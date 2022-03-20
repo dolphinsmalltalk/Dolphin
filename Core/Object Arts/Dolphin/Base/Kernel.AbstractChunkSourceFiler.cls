@@ -44,8 +44,7 @@ emitGUIDOfClass: aClass
 		nextPutAll: #fromString:;
 		space;
 		print: guid asString;
-		nextPutAll: ')!!';
-		cr!
+		nextPutAll: ')!!'!
 
 emitHeaderForMethodsOf: aClass
 	"Private - Emits a category header for the class, aClass, to the source stream."

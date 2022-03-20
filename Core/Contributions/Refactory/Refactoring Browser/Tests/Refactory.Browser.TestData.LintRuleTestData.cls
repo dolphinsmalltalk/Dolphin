@@ -71,8 +71,8 @@ resetResult!
 run
 	^Smalllint runRule: self!
 
-runOnEnvironment: anEnvironment 
-	^Smalllint runRule: self onEnvironment: anEnvironment!
+runOnEnvironment: anEnvironment
+	^Smalllint runRule: (#{BlockLintRule} value perform: self name) onEnvironment: anEnvironment!
 
 viewResults
 	self subclassResponsibility! !

@@ -36,8 +36,7 @@ addClassVariable: aString
 addImport: aString
 	| ref |
 	ref := aString asQualifiedReference.
-	imports := self imports copyWith: (ref referenceInModel: model).
-	model addImport: ref to: self!
+	self changeImports: (self imports copyWith: (ref referenceInModel: model))!
 
 addSubclass: aRBClass
 	subclasses := self subclasses copyWith: aRBClass!
@@ -73,11 +72,7 @@ allClassesDo: aMonadicValuable
 allClassVariableNames
 	^self superclass
 		ifNil: [self classVariableNames]
-		ifNotNil: 
-			[:sprClass |
-			sprClass allClassVariableNames
-				addAll: self classVariableNames;
-				yourself]!
+		ifNotNil: [:sprClass | sprClass allClassVariableNames , self classVariableNames]!
 
 allImports
 	"Answer a <sequencedReadableCollection> of <BindingReference> being the imports that are specified in the receiver and each of its superclasses."
@@ -124,6 +119,10 @@ category
 category: aSymbol 
 	category := aSymbol!
 
+changeImports: anArray
+	imports := anArray.
+	model import: anArray into: self!
+
 classBindingNames
 	^self definedBindings collect: [:each | each key]!
 
@@ -147,6 +146,9 @@ classConstants: aCollectionOfAssociations
 classInModel: aRBModel
 	^self!
 
+classInstanceVariableNames
+	^self metaclass instanceVariableNames!
+
 classPool
 	^classPool
 		ifNil: 
@@ -165,7 +167,8 @@ classPool
 			classPool]!
 
 classVariableNames
-	^(self definedBindings select: [:each | each isImmutable not]) collect: [:each | each key]!
+	^(self definedBindings reject: [:each | each isImmutable and: [each value isSelfEvaluating]])
+		collect: [:each | each key]!
 
 classVariableNames: aCollectionOfStrings
 	classPool := Dictionary new: aCollectionOfStrings size.
@@ -190,7 +193,7 @@ definedBindings
 
 	^self bindings select: [:each | each isClassVariable]!
 
-definitionString
+definition
 	| definitionStream |
 	definitionStream := (String writeStream: 256)
 				locale: SmalltalkLocale.Hex;
@@ -279,6 +282,9 @@ includesNamespace: aRBClass
 isDefined
 	^realClass notNil!
 
+isInBaseEnvironment
+	^(BindingReference isQualifiedName: self fullName) not!
+
 isMeta
 	^false!
 
@@ -332,53 +338,11 @@ newBindingContextForIdentifier: aString environment: aRBClass
 nonMetaclass
 	^self!
 
-printDefinitionOn: puttableStream
-	| classVariables classConstants |
-	puttableStream
-		nextPutAll: self superclass name;
-		space;
-		nextPutAll: self kindOfSubclass;
-		space;
-		print: self fullName asSymbol;
-		crtab;
-		nextPutAll: 'instanceVariableNames: '''.
-	self instanceVariableNames do: [:each | puttableStream nextPutAll: each]
-		separatedBy: [puttableStream space].
-	puttableStream
-		nextPut: $';
-		crtab;
-		nextPutAll: 'classVariableNames: '''.
-	classConstants := OrderedCollection new.
-	classVariables := OrderedCollection new.
-	self definedBindings asSortedArray do: 
-			[:each |
-			((each isImmutable and: [each value isSelfEvaluating])
-				ifTrue: [classConstants]
-				ifFalse: [classVariables]) addLast: each].
-	classVariables do: [:var | puttableStream nextPutAll: var key] separatedBy: [puttableStream space].
-	puttableStream
-		nextPut: $';
-		crtab;
-		nextPutAll: 'imports: ';
-		print: self imports;
-		crtab;
-		nextPutAll: 'classInstanceVariableNames: '''.
-	self metaclass instanceVariableNames do: [:each | puttableStream nextPutAll: each]
-		separatedBy: [puttableStream space].
-	puttableStream
-		nextPut: $';
-		crtab;
-		nextPutAll: 'classConstants: {'.
-	classConstants isEmpty
-		ifFalse: 
-			[classConstants do: 
-					[:each |
-					puttableStream
-						crtab: 2;
-						print: each]
-				separatedBy: [puttableStream nextPut: $.].
-			puttableStream crtab].
-	puttableStream nextPut: $}!
+printDefinitionOn: aPuttableStream
+	(Object sourceFilerClass on: aPuttableStream) printBasicDefinitionOfClass: self!
+
+printFullNameOn: aWriteStream
+	aWriteStream nextPutAll: self fullName!
 
 realClass
 	^realClass!
@@ -408,12 +372,8 @@ renameClassVariable: oldName to: newName around: aBlock
 replaceImport: oldBindingReference with: newBindingReference
 	"Replace an existing import with a new one, maintaining the existing order. This is typically used when renaming classes/namespaces that might be imported elsewhere."
 
-	imports := self imports copyReplacing: oldBindingReference
-				withObject: (newBindingReference referenceInModel: model).
-	model
-		replaceImport: oldBindingReference
-		with: newBindingReference
-		in: self!
+	self changeImports: (self imports copyReplacing: oldBindingReference
+				withObject: (newBindingReference referenceInModel: model))!
 
 resolveBindingPath: anArray
 	"Private - Attempt to resolve a <VariableBinding> by walking the names in the argument through nested namespaces."
@@ -511,6 +471,13 @@ setModel: aRBModel name: anObject realClass: aClassDescription
 setSuperclass: aRBClass
 	superclass := aRBClass!
 
+shortName
+	"Answer the shortest <String> name of the receiver that is bindable from Smalltalk. i.e. for classes defined directly in Smalltalk, or in any of its imports, this will be an unqualified name. Otherwise it is the fully qualified name relative to Smalltalk."
+
+	^self isInBaseEnvironment
+		ifTrue: [name]
+		ifFalse: [self model smalltalkNamespace shortNameFor: self unqualifiedName in: self environment]!
+
 subclasses
 	^subclasses
 		ifNil: 
@@ -556,10 +523,12 @@ bindings!accessing!public! !
 bindingsDo:!enumerating!public! !
 category!accessing!public! !
 category:!accessing!public! !
+changeImports:!namespaces!private! !
 classBindingNames!public! !
 classConstants!accessing!public! !
 classConstants:!accessing!public! !
 classInModel:!public! !
+classInstanceVariableNames!public! !
 classPool!accessing!public! !
 classVariableNames!accessing!public! !
 classVariableNames:!accessing!public! !
@@ -567,7 +536,7 @@ classVariables!class variables!public! !
 comment!accessing!public! !
 comment:!accessing!public! !
 definedBindings!accessing!public! !
-definitionString!accessing!public! !
+definition!accessing!public! !
 directlyDefinesClassVariable:!public!testing! !
 directlyImportsNamespace:!public!testing! !
 environment!accessing!public! !
@@ -582,6 +551,7 @@ imports:!accessing!public! !
 includesEnvironment:!namespaces!public!testing! !
 includesNamespace:!public!testing! !
 isDefined!public!testing! !
+isInBaseEnvironment!public! !
 isMeta!public!testing! !
 kindOfSubclass!class hierarchy-testing!private! !
 localBindingFor:!bindings!public! !
@@ -596,6 +566,7 @@ nearestRealClass!accessing!private! !
 newBindingContextForIdentifier:environment:!bindings!private! !
 nonMetaclass!accessing!public! !
 printDefinitionOn:!accessing!public! !
+printFullNameOn:!public! !
 realClass!accessing!public! !
 realClass:!accessing!public! !
 removeBindingFor:!public! !
@@ -613,11 +584,14 @@ resolvePublicBinding:!bindings!private! !
 resolveUnqualifiedName:environment:!bindings!private! !
 setModel:name:realClass:!accessing!initializing!private! !
 setSuperclass:!initializing!private! !
+shortName!public! !
 subclasses!accessing!public! !
 superclass!accessing!public! !
 superclass:!accessing!private! !
 unqualifiedName!public! !
 !
+
+Refactory.Browser.RBClass methodProtocol: #importableNamespace attributes: #(#readOnly) selectors: #(#asQualifiedReference #includesEnvironment: #resolvePublicBinding:)!
 
 !Refactory.Browser.RBClass class methodsFor!
 

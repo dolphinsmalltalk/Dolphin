@@ -521,7 +521,7 @@ modifyImportsOf: aClass
 			reason := 'Recompilation required to update imports of ' , aClass name , ' from: '
 						, aClass imports fullPrintString , ', to: '
 						, newImports fullPrintString.
-			aClass imports: newImports.
+			aClass setImports: newImports.
 			self recompilationRequired: true reason: reason]!
 
 modifyOrCreate
@@ -791,7 +791,7 @@ setCommentOf: aClass
 setImportsOf: aClass
 	"Private - Set the shared pools of the newly created class, aClass, to those described by the receiver's sharedPools inst var."
 
-	aClass imports: self imports!
+	aClass setImports: self imports!
 
 setInstanceVariablesOf: aClass
 	"Private - Set the instance variable layout of aClass to those described by the receiver's
@@ -994,7 +994,9 @@ validateImports
 			added == canonical
 				ifTrue: [distinct nextPut: canonical]
 				ifFalse: [canonical isPrivate ifFalse: [added isPrivate: false]]].
-	imports := distinct grabContents!
+	imports := distinct grabContents
+				isImmutable: true;
+				yourself!
 
 validateInstanceSpec
 	"Private - Validate and complete the instanceSpec inst var."

@@ -1102,7 +1102,7 @@ queryFrameCommand: aCommandQuery
 	running := self isRunning or: [animating].
 	runnable := running not and: [self isResumable].
 	frame := self frame.
-	frame isDead ifTrue: [^false].
+	(frame isNil or: [frame isDead]) ifTrue: [^false].
 	"Note that the implement menu is not just for DNUs any more, but any message which is not directly
 	 implemented by its receiver."
 	selector == #implementDNUMenu

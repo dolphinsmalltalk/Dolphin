@@ -16,6 +16,7 @@ package setMethodNames: #(
 	#(#{Core.Class} #storeClassCategories)
 	#(#{Core.Metaclass} #storeClassCategories)
 	#(#{Kernel.AbstractChunkSourceFiler} #emitBinaryVariableDefinition:)
+	#(#{Kernel.AbstractChunkSourceFiler} #emitCategories:for:in:)
 	#(#{Kernel.AbstractChunkSourceFiler} #emitCategoriesForMethods:of:)
 	#(#{Kernel.AbstractChunkSourceFiler} #emitCategoriesOfClass:)
 	#(#{Kernel.AbstractChunkSourceFiler} #emitCategoriesOfMethod:)
@@ -162,6 +163,18 @@ emitBinaryVariableDefinition: aBindingReference
 		nextPut: $!!;
 		cr!
 
+emitCategories: aCollection for: aSymbol in: aClass
+	stream nextPut: $!!.
+	self emitClassName: aClass.
+	stream
+		space;
+		nextPutAll: #categoriesFor:;
+		space.
+	self emitString: aSymbol printString.
+	stream nextPut: $!!.
+	aCollection asSortedArray do: [:each | self nextChunkPut: each name].
+	self endChunk!
+
 emitCategoriesForMethods: aSequencableCollection of: aClass
 	"Emit source that associates the <CompiledMethod>s in the <collection>, methods, with their current categories.
 	Note that it is assumed that all the methods are of the same class."
@@ -198,22 +211,15 @@ emitCategoriesOfClass: aClass
 		nextPutAll: #categoriesForClass;
 		nextPut: $!!.
 	categories asSortedArray do: [:aCategory | self nextChunkPut: aCategory name].
-	self endChunk!
+	stream nextPutAll: ' !!'!
 
 emitCategoriesOfMethod: aCompiledMethod
-	"Private - Append a chunk to the receiver's stream	to reclassify the <CompiledMethod>, aCompiledMethod, in all its current method categories.
-	The method class name is printed using the specified <ClassDefinitionPrinter>."
+	"Private - Append a chunk to the receiver's stream	to reclassify the <CompiledMethod>, aCompiledMethod, in all its current method categories."
 
-	stream nextPut: $!!.
-	self emitClassName: aCompiledMethod methodClass.
-	stream
-		space;
-		nextPutAll: #categoriesFor:;
-		space.	"#2144."
-	self emitString: aCompiledMethod selector printString.
-	stream nextPut: $!!.
-	aCompiledMethod realCategories asSortedArray do: [:each | self nextChunkPut: each name].
-	self endChunk!
+	self
+		emitCategories: aCompiledMethod realCategories
+		for: aCompiledMethod selector
+		in: aCompiledMethod methodClass!
 
 emitComment: aString
 	"Private - Record aString to the chunk stream as a comment. All comments logged are prefixed
@@ -237,8 +243,7 @@ emitCommentOfClass: aClass
 		display: #comment:;
 		space.
 	self
-		nextChunkPut: aClass comment fullPrintString;
-		cr!
+		nextChunkPut: aClass comment fullPrintString!
 
 emitFileOutHeader
 	self
@@ -253,25 +258,33 @@ emitMethod: aCompiledMethod
 	self storeSource: aCompiledMethod getSource for: aCompiledMethod!
 
 emitSpecialBehaviorAttributesOfClass: aClass
+	| count |
+	count := 0.
 	self specialBehaviorAttributes do: 
 			[:each |
 			(aClass perform: each first)
 				ifTrue: 
-					[self emitClassName: aClass.
+					[(count := count + 1) > 1 ifTrue: [stream cr].
+					self emitClassName: aClass.
 					stream
 						space;
 						nextPutAll: each last;
-						nextPutAll: ': true!!';
-						cr]]!
+						nextPutAll: ': true!!']].
+	^count!
 
 fileOutAttributesOfClass: aClass
 	"File-out any attributes of the aClass (e.g. the comment, GUID, etc) not included in the basic
 	aClass definition, onto the source stream."
 
-	self emitGUIDOfClass: aClass.
-	self emitSpecialBehaviorAttributesOfClass: aClass.
-	self emitCommentOfClass: aClass.
-	self emitCategoriesOfClass: aClass!
+	self
+		emitGUIDOfClass: aClass;
+		cr.
+	(self emitSpecialBehaviorAttributesOfClass: aClass) == 0 ifFalse: [self cr].
+	self
+		emitCommentOfClass: aClass;
+		cr;
+		emitCategoriesOfClass: aClass;
+		cr!
 
 fileOutBasicDefinitionOfClass: aClass
 	"Print a definition of the <Class>, aClass, onto the receiver's stream."
@@ -323,41 +336,41 @@ logEvaluation: aString
 	self fileOutExpression: aString!
 
 printBasicDefinitionOfClass: aClass
-	| classConstants classVariables |
+	| classConstants |
 	aClass superclass ifNil: [stream nextPutAll: 'nil'] ifNotNil: [:base | self emitClassName: base].
 	stream
 		space;
 		nextPutAll: aClass kindOfSubclass;
 		space;
-		print: (aClass environment == aClass baseEnvironment
+		print: (aClass isInBaseEnvironment
 					ifTrue: [aClass unqualifiedName]
 					ifFalse: [aClass fullName asSymbol]);
 		crtab;
-		nextPutAll: 'instanceVariableNames: ';
-		print: aClass instanceVariableString;
+		nextPutAll: 'instanceVariableNames: '''.
+	aClass instanceVariableNames do: [:each | stream nextPutAll: each] separatedBy: [stream space].
+	stream
+		nextPut: $';
 		crtab;
 		nextPutAll: 'classVariableNames: '''.
-	classConstants := OrderedCollection new.
-	classVariables := OrderedCollection new.
-	aClass definedBindings asSortedArray do: 
-			[:each |
-			((each isImmutable and: [each value isSelfEvaluating])
-				ifTrue: [classConstants]
-				ifFalse: [classVariables]) addLast: each].
-	classVariables do: [:var | stream nextPutAll: var key] separatedBy: [stream space].
+	aClass classVariableNames asSortedArray do: [:each | stream nextPutAll: each]
+		separatedBy: [stream space].
 	stream
 		nextPut: $';
 		crtab;
 		nextPutAll: 'imports: ';
 		print: aClass imports;
 		crtab;
-		nextPutAll: 'classInstanceVariableNames: ';
-		print: aClass class instanceVariableString;
+		nextPutAll: 'classInstanceVariableNames: '''.
+	aClass classInstanceVariableNames do: [:each | stream nextPutAll: each]
+		separatedBy: [stream space].
+	stream
+		nextPut: $';
 		crtab;
 		nextPutAll: 'classConstants: {'.
+	classConstants := aClass classConstants.
 	classConstants isEmpty
 		ifFalse: 
-			[classConstants do: 
+			[classConstants asSortedArray do: 
 					[:each |
 					stream
 						crtab: 2;
@@ -404,6 +417,7 @@ storeSource: aString for: aSourceObject
 	self nextChunkPut: aString! !
 !Kernel.AbstractChunkSourceFiler categoriesForMethods!
 emitBinaryVariableDefinition:!public!source filing-file out! !
+emitCategories:for:in:!private!source filing-pax! !
 emitCategoriesForMethods:of:!public!source filing! !
 emitCategoriesOfClass:!private!source filing-file out! !
 emitCategoriesOfMethod:!private!source filing-file out! !
@@ -888,6 +902,7 @@ storeCategoriesForClass: class
 					[logger
 						setToEnd;
 						emitCategoriesOfClass: class;
+						cr;
 						flush]]!
 
 storeCategoriesForMethod: aCompiledMethod

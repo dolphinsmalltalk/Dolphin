@@ -6,7 +6,7 @@ CollectionTest subclass: #SequencedReadableCollectionTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SequencedReadableCollectionTest guid: (GUID fromString: '{80a590e8-57fd-459f-bfdd-3055f38fecee}')!
-SequencedReadableCollectionTest isNonInstantiable: true!
+SequencedReadableCollectionTest isAbstract: true!
 SequencedReadableCollectionTest comment: ''!
 !SequencedReadableCollectionTest categoriesForClass!Unclassified! !
 !SequencedReadableCollectionTest methodsFor!

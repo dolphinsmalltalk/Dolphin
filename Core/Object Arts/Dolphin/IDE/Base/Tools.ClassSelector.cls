@@ -499,7 +499,7 @@ onClass: aClass renamedTo: text
 		on: Error
 		do: [:e | e okCancel]!
 
-onClass: aClass renameTo: text accept: booleanValue
+onClass: aClass renameTo: aString accept: booleanValue
 	"The user has initiated a rename of the class, aClass, by editing the label in the class
 	tree. Ask the user to confirm the action, and if so queue a deferred action to perform the
 	actual rename."
@@ -507,19 +507,14 @@ onClass: aClass renameTo: text accept: booleanValue
 	"Implementation Notes: We don't set the booleanValue holder to true, because the rename may
 	not work."
 
-	(text isEmpty or: [aClass fullName = text])
+	(aString isEmpty or: [aClass fullName = aString])
 		ifTrue: 
 			[booleanValue value: false.
 			^self].
-	(MessageBox new
-		headline: 'Rename <1s>?' << aClass unqualifiedName;
-		text: '<1s> will be renamed to <2s>.<n><n>Any references in code will be updated, but not where the name appears in comments, literal strings, or argument names.' << {aClass fullName. text};
-		customButtons: #(#(#yes '&Rename') #(#no 'Cancel'));
-		isCancellable: true;
-		confirm)
-			ifTrue: 
-				["Queue deferred action as we can't delete the old item now while still in use (causes GPF in TreeView)"
-				[self onClass: aClass renamedTo: text] postToMessageQueue]!
+	(self systemModel confirmRenameClass: aClass to: aString)
+		ifTrue: 
+			["Queue deferred action as we can't delete the old item now while still in use (causes GPF in TreeView)"
+			[self onClass: aClass renamedTo: aString] postToMessageQueue]!
 
 onDrag: session
 	"Private - A class drag has been started. Populate the <DragDropSession>, 
@@ -746,14 +741,22 @@ queryCommand: aCommandQuery
 			aCommandQuery text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: {name}
 						locale: Locale smalltalk).
 			^true].
-	(#(#browseClass #fileInClass #fileOutClass #checkInClass #checkOutClass #categorizeClass #clearSelection #removeClass #inspectIt #browseMenu #browseHierarchy #browseReferences #browseClassReferences #browseClassVariables #browseInstanceVariables #browseAllMethods #browsePackages #classPackage #browseChangedMethods #browseVariablesMenu)
+	(#(#browseClass #fileInClass #fileOutClass #checkInClass #checkOutClass #categorizeClass #clearSelection #inspectIt #browseMenu #browseHierarchy #browseReferences #browseClassReferences #browseClassVariables #browseInstanceVariables #browseAllMethods #browsePackages #classPackage #browseChangedMethods #browseVariablesMenu)
 		identityIncludes: selector)
 			ifTrue: 
 				[aCommandQuery isEnabled: class notNil.
 				^true].
+	#removeClass == selector
+		ifTrue: 
+			[aCommandQuery isEnabled: self selections notEmpty.
+			^true].
 	#renameClass == selector
 		ifTrue: 
 			[aCommandQuery isEnabled: (self systemModel canRenameClass: class).
+			^true].
+	#addImport == selector
+		ifTrue: 
+			[aCommandQuery isEnabled: self hasSelection.
 			^true].
 	#changeClassNamespace == selector
 		ifTrue: 
@@ -839,9 +842,9 @@ queryMoveClass: aClass toPackage: aPackage
 	^true!
 
 removeClass
-	"Removes the selected class from the system. If refactoring is available, then the 'Remove Class' refactoring is employed."
+	"Removes the selected class(es) from the system. If refactoring is available, then the 'Remove Class' refactoring is employed."
 
-	self permitSelectionChange ifTrue: [self systemModel removeClass: self selection]!
+	self permitSelectionChange ifTrue: [self systemModel removeClasses: self selections]!
 
 renameClass
 	"Private - Initiate in-place label edit for the selected class."

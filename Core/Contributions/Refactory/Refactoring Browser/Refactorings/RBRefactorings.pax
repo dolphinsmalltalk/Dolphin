@@ -16,6 +16,7 @@ package setClassNames: #(
 	#{Refactory.Browser.AbstractVariablesRefactoring}
 	#{Refactory.Browser.AddClassRefactoring}
 	#{Refactory.Browser.AddClassVariableRefactoring}
+	#{Refactory.Browser.AddImportRefactoring}
 	#{Refactory.Browser.AddInstanceVariableRefactoring}
 	#{Refactory.Browser.AddMethodRefactoring}
 	#{Refactory.Browser.AddParameterRefactoring}
@@ -42,6 +43,7 @@ package setClassNames: #(
 	#{Refactory.Browser.PushDownInstanceVariableRefactoring}
 	#{Refactory.Browser.PushDownMethodRefactoring}
 	#{Refactory.Browser.PushUpMethodRefactoring}
+	#{Refactory.Browser.QualifyStaticVariablesRefactoring}
 	#{Refactory.Browser.RBAbstractClass}
 	#{Refactory.Browser.RBAbstractCondition}
 	#{Refactory.Browser.RBClass}
@@ -56,6 +58,7 @@ package setClassNames: #(
 	#{Refactory.Browser.RBNegationCondition}
 	#{Refactory.Browser.RBReadBeforeWrittenTester}
 	#{Refactory.Browser.RBRootNamespace}
+	#{Refactory.Browser.RBSmalltalkNamespace}
 	#{Refactory.Browser.RBVariableAnalyser}
 	#{Refactory.Browser.RBVariableBinding}
 	#{Refactory.Browser.Refactoring}
@@ -75,6 +78,7 @@ package setClassNames: #(
 	#{Refactory.Browser.RenameTemporaryRefactoring}
 	#{Refactory.Browser.SplitClassRefactoring}
 	#{Refactory.Browser.TemporaryToInstanceVariableRefactoring}
+	#{Refactory.Browser.UnqualifyStaticVariablesRefactoring}
 	#{Refactory.Browser.VariableRefactoring}
 	#{Tools.ClassNameToBindingReferenceRefactoring}
 ).
@@ -89,6 +93,7 @@ package setMethodNames: #(
 	#(#{Kernel.BindingReference} #referenceInModel:)
 	#(#{Kernel.CompiledCode} #hasLiteralMatching:)
 	#(#{Kernel.Namespace class} #rbClass)
+	#(#{Kernel.StAbstractVariableNode} #isBindingChanged)
 	#(#{Kernel.StAbstractVariableNode} #refersToClass:)
 	#(#{Kernel.StLiteralArrayNode} #refersToClass:)
 	#(#{Kernel.StLiteralArrayNode} #refersToSymbol:)
@@ -97,18 +102,21 @@ package setMethodNames: #(
 	#(#{Kernel.StLiteralValueNode} #refersToSymbol:)
 	#(#{Kernel.StProgramNode} #refersToBinding:)
 	#(#{Kernel.StProgramNode} #refersToClass:)
+	#(#{Kernel.StQualifiedReferenceNode} #isBindingChanged)
 	#(#{Kernel.StQualifiedReferenceNode} #refersToBinding:)
 	#(#{Kernel.StQualifiedReferenceNode} #refersToClass:)
 	#(#{Kernel.StStaticVariable} #refersToBinding:)
 	#(#{Kernel.StStaticVariable} #refersToClass:)
 	#(#{Kernel.StVariable} #refersToBinding:)
 	#(#{Kernel.StVariable} #refersToClass:)
+	#(#{Kernel.StVariableNode} #isBindingChanged)
 	#(#{Kernel.StVariableNode} #refersToBinding:)
 	#(#{Kernel.StVariableNode} #refersToClass:)
 	#(#{Kernel.VariableBinding} #refersToBinding:)
 	#(#{Kernel.VariableBinding} #refersToClass:)
 	#(#{Root class} #classInModel:)
 	#(#{Root class} #rbClass)
+	#(#{Smalltalk class} #rbClass)
 ).
 
 package setPrerequisites: #(
@@ -227,6 +235,12 @@ Refactory.Browser.RBNamespaceClass subclass: #'Refactory.Browser.RBRootNamespace
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Refactory.Browser.RBNamespaceClass subclass: #'Refactory.Browser.RBSmalltalkNamespace'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Refactory.Browser.RBAbstractCondition subclass: #'Refactory.Browser.RBCondition'
 	instanceVariableNames: 'block type errorBlock'
 	classVariableNames: ''
@@ -264,13 +278,19 @@ Refactory.Browser.Refactoring subclass: #'Refactory.Browser.ClassRefactoring'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Refactory.Browser.Refactoring subclass: #'Refactory.Browser.ExpandImportsRefactoring'
-	instanceVariableNames: 'pools fromClass parseTree toClasses'
+	instanceVariableNames: 'imports fromClass parseTree toClasses'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Refactory.Browser.Refactoring subclass: #'Refactory.Browser.MethodRefactoring'
 	instanceVariableNames: 'class'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.Refactoring subclass: #'Refactory.Browser.QualifyStaticVariablesRefactoring'
+	instanceVariableNames: 'tree'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -287,6 +307,12 @@ Refactory.Browser.Refactoring subclass: #'Refactory.Browser.SplitClassRefactorin
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Refactory.Browser.Refactoring subclass: #'Refactory.Browser.UnqualifyStaticVariablesRefactoring'
+	instanceVariableNames: 'tree'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Refactory.Browser.Refactoring subclass: #'Refactory.Browser.VariableRefactoring'
 	instanceVariableNames: 'class variableName'
 	classVariableNames: ''
@@ -295,6 +321,12 @@ Refactory.Browser.Refactoring subclass: #'Refactory.Browser.VariableRefactoring'
 	classConstants: {}!
 Refactory.Browser.ClassRefactoring subclass: #'Refactory.Browser.AddClassRefactoring'
 	instanceVariableNames: 'category superclass subclasses'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.ClassRefactoring subclass: #'Refactory.Browser.AddImportRefactoring'
+	instanceVariableNames: 'class import'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -366,7 +398,7 @@ Refactory.Browser.MethodRefactoring subclass: #'Refactory.Browser.InlineTemporar
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Refactory.Browser.MethodRefactoring subclass: #'Refactory.Browser.MoveMethodRefactoring'
-	instanceVariableNames: 'selector variable moveToClasses parseTree hasOnlySelfReturns selfVariableName'
+	instanceVariableNames: 'selector variable moveToClasses parseTree hasOnlySelfReturns selfVariableName abstractVariables'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -609,9 +641,15 @@ rbClass!constants!public! !
 
 !Kernel.StAbstractVariableNode methodsFor!
 
+isBindingChanged
+	"Assuming that this node has been bound by a semantic analyser, would it bind differently now?"
+
+	^false!
+
 refersToClass: aRBClass
 	^false! !
 !Kernel.StAbstractVariableNode categoriesForMethods!
+isBindingChanged!accessing!public! !
 refersToClass:!public!testing! !
 !
 
@@ -667,6 +705,11 @@ refersToClass:!public!testing! !
 
 !Kernel.StQualifiedReferenceNode methodsFor!
 
+isBindingChanged
+	"Assuming that this node has been bound by the RBVariableAnalyser, would it bind differently now?"
+
+	^binding notNil and: [self resolveBinding ~~ binding]!
+
 refersToBinding: aVariableBinding
 	| var |
 	var := self binding.
@@ -678,6 +721,7 @@ refersToClass: aClass
 	#namespaceToDo.	"What about the reference a VariableBinding has to it's environment?"
 	^var notNil and: [var refersToClass: aClass]! !
 !Kernel.StQualifiedReferenceNode categoriesForMethods!
+isBindingChanged!public!testing! !
 refersToBinding:!public!testing! !
 refersToClass:!public!testing! !
 !
@@ -708,12 +752,20 @@ refersToClass:!public!testing! !
 
 !Kernel.StVariableNode methodsFor!
 
+isBindingChanged
+	"Assuming that this node has been bound by a semantic analyser, would it bind differently now?"
+
+	| originalBinding |
+	originalBinding := self binding.
+	^originalBinding notNil and: [originalBinding ~~ self resolveBinding]!
+
 refersToBinding: aVariableBinding
 	^variable notNil and: [variable refersToBinding: aVariableBinding]!
 
 refersToClass: aClass
 	^variable notNil and: [variable refersToClass: aClass]! !
 !Kernel.StVariableNode categoriesForMethods!
+isBindingChanged!public!testing! !
 refersToBinding:!public!testing! !
 refersToClass:!public!testing! !
 !
@@ -740,6 +792,14 @@ rbClass
 	^Refactory.Browser.RBRootNamespace! !
 !Root class categoriesForMethods!
 classInModel:!public! !
+rbClass!constants!public! !
+!
+
+!Smalltalk class methodsFor!
+
+rbClass
+	^Refactory.Browser.RBSmalltalkNamespace! !
+!Smalltalk class categoriesForMethods!
 rbClass!constants!public! !
 !
 

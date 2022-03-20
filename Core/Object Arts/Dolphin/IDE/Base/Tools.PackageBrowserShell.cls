@@ -396,7 +396,10 @@ createSchematicWiring
 		when: #dragOver:
 			send: #onDragOver:type:
 			to: self
-			withArguments: #(nil #Class).
+			withArguments: #(nil #Class);
+		when: #labelOf:editedTo:accept:
+			send: #onClass:renameTo:accept:
+			to: self.
 	methodsPresenter
 		when: #actionPerformed
 			send: #browseIt
@@ -999,6 +1002,11 @@ removeVariables
 
 	self variableNames do: [:each | Package manager addVariableNamed: each to: nil]!
 
+renameClass
+	"Private - Initiate in-place label edit for the selected class."
+
+	classesPresenter view editSelectionLabel!
+
 resourceIdentifier
 	"Private - Answer the currently selected <ResourceIdentifier>, or nil if there not exactly one selection."
 
@@ -1350,6 +1358,7 @@ release!dependency!public! !
 removeClasses!commands!private! !
 removeLooseMethods!commands!private! !
 removeVariables!commands!private! !
+renameClass!public! !
 resourceIdentifier!accessing!private! !
 resourceIdentifiers!accessing!private! !
 saveComment!commands!private! !

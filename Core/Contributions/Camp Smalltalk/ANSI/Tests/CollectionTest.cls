@@ -6,7 +6,7 @@ MainTestCase subclass: #CollectionTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 CollectionTest guid: (GUID fromString: '{92c1298a-2628-4867-8fbf-2c7f1d613a62}')!
-CollectionTest isNonInstantiable: true!
+CollectionTest isAbstract: true!
 CollectionTest comment: ''!
 !CollectionTest categoriesForClass!Unclassified! !
 !CollectionTest methodsFor!

@@ -17,9 +17,6 @@ addClassConstant: anAssociation to: aRBClass
 addClassVariable: aString to: aRBClass 
 	^changes addClassVariable: aString to: aRBClass!
 
-addImport: aBindingReference to: aRBClass
-	^changes addImport: aBindingReference to: aRBClass!
-
 addInstanceVariable: aString to: aRBClass 
 	^changes addInstanceVariable: aString to: aRBClass!
 
@@ -152,7 +149,7 @@ compileTree: aMethodNode forMethod: aRBMethod
 	class := aRBMethod modelClass.
 	self assert: aMethodNode selector == aRBMethod selector.
 	class addMethod: aRBMethod.
-	packageAndEnvironment := class existingMethodPackageAndEnvironment: selector.
+	packageAndEnvironment := aRBMethod existingPackageAndEnvironment.
 	class
 		compile: aMethodNode newSource
 		environment: packageAndEnvironment second
@@ -197,6 +194,9 @@ flushCaches
 
 fullBindingFor: aString
 	^smalltalkNamespace fullBindingFor: aString!
+
+import: anArrayOfBindingReferences into: aRBClass
+	^changes import: anArrayOfBindingReferences into: aRBClass!
 
 includesClassNamed: aString
 	^(self classNamed: aString) notNil!
@@ -265,9 +265,6 @@ removeClassNamed: aString
 removeClassVariable: aString from: aRBClass 
 	^changes removeClassVariable: aString from: aRBClass!
 
-removeImport: aBindingReference from: aRBClass
-	^changes removeImport: aBindingReference from: aRBClass!
-
 removeInstanceVariable: aString from: aRBClass 
 	^changes removeInstanceVariable: aString from: aRBClass!
 
@@ -314,20 +311,15 @@ renameInstanceVariable: oldName to: newName in: aRBClass around: aBlock
 				in: aRBClass)
 		around: aBlock!
 
-reparentClasses: aRBClassCollection to: newClass 
-	aRBClassCollection do: 
-			[:aClass | 
-			self defineClass: (self replaceClassNameIn: aClass definitionString
-						to: newClass fullName)]!
+reparentClasses: aRBClassCollection to: newClass
+	aRBClassCollection
+		do: [:aClass | self defineClass: (self replaceClassNameIn: aClass definition to: newClass fullName)]!
 
 replaceClassNameIn: definitionString to: aSymbol 
 	| parseTree |
 	parseTree := Parser parseExpression: definitionString.
 	parseTree receiver: (StVariableNode named: aSymbol).
 	^parseTree formattedCode!
-
-replaceImport: oldBindingReference with: newBindingReference in: aRBClass
-	^changes replaceImport: oldBindingReference with: newBindingReference in: aRBClass!
 
 rootClasses
 	^rootClasses
@@ -358,7 +350,6 @@ whichCategoryIncludes: aSymbol
 !Refactory.Browser.RBModel categoriesForMethods!
 addClassConstant:to:!changes!private! !
 addClassVariable:to:!changes!private! !
-addImport:to:!changes!public! !
 addInstanceVariable:to:!changes!private! !
 allBehaviorsDo:!accessing!public! !
 allClassesDo:!accessing!public! !
@@ -381,6 +372,7 @@ definesStaticVariable:!public!testing! !
 environment!accessing!public! !
 flushCaches!changes!private! !
 fullBindingFor:!binding!public! !
+import:into:!changes!public! !
 includesClassNamed:!public!testing! !
 includesStaticVariable:!public!testing! !
 instanceClassFor:!accessing/classes!public! !
@@ -393,7 +385,6 @@ removeClass:!changes!public! !
 removeClassConstant:from:!changes!private! !
 removeClassNamed:!changes!private! !
 removeClassVariable:from:!changes!private! !
-removeImport:from:!changes!public! !
 removeInstanceVariable:from:!changes!private! !
 removeSelector:from:!changes!private! !
 renameClass:to:around:!changes!public! !
@@ -401,7 +392,6 @@ renameClassVariable:to:in:around:!changes!private! !
 renameInstanceVariable:to:in:around:!changes!private! !
 reparentClasses:to:!changes!public! !
 replaceClassNameIn:to:!changes!private! !
-replaceImport:with:in:!changes!public! !
 rootClasses!accessing!public! !
 rootNamespace!public! !
 setEnvironment:!initialize/release!private! !

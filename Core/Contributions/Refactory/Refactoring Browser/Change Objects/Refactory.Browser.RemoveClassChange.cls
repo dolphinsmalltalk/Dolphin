@@ -11,36 +11,47 @@ Refactory.Browser.RemoveClassChange comment: ''!
 !Refactory.Browser.RemoveClassChange categoriesForClass!Refactory-Change Objects! !
 !Refactory.Browser.RemoveClassChange methodsFor!
 
+afterText
+	^''!
+
 asUndoOperation
 	| classChanges |
 	classChanges := CompositeRefactoryChange new.
 	self changeClass withAllSubclasses do: 
 			[:each |
-			classChanges defineClass: each definition.
-			each class instanceVariableNames do: [:varName | classChanges addInstanceVariable: varName to: each class].
-			each selectors do: [:selector | classChanges compile: (each sourceCodeAt: selector) in: each].
-			each class selectors
+			classChanges
+				defineClass: each definition;
+				setGuid: each guid of: each.
+			each hasSpecialBehavior ifTrue: [classChanges setSpecialBehavior: each instanceSpec of: each].
+			classChanges
+				comment: each comment in: each;
+				categorize: each as: each categories.
+			each selectors asSortedArray
+				do: [:selector | classChanges compile: (each sourceCodeAt: selector) in: each].
+			each class selectors asSortedArray
 				do: [:selector | classChanges compile: (each class sourceCodeAt: selector) in: each class]].
 	^classChanges!
 
-beforeText
-	^self changeClass definition!
-
 changeString
-	^'Remove class ', self displayClassName!
+	^'Remove class <1d>' << classReference!
+
+mutateAttributes: aClassAttributes
+	self shouldNotImplement!
 
 primitiveExecute
 	self changeClass removeFromSystem!
 
-printOn: aStream 
+printOn: aStream
 	aStream
-		nextPutAll: self displayClassName;
-		nextPutAll: ' removeFromSystem';
+		display: classReference;
+		space;
+		nextPutAll: #removeFromSystem;
 		nextPut: $!!! !
 !Refactory.Browser.RemoveClassChange categoriesForMethods!
+afterText!printing!public! !
 asUndoOperation!converting!public! !
-beforeText!printing!public! !
 changeString!printing!public! !
+mutateAttributes:!helpers!private! !
 primitiveExecute!applying!private! !
 printOn:!printing!public! !
 !

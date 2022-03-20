@@ -295,11 +295,16 @@ fileOutAttributesOfClass: aClass
 	"File-out any attributes of the aClass (e.g. the comment, GUID, etc) not included in the basic
 	aClass definition, onto the source stream."
 
-	self emitGUIDOfClass: aClass.
-	self emitSpecialBehaviorAttributesOfClass: aClass.
-	self emitClassPoolOfClass: aClass.
-	self emitCommentOfClass: aClass.
-	self emitCategoriesOfClass: aClass!
+	self
+		emitGUIDOfClass: aClass;
+		cr.
+	(self emitSpecialBehaviorAttributesOfClass: aClass) == 0 ifFalse: [self cr].
+	self
+		emitClassPoolOfClass: aClass;
+		emitCommentOfClass: aClass;
+		cr;
+		emitCategoriesOfClass: aClass;
+		cr!
 
 fileOutBasicDefinitionOfClass: aClass
 	"Print a definition of the <Class>, aClass, onto the receiver's stream."
@@ -459,7 +464,7 @@ printBasicDefinitionOfClass: aClass
 		space;
 		nextPutAll: aClass kindOfSubclass;
 		space;
-		print: (aClass environment == aClass baseEnvironment
+		print: (aClass isInBaseEnvironment
 					ifTrue: [aClass unqualifiedName]
 					ifFalse: 
 						["Not supported by the format, but we print the qualified name here anyway as this method is used to print the class definition for display in browsers. The file out error is detected elsewhere."
@@ -475,7 +480,13 @@ printBasicDefinitionOfClass: aClass
 		print: aClass sharedVariableString;
 		crtab;
 		nextPutAll: 'classInstanceVariableNames: ';
-		print: aClass class instanceVariableString!
+		print: ($\x20 join: aClass classInstanceVariableNames)!
+
+sharedPoolNames: aClass
+	^aClass imports collect: 
+			[:each |
+			(each valueOrNil ifNotNil: [:sharedPoolClass | Smalltalk oldNames lookup: sharedPoolClass])
+				ifNil: [each unqualifiedName]]!
 
 shortNameForClass: aClass
 	^(Smalltalk oldNames lookup: aClass) ifNil: [self getShortName: aClass]!
@@ -518,6 +529,7 @@ legacyPackagePaths!constants!private! !
 makePoolConstsFromSharedPool:!helpers!private! !
 packageClassesInFileoutOrder:!helpers!private! !
 printBasicDefinitionOfClass:!public!source filing-file out! !
+sharedPoolNames:!public!source filing-file out! !
 shortNameForClass:!public!source filing-file out! !
 specialBehaviorAttributes!constants!public! !
 !

@@ -74,7 +74,6 @@ contents
 		add: #('Core\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments.pax' #plain #imageBased);
 		add: #('Core\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\IDE\Base\Dolphin Browser Environments.pax' #plain #imageBased);
-		add: #('Core\Object Arts\Dolphin\IDE\Base\Dolphin Change Objects.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\IDE\Base\Development System.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Utilities\HTML Help\HTML Help.pax' #plain #imageBased);
 		yourself.

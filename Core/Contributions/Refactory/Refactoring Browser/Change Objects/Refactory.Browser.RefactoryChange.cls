@@ -28,7 +28,7 @@ beforeText
 changeClass
 	^nil!
 
-changeForClass: aRBClass selector: aSelector 
+changeForClassNamed: aBindingReference selector: aSelector
 	^nil!
 
 changeForMetaclass: aSymbol selector: aSelector 
@@ -49,11 +49,8 @@ changeString
 classReference
 	^nil!
 
-displayClassName
-	^''!
-
 displayString
-	^name isNil ifTrue: [self changeString] ifFalse: [name]!
+	^self name!
 
 execute
 	^self executeNotifying: []!
@@ -90,14 +87,13 @@ selector
 afterText!printing!public! !
 beforeText!printing!public! !
 changeClass!accessing!public! !
-changeForClass:selector:!public!searching! !
+changeForClassNamed:selector:!public!searching! !
 changeForMetaclass:selector:!public!searching! !
 changes!accessing!public! !
 changesDo:!enumerating!public! !
 changesSize!accessing!public! !
 changeString!printing!public! !
 classReference!accessing!public! !
-displayClassName!printing!public! !
 displayString!printing!public! !
 execute!applying!public! !
 executeNotifying:!applying!private! !

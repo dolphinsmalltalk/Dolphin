@@ -31,11 +31,6 @@ hasQualifiedName
 
 	^false!
 
-isBindingChanged
-	"Private - Assuming that this node has been bound by a semantic analyser, would it bind differently now?"
-
-	^false!
-
 isConstantNode
 	"Answer whether the receiver describes a variable that cannot be assigned to (i.e. a constant)."
 
@@ -79,7 +74,6 @@ variable: aStVariable
 =!comparing!public! !
 hash!comparing!public! !
 hasQualifiedName!public!testing! !
-isBindingChanged!accessing!private! !
 isConstantNode!public!testing! !
 isImmediateNode!public!testing! !
 isStaticVariable!public!testing! !

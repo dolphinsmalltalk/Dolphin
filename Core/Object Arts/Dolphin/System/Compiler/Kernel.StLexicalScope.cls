@@ -99,6 +99,9 @@ node: aBlockOrMethodNode outer: aStLexicalScope
 outer
 	^outer!
 
+outer: aStSemanticScope
+	outer := aStSemanticScope!
+
 printOn: aPuttableStream
 	self basicPrintOn: aPuttableStream.
 	aPuttableStream
@@ -153,6 +156,7 @@ needsSelf!accessing!public! !
 node!accessing!public! !
 node:outer:!initializing!private! !
 outer!accessing!public! !
+outer:!accessing!public! !
 printOn:!printing!public! !
 realScope!accessing!public! !
 resolveIdentifier:!operations!private! !

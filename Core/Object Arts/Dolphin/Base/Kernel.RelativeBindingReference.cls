@@ -34,10 +34,17 @@ Kernel.RelativeBindingReference comment: '`RelativeBindingReference`s represent 
 asFullyQualifiedReference
 	"Answer a<BindingReference> that references the same binding as the receiver does currently in its home context, but from Smalltalk or Root."
 
-	^FullBindingReference
-		pathString: self environmentName , PathSeparatorString , self unqualifiedName
-		path: nil
-		private: private!
+	^self bindingOrNil
+		ifNil: 
+			[FullBindingReference
+				pathString: self environmentName , PathSeparatorString , self unqualifiedName
+				path: nil
+				private: private]
+		ifNotNil: 
+			[:var |
+			var fullyQualifiedReference
+				isPrivate: private;
+				yourself]!
 
 asString
 	"Answer a <readableString> that is the receiver's qualified name expression."

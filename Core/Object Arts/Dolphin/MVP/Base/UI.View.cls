@@ -2681,12 +2681,10 @@ onViewOpened
 	self presenter trigger: #viewOpened.!
 
 onVScroll: aScrollEvent
-	"Default handler for a vertical scroll event.
-	Answer nil to accept the default processing."
+	"Default handler for a vertical scroll event."
 
-	^nil
-
-!
+	self presenter trigger: #verticalScroll: with: aScrollEvent.
+	^aScrollEvent defaultWindowProcessing!
 
 onXButtonDoubleClicked: aMouseEvent
 	"Default handler for a mouse X button double-click event. Accept the default window

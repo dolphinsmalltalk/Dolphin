@@ -95,6 +95,9 @@ printOn: aStream
 realClass
 	^nonMetaclass realClass ifNotNil: [:realClass | realClass class]!
 
+shortName
+	^nonMetaclass shortName , ' class'!
+
 storeOn: aStream 
 	super storeOn: aStream.
 	aStream nextPutAll: ' class'!
@@ -135,6 +138,7 @@ nonMetaclass!accessing!public! !
 nonMetaclass:!accessing!initializing!private! !
 printOn:!printing!public! !
 realClass!accessing!public! !
+shortName!public! !
 storeOn:!printing!public! !
 subclasses!accessing!public! !
 superclass!accessing!public! !

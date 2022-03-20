@@ -56,19 +56,6 @@ addProtocol: protocol
 	protocols add: protName.
 	self allSubclassesDo: [:q | q removeProtocol: protName ifAbsent: nil]!
 
-addSharedPool: aPoolDictionary
-	"Add the argument, aPoolDictionary, as one of the pool dictionaries referenced by the
-	receiver, but lower in precedence than any previously added pools. It is an error if the
-	dictionary is already one of the pools.
-	Note: This is a low-level operation and does not recompile affected classes. Generally 
-	speaking any modification to a class should be made through a <ClassBuilder>."
-
-	| poolName pools |
-	poolName := aPoolDictionary asQualifiedReference.
-	pools := self imports.
-	(pools includes: poolName) ifTrue: [^self error: 'Pool is already referenced by this class'].
-	self imports: (pools copyWith: poolName)!
-
 allClassVarNames
 	"Answer a <Set> of the <readableString> names of the receiver's and the 
 	receiver's superclasses' class variables."
@@ -500,18 +487,10 @@ hierarchyBindingFor: aString
 
 	^(self localBindingFor: aString) ifNil: [super hierarchyBindingFor: aString]!
 
-importedNamespacesDo: aMonadicValuable
-	"Evaluate the <monadicValuable> argument for each of the namespaces imported by the receiver."
-
-	self subclassResponsibility!
-
 imports
 	"Answer a <sequencedReadableCollection> of the <Namespaces> imported into the receiver's scope."
 
 	^self subclassResponsibility!
-
-imports: anArray
-	self subclassResponsibility!
 
 includesCategory: category
 	"Answer whether the receiver includes the named category."
@@ -614,6 +593,9 @@ isChanged: aBoolean
 	of the <Boolean> argument."
 
 	"When not running in a development system, changes are not tracked"!
+
+isInBaseEnvironment
+	^self environment == self baseEnvironment!
 
 localBindingFor: aString
 	"Answer a variable binding for the named variable directly in the scope of this class, i.e. one of its own class variables. If there is no such class variable, then answer nil."
@@ -1062,7 +1044,6 @@ withAllSubclassesDo: aMonadicValuable
 absoluteReference!accessing!namespaces!public! !
 addInstVarName:!class hierarchy-mutating!instance variables!public! !
 addProtocol:!private!protocols! !
-addSharedPool:!pool variables!public! !
 allClassVarNames!class variables!public! !
 allGettersDo:!accessing!private! !
 allInstances!instances!public! !
@@ -1114,9 +1095,7 @@ fullyQualifiedReference!accessing!public! !
 globalScope!accessing!public! !
 hasCompilationFailures!public!testing! !
 hierarchyBindingFor:!bindings!public! !
-importedNamespacesDo:!pool variables!public! !
 imports!pool variables!public! !
-imports:!pool variables!public! !
 includesCategory:!categories-testing!public! !
 includeSelector:inCategory:!categories-testing!public! !
 indexOfInstVar:!instance variables!public! !
@@ -1130,6 +1109,7 @@ isAnonymous!public!testing! !
 isAtomic!public!testing! !
 isChanged!public!source filing!testing! !
 isChanged:!accessing!public! !
+isInBaseEnvironment!private!testing! !
 localBindingFor:!binding!public! !
 localEnvironment!accessing!private! !
 localScope!accessing!public! !

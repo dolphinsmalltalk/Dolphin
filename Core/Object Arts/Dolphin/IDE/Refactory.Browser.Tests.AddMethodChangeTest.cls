@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTest subclass: #'Refactory.Browser.Tests.AddMethodChangeTest'
+Refactory.Browser.Tests.ChangeObjectTest subclass: #'Refactory.Browser.Tests.AddMethodChangeTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -51,7 +51,8 @@ testPrintOn
 		equals: '!!<1d> class methodsFor!!
 
 isAbstract ^false!! !!
-!!<1d> class categoriesFor: #isAbstract!!testing!! !!'
+!!<1d> class categoriesFor: #isAbstract!!testing!! !!
+'
 				<< self class fullName.
 	#'1593'.
 	change protocols: #().

@@ -44,7 +44,14 @@ copyClassVarsTo: clone
 						class: clone)]!
 
 copyImportsTo: clone
-	class allImports do: [:each | (clone importsNamespace: each) ifFalse: [clone addImport: each]]	"No refactoring for adding pools"!
+	class allImports do: 
+			[:each |
+			(clone importsNamespace: each)
+				ifFalse: 
+					[self performComponentRefactoring: (AddImportRefactoring
+								model: self model
+								addImport: each
+								to: clone)]]!
 
 copyInstVarsTo: clone
 	(class allInstanceVariableNames difference: superclass allInstanceVariableNames) do: 

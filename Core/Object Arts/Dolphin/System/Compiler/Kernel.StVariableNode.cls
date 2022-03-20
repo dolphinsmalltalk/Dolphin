@@ -22,27 +22,20 @@ hasQualifiedName
 
 	^BindingReference isQualifiedName: name!
 
-isBindingChanged
-	"Private - Assuming that this node has been bound by a semantic analyser, would it bind differently now?"
-
-	| originalBinding |
-	originalBinding := self binding.
-	^originalBinding notNil and: [originalBinding ~~ self resolveBinding]!
-
 isStaticVariable
 	"Answer whether the receiver is a reference to a static variable - this is only valid after binding variables in a parse tree using a semantic analyser."
 
-	^variable isStaticVariable!
+	^variable notNil and: [variable isStaticVariable]!
 
 resolveBinding
 	| initial |
 	initial := name at: 1.
-	^(initial isUppercase or: [initial == $_]) ifTrue: [self lookupInScope: scope]! !
+	^(initial isUppercase or: [initial == $_])
+		ifTrue: [(self lookupInScope: scope) ifNotNil: [:var | var binding]]! !
 !Kernel.StVariableNode categoriesForMethods!
 binding!accessing!private! !
 hasQualifiedName!public!testing! !
-isBindingChanged!accessing!private! !
 isStaticVariable!public!testing! !
-resolveBinding!accessing!private! !
+resolveBinding!accessing!public! !
 !
 

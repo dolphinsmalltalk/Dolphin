@@ -95,15 +95,15 @@ testDefinesPoolDictionary
 	self assert: ((RBModel new classNamed: 'OS.HRESULTError') importsNamespace: 'OS.FacilityCodes')!
 
 testDefinitionString
-	self assert: objectClass definitionString
+	self assert: objectClass definition
 		equals: 'nil subclass: #''Core.Object''
 	instanceVariableNames: ''''
 	classVariableNames: ''_AssertionFailureSignal _DependentsRegister _EventsRegister _PropertyRegister ModelOnlyClassVariable''
 	imports: #()
 	classInstanceVariableNames: ''''
 	classConstants: {}'.
-	self assert: newClass definitionString
-		equals:'Core.Object subclass: #SomeClassName
+	self assert: newClass definition
+		equals: 'Core.Object subclass: #SomeClassName
 	instanceVariableNames: ''instanceVariable1 instanceVariable2''
 	classVariableNames: ''ClassVariable1''
 	imports: #(#{Kernel.OpcodePool})
@@ -115,7 +115,8 @@ testDefinitionString
 			[:each |
 			| class |
 			class := model classFor: each.
-			self assert: class definitionString equals: class realClass definition]!
+			self assert: class definition equals: class realClass definition].
+	self should: [objectClass metaclass definition] raise: MessageNotUnderstood!
 
 testEnvironment
 	| rbTests myClass refactory root smalltalk |
@@ -183,6 +184,19 @@ testHierarchy
 	meta := objectClass metaclass.
 	self assert: (objectClass withAllSubclasses includes: meta).
 	self assert: (meta withAllSuperclasses includes: objectClass)!
+
+testLegacyDefinitionString
+	"We don't use the legacy definition string format for RBClasses"
+
+	| scribble |
+	scribble := model classNamed: #Scribble.
+	self assert: scribble definition
+		equals: 'UI.Presenter subclass: #''Smalltalk.Scribble''
+	instanceVariableNames: ''newStroke trackingCanvas''
+	classVariableNames: ''''
+	imports: #()
+	classInstanceVariableNames: ''''
+	classConstants: {}'!
 
 testLocalBindingFor
 	| binding |
@@ -289,6 +303,15 @@ testRealClass
 	self assert: myClass realClass identicalTo: self class.
 	self assert: myClass metaclass realClass identicalTo: self class class!
 
+testShortName
+	self assert: objectClass shortName equals: 'Object'.
+	self assert: objectClass metaclass shortName equals: 'Object class'.
+	self assert: objectClass environment shortName equals: 'Core'.
+	self assert: (model classFor: self class) shortName equals: self class shortName.
+	self assert: newClass shortName equals: 'SomeClassName'.
+	self assert: model rootNamespace shortName equals: 'Root'.
+	self assert: model smalltalkNamespace shortName equals: 'Smalltalk'!
+
 testSubclasses
 	| class |
 	self assert: (objectClass subclasses includes: newClass).
@@ -374,6 +397,7 @@ testExistingMethodPackageAndEnvironmentLooseCustom!public! !
 testExistingMethodPackageAndEnvironmentRootClass!public! !
 testFullName!public!unit tests! !
 testHierarchy!public!unit tests! !
+testLegacyDefinitionString!public!unit tests! !
 testLocalBindingFor!public!unit tests! !
 testMethodsReferencingExternals1!public! !
 testMethodsReferencingExternals2!public! !
@@ -381,6 +405,7 @@ testMethodsReferencingExternals3!public! !
 testModel!public!unit tests! !
 testName!public!unit tests! !
 testRealClass!public!unit tests! !
+testShortName!public!unit tests! !
 testSubclasses!public!unit tests! !
 testSubclassesFilteredByEnvironment!public!unit tests! !
 testSuperclass!public! !

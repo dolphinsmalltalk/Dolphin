@@ -88,18 +88,10 @@ fullyQualifiedReference
 
 	^instanceClass fullyQualifiedReference meta!
 
-importedNamespacesDo: aMonadicValuable
-	"Evaluate the <monadicValuable> argument for each of the namespaces imported by the receiver."
-
-	instanceClass importedNamespacesDo: aMonadicValuable!
-
 imports
 	"Answer a <sequencedReadableCollection> of the <Namespaces> imported into the receiver's scope."
 
 	^instanceClass imports!
-
-imports: anArray
-	instanceClass imports: anArray!
 
 instanceClass
 	"Answer the receiver's singleton instance (the actual class object)."
@@ -235,9 +227,7 @@ environment!accessing!public! !
 fullBindingFor:environment:!binding!public! !
 fullName!accessing!namespaces!public! !
 fullyQualifiedReference!accessing!public! !
-importedNamespacesDo:!pool variables!public! !
 imports!pool variables!public! !
-imports:!pool variables!public! !
 instanceClass!accessing!public! !
 instanceClass:!accessing!private! !
 instanceVariableNames:!class hierarchy-mutating!instance variables!public! !

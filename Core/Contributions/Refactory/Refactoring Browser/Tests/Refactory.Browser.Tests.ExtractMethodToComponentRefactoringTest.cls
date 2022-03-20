@@ -77,6 +77,42 @@ testExtractMethodAtEndOfMethodThatNeedsReturn
 								^asdf').
 	self assert: class selectors size equals: selectorsSize!
 
+testMoveToDifferentNamespace
+	| refactoring source componentClass2 class componentClass1 componentClass3 |
+	model := RBModel new.
+	class := model classFor: LintRuleTestData.
+	source := (class methodFor: #runOnEnvironment:) source.
+	refactoring := ExtractMethodToComponentRefactoring
+				model: model
+				extract: ((source indexOf: $^) + 1 to: source size)
+				from: #runOnEnvironment:
+				in: class.
+	self setupMethodNameFor: refactoring toReturn: #runRule:.
+	self setupVariableToMoveToFor: refactoring toReturn: 'anEnvironment'.
+	self setupSelfArgumentNameFor: refactoring toReturn: 'aLintRuleTestData'.
+	componentClass1 := model classFor: BrowserEnvironment.
+	componentClass2 := model classFor: Kernel class.
+	componentClass3 := model classFor: Refactory.
+	self setupVariableTypesFor: refactoring
+		toReturn: {componentClass1. componentClass2. componentClass3}.
+	self executeRefactoring: refactoring.
+	self
+		verifyMethod: #runOnEnvironment:
+		of: class
+		equals: 'runOnEnvironment: anEnvironment ^anEnvironment runRule: self'.
+	self
+		verifyMethod: #runRule:
+		of: componentClass1
+		equals: 'runRule: aLintRuleTestData  ^Smalllint runRule: (#{BlockLintRule} value perform: aLintRuleTestData name) onEnvironment: self'.
+	self
+		verifyMethod: #runRule:
+		of: componentClass2
+		equals: 'runRule: aLintRuleTestData  ^Refactory.Browser.Smalllint runRule: (#{Refactory.Browser.BlockLintRule} value perform: aLintRuleTestData name) onEnvironment: self'.
+	self
+		verifyMethod: #runRule:
+		of: componentClass3
+		equals: 'runRule: aLintRuleTestData  ^Browser.Smalllint runRule: (#{Refactory.Browser.BlockLintRule} value perform: aLintRuleTestData name) onEnvironment: self'!
+
 testMoveWithoutSelfReference
 	| refactoring class selectorsSize |
 	refactoring := ExtractMethodToComponentRefactoring
@@ -114,6 +150,7 @@ testNonExistantSelector
 testBadInterval!failure tests!public! !
 testExtractFailure!failure tests!public! !
 testExtractMethodAtEndOfMethodThatNeedsReturn!public!tests! !
+testMoveToDifferentNamespace!public!tests! !
 testMoveWithoutSelfReference!public!tests! !
 testNonExistantSelector!failure tests!public! !
 !

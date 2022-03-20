@@ -292,6 +292,15 @@ testRootClasses
 		equals: ((Class rootsOfTheWorld collect: [:each | model classFor: each])
 				asSortedArray: [:a :b | a name < b name])!
 
+testSmalltalk
+	| model smalltalk |
+	model := RBModel new.
+	smalltalk := model classFor: Smalltalk.
+	self assert: smalltalk isKindOf: RBSmalltalkNamespace.
+	self assert: smalltalk environment identicalTo: model rootNamespace.
+	self assert: smalltalk identicalTo: model smalltalkNamespace.
+	self assert: (model rootNamespace classPool at: #Smalltalk) identicalTo: smalltalk!
+
 verifyMethodRefersToNamespaceHierarchy: aCompiledMethod in: aRBModel
 	| myModelClass path env |
 	myModelClass := aRBModel classFor: aCompiledMethod methodClass.
@@ -333,6 +342,7 @@ testResolveBindingPathOfClassConstant!public!unit tests! !
 testResolveBindingPathOfClassVar!public!unit tests! !
 testRoot!public!unit tests! !
 testRootClasses!public!unit tests! !
+testSmalltalk!public!unit tests! !
 verifyMethodRefersToNamespaceHierarchy:in:!helpers!private! !
 !
 

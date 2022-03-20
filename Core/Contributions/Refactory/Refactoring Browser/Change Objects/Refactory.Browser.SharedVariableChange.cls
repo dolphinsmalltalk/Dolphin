@@ -1,22 +1,22 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.RefactoryChange subclass: #'Tools.SharedVariableChange'
+Refactory.Browser.RefactoryChange subclass: #'Refactory.Browser.SharedVariableChange'
 	instanceVariableNames: 'variable environmentName'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.SharedVariableChange guid: (Core.GUID fromString: '{bf918303-56e4-4280-8d26-657909a74246}')!
-Tools.SharedVariableChange isNonInstantiable: true!
-Tools.SharedVariableChange comment: '`SharedVariableChange` is the class of Dolphin specific `RefactoryChange`s that add, remove, etc shared variables in namespaces.
+Refactory.Browser.SharedVariableChange guid: (Core.GUID fromString: '{bf918303-56e4-4280-8d26-657909a74246}')!
+Refactory.Browser.SharedVariableChange isNonInstantiable: true!
+Refactory.Browser.SharedVariableChange comment: '`SharedVariableChange` is the class of Dolphin specific `RefactoryChange`s that add, remove, etc shared variables in namespaces.
 
 Instance Variables:
 	variable			`String`. Unqualified name of the shared variable to operate on
 	environmentName	`BindingReference` to the `Namespace` for the shared variable
 
 '!
-!Tools.SharedVariableChange categoriesForClass!Refactory-Change Objects! !
-!Tools.SharedVariableChange methodsFor!
+!Refactory.Browser.SharedVariableChange categoriesForClass!Refactory-Change Objects! !
+!Refactory.Browser.SharedVariableChange methodsFor!
 
 = aDolphinGlobalChange
 	self class = aDolphinGlobalChange class ifFalse: [^false].
@@ -49,7 +49,7 @@ setVariable: aString environment: aNamespace
 
 variable
 	^variable! !
-!Tools.SharedVariableChange categoriesForMethods!
+!Refactory.Browser.SharedVariableChange categoriesForMethods!
 =!comparing!public! !
 asUndoOperation!converting!public! !
 environment!accessing!private! !

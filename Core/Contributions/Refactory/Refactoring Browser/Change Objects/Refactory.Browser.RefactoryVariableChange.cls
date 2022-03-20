@@ -20,56 +20,42 @@ changeObject
 	^variable!
 
 changeString
-	^self changeStringFormat expandMacrosWith: self variableName with: self displayClassName!
-
-changeStringFormat
 	^self subclassResponsibility!
 
 changeSymbol
 	^self subclassResponsibility!
 
-class: aBehavior variable: aString 
+class: aBehavior variable: aString
 	self changeClass: aBehavior.
-	variable := aString!
+	self variable: aString!
 
 hash
 	^self class hash bitXor: variable hash!
 
-primitiveExecute
-	self changeClass perform: self changeSymbol with: self changeObject
-
-	"ChangeSet current changeClass: self changeClass.
-	SourceFileManager default logChange: (self changesFileTemplate 
-				expandMacrosWith: self changeClass
-				with: changeSymbol
-				with: self variable)"!
-
 printOn: aStream
 	aStream
-		nextPutAll: self displayClassName;
+		display: classReference;
 		space;
 		nextPutAll: self changeSymbol;
 		space;
-		print: self changeObject;
+		print: variable;
 		nextPut: $!!!
 
 variable
 	^variable!
 
-variableName
-	^variable! !
+variable: aString
+	variable := aString! !
 !Refactory.Browser.RefactoryVariableChange categoriesForMethods!
 =!comparing!public! !
 changeObject!accessing!private! !
 changeString!printing!public! !
-changeStringFormat!constants!printing!private! !
 changeSymbol!constants!private! !
 class:variable:!initializing!private! !
 hash!comparing!public! !
-primitiveExecute!applying!private! !
 printOn:!printing!public! !
 variable!accessing!private! !
-variableName!accessing!private! !
+variable:!initializing!private! !
 !
 
 !Refactory.Browser.RefactoryVariableChange class methodsFor!

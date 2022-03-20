@@ -674,15 +674,23 @@ yourselfNotUsed!lint!public! !
 
 !Refactory.Browser.TestData.RefactoryTestDataApp class methodsFor!
 
+classSideGlobalRef
+	^Smalltalk!
+
 comment
 	#rbFix.	"Added to test #overridesSpecialMessage"
 	^'Test class for Smalllint. Contains lots of smelly code'!
 
 initialize
 	ClassVar1 := 'ClassVar1 of RefactoryTestDataApp'.
-	ClassVar2 := 'ClassVar2 of RefactoryTestDataApp'.! !
+	ClassVar2 := 'ClassVar2 of RefactoryTestDataApp'.!
+
+refersToClassPartiallyQualified1
+	^Tests.ClassToRename! !
 !Refactory.Browser.TestData.RefactoryTestDataApp class categoriesForMethods!
+classSideGlobalRef!class initialization!public! !
 comment!accessing!public! !
 initialize!class initialization!public! !
+refersToClassPartiallyQualified1!lint!public! !
 !
 

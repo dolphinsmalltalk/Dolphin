@@ -14,7 +14,7 @@ Refactory.Browser.Tests.RBVariableAnalyserTest comment: ''!
 testNamespaceAnnotation
 	"Test that a namepace annotation is bound, and allows unqualified names reachable from that namespace to be bound."
 
-	| parseTree tags namespaceAnnotation namespace browserEnv message rbModelRef |
+	| parseTree tags namespaceAnnotation namespace browserEnv message rbModelRef variable |
 	parseTree := self
 				parseMethod: 'newEnv <namespace: Refactory.Browser> ^BrowserEnvironment forClasses: #{RBModel} value'.
 	tags := parseTree tags.
@@ -26,7 +26,9 @@ testNamespaceAnnotation
 	self assertIsNil: browserEnv variable.
 	rbModelRef := message arguments first receiver.
 	RBVariableAnalyser analyseParseTree: parseTree.
-	self assert: namespace variable binding identicalTo: Refactory.Browser binding.
+	variable := namespace variable.
+	self assert: variable binding identicalTo: Refactory.Browser binding.
+	self deny: namespace isBindingChanged.
 	self assert: browserEnv variable binding identicalTo: Refactory.Browser.BrowserEnvironment binding.
 	self assert: rbModelRef binding identicalTo: Refactory.Browser.RBModel binding!
 

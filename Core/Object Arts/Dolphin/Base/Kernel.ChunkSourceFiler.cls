@@ -12,12 +12,10 @@ Kernel.ChunkSourceFiler comment: '`ChunkSourceFiler` is the standard chunk-forma
 !Kernel.ChunkSourceFiler methodsFor!
 
 emitClassName: aClass
-	| classEnv |
-	classEnv := aClass environment.
-	(classEnv == aClass baseEnvironment and: 
+	(aClass isInBaseEnvironment and: 
 			[| localEnv |
 			localEnv := self environment ?? Smalltalk.
-			classEnv == localEnv or: 
+			aClass environment == localEnv or: 
 					[| var |
 					var := localEnv fullBindingFor: aClass name.
 					var notNil and: [var value == aClass]]])

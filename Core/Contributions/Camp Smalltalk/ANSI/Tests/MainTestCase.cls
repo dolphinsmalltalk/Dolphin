@@ -6,7 +6,7 @@ TestCaseProtocol subclass: #MainTestCase
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 MainTestCase guid: (GUID fromString: '{9d4aa044-4c93-4a47-9e3f-c74f8b18381e}')!
-MainTestCase isNonInstantiable: true!
+MainTestCase isAbstract: true!
 MainTestCase comment: ''!
 !MainTestCase categoriesForClass!Unclassified! !
 !MainTestCase methodsFor!

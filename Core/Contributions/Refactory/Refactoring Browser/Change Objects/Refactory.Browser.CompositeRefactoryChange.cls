@@ -29,6 +29,9 @@ addChangeFirst: aRefactoryChange
 	changes addFirst: aRefactoryChange.
 	^aRefactoryChange!
 
+addClassConstant: aVariableBinding to: aRBClass
+	^self addChange: (Refactory.Browser.AddClassConstantChange add: aVariableBinding to: aRBClass)!
+
 addClassVariable: aString to: aClass
 	^self addChange: (AddClassVariableChange add: aString to: aClass)!
 
@@ -40,11 +43,7 @@ afterText
 	stream := String writeStream.
 	self changesDo: 
 			[:each |
-			stream position == 0
-				ifFalse: 
-					[stream
-						cr;
-						cr].
+			stream position == 0 ifFalse: [stream cr].
 			stream print: each].
 	^stream contents!
 
@@ -55,11 +54,14 @@ basicExecuteNotifying: aBlock
 	undo changes: undos reverse.
 	^undo!
 
-changeForClass: aRBClass selector: aSelector 
+categorize: aClass as: aCollectionOfClassCategories
+	^self addChange: (ClassCategoryChange categorize: aClass as: aCollectionOfClassCategories)!
+
+changeForClassNamed: aBindingReference selector: aSelector
 	changes reverseDo: 
-			[:each | 
+			[:each |
 			| change |
-			change := each changeForClass: aRBClass selector: aSelector.
+			change := each changeForClassNamed: aBindingReference selector: aSelector.
 			change notNil ifTrue: [^change]].
 	^nil!
 
@@ -120,6 +122,10 @@ executeNotifying: aBlock
 hash
 	^changes size!
 
+import: anArrayOfBindingReferences into: aRBClass
+	^self addChange: (Refactory.Browser.ClassImportsChange import: anArrayOfBindingReferences
+				into: aRBClass)!
+
 initialize
 	super initialize.
 	changes := OrderedCollection new!
@@ -153,6 +159,9 @@ removeChange: aChange
 removeClass: aClass
 	^self removeClassNamed: aClass fullName!
 
+removeClassConstant: aVariableBinding from: aClass
+	^self addChange: (Refactory.Browser.RemoveClassConstantChange remove: aVariableBinding from: aClass)!
+
 removeClassNamed: aString
 	^self addChange: (RemoveClassChange removeClassName: aString)!
 
@@ -172,16 +181,24 @@ renameChangesForClass: aClassName to: newClassName
 		yourself!
 
 renameClass: aClass to: aString
-	^self addChange: (RenameClassChange rename: aClass name to: aString)! !
+	^self addChange: (RenameClassChange rename: aClass name to: aString)!
+
+setGuid: aGUID of: aClass
+	^self addChange: (ClassGuidChange setGuid: aGUID of: aClass)!
+
+setSpecialBehavior: anInteger of: aClass
+	^self addChange: (ClassSpecialBehaviorChange setSpecialBehavior: anInteger of: aClass)! !
 !Refactory.Browser.CompositeRefactoryChange categoriesForMethods!
 =!comparing!public! !
 addChange:!adding!public! !
 addChangeFirst:!adding!public! !
+addClassConstant:to:!adding!private! !
 addClassVariable:to:!adding!public! !
 addInstanceVariable:to:!adding!public! !
 afterText!printing!public! !
 basicExecuteNotifying:!applying!private! !
-changeForClass:selector:!public!searching! !
+categorize:as:!adding!public! !
+changeForClassNamed:selector:!public!searching! !
 changeForMetaclass:selector:!public!searching! !
 changes!accessing!private! !
 changes:!accessing!private! !
@@ -195,6 +212,7 @@ compile:in:environment:categories:package:!adding!public! !
 defineClass:!adding!public! !
 executeNotifying:!applying!private! !
 hash!comparing!public! !
+import:into:!adding!public! !
 initialize!initializing!private! !
 lastChangeMatching:!public!searching! !
 postCopy!copying!private! !
@@ -202,12 +220,15 @@ printOn:!printing!public! !
 problemCount!accessing!public! !
 removeChange:!private!removing! !
 removeClass:!adding!public! !
+removeClassConstant:from:!adding!public! !
 removeClassNamed:!adding!public! !
 removeClassVariable:from:!adding!public! !
 removeInstanceVariable:from:!adding!public! !
 removeSelector:from:!adding!public! !
 renameChangesForClass:to:!helpers!private! !
 renameClass:to:!adding!public! !
+setGuid:of:!adding!public! !
+setSpecialBehavior:of:!adding!public! !
 !
 
 !Refactory.Browser.CompositeRefactoryChange class methodsFor!

@@ -73,7 +73,7 @@ onViewOpened
 
 	super onViewOpened.
 	"Unfortunately the selection is not represented as a value model, so we must sync. it manually"
-	classesPresenter selectionOrNil: self model value.
+	classesPresenter selectionOrNil: self value.
 	(self view viewNamed: 'none' ifNone: [])
 		ifNotNil: 
 			[:noneButton |

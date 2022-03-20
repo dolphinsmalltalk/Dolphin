@@ -31,7 +31,7 @@ cr
 	stream cr!
 
 emitClassName: aClass
-	aClass environment == aClass baseEnvironment
+	aClass isInBaseEnvironment
 		ifTrue: [stream nextPutAll: aClass name]
 		ifFalse: [aClass printFullNameOn: stream]!
 

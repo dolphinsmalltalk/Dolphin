@@ -75,6 +75,25 @@ addFilteredMethod: aCompiledMethod forLintRule: aLintRule
 	filter addClass: aCompiledMethod methodClass selector: aCompiledMethod selector.
 	self trigger: #lintRuleFilterChanged: with: aLintRule!
 
+addImportToClasses: aCollectionOfClasses
+	| import refactoringModel refactorings dialog |
+	dialog := ChooseImportDialog create.
+	import := dialog showModal.
+	import ifNil: [^self].
+	refactoringModel := RBModel new.
+	refactorings := aCollectionOfClasses asArray
+				select: [:each | ((refactoringModel classFor: each) importsNamespace: import) not]
+				thenCollect: 
+					[:each |
+					AddImportRefactoring
+						model: refactoringModel
+						addImport: import
+						to: each].
+	refactoringModel name: (refactorings size = 1
+				ifTrue: [refactorings first displayString]
+				ifFalse: ['Import <1p> into <2d> classes' << {import. refactorings size}]).
+	self performRefactorings: refactorings showChanges: dialog showChanges!
+
 addInstanceVariable: aString to: aClass
 	self
 		executeVariableRefactoring: AddInstanceVariableRefactoring
@@ -290,6 +309,15 @@ cloneClass: aClass as: newClassName under: superclass in: package
 			newClass := newClassName asQualifiedReference value.
 			newClass owningPackage: package.
 			newClass]!
+
+confirmRenameClass: aClass to: text
+	^MessageBox new
+		headline: 'Rename <1s>?' << aClass unqualifiedName;
+		text: '<1s> will be renamed to <2s>.<n><n>Any references in code will be updated, but not where the name appears in comments, literal strings, or argument names.'
+					<< {aClass fullName. text};
+		customButtons: #(#(#yes '&Rename') #(#no 'Cancel'));
+		isCancellable: true;
+		confirm!
 
 convertTemporaryToInstanceVariable: aString in: aClass selector: aSelector
 	"Implement the 'Convert to Instance Variable' code refactoring."
@@ -680,38 +708,21 @@ moveAllTempsToInnerScopeIn: anRBClass selector: aSelector
 			repeat!
 
 moveClasses: aCollectionOfClasses toNamespace: aNamespace showChanges: aBoolean
-	| refactorings rbModel count |
-	rbModel := RBModel new.
+	| refactorings refactoringModel |
+	"Enhance RenameClassRefactoring to support multiple renames. In the meantime perform as a sequence"
+	refactoringModel := RBModel new.
 	refactorings := aCollectionOfClasses asArray
 				select: [:each | each ~~ aNamespace and: [each environment ~~ aNamespace]]
 				thenCollect: 
 					[:each |
 					RenameClassRefactoring
-						model: rbModel
+						model: refactoringModel
 						rename: each
 						to: (aNamespace fullNameFor: each unqualifiedName)].
-	count := refactorings size.
-	count < 1
-		ifTrue: 
-			["Nothing to do"
-			^self].
-	rbModel name: (count = 1
+	refactoringModel name: (refactorings size = 1
 				ifTrue: [refactorings first displayString]
-				ifFalse: ['Move <2d> classes to <1p>' << {aNamespace. count}]).
-	(ProgressDialog operation: 
-			[:progress |
-			self performRefactoring: 
-					["Enhance RenameClassRefactoring to support multiple renames. In the meantime perform as a sequence"
-					refactorings keysAndValuesDo: 
-							[:index :each |
-							progress text: 'Renaming ' , each className.
-							each primitiveExecute.
-							progress value: index * 100 / count].
-					aBoolean
-						ifTrue: [[rbModel browseChanges] postToInputQueue]
-						ifFalse: [RefactoringManager instance addRefactoring: refactorings last]]])
-		caption: 'Moving classes to <1p>, please wait…' << aNamespace;
-		showModal!
+				ifFalse: ['Move <2d> classes to <1p>' << {aNamespace. refactorings size}]).
+	self performRefactorings: refactorings showChanges: aBoolean!
 
 moveTempToInnerScope: anInterval in: aClass selector: aSelector
 	"Implement the 'Move to Inner Scope' code refactoring: 'Moves a temporary variable definition 
@@ -752,6 +763,34 @@ performRefactoring: aBlock
 	^aBlock
 		on: self refactoringError
 		do: [:ex | self handleRefactoringException: ex]!
+
+performRefactorings: aCollectionOfRefactorings showChanges: aBoolean
+	| count rbModel refactorings |
+	count := aCollectionOfRefactorings size.
+	count < 1
+		ifTrue: 
+			["Nothing to do"
+			^self].
+	refactorings := aCollectionOfRefactorings asArray.
+	rbModel := refactorings last model.
+	(ProgressDialog operation: 
+			[:progress |
+			
+			[self performRefactoring: 
+					[refactorings keysAndValuesDo: 
+							[:index :each |
+							"All the refactorings must have the same model"
+							self assert: [each model == rbModel].
+							progress text: each displayString.
+							each primitiveExecute.
+							progress value: index * 100 / count].
+					aBoolean
+						ifTrue: [[rbModel browseChanges] postToInputQueue]
+						ifFalse: [RefactoringManager instance addRefactoring: refactorings last]]]
+					on: self abortSignal
+					do: [:ex | ex toTrace]])
+		caption: rbModel name;
+		showModal!
 
 promptForInitializationExpression: anAddParameterRefactoring
 	^(Prompter
@@ -958,18 +997,24 @@ refactoringError
 
 	^RefactoringSignal!
 
-removeClass: aClass
+removeClasses: aCollection
 	"Removes aClass from the system using the 'Remove Class' refactoring, which won't remove
 	the class if referenced, and which promotes all subclasses."
 
-	| oldClassName |
-	oldClassName := aClass fullName.
+	| count single |
+	count := aCollection size.
+	count = 0 ifTrue: [^self].
+	single := count = 1.
 	(MessageBox new
 		uniqueId: [self] method;
 		isSuppressible: true;
-		headline: 'Remove class <1s>?' << oldClassName;
-		confirm: 'The class will only be removed if it has no references.') ifFalse: [^false].
-	self performRefactoring: [(RemoveClassRefactoring classNames: {aClass fullName}) execute].
+		headline: (single
+					ifTrue: ['Remove class <1s>?' << aCollection first fullName]
+					ifFalse: ['Remove <1d> classes?' << count]);
+		confirm: 'The class<1?:es> will only be removed if <1?it has:they have> no references.' << single)
+			ifFalse: [^false].
+	self performRefactoring: 
+			[(RemoveClassRefactoring classNames: (aCollection collect: [:each | each fullName])) execute].
 	^true!
 
 removeClassVariable: aString from: aClass within: aBrowserEnvironment
@@ -1366,6 +1411,7 @@ abstractInstanceVariables:within:!public!refactoring! !
 addClassVariable:to:!public!refactoring! !
 addClassVariableTo:!public!refactoring! !
 addFilteredMethod:forLintRule:!public!refactoring! !
+addImportToClasses:!public! !
 addInstanceVariable:to:!public!refactoring! !
 addInstanceVariableTo:!public!refactoring! !
 addParameterToMethod:!commands!public!refactoring! !
@@ -1383,6 +1429,7 @@ changeNamespaceOfClasses:!operations!public! !
 chooseMethodFromEnvironment:caption:!public! !
 chooseSelectorInEnvironment:caption:!public! !
 cloneClass:as:under:in:!private!refactoring! !
+confirmRenameClass:to:!event handling!private! !
 convertTemporaryToInstanceVariable:in:selector:!public!refactoring! !
 convertToSibling:!public!refactoring! !
 createInstanceVariableAccessors:in:within:!public!refactoring! !
@@ -1411,6 +1458,7 @@ newCodeRefactoringToolFor:!helpers!private!refactoring! !
 newMethodRefactoringToolFor:!helpers!private!refactoring! !
 nukeChangeHistory!private!refactoring! !
 performRefactoring:!private!refactoring! !
+performRefactorings:showChanges:!commands!private!refactoring! !
 promptForInitializationExpression:!private!refactoring! !
 promptForMethodName:caption:allowExisting:!helpers!private!refactoring! !
 promptForMethodRename:caption:allowExisting:!helpers!private!refactoring! !
@@ -1430,7 +1478,7 @@ pushMethods:up:!private!refactoring! !
 pushUpMethods:!public!refactoring! !
 queryCommand:!commands!private! !
 refactoringError!constants!private! !
-removeClass:!public!refactoring! !
+removeClasses:!public!refactoring! !
 removeClassVariable:from:within:!public!refactoring! !
 removeClassVariables:within:!public!refactoring! !
 removeFilteredMethod:forLintRule:!public!refactoring! !

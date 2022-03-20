@@ -340,6 +340,9 @@ classConstants
 
 	^self definedBindings select: [:each | each isImmutable and: [each value isSelfEvaluating]]!
 
+classInstanceVariableNames
+	^self class instanceVariableNames!
+
 classPool
 	"Answer the Dictionary of class variables belonging to the receiver.
 	N.B. This should not be modified as it may not be the actual class pool
@@ -358,7 +361,7 @@ classVariableRemoved: aString
 classVariables
 	"Answer a <collection> of <VariableBinding>s, being the class variables of the receiver, but not including class constants."
 
-	^self bindings reject: [:each | each isImmutable and: [each value isSelfEvaluating]]!
+	^self definedBindings reject: [:each | each isImmutable and: [each value isSelfEvaluating]]!
 
 clearGuid
 	"Private - Set the receiver's GUID to be the null <GUID>.
@@ -474,8 +477,9 @@ imports: anArray
 	| newImports |
 	newImports := anArray asArray.
 	newImports = imports ifTrue: [^self].
-	(imports := newImports) isImmutable: true.
-	self isChanged: true!
+	(ClassBuilder forModifying: self)
+		imports: newImports;
+		modifyExistingClass!
 
 importsFromPoolsString: poolDictString
 	^poolDictString subStrings distinct collect: [:each | each asQualifiedReference]!
@@ -847,6 +851,9 @@ setGuid: id
 	_guid := id.
 !
 
+setImports: anArray
+	imports := anArray!
+
 setName: aSymbolOrNil environment: aNamespace
 	"Private - Set the name of the receiver to be the <Symbol> or nil argument. The name can be nil for anonymous classes."
 
@@ -862,9 +869,7 @@ shortName
 	^name
 		ifNil: [super name]
 		ifNotNil: 
-			[environment == self baseEnvironment
-				ifTrue: [name]
-				ifFalse: [Smalltalk shortNameFor: name in: environment]]!
+			[self isInBaseEnvironment ifTrue: [name] ifFalse: [Smalltalk shortNameFor: name in: environment]]!
 
 simpleName
 	"Answer the receiver's name within it's environment.
@@ -988,7 +993,7 @@ subclassesDo: aMonadicValuable
 unaliasedName
 	"Answer the shortest name for the receiver that is bindable from Smalltalk without using an alias."
 
-	^environment == self baseEnvironment
+	^self isInBaseEnvironment
 		ifTrue: [name]
 		ifFalse: 
 			[| binding |
@@ -1118,6 +1123,7 @@ classBindingNames!accessing!class variables!public! !
 classCategories!categories-accessing!private!source filing! !
 classCategories:!categories-accessing!private! !
 classConstants!class variables!public! !
+classInstanceVariableNames!public! !
 classPool!accessing!class variables!public! !
 classUpdated!class hierarchy-mutating!class variables!private! !
 classVariableRemoved:!class hierarchy-mutating!class variables!private! !
@@ -1141,7 +1147,7 @@ guid!constants!public! !
 guid:!class hierarchy-adding!private! !
 importedNamespacesDo:!namespaces!public! !
 imports!namespaces!public! !
-imports:!accessing!public! !
+imports:!class hierarchy-mutating!public! !
 importsFromPoolsString:!class hierarchy-adding!private! !
 includeInCategory:!categories-adding!public! !
 includesEnvironment:!public!testing! !
@@ -1189,6 +1195,7 @@ resolvePublicBinding:!bindings!private! !
 resolveUnqualifiedName:environment:!bindings!private! !
 setClassVarNames:!class variables!private! !
 setGuid:!accessing!private! !
+setImports:!accessing!private! !
 setName:environment:!accessing!private! !
 shortName!accessing!public! !
 simpleName!accessing!public! !

@@ -37,6 +37,11 @@ testClassPoolsWellFormed
 								allSatisfy: [:v | v class == VariableBinding and: [v environment == each]]]].
 	self assert: badPools asArray equals: #()!
 
+testClassVariableNames
+	self assert: Object classVariableNames asSortedArray
+		equals: #('_AssertionFailureSignal' '_DependentsRegister' '_EventsRegister' '_PropertyRegister').
+	self assert: Kernel classVariableNames equals: #()!
+
 testImportsValid
 	Smalltalk allClasses do: [:each | self assert: (each imports allSatisfy: [:i | i isDefined])]!
 
@@ -105,6 +110,7 @@ allClassHierarchyInstancesDo:!helpers!private! !
 testAllRoots!public!unit tests! !
 testClassBindingNames!public! !
 testClassPoolsWellFormed!public!unit tests! !
+testClassVariableNames!public! !
 testImportsValid!public!unit tests! !
 testIncludesNamespace!public!unit tests! !
 testLessOrEqual!public!unit tests! !

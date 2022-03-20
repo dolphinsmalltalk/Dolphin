@@ -20,17 +20,11 @@ changeClass
 	^(self classReference bindingOrNil ifNil: [newName asQualifiedReference bindingOrNil]) value!
 
 changesDo: aMonadicValuable
-	aMonadicValuable value: (Tools.BasicRenameClassChange rename: oldName to: newName).
+	aMonadicValuable value: (BasicRenameClassChange rename: oldName to: newName).
 	super changesDo: aMonadicValuable!
-
-changeString
-	^'ClassBuilder renameClass: <1s> to: <2p>' << {oldName. newName}!
 
 classReference
 	^oldName asQualifiedReference!
-
-displayClassName
-	^self classReference asString!
 
 executeNotifying: aBlock
 	| undos |
@@ -65,9 +59,7 @@ renameChangesForClass: aClassName to: newClassName
 =!comparing!public! !
 changeClass!accessing!public! !
 changesDo:!enumerating!public! !
-changeString!printing!public! !
 classReference!accessing!public! !
-displayClassName!printing!public! !
 executeNotifying:!applying!private! !
 newName!accessing!private! !
 oldName!accessing!private! !

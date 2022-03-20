@@ -14,14 +14,25 @@ Refactory.Browser.AddInstanceVariableChange comment: ''!
 asUndoOperation
 	^RemoveInstanceVariableChange remove: variable from: self changeClass!
 
-changeStringFormat
-	^'Add instance variable named, <1s>, to <2s>'!
+changeString
+	^'Add instance variable named, <1s>, to <2d>' << {variable. classReference}!
 
 changeSymbol
-	^#addInstVarName:! !
+	^#addInstVarName:!
+
+mutateAttributes: aClassAttributes
+	| instVars |
+	instVars := aClassAttributes instanceVariableNames.
+	(instVars includes: variable)
+		ifFalse: [aClassAttributes instanceVariableNames: (instVars copyWith: variable)]!
+
+primitiveExecute
+	self changeClass addInstVarName: variable! !
 !Refactory.Browser.AddInstanceVariableChange categoriesForMethods!
 asUndoOperation!converting!public! !
-changeStringFormat!constants!printing!private! !
+changeString!printing!public! !
 changeSymbol!constants!private! !
+mutateAttributes:!helpers!private! !
+primitiveExecute!applying!private! !
 !
 

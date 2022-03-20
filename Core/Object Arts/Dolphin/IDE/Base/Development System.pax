@@ -31,6 +31,7 @@ package setClassNames: #(
 	#{Tools.CategoryTreeModel}
 	#{Tools.ChangedMethodsCategory}
 	#{Tools.ChooseClassDialog}
+	#{Tools.ChooseImportDialog}
 	#{Tools.ChooseNamespaceDialog}
 	#{Tools.ClassAspectPlugin}
 	#{Tools.ClassBrowserAbstract}
@@ -754,7 +755,6 @@ package setPrerequisites: #(
 	'..\..\MVP\Presenters\Boolean\Dolphin Boolean Presenter'
 	'Dolphin Browser Environments'
 	'..\..\MVP\Views\Cards\Dolphin Card Containers'
-	'Dolphin Change Objects'
 	'..\..\MVP\Views\Buttons\Dolphin Check Buttons'
 	'..\..\MVP\Presenters\Choice\Dolphin Choice Presenter'
 	'..\..\MVP\Presenters\Prompters\Dolphin Choice Prompter'
@@ -1347,6 +1347,12 @@ Tools.ChooseClassDialog subclass: #'Tools.ChooseNamespaceDialog'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Tools.ChooseNamespaceDialog subclass: #'Tools.ChooseImportDialog'
+	instanceVariableNames: 'private hintBubble includeClasses'
+	classVariableNames: ''
+	imports: #(#{Refactory.Browser private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Tools.MenuComposer subclass: #'Tools.MenuBarComposer'

@@ -38,9 +38,6 @@ changeString
 classReference
 	^classReference!
 
-displayClassName
-	^classReference asString!
-
 executeNotifying: aBlock
 	| undo |
 	#rbFix.	"Rather than doing the change as an add, copy values, and then remove, we just rename the variable directly in the class. This is particularly advantageous when renaming an instance variable since it remains in the same position (important for use of #instVarAt: and if the class' instances have saved using STB). With this change the #addNewVariable, #copyOldValuesToNewVariable, and #removeOldVariable methods are not required, being replaced with #renameVariable."
@@ -83,7 +80,6 @@ changeClassName!accessing!public! !
 changeClassName:!accessing!public! !
 changeString!printing!public! !
 classReference!accessing!public! !
-displayClassName!printing!public! !
 executeNotifying:!applying!private! !
 hash!comparing!public! !
 isMeta!private!testing! !

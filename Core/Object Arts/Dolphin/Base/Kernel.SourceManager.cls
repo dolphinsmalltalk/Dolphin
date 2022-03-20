@@ -393,6 +393,7 @@ storeGUIDForClass: class
 					[logger
 						setToEnd;
 						emitGUIDOfClass: class;
+						cr;
 						flush]]!
 
 storeSourceString: aString forMethod: aCompiledMethod

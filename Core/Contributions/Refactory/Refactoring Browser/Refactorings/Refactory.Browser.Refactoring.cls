@@ -30,12 +30,7 @@ buildVariableReferenceRewriter
 	rewriter
 		replace: '`identifier'
 		withValueFrom: [:variableNode | self rewriteStaleStaticVariable: variableNode]
-		when: 
-			[:variableNode |
-			"We rewrite any variable reference that needs change (or more qualification), or which is currently qualified but could be shortened."
-			variableNode isBindingChanged or: 
-					[variableNode hasQualifiedName
-						and: [(self shortestNameForStaticVariable: variableNode) ~= variableNode name]]].
+		when: [:variableNode | self isStaleStaticVariable: variableNode].
 	"We rewrite any BindingReferences that bind to class before it is renamed, even if embedded in literal arrays. Symbols are not renamed."
 	rewriter
 		replace: '`#literal'
@@ -281,6 +276,20 @@ isStaleLiteralReference: aStLiteralNode
 			^aStLiteralNode binding ~~ aStLiteralNode resolveBinding].
 	^false!
 
+isStaleStaticVariable: aStVariableNode
+	"We rewrite any variable reference that needs change (or more qualification), or which is currently qualified but could be shortened."
+
+	aStVariableNode isStaticVariable ifFalse: [^false].
+	"If the variable binds differently against the current state of the model, it must be rewritten."
+	aStVariableNode isBindingChanged ifTrue: [^true].
+	(aStVariableNode parent isAnnotation and: [aStVariableNode parent selector == #namespace:])
+		ifTrue: 
+			["Namespace annotations should be fully-qualified. Rewrite them if not."
+			^aStVariableNode binding fullName ~= aStVariableNode name].
+	"Otherwise rewrite the variable if qualified and can be shortened"
+	^aStVariableNode hasQualifiedName
+		and: [(self shortestNameForStaticVariable: aStVariableNode) ~= aStVariableNode name]!
+
 lookupOption: aSymbol
 	options ifNotNil: [(options lookup: aSymbol) ifNotNil: [:option | ^option]].
 	^RefactoringOptions at: aSymbol!
@@ -314,9 +323,11 @@ options: aDictionary
 	self assert: [aDictionary ~~ RefactoringOptions].
 	options := aDictionary!
 
-performComponentRefactoring: aRefactoring 
-	aRefactoring copyOptionsFrom: options.
-	aRefactoring primitiveExecute!
+performComponentRefactoring: aRefactoring
+	^aRefactoring
+		copyOptionsFrom: options;
+		primitiveExecute;
+		yourself!
 
 preconditions
 	self subclassResponsibility!
@@ -361,7 +372,7 @@ rewriteStaleLiteralReference: aLiteralNode
 	^aLiteralNode copy!
 
 rewriteStaleQualifiedReference: aQualifiedReferenceNode
-	| binding pathString path i methodNode fullName |
+	| binding pathString path i classScope fullName |
 	aQualifiedReferenceNode isRelative
 		ifFalse: 
 			["Previous fully qualified reference, just answer the new fully-qualifed reference"
@@ -374,14 +385,14 @@ rewriteStaleQualifiedReference: aQualifiedReferenceNode
 	aQualifiedReferenceNode isBindingChanged ifFalse: [^aQualifiedReferenceNode copy].
 	"We have a changed relative binding reference, so need to find the shortest new relative path that will bind to the same variable"
 	binding := aQualifiedReferenceNode binding.
-	methodNode := aQualifiedReferenceNode methodNode.
+	classScope := aQualifiedReferenceNode methodNode.
 	fullName := binding fullName.
 	path := BindingReference.PathSeparator split: fullName.
 	i := path size.
 	pathString := ''.
 	
 	[pathString := (path at: i) , pathString.
-	(methodNode fullBindingFor: pathString) == binding
+	(classScope fullBindingFor: pathString) == binding
 		ifTrue: 
 			[^aQualifiedReferenceNode copy
 				pathString: (i == path size ifTrue: [pathString] ifFalse: ['_.' , pathString]);
@@ -553,6 +564,7 @@ getOptionVariableToMoveToOf:in:!options!public! !
 getOptionVariableTypes:selected:!options!public! !
 importedVariableNamesFor:!public!utilities! !
 isStaleLiteralReference:!helpers!private! !
+isStaleStaticVariable:!private!transforming! !
 lookupOption:!accessing!options!private! !
 model!public!transforming! !
 model:!initialize/release!public! !

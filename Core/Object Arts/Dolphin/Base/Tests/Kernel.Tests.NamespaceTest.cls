@@ -127,6 +127,9 @@ testBindingInParentNamespace
 	"Search up should not work other than for the primary name component"
 	self assertIsNil: (XProgramming.SUnit fullBindingFor: 'Root.Smalltalk.XProgramming.SUnit.SUnit')!
 
+testClassVariableNames
+	self assert: self canonicalSubject classVariableNames equals: #()!
+
 testEnvironment
 	self assert: XProgramming environment identicalTo: Root.
 	self assert: Kernel environment identicalTo: Root.
@@ -282,6 +285,7 @@ testAtIfAbsent!public! !
 testAtIfPresent!public! !
 testBindingFromNamespaceWithCustomEnvironment!public! !
 testBindingInParentNamespace!public!unit tests! !
+testClassVariableNames!public! !
 testEnvironment!public!unit tests! !
 testFullName!public!unit tests! !
 testFullyQualifiedReference!public!unit tests! !

@@ -14,7 +14,6 @@ package basicScriptAt: #postinstall put: '(MethodProtocol name: #sourceObject)
 package setMethodNames: #(
 	#(#{Core.Class} #canFileOut)
 	#(#{Core.Class} #fileOut)
-	#(#{Kernel.AbstractChunkSourceFiler} #emitCategories:for:in:)
 	#(#{Kernel.AbstractChunkSourceFiler} #emitPackageAboutBlock:)
 	#(#{Kernel.AbstractChunkSourceFiler} #emitPackageClassNames:)
 	#(#{Kernel.AbstractChunkSourceFiler} #emitPackageDescription:)
@@ -117,19 +116,6 @@ fileOut!public!source filing! !
 !
 
 !Kernel.AbstractChunkSourceFiler methodsFor!
-
-emitCategories: aCollection for: aSymbol in: aClass
-	stream nextPut: $!!.
-	self emitClassName: aClass.
-	stream
-		space;
-		nextPutAll: #categoriesFor:;
-		space.
-	"#2144."
-	self emitString: aSymbol printString.
-	stream nextPut: $!!.
-	aCollection asSortedArray do: [:each | self nextChunkPut: each name].
-	self endChunk!
 
 emitPackageAboutBlock: aPackage
 	aPackage aboutBlock
@@ -280,7 +266,6 @@ methodNameSortBlock: aPackage
 		ifTrue: [a selector <==> b selector <= 0]
 		ifFalse: [a className <= b className]]! !
 !Kernel.AbstractChunkSourceFiler categoriesForMethods!
-emitCategories:for:in:!private!source filing-pax! !
 emitPackageAboutBlock:!private!source filing-pax! !
 emitPackageClassNames:!accessing!private! !
 emitPackageDescription:!private!source filing-pax! !

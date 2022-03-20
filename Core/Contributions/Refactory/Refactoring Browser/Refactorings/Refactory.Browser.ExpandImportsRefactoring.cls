@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Refactoring subclass: #'Refactory.Browser.ExpandImportsRefactoring'
-	instanceVariableNames: 'pools fromClass parseTree toClasses'
+	instanceVariableNames: 'imports fromClass parseTree toClasses'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -23,10 +23,14 @@ addImport: aBindingReference toClass: aClass
 	| nonMetaClass |
 	nonMetaClass := aClass nonMetaclass.
 	(nonMetaClass importsNamespace: aBindingReference)
-		ifFalse: [nonMetaClass addImport: aBindingReference]!
+		ifFalse: 
+			[self performComponentRefactoring: (AddImportRefactoring
+						model: self model
+						addImport: aBindingReference
+						to: aClass)]!
 
 addImports
-	pools do: [:poolDict | toClasses do: [:each | self addImport: poolDict toClass: each]]!
+	imports do: [:bindingRef | toClasses do: [:each | self addImport: bindingRef toClass: each]]!
 
 classVariableNamesIn: aClassName
 	^aClassName asQualifiedReference valueOrNil
@@ -36,7 +40,7 @@ classVariableNamesIn: aClassName
 computeReferencedNamespaces
 	| poolVariables searcher |
 	poolVariables := self importedVariableNamesFor: fromClass.
-	pools := Set new.
+	imports := Set new.
 	searcher := ParseTreeSearcher new.
 	searcher matches: '`var'
 		do: 
@@ -49,7 +53,7 @@ computeReferencedNamespaces
 						ifTrue: 
 							[| pool |
 							pool := self whichNamespaceDefines: varName.
-							pool notNil ifTrue: [pools add: pool]]]].
+							pool notNil ifTrue: [imports add: pool]]]].
 	searcher executeTree: parseTree!
 
 forMethod: aParseTree fromClass: aClass toClasses: classCollection 
@@ -58,7 +62,7 @@ forMethod: aParseTree fromClass: aClass toClasses: classCollection
 	toClasses := classCollection collect: [:each | self model classFor: each]!
 
 importsToAdd
-	^pools select: 
+	^imports select: 
 			[:eachPoolName |
 			toClasses anySatisfy: 
 					[:eachClass |

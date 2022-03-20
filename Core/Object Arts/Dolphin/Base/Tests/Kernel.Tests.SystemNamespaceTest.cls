@@ -33,6 +33,9 @@ testBinding
 testBindingOrNil
 	self assert: self subject bindingOrNil identicalTo: (Root localBindingFor: self subject name)!
 
+testClassVariableNames
+	self assert: self subject classVariableNames equals: #()!
+
 testEnvironment
 	self subclassResponsibility!
 
@@ -58,6 +61,7 @@ testAbsoluteNameOfIdentifier!public!unit tests! !
 testAllEnvironments!public!unit tests! !
 testBinding!public!unit tests! !
 testBindingOrNil!public!unit tests! !
+testClassVariableNames!public! !
 testEnvironment!public!unit tests! !
 testFullName!public!unit tests! !
 testFullyQualifiedReference!public!unit tests! !

@@ -6,7 +6,7 @@ TestCaseProtocol subclass: #TestCaseHelper
 	poolDictionaries: ''
 	classInstanceVariableNames: 'testSelectors'!
 TestCaseHelper guid: (GUID fromString: '{8205f35b-2543-4bf4-8069-8402d8c23365}')!
-TestCaseHelper isNonInstantiable: true!
+TestCaseHelper isAbstract: true!
 TestCaseHelper comment: ''!
 !TestCaseHelper categoriesForClass!Unclassified! !
 !TestCaseHelper methodsFor!

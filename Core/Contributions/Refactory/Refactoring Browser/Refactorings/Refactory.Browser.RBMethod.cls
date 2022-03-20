@@ -50,15 +50,15 @@ environment
 
 existingPackageAndEnvironment
 	^self method
-		ifNil: [Pair first: nil second: class environment]
+		ifNil: [Pair first: nil second: nil]
 		ifNotNil: 
 			[:method |
-			| package |
-			package := method owningPackage.
-			Pair first: package
-				second: ((method customEnvironment ifNil: [package ifNotNil: [package environment]])
-						ifNotNil: [:namespace | namespace classInModel: self model]
-						ifNil: [class basicEnvironment])]!
+			method owningPackageIfLoose
+				ifNil: [Pair first: method methodClass owningPackage second: nil]
+				ifNotNil: 
+					[:package |
+					Pair first: package
+						second: (package environment ifNotNil: [:namespace | namespace classInModel: self model])]]!
 
 hash
 	"Answer the <SmallInteger> hash value for the receiver."

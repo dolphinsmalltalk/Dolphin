@@ -136,6 +136,10 @@ lastIsReturn
 methodClass
 	^methodClass!
 
+methodClass: each
+	self methodClass: each environment: nil.
+	scope ifNotNil: [scope outer: self newClassScope]!
+
 methodClass: aClass environment: aNamespaceOrNil
 	methodClass := aClass.
 	environment := aNamespaceOrNil!
@@ -261,6 +265,7 @@ isPrimitive!public!testing! !
 keywords!accessing!public! !
 lastIsReturn!public!testing! !
 methodClass!accessing!public! !
+methodClass:!accessing!public! !
 methodClass:environment:!initializing!private! !
 methodComments!accessing!public! !
 methodNode!accessing!public! !

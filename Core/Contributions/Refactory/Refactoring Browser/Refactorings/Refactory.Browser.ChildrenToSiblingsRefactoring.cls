@@ -103,7 +103,14 @@ pullUpImports
 
 	| newSuperclass |
 	newSuperclass := self abstractSuperclass.
-	parent imports do: [:each | newSuperclass addImport: each]!
+	parent imports do: 
+			[:each |
+			(newSuperclass importsNamespace: each)
+				ifFalse: 
+					[self performComponentRefactoring: (AddImportRefactoring
+								model: self model
+								addImport: each
+								to: newSuperclass)]]!
 
 pullUpInstanceVariables
 	| newSuperclass |

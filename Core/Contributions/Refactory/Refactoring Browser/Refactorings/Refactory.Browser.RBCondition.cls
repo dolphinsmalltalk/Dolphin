@@ -205,6 +205,21 @@ isClass: anObject
 		block: [anObject isBehavior]
 		errorString: anObject printString , ' is <1?:not >a behavior'!
 
+isClassBinding: aBindingReference
+	^self new
+		type: {#isDefined. aBindingReference}
+		block: 
+			[| binding |
+			binding := aBindingReference bindingOrNil.
+			binding notNil and: [binding isClassBinding]]
+		errorString: aBindingReference printString , ' <1?refers:does not refer> to a defined class binding'!
+
+isDefinedBinding: aBindingReference
+	^self new
+		type: {#isDefined. aBindingReference}
+		block: [aBindingReference isDefined]
+		errorString: aBindingReference printString , ' is <1?already:not> defined'!
+
 isEmptyClass: anObject
 	^self new
 		type: {#IsEmptyClass. anObject}
@@ -380,6 +395,8 @@ hierarchyOf:definesVariable:!instance creation!public! !
 hierarchyOf:referencesInstanceVariable:!instance creation!public! !
 isAbstractClass:!instance creation!public! !
 isClass:!instance creation!public! !
+isClassBinding:!instance creation!public! !
+isDefinedBinding:!instance creation!public! !
 isEmptyClass:!instance creation!public! !
 isImmediateSubclass:of:!instance creation!public! !
 isMetaclass:!instance creation!public! !

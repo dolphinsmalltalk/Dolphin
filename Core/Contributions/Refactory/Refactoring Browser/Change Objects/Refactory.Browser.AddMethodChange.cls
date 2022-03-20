@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.RefactoryClassChange subclass: #'Refactory.Browser.AddMethodChange'
-	instanceVariableNames: 'source selector protocols environment packageName compilationFlags method'
+Refactory.Browser.RefactoryMethodChange subclass: #'Refactory.Browser.AddMethodChange'
+	instanceVariableNames: 'source protocols environment packageName compilationFlags method'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -14,9 +14,6 @@ Refactory.Browser.AddMethodChange comment: ''!
 = anAddMethodChange 
 	super = anAddMethodChange ifFalse: [^false].
 	^self parseTree = anAddMethodChange parseTree!
-
-afterText
-	^source!
 
 asUndoOperation
 	^(self changeClass includesSelector: self selector)
@@ -34,14 +31,11 @@ asUndoOperation
 				package: self package]
 		ifFalse: [RemoveMethodChange remove: selector from: self changeClass]!
 
-beforeText
-	^(self methodSourceFor: selector) !
-
 categories
 	^protocols collect: [:each | each asMethodCategory]!
 
-changeForClass: aSymbol selector: aSelector 
-	^(self selector == aSelector and: [classReference asString = aSymbol])
+changeForClassNamed: aBindingReference selector: aSelector
+	^(self selector == aSelector and: [aBindingReference = classReference])
 		ifTrue: [self]
 		ifFalse: [nil]!
 
@@ -51,12 +45,12 @@ changeForMetaclass: aSymbol selector: aSelector
 		ifFalse: [nil]!
 
 changeString
-	^'<1s> <2s>>><3s>'
-		expandMacrosWith: ((self changeClass
-				ifNil: [false]
-				ifNotNil: [:class | class includesSelector: self selector]) ifTrue: ['Modify'] ifFalse: ['Add'])
-		with: self displayClassName
-		with: self selector!
+	^'<1s> <2d>>><3s>'
+		<< {(self changeClass ifNil: [false] ifNotNil: [:class | class includesSelector: self selector])
+					ifTrue: ['Modify']
+					ifFalse: ['Add'].
+				classReference.
+				self selector}!
 
 class: aClass protocol: aProtocol source: aString 
 	self changeClass: aClass.
@@ -118,32 +112,22 @@ primitiveExecute
 				flags: self compilationFlags!
 
 printOn: aStream
-	| className |
-	className := self displayClassName.
-	aStream
-		nextPut: $!!;
-		nextPutAll: className;
-		nextPutAll: ' methodsFor';
-		nextPut: $!!;
+	| classAttr filer |
+	classAttr := self getClassAttributes.
+	filer := self sourceFilerClass on: aStream.
+	filer
+		emitHeaderForMethodsOf: classAttr;
 		cr;
 		cr;
-		nextPutAll: source;
-		nextPutAll: '!! !!'.
-	protocols isEmpty ifTrue: [^self].
-	aStream
-		cr;
-		nextPut: $!!;
-		nextPutAll: className;
-		space;
-		nextPutAll: #categoriesFor:;
-		space;
-		print: selector.
-	protocols asSortedCollection do: 
-			[:each |
-			aStream
-				nextPut: $!!;
-				nextPutAll: each].
-	aStream nextPutAll: '!! !!'!
+		nextChunkPut: source.
+	aStream nextPutAll: ' !!'.
+	protocols isEmpty
+		ifFalse: 
+			[filer
+				cr;
+				emitCategories: (protocols collect: [:each | each asMethodCategory])
+					for: selector
+					in: classAttr]!
 
 protocol
 	Notification deprecated.
@@ -163,11 +147,9 @@ source
 	^source! !
 !Refactory.Browser.AddMethodChange categoriesForMethods!
 =!comparing!public! !
-afterText!printing!public! !
 asUndoOperation!converting!public! !
-beforeText!printing!public! !
 categories!accessing!public! !
-changeForClass:selector:!accessing!public! !
+changeForClassNamed:selector:!accessing!public! !
 changeForMetaclass:selector:!accessing!public! !
 changeString!printing!public! !
 class:protocol:source:!initializing!private! !
@@ -232,11 +214,15 @@ compile: aString in: aClass environment: aNamespace categories: aSequenceableCol
 	change
 		environment: aNamespace;
 		package: aPackage.
-	^change! !
+	^change!
+
+new
+	^self basicNew initialize! !
 !Refactory.Browser.AddMethodChange class categoriesForMethods!
 compile:in:!instance creation!public! !
 compile:in:categories:!instance creation!public! !
 compile:in:classified:!instance creation!public! !
 compile:in:environment:categories:package:!instance creation!public! !
+new!instance creation!public! !
 !
 

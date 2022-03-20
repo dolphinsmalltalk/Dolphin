@@ -1442,15 +1442,17 @@ copyAllMethodsOf: aClass to: newClass changes: aCompositeRefactoryChange
 
 copyClass: aClass
 	| dialog newClassName superclass package |
+	newClassName := aClass asQualifiedReference.
 	
-	[newClassName := ('CopyOf' , aClass name) asSymbol.
-	newClassName asQualifiedReference isDefined]
+	[newClassName := BindingReference
+				path: (newClassName path allButLast copyWith: 'CopyOf' , newClassName path last).
+	newClassName isDefined]
 			whileTrue.
 	dialog := CreateSubclassDialog on: aClass superclass asValue.
 	dialog
 		package: aClass owningPackage;
 		createView: dialog class defaultView.
-	dialog subclassName: newClassName.
+	dialog subclassName: newClassName pathString.
 	dialog caption: 'Clone <1p>…' << aClass.
 	dialog showModal isNil ifTrue: [^nil].
 	newClassName := dialog subclassName asSymbol.
@@ -3466,51 +3468,6 @@ registerTool: aToolClass
 
 	self class registerTool: aToolClass!
 
-removeClass: aClass
-	"Removes aClass from the system, and any subclasses, regardless of whether they
-	are still referenced. Answer whether the class was removed."
-
-	| subclasses prompt removedGlobals references oldClassName scope mb changes |
-	oldClassName := aClass name asString.
-	subclasses := aClass allSubclasses.
-	mb := MessageBox new.
-	mb uniqueId: [self] method displayString.
-	mb defaultButton: 1.
-	scope := self systemEnvironment.
-	changes := CompositeRefactoryChange new.
-	subclasses isEmpty
-		ifTrue: 
-			[prompt := 'Are you sure you want to delete the class <1s>?' << oldClassName.
-			changes name: 'Delete <1s>' << oldClassName]
-		ifFalse: 
-			[prompt := 'Are you sure you want to delete <1s> and its <2p> subclass(es)?'
-						<< {oldClassName. subclasses size}.
-			changes name: 'Delete <1s> and subclasses' << oldClassName].
-	mb headline: changes name , '?'.
-	(mb confirm: prompt
-				, '<n><n>The change is undoable, but beware of deleting essential classes.' expandMacros)
-		ifFalse: [^false].
-	removedGlobals := OrderedCollection new.
-	references := scope referencesToClass: aClass.
-	aClass allSubclassesEndOrderDo: 
-			[:each |
-			removedGlobals add: each.
-			changes removeClass: each].
-	changes removeClass: aClass.
-	[self changeManager performChange: changes] on: ClassBuilder invalidRemoveError
-		do: 
-			[:e |
-			MessageBox errorMsg: e description.
-			^false].
-	removedGlobals do: [:g | references addMethods: (scope referencesToClass: g) allMethods].
-	references notEmpty
-		ifTrue: 
-			[references
-				label: ('Class <1s> deleted' expandMacrosWith: oldClassName);
-				addSearchString: oldClassName.
-			self browseMethodsIn: references].
-	^true!
-
 removeClass: aClassDescription fromProtocol: aMethodProtocol
 	"Private - Remove the specified class from the specified <MethodProtocol>."
 
@@ -3522,6 +3479,53 @@ removeClass: aClassDescription fromProtocol: aMethodProtocol
 					<< args;
 		confirm: 'Are you sure you would like to remove the class <1p> from method protocol <2d>?' << args)
 			ifTrue: [aMethodProtocol removeClass: aClassDescription]!
+
+removeClasses: aCollection
+	"Removes aClass from the system, and any subclasses, regardless of whether they
+	are still referenced. Answer whether the class was removed."
+
+	| subclasses prompt removedGlobals references oldClassName scope mb changes |
+	aCollection do: 
+			[:eachClass |
+			oldClassName := eachClass name asString.
+			subclasses := eachClass allSubclasses.
+			mb := MessageBox new.
+			mb uniqueId: [self] method displayString.
+			mb defaultButton: 1.
+			scope := self systemEnvironment.
+			changes := CompositeRefactoryChange new.
+			subclasses isEmpty
+				ifTrue: 
+					[prompt := 'Are you sure you want to delete the class <1s>?' << oldClassName.
+					changes name: 'Delete <1s>' << oldClassName]
+				ifFalse: 
+					[prompt := 'Are you sure you want to delete <1s> and its <2p> subclass(es)?'
+								<< {oldClassName. subclasses size}.
+					changes name: 'Delete <1s> and subclasses' << oldClassName].
+			mb headline: changes name , '?'.
+			(mb confirm: prompt
+						, '<n><n>The change is undoable, but beware of deleting essential classes.' expandMacros)
+				ifFalse: [^false].
+			removedGlobals := OrderedCollection new.
+			references := scope referencesToClass: eachClass.
+			eachClass allSubclassesEndOrderDo: 
+					[:each |
+					removedGlobals add: each.
+					changes removeClass: each].
+			changes removeClass: eachClass.
+			[self changeManager performChange: changes] on: ClassBuilder invalidRemoveError
+				do: 
+					[:e |
+					MessageBox errorMsg: e description.
+					^false].
+			removedGlobals do: [:g | references addMethods: (scope referencesToClass: g) allMethods].
+			references notEmpty
+				ifTrue: 
+					[references
+						label: ('Class <1s> deleted' expandMacrosWith: oldClassName);
+						addSearchString: oldClassName.
+					self browseMethodsIn: references]].
+	^true!
 
 removeMethod: aCompiledMethod
 	"Removes the <CompiledMethod>, method, from its class after first verifying with the user.
@@ -4592,8 +4596,8 @@ reformatAllMethodsIn:!commands!private! !
 reformatSource:in:!commands!private! !
 registerSystemEvents!initializing!private! !
 registerTool:!accessing!public! !
-removeClass:!operations!public! !
 removeClass:fromProtocol:!operations!private!protocols! !
+removeClasses:!operations!public! !
 removeMethod:!operations!public! !
 removeMethod:changes:!operations!private! !
 removeMethods:!commands!public! !

@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.MethodRefactoring subclass: #'Refactory.Browser.MoveMethodRefactoring'
-	instanceVariableNames: 'selector variable moveToClasses parseTree hasOnlySelfReturns selfVariableName'
+	instanceVariableNames: 'selector variable moveToClasses parseTree hasOnlySelfReturns selfVariableName abstractVariables'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -12,23 +12,24 @@ Refactory.Browser.MoveMethodRefactoring comment: ''!
 !Refactory.Browser.MoveMethodRefactoring methodsFor!
 
 abstractVariables
-	self performComponentRefactoring: self abstractVariablesRefactoring.
-	parseTree := self abstractVariablesRefactoring parseTree!
+	parseTree := (self performComponentRefactoring: self abstractVariablesRefactoring) parseTree!
 
 abstractVariablesRefactoring
-	^AbstractVariablesRefactoring 
-		model: self model
-		abstractVariablesIn: parseTree
-		from: class
-		toAll: moveToClasses
-		ignoring: variable!
+	^abstractVariables
+		ifNil: 
+			[abstractVariables := AbstractVariablesRefactoring
+						model: self model
+						abstractVariablesIn: parseTree
+						from: class
+						toAll: moveToClasses
+						ignoring: variable]!
 
 addSelfReturn
 	self hasOnlySelfReturns ifTrue: [^self].
 	parseTree addSelfReturn!
 
 buildParseTree
-	parseTree := (class parseTreeFor: selector) copy.
+	parseTree := (class methodFor: selector) boundParseTree copy.
 	parseTree isNil ifTrue: [self refactoringError: 'Could not parse method']!
 
 checkAssignmentsToVariable
@@ -81,9 +82,16 @@ compileDelegatorMethod
 		forMethod: method!
 
 compileNewMethods
-	| categories |
+	| categories rewriter |
 	categories := class protocolsFor: selector.
-	moveToClasses do: [:each | each compile: parseTree newSource categories: categories]!
+	"Static variable references may need to be rewritten if moving a method to a class in a different namespace"
+	rewriter := self buildVariableReferenceRewriter.
+	moveToClasses do: 
+			[:each |
+			parseTree methodNode methodClass: each.
+			each
+				compile: ((rewriter executeTree: parseTree) ifTrue: [rewriter tree] ifFalse: [parseTree]) newSource
+				categories: categories]!
 
 getAllClassesForGlobalOrClassVariable
 	"rbDmm added for MoveMethodRefactoring>>getClassForGlobalOrClassVariable"
@@ -269,7 +277,7 @@ verifyTemporaryVariableDoesNotOverride
 	^(moveToClasses anySatisfy: [:each | each definesVariable: selfVariableName]) not! !
 !Refactory.Browser.MoveMethodRefactoring categoriesForMethods!
 abstractVariables!public!transforming! !
-abstractVariablesRefactoring!public!transforming! !
+abstractVariablesRefactoring!private!transforming! !
 addSelfReturn!public!transforming! !
 buildParseTree!private! !
 checkAssignmentsToVariable!preconditions!public! !

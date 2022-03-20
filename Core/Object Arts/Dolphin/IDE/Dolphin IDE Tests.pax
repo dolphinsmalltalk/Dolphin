@@ -52,6 +52,7 @@ package setPrerequisites: #(
 	'..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects'
 	'..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
 	'..\..\..\Contributions\Refactory\Refactoring Browser\Tests\RBTestMethods'
+	'..\..\..\Contributions\Refactory\Refactoring Browser\Tests\RBTests'
 	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
 	'..\ActiveX\Components\XML DOM\XML DOM'
 ).
@@ -68,12 +69,6 @@ UI.Dialog subclass: #'Tools.Tests.ClosedCommandDescriptionIssueDialog'
 	classConstants: {}!
 XProgramming.SUnit.TestCase subclass: #'Tools.Tests.ClosedCommandDescriptionTest'
 	instanceVariableNames: 'dialog'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Refactory.Browser.Tests.AddMethodChangeTest'
-	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -187,6 +182,12 @@ Tools.Tests.ClassSelectorTest subclass: #'Tools.Tests.ClassListSelectorTest'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Tools.Tests.ClassSelectorTest subclass: #'Tools.Tests.PackagedClassSelectorTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.Tests.ChangeObjectTest subclass: #'Refactory.Browser.Tests.AddMethodChangeTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

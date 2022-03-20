@@ -190,6 +190,11 @@ compileTree: aBRMethodNode environment: aRBNamespaceClass categories: aSymbolCol
 		categories: aSymbolCollection
 		package: aPackage!
 
+conformsToProtocol: aSymbol
+	| class |
+	class := self realClass.
+	^class notNil and: [class conformsToProtocol: aSymbol]!
+
 definesClassVariable: aSymbol
 	| sprClass |
 	(self directlyDefinesClassVariable: aSymbol) ifTrue: [^true].
@@ -526,17 +531,13 @@ printOn: aStream
 	aStream nextPutAll: self name!
 
 protocolsFor: aSelector
-	| change |
 	#rbFix.	"Added to support Dolphin's multiple method categories"
-	change := self isMeta
-				ifTrue: [self model changes changeForMetaclass: self name selector: aSelector]
-				ifFalse: [self model changes changeForClass: self name selector: aSelector].
-	^change isNil
-		ifTrue: 
+	^(self model changes changeForClassNamed: self fullyQualifiedReference selector: aSelector)
+		ifNil: 
 			[self realClass
 				ifNotNil: [:realClass | BrowserEnvironment new whichProtocolsInclude: aSelector in: realClass]
 				ifNil: [#(#accessing)]]
-		ifFalse: [change protocols]!
+		ifNotNil: [:change | change protocols]!
 
 realClass
 	^self subclassResponsibility!
@@ -581,6 +582,11 @@ selectors
 				ifTrue: [selectors addAll: realClass selectors]
 				ifFalse: [realClass selectorsDo: [:each | (removed includes: each) ifFalse: [selectors add: each]]]].
 	^selectors!
+
+shortName
+	"Answer the shorted <String> name of the receiver that is bindable from Smalltalk. i.e. for classes defined directly in Smalltalk, or in any of its imports, this will be an unqualified name. Otherwise it is the fully qualified name relative to Smalltalk."
+
+	^self subclassResponsibility!
 
 soleInstance
 	^self nonMetaclass!
@@ -754,6 +760,7 @@ compile:categories:!compiling!public! !
 compile:classified:!compiling!public! !
 compile:environment:categories:package:!compiling!public! !
 compileTree:environment:categories:package:!compiling!public! !
+conformsToProtocol:!public! !
 definesClassVariable:!public!testing! !
 definesInstanceVariable:!public!testing! !
 definesMethod:!public!testing! !
@@ -819,6 +826,7 @@ removeSelector:!method accessing!public! !
 renameInstanceVariable:to:around:!public!variable accessing! !
 scope!accessing!public! !
 selectors!method accessing!public! !
+shortName!accessing!public! !
 soleInstance!accessing!public! !
 sourceCodeFor:!method accessing!public! !
 storeOn:!printing!public! !

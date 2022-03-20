@@ -65,7 +65,7 @@ storeOn: aStream
 	aStream nextPut: $)!
 
 transform
-	| definingNode variableNode method newTree |
+	| definingNode variableNode method |
 	method := class methodFor: selector.
 	parseTree := method parseTreeWithSourceIntervals copy.
 	variableNode := self

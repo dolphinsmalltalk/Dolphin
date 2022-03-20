@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.RefactoryClassChange subclass: #'Refactory.Browser.ClassCommentChange'
+Refactory.Browser.ClassAttributeChange subclass: #'Refactory.Browser.ClassCommentChange'
 	instanceVariableNames: 'comment'
 	classVariableNames: ''
 	imports: #()
@@ -16,12 +16,8 @@ asUndoOperation
 		comment: self changeClass comment;
 		yourself!
 
-changeClass: aBehavior
-	super changeClass: aBehavior.
-	classReference := classReference instance!
-
 changeString
-	^'Comment ' , self displayClassName!
+	^'Comment <1d>' << classReference!
 
 comment
 	^comment!
@@ -29,23 +25,24 @@ comment
 comment: aString
 	comment := aString!
 
-primitiveExecute
-	self changeClass comment: self comment!
+emitAttributeOf: aClass with: aChunkSourceFiler
+	aChunkSourceFiler emitCommentOfClass: aClass!
 
-printOn: aStream
-	aStream
-		nextPutAll: self displayClassName;
-		nextPutAll: ' comment: ';
-		print: (self comment copyReplaceAll: '!!' with: '!!!!');
-		nextPutAll: '!!'! !
+mutateAttributes: aClassAttributes
+	"Alter the <ClassAttributes> argument to reflect the change described by the receiver."
+
+	aClassAttributes comment: comment!
+
+primitiveExecute
+	self changeClass comment: self comment! !
 !Refactory.Browser.ClassCommentChange categoriesForMethods!
 asUndoOperation!converting!public! !
-changeClass:!accessing!public! !
 changeString!printing!public! !
 comment!accessing!public! !
 comment:!accessing!public! !
+emitAttributeOf:with:!printing!private! !
+mutateAttributes:!helpers!private! !
 primitiveExecute!applying!private! !
-printOn:!printing!public! !
 !
 
 !Refactory.Browser.ClassCommentChange class methodsFor!
@@ -56,6 +53,6 @@ comment: aString in: aClass
 		comment: aString;
 		yourself! !
 !Refactory.Browser.ClassCommentChange class categoriesForMethods!
-comment:in:!instance creation!private! !
+comment:in:!instance creation!public! !
 !
 

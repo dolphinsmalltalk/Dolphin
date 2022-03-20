@@ -34,6 +34,7 @@ package methodNames
 	add: #Behavior -> #makeIndirect;
 	add: #Behavior -> #makeNullTerminated;
 	add: #ByteCodeDispatcher -> #byteCodeSegments;
+	add: #Class -> #addSharedPool:;
 	add: #Class -> #allSharedPoolNames;
 	add: #Class -> #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:category:;
 	add: #Class -> #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:;
@@ -289,6 +290,20 @@ safeCodePoint:!instance creation!public! !
 
 !Class methodsFor!
 
+addSharedPool: aPoolDictionary
+	"Add the argument, aPoolDictionary, as one of the pool dictionaries referenced by the
+	receiver, but lower in precedence than any previously added pools. It is an error if the
+	dictionary is already one of the pools.
+	Note: This is a low-level operation and does not recompile affected classes. Generally 
+	speaking any modification to a class should be made through a <ClassBuilder>."
+
+	| poolName pools |
+	Notification deprecated.
+	poolName := aPoolDictionary asQualifiedReference.
+	pools := self imports.
+	(pools includes: poolName) ifTrue: [^self error: 'Pool is already referenced by this class'].
+	self imports: (pools copyWith: poolName)!
+
 allSharedPoolNames
 	#deprecated.
 	^self allSharedPools collect: [:each | each name]!
@@ -334,6 +349,7 @@ variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariabl
 		categories: {ClassCategory name: aCategoryOrString};
 		yourself! !
 !Class categoriesForMethods!
+addSharedPool:!pool variables!public! !
 allSharedPoolNames!pool variables!public! !
 variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
 variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
@@ -382,7 +398,7 @@ sharedPools
 
 sharedPoolsDo: aMonadicValuable
 	#deprecated.
-	self
+	self instanceClass
 		importedNamespacesDo: [:each | (each inheritsFrom: SharedPool) ifTrue: [aMonadicValuable value: each]]! !
 !ClassDescription categoriesForMethods!
 allSharedPoolNames!pool variables!public! !

@@ -34,6 +34,7 @@ package setMethodNames: #(
 	#(#{Kernel.StMethodNode} #analyze)
 	#(#{Kernel.StMethodNode} #newClassScope)
 	#(#{Kernel.StProgramNode} #classScope)
+	#(#{Kernel.StProgramNode} #methodScope)
 	#(#{Kernel.StQualifiedReferenceNode} #binding)
 	#(#{Kernel.StQualifiedReferenceNode} #binding:)
 	#(#{Kernel.StQualifiedReferenceNode} #resolveBinding)
@@ -210,9 +211,13 @@ newClassScope!accessing!private! !
 !Kernel.StProgramNode methodsFor!
 
 classScope
-	^scope classScope! !
+	^scope classScope!
+
+methodScope
+	^scope methodScope! !
 !Kernel.StProgramNode categoriesForMethods!
 classScope!accessing!public! !
+methodScope!accessing!public! !
 !
 
 !Kernel.StQualifiedReferenceNode methodsFor!
@@ -237,7 +242,7 @@ resolveBinding
 !Kernel.StQualifiedReferenceNode categoriesForMethods!
 binding!accessing!private! !
 binding:!accessing!private! !
-resolveBinding!accessing!private! !
+resolveBinding!accessing!public! !
 !
 
 !Kernel.StRealVariableNode methodsFor!

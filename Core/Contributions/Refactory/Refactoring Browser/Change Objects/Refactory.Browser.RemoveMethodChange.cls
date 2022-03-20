@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.RefactoryClassChange subclass: #'Refactory.Browser.RemoveMethodChange'
-	instanceVariableNames: 'selector'
+Refactory.Browser.RefactoryMethodChange subclass: #'Refactory.Browser.RemoveMethodChange'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -15,17 +15,11 @@ Refactory.Browser.RemoveMethodChange comment: ''!
 	super = aRemoveMethodChange ifFalse: [^false].
 	^selector = aRemoveMethodChange selector!
 
-afterText
-	^''!
-
 asUndoOperation
 	^AddMethodChange compile: (self methodSourceFor: selector) in: self changeClass!
 
-beforeText
-	^(self methodSourceFor: selector) !
-
 changeString
-	^'Remove <1s>>><2s>' expandMacrosWith: self displayClassName with: self selector!
+	^'Remove <1d>>><2s>' << {classReference. self selector}!
 
 hash
 	^selector hash!
@@ -33,18 +27,14 @@ hash
 primitiveExecute
 	^self changeClass removeSelector: selector!
 
-printOn: aStream 
+printOn: aStream
 	aStream
-		nextPutAll: self displayClassName;
-		nextPutAll: ' removeSelector: ';
+		display: classReference;
+		space;
+		nextPutAll: #removeSelector:;
+		space;
 		nextPutAll: selector;
 		nextPut: $!!!
-
-selector
-	^selector!
-
-selector: aSymbol 
-	selector := aSymbol!
 
 source
 	"After this change has been applied, the method will have no source."
@@ -53,15 +43,11 @@ source
 	^''! !
 !Refactory.Browser.RemoveMethodChange categoriesForMethods!
 =!comparing!public! !
-afterText!printing!public! !
 asUndoOperation!converting!public! !
-beforeText!printing!public! !
 changeString!printing!public! !
 hash!comparing!public! !
 primitiveExecute!applying!private! !
 printOn:!printing!public! !
-selector!accessing!public! !
-selector:!initializing!private! !
 source!accessing!public! !
 !
 

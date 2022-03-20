@@ -119,13 +119,10 @@ testModelRenameClass
 	self deny: (model includesClassNamed: Object fullName).
 	self assert: fooClass superclass name equals: #'Core.Thing'.
 	self assert: (fooClass imports includes: #{Core.Thing}).
-	change := model changes lastChangeMatching: 
-					[:each |
-					(each isKindOf: Tools.ReplaceImportChange)
-						and: [each oldImport = #{Core.Object} and: [each newImport = #{Core.Thing}]]].
+	change := model changes
+				lastChangeMatching: [:each | (each isKindOf: ClassImportsChange) and: [each imports includes: #{Core.Thing}]].
 	self assertNotNil: change.
-	self assert: change oldImport isKindOf: FullBindingReference.
-	self assert: change newImport isKindOf: FullBindingReference.
+	self assert: (change imports allSatisfy: [:each | each isKindOf: FullBindingReference]).
 	"References to the class in methods should be renamed - note that the redundant qualification is removed as the names are minimised"
 	self
 		verifyMethod: #refersToClass
@@ -285,9 +282,9 @@ testRenameChangeNamespace
 		verifyMethod: #testFailure
 		of: newClass
 		equals: 'testFailure ^XProgramming.SUnit.TestFailure'.
-	change := model changes changeForClass: newClass name selector: #testFailure.
-	"Check that a change to a method of the renamed class has the correct (new) namespace, and that the package is preserved"
-	self assert: change environment equals: Smalltalk.
+	change := model changes changeForClassNamed: newClass fullyQualifiedReference selector: #testFailure.
+	"Check that a change to a method of the renamed class has the correct (new) namespace (nil, so the class' namespace is used), and that the package is preserved"
+	self assertIsNil: change environment.
 	self assert: change package equals: RefactoryTestDataApp owningPackage.
 	"Model class Foo was defined in Smalltalk, so it can now reference Smalltalk.ClassToRename using just its unqualified name"
 	self
@@ -572,19 +569,26 @@ testRenameNamespace
 				equals: '<1s> ^#{_.Tests2.ClassToRename}' << each]!
 
 testRenameOfClassWithMethodInPackageNamespace
-	| refactoring class ref |
-	ref := #{Tools.AddSharedVariableChange}.
+	| refactoring conditionClass change selector class |
+	conditionClass := model classFor: RBCondition.
 	refactoring := RenameClassRefactoring
 				model: model
-				rename: ref value
-				to: 'Refactory.Browser.AddSharedVariableChange'.
-	class := model classNamed: ref pathString.
+				rename: conditionClass
+				to: 'Refactory.RBCondition'.
 	refactoring setOption: #ignoreSymbolicClassReferences toUse: [:rename :refs | true].
 	self executeRefactoring: refactoring.
+	class := model classFor: MethodRefactoring.
+	"This method references RBCondition, and also its class is in Refactory.Browser, the method is loose in a tools package with the Tools default namespace, so it needs to refer to RBCondition using a fully-qualified name. The rename will have to update this variable reference. The method also references a class in Tools (MethodNameDialog) that is not visible directly in Refactory.Browser, but because of the method namespace this is still bindable using its unqualified name."
+	selector := #getOptionNewMethodName:classes:.
+	change := model changes changeForClassNamed: class fullyQualifiedReference selector: selector.
+	"Check that a change to a method of the renamed class has the correct (new) namespace (nil, so the class' namespace is used), and that the package is preserved"
+	self assert: change environment identicalTo: Tools.
+	self assert: change package equals: Tools.RefactoringTool owningPackage.
 	self
-		verifyMethod: #icon
-		of: class metaclass
-		equals: (ref value class >> #icon) getSource!
+		verifyMethod: selector
+		of: class
+		equals: ((MethodRefactoring >> selector) getSource copyReplaceAll: 'Refactory.Browser.'
+				with: 'Refactory.')!
 
 verifyRenames: aRBClass unqualified: unqualified full: fullyQualified partial: partial
 	| subclassInNamespace classInOtherNamespace ast expectedSource |

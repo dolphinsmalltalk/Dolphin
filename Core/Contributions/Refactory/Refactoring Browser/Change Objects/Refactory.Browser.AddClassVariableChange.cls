@@ -14,14 +14,25 @@ Refactory.Browser.AddClassVariableChange comment: ''!
 asUndoOperation
 	^RemoveClassVariableChange remove: variable from: self changeClass!
 
-changeStringFormat
-	^'Add class variable named, <1s>, from <2s>'!
+changeString
+	^'Add class variable named, <1s>, to <2d>' << {variable. classReference}!
 
 changeSymbol
-	^#addClassVarNamed:! !
+	^#addClassVarNamed:!
+
+mutateAttributes: aClassAttributes
+	| classVars |
+	classVars := aClassAttributes classVariableNames.
+	(classVars includes: variable)
+		ifFalse: [aClassAttributes classVariableNames: (classVars copyWith: variable) sort]!
+
+primitiveExecute
+	self changeClass addClassVarNamed: variable! !
 !Refactory.Browser.AddClassVariableChange categoriesForMethods!
 asUndoOperation!converting!public! !
-changeStringFormat!printing!private! !
+changeString!printing!public! !
 changeSymbol!constants!private! !
+mutateAttributes:!helpers!private! !
+primitiveExecute!applying!private! !
 !
 

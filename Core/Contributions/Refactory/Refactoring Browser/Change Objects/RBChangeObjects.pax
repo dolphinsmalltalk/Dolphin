@@ -5,32 +5,44 @@ package paxVersion: 2.1;
 	basicComment: 'Refactoring Browser Change Objects
 Copyright © John Brant & Don Roberts.
 
-Originally ported to Dolphin by Blair McGlashan and Andy Bower at Camp Smalltalk 1 in San Diego, 2000. Fairly extensively modified since, especially in Dolphin 8 due to the introduction of namespaces.
+Originally ported to Dolphin by Blair McGlashan and Andy Bower at Camp Smalltalk 1 in San Diego, 2000. Fairly extensively modified and extended since, especially in Dolphin 8 due to the introduction of namespaces.
 '.
 
 
 package setClassNames: #(
 	#{Refactory.Browser.AddClassChange}
+	#{Refactory.Browser.AddClassConstantChange}
 	#{Refactory.Browser.AddClassVariableChange}
 	#{Refactory.Browser.AddInstanceVariableChange}
 	#{Refactory.Browser.AddMethodChange}
+	#{Refactory.Browser.AddSharedVariableChange}
+	#{Refactory.Browser.BasicRenameClassChange}
 	#{Refactory.Browser.ChangeSet}
+	#{Refactory.Browser.ClassAttributeChange}
+	#{Refactory.Browser.ClassAttributes}
+	#{Refactory.Browser.ClassCategoryChange}
 	#{Refactory.Browser.ClassCommentChange}
+	#{Refactory.Browser.ClassGuidChange}
+	#{Refactory.Browser.ClassImportsChange}
+	#{Refactory.Browser.ClassSpecialBehaviorChange}
 	#{Refactory.Browser.CompositeRefactoryChange}
+	#{Refactory.Browser.MoveClassChange}
 	#{Refactory.Browser.RefactoryChange}
 	#{Refactory.Browser.RefactoryChangeManager}
 	#{Refactory.Browser.RefactoryClassChange}
+	#{Refactory.Browser.RefactoryMethodChange}
 	#{Refactory.Browser.RefactoryVariableChange}
 	#{Refactory.Browser.RemoveClassChange}
+	#{Refactory.Browser.RemoveClassConstantChange}
 	#{Refactory.Browser.RemoveClassVariableChange}
 	#{Refactory.Browser.RemoveInstanceVariableChange}
 	#{Refactory.Browser.RemoveMethodChange}
+	#{Refactory.Browser.RemoveSharedVariableChange}
 	#{Refactory.Browser.RenameClassChange}
 	#{Refactory.Browser.RenameClassVariableChange}
 	#{Refactory.Browser.RenameInstanceVariableChange}
 	#{Refactory.Browser.RenameVariableChange}
-	#{Tools.BasicRenameClassChange}
-	#{Tools.ReplaceImportChange}
+	#{Refactory.Browser.SharedVariableChange}
 ).
 
 package setPrerequisites: #(
@@ -46,6 +58,12 @@ package!
 
 Core.Object subclass: #'Refactory.Browser.ChangeSet'
 	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Object subclass: #'Refactory.Browser.ClassAttributes'
+	instanceVariableNames: 'className superclassName instanceVariableNames classVariableNames imports classConstants classInstanceVariableNames instanceSpec guid comment categories'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -70,6 +88,12 @@ Refactory.Browser.RefactoryChange subclass: #'Refactory.Browser.CompositeRefacto
 	classConstants: {}!
 Refactory.Browser.RefactoryChange subclass: #'Refactory.Browser.RefactoryClassChange'
 	instanceVariableNames: 'classReference'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.RefactoryChange subclass: #'Refactory.Browser.SharedVariableChange'
+	instanceVariableNames: 'variable environmentName'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -99,25 +123,37 @@ Refactory.Browser.RenameVariableChange subclass: #'Refactory.Browser.RenameInsta
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Refactory.Browser.RefactoryClassChange subclass: #'Refactory.Browser.AddClassChange'
-	instanceVariableNames: 'definition superclassName instanceVariableNames classVariableNames imports category classConstants'
+	instanceVariableNames: 'definition attributes'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.RefactoryClassChange subclass: #'Refactory.Browser.AddMethodChange'
-	instanceVariableNames: 'source selector protocols environment packageName compilationFlags method'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Refactory.Browser.RefactoryClassChange subclass: #'Tools.BasicRenameClassChange'
+Refactory.Browser.RefactoryClassChange subclass: #'Refactory.Browser.BasicRenameClassChange'
 	instanceVariableNames: 'newName'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.RefactoryClassChange subclass: #'Refactory.Browser.ClassCommentChange'
-	instanceVariableNames: 'comment'
+Refactory.Browser.RefactoryClassChange subclass: #'Refactory.Browser.ClassAttributeChange'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.RefactoryClassChange subclass: #'Refactory.Browser.ClassImportsChange'
+	instanceVariableNames: 'imports'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.RefactoryClassChange subclass: #'Refactory.Browser.MoveClassChange'
+	instanceVariableNames: 'superclassName'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.RefactoryClassChange subclass: #'Refactory.Browser.RefactoryMethodChange'
+	instanceVariableNames: 'selector'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -134,14 +170,44 @@ Refactory.Browser.RefactoryClassChange subclass: #'Refactory.Browser.RemoveClass
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.RefactoryClassChange subclass: #'Refactory.Browser.RemoveMethodChange'
-	instanceVariableNames: 'selector'
+Refactory.Browser.ClassAttributeChange subclass: #'Refactory.Browser.ClassCategoryChange'
+	instanceVariableNames: 'categories'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.RefactoryClassChange subclass: #'Tools.ReplaceImportChange'
-	instanceVariableNames: 'oldImport newImport'
+Refactory.Browser.ClassAttributeChange subclass: #'Refactory.Browser.ClassCommentChange'
+	instanceVariableNames: 'comment'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.ClassAttributeChange subclass: #'Refactory.Browser.ClassGuidChange'
+	instanceVariableNames: 'guid'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.ClassAttributeChange subclass: #'Refactory.Browser.ClassSpecialBehaviorChange'
+	instanceVariableNames: 'instanceSpec'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.RefactoryMethodChange subclass: #'Refactory.Browser.AddMethodChange'
+	instanceVariableNames: 'source protocols environment packageName compilationFlags method'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.RefactoryMethodChange subclass: #'Refactory.Browser.RemoveMethodChange'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.RefactoryVariableChange subclass: #'Refactory.Browser.AddClassConstantChange'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -158,6 +224,12 @@ Refactory.Browser.RefactoryVariableChange subclass: #'Refactory.Browser.AddInsta
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Refactory.Browser.RefactoryVariableChange subclass: #'Refactory.Browser.RemoveClassConstantChange'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Refactory.Browser.RefactoryVariableChange subclass: #'Refactory.Browser.RemoveClassVariableChange'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -165,6 +237,18 @@ Refactory.Browser.RefactoryVariableChange subclass: #'Refactory.Browser.RemoveCl
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Refactory.Browser.RefactoryVariableChange subclass: #'Refactory.Browser.RemoveInstanceVariableChange'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.SharedVariableChange subclass: #'Refactory.Browser.AddSharedVariableChange'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.SharedVariableChange subclass: #'Refactory.Browser.RemoveSharedVariableChange'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
