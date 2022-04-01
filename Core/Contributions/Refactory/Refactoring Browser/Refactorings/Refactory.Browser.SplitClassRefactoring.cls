@@ -40,7 +40,7 @@ addClass
 				addClass: newClassName
 				superclass: Object
 				subclasses: #()
-				category: class category).
+				categories: class categories).
 	newClass := self model classNamed: newClassName!
 
 addInstanceVariables

@@ -1210,4 +1210,4 @@ Kernel.SharedPool subclass: #'OS.Win32Constants'
 OS.Win32Constants guid: (Core.GUID fromString: '{f9d6e381-277b-4501-bfd5-b9a3513f1bf0}')!
 OS.Win32Constants isNonInstantiable: true!
 OS.Win32Constants comment: ''!
-!OS.Win32Constants categoriesForClass!Kernel-Objects! !
+!OS.Win32Constants categoriesForClass!External-Data-Constants! !

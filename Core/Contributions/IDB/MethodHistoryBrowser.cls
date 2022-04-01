@@ -250,10 +250,10 @@ source
 updateHistory
 	"Get the historic information for the method. Purge consecutive duplicates from the list"
 
-	| temp |
-	Cursor wait showWhile: [temp := self scanner scanForMethodVersions: selector inClass: self methodClass].
-	history := OrderedCollection with: temp first.
-	temp do: 
+	| versions |
+	versions := Cursor wait showWhile: [self scanner scanForMethodVersions: selector inClass: self methodClass].
+	history := OrderedCollection with: versions first.
+	versions do: 
 			[:each |
 			((history last hasSameSourceAs: each) and: [history last sourceFileIndex = each sourceFileIndex])
 				ifFalse: [history add: each]].

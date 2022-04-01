@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.ClassRefactoring subclass: #'Refactory.Browser.AddClassRefactoring'
-	instanceVariableNames: 'category superclass subclasses'
+Refactory.Browser.Refactoring subclass: #'Refactory.Browser.AddClassRefactoring'
+	instanceVariableNames: 'details subclasses'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -11,68 +11,55 @@ Refactory.Browser.AddClassRefactoring comment: ''!
 !Refactory.Browser.AddClassRefactoring categoriesForClass!Refactory-Refactorings! !
 !Refactory.Browser.AddClassRefactoring methodsFor!
 
-addClass: aName superclass: aClass subclasses: aCollection category: aSymbol 
-	self className: aName.
-	superclass := self classObjectFor: aClass.
-	subclasses := aCollection collect: [:each | self classObjectFor: each].
-	category := aSymbol!
+className
+	^details className!
 
 definitionMessage
-	| classType |
-	#rbFix.	"Factored out from #transform, and allow for indexed/byte superclasses and for nil superclass."
-	classType := superclass isNil
-				ifTrue: ['subclass']
-				ifFalse: 
-					[superclass isPointers
-						ifTrue: [superclass isVariable ifTrue: ['variableSubclass'] ifFalse: ['subclass']]
-						ifFalse: ['variableByteSubclass']].
-	^'<1p> <2s>: <3p> instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''' category: <4p>'
-		expandMacrosWith: superclass
-		with: classType
-		with: className asSymbol
-		with: category!
+	^details printString!
+
+details: aClassDetails subclasses: aCollection
+	details := aClassDetails.
+	details className: (aClassDetails classReference referenceInModel: self model).
+	aClassDetails superclassReference
+		ifNotNil: [:ref | details superclassName: (ref referenceInModel: self model)].
+	subclasses := aCollection collect: [:each | self classObjectFor: each]!
 
 preconditions
-	| cond superNotMeta |
+	| cond superNotMeta superclass |
 	#rbFix.	"Bodge to allow for nil superclass"
+	superclass := details superclass.
 	superNotMeta := superclass isNil
 				ifTrue: [RBCondition empty]
-				ifFalse: [((RBCondition isMetaclass: superclass) errorMacro: 'Superclass must <1?not :>be a metaclass') not].
+				ifFalse: 
+					[((RBCondition isMetaclass: superclass) errorMacro: 'Superclass must <1?not :>be a metaclass') not].
 	cond := subclasses inject: superNotMeta
 				into: 
 					[:sub :each |
 					sub & ((RBCondition isMetaclass: each) errorMacro: 'Subclass must <1?not :>be a metaclass') not
 						& (RBCondition isImmediateSubclass: each of: superclass)].
-	#rbFix.	"Dolphin's categories are Strings, not Symbols"
+	#rbFix.	"Dolphin's class categories are named by Strings, not Symbols, and any class can be in multiple categories"
 	^cond & (RBCondition isValidClassName: self className)
-		& (RBCondition isStatic: self className in: self model) not & (RBCondition isString: category)
-		& ((RBCondition withBlock: 
-					["*** & (RBCondition isSymbol: category) "
-					category notEmpty])
-				errorMacro: 'Invalid category name')!
+		& (RBCondition isStatic: self className in: self model) not!
 
 storeOn: aStream
-	aStream nextPut: $(.
-	self class storeOn: aStream.
 	aStream
-		nextPutAll: ' addClass: ';
-		print: self className;
-		nextPutAll: ' superclass: '.
-	superclass storeOn: aStream.
-	aStream nextPutAll: ' subclasses: '.
-	subclasses asArray storeOn: aStream.
-	aStream nextPutAll: ' category: '.
-	category storeOn: aStream.
-	aStream nextPut: $)!
+		nextPut: $(;
+		store: self class;
+		space;
+		nextPutAll: #details:;
+		space;
+		store: details;
+		nextPut: $)!
 
 transform
 	#rbFix.	"Factor out #definitionMessage in order to permit override in subclass"
 	self model
-		defineClass: self definitionMessage;
+		defineClassWithDetails: details;
 		reparentClasses: subclasses to: (model instanceClassNamed: self className)! !
 !Refactory.Browser.AddClassRefactoring categoriesForMethods!
-addClass:superclass:subclasses:category:!initialize/release!public! !
+className!accessing!public! !
 definitionMessage!public!transforming! !
+details:subclasses:!initializing!private! !
 preconditions!public! !
 storeOn:!printing!public! !
 transform!public!transforming! !
@@ -80,23 +67,37 @@ transform!public!transforming! !
 
 !Refactory.Browser.AddClassRefactoring class methodsFor!
 
-addClass: aName superclass: aClass subclasses: aCollection category: aSymbol
-	^self new
-		addClass: aName
-		superclass: aClass
-		subclasses: aCollection
-		category: aSymbol!
+addClass: aString superclass: aClass subclasses: subclassesCollection categories: categoriesCollection
+	^self details: (ClassDetails
+				className: aString
+				superclass: aClass
+				categories: categoriesCollection)
+		subclasses: subclassesCollection!
 
-model: aRBModel addClass: aName superclass: aClass subclasses: aCollection category: aSymbol
+details: aClassDetails subclasses: anArray
+	^self new
+		details: aClassDetails subclasses: anArray;
+		yourself!
+
+model: aRBModel addClass: aString superclass: aClass subclasses: subclassesCollection categories: categoriesCollection
 	^self new
 		model: aRBModel;
-		addClass: aName
-			superclass: aClass
-			subclasses: aCollection
-			category: aSymbol;
+		details: (ClassDetails
+					className: aString
+					superclass: aClass
+					categories: categoriesCollection)
+			subclasses: subclassesCollection;
+		yourself!
+
+model: aRBModel details: aClassDetails subclasses: anArray
+	^self new
+		model: aRBModel;
+		details: aClassDetails subclasses: anArray;
 		yourself! !
 !Refactory.Browser.AddClassRefactoring class categoriesForMethods!
-addClass:superclass:subclasses:category:!instance creation!public! !
-model:addClass:superclass:subclasses:category:!instance creation!public! !
+addClass:superclass:subclasses:categories:!instance creation!public! !
+details:subclasses:!instance creation!public! !
+model:addClass:superclass:subclasses:categories:!instance creation!public! !
+model:details:subclasses:!instance creation!public! !
 !
 

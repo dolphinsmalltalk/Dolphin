@@ -87,4 +87,4 @@ Kernel.SharedPool subclass: #'OS.CRTConstants'
 OS.CRTConstants guid: (Core.GUID fromString: '{25d19e14-d8b9-4e6b-b84b-bc169d311bcc}')!
 OS.CRTConstants isNonInstantiable: true!
 OS.CRTConstants comment: ''!
-!OS.CRTConstants categoriesForClass!Unclassified! !
+!OS.CRTConstants categoriesForClass!External-Data-Constants! !

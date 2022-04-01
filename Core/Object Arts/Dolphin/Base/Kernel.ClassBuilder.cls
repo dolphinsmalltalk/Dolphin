@@ -6,6 +6,26 @@ Core.Object subclass: #'Kernel.ClassBuilder'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'ErrorAlreadyExists' -> '<1p>.<2s> already exists.'.
+		'ErrorBytesAndNamedInstVars' -> 'A byte subclass may not contain named instance variables.'.
+		'ErrorByteSubclassOfFixed' -> 'A byte subclass may not derive from a class containing named instance variables'.
+		'ErrorByteSubclassOfVariable' -> 'A byte subclass may not derive from a class containing indexed instance variables'.
+		'ErrorChangeMetaclassSuperclass' -> 'It is invalid to directly change the superclass of a metaclass.'.
+		'ErrorFixedInitialLayout' -> 'New inst vars must come after those already in <1p>'.
+		'ErrorFixedLayout' -> 'You must not change the instance variable layout of <1p>'.
+		'ErrorFixedSubclassOfVariable' -> 'Subclasses of an indexed class must also be indexed.'.
+		'ErrorFixedSubclassType' -> 'You may not change the subclass type of <1p>'.
+		'ErrorIndirectAndNullTerm' -> 'A byte subclass may not be both indirect and null-terminated.'.
+		'ErrorIndirectNotBytes' -> 'Indirect subclasses must contain bytes.'.
+		'ErrorInstVarAlreadyDefined' -> 'Proposed instance variable <1p> is multiply defined.'.
+		'ErrorInvalidClassName' -> 'Invalid class name ''<1s>'''.
+		'ErrorInvalidInstVarName' -> 'Proposed instance variable <1p> is invalid as a local identifier.'.
+		'ErrorNullTermNotBytes' -> 'Null-terminated subclasses must contain bytes.'.
+		'ErrorPointerSubclassOfBytes' -> 'A subclass containing pointers may not derive from a class containing bytes.'.
+		'ErrorRecursiveSubclass' -> 'Class cannot be a subclass of itself'.
+		'ErrorSuperclassIsSubclass' -> '<1p> is a subclass of the class being changed.'.
+		'ErrorTooManyInstVars' -> 'Classes are allowed a maximum of <1p> instance variables.'.
+		'ErrorUnsubclassable' -> '<1p> is not subclassable.'.
 		'FixedName' -> #(#Smalltalk #Root).
 		'IgnoreInstsMask' -> 16r2.
 		'RecompileMask' -> 16r1
@@ -111,24 +131,13 @@ checkNoInstances
 	instCount > 0
 		ifTrue: 
 			["Oh dear still extant instances - raise an error"
-			self errorInvalidRemove: (String writeStream
-						print: self currentClass;
-						nextPutAll: ' has ';
-						display: instCount;
-						nextPutAll: ' instances';
-						contents)]!
+			self errorInvalidRemove: '<1p> has <2d> instances' << {self currentClass. instCount}]!
 
 checkNoSubclasses
 	| subs |
 	subs := currentClass subclasses.
 	subs notEmpty
-		ifTrue: 
-			[self errorInvalidRemove: (String writeStream
-						print: self currentClass;
-						nextPutAll: ' has ';
-						display: subs size;
-						nextPutAll: ' subclasses';
-						contents)]!
+		ifTrue: [self errorInvalidRemove: '<1p> has <2d> subclasses' << {self currentClass. subs size}]!
 
 class: aClass
 	"Private - Set the currentClass inst var to the class to be modified, aClass."
@@ -860,7 +869,7 @@ validateClassForRename
 	self validateClass.
 	(SessionManager current isOAD
 		or: [((FixedLayout includes: currentClass) or: [FixedInitialLayout includes: currentClass]) not])
-			ifFalse: [self error: ('<1p> must not be renamed.' expandMacrosWith: currentClass)]!
+			ifFalse: [self error: '<1p> must not be renamed.' << currentClass]!
 
 validateClassInstanceVars
 	"Private - Ensure that the proposed changes do not result in a duplicate name
@@ -876,7 +885,7 @@ validateClassName
 	"Private - Ensure that the proposed class name is valid."
 
 	(self class isValidClassName: className)
-		ifFalse: [self error: ('Invalid class name <1s>' expandMacrosWith: className)]!
+		ifFalse: [self error: (ErrorInvalidClassName << className)]!
 
 validateClassVarName: aString using: aCollection
 	"Private - Ensure that the proposed class variable name is not a
@@ -884,17 +893,14 @@ validateClassVarName: aString using: aCollection
 
 	| first |
 	(self class isValidIdentifier: aString)
-		ifFalse: 
-			[self
-				error: ('Proposed class variable <1p> is invalid as a local identifier.' expandMacrosWith: aString)].
+		ifFalse: [self error: 'Proposed class variable <1p> is invalid as a local identifier.' << aString].
 	(aCollection includes: aString)
-		ifTrue: [self error: ('Proposed class variable <1p> is multiply defined.' expandMacrosWith: aString)].
+		ifTrue: [self error: 'Proposed class variable <1p> is multiply defined.' << aString].
 	first := aString first.
 	(first isUppercase or: [first == $_]) ifTrue: [^self].
 	Warning new
 		isSuppressible: true;
-		signal: ('Proposed class variable <1p> should start with an uppercase letter.'
-					expandMacrosWith: aString)!
+		signal: 'Proposed class variable <1p> should start with an uppercase letter.' << aString!
 
 validateClassVars: classVarsArray againstSuperclass: aClass
 	"Private - Ensure that the proposed class variable name list does not
@@ -974,8 +980,7 @@ validateForRename
 		validateClassForRename;
 		validateClassName.
 	(self environment localBindingFor: className)
-		ifNotNil: 
-			[self error: ('<1p>.<2s> already exists.' expandMacrosWith: self environment with: className)]!
+		ifNotNil: [self error: ErrorAlreadyExists << {self environment. className}]!
 
 validateImports
 	"Private - Ensure that the proposed imports exist in the environment and ensure they are of canonical form."
@@ -1031,10 +1036,7 @@ validateInstanceSpec: anInstanceSpec size: anInteger superclass: proposedSupercl
 								size: anInteger
 								superclass: proposedSuperclass]].
 	fixedSize := anInteger + (proposedSuperclass ifNil: [0] ifNotNil: [proposedSuperclass instSize]).
-	fixedSize > Behavior._SizeMask
-		ifTrue: 
-			[self error: ('Classes are allowed a maximum of <1p> instance variables.'
-						expandMacrosWith: Behavior._SizeMask)].
+	fixedSize > Behavior._SizeMask ifTrue: [self error: ErrorTooManyInstVars << Behavior._SizeMask].
 	^spec bitOr: fixedSize!
 
 validateInstanceSpecForModify
@@ -1042,7 +1044,7 @@ validateInstanceSpecForModify
 
 	self validateInstanceSpec.
 	(self fundamentalTypeIsBeingChanged and: [currentClass isMeta not and: [self isFixedType]])
-		ifTrue: [self error: ('You may not change the subclass type of <1p>' expandMacrosWith: currentClass)]!
+		ifTrue: [self error: (ErrorFixedSubclassType << currentClass)]!
 
 validateInstanceVars: instVarsArray againstSuperclass: aClass
 	"Private - Ensure that the proposed instance variable name list does not
@@ -1079,12 +1081,13 @@ validateInstanceVarsForModify
 	currentClass isMeta
 		ifFalse: 
 			[(self isFixedLayout and: [currentClass instanceVariableNames ~= proposedInstVarArray])
-				ifTrue: [self error: 'You must not change the instance variable layout of ' , currentClass name].
+				ifTrue: [self error: ErrorFixedLayout << currentClass].
 			(self isFixedInitialLayout and: 
 					[| existing |
 					existing := currentClass instanceVariableNames.
-					existing notEmpty and: [(proposedInstVarArray indexOfSubCollection: currentClass instanceVariableNames) ~~ 1]])
-				ifTrue: [self error: 'New inst vars must come after those already in ' , currentClass name]].
+					existing notEmpty
+						and: [(proposedInstVarArray indexOfSubCollection: currentClass instanceVariableNames) ~~ 1]])
+				ifTrue: [self error: ErrorFixedInitialLayout << currentClass]].
 	currentClass allSubclasses
 		do: [:cls | cls instanceVariableNames do: [:name | self validateInstVarName: name using: instVarSet]]!
 
@@ -1092,13 +1095,9 @@ validateInstVarName: aString using: aCollection
 	"Private - Ensure that the proposed instance variable name is not a
 	reserved word and does not duplicate a name defined in aColecton."
 
-	(self class isValidIdentifier: aString)
-		ifFalse: 
-			[self
-				error: ('Proposed instance variable <1p> is invalid as a local identifier.' expandMacrosWith: aString)].
+	(self class isValidIdentifier: aString) ifFalse: [self error: ErrorInvalidInstVarName << aString].
 	(aCollection includes: aString)
-		ifTrue: 
-			[self error: ('Proposed instance variable <1p> is multiply defined.' expandMacrosWith: aString)]!
+		ifTrue: [self error: (ErrorInstVarAlreadyDefined expandMacrosWith: aString)]!
 
 validateSpecAsFixedPointers: spec size: anInteger superclass: proposedSuperclass
 	"Private - Answer a validated instance spec. Signal an exception if spec is
@@ -1112,8 +1111,7 @@ validateSpecAsFixedPointers: spec size: anInteger superclass: proposedSuperclass
 						validateSpecAsVariablePointers: spec
 						size: anInteger
 						superclass: proposedSuperclass].
-			proposedSuperclass isVariable
-				ifTrue: [self error: 'Subclasses of an indexed class must also be indexed.']].
+			proposedSuperclass isVariable ifTrue: [self error: ErrorFixedSubclassOfVariable]].
 	^spec!
 
 validateSpecAsVariableBytes: spec size: anInteger superclass: proposedSuperclass
@@ -1125,17 +1123,14 @@ validateSpecAsVariableBytes: spec size: anInteger superclass: proposedSuperclass
 	inheritedFlags := ##(Behavior._IndirectMask + Behavior._NullTermMask).
 	validatedSpec := spec.
 	proposedSuperclass notNil
-		ifTrue: [
-			proposedSuperclass instSize > 0
-				ifTrue: [self error: 'A byte subclass may not derive from a class containing named instance variables'].
+		ifTrue: 
+			[proposedSuperclass instSize > 0 ifTrue: [self error: ErrorByteSubclassOfFixed].
 			(proposedSuperclass isPointers and: [proposedSuperclass isVariable])
-				ifTrue: [self error: 'A byte subclass may not derive from a class containing indexed instance variables'].
+				ifTrue: [self error: ErrorByteSubclassOfVariable].
 			validatedSpec := validatedSpec bitOr: (inheritedFlags bitAnd: proposedSuperclass instanceSpec)].
-
 	(validatedSpec allMask: inheritedFlags)
-		ifTrue: [self error: 'A byte subclass may not be both indirect and null-terminated.'].
-	anInteger > 0
-		ifTrue: [self error: 'A byte subclass may not contain named instance variables.'].
+		ifTrue: [self error: ErrorIndirectAndNullTerm].
+	anInteger > 0 ifTrue: [self error: ErrorBytesAndNamedInstVars].
 	^validatedSpec!
 
 validateSpecAsVariablePointers: spec size: anInteger superclass: proposedSuperclass
@@ -1143,11 +1138,11 @@ validateSpecAsVariablePointers: spec size: anInteger superclass: proposedSupercl
 	invalid as a variable subclass of proposedSuperclass."
 
 	(proposedSuperclass notNil and: [proposedSuperclass isBytes])
-		ifTrue: [self error: 'A subclass containing pointers may not derive from a class containing bytes.'].
+		ifTrue: [self error: ErrorPointerSubclassOfBytes].
 	(spec anyMask: Behavior._IndirectMask)
-		ifTrue: [self error: 'Indirect subclasses must contain bytes.'].
+		ifTrue: [self error: ErrorIndirectNotBytes].
 	(spec anyMask: Behavior._NullTermMask)
-		ifTrue: [self error: 'Null-terminated subclasses must contain bytes.'].
+		ifTrue: [self error: ErrorNullTermNotBytes].
 	^spec!
 
 validateSubclassesOf: aClass againstInstanceSpec: instSpec
@@ -1180,26 +1175,25 @@ validateSuperclassChainForCreate
 	superclass isNil ifTrue: [^self].
 	fullName := self environment fullNameFor: className.
 	(superclass withAllSuperclasses anySatisfy: [:each | each fullName = fullName])
-		ifTrue: [self error: 'Class cannot be a subclass of itself']!
+		ifTrue: [self error: ErrorRecursiveSubclass]!
 
 validateSuperclassChainForModify
 	"Private - Ensure that the proposed superclass chain doesn't already include
 	the current class"
 
 	superclass isNil ifTrue: [^self].
-	(superclass withAllSuperclasses anySatisfy: [:each | each == currentClass]) 
-		ifTrue: [self error: 'Class cannot be a subclass of itself']!
+	(superclass withAllSuperclasses anySatisfy: [:each | each == currentClass])
+		ifTrue: [self error: ErrorRecursiveSubclass]!
 
 validateSuperclassForModify
 	"Private - Ensure that no circularity is introduced into the hierarchy and
 	that the superclass of a metaclass is not changed directly."
 
 	self superclassIsBeingChanged ifFalse: [^self].
-	currentClass isMeta
-		ifTrue: [self error: 'It is invalid to directly change the superclass of a metaclass.'].
+	currentClass isMeta ifTrue: [self error: ErrorChangeMetaclassSuperclass].
 	self validateSuperclassIsSubclassable.
 	(superclass notNil and: [superclass isKindOf: currentClass])
-		ifTrue: [self error: ('<1p> is a subclass of the class being changed.' expandMacrosWith: superclass)]!
+		ifTrue: [self error: ErrorSuperclassIsSubclass << superclass]!
 
 validateSuperclassIsSubclassable
 	"Private - Ensure that the superclass is a subclassable object."
@@ -1207,7 +1201,7 @@ validateSuperclassIsSubclassable
 	superclass notNil
 		ifTrue: 
 			[(superclass class isMeta not or: [Unsubclassable includes: superclass])
-				ifTrue: [self error: 'Proposed superclass is not subclassable.']]! !
+				ifTrue: [self error: ErrorUnsubclassable << superclass]]! !
 !Kernel.ClassBuilder categoriesForMethods!
 allClassVarNamesOf:!helpers!private! !
 allInstVarNamesOf:!helpers!private! !

@@ -759,25 +759,38 @@ fileOutPackageClassDefinitions: aPackage
 			classes do: 
 					[:each |
 					((each inheritsFrom: Namespace) and: [(each inheritsFrom: SharedPool) not])
-						ifTrue: [self fileOutBasicDefinitionOfClass: each]].
-			classes
-				do: [:each | (each inheritsFrom: SharedPool) ifTrue: [self fileOutBasicDefinitionOfClass: each]].
-			classes
-				do: [:each | (each inheritsFrom: Namespace) ifFalse: [self fileOutBasicDefinitionOfClass: each]].
+						ifTrue: 
+							[self
+								fileOutBasicDefinitionOfClass: each;
+								cr]].
+			classes do: 
+					[:each |
+					(each inheritsFrom: SharedPool)
+						ifTrue: 
+							[self
+								fileOutBasicDefinitionOfClass: each;
+								cr]].
+			classes do: 
+					[:each |
+					(each inheritsFrom: Namespace)
+						ifFalse: 
+							[self
+								fileOutBasicDefinitionOfClass: each;
+								cr]].
 			self cr]!
 
 fileOutPackageClasses: aPackage
 	| classes |
 	classes := self packageClassesInFileoutOrder: aPackage.
 	classes isEmpty ifTrue: [^self].
-	self
-		emitComment: 'Classes';
-		cr.
+	self emitComment: 'Classes'.
 	classes do: 
 			[:aClass |
-			self fileOutAttributesOfClass: aClass.
-			self fileOutPackage: aPackage methodsOfClass: aClass.
-			self fileOutPackage: aPackage methodsOfClass: aClass class]!
+			self
+				fileOutAttributesOfClass: aClass;
+				cr;
+				fileOutPackage: aPackage methodsOfClass: aClass;
+				fileOutPackage: aPackage methodsOfClass: aClass class]!
 
 fileOutPackageMethods: aPackage
 	"Private - File out the loose methods owned by the specified package to the receiver's stream."

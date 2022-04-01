@@ -99,15 +99,15 @@ classVariables: anObject
 	classVariables := anObject!
 
 classVariableSelectorsFor: aClass
-	| selectors classVars nonMetaClass |
-	nonMetaClass := aClass instanceClass.
+	| selectors classVars instanceClass |
+	instanceClass := aClass instanceClass.
 	selectors := IdentitySet new.
 	classVars := Set new.
 	classVariables keysDo: 
 			[:each |
 			| cls |
 			cls := self classForName: each.
-			(cls notNil and: [nonMetaClass includesBehavior: cls])
+			(cls notNil and: [instanceClass includesBehavior: cls])
 				ifTrue: [classVars addAll: (classVariables at: each)]].
 	classVars do: 
 			[:each |
@@ -170,10 +170,8 @@ environmentForInstanceVariable: aString in: aClass
 	^selectorEnvironment!
 
 flushCachesFor: aClass
-	| nonMetaClass |
 	selectorCache isNil ifTrue: [^self].
-	nonMetaClass := aClass instanceClass.
-	nonMetaClass withAllSubclasses do: 
+	aClass instanceClass withAllSubclasses do: 
 			[:each |
 			selectorCache
 				removeKey: each ifAbsent: nil;

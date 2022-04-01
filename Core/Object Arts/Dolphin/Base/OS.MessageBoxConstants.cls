@@ -38,4 +38,4 @@ Kernel.SharedPool subclass: #'OS.MessageBoxConstants'
 OS.MessageBoxConstants guid: (Core.GUID fromString: '{ae2717d5-7d5d-4625-aed8-d9b721d4e019}')!
 OS.MessageBoxConstants isNonInstantiable: true!
 OS.MessageBoxConstants comment: ''!
-!OS.MessageBoxConstants categoriesForClass!Unclassified! !
+!OS.MessageBoxConstants categoriesForClass!External-Data-Constants! !

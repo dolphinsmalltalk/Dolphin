@@ -28,10 +28,10 @@ instanceSpec
 instanceSpec: aString
 	instanceSpec := aString!
 
-mutateAttributes: aClassAttributes
-	"Alter the <ClassAttributes> argument to reflect the change described by the receiver."
+mutateClassDetails: aClassDetails
+	"Alter the <ClassDetails> argument to reflect the change described by the receiver."
 
-	aClassAttributes instanceSpec: instanceSpec!
+	aClassDetails instanceSpec: instanceSpec!
 
 primitiveExecute
 	| class |
@@ -44,25 +44,25 @@ changeString!printing!public! !
 emitAttributeOf:with:!printing!private! !
 instanceSpec!accessing!public! !
 instanceSpec:!accessing!public! !
-mutateAttributes:!helpers!private! !
+mutateClassDetails:!helpers!private! !
 primitiveExecute!applying!private! !
 !
 
 !Refactory.Browser.ClassSpecialBehaviorChange class methodsFor!
 
-setGuid: aGUID of: aClass
-	^self new
-		changeClass: aClass;
-		instanceSpec: aGUID;
-		yourself!
-
 setSpecialBehavior: anInteger of: aClass
 	^self new
 		changeClass: aClass;
 		instanceSpec: anInteger;
+		yourself!
+
+uniquelyIdentify: aClass with: aGUID
+	^self new
+		changeClass: aClass;
+		instanceSpec: aGUID;
 		yourself! !
 !Refactory.Browser.ClassSpecialBehaviorChange class categoriesForMethods!
-setGuid:of:!instance creation!public! !
 setSpecialBehavior:of:!instance creation!public! !
+uniquelyIdentify:with:!instance creation!public! !
 !
 

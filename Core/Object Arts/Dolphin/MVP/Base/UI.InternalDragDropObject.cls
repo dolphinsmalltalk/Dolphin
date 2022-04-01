@@ -8,7 +8,6 @@ UI.DragDropObject subclass: #'UI.InternalDragDropObject'
 	classConstants: {}!
 UI.InternalDragDropObject guid: (Core.GUID fromString: '{66dcba44-45b2-4c2d-8b18-0fbcf0e9ff95}')!
 UI.InternalDragDropObject comment: ''!
-!UI.InternalDragDropObject categoriesForClass!Unclassified! !
 !UI.InternalDragDropObject methodsFor!
 
 availableFormats

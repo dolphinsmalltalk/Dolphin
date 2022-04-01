@@ -111,7 +111,6 @@ package setClassNames: #(
 	#{UI.KeyEvent}
 	#{UI.LayoutContext}
 	#{UI.LayoutManager}
-	#{UI.LegacyCommandPolicy}
 	#{UI.LinearLayout}
 	#{UI.Menu}
 	#{UI.MenuBar}
@@ -1281,7 +1280,7 @@ Core.Object subclass: #'UI.CommandDescription'
 	classConstants: {
 		'DefaultMask' -> 16r1.
 		'ModalMask' -> 16r2.
-		'NotAbortableMask' -> 16r3
+		'NotAbortableMask' -> 16r4
 	}!
 Core.Object subclass: #'UI.CommandPolicy'
 	instanceVariableNames: 'source path'
@@ -1436,12 +1435,6 @@ UI.CommandDescription subclass: #'UI.ClosedCommandDescription'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.CommandPolicy subclass: #'UI.DelegatingCommandPolicy'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-UI.CommandPolicy subclass: #'UI.LegacyCommandPolicy'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

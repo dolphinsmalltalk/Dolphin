@@ -9,7 +9,7 @@ Core.Locale subclass: #'OS.AbstractWindowsLocale'
 OS.AbstractWindowsLocale guid: (Core.GUID fromString: '{f4f1e93b-efe9-4ae4-a610-a5f9fcb791f0}')!
 OS.AbstractWindowsLocale isNonInstantiable: true!
 OS.AbstractWindowsLocale comment: ''!
-!OS.AbstractWindowsLocale categoriesForClass!Unclassified! !
+!OS.AbstractWindowsLocale categoriesForClass!System-Localization! !
 !OS.AbstractWindowsLocale methodsFor!
 
 amDesignator

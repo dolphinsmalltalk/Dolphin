@@ -7,6 +7,7 @@ Core.WeakArray variableSubclass: #'Core.MourningWeakArray'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.MourningWeakArray guid: (Core.GUID fromString: '{87b4c520-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.MourningWeakArray isMourner: true!
 Core.MourningWeakArray comment: ''!
 !Core.MourningWeakArray categoriesForClass!Collections-Arrayed!Collections-Weak! !
 !Core.MourningWeakArray methodsFor!
@@ -61,14 +62,8 @@ elementsExpired: anInteger of: aWeakArray
 	The reason for making the default pathologist the receiver (i.e. the MourningWeakArray class)
 	is to avoid creating a circular references in all MourningWeakArrays."
 
-	aWeakArray trigger: #elementsExpired: with: anInteger!
-
-initialize
-	"Initialize the receiver."
-
-	self makeMourner! !
+	aWeakArray trigger: #elementsExpired: with: anInteger! !
 !Core.MourningWeakArray class categoriesForMethods!
 elementsExpired:of:!finalizing!private! !
-initialize!development!initializing!public! !
 !
 

@@ -8,7 +8,7 @@ Core.Object subclass: #'UI.CommandDescription'
 	classConstants: {
 		'DefaultMask' -> 16r1.
 		'ModalMask' -> 16r2.
-		'NotAbortableMask' -> 16r3
+		'NotAbortableMask' -> 16r4
 	}!
 UI.CommandDescription guid: (Core.GUID fromString: '{87b4c469-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.CommandDescription comment: 'A CommandDescription acts as the fundamental source for all MVP user interface commands. An instance of this class holds the command itself, a textual description of the command''s function and, optionally, an accelerator key that may trigger the command action when used within a menu. The command can be a <Message>, <Symbol> or, indeed, any object that responds to the <commandMessage> protocol. For most commands, symbols are prevalent but messages can sometimes be more convenient, especially if the command is to carry parameters, such as in dynamically constructed menus (e.g. the browser history list).
@@ -123,7 +123,7 @@ id
 image
 	"Answers the <Image> associated with the receiver or nil if there is none"
 
-	^image!
+	^image value!
 
 image: anImageOrNil
 	"Sets  the icon associated with the receiver to anImageOrNil"
@@ -137,7 +137,7 @@ initialize
 	flags := 0!
 
 isAbortable
-	"Answer whether the receiver describes a command that may safely throw OperationAborted to terminate its operation without side effects. Some command hosts may choose to use this information to catch and suppress OperationAborted exceptions when executing the command. If this message answers false, then the command host should treat OperationAborted like any other error."
+	"Answer whether the receiver describes a command that may safely throw OperationAborted to terminate its operation without side effects. Some command hosts may choose to use this information to catch and suppress OperationAborted exceptions when executing the command. If this message answers false, then the command host should treat OperationAborted like any other error. By default commands are abortable."
 
 	^flags noMask: NotAbortableMask!
 

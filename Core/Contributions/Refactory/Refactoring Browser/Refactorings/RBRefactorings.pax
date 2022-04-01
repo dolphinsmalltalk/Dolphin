@@ -22,6 +22,8 @@ package setClassNames: #(
 	#{Refactory.Browser.AddParameterRefactoring}
 	#{Refactory.Browser.ChangeMethodNameRefactoring}
 	#{Refactory.Browser.ChildrenToSiblingsRefactoring}
+	#{Refactory.Browser.ClassImportsRefactoring}
+	#{Refactory.Browser.ClassNameToBindingReferenceRefactoring}
 	#{Refactory.Browser.ClassRefactoring}
 	#{Refactory.Browser.CreateAccessorsForVariableRefactoring}
 	#{Refactory.Browser.ExpandImportsRefactoring}
@@ -64,10 +66,10 @@ package setClassNames: #(
 	#{Refactory.Browser.Refactoring}
 	#{Refactory.Browser.RefactoringError}
 	#{Refactory.Browser.RefactoringManager}
-	#{Refactory.Browser.RefactoringWarning}
 	#{Refactory.Browser.RefactoryTyper}
 	#{Refactory.Browser.RemoveClassRefactoring}
 	#{Refactory.Browser.RemoveClassVariableRefactoring}
+	#{Refactory.Browser.RemoveImportRefactoring}
 	#{Refactory.Browser.RemoveInstanceVariableRefactoring}
 	#{Refactory.Browser.RemoveMethodRefactoring}
 	#{Refactory.Browser.RemoveParameterRefactoring}
@@ -80,19 +82,18 @@ package setClassNames: #(
 	#{Refactory.Browser.TemporaryToInstanceVariableRefactoring}
 	#{Refactory.Browser.UnqualifyStaticVariablesRefactoring}
 	#{Refactory.Browser.VariableRefactoring}
-	#{Tools.ClassNameToBindingReferenceRefactoring}
 ).
 
 package setMethodNames: #(
 	#(#{Core.Array} #hasLiteralMatching:)
 	#(#{Core.Class} #classInModel:)
-	#(#{Core.Class} #rbClass)
+	#(#{Core.Class} #newClassInModel:)
 	#(#{Core.Class class} #rootsOfTheWorld)
 	#(#{Core.ClassDescription} #classInModel:)
 	#(#{Core.Metaclass} #classInModel:)
 	#(#{Kernel.BindingReference} #referenceInModel:)
 	#(#{Kernel.CompiledCode} #hasLiteralMatching:)
-	#(#{Kernel.Namespace class} #rbClass)
+	#(#{Kernel.Namespace class} #newClassInModel:)
 	#(#{Kernel.StAbstractVariableNode} #isBindingChanged)
 	#(#{Kernel.StAbstractVariableNode} #refersToClass:)
 	#(#{Kernel.StLiteralArrayNode} #refersToClass:)
@@ -115,8 +116,8 @@ package setMethodNames: #(
 	#(#{Kernel.VariableBinding} #refersToBinding:)
 	#(#{Kernel.VariableBinding} #refersToClass:)
 	#(#{Root class} #classInModel:)
-	#(#{Root class} #rbClass)
-	#(#{Smalltalk class} #rbClass)
+	#(#{Root class} #newClassInModel:)
+	#(#{Smalltalk class} #newClassInModel:)
 ).
 
 package setPrerequisites: #(
@@ -187,12 +188,6 @@ Core.Error subclass: #'Refactory.Browser.RefactoringError'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Warning subclass: #'Refactory.Browser.RefactoringWarning'
-	instanceVariableNames: 'refactoring'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 Kernel.VariableBinding subclass: #'Refactory.Browser.RBVariableBinding'
 	instanceVariableNames: 'realBinding'
 	classVariableNames: ''
@@ -212,13 +207,13 @@ Kernel.AbstractSemanticAnalyser subclass: #'Refactory.Browser.RBVariableAnalyser
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Refactory.Browser.RBAbstractClass subclass: #'Refactory.Browser.RBClass'
-	instanceVariableNames: 'model name metaclass realClass superclass subclasses unqualifiedName classPool imports category comment environment binding'
+	instanceVariableNames: 'model name metaclass realClass superclass subclasses unqualifiedName classPool imports categoryNames comment environment binding'
 	classVariableNames: 'LookupComment'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Refactory.Browser.RBAbstractClass subclass: #'Refactory.Browser.RBMetaclass'
-	instanceVariableNames: 'nonMetaclass'
+	instanceVariableNames: 'instanceClass'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -271,6 +266,12 @@ Refactory.Browser.Refactoring subclass: #'Refactory.Browser.AbstractVariablesRef
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Refactory.Browser.Refactoring subclass: #'Refactory.Browser.AddClassRefactoring'
+	instanceVariableNames: 'details subclasses'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Refactory.Browser.Refactoring subclass: #'Refactory.Browser.ClassRefactoring'
 	instanceVariableNames: 'className'
 	classVariableNames: ''
@@ -319,25 +320,19 @@ Refactory.Browser.Refactoring subclass: #'Refactory.Browser.VariableRefactoring'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.ClassRefactoring subclass: #'Refactory.Browser.AddClassRefactoring'
-	instanceVariableNames: 'category superclass subclasses'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Refactory.Browser.ClassRefactoring subclass: #'Refactory.Browser.AddImportRefactoring'
-	instanceVariableNames: 'class import'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 Refactory.Browser.ClassRefactoring subclass: #'Refactory.Browser.ChildrenToSiblingsRefactoring'
 	instanceVariableNames: 'parent subclasses'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.ClassRefactoring subclass: #'Tools.ClassNameToBindingReferenceRefactoring'
+Refactory.Browser.ClassRefactoring subclass: #'Refactory.Browser.ClassImportsRefactoring'
+	instanceVariableNames: 'class import'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.ClassRefactoring subclass: #'Refactory.Browser.ClassNameToBindingReferenceRefactoring'
 	instanceVariableNames: 'class unqualifiedName'
 	classVariableNames: ''
 	imports: #(#{Refactory.Browser})
@@ -347,6 +342,18 @@ Refactory.Browser.ClassRefactoring subclass: #'Refactory.Browser.RenameClassRefa
 	instanceVariableNames: 'newName class newClassReference oldUnqualified classBinding'
 	classVariableNames: ''
 	imports: #(#{Refactory.Browser})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.ClassImportsRefactoring subclass: #'Refactory.Browser.AddImportRefactoring'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.ClassImportsRefactoring subclass: #'Refactory.Browser.RemoveImportRefactoring'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Refactory.Browser.MethodRefactoring subclass: #'Refactory.Browser.AddMethodRefactoring'
@@ -428,7 +435,7 @@ Refactory.Browser.MethodRefactoring subclass: #'Refactory.Browser.RemoveMethodRe
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Refactory.Browser.MethodRefactoring subclass: #'Refactory.Browser.RenameTemporaryRefactoring'
-	instanceVariableNames: 'selector interval oldName newName parseTree'
+	instanceVariableNames: 'selector interval oldName newName'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -576,11 +583,11 @@ hasLiteralMatching:!private!testing! !
 classInModel: aRBModel
 	^((environment classInModel: aRBModel) localBindingFor: name) value!
 
-rbClass
-	^Refactory.Browser.RBClass! !
+newClassInModel: aRBModel
+	^Refactory.Browser.RBClass new model: aRBModel existing: self! !
 !Core.Class categoriesForMethods!
 classInModel:!public! !
-rbClass!constants!public! !
+newClassInModel:!private!refactoring! !
 !
 
 !Core.Class class methodsFor!
@@ -633,10 +640,10 @@ hasLiteralMatching:!private!testing! !
 
 !Kernel.Namespace class methodsFor!
 
-rbClass
-	^Refactory.Browser.RBNamespaceClass! !
+newClassInModel: aRBModel
+	^Refactory.Browser.RBNamespaceClass new model: aRBModel existing: self! !
 !Kernel.Namespace class categoriesForMethods!
-rbClass!constants!public! !
+newClassInModel:!private!refactoring! !
 !
 
 !Kernel.StAbstractVariableNode methodsFor!
@@ -788,19 +795,19 @@ refersToClass:!public!testing! !
 classInModel: aRBModel
 	^aRBModel rootNamespace!
 
-rbClass
-	^Refactory.Browser.RBRootNamespace! !
+newClassInModel: aRBModel
+	^aRBModel rootNamespace! !
 !Root class categoriesForMethods!
 classInModel:!public! !
-rbClass!constants!public! !
+newClassInModel:!private!refactoring! !
 !
 
 !Smalltalk class methodsFor!
 
-rbClass
-	^Refactory.Browser.RBSmalltalkNamespace! !
+newClassInModel: aRBModel
+	^Refactory.Browser.RBSmalltalkNamespace new model: aRBModel existing: self! !
 !Smalltalk class categoriesForMethods!
-rbClass!constants!public! !
+newClassInModel:!private!refactoring! !
 !
 
 "End of package definition"!

@@ -11,11 +11,14 @@ Refactory.Browser.Tests.RemoveInstanceVariableChangeTest comment: ''!
 !Refactory.Browser.Tests.RemoveInstanceVariableChangeTest categoriesForClass!Refactory-Testing! !
 !Refactory.Browser.Tests.RemoveInstanceVariableChangeTest methodsFor!
 
+subjectClass
+	^RemoveInstanceVariableChange!
+
 testAsUndo
 	| subject undo |
-	subject := RemoveInstanceVariableChange remove: 'class' from: TransformationRuleTestData.
+	subject := self subjectClass remove: 'class' from: TransformationRuleTestData.
 	undo := subject asUndoOperation.
-	self assert: undo isKindOf: AddInstanceVariableChange.
+	self assert: undo isKindOf: self undoClass.
 	self assert: undo variable identicalTo: subject variable.
 	self assert: undo afterText equals: subject beforeText!
 
@@ -36,9 +39,14 @@ testPrinting
 	self assert: subject changeString
 		equals: 'Remove instance variable named, class, from Refactory.Browser.TestData.TransformationRuleTestData'.
 	self assert: subject printString
-		equals: 'Refactory.Browser.TestData.TransformationRuleTestData removeInstVarName: ''class''!!'! !
+		equals: 'Refactory.Browser.TestData.TransformationRuleTestData removeInstVarName: ''class''!!'!
+
+undoClass
+	^AddInstanceVariableChange! !
 !Refactory.Browser.Tests.RemoveInstanceVariableChangeTest categoriesForMethods!
+subjectClass!constants!private! !
 testAsUndo!public!unit tests! !
 testPrinting!public!unit tests! !
+undoClass!constants!private! !
 !
 

@@ -8,7 +8,7 @@ OS.AbstractWindowsLocale subclass: #'OS.WindowsLocale'
 	classConstants: {}!
 OS.WindowsLocale guid: (Core.GUID fromString: '{72672414-3e98-4af9-a1af-684456e4529d}')!
 OS.WindowsLocale comment: ''!
-!OS.WindowsLocale categoriesForClass!Unclassified! !
+!OS.WindowsLocale categoriesForClass!System-Localization! !
 !OS.WindowsLocale methodsFor!
 
 = anObject

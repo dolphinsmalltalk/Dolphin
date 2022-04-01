@@ -11,18 +11,21 @@ Refactory.Browser.Tests.RemoveClassConstantChangeTest comment: ''!
 !Refactory.Browser.Tests.RemoveClassConstantChangeTest categoriesForClass!Refactory-Testing! !
 !Refactory.Browser.Tests.RemoveClassConstantChangeTest methodsFor!
 
+subjectClass
+	^RemoveClassConstantChange!
+
 testAsUndo
 	| subject undo |
-	subject := RemoveClassConstantChange remove: (TransformationRuleTestData bindingFor: 'Bar')
+	subject := self subjectClass remove: (TransformationRuleTestData bindingFor: 'Bar')
 				from: TransformationRuleTestData.
 	undo := subject asUndoOperation.
-	self assert: undo isKindOf: AddClassConstantChange.
+	self assert: undo isKindOf: self undoClass.
 	self assert: undo variable identicalTo: subject variable.
 	self assert: undo afterText equals: subject beforeText!
 
 testPrinting
 	| subject |
-	subject := RemoveClassConstantChange remove: (TransformationRuleTestData bindingFor: 'Bar')
+	subject := self subjectClass remove: (TransformationRuleTestData bindingFor: 'Bar')
 				from: TransformationRuleTestData.
 	self assert: subject beforeText equals: TransformationRuleTestData definition.
 	self assert: subject afterText
@@ -35,9 +38,14 @@ testPrinting
 	self assert: subject changeString
 		equals: 'Remove class constant named, Bar, from Refactory.Browser.TestData.TransformationRuleTestData'.
 	self assert: subject printString
-		equals: 'Refactory.Browser.TestData.TransformationRuleTestData removeClassConstant: ''Bar'' -> 123!!'! !
+		equals: 'Refactory.Browser.TestData.TransformationRuleTestData removeClassConstant: ''Bar'' -> 123!!'!
+
+undoClass
+	^AddClassConstantChange! !
 !Refactory.Browser.Tests.RemoveClassConstantChangeTest categoriesForMethods!
+subjectClass!constants!private! !
 testAsUndo!public!unit tests! !
 testPrinting!public!unit tests! !
+undoClass!constants!private! !
 !
 

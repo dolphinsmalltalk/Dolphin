@@ -22,15 +22,9 @@ Renaming a class in such a way as to change its `Namespace` can result in ambigu
 !Refactory.Browser.RenameClassRefactoring categoriesForClass!Refactory-Refactorings! !
 !Refactory.Browser.RenameClassRefactoring methodsFor!
 
-checkForSymbolicReferences
-	| symbolicRefs |
-	symbolicRefs := model allReferencesTo: oldUnqualified.
-	symbolicRefs isEmpty ifFalse: [
-		self shouldIgnoreRemainingSymbolicReferences: symbolicRefs]!
-
 className: oldString newName: newString
-	self className: oldString.
 	newName := newString.
+	self className: oldString.
 	class := self model classNamed: oldString.
 	oldUnqualified := class unqualifiedName.
 	classBinding := class globalScope fullBindingFor: oldString environment: class environment.
@@ -85,7 +79,7 @@ rewriteSymbolicReferencesToClass
 	(classBinding environment == self model smalltalkNamespace
 		and: [newClassReference environment ~~ classBinding environment])
 			ifTrue: 
-				[rewriteClassNames := Tools.ClassNameToBindingReferenceRefactoring model: model
+				[rewriteClassNames := ClassNameToBindingReferenceRefactoring model: model
 							replaceSymbolicReferencesTo: class.
 				self performComponentRefactoring: rewriteClassNames].
 	symbolicRefs := model allReferencesTo: oldUnqualified.
@@ -117,7 +111,6 @@ transform
 				renameImports;
 				rewriteStaleVariableReferences: methods]! !
 !Refactory.Browser.RenameClassRefactoring categoriesForMethods!
-checkForSymbolicReferences!private!transforming! !
 className:newName:!initializing!private! !
 displayOn:!displaying!public! !
 preconditions!accessing!public! !

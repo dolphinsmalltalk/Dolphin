@@ -381,9 +381,6 @@ shouldFail: aRefactoring withMessage: aString
 	self assertNotNil: exception.
 	self assert: (aString match: exception messageText)!
 
-shouldWarn: aRefactoring
-	self should: [self executeRefactoring: aRefactoring] raise: RefactoringWarning!
-
 tearDown
 	super tearDown.
 	RefactoringManager instance release.
@@ -404,7 +401,6 @@ setupVariableTypesFor:toReturn:!public!set up! !
 shouldAbort:!helpers!private! !
 shouldFail:existingVariable:!helpers!private! !
 shouldFail:withMessage:!helpers!private! !
-shouldWarn:!helpers!private! !
 tearDown!public!set up! !
 !
 

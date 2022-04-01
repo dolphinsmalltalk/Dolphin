@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Presenter subclass: #'Tools.SmalltalkWorkspace'
-	instanceVariableNames: 'evaluationContext errorModel findDetails workspacePool evaluationPools compilationErrors textStyles searchEnvironment modifiedModel flags indicatorStyles variableMetadataProvider'
+	instanceVariableNames: 'evaluationContext errorModel findDetails workspacePool namespaces compilationErrors textStyles searchEnvironment modifiedModel flags indicatorStyles variableMetadataProvider'
 	classVariableNames: 'Abbreviations AnnotationMode AutoCompleteDwell DefaultCaretColor DefaultFont DefaultTabWidth FontQuality IndicatorStyles KeyBindings KeywordCompletions MaxAutoCompletionListHeight MaxAutoCompletionListSize MaxAutoCompletionListWidth OptionFlags StandardUnaryReturnTypes TextStyles WrapIndentMode'
 	imports: #(#{Kernel.CompilerFlags} #{UI.Scintilla private} #{Refactory.Browser private})
 	classInstanceVariableNames: 'additionalKeyBindings commandQueryHandlers'
@@ -68,7 +68,7 @@ allPools
 	receiver. The workspacePool of locals must be the first element of the array"
 
 	^(OrderedCollection with: self workspacePool) 
-		addAll: self evaluationPools; 
+		addAll: self namespaces; 
 		asArray!
 
 applyOptions
@@ -187,14 +187,15 @@ cancelAutoCompletion
 caretPosition: anInteger 
 	self view caretPosition: anInteger!
 
-chooseEvaluationPools
+chooseNamespaces
 	"Display a ListPrompter to allow the user to choose the evaluation pools associated with the
 	receiver"
 
 	ChoicePrompter
-		on: (self aspectValue: #evaluationPools)
-		multipleChoices: SmalltalkSystem current availablePools asArray
-		caption: 'Available pools'!
+		on: (self aspectValue: #namespaces)
+		multipleChoices: (SmalltalkSystem current availableNamespaces
+				asSortedArray: [:a :b | a fullName <= b fullName])
+		caption: 'Available Namespaces'!
 
 chunkFilerClass
 	^ChunkSourceFiler!
@@ -276,7 +277,7 @@ cloneNew
 	clone workspace
 		text: self text;
 		workspacePool: self workspacePool;
-		evaluationPools: self evaluationPools;
+		namespaces: self namespaces;
 		evaluationContext: self evaluationContext.
 	^clone!
 
@@ -643,16 +644,6 @@ evaluationContext: anObject
 
 	evaluationContext := anObject.!
 
-evaluationPools
-	"Answers the evaluation pool for this workspace."
-
-	^evaluationPools!
-
-evaluationPools: aCollectionOfPools
-	"Sets the evaluation pools for this workspace to aCollectionOfPools"
-
-	evaluationPools := aCollectionOfPools asArray!
-
 fileItIn
 	"Files in the current selection in chunk format"
 
@@ -782,7 +773,7 @@ identifiersStartingWith: aString maxItems: anInteger
 					[:eachClass |
 					eachClass bindingsDo: selectVars.
 					eachClass importedNamespacesDo: [:eachNs | eachNs bindingsDo: selectVars]].
-			evaluationPools do: [:eachPool | eachPool associationsDo: selectVars].
+			namespaces do: [:eachPool | eachPool bindingsDo: selectVars].
 			class environment ?? Smalltalk bindingsDo: selectVars].
 	^variables!
 
@@ -800,7 +791,7 @@ initialize
 	super initialize.
 	flags := VariableTipsMask.
 	"Set up the pools for evaluations in the receiver"
-	self evaluationPools: {}.
+	self namespaces: {}.
 	self newVariablePool.
 	self clearStatus.
 	compilationErrors := OrderedCollection new.
@@ -976,6 +967,16 @@ nameBindingContext
 			| class |
 			class := context basicClass.
 			ParseContext methodClass: class environment: class environment]!
+
+namespaces
+	"Answers the evaluation pool for this workspace."
+
+	^namespaces!
+
+namespaces: aCollectionOfNamespaces
+	"Sets the evaluation pools for this workspace to aCollectionOfNamespaces"
+
+	namespaces := aCollectionOfNamespaces asArray!
 
 newVariablePool
 	workspacePool := PoolDictionary new!
@@ -1153,7 +1154,7 @@ queryCommand: aCommandQuery
 		ifTrue: 
 			[aCommandQuery isEnabled: (self isEditable and: [self view styleUnderCaret name == #comment]).
 			^true].
-	(#(#chooseEvaluationPools #inspectWorkspacePool #cloneNew #clear #displayIt #printIt #completeWord)
+	(#(#chooseNamespaces #inspectWorkspacePool #cloneNew #clear #displayIt #printIt #completeWord)
 		identityIncludes: selector)
 			ifTrue: 
 				[aCommandQuery isEnabled: self isReadOnly not.
@@ -1682,7 +1683,7 @@ browseReferences!commands!public! !
 browseReferencesCommand!commands!private! !
 cancelAutoCompletion!helpers!private! !
 caretPosition:!accessing!caret!public! !
-chooseEvaluationPools!commands!public! !
+chooseNamespaces!commands!public! !
 chunkFilerClass!constants!public! !
 classForIdentifier:!autocompletion!helpers!private! !
 classForToken:!autocompletion!helpers!private! !
@@ -1725,8 +1726,6 @@ evaluateRange:ifFail:!helpers!private! !
 evaluateRange:ifFail:debug:!helpers!private! !
 evaluationContext!accessing!public! !
 evaluationContext:!accessing!public! !
-evaluationPools!accessing!public! !
-evaluationPools:!accessing!public! !
 fileItIn!commands!public! !
 findDetails!accessing!public! !
 findDetails:!accessing!public! !
@@ -1765,6 +1764,8 @@ messagesForToken:startingWith:maxItems:!autocompletion!helpers!private! !
 modifiedModel!accessing!public! !
 modifiedModel:!accessing!public! !
 nameBindingContext!accessing!autocompletion!private! !
+namespaces!accessing!public! !
+namespaces:!accessing!public! !
 newVariablePool!operations!private! !
 onAutoComplete:startingAt:accept:!autocompletion!event handling!private! !
 onCharAdded:!autocompletion!event handling!private! !

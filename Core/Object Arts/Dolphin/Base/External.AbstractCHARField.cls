@@ -8,7 +8,7 @@ External.ScalarField subclass: #'External.AbstractCHARField'
 	classConstants: {}!
 External.AbstractCHARField guid: (Core.GUID fromString: '{225e024e-8ea6-493f-ad47-82a47ac5cb5c}')!
 External.AbstractCHARField comment: ''!
-!External.AbstractCHARField categoriesForClass!Unclassified! !
+!External.AbstractCHARField categoriesForClass!External-Data-Types! !
 !External.AbstractCHARField methodsFor!
 
 basicWriteInto: anExternalStructure value: anInteger

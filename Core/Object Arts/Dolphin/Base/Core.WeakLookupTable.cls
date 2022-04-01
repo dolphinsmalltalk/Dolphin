@@ -7,6 +7,7 @@ Core.SharedLookupTable variableSubclass: #'Core.WeakLookupTable'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.WeakLookupTable guid: (Core.GUID fromString: '{87b4c532-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.WeakLookupTable isMourner: true!
 Core.WeakLookupTable comment: ''!
 !Core.WeakLookupTable categoriesForClass!Collections-Unordered!Collections-Weak! !
 !Core.WeakLookupTable methodsFor!
@@ -229,12 +230,6 @@ valuesClass!constants!public! !
 
 !Core.WeakLookupTable class methodsFor!
 
-initialize
-	"Initialize the receiver.
-	The receiver's instances need bereavement notifications to repair themselves."
-
-	self makeMourner!
-
 new: anInteger
 	"Answer a new instance of the receiver sufficient capacity for anInteger elements. Both keys and values
 	can be weakly referenced. By default instances of the receiver have strong key and weak value references."
@@ -260,7 +255,6 @@ newWithWeakValues: anInteger
 	^super new: anInteger
 ! !
 !Core.WeakLookupTable class categoriesForMethods!
-initialize!development!initializing!public! !
 new:!instance creation!public! !
 newWithWeakKeys:!instance creation!public! !
 newWithWeakValues:!instance creation!public! !

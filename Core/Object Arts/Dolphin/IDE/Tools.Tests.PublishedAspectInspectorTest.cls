@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Tools.Tests.PublishedAspectInspectorTest'
 	classConstants: {}!
 Tools.Tests.PublishedAspectInspectorTest guid: (Core.GUID fromString: '{26c95677-a861-4030-8d8e-b6bed0a6c3ef}')!
 Tools.Tests.PublishedAspectInspectorTest comment: ''!
-!Tools.Tests.PublishedAspectInspectorTest categoriesForClass!Unclassified! !
 !Tools.Tests.PublishedAspectInspectorTest methodsFor!
 
 aspectAccessorNamed: aSymbol

@@ -62,12 +62,7 @@ runTransformation: aTransformationRule
 		ifFalse: [RewriteChangesBrowser showOn: aTransformationRule changes]!
 
 status: text 
-	^self browser statusText: text!
-
-systemModel
-	"Private - Answer the development system model."
-
-	^SmalltalkSystem current! !
+	^self browser statusText: text! !
 !Tools.SmalllintPlugin categoriesForMethods!
 browserEnvironment!operations!private! !
 checkerForRule:environment:!helpers!private! !
@@ -75,6 +70,5 @@ methodFilterForRule:inEnvironment:!helpers!private! !
 runRule:!helpers!private! !
 runTransformation:!helpers!private! !
 status:!operations!private! !
-systemModel!commands!private! !
 !
 

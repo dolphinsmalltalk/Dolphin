@@ -7,6 +7,7 @@ Core.WeakSet variableSubclass: #'Core.WeakIdentitySet'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.WeakIdentitySet guid: (Core.GUID fromString: '{87b4c539-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.WeakIdentitySet isMourner: true!
 Core.WeakIdentitySet comment: ''!
 !Core.WeakIdentitySet categoriesForClass!Collections-Unordered!Collections-Weak! !
 !Core.WeakIdentitySet methodsFor!

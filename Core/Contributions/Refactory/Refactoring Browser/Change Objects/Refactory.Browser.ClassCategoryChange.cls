@@ -25,13 +25,13 @@ categories: anArray
 changeString
 	^'Categorize <1d>' << classReference!
 
-emitAttributeOf: class with: filer
-	filer emitCategoriesOfClass: class!
+emitAttributeOf: aClass with: aSourceFiler
+	aSourceFiler emitCategoriesOfClass: aClass!
 
-mutateAttributes: aClassAttributes
-	"Alter the <ClassAttributes> argument to reflect the change described by the receiver."
+mutateClassDetails: aClassDetails
+	"Alter the <ClassDetails> argument to reflect the change described by the receiver."
 
-	aClassAttributes categories: categories!
+	aClassDetails categories: categories!
 
 primitiveExecute
 	self changeClass categories: self categories! !
@@ -41,7 +41,7 @@ categories!accessing!public! !
 categories:!accessing!public! !
 changeString!printing!public! !
 emitAttributeOf:with:!printing!public! !
-mutateAttributes:!helpers!private! !
+mutateClassDetails:!helpers!private! !
 primitiveExecute!applying!private! !
 !
 

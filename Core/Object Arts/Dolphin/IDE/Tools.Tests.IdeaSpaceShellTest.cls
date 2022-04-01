@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Tools.Tests.IdeaSpaceShellTest'
 	classConstants: {}!
 Tools.Tests.IdeaSpaceShellTest guid: (Core.GUID fromString: '{2e6de900-c47f-4134-b038-b70cd1679c1c}')!
 Tools.Tests.IdeaSpaceShellTest comment: ''!
-!Tools.Tests.IdeaSpaceShellTest categoriesForClass!Unclassified! !
 !Tools.Tests.IdeaSpaceShellTest methodsFor!
 
 create: aClassSymbol subclassOf: aClass
@@ -260,10 +259,10 @@ testSaveRestore
 
 	"Workspace"
 	ws := self newWorkspaceCard.
-	ws workspace evaluationPools: {OS.Win32Constants. OS.CommCtrlConstants}.
+	ws workspace namespaces: {OS.Win32Constants. OS.CommCtrlConstants}.
 	wsDocData := ws getDocumentData.
 	wsFilename := ws filename.
-	wsPools := ws workspace evaluationPools.
+	wsPools := ws workspace namespaces.
 
 	"View Composer"
 	rid := ResourceIdentifier class: Shell.
@@ -303,8 +302,8 @@ testSaveRestore
 	self assert: newWs isKindOf: SmalltalkWorkspaceDocument.
 	self assert: newWs getDocumentData equals: wsDocData.
 	self assert: newWs filename equals: wsFilename.
-	self assert: newWs workspace evaluationPools equals: wsPools.
-	self assert: newWs workspace evaluationPools first identicalTo: wsPools first.
+	self assert: newWs workspace namespaces equals: wsPools.
+	self assert: newWs workspace namespaces first identicalTo: wsPools first.
 	self assert: newVc isKindOf: ViewComposer.
 	self assert: newVc resourceIdentifier equals: rid.
 	self assert: newRb isKindOf: ResourceBrowser.

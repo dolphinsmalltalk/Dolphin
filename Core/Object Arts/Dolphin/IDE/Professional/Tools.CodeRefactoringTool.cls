@@ -26,7 +26,6 @@ CodeRefactoringTool implements the following refactorings:
 	Rename Message*
 
 *Can rename messages sent to self, super, static variables and literals, and when hosted in the debugger temporaries and instance variables as well, i.e. where the type of the receiver is known so that the method to rename can be located.'!
-!Tools.CodeRefactoringTool categoriesForClass!Unclassified! !
 !Tools.CodeRefactoringTool methodsFor!
 
 addClassVariable: aStVariableNode to: aClass 
@@ -99,16 +98,11 @@ convertTempToInstVar
 
 createClassForVariable: aStVariableNode
 	| dialog |
-	dialog := CreateSubclassDialog newSubclassOf: Object
-				inPackage: presenter parseContext owningPackage.
-	dialog subclassName: aStVariableNode name.
+	dialog := CreateSubclassDialog newSubclassOf: Object inPackage: presenter parseContext owningPackage.
+	dialog subclassFullName: aStVariableNode name.
 	dialog showModal.
-	dialog answer isNil ifTrue: [^self].
-	self systemModel
-		createSubclass: dialog subclassName asSymbol
-		of: dialog superclass
-		package: dialog package
-		subclasses: dialog subclasses.
+	dialog answer ifNil: [^self].
+	self systemModel createSubclass: dialog classDetails subclasses: dialog subclasses.
 	presenter clearParseTree!
 
 declareAllUndeclaredVariablesAsTemps

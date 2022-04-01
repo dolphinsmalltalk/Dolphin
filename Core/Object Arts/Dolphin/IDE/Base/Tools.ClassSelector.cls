@@ -357,7 +357,7 @@ dropMethod: aCompiledMethod onto: aClass isMove: aBoolean changes: aCompositeRef
 	aCompositeRefactoryChange addChange: (AddMethodChange
 				compile: aCompiledMethod getSource
 				in: aClass
-				environment: aCompiledMethod environment
+				environment: aCompiledMethod customEnvironment
 				categories: aCompiledMethod categories
 				package: aCompiledMethod owningPackageIfLoose).
 	^true!
@@ -484,21 +484,6 @@ onAboutToRenameClass: aLabelEditingEvent
 			[aLabelEditingEvent
 				forecolor: (Color windowText fadedBy: ClassBrowserAbstract.GrayedMethodFadeFactor)]!
 
-onClass: aClass renamedTo: text
-	"The class, aClass, has been renamed by the user to, text, by editing the label
-	in the classes presenter and subsequently confirmed. Ask the receiver's
-	model to actually rename the class, converting any exception raised to a
-	friendlier message box."
-
-	[Cursor wait showWhile: [self systemModel renameClass: aClass to: text]]
-		on: Refactoring abortSignal
-		do: 
-			[:ex |
-			"Cancelled by user"
-			self topShell statusModel value: ex]
-		on: Error
-		do: [:e | e okCancel]!
-
 onClass: aClass renameTo: aString accept: booleanValue
 	"The user has initiated a rename of the class, aClass, by editing the label in the class
 	tree. Ask the user to confirm the action, and if so queue a deferred action to perform the
@@ -507,14 +492,20 @@ onClass: aClass renameTo: aString accept: booleanValue
 	"Implementation Notes: We don't set the booleanValue holder to true, because the rename may
 	not work."
 
+	| prompter |
 	(aString isEmpty or: [aClass fullName = aString])
 		ifTrue: 
 			[booleanValue value: false.
 			^self].
-	(self systemModel confirmRenameClass: aClass to: aString)
-		ifTrue: 
-			["Queue deferred action as we can't delete the old item now while still in use (causes GPF in TreeView)"
-			[self onClass: aClass renamedTo: aString] postToMessageQueue]!
+	prompter := self systemModel confirmRenameClass: aClass to: aString.
+	prompter confirm ifFalse: [^self].
+	"Queue deferred action as we can't delete the old item now while still in use (causes GPF in TreeView)"
+	
+	[self
+		onRenameClass: aClass
+		to: aString
+		showChanges: prompter isChecked]
+			postToMessageQueue!
 
 onDrag: session
 	"Private - A class drag has been started. Populate the <DragDropSession>, 
@@ -608,6 +599,26 @@ onDropOver: aDragDropSession
 				ifTrue: [self systemModel addClass: dropClass toProtocol: (each format: #MethodProtocol)]].
 	aDragDropSession resetOperation.
 	self performDropChanges: changes target: dropClass!
+
+onRenameClass: aClass to: aString showChanges: aBoolean
+	"The class, aClass, has been renamed by the user to, text, by editing the label
+	in the classes presenter and subsequently confirmed. Ask the receiver's
+	model to actually rename the class, converting any exception raised to a
+	friendlier message box."
+
+	
+	[Cursor wait showWhile: 
+			[self systemModel
+				renameClass: aClass
+				to: aString
+				showChanges: aBoolean]]
+			on: Refactoring abortSignal
+			do: 
+				[:ex |
+				"Cancelled by user"
+				self topShell statusModel value: ex]
+			on: Error
+			do: [:e | e okCancel]!
 
 onSelectionChanged
 	"Sent by #onSelChange when the receiver's selection has changed.
@@ -746,17 +757,20 @@ queryCommand: aCommandQuery
 			ifTrue: 
 				[aCommandQuery isEnabled: class notNil.
 				^true].
-	#removeClass == selector
-		ifTrue: 
-			[aCommandQuery isEnabled: self selections notEmpty.
-			^true].
 	#renameClass == selector
 		ifTrue: 
 			[aCommandQuery isEnabled: (self systemModel canRenameClass: class).
 			^true].
-	#addImport == selector
+	(#(#removeClass #addImport) identityIncludes: selector)
 		ifTrue: 
 			[aCommandQuery isEnabled: self hasSelection.
+			^true].
+	#removeImport == selector
+		ifTrue: 
+			[| imports |
+			imports := Set new.
+			self selections do: [:each | imports addAll: each imports].
+			aCommandQuery isEnabled: imports notEmpty.
 			^true].
 	#changeClassNamespace == selector
 		ifTrue: 
@@ -968,11 +982,11 @@ model:!accessing!public! !
 newView!commands!public! !
 onAboutToDisplayMenu:!event handling!menus!public! !
 onAboutToRenameClass:!event handling!private! !
-onClass:renamedTo:!event handling!public! !
 onClass:renameTo:accept:!event handling!public! !
 onDrag:!event handling!private! !
 onDragOver:!event handling!private! !
 onDropOver:!event handling!private! !
+onRenameClass:to:showChanges:!event handling!public! !
 onSelectionChanged!event handling!public! !
 onSelectionChanging:!event handling!public! !
 onTipTextRequired:!event handling!private! !

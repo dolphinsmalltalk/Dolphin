@@ -8,7 +8,7 @@ XProgramming.SUnit.TestCase subclass: #'Refactory.Browser.Tests.RewriteTestCase'
 	classConstants: {}!
 Refactory.Browser.Tests.RewriteTestCase guid: (Core.GUID fromString: '{6a77c1e6-2f15-4abc-9442-261f617e5ba1}')!
 Refactory.Browser.Tests.RewriteTestCase comment: ''!
-!Refactory.Browser.Tests.RewriteTestCase categoriesForClass!Unclassified! !
+!Refactory.Browser.Tests.RewriteTestCase categoriesForClass!Refactory-Testing! !
 !Refactory.Browser.Tests.RewriteTestCase methodsFor!
 
 setUp

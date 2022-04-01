@@ -8,7 +8,6 @@ UI.Tests.PresenterTest subclass: #'Tools.Tests.MethodWorkspaceTest'
 	classConstants: {}!
 Tools.Tests.MethodWorkspaceTest guid: (Core.GUID fromString: '{e5dadb09-1b76-4a90-a763-95cc11d735d8}')!
 Tools.Tests.MethodWorkspaceTest comment: ''!
-!Tools.Tests.MethodWorkspaceTest categoriesForClass!Unclassified! !
 !Tools.Tests.MethodWorkspaceTest methodsFor!
 
 classToTest

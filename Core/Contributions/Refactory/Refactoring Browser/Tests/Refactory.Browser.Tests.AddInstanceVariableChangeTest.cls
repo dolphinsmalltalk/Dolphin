@@ -11,17 +11,20 @@ Refactory.Browser.Tests.AddInstanceVariableChangeTest comment: ''!
 !Refactory.Browser.Tests.AddInstanceVariableChangeTest categoriesForClass!Refactory-Testing! !
 !Refactory.Browser.Tests.AddInstanceVariableChangeTest methodsFor!
 
+subjectClass
+	^AddInstanceVariableChange!
+
 testAsUndo
 	| subject undo |
 	subject := AddInstanceVariableChange add: 'foo' to: TransformationRuleTestData.
 	undo := subject asUndoOperation.
-	self assert: undo isKindOf: RemoveInstanceVariableChange.
+	self assert: undo isKindOf: self undoClass.
 	self assert: undo variable identicalTo: subject variable.
 	self assert: undo afterText equals: subject beforeText!
 
 testPrinting
 	| subject |
-	subject := AddInstanceVariableChange add: 'foo' to: TransformationRuleTestData.
+	subject := self subjectClass add: 'foo' to: TransformationRuleTestData.
 	self assert: subject beforeText equals: TransformationRuleTestData definition.
 	self assert: subject afterText
 		equals: 'Refactory.Browser.TestData.FooLintRuleTestData subclass: #''Refactory.Browser.TestData.TransformationRuleTestData''
@@ -35,9 +38,14 @@ testPrinting
 	self assert: subject changeString
 		equals: 'Add instance variable named, foo, to Refactory.Browser.TestData.TransformationRuleTestData'.
 	self assert: subject printString
-		equals: 'Refactory.Browser.TestData.TransformationRuleTestData addInstVarName: ''foo''!!'! !
+		equals: 'Refactory.Browser.TestData.TransformationRuleTestData addInstVarName: ''foo''!!'!
+
+undoClass
+	^RemoveInstanceVariableChange! !
 !Refactory.Browser.Tests.AddInstanceVariableChangeTest categoriesForMethods!
+subjectClass!constants!private! !
 testAsUndo!public!unit tests! !
 testPrinting!public!unit tests! !
+undoClass!constants!private! !
 !
 

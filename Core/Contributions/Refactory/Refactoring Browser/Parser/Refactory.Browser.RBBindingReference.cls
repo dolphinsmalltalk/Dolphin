@@ -8,7 +8,6 @@ Kernel.BindingReferenceWrapper subclass: #'Refactory.Browser.RBBindingReference'
 	classConstants: {}!
 Refactory.Browser.RBBindingReference guid: (Core.GUID fromString: '{6087e072-0c5e-458a-8084-877b910c0553}')!
 Refactory.Browser.RBBindingReference comment: ''!
-!Refactory.Browser.RBBindingReference categoriesForClass!Unclassified! !
 !Refactory.Browser.RBBindingReference methodsFor!
 
 = anObject
@@ -44,7 +43,10 @@ realReference
 	^reference!
 
 referenceInModel: aRBModel
-	^model == aRBModel ifTrue: [self] ifFalse: [self class model: aRBModel reference: reference]! !
+	^model == aRBModel ifTrue: [self] ifFalse: [self class model: aRBModel reference: reference]!
+
+valueOfBinding: aVariableBinding
+	^reference isMeta ifTrue: [aVariableBinding value metaclass] ifFalse: [aVariableBinding value]! !
 !Refactory.Browser.RBBindingReference categoriesForMethods!
 =!comparing!public! !
 bindingOrNil!accessing!public! !
@@ -53,6 +55,7 @@ model:!initializing!private! !
 newWrapping:!converting!private! !
 realReference!accessing!public! !
 referenceInModel:!converting!public! !
+valueOfBinding:!accessing!private! !
 !
 
 !Refactory.Browser.RBBindingReference class methodsFor!

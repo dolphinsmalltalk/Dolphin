@@ -9,7 +9,7 @@ Kernel.BindingReference subclass: #'Kernel.BindingReferenceWrapper'
 Kernel.BindingReferenceWrapper guid: (Core.GUID fromString: '{87488d7c-57f8-4328-91f8-f2f6dd0e66fd}')!
 Kernel.BindingReferenceWrapper isNonInstantiable: true!
 Kernel.BindingReferenceWrapper comment: ''!
-!Kernel.BindingReferenceWrapper categoriesForClass!Unclassified! !
+!Kernel.BindingReferenceWrapper categoriesForClass!System-Namespaces! !
 !Kernel.BindingReferenceWrapper methodsFor!
 
 = anObject

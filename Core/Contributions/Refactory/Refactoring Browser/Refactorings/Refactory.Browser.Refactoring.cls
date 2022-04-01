@@ -20,9 +20,6 @@ baseEnvironment
 
 	^Smalltalk!
 
-browseEnvironments: aCollectionOfBrowserEnvironments
-	^(self lookupOption: #browseEnvironments) cull: self cull: aCollectionOfBrowserEnvironments!
-
 buildVariableReferenceRewriter
 	| rewriter |
 	rewriter := ParseTreeRewriter new.
@@ -39,9 +36,9 @@ buildVariableReferenceRewriter
 	^rewriter!
 
 canReferenceVariable: aString in: aClass
-	(aClass definesVariable: aString) ifTrue: [^true].
-	(self model includesStaticVariable: aString) ifTrue: [^true].
-	^(self importedVariableNamesFor: aClass) includes: aString!
+	^(aClass definesVariable: aString) or: 
+			[(self model includesStaticVariable: aString)
+				or: [(self importedVariableNamesFor: aClass) includes: aString]]!
 
 changes
 	^self model changes!
@@ -61,14 +58,12 @@ checkMethodName: aName
 checkPreconditions
 	self checkPreconditions: self preconditions!
 
-checkPreconditions: aCompositeRBCondition 
-	aCompositeRBCondition check 
+checkPreconditions: aCompositeRBCondition
+	aCompositeRBCondition check
 		ifFalse: 
-			[| block |
-			block := aCompositeRBCondition errorBlock.
-			block notNil 
-				ifTrue: [self refactoringError: aCompositeRBCondition errorString with: block]
-				ifFalse: [self refactoringError: aCompositeRBCondition errorString]]!
+			[aCompositeRBCondition errorBlock
+				ifNotNil: [:block | self refactoringError: aCompositeRBCondition errorString with: block]
+				ifNil: [self refactoringError: aCompositeRBCondition errorString]]!
 
 classObjectFor: anObject 
 	anObject isBehavior ifTrue: [^self model classFor: anObject].
@@ -270,11 +265,9 @@ isStaleLiteralReference: aStLiteralNode
 		ifTrue: 
 			[^aStLiteralNode contents
 				anySatisfy: [:each | each isLiteralNode and: [self isStaleLiteralReference: each]]].
-	aStLiteralNode isQualifiedReference
-		ifTrue: 
+	^aStLiteralNode isQualifiedReference and: 
 			["Any qualified reference that now binds differently against the current state of the model needs rewriting."
-			^aStLiteralNode binding ~~ aStLiteralNode resolveBinding].
-	^false!
+			aStLiteralNode binding ~~ aStLiteralNode resolveBinding]!
 
 isStaleStaticVariable: aStVariableNode
 	"We rewrite any variable reference that needs change (or more qualification), or which is currently qualified but could be shortened."
@@ -352,9 +345,6 @@ refactoringError: aString with: aBlock
 		refactoring: self
 		signal: aString
 		with: aBlock!
-
-refactoringWarning: aString
-	RefactoringWarning refactoring: self signal: aString!
 
 requestNewMethodName: aMethodName forClasses: aCollection
 	^(self lookupOption: #methodName)
@@ -518,7 +508,6 @@ whichVariableNode: aParseTree inInterval: anInterval name: aName
 !Refactory.Browser.Refactoring categoriesForMethods!
 associationForClassVariable:in:ifAbsent:!public!utilities! !
 baseEnvironment!constants!private! !
-browseEnvironments:!public!requests! !
 buildVariableReferenceRewriter!private!transforming! !
 canReferenceVariable:in:!public!testing! !
 changes!accessing!public! !
@@ -579,7 +568,6 @@ refactoringAborted!exceptions!private! !
 refactoringAborted:!exceptions!private! !
 refactoringError:!exceptions!private! !
 refactoringError:with:!exceptions!private! !
-refactoringWarning:!public!requests! !
 requestNewMethodName:forClasses:!public!requests! !
 requestSelfArgumentName!public!requests! !
 rewriteStaleLiteralReference:!private!transforming! !
@@ -620,8 +608,6 @@ initializeRefactoringOptions
 				withAll: {#abstractVariables -> [:refactoring | refactoring getOptionAbstractVariables].
 						#alreadyDefined
 							-> [:refactoring :class :selector | refactoring getOptionAlreadyDefined: class selector: selector].
-						#browseEnvironments
-							-> [:refactoring :environments | refactoring getOptionBrowseEnvironments: environments].
 						#copyDownSuperclassMethod
 							-> [:refactoring :selector | refactoring getOptionCopyDownSuperclassMethod: selector].
 						#extractAssignment
@@ -678,7 +664,7 @@ onPreStripImage
 	self uninitialize!
 
 preconditionSignal
-	^self errorSignal , RefactoringWarning!
+	^self errorSignal!
 
 refactoringOptions
 	^RefactoringOptions!

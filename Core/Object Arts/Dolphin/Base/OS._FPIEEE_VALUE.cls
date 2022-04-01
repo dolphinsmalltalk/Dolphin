@@ -13,7 +13,7 @@ External.Structure subclass: #'OS._FPIEEE_VALUE'
 	}!
 OS._FPIEEE_VALUE guid: (Core.GUID fromString: '{836cb53c-b7d3-492c-ad33-8574c49bed82}')!
 OS._FPIEEE_VALUE comment: '_FPIEEE_VALUE is an <ExternalStructure> class to represent the Win32 structure of the same name. _FPIEEE_VALUE is used in the reporting of IEEE compliant floating point exceptions. It is essentially a discriminated union that can hold the various types of operand that can be used in floating point operations.'!
-!OS._FPIEEE_VALUE categoriesForClass!Unclassified! !
+!OS._FPIEEE_VALUE categoriesForClass!External-Data-Structured! !
 !OS._FPIEEE_VALUE methodsFor!
 
 flags

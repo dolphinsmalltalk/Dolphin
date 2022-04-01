@@ -17,7 +17,7 @@ emitClassName: aClass
 			localEnv := self environment ?? Smalltalk.
 			aClass environment == localEnv or: 
 					[| var |
-					var := localEnv fullBindingFor: aClass name.
+					var := localEnv fullBindingFor: aClass unqualifiedName.
 					var notNil and: [var value == aClass]]])
 		ifTrue: [stream nextPutAll: aClass name]
 		ifFalse: [aClass printFullNameOn: stream]!

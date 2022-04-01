@@ -6703,9 +6703,11 @@ isPoolCheck: aVariableBinding
 maybeChangeNamespaceOf: existingClass
 	(self namespaceClashSignal signalWith: existingClass)
 		ifTrue: 
-			[Tools.SmalltalkSystem current renameClass: existingClass
+			[Tools.SmalltalkSystem current
+				renameClass: existingClass
 				to: (BindingReference pathString: existingClass unqualifiedName home: self environment)
-						asFullyQualifiedReference asSymbol].
+						asFullyQualifiedReference asSymbol
+				showChanges: false].
 	^existingClass binding!
 
 moveClassToPackage: class

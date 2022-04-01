@@ -365,7 +365,7 @@ hasMethods
 	^methodDictionary notNil and: [methodDictionary size > 0]!
 
 hasSpecialBehavior
-	^(instanceSpec bitAnd: ##(_FundamentalShapeMask bitInvert)) ~~ 0!
+	^instanceSpec anyMask: ##(_IndirectMask | _NullTermMask | _NonInstantiableMask | _MournerMask)!
 
 hierarchyBindingFor: aString 
 	"Answer a variable binding for the named variable in the scope of this class. If there is no such variable, then answer nil."
@@ -482,6 +482,19 @@ isMourner
 
 	^instanceSpec anyMask: _MournerMask!
 
+isMourner: aBoolean
+	"Set the receiver's status as an mourner. This only affects the
+	weak instances of such classes, which will receive a #elementsExpired:
+	message from the Undertaker process soon after they have suffered the loss
+	of an object they are weakly referencing. This gives the mourner the opportunity
+	to put its house in order. By default this behaviour is disabled, as its use
+	can extend the life of an object (a weak object which would otherwise be
+	garbage collected has to be rescued in order that it can perform its
+	mourning process, as the mourning process may be important for releasing
+	external resources, etc."
+
+	self setShapeFlags: _MournerMask to: aBoolean!
+
 isNonInstantiable
 	"Answer whether the receiver should not be instantiated, e.g. it is abstract."
 
@@ -528,8 +541,8 @@ kindOfSubclass
 	"Private - Answer a string describing the kind of subclassing method used to create the receiver 
 	(part of its definition)."
 
-	^self isVariable 
-		ifTrue: [self isBytes ifTrue: ['variableByteSubclass:'] ifFalse: ['variableSubclass:']]
+	^self isVariable
+		ifTrue: [self isPointers ifTrue: ['variableSubclass:'] ifFalse: ['variableByteSubclass:']]
 		ifFalse: ['subclass:']!
 
 lookupMethod: aSymbol
@@ -538,19 +551,6 @@ lookupMethod: aSymbol
 
 	<primitive: 148>
 	^self primitiveFailed: _failureCode!
-
-makeMourner
-	"Private - Set the receiver's status as an mourner. This only affects the
-	weak instances of such classes, which will receive a #elementsExpired:
-	message from the Undertaker process soon after they have suffered the loss
-	of an object they are weakly referencing. This gives the mourner the opportunity
-	to put its house in order. By default this behaviour is disabled, as its use
-	can extend the life of an object (a weak object which would otherwise be
-	garbage collected has to be rescued in order that it can perform its
-	mourning process, as the mourning process may be important for releasing
-	external resources, etc."
-
-	self setShapeFlags: _MournerMask to: true!
 
 methodDictionary
 	"Private - Answer the receiver's <MethodDictionary>."
@@ -1051,6 +1051,7 @@ isIndirection:!instance specification-accessing!public! !
 isMeta!public!testing! !
 isMetaclass!public!testing! !
 isMourner!instance specification-testing!public! !
+isMourner:!instance specification-accessing!public! !
 isNonInstantiable!instance specification-testing!public! !
 isNonInstantiable:!instance specification-accessing!public! !
 isNullTerminated!instance specification-testing!public! !
@@ -1060,7 +1061,6 @@ isVariable!instance specification-testing!public! !
 isWords!instance specification-testing!public! !
 kindOfSubclass!class hierarchy-testing!private! !
 lookupMethod:!methods-accessing!public! !
-makeMourner!instance specification-accessing!private! !
 methodDictionary!methods-accessing!private! !
 methodDictionary:!methods-accessing!private! !
 methodRemoved:!public! !

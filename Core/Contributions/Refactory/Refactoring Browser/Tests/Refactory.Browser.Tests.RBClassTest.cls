@@ -38,6 +38,16 @@ testAllBehaviorsDo
 	self assert: (modelClasses difference: environmentClasses) asSortedArray
 		equals: #('SomeClassName' 'SomeClassName class')!
 
+testAllClassVarNames
+	| objectClassVars newClassVars |
+	objectClassVars := (Object classVariableNames copyWith: 'ModelOnlyClassVariable') sort.
+	self assert: objectClass allClassVariableNames sort equals: objectClassVars.
+	self assert: objectClass metaclass allClassVariableNames sort equals: objectClassVars.
+	newClassVars := (objectClassVars copyWith: 'ClassVariable1') sort.
+	self assert: newClass allClassVariableNames sort equals: newClassVars.
+	self assert: newClass metaclass allClassVariableNames sort equals: newClassVars.
+!
+
 testAllImports
 	| opcodePool |
 	opcodePool := (model classFor: Kernel.OpcodePool) asQualifiedReference.
@@ -62,6 +72,11 @@ testBindings
 	self assert: (bindings allSatisfy: [:each | each environment == objectClass]).
 	self assert: (bindings collect: [:each | each key]) sort
 		equals: #('_AssertionFailureSignal' '_DependentsRegister' '_EventsRegister' '_PropertyRegister' 'ModelOnlyClassVariable')!
+
+testCategories
+	self assert: objectClass categoryNames equals: #('Kernel-Objects').
+	self assert: (model classFor: WeakArray) categoryNames equals: #('Collections-Arrayed' 'Collections-Weak').
+	self assert: newClass categoryNames equals: #()!
 
 testClassSubclasses
 	| class |
@@ -279,9 +294,14 @@ testModel
 
 testName
 	self assert: objectClass name equals: 'Core.Object'.
-	self assert: objectClass metaclass name equals: 'Core.Object'.
+	self assert: objectClass metaclass name equals: 'Core.Object class'.
 	self assert: (model classFor: self class) name equals: self class fullName.
-	self assert: newClass name equals: 'SomeClassName'.!
+	self assert: newClass name equals: 'SomeClassName'.
+	self assert: newClass metaclass name equals: 'SomeClassName class'.!
+
+testPrintString
+	self assert: objectClass printString equals: 'Core.Object'.
+	self assert: objectClass metaclass printString equals: 'Core.Object class'!
 
 testRealClass
 	| myClass subclasses |
@@ -312,18 +332,15 @@ testShortName
 	self assert: model rootNamespace shortName equals: 'Root'.
 	self assert: model smalltalkNamespace shortName equals: 'Smalltalk'!
 
+testStoreString
+	self assert: objectClass storeString equals: 'Core.Object'.
+	self assert: objectClass metaclass storeString equals: 'Core.Object class'!
+
 testSubclasses
-	| class |
 	self assert: (objectClass subclasses includes: newClass).
 	self assert: (objectClass metaclass subclasses includes: newClass metaclass).
 	self assert: (objectClass subclasses collect: [:each | each metaclass])
 		equals: objectClass metaclass subclasses.
-	class := model classFor: Class.
-	class subclasses do: 
-			[:each |
-			self assert: each superclass identicalTo: class.
-			self assertIsNil: each instanceClass superclass].
-	self assert: class metaclass subclasses isEmpty.
 	self assert: newClass subclasses isEmpty.
 	self assert: newClass metaclass subclasses isEmpty!
 
@@ -335,6 +352,18 @@ testSubclassesFilteredByEnvironment
 	self assert: object subclasses
 		equals: {model classFor: Behavior. model classFor: Boolean. model classFor: Collection}.
 	self assert: (model classFor: Class) subclasses equals: {object metaclass}!
+
+testSubclassesOfClass
+	| class rootMetaclasses |
+	class := model classFor: Class.
+	rootMetaclasses := class subclasses.
+	self assert: (rootMetaclasses identityIncludes: (model classFor: Object class)).
+	self assert: (rootMetaclasses identityIncludes: (model classFor: ProtoObject class)).
+	rootMetaclasses do: 
+			[:each |
+			self assert: each superclass identicalTo: class.
+			self assertIsNil: each instanceClass superclass].
+	self assert: class metaclass subclasses isEmpty!
 
 testSuperclass
 	self assert: newClass superclass equals: objectClass.
@@ -380,10 +409,12 @@ testWithAllSubclasses
 	"We should only be left with the model-only defined class"
 	self assert: all asArray equals: {newClass metaclass}! !
 !Refactory.Browser.Tests.RBClassTest categoriesForMethods!
-setUp!public!set up! !
+setUp!private!set up! !
 testAllBehaviorsDo!public!unit tests! !
+testAllClassVarNames!public!unit tests! !
 testAllImports!public!unit tests! !
 testBindings!public!unit tests! !
+testCategories!public!unit tests! !
 testClassSubclasses!public!unit tests! !
 testDefinesClassVariable!public!unit tests! !
 testDefinesInstanceVariable!public!unit tests! !
@@ -404,10 +435,13 @@ testMethodsReferencingExternals2!public! !
 testMethodsReferencingExternals3!public! !
 testModel!public!unit tests! !
 testName!public!unit tests! !
+testPrintString!public!unit tests! !
 testRealClass!public!unit tests! !
 testShortName!public!unit tests! !
+testStoreString!public!unit tests! !
 testSubclasses!public!unit tests! !
 testSubclassesFilteredByEnvironment!public!unit tests! !
+testSubclassesOfClass!public!unit tests! !
 testSuperclass!public! !
 testUnqualifiedName!public!unit tests! !
 testWhichMethodsReferToClass!public! !

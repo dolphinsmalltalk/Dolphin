@@ -8,19 +8,22 @@ Core.Object subclass: #'Kernel.Namespace'
 	classConstants: {}!
 Kernel.Namespace guid: (Core.GUID fromString: '{e40d6edd-5883-4edc-b117-c508f7c8d47c}')!
 Kernel.Namespace isNonInstantiable: true!
-Kernel.Namespace comment: '`Namespace` defines behavior common to all namespaces, although as Classes are namespaces much of the namespace functionality is inherited from `Class`. `Namespace` adds dictionary protocol for convenience and backwards compatibility. All `Namespace` behaviour is implemented on the class side as `Namespaces` are not instantiable.
+Kernel.Namespace comment: '`Namespace` defines behavior common to all namespaces, although as all classes are namespaces much of the namespace functionality is inherited from `Class`. `Namespace` adds dictionary protocol for convenience and backwards compatibility. All `Namespace` behaviour is implemented on the class side as `Namespaces` are not instantiable (cannot have instances).
 
-It is a good practice to define sub-namespaces as subclasses of their enclosing namespace. This is a slight misuse of subclassing since a sub-namespace is not really a sub-type of its enclosing namespace in a behavioral sense, however it is convenient and means that existing tooling presents the hierarchy in a useful way.
+It is a good practice to define sub-namespaces as subclasses of their enclosing namespace. This is a slight misuse of subclassing since a sub-namespace is not really a sub-type of its enclosing namespace in a behavioral sense, however it is convenient and means that tooling such as the class browser presents the hierarchy in a meaningful way that is easier to navigate.
 
-Terminology:
+Note that you can still use dictionary protocols to look up variables in namespaces, so expressions such as `Smalltalk at: #Scribble` will still work. However, this code form is deprecated in favour of `BindingReference`s, which should be used in preference when indirect references are required, e.g. `#{Smalltalk.Scribble} value`.
 
-Top-level namespace - a Namespace defined in Root, e.g. Smalltalk and Core.
-Absolute name - Fully qualified name including ''Root'', e.g. Root.Core.Object, is the absolute name of the Object class.
-Binding References or Qualified References - a smart name that should be used to refer indirectly to classes (and other static variables) where symbolic names might previously have been used, e.g. #{Core.Object}.
-Full name - Fully qualified name bindable from any top-level namespace, e.g. Smalltalk , e.g. Core.Object is the full name of the Object class.
-Simple name or unqualified name, e.g. Object
-Short name - A name bindable in Smalltalk, preferring unqualified form where possible.
-'!
+##Terminology:
+
+ - Absolute name - Fully qualified name including `Root`, e.g. `Root.Core.Object`, is the absolute name of the `Object` class.
+ - Binding References or Qualified References - a smart name that should be used to refer indirectly to classes (and other static variables) where symbolic names might previously have been used, e.g. `#{Core.Object}` rather than `#Object`.
+ - Full name - Fully-qualified name bindable from any top-level namespace such as `Core`, e.g. `Core.Object` is the full name of the `Object` class.
+ - Import - To include in binding scope, e.g. `Smalltalk` imports `Core` so all of the classes in `Core` are bindable using their unqualified names from classes defined in `Smalltalk`.
+ - Root namespace - the distinguished namespace, `Root`, which is the root of the namespace hierarchy.
+ - Simple name or unqualified name, e.g. `Object`. Not necessarily bindable globally, although `Object` is because `Smalltalk` imports `Core`.
+ - Short name - A name bindable from Smalltalk (i.e. globally), preferring unqualified form where possible.
+ - Top-level namespace - a Namespace defined in Root, e.g. `Smalltalk` and `Core`.'!
 !Kernel.Namespace categoriesForClass!Kernel-Objects! !
 !Kernel.Namespace class methodsFor!
 

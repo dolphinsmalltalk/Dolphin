@@ -16,7 +16,6 @@ You can run a standalone version of the game outside of the splash by evaluating
 SeeingTheObjectsInside show
 
 '!
-!Tools.SeeingTheObjectsInside categoriesForClass!Unclassified! !
 !Tools.SeeingTheObjectsInside methodsFor!
 
 addInsideObject: anObject minScale: minScale maxScale: maxScale

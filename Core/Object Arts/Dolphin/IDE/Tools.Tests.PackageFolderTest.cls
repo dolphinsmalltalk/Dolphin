@@ -8,7 +8,6 @@ UI.Tests.FolderTest subclass: #'Tools.Tests.PackageFolderTest'
 	classConstants: {}!
 Tools.Tests.PackageFolderTest guid: (Core.GUID fromString: '{3a14afc2-659e-4b7b-af2f-dc8631af7128}')!
 Tools.Tests.PackageFolderTest comment: ''!
-!Tools.Tests.PackageFolderTest categoriesForClass!Unclassified! !
 !Tools.Tests.PackageFolderTest methodsFor!
 
 folderClass

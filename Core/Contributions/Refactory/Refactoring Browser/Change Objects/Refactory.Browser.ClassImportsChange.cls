@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.RefactoryClassChange subclass: #'Refactory.Browser.ClassImportsChange'
+Refactory.Browser.ClassModificationChange subclass: #'Refactory.Browser.ClassImportsChange'
 	instanceVariableNames: 'imports'
 	classVariableNames: ''
 	imports: #()
@@ -32,8 +32,8 @@ imports
 imports: aCollection
 	imports := aCollection asArray collect: [:each | each realReference asFullyQualifiedReference]!
 
-mutateAttributes: aClassAttributes
-	aClassAttributes imports: imports!
+mutateClassDetails: aClassDetails
+	aClassDetails imports: imports!
 
 primitiveExecute
 	self changeClass imports: imports!
@@ -51,7 +51,7 @@ changeString!printing!public! !
 hash!comparing!public! !
 imports!public! !
 imports:!accessing!private! !
-mutateAttributes:!helpers!private! !
+mutateClassDetails:!helpers!private! !
 primitiveExecute!applying!private! !
 printOn:!printing!public! !
 !

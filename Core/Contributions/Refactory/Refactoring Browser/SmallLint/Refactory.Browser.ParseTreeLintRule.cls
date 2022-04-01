@@ -377,7 +377,7 @@ literalArrayCharacters
 			[:aNode :answer |
 			answer isNil
 				ifTrue: 
-					[(aNode value class == Array and: [self isArrayOfCharacters: aNode value])
+					[(aNode isLiteralArray and: [self isArrayOfCharacters: aNode value])
 						ifTrue: [aNode]
 						ifFalse: [nil]]
 				ifFalse: [answer]].
@@ -422,14 +422,15 @@ modifiesCollection
 	^detector!
 
 modifiesTree: aCollectionTree in: aParseTree
-	| notifier args |
+	| notifier args receiver |
 	notifier := ParseTreeSearcher new.
 	args := {RBPatternVariableNode named: '`@object'}.
+	receiver := aCollectionTree copy.
 	notifier
 		matchesAnyTreeOf: (#(#add: #addAll: #remove: #removeAll:) collect: 
 					[:each |
 					StMessageNode
-						receiver: aCollectionTree
+						receiver: receiver
 						selector: each
 						arguments: args])
 		do: [:aNode :answer | true].

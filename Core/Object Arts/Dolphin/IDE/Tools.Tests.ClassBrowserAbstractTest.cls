@@ -9,7 +9,6 @@ Core.Tests.DolphinTest subclass: #'Tools.Tests.ClassBrowserAbstractTest'
 Tools.Tests.ClassBrowserAbstractTest guid: (Core.GUID fromString: '{fa025e63-3880-48ae-82d4-4b3172d507cc}')!
 Tools.Tests.ClassBrowserAbstractTest isNonInstantiable: true!
 Tools.Tests.ClassBrowserAbstractTest comment: ''!
-!Tools.Tests.ClassBrowserAbstractTest categoriesForClass!Unclassified! !
 !Tools.Tests.ClassBrowserAbstractTest methodsFor!
 
 assertIsOnlyMethodVisible: method

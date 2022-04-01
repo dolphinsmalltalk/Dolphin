@@ -60,7 +60,7 @@ testModelPushDownVariableToClassDownTwoLevels
 		defineClass: 'Subclass subclass: #AnotherSubclass instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''''.
 	class := model metaclassNamed: #AnotherSubclass.
 	class compile: 'bar ^Foo' classified: #accessing.
-	class := class nonMetaclass.
+	class := class instanceClass.
 	self executeRefactoring: (PushDownClassVariableRefactoring
 				model: model
 				variable: #Foo
@@ -102,7 +102,7 @@ testModelRemoveUnusedVariable
 
 testNonExistantName
 	self shouldFail: (PushDownClassVariableRefactoring variable: #Foo class: BasicLintRuleTestData)
-		withMessage: 'BasicLintRuleTestData does not define class variable #Foo'!
+		withMessage: '<1p> does not define class variable #Foo' << BasicLintRuleTestData!
 
 testPushDownClassVariable
 	| refactoring |

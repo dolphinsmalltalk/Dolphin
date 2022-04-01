@@ -27,12 +27,15 @@ className: aName newName: aNewName superclass: aClass
 	^self!
 
 copyClass
-	self performComponentRefactoring: (AddClassRefactoring 
+	| details |
+	details := ClassDetails fromClass: class.
+	details
+		superclass: superclass;
+		className: newName.
+	self performComponentRefactoring: (AddClassRefactoring
 				model: self model
-				addClass: newName
-				superclass: superclass
-				subclasses: #()
-				category: class category).
+				details: details
+				subclasses: #()).
 	^self model classNamed: newName!
 
 copyClassVarsTo: clone

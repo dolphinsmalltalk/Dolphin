@@ -53,4 +53,4 @@ Kernel.SharedPool subclass: #'OS.Win32Errors'
 OS.Win32Errors guid: (Core.GUID fromString: '{ebf1ffcb-3db7-4be5-bc6e-4f922ed6d1b8}')!
 OS.Win32Errors isNonInstantiable: true!
 OS.Win32Errors comment: ''!
-!OS.Win32Errors categoriesForClass!Unclassified! !
+!OS.Win32Errors categoriesForClass!External-Data-Constants! !

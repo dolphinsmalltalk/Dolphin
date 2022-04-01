@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.RefactoryClassChange subclass: #'Refactory.Browser.BasicRenameClassChange'
+Refactory.Browser.ClassModificationChange subclass: #'Refactory.Browser.BasicRenameClassChange'
 	instanceVariableNames: 'newName'
 	classVariableNames: ''
 	imports: #()
@@ -24,8 +24,8 @@ changeClass: aBehavior
 changeString
 	^'Rename <1d> to <2s>' << {classReference. newName}!
 
-mutateAttributes: aClassAttributes 
-	aClassAttributes className: newName!
+mutateClassDetails: aClassDetails
+	aClassDetails className: newName!
 
 newName
 	^newName!
@@ -50,7 +50,7 @@ asUndoOperation!converting!public! !
 changeClass!accessing!public! !
 changeClass:!accessing!public! !
 changeString!printing!public! !
-mutateAttributes:!public! !
+mutateClassDetails:!helpers!private! !
 newName!accessing!public! !
 primitiveExecute!applying!private! !
 printOn:!printing!public! !

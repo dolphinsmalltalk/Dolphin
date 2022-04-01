@@ -11,17 +11,21 @@ Refactory.Browser.Tests.ClassCategoryChangeTest comment: ''!
 !Refactory.Browser.Tests.ClassCategoryChangeTest categoriesForClass!Refactory-Testing! !
 !Refactory.Browser.Tests.ClassCategoryChangeTest methodsFor!
 
+subjectClass
+	^ClassCategoryChange!
+
 testAsUndo
 	| subject undo |
-	subject := ClassCategoryChange categorize: Object as: {ClassCategory name: 'Kernel-Objects'. ClassCategory name: 'Refactoring-Model'}.
+	subject := self subjectClass categorize: Object
+				as: {ClassCategory name: 'Kernel-Objects'. ClassCategory name: 'Refactoring-Model'}.
 	undo := subject asUndoOperation.
-	self assert: undo isKindOf: ClassCategoryChange.
-	self assert: undo categories equals: Object categories .
+	self assert: undo isKindOf: self undoClass.
+	self assert: undo categories equals: Object categories.
 	self assert: undo afterText equals: subject beforeText!
 
 testPrinting
 	| subject printString |
-	subject := ClassCategoryChange categorize: Object
+	subject := self subjectClass categorize: Object
 				as: {ClassCategory name: 'Kernel-Objects'. ClassCategory name: 'Refactoring-Model'}.
 	self assert: subject beforeText equals: '!!Core.Object categoriesForClass!!Kernel-Objects!! !!'.
 	printString := '!!Core.Object categoriesForClass!!Kernel-Objects!!Refactoring-Model!! !!'.
@@ -29,6 +33,7 @@ testPrinting
 	self assert: subject changeString equals: 'Categorize Core.Object'.
 	self assert: subject printString equals: printString! !
 !Refactory.Browser.Tests.ClassCategoryChangeTest categoriesForMethods!
+subjectClass!constants!private! !
 testAsUndo!public!unit tests! !
 testPrinting!public!unit tests! !
 !

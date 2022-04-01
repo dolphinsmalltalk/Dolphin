@@ -31,6 +31,7 @@ package setMethodNames: #(
 	#(#{Kernel.AbstractChunkSourceFiler} #fileOutProtocols:ofBehavior:)
 	#(#{Kernel.AbstractChunkSourceFiler} #logEvaluation:)
 	#(#{Kernel.AbstractChunkSourceFiler} #printBasicDefinitionOfClass:)
+	#(#{Kernel.AbstractChunkSourceFiler} #printVariables:string:)
 	#(#{Kernel.AbstractChunkSourceFiler} #specialBehaviorAttributes)
 	#(#{Kernel.AbstractChunkSourceFiler} #storeCommentString:forClass:)
 	#(#{Kernel.AbstractChunkSourceFiler} #storeCommentString:forPackage:)
@@ -198,19 +199,15 @@ emitCategoriesForMethods: aSequencableCollection of: aClass
 		cr!
 
 emitCategoriesOfClass: aClass
-	"Private - Emit a chunk to source stream to reclassify the <Class>, aClass, in all its existing 
-	categories."
+	"Private - Emit a chunk to source stream to reclassify the <Class>, aClass, in all its existing categories."
 
-	| categories |
-	categories := aClass categories.
-	categories isEmpty ifTrue: [^self].
 	stream nextPut: $!!.
 	self emitClassName: aClass.
 	stream
 		space;
 		nextPutAll: #categoriesForClass;
 		nextPut: $!!.
-	categories asSortedArray do: [:aCategory | self nextChunkPut: aCategory name].
+	aClass categories asSortedArray do: [:aCategory | self nextChunkPut: aCategory asString].
 	stream nextPutAll: ' !!'!
 
 emitCategoriesOfMethod: aCompiledMethod
@@ -276,23 +273,32 @@ fileOutAttributesOfClass: aClass
 	"File-out any attributes of the aClass (e.g. the comment, GUID, etc) not included in the basic
 	aClass definition, onto the source stream."
 
-	self
-		emitGUIDOfClass: aClass;
-		cr.
-	(self emitSpecialBehaviorAttributesOfClass: aClass) == 0 ifFalse: [self cr].
-	self
-		emitCommentOfClass: aClass;
-		cr;
-		emitCategoriesOfClass: aClass;
-		cr!
+	aClass guid
+		ifNotNil: 
+			[self
+				cr;
+				emitGUIDOfClass: aClass].
+	aClass hasSpecialBehavior
+		ifTrue: 
+			[self
+				cr;
+				emitSpecialBehaviorAttributesOfClass: aClass].
+	aClass comment
+		ifNotNil: 
+			[self
+				cr;
+				emitCommentOfClass: aClass].
+	aClass classCategories
+		ifNotNil: 
+			[self
+				cr;
+				emitCategoriesOfClass: aClass]!
 
 fileOutBasicDefinitionOfClass: aClass
 	"Print a definition of the <Class>, aClass, onto the receiver's stream."
 
 	self printBasicDefinitionOfClass: aClass.
-	stream
-		nextPut: $!!;
-		cr!
+	stream nextPut: $!!!
 
 fileOutMessages: aCollection ofBehavior: aClass
 	"Append the definitions of the methods of the <ClassDescription>, aClassDescription,
@@ -345,26 +351,17 @@ printBasicDefinitionOfClass: aClass
 		print: (aClass isInBaseEnvironment
 					ifTrue: [aClass unqualifiedName]
 					ifFalse: [aClass fullName asSymbol]);
-		crtab;
-		nextPutAll: 'instanceVariableNames: '''.
-	aClass instanceVariableNames do: [:each | stream nextPutAll: each] separatedBy: [stream space].
+		crtab.
+	self printVariables: aClass instanceVariableNames string: 'instanceVariableNames:'.
+	stream crtab.
+	self printVariables: aClass classVariableNames asSortedArray string: 'classVariableNames:'.
 	stream
-		nextPut: $';
-		crtab;
-		nextPutAll: 'classVariableNames: '''.
-	aClass classVariableNames asSortedArray do: [:each | stream nextPutAll: each]
-		separatedBy: [stream space].
-	stream
-		nextPut: $';
 		crtab;
 		nextPutAll: 'imports: ';
 		print: aClass imports;
-		crtab;
-		nextPutAll: 'classInstanceVariableNames: '''.
-	aClass classInstanceVariableNames do: [:each | stream nextPutAll: each]
-		separatedBy: [stream space].
+		crtab.
+	self printVariables: aClass classInstanceVariableNames string: 'classInstanceVariableNames:'.
 	stream
-		nextPut: $';
 		crtab;
 		nextPutAll: 'classConstants: {'.
 	classConstants := aClass classConstants.
@@ -379,8 +376,15 @@ printBasicDefinitionOfClass: aClass
 			stream crtab].
 	stream nextPut: $}!
 
+printVariables: aCollection string: aString
+	stream
+		nextPutAll: aString;
+		nextPutAll: ' '''.
+	aCollection do: [:each | stream nextPutAll: each] separatedBy: [stream space].
+	stream nextPut: $'!
+
 specialBehaviorAttributes
-	^#(#(#isIndirection) #(#isNullTerminated) #(#isNonInstantiable))!
+	^#(#(#isIndirection) #(#isNullTerminated) #(#isNonInstantiable) #(isMourner))!
 
 storeCommentString: aString forClass: aClass
 	"Save the <readableString>, aString, as the comment text for the 
@@ -432,6 +436,7 @@ fileOutMessages:ofBehavior:!public!source filing! !
 fileOutProtocols:ofBehavior:!public!source filing-file out! !
 logEvaluation:!private!source filing-file out! !
 printBasicDefinitionOfClass:!public!source filing-file out! !
+printVariables:string:!private!source filing-file out! !
 specialBehaviorAttributes!constants!public!source filing! !
 storeCommentString:forClass:!public!source filing-file out! !
 storeCommentString:forPackage:!public!source filing-file out! !
@@ -578,7 +583,7 @@ fileOutBasicDefinitionOfClass: aClass
 
 	self subclassResponsibility!
 
-fileOutClass: aClass 
+fileOutClass: aClass
 	"File out a full definition of the <ClassDescription>, aClass, to the source stream
 	including all methods, categories and protocols. This includes all methods of the
 	class, including any loose methods that may belong to packages other than the
@@ -589,12 +594,13 @@ fileOutClass: aClass
 		fileOutAllMethodsOfBehavior: aClass;
 		fileOutAllMethodsOfBehavior: aClass class!
 
-fileOutDefinitionOfClass: aClass 
+fileOutDefinitionOfClass: aClass
 	"File-out a definition of the <Class> to the source stream."
 
 	self
 		fileOutBasicDefinitionOfClass: aClass;
-		fileOutAttributesOfClass: aClass!
+		fileOutAttributesOfClass: aClass;
+		cr!
 
 fileOutExpression: aString
 	"Append an immediate expression evaluation to the source stream."
@@ -891,9 +897,8 @@ logComment: aString to: aSourceFiler
 				emitComment: stampedComment;
 				cr]!
 
-storeCategoriesForClass: class
-	"Private - Store the categories of the <ClassDescription>, class, to
-	the change log so that they may be reloaded later."
+storeCategoriesForClass: aClass
+	"Private - Store the categories of the <ClassDescription> argument to the change log so that they may be reloaded later."
 
 	self changesFiler
 		ifNotNil: 
@@ -901,7 +906,7 @@ storeCategoriesForClass: class
 			mutex critical: 
 					[logger
 						setToEnd;
-						emitCategoriesOfClass: class;
+						emitCategoriesOfClass: aClass;
 						cr;
 						flush]]!
 

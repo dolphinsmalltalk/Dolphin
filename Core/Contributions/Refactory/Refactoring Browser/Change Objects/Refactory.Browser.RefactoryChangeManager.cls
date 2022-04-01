@@ -20,15 +20,9 @@ clearUndoRedoList
 	undo := OrderedCollection new.
 	redo := OrderedCollection new!
 
-connectToChanges
-	ChangeSet addDependent: self!
-
 discardLastChange
 	undo isEmpty ifTrue: [^self].
 	undo removeLast!
-
-disconnectFromChanges
-	ChangeSet removeDependent: self!
 
 hasRedoableOperations
 	^redo notEmpty!
@@ -44,8 +38,7 @@ ignoreChangesWhile: aBlock
 initialize
 	undo := OrderedCollection new.
 	redo := OrderedCollection new.
-	isPerformingRefactoring := false.
-	self connectToChanges!
+	isPerformingRefactoring := false!
 
 performChange: aRefactoringChange 
 	self ignoreChangesWhile: [self addUndo: aRefactoringChange execute]!
@@ -60,10 +53,6 @@ redoOperation
 			change := redo removeLast.
 			undo add: change execute]!
 
-release
-	super release.
-	self disconnectFromChanges!
-
 undoChange
 	^undo last!
 
@@ -72,23 +61,11 @@ undoOperation
 	self ignoreChangesWhile: 
 			[| change |
 			change := undo removeLast.
-			redo add: change execute]!
-
-update: anAspectSymbol with: aParameter from: aSender
-	| changeType |
-	(aSender == ChangeSet and: [isPerformingRefactoring not]) ifFalse: [^self].
-	anAspectSymbol == #reorganizeClass: ifTrue: [^self].
-	changeType := (anAspectSymbol isString ifTrue: [anAspectSymbol asString] ifFalse: ['class'])
-				asLowercase.
-	(changeType indexOfSubCollection: 'class' startingAt: 1)
-		+ (changeType indexOfSubCollection: 'selector' startingAt: 1) > 0
-		ifTrue: [self clearUndoRedoList]! !
+			redo add: change execute]! !
 !Refactory.Browser.RefactoryChangeManager categoriesForMethods!
 addUndo:!public!public access! !
 clearUndoRedoList!private! !
-connectToChanges!initialize/release!public! !
 discardLastChange!public!public access! !
-disconnectFromChanges!initialize/release!public! !
 hasRedoableOperations!public! !
 hasUndoableOperations!public! !
 ignoreChangesWhile:!public!public access! !
@@ -96,10 +73,8 @@ initialize!initialize/release!public! !
 performChange:!public!public access! !
 redoChange!public!public access! !
 redoOperation!public!public access! !
-release!initialize/release!public! !
 undoChange!public!public access! !
 undoOperation!public!public access! !
-update:with:from:!public!updating! !
 !
 
 !Refactory.Browser.RefactoryChangeManager class methodsFor!

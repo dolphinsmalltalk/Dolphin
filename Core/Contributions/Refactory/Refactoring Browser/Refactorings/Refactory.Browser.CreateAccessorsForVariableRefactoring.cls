@@ -132,7 +132,7 @@ usesAssignmentOf: aString in: aClass classVariable: isClassVar
 	matcher
 		answer: false;
 		matches: aString , ' := ``@object' do: [:aNode :answer | answer or: [aNode isUsed]].
-	definingClass := isClassVar ifTrue: [aClass nonMetaclass] ifFalse: [aClass].
+	definingClass := isClassVar ifTrue: [aClass instanceClass] ifFalse: [aClass].
 	^definingClass withAllSubclasses
 		, (isClassVar ifTrue: [definingClass metaclass withAllSubclasses] ifFalse: [#()]) anySatisfy: 
 				[:each |

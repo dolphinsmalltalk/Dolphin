@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.MethodRefactoring subclass: #'Refactory.Browser.RenameTemporaryRefactoring'
-	instanceVariableNames: 'selector interval oldName newName parseTree'
+	instanceVariableNames: 'selector interval oldName newName'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -29,7 +29,7 @@ preconditions
 	^(RBCondition definesSelector: selector in: class) 
 		& (RBCondition isValidTemporaryVariableName: newName for: class) 
 			& (RBCondition definesInstanceVariable: newName in: class) not 
-			& (RBCondition definesClassVariable: newName in: class) not 
+			& (RBCondition definesStaticVariable: newName in: class) not 
 			& (RBCondition withBlock: 
 						[| methodSource |
 						interval first > interval last ifTrue: [self refactoringError: 'Invalid variable name'].
@@ -65,7 +65,7 @@ storeOn: aStream
 	aStream nextPut: $)!
 
 transform
-	| definingNode variableNode method |
+	| definingNode variableNode method parseTree |
 	method := class methodFor: selector.
 	parseTree := method parseTreeWithSourceIntervals copy.
 	variableNode := self

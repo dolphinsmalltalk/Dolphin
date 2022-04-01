@@ -156,22 +156,35 @@ compileTree: aMethodNode forMethod: aRBMethod
 		categories: (class protocolsFor: selector)
 		package: packageAndEnvironment first!
 
-defineClass: aString
-	| change newClass newClassName |
-	change := changes defineClass: aString.
-	newClassName := change changeClassName.
+createOrUpdateModelClass: anAddClassChange
+	| newClass newClassName |
+	newClassName := anAddClassChange changeClassName.
 	newClass := self instanceClassNamed: newClassName.
 	newClass
 		ifNil: 
 			[newClass := RBClass model: self named: newClassName.
-			newClass environment addClass: newClass].
-	newClass superclass: (self instanceClassNamed: change superclassName).
+			newClass environment addClass: newClass]
+		ifNotNil: 
+			["If the class previously existed, and was a root class, we need to remove it from the model's cache of root classes."
+			newClass superclass ifNil: [self rootClasses remove: newClass]].
+	newClass superclass: (self instanceClassNamed: anAddClassChange superclassName).
 	newClass superclass ifNil: [self rootClasses add: newClass].
-	newClass instanceVariableNames: change instanceVariableNames.
-	newClass classVariableNames: change classVariableNames.
-	newClass classConstants: change classConstants.
-	newClass imports: change imports.
-	newClass category: change category.
+	newClass instanceVariableNames: anAddClassChange instanceVariableNames.
+	newClass classVariableNames: anAddClassChange classVariableNames.
+	newClass classConstants: anAddClassChange classConstants.
+	newClass imports: anAddClassChange imports.
+	newClass categoryNames: anAddClassChange categoryNames!
+
+defineClass: aString
+	| change |
+	change := changes defineClass: aString.
+	self createOrUpdateModelClass: change.
+	^change!
+
+defineClassWithDetails: aClassDetails
+	| change |
+	change := changes defineClassWithDetails: aClassDetails.
+	self createOrUpdateModelClass: change.
 	^change!
 
 definesStaticVariable: aString
@@ -262,8 +275,8 @@ removeClassNamed: aString
 	self flushCaches.
 	^changes removeClassNamed: aString!
 
-removeClassVariable: aString from: aRBClass 
-	^changes removeClassVariable: aString from: aRBClass!
+removeClassVariable: aVariableBinding
+	^changes removeClassVariable: aVariableBinding!
 
 removeInstanceVariable: aString from: aRBClass 
 	^changes removeInstanceVariable: aString from: aRBClass!
@@ -312,14 +325,11 @@ renameInstanceVariable: oldName to: newName in: aRBClass around: aBlock
 		around: aBlock!
 
 reparentClasses: aRBClassCollection to: newClass
-	aRBClassCollection
-		do: [:aClass | self defineClass: (self replaceClassNameIn: aClass definition to: newClass fullName)]!
-
-replaceClassNameIn: definitionString to: aSymbol 
-	| parseTree |
-	parseTree := Parser parseExpression: definitionString.
-	parseTree receiver: (StVariableNode named: aSymbol).
-	^parseTree formattedCode!
+	aRBClassCollection do: 
+			[:aClass |
+			self defineClassWithDetails: ((ClassDetails fromClass: aClass)
+						superclassName: newClass fullName;
+						yourself)]!
 
 rootClasses
 	^rootClasses
@@ -338,15 +348,12 @@ rootNamespace
 setEnvironment: aBrowserEnvironment
 	changes := CompositeRefactoryChange new.
 	environment := aBrowserEnvironment.
-	rootNamespace := Root rbClass model: self existing: Root.
+	rootNamespace :=RBRootNamespace new model: self existing: Root.
 	smalltalkNamespace := rootNamespace classPool at: #Smalltalk.
 	self flushCaches!
 
 smalltalkNamespace
-	^smalltalkNamespace!
-
-whichCategoryIncludes: aSymbol
-	^self environment whichCategoryIncludes: aSymbol! !
+	^smalltalkNamespace! !
 !Refactory.Browser.RBModel categoriesForMethods!
 addClassConstant:to:!changes!private! !
 addClassVariable:to:!changes!private! !
@@ -365,9 +372,11 @@ classFor:!accessing/classes!public! !
 classNamed:!accessing/classes!public! !
 comment:in:!changes!private! !
 compile:in:categories:!changes!private! !
-compile:in:environment:categories:package:!public! !
+compile:in:environment:categories:package:!compiling!public! !
 compileTree:forMethod:!public!support! !
+createOrUpdateModelClass:!changes!private! !
 defineClass:!changes!public! !
+defineClassWithDetails:!changes!public! !
 definesStaticVariable:!public!testing! !
 environment!accessing!public! !
 flushCaches!changes!private! !
@@ -384,19 +393,17 @@ performChange:around:!changes!private! !
 removeClass:!changes!public! !
 removeClassConstant:from:!changes!private! !
 removeClassNamed:!changes!private! !
-removeClassVariable:from:!changes!private! !
+removeClassVariable:!changes!public! !
 removeInstanceVariable:from:!changes!private! !
 removeSelector:from:!changes!private! !
 renameClass:to:around:!changes!public! !
 renameClassVariable:to:in:around:!changes!private! !
 renameInstanceVariable:to:in:around:!changes!private! !
 reparentClasses:to:!changes!public! !
-replaceClassNameIn:to:!changes!private! !
-rootClasses!accessing!public! !
-rootNamespace!public! !
+rootClasses!accessing/classes!public! !
+rootNamespace!accessing/classes!public! !
 setEnvironment:!initialize/release!private! !
-smalltalkNamespace!accessing!public! !
-whichCategoryIncludes:!accessing/classes!public! !
+smalltalkNamespace!accessing/classes!public! !
 !
 
 !Refactory.Browser.RBModel class methodsFor!

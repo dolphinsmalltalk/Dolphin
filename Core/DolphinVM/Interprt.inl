@@ -265,6 +265,7 @@ __forceinline Interpreter::MethodCacheEntry* __fastcall Interpreter::findNewMeth
 	if (pEntry->classPointer == classPointer && pEntry->selector == oteSelector)
 	{
 #ifdef _DEBUG
+		extern size_t cacheHits;
 		cacheHits++;
 		{
 			if (executionTrace)

@@ -94,9 +94,7 @@ messages
 	^messages!
 
 parseTree
-	^parseTree isNil
-		ifTrue: [parseTree := self buildParseTree]
-		ifFalse: [parseTree]!
+	^parseTree ifNil: [parseTree := self buildParseTree]!
 
 primitiveComputeLiterals
 	"Dolphin's view resources may reference symbols, and so may the VM"

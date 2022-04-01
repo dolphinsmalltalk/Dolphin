@@ -17,7 +17,6 @@ Instance Variables:
 	imageModel			<ValueAspectAdaptor>
 	iconIdPresenter		<TextPresenter>
 '!
-!Tools.MenuItemDialog categoriesForClass!Unclassified! !
 !Tools.MenuItemDialog methodsFor!
 
 chooseIcon

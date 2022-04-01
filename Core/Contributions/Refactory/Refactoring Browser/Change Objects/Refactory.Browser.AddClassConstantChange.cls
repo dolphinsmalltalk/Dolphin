@@ -20,9 +20,9 @@ changeString
 changeSymbol
 	^#addClassConstant:!
 
-mutateAttributes: aClassAttributes
-	aClassAttributes
-		classConstants: (aClassAttributes classConstants asDictionary
+mutateClassDetails: aClassDetails
+	aClassDetails
+		classConstants: (aClassDetails classConstants asDictionary
 				removeKey: variable key ifAbsent: nil;
 				add: variable;
 				yourself) associations
@@ -34,7 +34,7 @@ primitiveExecute
 asUndoOperation!converting!public! !
 changeString!printing!public! !
 changeSymbol!constants!private! !
-mutateAttributes:!helpers!private! !
+mutateClassDetails:!helpers!private! !
 primitiveExecute!applying!private! !
 !
 

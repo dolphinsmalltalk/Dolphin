@@ -16,6 +16,7 @@ package setClassNames: #(
 	#{Refactory.Browser.Tests.AddImportRefactoringTest}
 	#{Refactory.Browser.Tests.AddInstanceVariableChangeTest}
 	#{Refactory.Browser.Tests.AddInstanceVariableRefactoringTest}
+	#{Refactory.Browser.Tests.AddMethodChangeTest}
 	#{Refactory.Browser.Tests.AddMethodRefactoringTest}
 	#{Refactory.Browser.Tests.AddParameterRefactoringTest}
 	#{Refactory.Browser.Tests.BasicRenameClassChangeTest}
@@ -24,8 +25,10 @@ package setClassNames: #(
 	#{Refactory.Browser.Tests.ChildrenToSiblingsRefactoringTest}
 	#{Refactory.Browser.Tests.ClassCategoryChangeTest}
 	#{Refactory.Browser.Tests.ClassCommentChangeTest}
+	#{Refactory.Browser.Tests.ClassDetailsTest}
 	#{Refactory.Browser.Tests.ClassGuidChangeTest}
 	#{Refactory.Browser.Tests.ClassImportsChangeTest}
+	#{Refactory.Browser.Tests.ClassNameToBindingReferenceRefactoringTest}
 	#{Refactory.Browser.Tests.CreateAccessorsForVariableRefactoringTest}
 	#{Refactory.Browser.Tests.ExpandImportsRefactoringTest}
 	#{Refactory.Browser.Tests.ExtractMethodRefactoringTest}
@@ -64,6 +67,7 @@ package setClassNames: #(
 	#{Refactory.Browser.Tests.RemoveClassRefactoringTest}
 	#{Refactory.Browser.Tests.RemoveClassVariableChangeTest}
 	#{Refactory.Browser.Tests.RemoveClassVariableRefactoringTest}
+	#{Refactory.Browser.Tests.RemoveImportRefactoringTest}
 	#{Refactory.Browser.Tests.RemoveInstanceVariableChangeTest}
 	#{Refactory.Browser.Tests.RemoveInstanceVariableRefactoringTest}
 	#{Refactory.Browser.Tests.RemoveMethodRefactoringTest}
@@ -104,7 +108,6 @@ package setAliasVariableNames: #(
 
 package setPrerequisites: #(
 	'..\..\..\..\Object Arts\Dolphin\Base\Dolphin'
-	'..\..\..\..\Object Arts\Dolphin\IDE\Professional\Dolphin Refactoring Browser'
 	'..\Change Objects\RBChangeObjects'
 	'..\Environments\RBEnvironments'
 	'..\Formatters\RBFormatters'
@@ -114,6 +117,7 @@ package setPrerequisites: #(
 	'..\Refactorings\RBReferenceFinder'
 	'..\SmallLint\RBSmallLint'
 	'RBTestMethods'
+	'..\..\..\..\Object Arts\Samples\MVP\Scribble\Scribble'
 	'..\..\..\..\Object Arts\Dolphin\System\Compiler\Smalltalk Parser'
 	'..\..\..\Camp Smalltalk\SUnit\SUnit'
 ).
@@ -135,6 +139,12 @@ Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tes
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tests.ChangeObjectTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tests.ClassDetailsTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -254,6 +264,12 @@ Refactory.Browser.Tests.ChangeObjectTest subclass: #'Refactory.Browser.Tests.Add
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Refactory.Browser.Tests.ChangeObjectTest subclass: #'Refactory.Browser.Tests.AddMethodChangeTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Refactory.Browser.Tests.ChangeObjectTest subclass: #'Refactory.Browser.Tests.BasicRenameClassChangeTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -357,6 +373,12 @@ Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.AddP
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.ChildrenToSiblingsRefactoringTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.ClassNameToBindingReferenceRefactoringTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -489,6 +511,12 @@ Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.Remo
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.RemoveClassVariableRefactoringTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.RemoveImportRefactoringTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

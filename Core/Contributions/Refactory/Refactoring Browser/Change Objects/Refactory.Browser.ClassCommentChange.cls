@@ -28,10 +28,10 @@ comment: aString
 emitAttributeOf: aClass with: aChunkSourceFiler
 	aChunkSourceFiler emitCommentOfClass: aClass!
 
-mutateAttributes: aClassAttributes
-	"Alter the <ClassAttributes> argument to reflect the change described by the receiver."
+mutateClassDetails: aClassDetails
+	"Alter the <ClassDetails> argument to reflect the change described by the receiver."
 
-	aClassAttributes comment: comment!
+	aClassDetails comment: comment!
 
 primitiveExecute
 	self changeClass comment: self comment! !
@@ -41,7 +41,7 @@ changeString!printing!public! !
 comment!accessing!public! !
 comment:!accessing!public! !
 emitAttributeOf:with:!printing!private! !
-mutateAttributes:!helpers!private! !
+mutateClassDetails:!helpers!private! !
 primitiveExecute!applying!private! !
 !
 

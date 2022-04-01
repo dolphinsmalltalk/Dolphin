@@ -583,7 +583,7 @@ testRenameOfClassWithMethodInPackageNamespace
 	change := model changes changeForClassNamed: class fullyQualifiedReference selector: selector.
 	"Check that a change to a method of the renamed class has the correct (new) namespace (nil, so the class' namespace is used), and that the package is preserved"
 	self assert: change environment identicalTo: Tools.
-	self assert: change package equals: Tools.RefactoringTool owningPackage.
+	self assert: change package name equals: 'Dolphin Refactoring Browser'.
 	self
 		verifyMethod: selector
 		of: class

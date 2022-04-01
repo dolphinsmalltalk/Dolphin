@@ -31,8 +31,7 @@ realBinding: aVariableBinding environment: aRBClass
 	key := aVariableBinding key.
 	value := aVariableBinding value.
 	environment := aRBClass.
-	realBinding := aVariableBinding.
-	flags := aVariableBinding flags.
+	flags := (realBinding := aVariableBinding) flags.
 	self isImmutable: aVariableBinding isImmutable.
 	^self! !
 !Refactory.Browser.RBVariableBinding categoriesForMethods!

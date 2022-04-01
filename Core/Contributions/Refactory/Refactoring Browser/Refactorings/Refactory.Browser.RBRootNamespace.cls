@@ -38,11 +38,3 @@ environment!accessing!public! !
 fullNameFor:!helpers!private! !
 !
 
-!Refactory.Browser.RBRootNamespace class methodsFor!
-
-model: aRBModel existing: aClass
-	^aRBModel rootNamespace ifNil: [super model: aRBModel existing: aClass]! !
-!Refactory.Browser.RBRootNamespace class categoriesForMethods!
-model:existing:!instance creation!public! !
-!
-

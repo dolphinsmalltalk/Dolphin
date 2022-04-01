@@ -8,7 +8,6 @@ XProgramming.SUnit.TestCase subclass: #'Tools.Tests.ClosedCommandDescriptionTest
 	classConstants: {}!
 Tools.Tests.ClosedCommandDescriptionTest guid: (Core.GUID fromString: '{c860325b-fae5-47a0-a5d0-711d8ac4c509}')!
 Tools.Tests.ClosedCommandDescriptionTest comment: ''!
-!Tools.Tests.ClosedCommandDescriptionTest categoriesForClass!Unclassified! !
 !Tools.Tests.ClosedCommandDescriptionTest methodsFor!
 
 setUp

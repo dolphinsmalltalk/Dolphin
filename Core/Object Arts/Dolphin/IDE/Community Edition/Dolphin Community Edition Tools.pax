@@ -25,7 +25,7 @@ package basicPackageVersion: '6.1'.
 package setClassNames: #(
 	#{Tools.ClassHierarchyDiagram}
 	#{Tools.CommunityEditionSmalltalkSystem}
-	#{Tools.PoolDictionariesShell}
+	#{Tools.NamespacesShell}
 	#{Tools.ProtocolBrowserShell}
 	#{Tools.SourceBrowser}
 	#{Tools.UserPreferencesShell}
@@ -34,7 +34,7 @@ package setClassNames: #(
 package setMethodNames: #(
 	#(#{OS.ITEMIDLIST class} #publishedAspectsOfInstances)
 	#(#{Tools.ClassBrowserAbstract} #browseMethodProtocol)
-	#(#{Tools.SmalltalkSystem} #inspectPoolDictionaries)
+	#(#{Tools.SmalltalkSystem} #inspectNamespaces)
 	#(#{Tools.SmalltalkSystem} #inspectSystemOptions)
 	#(#{UI.Toolbar class} #resource_Protocol_tools)
 ).
@@ -82,7 +82,7 @@ Tools.SmalltalkToolShell subclass: #'Tools.ClassHierarchyDiagram'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.SmalltalkToolShell subclass: #'Tools.PoolDictionariesShell'
+Tools.SmalltalkToolShell subclass: #'Tools.NamespacesShell'
 	instanceVariableNames: 'dictionariesPresenter'
 	classVariableNames: ''
 	imports: #()
@@ -138,11 +138,11 @@ browseMethodProtocol!commands!private! !
 
 !Tools.SmalltalkSystem methodsFor!
 
-inspectPoolDictionaries
+inspectNamespaces
 	"Opens an inspector on the available pool dictionaries"
 
 	| inspector |
-	inspector := PublishedAspectInspector shellOn: self availablePools asOrderedCollection.
+	inspector := PublishedAspectInspector shellOn: self availableNamespaces asOrderedCollection.
 	inspector topShell caption: 'Available Pool Dictionaries'.
 	^inspector!
 
@@ -151,7 +151,7 @@ inspectSystemOptions
 
 	^UserPreferencesShell showOn: (ListModel withAll: self systemOptions)! !
 !Tools.SmalltalkSystem categoriesForMethods!
-inspectPoolDictionaries!initializing!public! !
+inspectNamespaces!initializing!public! !
 inspectSystemOptions!commands!public! !
 !
 

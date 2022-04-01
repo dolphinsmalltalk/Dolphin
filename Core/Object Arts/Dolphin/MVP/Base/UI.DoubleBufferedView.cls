@@ -8,7 +8,7 @@ UI.View subclass: #'UI.DoubleBufferedView'
 	classConstants: {}!
 UI.DoubleBufferedView guid: (Core.GUID fromString: '{f0757e5d-e398-4ede-9e0f-8c6ccb3699fc}')!
 UI.DoubleBufferedView comment: ''!
-!UI.DoubleBufferedView categoriesForClass!Unclassified! !
+!UI.DoubleBufferedView categoriesForClass!MVP-Views! !
 !UI.DoubleBufferedView methodsFor!
 
 canvas

@@ -241,6 +241,7 @@ installTestCommandsInClassMenu: aMenu withAccelerator: needsAccel
 									expandMacrosWithArguments: {self toggleToTestsClassDescription}
 									locale: Locale smalltalk)]
 				receiver: self.
+	toggleToTestClassCommandDescription image: [self toggleToTestsClass ifNotNil: [:class | class icon]].
 	needsAccel ifTrue: [toggleToTestClassCommandDescription acceleratorKeyString: 'Ctrl+Alt+T'].
 	aMenu
 		addSeparator;

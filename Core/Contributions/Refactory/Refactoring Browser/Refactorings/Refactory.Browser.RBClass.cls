@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.RBAbstractClass subclass: #'Refactory.Browser.RBClass'
-	instanceVariableNames: 'model name metaclass realClass superclass subclasses unqualifiedName classPool imports category comment environment binding'
+	instanceVariableNames: 'model name metaclass realClass superclass subclasses unqualifiedName classPool imports categoryNames comment environment binding'
 	classVariableNames: 'LookupComment'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -29,6 +29,10 @@ addBinding: aRBVariableBinding
 	aRBVariableBinding environment: self.
 	self classPool add: aRBVariableBinding!
 
+addClassConstant: aRBVariableBinding
+	self addBinding: aRBVariableBinding.
+	model addClassConstant: aRBVariableBinding to: self!
+
 addClassVariable: aString
 	self classPool add: (RBVariableBinding name: aString environment: self).
 	model addClassVariable: aString to: self!
@@ -46,14 +50,6 @@ allBehaviorsDo: operation
 			[:class |
 			operation value: class.
 			operation value: class metaclass]!
-
-allBindingsDo: aMonadicValuable
-	"Evaluate the <monadicValuable> argument for each of the bindings in the receiver, including aliases, and recursively in any of the nested namespaces."
-
-	self bindingsDo: 
-			[:each |
-			aMonadicValuable value: each.
-			each isClassBinding ifTrue: [each value bindingsDo: aMonadicValuable]]!
 
 allClassBindingNames
 	^self superclass
@@ -74,16 +70,6 @@ allClassVariableNames
 		ifNil: [self classVariableNames]
 		ifNotNil: [:sprClass | sprClass allClassVariableNames , self classVariableNames]!
 
-allImports
-	"Answer a <sequencedReadableCollection> of <BindingReference> being the imports that are specified in the receiver and each of its superclasses."
-
-	| all seen |
-	all := Array writeStream: 5.
-	seen := Set new.
-	self
-		withAllSuperclassesDo: [:c | c imports do: [:each | (seen addNewElement: each) ifTrue: [all nextPut: each]]].
-	^all contents!
-
 baseEnvironment
 	"Private - Answer the default environment for new subclasses of the receiver that the ClassBuilder should use when the provided subclass name is unqualified."
 
@@ -103,35 +89,40 @@ bindingOrNil
 			[binding := self globalScope fullBindingFor: self name.
 			binding]!
 
-bindings
-	^self classPool associations!
+buildClassPool
+	"Private - Create a shadow copy of the real class' classPool with model static variables and classes in place of the real static variables and classes."
 
-bindingsDo: aMonadicValuable
-	"Evaluate the <monadicValuable> argument for each of the receiver's localled defined <VariableBinding>s."
+	"Implementation Note: To reduce the hashing overhead we make a shallow copy of the class pool and then update it in place. This works because the variable name hashes will remain the same. Such low-level hackery is excusable only because building out the namespace hierarchy is one of the most expensive operations when running refactorings. The alternative would be to store only the model differences in the model classes (deletions and additions), but generating a complete shadow copy on demand is simpler and seems to provide acceptable performance."
 
-	self classPool associationsDo: aMonadicValuable!
+	| pool |
+	pool := realClass classPool shallowCopy.
+	1 to: pool basicSize
+		do: 
+			[:i |
+			(pool basicAt: i)
+				ifNotNil: 
+					[:each |
+					| var |
+					var := pool basicAt: i put: (RBVariableBinding new realBinding: each environment: self).
+					each isClassBinding ifTrue: [var setValue: (each value newClassInModel: model)]]].
+	^pool!
 
-category
-	^category isNil
-		ifTrue: [model environment whichCategoryIncludes: self name]
-		ifFalse: [category]!
+categoryNames
+	^categoryNames
+		ifNil: [(model environment whichCategoriesInclude: self name) collect: [:each | each asString]]
+		ifNotNil: [categoryNames]!
 
-category: aSymbol 
-	category := aSymbol!
+categoryNames: aCollectionOfStrings
+	categoryNames := aCollectionOfStrings!
 
 changeImports: anArray
 	imports := anArray.
 	model import: anArray into: self!
 
-classBindingNames
-	^self definedBindings collect: [:each | each key]!
-
-classConstants
-	"The answer is a temporary value representing a subset of the class variable bindings collection, so mark it immutable to catch errors of attempting to modify it"
-
-	^(self definedBindings select: [:each | each isImmutable and: [each value isSelfEvaluating]])
-		isImmutable: true;
-		yourself!
+classCategories
+	^categoryNames
+		ifNil: [model environment whichCategoriesInclude: self name]
+		ifNotNil: [categoryNames collect: [:each | ClassCategory name: each]]!
 
 classConstants: aCollectionOfAssociations
 	| pool |
@@ -150,34 +141,11 @@ classInstanceVariableNames
 	^self metaclass instanceVariableNames!
 
 classPool
-	^classPool
-		ifNil: 
-			[| realBindings |
-			realBindings := realClass classPool.
-			classPool := Dictionary new: realBindings size.
-			realBindings associationsDo: 
-					[:each |
-					| var |
-					var := RBVariableBinding new realBinding: each environment: self.
-					each isClassBinding
-						ifTrue: 
-							[| class |
-							var setValue: ((class := each value) rbClass model: model existing: class)].
-					classPool add: var].
-			classPool]!
-
-classVariableNames
-	^(self definedBindings reject: [:each | each isImmutable and: [each value isSelfEvaluating]])
-		collect: [:each | each key]!
+	^classPool ifNil: [classPool := self buildClassPool]!
 
 classVariableNames: aCollectionOfStrings
 	classPool := Dictionary new: aCollectionOfStrings size.
 	aCollectionOfStrings do: [:each | classPool add: (RBVariableBinding name: each environment: self)]!
-
-classVariables
-	"Answer a <collection> of <VariableBinding>s, being the class variables of the receiver, but not including class constants."
-
-	^self bindings reject: [:each | each isImmutable and: [each value isSelfEvaluating]]!
 
 comment
 	^comment == LookupComment
@@ -187,12 +155,6 @@ comment
 comment: aString
 	model comment: (comment := aString) in: self!
 
-definedBindings
-	"Private - Answer a <collection> of the receiver's <RBVariableBinding>s that are defined as part of the receiver's class definition (as opposed to externally).
-	For most classes this is all the class variables, including constants. For namespaces, this does not include any of the classes in the namespace as these are added to the namespace implicitly as part of their own definition."
-
-	^self bindings select: [:each | each isClassVariable]!
-
 definition
 	| definitionStream |
 	definitionStream := (String writeStream: 256)
@@ -201,27 +163,14 @@ definition
 	self printDefinitionOn: definitionStream.
 	^definitionStream contents!
 
-directlyDefinesClassVariable: aString
-	^self classPool includesKey: aString!
-
-directlyImportsNamespace: aBindingReference
-	"Namespace imports must always be absolute binding references, but they may be private, so we just compare the paths"
-
-	| pathString |
-	pathString := aBindingReference asString.
-	^self imports anySatisfy: [:each | each pathString = pathString]!
+details
+	^ClassDetails fromClass: self!
 
 environment
 	"Rather confusingly, this is environment in the sense of being a namespace (i.e. an instance of RBNamespaceClass) and is compatible with the use of the term in the Behavior/ClassDescription/Class/Metaclass hierarchy.
 	It's not the BrowserEnvironment (another type of scope) environment of the RBNamespace (Refactoring model) class. I think I might rename RBNamespace...."
 
 	^self basicEnvironment!
-
-fullName
-	"Answer the <String> fully qualified name of the receiver, which is a dot-separated path that binds to the receiver from the global namespace, Root.
-	Note that these names will also be bindable within the legacy Smalltalk namespace, because it is itself an immediate child of root, and so any of its siblings is bindable using that sibling's unqualified name."
-
-	^name!
 
 fullName: aString
 	name = aString ifTrue: [^self].
@@ -254,6 +203,9 @@ getImports
 	^self realClass imports
 	"sharedPools collect: [:each | Smalltalk keyAtValue: each]"!
 
+guid
+	^self realClass ifNotNil: [realClass guid]!
+
 imports
 	imports
 		ifNil: 
@@ -279,6 +231,12 @@ includesNamespace: aRBClass
 	^self == aRBClass
 		or: [(self inheritsFrom: aRBClass) or: [self environment includesEnvironment: aRBClass]]!
 
+instanceClass
+	^self!
+
+instanceSpec
+	^self nearestRealClass ifNil: [Behavior._IsPointersMask] ifNotNil: [:class | class instanceSpec]!
+
 isDefined
 	^realClass notNil!
 
@@ -288,18 +246,16 @@ isInBaseEnvironment
 isMeta
 	^false!
 
+isNonInstantiable
+	^self instanceSpec anyMask: Behavior._NonInstantiableMask!
+
 kindOfSubclass
 	"Private - Answer a string describing the kind of subclassing method used to create the receiver 
 	(part of its definition)."
 
-	^self isVariable 
-		ifTrue: [self isBytes ifTrue: ['variableByteSubclass:'] ifFalse: ['variableSubclass:']]
+	^self isVariable
+		ifTrue: [self isPointers ifTrue: ['variableSubclass:'] ifFalse: ['variableByteSubclass:']]
 		ifFalse: ['subclass:']!
-
-localBindingFor: aString
-	"Answer a variable binding for the named variable directly in the scope of this class, i.e. one of its own class variables. If there is no such class variable, then answer nil."
-
-	^self classPool bindingFor: aString!
 
 localScope
 	^self!
@@ -315,6 +271,22 @@ model
 
 model: aRBModel
 	model := aRBModel!
+
+model: aRBModel existing: aClass
+	model := aRBModel.
+	name := (realClass := aClass) fullName.
+	unqualifiedName := aClass unqualifiedName.
+	(metaclass := RBMetaclass basicNew) instanceClass: self.
+	superclass := LookupSuperclass.
+	comment := LookupComment.
+	^self!
+
+model: aRBModel named: aSymbol
+	model := aRBModel.
+	name := aSymbol.
+	(metaclass := RBMetaclass basicNew) instanceClass: self.
+	comment := LookupComment.
+	^self!
 
 name
 	"Answer the name of the non-metaclass. Note that in Dolphin 8 this is always a fully-qualified name."
@@ -335,9 +307,6 @@ newBindingContextForIdentifier: aString environment: aRBClass
 		environment: aRBClass
 		identifier: aString!
 
-nonMetaclass
-	^self!
-
 printDefinitionOn: aPuttableStream
 	(Object sourceFilerClass on: aPuttableStream) printBasicDefinitionOfClass: self!
 
@@ -354,9 +323,23 @@ realClass: aClass
 removeBindingFor: aString
 	^self classPool removeAssociationAt: aString!
 
+removeClassConstant: anAssociation
+	| var |
+	var := self removeBindingFor: anAssociation key.
+	model removeClassConstant: var from: self!
+
 removeClassVariable: aString
+	| var |
+	var := self localBindingFor: aString.
+	var isNil ifTrue: [^self errorNotFound: aString].
+	var isClassBinding
+		ifTrue: [^self error: 'Cannot remove class binding <1s> from <2p>' << {aString. self}].
 	self removeBindingFor: aString.
-	model removeClassVariable: aString from: self!
+	model removeClassVariable: var.
+	^var!
+
+removeImport: aString
+	self changeImports: (self imports copyWithout: aString asQualifiedReference)!
 
 removeSubclass: aRBClass
 	subclasses := self subclasses copyWithout: aRBClass!
@@ -460,7 +443,7 @@ resolveUnqualifiedName: aString environment: aRBNamespaceClass
 setModel: aRBModel name: anObject realClass: aClassDescription
 	model := aRBModel.
 	name := anObject.
-	(metaclass := RBMetaclass basicNew) nonMetaclass: self.
+	(metaclass := RBMetaclass basicNew) instanceClass: self.
 	comment := LookupComment.
 	aClassDescription
 		ifNotNil: 
@@ -497,7 +480,9 @@ superclass
 
 superclass: aRBClass
 	self superclass ifNotNil: [:sprClass | sprClass removeSubclass: self].
-	(superclass := aRBClass) ifNotNil: [aRBClass addSubclass: self]!
+	(superclass := aRBClass)
+		ifNil: [(model classFor: Class) addSubclass: self metaclass]
+		ifNotNil: [aRBClass addSubclass: self]!
 
 unqualifiedName
 	"Answer the unqualified name of the class."
@@ -505,72 +490,70 @@ unqualifiedName
 	^unqualifiedName
 		ifNil: [unqualifiedName := (BindingReference.PathSeparator split: name) last asSymbol]! !
 !Refactory.Browser.RBClass categoriesForMethods!
-<=!public! !
-addBinding:!public! !
+<=!comparing!public! !
+addBinding:!bindings!public! !
+addClassConstant:!public!variable accessing! !
 addClassVariable:!public!variable accessing! !
 addImport:!namespaces!public! !
 addSubclass:!class hierarchy-adding!private! !
 allBehaviorsDo:!enumerating!public! !
-allBindingsDo:!enumerating!public! !
 allClassBindingNames!accessing!public! !
 allClassesDo:!enumerating!public! !
 allClassVariableNames!accessing!public! !
-allImports!namespaces!public! !
 baseEnvironment!constants!private! !
 basicEnvironment!accessing!public! !
 bindingOrNil!bindings!public! !
-bindings!accessing!public! !
-bindingsDo:!enumerating!public! !
-category!accessing!public! !
-category:!accessing!public! !
+buildClassPool!private! !
+categoryNames!accessing!public! !
+categoryNames:!accessing!public! !
 changeImports:!namespaces!private! !
-classBindingNames!public! !
-classConstants!accessing!public! !
+classCategories!accessing!public! !
 classConstants:!accessing!public! !
-classInModel:!public! !
-classInstanceVariableNames!public! !
+classInModel:!converting!public! !
+classInstanceVariableNames!accessing!public! !
 classPool!accessing!public! !
-classVariableNames!accessing!public! !
 classVariableNames:!accessing!public! !
-classVariables!class variables!public! !
 comment!accessing!public! !
 comment:!accessing!public! !
-definedBindings!accessing!public! !
 definition!accessing!public! !
-directlyDefinesClassVariable:!public!testing! !
-directlyImportsNamespace:!public!testing! !
+details!accessing!public! !
 environment!accessing!public! !
-fullName!accessing!public! !
 fullName:!accessing!private! !
 fullNameFor:!helpers!private! !
 fullyQualifiedReference!accessing!namespaces!public! !
 getEnvironment!accessing!public! !
 getImports!helpers!private! !
+guid!accessing!public! !
 imports!accessing!public! !
 imports:!accessing!public! !
 includesEnvironment:!namespaces!public!testing! !
 includesNamespace:!public!testing! !
+instanceClass!accessing!public! !
+instanceSpec!accessing!public! !
 isDefined!public!testing! !
-isInBaseEnvironment!public! !
+isInBaseEnvironment!public!testing! !
 isMeta!public!testing! !
+isNonInstantiable!public!testing! !
 kindOfSubclass!class hierarchy-testing!private! !
-localBindingFor:!bindings!public! !
 localScope!accessing!public! !
 metaclass!accessing!public! !
 metaSubclasses!accessing!private! !
 model!accessing!public! !
-model:!initialize/release!public! !
+model:!initialize/release!private! !
+model:existing:!private! !
+model:named:!private! !
 name!accessing!public! !
 name:!accessing!public! !
 nearestRealClass!accessing!private! !
 newBindingContextForIdentifier:environment:!bindings!private! !
-nonMetaclass!accessing!public! !
 printDefinitionOn:!accessing!public! !
-printFullNameOn:!public! !
+printFullNameOn:!printing!public! !
 realClass!accessing!public! !
 realClass:!accessing!public! !
-removeBindingFor:!public! !
+removeBindingFor:!bindings!public! !
+removeClassConstant:!public!variable accessing! !
 removeClassVariable:!public!variable accessing! !
+removeImport:!public!variable accessing! !
 removeSubclass:!accessing!public! !
 renameClassVariable:to:around:!public!variable accessing! !
 replaceImport:with:!namespaces!public! !
@@ -584,11 +567,11 @@ resolvePublicBinding:!bindings!private! !
 resolveUnqualifiedName:environment:!bindings!private! !
 setModel:name:realClass:!accessing!initializing!private! !
 setSuperclass:!initializing!private! !
-shortName!public! !
+shortName!accessing!public! !
 subclasses!accessing!public! !
 superclass!accessing!public! !
 superclass:!accessing!private! !
-unqualifiedName!public! !
+unqualifiedName!accessing!public! !
 !
 
 Refactory.Browser.RBClass methodProtocol: #importableNamespace attributes: #(#readOnly) selectors: #(#asQualifiedReference #includesEnvironment: #resolvePublicBinding:)!
@@ -598,20 +581,10 @@ Refactory.Browser.RBClass methodProtocol: #importableNamespace attributes: #(#re
 initialize
 	LookupComment := Object new!
 
-model: aRBModel existing: aClass
-	^self basicNew
-		setModel: aRBModel
-			name: aClass fullName
-			realClass: aClass;
-		yourself!
-
 model: aRBModel named: aSymbol
-	^self basicNew
-		setModel: aRBModel name: aSymbol realClass: nil;
-		yourself! !
+	^self basicNew model: aRBModel named: aSymbol! !
 !Refactory.Browser.RBClass class categoriesForMethods!
 initialize!class initialization!public! !
-model:existing:!instance creation!public! !
 model:named:!instance creation!public! !
 !
 

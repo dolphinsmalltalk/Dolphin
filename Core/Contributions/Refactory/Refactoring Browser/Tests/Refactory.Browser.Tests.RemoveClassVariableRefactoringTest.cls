@@ -14,10 +14,15 @@ Refactory.Browser.Tests.RemoveClassVariableRefactoringTest comment: ''!
 setRemoveReferencedVariableOption: refactoring toAnswer: aBoolean
 	refactoring setOption: #removeReferencedVariable toUse: [aBoolean]!
 
+testAttemptToRemoveClass
+	self
+		shouldFail: (RemoveClassVariableRefactoring variable: self class name class: self class environment)
+		withMessage: '<1d> does not define class variable #<2s>' << {self class environment. self class name}!
+
 testNonExistantName
 	self shouldFail: (RemoveClassVariableRefactoring variable: #RecursiveSelfRule1
 				class: TransformationRuleTestData)
-		withMessage: 'TransformationRuleTestData does not define class variable #RecursiveSelfRule1'!
+		withMessage: '<1p> does not define class variable #RecursiveSelfRule1' << TransformationRuleTestData!
 
 testReferencedVariable
 	| refactoring class |
@@ -49,6 +54,17 @@ testReferencedVariableFromForeignMethod
 	self shouldAbort: refactoring.
 	self assert: (class directlyDefinesClassVariable: 'ClassVar2')!
 
+testRemoveClassConstant
+	| refactoring class |
+	refactoring := RemoveClassVariableRefactoring variable: 'ClassConst1' class: ClassToRename.
+	class := refactoring model classFor: ClassToRename.
+	self assert: (class definesClassVariable: 'ClassConst1').
+	self setRemoveReferencedVariableOption: refactoring toAnswer: true.
+	self executeRefactoring: refactoring.
+	self deny: (class definesClassVariable: 'ClassConst1').
+	self assert: refactoring model changes afterText
+		equals: 'Refactory.Browser.Tests.ClassToRename removeClassConstant: ''ClassConst1'' -> 1!!'!
+
 testRemoveClassVar
 	| refactoring class |
 	refactoring := RemoveClassVariableRefactoring variable: 'Foo1' class: LintRuleTestData.
@@ -58,9 +74,11 @@ testRemoveClassVar
 	self deny: (class definesClassVariable: 'Foo1')! !
 !Refactory.Browser.Tests.RemoveClassVariableRefactoringTest categoriesForMethods!
 setRemoveReferencedVariableOption:toAnswer:!helpers!private! !
+testAttemptToRemoveClass!public!tests! !
 testNonExistantName!failure tests!public! !
 testReferencedVariable!failure tests!public! !
 testReferencedVariableFromForeignMethod!failure tests!public! !
+testRemoveClassConstant!public!tests! !
 testRemoveClassVar!public!tests! !
 !
 

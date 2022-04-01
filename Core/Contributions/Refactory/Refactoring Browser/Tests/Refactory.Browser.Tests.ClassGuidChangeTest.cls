@@ -11,19 +11,22 @@ Refactory.Browser.Tests.ClassGuidChangeTest comment: ''!
 !Refactory.Browser.Tests.ClassGuidChangeTest categoriesForClass!Refactory-Testing! !
 !Refactory.Browser.Tests.ClassGuidChangeTest methodsFor!
 
+subjectClass
+	^ClassGuidChange!
+
 testAsUndo
 	| subject undo guid |
 	guid := GUID newUnique.
-	subject := ClassGuidChange setGuid: guid of: Object.
+	subject := self subjectClass uniquelyIdentify: Object with: guid.
 	undo := subject asUndoOperation.
-	self assert: undo isKindOf: ClassGuidChange.
+	self assert: undo isKindOf: self undoClass.
 	self assert: undo guid equals: Object guid.
 	self assert: undo afterText equals: subject beforeText!
 
 testPrinting
 	| subject guid printString format |
 	guid := GUID newUnique.
-	subject := ClassGuidChange setGuid: guid of: Object.
+	subject := self subjectClass uniquelyIdentify: Object with: guid.
 	format := 'Core.Object guid: (Core.GUID fromString: ''<1d>'')!!'.
 	self assert: subject beforeText equals: format << Object guid.
 	printString := format << guid.
@@ -31,6 +34,7 @@ testPrinting
 	self assert: subject changeString equals: 'Set guid of Core.Object'.
 	self assert: subject printString equals: printString! !
 !Refactory.Browser.Tests.ClassGuidChangeTest categoriesForMethods!
+subjectClass!constants!private! !
 testAsUndo!public!unit tests! !
 testPrinting!public!unit tests! !
 !

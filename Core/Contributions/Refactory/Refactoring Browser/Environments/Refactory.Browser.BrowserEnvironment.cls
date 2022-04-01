@@ -381,10 +381,8 @@ storeOn: aStream
 		nextPutAll: self class fullName;
 		nextPutAll: ' new'!
 
-whichCategoryIncludes: aClassName
-	#rbFix. "Dolphin's category system completely different"
-	^aClassName asQualifiedReference value categories asSortedArray first name
-"	^Smalltalk organization categoryOfElement: aClassName"!
+whichCategoriesInclude: aClassName
+	^aClassName asQualifiedReference valueOrNil ifNil: [#()] ifNotNil: [:class | class categories]!
 
 whichProtocolIncludes: aSelector in: aClass
 	#rbFix.	"Dolphin allows methods to be in multiple categories"
@@ -466,7 +464,7 @@ selectorsFor:in:!accessing!public! !
 selectorsForClass:!accessing!public! !
 selectorsForClass:do:!accessing!public! !
 storeOn:!printing!public! !
-whichCategoryIncludes:!accessing!public! !
+whichCategoriesInclude:!accessing!public! !
 whichProtocolIncludes:in:!accessing!public! !
 whichProtocolsInclude:in:!accessing!public! !
 !

@@ -8,7 +8,6 @@ Refactory.Browser.Tests.BrowserEnvironmentTest subclass: #'Refactory.Browser.Tes
 	classConstants: {}!
 Refactory.Browser.Tests.PluggableEnvironmentTest guid: (Core.GUID fromString: '{42174aca-9bf1-402a-843a-d752822b7893}')!
 Refactory.Browser.Tests.PluggableEnvironmentTest comment: ''!
-!Refactory.Browser.Tests.PluggableEnvironmentTest categoriesForClass!Unclassified! !
 !Refactory.Browser.Tests.PluggableEnvironmentTest methodsFor!
 
 testReferencesTo

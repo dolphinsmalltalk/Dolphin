@@ -10,7 +10,7 @@ External.BYTE subclass: #'External.BOOLEAN'
 	}!
 External.BOOLEAN guid: (Core.GUID fromString: '{35efc105-16f9-425a-94d7-298ebbb17d36}')!
 External.BOOLEAN comment: ''!
-!External.BOOLEAN categoriesForClass!Unclassified! !
+!External.BOOLEAN categoriesForClass!External-Data-Unstructured! !
 !External.BOOLEAN methodsFor!
 
 value

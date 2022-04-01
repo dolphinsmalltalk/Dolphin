@@ -9,7 +9,6 @@ UI.Tests.SelectableItemsTest subclass: #'Tools.Tests.ClassSelectorTest'
 Tools.Tests.ClassSelectorTest guid: (Core.GUID fromString: '{165b5ae1-4f70-45e2-94d3-cc4f11c068dc}')!
 Tools.Tests.ClassSelectorTest isNonInstantiable: true!
 Tools.Tests.ClassSelectorTest comment: ''!
-!Tools.Tests.ClassSelectorTest categoriesForClass!Unclassified! !
 !Tools.Tests.ClassSelectorTest methodsFor!
 
 create: aClassSymbol subclassOf: aClass

@@ -54,4 +54,4 @@ Kernel.SharedPool subclass: #'OS.ButtonConstants'
 OS.ButtonConstants guid: (Core.GUID fromString: '{4468d603-0524-4246-aac6-40acaa431b19}')!
 OS.ButtonConstants isNonInstantiable: true!
 OS.ButtonConstants comment: ''!
-!OS.ButtonConstants categoriesForClass!Unclassified! !
+!OS.ButtonConstants categoriesForClass!External-Data-Constants! !

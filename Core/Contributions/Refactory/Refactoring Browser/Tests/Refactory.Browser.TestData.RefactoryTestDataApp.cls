@@ -399,6 +399,12 @@ refersToDolphinTestUnqualifiedNameMethodNamespace
 	<namespace: Core.Tests>
 	^#DolphinTest!
 
+refersToImportedPoolConstantBindingUnqualified
+	^#{EINVAL}!
+
+refersToImportedPoolConstantUnqualified
+	^EINVAL!
+
 refersToOtherClassPartiallyQualifiedBinding
 	"Not a valid relative reference to the superclass (does not bind - try sending it #value)"
 
@@ -414,6 +420,12 @@ refersToOwnClassVariable
 
 refersToOwnClassVariableUnqualifiedBinding
 	^#{ClassVar1} value!
+
+refersToPoolConstantBindingFullyQualified
+	^#{OS.Win32Constants.COLOR_DESKTOP}!
+
+refersToPoolConstantFullyQualified
+	^OS.Win32Constants.COLOR_DESKTOP!
 
 release
 	self printString!
@@ -631,10 +643,14 @@ refersToClassVariablePartiallyQualifiedBinding!lint!public! !
 refersToDolphinTestBindingFullyQualified!lint!public! !
 refersToDolphinTestPartiallyQualifiedBindingMethodNamespace!lint!public! !
 refersToDolphinTestUnqualifiedNameMethodNamespace!lint!public! !
+refersToImportedPoolConstantBindingUnqualified!lint!public! !
+refersToImportedPoolConstantUnqualified!lint!public! !
 refersToOtherClassPartiallyQualifiedBinding!performing!public! !
 refersToOtherClassPartiallyQualifiedName!performing!public! !
 refersToOwnClassVariable!lint!public! !
 refersToOwnClassVariableUnqualifiedBinding!lint!public! !
+refersToPoolConstantBindingFullyQualified!lint!public! !
+refersToPoolConstantFullyQualified!lint!public! !
 release!lint!public! !
 rename:two:!public!test! !
 renameThisMethod:!public!test! !

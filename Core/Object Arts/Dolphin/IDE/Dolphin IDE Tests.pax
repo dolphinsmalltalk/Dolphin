@@ -6,7 +6,6 @@ package paxVersion: 2.1;
 
 
 package setClassNames: #(
-	#{Refactory.Browser.Tests.AddMethodChangeTest}
 	#{Tools.Tests.ClassBrowserAbstractTest}
 	#{Tools.Tests.ClassBrowserTest}
 	#{Tools.Tests.ClassHierarchySelectorTest}
@@ -49,10 +48,7 @@ package setPrerequisites: #(
 	'..\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\MVP\Presenters\Tree\Dolphin Tree Presenter'
 	'..\..\..\Contributions\IDB\IDB Method History'
-	'..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects'
 	'..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
-	'..\..\..\Contributions\Refactory\Refactoring Browser\Tests\RBTestMethods'
-	'..\..\..\Contributions\Refactory\Refactoring Browser\Tests\RBTests'
 	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
 	'..\ActiveX\Components\XML DOM\XML DOM'
 ).
@@ -182,12 +178,6 @@ Tools.Tests.ClassSelectorTest subclass: #'Tools.Tests.ClassListSelectorTest'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Tools.Tests.ClassSelectorTest subclass: #'Tools.Tests.PackagedClassSelectorTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Refactory.Browser.Tests.ChangeObjectTest subclass: #'Refactory.Browser.Tests.AddMethodChangeTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

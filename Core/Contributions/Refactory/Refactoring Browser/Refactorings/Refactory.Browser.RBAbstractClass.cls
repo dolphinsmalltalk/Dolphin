@@ -71,11 +71,26 @@ addMethodChange: anAddMethodChange
 	removedSelectors notNil ifTrue: [removedSelectors remove: selector ifAbsent: nil].
 	^anAddMethodChange!
 
+allBindingsDo: aMonadicValuable
+	"Evaluate the <monadicValuable> argument for each of the bindings in the receiver, including aliases, and recursively in any of the nested namespaces."
+
+	self bindingsDo: 
+			[:each |
+			aMonadicValuable value: each.
+			each isClassBinding ifTrue: [each value bindingsDo: aMonadicValuable]]!
+
 allClassVariableNames
 	^self subclassResponsibility!
 
 allImports
-	^self subclassResponsibility!
+	"Answer a <sequencedReadableCollection> of <BindingReference> being the imports that are specified in the receiver and each of its superclasses."
+
+	| all seen |
+	all := Array writeStream: 5.
+	seen := Set new.
+	self
+		withAllSuperclassesDo: [:c | c imports do: [:each | (seen addNewElement: each) ifTrue: [all nextPut: each]]].
+	^all contents!
 
 allInstanceVariableNames
 	^self superclass
@@ -157,8 +172,40 @@ bindingOrNil
 
 	^self subclassResponsibility!
 
+bindings
+	^self classPool associations!
+
+bindingsDo: aMonadicValuable
+	"Evaluate the <monadicValuable> argument for each of the receiver's localled defined <VariableBinding>s."
+
+	self classPool associationsDo: aMonadicValuable!
+
+classBindingNames
+	^self definedBindings collect: [:each | each key]!
+
+classConstants
+	"The answer is a temporary value representing a subset of the class variable bindings collection, so mark it immutable to catch errors of attempting to modify it"
+
+	^(self definedBindings select: [:each | each isImmutable and: [each value isSelfEvaluating]])
+		isImmutable: true;
+		yourself!
+
 classInModel: aRBModel
 	^self!
+
+classPool
+	"Answer the dictionary of class variables."
+
+	^self subclassResponsibility!
+
+classVariableNames
+	^(self definedBindings reject: [:each | each isImmutable and: [each value isSelfEvaluating]])
+		collect: [:each | each key]!
+
+classVariables
+	"Answer a <collection> of <VariableBinding>s, being the class variables of the receiver, but not including class constants."
+
+	^self bindings reject: [:each | each isImmutable and: [each value isSelfEvaluating]]!
 
 compile: aString 
 	#rbFix. "Support multiple method categories for Dolphin"
@@ -195,6 +242,12 @@ conformsToProtocol: aSymbol
 	class := self realClass.
 	^class notNil and: [class conformsToProtocol: aSymbol]!
 
+definedBindings
+	"Private - Answer a <collection> of the receiver's <RBVariableBinding>s that are defined as part of the receiver's class definition (as opposed to externally).
+	For most classes this is all the class variables, including constants. For namespaces, this does not include any of the classes in the namespace as these are added to the namespace implicitly as part of their own definition."
+
+	^self bindings select: [:each | each isClassVariable]!
+
 definesClassVariable: aSymbol
 	| sprClass |
 	(self directlyDefinesClassVariable: aSymbol) ifTrue: [^true].
@@ -213,12 +266,20 @@ definesMethod: aSelector
 	sprClass := self superclass.
 	^sprClass notNil and: [sprClass definesMethod: aSelector]!
 
+definesStaticVariable: aString
+	| sprClass |
+	(self directlyDefinesStaticVariable: aString) ifTrue: [^true].
+	sprClass := self superclass.
+	^sprClass notNil and: [sprClass definesStaticVariable: aString]!
+
 definesVariable: aVariableName 
-	^(self definesClassVariable: aVariableName) 
+	^(self definesStaticVariable: aVariableName) 
 		or: [self definesInstanceVariable: aVariableName]!
 
-directlyDefinesClassVariable: aString 
-	self subclassResponsibility!
+directlyDefinesClassVariable: aString
+	| var |
+	var := self localBindingFor: aString.
+	^var notNil and: [var isClassVariable]!
 
 directlyDefinesInstanceVariable: aString 
 	^self instanceVariableNames includes: aString!
@@ -231,12 +292,19 @@ directlyDefinesMethod: aSymbol
 			(realClass includesSelector: aSymbol) ifTrue: [^true]].
 	^newMethods notNil and: [newMethods includesKey: aSymbol]!
 
+directlyDefinesStaticVariable: aString
+	^self classPool includesKey: aString!
+
 directlyDefinesVariable: aVariableName 
 	^(self directlyDefinesClassVariable: aVariableName) 
 		or: [self directlyDefinesInstanceVariable: aVariableName]!
 
-directlyImportsNamespace: aString
-	^self subclassResponsibility!
+directlyImportsNamespace: aBindingReference
+	"Namespace imports must always be absolute binding references, but they may be private, so we just compare the paths"
+
+	| pathString |
+	pathString := aBindingReference asString.
+	^self imports anySatisfy: [:each | each pathString = pathString]!
 
 environment
 	^self basicEnvironment!
@@ -310,13 +378,13 @@ fullBindingFor: aString
 fullBindingFor: aString environment: aRBNamespaceClass
 	"Answer a variable binding for the named variable in the scope of this class, and failing that in the receiver's environment. If there is no such variable, then answer nil."
 
-	^self nonMetaclass resolvePathString: aString environment: aRBNamespaceClass!
+	^self instanceClass resolvePathString: aString environment: aRBNamespaceClass!
 
 fullName
 	"Answer the <String> fully qualified name of the receiver, which is a dot-separated path that binds to the receiver from the global namespace, Root.
 	Note that these names will also be bindable within the legacy Smalltalk namespace, because it is itself an immediate child of root, and so any of its siblings is bindable using that sibling's unqualified name."
 
-	^self subclassResponsibility!
+	^self name!
 
 fullyQualifiedReference
 	^self subclassResponsibility!
@@ -338,20 +406,13 @@ hierarchyBindingFor: aString
 	^(self localBindingFor: aString)
 		ifNil: [self superclass ifNotNil: [:sprClass | sprClass hierarchyBindingFor: aString]]!
 
-hierarchyDefinesClassVariable: aString
-	(self definesClassVariable: aString) ifTrue: [^true].
-	self
-		allSubclassesBreadthFirstDo: [:each | (each directlyDefinesClassVariable: aString) ifTrue: [^true]].
-	^false!
-
 hierarchyDefinesInstanceVariable: aString 
 	(self definesInstanceVariable: aString) ifTrue: [^true].
 	self allSubclassesBreadthFirstDo: [:each | (each directlyDefinesInstanceVariable: aString) ifTrue: [^true]].
 	^false!
 
-hierarchyDefinesMethod: aSelector 
-	(self definesMethod: aSelector) ifTrue: [^true].
-	^self subclassRedefines: aSelector!
+hierarchyDefinesMethod: aSelector
+	^(self definesMethod: aSelector) or: [self subclassRedefines: aSelector]!
 
 hierarchyDefinesVariable: aString
 	(self definesVariable: aString) ifTrue: [^true].
@@ -365,6 +426,9 @@ hierarchyImportsNamespace: aBindingReference
 	self
 		allSubclassesBreadthFirstDo: [:each | (each directlyImportsNamespace: aBindingReference) ifTrue: [^true]].
 	^false!
+
+imports
+	^self subclassResponsibility!
 
 importsNamespace: aBindingReference
 	| sprClass ref |
@@ -397,8 +461,7 @@ inheritsPoolDictionaries
 	^true!
 
 instanceClass
-	#rbFix.	"Added because Dolphin uses this message rather than #soleInstance"
-	^self nonMetaclass!
+	^self subclassResponsibility!
 
 instanceVariableNames
 	instanceVariableNames
@@ -452,7 +515,7 @@ isVariable
 localBindingFor: aString
 	"Answer a variable binding for the named variable directly in the scope of this class, i.e. one of its own class variables. If there is no such class variable, then answer nil."
 
-	^self subclassResponsibility!
+	^self classPool bindingFor: aString!
 
 localScope
 	^self subclassResponsibility!
@@ -515,8 +578,8 @@ newMethods
 				isImmutable: true;
 				yourself)!
 
-nonMetaclass
-	^self subclassResponsibility!
+owningPackage
+	^self realClass ifNotNil: [:class | class owningPackage]!
 
 parseTreeFor: aSelector 
 	| class |
@@ -525,7 +588,7 @@ parseTreeFor: aSelector
 	^(class methodFor: aSelector) parseTree!
 
 primaryInstance
-	^self nonMetaclass!
+	^self instanceClass!
 
 printOn: aStream 
 	aStream nextPutAll: self name!
@@ -571,8 +634,7 @@ scope
 
 selectors
 	| selectors |
-	selectors := Set new.
-	selectors addAll: self newMethods keys.
+	selectors := self newMethods keys.
 	self realClass
 		ifNotNil: 
 			[:realClass |
@@ -589,7 +651,7 @@ shortName
 	^self subclassResponsibility!
 
 soleInstance
-	^self nonMetaclass!
+	^self instanceClass!
 
 sourceCodeFor: aSelector 
 	| class |
@@ -678,7 +740,7 @@ whichSelectorsReferToClassVariable: aString
 	selectors := Set new.
 	self newMethods
 		do: [:each | (each refersToVariable: aString) ifTrue: [selectors add: each selector]].
-	(class := self nonMetaclass realClass) ifNil: [^selectors].
+	(class := self instanceClass realClass) ifNil: [^selectors].
 	(class := class whichClassDefinesClassVar: aString asString) ifNil: [^selectors].
 	(binding := (self model instanceClassFor: class) bindingFor: aString) ifNil: [^selectors].
 	(binding := binding realBinding) ifNil: [^selectors].
@@ -735,12 +797,13 @@ withAllSuperclassesDo: aMonadicValuable
 	self allSuperclassesDo: aMonadicValuable! !
 !Refactory.Browser.RBAbstractClass categoriesForMethods!
 =!comparing!public! !
->>!public! !
+>>!accessing!public! !
 addInstanceVariable:!public!variable accessing! !
 addMethod:!compiling!public! !
 addMethodChange:!compiling!public! !
+allBindingsDo:!enumerating!public! !
 allClassVariableNames!accessing!public! !
-allImports!accessing!public! !
+allImports!namespaces!public! !
 allInstanceVariableNames!accessing!public! !
 allSelectors!method accessing!public! !
 allSubclasses!accessing!public! !
@@ -754,20 +817,30 @@ basicEnvironment!accessing!public! !
 binding!accessing!public! !
 bindingFor:!bindings!public! !
 bindingOrNil!bindings!public! !
-classInModel:!public! !
+bindings!accessing!public! !
+bindingsDo:!enumerating!public! !
+classBindingNames!accessing!bindings!public! !
+classConstants!accessing!public! !
+classInModel:!converting!public! !
+classPool!class variables!public! !
+classVariableNames!accessing!public! !
+classVariables!class variables!public! !
 compile:!compiling!public! !
 compile:categories:!compiling!public! !
 compile:classified:!compiling!public! !
 compile:environment:categories:package:!compiling!public! !
 compileTree:environment:categories:package:!compiling!public! !
-conformsToProtocol:!public! !
+conformsToProtocol:!protocols!public! !
+definedBindings!accessing!public! !
 definesClassVariable:!public!testing! !
 definesInstanceVariable:!public!testing! !
 definesMethod:!public!testing! !
+definesStaticVariable:!public!testing! !
 definesVariable:!public!testing! !
 directlyDefinesClassVariable:!public!testing! !
 directlyDefinesInstanceVariable:!public!testing! !
 directlyDefinesMethod:!public!testing! !
+directlyDefinesStaticVariable:!public!testing! !
 directlyDefinesVariable:!public!testing! !
 directlyImportsNamespace:!public!testing! !
 environment!accessing!public! !
@@ -776,19 +849,19 @@ existingMethodAt:!method accessing!public! !
 existingMethodPackageAndEnvironment:!method accessing!public! !
 existingMethodsReferencingExternals!method accessing!private! !
 existingMethodsThatReferTo:!method accessing!private! !
-fullBindingFor:!binding!public! !
-fullBindingFor:environment:!public! !
+fullBindingFor:!bindings!public! !
+fullBindingFor:environment:!bindings!public! !
 fullName!accessing!public! !
 fullyQualifiedReference!accessing!private! !
 globalScope!accessing!public! !
 hash!comparing!public! !
 hasRemoved:!public!testing! !
 hierarchyBindingFor:!bindings!public! !
-hierarchyDefinesClassVariable:!public!testing! !
 hierarchyDefinesInstanceVariable:!public!testing! !
 hierarchyDefinesMethod:!public!testing! !
 hierarchyDefinesVariable:!public!testing! !
 hierarchyImportsNamespace:!public!testing! !
+imports!accessing!public! !
 importsNamespace:!public!testing! !
 includesClass:!public!testing! !
 inheritsFrom:!class hierarchy-testing!public! !
@@ -803,7 +876,7 @@ isExternalReference:in:!method accessing!private! !
 isMeta!public!testing! !
 isPointers!public!testing! !
 isVariable!public!testing! !
-localBindingFor:!binding!public! !
+localBindingFor:!bindings!public! !
 localScope!accessing!public! !
 metaclass!accessing!public! !
 methodFor:!method accessing!public! !
@@ -814,7 +887,7 @@ name!accessing!public! !
 nearestRealClass!accessing!private! !
 newMethodFor:!method accessing!private! !
 newMethods!accessing!public! !
-nonMetaclass!accessing!public! !
+owningPackage!accessing!public! !
 parseTreeFor:!method accessing!public! !
 primaryInstance!accessing!public! !
 printOn:!printing!public! !
@@ -855,14 +928,8 @@ Refactory.Browser.RBAbstractClass methodProtocol: #classDescription attributes: 
 !Refactory.Browser.RBAbstractClass class methodsFor!
 
 initialize
-	LookupSuperclass := Object new!
-
-new
-	"RBClasses must always be #named:"
-
-	^self shouldNotImplement! !
+	LookupSuperclass := Object new! !
 !Refactory.Browser.RBAbstractClass class categoriesForMethods!
 initialize!class initialization!public! !
-new!instance creation!public! !
 !
 

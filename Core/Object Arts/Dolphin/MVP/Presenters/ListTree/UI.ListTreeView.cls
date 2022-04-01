@@ -1359,11 +1359,12 @@ refreshFromModelBelow: anObject
 refreshItemState: anObject
 	"private -- update the 'state' image for anObject"
 
-	| index |
-	index := self handleFromObject: anObject.
-	self isVirtual
-		ifTrue: [self invalidateItemAt: index]
-		ifFalse: [self setItemAt: index stateImage: (self stateImageFromRow: anObject)]!
+	(self handleFromObject: anObject)
+		ifNotNil: 
+			[:index |
+			self isVirtual
+				ifTrue: [self invalidateItemAt: index]
+				ifFalse: [self setItemAt: index stateImage: (self stateImageFromRow: anObject)]]!
 
 removeAllExcept: aSet
 	"private -- remove all the items that are not in aSet. The set is assumed to have the

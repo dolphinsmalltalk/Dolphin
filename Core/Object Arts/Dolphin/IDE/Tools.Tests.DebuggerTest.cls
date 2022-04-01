@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Tools.Tests.DebuggerTest'
 	classConstants: {}!
 Tools.Tests.DebuggerTest guid: (Core.GUID fromString: '{29cfd485-34b1-41d6-a030-30d1fe5a9edd}')!
 Tools.Tests.DebuggerTest comment: ''!
-!Tools.Tests.DebuggerTest categoriesForClass!Unclassified! !
 !Tools.Tests.DebuggerTest methodsFor!
 
 setUp

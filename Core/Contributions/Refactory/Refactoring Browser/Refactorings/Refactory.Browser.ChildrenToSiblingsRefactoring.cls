@@ -17,10 +17,11 @@ abstractSuperclass
 addSuperclass
 	self performComponentRefactoring: (AddClassRefactoring
 				model: self model
-				addClass: self className
-				superclass: parent superclass
-				subclasses: {parent}
-				category: parent category)!
+				details: (ClassDetails
+						className: self className
+						superclass: parent superclass
+						categories: parent classCategories)
+				subclasses: {parent})!
 
 changeIsKindOfReferences
 	| replacer superclass |

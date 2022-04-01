@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.RBAbstractClass subclass: #'Refactory.Browser.RBMetaclass'
-	instanceVariableNames: 'nonMetaclass'
+	instanceVariableNames: 'instanceClass'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -13,133 +13,104 @@ Refactory.Browser.RBMetaclass comment: 'RBMetaclass represents a Metaclass.
 !Refactory.Browser.RBMetaclass methodsFor!
 
 allClassVariableNames
-	^nonMetaclass allClassVariableNames!
-
-allImports
-	^nonMetaclass allImports!
+	^instanceClass allClassVariableNames!
 
 baseEnvironment
 	"Private - Answer the default environment for new subclasses of the receiver that the ClassBuilder should use when the provided subclass name is unqualified."
 
-	^nonMetaclass baseEnvironment!
+	^instanceClass baseEnvironment!
 
 basicEnvironment
-	^nonMetaclass basicEnvironment!
+	^instanceClass basicEnvironment!
 
 bindingOrNil
 	"Resolve the binding for the receiver's real class, if any. The name is always a fully qualified name"
 
-	^self globalScope fullBindingFor: self name!
+	^instanceClass bindingOrNil!
 
-classBindingNames
-	^nonMetaclass classBindingNames!
+classPool
+	"Answer the dictionary of class variables."
 
-directlyDefinesClassVariable: aString
-	^nonMetaclass directlyDefinesClassVariable: aString!
-
-directlyImportsNamespace: aString
-	^nonMetaclass directlyImportsNamespace: aString!
+	^instanceClass classPool!
 
 environment
-	^nonMetaclass environment!
-
-fullName
-	"Answer the <String> fully qualified name of the receiver, which is a dot-separated path that binds to the receiver from the global namespace, Root.
-	Note that these names will also be bindable within the legacy Smalltalk namespace, because it is itself an immediate child of root, and so any of its siblings is bindable using that sibling's unqualified name."
-
-	^nonMetaclass fullName , ' class'!
+	^instanceClass environment!
 
 fullyQualifiedReference
 	"Answer a <BindingReference> to this class."
 
-	^nonMetaclass fullyQualifiedReference meta!
+	^instanceClass fullyQualifiedReference meta!
+
+imports
+	^instanceClass imports!
+
+instanceClass
+	^instanceClass!
+
+instanceClass: aRBClass
+	instanceClass := aRBClass!
 
 isDefined
-	^nonMetaclass isDefined!
+	^instanceClass isDefined!
 
 isMeta
 	^true!
 
-localBindingFor: aString
-	"Answer a variable binding for the named variable directly in the scope of this class, i.e. one of its own class variables. If there is no such class variable, then answer nil."
-
-	^nonMetaclass localBindingFor: aString!
-
 localScope
-	^nonMetaclass!
+	^instanceClass!
 
 metaclass
 	^self!
 
 model
-	^nonMetaclass model!
+	^instanceClass model!
 
 name
 	"Answer the name of the non-metaclass. Note that in Dolphin 8 this is always a fully-qualified name."
 
-	^nonMetaclass name!
+	^instanceClass name, ' class'!
 
 nearestRealClass
-	^nonMetaclass nearestRealClass!
-
-nonMetaclass
-	^nonMetaclass!
-
-nonMetaclass: aRBClass
-	nonMetaclass := aRBClass!
-
-printOn: aStream
-	super printOn: aStream.
-	aStream nextPutAll: ' class'!
+	^instanceClass nearestRealClass!
 
 realClass
-	^nonMetaclass realClass ifNotNil: [:realClass | realClass class]!
+	^instanceClass realClass ifNotNil: [:realClass | realClass class]!
 
 shortName
-	^nonMetaclass shortName , ' class'!
-
-storeOn: aStream 
-	super storeOn: aStream.
-	aStream nextPutAll: ' class'!
+	^instanceClass shortName , ' class'!
 
 subclasses
-	^nonMetaclass metaSubclasses!
+	^instanceClass metaSubclasses!
 
 superclass
-	^nonMetaclass superclass
+	^instanceClass superclass
 		ifNil: [self model instanceClassFor: Class]
 		ifNotNil: [:superclass | superclass metaclass]!
 
 unqualifiedName
 	"Answer the unqualified name of the class."
 
-	^nonMetaclass unqualifiedName , ' class'! !
+	^instanceClass unqualifiedName , ' class'! !
 !Refactory.Browser.RBMetaclass categoriesForMethods!
 allClassVariableNames!accessing!public! !
-allImports!accessing!public! !
 baseEnvironment!constants!private! !
 basicEnvironment!accessing!public! !
 bindingOrNil!bindings!public! !
-classBindingNames!accessing!public! !
-directlyDefinesClassVariable:!public!testing! !
-directlyImportsNamespace:!public!testing! !
+classPool!class variables!public! !
 environment!accessing!public! !
-fullName!converting!public! !
 fullyQualifiedReference!converting!public! !
+imports!accessing!public! !
+instanceClass!accessing!public! !
+instanceClass:!accessing!initializing!private! !
 isDefined!public!testing! !
 isMeta!public!testing! !
-localBindingFor:!binding!public! !
 localScope!accessing!public! !
 metaclass!accessing!public! !
 model!accessing!public! !
 name!accessing!public! !
 nearestRealClass!accessing!private! !
-nonMetaclass!accessing!public! !
-nonMetaclass:!accessing!initializing!private! !
-printOn:!printing!public! !
 realClass!accessing!public! !
-shortName!public! !
-storeOn:!printing!public! !
+shortName!accessing!public! !
 subclasses!accessing!public! !
 superclass!accessing!public! !
 unqualifiedName!accessing!public! !

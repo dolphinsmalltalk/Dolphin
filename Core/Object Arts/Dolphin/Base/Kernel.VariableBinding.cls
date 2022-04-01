@@ -11,8 +11,28 @@ Core.Association subclass: #'Kernel.VariableBinding'
 		'PrivateMask' -> 16r1
 	}!
 Kernel.VariableBinding guid: (Core.GUID fromString: '{1e72742f-5466-4331-bb39-2ff12ac9743f}')!
-Kernel.VariableBinding comment: ''!
-!Kernel.VariableBinding categoriesForClass!Collections-Support! !
+Kernel.VariableBinding comment: '`VariableBinding` is the special class of `Assocation`s representing the static variables of classes and namespaces. Static variables include both class and namespace (formerly global) variables. The can be referred to in code directly by name using either a fully-qualified name, or, visibility depending, a partially-qualified or unqualified name.
+
+`VariableBinding`s are aware of their ''environment'', which is the `Class` in which they reside. They can be considered as owned by that environment, in which case they are referred to as ''class variables''. They can also be independently owned by a package, rather than the class in which they reside, in which case they are referred to as ''namespace variables''. The terminology ''shared variables'' is also used for namespace variables, but this may be confusing since class variables are also shareable (i.e. externally referenceable using a qualified name) if they are not marked as ''private''. As `Namespace`s in Dolphin 8 are actually classes, namespace variables are held as bindings in the same class pool as the class'' own variables. Any class is fundamentally a namespace, so any class may hold namespace variables. Conversely `Namespace`s (as classes) can have class variables and constants that they own as part of their definition.
+
+Static variables can be marked as constant, in which case they are immutable. Immutable static variables with values that have immediate bytecode representations are inlined by the compiler, although the variable will still be added to the referencing methods literal frame. Attempting to assign to a static constant static will cause a compilation error. Attempting to modify the value of a constant binding, looked up by some other means than direct reference to its name in code, will cause a runtime error as the VM enforces the immutability of objects where set.
+
+Static variables can be used to create an alias for a class, either under a different name in the classes own namespace, or in an entirely different namespace. This is particularly useful for creating ''old names'' aliases to namespaced classes so that they can still be referenced from legacy code that is not namespace aware. Legacy code expects all variables to be bindable by unqualified name, either as globals defined in Smalltalk, or local class variables, or from ''shared pools'' (imported dictionaries of static variables). The commonly used classes in the Smalltalk class library are now in namespaces such as Core and Kernel, and these namespaces are imported into the `Smalltalk` namespace so that the classes are still visible to legacy code (where not renamed). Some other classes that have been renamed, or which live in other namespaces, have aliases defined by the base system. These are typically owned by an ''(Old Names)'' package that sits alongside the package that owns the class. A cache of these old names is maintained by the Smalltalk namespace in order to enable round-tripping of legacy code by filing out using old names so that there is some chance of loading code modified in Dolphin 8 in Dolphin 7.1:
+```
+Smalltalk oldNames
+```
+
+Static variables can also be marked as deprecated. This is used to mark old-name aliases that should be updated. An example is `Smalltalk.UnicodeString`, a deprecated alias for `Core.Utf16String`. 
+```
+Smalltalk bindings select: [:each | each isDeprecated]
+``
+
+The variable bindings for classes are somewhat special. These are constants, and should not be added, removed or modified directly, rather this is achieved by defining, removing, or renaming classes. The class bindings can be identified easily:
+```
+Smalltalk bindings select: [:each | each isClassBinding]
+```
+'!
+!Kernel.VariableBinding categoriesForClass!Kernel-Support! !
 !Kernel.VariableBinding methodsFor!
 
 = anObject
@@ -65,7 +85,7 @@ isClassBinding
 	^value class isMeta and: [key == value unqualifiedName and: [environment == value basicEnvironment]]!
 
 isClassVariable
-	"Answer whether the receiver is a class variable binding (as opposed to a namespace variable binding)."
+	"Answer whether the receiver is a class variable binding (as opposed to a namespace variable binding). Class variables are considered to be owned by a class, and form part of its definition. Namespace variables (aka 'shared' variables, although class variables can also be referenced directly from other classes, i.e shared, so this terminology is a little confusing) are not considered to be owned by the namespace class, and are independently packagable."
 
 	^flags allMask: ClassMask!
 

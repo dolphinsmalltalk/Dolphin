@@ -20,11 +20,11 @@ changeString
 changeSymbol
 	^#addClassVarNamed:!
 
-mutateAttributes: aClassAttributes
+mutateClassDetails: aClassDetails
 	| classVars |
-	classVars := aClassAttributes classVariableNames.
+	classVars := aClassDetails classVariableNames.
 	(classVars includes: variable)
-		ifFalse: [aClassAttributes classVariableNames: (classVars copyWith: variable) sort]!
+		ifFalse: [aClassDetails classVariableNames: (classVars copyWith: variable) sort]!
 
 primitiveExecute
 	self changeClass addClassVarNamed: variable! !
@@ -32,7 +32,7 @@ primitiveExecute
 asUndoOperation!converting!public! !
 changeString!printing!public! !
 changeSymbol!constants!private! !
-mutateAttributes:!helpers!private! !
+mutateClassDetails:!helpers!private! !
 primitiveExecute!applying!private! !
 !
 

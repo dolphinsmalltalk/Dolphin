@@ -11,18 +11,21 @@ Refactory.Browser.Tests.ClassCommentChangeTest comment: ''!
 !Refactory.Browser.Tests.ClassCommentChangeTest categoriesForClass!Refactory-Testing! !
 !Refactory.Browser.Tests.ClassCommentChangeTest methodsFor!
 
+subjectClass
+	^ClassCommentChange!
+
 testAsUndo
 	| subject undo |
-	subject := ClassCommentChange comment: 'Blah blah blah' in: Object.
+	subject := self subjectClass comment: 'Blah blah blah' in: Object.
 	undo := subject asUndoOperation.
-	self assert: undo isKindOf: ClassCommentChange.
+	self assert: undo isKindOf: self undoClass.
 	self assert: undo comment equals: Object comment.
 	self assert: undo afterText equals: subject beforeText!
 
 testPrinting
 	| subject comment printString format |
 	comment := 'Blah blah blah'.
-	subject := ClassCommentChange comment: comment in: Object.
+	subject := self subjectClass comment: comment in: Object.
 	format := 'Core.Object comment: <1p>!!'.
 	self assert: subject beforeText equals: format << Object comment.
 	printString := format << comment.
@@ -30,6 +33,7 @@ testPrinting
 	self assert: subject changeString equals: 'Comment Core.Object'.
 	self assert: subject printString equals: printString! !
 !Refactory.Browser.Tests.ClassCommentChangeTest categoriesForMethods!
+subjectClass!constants!private! !
 testAsUndo!public!unit tests! !
 testPrinting!public!unit tests! !
 !

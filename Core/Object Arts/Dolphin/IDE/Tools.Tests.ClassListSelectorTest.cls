@@ -8,7 +8,6 @@ Tools.Tests.ClassSelectorTest subclass: #'Tools.Tests.ClassListSelectorTest'
 	classConstants: {}!
 Tools.Tests.ClassListSelectorTest guid: (Core.GUID fromString: '{1e05f062-5ab2-4d18-b534-77cb8b7ca82e}')!
 Tools.Tests.ClassListSelectorTest comment: ''!
-!Tools.Tests.ClassListSelectorTest categoriesForClass!Unclassified! !
 !Tools.Tests.ClassListSelectorTest methodsFor!
 
 assertContains: anObject

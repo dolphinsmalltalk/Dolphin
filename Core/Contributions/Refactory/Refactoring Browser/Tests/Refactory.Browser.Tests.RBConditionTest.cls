@@ -42,11 +42,11 @@ testIsEmptyClass
 	subject := RBCondition isEmptyClass: foo.
 	self deny: subject check.
 	self assert: (subject errorStringFor: false)
-		equals: 'Foo is not empty (has class variables, instance variables, and methods)'.
+		equals: 'Foo is not empty (has class/shared variables, instance variables, and methods)'.
 	foo instanceVariableNames: #().
 	self deny: subject check.
 	self assert: (subject errorStringFor: false)
-		equals: 'Foo is not empty (has class variables, and methods)'.
+		equals: 'Foo is not empty (has class/shared variables, and methods)'.
 	foo instanceVariableNames: #('foo1').
 	foo classVariableNames: #().
 	self deny: subject check.
@@ -71,10 +71,10 @@ testIsEmptyClass
 	foobar classVariableNames: #('FooBar1').
 	self deny: subject check.
 	self assert: (subject errorStringFor: false)
-		equals: 'FooBar is not empty (has class variables, and instance variables)'.
+		equals: 'FooBar is not empty (has class/shared variables, and instance variables)'.
 	foobar instanceVariableNames: #().
 	self deny: subject check.
-	self assert: subject errorString equals: 'FooBar is not empty (has class variables)'!
+	self assert: subject errorString equals: 'FooBar is not empty (has class/shared variables)'!
 
 testIsGlobalIn
 	| subject |

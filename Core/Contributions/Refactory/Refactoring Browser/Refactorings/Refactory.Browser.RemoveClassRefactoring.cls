@@ -22,7 +22,7 @@ classNames: aClassNameCollection
 
 hasReferencesTo: aRBClass
 	model allReferencesToClass: aRBClass do: [:each | 
-		(classNames includes: each modelClass name) ifFalse: [^true]].
+		(classNames includes: each modelClass instanceClass name) ifFalse: [^true]].
 	^false!
 
 preconditions
@@ -46,7 +46,7 @@ referencesToClass: aRBClass
 	| refs |
 	refs := OrderedCollection new.
 	model allReferencesToClass: aRBClass
-		do: [:each | (classNames includes: each modelClass name) ifFalse: [refs addLast: each]].
+		do: [:each | (classNames includes: each modelClass instanceClass name) ifFalse: [refs addLast: each]].
 	^refs!
 
 removeClasses

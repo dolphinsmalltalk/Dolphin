@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Tools.Tests.ViewComposerTest'
 	classConstants: {}!
 Tools.Tests.ViewComposerTest guid: (Core.GUID fromString: '{84c0e504-bdda-4d87-92dc-53b89f80f634}')!
 Tools.Tests.ViewComposerTest comment: ''!
-!Tools.Tests.ViewComposerTest categoriesForClass!Unclassified! !
 !Tools.Tests.ViewComposerTest methodsFor!
 
 doArenaDropOf: subPresenterType operation: aSymbol

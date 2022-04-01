@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Tools.Tests.ProductReleaseTest'
 	classConstants: {}!
 Tools.Tests.ProductReleaseTest guid: (Core.GUID fromString: '{685d25f7-ba9b-419b-af63-61526013895c}')!
 Tools.Tests.ProductReleaseTest comment: ''!
-!Tools.Tests.ProductReleaseTest categoriesForClass!Unclassified! !
 !Tools.Tests.ProductReleaseTest methodsFor!
 
 checkNoClass: aSymbol

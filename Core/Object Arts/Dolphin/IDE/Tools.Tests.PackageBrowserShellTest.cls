@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Tools.Tests.PackageBrowserShellTest'
 	classConstants: {}!
 Tools.Tests.PackageBrowserShellTest guid: (Core.GUID fromString: '{c635384e-76c1-4b7d-b532-6a2ec1916dbe}')!
 Tools.Tests.PackageBrowserShellTest comment: ''!
-!Tools.Tests.PackageBrowserShellTest categoriesForClass!Unclassified! !
 !Tools.Tests.PackageBrowserShellTest methodsFor!
 
 addRemoveRenameClasses

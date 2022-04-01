@@ -1,15 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.CommandPolicy subclass: #'UI.LegacyCommandPolicy'
+CommandPolicy subclass: #LegacyCommandPolicy
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-UI.LegacyCommandPolicy guid: (Core.GUID fromString: '{cd4f5c9f-18d7-4b31-94af-4f76d1e56c08}')!
-UI.LegacyCommandPolicy comment: ''!
-!UI.LegacyCommandPolicy categoriesForClass!Unclassified! !
-!UI.LegacyCommandPolicy methodsFor!
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+LegacyCommandPolicy guid: (GUID fromString: '{cd4f5c9f-18d7-4b31-94af-4f76d1e56c08}')!
+LegacyCommandPolicy comment: ''!
+!LegacyCommandPolicy categoriesForClass!Deprecated! !
+!LegacyCommandPolicy methodsFor!
 
 queryCommand: query
 	"Private - Enter details about a potential command into the <CommandQuery>, query.
@@ -40,7 +39,7 @@ visitPresenter: presenter
 
 	self appendPresenter: presenter.
 	^presenter! !
-!UI.LegacyCommandPolicy categoriesForMethods!
+!LegacyCommandPolicy categoriesForMethods!
 queryCommand:!operations!private! !
 visitPresenter:!operations!private! !
 !

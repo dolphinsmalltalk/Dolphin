@@ -16,26 +16,18 @@ className
 	^className pathString!
 
 className: aString
-	className := FullBindingReference fullPathString: aString!
+	className := (FullBindingReference fullPathString: aString) referenceInModel: self model!
 
 environment
 	^className environment!
 
-environment: aNamespace
-	self className: (aNamespace fullNameFor: self unqualifiedClassName)!
-
 unqualifiedClassName
-	^className unqualifiedName!
-
-unqualifiedClassName: aSymbol
-	self className: (self environment fullNameFor: aSymbol)! !
+	^className unqualifiedName! !
 !Refactory.Browser.ClassRefactoring categoriesForMethods!
 className!accessing!public! !
 className:!accessing!public! !
 environment!accessing!public! !
-environment:!accessing!public! !
 unqualifiedClassName!accessing!public! !
-unqualifiedClassName:!accessing!public! !
 !
 
 !Refactory.Browser.ClassRefactoring class methodsFor!

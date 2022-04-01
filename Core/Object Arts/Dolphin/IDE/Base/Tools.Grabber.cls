@@ -8,7 +8,6 @@ Core.Object subclass: #'Tools.Grabber'
 	classConstants: {}!
 Tools.Grabber guid: (Core.GUID fromString: '{7024e3c5-a46a-47fb-a7c0-e17bcf414e66}')!
 Tools.Grabber comment: ''!
-!Tools.Grabber categoriesForClass!Unclassified! !
 !Tools.Grabber methodsFor!
 
 alignWithView

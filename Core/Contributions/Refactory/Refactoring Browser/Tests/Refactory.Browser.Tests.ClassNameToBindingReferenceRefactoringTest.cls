@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.Tests.RefactoringTest subclass: #'Tools.Tests.ClassNameToBindingReferenceRefactoringTest'
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.ClassNameToBindingReferenceRefactoringTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.Tests.ClassNameToBindingReferenceRefactoringTest guid: (Core.GUID fromString: '{2a06fd11-d52a-4bd1-98eb-fad2671fad7e}')!
-Tools.Tests.ClassNameToBindingReferenceRefactoringTest comment: ''!
-!Tools.Tests.ClassNameToBindingReferenceRefactoringTest categoriesForClass!Refactory-Testing! !
-!Tools.Tests.ClassNameToBindingReferenceRefactoringTest methodsFor!
+Refactory.Browser.Tests.ClassNameToBindingReferenceRefactoringTest guid: (Core.GUID fromString: '{2a06fd11-d52a-4bd1-98eb-fad2671fad7e}')!
+Refactory.Browser.Tests.ClassNameToBindingReferenceRefactoringTest comment: ''!
+!Refactory.Browser.Tests.ClassNameToBindingReferenceRefactoringTest categoriesForClass!Refactory-Testing! !
+!Refactory.Browser.Tests.ClassNameToBindingReferenceRefactoringTest methodsFor!
 
 testConvertAlias
 	| refactoring testClass |
-	refactoring := (Tools.ClassNameToBindingReferenceRefactoring model: model
+	refactoring := (ClassNameToBindingReferenceRefactoring model: model
 				replaceSymbolicReferencesTo: External.Handle)
 				unqualifiedName: #ExternalHandle;
 				yourself.
@@ -25,9 +25,10 @@ testConvertAlias
 		equals: 'smalltalkAtAlias ^#{External.Handle} value'!
 
 testConvertSymbolsToBindingReferences
-	| refactoring testClass |
-	refactoring := (Tools.ClassNameToBindingReferenceRefactoring model: model
-				replaceSymbolicReferencesTo: Smalltalk.PoolConstantsDictionary) yourself.
+	| refactoring testClass pcd |
+	pcd := model classNamed: 'Smalltalk.PoolConstantsDictionary'.
+	refactoring := (ClassNameToBindingReferenceRefactoring model: model
+				replaceSymbolicReferencesTo: pcd) yourself.
 	self executeRefactoring: refactoring.
 	testClass := model classFor: RefactoryTestDataApp.
 	self
@@ -70,7 +71,7 @@ testConvertSymbolsToBindingReferences
 		verifyMethod: #smalltalkAtPut
 		of: testClass
 		equals: 'smalltalkAtPut ^#{Smalltalk.PoolConstantsDictionary} declare: nil'! !
-!Tools.Tests.ClassNameToBindingReferenceRefactoringTest categoriesForMethods!
+!Refactory.Browser.Tests.ClassNameToBindingReferenceRefactoringTest categoriesForMethods!
 testConvertAlias!public! !
 testConvertSymbolsToBindingReferences!public! !
 !

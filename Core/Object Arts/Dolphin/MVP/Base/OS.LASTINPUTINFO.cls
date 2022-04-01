@@ -21,7 +21,7 @@ typedef struct tagLASTINPUTINFO {
 This function is useful for input idle detection. For more information on tick counts, see GetTickCount.
 
 https://msdn.microsoft.com/en-us/library/windows/desktop/ms646272(v=vs.85).aspx'!
-!OS.LASTINPUTINFO categoriesForClass!Unclassified! !
+!OS.LASTINPUTINFO categoriesForClass!External-Data-Structured-Win32! !
 !OS.LASTINPUTINFO methodsFor!
 
 dwSize: anInteger

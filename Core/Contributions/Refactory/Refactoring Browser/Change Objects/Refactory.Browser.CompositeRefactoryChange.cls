@@ -115,6 +115,9 @@ compile: aString in: aRBClass environment: aRBNamespaceClass categories: aCollec
 defineClass: aString
 	^self addChange: (AddClassChange definition: aString)!
 
+defineClassWithDetails: aClassDetails
+	^self addChange: (AddClassChange details: aClassDetails)!
+
 executeNotifying: aBlock
 	#rbFix.	"Extract to method so can invoke from subclass of subclass where both override"
 	^self basicExecuteNotifying: aBlock!
@@ -165,8 +168,10 @@ removeClassConstant: aVariableBinding from: aClass
 removeClassNamed: aString
 	^self addChange: (RemoveClassChange removeClassName: aString)!
 
-removeClassVariable: aString from: aClass
-	^self addChange: (RemoveClassVariableChange remove: aString from: aClass)!
+removeClassVariable: aVariableBinding
+	^self addChange: (aVariableBinding isImmutable
+				ifTrue: [RemoveClassConstantChange remove: aVariableBinding from: aVariableBinding environment]
+				ifFalse: [RemoveClassVariableChange remove: aVariableBinding key from: aVariableBinding environment])!
 
 removeInstanceVariable: aString from: aClass
 	^self addChange: (RemoveInstanceVariableChange remove: aString from: aClass)!
@@ -183,11 +188,11 @@ renameChangesForClass: aClassName to: newClassName
 renameClass: aClass to: aString
 	^self addChange: (RenameClassChange rename: aClass name to: aString)!
 
-setGuid: aGUID of: aClass
-	^self addChange: (ClassGuidChange setGuid: aGUID of: aClass)!
-
 setSpecialBehavior: anInteger of: aClass
-	^self addChange: (ClassSpecialBehaviorChange setSpecialBehavior: anInteger of: aClass)! !
+	^self addChange: (ClassSpecialBehaviorChange setSpecialBehavior: anInteger of: aClass)!
+
+uniquelyIdentify: aClass with: aGUID
+	^self addChange: (ClassGuidChange uniquelyIdentify: aClass with: aGUID)! !
 !Refactory.Browser.CompositeRefactoryChange categoriesForMethods!
 =!comparing!public! !
 addChange:!adding!public! !
@@ -210,6 +215,7 @@ compile:in:categories:!adding!public! !
 compile:in:classified:!adding!public! !
 compile:in:environment:categories:package:!adding!public! !
 defineClass:!adding!public! !
+defineClassWithDetails:!adding!public! !
 executeNotifying:!applying!private! !
 hash!comparing!public! !
 import:into:!adding!public! !
@@ -219,16 +225,16 @@ postCopy!copying!private! !
 printOn:!printing!public! !
 problemCount!accessing!public! !
 removeChange:!private!removing! !
-removeClass:!adding!public! !
-removeClassConstant:from:!adding!public! !
-removeClassNamed:!adding!public! !
-removeClassVariable:from:!adding!public! !
-removeInstanceVariable:from:!adding!public! !
-removeSelector:from:!adding!public! !
+removeClass:!public!removing! !
+removeClassConstant:from:!public!removing! !
+removeClassNamed:!public!removing! !
+removeClassVariable:!public!removing! !
+removeInstanceVariable:from:!public!removing! !
+removeSelector:from:!public!removing! !
 renameChangesForClass:to:!helpers!private! !
 renameClass:to:!adding!public! !
-setGuid:of:!adding!public! !
 setSpecialBehavior:of:!adding!public! !
+uniquelyIdentify:with:!adding!public! !
 !
 
 !Refactory.Browser.CompositeRefactoryChange class methodsFor!

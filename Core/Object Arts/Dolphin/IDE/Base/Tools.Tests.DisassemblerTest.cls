@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Tools.Tests.DisassemblerTest'
 	classConstants: {}!
 Tools.Tests.DisassemblerTest guid: (Core.GUID fromString: '{0e5ffada-8287-4392-9b23-1146198af056}')!
 Tools.Tests.DisassemblerTest comment: ''!
-!Tools.Tests.DisassemblerTest categoriesForClass!Unclassified! !
 !Tools.Tests.DisassemblerTest methodsFor!
 
 testExLongPushImmediate

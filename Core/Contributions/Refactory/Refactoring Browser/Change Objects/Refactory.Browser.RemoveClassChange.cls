@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.RefactoryClassChange subclass: #'Refactory.Browser.RemoveClassChange'
+Refactory.Browser.ClassModificationChange subclass: #'Refactory.Browser.RemoveClassChange'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -19,13 +19,7 @@ asUndoOperation
 	classChanges := CompositeRefactoryChange new.
 	self changeClass withAllSubclasses do: 
 			[:each |
-			classChanges
-				defineClass: each definition;
-				setGuid: each guid of: each.
-			each hasSpecialBehavior ifTrue: [classChanges setSpecialBehavior: each instanceSpec of: each].
-			classChanges
-				comment: each comment in: each;
-				categorize: each as: each categories.
+			classChanges defineClassWithDetails: (ClassDetails fromClass: each).
 			each selectors asSortedArray
 				do: [:selector | classChanges compile: (each sourceCodeAt: selector) in: each].
 			each class selectors asSortedArray
@@ -35,7 +29,7 @@ asUndoOperation
 changeString
 	^'Remove class <1d>' << classReference!
 
-mutateAttributes: aClassAttributes
+mutateClassDetails: aClassDetails
 	self shouldNotImplement!
 
 primitiveExecute
@@ -51,7 +45,7 @@ printOn: aStream
 afterText!printing!public! !
 asUndoOperation!converting!public! !
 changeString!printing!public! !
-mutateAttributes:!helpers!private! !
+mutateClassDetails:!helpers!private! !
 primitiveExecute!applying!private! !
 printOn:!printing!public! !
 !

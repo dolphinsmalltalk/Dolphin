@@ -15,6 +15,25 @@ addToCommandRoute: route
 	super addToCommandRoute: route.
 	route prependTarget: self!
 
+extendMenus
+	{(self view viewNamed: 'methodsList') presenterConnectionPoint contextMenu.
+		self view menuBar findCommand: #method} do: 
+				[:each |
+				each insertItem: (CommandMenuItem
+							commandDescription: (CommandDescription command: (Message selector: #ignoreFailure)
+									description: '&Ignore this rule failure'))
+					before: #removeMethod]!
+
+ignoreFailure
+	"Filter the selected method so that it is not checked by the current rule in future"
+
+	| index methods |
+	methods := self browser selections.
+	methods do: [:each | self systemModel addFilteredMethod: each forLintRule: self lintRule].
+	index := self browser selectionsByIndex first.
+	self browser model removeAll: methods.
+	self browser selectionByIndex: index ifAbsent: []!
+
 lintRule
 	^lintRule!
 
@@ -31,37 +50,32 @@ lintRule: aLintRule
 				selection: failedMethods first].
 	self caption: aLintRule name"!
 
-queryCommand: aCommandQuery 
+onViewOpened
+	"Received when the receiver's view is been connected. 
+	Transfer the caption across to the view"
+
+	super onViewOpened.
+	self extendMenus!
+
+queryCommand: aCommandQuery
 	"Private - Enter details about a potential command for the receiver 
 	into the <CommandQuery> argument."
 
 	| selector |
 	selector := aCommandQuery commandSymbol.
-	#removeMethod == selector 
+	#ignoreFailure == selector
 		ifTrue: 
-			[
-			aCommandQuery
-				isEnabled: self browser hasSelection;
-				text: '&Ignore this rule failure'.
+			[aCommandQuery isEnabled: self browser hasSelection.
 			^true].
-	^super queryCommand: aCommandQuery 
-!
-
-removeMethod
-	"Filter the selected method so that it is not checked by the current rule in future"
-
-	| index methods |
-	methods := self browser selections.
-	methods do: [:each | self systemModel addFilteredMethod: each forLintRule: self lintRule].
-	index := self browser selectionsByIndex first.
-	self browser model removeAll: methods.
-	self browser selectionByIndex: index ifAbsent: []! !
+	^super queryCommand: aCommandQuery! !
 !Tools.LintRuleFailuresBrowserShell categoriesForMethods!
 addToCommandRoute:!commands!public! !
+extendMenus!browsing!private! !
+ignoreFailure!commands!public! !
 lintRule!accessing!public! !
 lintRule:!accessing!public! !
+onViewOpened!event handling!public! !
 queryCommand:!commands!private! !
-removeMethod!commands!public! !
 !
 
 !Tools.LintRuleFailuresBrowserShell class methodsFor!

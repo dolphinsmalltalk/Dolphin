@@ -371,12 +371,13 @@ autoFormatMethodSource
 autoFormatMethodSource: aBoolean
 	MethodBrowser autoFormat: aBoolean!
 
-availablePools
+availableNamespaces
 	"Answers a <sequencedReadableCollection> of all available pools in ascending name order.
 		SmalltalkSystem current availablePools
 	The system pools (identified by a name that starts with an underscore) are specifically excluded."
 
-	^(SharedPool allSubclasses reject: [:each | each name first == $_]) asSortedArray!
+	^(Namespace allSubclasses reject: [:each | each isVisiblyAbstract or: [each name first == $_]])
+		asSortedArray!
 
 backupOnImageSave
 	"Answer whether the image should be backed up (i.e. the old .img file is renamed to .bak when the new .img
@@ -388,8 +389,8 @@ backupOnImageSave
 backupOnImageSave: aBoolean 
 	self sessionManager backupOnImageSave: aBoolean!
 
-basicCreateSubclass: aSymbol of: aClass subclasses: aCollection
-	"Private - Create a subclass a named subclass of the specified class. Answer the new class.
+basicCreateSubclass: aClassDetails subclasses: aCollection
+	"Private - Create a subclass a subclass with the specified details and subclasses. Answer the new class.
 	Note that the operation is undoable."
 
 	| addClass |
@@ -397,13 +398,9 @@ basicCreateSubclass: aSymbol of: aClass subclasses: aCollection
 		ifTrue: 
 			[^self
 				error: 'Unable to reparent subclasses in this version of the system (requires Dolphin Professional)'].
-	addClass := AddClassChange
-				definition: ('<1p> <2s> <3p> instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''''
-						expandMacrosWith: aClass
-						with: aClass kindOfSubclass
-						with: aSymbol).
+	addClass := AddClassChange details: aClassDetails.
 	self changeManager performChange: addClass.
-	^aSymbol asQualifiedReference valueOrNil!
+	^addClass classReference valueOrNil!
 
 basicRemoveMethods: aCollection
 	| changes |
@@ -1292,55 +1289,34 @@ clearSystemFolder
 
 	systemFolder := nil.!
 
-cloneClass: aClass as: newClassName under: superclass in: package
-	| buildVarString aPackage definition changes |
-	aPackage := package.
-	definition := String writeStream.
-	buildVarString := 
-			[:names |
-			definition nextPut: $'.
-			names do: [:each | definition display: each] separatedBy: [definition space].
-			definition nextPut: $'].
+cloneClass: aClass as: aString under: superClass in: aPackage
+	| changes details |
 	changes := CompositeRefactoryChange
-				named: ('Clone class <1p> as <1s>' expandMacrosWith: aClass with: newClassName).
-	definition
-		print: superclass;
-		space;
-		display: aClass kindOfSubclass;
-		space;
-		print: newClassName;
-		crtab;
-		display: 'instanceVariableNames: '.
-	buildVarString value: (aClass allInstanceVariableNames
-				difference: (superclass ifNil: [#()] ifNotNil: [superclass allInstanceVariableNames])).
-	definition
-		crtab;
-		display: 'classVariableNames: '.
-	buildVarString value: (aClass allClassVarNames
-				difference: (superclass ifNil: [#()] ifNotNil: [superclass allClassVarNames])).
-	definition
-		crtab;
-		display: 'imports: ';
-		print: (aClass allImports difference: (superclass ifNil: [#()] ifNotNil: [superclass allImports])).
-	definition
-		crtab;
-		display: 'classInstanceVariableNames: '.
-	buildVarString value: (aClass class allInstanceVariableNames
-				difference: (superclass ifNil: [#()] ifNotNil: [superclass class allInstanceVariableNames])).
-	changes defineClass: definition contents.
+				named: ('Clone class <1p> as <1s>' expandMacrosWith: aClass with: aString).
+	details := ClassDetails fromClass: aClass.
+	details
+		superclass: superClass;
+		className: aString;
+		package: aPackage.
+	details instanceVariableNames: (aClass allInstanceVariableNames
+				difference: (superClass ifNil: [#()] ifNotNil: [superClass allInstanceVariableNames])).
+	details classVariableNames: (aClass allClassVarNames
+				difference: (superClass ifNil: [#()] ifNotNil: [superClass allClassVarNames])).
+	details
+		imports: (aClass allImports difference: (superClass ifNil: [#()] ifNotNil: [superClass allImports])).
+	details classInstanceVariableNames: (aClass class allInstanceVariableNames
+				difference: (superClass ifNil: [#()] ifNotNil: [superClass class allInstanceVariableNames])).
+	changes defineClassWithDetails: details.
 	self
 		copyAllMethodsOf: aClass
-		to: newClassName
+		to: aString
 		changes: changes.
 	self
 		copyAllMethodsOf: aClass class
-		to: newClassName
+		to: aString
 		changes: changes.
 	self changeManager performChange: changes.
-	^newClassName asQualifiedReference ifDefined: 
-			[:newClass |
-			newClass owningPackage: aPackage.
-			newClass]!
+	^aString asQualifiedReference valueOrNil!
 
 closeAll
 	"Close all views, prompting to save changes."
@@ -1427,6 +1403,15 @@ compressSources
 	progress caption: 'Compressing  sources, please wait…'.
 	srcmgr compressSourcesWith: progress!
 
+confirmRenameClass: aClass to: aString
+	^MessageBox new
+		headline: 'Rename <1s>?' << aClass unqualifiedName;
+		text: '<1s> will be renamed to <2s>.<n><n>Any references in code will require amending after the rename.'
+					<< {aClass fullName. aString};
+		customButtons: #(#(#yes '&Rename') #(#no 'Cancel'));
+		isCancellable: true;
+		yourself!
+
 copyAllMethodsOf: aClass to: newClass changes: aCompositeRefactoryChange
 	aClass methodsDo: 
 			[:each |
@@ -1452,10 +1437,15 @@ copyClass: aClass
 	dialog
 		package: aClass owningPackage;
 		createView: dialog class defaultView.
-	dialog subclassName: newClassName pathString.
+	dialog
+		subclassFullName: newClassName pathString;
+		isNonInstantiable: aClass isNonInstantiable;
+		isBytes: aClass isBytes;
+		isVariable: aClass isVariable;
+		disableAttributeChanges.
 	dialog caption: 'Clone <1p>…' << aClass.
 	dialog showModal isNil ifTrue: [^nil].
-	newClassName := dialog subclassName asSymbol.
+	newClassName := dialog subclassFullName asSymbol.
 	superclass := dialog superclass.
 	package := dialog package.
 	^self
@@ -1472,19 +1462,13 @@ createClassVariableAccessors: aString in: aClass within: aBrowserEnvironment
 		classVariables: true
 		within: aBrowserEnvironment!
 
-createSubclass: aSymbol of: aClass package: aPackage subclasses: aCollection
+createSubclass: aClassDetails subclasses: aCollection
 	"Create a subclass a named subclass of the specified class and assign it to the 
 	specified package. Answer the new class."
 
 	| newClass |
-	newClass := self 
-				basicCreateSubclass: aSymbol
-				of: aClass
-				subclasses: aCollection.
-	newClass notNil 
-		ifTrue: 
-			[aPackage notNil ifTrue: [newClass owningPackage: aPackage].
-			newClass sourceManager logChanged: newClass].
+	newClass := self basicCreateSubclass: aClassDetails subclasses: aCollection.
+	newClass notNil ifTrue: [newClass sourceManager logChanged: newClass].
 	^newClass!
 
 createSubclassOf: aClass
@@ -1496,15 +1480,10 @@ createSubclassOf: aClass
 	^self createSubclassOf: aClass inPackage: aPackage!
 
 createSubclassOf: aClass inPackage: aPackageOrNil
-	| details |
-	details := CreateSubclassDialog subclassOf: aClass inPackage: aPackageOrNil.
-	^details answer notNil
-		ifTrue: 
-			[self
-				createSubclass: details subclassName asSymbol
-				of: details superclass
-				package: details package
-				subclasses: details subclasses]!
+	| dialog |
+	dialog := CreateSubclassDialog subclassOf: aClass inPackage: aPackageOrNil.
+	dialog answer ifNil: [^nil].
+	^self createSubclass: dialog classDetails subclasses: dialog subclasses!
 
 createVariableAccessors: variableNamePairs classVariables: aBoolean within: aBrowserEnvironment
 	"Generate get and set accessors for the specified class and variable name pairs. Note that
@@ -3399,9 +3378,6 @@ referencesToLiteral: anObject in: aBrowserEnvironment
 		search: search;
 		yourself!
 
-referencesToVariable: aVariableBinding in: aBrowserEnvironment
-	^aBrowserEnvironment referencesToVariable: aVariableBinding!
-
 reformatAllMethodsIn: aBrowserEnvironment
 	| changes |
 	changes := CompositeRefactoryChange new.
@@ -3698,7 +3674,19 @@ renameClass: aClass
 		prompt: 'New name for ' , oldClassName
 		caption: 'Rename Class') ifNotNil: [:newClassName | self renameClass: aClass to: newClassName]!
 
-renameClass: aClass to: newClassName
+renameClass: aClass to: aString
+	"Prompt for confirmation, and then if confirmed rename the <Class> first argument to have the new full-name specified by the second, <String> argument. Use the Rename Class refactoring when available."
+
+	| prompter |
+	prompter := self confirmRenameClass: aClass to: aString.
+	prompter confirm ifFalse: [^self].
+	"Queue deferred action as we can't delete the old item now while still in use (causes GPF in TreeView)"
+	self
+		renameClass: aClass
+		to: aString
+		showChanges: prompter isChecked!
+
+renameClass: aClass to: newClassName showChanges: aBoolean
 	"Rename aClass to newClassName. Also list all of the methods which reference
 	the class. Their source must be modified to include the newClassName."
 
@@ -4275,10 +4263,10 @@ argumentClasses!accessing!private! !
 argumentClasses:!accessing!private! !
 autoFormatMethodSource!options!public! !
 autoFormatMethodSource:!options!public! !
-availablePools!accessing!public! !
+availableNamespaces!accessing!public! !
 backupOnImageSave!accessing!public! !
 backupOnImageSave:!accessing!public! !
-basicCreateSubclass:of:subclasses:!private!refactoring! !
+basicCreateSubclass:subclasses:!private!refactoring! !
 basicRemoveMethods:!helpers!private! !
 basicRemoveMethods:within:!helpers!private! !
 basicRemoveMethodsIn:within:!helpers!private! !
@@ -4397,10 +4385,11 @@ compile:in:environment:categories:package:extraFlags:!operations!public! !
 compilerNotification:!exceptions!private! !
 compressChanges!commands!public! !
 compressSources!commands!public! !
+confirmRenameClass:to:!event handling!private! !
 copyAllMethodsOf:to:changes:!private!refactoring! !
 copyClass:!public!refactoring! !
 createClassVariableAccessors:in:within:!public!refactoring! !
-createSubclass:of:package:subclasses:!public!refactoring! !
+createSubclass:subclasses:!public!refactoring! !
 createSubclassOf:!public!refactoring! !
 createSubclassOf:inPackage:!public!refactoring! !
 createVariableAccessors:classVariables:within:!public!refactoring! !
@@ -4591,7 +4580,6 @@ referencesTo:!enquiries!public! !
 referencesTo:in:!enquiries!public! !
 referencesToBinding:in:!enquiries!private! !
 referencesToLiteral:in:!browsing!public! !
-referencesToVariable:in:!enquiries!private! !
 reformatAllMethodsIn:!commands!private! !
 reformatSource:in:!commands!private! !
 registerSystemEvents!initializing!private! !
@@ -4607,7 +4595,8 @@ removeSystemFolderIcon:!operations!public! !
 removeSystemFolderIconNamed:!operations!public! !
 removeSystemFolderIconsForClass:!event handling!private! !
 renameClass:!operations!public! !
-renameClass:to:!operations!public! !
+renameClass:to:!public!refactoring! !
+renameClass:to:showChanges:!operations!public! !
 renameClassVariable:in:!public!refactoring! !
 renameClassVariable:in:within:!public!refactoring! !
 renameClassVariable:to:in:within:!private!refactoring! !

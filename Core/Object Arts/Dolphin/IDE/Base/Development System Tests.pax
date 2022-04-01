@@ -9,7 +9,6 @@ package setClassNames: #(
 	#{OS.Tests.VersionResourceTest}
 	#{Refactory.Browser.Tests.RewriteTestCase}
 	#{Tools.Tests}
-	#{Tools.Tests.ClassNameToBindingReferenceRefactoringTest}
 	#{Tools.Tests.CreateSubclassDialogTest}
 	#{Tools.Tests.DisassemblerTest}
 	#{Tools.Tests.ImageListViewTest}
@@ -47,7 +46,6 @@ package setPrerequisites: #(
 	'..\..\Base\Tests\Dolphin Base Tests'
 	'..\..\MVP\Dialogs\Common\Dolphin Common Dialogs'
 	'..\..\MVP\Graphics\Dolphin GDI Graphics'
-	'..\..\Base\Deprecated\Dolphin Legacy Package Support'
 	'..\..\MVP\Base\Dolphin MVP Base'
 	'..\..\MVP\Dolphin MVP Tests'
 	'..\Professional\Dolphin Professional Tools'
@@ -55,7 +53,6 @@ package setPrerequisites: #(
 	'..\..\MVP\Views\Scintilla\Tests\Dolphin Scintilla View Tests'
 	'..\..\Lagoon\Lagoon Image Stripper'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
-	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Refactorings\RBRefactorings'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\SmallLint\RBSmallLint'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Tests\RBTestMethods'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Tests\RBTests'
@@ -154,12 +151,6 @@ Refactory.Browser.Tests.BrowserEnvironmentTest subclass: #'Tools.Tests.MethodCat
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Refactory.Browser.Tests.BrowserEnvironmentTest subclass: #'Tools.Tests.PackageEnvironmentTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Refactory.Browser.Tests.RefactoringTest subclass: #'Tools.Tests.ClassNameToBindingReferenceRefactoringTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

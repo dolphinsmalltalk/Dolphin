@@ -11,13 +11,16 @@ Refactory.Browser.Tests.ClassImportsChangeTest comment: ''!
 !Refactory.Browser.Tests.ClassImportsChangeTest categoriesForClass!Refactory-Testing! !
 !Refactory.Browser.Tests.ClassImportsChangeTest methodsFor!
 
+subjectClass
+	^ClassImportsChange!
+
 testAsUndo
 	| subject undo |
-	subject := ClassImportsChange
+	subject := self subjectClass
 				import: #(#{Core} #{Graphics.Gdiplus private} #{OS private} #{Kernel private})
 				into: UI.
 	undo := subject asUndoOperation.
-	self assert: undo isKindOf: ClassImportsChange.
+	self assert: undo isKindOf: self undoClass.
 	self assert: undo imports equals: UI imports.
 	self assert: undo afterText equals: subject beforeText!
 
@@ -38,6 +41,7 @@ testPrinting
 	self assert: subject printString
 		equals: 'UI imports: #(#{Core} #{Graphics.Gdiplus private} #{OS private} #{Kernel private})!!'! !
 !Refactory.Browser.Tests.ClassImportsChangeTest categoriesForMethods!
+subjectClass!constants!private! !
 testAsUndo!public!unit tests! !
 testPrinting!public!unit tests! !
 !

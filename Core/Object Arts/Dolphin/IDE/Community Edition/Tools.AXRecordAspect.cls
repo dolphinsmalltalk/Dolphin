@@ -8,7 +8,6 @@ Tools.AXAutomationAspect subclass: #'Tools.AXRecordAspect'
 	classConstants: {}!
 Tools.AXRecordAspect guid: (Core.GUID fromString: '{0b80a2c6-1c74-4fe7-9a0e-b28bb197d120}')!
 Tools.AXRecordAspect comment: 'AXRecordAspect is a specialised <Aspect> for accessing properties of user-defined Automation structures (as represented by instances of <AXRecord>). It is an extension of the PublishedAspectorInspector framework.'!
-!Tools.AXRecordAspect categoriesForClass!Unclassified! !
 !Tools.AXRecordAspect methodsFor!
 
 defaultFlags

@@ -22,6 +22,14 @@ testAddClassVariable
 	self assert: ((refactoring model classNamed: #'Refactory.Browser.TestData.TransformationRuleTestData')
 				directlyDefinesClassVariable: #Asdf)!
 
+testAlreadyExistingClass
+	"Attempting to add a class variable to a Namespace that clashes with a class binding"
+
+	self shouldFail: (AddClassVariableRefactoring variable: #Object class: Core)
+		withMessage: 'Core or one of its subclasses defines variable ''Object'''.
+	self shouldFail: (AddClassVariableRefactoring variable: #Core class: Root)
+		withMessage: 'Root or one of its subclasses defines variable ''Core'''!
+
 testAlreadyExistingName
 	self
 		shouldFail: (AddClassVariableRefactoring variable: #RecursiveSelfRule
@@ -72,6 +80,7 @@ testRBMetaclassFailure
 !Refactory.Browser.Tests.AddClassVariableRefactoringTest categoriesForMethods!
 setUp!public!set up! !
 testAddClassVariable!public!tests! !
+testAlreadyExistingClass!failure tests!public! !
 testAlreadyExistingName!failure tests!public! !
 testMetaClassFailure!failure tests!public! !
 testModelAddClassVariable!public!tests! !

@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.RefactoryClassChange subclass: #'Refactory.Browser.ClassAttributeChange'
+Refactory.Browser.ClassModificationChange subclass: #'Refactory.Browser.ClassAttributeChange'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -34,11 +34,11 @@ emitAttributeOf: aClass with: aChunkSourceFiler
 	self subclassResponsibility!
 
 printOn: aStream
-	| attributes |
-	attributes := ClassAttributes new.
-	attributes className: classReference.
-	self mutateAttributes: attributes.
-	self emitAttributeOf: attributes with: (self sourceFilerClass on: aStream)! !
+	| details |
+	details := ClassDetails new.
+	details className: classReference.
+	self mutateClassDetails: details.
+	self emitAttributeOf: details with: (self sourceFilerClass on: aStream)! !
 !Refactory.Browser.ClassAttributeChange categoriesForMethods!
 afterText!printing!public! !
 beforeText!printing!public! !

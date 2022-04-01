@@ -8,7 +8,7 @@ External.ExternalArray subclass: #'External.DOUBLEArray'
 	classConstants: {}!
 External.DOUBLEArray guid: (Core.GUID fromString: '{c0413e69-b874-4e6b-a120-709d0c760f0f}')!
 External.DOUBLEArray comment: 'Specialized <ExternalArray> to represent contiguous single-dimensioned arrays of double-precision (64-bit) floating point numbers.'!
-!External.DOUBLEArray categoriesForClass!Unclassified! !
+!External.DOUBLEArray categoriesForClass!External-Data-Structured! !
 !External.DOUBLEArray methodsFor!
 
 uncheckedAt: anInteger 

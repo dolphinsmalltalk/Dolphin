@@ -8,7 +8,6 @@ Refactory.Browser.Tests.BrowserEnvironmentTest subclass: #'Tools.Tests.MethodCat
 	classConstants: {}!
 Tools.Tests.MethodCategoryEnvironmentTest guid: (Core.GUID fromString: '{fc1f9c02-ad7f-4715-a48e-c9891c1c5c75}')!
 Tools.Tests.MethodCategoryEnvironmentTest comment: ''!
-!Tools.Tests.MethodCategoryEnvironmentTest categoriesForClass!Unclassified! !
 !Tools.Tests.MethodCategoryEnvironmentTest methodsFor!
 
 testMethodCategoryEnvironment

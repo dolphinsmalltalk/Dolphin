@@ -11,18 +11,23 @@ Refactory.Browser.Tests.RemoveClassChangeTest comment: ''!
 !Refactory.Browser.Tests.RemoveClassChangeTest categoriesForClass!Refactory-Testing! !
 !Refactory.Browser.Tests.RemoveClassChangeTest methodsFor!
 
+subjectClass
+	^RemoveClassChange!
+
 testAsUndo
 	| subject undo filer afterText |
-	subject := RemoveClassChange remove: String.
+	subject := self subjectClass remove: String.
 	undo := subject asUndoOperation.
-	self assert: undo isKindOf: CompositeRefactoryChange.
+	self assert: undo isKindOf: self undoClass.
 	"Until the change is applied, the undo's beforeText will be empty because the class does not exist"
 	self assert: undo beforeText equals: ''.
 	afterText := String writeStream.
 	filer := String sourceFilerClass on: afterText.
 	String withAllSubclasses do: 
 			[:each |
-			filer fileOutDefinitionOfClass: each.
+			filer
+				fileOutDefinitionOfClass: each;
+				cr.
 			(each selectors asSortedArray collect: [:selector | each compiledMethodAt: selector])
 				, (each class selectors asSortedArray collect: [:selector | each class compiledMethodAt: selector])
 					do: 
@@ -41,13 +46,18 @@ testAsUndo
 
 testPrinting
 	| subject |
-	subject := RemoveClassChange remove: ClassToRename.
+	subject := self subjectClass remove: ClassToRename.
 	self assert: subject beforeText equals: ClassToRename definition.
 	self assert: subject afterText equals: ''.
-	self assert: subject changeString equals: 'Remove class ', ClassToRename fullName.
-	self assert: subject printString equals: ClassToRename fullName, ' removeFromSystem!!'! !
+	self assert: subject changeString equals: 'Remove class ' , ClassToRename fullName.
+	self assert: subject printString equals: ClassToRename fullName , ' removeFromSystem!!'!
+
+undoClass
+	^CompositeRefactoryChange! !
 !Refactory.Browser.Tests.RemoveClassChangeTest categoriesForMethods!
+subjectClass!constants!private! !
 testAsUndo!public!unit tests! !
 testPrinting!public!unit tests! !
+undoClass!constants!private! !
 !
 

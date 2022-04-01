@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Tools.Tests.ResourceBrowserTest'
 	classConstants: {}!
 Tools.Tests.ResourceBrowserTest guid: (Core.GUID fromString: '{8d888ba2-f5b7-402c-9bff-e88b2cde2fab}')!
 Tools.Tests.ResourceBrowserTest comment: ''!
-!Tools.Tests.ResourceBrowserTest categoriesForClass!Unclassified! !
 !Tools.Tests.ResourceBrowserTest methodsFor!
 
 getShellResource

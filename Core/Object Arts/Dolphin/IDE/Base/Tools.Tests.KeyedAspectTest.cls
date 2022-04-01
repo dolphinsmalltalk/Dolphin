@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Tools.Tests.KeyedAspectTest'
 	classConstants: {}!
 Tools.Tests.KeyedAspectTest guid: (Core.GUID fromString: '{d76395c9-f61a-49dc-b5b1-87a2adf2020f}')!
 Tools.Tests.KeyedAspectTest comment: ''!
-!Tools.Tests.KeyedAspectTest categoriesForClass!Unclassified! !
 !Tools.Tests.KeyedAspectTest methodsFor!
 
 collectionKeyedAspectsTest: subject

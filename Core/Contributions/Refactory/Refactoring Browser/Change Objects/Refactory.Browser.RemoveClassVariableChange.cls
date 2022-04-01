@@ -20,8 +20,8 @@ changeString
 changeSymbol
 	^#removeClassVarName:!
 
-mutateAttributes: aClassAttributes
-	aClassAttributes classVariableNames: (aClassAttributes classVariableNames copyWithout: variable)!
+mutateClassDetails: aClassDetails
+	aClassDetails classVariableNames: (aClassDetails classVariableNames copyWithout: variable)!
 
 primitiveExecute
 	self changeClass removeClassVarName: variable! !
@@ -29,7 +29,7 @@ primitiveExecute
 asUndoOperation!converting!public! !
 changeString!printing!public! !
 changeSymbol!constants!private! !
-mutateAttributes:!helpers!private! !
+mutateClassDetails:!helpers!private! !
 primitiveExecute!applying!private! !
 !
 

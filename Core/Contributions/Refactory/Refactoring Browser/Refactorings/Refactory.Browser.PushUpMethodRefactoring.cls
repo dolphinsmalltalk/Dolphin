@@ -38,7 +38,7 @@ checkClassVars
 	selectors do: [:each | self checkClassVarsFor: each]!
 
 checkClassVarsFor: aSelector
-	class nonMetaclass classBindingNames do: 
+	class instanceClass classBindingNames do: 
 			[:each |
 			((class whichSelectorsReferToClassVariable: each) includes: aSelector)
 				ifTrue: 

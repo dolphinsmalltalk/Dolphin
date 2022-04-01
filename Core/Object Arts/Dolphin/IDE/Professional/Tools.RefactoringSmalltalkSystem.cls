@@ -158,21 +158,18 @@ addParameterToMethod: aCompiledMethod inPackages: aCollectionOfPackages
 addSharedVariable: aString to: aNamespace
 	self changeManager performChange: (AddSharedVariableChange addSharedVariable: aString to: aNamespace )!
 
-basicCreateSubclass: aSymbol of: aClass subclasses: aCollection
-	"Private - Create a subclass a named subclass of the specified class. Answer the new class.
-	Implements the 'Create Subclass' class refactoring: 'This refactoring allows you to insert a
+basicCreateSubclass: aClassDetails subclasses: aCollection
+	"Private - Create a subclass a subclass with the specified details and subclasses. Answer the new class."
+
+	"Implements the 'Create Subclass' class refactoring: 'This refactoring allows you to insert a
 	new class into an existing hierarchy. For example, you can insert a new class between object
 	and all of its subclasses by using the refactoring (although I wouldn't recommend it).'"
 
-	| categories |
-	categories := aClass isNil ifTrue: [{ClassCategory unclassified}] ifFalse: [aClass categories].
-	self performRefactoring: 
-			[(AddClassRefactoring
-				addClass: aSymbol
-				superclass: aClass
-				subclasses: aCollection
-				category: categories first name) execute].
-	^aSymbol asQualifiedReference valueOrNil!
+	| ref |
+	ref := aClassDetails classReference.
+	self
+		performRefactoring: [(AddClassRefactoring details: aClassDetails subclasses: aCollection) execute].
+	^ref valueOrNil!
 
 basicRemoveMethods: aCollectionOfCompiledMethods within: aBrowserEnvironment
 	| classes |
@@ -310,14 +307,15 @@ cloneClass: aClass as: newClassName under: superclass in: package
 			newClass owningPackage: package.
 			newClass]!
 
-confirmRenameClass: aClass to: text
+confirmRenameClass: aClass to: aString
 	^MessageBox new
 		headline: 'Rename <1s>?' << aClass unqualifiedName;
 		text: '<1s> will be renamed to <2s>.<n><n>Any references in code will be updated, but not where the name appears in comments, literal strings, or argument names.'
-					<< {aClass fullName. text};
+					<< {aClass fullName. aString};
 		customButtons: #(#(#yes '&Rename') #(#no 'Cancel'));
 		isCancellable: true;
-		confirm!
+		checkboxText: 'Show refactoring changes?';
+		yourself!
 
 convertTemporaryToInstanceVariable: aString in: aClass selector: aSelector
 	"Implement the 'Convert to Instance Variable' code refactoring."
@@ -421,7 +419,7 @@ duplicateSuperclassMethodsOf: aClass
 					answer add: (self duplicateOf: eachMethod in: nearest)]].
 	^answer!
 
-executeVariableRefactoring: refactoringClass variables: aCollection within: aBrowserEnvironment
+executeVariableRefactoring: refactoringClass variables: aCollectionOfPairs within: aBrowserEnvironment
 	^self performRefactoring: 
 			[| namespace refactoring caption |
 			namespace := RBModel onEnvironment: aBrowserEnvironment.
@@ -429,7 +427,7 @@ executeVariableRefactoring: refactoringClass variables: aCollection within: aBro
 			caption
 				nextPutAll: refactoringClass displayPrefix;
 				space.
-			aCollection do: 
+			aCollectionOfPairs do: 
 					[:each |
 					| class variable |
 					variable := each value.
@@ -1018,23 +1016,34 @@ removeClasses: aCollection
 	^true!
 
 removeClassVariable: aString from: aClass within: aBrowserEnvironment
-	self removeClassVariables: {aClass -> aString} within: aBrowserEnvironment!
-
-removeClassVariables: aCollectionOfAssociations within: aBrowserEnvironment
-	"Invoke the 'Remove Class Variable' refactoring for each of the {class, var. name} pairs in
-	the argument. Note that all variables are removed as an atomic unit, so if one cannot be
-	removed the whole operation is aborted. The operation also creates only one undo/redo unit."
-
-	^self
-		executeVariableRefactoring: RemoveClassVariableRefactoring
-		variables: aCollectionOfAssociations
-		within: aBrowserEnvironment!
+	self removeStaticVariables: {aClass -> aString} within: aBrowserEnvironment!
 
 removeFilteredMethod: aCompiledMethod forLintRule: aLintRule
 	| filter |
 	filter := BasicLintRule filterFor: aLintRule name.
 	filter removeClass: aCompiledMethod methodClass selector: aCompiledMethod selector.
 	self trigger: #lintRuleFilterChanged: with: aLintRule!
+
+removeImportFromClasses: aCollectionOfClasses
+	| classes allImports import refactoringModel refactorings  count caption |
+	allImports := Set new.
+	classes := aCollectionOfClasses asArray.
+	classes do: [:each | allImports addAll: each imports].
+	count := aCollectionOfClasses size.
+	caption := 'Remove import from <1d>...' << (count = 1 ifTrue: [aCollectionOfClasses anyOne] ifFalse: ['<1d> classes' << count]).
+	import := ChoicePrompter choices: allImports asSortedCollection caption: caption.
+	import ifNil: [^self].
+	refactoringModel := RBModel new.
+	refactorings := classes collect: 
+					[:each |
+					AddImportRefactoring
+						model: refactoringModel
+						addImport: import
+						to: each].
+	refactoringModel name: (count = 1
+				ifTrue: [refactorings first displayString]
+				ifFalse: ['Remove Import <1p> from <2d> Classes' << {import. refactorings size}]).
+	self performRefactorings: refactorings showChanges: true!
 
 removeInstanceVariable: aString from: aClass within: aBrowserEnvironment
 	^self removeInstanceVariables: {aClass -> aString} within: aBrowserEnvironment!
@@ -1102,11 +1111,23 @@ removeParameter: aString from: aSelector in: aClass environment: aBrowserEnviron
 				execute;
 				yourself]!
 
-renameClass: aClass to: newClassName
-	"Rename aClass to newClassName. Also list all of the methods which reference
-	the class. Their source must be modified to include the newClassName."
+removeStaticVariables: aCollectionOfAssociations within: aBrowserEnvironment
+	"Invoke the 'Remove Static Variable' refactoring for each of the {class, var. name} pairs in
+	the argument. Note that all variables are removed as an atomic unit, so if one cannot be
+	removed the whole operation is aborted. The operation also creates only one undo/redo unit."
 
-	self performRefactoring: [(RenameClassRefactoring rename: aClass to: newClassName) execute]!
+	^self
+		executeVariableRefactoring: RemoveClassVariableRefactoring
+		variables: aCollectionOfAssociations
+		within: aBrowserEnvironment!
+
+renameClass: aClass to: newClassName showChanges: aBoolean
+	| refactoring |
+	refactoring := RenameClassRefactoring rename: aClass to: newClassName.
+	self performRefactoring: [refactoring primitiveExecute].
+	aBoolean
+		ifTrue: [refactoring model browseChanges]
+		ifFalse: [RefactoringManager instance addRefactoring: refactoring]!
 
 renameClassVariable: aString to: newName in: aClass within: aBrowserEnvironment 
 	self 
@@ -1417,7 +1438,7 @@ addInstanceVariableTo:!public!refactoring! !
 addParameterToMethod:!commands!public!refactoring! !
 addParameterToMethod:inPackages:!public!refactoring! !
 addSharedVariable:to:!commands!public! !
-basicCreateSubclass:of:subclasses:!private!refactoring! !
+basicCreateSubclass:subclasses:!private!refactoring! !
 basicRemoveMethods:within:!private!refactoring! !
 basicRemoveMethodsIn:within:!private!refactoring! !
 browseMethodsIn:!browsing!public! !
@@ -1480,14 +1501,15 @@ queryCommand:!commands!private! !
 refactoringError!constants!private! !
 removeClasses:!public!refactoring! !
 removeClassVariable:from:within:!public!refactoring! !
-removeClassVariables:within:!public!refactoring! !
 removeFilteredMethod:forLintRule:!public!refactoring! !
+removeImportFromClasses:!public! !
 removeInstanceVariable:from:within:!public!refactoring! !
 removeInstanceVariables:within:!public!refactoring! !
 removeMethods:!public!refactoring! !
 removeMethodsDuplicatedInSuperclassOf:!private!refactoring! !
 removeParameter:from:in:environment:!public!refactoring! !
-renameClass:to:!public!refactoring! !
+removeStaticVariables:within:!public!refactoring! !
+renameClass:to:showChanges:!public!refactoring! !
 renameClassVariable:to:in:within:!private!refactoring! !
 renameInstanceVariable:to:in:within:!private!refactoring! !
 renameMethod:!public!refactoring! !

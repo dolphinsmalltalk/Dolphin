@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Tools.Tests.SmalltalkStylerTest'
 	classConstants: {}!
 Tools.Tests.SmalltalkStylerTest guid: (Core.GUID fromString: '{a4d5d58a-e2a3-4f2b-8877-0c480d6f3b01}')!
 Tools.Tests.SmalltalkStylerTest comment: ''!
-!Tools.Tests.SmalltalkStylerTest categoriesForClass!Unclassified! !
 !Tools.Tests.SmalltalkStylerTest methodsFor!
 
 restyleFromEachPosition: anObject resumeable: aBoolean

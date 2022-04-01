@@ -117,10 +117,18 @@ addClassVariable: aString value: anObject
 	variable already exists, this is a no-op. If the variable does not exist, a new binding is
 	added with initial value nil."
 
-	^(self addClassVarNamed: aString)
-		isImmutable: false;
-		value: anObject;
-		yourself!
+	| binding count requiresRecompile |
+	count := classPool ifNil: [0] ifNotNil: [classPool size].
+	binding := self addClassVarNamed: aString.
+	"We need to recompile if we are modifying an existing binding and the binding was constant and its value was inlineable"
+	requiresRecompile := classPool size = count
+				and: [binding isImmutable and: [VMLibrary hasBytecodeRepresentation: binding value]].
+	binding
+		setValue: anObject;
+		isImmutable: false.
+	self isChanged: true.
+	requiresRecompile ifTrue: [Object recompileAllReferencesToLiteral: binding].
+	^binding!
 
 addClassVarNamed: aString
 	"Answer the binding for a new or existing class variable in the receiver with the specified
@@ -537,6 +545,9 @@ isSelfEvaluating
 
 	^name notNil!
 
+legacySourceFilerClass
+	^#{LegacyChunkSourceFiler} valueOrNil ifNil: [ChunkSourceFiler]!
+
 localBindingFor: aString
 	"Answer a variable binding for the named variable directly in the scope of this class, i.e. one of its own class variables. If there is no such class variable, then answer nil."
 
@@ -889,13 +900,9 @@ sourceDescriptor: sourceDes
 	comment := sourceDes!
 
 sourceFilerClass
-	^#{LegacyChunkSourceFiler} valueOrNil
-		ifNil: [ChunkSourceFiler]
-		ifNotNil: 
-			[:legacyFiler |
-			self owningPackage
-				ifNil: [environment == Smalltalk ifTrue: [legacyFiler] ifFalse: [ChunkSourceFiler]]
-				ifNotNil: [:package | package sourceFilerClass]]!
+	^self owningPackage
+		ifNil: [environment == Smalltalk ifTrue: [self legacySourceFilerClass] ifFalse: [ChunkSourceFiler]]
+		ifNotNil: [:package | package sourceFilerClass]!
 
 stbConvertFrom: anSTBClassFormat
 	"Private - Answer a block that answers a new instance initialised from the block's single
@@ -1157,6 +1164,7 @@ instanceClass!accessing!public! !
 isAbstract:!instance specification-accessing!public! !
 isAnonymous!public!testing! !
 isSelfEvaluating!public!testing! !
+legacySourceFilerClass!development!private!source filing-class definition! !
 localBindingFor:!bindings!public! !
 metaclass!accessing!public! !
 name!accessing!public! !

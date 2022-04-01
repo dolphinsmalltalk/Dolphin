@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Tools.Tests.CodeMentorTest'
 	classConstants: {}!
 Tools.Tests.CodeMentorTest guid: (Core.GUID fromString: '{57ac07f6-6b32-42d2-a0cd-7488ae11ec92}')!
 Tools.Tests.CodeMentorTest comment: ''!
-!Tools.Tests.CodeMentorTest categoriesForClass!Unclassified! !
 !Tools.Tests.CodeMentorTest methodsFor!
 
 testLintRulesXml

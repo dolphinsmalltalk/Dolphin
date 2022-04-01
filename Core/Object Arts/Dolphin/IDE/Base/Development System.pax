@@ -548,6 +548,7 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.BrowserEnvironment} #search:)
 	#(#{Refactory.Browser.BrowserEnvironmentWrapper} #includesResource:)
 	#(#{Refactory.Browser.BrowserEnvironmentWrapper} #openEditor)
+	#(#{Refactory.Browser.ClassDetails class} #icon)
 	#(#{Refactory.Browser.ClassEnvironment} #includesResource:)
 	#(#{Refactory.Browser.OrEnvironment} #includesResource:)
 	#(#{Refactory.Browser.RBConfigurableFormatter class} #publishedAspects)
@@ -1162,7 +1163,7 @@ UI.Presenter subclass: #'Tools.SmalltalkSearchPresenter'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.Presenter subclass: #'Tools.SmalltalkWorkspace'
-	instanceVariableNames: 'evaluationContext errorModel findDetails workspacePool evaluationPools compilationErrors textStyles searchEnvironment modifiedModel flags indicatorStyles variableMetadataProvider'
+	instanceVariableNames: 'evaluationContext errorModel findDetails workspacePool namespaces compilationErrors textStyles searchEnvironment modifiedModel flags indicatorStyles variableMetadataProvider'
 	classVariableNames: 'Abbreviations AnnotationMode AutoCompleteDwell DefaultCaretColor DefaultFont DefaultTabWidth FontQuality IndicatorStyles KeyBindings KeywordCompletions MaxAutoCompletionListHeight MaxAutoCompletionListSize MaxAutoCompletionListWidth OptionFlags StandardUnaryReturnTypes TextStyles WrapIndentMode'
 	imports: #(#{Kernel.CompilerFlags} #{UI.Scintilla private} #{Refactory.Browser private})
 	classInstanceVariableNames: 'additionalKeyBindings commandQueryHandlers'
@@ -1287,7 +1288,7 @@ UI.Dialog subclass: #'Tools.AspectEditorDialog'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.Dialog subclass: #'Tools.CreateSubclassDialog'
-	instanceVariableNames: 'packagesPresenter subclassesPresenter namePresenter namespacePresenter usePackagePresenter package superclassPresenter hintBubble'
+	instanceVariableNames: 'packagesPresenter subclassesPresenter namePresenter namespacePresenter usePackagePresenter package superclassPresenter hintBubble isNonInstantiablePresenter isVariablePresenter isBytesPresenter attributesPresenter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -1350,7 +1351,7 @@ Tools.ChooseClassDialog subclass: #'Tools.ChooseNamespaceDialog'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Tools.ChooseNamespaceDialog subclass: #'Tools.ChooseImportDialog'
-	instanceVariableNames: 'private hintBubble includeClasses'
+	instanceVariableNames: 'private hintBubble namespacesOnly'
 	classVariableNames: ''
 	imports: #(#{Refactory.Browser private})
 	classInstanceVariableNames: ''
@@ -1850,7 +1851,7 @@ isChanged:!accessing!public! !
 isDeprecated!public!source filing! !
 isNonInstantiable:!instance specification-accessing!private! !
 methodChanged:!helpers!private! !
-notifyPackageOfChange!helpers!private! !
+notifyPackageOfChange!private!refactoring! !
 renameClassVar:to:!class hierarchy-mutating!class variables!private! !
 !
 
@@ -6142,6 +6143,16 @@ openEditor
 !Refactory.Browser.BrowserEnvironmentWrapper categoriesForMethods!
 includesResource:!public!testing! !
 openEditor!browsing!public! !
+!
+
+!Refactory.Browser.ClassDetails class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^Icon fromId: 'ClassDefinition.ico'! !
+!Refactory.Browser.ClassDetails class categoriesForMethods!
+icon!constants!public! !
 !
 
 !Refactory.Browser.ClassEnvironment methodsFor!

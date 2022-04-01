@@ -14,7 +14,7 @@ OS.Win32Structure subclass: #'OS.OwnerDrawStruct'
 OS.OwnerDrawStruct guid: (Core.GUID fromString: '{7208da36-0f29-40ae-b974-07c3a81db8f5}')!
 OS.OwnerDrawStruct isNonInstantiable: true!
 OS.OwnerDrawStruct comment: ''!
-!OS.OwnerDrawStruct categoriesForClass!Unclassified! !
+!OS.OwnerDrawStruct categoriesForClass!External-Data-Structured-Win32! !
 !OS.OwnerDrawStruct methodsFor!
 
 CtlID

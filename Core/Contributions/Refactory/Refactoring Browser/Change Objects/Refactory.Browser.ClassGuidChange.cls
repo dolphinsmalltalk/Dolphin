@@ -28,10 +28,10 @@ guid
 guid: aString
 	guid := aString!
 
-mutateAttributes: aClassAttributes
-	"Alter the <ClassAttributes> argument to reflect the change described by the receiver."
+mutateClassDetails: aClassDetails
+	"Alter the <ClassDetails> argument to reflect the change described by the receiver."
 
-	aClassAttributes guid: guid!
+	aClassDetails guid: guid!
 
 primitiveExecute
 	self changeClass guid: self guid! !
@@ -41,18 +41,18 @@ changeString!printing!public! !
 emitAttributeOf:with:!printing!private! !
 guid!accessing!public! !
 guid:!accessing!public! !
-mutateAttributes:!helpers!private! !
+mutateClassDetails:!helpers!private! !
 primitiveExecute!applying!private! !
 !
 
 !Refactory.Browser.ClassGuidChange class methodsFor!
 
-setGuid: aGUID of: aClass
+uniquelyIdentify: aClass with: aGUID
 	^self new
 		changeClass: aClass;
 		guid: aGUID;
 		yourself! !
 !Refactory.Browser.ClassGuidChange class categoriesForMethods!
-setGuid:of:!instance creation!public! !
+uniquelyIdentify:with:!instance creation!public! !
 !
 

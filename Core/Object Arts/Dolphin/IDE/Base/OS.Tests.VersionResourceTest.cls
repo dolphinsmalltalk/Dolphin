@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'OS.Tests.VersionResourceTest'
 	classConstants: {}!
 OS.Tests.VersionResourceTest guid: (Core.GUID fromString: '{a475b032-cef9-4aa6-affe-32b7dc1c4640}')!
 OS.Tests.VersionResourceTest comment: ''!
-!OS.Tests.VersionResourceTest categoriesForClass!Unclassified! !
 !OS.Tests.VersionResourceTest methodsFor!
 
 assertResource: res atVersion: newVersion

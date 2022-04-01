@@ -72,7 +72,11 @@ compilationFlags: anInteger
 currentProtocols
 	^self changeClass
 		ifNil: [#()]
-		ifNotNil: [:class | BrowserEnvironment new whichProtocolsInclude: self selector in: class]!
+		ifNotNil: 
+			[:class |
+			(class compiledMethodAt: self selector ifAbsent: nil)
+				ifNil: [#()]
+				ifNotNil: [:m | m realCategories collect: [:each | each name asSymbol]]]!
 
 environment
 	"Answer the <Namespace> into which the method should be compiled (or nil for the owning class' namespace)."
@@ -112,11 +116,11 @@ primitiveExecute
 				flags: self compilationFlags!
 
 printOn: aStream
-	| classAttr filer |
-	classAttr := self getClassAttributes.
+	| classDetails filer |
+	classDetails := self getClassDetails.
 	filer := self sourceFilerClass on: aStream.
 	filer
-		emitHeaderForMethodsOf: classAttr;
+		emitHeaderForMethodsOf: classDetails;
 		cr;
 		cr;
 		nextChunkPut: source.
@@ -126,8 +130,8 @@ printOn: aStream
 			[filer
 				cr;
 				emitCategories: (protocols collect: [:each | each asMethodCategory])
-					for: selector
-					in: classAttr]!
+					for: self selector
+					in: classDetails]!
 
 protocol
 	Notification deprecated.

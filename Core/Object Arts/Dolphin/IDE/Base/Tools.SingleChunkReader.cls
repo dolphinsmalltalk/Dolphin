@@ -8,7 +8,7 @@ Kernel.ChunkReader subclass: #'Tools.SingleChunkReader'
 	classConstants: {}!
 Tools.SingleChunkReader guid: (Core.GUID fromString: '{daff2a96-8e7c-400e-9fb0-df8d523f7136}')!
 Tools.SingleChunkReader comment: ''!
-!Tools.SingleChunkReader categoriesForClass!Unclassified! !
+!Tools.SingleChunkReader categoriesForClass!Kernel-Support! !
 !Tools.SingleChunkReader methodsFor!
 
 fileInFrom: aSourceFiler

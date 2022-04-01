@@ -45,22 +45,22 @@ createSchematicWiring
 	"Create the trigger wiring for the receiver"
 
 	super createSchematicWiring.
-	(self model)
+	self model
 		when: #methodSelected
 			send: #onBrowserMethodSelected
 			to: self;
 		when: #classSelected
 			send: #onBrowserClassSelected
 			to: self.
-	textMapPresenter 
+	textMapPresenter
 		when: #selectionChanged
 		send: #onTextMapEntrySelected
 		to: self.
-	toggleDebugPresenter 
+	toggleDebugPresenter
 		when: #valueChanged
 		send: #toggleDebug
 		to: self.
-	toggleOptimisedPresenter 
+	toggleOptimisedPresenter
 		when: #valueChanged
 		send: #toggleDebug
 		to: self!

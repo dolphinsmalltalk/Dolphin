@@ -8,7 +8,6 @@ UI.Tests.SelectableItemsTest subclass: #'Tools.Tests.PackageSelectorTest'
 	classConstants: {}!
 Tools.Tests.PackageSelectorTest guid: (Core.GUID fromString: '{eb6a3732-7f1e-4c12-b050-6446fcbde374}')!
 Tools.Tests.PackageSelectorTest comment: ''!
-!Tools.Tests.PackageSelectorTest categoriesForClass!Unclassified! !
 !Tools.Tests.PackageSelectorTest methodsFor!
 
 classToTest

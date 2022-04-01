@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Tools.Tests.SmalltalkSystemShellTest'
 	classConstants: {}!
 Tools.Tests.SmalltalkSystemShellTest guid: (Core.GUID fromString: '{6d373cd5-f02e-4adb-bce9-f0755886a74b}')!
 Tools.Tests.SmalltalkSystemShellTest comment: ''!
-!Tools.Tests.SmalltalkSystemShellTest categoriesForClass!Unclassified! !
 !Tools.Tests.SmalltalkSystemShellTest methodsFor!
 
 setUp

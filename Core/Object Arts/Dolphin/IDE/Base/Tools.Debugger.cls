@@ -1817,7 +1817,7 @@ updateTemporaries
 		ifTrue: 
 			[sourcePresenter
 				workspacePool: PoolDictionary new;
-				evaluationPools: #();
+				namespaces: #();
 				evaluationContext: nil.
 			self setVariablesList: #().
 			^self].
@@ -1864,12 +1864,12 @@ updateTemporaries
 				ifTrue: 
 					[evalPools first isNil ifFalse: [pool addAll: evalPools first associations].
 					inspectorPresenter
-						evaluationPools: (evalPools copyFrom: 2 to: evalPools size) , inspectorPresenter evaluationPools]].
+						namespaces: (evalPools copyFrom: 2 to: evalPools size) , inspectorPresenter namespaces]].
 
 	"Source presenter should share the same pools"
 	sourcePresenter
 		workspacePool: pool;
-		evaluationPools: inspectorPresenter evaluationPools;
+		namespaces: inspectorPresenter namespaces;
 		evaluationContext: receiver.
 	self setVariablesList: varList!
 

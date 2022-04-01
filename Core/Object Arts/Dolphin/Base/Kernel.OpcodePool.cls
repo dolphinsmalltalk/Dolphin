@@ -111,4 +111,4 @@ Kernel.SharedPool subclass: #'Kernel.OpcodePool'
 Kernel.OpcodePool guid: (Core.GUID fromString: '{1913f573-a07c-4ca8-8ab7-8afbd024a785}')!
 Kernel.OpcodePool isNonInstantiable: true!
 Kernel.OpcodePool comment: ''!
-!Kernel.OpcodePool categoriesForClass!Unclassified! !
+!Kernel.OpcodePool categoriesForClass!System-Compiler! !

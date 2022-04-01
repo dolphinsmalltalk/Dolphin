@@ -16,20 +16,62 @@ setUp
 	model := self abstractVariableTestData!
 
 testAddClass
-	| refactoring newClass superClass classTest |
+	| categoryNames refactoring newClass superClass classTest |
+	categoryNames := #('Refactory-Testing' 'Blah').
 	refactoring := AddClassRefactoring
-				addClass: #FooTest
+				addClass: 'Refactory.Browser.Tests.FooTest'
 				superclass: RefactoringTest
 				subclasses: {self class}
-				category: #'Refactory-Testing'.
+				categories: categoryNames.
 	self executeRefactoring: refactoring.
-	newClass := refactoring model classNamed: #FooTest.
-	superClass := refactoring model classNamed: #'Refactory.Browser.Tests.RefactoringTest'.
+	newClass := refactoring model classNamed: 'Refactory.Browser.Tests.FooTest'.
+	superClass := refactoring model classNamed: 'Refactory.Browser.Tests.RefactoringTest'.
 	classTest := refactoring model classNamed: self class fullName.
 	self assert: newClass superclass equals: superClass.
 	self assert: (superClass subclasses includes: newClass).
 	self assert: newClass metaclass superclass equals: superClass metaclass.
 	self assert: (superClass metaclass subclasses includes: newClass metaclass).
+	self assert: classTest superclass equals: newClass.
+	self assert: (newClass subclasses includes: classTest).
+	self assert: classTest metaclass superclass equals: newClass metaclass.
+	self assert: (newClass metaclass subclasses includes: classTest metaclass).
+	self assert: newClass categoryNames equals: categoryNames!
+
+testAddNamespaceClass
+	| refactoring newClass superClass |
+	refactoring := AddClassRefactoring
+				addClass: 'Refactory.Browser.TestData.FooTest'
+				superclass: Refactory.Browser.TestData
+				subclasses: #()
+				categories: #('Refactory-Testing').
+	self executeRefactoring: refactoring.
+	newClass := refactoring model classNamed: 'Refactory.Browser.TestData.FooTest'.
+	superClass := refactoring model classFor: Refactory.Browser.TestData.
+	self assert: newClass superclass equals: superClass.
+	self assert: (superClass subclasses includes: newClass).
+	self assert: newClass metaclass superclass equals: superClass metaclass.
+	self assert: (superClass metaclass subclasses includes: newClass metaclass).
+	self assert: newClass subclasses isEmpty.
+	self assert: newClass metaclass subclasses isEmpty.
+	self assert: newClass kindOfSubclass equals: 'subclass:'.
+	self assert: newClass isNonInstantiable!
+
+testAddRootClass
+	| refactoring newClass classTest classClass |
+	refactoring := AddClassRefactoring
+				addClass: 'Refactory.Browser.Tests.FooTest'
+				superclass: nil
+				subclasses: {ProtoObject}
+				categories: #('Refactory-Testing').
+	self executeRefactoring: refactoring.
+	newClass := refactoring model classNamed: 'Refactory.Browser.Tests.FooTest'.
+	classTest := refactoring model classFor: ProtoObject.
+	self assertIsNil: newClass superclass.
+	self assert: (refactoring model rootClasses includes: newClass).
+	self deny: (refactoring model rootClasses includes: classTest).
+	classClass := refactoring model classFor: Class.
+	self assert: newClass metaclass superclass equals: classClass.
+	self assert: (classClass subclasses includes: newClass metaclass).
 	self assert: classTest superclass equals: newClass.
 	self assert: (newClass subclasses includes: classTest).
 	self assert: classTest metaclass superclass equals: newClass metaclass.
@@ -41,7 +83,7 @@ testAddVariableByteClass
 				addClass: #FooTest
 				superclass: ByteArray
 				subclasses: #()
-				category: #'Refactory-Testing'.
+				categories: #('Refactory-Testing').
 	self executeRefactoring: refactoring.
 	newClass := refactoring model classNamed: #FooTest.
 	superClass := refactoring model classFor: ByteArray.
@@ -51,7 +93,8 @@ testAddVariableByteClass
 	self assert: (superClass metaclass subclasses includes: newClass metaclass).
 	self assert: newClass subclasses isEmpty.
 	self assert: newClass metaclass subclasses isEmpty.
-	self assert: newClass kindOfSubclass equals: 'variableByteSubclass:'!
+	self assert: newClass kindOfSubclass equals: 'variableByteSubclass:'.
+	self deny: newClass isNonInstantiable!
 
 testAddVariableClass
 	| refactoring newClass superClass |
@@ -59,7 +102,7 @@ testAddVariableClass
 				addClass: #FooTest
 				superclass: Array
 				subclasses: #()
-				category: #'Refactory-Testing'.
+				categories: #('Refactory-Testing').
 	self executeRefactoring: refactoring.
 	newClass := refactoring model classNamed: #FooTest.
 	superClass := refactoring model classFor: Array.
@@ -69,22 +112,15 @@ testAddVariableClass
 	self assert: (superClass metaclass subclasses includes: newClass metaclass).
 	self assert: newClass subclasses isEmpty.
 	self assert: newClass metaclass subclasses isEmpty.
-	self assert: newClass kindOfSubclass equals: 'variableSubclass:'!
-
-testEmptyCategory
-	self shouldFail: (AddClassRefactoring
-				addClass: #FooTest
-				superclass: RefactoringTest
-				subclasses: {self class}
-				category: #'')
-		withMessage: 'Invalid category name'!
+	self assert: newClass kindOfSubclass equals: 'variableSubclass:'.
+	self deny: newClass isNonInstantiable!
 
 testExistingClassName
 	self shouldFail: (AddClassRefactoring
 				addClass: #'Core.Object'
 				superclass: self class
 				subclasses: #()
-				category: #'Refactory-Testing')
+				categories: #('Refactory-Testing'))
 		existingVariable: 'Core.Object'!
 
 testExistingName
@@ -92,7 +128,7 @@ testExistingName
 				addClass: #'Core.Object'
 				superclass: self class
 				subclasses: #()
-				category: #'Refactory-Testing')
+				categories: #('Refactory-Testing'))
 		existingVariable: 'Core.Object'!
 
 testExistingVariableName
@@ -100,7 +136,7 @@ testExistingVariableName
 				addClass: #'Kernel.SourceFiles'
 				superclass: self class
 				subclasses: #()
-				category: #'Refactory-Testing')
+				categories: #('Refactory-Testing'))
 		existingVariable: 'Kernel.SourceFiles'!
 
 testModelAddClass
@@ -112,7 +148,7 @@ testModelAddClass
 				addClass: #FooTest
 				superclass: superClass
 				subclasses: {subclass}
-				category: #'Refactory-Testing'.
+				categories: #('Refactory-Testing').
 	self executeRefactoring: refactoring.
 	newClass := model classNamed: #FooTest.
 	self assert: newClass superclass equals: superClass.
@@ -122,7 +158,9 @@ testModelAddClass
 	self assert: subclass superclass equals: newClass.
 	self assert: (newClass subclasses includes: subclass).
 	self assert: subclass metaclass superclass equals: newClass metaclass.
-	self assert: (newClass metaclass subclasses includes: subclass metaclass)!
+	self assert: (newClass metaclass subclasses includes: subclass metaclass).
+	self assert: newClass kindOfSubclass equals: 'subclass:'.
+	self deny: newClass isNonInstantiable!
 
 testModelExistingClassName
 	self shouldFail: (AddClassRefactoring
@@ -130,7 +168,7 @@ testModelExistingClassName
 				addClass: #Foo
 				superclass: Object
 				subclasses: #()
-				category: #'Refactory-Testing')
+				categories: #('Refactory-Testing'))
 		existingVariable: #Foo!
 
 testModelNonImmediateSubclass
@@ -140,7 +178,7 @@ testModelNonImmediateSubclass
 				addClass: #Foo2
 				superclass: Object
 				subclasses: {model classNamed: #Bar}
-				category: #'Refactory-Tesing'.
+				categories: #('Refactory-Testing').
 	self shouldFail: refactoring withMessage: 'Bar is not an immediate subclass of Core.Object'!
 
 testNonImmediateSubclass
@@ -148,7 +186,7 @@ testNonImmediateSubclass
 				addClass: #Foo
 				superclass: CompositeLintRuleTestData
 				subclasses: {BasicLintRuleTestData}
-				category: #'Refactory-Tesing')
+				categories: #('Refactory-Tesing'))
 		withMessage: 'Refactory.Browser.TestData.BasicLintRuleTestData is not an immediate subclass of Refactory.Browser.TestData.CompositeLintRuleTestData'!
 
 testSubclassIsMetaclass
@@ -156,7 +194,7 @@ testSubclassIsMetaclass
 				addClass: #Foo
 				superclass: LintRuleTestData
 				subclasses: {CompositeLintRuleTestData class}
-				category: #'Refactory-Testing')
+				categories: #('Refactory-Testing'))
 		withMessage: 'Subclass must not be a metaclass'!
 
 testSuperclassIsMetaclass
@@ -164,14 +202,15 @@ testSuperclassIsMetaclass
 				addClass: #Foo
 				superclass: self class class
 				subclasses: #()
-				category: #'Refactory-Testing')
+				categories: #('Refactory-Testing'))
 		withMessage: 'Superclass must not be a metaclass'! !
 !Refactory.Browser.Tests.AddClassRefactoringTest categoriesForMethods!
 setUp!public!set up! !
 testAddClass!public!tests! !
+testAddNamespaceClass!public!tests! !
+testAddRootClass!public!tests! !
 testAddVariableByteClass!public!tests! !
 testAddVariableClass!public!tests! !
-testEmptyCategory!public!tests! !
 testExistingClassName!failure tests!public! !
 testExistingName!failure tests!public! !
 testExistingVariableName!failure tests!public! !

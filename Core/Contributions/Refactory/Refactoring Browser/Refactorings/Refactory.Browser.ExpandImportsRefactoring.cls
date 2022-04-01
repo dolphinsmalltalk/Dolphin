@@ -20,9 +20,7 @@ Instance Variables:
 !Refactory.Browser.ExpandImportsRefactoring methodsFor!
 
 addImport: aBindingReference toClass: aClass
-	| nonMetaClass |
-	nonMetaClass := aClass nonMetaclass.
-	(nonMetaClass importsNamespace: aBindingReference)
+	(aClass instanceClass importsNamespace: aBindingReference)
 		ifFalse: 
 			[self performComponentRefactoring: (AddImportRefactoring
 						model: self model
@@ -31,11 +29,6 @@ addImport: aBindingReference toClass: aClass
 
 addImports
 	imports do: [:bindingRef | toClasses do: [:each | self addImport: bindingRef toClass: each]]!
-
-classVariableNamesIn: aClassName
-	^aClassName asQualifiedReference valueOrNil
-		ifNil: [#()]
-		ifNotNil: [:class | class definedBindings collect: [:each | each key]]!
 
 computeReferencedNamespaces
 	| poolVariables searcher |
@@ -64,11 +57,7 @@ forMethod: aParseTree fromClass: aClass toClasses: classCollection
 importsToAdd
 	^imports select: 
 			[:eachPoolName |
-			toClasses anySatisfy: 
-					[:eachClass |
-					| nonMetaClass |
-					nonMetaClass := eachClass nonMetaclass.
-					(nonMetaClass importsNamespace: eachPoolName) not]]!
+			toClasses anySatisfy: [:eachClass | (eachClass instanceClass importsNamespace: eachPoolName) not]]!
 
 preconditions
 	^RBCondition empty!
@@ -96,7 +85,6 @@ whichNamespaceDefines: aString
 !Refactory.Browser.ExpandImportsRefactoring categoriesForMethods!
 addImport:toClass:!private!transforming! !
 addImports!private!transforming! !
-classVariableNamesIn:!private!transforming! !
 computeReferencedNamespaces!private!transforming! !
 forMethod:fromClass:toClasses:!initialize/release!public! !
 importsToAdd!helpers!private! !

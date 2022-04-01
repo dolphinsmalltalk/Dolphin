@@ -12,12 +12,11 @@ Refactory.Browser.AbstractVariablesRefactoring comment: ''!
 !Refactory.Browser.AbstractVariablesRefactoring methodsFor!
 
 abstractClassVariable: aString
-	| refactoring rewriter nonMetaClass |
-	nonMetaClass := fromClass nonMetaclass.
+	| refactoring rewriter |
 	refactoring := CreateAccessorsForVariableRefactoring
 				model: self model
 				variable: aString
-				class: nonMetaClass
+				class: fromClass instanceClass
 				classVariable: true.
 	self performComponentRefactoring: refactoring.
 	rewriter := ParseTreeRewriter new.
@@ -82,7 +81,7 @@ abstractVariablesIn: aBRProgramNode from: fromBehavior toAll: behaviorCollection
 	self computeVariablesToAbstract!
 
 classBindingNames
-	^fromClass nonMetaclass allClassBindingNames!
+	^fromClass instanceClass allClassBindingNames!
 
 computeVariablesToAbstract
 	| searcher |
@@ -130,13 +129,13 @@ processReferenceNode: aNode
 	(self classBindingNames includes: varName) ifTrue: [classVarReaders add: varName]!
 
 removeDefinedClassVariables
-	| selectionBlock nonMetaClass |
-	nonMetaClass := fromClass nonMetaclass.
+	| selectionBlock instanceClass |
+	instanceClass := fromClass instanceClass.
 	selectionBlock := 
 			[:varName | 
 			toClasses anySatisfy: 
 					[:each | 
-					(each nonMetaclass includesClass: (nonMetaClass whoDefinesClassVariable: varName)) not]].
+					(each instanceClass includesClass: (instanceClass whoDefinesClassVariable: varName)) not]].
 	classVarReaders := classVarReaders select: selectionBlock.
 	classVarWriters := classVarWriters select: selectionBlock!
 
@@ -153,7 +152,7 @@ abstractClassVariable:!public!transforming! !
 abstractClassVariables!public!transforming! !
 abstractInstanceVariable:!public!transforming! !
 abstractInstanceVariables!public!transforming! !
-abstractVariablesIn:from:toAll:ignoring:!initialize/release!public! !
+abstractVariablesIn:from:toAll:ignoring:!initializing!private! !
 classBindingNames!public!transforming! !
 computeVariablesToAbstract!public!transforming! !
 hasVariablesToAbstract!public!testing! !

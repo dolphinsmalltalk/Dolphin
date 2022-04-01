@@ -9,7 +9,6 @@ Tools subclass: #'Tools.Tests'
 Tools.Tests guid: (Core.GUID fromString: '{95cf0313-d9e5-4a1a-b4e6-c6fcebd1a938}')!
 Tools.Tests isNonInstantiable: true!
 Tools.Tests comment: ''!
-!Tools.Tests categoriesForClass!Unclassified! !
 !Tools.Tests class methodsFor!
 
 icon

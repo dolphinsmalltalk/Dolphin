@@ -70,9 +70,8 @@ inlineClass
 	^inlineClass!
 
 newNameForSelf
-	| variableName index originalName nonMetaClass name |
-	nonMetaClass := inlineClass nonMetaclass.
-	name := nonMetaClass unqualifiedName.
+	| variableName index originalName name |
+	name := inlineClass instanceClass unqualifiedName.
 	variableName := originalName := (name first isVowel ifTrue: ['an'] ifFalse: ['a']) , name.
 	index := 1.
 	

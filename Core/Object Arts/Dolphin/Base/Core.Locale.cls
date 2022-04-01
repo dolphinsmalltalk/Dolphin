@@ -11,7 +11,7 @@ Core.Object subclass: #'Core.Locale'
 Core.Locale guid: (Core.GUID fromString: '{87b4c49a-026e-11d3-9fd7-00a0cc3e4a32}')!
 Core.Locale isNonInstantiable: true!
 Core.Locale comment: ''!
-!Core.Locale categoriesForClass!System-Support! !
+!Core.Locale categoriesForClass!System-Localization! !
 !Core.Locale methodsFor!
 
 = anObject

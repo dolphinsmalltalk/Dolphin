@@ -7,13 +7,9 @@ Kernel.BindingReferenceWrapper subclass: #'Kernel.MetaBindingReference'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Kernel.MetaBindingReference guid: (Core.GUID fromString: '{c54304a7-5aa9-404b-a969-27501f25f612}')!
-Kernel.MetaBindingReference comment: '`MetaBindingReference` are `BindingReference`s that resolve to the class of the referenced binding''s value, for example `#{Object class}` is a static literal reference that evaluates to the same object as the expression `#{Object} class`, i.e. the metaclass of the class `Object`.
+Kernel.MetaBindingReference comment: '`MetaBindingReference` are `BindingReference`s that resolve to the class of the referenced binding''s value, for example `#{Object class}` is a static literal reference that evaluates to the same object as the expression `#{Object} value class`, i.e. the metaclass of the class `Object`.
 
 `MetaBindingReference` instances are useful for cases such as constructing `MethodName`s that refer to class-side methods. They are used as part of the file out format for packages and allow the list of loose methods to be represented efficiently as literal arrays.
-
-## Instance Variables:
-  `instance`		`BindingReference`. Binding reference to resolve the instance class.
-
 '!
 !Kernel.MetaBindingReference categoriesForClass!System-Namespaces! !
 !Kernel.MetaBindingReference methodsFor!

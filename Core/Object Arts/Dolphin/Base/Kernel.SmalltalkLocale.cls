@@ -8,7 +8,7 @@ Core.Locale subclass: #'Kernel.SmalltalkLocale'
 	classConstants: {}!
 Kernel.SmalltalkLocale guid: (Core.GUID fromString: '{06088e6e-01bc-4518-a4a5-73088615fdd8}')!
 Kernel.SmalltalkLocale comment: ''!
-!Kernel.SmalltalkLocale categoriesForClass!Unclassified! !
+!Kernel.SmalltalkLocale categoriesForClass!System-Localization! !
 !Kernel.SmalltalkLocale methodsFor!
 
 amDesignator

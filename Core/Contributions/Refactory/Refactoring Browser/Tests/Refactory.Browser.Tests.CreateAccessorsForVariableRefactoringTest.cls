@@ -58,12 +58,12 @@ testNonExistantName
 					variable: #Foo
 					class: BasicLintRuleTestData
 					classVariable: true)
-			withMessage: ('BasicLintRuleTestData does not define class variable #Foo');
+			withMessage: ('<1p> does not define class variable #Foo' << BasicLintRuleTestData);
 		shouldFail: (CreateAccessorsForVariableRefactoring
 					variable: 'foo'
 					class: BasicLintRuleTestData
 					classVariable: true)
-			withMessage: ('BasicLintRuleTestData does not define class variable ''foo''')! !
+			withMessage: ('<1p> does not define class variable ''foo''' << BasicLintRuleTestData)! !
 !Refactory.Browser.Tests.CreateAccessorsForVariableRefactoringTest categoriesForMethods!
 testExistingInstanceVariableAccessors!public!tests! !
 testNewClassVariableAccessors!public!tests! !

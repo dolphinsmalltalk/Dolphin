@@ -15,7 +15,6 @@ Instance Variables:
 	versionString	<String>
 
 '!
-!Tools.AXTypeLibRegistration categoriesForClass!Unclassified! !
 !Tools.AXTypeLibRegistration methodsFor!
 
 < operand

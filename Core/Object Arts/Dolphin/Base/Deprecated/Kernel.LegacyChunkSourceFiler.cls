@@ -12,7 +12,6 @@ Kernel.LegacyChunkSourceFiler comment: '`LegacyChunkSourceFiler` is a `SourceFil
 It is not possible to file out packages that contain namespaced program objects that are not bindable by unqualified name from Smalltalk. In other words the program objects in the package must be defined in Smalltalk, or one of the namespaces imported into Smalltalk (directly or indirectly). If an attempt is made to file out a package (or packaged class) that is not compatible, then a `SourceFormatNotSupportedError` detailing the first offending program object detected.  To workaround this for namespaced classes an alias variable can be added to the Smalltalk namespace. By convention such alias variables are packaged into a sidecar package with the same name as the original package with the suffix ''(Old Names)''.
 
 Bear in mind that filing out a package/class in D7 format does not guarantee that it will actually be loadable in Dolphin 7.1, as it may have dependencies on new Dolphin 8 objects that are not present in Dolphin 7.1. There may also be behavioural changes that cause it to function differently, and of course the way to detect this is by defining a good set of unit tests.'!
-!Kernel.LegacyChunkSourceFiler categoriesForClass!Unclassified! !
 !Kernel.LegacyChunkSourceFiler methodsFor!
 
 collateClass: aClass1 against: aClass2
@@ -49,14 +48,12 @@ emitClassName: aClass
 emitClassPoolOfClass: aClass
 	"Private - Emit initialization expressions for each of the literal constants in the class pool of aClass."
 
-	| literalConstants |
-	literalConstants := aClass classPool associations
-				select: [:each | each isImmutable and: [each value isSelfEvaluating]].
-	literalConstants sort do: [:each | self emitDeclarationForClass: aClass variable: each]!
+	aClass classConstants sort do: [:each | self emitDeclarationForClass: aClass variable: each]!
 
 emitDeclarationForClass: aClass variable: anAssociation
 	| value |
 	stream
+		cr;
 		nextPutAll: aClass name;
 		nextPutAll: (anAssociation isImmutable
 					ifTrue: [' addClassConstant: ']
@@ -65,8 +62,7 @@ emitDeclarationForClass: aClass variable: anAssociation
 		nextPutAll: ' value: '.
 	value := anAssociation value.
 	self
-		nextChunkPut: (value isInteger ifTrue: [value printStringRadix: 16] ifFalse: [value storeString]).
-	stream cr!
+		nextChunkPut: (value isInteger ifTrue: [value printStringRadix: 16] ifFalse: [value storeString])!
 
 emitFileOutHeader
 	"Note the typo. This needs to be fixed in Dolphin 7.1"
@@ -295,24 +291,31 @@ fileOutAttributesOfClass: aClass
 	"File-out any attributes of the aClass (e.g. the comment, GUID, etc) not included in the basic
 	aClass definition, onto the source stream."
 
+	aClass guid
+		ifNotNil: 
+			[self
+				cr;
+				emitGUIDOfClass: aClass].
+	aClass hasSpecialBehavior
+		ifTrue: 
+			[self
+				cr;
+				emitSpecialBehaviorAttributesOfClass: aClass].
+	self emitClassPoolOfClass: aClass.
+	aClass comment
+		ifNotNil: 
+			[self
+				cr;
+				emitCommentOfClass: aClass].
 	self
-		emitGUIDOfClass: aClass;
-		cr.
-	(self emitSpecialBehaviorAttributesOfClass: aClass) == 0 ifFalse: [self cr].
-	self
-		emitClassPoolOfClass: aClass;
-		emitCommentOfClass: aClass;
 		cr;
-		emitCategoriesOfClass: aClass;
-		cr!
+		emitCategoriesOfClass: aClass!
 
 fileOutBasicDefinitionOfClass: aClass
 	"Print a definition of the <Class>, aClass, onto the receiver's stream."
 
 	self printBasicDefinitionOfClass: aClass.
-	stream
-		nextPut: $!!;
-		cr!
+	stream nextPut: $!!!
 
 fileOutClass: aClass ofPackage: aPackage
 	(aClass inheritsFrom: SharedPool)
@@ -456,11 +459,12 @@ packageClassesInFileoutOrder: aPackage
 	^aPackage classesInHierarchyOrder reject: [:each | each inheritsFrom: SharedPool]!
 
 printBasicDefinitionOfClass: aClass
-	| superclassShortName |
 	"We may not be able to file out the class in legacy format if it's superclass requires a qualified name - if not, an error will be raised here when we try to resolve the short name. It is usually possible to workaround this problem by adding an alias for the superclass into the Smalltalk namespace. The alias variable should be added to an 'Old Names' package."
-	superclassShortName := self shortNameForClass: aClass superclass.
+
+	aClass superclass
+		ifNil: [stream print: nil]
+		ifNotNil: [:superclass | stream nextPutAll: (self shortNameForClass: superclass)].
 	stream
-		nextPutAll: superclassShortName;
 		space;
 		nextPutAll: aClass kindOfSubclass;
 		space;
@@ -469,18 +473,16 @@ printBasicDefinitionOfClass: aClass
 					ifFalse: 
 						["Not supported by the format, but we print the qualified name here anyway as this method is used to print the class definition for display in browsers. The file out error is detected elsewhere."
 						aClass fullName asSymbol]);
-		crtab;
-		nextPutAll: 'instanceVariableNames: ';
-		print: aClass instanceVariableString;
+		crtab.
+	self printVariables: aClass instanceVariableNames string: 'instanceVariableNames:'.
+	stream
 		crtab;
 		nextPutAll: 'classVariableNames: ';
 		print: aClass classVariableString;
-		crtab;
-		nextPutAll: 'poolDictionaries: ';
-		print: aClass sharedVariableString;
-		crtab;
-		nextPutAll: 'classInstanceVariableNames: ';
-		print: ($\x20 join: aClass classInstanceVariableNames)!
+		crtab.
+	self printVariables: aClass sharedPoolNames asSortedArray string: 'poolDictionaries:'.
+	stream crtab.
+	self printVariables: aClass classInstanceVariableNames string: 'classInstanceVariableNames:'!
 
 sharedPoolNames: aClass
 	^aClass imports collect: 
@@ -492,7 +494,7 @@ shortNameForClass: aClass
 	^(Smalltalk oldNames lookup: aClass) ifNil: [self getShortName: aClass]!
 
 specialBehaviorAttributes
-	^#(#(#isIndirection) #(#isNullTerminated) #(#isNonInstantiable #isAbstract))! !
+	^#(#(#isIndirection) #(#isNullTerminated) #(#isNonInstantiable #isAbstract) #isMourner)! !
 !Kernel.LegacyChunkSourceFiler categoriesForMethods!
 collateClass:against:!private!source filing! !
 emitBinaryVariableDefinition:!public!source filing-file out! !

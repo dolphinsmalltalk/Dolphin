@@ -8,7 +8,7 @@ UI.CommandPolicy subclass: #'UI.DelegatingCommandPolicy'
 	classConstants: {}!
 UI.DelegatingCommandPolicy guid: (Core.GUID fromString: '{aba1d303-40c8-44b1-8bc7-bd99e0efa423}')!
 UI.DelegatingCommandPolicy comment: ''!
-!UI.DelegatingCommandPolicy categoriesForClass!Unclassified! !
+!UI.DelegatingCommandPolicy categoriesForClass!MVP-Commands! !
 !UI.DelegatingCommandPolicy methodsFor!
 
 visitPresenter: presenter

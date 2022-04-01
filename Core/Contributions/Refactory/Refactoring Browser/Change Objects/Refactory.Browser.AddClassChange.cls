@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.RefactoryClassChange subclass: #'Refactory.Browser.AddClassChange'
-	instanceVariableNames: 'definition attributes'
+	instanceVariableNames: 'definition details'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -13,7 +13,7 @@ Refactory.Browser.AddClassChange comment: ''!
 
 = anAddClassChange 
 	self class = anAddClassChange class ifFalse: [^false].
-	^definition = anAddClassChange definition!
+	^self definition = anAddClassChange definition!
 
 areSubclassCreationMessageArgumentsValid: aMessageNode
 	^aMessageNode arguments allSatisfy: [:each | each isLiteralNode or: [each isDynamicArray]]!
@@ -22,94 +22,99 @@ asUndoOperation
 	| class |
 	class := self classReference valueOrNil.
 	^class isBehavior
-		ifTrue: [self class definition: class definition]
+		ifTrue: [self class details: (ClassDetails fromClass: class)]
 		ifFalse: [RemoveClassChange removeClassName: self changeClassName]!
 
-attributes
-	^attributes ifNil: [self fillOutDefinition]!
-
-category
-	^self attributes category!
+categoryNames
+	^self details categoryNames!
 
 changeClassName
-	^self attributes className!
+	^self details className!
 
 changeString
 	^'Define <1d>' << self classReference!
 
 classConstants
-	^self attributes classConstants!
+	^self details classConstants!
 
 classReference
-	self attributes.
-	^classReference!
+	^self details classReference!
+
+classReference: aBindingReference
+	self details classReference: aBindingReference!
 
 classVariableNames
-	^self attributes classVariableNames!
+	^self details classVariableNames!
 
 definingSuperclass
 	^self class!
 
 definition
-	^definition!
+	^definition ifNil: [definition := details printString]!
 
 definition: aString 
-	definition := aString!
+	definition := aString.
+	^self!
+
+details
+	^details ifNil: [self fillOutDefinition]!
+
+details: aClassDetails 
+	details := aClassDetails.
+	^self!
 
 fillOutDefinition
 	| parseTree |
-	parseTree := Parser parseExpression: definition onError: [:str :pos | ^self parseDefinitionError].
+	parseTree := Parser parseExpression: self definition onError: [:str :pos | ^self parseDefinitionError].
 	parseTree isMessage ifFalse: [^self parseDefinitionError].
 	(self isValidSubclassCreationMessage: parseTree) ifFalse: [^self parseDefinitionError].
 	self fillOutDefinitionArguments: parseTree.
-	^attributes!
+	^details!
 
 fillOutDefinitionArguments: parseTree
 	| args keywords pairs |
-	attributes := ClassAttributes new.
-	attributes superclassName: (parseTree receiver isVariable
+	details := ClassDetails new.
+	details superclassName: (parseTree receiver isVariable
 				ifTrue: [parseTree receiver name asSymbol]
 				ifFalse: [parseTree receiver value]).
 	args := parseTree arguments.
 	keywords := parseTree selector keywords.
 	"The new class name is always the 1st argument, but might have differing selector keywords, so look up by position"
-	attributes
-		className: (classReference := (args at: 1) value);
+	details
+		className: (args at: 1) value;
 		kindOfSubclass: (keywords at: 1).
-	classReference := attributes className asQualifiedReference.
 	pairs := LookupTable new.
 	keywords with: args do: [:eachKeyword :eachArg | pairs at: eachKeyword put: eachArg].
-	attributes
+	details
 		instanceVariableNames: (self namesIn: (pairs at: 'instanceVariableNames:') value);
 		classVariableNames: (self namesIn: (pairs at: 'classVariableNames:') value).
 	(pairs lookup: 'imports:')
 		ifNil: 
-			[(pairs lookup: 'poolDictionaries:')
-				ifNotNil: [:arg | attributes imports: (self namesIn: arg value)]]
+			[(pairs lookup: 'poolDictionaries:') ifNotNil: [:arg | details imports: (self namesIn: arg value)]]
 		ifNotNil: 
 			[:arg |
-			attributes imports: (arg children
+			details imports: (arg children
 						collect: [:each | BindingReference pathString: each pathString private: each isPrivate])].
 	(pairs lookup: 'classConstants:')
 		ifNotNil: 
 			[:arg |
 			"We defer evaluating the brace array expression until needed, as mostly it is not"
-			attributes classConstants: arg formattedCode].
+			details classConstants: arg formattedCode].
 	(pairs lookup: 'classInstanceVariableNames:')
-		ifNotNil: [:arg | attributes classInstanceVariableNames: (self namesIn: arg value)].
-	(pairs lookup: 'category:') ifNotNil: [:arg | attributes category: arg value asSymbol]!
+		ifNotNil: [:arg | details classInstanceVariableNames: (self namesIn: arg value)].
+	(pairs lookup: 'category:') ifNotNil: [:arg | details category: arg value]!
 
-getClassAttributes
-	^self attributes!
+getClassDetails
+	^self details!
 
 hash
-	^definition hash!
+	^self definition hash!
 
 imports
-	^self attributes imports!
+	^self details imports!
 
 instanceVariableNames
-	^self attributes instanceVariableNames!
+	^self details instanceVariableNames!
 
 isValidMessageName: aMessageNode
 	^##(#(
@@ -139,48 +144,49 @@ namesIn: aString
 	^aString subStrings!
 
 parseDefinitionError
-	classReference := #{Unknown}.
-	attributes := ClassAttributes new
+	details := ClassDetails new
 				className: #Unknown;
 				yourself!
 
 primitiveExecute
-	#rbFix. "rbDmm changed "
+	^(self definingSuperclass compilerClass evaluate: self definition)
+		ifNotNil: 
+			[:newClass |
+			details isNonInstantiable ifTrue: [newClass isNonInstantiable: true].
+			details guid ifNotNil: [:guid | newClass guid: guid].
+			details comment ifNotNil: [:comment | newClass comment: comment].
+			details package ifNotNil: [:package | newClass owningPackage: package].
+			newClass]!
 
-	^self definingSuperclass compilerClass evaluate: definition.
-
-
-
-
-!
-
-printOn: aStream 
-	aStream
-		nextPutAll: definition;
-		nextPut: $!!!
+printOn: aStream
+	| classDetails |
+	classDetails := self details.
+	(classDetails sourceFilerClass on: aStream) fileOutDefinitionOfClass: classDetails!
 
 sourceFilerClass
 	^Object sourceFilerClass!
 
 superclassName
-	^self attributes superclassName! !
+	^self details superclassName! !
 !Refactory.Browser.AddClassChange categoriesForMethods!
 =!comparing!public! !
 areSubclassCreationMessageArgumentsValid:!private!testing! !
 asUndoOperation!converting!public! !
-attributes!accessing!public! !
-category!accessing!public! !
+categoryNames!accessing!public! !
 changeClassName!accessing!public! !
 changeString!printing!public! !
 classConstants!accessing!public! !
 classReference!accessing!public! !
+classReference:!accessing!public! !
 classVariableNames!accessing!public! !
 definingSuperclass!accessing!private! !
-definition!accessing!private! !
+definition!accessing!public! !
 definition:!initializing!public! !
+details!accessing!public! !
+details:!initializing!public! !
 fillOutDefinition!helpers!private! !
 fillOutDefinitionArguments:!helpers!private! !
-getClassAttributes!printing!private! !
+getClassDetails!printing!private! !
 hash!comparing!public! !
 imports!accessing!public! !
 instanceVariableNames!accessing!public! !
@@ -197,8 +203,12 @@ superclassName!accessing!public! !
 !Refactory.Browser.AddClassChange class methodsFor!
 
 definition: aString 
-	^self new definition: aString! !
+	^self new definition: aString!
+
+details: aClassDetails
+	^self new details: aClassDetails! !
 !Refactory.Browser.AddClassChange class categoriesForMethods!
 definition:!instance creation!public! !
+details:!instance creation!public! !
 !
 

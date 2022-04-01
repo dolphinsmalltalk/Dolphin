@@ -8,7 +8,6 @@ UI.Tests.ImageViewAbstractTest subclass: #'Tools.Tests.ImageListViewTest'
 	classConstants: {}!
 Tools.Tests.ImageListViewTest guid: (Core.GUID fromString: '{9e3fdff9-1f55-4b2e-8b02-1c766aa4b56b}')!
 Tools.Tests.ImageListViewTest comment: ''!
-!Tools.Tests.ImageListViewTest categoriesForClass!Unclassified! !
 !Tools.Tests.ImageListViewTest methodsFor!
 
 classToTest

@@ -758,4 +758,4 @@ Kernel.SharedPool subclass: #'OS.ThemeConstants'
 OS.ThemeConstants guid: (Core.GUID fromString: '{f601ab70-6b9a-47cf-81f7-79e3c79b803a}')!
 OS.ThemeConstants isNonInstantiable: true!
 OS.ThemeConstants comment: ''!
-!OS.ThemeConstants categoriesForClass!Unclassified! !
+!OS.ThemeConstants categoriesForClass!External-Data-Constants! !

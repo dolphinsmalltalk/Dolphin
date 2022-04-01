@@ -22,7 +22,7 @@ Instance Variables:
 	loop		<boolean>. Used to control termination of the modal loop.
 
 '!
-!Kernel.ModalMsgLoop categoriesForClass!Unclassified! !
+!Kernel.ModalMsgLoop categoriesForClass!Kernel-Processes! !
 !Kernel.ModalMsgLoop methodsFor!
 
 initialize

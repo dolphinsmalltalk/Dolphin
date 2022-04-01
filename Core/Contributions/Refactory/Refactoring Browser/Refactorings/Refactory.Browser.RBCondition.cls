@@ -81,7 +81,7 @@ definesClassVariable: aString in: aClass
 	^self new
 		type: {#definesClassVar. aClass. aString}
 		block: [aClass definesClassVariable: aString]
-		errorString: aClass unqualifiedName , ' <1?:does not >define<1?s:> class variable '
+		errorString: aClass name , ' <1?:does not >define<1?s:> class variable '
 				, aString printString!
 
 definesInstanceVariable: aString in: aClass
@@ -96,6 +96,13 @@ definesSelector: aSelector in: aClass
 		type: {#definesSelector. aClass. aSelector}
 		block: [aClass directlyDefinesMethod: aSelector]
 		errorString: aClass unqualifiedName , ' <1?:does not >define<1?s:> ' , aSelector printString!
+
+definesStaticVariable: aString in: aClass
+	^self new
+		type: {#definesStaticVar. aClass. aString}
+		block: [aClass definesStaticVariable: aString]
+		errorString: aClass instanceClass name , ' <1?:does not >define<1?s:> static variable '
+				, aString printString!
 
 definesTemporaryVariable: aString in: aClass
 	| condition |
@@ -234,7 +241,7 @@ isEmptyClass: anObject
 				nextPutAll: ' is <1?:not >empty (has <1?no variables or methods):'.
 			hasMethods := anObject selectors notEmpty.
 			hasClassVars := anObject classPool notEmpty.
-			hasClassVars ifTrue: [stream nextPutAll: 'class variables'].
+			hasClassVars ifTrue: [stream nextPutAll: 'class/shared variables'].
 			hasInstVars := anObject instanceVariableNames notEmpty.
 			hasInstVars
 				ifTrue: 
@@ -382,6 +389,7 @@ checkMethodName:!public!utilities! !
 definesClassVariable:in:!instance creation!public! !
 definesInstanceVariable:in:!instance creation!public! !
 definesSelector:in:!instance creation!public! !
+definesStaticVariable:in:!instance creation!public! !
 definesTemporaryVariable:in:!instance creation!public! !
 definesTempVar:in:ignoreClass:!instance creation!public! !
 directlyDefinesClassVariable:in:!instance creation!public! !

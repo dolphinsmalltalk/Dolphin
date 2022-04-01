@@ -22,7 +22,7 @@ testAddImport
 				to: class.
 	importsBefore := class imports.
 	self executeRefactoring: subject.
-	self assert: (class importsNamespace: bindingRef).
+	self assert: (class directlyImportsNamespace: bindingRef).
 	self assert: class imports equals: (importsBefore copyWith: (bindingRef referenceInModel: model)).
 	#(#refersToClassFullyQualified #refersToClassPartiallyQualified1 #refersToClassPartiallyQualified2)
 		do: 
@@ -62,11 +62,14 @@ testAddImport
 testExistingImport
 	"Note that RefactoringBrowserTest is currently importing TestData privately. Attempting to add it as a public import should also be considered a duplicate."
 
+	| class |
+	class := model classFor: self class.
+	self assert: (class importsNamespace: #{Refactory.Browser.TestData}).
 	self shouldFail: (AddImportRefactoring
 				model: model
 				addImport: #{Refactory.Browser.TestData}
-				to: RefactoringBrowserTest)
-		withMessage: RefactoringBrowserTest printString , ' already imports #{Refactory.Browser.TestData}'!
+				to: class)
+		withMessage: class printString , ' already imports #{Refactory.Browser.TestData}'!
 
 testImportClassVar
 	self shouldFail: (AddImportRefactoring
@@ -74,6 +77,26 @@ testImportClassVar
 				addImport: #{Object._EventsRegister}
 				to: self class)
 		withMessage: '#{Object._EventsRegister} does not refer to a defined class binding'!
+
+testImportPool
+	| class subject bindingRef importsBefore |
+	class := model classFor: RefactoryTestDataApp.
+	bindingRef := #{OS.Win32Constants}.
+	self deny: (class importsNamespace: bindingRef).
+	subject := AddImportRefactoring
+				model: model
+				addImport: bindingRef
+				to: class.
+	importsBefore := class imports.
+	self executeRefactoring: subject.
+	self assert: (class directlyImportsNamespace: bindingRef).
+	self assert: class imports equals: (importsBefore copyWith: (bindingRef referenceInModel: model)).
+	self
+		verifyMethod: #refersToPoolConstantFullyQualified
+		of: class
+		equals: '<1s> ^COLOR_DESKTOP' << #refersToPoolConstantFullyQualified.
+	"Fully-qualified binding reference should have been left unchanged"
+	self assertIsNil: (model changes changeForClassNamed: RefactoryTestDataApp fullyQualifiedReference selector: #refersToPoolConstantBindingFullyQualified)!
 
 testRootNotImportable
 	self shouldFail: (AddImportRefactoring
@@ -92,6 +115,7 @@ testUndefinedImport
 testAddImport!public! !
 testExistingImport!public! !
 testImportClassVar!public! !
+testImportPool!public! !
 testRootNotImportable!public! !
 testUndefinedImport!public! !
 !

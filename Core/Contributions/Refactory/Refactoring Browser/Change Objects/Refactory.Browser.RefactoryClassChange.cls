@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.RefactoryChange subclass: #'Refactory.Browser.RefactoryClassChange'
-	instanceVariableNames: 'classReference'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -17,12 +17,7 @@ Refactory.Browser.RefactoryClassChange comment: ''!
 	^self classReference = aRefactoryClassChange classReference!
 
 afterText
-	| attributes stream |
-	attributes := self getClassAttributes.
-	attributes ifNil: [^self printString].
-	stream := String writeStream: 256.
-	(self sourceFilerClass on: stream) printBasicDefinitionOfClass: attributes.
-	^stream contents!
+	^(self getClassDetails ifNil: [self]) fullPrintString!
 
 asUndoOperation
 	^self subclassResponsibility!
@@ -34,22 +29,27 @@ changeClass
 	^self classReference valueOrNil!
 
 changeClass: aBehavior
-	classReference := aBehavior fullName asQualifiedReference!
+	self classReference: aBehavior fullName asQualifiedReference!
 
 changeClassName
 	^self classReference instance asString!
 
 changeClassName: aSymbol
-	| wasMeta |
-	wasMeta := classReference notNil and: [classReference isMeta].
-	classReference := BindingReference pathString: aSymbol.
-	wasMeta ifTrue: [classReference := classReference meta]!
+	| wasMeta oldRef newRef |
+	oldRef := self classReference.
+	wasMeta := oldRef notNil and: [oldRef isMeta].
+	newRef := BindingReference pathString: aSymbol.
+	wasMeta ifTrue: [newRef := newRef meta].
+	self classReference: newRef!
 
 changeString
 	^self classReference asString!
 
 classReference
-	^classReference!
+	^self subclassResponsibility!
+
+classReference: aBindingReference
+	self subclassResponsibility!
 
 executeNotifying: aBlock 
 	| undo |
@@ -59,14 +59,16 @@ executeNotifying: aBlock
 	aBlock value.
 	^undo!
 
-getClassAttributes
-	^self changeClass
-		ifNotNil: 
-			[:class |
-			| attributes |
-			attributes := ClassAttributes fromClass: class.
-			self mutateAttributes: attributes.
-			^attributes]!
+getClassDetails
+	| details |
+	details := self changeClass
+				ifNil: 
+					[ClassDetails new
+						className: self classReference;
+						yourself]
+				ifNotNil: [:class | ClassDetails fromClass: class].
+	self mutateClassDetails: details.
+	^details!
 
 hash
 	^self classReference hash!
@@ -74,8 +76,10 @@ hash
 isMeta
 	^self classReference isMeta!
 
-mutateAttributes: aClassAttributes
-	"Alter the <ClassAttributes> argument to reflect the change described by the receiver."!
+mutateClassDetails: aClassDetails
+	"Alter the <ClassDetails> argument to reflect the change described by the receiver."
+
+	!
 
 primitiveExecute
 	self subclassResponsibility!
@@ -92,7 +96,7 @@ renameChangesForClass: aClassName to: newClassName
 	^self!
 
 sourceFilerClass
-	^self changeClass sourceFilerClass! !
+	^self getClassDetails sourceFilerClass! !
 !Refactory.Browser.RefactoryClassChange categoriesForMethods!
 =!comparing!public! !
 afterText!printing!public! !
@@ -104,11 +108,12 @@ changeClassName!accessing!public! !
 changeClassName:!accessing!public! !
 changeString!printing!public! !
 classReference!accessing!public! !
+classReference:!accessing!private! !
 executeNotifying:!applying!private! !
-getClassAttributes!printing!private! !
+getClassDetails!printing!private! !
 hash!comparing!public! !
 isMeta!private!testing! !
-mutateAttributes:!helpers!private! !
+mutateClassDetails:!helpers!private! !
 primitiveExecute!applying!private! !
 printOn:!printing!public! !
 renameChangesForClass:to:!helpers!private! !

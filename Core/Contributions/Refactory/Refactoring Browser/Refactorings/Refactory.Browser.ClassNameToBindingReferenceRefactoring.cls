@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.ClassRefactoring subclass: #'Tools.ClassNameToBindingReferenceRefactoring'
+Refactory.Browser.ClassRefactoring subclass: #'Refactory.Browser.ClassNameToBindingReferenceRefactoring'
 	instanceVariableNames: 'class unqualifiedName'
 	classVariableNames: ''
 	imports: #(#{Refactory.Browser})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.ClassNameToBindingReferenceRefactoring guid: (Core.GUID fromString: '{889a55db-e170-4af7-999d-97369a4f1832}')!
-Tools.ClassNameToBindingReferenceRefactoring comment: 'Component refactoring to replace old-style symbolic references to classes, e.g. `Smalltalk at: #DiffBrowser` with literal binding references as part of renaming a class in Smalltalk into another namespace.'!
-!Tools.ClassNameToBindingReferenceRefactoring categoriesForClass!Refactory-Refactorings! !
-!Tools.ClassNameToBindingReferenceRefactoring methodsFor!
+Refactory.Browser.ClassNameToBindingReferenceRefactoring guid: (Core.GUID fromString: '{889a55db-e170-4af7-999d-97369a4f1832}')!
+Refactory.Browser.ClassNameToBindingReferenceRefactoring comment: 'Component refactoring to replace old-style symbolic references to classes, e.g. `Smalltalk at: #DiffBrowser` with literal binding references as part of renaming a class in Smalltalk into another namespace.'!
+!Refactory.Browser.ClassNameToBindingReferenceRefactoring categoriesForClass!Refactory-Refactorings! !
+!Refactory.Browser.ClassNameToBindingReferenceRefactoring methodsFor!
 
 className: aString
 	super className: aString.
@@ -52,7 +52,7 @@ unqualifiedName
 
 unqualifiedName: aSymbol
 	unqualifiedName := aSymbol! !
-!Tools.ClassNameToBindingReferenceRefactoring categoriesForMethods!
+!Refactory.Browser.ClassNameToBindingReferenceRefactoring categoriesForMethods!
 className:!accessing!public! !
 preconditions!preconditions!public! !
 rewriteReferences!private!transforming! !
@@ -62,18 +62,14 @@ unqualifiedName!accessing!public! !
 unqualifiedName:!accessing!initializing!public! !
 !
 
-!Tools.ClassNameToBindingReferenceRefactoring class methodsFor!
+!Refactory.Browser.ClassNameToBindingReferenceRefactoring class methodsFor!
 
 model: aRBModel replaceSymbolicReferencesTo: aClass
 	^self new
 		model: aRBModel;
 		className: aClass fullName;
-		yourself!
-
-replaceSymbolicReferencesTo: aClass
-	^self new className: aClass fullName! !
-!Tools.ClassNameToBindingReferenceRefactoring class categoriesForMethods!
+		yourself! !
+!Refactory.Browser.ClassNameToBindingReferenceRefactoring class categoriesForMethods!
 model:replaceSymbolicReferencesTo:!instance creation!public! !
-replaceSymbolicReferencesTo:!instance creation!public! !
 !
 

@@ -8,7 +8,6 @@ Tools.Tests.ClassSelectorTest subclass: #'Tools.Tests.PackagedClassSelectorTest'
 	classConstants: {}!
 Tools.Tests.PackagedClassSelectorTest guid: (Core.GUID fromString: '{85913f04-2759-4d36-864b-eac86b435a51}')!
 Tools.Tests.PackagedClassSelectorTest comment: ''!
-!Tools.Tests.PackagedClassSelectorTest categoriesForClass!Unclassified! !
 !Tools.Tests.PackagedClassSelectorTest methodsFor!
 
 assertContains: anObject

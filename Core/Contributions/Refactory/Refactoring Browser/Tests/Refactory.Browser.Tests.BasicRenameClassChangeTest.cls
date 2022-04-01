@@ -11,24 +11,28 @@ Refactory.Browser.Tests.BasicRenameClassChangeTest comment: ''!
 !Refactory.Browser.Tests.BasicRenameClassChangeTest categoriesForClass!Refactory-Testing! !
 !Refactory.Browser.Tests.BasicRenameClassChangeTest methodsFor!
 
+subjectClass
+	^BasicRenameClassChange!
+
 testAsUndo
 	| subject undo |
-	subject := BasicRenameClassChange rename: 'Core.Object' to: 'Core.Foo'.
+	subject := self subjectClass rename: 'Core.Object' to: 'Core.Foo'.
 	undo := subject asUndoOperation.
-	self assert: undo isKindOf: BasicRenameClassChange.
+	self assert: undo isKindOf: self undoClass.
 	self assert: undo newName equals: 'Core.Object'.
 	self assert: undo classReference equals: #{Core.Foo}.
 	self assert: undo afterText equals: subject beforeText!
 
 testPrinting
 	| subject |
-	subject := BasicRenameClassChange rename: 'Core.Object' to: 'Core.Foo'.
+	subject := self subjectClass rename: 'Core.Object' to: 'Core.Foo'.
 	self assert: subject beforeText equals: Object definition.
 	self assert: subject afterText
 		equals: (Object definition copyReplaceAll: 'Core.Object' with: 'Core.Foo').
 	self assert: subject changeString equals: 'Rename Core.Object to Core.Foo'.
 	self assert: subject printString equals: 'ClassBuilder renameClass: Core.Object to: ''Core.Foo''!!'! !
 !Refactory.Browser.Tests.BasicRenameClassChangeTest categoriesForMethods!
+subjectClass!constants!private! !
 testAsUndo!public!unit tests! !
 testPrinting!public!unit tests! !
 !

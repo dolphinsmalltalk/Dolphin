@@ -16,7 +16,6 @@ Instance Variables:
 	presenter		<presenter> hosting the refactoring tool. Its type will depend on the subclass.
 
 '!
-!Tools.RefactoringTool categoriesForClass!Unclassified! !
 !Tools.RefactoringTool methodsFor!
 
 convertTempToInstVar: aStVariableNode 

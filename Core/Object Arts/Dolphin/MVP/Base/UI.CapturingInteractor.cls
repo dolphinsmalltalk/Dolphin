@@ -26,7 +26,7 @@ UI.CapturingInteractor comment: '`CapturingInteractor` is an abstract class of `
   `LeftDownMask`		`<integer>` flags mask to record left-button down.
 
 '!
-!UI.CapturingInteractor categoriesForClass!Unclassified! !
+!UI.CapturingInteractor categoriesForClass!MVP-Interactors! !
 !UI.CapturingInteractor methodsFor!
 
 buttonsReleased

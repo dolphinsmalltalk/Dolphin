@@ -34,4 +34,4 @@ Kernel.SharedPool subclass: #'Kernel.VMConstants'
 Kernel.VMConstants guid: (Core.GUID fromString: '{0ce3edb9-a86f-4a2e-b743-3de1e198c6ff}')!
 Kernel.VMConstants isNonInstantiable: true!
 Kernel.VMConstants comment: ''!
-!Kernel.VMConstants categoriesForClass!Unclassified! !
+!Kernel.VMConstants categoriesForClass!Kernel-Support! !

@@ -2199,6 +2199,26 @@ Core.Object subclass: #'Kernel.ClassBuilder'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'ErrorAlreadyExists' -> '<1p>.<2s> already exists.'.
+		'ErrorBytesAndNamedInstVars' -> 'A byte subclass may not contain named instance variables.'.
+		'ErrorByteSubclassOfFixed' -> 'A byte subclass may not derive from a class containing named instance variables'.
+		'ErrorByteSubclassOfVariable' -> 'A byte subclass may not derive from a class containing indexed instance variables'.
+		'ErrorChangeMetaclassSuperclass' -> 'It is invalid to directly change the superclass of a metaclass.'.
+		'ErrorFixedInitialLayout' -> 'New inst vars must come after those already in <1p>'.
+		'ErrorFixedLayout' -> 'You must not change the instance variable layout of <1p>'.
+		'ErrorFixedSubclassOfVariable' -> 'Subclasses of an indexed class must also be indexed.'.
+		'ErrorFixedSubclassType' -> 'You may not change the subclass type of <1p>'.
+		'ErrorIndirectAndNullTerm' -> 'A byte subclass may not be both indirect and null-terminated.'.
+		'ErrorIndirectNotBytes' -> 'Indirect subclasses must contain bytes.'.
+		'ErrorInstVarAlreadyDefined' -> 'Proposed instance variable <1p> is multiply defined.'.
+		'ErrorInvalidClassName' -> 'Invalid class name ''<1s>'''.
+		'ErrorInvalidInstVarName' -> 'Proposed instance variable <1p> is invalid as a local identifier.'.
+		'ErrorNullTermNotBytes' -> 'Null-terminated subclasses must contain bytes.'.
+		'ErrorPointerSubclassOfBytes' -> 'A subclass containing pointers may not derive from a class containing bytes.'.
+		'ErrorRecursiveSubclass' -> 'Class cannot be a subclass of itself'.
+		'ErrorSuperclassIsSubclass' -> '<1p> is a subclass of the class being changed.'.
+		'ErrorTooManyInstVars' -> 'Classes are allowed a maximum of <1p> instance variables.'.
+		'ErrorUnsubclassable' -> '<1p> is not subclassable.'.
 		'FixedName' -> #(#Smalltalk #Root).
 		'IgnoreInstsMask' -> 16r2.
 		'RecompileMask' -> 16r1

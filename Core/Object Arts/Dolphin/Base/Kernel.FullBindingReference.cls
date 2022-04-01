@@ -14,7 +14,7 @@ Kernel.FullBindingReference comment: '`FullBindingReference`s represent fully-qu
   `path`			`<sequencedReadableCollection>`. The components of the qualified name.
   `private`			`<boolean>` indicating whether this is a private reference (typically only relevant when used to specify an import into a namespace).
   `binding`		`VariableBinding`. The resolved binding, or `Undeclared` if there is no binding for the name path in context.
-  `generation`		`<integer>`. Value of `BindingReference.Generation` when the binding was resolved.
+  `generation`		`<integer>`. Value of `BindingReference.Generation` when `binding` was resolved. Used to check if the cache is stale.
 
 '!
 !Kernel.FullBindingReference categoriesForClass!System-Namespaces! !
