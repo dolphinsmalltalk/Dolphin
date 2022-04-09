@@ -253,7 +253,7 @@ addUnique: aSymbol
 	bucketIndex := aSymbol hash \\ Table basicSize + 1.
 	(Table basicAt: bucketIndex)
 		ifNil: [Table basicAt: bucketIndex put: (WeakArray with: aSymbol)]
-		ifNotNil: [:bucket | bucket replaceIdentity: DeadObject current with: aSymbol].
+		ifNotNil: [:bucket | bucket replaceIdentity: DeadObject.Current with: aSymbol].
 	^aSymbol!
 
 allInstancesDo: aMonadicValuable 

@@ -53,7 +53,7 @@ elementsExpired: anInteger
 
 	mutex critical: 
 			[| deathAt capacity corpse |
-			corpse := DeadObject current.
+			corpse := DeadObject.Current.
 			capacity := self basicSize.
 			tally := tally - anInteger.
 			deathAt := self
@@ -93,7 +93,7 @@ fixCollisionsIgnoringCorpsesFrom: index
 	| slotIndex capacity element corpse |
 	slotIndex := index.
 	capacity := self basicSize.
-	corpse := DeadObject current.
+	corpse := DeadObject.Current.
 	
 	[slotIndex := slotIndex \\ capacity + 1.
 	(element := self basicAt: slotIndex) isNil] whileFalse: 

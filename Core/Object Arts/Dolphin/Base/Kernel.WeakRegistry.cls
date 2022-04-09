@@ -27,7 +27,7 @@ initialize: anInteger
 	registry
 		replaceFrom: 1
 		to: anInteger
-		withObject: DeadObject current!
+		withObject: DeadObject.Current!
 
 removeAtIndex: anInteger
 	"Remove, and answer, the registered object with id anInteger in the receiver. 
@@ -35,7 +35,7 @@ removeAtIndex: anInteger
 
 	| object |
 	object := registry basicAt: anInteger.
-	registry basicAt: anInteger put: DeadObject current.
+	registry basicAt: anInteger put: DeadObject.Current.
 	^object! !
 !Kernel.WeakRegistry categoriesForMethods!
 addAnsweringIndex:!adding!public! !

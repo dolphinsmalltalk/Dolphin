@@ -59,7 +59,7 @@ includes: aMessage
 	receiver's elements."
 
 	| corpse |
-	corpse := DeadObject current.
+	corpse := DeadObject.Current.
 	1 to: receivers basicSize
 		do: 
 			[:index |
@@ -72,7 +72,7 @@ initialize
 	Implementation Note: The majority of instances only ever contain one message
 	for the event against the receiver, so we use 1 as the initial capacity."
 
-	receivers := (MourningWeakArray with: DeadObject current)
+	receivers := (MourningWeakArray with: DeadObject.Current)
 				pathologist: self;
 				yourself.
 	messages := Array new: 1.
@@ -92,7 +92,7 @@ removeMessagesFor: anObject
 	"Removes all the messages in this sequence that are destined for anObject. Answers the receiver."
 
 	| corpse |
-	corpse := DeadObject current.
+	corpse := DeadObject.Current.
 	1 to: receivers basicSize
 		do: 
 			[:index |

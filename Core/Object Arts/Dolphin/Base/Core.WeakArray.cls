@@ -24,7 +24,7 @@ addAnsweringIndex: newElement
 	then append it. This is a very useful method in many system support tasks (e.g. the Dependency 
 	mechanism)."
 
-	^self replaceIdentity: DeadObject current with: newElement!
+	^self replaceIdentity: DeadObject.Current with: newElement!
 
 copyingClass
 	"Private - Answer the class of object expected when the receiver is copied in whole or in part."
@@ -42,7 +42,7 @@ corpsesDo: aBlock
 
 	| deathAt size corpse |
 	size := self basicSize.
-	corpse := DeadObject current.
+	corpse := DeadObject.Current.
 	deathAt := self
 				basicIdentityIndexOf: corpse
 				from: 1
@@ -71,7 +71,7 @@ nilCorpsesAndDo: aBlock
 
 	| deathAt size corpse |
 	size := self basicSize.
-	corpse := DeadObject current.
+	corpse := DeadObject.Current.
 	deathAt := self
 				basicIdentityIndexOf: corpse
 				from: 1
@@ -88,7 +88,7 @@ nonCorpsesDo: aBlock
 	"Evaluate aBlock for all non-Corpse elements of the receiver. Answer the receiver."
 
 	| corpse |
-	corpse := DeadObject current.
+	corpse := DeadObject.Current.
 	1 to: self basicSize
 		do: 
 			[:index |
@@ -109,7 +109,7 @@ remove: oldElement ifAbsent: exceptionHandler
 	^index == 0
 		ifTrue: [exceptionHandler value]
 		ifFalse: 
-			[self basicAt: index put: DeadObject current.
+			[self basicAt: index put: DeadObject.Current.
 			oldElement]!
 
 species
