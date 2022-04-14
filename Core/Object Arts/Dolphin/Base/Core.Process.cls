@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Link variableSubclass: #'Core.Process'
-	instanceVariableNames: 'suspendedFrame priority myList callbackDepth _unused6 _unused7 fpControl threadSync thread exceptionEnvironment _unused12 _unused13 debugger name debugStream'
+	instanceVariableNames: 'suspendedFrame priority myList callbackDepth tls _unused7 fpControl threadSync thread exceptionEnvironment _unused12 _unused13 debugger name debugStream'
 	classVariableNames: 'DefaultMaxStack'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -628,6 +628,12 @@ terminate
 threadSync
 	^threadSync!
 
+threadVarAt: aSymbol
+	^tls ifNotNil: [tls lookup: aSymbol]!
+
+threadVarAt: aSymbol put: anObject
+	^(tls ifNil: [tls := IdentityDictionary new]) at: aSymbol put: anObject!
+
 topFrame
 	"Private - Answer a frame representing the top activation record of the receiver's stack.
 	We deliberately answer a frame for the sender if the receiver is the active
@@ -701,6 +707,8 @@ suspendingList!accessing!private! !
 suspendUnconditionally!public!states-changing! !
 terminate!public!states-changing! !
 threadSync!accessing!private! !
+threadVarAt:!accessing!public! !
+threadVarAt:put:!accessing!public! !
 topFrame!private!stack frames! !
 !
 

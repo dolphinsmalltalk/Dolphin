@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Core.Tests.ProcessTest'
 	classConstants: {}!
 Core.Tests.ProcessTest guid: (Core.GUID fromString: '{3601a8c6-de0f-4218-a7df-40838259fc47}')!
 Core.Tests.ProcessTest comment: ''!
-!Core.Tests.ProcessTest categoriesForClass!Unclassified! !
 !Core.Tests.ProcessTest methodsFor!
 
 assertBlock: copyBlockClosure in: copyProcess2 isCopyOf: srcBlockClosure in: sourceProcess2 visited: anIdentitySet
@@ -556,6 +555,28 @@ testSeparateContexts
 	copyProcess resume.
 	self assert: x identicalTo: 1!
 
+testTls
+	| process sema sema2 |
+	sema := Semaphore new.
+	sema2 := Semaphore new.
+	process := 
+			[self assertIsNil: (Processor activeProcess threadVarAt: #foo).
+			Processor activeProcess threadVarAt: #foo put: 'bar'.
+			sema signal.
+			sema2 wait.
+			self assert: (Processor activeProcess threadVarAt: #foo) equals: 'bar']
+					forkAt: Processor activeProcess priority.
+	sema wait.	"until process gets scheduled"
+	self assertIsNil: (Processor activeProcess threadVarAt: #foo).
+	Processor activeProcess threadVarAt: #foo put: 'foobar'.
+	
+	[self assert: (process threadVarAt: #foo) equals: 'bar'.
+	sema2 signal.
+	Processor yield.
+	self assert: (Processor activeProcess threadVarAt: #foo) equals: 'foobar'.
+	self assert: (process threadVarAt: #foo) equals: 'bar']
+			ensure: [Processor activeProcess threadVarAt: #foo put: nil]!
+
 testUnwindFromActiveProcess
 	| sema process |
 	sema := Semaphore forMutualExclusion.
@@ -607,6 +628,7 @@ testOverlappedErrno!public!unit tests! !
 testOverlappedLastError!public!unit tests! !
 testSchedulerTermination!public!tests! !
 testSeparateContexts!public!unit tests! !
+testTls!public!tests! !
 testUnwindFromActiveProcess!public!tests! !
 testUnwindFromForeignProcess!public!tests! !
 !
