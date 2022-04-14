@@ -9,7 +9,6 @@ Core.Tests.DolphinTest subclass: #'Core.Tests.IntegerTest'
 Core.Tests.IntegerTest guid: (Core.GUID fromString: '{025b6e24-5e2b-49b1-9f4b-55b831a5aef3}')!
 Core.Tests.IntegerTest isNonInstantiable: true!
 Core.Tests.IntegerTest comment: ''!
-!Core.Tests.IntegerTest categoriesForClass!Unclassified! !
 !Core.Tests.IntegerTest methodsFor!
 
 canonicalInstance
@@ -78,6 +77,17 @@ testPrimesUpTo
 	self assert: primes asArray
 		equals: #(2 3 5 7 11 13 17 19 23 29 31 37 41 43 47 53 59 61 67 71 73 79 83 89 97)!
 
+testRoundUpToPowerOfTwo
+	self assert: 0 roundUpToPowerOfTwo equals: 1.
+	self assert: 1 roundUpToPowerOfTwo equals: 1.
+	self assert: 2 roundUpToPowerOfTwo equals: 2.
+	self assert: 3 roundUpToPowerOfTwo equals: 4.
+	self assert: 4 roundUpToPowerOfTwo equals: 4.
+	self assert: 1023 roundUpToPowerOfTwo equals: 1024.
+	self assert: 1025 roundUpToPowerOfTwo equals: 2048.
+	self assert: 16r3FFFFFFF roundUpToPowerOfTwo equals: 16r40000000.
+	self should: [-1 roundUpToPowerOfTwo] raise: Error!
+
 testSetBit
 	1 to: 128 do: [:i | self assert: (0 setBit: i) equals: (2 raisedToInteger: i - 1)].
 	0 to: 128
@@ -112,6 +122,7 @@ testIsInteger!public!unit tests! !
 testIsPowerOfTwo!public!unit tests! !
 testNew!public!unit tests! !
 testPrimesUpTo!public!unit tests! !
+testRoundUpToPowerOfTwo!public!unit tests! !
 testSetBit!public!unit tests! !
 testTwoComplementRightShift!public!unit tests! !
 !

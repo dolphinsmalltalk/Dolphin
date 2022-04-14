@@ -742,6 +742,13 @@ rounded
 	^self
 !
 
+roundUpToPowerOfTwo
+	"Convert the receiver into a power of two which is not less than the receiver"
+
+	^self isPowerOfTwo ifTrue: [self] ifFalse: [1 bitShift: self highBit]
+
+!
+
 setBit: index
 	"Answer the Integer which results from setting the index'th bit of the receiver,
 	where the least significant bit is considered to have index 1."
@@ -889,6 +896,7 @@ printStringBase:!accessing!public! !
 printStringBase:nDigits:!printing!public! !
 printStringRadix:!printing!public! !
 rounded!public!truncation and round off! !
+roundUpToPowerOfTwo!public!truncation and round off! !
 setBit:!bit manipulation!public! !
 size!accessing!public! !
 subtractFromFloat:!double dispatch!private! !
