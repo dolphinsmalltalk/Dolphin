@@ -1,0 +1,38 @@
+﻿| package |
+package := Package name: 'WebView2 Tests'.
+package paxVersion: 1;
+	basicComment: ''.
+
+
+package classNames
+	add: #WebView2EnvironmentOptionsTest;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: #(
+	'..\..\..\Base\Dolphin'
+	'..\..\..\Base\Dolphin Base Tests'
+	'WebView2').
+
+package!
+
+"Class Definitions"!
+
+DolphinTest subclass: #WebView2EnvironmentOptionsTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

@@ -176,6 +176,7 @@ package setClassNames: #(
 	#{WebView2.ICoreWebView2WindowFeatures}
 	#{WebView2.ICoreWebView2ZoomFactorChangedEventHandler}
 	#{WebView2.WebView2CompletionHandler}
+	#{WebView2.WebView2EnvironmentOptions}
 	#{WebView2.WebView2EventSink}
 	#{WebView2.WebView2Loader}
 ).
@@ -358,6 +359,12 @@ External.DynamicLinkLibrary subclass: #'WebView2.WebView2Loader'
 	classConstants: {}!
 OS.COM.InterfaceImplementation subclass: #'WebView2.WebView2CompletionHandler'
 	instanceVariableNames: 'completionBlock'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.InterfaceImplementation subclass: #'WebView2.WebView2EnvironmentOptions'
+	instanceVariableNames: 'additionalBrowserArguments allowSSO locale browserVersion'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

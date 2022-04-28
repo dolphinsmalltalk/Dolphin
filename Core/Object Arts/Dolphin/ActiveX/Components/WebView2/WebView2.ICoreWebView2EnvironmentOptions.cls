@@ -203,6 +203,8 @@ targetCompatibleBrowserVersion!properties!public! !
 targetCompatibleBrowserVersion:!**auto generated**!properties!public! !
 !
 
+WebView2.ICoreWebView2EnvironmentOptions methodProtocol: #ICoreWebView2EnvironmentOptions attributes: #(#readOnly) selectors: #(#get_AdditionalBrowserArguments: #get_AllowSingleSignOnUsingOSPrimaryAccount: #get_Language: #get_TargetCompatibleBrowserVersion: #put_AdditionalBrowserArguments: #put_AllowSingleSignOnUsingOSPrimaryAccount: #put_Language: #put_TargetCompatibleBrowserVersion:)!
+
 !WebView2.ICoreWebView2EnvironmentOptions class methodsFor!
 
 defineFunctions

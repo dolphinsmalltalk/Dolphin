@@ -111,12 +111,20 @@ createWebView
 		thenDo: [:hr :controller | hr < 0 ifFalse: [self onControllerCreated: controller]]	"We could create a composition controller here, but there is no point as we don't have any integration with Direct Composition"!
 
 createWebViewEnvironment
-	| completed |
+	| completed userDataFolder |
 	completed := (WebView2CompletionHandler
 				completionBlock: [:hr :env | hr < 0 ifFalse: [self onEnvironmentCreated: env]])
 					queryInterface: ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler.
-	[WebView2Loader default createCoreWebView2Environment: completed] on: Win32Error
-		do: [:ex | self createUnavailableLink].
+	userDataFolder := File composePath: (SessionManager current getenv: 'LocalAppData')
+				subPath: (File splitFilenameFrom: (DynamicLinkLibrary moduleFileName: nil)) , '.WebView2'.
+	
+	[WebView2Loader default
+		createCoreWebView2EnvironmentWithOptions: nil
+		userDataFolder: userDataFolder
+		environmentOptions: nil
+		environmentCreatedHandler: completed]
+			on: Win32Error
+			do: [:ex | self createUnavailableLink].
 	completed free.
 	self topShell
 		when: #positionChanged:
