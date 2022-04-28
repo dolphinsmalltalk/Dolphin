@@ -53,6 +53,10 @@ testEnglishName
 	#(1033 'English' 2057 'English' 1034 'Spanish' 1106 'Welsh' 11274 'Spanish') pairsDo: [:lcid :language |
 		self assert: (Locale lcid: lcid) englishLanguageName equals: language]!
 
+testNamed
+	self assert: (Locale named: 'cy-GB') lcid equals: 1106.
+	self assert: (Locale named: 'Invariant') identicalTo: Locale invariant!
+
 testPrintFloat
 	| subject |
 	{{Locale lcid: 2057.
@@ -166,6 +170,7 @@ testPrintNoLeadingZero
 defaultSubject!helpers!private! !
 testDisplayFloatOnNegativeModes!public!unit tests! !
 testEnglishName!public!unit tests! !
+testNamed!public!unit tests! !
 testPrintFloat!public!unit tests! !
 testPrintFloatGrouping!public!unit tests! !
 testPrintFloatSeparators!public!unit tests! !

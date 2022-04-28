@@ -13,6 +13,9 @@ SmalltalkLocaleTest comment: ''!
 defaultSubject
 	^Locale smalltalk!
 
+testNamed
+	self assert: (Locale named: #Smalltalk) identicalTo: self defaultSubject!
+
 testPrintFloat
 	| subject |
 	subject := Locale smalltalk.
@@ -67,6 +70,7 @@ testPrintFloatSeparators
 	self assert: (subject printFloat: 1234567890.123 format: format) equals: '1234567890@123'! !
 !SmalltalkLocaleTest categoriesForMethods!
 defaultSubject!helpers!private! !
+testNamed!public!unit tests! !
 testPrintFloat!public! !
 testPrintFloatGrouping!public!unit tests! !
 testPrintFloatSeparators!public!unit tests! !

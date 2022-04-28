@@ -182,7 +182,7 @@ Object subclass: #Link
 	classInstanceVariableNames: ''!
 Object subclass: #Locale
 	instanceVariableNames: 'numberFormat'
-	classVariableNames: 'Invariant SystemDefault TimeZoneInfo UserDefault'
+	classVariableNames: 'Invariant NoUserOverrideMask SystemDefault TimeZoneInfo UserDefault'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 Object subclass: #Magnitude
