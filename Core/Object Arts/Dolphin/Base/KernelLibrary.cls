@@ -1119,6 +1119,17 @@ loadResource: anInstanceHandle hResInfo: aResourceHandle
 	<stdcall: handle LoadResource handle handle>
 	^self invalidCall: _failureCode!
 
+localeNameToLCID: lpName dwFlags: dwFlags
+	"Converts a locale name to a locale identifier.
+
+	LCID LocaleNameToLCID(
+		LPCWSTR lpName,
+		DWORD   dwFlags
+	)"
+
+	<stdcall: dword LocaleNameToLCID lpwstr dword>
+	^self invalidCall: _failureCode!
+
 localFileTimeToFileTime: lpLocalFileTime lpFileTime: lpFileTime
 	"Convert a UTC FILETIME to a local FILETIME, answering whether the conversion succeeded.
 		BOOL LocalFileTimeToFileTime(
@@ -1744,6 +1755,7 @@ isWow64Process:wow64Process:!public!win32 functions-system information! !
 lcMapString:dwMapFlags:lpScrStr:cchSrc:lpDestStr:cchDest:!public!win32 functions-national language support! !
 loadLibraryEx:hFile:dwFlags:!public!win32 functions-dynamic link library! !
 loadResource:hResInfo:!public!win32 functions-resource! !
+localeNameToLCID:dwFlags:!public!win32 functions-national language support! !
 localFileTimeToFileTime:lpFileTime:!public!win32 functions-date and time! !
 localFree:!**auto generated**!public!win32 functions-memory management! !
 lockResource:!public!win32 functions-resource! !

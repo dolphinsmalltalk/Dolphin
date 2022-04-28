@@ -2,10 +2,11 @@
 
 Object subclass: #Locale
 	instanceVariableNames: 'numberFormat'
-	classVariableNames: 'Invariant SystemDefault TimeZoneInfo UserDefault'
+	classVariableNames: 'Invariant NoUserOverrideMask SystemDefault TimeZoneInfo UserDefault'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 Locale guid: (GUID fromString: '{87b4c49a-026e-11d3-9fd7-00a0cc3e4a32}')!
+Locale addClassConstant: 'NoUserOverrideMask' value: 16r1000000!
 Locale comment: ''!
 !Locale categoriesForClass!System-Support! !
 !Locale methodsFor!
@@ -744,7 +745,9 @@ initialize
 	SessionManager current
 		when: #settingChanged:
 		send: #onSettingChanged:
-		to: self!
+		to: self.
+
+	self addClassConstant: 'NoUserOverrideMask' value: 16r1000000!
 
 installedSystemLocales
 	"Private - Answer the installed Win32 system locales.
@@ -777,6 +780,21 @@ makeLcId: langIdWord sortId: sortIdBits
 
 	^(sortIdBits bitAnd: 16rF) << 16 
 		bitOr: (langIdWord bitAnd: 16rFFFF)!
+
+named: aString
+	"Answer an instance of the receiver to represent the locale with the specified name, e.g. 'en-US', including any user customisation of the settings."
+
+	^self named: aString withOverrides: true!
+
+named: aString withOverrides: aBoolean
+	"Private - Answer a sub-instance of the receiver to represent the Locale with the specified name."
+
+	| lcid |
+	(aString sameAs: 'smalltalk') ifTrue: [^self smalltalk].
+	(aString sameAs: 'invariant') ifTrue: [^self invariant].
+	lcid := KernelLibrary default localeNameToLCID: aString dwFlags: 0.
+	lcid == 0 ifTrue: [KernelLibrary default systemError].
+	^WindowsLocale lcid: lcid withOverrides: aBoolean!
 
 onPreStripImage
 	"Private -  Assist in the image stripping process by clearning down any lazily initialized variables held by the receiver."
@@ -846,6 +864,8 @@ invariant!instance creation!public! !
 lcid:!instance creation!public! !
 makeLangId:subLang:!enquiries!private! !
 makeLcId:sortId:!enquiries!private! !
+named:!instance creation!public! !
+named:withOverrides:!instance creation!private! !
 onPreStripImage!class hierarchy-removing!private! !
 onSettingChanged:!event handling!private! !
 onStartup!event handling!private! !

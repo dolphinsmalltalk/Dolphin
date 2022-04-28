@@ -476,6 +476,15 @@ yearMonthFormat!constants!public! !
 
 !WindowsLocale class methodsFor!
 
+lcid: anInteger withOverrides: aBoolean
+	"Private - Answer an instance of the receiver to represent the Locale with the specified LCID."
+
+	^anInteger == LOCALE_INVARIANT
+		ifTrue: [self invariant]
+		ifFalse: 
+			[WindowsLocale new
+				lcid: (aBoolean ifTrue: [anInteger] ifFalse: [anInteger bitOr: NoUserOverrideMask])]!
+
 reset
 	UserDefault := SystemDefault := nil!
 
@@ -493,6 +502,7 @@ systemLocales: anInteger
 	enum free.
 	^locales collect: [:s | self lcid: (Integer readFrom: s asUppercase readStream radix: 16)]! !
 !WindowsLocale class categoriesForMethods!
+lcid:withOverrides:!instance creation!private! !
 reset!initializing!private! !
 systemLocales:!enquiries!private! !
 !
