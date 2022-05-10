@@ -117,7 +117,7 @@ extern "C" PRIMTABLEDECL Interpreter::PrimitiveFp primitivesTable[256] = {
 	Interpreter::primitiveSingleStepThunk										, // case 105: Process>>#primStep:
 	Interpreter::primitiveHashBytes												, // case 106: ByteArray>>#hash, String>>#hash, LargeInteger>>#hash
 	Interpreter::primitiveUnwindCallback										, // case 107: ProcessorScheduler>>#primUnwindCallback
-	Interpreter::primitiveHookWindowCreate										, // case 108: View>>primHookWindowCreate:
+	Interpreter::unusedPrimitive												, // case 108:
 	Interpreter::primitiveHashMultiply											, // case 109: Integer>>#hashMultiply, SmallInteger>>#identityHash, SmallInteger>>#hash
 	Interpreter::primitiveIdentical												, // case 110: Object>#==, Object>>#=
 	Interpreter::primitiveClass													, // case 111: Object>>#class, Object>>#basicClass

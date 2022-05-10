@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Kernel.InputState'
-	instanceVariableNames: 'inputSemaphore idler idleTimer main windows deferredActions lastWindow wakeupEvent msgWindow queueStatusMask'
+	instanceVariableNames: 'inputSemaphore idler idleTimer main windowTable deferredActions lastWindow wakeupEvent msgWindow queueStatusMask'
 	classVariableNames: 'MaxIdleSleep SamplingInterval UserInterruptSignal'
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
@@ -50,7 +50,7 @@ consoleStartup
 	"Private - System startup has entered the second stage, and it is time to reinitialize the
 	user interaction subsystem for a console session."
 
-	windows := LookupTable new.
+	windowTable := LookupTable new.
 	self createPostedActionWindow.
 	"#aboutToIdle will not be invoked, so best to to start the idler manually as otherwise an
 	idlePanic interrupt will be sent by the VM"
@@ -110,6 +110,14 @@ enterIdle
 
 	self inputSemaphore wait!
 
+evaluateDeferredAction
+	^deferredActions nextNoWait
+		ifNil: [false]
+		ifNotNil: 
+			[:action |
+			action value.
+			true]!
+
 forkIdler
 	"Private - Start a process at the lowest possible priority (system background) to perform
 	idle time processing. The VM scheduler requires that there always be a process ready to run,
@@ -163,7 +171,7 @@ hasVisibleWindows
 
 	| hDesktop |
 	hDesktop := User32 getDesktopWindow.
-	^windows anySatisfy: 
+	^windowTable anySatisfy: 
 			[:each |
 			| hWnd |
 			hWnd := each asParameter.
@@ -225,10 +233,10 @@ initializeFrom: anInputState
 	anInputState isNil
 		ifTrue: 
 			[deferredActions := SharedQueue new.
-			windows := LookupTable new]
+			windowTable := LookupTable new]
 		ifFalse: 
 			[deferredActions := anInputState deferredActions.
-			windows := anInputState windows.
+			windowTable := anInputState windowTable.
 			anInputState main: nil.
 			anInputState idler ifNotNil: [:process | process kill]].
 	idleTimer := nil.
@@ -291,7 +299,7 @@ lookupWindow: aHandle
 			[| hWnd wasEnabled window |
 			hWnd := aHandle asInteger.
 			wasEnabled := Processor enableAsyncEvents: false.
-			window := windows lookup: hWnd.
+			window := windowTable lookup: hWnd.
 			Processor enableAsyncEvents: wasEnabled.
 			window]!
 
@@ -320,14 +328,11 @@ loopWhile: aBlock
 	robustness ensure it does not accumulate a backlog of actions as this would cause very
 	strange behaviour."
 	msgWindow evaluatePendingActions ifTrue: [activity := true].
-	deferredActions nextNoWait
-		ifNil: 
+	self evaluateDeferredAction
+		ifTrue: [activity := true]
+		ifFalse: 
 			[self waitForInput: activity.
-			activity := false]
-		ifNotNil: 
-			[:action |
-			activity := true.
-			action value]]
+			activity := false]]
 			repeat!
 
 main
@@ -460,7 +465,7 @@ purgeDeadWindows
 
 	| bEnabled |
 	bEnabled := Processor enableAsyncEvents: false.
-	windows := windows select: 
+	windowTable := windowTable select: 
 					[:each |
 					| hWnd |
 					(hWnd := each asParameter) notNil and: [User32 isWindow: hWnd]].
@@ -494,7 +499,7 @@ removeWindowAt: aHandle
 	| bEnabled |
 	aHandle isNil ifTrue: [^self].
 	bEnabled := Processor enableAsyncEvents: false.
-	windows removeKey: aHandle asInteger ifAbsent: nil.
+	windowTable removeKey: aHandle asInteger ifAbsent: nil.
 	lastWindow := nil.
 	Processor enableAsyncEvents: bEnabled!
 
@@ -570,7 +575,7 @@ windowAt: aHandle ifAbsent: exceptionHandler
 	aHandle ifNil: [^exceptionHandler value].
 	hWnd := aHandle asInteger.
 	wasEnabled := Processor enableAsyncEvents: false.
-	window := windows lookup: hWnd.
+	window := windowTable lookup: hWnd.
 	Processor enableAsyncEvents: wasEnabled.
 	^window ifNil: [exceptionHandler value]!
 
@@ -580,15 +585,17 @@ windowAt: aHandle put: aWindow
 	| wasEnabled hWnd |
 	hWnd := aHandle asInteger.
 	wasEnabled := Processor enableAsyncEvents: false.
-	windows at: hWnd put: aWindow.
+	windowTable at: hWnd put: aWindow.
 	lastWindow := nil.
 	Processor enableAsyncEvents: wasEnabled!
 
 windows
-	"Private - Answer the collection of all open windows (a <LookupTable> mapping <integer>
-	window handles to <windows>."
+	^#()!
 
-	^windows!
+windowTable
+	"Private - Answer the collection of all open windows (a <LookupTable> mapping <integer> window handles to <windows>."
+
+	^windowTable!
 
 wndProc: hWnd message: message wParam: wParam lParam: lParam cookie: cookie
 	"Private - Dispatch a Windows message to the appropriate event handler of the view whose
@@ -606,7 +613,7 @@ wndProc: hWnd message: message wParam: wParam lParam: lParam cookie: cookie
 	lastWindow asParameter = hWnd
 		ifTrue: [window := lastWindow]
 		ifFalse: 
-			[window := windows lookup: hWnd.
+			[window := windowTable lookup: hWnd.
 			window isNil
 				ifTrue: 
 					[^Processor callback: cookie
@@ -636,6 +643,7 @@ deferredActions!accessing!private! !
 ensureIdlerRunning!idling!private! !
 ensureMainRunning!idling!private! !
 enterIdle!idling!private! !
+evaluateDeferredAction!message dispatching!private! !
 forkIdler!idling!private! !
 forkMain!message dispatching!private! !
 hasVisibleWindows!private!testing! !
@@ -677,7 +685,8 @@ userInterruptSignal!constants!public! !
 waitForInput:!idling!private! !
 windowAt:ifAbsent:!accessing!public! !
 windowAt:put:!accessing!public! !
-windows!accessing!private! !
+windows!private! !
+windowTable!accessing!private! !
 wndProc:message:wParam:lParam:cookie:!message dispatching!not restartable!private!vm entry points! !
 !
 

@@ -102,8 +102,8 @@ struct VMPointers //: public Object
 			SymbolOTE* callbackPerformWithWithSymbol;			// 50
 			SymbolOTE* callbackPerformWithWithWithSymbol;		// 51
 			SymbolOTE* callbackPerformWithArgumentsSymbol;		// 52
-			/**/Oop _unusedSelector53;							// 53
-			SymbolOTE* subclassWindowSymbol;					// 54
+			SymbolOTE* subclassProcSelector;					// 53
+			SymbolOTE* windowCreatedSelector;					// 54
 			SymbolOTE* instVarAtPutSymbol;						// 55
 
 			// 56..65
@@ -128,7 +128,7 @@ struct VMPointers //: public Object
 			SymbolOTE* setScopeSelector;						// 69
 			SymbolOTE* virtualCallbackSelector;					// 70
 			SymbolOTE* exSpecialSelectors[NumExSpecialSends];	// 71,72,73
-			Oop _unused74to80[7];								// 74,75,76,77,78,79,80
+			Oop _unused74to80[7];								// 74, 75,76,77,78,79,80
 
 			// Classes required by Dolphin VM
 			// 81..90

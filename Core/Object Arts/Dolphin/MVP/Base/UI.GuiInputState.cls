@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.InputState subclass: #'UI.GuiInputState'
-	instanceVariableNames: ''
+	instanceVariableNames: 'windows'
 	classVariableNames: 'EnumHandlesDescriptor'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -15,6 +15,26 @@ aboutToForkUI
 	"Private - A new main UI process is being started. Reset any global UI state."
 
 	Cursor reset!
+
+allocateWindowIndex: aWindow
+	| index |
+	index := windows
+				nextIdentityIndexOf: DeadObject.Current
+				from: 1
+				to: windows size.
+	index == 0
+		ifTrue: 
+			[| size |
+			size := windows size.
+			index := size + 1.
+			size := size bitShift: 1.
+			windows
+				resize: size;
+				from: index + 1
+					to: size
+					put: DeadObject.Current].
+	windows at: index put: aWindow.
+	^index!
 
 allTopLevelWindowHandlesDo: aMonadicValuable
 	| callback answer |
@@ -36,16 +56,53 @@ guiStartup
 	user interaction subsystem for a GUI session."
 
 	| oldWindows |
-	oldWindows := windows.
+	oldWindows := windowTable.
 	lastWindow := nil.
-	windows := LookupTable new.
-	oldWindows notNil ifTrue: [oldWindows do: [:w | w onStartup]].
+	windowTable := LookupTable new.
+	windows := WeakArray new: (oldWindows size roundUpToPowerOfTwo max: 64) withAll: DeadObject.Current.
+	oldWindows ifNotNil: [oldWindows do: [:w | w onStartup]].
 	self createPostedActionWindow!
+
+initializeFrom: anInputState
+	windows := anInputState
+				ifNil: [WeakArray new: 64 withAll: DeadObject.Current]
+				ifNotNil: [anInputState windows].
+	super initializeFrom: anInputState!
 
 isDolphinWindow: hWnd
 	"Answer whether the window with handle, hWnd, is a Dolphin window or not."
 
 	^(self lookupWindow: hWnd) notNil!
+
+subclassProc: hWnd message: message wParam: wParam lParam: lParam uIdSubclass: uiSubclass dwRefData: dwRefData cookie: cookie
+	"Private - Dispatch a Windows message to the appropriate event handler of the ControlView whose handle is hWnd. The dwRefData argument is the index of the control in the windowArray. If the window handle is not registered, then the default subclass procedure is invoked."
+
+	"WARNING: This method is an entry point from the VM, and must not be invoked from Smalltalk code, as it returns directly to the VM as if from a callback. Do not modify or remove this method."
+
+	"Implementation Note: The VM sends this message with asynchronous process switching disabled."
+
+	^(windows lookup: dwRefData)
+		ifNil: 
+			[Processor
+				enableAsyncEvents: true;
+				callback: cookie
+					evaluate: 
+						[ComCtl32
+							defSubclassProc: hWnd
+							uMsg: message
+							wParam: wParam
+							lParam: lParam]]
+		ifNotNil: 
+			[:window |
+			Processor
+				enableAsyncEvents: true;
+				callback: cookie
+					return: (
+						[(window
+							dispatchMessage: message
+							wParam: wParam
+							lParam: lParam) asUIntPtr]
+								ifCurtailed: [Processor unwindCallback: cookie])]!
 
 topLevelWindowHandlesDo: aMonadicValuable
 	| callback answer |
@@ -67,7 +124,7 @@ topLevelWindows
 	shells := Array writeStream: 20.
 	desktop := View desktop.
 	bEnabled := Processor enableAsyncEvents: false.
-	windows do: 
+	windowTable do: 
 			[:each |
 			"This selection filter has been re-written for bug fix #2261. Previously
 			WS_CHILD views that were children of the desktop were not being included in
@@ -134,18 +191,35 @@ visibleWindows
 
 	| hDesktop |
 	hDesktop := User32 getDesktopWindow.
-	^windows select: 
+	^windowTable select: 
 			[:each |
 			| hWnd |
 			hWnd := each asParameter.
 			hWnd notNil
-				and: [hWnd ~= hDesktop and: [(User32 isWindow: hWnd) and: [User32 isWindowVisible: hWnd]]]]! !
+				and: [hWnd ~= hDesktop and: [(User32 isWindow: hWnd) and: [User32 isWindowVisible: hWnd]]]]!
+
+windowCreated: hWnd param: anInteger
+	"Private - Dispatch a Windows message to the appropriate event handler of the ControlView whose handle is hWnd. The dwRefData argument is the index of the control in the windowArray. If the window handle is not registered, then the default subclass procedure is invoked."
+
+	"WARNING: This method is an entry point from the VM, and must not be invoked from Smalltalk code, as it returns directly to the VM as if from a callback. Do not modify or remove this method."
+
+	"Implementation Note: The VM sends this message with asynchronous process switching disabled."
+
+	(anInteger = 0 ifTrue: [Processor activeProcess newWindow] ifFalse: [windows lookup: anInteger])
+		ifNotNil: [:window | window subclassWindow: hWnd].
+	^0!
+
+windows
+	^windows! !
 !UI.GuiInputState categoriesForMethods!
 aboutToForkUI!idling!private! !
+allocateWindowIndex:!private!realizing/unrealizing! !
 allTopLevelWindowHandlesDo:!enumerating!private! !
 getLastInputInfo!helpers!private! !
 guiStartup!operations-startup!private! !
+initializeFrom:!initializing!private! !
 isDolphinWindow:!private!testing! !
+subclassProc:message:wParam:lParam:uIdSubclass:dwRefData:cookie:!message dispatching!not restartable!private!vm entry points! !
 topLevelWindowHandlesDo:!enumerating!private! !
 topLevelWindows!enumerating!public! !
 topLevelWindowsInZOrder!enumerating!public! !
@@ -153,6 +227,8 @@ uiIdle!idling!private! !
 uiIdle:!idling!private! !
 userSessionIdleMs!idling!public! !
 visibleWindows!private!testing! !
+windowCreated:param:!private!vm entry points! !
+windows!accessing!private! !
 !
 
 !UI.GuiInputState class methodsFor!

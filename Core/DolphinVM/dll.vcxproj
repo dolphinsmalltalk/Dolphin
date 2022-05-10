@@ -114,6 +114,7 @@
       <ModuleDefinitionFile>.\VM.def</ModuleDefinitionFile>
       <EntryPointSymbol>_DllMainCRTStartup%4012</EntryPointSymbol>
       <DataExecutionPrevention />
+      <AdditionalDependencies>Comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
     </PreBuildEvent>
@@ -132,7 +133,7 @@
       <MinimumTargetSystem />
     </Midl>
     <ClCompile>
-      <AdditionalOptions>/LD  %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/LD  /Zm1000 %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>DEBUG;_DEBUG;VM;VMDLL;_CTYPE_DISABLE_MACROS;WIN32;_WINDOWS;WIN32_LEAN_AND_MEAN;WIN32_EXTRA_LEAN;STRICT;_MERGE_PROXYSTUB;_ATL_NO_MP_HEAP;ZEXPORT=__stdcall;ZEXPORTVA=__cdecl;_HAS_EXCEPTIONS=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling />
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
@@ -160,6 +161,7 @@
       <EntryPointSymbol>_DllMainCRTStartup%4012</EntryPointSymbol>
       <TargetMachine>MachineX86</TargetMachine>
       <MapExports>true</MapExports>
+      <AdditionalDependencies>Comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>
@@ -214,6 +216,7 @@
       <EntryPointSymbol>_DllMainCRTStartup%4012</EntryPointSymbol>
       <OptimizeReferences>false</OptimizeReferences>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
+      <AdditionalDependencies>Comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>

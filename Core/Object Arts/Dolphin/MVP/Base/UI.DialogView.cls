@@ -30,7 +30,7 @@ answer: anObject
 
 	self model: anObject!
 
-basicCreateAt: position extent: size
+basicCreate: anInteger at: position extent: size
 	"Private - Create the Windows window ensuring it has the VM window procedure.
 	Answer the receiver. The position and size are currently ignored."
 
@@ -44,13 +44,20 @@ basicCreateAt: position extent: size
 		lpTemplate: self templateId asResourceId
 		hWndParent: self class activeHandle
 		lpDialogFunc: VM getDlgProc
-		dwInitParam: 0!
+		dwInitParam: anInteger!
 
 cancel
 	"Process a cancel command. This is done by sending the correct cancel
 	command to follow the correct procedure for cancelling a dialog."
 
 	self destroy!
+
+createAt: positionPoint extent: extentPoint
+	"Private - Create the View window ensuring it has the VM window procedure.
+	Answer the receiver."
+
+	Processor activeProcess newWindow: self.
+	super createAt: positionPoint extent: extentPoint!
 
 defaultBackcolor
 	"Private - Answer the default colour for the receiver's background"
@@ -375,11 +382,12 @@ showModeless: aView
 	aView repositionShell: self.
 	self show!
 
-subclassWindow: aWinHandle
+subclassWindow: anExternalHandle
 	"Private - Subclass the receiver's associated Win32 window by substituting the VM's 
 	window procedure for the default dialog proc."
 
-	super subclassWindow: aWinHandle.
+	Processor activeProcess newWindow: nil.
+	self attachHandle: anExternalHandle.
 	self subclassWindow!
 
 templateId
@@ -408,8 +416,9 @@ wmInitDialog: message wParam: wParam lParam: lParam
 !UI.DialogView categoriesForMethods!
 answer!accessing!public! !
 answer:!accessing!not an aspect!public! !
-basicCreateAt:extent:!private!realizing/unrealizing! !
+basicCreate:at:extent:!public! !
 cancel!commands!public! !
+createAt:extent:!private!realizing/unrealizing! !
 defaultBackcolor!colors!constants!private! !
 defaultButton!colors!constants!public! !
 defaultExtent!constants!public! !

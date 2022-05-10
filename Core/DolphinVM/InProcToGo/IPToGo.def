@@ -9,6 +9,7 @@ EXPORTS
 HashBytes
 WndProc=?DolphinWndProc@Interpreter@@SGJPAUHWND__@@IIJ@Z
 DlgProc=?DolphinDlgProc@Interpreter@@SGJPAUHWND__@@IIJ@Z
+SubclassProc=?DolphinSubclassProc@Interpreter@@SGJPAUHWND__@@IIJIK@Z
 GenericCallback
 VTable
 AnswerDWORD

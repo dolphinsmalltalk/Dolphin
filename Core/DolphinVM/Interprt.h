@@ -150,7 +150,9 @@ public:
 	static LRESULT CALLBACK VMWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK DolphinDlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK CbtFilterHook(int code, WPARAM wParam, LPARAM lParam);
-	static void subclassWindow(OTE* window, HWND hWnd);
+	static void windowCreated(HWND hWnd, LPVOID lpCreateParams);
+	static LRESULT subclassProcResultFromOop(Oop objectPointer, HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK DolphinSubclassProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData);
 
 	static LRESULT callbackResultFromOop(Oop objectPointer);
 
@@ -848,8 +850,6 @@ private:
 
 	static uint64_t m_clockFrequency;
 	static unsigned m_numberOfProcessors;			// Logical cores
-
-	static OTE* m_oteUnderConstruction;				// Window currently under construction
 
 	// Interpreter referenced objects (roots as may have no other refs)
 	static OTE** m_roots[];

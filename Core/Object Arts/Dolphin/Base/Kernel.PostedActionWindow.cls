@@ -29,12 +29,12 @@ dispatchMessage: msgInteger wParam: wParam lParam: lParam
 evaluateNextAction
 	"Private - Evaluate the next pending action, if any. Answer whether an action was evaluated."
 
-	^actions nextNoWait 
-		ifNil: [false]
+	^actions nextNoWait
 		ifNotNil: 
-			[:action | 
+			[:action |
 			action value.
-			true]!
+			true]
+		ifNil: [false]!
 
 evaluatePendingActions
 	"Private - Evaluate  all pending actions, if any. Answer whether any actions were evaluated."

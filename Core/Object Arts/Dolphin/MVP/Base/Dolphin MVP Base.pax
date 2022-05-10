@@ -157,6 +157,10 @@ package setMethodNames: #(
 	#(#{Core.Symbol} #copyToClipboard)
 	#(#{Core.UndefinedObject} #asResourceId)
 	#(#{Graphics.Bitmap} #copyToClipboard)
+	#(#{OS.CommCtrlLibrary} #defSubclassProc:uMsg:wParam:lParam:)
+	#(#{OS.CommCtrlLibrary} #getWindowSubclass:pfnSubclass:uIdSubclass:pdwRefData:)
+	#(#{OS.CommCtrlLibrary} #removeWindowSubclass:pfnSubclass:uIdSubclass:)
+	#(#{OS.CommCtrlLibrary} #setWindowSubclass:pfnSubclass:uIdSubclass:dwRefData:)
 	#(#{OS.CommCtrlLibrary class} #sharedVariableName)
 	#(#{OS.KernelLibrary} #getConsoleWindow)
 	#(#{OS.SystemMetrics} #menuBarColor)
@@ -1575,7 +1579,7 @@ UI.Menu subclass: #'UI.MenuBar'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Kernel.InputState subclass: #'UI.GuiInputState'
-	instanceVariableNames: ''
+	instanceVariableNames: 'windows'
 	classVariableNames: 'EnumHandlesDescriptor'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -2082,7 +2086,7 @@ UI.View subclass: #'UI.ContainerView'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.View subclass: #'UI.ControlView'
-	instanceVariableNames: 'forecolor oldWndProc'
+	instanceVariableNames: 'forecolor windowId'
 	classVariableNames: 'CommonControlCallError'
 	imports: #(#{OS.CommCtrlConstants})
 	classInstanceVariableNames: ''
@@ -2259,6 +2263,65 @@ copyToClipboard
 	UI.Clipboard current setBitmap: self! !
 !Graphics.Bitmap categoriesForMethods!
 copyToClipboard!copying!public! !
+!
+
+!OS.CommCtrlLibrary methodsFor!
+
+defSubclassProc: hwnd uMsg: uMsg wParam: wParam lParam: lParam
+	"Invoke the DefSubclassProc() function of the module wrapped by the receiver.
+	Helpstring: Calls the next handler in a window's subclass chain. The last handler in the subclass chain calls the original window procedure for the window.
+
+		LONG_PTR __stdcall DefSubclassProc(
+			wireHWND hwnd,
+			unsigned int uMsg,
+			UINT_PTR wParam,
+			LONG_PTR lParam);"
+
+	<stdcall: intptr DefSubclassProc handle dword uintptr uintptr>
+	^self invalidCall: _failureCode!
+
+getWindowSubclass: hwnd pfnSubclass: pfnSubclass uIdSubclass: uIdSubclass pdwRefData: pdwRefData
+	"Invoke the GetWindowSubclass() function of the module wrapped by the receiver.
+	Helpstring: Retrieves the reference data for the specified window subclass callback.
+
+		BOOL __stdcall GetWindowSubclass(
+			wireHWND hwnd,
+			LPVOID pfnSubclass,
+			UINT_PTR uIdSubclass,
+			ULONG_PTR* pdwRefData);"
+
+	<stdcall: bool GetWindowSubclass handle void* uintptr uintptr*>
+	^self invalidCall: _failureCode!
+
+removeWindowSubclass: hwnd pfnSubclass: pfnSubclass uIdSubclass: uIdSubclass
+	"Invoke the RemoveWindowSubclass() function of the module wrapped by the receiver.
+	Helpstring: Removes a subclass callback from a window.
+
+		BOOL __stdcall RemoveWindowSubclass(
+			wireHWND hwnd,
+			LPVOID pfnSubclass,
+			UINT_PTR uIdSubclass);"
+
+	<stdcall: bool GetWindowSubclass handle uintptr uintptr>
+	^self invalidCall: _failureCode!
+
+setWindowSubclass: hwnd pfnSubclass: pfnSubclass uIdSubclass: uIdSubclass dwRefData: dwRefData
+	"Invoke the SetWindowSubclass() function of the module wrapped by the receiver.
+	Helpstring: Installs or updates a window subclass callback.
+
+		BOOL __stdcall SetWindowSubclass(
+			wireHWND hwnd,
+			LPVOID pfnSubclass,
+			UINT_PTR uIdSubclass,
+			ULONG_PTR dwRefData);"
+
+	<stdcall: bool SetWindowSubclass handle uintptr uintptr uintptr>
+	^self invalidCall: _failureCode! !
+!OS.CommCtrlLibrary categoriesForMethods!
+defSubclassProc:uMsg:wParam:lParam:!helpers!public!win32 functions-window procedure! !
+getWindowSubclass:pfnSubclass:uIdSubclass:pdwRefData:!**auto generated**!public!win32 functions-window class! !
+removeWindowSubclass:pfnSubclass:uIdSubclass:!public!win32 functions-window class! !
+setWindowSubclass:pfnSubclass:uIdSubclass:dwRefData:!public!win32 functions-window class! !
 !
 
 !OS.CommCtrlLibrary class methodsFor!

@@ -46,7 +46,6 @@ BOOL Interpreter::m_bStepping = FALSE;
 
 // The only Oops ref'd by the Interpreter which are not stored in the global pointers registry (VMPointers)
 ProcessOTE* Interpreter::m_oteNewProcess;
-POTE Interpreter::m_oteUnderConstruction;
 
 // Input Polling is initially off (negative interval) so that it doesn't interfere if not wanted
 SHAREDLONG Interpreter::m_nInputPollCounter;	// When this goes to zero, its time to poll for input
@@ -73,7 +72,6 @@ ObjectMemory::OTEPool Interpreter::m_otePools[NumOtePools];
 
 POTE* Interpreter::m_roots[] = {
 	reinterpret_cast<POTE*>(&m_oteNewProcess),
-	&m_oteUnderConstruction,
 	0
 };
 
@@ -192,7 +190,6 @@ HRESULT Interpreter::initializeAfterLoad()
 		return hr;
 
 	m_oteNewProcess = reinterpret_cast<ProcessOTE*>(Pointers.Nil);
-	m_oteUnderConstruction = Pointers.Nil;
 
 	hr = ObjectMemory::InitializeImage();
 	if (FAILED(hr))

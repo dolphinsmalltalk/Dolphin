@@ -134,6 +134,9 @@ allChildWindowHandlesDo: aMonadicValuable
 	callback free.
 	^answer!
 
+allocateId
+	^SessionManager.Current inputState allocateWindowIndex: self!
+
 allParents
 	"Answers an <sequencedReadableCollection> of all parents of the receiver including, ultimately,
 	the desktop."
@@ -352,7 +355,7 @@ basicAddSubView: aView
 		show.	"Forces creation"
 	^aView!
 
-basicCreateAt: position extent: extentPoint
+basicCreate: anInteger at: positionPoint extent: extentPoint
 	"Private - Create the Win32 window for the receiver, and answer its handle.
 	N.B. The window may not be properly subclassed - use #createAt:extent: instead."
 
@@ -363,14 +366,14 @@ basicCreateAt: position extent: extentPoint
 		lpClassName: self class winClassName asUtf16String
 		lpWindowName: self windowName
 		dwStyle: dwStyle
-		x: position x
-		y: position y
+		x: positionPoint x
+		y: positionPoint y
 		nWidth: extentPoint x
 		nHeight: extentPoint y
 		hWndParent: self creationParentView asParameter
 		hMenu: ((dwStyle anyMask: WS_CHILD) ifTrue: [self defaultId])
 		hInstance: VM applicationHandle
-		lpParam: nil!
+		lpParam: anInteger!
 
 basicDestroy
 	"Private - As #destroy, but must not be overridden."
@@ -687,12 +690,16 @@ create
 	^self createAt: (self defaultPositionWithin: creationParent forExtent: extent)
 		extent: extent!
 
-createAt: position extent: extentPoint
+createAt: positionPoint extent: extentPoint
 	"Private - Create the View window ensuring it has the VM window procedure.
 	Answer the receiver."
 
-	self hookWindowCreate.
-	self unhookWindowCreate: (self basicCreateAt: position extent: extentPoint).
+	self onAboutToCreate.
+	self
+		basicCreate: self allocateId
+		at: positionPoint
+		extent: extentPoint.
+	handle isNull ifTrue: [Win32Error signal: 'failed to create window'].
 	self presenter onViewCreated!
 
 creationParentView
@@ -1681,15 +1688,6 @@ hide
 	"Makes the receiver invisible"
 
 	^self showWithStyle: SW_HIDE!
-
-hookWindowCreate
-	"Private - Hook window creation for the receiver so that we are able to intercept the very
-	first message for the receiver and subclass the window at that point. This means
-	that we can receiver every message for a View before its class' window proc, even
-	if it is a control. We don't need to do anything fancy for our own windows."
-
-	self onAboutToCreate.
-	self primHookWindowCreate: true!
 
 id
 	"Answer the Integer identifier of the receiver"
@@ -2888,19 +2886,6 @@ previousSiblingView
 	sibling isNil ifTrue: [^nil].
 	^View withHandle: sibling!
 
-primHookWindowCreate: hookBoolean
-	"Private - Ask the VM to hook the first subsequent window creation event for the receiver.
-	When it receives such an event it will send a #subclassWindow: callback with the handle of the newly created window to the receiver. This allows controls to be subclassed BEFORE they return from the CreateWindowEx() call.
-	The VM uses a CBT hook to achieve this. The hook is implemented in the VM to minimise the performance impact. The hook is automatically 'unhooked' by the VM when it receive's the create notification before it sends the #subclassWindow: callback."
-
-	"Primitive failure reasons:
-		InvalidParameter1	- hookBoolean not a boolean
-		IllegalStateChange	- already hooked by another view
-		NotSupported		- The VM is for console apps only"
-
-	<primitive: 108>
-	^self primitiveFailed: _failureCode!
-
 printOn: aStream
 	"Append a short description of the receiver to aStream."
 
@@ -3442,13 +3427,6 @@ state
 								receiver: self
 								selector: #isEnabled:
 								argument: false)].
-			self contextMenu isNil
-				ifFalse: 
-					["views do not have context menus by default"
-					answer add: (MessageSend
-								receiver: self
-								selector: #contextMenu:
-								argument: self contextMenu)].
 			(txt := self text) notEmpty
 				ifTrue: 
 					["views have no text by default"
@@ -3503,15 +3481,13 @@ subclassWindow
 	dolphinWndProc := VM getWndProc.
 	(oldProc := self setWndProc: dolphinWndProc) = dolphinWndProc ifFalse: [self oldWndProc: oldProc]!
 
-subclassWindow: hWnd
-	"Private - Subclass the receiver's associated Win32 window, if necessary, by substituting the VM's 
-	window procedure and saving the old one, and record hWnd as the handle of the receiver's window.
-	Windows of Smalltalk registered classes (i.e. most windows apart from Windows controls) need only 
-	record the handle passed by the VM (which has previously been instructed to hook the window create
-	for the receiver).
-	Implementation Note: This message is sent by the VM with asynchronous process switching disabled."
+subclassWindow: anExternalHandle
+	"Private - Subclass the receiver's associated Win32 window, if necessary, and record the <ExternalHandle> argument as the handle of the receiver's window.
+	Windows of Smalltalk registered window classes (i.e. most windows apart from Windows controls) need only record the handle passed by the VM's CBT hook."
 
-	self attachHandle: hWnd!
+	"Implementation Note: This message is sent by the VM with asynchronous process switching disabled."
+
+	self attachHandle: anExternalHandle!
 
 subViewFromPoint: aPoint
 	"Answers the receiver's immediate subview beneath aPoint (in the receiver's coordinates)
@@ -3731,14 +3707,6 @@ trackMouseLeave
 	tme dwFlags: (tme dwFlags bitOr: TME_LEAVE).
 	tme hwndTrack: handle.
 	User32 trackMouseEvent: tme!
-
-unhookWindowCreate: hWnd
-	"Private - Undo #hookWindowCreate. The VM auto-unhooks, but if the window
-	create fails this needs to be called as the VM may not have received
-	any messages. We unhook before raising any error."
-
-	self primHookWindowCreate: false.
-	hWnd isNull ifTrue: [^Win32Error signal: 'failed to create window']!
 
 unregisterHotKeyId: id
 	User32
@@ -4619,6 +4587,7 @@ addToCommandRoute:!commands!public! !
 addToImageList:mask:!double dispatch!private! !
 adjustRectangle:!geometry!public! !
 allChildWindowHandlesDo:!hierarchy!public! !
+allocateId!private!realizing/unrealizing! !
 allParents!hierarchy!public! !
 allParentsDo:!hierarchy!public! !
 allSubViews!hierarchy!public! !
@@ -4643,7 +4612,7 @@ baseStyleMask:set:!accessing-styles!private! !
 baseStyleMask:set:recreateIfChanged:!accessing-styles!private! !
 basicActualBackcolor!accessing!private! !
 basicAddSubView:!hierarchy!private!sub views! !
-basicCreateAt:extent:!private!realizing/unrealizing! !
+basicCreate:at:extent:!public! !
 basicDestroy!private!realizing/unrealizing! !
 basicFont:!accessing!private! !
 basicInvalidateLayout!geometry!private! !
@@ -4802,7 +4771,6 @@ height!geometry!public! !
 height:!geometry!public! !
 helpId!accessing!public! !
 hide!operations!public! !
-hookWindowCreate!operations!private! !
 id!accessing!public! !
 id:!accessing!public! !
 inheritContextMenu!public!testing! !
@@ -4972,7 +4940,6 @@ preTranslateKeyboardInput:!dispatching!public! !
 preTranslateMessage:!dispatching!public! !
 preTranslateMouseInput:!dispatching!public! !
 previousSiblingView!hierarchy!public!sub views! !
-primHookWindowCreate:!helpers!private! !
 printOn:!development!printing!public! !
 propagateSettingsChange:!event handling!private! !
 queryCommand:!commands!private! !
@@ -5056,7 +5023,6 @@ topView!hierarchy!public! !
 trackContextMenu:!menus!private! !
 trackMouseHover:!operations!public! !
 trackMouseLeave!operations!public! !
-unhookWindowCreate:!operations!private! !
 unregisterHotKeyId:!helpers!public! !
 update!drawing!public! !
 updateModel!public!updating! !

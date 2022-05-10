@@ -91,26 +91,6 @@ onInitDialog
 	] on: Error do: [:e | e resignalAsWarning].
 	^true	"direct Windows to set the focus"!
 
-primHookWindowCreate: hookBoolean
-	"Private - Hook the first window creation event for the receiver.
-	We override this to force the hooking if another window is currently
-	hogging it. This prevents recursive walkbacks in some situations."
-
-	"Primitive failure reasons:
-		InvalidParameter1	- hookBoolean not a boolean
-		IllegalStateChange	- already hooked by another view
-		NotSupported		- The VM is for console apps only"
-
-	<primitive: 108>
-	^_failureCode == _PrimitiveFailureCode.IllegalStateChange
-		ifTrue: 
-			["First forcibly unhook so error walkback can be displayed"
-			self primHookWindowCreate: nil.
-			Notification signal: 'Forcibly unhooked failed window creation'.
-			"Now retry"
-			super primHookWindowCreate: hookBoolean]
-		ifFalse: [self primitiveFailed: _failureCode]!
-
 resumable: aBoolean
 	"Set whether the resume key should be enabled or disabled."
 
@@ -128,18 +108,6 @@ templateId
 	"Private - Answer the dialog template for the receiver."
 
 	^136!
-
-unhookWindowCreate: hWnd
-	"Private - Undo #hookWindowCreate. Override to ignore
-	failure to open the walkback. The likelihood is that any
-	subsequent attempt to open a walkback would fail, and hence
-	a recursive error would result, therefore it is best to fall back
-	on using a message box for the walkback."
-
-	self primHookWindowCreate: false.
-	hWnd isNull
-		ifTrue: [Notification signal: 'Failed to open walkback dialog']
-!
 
 wmCommand: message wParam: wParam lParam: lParam
 	"Our command handling requirements are very simple, so to avoid having to create Smalltalk
@@ -171,11 +139,9 @@ copyWalkbackToClipboard!commands!public! !
 debuggable:!accessing!public! !
 defaultExtent!constants!public! !
 onInitDialog!event handling!private! !
-primHookWindowCreate:!helpers!private! !
 resumable:!accessing!public! !
 runModalLoop!operations!private! !
 templateId!constants!private! !
-unhookWindowCreate:!operations!private! !
 wmCommand:wParam:lParam:!event handling-win32!public! !
 wmSize:wParam:lParam:!event handling-win32!private! !
 !

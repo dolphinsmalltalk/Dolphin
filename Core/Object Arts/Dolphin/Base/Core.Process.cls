@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Link variableSubclass: #'Core.Process'
-	instanceVariableNames: 'suspendedFrame priority myList callbackDepth tls _unused7 fpControl threadSync thread exceptionEnvironment _unused12 _unused13 debugger name debugStream'
+	instanceVariableNames: 'suspendedFrame priority myList callbackDepth tls _unused7 fpControl threadSync thread exceptionEnvironment _unused12 newWindow debugger name debugStream'
 	classVariableNames: 'DefaultMaxStack'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -321,6 +321,12 @@ name: anObject
 	"Set the name of the Process to the argument, anObject (see #name)"
 
 	name := anObject!
+
+newWindow
+	^newWindow!
+
+newWindow: aWindow
+	newWindow := aWindow!
 
 primTerminate
 	"Private - Transition the receiver from its current state to the Terminated state. Once terminated, a Process cannot (easily) be resumed or restarted."
@@ -681,6 +687,8 @@ kill!public!states-changing! !
 lastError!accessing!public! !
 name!accessing!public! !
 name:!accessing!public! !
+newWindow!accessing!public! !
+newWindow:!accessing!public! !
 primTerminate!private!states-changing! !
 printOn:!printing!public! !
 priority!accessing!public! !

@@ -56,76 +56,22 @@ void Interpreter::GuiShutdown()
 
 static HHOOK hHookOldCbtFilter;
 
-Oop* PRIMCALL Interpreter::primitiveHookWindowCreate(Oop* const sp, primargcount_t)
+void Interpreter::windowCreated(HWND hWnd, LPVOID lpCreateParams)
 {
-	Oop argPointer = *sp;
-	OTE* underConstruction = m_oteUnderConstruction;
-	OTE* receiverPointer = reinterpret_cast<OTE*>(*(sp - 1));
-
-	if (!isNil(underConstruction) && underConstruction != receiverPointer)
-	{
-		if (argPointer == reinterpret_cast<Oop>(Pointers.Nil))
-		{
-			tracelock lock(TRACESTREAM);
-			TRACESTREAM << L"WARNING: Forcibly unhooking create for " << std::hex << underConstruction << std::endl;
-			ObjectMemory::nilOutPointer(m_oteUnderConstruction);
-		}
-		else
-		{
-			// Hooked by another window - fail the primitive
-			return primitiveFailure(_PrimitiveFailureCode::IllegalStateChange);
-		}
-	}
-	else
-	{
-		if (argPointer == Oop(Pointers.True))
-		{
-			// Hooking
-
-			if (underConstruction != receiverPointer)
-			{
-				ASSERT(isNil(underConstruction));
-				m_oteUnderConstruction = receiverPointer;
-				receiverPointer->countUp();
-			}
-		}
-		else
-		{
-			if (argPointer == Oop(Pointers.False))
-			{
-				// Unhooking
-				if (underConstruction == receiverPointer)
-				{
-					tracelock lock(TRACESTREAM);
-					TRACESTREAM << L"WARNING: Unhooking create for " << std::hex << underConstruction << L" before HCBT_CREATEWND" << std::endl;
-					ObjectMemory::nilOutPointer(m_oteUnderConstruction);
-				}
-				else
-					ASSERT(isNil(underConstruction));
-			}
-			else
-				return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);	// Invalid argument
-		}
-	}
-	return sp - 1;
-}
-
-inline void Interpreter::subclassWindow(OTE* window, HWND hWnd)
-{
-	ASSERT(!ObjectMemoryIsIntegerObject(window));
 	// As this is called from an external entry point, we must ensure that OT/stack overflows
 	// are handled, and also that we catch the SE_VMCALLBACKUNWIND exceptions
 	__try
 	{
+		Oop oopWndHandle = reinterpret_cast<Oop>(ExternalHandle::New(hWnd));
+		Oop oopCreateParam = Integer::NewUIntPtr(reinterpret_cast<uintptr_t>(lpCreateParams));
 		bool bDisabled = disableInterrupts(true);
-		Oop retVal = performWith(Oop(window), Pointers.subclassWindowSymbol, Oop(ExternalHandle::New(hWnd)));
-		ObjectMemory::countDown(retVal);
+		performWithWith(reinterpret_cast<Oop>(Pointers.Dispatcher), Pointers.windowCreatedSelector, oopWndHandle, oopCreateParam);
 		ASSERT(m_bInterruptsDisabled);
 		disableInterrupts(bDisabled);
 	}
 	__except (callbackExceptionFilter(GetExceptionInformation()))
 	{
-		trace(L"WARNING: Unwinding Interpreter::subclassWindow(%#x, %#x)\n", window, hWnd);
+		trace(L"WARNING: Unwinding Interpreter::windowCreated(%#x, %#x)\n", hWnd, lpCreateParams);
 	}
 }
 
@@ -135,26 +81,16 @@ LRESULT CALLBACK Interpreter::CbtFilterHook(int code, WPARAM wParam, LPARAM lPar
 	// Looking for HCBT_CREATEWND, just pass others on...
 	if (code == HCBT_CREATEWND)
 	{
-		//ASSERT(lParam != NULL);
-		//LPCREATESTRUCT lpcs = ((LPCBT_CREATEWND)lParam)->lpcs;
-		//ASSERT(lpcs != NULL);
+		LPCBT_CREATEWNDW pCbtCreateWnd = reinterpret_cast<LPCBT_CREATEWNDW>(lParam);
+		LPCREATESTRUCT pCreateStruct = pCbtCreateWnd->lpcs;
+		LPVOID createParam = pCreateStruct->lpCreateParams;
 
-		OTE* underConstruction = m_oteUnderConstruction;
-
-		if (!isNil(underConstruction))
+		// Aside from when creating dialogs, we always pass a non-zero integer index parameter to CreateWindowEx to identify the window being created
+		// Ignore other windows that are being created, e.g. tooltips, the listview header control, etc
+		if (createParam != nullptr || pCreateStruct->lpszClass == WC_DIALOG)
 		{
-			// Nil this out as soon as possible
-			m_oteUnderConstruction = Pointers.Nil;
-			underConstruction->countDown();
-
-			ASSERT(wParam != NULL); // should be non-NULL HWND
-
-									// set m_bDlgCreate to TRUE if it is a dialog box
-									//  (this controls what kind of subclassing is done later)
-									//pThreadState->m_bDlgCreate = (lpcs->lpszClass == WC_DIALOG);
-
-									// Pass to Smalltalk for subclassing (catch unwind failures so not thrown out)
-			subclassWindow(underConstruction, HWND(wParam));
+			// Pass to Smalltalk for attach/subclassing (catch unwind failures so not thrown out)
+			windowCreated(HWND(wParam), createParam);
 		}
 	}
 
@@ -163,6 +99,103 @@ LRESULT CALLBACK Interpreter::CbtFilterHook(int code, WPARAM wParam, LPARAM lPar
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
+
+inline LRESULT Interpreter::subclassProcResultFromOop(Oop objectPointer, HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+{
+	if (ObjectMemoryIsIntegerObject(objectPointer))
+		// The result is a SmallInteger (the most common answer we hope)
+		return ObjectMemoryIntegerValueOf(objectPointer);
+
+	OTE* ote = reinterpret_cast<OTE*>(objectPointer);
+	if (ote->isBytes())
+	{
+		ASSERT(ote->bytesSize() <= 8);
+		LargeInteger* l32i = static_cast<LargeInteger*>(ote->m_location);
+		LRESULT lResult = l32i->m_digits[0];
+		ote->countDown();
+		return lResult;
+	}
+
+	trace(L"DolphinSubclassProc: Non-LRESULT value returned for MSG(hwnd:%p, msg:%u, wParam:%x, lParam:%x)\n",
+		hWnd, uMsg, wParam, lParam);
+
+	ote->countDown();
+
+	// Non-LRESULT returned, so do the only thing possible - call the default subclass procedure
+	return ::DefSubclassProc(hWnd, uMsg, wParam, lParam);
+}
+
+// Common subclass procedure for all Dolphin control windows (dispatching handled in Smalltalk)
+LRESULT CALLBACK Interpreter::DolphinSubclassProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData)
+{
+	//CHECKREFERENCES
+#ifdef _DEBUG
+	if (ObjectMemoryIntegerValueOf(m_registers.m_pActiveFrame->m_ip) > 1024)
+		_asm int 3;
+#endif
+
+	ResetInputPollCounter();
+
+	LRESULT lResult;
+
+	__try
+	{
+		// N.B. All allocation and pushing must be performed within the try
+		// block in case either stack or object table overflow occurs,
+		// and we must not pass exceptions back over the window process
+		// boundary as the originator could be a send message in non-Smalltalk
+		// code.
+
+		pushObject(Pointers.Dispatcher);
+		pushUintPtr(reinterpret_cast<uintptr_t>(hWnd));
+		pushUint32(uMsg);
+		pushUintPtr(wParam);
+		pushUintPtr(lParam);
+		pushUintPtr(uIdSubclass);
+		pushUint32(dwRefData);
+
+		disableInterrupts(true);
+		Oop lResultOop = callback(Pointers.subclassProcSelector, 6 TRACEARG(TRACEFLAG::TraceOff));
+
+		// Decode result
+		lResult = subclassProcResultFromOop(lResultOop, hWnd, uMsg, wParam, lParam);
+	}
+	__except (callbackExceptionFilter(GetExceptionInformation()))
+	{
+		// N.B. callbackExceptionFilter() catches SE_VMCALLBACKUNWIND exceptions
+		// and passes them to this handler
+
+		lResult = 0;
+
+		// Answer some default return value appropriate for the window message
+		switch (uMsg)
+		{
+		case WM_CREATE:
+			// Fail creation
+			lResult = -1;
+			break;
+
+		case WM_PAINT:
+			// We don't want to get the paint again, so just validate it
+			::ValidateRect(hWnd, NULL);
+			break;
+
+		default:
+			break;
+		}
+
+#ifdef _DEBUG
+		{
+			trace(L"WARNING: Unwinding DolphinSubclassProc(%#x, %d, %d, %d) ret: %d\n",
+				hWnd, uMsg, wParam, lParam, lResult);
+		}
+#endif
+	}
+
+	// On exit from SubclassProc, interrupts are always enabled
+	disableInterrupts(false);
+	return lResult;
+}
 
 // All messages are dispatched through DolphinWndProc. The purpose of this procedure is to act as a
 // target for calls to default window processing
@@ -189,6 +222,29 @@ int __stdcall DolphinMessage(UINT flags, const wchar_t* msg)
 	}
 }
 
+#ifdef DEBUG_HOOKS
+static HHOOK oldDebugHook = nullptr;
+static std::wstring codeNames[] = {
+L"WH_JOURNALRECORD", L"WH_JOURNALPLAYBACK", L"WH_KEYBOARD", L"WH_GETMESSAGE", L"WH_CALLWNDPROC",
+L"WH_CBT", L"WH_SYSMSGFILTER", L"WH_MOUSE", L"WH_HARDWARE", L"WH_DEBUG", L"WH_SHELL", L"WH_FOREGROUNDIDLE",
+L"WH_CALLWNDPROCRET", L"WH_KEYBOARD_LL", L"WH_MOUSE_LL" };
+static std::wstring hookCodes[] = { L"HC_ACTION", L"HC_GETNEXT", L"HC_SKIP", L"HC_NOREMOVE", L"HC_SYSMODALON", L"HC_SYSMODALOFF" };
+static std::wstring cbtHookCodes[] = { L"HCBT_MOVESIZE", L"HCBT_MINMAX", L"HCBT_QS", L"HCBT_CREATEWND", L"HCBT_DESTROYWND", L"HCBT_ACTIVATE", L"HCBT_CLICKSKIPPED", L"HCBT_KEYSKIPPED", L"HCBT_SYSCOMMAND", L"HCBT_SETFOCUS" };
+
+LRESULT CALLBACK DebugHookProc(int code, WPARAM wParam, LPARAM lParam)
+{
+	if (code >= 0)
+	{
+		auto pHookInfo = reinterpret_cast<DEBUGHOOKINFO*>(lParam);
+		thinDump << L"DebugHookProc(code: " << hookCodes[code] << L", wParam: " << codeNames[wParam] << L", lParam: " 
+			<< L"DEBUGHOOKINFO(idThread: " << std::dec << pHookInfo->idThread << L", idThreadInstaller: " << pHookInfo->idThreadInstaller
+			<< L", lParam: " << std::hex << pHookInfo->lParam << L", wParam: " << pHookInfo->wParam << L", code: " 
+			<< (wParam == WH_CBT ? cbtHookCodes[pHookInfo->code] : hookCodes[pHookInfo->code]) << L"))" << std::endl;
+	}
+	return ::CallNextHookEx(oldDebugHook, code, wParam, lParam);
+}
+#endif
+
 #pragma code_seg(INIT_SEG)
 HRESULT Interpreter::initializeImage()
 {
@@ -198,6 +254,10 @@ HRESULT Interpreter::initializeImage()
 	hHookOldCbtFilter = ::SetWindowsHookEx(WH_CBT, CbtFilterHook, NULL, ::GetCurrentThreadId());
 	if (hHookOldCbtFilter == NULL)
 		return ReportError(IDP_FAILTOHOOK, ::GetLastError());
+
+#ifdef DEBUG_HOOKS
+	oldDebugHook = ::SetWindowsHookEx(WH_DEBUG, DebugHookProc, NULL, ::GetCurrentThreadId());
+#endif
 
 	return S_OK;
 }

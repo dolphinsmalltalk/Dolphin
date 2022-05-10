@@ -22,7 +22,6 @@ Instance Variables:
 	monitorProgressPeriod	<Integer> number of milliseconds between progress monitoring periods
 
 '!
-!ImageStripperProgress categoriesForClass!Unclassified! !
 !ImageStripperProgress methodsFor!
 
 _notify: aString
@@ -201,19 +200,6 @@ preTranslateMessage: aMSG
 
 	^false!
 
-primHookWindowCreate: hookBoolean
-	"Private - Ask the VM to hook the first subsequent window creation event for the receiver.
-	When it receives such an event it will send a #subclassWindow: callback with the
-	handle of the newly created window to the receiver. This allows controls to be
-	subclassed BEFORE they return from the CreateWindowEx() call.
-	The VM uses a CBT hook to achieve this. The hook is implemented in the VM to
-	minimise the performance impact. The hook is automatically 'unhooked' by the VM
-	when it receive's the create notification before it sends the #subclassWindow:
-	callback."
-
-	<primitive: 108>
-	^self primitiveFailed: _failureCode!
-
 progress: anInteger
 	"Private - Report anInteger as the current level of progress"
 
@@ -261,7 +247,7 @@ setItem: anInteger text: aString
 
 show
 	| hWnd |
-	self primHookWindowCreate: true.
+	Processor activeProcess newWindow: self.
 	"Note: If the CreateDialogIndirect() API call GPFs it is almost certainly because 
 	an attempt is being made to load a dialog template from a resource library that
 	has been opened with the LOAD_LIBRARY_AS_DATAFILE flag. Dialog templates
@@ -272,7 +258,7 @@ show
 				hWndParent: nil
 				lpDialogFunc: VM getDlgProc
 				dwInitParam: 0.
-	self primHookWindowCreate: false.
+	Processor activeProcess newWindow: nil.
 	hWnd isNull ifTrue: [self error: 'Failed to create window'].
 	User32 showWindow: handle nCmdShow: SW_SHOWNORMAL!
 
@@ -403,7 +389,6 @@ onStartup!event handling!public! !
 parentPresenter!presenter!public! !
 presenter!accessing!public! !
 preTranslateMessage:!dispatching!public! !
-primHookWindowCreate:!helpers!private! !
 progress:!accessing!must not strip!private! !
 progressRange!operations!private! !
 resourceLib!constants!public! !
@@ -449,7 +434,7 @@ initialize
 
 onPreStripImage
 	self
-		removeSelectors: #(#forkProgressMonitor #primHookWindowCreate: #show #subclassWindow: #template #wmInitDialog:wParam:lParam: #wmCreate:wParam:lParam:).
+		removeSelectors: #(#forkProgressMonitor #show #subclassWindow: #template #wmInitDialog:wParam:lParam: #wmCreate:wParam:lParam:).
 	self class removeSelectors: self selectors!
 
 show
