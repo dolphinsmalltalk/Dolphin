@@ -134,8 +134,14 @@ new: anInteger
 	"Answer a new instance of the receiver with anInteger indexed instance variables
 	The new instance is registered with the memory manager as a weakling"
 
-	^(super new: anInteger) initialize! !
+	^(super new: anInteger) initialize!
+
+new: anInteger withAll: anObject
+	"Answer a new instance of the receiver with <integer>, anInteger, elements, each of which is initialized to the <Object>, anObject."
+
+	^(super new: anInteger withAll: anObject) initialize! !
 !Core.WeakArray class categoriesForMethods!
 new:!instance creation!public! !
+new:withAll:!instance creation!public! !
 !
 

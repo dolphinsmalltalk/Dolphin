@@ -292,10 +292,9 @@ new
 	^self new: 0!
 
 new: elementCount withAll: elementValue
-	"Answer a new instance of the receiver with <integer>, elementCount, 
-	elements, each of which is initialized to the <Object>, elementValue.
-	Included mainly for compatibility with VisualWorks."
+	"Answer a new instance of the receiver with <integer>, anInteger, elements, each of which is initialized to the <Object>, anObject."
 
+	<primitive: 71>
 	^(self new: elementCount)
 		atAllPut: elementValue;
 		yourself!

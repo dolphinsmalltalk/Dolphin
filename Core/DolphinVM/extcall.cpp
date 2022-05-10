@@ -70,7 +70,7 @@ OTE* __fastcall ExternalStructure::NewPointer(BehaviorOTE* classPointer, void* p
 	{
 		if (behavior.isIndirect())
 		{
-			AddressOTE* oteBytes = reinterpret_cast<AddressOTE*>(ObjectMemory::newByteObject<false, false>(classPointer, sizeof(uint8_t*)));
+			AddressOTE* oteBytes = reinterpret_cast<AddressOTE*>(ObjectMemory::newByteObject<false, false>(classPointer, sizeof(ExternalAddress*)));
 			ExternalAddress* extAddress = static_cast<ExternalAddress*>(oteBytes->m_location);
 			extAddress->m_pointer = ptr;
 			resultPointer = reinterpret_cast<OTE*>(oteBytes);

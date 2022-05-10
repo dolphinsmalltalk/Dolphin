@@ -23,11 +23,7 @@ addAnsweringIndex: anObject
 initialize: anInteger
 	"Private - Initialize the receiver with the specified initial capacity."
 
-	registry := WeakArray new: anInteger.
-	registry
-		replaceFrom: 1
-		to: anInteger
-		withObject: DeadObject.Current!
+	registry := WeakArray new: anInteger withAll: DeadObject.Current!
 
 removeAtIndex: anInteger
 	"Remove, and answer, the registered object with id anInteger in the receiver. 

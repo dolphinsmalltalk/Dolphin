@@ -940,10 +940,8 @@ mutableCopy
 	^self copy!
 
 nextIdentityIndexOf: anElement from: start to: stop
-	"Answer the index of the next occurrence of anElement in the receiver's indexable
-	variables between startIndex and stopIndex inclusive. If there are no such occurrences, answer 0.
-	Subclasses may be able to provide a more efficient implementation using 
-	#primIdentityIndexOf:from:to:."
+	"Answer the index of the next occurrence of anElement in the receiver's indexable variables between startIndex and stopIndex inclusive. If there are no such occurrences, answer 0.
+	Subclasses may be able to provide a more efficient implementation using #basicIdentityIndexOf:from:to:"
 
 	self from: start to: stop keysAndValuesDo: [:i :elem | elem == anElement ifTrue: [^i]].
 	^0!

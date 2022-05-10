@@ -272,10 +272,10 @@ Oop* PRIMCALL Interpreter::primitiveNew(Oop* const sp, primargcount_t)
 	}
 }
 
-Oop* PRIMCALL Interpreter::primitiveNewWithArg(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveNewWithArg(Oop* const sp, primargcount_t argc)
 {
-	BehaviorOTE* oteClass = reinterpret_cast<BehaviorOTE*>(*(sp - 1));
-	Oop oopArg = (*sp);
+	BehaviorOTE* oteClass = reinterpret_cast<BehaviorOTE*>(*(sp - argc));
+	Oop oopArg = *(sp - argc + 1);
 	// Unfortunately the compiler can't be persuaded to perform this using just the sar and conditional jumps on no-carry and signed;
 	// it generates both the bit test and the shift.
 	SmallInteger size;
@@ -287,17 +287,62 @@ Oop* PRIMCALL Interpreter::primitiveNewWithArg(Oop* const sp, primargcount_t)
 		{
 			if (instSpec.m_pointers)
 			{
-				PointersOTE* newObj = ObjectMemory::newPointerObject(oteClass, size + instSpec.m_fixedFields);
-				*(sp - 1) = reinterpret_cast<Oop>(newObj);
-				ObjectMemory::AddToZct(reinterpret_cast<OTE*>(newObj));
-				return sp - 1;
+				// We allow an extra argument to specify the initial values
+				if (argc == 1)
+				{
+					PointersOTE* newObj = ObjectMemory::newPointerObject(oteClass, size + instSpec.m_fixedFields);
+					*(sp - 1) = reinterpret_cast<Oop>(newObj);
+					ObjectMemory::AddToZct(reinterpret_cast<OTE*>(newObj));
+					return sp - 1;
+				}
+				else
+				{
+					Oop oopValue = *(sp);
+					const size_t fixed = instSpec.m_fixedFields;
+					const size_t total = size + fixed;
+					PointersOTE* newObj = ObjectMemory::newUninitializedPointerObject(oteClass, total);
+					Oop* fields = newObj->m_location->m_fields;
+					for (size_t i = fixed; i < total; i++)
+					{
+						fields[i] = oopValue;
+					}
+					if (!ObjectMemoryIsIntegerObject(oopValue))
+					{
+						OTE* oteValue = reinterpret_cast<OTE*>(oopValue);
+						size_t totalCount = oteValue->m_count + size;
+						oteValue->m_count = static_cast<count_t>(min(totalCount, OTE::MAXCOUNT));
+					}
+					*(sp - argc) = reinterpret_cast<Oop>(newObj);
+					ObjectMemory::AddToZct(reinterpret_cast<OTE*>(newObj));
+					return sp - argc;
+				}
 			}
 			else
 			{
-				BytesOTE* newObj = ObjectMemory::newByteObject<true, true>(oteClass, size);
-				*(sp - 1) = reinterpret_cast<Oop>(newObj);
-				ObjectMemory::AddToZct(reinterpret_cast<OTE*>(newObj));
-				return sp - 1;
+				if (argc == 1)
+				{
+					BytesOTE* newObj = ObjectMemory::newByteObject<true, true>(oteClass, size);
+					*(sp - 1) = reinterpret_cast<Oop>(newObj);
+					ObjectMemory::AddToZct(reinterpret_cast<OTE*>(newObj));
+					return sp - 1;
+				}
+				else
+				{
+					Oop oopValue = *(sp);
+					SmallInteger value;
+					if (ObjectMemoryIsIntegerObject(oopValue) && (value = ObjectMemoryIntegerValueOf(oopValue)) >= 0 && value <= 255)
+					{
+						BytesOTE* newObj = ObjectMemory::newByteObject<true, false>(oteClass, size);
+						memset(newObj->m_location, value, size);
+						*(sp - argc) = reinterpret_cast<Oop>(newObj);
+						ObjectMemory::AddToZct(reinterpret_cast<OTE*>(newObj));
+						return sp - argc;
+					}
+					else
+					{
+						return primitiveFailure(_PrimitiveFailureCode::IntegerOutOfRange);
+					}
+				}
 			}
 		}
 		else
