@@ -109,6 +109,18 @@ templateId
 
 	^136!
 
+unhookWindowCreate: hWnd
+	"Private - Undo #hookWindowCreate. Override to ignore
+	failure to open the walkback. The likelihood is that any
+	subsequent attempt to open a walkback would fail, and hence
+	a recursive error would result, therefore it is best to fall back
+	on using a message box for the walkback."
+
+	Processor activeProcess newWindow: nil.
+	hWnd isNull
+		ifTrue: [Notification signal: 'Failed to open walkback dialog']
+!
+
 wmCommand: message wParam: wParam lParam: lParam
 	"Our command handling requirements are very simple, so to avoid having to create Smalltalk
 	button objects to represent the buttons on the template, we simply implement a rudimentary
@@ -142,6 +154,7 @@ onInitDialog!event handling!private! !
 resumable:!accessing!public! !
 runModalLoop!operations!private! !
 templateId!constants!private! !
+unhookWindowCreate:!private!realizing/unrealizing! !
 wmCommand:wParam:lParam:!event handling-win32!public! !
 wmSize:wParam:lParam:!event handling-win32!private! !
 !

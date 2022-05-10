@@ -102,7 +102,7 @@ struct VMPointers //: public Object
 			SymbolOTE* callbackPerformWithWithSymbol;			// 50
 			SymbolOTE* callbackPerformWithWithWithSymbol;		// 51
 			SymbolOTE* callbackPerformWithArgumentsSymbol;		// 52
-			SymbolOTE* subclassProcSelector;					// 53
+			Oop _unused53;										// 53
 			SymbolOTE* windowCreatedSelector;					// 54
 			SymbolOTE* instVarAtPutSymbol;						// 55
 

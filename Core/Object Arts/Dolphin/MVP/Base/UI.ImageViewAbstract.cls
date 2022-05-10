@@ -52,6 +52,8 @@ default: imageExtent in: displayRect
 defaultWindowProcessing: message wParam: wParam lParam: lParam
 	"Private - Pass an event to the 'default' window procedure of the receiver."
 
+	"Implementation Note: The receiver is not really a Static control."
+
 	^User32
 		defWindowProc: handle
 		msg: message

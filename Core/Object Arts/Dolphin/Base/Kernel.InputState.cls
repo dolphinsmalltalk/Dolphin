@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Kernel.InputState'
-	instanceVariableNames: 'inputSemaphore idler idleTimer main windowTable deferredActions lastWindow wakeupEvent msgWindow queueStatusMask'
+	instanceVariableNames: 'inputSemaphore idler idleTimer main windows deferredActions lastWindow wakeupEvent msgWindow queueStatusMask'
 	classVariableNames: 'MaxIdleSleep SamplingInterval UserInterruptSignal'
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
@@ -50,7 +50,7 @@ consoleStartup
 	"Private - System startup has entered the second stage, and it is time to reinitialize the
 	user interaction subsystem for a console session."
 
-	windowTable := LookupTable new.
+	windows := LookupTable new.
 	self createPostedActionWindow.
 	"#aboutToIdle will not be invoked, so best to to start the idler manually as otherwise an
 	idlePanic interrupt will be sent by the VM"
@@ -171,7 +171,7 @@ hasVisibleWindows
 
 	| hDesktop |
 	hDesktop := User32 getDesktopWindow.
-	^windowTable anySatisfy: 
+	^windows anySatisfy: 
 			[:each |
 			| hWnd |
 			hWnd := each asParameter.
@@ -233,10 +233,10 @@ initializeFrom: anInputState
 	anInputState isNil
 		ifTrue: 
 			[deferredActions := SharedQueue new.
-			windowTable := LookupTable new]
+			windows := LookupTable new]
 		ifFalse: 
 			[deferredActions := anInputState deferredActions.
-			windowTable := anInputState windowTable.
+			windows := anInputState windows.
 			anInputState main: nil.
 			anInputState idler ifNotNil: [:process | process kill]].
 	idleTimer := nil.
@@ -299,7 +299,7 @@ lookupWindow: aHandle
 			[| hWnd wasEnabled window |
 			hWnd := aHandle asInteger.
 			wasEnabled := Processor enableAsyncEvents: false.
-			window := windowTable lookup: hWnd.
+			window := windows lookup: hWnd.
 			Processor enableAsyncEvents: wasEnabled.
 			window]!
 
@@ -465,7 +465,7 @@ purgeDeadWindows
 
 	| bEnabled |
 	bEnabled := Processor enableAsyncEvents: false.
-	windowTable := windowTable select: 
+	windows := windows select: 
 					[:each |
 					| hWnd |
 					(hWnd := each asParameter) notNil and: [User32 isWindow: hWnd]].
@@ -499,7 +499,7 @@ removeWindowAt: aHandle
 	| bEnabled |
 	aHandle isNil ifTrue: [^self].
 	bEnabled := Processor enableAsyncEvents: false.
-	windowTable removeKey: aHandle asInteger ifAbsent: nil.
+	windows removeKey: aHandle asInteger ifAbsent: nil.
 	lastWindow := nil.
 	Processor enableAsyncEvents: bEnabled!
 
@@ -575,27 +575,33 @@ windowAt: aHandle ifAbsent: exceptionHandler
 	aHandle ifNil: [^exceptionHandler value].
 	hWnd := aHandle asInteger.
 	wasEnabled := Processor enableAsyncEvents: false.
-	window := windowTable lookup: hWnd.
+	window := windows lookup: hWnd.
 	Processor enableAsyncEvents: wasEnabled.
 	^window ifNil: [exceptionHandler value]!
 
-windowAt: aHandle put: aWindow 
+windowAt: aHandle put: aWindow
 	"Register a Window object (which understands #dispatchMessage:) with the specified handle."
 
 	| wasEnabled hWnd |
 	hWnd := aHandle asInteger.
 	wasEnabled := Processor enableAsyncEvents: false.
-	windowTable at: hWnd put: aWindow.
+	windows at: hWnd put: aWindow.
 	lastWindow := nil.
 	Processor enableAsyncEvents: wasEnabled!
 
-windows
-	^#()!
+windowCreated: hWnd param: anInteger
+	"Private - A window with the handle, hWnd, and creation parameter, anInteger, has been created in the Dolphin process."
 
-windowTable
+	"WARNING: This method is an entry point from the VM, and must not be invoked from Smalltalk code, as it returns directly to the VM as if from a callback. Do not modify or remove this method."
+
+	"Implementation Note: The VM sends this message with asynchronous process switching disabled."
+
+	^0!
+
+windows
 	"Private - Answer the collection of all open windows (a <LookupTable> mapping <integer> window handles to <windows>."
 
-	^windowTable!
+	^windows!
 
 wndProc: hWnd message: message wParam: wParam lParam: lParam cookie: cookie
 	"Private - Dispatch a Windows message to the appropriate event handler of the view whose
@@ -613,7 +619,7 @@ wndProc: hWnd message: message wParam: wParam lParam: lParam cookie: cookie
 	lastWindow asParameter = hWnd
 		ifTrue: [window := lastWindow]
 		ifFalse: 
-			[window := windowTable lookup: hWnd.
+			[window := windows lookup: hWnd.
 			window isNil
 				ifTrue: 
 					[^Processor callback: cookie
@@ -685,8 +691,8 @@ userInterruptSignal!constants!public! !
 waitForInput:!idling!private! !
 windowAt:ifAbsent:!accessing!public! !
 windowAt:put:!accessing!public! !
-windows!private! !
-windowTable!accessing!private! !
+windowCreated:param:!private!vm entry points! !
+windows!accessing!private! !
 wndProc:message:wParam:lParam:cookie:!message dispatching!not restartable!private!vm entry points! !
 !
 

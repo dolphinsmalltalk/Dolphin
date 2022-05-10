@@ -1121,7 +1121,7 @@ clearContainerIndicators
 	indicators := nil!
 
 clearHandle
-	this := handle := windowId := nil.
+	this := handle := oldWndProc := nil.
 	library := NullScintillaLibrary default!
 
 clearIndicator: anIntegerOrSymbol from: startInteger to: stopInteger 

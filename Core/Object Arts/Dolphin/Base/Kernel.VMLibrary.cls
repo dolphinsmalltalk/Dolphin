@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 External.PermanentLibrary subclass: #'Kernel.VMLibrary'
-	instanceVariableNames: 'wndProc dlgProc genericCallback vtable specialSelectorStart subclassProc'
+	instanceVariableNames: 'wndProc dlgProc genericCallback vtable specialSelectorStart'
 	classVariableNames: 'Registry RegistryKeys'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -198,13 +198,6 @@ getGenericCallback
 			[genericCallback := Kernel32 getProcAddressDWORD: self asParameter lpProcName: 'GenericCallback'].
 	^genericCallback!
 
-getSubclassProc
-	"Answer a pointer to the VM's window subclass procedure."
-
-	subclassProc isNil
-		ifTrue: [subclassProc := Kernel32 getProcAddressDWORD: self asParameter lpProcName: 'SubclassProc'].
-	^subclassProc!
-
 getVTable
 	"Private - Answer a pointer to the VM's vtable (a fixed size virtual
 	function pointer table for use in conjunction with the COM implementation)."
@@ -337,7 +330,7 @@ onStartup
 
 	handle := Registry at: 122.
 	specialSelectorStart := RegistryKeys at: #arithmeticSelectors.
-	subclassProc := wndProc := dlgProc := vtable := genericCallback := nil!
+	wndProc := dlgProc := vtable := genericCallback := nil!
 
 productName
 	"Answer the localised name for Dolphin."
@@ -475,7 +468,6 @@ errorIntegerMoreThan32Bits:!exceptions!private! !
 fullVersion!accessing-version!public! !
 getDlgProc!accessing-callbacks!private! !
 getGenericCallback!accessing-callbacks!private! !
-getSubclassProc!accessing-callbacks!public! !
 getVTable!accessing-callbacks!private! !
 getWndProc!accessing-callbacks!public! !
 handleFromInteger:!helpers!private! !

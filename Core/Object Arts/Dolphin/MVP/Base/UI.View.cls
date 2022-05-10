@@ -134,9 +134,6 @@ allChildWindowHandlesDo: aMonadicValuable
 	callback free.
 	^answer!
 
-allocateId
-	^SessionManager.Current inputState allocateWindowIndex: self!
-
 allParents
 	"Answers an <sequencedReadableCollection> of all parents of the receiver including, ultimately,
 	the desktop."
@@ -694,12 +691,11 @@ createAt: positionPoint extent: extentPoint
 	"Private - Create the View window ensuring it has the VM window procedure.
 	Answer the receiver."
 
-	self onAboutToCreate.
-	self
-		basicCreate: self allocateId
-		at: positionPoint
-		extent: extentPoint.
-	handle isNull ifTrue: [Win32Error signal: 'failed to create window'].
+	self hookWindowCreate.
+	self unhookWindowCreate: (self
+				basicCreate: 0
+				at: positionPoint
+				extent: extentPoint).
 	self presenter onViewCreated!
 
 creationParentView
@@ -1688,6 +1684,12 @@ hide
 	"Makes the receiver invisible"
 
 	^self showWithStyle: SW_HIDE!
+
+hookWindowCreate
+	"Private - Hook window creation for the receiver so that we are able to intercept the very first message for the receiver and subclass the window at that point. The VM has a permanently installed CBT hook that receives and forwards any window creation methods to the GuiInputState. This means that we can subclass the window and receive every message for a View before its window class window proc, even if it is a control. We don't need to subclass our own windows, but it is still useful to be able to attach the handle immediately in order to be able to process the window creation messages at the Smalltalk level."
+
+	self onAboutToCreate.
+	Processor activeProcess newWindow: self!
 
 id
 	"Answer the Integer identifier of the receiver"
@@ -3708,6 +3710,12 @@ trackMouseLeave
 	tme hwndTrack: handle.
 	User32 trackMouseEvent: tme!
 
+unhookWindowCreate: hWnd
+	"Private - Undo #hookWindowCreate. The VM has a CBT hook that forwards any window creation events to the InputState, which will attach/subclass any window being created, and clear the newWindow thread variable. If the windowcreate fails this needs to be called as the VM may not have received any messages. We clear the newWindow thread variable before raising any error."
+
+	Processor activeProcess newWindow: nil.
+	hWnd isNull ifTrue: [^Win32Error signal: 'failed to create window']!
+
 unregisterHotKeyId: id
 	User32
 		registerHotKey: self handle
@@ -4587,7 +4595,6 @@ addToCommandRoute:!commands!public! !
 addToImageList:mask:!double dispatch!private! !
 adjustRectangle:!geometry!public! !
 allChildWindowHandlesDo:!hierarchy!public! !
-allocateId!private!realizing/unrealizing! !
 allParents!hierarchy!public! !
 allParentsDo:!hierarchy!public! !
 allSubViews!hierarchy!public! !
@@ -4612,7 +4619,7 @@ baseStyleMask:set:!accessing-styles!private! !
 baseStyleMask:set:recreateIfChanged:!accessing-styles!private! !
 basicActualBackcolor!accessing!private! !
 basicAddSubView:!hierarchy!private!sub views! !
-basicCreate:at:extent:!public! !
+basicCreate:at:extent:!private!realizing/unrealizing! !
 basicDestroy!private!realizing/unrealizing! !
 basicFont:!accessing!private! !
 basicInvalidateLayout!geometry!private! !
@@ -4771,6 +4778,7 @@ height!geometry!public! !
 height:!geometry!public! !
 helpId!accessing!public! !
 hide!operations!public! !
+hookWindowCreate!private!realizing/unrealizing! !
 id!accessing!public! !
 id:!accessing!public! !
 inheritContextMenu!public!testing! !
@@ -5023,6 +5031,7 @@ topView!hierarchy!public! !
 trackContextMenu:!menus!private! !
 trackMouseHover:!operations!public! !
 trackMouseLeave!operations!public! !
+unhookWindowCreate:!private!realizing/unrealizing! !
 unregisterHotKeyId:!helpers!public! !
 update!drawing!public! !
 updateModel!public!updating! !
@@ -5403,8 +5412,7 @@ initialize
 		ifTrue: 
 			[MessageMap := self buildMessageMap
 						isImmutable: true;
-						yourself].
-	VM registryAtIndex: 54 put: #subclassWindow:!
+						yourself]!
 
 mapRectangle: aRectangle from: aSourceView to: aDestinationView
 	"Answers a RECTL like aRectangle mapped from the coordinate system of aSourceView 
@@ -5699,11 +5707,7 @@ uninitialize
 	"Private - Remove any special selectors sent by the VM."
 
 	self unregisterClass.
-	"N.B. If you have implemented your own View hierarchy that uses the VM's Window class, then
-	you may need the VM to be able to notify the image of Windows messages, and will have to
-	register appropriate selectors to replace these. Note further that #wndProc:message:wParam:lParam:cookie:
-	cannot be unregistered here because it is needed by the ImageStripper progress dialog."
-	#(#subclassWindow:) do: [:each | VM unregisterObject: each]!
+	"Note that #wndProc:message:wParam:lParam:cookie: cannot be unregistered here because it is needed by the ImageStripper progress dialog."!
 
 unregisterClass
 	"Private - Unregister the receiver's corresponding Win32 class - answer whether it succeeds."

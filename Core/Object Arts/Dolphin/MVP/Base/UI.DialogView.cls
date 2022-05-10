@@ -416,7 +416,7 @@ wmInitDialog: message wParam: wParam lParam: lParam
 !UI.DialogView categoriesForMethods!
 answer!accessing!public! !
 answer:!accessing!not an aspect!public! !
-basicCreate:at:extent:!public! !
+basicCreate:at:extent:!private!realizing/unrealizing! !
 cancel!commands!public! !
 createAt:extent:!private!realizing/unrealizing! !
 defaultBackcolor!colors!constants!private! !

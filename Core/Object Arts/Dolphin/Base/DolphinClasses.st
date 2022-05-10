@@ -2345,7 +2345,7 @@ Core.Object variableByteSubclass: #'Core.GUID'
 		'StringSize' -> 16r26
 	}!
 Core.Object subclass: #'Kernel.InputState'
-	instanceVariableNames: 'inputSemaphore idler idleTimer main windowTable deferredActions lastWindow wakeupEvent msgWindow queueStatusMask'
+	instanceVariableNames: 'inputSemaphore idler idleTimer main windows deferredActions lastWindow wakeupEvent msgWindow queueStatusMask'
 	classVariableNames: 'MaxIdleSleep SamplingInterval UserInterruptSignal'
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
@@ -3310,7 +3310,7 @@ External.PermanentLibrary subclass: #'OS.UserLibrary'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 External.PermanentLibrary subclass: #'Kernel.VMLibrary'
-	instanceVariableNames: 'wndProc dlgProc genericCallback vtable specialSelectorStart subclassProc'
+	instanceVariableNames: 'wndProc dlgProc genericCallback vtable specialSelectorStart'
 	classVariableNames: 'Registry RegistryKeys'
 	imports: #()
 	classInstanceVariableNames: ''

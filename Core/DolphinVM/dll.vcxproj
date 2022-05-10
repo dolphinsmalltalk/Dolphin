@@ -114,7 +114,6 @@
       <ModuleDefinitionFile>.\VM.def</ModuleDefinitionFile>
       <EntryPointSymbol>_DllMainCRTStartup%4012</EntryPointSymbol>
       <DataExecutionPrevention />
-      <AdditionalDependencies>Comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
     </PreBuildEvent>
@@ -161,7 +160,6 @@
       <EntryPointSymbol>_DllMainCRTStartup%4012</EntryPointSymbol>
       <TargetMachine>MachineX86</TargetMachine>
       <MapExports>true</MapExports>
-      <AdditionalDependencies>Comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>
@@ -216,7 +214,6 @@
       <EntryPointSymbol>_DllMainCRTStartup%4012</EntryPointSymbol>
       <OptimizeReferences>false</OptimizeReferences>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
-      <AdditionalDependencies>Comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>

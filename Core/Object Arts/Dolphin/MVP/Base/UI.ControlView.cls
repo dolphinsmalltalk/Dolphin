@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 UI.View subclass: #'UI.ControlView'
-	instanceVariableNames: 'forecolor windowId'
+	instanceVariableNames: 'forecolor oldWndProc'
 	classVariableNames: 'CommonControlCallError'
 	imports: #(#{OS.CommCtrlConstants})
 	classInstanceVariableNames: ''
@@ -25,9 +25,6 @@ Class Variables:
 !UI.ControlView categoriesForClass!MVP-Views! !
 !UI.ControlView methodsFor!
 
-allocateId
-	^windowId := super allocateId!
-
 applyFont
 	"Private - Apply the receiver's font to the associated Windows control"
 
@@ -47,7 +44,7 @@ ccmSetVersion: anInteger
 	^self sendMessage: CCM_SETVERSION wParam: anInteger lParam: 0!
 
 clearHandle
-	handle := windowId := nil!
+	handle := oldWndProc := nil!
 
 commonNotificationMap
 	"Private - Answer a 'map' between notification codes and the selector of the corresponding event handlers in the receiver. 
@@ -95,9 +92,10 @@ commonNotificationMap
 defaultWindowProcessing: message wParam: wParam lParam: lParam
 	"Private - Pass a message to the 'default' window procedure of the receiver."
 
-	^ComCtl32
-		defSubclassProc: handle
-		uMsg: message
+	^User32
+		callWindowProc: oldWndProc
+		hWnd: handle
+		msg: message
 		wParam: wParam
 		lParam: lParam!
 
@@ -258,6 +256,16 @@ nmStartWait: pNMHDR
 	^nil
 !
 
+oldWndProc
+	"Private - Answer the window procedure of the control before we subclassed it."
+
+	^oldWndProc!
+
+oldWndProc: anAddress
+	"Private - Set the window procedure of the control before we subclassed it."
+
+	oldWndProc := anAddress!
+
 onColorRequired: aColorEvent
 	"Private - Colour event handler for aColorEvent. We set up the canvas provided by the event
 	with the appropriate foreground and background colours for the receiver. Windows
@@ -331,13 +339,6 @@ setFont: aFont
 	
 	self sendMessage: WM_SETFONT wParam: aFont asParameter lParam: 0!
 
-subclassWindow
-	ComCtl32
-		setWindowSubclass: handle
-		pfnSubclass: VM getSubclassProc
-		uIdSubclass: 0
-		dwRefData: windowId!
-
 subclassWindow: hWnd
 	"Private - Subclass the receiver's associated Win32 window by substituting the VM's 
 	window procedure and saving the control's one, and record hWnd as the handle 
@@ -366,10 +367,7 @@ ttnGetDispInfoW: pNMHDR
 	^self ttnGetDispInfo: (NMTTDISPINFOW fromAddress: pNMHDR)!
 
 unsubclassWindow
-	ComCtl32
-		removeWindowSubclass: handle
-		pfnSubclass: VM getSubclassProc
-		uIdSubclass: 0!
+	self setWndProc: oldWndProc!
 
 wantParentNotifications
 	"Answer whether the receiver's parent will be sent notifications from the receiver
@@ -384,9 +382,6 @@ wantParentNotifications: aBoolean
 	N.B. Dolphin reflects these notifications back to the receiver."
 
 	self exStyleMask: WS_EX_NOPARENTNOTIFY set: aBoolean not recreateIfChanged: false!
-
-windowId
-	^windowId!
 
 winFinalize
 	self unsubclassWindow.
@@ -427,7 +422,6 @@ wmWindowPosChanged: message wParam: wParam lParam: lParam
 	^nil	"Accept default processing"
 ! !
 !UI.ControlView categoriesForMethods!
-allocateId!private!realizing/unrealizing! !
 applyFont!font!private!updating! !
 backcolorChanged!helpers!private! !
 ccmGetVersion!operations!public! !
@@ -457,6 +451,8 @@ nmRDblClk:!event handling-win32!private! !
 nmReturn:!event handling-win32!private! !
 nmSetFocus:!event handling-win32!private! !
 nmStartWait:!event handling-win32!private! !
+oldWndProc!accessing!private! !
+oldWndProc:!accessing!private! !
 onColorRequired:!event handling!private! !
 onEraseRequired:!event handling!public! !
 onInputMaskRequired:!event handling!public! !
@@ -465,14 +461,12 @@ paintTransparentBackgroundOn:!private!updating! !
 setControlBackcolor!helpers!private! !
 setControlBackcolor:!helpers!private! !
 setFont:!accessing!font!private! !
-subclassWindow!operations!private! !
 subclassWindow:!operations!private! !
 ttnGetDispInfo:!event handling-win32!private! !
 ttnGetDispInfoW:!event handling-win32!private! !
 unsubclassWindow!operations!private! !
 wantParentNotifications!accessing-styles!public! !
 wantParentNotifications:!accessing-styles!public! !
-windowId!accessing!private! !
 winFinalize!finalizing!private! !
 withOldWndProc:!dispatching!private! !
 wmPaint:wParam:lParam:!event handling-win32!private! !
@@ -499,7 +493,6 @@ initialize
 		ControlView initialize
 	"
 
-	VM registryAtIndex: 53 put: #subclassProc:message:wParam:lParam:uIdSubclass:dwRefData:cookie:.
 	CommCtrlLibrary addInitFlag: ICC_STANDARD_CLASSES.
 	CommonControlCallError := Signal description: 'Common control call failed'.
 	View registerMessageMappings: self messageMappings!
@@ -518,8 +511,7 @@ uninitialize
 	CommCtrlLibrary removeInitFlag: ICC_STANDARD_CLASSES.
 	deadMessages := self controlColorMessages.
 	#{Menu} isDefined ifFalse: [deadMessages := deadMessages , {WM_DRAWITEM. WM_MEASUREITEM}].
-	View unregisterMessageMappings: deadMessages.
-	VM unregisterObject: #subclassProc:message:wParam:lParam:uIdSubclass:dwRefData:cookie:!
+	View unregisterMessageMappings: deadMessages!
 
 winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."

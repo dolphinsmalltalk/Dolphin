@@ -151,8 +151,6 @@ public:
 	static LRESULT CALLBACK DolphinDlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK CbtFilterHook(int code, WPARAM wParam, LPARAM lParam);
 	static void windowCreated(HWND hWnd, LPVOID lpCreateParams);
-	static LRESULT subclassProcResultFromOop(Oop objectPointer, HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-	static LRESULT CALLBACK DolphinSubclassProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData);
 
 	static LRESULT callbackResultFromOop(Oop objectPointer);
 

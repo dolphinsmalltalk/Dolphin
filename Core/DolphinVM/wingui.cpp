@@ -85,13 +85,8 @@ LRESULT CALLBACK Interpreter::CbtFilterHook(int code, WPARAM wParam, LPARAM lPar
 		LPCREATESTRUCT pCreateStruct = pCbtCreateWnd->lpcs;
 		LPVOID createParam = pCreateStruct->lpCreateParams;
 
-		// Aside from when creating dialogs, we always pass a non-zero integer index parameter to CreateWindowEx to identify the window being created
-		// Ignore other windows that are being created, e.g. tooltips, the listview header control, etc
-		if (createParam != nullptr || pCreateStruct->lpszClass == WC_DIALOG)
-		{
-			// Pass to Smalltalk for attach/subclassing (catch unwind failures so not thrown out)
-			windowCreated(HWND(wParam), createParam);
-		}
+		// Pass to Smalltalk for attach/subclassing (catch unwind failures so not thrown out)
+		windowCreated(HWND(wParam), createParam);
 	}
 
 	return ::CallNextHookEx(hHookOldCbtFilter, code, wParam, lParam);
@@ -99,103 +94,6 @@ LRESULT CALLBACK Interpreter::CbtFilterHook(int code, WPARAM wParam, LPARAM lPar
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-
-inline LRESULT Interpreter::subclassProcResultFromOop(Oop objectPointer, HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
-{
-	if (ObjectMemoryIsIntegerObject(objectPointer))
-		// The result is a SmallInteger (the most common answer we hope)
-		return ObjectMemoryIntegerValueOf(objectPointer);
-
-	OTE* ote = reinterpret_cast<OTE*>(objectPointer);
-	if (ote->isBytes())
-	{
-		ASSERT(ote->bytesSize() <= 8);
-		LargeInteger* l32i = static_cast<LargeInteger*>(ote->m_location);
-		LRESULT lResult = l32i->m_digits[0];
-		ote->countDown();
-		return lResult;
-	}
-
-	trace(L"DolphinSubclassProc: Non-LRESULT value returned for MSG(hwnd:%p, msg:%u, wParam:%x, lParam:%x)\n",
-		hWnd, uMsg, wParam, lParam);
-
-	ote->countDown();
-
-	// Non-LRESULT returned, so do the only thing possible - call the default subclass procedure
-	return ::DefSubclassProc(hWnd, uMsg, wParam, lParam);
-}
-
-// Common subclass procedure for all Dolphin control windows (dispatching handled in Smalltalk)
-LRESULT CALLBACK Interpreter::DolphinSubclassProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData)
-{
-	//CHECKREFERENCES
-#ifdef _DEBUG
-	if (ObjectMemoryIntegerValueOf(m_registers.m_pActiveFrame->m_ip) > 1024)
-		_asm int 3;
-#endif
-
-	ResetInputPollCounter();
-
-	LRESULT lResult;
-
-	__try
-	{
-		// N.B. All allocation and pushing must be performed within the try
-		// block in case either stack or object table overflow occurs,
-		// and we must not pass exceptions back over the window process
-		// boundary as the originator could be a send message in non-Smalltalk
-		// code.
-
-		pushObject(Pointers.Dispatcher);
-		pushUintPtr(reinterpret_cast<uintptr_t>(hWnd));
-		pushUint32(uMsg);
-		pushUintPtr(wParam);
-		pushUintPtr(lParam);
-		pushUintPtr(uIdSubclass);
-		pushUint32(dwRefData);
-
-		disableInterrupts(true);
-		Oop lResultOop = callback(Pointers.subclassProcSelector, 6 TRACEARG(TRACEFLAG::TraceOff));
-
-		// Decode result
-		lResult = subclassProcResultFromOop(lResultOop, hWnd, uMsg, wParam, lParam);
-	}
-	__except (callbackExceptionFilter(GetExceptionInformation()))
-	{
-		// N.B. callbackExceptionFilter() catches SE_VMCALLBACKUNWIND exceptions
-		// and passes them to this handler
-
-		lResult = 0;
-
-		// Answer some default return value appropriate for the window message
-		switch (uMsg)
-		{
-		case WM_CREATE:
-			// Fail creation
-			lResult = -1;
-			break;
-
-		case WM_PAINT:
-			// We don't want to get the paint again, so just validate it
-			::ValidateRect(hWnd, NULL);
-			break;
-
-		default:
-			break;
-		}
-
-#ifdef _DEBUG
-		{
-			trace(L"WARNING: Unwinding DolphinSubclassProc(%#x, %d, %d, %d) ret: %d\n",
-				hWnd, uMsg, wParam, lParam, lResult);
-		}
-#endif
-	}
-
-	// On exit from SubclassProc, interrupts are always enabled
-	disableInterrupts(false);
-	return lResult;
-}
 
 // All messages are dispatched through DolphinWndProc. The purpose of this procedure is to act as a
 // target for calls to default window processing

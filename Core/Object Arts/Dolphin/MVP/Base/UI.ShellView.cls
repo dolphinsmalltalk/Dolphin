@@ -192,16 +192,20 @@ defaultPositionWithin: aParentView forExtent: aPoint
 	This is used only on creation."
 
 	| testWindow defaultPosition activeMonitor defaultMonitor |
-	self assert: [aParentView notNil].
 	self isInitiallyCentered ifTrue: [^aParentView centerExtent: aPoint].
 
 	"If not creating on the desktop, create at the origin of the parent's client area"
-	aParentView parentView notNil ifTrue: [^0 @ 0].
-	(testWindow := ShellView new)
+	aParentView parentView ifNotNil: [^0 @ 0].
+	"Otherwise determine a default location"
+	testWindow := ShellView new.
+	testWindow
 		parentView: aParentView;
-		createAt: ##(CW_USEDEFAULT @ CW_USEDEFAULT) extent: aPoint.
+		handle: (testWindow
+					basicCreate: 0
+					at: ##(CW_USEDEFAULT @ CW_USEDEFAULT)
+					extent: aPoint).
 	defaultPosition := testWindow position.
-	testWindow destroy.
+	testWindow basicDestroy.
 	"Reposition to within bounds of active monitor"
 	activeMonitor := DisplayMonitor active.
 	defaultMonitor := DisplayMonitor containingPoint: defaultPosition.
