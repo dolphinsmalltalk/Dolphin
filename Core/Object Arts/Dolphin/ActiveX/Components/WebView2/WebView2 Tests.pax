@@ -1,38 +1,38 @@
 ﻿| package |
 package := Package name: 'WebView2 Tests'.
-package paxVersion: 1;
+package paxVersion: 2.1;
 	basicComment: ''.
 
 
-package classNames
-	add: #WebView2EnvironmentOptionsTest;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{WebView2.Tests}
+	#{WebView2.Tests.WebView2EnvironmentOptionsTest}
+).
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
-	'..\..\..\Base\Dolphin Base Tests'
-	'WebView2').
+	'..\..\..\Base\Tests\Dolphin Base Tests'
+	'..\..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
+	'..\..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitPreload'
+	'WebView2'
+).
 
 package!
 
 "Class Definitions"!
 
-DolphinTest subclass: #WebView2EnvironmentOptionsTest
+WebView2 subclass: #'WebView2.Tests'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	imports: #(#{XProgramming.SUnit})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'WebView2.Tests.WebView2EnvironmentOptionsTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 
