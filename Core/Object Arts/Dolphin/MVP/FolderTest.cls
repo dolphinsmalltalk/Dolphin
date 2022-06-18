@@ -47,13 +47,18 @@ testParent
 	subject := top parent.
 	empty := Folder pathname: ''.
 	self assert: subject equals: empty.
-	self assertIsNil: empty parent! !
+	self assertIsNil: empty parent!
+
+testParentOfDriveRoot
+	self assertIsNil: c parent.
+	self assertIsNil: windows parent parent! !
 !FolderTest categoriesForMethods!
 folderClass!constants!private! !
 rootFolder!public!unit tests! !
 setUp!public!Running! !
 testFolderName!public!unit tests! !
 testName!public!unit tests! !
-testParent!public! !
+testParent!public!unit tests! !
+testParentOfDriveRoot!public!unit tests! !
 !
 
