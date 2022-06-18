@@ -12,16 +12,18 @@ UI.FolderHierarchyModel comment: 'FolderHierarchyModel is a specialized <TreeMod
 !UI.FolderHierarchyModel categoriesForClass!MVP-Models! !
 !UI.FolderHierarchyModel methodsFor!
 
+add: aFolder
+	"Add the <Folder> argument to the model, recursively including any of its parent folders necessary to construct a path to a root folder."
+
+	| parent |
+	parent := aFolder parent.
+	(parent isNil or: [self includes: parent]) ifFalse: [self add: parent].
+	self add: aFolder asChildOf: parent!
+
 addFolder: aString
 	"Add the hierarchy of folders in the <readableString> path argument to the receiver."
 
-	| parent newFolder |
-	newFolder := self folderClass pathname: aString.
-	(aString isEmpty or: [File isRootPath: aString])
-		ifFalse: 
-			[parent := newFolder parent.
-			(self includes: parent) ifFalse: [self addFolder: parent pathname]].
-	self add: newFolder asChildOf: parent!
+	self add: (self folderClass pathname: aString)!
 
 folderClass
 	^Folder!
@@ -31,6 +33,7 @@ newNode: anObject
 		children: (SortedCollection sortAlgorithm: NodeSortAlgorithm);
 		yourself! !
 !UI.FolderHierarchyModel categoriesForMethods!
+add:!adding!public! !
 addFolder:!adding!public! !
 folderClass!operations!private! !
 newNode:!adding!private! !
