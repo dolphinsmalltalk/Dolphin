@@ -1,9 +1,9 @@
 version: 7.1.{build}
 skip_non_tags: true
-image: Visual Studio 2019
+image: Visual Studio 2022
 configuration: Release
 environment:
-  VCToolsRedistDir: '%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Community\VC\Redist\MSVC\v142'
+  VCToolsRedistDir: '%ProgramFiles%\Microsoft Visual Studio\2022\Community\VC\Redist\MSVC\v143'
 install:
 - cmd: "git submodule update --init --recursive\n   \ngit lfs pull"
 build_script:
