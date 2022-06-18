@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'UI.Tests.FolderTest'
 	classConstants: {}!
 UI.Tests.FolderTest guid: (Core.GUID fromString: '{8b810291-5941-433e-a94c-b16bc3505368}')!
 UI.Tests.FolderTest comment: ''!
-!UI.Tests.FolderTest categoriesForClass!Unclassified! !
 !UI.Tests.FolderTest methodsFor!
 
 folderClass
@@ -48,7 +47,11 @@ testParent
 	subject := top parent.
 	empty := Folder pathname: ''.
 	self assert: subject equals: empty.
-	self assertIsNil: empty parent! !
+	self assertIsNil: empty parent!
+
+testParentOfDriveRoot
+	self assertIsNil: c parent.
+	self assertIsNil: windows parent parent! !
 !UI.Tests.FolderTest categoriesForMethods!
 folderClass!constants!private! !
 rootFolder!public!unit tests! !
@@ -56,5 +59,6 @@ setUp!public!Running! !
 testFolderName!public!unit tests! !
 testName!public!unit tests! !
 testParent!public!unit tests! !
+testParentOfDriveRoot!public!unit tests! !
 !
 
