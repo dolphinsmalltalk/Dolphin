@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Known Failing Tests'.
 package paxVersion: 1;
 	basicComment: 'These tests are known failures that have not yet been debugged or resolved. In general these tests should pass and are therefre in need of some debugging effort so that they may be reintroduced into the fold. This package is not loaded during normal regression testing (for obvious reasons).
@@ -18,7 +18,6 @@ package methodNames
 	add: #StyledContainerTest -> #test1PixDottedBorderPaint;
 	add: #StyledContainerTest -> #test1PixDottedBorderPrint;
 	add: #ViewComposerTest -> #testResizeDoesNotMove;
-	add: #VMTest -> #testInterruptPendingOverlappedCall;
 	add: #VMTest -> #testOverlappedCallsSuspendAndTerminate2;
 	yourself.
 
@@ -28,17 +27,16 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\IDE\Base\Development System Tests';
-	add: '..\Base\Dolphin';
-	add: '..\Base\Dolphin Base Tests';
-	add: '..\MVP\Views\Common Controls\Dolphin Common Controls';
-	add: '..\IDE\Dolphin IDE Tests';
-	add: '..\MVP\Dolphin MVP Tests';
-	add: '..\MVP\Views\Styled Views\Dolphin Styled Views';
-	add: '..\MVP\Gdiplus\Gdiplus';
-	add: '..\MVP\Gdiplus\Tests\Gdiplus Tests';
-	yourself).
+package setPrerequisites: #(
+	'..\IDE\Base\Development System Tests'
+	'..\Base\Dolphin'
+	'..\Base\Dolphin Base Tests'
+	'..\MVP\Views\Common Controls\Dolphin Common Controls'
+	'..\IDE\Dolphin IDE Tests'
+	'..\MVP\Dolphin MVP Tests'
+	'..\MVP\Views\Styled Views\Dolphin Styled Views'
+	'..\MVP\Gdiplus\Gdiplus'
+	'..\MVP\Gdiplus\Tests\Gdiplus Tests').
 
 package!
 
@@ -60,7 +58,9 @@ testFullBlockEquality
 	block3 := [ | tmp | tmp := 1. count := count + tmp. tmp].
 	self assert: block1 = block2.
 	self assert: block1 ~= block3! !
-!BlockClosureTest categoriesFor: #testFullBlockEquality!public!unit tests-known failures! !
+!BlockClosureTest categoriesForMethods!
+testFullBlockEquality!public!unit tests-known failures! !
+!
 
 !CompilerTest methodsFor!
 
@@ -79,7 +79,9 @@ testOptimizedLoopReadBeforeWritten
 	"Results of actual block evaluation in a loop and optimized loop should be the same - any
 	read-before-written locals must be reinitialized to zero on each iteration"
 	self assert: actual = expected! !
-!CompilerTest categoriesFor: #testOptimizedLoopReadBeforeWritten!public!unit tests! !
+!CompilerTest categoriesForMethods!
+testOptimizedLoopReadBeforeWritten!public!unit tests! !
+!
 
 !DebuggerTest methodsFor!
 
@@ -110,7 +112,9 @@ testRemapIPSmokeTest
 					offset := ip - (textMap at: segment) key.
 					self assert: offset >= 0.
 					ip := ip + bytes size]"]! !
-!DebuggerTest categoriesFor: #testRemapIPSmokeTest!public! !
+!DebuggerTest categoriesForMethods!
+testRemapIPSmokeTest!public! !
+!
 
 !GdiplusBitmapTest methodsFor!
 
@@ -122,7 +126,9 @@ testAsByteArray
 	self assert: b1 size = b2 size.
 	"difference is in the first 100 bytes ... what is the problem?"
 	self assert: b1 = b2! !
-!GdiplusBitmapTest categoriesFor: #testAsByteArray!public!unit tests! !
+!GdiplusBitmapTest categoriesForMethods!
+testAsByteArray!public!unit tests! !
+!
 
 !ListViewTest methodsFor!
 
@@ -153,7 +159,9 @@ testColumnWidth
 	self assert: presenter view isLayoutValid.
 	self assert: primary width < after.
 	self assert: column width = 100! !
-!ListViewTest categoriesFor: #testColumnWidth!public!unit tests! !
+!ListViewTest categoriesForMethods!
+testColumnWidth!public!unit tests! !
+!
 
 !PackageSelectorTest methodsFor!
 
@@ -181,8 +189,10 @@ testPackageRemovalDoesntAlterSelection
 	packageA := nil.
 	newSelections := presenter selections.
 	self assert: newSelections = selections! !
-!PackageSelectorTest categoriesFor: #testPackageCreationDoesntAlterSelection!public! !
-!PackageSelectorTest categoriesFor: #testPackageRemovalDoesntAlterSelection!public! !
+!PackageSelectorTest categoriesForMethods!
+testPackageCreationDoesntAlterSelection!public! !
+testPackageRemovalDoesntAlterSelection!public! !
+!
 
 !PackageTest methodsFor!
 
@@ -191,7 +201,9 @@ testImageStripperPrereqs
 
 	self assert: ((Package manager packageNamed: 'Autoplay') prerequisiteNames asArray 
 				includes: 'Lagoon Image Stripper')! !
-!PackageTest categoriesFor: #testImageStripperPrereqs!public!unit tests! !
+!PackageTest categoriesForMethods!
+testImageStripperPrereqs!public!unit tests! !
+!
 
 !StyledContainerTest methodsFor!
 
@@ -251,8 +263,10 @@ test1PixDottedBorderPrint
 		checkRectangle: ((self borderRectangleOf: containerView) insetBy: 1 asPoint)
 		inBitmap: bitmap
 		color: self backgroundColor! !
-!StyledContainerTest categoriesFor: #test1PixDottedBorderPaint!public! !
-!StyledContainerTest categoriesFor: #test1PixDottedBorderPrint!public! !
+!StyledContainerTest categoriesForMethods!
+test1PixDottedBorderPaint!public! !
+test1PixDottedBorderPrint!public! !
+!
 
 !ViewComposerTest methodsFor!
 
@@ -278,56 +292,11 @@ testResizeDoesNotMove
 	self assert: static position = pos.
 	self deny: static extent = extent.
 	self assert: (vc constrainPoint: static extent) = static extent! !
-!ViewComposerTest categoriesFor: #testResizeDoesNotMove!public!unit tests! !
+!ViewComposerTest categoriesForMethods!
+testResizeDoesNotMove!public!unit tests! !
+!
 
 !VMTest methodsFor!
-
-testInterruptPendingOverlappedCall
-	"Test sending a VM interrupt to a Process blocked waiting on an overlapped call"
-
-	| evt continue |
-	evt := KernelLibrary default
-				createEvent: nil
-				bManualReset: false
-				bInitialState: false
-				lpName: nil.
-	continue := true.
-	
-	[| done sem wait proc |
-	wait := 0.
-	proc := 
-			[
-			[wait := wait + 1.
-			KernelLibrary default waitForSingleObject: evt dwMilliseconds: -1.
-			continue]
-					whileTrue]
-					forkAt: 7.
-	self assert: 1 equals: wait.
-	"Interrupt completes while the overlapped call is still pending"
-	done := false.
-	proc interruptWith: [done := true].
-	self assert: done.
-	self assert: 1 equals: wait.
-	KernelLibrary default setEvent: evt.
-	self assert: 2 equals: wait.
-	"Interrupt is waiting when the overlapped call completes (but cannot return)"
-	sem := Semaphore new.
-	proc interruptWith: 
-			[done := false.
-			sem wait.
-			done := 2].
-	KernelLibrary default setEvent: evt.
-	self deny: done.
-	self assert: 2 equals: wait.
-	"Allow interrupt to complete - and the overlapped method to return"
-	sem signal.
-	self assert: done.
-	self assert: 3 equals: wait]
-			ensure: 
-				[continue := false.
-				(KernelLibrary default)
-					setEvent: evt;
-					closeHandle: evt]!
 
 testOverlappedCallsSuspendAndTerminate2
 	| proc a win32Event maxRetries busyWaitForSignal retries sleep |
@@ -410,8 +379,9 @@ testOverlappedCallsSuspendAndTerminate2
 	self assert: a == 3.
 	self assert: Processor pendingTerminations isEmpty]
 			ensure: [KernelLibrary default closeHandle: win32Event]! !
-!VMTest categoriesFor: #testInterruptPendingOverlappedCall!public!unit tests! !
-!VMTest categoriesFor: #testOverlappedCallsSuspendAndTerminate2!public!unit tests! !
+!VMTest categoriesForMethods!
+testOverlappedCallsSuspendAndTerminate2!public!unit tests! !
+!
 
 "End of package definition"!
 

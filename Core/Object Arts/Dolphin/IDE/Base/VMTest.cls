@@ -43,6 +43,33 @@ assertImmutableResize: anObject
 	#(0 1 -1)
 		do: [:i | self should: [anObject resize: anObject size + i] raise: Processor constWriteSignal]!
 
+assertLoopInterruptible: aBlock
+	| interruptTimes start intervals execTime sampleInterval go finished |
+	interruptTimes := OrderedCollection new.
+	sampleInterval := 2 milliseconds.
+	finished := Semaphore new.
+	go := true.
+	
+	[
+	[sampleInterval wait.
+	go] whileTrue: [interruptTimes addLast: Time microsecondClockValue].
+	finished signal]
+			forkAt: Processor userInterruptPriority.
+	start := Time microsecondClockValue.
+	aBlock value.
+	execTime := (Time microsecondClockValue - start) microseconds.
+	go := false.
+	finished wait.
+	self assert: (interruptTimes size > 2
+				and: [interruptTimes size * 2 >= (execTime / sampleInterval) asFloat]).
+	intervals := OrderedCollection new.
+	interruptTimes inject: start
+		into: 
+			[:last :each |
+			intervals add: (each - last) microseconds.
+			each].
+	self assert: (intervals allSatisfy: [:each | each < (sampleInterval * 2.5)])!
+
 compile: text in: aBehavior
 	| method |
 	method := Compiler compile: text in: aBehavior.
@@ -1109,6 +1136,106 @@ testIntDivideByZero
 								isFault: ex
 								raisedIn: SmallInteger >> op
 								receiver: 123)]]!
+
+testInterruptPendingOverlappedCall
+	"Test sending a VM interrupt to a Process blocked waiting on an overlapped call"
+
+	| evt continue kernel32 |
+	kernel32 := KernelLibrary default.
+	evt := kernel32
+				createEvent: nil
+				bManualReset: false
+				bInitialState: false
+				lpName: nil.
+	
+	[| done sem wait proc |
+	wait := 0.
+	continue := true.
+	proc := 
+			[
+			[wait := wait + 1.
+			[kernel32 waitForSingleObject: evt dwMilliseconds: 1000] on: HRESULTError
+				do: [:ex | continue := false].
+			continue]
+					whileTrue]
+					forkAt: 7.
+	self assert: wait equals: 1.
+	"Interrupt completes while the overlapped call is still pending"
+	done := 0.
+	proc interruptWith: [done := 1].
+	Processor yield.
+	self assert: done equals: 1.
+	self assert: wait equals: 1.
+	kernel32 setEvent: evt.
+	5 milliseconds wait.
+	self assert: wait equals: 2.
+	"Interrupt is waiting when the overlapped call completes (but cannot return)"
+	sem := Semaphore new.
+	proc interruptWith: 
+			[done := 0.
+			sem wait.
+			done := 2].
+	kernel32 setEvent: evt.
+	Processor yield.
+	self assert: done equals: 0.
+	self assert: wait equals: 2.
+	"Allow interrupt to complete - and the overlapped method to return"
+	sem signal.
+	self assert: done equals: 2.
+	5 milliseconds wait.
+	self assert: wait equals: 3]
+			ensure: 
+				[continue := false.
+				kernel32
+					setEvent: evt;
+					closeHandle: evt]!
+
+testLoopsInterruptible
+	"#2167: Need to test all the optimisable loop types:
+		#timesRepeat:
+		#whileTrue[:]
+		#whileFalse[:]
+		#to:[by:]do:
+		#repeat		(hmmm, tricky, need some way to break the loop)
+	The loops must not contain any true mesage sends, only bytecodes"
+
+	"#timesRepeat:"
+	self assertLoopInterruptible: [3000000 timesRepeat: [1 + 2]].
+	"#whileFalse"
+	self assertLoopInterruptible: 
+			[| i |
+			i := 0.
+			
+			[i := i + 1.
+			i > 4000000] whileFalse].
+	"#whileTrue"
+	self assertLoopInterruptible: 
+			[| i |
+			i := 0.
+			
+			[i := i + 1.
+			i <= 4000000] whileTrue].
+	"#whileFalse:"
+	self assertLoopInterruptible: 
+			[| i |
+			i := 0.
+			[i >= 4000000] whileFalse: [i := i + 1]].
+	"#whileTrue:"
+	self assertLoopInterruptible: 
+			[| i |
+			i := 0.
+			[i < 4000000] whileTrue: [i := i + 1]].
+	"#to:do:"
+	self assertLoopInterruptible: [1 to: 4000000 do: [:i | i + 1]].
+	"#to:by:do:"
+	self assertLoopInterruptible: 
+			[1 to: 5000000
+				by: 2
+				do: [:i | i + 1]].
+	self assertLoopInterruptible: 
+			[3000000 to: 1
+				by: -1
+				do: [:i | i + 1]]!
 
 testMakeLargeUnsigned
 	| bytes |
@@ -3092,9 +3219,9 @@ verifyExtCallCrtFault: aBoolean
 	| lib |
 	lib := aBoolean ifTrue: [CRTLibrary nonblocking] ifFalse: [CRTLibrary default].
 	self
-		should: [lib chmod: nil pmode: 0]
+		should: [lib fgetc: nil]
 		raise: CRTError
-		matching: [:ex | ex tag == CRTConstants.EINVAL]!
+		matching: [:ex | ex tag == EINVAL]!
 
 verifyExtCallFpFault: aBoolean
 	| method exceptions fpFault |
@@ -3517,6 +3644,7 @@ assertImmutableAtPut:!private!unit tests! !
 assertImmutableBasicAtPut:!private!unit tests! !
 assertImmutableInstVarAtPut:!private!unit tests! !
 assertImmutableResize:!private!unit tests! !
+assertLoopInterruptible:!private!unit tests! !
 compile:in:!helpers!private! !
 createPrimitiveMethod:in:argCount:!helpers!private! !
 createPrimitiveMethodLike:!helpers!private! !
@@ -3581,6 +3709,8 @@ testIndirectSdwordAtOffsetPrimitives!public!unit tests! !
 testIndirectSwordAtOffsetPrimitives!public!unit tests! !
 testIndirectWordAtOffsetPrimitives!public!unit tests! !
 testIntDivideByZero!public!unit tests! !
+testInterruptPendingOverlappedCall!public!unit tests! !
+testLoopsInterruptible!public!unit tests! !
 testMakeLargeUnsigned!public!unit tests! !
 testMustBeBoolean!public!unit tests! !
 testPrimitiveAdd!public!unit tests! !
