@@ -17,9 +17,7 @@ package methodNames
 	add: #HeapsortAlgorithmTest -> #testBigStringSort;
 	add: #IntrosortAlgorithmTest -> #testBigStringSort;
 	add: #MergesortAlgorithmTest -> #testBigStringSort;
-	add: #VMTest -> #assertLoopInterruptible:;
 	add: #VMTest -> #getCPUTime;
-	add: #VMTest -> #testLoopsInterruptible;
 	add: #VMTest -> #testQuiesceWhenUIBlocked;
 	yourself.
 
@@ -33,7 +31,6 @@ package setPrerequisites: #(
 	'..\IDE\Base\Development System Tests'
 	'..\Base\Dolphin'
 	'..\Base\Dolphin Base Tests'
-	'..\Base\Dolphin Legacy Date & Time'
 	'..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects'
 	'..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
 	'..\..\..\Contributions\Refactory\Refactoring Browser\Tests\RBTests').
@@ -237,29 +234,6 @@ testBigStringSort!public!unit tests! !
 
 !VMTest methodsFor!
 
-assertLoopInterruptible: aBlock
-	| intervals execTime last sampleInterval go |
-	go := true.
-	last := Time millisecondClockValue.
-	intervals := OrderedCollection new.
-	sampleInterval := 3 milliseconds.
-	
-	[
-	[Processor sleep: sampleInterval.
-	go and: 
-			[| next |
-			next := Time millisecondClockValue.
-			intervals addLast: (next - last) milliseconds.
-			last := next.
-			true]]
-			whileTrue]
-			forkAt: Processor userInterruptPriority.
-	execTime := aBlock timeToRun.
-	go := false.
-	self
-		assert: (intervals size > 5 and: [intervals size * 1.25 >= (execTime / sampleInterval) asFloat]).
-	self assert: (intervals size > 2 and: [intervals allSatisfy: [:each | each < (sampleInterval * 2)]])!
-
 getCPUTime
 	"Answer the total CPU time consumed since Dolphin was started, in milliseconds."
 
@@ -277,54 +251,6 @@ getCPUTime
 		lpUserTime: user.
 	^Duration microseconds: (kernel asInteger + user asInteger) / 10!
 
-testLoopsInterruptible
-	"#2167: Need to test all the optimisable loop types:
-		#timesRepeat:
-		#whileTrue[:]
-		#whileFalse[:]
-		#to:[by:]do:
-		#repeat		(hmmm, tricky, need some way to break the loop)
-	The loops must not contain any true mesage sends, only bytecodes"
-
-	"#timesRepeat:"
-
-	self assertLoopInterruptible: [3000000 timesRepeat: [1 + 2]].
-	"#whileFalse"
-	self assertLoopInterruptible: 
-			[| i |
-			i := 0.
-			
-			[i := i + 1.
-			i > 5000000] whileFalse].
-	"#whileTrue"
-	self assertLoopInterruptible: 
-			[| i |
-			i := 0.
-			
-			[i := i + 1.
-			i <= 5000000] whileTrue].
-	"#whileFalse:"
-	self assertLoopInterruptible: 
-			[| i |
-			i := 0.
-			[i >= 5000000] whileFalse: [i := i + 1]].
-	"#whileTrue:"
-	self assertLoopInterruptible: 
-			[| i |
-			i := 0.
-			[i < 5000000] whileTrue: [i := i + 1]].
-	"#to:do:"
-	self assertLoopInterruptible: [1 to: 5000000 do: [:i | i + 1]].
-	"#to:by:do:"
-	self assertLoopInterruptible: 
-			[1 to: 10000000
-				by: 2
-				do: [:i | i + 1]].
-	self assertLoopInterruptible: 
-			[5000000 to: 1
-				by: -1
-				do: [:i | i + 1]]!
-
 testQuiesceWhenUIBlocked
 	"#969: Dolphin burns 100% CPU when main UI process blocked on Semaphore"
 
@@ -340,9 +266,7 @@ testQuiesceWhenUIBlocked
 	"The VM should quiesce properly, even if events are waiting to be processed, so very little CPU time should have been consumed"
 	self assert: cpuWhileSleeping < (wait * 0.03)! !
 !VMTest categoriesForMethods!
-assertLoopInterruptible:!private!unit tests! !
 getCPUTime!public!unit tests! !
-testLoopsInterruptible!public!unit tests! !
 testQuiesceWhenUIBlocked!public!unit tests! !
 !
 
