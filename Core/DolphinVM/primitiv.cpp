@@ -319,7 +319,6 @@ boolean Interpreter::hasCompatibleShape(OTE* oteReceiver, ST::Behavior* argClass
 		//	- target class is fixed size and that size is the same as the current size
 		//	- target class is indexable, and the current size is sufficient to at least cover all its fixed fields
 		// Whether the source is indexable or fixed not does not actually matter
-		ASSERT(targetClassShape.m_indexable == sourceClassShape.m_indexable);
 		size_t pointerSize = oteReceiver->pointersSize();
 		return targetClassShape.m_indexable
 			? pointerSize >= targetClassShape.m_fixedFields
