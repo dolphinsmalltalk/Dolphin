@@ -10,7 +10,6 @@ Kernel.Tests.VMTest guid: (Core.GUID fromString: '{d03f75a2-8c1c-4559-8177-eff37
 Kernel.Tests.VMTest comment: 'Test the VM primitives and other VM related operations.
 
 SUnitBrowser openOnTestCase: self'!
-!Kernel.Tests.VMTest categoriesForClass!Unclassified! !
 !Kernel.Tests.VMTest methodsFor!
 
 assertImmutableAtPut: anObject
@@ -47,22 +46,22 @@ assertImmutableResize: anObject
 assertLoopInterruptible: aBlock
 	| interruptTimes start intervals execTime sampleInterval go finished |
 	interruptTimes := OrderedCollection new.
-	sampleInterval := 3 milliseconds.
+	sampleInterval := 2 milliseconds.
 	finished := Semaphore new.
 	go := true.
 	
-	[start := Time microsecondClockValue.
-	
+	[
 	[sampleInterval wait.
 	go] whileTrue: [interruptTimes addLast: Time microsecondClockValue].
 	finished signal]
 			forkAt: Processor userInterruptPriority.
+	start := Time microsecondClockValue.
 	aBlock value.
 	execTime := (Time microsecondClockValue - start) microseconds.
 	go := false.
 	finished wait.
 	self assert: (interruptTimes size > 2
-				and: [interruptTimes size * 1.5 >= (execTime / sampleInterval) asFloat]).
+				and: [interruptTimes size * 2 >= (execTime / sampleInterval) asFloat]).
 	intervals := OrderedCollection new.
 	interruptTimes inject: start
 		into: 
@@ -1212,40 +1211,40 @@ testLoopsInterruptible
 	The loops must not contain any true mesage sends, only bytecodes"
 
 	"#timesRepeat:"
-	self assertLoopInterruptible: [2500000 timesRepeat: [1 + 2]].
+	self assertLoopInterruptible: [3000000 timesRepeat: [1 + 2]].
 	"#whileFalse"
 	self assertLoopInterruptible: 
 			[| i |
 			i := 0.
 			
 			[i := i + 1.
-			i > 3000000] whileFalse].
+			i > 4000000] whileFalse].
 	"#whileTrue"
 	self assertLoopInterruptible: 
 			[| i |
 			i := 0.
 			
 			[i := i + 1.
-			i <= 3000000] whileTrue].
+			i <= 4000000] whileTrue].
 	"#whileFalse:"
 	self assertLoopInterruptible: 
 			[| i |
 			i := 0.
-			[i >= 3000000] whileFalse: [i := i + 1]].
+			[i >= 4000000] whileFalse: [i := i + 1]].
 	"#whileTrue:"
 	self assertLoopInterruptible: 
 			[| i |
 			i := 0.
-			[i < 3000000] whileTrue: [i := i + 1]].
+			[i < 4000000] whileTrue: [i := i + 1]].
 	"#to:do:"
-	self assertLoopInterruptible: [1 to: 3000000 do: [:i | i + 1]].
+	self assertLoopInterruptible: [1 to: 4000000 do: [:i | i + 1]].
 	"#to:by:do:"
 	self assertLoopInterruptible: 
 			[1 to: 5000000
 				by: 2
 				do: [:i | i + 1]].
 	self assertLoopInterruptible: 
-			[2500000 to: 1
+			[3000000 to: 1
 				by: -1
 				do: [:i | i + 1]]!
 

@@ -353,7 +353,10 @@ setEnvironment: aBrowserEnvironment
 	self flushCaches!
 
 smalltalkNamespace
-	^smalltalkNamespace! !
+	^smalltalkNamespace!
+
+upgradePackage: aPackage
+	^changes addChange: (PackageVersionChange package: aPackage version: Package paxVersion)! !
 !Refactory.Browser.RBModel categoriesForMethods!
 addClassConstant:to:!changes!private! !
 addClassVariable:to:!changes!private! !
@@ -404,6 +407,7 @@ rootClasses!accessing/classes!public! !
 rootNamespace!accessing/classes!public! !
 setEnvironment:!initialize/release!private! !
 smalltalkNamespace!accessing/classes!public! !
+upgradePackage:!changes!public! !
 !
 
 !Refactory.Browser.RBModel class methodsFor!

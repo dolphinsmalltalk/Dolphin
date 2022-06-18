@@ -476,6 +476,53 @@ testRenameClassShadowingImported
 		of: fooClass
 		equals: 'referencesToImportedClass ^{Refactory.Browser.Tests.RenameClassRefactoringTest. #{Refactory.Browser.Tests.RenameClassRefactoringTest}. #RenameClassRefactoringTest. #{RenameClassRefactoringTest}}'!
 
+testRenameLegacyClass
+	"Tests a rename that changes a class' namespace from Smalltalk will upgrade the owning package to the new source format"
+
+	| refactoring newClass scribble smalltalk change package packageToUpgrade |
+	scribble := model classNamed: 'Scribble'.
+	package := scribble owningPackage.
+	self assert: package paxVersion equals: 1.
+	self assertNotNil: package.
+	smalltalk := model classFor: Smalltalk.
+	self assert: scribble environment identicalTo: smalltalk.
+	"Now rename Refactory.Browser.Tests.ClassToRename to Smalltalk.ClassToRename, effectively changing just its namespace"
+	refactoring := RenameClassRefactoring
+				model: model
+				rename: scribble
+				to: 'UI.Examples.Scribble'.
+	packageToUpgrade := nil.
+	refactoring setOption: #upgradeLegacyPackages
+		toUse: 
+			[:rename :pkg |
+			packageToUpgrade := pkg.
+			false].
+	self
+		should: [self executeRefactoring: refactoring]
+		raise: Refactoring abortSignal
+		matching: [:ex | ex description = 'Rename class Smalltalk.Scribble to UI.Examples.Scribble aborted'].
+	self assert: packageToUpgrade identicalTo: package.
+	packageToUpgrade := nil.
+	refactoring := RenameClassRefactoring
+				model: model
+				rename: scribble
+				to: 'UI.Examples.Scribble'.
+	refactoring
+		setOption: #upgradeLegacyPackages
+			toUse: 
+				[:rename :pkg |
+				packageToUpgrade := pkg.
+				true];
+		setOption: #ignoreSymbolicClassReferences toUse: [:rename :refs | true].
+	self executeRefactoring: refactoring.
+	newClass := model classNamed: 'UI.Examples.Scribble'.
+	self denyIsNil: newClass.
+	self deny: (model includesClassNamed: 'Scribble').
+	self assert: packageToUpgrade identicalTo: package.
+	change := model changes lastChangeMatching: [:each | each isKindOf: PackageVersionChange].
+	self assert: change package equals: package.
+	self assert: change version equals: Package paxVersion!
+
 testRenameNamespace
 	"Renaming a Namespace is like a normal Class rename for direct references, but there could also be indirect references. In fact all the classes in the Namespace are effectively being renamed. This means we need to consider all references to all classes in the namespace, including any sub-namespace classes, and any classes in those sub-namespaces, and so on."
 
@@ -688,6 +735,7 @@ testRenameChangeNamespaceToImported!public!unit tests! !
 testRenameClass!public!unit tests! !
 testRenameClassShadowedByClassVariable!public!unit tests! !
 testRenameClassShadowingImported!public!unit tests! !
+testRenameLegacyClass!public!unit tests! !
 testRenameNamespace!public!unit tests! !
 testRenameOfClassWithMethodInPackageNamespace!public!unit tests! !
 verifyRenames:unqualified:full:partial:!helpers!private! !

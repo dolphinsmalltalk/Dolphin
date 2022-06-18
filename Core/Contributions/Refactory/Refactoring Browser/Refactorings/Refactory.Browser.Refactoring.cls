@@ -231,6 +231,11 @@ getOptionReplaceReferencesTo: oldSymbol with: newSymbol
 getOptionSelfArgumentName
 	^self prompt: 'Enter name for argument to refer to "self" in extracted method'!
 
+getOptionUpgradeLegacyPackage: aPackage
+	^self
+		confirm: 'The package <1p> is in legacy source format, which does not support namespace classes. In order to proceed with the refactoring the package will have to be upgraded. Once upgraded, the package will no longer be loadable in older versions of Dolphin such as 7.1.<n><n>Are you sure you want to proceed?'
+				<< aPackage!
+
 getOptionUseExistingMethod: aSelector
 	^self
 		confirm: ('Use existing method <1p> instead of creating a new method?' expandMacrosWith: aSelector)!
@@ -548,6 +553,7 @@ getOptionRenameAllDefinitions:of:!options!public! !
 getOptionRenameReferencesTo:!options!public! !
 getOptionReplaceReferencesTo:with:!options!public! !
 getOptionSelfArgumentName!options!public! !
+getOptionUpgradeLegacyPackage:!options!public! !
 getOptionUseExistingMethod:!options!public! !
 getOptionVariableToMoveToOf:in:!options!public! !
 getOptionVariableTypes:selected:!options!public! !
@@ -647,6 +653,8 @@ initializeRefactoringOptions
 						#selectVariableToMoveTo
 							-> [:refactoring :class :selector | refactoring getOptionVariableToMoveToOf: class in: selector].
 						#selfArgumentName -> [:refactoring | refactoring getOptionSelfArgumentName].
+						#upgradeLegacyPackages
+							-> [:refactoring :package | refactoring getOptionUpgradeLegacyPackage: package].
 						#useExistingMethod
 							-> [:refactoring :selector | refactoring getOptionUseExistingMethod: selector].
 						#variableTypes

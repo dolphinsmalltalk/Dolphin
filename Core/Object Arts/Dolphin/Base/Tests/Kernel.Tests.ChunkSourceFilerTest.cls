@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Kernel.Tests.ChunkSourceFilerTest'
 	classConstants: {}!
 Kernel.Tests.ChunkSourceFilerTest guid: (Core.GUID fromString: '{68c7a37f-c3e0-49cd-912f-b09e383474a3}')!
 Kernel.Tests.ChunkSourceFilerTest comment: ''!
-!Kernel.Tests.ChunkSourceFilerTest categoriesForClass!Unclassified! !
 !Kernel.Tests.ChunkSourceFilerTest methodsFor!
 
 testPrintDefinitionOfClassInSmalltalk

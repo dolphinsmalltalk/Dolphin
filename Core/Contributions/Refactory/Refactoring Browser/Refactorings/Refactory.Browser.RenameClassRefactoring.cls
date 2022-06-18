@@ -44,6 +44,10 @@ displayOn: aPuttableStream
 		nextPutAll: ' to ';
 		nextPutAll: newName!
 
+isMovingClassFromSmalltalk
+	^classBinding environment == self model smalltalkNamespace
+		and: [newClassReference environment ~~ classBinding environment]!
+
 preconditions
 	^(RBCondition withBlock: [class notNil and: [class isMeta not]]
 		errorString: self className , ' is <1?:not >an existing class')
@@ -76,12 +80,11 @@ rewriteSymbolicReferencesToClass
 	"Private - If renaming a class that is currently in Smalltalk into another Namespace, we first rewrite any definite symbolic references to the class into literal binding references."
 
 	| rewriteClassNames symbolicRefs |
-	(classBinding environment == self model smalltalkNamespace
-		and: [newClassReference environment ~~ classBinding environment])
-			ifTrue: 
-				[rewriteClassNames := ClassNameToBindingReferenceRefactoring model: model
-							replaceSymbolicReferencesTo: class.
-				self performComponentRefactoring: rewriteClassNames].
+	self isMovingClassFromSmalltalk
+		ifTrue: 
+			[rewriteClassNames := ClassNameToBindingReferenceRefactoring model: model
+						replaceSymbolicReferencesTo: class.
+			self performComponentRefactoring: rewriteClassNames].
 	symbolicRefs := model allReferencesTo: oldUnqualified.
 	symbolicRefs isEmpty
 		ifFalse: 
@@ -89,6 +92,9 @@ rewriteSymbolicReferencesToClass
 
 shouldIgnoreRemainingSymbolicReferences: aCollection
 	^(self lookupOption: #ignoreSymbolicClassReferences) cull: self cull: aCollection!
+
+shouldUpgradeLegacyPackages: aPackage
+	^(self lookupOption: #upgradeLegacyPackages) cull: self cull: aPackage!
 
 storeOn: aStream
 	aStream nextPut: $(.
@@ -101,7 +107,9 @@ storeOn: aStream
 		nextPut: $)!
 
 transform
-	self rewriteSymbolicReferencesToClass.
+	self
+		upgradePackageIfRequired;
+		rewriteSymbolicReferencesToClass.
 	self model
 		renameClass: class
 		to: newName
@@ -109,16 +117,29 @@ transform
 			[:methods |
 			self
 				renameImports;
-				rewriteStaleVariableReferences: methods]! !
+				rewriteStaleVariableReferences: methods]!
+
+upgradePackageIfRequired
+	"Private - If renaming a class that is currently in Smalltalk into another Namespace, we may need to upgrade its package if currently a legacy package that cannot host namespaced classes."
+
+	| package |
+	self isMovingClassFromSmalltalk ifFalse: [^self].
+	package := class owningPackage.
+	(package isNil or: [package isLegacySourceFormat not]) ifTrue: [^self].
+	(self shouldUpgradeLegacyPackages: package) ifFalse: [self refactoringAborted].
+	self model upgradePackage: package! !
 !Refactory.Browser.RenameClassRefactoring categoriesForMethods!
 className:newName:!initializing!private! !
 displayOn:!displaying!public! !
+isMovingClassFromSmalltalk!private!testing! !
 preconditions!accessing!public! !
 renameImports!private!transforming! !
 rewriteSymbolicReferencesToClass!private!transforming! !
 shouldIgnoreRemainingSymbolicReferences:!options!private! !
+shouldUpgradeLegacyPackages:!options!private! !
 storeOn:!printing!public! !
 transform!public!transforming! !
+upgradePackageIfRequired!private!transforming! !
 !
 
 !Refactory.Browser.RenameClassRefactoring class methodsFor!

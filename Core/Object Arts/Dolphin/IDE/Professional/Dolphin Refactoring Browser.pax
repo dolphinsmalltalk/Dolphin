@@ -166,6 +166,7 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.RenameAccessorsForVariableRefactoring class} #icon)
 	#(#{Refactory.Browser.RenameClassChange class} #icon)
 	#(#{Refactory.Browser.RenameClassRefactoring} #getOptionIgnoreSymbolicClassReferences:)
+	#(#{Refactory.Browser.RenameClassRefactoring} #getOptionUpgradeLegacyPackage:)
 	#(#{Refactory.Browser.RenameClassVariableRefactoring} #displayOn:)
 	#(#{Refactory.Browser.RenameClassVariableRefactoring class} #displayPrefix)
 	#(#{Refactory.Browser.RenameClassVariableRefactoring class} #icon)
@@ -1900,9 +1901,26 @@ getOptionIgnoreSymbolicClassReferences: aCollection
 			[self openBrowserOn: ((self model environment forMethods: aCollection)
 						label: 'Remaining references to class being renamed from <1p>' << oldUnqualified;
 						yourself)].
-	^false! !
+	^false!
+
+getOptionUpgradeLegacyPackage: aPackage
+	| args |
+	args := {oldUnqualified. aPackage. newName}.
+	^UI.MessageBox new
+		caption: self displayString;
+		headline: 'Package upgrade required';
+		text: 'The class ''<1d>'' is owned by the legacy format package ''<2d>'', which must be upgraded to complete the rename.'
+					<< args;
+		detailsText: 'Legacy format packages can only be used to save and load classes in the legacy Smalltalk namespace.<n><n>In order to proceed with renaming <1s> to <3s>, it will be necessary to upgrade the package to the new source format that supports namespaces.<n><n>New format packages cannot be loaded into versions of Dolphin prior to 8.x.'
+					<< args;
+		customButtons: #(#(#yes '&Upgrade Package') #(#no 'Cancel'));
+		iconStyle: #warning;
+		defaultButton: 2;
+		isCancellable: true;
+		confirm! !
 !Refactory.Browser.RenameClassRefactoring categoriesForMethods!
 getOptionIgnoreSymbolicClassReferences:!options!public! !
+getOptionUpgradeLegacyPackage:!options!public! !
 !
 
 !Refactory.Browser.RenameClassVariableRefactoring methodsFor!
