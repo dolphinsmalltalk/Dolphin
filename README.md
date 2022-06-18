@@ -2,7 +2,7 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/scael64ohx3l6io9/branch/master?svg=true)](https://ci.appveyor.com/project/dolphinsmalltalk/dolphin-db22v/branch/master)
 
-**Please note: The master branch is now the development branch for version 8.0. This will add support for namespaces, but is currently in a pre-beta state. It also changes the package and class file formats when namespaces are used, and consequently code saved in the new format is not loadable directly into earlier versions of Dolphin. Please use the `release/7.1` branch if you need a stable version. PRs for bug fixes, etc, will still be accepted against the `release/7.1` branch for the foreseeable future.**
+**Please note: The master branch is now the development branch for version 8.0. This adds support for namespaces and has numerous other improvements, but is currently in a beta state. It also changes the package and class file formats when namespaces are used, and consequently code saved in the new format is not loadable directly into earlier versions of Dolphin. It is still possible to save packages in the old format, but only if namespaces are not used or referenced. Please use the `release/7.1` branch if you need to keep working with code in release 7.1, or if you require a stable version. PRs for bug fixes, etc, will still be accepted against the `release/7.1` branch for the foreseeable future.**
 
 This repository contains:
 * A VS2022 solution to build the Virtual Machine (VM) elements of Dolphin Smalltalk.
