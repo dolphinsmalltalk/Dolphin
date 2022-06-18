@@ -60,7 +60,7 @@ parent
 
 	| path |
 	path := self pathname.
-	^path isEmpty
+	^(path isEmpty or: [File isRootPath: path])
 		ifFalse: [self class pathname: (File splitPathFrom: (File removePathDelimiter: path))]!
 
 pathname
