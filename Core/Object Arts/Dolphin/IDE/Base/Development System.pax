@@ -4819,7 +4819,9 @@ searchForInTool: aSmalltalkToolShell
 toggleLegacySourceFormat
 	"Toggles the use of legacy (pre-namespace) source format."
 
-	^self isLegacySourceFormat: self isLegacySourceFormat not!
+	SmalltalkSystem current changeManager
+		performChange: (Refactory.Browser.PackageVersionChange package: self
+				version: (self isLegacySourceFormat ifTrue: [self class paxVersion] ifFalse: [1]))!
 
 toggleUsingPAX
 	"Toggles the use of PAX mode."

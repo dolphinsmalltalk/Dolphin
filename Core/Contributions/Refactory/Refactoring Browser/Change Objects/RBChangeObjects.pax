@@ -27,6 +27,7 @@ package setClassNames: #(
 	#{Refactory.Browser.ClassSpecialBehaviorChange}
 	#{Refactory.Browser.CompositeRefactoryChange}
 	#{Refactory.Browser.MoveClassChange}
+	#{Refactory.Browser.PackageVersionChange}
 	#{Refactory.Browser.RefactoryChange}
 	#{Refactory.Browser.RefactoryChangeManager}
 	#{Refactory.Browser.RefactoryClassChange}
@@ -75,6 +76,12 @@ Core.Object subclass: #'Refactory.Browser.RefactoryChangeManager'
 	classConstants: {}!
 Refactory.Browser.RefactoryChange subclass: #'Refactory.Browser.CompositeRefactoryChange'
 	instanceVariableNames: 'changes'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.RefactoryChange subclass: #'Refactory.Browser.PackageVersionChange'
+	instanceVariableNames: 'version packageName'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

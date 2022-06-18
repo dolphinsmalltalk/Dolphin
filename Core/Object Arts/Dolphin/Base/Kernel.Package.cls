@@ -2256,6 +2256,11 @@ name: nameString
 		yourself
 !
 
+named: aString
+	"Answer an existing  instance of the receiver with the <readableString> name, aString."
+
+	^self manager packageNamed: aString!
+
 new
 	"Answer a new instance of the receiver."
 
@@ -2518,6 +2523,7 @@ fromPAXFile:!instance creation!private! !
 initialize!initializing!private! !
 manager!accessing!public! !
 name:!instance creation!public! !
+named:!instance creation!public! !
 new!instance creation!public! !
 onPreStripImage!class hierarchy-removing!private! !
 packageExtension!constants!private! !

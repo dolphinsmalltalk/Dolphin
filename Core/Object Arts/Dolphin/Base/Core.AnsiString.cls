@@ -140,6 +140,11 @@ coerceString: aString
 
 	^aString asAnsiString!
 
+encoding
+	"Answer a <Symbol> naming the encoding of instances of the receiver, which will be one of #ansi, #utf8, #utf16 or #utf32."
+
+	^#ansi!
+
 initialize
 	empty := self new
 				isImmutable: true;
@@ -184,6 +189,7 @@ with: firstCharacter with: secondCharacter with: thirdCharacter with: fourthChar
 !Core.AnsiString class categoriesForMethods!
 characterForCodeUnit:!enquiries!public! !
 coerceString:!instance creation!public! !
+encoding!constants!public! !
 initialize!class initialization!development!public! !
 with:!instance creation!public! !
 with:with:!instance creation!public! !

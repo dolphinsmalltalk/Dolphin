@@ -477,6 +477,11 @@ codePage
 
 	^CP_UTF8!
 
+encoding
+	"Answer a <Symbol> naming the encoding of instances of the receiver, which will be one of #ansi, #utf8, #utf16 or #utf32."
+
+	^#utf8!
+
 initialize
 	self extraInstanceSpec: EncodingUtf8.
 	empty := ''.
@@ -484,6 +489,7 @@ initialize
 !Core.Utf8String class categoriesForMethods!
 characterForCodeUnit:!enquiries!public! !
 codePage!instance creation!public! !
+encoding!constants!public! !
 initialize!development!initializing!public! !
 !
 

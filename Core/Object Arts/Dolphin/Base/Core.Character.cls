@@ -245,7 +245,7 @@ displayOn: aPuttableStream
 	aPuttableStream nextPut: self!
 
 encoding
-	"Answer a <Symbol> naming the encoding of the character, which will be one of #ansi, #utf8, #utf16 or #utf32."
+	"Answer a <Symbol> naming the encoding of the character, which will be one of #ansi, #utf8, #utf16le or #utf32."
 
 	^String encodingName: self basicEncoding!
 

@@ -412,6 +412,11 @@ elementSize
 
 	^2!
 
+encoding
+	"Answer a <Symbol> naming the encoding of instances of the receiver, which will be one of #ansi, #utf8, #utf16 or #utf32."
+
+	^#utf16le!
+
 fromAddress: anAddress
 	"Answer a new String instantiated from the null terminated string at anAddress."
 
@@ -499,6 +504,7 @@ characterForCodeUnit:!enquiries!public! !
 codePage!constants!public! !
 coerceString:!instance creation!public! !
 elementSize!constants!public! !
+encoding!constants!public! !
 fromAddress:!instance creation!public! !
 fromAddress:length:!instance creation!public! !
 fromAtomId:!instance creation!public! !

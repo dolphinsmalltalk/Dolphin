@@ -1473,7 +1473,7 @@ empty
 	^empty!
 
 encoding
-	"Answer a <Symbol> naming the encoding of instances of the receiver, which will be one of #ansi, #utf8, #utf16 or #utf32."
+	"Answer a <Symbol> naming the encoding of instances of the receiver, which will be one of #ansi, #utf8, #utf16le or #utf32."
 
 	^Encodings at: self basicEncoding + 1!
 
