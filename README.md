@@ -5,7 +5,7 @@
 **Please note: The master branch is now the development branch for version 8.0. This adds support for namespaces, but is a beta state. The source code fileout format requires changes to support namespaces, although Dolphin 8 can round-trip code in the earlier (pre-namespace) package format of Dolphin 7.1 when namespaces are not used. Please use the `release/7.1` branch if you need a stable version. PRs for bug fixes, etc, will still be accepted against the `release/7.1` branch for the foreseeable future.**
 
 This repository contains:
-* A VS2019 solution to build the Virtual Machine (VM) elements of Dolphin Smalltalk.
+* A VS2022 solution to build the Virtual Machine (VM) elements of Dolphin Smalltalk.
 * The necessary Smalltalk packages to build the [Dolphin Smalltalk](https://object-arts.com) Core Images from a pre-built boot image.
 
 ## Building the Virtual Machine
@@ -18,9 +18,9 @@ It is not necessary to build the VM, since pre-built binaries are available for 
 
 * _Version 7.1 and later:_ The DolphinVM repository has been merged into the main Dolphin repository and can be found in the `Core\DolphinVM` folder. The history from the original repository has been retained. 
 
-* Install the free VS2019 Community Edition on your machine with the "Desktop development with C++" workload. The Dolphin VM is a set of C++ projects so make sure to install this option (it's not the default) or you'll end up only being able to compile C#. You can use the Pro or Enterprise edition if you have it. It is possible to compile the VM with earlier versions of VS (certainly VS2017) but you will need to downgrade the solution to the appropriate toolset and either retarget to the ealier Windows SDK that shipped with VS, or install the latest SDK standalone.
-
-* Load the DolphinVM solution into Visual Studio. Choose the **Release** profile (**Debug** will compile but will run slowly) and then _Build Solution_. A bunch of DLLs and `Dolphin7.exe` will have been copied to the `\Dolphin` root folder.
+* Install the free VS2022 Community Edition on your machine with the "Desktop development with C++" workload. The Dolphin VM is a set of C++ projects so make sure to install this option (it's not the default) or you'll end up only being able to compile C#. You can use the Pro or Enterprise edition if you have it. It is possible to compile the VM with earlier versions of VS (certainly VS2019) but you will need to downgrade the solution to the appropriate toolset and either retarget to the ealier Windows SDK that shipped with VS, or install the latest SDK standalone.
+ 
+* Load the DolphinVM solution into Visual Studio. Choose the **Release** profile (**Debug** will compile but will run slowly and is not suitable for Smalltalk development work) and then _Build Solution_. A bunch of DLLs and `Dolphin8.exe` will have been copied to the `\Dolphin` root folder.
 
 ## Building the Dolphin Product Image
 
