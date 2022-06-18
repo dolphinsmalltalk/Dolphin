@@ -819,12 +819,16 @@ BOOL __fastcall Interpreter::FireAsyncEvents()
 			oteProcess->countDown();
 			HARDASSERT(!oteProcess->isFree());
 
+			bool moreInterrupts = !m_qInterrupts.isEmpty();
+
+			RelinquishAsyncProtect();
+
 			// Handle the first interrupt only (disable interrupts)
 			sendVMInterrupt(oteProcess, static_cast<VMInterrupts>(oopInterrupt), oopArg);
 
 			// We only process the first interrupt, so there may still be some pending
 			// We leave the flag set if appropriate
-			if (!m_qInterrupts.isEmpty())
+			if (moreInterrupts)
 			{
 				InterlockedExchange(&m_bAsyncPending, TRUE);
 			}
@@ -835,8 +839,10 @@ BOOL __fastcall Interpreter::FireAsyncEvents()
 			// Interrupts take priority over synchronous and asynchronous switches
 			bInterrupted = TRUE;
 		}
-
-		RelinquishAsyncProtect();
+		else
+		{
+			RelinquishAsyncProtect();
+		}
 	}
 
 	return bInterrupted;
