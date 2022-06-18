@@ -418,12 +418,11 @@ testCRTFault
 		raise: CRTError
 		matching: 
 			[:err |
-			err errno = EBADF and: 
-					["Verify that the fault is dispatched synchronously"
-					self
-						isFault: err
-						raisedIn: CRTLibrary >> #_close:
-						receiver: crt]]!
+			"Verify that the fault is dispatched synchronously"
+			self
+				isFault: err
+				raisedIn: CRTLibrary >> #_close:
+				receiver: crt]!
 
 testDwordAtOffsetPut
 	| bytes dword max |
