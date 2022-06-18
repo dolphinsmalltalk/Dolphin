@@ -117,7 +117,6 @@ void Interpreter::RemoveVMReference(OTE* pOTE)
 		// in the global pointers structure (see below)
 
 		m_oteNewProcess->countUp();					// new process or nil
-		m_oteUnderConstruction->countUp();			// Window currently under construction or nil
 		
 		OverlappedCall::ReincrementProcessReferences();
 
