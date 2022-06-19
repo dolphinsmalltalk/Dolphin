@@ -42,6 +42,9 @@ basicUnregister!private!realizing/unrealizing! !
 
 !ICoreWebView2MoveFocusRequestedEventHandler class methodsFor!
 
+argsClass
+	^ICoreWebView2MoveFocusRequestedEventArgs!
+
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2MoveFocusRequestedEventHandler'
 		ICoreWebView2MoveFocusRequestedEventHandler defineTemplate"
@@ -56,6 +59,7 @@ eventName
 
 	^#moveFocusRequested:! !
 !ICoreWebView2MoveFocusRequestedEventHandler class categoriesForMethods!
+argsClass!constants!public! !
 defineFunctions!**auto generated**!initializing!public! !
 eventName!constants!public! !
 !

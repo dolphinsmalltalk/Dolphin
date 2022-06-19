@@ -35,34 +35,34 @@ struct tagCOREWEBVIEW2_PHYSICAL_KEY_STATUS {
 !COREWEBVIEW2_PHYSICAL_KEY_STATUS methodsFor!
 
 IsExtendedKey
-	"Answer the <Integer> value of the receiver's 'IsExtendedKey' field."
+	"Answer the <Boolean> value of the receiver's 'IsExtendedKey' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_IsExtendedKey!
+	^(bytes dwordAtOffset: _OffsetOf_IsExtendedKey) asBoolean!
 
-IsExtendedKey: anInteger
-	"Set the receiver's 'IsExtendedKey' field to the value of the argument, anInteger"
+IsExtendedKey: aBoolean
+	"Set the receiver's 'IsExtendedKey' field to the value of the argument, aBoolean"
 
-	bytes sdwordAtOffset: _OffsetOf_IsExtendedKey put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_IsExtendedKey put: aBoolean asParameter!
 
 IsKeyReleased
-	"Answer the <Integer> value of the receiver's 'IsKeyReleased' field."
+	"Answer the <Boolean> value of the receiver's 'IsKeyReleased' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_IsKeyReleased!
+	^(bytes dwordAtOffset: _OffsetOf_IsKeyReleased) asBoolean!
 
-IsKeyReleased: anInteger
-	"Set the receiver's 'IsKeyReleased' field to the value of the argument, anInteger"
+IsKeyReleased: aBoolean
+	"Set the receiver's 'IsKeyReleased' field to the value of the argument, aBoolean"
 
-	bytes sdwordAtOffset: _OffsetOf_IsKeyReleased put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_IsKeyReleased put: aBoolean asParameter!
 
 IsMenuKeyDown
-	"Answer the <Integer> value of the receiver's 'IsMenuKeyDown' field."
+	"Answer the <Boolean> value of the receiver's 'IsMenuKeyDown' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_IsMenuKeyDown!
+	^(bytes dwordAtOffset: _OffsetOf_IsMenuKeyDown) asBoolean!
 
-IsMenuKeyDown: anInteger
-	"Set the receiver's 'IsMenuKeyDown' field to the value of the argument, anInteger"
+IsMenuKeyDown: aBoolean
+	"Set the receiver's 'IsMenuKeyDown' field to the value of the argument, aBoolean"
 
-	bytes sdwordAtOffset: _OffsetOf_IsMenuKeyDown put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_IsMenuKeyDown put: aBoolean asParameter!
 
 RepeatCount
 	"Answer the <Integer> value of the receiver's 'RepeatCount' field."
@@ -85,14 +85,14 @@ ScanCode: anInteger
 	bytes dwordAtOffset: _OffsetOf_ScanCode put: anInteger!
 
 WasKeyDown
-	"Answer the <Integer> value of the receiver's 'WasKeyDown' field."
+	"Answer the <Boolean> value of the receiver's 'WasKeyDown' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_WasKeyDown!
+	^(bytes dwordAtOffset: _OffsetOf_WasKeyDown) asBoolean!
 
-WasKeyDown: anInteger
-	"Set the receiver's 'WasKeyDown' field to the value of the argument, anInteger"
+WasKeyDown: aBoolean
+	"Set the receiver's 'WasKeyDown' field to the value of the argument, aBoolean"
 
-	bytes sdwordAtOffset: _OffsetOf_WasKeyDown put: anInteger! !
+	bytes dwordAtOffset: _OffsetOf_WasKeyDown put: aBoolean asParameter! !
 !COREWEBVIEW2_PHYSICAL_KEY_STATUS categoriesForMethods!
 IsExtendedKey!**compiled accessors**!public! !
 IsExtendedKey:!**compiled accessors**!public! !
@@ -129,16 +129,16 @@ defineFields
 	self
 		defineField: #RepeatCount type: DWORDField new offset: 0;
 		defineField: #ScanCode type: DWORDField new offset: 4;
-		defineField: #IsExtendedKey type: SDWORDField new offset: 8;
-		defineField: #IsMenuKeyDown type: SDWORDField new offset: 12;
-		defineField: #WasKeyDown type: SDWORDField new offset: 16;
-		defineField: #IsKeyReleased type: SDWORDField new offset: 20.
+		defineField: #IsExtendedKey type: BOOLField new offset: 8;
+		defineField: #IsMenuKeyDown type: BOOLField new offset: 12;
+		defineField: #WasKeyDown type: BOOLField new offset: 16;
+		defineField: #IsKeyReleased type: BOOLField new offset: 20.
 	self byteSize: 24!
 
 getFieldNames
 	^#(#RepeatCount #ScanCode #IsExtendedKey #IsMenuKeyDown #WasKeyDown #IsKeyReleased)! !
 !COREWEBVIEW2_PHYSICAL_KEY_STATUS class categoriesForMethods!
-defineFields!**auto generated**!public!template definition! !
+defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !
 

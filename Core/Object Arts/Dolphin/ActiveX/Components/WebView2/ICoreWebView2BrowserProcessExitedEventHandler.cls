@@ -42,6 +42,9 @@ basicUnregister!private!realizing/unrealizing! !
 
 !ICoreWebView2BrowserProcessExitedEventHandler class methodsFor!
 
+argsClass
+	^ICoreWebView2BrowserProcessExitedEventArgs!
+
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2BrowserProcessExitedEventHandler'
 		ICoreWebView2BrowserProcessExitedEventHandler defineTemplate"
@@ -56,6 +59,7 @@ eventName
 
 	^#browseProcessExited:! !
 !ICoreWebView2BrowserProcessExitedEventHandler class categoriesForMethods!
+argsClass!constants!public! !
 defineFunctions!**auto generated**!initializing!public! !
 eventName!constants!public! !
 !

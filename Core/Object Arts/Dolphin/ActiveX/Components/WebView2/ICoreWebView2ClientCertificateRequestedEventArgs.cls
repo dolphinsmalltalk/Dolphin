@@ -178,7 +178,7 @@ handled
 	| answer |
 	answer := BOOL newBuffer.
 	self get_Handled: answer.
-	^answer asObject!
+	^answer value!
 
 handled: handled
 	"Set the 'Handled' property of the receiver to the <sdword> value of the argument."

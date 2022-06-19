@@ -38,22 +38,6 @@ interface ICoreWebView2ProcessFailedEventArgs2 : ICoreWebView2ProcessFailedEvent
 !ICoreWebView2ProcessFailedEventArgs2 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
 !ICoreWebView2ProcessFailedEventArgs2 methodsFor!
 
-exitCode
-	"Answer the <sdword> value of the 'ExitCode' property of the receiver."
-
-	| answer |
-	answer := SDWORD new.
-	self get_ExitCode: answer.
-	^answer asObject!
-
-frameInfosForFailedProcess
-	"Answer the <ICoreWebView2FrameInfoCollection> value of the 'FrameInfosForFailedProcess' property of the receiver."
-
-	| answer |
-	answer := ICoreWebView2FrameInfoCollection newPointer.
-	self get_FrameInfosForFailedProcess: answer.
-	^answer asObject!
-
 get_ExitCode: exitCode
 	"Private - Get the value of the 'ExitCode' property of the receiver.
 
@@ -88,47 +72,12 @@ get_reason: reason
 			[out, retval]COREWEBVIEW2_PROCESS_FAILED_REASON* reason);"
 
 	<virtual stdcall: hresult 5 sdword*>
-	^self invalidCall: _failureCode!
-
-printableProperties
-	| propertyNames failureKind |
-	propertyNames := OrderedCollection withAll: super printableProperties.
-	propertyNames addLast: #exitCode.
-	self processDescription isEmpty ifFalse: [propertyNames add: #processDescription].
-	failureKind := self processFailedKind.
-	failureKind = WebView2Constants.COREWEBVIEW2_PROCESS_FAILED_KIND_BROWSER_PROCESS_EXITED
-		ifFalse: [propertyNames add: #reason].
-	failureKind = WebView2Constants.COREWEBVIEW2_PROCESS_FAILED_KIND_FRAME_RENDER_PROCESS_EXITED
-		ifTrue: [propertyNames addLast: #frameInfosForFailedProcess].
-	^propertyNames!
-
-processDescription
-	"Answer the <lpwstr> value of the 'ProcessDescription' property of the receiver."
-
-	| ptr answer |
-	ptr := COMTaskMemory new.
-	self get_ProcessDescription: ptr.
-	answer := Utf16String fromAddress: ptr.
-	ptr free.
-	^answer!
-
-reason
-	"Answer the <sdword> value of the 'reason' property of the receiver."
-
-	| answer |
-	answer := SDWORD new.
-	self get_reason: answer.
-	^answer asObject! !
+	^self invalidCall: _failureCode! !
 !ICoreWebView2ProcessFailedEventArgs2 categoriesForMethods!
-exitCode!**auto generated**!properties!public! !
-frameInfosForFailedProcess!**auto generated**!properties!public! !
 get_ExitCode:!**auto generated**!COM Interfaces-ICoreWebView2ProcessFailedEventArgs2!private! !
 get_FrameInfosForFailedProcess:!**auto generated**!COM Interfaces-ICoreWebView2ProcessFailedEventArgs2!private! !
 get_ProcessDescription:!**auto generated**!COM Interfaces-ICoreWebView2ProcessFailedEventArgs2!private! !
 get_reason:!**auto generated**!COM Interfaces-ICoreWebView2ProcessFailedEventArgs2!private! !
-printableProperties!printing!private! !
-processDescription!properties!public! !
-reason!**auto generated**!properties!public! !
 !
 
 !ICoreWebView2ProcessFailedEventArgs2 class methodsFor!

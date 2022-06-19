@@ -42,6 +42,9 @@ basicUnregister!private!realizing/unrealizing! !
 
 !ICoreWebView2ScriptDialogOpeningEventHandler class methodsFor!
 
+argsClass
+	^ICoreWebView2ScriptDialogOpeningEventArgs!
+
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2ScriptDialogOpeningEventHandler'
 		ICoreWebView2ScriptDialogOpeningEventHandler defineTemplate"
@@ -56,6 +59,7 @@ eventName
 
 	^#scriptDialogOpening:! !
 !ICoreWebView2ScriptDialogOpeningEventHandler class categoriesForMethods!
+argsClass!constants!public! !
 defineFunctions!**auto generated**!initializing!public! !
 eventName!constants!public! !
 !

@@ -42,6 +42,9 @@ basicUnregister!private!realizing/unrealizing! !
 
 !ICoreWebView2DOMContentLoadedEventHandler class methodsFor!
 
+argsClass
+	^ICoreWebView2DOMContentLoadedEventArgs!
+
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2DOMContentLoadedEventHandler'
 		ICoreWebView2DOMContentLoadedEventHandler defineTemplate"
@@ -56,6 +59,7 @@ eventName
 
 	^#domContentLoaded:! !
 !ICoreWebView2DOMContentLoadedEventHandler class categoriesForMethods!
+argsClass!constants!public! !
 defineFunctions!**auto generated**!initializing!public! !
 eventName!constants!public! !
 !

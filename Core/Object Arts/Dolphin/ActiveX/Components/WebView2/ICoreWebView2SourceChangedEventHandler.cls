@@ -42,6 +42,9 @@ basicUnregister!private!realizing/unrealizing! !
 
 !ICoreWebView2SourceChangedEventHandler class methodsFor!
 
+argsClass
+	^ICoreWebView2SourceChangedEventArgs!
+
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2SourceChangedEventHandler'
 		ICoreWebView2SourceChangedEventHandler defineTemplate"
@@ -56,6 +59,7 @@ eventName
 
 	^#sourceChanged:! !
 !ICoreWebView2SourceChangedEventHandler class categoriesForMethods!
+argsClass!constants!public! !
 defineFunctions!**auto generated**!initializing!public! !
 eventName!constants!public! !
 !
