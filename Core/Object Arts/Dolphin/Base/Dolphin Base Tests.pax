@@ -852,7 +852,7 @@ setDefault:!accessing!public! !
 baselinedSlowTests
 	| laggards |
 	laggards := Set new.
-	#(#(#ReferenceFinderTest #(#testAllPaths #testAllPathsToInstance #testNotFound)) #(#BrowserEnvironmentTest #(#testOrEnvironment)) #(#IdeaSpaceShellTest #(#testSaveRestore)) #(#RenameClassTest #(#testModelRenameClass)))
+	#(#(#ReferenceFinderTest #(#testAllPaths #testAllPathsToInstance #testNotFound)) #(#BrowserEnvironmentTest #(#testOrEnvironment)) #(#IdeaSpaceShellTest #(#testSaveRestore)) #(#RenameClassTest #(#testModelRenameClass)) #(#WebView2ViewTest #(#testBrowserCrashRecovery #testNavigateToString)))
 		do: 
 			[:each |
 			Smalltalk at: each first
