@@ -42,6 +42,9 @@ basicUnregister!private!realizing/unrealizing! !
 
 !ICoreWebView2WebResourceResponseReceivedEventHandler class methodsFor!
 
+argsClass
+	^ICoreWebView2WebResourceResponseReceivedEventArgs!
+
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2WebResourceResponseReceivedEventHandler'
 		ICoreWebView2WebResourceResponseReceivedEventHandler defineTemplate"
@@ -56,6 +59,7 @@ eventName
 
 	^#webResourceResponseReceived:! !
 !ICoreWebView2WebResourceResponseReceivedEventHandler class categoriesForMethods!
+argsClass!constants!public! !
 defineFunctions!**auto generated**!initializing!public! !
 eventName!constants!public! !
 !

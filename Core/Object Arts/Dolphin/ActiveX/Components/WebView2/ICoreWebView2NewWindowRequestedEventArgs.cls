@@ -68,6 +68,9 @@ get_IsUserInitiated: isUserInitiated
 	<virtual stdcall: hresult 9 sdword*>
 	^self invalidCall: _failureCode!
 
+get_name: value
+	^E_NOTIMPL!
+
 get_NewWindow: newWindow
 	"Private - Get the value of the 'NewWindow' property of the receiver.
 
@@ -133,6 +136,16 @@ isUserInitiated
 	self get_IsUserInitiated: answer.
 	^answer asObject!
 
+name
+	"Answer the <lpwstr> value of the 'name' property of the receiver."
+
+	| ptr answer |
+	ptr := COMTaskMemory new.
+	self get_name: ptr.
+	answer := Utf16String fromAddress: ptr.
+	ptr free.
+	^answer!
+
 newWindow
 	"Answer the <ICoreWebView2> value of the 'NewWindow' property of the receiver."
 
@@ -147,7 +160,7 @@ newWindow: newWindow
 	self put_NewWindow: newWindow!
 
 printableProperties
-	^#(#uri #isUserInitiated #windowFeatures)!
+	^#(#name #uri #isUserInitiated #windowFeatures)!
 
 put_Handled: handled
 	"Private - Set the value of the 'Handled' property of the object wrapped by the 
@@ -189,6 +202,7 @@ windowFeatures
 !ICoreWebView2NewWindowRequestedEventArgs categoriesForMethods!
 get_Handled:!**auto generated**!COM Interfaces-ICoreWebView2NewWindowRequestedEventArgs!private! !
 get_IsUserInitiated:!**auto generated**!COM Interfaces-ICoreWebView2NewWindowRequestedEventArgs!private! !
+get_name:!**auto generated**!COM Interfaces-ICoreWebView2NewWindowRequestedEventArgs2!private! !
 get_NewWindow:!**auto generated**!COM Interfaces-ICoreWebView2NewWindowRequestedEventArgs!private! !
 get_uri:!**auto generated**!COM Interfaces-ICoreWebView2NewWindowRequestedEventArgs!private! !
 get_WindowFeatures:!**auto generated**!COM Interfaces-ICoreWebView2NewWindowRequestedEventArgs!private! !
@@ -197,6 +211,7 @@ GetDeferral:!**auto generated**!COM Interfaces-ICoreWebView2NewWindowRequestedEv
 handled!properties!public! !
 handled:!properties!public! !
 isUserInitiated!properties!public! !
+name!properties!public! !
 newWindow!**auto generated**!properties!public! !
 newWindow:!**auto generated**!properties!public! !
 printableProperties!printing!private! !

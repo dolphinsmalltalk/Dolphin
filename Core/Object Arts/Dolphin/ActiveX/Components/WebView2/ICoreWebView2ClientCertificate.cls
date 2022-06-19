@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2Interface subclass: #ICoreWebView2ClientCertificate
+ICoreWebView2Certificate subclass: #ICoreWebView2ClientCertificate
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -53,56 +53,6 @@ interface ICoreWebView2ClientCertificate : IUnknown
 !ICoreWebView2ClientCertificate categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
 !ICoreWebView2ClientCertificate methodsFor!
 
-derEncodedSerialNumber
-	"Answer the <lpwstr> value of the 'DerEncodedSerialNumber' property of the receiver."
-
-	| ptr answer |
-	ptr := COMTaskMemory new.
-	self get_DerEncodedSerialNumber: ptr.
-	answer := Utf16String fromAddress: ptr.
-	ptr free.
-	^answer!
-
-displayName
-	"Answer the <lpwstr> value of the 'DisplayName' property of the receiver."
-
-	| ptr answer |
-	ptr := COMTaskMemory new.
-	self get_DisplayName: ptr.
-	answer := Utf16String fromAddress: ptr.
-	ptr free.
-	^answer!
-
-displayOn: aWriteStream
-	aWriteStream nextPutAll: self displayName!
-
-get_DerEncodedSerialNumber: value
-	"Private - Get the value of the 'DerEncodedSerialNumber' property of the receiver.
-
-		HRESULT __stdcall DerEncodedSerialNumber(
-			[out, retval]LPWSTR* value);"
-
-	<virtual stdcall: hresult 8 lpwstr*>
-	^self invalidCall: _failureCode!
-
-get_DisplayName: value
-	"Private - Get the value of the 'DisplayName' property of the receiver.
-
-		HRESULT __stdcall DisplayName(
-			[out, retval]LPWSTR* value);"
-
-	<virtual stdcall: hresult 9 lpwstr*>
-	^self invalidCall: _failureCode!
-
-get_Issuer: value
-	"Private - Get the value of the 'Issuer' property of the receiver.
-
-		HRESULT __stdcall Issuer(
-			[out, retval]LPWSTR* value);"
-
-	<virtual stdcall: hresult 5 lpwstr*>
-	^self invalidCall: _failureCode!
-
 get_Kind: value
 	"Private - Get the value of the 'Kind' property of the receiver.
 
@@ -112,137 +62,16 @@ get_Kind: value
 	<virtual stdcall: hresult 12 sdword*>
 	^self invalidCall: _failureCode!
 
-get_PemEncodedIssuerCertificateChain: value
-	"Private - Get the value of the 'PemEncodedIssuerCertificateChain' property of the receiver.
-
-		HRESULT __stdcall PemEncodedIssuerCertificateChain(
-			[out, retval]ICoreWebView2StringCollection** value);"
-
-	<virtual stdcall: hresult 11 ICoreWebView2StringCollection**>
-	^self invalidCall: _failureCode!
-
-get_Subject: value
-	"Private - Get the value of the 'Subject' property of the receiver.
-
-		HRESULT __stdcall Subject(
-			[out, retval]LPWSTR* value);"
-
-	<virtual stdcall: hresult 4 lpwstr*>
-	^self invalidCall: _failureCode!
-
-get_ValidFrom: value
-	"Private - Get the value of the 'ValidFrom' property of the receiver.
-
-		HRESULT __stdcall ValidFrom(
-			[out, retval]double* value);"
-
-	<virtual stdcall: hresult 6 double*>
-	^self invalidCall: _failureCode!
-
-get_ValidTo: value
-	"Private - Get the value of the 'ValidTo' property of the receiver.
-
-		HRESULT __stdcall ValidTo(
-			[out, retval]double* value);"
-
-	<virtual stdcall: hresult 7 double*>
-	^self invalidCall: _failureCode!
-
-issuer
-	"Answer the <lpwstr> value of the 'Issuer' property of the receiver."
-
-	| ptr answer |
-	ptr := COMTaskMemory new.
-	self get_Issuer: ptr.
-	answer := Utf16String fromAddress: ptr.
-	ptr free.
-	^answer!
-
 kind
 	"Answer the <sdword> value of the 'Kind' property of the receiver."
 
 	| answer |
 	answer := SDWORD new.
 	self get_Kind: answer.
-	^answer asObject!
-
-pemEncodedIssuerCertificateChain
-	"Answer the <ICoreWebView2StringCollection> value of the 'PemEncodedIssuerCertificateChain' property of the receiver."
-
-	| answer |
-	answer := ICoreWebView2StringCollection newPointer.
-	self get_PemEncodedIssuerCertificateChain: answer.
-	^answer asObject!
-
-printableProperties
-	^#(#displayName)!
-
-subject
-	"Answer the <lpwstr> value of the 'Subject' property of the receiver."
-
-	| ptr answer |
-	ptr := COMTaskMemory new.
-	self get_Subject: ptr.
-	answer := Utf16String fromAddress: ptr.
-	ptr free.
-	^answer!
-
-toPemEncoding
-	"Answer the <Utf16String> result of invoking the ToPemEncoding() method of the COM object."
-
-	| ptr answer |
-	ptr := COMTaskMemory new.
-	self ToPemEncoding: ptr.
-	answer := Utf16String fromAddress: ptr.
-	ptr free.
-	^answer
-!
-
-ToPemEncoding: pemEncodedData
-	"Private - Invoke the ToPemEncoding() method of the COM object.
-
-		HRESULT __stdcall ToPemEncoding(
-			[out, retval]LPWSTR* pemEncodedData);"
-
-	<virtual stdcall: hresult 10 lpwstr*>
-	^self invalidCall: _failureCode!
-
-validFrom
-	"Answer the <double> value of the 'ValidFrom' property of the receiver."
-
-	| answer |
-	answer := DOUBLE new.
-	self get_ValidFrom: answer.
-	^answer asObject!
-
-validTo
-	"Answer the <double> value of the 'ValidTo' property of the receiver."
-
-	| answer |
-	answer := DOUBLE new.
-	self get_ValidTo: answer.
 	^answer asObject! !
 !ICoreWebView2ClientCertificate categoriesForMethods!
-derEncodedSerialNumber!properties!public! !
-displayName!properties!public! !
-displayOn:!displaying!public! !
-get_DerEncodedSerialNumber:!**auto generated**!COM Interfaces-ICoreWebView2ClientCertificate!private! !
-get_DisplayName:!**auto generated**!COM Interfaces-ICoreWebView2ClientCertificate!private! !
-get_Issuer:!**auto generated**!COM Interfaces-ICoreWebView2ClientCertificate!private! !
 get_Kind:!**auto generated**!COM Interfaces-ICoreWebView2ClientCertificate!private! !
-get_PemEncodedIssuerCertificateChain:!**auto generated**!COM Interfaces-ICoreWebView2ClientCertificate!private! !
-get_Subject:!**auto generated**!COM Interfaces-ICoreWebView2ClientCertificate!private! !
-get_ValidFrom:!**auto generated**!COM Interfaces-ICoreWebView2ClientCertificate!private! !
-get_ValidTo:!**auto generated**!COM Interfaces-ICoreWebView2ClientCertificate!private! !
-issuer!properties!public! !
 kind!**auto generated**!properties!public! !
-pemEncodedIssuerCertificateChain!**auto generated**!properties!public! !
-printableProperties!printing!private! !
-subject!properties!public! !
-toPemEncoding!methods!public! !
-ToPemEncoding:!**auto generated**!COM Interfaces-ICoreWebView2ClientCertificate!private! !
-validFrom!**auto generated**!properties!public! !
-validTo!**auto generated**!properties!public! !
 !
 
 !ICoreWebView2ClientCertificate class methodsFor!
@@ -251,27 +80,8 @@ defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2ClientCertificate'
 		ICoreWebView2ClientCertificate defineTemplate"
 
-	self
-		defineFunction: #get_Subject:
-			argumentTypes: 'lpwstr*';
-		defineFunction: #get_Issuer:
-			argumentTypes: 'lpwstr*';
-		defineFunction: #get_ValidFrom:
-			argumentTypes: 'double*';
-		defineFunction: #get_ValidTo:
-			argumentTypes: 'double*';
-		defineFunction: #get_DerEncodedSerialNumber:
-			argumentTypes: 'lpwstr*';
-		defineFunction: #get_DisplayName:
-			argumentTypes: 'lpwstr*';
-		defineFunction: #ToPemEncoding:
-			argumentTypes: 'lpwstr*';
-		defineFunction: #get_PemEncodedIssuerCertificateChain:
-			argumentTypes: 'ICoreWebView2StringCollection**';
-		defineFunction: #get_Kind:
-			argumentTypes: 'sdword*'
-! !
+	self defineFunction: #get_Kind: argumentTypes: 'sdword*'! !
 !ICoreWebView2ClientCertificate class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!initializing!public! !
 !
 

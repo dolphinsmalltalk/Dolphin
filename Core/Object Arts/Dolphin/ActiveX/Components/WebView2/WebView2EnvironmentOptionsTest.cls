@@ -31,6 +31,17 @@ testAllowSSO
 	self deny: subject allowSSO.
 	self deny: interface allowSingleSignOnUsingOSPrimaryAccount.!
 
+testExclusiveDataFolderAccess
+	| subject interface |
+	subject := WebView2EnvironmentOptions new.
+	self deny: subject exclusiveUserDataFolderAccess.
+	interface := subject queryInterface: ICoreWebView2EnvironmentOptions2.
+	self deny: interface exclusiveUserDataFolderAccess.
+	subject exclusiveUserDataFolderAccess: true.
+	self assert: interface exclusiveUserDataFolderAccess.
+	self assert: subject exclusiveUserDataFolderAccess.
+!
+
 testLanguage
 	| subject interface |
 	subject := WebView2EnvironmentOptions new.
@@ -58,6 +69,7 @@ testTargetCompatibleBrowserVersion
 !WebView2EnvironmentOptionsTest categoriesForMethods!
 testAdditionalBrowserArguments!public! !
 testAllowSSO!public! !
+testExclusiveDataFolderAccess!public! !
 testLanguage!public! !
 testTargetCompatibleBrowserVersion!public! !
 !

@@ -154,6 +154,19 @@ Add_ZoomFactorChanged: eventHandler token: token
 	<virtual stdcall: hresult 10 ICoreWebView2ZoomFactorChangedEventHandler* sqword*>
 	^self invalidCall: _failureCode!
 
+allowExternalDrop
+	"Answer the <Boolean> value of the 'AllowExternalDrop' property of the receiver."
+
+	| answer |
+	answer := BOOL newBuffer.
+	self get_AllowExternalDrop: answer.
+	^answer value!
+
+allowExternalDrop: value
+	"Set the 'AllowExternalDrop' property of the receiver to the <sdword> value of the argument."
+
+	self put_AllowExternalDrop: value!
+
 bounds
 	"Answer the <RECT> value of the 'Bounds' property of the receiver."
 
@@ -213,6 +226,14 @@ defaultBackgroundColor: backgroundColor
 	"Set the 'DefaultBackgroundColor' property of the receiver to the <COREWEBVIEW2_COLOR> value of the argument."
 
 	self put_DefaultBackgroundColor: backgroundColor argbCode!
+
+get_AllowExternalDrop: value
+	"Private - Get the value of the 'AllowExternalDrop' property of the receiver.
+
+		HRESULT __stdcall AllowExternalDrop(
+			[out, retval]long* value);"
+
+	^E_NOTIMPL!
 
 get_Bounds: bounds
 	"Private - Get the value of the 'Bounds' property of the receiver.
@@ -353,6 +374,15 @@ parentWindow: parentWindow
 
 printableProperties
 	^#(#isVisible #rectangle #zoomFactor #defaultBackgroundColor #boundsMode #rasterizationScale #shouldDetectMonitorScaleChanges)!
+
+put_AllowExternalDrop: value
+	"Private - Set the value of the 'AllowExternalDrop' property of the object wrapped by the 
+	 receiver to the <sdword> argument, value.
+
+		HRESULT __stdcall AllowExternalDrop(
+			[in]long value);"
+
+	^E_NOTIMPL!
 
 put_Bounds: bounds
 	"Private - Set the value of the 'Bounds' property of the object wrapped by the 
@@ -552,6 +582,8 @@ Add_LostFocus:token:!**auto generated**!COM Interfaces-ICoreWebView2Controller!p
 Add_MoveFocusRequested:token:!**auto generated**!COM Interfaces-ICoreWebView2Controller!private! !
 Add_RasterizationScaleChanged:token:!COM Interfaces-ICoreWebView2Controller3!events!private! !
 Add_ZoomFactorChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2Controller!private! !
+allowExternalDrop!properties!public! !
+allowExternalDrop:!**auto generated**!properties!public! !
 bounds!**auto generated**!properties!public! !
 bounds:!**auto generated**!properties!public! !
 boundsMode!properties!public! !
@@ -561,6 +593,7 @@ Close!**auto generated**!COM Interfaces-ICoreWebView2Controller!private! !
 coreWebView2!**auto generated**!properties!public! !
 defaultBackgroundColor!properties!public! !
 defaultBackgroundColor:!properties!public! !
+get_AllowExternalDrop:!**auto generated**!COM Interfaces-ICoreWebView2Controller4!private! !
 get_Bounds:!**auto generated**!COM Interfaces-ICoreWebView2Controller!private! !
 get_BoundsMode:!COM Interfaces-ICoreWebView2Controller3!private!properties! !
 get_CoreWebView2:!**auto generated**!COM Interfaces-ICoreWebView2Controller!private! !
@@ -579,6 +612,7 @@ NotifyParentWindowPositionChanged!**auto generated**!COM Interfaces-ICoreWebView
 parentWindow!**auto generated**!properties!public! !
 parentWindow:!**auto generated**!properties!public! !
 printableProperties!printing!private! !
+put_AllowExternalDrop:!**auto generated**!COM Interfaces-ICoreWebView2Controller4!private! !
 put_Bounds:!**auto generated**!COM Interfaces-ICoreWebView2Controller!private! !
 put_BoundsMode:!COM Interfaces-ICoreWebView2Controller3!private!properties! !
 put_DefaultBackgroundColor:!COM Interfaces-ICoreWebView2Controller2!private!properties! !
@@ -604,10 +638,6 @@ shouldDetectMonitorScaleChanges:!properties!public! !
 zoomFactor!**auto generated**!properties!public! !
 zoomFactor:!**auto generated**!properties!public! !
 !
-
-ICoreWebView2Controller methodProtocol: #ICoreWebView2Controller attributes: #(#readOnly) selectors: #(#Add_AcceleratorKeyPressed:token: #Add_GotFocus:token: #Add_LostFocus:token: #Add_MoveFocusRequested:token: #Add_ZoomFactorChanged:token: #Close #get_Bounds: #get_CoreWebView2: #get_IsVisible: #get_ParentWindow: #get_ZoomFactor: #MoveFocus: #NotifyParentWindowPositionChanged #put_Bounds: #put_IsVisible: #put_ParentWindow: #put_ZoomFactor: #Remove_AcceleratorKeyPressed: #Remove_GotFocus: #Remove_LostFocus: #Remove_MoveFocusRequested: #Remove_ZoomFactorChanged: #SetBoundsAndZoomFactor:zoomFactor:)!
-ICoreWebView2Controller methodProtocol: #ICoreWebView2Controller2 attributes: #(#readOnly) selectors: #(#Add_AcceleratorKeyPressed:token: #Add_GotFocus:token: #Add_LostFocus:token: #Add_MoveFocusRequested:token: #Add_ZoomFactorChanged:token: #Close #get_Bounds: #get_CoreWebView2: #get_DefaultBackgroundColor: #get_IsVisible: #get_ParentWindow: #get_ZoomFactor: #MoveFocus: #NotifyParentWindowPositionChanged #put_Bounds: #put_DefaultBackgroundColor: #put_IsVisible: #put_ParentWindow: #put_ZoomFactor: #Remove_AcceleratorKeyPressed: #Remove_GotFocus: #Remove_LostFocus: #Remove_MoveFocusRequested: #Remove_ZoomFactorChanged: #SetBoundsAndZoomFactor:zoomFactor:)!
-ICoreWebView2Controller methodProtocol: #ICoreWebView2Controller3 attributes: #(#readOnly) selectors: #(#Add_AcceleratorKeyPressed:token: #Add_GotFocus:token: #Add_LostFocus:token: #Add_MoveFocusRequested:token: #Add_RasterizationScaleChanged:token: #Add_ZoomFactorChanged:token: #Close #get_Bounds: #get_BoundsMode: #get_CoreWebView2: #get_DefaultBackgroundColor: #get_IsVisible: #get_ParentWindow: #get_RasterizationScale: #get_ShouldDetectMonitorScaleChanges: #get_ZoomFactor: #MoveFocus: #NotifyParentWindowPositionChanged #put_Bounds: #put_BoundsMode: #put_DefaultBackgroundColor: #put_IsVisible: #put_ParentWindow: #put_RasterizationScale: #put_ShouldDetectMonitorScaleChanges: #put_ZoomFactor: #Remove_AcceleratorKeyPressed: #Remove_GotFocus: #Remove_LostFocus: #Remove_MoveFocusRequested: #Remove_RasterizationScaleChanged: #Remove_ZoomFactorChanged: #SetBoundsAndZoomFactor:zoomFactor:)!
 
 !ICoreWebView2Controller class methodsFor!
 

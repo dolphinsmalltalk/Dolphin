@@ -35,6 +35,9 @@ interface ICoreWebView2NavigationCompletedEventArgs : IUnknown
 !ICoreWebView2NavigationCompletedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
 !ICoreWebView2NavigationCompletedEventArgs methodsFor!
 
+get_HttpStatusCode: http_status_code
+	^E_NOTIMPL!
+
 get_IsSuccess: isSuccess
 	"Private - Get the value of the 'IsSuccess' property of the receiver.
 
@@ -62,13 +65,21 @@ get_WebErrorStatus: webErrorStatus
 	<virtual stdcall: hresult 5 sdword*>
 	^self invalidCall: _failureCode!
 
+httpStatusCode
+	"Answer the <sdword> value of the 'HttpStatusCode' property of the receiver."
+
+	| answer |
+	answer := SDWORD newBuffer.
+	self get_HttpStatusCode: answer.
+	^answer value!
+
 isSuccess
 	"Answer the <Boolean> value of the 'IsSuccess' property of the receiver."
 
 	| answer |
 	answer := BOOL newBuffer.
 	self get_IsSuccess: answer.
-	^answer asObject!
+	^answer value!
 
 navigationId
 	"Answer the <qword> value of the 'NavigationId' property of the receiver."
@@ -79,7 +90,7 @@ navigationId
 	^answer asObject!
 
 printableProperties
-	^#(#navigationId #isSuccess #webErrorStatus)!
+	^#(#navigationId #isSuccess #webErrorStatus #httpStatusCode)!
 
 webErrorStatus
 	"Answer the <sdword> value of the 'WebErrorStatus' property of the receiver."
@@ -89,9 +100,11 @@ webErrorStatus
 	self get_WebErrorStatus: answer.
 	^answer asObject! !
 !ICoreWebView2NavigationCompletedEventArgs categoriesForMethods!
+get_HttpStatusCode:!COM Interfaces-ICoreWebView2NavigationCompletedEventArgs2!private! !
 get_IsSuccess:!**auto generated**!COM Interfaces-ICoreWebView2NavigationCompletedEventArgs!private! !
 get_NavigationId:!**auto generated**!COM Interfaces-ICoreWebView2NavigationCompletedEventArgs!private! !
 get_WebErrorStatus:!**auto generated**!COM Interfaces-ICoreWebView2NavigationCompletedEventArgs!private! !
+httpStatusCode!properties!public! !
 isSuccess!properties!public! !
 navigationId!**auto generated**!properties!public! !
 printableProperties!printing!private! !

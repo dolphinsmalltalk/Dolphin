@@ -42,6 +42,9 @@ basicUnregister!private!realizing/unrealizing! !
 
 !ICoreWebView2ProcessFailedEventHandler class methodsFor!
 
+argsClass
+	^ICoreWebView2ProcessFailedEventArgs2!
+
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2ProcessFailedEventHandler'
 		ICoreWebView2ProcessFailedEventHandler defineTemplate"
@@ -56,6 +59,7 @@ eventName
 
 	^#processFailed:! !
 !ICoreWebView2ProcessFailedEventHandler class categoriesForMethods!
+argsClass!constants!public! !
 defineFunctions!**auto generated**!initializing!public! !
 eventName!constants!public! !
 !

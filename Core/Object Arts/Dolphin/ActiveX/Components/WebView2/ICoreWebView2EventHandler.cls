@@ -42,11 +42,15 @@ unregister!public!realizing/unrealizing! !
 
 !ICoreWebView2EventHandler class methodsFor!
 
+argsClass
+	^IUnknown!
+
 eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^self subclassResponsibility! !
 !ICoreWebView2EventHandler class categoriesForMethods!
+argsClass!constants!public! !
 eventName!constants!public! !
 !
 

@@ -190,6 +190,9 @@ get_AreHostObjectsAllowed: allowed
 	<virtual stdcall: hresult 16 sdword*>
 	^self invalidCall: _failureCode!
 
+get_HiddenPdfToolbarItems: hidden_pdf_toolbar_items
+	^E_NOTIMPL!
+
 get_IsBuiltInErrorPageEnabled: enabled
 	"Private - Get the value of the 'IsBuiltInErrorPageEnabled' property of the receiver.
 
@@ -284,6 +287,19 @@ get_UserAgent: userAgent
 	taskMem beUnfinalizable.
 	^S_OK!
 
+hiddenPdfToolbarItems
+	"Answer the <sdword> value of the 'HiddenPdfToolbarItems' property of the receiver. These are flag values from the COREWEBVIEW2_PDF_TOOLBAR_ITEMS enumeration."
+
+	| answer |
+	answer := SDWORD new.
+	self get_HiddenPdfToolbarItems: answer.
+	^answer asObject!
+
+hiddenPdfToolbarItems: hidden_pdf_toolbar_items
+	"Set the 'HiddenPdfToolbarItems' property of the receiver to the <sdword> value of the argument."
+
+	self put_HiddenPdfToolbarItems: hidden_pdf_toolbar_items!
+
 isBuiltInErrorPageEnabled
 	"Answer the <Boolean> value of the 'IsBuiltInErrorPageEnabled' property of the receiver."
 
@@ -329,7 +345,7 @@ isPinchZoomEnabled
 	| answer |
 	answer := BOOL newBuffer.
 	self get_IsPinchZoomEnabled: answer.
-	^answer asObject!
+	^answer value!
 
 isPinchZoomEnabled: enabled
 	"Set the 'IsPinchZoomEnabled' property of the receiver to the <sdword> value of the argument."
@@ -366,9 +382,9 @@ isSwipeNavigationEnabled
 	"Answer the <sdword> value of the 'IsSwipeNavigationEnabled' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := BOOL newBuffer.
 	self get_IsSwipeNavigationEnabled: answer.
-	^answer asObject!
+	^answer value!
 
 isSwipeNavigationEnabled: enabled
 	"Set the 'IsSwipeNavigationEnabled' property of the receiver to the <sdword> value of the argument."
@@ -402,7 +418,7 @@ isZoomControlEnabled: enabled
 	self put_IsZoomControlEnabled: enabled asParameter!
 
 printableProperties
-	^#(#areDefaultContextMenusEnabled #areDefaultScriptDialogsEnabled #areDevToolsEnabled #areHostObjectsAllowed #isBuiltInErrorPageEnabled #isScriptEnabled #isStatusBarEnabled #isWebMessageEnabled #isZoomControlEnabled #areBrowserAcceleratorKeysEnabled #isGeneralAutofillEnabled #isPasswordAutosaveEnabled #isPinchZoomEnabled)!
+	^#(#areDefaultContextMenusEnabled #areDefaultScriptDialogsEnabled #areDevToolsEnabled #areHostObjectsAllowed #isBuiltInErrorPageEnabled #isScriptEnabled #isStatusBarEnabled #isWebMessageEnabled #isZoomControlEnabled #areBrowserAcceleratorKeysEnabled #isGeneralAutofillEnabled #isPasswordAutosaveEnabled #isPinchZoomEnabled #isSwipeNavigationEnabled #hiddenPdfToolbarItems)!
 
 put_AreBrowserAcceleratorKeysEnabled: areBrowserAcceleratorKeysEnabled
 	"Private - Set the value of the 'AreBrowserAcceleratorKeysEnabled' property of the object wrapped by the 
@@ -452,6 +468,9 @@ put_AreHostObjectsAllowed: allowed
 
 	<virtual stdcall: hresult 17 sdword>
 	^self invalidCall: _failureCode!
+
+put_HiddenPdfToolbarItems: hidden_pdf_toolbar_items
+	^E_NOTIMPL!
 
 put_IsBuiltInErrorPageEnabled: enabled
 	"Private - Set the value of the 'IsBuiltInErrorPageEnabled' property of the object wrapped by the 
@@ -578,6 +597,7 @@ get_AreDefaultContextMenusEnabled:!**auto generated**!COM Interfaces-ICoreWebVie
 get_AreDefaultScriptDialogsEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
 get_AreDevToolsEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
 get_AreHostObjectsAllowed:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
+get_HiddenPdfToolbarItems:!**auto generated**!COM Interfaces-ICoreWebView2Settings7!private! !
 get_IsBuiltInErrorPageEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
 get_IsGeneralAutofillEnabled:!COM Interfaces-ICoreWebView2Settings4!private! !
 get_IsPasswordAutosaveEnabled:!COM Interfaces-ICoreWebView2Settings4!private! !
@@ -588,6 +608,8 @@ get_IsSwipeNavigationEnabled:!COM Interfaces-ICoreWebView2Settings6!private! !
 get_IsWebMessageEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
 get_IsZoomControlEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
 get_UserAgent:!COM Interfaces-ICoreWebView2Settings2!private! !
+hiddenPdfToolbarItems!properties!public! !
+hiddenPdfToolbarItems:!properties!public! !
 isBuiltInErrorPageEnabled!properties!public! !
 isBuiltInErrorPageEnabled:!properties!public! !
 isGeneralAutofillEnabled!properties!public! !
@@ -612,6 +634,7 @@ put_AreDefaultContextMenusEnabled:!**auto generated**!COM Interfaces-ICoreWebVie
 put_AreDefaultScriptDialogsEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
 put_AreDevToolsEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
 put_AreHostObjectsAllowed:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
+put_HiddenPdfToolbarItems:!**auto generated**!COM Interfaces-ICoreWebView2Settings7!private! !
 put_IsBuiltInErrorPageEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
 put_IsGeneralAutofillEnabled:!COM Interfaces-ICoreWebView2Settings4!private! !
 put_IsPasswordAutosaveEnabled:!COM Interfaces-ICoreWebView2Settings4!private! !
@@ -625,13 +648,6 @@ put_UserAgent:!COM Interfaces-ICoreWebView2Settings2!private! !
 userAgent!**auto generated**!properties!public! !
 userAgent:!**auto generated**!properties!public! !
 !
-
-ICoreWebView2Settings methodProtocol: #ICoreWebView2Settings attributes: #(#readOnly) selectors: #(#get_AreDefaultContextMenusEnabled: #get_AreDefaultScriptDialogsEnabled: #get_AreDevToolsEnabled: #get_AreHostObjectsAllowed: #get_IsBuiltInErrorPageEnabled: #get_IsScriptEnabled: #get_IsStatusBarEnabled: #get_IsWebMessageEnabled: #get_IsZoomControlEnabled: #put_AreDefaultContextMenusEnabled: #put_AreDefaultScriptDialogsEnabled: #put_AreDevToolsEnabled: #put_AreHostObjectsAllowed: #put_IsBuiltInErrorPageEnabled: #put_IsScriptEnabled: #put_IsStatusBarEnabled: #put_IsWebMessageEnabled: #put_IsZoomControlEnabled:)!
-ICoreWebView2Settings methodProtocol: #ICoreWebView2Settings2 attributes: #(#readOnly) selectors: #(#get_AreDefaultContextMenusEnabled: #get_AreDefaultScriptDialogsEnabled: #get_AreDevToolsEnabled: #get_AreHostObjectsAllowed: #get_IsBuiltInErrorPageEnabled: #get_IsScriptEnabled: #get_IsStatusBarEnabled: #get_IsWebMessageEnabled: #get_IsZoomControlEnabled: #get_UserAgent: #put_AreDefaultContextMenusEnabled: #put_AreDefaultScriptDialogsEnabled: #put_AreDevToolsEnabled: #put_AreHostObjectsAllowed: #put_IsBuiltInErrorPageEnabled: #put_IsScriptEnabled: #put_IsStatusBarEnabled: #put_IsWebMessageEnabled: #put_IsZoomControlEnabled: #put_UserAgent:)!
-ICoreWebView2Settings methodProtocol: #ICoreWebView2Settings3 attributes: #(#readOnly) selectors: #(#get_AreBrowserAcceleratorKeysEnabled: #get_AreDefaultContextMenusEnabled: #get_AreDefaultScriptDialogsEnabled: #get_AreDevToolsEnabled: #get_AreHostObjectsAllowed: #get_IsBuiltInErrorPageEnabled: #get_IsScriptEnabled: #get_IsStatusBarEnabled: #get_IsWebMessageEnabled: #get_IsZoomControlEnabled: #get_UserAgent: #put_AreBrowserAcceleratorKeysEnabled: #put_AreDefaultContextMenusEnabled: #put_AreDefaultScriptDialogsEnabled: #put_AreDevToolsEnabled: #put_AreHostObjectsAllowed: #put_IsBuiltInErrorPageEnabled: #put_IsScriptEnabled: #put_IsStatusBarEnabled: #put_IsWebMessageEnabled: #put_IsZoomControlEnabled: #put_UserAgent:)!
-ICoreWebView2Settings methodProtocol: #ICoreWebView2Settings4 attributes: #(#readOnly) selectors: #(#get_AreBrowserAcceleratorKeysEnabled: #get_AreDefaultContextMenusEnabled: #get_AreDefaultScriptDialogsEnabled: #get_AreDevToolsEnabled: #get_AreHostObjectsAllowed: #get_IsBuiltInErrorPageEnabled: #get_IsGeneralAutofillEnabled: #get_IsPasswordAutosaveEnabled: #get_IsScriptEnabled: #get_IsStatusBarEnabled: #get_IsWebMessageEnabled: #get_IsZoomControlEnabled: #get_UserAgent: #put_AreBrowserAcceleratorKeysEnabled: #put_AreDefaultContextMenusEnabled: #put_AreDefaultScriptDialogsEnabled: #put_AreDevToolsEnabled: #put_AreHostObjectsAllowed: #put_IsBuiltInErrorPageEnabled: #put_IsGeneralAutofillEnabled: #put_IsPasswordAutosaveEnabled: #put_IsScriptEnabled: #put_IsStatusBarEnabled: #put_IsWebMessageEnabled: #put_IsZoomControlEnabled: #put_UserAgent:)!
-ICoreWebView2Settings methodProtocol: #ICoreWebView2Settings5 attributes: #(#readOnly) selectors: #(#get_AreBrowserAcceleratorKeysEnabled: #get_AreDefaultContextMenusEnabled: #get_AreDefaultScriptDialogsEnabled: #get_AreDevToolsEnabled: #get_AreHostObjectsAllowed: #get_IsBuiltInErrorPageEnabled: #get_IsGeneralAutofillEnabled: #get_IsPasswordAutosaveEnabled: #get_IsPinchZoomEnabled: #get_IsScriptEnabled: #get_IsStatusBarEnabled: #get_IsWebMessageEnabled: #get_IsZoomControlEnabled: #get_UserAgent: #put_AreBrowserAcceleratorKeysEnabled: #put_AreDefaultContextMenusEnabled: #put_AreDefaultScriptDialogsEnabled: #put_AreDevToolsEnabled: #put_AreHostObjectsAllowed: #put_IsBuiltInErrorPageEnabled: #put_IsGeneralAutofillEnabled: #put_IsPasswordAutosaveEnabled: #put_IsPinchZoomEnabled: #put_IsScriptEnabled: #put_IsStatusBarEnabled: #put_IsWebMessageEnabled: #put_IsZoomControlEnabled: #put_UserAgent:)!
-ICoreWebView2Settings methodProtocol: #ICoreWebView2Settings6 attributes: #(#readOnly) selectors: #(#get_AreBrowserAcceleratorKeysEnabled: #get_AreDefaultContextMenusEnabled: #get_AreDefaultScriptDialogsEnabled: #get_AreDevToolsEnabled: #get_AreHostObjectsAllowed: #get_IsBuiltInErrorPageEnabled: #get_IsGeneralAutofillEnabled: #get_IsPasswordAutosaveEnabled: #get_IsPinchZoomEnabled: #get_IsScriptEnabled: #get_IsStatusBarEnabled: #get_IsSwipeNavigationEnabled: #get_IsWebMessageEnabled: #get_IsZoomControlEnabled: #get_UserAgent: #put_AreBrowserAcceleratorKeysEnabled: #put_AreDefaultContextMenusEnabled: #put_AreDefaultScriptDialogsEnabled: #put_AreDevToolsEnabled: #put_AreHostObjectsAllowed: #put_IsBuiltInErrorPageEnabled: #put_IsGeneralAutofillEnabled: #put_IsPasswordAutosaveEnabled: #put_IsPinchZoomEnabled: #put_IsScriptEnabled: #put_IsStatusBarEnabled: #put_IsSwipeNavigationEnabled: #put_IsWebMessageEnabled: #put_IsZoomControlEnabled: #put_UserAgent:)!
 
 !ICoreWebView2Settings class methodsFor!
 

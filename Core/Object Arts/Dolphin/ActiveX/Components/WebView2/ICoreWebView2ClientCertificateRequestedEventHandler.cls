@@ -42,6 +42,9 @@ basicUnregister!private!realizing/unrealizing! !
 
 !ICoreWebView2ClientCertificateRequestedEventHandler class methodsFor!
 
+argsClass
+	^ICoreWebView2ClientCertificateRequestedEventArgs!
+
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2ClientCertificateRequestedEventHandler'
 		ICoreWebView2ClientCertificateRequestedEventHandler defineTemplate"
@@ -56,6 +59,7 @@ eventName
 
 	^#clientCertificateRequested:! !
 !ICoreWebView2ClientCertificateRequestedEventHandler class categoriesForMethods!
+argsClass!constants!public! !
 defineFunctions!**auto generated**!initializing!public! !
 eventName!constants!public! !
 !

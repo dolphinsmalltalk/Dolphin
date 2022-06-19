@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2AcceleratorKeyPressedEventHandler subclass: #ICoreWebView2FrameDestroyedEventHandler
+ICoreWebView2EventHandler subclass: #ICoreWebView2FrameDestroyedEventHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

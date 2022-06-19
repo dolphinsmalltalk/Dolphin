@@ -47,6 +47,21 @@ interface ICoreWebView2NavigationStartingEventArgs : IUnknown
 !ICoreWebView2NavigationStartingEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
 !ICoreWebView2NavigationStartingEventArgs methodsFor!
 
+additionalAllowedFrameAncestors
+	"Answer the <lpwstr> value of the 'AdditionalAllowedFrameAncestors' property of the receiver."
+
+	| ptr answer |
+	ptr := COMTaskMemory new.
+	self get_AdditionalAllowedFrameAncestors: ptr.
+	answer := Utf16String fromAddress: ptr.
+	ptr free.
+	^answer!
+
+additionalAllowedFrameAncestors: value
+	"Set the 'AdditionalAllowedFrameAncestors' property of the receiver to the <lpwstr> value of the argument."
+
+	self put_AdditionalAllowedFrameAncestors: value asUtf16String!
+
 cancel
 	"Answer whether the navigation is to be cancelled."
 
@@ -59,6 +74,9 @@ cancel: aBoolean
 	"Set whether the navigation should be cancelled."
 
 	self put_Cancel: aBoolean asParameter!
+
+get_AdditionalAllowedFrameAncestors: value
+	^E_NOTIMPL!
 
 get_Cancel: cancel
 	"Private - Get the value of the 'Cancel' property of the receiver.
@@ -141,6 +159,16 @@ navigationId
 printableProperties
 	^#(#navigationId #uri)!
 
+put_AdditionalAllowedFrameAncestors: value
+	"Private - Set the value of the 'AdditionalAllowedFrameAncestors' property of the object wrapped by the 
+	 receiver to the <lpwstr> argument, value.
+
+		HRESULT __stdcall AdditionalAllowedFrameAncestors(
+			[in]LPWSTR value);"
+
+	<virtual stdcall: hresult 12 lpwstr>
+	^self invalidCall: _failureCode!
+
 put_Cancel: cancel
 	"Private - Set the value of the 'Cancel' property of the object wrapped by the 
 	 receiver to the <sdword> argument, cancel.
@@ -169,8 +197,11 @@ uri
 	ptr free.
 	^answer! !
 !ICoreWebView2NavigationStartingEventArgs categoriesForMethods!
+additionalAllowedFrameAncestors!properties!public! !
+additionalAllowedFrameAncestors:!properties!public! !
 cancel!properties!public! !
 cancel:!properties!public! !
+get_AdditionalAllowedFrameAncestors:!COM Interfaces-ICoreWebView2NavigationStartingEventArgs2!private! !
 get_Cancel:!**auto generated**!COM Interfaces-ICoreWebView2NavigationStartingEventArgs!private! !
 get_IsRedirected:!**auto generated**!COM Interfaces-ICoreWebView2NavigationStartingEventArgs!private! !
 get_IsUserInitiated:!**auto generated**!COM Interfaces-ICoreWebView2NavigationStartingEventArgs!private! !
@@ -181,6 +212,7 @@ isRedirected!properties!public! !
 isUserInitiated!properties!public! !
 navigationId!**auto generated**!properties!public! !
 printableProperties!printing!private! !
+put_AdditionalAllowedFrameAncestors:!COM Interfaces-ICoreWebView2NavigationStartingEventArgs2!private! !
 put_Cancel:!**auto generated**!COM Interfaces-ICoreWebView2NavigationStartingEventArgs!private! !
 requestHeaders!**auto generated**!properties!public! !
 uri!properties!public! !

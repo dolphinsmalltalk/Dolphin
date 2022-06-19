@@ -111,6 +111,15 @@ Add_NavigationStarting: eventHandler token: token
 
 	^E_NOTIMPL!
 
+Add_PermissionRequested: handler token: token
+	"Private - Invoke the add_PermissionRequested() method of the COM object.
+
+		HRESULT __stdcall add_PermissionRequested(
+			[in]ICoreWebView2FramePermissionRequestedEventHandler* handler,
+			[out]EventRegistrationToken* token);"
+
+	^E_NOTIMPL!
+
 Add_WebMessageReceived: handler token: token
 	"Private - Invoke the add_WebMessageReceived() method of the COM object.
 
@@ -274,6 +283,14 @@ Remove_NavigationStarting: token
 
 	^E_NOTIMPL!
 
+Remove_PermissionRequested: token
+	"Private - Invoke the remove_PermissionRequested() method of the COM object.
+
+		HRESULT __stdcall remove_PermissionRequested(
+			[in]EventRegistrationToken token);"
+
+	^E_NOTIMPL!
+
 Remove_WebMessageReceived: token
 	"Private - Invoke the remove_WebMessageReceived() method of the COM object.
 
@@ -302,6 +319,7 @@ Add_DOMContentLoaded:token:!COM Interfaces-ICoreWebView2Frame2!events!private! !
 Add_NameChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2Frame!events!private! !
 Add_NavigationCompleted:token:!COM Interfaces-ICoreWebView2Frame2!events!private! !
 Add_NavigationStarting:token:!COM Interfaces-ICoreWebView2Frame2!events!private! !
+Add_PermissionRequested:token:!**auto generated**!COM Interfaces-ICoreWebView2Frame3!private! !
 Add_WebMessageReceived:token:!COM Interfaces-ICoreWebView2Frame2!events!private! !
 addHostObjectToScriptWithOrigins:object:originsCount:origins:!**auto generated**!methods!public! !
 AddHostObjectToScriptWithOrigins:object:originsCount:origins:!**auto generated**!COM Interfaces-ICoreWebView2Frame!private! !
@@ -322,13 +340,11 @@ Remove_DOMContentLoaded:!COM Interfaces-ICoreWebView2Frame2!events!private! !
 Remove_NameChanged:!**auto generated**!COM Interfaces-ICoreWebView2Frame!events!private! !
 Remove_NavigationCompleted:!COM Interfaces-ICoreWebView2Frame2!events!private! !
 Remove_NavigationStarting:!COM Interfaces-ICoreWebView2Frame2!events!private! !
+Remove_PermissionRequested:!**auto generated**!COM Interfaces-ICoreWebView2Frame3!private! !
 Remove_WebMessageReceived:!COM Interfaces-ICoreWebView2Frame2!events!private! !
 removeHostObjectFromScript:!**auto generated**!methods!public! !
 RemoveHostObjectFromScript:!**auto generated**!COM Interfaces-ICoreWebView2Frame!private! !
 !
-
-ICoreWebView2Frame methodProtocol: #ICoreWebView2Frame attributes: #(#readOnly) selectors: #(#Add_Destroyed:token: #Add_NameChanged:token: #AddHostObjectToScriptWithOrigins:object:originsCount:origins: #get_name: #IsDestroyed: #Remove_Destroyed: #Remove_NameChanged: #RemoveHostObjectFromScript:)!
-ICoreWebView2Frame methodProtocol: #ICoreWebView2Frame2 attributes: #(#readOnly) selectors: #(#Add_ContentLoading:token: #Add_Destroyed:token: #Add_DOMContentLoaded:token: #Add_NameChanged:token: #Add_NavigationCompleted:token: #Add_NavigationStarting:token: #Add_WebMessageReceived:token: #AddHostObjectToScriptWithOrigins:object:originsCount:origins: #ExecuteScript:handler: #get_name: #IsDestroyed: #PostWebMessageAsJson: #PostWebMessageAsString: #Remove_ContentLoading: #Remove_Destroyed: #Remove_DOMContentLoaded: #Remove_NameChanged: #Remove_NavigationCompleted: #Remove_NavigationStarting: #Remove_WebMessageReceived: #RemoveHostObjectFromScript:)!
 
 !ICoreWebView2Frame class methodsFor!
 

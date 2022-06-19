@@ -42,6 +42,9 @@ basicUnregister!private!realizing/unrealizing! !
 
 !ICoreWebView2NewWindowRequestedEventHandler class methodsFor!
 
+argsClass
+	^ICoreWebView2NewWindowRequestedEventArgs2!
+
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2NewWindowRequestedEventHandler'
 		ICoreWebView2NewWindowRequestedEventHandler defineTemplate"
@@ -56,6 +59,7 @@ eventName
 
 	^#newWindowRequested:! !
 !ICoreWebView2NewWindowRequestedEventHandler class categoriesForMethods!
+argsClass!constants!public! !
 defineFunctions!**auto generated**!initializing!public! !
 eventName!constants!public! !
 !
