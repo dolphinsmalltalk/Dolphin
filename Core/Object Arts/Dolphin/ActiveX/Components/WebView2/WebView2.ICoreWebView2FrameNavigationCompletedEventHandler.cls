@@ -43,6 +43,9 @@ basicUnregister!private!realizing/unrealizing! !
 
 !WebView2.ICoreWebView2FrameNavigationCompletedEventHandler class methodsFor!
 
+argsClass
+	^ICoreWebView2NavigationCompletedEventArgs2!
+
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2FrameNavigationCompletedEventHandler'
 		ICoreWebView2FrameNavigationCompletedEventHandler defineTemplate"
@@ -57,6 +60,7 @@ eventName
 
 	^#frameNavigationCompleted:! !
 !WebView2.ICoreWebView2FrameNavigationCompletedEventHandler class categoriesForMethods!
+argsClass!constants!public! !
 defineFunctions!**auto generated**!initializing!public! !
 eventName!constants!public! !
 !

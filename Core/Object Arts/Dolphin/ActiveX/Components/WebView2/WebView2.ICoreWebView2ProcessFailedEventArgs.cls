@@ -30,6 +30,31 @@ interface ICoreWebView2ProcessFailedEventArgs : IUnknown
 !WebView2.ICoreWebView2ProcessFailedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
 !WebView2.ICoreWebView2ProcessFailedEventArgs methodsFor!
 
+exitCode
+	"Answer the <sdword> value of the 'ExitCode' property of the receiver."
+
+	| answer |
+	answer := SDWORD new.
+	self get_ExitCode: answer.
+	^answer asObject!
+
+frameInfosForFailedProcess
+	"Answer the <ICoreWebView2FrameInfoCollection> value of the 'FrameInfosForFailedProcess' property of the receiver."
+
+	| answer |
+	answer := ICoreWebView2FrameInfoCollection newPointer.
+	self get_FrameInfosForFailedProcess: answer.
+	^answer asObject!
+
+get_ExitCode: exitCode
+	^E_NOTIMPL!
+
+get_FrameInfosForFailedProcess: frames
+	^E_NOTIMPL!
+
+get_ProcessDescription: processDescription
+	^E_NOTIMPL!
+
 get_ProcessFailedKind: processFailedKind
 	"Private - Get the value of the 'ProcessFailedKind' property of the receiver.
 
@@ -38,6 +63,9 @@ get_ProcessFailedKind: processFailedKind
 
 	<virtual stdcall: hresult 4 sdword*>
 	^self invalidCall: _failureCode!
+
+get_reason: reason
+	^E_NOTIMPL!
 
 handled
 	^handled!
@@ -49,7 +77,26 @@ isBrowserProcessExit
 	^self processFailedKind = COREWEBVIEW2_PROCESS_FAILED_KIND_BROWSER_PROCESS_EXITED!
 
 printableProperties
-	^#(#processFailedKind)!
+	| propertyNames failureKind |
+	propertyNames := OrderedCollection withAll: #(#processFailedKind).
+	propertyNames addLast: #exitCode.
+	self processDescription isEmpty ifFalse: [propertyNames add: #processDescription].
+	failureKind := self processFailedKind.
+	failureKind = COREWEBVIEW2_PROCESS_FAILED_KIND_BROWSER_PROCESS_EXITED
+		ifFalse: [propertyNames add: #reason].
+	failureKind = COREWEBVIEW2_PROCESS_FAILED_KIND_FRAME_RENDER_PROCESS_EXITED
+		ifTrue: [propertyNames addLast: #frameInfosForFailedProcess].
+	^propertyNames!
+
+processDescription
+	"Answer the <lpwstr> value of the 'ProcessDescription' property of the receiver."
+
+	| ptr answer |
+	ptr := COMTaskMemory new.
+	self get_ProcessDescription: ptr.
+	answer := Utf16String fromAddress: ptr.
+	ptr free.
+	^answer!
 
 processFailedKind
 	"Answer the <sdword> value of the 'ProcessFailedKind' property of the receiver."
@@ -57,14 +104,30 @@ processFailedKind
 	| answer |
 	answer := SDWORD new.
 	self get_ProcessFailedKind: answer.
+	^answer asObject!
+
+reason
+	"Answer the <sdword> value of the 'reason' property of the receiver."
+
+	| answer |
+	answer := SDWORD new.
+	self get_reason: answer.
 	^answer asObject! !
 !WebView2.ICoreWebView2ProcessFailedEventArgs categoriesForMethods!
+exitCode!properties!public! !
+frameInfosForFailedProcess!properties!public! !
+get_ExitCode:!**auto generated**!COM Interfaces-ICoreWebView2ProcessFailedEventArgs2!private! !
+get_FrameInfosForFailedProcess:!**auto generated**!COM Interfaces-ICoreWebView2ProcessFailedEventArgs2!private! !
+get_ProcessDescription:!**auto generated**!COM Interfaces-ICoreWebView2ProcessFailedEventArgs2!private! !
 get_ProcessFailedKind:!**auto generated**!COM Interfaces-ICoreWebView2ProcessFailedEventArgs!private! !
+get_reason:!**auto generated**!COM Interfaces-ICoreWebView2ProcessFailedEventArgs2!private! !
 handled!accessing!public! !
 handled:!accessing!public! !
 isBrowserProcessExit!public!testing! !
 printableProperties!printing!private! !
+processDescription!properties!public! !
 processFailedKind!**auto generated**!properties!public! !
+reason!properties!public! !
 !
 
 !WebView2.ICoreWebView2ProcessFailedEventArgs class methodsFor!

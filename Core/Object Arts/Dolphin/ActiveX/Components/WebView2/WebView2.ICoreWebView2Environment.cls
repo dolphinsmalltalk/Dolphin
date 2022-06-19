@@ -78,6 +78,29 @@ browserVersionString
 	ptr free.
 	^answer!
 
+createContextMenuItem: label iconStream: iconStream kind: kind
+	"Answer the <ICoreWebView2ContextMenuItem> result of invoking the CreateContextMenuItem() method of the COM object."
+
+	| answer |
+	answer := ICoreWebView2ContextMenuItem newPointer.
+	self
+		CreateContextMenuItem: label asUtf16String
+		iconStream: iconStream
+		kind: kind
+		item: answer.
+	^answer asObject!
+
+CreateContextMenuItem: label iconStream: iconStream kind: kind item: item
+	"Private - Invoke the CreateContextMenuItem() method of the COM object.
+
+		HRESULT __stdcall CreateContextMenuItem(
+			[in]LPWSTR Label,
+			[in]IStream* iconStream,
+			[in]COREWEBVIEW2_CONTEXT_MENU_ITEM_KIND Kind,
+			[out, retval]ICoreWebView2ContextMenuItem** item);"
+
+	^E_NOTIMPL!
+
 CreateCoreWebView2CompositionController: parentWindow handler: handler
 	"Private - Invoke the CreateCoreWebView2CompositionController() method of the COM object.
 
@@ -98,6 +121,27 @@ createCoreWebView2CompositionController: parentWindow thenDo: aDyadicValuable
 	self CreateCoreWebView2CompositionController: parentWindow handler: handler.
 	handler free!
 
+createCoreWebView2CompositionController: parentWindow withOptions: anICoreWebView2ControllerOptions thenDo: aDyadicValuable
+	"Invoke the CreateCoreWebView2CompositionController() method of the COM object."
+
+	| handler |
+	handler := (WebView2CompletionHandler completionBlock: aDyadicValuable)
+				queryInterface: ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler.
+	self
+		CreateCoreWebView2CompositionControllerWithOptions: parentWindow
+		options: anICoreWebView2ControllerOptions
+		handler: handler , handler free!
+
+CreateCoreWebView2CompositionControllerWithOptions: parentWindow options: options handler: handler
+	"Private - Invoke the CreateCoreWebView2CompositionControllerWithOptions() method of the COM object.
+
+		HRESULT __stdcall CreateCoreWebView2CompositionControllerWithOptions(
+			[in]wireHWND ParentWindow,
+			[in]ICoreWebView2ControllerOptions* options,
+			[in]ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler* handler);"
+
+	^self CreateCoreWebView2CompositionController: parentWindow handler: handler!
+
 CreateCoreWebView2Controller: parentWindow handler: handler
 	"Private - Invoke the CreateCoreWebView2Controller() method of the COM object.
 
@@ -116,6 +160,42 @@ createCoreWebView2Controller: parentWindow thenDo: aDyadicValuable
 				queryInterface: ICoreWebView2CreateCoreWebView2ControllerCompletedHandler.
 	self CreateCoreWebView2Controller: parentWindow handler: handler.
 	handler free!
+
+createCoreWebView2Controller: parentWindow withOptions: options thenDo: aDyadicValuable
+	"Invoke the CreateCoreWebView2ControllerWithOptions() method of the COM object."
+
+	| handler |
+	handler := (WebView2CompletionHandler completionBlock: aDyadicValuable)
+				queryInterface: ICoreWebView2CreateCoreWebView2ControllerCompletedHandler.
+	self CreateCoreWebView2ControllerWithOptions: parentWindow options: options handler: aDyadicValuable.
+	handler free!
+
+createCoreWebView2ControllerOptions
+	"Answer the <ICoreWebView2ControllerOptions> result of invoking the CreateCoreWebView2ControllerOptions() method of the COM object."
+
+	| answer |
+	answer := ICoreWebView2ControllerOptions newPointer.
+	self CreateCoreWebView2ControllerOptions: answer.
+	^answer asObject!
+
+CreateCoreWebView2ControllerOptions: options
+	"Private - Invoke the CreateCoreWebView2ControllerOptions() method of the COM object.
+
+		HRESULT __stdcall CreateCoreWebView2ControllerOptions(
+			[out, retval]ICoreWebView2ControllerOptions** options);"
+
+	^E_NOTIMPL!
+
+CreateCoreWebView2ControllerWithOptions: parentWindow options: options handler: handler
+	"Private - Invoke the CreateCoreWebView2ControllerWithOptions() method of the COM object.
+
+		HRESULT __stdcall CreateCoreWebView2ControllerWithOptions(
+			[in]wireHWND ParentWindow,
+			[in]ICoreWebView2ControllerOptions* options,
+			[in]ICoreWebView2CreateCoreWebView2ControllerCompletedHandler* handler);"
+
+	"The options are ignored at this level"
+	^self CreateCoreWebView2Controller: parentWindow handler: handler!
 
 CreateCoreWebView2PointerInfo: pointerInfo
 	"Private - Invoke the CreateCoreWebView2PointerInfo() method of the COM object.
@@ -296,10 +376,18 @@ Add_BrowserProcessExited:token:!COM Interfaces-ICoreWebView2Environment5!events!
 Add_NewBrowserVersionAvailable:token:!**auto generated**!COM Interfaces-ICoreWebView2Environment!events!private! !
 Add_ProcessInfosChanged:token:!COM Interfaces-ICoreWebView2Environment8!events!private! !
 browserVersionString!properties!public! !
+createContextMenuItem:iconStream:kind:!methods!public! !
+CreateContextMenuItem:iconStream:kind:item:!COM Interfaces-ICoreWebView2Environment9!private! !
 CreateCoreWebView2CompositionController:handler:!COM Interfaces-ICoreWebView2Environment3!methods!private! !
 createCoreWebView2CompositionController:thenDo:!methods!public! !
+createCoreWebView2CompositionController:withOptions:thenDo:!methods!public! !
+CreateCoreWebView2CompositionControllerWithOptions:options:handler:!COM Interfaces-ICoreWebView2Environment10!private! !
 CreateCoreWebView2Controller:handler:!**auto generated**!COM Interfaces-ICoreWebView2Environment!private! !
 createCoreWebView2Controller:thenDo:!methods!public! !
+createCoreWebView2Controller:withOptions:thenDo:!**auto generated**!methods!public! !
+createCoreWebView2ControllerOptions!**auto generated**!methods!public! !
+CreateCoreWebView2ControllerOptions:!COM Interfaces-ICoreWebView2Environment10!private! !
+CreateCoreWebView2ControllerWithOptions:options:handler:!COM Interfaces-ICoreWebView2Environment10!private! !
 CreateCoreWebView2PointerInfo:!COM Interfaces-ICoreWebView2Environment3!methods!private! !
 createPointerInfo!methods!public! !
 CreatePrintSettings:!COM Interfaces-ICoreWebView2Environment6!methods!private! !
@@ -320,15 +408,6 @@ Remove_NewBrowserVersionAvailable:!**auto generated**!COM Interfaces-ICoreWebVie
 Remove_ProcessInfosChanged:!COM Interfaces-ICoreWebView2Environment8!events!private! !
 userDataFolder!properties!public! !
 !
-
-WebView2.ICoreWebView2Environment methodProtocol: #ICoreWebView2Environment attributes: #(#readOnly) selectors: #(#Add_NewBrowserVersionAvailable:token: #CreateCoreWebView2Controller:handler: #CreateWebResourceResponse:statusCode:reasonPhrase:headers:response: #get_BrowserVersionString: #Remove_NewBrowserVersionAvailable:)!
-WebView2.ICoreWebView2Environment methodProtocol: #ICoreWebView2Environment2 attributes: #(#readOnly) selectors: #(#Add_NewBrowserVersionAvailable:token: #CreateCoreWebView2Controller:handler: #CreateWebResourceRequest:method:postData:headers:request: #CreateWebResourceResponse:statusCode:reasonPhrase:headers:response: #get_BrowserVersionString: #Remove_NewBrowserVersionAvailable:)!
-WebView2.ICoreWebView2Environment methodProtocol: #ICoreWebView2Environment3 attributes: #(#readOnly) selectors: #(#Add_NewBrowserVersionAvailable:token: #CreateCoreWebView2CompositionController:handler: #CreateCoreWebView2Controller:handler: #CreateCoreWebView2PointerInfo: #CreateWebResourceRequest:method:postData:headers:request: #CreateWebResourceResponse:statusCode:reasonPhrase:headers:response: #get_BrowserVersionString: #Remove_NewBrowserVersionAvailable:)!
-WebView2.ICoreWebView2Environment methodProtocol: #ICoreWebView2Environment4 attributes: #(#readOnly) selectors: #(#Add_NewBrowserVersionAvailable:token: #CreateCoreWebView2CompositionController:handler: #CreateCoreWebView2Controller:handler: #CreateCoreWebView2PointerInfo: #CreateWebResourceRequest:method:postData:headers:request: #CreateWebResourceResponse:statusCode:reasonPhrase:headers:response: #get_BrowserVersionString: #GetProviderForHwnd:provider: #Remove_NewBrowserVersionAvailable:)!
-WebView2.ICoreWebView2Environment methodProtocol: #ICoreWebView2Environment5 attributes: #(#readOnly) selectors: #(#Add_BrowserProcessExited:token: #Add_NewBrowserVersionAvailable:token: #CreateCoreWebView2CompositionController:handler: #CreateCoreWebView2Controller:handler: #CreateCoreWebView2PointerInfo: #CreateWebResourceRequest:method:postData:headers:request: #CreateWebResourceResponse:statusCode:reasonPhrase:headers:response: #get_BrowserVersionString: #GetProviderForHwnd:provider: #Remove_BrowserProcessExited: #Remove_NewBrowserVersionAvailable:)!
-WebView2.ICoreWebView2Environment methodProtocol: #ICoreWebView2Environment6 attributes: #(#readOnly) selectors: #(#Add_BrowserProcessExited:token: #Add_NewBrowserVersionAvailable:token: #CreateCoreWebView2CompositionController:handler: #CreateCoreWebView2Controller:handler: #CreateCoreWebView2PointerInfo: #CreatePrintSettings: #CreateWebResourceRequest:method:postData:headers:request: #CreateWebResourceResponse:statusCode:reasonPhrase:headers:response: #get_BrowserVersionString: #GetProviderForHwnd:provider: #Remove_BrowserProcessExited: #Remove_NewBrowserVersionAvailable:)!
-WebView2.ICoreWebView2Environment methodProtocol: #ICoreWebView2Environment7 attributes: #(#readOnly) selectors: #(#Add_BrowserProcessExited:token: #Add_NewBrowserVersionAvailable:token: #CreateCoreWebView2CompositionController:handler: #CreateCoreWebView2Controller:handler: #CreateCoreWebView2PointerInfo: #CreatePrintSettings: #CreateWebResourceRequest:method:postData:headers:request: #CreateWebResourceResponse:statusCode:reasonPhrase:headers:response: #get_BrowserVersionString: #get_UserDataFolder: #GetProviderForHwnd:provider: #Remove_BrowserProcessExited: #Remove_NewBrowserVersionAvailable:)!
-WebView2.ICoreWebView2Environment methodProtocol: #ICoreWebView2Environment8 attributes: #(#readOnly) selectors: #(#Add_BrowserProcessExited:token: #Add_NewBrowserVersionAvailable:token: #Add_ProcessInfosChanged:token: #CreateCoreWebView2CompositionController:handler: #CreateCoreWebView2Controller:handler: #CreateCoreWebView2PointerInfo: #CreatePrintSettings: #CreateWebResourceRequest:method:postData:headers:request: #CreateWebResourceResponse:statusCode:reasonPhrase:headers:response: #get_BrowserVersionString: #get_UserDataFolder: #GetProcessInfos: #GetProviderForHwnd:provider: #Remove_BrowserProcessExited: #Remove_NewBrowserVersionAvailable: #Remove_ProcessInfosChanged:)!
 
 !WebView2.ICoreWebView2Environment class methodsFor!
 

@@ -55,7 +55,7 @@ defineFunctions
 eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
-	^#processInfosChanged:! !
+	^#processInfosChanged! !
 !WebView2.ICoreWebView2ProcessInfosChangedEventHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 eventName!constants!public! !

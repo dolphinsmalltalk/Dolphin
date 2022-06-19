@@ -7,6 +7,7 @@ package paxVersion: 2.1;
 package setClassNames: #(
 	#{WebView2.Tests}
 	#{WebView2.Tests.WebView2EnvironmentOptionsTest}
+	#{WebView2.Tests.WebView2ViewTest}
 ).
 
 package setPrerequisites: #(
@@ -14,6 +15,7 @@ package setPrerequisites: #(
 	'..\..\..\Base\Tests\Dolphin Base Tests'
 	'..\..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
 	'..\..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitPreload'
+	'..\..\..\MVP\Dolphin MVP Tests'
 	'WebView2'
 ).
 
@@ -33,6 +35,13 @@ Core.Tests.DolphinTest subclass: #'WebView2.Tests.WebView2EnvironmentOptionsTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+UI.Tests.PresenterTest subclass: #'WebView2.Tests.WebView2ViewTest'
+	instanceVariableNames: 'domContentLoaded navigationCompleted processFailed'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
 
 "End of package definition"!
 

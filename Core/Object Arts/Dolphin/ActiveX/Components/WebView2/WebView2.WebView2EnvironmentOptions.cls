@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 OS.COM.InterfaceImplementation subclass: #'WebView2.WebView2EnvironmentOptions'
-	instanceVariableNames: 'additionalBrowserArguments allowSSO locale browserVersion'
+	instanceVariableNames: 'additionalBrowserArguments allowSSO locale browserVersion exclusiveUserDataFolderAccess'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -29,6 +29,12 @@ browserVersion
 browserVersion: anObject
 	browserVersion := anObject!
 
+exclusiveUserDataFolderAccess
+	^exclusiveUserDataFolderAccess!
+
+exclusiveUserDataFolderAccess: aBoolean 
+	exclusiveUserDataFolderAccess := aBoolean!
+
 get_AdditionalBrowserArguments: value
 	"Private - Get the value of the 'AdditionalBrowserArguments' property of the receiver.
 
@@ -47,6 +53,15 @@ get_AllowSingleSignOnUsingOSPrimaryAccount: allow
 			[out, retval]long* allow);"
 
 	allow value: allowSSO asParameter.
+	^S_OK!
+
+get_ExclusiveUserDataFolderAccess: value
+	"Private - Get the value of the 'ExclusiveUserDataFolderAccess' property of the receiver.
+
+		HRESULT __stdcall ExclusiveUserDataFolderAccess(
+			[out, retval]long* value);"
+
+	value value: exclusiveUserDataFolderAccess asParameter.
 	^S_OK!
 
 get_Language: value
@@ -70,6 +85,7 @@ get_TargetCompatibleBrowserVersion: value
 
 initialize
 	allowSSO := true.
+	exclusiveUserDataFolderAccess := false.
 	super initialize!
 
 locale
@@ -98,6 +114,16 @@ put_AllowSingleSignOnUsingOSPrimaryAccount: allow
 	allowSSO := allow asBoolean.
 	^S_OK!
 
+put_ExclusiveUserDataFolderAccess: value
+	"Private - Set the value of the 'ExclusiveUserDataFolderAccess' property of the object wrapped by the 
+	 receiver to the <sdword> argument, value.
+
+		HRESULT __stdcall ExclusiveUserDataFolderAccess(
+			[in]long value);"
+
+	exclusiveUserDataFolderAccess := value asBoolean.
+	^S_OK!
+
 put_Language: value
 	"Private - Set the value of the 'Language' property of the object wrapped by the 
 	 receiver to the <lpwstr> argument, value.
@@ -119,7 +145,7 @@ put_TargetCompatibleBrowserVersion: value
 	^S_OK!
 
 supportedInterfaces
-	^{ICoreWebView2EnvironmentOptions}! !
+	^{ICoreWebView2EnvironmentOptions. ICoreWebView2EnvironmentOptions2}! !
 !WebView2.WebView2EnvironmentOptions categoriesForMethods!
 additionalBrowserArguments!accessing!public! !
 additionalBrowserArguments:!accessing!public! !
@@ -127,8 +153,11 @@ allowSSO!accessing!public! !
 allowSSO:!accessing!public! !
 browserVersion!accessing!public! !
 browserVersion:!accessing!public! !
+exclusiveUserDataFolderAccess!public! !
+exclusiveUserDataFolderAccess:!public! !
 get_AdditionalBrowserArguments:!COM Interfaces-ICoreWebView2EnvironmentOptions!private! !
 get_AllowSingleSignOnUsingOSPrimaryAccount:!COM Interfaces-ICoreWebView2EnvironmentOptions!private! !
+get_ExclusiveUserDataFolderAccess:!**auto generated**!COM Interfaces-ICoreWebView2EnvironmentOptions2!private! !
 get_Language:!COM Interfaces-ICoreWebView2EnvironmentOptions!private! !
 get_TargetCompatibleBrowserVersion:!COM Interfaces-ICoreWebView2EnvironmentOptions!private! !
 initialize!initializing!public! !
@@ -136,12 +165,14 @@ locale!accessing!public! !
 locale:!accessing!public! !
 put_AdditionalBrowserArguments:!COM Interfaces-ICoreWebView2EnvironmentOptions!private! !
 put_AllowSingleSignOnUsingOSPrimaryAccount:!COM Interfaces-ICoreWebView2EnvironmentOptions!private! !
+put_ExclusiveUserDataFolderAccess:!**auto generated**!COM Interfaces-ICoreWebView2EnvironmentOptions2!private! !
 put_Language:!COM Interfaces-ICoreWebView2EnvironmentOptions!private! !
 put_TargetCompatibleBrowserVersion:!COM Interfaces-ICoreWebView2EnvironmentOptions!private! !
 supportedInterfaces!constants!public! !
 !
 
-WebView2.WebView2EnvironmentOptions methodProtocol: #ICoreWebView2EnvironmentOptions attributes: #(#readOnly) selectors: #(#get_AdditionalBrowserArguments: #get_AllowSingleSignOnUsingOSPrimaryAccount: #get_Language: #get_TargetCompatibleBrowserVersion: #put_AdditionalBrowserArguments: #put_AllowSingleSignOnUsingOSPrimaryAccount: #put_Language: #put_TargetCompatibleBrowserVersion:)!
+WebView2EnvironmentOptions methodProtocol: #ICoreWebView2EnvironmentOptions attributes: #(#readOnly) selectors: #(#get_AdditionalBrowserArguments: #get_AllowSingleSignOnUsingOSPrimaryAccount: #get_Language: #get_TargetCompatibleBrowserVersion: #put_AdditionalBrowserArguments: #put_AllowSingleSignOnUsingOSPrimaryAccount: #put_Language: #put_TargetCompatibleBrowserVersion:)!
+WebView2EnvironmentOptions methodProtocol: #ICoreWebView2EnvironmentOptions2 attributes: #(#readOnly) selectors: #(#get_ExclusiveUserDataFolderAccess: #put_ExclusiveUserDataFolderAccess:)!
 
 !WebView2.WebView2EnvironmentOptions class methodsFor!
 

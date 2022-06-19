@@ -43,6 +43,9 @@ basicUnregister!private!realizing/unrealizing! !
 
 !WebView2.ICoreWebView2WebMessageReceivedEventHandler class methodsFor!
 
+argsClass
+	^ICoreWebView2WebMessageReceivedEventArgs!
+
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2WebMessageReceivedEventHandler'
 		ICoreWebView2WebMessageReceivedEventHandler defineTemplate"
@@ -57,6 +60,7 @@ eventName
 
 	^#webMessageReceived:! !
 !WebView2.ICoreWebView2WebMessageReceivedEventHandler class categoriesForMethods!
+argsClass!constants!public! !
 defineFunctions!**auto generated**!initializing!public! !
 eventName!constants!public! !
 !

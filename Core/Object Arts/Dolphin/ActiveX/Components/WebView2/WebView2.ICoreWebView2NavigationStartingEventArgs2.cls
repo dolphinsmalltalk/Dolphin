@@ -33,21 +33,6 @@ interface ICoreWebView2NavigationStartingEventArgs2 : ICoreWebView2NavigationSta
 !WebView2.ICoreWebView2NavigationStartingEventArgs2 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
 !WebView2.ICoreWebView2NavigationStartingEventArgs2 methodsFor!
 
-additionalAllowedFrameAncestors
-	"Answer the <lpwstr> value of the 'AdditionalAllowedFrameAncestors' property of the receiver."
-
-	| ptr answer |
-	ptr := TaskMemory new.
-	self get_AdditionalAllowedFrameAncestors: ptr.
-	answer := Utf16String fromAddress: ptr.
-	ptr free.
-	^answer!
-
-additionalAllowedFrameAncestors: value
-	"Set the 'AdditionalAllowedFrameAncestors' property of the receiver to the <lpwstr> value of the argument."
-
-	self put_AdditionalAllowedFrameAncestors: value asUtf16String!
-
 get_AdditionalAllowedFrameAncestors: value
 	"Private - Get the value of the 'AdditionalAllowedFrameAncestors' property of the receiver.
 
@@ -67,8 +52,6 @@ put_AdditionalAllowedFrameAncestors: value
 	<virtual stdcall: hresult 12 lpwstr>
 	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2NavigationStartingEventArgs2 categoriesForMethods!
-additionalAllowedFrameAncestors!properties!public! !
-additionalAllowedFrameAncestors:!**auto generated**!properties!public! !
 get_AdditionalAllowedFrameAncestors:!**auto generated**!COM Interfaces-ICoreWebView2NavigationStartingEventArgs2!private! !
 put_AdditionalAllowedFrameAncestors:!**auto generated**!COM Interfaces-ICoreWebView2NavigationStartingEventArgs2!private! !
 !

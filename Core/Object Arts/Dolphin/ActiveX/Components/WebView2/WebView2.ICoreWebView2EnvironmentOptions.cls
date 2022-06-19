@@ -72,7 +72,7 @@ allowSingleSignOnUsingOSPrimaryAccount
 	| answer |
 	answer := BOOL newBuffer.
 	self get_AllowSingleSignOnUsingOSPrimaryAccount: answer.
-	^answer asObject!
+	^answer value!
 
 allowSingleSignOnUsingOSPrimaryAccount: allow
 	"Set the 'AllowSingleSignOnUsingOSPrimaryAccount' property of the receiver to the <sdword> value of the argument."

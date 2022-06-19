@@ -43,6 +43,9 @@ basicUnregister!private!realizing/unrealizing! !
 
 !WebView2.ICoreWebView2FrameCreatedEventHandler class methodsFor!
 
+argsClass
+	^ICoreWebView2FrameCreatedEventArgs!
+
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2FrameCreatedEventHandler'
 		ICoreWebView2FrameCreatedEventHandler defineTemplate"
@@ -57,6 +60,7 @@ eventName
 
 	^#frameCreated:! !
 !WebView2.ICoreWebView2FrameCreatedEventHandler class categoriesForMethods!
+argsClass!constants!public! !
 defineFunctions!**auto generated**!initializing!public! !
 eventName!constants!public! !
 !

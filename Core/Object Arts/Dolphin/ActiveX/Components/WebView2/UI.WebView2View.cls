@@ -288,12 +288,25 @@ observeEnvironmentEvents
 			do: [:each | self observeEvent: each from: webviewEnvironment]!
 
 observeEvent: anICoreWebView2EventHandlerClass from: anICoreWebView2EventSource
+	| event argsClass handlerBlock |
+	event := anICoreWebView2EventHandlerClass eventName.
+	argsClass := anICoreWebView2EventHandlerClass argsClass.
+	handlerBlock := argsClass == IUnknown
+				ifTrue: [[:source :args | self presenter trigger: event]]
+				ifFalse: 
+					[argsClass superclass isNonInstantiable
+						ifTrue: [[:source :args | self presenter trigger: event with: args]]
+						ifFalse: 
+							["Here we are assuming that there is only every Args and Args2. This is true currently. If more depth is added, we could walk up the hierarchy querying"
+							[:source :args | self presenter trigger: event with: (args queryInterface: argsClass ifNone: [args])]]].
 	^self registerEventSink: (WebView2EventSink
 				source: anICoreWebView2EventSource
 				interfaceClass: anICoreWebView2EventHandlerClass
-				handler: [:source :args | self presenter trigger: anICoreWebView2EventHandlerClass eventName with: args])!
+				handler: handlerBlock)!
 
 observeWindowEvents
+	"For some events we want to do more than just trigger a Smalltalk event, so these have custom handlers"
+
 	self registerEventSink: (WebView2EventSink
 				source: webview
 				interfaceClass: ICoreWebView2ProcessFailedEventHandler
@@ -306,15 +319,19 @@ observeWindowEvents
 				source: webview
 				interfaceClass: ICoreWebView2HistoryChangedEventHandler
 				handler: [:source :args | self onHistoryChanged]).
-	##({ICoreWebView2ClientCertificateRequestedEventHandler.
+	"For all other events we just trigger a Smalltalk event, so we can follow a generic pattern to set up the handler"
+	##({ICoreWebView2BasicAuthenticationRequestedEventHandler.
+		ICoreWebView2ClientCertificateRequestedEventHandler.
 		ICoreWebView2ContainsFullScreenElementChangedEventHandler.
 		ICoreWebView2ContentLoadingEventHandler.
+		ICoreWebView2ContextMenuRequestedEventHandler.
 		ICoreWebView2DocumentTitleChangedEventHandler.
 		ICoreWebView2DOMContentLoadedEventHandler.
 		ICoreWebView2DownloadStartingEventHandler.
 		ICoreWebView2FrameCreatedEventHandler.
 		ICoreWebView2FrameNavigationCompletedEventHandler.
 		ICoreWebView2FrameNavigationStartingEventHandler.
+		ICoreWebView2FramePermissionRequestedEventHandler.
 		ICoreWebView2IsDefaultDownloadDialogOpenChangedEventHandler.
 		ICoreWebView2IsDocumentPlayingAudioChangedEventHandler.
 		ICoreWebView2IsMutedChangedEventHandler.
@@ -322,7 +339,9 @@ observeWindowEvents
 		ICoreWebView2NavigationStartingEventHandler.
 		ICoreWebView2NewWindowRequestedEventHandler.
 		ICoreWebView2PermissionRequestedEventHandler.
+		ICoreWebView2ServerCertificateErrorDetectedEventHandler.
 		ICoreWebView2ScriptDialogOpeningEventHandler.
+		ICoreWebView2StatusBarTextChangedEventHandler.
 		ICoreWebView2WebMessageReceivedEventHandler.
 		ICoreWebView2WebResourceRequestedEventHandler.
 		ICoreWebView2WebResourceResponseReceivedEventHandler.
@@ -401,6 +420,9 @@ onViewCreated
 	eventHandlers := OrderedCollection new.
 	self createWebViewEnvironment!
 
+profile
+	^webview profile!
+
 queryCommand: query
 	"Enters details about a potential command for the receiver into the 
 	<CommandQuery>,  query."
@@ -418,22 +440,24 @@ queryCommand: query
 	^super queryCommand: query!
 
 queryControllerInterface: anIUnknown
-	^anIUnknown queryInterface: ICoreWebView2Controller3
-		ifNone: 
-			[anIUnknown queryInterface: ICoreWebView2Controller2
-				ifNone: [anIUnknown queryInterface: ICoreWebView2Controller]]!
+	| interfaceClass |
+	interfaceClass := ICoreWebView2Controller4.
+	
+	[(anIUnknown queryInterface: interfaceClass ifNone: []) ifNotNil: [:interface | ^interface].
+	(interfaceClass := interfaceClass superclass) == ICoreWebView2Controller]
+			whileFalse.
+	^anIUnknown queryInterface: ICoreWebView2Controller!
 
 queryEnvironmentInterface: anICoreWebView2Environment
-	"Private - There are already 8 versions of the ICoreWebView2Environment; answer the latest available. A little more forethought in the design so as to not have to define 8 versions of a public interface in a year or two might be nice!!"
+	"Private - There are already 10 versions of the ICoreWebView2Environment; answer the latest available. A little more forethought in the design so as to not have to define 10 versions of a public interface in a year or two might be nice!!"
 
-	##({ICoreWebView2Environment8.
-		ICoreWebView2Environment7.
-		ICoreWebView2Environment6.
-		ICoreWebView2Environment5.
-		ICoreWebView2Environment4.
-		ICoreWebView2Environment3.
-		ICoreWebView2Environment2})
-			do: [:each | (anICoreWebView2Environment queryInterface: each ifNone: []) ifNotNil: [:interface | ^interface]].
+	| interfaceClass |
+	interfaceClass := ICoreWebView2Environment10.
+	
+	[(anICoreWebView2Environment queryInterface: interfaceClass ifNone: [])
+		ifNotNil: [:interface | ^interface].
+	(interfaceClass := interfaceClass superclass) == ICoreWebView2Environment]
+			whileFalse.
 	^anICoreWebView2Environment!
 
 querySettingsInterface
@@ -448,17 +472,14 @@ querySettingsInterface
 	^settings!
 
 queryWindowInterface
-	| webview2 |
+	| webview2 interfaceClass |
 	webview2 := webviewController coreWebView2.
-	##({ICoreWebView2_9.
-		ICoreWebView2_8.
-		ICoreWebView2_7.
-		ICoreWebView2_6.
-		ICoreWebView2_5.
-		ICoreWebView2_4.
-		ICoreWebView2_3.
-		ICoreWebView2_2})
-			do: [:each | (webview2 queryInterface: each ifNone: []) ifNotNil: [:interface | ^interface]].
+	"Work up from the latest interface class until we find one that the control implements"
+	interfaceClass := ICoreWebView2_14.
+	
+	[(webview2 queryInterface: interfaceClass ifNone: []) ifNotNil: [:interface | ^interface].
+	(interfaceClass := interfaceClass superclass) == ICoreWebView2]
+			whileFalse.
 	^webview2!
 
 registerEventSink: aWebView2EventSink
@@ -478,6 +499,9 @@ releaseWebView
 
 resizeContentToFit
 	self content rectangle: self clientRectangle!
+
+settings
+	^webview settings!
 
 showWithStyle: anInteger
 	| result |
@@ -598,6 +622,7 @@ onShellPositionChanged:!event handling!public! !
 onSourceChanged:!event handling!private! !
 onUnavailableLinkClicked:!event handling!private! !
 onViewCreated!event handling!public! !
+profile!commands!public! !
 queryCommand:!commands!public! !
 queryControllerInterface:!helpers!private! !
 queryEnvironmentInterface:!helpers!private! !
@@ -606,6 +631,7 @@ queryWindowInterface!helpers!private! !
 registerEventSink:!helpers!private! !
 releaseWebView!operations!private!realizing/unrealizing! !
 resizeContentToFit!helpers!private! !
+settings!commands!public! !
 showWithStyle:!operations!private! !
 stop!commands!public! !
 subclassWindow:!operations!private! !
@@ -649,7 +675,7 @@ initialize
 webview2Events
 	"This is the full set of events. Not all are actually published currently; for example the frame and download events are not."
 
-	^#(#acceleratorKeyPressed: #browseProcessExited: #bytesReceivedChanged #clientCertificateRequested: #containsFullScreenElementChanged #contentLoading: #cursorChanged #devToolsProtocolEvent: #documentTitleChanged #domContentLoaded: #downloadStarting: #dowloadStateChanged #focusGained #focusLost #frameContentLoading: #frameCreated: #frameDestroyed #frameDomContentLoaded: #frameNameChanged #frameNavigationCompleted: #frameNavigationStarting: #frameWebMessageReceived: #historyChanged #isDefaultDownloadDialogOpenChanged #isDocumentPlayingAudioChanged #isMutedChanged #moveFocusRequested: #navigationCompleted: #navigationStarting: #newBrowserVersionAvailable #newWindowRequested: #permissionRequested: #processFailed: #processInfosChanged: #rasterizationScaleChanged #scriptDialogOpening: #sourceChanged: #webMessageReceived: #webResourceRequested: #webResourceResponseReceived: #webviewAvailable #windowCloseRequested #zoomFactorChanged)!
+	^#(#acceleratorKeyPressed: #basicAuthenticationRequested: #browseProcessExited: #bytesReceivedChanged #clientCertificateRequested: #containsFullScreenElementChanged #contentLoading: #contextMenuRequested: #cursorChanged #devToolsProtocolEvent: #documentTitleChanged #domContentLoaded: #downloadStarting: #dowloadStateChanged #focusGained #focusLost #frameContentLoading: #frameCreated: #frameDestroyed #frameDomContentLoaded: #frameNameChanged #frameNavigationCompleted: #frameNavigationStarting: #framePermissionRequested: #frameWebMessageReceived: #historyChanged #isDefaultDownloadDialogOpenChanged #isDocumentPlayingAudioChanged #isMutedChanged #moveFocusRequested: #navigationCompleted: #navigationStarting: #newBrowserVersionAvailable #newWindowRequested: #permissionRequested: #processFailed: #processInfosChanged #rasterizationScaleChanged #scriptDialogOpening: #serverCertificateErrorDetected: #sourceChanged: #statusBarTextChanged #webMessageReceived: #webResourceRequested: #webResourceResponseReceived: #webviewAvailable #windowCloseRequested #zoomFactorChanged)!
 
 winClassName
 	"Private - Answer the Windows class name, or atom, to be used when creating Windows attached

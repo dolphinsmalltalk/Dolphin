@@ -37,20 +37,9 @@ get_name: value
 			[out, retval]LPWSTR* value);"
 
 	<virtual stdcall: hresult 12 lpwstr*>
-	^self invalidCall: _failureCode!
-
-name
-	"Answer the <lpwstr> value of the 'name' property of the receiver."
-
-	| ptr answer |
-	ptr := TaskMemory new.
-	self get_name: ptr.
-	answer := Utf16String fromAddress: ptr.
-	ptr free.
-	^answer! !
+	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2NewWindowRequestedEventArgs2 categoriesForMethods!
 get_name:!**auto generated**!COM Interfaces-ICoreWebView2NewWindowRequestedEventArgs2!private! !
-name!properties!public! !
 !
 
 !WebView2.ICoreWebView2NewWindowRequestedEventArgs2 class methodsFor!

@@ -314,7 +314,7 @@ findLast:!public!searching! !
 first!accessing!public! !
 from:to:do:!enumerating!public! !
 from:to:keysAndValuesDo:!enumerating!public! !
-get_Count:!COM Interfaces-ICoreWebView2ClientCertificateCollection!COM Interfaces-ICoreWebView2CookieList!COM Interfaces-ICoreWebView2ProcessInfoCollection!COM Interfaces-ICoreWebView2StringCollection!private! !
+get_Count:!COM Interfaces-ICoreWebView2ClientCertificateCollection!COM Interfaces-ICoreWebView2ContextMenuItemCollection!COM Interfaces-ICoreWebView2CookieList!COM Interfaces-ICoreWebView2ProcessInfoCollection!COM Interfaces-ICoreWebView2StringCollection!private! !
 GetValueAtIndex:value:!COM Interfaces-ICoreWebView2CookieList!private! !
 indexOf:!public!searching! !
 indexOf:ifAbsent:!public!searching! !

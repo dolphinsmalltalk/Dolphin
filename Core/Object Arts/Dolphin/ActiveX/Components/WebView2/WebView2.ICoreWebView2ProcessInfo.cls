@@ -33,6 +33,37 @@ interface ICoreWebView2ProcessInfo : IUnknown
 !WebView2.ICoreWebView2ProcessInfo categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
 !WebView2.ICoreWebView2ProcessInfo methodsFor!
 
+ClearBrowsingData: dataKinds handler: handler
+	"Private - Invoke the ClearBrowsingData() method of the COM object.
+
+		HRESULT __stdcall ClearBrowsingData(
+			[in]COREWEBVIEW2_BROWSING_DATA_KINDS dataKinds,
+			[in]ICoreWebView2ClearBrowsingDataCompletedHandler* handler);"
+
+	<virtual stdcall: hresult 11 sdword ICoreWebView2ClearBrowsingDataCompletedHandler*>
+	^self invalidCall: _failureCode!
+
+ClearBrowsingDataAll: handler
+	"Private - Invoke the ClearBrowsingDataAll() method of the COM object.
+
+		HRESULT __stdcall ClearBrowsingDataAll(
+			[in]ICoreWebView2ClearBrowsingDataCompletedHandler* handler);"
+
+	<virtual stdcall: hresult 13 ICoreWebView2ClearBrowsingDataCompletedHandler*>
+	^self invalidCall: _failureCode!
+
+ClearBrowsingDataInTimeRange: dataKinds startTime: startTime endTime: endTime handler: handler
+	"Private - Invoke the ClearBrowsingDataInTimeRange() method of the COM object.
+
+		HRESULT __stdcall ClearBrowsingDataInTimeRange(
+			[in]COREWEBVIEW2_BROWSING_DATA_KINDS dataKinds,
+			[in]double startTime,
+			[in]double endTime,
+			[in]ICoreWebView2ClearBrowsingDataCompletedHandler* handler);"
+
+	<virtual stdcall: hresult 12 sdword double double ICoreWebView2ClearBrowsingDataCompletedHandler*>
+	^self invalidCall: _failureCode!
+
 get_Kind: kind
 	"Private - Get the value of the 'Kind' property of the receiver.
 
@@ -70,6 +101,9 @@ processId
 	self get_ProcessId: answer.
 	^answer asObject! !
 !WebView2.ICoreWebView2ProcessInfo categoriesForMethods!
+ClearBrowsingData:handler:!**auto generated**!COM Interfaces-ICoreWebView2Profile2!private! !
+ClearBrowsingDataAll:!**auto generated**!COM Interfaces-ICoreWebView2Profile2!private! !
+ClearBrowsingDataInTimeRange:startTime:endTime:handler:!**auto generated**!COM Interfaces-ICoreWebView2Profile2!private! !
 get_Kind:!**auto generated**!COM Interfaces-ICoreWebView2ProcessInfo!private! !
 get_ProcessId:!**auto generated**!COM Interfaces-ICoreWebView2ProcessInfo!private! !
 kind!**auto generated**!properties!public! !

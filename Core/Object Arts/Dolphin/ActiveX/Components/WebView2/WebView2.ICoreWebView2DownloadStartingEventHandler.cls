@@ -43,6 +43,9 @@ basicUnregister!private!realizing/unrealizing! !
 
 !WebView2.ICoreWebView2DownloadStartingEventHandler class methodsFor!
 
+argsClass
+	^ICoreWebView2DownloadStartingEventArgs!
+
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2DownloadStartingEventHandler'
 		ICoreWebView2DownloadStartingEventHandler defineTemplate"
@@ -57,6 +60,7 @@ eventName
 
 	^#downloadStarting:! !
 !WebView2.ICoreWebView2DownloadStartingEventHandler class categoriesForMethods!
+argsClass!constants!public! !
 defineFunctions!**auto generated**!initializing!public! !
 eventName!constants!public! !
 !
