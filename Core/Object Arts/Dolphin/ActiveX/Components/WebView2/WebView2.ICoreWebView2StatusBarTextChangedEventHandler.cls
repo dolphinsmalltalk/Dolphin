@@ -1,12 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2EventHandler subclass: #ICoreWebView2StatusBarTextChangedEventHandler
+WebView2.ICoreWebView2EventHandler subclass: #'WebView2.ICoreWebView2StatusBarTextChangedEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-ICoreWebView2StatusBarTextChangedEventHandler guid: (IID fromString: '{a5e3b0d0-10df-4156-bfad-3b43867acac6}')!
-ICoreWebView2StatusBarTextChangedEventHandler comment: '`ICoreWebView2StatusBarTextChangedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2StatusBarTextChangedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2StatusBarTextChangedEventHandler guid: (OS.COM.IID fromString: '{a5e3b0d0-10df-4156-bfad-3b43867acac6}')!
+WebView2.ICoreWebView2StatusBarTextChangedEventHandler comment: '`ICoreWebView2StatusBarTextChangedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2StatusBarTextChangedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -27,20 +28,20 @@ interface ICoreWebView2StatusBarTextChangedEventHandler : IUnknown
 };
 ```
 '!
-!ICoreWebView2StatusBarTextChangedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2StatusBarTextChangedEventHandler methodsFor!
+!WebView2.ICoreWebView2StatusBarTextChangedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2StatusBarTextChangedEventHandler methodsFor!
 
 basicRegister: tokenBuffer
 	source Add_StatusBarTextChanged: self token: tokenBuffer!
 
 basicUnregister
 	source Remove_StatusBarTextChanged: token! !
-!ICoreWebView2StatusBarTextChangedEventHandler categoriesForMethods!
+!WebView2.ICoreWebView2StatusBarTextChangedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
 !
 
-!ICoreWebView2StatusBarTextChangedEventHandler class methodsFor!
+!WebView2.ICoreWebView2StatusBarTextChangedEventHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2StatusBarTextChangedEventHandler'
@@ -55,7 +56,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#statusBarTextChanged! !
-!ICoreWebView2StatusBarTextChangedEventHandler class categoriesForMethods!
+!WebView2.ICoreWebView2StatusBarTextChangedEventHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 eventName!constants!public! !
 !

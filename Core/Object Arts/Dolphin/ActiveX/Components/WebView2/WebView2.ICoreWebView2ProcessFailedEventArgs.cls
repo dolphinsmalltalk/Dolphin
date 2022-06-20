@@ -92,7 +92,7 @@ processDescription
 	"Answer the <lpwstr> value of the 'ProcessDescription' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_ProcessDescription: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.

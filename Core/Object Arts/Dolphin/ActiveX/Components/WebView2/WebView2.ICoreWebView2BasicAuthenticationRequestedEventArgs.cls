@@ -1,12 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2EventArgs subclass: #ICoreWebView2BasicAuthenticationRequestedEventArgs
+WebView2.ICoreWebView2EventArgs subclass: #'WebView2.ICoreWebView2BasicAuthenticationRequestedEventArgs'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebView2BasicAuthenticationRequestedEventArgs guid: (IID fromString: '{ef05516f-d897-4f9e-b672-d8e2307a3fb0}')!
-ICoreWebView2BasicAuthenticationRequestedEventArgs comment: '`ICoreWebView2BasicAuthenticationRequestedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2BasicAuthenticationRequestedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2BasicAuthenticationRequestedEventArgs guid: (OS.COM.IID fromString: '{ef05516f-d897-4f9e-b672-d8e2307a3fb0}')!
+WebView2.ICoreWebView2BasicAuthenticationRequestedEventArgs comment: '`ICoreWebView2BasicAuthenticationRequestedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2BasicAuthenticationRequestedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -41,8 +42,8 @@ interface ICoreWebView2BasicAuthenticationRequestedEventArgs : IUnknown
 };
 ```
 '!
-!ICoreWebView2BasicAuthenticationRequestedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2BasicAuthenticationRequestedEventArgs methodsFor!
+!WebView2.ICoreWebView2BasicAuthenticationRequestedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2BasicAuthenticationRequestedEventArgs methodsFor!
 
 cancel
 	"Answer the <Boolean> value of the 'Cancel' property of the receiver."
@@ -63,7 +64,7 @@ challenge
 	"The auto-generated code is functionally correct, but this code is slightly more efficient; in particular it avoids generating finalizable garbage."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_Challenge: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -149,12 +150,12 @@ uri
 	"The auto-generated code is functionally correct, but this code is slightly more efficient; in particular it avoids generating finalizable garbage."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_uri: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
 	^answer! !
-!ICoreWebView2BasicAuthenticationRequestedEventArgs categoriesForMethods!
+!WebView2.ICoreWebView2BasicAuthenticationRequestedEventArgs categoriesForMethods!
 cancel!properties!public! !
 cancel:!**auto generated**!properties!public! !
 challenge!properties!public! !
@@ -170,7 +171,7 @@ response!**auto generated**!properties!public! !
 uri!properties!public! !
 !
 
-!ICoreWebView2BasicAuthenticationRequestedEventArgs class methodsFor!
+!WebView2.ICoreWebView2BasicAuthenticationRequestedEventArgs class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2BasicAuthenticationRequestedEventArgs'
@@ -190,7 +191,7 @@ defineFunctions
 		defineFunction: #GetDeferral:
 			argumentTypes: 'ICoreWebView2Deferral**'
 ! !
-!ICoreWebView2BasicAuthenticationRequestedEventArgs class categoriesForMethods!
+!WebView2.ICoreWebView2BasicAuthenticationRequestedEventArgs class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

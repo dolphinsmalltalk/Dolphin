@@ -1,12 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2EventArgs subclass: #ICoreWebView2ContextMenuRequestedEventArgs
+WebView2.ICoreWebView2EventArgs subclass: #'WebView2.ICoreWebView2ContextMenuRequestedEventArgs'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebView2ContextMenuRequestedEventArgs guid: (IID fromString: '{a1d309ee-c03f-11eb-8529-0242ac130003}')!
-ICoreWebView2ContextMenuRequestedEventArgs comment: '`ICoreWebView2ContextMenuRequestedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ContextMenuRequestedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2ContextMenuRequestedEventArgs guid: (OS.COM.IID fromString: '{a1d309ee-c03f-11eb-8529-0242ac130003}')!
+WebView2.ICoreWebView2ContextMenuRequestedEventArgs comment: '`ICoreWebView2ContextMenuRequestedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ContextMenuRequestedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -47,8 +48,8 @@ interface ICoreWebView2ContextMenuRequestedEventArgs : IUnknown
 };
 ```
 '!
-!ICoreWebView2ContextMenuRequestedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2ContextMenuRequestedEventArgs methodsFor!
+!WebView2.ICoreWebView2ContextMenuRequestedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2ContextMenuRequestedEventArgs methodsFor!
 
 contextMenuTarget
 	"Answer the <ICoreWebView2ContextMenuTarget> value of the 'ContextMenuTarget' property of the receiver."
@@ -184,7 +185,7 @@ selectedCommandId: value
 	"Set the 'SelectedCommandId' property of the receiver to the <sdword> value of the argument."
 
 	self put_SelectedCommandId: value! !
-!ICoreWebView2ContextMenuRequestedEventArgs categoriesForMethods!
+!WebView2.ICoreWebView2ContextMenuRequestedEventArgs categoriesForMethods!
 contextMenuTarget!**auto generated**!properties!public! !
 get_ContextMenuTarget:!**auto generated**!COM Interfaces-ICoreWebView2ContextMenuRequestedEventArgs!private! !
 get_Handled:!**auto generated**!COM Interfaces-ICoreWebView2ContextMenuRequestedEventArgs!private! !
@@ -204,7 +205,7 @@ selectedCommandId!**auto generated**!properties!public! !
 selectedCommandId:!**auto generated**!properties!public! !
 !
 
-!ICoreWebView2ContextMenuRequestedEventArgs class methodsFor!
+!WebView2.ICoreWebView2ContextMenuRequestedEventArgs class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2ContextMenuRequestedEventArgs'
@@ -228,7 +229,7 @@ defineFunctions
 		defineFunction: #GetDeferral:
 			argumentTypes: 'ICoreWebView2Deferral**'
 ! !
-!ICoreWebView2ContextMenuRequestedEventArgs class categoriesForMethods!
+!WebView2.ICoreWebView2ContextMenuRequestedEventArgs class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

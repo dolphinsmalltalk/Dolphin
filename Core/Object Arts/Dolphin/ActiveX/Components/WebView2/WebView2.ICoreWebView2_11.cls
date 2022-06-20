@@ -1,12 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2_10 subclass: #ICoreWebView2_11
+WebView2.ICoreWebView2_10 subclass: #'WebView2.ICoreWebView2_11'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-ICoreWebView2_11 guid: (IID fromString: '{0be78e56-c193-4051-b943-23b460c08bdb}')!
-ICoreWebView2_11 comment: '`ICoreWebView2_11` is a wrapper class for the COM interface ''WebView2.ICoreWebView2_11'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2_11 guid: (OS.COM.IID fromString: '{0be78e56-c193-4051-b943-23b460c08bdb}')!
+WebView2.ICoreWebView2_11 comment: '`ICoreWebView2_11` is a wrapper class for the COM interface ''WebView2.ICoreWebView2_11'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -36,8 +37,8 @@ interface ICoreWebView2_11 : ICoreWebView2_10
 };
 ```
 '!
-!ICoreWebView2_11 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2_11 methodsFor!
+!WebView2.ICoreWebView2_11 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2_11 methodsFor!
 
 Add_ContextMenuRequested: eventHandler token: token
 	"Private - Invoke the add_ContextMenuRequested() method of the COM object.
@@ -69,13 +70,13 @@ Remove_ContextMenuRequested: token
 
 	<virtual stdcall: hresult 102 sqword>
 	^self invalidCall: _failureCode! !
-!ICoreWebView2_11 categoriesForMethods!
+!WebView2.ICoreWebView2_11 categoriesForMethods!
 Add_ContextMenuRequested:token:!**auto generated**!COM Interfaces-ICoreWebView2_11!private! !
 CallDevToolsProtocolMethodForSession:methodName:parametersAsJson:handler:!**auto generated**!COM Interfaces-ICoreWebView2_11!private! !
 Remove_ContextMenuRequested:!**auto generated**!COM Interfaces-ICoreWebView2_11!private! !
 !
 
-!ICoreWebView2_11 class methodsFor!
+!WebView2.ICoreWebView2_11 class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2_11'
@@ -89,7 +90,7 @@ defineFunctions
 		defineFunction: #Remove_ContextMenuRequested:
 			argumentTypes: 'sqword'
 ! !
-!ICoreWebView2_11 class categoriesForMethods!
+!WebView2.ICoreWebView2_11 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

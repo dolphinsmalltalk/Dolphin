@@ -1,12 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2CompletedHandler subclass: #ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler
+WebView2.ICoreWebView2CompletedHandler subclass: #'WebView2.ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler guid: (IID fromString: '{3b40aac6-acfe-4ffd-8211-f607b96e2d5b}')!
-ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler comment: '`ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler guid: (OS.COM.IID fromString: '{3b40aac6-acfe-4ffd-8211-f607b96e2d5b}')!
+WebView2.ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler comment: '`ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -26,15 +27,15 @@ interface ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler : IUnk
 };
 ```
 '!
-!ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler class methodsFor!
+!WebView2.ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler'
 		ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler defineTemplate"
 
 	self defineFunction: #value: argumentTypes: 'hresult'! !
-!ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler class categoriesForMethods!
+!WebView2.ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

@@ -1,12 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2PermissionRequestedEventArgs subclass: #ICoreWebView2PermissionRequestedEventArgs2
+WebView2.ICoreWebView2PermissionRequestedEventArgs subclass: #'WebView2.ICoreWebView2PermissionRequestedEventArgs2'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-ICoreWebView2PermissionRequestedEventArgs2 guid: (IID fromString: '{74d7127f-9de6-4200-8734-42d6fb4ff741}')!
-ICoreWebView2PermissionRequestedEventArgs2 comment: '`ICoreWebView2PermissionRequestedEventArgs2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2PermissionRequestedEventArgs2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2PermissionRequestedEventArgs2 guid: (OS.COM.IID fromString: '{74d7127f-9de6-4200-8734-42d6fb4ff741}')!
+WebView2.ICoreWebView2PermissionRequestedEventArgs2 comment: '`ICoreWebView2PermissionRequestedEventArgs2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2PermissionRequestedEventArgs2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -29,8 +30,8 @@ interface ICoreWebView2PermissionRequestedEventArgs2 : ICoreWebView2PermissionRe
 };
 ```
 '!
-!ICoreWebView2PermissionRequestedEventArgs2 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2PermissionRequestedEventArgs2 methodsFor!
+!WebView2.ICoreWebView2PermissionRequestedEventArgs2 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2PermissionRequestedEventArgs2 methodsFor!
 
 get_Handled: handled
 	"Private - Get the value of the 'Handled' property of the receiver.
@@ -63,14 +64,14 @@ put_Handled: handled
 
 	<virtual stdcall: hresult 11 sdword>
 	^self invalidCall: _failureCode! !
-!ICoreWebView2PermissionRequestedEventArgs2 categoriesForMethods!
+!WebView2.ICoreWebView2PermissionRequestedEventArgs2 categoriesForMethods!
 get_Handled:!**auto generated**!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs2!private! !
 handled!**auto generated**!properties!public! !
 handled:!**auto generated**!properties!public! !
 put_Handled:!**auto generated**!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs2!private! !
 !
 
-!ICoreWebView2PermissionRequestedEventArgs2 class methodsFor!
+!WebView2.ICoreWebView2PermissionRequestedEventArgs2 class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2PermissionRequestedEventArgs2'
@@ -82,7 +83,7 @@ defineFunctions
 		defineFunction: #put_Handled:
 			argumentTypes: 'sdword'
 ! !
-!ICoreWebView2PermissionRequestedEventArgs2 class categoriesForMethods!
+!WebView2.ICoreWebView2PermissionRequestedEventArgs2 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

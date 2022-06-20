@@ -1,12 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2EventHandler subclass: #ICoreWebView2ServerCertificateErrorDetectedEventHandler
+WebView2.ICoreWebView2EventHandler subclass: #'WebView2.ICoreWebView2ServerCertificateErrorDetectedEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebView2ServerCertificateErrorDetectedEventHandler guid: (IID fromString: '{969b3a26-d85e-4795-8199-fef57344da22}')!
-ICoreWebView2ServerCertificateErrorDetectedEventHandler comment: '`ICoreWebView2ServerCertificateErrorDetectedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ServerCertificateErrorDetectedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2ServerCertificateErrorDetectedEventHandler guid: (OS.COM.IID fromString: '{969b3a26-d85e-4795-8199-fef57344da22}')!
+WebView2.ICoreWebView2ServerCertificateErrorDetectedEventHandler comment: '`ICoreWebView2ServerCertificateErrorDetectedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ServerCertificateErrorDetectedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -27,20 +28,20 @@ interface ICoreWebView2ServerCertificateErrorDetectedEventHandler : IUnknown
 };
 ```
 '!
-!ICoreWebView2ServerCertificateErrorDetectedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2ServerCertificateErrorDetectedEventHandler methodsFor!
+!WebView2.ICoreWebView2ServerCertificateErrorDetectedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2ServerCertificateErrorDetectedEventHandler methodsFor!
 
 basicRegister: tokenBuffer
 	source Add_ServerCertificateErrorDetected: self token: tokenBuffer!
 
 basicUnregister
 	source Remove_ServerCertificateErrorDetected: token! !
-!ICoreWebView2ServerCertificateErrorDetectedEventHandler categoriesForMethods!
+!WebView2.ICoreWebView2ServerCertificateErrorDetectedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
 !
 
-!ICoreWebView2ServerCertificateErrorDetectedEventHandler class methodsFor!
+!WebView2.ICoreWebView2ServerCertificateErrorDetectedEventHandler class methodsFor!
 
 argsClass
 	^ICoreWebView2SourceChangedEventArgs!
@@ -58,7 +59,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#serverCertificateErrorDetected:! !
-!ICoreWebView2ServerCertificateErrorDetectedEventHandler class categoriesForMethods!
+!WebView2.ICoreWebView2ServerCertificateErrorDetectedEventHandler class categoriesForMethods!
 argsClass!constants!public! !
 defineFunctions!**auto generated**!initializing!public! !
 eventName!constants!public! !

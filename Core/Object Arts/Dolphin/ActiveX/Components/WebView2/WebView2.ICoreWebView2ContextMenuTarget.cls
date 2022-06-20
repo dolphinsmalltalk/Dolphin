@@ -1,12 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2Interface subclass: #ICoreWebView2ContextMenuTarget
+WebView2.ICoreWebView2Interface subclass: #'WebView2.ICoreWebView2ContextMenuTarget'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebView2ContextMenuTarget guid: (IID fromString: '{b8611d99-eed6-4f3f-902c-a198502ad472}')!
-ICoreWebView2ContextMenuTarget comment: '`ICoreWebView2ContextMenuTarget` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ContextMenuTarget'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2ContextMenuTarget guid: (OS.COM.IID fromString: '{b8611d99-eed6-4f3f-902c-a198502ad472}')!
+WebView2.ICoreWebView2ContextMenuTarget comment: '`ICoreWebView2ContextMenuTarget` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ContextMenuTarget'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -62,14 +63,14 @@ interface ICoreWebView2ContextMenuTarget : IUnknown
 };
 ```
 '!
-!ICoreWebView2ContextMenuTarget categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2ContextMenuTarget methodsFor!
+!WebView2.ICoreWebView2ContextMenuTarget categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2ContextMenuTarget methodsFor!
 
 frameUri
 	"Answer the <readableString> value of the 'FrameUri' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_FrameUri: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -252,7 +253,7 @@ linkText
 	"Answer the <readableString> value of the 'LinkText' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_LinkText: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -262,7 +263,7 @@ linkUri
 	"Answer the <readableString> value of the 'LinkUri' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_LinkUri: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -272,7 +273,7 @@ pageUri
 	"Answer the <readableString> value of the 'PageUri' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_PageUri: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -292,7 +293,7 @@ selectionText
 	"Answer the <readableString> value of the 'SelectionText' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_SelectionText: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -302,12 +303,12 @@ sourceUri
 	"Answer the <readableString> value of the 'SourceUri' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_SourceUri: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
 	^answer! !
-!ICoreWebView2ContextMenuTarget categoriesForMethods!
+!WebView2.ICoreWebView2ContextMenuTarget categoriesForMethods!
 frameUri!properties!public! !
 get_FrameUri:!**auto generated**!COM Interfaces-ICoreWebView2ContextMenuTarget!private! !
 get_HasLinkText:!**auto generated**!COM Interfaces-ICoreWebView2ContextMenuTarget!private! !
@@ -337,7 +338,7 @@ selectionText!properties!public! !
 sourceUri!properties!public! !
 !
 
-!ICoreWebView2ContextMenuTarget class methodsFor!
+!WebView2.ICoreWebView2ContextMenuTarget class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2ContextMenuTarget'
@@ -371,7 +372,7 @@ defineFunctions
 		defineFunction: #get_SelectionText:
 			argumentTypes: 'lpwstr*'
 ! !
-!ICoreWebView2ContextMenuTarget class categoriesForMethods!
+!WebView2.ICoreWebView2ContextMenuTarget class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

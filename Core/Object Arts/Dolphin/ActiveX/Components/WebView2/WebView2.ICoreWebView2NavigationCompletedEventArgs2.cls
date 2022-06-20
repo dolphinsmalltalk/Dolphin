@@ -1,12 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2NavigationCompletedEventArgs subclass: #ICoreWebView2NavigationCompletedEventArgs2
+WebView2.ICoreWebView2NavigationCompletedEventArgs subclass: #'WebView2.ICoreWebView2NavigationCompletedEventArgs2'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-ICoreWebView2NavigationCompletedEventArgs2 guid: (IID fromString: '{fdf8b738-ee1e-4db2-a329-8d7d7b74d792}')!
-ICoreWebView2NavigationCompletedEventArgs2 comment: '`ICoreWebView2NavigationCompletedEventArgs2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2NavigationCompletedEventArgs2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2NavigationCompletedEventArgs2 guid: (OS.COM.IID fromString: '{fdf8b738-ee1e-4db2-a329-8d7d7b74d792}')!
+WebView2.ICoreWebView2NavigationCompletedEventArgs2 comment: '`ICoreWebView2NavigationCompletedEventArgs2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2NavigationCompletedEventArgs2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -26,8 +27,8 @@ interface ICoreWebView2NavigationCompletedEventArgs2 : ICoreWebView2NavigationCo
 };
 ```
 '!
-!ICoreWebView2NavigationCompletedEventArgs2 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2NavigationCompletedEventArgs2 methodsFor!
+!WebView2.ICoreWebView2NavigationCompletedEventArgs2 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2NavigationCompletedEventArgs2 methodsFor!
 
 get_HttpStatusCode: http_status_code
 	"Private - Get the value of the 'HttpStatusCode' property of the receiver.
@@ -37,11 +38,11 @@ get_HttpStatusCode: http_status_code
 
 	<virtual stdcall: hresult 7 sdword*>
 	^self invalidCall: _failureCode! !
-!ICoreWebView2NavigationCompletedEventArgs2 categoriesForMethods!
+!WebView2.ICoreWebView2NavigationCompletedEventArgs2 categoriesForMethods!
 get_HttpStatusCode:!**auto generated**!COM Interfaces-ICoreWebView2NavigationCompletedEventArgs2!private! !
 !
 
-!ICoreWebView2NavigationCompletedEventArgs2 class methodsFor!
+!WebView2.ICoreWebView2NavigationCompletedEventArgs2 class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2NavigationCompletedEventArgs2'
@@ -51,7 +52,7 @@ defineFunctions
 		defineFunction: #get_HttpStatusCode:
 			argumentTypes: 'sdword*'
 ! !
-!ICoreWebView2NavigationCompletedEventArgs2 class categoriesForMethods!
+!WebView2.ICoreWebView2NavigationCompletedEventArgs2 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

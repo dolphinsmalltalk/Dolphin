@@ -1,12 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2EventHandler subclass: #ICoreWebView2BasicAuthenticationRequestedEventHandler
+WebView2.ICoreWebView2EventHandler subclass: #'WebView2.ICoreWebView2BasicAuthenticationRequestedEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebView2BasicAuthenticationRequestedEventHandler guid: (IID fromString: '{58b4d6c2-18d4-497e-b39b-9a96533fa278}')!
-ICoreWebView2BasicAuthenticationRequestedEventHandler comment: '`ICoreWebView2BasicAuthenticationRequestedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2BasicAuthenticationRequestedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2BasicAuthenticationRequestedEventHandler guid: (OS.COM.IID fromString: '{58b4d6c2-18d4-497e-b39b-9a96533fa278}')!
+WebView2.ICoreWebView2BasicAuthenticationRequestedEventHandler comment: '`ICoreWebView2BasicAuthenticationRequestedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2BasicAuthenticationRequestedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -27,20 +28,20 @@ interface ICoreWebView2BasicAuthenticationRequestedEventHandler : IUnknown
 };
 ```
 '!
-!ICoreWebView2BasicAuthenticationRequestedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2BasicAuthenticationRequestedEventHandler methodsFor!
+!WebView2.ICoreWebView2BasicAuthenticationRequestedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2BasicAuthenticationRequestedEventHandler methodsFor!
 
 basicRegister: tokenBuffer
 	source Add_BasicAuthenticationRequested: self token: tokenBuffer!
 
 basicUnregister
 	source Remove_BasicAuthenticationRequested: token! !
-!ICoreWebView2BasicAuthenticationRequestedEventHandler categoriesForMethods!
+!WebView2.ICoreWebView2BasicAuthenticationRequestedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
 !
 
-!ICoreWebView2BasicAuthenticationRequestedEventHandler class methodsFor!
+!WebView2.ICoreWebView2BasicAuthenticationRequestedEventHandler class methodsFor!
 
 argsClass
 	^ICoreWebView2BasicAuthenticationRequestedEventArgs!
@@ -58,7 +59,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#basicAuthenticationRequested:! !
-!ICoreWebView2BasicAuthenticationRequestedEventHandler class categoriesForMethods!
+!WebView2.ICoreWebView2BasicAuthenticationRequestedEventHandler class categoriesForMethods!
 argsClass!constants!public! !
 defineFunctions!**auto generated**!initializing!public! !
 eventName!constants!public! !

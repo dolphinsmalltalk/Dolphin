@@ -1,12 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2Controller3 subclass: #ICoreWebView2Controller4
+WebView2.ICoreWebView2Controller3 subclass: #'WebView2.ICoreWebView2Controller4'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-ICoreWebView2Controller4 guid: (IID fromString: '{97d418d5-a426-4e49-a151-e1a10f327d9e}')!
-ICoreWebView2Controller4 comment: '`ICoreWebView2Controller4` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Controller4'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2Controller4 guid: (OS.COM.IID fromString: '{97d418d5-a426-4e49-a151-e1a10f327d9e}')!
+WebView2.ICoreWebView2Controller4 comment: '`ICoreWebView2Controller4` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Controller4'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -29,8 +30,8 @@ interface ICoreWebView2Controller4 : ICoreWebView2Controller3
 };
 ```
 '!
-!ICoreWebView2Controller4 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2Controller4 methodsFor!
+!WebView2.ICoreWebView2Controller4 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2Controller4 methodsFor!
 
 get_AllowExternalDrop: value
 	"Private - Get the value of the 'AllowExternalDrop' property of the receiver.
@@ -50,12 +51,12 @@ put_AllowExternalDrop: value
 
 	<virtual stdcall: hresult 38 sdword>
 	^self invalidCall: _failureCode! !
-!ICoreWebView2Controller4 categoriesForMethods!
+!WebView2.ICoreWebView2Controller4 categoriesForMethods!
 get_AllowExternalDrop:!**auto generated**!COM Interfaces-ICoreWebView2Controller4!private! !
 put_AllowExternalDrop:!**auto generated**!COM Interfaces-ICoreWebView2Controller4!private! !
 !
 
-!ICoreWebView2Controller4 class methodsFor!
+!WebView2.ICoreWebView2Controller4 class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2Controller4'
@@ -67,7 +68,7 @@ defineFunctions
 		defineFunction: #put_AllowExternalDrop:
 			argumentTypes: 'sdword'
 ! !
-!ICoreWebView2Controller4 class categoriesForMethods!
+!WebView2.ICoreWebView2Controller4 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

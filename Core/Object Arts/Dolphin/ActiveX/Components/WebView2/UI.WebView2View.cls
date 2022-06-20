@@ -23,7 +23,7 @@ UI.ValueConvertingControlView subclass: #'UI.WebView2View'
 	}!
 UI.WebView2View guid: (Core.GUID fromString: '{3a9f720c-51f6-49f2-8267-f2b3b878129c}')!
 UI.WebView2View comment: '`WebView2View` is a `<valueView>` that wraps the Microsoft Edge WebView2 embeddable browser to display content downloaded from a URL, or provided as a string.'!
-!UI.WebView2View categoriesForClass!MVP-Resources-Misc! !
+!UI.WebView2View categoriesForClass!MVP-Views! !
 !UI.WebView2View methodsFor!
 
 allowContextMenu

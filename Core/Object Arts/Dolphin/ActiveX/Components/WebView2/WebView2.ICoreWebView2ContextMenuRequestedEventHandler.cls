@@ -1,12 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2EventHandler subclass: #ICoreWebView2ContextMenuRequestedEventHandler
+WebView2.ICoreWebView2EventHandler subclass: #'WebView2.ICoreWebView2ContextMenuRequestedEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebView2ContextMenuRequestedEventHandler guid: (IID fromString: '{04d3fe1d-ab87-42fb-a898-da241d35b63c}')!
-ICoreWebView2ContextMenuRequestedEventHandler comment: '`ICoreWebView2ContextMenuRequestedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ContextMenuRequestedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2ContextMenuRequestedEventHandler guid: (OS.COM.IID fromString: '{04d3fe1d-ab87-42fb-a898-da241d35b63c}')!
+WebView2.ICoreWebView2ContextMenuRequestedEventHandler comment: '`ICoreWebView2ContextMenuRequestedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ContextMenuRequestedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -27,20 +28,20 @@ interface ICoreWebView2ContextMenuRequestedEventHandler : IUnknown
 };
 ```
 '!
-!ICoreWebView2ContextMenuRequestedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2ContextMenuRequestedEventHandler methodsFor!
+!WebView2.ICoreWebView2ContextMenuRequestedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2ContextMenuRequestedEventHandler methodsFor!
 
 basicRegister: tokenBuffer
 	source Add_ContextMenuRequested: self token: tokenBuffer!
 
 basicUnregister
 	source Remove_ContextMenuRequested: token! !
-!ICoreWebView2ContextMenuRequestedEventHandler categoriesForMethods!
+!WebView2.ICoreWebView2ContextMenuRequestedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
 !
 
-!ICoreWebView2ContextMenuRequestedEventHandler class methodsFor!
+!WebView2.ICoreWebView2ContextMenuRequestedEventHandler class methodsFor!
 
 argsClass
 	^ICoreWebView2ContextMenuRequestedEventArgs!
@@ -58,7 +59,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#contextMenuRequested:! !
-!ICoreWebView2ContextMenuRequestedEventHandler class categoriesForMethods!
+!WebView2.ICoreWebView2ContextMenuRequestedEventHandler class categoriesForMethods!
 argsClass!constants!public! !
 defineFunctions!**auto generated**!initializing!public! !
 eventName!constants!public! !

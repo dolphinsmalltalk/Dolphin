@@ -1446,7 +1446,7 @@ statusBarText
 	"Answer the <readableString> 'status bar' text."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_StatusBarText: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.

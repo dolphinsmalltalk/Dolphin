@@ -1,12 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2_11 subclass: #ICoreWebView2_12
+WebView2.ICoreWebView2_11 subclass: #'WebView2.ICoreWebView2_12'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-ICoreWebView2_12 guid: (IID fromString: '{35d69927-bcfa-4566-9349-6b3e0d154cac}')!
-ICoreWebView2_12 comment: '`ICoreWebView2_12` is a wrapper class for the COM interface ''WebView2.ICoreWebView2_12'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2_12 guid: (OS.COM.IID fromString: '{35d69927-bcfa-4566-9349-6b3e0d154cac}')!
+WebView2.ICoreWebView2_12 comment: '`ICoreWebView2_12` is a wrapper class for the COM interface ''WebView2.ICoreWebView2_12'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -33,8 +34,8 @@ interface ICoreWebView2_12 : ICoreWebView2_11
 };
 ```
 '!
-!ICoreWebView2_12 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2_12 methodsFor!
+!WebView2.ICoreWebView2_12 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2_12 methodsFor!
 
 Add_StatusBarTextChanged: eventHandler token: token
 	"Private - Invoke the add_StatusBarTextChanged() method of the COM object.
@@ -63,13 +64,13 @@ Remove_StatusBarTextChanged: token
 
 	<virtual stdcall: hresult 104 sqword>
 	^self invalidCall: _failureCode! !
-!ICoreWebView2_12 categoriesForMethods!
+!WebView2.ICoreWebView2_12 categoriesForMethods!
 Add_StatusBarTextChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2_12!private! !
 get_StatusBarText:!**auto generated**!COM Interfaces-ICoreWebView2_12!private! !
 Remove_StatusBarTextChanged:!**auto generated**!COM Interfaces-ICoreWebView2_12!private! !
 !
 
-!ICoreWebView2_12 class methodsFor!
+!WebView2.ICoreWebView2_12 class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2_12'
@@ -83,7 +84,7 @@ defineFunctions
 		defineFunction: #get_StatusBarText:
 			argumentTypes: 'lpwstr*'
 ! !
-!ICoreWebView2_12 class categoriesForMethods!
+!WebView2.ICoreWebView2_12 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

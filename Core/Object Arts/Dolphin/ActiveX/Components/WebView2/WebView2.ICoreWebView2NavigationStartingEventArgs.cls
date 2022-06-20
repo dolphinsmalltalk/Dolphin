@@ -52,7 +52,7 @@ additionalAllowedFrameAncestors
 	"Answer the <lpwstr> value of the 'AdditionalAllowedFrameAncestors' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_AdditionalAllowedFrameAncestors: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.

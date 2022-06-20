@@ -1,12 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2CompletedHandler subclass: #ICoreWebView2ClearBrowsingDataCompletedHandler
+WebView2.ICoreWebView2CompletedHandler subclass: #'WebView2.ICoreWebView2ClearBrowsingDataCompletedHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebView2ClearBrowsingDataCompletedHandler guid: (IID fromString: '{e9710a06-1d1d-49b2-8234-226f35846ae5}')!
-ICoreWebView2ClearBrowsingDataCompletedHandler comment: '`ICoreWebView2ClearBrowsingDataCompletedHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ClearBrowsingDataCompletedHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2ClearBrowsingDataCompletedHandler guid: (OS.COM.IID fromString: '{e9710a06-1d1d-49b2-8234-226f35846ae5}')!
+WebView2.ICoreWebView2ClearBrowsingDataCompletedHandler comment: '`ICoreWebView2ClearBrowsingDataCompletedHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ClearBrowsingDataCompletedHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -26,15 +27,15 @@ interface ICoreWebView2ClearBrowsingDataCompletedHandler : IUnknown
 };
 ```
 '!
-!ICoreWebView2ClearBrowsingDataCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2ClearBrowsingDataCompletedHandler class methodsFor!
+!WebView2.ICoreWebView2ClearBrowsingDataCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2ClearBrowsingDataCompletedHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2ClearBrowsingDataCompletedHandler'
 		ICoreWebView2ClearBrowsingDataCompletedHandler defineTemplate"
 
 	self defineFunction: #value: argumentTypes: 'hresult'! !
-!ICoreWebView2ClearBrowsingDataCompletedHandler class categoriesForMethods!
+!WebView2.ICoreWebView2ClearBrowsingDataCompletedHandler class categoriesForMethods!
 defineFunctions!initializing!public! !
 !
 

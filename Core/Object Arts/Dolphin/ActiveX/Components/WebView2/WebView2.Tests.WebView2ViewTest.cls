@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-PresenterTest subclass: #WebView2ViewTest
+UI.Tests.PresenterTest subclass: #'WebView2.Tests.WebView2ViewTest'
 	instanceVariableNames: 'domContentLoaded navigationCompleted processFailed'
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-WebView2ViewTest guid: (GUID fromString: '{3cee0357-fcb9-4dd8-8e6f-9962dbca8e5c}')!
-WebView2ViewTest comment: ''!
-!WebView2ViewTest categoriesForClass!Unclassified! !
-!WebView2ViewTest methodsFor!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.Tests.WebView2ViewTest guid: (Core.GUID fromString: '{3cee0357-fcb9-4dd8-8e6f-9962dbca8e5c}')!
+WebView2.Tests.WebView2ViewTest comment: ''!
+!WebView2.Tests.WebView2ViewTest methodsFor!
 
 classToTest
-	^URLPresenter!
+	^UI.URLPresenter!
 
 initializePresenter
 	super initializePresenter.
@@ -73,7 +73,7 @@ waitForNavigationCompleted
 	start := DateAndTime now.
 	SessionManager inputState
 		loopWhile: [navigationCompleted isNil and: [DateAndTime now - start < 30 minutes]]! !
-!WebView2ViewTest categoriesForMethods!
+!WebView2.Tests.WebView2ViewTest categoriesForMethods!
 classToTest!helpers!private! !
 initializePresenter!public!Running! !
 onDomContentLoaded:!event handling!private! !

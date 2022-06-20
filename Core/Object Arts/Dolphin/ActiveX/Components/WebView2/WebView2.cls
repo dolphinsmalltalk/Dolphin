@@ -159,4 +159,3 @@ Kernel.Namespace subclass: #WebView2
 WebView2 guid: (Core.GUID fromString: '{014d57e9-7c7c-4e57-97f2-854b126080af}')!
 WebView2 isNonInstantiable: true!
 WebView2 comment: ''!
-!WebView2 categoriesForClass!Unclassified! !

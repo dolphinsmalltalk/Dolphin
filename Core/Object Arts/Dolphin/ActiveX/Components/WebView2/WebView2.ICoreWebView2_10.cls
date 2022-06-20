@@ -1,12 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2_9 subclass: #ICoreWebView2_10
+WebView2.ICoreWebView2_9 subclass: #'WebView2.ICoreWebView2_10'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-ICoreWebView2_10 guid: (IID fromString: '{b1690564-6f5a-4983-8e48-31d1143fecdb}')!
-ICoreWebView2_10 comment: '`ICoreWebView2_10` is a wrapper class for the COM interface ''WebView2.ICoreWebView2_10'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2_10 guid: (OS.COM.IID fromString: '{b1690564-6f5a-4983-8e48-31d1143fecdb}')!
+WebView2.ICoreWebView2_10 comment: '`ICoreWebView2_10` is a wrapper class for the COM interface ''WebView2.ICoreWebView2_10'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -30,8 +31,8 @@ interface ICoreWebView2_10 : ICoreWebView2_9
 };
 ```
 '!
-!ICoreWebView2_10 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2_10 methodsFor!
+!WebView2.ICoreWebView2_10 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2_10 methodsFor!
 
 Add_BasicAuthenticationRequested: eventHandler token: token
 	"Private - Invoke the add_BasicAuthenticationRequested() method of the COM object.
@@ -51,12 +52,12 @@ Remove_BasicAuthenticationRequested: token
 
 	<virtual stdcall: hresult 99 sqword>
 	^self invalidCall: _failureCode! !
-!ICoreWebView2_10 categoriesForMethods!
+!WebView2.ICoreWebView2_10 categoriesForMethods!
 Add_BasicAuthenticationRequested:token:!**auto generated**!COM Interfaces-ICoreWebView2_10!private! !
 Remove_BasicAuthenticationRequested:!**auto generated**!COM Interfaces-ICoreWebView2_10!private! !
 !
 
-!ICoreWebView2_10 class methodsFor!
+!WebView2.ICoreWebView2_10 class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2_10'
@@ -68,7 +69,7 @@ defineFunctions
 		defineFunction: #Remove_BasicAuthenticationRequested:
 			argumentTypes: 'sqword'
 ! !
-!ICoreWebView2_10 class categoriesForMethods!
+!WebView2.ICoreWebView2_10 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

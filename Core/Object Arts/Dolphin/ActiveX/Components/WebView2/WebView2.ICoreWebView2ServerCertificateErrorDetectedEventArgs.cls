@@ -1,12 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2EventArgs subclass: #ICoreWebView2ServerCertificateErrorDetectedEventArgs
+WebView2.ICoreWebView2EventArgs subclass: #'WebView2.ICoreWebView2ServerCertificateErrorDetectedEventArgs'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebView2ServerCertificateErrorDetectedEventArgs guid: (IID fromString: '{012193ed-7c13-48ff-969d-a84c1f432a14}')!
-ICoreWebView2ServerCertificateErrorDetectedEventArgs comment: '`ICoreWebView2ServerCertificateErrorDetectedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ServerCertificateErrorDetectedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2ServerCertificateErrorDetectedEventArgs guid: (OS.COM.IID fromString: '{012193ed-7c13-48ff-969d-a84c1f432a14}')!
+WebView2.ICoreWebView2ServerCertificateErrorDetectedEventArgs comment: '`ICoreWebView2ServerCertificateErrorDetectedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ServerCertificateErrorDetectedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -41,8 +42,8 @@ interface ICoreWebView2ServerCertificateErrorDetectedEventArgs : IUnknown
 };
 ```
 '!
-!ICoreWebView2ServerCertificateErrorDetectedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2ServerCertificateErrorDetectedEventArgs methodsFor!
+!WebView2.ICoreWebView2ServerCertificateErrorDetectedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2ServerCertificateErrorDetectedEventArgs methodsFor!
 
 action
 	"Answer the <sdword> value of the 'Action' property of the receiver."
@@ -135,7 +136,7 @@ requestUri
 	"Answer the <readableString> value of the 'RequestUri' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_RequestUri: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -148,7 +149,7 @@ serverCertificate
 	answer := ICoreWebView2Certificate newPointer.
 	self get_ServerCertificate: answer.
 	^answer asObject! !
-!ICoreWebView2ServerCertificateErrorDetectedEventArgs categoriesForMethods!
+!WebView2.ICoreWebView2ServerCertificateErrorDetectedEventArgs categoriesForMethods!
 action!**auto generated**!properties!public! !
 action:!**auto generated**!properties!public! !
 errorStatus!**auto generated**!properties!public! !
@@ -164,7 +165,7 @@ requestUri!properties!public! !
 serverCertificate!**auto generated**!properties!public! !
 !
 
-!ICoreWebView2ServerCertificateErrorDetectedEventArgs class methodsFor!
+!WebView2.ICoreWebView2ServerCertificateErrorDetectedEventArgs class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2ServerCertificateErrorDetectedEventArgs'
@@ -184,7 +185,7 @@ defineFunctions
 		defineFunction: #GetDeferral:
 			argumentTypes: 'ICoreWebView2Deferral**'
 ! !
-!ICoreWebView2ServerCertificateErrorDetectedEventArgs class categoriesForMethods!
+!WebView2.ICoreWebView2ServerCertificateErrorDetectedEventArgs class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

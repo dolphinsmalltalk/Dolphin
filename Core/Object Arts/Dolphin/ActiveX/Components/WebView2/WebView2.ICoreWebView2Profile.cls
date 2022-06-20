@@ -1,12 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2Interface subclass: #ICoreWebView2Profile
+WebView2.ICoreWebView2Interface subclass: #'WebView2.ICoreWebView2Profile'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-ICoreWebView2Profile guid: (IID fromString: '{79110ad3-cd5d-4373-8bc3-c60658f17a5f}')!
-ICoreWebView2Profile comment: '`ICoreWebView2Profile` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Profile'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2Profile guid: (OS.COM.IID fromString: '{79110ad3-cd5d-4373-8bc3-c60658f17a5f}')!
+WebView2.ICoreWebView2Profile comment: '`ICoreWebView2Profile` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Profile'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -44,8 +45,8 @@ interface ICoreWebView2Profile : IUnknown
 };
 ```
 '!
-!ICoreWebView2Profile categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2Profile methodsFor!
+!WebView2.ICoreWebView2Profile categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2Profile methodsFor!
 
 ClearBrowsingData: dataKinds handler: handler
 	^E_NOTIMPL!
@@ -60,7 +61,7 @@ defaultDownloadFolderPath
 	"Answer the <readableString> value of the 'DefaultDownloadFolderPath' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_DefaultDownloadFolderPath: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -150,7 +151,7 @@ profileName
 	"Answer the <readableString> value of the 'ProfileName' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_ProfileName: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -160,7 +161,7 @@ profilePath
 	"Answer the <readableString> value of the 'ProfilePath' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_ProfilePath: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -185,7 +186,7 @@ put_PreferredColorScheme: value
 
 	<virtual stdcall: hresult 10 sdword>
 	^self invalidCall: _failureCode! !
-!ICoreWebView2Profile categoriesForMethods!
+!WebView2.ICoreWebView2Profile categoriesForMethods!
 ClearBrowsingData:handler:!COM Interfaces-ICoreWebView2Profile2!private! !
 ClearBrowsingDataAll:!COM Interfaces-ICoreWebView2Profile2!private! !
 ClearBrowsingDataInTimeRange:startTime:endTime:handler:!COM Interfaces-ICoreWebView2Profile2!private! !
@@ -206,7 +207,7 @@ put_DefaultDownloadFolderPath:!**auto generated**!COM Interfaces-ICoreWebView2Pr
 put_PreferredColorScheme:!**auto generated**!COM Interfaces-ICoreWebView2Profile!private! !
 !
 
-!ICoreWebView2Profile class methodsFor!
+!WebView2.ICoreWebView2Profile class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2Profile'
@@ -228,7 +229,7 @@ defineFunctions
 		defineFunction: #put_PreferredColorScheme:
 			argumentTypes: 'sdword'
 ! !
-!ICoreWebView2Profile class categoriesForMethods!
+!WebView2.ICoreWebView2Profile class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

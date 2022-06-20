@@ -1,12 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2Interface subclass: #ICoreWebView2ControllerOptions
+WebView2.ICoreWebView2Interface subclass: #'WebView2.ICoreWebView2ControllerOptions'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebView2ControllerOptions guid: (IID fromString: '{12aae616-8ccb-44ec-bcb3-eb1831881635}')!
-ICoreWebView2ControllerOptions comment: '`ICoreWebView2ControllerOptions` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ControllerOptions'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2ControllerOptions guid: (OS.COM.IID fromString: '{12aae616-8ccb-44ec-bcb3-eb1831881635}')!
+WebView2.ICoreWebView2ControllerOptions comment: '`ICoreWebView2ControllerOptions` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ControllerOptions'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -35,8 +36,8 @@ interface ICoreWebView2ControllerOptions : IUnknown
 };
 ```
 '!
-!ICoreWebView2ControllerOptions categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2ControllerOptions methodsFor!
+!WebView2.ICoreWebView2ControllerOptions categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2ControllerOptions methodsFor!
 
 get_IsInPrivateModeEnabled: value
 	"Private - Get the value of the 'IsInPrivateModeEnabled' property of the receiver.
@@ -78,7 +79,7 @@ profileName
 	"The auto-generated code is functionally correct, but this code is slightly more efficient; in particular it avoids generating finalizable garbage."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_ProfileName: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -108,7 +109,7 @@ put_ProfileName: value
 
 	<virtual stdcall: hresult 5 lpwstr>
 	^self invalidCall: _failureCode! !
-!ICoreWebView2ControllerOptions categoriesForMethods!
+!WebView2.ICoreWebView2ControllerOptions categoriesForMethods!
 get_IsInPrivateModeEnabled:!**auto generated**!COM Interfaces-ICoreWebView2ControllerOptions!private! !
 get_ProfileName:!**auto generated**!COM Interfaces-ICoreWebView2ControllerOptions!private! !
 isInPrivateModeEnabled!properties!public! !
@@ -120,7 +121,7 @@ put_IsInPrivateModeEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Contr
 put_ProfileName:!**auto generated**!COM Interfaces-ICoreWebView2ControllerOptions!private! !
 !
 
-!ICoreWebView2ControllerOptions class methodsFor!
+!WebView2.ICoreWebView2ControllerOptions class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2ControllerOptions'
@@ -136,7 +137,7 @@ defineFunctions
 		defineFunction: #put_IsInPrivateModeEnabled:
 			argumentTypes: 'sdword'
 ! !
-!ICoreWebView2ControllerOptions class categoriesForMethods!
+!WebView2.ICoreWebView2ControllerOptions class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

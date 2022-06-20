@@ -13,9 +13,9 @@ package setClassNames: #(
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
 	'..\..\..\Base\Tests\Dolphin Base Tests'
+	'..\..\..\MVP\Dolphin MVP Tests'
 	'..\..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
 	'..\..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitPreload'
-	'..\..\..\MVP\Dolphin MVP Tests'
 	'WebView2'
 ).
 
@@ -41,7 +41,6 @@ UI.Tests.PresenterTest subclass: #'WebView2.Tests.WebView2ViewTest'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-
 
 "End of package definition"!
 

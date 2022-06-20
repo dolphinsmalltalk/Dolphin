@@ -1,12 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2Interface subclass: #ICoreWebView2EnvironmentOptions2
+WebView2.ICoreWebView2Interface subclass: #'WebView2.ICoreWebView2EnvironmentOptions2'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebView2EnvironmentOptions2 guid: (IID fromString: '{ff85c98a-1ba7-4a6b-90c8-2b752c89e9e2}')!
-ICoreWebView2EnvironmentOptions2 comment: '`ICoreWebView2EnvironmentOptions2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2EnvironmentOptions2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2EnvironmentOptions2 guid: (OS.COM.IID fromString: '{ff85c98a-1ba7-4a6b-90c8-2b752c89e9e2}')!
+WebView2.ICoreWebView2EnvironmentOptions2 comment: '`ICoreWebView2EnvironmentOptions2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2EnvironmentOptions2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The IDL contains this comment, which includes an explanation of why ICoreWebView2EnviromentOptions2 is not a sub-interface of ICoreWebView2EnvironmentOptions:
 
@@ -38,8 +39,8 @@ interface ICoreWebView2EnvironmentOptions2 : IUnknown
 };
 ```
 '!
-!ICoreWebView2EnvironmentOptions2 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2EnvironmentOptions2 methodsFor!
+!WebView2.ICoreWebView2EnvironmentOptions2 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2EnvironmentOptions2 methodsFor!
 
 exclusiveUserDataFolderAccess
 	"Answer the <Boolean> value of the 'ExclusiveUserDataFolderAccess' property of the receiver."
@@ -72,16 +73,16 @@ put_ExclusiveUserDataFolderAccess: value
 
 	<virtual stdcall: hresult 5 sdword>
 	^self invalidCall: _failureCode! !
-!ICoreWebView2EnvironmentOptions2 categoriesForMethods!
+!WebView2.ICoreWebView2EnvironmentOptions2 categoriesForMethods!
 exclusiveUserDataFolderAccess!properties!public! !
 exclusiveUserDataFolderAccess:!**auto generated**!properties!public! !
 get_ExclusiveUserDataFolderAccess:!**auto generated**!COM Interfaces-ICoreWebView2EnvironmentOptions2!private! !
 put_ExclusiveUserDataFolderAccess:!**auto generated**!COM Interfaces-ICoreWebView2EnvironmentOptions2!private! !
 !
 
-ICoreWebView2EnvironmentOptions2 methodProtocol: #ICoreWebView2EnvironmentOptions2 attributes: #(#readOnly) selectors: #(#get_ExclusiveUserDataFolderAccess: #put_ExclusiveUserDataFolderAccess:)!
+WebView2.ICoreWebView2EnvironmentOptions2 methodProtocol: #ICoreWebView2EnvironmentOptions2 attributes: #(#readOnly) selectors: #(#get_ExclusiveUserDataFolderAccess: #put_ExclusiveUserDataFolderAccess:)!
 
-!ICoreWebView2EnvironmentOptions2 class methodsFor!
+!WebView2.ICoreWebView2EnvironmentOptions2 class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2EnvironmentOptions2'
@@ -93,7 +94,7 @@ defineFunctions
 		defineFunction: #put_ExclusiveUserDataFolderAccess:
 			argumentTypes: 'sdword'
 ! !
-!ICoreWebView2EnvironmentOptions2 class categoriesForMethods!
+!WebView2.ICoreWebView2EnvironmentOptions2 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

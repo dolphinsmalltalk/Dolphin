@@ -141,7 +141,7 @@ name
 	"Answer the <lpwstr> value of the 'name' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_name: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.

@@ -1,12 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2Profile subclass: #ICoreWebView2Profile2
+WebView2.ICoreWebView2Profile subclass: #'WebView2.ICoreWebView2Profile2'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-ICoreWebView2Profile2 guid: (IID fromString: '{fa740d4b-5eae-4344-a8ad-74be31925397}')!
-ICoreWebView2Profile2 comment: '`ICoreWebView2Profile2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Profile2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2Profile2 guid: (OS.COM.IID fromString: '{fa740d4b-5eae-4344-a8ad-74be31925397}')!
+WebView2.ICoreWebView2Profile2 comment: '`ICoreWebView2Profile2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Profile2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -36,8 +37,8 @@ interface ICoreWebView2Profile2 : ICoreWebView2Profile
 };
 ```
 '!
-!ICoreWebView2Profile2 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2Profile2 methodsFor!
+!WebView2.ICoreWebView2Profile2 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2Profile2 methodsFor!
 
 clearBrowsingData: dataKinds from: startTime to: endTime thenDo: aMonadicValuable
 	"Clear browsing data of the kinds indicated by the flags in the <integer> dataKinds argument in a range specified by the <DateAndTime> startTime and endTime arguments. When done invoke the <monadicValuable> argument passing an integer HRESULT indicating success/failure."
@@ -100,7 +101,7 @@ clearBrowsingDataThenDo: aMonadicValuable
 				queryInterface: ICoreWebView2ClearBrowsingDataCompletedHandler.
 	self ClearBrowsingDataAll: handler.
 	handler free! !
-!ICoreWebView2Profile2 categoriesForMethods!
+!WebView2.ICoreWebView2Profile2 categoriesForMethods!
 clearBrowsingData:from:to:thenDo:!methods!public! !
 ClearBrowsingData:handler:!**auto generated**!COM Interfaces-ICoreWebView2Profile2!private! !
 clearBrowsingData:thenDo:!methods!public! !
@@ -109,7 +110,7 @@ ClearBrowsingDataInTimeRange:startTime:endTime:handler:!**auto generated**!COM I
 clearBrowsingDataThenDo:!methods!public! !
 !
 
-!ICoreWebView2Profile2 class methodsFor!
+!WebView2.ICoreWebView2Profile2 class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2Profile2'
@@ -123,7 +124,7 @@ defineFunctions
 		defineFunction: #ClearBrowsingDataAll:
 			argumentTypes: 'ICoreWebView2ClearBrowsingDataCompletedHandler*'
 ! !
-!ICoreWebView2Profile2 class categoriesForMethods!
+!WebView2.ICoreWebView2Profile2 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

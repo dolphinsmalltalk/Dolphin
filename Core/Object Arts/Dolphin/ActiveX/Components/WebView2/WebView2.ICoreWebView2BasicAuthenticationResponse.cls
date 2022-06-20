@@ -1,12 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2Interface subclass: #ICoreWebView2BasicAuthenticationResponse
+WebView2.ICoreWebView2Interface subclass: #'WebView2.ICoreWebView2BasicAuthenticationResponse'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebView2BasicAuthenticationResponse guid: (IID fromString: '{07023f7d-2d77-4d67-9040-6e7d428c6a40}')!
-ICoreWebView2BasicAuthenticationResponse comment: '`ICoreWebView2BasicAuthenticationResponse` is a wrapper class for the COM interface ''WebView2.ICoreWebView2BasicAuthenticationResponse'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2BasicAuthenticationResponse guid: (OS.COM.IID fromString: '{07023f7d-2d77-4d67-9040-6e7d428c6a40}')!
+WebView2.ICoreWebView2BasicAuthenticationResponse comment: '`ICoreWebView2BasicAuthenticationResponse` is a wrapper class for the COM interface ''WebView2.ICoreWebView2BasicAuthenticationResponse'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -35,8 +36,8 @@ interface ICoreWebView2BasicAuthenticationResponse : IUnknown
 };
 ```
 '!
-!ICoreWebView2BasicAuthenticationResponse categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2BasicAuthenticationResponse methodsFor!
+!WebView2.ICoreWebView2BasicAuthenticationResponse categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2BasicAuthenticationResponse methodsFor!
 
 get_Password: password
 	"Private - Get the value of the 'Password' property of the receiver.
@@ -62,7 +63,7 @@ password
 	"The auto-generated code is functionally correct, but this code is slightly more efficient; in particular it avoids generating finalizable garbage."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_Password: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -104,7 +105,7 @@ userName
 	"The auto-generated code is functionally correct, but this code is slightly more efficient; in particular it avoids generating finalizable garbage."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_UserName: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -114,7 +115,7 @@ userName: userName
 	"Set the 'UserName' property of the receiver to the <lpwstr> value of the argument."
 
 	self put_UserName: userName asUtf16String! !
-!ICoreWebView2BasicAuthenticationResponse categoriesForMethods!
+!WebView2.ICoreWebView2BasicAuthenticationResponse categoriesForMethods!
 get_Password:!**auto generated**!COM Interfaces-ICoreWebView2BasicAuthenticationResponse!private! !
 get_UserName:!**auto generated**!COM Interfaces-ICoreWebView2BasicAuthenticationResponse!private! !
 password!properties!public! !
@@ -126,7 +127,7 @@ userName!properties!public! !
 userName:!**auto generated**!properties!public! !
 !
 
-!ICoreWebView2BasicAuthenticationResponse class methodsFor!
+!WebView2.ICoreWebView2BasicAuthenticationResponse class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2BasicAuthenticationResponse'
@@ -142,7 +143,7 @@ defineFunctions
 		defineFunction: #put_Password:
 			argumentTypes: 'lpwstr'
 ! !
-!ICoreWebView2BasicAuthenticationResponse class categoriesForMethods!
+!WebView2.ICoreWebView2BasicAuthenticationResponse class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 
