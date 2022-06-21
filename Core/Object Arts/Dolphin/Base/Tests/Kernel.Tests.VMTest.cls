@@ -1210,6 +1210,8 @@ testLoopsInterruptible
 		#repeat		(hmmm, tricky, need some way to break the loop)
 	The loops must not contain any true mesage sends, only bytecodes"
 
+	"Timing sensitive - too unreliable for CI build"
+	self skipIfCiBuild.
 	"#timesRepeat:"
 	self assertLoopInterruptible: [3000000 timesRepeat: [1 + 2]].
 	"#whileFalse"
