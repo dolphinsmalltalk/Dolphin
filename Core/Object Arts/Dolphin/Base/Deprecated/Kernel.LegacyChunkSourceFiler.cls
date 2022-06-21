@@ -494,7 +494,7 @@ shortNameForClass: aClass
 	^(Smalltalk oldNames lookup: aClass) ifNil: [self getShortName: aClass]!
 
 specialBehaviorAttributes
-	^#(#(#isIndirection) #(#isNullTerminated) #(#isNonInstantiable #isAbstract) #isMourner)! !
+	^#(#(#isIndirection) #(#isNullTerminated) #(#isNonInstantiable #isAbstract) #(#isMourner))! !
 !Kernel.LegacyChunkSourceFiler categoriesForMethods!
 collateClass:against:!private!source filing! !
 emitBinaryVariableDefinition:!public!source filing-file out! !
