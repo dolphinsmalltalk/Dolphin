@@ -197,6 +197,9 @@ removeFromSuper
 
 	^superclass ~~ Class ifTrue: [super removeFromSuper]!
 
+setImports: anArray
+	self instanceClass setImports: anArray!
+
 shortName
 	^instanceClass shortName , ' class'!
 
@@ -244,6 +247,7 @@ printFullNameOn:!helpers!private! !
 printOn:!printing!public! !
 removeClassVarName:!class variables!public! !
 removeFromSuper!operations!private! !
+setImports:!accessing!private! !
 shortName!public! !
 stbSaveOn:!binary filing!public! !
 subclassesDo:!class hierarchy-accessing!public! !

@@ -1188,7 +1188,7 @@ removeClassVarName:!class hierarchy-mutating!class variables!public! !
 removeFromCategory:!categories-removing!public! !
 removeFromSuper!operations!private! !
 removeFromSystem!class hierarchy-removing!private! !
-removeImport:!namespaces!public! !
+removeImport:!class hierarchy-mutating!namespaces!public! !
 removeSubclass:!helpers!private! !
 rename:!class hierarchy-mutating!private! !
 replaceImport:with:!applying!private! !

@@ -28,18 +28,19 @@ _basicDevelopmentClasses
 
 _closeLog
 	[elementStack isEmpty] whileFalse: [self _endElement: true].
-	logFilename
-		ifNotNil: 
-			[| log |
-			log := logStream contents.
-			(File
-				open: logFilename
-				mode: #truncate
-				check: false
-				share: #exclusive)
-				write: log count: log size;
-				close].
+	logFilename ifNotNil: [self _closeLogStream].
 	logStream := nil!
+
+_closeLogStream
+	| log |
+	log := logStream contents.
+	^(File
+		open: logFilename
+		mode: #truncate
+		check: false
+		share: #exclusive)
+		write: log count: log size;
+		close!
 
 _destroyNotifier
 	notifier destroy.
@@ -116,11 +117,14 @@ _notify: aStringMessage
 _openLogFile: aString
 	logFilename := aString.
 	"We can avoid a dependency on FileStream by building the log in memory, and then writing it directly to a File when done."
-	logStream := aString ifNil: [DeafObject current] ifNotNil: [Utf8String writeStream].
+	logStream := logFilename ifNil: [DeafObject current] ifNotNil: [self _openLogStream].
 	logStream nextPutAll: '<?xml version="1.0" encoding="UTF-8"?>'.
 	self _startElement: 'Lagoon'
 		attributes: {'xmlns:xsi' -> 'http://www.w3.org/2001/XMLSchema-instance'.
 				'xsi:noNamespaceSchemaLocation' -> 'Lagoon.xsd'}!
+
+_openLogStream
+	^Utf8String writeStream!
 
 _preservedMessages
 	^preservedMessages!
@@ -185,6 +189,7 @@ _aspectSetters!accessing!private! !
 _aspectSetters:!accessing!private! !
 _basicDevelopmentClasses!accessing!private! !
 _closeLog!operations!private! !
+_closeLogStream!operations!private! !
 _destroyNotifier!operations!private! !
 _endElement:!logging!private! !
 _endTag!logging!private! !
@@ -196,6 +201,7 @@ _logValue:!logging!private! !
 _notifier:!accessing!private! !
 _notify:!logging!private! !
 _openLogFile:!logging!private! !
+_openLogStream!logging!private! !
 _preservedMessages!accessing!private! !
 _preservedMessages:!accessing!private! !
 _rootClasses!accessing!private! !

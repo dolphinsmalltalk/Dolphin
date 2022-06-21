@@ -785,6 +785,9 @@ removeCategory: category
 	self removeSelectors: ((category asMethodCategory methodsInBehavior: self)
 				collect: [:method | method selector])!
 
+removeImport: aBindingReference
+	self setImports: (self imports copyWithout: aBindingReference)!
+
 removeInstVarName: aString
 	"Remove the instance variable of the receiver with the specified <readableString> name."
 
@@ -904,6 +907,9 @@ selectorsInCategory: category
 	"Answer a <Collection> of selector <Symbol>s, of the receiver's methods which are included in the <methodCategory>, category."
 
 	^methodsCatalogue ifNil: [#()] ifNotNil: [(methodsCatalogue lookup: category) ?? #()]!
+
+setImports: anArray
+	self subclassResponsibility!
 
 setInstanceVariables: aCollection
 	"Private - Set the instance variable string of the receiver to be the list
@@ -1136,6 +1142,7 @@ realMethodCategories!categories-accessing!public! !
 recompileAll!compiling!development!public! !
 recompileAllReferencesToLiteral:!development!private! !
 removeCategory:!categories-removing!public! !
+removeImport:!namespaces!public! !
 removeInstVarName:!class hierarchy-mutating!instance variables!public! !
 removeMethodFromNonVirtualCategories:!development!helpers!private! !
 removeProtocol:!private!protocols! !
@@ -1150,6 +1157,7 @@ resourceNames!accessing!public! !
 resources!accessing!public! !
 resourceSelectorsDo:!enumerating!public! !
 selectorsInCategory:!categories-accessing!public! !
+setImports:!accessing!private! !
 setInstanceVariables:!instance variables!private! !
 setShapeFlags:to:!class hierarchy-mutating!instance specification-accessing!private! !
 shortName!accessing!public! !

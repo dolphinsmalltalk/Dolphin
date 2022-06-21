@@ -2874,6 +2874,7 @@ publishedAspects
 	^aspects!
 
 removePlugin: aClassBrowserPlugin
+	plugins ifNil: [^aClassBrowserPlugin].
 	^plugins remove: aClassBrowserPlugin ifAbsent: nil!
 
 wordWrapDefinition
