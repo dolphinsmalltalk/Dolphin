@@ -301,7 +301,7 @@ loadCursor: anInstanceHandle lpCursorName: anIntegerID
 
 loadKeyboardLayout: pwszKLID flags: flags
 	<stdcall: handle LoadKeyboardLayoutW lpwstr dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 loadString: anExternalHandle uID: anIntegerID lpBuffer: aString nBufferMax: anIntegerLength
 	"Load a string resource from the executable file associated with 

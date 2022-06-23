@@ -465,7 +465,8 @@ messagesDo: aBlock
 	"Evaluate the <monadicValuable> argument, aBlock, for each of the messages 
 	actually sent by the receiver, including any special selectors."
 
-	self extraIndex == 0
+	| idx |
+	((idx := self extraIndex) == 0 or: [idx > 8])
 		ifTrue: [(MessageSendCollector dispatcher: self byteCodeDispatcher) messagesDo: aBlock]!
 
 methodClass

@@ -60,6 +60,13 @@ testLocalScope
 	self assert: (Object>>#=) localScope equals: Object.
 	self assert: Object class methodDictionary anyOne localScope equals: Object!
 
+testMessages
+	"Messages sent in a primitive, including those with special byte codes - note that #ifTrue: and whileFalse: are not detected. These are in the literal frame; recognising the bytecode patterns would be expensive, but they could be detected from the frame as special cases since we know they are messages."
+	#todo. "#+ should be included"
+	self assert: (Object >> #basicIdentityIndexOf:from:to:) messages asArray equals: #(#basicAt: #> #==).
+	"Special inst var return method - no messages"
+	self assert: (Association>>#setKey:) messages asArray equals: #()!
+
 testRecompileMaintainsEnvironmentAndPackage
 	"Verify that a recompiled method's environment is maintained if different from it's method class', and likewise the owning package"
 
@@ -111,6 +118,7 @@ testIsQuick!public!unit tests! !
 testIsSimpleSelfSend!public!unit tests! !
 testLocalEnvironment!public!unit tests! !
 testLocalScope!public!unit tests! !
+testMessages!public!unit tests! !
 testRecompileMaintainsEnvironmentAndPackage!public!unit tests! !
 testReferenceToOwnClassVar!public! !
 testRefersToClassViaClassVar!public! !
