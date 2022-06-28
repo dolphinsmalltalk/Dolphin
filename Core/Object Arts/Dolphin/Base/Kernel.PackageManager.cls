@@ -984,8 +984,7 @@ packageOfClass: aBehavior
 	"Answer the Package held by the receiver which owns aBehavior, or nil if the class is unpackaged."
 
 	| ref |
-	ref := aBehavior instanceClass asQualifiedReference.
-	^(packagedVariables lookup: ref)
+	^(packagedVariables lookup: (ref := aBehavior instanceClass fullyQualifiedReference))
 		ifNil: 
 			["Fall back on enumerating the packages."
 			self packages detect: [:p | p includesClassNamed: ref] ifNone: nil]!

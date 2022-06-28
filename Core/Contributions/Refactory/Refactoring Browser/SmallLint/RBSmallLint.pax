@@ -18,12 +18,14 @@ package setClassNames: #(
 	#{Refactory.Browser.SmalllintContext}
 	#{Refactory.Browser.SmalllintFilterEnvironment}
 	#{Refactory.Browser.TransformationRule}
+	#{Refactory.Browser.UndeclaredVariableCollector}
 ).
 
 package setMethodNames: #(
 	#(#{Core.Behavior} #instanceBehavior)
 	#(#{Core.Metaclass} #instanceBehavior)
 	#(#{Kernel.CompiledCode} #needsHybridFrame)
+	#(#{Kernel.CompiledCode} #refersToStaticVariables)
 	#(#{Kernel.CompiledCode} #withAllBlockMethodsDo:)
 	#(#{Kernel.CompiledMethod} #equivalentTo:)
 ).
@@ -35,6 +37,7 @@ package setPrerequisites: #(
 	'..\..\RBNamespaces'
 	'..\Parser\RBParser'
 	'..\Refactorings\RBRefactorings'
+	'..\..\..\..\Object Arts\Dolphin\System\Compiler\Smalltalk Compiler'
 	'..\..\..\..\Object Arts\Dolphin\System\Compiler\Smalltalk Parser'
 ).
 
@@ -108,6 +111,12 @@ Refactory.Browser.BasicLintRule subclass: #'Refactory.Browser.ParseTreeLintRule'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Kernel.StaticVariableBinder subclass: #'Refactory.Browser.UndeclaredVariableCollector'
+	instanceVariableNames: 'undeclareds'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 
@@ -136,10 +145,15 @@ instanceBehavior!accessing!public! !
 needsHybridFrame
 	^self needsContext!
 
+refersToStaticVariables
+	1 to: self size do: [:i | (self basicAt: i) isVariableBinding ifTrue: [^true]].
+	^false!
+
 withAllBlockMethodsDo: operation
 	operation value: self! !
 !Kernel.CompiledCode categoriesForMethods!
 needsHybridFrame!private!testing! !
+refersToStaticVariables!private!testing! !
 withAllBlockMethodsDo:!enumerating!private! !
 !
 

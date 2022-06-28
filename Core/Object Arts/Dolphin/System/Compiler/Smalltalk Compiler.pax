@@ -8,6 +8,7 @@ package paxVersion: 2.1;
 package setClassNames: #(
 	#{Kernel.AbstractSemanticAnalyser}
 	#{Kernel.StArgumentVariable}
+	#{Kernel.StaticVariableBinder}
 	#{Kernel.StBlockScope}
 	#{Kernel.StClassScope}
 	#{Kernel.StEvalScope}
@@ -69,6 +70,12 @@ Kernel.ParseNodeVisitor subclass: #'Kernel.AbstractSemanticAnalyser'
 	instanceVariableNames: 'methodNode classScope currentScope evalScope errorBlock scopes inStaticExpression inTag'
 	classVariableNames: ''
 	imports: #(#{Kernel.ParseErrorCodes})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.AbstractSemanticAnalyser subclass: #'Kernel.StaticVariableBinder'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Kernel.AbstractSemanticAnalyser subclass: #'Kernel.StSemanticAnalyser'

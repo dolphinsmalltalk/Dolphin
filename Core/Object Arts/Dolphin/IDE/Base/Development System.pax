@@ -150,9 +150,7 @@ package setMethodNames: #(
 	#(#{Core.Behavior} #whichMethodsContainSource:)
 	#(#{Core.Behavior} #whichMethodsOnlySelfSend:)
 	#(#{Core.Behavior} #whichMethodsReferTo:)
-	#(#{Core.Behavior} #whichMethodsReferToAnyOf:)
 	#(#{Core.Behavior} #whichSelectorsReferTo:)
-	#(#{Core.Behavior} #whichSelectorsReferToAnyOf:)
 	#(#{Core.Boolean} #literalTextStyle)
 	#(#{Core.Boolean class} #newInstanceAspect:class:)
 	#(#{Core.Category class} #icon)
@@ -1719,17 +1717,11 @@ whichMethodsReferTo: anObject
 
 	^self selectMethods: (self referenceFilterFor: anObject)!
 
-whichMethodsReferToAnyOf: aCollection
-	^self selectMethods: (self referenceFilterForAnyOf: aCollection)!
-
 whichSelectorsReferTo: anObject
 	"Answer a Set of selectors whose methods access the argument, anObject.
 	This is really only included for Blue Book compatibility."
 
-	^(self whichMethodsReferTo: anObject) collect: [:each | each selector]!
-
-whichSelectorsReferToAnyOf: aCollection
-	^(self whichMethodsReferToAnyOf: aCollection) collect: [:each | each selector]! !
+	^(self whichMethodsReferTo: anObject) collect: [:each | each selector]! !
 !Core.Behavior categoriesForMethods!
 changedMethods!methods-accessing!private! !
 hasAbstractMethods!public!testing! !
@@ -1740,9 +1732,7 @@ whichClassDefinesInstVar:!public!RefactoringBrowser! !
 whichMethodsContainSource:!methods-testing!public! !
 whichMethodsOnlySelfSend:!methods-testing!public! !
 whichMethodsReferTo:!methods-testing!public! !
-whichMethodsReferToAnyOf:!methods-testing!public! !
 whichSelectorsReferTo:!methods-testing!public! !
-whichSelectorsReferToAnyOf:!private! !
 !
 
 !Core.Boolean methodsFor!

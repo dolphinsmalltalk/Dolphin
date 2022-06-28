@@ -200,7 +200,7 @@ Kernel.ParseNodeVisitor subclass: #'Refactory.Browser.RBReadBeforeWrittenTester'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.AbstractSemanticAnalyser subclass: #'Refactory.Browser.RBVariableAnalyser'
+Kernel.StaticVariableBinder subclass: #'Refactory.Browser.RBVariableAnalyser'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

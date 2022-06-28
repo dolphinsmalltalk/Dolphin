@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.AbstractSemanticAnalyser subclass: #'Refactory.Browser.RBVariableAnalyser'
+Kernel.StaticVariableBinder subclass: #'Refactory.Browser.RBVariableAnalyser'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -11,27 +11,14 @@ Refactory.Browser.RBVariableAnalyser comment: '`RBVariableAnalyser` is a special
 !Refactory.Browser.RBVariableAnalyser categoriesForClass!Refactory-ParseTree Matching! !
 !Refactory.Browser.RBVariableAnalyser methodsFor!
 
+undeclaredVariable: aVariableNode
+	RefactoringError signal: 'Variable not bindable: ' , aVariableNode name!
+
 visitQualifiedReferenceNode: aQualifiedReferenceNode
 	aQualifiedReferenceNode binding.
-	^aQualifiedReferenceNode!
-
-visitSelfVariableNode: aSelfVariableNode
-	"Do nothing as we don't care about self references."
-
-	!
-
-visitSpecialVariableNode: aSpecialVariableNode
-	"Do nothing as we don't care about special variable references."
-
-	!
-
-visitVariableNode: aVariableNode
-	(self bindVariable: aVariableNode)
-		ifNil: [RefactoringError signal: 'Variable not bindable: ' , aVariableNode name]! !
+	^aQualifiedReferenceNode! !
 !Refactory.Browser.RBVariableAnalyser categoriesForMethods!
+undeclaredVariable:!error handling!private! !
 visitQualifiedReferenceNode:!public!visiting! !
-visitSelfVariableNode:!public!visiting! !
-visitSpecialVariableNode:!public!visiting! !
-visitVariableNode:!public!visitor/double dispatching! !
 !
 

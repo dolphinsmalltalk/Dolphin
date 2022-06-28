@@ -735,30 +735,6 @@ referenceFilterFor: anObject
 							dispatcher sendsSpecialSelector: index]]]].
 	^[:eachMethod | eachMethod refersToLiteral: anObject]!
 
-referenceFilterForAnyOf: aCollection
-	| array specialSelectorIndices |
-	array := aCollection asArray.
-	"Here we are expecting that aCollection is very small, and there will generally be no special selectors in it."
-	array do: 
-			[:each |
-			each isSymbol
-				ifTrue: 
-					[(VM indexOfSpecialSelector: each ifAbsent: nil)
-						ifNotNil: [:index | (specialSelectorIndices ifNil: [specialSelectorIndices := Set new]) add: index]]].
-	^specialSelectorIndices
-		ifNil: [[:method | method refersToAnyOf: array]]
-		ifNotNil: 
-			[| dispatcher |
-			dispatcher := ByteCodeDispatcher new.
-			specialSelectorIndices := specialSelectorIndices asArray.
-			
-			[:method |
-			(method refersToAnyOf: array) or: 
-					[specialSelectorIndices anySatisfy: 
-							[:index |
-							dispatcher method: method.
-							dispatcher sendsSpecialSelector: index]]]]!
-
 removeFromSuper
 	"Private - Remove the receiver from its superclasses' subclass collection and answer the old superclass.
 	Root classes will have a superclass of nil - we do not put such classes into any subclass collection."
@@ -1076,7 +1052,6 @@ recompile:!compiling!development!public! !
 recompileMethod:environment:!compiling!development!private! !
 recompileReferencesToLiteral:!development!private! !
 referenceFilterFor:!development!methods-testing!private! !
-referenceFilterForAnyOf:!development!methods-testing!private! !
 removeFromSuper!operations!private! !
 removeFromSystem!class hierarchy-removing!private! !
 removeSelector:!methods-removing!public! !

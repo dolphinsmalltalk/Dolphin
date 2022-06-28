@@ -660,22 +660,20 @@ variableAssignedLiteral
 
 variableNotDefined
 	| detector |
-	#rbFix.	"Modified for namespaces"
 	detector := self new.
 	detector name: 'Variable used, but not defined anywhere'.
 	detector methodBlock: 
 			[:context :result |
-			context compiledMethod withAllBlockMethodsDo: 
-					[:each |
-					each literalsDo: 
-							[:lit |
-							lit isVariableBinding
-								ifTrue: 
-									[| binding |
-									((binding := each fullBindingFor: lit key) notNil and: [binding binding == lit binding])
-										ifFalse: 
-											[result addClass: context selectedClass selector: context selector.
-											result addSearchString: lit key]]]]].
+			| method |
+			method := context compiledMethod.
+			method refersToStaticVariables
+				ifTrue: 
+					[| undeclareds |
+					undeclareds := (UndeclaredVariableCollector analyseParseTree: method parseTree) undeclareds.
+					undeclareds isEmpty
+						ifFalse: 
+							[result addClass: context selectedClass selector: context selector.
+							undeclareds do: [:each | result addSearchString: each name]]]].
 	^detector!
 
 variableReferencedOnce

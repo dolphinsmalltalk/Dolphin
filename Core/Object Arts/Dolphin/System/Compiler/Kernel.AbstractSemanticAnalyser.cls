@@ -18,7 +18,7 @@ bindVariable: aStVariableNode
 
 	^(aStVariableNode lookupInScope: currentScope)
 		ifNil: 
-			[self signalError: CErrUndeclared forNode: aStVariableNode.
+			[self undeclaredVariable: aStVariableNode.
 			nil]
 		ifNotNil: 
 			[:var |
@@ -112,6 +112,9 @@ signalError: codeInteger forNode: aStProgramNode range: anInterval extras: anArr
 	(err severityClass == Error and: [errorBlock notNil]) ifTrue: [errorBlock value: err].
 	"If the error block returns, then the exception is signalled"
 	^err signal!
+
+undeclaredVariable: aStVariableNode
+	self signalError: CErrUndeclared forNode: aStVariableNode!
 
 visitAnnotationNode: aStAnnotationNode
 	"Visiting the args will detect any undeclared variables."
@@ -208,6 +211,7 @@ signalError:forNode:!error handling!private! !
 signalError:forNode:extra:!error handling!private! !
 signalError:forNode:extras:!error handling!private! !
 signalError:forNode:range:extras:!error handling!private! !
+undeclaredVariable:!error handling!private! !
 visitAnnotationNode:!public!visiting! !
 visitAssignmentNode:!public!visitor/double dispatching! !
 visitBlockNode:!public!visitor/double dispatching! !

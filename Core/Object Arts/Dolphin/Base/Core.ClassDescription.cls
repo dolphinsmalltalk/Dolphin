@@ -813,8 +813,8 @@ removeProtocol: protocol
 removeProtocol: protocol ifAbsent: exceptionHandler
 	"Private - Remove the specified method protocol from the list implemented by the receiver."
 
-	protocols isNil ifTrue: [^exceptionHandler value].
-	protocols remove: protocol asSymbol ifAbsent: [^exceptionHandler value].
+	(protocols isNil or: [(protocols remove: protocol asSymbol ifAbsent: nil) isNil])
+		ifTrue: [^exceptionHandler value].
 	protocols isEmpty ifTrue: [protocols := nil]!
 
 removeSelector: aSelector fromCategory: category
