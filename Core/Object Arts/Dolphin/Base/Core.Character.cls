@@ -355,7 +355,7 @@ isPunctuation
 isSeparator
 	"Answer whether the receiver is an ASCII separator character (i.e. whitespace)."
 
-	^code == 32 or: [code >= 9 and: [code <= 13]]!
+	^code == 32 or: [code <= 13 and: [code >= 9]]!
 
 isSurrogate
 	"Answer whether the receiver is a leading or trailing code unit of a multi-code unit code-point in it's encoding."
