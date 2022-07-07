@@ -35,12 +35,6 @@ Kernel.ClassBuilder comment: ''!
 !Kernel.ClassBuilder categoriesForClass!System-Support! !
 !Kernel.ClassBuilder methodsFor!
 
-allClassVarNamesOf: aClass
-	"Private - Answer an array of the class var names of aClass.
-	The Array will be empty if aClass is nil."
-
-	^aClass isNil ifTrue: [{}] ifFalse: [aClass allClassVarNames]!
-
 allInstVarNamesOf: aClass
 	"Private - Answer an array of the inst var names of aClass.
 	The Array will be empty if aClass is nil."
@@ -103,7 +97,7 @@ canonicalizeImport: aBindingReference
 				ifNil: 
 					[Notification signal: 'Imported namespace <1p> does not currently exist.' << ref asString.
 					"Must not be relative so treat as full even if has only an unqualified name"
-					aBindingReference asFullyQualifiedReference]])
+					NamespaceImport fullPathString: aBindingReference asString]])
 		isPrivate: private;
 		yourself!
 
@@ -143,7 +137,7 @@ class: aClass
 	"Private - Set the currentClass inst var to the class to be modified, aClass."
 
 	currentClass := aClass.
-	self instanceSpec: aClass instanceSpec.!
+	instanceSpec := aClass instanceSpec!
 
 classCategoryClass
 	^(superclass ifNil: [superclass class]) classCategoryClass!
@@ -783,12 +777,9 @@ requiresMutation
 		or: [self instanceShapeIsBeingChanged or: [self instanceVariablesAreBeingChanged]]!
 
 resolveImport: aBindingReference
-	^aBindingReference valueOrNil
-		ifNotNil: 
-			[:imported |
-			(imported class conformsToProtocol: #importableNamespace)
-				ifFalse: [self error: 'Invalid import: <1p>' << aBindingReference].
-			imported asQualifiedReference]!
+	| import |
+	import := aBindingReference asNamespaceImport.
+	^import isDefined ifTrue: [import]!
 
 setCommentOf: aClass
 	"Private - Set the comment of aClass to the receiver's comment inst var unless it
@@ -821,6 +812,17 @@ superclassIsBeingChanged
 
 	^superclass ~= currentClass superclass
 			!
+
+toModify: aClass
+	currentClass := aClass.
+	instanceSpec := aClass instanceSpec.
+	self superclass: aClass superclass.
+	instanceVariables := aClass instanceVariableNames.
+	environment := aClass environment.
+	aClass isMeta ifTrue: [^self].
+	classVariables := aClass classVariableNames asArray.
+	imports := aClass imports.
+	classConstants := aClass classConstants!
 
 translateInstance: oldInstance intoANewInstanceOf: newClass via: mappingArray 
 	"Private - Answer a new instance of newClass initialised from the data
@@ -860,8 +862,28 @@ updateVMRegistryWith: aClass
 validateClass
 	"Private - Ensure that currentClass is a valid Behavior."
 
-	currentClass isNil ifTrue: [self error: 'Class not found.'].
+	currentClass ifNil: [self error: 'Class not found.'].
 	(currentClass isKindOf: Behavior) ifFalse: [self error: 'Class must be a kind of Behavior.']!
+
+validateClass: classNameString varName: varNameString inherited: aCollection
+	"Private - Ensure that the proposed class variable name is not a
+	reserved word and does not duplicate a name defined in aCollecton."
+
+	| first |
+	(self class isValidIdentifier: varNameString)
+		ifFalse: 
+			[self error: 'Proposed class variable <2s> of <1s> is invalid as a local identifier.'
+						<< {classNameString. varNameString}].
+	(aCollection includes: varNameString)
+		ifTrue: 
+			[self
+				error: 'Proposed class variable <1s>.<2s> is multiply defined.' << {classNameString. varNameString}].
+	first := varNameString first.
+	(first isUppercase or: [first == $_]) ifTrue: [^self].
+	Warning new
+		isSuppressible: true;
+		signal: 'Proposed class variable <2p> of <1s> should start with an uppercase letter.'
+					<< {classNameString. varNameString}!
 
 validateClassForRename
 	"Private - Ensure that we are permitted to rename the class."
@@ -878,29 +900,15 @@ validateClassInstanceVars
 	| instVarSet |
 	instVarSet := self validateInstanceVars: currentClass class instanceVariableNames
 				againstSuperclass: (self classOf: superclass).
-	currentClass class allSubclasses
-		do: [:cls | cls instanceVariableNames do: [:name | self validateInstVarName: name using: instVarSet]]!
+	currentClass class allSubclassesDo: 
+			[:each |
+			each instanceVariableNames do: [:name | self validateInstVarName: name using: instVarSet]]!
 
 validateClassName
 	"Private - Ensure that the proposed class name is valid."
 
 	(self class isValidClassName: className)
 		ifFalse: [self error: (ErrorInvalidClassName << className)]!
-
-validateClassVarName: aString using: aCollection
-	"Private - Ensure that the proposed class variable name is not a
-	reserved word and does not duplicate a name defined in aCollecton."
-
-	| first |
-	(self class isValidIdentifier: aString)
-		ifFalse: [self error: 'Proposed class variable <1p> is invalid as a local identifier.' << aString].
-	(aCollection includes: aString)
-		ifTrue: [self error: 'Proposed class variable <1p> is multiply defined.' << aString].
-	first := aString first.
-	(first isUppercase or: [first == $_]) ifTrue: [^self].
-	Warning new
-		isSuppressible: true;
-		signal: 'Proposed class variable <1p> should start with an uppercase letter.' << aString!
 
 validateClassVars: classVarsArray againstSuperclass: aClass
 	"Private - Ensure that the proposed class variable name list does not
@@ -910,12 +918,15 @@ validateClassVars: classVarsArray againstSuperclass: aClass
 	superclasses."
 
 	| classVarSet |
-	classVarSet := (self allClassVarNamesOf: aClass) asSet.
-	classVarsArray do: [:classVar |
-		self validateClassVarName: classVar using: classVarSet.
-		classVarSet add: classVar].
-	^classVarSet
-!
+	classVarSet := aClass ifNil: [Set new] ifNotNil: [aClass allClassVarNames].
+	classVarsArray do: 
+			[:classVar |
+			self
+				validateClass: className
+				varName: classVar
+				inherited: classVarSet.
+			classVarSet add: classVar].
+	^classVarSet!
 
 validateClassVarsForCreate
 	"Private - Ensure that the proposed class variable name list does not
@@ -932,8 +943,16 @@ validateClassVarsForModify
 
 	| classVarSet |
 	classVarSet := self validateClassVars: self classVariables againstSuperclass: superclass.
-	currentClass allSubclasses
-		do: [:cls | cls classBindingNames do: [:name | self validateClassVarName: name using: classVarSet]]!
+	currentClass allSubclassesDo: 
+			[:each |
+			| fullName |
+			fullName := each fullName.
+			each classBindingNames do: 
+					[:name |
+					self
+						validateClass: fullName
+						varName: name
+						inherited: classVarSet]]!
 
 validateForCreate
 	"Private - Ensure that the proposed class creation would result in a valid new class."
@@ -1054,12 +1073,12 @@ validateInstanceVars: instVarsArray againstSuperclass: aClass
 	superclasses."
 
 	| instVarSet |
-	instVarSet := (self allInstVarNamesOf: aClass) asSet.
-	instVarsArray do: [:instVar |
-		self validateInstVarName: instVar using: instVarSet.
-		instVarSet add: instVar].
-	^instVarSet
-!
+	instVarSet := aClass ifNil: [Set new] ifNotNil: [aClass allInstanceVariableNames asSet].
+	instVarsArray do: 
+			[:instVar |
+			self validateInstVarName: instVar using: instVarSet.
+			instVarSet add: instVar].
+	^instVarSet!
 
 validateInstanceVarsForCreate
 	"Private - Ensure that the proposed instance variable name list does not
@@ -1088,16 +1107,15 @@ validateInstanceVarsForModify
 					existing notEmpty
 						and: [(proposedInstVarArray indexOfSubCollection: currentClass instanceVariableNames) ~~ 1]])
 				ifTrue: [self error: ErrorFixedInitialLayout << currentClass]].
-	currentClass allSubclasses
-		do: [:cls | cls instanceVariableNames do: [:name | self validateInstVarName: name using: instVarSet]]!
+	currentClass allSubclassesDo: 
+			[:each |
+			each instanceVariableNames do: [:name | self validateInstVarName: name using: instVarSet]]!
 
 validateInstVarName: aString using: aCollection
-	"Private - Ensure that the proposed instance variable name is not a
-	reserved word and does not duplicate a name defined in aColecton."
+	"Private - Ensure that the proposed instance variable name is not a reserved word and does not duplicate a name defined in aCollecton."
 
 	(self class isValidIdentifier: aString) ifFalse: [self error: ErrorInvalidInstVarName << aString].
-	(aCollection includes: aString)
-		ifTrue: [self error: (ErrorInstVarAlreadyDefined expandMacrosWith: aString)]!
+	(aCollection includes: aString) ifTrue: [self error: ErrorInstVarAlreadyDefined << aString]!
 
 validateSpecAsFixedPointers: spec size: anInteger superclass: proposedSuperclass
 	"Private - Answer a validated instance spec. Signal an exception if spec is
@@ -1168,22 +1186,21 @@ validateSubclassInstanceSpecs
 	self validateSubclassesOf: currentClass againstInstanceSpec: instanceSpec!
 
 validateSuperclassChainForCreate
-	"Private - Ensure that the proposed superclass chain doesn't already include
-	a class of the same name as the proposed class."
+	"Private - Ensure that the proposed superclass chain doesn't already include a class of the same name as the proposed class."
 
 	| fullName |
-	superclass isNil ifTrue: [^self].
+	superclass ifNil: [^self].
 	fullName := self environment fullNameFor: className.
 	(superclass withAllSuperclasses anySatisfy: [:each | each fullName = fullName])
 		ifTrue: [self error: ErrorRecursiveSubclass]!
 
 validateSuperclassChainForModify
-	"Private - Ensure that the proposed superclass chain doesn't already include
-	the current class"
+	"Private - Ensure that the proposed superclass chain doesn't already include the current class"
 
-	superclass isNil ifTrue: [^self].
-	(superclass withAllSuperclasses anySatisfy: [:each | each == currentClass])
-		ifTrue: [self error: ErrorRecursiveSubclass]!
+	superclass
+		ifNotNil: 
+			[(superclass withAllSuperclasses anySatisfy: [:each | each == currentClass])
+				ifTrue: [self error: ErrorRecursiveSubclass]]!
 
 validateSuperclassForModify
 	"Private - Ensure that no circularity is introduced into the hierarchy and
@@ -1203,7 +1220,6 @@ validateSuperclassIsSubclassable
 			[(superclass class isMeta not or: [Unsubclassable includes: superclass])
 				ifTrue: [self error: ErrorUnsubclassable << superclass]]! !
 !Kernel.ClassBuilder categoriesForMethods!
-allClassVarNamesOf:!helpers!private! !
 allInstVarNamesOf:!helpers!private! !
 baseEnvironment!helpers!private! !
 beBytes!class type!private! !
@@ -1287,13 +1303,14 @@ setInstanceVariablesOf:!instance variables!private! !
 setNewClassCategories!helpers!private! !
 superclass:!accessing!private! !
 superclassIsBeingChanged!private!testing! !
+toModify:!initializing!private! !
 translateInstance:intoANewInstanceOf:via:!mutating!private! !
 updateVMRegistryWith:!mutating!private! !
 validateClass!private!validation! !
+validateClass:varName:inherited:!private!validation! !
 validateClassForRename!private!validation! !
 validateClassInstanceVars!private!validation! !
 validateClassName!private!validation! !
-validateClassVarName:using:!private!validation! !
 validateClassVars:againstSuperclass:!private!validation! !
 validateClassVarsForCreate!private!validation! !
 validateClassVarsForModify!private!validation! !
@@ -1327,20 +1344,9 @@ forModifying: aClass
 	The instance is initialized with all the current attributes of the class, so obviously
 	one or more of these must be modified if any modification is actually to take place."
 
-	| builder |
-	builder := self new
-				class: aClass;
-				superclass: aClass superclass;
-				instanceVariables: aClass instanceVariableNames;
-				environment: aClass environment;
-				yourself.
-	aClass isMeta
-		ifFalse: 
-			[builder
-				classVariables: aClass classVariableNames;
-				imports: aClass imports;
-				classConstants: aClass classConstants].
-	^builder!
+	^self new
+		toModify: aClass;
+		yourself!
 
 initialize
 	"Initialize the receiver's class variables.
@@ -1351,6 +1357,7 @@ initialize
 		value: ({Character. SmallInteger} asIdentitySet
 				isImmutable: true;
 				yourself).
+	"Classes that, in addition to all byte classes, have a fixed layout"
 	self addClassConstant: 'FixedLayout'
 		value: ({true class.
 				false class.
@@ -1360,7 +1367,6 @@ initialize
 				BlockClosure.
 				Context.
 				External.ExternalMethod.
-				External.Address.
 				Message.
 				MethodDictionary.
 				UndefinedObject.
@@ -1410,16 +1416,12 @@ isValidClassName: aString
 isValidIdentifier: aString
 	"Would be nice to use the Scanner here, but for boot order dependency reasons we cannot rely on the parser package being available to the ClassBuilder."
 
-	(aString isEmpty or: [self isValidInitialIdentifierChar: aString first]) ifFalse: [^false].
-	2 to: aString size do: [:i | (self isValidIdentifierChar: (aString at: i)) ifFalse: [^false]].
-	^(##(Set withAll: #('self' 'super' 'nil' 'true' 'false' 'thisContext' '_'))
-		includes: aString asString) not!
-
-isValidIdentifierChar: aCharacter 
-	^(self isValidInitialIdentifierChar: aCharacter) or: [aCharacter isDigit]!
-
-isValidInitialIdentifierChar: aCharacter
-	^aCharacter == $_ or: [aCharacter isEnglishLetter]!
+	| count ch |
+	count := aString size.
+	(count > 0 and: [(ch := aString at: 1) == $_ or: [ch isEnglishLetter]]) ifFalse: [^false].
+	2 to: count
+		do: [:i | ((ch := aString at: i) == $_ or: [ch isEnglishLetter or: [ch isDigit]]) ifFalse: [^false]].
+	^(##(Set withAll: #('self' 'super' 'nil' 'true' 'false' 'thisContext' '_')) includes: aString) not!
 
 moveClass: aClass toSuperclass: aSuperclass
 	"Move aClass to be subclassed from aSuperclass."
@@ -1460,8 +1462,6 @@ isFixedLayout:!enquiries!public! !
 isFixedName:!enquiries!public! !
 isValidClassName:!private!testing! !
 isValidIdentifier:!private!testing! !
-isValidIdentifierChar:!private!testing! !
-isValidInitialIdentifierChar:!private!testing! !
 moveClass:toSuperclass:!operations!public! !
 new!instance creation!public! !
 removeClass:!operations!public! !

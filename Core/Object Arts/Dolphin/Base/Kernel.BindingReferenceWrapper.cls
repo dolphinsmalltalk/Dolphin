@@ -27,6 +27,13 @@ asFullyQualifiedReference
 		ifTrue: [self newWrapping: reference asFullyQualifiedReference]
 		ifFalse: [self]!
 
+asNamespaceImport
+	"Answer a<NamespaceImport> that references the same binding as the receiver, the value of which is assumed to be an <importableNamespace>."
+
+	| import |
+	import := reference asNamespaceImport.
+	^import == reference ifTrue: [self] ifFalse: [self newWrapping: import]!
+
 asString
 	"Answer a <readableString> that is the receiver's qualified name expression."
 
@@ -136,6 +143,7 @@ setScope: anObject
 !Kernel.BindingReferenceWrapper categoriesForMethods!
 =!comparing!public! !
 asFullyQualifiedReference!converting!public! !
+asNamespaceImport!converting!public! !
 asString!converting!public! !
 baseClass!accessing!public! !
 bindingOrNil!accessing!public! !

@@ -70,9 +70,8 @@ renameImports
 					(path beginsWith: classPath)
 						ifTrue: 
 							[| newImport |
-							newImport := FullBindingReference
-										pathString: nil
-										path: newClassReference path , (path copyFrom: classPath size + 1 to: path size)
+							newImport := BindingReference
+										newFullPath: newClassReference path , (path copyFrom: classPath size + 1 to: path size)
 										private: each isPrivate.
 							eachClass replaceImport: each with: newImport]]]!
 

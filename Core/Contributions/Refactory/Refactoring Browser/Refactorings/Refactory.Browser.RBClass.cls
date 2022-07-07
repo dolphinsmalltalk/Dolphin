@@ -38,9 +38,8 @@ addClassVariable: aString
 	model addClassVariable: aString to: self!
 
 addImport: aString
-	| ref |
-	ref := aString asQualifiedReference.
-	self changeImports: (self imports copyWith: (ref referenceInModel: model))!
+	self changeImports: (self imports
+				copyWith: (aString asQualifiedReference asNamespaceImport referenceInModel: model))!
 
 addSubclass: aRBClass
 	subclasses := self subclasses copyWith: aRBClass!
@@ -188,7 +187,7 @@ fullNameFor: aString
 	^stream contents!
 
 fullyQualifiedReference
-	^(FullBindingReference fullPathString: name) referenceInModel: model!
+	^(BindingReference fullPathString: name) referenceInModel: model!
 
 getEnvironment
 	^(realClass notNil and: [realClass fullName = name])
@@ -339,7 +338,8 @@ removeClassVariable: aString
 	^var!
 
 removeImport: aString
-	self changeImports: (self imports copyWithout: aString asQualifiedReference)!
+	self
+		changeImports: (self imports copyWithout: (aString asQualifiedReference referenceInModel: model))!
 
 removeSubclass: aRBClass
 	subclasses := self subclasses copyWithout: aRBClass!
@@ -356,7 +356,7 @@ replaceImport: oldBindingReference with: newBindingReference
 	"Replace an existing import with a new one, maintaining the existing order. This is typically used when renaming classes/namespaces that might be imported elsewhere."
 
 	self changeImports: (self imports copyReplacing: oldBindingReference
-				withObject: (newBindingReference referenceInModel: model))!
+				withObject: (newBindingReference referenceInModel: model) asNamespaceImport)!
 
 resolveBindingPath: anArray
 	"Private - Attempt to resolve a <VariableBinding> by walking the names in the argument through nested namespaces."
@@ -400,6 +400,23 @@ resolveImportedEnvironmentBinding: aBindingContext
 
 	(self resolveLocallyImportedBinding: aBindingContext) ifNotNil: [:var | ^var].
 	^self environment ifNotNil: [:env | env resolveImportedEnvironmentBinding: aBindingContext]!
+
+resolveLocalBindingPath: anArray
+	"Private - Attempt to resolve a <VariableBinding> by walking the names in the argument through nested namespaces, but considering only the directly defined variables.
+	This is used for deterministic resolution of namespace imports."
+
+	| length var |
+	length := anArray size.
+	length == 0 ifTrue: [^self binding].
+	var := self localBindingFor: (anArray at: 1).
+	2 to: length
+		do: 
+			[:i |
+			"We don't want to attempt to drill into normal class variables"
+			(var isNil or: [var isClassVariable]) ifTrue: [^nil].
+			var := var value localBindingFor: (anArray at: i).
+			var ifNil: [^nil]].
+	^var!
 
 resolveLocallyImportedBinding: aBindingContext
 	"Private - Search the directly imported namespaces for a binding that matches the identifier in the <BindingContext> argument."
@@ -561,6 +578,7 @@ resolveBindingPath:!bindings!private! !
 resolveBindingPath:environment:!bindings!private! !
 resolveImportedBinding:!bindings!private! !
 resolveImportedEnvironmentBinding:!bindings!private! !
+resolveLocalBindingPath:!bindings!private! !
 resolveLocallyImportedBinding:!bindings!private! !
 resolvePathString:environment:!bindings!private! !
 resolvePublicBinding:!bindings!private! !
@@ -574,7 +592,7 @@ superclass:!accessing!private! !
 unqualifiedName!accessing!public! !
 !
 
-Refactory.Browser.RBClass methodProtocol: #importableNamespace attributes: #(#readOnly) selectors: #(#asQualifiedReference #includesEnvironment: #resolvePublicBinding:)!
+Refactory.Browser.RBClass methodProtocol: #importableNamespace attributes: #(#readOnly) selectors: #(#asQualifiedReference #fullName #includesEnvironment: #resolveLocalBindingPath: #resolvePublicBinding:)!
 
 !Refactory.Browser.RBClass class methodsFor!
 

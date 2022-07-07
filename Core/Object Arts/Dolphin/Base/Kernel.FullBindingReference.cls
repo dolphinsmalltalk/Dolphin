@@ -27,8 +27,23 @@ Kernel.FullBindingReference comment: '`FullBindingReference`s represent fully-qu
 	"Implementation Note: This implementation depends on the fact that for absolute references the context is always nil. Relative references are of a different class, so will never be equal to absolute references."
 
 	^self == anObject or: 
-			[self class == anObject class
+			[self species == anObject species
 				and: [self pathString = anObject pathString and: [private == anObject isPrivate]]]!
+
+asNamespaceImport
+	"Answer a<NamespaceImport> that references the same binding as the receiver, the value of which (if any) must to be an <importableNamespace>."
+
+	^self valueOrNil
+		ifNil: 
+			[NamespaceImport
+				pathString: pathString
+				path: path
+				private: private]
+		ifNotNil: 
+			[:imported |
+			(imported class conformsToProtocol: #importableNamespace)
+				ifFalse: [self error: 'Invalid import: <1p>' << self].
+			NamespaceImport newFull: imported fullName private: private]!
 
 asString
 	"Answer a <readableString> that is the receiver's qualified name expression."
@@ -44,17 +59,15 @@ baseClass
 	^nil
 !
 
-bind: aBindingScope
+bind
 	self
 		setGeneration: Generation;
-		setBinding: (aBindingScope localScope resolveBindingPath: self path
-					environment: aBindingScope environment) ?? Undeclared.
-	^binding!
+		setBinding: (self resolveIn: self bindingScope) ?? Undeclared!
 
 bindingOrNil
 	"Answer the <VariableBinding> referenced by the receiver (i.e. resolve the variable), or nil if there is no such variable."
 
-	(binding isNil or: [generation ~~ Generation]) ifTrue: [self bind: self bindingScope].
+	(binding isNil or: [generation ~~ Generation]) ifTrue: [self bind].
 	^binding targetVariable!
 
 bindingScope
@@ -86,6 +99,11 @@ environmentName
 				nextPutAll: (parts at: i)].
 	^stream contents!
 
+getBinding
+	"Private - For testing purposes only. Does not attempt to resolve the binding."
+
+	^binding!
+
 hash
 	"Answer the <integer> hash value for the receiver."
 
@@ -96,7 +114,7 @@ home
 
 	"Implementation Note: This is defined for compatibility with the reference platform. It is not used in Dolphin."
 
-	^Smalltalk!
+	^self bindingScope!
 
 instance
 	"Answer a <BindingReference> that resolves to the value of the binding to which the receiver resolves."
@@ -148,6 +166,9 @@ private
 				pathString: pathString
 				path: path
 				private: true]!
+
+resolveIn: aBindingScope
+	^aBindingScope localScope resolveBindingPath: self path environment: aBindingScope environment!
 
 scope
 	"Private - Answer the <bindingScope> in which the reference was created. For relative references this is used to determine the start point for binding resolution. For absolute references this should always be nil."
@@ -202,13 +223,15 @@ valueOrNil
 	^self bindingOrNil value! !
 !Kernel.FullBindingReference categoriesForMethods!
 =!comparing!public! !
+asNamespaceImport!converting!public! !
 asString!converting!public! !
 baseClass!accessing!public! !
-bind:!operations!private! !
+bind!accessing!private! !
 bindingOrNil!accessing!public! !
 bindingScope!accessing!public! !
 displayOn:!displaying!public! !
 environmentName!accessing!public! !
+getBinding!accessing!private! !
 hash!comparing!public! !
 home!accessing!public! !
 instance!converting!public! !
@@ -219,6 +242,7 @@ meta!converting!public! !
 path!accessing!public! !
 pathString!accessing!public! !
 private!converting!public! !
+resolveIn:!operations!private! !
 scope!accessing!private! !
 scope:!converting!public! !
 setBinding:!initializing!private! !
@@ -233,14 +257,6 @@ valueOrNil!accessing!public! !
 
 !Kernel.FullBindingReference class methodsFor!
 
-fullPathString: aString
-	"Answer a new instance of the receiver representing the qualified name identified by the <readableString> argument, which is expected to be a fully qualified name."
-
-	^self
-		pathString: aString
-		path: nil
-		private: false!
-
 newPathString: aString path: anArray private: aBoolean
 	<primitive: 157>
 	^self basicNew
@@ -248,6 +264,11 @@ newPathString: aString path: anArray private: aBoolean
 		setPath: anArray;
 		isPrivate: aBoolean;
 		yourself!
+
+path: aSequencedReadableCollection private: aBoolean
+	"Answer a new instance of the receiver representing the qualified name composed of the <readableString> elements of the argument."
+
+	^self path: aSequencedReadableCollection scope: nil!
 
 pathString: aString path: anArray private: aBoolean
 	^(self
@@ -263,8 +284,8 @@ uninitialize
 		registryAtIndex: 65 put: nil;
 		registryAtIndex: 69 put: nil! !
 !Kernel.FullBindingReference class categoriesForMethods!
-fullPathString:!instance creation!public! !
 newPathString:path:private:!instance creation!private! !
+path:private:!instance creation!public! !
 pathString:path:private:!instance creation!private! !
 uninitialize!class hierarchy-removing!private! !
 !

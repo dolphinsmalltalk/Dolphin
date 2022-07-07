@@ -153,7 +153,7 @@ addClassVarNamed: aString
 
 addImport: aBindingReference
 	(imports includes: aBindingReference)
-		ifFalse: [self imports: (imports copyWith: aBindingReference)]!
+		ifFalse: [self imports: (imports copyWith: aBindingReference asNamespaceImport)]!
 
 addSubclass: aClass
 	"Private - Include the argument, aClass, as a subclass of the receiver."
@@ -448,7 +448,7 @@ fullPath
 fullyQualifiedReference
 	"Answer a <BindingReference> that represents a fully qualified reference to the receiver relative to the Root namespace. Classes in the legacy 'flat' Smalltalk namespace will have Smalltalk as the first element of the binding path."
 
-	^FullBindingReference fullPathString: self fullName!
+	^BindingReference fullPathString: self fullName!
 
 getFullName
 	| stream |
@@ -793,6 +793,31 @@ resolveImportedEnvironmentBinding: aBindingContext
 	(self resolveLocallyImportedBinding: aBindingContext) ifNotNil: [:var | ^var].
 	^self environment ifNotNil: [:env | env resolveImportedEnvironmentBinding: aBindingContext]!
 
+resolveLocalBindingPath: anArray
+	"Private - Attempt to resolve a <VariableBinding> by walking the names in the argument through nested namespaces, but considering only the directly defined variables.
+	This is used for deterministic resolution of namespace imports."
+
+	| length |
+	length := anArray size.
+	length == 0 ifTrue: [^self binding].
+	^(self localBindingFor: (anArray at: 1))
+		ifNotNil: 
+			[:rootBinding |
+			| binding namespace |
+			binding := rootBinding.
+			2 to: length
+				do: 
+					[:i |
+					| identifier |
+					"We don't want to attempt to drill into normal class variables"
+					binding isClassVariable ifTrue: [^nil].
+					namespace := binding value.
+					namespace class isMeta ifFalse: [^nil].
+					identifier := anArray at: i.
+					binding := namespace localBindingFor: identifier.
+					binding isNil ifTrue: [^nil]].
+			binding]!
+
 resolveLocallyImportedBinding: aBindingContext
 	"Private - Search the directly imported namespaces for a binding that matches the identifier in the <BindingContext> argument."
 
@@ -863,7 +888,7 @@ setGuid: id
 !
 
 setImports: anArray
-	imports := anArray!
+	imports := anArray collect: [:each | each asNamespaceImport]!
 
 setName: aSymbolOrNil environment: aNamespace
 	"Private - Set the name of the receiver to be the <Symbol> or nil argument. The name can be nil for anonymous classes."
@@ -1197,6 +1222,7 @@ resolveBindingPath:!bindings!private! !
 resolveBindingPath:environment:!bindings!private! !
 resolveImportedBinding:!bindings!private! !
 resolveImportedEnvironmentBinding:!binding!private! !
+resolveLocalBindingPath:!bindings!private! !
 resolveLocallyImportedBinding:!bindings!private! !
 resolvePathString:environment:!bindings!private! !
 resolvePublicBinding:!bindings!private! !
@@ -1233,7 +1259,7 @@ variableSubclass:instanceVariableNames:classVariableNames:imports:!class hierarc
 variableSubclass:instanceVariableNames:classVariableNames:imports:classInstanceVariableNames:classConstants:!class hierarchy-adding!public! !
 !
 
-Core.Class methodProtocol: #importableNamespace attributes: #(#readOnly) selectors: #(#asQualifiedReference #includesEnvironment: #resolvePublicBinding:)!
+Core.Class methodProtocol: #importableNamespace attributes: #(#readOnly) selectors: #(#asQualifiedReference #fullName #includesEnvironment: #resolveLocalBindingPath: #resolvePublicBinding:)!
 Core.Class methodProtocol: #namespace attributes: #(#readOnly) selectors: #(#addBinding: #addImport: #environment #fullBindingFor:environment: #fullName #hierarchyBindingFor: #imports #includesNamespace: #localBindingFor: #removeBindingFor: #removeImport: #unqualifiedName)!
 
 !Core.Class class methodsFor!

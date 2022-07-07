@@ -2859,6 +2859,14 @@ Kernel.BindingReferenceWrapper subclass: #'Kernel.MetaBindingReference'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Kernel.FullBindingReference subclass: #'Kernel.NamespaceImport'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'InvalidImportPath' -> 'NamespaceImports must describe a full path from Root'
+	}!
 Kernel.FullBindingReference subclass: #'Kernel.RelativeBindingReference'
 	instanceVariableNames: 'scope'
 	classVariableNames: ''

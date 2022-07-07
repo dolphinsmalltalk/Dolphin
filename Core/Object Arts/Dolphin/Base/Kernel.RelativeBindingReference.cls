@@ -36,15 +36,18 @@ asFullyQualifiedReference
 
 	^self bindingOrNil
 		ifNil: 
-			[FullBindingReference
-				pathString: self environmentName , PathSeparatorString , self unqualifiedName
-				path: nil
+			[self class newFull: self environmentName , PathSeparatorString , self unqualifiedName
 				private: private]
 		ifNotNil: 
 			[:var |
 			var fullyQualifiedReference
 				isPrivate: private;
 				yourself]!
+
+asNamespaceImport
+	"Answer a<NamespaceImport> that references the same binding as the receiver, the value of which is assumed to be an <importableNamespace>."
+
+	^self asFullyQualifiedReference asNamespaceImport!
 
 asString
 	"Answer a <readableString> that is the receiver's qualified name expression."
@@ -134,6 +137,7 @@ setScope: anObject
 !Kernel.RelativeBindingReference categoriesForMethods!
 =!comparing!public! !
 asFullyQualifiedReference!converting!public! !
+asNamespaceImport!converting!public! !
 asString!converting!public! !
 baseClass!accessing!public! !
 bindingScope!accessing!public! !

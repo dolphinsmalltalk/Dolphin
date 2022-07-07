@@ -16,18 +16,33 @@ className
 	^className pathString!
 
 className: aString
-	className := (FullBindingReference fullPathString: aString) referenceInModel: self model!
+	self classReference: (BindingReference fullPathString: aString)!
+
+classReference: aBindingReference
+	className := aBindingReference referenceInModel: model!
 
 environment
 	^className environment!
 
+environment: aRBNamespaceClass 
+	self className: (aRBNamespaceClass fullNameFor: self unqualifiedClassName)!
+
 unqualifiedClassName
-	^className unqualifiedName! !
+	^className unqualifiedName!
+
+unqualifiedClassName: aString
+	| path |
+	path := className path copy.
+	path at: path size put: aString.
+	self classReference: (BindingReference newFullPath: path private: false)! !
 !Refactory.Browser.ClassRefactoring categoriesForMethods!
 className!accessing!public! !
 className:!accessing!public! !
+classReference:!accessing!public! !
 environment!accessing!public! !
+environment:!accessing!public! !
 unqualifiedClassName!accessing!public! !
+unqualifiedClassName:!public! !
 !
 
 !Refactory.Browser.ClassRefactoring class methodsFor!

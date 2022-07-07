@@ -9,23 +9,10 @@ Core.Tests.DolphinTest subclass: #'Kernel.Tests.BindingReferenceTest'
 Kernel.Tests.BindingReferenceTest guid: (Core.GUID fromString: '{aca86665-9b25-4f35-bdb8-0c0e434df4e6}')!
 Kernel.Tests.BindingReferenceTest isNonInstantiable: true!
 Kernel.Tests.BindingReferenceTest comment: ''!
-!Kernel.Tests.BindingReferenceTest categoriesForClass!Unclassified! !
 !Kernel.Tests.BindingReferenceTest methodsFor!
 
 bindingTestCases
-	| missingNamespace |
-	missingNamespace := '_' , GUID newUnique idlString copyReplacing: $- withObject: $_.
-	^{#(#(#Object) nil #(#Object)).
-		{#(#Smalltalk #Object). nil. #(#Smalltalk #Object)}.
-		#(#(#OpcodePool #Nop) nil #(#OpcodePool #Nop)).
-		#(#(#Smalltalk #OpcodePool #Nop) nil #(#Smalltalk #OpcodePool #Nop)).
-		{{missingNamespace. '__MissingClass'}. nil. nil}.
-		{{missingNamespace. 'Date'}. nil. nil}.
-		#(#(#Object #_EventsRegister) nil #(#Object #_EventsRegister)).
-		{#(#_EventsRegister). Object. #(#Object #_EventsRegister)}.
-		{#(#Kernel #VMLibrary #Registry #Symbol). Core. nil}.
-		#(#(#XProgramming #SUnit #TestCase) nil #(#XProgramming #SUnit #TestCase)).
-		{#('_' #SUnit #TestCase). XProgramming. #(#XProgramming #SUnit #TestCase)}}!
+	^self subclassResponsibility!
 
 nameSuffix
 	^''!
@@ -54,8 +41,11 @@ newSubjectWithPathString: pathString scope: aBindingScope
 	self assert: subject isImmutable.
 	^subject!
 
+pathTestCases
+	^self subclassResponsibility!
+
 printStringTestCases
-	^#(#(#(#Object) '#{Object}') #(#(#OpcodePool #Nop) '#{OpcodePool.Nop}') #(#('A' 'B' 'C') '#{A.B.C}') #(#('_' 'SUnit' 'TestCase') '#{_.SUnit.TestCase}'))!
+	^self subclassResponsibility!
 
 subjectClass
 	self subclassResponsibility!
@@ -63,9 +53,30 @@ subjectClass
 testAppend
 	| subject nested |
 	"Class variables can be bound on both sides, so this should work for meta binding refs too."
-	subject := self newSubjectWithPath: #(#Object).
+	subject := self newSubjectWithPath: #(#Core #Object).
 	nested := subject append: '_EventsRegister'.
 	self assert: nested binding identicalTo: (Object localBindingFor: #_EventsRegister)!
+
+testAsNamespaceImport
+	| subject import |
+	"Class"
+	subject := self newSubjectWithPath: #(#Core #Object).
+	import := subject asNamespaceImport.
+	self assert: import equals: subject.
+	"Namespace"
+	subject := self newSubjectWithPath: #(#XProgramming #SUnit).
+	import := subject asNamespaceImport.
+	self assert: import equals: subject.
+	"Missing"
+	subject := self newSubjectWithPath: #(#Core 'Blah').
+	import := subject asNamespaceImport.
+	self assert: import equals: subject.
+	"Not an importable namespace"
+	subject := self newSubjectWithPath: #(#Core #Object '_EventsRegister').
+	self
+		should: [subject asNamespaceImport]
+		raise: Error
+		matching: [:ex | ex messageText = 'Invalid import: #{Core.Object._EventsRegister}']!
 
 testAsQualifiedReference
 	| subject |
@@ -76,14 +87,14 @@ testAsString
 	self printStringTestCases do: 
 			[:each |
 			| subject |
-			subject := self newSubjectWithPath: each first scope: each second.
+			subject := self newSubjectWithPath: each first scope: each second value.
 			self assert: subject asString equals: (each last copyFrom: 3 to: each last size - 1)]!
 
 testAsSymbol
 	self printStringTestCases do: 
 			[:each |
 			| subject |
-			subject := self newSubjectWithPath: each first scope: each second.
+			subject := self newSubjectWithPath: each first scope: each second value.
 			self assert: subject asSymbol identicalTo: (each last copyFrom: 3 to: each last size - 1) asSymbol]!
 
 testBinding
@@ -117,32 +128,16 @@ testBindingOrNil
 	subject := BindingReference pathString: '_EventsRegister'.
 	self assertIsNil: subject bindingOrNil!
 
-testBindingOrNilInContext
-	| ref |
-	ref := self newSubjectWithPathString: '_EventsRegister' scope: Object.
-	self assert: ref bindingOrNil equals: (Object localBindingFor: '_EventsRegister').
-	ref := self newSubjectWithPathString: '_EventsRegister' scope: Object >> #trigger:.
-	self assert: ref bindingOrNil equals: (Object localBindingFor: '_EventsRegister')!
-
 testBindingScope
-	| subject |
-	subject := self newSubjectWithPath: #(#OpcodePool 'Nop').
-	self assert: subject bindingScope identicalTo: Smalltalk.
-	subject := self subjectClass path: #('Nop') home: OpcodePool.
-	self assert: subject isImmutable.
-	self assert: subject bindingScope identicalTo: OpcodePool!
+	^self subclassResponsibility!
 
 testEnvironmentName
-	| subject |
 	#('Core.Object' 'Core' 'Smalltalk' nil 'Root' nil 'Root.Smalltalk' 'Root' 'Smalltalk.Animal' 'Smalltalk' 'Animal' nil 'XProgramming.SUnit' 'XProgramming' 'XProgramming.SUnit.TestRunConsoleLogger' 'XProgramming.SUnit')
 		pairsDo: 
 			[:each :expected |
+			| subject |
 			subject := self newSubjectWithPathString: each.
-			self assert: subject environmentName equals: expected].
-	subject := (self newSubjectWithPathString: 'Root' scope: Root) instance.
-	self assert: subject environmentName equals: 'Root'.
-	subject := (self newSubjectWithPathString: 'TestCase' scope: XProgramming.SUnit) instance.
-	self assert: subject environmentName equals: 'XProgramming.SUnit'!
+			self assert: subject environmentName equals: expected]!
 
 testEquals
 	self assert: (self newSubjectWithPath: #(#Smalltalk))
@@ -152,39 +147,19 @@ testEquals
 	self deny: (self newSubjectWithPath: #(#Smalltalk)) equals: Object new.
 	"BindingReference equality is a stable property based on the path and starting point. Different paths to the same target binding (of which there may be many) are not equal."
 	self deny: (self newSubjectWithPath: #(#Core #Object))
-		equals: (self newSubjectWithPath: #(#Smalltalk #Object)).
-	self assert: (self newSubjectWithPath: #('Core'))
-		equals: (self subjectClass simpleName: 'Core' in: Smalltalk).
-	self assert: (self newSubjectWithPath: #('_' 'Object') scope: self class)
-		equals: (self newSubjectWithPath: #(#Object) scope: self class).
-	self assert: (self newSubjectWithPath: #('Core' 'Object') scope: self class)
-		equals: (self newSubjectWithPath: #('Core' 'Object') scope: (self class lookupMethod: self selector))!
+		equals: (self newSubjectWithPath: #(#Smalltalk #Object))!
 
 testHash
 	self assert: (self newSubjectWithPath: #(#Kernel 'OpcodePool' 'Nop')) hash
 		equals: (self newSubjectWithPathString: 'Kernel.OpcodePool.Nop') hash.
 	"Same target variable, but different paths, so different hashes."
-	self deny: (self newSubjectWithPath: #('Object')) hash
+	self deny: (self newSubjectWithPath: #(#Core 'Object')) hash
 		equals: (self newSubjectWithPath: #(#Smalltalk 'Object')) hash.
-	self deny: (self newSubjectWithPath: #('Object')) hash
-		equals: (self newSubjectWithPath: #(#Smalltalk)) hash.
-	self assert: (self newSubjectWithPath: #('Core' 'Object')) hash
-		equals: (self subjectClass path: #('Core' 'Object') home: Smalltalk) hash.
-	self deny: (self newSubjectWithPath: #('Object')) hash
-		equals: (self newSubjectWithPath: #('Object') scope: Core) hash.
-	self assert: (self newSubjectWithPath: #('Core' 'Object') scope: self class) hash
-		equals: (self newSubjectWithPath: #('Core' 'Object') scope: (self class lookupMethod: self selector))
-				hash!
+	self deny: (self newSubjectWithPath: #(#Core)) hash
+		equals: (self newSubjectWithPath: #(#Smalltalk)) hash!
 
 testHome
-	| subject |
-	subject := self newSubjectWithPath: #(#OpcodePool 'Nop').
-	self assert: subject home identicalTo: Smalltalk.
-	subject := self subjectClass path: #('Nop') home: OpcodePool.
-	self assert: subject isImmutable.
-	self assert: subject home identicalTo: OpcodePool.
-	subject := self subjectClass path: #(#Object) home: self class.
-	self assert: subject home identicalTo: self class environment!
+	self subclassResponsibility!
 
 testIfDefined
 	self bindingTestCases do: 
@@ -220,10 +195,6 @@ testIsDefined
 
 testIsLiteral
 	| subject |
-	subject := self newSubjectWithPath: #(#Object) scope: Core.
-	self deny: subject isLiteral.
-	subject := self newSubjectWithPath: #('_' #SUnit #TestCase) scope: XProgramming.
-	self deny: subject isLiteral.
 	subject := self newSubjectWithPath: #(#Core #Object) scope: nil.
 	self assert: subject isLiteral.
 	self assert: subject private isLiteral!
@@ -244,10 +215,6 @@ testIsRelative
 
 testIsSelfEvaluating
 	| subject |
-	subject := self newSubjectWithPath: #(#Object) scope: Core.
-	self deny: subject isSelfEvaluating.
-	subject := self newSubjectWithPath: #('_' #SUnit #TestCase) scope: XProgramming.
-	self deny: subject isSelfEvaluating.
 	subject := self newSubjectWithPath: #(#Core #Object) scope: nil.
 	self assert: subject isSelfEvaluating.
 	self assert: subject private isSelfEvaluating!
@@ -270,20 +237,11 @@ testMeta
 	self assert: meta value identicalTo: Object class!
 
 testPath
-	"Cases
-	- unqualified name (always relative)
-	- qualified absolute
-	- qualified relative"
-
-	{#(#(#Object) nil #(#Object)).
-		#(#(#Core #Object) nil #(#Core #Object)).
-		{#(#_EventsRegister). Object. #(#_EventsRegister)}.
-		#(#(#XProgramming #SUnit #TestCase) nil #(#XProgramming #SUnit #TestCase)).
-		{#('_' #SUnit #TestCase). XProgramming. #(#SUnit #TestCase)}} do: 
-				[:each |
-				| subject |
-				subject := self newSubjectWithPath: each first scope: each second.
-				self assert: subject path equals: each last]!
+	self pathTestCases do: 
+			[:each |
+			| subject |
+			subject := self newSubjectWithPath: each first scope: each second.
+			self assert: subject path equals: each last]!
 
 testPathString
 	| subject pathString |
@@ -375,24 +333,6 @@ testRefersToLiteralNotFound
 	"It doesn't refer to the namespace along the path either. This could perhaps be correct either way, but as the reference itself doesn't resolve it doesn't really refer to anything."
 	self deny: (objectRef refersTo: Core asLiteralOf: method)!
 
-testRefersToLiteralPoolVariable
-	"A BindingReference matches literals for the same path..."
-
-	| method poolConstRef poolConst |
-	method := self class lookupMethod: testSelector.
-	"BindingRef to a pool variable."
-	poolConstRef := self newSubjectWithPathString: '_PrimitiveFailureCode.AccessViolation'.
-	poolConst := _PrimitiveFailureCode localBindingFor: 'AccessViolation'.
-	self assert: (poolConstRef
-				refersTo: (self newSubjectWithPath: #(#_PrimitiveFailureCode 'AccessViolation'))
-				asLiteralOf: method).
-	self assert: (poolConstRef refersTo: poolConst asLiteralOf: method).
-	self deny: (poolConstRef refersTo: poolConst value asLiteralOf: method).
-	"Should a BindingRef implicitly refers to refs along its path? Not entirely sure, but at the moment not"
-	self deny: (poolConstRef refersTo: #{Kernel._PrimitiveFailureCode} asLiteralOf: method).
-	#namespaceToDo.	"This should be true - a reference to a nested binding is implicitly a reference to the outer binding."
-	self deny: (poolConstRef refersTo: _PrimitiveFailureCode binding asLiteralOf: method)!
-
 testRelativeNoScope
 	self should: [self newSubjectWithPath: #('_' 'Object')] raise: Error!
 
@@ -458,15 +398,16 @@ newSubjectWithPath:!helpers!private! !
 newSubjectWithPath:scope:!helpers!private! !
 newSubjectWithPathString:!helpers!private! !
 newSubjectWithPathString:scope:!helpers!private! !
+pathTestCases!private!unit tests! !
 printStringTestCases!constants!private! !
 subjectClass!constants!private! !
 testAppend!public!unit tests! !
+testAsNamespaceImport!public!unit tests! !
 testAsQualifiedReference!public!unit tests! !
 testAsString!public!unit tests! !
 testAsSymbol!public!unit tests! !
 testBinding!public!unit tests! !
 testBindingOrNil!public!unit tests! !
-testBindingOrNilInContext!public!unit tests! !
 testBindingScope!public!unit tests! !
 testEnvironmentName!public!unit tests! !
 testEquals!public!unit tests! !
@@ -489,7 +430,6 @@ testPrivate!public!unit tests! !
 testPrivateRelative!public!unit tests! !
 testRefersToLiteralClass!public!unit tests! !
 testRefersToLiteralNotFound!public!unit tests! !
-testRefersToLiteralPoolVariable!public!unit tests! !
 testRelativeNoScope!public!unit tests! !
 testShortName!public!unit tests! !
 testStoreString!public!unit tests! !

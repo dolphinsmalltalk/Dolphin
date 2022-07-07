@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.Tests.BindingReferenceTest subclass: #'Kernel.Tests.FullBindingReferenceTest'
+Kernel.Tests.ScopedBindingReferenceTest subclass: #'Kernel.Tests.FullBindingReferenceTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -8,7 +8,6 @@ Kernel.Tests.BindingReferenceTest subclass: #'Kernel.Tests.FullBindingReferenceT
 	classConstants: {}!
 Kernel.Tests.FullBindingReferenceTest guid: (Core.GUID fromString: '{bc0780da-05e7-464d-af4f-48755f8f8d52}')!
 Kernel.Tests.FullBindingReferenceTest comment: ''!
-!Kernel.Tests.FullBindingReferenceTest categoriesForClass!Unclassified! !
 !Kernel.Tests.FullBindingReferenceTest methodsFor!
 
 subjectClass
@@ -37,18 +36,6 @@ testEnvironment
 	"A namespace that does not exist, well doesn't exist"
 	subject := self newSubjectWithPathString: 'NothingToSeeHere.Really'.
 	self assertIsNil: subject environment!
-
-testEnvironmentName
-	| subject |
-	#('Core.Object' 'Core' 'Smalltalk' nil 'Root' nil 'Root.Smalltalk' 'Root' 'Smalltalk.Animal' 'Smalltalk' 'Animal' nil 'XProgramming.SUnit' 'XProgramming' 'XProgramming.SUnit.TestRunConsoleLogger' 'XProgramming.SUnit')
-		pairsDo: 
-			[:each :expected |
-			subject := self newSubjectWithPathString: each.
-			self assert: subject environmentName equals: expected].
-	subject := (self newSubjectWithPathString: 'Root' scope: Root) instance.
-	self assert: subject environmentName equals: 'Root'.
-	subject := (self newSubjectWithPathString: 'TestCase' scope: XProgramming.SUnit) instance.
-	self assert: subject environmentName equals: 'XProgramming.SUnit'!
 
 testEnvironmentNameRelative
 	#(#{Object} #{_.Object}) do: [:each | self assert: each environmentName equals: self class fullName].
@@ -184,22 +171,12 @@ testLiteralImplicitExplicitEnvironmentRelative
 	self assert: method customEnvironment identicalTo: env.
 	self assert: (method value: Object new withArguments: #()) identicalTo: self class!
 
-testScope
-	| subject coreRelative |
-	subject := 'Object' asQualifiedReference.
-	self deny: subject isRelative.
-	self assert: (subject scope: nil) equals: subject.
-	coreRelative := subject scope: Core.
-	self deny: coreRelative equals: subject.
-	self assert: coreRelative isRelative.
-	self assert: coreRelative scope identicalTo: Core!
-
 testStbConvertFromVersion0
 	| subject |
 	subject := Compiler
 				evaluate: 'Object
 				fromLiteralStoreArray: #(#''!!STL'' 4 1508870 ##(Kernel.BindingReference) nil 34 2 8 ''Core'' 8 ''Object'' nil 5 1442886 2 ##(Kernel.VariableBinding) #Object ##(Core.Object) ##(Core) 1 1)'.
-	self assert: subject class identicalTo: FullBindingReference.
+	self assert: subject class identicalTo: self subjectClass.
 	self assert: subject isPrivate.
 	self assert: subject value identicalTo: Object!
 
@@ -207,7 +184,7 @@ testStbConvertFromVersion1
 	| subject |
 	subject := Object
 				fromBinaryStoreBytes: #[33 83 84 66 32 52 32 70 5 23 0 1 0 0 0 75 101 114 110 101 108 46 66 105 110 100 105 110 103 82 101 102 101 114 101 110 99 101 18 1 0 0 11 0 0 0 67 111 114 101 46 79 98 106 101 99 116 0 0 0 0 16 0 0 0 0 0 0 0 0 0 0 0].
-	self assert: subject class identicalTo: FullBindingReference.
+	self assert: subject class identicalTo: self subjectClass.
 	self assert: subject isPrivate.
 	self assert: subject value identicalTo: Object!
 
@@ -233,7 +210,7 @@ testStlConvertFromVersion1
 	| subject |
 	subject := Compiler
 				evaluate: '(Object fromLiteralStoreArray: #(#''!!STL'' 4 1508678 1 ##(Kernel.BindingReference) 8 ''Core.Object'' nil true nil nil))'.
-	self assert: subject class identicalTo: FullBindingReference.
+	self assert: subject class identicalTo: self subjectClass.
 	self assert: subject isPrivate.
 	self assert: subject value identicalTo: Object!
 
@@ -249,7 +226,6 @@ testStlConvertRelativeFromVersion1
 subjectClass!constants!private! !
 testAsQualifiedReference!public!unit tests! !
 testEnvironment!public!unit tests! !
-testEnvironmentName!public!unit tests! !
 testEnvironmentNameRelative!public!unit tests! !
 testEqualityOfRelativeAndAbsolute!public!unit tests! !
 testEqualsLiteral!public!unit tests! !
@@ -260,7 +236,6 @@ testLiteralExplicitEnvironmentRelative!public!unit tests! !
 testLiteralExplicitEnvironmentRelative2!public!unit tests! !
 testLiteralImplicitEnvironmentRelative!public!unit tests! !
 testLiteralImplicitExplicitEnvironmentRelative!public!unit tests! !
-testScope!public!unit tests! !
 testStbConvertFromVersion0!public!unit tests! !
 testStbConvertFromVersion1!public!unit tests! !
 testStbConvertRelativeFromVersion0!public!unit tests! !

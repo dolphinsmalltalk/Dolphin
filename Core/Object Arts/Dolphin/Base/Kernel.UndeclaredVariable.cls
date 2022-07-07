@@ -17,7 +17,7 @@ isPrivate
 targetVariable
 	^nil! !
 !Kernel.UndeclaredVariable categoriesForMethods!
-isPrivate!public! !
-targetVariable!public! !
+isPrivate!public!testing! !
+targetVariable!accessing!public! !
 !
 

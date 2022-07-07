@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.Tests.BindingReferenceTest subclass: #'Kernel.Tests.MetaBindingReferenceTest'
+Kernel.Tests.ScopedBindingReferenceTest subclass: #'Kernel.Tests.MetaBindingReferenceTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -8,7 +8,6 @@ Kernel.Tests.BindingReferenceTest subclass: #'Kernel.Tests.MetaBindingReferenceT
 	classConstants: {}!
 Kernel.Tests.MetaBindingReferenceTest guid: (Core.GUID fromString: '{fd978d4f-c029-4293-a636-297a14b7fa15}')!
 Kernel.Tests.MetaBindingReferenceTest comment: ''!
-!Kernel.Tests.MetaBindingReferenceTest categoriesForClass!Unclassified! !
 !Kernel.Tests.MetaBindingReferenceTest methodsFor!
 
 nameSuffix

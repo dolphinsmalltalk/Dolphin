@@ -118,7 +118,7 @@ shortNameFor: aString in: aNamespace
 	^(aNamespace isNil or: 
 			[aNamespace == self or: 
 					[(self fullBindingFor: aString)
-						ifNil: [self imports anySatisfy: [:each | each value == aNamespace]]
+						ifNil: [self imports anySatisfy: [:each | each valueOrNil == aNamespace]]
 						ifNotNil: [:binding | binding environment == aNamespace or: [binding environment == self]]]])
 		ifTrue: [aString]
 		ifFalse: [aNamespace fullNameFor: aString]!

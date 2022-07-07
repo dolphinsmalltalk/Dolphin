@@ -261,7 +261,7 @@ testBindingReferenceRelative
 	self deny: rehydrated isPrivate!
 
 testBindingReferences
-	| objects rehydrated bindingIndex |
+	| objects rehydrated |
 	objects := {self class fullyQualifiedReference.
 				#{Object}.
 				#{Core.Object}.
@@ -269,8 +269,7 @@ testBindingReferences
 					binding;
 					yourself}.
 	rehydrated := self serializeAndMaterialize: objects.
-	bindingIndex := FullBindingReference indexOfInstVar: 'binding'.
-	self assert: (rehydrated allSatisfy: [:each | (each instVarAt: bindingIndex) isNil])!
+	self assert: (rehydrated allSatisfy: [:each | each getBinding isNil])!
 
 testColorReferences
 	| light lighter |

@@ -59,13 +59,6 @@ species!accessing!public! !
 
 !Core.WeakIdentityDictionary class methodsFor!
 
-initialize
-	"Initialize the receiver.
-	Class initialize methods are ignored by the SourceManager unless directly implemented
-	so we must implement to get the bereavement notifications."
-
-	super initialize!
-
 new: anInteger
 	"Answer a new instance of the receiver sufficient capacity for anInteger elements. Both keys and values
 	are weakly referenced. By default WeakIdentityDictionaries have both weak key and weak value references."
@@ -74,7 +67,6 @@ new: anInteger
 		haveWeakKeys;
 		yourself! !
 !Core.WeakIdentityDictionary class categoriesForMethods!
-initialize!development!initializing!public! !
 new:!instance creation!public! !
 !
 

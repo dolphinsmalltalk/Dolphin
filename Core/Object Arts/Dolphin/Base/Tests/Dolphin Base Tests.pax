@@ -80,6 +80,7 @@ package setClassNames: #(
 	#{Core.Tests.Utf16StringTest}
 	#{Core.Tests.Utf8StringTest}
 	#{Core.Tests.UtfEncodedStringTest}
+	#{Core.Tests.WeakIdentityDictionaryTest}
 	#{Core.Tests.WriteStreamTest}
 	#{External.Tests}
 	#{External.Tests.AddressTest}
@@ -133,6 +134,7 @@ package setClassNames: #(
 	#{Kernel.Tests.MetaBindingReferenceTest}
 	#{Kernel.Tests.MethodAnnotationsTest}
 	#{Kernel.Tests.MethodDictionaryTest}
+	#{Kernel.Tests.NamespaceImportTest}
 	#{Kernel.Tests.NamespaceTest}
 	#{Kernel.Tests.NeverSearchPolicyTest}
 	#{Kernel.Tests.PackageManagerTest}
@@ -141,6 +143,7 @@ package setClassNames: #(
 	#{Kernel.Tests.PropertyManagerTest}
 	#{Kernel.Tests.QuicksortAlgorithmTest}
 	#{Kernel.Tests.RootNamespaceTest}
+	#{Kernel.Tests.ScopedBindingReferenceTest}
 	#{Kernel.Tests.SessionManagerTest}
 	#{Kernel.Tests.ShellsortAlgorithmTest}
 	#{Kernel.Tests.SmalltalkLocaleTest}
@@ -686,13 +689,25 @@ Core.Tests.AssociationTest subclass: #'Kernel.Tests.VariableBindingTest'
 	classConstants: {
 		'TestClassConst' -> 16r1
 	}!
-Kernel.Tests.BindingReferenceTest subclass: #'Kernel.Tests.FullBindingReferenceTest'
+Kernel.Tests.BindingReferenceTest subclass: #'Kernel.Tests.NamespaceImportTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.Tests.BindingReferenceTest subclass: #'Kernel.Tests.MetaBindingReferenceTest'
+Kernel.Tests.BindingReferenceTest subclass: #'Kernel.Tests.ScopedBindingReferenceTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.Tests.ScopedBindingReferenceTest subclass: #'Kernel.Tests.FullBindingReferenceTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.Tests.ScopedBindingReferenceTest subclass: #'Kernel.Tests.MetaBindingReferenceTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -771,6 +786,12 @@ Core.Tests.LookupTableTest subclass: #'Core.Tests.DeferredValueTableTest'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Tests.LookupTableTest subclass: #'Core.Tests.IdentityDictionaryTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.LookupTableTest subclass: #'Core.Tests.WeakIdentityDictionaryTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

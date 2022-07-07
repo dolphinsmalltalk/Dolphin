@@ -1,2 +1,1 @@
-﻿Process setInstanceVariables: #('suspendedFrame' 'priority' 'myList' 'callbackDepth' 'tls' '_unused7' 'fpControl' 'threadSync' 'thread' 'exceptionEnvironment' '_unused12' 'newWindow' 'debugger' 'name' 'debugStream')!
-VMLibrary default registryAtIndex: 54 put: #windowCreated:param:!
+﻿

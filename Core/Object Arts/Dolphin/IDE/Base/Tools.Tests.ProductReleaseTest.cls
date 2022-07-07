@@ -22,6 +22,14 @@ specialAssert: aBoolean
 
 	self assert: (self isReleased ifTrue: [aBoolean] ifFalse: [aBoolean not])!
 
+testClassState
+	Smalltalk allClasses do: 
+			[:each |
+			| builder |
+			builder := ClassBuilder forModifying: each.
+			[builder validateForModify] on: Warning do: [:warning | warning resume].
+			each imports do: [:import | self assert: import isKindOf: NamespaceImport]]!
+
 testCompilationFailures
 	| failed |
 	failed := '*-compilation failures' asMethodCategory methods.
@@ -55,6 +63,7 @@ testUnpackagedVariables
 checkNoClass:!public!unit tests! !
 isReleased!private!unit tests! !
 specialAssert:!private!unit tests! !
+testClassState!public!unit tests! !
 testCompilationFailures!public!unit tests! !
 testSubclassResponsibilityNotDefined!public!unit tests! !
 testUnpackagedVariables!public!unit tests! !

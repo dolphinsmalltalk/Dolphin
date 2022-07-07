@@ -65,6 +65,11 @@ asFullyQualifiedReference
 
 	^self!
 
+asNamespaceImport
+	"Answer a<NamespaceImport> that references the same binding as the receiver, the value of which is assumed to be an <importableNamespace>."
+
+	^self subclassResponsibility!
+
 asQualifiedReference
 	"Answer the <BindingReference> equivalent of the receiver."
 
@@ -345,6 +350,7 @@ valueOrNil
 =!comparing!public! !
 append:!copying!public! !
 asFullyQualifiedReference!converting!public! !
+asNamespaceImport!converting!public! !
 asQualifiedReference!converting!public! !
 asString!converting!public! !
 asSymbol!converting!public! !
@@ -409,6 +415,11 @@ flushBindings
 	1 to: instances size do: [:i | (instances at: i) setBinding: nil].
 	Generation := 0!
 
+fullPathString: aString
+	"Answer a new instance of the receiver representing the qualified name identified by the <readableString> argument, which is expected to be a fully qualified name."
+
+	^self newFull: aString private: false!
+
 initialize
 	Undeclared := UndeclaredVariable new.
 	VM
@@ -446,39 +457,65 @@ isValidUnqualifiedName: aString
 new
 	^self shouldNotImplement!
 
-newPath: anArray private: aBoolean scope: aBindingScope
-	anArray size <= 1
-		ifTrue: 
-			[aBindingScope
-				ifNotNil: 
-					[^RelativeBindingReference
-						pathString: nil
-						path: anArray
-						private: aBoolean
-						scope: aBindingScope]]
-		ifFalse: 
-			[(anArray at: 1) = RelativePathPrefix
-				ifTrue: 
-					[^RelativeBindingReference
-						pathString: nil
-						path: (anArray copyFrom: 2 to: anArray size)
-						private: aBoolean
-						scope: aBindingScope]].
+newFull: aString private: aBoolean
+	^FullBindingReference
+		pathString: aString
+		path: nil
+		private: aBoolean!
+
+newFullPath: anArray private: aBoolean
 	^FullBindingReference
 		pathString: nil
 		path: anArray
 		private: aBoolean!
 
+newPath: anArray private: aBoolean scope: aBindingScope
+	anArray size <= 1
+		ifTrue: 
+			[aBindingScope
+				ifNotNil: 
+					[^self
+						newRelativePath: anArray
+						private: aBoolean
+						scope: aBindingScope]]
+		ifFalse: 
+			[(anArray at: 1) = RelativePathPrefix
+				ifTrue: 
+					[^self
+						newRelativePath: (anArray copyFrom: 2 to: anArray size)
+						private: aBoolean
+						scope: aBindingScope]].
+	^self newFullPath: anArray private: aBoolean!
+
+newRelative: aString private: aBoolean scope: aBindingScope
+	^RelativeBindingReference
+		pathString: aString
+		path: nil
+		private: aBoolean
+		scope: aBindingScope!
+
+newRelativePath: anArray private: aBoolean scope: aBindingScope
+	^RelativeBindingReference
+		pathString: nil
+		path: anArray
+		private: aBoolean
+		scope: aBindingScope!
+
 path: aSequencedReadableCollection
 	"Answer a new instance of the receiver representing the qualified name composed of the <readableString> elements of the argument."
 
-	^self path: aSequencedReadableCollection scope: nil!
+	^self path: aSequencedReadableCollection private: false!
 
 path: aSequencedReadableCollection home: aNamespaceOrNil
 	"Answer a new instance of the receiver representing the qualified name composed of the <readableString> elements of the argument."
 
 	^self path: aSequencedReadableCollection
 		scope: (aNamespaceOrNil == Smalltalk ifFalse: [aNamespaceOrNil])!
+
+path: aSequencedReadableCollection private: aBoolean
+	"Answer a new instance of the receiver representing the qualified name composed of the <readableString> elements of the argument."
+
+	^self path: aSequencedReadableCollection private: aBoolean scope: nil!
 
 path: aSequencedReadableCollection private: aBoolean scope: aBindingScope
 	"Answer a new instance of the receiver representing the qualified name composed of the <readableString> elements of the argument."
@@ -515,15 +552,10 @@ pathString: aString private: aBoolean
 
 pathString: aString private: aBoolean scope: aBindingScope
 	^aBindingScope
-		ifNil: 
-			[FullBindingReference
-				pathString: aString
-				path: nil
-				private: aBoolean]
+		ifNil: [self newFull: aString private: aBoolean]
 		ifNotNil: 
-			[RelativeBindingReference
-				pathString: aString
-				path: nil
+			[self
+				newRelative: aString
 				private: aBoolean
 				scope: aBindingScope]!
 
@@ -567,16 +599,11 @@ pathString: aString scope: aBindingScope flags: anInteger
 	| ref |
 	ref := (anInteger allMask: RelativeMask)
 				ifTrue: 
-					[RelativeBindingReference
-						pathString: aString
-						path: nil
+					[self
+						newRelative: aString
 						private: (anInteger allMask: PrivateMask)
 						scope: aBindingScope]
-				ifFalse: 
-					[FullBindingReference
-						pathString: aString
-						path: nil
-						private: (anInteger allMask: PrivateMask)].
+				ifFalse: [self newFull: aString private: (anInteger allMask: PrivateMask)].
 	^(anInteger allMask: MetaMask) ifTrue: [ref meta] ifFalse: [ref]!
 
 simpleName: aString
@@ -633,14 +660,20 @@ stbVersion
 !Kernel.BindingReference class categoriesForMethods!
 clearCachedBindings!operations!private! !
 flushBindings!operations!private! !
+fullPathString:!instance creation!public! !
 initialize!class initialization!public! !
 isQualifiedName:!enquiries!public! !
 isValidQualifiedName:!enquiries!public! !
 isValidUnqualifiedName:!enquiries!public! !
 new!instance creation!public! !
+newFull:private:!instance creation!private! !
+newFullPath:private:!instance creation!private! !
 newPath:private:scope:!instance creation!private! !
+newRelative:private:scope:!instance creation!private! !
+newRelativePath:private:scope:!instance creation!private! !
 path:!instance creation!public! !
 path:home:!compatibility!instance creation!public! !
+path:private:!instance creation!public! !
 path:private:scope:!instance creation!public! !
 path:scope:!instance creation!public! !
 pathString:!instance creation!public! !

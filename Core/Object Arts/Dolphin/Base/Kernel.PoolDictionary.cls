@@ -15,7 +15,7 @@ anonymousName
 	^'Anon'!
 
 asQualifiedReference
-	^self name asQualifiedReference!
+	^self fullName asQualifiedReference!
 
 associationClass
 	"Private - Answer the class of association to be used for holding
@@ -51,8 +51,23 @@ environment
 
 	^Smalltalk!
 
-fullNameFor: aString 
-	^aString!
+fullName
+	"Answer the <String> fully qualified name of the receiver, which is a dot-separated path that binds to the receiver from the global namespace, Root."
+
+	^self environment fullNameFor: self unqualifiedName!
+
+fullNameFor: aString
+	"Private - Answer the full name  of a variable with the specified local identifier, assumed to be in this namespace. This will be a (potentially) dot-separated path string that is bindable from any top-level namespace, including Smalltalk."
+
+	| stream |
+	stream := String writeStream: 32.
+	self environment printFullNameOn: stream.
+	stream
+		nextPut: $.;
+		nextPutAll: self unqualifiedName;
+		nextPut: $.;
+		nextPutAll: aString.
+	^stream contents!
 
 includesEnvironment: anImportableNamespace
 	^self == anImportableNamespace!
@@ -70,6 +85,12 @@ newAssociation: keyObject value: valueObject
 		environment: self;
 		yourself!
 
+resolveLocalBindingPath: anArray
+	"Private - Attempt to resolve a <VariableBinding> by walking the names in the argument through nested namespaces, but considering only the directly defined variables.
+	This is used for deterministic resolution of namespace imports."
+
+	^self bindingFor: anArray single!
+
 resolvePublicBinding: aBindingContext
 	"Private - Resolve a binding with public visibility in the receiver's hierarchy, or among its local imports.
 	This is used to find bindings for second and subsequent components of qualified names."
@@ -85,16 +106,18 @@ associationClass!constants!private! !
 convertToSharedPool!development!private! !
 displayOn:!public! !
 environment!accessing!public! !
+fullName!accessing!public! !
 fullNameFor:!helpers!private! !
 includesEnvironment:!public!testing! !
 name!accessing!public! !
 name:!accessing!private! !
 newAssociation:value:!helpers!private! !
+resolveLocalBindingPath:!bindings!private! !
 resolvePublicBinding:!private! !
 unqualifiedName!accessing!private! !
 !
 
-Kernel.PoolDictionary methodProtocol: #importableNamespace attributes: #(#readOnly) selectors: #(#asQualifiedReference #includesEnvironment: #resolvePublicBinding:)!
+Kernel.PoolDictionary methodProtocol: #importableNamespace attributes: #(#readOnly) selectors: #(#asQualifiedReference #fullName #includesEnvironment: #resolveLocalBindingPath: #resolvePublicBinding:)!
 
 !Kernel.PoolDictionary class methodsFor!
 

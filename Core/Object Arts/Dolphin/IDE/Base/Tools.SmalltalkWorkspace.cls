@@ -1649,14 +1649,14 @@ variableMetadataProvider: aVariableResolver
 	variableMetadataProvider := aVariableResolver!
 
 workspacePool
-	"Answer the PoolDictionary for locals used in evaluations within the receiver"
+	"Answer the <Dictionary> for locals used in evaluations within the receiver"
 
 	^workspacePool!
 
-workspacePool: aPoolDictionaryOrNil
-	"Set the PoolDictionary for locals used in evaluations within the receiver"
+workspacePool: aDictionaryOrNil
+	"Set the Dictionary for locals used in evaluations within the receiver"
 	
-	workspacePool := aPoolDictionaryOrNil!
+	workspacePool := aDictionaryOrNil!
 
 wrapLinesInRange: anInterval indent: anInteger 
 	| scintilla justified |

@@ -24,7 +24,7 @@ package setMethodNames: #(
 	#(#{Kernel.STLInFiler class} #correspondingTestCase)
 	#(#{Kernel.STLOutFiler class} #correspondingTestCase)
 	#(#{Kernel.Tests.BindingReferenceTest} #testLiteralStoreFull)
-	#(#{Kernel.Tests.BindingReferenceTest} #testLiteralStoreRelative)
+	#(#{Kernel.Tests.ScopedBindingReferenceTest} #testLiteralStoreRelative)
 ).
 
 package setPrerequisites: #(
@@ -240,7 +240,12 @@ testLiteralStoreFull
 			self assert: actual equals: expected.
 			array := {each. each value}.
 			rehydrated := Compiler evaluate: array literalStoreEvaluationString.
-			self assert: rehydrated equals: array]!
+			self assert: rehydrated equals: array]! !
+!Kernel.Tests.BindingReferenceTest categoriesForMethods!
+testLiteralStoreFull!public!unit tests! !
+!
+
+!Kernel.Tests.ScopedBindingReferenceTest methodsFor!
 
 testLiteralStoreRelative
 	"The literal form cannot be used for unqualified or partially qualified (i.e. relative) references."
@@ -261,8 +266,7 @@ testLiteralStoreRelative
 			self assertIsNil: (rehydrated instance instVarAt: 4).
 			self assertIsNil: (rehydrated instance instVarAt: 5).
 			self assert: rehydrated binding identicalTo: binding]! !
-!Kernel.Tests.BindingReferenceTest categoriesForMethods!
-testLiteralStoreFull!public!unit tests! !
+!Kernel.Tests.ScopedBindingReferenceTest categoriesForMethods!
 testLiteralStoreRelative!public!unit tests! !
 !
 

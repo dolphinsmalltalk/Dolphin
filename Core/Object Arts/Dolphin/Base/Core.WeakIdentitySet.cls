@@ -45,15 +45,3 @@ hash:max:!private!searching! !
 species!accessing!public! !
 !
 
-!Core.WeakIdentitySet class methodsFor!
-
-initialize
-	"Initialize the receiver.
-	Class initialize methods are ignored by the SourceManager unless directly implemented
-	so we must implement to get the bereavement notifications."
-
-	super initialize! !
-!Core.WeakIdentitySet class categoriesForMethods!
-initialize!development!initializing!public! !
-!
-

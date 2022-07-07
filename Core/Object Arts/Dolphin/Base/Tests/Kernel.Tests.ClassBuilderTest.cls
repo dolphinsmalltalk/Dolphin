@@ -81,8 +81,10 @@ testAddInstVarName
 	!
 
 testAddRemoveImports
-	| subclassName |
-	self assert: self classBuilderTestSubclass1 allImports
+	| subclassName imports |
+	imports := self classBuilderTestSubclass1 allImports.
+	self assert: (imports allSatisfy: [:each | each isKindOf: NamespaceImport]).
+	self assert: imports
 		equals: #(#{Smalltalk.ClassBuilderTestPool2} #{Smalltalk.ClassBuilderTestPool1}) , Object imports.
 	self assert: (self classBuilderTestSubclass1 fullBindingFor: 'PoolVar1') value
 		equals: 'ClassBuilderTestPool2.PoolVar1'.
@@ -106,7 +108,9 @@ testAddRemoveImports
 		classConstants: {}.
 	dirtiedClasses := true.
 	"Names remain the same, but in reverse order because we added previously inherited pool first"
-	self assert: self classBuilderTestSubclass1 allImports
+	imports := self classBuilderTestSubclass1 allImports.
+	self assert: (imports allSatisfy: [:each | each isKindOf: NamespaceImport]).
+	self assert: imports
 		equals: #(#{Smalltalk.ClassBuilderTestPool1} #{Smalltalk.ClassBuilderTestPool2}) , Object imports.
 	self assert: (self classBuilderTestSubclass1 fullBindingFor: 'PoolVar1') value
 		equals: 'ClassBuilderTestPool1.PoolVar1'.
@@ -124,8 +128,11 @@ testAddRemoveImports
 		imports: #(#{ClassBuilderTestPool2} #{ClassBuilderTestPool3})
 		classInstanceVariableNames: ''
 		classConstants: {}.
-	self assert: self classBuilderTestSubclass1 allImports
-		equals: #(#{Smalltalk.ClassBuilderTestPool2} #{Smalltalk.ClassBuilderTestPool3} #{Smalltalk.ClassBuilderTestPool1}), Object imports.
+	imports := self classBuilderTestSubclass1 allImports.
+	self assert: (imports allSatisfy: [:each | each isKindOf: NamespaceImport]).
+	self assert: imports
+		equals: #(#{Smalltalk.ClassBuilderTestPool2} #{Smalltalk.ClassBuilderTestPool3} #{Smalltalk.ClassBuilderTestPool1})
+				, Object imports.
 	self assert: (self classBuilderTestSubclass1 fullBindingFor: 'PoolVar1') value
 		equals: 'ClassBuilderTestPool2.PoolVar1'.
 	self assert: (self classBuilderTestSubclass1 fullBindingFor: 'PoolVar2') value
@@ -142,8 +149,10 @@ testAddRemoveImports
 		imports: #()
 		classInstanceVariableNames: ''
 		classConstants: {}.
-	self assert: self classBuilderTestSubclass1 allImports
-		equals: #(#{Smalltalk.ClassBuilderTestPool1}), Object imports.
+	imports := self classBuilderTestSubclass1 allImports.
+	self assert: (imports allSatisfy: [:each | each isKindOf: NamespaceImport]).
+	self assert: imports
+		equals: #(#{Smalltalk.ClassBuilderTestPool1}) , Object imports.
 	self assert: (self classBuilderTestSubclass1 fullBindingFor: 'PoolVar1') value
 		equals: 'ClassBuilderTestPool1.PoolVar1'.
 	self assert: (self classBuilderTestSubclass1 fullBindingFor: 'PoolVar2') value
@@ -223,6 +232,11 @@ testFullName
 	self assert: self classBuilderTestClass fullName equals: 'Smalltalk.ClassBuilderTestClass'.
 	self assert: self classBuilderTestSubclass1 fullName equals: 'Kernel.Tests.ClassBuilderTestSubClass'.
 	self assert: self classBuilderTestSubclass2 fullName equals: 'ClassBuilderTestSubClass2'!
+
+testIsValidIdentifier
+	#('' ' ' '9' '9a' '?' 'a?' '_' 'a ' ' a')
+		do: [:each | self deny: (ClassBuilder isValidIdentifier: each)].
+	#('_a' 'a' 'aAZz' 'a9_') do: [:each | self assert: (ClassBuilder isValidIdentifier: each)]!
 
 testMoveClassToSuperclassWithInstVars
 	| newClass oldClass namespace |
@@ -459,6 +473,7 @@ testBuildAnonymousRootClass!public!unit tests! !
 testClassVars!public!unit tests! !
 testCreateSubclassWithSameUnqualifiedName!public!unit tests! !
 testFullName!public!unit tests! !
+testIsValidIdentifier!public!unit tests! !
 testMoveClassToSuperclassWithInstVars!public!unit tests! !
 testMoveClassToSuperclassWithNoInstVars!public!unit tests! !
 testMoveVariable!public!unit tests! !
