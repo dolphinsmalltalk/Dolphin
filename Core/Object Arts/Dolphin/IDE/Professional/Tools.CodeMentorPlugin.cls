@@ -447,7 +447,7 @@ printClassFailuresHtmlFor: aLintRule on: aStream
 							space;
 							display: #browseFailedClass:;
 							space;
-							print: each;
+							nextPutAll: each fullName;
 							contents) urlEncoded;
 				nextPutAll: '">';
 				print: each;
@@ -474,7 +474,9 @@ printMethodFailuresHtmlFor: aLintRule on: aStream
 							nextPutAll: 'self ';
 							display: #browseFailedMethod:;
 							space;
-							print: each;
+							nextPutAll: each methodClass fullName;
+							nextPutAll: #>>;
+							print: each selector;
 							contents) urlEncoded;
 				nextPutAll: '">';
 				display: each;
