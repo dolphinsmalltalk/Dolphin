@@ -19,6 +19,9 @@ PresenterTest comment: ''!
 classToTest
 	^self subclassResponsibility!
 
+d3ResourceStream: aString
+	^self resourceStream: 'D3ViewResources/' , aString text: false!
+
 destroyPresenter
 	| shell |
 	presenter ifNil: [^self].
@@ -80,6 +83,7 @@ waitForInputIdle
 
 !PresenterTest categoriesForMethods!
 classToTest!helpers!private! !
+d3ResourceStream:!helpers!private! !
 destroyPresenter!public!Running! !
 initializePresenter!public!Running! !
 leftClickAt:!private!unit tests! !

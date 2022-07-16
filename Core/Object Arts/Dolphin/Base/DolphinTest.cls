@@ -43,9 +43,9 @@ compare: x to: y epsilon: epsilon
 	| max |
 	^(max := x abs max: y abs) <= epsilon or: [(x - y) abs < (epsilon * max)]!
 
-createPackage: name
+createPackage: aString
 	| package |
-	package := Package name: name.
+	package := Package name: aString.
 	Package manager addPackage: package.
 	^package!
 
@@ -73,10 +73,15 @@ isOnline
 methodContextClass
 	^Context!
 
-runKnownBug: aString test: aSymbol 
-	Notification 
-		signal: ('Warning: Known bug <1s> tested by <2p> not run' expandMacrosWith: aString
-				with: aSymbol).
+resourceFilename: aString
+	^FileLocator installRelative localFileSpecFor: 'Resources\Tests\' , aString!
+
+resourceStream: aString text: aBoolean
+	^FileStream read: (self resourceFilename: aString) text: aBoolean!
+
+runKnownBug: aString test: aSymbol
+	Notification
+		signal: ('Warning: Known bug <1s> tested by <2p> not run' expandMacrosWith: aString with: aSymbol).
 	#todo.	"Make this controllable by an option or class var"
 	^false!
 
@@ -103,6 +108,8 @@ isAtLeastVmVersion:!private!testing! !
 isLogging!Accessing!public! !
 isOnline!public!unit tests! !
 methodContextClass!constants!private! !
+resourceFilename:!helpers!public! !
+resourceStream:text:!helpers!public! !
 runKnownBug:test:!public!unit tests! !
 shouldRaiseZeroDivide:!Accessing!public! !
 versionFromParts:!public!unit tests! !

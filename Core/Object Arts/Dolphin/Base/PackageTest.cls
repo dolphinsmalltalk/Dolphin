@@ -206,12 +206,9 @@ b2xwaGluZHIwMDUuZGxsAAAAAA==''))!!
 
 '!
 
-filenameFor: aString 
-	^FileLocator installRelative localFileSpecFor: 'Resources\Tests\' , aString!
-
-loadAndTestPackage: filename 
+loadAndTestPackage: filename
 	self checkNoTestPackageContents.
-	loadedPackages := Package manager install: (self filenameFor: filename).
+	loadedPackages := Package manager install: (self resourceFilename: filename).
 	self checkTestPackageContents!
 
 setUp
@@ -239,7 +236,7 @@ testForwardRefLoadPac
 	"#1720: Test loading and converting of old packages with forward reference view referereces"
 
 	| pacName |
-	pacName := self filenameFor: 'D5LoadTest.pac'.
+	pacName := self resourceFilename: 'D5LoadTest.pac'.
 	(FileStream write: pacName)
 		nextPutAll: self d5ForwardRefTestPacContents;
 		close.
@@ -285,7 +282,6 @@ testTimestampInitialized
 checkNoTestPackageContents!private!unit tests! !
 checkTestPackageContents!private!unit tests! !
 d5ForwardRefTestPacContents!private!unit tests! !
-filenameFor:!helpers!private! !
 loadAndTestPackage:!helpers!private! !
 setUp!initializing!private!unit tests! !
 tearDown!private!unit tests! !

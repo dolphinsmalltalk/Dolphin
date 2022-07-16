@@ -45,13 +45,37 @@ testCalculateExtent
 	"The width calculated by the GDI GetTextExtentPoint32 function is slightly different than the DrawTextEx calculation used by the control (and now#calculateExtent:) so we don't expect a precise result"
 	self assert: (actual x - expected x) abs < 3!
 
+testStbUpgradeFromD3
+	"Test upgrade of 20+ year old Dolphin 3.0 (1999), STB version 8 binary resource"
+
+	| stream |
+	stream := self d3ResourceStream: 'TextPresenter.Default view.vu'.
+	presenter := Object binaryReadFrom: stream context: View desktop.
+	stream close.
+	self assert: presenter isOpen.
+	self assert: presenter backcolor identicalTo: Color default.
+	self assert: presenter styles equals: #(1140916352 512).
+	self assert: presenter presenter identicalTo: presenter.
+	self assertIsNil: presenter model.
+	self assertIsNil: presenter preferredExtent.
+	self deny: presenter usePreferredExtent.
+	self assert: presenter isManaged.
+	self assertIsNil: presenter contextMenu.
+	self assertIsNil: presenter font.
+	self assertIsNil: presenter getEvents.
+	self assert: presenter interactor identicalTo: presenter.
+	self assertIsNil: presenter forecolor.
+	self assert: presenter typeconverter isNullConverter.
+	self assert: (presenter instVarNamed: 'teFlags') equals: 0!
+
 text
 	^'The quick brown fox jumped over the lazy dog'! !
 
 !TextEditTest categoriesForMethods!
 classToTest!helpers!private! !
 margins!private!unit tests! !
-testCalculateExtent!public! !
+testCalculateExtent!public!unit tests! !
+testStbUpgradeFromD3!public! !
 text!constants!private! !
 !
 
