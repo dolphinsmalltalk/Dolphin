@@ -2477,7 +2477,11 @@ formFeed
 
 getDirectPointer
 	library := ScintillaLibrary default.
-	this := super sendMessage: SCI_GETDIRECTPOINTER.
+	this := User32
+				sendMessage: handle
+				msg: SCI_GETDIRECTPOINTER
+				wParam: 0
+				lParam: 0.
 	^this!
 
 getElementColor: anInteger
@@ -4014,13 +4018,11 @@ modifyText: niladicBlock
 	must temporarily disable read-only mode when performing any operation which updates text in
 	the view."
 
-	| readOnly |
-	readOnly := self isReadOnly.
-	readOnly
+	self isReadOnly
 		ifFalse: [niladicBlock value]
 		ifTrue: 
 			[self isReadOnly: false.
-			niladicBlock ensure: [self isReadOnly: readOnly]]!
+			niladicBlock ensure: [self isReadOnly: true]]!
 
 mouseDwellTime
 	"Retrieve the <Duration> that the mouse must sit still to generate a mouse hovering event. Answer nil if this is effectively infinite to indicate that the dwell is not set and no hover events will be generated."
