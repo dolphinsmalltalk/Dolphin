@@ -96,9 +96,7 @@ addOrUpdate: aBoolean nonVirtualItems: aSequenceableCollection afterIndex: anInt
 					[colImageBlock := [:eachRow :eachCol | eachCol imageFromRow: eachRow].
 					primaryImageSupplier := primaryTextSupplier]].
 	lvItem := LVITEMW newBuffer.
-	msg := aBoolean
-				ifTrue: [ListViewConstants.LVM_SETITEMW]
-				ifFalse: [ListViewConstants.LVM_INSERTITEMW].
+	msg := aBoolean ifTrue: [LVM_SETITEMW] ifFalse: [LVM_INSERTITEMW].
 	aSequenceableCollection keysAndValuesDo: 
 			[:i :each |
 			lvItem
@@ -107,8 +105,9 @@ addOrUpdate: aBoolean nonVirtualItems: aSequenceableCollection afterIndex: anInt
 				imageIndex: (primaryImageSupplier imageFromRow: each)
 				indent: (self indentFromRow: each).
 			(self stateImageFromRow: each) ifNotNil: [:state | lvItem stateImageIndex: state].
-			self
-				sendMessage: msg
+			User32
+				sendMessage: handle
+				msg: msg
 				wParam: 0
 				lpParam: lvItem].
 	isMultiColumn ifFalse: [^self].
@@ -336,7 +335,11 @@ basicRemoveAtIndex: anInteger
 	"Private - Delete item at anInteger index in the list view.
 	Answer whether the request succeeded."
 
-	^self lvmDeleteItem: anInteger-1.!
+	^(User32
+		sendMessage: handle
+		msg: LVM_DELETEITEM
+		wParam: anInteger - 1
+		lParam: 0) ~~ 0!
 
 basicRemoveColumnAtIndex: anInteger
 	self lvmDeleteColumn: anInteger - 1!
@@ -1013,23 +1016,21 @@ isVirtual
 
 	^(self baseStyleAllMask: LVS_OWNERDATA)!
 
-isVirtual: aBoolean 
+isVirtual: aBoolean
 	"Sets the receiver to be virtual or not depending on the value of aBoolean (i.e. sets/clears
 	the LVS_OWNERDATA style)."
 
 	"Implementation Note: From MSDN: 'Dynamically switching to and from the LVS_OWNERDATA style
 	is not supported.' i.e. Cannot be changed on-the-fly without view recreation."
 
-	self 
+	self
 		baseStyleMask: LVS_OWNERDATA
 		set: aBoolean
 		recreateIfChanged: true.
-
-	self isOpen ifTrue: [
-		| mask |
-		mask := self lvmGetCallbackMask.
-		mask := mask mask: LVIS_STATEIMAGEMASK set: (aBoolean and: [self stateImageManager notNil]).
-		self lvmSetCallbackMask: mask]!
+	self isOpen
+		ifTrue: 
+			[self lvmSetCallbackMask: (self lvmGetCallbackMask mask: LVIS_STATEIMAGEMASK
+						set: (aBoolean and: [self stateImageManager notNil]))]!
 
 itemCount
 	"Answer the total number of items in the view."
@@ -1086,10 +1087,11 @@ listViewStyleMask: mask set: aBoolean
 lvFlags
 	^lvFlags ?? 0!
 
-lvmApproximateViewRect: countInteger cx: cxInteger cy: cyInteger 
+lvmApproximateViewRect: countInteger cx: cxInteger cy: cyInteger
 	| dword |
-	dword := self 
-				sendMessage: LVM_APPROXIMATEVIEWRECT
+	dword := User32
+				sendMessage: handle
+				msg: LVM_APPROXIMATEVIEWRECT
 				wParam: countInteger
 				lParam: ((cxInteger bitShift: 16) bitOr: (cyInteger bitAnd: 16rFFFF)).
 	^(dword bitAnd: 16rFFFF) @ (dword bitShift: -16)!
@@ -1097,7 +1099,11 @@ lvmApproximateViewRect: countInteger cx: cxInteger cy: cyInteger
 lvmArrange: arrangeStyle
 	"Private - Arrange items when in icon style."
 
-	(self sendMessage: LVM_ARRANGE wParam: arrangeStyle) == 0
+	(User32
+		sendMessage: handle
+		msg: LVM_ARRANGE
+		wParam: arrangeStyle
+		lParam: 0) == 0
 		ifTrue: [^self errorInCommonControlCall]!
 
 lvmCreateDragImage: index position: position
@@ -1105,52 +1111,70 @@ lvmCreateDragImage: index position: position
 	contains the upper-left position of the item (in view coordinates)."
 
 	| dragList |
-	^(dragList := self sendMessage: LVM_CREATEDRAGIMAGE wParam: index lpParam: position asParameter) == 0
+	^(dragList := User32
+				sendMessage: handle
+				msg: LVM_CREATEDRAGIMAGE
+				wParam: index
+				lpParam: position asParameter) == 0
 		ifTrue: [self errorInCommonControlCall: index]
-		ifFalse: [dragList asExternalHandle]
-	!
+		ifFalse: [dragList asExternalHandle]!
 
 lvmDeleteAllItems
 	"Private - Remove all items from the ListView control.
 	Answer whether the call succeeded."
 
-	^(self sendMessage: LVM_DELETEALLITEMS) ~= 0!
+	^(User32
+		sendMessage: handle
+		msg: LVM_DELETEALLITEMS
+		wParam: 0
+		lParam: 0) ~= 0!
 
 lvmDeleteColumn: index
 	"Private - Removes the column at index."
 
-	(self sendMessage: LVM_DELETECOLUMN wParam: index) == 0
+	(User32
+		sendMessage: handle
+		msg: LVM_DELETECOLUMN
+		wParam: index
+		lParam: 0) == 0
 		ifTrue: [^self errorInCommonControlCall: index]!
-
-lvmDeleteItem: index
-	"Private - Removes the item at index. Answer whether the request
-	succeeded."
-
-	^(self sendMessage: LVM_DELETEITEM wParam: index) ~~ 0!
 
 lvmEnsureVisible: index partial: partialBoolean
 	"Private - Ensure the item at index is visible."
 
-	self sendMessage: LVM_ENSUREVISIBLE wParam: index lParam: partialBoolean asParameter!
+	User32
+		sendMessage: handle
+		msg: LVM_ENSUREVISIBLE
+		wParam: index
+		lParam: partialBoolean asParameter!
 
 lvmFindItem: aLvFindInfo startingAt: start
 	"Private - Answer the index of the found item, or -1 there are none."
 
-	^self sendMessage: LVM_FINDITEM wParam: start lpParam: aLvFindInfo!
+	^User32
+		sendMessage: handle
+		msg: LVM_FINDITEM
+		wParam: start
+		lpParam: aLvFindInfo!
 
 lvmGetBkImage: aLVBKIMAGEW
 	"Private - Populate the <LVBIMAGEW> argument with details of the receiver's background
 	image. Answer whether the request succeeded."
 
-	^(self
-		sendMessage: LVM_GETBKIMAGEW
+	^(User32
+		sendMessage: handle
+		msg: LVM_GETBKIMAGEW
 		wParam: 0
 		lpParam: aLVBKIMAGEW) asBoolean!
 
 lvmGetCallbackMask
 	"Private - Answers the callback mask of the underlying control"
 
-	^self sendMessage: LVM_GETCALLBACKMASK!
+	^User32
+		sendMessage: handle
+		msg: LVM_GETCALLBACKMASK
+		wParam: 0
+		lParam: 0!
 
 lvmGetColumnOrderArray
 	"Private - Answer an <SDWORDArray> containing the current left-to-right order 
@@ -1159,8 +1183,9 @@ lvmGetColumnOrderArray
 	| iCount iArray |
 	iCount := self columnCount.
 	iArray := DWORDArray new: iCount.
-	(self
-		sendMessage: LVM_GETCOLUMNORDERARRAY
+	(User32
+		sendMessage: handle
+		msg: LVM_GETCOLUMNORDERARRAY
 		wParam: iCount
 		lpParam: iArray) == 0
 		ifTrue: [^self errorInCommonControlCall].
@@ -1169,27 +1194,43 @@ lvmGetColumnOrderArray
 lvmGetColumnWidth: columnIndex
 	"Private - Answers the width of the column at the zero based columnIndex"
 
-	^self sendMessage: LVM_GETCOLUMNWIDTH wParam: columnIndex.
-!
+	^User32
+		sendMessage: handle
+		msg: LVM_GETCOLUMNWIDTH
+		wParam: columnIndex
+		lParam: 0!
 
 lvmGetExtendedListViewStyle
 	"Private - Answer the views extended style flags."
 
-	^self sendMessage: LVM_GETEXTENDEDLISTVIEWSTYLE wParam: 0 lpParam: 0!
+	^User32
+		sendMessage: handle
+		msg: LVM_GETEXTENDEDLISTVIEWSTYLE
+		wParam: 0
+		lpParam: 0!
 
 lvmGetHeader
 	"Private - Answer the handle of the header control."
 
-	^self sendMessage: LVM_GETHEADER!
+	^User32
+		sendMessage: handle
+		msg: LVM_GETHEADER
+		wParam: 0
+		lParam: 0!
 
 lvmGetImageList: wParam
-	^self sendMessage: LVM_GETIMAGELIST wParam: wParam!
+	^User32
+		sendMessage: handle
+		msg: LVM_GETIMAGELIST
+		wParam: wParam
+		lParam: 0!
 
 lvmGetItem: aLvItem
 	"Private - Retrieve the requested items attributes into the argument, aLvItem."
 
-	(self
-		sendMessage: ListViewConstants.LVM_GETITEMW
+	(User32
+		sendMessage: handle
+		msg: LVM_GETITEMW
 		wParam: 0
 		lpParam: aLvItem) == 0
 		ifTrue: [^self errorInCommonControlCall]!
@@ -1197,18 +1238,23 @@ lvmGetItem: aLvItem
 lvmGetItemCount
 	"Private - Answers the number of items in the underlying list-view control."
 
-	^self sendMessage: LVM_GETITEMCOUNT!
+	^User32
+		sendMessage: handle
+		msg: LVM_GETITEMCOUNT
+		wParam: 0
+		lParam: 0!
 
-lvmGetItemPosition: index
+lvmGetItemPosition: anInteger
 	"Private - Answer the Point of the index item on the view."
 
 	| pt |
 	pt := POINTL newBuffer.
-	(self
-		sendMessage: LVM_GETITEMPOSITION
-		wParam: index
+	(User32
+		sendMessage: handle
+		msg: LVM_GETITEMPOSITION
+		wParam: anInteger
 		lpParam: pt) == 0
-		ifTrue: [^self errorInCommonControlCall: index].
+		ifTrue: [^self errorInCommonControlCall: anInteger].
 	^pt asPoint!
 
 lvmGetItemRect: index bounding: boundingValue
@@ -1217,8 +1263,9 @@ lvmGetItemRect: index bounding: boundingValue
 	| rect |
 	rect := RECTL newBuffer.
 	rect left: boundingValue.
-	(self
-		sendMessage: LVM_GETITEMRECT
+	(User32
+		sendMessage: handle
+		msg: LVM_GETITEMRECT
 		wParam: index
 		lpParam: rect) == 0
 		ifTrue: [^self errorInCommonControlCall: index].
@@ -1226,26 +1273,39 @@ lvmGetItemRect: index bounding: boundingValue
 
 lvmGetItemSpacing
 	| dword |
-	dword := self sendMessage: LVM_GETITEMSPACING.
+	dword := User32
+				sendMessage: handle
+				msg: LVM_GETITEMSPACING
+				wParam: 0
+				lParam: 0.
 	^dword lowWord @ dword highWord!
 
 lvmGetItemState: index mask: mask
 	"Private - Answer the item's state flags."
 
-	^self sendMessage: LVM_GETITEMSTATE wParam: index lParam: mask!
+	^User32
+		sendMessage: handle
+		msg: LVM_GETITEMSTATE
+		wParam: index
+		lParam: mask!
 
 lvmGetNextItem: startIndex flags: niFlags
 	"Private - Answer the next item found matching flags."
 
-	^self sendMessage: LVM_GETNEXTITEM wParam: startIndex lParam: niFlags!
+	^User32
+		sendMessage: handle
+		msg: LVM_GETNEXTITEM
+		wParam: startIndex
+		lParam: niFlags!
 
 lvmGetOrigin
 	"Private - Answer the current view origin. This will fail if the receiver is in list or report mode."
 
 	| pt |
 	pt := POINTL newBuffer.
-	(self
-		sendMessage: LVM_GETORIGIN
+	(User32
+		sendMessage: handle
+		msg: LVM_GETORIGIN
 		wParam: 0
 		lpParam: pt) == 0
 		ifTrue: [^self errorInCommonControlCall].
@@ -1255,10 +1315,12 @@ lvmGetStringWidth: aString
 	"Private - Answer the width of aString when displayed in this view."
 
 	| width |
-	width := self sendMessage: LVM_GETSTRINGWIDTH wParam: 0 lpParam: aString.
-	^width == 0
-		ifTrue: [self errorInCommonControlCall]
-		ifFalse: [width]!
+	width := User32
+				sendMessage: handle
+				msg: LVM_GETSTRINGWIDTH
+				wParam: 0
+				lpParam: aString.
+	^width == 0 ifTrue: [self errorInCommonControlCall] ifFalse: [width]!
 
 lvmGetSubItemRect: rowInteger subitem: colInteger bounding: flagInteger
 	"Private - Answer a bounding Rectangle for all or part of a subitem."
@@ -1268,8 +1330,9 @@ lvmGetSubItemRect: rowInteger subitem: colInteger bounding: flagInteger
 	rect
 		top: colInteger;
 		left: flagInteger.
-	(self
-		sendMessage: LVM_GETSUBITEMRECT
+	(User32
+		sendMessage: handle
+		msg: LVM_GETSUBITEMRECT
 		wParam: rowInteger
 		lpParam: rect) == 0
 		ifTrue: [^self errorInCommonControlCall: rowInteger].
@@ -1278,7 +1341,11 @@ lvmGetSubItemRect: rowInteger subitem: colInteger bounding: flagInteger
 lvmGetView
 	"Private - Retrieve the current view mode."
 
-	^self sendMessage: LVM_GETVIEW!
+	^User32
+		sendMessage: handle
+		msg: LVM_GETVIEW
+		wParam: 0
+		lParam: 0!
 
 lvmGetViewRect
 	"Private - Answer the bounding rectangle that contains all items in the control. This will
@@ -1286,8 +1353,9 @@ lvmGetViewRect
 
 	| rect |
 	rect := RECTL newBuffer.
-	(self
-		sendMessage: LVM_GETVIEWRECT
+	(User32
+		sendMessage: handle
+		msg: LVM_GETVIEWRECT
 		wParam: 0
 		lpParam: rect) == 0
 		ifTrue: [^self errorInCommonControlCall].
@@ -1297,8 +1365,9 @@ lvmInsertAt: column column: anLvColumn
 	"Private - Answer the index of the new column."
 
 	| index |
-	index := self
-				sendMessage: LVM_INSERTCOLUMNW
+	index := User32
+				sendMessage: handle
+				msg: LVM_INSERTCOLUMNW
 				wParam: column
 				lpParam: anLvColumn asParameter.
 	^index == -1 ifTrue: [self errorInCommonControlCall] ifFalse: [index]!
@@ -1306,33 +1375,43 @@ lvmInsertAt: column column: anLvColumn
 lvmInsertItem: aLvItem
 	"Private - Insert aLvItem into the tree view and add it to our contents dictionary"
 
-	^self
-		sendMessage: ListViewConstants.LVM_INSERTITEMW
+	^User32
+		sendMessage: handle
+		msg: LVM_INSERTITEMW
 		wParam: 0
 		lpParam: aLvItem asParameter!
 
 lvmRedrawItems: firstIndex to: lastIndex
-
-	^self sendMessage: LVM_REDRAWITEMS wParam: firstIndex lpParam: lastIndex!
+	^User32
+		sendMessage: handle
+		msg: LVM_REDRAWITEMS
+		wParam: firstIndex
+		lpParam: lastIndex!
 
 lvmSetBkImage: aLVBKIMAGEW
 	"Private - Set the background image according to the information held in the <LVBKIMAGEW> argument."
 
-	^(self
-		sendMessage: LVM_SETBKIMAGEW
+	^(User32
+		sendMessage: handle
+		msg: LVM_SETBKIMAGEW
 		wParam: 0
 		lpParam: aLVBKIMAGEW) asBoolean!
 
-lvmSetCallbackMask: anInteger 
+lvmSetCallbackMask: anInteger
 	"Private - Answers the callback mask of the underlying control."
 
-	^self sendMessage: LVM_SETCALLBACKMASK wParam: anInteger!
+	^User32
+		sendMessage: handle
+		msg: LVM_SETCALLBACKMASK
+		wParam: anInteger
+		lParam: 0!
 
 lvmSetColumn: anLvColumn at: columnIndex
 	"Private - Set the attributes of a column."
 
-	(self
-		sendMessage: LVM_SETCOLUMNW
+	(User32
+		sendMessage: handle
+		msg: LVM_SETCOLUMNW
 		wParam: columnIndex
 		lpParam: anLvColumn asParameter) == 0
 		ifTrue: [^self errorInCommonControlCall]!
@@ -1341,37 +1420,55 @@ lvmSetColumnOrderArray: iArray
 	"Private - Sets the left-to-right order of columns in the receiver to the zero-based positions
 	specified in the <SDWORDArray> argument, iArray."
 
-	self sendMessage: LVM_SETCOLUMNORDERARRAY wParam: iArray size lpParam: iArray!
+	User32
+		sendMessage: handle
+		msg: LVM_SETCOLUMNORDERARRAY
+		wParam: iArray size
+		lpParam: iArray!
 
 lvmSetColumnWidth: itemIndex to: anInteger
 	"Private - Set the width of the column identified by itemIndex to anInteger."
+
 	"wParam = (WPARAM) (int) iCol; 
 	lParam = MAKELPARAM((int) cx, 0); "
 
-	self sendMessage: LVM_SETCOLUMNWIDTH wParam: itemIndex lpParam: anInteger!
+	^User32
+		sendMessage: handle
+		msg: LVM_SETCOLUMNWIDTH
+		wParam: itemIndex
+		lParam: anInteger!
 
 lvmSetExtendedListViewStyle: style
 	"Private - Set the extended styles of the receiver.
 	Implementation Note: Present for backward compatibility with pre-3.0 resources."
 
 	lvStyle := style.
-	self sendMessage: LVM_SETEXTENDEDLISTVIEWSTYLE wParam: 0 lpParam: style asParameter!
+	User32
+		sendMessage: handle
+		msg: LVM_SETEXTENDEDLISTVIEWSTYLE
+		wParam: 0
+		lpParam: style asParameter!
 
 lvmSetExtendedListViewStyle: dwExMask dwExStyle: dwExStyle
 	"Private - Set or reset the masked extended styles of the receiver.
 	Answer the previous style flags."
 
 	| prevStyle |
-	prevStyle := self sendMessage: LVM_SETEXTENDEDLISTVIEWSTYLE wParam: dwExMask lParam: dwExStyle.
+	prevStyle := User32
+				sendMessage: handle
+				msg: LVM_SETEXTENDEDLISTVIEWSTYLE
+				wParam: dwExMask
+				lParam: dwExStyle.
 	lvStyle := (prevStyle maskClear: dwExMask) maskSet: (dwExStyle bitAnd: dwExMask).
 	^prevStyle!
 
-lvmSetIconSpacing: aPoint 
+lvmSetIconSpacing: aPoint
 	"Private - Set the spacing between icons displayed in the receiver.
 	Answers the previous icon spacing packed into a 32-bit integer."
 
-	^self 
-		sendMessage: LVM_SETICONSPACING
+	^User32
+		sendMessage: handle
+		msg: LVM_SETICONSPACING
 		wParam: 0
 		lpParam: aPoint asUIntPtr!
 
@@ -1389,56 +1486,71 @@ lvmSetItem: anLvItem
 	"Private - Set some or all of the receiver's default attributes as 
 	specified in the argument, anLvItem."
 
-	(self
-		sendMessage: ListViewConstants.LVM_SETITEMW
+	(User32
+		sendMessage: handle
+		msg: LVM_SETITEMW
 		wParam: 0
 		lpParam: anLvItem asParameter) == 0
 		ifTrue: [^self errorInCommonControlCall]!
 
-lvmSetItem: index position: aPos
+lvmSetItem: anInteger position: aPos
 	"Private - Move an item to the specified position in the receiver when
 	in large or small icon mode"
 
-	self 
-		sendMessage: LVM_SETITEMPOSITION
-		wParam: index
+	User32
+		sendMessage: handle
+		msg: LVM_SETITEMPOSITION
+		wParam: anInteger
 		lpParam: aPos asParameter!
 
 lvmSetItem: index state: anLvItem
 	"Private - Set an item's state to that in anLvItem."
 
-	(self 
-		sendMessage: LVM_SETITEMSTATE
+	(User32
+		sendMessage: handle
+		msg: LVM_SETITEMSTATE
 		wParam: index
-		lpParam: anLvItem asParameter) == 0 
+		lpParam: anLvItem asParameter) == 0
 		ifTrue: 
 			["Control didn't like it, try and deduce why..."
-
 			^self errorInCommonControlCall: index]!
 
 lvmSetItemCount: size
 	"Private - Prepare a list view for adding a large number of items, or set the number of items in a virtual list."
 
-	self sendMessage: LVM_SETITEMCOUNT wParam: size!
+	User32
+		sendMessage: handle
+		msg: LVM_SETITEMCOUNT
+		wParam: size
+		lParam: 0!
 
 lvmSetItemText: anLvItem index: index
 	"Private - Change the text of an item or subitem."
 
-	(self
-		sendMessage: ListViewConstants.LVM_SETITEMTEXTW
+	(User32
+		sendMessage: handle
+		msg: LVM_SETITEMTEXTW
 		wParam: index
 		lpParam: anLvItem asParameter) == 0
 		ifTrue: [^self errorInCommonControlCall: index]!
 
 lvmSetView: anInteger
-	self sendMessage: LVM_SETVIEW wParam: anInteger!
+	User32
+		sendMessage: handle
+		msg: LVM_SETVIEW
+		wParam: anInteger
+		lParam: 0!
 
-lvmUpdate: index
+lvmUpdate: anInteger
 	"Private - Update an item at the specified zero-based <integer> index in the receiver.
 	If in auto arrange mode then arrange."
 
-	(self sendMessage: LVM_UPDATE wParam: index) == 0
-		ifTrue: [^self errorInCommonControlCall: index]!
+	(User32
+		sendMessage: handle
+		msg: LVM_UPDATE
+		wParam: anInteger
+		lParam: 0) == 0
+		ifTrue: [^self errorInCommonControlCall: anInteger]!
 
 lvnBeginScroll: pNMHDR 
 	^nil!
@@ -1488,7 +1600,9 @@ lvnGetInfoTip: pNMHDR
 
 	| nmlv target prefixText |
 	nmlv := NMLVGETINFOTIPW fromAddress: pNMHDR.
-	target := self objectFromHandle: nmlv itemHandle ifAbsent: [^0].	"ListView may occassionally ask for info tip for item we don't have (e.g. off end of list)"
+	target := self objectFromHandle: nmlv itemHandle ifAbsent: UnknownItem.
+	"ListView may occassionally ask for info tip for item we don't have (e.g. off end of list)"
+	target == UnknownItem ifTrue: [^0].
 	prefixText := nmlv dwFlags == 0 ifTrue: [nmlv text] ifFalse: [''].	"If in report mode and the column has an info. tip block then we delegate to it, otherwise fill it in."
 	nmlv
 		text: ((self isReportMode
@@ -2077,15 +2191,15 @@ setNoRedrawCount: anInteger
 	noRedrawCount := anInteger max: 0!
 
 setSelectionsByIndex: indices
+	"Use the actual selections that resulted - we need to check these again against the last selections, as in the single selection case the actual selection may not have changed if multiple selections were requested and the first is still the same as the previous single selection."
+
 	| selections |
 	(indices noDifference: lastSelIndices) ifTrue: [^self].
 	self basicSelectionsByIndex: indices.
-	"Use the actual selections that resulted - we need to check these again against the last selections, as in the single selection case the actual selection may not have changed if multiple selections were requested and the first is still the same as the previous single selection."
 	selections := self getSelectionsByIndex.
-	selections = lastSelIndices
-		ifFalse: 
-			[self ensureItemsVisible: selections.
-			self onSelChanged: selections]!
+	selections = lastSelIndices ifTrue: [^self].
+	self ensureItemsVisible: selections.
+	self onSelChanged: selections!
 
 setSingleSelection: anInteger 
 	self selectIndex: anInteger set: anInteger ~~ 0!
@@ -2452,7 +2566,6 @@ lvmArrange:!operations!private! !
 lvmCreateDragImage:position:!operations!private! !
 lvmDeleteAllItems!private!removing! !
 lvmDeleteColumn:!columns!private!removing! !
-lvmDeleteItem:!private!removing! !
 lvmEnsureVisible:partial:!operations!private! !
 lvmFindItem:startingAt:!operations!private! !
 lvmGetBkImage:!accessing!private! !
@@ -2625,14 +2738,11 @@ initialize
 	UnknownItem := Object new!
 
 onStartup
-	"The system is starting: Register a message to be used for cancelling a selection after
-	the fact."
-
-	NtDll isWine
-		ifTrue: 
-			["When running under Wine the autoSelectPackages option causes an unpleasant scrolling effect when many packages are selected in a System Browser or Package Browser. The problem does not occur without the LVIS_FOCUSED style, the absence of which does mean the loss of focus indication."
-			SelectionStateMask := LVIS_SELECTED]
-		ifFalse: [SelectionStateMask := ##(LVIS_SELECTED | LVIS_FOCUSED)]!
+	SelectionStateMask := NtDll isWine
+				ifTrue: 
+					["When running under Wine the autoSelectPackages option causes an unpleasant scrolling effect when many packages are selected in a System Browser or Package Browser. The problem does not occur without the LVIS_FOCUSED style, the absence of which does mean the loss of focus indication."
+					LVIS_SELECTED]
+				ifFalse: [##(LVIS_SELECTED | LVIS_FOCUSED)]!
 
 stbConvert: instVarArray fromVersion: verInteger
 	| instVars |
