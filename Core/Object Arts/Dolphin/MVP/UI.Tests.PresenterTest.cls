@@ -9,11 +9,13 @@ Core.Tests.DolphinTest subclass: #'UI.Tests.PresenterTest'
 UI.Tests.PresenterTest guid: (Core.GUID fromString: '{80e6f4ef-64d4-40f6-857c-5b74578eb87b}')!
 UI.Tests.PresenterTest isNonInstantiable: true!
 UI.Tests.PresenterTest comment: ''!
-!UI.Tests.PresenterTest categoriesForClass!Unclassified! !
 !UI.Tests.PresenterTest methodsFor!
 
 classToTest
 	^self subclassResponsibility!
+
+d3ResourceStream: aString
+	^self resourceStream: 'D3ViewResources/' , aString text: false!
 
 initializePresenter
 	self classToTest ifNotNil: [:subjectClass | presenter := subjectClass show]!
@@ -58,6 +60,7 @@ waitForInputIdle
 	SessionManager inputState pumpMessages! !
 !UI.Tests.PresenterTest categoriesForMethods!
 classToTest!helpers!private! !
+d3ResourceStream:!helpers!private! !
 initializePresenter!public!Running! !
 leftClickAt:!private!unit tests! !
 setUp!public!Running! !

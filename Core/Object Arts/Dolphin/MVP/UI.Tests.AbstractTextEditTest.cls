@@ -9,7 +9,6 @@ UI.Tests.PresenterTest subclass: #'UI.Tests.AbstractTextEditTest'
 UI.Tests.AbstractTextEditTest guid: (Core.GUID fromString: '{3f7e7558-eb69-4b84-a91f-de5dba0c2d10}')!
 UI.Tests.AbstractTextEditTest isNonInstantiable: true!
 UI.Tests.AbstractTextEditTest comment: ''!
-!UI.Tests.AbstractTextEditTest categoriesForClass!Unclassified! !
 !UI.Tests.AbstractTextEditTest methodsFor!
 
 margins

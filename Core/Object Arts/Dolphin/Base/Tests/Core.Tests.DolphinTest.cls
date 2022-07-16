@@ -9,7 +9,6 @@ XProgramming.SUnit.TestCase subclass: #'Core.Tests.DolphinTest'
 Core.Tests.DolphinTest guid: (Core.GUID fromString: '{6444f9c6-8a25-4f8a-bade-5f08d7c882be}')!
 Core.Tests.DolphinTest isNonInstantiable: true!
 Core.Tests.DolphinTest comment: ''!
-!Core.Tests.DolphinTest categoriesForClass!Unclassified! !
 !Core.Tests.DolphinTest methodsFor!
 
 assertIs: cloneObject deepCopyOf: sourceObject
@@ -60,6 +59,12 @@ isOnline
 
 methodContextClass
 	^Context!
+
+resourceFilename: aString
+	^FileLocator installRelative localFileSpecFor: 'Resources\Tests\' , aString!
+
+resourceStream: aString text: aBoolean
+	^FileStream read: (self resourceFilename: aString) text: aBoolean!
 
 runKnownBug: aString test: aSymbol
 	Notification
@@ -119,6 +124,8 @@ isAtLeastVmVersion:!private!testing! !
 isLogging!Accessing!public! !
 isOnline!public!unit tests! !
 methodContextClass!constants!private! !
+resourceFilename:!helpers!public! !
+resourceStream:text:!helpers!public! !
 runKnownBug:test:!public!unit tests! !
 shouldRaiseZeroDivide:!Accessing!public! !
 verifyPropertyManagerOf:!helpers!private! !

@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Kernel.Tests.PackageTest'
 	classConstants: {}!
 Kernel.Tests.PackageTest guid: (Core.GUID fromString: '{0bcde90d-a936-43ee-9e4a-2bdec39abf2a}')!
 Kernel.Tests.PackageTest comment: ''!
-!Kernel.Tests.PackageTest categoriesForClass!Unclassified! !
 !Kernel.Tests.PackageTest methodsFor!
 
 checkNoTestPackageContents
@@ -203,12 +202,9 @@ b2xwaGluZHIwMDUuZGxsAAAAAA==''))!!
 
 '!
 
-filenameFor: aString
-	^FileLocator installRelative localFileSpecFor: 'Resources\Tests\' , aString!
-
 loadAndTestPackage: filename
 	self checkNoTestPackageContents.
-	loadedPackages := Package manager install: (self filenameFor: filename).
+	loadedPackages := Package manager install: (self resourceFilename: filename).
 	self checkTestPackageContents
 !
 
@@ -238,7 +234,7 @@ testForwardRefLoadPac
 	"#1720: Test loading and converting of old packages with forward reference view referereces"
 
 	| pacName |
-	pacName := self filenameFor: 'D5LoadTest.pac'.
+	pacName := self resourceFilename: 'D5LoadTest.pac'.
 	(FileStream write: pacName)
 		nextPutAll: self d5ForwardRefTestPacContents;
 		close.
@@ -440,7 +436,8 @@ testLoad70Pax
 	filer := scribbleTestPackage sourceFilerClass on: String writeStream.
 	filer fileOutPackage: scribbleTestPackage.
 	actual := filer stream contents.
-	expected := File readAllText: (File change: (self filenameFor: testPackagePath) extension: 'pac').
+	expected := File
+				readAllText: (File change: (self resourceFilename: testPackagePath) extension: 'pac').
 	"
 	Smalltalk.DiffBrowser compare: actual with: expected
 	"
@@ -537,7 +534,6 @@ verifyTestPackageResources: scribbleTestPackage
 checkNoTestPackageContents!helpers!private! !
 checkTestPackageContents!helpers!private! !
 d5ForwardRefTestPacContents!constants!private! !
-filenameFor:!helpers!private! !
 loadAndTestPackage:!helpers!private! !
 loadTestAndUninstallPackage:!helpers!private! !
 setUp!private!running! !
