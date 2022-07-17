@@ -53,13 +53,21 @@ testNewSelectionsClickOutsideListWithModifiers
 				self verifySelectionsFromMouseDown: event equals: expected]!
 
 verifyClicks: anArray
-	self assert: clicks size equals: anArray size! !
+	self assert: clicks size equals: anArray size!
+
+verifyUpgradedView: anInteger
+	| view |
+	super verifyUpgradedView: anInteger.
+	view := self view.
+	self assert: view backcolor identicalTo: Color default.
+	self assert: view lastSelIndices equals: #()! !
 
 !ListBoxTest categoriesForMethods!
 classToTest!helpers!private! !
 newSelectionAfterLeftClickOutsideList:!helpers!private! !
-setupClickIntercept!private! !
+setupClickIntercept!helpers!private! !
 testNewSelectionsClickOutsideListWithModifiers!public!unit tests! !
 verifyClicks:!helpers!private! !
+verifyUpgradedView:!helpers!private! !
 !
 

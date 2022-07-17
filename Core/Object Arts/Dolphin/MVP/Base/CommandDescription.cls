@@ -2,11 +2,15 @@
 
 Object subclass: #CommandDescription
 	instanceVariableNames: 'command description acceleratorKey flags image'
-	classVariableNames: 'CommandDescriptionRegistry CurrentId DefaultMask ModalMask'
+	classVariableNames: 'CommandDescriptionRegistry CurrentId DefaultMask ModalMask NotAbortableMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
 CommandDescription guid: (GUID fromString: '{87b4c469-026e-11d3-9fd7-00a0cc3e4a32}')!
+
+CommandDescription addClassConstant: 'DefaultMask' value: 16r1!
+CommandDescription addClassConstant: 'ModalMask' value: 16r2!
+CommandDescription addClassConstant: 'NotAbortableMask' value: 16r4!
 
 CommandDescription comment: 'A CommandDescription acts as the fundamental source for all MVP user interface commands. An instance of this class holds the command itself, a textual description of the command''s function and, optionally, an accelerator key that may trigger the command action when used within a menu. The command can be a <Message>, <Symbol> or, indeed, any object that responds to the <commandMessage> protocol. For most commands, symbols are prevalent but messages can sometimes be more convenient, especially if the command is to carry parameters, such as in dynamically constructed menus (e.g. the browser history list).
 
@@ -143,6 +147,14 @@ initialize
 	acceleratorKey := 0.
 	flags := 0!
 
+isAbortable
+	"Answer whether the receiver describes a command that may safely throw OperationAborted to terminate its operation without side effects. Some command hosts may choose to use this information to catch and suppress OperationAborted exceptions when executing the command. If this message answers false, then the command host should treat OperationAborted like any other error. By default commands are abortable."
+
+	^flags noMask: NotAbortableMask!
+
+isAbortable: aBoolean
+	flags := flags mask: NotAbortableMask set: aBoolean not!
+
 isModalCommand
 	"Answer whether the receiver describes a command that should be performed modally to 
 	its initiating shell (i.e. the shell will be disabled for the duration of execution of the
@@ -230,6 +242,8 @@ id!accessing!public! !
 image!accessing!public! !
 image:!accessing!public! !
 initialize!initializing!private! !
+isAbortable!commands!public!testing! !
+isAbortable:!accessing!public! !
 isModalCommand!public!testing! !
 isModalCommand:!public!testing! !
 menuText!accessing!private! !
@@ -286,8 +300,9 @@ initialize
 			[CommandDescriptionRegistry
 				haveStrongValues;
 				haveWeakKeys].
-	DefaultMask := 1.
-	ModalMask := 2!
+	self addClassConstant: 'DefaultMask' value: 1.
+	self addClassConstant: 'ModalMask' value: 2.
+	self addClassConstant: 'NotAbortableMask' value: 4!
 
 maximumId
 	"Private - Answer the maximum id that we have available."

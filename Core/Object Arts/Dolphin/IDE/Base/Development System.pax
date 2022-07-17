@@ -7871,6 +7871,7 @@ publishedAspectsOfInstances
 	^(super publishedAspectsOfInstances)
 		add: (Aspect name: #buttonText);
 		yourself! !
+
 !ToolbarTextButton class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -8374,6 +8375,7 @@ publishedEventsOfInstances!events!public! !
 
 printableFields
 	^super printableFields! !
+
 !WINDOWPLACEMENT categoriesForMethods!
 printableFields!printing!private! !
 !

@@ -201,7 +201,10 @@ testReplaceFromToWithStartingAt
 	self should: [super testReplaceFromToWithStartingAt] raise: Error!
 
 testResize
-	self should: [super testResize] raise: Error matching: [:ex | ex description contains: 'not indexable']!
+	self
+		should: [super testResize]
+		raise: Error
+		matching: [:ex | ex description = 'Interval should not implement #resize:']!
 
 testStoreOn
 	"#1379"

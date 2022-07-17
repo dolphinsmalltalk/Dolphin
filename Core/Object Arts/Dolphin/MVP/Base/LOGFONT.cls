@@ -18,11 +18,10 @@ LOGFONT has been replaced by LOGFONTW, but is retained due to references from pr
 
 !LOGFONT class methodsFor!
 
-stbReadFrom: anSTBInFiler format: anSTBClassConversion
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 	"Replace the LOGFONT in the serialised data with an equivalent LOGFONTW"
 
 	| logfontw lfbytes |
-	anSTBInFiler readIndexableSizeFor: self.
 	logfontw := LOGFONTW new.
 	anSTBInFiler register: logfontw.
 	lfbytes := anSTBInFiler basicNext.
@@ -35,6 +34,6 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion
 	^logfontw! !
 
 !LOGFONT class categoriesForMethods!
-stbReadFrom:format:!public! !
+stbReadFrom:format:size:!public! !
 !
 

@@ -12878,18 +12878,20 @@ stbConvertFromVersion13: anArray
 	"Private - Perform an STB conversion from a version 13 <ScintillaView> to version 14,
 	i.e. use call tip style, fix a small bug, and add some spare inst vars."
 
-	| callTipBackcolor callTipForecolor currentTextStyles callTipStyle selectionBackcolor |
-	callTipBackcolor := anArray at: 33.
-	callTipForecolor := anArray at: 34.
-	anArray at: 33 put: DefaultCallTipTabWidth.
-	anArray at: 34 put: nil.
-	currentTextStyles := anArray at: 18.
-	callTipStyle := currentTextStyles at: #callTip ifAbsentPut: [self defaultCallTipStyle].
-	callTipBackcolor ifNotNil: [:value | callTipStyle backcolor: value].
-	callTipForecolor ifNotNil: [:value | callTipStyle forecolor: value].
-	selectionBackcolor := anArray at: 30.
-	selectionBackcolor = IndexedColor darkGray ifTrue: [anArray at: 30 put: Color silver].
-	^anArray!
+	| callTipStyle instVars |
+	callTipStyle := (anArray at: 18) at: #callTip ifAbsentPut: [self defaultCallTipStyle].
+	(anArray at: 33) ifNotNil: [:value | callTipStyle backcolor: value].
+	(anArray at: 34) ifNotNil: [:value | callTipStyle forecolor: value].
+	instVars := Array new: 50.
+	instVars
+		replaceFrom: 1
+			to: anArray size
+			with: anArray
+			startingAt: 1;
+		at: 33 put: DefaultCallTipTabWidth;
+		at: 34 put: nil.
+	(anArray at: 30) = IndexedColor darkGray ifTrue: [instVars at: 30 put: Color silver].
+	^instVars!
 
 stbConvertFromVersion14: anArray
 	"Private - Perform an STB conversion from a version 14 <ScintillaView> to version 15,

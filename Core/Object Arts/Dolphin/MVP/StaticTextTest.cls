@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-PresenterTest subclass: #StaticTextTest
+StaticViewTest subclass: #StaticTextTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -16,6 +16,9 @@ StaticTextTest comment: ''!
 
 classToTest
 	^StaticText!
+
+oldDolphinVersionsForStbUpgrade
+	^1 to: 4!
 
 testCalculateExtentMultiline
 	"Test preferred extent calculation in multi-line 'alignment' modes:
@@ -80,11 +83,52 @@ lines'.
 	actual := presenter calculateExtent: (LayoutContext forContainer: shell).
 	self assert: actual y equals: expected y.
 	"The width calculated by the GDI GetTextExtentPoint32 function is slightly different than the DrawTextEx calculation used by the control (and now#calculateExtent:) so we don't expect a precise result"
-	self assert: (actual x - expected x) abs < (3 * presenter scaleFactor)! !
+	self assert: (actual x - expected x) abs < (3 * presenter scaleFactor)!
+
+verifyUpgradedView: anInteger
+	| view |
+	super verifyUpgradedView: anInteger.
+	view := self view.
+	"Backcolor of StaticViews left as nil in v12 to inherit from parent"
+	self assertIsNil: view backcolor.
+	self assert: view interactor identicalTo: view!
+
+vuFile
+	^'TextPresenter.Static text.vu'! !
 
 !StaticTextTest categoriesForMethods!
 classToTest!helpers!private! !
-testCalculateExtentMultiline!public! !
-testCalculateExtentSimple!public! !
+oldDolphinVersionsForStbUpgrade!constants!private! !
+testCalculateExtentMultiline!public!unit tests! !
+testCalculateExtentSimple!public!unit tests! !
+verifyUpgradedView:!helpers!private! !
+vuFile!constants!private! !
+!
+
+!StaticTextTest class methodsFor!
+
+resource_Static_text_D6
+	"Answer the literal data from which the 'Static text' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Static_text)
+	"
+
+	^#(#'!!STL' 3 788558 10 ##(Smalltalk.STBViewProxy)  8 ##(Smalltalk.StaticText)  98 16 0 0 98 2 8 1140850944 1 416 0 0 0 7 0 0 0 416 0 8 4294904617 852486 ##(Smalltalk.NullConverter)  0 0 0 983302 ##(Smalltalk.MessageSequence)  202 208 98 2 721670 ##(Smalltalk.MessageSend)  8 #createAt:extent: 98 2 328198 ##(Smalltalk.Point)  2799 21 674 241 39 416 610 8 #text: 98 1 8 'Static Text' 416 983302 ##(Smalltalk.WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 119 5 0 0 10 0 0 0 239 5 0 0 29 0 0 0] 98 0 674 193 193 0 27 )!
+
+resource_Static_text_D7
+	"Answer the literal data from which the 'Static text' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Static_text)
+	"
+
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.StaticText) 34 16 nil nil 34 2 8 1140850944 65 416 nil nil nil 7 nil nil nil 416 nil 8 1915124368 852486 ##(Smalltalk.NullConverter) nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3359 21 642 241 39 416 594 #text: 34 1 8 'Static Text' 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 143 6 0 0 10 0 0 0 7 7 0 0 29 0 0 0] 8 #() 642 193 193 nil 27 )! !
+
+!StaticTextTest class categoriesForMethods!
+resource_Static_text_D6!public!resources-views! !
+resource_Static_text_D7!public!resources-views! !
 !
 

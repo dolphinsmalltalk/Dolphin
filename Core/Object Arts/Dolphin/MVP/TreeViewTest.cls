@@ -22,6 +22,9 @@ getItemText: anObject
 	treeView := presenter view.
 	^treeView getItemText: (treeView handleFromObject: anObject)!
 
+oldDolphinVersionsForStbUpgrade
+	^1 to: 5!
+
 paintTree
 	false
 		ifTrue: 
@@ -129,11 +132,30 @@ testSetTextBlockDoesNotAffectSelection
 			[:each | 
 			presenter view updateMode: each.
 			super testSetTextBlockDoesNotAffectSelection.
-			presenter view model clear]! !
+			presenter view model clear]!
+
+verifyUpgradedView: anInteger
+	| view |
+	super verifyUpgradedView: anInteger.
+	view := self view.
+	self assert: view backcolor identicalTo: Color default.
+	self assert: view updateMode identicalTo: #dynamic.
+	self assertIsNil: view customDrawBlock.
+	self assert: view largeIconExtent equals: SystemMetrics default largeIconExtent.
+	self assert: view isExpandAllEnabled.
+	self assert: view isVirtual.
+	anInteger < 13
+		ifTrue: [self assert: self view indentSeparation equals: 16 * self view dpi // USER_DEFAULT_SCREEN_DPI]!
+
+vuFile
+	"Was TreePresenter.TreeView in D1 & 2"
+
+	^'TreePresenter.Default view.vu'! !
 
 !TreeViewTest categoriesForMethods!
 classToTest!helpers!private! !
 getItemText:!helpers!private! !
+oldDolphinVersionsForStbUpgrade!constants!private! !
 paintTree!helpers!private! !
 refreshTree:!helpers!private! !
 testCollapseOneLevel!public!unit tests! !
@@ -145,5 +167,34 @@ testSelectionSetter!public!unit tests! !
 testSelectionsPreservedOnRecreate!public!unit tests! !
 testSetImageBlockDoesNotAffectSelection!public!unit tests! !
 testSetTextBlockDoesNotAffectSelection!public!unit tests! !
+verifyUpgradedView:!helpers!private! !
+vuFile!constants!private! !
+!
+
+!TreeViewTest class methodsFor!
+
+resource_Default_view_D6
+	"Answer the literal data from which the 'Default view' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	"
+
+	^#(#'!!STL' 3 788558 10 ##(Smalltalk.STBViewProxy) 8 ##(Smalltalk.TreeView) 98 27 0 0 98 2 8 1409351719 1025 416 590918 3 ##(Smalltalk.TreeModel) 0 1310726 ##(Smalltalk.IdentitySearchPolicy) 525062 ##(Smalltalk.TreeNode) 0 0 0 234 256 98 0 524550 ##(Smalltalk.ColorRef) 8 4278190080 0 5 0 0 0 416 0 8 4294903619 459270 ##(Smalltalk.Message) 8 #displayString 98 0 8 ##(Smalltalk.IconicListAbstract) 1049670 1 ##(Smalltalk.IconImageManager) 0 0 0 0 0 234 240 608 17 8 #noIcons 1 0 983302 ##(Smalltalk.MessageSequence) 202 208 98 1 721670 ##(Smalltalk.MessageSend) 8 #createAt:extent: 98 2 328198 ##(Smalltalk.Point) 2799 21 962 401 571 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 119 5 0 0 10 0 0 0 63 6 0 0 39 1 0 0] 98 0 962 193 193 0 27)!
+
+resource_Default_view_D7
+	"Answer the literal data from which the 'Default view' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	"
+
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.TreeView) 34 27 nil nil 34 2 8 1409352231 1025 416 590918 3 ##(Smalltalk.TreeModel) nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 525062 ##(Smalltalk.TreeNode) nil nil nil 170 192 8 #() 327686 ##(Smalltalk.Color) #default nil 5 nil nil nil 416 nil 8 1903706176 459270 ##(Smalltalk.Message) #displayString 8 #() ##(Smalltalk.IconicListAbstract) 1049926 1 ##(Smalltalk.IconImageManager) nil nil nil nil nil 170 176 592 nil #noIcons 1 170 ##(Smalltalk.PluggableLookupTable) 592 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 882 401 571 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 71 8 0 0 39 1 0 0] 8 #() 882 193 193 nil 27 )! !
+
+!TreeViewTest class categoriesForMethods!
+resource_Default_view_D6!public!resources-views! !
+resource_Default_view_D7!public!resources-views! !
 !
 

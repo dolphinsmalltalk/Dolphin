@@ -40,6 +40,11 @@ readObjectWithPrefix: anInteger
 	anInteger == STBPrefix.LiteralPrefixMask ifTrue: [^self readLiteralData].
 	^super readObjectWithPrefix: anInteger!
 
+readSizeBlock
+	^version < 3
+		ifTrue: [[:class | stream next]]
+		ifFalse: [[:class | class isVariable ifTrue: [stream next] ifFalse: [0]]]!
+
 readVersion
 	version := stream next.
 	^true!
@@ -55,6 +60,7 @@ readClassLocator:!helpers!private! !
 readInteger!helpers!private! !
 readLiteralData!private! !
 readObjectWithPrefix:!accessing!private! !
+readSizeBlock!helpers!private! !
 readVersion!initializing!private! !
 registerPredefinedObjects!initializing!private! !
 !

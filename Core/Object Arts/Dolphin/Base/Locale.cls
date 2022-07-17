@@ -857,6 +857,33 @@ standard: aString
 
 	^self named: aString withOverrides: false!
 
+stbConvertFrom: anSTBClassFormat
+	"Convert from previous version resource. 
+	In version 1 the STB format was changed to store just the locale identifier and to preserve logical locales such as userDefault.
+	We don't use the STB conversion mechanism to perform the upgrade, but we are required to supply a conversion block anyway."
+
+	^[:data | data error: 'Not used']!
+
+stbReadFrom: anSTBInFiler format: anSTBClassConversion
+	"Read an instance of the receiver from the binary filer, aSTBInFiler."
+
+	"Implementation Note: Overridden in order to maintain unique instances without using a STBSingletonProxy."
+
+	| locale id ref |
+	ref := anSTBInFiler register: nil.
+	id := anSTBInFiler basicNext.
+	locale := id isInteger
+				ifTrue: [self lcid: id]
+				ifFalse: 
+					[(#(#userDefault #smalltalk #invariant #systemDefault #uiDefault) identityIncludes: id)
+						ifTrue: [self perform: id]
+						ifFalse: [self named: id]].
+	anSTBInFiler fixup: ref to: locale.
+	^locale!
+
+stbVersion
+	^1!
+
 supportedSystemLocales
 	"Private - Answer the supported Win32 system locales.
 		Locale supportedSystemLocales
@@ -900,6 +927,9 @@ onStartup!event handling!private! !
 reset!initializing!private! !
 smalltalk!instance creation!public! !
 standard:!instance creation!public! !
+stbConvertFrom:!public! !
+stbReadFrom:format:!public! !
+stbVersion!public! !
 supportedSystemLocales!enquiries!private! !
 systemDefault!instance creation!public! !
 timeZoneInformation!enquiries!public! !

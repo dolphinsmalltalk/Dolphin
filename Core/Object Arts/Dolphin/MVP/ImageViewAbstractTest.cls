@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-PresenterTest subclass: #ImageViewAbstractTest
+StaticViewTest subclass: #ImageViewAbstractTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -19,8 +19,8 @@ ImageViewAbstractTest comment: ''!
 image
 	^self subclassResponsibility!
 
-setUp
-	super setUp.
+initializePresenter
+	super initializePresenter.
 	presenter
 		viewMode: #center;
 		model: self image asValue!
@@ -58,7 +58,7 @@ testInvalidateOnResize
 
 !ImageViewAbstractTest categoriesForMethods!
 image!private!Running! !
-setUp!private!Running! !
-testInvalidateOnResize!public! !
+initializePresenter!public!Running! !
+testInvalidateOnResize!public!unit tests! !
 !
 

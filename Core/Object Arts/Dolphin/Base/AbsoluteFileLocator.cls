@@ -60,7 +60,7 @@ onPreStripImage
 
 	self uninitialize!
 
-stbReadFrom: anSTBInFiler format: anSTBClassConversion 
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 	"Read an instance of the receiver from the binary filer, aSTBInFiler."
 
 	| singleton |
@@ -76,7 +76,7 @@ uninitialize
 !AbsoluteFileLocator class categoriesForMethods!
 current!accessing!public! !
 onPreStripImage!class hierarchy-removing!private! !
-stbReadFrom:format:!binary filing!public! !
+stbReadFrom:format:size:!binary filing!public! !
 uninitialize!class hierarchy-removing!private! !
 !
 

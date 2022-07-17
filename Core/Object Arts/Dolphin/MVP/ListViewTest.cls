@@ -393,7 +393,21 @@ verifyColumnWidths: widths
 			self
 				assert: col width
 				closeTo: width * presenter scaleFactor
-				precision: 3]! !
+				precision: 3]!
+
+verifyUpgradedView: anInteger
+	| view |
+	super verifyUpgradedView: anInteger.
+	view := self view.
+	self assert: view backcolor identicalTo: Color default.
+	self assert: view allColumns size equals: 1.
+	self assert: view lastSelIndices equals: #().
+	self assert: view thumbnailExtent equals: 64 @ 64.
+	self assert: view lvFlags equals: 0.
+	self assertIsNil: view customDrawBlock.
+	self assertIsNil: view backImage.
+	self assert: view largeIconExtent equals: SystemMetrics default largeIconExtent.
+	self assert: view isDoubleBuffered! !
 
 !ListViewTest categoriesForMethods!
 classToTest!helpers!private! !
@@ -404,7 +418,7 @@ minNonScrolledExtent!helpers!private! !
 newSelectionAfterLeftClickOutsideList:!constants!private! !
 newSelectionsFromEvent:!helpers!private! !
 setColumns:!helpers!private! !
-setupClickIntercept!private! !
+setupClickIntercept!helpers!private! !
 setUpForSelectionTesting!helpers!private! !
 sortSelections!helpers!public! !
 test1071!public!unit tests! !
@@ -423,5 +437,6 @@ testSetTextBlockDoesNotAffectSelection!public!unit tests! !
 testSetTextImageDoesNotAffectSelection!public!unit tests! !
 verifyClicks:!helpers!private! !
 verifyColumnWidths:!helpers!private! !
+verifyUpgradedView:!helpers!private! !
 !
 

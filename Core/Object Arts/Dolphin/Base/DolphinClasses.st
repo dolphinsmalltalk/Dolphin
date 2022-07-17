@@ -1909,7 +1909,7 @@ StackFrame subclass: #BlockFrame
 	classInstanceVariableNames: ''!
 
 STBFiler subclass: #STBInFiler
-	instanceVariableNames: 'readMap converters classLocator deferredActions flags'
+	instanceVariableNames: 'readMap converters classLocator deferredActions flags readSize'
 	classVariableNames: 'UpgradingMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

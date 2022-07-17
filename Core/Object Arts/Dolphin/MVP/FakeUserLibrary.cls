@@ -82,6 +82,7 @@ clear
 	instances of the receiver from previous runs. etc."
 
 	"Nothing to do"! !
+
 !FakeUserLibrary class categoriesForMethods!
 clear!initializing!private! !
 !

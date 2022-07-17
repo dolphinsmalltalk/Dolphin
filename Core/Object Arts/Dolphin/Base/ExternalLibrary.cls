@@ -457,7 +457,7 @@ openDefault
 
 	^default := self open!
 
-stbReadFrom: anSTBInFiler format: anSTBClassConversion 
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 	"Read an instance of the receiver from the binary filer, aSTBInFiler."
 
 	| singleton |
@@ -503,7 +503,7 @@ onStartup2!event handling!private! !
 open!instance creation!public! !
 open:!instance creation!public! !
 openDefault!instance creation!private!realizing/unrealizing! !
-stbReadFrom:format:!binary filing!public! !
+stbReadFrom:format:size:!binary filing!public! !
 uninitialize!class hierarchy-removing!private! !
 uninitializeBeforeRemove!class hierarchy-removing!private! !
 versionInfo!accessing-version!public! !

@@ -37,6 +37,7 @@ testGeometry
 	self assert: subject width equals: 177.
 	self assert: subject height equals: 51.
 	self assert: subject corner equals: 277 @ 251! !
+
 !WINDOWPLACEMENTTest categoriesForMethods!
 testGeometry!public! !
 !

@@ -28,6 +28,6 @@ testColorDefault
 	self assert: model value equals: Color default! !
 
 !ColorDialogTest categoriesForMethods!
-testColorDefault!public! !
+testColorDefault!public!unit tests! !
 !
 

@@ -35,20 +35,20 @@ new
 
 	^self shouldNotImplement!
 
-stbConvertFrom: anSTBClassFormat 
+stbConvertFrom: anSTBClassFormat
 	"Convert from earlier version models.
 	1: ComparisionPolicy subsumed by SearchPolicy."
 
 	^
-	[:data | 
+	[:data |
 	| compareBlock |
-	Notification 
-		signal: 'STB reference to deprecated class ComparisonPolicy encountered. Please resave the offending resource or binary file'.
 	compareBlock := data first.
 	(compareBlock class == BlockClosure and: 
-			[compareBlock method methodClass == self class 
-				and: [SearchPolicy respondsTo: compareBlock method selector]]) 
-		ifTrue: [(SearchPolicy perform: compareBlock method selector) shallowCopy]
+			[compareBlock method methodClass == self class
+				and: [SearchPolicy respondsTo: compareBlock method selector]])
+		ifTrue: 
+			["shallowCopy is necessary here because STB uses become to swap in the converted object"
+			(SearchPolicy perform: compareBlock method selector) shallowCopy]
 		ifFalse: [PluggableSearchPolicy newCompareBlock: compareBlock hashBlock: [:each | each hash]]]!
 
 stbVersion

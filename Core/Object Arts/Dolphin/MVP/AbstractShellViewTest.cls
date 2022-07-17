@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-DolphinTest subclass: #AbstractShellViewTest
+PresenterTest subclass: #AbstractShellViewTest
 	instanceVariableNames: 'fakeUser32 cursorPos shells'
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -35,7 +35,6 @@ getSecondaryMonitorIfAvailable
 	^monitors size > 1 ifTrue: [monitors detect: [:each | each isPrimary not]] ifFalse: [monitors first]!
 
 setUp
-	super setUp.
 	shells := OrderedCollection new.
 	cursorPos := 0@0!
 

@@ -49,11 +49,7 @@ package methodNames
 	add: #ListModel -> #updateAtIndex:;
 	add: #ListModel -> #updateItem:;
 	add: #ListModel -> #updateItem:ifAbsent:;
-	add: #ListView -> #autoArrange;
-	add: #ListView -> #autoArrange:;
 	add: #ListView -> #columns;
-	add: #ListView -> #hasTrackSelect;
-	add: #ListView -> #hasTrackSelect:;
 	add: #LVBKIMAGEW -> #offset:;
 	add: #Menu -> #find:;
 	add: #Menu -> #find:ifAbsent:;
@@ -103,6 +99,7 @@ package methodNames
 	add: #TextEdit -> #isUpperCase;
 	add: #TextEdit -> #isUppercase:;
 	add: #TextEdit -> #lines;
+	add: #TextEdit -> #setModify:;
 	add: #TreeView -> #disableExpandAll;
 	add: #TreeView -> #disableExpandAll:;
 	add: #TypeConverter -> #leftExceptionalValue;
@@ -113,6 +110,7 @@ package methodNames
 	add: #UserLibrary -> #setSysColors:lpaElements:lpaRgbValues:;
 	add: #UserLibrary -> #winHelp:lpszHelp:uCommand:dwData:;
 	add: #View -> #defaultWindowProcessing:;
+	add: #View -> #enable:;
 	add: #View -> #hasWindowEdge;
 	add: #View -> #hasWindowEdge:;
 	add: #View -> #winHelpPopup:topic:;
@@ -152,6 +150,9 @@ package globalNames
 	add: #CompositePresenter;
 	add: #MultipleChoicePresenter;
 	add: #StaticViewAbstract;
+	add: #Status;
+	add: #StatusItem;
+	add: #StatusOwnerDraw;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -162,6 +163,9 @@ package globalAliases: (Set new
 	add: #CompositePresenter;
 	add: #MultipleChoicePresenter;
 	add: #StaticViewAbstract;
+	add: #Status;
+	add: #StatusItem;
+	add: #StatusOwnerDraw;
 	yourself).
 
 package setPrerequisites: #(
@@ -219,6 +223,12 @@ CompositePresenter := Presenter!
 MultipleChoicePresenter := ChoicePresenter!
 
 StaticViewAbstract := StaticView!
+
+Status := StatusBar!
+
+StatusItem := StatusBarItem!
+
+StatusOwnerDraw := StatusBarNullItem!
 
 
 "Loose Methods"!
@@ -380,6 +390,7 @@ setTextColor:!modes!public! !
 screenResolution
 	Notification deprecated.
 	^self desktopResolution! !
+
 !Canvas class categoriesForMethods!
 screenResolution!environment!public! !
 !
@@ -502,6 +513,7 @@ splitHorizontal
 splitVertical
 	#deprecated.
 	^self sizeWE! !
+
 !Cursor class categoriesForMethods!
 splitHorizontal!instance creation!public! !
 splitVertical!instance creation!public! !
@@ -524,6 +536,7 @@ whatsThis:!commands!public! !
 asMenuBitmap
 	Notification deprecated.	"Extent required depends on DPI of the view the menu"
 	^self asSharedBitmap: SystemMetrics current menuImageExtent! !
+
 !Icon categoriesForMethods!
 asMenuBitmap!converting!public! !
 !
@@ -555,6 +568,7 @@ tileExtent
 
 	#deprecated.	"Varies by monitor DPI and should be queried from a SystemMetrics configured for the correct DPI of the monitor where the icon is to be displayed."
 	^SystemMetrics current tileIconExtent! !
+
 !Icon class categoriesForMethods!
 extraLargeExtent!constants!public! !
 largeExtent!constants!public! !
@@ -567,6 +581,7 @@ tileExtent!constants!public! !
 menuBitmapForIcon: anIcon
 	Notification deprecated.	"Extent required depends on DPI of the view the menu"
 	^self bitmapForIcon: anIcon extent: SystemMetrics current menuImageExtent! !
+
 !IconImageManager categoriesForMethods!
 menuBitmapForIcon:!public!searching! !
 !
@@ -659,38 +674,19 @@ resource_Multiselection_list_box!public!resources-views! !
 stateImageBlock: a0Block
 	Notification deprecated
 	"No longer supported as multiple image sizes will be needed. If custom tree expandos really are needed, then something based on icons would be better."! !
+
 !ListTreeView class categoriesForMethods!
 stateImageBlock:!accessing!do not copy!public! !
 !
 
 !ListView methodsFor!
 
-autoArrange
-	#deprecated.
-	^self isAutoArranged!
-
-autoArrange: aBoolean 
-	#deprecated.
-	self isAutoArranged: aBoolean!
-
 columns
 	#deprecated. "5.0"
-	^self allColumns copyFrom: 2!
-
-hasTrackSelect
-	#deprecated. "6.0"
-	^self hasHotTracking!
-
-hasTrackSelect: aBoolean 
-	#deprecated. "6.0"
-	self hasHotTracking: aBoolean! !
+	^self allColumns copyFrom: 2! !
 
 !ListView categoriesForMethods!
-autoArrange!arranging!public! !
-autoArrange:!accessing-styles!public! !
 columns!columns!public! !
-hasTrackSelect!accessing-styles!public! !
-hasTrackSelect:!accessing-styles!public! !
 !
 
 !LVBKIMAGEW methodsFor!
@@ -772,6 +768,7 @@ defaultHysteresis
 
 	#deprecated.
 	^SystemMetrics current dragHysteresis! !
+
 !MouseTracker class categoriesForMethods!
 defaultHysteresis!constants!public! !
 !
@@ -997,6 +994,7 @@ selection:!accessing!public! !
 beFullWidth
 	Notification deprecated.
 	self isAutoResize: true! !
+
 !StatusBarItemAbstract categoriesForMethods!
 beFullWidth!accessing!public! !
 !
@@ -1158,7 +1156,12 @@ isUppercase: aBoolean
 
 lines
 	#deprecated. "5.0"
-	^self lineCount! !
+	^self lineCount!
+
+setModify: aBoolean 
+	"May be used in early version view resources."
+	#deprecated.
+	self isTextModified: aBoolean! !
 
 !TextEdit categoriesForMethods!
 find:range:down:wholeWord:matchCase:!private!searching & replacing! !
@@ -1170,6 +1173,7 @@ isNumeric:!accessing!public! !
 isUpperCase!public!testing! !
 isUppercase:!public!testing! !
 lines!accessing!public! !
+setModify:!modes!public! !
 !
 
 !TextTileIcon class methodsFor!
@@ -1272,6 +1276,12 @@ defaultWindowProcessing: anEvent
 	#deprecated.
 	^anEvent defaultWindowProcessing!
 
+enable: aBoolean
+	"Sent from state in old view resources"
+
+	#deprecated.
+	self isEnabled: aBoolean!
+
 hasWindowEdge
 	#deprecated.	"6.0: This style is automatically managed by Windows and changing it has no
 			effect."
@@ -1306,6 +1316,7 @@ winHelpPopup: helpFileString topic: topicId at: aPointOrNil
 
 !View categoriesForMethods!
 defaultWindowProcessing:!dispatching!public! !
+enable:!operations!public! !
 hasWindowEdge!accessing-styles!public! !
 hasWindowEdge:!accessing-styles!public! !
 winHelpPopup:topic:!public! !

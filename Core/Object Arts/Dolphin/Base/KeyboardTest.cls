@@ -27,6 +27,6 @@ testInvariantMap
 	self assert: ((invariant keyNameFromVKey: delete ifNone: []) beginsWith: 'DEL')! !
 
 !KeyboardTest categoriesForMethods!
-testInvariantMap!public! !
+testInvariantMap!public!unit tests! !
 !
 

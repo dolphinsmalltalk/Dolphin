@@ -28,7 +28,7 @@ basicNext
 
 	| prefix class anObject newObjectIndex offset |
 	traceStream cr.
-	printOffsets 
+	printOffsets
 		ifTrue: 
 			[offset := stream position.
 			6 - offset displayString size timesRepeat: [traceStream nextPut: $0].
@@ -37,7 +37,7 @@ basicNext
 
 	"First, read the prefix."
 	prefix := STBPrefix fromInteger: self readInteger.
-	prefix isSmallInteger 
+	prefix isSmallInteger
 		ifTrue: 
 			[anObject := prefix smallInteger.
 			traceStream
@@ -45,9 +45,9 @@ basicNext
 				print: anObject;
 				nextPut: $].
 			^anObject].
-	prefix isDataPrefix 
+	prefix isDataPrefix
 		ifFalse: 
-			[prefix isCharacter 
+			[prefix isCharacter
 				ifTrue: 
 					[anObject := prefix character.
 					traceStream
@@ -65,7 +65,7 @@ basicNext
 	"Ascertain the class of the object."
 	indentLevel := indentLevel + 1.
 	traceStream nextPut: $[.
-	prefix isClassPrefix 
+	prefix isClassPrefix
 		ifTrue: 
 			[class := self readClassData: prefix dword.
 			traceStream print: class name displayString]
@@ -77,7 +77,7 @@ basicNext
 	"Now read the object data."
 	newObjectIndex := readMap size + 1.
 	anObject := self readObjectOfClass: class.
-	class isBytes 
+	class isBytes
 		ifTrue: 
 			[traceStream
 				space;

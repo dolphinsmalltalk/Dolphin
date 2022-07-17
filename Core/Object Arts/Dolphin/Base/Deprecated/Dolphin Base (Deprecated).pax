@@ -121,6 +121,7 @@ package methodNames
 	add: #MessageBoxAbstract -> #warning;
 	add: #Process -> #fpeMask;
 	add: #Process -> #fpeMask:;
+	add: #STBInFiler -> #readObjectOfClass:format:;
 	add: #STBPrefix -> #isLiteralPrefix;
 	add: #Stream -> #nextOrNil;
 	add: #String -> #asUnicodeString;
@@ -1118,6 +1119,19 @@ for: aCollection
 
 !STBCollectionProxy class categoriesForMethods!
 for:!instance creation!public! !
+!
+
+!STBInFiler methodsFor!
+
+readObjectOfClass: aClass format: anSTBClassConversion
+	#deprecated.
+	^self
+		readObjectOfClass: aClass
+		format: anSTBClassConversion
+		size: (self readSizeOf: aClass)! !
+
+!STBInFiler categoriesForMethods!
+readObjectOfClass:format:!operations!public! !
 !
 
 !STBPrefix methodsFor!

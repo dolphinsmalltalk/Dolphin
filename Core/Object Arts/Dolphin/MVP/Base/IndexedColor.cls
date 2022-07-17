@@ -190,14 +190,12 @@ named: aString
 
 	^InstancesByName at: aString!
 
-stbReadFrom: anSTBInFiler format: anSTBClassConversion 
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 	"Read a sub-instance of the receiver from the binary filer, aSTBInFiler."
 
 	"Implementation Note: Overridden in order to maintain unique instances without using a proxy"
 
 	| answer ref |
-	anSTBInFiler version < 3 ifTrue: [anSTBInFiler stream skip: 4].
-	"Make a placeholder for the Color"
 	ref := anSTBInFiler register: nil.
 	answer := self withIndex: anSTBInFiler basicNext.
 	anSTBInFiler fixup: ref to: answer.
@@ -215,7 +213,7 @@ withIndex: anInteger
 black!common colors!public! !
 initialize!development!initializing!public! !
 named:!instance creation!named colors!public! !
-stbReadFrom:format:!binary filing!public! !
+stbReadFrom:format:size:!binary filing!public! !
 white!common colors!public! !
 withIndex:!instance creation!public! !
 !

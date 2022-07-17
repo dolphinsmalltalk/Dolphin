@@ -48,8 +48,8 @@ testPrepareStructWithUtf8String
 	self assert: lpstrFile equals: utf8String! !
 
 !FileDialogTest categoriesForMethods!
-testExtractPathnames!public! !
-testPrepareStructWithNil!public! !
-testPrepareStructWithUtf8String!public! !
+testExtractPathnames!public!unit tests! !
+testPrepareStructWithNil!public!unit tests! !
+testPrepareStructWithUtf8String!public!unit tests! !
 !
 

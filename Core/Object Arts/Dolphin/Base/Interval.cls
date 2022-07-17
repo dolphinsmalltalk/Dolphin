@@ -156,6 +156,12 @@ printOn: target
 			print: self step].
 	target nextPut: $)!
 
+resize: anInteger
+	"Intervals cannot be resized."
+
+	^self shouldNotImplement
+!
+
 setFrom: startInteger to: stopInteger by: stepInteger
 	"Private - Initialize the receiver's instance variables."
 
@@ -248,6 +254,7 @@ inject:into:!enumerating!public! !
 isEmpty!public!testing! !
 last!accessing!public! !
 printOn:!printing!public! !
+resize:!mutating!private! !
 setFrom:to:by:!accessing!private! !
 size!accessing!public! !
 species!accessing!public! !

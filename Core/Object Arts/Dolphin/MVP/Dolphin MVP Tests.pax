@@ -5,7 +5,9 @@ package paxVersion: 1;
 	basicComment: ''.
 
 package classNames
+	add: #AbstractCardContainerTest;
 	add: #AbstractContainerViewTest;
+	add: #AbstractMultilineTextEditTest;
 	add: #AbstractPointTest;
 	add: #AbstractRectangleTest;
 	add: #AbstractShellViewTest;
@@ -16,15 +18,18 @@ package classNames
 	add: #BorderLayoutTest;
 	add: #BrushTest;
 	add: #CanvasTest;
+	add: #CardContainerTest;
 	add: #CheckBoxTest;
 	add: #CheckButtonTest;
 	add: #ChoicePresenterTest;
 	add: #ClipboardTest;
 	add: #ColorDialogTest;
 	add: #ColorTest;
+	add: #ColorViewTest;
 	add: #ComboBoxTest;
 	add: #CommandDescriptionTest;
 	add: #ContainerViewTest;
+	add: #DateTimePickerTest;
 	add: #DialogViewTest;
 	add: #DifferencesPresenterTest;
 	add: #DisplayMonitorTest;
@@ -37,8 +42,11 @@ package classNames
 	add: #FlowLayoutTest;
 	add: #FolderTest;
 	add: #FontTest;
+	add: #FontViewTest;
 	add: #FramingLayoutTest;
 	add: #GridLayoutTest;
+	add: #GroupBoxTest;
+	add: #HotKeyTest;
 	add: #IconTest;
 	add: #ImageViewAbstractTest;
 	add: #ImageViewTest;
@@ -53,9 +61,8 @@ package classNames
 	add: #MockScintillaView;
 	add: #MoenTreeViewTest;
 	add: #MoenTreeViewTest2;
+	add: #MonthCalendarViewTest;
 	add: #MultilineTextEditTest;
-	add: #MultipleSelectionListBoxTest;
-	add: #MultipleSelectionListViewTest;
 	add: #MultiSelectListBoxTest;
 	add: #MultiSelectListViewTest;
 	add: #PluggableColorTest;
@@ -64,6 +71,7 @@ package classNames
 	add: #POINTSTest;
 	add: #PointTest;
 	add: #PresenterTest;
+	add: #ProgressBarTest;
 	add: #ProportionalLayoutTest;
 	add: #PushButtonTest;
 	add: #RadioButtonSetPresenterTest;
@@ -77,6 +85,7 @@ package classNames
 	add: #ScintillaLexerMetadataTest;
 	add: #ScintillaLexerPropertyTest;
 	add: #ScintillaViewTest;
+	add: #ScrollBarTest;
 	add: #ScrollingDecoratorTest;
 	add: #SelectableItemsTest;
 	add: #SelectableListItemsTest;
@@ -86,15 +95,23 @@ package classNames
 	add: #SingleSelectListViewTest;
 	add: #SliderTest;
 	add: #SlideyInneyOuteyThingTest;
+	add: #SpinButtonTest;
+	add: #SplitterTest;
+	add: #StaticBitmapTest;
+	add: #StaticIconTest;
 	add: #StaticPathTest;
+	add: #StaticRectangleTest;
 	add: #StaticTextTest;
+	add: #StaticViewTest;
 	add: #StatusBarTest;
 	add: #StyledContainerTest;
+	add: #SysLinkViewTest;
 	add: #SystemMetricsTest;
 	add: #TabViewTest;
 	add: #TabViewXPTest;
 	add: #TextEditTest;
 	add: #ThemeColorTest;
+	add: #ToolbarTest;
 	add: #TreePresenterTest;
 	add: #TreeViewTest;
 	add: #TypeConverterTest;
@@ -103,6 +120,7 @@ package classNames
 	add: #VirtualColorTest;
 	add: #WINDOWPLACEMENTTest;
 	add: #WindowsEventTest;
+	add: #WizardCardContainerTest;
 	yourself.
 
 package methodNames
@@ -118,18 +136,23 @@ package globalAliases: (Set new
 	yourself).
 
 package setPrerequisites: #(
+	'..\IDE\Base\Development System'
 	'..\Base\Dolphin'
+	'Presenters\Accelerator\Dolphin Accelerator Presenter'
 	'..\Base\Dolphin Anonymous Classes'
 	'..\Base\Dolphin Base Tests'
 	'Base\Dolphin Basic Geometry'
 	'Presenters\Boolean\Dolphin Boolean Presenter'
+	'Views\Cards\Dolphin Card Containers'
 	'Presenters\Choice\Dolphin Choice Presenter'
 	'Presenters\Color\Dolphin Color Presenter'
 	'Views\Common Controls\Dolphin Common Controls'
 	'Dialogs\Common\Dolphin Common Dialogs'
 	'Views\Control Bars\Dolphin Control Bars'
+	'Views\Date Time\Dolphin Date Time Controls'
 	'Presenters\Date Time\Dolphin Date Time Presenters'
 	'Presenters\Difference\Dolphin Differences Presenter'
+	'Presenters\Font\Dolphin Font Presenter'
 	'Presenters\Image\Dolphin Image Presenter'
 	'Presenters\Prompters\Dolphin In-place Text Editor'
 	'..\Base\Dolphin Legacy Date & Time'
@@ -139,9 +162,9 @@ package setPrerequisites: #(
 	'..\System\Filer\Dolphin Literal Filer Tests'
 	'Metafiles\Dolphin Metafile Records'
 	'Views\MoenTree\Dolphin MoenTree View'
-	'Deprecated\Dolphin MVP (Deprecated)'
 	'Base\Dolphin MVP Base'
 	'Presenters\Number\Dolphin Number Presenter'
+	'Dialogs\Progress\Dolphin Progress Dialog'
 	'Presenters\Radio\Dolphin Radio Buttons'
 	'..\System\Random\Dolphin Random Stream'
 	'Presenters\Text\Dolphin Rich Text Presenter'
@@ -149,6 +172,7 @@ package setPrerequisites: #(
 	'Views\Scrollbars\Dolphin Scrollbars'
 	'Views\Slider\Dolphin Slider Control'
 	'Views\Sliding Tray\Dolphin Slidey-Inney-Outey Thing'
+	'Views\SpinButton\Dolphin SpinButton Control'
 	'Views\Styled Views\Dolphin Styled Views'
 	'Views\SysLink\Dolphin SysLink Control'
 	'Presenters\Text\Dolphin Text Presenter'
@@ -173,12 +197,6 @@ UserLibrary subclass: #FakeUserLibrary
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-DolphinTest subclass: #AbstractContainerViewTest
-	instanceVariableNames: 'containerView initialParentRect'
-	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
-
 DolphinTest subclass: #AbstractPointTest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -187,12 +205,6 @@ DolphinTest subclass: #AbstractPointTest
 
 DolphinTest subclass: #AbstractRectangleTest
 	instanceVariableNames: 'desktop oddDesktop unary'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-DolphinTest subclass: #AbstractShellViewTest
-	instanceVariableNames: 'fakeUser32 cursorPos shells'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -299,12 +311,6 @@ DolphinTest subclass: #MoenTreeViewTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-DolphinTest subclass: #MultipleSelectionListBoxTest
-	instanceVariableNames: 'box'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
 DolphinTest subclass: #Point3DTest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -315,12 +321,6 @@ DolphinTest subclass: #PresenterTest
 	instanceVariableNames: 'presenter'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
-
-DolphinTest subclass: #PushButtonTest
-	instanceVariableNames: 'shell shellButtonA shellButtonB dialog dialogButtonA dialogButtonB'
-	classVariableNames: ''
-	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
 DolphinTest subclass: #RadioButtonSetPresenterTest
@@ -383,18 +383,6 @@ DolphinTest subclass: #WindowsEventTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-AbstractContainerViewTest subclass: #ContainerViewTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
-
-AbstractContainerViewTest subclass: #StyledContainerTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
 AbstractKeyboardTest subclass: #AcceleratorTableTest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -443,18 +431,6 @@ ExternalRectangleTest subclass: #RECTLTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-AbstractShellViewTest subclass: #DialogViewTest
-	instanceVariableNames: 'owner shell2'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-AbstractShellViewTest subclass: #ShellViewTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
 LayoutManagerTest subclass: #BorderLayoutTest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -485,8 +461,20 @@ LayoutManagerTest subclass: #ProportionalLayoutTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-MultipleSelectionListBoxTest subclass: #MultipleSelectionListViewTest
+PresenterTest subclass: #AbstractCardContainerTest
 	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+PresenterTest subclass: #AbstractContainerViewTest
+	instanceVariableNames: 'initialParentRect'
+	classVariableNames: ''
+	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: ''!
+
+PresenterTest subclass: #AbstractShellViewTest
+	instanceVariableNames: 'fakeUser32 cursorPos shells'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -515,13 +503,25 @@ PresenterTest subclass: #ComboBoxTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
+PresenterTest subclass: #DateTimePickerTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
 PresenterTest subclass: #DifferencesPresenterTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-PresenterTest subclass: #ImageViewAbstractTest
+PresenterTest subclass: #GroupBoxTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+PresenterTest subclass: #HotKeyTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -539,7 +539,31 @@ PresenterTest subclass: #LinkButtonTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
+PresenterTest subclass: #MonthCalendarViewTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+PresenterTest subclass: #ProgressBarTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+PresenterTest subclass: #PushButtonTest
+	instanceVariableNames: 'shell shellButtonA shellButtonB dialog dialogButtonA dialogButtonB'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
 PresenterTest subclass: #ReferenceViewTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+PresenterTest subclass: #ScrollBarTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -563,13 +587,25 @@ PresenterTest subclass: #SliderTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-PresenterTest subclass: #StaticPathTest
+PresenterTest subclass: #SpinButtonTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-PresenterTest subclass: #StaticTextTest
+PresenterTest subclass: #SplitterTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+PresenterTest subclass: #StaticRectangleTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+PresenterTest subclass: #StaticViewTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -581,13 +617,61 @@ PresenterTest subclass: #StatusBarTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
+PresenterTest subclass: #SysLinkViewTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+PresenterTest subclass: #ToolbarTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
 PresenterTest subclass: #ViewTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-AbstractTextEditTest subclass: #MultilineTextEditTest
+AbstractCardContainerTest subclass: #CardContainerTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+AbstractCardContainerTest subclass: #WizardCardContainerTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+AbstractContainerViewTest subclass: #ContainerViewTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: ''!
+
+AbstractContainerViewTest subclass: #StyledContainerTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+AbstractShellViewTest subclass: #DialogViewTest
+	instanceVariableNames: 'owner shell2'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+AbstractShellViewTest subclass: #ShellViewTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+AbstractTextEditTest subclass: #AbstractMultilineTextEditTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -599,13 +683,19 @@ AbstractTextEditTest subclass: #TextEditTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-MultilineTextEditTest subclass: #RichTextEditTest
+AbstractMultilineTextEditTest subclass: #MultilineTextEditTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+AbstractMultilineTextEditTest subclass: #RichTextEditTest
 	instanceVariableNames: 'savedLocale'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-MultilineTextEditTest subclass: #ScintillaViewTest
+AbstractMultilineTextEditTest subclass: #ScintillaViewTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ScintillaConstants'
@@ -618,12 +708,6 @@ CheckButtonTest subclass: #CheckBoxTest
 	classInstanceVariableNames: ''!
 
 CheckButtonTest subclass: #RadioButtonTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-ImageViewAbstractTest subclass: #ImageViewTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -648,7 +732,7 @@ SelectableItemsTest subclass: #SlideyInneyOuteyThingTest
 	classInstanceVariableNames: ''!
 
 SelectableListItemsTest subclass: #AbstractTabViewTest
-	instanceVariableNames: 'allowCardChange'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -726,6 +810,54 @@ SelectableTreeItemsTest subclass: #TreePresenterTest
 	classInstanceVariableNames: ''!
 
 SelectableTreeItemsTest subclass: #TreeViewTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+StaticViewTest subclass: #ColorViewTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+StaticViewTest subclass: #FontViewTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+StaticViewTest subclass: #ImageViewAbstractTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+StaticViewTest subclass: #StaticBitmapTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+StaticViewTest subclass: #StaticIconTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+StaticViewTest subclass: #StaticPathTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+StaticViewTest subclass: #StaticTextTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+ImageViewAbstractTest subclass: #ImageViewTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

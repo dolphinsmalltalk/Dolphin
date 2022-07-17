@@ -80,17 +80,12 @@ fromCOLORREF: anInteger
 		ifTrue: [None]
 		ifFalse: [Win32Constants.CLR_DEFAULT = anInteger ifTrue: [Default] ifFalse: [self rgbClass fromRgbCode: anInteger]]!
 
-stbReadFrom: anSTBInFiler format: anSTBClassConversion
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 	"Read a sub-instance of the receiver from the binary filer, aSTBInFiler."
 
 	"Implementation Note: Overridden in order to maintain unique instances without using a proxy"
 
 	| answer ref |
-	anSTBInFiler version < 3
-		ifTrue: 
-			["Skip over the object size that older STB versions used to write for everything"
-			anSTBInFiler stream skip: 4].
-	"Make a placeholder for the Color"
 	ref := anSTBInFiler register: nil.
 	answer := self fromCOLORREF: anSTBInFiler basicNext.
 	anSTBInFiler fixup: ref to: answer.
@@ -99,6 +94,6 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion
 !ColorRef class categoriesForMethods!
 defaultColorRepresentation!constants!private! !
 fromCOLORREF:!instance creation!private! !
-stbReadFrom:format:!binary filing!public! !
+stbReadFrom:format:size:!binary filing!public! !
 !
 

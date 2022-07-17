@@ -129,14 +129,12 @@ initialize
 	Color addClassConstant: 'Window' value: (self named: #window).
 	Color addClassConstant: 'WindowText' value: (self named: #windowText)!
 
-stbReadFrom: anSTBInFiler format: anSTBClassConversion 
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 	"Read a sub-instance of the receiver from the binary filer, aSTBInFiler."
 
 	"Implementation Note: Overridden in order to maintain unique instances without using a proxy"
 
 	| answer ref |
-	anSTBInFiler version < 3 ifTrue: [anSTBInFiler stream skip: 4].
-	"Make a placeholder for the Color"
 	ref := anSTBInFiler register: nil.
 	answer := self withIndex: anSTBInFiler basicNext.
 	anSTBInFiler fixup: ref to: answer.
@@ -151,7 +149,7 @@ withIndex: anInteger
 
 !SystemColor class categoriesForMethods!
 initialize!class initialization!development!public! !
-stbReadFrom:format:!binary filing!public! !
+stbReadFrom:format:size:!binary filing!public! !
 withIndex:!instance creation!public! !
 !
 

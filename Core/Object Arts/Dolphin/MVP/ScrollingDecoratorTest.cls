@@ -25,6 +25,9 @@ initializePresenter
 				yourself).
 	presenter layoutManager shouldStretchToFit: false!
 
+oldDolphinVersionsForStbUpgrade
+	^#(5)!
+
 testMultipleSubViews
 	self should: [presenter addSubView: ContainerView new] raise: Error!
 
@@ -60,15 +63,48 @@ testSubViewResizeSmallerThanParent
 
 	presenter subViews first extent: 50 @ 50.
 	presenter layout.
-	self assert: presenter subViews first extent equals: 50 @ 50! !
+	self assert: presenter subViews first extent equals: 50 @ 50!
+
+vuFile
+	^'Presenter.Scrolling container.vu'! !
 
 !ScrollingDecoratorTest categoriesForMethods!
 classToTest!helpers!private! !
 initializePresenter!public!Running! !
+oldDolphinVersionsForStbUpgrade!constants!private! !
 testMultipleSubViews!public!unit tests! !
 testResizeLargeAndSmall!public!unit tests! !
 testResizeToNothing!public!unit tests! !
 testSubViewResizeLargerThanParent!public!unit tests! !
 testSubViewResizeSmallerThanParent!public!unit tests! !
+vuFile!constants!private! !
+!
+
+!ScrollingDecoratorTest class methodsFor!
+
+resource_Scrolling_container_D6
+	"Answer the literal data from which the 'Scrolling container' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Scrolling_container)
+	"
+
+
+	^#(#'!!STL' 3 788558 10 ##(STBViewProxy)  8 ##(ScrollingDecorator)  98 18 0 0 98 2 8 1143996416 131073 416 0 0 0 5 0 0 0 416 1573190 1 ##(ScrollingDecoratorLayout)  16 234 256 98 0 0 328198 ##(Point)  1 1 16 562 17 17 983302 ##(MessageSequence)  202 208 98 1 721670 ##(MessageSend)  8 #createAt:extent: 98 2 562 11 11 562 701 501 416 983302 ##(WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 99 1 0 0 255 0 0 0] 98 0 562 193 193 0 27 )!
+
+resource_Scrolling_container_D7
+	"Answer the literal data from which the 'Scrolling container' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Scrolling_container)
+	"
+
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ScrollingDecorator) 34 18 nil nil 34 2 8 1143996416 131073 416 nil nil nil 5 nil nil nil 416 1573190 1 ##(Smalltalk.ScrollingDecoratorLayout) true 170 192 8 #() nil 328198 ##(Smalltalk.Point) 1 1 true 546 17 17 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 546 11 11 546 701 501 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 99 1 0 0 255 0 0 0] 8 #() 546 193 193 nil 27)! !
+
+!ScrollingDecoratorTest class categoriesForMethods!
+resource_Scrolling_container_D6!public!resources-views! !
+resource_Scrolling_container_D7!public!resources-views! !
 !
 

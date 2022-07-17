@@ -90,6 +90,7 @@ testSystem
 	self assert: systemFont dpi equals: SystemMetrics current dpi.
 	self assert: Font system identicalTo: systemFont.
 	self assert: systemFont isKindOf: StockFont! !
+
 !FontTest categoriesForMethods!
 testAtDpi!public!unit tests! !
 testComparing!public!unit tests! !

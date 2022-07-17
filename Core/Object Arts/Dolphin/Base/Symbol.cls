@@ -427,25 +427,26 @@ stats
 		print: count / full asFloat;
 		contents!
 
-stbReadFrom: anSTBInFiler format: anSTBClassConversion 
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 	"Read an instance of the receiver from the binary filer, aSTBInFiler."
 
-	| stream size answer bytes |
-	anSTBInFiler version < 2 ifTrue: [^self stbReadFromProxy: anSTBInFiler].
+	| stream answer stringClass |
+	stringClass := anSTBInFiler version < 4
+				ifTrue: 
+					[anSTBInFiler version < 2 ifTrue: [^self stbReadFromProxy: anSTBInFiler].
+					"Symbols would definitely have been ANSI encoded. Unfortunately there was no STB version change specifically for the switch to unicode, and because Symbol's are a built-in class they do not benefit from the normal STB versioning mechanism, so there is nothing we can do now to correct any misencodings read from Symbols in STB files created in versions of 7.0 post 7.0.30 up to the first 7.1 versions with Unicode."
+					AnsiString]
+				ifFalse: [Utf8String].
 	stream := anSTBInFiler stream.
-	size := stream nextSDWORD.
-	bytes := stream next: size.
-	answer := self intern: (Utf8String fromByteArray: bytes).
+	answer := self intern: (stringClass fromByteArray: (stream next: anInteger)).
 	anSTBInFiler register: answer.
 	^answer!
 
-stbReadFromProxy: anSTBInFiler 
+stbReadFromProxy: anSTBInFiler
 	"Read and answer a <Symbol> from the binary in-filer argument, which is attached to an old
 	format STB stream which used a proxy to store symbols."
 
 	| answer ref |
-	anSTBInFiler stream skip: 4.
-	"Make a placeholder for the symbol"
 	ref := anSTBInFiler register: nil.
 	"Then read the string and intern it"
 	answer := anSTBInFiler basicNext asSymbol.
@@ -474,7 +475,7 @@ readFrom:!instance creation!public! !
 resizeTable!initializing!private! !
 resizeTable:!initializing!private! !
 stats!development!private! !
-stbReadFrom:format:!binary filing!public! !
+stbReadFrom:format:size:!binary filing!public! !
 stbReadFromProxy:!binary filing!private! !
 with:!instance creation!public! !
 withAll:!instance creation!public! !

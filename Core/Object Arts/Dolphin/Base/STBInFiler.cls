@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 STBFiler subclass: #STBInFiler
-	instanceVariableNames: 'readMap converters classLocator deferredActions flags'
+	instanceVariableNames: 'readMap converters classLocator deferredActions flags readSize'
 	classVariableNames: 'UpgradingMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -46,6 +46,23 @@ contents
 	[self atEnd]
 		whileFalse: [writeStream nextPut: self next].
 	^writeStream contents!
+
+convertObjectOfClass: aClass size: anInteger format: anSTBClassConversion
+	"Private - Read on old format object from the stream: Create an Array or ByteArray into which the stored instance variables are deserialized. This is passed to the converter block which answers an instance of the real class initialised from the array."
+
+	| newObject |
+	aClass isPointers
+		ifTrue: 
+			[newObject := Array new: anSTBClassConversion instSize + anInteger.
+			self register: newObject.
+			1 to: newObject size do: [:i | newObject at: i put: self basicNext]]
+		ifFalse: 
+			[newObject := ByteArray new: anInteger.
+			self register: newObject.
+			1 to: anInteger do: [:i | newObject at: i put: stream next]].
+	"Initialise a new instance from the old format object data and become it."
+	newObject become: (anSTBClassConversion converterBlock value: newObject).
+	^newObject!
 
 defaultClassLocatorClass
 	"Answer the class of Class Locator to use by default for finding and validating
@@ -146,38 +163,29 @@ readMap
 readObjectOfClass: aClass
 	^aClass stbReadFrom: self format: (converters lookup: aClass)!
 
-readObjectOfClass: aClass format: anSTBClassConversion
-	"Private - Read the stream for the data to create an instance of aClass."
+readObjectOfClass: aClass format: anSTBClassConversion size: anInteger
+	"Read the stream for the data to create an instance of aClass."
 
-	| basicSize fullSize newObject |
-	basicSize := self readIndexableSizeFor: aClass.
-	"Create a new object of sufficient size to hold the stored data."
-	anSTBClassConversion isNil
-		ifTrue: 
-			["The object is of the current format.
-			Create an instance of the appropriate class."
-			fullSize := aClass instSize + basicSize.
-			newObject := aClass isVariable ifTrue: [aClass basicNew: basicSize] ifFalse: [aClass basicNew]]
-		ifFalse: 
-			["The object is of an old format.
-			Create an Array or ByteArray to hold the stored data. This is
-			passed to the converter block which answers an instance of the
-			real class initialised from it."
-			fullSize := anSTBClassConversion instSize + basicSize.
-			newObject := anSTBClassConversion dataClass basicNew: fullSize].
+	^anSTBClassConversion
+		ifNil: [self readObjectOfClass: aClass size: anInteger]
+		ifNotNil: 
+			[self
+				convertObjectOfClass: aClass
+				size: anInteger
+				format: anSTBClassConversion]!
+
+readObjectOfClass: aClass size: anInteger
+	"Private - Read an object of the specified class and variable size, that is of the current format"
+
+	| newObject instSpec  |
 	"Register the new object before reading its instance variables, in case of circular references"
-	self register: newObject.
-
-	"Read the object's instance data."
-	aClass isBytes
+	self register: (newObject := aClass basicNew: anInteger).
+	instSpec := aClass instanceSpec.
+	(instSpec anyMask: Behavior._PointersMask)
 		ifTrue: 
-			["Many of these objects will be Strings, so some optimization may be possible"
-			1 to: fullSize do: [:i | newObject basicAt: i put: stream next]]
-		ifFalse: [1 to: fullSize do: [:i | newObject instVarAt: i put: self basicNext]].
-	anSTBClassConversion notNil
-		ifTrue: 
-			["Initialise a new instance from the old format object data and become it."
-			newObject become: (anSTBClassConversion converterBlock value: newObject)].
+			[1 to: (instSpec bitAnd: Behavior._SizeMask) + anInteger
+				do: [:i | newObject instVarAt: i put: self basicNext]]
+		ifFalse: [1 to: anInteger do: [:i | newObject basicAt: i put: stream next]].
 	^newObject!
 
 readObjectWithPrefix: anInteger
@@ -186,7 +194,6 @@ readObjectWithPrefix: anInteger
 
 	"SmallInteger?"
 	(anInteger allMask: STBPrefix.SmallIntegerMask) ifTrue: [^anInteger bitShift: -1].
-
 	(anInteger allMask: STBPrefix.DataPrefixMask)
 		ifFalse: 
 			[^(anInteger allMask: STBPrefix.CharacterMask)
@@ -204,6 +211,14 @@ readObjectWithPrefix: anInteger
 
 	"If anObject was a proxy for the real one, evaluate it now."
 	^anObject stbFixup: self at: newObjectIndex!
+
+readSizeBlock
+	^version < 3
+		ifTrue: [[:class | stream nextSDWORD]]
+		ifFalse: [[:class | class isVariable ifTrue: [stream nextSDWORD] ifFalse: [0]]]!
+
+readSizeOf: aClass
+	^readSize value: aClass!
 
 readVersion
 	| char |
@@ -226,6 +241,7 @@ reset
 	readMap := OrderedCollection new: 512.
 	converters := IdentityDictionary new.
 	deferredActions := nil.
+	readSize := self readSizeBlock.
 	super reset!
 
 resetAndValidateStream
@@ -246,6 +262,7 @@ classAt:!accessing!private! !
 classLocator!accessing!public! !
 classLocator:!accessing!public! !
 contents!enumerating!public! !
+convertObjectOfClass:size:format:!operations!public! !
 defaultClassLocatorClass!constants!private! !
 deferAction:!deferred actions!public! !
 evaluateDeferredActions!deferred actions!private! !
@@ -260,9 +277,12 @@ readClassLocator:!helpers!private! !
 readIndexableSizeFor:!operations!private! !
 readInteger!helpers!private! !
 readMap!accessing!private! !
-readObjectOfClass:!accessing!private! !
-readObjectOfClass:format:!operations!private! !
+readObjectOfClass:!operations!private! !
+readObjectOfClass:format:size:!operations!public! !
+readObjectOfClass:size:!operations!private! !
 readObjectWithPrefix:!accessing!private! !
+readSizeBlock!operations!private! !
+readSizeOf:!operations!public! !
 readVersion!initializing!private! !
 register:!helpers!private! !
 reset!initializing!private! !

@@ -1,39 +1,34 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-DolphinTest subclass: #MultipleSelectionListBoxTest
-	instanceVariableNames: 'box'
+PresenterTest subclass: #MultipleSelectionListControlTest
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-MultipleSelectionListBoxTest guid: (GUID fromString: '{29849786-386a-43f0-a24e-f1970727a83b}')!
+MultipleSelectionListControlTest guid: (GUID fromString: '{bef7231e-b333-4717-a462-cbf88117dba1}')!
 
-MultipleSelectionListBoxTest comment: 'Test that the behaviour of the deprecated MultipleSelectionListBox class retains its legacy features in the refactored ListControlView hierarchy.'!
+MultipleSelectionListControlTest isAbstract: true!
 
-!MultipleSelectionListBoxTest categoriesForClass!Unclassified! !
+MultipleSelectionListControlTest comment: 'Test that the behaviour of the deprecated MultipleSelectionListBox class retains its legacy features in the refactored ListControlView hierarchy.'!
 
-!MultipleSelectionListBoxTest methodsFor!
+!MultipleSelectionListControlTest categoriesForClass!Unclassified! !
+
+!MultipleSelectionListControlTest methodsFor!
 
 assertAllSelectionAre: anArray
+	| box |
+	box := self view.
 	self assert: box selection equals: anArray.
 	self assert: box selectionOrNil equals: anArray.
 	self assert: box selectionByIndex equals: anArray.
 	self assert: (box selectionIfNone: [#()]) equals: anArray!
 
-classToTest
-	^MultipleSelectionListBox!
-
-setUp
-	super setUp.
-	box := self classToTest show!
-
-tearDown
-	box topView destroy.
-	box := nil!
-
 testSelection
 	"Test legacy selection behaviour is maintained (even though it is incorrect)"
 
+	| box |
+	box := self view.
 	#(#selection: #selectionOrNil: #selectionByIndex: #selections: #selectionsByIndex:) do: 
 			[:each | 
 			box model list: (1 to: 6) asOrderedCollection.
@@ -106,6 +101,8 @@ testSelection
 			self assertAllSelectionAre: #(1)]!
 
 testSelectionCacheUpdated
+	| box |
+	box := self view.
 	box model list: (1 to: 6) asOrderedCollection.
 	box selections: #(1 3 5).
 	box model remove: 2.
@@ -120,7 +117,8 @@ testSelectionCacheUpdated
 testSelectionIfAbsent
 	"Test legacy selection behaviour is maintained (even though it is incorrect)"
 
-	| selections |
+	| box selections |
+	box := self view.
 	box model list: (1 to: 6) asOrderedCollection.
 	#(#selection:ifAbsent: #selectionByIndex:ifAbsent: #selections:ifAbsent: #selectionsByIndex:ifAbsent:)
 		do: 
@@ -188,7 +186,7 @@ testSelectionIfAbsent
 								with: [:nope | missing := nope]]
 				trigger: #selectionChanged
 				against: box.
-			self assert: box selections equals: (selections select: [:each | each between: 1 and: 6]).
+			self assert: box selections equals: (selections select: [:eachSel | eachSel between: 1 and: 6]).
 			self assert: missing asArray equals: #(8).
 			self assert: answer identicalTo: missing.
 
@@ -209,15 +207,20 @@ testSelectionIfAbsent
 						with: #()
 						with: [self assert: false]]
 				trigger: #selectionChanged
-				against: box]! !
+				against: box]!
 
-!MultipleSelectionListBoxTest categoriesForMethods!
+verifyUpgradedView: anInteger
+	| view |
+	super verifyUpgradedView: anInteger.
+	view := self view.
+	"The multi-select view will have been converted to a ListView with the isMultiSelect flag set"
+	self assert: view isMultiSelect! !
+
+!MultipleSelectionListControlTest categoriesForMethods!
 assertAllSelectionAre:!helpers!private! !
-classToTest!constants!private! !
-setUp!public!Running! !
-tearDown!public!Running! !
 testSelection!public!unit tests! !
 testSelectionCacheUpdated!public!unit tests! !
 testSelectionIfAbsent!public!unit tests! !
+verifyUpgradedView:!helpers!private! !
 !
 

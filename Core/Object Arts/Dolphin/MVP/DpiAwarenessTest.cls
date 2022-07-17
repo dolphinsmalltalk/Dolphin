@@ -136,6 +136,7 @@ testName
 testPrintString
 	#(#unaware #system #perMonitor #perMonitorV1 #gdiScaled #invalid)
 		do: [:each | self assert: (DpiAwareness named: each) printString equals: 'DpiAwareness <1s>' << each]! !
+
 !DpiAwarenessTest categoriesForMethods!
 allAwarenessContexts!constants!private! !
 testAwarenessLevel!public!unit tests! !

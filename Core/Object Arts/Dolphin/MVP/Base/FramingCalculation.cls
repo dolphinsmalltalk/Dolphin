@@ -300,7 +300,7 @@ relativeParentWidth
 		offsetBlock: [:offset :ctx | (offset - ctx parentLeft) / ctx parentWidth]
 		flags: IndependentMask | ProportionalMask!
 
-stbReadFrom: anSTBInFiler format: anSTBClassConversion 
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 	"Read an instance of the receiver from the binary filer, aSTBInFiler."
 
 	| answer ref |
@@ -331,6 +331,6 @@ onPostStripImage!event handling!private! !
 onPreStripImage!class hierarchy-removing!private! !
 relativeParentHeight!instance creation!public! !
 relativeParentWidth!instance creation!public! !
-stbReadFrom:format:!binary filing!public! !
+stbReadFrom:format:size:!binary filing!public! !
 !
 

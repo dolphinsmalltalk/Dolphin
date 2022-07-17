@@ -503,7 +503,7 @@ Object subclass: #Command
 
 Object subclass: #CommandDescription
 	instanceVariableNames: 'command description acceleratorKey flags image'
-	classVariableNames: 'CommandDescriptionRegistry CurrentId DefaultMask ModalMask'
+	classVariableNames: 'CommandDescriptionRegistry CurrentId DefaultMask ModalMask NotAbortableMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
@@ -4044,6 +4044,7 @@ dpiAwareness
 	"Answer the <DpiAwareness> context established for this Dolphin process. Note that this cannot be changed in a running session, only on restart."
 
 	^SystemDpiAwareness! !
+
 !UserLibrary class categoriesForMethods!
 desiredDpiAwareness!accessing!high DPI!public! !
 desiredDpiAwareness:!accessing!high DPI!public! !

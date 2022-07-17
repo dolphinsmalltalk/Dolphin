@@ -36,10 +36,10 @@ testWithTimes
 	self checkWith: 'Time fromString: ''11:55:56'''! !
 
 !EvaluationConverterTest categoriesForMethods!
-checkWith:!private! !
+checkWith:!helpers!private! !
 converter!private! !
-testWithArrays!public! !
-testWithDates!public! !
-testWithTimes!public! !
+testWithArrays!public!unit tests! !
+testWithDates!public!unit tests! !
+testWithTimes!public!unit tests! !
 !
 

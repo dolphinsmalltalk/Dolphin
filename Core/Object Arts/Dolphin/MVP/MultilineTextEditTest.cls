@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-AbstractTextEditTest subclass: #MultilineTextEditTest
+AbstractMultilineTextEditTest subclass: #MultilineTextEditTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -20,12 +20,24 @@ classToTest
 margins
 	^1 @ 1!
 
-text
-	^Object comment copyWithout: Character tab! !
+oldDolphinVersionsForStbUpgrade
+	^1 to: 4!
+
+verifyUpgradedView: anInteger
+	| view |
+	super verifyUpgradedView: anInteger.
+	view := self view.
+	self assertIsNil: view contextMenu.
+	self assert: (view instVarNamed: 'teFlags') equals: 4!
+
+vuFile
+	^'TextPresenter.Multiline text.vu'! !
 
 !MultilineTextEditTest categoriesForMethods!
-classToTest!helpers!private! !
-margins!private!unit tests! !
-text!constants!private! !
+classToTest!constants!private! !
+margins!constants!private! !
+oldDolphinVersionsForStbUpgrade!constants!private! !
+verifyUpgradedView:!helpers!private! !
+vuFile!constants!private! !
 !
 

@@ -66,7 +66,7 @@ reset
 
 	Current := nil!
 
-stbReadFrom: anSTBInFiler format: anSTBClassConversion 
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 	"Read an instance of the receiver from the binary filer, aSTBInFiler."
 
 	| singleton |
@@ -84,7 +84,7 @@ current!instance creation!public! !
 new!instance creation!private! !
 onPreStripImage!class hierarchy-removing!private! !
 reset!operations!public! !
-stbReadFrom:format:!binary filing!public! !
+stbReadFrom:format:size:!binary filing!public! !
 uninitialize!class hierarchy-removing!private! !
 !
 

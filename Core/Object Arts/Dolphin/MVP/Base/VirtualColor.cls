@@ -55,3 +55,17 @@ isNone!public!testing! !
 rgbCode!converting!public! !
 !
 
+!VirtualColor class methodsFor!
+
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
+	"Override back to default implementation"
+
+	^anSTBInFiler
+		readObjectOfClass: self
+		format: anSTBClassConversion
+		size: anInteger! !
+
+!VirtualColor class categoriesForMethods!
+stbReadFrom:format:size:!binary filing!public! !
+!
+

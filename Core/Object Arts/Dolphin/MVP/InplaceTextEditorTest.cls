@@ -42,6 +42,7 @@ testPaste
 	self assert: result equals: expected.
 	presenter ok.
 	self assert: presenter value equals: expected! !
+
 !InplaceTextEditorTest categoriesForMethods!
 classToTest!helpers!private! !
 setUp!private!Running! !

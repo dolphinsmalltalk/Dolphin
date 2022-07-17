@@ -905,9 +905,12 @@ setGuid: aGUID
 		self register]
 !
 
-stbReadFrom: anSTBInFiler format: anSTBClassConversion 
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 	self ensureDefined.
-	^super stbReadFrom: anSTBInFiler format: anSTBClassConversion!
+	^super
+		stbReadFrom: anSTBInFiler
+		format: anSTBClassConversion
+		size: anInteger!
 
 structurePacker
 	"Answer the object which implements the structure packing algorithm
@@ -1002,7 +1005,7 @@ registerClass:forGUID:!adding!public! !
 removeRedundantOffsetConstants!private!template definition! !
 resetTemplate!public!template definition! !
 setGuid:!accessing!private! !
-stbReadFrom:format:!binary filing!public! !
+stbReadFrom:format:size:!binary filing!public! !
 structurePacker!public!template definition! !
 template!accessing!private! !
 uninitializeBeforeRemove!class hierarchy-removing!public! !

@@ -6,6 +6,7 @@ Package manager
 	install: 'Core\Object Arts\Dolphin\System\Announcements\Dolphin Announcements Tests.pax';
 	install: 'Core\Object Arts\Dolphin\System\Filer\Dolphin Literal Filer Tests.pax';
 	install: 'Core\Object Arts\Dolphin\MVP\Dolphin MVP Tests.pax';
+	install: 'Core\Object Arts\Dolphin\MVP\Deprecated\Dolphin MVP Tests (Deprecated).pax';
 	install: 'Core\Object Arts\Dolphin\MVP\Gdiplus\Tests\Gdiplus Tests.pax';
 	install: 'Core\Contributions\Camp Smalltalk\SUnit\SUnitTests.pax';
 	install: 'Core\Contributions\Camp Smalltalk\ANSI\Tests\CS ANSI Tests.pax';

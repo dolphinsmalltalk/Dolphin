@@ -5803,7 +5803,7 @@ stbConvertFromVersion12: anArray
 	background should be transparent if this is supported by the control (though not many
 	controls do support transparency)."
 
-	(anArray at: 6) ifNil: [anArray at: 6 put: Color default].
+	(anArray at: 6) ifNil: [anArray at: 6 put: Color.Default].
 	^anArray!
 
 stbConvertFromVersion2: anArray 
@@ -5873,11 +5873,14 @@ stbConvertProxy: anSTBViewProxy
 							fromVersion: anSTBViewProxy version)!
 
 stbVersion
-	"Answer the current binary filer version number for instances of the receiver.
-	Versions up to and include 9 are common, but in Dolphin 4.0 you may now
-	upgrade Views individually. Just override this method to answer a version
-	from 14 and up. See STBViewProxy>>stbVersion for details of the common 
-	version upgrades that have happened to views in the past."
+	"Answer the current binary filer version number for instances of the receiver."
+
+	"Versions up to and including 9 were common, but in Dolphin 4.0 an individual version number was added allowing for View classes to have their own version numbers starting at 10.
+	See STBViewProxy>>stbVersion for details of the common version upgrades 1 through 10.
+	Some further common version number changes were made, so individual view versions should start from 14.
+		11: Separate ListView primaryColumn inst var was merged into the columns collection, but nil'd and left for future use.
+		12: Addition of inst vars to MoenTreeView and double-buffering style in ListView.
+		13: backcolor instance variable set to `Color default` as default, instead of nil."
 
 	^13!
 

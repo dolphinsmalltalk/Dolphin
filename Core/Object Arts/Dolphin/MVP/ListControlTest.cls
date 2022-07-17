@@ -438,7 +438,7 @@ testSelectionsByIndex!public!unit tests! !
 testSelectionsPreservedOnRecreate!public!unit tests! !
 verifyClicks:!helpers!private! !
 verifyEventsFromClickSelectionChangeAccepted:!helpers!private! !
-verifyEventsFromClickSelectionChangeRejected:!private! !
+verifyEventsFromClickSelectionChangeRejected:!helpers!private! !
 verifyMultiSelectionsByIndex!helpers!private! !
 verifySelectionsFromMouseDown:equals:!helpers!private! !
 verifySingleSelectionsByIndex!helpers!private! !

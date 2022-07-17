@@ -1359,8 +1359,13 @@ lvmSetExtendedListViewStyle: style
 	"Private - Set the extended styles of the receiver.
 	Implementation Note: Present for backward compatibility with pre-3.0 resources."
 
-	lvStyle := style.
-	self sendMessage: LVM_SETEXTENDEDLISTVIEWSTYLE wParam: 0 lpParam: style asParameter!
+	#deprecated.
+	lvStyle := style bitOr: LVS_EX_DOUBLEBUFFER.
+	UserLibrary default
+		sendMessage: handle
+		msg: LVM_SETEXTENDEDLISTVIEWSTYLE
+		wParam: 0
+		lpParam: style asParameter!
 
 lvmSetExtendedListViewStyle: dwExMask dwExStyle: dwExStyle
 	"Private - Set or reset the masked extended styles of the receiver.
@@ -2621,7 +2626,7 @@ stbConvert: instVarArray fromVersion: verInteger
 			instVars at: 30 put: lvFlags].
 	^instVars!
 
-stbConvertFromVersion10: anArray 
+stbConvertFromVersion10: anArray
 	"Private - Perform an STB conversion from a version 10 <ListView> to version 11,
 	i.e. merge column and primaryColumns instance variables into one, and add a couple 
 	of new spare inst. var slots."
@@ -2629,8 +2634,16 @@ stbConvertFromVersion10: anArray
 	| array |
 	array := super stbConvertFromVersion10: anArray.
 	(array at: 24) addFirst: (array at: 23).	"Copy primary column into OrderedCollection of columns"
-	array at: 23 put: nil.			"nil the former primary column slot"
-	^array!
+	self assert: [anArray size = 28].
+	"nil the former primary column slot (23), and set lastSelIndices to empty"	
+	^(Array new: 30)
+		replaceFrom: 1
+			to: 28
+			with: array
+			startingAt: 1;
+		at: 23 put: nil;
+		at: 26 put: #();
+		yourself	!
 
 stbConvertFromVersion11: anArray 
 	"Private - Perform an STB conversion from a version 11 <ListView> to version 12,
@@ -2664,7 +2677,9 @@ stbConvertFromVersion5: anArray
 
 stbVersion
 	"Versions:
-		1-13: See View
+		1-9: Common across all views and STBViewProxy
+		10: Adds customDrawBlock and two spare instance variables to IconicListAbstract (now largeIconExtent and thumbnailsImageManager) (D4; inst size 28)
+		11: primaryColumn and columns inst. vars merged into one collection, lastSel becomes lastSelIndices (and is always a collection) and add a couple of spare inst. vars (D5; inst size 30).
 		14-16: See EditableListView
 		17: Consolidates 4 vars using moreParams into inst vars and adds 12 spares"
 
