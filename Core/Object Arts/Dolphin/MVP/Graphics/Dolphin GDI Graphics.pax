@@ -63,6 +63,7 @@ package setClassNames: #(
 	#{OS.DEVMODE}
 	#{OS.DIBSECTION}
 	#{OS.DOCINFOW}
+	#{OS.ENUMLOGFONTW}
 	#{OS.GDILibrary}
 	#{OS.GRADIENT_RECT}
 	#{OS.GRADIENT_TRIANGLE}
@@ -872,6 +873,16 @@ OS.AbstractLOGFONT subclass: #'OS.LOGFONTW'
 	classConstants: {
 		'_LOGFONTW_Size' -> 16r5C.
 		'_OffsetOf_lfFaceName' -> 16r1C
+	}!
+OS.LOGFONTW subclass: #'OS.ENUMLOGFONTW'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_ENUMLOGFONTW_Size' -> 16r11C.
+		'_OffsetOf_elfFullName' -> 16r5C.
+		'_OffsetOf_elfStyle' -> 16rDC
 	}!
 OS.BITMAP subclass: #'OS.DIBSECTION'
 	instanceVariableNames: ''

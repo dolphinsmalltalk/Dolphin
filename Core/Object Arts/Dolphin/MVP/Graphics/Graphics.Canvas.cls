@@ -323,7 +323,7 @@ fontFamilies: aString do: aValuable
 				ifTrue: 
 					[Callback block: [:lplf :lpntm :dwType :lpData | aValuable value: lplf]
 						descriptor: (FunctionDescriptor returnType: 'sdword'
-								argumentTypes: 'ENUMLOGFONTW* lpvoid dword uintptr')]
+								argumentTypes: ##('<1p>* lpvoid dword uintptr' << ENUMLOGFONTW))]
 				ifFalse: 
 					[Callback block: 
 							[:lplf :lpntm :dwType :lpData |
@@ -332,7 +332,7 @@ fontFamilies: aString do: aValuable
 								cull: lpntm
 								cull: dwType]
 						descriptor: (FunctionDescriptor returnType: 'sdword'
-								argumentTypes: 'ENUMLOGFONTW* NEWTEXTMETRICW* dword uintptr')].
+								argumentTypes: ##('<1p>* <2p>* dword uintptr' << {ENUMLOGFONTW. NEWTEXTMETRICW}))].
 	answer := Gdi32
 				enumFontFamilies: self asParameter
 				lpszFamily: aString

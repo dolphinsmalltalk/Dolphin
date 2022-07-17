@@ -340,7 +340,7 @@ fonts: aString do: operation
 		);"
 
 	| callback answer |
-	#deprecated. "Use fontFamilies:do:, which uses the newer Windows API."
+	#deprecated.	"Use fontFamilies:do:, which uses the newer Windows API."
 	callback := External.Callback block: 
 					[:lplf :lptm :dwType :lpData |
 					operation
@@ -348,7 +348,7 @@ fonts: aString do: operation
 						value: lptm
 						value: dwType]
 				descriptor: (External.FunctionDescriptor returnType: 'sdword'
-						argumentTypes: 'LOGFONTW* lpvoid dword uintptr').
+						argumentTypes: ##('<1p>* lpvoid dword uintptr' << LOGFONTW)).
 	answer := Gdi32
 				enumFonts: self asParameter
 				lpFaceName: aString

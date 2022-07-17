@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Graphics.Tests.CanvasTest'
 	classConstants: {}!
 Graphics.Tests.CanvasTest guid: (Core.GUID fromString: '{f582d7b1-304e-45af-a9fd-315ee37dd609}')!
 Graphics.Tests.CanvasTest comment: ''!
-!Graphics.Tests.CanvasTest categoriesForClass!Unclassified! !
 !Graphics.Tests.CanvasTest methodsFor!
 
 testFont
@@ -26,6 +25,12 @@ testFont
 	font := canvas font: oldFont.
 	self assert: font identicalTo: newFont.
 	self assert: canvas font identicalTo: oldFont!
+
+testFontNames
+	| subject fontFamilies |
+	subject := Canvas forDesktop.
+	fontFamilies := subject fontNames.
+	self assert: (fontFamilies includes: 'Times New Roman')!
 
 testOutlineTextMetrics
 	"For #1349"
@@ -57,6 +62,7 @@ testOutlineTextMetrics
 	self assert: otm familyName equals: font name! !
 !Graphics.Tests.CanvasTest categoriesForMethods!
 testFont!public!unit tests! !
+testFontNames!public!unit tests! !
 testOutlineTextMetrics!public!unit tests! !
 !
 
