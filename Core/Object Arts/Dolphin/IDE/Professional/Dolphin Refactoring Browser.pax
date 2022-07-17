@@ -895,12 +895,15 @@ displayOn: aPuttableStream
 		print: selector!
 
 getOptionUseExistingMethod: aSymbol
-	^MessageBox new
-		caption: self displayString;
-		headline: 'Use existing method <1p>?' << aSymbol;
-		text: 'The existing method contains the same code as that you are extracting, and can be used safely instead of creating a new method.';
-		customButtons: #(#(#yes '&Use Existing') #(#no '&Create New Method'));
-		confirm! !
+	| response |
+	response := MessageBox new
+				caption: self displayString;
+				headline: 'Use existing method <1p>?' << aSymbol;
+				text: 'The existing method contains the same code as that you are extracting, and can be used safely instead of creating a new method.';
+				customButtons: #(#(#yes '&Use Existing') #(#no '&Create New Method'));
+				confirmOrCancel.
+	response == #cancel ifTrue: [self refactoringAborted].
+	^response == #yes! !
 !Refactory.Browser.ExtractMethodRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
 getOptionUseExistingMethod:!options!public! !
