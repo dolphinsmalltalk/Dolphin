@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Tests.PresenterTest subclass: #'UI.Tests.ImageViewAbstractTest'
+UI.Tests.StaticViewTest subclass: #'UI.Tests.ImageViewAbstractTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -9,14 +9,13 @@ UI.Tests.PresenterTest subclass: #'UI.Tests.ImageViewAbstractTest'
 UI.Tests.ImageViewAbstractTest guid: (Core.GUID fromString: '{ed83beab-fa00-4772-a8d4-fcf6e16c948a}')!
 UI.Tests.ImageViewAbstractTest isNonInstantiable: true!
 UI.Tests.ImageViewAbstractTest comment: ''!
-!UI.Tests.ImageViewAbstractTest categoriesForClass!Unclassified! !
 !UI.Tests.ImageViewAbstractTest methodsFor!
 
 image
 	^self subclassResponsibility!
 
-setUp
-	super setUp.
+initializePresenter
+	super initializePresenter.
 	presenter
 		viewMode: #center;
 		model: self image asValue!
@@ -53,7 +52,7 @@ testInvalidateOnResize
 	self assert: rect extent equals: extent * 2 - (50 @ 100)! !
 !UI.Tests.ImageViewAbstractTest categoriesForMethods!
 image!private!Running! !
-setUp!private!Running! !
-testInvalidateOnResize!public! !
+initializePresenter!public!Running! !
+testInvalidateOnResize!public!unit tests! !
 !
 

@@ -63,13 +63,13 @@ current
 reset
 	Invariant := nil!
 
-stbReadFrom: anSTBInFiler format: anSTBClassConversion
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 	"Read an instance of the receiver from the binary filer, aSTBInFiler."
 
 	^self error: 'Unexpected InvariantLocale instance in STB stream'! !
 !OS.InvariantLocale class categoriesForMethods!
 current!instance creation!public! !
 reset!initializing!public! !
-stbReadFrom:format:!binary filing!public! !
+stbReadFrom:format:size:!binary filing!public! !
 !
 

@@ -8,7 +8,6 @@ UI.Tests.ListViewTest subclass: #'UI.Tests.MultiSelectListViewTest'
 	classConstants: {}!
 UI.Tests.MultiSelectListViewTest guid: (Core.GUID fromString: '{67f073df-d832-4f4f-a5c1-57d8730e3515}')!
 UI.Tests.MultiSelectListViewTest comment: ''!
-!UI.Tests.MultiSelectListViewTest categoriesForClass!Unclassified! !
 !UI.Tests.MultiSelectListViewTest methodsFor!
 
 initializePresenter

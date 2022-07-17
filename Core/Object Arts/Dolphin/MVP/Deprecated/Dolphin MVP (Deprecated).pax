@@ -54,11 +54,7 @@ package methodNames
 	add: #ListModel -> #updateAtIndex:;
 	add: #ListModel -> #updateItem:;
 	add: #ListModel -> #updateItem:ifAbsent:;
-	add: #ListView -> #autoArrange;
-	add: #ListView -> #autoArrange:;
 	add: #ListView -> #columns;
-	add: #ListView -> #hasTrackSelect;
-	add: #ListView -> #hasTrackSelect:;
 	add: #LOGBRUSH -> #style;
 	add: #LOGBRUSH -> #style:;
 	add: #LOGPEN -> #style;
@@ -101,6 +97,7 @@ package methodNames
 	add: #TextEdit -> #isUpperCase;
 	add: #TextEdit -> #isUppercase:;
 	add: #TextEdit -> #lines;
+	add: #TextEdit -> #setModify:;
 	add: #TreeView -> #disableExpandAll;
 	add: #TreeView -> #disableExpandAll:;
 	add: #TypeConverter -> #leftExceptionalValue;
@@ -137,6 +134,8 @@ package globalNames
 	add: #CompositePresenter;
 	add: #MultipleChoicePresenter;
 	add: #StaticViewAbstract;
+	add: #Status;
+	add: #StatusOwnerDraw;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -147,6 +146,8 @@ package globalAliases: (Set new
 	add: #CompositePresenter;
 	add: #MultipleChoicePresenter;
 	add: #StaticViewAbstract;
+	add: #Status;
+	add: #StatusOwnerDraw;
 	yourself).
 
 package setPrerequisites: #(
@@ -206,6 +207,10 @@ CompositePresenter := Presenter!
 MultipleChoicePresenter := ChoicePresenter!
 
 StaticViewAbstract := StaticView!
+
+Status := StatusBar!
+
+StatusOwnerDraw := StatusBarNullItem!
 
 
 "Loose Methods"!
@@ -608,31 +613,11 @@ resource_Multiselection_list_box!public!resources-views! !
 
 !ListView methodsFor!
 
-autoArrange
-	#deprecated.
-	^self isAutoArranged!
-
-autoArrange: aBoolean 
-	#deprecated.
-	self isAutoArranged: aBoolean!
-
 columns
 	#deprecated. "5.0"
-	^self allColumns copyFrom: 2!
-
-hasTrackSelect
-	#deprecated. "6.0"
-	^self hasHotTracking!
-
-hasTrackSelect: aBoolean 
-	#deprecated. "6.0"
-	self hasHotTracking: aBoolean! !
+	^self allColumns copyFrom: 2! !
 !ListView categoriesForMethods!
-autoArrange!arranging!public! !
-autoArrange:!accessing-styles!public! !
 columns!columns!public! !
-hasTrackSelect!accessing-styles!public! !
-hasTrackSelect:!accessing-styles!public! !
 !
 
 !LOGBRUSH methodsFor!
@@ -989,7 +974,12 @@ isUppercase: aBoolean
 
 lines
 	#deprecated. "5.0"
-	^self lineCount! !
+	^self lineCount!
+
+setModify: aBoolean 
+	"May be used in early version view resources."
+	#deprecated.
+	self isTextModified: aBoolean! !
 !TextEdit categoriesForMethods!
 findNextWrapped:down:wholeWord:matchCase:!public!searching & replacing! !
 isLowercase!public!testing! !
@@ -999,6 +989,7 @@ isNumeric:!accessing!public! !
 isUpperCase!public!testing! !
 isUppercase:!public!testing! !
 lines!accessing!public! !
+setModify:!modes!public! !
 !
 
 !TextTileIcon class methodsFor!

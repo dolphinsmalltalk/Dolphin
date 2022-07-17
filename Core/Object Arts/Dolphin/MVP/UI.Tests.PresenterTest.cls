@@ -14,11 +14,22 @@ UI.Tests.PresenterTest comment: ''!
 classToTest
 	^self subclassResponsibility!
 
-d3ResourceStream: aString
-	^self resourceStream: 'D3ViewResources/' , aString text: false!
+destroyPresenter
+	presenter isNil
+		ifFalse: 
+			[| shell |
+			shell := presenter topShell.
+			shell = View desktop ifTrue: [presenter destroy] ifFalse: [shell close].
+			presenter := nil]!
 
 initializePresenter
-	self classToTest ifNotNil: [:subjectClass | presenter := subjectClass show]!
+	self classToTest
+		ifNotNil: 
+			[:subjectClass |
+			| shell |
+			presenter := subjectClass show.
+			shell := presenter topShell.
+			shell = View desktop ifFalse: [shell text: self printString]]!
 
 leftClickAt: aPoint 
 	"Fire a left-click at the specified client coordinate of the tested presenter."
@@ -45,26 +56,109 @@ leftClickAt: aPoint
 	^self.
 !
 
+oldDolphinVersionsForStbUpgrade
+	"Answer an <sequencedReadableCollection> of <Integer>, being the Dolphin versions for which there is a test view binary resource in a .vu file to attempt to upgrade."
+
+	^#()!
+
+oldStlResources
+	^self class resourceIdentifiers!
+
 setUp
-	self initializePresenter!
+	self shouldSetupPresenter ifTrue: [self initializePresenter]!
+
+shouldSetupPresenter
+	^(self thisTestMethod hasAnnotation: #nocreate) not!
 
 tearDown
-	presenter isNil
-		ifFalse: 
-			[| shell |
-			shell := presenter topShell.
-			shell = View desktop ifTrue: [presenter destroy] ifFalse: [shell close].
-			presenter := nil]!
+	self destroyPresenter!
+
+testStbUpgradeFromBinaryResources
+	"Test upgrades of old STB version .vu resources. These were used in versions of Dolphin prior to 6.0, after which the STL format was introduced and the resources stored as literal arrays in class methods.
+	In most cases the D5 resources are the same as the D4 version so are not tested. Later Dolphin versions had view resources in STL form, and these are tested separated."
+
+	"In order to test a subclass:
+		- Drop copies of the binary .vu resource files into appropriate subdirectories of the Resources\Tests\ViewResources folder for each relevant pre-D6 version.
+		- Override the oldDolphinVersions method to return a collection of the major versions to be tested
+		- Override the #verifyUpgradedView: method to add any further validation of the upgrade process, if required."
+
+	<nocreate>
+	self oldDolphinVersionsForStbUpgrade do: 
+			[:each |
+			self verifyStbUpgrade: each.
+			self destroyPresenter]!
+
+testStlUpgradesFromLiteralResources
+	"Test upgrades of old STL versions in STL format, e.g. from D6 or 7."
+
+	"In order to test a subclass:
+		- drop a copy of a relevant STL view resource method on the class side of the test class.
+		- Override the #verifyUpgradedView: method to add any further validation of the upgrade process, if required."
+
+	<nocreate>
+	self oldStlResources do: 
+			[:each |
+			self verifyStlUpgrade: each resource.
+			self destroyPresenter]!
+
+verifyStbUpgrade: anInteger
+	| stream filer version |
+	stream := self resourceStream: 'ViewResources/D<1p>/<2s>' << {anInteger. self vuFile} text: false.
+	filer := STBInFiler on: stream.
+	presenter := filer
+				context: View desktop;
+				basicNext.
+	stream close.
+	version := presenter version.
+	filer evaluateDeferredActions.
+	self verifyUpgradedView: version!
+
+verifyStlUpgrade: anArray
+	| version filer |
+	filer := STLInFiler on: anArray readStream.
+	presenter := filer
+				context: View desktop;
+				basicNext.
+	version := presenter version.
+	filer evaluateDeferredActions.
+	self verifyUpgradedView: version!
+
+verifyUpgradedView: anInteger
+	| view |
+	view := self view.
+Transcript print: anInteger; nextPutAll: ': '; print: presenter; cr.
+	self assert: view isKindOf: self viewClass.
+	self assert: view isOpen!
+
+view
+	^presenter view!
+
+viewClass
+	^self classToTest!
+
+vuFile
+	^self shouldNotImplement!
 
 waitForInputIdle
 	SessionManager inputState pumpMessages! !
 !UI.Tests.PresenterTest categoriesForMethods!
-classToTest!helpers!private! !
-d3ResourceStream:!helpers!private! !
+classToTest!constants!private! !
+destroyPresenter!public!Running! !
 initializePresenter!public!Running! !
-leftClickAt:!private!unit tests! !
+leftClickAt:!helpers!private! !
+oldDolphinVersionsForStbUpgrade!constants!private! !
+oldStlResources!constants!private! !
 setUp!public!Running! !
+shouldSetupPresenter!helpers!private! !
 tearDown!public!Running! !
-waitForInputIdle!private!unit tests! !
+testStbUpgradeFromBinaryResources!public!unit tests! !
+testStlUpgradesFromLiteralResources!public!unit tests! !
+verifyStbUpgrade:!helpers!private! !
+verifyStlUpgrade:!helpers!private! !
+verifyUpgradedView:!helpers!private! !
+view!accessing!private! !
+viewClass!constants!private! !
+vuFile!constants!private! !
+waitForInputIdle!helpers!private! !
 !
 

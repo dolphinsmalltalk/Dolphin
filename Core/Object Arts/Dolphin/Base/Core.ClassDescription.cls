@@ -943,15 +943,22 @@ sourceManager
 
 	^#{SourceManager} valueOrNil ifNil: [DeafObject current] ifNotNil: [:sm | sm default]!
 
-stbReadFrom: anSTBInFiler format: anSTBClassConversion 
-	"Read an instance of the receiver from the binary filer, aSTBInFiler. In most cases we can
-	just bat this right back to the in-filer, and let it read its standard format from the
-	stream. Custom format (or read routines) are useful where the standard STB format, and/or
-	reader, is too inefficient in terms of space, or time, or both. It can also be used to avoid
-	the need to create a proxy class; an example of this in D6 is the filing of symbols, which
-	relegates the old STBSymbolProxy class to use only for reading older STB files."
+stbReadFrom: anSTBInFiler format: anSTBClassConversion
+	"Read an instance of the receiver from the binary filer, aSTBInFiler.
+	Classes in D8 now override the new stbReadFrom:format:size: method, in order to avoid dealing with the complexities of the object size value. In older STB streams there is always a size. From STB v3, the size is only present for indexable classes (i.e. indexable pointer objects, variable byte objects). The filer still sends this message to the class being read for backwards compatibility."
 
-	^anSTBInFiler readObjectOfClass: self format: anSTBClassConversion!
+	^self
+		stbReadFrom: anSTBInFiler
+		format: anSTBClassConversion
+		size: (anSTBInFiler readSizeOf: self)!
+
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
+	"Read an instance of the receiver from the binary filer, aSTBInFiler. In most cases we can just bat this right back to the in-filer, and let it read its standard format from the stream. Custom format (or read routines) are useful where the standard STB format, and/or reader, is too inefficient in terms of space, or time, or both. It can also be used to avoid the need to create a proxy class; an example of this is the filing of symbols, which relegates the old STBSymbolProxy class to use only for reading older STB files."
+
+	^anSTBInFiler
+		readObjectOfClass: self
+		format: anSTBClassConversion
+		size: anInteger!
 
 storeClassCategories
 	"Private - Record the categories of the receiver to the change log."
@@ -1164,6 +1171,7 @@ shortName!accessing!public! !
 sourceFilerClass!private!source filing-class definition! !
 sourceManager!accessing!public! !
 stbReadFrom:format:!binary filing!public! !
+stbReadFrom:format:size:!binary filing!public! !
 storeClassCategories!private!source filing-methods! !
 storeOn:!printing!public! !
 subclasses!class hierarchy-accessing!public! !

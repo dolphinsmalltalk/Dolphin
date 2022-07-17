@@ -9,7 +9,6 @@ UI.Tests.SelectableItemsTest subclass: #'UI.Tests.SelectableListItemsTest'
 UI.Tests.SelectableListItemsTest guid: (Core.GUID fromString: '{48f12746-e517-4013-8077-973b1d783f60}')!
 UI.Tests.SelectableListItemsTest isNonInstantiable: true!
 UI.Tests.SelectableListItemsTest comment: ''!
-!UI.Tests.SelectableListItemsTest categoriesForClass!Unclassified! !
 !UI.Tests.SelectableListItemsTest methodsFor!
 
 autoSelectsFirst

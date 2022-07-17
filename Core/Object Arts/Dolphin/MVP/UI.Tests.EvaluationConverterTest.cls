@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'UI.Tests.EvaluationConverterTest'
 	classConstants: {}!
 UI.Tests.EvaluationConverterTest guid: (Core.GUID fromString: '{e4302154-42e4-4d4f-acbd-3e3aa6f78982}')!
 UI.Tests.EvaluationConverterTest comment: ''!
-!UI.Tests.EvaluationConverterTest categoriesForClass!Unclassified! !
 !UI.Tests.EvaluationConverterTest methodsFor!
 
 checkWith: string
@@ -32,10 +31,10 @@ testWithDates
 testWithTimes
 	self checkWith: 'Time fromString: ''11:55:56'''! !
 !UI.Tests.EvaluationConverterTest categoriesForMethods!
-checkWith:!private! !
+checkWith:!helpers!private! !
 converter!private! !
-testWithArrays!public! !
-testWithDates!public! !
-testWithTimes!public! !
+testWithArrays!public!unit tests! !
+testWithDates!public!unit tests! !
+testWithTimes!public!unit tests! !
 !
 

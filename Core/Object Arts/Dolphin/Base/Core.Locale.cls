@@ -1020,7 +1020,7 @@ stbConvertFrom: anSTBClassFormat
 
 	^[:data | data error: 'Not used']!
 
-stbReadFrom: anSTBInFiler format: anSTBClassConversion
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 	"Read an instance of the receiver from the binary filer, aSTBInFiler."
 
 	"Implementation Note: Overridden in order to maintain unique instances without using a STBSingletonProxy."
@@ -1087,7 +1087,7 @@ reset!initializing!public! !
 smalltalk!instance creation!public! !
 standard:!instance creation!public! !
 stbConvertFrom:!public! !
-stbReadFrom:format:!public! !
+stbReadFrom:format:size:!public! !
 stbVersion!public! !
 supportedSystemLocales!enquiries!private! !
 systemDefault!instance creation!public! !

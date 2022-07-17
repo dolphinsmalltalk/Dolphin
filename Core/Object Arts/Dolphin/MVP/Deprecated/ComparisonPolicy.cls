@@ -44,7 +44,9 @@ stbConvertFrom: anSTBClassFormat
 	(compareBlock class == BlockClosure and: 
 			[compareBlock method methodClass == self class
 				and: [SearchPolicy respondsTo: compareBlock method selector]])
-		ifTrue: [(SearchPolicy perform: compareBlock method selector) shallowCopy]
+		ifTrue: [
+			"shallowCopy is necessary here because STB uses become to swap in the converted object"
+			(SearchPolicy perform: compareBlock method selector) shallowCopy]
 		ifFalse: [SearchPolicy newCompareBlock: compareBlock hashBlock: [:each | each hash]]]!
 
 stbVersion

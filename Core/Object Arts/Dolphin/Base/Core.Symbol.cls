@@ -435,7 +435,7 @@ stats
 		print: count / full asFloat;
 		contents!
 
-stbReadFrom: anSTBInFiler format: anSTBClassConversion
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 	"Read an instance of the receiver from the binary filer, aSTBInFiler."
 
 	| stream answer stringClass |
@@ -446,17 +446,15 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion
 					AnsiString]
 				ifFalse: [Utf8String].
 	stream := anSTBInFiler stream.
-	answer := self intern: (stringClass fromByteArray: (stream next: stream nextSDWORD)).
+	answer := self intern: (stringClass fromByteArray: (stream next: anInteger)).
 	anSTBInFiler register: answer.
 	^answer!
 
-stbReadFromProxy: anSTBInFiler 
+stbReadFromProxy: anSTBInFiler
 	"Read and answer a <Symbol> from the binary in-filer argument, which is attached to an old
 	format STB stream which used a proxy to store symbols."
 
 	| answer ref |
-	anSTBInFiler stream skip: 4.
-	"Make a placeholder for the symbol"
 	ref := anSTBInFiler register: nil.
 	"Then read the string and intern it"
 	answer := anSTBInFiler basicNext asSymbol.
@@ -485,7 +483,7 @@ readFrom:!instance creation!public! !
 resizeTable!initializing!private! !
 resizeTable:!initializing!private! !
 stats!development!private! !
-stbReadFrom:format:!binary filing!public! !
+stbReadFrom:format:size:!binary filing!public! !
 stbReadFromProxy:!binary filing!private! !
 with:!instance creation!public! !
 withAll:!instance creation!public! !

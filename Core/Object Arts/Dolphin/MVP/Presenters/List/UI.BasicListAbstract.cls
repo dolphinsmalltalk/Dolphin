@@ -279,6 +279,17 @@ updateSelectionCache!helpers!private!selection! !
 initialize
 	View registerMessageMappings: {WM_CTLCOLORLISTBOX -> #wmCtlColor:wParam:lParam:}!
 
+stbConvertFromVersion10: anArray
+	"Private - Perform an STB conversion from a version 10 <ListView> to version 11,
+	i.e. merge column and primaryColumns instance variables into one, and add a couple 
+	of new spare inst. var slots."
+
+	| array |
+	array := super stbConvertFromVersion10: anArray.
+	"Set lastSelIndices to empty"
+	array at: 16 put: #().
+	^array!
+
 uninitialize
 	View unregisterMessageMappings: {WM_CTLCOLORLISTBOX}!
 
@@ -288,6 +299,7 @@ value: anObject
 	^anObject displayString! !
 !UI.BasicListAbstract class categoriesForMethods!
 initialize!development!initializing!private! !
+stbConvertFromVersion10:!binary filing!private! !
 uninitialize!class hierarchy-removing!private! !
 value:!evaluating!private! !
 !

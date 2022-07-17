@@ -8,17 +8,20 @@ UI.Tests.AbstractContainerViewTest subclass: #'UI.Tests.ContainerViewTest'
 	classConstants: {}!
 UI.Tests.ContainerViewTest guid: (Core.GUID fromString: '{4e892cf1-595a-44ad-9a6d-0c319b32d174}')!
 UI.Tests.ContainerViewTest comment: ''!
-!UI.Tests.ContainerViewTest categoriesForClass!Unclassified! !
 !UI.Tests.ContainerViewTest methodsFor!
 
-containerClass
+classToTest
 	^ContainerView!
+
+oldDolphinVersionsForStbUpgrade
+	^1 to: 4!
 
 test1PixBorderPaint
 	"Tests the validity of WM_PAINT of a 1 pixel border"
 
-	| paintBitmap |
+	| containerView paintBitmap |
 	self skipIfCiBuild.	"Fails on AppVeyor only"
+	containerView := self view.
 	containerView hasBorder: false.
 	self waitForScreenUpdate.
 	paintBitmap := self bitmapOfPaintView: containerView.
@@ -45,26 +48,27 @@ test1PixBorderPaint
 test1PixBorderPrint
 	"Tests the validity of WM_PRINT of a 1 pixel border"
 
-	| printBitmap |
+	| containerView printBitmap |
+	containerView := self view.
 	containerView hasBorder: false.
 	self waitForScreenUpdate.
 	printBitmap := self bitmapOfPrintView: containerView.
-	self 
+	self
 		checkRectangle: (self borderRectangleOf: containerView)
 		inBitmap: printBitmap
 		color: self backgroundColor.
-	self 
+	self
 		checkRectangle: ((self borderRectangleOf: containerView) insetBy: 1 asPoint)
 		inBitmap: printBitmap
 		color: self backgroundColor.
 	containerView hasBorder: true.
 	self waitForScreenUpdate.
 	printBitmap := self bitmapOfPrintView: containerView.
-	self 
+	self
 		checkRectangle: (self borderRectangleOf: containerView)
 		inBitmap: printBitmap
 		color: self borderColor.
-	self 
+	self
 		checkRectangle: ((self borderRectangleOf: containerView) insetBy: 1 asPoint)
 		inBitmap: printBitmap
 		color: self backgroundColor!
@@ -76,7 +80,8 @@ testBordersPrintAndPaintIdentical
 
 	"Test not bordered"
 
-	| paintPixels printPixels paintPixelsBordered printPixelsBordered |
+	| containerView paintPixels printPixels paintPixelsBordered printPixelsBordered |
+	containerView := self view.
 	self skipIfCiBuild.	"Fails on AppVeyor only"
 	containerView hasBorder: false.
 	self waitForScreenUpdate.
@@ -90,11 +95,42 @@ testBordersPrintAndPaintIdentical
 	paintPixelsBordered := (self bitmapOfPaintView: containerView) pixelData.
 	printPixelsBordered := (self bitmapOfPrintView: containerView) pixelData.
 	self assert: paintPixelsBordered = printPixelsBordered.
-	self deny: paintPixels = paintPixelsBordered! !
+	self deny: paintPixels = paintPixelsBordered!
+
+vuFile
+	^'CompositePresenter.Container view.vu'! !
 !UI.Tests.ContainerViewTest categoriesForMethods!
-containerClass!private! !
-test1PixBorderPaint!public! !
-test1PixBorderPrint!public! !
-testBordersPrintAndPaintIdentical!public! !
+classToTest!helpers!private! !
+oldDolphinVersionsForStbUpgrade!constants!private! !
+test1PixBorderPaint!public!unit tests! !
+test1PixBorderPrint!public!unit tests! !
+testBordersPrintAndPaintIdentical!public!unit tests! !
+vuFile!constants!private! !
+!
+
+!UI.Tests.ContainerViewTest class methodsFor!
+
+resource_Default_view_D6
+	"Answer the literal data from which the 'Default view' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	"
+
+	^#(#'!!STL' 3 788558 10 ##(STBViewProxy)  8 ##(ContainerView)  98 15 0 0 98 2 8 1140850688 131073 416 0 0 0 5 0 0 0 416 0 234 256 98 0 0 983302 ##(MessageSequence)  202 208 98 1 721670 ##(MessageSend)  8 #createAt:extent: 98 2 328198 ##(Point)  1 1 658 701 501 416 983302 ##(WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 94 1 0 0 250 0 0 0] 98 0 658 193 193 0 27 )!
+
+resource_Default_view_D7
+	"Answer the literal data from which the 'Default view' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	"
+
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ContainerView) 34 15 nil nil 34 2 8 1140850688 131073 416 nil nil nil 5 nil nil nil 416 nil 170 192 8 #() nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 1 1 626 701 501 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 94 1 0 0 250 0 0 0] 8 #() 626 193 193 nil 27 )! !
+!UI.Tests.ContainerViewTest class categoriesForMethods!
+resource_Default_view_D6!public!resources-views! !
+resource_Default_view_D7!public!resources-views! !
 !
 

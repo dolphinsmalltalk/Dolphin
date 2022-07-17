@@ -46,11 +46,26 @@ testPositionOfChar
 	canvas free!
 
 text
-	^self subclassResponsibility! !
+	^self subclassResponsibility!
+
+verifyUpgradedView: anInteger
+	| view |
+	super verifyUpgradedView: anInteger.
+	view := self view.
+	self assert: view view identicalTo: view.
+	self assertIsNil: view preferredExtent.
+	self deny: view usePreferredExtent.
+	self assert: view isManaged.
+	self assertIsNil: view font.
+	self assertIsNil: view getEvents.
+	self assert: view interactor identicalTo: view.
+	self assertIsNil: view forecolor.
+	self assert: view typeconverter isNullConverter! !
 !UI.Tests.AbstractTextEditTest categoriesForMethods!
 margins!constants!private! !
 nonProportionalFont!constants!private! !
 testPositionOfChar!public!unit tests! !
 text!constants!private! !
+verifyUpgradedView:!helpers!private! !
 !
 

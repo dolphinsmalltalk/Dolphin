@@ -143,17 +143,15 @@ readMap
 
 	^readMap!
 
-readObjectOfClass: aClass format: anSTBClassConversion
+readObjectOfClass: aClass format: anSTBClassConversion size: anInteger
 	"Read the stream for the data to create an instance of aClass."
 
-	| basicSize |
-	basicSize := readSize value: aClass.
 	^anSTBClassConversion
-		ifNil: [self readObjectOfClass: aClass size: basicSize]
+		ifNil: [self readObjectOfClass: aClass size: anInteger]
 		ifNotNil: 
 			[self
 				convertObjectOfClass: aClass
-				size: basicSize
+				size: anInteger
 				format: anSTBClassConversion]!
 
 readObjectOfClass: aClass size: anInteger
@@ -198,6 +196,9 @@ readSizeBlock
 	^version < 3
 		ifTrue: [[:class | stream nextSDWORD]]
 		ifFalse: [[:class | class isVariable ifTrue: [stream nextSDWORD] ifFalse: [0]]]!
+
+readSizeOf: aClass
+	^readSize value: aClass!
 
 readVersion
 	| char |
@@ -258,10 +259,11 @@ readClassData:!helpers!private! !
 readClassLocator:!helpers!private! !
 readInteger!helpers!private! !
 readMap!accessing!private! !
-readObjectOfClass:format:!operations!public! !
+readObjectOfClass:format:size:!operations!public! !
 readObjectOfClass:size:!operations!private! !
 readObjectWithPrefix:!accessing!private! !
 readSizeBlock!operations!private! !
+readSizeOf:!operations!public! !
 readVersion!initializing!private! !
 register:!helpers!private! !
 registerAll:!public! !

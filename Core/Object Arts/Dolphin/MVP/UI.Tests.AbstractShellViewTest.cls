@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTest subclass: #'UI.Tests.AbstractShellViewTest'
+UI.Tests.PresenterTest subclass: #'UI.Tests.AbstractShellViewTest'
 	instanceVariableNames: 'fakeUser32 cursorPos shells'
 	classVariableNames: ''
 	imports: #()
@@ -9,7 +9,6 @@ Core.Tests.DolphinTest subclass: #'UI.Tests.AbstractShellViewTest'
 UI.Tests.AbstractShellViewTest guid: (Core.GUID fromString: '{be6c197d-5333-4ba6-aef4-6b93d2970718}')!
 UI.Tests.AbstractShellViewTest isNonInstantiable: true!
 UI.Tests.AbstractShellViewTest comment: ''!
-!UI.Tests.AbstractShellViewTest categoriesForClass!Unclassified! !
 !UI.Tests.AbstractShellViewTest methodsFor!
 
 createShell: aRectangle text: aString
@@ -31,7 +30,6 @@ getSecondaryMonitorIfAvailable
 	^monitors size > 1 ifTrue: [monitors detect: [:each | each isPrimary not]] ifFalse: [monitors first]!
 
 setUp
-	super setUp.
 	shells := OrderedCollection new.
 	cursorPos := 0@0!
 

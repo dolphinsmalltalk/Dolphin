@@ -827,7 +827,7 @@ fromHexString: aString
 						+ (digits at: (aString basicAt: j) - ##($0 codePoint - 1))].
 	^answer!
 
-stbReadFrom: anSTBInFiler format: anSTBClassConversion
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 	"Read an instance of the receiver from the binary filer, aSTBInFiler. Note that we can
 	ignore the format argument, since ByteArray is a pre-registered class that cannot be
 	versioned. The format we read here is the same as that which would be read by the in-filer
@@ -836,7 +836,7 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion
 
 	| stream answer |
 	stream := anSTBInFiler stream.
-	answer := stream next: stream nextSDWORD.
+	answer := stream next: anInteger.
 	anSTBInFiler register: answer.
 	^answer! !
 !Core.ByteArray class categoriesForMethods!
@@ -846,6 +846,6 @@ encoding!constants!public! !
 fromAddress:length:!instance creation!public! !
 fromGlobalHandle:!instance creation!public! !
 fromHexString:!instance creation!public! !
-stbReadFrom:format:!binary filing!public! !
+stbReadFrom:format:size:!binary filing!public! !
 !
 

@@ -8,7 +8,6 @@ UI.Tests.AbstractKeyboardTest subclass: #'UI.Tests.KeyboardTest'
 	classConstants: {}!
 UI.Tests.KeyboardTest guid: (Core.GUID fromString: '{9cecaad7-bd3c-4b84-aff3-bbf32cb900fc}')!
 UI.Tests.KeyboardTest comment: ''!
-!UI.Tests.KeyboardTest categoriesForClass!Unclassified! !
 !UI.Tests.KeyboardTest methodsFor!
 
 testInvariantMap
@@ -23,6 +22,6 @@ testInvariantMap
 			self assert: keyName equals: each key].
 	self assert: ((invariant keyNameFromVKey: delete ifNone: []) beginsWith: 'DEL')! !
 !UI.Tests.KeyboardTest categoriesForMethods!
-testInvariantMap!public! !
+testInvariantMap!public!unit tests! !
 !
 

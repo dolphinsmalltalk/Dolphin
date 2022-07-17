@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTest subclass: #'UI.Tests.AbstractContainerViewTest'
-	instanceVariableNames: 'containerView'
+UI.Tests.PresenterTest subclass: #'UI.Tests.AbstractContainerViewTest'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
@@ -9,7 +9,6 @@ Core.Tests.DolphinTest subclass: #'UI.Tests.AbstractContainerViewTest'
 UI.Tests.AbstractContainerViewTest guid: (Core.GUID fromString: '{79c3a28a-ce43-49e3-a030-adb99de3efea}')!
 UI.Tests.AbstractContainerViewTest isNonInstantiable: true!
 UI.Tests.AbstractContainerViewTest comment: ''!
-!UI.Tests.AbstractContainerViewTest categoriesForClass!Unclassified! !
 !UI.Tests.AbstractContainerViewTest methodsFor!
 
 backgroundColor
@@ -49,7 +48,8 @@ borderRectangleOf: aView
 checkBorderedNcRectangle: borderWidth
 	"Private - Check that applying a border correctly changes the NC and Client rectagle calcs"
 
-	| clientRect parentRect calcClientRect calcNcRect |
+	| containerView clientRect parentRect calcClientRect calcNcRect |
+	containerView := self view.
 	clientRect := containerView clientRectangle.
 	parentRect := containerView rectangle.
 	self assert: clientRect position equals: Point zero.
@@ -86,8 +86,11 @@ checkRectangle: rect inBitmap: bitmap color: color
 		inBitmap: bitmap
 		color: color!
 
-containerClass
-	self subclassResponsibility!
+initializePresenter
+	presenter := self classToTest show.
+	presenter topView layoutManager: nil.
+	presenter rectangle: self initialParentRect.
+	presenter backcolor: self backgroundColor!
 
 initialParentExtent
 	"Answer the extent of the view under test. Keep this fairly small to avoid length
@@ -98,19 +101,11 @@ initialParentExtent
 initialParentRect
 	^10 @ 20 extent: self initialParentExtent!
 
-setUp
-	containerView := self containerClass show.
-	containerView topView layoutManager: nil.
-	containerView rectangle: self initialParentRect.
-	containerView backcolor: self backgroundColor!
-
-tearDown
-	containerView topView destroy.
-	containerView := nil!
-
 testBorderedNcRectangle
 	"Check that applying a border correctly changes the NC and Client rectagle calcs"
 	
+	| containerView |
+	containerView := self view.
 	containerView hasBorder: true.
 	self assert: containerView hasBorder.
 	self checkBorderedNcRectangle:1.!
@@ -118,7 +113,8 @@ testBorderedNcRectangle
 testNcCalcSize
 	"Border off - simple text"
 
-	| rect params ret parentRect |
+	| containerView rect params ret parentRect |
+	containerView := self view.
 	rect := RECTL fromRectangle: containerView rectangle.
 	self assert: rect asRectangle equals: self initialParentRect.
 	ret := containerView
@@ -163,7 +159,8 @@ testNcCalcSize
 testNonBorderedNcRectangle
 	"Check that applying a border correctly changes the NC and Client rectagle calcs"
 
-	| clientRect parentRect calcClientRect calcNcRect |
+	| containerView clientRect parentRect calcClientRect calcNcRect |
+	containerView := self view.
 	self deny: containerView hasBorder.
 	clientRect := containerView clientRectangle.
 	parentRect := containerView rectangle.
@@ -181,27 +178,25 @@ testNonBorderedNcRectangle
 	self assert: calcNcRect extent equals: clientRect extent!
 
 waitForScreenUpdate
-	containerView topView update.
+	self view topView update.
 	"5 timesRepeat: 
 			[SessionManager current inputState pumpMessages.
 			Processor sleep: 100]"! !
 !UI.Tests.AbstractContainerViewTest categoriesForMethods!
-backgroundColor!private! !
-bitmapOfPaintView:!public! !
+backgroundColor!constants!private! !
+bitmapOfPaintView:!helpers!public! !
 bitmapOfPrintView:!helpers!private! !
-borderColor!private! !
-borderRectangleOf:!private! !
-checkBorderedNcRectangle:!private! !
-checkPoints:inBitmap:color:!private! !
-checkRectangle:inBitmap:color:!private! !
-containerClass!private! !
+borderColor!constants!private! !
+borderRectangleOf:!helpers!private! !
+checkBorderedNcRectangle:!helpers!private! !
+checkPoints:inBitmap:color:!helpers!private! !
+checkRectangle:inBitmap:color:!helpers!private! !
+initializePresenter!public!Running! !
 initialParentExtent!private!Running! !
 initialParentRect!private!Running! !
-setUp!public!Running! !
-tearDown!public!Running! !
-testBorderedNcRectangle!public! !
-testNcCalcSize!public! !
-testNonBorderedNcRectangle!public! !
-waitForScreenUpdate!private! !
+testBorderedNcRectangle!public!unit tests! !
+testNcCalcSize!public!unit tests! !
+testNonBorderedNcRectangle!public!unit tests! !
+waitForScreenUpdate!helpers!private! !
 !
 

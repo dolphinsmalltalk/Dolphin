@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'UI.Tests.PositionEventTest'
 	classConstants: {}!
 UI.Tests.PositionEventTest guid: (Core.GUID fromString: '{dfddf958-2f9b-4f9e-b2ba-59c2fa09ebf8}')!
 UI.Tests.PositionEventTest comment: ''!
-!UI.Tests.PositionEventTest categoriesForClass!Unclassified! !
 !UI.Tests.PositionEventTest methodsFor!
 
 testIsRectangleChanged
@@ -27,6 +26,6 @@ testIsRectangleChanged
 	subject flags: SWP_NOSIZE.
 	self assert: subject isRectangleChanged! !
 !UI.Tests.PositionEventTest categoriesForMethods!
-testIsRectangleChanged!public! !
+testIsRectangleChanged!public!unit tests! !
 !
 

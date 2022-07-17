@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'UI.Tests.MenuTest'
 	classConstants: {}!
 UI.Tests.MenuTest guid: (Core.GUID fromString: '{7e39f8d9-1ee0-471d-8e3f-76c307707b10}')!
 UI.Tests.MenuTest comment: ''!
-!UI.Tests.MenuTest categoriesForClass!Unclassified! !
 !UI.Tests.MenuTest methodsFor!
 
 testFindCommand
@@ -25,6 +24,6 @@ testFindCommand
 	self assert: item command isKindOf: Message.
 	self assert: item command selector equals: #quit! !
 !UI.Tests.MenuTest categoriesForMethods!
-testFindCommand!public! !
+testFindCommand!public!unit tests! !
 !
 

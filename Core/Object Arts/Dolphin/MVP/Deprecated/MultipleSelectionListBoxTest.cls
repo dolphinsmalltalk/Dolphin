@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-DolphinTest subclass: #MultipleSelectionListBoxTest
-	instanceVariableNames: 'box'
+MultipleSelectionListControlTest subclass: #MultipleSelectionListBoxTest
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -10,209 +10,32 @@ MultipleSelectionListBoxTest comment: 'Test that the behaviour of the deprecated
 !MultipleSelectionListBoxTest categoriesForClass!Unclassified! !
 !MultipleSelectionListBoxTest methodsFor!
 
-assertAllSelectionAre: anArray
-	self assert: box selection equals: anArray.
-	self assert: box selectionOrNil equals: anArray.
-	self assert: box selectionByIndex equals: anArray.
-	self assert: (box selectionIfNone: [#()]) equals: anArray!
-
 classToTest
 	^MultipleSelectionListBox!
 
-setUp
-	super setUp.
-	box := self classToTest show!
+oldDolphinVersionsForStbUpgrade
+	^1 to: 4!
 
-tearDown
-	box topView destroy.
-	box := nil!
-
-testSelection
-	"Test legacy selection behaviour is maintained (even though it is incorrect)"
-
-	#(#selection: #selectionOrNil: #selectionByIndex: #selections: #selectionsByIndex:) do: 
-			[:each | 
-			box model list: (1 to: 6) asOrderedCollection.
-			self assertAllSelectionAre: #().
-			self 
-				shouldnt: [box perform: each with: #()]
-				trigger: #selectionChanged
-				against: box.
-			self assertAllSelectionAre: #().
-			"Add some selections"
-			self 
-				should: [box perform: each with: #(1 3 5)]
-				trigger: #selectionChanged
-				against: box.
-			self assertAllSelectionAre: #(1 3 5).
-			self 
-				shouldnt: [box perform: each with: #(1 3 5)]
-				trigger: #selectionChanged
-				against: box.
-			self assertAllSelectionAre: #(1 3 5).
-			"Now remove all selections"
-			self 
-				should: [box perform: each with: #()]
-				trigger: #selectionChanged
-				against: box.
-			self assertAllSelectionAre: #().
-			"Add one selection"
-			self 
-				should: [box perform: each with: #(3)]
-				trigger: #selectionChanged
-				against: box.
-			self assertAllSelectionAre: #(3).
-			self 
-				shouldnt: [box perform: each with: #(3)]
-				trigger: #selectionChanged
-				against: box.
-			self assertAllSelectionAre: #(3).
-			"Replace one selection"
-			self 
-				should: [box perform: each with: #(6)]
-				trigger: #selectionChanged
-				against: box.
-			self assertAllSelectionAre: #(6).
-			self 
-				shouldnt: [box perform: each with: #(6)]
-				trigger: #selectionChanged
-				against: box.
-			self assertAllSelectionAre: #(6).
-			"Add another selection"
-			self 
-				should: [box perform: each with: #(1 6)]
-				trigger: #selectionChanged
-				against: box.
-			self assertAllSelectionAre: #(1 6).
-			self 
-				shouldnt: [box perform: each with: #(1 6)]
-				trigger: #selectionChanged
-				against: box.
-			self assertAllSelectionAre: #(1 6).
-			"Remove one selection"
-			self 
-				should: [box perform: each with: #(1)]
-				trigger: #selectionChanged
-				against: box.
-			self assertAllSelectionAre: #(1).
-			self 
-				shouldnt: [box perform: each with: #(1)]
-				trigger: #selectionChanged
-				against: box.
-			self assertAllSelectionAre: #(1)]!
-
-testSelectionCacheUpdated
-	box model list: (1 to: 6) asOrderedCollection.
-	box selections: #(1 3 5).
-	box model remove: 2.
-	self assert: box lastSelIndices equals: box selectionsByIndex.
-	box model addFirst: 0.
-	self assert: box lastSelIndices equals: box selectionsByIndex.
-	box model add: 4.5 afterIndex: 4.
-	self assert: box lastSelIndices equals: box selectionsByIndex.
-	box model remove: 1.
-	self assert: box lastSelIndices equals: box selectionsByIndex!
-
-testSelectionIfAbsent
-	"Test legacy selection behaviour is maintained (even though it is incorrect)"
-
-	| selections |
-	box model list: (1 to: 6) asOrderedCollection.
-	#(#selection:ifAbsent: #selectionByIndex:ifAbsent: #selections:ifAbsent: #selectionsByIndex:ifAbsent:)
-		do: 
-			[:each |
-			| missing answer |
-			missing := OrderedCollection new.
-			self
-				should: 
-					[answer := box
-								perform: each
-								with: (0 to: 7)
-								with: [:nope | missing := nope]]
-				trigger: #selectionChanged
-				against: box.
-			"Might answer argument, or actual selections"
-			self assert: box selections equals: (1 to: 6) asArray.
-			self assert: missing asArray equals: #(0 7).
-			self assert: answer identicalTo: missing.
-			"Apply the same selection again - no change so no event"
-			missing := nil.
-			self
-				shouldnt: 
-					[answer := box
-								perform: each
-								with: (0 to: 7)
-								with: [:nope | missing := nope]]
-				trigger: #selectionChanged
-				against: box.
-			self assert: missing asArray equals: #(0 7).
-			self assert: answer identicalTo: missing.
-			self assert: box selections equals: (1 to: 6) asArray.
-			"Apply the same selection again, but this time with none of the selections being missing - again no change"
-			missing := nil.
-			self
-				shouldnt: 
-					[answer := box
-								perform: each
-								with: (1 to: 6)
-								with: [:nope | missing := nope]]
-				trigger: #selectionChanged
-				against: box.
-			self assertIsNil: missing.
-			"		self assert: (answer noDifference: (1 to: 6))."
-			self assert: box selections equals: (1 to: 6) asArray.
-			"Remove a selection or two"
-			selections := #(0 2 4 5).
-			self
-				should: 
-					[answer := box
-								perform: each
-								with: selections
-								with: [:nope | missing := nope]]
-				trigger: #selectionChanged
-				against: box.
-			self assert: box selections equals: (selections select: [:eachSel | eachSel between: 1 and: 6]).
-			self assert: missing asArray equals: #(0).
-			self assert: answer identicalTo: missing.
-			"Add a couple back"
-			self
-				should: 
-					[selections := #(2 3 4 5 6 8).
-					answer := box
-								perform: each
-								with: selections
-								with: [:nope | missing := nope]]
-				trigger: #selectionChanged
-				against: box.
-			self assert: box selections equals: (selections select: [:eachSel | eachSel between: 1 and: 6]).
-			self assert: missing asArray equals: #(8).
-			self assert: answer identicalTo: missing.
-
-			"Reset selection"
-			self
-				should: 
-					[box
-						perform: each
-						with: #()
-						with: [self assert: false]]
-				trigger: #selectionChanged
-				against: box.
-			"And again - should be no change"
-			self
-				shouldnt: 
-					[box
-						perform: each
-						with: #()
-						with: [self assert: false]]
-				trigger: #selectionChanged
-				against: box]! !
+vuFile
+	^'ListPresenter.Multi-selection list box.vu'! !
 !MultipleSelectionListBoxTest categoriesForMethods!
-assertAllSelectionAre:!helpers!private! !
 classToTest!constants!private! !
-setUp!public!Running! !
-tearDown!public!Running! !
-testSelection!public!unit tests! !
-testSelectionCacheUpdated!public!unit tests! !
-testSelectionIfAbsent!public!unit tests! !
+oldDolphinVersionsForStbUpgrade!constants!private! !
+vuFile!constants!private! !
+!
+
+!MultipleSelectionListBoxTest class methodsFor!
+
+resource_Multiselection_list_box_D6
+	"Answer the literal data from which the 'Multiselection list box' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Multiselection_list_box)
+	"
+
+	^#(#'!!STL' 3 788558 10 ##(STBViewProxy) 8 ##(MultipleSelectionListBox) 98 17 0 0 98 2 8 1144064257 1025 416 590662 2 ##(ListModel) 202 208 98 0 0 1114638 ##(STBSingletonProxy) 8 ##(SearchPolicy) 8 #identity 524550 ##(ColorRef) 8 4278190080 0 7 0 0 0 416 0 8 4294903705 459270 ##(Message) 8 #displayString 98 0 544 32 983302 ##(MessageSequence) 202 208 98 2 721670 ##(MessageSend) 8 #createAt:extent: 98 2 328198 ##(Point) 11 11 882 251 351 416 818 8 #horizontalExtent: 98 1 1 416 983302 ##(WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 130 0 0 0 180 0 0 0] 98 0 882 193 193 0 27)! !
+!MultipleSelectionListBoxTest class categoriesForMethods!
+resource_Multiselection_list_box_D6!public!resources-views! !
 !
 

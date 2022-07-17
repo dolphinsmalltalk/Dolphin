@@ -8,10 +8,9 @@ UI.Tests.AbstractContainerViewTest subclass: #'UI.Tests.StyledContainerTest'
 	classConstants: {}!
 UI.Tests.StyledContainerTest guid: (Core.GUID fromString: '{c2d30af9-3ddd-440f-add5-535cd0e410a9}')!
 UI.Tests.StyledContainerTest comment: ''!
-!UI.Tests.StyledContainerTest categoriesForClass!Unclassified! !
 !UI.Tests.StyledContainerTest methodsFor!
 
-containerClass
+classToTest
 	^Smalltalk.StyledContainer!
 
 parentBackcolor
@@ -24,8 +23,9 @@ test1PixDottedBorderPaint
 	"Tests the validity of WM_PAINT of a 1 pixel styled dotted border"
 
 	<namespace: Smalltalk>
-	| bitmap rect |
+	| containerView bitmap rect |
 	self skip: 'Known failing test'.
+	containerView := self view.
 	containerView hasBorder: true.
 	containerView styledPen: (Smalltalk.StyledPen 
 				color: self styledBorderColor
@@ -55,8 +55,9 @@ test1PixDottedBorderPrint
 	"Tests the validity of WM_PRINT of a 1 pixel styled dotted border"
 
 	<namespace: Smalltalk>
-	| bitmap rect |
+	| containerView bitmap rect |
 	self skip: 'Known failing test'.
+	containerView := self view.
 	containerView hasBorder: true.
 	containerView styledPen: (Smalltalk.StyledPen 
 				color: self styledBorderColor
@@ -81,10 +82,10 @@ test1PixDottedBorderPrint
 		inBitmap: bitmap
 		color: self backgroundColor! !
 !UI.Tests.StyledContainerTest categoriesForMethods!
-containerClass!private! !
+classToTest!helpers!private! !
 parentBackcolor!private! !
 styledBorderColor!private! !
-test1PixDottedBorderPaint!public! !
-test1PixDottedBorderPrint!public! !
+test1PixDottedBorderPaint!public!unit tests! !
+test1PixDottedBorderPrint!public!unit tests! !
 !
 

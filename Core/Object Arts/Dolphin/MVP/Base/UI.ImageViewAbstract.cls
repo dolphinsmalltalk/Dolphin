@@ -361,14 +361,16 @@ initialize
 				isImmutable: true;
 				yourself)!
 
-stbConvertFromVersion12: anArray 
+stbConvertFromVersion12: anArray
 	"Private - Perform an STB conversion from a version 12 <View> to version 13. 13 adds
 	inheritable background colours if the backcolor is nil (similar to the way fonts are
 	inherited). The special colour 'default' can be used to specify the control's default
 	background colour. In this version ImageView itself adds a flags instance variable."
 
-	(anArray at: 6) ifNil: [anArray at: 6 put: Color default].
-	^anArray, #(0 nil nil)!
+	| backcolor |
+	backcolor := anArray at: 6.
+	(backcolor isNil or: [backcolor = Color silver]) ifTrue: [anArray at: 6 put: Color default].
+	^anArray , #(0 nil nil)!
 
 viewModes
 	^#(#normal #centered #scale #scaleToFit #scaleBestFit)!

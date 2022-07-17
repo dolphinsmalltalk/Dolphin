@@ -26,6 +26,7 @@ package methodNames
 	add: #_FPIEEE_RECORD -> #causeCode;
 	add: #_FPIEEE_RECORD -> #causeName;
 	add: #_FPIEEE_VALUE -> #valueType;
+	add: #AbstractSTBInFiler -> #readObjectOfClass:format:;
 	add: #AbstractWindowsLocale -> #dateOrder;
 	add: #AbstractWindowsLocale -> #dateSeparator;
 	add: #ArithmeticValue -> #quoAndRem:;
@@ -72,6 +73,7 @@ package methodNames
 	add: #TimeStamp -> #dateAndTime;
 	add: #TimeStamp -> #time:;
 	add: #UndefinedObject -> #subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:;
+	add: #View -> #enable:;
 	add: #VMLibrary -> #isWindows10OrGreater;
 	add: #VMLibrary -> #isWindows7OrGreater;
 	add: #VMLibrary -> #isWindows7SP1OrGreater;
@@ -128,7 +130,8 @@ package globalAliases: (Set new
 package setPrerequisites: #(
 	'..\Dolphin'
 	'..\Dolphin Conformant Array Fields'
-	'..\Dolphin Legacy Date & Time').
+	'..\Dolphin Legacy Date & Time'
+	'..\..\MVP\Base\Dolphin MVP Base').
 
 package!
 
@@ -198,6 +201,18 @@ valueType
 	^self format! !
 !_FPIEEE_VALUE categoriesForMethods!
 valueType!accessing!public! !
+!
+
+!AbstractSTBInFiler methodsFor!
+
+readObjectOfClass: aClass format: anSTBClassConversion
+	#deprecated.
+	^self
+		readObjectOfClass: aClass
+		format: anSTBClassConversion
+		size: (self readSizeOf: aClass)! !
+!AbstractSTBInFiler categoriesForMethods!
+readObjectOfClass:format:!operations!public! !
 !
 
 !AbstractWindowsLocale methodsFor!
@@ -871,6 +886,17 @@ subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: 
 		yourself! !
 !UndefinedObject categoriesForMethods!
 subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
+!
+
+!View methodsFor!
+
+enable: aBoolean
+	"Sent from state in old view resources"
+
+	#deprecated.
+	self isEnabled: aBoolean! !
+!View categoriesForMethods!
+enable:!operations!public! !
 !
 
 !VMLibrary methodsFor!

@@ -1367,7 +1367,7 @@ snow
 springGreen
 	^self named: #springGreen!
 
-stbReadFrom: anSTBInFiler format: anSTBClassConversion
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 	"Read an instance of the receiver from the binary filer, aSTBInFiler."
 
 	"Implementation Note: Overridden in order to maintain unique instances without using an
@@ -1632,7 +1632,7 @@ slateBlue!**auto generated**!common colors!public! !
 slateGray!**auto generated**!common colors!public! !
 snow!**auto generated**!common colors!public! !
 springGreen!**auto generated**!common colors!public! !
-stbReadFrom:format:!binary filing!public! !
+stbReadFrom:format:size:!binary filing!public! !
 steelBlue!**auto generated**!common colors!public! !
 systemColor:!instance creation!public! !
 systemColorClass!constants!public! !

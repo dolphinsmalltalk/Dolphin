@@ -8,7 +8,6 @@ UI.Tests.AbstractMultilineTextEditTest subclass: #'UI.Tests.RichTextEditTest'
 	classConstants: {}!
 UI.Tests.RichTextEditTest guid: (Core.GUID fromString: '{bc34bf3f-4b1c-44a8-9c0c-b25db1e72469}')!
 UI.Tests.RichTextEditTest comment: ''!
-!UI.Tests.RichTextEditTest categoriesForClass!Unclassified! !
 !UI.Tests.RichTextEditTest methodsFor!
 
 classToTest
@@ -19,6 +18,9 @@ margins
 
 nonProportionalFont
 	^Font name: 'Consolas'!
+
+oldDolphinVersionsForStbUpgrade
+	^1 to: 4!
 
 setUp
 	super setUp.
@@ -142,16 +144,59 @@ testStreamInUtfText
 text
 	"As of v2.0 of the RichEdit control, it strips out CRs internally, and so positions will be out relative to the original text"
 
-	^'Ḽơᶉëᶆ ȋṕšᶙṁ ḍỡḽǭᵳ ʂǐť ӓṁệẗ, ĉṓɲṩḙċťᶒțûɾ ấɖḯƥĭṩčįɳġ ḝłįʈ'! !
+	^'Ḽơᶉëᶆ ȋṕšᶙṁ ḍỡḽǭᵳ ʂǐť ӓṁệẗ, ĉṓɲṩḙċťᶒțûɾ ấɖḯƥĭṩčįɳġ ḝłįʈ'!
+
+verifyUpgradedView: anInteger
+	super verifyUpgradedView: anInteger.
+	self view plainText: self printString.
+	self assert: (self view instVarNamed: 'teFlags') equals: 4!
+
+vuFile
+	^'RichTextPresenter.Default view.vu'! !
 !UI.Tests.RichTextEditTest categoriesForMethods!
 classToTest!helpers!private! !
 margins!private!unit tests! !
 nonProportionalFont!constants!private! !
+oldDolphinVersionsForStbUpgrade!constants!private! !
 setUp!private!unit tests! !
 tearDown!private!running! !
 testCharNearestPosition!public!unit tests! !
 testStreamInAnsiText!public!unit tests! !
 testStreamInUtfText!public!unit tests! !
-text!public! !
+text!constants!public! !
+verifyUpgradedView:!helpers!private! !
+vuFile!constants!private! !
+!
+
+!UI.Tests.RichTextEditTest class methodsFor!
+
+resource_Default_view_D6
+	"Answer the literal data from which the 'Default view' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	"
+
+	^#(#'!!STL' 3 788558 10 ##(Smalltalk.STBViewProxy)  8 ##(Smalltalk.RichTextEdit)  98 18 0 0 98 2 8 1140920644 1025 416 0 524550 ##(Smalltalk.ColorRef)  8 4278190080 0 7 265030 4 ##(Smalltalk.Menu)  0 16 98 10 984134 2 ##(Smalltalk.CommandMenuItem)  1 1180998 4 ##(Smalltalk.CommandDescription)  8 #chooseSelectionFont 8 '&Font...' 1 1 0 0 0 983366 1 ##(Smalltalk.DividerMenuItem)  4097 594 1 626 8 #bePlain 8 '&Plain' 1 1 0 0 0 594 1 626 8 #toggleBold 8 '&Bold' 1 1 0 0 0 594 1 626 8 #toggleItalic 8 '&Italic' 1 1 0 0 0 594 1 626 8 #toggleUnderlined 8 '&Underlined' 1 1 0 0 0 690 4097 546 0 16 98 3 594 1025 626 8 #alignParagraphLeft 8 '&Left' 1 1 0 0 0 594 1025 626 8 #alignParagraphCenter 8 '&Centre' 1 1 0 0 0 594 1025 626 8 #alignParagraphRight 8 '&Right' 1 1 0 0 0 8 '&Align' 0 1 0 0 0 0 0 690 4097 594 1 626 8 #chooseSelectionColor 8 '&Colour...' 1 1 0 0 0 8 '' 0 1 0 0 0 0 0 0 0 416 0 8 1833025437 852486 ##(Smalltalk.NullConverter)  0 0 9 0 655622 ##(Smalltalk.EDITSTREAM)  8 #[0 0 0 0 0 0 0 0 48 0 132 1] 983302 ##(Smalltalk.MessageSequence)  202 208 98 6 721670 ##(Smalltalk.MessageSend)  8 #createAt:extent: 98 2 328198 ##(Smalltalk.Point)  2799 21 1554 421 351 416 1490 8 #contextMenu: 98 1 560 416 1490 8 #text: 98 1 524550 ##(Smalltalk.RichText)  8 '{\rtf1\ansi\ansicpg1252\deff0\deflang2057{\fonttbl{\f0\froman Times New Roman;}}
+\viewkind4\uc1\pard\f0\fs22 
+\par }
+' 416 1490 8 #selectionRange: 98 1 525062 ##(Smalltalk.Interval)  3 1 3 416 1490 8 #isTextModified: 98 1 32 416 1490 8 #resetCharFormat 98 0 416 983302 ##(Smalltalk.WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 119 5 0 0 10 0 0 0 73 6 0 0 185 0 0 0] 98 0 1554 193 193 0 27 )!
+
+resource_Default_view_D7
+	"Answer the literal data from which the 'Default view' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	"
+
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.RichTextEdit) 34 18 nil nil 34 2 8 1140920644 1025 416 nil 327686 ##(Smalltalk.Color) #default nil 7 265030 4 ##(Smalltalk.Menu) nil true 34 10 984134 2 ##(Smalltalk.CommandMenuItem) 1 1180998 4 ##(Smalltalk.CommandDescription) #chooseSelectionFont 8 '&Font...' 1 1 nil nil nil 983366 1 ##(Smalltalk.DividerMenuItem) 4097 562 1 594 #bePlain 8 '&Plain' 1 1 nil nil nil 562 1 594 #toggleBold 8 '&Bold' 1 1 nil nil nil 562 1 594 #toggleItalic 8 '&Italic' 1 1 nil nil nil 562 1 594 #toggleUnderlined 8 '&Underlined' 1 1 nil nil nil 642 4097 514 nil true 34 3 562 1025 594 #alignParagraphLeft 8 '&Left' 1 1 nil nil nil 562 1025 594 #alignParagraphCenter 8 '&Centre' 1 1 nil nil nil 562 1025 594 #alignParagraphRight 8 '&Right' 1 1 nil nil nil 8 '&Align' nil 1 nil nil nil nil nil 642 4097 562 1 594 #chooseSelectionColor 8 '&Colour...' 1 1 nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil 416 nil 8 2063088144 852486 ##(Smalltalk.NullConverter) nil nil 9 nil 655622 ##(Smalltalk.EDITSTREAM) 8 #[0 0 0 0 0 0 0 0 16 0 13 4] 983302 ##(Smalltalk.MessageSequence) 138 144 34 5 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 1362 421 351 416 1314 #contextMenu: 34 1 528 416 1314 #text: 34 1 524550 ##(Smalltalk.RichText) 8 '{\urtf1\ansi\ansicpg1252\deff0\deflang2057{\fonttbl{\f0\froman Times New Roman;}}
+\viewkind4\uc1\pard\f0\fs22\par
+}
+' 416 1314 #textLimit: 8 #(1073741823) 416 1314 #resetCharFormat 8 #() 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 81 8 0 0 185 0 0 0] 8 #() 1362 193 193 nil 27 )! !
+!UI.Tests.RichTextEditTest class categoriesForMethods!
+resource_Default_view_D6!public!resources-views! !
+resource_Default_view_D7!public!resources-views! !
 !
 

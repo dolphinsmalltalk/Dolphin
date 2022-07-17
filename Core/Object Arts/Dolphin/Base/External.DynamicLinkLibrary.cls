@@ -525,7 +525,7 @@ sharedVariableName
 
 	^nil!
 
-stbReadFrom: anSTBInFiler format: anSTBClassConversion 
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 	"Read an instance of the receiver from the binary filer, aSTBInFiler."
 
 	| singleton |
@@ -577,7 +577,7 @@ open:!instance creation!public! !
 openDefault!instance creation!private!realizing/unrealizing! !
 setDefault:!initializing!private! !
 sharedVariableName!constants!private! !
-stbReadFrom:format:!binary filing!public! !
+stbReadFrom:format:size:!binary filing!public! !
 uninitialize!class hierarchy-removing!private! !
 uninitializeBeforeRemove!class hierarchy-removing!private! !
 versionInfo!accessing-version!public! !

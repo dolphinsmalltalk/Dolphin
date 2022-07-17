@@ -514,7 +514,7 @@ initialize
 reset
 	Current ifNotNil: [:current | current numberFormat: nil]!
 
-stbReadFrom: anSTBInFiler format: anSTBClassConversion
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 	"Read an instance of the receiver from the binary filer, aSTBInFiler."
 
 	^anSTBClassConversion
@@ -527,6 +527,6 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion
 current!instance creation!public! !
 initialize!class initialization!public! !
 reset!initializing!private! !
-stbReadFrom:format:!binary filing!public! !
+stbReadFrom:format:size:!binary filing!public! !
 !
 

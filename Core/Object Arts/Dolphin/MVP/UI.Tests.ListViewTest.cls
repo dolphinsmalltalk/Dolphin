@@ -9,7 +9,6 @@ UI.Tests.ListControlTest subclass: #'UI.Tests.ListViewTest'
 UI.Tests.ListViewTest guid: (Core.GUID fromString: '{bce10a8d-244e-4377-846c-bcbef9d853a1}')!
 UI.Tests.ListViewTest isNonInstantiable: true!
 UI.Tests.ListViewTest comment: ''!
-!UI.Tests.ListViewTest categoriesForClass!Unclassified! !
 !UI.Tests.ListViewTest methodsFor!
 
 classToTest
@@ -399,7 +398,21 @@ verifyClicks: anArray
 			self assert: click position equals: expected second]!
 
 verifyColumnWidths: widths
-	presenter columnsList with: widths do: [:col :width | self assert: col width equals: width]! !
+	presenter columnsList with: widths do: [:col :width | self assert: col width equals: width]!
+
+verifyUpgradedView: anInteger
+	| view |
+	super verifyUpgradedView: anInteger.
+	view := self view.
+	self assert: view backcolor identicalTo: Color default.
+	self assert: view allColumns size equals: 1.
+	self assert: view lastSelIndices equals: #().
+	self assert: view thumbnailExtent equals: 64 @ 64.
+	self assert: view lvFlags equals: 0.
+	self assertIsNil: view customDrawBlock.
+	self assertIsNil: view backImage.
+	self assert: view largeIconExtent equals: Icon largeExtent.
+	self assert: view isDoubleBuffered! !
 !UI.Tests.ListViewTest categoriesForMethods!
 classToTest!helpers!private! !
 forceColumnResize!helpers!private! !
@@ -408,7 +421,7 @@ getItem:!helpers!private! !
 newSelectionAfterLeftClickOutsideList:!constants!private! !
 newSelectionsFromEvent:!helpers!private! !
 setColumns:!helpers!private! !
-setupClickIntercept!private! !
+setupClickIntercept!helpers!private! !
 setUpForSelectionTesting!helpers!private! !
 sortSelections!helpers!public! !
 test1071!public!unit tests! !
@@ -428,5 +441,6 @@ testSetTextBlockDoesNotAffectSelection!public!unit tests! !
 testSetTextImageDoesNotAffectSelection!public!unit tests! !
 verifyClicks:!helpers!private! !
 verifyColumnWidths:!helpers!private! !
+verifyUpgradedView:!helpers!private! !
 !
 

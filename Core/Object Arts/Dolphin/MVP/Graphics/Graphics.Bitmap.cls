@@ -588,7 +588,7 @@ stbConvertFromVersion1: anArray
 
 	| vars |
 	vars := anArray shallowCopy.
-	vars at: 7 put: ((anArray at: 7) ifTrue: [1 "Map3DColorsMask"] ifFalse: [0]).
+	vars at: 6 put: ((anArray at: 6) ifTrue: [1 "Map3DColorsMask"] ifFalse: [0]).
 	^vars!
 
 stbConvertFromVersion3: anArray

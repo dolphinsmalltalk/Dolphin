@@ -1232,7 +1232,7 @@ stbConvertFromVersion12: anArray
 
 stbConvertFromVersion13: anArray
 	"Private - Perform an STB conversion from a version 13 `Toolbar` to version 14.
-	Version 14 adds a tipText instance variable to the superclass (and a couple of spares). The former tipText instance variable of Toolbar becomes unused."
+	Version 14 adds a tipText instance variable to the superclass (and a couple of spares). The former tipText instance variable of Toolbar is now used for 'indent'"
 
 	anArray at: 24 put: nil.
 	^super stbConvertFromVersion13: anArray!

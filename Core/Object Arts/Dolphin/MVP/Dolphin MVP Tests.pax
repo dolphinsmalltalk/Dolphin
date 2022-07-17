@@ -17,18 +17,25 @@ package setClassNames: #(
 	#{OS.Tests.POINTSTest}
 	#{OS.Tests.RECTLTest}
 	#{UI.Tests}
+	#{UI.Tests.AbstractCardContainerTest}
 	#{UI.Tests.AbstractContainerViewTest}
 	#{UI.Tests.AbstractKeyboardTest}
 	#{UI.Tests.AbstractMultilineTextEditTest}
 	#{UI.Tests.AbstractShellViewTest}
+	#{UI.Tests.AbstractTabViewTest}
 	#{UI.Tests.AbstractTextEditTest}
 	#{UI.Tests.AcceleratorTableTest}
 	#{UI.Tests.BorderLayoutTest}
+	#{UI.Tests.CardContainerTest}
+	#{UI.Tests.CheckBoxTest}
 	#{UI.Tests.ChoicePresenterTest}
 	#{UI.Tests.ClipboardTest}
 	#{UI.Tests.ColorDialogTest}
+	#{UI.Tests.ColorViewTest}
+	#{UI.Tests.ComboBoxTest}
 	#{UI.Tests.CommandDescriptionTest}
 	#{UI.Tests.ContainerViewTest}
+	#{UI.Tests.DateTimePickerTest}
 	#{UI.Tests.DialogViewTest}
 	#{UI.Tests.DifferencesPresenterTest}
 	#{UI.Tests.DisplayMonitorTest}
@@ -37,8 +44,11 @@ package setClassNames: #(
 	#{UI.Tests.FileDialogTest}
 	#{UI.Tests.FlowLayoutTest}
 	#{UI.Tests.FolderTest}
+	#{UI.Tests.FontViewTest}
 	#{UI.Tests.FramingLayoutTest}
 	#{UI.Tests.GridLayoutTest}
+	#{UI.Tests.GroupBoxTest}
+	#{UI.Tests.HotKeyTest}
 	#{UI.Tests.ImageViewAbstractTest}
 	#{UI.Tests.ImageViewTest}
 	#{UI.Tests.InplaceTextEditorTest}
@@ -52,17 +62,20 @@ package setClassNames: #(
 	#{UI.Tests.MenuTest}
 	#{UI.Tests.MoenTreeViewTest}
 	#{UI.Tests.MoenTreeViewTest2}
+	#{UI.Tests.MonthCalendarViewTest}
 	#{UI.Tests.MultilineTextEditTest}
 	#{UI.Tests.MultiSelectListBoxTest}
 	#{UI.Tests.MultiSelectListViewTest}
 	#{UI.Tests.PositionEventTest}
 	#{UI.Tests.PresenterTest}
+	#{UI.Tests.ProgressBarTest}
 	#{UI.Tests.ProportionalLayoutTest}
 	#{UI.Tests.PushButtonTest}
 	#{UI.Tests.RadioButtonSetPresenterTest}
 	#{UI.Tests.ReferenceViewTest}
 	#{UI.Tests.ResourceIdentifierTest}
 	#{UI.Tests.RichTextEditTest}
+	#{UI.Tests.ScrollBarTest}
 	#{UI.Tests.ScrollingDecoratorTest}
 	#{UI.Tests.SelectableItemsTest}
 	#{UI.Tests.SelectableListItemsTest}
@@ -71,19 +84,29 @@ package setClassNames: #(
 	#{UI.Tests.SingleSelectListBoxTest}
 	#{UI.Tests.SingleSelectListViewTest}
 	#{UI.Tests.SliderTest}
+	#{UI.Tests.SlideyInneyOuteyThingTest}
+	#{UI.Tests.SpinButtonTest}
+	#{UI.Tests.SplitterTest}
+	#{UI.Tests.StaticBitmapTest}
+	#{UI.Tests.StaticIconTest}
 	#{UI.Tests.StaticPathTest}
+	#{UI.Tests.StaticRectangleTest}
 	#{UI.Tests.StaticTextTest}
+	#{UI.Tests.StaticViewTest}
 	#{UI.Tests.StatusBarTest}
 	#{UI.Tests.StyledContainerTest}
+	#{UI.Tests.SysLinkViewTest}
 	#{UI.Tests.TabViewTest}
 	#{UI.Tests.TabViewXPTest}
 	#{UI.Tests.TextEditTest}
+	#{UI.Tests.ToolbarTest}
 	#{UI.Tests.TreePresenterTest}
 	#{UI.Tests.TreeViewTest}
 	#{UI.Tests.TypeConverterTest}
 	#{UI.Tests.ValueConverterTest}
 	#{UI.Tests.ViewTest}
 	#{UI.Tests.WindowsEventTest}
+	#{UI.Tests.WizardCardContainerTest}
 ).
 
 package setMethodNames: #(
@@ -93,24 +116,38 @@ package setMethodNames: #(
 	#(#{Kernel.Tests.STLFilerTest} #testShellReadWrite)
 ).
 
+package setVariableNames: #(
+	#{Smalltalk.PresenterTest}
+).
+
+package setAliasVariableNames: #(
+	#{Smalltalk.PresenterTest}
+).
+
 package setPrerequisites: #(
 	'..\IDE\Base\Development System'
 	'..\Base\Dolphin'
+	'Presenters\Accelerator\Dolphin Accelerator Presenter'
 	'..\Base\Dolphin Anonymous Classes'
 	'Base\Dolphin Base Dialogs'
 	'..\Base\Tests\Dolphin Base Tests'
 	'Base\Dolphin Basic Geometry'
 	'Presenters\Boolean\Dolphin Boolean Presenter'
+	'Views\Cards\Dolphin Card Containers'
+	'Views\Buttons\Dolphin Check Buttons'
 	'Presenters\Choice\Dolphin Choice Presenter'
 	'Presenters\Color\Dolphin Color Presenter'
 	'Views\Common Controls\Dolphin Common Controls'
 	'Dialogs\Common\Dolphin Common Dialogs'
 	'Views\Control Bars\Dolphin Control Bars'
+	'Views\Date Time\Dolphin Date Time Controls'
 	'Presenters\Date Time\Dolphin Date Time Presenters'
 	'Presenters\Difference\Dolphin Differences Presenter'
 	'Type Converters\Dolphin Evaluating Type Converter'
 	'Models\Tree\Dolphin Folder Tree Model'
+	'Presenters\Font\Dolphin Font Presenter'
 	'Graphics\Dolphin GDI Graphics'
+	'Views\GroupBox\Dolphin GroupBox'
 	'Presenters\Image\Dolphin Image Presenter'
 	'Presenters\Prompters\Dolphin In-place Text Editor'
 	'..\Base\Dolphin Legacy Date & Time'
@@ -122,11 +159,15 @@ package setPrerequisites: #(
 	'Views\MoenTree\Dolphin MoenTree View'
 	'Base\Dolphin MVP Base'
 	'Presenters\Number\Dolphin Number Presenter'
+	'Dialogs\Progress\Dolphin Progress Dialog'
 	'Views\Buttons\Dolphin Push Buttons'
 	'Presenters\Radio\Dolphin Radio Buttons'
 	'Presenters\Text\Dolphin Rich Text Presenter'
+	'Views\Scintilla\Dolphin Scintilla View'
 	'Views\Scrollbars\Dolphin Scrollbars'
 	'Views\Slider\Dolphin Slider Control'
+	'Views\Sliding Tray\Dolphin Slidey-Inney-Outey Thing'
+	'Views\SpinButton\Dolphin SpinButton Control'
 	'Views\Splitter\Dolphin Splitter Control'
 	'Views\Path\Dolphin StaticPath Control'
 	'Views\Styled Views\Dolphin Styled Views'
@@ -134,6 +175,7 @@ package setPrerequisites: #(
 	'Presenters\Text\Dolphin Text Presenter'
 	'Models\Tree\Dolphin Tree Models'
 	'Presenters\Tree\Dolphin Tree Presenter'
+	'Type Converters\Dolphin Type Converters'
 	'Models\Value\Dolphin Value Models'
 	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
 	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitPreload'
@@ -159,12 +201,6 @@ OS.UserLibrary subclass: #'UI.Tests.FakeUserLibrary'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'UI.Tests.AbstractContainerViewTest'
-	instanceVariableNames: 'containerView'
-	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'UI.Tests.AbstractKeyboardTest'
 	instanceVariableNames: 'savedLayout'
 	classVariableNames: ''
@@ -179,12 +215,6 @@ Core.Tests.DolphinTest subclass: #'Graphics.Tests.AbstractPointTest'
 	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'Graphics.Tests.AbstractRectangleTest'
 	instanceVariableNames: 'desktop oddDesktop unary'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'UI.Tests.AbstractShellViewTest'
-	instanceVariableNames: 'fakeUser32 cursorPos shells'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -267,12 +297,6 @@ Core.Tests.DolphinTest subclass: #'UI.Tests.PresenterTest'
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'UI.Tests.PushButtonTest'
-	instanceVariableNames: 'shell shellButtonA shellButtonB dialog dialogButtonA dialogButtonB'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'UI.Tests.RadioButtonSetPresenterTest'
 	instanceVariableNames: 'radioSet'
 	classVariableNames: ''
@@ -298,18 +322,6 @@ Core.Tests.DolphinTest subclass: #'UI.Tests.ValueConverterTest'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'UI.Tests.WindowsEventTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-UI.Tests.AbstractContainerViewTest subclass: #'UI.Tests.ContainerViewTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-UI.Tests.AbstractContainerViewTest subclass: #'UI.Tests.StyledContainerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -369,18 +381,6 @@ External.Tests.RECTTest subclass: #'OS.Tests.RECTLTest'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.AbstractShellViewTest subclass: #'UI.Tests.DialogViewTest'
-	instanceVariableNames: 'owner shell2'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-UI.Tests.AbstractShellViewTest subclass: #'UI.Tests.ShellViewTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 UI.Tests.LayoutManagerTest subclass: #'UI.Tests.BorderLayoutTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -411,7 +411,31 @@ UI.Tests.LayoutManagerTest subclass: #'UI.Tests.ProportionalLayoutTest'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+UI.Tests.PresenterTest subclass: #'UI.Tests.AbstractCardContainerTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.PresenterTest subclass: #'UI.Tests.AbstractContainerViewTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.Win32Constants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.PresenterTest subclass: #'UI.Tests.AbstractShellViewTest'
+	instanceVariableNames: 'fakeUser32 cursorPos shells'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 UI.Tests.PresenterTest subclass: #'UI.Tests.AbstractTextEditTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.PresenterTest subclass: #'UI.Tests.CheckBoxTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -423,13 +447,31 @@ UI.Tests.PresenterTest subclass: #'UI.Tests.ChoicePresenterTest'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+UI.Tests.PresenterTest subclass: #'UI.Tests.ComboBoxTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.PresenterTest subclass: #'UI.Tests.DateTimePickerTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 UI.Tests.PresenterTest subclass: #'UI.Tests.DifferencesPresenterTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.PresenterTest subclass: #'UI.Tests.ImageViewAbstractTest'
+UI.Tests.PresenterTest subclass: #'UI.Tests.GroupBoxTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.PresenterTest subclass: #'UI.Tests.HotKeyTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -447,7 +489,31 @@ UI.Tests.PresenterTest subclass: #'UI.Tests.LinkButtonTest'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+UI.Tests.PresenterTest subclass: #'UI.Tests.MonthCalendarViewTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.PresenterTest subclass: #'UI.Tests.ProgressBarTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.PresenterTest subclass: #'UI.Tests.PushButtonTest'
+	instanceVariableNames: 'shell shellButtonA shellButtonB dialog dialogButtonA dialogButtonB'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 UI.Tests.PresenterTest subclass: #'UI.Tests.ReferenceViewTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.PresenterTest subclass: #'UI.Tests.ScrollBarTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -471,13 +537,31 @@ UI.Tests.PresenterTest subclass: #'UI.Tests.SliderTest'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.PresenterTest subclass: #'UI.Tests.StaticPathTest'
+UI.Tests.PresenterTest subclass: #'UI.Tests.SlideyInneyOuteyThingTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.PresenterTest subclass: #'UI.Tests.StaticTextTest'
+UI.Tests.PresenterTest subclass: #'UI.Tests.SpinButtonTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.PresenterTest subclass: #'UI.Tests.SplitterTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.PresenterTest subclass: #'UI.Tests.StaticRectangleTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.PresenterTest subclass: #'UI.Tests.StaticViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -489,7 +573,55 @@ UI.Tests.PresenterTest subclass: #'UI.Tests.StatusBarTest'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+UI.Tests.PresenterTest subclass: #'UI.Tests.SysLinkViewTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.PresenterTest subclass: #'UI.Tests.ToolbarTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 UI.Tests.PresenterTest subclass: #'UI.Tests.ViewTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.AbstractCardContainerTest subclass: #'UI.Tests.CardContainerTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.Win32Constants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.AbstractCardContainerTest subclass: #'UI.Tests.WizardCardContainerTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.Win32Constants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.AbstractContainerViewTest subclass: #'UI.Tests.ContainerViewTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.Win32Constants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.AbstractContainerViewTest subclass: #'UI.Tests.StyledContainerTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.AbstractShellViewTest subclass: #'UI.Tests.DialogViewTest'
+	instanceVariableNames: 'owner shell2'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.AbstractShellViewTest subclass: #'UI.Tests.ShellViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -519,12 +651,6 @@ UI.Tests.AbstractMultilineTextEditTest subclass: #'UI.Tests.RichTextEditTest'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.ImageViewAbstractTest subclass: #'UI.Tests.ImageViewTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 UI.Tests.SelectableItemsTest subclass: #'UI.Tests.SelectableListItemsTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -532,6 +658,12 @@ UI.Tests.SelectableItemsTest subclass: #'UI.Tests.SelectableListItemsTest'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.Tests.SelectableItemsTest subclass: #'UI.Tests.SelectableTreeItemsTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.SelectableListItemsTest subclass: #'UI.Tests.AbstractTabViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -549,7 +681,13 @@ UI.Tests.SelectableListItemsTest subclass: #'UI.Tests.ListPresenterTest'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.SelectableListItemsTest subclass: #'UI.Tests.TabViewTest'
+UI.Tests.AbstractTabViewTest subclass: #'UI.Tests.TabViewTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.AbstractTabViewTest subclass: #'UI.Tests.TabViewXPTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -591,12 +729,6 @@ UI.Tests.ListViewTest subclass: #'UI.Tests.SingleSelectListViewTest'
 	imports: #(#{OS.ListViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.TabViewTest subclass: #'UI.Tests.TabViewXPTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 UI.Tests.SelectableTreeItemsTest subclass: #'UI.Tests.MoenTreeViewTest2'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -615,6 +747,59 @@ UI.Tests.SelectableTreeItemsTest subclass: #'UI.Tests.TreeViewTest'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+UI.Tests.StaticViewTest subclass: #'UI.Tests.ColorViewTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.StaticViewTest subclass: #'UI.Tests.FontViewTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.StaticViewTest subclass: #'UI.Tests.ImageViewAbstractTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.StaticViewTest subclass: #'UI.Tests.StaticBitmapTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.StaticViewTest subclass: #'UI.Tests.StaticIconTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.StaticViewTest subclass: #'UI.Tests.StaticPathTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.StaticViewTest subclass: #'UI.Tests.StaticTextTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.ImageViewAbstractTest subclass: #'UI.Tests.ImageViewTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"Variable Aliases"!
+
+Smalltalk.PresenterTest := UI.Tests.PresenterTest!
+
 
 "Loose Methods"!
 

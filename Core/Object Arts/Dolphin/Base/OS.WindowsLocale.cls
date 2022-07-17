@@ -56,7 +56,7 @@ printOn:!development!printing!public! !
 
 !OS.WindowsLocale class methodsFor!
 
-stbReadFrom: anSTBInFiler format: anSTBClassConversion
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 	"Read an instance of the receiver from the binary filer, aSTBInFiler."
 
 	"Implementation Note: Overridden in order to maintain unique instances without using an
@@ -76,6 +76,6 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion
 			locale]
 		ifNil: [self error: 'Unexpected WindowsLocale instance in STB stream']! !
 !OS.WindowsLocale class categoriesForMethods!
-stbReadFrom:format:!binary filing!public! !
+stbReadFrom:format:size:!binary filing!public! !
 !
 

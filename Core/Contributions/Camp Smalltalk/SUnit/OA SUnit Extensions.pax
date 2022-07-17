@@ -43,6 +43,7 @@ package setMethodNames: #(
 	#(#{XProgramming.SUnit.TestCase} #skipIfCiBuild)
 	#(#{XProgramming.SUnit.TestCase} #skipIfWin32)
 	#(#{XProgramming.SUnit.TestCase} #skipUnless:)
+	#(#{XProgramming.SUnit.TestCase} #thisTestMethod)
 	#(#{XProgramming.SUnit.TestCase class} #buildSuiteFromConcreteMethods:)
 	#(#{XProgramming.SUnit.TestCase class} #debugWithResult:)
 	#(#{XProgramming.SUnit.TestResult} #debugCase:)
@@ -318,7 +319,10 @@ skipIfWin32
 skipUnless: aNiladicValuable
 	" If the assumption in the <niladicValuable> argument evaluates to false, abandon the running test and mark it as skipped."
 	
-	aNiladicValuable value ifFalse: [TestSkip signal: 'Assumption in #skipUnless: failed']! !
+	aNiladicValuable value ifFalse: [TestSkip signal: 'Assumption in #skipUnless: failed']!
+
+thisTestMethod
+	^self class lookupMethod: self selector! !
 !XProgramming.SUnit.TestCase categoriesForMethods!
 <=!comparing!public! !
 =!comparing!public! !
@@ -348,6 +352,7 @@ shouldnt:triggerAnyOf:against:!asserting!public! !
 skipIfCiBuild!helpers!public! !
 skipIfWin32!helpers!public! !
 skipUnless:!asserting!public! !
+thisTestMethod!accessing!public! !
 !
 
 !XProgramming.SUnit.TestCase class methodsFor!

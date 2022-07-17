@@ -9,7 +9,6 @@ UI.Tests.PresenterTest subclass: #'UI.Tests.SelectableItemsTest'
 UI.Tests.SelectableItemsTest guid: (Core.GUID fromString: '{eb11681e-441a-44d4-af4c-de1ea399a79e}')!
 UI.Tests.SelectableItemsTest isNonInstantiable: true!
 UI.Tests.SelectableItemsTest comment: ''!
-!UI.Tests.SelectableItemsTest categoriesForClass!Unclassified! !
 !UI.Tests.SelectableItemsTest methodsFor!
 
 assertContains: anObject

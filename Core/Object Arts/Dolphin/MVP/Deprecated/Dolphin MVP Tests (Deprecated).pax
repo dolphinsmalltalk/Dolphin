@@ -6,6 +6,7 @@ package paxVersion: 1;
 
 package classNames
 	add: #MultipleSelectionListBoxTest;
+	add: #MultipleSelectionListControlTest;
 	add: #MultipleSelectionListViewTest;
 	yourself.
 
@@ -17,19 +18,28 @@ package globalAliases: (Set new
 
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
-	'..\..\Base\Tests\Dolphin Base Tests'
-	'Dolphin MVP (Deprecated)').
+	'..\Base\Dolphin Basic Geometry'
+	'..\Views\Common Controls\Dolphin Common Controls'
+	'..\Models\List\Dolphin List Models'
+	'Dolphin MVP (Deprecated)'
+	'..\Base\Dolphin MVP Base'
+	'..\Dolphin MVP Tests').
 
 package!
 
 "Class Definitions"!
 
-DolphinTest subclass: #MultipleSelectionListBoxTest
-	instanceVariableNames: 'box'
+PresenterTest subclass: #MultipleSelectionListControlTest
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MultipleSelectionListBoxTest subclass: #MultipleSelectionListViewTest
+MultipleSelectionListControlTest subclass: #MultipleSelectionListBoxTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+MultipleSelectionListControlTest subclass: #MultipleSelectionListViewTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

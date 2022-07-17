@@ -8,7 +8,6 @@ UI.Tests.PresenterTest subclass: #'UI.Tests.ReferenceViewTest'
 	classConstants: {}!
 UI.Tests.ReferenceViewTest guid: (Core.GUID fromString: '{a38c1b83-5cc7-4717-8bc4-29b681abe8f9}')!
 UI.Tests.ReferenceViewTest comment: ''!
-!UI.Tests.ReferenceViewTest categoriesForClass!Unclassified! !
 !UI.Tests.ReferenceViewTest methodsFor!
 
 classToTest

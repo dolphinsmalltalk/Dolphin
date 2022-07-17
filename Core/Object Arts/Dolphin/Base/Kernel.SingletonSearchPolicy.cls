@@ -39,7 +39,7 @@ onPreStripImage
 
 	self allSubclassesDo: [:each | each uninitialize]!
 
-stbReadFrom: anSTBInFiler format: anSTBClassConversion 
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 	"Read an instance of the receiver from the binary filer, aSTBInFiler."
 
 	| singleton |
@@ -54,7 +54,7 @@ uninitialize
 !Kernel.SingletonSearchPolicy class categoriesForMethods!
 current!instance creation!public! !
 onPreStripImage!class hierarchy-removing!private! !
-stbReadFrom:format:!binary filing!public! !
+stbReadFrom:format:size:!binary filing!public! !
 uninitialize!class hierarchy-removing!private! !
 !
 

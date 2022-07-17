@@ -10,6 +10,7 @@ package setVariableNames: #(
 	#{Smalltalk.POINT}
 	#{Smalltalk.RECT}
 	#{Smalltalk.SIZE}
+	#{Smalltalk.StatusItem}
 	#{Smalltalk.WinImageList}
 ).
 
@@ -17,11 +18,13 @@ package setAliasVariableNames: #(
 	#{Smalltalk.POINT}
 	#{Smalltalk.RECT}
 	#{Smalltalk.SIZE}
+	#{Smalltalk.StatusItem}
 	#{Smalltalk.WinImageList}
 ).
 
 package setPrerequisites: #(
 	'..\Base\Dolphin Basic Geometry'
+	'..\Views\Control Bars\Dolphin Control Bars'
 	'..\Graphics\Dolphin GDI Graphics'
 ).
 
@@ -34,6 +37,8 @@ Smalltalk.POINT := OS.POINTL!
 Smalltalk.RECT := OS.RECTL!
 
 Smalltalk.SIZE := OS.SIZEL!
+
+Smalltalk.StatusItem := UI.StatusBarItem!
 
 Smalltalk.WinImageList := Graphics.ImageList!
 

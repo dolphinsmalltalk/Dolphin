@@ -9,7 +9,6 @@ UI.Tests.SelectableListItemsTest subclass: #'UI.Tests.ListControlTest'
 UI.Tests.ListControlTest guid: (Core.GUID fromString: '{a10a1ba0-5afc-41f3-8b51-2b9e52718424}')!
 UI.Tests.ListControlTest isNonInstantiable: true!
 UI.Tests.ListControlTest comment: ''!
-!UI.Tests.ListControlTest categoriesForClass!Unclassified! !
 !UI.Tests.ListControlTest methodsFor!
 
 assertCaretVisible
@@ -417,7 +416,7 @@ testSelectionsByIndex!public!unit tests! !
 testSelectionsPreservedOnRecreate!public!unit tests! !
 verifyClicks:!helpers!private! !
 verifyEventsFromClickSelectionChangeAccepted:!helpers!private! !
-verifyEventsFromClickSelectionChangeRejected:!private! !
+verifyEventsFromClickSelectionChangeRejected:!helpers!private! !
 verifyMultiSelectionsByIndex!helpers!private! !
 verifySelectionsFromMouseDown:equals:!helpers!private! !
 verifySingleSelectionsByIndex!helpers!private! !

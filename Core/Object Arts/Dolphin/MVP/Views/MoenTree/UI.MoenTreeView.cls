@@ -2019,6 +2019,15 @@ stbConvertFromVersion11: anArray
 
 	^(super stbConvertFromVersion11: anArray), #(nil nil nil)!
 
+stbConvertFromVersion4: anArray
+	"Private - Perform an STB conversion from a version 4 (or earlier) <MoenTreeView> to version 5,
+	i.e. trees IdentitiyDictionary replaced with roots OrderedCollection."
+
+	| array |
+	array := super stbConvertFromVersion4: anArray.
+	array at: 11 put: (array at: 11) values asOrderedCollection.
+	^array!
+
 stbConvertFromVersion9: anArray 
 	"Private - Perform an STB conversion from a version 9 (or earlier) <View> to version 10,
 	i.e. use #reserved1 inst. var. for flags."
@@ -2049,6 +2058,7 @@ icon!constants!public! !
 initialize!development!initializing!private! !
 stbConvertFromVersion10:!binary filing!private! !
 stbConvertFromVersion11:!binary filing!private! !
+stbConvertFromVersion4:!binary filing!private! !
 stbConvertFromVersion9:!binary filing!private! !
 themePartName!constants!public!theming! !
 value:!evaluating!private! !
