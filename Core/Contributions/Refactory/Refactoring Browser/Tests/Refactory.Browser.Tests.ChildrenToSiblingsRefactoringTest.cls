@@ -18,6 +18,37 @@ testBadName
 				subclasses: {BasicLintRuleTestData. CompositeLintRuleTestData})
 		withMessage: '#''Obje ct'' is not a valid class name'!
 
+testChildToSibling
+	| refactoring class subclass superclass |
+	refactoring := ChildrenToSiblingsRefactoring
+				name: #'Refactory.Browser.Tests.ClassToRenameAbstract'
+				class: ClassToRename
+				subclasses: {SubclassOfClassToRename}.
+	model := refactoring model.
+	self assert: refactoring environment equals: (model classFor: Refactory.Browser.Tests).
+	self executeRefactoring: refactoring.
+	class := model classNamed: #'Refactory.Browser.Tests.ClassToRename'.
+	subclass := model classNamed: #'Refactory.Browser.Tests.SubclassOfClassToRename'.
+	superclass := refactoring model classNamed: #'Refactory.Browser.Tests.ClassToRenameAbstract'.
+	self assert: class superclass equals: superclass.
+	self assert: class metaclass superclass equals: superclass metaclass.
+	self assert: subclass superclass equals: superclass.
+	self assert: subclass metaclass superclass equals: superclass metaclass.
+	"Inst vars should have been pushed up"
+	self assert: class instanceVariableNames isEmpty.
+	self assert: superclass instanceVariableNames equals: ClassToRename instanceVariableNames.
+	"Ditto class vars"
+	self assert: class classVariableNames isEmpty.
+	self assert: superclass classVariableNames equals: ClassToRename classVariableNames.
+	self assert: class classConstants isEmpty.
+	self assert: (Dictionary withAll: superclass classConstants) equals: (Dictionary withAll: ClassToRename classConstants).
+	"Methods all pushed up too"
+	self assert: class selectors isEmpty.
+	self assert: superclass selectors equals: ClassToRename selectors.
+	self assert: class metaclass selectors isEmpty.
+	self assert: superclass metaclass selectors equals: ClassToRename class selectors.
+!
+
 testExistingName
 	self shouldFail: (ChildrenToSiblingsRefactoring
 				name: #'Core.Object'
@@ -106,6 +137,7 @@ testModelChildrenToSibling
 							^self printString')! !
 !Refactory.Browser.Tests.ChildrenToSiblingsRefactoringTest categoriesForMethods!
 testBadName!failure tests!public! !
+testChildToSibling!public!tests! !
 testExistingName!failure tests!public! !
 testInvalidSubclass!failure tests!public! !
 testMetaClassFailure!failure tests!public! !

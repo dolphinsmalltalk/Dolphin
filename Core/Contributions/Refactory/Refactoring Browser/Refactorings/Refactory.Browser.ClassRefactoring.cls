@@ -19,7 +19,7 @@ className: aString
 	self classReference: (BindingReference fullPathString: aString)!
 
 classReference: aBindingReference
-	className := aBindingReference referenceInModel: model!
+	className := aBindingReference referenceInModel: self model!
 
 environment
 	^className environment!

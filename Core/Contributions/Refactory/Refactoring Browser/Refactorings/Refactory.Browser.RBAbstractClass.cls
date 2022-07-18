@@ -230,6 +230,9 @@ compile: aString environment: aNamespace categories: aSymbolCollection package: 
 				categories: aSymbolCollection
 				package: aPackage)!
 
+compiledMethodAt: aSelector ifAbsent: aNiladicValuable
+	^(self methodFor: aSelector) ifNil: [aNiladicValuable value]!
+
 compileTree: aBRMethodNode environment: aRBNamespaceClass categories: aSymbolCollection package: aPackage
 	^self
 		compile: aBRMethodNode formattedCode
@@ -829,6 +832,7 @@ compile:!compiling!public! !
 compile:categories:!compiling!public! !
 compile:classified:!compiling!public! !
 compile:environment:categories:package:!compiling!public! !
+compiledMethodAt:ifAbsent:!method accessing!public! !
 compileTree:environment:categories:package:!compiling!public! !
 conformsToProtocol:!protocols!public! !
 definedBindings!accessing!public! !
