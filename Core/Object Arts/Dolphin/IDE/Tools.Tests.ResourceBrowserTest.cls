@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTest subclass: #'Tools.Tests.ResourceBrowserTest'
-	instanceVariableNames: 'resourceBrowser testClass'
+UI.Tests.PresenterTest subclass: #'Tools.Tests.ResourceBrowserTest'
+	instanceVariableNames: 'testClass'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -10,11 +10,14 @@ Tools.Tests.ResourceBrowserTest guid: (Core.GUID fromString: '{8d888ba2-f5b7-402
 Tools.Tests.ResourceBrowserTest comment: ''!
 !Tools.Tests.ResourceBrowserTest methodsFor!
 
+classToTest
+	^ResourceBrowser!
+
 getShellResource
 	^(ResourceIdentifier class: Shell) resource!
 
 resourceBrowser
-	^resourceBrowser!
+	^presenter!
 
 resourceDisplayList
 	^self resourceToolboxPresenter resourcesPresenter list!
@@ -27,8 +30,7 @@ resourceToolboxPresenter
 
 setUp
 	super setUp.
-	resourceBrowser := ResourceBrowser show.
-	testClass := self class 
+	testClass := Object
 				subclass: #ResourceBrowserTestSampleClass
 				instanceVariableNames: ''
 				classVariableNames: ''
@@ -36,9 +38,7 @@ setUp
 				classInstanceVariableNames: ''!
 
 tearDown
-	self resourceBrowser destroy.
-	resourceBrowser := nil.
-	testClass removeFromSystem.
+	testClass ifNotNil: [testClass removeFromSystem].
 	super tearDown!
 
 testAddRemoveResource
@@ -57,12 +57,15 @@ testAddRemoveResource
 			ensure: [testClass class removeSelector: sampleResourceId selector ifAbsent: nil]!
 
 testBasicContents
-	self assert: self resourceList notEmpty.
-	self assert: self resourceList first isKindOf: ResourceIdentifier.
-	self assert: self resourceList size > 100.
-	self assert: (self resourceList includes: (ResourceIdentifier class: Shell)).
-	self assert: (self resourceList includes: (ResourceIdentifier class: SystemBrowserShell))! !
+	| list |
+	list := self resourceList.
+	self assert: list notEmpty.
+	self assert: list first isKindOf: ResourceIdentifier.
+	self assert: list size > 100.
+	self assert: (list includes: (ResourceIdentifier class: Shell)).
+	self assert: (list includes: (ResourceIdentifier class: SystemBrowserShell))! !
 !Tools.Tests.ResourceBrowserTest categoriesForMethods!
+classToTest!private!unit tests! !
 getShellResource!private!unit tests! !
 resourceBrowser!private!unit tests! !
 resourceDisplayList!private!unit tests! !

@@ -57,6 +57,11 @@ clearCommandHistory
 
 	commandHistory notNil ifTrue: [commandHistory := HistoryList new]!
 
+close
+	"Attempt to close the receiver's view."
+
+	^self view close!
+
 commandHistory
 	"Private - Answer the history list of recent commands for the receiver"
 
@@ -90,7 +95,7 @@ createView: aResourceNameString
 exit
 	"Attempt to close the receiver's view."
 
-	^self view close!
+	^self close!
 
 hasCommandHistory
 	"Answer true if the receiver can undo/redo commands"
@@ -306,6 +311,7 @@ allAdditionalKeyBindings!constants!private! !
 caption!accessing!public! !
 caption:!accessing!public! !
 clearCommandHistory!accessing!public! !
+close!commands!public! !
 commandHistory!accessing!private! !
 commandPolicyClass!commands!constants!public! !
 commandPolicyWithSource:!commands!public! !

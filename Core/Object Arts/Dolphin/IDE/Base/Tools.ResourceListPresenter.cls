@@ -267,9 +267,11 @@ selectableItems
 	^resourcesPresenter!
 
 showAllResources
-	"Set the receiver's filter block to display all resources."
+	"Set the receiver's filter block to display all resources, except those in Test classes"
 
-	self filterBlock: nil!
+	| testCase |
+	testCase := #{XProgramming.SUnit.TestCase} valueOrNil.
+	self filterBlock: (testCase ifNotNil: [:resId | (resId owningClass inheritsFrom: testCase) not])!
 
 showResource
 	"Display the selected resource in whatever manner is appropriate for it."

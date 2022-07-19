@@ -211,9 +211,11 @@ resourceCategories
 			categories addAll: category].
 	^categories asSortedCollection!
 
-resourceCategoriesOf: aClassOrNil 
+resourceCategoriesOf: aClassOrNil
 	| categories |
 	aClassOrNil isNil ifTrue: [^#('Misc')].
+	#{XProgramming.SUnit.TestCase} valueOrNil
+		ifNotNil: [:testCase | (aClassOrNil inheritsFrom: testCase) ifTrue: [^#()]].
 	categories := self localResourceCategoriesOf: aClassOrNil.
 	categories notEmpty ifTrue: [^categories].
 	^self resourceCategoriesOf: aClassOrNil superclass!

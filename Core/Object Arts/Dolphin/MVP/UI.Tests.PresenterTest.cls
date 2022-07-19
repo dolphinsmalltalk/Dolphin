@@ -29,7 +29,7 @@ initializePresenter
 			| shell |
 			presenter := subjectClass show.
 			shell := presenter topShell.
-			shell = View desktop ifFalse: [shell text: self printString]]!
+			shell = View desktop ifFalse: [shell view text: self printString]]!
 
 leftClickAt: aPoint 
 	"Fire a left-click at the specified client coordinate of the tested presenter."

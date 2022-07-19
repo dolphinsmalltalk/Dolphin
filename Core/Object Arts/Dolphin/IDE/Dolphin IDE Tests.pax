@@ -105,12 +105,6 @@ Core.Tests.DolphinTest subclass: #'Tools.Tests.PublishedAspectInspectorTest'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Tools.Tests.ResourceBrowserTest'
-	instanceVariableNames: 'resourceBrowser testClass'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'Tools.Tests.SmalltalkStylerTest'
 	instanceVariableNames: 'mock scintilla'
 	classVariableNames: ''
@@ -149,6 +143,12 @@ UI.Tests.FolderTest subclass: #'Tools.Tests.PackageFolderTest'
 	classConstants: {}!
 UI.Tests.PresenterTest subclass: #'Tools.Tests.MethodWorkspaceTest'
 	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.PresenterTest subclass: #'Tools.Tests.ResourceBrowserTest'
+	instanceVariableNames: 'testClass'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
