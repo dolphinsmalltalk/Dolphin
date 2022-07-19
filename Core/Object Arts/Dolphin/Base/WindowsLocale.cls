@@ -342,6 +342,11 @@ numberGrouping
 
 	^self getStringInfo: LOCALE_SGROUPING!
 
+parentName
+	"The name of the parent Locale that should be used as a fallback for resource lookup."
+
+	^self getStringInfo: LOCALE_SPARENT!
+
 percentSymbol
 	"Answer a <String> containing the percent symbol for this local."
 
@@ -351,6 +356,12 @@ pmDesignator
 	"Answer the character used in the receiver locale to designate PM (afternoon)."
 
 	^self getStringInfo: LOCALE_SPM!
+
+primary
+	"Answer the primary language locale for this Locale. For example fr-Fr is the primary locale for all the various French locales such as fr-CA."
+
+	self lcid == LOCALE_CUSTOM_DEFAULT ifTrue: [^self class userDefault].
+	^self class named: self parentName!
 
 printOn: aStream
 	"Append a debug representation of the receiver to aStream."
@@ -460,8 +471,10 @@ negativeNumberMode!constants!public! !
 negativeSign!constants!public! !
 nlsLib!constants!private! !
 numberGrouping!constants!public! !
+parentName!constants!public! !
 percentSymbol!constants!public! !
 pmDesignator!constants!public! !
+primary!enquiries!public! !
 printOn:!development!printing!public! !
 shortAmDesignator!constants!public! !
 shortDateFormat!constants!public! !

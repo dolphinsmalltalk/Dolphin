@@ -20,17 +20,19 @@ beforeTestCases
 		, #(#('Ā🐬' $\x1F42C $\x100) #('🐬🍺' $\x1F37A $\x1F42C) #('文Ā' $\x100 $\x6587))!
 
 caseConversionCases
+	"Note that we don't expect the turkish dotless lowercase 'i' to be translated to 'İ'. This wouldn't happen even if the user's default locale is turkic because the standard asUppercase and asLowercase conversions are non-linguistic."
+
 	^super caseConversionCases
-		, #(#('кракозябры' 'КРАКОЗЯБРЫ') #('文字化け') #('маймуница' 'МАЙМУНИЦА') #('ａｂｃ' 'ＡＢＣ'))!
+		, #(#('кракозябры' 'КРАКОЗЯБРЫ') #('文字化け') #('маймуница' 'МАЙМУНИЦА') #('ａｂｃ' 'ＡＢＣ') #('straße' 'STRAßE') #('ınteresting' 'ıNTERESTING'))!
 
 decodeIncompleteContinuations
-	^Error notYetImplemented!
+	^self subclassResponsibility!
 
 decodeInvalidContinuations
-	^Error notYetImplemented!
+	^self subclassResponsibility!
 
 decodeTestCases
-	^Error notYetImplemented!
+	^self subclassResponsibility!
 
 indexOfTestCases
 	^super indexOfTestCases, #('' $文 'a£ö🐬👨🏻‍🍳' $文 '' $🐬 'a£文🍺👨🏻‍🍳' $🐬'a£a文a🍺a👨🏻‍🍳a' $a 'a£文🍺👨🏻‍🍳' $b 'a文£文ö文🐬文👨🏻‍🍳文' $文 'a🐬£🐬文🐬🍺🐬👨🏻‍🍳🐬' $🐬)!
@@ -45,6 +47,9 @@ makeStringFromCodeUnits: data
 	1 to: data size do: [:i | subject basicAt: i put: (data at: i)].
 	subject := self assimilateString: subject.
 	^subject!
+
+matchingPairs
+	^super matchingPairs , #(#('#' '🐬') #('#€#a' '🐬€🍺a'))!
 
 reverseTestCases
 	"Private - #reverse doesn't work correctly for multi-byte encodings of UTF-8 and UTF-16."
@@ -87,7 +92,12 @@ testAnsiStringRoundTrip
 	ansi := utf asAnsiString.
 	self assert: ansi class identicalTo: AnsiString.
 	self assert: ansi size equals: 256.
-	self assert: ansi equals: ansiAll!
+	self assert: ansi equals: ansiAll.
+
+	"Note that turkish dotless-i's do not normally roundtrip, unless using a turkish code page."
+	utf := self assimilateString: 'ınteresting'.
+	ansi := utf asAnsiString.
+	self assert: ansi equals: 'interesting' asAnsiString!
 
 testAnyone
 	| subject |
@@ -101,30 +111,43 @@ testAnySatisfy
 	subject := self assimilateString: 'a£文🐬1🍺'.
 	self deny: (subject anySatisfy: [:each | each isSurrogate])!
 
+testAsAnsiStringDotlessI
+	| subject actual |
+	"Note that turkish i's are not normally preserved on conversion to an ANSI string, unless using a turkish code page."
+	Locale userDefault primary = (Locale named: 'Tr-tr')
+		ifTrue: 
+			[subject := self assimilateString: 'İiıI'.
+			actual := subject asAnsiString.
+			self assert: actual equals: 'İiıI']
+		ifFalse: 
+			[subject := self assimilateString: 'İiıI'.
+			actual := subject asAnsiString.
+			self assert: actual equals: 'IiiI']!
+
 testBeginsWithExtended
-	| subject comperand |
+	| subject comparand |
 	subject := self newCollection: {Character dolphin. $a. $£. $b. $c}.
 	self assert: (subject beginsWith: Character dolphin).
 	self deny: (subject beginsWith: (String with: (Character value: 16rF0))).
 	self deny: (subject beginsWith: (Character value: 16rF0)).
 	self deny: (subject beginsWith: (String with: (Character value: 16r3D))).
 	self deny: (subject beginsWith: (Character value: 16r3D)).
-	comperand := Character dolphin asUtf8String , 'a£'.
-	self assert: (subject beginsWith: comperand).
-	comperand := Character dolphin asUtf16String , 'a£'.
-	self assert: (subject beginsWith: comperand)!
+	comparand := Character dolphin asUtf8String , 'a£'.
+	self assert: (subject beginsWith: comparand).
+	comparand := Character dolphin asUtf16String , 'a£'.
+	self assert: (subject beginsWith: comparand)!
 
 testBeginsWithIgnoreCase
-	| subject comperand |
+	| subject comparand |
 	subject := self newCollection: {Character dolphin. $a. $\0. $£. $b. $c}.
 	self assert: (subject beginsWith: subject ignoreCase: true).
 	self assert: (subject beginsWith: subject ignoreCase: false).
-	comperand := self newCollection: {Character dolphin. $A. $\0. $£}.
-	self assert: (subject beginsWith: comperand ignoreCase: true).
-	self deny: (subject beginsWith: comperand ignoreCase: false).
-	comperand := comperand asUtf16String.
-	self assert: (subject beginsWith: comperand ignoreCase: true).
-	self deny: (subject beginsWith: comperand ignoreCase: false)!
+	comparand := self newCollection: {Character dolphin. $A. $\0. $£}.
+	self assert: (subject beginsWith: comparand ignoreCase: true).
+	self deny: (subject beginsWith: comparand ignoreCase: false).
+	comparand := comparand asUtf16String.
+	self assert: (subject beginsWith: comparand ignoreCase: true).
+	self deny: (subject beginsWith: comparand ignoreCase: false)!
 
 testCollect
 	| subject actual |
@@ -218,6 +241,24 @@ testDecodeNextFrom
 			self assert: actual equals: Character replacement.
 			self assert: stream atEnd]!
 
+testDetectIfNoneExtended
+	| absent chars subject |
+	absent := Object new.
+	chars := self decodeTestCases.
+	subject := self newCollection: chars.
+	chars keysAndValuesDo: 
+			[:key :ch |
+			| enumerated |
+			enumerated := OrderedCollection new.
+			self assert: (subject detect: 
+							[:each |
+							enumerated add: each.
+							each = ch]
+						ifNone: [absent])
+				equals: ch.
+			self assert: enumerated asArray equals: (chars copyFrom: 1 to: key).
+			self assert: (subject detect: [:each | each = $\x1F37B] ifNone: [absent]) identicalTo: absent]!
+
 testEncodeOnPut
 	{Character dolphin.
 		Character codePoint: 16r10FFFD.
@@ -251,10 +292,8 @@ testFindFirst
 	| subject index |
 	super testFindFirst.
 	subject := self assimilateString: 'a£🍺文1'.
-	subject do: 
-			[:ch |
-			index := subject findFirst: [:each | each = ch].
-			self assert: index equals: (subject indexOf: ch)].
+	subject
+		do: [:ch | self assert: (subject findFirst: [:each | each = ch]) equals: (subject indexOf: ch)].
 	index := subject findFirst: [:each | each = Character dolphin].
 	self assert: index equals: 0.
 	index := self collectionClass empty findFirst: [:each | each = $a].
@@ -263,10 +302,8 @@ testFindFirst
 testFindLast
 	| subject index |
 	subject := self assimilateString: 'a£🍺文1a£🍺文1'.
-	subject do: 
-			[:ch |
-			index := subject findLast: [:each | each = ch].
-			self assert: index equals: (subject lastIndexOf: ch)].
+	subject
+		do: [:ch | self assert: (subject findLast: [:each | each = ch]) equals: (subject lastIndexOf: ch)].
 	index := subject findLast: [:each | each = Character dolphin].
 	self assert: index equals: 0.
 	index := self collectionClass empty findLast: [:each | each = $a].
@@ -350,7 +387,7 @@ testIdentityIncludes
 	super testIdentityIncludes.
 	pound := Character value: 163.
 	dolphin := self collectionClass with: Character dolphin.
-	subject := 'a' , dolphin , 'b' , pound asString , 'c'.
+	subject := (self newCollection: 'a') , dolphin , 'b' , pound asString , 'c'.
 	{$a. Character dolphin. $\x1F42C. $b. pound. $c}
 		do: [:each | self assert: (subject identityIncludes: each)].
 	"Should include all the surrogates too"
@@ -366,7 +403,7 @@ testIncludes
 	super testIncludes.
 	pound := Character value: 163.
 	dolphin := self collectionClass with: Character dolphin.
-	subject := 'a' , dolphin , 'b' , pound asString , 'c'.
+	subject := (self newCollection: 'a') , dolphin , 'b' , pound asString , 'c'.
 	{$a. Character dolphin. $\x1F42C. $b. pound. $c} do: [:each | self assert: (subject includes: each)].
 	dolphin do: [:each | self assert: (subject includes: each)].
 	foreign := self collectionClass encoding == #utf8
@@ -429,6 +466,10 @@ testLeftString
 	self assert: (subject leftString: 5) equals: '🐬a£文🍺'.
 	self assert: (subject leftString: 6) equals: '🐬a£文🍺'.
 	self assert: (self collectionClass empty leftString: 1) equals: ''!
+
+testMatchExtended
+	#(#('#' '🐬') #('*#' '🐬') #('*#a' '🐬A') #('*#€#🍺*B*' '🐬€a🍺b'))
+		do: [:each | self verifyPattern: each first matches: each second]!
 
 testMidString
 	| subject |
@@ -548,14 +589,18 @@ testWithDo
 	pairs := OrderedCollection new.
 	subject with: reversed asUtf8String do: [:a :b | pairs add: {a. b}].
 	self assert: pairs asArray equals: expected.
-	pairs := OrderedCollection new.
+	pairs removeAll.
 	subject with: reversed asUtf16String do: [:a :b | pairs add: {a. b}].
 	self assert: pairs asArray equals: expected.
-	pairs := OrderedCollection new.
+	pairs removeAll.
 	subject with: reversed asArray do: [:a :b | pairs add: {a. b}].
 	self assert: pairs asArray equals: expected.
 	self should: [subject with: (1 to: 6) do: [:a :b | ]] raise: Error.
 	self should: [subject with: (1 to: 4) do: [:a :b | ]] raise: Error!
+
+verifyPattern: patternString matches: matchString
+	self assert: ((self assimilateString: patternString) match: matchString asUtf8String).
+	self assert: ((self assimilateString: patternString) match: matchString asUtf16String)!
 
 withAllTestCases
 	^super withAllTestCases , {{'a 🐬 è' asUtf16String}.
@@ -572,6 +617,7 @@ decodeTestCases!constants!private! !
 indexOfTestCases!constants!private! !
 lengthTestCases!constants!private! !
 makeStringFromCodeUnits:!helpers!private! !
+matchingPairs!public! !
 reverseTestCases!constants!private! !
 testAllButFirst!public!unit tests! !
 testAllButLast!public!unit tests! !
@@ -579,6 +625,7 @@ testAllSatisfy!public!unit tests! !
 testAnsiStringRoundTrip!public!unit tests! !
 testAnyone!public!unit tests! !
 testAnySatisfy!public!unit tests! !
+testAsAnsiStringDotlessI!public!unit tests! !
 testBeginsWithExtended!public!unit tests! !
 testBeginsWithIgnoreCase!public!unit tests! !
 testCollect!public!unit tests! !
@@ -586,8 +633,9 @@ testCopyReplaceAllWith!public!unit tests! !
 testCopyReplacingWithObject!public!unit tests! !
 testCopyWithout!public!unit tests! !
 testCopyWithoutIndex!public!unit tests! !
-testDecodeAt!public! !
+testDecodeAt!public!unit tests! !
 testDecodeNextFrom!constants!public! !
+testDetectIfNoneExtended!public!unit tests! !
 testEncodeOnPut!public!unit tests! !
 testFindFirst!public!unit tests! !
 testFindLast!public!unit tests! !
@@ -603,6 +651,7 @@ testKeysAndValuesDo!public!unit tests! !
 testLast!public!unit tests! !
 testLastColon!public!unit tests! !
 testLeftString!public!unit tests! !
+testMatchExtended!public! !
 testMidString!public!unit tests! !
 testOccurrencesOf!public!unit tests! !
 testPairsDo!public!unit tests! !
@@ -614,6 +663,7 @@ testSelect!public!unit tests! !
 testSplitByCharacterArrayExtended!public!unit tests! !
 testSplitByString!public!unit tests! !
 testWithDo!public!unit tests! !
+verifyPattern:matches:!public! !
 withAllTestCases!constants!private! !
 !
 

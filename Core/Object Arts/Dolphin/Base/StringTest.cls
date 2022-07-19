@@ -24,7 +24,7 @@ beforeTestCases
 	^#(#('ab' $b $a) #('ca£d' $£ $a) #('ca£d' $d $£))!
 
 caseConversionCases
-	^#(#('abc £12' 'ABC £12') #('oña' 'OÑA') #('árvízturo tükörfúrógép' 'ÁRVÍZTURO TÜKÖRFÚRÓGÉP'))
+	^#(#('' '') #('abc £12' 'ABC £12') #('oña' 'OÑA') #('árvízturo tükörfúrógép' 'ÁRVÍZTURO TÜKÖRFÚRÓGÉP'))
 		, {{AnsiString fromByteArray: #[97 0 98]. AnsiString fromByteArray: #[65 0 66]}}!
 
 equalityTestCases
@@ -47,11 +47,31 @@ indexOfTestCases
 lengthTestCases
 	^#(#('' 0) #('a' 1) #('ab' 2) #('oña' 3) #('£€' 2))!
 
-newNumericArray: anInteger 
+matchingPairs
+	^#(#('*' 'zort') #('*baz' 'mobaz') #('foo*' 'foozo') #('foo*baz' 'foo23baz') #('foo*baz' 'foobaz') #('foo' 'Foo') #('foo*baz*zort' 'foobazzort') #('*foo#zort' 'afoo3zortthenfoo3zort') #('*foo*zort' 'afoodezortorfoo3zort'))!
+
+mismatchedPairs
+	^#(#('*baz' 'mobazo') #('*baz*' 'mozo') #('foo*' 'bozo') #('foo*baz' 'foo23bazo') #('foo*baz*zort' 'foobazort') #('#' ''))!
+
+newNumericArray: anInteger
 	^self newCollection: ((1 to: anInteger) collect: [:each | Character digitValue: each])!
 
 reverseTestCases
-	^#(#('' '') #('a' 'a') #('ab' 'ba') #('abc' 'cba') #('oña' 'año'))!
+	^{#('' '').
+		#('a' 'a').
+		#('ab' 'ba').
+		#('abc' 'cba').
+		#('oña' 'año').
+		{String
+				with: $a
+				with: $b
+				with: $\0
+				with: $c.
+			String
+				with: $c
+				with: $\0
+				with: $b
+				with: $a}}!
 
 testAfter
 	self afterTestCases do: 
@@ -208,12 +228,15 @@ testCapitalized
 	self assert: string equals: (self assimilateString: 'Ab')!
 
 testCaseConversions
-	| subject actual expected |
 	self caseConversionCases do: 
 			[:each |
+			| subject actual expected |
 			subject := self assimilateString: each first.
+			expected := self assimilateString: each last.
+			"Sanity check that the test cases are equal ordinally ignoring case"
+			self assert: (subject <=> expected) equals: 0.
+			self assert: (subject sameAs: expected).
 			actual := subject asUppercase.
-			expected := (self assimilateString: each last).
 			self assert: actual equals: expected mutableCopy.
 			actual := expected asLowercase.
 			self assert: actual equals: subject mutableCopy]!
@@ -525,16 +548,26 @@ testFindStringStartingAtIgnoreCase
 				ignoreCase: true)
 		equals: 7!
 
+testFromAddress
+	self assertIsNil: (self collectionClass fromAddress: 0).
+	self assertIsNil: (self collectionClass fromAddress: 0 length: 0)!
+
 testHash
 	| abc |
+	"Might fail if the hash algorithm is changed."
+	self assert: (self assimilateString: '€') hash equals: 697271083.
 	self equalityTestCases do: 
 			[:each |
 			| subject |
 			subject := self assimilateString: each.
 			"Same characters must be equal"
 			self assert: subject hash equals: subject copy hash.
+			"If representable as an ANSI string, should still have the same hash value (hash value is always that of the Utf-8 bytes"
+			subject asAnsiString asUtf8String = subject
+				ifTrue: [self assert: subject hash equals: subject asAnsiString hash].
 			self assert: subject hash equals: subject asUtf8String hash.
 			self assert: subject hash equals: subject asUtf16String hash].
+
 	"Symbols are now equal to strings with the same characters"
 	abc := self assimilateString: 'abc'.
 	self assert: #abc hash equals: abc hash!
@@ -598,6 +631,16 @@ testLines
 				self assimilateString: ' '.
 				empty}!
 
+testMatch
+	#('**' 'f**' 'f**o' 'f*' '*f*' 'f#*' 'f##' '*oo' '#oo' '*o*' '#o#' '#o*' '*o#' 'fo*' 'fo#' '*foo*' '###' '*#' 'f*#' 'f*#o')
+		do: [:each | self verifyPattern: each matches: 'foo'].
+	#('#' 'bar' 'foo#' '#foo' '*foo#' '#foo*' '*bar*')
+		do: [:each | self verifyPattern: each mismatch: 'foo'].
+	#(#('*' 'zort') #('*#' 'a') #('*baz' 'mobaz') #('foo*' 'foozo') #('foo*baz' 'foo23baz') #('foo*baz' 'foobaz') #('foo' 'Foo') #('foo**' 'Foo') #('foo*baz*zort' 'foobazzort') #('*foo#zort' 'afoo3zortthenfoo3zort') #('*foo***zort' 'afoodezortorfoo3zort') #('*#c*d' 'abcd'))
+		do: [:each | self verifyPattern: each first matches: each second].
+	#(#('*baz' 'mobazo') #('*baz*' 'mozo') #('foo*' 'bozo') #('foo*baz' 'foo23bazo') #('foo*baz*zort' 'foobazort') #('#' ''))
+		do: [:each | self verifyPattern: each first mismatch: each second]!
+
 testMutableCopy
 	self caseConversionCases do: 
 			[:each |
@@ -622,8 +665,9 @@ testRefersToLiteral
 	self deny: (str refersToLiteral: 'ab')!
 
 testReverse
-	"Tests reversing a variety of 1, 2, 3 and 4 byte encodings"
+	"Tests reversing a variety of 1, 2, 3 and 4 byte encodings, and with embedded nulls"
 
+	super testReverse.
 	self reverseTestCases do: 
 			[:each |
 			| subject expected actual |
@@ -634,6 +678,31 @@ testReverse
 			"Reverse it back"
 			actual := actual reverse.
 			self assert: actual equals: subject]!
+
+testReversedFromTo
+	"Tests reversing a variety of 1, 2, 3 and 4 byte encodings"
+
+	| lenFirst lenLast |
+	super testReversedFromTo.
+	self reverseTestCases do: 
+			[:each |
+			| subject expected actual chars |
+			subject := self assimilateString: each first.
+			expected := self assimilateString: each last.
+			actual := subject reversedFrom: 1 to: subject size.
+			self assert: actual equals: expected.
+			"Reverse it back"
+			actual := actual reversedFrom: 1 to: subject size.
+			self assert: actual equals: subject.
+			chars := subject asArray.
+			chars size > 2
+				ifTrue: 
+					[lenFirst := subject encodedSizeOf: chars first.
+					lenLast := subject encodedSizeOf: chars last.
+					actual := subject reversedFrom: 1 + lenFirst to: subject size - lenLast.
+					expected := self newCollection: (chars copyFrom: 2 to: chars size - 1) reverse.
+					self assert: actual equals: expected].
+			self assert: (subject reversedFrom: subject size + 1 to: subject size) isEmpty]!
 
 testReverseDo
 	self reverseTestCases do: 
@@ -987,27 +1056,30 @@ testUrlEncoded
 	| unreserved reserved |
 	unreserved := 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~'.
 	reserved := ':/?#[]@!!$&''()*+,;='.
-	
+
 	"Unreserved shouldn't be encoded"
 	self assert: (self collectionClass withAll: unreserved) urlEncoded equals: unreserved.
 	"Reserved should allways be encoded when used for some other purpose."
-	self assert: (self collectionClass withAll: reserved) urlEncoded equals: '%3A%2F%3F%23%5B%5D%40%21%24%26%27%28%29%2A%2B%2C%3B%3D'.
+	self assert: (self collectionClass withAll: reserved) urlEncoded
+		equals: '%3A%2F%3F%23%5B%5D%40%21%24%26%27%28%29%2A%2B%2C%3B%3D'.
 	self assert: (self collectionClass with: Character space) urlEncoded equals: '%20'.
 	self assert: (self collectionClass with: $%) urlEncoded equals: '%25'.
 	self assert: (self collectionClass withAll: String lineDelimiter) urlEncoded equals: '%0D%0A'.
 	"Other common characters found in urls."
-	self assert: (self collectionClass withAll: '"<>\^`{|}') urlEncoded equals: '%22%3C%3E%5C%5E%60%7B%7C%7D'.
+	self assert: (self collectionClass withAll: '"<>\^`{|}') urlEncoded
+		equals: '%22%3C%3E%5C%5E%60%7B%7C%7D'.
 	"Some unicode"
-	self assert: '🐬 cañón CAÑÓN' urlEncoded equals: '%F0%9F%90%AC%20ca%C3%B1%C3%B3n%20CA%C3%91%C3%93N'.
-	self assert: '🐬 cañón CAÑÓN' asUtf16String urlEncoded equals: '%F0%9F%90%AC%20ca%C3%B1%C3%B3n%20CA%C3%91%C3%93N'.
+	self assert: '🐬 cañón CAÑÓN' urlEncoded
+		equals: '%F0%9F%90%AC%20ca%C3%B1%C3%B3n%20CA%C3%91%C3%93N'.
+	self assert: '🐬 cañón CAÑÓN' asUtf16String urlEncoded
+		equals: '%F0%9F%90%AC%20ca%C3%B1%C3%B3n%20CA%C3%91%C3%93N'.
 	self assert: '日本語' urlEncoded equals: '%E6%97%A5%E6%9C%AC%E8%AA%9E'.
 	"Test reversions"
 	self assert: '🐬 cañón CAÑÓN' urlEncoded urlDecoded equals: '🐬 cañón CAÑÓN'.
 	self assert: String lineDelimiter urlEncoded urlDecoded equals: String lineDelimiter.
 	self assert: ' ' urlEncoded urlDecoded equals: ' '.
 	self assert: (self collectionClass withAll: unreserved) urlEncoded urlDecoded equals: unreserved.
-	self assert: (self collectionClass withAll: reserved) urlEncoded urlDecoded equals: reserved.
-!
+	self assert: (self collectionClass withAll: reserved) urlEncoded urlDecoded equals: reserved!
 
 testWithAll
 	self withAllTestCases do: 
@@ -1068,6 +1140,14 @@ verifyConcatenationResult: resultString of: receiverString with: argumentString
 				contents.
 	self assert: resultString equals: expected!
 
+verifyPattern: patternString matches: matchString
+	self assert: ((self assimilateString: patternString) match: (self assimilateString: matchString))!
+
+verifyPattern: patternString mismatch: matchString
+	self deny: ((self assimilateString: patternString) match: matchString).
+	self deny: ((self assimilateString: patternString) match: (self assimilateString: matchString)).
+	self deny: (patternString match: (self assimilateString: matchString))!
+
 withAllTestCases
 	^#(#('') #('a') #('abc') #('£€') #(#($a $£ $1 $\x20AC) 'a£1€'))! !
 !StringTest categoriesForMethods!
@@ -1080,6 +1160,8 @@ equalityTestCases!constants!private! !
 findActualIndicesOf:in:!helpers!private! !
 indexOfTestCases!constants!private! !
 lengthTestCases!constants!private! !
+matchingPairs!public! !
+mismatchedPairs!public! !
 newNumericArray:!helpers!private! !
 reverseTestCases!constants!private! !
 testAfter!public!unit tests! !
@@ -1103,15 +1185,18 @@ testExpandMacrosWith!public!unit tests! !
 testExpandMacrosWithArguments!public!unit tests! !
 testFindStringStartingAt!public!unit tests! !
 testFindStringStartingAtIgnoreCase!public!unit tests! !
+testFromAddress!public!unit tests! !
 testHash!public!unit tests! !
 testIndexOfStartingAt!public!unit tests! !
 testInvalidComparisons!public!unit tests! !
 testLastIndexOf!public!unit tests! !
 testLength!public!unit tests! !
 testLines!public!unit tests! !
+testMatch!public! !
 testMutableCopy!public!unit tests! !
 testRefersToLiteral!public!unit tests! !
 testReverse!public!unit tests! !
+testReversedFromTo!public!unit tests! !
 testReverseDo!public!unit tests! !
 testSplitByCharacterArray!public!unit tests! !
 testSplitByString!public!unit tests! !
@@ -1125,6 +1210,8 @@ testUrlEncoded!public!unit tests! !
 testWithAll!public!unit tests! !
 testWithNormalizedLineDelimiters!public!unit tests! !
 verifyConcatenationResult:of:with:!helpers!private! !
+verifyPattern:matches:!public! !
+verifyPattern:mismatch:!public! !
 withAllTestCases!constants!private! !
 !
 
