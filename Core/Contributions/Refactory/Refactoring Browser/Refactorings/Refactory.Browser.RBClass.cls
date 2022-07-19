@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.RBAbstractClass subclass: #'Refactory.Browser.RBClass'
-	instanceVariableNames: 'model name metaclass realClass superclass subclasses unqualifiedName classPool imports categoryNames comment environment binding'
+	instanceVariableNames: 'model name metaclass realClass superclass subclasses unqualifiedName classPool imports categoryNames comment environment binding instanceSpec'
 	classVariableNames: 'LookupComment'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -154,6 +154,9 @@ comment
 comment: aString
 	model comment: (comment := aString) in: self!
 
+defaultInstanceSpec
+	^Behavior._IsPointersMask!
+
 definition
 	| definitionStream |
 	definitionStream := (String writeStream: 256)
@@ -197,10 +200,8 @@ getEnvironment
 			ref := self fullyQualifiedReference.
 			ref isQualifiedName ifTrue: [ref environment] ifFalse: [self baseEnvironment]]!
 
-getImports
-	#rbFix.	"Dolphin stores the pool names in its classes, rather than the pools themselves."
-	^self realClass imports
-	"sharedPools collect: [:each | Smalltalk keyAtValue: each]"!
+getInstanceSpec
+	^self nearestRealClass ifNil: [self defaultInstanceSpec] ifNotNil: [:class | class instanceSpec]!
 
 guid
 	^self realClass ifNotNil: [realClass guid]!
@@ -234,7 +235,9 @@ instanceClass
 	^self!
 
 instanceSpec
-	^self nearestRealClass ifNil: [Behavior._IsPointersMask] ifNotNil: [:class | class instanceSpec]!
+	^instanceSpec
+		ifNil: 
+			[self nearestRealClass ifNil: [self defaultInstanceSpec] ifNotNil: [:class | class instanceSpec]]!
 
 isDefined
 	^realClass notNil!
@@ -247,6 +250,11 @@ isMeta
 
 isNonInstantiable
 	^self instanceSpec anyMask: Behavior._NonInstantiableMask!
+
+isNonInstantiable: aBoolean
+	"Set whether the class described by the receiver should not be instantiated, e.g. it is abstract."
+
+	instanceSpec := self instanceSpec mask: Behavior._NonInstantiableMask set: aBoolean!
 
 kindOfSubclass
 	"Private - Answer a string describing the kind of subclassing method used to create the receiver 
@@ -532,6 +540,7 @@ classPool!accessing!public! !
 classVariableNames:!accessing!public! !
 comment!accessing!public! !
 comment:!accessing!public! !
+defaultInstanceSpec!constants!private! !
 definition!accessing!public! !
 details!accessing!public! !
 environment!accessing!public! !
@@ -539,7 +548,7 @@ fullName:!accessing!private! !
 fullNameFor:!helpers!private! !
 fullyQualifiedReference!accessing!namespaces!public! !
 getEnvironment!accessing!public! !
-getImports!helpers!private! !
+getInstanceSpec!accessing!private! !
 guid!accessing!public! !
 imports!accessing!public! !
 imports:!accessing!public! !
@@ -551,6 +560,7 @@ isDefined!public!testing! !
 isInBaseEnvironment!public!testing! !
 isMeta!public!testing! !
 isNonInstantiable!public!testing! !
+isNonInstantiable:!instance specification-accessing!public! !
 kindOfSubclass!class hierarchy-testing!private! !
 localScope!accessing!public! !
 metaclass!accessing!public! !

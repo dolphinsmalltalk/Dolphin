@@ -17,10 +17,12 @@ abstractSuperclass
 addSuperclass
 	self performComponentRefactoring: (AddClassRefactoring
 				model: self model
-				details: (ClassDetails
+				details: ((ClassDetails
 						className: self className
 						superclass: parent superclass
 						categories: parent classCategories)
+						isNonInstantiable: true;
+						yourself)
 				subclasses: {parent})!
 
 changeIsKindOfReferences

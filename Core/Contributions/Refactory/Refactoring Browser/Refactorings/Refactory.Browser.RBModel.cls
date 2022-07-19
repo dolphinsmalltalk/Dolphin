@@ -157,7 +157,7 @@ compileTree: aMethodNode forMethod: aRBMethod
 		package: packageAndEnvironment first!
 
 createOrUpdateModelClass: anAddClassChange
-	| newClass newClassName |
+	| newClass newClassName details |
 	newClassName := anAddClassChange changeClassName.
 	newClass := self instanceClassNamed: newClassName.
 	newClass
@@ -167,13 +167,16 @@ createOrUpdateModelClass: anAddClassChange
 		ifNotNil: 
 			["If the class previously existed, and was a root class, we need to remove it from the model's cache of root classes."
 			newClass superclass ifNil: [self rootClasses remove: newClass]].
-	newClass superclass: (self instanceClassNamed: anAddClassChange superclassName).
+	details := anAddClassChange details.
+	newClass superclass: (self instanceClassNamed: details superclassName).
 	newClass superclass ifNil: [self rootClasses add: newClass].
-	newClass instanceVariableNames: anAddClassChange instanceVariableNames.
-	newClass classVariableNames: anAddClassChange classVariableNames.
-	newClass classConstants: anAddClassChange classConstants.
-	newClass imports: anAddClassChange imports.
-	newClass categoryNames: anAddClassChange categoryNames!
+	newClass
+		instanceVariableNames: details instanceVariableNames;
+		classVariableNames: details classVariableNames;
+		classConstants: details classConstants;
+		imports: details imports;
+		categoryNames: details categoryNames.
+	details isNonInstantiable ifTrue: [newClass isNonInstantiable: true]!
 
 defineClass: aString
 	| change |

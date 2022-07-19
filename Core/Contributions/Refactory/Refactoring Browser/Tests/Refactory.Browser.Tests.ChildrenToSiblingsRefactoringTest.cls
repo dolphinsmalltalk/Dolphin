@@ -30,6 +30,7 @@ testChildToSibling
 	class := model classNamed: #'Refactory.Browser.Tests.ClassToRename'.
 	subclass := model classNamed: #'Refactory.Browser.Tests.SubclassOfClassToRename'.
 	superclass := refactoring model classNamed: #'Refactory.Browser.Tests.ClassToRenameAbstract'.
+	self assert: superclass isNonInstantiable.
 	self assert: class superclass equals: superclass.
 	self assert: class metaclass superclass equals: superclass metaclass.
 	self assert: subclass superclass equals: superclass.
@@ -91,6 +92,7 @@ testModelChildrenToSibling
 				subclasses: {subclass}.
 	self executeRefactoring: refactoring.
 	superclass := refactoring model classNamed: #'Refactory.Browser.Tests.AbstractSuperclass'.
+	self assert: superclass isNonInstantiable.
 	self assert: class superclass equals: superclass.
 	self assert: class metaclass superclass equals: superclass metaclass.
 	self assert: subclass superclass equals: superclass.

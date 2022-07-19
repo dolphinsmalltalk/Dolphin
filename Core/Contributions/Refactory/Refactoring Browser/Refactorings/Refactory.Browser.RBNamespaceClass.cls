@@ -24,6 +24,9 @@ baseEnvironment
 
 	^model rootNamespace!
 
+defaultInstanceSpec
+	^##(Behavior._IsPointersMask | Behavior._NonInstantiableMask)!
+
 fullName: aString
 	name = aString ifTrue: [^self].
 	super fullName: aString.
@@ -42,6 +45,7 @@ removeClass: aRBClass
 !Refactory.Browser.RBNamespaceClass categoriesForMethods!
 addClass:!public! !
 baseEnvironment!constants!public! !
+defaultInstanceSpec!constants!private! !
 fullName:!accessing!private! !
 hierarchyBindingFor:!bindings!public! !
 removeClass:!public! !

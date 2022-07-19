@@ -25,26 +25,17 @@ asUndoOperation
 		ifTrue: [self class details: (ClassDetails fromClass: class)]
 		ifFalse: [RemoveClassChange removeClassName: self changeClassName]!
 
-categoryNames
-	^self details categoryNames!
-
 changeClassName
 	^self details className!
 
 changeString
 	^'Define <1d>' << self classReference!
 
-classConstants
-	^self details classConstants!
-
 classReference
 	^self details classReference!
 
 classReference: aBindingReference
 	self details classReference: aBindingReference!
-
-classVariableNames
-	^self details classVariableNames!
 
 definingSuperclass
 	^self class!
@@ -57,6 +48,8 @@ definition: aString
 	^self!
 
 details
+	"Answer a <ClassDetails> describing the attributes of the new class."
+
 	^details ifNil: [self fillOutDefinition]!
 
 details: aClassDetails 
@@ -110,12 +103,6 @@ getClassDetails
 hash
 	^self definition hash!
 
-imports
-	^self details imports!
-
-instanceVariableNames
-	^self details instanceVariableNames!
-
 isValidMessageName: aMessageNode
 	^##(#(
 	#subclass:instanceVariableNames:classVariableNames:poolDictionaries: 
@@ -164,21 +151,15 @@ printOn: aStream
 	(classDetails sourceFilerClass on: aStream) fileOutDefinitionOfClass: classDetails!
 
 sourceFilerClass
-	^Object sourceFilerClass!
-
-superclassName
-	^self details superclassName! !
+	^Object sourceFilerClass! !
 !Refactory.Browser.AddClassChange categoriesForMethods!
 =!comparing!public! !
 areSubclassCreationMessageArgumentsValid:!private!testing! !
 asUndoOperation!converting!public! !
-categoryNames!accessing!public! !
 changeClassName!accessing!public! !
 changeString!printing!public! !
-classConstants!accessing!public! !
 classReference!accessing!public! !
 classReference:!accessing!public! !
-classVariableNames!accessing!public! !
 definingSuperclass!accessing!private! !
 definition!accessing!public! !
 definition:!initializing!public! !
@@ -188,8 +169,6 @@ fillOutDefinition!helpers!private! !
 fillOutDefinitionArguments:!helpers!private! !
 getClassDetails!printing!private! !
 hash!comparing!public! !
-imports!accessing!public! !
-instanceVariableNames!accessing!public! !
 isValidMessageName:!private!testing! !
 isValidSubclassCreationMessage:!private!testing! !
 namesIn:!helpers!private! !
@@ -197,7 +176,6 @@ parseDefinitionError!helpers!private! !
 primitiveExecute!applying!private! !
 printOn:!printing!public! !
 sourceFilerClass!constants!private! !
-superclassName!accessing!public! !
 !
 
 !Refactory.Browser.AddClassChange class methodsFor!

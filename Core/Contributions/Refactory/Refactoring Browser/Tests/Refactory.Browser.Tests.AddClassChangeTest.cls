@@ -60,7 +60,7 @@ testAsUndoModify
 	self assert: undo isKindOf: self undoClass.
 	self assert: undo changeClass identicalTo: subject changeClass.
 	self assert: undo afterText equals: ClassToRename definition.
-	self assert: undo imports equals: #()!
+	self assert: undo details imports equals: #()!
 
 testDetails
 	| subject details |
