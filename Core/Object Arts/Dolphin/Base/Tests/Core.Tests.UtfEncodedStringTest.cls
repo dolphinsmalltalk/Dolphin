@@ -9,7 +9,6 @@ Core.Tests.StringTest subclass: #'Core.Tests.UtfEncodedStringTest'
 Core.Tests.UtfEncodedStringTest guid: (Core.GUID fromString: '{f3d4f4a7-05b6-445f-8380-d0b838804877}')!
 Core.Tests.UtfEncodedStringTest isNonInstantiable: true!
 Core.Tests.UtfEncodedStringTest comment: ''!
-!Core.Tests.UtfEncodedStringTest categoriesForClass!Unclassified! !
 !Core.Tests.UtfEncodedStringTest methodsFor!
 
 afterTestCases
@@ -48,6 +47,9 @@ makeStringFromCodeUnits: data
 	1 to: data size do: [:i | subject basicAt: i put: (data at: i)].
 	subject := self assimilateString: subject.
 	^subject!
+
+matchingPairs
+	^super matchingPairs , #(#('#' '🐬') #('#€#a' '🐬€🍺a'))!
 
 reverseTestCases
 	"Private - #reverse doesn't work correctly for multi-byte encodings of UTF-8 and UTF-16."
@@ -465,6 +467,10 @@ testLeftString
 	self assert: (subject leftString: 6) equals: '🐬a£文🍺'.
 	self assert: (self collectionClass empty leftString: 1) equals: ''!
 
+testMatchExtended
+	#(#('#' '🐬') #('*#' '🐬') #('*#a' '🐬A') #('*#€#🍺*B*' '🐬€a🍺b'))
+		do: [:each | self verifyPattern: each first matches: each second]!
+
 testMidString
 	| subject |
 	subject := self assimilateString: '🐬a£文🍺'.
@@ -592,6 +598,10 @@ testWithDo
 	self should: [subject with: (1 to: 6) do: [:a :b | ]] raise: Error.
 	self should: [subject with: (1 to: 4) do: [:a :b | ]] raise: Error!
 
+verifyPattern: patternString matches: matchString
+	self assert: ((self assimilateString: patternString) match: matchString asUtf8String).
+	self assert: ((self assimilateString: patternString) match: matchString asUtf16String)!
+
 withAllTestCases
 	^super withAllTestCases , {{'a 🐬 è' asUtf16String}.
 				{'a 🐬 è' asUtf8String}.
@@ -607,6 +617,7 @@ decodeTestCases!constants!private! !
 indexOfTestCases!constants!private! !
 lengthTestCases!constants!private! !
 makeStringFromCodeUnits:!helpers!private! !
+matchingPairs!public! !
 reverseTestCases!constants!private! !
 testAllButFirst!public!unit tests! !
 testAllButLast!public!unit tests! !
@@ -640,6 +651,7 @@ testKeysAndValuesDo!public!unit tests! !
 testLast!public!unit tests! !
 testLastColon!public!unit tests! !
 testLeftString!public!unit tests! !
+testMatchExtended!public! !
 testMidString!public!unit tests! !
 testOccurrencesOf!public!unit tests! !
 testPairsDo!public!unit tests! !
@@ -651,6 +663,7 @@ testSelect!public!unit tests! !
 testSplitByCharacterArrayExtended!public!unit tests! !
 testSplitByString!public!unit tests! !
 testWithDo!public!unit tests! !
+verifyPattern:matches:!public! !
 withAllTestCases!constants!private! !
 !
 

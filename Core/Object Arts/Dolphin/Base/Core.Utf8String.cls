@@ -357,6 +357,70 @@ encodeOn: aPuttableStream put: aCharacter
 isLeadCodeUnit: anInteger
 	^anInteger < 16r80 or: [anInteger >= 16rC0]!
 
+matchPatternFrom: patternStart in: aUtf8String from: sourceStart
+	"Private - Answer whether the receiver matches aString (starting at patternStart in the receiver and sourceStart in source).
+	The receiver may contain wildcards; $* matches any sequence of characters (including none), and $# matches any one character."
+
+	"This is based on the #startingAt:match:startingAt: method in Squeak. It's a little messy, particularly after adaptation for variable length encoding, but is faster than the simpler and more elegant method implemented in Dolphin originally (by Russ, IIRC)."
+
+	| i j matchEnd anyMatch matchStart matchStr ii jj |
+	i := patternStart.
+	j := sourceStart.
+
+	"Process consecutive *s and #s at the beginning."
+	anyMatch := false.
+	matchEnd := self size.
+	jj := aUtf8String size.
+	
+	[i <= matchEnd and: 
+			[| ch |
+			ch := self at: i.
+			(ch == $* and: 
+					[anyMatch := true.
+					i := i + 1.
+					true]) or: 
+					[ch == $# and: 
+							[j > jj ifTrue: [^false].
+							i := i + 1.
+							j := j + (aUtf8String encodedSizeAt: j).
+							true]]]]
+			whileTrue.
+	i > matchEnd
+		ifTrue: 
+			[^j - 1 == jj or: 
+					["We reached the end by matching the character with a #."
+					anyMatch and: [j <= jj]	"Or there was a * before the end."]].
+	matchStart := i.
+
+	"Now determine the match string"
+	(ii := self
+				nextIndexOf: $*
+				from: matchStart
+				to: matchEnd) > 0
+		ifTrue: [matchEnd := ii - 1].
+	(ii := self
+				nextIndexOf: $#
+				from: matchStart
+				to: matchEnd) > 0
+		ifTrue: [matchEnd := ii - 1].
+	matchStr := self copyFrom: matchStart to: matchEnd.
+
+	"Now look for the match string"
+	
+	[jj := aUtf8String findString: matchStr startingAt: j.
+	anyMatch ifTrue: [jj > 0] ifFalse: [jj == j]]
+			whileTrue: 
+				["Found matchStr at jj.  See if the rest matches..."
+				(self
+					matchPatternFrom: matchEnd + 1
+					in: aUtf8String
+					from: jj + matchStr size) ifTrue: [^true	"the rest matches -- success"].
+				"The rest did not match."
+				anyMatch ifFalse: [^false].
+				"Preceded by * -- try for a later match"
+				j := j + 1].
+	^false	"Failed to find the match string"!
+
 maxEncoding
 	^4!
 
@@ -461,6 +525,7 @@ encodedSizeAt:!encode/decode!private! !
 encodedSizeOf:!encode/decode!private! !
 encodeOn:put:!encode/decode!private! !
 isLeadCodeUnit:!encode/decode!public!testing! !
+matchPatternFrom:in:from:!private!searching! !
 maxEncoding!constants!private! !
 nextIndexOfCharacter:from:to:!private!searching! !
 reversedFrom:to:!copying!public! !

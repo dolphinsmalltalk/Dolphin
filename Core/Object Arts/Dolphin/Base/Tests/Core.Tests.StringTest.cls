@@ -9,7 +9,6 @@ Core.Tests.ArrayedCollectionTest subclass: #'Core.Tests.StringTest'
 Core.Tests.StringTest guid: (Core.GUID fromString: '{262b323f-d574-423e-8571-63b1fab0d021}')!
 Core.Tests.StringTest isNonInstantiable: true!
 Core.Tests.StringTest comment: ''!
-!Core.Tests.StringTest categoriesForClass!Unclassified! !
 !Core.Tests.StringTest methodsFor!
 
 afterTestCases
@@ -55,6 +54,12 @@ indexOfTestCases
 
 lengthTestCases
 	^#(#('' 0) #('a' 1) #('ab' 2) #('oña' 3) #('£€' 2))!
+
+matchingPairs
+	^#(#('*' 'zort') #('*baz' 'mobaz') #('foo*' 'foozo') #('foo*baz' 'foo23baz') #('foo*baz' 'foobaz') #('foo' 'Foo') #('foo*baz*zort' 'foobazzort') #('*foo#zort' 'afoo3zortthenfoo3zort') #('*foo*zort' 'afoodezortorfoo3zort'))!
+
+mismatchedPairs
+	^#(#('*baz' 'mobazo') #('*baz*' 'mozo') #('foo*' 'bozo') #('foo*baz' 'foo23bazo') #('foo*baz*zort' 'foobazort') #('#' ''))!
 
 newNumericArray: anInteger
 	^self newCollection: ((1 to: anInteger) collect: [:each | Character digitValue: each])!
@@ -711,6 +716,16 @@ testLines
 				self assimilateString: ' '.
 				empty}!
 
+testMatch
+	#('**' 'f**' 'f**o' 'f*' '*f*' 'f#*' 'f##' '*oo' '#oo' '*o*' '#o#' '#o*' '*o#' 'fo*' 'fo#' '*foo*' '###' '*#' 'f*#' 'f*#o')
+		do: [:each | self verifyPattern: each matches: 'foo'].
+	#('#' 'bar' 'foo#' '#foo' '*foo#' '#foo*' '*bar*')
+		do: [:each | self verifyPattern: each mismatch: 'foo'].
+	#(#('*' 'zort') #('*#' 'a') #('*baz' 'mobaz') #('foo*' 'foozo') #('foo*baz' 'foo23baz') #('foo*baz' 'foobaz') #('foo' 'Foo') #('foo**' 'Foo') #('foo*baz*zort' 'foobazzort') #('*foo#zort' 'afoo3zortthenfoo3zort') #('*foo***zort' 'afoodezortorfoo3zort') #('*#c*d' 'abcd'))
+		do: [:each | self verifyPattern: each first matches: each second].
+	#(#('*baz' 'mobazo') #('*baz*' 'mozo') #('foo*' 'bozo') #('foo*baz' 'foo23bazo') #('foo*baz*zort' 'foobazort') #('#' ''))
+		do: [:each | self verifyPattern: each first mismatch: each second]!
+
 testMutableCopy
 	self caseConversionCases do: 
 			[:each |
@@ -1174,6 +1189,14 @@ verifyConcatenationResult: resultString of: receiverString with: argumentString
 				contents.
 	self assert: resultString equals: expected!
 
+verifyPattern: patternString matches: matchString
+	self assert: ((self assimilateString: patternString) match: (self assimilateString: matchString))!
+
+verifyPattern: patternString mismatch: matchString
+	self deny: ((self assimilateString: patternString) match: matchString).
+	self deny: ((self assimilateString: patternString) match: (self assimilateString: matchString)).
+	self deny: (patternString match: (self assimilateString: matchString))!
+
 withAllTestCases
 	^#(#('') #('a') #('abc') #('£€') #(#($a $£ $1 $\x20AC) 'a£1€'))! !
 !Core.Tests.StringTest categoriesForMethods!
@@ -1188,6 +1211,8 @@ equalityTestCases!constants!private! !
 findActualIndicesOf:in:!helpers!private! !
 indexOfTestCases!constants!private! !
 lengthTestCases!constants!private! !
+matchingPairs!public! !
+mismatchedPairs!public! !
 newNumericArray:!helpers!private! !
 reverseTestCases!constants!private! !
 testAfter!public!unit tests! !
@@ -1222,6 +1247,7 @@ testLastCodeUnit!public!unit tests! !
 testLastIndexOf!public!unit tests! !
 testLength!public!unit tests! !
 testLines!public!unit tests! !
+testMatch!public! !
 testMutableCopy!public!unit tests! !
 testRefersToLiteral!public!unit tests! !
 testReverse!public!unit tests! !
@@ -1240,6 +1266,8 @@ testUrlEncoded!public!unit tests! !
 testWithAll!public!unit tests! !
 testWithNormalizedLineDelimiters!public!unit tests! !
 verifyConcatenationResult:of:with:!helpers!private! !
+verifyPattern:matches:!public! !
+verifyPattern:mismatch:!public! !
 withAllTestCases!constants!private! !
 !
 

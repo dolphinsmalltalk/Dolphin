@@ -688,7 +688,7 @@ findString: aString startingAt: anInteger ignoreCase: aBoolean
 
 	#todo.	"More efficient implementation needed."
 	aBoolean ifFalse: [^self findString: aString startingAt: anInteger].
-	^self asLowercase findString: aString asLowercase startingAt: anInteger!
+	^self asUppercase findString: aString asUppercase startingAt: anInteger!
 
 formatWith: anObject
 	"Answer a <readableString> which is a message formatted from the receiver (assumed to be a
@@ -843,63 +843,20 @@ match: aString
 	^self match: aString ignoreCase: true!
 
 match: aString ignoreCase: aBoolean
-	"Answer whether the receiver (which may contain wildcard characters) matches the 
-	<readableString> argument, aString, ignoring or respecting case differences depending
-	on the <Boolean> argument, aBoolean.
-	Note that the pattern matching characters are *, matching any sequence of characters 
-	and # matching any single character. The latter differs from the usual ? for historical
-	reasons."
+	"Answer whether the receiver (which may contain wildcard characters) matches the <readableString> argument, aString, ignoring or respecting case differences depending on the <Boolean> argument, aBoolean.
+	Note that the pattern matching characters are *, matching any sequence of characters and # matching any single character. The latter differs from the usual ? for historical reasons."
 
 	^aBoolean
 		ifTrue: 
-			[self asUppercase
+			[self asUppercase asUtf8String
 				matchPatternFrom: 1
-				in: aString asUppercase
+				in: aString asUppercase asUtf8String
 				from: 1]
 		ifFalse: 
-			[self
+			[self asUtf8String
 				matchPatternFrom: 1
-				in: aString
+				in: aString asUtf8String
 				from: 1]!
-
-matchPatternFrom: patternStart in: aString from: sourceStart
-	"Private - Answer whether the receiver matches aString (starting
-	at patternStart in the receiver and sourceStart in source).
-	The receiver may contain wildcards. Any differences in case between individual
-	characters are ignored if the <boolean> argument is true."
-
-	| p |
-	patternStart > self size
-		ifTrue: 
-			["We've processed the whole pattern.
-		If there is no more source, then we have a successful match,
-		otherwise the match has failed."
-			^sourceStart > aString size].
-
-	"Get the next character from the pattern."
-	(p := self at: patternStart) == $*
-		ifTrue: 
-			["Handle the $* in the pattern."
-			sourceStart to: aString size + 1
-				do: 
-					[:s |
-					(self
-						matchPatternFrom: patternStart + 1
-						in: aString
-						from: s) ifTrue: [^true]].
-			^false].
-	sourceStart > aString size
-		ifTrue: 
-			["We've run out of source to be matched by the pattern."
-			^false].
-	(p == $# or: [p = (aString at: sourceStart)])
-		ifTrue: 
-			[^self
-				matchPatternFrom: patternStart + 1
-				in: aString
-				from: sourceStart + 1].
-	"A character has been matched exactly, or matched by a $#."
-	^false!
 
 max: operand
 	"Answer the greater of the receiver and the <magnitude>, operand.
@@ -1386,7 +1343,6 @@ lines!copying!public! !
 lookup:!accessing!public! !
 match:!public!searching! !
 match:ignoreCase:!public!searching! !
-matchPatternFrom:in:from:!private!searching! !
 max:!comparing!public! !
 midString:from:!copying!public! !
 min:!comparing!public! !

@@ -8,7 +8,6 @@ Core.Tests.StringTest subclass: #'Core.Tests.AnsiStringTest'
 	classConstants: {}!
 Core.Tests.AnsiStringTest guid: (Core.GUID fromString: '{c1474b06-e77d-41d7-ad4d-10d5114f8471}')!
 Core.Tests.AnsiStringTest comment: 'Tests AnsiString.'!
-!Core.Tests.AnsiStringTest categoriesForClass!Unclassified! !
 !Core.Tests.AnsiStringTest methodsFor!
 
 assimilate: each
@@ -83,41 +82,7 @@ testIndexOfSubCollectionStartingAtGPF
 			[:i |
 			current := String new: 970.
 			self assert: (current indexOfSubCollection: search startingAt: 965) identicalTo: 0.
-			strings add: current]!
-
-testMatch
-	"Match anything"
-
-	self assert: ('*' match: 'zort').
-	self assert: ('*' match: '').
-	"Leading wilcard, matches at end"
-	self assert: ('*baz' match: 'mobaz').
-	"Must match whole sequence"
-	self deny: ('*baz' match: 'mobazo').
-	"Leading and trailing wildcard"
-	self assert: ('*baz*' match: 'mobazo').
-	"No match"
-	self deny: ('*baz*' match: 'mozo').
-	"Trailing wildcard"
-	self assert: ('foo*' match: 'foozo').
-	self deny: ('foo*' match: 'bozo').
-	"* can match any length sequence"
-	self assert: ('foo*baz' match: 'foo23baz').
-	"* matches empty sequence"
-	self assert: ('foo*baz' match: 'foobaz').
-	"Has to match whole sequence"
-	self deny: ('foo*baz' match: 'foo23bazo').
-	"Case insensitive"
-	self assert: ('foo' match: 'Foo').
-	self deny: ('foo*baz*zort' match: 'foobazort').
-	"* should match empty sequence"
-	self assert: ('foo*baz*zort' match: 'foobazzort').
-	"# matches any single char"
-	self assert: ('*foo#zort' match: 'afoo3zortthenfoo3zort').
-	self assert: ('*foo*zort' match: 'afoodezortorfoo3zort').
-	#('**' 'f**' 'f**o' 'f*' '*f*' 'f#*' 'f##' '*oo' '#oo' '*o*' '#o#' '#o*' '*o#' 'fo*' 'fo#' '*foo*' '###' '*#' 'f*#' 'f*#o')
-		do: [:each | self assert: (each match: 'foo')].
-	#('bar' 'foo#' '#foo' '*foo#' '#foo*' '*bar*') do: [:each | self deny: (each match: 'foo')]! !
+			strings add: current]! !
 !Core.Tests.AnsiStringTest categoriesForMethods!
 assimilate:!helpers!private! !
 assimilateString:!helpers!private! !
@@ -127,6 +92,5 @@ testBeginsWithIgnoreCase!public!unit tests! !
 testClassWith!public! !
 testCopyReplaceAllWith!public!unit tests! !
 testIndexOfSubCollectionStartingAtGPF!public!unit tests! !
-testMatch!public!unit tests! !
 !
 
