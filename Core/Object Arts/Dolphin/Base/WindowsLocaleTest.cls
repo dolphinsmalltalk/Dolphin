@@ -57,6 +57,15 @@ testNamed
 	self assert: (Locale named: 'cy-GB') lcid equals: 1106.
 	self assert: (Locale named: 'Invariant') identicalTo: Locale invariant!
 
+testPrimary
+	"Sad, but true"
+
+	self assert: (Locale named: 'en-GB') primary code equals: 'en-US'.
+	self assert: (Locale named: 'fr-CA') primary code equals: 'fr-FR'.
+	self assert: Locale invariant primary equals: Locale invariant.
+	self assert: (Locale lcid: Win32Constants.LOCALE_CUSTOM_DEFAULT) primary code
+		equals: Locale userDefault primary code!
+
 testPrintFloat
 	| subject |
 	{{Locale lcid: 2057.
@@ -171,6 +180,7 @@ defaultSubject!helpers!private! !
 testDisplayFloatOnNegativeModes!public!unit tests! !
 testEnglishName!public!unit tests! !
 testNamed!public!unit tests! !
+testPrimary!public!unit tests! !
 testPrintFloat!public!unit tests! !
 testPrintFloatGrouping!public!unit tests! !
 testPrintFloatSeparators!public!unit tests! !

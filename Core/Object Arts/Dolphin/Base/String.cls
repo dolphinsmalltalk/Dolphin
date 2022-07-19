@@ -597,9 +597,7 @@ findString: aString startingAt: anInteger ignoreCase: aBoolean
 	| meLower subLower |
 	#todo.	"More efficient implementation needed."
 	aBoolean ifFalse: [^self findString: aString startingAt: anInteger].
-	meLower := self asLowercase.
-	subLower := aString asLowercase.
-	^meLower findString: subLower startingAt: anInteger!
+	^self asUppercase findString: aString asUppercase startingAt: anInteger!
 
 formatWith: anObject
 	"Answer a <readableString> which is a message formatted from the receiver (assumed to be a
@@ -651,8 +649,9 @@ formatWithArguments: aCollection
 		withArguments: aCollection!
 
 hash
-	"Answer the <integer> hash value for the receiver. Note that this must be the same for equal objects, and therefore it should be the same for the same sequence of characters, regardless of encoding.
-	Currently the hash is a 32-bit FNV1a with the standard constants, folded to 30 bits to produce a positive <SmallInteger> hash value, but this is a choice subject to change."
+	"Answer the <integer> hash value for the receiver. Note that this must be the same for equal objects (and in this case of Strings this means exact equal character, i.e. an ordinal comparison of the code points), and therefore it should be the same for the same sequence of code points, regardless of encoding."
+
+	"Currently the hash is a 32-bit FNV1a of the UTF-8 encoding with the standard FNV1a constants, folded to 30 bits to produce a positive <SmallInteger> hash value, but this is an implementation choice and subject to change."
 
 	<primitive: 106>
 	| utf8 hash |
@@ -661,7 +660,7 @@ hash
 	"FNV1a"
 	1 to: utf8 size do: [:i | hash := (hash bitXor: (utf8 basicAt: i)) * 16777619 bitAnd: 16rFFFFFFFF].
 	"Fold to 30 bits so is always positive SmallInteger"
-	^(hash bitShift: VMConstants.SmallIntegerMax highBit negated)
+	^(hash bitShift: ##(VMConstants.SmallIntegerMax highBit negated))
 		bitXor: (hash bitAnd: VMConstants.SmallIntegerMax)!
 
 indexOfAnyOf: aCollectionOfCharacters startingAt: anInteger 
@@ -732,63 +731,20 @@ match: aString
 	^self match: aString ignoreCase: true!
 
 match: aString ignoreCase: aBoolean
-	"Answer whether the receiver (which may contain wildcard characters) matches the 
-	<readableString> argument, aString, ignoring or respecting case differences depending
-	on the <Boolean> argument, aBoolean.
-	Note that the pattern matching characters are *, matching any sequence of characters 
-	and # matching any single character. The latter differs from the usual ? for historical
-	reasons."
+	"Answer whether the receiver (which may contain wildcard characters) matches the <readableString> argument, aString, ignoring or respecting case differences depending on the <Boolean> argument, aBoolean.
+	Note that the pattern matching characters are *, matching any sequence of characters and # matching any single character. The latter differs from the usual ? for historical reasons."
 
 	^aBoolean
 		ifTrue: 
-			[self asUppercase
+			[self asUppercase asUtf8String
 				matchPatternFrom: 1
-				in: aString asUppercase
+				in: aString asUppercase asUtf8String
 				from: 1]
 		ifFalse: 
-			[self
+			[self asUtf8String
 				matchPatternFrom: 1
-				in: aString
+				in: aString asUtf8String
 				from: 1]!
-
-matchPatternFrom: patternStart in: aString from: sourceStart
-	"Private - Answer whether the receiver matches aString (starting
-	at patternStart in the receiver and sourceStart in source).
-	The receiver may contain wildcards. Any differences in case between individual
-	characters are ignored if the <boolean> argument is true."
-
-	| p |
-	patternStart > self size
-		ifTrue: 
-			["We've processed the whole pattern.
-		If there is no more source, then we have a successful match,
-		otherwise the match has failed."
-			^sourceStart > aString size].
-
-	"Get the next character from the pattern."
-	(p := self at: patternStart) == $*
-		ifTrue: 
-			["Handle the $* in the pattern."
-			sourceStart to: aString size + 1
-				do: 
-					[:s |
-					(self
-						matchPatternFrom: patternStart + 1
-						in: aString
-						from: s) ifTrue: [^true]].
-			^false].
-	sourceStart > aString size
-		ifTrue: 
-			["We've run out of source to be matched by the pattern."
-			^false].
-	(p == $# or: [p = (aString at: sourceStart)])
-		ifTrue: 
-			[^self
-				matchPatternFrom: patternStart + 1
-				in: aString
-				from: sourceStart + 1].
-	"A character has been matched exactly, or matched by a $#."
-	^false!
 
 max: operand
 	"Answer the greater of the receiver and the <magnitude>, operand.
@@ -887,7 +843,7 @@ occurrencesOf: anObject from: startInteger to: endInteger
 prevIndexOf: anObject from: hiInteger to: loInteger
 	"Answer the <integer> index of the first occurrence of anElement in the receiver that is before index, hiInteger, but after index, loInteger. The range is inclusive. If there are no such occurrences, answer 0."
 
-	| last next |
+	| next last |
 	last := 0.
 	next := self
 				nextIndexOf: anObject
@@ -1305,7 +1261,6 @@ lines!copying!public! !
 lookup:!accessing!public! !
 match:!public!searching! !
 match:ignoreCase:!public!searching! !
-matchPatternFrom:in:from:!private!searching! !
 max:!comparing!public! !
 midString:from:!copying!public! !
 min:!comparing!public! !

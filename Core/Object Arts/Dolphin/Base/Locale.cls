@@ -438,6 +438,11 @@ pmDesignator
 
 	^self subclassResponsibility!
 
+primary
+	"Answer the primary language locale for this Locale. For example fr-Fr is the primary locale for all the various French locales such as fr-CA."
+
+	^self class named: (self name copyFrom: 1 to: 2)!
+
 print: anObject on: aWriteStream format: formatString alphabet: formatChars formatters: aLookupTable
 	
 	| ch formatStream tokenStream |
@@ -704,6 +709,7 @@ numberFormat:!accessing!private! !
 numberGrouping!constants!public! !
 percentSymbol!constants!public! !
 pmDesignator!constants!public! !
+primary!enquiries!public! !
 print:on:format:alphabet:formatters:!printing!private! !
 printDate:on:format:!printing!public! !
 printDateTime:on:format:!printing!public! !

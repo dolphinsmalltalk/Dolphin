@@ -286,6 +286,11 @@ pmDesignator
 
 	^'pm'!
 
+primary
+	"Answer the primary language locale for this Locale. For example fr-Fr is the primary locale for all the various French locales such as fr-CA."
+
+	^Locale named: 'en'!
+
 printFloat: aFloat
 	"Answer a <String> representation of the <Float> argument in the format defined for this locale."
 
@@ -373,6 +378,7 @@ negativeSign!constants!public! !
 numberGrouping!constants!public! !
 percentSymbol!constants!public! !
 pmDesignator!constants!public! !
+primary!enquiries!public! !
 printFloat:!printing!public! !
 printFloat:on:format:!printing!public! !
 shortAmDesignator!constants!public! !

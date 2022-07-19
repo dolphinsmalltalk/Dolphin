@@ -16,6 +16,9 @@ defaultSubject
 testNamed
 	self assert: (Locale named: #Smalltalk) identicalTo: self defaultSubject!
 
+testPrimary
+	self assert: self defaultSubject primary code equals: 'en-US'!
+
 testPrintFloat
 	| subject |
 	subject := Locale smalltalk.
@@ -71,6 +74,7 @@ testPrintFloatSeparators
 !SmalltalkLocaleTest categoriesForMethods!
 defaultSubject!helpers!private! !
 testNamed!public!unit tests! !
+testPrimary!public!unit tests! !
 testPrintFloat!public! !
 testPrintFloatGrouping!public!unit tests! !
 testPrintFloatSeparators!public!unit tests! !

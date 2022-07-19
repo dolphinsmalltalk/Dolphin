@@ -45,17 +45,16 @@ testAsPhrase
 		equals: 'Get IDs Of Names Rgsz Names C Names Lcid Rgdispid'!
 
 testBeginsWithIgnoreCase
-	| subject comperand pound |
-	pound := Character value: 163.
+	| subject comparand |
 	subject := self newCollection: {$a. $\0. $£. $b. $c}.
 	self assert: (subject beginsWith: subject ignoreCase: true).
 	self assert: (subject beginsWith: subject ignoreCase: false).
-	comperand := self newCollection: {$A. $\0. pound}.
-	self assert: (subject beginsWith: comperand ignoreCase: true).
-	self deny: (subject beginsWith: comperand ignoreCase: false).
-	comperand := self newCollection: {$A. $\0. $b. pound}.
-	self deny: (subject beginsWith: comperand ignoreCase: false).
-	self deny: (subject beginsWith: comperand ignoreCase: true)!
+	comparand := self newCollection: {$A. $\0. $£}.
+	self assert: (subject beginsWith: comparand ignoreCase: true).
+	self deny: (subject beginsWith: comparand ignoreCase: false).
+	comparand := self newCollection: {$A. $\0. $b. $£}.
+	self deny: (subject beginsWith: comparand ignoreCase: false).
+	self deny: (subject beginsWith: comparand ignoreCase: true)!
 
 testClassWith
 	self assert: (AnsiString with: $a) equals: 'a' asAnsiString.
@@ -83,41 +82,7 @@ testIndexOfSubCollectionStartingAtGPF
 			[:i |
 			current := String new: 970.
 			self assert: (current indexOfSubCollection: search startingAt: 965) identicalTo: 0.
-			strings add: current]!
-
-testMatch
-	"Match anything"
-
-	self assert: ('*' match: 'zort').
-	self assert: ('*' match: '').
-	"Leading wilcard, matches at end"
-	self assert: ('*baz' match: 'mobaz').
-	"Must match whole sequence"
-	self deny: ('*baz' match: 'mobazo').
-	"Leading and trailing wildcard"
-	self assert: ('*baz*' match: 'mobazo').
-	"No match"
-	self deny: ('*baz*' match: 'mozo').
-	"Trailing wildcard"
-	self assert: ('foo*' match: 'foozo').
-	self deny: ('foo*' match: 'bozo').
-	"* can match any length sequence"
-	self assert: ('foo*baz' match: 'foo23baz').
-	"* matches empty sequence"
-	self assert: ('foo*baz' match: 'foobaz').
-	"Has to match whole sequence"
-	self deny: ('foo*baz' match: 'foo23bazo').
-	"Case insensitive"
-	self assert: ('foo' match: 'Foo').
-	self deny: ('foo*baz*zort' match: 'foobazort').
-	"* should match empty sequence"
-	self assert: ('foo*baz*zort' match: 'foobazzort').
-	"# matches any single char"
-	self assert: ('*foo#zort' match: 'afoo3zortthenfoo3zort').
-	self assert: ('*foo*zort' match: 'afoodezortorfoo3zort').
-	#('**' 'f**' 'f**o' 'f*' '*f*' 'f#*' 'f##' '*oo' '#oo' '*o*' '#o#' '#o*' '*o#' 'fo*' 'fo#' '*foo*' '###' '*#' 'f*#' 'f*#o')
-		do: [:each | self assert: (each match: 'foo')].
-	#('bar' 'foo#' '#foo' '*foo#' '#foo*' '*bar*') do: [:each | self deny: (each match: 'foo')]! !
+			strings add: current]! !
 !AnsiStringTest categoriesForMethods!
 assimilate:!helpers!private! !
 assimilateString:!helpers!private! !
@@ -127,6 +92,5 @@ testBeginsWithIgnoreCase!public!unit tests! !
 testClassWith!public! !
 testCopyReplaceAllWith!public!unit tests! !
 testIndexOfSubCollectionStartingAtGPF!public!unit tests! !
-testMatch!public!unit tests! !
 !
 

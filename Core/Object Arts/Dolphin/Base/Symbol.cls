@@ -261,7 +261,8 @@ findInterned: aString
 	^nil!
 
 fromAddress: anInteger length: anInteger2
-	^self intern: (String fromAddress: anInteger length: anInteger2)!
+	^(String fromAddress: anInteger length: anInteger2)
+		ifNotNil: [:string | self intern: string]!
 
 initialize
 	"Initialize class variables of the receiver.

@@ -102,16 +102,6 @@ nextIndexOfCharacter: aCharacter from: startInteger to: stopInteger
 		from: startInteger
 		to: stopInteger!
 
-reverse
-	"Answer a copy of the receiver but with its elements in reverse order.
-	Our Strings are null-terminated, so we can use the CRTLibrary (_strrev()
-	works in place, so we must get a copy)."
-
-	| copy |
-	copy := self copy.
-	CRTLibrary default _strrev: copy.
-	^copy!
-
 skipEncodingMarkerFrom: aGettableStream
 	"Private - Skip over any encoding marker used for the stream encoding this collection represents on the <gettableStream> argument, which 
 	is assumed to be at the start of its sequence."
@@ -174,7 +164,6 @@ encodedSizeAt:!encode/decode!private! !
 encodeOn:put:!encode/decode!private! !
 first:!copying!public! !
 nextIndexOfCharacter:from:to:!private!searching! !
-reverse!copying!public! !
 skipEncodingMarkerFrom:!encode/decode!private! !
 strlen!accessing!private! !
 trimNulls!copying!public! !
