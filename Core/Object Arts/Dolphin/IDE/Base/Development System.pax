@@ -49,7 +49,6 @@ package setClassNames: #(
 	#{Tools.CreateSubclassDialog}
 	#{Tools.Debugger}
 	#{Tools.DebuggerMethodCategory}
-	#{Tools.DebuggerShellView}
 	#{Tools.DevelopmentSessionManager}
 	#{Tools.DictionaryInspector}
 	#{Tools.Examples}
@@ -1591,12 +1590,6 @@ UI.ContainerView subclass: #'Tools.MenuComposerArena'
 	instanceVariableNames: 'dragImageList dragPoint dragMenuIndex dragSource _unused'
 	classVariableNames: ''
 	imports: #(#{OS.CommCtrlConstants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-UI.ShellView subclass: #'Tools.DebuggerShellView'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.DialogView subclass: #'Tools.WalkbackDialog'
