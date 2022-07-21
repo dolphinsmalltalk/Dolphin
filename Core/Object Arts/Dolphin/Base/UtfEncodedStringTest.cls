@@ -468,7 +468,7 @@ testLeftString
 	self assert: (self collectionClass empty leftString: 1) equals: ''!
 
 testMatchExtended
-	#(#('#' '🐬') #('*#' '🐬') #('*#a' '🐬A') #('*#€#🍺*B*' '🐬€a🍺b'))
+	#(#('#' '🐬') #('*#' '🐬') #('*#a' '🐬A') #('*#€#🍺*B*' '🐬€a🍺b') #('*€文a#b*c' '🐬🍺€文a🍺€文a🍺bc'))
 		do: [:each | self verifyPattern: each first matches: each second]!
 
 testMidString
