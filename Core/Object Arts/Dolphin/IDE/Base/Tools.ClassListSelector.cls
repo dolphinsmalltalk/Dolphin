@@ -216,14 +216,10 @@ selectableItems
 updateClasses
 	"Private - Update the classes list for this package. Try and maintain the existing selection if possible."
 
-	| classes originalSelection |
-	classes := Set new.
-	browserEnvironment classesDo: [:each | classes add: each instanceClass].
+	| originalSelection |
 	originalSelection := self selections.
 	self noEventsDo: 
-			[| sorted |
-			sorted := classes asSortedCollection.
-			classesPresenter list: sorted.
+			[classesPresenter list: browserEnvironment allClasses asSortedCollection.
 			self selections: originalSelection ifAbsent: []].
 	self selections = originalSelection ifFalse: [self onSelectionChanged]! !
 !Tools.ClassListSelector categoriesForMethods!

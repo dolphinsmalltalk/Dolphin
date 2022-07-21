@@ -229,16 +229,17 @@ onTreeRemovingItem: anObject
 					visibleNodes remove: each ifAbsent: nil]]!
 
 rebuildFilter
-	| aVirtualTreeModel |
-	aVirtualTreeModel := self treeModel.
-	visibleNodes := Set new.
-	self list do: 
+	| treeModel list |
+	treeModel := self treeModel.
+	list := self list.
+	visibleNodes := Set new: list size.
+	list do: 
 			[:each |
 			| current |
 			"Avoid the cost of walking the parent chain if object is already in the set. An invariant is that if a node is already in the set, then its parent nodes must also be there. This is guaranteed by walking all the way up from a node after adding it."
 			current := each.
-			[current notNil and: [visibleNodes addNewElement: current]]
-				whileTrue: [current := aVirtualTreeModel parentOf: current]]!
+			[(visibleNodes addNewElement: current) and: [(current := treeModel parentOf: current) notNil]]
+				whileTrue]!
 
 refresh
 	"Private - Refresh the display of the receiver"

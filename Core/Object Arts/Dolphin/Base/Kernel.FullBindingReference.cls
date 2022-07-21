@@ -217,8 +217,9 @@ undeclare
 	self setBinding: nil!
 
 valueOrNil
-	"Answer the value of the variable named by the receiver, or nil if not defined.
-	Note that it will not be possible to distinguish the cases of an undefined variable and a defined variable with value nil."
+	"Answer the value of the variable named by the receiver, or nil if not defined."
+	
+	"Implementation Note: Overridden as a micro-optimisation as this is perf critical."
 
 	^self bindingOrNil value! !
 !Kernel.FullBindingReference categoriesForMethods!

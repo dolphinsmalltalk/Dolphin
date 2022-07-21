@@ -51,8 +51,8 @@ heapsort: anObject from: startInteger to: stopInteger
 insertionSort: anObject from: startInteger to: stopInteger
 	self subclassResponsibility!
 
-quicksortRecursionLimit: anInteger 
-	^(2.0 * (anInteger log: 2)) floor!
+quicksortRecursionLimit: anInteger
+	^(2.0 * (anInteger asFloat ln / ##(2.0 ln))) floor!
 
 sift: anObject from: anInteger between: startInteger and: stopInteger
 	self subclassResponsibility!

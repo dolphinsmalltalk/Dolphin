@@ -209,7 +209,7 @@ parentOf: anObject
 	receiver. If anObject is a root of the hierarchy then answer nil.
 	The getParentBlock is evaluated for this purpose"
 
-	((self hasRoot: anObject) or: [anObject isNil]) ifTrue: [^nil].
+	(anObject isNil or: [self hasRoot: anObject]) ifTrue: [^nil].
 	^getParentBlock value: anObject!
 
 remove: anObject ifAbsent: aNiladicValuable

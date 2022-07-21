@@ -273,7 +273,10 @@ reSort
 	"Resort the entire contents of the receiver in the order specified by the current
 	<SortAlgorithm>."
 
-	self sortFrom: firstIndex to: lastIndex!
+	algorithm
+		sort: self
+		from: firstIndex
+		to: lastIndex!
 
 reverse
 	"Answer a copy of the receiver but with its elements in reverse order."
@@ -321,15 +324,6 @@ sortBlock: aDyadicValuable
 
 	self algorithm: (algorithm copyWithSortBlock: aDyadicValuable)!
 
-sortFrom: startInteger to: stopInteger 
-	"Private - Sort the receiver's indexed instance variables between the two <integer> indices,
-	startInteger and stopInteger, using the receiver's current <SortAlgorithm>."
-
-	algorithm 
-		sort: self
-		from: startInteger
-		to: stopInteger!
-
 sortUsing: aSortAlgorithm
 	"Perform an in-place sort against the receiver using the specified sort algorithm.
 	Note that this must change the receiver's sort algorithm, as well as perform an in-place sort, in order to maintain the invariant that the receiver's elements are maintained in the order determined by the receiver's sort comparison."
@@ -375,7 +369,6 @@ select:!enumerating!public! !
 setSortAlgorithm:!initializing!private! !
 sortBlock!accessing!public! !
 sortBlock:!accessing!operations!public! !
-sortFrom:to:!algorithms!private! !
 sortUsing:!public!sorting! !
 stbSaveOn:!binary filing!public! !
 !

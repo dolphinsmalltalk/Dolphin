@@ -107,12 +107,9 @@ moveToEnd
 	self setToEnd!
 
 next: countInteger putAll: aSequenceableCollection startingAt: startInteger
-	"Append countInteger elements of aSequenceableCollection from startInteger to the receiver.
-	Answer aSequenceableCollection.
+	"Append countInteger elements of aSequenceableCollection from startInteger to the receiver. Answer aSequenceableCollection.
 
-	Note that the element count is in terms of the <sequencedReadableCollection argument.
-	Depending on the receiver's encoding, this may not necessarily result in the receiver's
-	position advancing by the same count. "
+	Note that the element count is the number of elements written from the <sequencedReadableCollection> argument. Depending on the receiver's encoding, this may not necessarily result in the receiver's position advancing by the same count."
 
 	^collection
 		encodeOn: self

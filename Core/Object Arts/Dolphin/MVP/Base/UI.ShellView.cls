@@ -155,11 +155,13 @@ commandSource
 	source isNil ifTrue: [source := self].
 	^source!
 
-createAt: position extent: extentPoint 
+createAt: position extent: extentPoint
 	"Private - Create the ShellView window after first giving the class side precreateHookBlock
 	a chance to adjust the receiver. Answer the realized receiver."
 
-	self class createHookBlock value: self value: [super createAt: position extent: extentPoint]!
+	CreateHookBlock
+		ifNil: [super createAt: position extent: extentPoint]
+		ifNotNil: [:hook | hook value: self value: [super createAt: position extent: extentPoint]]!
 
 defaultButtonId
 	"Private - Answer the id of the default PushButton for the receiver or nil
@@ -1344,9 +1346,6 @@ UI.ShellView methodProtocol: #topView attributes: #(#readOnly) selectors: #(#acc
 asSessionManagerClass
 	^DefaultShellSessionManager!
 
-createHookBlock
-	^CreateHookBlock ?? [:shellView :createBlock | createBlock value]!
-
 createHookBlock: aDyadicBlock 
 	"Private - Set aDyadicBlock to be used to hook and wrap the actual window creation process.
 	The first argument is the ShellView that is about to be realized whilst the second is a
@@ -1462,7 +1461,6 @@ uninitialize
 	SessionManager current events removeActionsForEvent: #settingChanged:! !
 !UI.ShellView class categoriesForMethods!
 asSessionManagerClass!converting!public!VM and session managerment! !
-createHookBlock!accessing!private!realizing/unrealizing! !
 createHookBlock:!accessing!private!realizing/unrealizing! !
 defaultExtentBlock!accessing!geometry!private! !
 defaultExtentBlock:!accessing!geometry!private! !
