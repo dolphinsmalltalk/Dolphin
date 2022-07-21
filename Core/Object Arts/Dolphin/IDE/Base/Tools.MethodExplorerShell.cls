@@ -70,7 +70,7 @@ buildHistoryMenu: visits command: cmdSelector
 			env := each key.
 			env == lastEnv
 				ifFalse: 
-					[methods := IdentitySet new.
+					[methods := Set new.
 					subMenu := popup addSubmenu: env displayString.
 					lastEnv := env].
 			method := each value ?? '(none)'.
@@ -153,13 +153,16 @@ historySkip: anInteger
 	visit := history current.
 	node := visit key.
 	self noEventsDo: [historyTree selection: node].
-	method := visit value.
 	browserPresenter clearErrors.
-	(method notNil and: [(method methodClass includesSelector: method selector) not])
-		ifTrue: 
-			[self statusText: ('<1p> has been deleted' expandMacrosWith: method).
-			Sound warningBeep.
-			method := nil].
+	method := nil.
+	visit value
+		ifNotNil: 
+			[:name |
+			method := name valueOrNil.
+			method isNil
+				ifTrue: 
+					[self statusText: ('<1p> has been deleted' expandMacrosWith: method).
+					Sound warningBeep]].
 	browserPresenter selection: method ifAbsent: []!
 
 historyTree
@@ -288,19 +291,16 @@ queryCommand: aCommandQuery
 recordMethodVisit
 	"Private - Add to the visit history - note that the current item is at the top of the history list"
 
-	| node method |
-	#namespaceToDo.	"Rework to use MethodNames"
+	| node method pair |
 	node := historyTree selectionOrNil.
 	node isNil ifTrue: [^self].
 	method := self selectedMethod.
-	(historyList isEmpty or: 
-			[| cur |
-			cur := historyList current.
-			cur key ~= node or: [(self isSameMethod: cur value as: method) not]])
+	pair := node -> (method ifNotNil: [MethodName method: method]).
+	(historyList isEmpty or: [historyList current ~= pair])
 		ifTrue: 
-			[historyList addLast: node -> method.
+			[historyList addLast: pair.
 			self invalidateUserInterface]
-		ifFalse: [historyList current: node -> method]!
+		ifFalse: [historyList current: pair]!
 
 removeHistoryNode
 	| node |
