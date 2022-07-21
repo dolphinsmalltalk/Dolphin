@@ -8,7 +8,6 @@ Core.Tests.DolphinTestClassResource subclass: #'Kernel.Tests.ClassBuilderTestCla
 	classConstants: {}!
 Kernel.Tests.ClassBuilderTestClasses guid: (Core.GUID fromString: '{b9045f26-8b7d-468f-969a-7e228869fe20}')!
 Kernel.Tests.ClassBuilderTestClasses comment: ''!
-!Kernel.Tests.ClassBuilderTestClasses categoriesForClass!Unclassified! !
 !Kernel.Tests.ClassBuilderTestClasses methodsFor!
 
 compileMethods
@@ -22,19 +21,19 @@ createClasses
 				createClass: #ClassBuilderTestClass
 				superclass: Object
 				instVars: 'var1 var2'
-				pools: 'ClassBuilderTestPool1'
+				imports: #(#{ClassBuilderTestPool1})
 				classVars: 'Var1 Var2'.
 	testSubclass1 := self
 				createClass: #'Kernel.Tests.ClassBuilderTestSubClass'
 				superclass: testClass
 				instVars: 'var3 var4'
-				pools: 'ClassBuilderTestPool2'
+				imports: #(#{ClassBuilderTestPool2})
 				classVars: ''.
 	testSubclass2 := self
 				createClass: #'Root.ClassBuilderTestSubClass2'
 				superclass: testClass
 				instVars: 'var3 var4'
-				pools: 'ClassBuilderTestPool3 ClassBuilderTestPool2'
+				imports: #(#{ClassBuilderTestPool3} #{ClassBuilderTestPool2})
 				classVars: ''!
 
 createPools

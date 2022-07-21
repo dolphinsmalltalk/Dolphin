@@ -13,11 +13,13 @@ Tools.Tests.ClassSelectorTest comment: ''!
 
 create: aClassSymbol subclassOf: aClass
 	| newClass |
-	newClass := aClass
-				subclass: aClassSymbol
+	newClass := (aClass
+				newClassBuilder: aClassSymbol
 				instanceVariableNames: ''
 				classVariableNames: ''
-				imports: #().
+				imports: #())
+				beQuiet;
+				modifyOrCreate.
 	self assert: (newClass notNil and: [newClass isKindOf: Class]).
 	^newClass!
 

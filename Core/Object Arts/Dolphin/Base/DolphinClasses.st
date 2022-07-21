@@ -2226,6 +2226,7 @@ Core.Object subclass: #'Kernel.ClassBuilder'
 		'ErrorUnsubclassable' -> '<1p> is not subclassable.'.
 		'FixedName' -> #(#Smalltalk #Root).
 		'IgnoreInstsMask' -> 16r2.
+		'QuietMask' -> 16r4.
 		'RecompileMask' -> 16r1
 	}!
 Core.Object subclass: #'Core.Collection'

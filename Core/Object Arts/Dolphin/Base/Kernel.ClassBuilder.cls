@@ -28,6 +28,7 @@ Core.Object subclass: #'Kernel.ClassBuilder'
 		'ErrorUnsubclassable' -> '<1p> is not subclassable.'.
 		'FixedName' -> #(#Smalltalk #Root).
 		'IgnoreInstsMask' -> 16r2.
+		'QuietMask' -> 16r4.
 		'RecompileMask' -> 16r1
 	}!
 Kernel.ClassBuilder guid: (Core.GUID fromString: '{87b4c461-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -57,6 +58,9 @@ beFixed
 
 beNonInstantiable
 	instanceSpec := instanceSpec bitOr: Behavior._NonInstantiableMask!
+
+beQuiet
+	flags := flags bitOr: QuietMask!
 
 beVariable
 	"Private - Set the class type to indexable pointers and named instance vars."
@@ -90,14 +94,7 @@ canonicalizeImport: aBindingReference
 				ifFalse: 
 					[private := aBindingReference isPrivate.
 					aBindingReference].
-	^((self resolveImport: ref)
-		ifNil: 
-			[ref := ref scope: superclass.
-			(self resolveImport: ref)
-				ifNil: 
-					[Notification signal: 'Imported namespace <1p> does not currently exist.' << ref asString.
-					"Must not be relative so treat as full even if has only an unqualified name"
-					NamespaceImport fullPathString: aBindingReference asString]])
+	^(self resolveImport: ref)
 		isPrivate: private;
 		yourself!
 
@@ -452,6 +449,9 @@ isModifyAction
 			currentClass := binding value].
 	^true!
 
+isQuiet
+	^flags allMask: QuietMask!
+
 modifyClassVariablesOf: aClass
 	| removed classVars addedVariables originalNames newNames existingClassVariables |
 	"If classConstants are not specified, then one of the legacy class creation messages has been used, in which case we can't distinguish between constants and variables."
@@ -516,16 +516,16 @@ modifyExistingClass
 	^self currentClass!
 
 modifyImportsOf: aClass
-	| newImports |
+	| newImports newImportsString oldImportsString |
 	newImports := self imports.
-	newImports fullPrintString = aClass imports fullPrintString
+	newImportsString := newImports fullPrintString.
+	oldImportsString := aClass imports fullPrintString.
+	newImportsString = oldImportsString
 		ifFalse: 
-			[| reason |
-			reason := 'Recompilation required to update imports of ' , aClass name , ' from: '
-						, aClass imports fullPrintString , ', to: '
-						, newImports fullPrintString.
-			aClass setImports: newImports.
-			self recompilationRequired: true reason: reason]!
+			[aClass setImports: newImports.
+			self recompilationRequired: true
+				reason: 'Recompilation required to update imports of ' , aClass name , ' from: ' , oldImportsString
+						, ', to: ' , newImportsString]!
 
 modifyOrCreate
 	"Ascertain and execute the appropriate action depending on which pieces
@@ -608,16 +608,15 @@ mutateInSitu
 	We may need to change the superclass or instance variables.
 	N.B. We cannot change instance variables without changing superclass, as this always requires a full mutation."
 
-	self superclassIsBeingChanged
-		ifTrue: 
-			[| reason |
-			reason := 'Recompilation required because of change of superclass from '
-						, currentClass superclass name , ' to '
-						, superclass name.
-			currentClass class setSuperclass: (self classOf: superclass).
-			currentClass setSuperclass: superclass.
-			self instanceVariablesAreBeingChanged ifTrue: [self setInstanceVariablesOf: currentClass].
-			self recompilationRequired: true reason: reason]!
+	| oldSuperclass |
+	self superclassIsBeingChanged ifFalse: [^self].
+	oldSuperclass := currentClass superclass.
+	currentClass class setSuperclass: (self classOf: superclass).
+	currentClass setSuperclass: superclass.
+	self instanceVariablesAreBeingChanged ifTrue: [self setInstanceVariablesOf: currentClass].
+	self recompilationRequired: true
+		reason: 'Recompilation required because of change of superclass from ' , oldSuperclass name , ' to '
+				, superclass name!
 
 mutateInstances: anArray of: oldClass toBeInstancesOf: newClass
 	"Private - Mutate the instances of oldClass in anArray to be instances of newClass."
@@ -700,6 +699,9 @@ newMetaclassLike: aMetaclass superclass: metaSuperclass
 		fromClass: aMetaclass
 		superclass: metaSuperclass!
 
+notify: aString
+	self isQuiet ifFalse: [Notification signal: aString]!
+
 notifyClassCreated
 	"Use the trigger mechanism to notify interested parties that a class has been added."
 
@@ -726,7 +728,7 @@ recompilationRequired: aBoolean reason: aString
 	Note this is not an accessor - if the argument is false, then leave the current setting unchanged."
 
 	aBoolean ifTrue: [flags := flags bitOr: RecompileMask].
-	Notification signal: aString!
+	self notify: aString!
 
 remove
 	"Private - Remove currentClass completely from the system."
@@ -779,7 +781,15 @@ requiresMutation
 resolveImport: aBindingReference
 	| import |
 	import := aBindingReference asNamespaceImport.
-	^import isDefined ifTrue: [import]!
+	import isDefined ifTrue: [^import].
+	aBindingReference isRelative
+		ifTrue: 
+			[import := (aBindingReference scope: superclass) asNamespaceImport.
+			import isDefined ifTrue: [^import].
+			import := (aBindingReference scope: Smalltalk) asNamespaceImport.
+			import isDefined ifTrue: [^import]].
+	self notify: 'Imported namespace ' , import printString , ' does not currently exist.'.
+	^import!
 
 setCommentOf: aClass
 	"Private - Set the comment of aClass to the receiver's comment inst var unless it
@@ -1225,6 +1235,7 @@ baseEnvironment!helpers!private! !
 beBytes!class type!private! !
 beFixed!class type!private! !
 beNonInstantiable!class type!private! !
+beQuiet!modes!public! !
 beVariable!class type!private! !
 canMutateInSitu!mutating!private! !
 canonicalizeImport:!helpers!private! !
@@ -1275,6 +1286,7 @@ isFixedInitialLayout!public!testing! !
 isFixedLayout!public!testing! !
 isFixedType!public!testing! !
 isModifyAction!private!testing! !
+isQuiet!modes!public! !
 modifyClassVariablesOf:!private! !
 modifyExistingClass!operations!private! !
 modifyImportsOf:!pool dictionaries!private! !
@@ -1287,6 +1299,7 @@ mutateMetaclass:toBeASubclassOf:!mutating!private! !
 mutateToNewClass!mutating!private! !
 newClassLike:superclass:!mutating!private! !
 newMetaclassLike:superclass:!mutating!private! !
+notify:!helpers!private! !
 notifyClassCreated!public!updating! !
 notifyClassRenamed!operations!private! !
 notifyClassUpdated!private!updating! !

@@ -8,7 +8,6 @@ Core.Tests.DolphinTestClassResource subclass: #'Core.Tests.BehaviorTestClasses'
 	classConstants: {}!
 Core.Tests.BehaviorTestClasses guid: (Core.GUID fromString: '{bc98a827-49e3-4ce3-902e-fa6452944374}')!
 Core.Tests.BehaviorTestClasses comment: ''!
-!Core.Tests.BehaviorTestClasses categoriesForClass!Unclassified! !
 !Core.Tests.BehaviorTestClasses methodsFor!
 
 classWithAbstractMethod1
@@ -22,7 +21,7 @@ createClasses
 				createClass: #ClassWithAbstractMethod1
 				superclass: Object
 				instVars: ''
-				pools: ''
+				imports: #()
 				classVars: ''.
 	classWithAbstractMethod1 compile: 'abstractMethod ^self subclassResponsibility'.
 	classWithAbstractMethod1 class compile: 'nonAbstractMethod  ^#(subclassResponsibility)'.
@@ -30,7 +29,7 @@ createClasses
 				createClass: #ClassWithAbstractMethod2
 				superclass: Object
 				instVars: 'iv1'
-				pools: ''
+				imports: #()
 				classVars: ''.
 	classWithAbstractMethod2 class compile: 'abstractMethod self subclassResponsibility'.
 	classWithAbstractMethod2 compile: 'nonAbstractMethod1 #(subclassResponsibility)'.

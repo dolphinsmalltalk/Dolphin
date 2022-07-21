@@ -47,16 +47,6 @@ testBindingScope
 	subject := self newSubjectWithPath: #(#Core #Object).
 	self assert: subject bindingScope identicalTo: Root!
 
-testErrorRelative
-	self
-		should: [self newSubjectWithPath: #('_' 'Object')]
-		raise: Error
-		matching: [:ex | ex messageText = NamespaceImport.InvalidImportPath].
-	self
-		should: [self newSubjectWithPathString: '_.Object']
-		raise: Error
-		matching: [:ex | ex messageText = NamespaceImport.InvalidImportPath]!
-
 testHome
 	| subject |
 	subject := self newSubjectWithPath: #(#Kernel 'OpcodePool' 'Nop').
@@ -82,7 +72,6 @@ printStringTestCases!constants!private! !
 subjectClass!constants!private! !
 testAsNamespaceImport!public!unit tests! !
 testBindingScope!public!unit tests! !
-testErrorRelative!public! !
 testHome!public!unit tests! !
 testIsRelative!public!unit tests! !
 testMissingSmalltalkImport!public!unit tests! !

@@ -8,7 +8,6 @@ Core.Tests.DolphinTestClassResource subclass: #'Core.Tests.MustBeBooleanTestClas
 	classConstants: {}!
 Core.Tests.MustBeBooleanTestClasses guid: (Core.GUID fromString: '{7a283553-a0fa-4c3f-8502-7d21d0babca4}')!
 Core.Tests.MustBeBooleanTestClasses comment: ''!
-!Core.Tests.MustBeBooleanTestClasses categoriesForClass!Unclassified! !
 !Core.Tests.MustBeBooleanTestClasses methodsFor!
 
 createClasses
@@ -16,14 +15,14 @@ createClasses
 				createClass: #MustBeBooleanTestTrueClass
 				superclass: Object
 				instVars: ''
-				pools: ''
+				imports: #()
 				classVars: ''.
 	trueClass compile: 'mustBeBoolean ^true'.
 	falseClass := self
 				createClass: #MustBeBooleanTestFalseClass
 				superclass: Object
 				instVars: ''
-				pools: ''
+				imports: #()
 				classVars: ''.
 	falseClass compile: 'mustBeBoolean ^false'!
 

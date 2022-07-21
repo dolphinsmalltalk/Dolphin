@@ -38,9 +38,6 @@ species!accessing!public! !
 
 !Kernel.NamespaceImport class methodsFor!
 
-errorRelativeImportPath
-	^self error: InvalidImportPath!
-
 newFull: aString private: aBoolean
 	^self
 		pathString: aString
@@ -51,18 +48,9 @@ newFullPath: anArrayOfString private: aBoolean
 	^self
 		pathString: nil
 		path: anArrayOfString
-		private: aBoolean!
-
-newRelative: aString private: aBoolean scope: aBindingScope
-	^self errorRelativeImportPath!
-
-newRelativePath: anArray private: aBoolean scope: aBindingScope
-	^self errorRelativeImportPath! !
+		private: aBoolean! !
 !Kernel.NamespaceImport class categoriesForMethods!
-errorRelativeImportPath!error handling!private! !
 newFull:private:!instance creation!private! !
 newFullPath:private:!instance creation!private! !
-newRelative:private:scope:!instance creation!private! !
-newRelativePath:private:scope:!instance creation!private! !
 !
 

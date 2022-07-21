@@ -9,7 +9,6 @@ Core.Tests.DolphinTestResource subclass: #'Core.Tests.DolphinTestClassResource'
 Core.Tests.DolphinTestClassResource guid: (Core.GUID fromString: '{e358c277-08b0-4ffe-9f5a-c41be358f898}')!
 Core.Tests.DolphinTestClassResource isNonInstantiable: true!
 Core.Tests.DolphinTestClassResource comment: ''!
-!Core.Tests.DolphinTestClassResource categoriesForClass!Unclassified! !
 !Core.Tests.DolphinTestClassResource methodsFor!
 
 compileAccessorsFor: aClass 
@@ -21,16 +20,17 @@ compileAccessorsFor: aClass
 compileMethods
 	"To be implemented by subclasses as required"!
 
-createClass: className superclass: superClass instVars: instanceVariables pools: aString classVars: classVariablesString
-	| class |
-	class := superClass
-				subclass: className
+createClass: className superclass: superClass instVars: instanceVariables imports: anArray classVars: classVariablesString
+	| subclass |
+	subclass := (superClass
+				newClassBuilder: className
 				instanceVariableNames: instanceVariables
 				classVariableNames: classVariablesString
-				poolDictionaries: aString
-				classInstanceVariableNames: ''.
-	package addClass: class.
-	^class!
+				imports: anArray)
+				beQuiet;
+				modifyOrCreate.
+	package addClass: subclass.
+	^subclass!
 
 createClasses
 	^self subclassResponsibility!
@@ -74,7 +74,7 @@ tearDown
 !Core.Tests.DolphinTestClassResource categoriesForMethods!
 compileAccessorsFor:!Init / Release!private! !
 compileMethods!accessing!public! !
-createClass:superclass:instVars:pools:classVars:!Init / Release!private! !
+createClass:superclass:instVars:imports:classVars:!Init / Release!private! !
 createClasses!Init / Release!private! !
 createPackage!Init / Release!private! !
 createPool:!Init / Release!private! !

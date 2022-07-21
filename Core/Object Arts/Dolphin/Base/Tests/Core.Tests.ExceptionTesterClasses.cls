@@ -8,7 +8,6 @@ Core.Tests.DolphinTestClassResource subclass: #'Core.Tests.ExceptionTesterClasse
 	classConstants: {}!
 Core.Tests.ExceptionTesterClasses guid: (Core.GUID fromString: '{b20c60c4-bfd3-4bd6-b2c9-15a04318e517}')!
 Core.Tests.ExceptionTesterClasses comment: ''!
-!Core.Tests.ExceptionTesterClasses categoriesForClass!Unclassified! !
 !Core.Tests.ExceptionTesterClasses methodsFor!
 
 createClasses
@@ -16,20 +15,20 @@ createClasses
 				createClass: #MyTestNotification
 				superclass: Notification
 				instVars: ''
-				pools: ''
+				imports: #()
 				classVars: ''.
 	resumableErrorClass := self
 				createClass: #MyResumableTestError
 				superclass: Error
 				instVars: ''
-				pools: ''
+				imports: #()
 				classVars: ''.
 	resumableErrorClass compile: 'isResumable ^true'.
 	testErrorClass := self
 				createClass: #MyTestError
 				superclass: Error
 				instVars: ''
-				pools: ''
+				imports: #()
 				classVars: ''!
 
 isAvailable

@@ -31,6 +31,11 @@ classBuilderTestSubclass1
 classBuilderTestSubclass2
 	^ClassBuilderTestClasses current testSubclass2!
 
+newTestSubjectToModify: aClass
+	^(ClassBuilder forModifying: aClass)
+		beQuiet;
+		yourself!
+
 setUp
 	dirtiedClasses := false.
 	wasOAD := Smalltalk developmentSystem isOAD.
@@ -81,7 +86,7 @@ testAddInstVarName
 	!
 
 testAddRemoveImports
-	| subclassName imports |
+	| imports subclass |
 	imports := self classBuilderTestSubclass1 allImports.
 	self assert: (imports allSatisfy: [:each | each isKindOf: NamespaceImport]).
 	self assert: imports
@@ -98,17 +103,14 @@ testAddRemoveImports
 	"And pool var 4 is from local ref to TestPool2"
 	self assert: (self classBuilderTestSubclass1 fullBindingFor: 'PoolVar4') value
 		equals: 'ClassBuilderTestPool2.PoolVar4'.
-	subclassName := self classBuilderTestSubclass1 fullName asSymbol.
-	self classBuilderTestClass
-		subclass: subclassName
-		instanceVariableNames: 'var3 var4'
-		classVariableNames: ''
-		imports: #(#{ClassBuilderTestPool1} #{ClassBuilderTestPool2})
-		classInstanceVariableNames: ''
-		classConstants: {}.
+	subclass := (self newTestSubjectToModify: self classBuilderTestSubclass1)
+				instanceVariables: #('var3' 'var4');
+				imports: #(#{ClassBuilderTestPool1} #{ClassBuilderTestPool2});
+				modifyOrCreate.
 	dirtiedClasses := true.
+	self assert: subclass identicalTo: self classBuilderTestSubclass1.
 	"Names remain the same, but in reverse order because we added previously inherited pool first"
-	imports := self classBuilderTestSubclass1 allImports.
+	imports := subclass allImports.
 	self assert: (imports allSatisfy: [:each | each isKindOf: NamespaceImport]).
 	self assert: imports
 		equals: #(#{Smalltalk.ClassBuilderTestPool1} #{Smalltalk.ClassBuilderTestPool2}) , Object imports.
@@ -121,17 +123,14 @@ testAddRemoveImports
 		equals: 'ClassBuilderTestPool1.PoolVar3'.
 	self assert: (self classBuilderTestSubclass1 fullBindingFor: 'PoolVar4') value
 		equals: 'ClassBuilderTestPool2.PoolVar4'.
-	self classBuilderTestClass
-		subclass: subclassName
-		instanceVariableNames: 'var3 var4'
-		classVariableNames: ''
-		imports: #(#{ClassBuilderTestPool2} #{ClassBuilderTestPool3})
-		classInstanceVariableNames: ''
-		classConstants: {}.
-	imports := self classBuilderTestSubclass1 allImports.
+	subclass := (self newTestSubjectToModify: subclass)
+				imports: #(#{ClassBuilderTestPool2} #{ClassBuilderTestPool3} #{ClassBuilderTestPoolMissing});
+				modifyOrCreate.
+	self assert: subclass identicalTo: self classBuilderTestSubclass1.
+	imports := subclass allImports.
 	self assert: (imports allSatisfy: [:each | each isKindOf: NamespaceImport]).
 	self assert: imports
-		equals: #(#{Smalltalk.ClassBuilderTestPool2} #{Smalltalk.ClassBuilderTestPool3} #{Smalltalk.ClassBuilderTestPool1})
+		equals: #(#{Smalltalk.ClassBuilderTestPool2} #{Smalltalk.ClassBuilderTestPool3} #{Smalltalk.ClassBuilderTestPoolMissing} #{Smalltalk.ClassBuilderTestPool1})
 				, Object imports.
 	self assert: (self classBuilderTestSubclass1 fullBindingFor: 'PoolVar1') value
 		equals: 'ClassBuilderTestPool2.PoolVar1'.
@@ -142,17 +141,13 @@ testAddRemoveImports
 	self assert: (self classBuilderTestSubclass1 fullBindingFor: 'PoolVar4') value
 		equals: 'ClassBuilderTestPool2.PoolVar4'.
 	"Remove all the locally referenced pools, so only inheriting TestPool1"
-	self classBuilderTestClass
-		subclass: subclassName
-		instanceVariableNames: 'var3 var4'
-		classVariableNames: ''
-		imports: #()
-		classInstanceVariableNames: ''
-		classConstants: {}.
-	imports := self classBuilderTestSubclass1 allImports.
+	subclass := (self newTestSubjectToModify: subclass)
+				imports: #();
+				modifyOrCreate.
+	self assert: subclass identicalTo: self classBuilderTestSubclass1.
+	imports := subclass allImports.
 	self assert: (imports allSatisfy: [:each | each isKindOf: NamespaceImport]).
-	self assert: imports
-		equals: #(#{Smalltalk.ClassBuilderTestPool1}) , Object imports.
+	self assert: imports equals: #(#{Smalltalk.ClassBuilderTestPool1}) , Object imports.
 	self assert: (self classBuilderTestSubclass1 fullBindingFor: 'PoolVar1') value
 		equals: 'ClassBuilderTestPool1.PoolVar1'.
 	self assert: (self classBuilderTestSubclass1 fullBindingFor: 'PoolVar2') value
@@ -221,11 +216,13 @@ testClassVars
 	#namespaceToDo	"Test add/remove class variable, add/remove class constant, change immediate constant to variable, change constant to variable, change variable to immediate constant, change variable to constant."!
 
 testCreateSubclassWithSameUnqualifiedName
-
-	| testSubclass |
-	testSubclass := self classBuilderTestSubclass1
-					subclass: #ClassBuilderTestSubClass
-					instanceVariableNames: '' classVariableNames: '' imports: #().
+	| testSubclass subject |
+	subject := ClassBuilder new
+				superclass: self classBuilderTestSubclass1;
+				className: #ClassBuilderTestSubClass;
+				beQuiet;
+				yourself.
+	testSubclass := subject modifyOrCreate.
 	ClassBuilder removeClass: testSubclass!
 
 testFullName
@@ -252,13 +249,12 @@ testMoveClassToSuperclassWithInstVars
 
 testMoveClassToSuperclassWithNoInstVars
 	| newClass |
-	self classBuilderTestClass
-		subclass: #'Kernel.Tests.ClassBuilderTestSubClass'
-		instanceVariableNames: ''
-		classVariableNames: ''
-		poolDictionaries: ''.
-	ClassBuilder moveClass: self classBuilderTestSubclass1 toSuperclass: Object.
-	newClass := self classBuilderTestSubclass1.
+	(self newTestSubjectToModify: self classBuilderTestSubclass1)
+		instanceVariables: #();
+		modifyOrCreate.
+	newClass := (self newTestSubjectToModify: self classBuilderTestSubclass1)
+				superclass: Object;
+				modifyOrCreate.
 	self assert: newClass superclass identicalTo: Object.
 	self assert: newClass instanceVariableNames equals: #().
 	self assert: newClass instSize equals: 0.
@@ -270,11 +266,10 @@ testMoveVariable
 	self assert: self classBuilderTestClass instanceVariableNames equals: #('var1' 'var2').
 	self assert: self classBuilderTestSubclass1 instanceVariableNames equals: #('var3' 'var4').
 	self assert: self classBuilderTestSubclass2 instanceVariableNames equals: #('var3' 'var4').
-	Object
-		subclass: #ClassBuilderTestClass
-		instanceVariableNames: 'var1 testVar var2'
-		classVariableNames: ''
-		imports: #().
+	(ClassBuilder forModifying: self classBuilderTestClass)
+		instanceVariables: #('var1' 'testVar' 'var2');
+		beQuiet;
+		modifyOrCreate.
 	self assert: self classBuilderTestClass instanceVariableNames equals: #('var1' 'testVar' 'var2').
 	self assert: self classBuilderTestSubclass1 instanceVariableNames equals: #('var3' 'var4').
 	self assert: self classBuilderTestSubclass2 instanceVariableNames equals: #('var3' 'var4').
@@ -330,11 +325,10 @@ testReparentSubClassWithSameAllInstVars
 	testInstance var3: 'foo'.
 	testInstance var4: #bar.
 	"Change the superclass and instVars of the class at the same time, such that the answer to #allInstVarNames does not change."
-	Object
-		subclass: testClass fullName
-		instanceVariableNames: 'var1 var2 var3 var4'
-		classVariableNames: ''
-		imports: #().
+	(self newTestSubjectToModify: testClass)
+		instanceVariables: #('var1' 'var2' 'var3' 'var4');
+		superclass: Object;
+		modifyOrCreate.
 
 	"test state of new class"
 	self assert: testClass instSize equals: 4.
@@ -359,13 +353,10 @@ testReshapeClass
 	testInstance := testClass new.
 	testInstance var1: 42.
 	testInstance var2: 'hello'.
-	newClass := Object
-				subclass: #ClassBuilderTestClass
-				instanceVariableNames: 'foo var1 bar var2 mumble'
-				classVariableNames: ''
-				imports: #().
-	self assert: newClass owningPackage
-		identicalTo: ClassBuilderTestClasses current package.
+	newClass := (self newTestSubjectToModify: testClass)
+				instanceVariables: #('foo' 'var1' 'bar' 'var2' 'mumble');
+				modifyOrCreate.
+	self assert: newClass owningPackage identicalTo: ClassBuilderTestClasses current package.
 	newMeta := newClass class.
 
 	"test transparency of mapping"
@@ -392,11 +383,9 @@ testReshapeClassWithJugglingInstVars
 	testInstance := testClass new.
 	testInstance perform: 'var1:' asSymbol with: 42.
 	testInstance perform: 'var2:' asSymbol with: 'hello'.
-	newClass := Object
-				subclass: testClass fullName
-				instanceVariableNames: 'var2 foo bar mumble var1'
-				classVariableNames: ''
-				imports: #().
+	newClass := (self newTestSubjectToModify: testClass)
+				instanceVariables: #('var2' 'foo' 'bar' 'mumble' 'var1');
+				modifyOrCreate.
 	newMeta := newClass class.
 
 	"test transparency of mapping"
@@ -425,12 +414,9 @@ testReshapeSubClass
 	testInstance var2: 'hello'.
 	testInstance var3: 'foo'.
 	testInstance var4: #bar.
-	Object
-		subclass: #ClassBuilderTestClass
-		instanceVariableNames: 'var1 foo var2 bar mumble '
-		classVariableNames: ''
-		imports: #().
-	"test transparency of mapping"
+	(self newTestSubjectToModify: self classBuilderTestClass)
+		instanceVariables: #('var1' 'foo' 'var2' 'bar' 'mumble');
+		modifyOrCreate.
 	self assert: testInstance var1 equals: 42.
 	self assert: testInstance var2 equals: 'hello'.
 	self assert: testInstance var3 equals: 'foo'.
@@ -451,7 +437,7 @@ testReshapeSubClass
 
 testValidateImports
 	| subject |
-	subject := ClassBuilder forModifying: self class.
+	subject := self newTestSubjectToModify: self class.
 	subject imports: (Compiler
 				evaluate: '#(#{Tests.DolphinTest private} #{TestCase private} #{Core.Tests.DolphinTest} #{DolphinTest} #{SUnit.TestCase private})').
 	subject validateImports.
@@ -462,6 +448,7 @@ testValidateImports
 classBuilderTestClass!public!unit tests! !
 classBuilderTestSubclass1!public!unit tests! !
 classBuilderTestSubclass2!public!unit tests! !
+newTestSubjectToModify:!helpers!private! !
 setUp!public!Running! !
 tearDown!public!Running! !
 testAddClassInstVars!public!unit tests! !
