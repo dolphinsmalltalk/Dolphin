@@ -391,8 +391,7 @@ matchPatternFrom: patternStart in: aUtf8String from: sourceStart
 	
 	[i <= matchEnd and: 
 			[| ch |
-			ch := self at: i.
-			(ch == $* and: 
+			((ch := self at: i) == $* and: 
 					[anyMatch := true.
 					i := i + 1.
 					true]) or: 
@@ -435,7 +434,7 @@ matchPatternFrom: patternStart in: aUtf8String from: sourceStart
 				"The rest did not match."
 				anyMatch ifFalse: [^false].
 				"Preceded by * -- try for a later match"
-				j := j + 1].
+				j := j + (aUtf8String encodedSizeAt: j)].
 	^false	"Failed to find the match string"!
 
 maxEncoding
