@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Core.Tests.FileTest'
 	classConstants: {}!
 Core.Tests.FileTest guid: (Core.GUID fromString: '{26ae9922-21e2-489a-845c-3c1dc1c2a3cf}')!
 Core.Tests.FileTest comment: ''!
-!Core.Tests.FileTest categoriesForClass!Unclassified! !
 !Core.Tests.FileTest methodsFor!
 
 buildTestPathOfLength: anInteger
@@ -300,6 +299,14 @@ testCommonPrefixOfAnd
 	self
 		assert: (File commonPrefixOf: 'D:\dev\Dolphin\DolphinVM7.DLL' and: 'C:\dev\Dolphin\DolphinVM7.DLL')
 				isEmpty!
+
+testCreateTemporaryDirectory
+	| tempDir tempDir2 |
+	tempDir := File createTemporaryDirectory.
+	tempDir2 := File createTemporaryDirectory.
+	self deny: tempDir equals: tempDir2.
+	self deleteDirectory: tempDir.
+	self deleteDirectory: tempDir2!
 
 testDeleteDirectory
 	self createTestDirectories.
@@ -626,6 +633,7 @@ testClassDefaultExtension!public!unit tests! !
 testClassPathExtension!public!unit tests! !
 testClassRelativePathOfTo!public!unit tests! !
 testCommonPrefixOfAnd!public!unit tests! !
+testCreateTemporaryDirectory!public!unit tests! !
 testDeleteDirectory!public!unit tests! !
 testForDirectoriesIn!public!unit tests! !
 testFullPathOf!public!unit tests! !
