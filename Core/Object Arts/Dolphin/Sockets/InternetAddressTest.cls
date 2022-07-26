@@ -12,9 +12,7 @@ InternetAddressTest comment: ''!
 
 testAllForHost
 	| addresses |
-	self isOnline ifFalse: [^self].
-
-	"dns.google has two fixed and well-known IP addresses"
+	self skipUnless: [self isOnline and: [self isCiBuild not]].
 	addresses := InternetAddress allForHost: 'dns.google'.
 	self assert: addresses size equals: 2.
 	self assert: (addresses collect: [:each | each ipAddress]) asSet
