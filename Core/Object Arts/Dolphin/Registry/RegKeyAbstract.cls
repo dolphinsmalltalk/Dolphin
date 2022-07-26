@@ -739,7 +739,7 @@ valueFromObject: value
 					[(value between: ##(-2 ** 63) and: ##(2 ** 63 - 1))
 						ifTrue: [^#qword -> (LARGE_INTEGER fromInteger: value)]]].
 	(value isKindOf: String) ifTrue: [^#string -> value asUtf16String].
-	(value isKindOf: Collection)
+	((value isKindOf: Collection) and: [value class isPointers])
 		ifTrue: 
 			[| stream |
 			stream := Utf16String writeStream.
