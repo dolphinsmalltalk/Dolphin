@@ -9,7 +9,6 @@ Core.Tests.DolphinTest subclass: #'External.Tests.ExternalArrayTest'
 External.Tests.ExternalArrayTest guid: (Core.GUID fromString: '{356dac42-9b9c-4970-87d2-bfd4846fafa4}')!
 External.Tests.ExternalArrayTest isNonInstantiable: true!
 External.Tests.ExternalArrayTest comment: ''!
-!External.Tests.ExternalArrayTest categoriesForClass!Unclassified! !
 !External.Tests.ExternalArrayTest methodsFor!
 
 arrayClass
@@ -53,7 +52,7 @@ testAtAndAtPut
 			| elem |
 			elem := self elementFromValue: each.
 			self assert: (array at: each put: elem) equals: elem.
-			self assert: (self elementToValue: (array at: each)) equals: each].
+			self assert: (self elementToValue: (array at: each)) equals: (self canonicalizeValue: each)].
 	array := self newNumericArray: 2.
 	#(-1 0 3) do: 
 			[:each |
@@ -64,7 +63,7 @@ testAtAndAtPut
 			| elem |
 			elem := self elementFromValue: each.
 			self assert: (array at: each put: elem) equals: elem.
-			self assert: (self elementToValue: (array at: each)) equals: each].
+			self assert: (self elementToValue: (array at: each)) equals: (self canonicalizeValue: each)].
 	array := self newNumericArray: 3.
 	#(-1 0 4) do: 
 			[:each |
@@ -75,7 +74,15 @@ testAtAndAtPut
 			| elem |
 			elem := self elementFromValue: each.
 			self assert: (array at: each put: elem) equals: elem.
-			self assert: (self elementToValue: (array at: each)) equals: each]!
+			self assert: (self elementToValue: (array at: each)) equals: (self canonicalizeValue: each)]!
+
+testComparing
+	| subject array |
+	subject := self newNumericArray: 5.
+	array := subject asArray.
+	self assert: subject hash equals: array hash.
+	self assert: subject equals: array.
+	self assert: array equals: subject!
 
 testDoSeparatedBy
 	0 to: 4
@@ -198,20 +205,37 @@ testFromToKeysAndValuesDo
 						keysAndValuesDo: [:eachKey :eachValue | ]]
 				raise: BoundsError]!
 
+testMarshal
+	| subject |
+	subject := self arrayClass marshal: ((1 to: 3) collect: [:each | self canonicalizeValue: each]).
+	self assert: subject equals: (self newNumericArray: 3).
+	self assert: (self arrayClass marshal: subject) identicalTo: subject!
+
+testMaxEncoding
+	| subject |
+	subject := self newNumericArray: 5.
+	self assert: subject maxEncoding equals: 1!
+
+testSelfEvaluating
+	| subject |
+	subject := self newNumericArray: 3.
+	self assert: subject isSelfEvaluating.
+	self assert: subject printString
+		equals: '(<1p> withAll: #(<2p> <3p> <4p>))'
+				<< ({self arrayClass} , ((1 to: 3) collect: [:i | self elementFromValue: i]))!
+
 testWithDo
 	| count validationBlock subject |
 	count := 1.
 	validationBlock := 
 			[:a :b |
 			self assert: b equals: count.
-			self assert: a value equals: b.
-			count := count + 1.
-			a value: count].
+			self assert: a value equals: (self canonicalizeValue: b).
+			count := count + 1].
 	#(1 2 5) do: 
 			[:each |
 			subject := self newNumericArray: each.
 			subject with: (1 to: each) do: validationBlock.
-			self assert: subject asArray equals: (2 to: each + 1).
 			count := 1].
 	subject := self newNumericArray: 5.
 	{0. 1. subject size - 1. subject size + 1} do: 
@@ -232,9 +256,13 @@ newArrayOfIntegers:!helpers!private! !
 newNumericArray:!helpers!private! !
 numericElementClass!constants!private! !
 testAtAndAtPut!public!unit tests! !
+testComparing!public!unit tests! !
 testDoSeparatedBy!public!unit tests! !
 testElementClass!public!unit tests! !
 testFromToKeysAndValuesDo!public!unit tests! !
+testMarshal!public!unit tests! !
+testMaxEncoding!public!unit tests! !
+testSelfEvaluating!public!unit tests! !
 testWithDo!public!unit tests! !
 !
 

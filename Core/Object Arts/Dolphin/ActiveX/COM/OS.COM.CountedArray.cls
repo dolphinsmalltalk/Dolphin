@@ -13,7 +13,6 @@ External.ExternalArray subclass: #'OS.COM.CountedArray'
 OS.COM.CountedArray guid: (Core.GUID fromString: '{44a86404-b2fe-11d3-b376-080046056106}')!
 OS.COM.CountedArray isNonInstantiable: true!
 OS.COM.CountedArray comment: 'OLECountedArray is an abstract base class for counted array structures used by various OLE/COM interfaces to input/output variable length arrays, where the array storage is allocated from COM task memory.'!
-!OS.COM.CountedArray categoriesForClass!Unclassified! !
 !OS.COM.CountedArray methodsFor!
 
 asArray
@@ -52,6 +51,9 @@ initialize
 	resources."
 
 	self beFinalizable!
+
+isSelfEvaluating
+	^false!
 
 length
 	"Answer the number of elements in the receiver."
@@ -104,6 +106,7 @@ cElems:!**compiled accessors**!public! !
 elements!accessing!private! !
 getElements!accessing!private! !
 initialize!initializing!private! !
+isSelfEvaluating!public!testing! !
 length!accessing!public! !
 needsFree!initializing!private!realizing/unrealizing! !
 onStartup!event handling!private! !

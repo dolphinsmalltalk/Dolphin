@@ -9,6 +9,7 @@ Copyright (c) Object Arts Ltd. 1997-2018. Portions Copyright (c) CGI Group (Euro
 
 package setClassNames: #(
 	#{External.POINT}
+	#{External.POINTLArray}
 	#{External.RECT}
 	#{Graphics.Point}
 	#{Graphics.Point3D}
@@ -62,6 +63,12 @@ External.Structure subclass: #'External.POINT'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 External.Structure subclass: #'External.RECT'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+External.ExternalArray subclass: #'External.POINTLArray'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

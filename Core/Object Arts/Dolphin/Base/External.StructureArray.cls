@@ -79,7 +79,24 @@ uncheckedAt: anInteger put: anObject
 		from: 1 + offset
 		to: offset + self elementSize
 		startingAt: 1.
-	^anObject! !
+	^anObject!
+
+with: aCollection do: aDyadicValuable
+	"Evaluate the <dyadicValuable> argument with each of the receiver's element structures along with the corresponding element from the <collection> argument, aCollection. The collection is enumerated in its #do: order."
+
+	"This should be used with care. In particular the element passed to the operation must not be captured since it is re-used for subsequent elements. In any case it will be a reference to the actual memory occupied by 
+	the array, which would be invalidated when the StructureArray is deallocated. If you do need to capture the elements, then you should make a copy of them."
+
+	| elem spacing |
+	self size = aCollection size ifFalse: [^self error: 'collections are of different sizes'].
+	spacing := self packing.
+	elem := self elementClass newPointer.
+	aCollection inject: self yourAddress
+		into: 
+			[:addr :each |
+			elem initializeAtAddress: addr.
+			aDyadicValuable value: elem value: each.
+			addr + spacing]! !
 !External.StructureArray categoriesForMethods!
 alignment!constants!public! !
 basicFree!private!realizing/unrealizing! !
@@ -88,6 +105,7 @@ initialize!initializing!private! !
 initializePointer!initializing!private! !
 packing!constants!private! !
 uncheckedAt:put:!accessing!private! !
+with:do:!enumerating!public! !
 !
 
 !External.StructureArray class methodsFor!
@@ -115,10 +133,10 @@ length: anInteger elementClass: elementClass
 		elementClass: elementClass!
 
 length: anInteger elementClass: anExternalStructureClass initializer: aDyadicValuable
-	| answer |
-	answer := self length: anInteger elementClass: anExternalStructureClass.
-	answer with: (1 to: anInteger) do: aDyadicValuable.
-	^answer!
+	^self
+		withAll: (1 to: anInteger)
+		elementClass: anExternalStructureClass
+		initializer: aDyadicValuable!
 
 stbConvertFrom: anSTBClassFormat
 	"Convert from earlier version models.
@@ -141,6 +159,13 @@ with: anExternalStructure
 		at: 1 put: anExternalStructure;
 		yourself!
 
+withAll: newElements
+	"Answer a new instance of the receiver containing all of the elements of the <collection> newElements."
+
+	"We need to know the class of structured element - use #withAll:elementClass:"
+
+	^self shouldNotImplement!
+
 withAll: aCollection elementClass: anExternalStructureClass initializer: aDyadicValuable
 	"Answer a new <StructureArray> containing all of the elements of the <collection> argument, converted to the format of the <ExternalStructure> class argument by the <dyadicValuable> initializer block, aDyadicValuable."
 
@@ -155,6 +180,7 @@ length:elementClass:initializer:!instance creation!public! !
 stbConvertFrom:!binary filing!public! !
 stbVersion!binary filing!public! !
 with:!instance creation!public! !
+withAll:!instance creation!public! !
 withAll:elementClass:initializer:!instance creation!public! !
 !
 

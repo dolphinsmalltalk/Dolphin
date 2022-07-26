@@ -8,7 +8,6 @@ External.Tests.GenericExternalArrayTest subclass: #'OS.COM.Tests.SAFEARRAYTest'
 	classConstants: {}!
 OS.COM.Tests.SAFEARRAYTest guid: (Core.GUID fromString: '{f0fcec1b-f6cd-4f59-b5da-115cf8d04805}')!
 OS.COM.Tests.SAFEARRAYTest comment: ''!
-!OS.COM.Tests.SAFEARRAYTest categoriesForClass!Unclassified! !
 !OS.COM.Tests.SAFEARRAYTest methodsFor!
 
 arrayClass
@@ -149,6 +148,12 @@ testElementClasses
 
 	"	IUnknown ExternalArray )"!
 
+testMarshal
+	| subject |
+	subject := self arrayClass marshal: (1 to: 3).
+	self assert: subject equals: (self arrayClass withAll: (1 to: 3)).
+	self assert: (self arrayClass marshal: subject) identicalTo: subject!
+
 testRecordInfo
 	| sa recinfo fieldNames ordered |
 	sa := self threePoints: POINTL.
@@ -184,6 +189,7 @@ testBoolDisplayString!public! !
 testBounds!public!unit tests! !
 testElementAt!public!unit tests! !
 testElementClasses!public!unit tests! !
+testMarshal!public!unit tests! !
 testRecordInfo!public!unit tests! !
 threePoints:!public!unit tests! !
 !

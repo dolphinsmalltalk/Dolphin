@@ -11,6 +11,9 @@ External.UInt32Bytes comment: ''!
 !External.UInt32Bytes categoriesForClass!External-Data-Unstructured! !
 !External.UInt32Bytes methodsFor!
 
+asBoolean
+	^(self sdwordAtOffset: 0) ~~ 0!
+
 asDword
 	"Answer the receiver in a form suitable for passing/returning as 
 	a 32-bit value."
@@ -32,6 +35,7 @@ value: anObject
 
 	self dwordAtOffset: 0 put: anObject! !
 !External.UInt32Bytes categoriesForMethods!
+asBoolean!converting!public! !
 asDword!converting!public! !
 asInteger!converting!public! !
 asSignedInteger!converting!public! !

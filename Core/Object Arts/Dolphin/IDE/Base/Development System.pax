@@ -284,6 +284,9 @@ package setMethodNames: #(
 	#(#{External.DOUBLEField} #newAspect:class:)
 	#(#{External.EmbeddedField} #printAccessorExpression:on:)
 	#(#{External.EmbeddedField} #printStructClassSize:on:)
+	#(#{External.ExternalArray} #printElement:on:)
+	#(#{External.ExternalArray} #printElementsOn:)
+	#(#{External.ExternalArray} #printEvaluationOn:)
 	#(#{External.ExternalArray} #printOn:)
 	#(#{External.ExternalArray} #publishedAspects)
 	#(#{External.ExternalArray} #publishedKeyedAspects)
@@ -307,6 +310,7 @@ package setMethodNames: #(
 	#(#{External.FillerField} #printAccessorExpression:on:)
 	#(#{External.FillerField} #printMutatorBody:on:)
 	#(#{External.FLOAT class} #newInstanceAspect:class:)
+	#(#{External.FLOATArray} #printElement:on:)
 	#(#{External.FLOATField} #newAspect:class:)
 	#(#{External.HANDLEField} #printAccessorExpressionSuffixOn:)
 	#(#{External.INTEGER} #printOn:)
@@ -3174,16 +3178,31 @@ printStructClassSize:on:!automatic generation!private! !
 
 !External.ExternalArray methodsFor!
 
+printElement: anObject on: aStream
+	anObject printOn: aStream!
+
+printElementsOn: aStream
+	self do: [:each | self printElement: each on: aStream] separatedBy: [aStream space]!
+
+printEvaluationOn: aStream
+	aStream
+		nextPut: $(;
+		print: self class;
+		nextPutAll: ' withAll: #('.
+	self printElementsOn: aStream.
+	aStream nextPutAll: '))'!
+
 printOn: aStream
 	"Print a string representation of self on aStream."
 
-	aStream
-		basicPrint: self;
-		nextPut: $(.
-	self isNull
-		ifTrue: [aStream nextPutAll: 'NULL']
-		ifFalse: [self do: [:each | each printOn: aStream] separatedBy: [aStream space]].
-	aStream nextPut: $)!
+	self isSelfEvaluating
+		ifTrue: [self printEvaluationOn: aStream]
+		ifFalse: 
+			[aStream
+				basicPrint: self;
+				nextPut: $(.
+			self isNull ifTrue: [aStream nextPutAll: 'NULL'] ifFalse: [self printElementsOn: aStream].
+			aStream nextPut: $)]!
 
 publishedAspects
     	"Answer a <LookupTable> of the <Aspect>s published by the receiver.
@@ -3213,6 +3232,9 @@ publishedKeyedAspectsBatchSize
     	^100
     ! !
 !External.ExternalArray categoriesForMethods!
+printElement:on:!printing!private! !
+printElementsOn:!printing!private! !
+printEvaluationOn:!printing!private! !
 printOn:!printing!public! !
 publishedAspects!constants!public! !
 publishedKeyedAspects!constants!public! !
@@ -3411,6 +3433,17 @@ newInstanceAspect: aSymbol class: aspectClass
 	^aspectClass float: aSymbol! !
 !External.FLOAT class categoriesForMethods!
 newInstanceAspect:class:!adapters!private! !
+!
+
+!External.FLOATArray methodsFor!
+
+printElement: each on: aStream
+	"Private - Print the <Float> argument as if an element of the receiver (i.e. a single-precision float), in a format appropriate for a developer. In this case we want to print the number as it is represented, not necessarily as originally expressed. There is very limited definite decimal precision in a 32-bit float (6 digits only), but some numbers (e.g. binary fractions) can be represented precisely up to nine significant figures.
+	If an IEEE 754 single-precision number is converted to a decimal string with at least 9 significant digits, and then converted back to single-precision representation, the final result will match the original number."
+
+	^each printOn: aStream significantFigures: 9! !
+!External.FLOATArray categoriesForMethods!
+printElement:on:!printing!private! !
 !
 
 !External.FLOATField methodsFor!

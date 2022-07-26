@@ -51,21 +51,16 @@ _sameAsString: comparand
 	^comparand <=> string2 == 0!
 
 = comparand
-	"Answer whether the receiver and the <Object> argument, comparand,
-	are considered equivalent - that is they are of the same class and size, and
-	contain eqivalent elements that are in the same sequence.
-	Implementation Note: We perform a series of tests of increasing slowness, culminating
-	in an element-by-element equality test."
+	"Answer whether the receiver and the <Object> argument, comparand, are considered equivalent - that is they are of the same class and size, and contain eqivalent elements that are in the same sequence."
+
+	"Implementation Note: We perform a series of tests of increasing slowness, culminating in an element-by-element equality test."
 
 	| size |
 	self == comparand ifTrue: [^true].
-	#todo "ANSI draft says must be same class, not just same species".
-	(self species == comparand species) ifFalse: [^false].
+	self species == comparand species ifFalse: [^false].
 	size := self size.
 	size = comparand size ifFalse: [^false].
-	1 to: size do: [ :i |
-		(self at: i) = (comparand at: i)
-			ifFalse: [^false]].
+	1 to: size do: [:i | (self at: i) = (comparand at: i) ifFalse: [^false]].
 	^true!
 
 after: anObject
@@ -744,10 +739,9 @@ grow
 	self resize: self size + self growSize!
 
 hash
-	"Answer the <integer> hash value for the receiver.
-	Implementation Note: This is not a terribly good hash function (in particular it
-	exhibits very poor temporal stability), but it is quick, and alternatives involve expensive 
-	iteration through the receiver's elements."
+	"Answer the <integer> hash value for the receiver."
+
+	"Implementation Note: This is not a terribly good hash function (in particular it exhibits very poor temporal stability), but it is quick, and alternatives involve expensive iteration through the receiver's elements."
 
 	| size |
 	(size := self size) == 0 ifTrue: [^17171].

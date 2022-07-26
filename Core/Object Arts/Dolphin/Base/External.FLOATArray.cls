@@ -11,6 +11,22 @@ External.FLOATArray comment: 'Specialized <ExternalArray> to represent contiguou
 !External.FLOATArray categoriesForClass!External-Data-Structured! !
 !External.FLOATArray methodsFor!
 
+displayOn: aPuttableStream
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see.
+	There are only 6 guaranteed digits of precision in a single-precision float, so we limit output to that so that the string representation would round trip."
+
+	aPuttableStream nextPut: $(.
+	self isNull
+		ifFalse: 
+			[| listSep |
+			listSep := aPuttableStream locale listSeparator.
+			self do: [:float | float printOn: aPuttableStream significantFigures: 6]
+				separatedBy: 
+					[aPuttableStream
+						nextPutAll: listSep;
+						space]].
+	aPuttableStream nextPut: $)!
+
 uncheckedAt: anInteger 
 	"Private - Answer a <Float> representing the 32-bit single-precision 
 	IEEE float at the specified <integer> index in the receiver. No bounds 
@@ -24,6 +40,7 @@ uncheckedAt: anInteger put: aFloat
 
 	^bytes floatAtOffset: (anInteger - 1) * VMConstants.FloatSize put: aFloat! !
 !External.FLOATArray categoriesForMethods!
+displayOn:!printing!private! !
 uncheckedAt:!accessing!private! !
 uncheckedAt:put:!accessing!private! !
 !

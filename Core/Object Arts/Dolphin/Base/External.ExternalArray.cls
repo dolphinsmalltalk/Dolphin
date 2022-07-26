@@ -23,13 +23,10 @@ Instance Variables:
 = comparand
 	| size |
 	self == comparand ifTrue: [^true].
-	#todo "ANSI draft says must be same class, not just same species".
-	(self species == comparand species) ifFalse: [^false].
+	self species == comparand species ifFalse: [^false].
 	size := self size.
 	size = comparand size ifFalse: [^false].
-	1 to: size do: [ :i |
-		(self at: i) = (comparand at: i)
-			ifFalse: [^false]].
+	1 to: size do: [:i | (self uncheckedAt: i) = (comparand at: i) ifFalse: [^false]].
 	^true!
 
 anySatisfy: discriminator
@@ -214,6 +211,9 @@ elementSize
 first
 	^self at: 1!
 
+fourth
+	^self at: 4!
+
 from: start do: operation
 	"Evaluate the <monadicValuable>, operation, for each element of the receiver
 	from start, inclusive."
@@ -247,6 +247,15 @@ from: startInteger to: stopInteger keysAndValuesDo: operation
 		to: stopInteger
 		keysAndValuesDo: operation!
 
+hash
+	"Answer the <integer> hash value for the receiver."
+
+	"Implementation Note: This is a copy of the (not terribly good) hash function of SequenceableCollection, because ExternalArrays should compare equal to Arrays of equivalent values."
+
+	| size |
+	(size := self size) == 0 ifTrue: [^17171].
+	^size + (self at: 1) hash + (self at: size) hash!
+
 includes: target
 	"Answer whether the argument, target, is one of the elements of the receiver.
 	Implementation Note: Override superclass to revert to element search."
@@ -278,6 +287,9 @@ isEmpty
 
 	^self size == 0
 !
+
+isSelfEvaluating
+	^bytes class == ByteArray!
 
 keys
 	"Answer a <collection> containing the receiver's keys."
@@ -316,6 +328,9 @@ lookup: keyInteger
 	"Answer the value named by the <Integer> argument, keyInteger, or nil if there is no such key in the receiver."
 
 	^(keyInteger > 0 and: [keyInteger <= self size]) ifTrue: [self uncheckedAt: keyInteger]!
+
+maxEncoding
+	^1!
 
 notEmpty
 	"Answer whether the receiver contains any elements."
@@ -356,6 +371,9 @@ replaceFrom: startInteger to: stopInteger with: aByteObject startingAt: startAtI
 		from: 1 + offset
 		to: stopInteger * elemSize
 		startingAt: startAtInteger!
+
+second
+	^self at: 2!
 
 select: discriminator
 	"Evaluate the <monadicValuable> argument, discriminator, for each of the receiver's elements.
@@ -401,24 +419,20 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: operation
 	startInteger to: stopInteger do: [:i | operation value: i value: (self uncheckedAt: i)]!
 
 with: aCollection do: aDyadicValuable
-	"Evaluate the <dyadicValuable> argument with each of the receiver's elements along with the corresponding element from the <collection> argument, aCollection. The collection is enumerated in its #do: order."
-
-	"This should be used with care. In particular the element passed to the operation must not be captured since it is re-used for subsequent elements. In any case it will be a reference to the actual memory occupied by 
-	the array, which would be invalidated when the StructureArray is deallocated. If you do need to capture the elements, then you should make a copy of them."
+	"Evaluate the <dyadicValuable> argument with each of the receiver's element values along with the corresponding element from the <collection> argument, aCollection. The collection is enumerated in its #do: order."
 
 	| elem spacing |
-	self size = aCollection size
-		ifFalse: [^self error: 'collections are of different sizes'].
+	self size = aCollection size ifFalse: [^self error: 'collections are of different sizes'].
 	spacing := self packing.
 	elem := self elementClass newPointer.
 	aCollection inject: self yourAddress
 		into: 
 			[:addr :each |
 			elem initializeAtAddress: addr.
-			aDyadicValuable value: elem value: each.
+			aDyadicValuable value: elem value value: each.
 			addr + spacing]! !
 !External.ExternalArray categoriesForMethods!
-=!public! !
+=!comparing!public! !
 anySatisfy:!enumerating!public! !
 appendToStream:!double dispatch!private! !
 asArray!converting!public! !
@@ -440,25 +454,30 @@ do:separatedBy:!enumerating!public! !
 elementClass!constants!public! !
 elementSize!instance creation!private! !
 first!accessing!public! !
+fourth!accessing!public! !
 from:do:!enumerating!public! !
 from:keysAndValuesDo:!enumerating!public! !
 from:to:keysAndValuesDo:!enumerating!public! !
+hash!comparing!public! !
 includes:!public!searching! !
 includesKey:!public!testing! !
-initializePointer!public! !
+initializePointer!initializing!public! !
 inject:into:!enumerating!public! !
 isEmpty!public!testing! !
+isSelfEvaluating!public!testing! !
 keys!accessing!public! !
 keysAndValuesDo:!enumerating!public! !
 last!accessing!public! !
 length!accessing!public! !
 length:!accessing!public! !
 lookup:!accessing!public! !
+maxEncoding!constants!public! !
 notEmpty!public!testing! !
 packing!constants!private! !
 replaceBytesOf:from:to:startingAt:!double dispatch!private! !
 replaceElementsOf:from:to:startingAt:!private!replacing! !
 replaceFrom:to:with:startingAt:!public!replacing! !
+second!accessing!public! !
 select:!enumerating!public! !
 size!accessing!public! !
 species!constants!public! !
@@ -515,6 +534,10 @@ length: count elementSize: bytes
 	^(super new: count*bytes)
 		basicLength: count!
 
+marshal: aCollection
+	aCollection class == self ifTrue: [^aCollection].
+	^self withAll: aCollection!
+
 new: anInteger
 	"Answer a new instance of the receiver allocated at an immovable location."
 
@@ -536,7 +559,11 @@ withAll: newElements
 
 	| answer |
 	answer := self new: newElements size.
-	newElements inject: 1 into: [:i :elem | answer at: i put: elem. i + 1].
+	newElements inject: 1
+		into: 
+			[:i :elem |
+			answer uncheckedAt: i put: elem.
+			i + 1].
 	^answer! !
 !External.ExternalArray class categoriesForMethods!
 alignment!constants!public! !
@@ -546,6 +573,7 @@ fromAddress:!instance creation!public! !
 fromAddress:length:!instance creation!public! !
 getFieldNames!constants!private! !
 length:elementSize:!instance creation!private! !
+marshal:!instance creation!public! !
 new:!instance creation!public! !
 with:!instance creation!public! !
 withAll:!instance creation!public! !
