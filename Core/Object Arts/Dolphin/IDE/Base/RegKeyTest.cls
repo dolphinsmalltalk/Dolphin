@@ -3,7 +3,7 @@
 DolphinTest subclass: #RegKeyTest
 	instanceVariableNames: 'testKey'
 	classVariableNames: ''
-	poolDictionaries: ''
+	poolDictionaries: 'WinRegConstants'
 	classInstanceVariableNames: ''!
 RegKeyTest guid: (GUID fromString: '{a67b125d-54b1-4bf8-9634-222b74e70c77}')!
 RegKeyTest comment: ''!
@@ -135,7 +135,27 @@ testSz
 	{''. $\0 asUtf8String. 'a'. 'ab'. 'abc'. 'abcd'. Character dolphin asUtf16String} do: 
 			[:each |
 			testKey valueAt: 'String' put: each.
-			self assert: (testKey valueAt: 'String') equals: each]! !
+			self assert: (testKey valueAt: 'String') equals: each]!
+
+testValueAtPut
+	{1234. REG_DWORD. 16r7FFFFFFF. REG_DWORD. -16r80000000. REG_DWORD. 16r80000000. REG_QWORD. -16r80000001. REG_QWORD. 'abc'. REG_SZ. #[1 2 3]. REG_BINARY. #('Abc' 'def'). REG_MULTI_SZ. nil. REG_NONE} pairsDo: 
+			[:each :eachType |
+			| dwErr typeBuf |
+			testKey valueAt: 'each' put: each.
+			typeBuf := DWORDBytes new.
+			dwErr := AdvApiLibrary default
+						regQueryValueEx: testKey asParameter
+						lpValueName: 'each'
+						lpReserved: nil
+						lpType: typeBuf
+						lpData: nil
+						lpcbData: nil.
+			self assert: dwErr equals: Win32Errors.ERROR_SUCCESS.
+			self assert: typeBuf value equals: eachType.
+			self assert: (testKey valueAt: 'each') equals: each].
+	"Nil'ing the default value is a special case - see RegKeyAbstract>>valueAt:put:type:"
+	testKey value: nil.
+	self assertIsNil: testKey value! !
 !RegKeyTest categoriesForMethods!
 setUp!private!unit tests! !
 tearDown!private!unit tests! !
@@ -147,5 +167,6 @@ testMultiSz!public!unit tests! !
 testParentPath!public!unit tests! !
 testScintillaTextStyleSerialization!public!unit tests! !
 testSz!public!unit tests! !
+testValueAtPut!public! !
 !
 

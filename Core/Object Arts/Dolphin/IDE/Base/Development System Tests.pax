@@ -120,7 +120,7 @@ DolphinTest subclass: #ProductReleaseTest
 DolphinTest subclass: #RegKeyTest
 	instanceVariableNames: 'testKey'
 	classVariableNames: ''
-	poolDictionaries: ''
+	poolDictionaries: 'WinRegConstants'
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #SmalltalkParserTest
 	instanceVariableNames: ''
