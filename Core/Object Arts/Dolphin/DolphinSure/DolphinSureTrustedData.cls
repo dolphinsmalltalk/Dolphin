@@ -2,7 +2,7 @@
 
 Object subclass: #DolphinSureTrustedData
 	instanceVariableNames: 'data description signature publisherCertificate'
-	classVariableNames: ''
+	classVariableNames: 'ValidStbClasses'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinSureTrustedData guid: (GUID fromString: '{6ba876e9-8f00-4f03-bed6-f2f6af4edbf1}')!
@@ -164,24 +164,13 @@ validDataPublishedBy:!accessing!public! !
 
 !DolphinSureTrustedData class methodsFor!
 
-binaryReadFrom: aStream context: anObject 
-	"Answers an object read from its binary STB representation on aStream. Because STB is
-	inherently an insecure format (loading objects can cause arbitrary code to be run) we must
-	use a special STBInFiler (an STBValidatingInFiler) that will only load a restricted set of
-	classes that we know to be passive."
+binaryReadFrom: aStream context: anObject
+	"Answers an object read from its binary STB representation on aStream. Because STB is inherently an insecure format (loading objects can cause arbitrary code to be run) we must use a special STBInFiler (an STBValidatingInFiler) that will only load a restricted set of classes that we know to be passive."
 
-	| inFiler validClasses |
-	validClasses := (Set new)
-				add: #String;
-				add: #ByteArray;
-				addAll: self secureCertificateClassNames;
-				add: self name;
-				yourself.
-	inFiler := (STBValidatingInFiler on: aStream)
-				context: anObject;
-				validationBlock: [:className | validClasses identityIncludes: className];
-				yourself.
-	^inFiler next!
+	^(STBValidatingInFiler on: aStream)
+		context: anObject;
+		validationBlock: [:className | ValidStbClasses includes: className];
+		next!
 
 data: aByteArray description: aString publisherCertificate: certificate privateKey: privateKey
 	"Answer an instance of the receiver using the supplied publisher certificate and aByteArray of data
@@ -199,6 +188,13 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon!
+
+initialize
+	"
+		self initialize
+	"
+
+	ValidStbClasses := Set withAll: #(#AnsiString #Utf8String #ByteArray #DolphinSureCertificate)!
 
 keyGroup
 	"Private - Answers the key group for all instances of the receiver. This is a partial key that can be combined with
@@ -263,6 +259,7 @@ binaryReadFrom:context:!binary filing!public! !
 data:description:publisherCertificate:privateKey:!instance creation!public! !
 data:description:publisherCertificate:signature:!instance creation!public! !
 icon!constants!development!public! !
+initialize!public! !
 keyGroup!accessing!private! !
 parseByteArrayChunk:!helpers!private!source filing! !
 publisherCertificate:!instance creation!public! !

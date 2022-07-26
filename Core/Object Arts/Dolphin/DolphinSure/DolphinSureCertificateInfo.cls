@@ -2,7 +2,7 @@
 
 Object subclass: #DolphinSureCertificateInfo
 	instanceVariableNames: 'serial owner details issued expiry publicKey'
-	classVariableNames: ''
+	classVariableNames: 'ValidStbClasses'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinSureCertificateInfo guid: (GUID fromString: '{92dfd157-de8b-4c95-8ed4-fcc86403ef31}')!
@@ -120,24 +120,21 @@ validityString!accessing!public! !
 
 !DolphinSureCertificateInfo class methodsFor!
 
-binaryReadFrom: aStream context: anObject 
-	"Answers an instance of this class from its binary STB representation on aStream. Because STB is inherently an insecure format
-	we must use an STBInFiler that especially guarded with a ValidatingClassLocator to that only expected, non-dangerous
-	classes can be loaded from the STB stream."
+binaryReadFrom: aStream context: anObject
+	"Answers an object read from its binary STB representation on aStream. Because STB is inherently an insecure format (loading objects can cause arbitrary code to be run) we must use a special STBInFiler (an STBValidatingInFiler) that will only load a restricted set of classes that we know to be passive."
 
-	| inFiler validClasses |
-	validClasses := (Set new)
-				add: #Date;
-				add: #String;
-				add: #LargeInteger;
-				add: #SmallInteger;
-				add: self name;
-				yourself.
-	inFiler := (STBValidatingInFiler on: aStream)
-				validationBlock: [:className | validClasses identityIncludes: className];
-				context: anObject;
-				yourself.
-	^inFiler next!
+	^(STBValidatingInFiler on: aStream)
+		validationBlock: [:className | ValidStbClasses includes: className];
+		context: anObject;
+		next!
+
+initialize
+	"
+		self initialize
+	"
+
+	ValidStbClasses := Set
+				withAll: #(#Date #AnsiString #Utf8String #LargeInteger #SmallInteger #DolphinSureCertificateInfo)!
 
 new
 	"Private - Use #serial:owner"
@@ -151,6 +148,7 @@ serial: aStringSerialNo owner: aStringOwner publicKey: pkey
 	^super new serial: aStringSerialNo owner: aStringOwner publicKey: pkey! !
 !DolphinSureCertificateInfo class categoriesForMethods!
 binaryReadFrom:context:!binary filing!public! !
+initialize!binary filing!public! !
 new!instance creation!private! !
 serial:owner:publicKey:!instance creation!public! !
 !

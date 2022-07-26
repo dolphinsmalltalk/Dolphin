@@ -6,6 +6,7 @@ package paxVersion: 1;
 
 
 package classNames
+	add: #DolphinSureTrustedDataTest;
 	add: #SecureHashAlgorithmTest;
 	yourself.
 
@@ -24,6 +25,11 @@ package!
 
 "Class Definitions"!
 
+DolphinTest subclass: #DolphinSureTrustedDataTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 DolphinTest subclass: #SecureHashAlgorithmTest
 	instanceVariableNames: 'hash'
 	classVariableNames: ''

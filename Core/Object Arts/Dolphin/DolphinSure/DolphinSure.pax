@@ -68,7 +68,7 @@ Object subclass: #DigitalSignatureAlgorithm
 	classInstanceVariableNames: ''!
 Object subclass: #DolphinSureCertificateInfo
 	instanceVariableNames: 'serial owner details issued expiry publicKey'
-	classVariableNames: ''
+	classVariableNames: 'ValidStbClasses'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #DolphinSureCertificateStore
@@ -78,7 +78,7 @@ Object subclass: #DolphinSureCertificateStore
 	classInstanceVariableNames: ''!
 Object subclass: #DolphinSureTrustedData
 	instanceVariableNames: 'data description signature publisherCertificate'
-	classVariableNames: ''
+	classVariableNames: 'ValidStbClasses'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #PC1Cipher
