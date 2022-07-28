@@ -12,7 +12,7 @@
   
   	gplib := AXTypeLibraryAnalyzer open: '<path here>\Gdiplus.tlb'.
   	gplib prefix: ''; generateTypelibGlobal: false; forceLowercaseIdentifiers: true.
-  	gplib aliasMap at: 'RECT' put: #RECTL; at: 'SIZE' put: #SIZEL; at: 'POINT' put: #POINTL.
+  	gplib aliasMap at: 'SIZE' put: #SIZEL; at: 'POINT' put: #POINTL.
   
    Note that forceLowercaseIdentifiers option is used because of the MIDL case insensitivity bug (see Q220137),
    which causes parameters in the IDL with lowercase initial letters to be wrongly folder with the previously
@@ -42,6 +42,7 @@
 
 import "oaidl.idl";
 import "ocidl.idl";
+#include "common/CustomAttribs.h"
 
 enum MetaRecordType
 {
@@ -245,28 +246,26 @@ enum EnhancedMetaFileRecordType
 
 [
 	uuid(92833B84-9143-4E2A-9C20-D39DB1C13429),
-	version(1.0),
-	helpstring("GDI+ Library 1.0")
+	version(1.10),
+	helpstring("GDI+ Library 1.10")
 ]
 library Gdiplus
 {
 	importlib("stdole32.tlb");
 	importlib("stdole2.tlb");
+	#include "common/windef.idl"
 
 	typedef [public] BYTE* LPBYTE;
 
-	typedef [public] ExternalHandle HDC;
-	typedef [public] ExternalHandle HBITMAP;
-	typedef [public] ExternalHandle HPALETTE;
-	typedef [public] ExternalHandle HENHMETAFILE;
-	typedef [public] ExternalHandle HMETAFILE;
-	typedef [public] ExternalHandle HWND;
-	typedef [public] ExternalHandle HICON;
+	typedef [public] HANDLE HDC;
+	typedef [public] HANDLE HBITMAP;
+	typedef [public] HANDLE HPALETTE;
+	typedef [public] HANDLE HENHMETAFILE;
+	typedef [public] HANDLE HMETAFILE;
+	typedef [public] HANDLE HWND;
 
-	typedef [public] void VOID;
-
-	typedef [helpstring("Function return codes"), v1_enum]
-	enum Status
+	typedef [helpstring("Function return codes"), v1_enum, __errno]
+	enum GpStatus
 	{
 		Ok = 0,
 		GenericError = 1,
@@ -290,6 +289,8 @@ library Gdiplus
 		PropertyNotFound = 19,
 		PropertyNotSupported = 20
 	} GpStatus;
+
+	typedef [public] long GpStatus_NoThrow;
 
 	//--------------------------------------------------------------------------
 	// Graphics and Container State cookies
@@ -1163,14 +1164,6 @@ library Gdiplus
 
 	typedef [helpstring("Single-precision floating point number")] float REAL;
 
-	typedef [
-		helpstring("An opaque pointer to some external data structure"), 
-		uuid(87B4C518-026E-11D3-9FD7-00A0CC3E4A32)] 
-	struct ExternalHandle
-	{
-		void* pObj;
-	} ExternalHandle;
-
 	typedef [helpstring("Pointer to GDI+ class")] ExternalHandle PGpBase;
 
 	// Classes not currently being used.
@@ -1186,6 +1179,7 @@ library Gdiplus
 	typedef [helpstring("Pointer to GDI+ AdjustableArrowCap class")] PGpCustomLineCap PGpAdjustableArrowCap;
 	typedef [helpstring("Pointer to GDI+ Image class")] PGpBase PGpImage;
 	typedef [helpstring("Pointer to GDI+ Bitmap class")] PGpImage PGpBitmap;
+	typedef [helpstring("Pointer to GDI+ CachedBitmap class")] PGpBase PGpCachedBitmap;
 	typedef [helpstring("Pointer to GDI+ Metafile class")] PGpImage PGpMetafile;
 	typedef [helpstring("Pointer to GDI+ ImageAttributes class")] PGpBase PGpImageAttributes;
 	typedef [helpstring("Pointer to GDI+ Brush class")] PGpBase PGpBrush;
@@ -1196,37 +1190,63 @@ library Gdiplus
 	typedef [helpstring("Pointer to GDI+ Hatch class")] PGpBrush PGpHatch;
 	typedef [helpstring("Pointer to GDI+ FontCollection class")] PGpBase PGpFontCollection;
 	typedef [helpstring("Pointer to GDI+ Font class")] PGpBase PGpFont;
+	typedef [helpstring("Pointer to GDI+ Effect class")] PGpBase PCGpEffect;
+	
+	typedef
+	[
+		helpstring("Single-precision real cartesian coordinate."),
+		uuid(c6f719de-eec5-45f6-bd44-71200f76bd34)
+	]
+	struct POINTF
+	{
+		REAL x;
+		REAL y;
+	} POINTF;
 
 	typedef 
 	[
 		helpstring("State-only definition of GDI+ PathData class."),
 		uuid(411A9CB7-6ABC-4F55-AA9A-82C7E0D44142)
 	] 
-	struct GpPathData
+	struct PathData
 	{
 		INT Count;
-		POINTF* Points;
-		BYTE* Types;
-	} GpPathData;
+		_Counted_Array_Ptr_(Count) POINTF* Points;
+		_Counted_Array_Ptr_(Count) BYTE* Types;
+	} PathData;
+	typedef PathData GpPathData;
 
-	typedef [helpstring("Integer cartesian coordinate")] POINTL GpPoint;
-	typedef [helpstring("Single-preicision real cartesian coordinate")] POINTF GpPointF;
+	typedef POINTL GpPoint;
+	typedef POINTF GpPointF;
 
 	typedef 
 	[
-		helpstring("State only definition of GDI+ RectF class."),
+		helpstring("Represents a rectangle in a 2D coordinate system (floating-point coordinates)."),
 		uuid(9A449C4A-8AE9-45D9-B94D-1E1D91FEDCD5)
 	] 
-	struct RECTF
+	struct RectF
 	{
-		REAL X;
-		REAL Y;
-		REAL Width;
-		REAL Height;
-	} RECTF;
+		REAL x;
+		REAL y;
+		REAL width;
+		REAL height;
+	} RectF;
  
-	typedef [public] RECTF GpRectF;
-	typedef [public] RECT GpRect;
+	typedef RectF GpRectF;
+
+	typedef
+	[
+		helpstring("State only definition of GDI+ Rect class."),
+		uuid(6971c1a9-6a91-4a18-a526-2beac92d4746)
+	]
+	struct Rect
+	{
+		LONG x;
+		LONG y;
+		LONG width;
+		LONG height;
+	} Rect;
+	typedef Rect GpRect;
 
 	typedef [helpstring("32-bit pixel with alpha channel")] DWORD ARGB;
 	typedef [helpstring("64-bit pixel with alpha channel")] DWORDLONG ARGB64;
@@ -1273,6 +1293,29 @@ library Gdiplus
 	} GpEncoderParameters;
 
 	typedef [public] GpEncoderParameters EncoderParameters;
+
+	enum ItemDataPosition
+	{
+		ItemDataPositionAfterHeader = 0x0,
+		ItemDataPositionAfterPalette = 0x1,
+		ItemDataPositionAfterBits = 0x2,
+	};
+
+	typedef [
+		helpstring("External Data Item"),
+		uuid(8F94DA5E-28D8-4A70-93E8-FF94824E22D6)
+	] struct GpImageItemData
+	{
+		[helpstring("size of the structure")] UINT  Size;
+		[helpstring("flags describing how the data is to be used.")] UINT  Position;
+		[helpstring("description on how the data is to be saved. it is different for every codec type.")] VOID* Desc;
+		[helpstring("size memory pointed by Desc")] UINT  DescSize;
+		[helpstring("pointer to the data that is to be saved in the file, could be anything saved directly.")] VOID* Data;
+		[helpstring("size memory pointed by Data")] UINT  DataSize;
+		[helpstring("opaque for the apps data member used during enumeration of image data items.")] UINT  Cookie;
+	} GpImageItemData;
+
+	typedef [public] GpImageItemData ImageItemData;
 
 	typedef [public] void* ImageAbort; //BOOL (CALLBACK * ImageAbort)(void *);
 	typedef [public] ImageAbort DrawImageAbort;
@@ -1329,6 +1372,80 @@ library Gdiplus
 
 	typedef [public] RotateFlipType GpRotateFlipType;
 
+	//----------------------------------------------------------------------------
+// Color format conversion parameters
+//----------------------------------------------------------------------------
+
+	typedef [public, v1_enum]
+	enum GpPaletteType
+	{
+		// Arbitrary custom palette provided by caller.
+
+		PaletteTypeCustom = 0,
+
+		// Optimal palette generated using a median-cut algorithm.
+
+		PaletteTypeOptimal = 1,
+
+		// Black and white palette.
+
+		PaletteTypeFixedBW = 2,
+
+		// Symmetric halftone palettes.
+		// Each of these halftone palettes will be a superset of the system palette.
+		// E.g. Halftone8 will have it's 8-color on-off primaries and the 16 system
+		// colors added. With duplicates removed, that leaves 16 colors.
+
+		PaletteTypeFixedHalftone8 = 3, // 8-color, on-off primaries
+		PaletteTypeFixedHalftone27 = 4, // 3 intensity levels of each color
+		PaletteTypeFixedHalftone64 = 5, // 4 intensity levels of each color
+		PaletteTypeFixedHalftone125 = 6, // 5 intensity levels of each color
+		PaletteTypeFixedHalftone216 = 7, // 6 intensity levels of each color
+
+		// Assymetric halftone palettes.
+		// These are somewhat less useful than the symmetric ones, but are 
+		// included for completeness. These do not include all of the system
+		// colors.
+
+		PaletteTypeFixedHalftone252 = 8, // 6-red, 7-green, 6-blue intensities
+		PaletteTypeFixedHalftone256 = 9, // 8-red, 8-green, 4-blue intensities
+	} GpPaletteType;
+
+	typedef [public] GpPaletteType PaletteType;
+
+	typedef [public, v1_enum]
+	enum GpDitherType
+	{
+		DitherTypeNone = 0,
+
+		// Solid color - picks the nearest matching color with no attempt to 
+		// halftone or dither. May be used on an arbitrary palette.
+
+		DitherTypeSolid = 1,
+
+		// Ordered dithers and spiral dithers must be used with a fixed palette.
+
+		// NOTE: DitherOrdered4x4 is unique in that it may apply to 16bpp 
+		// conversions also.
+
+		DitherTypeOrdered4x4 = 2,
+
+		DitherTypeOrdered8x8 = 3,
+		DitherTypeOrdered16x16 = 4,
+		DitherTypeSpiral4x4 = 5,
+		DitherTypeSpiral8x8 = 6,
+		DitherTypeDualSpiral4x4 = 7,
+		DitherTypeDualSpiral8x8 = 8,
+
+		// Error diffusion. May be used with any palette.
+
+		DitherTypeErrorDiffusion = 9,
+
+		DitherTypeMax = 10
+	} GpDitherType;
+
+	typedef [public] GpDitherType DitherType;
+
 	typedef [public, v1_enum] enum PaletteFlags
 	{
 		PaletteFlagsHasAlpha    = 0x0001,
@@ -1336,14 +1453,12 @@ library Gdiplus
 		PaletteFlagsHalftone    = 0x0004
 	} GpPaletteFlags;
 
-	typedef [public, uuid(585419F2-D5AB-4E85-BF56-56D115CBE7B2)] struct GpColorPalette
+	typedef [public, uuid(585419F2-D5AB-4E85-BF56-56D115CBE7B2)] struct ColorPalette
 	{
 		[helpstring("Palette flags")] UINT Flags;             
 		[helpstring("Number of color entries")] UINT Count;             
-		[helpstring("Palette color entries")] ARGB Entries[1];        
-	} GpColorPalette;
-
-	typedef [public] GpColorPalette ColorPalette;
+		_Counted_Array_(Count) ARGB Entries[1];
+	} ColorPalette;
 
 	typedef [
 		helpstring("State-only definition of GDI+ PropertyItem class."),
@@ -1362,12 +1477,11 @@ library Gdiplus
  
 	typedef [public] void BITMAPINFO;
 	typedef [public] unsigned int UINT_PTR;
-	typedef [public] unsigned long ULONG_PTR;
 
 	typedef [
 		helpstring("State-only definition of GDI+ BitmapData class."),
 		uuid(8B358D63-CEC7-4AE5-87C2-72D86F11E109)
-	] struct GpBitmapData
+	] struct BitmapData
 	{
 		UINT Width;
 		UINT Height;
@@ -1375,18 +1489,27 @@ library Gdiplus
 		PixelFormat PixelFormat;
 		VOID* Scan0;
 		UINT_PTR Reserved;
-	} GpBitmapData;
+	} BitmapData;
 
-	typedef [public] GpBitmapData BitmapData;
+	typedef [helpstring("Per-channel Histogram for 8bpp images"), v1_enum]
+	enum HistogramFormat
+	{
+		HistogramFormatARGB,
+		HistogramFormatPARGB,
+		HistogramFormatRGB,
+		HistogramFormatGray,
+		HistogramFormatB,
+		HistogramFormatG,
+		HistogramFormatR,
+		HistogramFormatA
+	} HistogramFormat;
 
 	typedef [
 		helpstring("Color matrix"), 
-		uuid(6B5AB37E-5CC3-447E-99EF-9135F516CCC0)] struct GpColorMatrix
+		uuid(6B5AB37E-5CC3-447E-99EF-9135F516CCC0)] struct ColorMatrix
 	{
 		REAL m[5][5];
-	} GpColorMatrix;
-
-	typedef [public] GpColorMatrix ColorMatrix;
+	} ColorMatrix;
 
 
 	typedef [helpstring("Color Matrix flags"), v1_enum] enum ColorMatrixFlags
@@ -1426,41 +1549,42 @@ library Gdiplus
 		ColorChannelFlagsLast
 	} ColorChannelFlags;
 
-	typedef [uuid(16B02CC4-3683-4FDC-8BDC-C450EF3137B2)] struct GpColorMap
+	typedef [uuid(16B02CC4-3683-4FDC-8BDC-C450EF3137B2)] struct ColorMap
 	{
 		Color oldColor;
 		Color newColor;
-	} GpColorMap;
-
-	typedef [public] GpColorMap ColorMap;
+	} ColorMap;
 
 	typedef [helpstring("Callback function for enumerating meta files")] void* EnumerateMetafileProc; //BOOL (CALLBACK * EnumerateMetafileProc)(EmfPlusRecordType,UINT,UINT,const BYTE*,VOID*);
 
+	typedef [helpstring("This is the main GDI+ Abort interface")]
+	/*struct __declspec(novtable)GdiplusAbort
+	{
+		virtual HRESULT __stdcall Abort(void) = 0;
+	};*/
+	void* GdiplusAbort;
+
 	typedef [helpstring("16-bit signed integer")] short INT16;
 
-	typedef [public, uuid(1713CA90-9E3E-465B-9C3D-3C7B201F00EE)] struct GpWMFRect16
+	typedef [public, uuid(1713CA90-9E3E-465B-9C3D-3C7B201F00EE)] struct WMFRect16
 	{
 		INT16           Left;
 		INT16           Top;
 		INT16           Right;
 		INT16           Bottom;
-	} GpWMFRect16;
-
-	typedef [public] GpWMFRect16 PWMFRect16;
+	} WMFRect16;
 
 	typedef [helpstring("32-bit unsigned integer")] DWORD UINT32;
 
-	typedef [public, uuid(E244EDF0-9096-42DD-944D-3BE54248689F)] struct GpWmfPlaceableFileHeader
+	typedef [public, uuid(E244EDF0-9096-42DD-944D-3BE54248689F)] struct WmfPlaceableFileHeader
 	{
 		[helpstring("GDIP_WMF_PLACEABLEKEY")] UINT32          Key;            
 		[helpstring("Metafile HANDLE number (always 0)")] INT16           Hmf;            
-		[helpstring("Coordinates in metafile units")] PWMFRect16      BoundingBox;    
+		[helpstring("Coordinates in metafile units")] WMFRect16      BoundingBox;    
 		[helpstring("Number of metafile units per inch")] INT16           Inch;           
 		[helpstring("Reserved (always 0)")] UINT32          Reserved;       
 		[helpstring("Checksum value for previous 10 WORDs")] INT16           Checksum;       
-	} GpWmfPlaceableFileHeader;
-
-	typedef [public] GpWmfPlaceableFileHeader WmfPlaceableFileHeader;
+	} WmfPlaceableFileHeader;
 
 	typedef [public, uuid(0252C31A-1D28-4418-90FA-3243AFF6DE01)] struct METAHEADER
 	{
@@ -1492,7 +1616,7 @@ library Gdiplus
 		[helpstring("Size of the reference device in millimeters")] SIZEL   szlMillimeters;     
 	} ENHMETAHEADER3;
 
-	typedef [public, uuid(83583420-DBFC-415F-AB1B-93E52A2206EF)] struct GpMetafileHeader
+	typedef [public, uuid(83583420-DBFC-415F-AB1B-93E52A2206EF)] struct MetafileHeader
 	{
 		MetafileType        type;
 		[helpstring("Size of the metafile (in bytes)")] UINT                size;               
@@ -1512,11 +1636,9 @@ library Gdiplus
 		[helpstring("size of the EMF+ header in file")] INT                 EmfPlusHeaderSize;  
 		[helpstring("Logical Dpi of reference Hdc")] INT                 LogicalDpiX;        
 		[helpstring("usually valid only for EMF+")] INT                 LogicalDpiY;        
-	} GpMetafileHeader;
+	} MetafileHeader;
 
-	typedef [public] GpMetafileHeader MetafileHeader;
-
-	typedef [uuid(059E6E3A-2877-4EA7-A11C-7E5C1AC62165)] struct GpImageCodecInfo
+	typedef [uuid(059E6E3A-2877-4EA7-A11C-7E5C1AC62165)] struct ImageCodecInfo
 	{
 		CLSID Clsid;
 		GUID  FormatID;
@@ -1531,9 +1653,7 @@ library Gdiplus
 		DWORD SigSize;
 		const BYTE* SigPattern;
 		const BYTE* SigMask;
-	} GpImageCodecInfo;
-
-	typedef [public] GpImageCodecInfo ImageCodecInfo;
+	} ImageCodecInfo;
 
 	typedef [helpstring("16-bit unsigned integer")] unsigned short UINT16;
 
@@ -1557,19 +1677,34 @@ library Gdiplus
 		CHAR      lfFaceName[LF_FACESIZE];
 	} LOGFONT;
 
-	typedef [helpstring("Language identifier")] WORD   LANGID;      
-
 	typedef [public] LOGFONT LOGFONTA;
 
-	typedef [public, uuid(01079D38-5861-45B6-8DE5-D2165B5DE26B)] struct GpCharacterRange
+	typedef [uuid(37140088-772d-4f72-aac2-27311f7805d8)] struct LOGFONTW
+	{
+		LONG      lfHeight;
+		LONG      lfWidth;
+		LONG      lfEscapement;
+		LONG      lfOrientation;
+		LONG      lfWeight;
+		BYTE      lfItalic;
+		BYTE      lfUnderline;
+		BYTE      lfStrikeOut;
+		BYTE      lfCharSet;
+		BYTE      lfOutPrecision;
+		BYTE      lfClipPrecision;
+		BYTE      lfQuality;
+		BYTE      lfPitchAndFamily;
+		WCHAR      lfFaceName[LF_FACESIZE];
+	} LOGFONTW;
+
+	typedef [helpstring("Language identifier")] WORD   LANGID;      
+
+	typedef [public, uuid(01079D38-5861-45B6-8DE5-D2165B5DE26B)] struct CharacterRange
 	{
 		INT First;
 		INT Length;
-	} GpCharacterRange;
+	} CharacterRange;
 
-	typedef [public] GpCharacterRange CharacterRange;
-
-	typedef [public] PGpBase GpCachedBitmap;
 	typedef [public] void* DebugEventProc;
 
 	typedef [public, uuid(0CB202B5-B002-428D-8A31-F44D2919CB02)]
@@ -1950,197 +2085,253 @@ library Gdiplus
 		// GraphicsPath APIs
 		//----------------------------------------------------------------------------
 
-		[entry("GdipCreatePath")] GpStatus WINGDIPAPI
+		[entry("GdipCreatePath"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreatePath(GpFillMode brushMode, [out,retval]PGpPath *path);
 
-		[entry("GdipCreatePath2")] GpStatus WINGDIPAPI
+		[entry("GdipCreatePath2"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreatePath2(GDIPCONST GpPointF* points, GDIPCONST BYTE* types, INT count, GpFillMode fillMode,
 											[out,retval]PGpPath *path);
 
-		[entry("GdipCreatePath2I")] GpStatus WINGDIPAPI
+		[entry("GdipCreatePath2I"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreatePath2I(GDIPCONST GpPoint* points, GDIPCONST BYTE* types, INT count, GpFillMode fillMode,
 											 [out,retval]PGpPath *path);
 
-		[entry("GdipClonePath")] GpStatus WINGDIPAPI
-		GdipClonePath(PGpPath  path, [out,retval]PGpPath *clonePath);
+		[entry("GdipClonePath"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
+		GdipClonePath(PGpPath path, [out,retval]PGpPath *clonePath);
 
-		[entry("GdipDeletePath")] GpStatus WINGDIPAPI
-		GdipDeletePath(PGpPath  path);
+		[entry("GdipDeletePath"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus_NoThrow WINGDIPAPI
+		GdipDeletePath(PGpPath path);
 
-		[entry("GdipResetPath")] GpStatus WINGDIPAPI
-		GdipResetPath(PGpPath  path);
+		[entry("GdipResetPath"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
+		GdipResetPath(PGpPath path);
 
-		[entry("GdipGetPointCount")] GpStatus WINGDIPAPI
-		GdipGetPointCount(PGpPath  path, INT* count);
+		[entry("GdipGetPointCount"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
+		GdipGetPointCount(PGpPath path, INT* count);
 
-		[entry("GdipGetPathTypes")] GpStatus WINGDIPAPI
-		GdipGetPathTypes(PGpPath  path, BYTE* types, INT count);
+		[entry("GdipGetPathTypes"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
+		GdipGetPathTypes(PGpPath path, BYTE* types, INT count);
 
-		[entry("GdipGetPathPoints")] GpStatus WINGDIPAPI
-		GdipGetPathPoints(PGpPath  path, GpPointF* points, INT count);
+		[entry("GdipGetPathPoints"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
+		GdipGetPathPoints(PGpPath path, GpPointF* points, INT count);
 
-		[entry("GdipGetPathPointsI")] GpStatus WINGDIPAPI
-		GdipGetPathPointsI(PGpPath  path, GpPoint* points, INT count);
+		[entry("GdipGetPathPointsI"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
+		GdipGetPathPointsI(PGpPath path, GpPoint* points, INT count);
 
-		[entry("GdipGetPathFillMode")] GpStatus WINGDIPAPI
+		[entry("GdipGetPathFillMode"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetPathFillMode(PGpPath path, GpFillMode *fillmode);
 
-		[entry("GdipSetPathFillMode")] GpStatus WINGDIPAPI
+		[entry("GdipSetPathFillMode"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetPathFillMode(PGpPath path, GpFillMode fillmode);
 
-		[entry("GdipGetPathData")] GpStatus WINGDIPAPI
+		[entry("GdipGetPathData"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetPathData(PGpPath path, GpPathData* pathData);
 
-		[entry("GdipStartPathFigure")] GpStatus WINGDIPAPI
+		[entry("GdipStartPathFigure"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipStartPathFigure(PGpPath path);
 
-		[entry("GdipClosePathFigure")] GpStatus WINGDIPAPI
+		[entry("GdipClosePathFigure"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipClosePathFigure(PGpPath path);
 
-		[entry("GdipClosePathFigures")] GpStatus WINGDIPAPI
+		[entry("GdipClosePathFigures"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipClosePathFigures(PGpPath path);
 
-		[entry("GdipSetPathMarker")] GpStatus WINGDIPAPI
-		GdipSetPathMarker(PGpPath  path);
+		[entry("GdipSetPathMarker"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
+		GdipSetPathMarker(PGpPath path);
 
-		[entry("GdipClearPathMarkers")] GpStatus WINGDIPAPI
-		GdipClearPathMarkers(PGpPath  path);
+		[entry("GdipClearPathMarkers"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
+		GdipClearPathMarkers(PGpPath path);
 
-		[entry("GdipReversePath")] GpStatus WINGDIPAPI
-		GdipReversePath(PGpPath  path);
+		[entry("GdipReversePath"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
+		GdipReversePath(PGpPath path);
 
-		[entry("GdipGetPathLastPoint")] GpStatus WINGDIPAPI
-		GdipGetPathLastPoint(PGpPath  path, GpPointF* lastPoint);
+		[entry("GdipGetPathLastPoint"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
+		GdipGetPathLastPoint(PGpPath path, GpPointF* lastPoint);
 
-		[entry("GdipAddPathLine")] GpStatus WINGDIPAPI
+		[entry("GdipAddPathLine"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipAddPathLine(PGpPath path, REAL x1, REAL y1, REAL x2, REAL y2);
 
-		[entry("GdipAddPathLine2")] GpStatus WINGDIPAPI
+		[entry("GdipAddPathLine2"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipAddPathLine2(PGpPath path, GDIPCONST GpPointF *points, INT count);
 
-		[entry("GdipAddPathArc")] GpStatus WINGDIPAPI
+		[entry("GdipAddPathArc"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipAddPathArc(PGpPath path, REAL x, REAL y, REAL width, REAL height,
 								REAL startAngle, REAL sweepAngle);
 
-		[entry("GdipAddPathBezier")] GpStatus WINGDIPAPI
+		[entry("GdipAddPathBezier"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipAddPathBezier(PGpPath path, REAL x1, REAL y1, REAL x2, REAL y2,
 								   REAL x3, REAL y3, REAL x4, REAL y4);
 
-		[entry("GdipAddPathBeziers")] GpStatus WINGDIPAPI
+		[entry("GdipAddPathBeziers"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipAddPathBeziers(PGpPath path, GDIPCONST GpPointF *points, INT count);
 
-		[entry("GdipAddPathCurve")] GpStatus WINGDIPAPI
+		[entry("GdipAddPathCurve"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipAddPathCurve(PGpPath path, GDIPCONST GpPointF *points, INT count);
 
-		[entry("GdipAddPathCurve2")] GpStatus WINGDIPAPI
+		[entry("GdipAddPathCurve2"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipAddPathCurve2(PGpPath path, GDIPCONST GpPointF *points, INT count,
 								   REAL tension);
 
-		[entry("GdipAddPathCurve3")] GpStatus WINGDIPAPI
+		[entry("GdipAddPathCurve3"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipAddPathCurve3(PGpPath path, GDIPCONST GpPointF *points, INT count,
 								   INT offset, INT numberOfSegments, REAL tension);
 
-		[entry("GdipAddPathClosedCurve")] GpStatus WINGDIPAPI
+		[entry("GdipAddPathClosedCurve"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipAddPathClosedCurve(PGpPath path, GDIPCONST GpPointF *points, INT count);
 
-		[entry("GdipAddPathClosedCurve2")] GpStatus WINGDIPAPI
+		[entry("GdipAddPathClosedCurve2"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipAddPathClosedCurve2(PGpPath path, GDIPCONST GpPointF *points, INT count,
 										 REAL tension);
 
-		[entry("GdipAddPathRectangle")] GpStatus WINGDIPAPI
+		[entry("GdipAddPathRectangle"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipAddPathRectangle(PGpPath path, REAL x, REAL y, REAL width, REAL height);
 
-		[entry("GdipAddPathRectangles")] GpStatus WINGDIPAPI
+		[entry("GdipAddPathRectangles"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipAddPathRectangles(PGpPath path, GDIPCONST GpRectF *rects, INT count);
 
-		[entry("GdipAddPathEllipse")] GpStatus WINGDIPAPI
+		[entry("GdipAddPathEllipse"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipAddPathEllipse(PGpPath path, REAL x, REAL y, REAL width,
 									REAL height);
 
-		[entry("GdipAddPathPie")] GpStatus WINGDIPAPI
+		[entry("GdipAddPathPie"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipAddPathPie(PGpPath path, REAL x, REAL y, REAL width, REAL height,
 								REAL startAngle, REAL sweepAngle);
 
-		[entry("GdipAddPathPolygon")] GpStatus WINGDIPAPI
+		[entry("GdipAddPathPolygon"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipAddPathPolygon(PGpPath path, GDIPCONST GpPointF *points, INT count);
 
-		[entry("GdipAddPathPath")] GpStatus WINGDIPAPI
+		[entry("GdipAddPathPath"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipAddPathPath(PGpPath path, GDIPCONST PGpPath  addingPath, BOOL connect);
 
-		[entry("GdipAddPathString")] GpStatus WINGDIPAPI
+		[entry("GdipAddPathString"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipAddPathString(PGpPath path, [in]LPCOLESTR string,
 								INT length, GDIPCONST PGpFontFamily family, INT style,
 								REAL emSize, GDIPCONST RectF *layoutRect,
 								GDIPCONST PGpStringFormat format);
 
-		[entry("GdipAddPathStringI")] GpStatus WINGDIPAPI
+		[entry("GdipAddPathStringI"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipAddPathStringI(PGpPath path, [in]LPCOLESTR string,
 								INT length, GDIPCONST PGpFontFamily family, INT style,
 								REAL emSize, GDIPCONST Rect *layoutRect,
 								GDIPCONST PGpStringFormat format);
 
-		[entry("GdipAddPathLineI")] GpStatus WINGDIPAPI
+		[entry("GdipAddPathLineI"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipAddPathLineI(PGpPath path, INT x1, INT y1, INT x2, INT y2);
 
-		[entry("GdipAddPathLine2I")] GpStatus WINGDIPAPI
+		[entry("GdipAddPathLine2I"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipAddPathLine2I(PGpPath path, GDIPCONST GpPoint *points, INT count);
 
-		[entry("GdipAddPathArcI")] GpStatus WINGDIPAPI
+		[entry("GdipAddPathArcI"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipAddPathArcI(PGpPath path, INT x, INT y, INT width, INT height,
 								REAL startAngle, REAL sweepAngle);
 
-		[entry("GdipAddPathBezierI")] GpStatus WINGDIPAPI
+		[entry("GdipAddPathBezierI"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipAddPathBezierI(PGpPath path, INT x1, INT y1, INT x2, INT y2,
 								   INT x3, INT y3, INT x4, INT y4);
 
-		[entry("GdipAddPathBeziersI")] GpStatus WINGDIPAPI
+		[entry("GdipAddPathBeziersI"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipAddPathBeziersI(PGpPath path, GDIPCONST GpPoint *points, INT count);
 
-		[entry("GdipAddPathCurveI")] GpStatus WINGDIPAPI
+		[entry("GdipAddPathCurveI"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipAddPathCurveI(PGpPath path, GDIPCONST GpPoint *points, INT count);
 
-		[entry("GdipAddPathCurve2I")] GpStatus WINGDIPAPI
+		[entry("GdipAddPathCurve2I"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipAddPathCurve2I(PGpPath path, GDIPCONST GpPoint *points, INT count,
 								   REAL tension);
 
-		[entry("GdipAddPathCurve3I")] GpStatus WINGDIPAPI
+		[entry("GdipAddPathCurve3I"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipAddPathCurve3I(PGpPath path, GDIPCONST GpPoint *points, INT count,
 								   INT offset, INT numberOfSegments, REAL tension);
 
-		[entry("GdipAddPathClosedCurveI")] GpStatus WINGDIPAPI
+		[entry("GdipAddPathClosedCurveI"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipAddPathClosedCurveI(PGpPath path, GDIPCONST GpPoint *points, INT count);
 
-		[entry("GdipAddPathClosedCurve2I")] GpStatus WINGDIPAPI
+		[entry("GdipAddPathClosedCurve2I"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipAddPathClosedCurve2I(PGpPath path, GDIPCONST GpPoint *points, INT count,
 										 REAL tension);
 
-		[entry("GdipAddPathRectangleI")] GpStatus WINGDIPAPI
+		[entry("GdipAddPathRectangleI"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipAddPathRectangleI(PGpPath path, INT x, INT y, INT width, INT height);
 
-		[entry("GdipAddPathRectanglesI")] GpStatus WINGDIPAPI
+		[entry("GdipAddPathRectanglesI"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipAddPathRectanglesI(PGpPath path, GDIPCONST GpRect *rects, INT count);
 
-		[entry("GdipAddPathEllipseI")] GpStatus WINGDIPAPI
+		[entry("GdipAddPathEllipseI"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipAddPathEllipseI(PGpPath path, INT x, INT y, INT width, INT height);
 
-		[entry("GdipAddPathPieI")] GpStatus WINGDIPAPI
+		[entry("GdipAddPathPieI"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipAddPathPieI(PGpPath path, INT x, INT y, INT width, INT height,
 								REAL startAngle, REAL sweepAngle);
 
-		[entry("GdipAddPathPolygonI")] GpStatus WINGDIPAPI
+		[entry("GdipAddPathPolygonI"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipAddPathPolygonI(PGpPath path, GDIPCONST GpPoint *points, INT count);
 
-		[entry("GdipFlattenPath")] GpStatus WINGDIPAPI
+		[entry("GdipFlattenPath"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipFlattenPath(PGpPath path, PGpMatrix  matrix, REAL flatness);
 
-		[entry("GdipWindingModeOutline")] GpStatus WINGDIPAPI
+		[entry("GdipWindingModeOutline"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipWindingModeOutline(
 			PGpPath path,
 			PGpMatrix matrix,
 			REAL flatness
 		);
 
-		[entry("GdipWidenPath")] GpStatus WINGDIPAPI
+		[entry("GdipWidenPath"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipWidenPath(
 			PGpPath nativePath,
 			PGpPen pen,
@@ -2148,37 +2339,45 @@ library Gdiplus
 			REAL flatness
 		);
 
-		[entry("GdipWarpPath")] GpStatus WINGDIPAPI
+		[entry("GdipWarpPath"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipWarpPath(PGpPath path, PGpMatrix  matrix,
 					GDIPCONST GpPointF *points, INT count,
 					REAL srcx, REAL srcy, REAL srcwidth, REAL srcheight,
 					WarpMode warpMode, REAL flatness);
 
-		[entry("GdipTransformPath")] GpStatus WINGDIPAPI
-		GdipTransformPath(PGpPath  path, PGpMatrix  matrix);
+		[entry("GdipTransformPath"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
+		GdipTransformPath(PGpPath path, PGpMatrix  matrix);
 
-		[entry("GdipGetPathWorldBounds")] GpStatus WINGDIPAPI
-		GdipGetPathWorldBounds(PGpPath  path, GpRectF* bounds, 
+		[entry("GdipGetPathWorldBounds"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
+		GdipGetPathWorldBounds(PGpPath path, GpRectF* bounds, 
 							   GDIPCONST PGpMatrix matrix, GDIPCONST PGpPen pen);
 
-		[entry("GdipGetPathWorldBoundsI")] GpStatus WINGDIPAPI
-		GdipGetPathWorldBoundsI(PGpPath  path, GpRect* bounds, 
+		[entry("GdipGetPathWorldBoundsI"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
+		GdipGetPathWorldBoundsI(PGpPath path, GpRect* bounds, 
 								GDIPCONST PGpMatrix matrix, GDIPCONST PGpPen pen);
 
-		[entry("GdipIsVisiblePathPoint")] GpStatus WINGDIPAPI
-		GdipIsVisiblePathPoint(PGpPath  path, REAL x, REAL y,
+		[entry("GdipIsVisiblePathPoint"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
+		GdipIsVisiblePathPoint(PGpPath path, REAL x, REAL y,
 							   PGpGraphics graphics, BOOL *result);
 
-		[entry("GdipIsVisiblePathPointI")] GpStatus WINGDIPAPI
-		GdipIsVisiblePathPointI(PGpPath  path, INT x, INT y,
+		[entry("GdipIsVisiblePathPointI"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
+		GdipIsVisiblePathPointI(PGpPath path, INT x, INT y,
 								PGpGraphics graphics, BOOL *result);
 
-		[entry("GdipIsOutlineVisiblePathPoint")] GpStatus WINGDIPAPI
-		GdipIsOutlineVisiblePathPoint(PGpPath  path, REAL x, REAL y, PGpPen pen,
+		[entry("GdipIsOutlineVisiblePathPoint"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
+		GdipIsOutlineVisiblePathPoint(PGpPath path, REAL x, REAL y, PGpPen pen,
 									  PGpGraphics graphics, BOOL *result);
 
-		[entry("GdipIsOutlineVisiblePathPointI")] GpStatus WINGDIPAPI
-		GdipIsOutlineVisiblePathPointI(PGpPath  path, INT x, INT y, PGpPen pen,
+		[entry("GdipIsOutlineVisiblePathPointI"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
+		GdipIsOutlineVisiblePathPointI(PGpPath path, INT x, INT y, PGpPen pen,
 									   PGpGraphics graphics, BOOL *result);
 
 
@@ -2186,52 +2385,66 @@ library Gdiplus
 		// PathIterator APIs
 		//----------------------------------------------------------------------------
 
-		[entry("GdipCreatePathIter")] GpStatus WINGDIPAPI
-		GdipCreatePathIter([out]PGpPathIterator *iterator, [in]PGpPath  path);
+		[entry("GdipCreatePathIter"), __category("GDI+ Flat API-PathIterator Functions")]
+		GpStatus WINGDIPAPI
+		GdipCreatePathIter([out]PGpPathIterator *iterator, [in]PGpPath path);
 
-		[entry("GdipDeletePathIter")] GpStatus WINGDIPAPI
+		[entry("GdipDeletePathIter"), __category("GDI+ Flat API-PathIterator Functions")]
+		GpStatus_NoThrow WINGDIPAPI
 		GdipDeletePathIter([in]PGpPathIterator iterator);
 
-		[entry("GdipPathIterNextSubpath")] GpStatus WINGDIPAPI
+		[entry("GdipPathIterNextSubpath"), __category("GDI+ Flat API-PathIterator Functions")]
+		GpStatus WINGDIPAPI
 		GdipPathIterNextSubpath(PGpPathIterator  iterator, INT *resultCount,
 				INT* startIndex, INT* endIndex, BOOL* isClosed);
 
-		[entry("GdipPathIterNextSubpathPath")] GpStatus WINGDIPAPI
+		[entry("GdipPathIterNextSubpathPath"), __category("GDI+ Flat API-PathIterator Functions")]
+		GpStatus WINGDIPAPI
 		GdipPathIterNextSubpathPath(PGpPathIterator  iterator, INT* resultCount,
-				PGpPath  path, BOOL* isClosed);
+				PGpPath path, BOOL* isClosed);
 
-		[entry("GdipPathIterNextPathType")] GpStatus WINGDIPAPI
+		[entry("GdipPathIterNextPathType"), __category("GDI+ Flat API-PathIterator Functions")]
+		GpStatus WINGDIPAPI
 		GdipPathIterNextPathType(PGpPathIterator  iterator, INT* resultCount,
 				BYTE* pathType, INT* startIndex, INT* endIndex);
 
-		[entry("GdipPathIterNextMarker")] GpStatus WINGDIPAPI
+		[entry("GdipPathIterNextMarker"), __category("GDI+ Flat API-PathIterator Functions")]
+		GpStatus WINGDIPAPI
 		GdipPathIterNextMarker(PGpPathIterator  iterator, INT *resultCount,
 				INT* startIndex, INT* endIndex);
 
-		[entry("GdipPathIterNextMarkerPath")] GpStatus WINGDIPAPI
+		[entry("GdipPathIterNextMarkerPath"), __category("GDI+ Flat API-PathIterator Functions")]
+		GpStatus WINGDIPAPI
 		GdipPathIterNextMarkerPath(PGpPathIterator  iterator, INT* resultCount,
-				PGpPath  path);
+				PGpPath path);
 
-		[entry("GdipPathIterGetCount")] GpStatus WINGDIPAPI
+		[entry("GdipPathIterGetCount"), __category("GDI+ Flat API-PathIterator Functions")]
+		GpStatus WINGDIPAPI
 		GdipPathIterGetCount(PGpPathIterator  iterator, INT* count);
 
-		[entry("GdipPathIterGetSubpathCount")] GpStatus WINGDIPAPI
+		[entry("GdipPathIterGetSubpathCount"), __category("GDI+ Flat API-PathIterator Functions")]
+		GpStatus WINGDIPAPI
 		GdipPathIterGetSubpathCount(PGpPathIterator  iterator, INT* count);
 
-		[entry("GdipPathIterIsValid")] GpStatus WINGDIPAPI
+		[entry("GdipPathIterIsValid"), __category("GDI+ Flat API-PathIterator Functions")]
+		GpStatus WINGDIPAPI
 		GdipPathIterIsValid(PGpPathIterator  iterator, BOOL* valid);
 
-		[entry("GdipPathIterHasCurve")] GpStatus WINGDIPAPI
+		[entry("GdipPathIterHasCurve"), __category("GDI+ Flat API-PathIterator Functions")]
+		GpStatus WINGDIPAPI
 		GdipPathIterHasCurve(PGpPathIterator  iterator, BOOL* hasCurve);
 
-		[entry("GdipPathIterRewind")] GpStatus WINGDIPAPI
+		[entry("GdipPathIterRewind"), __category("GDI+ Flat API-PathIterator Functions")]
+		GpStatus WINGDIPAPI
 		GdipPathIterRewind(PGpPathIterator  iterator);
 
-		[entry("GdipPathIterEnumerate")] GpStatus WINGDIPAPI
+		[entry("GdipPathIterEnumerate"), __category("GDI+ Flat API-PathIterator Functions")]
+		GpStatus WINGDIPAPI
 		GdipPathIterEnumerate(PGpPathIterator  iterator, INT* resultCount,
 			GpPointF *points, BYTE *types, INT count);
 
-		[entry("GdipPathIterCopyData")] GpStatus WINGDIPAPI
+		[entry("GdipPathIterCopyData"), __category("GDI+ Flat API-PathIterator Functions")]
+		GpStatus WINGDIPAPI
 		GdipPathIterCopyData(PGpPathIterator  iterator, INT* resultCount,
 			GpPointF* points, BYTE* types, INT startIndex, INT endIndex);
 
@@ -2239,77 +2452,98 @@ library Gdiplus
 		// Matrix APIs
 		//----------------------------------------------------------------------------
 
-		[entry("GdipCreateMatrix")] GpStatus WINGDIPAPI
+		[entry("GdipCreateMatrix"), __category("GDI+ Flat API-Matrix Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateMatrix([out,retval]PGpMatrix *matrix);
 
-		[entry("GdipCreateMatrix2")] GpStatus WINGDIPAPI
+		[entry("GdipCreateMatrix2"), __category("GDI+ Flat API-Matrix Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateMatrix2(REAL m11, REAL m12, REAL m21, REAL m22, REAL dx,
 											  REAL dy, [out,retval]PGpMatrix *matrix);
 
-		[entry("GdipCreateMatrix3")] GpStatus WINGDIPAPI
+		[entry("GdipCreateMatrix3"), __category("GDI+ Flat API-Matrix Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateMatrix3(GDIPCONST GpRectF *rect, GDIPCONST GpPointF *dstplg,
 											  [out,retval]PGpMatrix *matrix);
 
-		[entry("GdipCreateMatrix3I")] GpStatus WINGDIPAPI
+		[entry("GdipCreateMatrix3I"), __category("GDI+ Flat API-Matrix Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateMatrix3I(GDIPCONST GpRect *rect, GDIPCONST GpPoint *dstplg,
 											   [out,retval]PGpMatrix *matrix);
 
-		[entry("GdipCloneMatrix")] GpStatus WINGDIPAPI
+		[entry("GdipCloneMatrix"), __category("GDI+ Flat API-Matrix Functions")]
+		GpStatus WINGDIPAPI
 		GdipCloneMatrix(PGpMatrix matrix, [out,retval]PGpMatrix *cloneMatrix);
 
-		[entry("GdipDeleteMatrix")] GpStatus WINGDIPAPI
+		[entry("GdipDeleteMatrix"), __category("GDI+ Flat API-Matrix Functions")]
+		GpStatus_NoThrow WINGDIPAPI
 		GdipDeleteMatrix(PGpMatrix matrix);
 
-		[entry("GdipSetMatrixElements")] GpStatus WINGDIPAPI
+		[entry("GdipSetMatrixElements"), __category("GDI+ Flat API-Matrix Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetMatrixElements(PGpMatrix matrix, REAL m11, REAL m12, REAL m21, REAL m22,
 							  REAL dx, REAL dy);
 
-		[entry("GdipMultiplyMatrix")] GpStatus WINGDIPAPI
+		[entry("GdipMultiplyMatrix"), __category("GDI+ Flat API-Matrix Functions")]
+		GpStatus WINGDIPAPI
 		GdipMultiplyMatrix(PGpMatrix matrix, PGpMatrix  matrix2,
 									GpMatrixOrder order);
 
-		[entry("GdipTranslateMatrix")] GpStatus WINGDIPAPI
+		[entry("GdipTranslateMatrix"), __category("GDI+ Flat API-Matrix Functions")]
+		GpStatus WINGDIPAPI
 		GdipTranslateMatrix(PGpMatrix matrix, REAL offsetX, REAL offsetY,
 							GpMatrixOrder order);
 
-		[entry("GdipScaleMatrix")] GpStatus WINGDIPAPI
+		[entry("GdipScaleMatrix"), __category("GDI+ Flat API-Matrix Functions")]
+		GpStatus WINGDIPAPI
 		GdipScaleMatrix(PGpMatrix matrix, REAL scaleX, REAL scaleY,
 						GpMatrixOrder order);
 
-		[entry("GdipRotateMatrix")] GpStatus WINGDIPAPI
+		[entry("GdipRotateMatrix"), __category("GDI+ Flat API-Matrix Functions")]
+		GpStatus WINGDIPAPI
 		GdipRotateMatrix(PGpMatrix matrix, REAL angle, GpMatrixOrder order);
 
-		[entry("GdipShearMatrix")] GpStatus WINGDIPAPI
+		[entry("GdipShearMatrix"), __category("GDI+ Flat API-Matrix Functions")]
+		GpStatus WINGDIPAPI
 		GdipShearMatrix(PGpMatrix matrix, REAL shearX, REAL shearY,
 						GpMatrixOrder order);
 
-		[entry("GdipInvertMatrix")] GpStatus WINGDIPAPI
+		[entry("GdipInvertMatrix"), __category("GDI+ Flat API-Matrix Functions")]
+		GpStatus WINGDIPAPI
 		GdipInvertMatrix(PGpMatrix matrix);
 
-		[entry("GdipTransformMatrixPoints")] GpStatus WINGDIPAPI
+		[entry("GdipTransformMatrixPoints"), __category("GDI+ Flat API-Matrix Functions")]
+		GpStatus WINGDIPAPI
 		GdipTransformMatrixPoints(PGpMatrix matrix, GpPointF *pts, INT count);
 
-		[entry("GdipTransformMatrixPointsI")] GpStatus WINGDIPAPI
+		[entry("GdipTransformMatrixPointsI"), __category("GDI+ Flat API-Matrix Functions")]
+		GpStatus WINGDIPAPI
 		GdipTransformMatrixPointsI(PGpMatrix matrix, GpPoint *pts, INT count);
 
-		[entry("GdipVectorTransformMatrixPoints")] GpStatus WINGDIPAPI
+		[entry("GdipVectorTransformMatrixPoints"), __category("GDI+ Flat API-Matrix Functions")]
+		GpStatus WINGDIPAPI
 		GdipVectorTransformMatrixPoints(PGpMatrix matrix, GpPointF *pts,
 												 INT count);
 
-		[entry("GdipVectorTransformMatrixPointsI")] GpStatus WINGDIPAPI
+		[entry("GdipVectorTransformMatrixPointsI"), __category("GDI+ Flat API-Matrix Functions")]
+		GpStatus WINGDIPAPI
 		GdipVectorTransformMatrixPointsI(PGpMatrix matrix, GpPoint *pts,
 												 INT count);
 
-		[entry("GdipGetMatrixElements")] GpStatus WINGDIPAPI
+		[entry("GdipGetMatrixElements"), __category("GDI+ Flat API-Matrix Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetMatrixElements(GDIPCONST PGpMatrix matrix, REAL *matrixOut);
 
-		[entry("GdipIsMatrixInvertible")] GpStatus WINGDIPAPI
+		[entry("GdipIsMatrixInvertible"), __category("GDI+ Flat API-Matrix Functions")]
+		GpStatus WINGDIPAPI
 		GdipIsMatrixInvertible(GDIPCONST PGpMatrix matrix, BOOL *result);
 
-		[entry("GdipIsMatrixIdentity")] GpStatus WINGDIPAPI
+		[entry("GdipIsMatrixIdentity"), __category("GDI+ Flat API-Matrix Functions")]
+		GpStatus WINGDIPAPI
 		GdipIsMatrixIdentity(GDIPCONST PGpMatrix matrix, BOOL *result);
 
-		[entry("GdipIsMatrixEqual")] GpStatus WINGDIPAPI
+		[entry("GdipIsMatrixEqual"), __category("GDI+ Flat API-Matrix Functions")]
+		GpStatus WINGDIPAPI
 		GdipIsMatrixEqual(GDIPCONST PGpMatrix matrix, GDIPCONST PGpMatrix matrix2, 
 						  BOOL *result);
 
@@ -2317,115 +2551,147 @@ library Gdiplus
 		// Region APIs
 		//----------------------------------------------------------------------------
 
-		[entry("GdipCreateRegion")] GpStatus WINGDIPAPI
+		[entry("GdipCreateRegion"), __category("GDI+ Flat API-Region Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateRegion([out,retval]PGpRegion *region);
 
-		[entry("GdipCreateRegionRect")] GpStatus WINGDIPAPI
+		[entry("GdipCreateRegionRect"), __category("GDI+ Flat API-Region Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateRegionRect(GDIPCONST GpRectF *rect, [out,retval]PGpRegion *region);
 
-		[entry("GdipCreateRegionRectI")] GpStatus WINGDIPAPI
+		[entry("GdipCreateRegionRectI"), __category("GDI+ Flat API-Region Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateRegionRectI(GDIPCONST GpRect *rect, [out,retval]PGpRegion *region);
 
-		[entry("GdipCreateRegionPath")] GpStatus WINGDIPAPI
+		[entry("GdipCreateRegionPath"), __category("GDI+ Flat API-Region Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateRegionPath(PGpPath path, [out,retval]PGpRegion *region);
 
-		[entry("GdipCreateRegionRgnData")] GpStatus WINGDIPAPI
+		[entry("GdipCreateRegionRgnData"), __category("GDI+ Flat API-Region Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateRegionRgnData(GDIPCONST BYTE *regionData, INT size, 
 								[out,retval]PGpRegion *region);
 
-		[entry("GdipCreateRegionHrgn")] GpStatus WINGDIPAPI
+		[entry("GdipCreateRegionHrgn"), __category("GDI+ Flat API-Region Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateRegionHrgn(HRGN hRgn, [out,retval]PGpRegion *region);
 
-		[entry("GdipCloneRegion")] GpStatus WINGDIPAPI
+		[entry("GdipCloneRegion"), __category("GDI+ Flat API-Region Functions")]
+		GpStatus WINGDIPAPI
 		GdipCloneRegion(PGpRegion region, [out,retval]PGpRegion *cloneRegion);
 
-		[entry("GdipDeleteRegion")] GpStatus WINGDIPAPI
+		[entry("GdipDeleteRegion"), __category("GDI+ Flat API-Region Functions")]
+		GpStatus_NoThrow WINGDIPAPI
 		GdipDeleteRegion(PGpRegion region);
 
-		[entry("GdipSetInfinite")] GpStatus WINGDIPAPI
+		[entry("GdipSetInfinite"), __category("GDI+ Flat API-Region Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetInfinite(PGpRegion region);
 
-		[entry("GdipSetEmpty")] GpStatus WINGDIPAPI
+		[entry("GdipSetEmpty"), __category("GDI+ Flat API-Region Functions")] 
+		GpStatus WINGDIPAPI
 		GdipSetEmpty(PGpRegion region);
 
-		[entry("GdipCombineRegionRect")] GpStatus WINGDIPAPI
+		[entry("GdipCombineRegionRect"), __category("GDI+ Flat API-Region Functions")]
+		GpStatus WINGDIPAPI
 		GdipCombineRegionRect(PGpRegion region, GDIPCONST GpRectF *rect,
 							  CombineMode combineMode);
 
-		[entry("GdipCombineRegionRectI")] GpStatus WINGDIPAPI
+		[entry("GdipCombineRegionRectI"), __category("GDI+ Flat API-Region Functions")]
+		GpStatus WINGDIPAPI
 		GdipCombineRegionRectI(PGpRegion region, GDIPCONST GpRect *rect,
 							   CombineMode combineMode);
 
-		[entry("GdipCombineRegionPath")] GpStatus WINGDIPAPI
+		[entry("GdipCombineRegionPath"), __category("GDI+ Flat API-Region Functions")]
+		GpStatus WINGDIPAPI
 		GdipCombineRegionPath(PGpRegion region, PGpPath path, CombineMode combineMode);
 
-		[entry("GdipCombineRegionRegion")] GpStatus WINGDIPAPI
+		[entry("GdipCombineRegionRegion"), __category("GDI+ Flat API-Region Functions")]
+		GpStatus WINGDIPAPI
 		GdipCombineRegionRegion(PGpRegion region,  PGpRegion region2,
 								CombineMode combineMode);
 
-		[entry("GdipTranslateRegion")] GpStatus WINGDIPAPI
+		[entry("GdipTranslateRegion"), __category("GDI+ Flat API-Region Functions")]
+		GpStatus WINGDIPAPI
 		GdipTranslateRegion(PGpRegion region, REAL dx, REAL dy);
 
-		[entry("GdipTranslateRegionI")] GpStatus WINGDIPAPI
+		[entry("GdipTranslateRegionI"), __category("GDI+ Flat API-Region Functions")]
+		GpStatus WINGDIPAPI
 		GdipTranslateRegionI(PGpRegion region, INT dx, INT dy);
 
-		[entry("GdipTransformRegion")] GpStatus WINGDIPAPI
+		[entry("GdipTransformRegion"), __category("GDI+ Flat API-Region Functions")]
+		GpStatus WINGDIPAPI
 		GdipTransformRegion(PGpRegion region, PGpMatrix matrix);
 
-		[entry("GdipGetRegionBounds")] GpStatus WINGDIPAPI
+		[entry("GdipGetRegionBounds"), __category("GDI+ Flat API-Region Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetRegionBounds(PGpRegion region, PGpGraphics graphics,
 									 GpRectF *rect);
 
-		[entry("GdipGetRegionBoundsI")] GpStatus WINGDIPAPI
+		[entry("GdipGetRegionBoundsI"), __category("GDI+ Flat API-Region Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetRegionBoundsI(PGpRegion region, PGpGraphics graphics,
 									 GpRect *rect);
 
-		[entry("GdipGetRegionHRgn")] GpStatus WINGDIPAPI
+		[entry("GdipGetRegionHRgn"), __category("GDI+ Flat API-Region Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetRegionHRgn(PGpRegion region, PGpGraphics graphics, HRGN *hRgn);
 
-		[entry("GdipIsEmptyRegion")] GpStatus WINGDIPAPI
+		[entry("GdipIsEmptyRegion"), __category("GDI+ Flat API-Region Functions")]
+		GpStatus WINGDIPAPI
 		GdipIsEmptyRegion(PGpRegion region, PGpGraphics graphics,
 								   BOOL *result);
 
-		[entry("GdipIsInfiniteRegion")] GpStatus WINGDIPAPI
+		[entry("GdipIsInfiniteRegion"), __category("GDI+ Flat API-Region Functions")]
+		GpStatus WINGDIPAPI
 		GdipIsInfiniteRegion(PGpRegion region, PGpGraphics graphics,
 									  BOOL *result);
 
-		[entry("GdipIsEqualRegion")] GpStatus WINGDIPAPI
+		[entry("GdipIsEqualRegion"), __category("GDI+ Flat API-Region Functions")]
+		GpStatus WINGDIPAPI
 		GdipIsEqualRegion(PGpRegion region, PGpRegion region2,
 								   PGpGraphics graphics, BOOL *result);
 
-		[entry("GdipGetRegionDataSize")] GpStatus WINGDIPAPI
+		[entry("GdipGetRegionDataSize"), __category("GDI+ Flat API-Region Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetRegionDataSize(PGpRegion region, UINT * bufferSize);
 
-		[entry("GdipGetRegionData")] GpStatus WINGDIPAPI
+		[entry("GdipGetRegionData"), __category("GDI+ Flat API-Region Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetRegionData(PGpRegion region, BYTE * buffer, UINT bufferSize, 
 						  UINT * sizeFilled);
 
-		[entry("GdipIsVisibleRegionPoint")] GpStatus WINGDIPAPI
+		[entry("GdipIsVisibleRegionPoint"), __category("GDI+ Flat API-Region Functions")]
+		GpStatus WINGDIPAPI
 		GdipIsVisibleRegionPoint(PGpRegion region, REAL x, REAL y,
 										  PGpGraphics graphics, BOOL *result);
 
-		[entry("GdipIsVisibleRegionPointI")] GpStatus WINGDIPAPI
+		[entry("GdipIsVisibleRegionPointI"), __category("GDI+ Flat API-Region Functions")]
+		GpStatus WINGDIPAPI
 		GdipIsVisibleRegionPointI(PGpRegion region, INT x, INT y,
 										  PGpGraphics graphics, BOOL *result);
 
-		[entry("GdipIsVisibleRegionRect")] GpStatus WINGDIPAPI
+		[entry("GdipIsVisibleRegionRect"), __category("GDI+ Flat API-Region Functions")]
+		GpStatus WINGDIPAPI
 		GdipIsVisibleRegionRect(PGpRegion region, REAL x, REAL y, REAL width,
 								REAL height, PGpGraphics graphics, BOOL *result);
 
-		[entry("GdipIsVisibleRegionRectI")] GpStatus WINGDIPAPI
+		[entry("GdipIsVisibleRegionRectI"), __category("GDI+ Flat API-Region Functions")]
+		GpStatus WINGDIPAPI
 		GdipIsVisibleRegionRectI(PGpRegion region, INT x, INT y, INT width,
 								 INT height, PGpGraphics graphics, BOOL *result);
 
-		[entry("GdipGetRegionScansCount")] GpStatus WINGDIPAPI
+		[entry("GdipGetRegionScansCount"), __category("GDI+ Flat API-Region Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetRegionScansCount(PGpRegion region, UINT* count, PGpMatrix  matrix);
 
-		[entry("GdipGetRegionScans")] GpStatus WINGDIPAPI
+		[entry("GdipGetRegionScans"), __category("GDI+ Flat API-Region Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetRegionScans(PGpRegion region, GpRectF* rects, INT* count, 
 						   PGpMatrix  matrix);
 
-		[entry("GdipGetRegionScansI")] GpStatus WINGDIPAPI
+		[entry("GdipGetRegionScansI"), __category("GDI+ Flat API-Region Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetRegionScansI(PGpRegion region, GpRect* rects, INT* count, 
 							PGpMatrix  matrix);
 
@@ -2433,140 +2699,170 @@ library Gdiplus
 		// Brush APIs
 		//----------------------------------------------------------------------------
 
-		[entry("GdipCloneBrush")] GpStatus WINGDIPAPI
+		[entry("GdipCloneBrush"), __category("GDI+ Flat API-Brush Functions")]
+		GpStatus WINGDIPAPI
 		GdipCloneBrush(PGpBrush brush, [out,retval]PGpBrush *cloneBrush);
 
-		[entry("GdipDeleteBrush")] GpStatus WINGDIPAPI
+		[entry("GdipDeleteBrush"), __category("GDI+ Flat API-Brush Functions")]
+		GpStatus_NoThrow WINGDIPAPI
 		GdipDeleteBrush(PGpBrush brush);
 
-		[entry("GdipGetBrushType")] GpStatus WINGDIPAPI
+		[entry("GdipGetBrushType"), __category("GDI+ Flat API-Brush Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetBrushType(PGpBrush brush, GpBrushType *type);
 
 		//----------------------------------------------------------------------------
 		// HatchBrush APIs
 		//----------------------------------------------------------------------------
 
-		[entry("GdipCreateHatchBrush")] GpStatus WINGDIPAPI
+		[entry("GdipCreateHatchBrush"), __category("GDI+ Flat API-HatchBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateHatchBrush(GpHatchStyle hatchstyle, ARGB forecol,
 									  ARGB backcol, [out,retval]PGpHatch *brush);
 
-		[entry("GdipGetHatchStyle")] GpStatus WINGDIPAPI
+		[entry("GdipGetHatchStyle"), __category("GDI+ Flat API-HatchBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetHatchStyle(PGpHatch brush, GpHatchStyle *hatchstyle);
 
-		[entry("GdipGetHatchForegroundColor")] GpStatus WINGDIPAPI
+		[entry("GdipGetHatchForegroundColor"), __category("GDI+ Flat API-HatchBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetHatchForegroundColor(PGpHatch brush, ARGB* forecol);
 
-		[entry("GdipGetHatchBackgroundColor")] GpStatus WINGDIPAPI
+		[entry("GdipGetHatchBackgroundColor"), __category("GDI+ Flat API-HatchBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetHatchBackgroundColor(PGpHatch brush, ARGB* backcol);
 
 		//----------------------------------------------------------------------------
 		// TextureBrush APIs
 		//----------------------------------------------------------------------------
 
-		[entry("GdipCreateTexture")] GpStatus WINGDIPAPI
+		[entry("GdipCreateTexture"), __category("GDI+ Flat API-TextureBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateTexture([in]PGpImage  image, [in]GpWrapMode wrapmode,
 								   [out,retval]PGpTexture *texture);
 
-		[entry("GdipCreateTexture2")] GpStatus WINGDIPAPI
+		[entry("GdipCreateTexture2"), __category("GDI+ Flat API-TextureBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateTexture2([in]PGpImage  image, [in]GpWrapMode wrapmode, [in]REAL x,
 						   [in]REAL y, [in]REAL width, [in]REAL height, [out,retval]PGpTexture *texture);
 
-		[entry("GdipCreateTextureIA")] GpStatus WINGDIPAPI
+		[entry("GdipCreateTextureIA"), __category("GDI+ Flat API-TextureBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateTextureIA([in]PGpImage  image, 
 							GDIPCONST PGpImageAttributes imageAttributes,
 							[in]REAL x, [in]REAL y, [in]REAL width, [in]REAL height,
 							[out,retval]PGpTexture *texture);
 
-		[entry("GdipCreateTexture2I")] GpStatus WINGDIPAPI
+		[entry("GdipCreateTexture2I"), __category("GDI+ Flat API-TextureBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateTexture2I([in]PGpImage  image, [in]GpWrapMode wrapmode, [in]INT x,
 							[in]INT y, [in]INT width, [in]INT height, [out,retval]PGpTexture *texture);
 
-		[entry("GdipCreateTextureIAI")] GpStatus WINGDIPAPI
+		[entry("GdipCreateTextureIAI"), __category("GDI+ Flat API-TextureBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateTextureIAI([in]PGpImage  image, 
 							 GDIPCONST PGpImageAttributes imageAttributes,
 							 [in]INT x, [in]INT y, [in]INT width, [in]INT height,
 							 [out,retval]PGpTexture *texture);
 
 
-		[entry("GdipGetTextureTransform")] GpStatus WINGDIPAPI
+		[entry("GdipGetTextureTransform"), __category("GDI+ Flat API-TextureBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetTextureTransform([in]PGpTexture brush, [in]PGpMatrix matrix);
 
-		[entry("GdipSetTextureTransform")] GpStatus WINGDIPAPI
+		[entry("GdipSetTextureTransform"), __category("GDI+ Flat API-TextureBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetTextureTransform([in]PGpTexture brush, GDIPCONST PGpMatrix matrix);
 
-		[entry("GdipResetTextureTransform")] GpStatus WINGDIPAPI
+		[entry("GdipResetTextureTransform"), __category("GDI+ Flat API-TextureBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipResetTextureTransform([in]PGpTexture  brush);
 
-		[entry("GdipMultiplyTextureTransform")] GpStatus WINGDIPAPI
+		[entry("GdipMultiplyTextureTransform"), __category("GDI+ Flat API-TextureBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipMultiplyTextureTransform([in]PGpTexture  brush, GDIPCONST PGpMatrix matrix,
 									[in]GpMatrixOrder order);
 
-		[entry("GdipTranslateTextureTransform")] GpStatus WINGDIPAPI
+		[entry("GdipTranslateTextureTransform"), __category("GDI+ Flat API-TextureBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipTranslateTextureTransform([in]PGpTexture  brush, [in]REAL dx, [in]REAL dy,
 									[in]GpMatrixOrder order);
 
-		[entry("GdipScaleTextureTransform")] GpStatus WINGDIPAPI
+		[entry("GdipScaleTextureTransform"), __category("GDI+ Flat API-TextureBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipScaleTextureTransform([in]PGpTexture  brush, [in]REAL sx, [in]REAL sy,
 									[in]GpMatrixOrder order);
 
-		[entry("GdipRotateTextureTransform")] GpStatus WINGDIPAPI
+		[entry("GdipRotateTextureTransform"), __category("GDI+ Flat API-TextureBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipRotateTextureTransform([in]PGpTexture  brush, [in]REAL angle, [in]GpMatrixOrder order);
 
-		[entry("GdipSetTextureWrapMode")] GpStatus WINGDIPAPI
+		[entry("GdipSetTextureWrapMode"), __category("GDI+ Flat API-TextureBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetTextureWrapMode([in]PGpTexture brush, [in]GpWrapMode wrapmode);
 
-		[entry("GdipGetTextureWrapMode")] GpStatus WINGDIPAPI
+		[entry("GdipGetTextureWrapMode"), __category("GDI+ Flat API-TextureBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetTextureWrapMode([in]PGpTexture brush, [out,retval]GpWrapMode *wrapmode);
 
-		[entry("GdipGetTextureImage")] GpStatus WINGDIPAPI
+		[entry("GdipGetTextureImage"), __category("GDI+ Flat API-TextureBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetTextureImage([in]PGpTexture brush, [out,retval]PGpImage  *image);
 
 		//----------------------------------------------------------------------------
 		// SolidBrush APIs
 		//----------------------------------------------------------------------------
 
-		[entry("GdipCreateSolidFill")] GpStatus WINGDIPAPI
+		[entry("GdipCreateSolidFill"), __category("GDI+ Flat API-SolidBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateSolidFill([in]ARGB color, [out,retval]PGpSolidFill *brush);
 
-		[entry("GdipSetSolidFillColor")] GpStatus WINGDIPAPI
+		[entry("GdipSetSolidFillColor"), __category("GDI+ Flat API-SolidBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetSolidFillColor([in]PGpSolidFill brush, [in]ARGB color);
 
-		[entry("GdipGetSolidFillColor")] GpStatus WINGDIPAPI
+		[entry("GdipGetSolidFillColor"), __category("GDI+ Flat API-SolidBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetSolidFillColor([in]PGpSolidFill brush, [out,retval]ARGB *color);
 
 		//----------------------------------------------------------------------------
 		// LineBrush APIs
 		//----------------------------------------------------------------------------
 
-		[entry("GdipCreateLineBrush")] GpStatus WINGDIPAPI
+		[entry("GdipCreateLineBrush"), __category("GDI+ Flat API-LinearGradientBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateLineBrush(GDIPCONST GpPointF* point1,
 							GDIPCONST GpPointF* point2,
 							[in]ARGB color1, [in]ARGB color2,
 							[in]GpWrapMode wrapMode,
 							[out,retval]PGpLineGradient *lineGradient);
 
-		[entry("GdipCreateLineBrushI")] GpStatus WINGDIPAPI
+		[entry("GdipCreateLineBrushI"), __category("GDI+ Flat API-LinearGradientBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateLineBrushI(GDIPCONST GpPoint* point1,
 							 GDIPCONST GpPoint* point2,
 							 ARGB color1, ARGB color2,
 							 GpWrapMode wrapMode,
 							 [out,retval]PGpLineGradient *lineGradient);
 
-		[entry("GdipCreateLineBrushFromRect")] GpStatus WINGDIPAPI
+		[entry("GdipCreateLineBrushFromRect"), __category("GDI+ Flat API-LinearGradientBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateLineBrushFromRect(GDIPCONST GpRectF* rect,
 									ARGB color1, ARGB color2,
 									LinearGradientMode mode,
 									GpWrapMode wrapMode,
 									[out,retval]PGpLineGradient *lineGradient);
 
-		[entry("GdipCreateLineBrushFromRectI")] GpStatus WINGDIPAPI
+		[entry("GdipCreateLineBrushFromRectI"), __category("GDI+ Flat API-LinearGradientBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateLineBrushFromRectI(GDIPCONST GpRect* rect,
 									 ARGB color1, ARGB color2,
 									 LinearGradientMode mode,
 									 GpWrapMode wrapMode,
 									 [out,retval]PGpLineGradient *lineGradient);
 
-		[entry("GdipCreateLineBrushFromRectWithAngle")] GpStatus WINGDIPAPI
+		[entry("GdipCreateLineBrushFromRectWithAngle"), __category("GDI+ Flat API-LinearGradientBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateLineBrushFromRectWithAngle(GDIPCONST GpRectF* rect,
 											 ARGB color1, ARGB color2,
 											 REAL angle,
@@ -2574,7 +2870,8 @@ library Gdiplus
 											 GpWrapMode wrapMode,
 											 [out,retval]PGpLineGradient *lineGradient);
 
-		[entry("GdipCreateLineBrushFromRectWithAngleI")] GpStatus WINGDIPAPI
+		[entry("GdipCreateLineBrushFromRectWithAngleI"), __category("GDI+ Flat API-LinearGradientBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateLineBrushFromRectWithAngleI(GDIPCONST GpRect* rect,
 											 ARGB color1, ARGB color2,
 											 REAL angle,
@@ -2582,80 +2879,103 @@ library Gdiplus
 											 GpWrapMode wrapMode,
 											 [out,retval]PGpLineGradient *lineGradient);
 
-		[entry("GdipSetLineColors")] GpStatus WINGDIPAPI
+		[entry("GdipSetLineColors"), __category("GDI+ Flat API-LinearGradientBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetLineColors(PGpLineGradient brush, ARGB color1, ARGB color2);
 
-		[entry("GdipGetLineColors")] GpStatus WINGDIPAPI
+		[entry("GdipGetLineColors"), __category("GDI+ Flat API-LinearGradientBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetLineColors(PGpLineGradient brush, ARGB* colors);
 
-		[entry("GdipGetLineRect")] GpStatus WINGDIPAPI
+		[entry("GdipGetLineRect"), __category("GDI+ Flat API-LinearGradientBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetLineRect(PGpLineGradient brush, GpRectF *rect);
 
-		[entry("GdipGetLineRectI")] GpStatus WINGDIPAPI
+		[entry("GdipGetLineRectI"), __category("GDI+ Flat API-LinearGradientBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetLineRectI(PGpLineGradient brush, GpRect *rect);
 
-		[entry("GdipSetLineGammaCorrection")] GpStatus WINGDIPAPI
+		[entry("GdipSetLineGammaCorrection"), __category("GDI+ Flat API-LinearGradientBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetLineGammaCorrection(PGpLineGradient brush, BOOL useGammaCorrection);
 
-		[entry("GdipGetLineGammaCorrection")] GpStatus WINGDIPAPI
+		[entry("GdipGetLineGammaCorrection"), __category("GDI+ Flat API-LinearGradientBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetLineGammaCorrection(PGpLineGradient brush, BOOL *useGammaCorrection);
 
-		[entry("GdipGetLineBlendCount")] GpStatus WINGDIPAPI
+		[entry("GdipGetLineBlendCount"), __category("GDI+ Flat API-LinearGradientBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetLineBlendCount(PGpLineGradient brush, INT *count);
 
-		[entry("GdipGetLineBlend")] GpStatus WINGDIPAPI
+		[entry("GdipGetLineBlend"), __category("GDI+ Flat API-LinearGradientBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetLineBlend(PGpLineGradient brush, REAL *blend, REAL* positions,
 						 INT count);
 
-		[entry("GdipSetLineBlend")] GpStatus WINGDIPAPI
+		[entry("GdipSetLineBlend"), __category("GDI+ Flat API-LinearGradientBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetLineBlend(PGpLineGradient brush, GDIPCONST REAL *blend,
 						 GDIPCONST REAL* positions, INT count);
 
-		[entry("GdipGetLinePresetBlendCount")] GpStatus WINGDIPAPI
+		[entry("GdipGetLinePresetBlendCount"), __category("GDI+ Flat API-LinearGradientBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetLinePresetBlendCount(PGpLineGradient brush, INT *count);
 
-		[entry("GdipGetLinePresetBlend")] GpStatus WINGDIPAPI
+		[entry("GdipGetLinePresetBlend"), __category("GDI+ Flat API-LinearGradientBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetLinePresetBlend(PGpLineGradient brush, ARGB *blend,
 												   REAL* positions, INT count);
 
-		[entry("GdipSetLinePresetBlend")] GpStatus WINGDIPAPI
+		[entry("GdipSetLinePresetBlend"), __category("GDI+ Flat API-LinearGradientBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetLinePresetBlend(PGpLineGradient brush, GDIPCONST ARGB *blend,
 							   GDIPCONST REAL* positions, INT count);
 
-		[entry("GdipSetLineSigmaBlend")] GpStatus WINGDIPAPI
+		[entry("GdipSetLineSigmaBlend"), __category("GDI+ Flat API-LinearGradientBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetLineSigmaBlend(PGpLineGradient brush, REAL focus, REAL scale);
 
-		[entry("GdipSetLineLinearBlend")] GpStatus WINGDIPAPI
+		[entry("GdipSetLineLinearBlend"), __category("GDI+ Flat API-LinearGradientBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetLineLinearBlend(PGpLineGradient brush, REAL focus, REAL scale);
 
-		[entry("GdipSetLineWrapMode")] GpStatus WINGDIPAPI
+		[entry("GdipSetLineWrapMode"), __category("GDI+ Flat API-LinearGradientBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetLineWrapMode(PGpLineGradient brush, GpWrapMode wrapmode);
 
-		[entry("GdipGetLineWrapMode")] GpStatus WINGDIPAPI
+		[entry("GdipGetLineWrapMode"), __category("GDI+ Flat API-LinearGradientBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetLineWrapMode(PGpLineGradient brush, GpWrapMode *wrapmode);
 
-		[entry("GdipGetLineTransform")] GpStatus WINGDIPAPI
+		[entry("GdipGetLineTransform"), __category("GDI+ Flat API-LinearGradientBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetLineTransform(PGpLineGradient brush, PGpMatrix matrix);
 
-		[entry("GdipSetLineTransform")] GpStatus WINGDIPAPI
+		[entry("GdipSetLineTransform"), __category("GDI+ Flat API-LinearGradientBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetLineTransform(PGpLineGradient brush, GDIPCONST PGpMatrix matrix);
 
-		[entry("GdipResetLineTransform")] GpStatus WINGDIPAPI
+		[entry("GdipResetLineTransform"), __category("GDI+ Flat API-LinearGradientBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipResetLineTransform(PGpLineGradient  brush);
 
-		[entry("GdipMultiplyLineTransform")] GpStatus WINGDIPAPI
+		[entry("GdipMultiplyLineTransform"), __category("GDI+ Flat API-LinearGradientBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipMultiplyLineTransform(PGpLineGradient  brush, GDIPCONST PGpMatrix matrix,
 									GpMatrixOrder order);
 
-		[entry("GdipTranslateLineTransform")] GpStatus WINGDIPAPI
+		[entry("GdipTranslateLineTransform"), __category("GDI+ Flat API-LinearGradientBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipTranslateLineTransform(PGpLineGradient  brush, REAL dx, REAL dy,
 									GpMatrixOrder order);
 
-		[entry("GdipScaleLineTransform")] GpStatus WINGDIPAPI
+		[entry("GdipScaleLineTransform"), __category("GDI+ Flat API-LinearGradientBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipScaleLineTransform(PGpLineGradient  brush, REAL sx, REAL sy,
 									GpMatrixOrder order);
 
-		[entry("GdipRotateLineTransform")] GpStatus WINGDIPAPI
+		[entry("GdipRotateLineTransform"), __category("GDI+ Flat API-LinearGradientBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipRotateLineTransform(PGpLineGradient  brush, REAL angle, 
 								GpMatrixOrder order);
 
@@ -2663,151 +2983,189 @@ library Gdiplus
 		// PathGradientBrush APIs
 		//----------------------------------------------------------------------------
 
-		[entry("GdipCreatePathGradient")] GpStatus WINGDIPAPI
+		[entry("GdipCreatePathGradient"), __category("GDI+ Flat API-PathGradientBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreatePathGradient(GDIPCONST GpPointF* points,
 											INT count,
 											GpWrapMode wrapMode,
 											[out,retval]PGpPathGradient *polyGradient);
 
-		[entry("GdipCreatePathGradientI")] GpStatus WINGDIPAPI
+		[entry("GdipCreatePathGradientI"), __category("GDI+ Flat API-PathGradientBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreatePathGradientI(GDIPCONST GpPoint* points,
 											INT count,
 											GpWrapMode wrapMode,
 											[out,retval]PGpPathGradient *polyGradient);
 
-		[entry("GdipCreatePathGradientFromPath")] GpStatus WINGDIPAPI
-		GdipCreatePathGradientFromPath(GDIPCONST PGpPath  path,
+		[entry("GdipCreatePathGradientFromPath"), __category("GDI+ Flat API-PathGradientBrush Functions")]
+		GpStatus WINGDIPAPI
+		GdipCreatePathGradientFromPath(GDIPCONST PGpPath path,
 											[out,retval]PGpPathGradient *polyGradient);
 
-		[entry("GdipGetPathGradientCenterColor")] GpStatus WINGDIPAPI
+		[entry("GdipGetPathGradientCenterColor"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetPathGradientCenterColor(
 								PGpPathGradient brush, ARGB* colors);
 
-		[entry("GdipSetPathGradientCenterColor")] GpStatus WINGDIPAPI
+		[entry("GdipSetPathGradientCenterColor"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetPathGradientCenterColor(
 								PGpPathGradient brush, ARGB colors);
 
-		[entry("GdipGetPathGradientSurroundColorsWithCount")] GpStatus WINGDIPAPI
+		[entry("GdipGetPathGradientSurroundColorsWithCount"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetPathGradientSurroundColorsWithCount(
 								PGpPathGradient brush, ARGB* color, INT* count);
 
-		[entry("GdipSetPathGradientSurroundColorsWithCount")] GpStatus WINGDIPAPI
+		[entry("GdipSetPathGradientSurroundColorsWithCount"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetPathGradientSurroundColorsWithCount(
 								PGpPathGradient brush,
 								GDIPCONST ARGB* color, INT* count);
 
-		[entry("GdipGetPathGradientPath")] GpStatus WINGDIPAPI
+		[entry("GdipGetPathGradientPath"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetPathGradientPath(PGpPathGradient brush, PGpPath path);
 
-		[entry("GdipSetPathGradientPath")] GpStatus WINGDIPAPI
+		[entry("GdipSetPathGradientPath"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetPathGradientPath(PGpPathGradient brush, GDIPCONST PGpPath path);
 
-		[entry("GdipGetPathGradientCenterPoint")] GpStatus WINGDIPAPI
+		[entry("GdipGetPathGradientCenterPoint"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetPathGradientCenterPoint(
 								PGpPathGradient brush, GpPointF* points);
 
-		[entry("GdipGetPathGradientCenterPointI")] GpStatus WINGDIPAPI
+		[entry("GdipGetPathGradientCenterPointI"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetPathGradientCenterPointI(
 								PGpPathGradient brush, GpPoint* points);
 
-		[entry("GdipSetPathGradientCenterPoint")] GpStatus WINGDIPAPI
+		[entry("GdipSetPathGradientCenterPoint"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetPathGradientCenterPoint(
 								PGpPathGradient brush, GDIPCONST GpPointF* points);
 
-		[entry("GdipSetPathGradientCenterPointI")] GpStatus WINGDIPAPI
+		[entry("GdipSetPathGradientCenterPointI"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetPathGradientCenterPointI(
 								PGpPathGradient brush, GDIPCONST GpPoint* points);
 
-		[entry("GdipGetPathGradientRect")] GpStatus WINGDIPAPI
+		[entry("GdipGetPathGradientRect"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetPathGradientRect(PGpPathGradient brush, GpRectF *rect);
 
-		[entry("GdipGetPathGradientRectI")] GpStatus WINGDIPAPI
+		[entry("GdipGetPathGradientRectI"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetPathGradientRectI(PGpPathGradient brush, GpRect *rect);
 
-		[entry("GdipGetPathGradientPointCount")] GpStatus WINGDIPAPI
+		[entry("GdipGetPathGradientPointCount"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetPathGradientPointCount(PGpPathGradient brush, INT* count);
 
-		[entry("GdipGetPathGradientSurroundColorCount")] GpStatus WINGDIPAPI
+		[entry("GdipGetPathGradientSurroundColorCount"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetPathGradientSurroundColorCount(PGpPathGradient brush, INT* count);
 
-		[entry("GdipSetPathGradientGammaCorrection")] GpStatus WINGDIPAPI
+		[entry("GdipSetPathGradientGammaCorrection"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetPathGradientGammaCorrection(PGpPathGradient brush, 
 										   BOOL useGammaCorrection);
 
-		[entry("GdipGetPathGradientGammaCorrection")] GpStatus WINGDIPAPI
+		[entry("GdipGetPathGradientGammaCorrection"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetPathGradientGammaCorrection(PGpPathGradient brush, 
 										   BOOL *useGammaCorrection);
 
-		[entry("GdipGetPathGradientBlendCount")] GpStatus WINGDIPAPI
+		[entry("GdipGetPathGradientBlendCount"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetPathGradientBlendCount(PGpPathGradient brush,
 													 INT *count);
 
-		[entry("GdipGetPathGradientBlend")] GpStatus WINGDIPAPI
+		[entry("GdipGetPathGradientBlend"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetPathGradientBlend(PGpPathGradient brush,
 											REAL *blend, REAL *positions, INT count);
 
-		[entry("GdipSetPathGradientBlend")] GpStatus WINGDIPAPI
+		[entry("GdipSetPathGradientBlend"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetPathGradientBlend(PGpPathGradient brush,
 						GDIPCONST REAL *blend, GDIPCONST REAL *positions, INT count);
 
-		[entry("GdipGetPathGradientPresetBlendCount")] GpStatus WINGDIPAPI
+		[entry("GdipGetPathGradientPresetBlendCount"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetPathGradientPresetBlendCount(PGpPathGradient brush, INT *count);
 
-		[entry("GdipGetPathGradientPresetBlend")] GpStatus WINGDIPAPI
+		[entry("GdipGetPathGradientPresetBlend"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetPathGradientPresetBlend(PGpPathGradient brush, ARGB *blend,
 														REAL* positions, INT count);
 
-		[entry("GdipSetPathGradientPresetBlend")] GpStatus WINGDIPAPI
+		[entry("GdipSetPathGradientPresetBlend"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetPathGradientPresetBlend(PGpPathGradient brush, GDIPCONST ARGB *blend,
 												GDIPCONST REAL* positions, INT count);
 
-		[entry("GdipSetPathGradientSigmaBlend")] GpStatus WINGDIPAPI
+		[entry("GdipSetPathGradientSigmaBlend"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetPathGradientSigmaBlend(PGpPathGradient brush, REAL focus, REAL scale);
 
-		[entry("GdipSetPathGradientLinearBlend")] GpStatus WINGDIPAPI
+		[entry("GdipSetPathGradientLinearBlend"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetPathGradientLinearBlend(PGpPathGradient brush, REAL focus, REAL scale);
 
-		[entry("GdipGetPathGradientWrapMode")] GpStatus WINGDIPAPI
+		[entry("GdipGetPathGradientWrapMode"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetPathGradientWrapMode(PGpPathGradient brush,
 												 GpWrapMode *wrapmode);
 
-		[entry("GdipSetPathGradientWrapMode")] GpStatus WINGDIPAPI
+		[entry("GdipSetPathGradientWrapMode"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetPathGradientWrapMode(PGpPathGradient brush,
 												 GpWrapMode wrapmode);
 
-		[entry("GdipGetPathGradientTransform")] GpStatus WINGDIPAPI
+		[entry("GdipGetPathGradientTransform"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetPathGradientTransform(PGpPathGradient brush,
 												  PGpMatrix matrix);
 
-		[entry("GdipSetPathGradientTransform")] GpStatus WINGDIPAPI
+		[entry("GdipSetPathGradientTransform"), __category("GDI+ Flat API-GraphicsPath Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetPathGradientTransform(PGpPathGradient brush,
 												  PGpMatrix matrix);
 
-		[entry("GdipResetPathGradientTransform")] GpStatus WINGDIPAPI
+		[entry("GdipResetPathGradientTransform"), __category("GDI+ Flat API-PathGradientBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipResetPathGradientTransform(PGpPathGradient  brush);
 
-		[entry("GdipMultiplyPathGradientTransform")] GpStatus WINGDIPAPI
+		[entry("GdipMultiplyPathGradientTransform"), __category("GDI+ Flat API-PathGradientBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipMultiplyPathGradientTransform(PGpPathGradient  brush, 
 										  GDIPCONST PGpMatrix matrix,
 										  GpMatrixOrder order);
 
-		[entry("GdipTranslatePathGradientTransform")] GpStatus WINGDIPAPI
+		[entry("GdipTranslatePathGradientTransform"), __category("GDI+ Flat API-PathGradientBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipTranslatePathGradientTransform(PGpPathGradient  brush, REAL dx, REAL dy,
 										   GpMatrixOrder order);
 
-		[entry("GdipScalePathGradientTransform")] GpStatus WINGDIPAPI
+		[entry("GdipScalePathGradientTransform"), __category("GDI+ Flat API-PathGradientBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipScalePathGradientTransform(PGpPathGradient  brush, REAL sx, REAL sy,
 									   GpMatrixOrder order);
 
-		[entry("GdipRotatePathGradientTransform")] GpStatus WINGDIPAPI
+		[entry("GdipRotatePathGradientTransform"), __category("GDI+ Flat API-PathGradientBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipRotatePathGradientTransform(PGpPathGradient  brush, REAL angle,
 										GpMatrixOrder order);
 
-		[entry("GdipGetPathGradientFocusScales")] GpStatus WINGDIPAPI
+		[entry("GdipGetPathGradientFocusScales"), __category("GDI+ Flat API-PathGradientBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetPathGradientFocusScales(PGpPathGradient brush, REAL* xScale, 
 									   REAL* yScale);
 
-		[entry("GdipSetPathGradientFocusScales")] GpStatus WINGDIPAPI
+		[entry("GdipSetPathGradientFocusScales"), __category("GDI+ Flat API-PathGradientBrush Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetPathGradientFocusScales(PGpPathGradient brush, REAL xScale, 
 									   REAL yScale);
 
@@ -2815,398 +3173,526 @@ library Gdiplus
 		// Pen APIs
 		//----------------------------------------------------------------------------
 
-		[entry("GdipCreatePen1")] GpStatus WINGDIPAPI
+		[entry("GdipCreatePen1"), __category("GDI+ Flat API-Pen Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreatePen1(ARGB color, REAL width, GpUnit unit, [out,retval]PGpPen *pen);
 
-		[entry("GdipCreatePen2")] GpStatus WINGDIPAPI
+		[entry("GdipCreatePen2"), __category("GDI+ Flat API-Pen Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreatePen2(PGpBrush brush, REAL width, GpUnit unit,
 								[out,retval]PGpPen *pen);
 
-		[entry("GdipClonePen")] GpStatus WINGDIPAPI
+		[entry("GdipClonePen"), __category("GDI+ Flat API-Pen Functions")]
+		GpStatus WINGDIPAPI
 		GdipClonePen(PGpPen pen, [out,retval]PGpPen *clonepen);
 
-		[entry("GdipDeletePen")] GpStatus WINGDIPAPI
+		[entry("GdipDeletePen"), __category("GDI+ Flat API-Pen Functions")]
+		GpStatus_NoThrow WINGDIPAPI
 		GdipDeletePen(PGpPen pen);
 
-		[entry("GdipSetPenWidth")] GpStatus WINGDIPAPI
+		[entry("GdipSetPenWidth"), __category("GDI+ Flat API-Pen Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetPenWidth(PGpPen pen, REAL width);
 
-		[entry("GdipGetPenWidth")] GpStatus WINGDIPAPI
+		[entry("GdipGetPenWidth"), __category("GDI+ Flat API-Pen Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetPenWidth(PGpPen pen, REAL *width);
 
-		[entry("GdipSetPenUnit")] GpStatus WINGDIPAPI
+		[entry("GdipSetPenUnit"), __category("GDI+ Flat API-Pen Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetPenUnit(PGpPen pen, GpUnit unit);
 
-		[entry("GdipGetPenUnit")] GpStatus WINGDIPAPI
+		[entry("GdipGetPenUnit"), __category("GDI+ Flat API-Pen Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetPenUnit(PGpPen pen, GpUnit *unit);
 
-		[entry("GdipSetPenLineCap197819")] GpStatus WINGDIPAPI
+		[entry("GdipSetPenLineCap197819"), __category("GDI+ Flat API-Pen Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetPenLineCap197819(PGpPen pen, GpLineCap startCap, GpLineCap endCap,
 						  GpDashCap dashCap);
 
-		[entry("GdipSetPenStartCap")] GpStatus WINGDIPAPI
+		[entry("GdipSetPenStartCap"), __category("GDI+ Flat API-Pen Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetPenStartCap(PGpPen pen, GpLineCap startCap);
 
-		[entry("GdipSetPenEndCap")] GpStatus WINGDIPAPI
+		[entry("GdipSetPenEndCap"), __category("GDI+ Flat API-Pen Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetPenEndCap(PGpPen pen, GpLineCap endCap);
 
-		[entry("GdipSetPenDashCap197819")] GpStatus WINGDIPAPI
+		[entry("GdipSetPenDashCap197819"), __category("GDI+ Flat API-Pen Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetPenDashCap197819(PGpPen pen, GpDashCap dashCap);
 
-		[entry("GdipGetPenStartCap")] GpStatus WINGDIPAPI
+		[entry("GdipGetPenStartCap"), __category("GDI+ Flat API-Pen Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetPenStartCap(PGpPen pen, GpLineCap *startCap);
 
-		[entry("GdipGetPenEndCap")] GpStatus WINGDIPAPI
+		[entry("GdipGetPenEndCap"), __category("GDI+ Flat API-Pen Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetPenEndCap(PGpPen pen, GpLineCap *endCap);
 
-		[entry("GdipGetPenDashCap197819")] GpStatus WINGDIPAPI
+		[entry("GdipGetPenDashCap197819"), __category("GDI+ Flat API-Pen Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetPenDashCap197819(PGpPen pen, GpDashCap *dashCap);
 
-		[entry("GdipSetPenLineJoin")] GpStatus WINGDIPAPI
+		[entry("GdipSetPenLineJoin"), __category("GDI+ Flat API-Pen Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetPenLineJoin(PGpPen pen, GpLineJoin lineJoin);
 
-		[entry("GdipGetPenLineJoin")] GpStatus WINGDIPAPI
+		[entry("GdipGetPenLineJoin"), __category("GDI+ Flat API-Pen Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetPenLineJoin(PGpPen pen, GpLineJoin *lineJoin);
 
-		[entry("GdipSetPenCustomStartCap")] GpStatus WINGDIPAPI
+		[entry("GdipSetPenCustomStartCap"), __category("GDI+ Flat API-Pen Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetPenCustomStartCap(PGpPen pen, PGpCustomLineCap  customCap);
 
-		[entry("GdipGetPenCustomStartCap")] GpStatus WINGDIPAPI
+		[entry("GdipGetPenCustomStartCap"), __category("GDI+ Flat API-Pen Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetPenCustomStartCap(PGpPen pen, [out,retval]PGpCustomLineCap * customCap);
 
-		[entry("GdipSetPenCustomEndCap")] GpStatus WINGDIPAPI
+		[entry("GdipSetPenCustomEndCap"), __category("GDI+ Flat API-Pen Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetPenCustomEndCap(PGpPen pen, PGpCustomLineCap  customCap);
 
-		[entry("GdipGetPenCustomEndCap")] GpStatus WINGDIPAPI
+		[entry("GdipGetPenCustomEndCap"), __category("GDI+ Flat API-Pen Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetPenCustomEndCap(PGpPen pen, [out,retval]PGpCustomLineCap * customCap);
 
-		[entry("GdipSetPenMiterLimit")] GpStatus WINGDIPAPI
+		[entry("GdipSetPenMiterLimit"), __category("GDI+ Flat API-Pen Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetPenMiterLimit(PGpPen pen, REAL miterLimit);
 
-		[entry("GdipGetPenMiterLimit")] GpStatus WINGDIPAPI
+		[entry("GdipGetPenMiterLimit"), __category("GDI+ Flat API-Pen Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetPenMiterLimit(PGpPen pen, REAL *miterLimit);
 
-		[entry("GdipSetPenMode")] GpStatus WINGDIPAPI
+		[entry("GdipSetPenMode"), __category("GDI+ Flat API-Pen Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetPenMode(PGpPen pen, GpPenAlignment penMode);
 
-		[entry("GdipGetPenMode")] GpStatus WINGDIPAPI
+		[entry("GdipGetPenMode"), __category("GDI+ Flat API-Pen Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetPenMode(PGpPen pen, GpPenAlignment *penMode);
 
-		[entry("GdipSetPenTransform")] GpStatus WINGDIPAPI
+		[entry("GdipSetPenTransform"), __category("GDI+ Flat API-Pen Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetPenTransform(PGpPen pen, PGpMatrix matrix);
 
-		[entry("GdipGetPenTransform")] GpStatus WINGDIPAPI
+		[entry("GdipGetPenTransform"), __category("GDI+ Flat API-Pen Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetPenTransform(PGpPen pen, PGpMatrix matrix);
 
-		[entry("GdipResetPenTransform")] GpStatus WINGDIPAPI
+		[entry("GdipResetPenTransform"), __category("GDI+ Flat API-Pen Functions")]
+		GpStatus WINGDIPAPI
 		GdipResetPenTransform(PGpPen pen);
 
-		[entry("GdipMultiplyPenTransform")] GpStatus WINGDIPAPI
+		[entry("GdipMultiplyPenTransform"), __category("GDI+ Flat API-Pen Functions")]
+		GpStatus WINGDIPAPI
 		GdipMultiplyPenTransform(PGpPen pen, GDIPCONST PGpMatrix matrix,
 								   GpMatrixOrder order);
 
-		[entry("GdipTranslatePenTransform")] GpStatus WINGDIPAPI
+		[entry("GdipTranslatePenTransform"), __category("GDI+ Flat API-Pen Functions")]
+		GpStatus WINGDIPAPI
 		GdipTranslatePenTransform(PGpPen pen, REAL dx, REAL dy,
 									GpMatrixOrder order);
 
-		[entry("GdipScalePenTransform")] GpStatus WINGDIPAPI
+		[entry("GdipScalePenTransform"), __category("GDI+ Flat API-Pen Functions")]
+		GpStatus WINGDIPAPI
 		GdipScalePenTransform(PGpPen pen, REAL sx, REAL sy,
 									GpMatrixOrder order);
 
-		[entry("GdipRotatePenTransform")] GpStatus WINGDIPAPI
+		[entry("GdipRotatePenTransform"), __category("GDI+ Flat API-Pen Functions")]
+		GpStatus WINGDIPAPI
 		GdipRotatePenTransform(PGpPen pen, REAL angle, GpMatrixOrder order);
 
-		[entry("GdipSetPenColor")] GpStatus WINGDIPAPI
+		[entry("GdipSetPenColor"), __category("GDI+ Flat API-Pen Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetPenColor(PGpPen pen, ARGB argb);
 
-		[entry("GdipGetPenColor")] GpStatus WINGDIPAPI
+		[entry("GdipGetPenColor"), __category("GDI+ Flat API-Pen Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetPenColor(PGpPen pen, ARGB *argb);
 
-		[entry("GdipSetPenBrushFill")] GpStatus WINGDIPAPI
+		[entry("GdipSetPenBrushFill"), __category("GDI+ Flat API-Pen Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetPenBrushFill(PGpPen pen, PGpBrush brush);
 
-		[entry("GdipGetPenBrushFill")] GpStatus WINGDIPAPI
+		[entry("GdipGetPenBrushFill"), __category("GDI+ Flat API-Pen Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetPenBrushFill(PGpPen pen, [out,retval]PGpBrush *brush);
 
-		[entry("GdipGetPenFillType")] GpStatus WINGDIPAPI
+		[entry("GdipGetPenFillType"), __category("GDI+ Flat API-Pen Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetPenFillType(PGpPen pen, GpPenType* type);
 
-		[entry("GdipGetPenDashStyle")] GpStatus WINGDIPAPI
+		[entry("GdipGetPenDashStyle"), __category("GDI+ Flat API-Pen Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetPenDashStyle(PGpPen pen, GpDashStyle *dashstyle);
 
-		[entry("GdipSetPenDashStyle")] GpStatus WINGDIPAPI
+		[entry("GdipSetPenDashStyle"), __category("GDI+ Flat API-Pen Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetPenDashStyle(PGpPen pen, GpDashStyle dashstyle);
 
-		[entry("GdipGetPenDashOffset")] GpStatus WINGDIPAPI
+		[entry("GdipGetPenDashOffset"), __category("GDI+ Flat API-Pen Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetPenDashOffset(PGpPen pen, REAL *offset);
 
-		[entry("GdipSetPenDashOffset")] GpStatus WINGDIPAPI
+		[entry("GdipSetPenDashOffset"), __category("GDI+ Flat API-Pen Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetPenDashOffset(PGpPen pen, REAL offset);
 
-		[entry("GdipGetPenDashCount")] GpStatus WINGDIPAPI
+		[entry("GdipGetPenDashCount"), __category("GDI+ Flat API-Pen Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetPenDashCount(PGpPen pen, INT *count);
 
-		[entry("GdipSetPenDashArray")] GpStatus WINGDIPAPI
+		[entry("GdipSetPenDashArray"), __category("GDI+ Flat API-Pen Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetPenDashArray(PGpPen pen, GDIPCONST REAL *dash, INT count);
 
-		[entry("GdipGetPenDashArray")] GpStatus WINGDIPAPI
+		[entry("GdipGetPenDashArray"), __category("GDI+ Flat API-Pen Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetPenDashArray(PGpPen pen, REAL *dash, INT count);
 
-		[entry("GdipGetPenCompoundCount")] GpStatus WINGDIPAPI
+		[entry("GdipGetPenCompoundCount"), __category("GDI+ Flat API-Pen Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetPenCompoundCount(PGpPen pen, INT *count);
 
-		[entry("GdipSetPenCompoundArray")] GpStatus WINGDIPAPI
+		[entry("GdipSetPenCompoundArray"), __category("GDI+ Flat API-Pen Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetPenCompoundArray(PGpPen pen, GDIPCONST REAL *dash, INT count);
 
-		[entry("GdipGetPenCompoundArray")] GpStatus WINGDIPAPI
+		[entry("GdipGetPenCompoundArray"), __category("GDI+ Flat API-Pen Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetPenCompoundArray(PGpPen pen, REAL *dash, INT count);
 
 		//----------------------------------------------------------------------------
 		// CustomLineCap APIs
 		//----------------------------------------------------------------------------
 
-		[entry("GdipCreateCustomLineCap")] GpStatus WINGDIPAPI
+		[entry("GdipCreateCustomLineCap"), __category("GDI+ Flat API-CustomLineCap Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateCustomLineCap(PGpPath  fillPath, PGpPath  strokePath,
 		   GpLineCap baseCap, REAL baseInset, [out,retval]PGpCustomLineCap *customCap);
 
-		[entry("GdipDeleteCustomLineCap")] GpStatus WINGDIPAPI
+		[entry("GdipDeleteCustomLineCap"), __category("GDI+ Flat API-CustomLineCap Functions")]
+		GpStatus_NoThrow WINGDIPAPI
 		GdipDeleteCustomLineCap(PGpCustomLineCap  customCap);
 
-		[entry("GdipCloneCustomLineCap")] GpStatus WINGDIPAPI
+		[entry("GdipCloneCustomLineCap"), __category("GDI+ Flat API-CustomLineCap Functions")]
+		GpStatus WINGDIPAPI
 		GdipCloneCustomLineCap(PGpCustomLineCap  customCap,
 							   [out,retval]PGpCustomLineCap * clonedCap);
 
-		[entry("GdipGetCustomLineCapType")] GpStatus WINGDIPAPI
+		[entry("GdipGetCustomLineCapType"), __category("GDI+ Flat API-CustomLineCap Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetCustomLineCapType(PGpCustomLineCap  customCap,
 							   CustomLineCapType* capType);
 
-		[entry("GdipSetCustomLineCapStrokeCaps")] GpStatus WINGDIPAPI
+		[entry("GdipSetCustomLineCapStrokeCaps"), __category("GDI+ Flat API-CustomLineCap Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetCustomLineCapStrokeCaps(PGpCustomLineCap  customCap,
 									   GpLineCap startCap, GpLineCap endCap);
 
-		[entry("GdipGetCustomLineCapStrokeCaps")] GpStatus WINGDIPAPI
+		[entry("GdipGetCustomLineCapStrokeCaps"), __category("GDI+ Flat API-CustomLineCap Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetCustomLineCapStrokeCaps(PGpCustomLineCap  customCap,
 									   GpLineCap* startCap, GpLineCap* endCap);
 
-		[entry("GdipSetCustomLineCapStrokeJoin")] GpStatus WINGDIPAPI
+		[entry("GdipSetCustomLineCapStrokeJoin"), __category("GDI+ Flat API-CustomLineCap Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetCustomLineCapStrokeJoin(PGpCustomLineCap  customCap, 
 									   GpLineJoin lineJoin);
 
-		[entry("GdipGetCustomLineCapStrokeJoin")] GpStatus WINGDIPAPI
+		[entry("GdipGetCustomLineCapStrokeJoin"), __category("GDI+ Flat API-CustomLineCap Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetCustomLineCapStrokeJoin(PGpCustomLineCap  customCap, 
 									   GpLineJoin* lineJoin);
 
-		[entry("GdipSetCustomLineCapBaseCap")] GpStatus WINGDIPAPI
+		[entry("GdipSetCustomLineCapBaseCap"), __category("GDI+ Flat API-CustomLineCap Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetCustomLineCapBaseCap(PGpCustomLineCap  customCap, GpLineCap baseCap);
 
-		[entry("GdipGetCustomLineCapBaseCap")] GpStatus WINGDIPAPI
+		[entry("GdipGetCustomLineCapBaseCap"), __category("GDI+ Flat API-CustomLineCap Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetCustomLineCapBaseCap(PGpCustomLineCap  customCap, GpLineCap* baseCap);
 
-		[entry("GdipSetCustomLineCapBaseInset")] GpStatus WINGDIPAPI
+		[entry("GdipSetCustomLineCapBaseInset"), __category("GDI+ Flat API-CustomLineCap Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetCustomLineCapBaseInset(PGpCustomLineCap  customCap, REAL inset);
 
-		[entry("GdipGetCustomLineCapBaseInset")] GpStatus WINGDIPAPI
+		[entry("GdipGetCustomLineCapBaseInset"), __category("GDI+ Flat API-CustomLineCap Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetCustomLineCapBaseInset(PGpCustomLineCap  customCap, REAL* inset);
 
-		[entry("GdipSetCustomLineCapWidthScale")] GpStatus WINGDIPAPI
+		[entry("GdipSetCustomLineCapWidthScale"), __category("GDI+ Flat API-CustomLineCap Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetCustomLineCapWidthScale(PGpCustomLineCap  customCap, REAL widthScale);
 
-		[entry("GdipGetCustomLineCapWidthScale")] GpStatus WINGDIPAPI
+		[entry("GdipGetCustomLineCapWidthScale"), __category("GDI+ Flat API-CustomLineCap Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetCustomLineCapWidthScale(PGpCustomLineCap  customCap, REAL* widthScale);
 
 		//----------------------------------------------------------------------------
 		// AdjustableArrowCap APIs
 		//----------------------------------------------------------------------------
 
-		[entry("GdipCreateAdjustableArrowCap")] GpStatus WINGDIPAPI
+		[entry("GdipCreateAdjustableArrowCap"), __category("GDI+ Flat API-AdjustableArrowCap Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateAdjustableArrowCap(REAL height, REAL width, BOOL isFilled,
 									 [out,retval]PGpAdjustableArrowCap *cap);
 
-		[entry("GdipSetAdjustableArrowCapHeight")] GpStatus WINGDIPAPI
+		[entry("GdipSetAdjustableArrowCapHeight"), __category("GDI+ Flat API-AdjustableArrowCap Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetAdjustableArrowCapHeight(PGpAdjustableArrowCap  cap, REAL height);
 
-		[entry("GdipGetAdjustableArrowCapHeight")] GpStatus WINGDIPAPI
+		[entry("GdipGetAdjustableArrowCapHeight"), __category("GDI+ Flat API-AdjustableArrowCap Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetAdjustableArrowCapHeight(PGpAdjustableArrowCap  cap, REAL* height);
 
-		[entry("GdipSetAdjustableArrowCapWidth")] GpStatus WINGDIPAPI
+		[entry("GdipSetAdjustableArrowCapWidth"), __category("GDI+ Flat API-AdjustableArrowCap Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetAdjustableArrowCapWidth(PGpAdjustableArrowCap  cap, REAL width);
 
-		[entry("GdipGetAdjustableArrowCapWidth")] GpStatus WINGDIPAPI
+		[entry("GdipGetAdjustableArrowCapWidth"), __category("GDI+ Flat API-AdjustableArrowCap Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetAdjustableArrowCapWidth(PGpAdjustableArrowCap  cap, REAL* width);
 
-		[entry("GdipSetAdjustableArrowCapMiddleInset")] GpStatus WINGDIPAPI
+		[entry("GdipSetAdjustableArrowCapMiddleInset"), __category("GDI+ Flat API-AdjustableArrowCap Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetAdjustableArrowCapMiddleInset(PGpAdjustableArrowCap  cap, 
 											 REAL middleInset);
 
-		[entry("GdipGetAdjustableArrowCapMiddleInset")] GpStatus WINGDIPAPI
+		[entry("GdipGetAdjustableArrowCapMiddleInset"), __category("GDI+ Flat API-AdjustableArrowCap Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetAdjustableArrowCapMiddleInset(PGpAdjustableArrowCap  cap, 
 											 REAL* middleInset);
 
-		[entry("GdipSetAdjustableArrowCapFillState")] GpStatus WINGDIPAPI
+		[entry("GdipSetAdjustableArrowCapFillState"), __category("GDI+ Flat API-AdjustableArrowCap Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetAdjustableArrowCapFillState(PGpAdjustableArrowCap  cap, BOOL fillState);
 
-		[entry("GdipGetAdjustableArrowCapFillState")] GpStatus WINGDIPAPI
+		[entry("GdipGetAdjustableArrowCapFillState"), __category("GDI+ Flat API-AdjustableArrowCap Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetAdjustableArrowCapFillState(PGpAdjustableArrowCap  cap, BOOL* fillState);
 
 		//----------------------------------------------------------------------------
 		// Image APIs
 		//----------------------------------------------------------------------------
 
-		[entry("GdipLoadImageFromStream")] GpStatus WINGDIPAPI
+		[entry("GdipLoadImageFromStream"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
 		GdipLoadImageFromStream([in]IStream* stream, [out,retval]PGpImage  *image);
 
-		[entry("GdipLoadImageFromFile")] GpStatus WINGDIPAPI
+		[entry("GdipLoadImageFromFile"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
 		GdipLoadImageFromFile([in]LPCOLESTR filename, [out,retval]PGpImage  *image);
 
-		[entry("GdipLoadImageFromStreamICM")] GpStatus WINGDIPAPI
+		[entry("GdipLoadImageFromStreamICM"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
 		GdipLoadImageFromStreamICM([in]IStream* stream, [out,retval]PGpImage  *image);
 
-		[entry("GdipLoadImageFromFileICM")] GpStatus WINGDIPAPI
+		[entry("GdipLoadImageFromFileICM"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
 		GdipLoadImageFromFileICM([in]LPCOLESTR filename, [out,retval]PGpImage  *image);
 
-		[entry("GdipCloneImage")] GpStatus WINGDIPAPI
+		[entry("GdipCloneImage"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
 		GdipCloneImage([in]PGpImage  image, [out,retval]PGpImage  *cloneImage);
 
-		[entry("GdipDisposeImage")] GpStatus WINGDIPAPI
+		[entry("GdipDisposeImage"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus_NoThrow WINGDIPAPI
 		GdipDisposeImage([in]PGpImage  image);
 
-		[entry("GdipSaveImageToFile")] GpStatus WINGDIPAPI
+		[entry("GdipSaveImageToFile"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
 		GdipSaveImageToFile([in]PGpImage  image, [in]LPCOLESTR filename,
 							GDIPCONST CLSID* clsidEncoder, 
 							GDIPCONST EncoderParameters* encoderParams);
 
-		[entry("GdipSaveImageToStream")] GpStatus WINGDIPAPI
+		[entry("GdipSaveImageToStream"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
 		GdipSaveImageToStream([in]PGpImage  image, [in]IStream* stream,
 							  GDIPCONST CLSID* clsidEncoder, 
 							  GDIPCONST EncoderParameters* encoderParams);
 
-		[entry("GdipSaveAdd")] GpStatus WINGDIPAPI
+		[entry("GdipSaveAdd"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
 		GdipSaveAdd([in]PGpImage  image, GDIPCONST EncoderParameters* encoderParams);
 
-		[entry("GdipSaveAddImage")] GpStatus WINGDIPAPI
+		[entry("GdipSaveAddImage"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
 		GdipSaveAddImage([in]PGpImage  image, [in]PGpImage  newImage,
 						 GDIPCONST EncoderParameters* encoderParams);
 
-		[entry("GdipGetImageGraphicsContext")] GpStatus WINGDIPAPI
+		[entry("GdipGetImageGraphicsContext"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetImageGraphicsContext([in]PGpImage  image, [out,retval]PGpGraphics *graphics);
 
-		[entry("GdipGetImageBounds")] GpStatus WINGDIPAPI
+		[entry("GdipGetImageBounds"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetImageBounds([in]PGpImage  image, GpRectF *srcRect, GpUnit *srcUnit);
 
-		[entry("GdipGetImageDimension")] GpStatus WINGDIPAPI
+		[entry("GdipGetImageDimension"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetImageDimension([in]PGpImage  image, [out]REAL *width, [out]REAL *height);
 
-		[entry("GdipGetImageType")] GpStatus WINGDIPAPI
+		[entry("GdipGetImageType"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetImageType([in]PGpImage  image, [out,retval]ImageType *type);
 
-		[entry("GdipGetImageWidth")] GpStatus WINGDIPAPI
+		[entry("GdipGetImageWidth"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetImageWidth([in]PGpImage  image, [out,retval]UINT *width);
 
-		[entry("GdipGetImageHeight")] GpStatus WINGDIPAPI
+		[entry("GdipGetImageHeight"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetImageHeight([in]PGpImage  image, [out,retval]UINT *height);
 
-		[entry("GdipGetImageHorizontalResolution")] GpStatus WINGDIPAPI
+		[entry("GdipGetImageHorizontalResolution"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetImageHorizontalResolution([in]PGpImage  image, [out,retval]REAL *resolution);
 
-		[entry("GdipGetImageVerticalResolution")] GpStatus WINGDIPAPI
+		[entry("GdipGetImageVerticalResolution"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetImageVerticalResolution([in]PGpImage  image, [out,retval]REAL *resolution);
 
-		[entry("GdipGetImageFlags")] GpStatus WINGDIPAPI
+		[entry("GdipGetImageFlags"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetImageFlags([in]PGpImage  image, [out,retval]UINT *flags);
 
-		[entry("GdipGetImageRawFormat")] GpStatus WINGDIPAPI
+		[entry("GdipGetImageRawFormat"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetImageRawFormat([in]PGpImage  image, [out,retval]GUID *format);
 
-		[entry("GdipGetImagePixelFormat")] GpStatus WINGDIPAPI
+		[entry("GdipGetImagePixelFormat"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetImagePixelFormat([in]PGpImage  image, [out,retval]PixelFormat *format);
 
-		[entry("GdipGetImageThumbnail")] GpStatus WINGDIPAPI
+		[entry("GdipGetImageThumbnail"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetImageThumbnail([in]PGpImage  image, [in]UINT thumbWidth, [in]UINT thumbHeight,
 							  [out]PGpImage  *thumbImage,
 							  [in]GetThumbnailImageAbort pfnCallback, [in]VOID * callbackData);
 
-		[entry("GdipGetEncoderParameterListSize")] GpStatus WINGDIPAPI
+		[entry("GdipGetEncoderParameterListSize"), __category("GDI+ Flat API-Image Functions")] 
+		GpStatus WINGDIPAPI
 		GdipGetEncoderParameterListSize([in]PGpImage  image, GDIPCONST CLSID* clsidEncoder,
 										[out,retval]UINT* size);
 
-		[entry("GdipGetEncoderParameterList")] GpStatus WINGDIPAPI
+		[entry("GdipGetEncoderParameterList"), __category("GDI+ Flat API-Image Functions")] 
+		GpStatus WINGDIPAPI
 		GdipGetEncoderParameterList([in]PGpImage  image, GDIPCONST CLSID* clsidEncoder,
 									[in]UINT size, [out,retval]EncoderParameters* buffer);
 
-		[entry("GdipImageGetFrameDimensionsCount")] GpStatus WINGDIPAPI
+		[entry("GdipImageGetFrameDimensionsCount"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
 		GdipImageGetFrameDimensionsCount([in]PGpImage  image, [out,retval]UINT* count);
 
-		[entry("GdipImageGetFrameDimensionsList")] GpStatus WINGDIPAPI
+		[entry("GdipImageGetFrameDimensionsList"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
 		GdipImageGetFrameDimensionsList([in]PGpImage  image, GUID* dimensionIDs, 
 										UINT count);
 
-		[entry("GdipImageGetFrameCount")] GpStatus WINGDIPAPI
+		[entry("GdipImageGetFrameCount"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
 		GdipImageGetFrameCount([in]PGpImage  image, GDIPCONST GUID* dimensionID, 
 							   UINT* count);
 
-		[entry("GdipImageSelectActiveFrame")] GpStatus WINGDIPAPI
+		[entry("GdipImageSelectActiveFrame"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
 		GdipImageSelectActiveFrame([in]PGpImage  image, GDIPCONST GUID* dimensionID,
 								   [in]UINT frameIndex);
 
-		[entry("GdipImageRotateFlip")] GpStatus WINGDIPAPI
+		[entry("GdipImageRotateFlip"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
 		GdipImageRotateFlip([in]PGpImage  image, [in]RotateFlipType rfType);
 
-		[entry("GdipGetImagePalette")] GpStatus WINGDIPAPI
+		[entry("GdipGetImagePalette"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetImagePalette([in]PGpImage  image, ColorPalette *palette, INT size);
 
-		[entry("GdipSetImagePalette")] GpStatus WINGDIPAPI
+		[entry("GdipSetImagePalette"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetImagePalette([in]PGpImage  image, GDIPCONST ColorPalette *palette);
 
-		[entry("GdipGetImagePaletteSize")] GpStatus WINGDIPAPI
+		[entry("GdipGetImagePaletteSize"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetImagePaletteSize([in]PGpImage  image, [out,retval]INT *size);
 
-		[entry("GdipGetPropertyCount")] GpStatus WINGDIPAPI
+		[entry("GdipGetPropertyCount"), __category("GDI+ Flat API-Image Functions")] 
+		GpStatus WINGDIPAPI
 		GdipGetPropertyCount([in]PGpImage  image, [out,retval]UINT* numOfProperty);
 
-		[entry("GdipGetPropertyIdList")] GpStatus WINGDIPAPI
+		[entry("GdipGetPropertyIdList"), __category("GDI+ Flat API-Image Functions")] 
+		GpStatus WINGDIPAPI
 		GdipGetPropertyIdList([in]PGpImage  image, [in]UINT numOfProperty, PROPID* list);
 
-		[entry("GdipGetPropertyItemSize")] GpStatus WINGDIPAPI
+		[entry("GdipGetPropertyItemSize"), __category("GDI+ Flat API-Image Functions")] 
+		GpStatus WINGDIPAPI
 		GdipGetPropertyItemSize([in]PGpImage  image, [in]PROPID propId, UINT* size);
 
-		[entry("GdipGetPropertyItem")] GpStatus WINGDIPAPI
+		[entry("GdipGetPropertyItem"), __category("GDI+ Flat API-Image Functions")] 
+		GpStatus WINGDIPAPI
 		GdipGetPropertyItem([in]PGpImage  image, [in]PROPID propId, [in]UINT propSize,
 							PropertyItem* buffer);
 
-		[entry("GdipGetPropertySize")] GpStatus WINGDIPAPI
+		[entry("GdipGetPropertySize"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetPropertySize([in]PGpImage  image, UINT* totalBufferSize, 
 							UINT* numProperties);
 
-		[entry("GdipGetAllPropertyItems")] GpStatus WINGDIPAPI
+		[entry("GdipGetAllPropertyItems"), __category("GDI+ Flat API-Image Functions")] 
+		GpStatus WINGDIPAPI
 		GdipGetAllPropertyItems([in]PGpImage  image, [in]UINT totalBufferSize,
 								[in]UINT numProperties, PropertyItem* allItems);
 
-		[entry("GdipRemovePropertyItem")] GpStatus WINGDIPAPI
+		[entry("GdipRemovePropertyItem"), __category("GDI+ Flat API-Image Functions")] 
+		GpStatus WINGDIPAPI
 		GdipRemovePropertyItem([in]PGpImage  image, [in]PROPID propId);
 
-		[entry("GdipSetPropertyItem")] GpStatus WINGDIPAPI
+		[entry("GdipSetPropertyItem"), __category("GDI+ Flat API-Image Functions")] 
+		GpStatus WINGDIPAPI
 		GdipSetPropertyItem([in]PGpImage  image, GDIPCONST PropertyItem* item);
 
-		[entry("GdipImageForceValidation")] GpStatus WINGDIPAPI
+		[entry("GdipFindFirstImageItem"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
+			GdipFindFirstImageItem([in]PGpImage  image, ImageItemData* item);
+
+		[entry("GdipFindNextImageItem"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
+			GdipFindNextImageItem([in]PGpImage  image, ImageItemData* item);
+
+		[entry("GdipGetImageItemData"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
+			GdipGetImageItemData([in]PGpImage  image, ImageItemData* item);
+
+		[entry("GdipImageForceValidation"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
 		GdipImageForceValidation([in]PGpImage  image);
 
 		//----------------------------------------------------------------------------
 		// Bitmap APIs
 		//----------------------------------------------------------------------------
 
-		[entry("GdipCreateBitmapFromStream")] GpStatus WINGDIPAPI
+		[entry("GdipCreateBitmapFromStream"), __category("GDI+ Flat API-Bitmap Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateBitmapFromStream([in]IStream* stream, [out,retval]PGpBitmap *bitmap);
 
-		[entry("GdipCreateBitmapFromFile")] GpStatus WINGDIPAPI
+		[entry("GdipCreateBitmapFromFile"), __category("GDI+ Flat API-Bitmap Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateBitmapFromFile([in]LPCOLESTR filename, [out,retval]PGpBitmap *bitmap);
 
-		[entry("GdipCreateBitmapFromStreamICM")] GpStatus WINGDIPAPI
+		[entry("GdipCreateBitmapFromStreamICM"), __category("GDI+ Flat API-Bitmap Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateBitmapFromStreamICM([in]IStream* stream, [out,retval]PGpBitmap *bitmap);
 
-		[entry("GdipCreateBitmapFromFileICM")] GpStatus WINGDIPAPI
+		[entry("GdipCreateBitmapFromFileICM"), __category("GDI+ Flat API-Bitmap Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateBitmapFromFileICM([in]LPCOLESTR filename, [out,retval]PGpBitmap *bitmap);
 
-		[entry("GdipCreateBitmapFromScan0")] GpStatus WINGDIPAPI
+		[entry("GdipCreateBitmapFromScan0"), __category("GDI+ Flat API-Bitmap Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateBitmapFromScan0([in]INT width,
 								  [in]INT height,
 								  [in]INT stride,
@@ -3214,51 +3700,61 @@ library Gdiplus
 								  [in]BYTE* scan0,
 								  [out,retval]PGpBitmap * bitmap);
 
-		[entry("GdipCreateBitmapFromGraphics")] GpStatus WINGDIPAPI
+		[entry("GdipCreateBitmapFromGraphics"), __category("GDI+ Flat API-Bitmap Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateBitmapFromGraphics([in]INT width,
 									 [in]INT height,
 									 [in]PGpGraphics  target,
 									 [out,retval]PGpBitmap * bitmap);
 
-		[entry("GdipCreateBitmapFromDirectDrawSurface")] GpStatus WINGDIPAPI
+		[entry("GdipCreateBitmapFromDirectDrawSurface"), __category("GDI+ Flat API-Bitmap Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateBitmapFromDirectDrawSurface([in]IDirectDrawSurface7* surface,
 											  [out,retval]PGpBitmap * bitmap);
 
-		[entry("GdipCreateBitmapFromGdiDib")] GpStatus WINGDIPAPI
+		[entry("GdipCreateBitmapFromGdiDib"), __category("GDI+ Flat API-Bitmap Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateBitmapFromGdiDib(GDIPCONST BITMAPINFO* gdiBitmapInfo,
 								   [in]VOID* gdiBitmapData,
 								   [out,retval]PGpBitmap * bitmap);
 
-		[entry("GdipCreateBitmapFromHBITMAP")] GpStatus WINGDIPAPI
+		[entry("GdipCreateBitmapFromHBITMAP"), __category("GDI+ Flat API-Bitmap Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateBitmapFromHBITMAP([in]HBITMAP hbm,
 									[in]HPALETTE hpal,
 									[out,retval]PGpBitmap * bitmap);
 
-		[entry("GdipCreateHBITMAPFromBitmap")] GpStatus WINGDIPAPI
+		[entry("GdipCreateHBITMAPFromBitmap"), __category("GDI+ Flat API-Bitmap Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateHBITMAPFromBitmap([in]PGpBitmap  bitmap,
 									[out]HBITMAP* hbmReturn,
 									[in]ARGB background);
 
-		[entry("GdipCreateBitmapFromHICON")] GpStatus WINGDIPAPI
+		[entry("GdipCreateBitmapFromHICON"), __category("GDI+ Flat API-Bitmap Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateBitmapFromHICON([in]HICON hicon,
 								  [out,retval]PGpBitmap * bitmap);
 
-		[entry("GdipCreateHICONFromBitmap")] GpStatus WINGDIPAPI
+		[entry("GdipCreateHICONFromBitmap"), __category("GDI+ Flat API-Bitmap Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateHICONFromBitmap([in]PGpBitmap  bitmap,
 								  [out,retval]HICON* hbmReturn);
 
-		[entry("GdipCreateBitmapFromResource")] GpStatus WINGDIPAPI
+		[entry("GdipCreateBitmapFromResource"), __category("GDI+ Flat API-Bitmap Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateBitmapFromResource([in]HINSTANCE hInstance,
 									 [in]LPCOLESTR lpBitmapName,
 									 [out,retval]PGpBitmap * bitmap);
 
-		[entry("GdipCloneBitmapArea")] GpStatus WINGDIPAPI
+		[entry("GdipCloneBitmapArea"), __category("GDI+ Flat API-Bitmap Functions")]
+		GpStatus WINGDIPAPI
 		GdipCloneBitmapArea([in]REAL x, [in]REAL y, [in]REAL width, [in]REAL height,
 									[in]PixelFormat format,
 									[in]PGpBitmap srcBitmap,
 									[out,retval]PGpBitmap *dstBitmap);
 
-		[entry("GdipCloneBitmapAreaI")] GpStatus WINGDIPAPI
+		[entry("GdipCloneBitmapAreaI"), __category("GDI+ Flat API-Bitmap Functions")]
+		GpStatus WINGDIPAPI
 		GdipCloneBitmapAreaI([in]INT x,
 							 [in]INT y,
 							 [in]INT width,
@@ -3267,48 +3763,138 @@ library Gdiplus
 							 [in]PGpBitmap srcBitmap,
 							 [out,retval]PGpBitmap *dstBitmap);
 
-		[entry("GdipBitmapLockBits")] GpStatus WINGDIPAPI
+		[entry("GdipBitmapLockBits"), __category("GDI+ Flat API-Bitmap Functions")]
+		GpStatus WINGDIPAPI
 		GdipBitmapLockBits([in]PGpBitmap  bitmap,
 						   GDIPCONST GpRect* rect,
 						   [in]UINT flags,
 						   [in]PixelFormat format,
 						   [out,retval]BitmapData* lockedBitmapData);
 
-		[entry("GdipBitmapUnlockBits")] GpStatus WINGDIPAPI
+		[entry("GdipBitmapUnlockBits"), __category("GDI+ Flat API-Bitmap Functions")]
+		GpStatus WINGDIPAPI
 		GdipBitmapUnlockBits([in]PGpBitmap  bitmap,
 							 [in]BitmapData* lockedBitmapData);
 
-		[entry("GdipBitmapGetPixel")] GpStatus WINGDIPAPI
-		GdipBitmapGetPixel([in]PGpBitmap  bitmap, [in]INT x, [in]INT y, [out,retval]ARGB *color);
+		[entry("GdipBitmapGetPixel"), __category("GDI+ Flat API-Bitmap Functions")]
+		GpStatus_NoThrow WINGDIPAPI
+			GdipBitmapGetPixel([in]PGpBitmap  bitmap, [in]INT x, [in]INT y, [out,retval]ARGB *color);
 
-		[entry("GdipBitmapSetPixel")] GpStatus WINGDIPAPI
-		GdipBitmapSetPixel([in]PGpBitmap  bitmap, [in]INT x, [in]INT y, [in]ARGB color);
+		[entry("GdipBitmapSetPixel"), __category("GDI+ Flat API-Bitmap Functions")]
+		GpStatus WINGDIPAPI
+			GdipBitmapSetPixel([in]PGpBitmap  bitmap, [in]INT x, [in]INT y, [in]ARGB color);
 
-		[entry("GdipBitmapSetResolution")] GpStatus WINGDIPAPI
+		[entry("GdipImageSetAbort"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI	
+			GdipImageSetAbort(
+				_In_ PGpImage pImage,
+				GdiplusAbort* pIAbort
+			);
+
+		[entry("GdipGraphicsSetAbort"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI 
+			GdipGraphicsSetAbort(
+				_In_ PGpGraphics pGraphics,
+				GdiplusAbort* pIAbort
+			);
+
+		[entry("GdipBitmapConvertFormat"), __category("GDI+ Flat API-Bitmap Functions")]
+		GpStatus WINGDIPAPI
+			GdipBitmapConvertFormat(
+				IN PGpBitmap pInputBitmap,
+				PixelFormat format,
+				DitherType dithertype,
+				PaletteType palettetype,
+				ColorPalette* palette,
+				REAL alphaThresholdPercent
+			);
+
+		[entry("GdipInitializePalette"), __category("GDI+ Flat API-Bitmap Functions")]
+		GpStatus WINGDIPAPI
+			GdipInitializePalette(
+				OUT ColorPalette* palette,   // output palette. must be allocated.
+				PaletteType palettetype,     // palette enumeration type.
+				INT optimalColors,           // how many optimal colors
+				BOOL useTransparentColor,    // add a transparent color to the palette.
+				PGpBitmap bitmap             // optional bitmap for median cut.
+			);
+
+		[entry("GdipBitmapApplyEffect"), __category("GDI+ Flat API-Bitmap Functions")]
+		GpStatus WINGDIPAPI
+			GdipBitmapApplyEffect(
+				PGpBitmap bitmap,
+				PCGpEffect effect,
+				RECT* roi,
+				BOOL useAuxData,
+				VOID** auxData,
+				INT* auxDataSize
+			);
+
+		[entry("GdipBitmapCreateApplyEffect"), __category("GDI+ Flat API-Bitmap Functions")]
+		GpStatus WINGDIPAPI
+			GdipBitmapCreateApplyEffect(
+				PGpBitmap* inputBitmaps,
+				INT numInputs,
+				PCGpEffect effect,
+				RECT* roi,
+				RECT* outputRect,
+				PGpBitmap* outputBitmap,
+				BOOL useAuxData,
+				VOID** auxData,
+				INT* auxDataSize
+			);
+
+		[entry("GdipBitmapGetHistogram"), __category("GDI+ Flat API-Bitmap Functions")]
+		GpStatus WINGDIPAPI
+			GdipBitmapGetHistogram(
+				PGpBitmap bitmap,
+				IN HistogramFormat format,
+				IN UINT NumberOfEntries,
+				_Out_writes_bytes_(sizeof(UINT) * 256) UINT* channel0,
+				_Out_writes_bytes_(sizeof(UINT) * 256) UINT* channel1,
+				_Out_writes_bytes_(sizeof(UINT) * 256) UINT* channel2,
+				_Out_writes_bytes_(sizeof(UINT) * 256) UINT* channel3
+			);
+
+		[entry("GdipBitmapGetHistogramSize"), __category("GDI+ Flat API-Bitmap Functions")]
+		GpStatus WINGDIPAPI
+			GdipBitmapGetHistogramSize(
+				IN HistogramFormat format,
+				OUT UINT* NumberOfEntries
+			);
+
+		[entry("GdipBitmapSetResolution"), __category("GDI+ Flat API-Bitmap Functions")]
+		GpStatus WINGDIPAPI
 		GdipBitmapSetResolution([in]PGpBitmap  bitmap, [in]REAL xdpi, [in]REAL ydpi);
 
 		//----------------------------------------------------------------------------
 		// ImageAttributes APIs
 		//----------------------------------------------------------------------------
 
-		[entry("GdipCreateImageAttributes")] GpStatus WINGDIPAPI
+		[entry("GdipCreateImageAttributes"), __category("GDI+ Flat API-ImageAttributes Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateImageAttributes([out,retval]PGpImageAttributes *imageattr);
 
-		[entry("GdipCloneImageAttributes")] GpStatus WINGDIPAPI
+		[entry("GdipCloneImageAttributes"), __category("GDI+ Flat API-ImageAttributes Functions")]
+		GpStatus WINGDIPAPI
 		GdipCloneImageAttributes(GDIPCONST PGpImageAttributes imageattr,
 								 [out,retval]PGpImageAttributes *cloneImageattr);
 
-		[entry("GdipDisposeImageAttributes")] GpStatus WINGDIPAPI
+		[entry("GdipDisposeImageAttributes"), __category("GDI+ Flat API-ImageAttributes Functions")]
+		GpStatus_NoThrow WINGDIPAPI
 		GdipDisposeImageAttributes(PGpImageAttributes imageattr);
 
-		[entry("GdipSetImageAttributesToIdentity")] GpStatus WINGDIPAPI
+		[entry("GdipSetImageAttributesToIdentity"), __category("GDI+ Flat API-ImageAttributes Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetImageAttributesToIdentity(PGpImageAttributes imageattr,
 										 ColorAdjustType type);
-		[entry("GdipResetImageAttributes")] GpStatus WINGDIPAPI
+		[entry("GdipResetImageAttributes"), __category("GDI+ Flat API-ImageAttributes Functions")]
+		GpStatus WINGDIPAPI
 		GdipResetImageAttributes(PGpImageAttributes imageattr,
 								 ColorAdjustType type);
 
-		[entry("GdipSetImageAttributesColorMatrix")] GpStatus WINGDIPAPI
+		[entry("GdipSetImageAttributesColorMatrix"), __category("GDI+ Flat API-ImageAttributes Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetImageAttributesColorMatrix(PGpImageAttributes imageattr,
 									   ColorAdjustType type,
 									   BOOL enableFlag,
@@ -3316,49 +3902,57 @@ library Gdiplus
 									   GDIPCONST ColorMatrix* grayMatrix,
 									   ColorMatrixFlags flags);
 
-		[entry("GdipSetImageAttributesThreshold")] GpStatus WINGDIPAPI
+		[entry("GdipSetImageAttributesThreshold"), __category("GDI+ Flat API-ImageAttributes Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetImageAttributesThreshold(PGpImageAttributes imageattr,
 										ColorAdjustType type,
 										BOOL enableFlag,
 										REAL threshold);
 
-		[entry("GdipSetImageAttributesGamma")] GpStatus WINGDIPAPI
+		[entry("GdipSetImageAttributesGamma"), __category("GDI+ Flat API-ImageAttributes Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetImageAttributesGamma(PGpImageAttributes imageattr,
 									ColorAdjustType type,
 									BOOL enableFlag,
 									REAL gamma);
 
-		[entry("GdipSetImageAttributesNoOp")] GpStatus WINGDIPAPI
+		[entry("GdipSetImageAttributesNoOp"), __category("GDI+ Flat API-ImageAttributes Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetImageAttributesNoOp(PGpImageAttributes imageattr,
 								   ColorAdjustType type,
 								   BOOL enableFlag);
 
-		[entry("GdipSetImageAttributesColorKeys")] GpStatus WINGDIPAPI
+		[entry("GdipSetImageAttributesColorKeys"), __category("GDI+ Flat API-ImageAttributes Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetImageAttributesColorKeys(PGpImageAttributes imageattr,
 										ColorAdjustType type,
 										BOOL enableFlag,
 										ARGB colorLow,
 										ARGB colorHigh);
 
-		[entry("GdipSetImageAttributesOutputChannel")] GpStatus WINGDIPAPI
+		[entry("GdipSetImageAttributesOutputChannel"), __category("GDI+ Flat API-ImageAttributes Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetImageAttributesOutputChannel(PGpImageAttributes imageattr,
 											ColorAdjustType type,
 											BOOL enableFlag,
 											ColorChannelFlags channelFlags);
 
-		[entry("GdipSetImageAttributesOutputChannelColorProfile")] GpStatus WINGDIPAPI
+		[entry("GdipSetImageAttributesOutputChannelColorProfile"), __category("GDI+ Flat API-ImageAttributes Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetImageAttributesOutputChannelColorProfile(PGpImageAttributes imageattr,
 														ColorAdjustType type,
 														BOOL enableFlag,
 														[in]LPCOLESTR colorProfileFilename);
 
-		[entry("GdipSetImageAttributesRemapTable")] GpStatus WINGDIPAPI
+		[entry("GdipSetImageAttributesRemapTable"), __category("GDI+ Flat API-ImageAttributes Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetImageAttributesRemapTable(PGpImageAttributes imageattr,
 										 ColorAdjustType type,
 										 BOOL enableFlag,
 										 UINT mapSize,
 										 GDIPCONST ColorMap *map);
-		[entry("GdipSetImageAttributesWrapMode")] GpStatus WINGDIPAPI
+		[entry("GdipSetImageAttributesWrapMode"), __category("GDI+ Flat API-ImageAttributes Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetImageAttributesWrapMode(
 			PGpImageAttributes imageAttr,
 			WrapMode wrap,
@@ -3366,13 +3960,15 @@ library Gdiplus
 			BOOL clamp
 		);
 
-		[entry("GdipSetImageAttributesICMMode")] GpStatus WINGDIPAPI
+		[entry("GdipSetImageAttributesICMMode"), __category("GDI+ Flat API-ImageAttributes Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetImageAttributesICMMode(
 			PGpImageAttributes imageAttr,
 			BOOL on
 		);
 
-		[entry("GdipGetImageAttributesAdjustedPalette")] GpStatus WINGDIPAPI
+		[entry("GdipGetImageAttributesAdjustedPalette"), __category("GDI+ Flat API-ImageAttributes Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetImageAttributesAdjustedPalette(
 			PGpImageAttributes imageAttr,
 			ColorPalette * colorPalette,
@@ -3383,379 +3979,492 @@ library Gdiplus
 		// Graphics APIs
 		//----------------------------------------------------------------------------
 
-		[entry("GdipFlush")] GpStatus WINGDIPAPI
+		[entry("GdipFlush"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipFlush(PGpGraphics graphics, GpFlushIntention intention);
 
-		[entry("GdipCreateFromHDC")] GpStatus WINGDIPAPI
+		[entry("GdipCreateFromHDC"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateFromHDC(HDC hdc, [out,retval]PGpGraphics *graphics);
 
-		[entry("GdipCreateFromHDC2")] GpStatus WINGDIPAPI
+		[entry("GdipCreateFromHDC2"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateFromHDC2(HDC hdc, HANDLE hDevice, [out,retval]PGpGraphics *graphics);
 
-		[entry("GdipCreateFromHWND")] GpStatus WINGDIPAPI
+		[entry("GdipCreateFromHWND"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateFromHWND(HWND hwnd, [out,retval]PGpGraphics *graphics);
 
-		[entry("GdipCreateFromHWNDICM")] GpStatus WINGDIPAPI
+		[entry("GdipCreateFromHWNDICM"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateFromHWNDICM(HWND hwnd, [out,retval]PGpGraphics *graphics);
 
-		[entry("GdipDeleteGraphics")] GpStatus WINGDIPAPI
+		[entry("GdipDeleteGraphics"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus_NoThrow WINGDIPAPI
 		GdipDeleteGraphics(PGpGraphics graphics);
 
-		[entry("GdipGetDC")] GpStatus WINGDIPAPI
+		[entry("GdipGetDC"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetDC(PGpGraphics  graphics, HDC * hdc);
 
-		[entry("GdipReleaseDC")] GpStatus WINGDIPAPI
+		[entry("GdipReleaseDC"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipReleaseDC(PGpGraphics  graphics, HDC hdc);
 
-		[entry("GdipSetCompositingMode")] GpStatus WINGDIPAPI
+		[entry("GdipSetCompositingMode"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetCompositingMode(PGpGraphics graphics, CompositingMode compositingMode);
 
-		[entry("GdipGetCompositingMode")] GpStatus WINGDIPAPI
+		[entry("GdipGetCompositingMode"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetCompositingMode(PGpGraphics graphics, CompositingMode *compositingMode);
 
-		[entry("GdipSetRenderingOrigin")] GpStatus WINGDIPAPI
+		[entry("GdipSetRenderingOrigin"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetRenderingOrigin(PGpGraphics graphics, INT x, INT y);
 
-		[entry("GdipGetRenderingOrigin")] GpStatus WINGDIPAPI
+		[entry("GdipGetRenderingOrigin"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetRenderingOrigin(PGpGraphics graphics, INT *x, INT *y);
 
-		[entry("GdipSetCompositingQuality")] GpStatus WINGDIPAPI
+		[entry("GdipSetCompositingQuality"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetCompositingQuality(PGpGraphics graphics, 
 								  CompositingQuality compositingQuality);
 
-		[entry("GdipGetCompositingQuality")] GpStatus WINGDIPAPI
+		[entry("GdipGetCompositingQuality"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetCompositingQuality(PGpGraphics graphics, 
 								  CompositingQuality *compositingQuality);
                           
-		[entry("GdipSetSmoothingMode")] GpStatus WINGDIPAPI
+		[entry("GdipSetSmoothingMode"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetSmoothingMode(PGpGraphics graphics, SmoothingMode smoothingMode);
 
-		[entry("GdipGetSmoothingMode")] GpStatus WINGDIPAPI
+		[entry("GdipGetSmoothingMode"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetSmoothingMode(PGpGraphics graphics, SmoothingMode *smoothingMode);
 
-		[entry("GdipSetPixelOffsetMode")] GpStatus WINGDIPAPI
+		[entry("GdipSetPixelOffsetMode"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetPixelOffsetMode(PGpGraphics  graphics, PixelOffsetMode pixelOffsetMode);
 
-		[entry("GdipGetPixelOffsetMode")] GpStatus WINGDIPAPI
+		[entry("GdipGetPixelOffsetMode"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetPixelOffsetMode(PGpGraphics graphics, PixelOffsetMode *pixelOffsetMode);
 
-		[entry("GdipSetTextRenderingHint")] GpStatus WINGDIPAPI
+		[entry("GdipSetTextRenderingHint"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetTextRenderingHint(PGpGraphics graphics, TextRenderingHint mode);
 
-		[entry("GdipGetTextRenderingHint")] GpStatus WINGDIPAPI
+		[entry("GdipGetTextRenderingHint"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetTextRenderingHint(PGpGraphics graphics, TextRenderingHint *mode);
 
-		[entry("GdipSetTextContrast")] GpStatus WINGDIPAPI
+		[entry("GdipSetTextContrast"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetTextContrast(PGpGraphics graphics, UINT contrast);
 
-		[entry("GdipGetTextContrast")] GpStatus WINGDIPAPI
+		[entry("GdipGetTextContrast"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetTextContrast(PGpGraphics graphics, UINT * contrast);
 
-		[entry("GdipSetInterpolationMode")] GpStatus WINGDIPAPI
+		[entry("GdipSetInterpolationMode"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetInterpolationMode(PGpGraphics graphics, 
 								 InterpolationMode interpolationMode);
 
-		[entry("GdipGetInterpolationMode")] GpStatus WINGDIPAPI
+		[entry("GdipGetInterpolationMode"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetInterpolationMode(PGpGraphics graphics, 
 								 InterpolationMode *interpolationMode);
 
-		[entry("GdipSetWorldTransform")] GpStatus WINGDIPAPI
+		[entry("GdipSetWorldTransform"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetWorldTransform(PGpGraphics graphics, PGpMatrix matrix);
 
-		[entry("GdipResetWorldTransform")] GpStatus WINGDIPAPI
+		[entry("GdipResetWorldTransform"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipResetWorldTransform(PGpGraphics graphics);
 
-		[entry("GdipMultiplyWorldTransform")] GpStatus WINGDIPAPI
+		[entry("GdipMultiplyWorldTransform"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipMultiplyWorldTransform(PGpGraphics graphics, GDIPCONST PGpMatrix matrix,
 								   GpMatrixOrder order);
 
-		[entry("GdipTranslateWorldTransform")] GpStatus WINGDIPAPI
+		[entry("GdipTranslateWorldTransform"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipTranslateWorldTransform(PGpGraphics graphics, REAL dx, REAL dy,
 									GpMatrixOrder order);
 
-		[entry("GdipScaleWorldTransform")] GpStatus WINGDIPAPI
+		[entry("GdipScaleWorldTransform"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipScaleWorldTransform(PGpGraphics graphics, REAL sx, REAL sy,
 								GpMatrixOrder order);
 
-		[entry("GdipRotateWorldTransform")] GpStatus WINGDIPAPI
+		[entry("GdipRotateWorldTransform"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipRotateWorldTransform(PGpGraphics graphics, REAL angle, 
 								 GpMatrixOrder order);
 
-		[entry("GdipGetWorldTransform")] GpStatus WINGDIPAPI
+		[entry("GdipGetWorldTransform"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetWorldTransform(PGpGraphics graphics, PGpMatrix matrix);
 
-		[entry("GdipResetPageTransform")] GpStatus WINGDIPAPI
+		[entry("GdipResetPageTransform"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipResetPageTransform(PGpGraphics graphics);
 
-		[entry("GdipGetPageUnit")] GpStatus WINGDIPAPI
+		[entry("GdipGetPageUnit"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetPageUnit(PGpGraphics graphics, GpUnit *unit);
 
-		[entry("GdipGetPageScale")] GpStatus WINGDIPAPI
+		[entry("GdipGetPageScale"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetPageScale(PGpGraphics graphics, REAL *scale);
 
-		[entry("GdipSetPageUnit")] GpStatus WINGDIPAPI
+		[entry("GdipSetPageUnit"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetPageUnit(PGpGraphics graphics, GpUnit unit);
 
-		[entry("GdipSetPageScale")] GpStatus WINGDIPAPI
+		[entry("GdipSetPageScale"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetPageScale(PGpGraphics graphics, REAL scale);
 
-		[entry("GdipGetDpiX")] GpStatus WINGDIPAPI
+		[entry("GdipGetDpiX"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetDpiX(PGpGraphics graphics, REAL* dpi);
 
-		[entry("GdipGetDpiY")] GpStatus WINGDIPAPI
+		[entry("GdipGetDpiY"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetDpiY(PGpGraphics graphics, REAL* dpi);
 
-		[entry("GdipTransformPoints")] GpStatus WINGDIPAPI
+		[entry("GdipTransformPoints"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipTransformPoints(PGpGraphics graphics, GpCoordinateSpace destSpace,
 									 GpCoordinateSpace srcSpace, GpPointF *points,
 									 INT count);
 
-		[entry("GdipTransformPointsI")] GpStatus WINGDIPAPI
+		[entry("GdipTransformPointsI"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipTransformPointsI(PGpGraphics graphics, GpCoordinateSpace destSpace,
 									 GpCoordinateSpace srcSpace, GpPoint *points,
 									 INT count);
 
-		[entry("GdipGetNearestColor")] GpStatus WINGDIPAPI
+		[entry("GdipGetNearestColor"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetNearestColor(PGpGraphics graphics, ARGB* argb);
 
 		
 		[helpstring("Creates the Win9x Halftone Palette (even on NT) with correct Desktop colors"), 
-			entry("GdipCreateHalftonePalette")] 
+			entry("GdipCreateHalftonePalette"), __category("GDI+ Flat API-Graphics Functions")]
 		HPALETTE WINGDIPAPI	GdipCreateHalftonePalette();
 
-		[entry("GdipDrawLine")] GpStatus WINGDIPAPI
+		[entry("GdipDrawLine"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipDrawLine(PGpGraphics graphics, PGpPen pen, REAL x1, REAL y1,
 							  REAL x2, REAL y2);
 
-		[entry("GdipDrawLineI")] GpStatus WINGDIPAPI
+		[entry("GdipDrawLineI"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipDrawLineI(PGpGraphics graphics, PGpPen pen, INT x1, INT y1,
 							  INT x2, INT y2);
 
-		[entry("GdipDrawLines")] GpStatus WINGDIPAPI
+		[entry("GdipDrawLines"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipDrawLines(PGpGraphics graphics, PGpPen pen, GDIPCONST GpPointF *points,
 							   INT count);
 
-		[entry("GdipDrawLinesI")] GpStatus WINGDIPAPI
+		[entry("GdipDrawLinesI"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipDrawLinesI(PGpGraphics graphics, PGpPen pen, GDIPCONST GpPoint *points,
 							   INT count);
 
-		[entry("GdipDrawArc")] GpStatus WINGDIPAPI
+		[entry("GdipDrawArc"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipDrawArc(PGpGraphics graphics, PGpPen pen, REAL x, REAL y,
 					REAL width, REAL height, REAL startAngle, REAL sweepAngle);
 
-		[entry("GdipDrawArcI")] GpStatus WINGDIPAPI
+		[entry("GdipDrawArcI"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipDrawArcI(PGpGraphics graphics, PGpPen pen, INT x, INT y,
 							 INT width, INT height, REAL startAngle, REAL sweepAngle);
 
-		[entry("GdipDrawBezier")] GpStatus WINGDIPAPI
+		[entry("GdipDrawBezier"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipDrawBezier(PGpGraphics graphics, PGpPen pen, REAL x1, REAL y1,
 								REAL x2, REAL y2, REAL x3, REAL y3, REAL x4, REAL y4);
 
-		[entry("GdipDrawBezierI")] GpStatus WINGDIPAPI
+		[entry("GdipDrawBezierI"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipDrawBezierI(PGpGraphics graphics, PGpPen pen, INT x1, INT y1,
 								INT x2, INT y2, INT x3, INT y3, INT x4, INT y4);
 
-		[entry("GdipDrawBeziers")] GpStatus WINGDIPAPI
+		[entry("GdipDrawBeziers"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipDrawBeziers(PGpGraphics graphics, PGpPen pen, GDIPCONST GpPointF *points,
 								 INT count);
 
-		[entry("GdipDrawBeziersI")] GpStatus WINGDIPAPI
+		[entry("GdipDrawBeziersI"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipDrawBeziersI(PGpGraphics graphics, PGpPen pen, GDIPCONST GpPoint *points,
 								 INT count);
 
-		[entry("GdipDrawRectangle")] GpStatus WINGDIPAPI
+		[entry("GdipDrawRectangle"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipDrawRectangle(PGpGraphics graphics, PGpPen pen, REAL x, REAL y,
 							  REAL width, REAL height);
 
-		[entry("GdipDrawRectangleI")] GpStatus WINGDIPAPI
+		[entry("GdipDrawRectangleI"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipDrawRectangleI(PGpGraphics graphics, PGpPen pen, INT x, INT y,
 							  INT width, INT height);
 
-		[entry("GdipDrawRectangles")] GpStatus WINGDIPAPI
+		[entry("GdipDrawRectangles"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipDrawRectangles(PGpGraphics graphics, PGpPen pen, GDIPCONST GpRectF *rects,
 							   INT count);
 
-		[entry("GdipDrawRectanglesI")] GpStatus WINGDIPAPI
+		[entry("GdipDrawRectanglesI"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipDrawRectanglesI(PGpGraphics graphics, PGpPen pen, GDIPCONST GpRect *rects,
 							   INT count);
 
-		[entry("GdipDrawEllipse")] GpStatus WINGDIPAPI
+		[entry("GdipDrawEllipse"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipDrawEllipse(PGpGraphics graphics, PGpPen pen, REAL x, REAL y,
 								 REAL width, REAL height);
 
-		[entry("GdipDrawEllipseI")] GpStatus WINGDIPAPI
+		[entry("GdipDrawEllipseI"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipDrawEllipseI(PGpGraphics graphics, PGpPen pen, INT x, INT y,
 								 INT width, INT height);
 
-		[entry("GdipDrawPie")] GpStatus WINGDIPAPI
+		[entry("GdipDrawPie"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipDrawPie(PGpGraphics graphics, PGpPen pen, REAL x, REAL y,
 							 REAL width, REAL height, REAL startAngle, 
 					REAL sweepAngle);
 
-		[entry("GdipDrawPieI")] GpStatus WINGDIPAPI
+		[entry("GdipDrawPieI"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipDrawPieI(PGpGraphics graphics, PGpPen pen, INT x, INT y,
 							 INT width, INT height, REAL startAngle, REAL sweepAngle);
 
-		[entry("GdipDrawPolygon")] GpStatus WINGDIPAPI
+		[entry("GdipDrawPolygon"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipDrawPolygon(PGpGraphics graphics, PGpPen pen, GDIPCONST GpPointF *points,
 								 INT count);
 
-		[entry("GdipDrawPolygonI")] GpStatus WINGDIPAPI
+		[entry("GdipDrawPolygonI"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipDrawPolygonI(PGpGraphics graphics, PGpPen pen, GDIPCONST GpPoint *points,
 								 INT count);
 
-		[entry("GdipDrawPath")] GpStatus WINGDIPAPI
+		[entry("GdipDrawPath"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipDrawPath(PGpGraphics graphics, PGpPen pen, PGpPath path);
 
-		[entry("GdipDrawCurve")] GpStatus WINGDIPAPI
+		[entry("GdipDrawCurve"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipDrawCurve(PGpGraphics graphics, PGpPen pen, GDIPCONST GpPointF *points,
 							   INT count);
 
-		[entry("GdipDrawCurveI")] GpStatus WINGDIPAPI
+		[entry("GdipDrawCurveI"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipDrawCurveI(PGpGraphics graphics, PGpPen pen, GDIPCONST GpPoint *points,
 							   INT count);
 
-		[entry("GdipDrawCurve2")] GpStatus WINGDIPAPI
+		[entry("GdipDrawCurve2"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipDrawCurve2(PGpGraphics graphics, PGpPen pen, GDIPCONST GpPointF *points,
 							   INT count, REAL tension);
 
-		[entry("GdipDrawCurve2I")] GpStatus WINGDIPAPI
+		[entry("GdipDrawCurve2I"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipDrawCurve2I(PGpGraphics graphics, PGpPen pen, GDIPCONST GpPoint *points,
 							   INT count, REAL tension);
 
-		[entry("GdipDrawCurve3")] GpStatus WINGDIPAPI
+		[entry("GdipDrawCurve3"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipDrawCurve3(PGpGraphics graphics, PGpPen pen, GDIPCONST GpPointF *points,
 					   INT count, INT offset, INT numberOfSegments, REAL tension);
 
-		[entry("GdipDrawCurve3I")] GpStatus WINGDIPAPI
+		[entry("GdipDrawCurve3I"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipDrawCurve3I(PGpGraphics graphics, PGpPen pen, GDIPCONST GpPoint *points,
 						INT count, INT offset, INT numberOfSegments, REAL tension);
 
-		[entry("GdipDrawClosedCurve")] GpStatus WINGDIPAPI
+		[entry("GdipDrawClosedCurve"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipDrawClosedCurve(PGpGraphics graphics, PGpPen pen,
 							GDIPCONST GpPointF *points, INT count);
 
-		[entry("GdipDrawClosedCurveI")] GpStatus WINGDIPAPI
+		[entry("GdipDrawClosedCurveI"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipDrawClosedCurveI(PGpGraphics graphics, PGpPen pen,
 							 GDIPCONST GpPoint *points, INT count);
 
-		[entry("GdipDrawClosedCurve2")] GpStatus WINGDIPAPI
+		[entry("GdipDrawClosedCurve2"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipDrawClosedCurve2(PGpGraphics graphics, PGpPen pen,
 							 GDIPCONST GpPointF *points, INT count, REAL tension);
 
-		[entry("GdipDrawClosedCurve2I")] GpStatus WINGDIPAPI
+		[entry("GdipDrawClosedCurve2I"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipDrawClosedCurve2I(PGpGraphics graphics, PGpPen pen,
 							  GDIPCONST GpPoint *points, INT count, REAL tension);
 
-		[entry("GdipGraphicsClear")] GpStatus WINGDIPAPI
+		[entry("GdipGraphicsClear"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipGraphicsClear(PGpGraphics graphics, ARGB color);
 
-		[entry("GdipFillRectangle")] GpStatus WINGDIPAPI
+		[entry("GdipFillRectangle"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipFillRectangle(PGpGraphics graphics, PGpBrush brush, REAL x, REAL y,
 						  REAL width, REAL height);
 
-		[entry("GdipFillRectangleI")] GpStatus WINGDIPAPI
+		[entry("GdipFillRectangleI"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipFillRectangleI(PGpGraphics graphics, PGpBrush brush, INT x, INT y,
 						   INT width, INT height);
 
-		[entry("GdipFillRectangles")] GpStatus WINGDIPAPI
+		[entry("GdipFillRectangles"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipFillRectangles(PGpGraphics graphics, PGpBrush brush,
 						   GDIPCONST GpRectF *rects, INT count);
 
-		[entry("GdipFillRectanglesI")] GpStatus WINGDIPAPI
+		[entry("GdipFillRectanglesI"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipFillRectanglesI(PGpGraphics graphics, PGpBrush brush,
 							GDIPCONST GpRect *rects, INT count);
 
-		[entry("GdipFillPolygon")] GpStatus WINGDIPAPI
+		[entry("GdipFillPolygon"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipFillPolygon(PGpGraphics graphics, PGpBrush brush,
 						GDIPCONST GpPointF *points, INT count, GpFillMode fillMode);
 
-		[entry("GdipFillPolygonI")] GpStatus WINGDIPAPI
+		[entry("GdipFillPolygonI"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipFillPolygonI(PGpGraphics graphics, PGpBrush brush,
 						 GDIPCONST GpPoint *points, INT count, GpFillMode fillMode);
 
-		[entry("GdipFillPolygon2")] GpStatus WINGDIPAPI
+		[entry("GdipFillPolygon2"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipFillPolygon2(PGpGraphics graphics, PGpBrush brush,
 						 GDIPCONST GpPointF *points, INT count);
 
-		[entry("GdipFillPolygon2I")] GpStatus WINGDIPAPI
+		[entry("GdipFillPolygon2I"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipFillPolygon2I(PGpGraphics graphics, PGpBrush brush,
 						  GDIPCONST GpPoint *points, INT count);
 
-		[entry("GdipFillEllipse")] GpStatus WINGDIPAPI
+		[entry("GdipFillEllipse"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipFillEllipse(PGpGraphics graphics, PGpBrush brush, REAL x, REAL y,
 						REAL width, REAL height);
 
-		[entry("GdipFillEllipseI")] GpStatus WINGDIPAPI
+		[entry("GdipFillEllipseI"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipFillEllipseI(PGpGraphics graphics, PGpBrush brush, INT x, INT y,
 						 INT width, INT height);
 
-		[entry("GdipFillPie")] GpStatus WINGDIPAPI
+		[entry("GdipFillPie"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipFillPie(PGpGraphics graphics, PGpBrush brush, REAL x, REAL y,
 					REAL width, REAL height, REAL startAngle, REAL sweepAngle);
 
-		[entry("GdipFillPieI")] GpStatus WINGDIPAPI
+		[entry("GdipFillPieI"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipFillPieI(PGpGraphics graphics, PGpBrush brush, INT x, INT y,
 					 INT width, INT height, REAL startAngle, REAL sweepAngle);
 
-		[entry("GdipFillPath")] GpStatus WINGDIPAPI
+		[entry("GdipFillPath"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipFillPath(PGpGraphics graphics, PGpBrush brush, PGpPath path);
 
-		[entry("GdipFillClosedCurve")] GpStatus WINGDIPAPI
+		[entry("GdipFillClosedCurve"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipFillClosedCurve(PGpGraphics graphics, PGpBrush brush,
 									  GDIPCONST GpPointF *points, INT count);
 
-		[entry("GdipFillClosedCurveI")] GpStatus WINGDIPAPI
+		[entry("GdipFillClosedCurveI"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipFillClosedCurveI(PGpGraphics graphics, PGpBrush brush,
 									  GDIPCONST GpPoint *points, INT count);
 
-		[entry("GdipFillClosedCurve2")] GpStatus WINGDIPAPI
+		[entry("GdipFillClosedCurve2"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipFillClosedCurve2(PGpGraphics graphics, PGpBrush brush,
 									  GDIPCONST GpPointF *points, INT count,
 									  REAL tension, GpFillMode fillMode);
 
-		[entry("GdipFillClosedCurve2I")] GpStatus WINGDIPAPI
+		[entry("GdipFillClosedCurve2I"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipFillClosedCurve2I(PGpGraphics graphics, PGpBrush brush,
 									  GDIPCONST GpPoint *points, INT count,
 									  REAL tension, GpFillMode fillMode);
 
-		[entry("GdipFillRegion")] GpStatus WINGDIPAPI
+		[entry("GdipFillRegion"), __category("GDI+ Flat API-Region Functions")]
+		GpStatus WINGDIPAPI
 		GdipFillRegion(PGpGraphics graphics, PGpBrush brush,
 								PGpRegion region);
 
-		[entry("GdipDrawImage")] GpStatus WINGDIPAPI
+		[entry("GdipDrawImageFX"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus
+			WINGDIPAPI
+			GdipDrawImageFX(
+				PGpGraphics graphics,
+				PGpImage image,
+				GpRectF* source,
+				PGpMatrix xForm,
+				PCGpEffect effect,
+				PGpImageAttributes imageAttributes,
+				GpUnit srcUnit
+			);
+
+		[entry("GdipDrawImage"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
 		GdipDrawImage(PGpGraphics graphics, PGpImage  image, REAL x, REAL y);
 
-		[entry("GdipDrawImageI")] GpStatus WINGDIPAPI
+		[entry("GdipDrawImageI"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
 		GdipDrawImageI(PGpGraphics graphics, PGpImage  image, INT x, INT y);
 
-		[entry("GdipDrawImageRect")] GpStatus WINGDIPAPI
+		[entry("GdipDrawImageRect"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
 		GdipDrawImageRect(PGpGraphics graphics, PGpImage  image, REAL x, REAL y,
 								   REAL width, REAL height);
 
-		[entry("GdipDrawImageRectI")] GpStatus WINGDIPAPI
+		[entry("GdipDrawImageRectI"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
 		GdipDrawImageRectI(PGpGraphics graphics, PGpImage  image, INT x, INT y,
 								   INT width, INT height);
 
-		[entry("GdipDrawImagePoints")] GpStatus WINGDIPAPI
+		[entry("GdipDrawImagePoints"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
 		GdipDrawImagePoints(PGpGraphics graphics, PGpImage  image,
 									 GDIPCONST GpPointF *dstpoints, INT count);
 
-		[entry("GdipDrawImagePointsI")] GpStatus WINGDIPAPI
+		[entry("GdipDrawImagePointsI"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
 		GdipDrawImagePointsI(PGpGraphics graphics, PGpImage  image,
 									 GDIPCONST GpPoint *dstpoints, INT count);
 
-		[entry("GdipDrawImagePointRect")] GpStatus WINGDIPAPI
+		[entry("GdipDrawImagePointRect"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
 		GdipDrawImagePointRect(PGpGraphics graphics, PGpImage  image, REAL x,
 										REAL y, REAL srcx, REAL srcy, REAL srcwidth,
 										REAL srcheight, GpUnit srcUnit);
 
-		[entry("GdipDrawImagePointRectI")] GpStatus WINGDIPAPI
+		[entry("GdipDrawImagePointRectI"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
 		GdipDrawImagePointRectI(PGpGraphics graphics, PGpImage  image, INT x,
 										INT y, INT srcx, INT srcy, INT srcwidth,
 										INT srcheight, GpUnit srcUnit);
 
-		[entry("GdipDrawImageRectRect")] GpStatus WINGDIPAPI
+		[entry("GdipDrawImageRectRect"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
 		GdipDrawImageRectRect(PGpGraphics graphics, PGpImage  image, REAL dstx,
 							  REAL dsty, REAL dstwidth, REAL dstheight,
 							  REAL srcx, REAL srcy, REAL srcwidth, REAL srcheight,
@@ -3763,7 +4472,8 @@ library Gdiplus
 							  GDIPCONST PGpImageAttributes  imageAttributes,
 							  DrawImageAbort callback, VOID * callbackData);
 
-		[entry("GdipDrawImageRectRectI")] GpStatus WINGDIPAPI
+		[entry("GdipDrawImageRectRectI"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
 		GdipDrawImageRectRectI(PGpGraphics graphics, PGpImage  image, INT dstx,
 							   INT dsty, INT dstwidth, INT dstheight,
 							   INT srcx, INT srcy, INT srcwidth, INT srcheight,
@@ -3771,7 +4481,8 @@ library Gdiplus
 							   GDIPCONST PGpImageAttributes  imageAttributes,
 							   DrawImageAbort callback, VOID * callbackData);
 
-		[entry("GdipDrawImagePointsRect")] GpStatus WINGDIPAPI
+		[entry("GdipDrawImagePointsRect"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
 		GdipDrawImagePointsRect(PGpGraphics graphics, PGpImage  image,
 								GDIPCONST GpPointF *points, INT count, REAL srcx,
 								REAL srcy, REAL srcwidth, REAL srcheight,
@@ -3779,7 +4490,8 @@ library Gdiplus
 								GDIPCONST PGpImageAttributes  imageAttributes,
 								DrawImageAbort callback, VOID * callbackData);
 
-		[entry("GdipDrawImagePointsRectI")] GpStatus WINGDIPAPI
+		[entry("GdipDrawImagePointsRectI"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
 		GdipDrawImagePointsRectI(PGpGraphics graphics, PGpImage  image,
 								 GDIPCONST GpPoint *points, INT count, INT srcx,
 								 INT srcy, INT srcwidth, INT srcheight,
@@ -3787,7 +4499,8 @@ library Gdiplus
 								 GDIPCONST PGpImageAttributes  imageAttributes,
 								 DrawImageAbort callback, VOID * callbackData);
 
-		[entry("GdipEnumerateMetafileDestPoint")] GpStatus WINGDIPAPI
+		[entry("GdipEnumerateMetafileDestPoint"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipEnumerateMetafileDestPoint(
 			[in]PGpGraphics             graphics,
 			GDIPCONST PGpMetafile   metafile,
@@ -3797,7 +4510,8 @@ library Gdiplus
 			GDIPCONST PGpImageAttributes      imageAttributes
 			);
 
-		[entry("GdipEnumerateMetafileDestPointI")] GpStatus WINGDIPAPI
+		[entry("GdipEnumerateMetafileDestPointI"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipEnumerateMetafileDestPointI(
 			PGpGraphics             graphics,
 			GDIPCONST PGpMetafile   metafile,
@@ -3807,7 +4521,8 @@ library Gdiplus
 			GDIPCONST PGpImageAttributes      imageAttributes
 			);
 
-		[entry("GdipEnumerateMetafileDestRect")] GpStatus WINGDIPAPI
+		[entry("GdipEnumerateMetafileDestRect"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipEnumerateMetafileDestRect(
 			PGpGraphics             graphics,
 			GDIPCONST PGpMetafile   metafile,
@@ -3817,7 +4532,8 @@ library Gdiplus
 			GDIPCONST PGpImageAttributes      imageAttributes
 			);
 
-		[entry("GdipEnumerateMetafileDestRectI")] GpStatus WINGDIPAPI
+		[entry("GdipEnumerateMetafileDestRectI"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipEnumerateMetafileDestRectI(
 			PGpGraphics             graphics,
 			GDIPCONST PGpMetafile   metafile,
@@ -3827,7 +4543,8 @@ library Gdiplus
 			GDIPCONST PGpImageAttributes      imageAttributes
 			);
 
-		[entry("GdipEnumerateMetafileDestPoints")] GpStatus WINGDIPAPI
+		[entry("GdipEnumerateMetafileDestPoints"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipEnumerateMetafileDestPoints(
 			PGpGraphics             graphics,
 			GDIPCONST PGpMetafile   metafile,
@@ -3838,7 +4555,8 @@ library Gdiplus
 			GDIPCONST PGpImageAttributes      imageAttributes
 			);
 
-		[entry("GdipEnumerateMetafileDestPointsI")] GpStatus WINGDIPAPI
+		[entry("GdipEnumerateMetafileDestPointsI"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipEnumerateMetafileDestPointsI(
 			PGpGraphics             graphics,
 			GDIPCONST PGpMetafile   metafile,
@@ -3849,7 +4567,8 @@ library Gdiplus
 			GDIPCONST PGpImageAttributes      imageAttributes
 			);
 
-		[entry("GdipEnumerateMetafileSrcRectDestPoint")] GpStatus WINGDIPAPI
+		[entry("GdipEnumerateMetafileSrcRectDestPoint"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipEnumerateMetafileSrcRectDestPoint(
 			PGpGraphics             graphics,
 			GDIPCONST PGpMetafile   metafile,
@@ -3861,7 +4580,8 @@ library Gdiplus
 			GDIPCONST PGpImageAttributes      imageAttributes
 			);
 
-		[entry("GdipEnumerateMetafileSrcRectDestPointI")] GpStatus WINGDIPAPI
+		[entry("GdipEnumerateMetafileSrcRectDestPointI"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipEnumerateMetafileSrcRectDestPointI(
 			PGpGraphics             graphics,
 			GDIPCONST PGpMetafile   metafile,
@@ -3873,7 +4593,8 @@ library Gdiplus
 			GDIPCONST PGpImageAttributes      imageAttributes
 			);
 
-		[entry("GdipEnumerateMetafileSrcRectDestRect")] GpStatus WINGDIPAPI
+		[entry("GdipEnumerateMetafileSrcRectDestRect"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipEnumerateMetafileSrcRectDestRect(
 			PGpGraphics             graphics,
 			GDIPCONST PGpMetafile   metafile,
@@ -3885,7 +4606,8 @@ library Gdiplus
 			GDIPCONST PGpImageAttributes      imageAttributes
 			);
 
-		[entry("GdipEnumerateMetafileSrcRectDestRectI")] GpStatus WINGDIPAPI
+		[entry("GdipEnumerateMetafileSrcRectDestRectI"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipEnumerateMetafileSrcRectDestRectI(
 			PGpGraphics             graphics,
 			GDIPCONST PGpMetafile   metafile,
@@ -3897,7 +4619,8 @@ library Gdiplus
 			GDIPCONST PGpImageAttributes      imageAttributes
 			);
 
-		[entry("GdipEnumerateMetafileSrcRectDestPoints")] GpStatus WINGDIPAPI
+		[entry("GdipEnumerateMetafileSrcRectDestPoints"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipEnumerateMetafileSrcRectDestPoints(
 			PGpGraphics             graphics,
 			GDIPCONST PGpMetafile   metafile,
@@ -3910,7 +4633,8 @@ library Gdiplus
 			GDIPCONST PGpImageAttributes      imageAttributes
 			);
 
-		[entry("GdipEnumerateMetafileSrcRectDestPointsI")] GpStatus WINGDIPAPI
+		[entry("GdipEnumerateMetafileSrcRectDestPointsI"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipEnumerateMetafileSrcRectDestPointsI(
 			PGpGraphics             graphics,
 			GDIPCONST PGpMetafile   metafile,
@@ -3923,7 +4647,8 @@ library Gdiplus
 			GDIPCONST PGpImageAttributes      imageAttributes
 			);
 
-		[entry("GdipPlayMetafileRecord")] GpStatus WINGDIPAPI
+		[entry("GdipPlayMetafileRecord"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipPlayMetafileRecord(
 			GDIPCONST PGpMetafile   metafile,
 			EmfPlusRecordType       recordType,
@@ -3932,158 +4657,197 @@ library Gdiplus
 			GDIPCONST BYTE *        data
 			);
 
-		[entry("GdipSetClipGraphics")] GpStatus WINGDIPAPI
+		[entry("GdipSetClipGraphics"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetClipGraphics(PGpGraphics graphics, PGpGraphics srcgraphics,
 							CombineMode combineMode);
 
-		[entry("GdipSetClipRect")] GpStatus WINGDIPAPI
+		[entry("GdipSetClipRect"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetClipRect(PGpGraphics graphics, REAL x, REAL y,
 								 REAL width, REAL height, CombineMode combineMode);
 
-		[entry("GdipSetClipRectI")] GpStatus WINGDIPAPI
+		[entry("GdipSetClipRectI"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetClipRectI(PGpGraphics graphics, INT x, INT y,
 								 INT width, INT height, CombineMode combineMode);
 
-		[entry("GdipSetClipPath")] GpStatus WINGDIPAPI
+		[entry("GdipSetClipPath"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetClipPath(PGpGraphics graphics, PGpPath path, CombineMode combineMode);
 
-		[entry("GdipSetClipRegion")] GpStatus WINGDIPAPI
+		[entry("GdipSetClipRegion"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetClipRegion(PGpGraphics graphics, PGpRegion region,
 						  CombineMode combineMode);
 
-		[entry("GdipSetClipHrgn")] GpStatus WINGDIPAPI
+		[entry("GdipSetClipHrgn"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetClipHrgn(PGpGraphics graphics, HRGN hRgn, CombineMode combineMode);
 
-		[entry("GdipResetClip")] GpStatus WINGDIPAPI
+		[entry("GdipResetClip"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipResetClip(PGpGraphics graphics);
 
-		[entry("GdipTranslateClip")] GpStatus WINGDIPAPI
+		[entry("GdipTranslateClip"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipTranslateClip(PGpGraphics graphics, REAL dx, REAL dy);
 
-		[entry("GdipTranslateClipI")] GpStatus WINGDIPAPI
+		[entry("GdipTranslateClipI"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipTranslateClipI(PGpGraphics graphics, INT dx, INT dy);
 
-		[entry("GdipGetClip")] GpStatus WINGDIPAPI
+		[entry("GdipGetClip"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetClip(PGpGraphics graphics, PGpRegion region);
 
-		[entry("GdipGetClipBounds")] GpStatus WINGDIPAPI
+		[entry("GdipGetClipBounds"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetClipBounds(PGpGraphics graphics, GpRectF *rect);
 
-		[entry("GdipGetClipBoundsI")] GpStatus WINGDIPAPI
+		[entry("GdipGetClipBoundsI"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetClipBoundsI(PGpGraphics graphics, GpRect *rect);
 
-		[entry("GdipIsClipEmpty")] GpStatus WINGDIPAPI
+		[entry("GdipIsClipEmpty"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipIsClipEmpty(PGpGraphics graphics, BOOL *result);
 
-		[entry("GdipGetVisibleClipBounds")] GpStatus WINGDIPAPI
+		[entry("GdipGetVisibleClipBounds"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetVisibleClipBounds(PGpGraphics graphics, GpRectF *rect);
 
-		[entry("GdipGetVisibleClipBoundsI")] GpStatus WINGDIPAPI
+		[entry("GdipGetVisibleClipBoundsI"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetVisibleClipBoundsI(PGpGraphics graphics, GpRect *rect);
 
-		[entry("GdipIsVisibleClipEmpty")] GpStatus WINGDIPAPI
+		[entry("GdipIsVisibleClipEmpty"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipIsVisibleClipEmpty(PGpGraphics graphics, BOOL *result);
 
-		[entry("GdipIsVisiblePoint")] GpStatus WINGDIPAPI
+		[entry("GdipIsVisiblePoint"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipIsVisiblePoint(PGpGraphics graphics, REAL x, REAL y,
 								   BOOL *result);
 
-		[entry("GdipIsVisiblePointI")] GpStatus WINGDIPAPI
+		[entry("GdipIsVisiblePointI"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipIsVisiblePointI(PGpGraphics graphics, INT x, INT y,
 								   BOOL *result);
 
-		[entry("GdipIsVisibleRect")] GpStatus WINGDIPAPI
+		[entry("GdipIsVisibleRect"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipIsVisibleRect(PGpGraphics graphics, REAL x, REAL y,
 								   REAL width, REAL height, BOOL *result);
 
-		[entry("GdipIsVisibleRectI")] GpStatus WINGDIPAPI
+		[entry("GdipIsVisibleRectI"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipIsVisibleRectI(PGpGraphics graphics, INT x, INT y,
 								   INT width, INT height, BOOL *result);
 
-		[entry("GdipSaveGraphics")] GpStatus WINGDIPAPI
+		[entry("GdipSaveGraphics"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipSaveGraphics(PGpGraphics graphics, GraphicsState *state);
 
-		[entry("GdipRestoreGraphics")] GpStatus WINGDIPAPI
+		[entry("GdipRestoreGraphics"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipRestoreGraphics(PGpGraphics graphics, GraphicsState state);
 
-		[entry("GdipBeginContainer")] GpStatus WINGDIPAPI
+		[entry("GdipBeginContainer"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipBeginContainer(PGpGraphics graphics, GDIPCONST GpRectF* dstrect,
 						   GDIPCONST GpRectF *srcrect, GpUnit unit, 
 						   GraphicsContainer *state);
 
-		[entry("GdipBeginContainerI")] GpStatus WINGDIPAPI
+		[entry("GdipBeginContainerI"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipBeginContainerI(PGpGraphics graphics, GDIPCONST GpRect* dstrect,
 							GDIPCONST GpRect *srcrect, GpUnit unit, 
 							GraphicsContainer *state);
 
-		[entry("GdipBeginContainer2")] GpStatus WINGDIPAPI
+		[entry("GdipBeginContainer2"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipBeginContainer2(PGpGraphics graphics, GraphicsContainer* state);
 
-		[entry("GdipEndContainer")] GpStatus WINGDIPAPI
+		[entry("GdipEndContainer"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipEndContainer(PGpGraphics graphics, GraphicsContainer state);
 
-		[entry("GdipGetMetafileHeaderFromWmf")] GpStatus WINGDIPAPI
+		[entry("GdipGetMetafileHeaderFromWmf"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetMetafileHeaderFromWmf(
 			HMETAFILE           hWmf,
 			GDIPCONST WmfPlaceableFileHeader *     wmfPlaceableFileHeader,
 			MetafileHeader *    header
 			);
 
-		[entry("GdipGetMetafileHeaderFromEmf")] GpStatus WINGDIPAPI
+		[entry("GdipGetMetafileHeaderFromEmf"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetMetafileHeaderFromEmf(
 			HENHMETAFILE        hEmf,
 			MetafileHeader *    header
 			);
 
-		[entry("GdipGetMetafileHeaderFromFile")] GpStatus WINGDIPAPI
+		[entry("GdipGetMetafileHeaderFromFile"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetMetafileHeaderFromFile(
 			[in]LPCOLESTR        filename,
 			MetafileHeader *    header
 			);
 
-		[entry("GdipGetMetafileHeaderFromStream")] GpStatus WINGDIPAPI
+		[entry("GdipGetMetafileHeaderFromStream"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetMetafileHeaderFromStream(
 			IStream *           stream,
 			MetafileHeader *    header
 			);
 
-		[entry("GdipGetMetafileHeaderFromMetafile")] GpStatus WINGDIPAPI
+		[entry("GdipGetMetafileHeaderFromMetafile"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetMetafileHeaderFromMetafile(
 			PGpMetafile         metafile,
 			MetafileHeader *    header
 			);
 
-		[entry("GdipGetHemfFromMetafile")] GpStatus WINGDIPAPI
+		[entry("GdipGetHemfFromMetafile"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetHemfFromMetafile(
 			PGpMetafile         metafile,
 			HENHMETAFILE *      hEmf
 			);
 
-		[entry("GdipCreateStreamOnFile")] GpStatus WINGDIPAPI
+		[entry("GdipCreateStreamOnFile"), __category("GDI+ Flat API-Graphics Functions")] 
+		GpStatus WINGDIPAPI
 		GdipCreateStreamOnFile([in]LPCOLESTR  filename, UINT access, 
 							   [out,retval]IStream **stream);
 
-		[entry("GdipCreateMetafileFromWmf")] GpStatus WINGDIPAPI
+		[entry("GdipCreateMetafileFromWmf"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateMetafileFromWmf(HMETAFILE hWmf, BOOL deleteWmf,
 								  GDIPCONST WmfPlaceableFileHeader * wmfPlaceableFileHeader, 
 								  [out,retval]PGpMetafile *metafile);
 
-		[entry("GdipCreateMetafileFromEmf")] GpStatus WINGDIPAPI
+		[entry("GdipCreateMetafileFromEmf"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateMetafileFromEmf(HENHMETAFILE hEmf, BOOL deleteEmf,
 								  [out,retval]PGpMetafile *metafile);
 
-		[entry("GdipCreateMetafileFromFile")] GpStatus WINGDIPAPI
+		[entry("GdipCreateMetafileFromFile"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateMetafileFromFile([in]LPCOLESTR file, [out,retval]PGpMetafile *metafile);
 
-		[entry("GdipCreateMetafileFromWmfFile")] GpStatus WINGDIPAPI
+		[entry("GdipCreateMetafileFromWmfFile"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateMetafileFromWmfFile([in]LPCOLESTR file, 
 									  GDIPCONST WmfPlaceableFileHeader * wmfPlaceableFileHeader, 
 									  [out,retval]PGpMetafile *metafile);
 
-		[entry("GdipCreateMetafileFromStream")] GpStatus WINGDIPAPI
+		[entry("GdipCreateMetafileFromStream"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateMetafileFromStream(IStream * stream, [out,retval]PGpMetafile *metafile);
 
-		[entry("GdipRecordMetafile")] GpStatus WINGDIPAPI
+		[entry("GdipRecordMetafile"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipRecordMetafile(
 			HDC                 referenceHdc,
 			EmfType             type,
@@ -4093,7 +4857,8 @@ library Gdiplus
 			[out,retval]PGpMetafile *       metafile
 			);
 
-		[entry("GdipRecordMetafileI")] GpStatus WINGDIPAPI
+		[entry("GdipRecordMetafileI"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipRecordMetafileI(
 			HDC                 referenceHdc,
 			EmfType             type,
@@ -4103,7 +4868,8 @@ library Gdiplus
 			[out,retval]PGpMetafile *       metafile
 			);
 
-		[entry("GdipRecordMetafileFileName")] GpStatus WINGDIPAPI
+		[entry("GdipRecordMetafileFileName"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipRecordMetafileFileName(
 			[in]LPCOLESTR    fileName,
 			HDC                 referenceHdc,
@@ -4114,7 +4880,8 @@ library Gdiplus
 			[out,retval]PGpMetafile *       metafile
 			);
 
-		[entry("GdipRecordMetafileFileNameI")] GpStatus WINGDIPAPI
+		[entry("GdipRecordMetafileFileNameI"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipRecordMetafileFileNameI(
 			[in]LPCOLESTR    fileName,
 			HDC                 referenceHdc,
@@ -4125,7 +4892,8 @@ library Gdiplus
 			[out,retval]PGpMetafile *       metafile
 			);
 
-		[entry("GdipRecordMetafileStream")] GpStatus WINGDIPAPI
+		[entry("GdipRecordMetafileStream"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipRecordMetafileStream(
 			IStream *           stream,
 			HDC                 referenceHdc,
@@ -4136,7 +4904,8 @@ library Gdiplus
 			[out,retval]PGpMetafile *       metafile
 			);
 
-		[entry("GdipRecordMetafileStreamI")] GpStatus WINGDIPAPI
+		[entry("GdipRecordMetafileStreamI"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipRecordMetafileStreamI(
 			IStream *           stream,
 			HDC                 referenceHdc,
@@ -4147,131 +4916,155 @@ library Gdiplus
 			[out,retval]PGpMetafile *       metafile
 			);
 
-		[entry("GdipSetMetafileDownLevelRasterizationLimit")] GpStatus WINGDIPAPI
+		[entry("GdipSetMetafileDownLevelRasterizationLimit"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetMetafileDownLevelRasterizationLimit(
 			PGpMetafile             metafile,
 			UINT                    metafileRasterizationLimitDpi
 			);
 
-		[entry("GdipGetMetafileDownLevelRasterizationLimit")] GpStatus WINGDIPAPI
+		[entry("GdipGetMetafileDownLevelRasterizationLimit"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetMetafileDownLevelRasterizationLimit(
 			GDIPCONST PGpMetafile   metafile,
 			UINT *                  metafileRasterizationLimitDpi
 			);
 
-		[entry("GdipGetImageDecodersSize")] GpStatus WINGDIPAPI
+		[entry("GdipGetImageDecodersSize"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetImageDecodersSize(UINT *numDecoders, UINT *size);
 
-		[entry("GdipGetImageDecoders")] GpStatus WINGDIPAPI
+		[entry("GdipGetImageDecoders"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetImageDecoders(UINT numDecoders,
 							 UINT size,
 							 ImageCodecInfo *decoders);
 
-		[entry("GdipGetImageEncodersSize")] GpStatus WINGDIPAPI
+		[entry("GdipGetImageEncodersSize"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetImageEncodersSize([out]UINT *numEncoders, [out]UINT *size);
 
-		[entry("GdipGetImageEncoders")] GpStatus WINGDIPAPI
+		[entry("GdipGetImageEncoders"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetImageEncoders([in]UINT numEncoders,
 							 [in]UINT size,
 							 [in,out]ImageCodecInfo *encoders);
 
-		[entry("GdipComment")] GpStatus WINGDIPAPI
+		[entry("GdipComment"), __category("GDI+ Flat API-Graphics Functions")]
+		GpStatus WINGDIPAPI
 		GdipComment(PGpGraphics  graphics, UINT sizeData, GDIPCONST BYTE * data);
 
 		//----------------------------------------------------------------------------
 		// FontFamily APIs
 		//----------------------------------------------------------------------------
 
-		[entry("GdipCreateFontFamilyFromName")] GpStatus WINGDIPAPI
+		[entry("GdipCreateFontFamilyFromName"), __category("GDI+ Flat API-FontFamily Functions")]
+		GpStatus_NoThrow WINGDIPAPI
 		GdipCreateFontFamilyFromName([in]LPCOLESTR name,
 									 [in]PGpFontCollection fontCollection,
 									 [out,retval]PGpFontFamily *FontFamily);
 
-		[entry("GdipDeleteFontFamily")] GpStatus WINGDIPAPI
+		[entry("GdipDeleteFontFamily"), __category("GDI+ Flat API-FontFamily Functions")]
+		GpStatus_NoThrow WINGDIPAPI
 		GdipDeleteFontFamily(PGpFontFamily FontFamily);
 
-		[entry("GdipCloneFontFamily")] GpStatus WINGDIPAPI
+		[entry("GdipCloneFontFamily"), __category("GDI+ Flat API-FontFamily Functions")]
+		GpStatus WINGDIPAPI
 		GdipCloneFontFamily(PGpFontFamily FontFamily, [out,retval]PGpFontFamily *clonedFontFamily);
 
-		[entry("GdipGetGenericFontFamilySansSerif")] GpStatus WINGDIPAPI
+		[entry("GdipGetGenericFontFamilySansSerif"), __category("GDI+ Flat API-FontFamily Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetGenericFontFamilySansSerif([out,retval]PGpFontFamily *nativeFamily);
 
-		[entry("GdipGetGenericFontFamilySerif")] GpStatus WINGDIPAPI
+		[entry("GdipGetGenericFontFamilySerif"), __category("GDI+ Flat API-FontFamily Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetGenericFontFamilySerif([out,retval]PGpFontFamily *nativeFamily);
 
-		[entry("GdipGetGenericFontFamilyMonospace")] GpStatus WINGDIPAPI
+		[entry("GdipGetGenericFontFamilyMonospace"), __category("GDI+ Flat API-FontFamily Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetGenericFontFamilyMonospace([out,retval]PGpFontFamily *nativeFamily);
 
 
-		[entry("GdipGetFamilyName")] GpStatus WINGDIPAPI
+		[entry("GdipGetFamilyName"), __category("GDI+ Flat API-FontFamily Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetFamilyName(
-			GDIPCONST PGpFontFamily family,
-			[in,out]WCHAR                name[LF_FACESIZE],
-			//[string,size_is(LF_FACESIZE)]WCHAR*   name,
-			LANGID               language
+			[in]GDIPCONST PGpFontFamily family,
+			[out, __String__]WCHAR name[LF_FACESIZE],
+			[in]LANGID language
 		);
 
-		[entry("GdipIsStyleAvailable")] GpStatus WINGDIPAPI
+		[entry("GdipIsStyleAvailable"), __category("GDI+ Flat API-FontFamily Functions")]
+		GpStatus WINGDIPAPI
 		GdipIsStyleAvailable(GDIPCONST PGpFontFamily family, INT style, 
-							 BOOL * IsStyleAvailable);
+							 [out,retval]BOOL * IsStyleAvailable);
 
-		[entry("GdipFontCollectionEnumerable")] GpStatus WINGDIPAPI
+		[entry("GdipFontCollectionEnumerable"), __category("GDI+ Flat API-Font Functions")]
+		GpStatus WINGDIPAPI
 		GdipFontCollectionEnumerable(
 			PGpFontCollection  fontCollection,
 			PGpGraphics  graphics,
-			INT *       numFound
+			[out]INT *       numFound
 		);
 
-		[entry("GdipFontCollectionEnumerate")] GpStatus WINGDIPAPI GdipFontCollectionEnumerate(
+		[entry("GdipFontCollectionEnumerate"), __category("GDI+ Flat API-Font Functions")]
+		GpStatus WINGDIPAPI GdipFontCollectionEnumerate(
 			PGpFontCollection  fontCollection,
 			INT             numSought,
 			PGpFontFamily    gpfamilies[],
-			INT*            numFound,
+			[out]INT*        numFound,
 			PGpGraphics      graphics
 		);
 
-		[entry("GdipGetEmHeight")] GpStatus WINGDIPAPI
+		[entry("GdipGetEmHeight"), __category("GDI+ Flat API-FontFamily Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetEmHeight(GDIPCONST PGpFontFamily family, INT style, 
-						UINT16 * EmHeight);
+						[out,retval]UINT16 * EmHeight);
 
-		[entry("GdipGetCellAscent")] GpStatus WINGDIPAPI
+		[entry("GdipGetCellAscent"), __category("GDI+ Flat API-FontFamily Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetCellAscent(GDIPCONST PGpFontFamily family, INT style,
-						  UINT16 * CellAscent);
+			[out, retval]UINT16 * CellAscent);
 
-		[entry("GdipGetCellDescent")] GpStatus WINGDIPAPI
+		[entry("GdipGetCellDescent"), __category("GDI+ Flat API-FontFamily Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetCellDescent(GDIPCONST PGpFontFamily family, INT style, 
-						   UINT16 * CellDescent);
+			[out, retval]UINT16 * CellDescent);
 
-		[entry("GdipGetLineSpacing")] GpStatus WINGDIPAPI
+		[entry("GdipGetLineSpacing"), __category("GDI+ Flat API-FontFamily Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetLineSpacing(GDIPCONST PGpFontFamily family, INT style, 
-						   UINT16 * LineSpacing);
+			[out, retval]UINT16 * LineSpacing);
 
 
 		//----------------------------------------------------------------------------
 		// Font APIs
 		//----------------------------------------------------------------------------
 
-		[entry("GdipCreateFontFromDC")] GpStatus WINGDIPAPI
+		[entry("GdipCreateFontFromDC"), __category("GDI+ Flat API-Font Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateFontFromDC(
 			HDC        hdc,
 			[out,retval]PGpFont *font
 		);
 
-		[entry("GdipCreateFontFromLogfontA")] GpStatus WINGDIPAPI
+		[entry("GdipCreateFontFromLogfontA"), __category("GDI+ Flat API-Font Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateFontFromLogfontA(
 			HDC        hdc,
 			GDIPCONST LOGFONTA  *logfont,
 			[out,retval]PGpFont *font
 		);
 
-/*		[entry("GdipCreateFontFromLogfontW")] GpStatus WINGDIPAPI
+		[entry("GdipCreateFontFromLogfontW"), __category("GDI+ Flat API-Font Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateFontFromLogfontW(
 			HDC        hdc,
 			GDIPCONST LOGFONTW  *logfont,
 			[out,retval]PGpFont *font
 		);
-*/
-		[entry("GdipCreateFont")] GpStatus WINGDIPAPI
+
+		[entry("GdipCreateFont"), __category("GDI+ Flat API-Font Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateFont(
 			GDIPCONST PGpFontFamily fontFamily,
 			REAL                 emSize,
@@ -4280,54 +5073,68 @@ library Gdiplus
 			[out,retval]PGpFont *font
 		);
 
-		[entry("GdipCloneFont")] GpStatus WINGDIPAPI
+		[entry("GdipCloneFont"), __category("GDI+ Flat API-Font Functions")]
+		GpStatus WINGDIPAPI
 		GdipCloneFont(PGpFont  font, [out,retval]PGpFont * cloneFont);
 
-		[entry("GdipDeleteFont")] GpStatus WINGDIPAPI
+		[entry("GdipDeleteFont"), __category("GDI+ Flat API-Font Functions")]
+		GpStatus_NoThrow WINGDIPAPI
 		GdipDeleteFont(PGpFont  font);
 
-		[entry("GdipGetFamily")] GpStatus WINGDIPAPI
+		[entry("GdipGetFamily"), __category("GDI+ Flat API-Font Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetFamily(PGpFont font, [out,retval]PGpFontFamily *family);
 
-		[entry("GdipGetFontStyle")] GpStatus WINGDIPAPI
+		[entry("GdipGetFontStyle"), __category("GDI+ Flat API-Font Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetFontStyle(PGpFont font, FontStyle* style);
 
-		[entry("GdipGetFontSize")] GpStatus WINGDIPAPI
+		[entry("GdipGetFontSize"), __category("GDI+ Flat API-Font Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetFontSize(PGpFont font, REAL *size);
 
-		[entry("GdipGetFontUnit")] GpStatus WINGDIPAPI
+		[entry("GdipGetFontUnit"), __category("GDI+ Flat API-Font Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetFontUnit(PGpFont font, Unit *unit);
 
-		[entry("GdipGetFontHeight")] GpStatus WINGDIPAPI
+		[entry("GdipGetFontHeight"), __category("GDI+ Flat API-Font Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetFontHeight(GDIPCONST PGpFont font, GDIPCONST PGpGraphics graphics, 
 						  REAL *height);
 
-		[entry("GdipGetFontHeightGivenDPI")] GpStatus WINGDIPAPI
+		[entry("GdipGetFontHeightGivenDPI"), __category("GDI+ Flat API-Font Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetFontHeightGivenDPI(GDIPCONST PGpFont font, REAL dpi, REAL *height);
 
-		[entry("GdipGetLogFontA")] GpStatus WINGDIPAPI
+		[entry("GdipGetLogFontA"), __category("GDI+ Flat API-Font Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetLogFontA(PGpFont  font, PGpGraphics graphics, LOGFONTA * logfontA);
 
-/*		[entry("GdipGetLogFontW")] GpStatus WINGDIPAPI
+		[entry("GdipGetLogFontW"), __category("GDI+ Flat API-Font Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetLogFontW(PGpFont  font, PGpGraphics graphics, LOGFONTW * logfontW);
-*/
 
-		[entry("GdipNewInstalledFontCollection")] GpStatus WINGDIPAPI
+		[entry("GdipNewInstalledFontCollection"), __category("GDI+ Flat API-Font Functions")]
+		GpStatus WINGDIPAPI
 		GdipNewInstalledFontCollection([out,retval]PGpFontCollection * fontCollection);
 
-		[entry("GdipNewPrivateFontCollection")] GpStatus WINGDIPAPI
+		[entry("GdipNewPrivateFontCollection"), __category("GDI+ Flat API-Font Functions")]
+		GpStatus WINGDIPAPI
 		GdipNewPrivateFontCollection([out,retval]PGpFontCollection * fontCollection);
 
-		[entry("GdipDeletePrivateFontCollection")] GpStatus WINGDIPAPI
+		[entry("GdipDeletePrivateFontCollection"), __category("GDI+ Flat API-Font Functions")]
+		GpStatus_NoThrow WINGDIPAPI
 		GdipDeletePrivateFontCollection([out,retval]PGpFontCollection * fontCollection);
 
-		[entry("GdipGetFontCollectionFamilyCount")] GpStatus WINGDIPAPI
+		[entry("GdipGetFontCollectionFamilyCount"), __category("GDI+ Flat API-Font Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetFontCollectionFamilyCount(
 			PGpFontCollection  fontCollection,
 			INT *       numFound
 		);
 
-		[entry("GdipGetFontCollectionFamilyList")] GpStatus WINGDIPAPI
+		[entry("GdipGetFontCollectionFamilyList"), __category("GDI+ Flat API-Font Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetFontCollectionFamilyList(
 			PGpFontCollection  fontCollection,
 			INT             numSought,
@@ -4335,13 +5142,15 @@ library Gdiplus
 			INT*            numFound
 		);
 
-		[entry("GdipPrivateAddFontFile")] GpStatus WINGDIPAPI
+		[entry("GdipPrivateAddFontFile"), __category("GDI+ Flat API-Font Functions")]
+		GpStatus WINGDIPAPI
 		GdipPrivateAddFontFile(
 			PGpFontCollection  fontCollection,
 			[in]LPCOLESTR filename
 		);
 
-		[entry("GdipPrivateAddMemoryFont")] GpStatus WINGDIPAPI
+		[entry("GdipPrivateAddMemoryFont"), __category("GDI+ Flat API-Font Functions")]
+		GpStatus WINGDIPAPI
 		GdipPrivateAddMemoryFont(
 			PGpFontCollection  fontCollection,
 			GDIPCONST void* memory,
@@ -4352,7 +5161,8 @@ library Gdiplus
 		// Text APIs
 		//----------------------------------------------------------------------------
 
-		[entry("GdipDrawString")] GpStatus WINGDIPAPI
+		[entry("GdipDrawString"), __category("GDI+ Flat API-Text Functions")]
+		GpStatus WINGDIPAPI
 		GdipDrawString(
 			PGpGraphics graphics,
 			[in]LPCOLESTR str,
@@ -4363,7 +5173,8 @@ library Gdiplus
 			GDIPCONST PGpBrush brush
 		);
 
-		[entry("GdipMeasureString")] GpStatus WINGDIPAPI
+		[entry("GdipMeasureString"), __category("GDI+ Flat API-Text Functions")]
+		GpStatus WINGDIPAPI
 		GdipMeasureString(
 			PGpGraphics graphics,
 			[in]LPCOLESTR str,
@@ -4376,7 +5187,8 @@ library Gdiplus
 			INT                      *linesFilled
 		);
 
-		[entry("GdipMeasureCharacterRanges")] GpStatus WINGDIPAPI
+		[entry("GdipMeasureCharacterRanges"), __category("GDI+ Flat API-Font Functions")]
+		GpStatus WINGDIPAPI
 		GdipMeasureCharacterRanges(
 			PGpGraphics graphics,
 			[in]LPCOLESTR str,
@@ -4388,7 +5200,8 @@ library Gdiplus
 			[out,retval]PGpRegion *regions
 		);
 
-		[entry("GdipDrawDriverString")] GpStatus WINGDIPAPI
+		[entry("GdipDrawDriverString"), __category("GDI+ Flat API-Text Functions")]
+		GpStatus WINGDIPAPI
 		GdipDrawDriverString(
 			PGpGraphics graphics,
 			GDIPCONST UINT16 *text,
@@ -4400,7 +5213,8 @@ library Gdiplus
 			GDIPCONST PGpMatrix matrix
 		);
 
-		[entry("GdipMeasureDriverString")] GpStatus WINGDIPAPI
+		[entry("GdipMeasureDriverString"), __category("GDI+ Flat API-Text Functions")]
+		GpStatus WINGDIPAPI
 		GdipMeasureDriverString(
 			PGpGraphics graphics,
 			GDIPCONST UINT16 *text,
@@ -4416,93 +5230,115 @@ library Gdiplus
 		// String format APIs
 		//----------------------------------------------------------------------------
 
-		[entry("GdipCreateStringFormat")] GpStatus WINGDIPAPI
+		[entry("GdipCreateStringFormat"), __category("GDI+ Flat API-String Format Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateStringFormat(
 			INT               formatAttributes,
 			LANGID            language,
 			[out,retval]PGpStringFormat *format
 		);
 
-		[entry("GdipStringFormatGetGenericDefault")] GpStatus WINGDIPAPI
+		[entry("GdipStringFormatGetGenericDefault"), __category("GDI+ Flat API-String Format Functions")]
+		GpStatus WINGDIPAPI
 		GdipStringFormatGetGenericDefault([out,retval]PGpStringFormat *format);
 
-		[entry("GdipStringFormatGetGenericTypographic")] GpStatus WINGDIPAPI
+		[entry("GdipStringFormatGetGenericTypographic"), __category("GDI+ Flat API-String Format Functions")]
+		GpStatus WINGDIPAPI
 		GdipStringFormatGetGenericTypographic([out,retval]PGpStringFormat *format);
 
-		[entry("GdipDeleteStringFormat")] GpStatus WINGDIPAPI
+		[entry("GdipDeleteStringFormat"), __category("GDI+ Flat API-String Format Functions")]
+		GpStatus_NoThrow WINGDIPAPI
 		GdipDeleteStringFormat(PGpStringFormat format);
 
-		[entry("GdipCloneStringFormat")] GpStatus WINGDIPAPI
+		[entry("GdipCloneStringFormat"), __category("GDI+ Flat API-String Format Functions")]
+		GpStatus WINGDIPAPI
 		GdipCloneStringFormat(GDIPCONST PGpStringFormat format, 
 							  [out,retval]PGpStringFormat *newFormat);
 
-		[entry("GdipSetStringFormatFlags")] GpStatus WINGDIPAPI
+		[entry("GdipSetStringFormatFlags"), __category("GDI+ Flat API-String Format Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetStringFormatFlags(PGpStringFormat format, INT flags);
 
-		[entry("											 ")] GpStatus WINGDIPAPI GdipGetStringFormatFlags(GDIPCONST PGpStringFormat format, 
-													 INT *flags);
+		[entry("GdipGetStringFormatFlags"), __category("GDI+ Flat API-String Format Functions")]
+		GpStatus WINGDIPAPI 
+			GdipGetStringFormatFlags(GDIPCONST PGpStringFormat format, INT *flags);
 
-		[entry("GdipSetStringFormatAlign")] GpStatus WINGDIPAPI
+		[entry("GdipSetStringFormatAlign"), __category("GDI+ Flat API-String Format Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetStringFormatAlign(PGpStringFormat format, StringAlignment align);
 
-		[entry("GdipGetStringFormatAlign")] GpStatus WINGDIPAPI
+		[entry("GdipGetStringFormatAlign"), __category("GDI+ Flat API-String Format Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetStringFormatAlign(GDIPCONST PGpStringFormat format, 
 								 StringAlignment *align);
 
-		[entry("GdipSetStringFormatLineAlign")] GpStatus WINGDIPAPI
+		[entry("GdipSetStringFormatLineAlign"), __category("GDI+ Flat API-String Format Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetStringFormatLineAlign(PGpStringFormat format,
 									 StringAlignment align);
 
-		[entry("GdipGetStringFormatLineAlign")] GpStatus WINGDIPAPI
+		[entry("GdipGetStringFormatLineAlign"), __category("GDI+ Flat API-String Format Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetStringFormatLineAlign(GDIPCONST PGpStringFormat format,
 									 StringAlignment *align);
 
-		[entry("GdipSetStringFormatTrimming")] GpStatus WINGDIPAPI
+		[entry("GdipSetStringFormatTrimming"), __category("GDI+ Flat API-String Format Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetStringFormatTrimming(
 			PGpStringFormat format,
 			StringTrimming   trimming
 		);
 
-		[entry("GdipGetStringFormatTrimming")] GpStatus WINGDIPAPI
+		[entry("GdipGetStringFormatTrimming"), __category("GDI+ Flat API-String Format Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetStringFormatTrimming(
 			GDIPCONST PGpStringFormat format,
 			StringTrimming       *trimming
 		);
 
-		[entry("GdipSetStringFormatHotkeyPrefix")] GpStatus WINGDIPAPI
+		[entry("GdipSetStringFormatHotkeyPrefix"), __category("GDI+ Flat API-String Format Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetStringFormatHotkeyPrefix(PGpStringFormat format, INT hotkeyPrefix);
 
-		[entry("GdipGetStringFormatHotkeyPrefix")] GpStatus WINGDIPAPI
+		[entry("GdipGetStringFormatHotkeyPrefix"), __category("GDI+ Flat API-String Format Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetStringFormatHotkeyPrefix(GDIPCONST PGpStringFormat format, 
 										INT *hotkeyPrefix);
 
-		[entry("GdipSetStringFormatTabStops")] GpStatus WINGDIPAPI
+		[entry("GdipSetStringFormatTabStops"), __category("GDI+ Flat API-String Format Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetStringFormatTabStops(PGpStringFormat format, REAL firstTabOffset, 
 									INT count, GDIPCONST REAL *tabStops);
 
-		[entry("GdipGetStringFormatTabStops")] GpStatus WINGDIPAPI
+		[entry("GdipGetStringFormatTabStops"), __category("GDI+ Flat API-String Format Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetStringFormatTabStops(GDIPCONST PGpStringFormat format, INT count, 
 									REAL *firstTabOffset, REAL *tabStops);
 
-		[entry("GdipGetStringFormatTabStopCount")] GpStatus WINGDIPAPI
+		[entry("GdipGetStringFormatTabStopCount"), __category("GDI+ Flat API-String Format Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetStringFormatTabStopCount(GDIPCONST PGpStringFormat format, INT * count);
 
-		[entry("GdipSetStringFormatDigitSubstitution")] GpStatus WINGDIPAPI
+		[entry("GdipSetStringFormatDigitSubstitution"), __category("GDI+ Flat API-String Format Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetStringFormatDigitSubstitution(PGpStringFormat format, LANGID language,
 											 StringDigitSubstitute substitute);
 
-		[entry("GdipGetStringFormatDigitSubstitution")] GpStatus WINGDIPAPI
+		[entry("GdipGetStringFormatDigitSubstitution"), __category("GDI+ Flat API-String Format Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetStringFormatDigitSubstitution(GDIPCONST PGpStringFormat format, 
 											 LANGID *language,
 											 StringDigitSubstitute *substitute);
 
-		[entry("GdipGetStringFormatMeasurableCharacterRangeCount")] GpStatus WINGDIPAPI
+		[entry("GdipGetStringFormatMeasurableCharacterRangeCount"), __category("GDI+ Flat API-String Format Functions")]
+		GpStatus WINGDIPAPI
 		GdipGetStringFormatMeasurableCharacterRangeCount(
 			GDIPCONST PGpStringFormat format,
 			INT                         *count
 		);
 
-		[entry("GdipSetStringFormatMeasurableCharacterRanges")] GpStatus WINGDIPAPI
+		[entry("GdipSetStringFormatMeasurableCharacterRanges"), __category("GDI+ Flat API-String Format Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetStringFormatMeasurableCharacterRanges(
 			PGpStringFormat format,
 			INT                         rangeCount,
@@ -4513,25 +5349,29 @@ library Gdiplus
 		// Cached Bitmap APIs
 		//----------------------------------------------------------------------------
 
-		[entry("GdipCreateCachedBitmap")] GpStatus WINGDIPAPI
+		[entry("GdipCreateCachedBitmap"), __category("GDI+ Flat API-CachedBitmap Functions")]
+		GpStatus WINGDIPAPI
 		GdipCreateCachedBitmap(
 			PGpBitmap bitmap,
 			PGpGraphics graphics,
-			[out,retval]GpCachedBitmap **cachedBitmap
+			[out,retval]PGpCachedBitmap *cachedBitmap
 		);
 
-		[entry("GdipDeleteCachedBitmap")] GpStatus WINGDIPAPI
-		GdipDeleteCachedBitmap(GpCachedBitmap *cachedBitmap);
+		[entry("GdipDeleteCachedBitmap"), __category("GDI+ Flat API-CachedBitmap Functions")]
+		GpStatus_NoThrow WINGDIPAPI
+		GdipDeleteCachedBitmap(PGpCachedBitmap cachedBitmap);
 
-		[entry("GdipDrawCachedBitmap")] GpStatus WINGDIPAPI
+		[entry("GdipDrawCachedBitmap"), __category("GDI+ Flat API-CachedBitmap Functions")]
+		GpStatus WINGDIPAPI
 		GdipDrawCachedBitmap(
 			PGpGraphics graphics,
-			GpCachedBitmap *cachedBitmap,
+			PGpCachedBitmap cachedBitmap,
 			INT x,
 			INT y
 		);
 
-		[entry("GdipEmfToWmfBits")] UINT WINGDIPAPI
+		[entry("GdipEmfToWmfBits"), __category("GDI+ Flat API-CachedBitmap Functions")] 
+		UINT WINGDIPAPI
 		GdipEmfToWmfBits(
 			HENHMETAFILE hemf,
 			UINT         cbData16,
@@ -4540,35 +5380,76 @@ library Gdiplus
 			INT          eFlags
 		);
 
-		[entry("GdipSetImageAttributesCachedBackground")] GpStatus WINGDIPAPI
+		[entry("GdipSetImageAttributesCachedBackground"), __category("GDI+ Flat API-ImageAttributes Functions")]
+		GpStatus WINGDIPAPI
 		GdipSetImageAttributesCachedBackground(
 			PGpImageAttributes imageattr,
 			BOOL enableFlag
 		);
 
-		[entry("GdipTestControl")] GpStatus WINGDIPAPI
+		[entry("GdipTestControl"), __category("GDI+ Flat API-Text Functions")]
+		GpStatus WINGDIPAPI
 		GdipTestControl(
 			GpTestControlEnum cntrl,
 			VOID* param
 		);
 
-		[entry("GdiplusNotificationHook")] GpStatus WINGDIPAPI
+		[entry("GdiplusNotificationHook"), __category("GDI+ Flat API-Notification Functions")]
+		GpStatus WINGDIPAPI
 		GdiplusNotificationHook(
 			ULONG_PTR *token
 		);
 
-		[entry("GdiplusNotificationUnhook")] VOID WINGDIPAPI
+		[entry("GdiplusNotificationUnhook"), __category("GDI+ Flat API-Notification Functions")]
+		VOID WINGDIPAPI
 		GdiplusNotificationUnhook(
 			ULONG_PTR token
 		);
 
-		[entry("GdiplusStartup")] GpStatus WINGDIPAPI GdiplusStartup(
+		[entry("GdiplusStartup"), __category("GDI+ Flat API-Other Functions")]
+		GpStatus WINGDIPAPI GdiplusStartup(
 			[out] ULONG_PTR *token,
-			[in]const GdiplusStartupInput *input,
+			GDIPCONST GdiplusStartupInput *input,
 			[out] GdiplusStartupOutput *output);
 
-		[entry("GdiplusStartup")] VOID WINGDIPAPI GdiplusShutdown([in]ULONG_PTR token);
+		[entry("GdiplusStartup"), __category("GDI+ Flat API-Other Functions")]
+		VOID WINGDIPAPI GdiplusShutdown([in]ULONG_PTR token);
 
+		[entry("GdipConvertToEmfPlus"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
+			GdipConvertToEmfPlus(
+				_In_ PGpGraphics refGraphics,
+				_In_ PGpMetafile metafile,
+				INT* conversionFailureFlag,
+				EmfType      emfType,
+				_In_z_ WCHAR* description,
+				[out,retval]PGpMetafile* out_metafile
+			);
+
+		[entry("GdipConvertToEmfPlusToFile"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
+			GdipConvertToEmfPlusToFile(
+				_In_ PGpGraphics refGraphics,
+				_In_ PGpMetafile metafile,
+				INT* conversionFailureFlag,
+				_In_z_ WCHAR* filename,
+				EmfType      emfType,
+				_In_z_ WCHAR* description,
+				[out,retval]PGpMetafile* out_metafile
+			);
+
+
+		[entry("GdipConvertToEmfPlusToStream"), __category("GDI+ Flat API-Image Functions")]
+		GpStatus WINGDIPAPI
+			GdipConvertToEmfPlusToStream(
+				_In_ PGpGraphics refGraphics,
+				_In_ PGpMetafile metafile,
+				INT* conversionFailureFlag,
+				IStream* stream,
+				EmfType      emfType,
+				_In_z_ WCHAR* description,
+				[out,retval]PGpMetafile* out_metafile
+			);
 	};	// End of module Gdiplus
 
 };

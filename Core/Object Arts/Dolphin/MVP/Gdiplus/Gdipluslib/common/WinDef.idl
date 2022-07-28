@@ -1,0 +1,140 @@
+#include "CustomAttribs.h"
+
+typedef [
+	helpstring("An opaque pointer to some external data structure"), 
+	uuid(87B4C518-026E-11D3-9FD7-00A0CC3E4A32)] 
+struct ExternalHandle
+{
+	void* pObj;
+} ExternalHandle;
+
+typedef [public] ExternalHandle HANDLE;
+
+typedef [public] unsigned char   BYTE;
+typedef [public] BYTE BOOLEAN;
+
+typedef [public] ExternalHandle HINSTANCE;
+typedef [public] ExternalHandle HICON;
+
+// HRESULT return code that will just be treated as an int (i.e. won't result in an automatic exception if < 0)
+typedef [public] LONG HRESULT_NOTHROW;
+
+typedef [
+	helpstring("An integer representing a boolean value (0 if FALSE, any other value TRUE)"), 
+	uuid(73888634-0C5B-4D09-83DC-C52101C10BA3)] 
+struct BOOL
+{
+	long value;
+} BOOL;
+
+typedef [public] unsigned short WORD;
+typedef [public] unsigned long DWORD;
+typedef long            LONG;
+typedef float           FLOAT;
+typedef double          DOUBLE;
+typedef [public] void *	LPVOID;
+typedef const void *	LPCVOID;
+typedef int *			LPINT;
+typedef long *			LPLONG;
+typedef BOOL *			LPBOOL;
+
+typedef char			CHAR;
+typedef [public]CHAR* LPSTR;
+typedef [public]const LPSTR		LPCSTR;
+typedef [public]wchar_t	WCHAR;
+typedef [public]WCHAR* LPWSTR;
+typedef [public]const LPWSTR	LPCWSTR;
+
+typedef [public] LPSTR PSTR;
+typedef [public] LPCSTR PCSTR;
+
+typedef [public] LPVOID RESOURCEID;
+
+#ifdef UNICODE 
+typedef LPWSTR			LPTSTR;
+typedef LPWSTR			LPCTSTR;
+typedef WCHAR			TCHAR;
+#else
+typedef LPSTR			LPTSTR;
+typedef LPCSTR	LPCTSTR;
+typedef [public]CHAR			TCHAR;
+#endif
+typedef [public]LPVOID	CALLBACK;
+
+typedef [public] unsigned char UCHAR;
+typedef [public] CHAR *PCHAR;
+typedef UCHAR *PUCHAR;
+typedef DWORD *PDWORD;
+typedef [public]WCHAR* PWCHAR;
+
+typedef LPWSTR PWSTR;
+typedef LPCWSTR PCWSTR;
+typedef DWORD ACCESS_MASK;
+typedef PVOID PSECURITY_DESCRIPTOR;
+typedef [public] DWORD ULONG;
+typedef ULONG* PULONG;
+typedef HANDLE* PHANDLE;
+//typedef [public]BYTE  BOOLEAN;
+typedef BOOLEAN *PBOOLEAN;
+
+#ifndef ULONG_PTR
+#if defined(_WIN64)
+typedef unsigned __int64 ULONG_PTR;
+#else
+typedef unsigned long ULONG_PTR;
+#endif
+#endif
+
+typedef void* PVOID;
+typedef [public] unsigned short USHORT;
+typedef [public] USHORT* PUSHORT;
+
+#define FAR
+#define OPTIONAL
+
+#define WINBASEAPI
+#define APIENTRY		__stdcall
+#define WINAPI			__stdcall
+#define VOID			void
+#define UNALIGNED
+#define IN				_In_
+#define OUT				[out]
+
+typedef long FARPROC;
+
+typedef
+[
+	uuid(301C9A7A-D4B4-42D5-895D-E658D212DF5B),
+	helpstring("Contains information used in asynchronous (or overlapped) input and output (I/O).")
+]
+struct OVERLAPPED {
+	[helpstring("The status code for the I/O request.")]
+	_ReadOnly_ ULONG_PTR Internal;
+	[helpstring("The number of bytes transferred for the I/O request.")]
+	_ReadOnly_ ULONG_PTR InternalHigh;
+	union {
+		struct {
+			[helpstring("The low - order portion of the file position at which to start the I / O request, as specified by the user.")]
+			DWORD Offset;
+			[helpstring("The high-order portion of the file position at which to start the I/O request, as specified by the user.")]
+			DWORD OffsetHigh;
+		};
+		[helpstring("Reserved for system use; do not use after initialization to zero.")]
+		_Reserved_ PVOID Pointer;
+	};
+
+	[helpstring("A handle to the event that will be set to a signaled state by the system when the operation has completed.")]
+	HANDLE  hEvent;
+} OVERLAPPED;
+typedef [public] OVERLAPPED *LPOVERLAPPED;
+
+typedef 
+[
+	uuid(dbeaf6a6-d2f7-4153-a02e-a389955a892f),
+	helpstring("The POINTL structure defines the x- and y-coordinates of a point.")
+]
+struct POINTL
+{
+	LONG  x;
+	LONG  y;
+} POINTL;
