@@ -6,6 +6,7 @@ package paxVersion: 2.1;
 
 
 package setClassNames: #(
+	#{External.Tests.POINTLArrayTest}
 	#{External.Tests.POINTTest}
 	#{External.Tests.RECTTest}
 	#{Graphics.Tests.AbstractPointTest}
@@ -376,6 +377,12 @@ Graphics.Tests.AbstractRectangleTest subclass: #'External.Tests.RECTTest'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 External.Tests.RECTTest subclass: #'OS.Tests.RECTLTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+External.Tests.ExternalArrayTest subclass: #'External.Tests.POINTLArrayTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

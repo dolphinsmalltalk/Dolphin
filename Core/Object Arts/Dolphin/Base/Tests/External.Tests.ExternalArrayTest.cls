@@ -35,6 +35,39 @@ newNumericArray: anInteger
 numericElementClass
 	^self subclassResponsibility!
 
+testAllSatisfy
+	0 to: 4
+		do: 
+			[:count |
+			| array elements |
+			array := self newNumericArray: count.
+			elements := Array writeStream.
+			array allSatisfy: 
+					[:each |
+					elements nextPut: each.
+					true].
+			self assert: elements contents equals: ((1 to: count) collect: [:i | self elementFromValue: i]).
+			elements reset.
+			array allSatisfy: 
+					[:each |
+					elements nextPut: each.
+					false].
+			self assert: elements contents
+				equals: ((1 to: (count min: 1)) collect: [:i | self elementFromValue: i])]!
+
+testAtAllPut
+	0 to: 4
+		do: 
+			[:count |
+			| array elements element |
+			array := self newNumericArray: count.
+			array atAllPut: (self elementFromValue: count).
+			elements := Array writeStream.
+			array do: [:each | elements nextPut: each].
+			element := self elementFromValue: count.
+			self assert: elements contents equals: ((1 to: count) collect: [:i | element])].
+	self should: [self arrayClass new: 1 withAll: Object new] raise: Error!
+
 testAtAndAtPut
 	| array |
 	array := self newNumericArray: 0.
@@ -255,6 +288,8 @@ elementToValue:!private!unit tests! !
 newArrayOfIntegers:!helpers!private! !
 newNumericArray:!helpers!private! !
 numericElementClass!constants!private! !
+testAllSatisfy!public! !
+testAtAllPut!public! !
 testAtAndAtPut!public!unit tests! !
 testComparing!public!unit tests! !
 testDoSeparatedBy!public!unit tests! !

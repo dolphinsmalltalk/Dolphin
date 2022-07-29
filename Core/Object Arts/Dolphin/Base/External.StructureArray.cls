@@ -44,7 +44,8 @@ elementClass: elemClass
 	Answer the receiver."
 
 	super elementClass: elemClass.
-	elementSpacing := self elementSize roundUpTo: self alignment!
+	elementSpacing := self elementSize roundUpTo: self alignment.
+	^self!
 
 initialize
 	"Private - Perform any initialization required for the receiver
@@ -61,6 +62,10 @@ initializePointer
 	on finalization."
 
 	self owner: bytes!
+
+length: anInteger elementClass: aStructureClass
+	length := anInteger.
+	elementSpacing := (elementClass := aStructureClass) elementSize roundUpTo: aStructureClass alignment!
 
 packing
 	"Private - Answer the number of bytes between individual elements of the receiver.
@@ -100,9 +105,10 @@ with: aCollection do: aDyadicValuable
 !External.StructureArray categoriesForMethods!
 alignment!constants!public! !
 basicFree!private!realizing/unrealizing! !
-elementClass:!accessing!private! !
+elementClass:!initializing!private! !
 initialize!initializing!private! !
 initializePointer!initializing!private! !
+length:elementClass:!initializing!private! !
 packing!constants!private! !
 uncheckedAt:put:!accessing!private! !
 with:do:!enumerating!public! !
@@ -116,27 +122,32 @@ fromAddress: anAddress length: anInteger elementClass: elementClass
 	Implementation Note: If the length is zero, then we ignore the address (even if invalid).
 	If the length is non-zero then we answer nil if the address is the Null pointer."
 
-	^anInteger == 0 
-		ifTrue: [self basicNew basicLength: 0; elementClass: elementClass]
-		ifFalse: [
-			anAddress isNull ifFalse: [
-				self basicNew
-					initializeAtAddress: anAddress;
-					elementClass: elementClass;
-					basicLength: anInteger]]!
+	^anInteger == 0
+		ifTrue: [self basicNew length: 0 elementClass: elementClass]
+		ifFalse: 
+			[anAddress isNull
+				ifFalse: 
+					[self basicNew
+						initializeAtAddress: anAddress;
+						length: anInteger elementClass: elementClass]]!
 
 length: anInteger elementClass: elementClass
-	"Answer a new instance of the receiver that contains a buffer
-	of sufficient size to contain anInteger elements of type, elementClass."
+	"Answer a new instance of the receiver that contains a buffer	of sufficient size to contain anInteger elements of type, elementClass."
 
-	^(self length: anInteger elementSize: elementClass elementSize)
-		elementClass: elementClass!
+	^self basicNew
+		initialize: anInteger * elementClass elementSize;
+		length: anInteger elementClass: elementClass!
 
 length: anInteger elementClass: anExternalStructureClass initializer: aDyadicValuable
 	^self
 		withAll: (1 to: anInteger)
 		elementClass: anExternalStructureClass
 		initializer: aDyadicValuable!
+
+length: countInteger elementSize: sizeInteger
+	"StructureArrays must know the element class."
+
+	^self shouldNotImplement!
 
 stbConvertFrom: anSTBClassFormat
 	"Convert from earlier version models.
@@ -177,6 +188,7 @@ withAll: aCollection elementClass: anExternalStructureClass initializer: aDyadic
 fromAddress:length:elementClass:!instance creation!public! !
 length:elementClass:!instance creation!public! !
 length:elementClass:initializer:!instance creation!public! !
+length:elementSize:!public! !
 stbConvertFrom:!binary filing!public! !
 stbVersion!binary filing!public! !
 with:!instance creation!public! !

@@ -320,6 +320,7 @@ package setMethodNames: #(
 	#(#{External.IntegerBytes class} #newInstanceAspect:class:)
 	#(#{External.LPVOIDField} #newAspect:class:)
 	#(#{External.LPVOIDField} #printAccessorExpressionSuffixOn:)
+	#(#{External.POINTArray} #printEvaluationOn:)
 	#(#{External.PointerField} #printAccessorExpression:on:)
 	#(#{External.PointerField} #printMutatorBody:on:)
 	#(#{External.QWORD} #printOn:)
@@ -3546,6 +3547,19 @@ printAccessorExpressionSuffixOn: aCodeGenerationContext
 !External.LPVOIDField categoriesForMethods!
 newAspect:class:!adapters!private! !
 printAccessorExpressionSuffixOn:!automatic generation!private! !
+!
+
+!External.POINTArray methodsFor!
+
+printEvaluationOn: aStream
+	aStream
+		nextPut: $(;
+		print: self class;
+		nextPutAll: ' withAll: {'.
+	self do: [:each | self printElement: each on: aStream] separatedBy: [aStream nextPutAll: '. '].
+	aStream nextPutAll: '})'! !
+!External.POINTArray categoriesForMethods!
+printEvaluationOn:!printing!private! !
 !
 
 !External.PointerField methodsFor!

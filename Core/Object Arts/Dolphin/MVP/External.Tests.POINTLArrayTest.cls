@@ -20,7 +20,7 @@ elementFromValue: anObject
 	^anObject @ (anObject + 1)!
 
 newArrayOfIntegers: anArray
-	^self arrayClass withAll: (anArray collect: [:each | each @ (each + 1)])!
+	^self arrayClass withAll: (anArray collect: [:each | self elementFromValue: each])!
 
 numericElementClass
 	^POINTL

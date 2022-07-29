@@ -29,6 +29,13 @@ Instance Variables:
 	1 to: size do: [:i | (self uncheckedAt: i) = (comparand at: i) ifFalse: [^false]].
 	^true!
 
+allSatisfy: discriminator
+	"Answer whether the <monadicValuable>, discriminator, evaluates to true for
+	every element of the receiver."
+
+	1 to: self size do: [:i | (discriminator value: (self uncheckedAt: i)) ifFalse: [^false]].
+	^true!
+
 anySatisfy: discriminator
 	"Answer whether the <monadicValuable>, discriminator, evaluates to true for
 	any element of the receiver.
@@ -89,10 +96,17 @@ at: anInteger put: newValue
 	(anInteger < 1 or: [anInteger > self length]) ifTrue: [self errorSubscriptBounds: anInteger].
 	^self uncheckedAt: anInteger put: newValue!
 
+atAllPut: anObject
+	"Replace all the elements of the receiver with the native representation of the <Object> argument.
+	The behaviour is undefined if the argument cannot be represented as an element of the array - an error may be thrown, or an invalid element stored."
+
+	1 to: self size do: [:i | self uncheckedAt: i put: anObject]!
+
 basicLength: anInteger
 	"Private - Set the length (in elements, not bytes) of the receiver."
 	
-	length := anInteger!
+	length := anInteger.
+	^self!
 
 binarySearchFor: anObject using: searchBlock
 	"Private - Answer the index at which anObject is located using a binary chop search based on searchBlock"
@@ -421,18 +435,11 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: operation
 with: aCollection do: aDyadicValuable
 	"Evaluate the <dyadicValuable> argument with each of the receiver's element values along with the corresponding element from the <collection> argument, aCollection. The collection is enumerated in its #do: order."
 
-	| elem spacing |
 	self size = aCollection size ifFalse: [^self error: 'collections are of different sizes'].
-	spacing := self packing.
-	elem := self elementClass newPointer.
-	aCollection inject: self yourAddress
-		into: 
-			[:addr :each |
-			elem initializeAtAddress: addr.
-			aDyadicValuable value: elem value value: each.
-			addr + spacing]! !
+	self keysAndValuesDo: [:i :elem | aDyadicValuable value: elem value: (aCollection at: i)]! !
 !External.ExternalArray categoriesForMethods!
 =!comparing!public! !
+allSatisfy:!public! !
 anySatisfy:!enumerating!public! !
 appendToStream:!double dispatch!private! !
 asArray!converting!public! !
@@ -440,7 +447,8 @@ asOrderedCollection!converting!public! !
 at:!accessing!public! !
 at:ifAbsent:!accessing!public! !
 at:put:!accessing!public! !
-basicLength:!accessing!private! !
+atAllPut:!public! !
+basicLength:!initializing!private! !
 binarySearchFor:using:!public!searching! !
 byteSize!accessing!public! !
 collect:!enumerating!public! !
@@ -543,6 +551,13 @@ new: anInteger
 
 	^self length: anInteger elementSize: self elementSize!
 
+new: elementCount withAll: elementValue
+	"Answer a new instance of the receiver with <integer>, anInteger, elements, each of which is initialized to the <Object>, anObject."
+
+	^(self new: elementCount)
+		atAllPut: elementValue;
+		yourself!
+
 with: element1
 	"Answer a new instance of the receiver containing the single 
 	<Object> element, element1."
@@ -575,6 +590,7 @@ getFieldNames!constants!private! !
 length:elementSize:!instance creation!private! !
 marshal:!instance creation!public! !
 new:!instance creation!public! !
+new:withAll:!public! !
 with:!instance creation!public! !
 withAll:!instance creation!public! !
 !

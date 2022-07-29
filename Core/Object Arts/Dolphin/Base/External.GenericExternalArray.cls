@@ -91,7 +91,12 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: operation
 		do: 
 			[:i | 
 			operation value: i value: (self newElementAt: address).
-			address := address + spacing]! !
+			address := address + spacing]!
+
+with: aCollection do: aDyadicValuable
+	"Evaluate the <dyadicValuable> argument with each of the receiver's element structures along with the corresponding element from the <collection> argument, aCollection. The collection is enumerated in its #do: order."
+
+	self subclassResponsibility! !
 !External.GenericExternalArray categoriesForMethods!
 asArray!converting!public! !
 base!accessing!private! !
@@ -104,6 +109,7 @@ newElementAt:!helpers!private! !
 owner:!accessing!private! !
 uncheckedAt:!accessing!private! !
 uncheckedFrom:to:keysAndValuesDo:!enumerating!private! !
+with:do:!public! !
 !
 
 !External.GenericExternalArray class methodsFor!
