@@ -57,6 +57,8 @@ buildClassDesc
 			"Its a pointer to something, so we need to recurse and answer  <typename>*"
 			indirTo := self tdesc classDesc.
 			^indirTo key -> (indirTo value + 1 min: 2)].
+	vt == VT_USERDEFINED
+		ifTrue: [^owner isNil ifTrue: [Structure -> 1] ifFalse: [self typeInfo classDesc]].
 	vt == VT_CARRAY
 		ifTrue: 
 			[| arryDesc |
@@ -66,8 +68,6 @@ buildClassDesc
 		<StructureArray>."
 			^(arryDesc key arrayType: arryDesc value) -> 0].
 	vt == VT_SAFEARRAY ifTrue: [^SAFEARRAY -> 1].
-	vt == VT_USERDEFINED
-		ifTrue: [^owner isNil ifTrue: [Structure -> 1] ifFalse: [self typeInfo classDesc]].
 	^(VARIANT classForVT: vt) -> (VTIndirections at: vt + 1)!
 
 classDesc
@@ -90,6 +90,11 @@ isAnonymous
 	struct or union type."
 
 	^self isStructure and: [self typeInfo isAnonymous]!
+
+isEnum
+	"Answer whether the receiver describes a user-defined union type."
+
+	^self isUserDefined and: [self realTypeInfo isEnum]!
 
 isStructure
 	"Answer whether the receiver describes a user-defined struct or union type."
@@ -126,6 +131,18 @@ realTypeInfo
 	"Answer an <AXTypeInfoAnalyzer> on the underlying type described by the receiver."
 
 	^self typeInfo realTypeInfo!
+
+targetType
+	"Private - Answer the <TYPEDESC> that describes the target type of this type.
+		- If the receiver is an alias, then the target type of the aliased type
+		- If the receiver is an indirection, then the target type of the pointed at type.
+		- Otherwise the receiver."
+
+	| vt |
+	vt := self vt.
+	vt == VT_PTR ifTrue: [self tdesc targetType].
+	vt == VT_USERDEFINED ifTrue: [^self typeInfo targetOfType: self].
+	^self!
 
 tdesc
 	"Answer a <TYPEDESC> which is the type of the element described by the receiver.
@@ -200,6 +217,7 @@ classDesc!accessing!private! !
 getRefType!accessing!private! !
 hreftype!**compiled accessors**!public! !
 isAnonymous!public!testing! !
+isEnum!public!testing! !
 isStructure!public!testing! !
 isUnion!public!testing! !
 isUserDefined!public!testing! !
@@ -207,6 +225,7 @@ lpadesc!**compiled accessors**!public! !
 lptdesc!**compiled accessors**!public! !
 owner:!accessing!private! !
 realTypeInfo!accessing!public! !
+targetType!private! !
 tdesc!accessing!public! !
 tdescArray!accessing!public! !
 typeDesc!helpers!private! !

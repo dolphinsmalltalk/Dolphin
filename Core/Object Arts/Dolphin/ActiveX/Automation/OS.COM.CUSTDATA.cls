@@ -19,10 +19,17 @@ Warning: This comment was automatically generated from the struct''s type inform
 !OS.COM.CUSTDATA categoriesForClass!External-Data-Structured-COM! !
 !OS.COM.CUSTDATA methodsFor!
 
+asLookupTable
+	"Answer a <LookupTable> containing the custom attribute entries in the receiver. The keys of
+	the table are either the <GUID> attribute ids, or for some well known custom attributes
+	symbolic names, and the values the custom attribute <VARIANT> values."
+
+	^contents ifNil: [contents := self buildContents]!
+
 buildContents
 	| attrs |
 	attrs := LookupTable new.
-	self prgCustData do: 
+	self do: 
 			[:each |
 			| id |
 			id := each guid.
@@ -41,6 +48,9 @@ contents
 
 	^contents ifNil: [contents := self buildContents]!
 
+do: aMonadicValuable
+	self prgCustData do: aMonadicValuable!
+
 prgCustData
 	"Answer the <StructureArray> value of the receiver's 'prgCustData' field."
 
@@ -49,9 +59,11 @@ prgCustData
 		length: self cCustData
 		elementClass: CUSTDATAITEM! !
 !OS.COM.CUSTDATA categoriesForMethods!
+asLookupTable!public! !
 buildContents!printing-IDL!private! !
 cCustData!**compiled accessors**!private! !
 contents!printing-IDL!public! !
+do:!private! !
 prgCustData!**compiled accessors**!public! !
 !
 
@@ -94,6 +106,8 @@ initialize
 		at: (GUID fromString: '{664f8323-a768-4acc-a2c8-8fa05d138897}') put: #string;
 		at: (GUID fromString: '{82a85647-bd20-4075-823b-d9758c4391eb}') put: #length_is;
 		at: (GUID fromString: '{be29f9d9-7844-49e1-aacb-8e19386529df}') put: #size_is;
+		at: (GUID fromString: '{8e229a94-5e3f-45bd-88bd-06d9f8fef430}') put: #errno;
+		at: (GUID fromString: '{905342e6-276b-4ca5-84cf-9e714b8e40e3}') put: #category;
 		shrink! !
 !OS.COM.CUSTDATA class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !

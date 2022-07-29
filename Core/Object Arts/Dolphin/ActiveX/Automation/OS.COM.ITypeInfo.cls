@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 OS.COM.IUnknown subclass: #'OS.COM.ITypeInfo'
-	instanceVariableNames: 'attributes'
+	instanceVariableNames: 'attributes allCustData'
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})
 	classInstanceVariableNames: ''
@@ -44,6 +44,9 @@ AddressOfMember: addressOfMember invKind: invKind ppv: ppv
 
 	<virtual stdcall: hresult 16 sdword sdword void**>
 	^self invalidCall: _failureCode!
+
+allCustData
+	^allCustData ifNil: [allCustData := self getAllCustData]!
 
 asImplType
 	"Answer an <ITypeInfo> which is the resolved implementation type for the receiver
@@ -496,6 +499,11 @@ nullCustData
 		beUnfinalizable;
 		yourself!
 
+onStartup
+	allCustData beUnfinalizable.
+	allCustData := nil.
+	^super onStartup!
+
 recordInfoIfNone: exceptionHandler
 	"Answer an <IRecordInfo> on the receiver's type information."
 
@@ -570,6 +578,7 @@ typeLib
 ! !
 !OS.COM.ITypeInfo categoriesForMethods!
 AddressOfMember:invKind:ppv:!COM Interfaces-OAIDL.ITypeInfo!private! !
+allCustData!public! !
 asImplType!accessing!converting!public! !
 attributes!accessing!public! !
 basicFree!private!realizing/unrealizing! !
@@ -612,6 +621,7 @@ libraryAndIndex!accessing!public! !
 nameOfID:!accessing!public! !
 nameOfID:ifAbsent:!accessing!public! !
 nullCustData!accessing!public! !
+onStartup!public! !
 recordInfoIfNone:!accessing!public! !
 ReleaseFuncDesc:!COM Interfaces-OAIDL.ITypeInfo!private! !
 ReleaseTypeAttr:!COM Interfaces-OAIDL.ITypeInfo!private! !
@@ -675,8 +685,23 @@ defineFunctions
 		defineFunction: #ReleaseVarDesc: 
 			returnType: 'void' 
 			argumentTypes: 'VARDESC*'
-! !
+!
+
+stbConvertFrom: anSTBClassFormat 
+	"Version 1 adds helpId instance variable."
+
+	^
+	[:data | 
+	| newInstance |
+	newInstance := self basicNew.
+	1 to: data size do: [:i | newInstance instVarAt: i put: (data at: i)].
+	newInstance]!
+
+stbVersion
+	^1! !
 !OS.COM.ITypeInfo class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
+stbConvertFrom:!binary filing!public! !
+stbVersion!public! !
 !
 

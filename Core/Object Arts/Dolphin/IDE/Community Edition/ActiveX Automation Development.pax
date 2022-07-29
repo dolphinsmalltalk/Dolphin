@@ -106,7 +106,6 @@ package setMethodNames: #(
 	#(#{OS.COM.AbstractDispatchImplementation class} #icon)
 	#(#{OS.COM.AbstractELEMDESC} #printFieldsOn:)
 	#(#{OS.COM.APIInfoAnalyzer} #areWrappersRequired)
-	#(#{OS.COM.APIInfoAnalyzer} #basicPrintType:on:)
 	#(#{OS.COM.APIInfoAnalyzer} #compileMethodWrapper:)
 	#(#{OS.COM.APIInfoAnalyzer} #functionHasReturnValue:)
 	#(#{OS.COM.APIInfoAnalyzer} #generateMethod:wrapping:)
@@ -115,12 +114,13 @@ package setMethodNames: #(
 	#(#{OS.COM.APIInfoAnalyzer} #generateRawMethod:categories:)
 	#(#{OS.COM.APIInfoAnalyzer} #generateVariableDefinition:)
 	#(#{OS.COM.APIInfoAnalyzer} #idlAttributesOfFunc:)
-	#(#{OS.COM.APIInfoAnalyzer} #instanceMethodCategories:)
+	#(#{OS.COM.APIInfoAnalyzer} #instanceMethodCategories:raw:)
 	#(#{OS.COM.APIInfoAnalyzer} #isDefaultedWrapperRequiredFor:)
 	#(#{OS.COM.APIInfoAnalyzer} #isMethodWrapperRequiredFor:)
 	#(#{OS.COM.APIInfoAnalyzer} #methodCommentDescription)
 	#(#{OS.COM.APIInfoAnalyzer} #mungeSelectorKeywords:forMember:)
 	#(#{OS.COM.APIInfoAnalyzer} #printCommentPrefixOn:isPrivate:)
+	#(#{OS.COM.APIInfoAnalyzer} #printExternalType:on:)
 	#(#{OS.COM.APIInfoAnalyzer} #printFunctionPrototype:on:indent:)
 	#(#{OS.COM.APIInfoAnalyzer} #printFunctionPrototypeComment:on:)
 	#(#{OS.COM.APIInfoAnalyzer} #printIDLForFunction:on:indent:)
@@ -131,6 +131,7 @@ package setMethodNames: #(
 	#(#{OS.COM.APIInfoAnalyzer} #printRawMethodComment:on:isPrivate:)
 	#(#{OS.COM.APIInfoAnalyzer} #printRawMethodCommentHelp:on:)
 	#(#{OS.COM.APIInfoAnalyzer} #printRawMethodCommentPreamble:on:isPrivate:)
+	#(#{OS.COM.APIInfoAnalyzer} #printReturnType:on:)
 	#(#{OS.COM.APIInfoAnalyzer} #printType:on:)
 	#(#{OS.COM.APIInfoAnalyzer} #proputrefWrapperPrefix)
 	#(#{OS.COM.APIInfoAnalyzer} #rawMethodNameForFunction:)
@@ -213,7 +214,7 @@ package setMethodNames: #(
 	#(#{OS.COM.InterfaceTypeAnalyzer} #generateVariableDefinition:)
 	#(#{OS.COM.InterfaceTypeAnalyzer} #idlAttributes)
 	#(#{OS.COM.InterfaceTypeAnalyzer} #inspectableProperties)
-	#(#{OS.COM.InterfaceTypeAnalyzer} #instanceMethodCategories:)
+	#(#{OS.COM.InterfaceTypeAnalyzer} #instanceMethodCategories:raw:)
 	#(#{OS.COM.InterfaceTypeAnalyzer} #interfaceCategoryName)
 	#(#{OS.COM.InterfaceTypeAnalyzer} #isAutomationCompatible)
 	#(#{OS.COM.InterfaceTypeAnalyzer} #isInspectablePropGet:)
@@ -358,7 +359,7 @@ package setMethodNames: #(
 	#(#{OS.COM.TKindModuleAnalyzer} #idlAttributes)
 	#(#{OS.COM.TKindModuleAnalyzer} #idlAttributesOfFunc:)
 	#(#{OS.COM.TKindModuleAnalyzer} #idlKeyword)
-	#(#{OS.COM.TKindModuleAnalyzer} #instanceMethodCategories:)
+	#(#{OS.COM.TKindModuleAnalyzer} #instanceMethodCategories:raw:)
 	#(#{OS.COM.TKindModuleAnalyzer} #methodCommentDescription)
 	#(#{OS.COM.TKindModuleAnalyzer} #mungeSelectorKeywords:forMember:)
 	#(#{OS.COM.TKindModuleAnalyzer} #printClassCommentPreambleOn:)
@@ -1567,17 +1568,6 @@ areWrappersRequired
 	
 	^(self generationFlags noMask: RawMethodsOnly)!
 
-basicPrintType: aTYPEDESC on: aPuttableStream
-	| type classDesc typeName |
-	classDesc := aTYPEDESC classDesc.
-	type := classDesc key.
-	typeName := type typeName.
-	"Built in types start with lowercase letters - there ought to be a better way to determine this"
-	typeName first isLowerCase
-		ifTrue: [aPuttableStream nextPutAll: typeName]
-		ifFalse: [self printClass: type on: aPuttableStream].
-	^classDesc!
-
 compileMethodWrapper: aString
 	self compileMethod: aString categories: {self autoGenCategoryName. 'methods'. 'public'}!
 
@@ -1612,7 +1602,7 @@ generateMethodWrappers: aFUNCDESC
 	| wrapit methodName |
 	wrapit := self isMethodWrapperRequiredFor: aFUNCDESC.
 	methodName := self generateRawMethod: aFUNCDESC
-				categories: (self instanceMethodCategories: wrapit).
+				categories: (self instanceMethodCategories: aFUNCDESC raw: wrapit).
 	wrapit ifTrue: [methodName := self generateMethod: aFUNCDESC wrapping: methodName].
 	^methodName!
 
@@ -1654,7 +1644,7 @@ idlAttributesOfFunc: aFUNCDESC
 
 	^aFUNCDESC idlAttributesAndId!
 
-instanceMethodCategories: aBoolean
+instanceMethodCategories: aFUNCDESC raw: aBoolean
 	"Private - Answer a collection of categories with which instance side methods are to be associated. The <boolean>
 	argument indicates whether the categories are for a public or private method."
 
@@ -1683,6 +1673,14 @@ printCommentPrefixOn: aPuttableStream isPrivate: aBoolean
 		tab;
 		nextPut: $".
 	aBoolean ifTrue: [aPuttableStream nextPutAll: 'Private - ']!
+
+printExternalType: aClass on: aPuttableStream
+	| typeName |
+	typeName := aClass typeName.
+	"Built in types start with lowercase letters - there ought to be a better way to determine this"
+	typeName first isLowerCase
+		ifTrue: [aPuttableStream nextPutAll: typeName]
+		ifFalse: [self printClass: aClass on: aPuttableStream]!
 
 printFunctionPrototype: aFUNCDESC on: target indent: tabs
 	"Private - Generate an IDL-style prototype for the method described by the <FUNCDESC>, funcDesc,
@@ -1766,7 +1764,7 @@ printMethodCommentPreamble: aFUNCDESC on: aPuttableStream isPrivate: aBoolean
 	((self functionHasReturnValue: aFUNCDESC) and: [aFUNCDESC hasMultipleOutputs not])
 		ifTrue: 
 			[aPuttableStream nextPutAll: 'Answer the <'.
-			self basicPrintType: aFUNCDESC tdesc on: aPuttableStream.
+			self printExternalType: aFUNCDESC tdesc classDesc key on: aPuttableStream.
 			aPuttableStream nextPutAll: '> result of invoking the ']
 		ifFalse: [aPuttableStream nextPutAll: 'Invoke the '].
 	aPuttableStream
@@ -1804,9 +1802,19 @@ printRawMethodCommentPreamble: aFUNCDESC on: aPuttableStream isPrivate: aBoolean
 		nextPutAll: self methodCommentDescription;
 		nextPut: $.!
 
+printReturnType: aFUNCDESC on: aPuttableStream
+	| returnType |
+	returnType := aFUNCDESC tdescFunc.
+	#todo.	"This is a hack to special case Errno return values. The printing of types should be reworked to be delegated to the types, rather than using the #classDesc mechanism to map to a Smalltalk type."
+	(returnType isEnum and: [returnType realTypeInfo customAttributes includesKey: #errno])
+		ifTrue: [aPuttableStream nextPutAll: 'errno']
+		ifFalse: [self printType: returnType on: aPuttableStream]!
+
 printType: aTYPEDESC on: aPuttableStream
-	self basicPrintType: aTYPEDESC on: aPuttableStream.
-	aTYPEDESC classDesc value timesRepeat: [aPuttableStream nextPut: $*]!
+	| classDesc |
+	classDesc := aTYPEDESC classDesc.
+	self printExternalType: classDesc key on: aPuttableStream.
+	classDesc value timesRepeat: [aPuttableStream nextPut: $*]!
 
 proputrefWrapperPrefix
 	"Answer a <String> to be prepended to high-level wrapper methods generated to
@@ -1864,7 +1872,6 @@ selectorForFunction: aFUNCDESC
 	^(self rawMethodNameForFunction: aFUNCDESC) selector! !
 !OS.COM.APIInfoAnalyzer categoriesForMethods!
 areWrappersRequired!private!testing! !
-basicPrintType:on:!private! !
 compileMethodWrapper:!private! !
 functionHasReturnValue:!helpers!private! !
 generateMethod:wrapping:!private! !
@@ -1873,12 +1880,13 @@ generateMethodWrappers:!private! !
 generateRawMethod:categories:!private! !
 generateVariableDefinition:!private! !
 idlAttributesOfFunc:!printing-IDL!private! !
-instanceMethodCategories:!private! !
+instanceMethodCategories:raw:!private! !
 isDefaultedWrapperRequiredFor:!private!testing! !
 isMethodWrapperRequiredFor:!private!testing! !
 methodCommentDescription!private! !
 mungeSelectorKeywords:forMember:!helpers!private! !
 printCommentPrefixOn:isPrivate:!private! !
+printExternalType:on:!private! !
 printFunctionPrototype:on:indent:!printing!private! !
 printFunctionPrototypeComment:on:!private! !
 printIDLForFunction:on:indent:!printing-IDL!private! !
@@ -1889,6 +1897,7 @@ printRawMethodBody:name:on:!printing!private! !
 printRawMethodComment:on:isPrivate:!private! !
 printRawMethodCommentHelp:on:!printing!private! !
 printRawMethodCommentPreamble:on:isPrivate:!private! !
+printReturnType:on:!private! !
 printType:on:!private! !
 proputrefWrapperPrefix!constants!private! !
 rawMethodNameForFunction:!helpers!private! !
@@ -2977,7 +2986,7 @@ inspectableProperties
 	answer addAll: (self methods select: [:each | self isInspectablePropGet: each]).
 	^answer!
 
-instanceMethodCategories: aBoolean
+instanceMethodCategories: aFUNCDESC raw: aBoolean
 	"Private - Answer a collection of categories with which instance side methods are to be associated. The <boolean> argument indicates whether the categories are for a public or private method."
 
 	^{self interfaceCategoryName.
@@ -3132,7 +3141,7 @@ printPropGetCommentPreamble: aMemberDesc on: aPuttableStream
 	aPuttableStream
 		tab;
 		nextPutAll: '"Answer the <'.
-	self basicPrintType: aMemberDesc tdesc on: aPuttableStream.
+	self printExternalType: aMemberDesc tdesc classDesc key on: aPuttableStream.
 	aPuttableStream
 		nextPutAll: '> value of the ''';
 		nextPutAll: aMemberDesc name;
@@ -3224,7 +3233,7 @@ generateValuePropertyWrappers!private! !
 generateVariableDefinition:!private! !
 idlAttributes!printing-IDL!private! !
 inspectableProperties!enumerating!public! !
-instanceMethodCategories:!private! !
+instanceMethodCategories:raw:!private! !
 interfaceCategoryName!constants!private! !
 isAutomationCompatible!public!testing! !
 isInspectablePropGet:!enumerating!private! !
@@ -4930,7 +4939,7 @@ printRawMethodBody: aFUNCDESC name: anAXMethodName on: aPuttableStream
 		nextPutAll: aFUNCDESC callingConvention;
 		space.
 	"Here we want to print the actual return type of the function, as opposed to any retval argument."
-	self printType: aFUNCDESC tdescFunc on: aPuttableStream.
+	self printReturnType: aFUNCDESC on: aPuttableStream.
 	aPuttableStream
 		space;
 		display: aFUNCDESC vfnIndex.
@@ -5099,11 +5108,15 @@ idlKeyword
 
 	^'module'!
 
-instanceMethodCategories: aBoolean
+instanceMethodCategories: aFUNCDESC raw: aBoolean
 	"Private - Answer a collection of categories with which instance side methods are to be associated. The <boolean>
 	argument indicates whether the categories are for a public or private method."
 
-	^{self autoGenCategoryName. aBoolean ifTrue: ['private'] ifFalse: ['public']}!
+	| categories |
+	categories := {self autoGenCategoryName. aBoolean ifTrue: ['private'] ifFalse: ['public']}.
+	(aFUNCDESC customAttributes at: #category ifAbsent: nil)
+		ifNotNil: [:category | categories := categories copyWith: category value].
+	^categories!
 
 methodCommentDescription
 	^'function of the module wrapped by the receiver'!
@@ -5180,7 +5193,7 @@ printRawMethodBody: aFUNCDESC name: anAXMethodName on: aPuttableStream
 		nextPutAll: aFUNCDESC callingConvention;
 		space.
 	"Here we want to print the actual return type of the function, as opposed to any retval argument."
-	self printType: aFUNCDESC tdescFunc on: aPuttableStream.
+	self printReturnType: aFUNCDESC on: aPuttableStream.
 	aPuttableStream space.
 	entry := self getDllEntry: aFUNCDESC.
 	procName := (entry at: 2) trimBlanks.
@@ -5208,7 +5221,7 @@ generateWrapper!private! !
 idlAttributes!printing-IDL!private! !
 idlAttributesOfFunc:!printing-IDL!private! !
 idlKeyword!constants!private! !
-instanceMethodCategories:!private! !
+instanceMethodCategories:raw:!private! !
 methodCommentDescription!private! !
 mungeSelectorKeywords:forMember:!helpers!private! !
 printClassCommentPreambleOn:!printing!private! !
@@ -5333,13 +5346,15 @@ canGenerateMessage: aSymbol into: aClass
 	The purpose of this test is to avoid overwriting hand written methods of the same
 	name, or perhaps to avoid overriding certain critical selectors."
 
-	^(aClass includesSelector: aSymbol asSymbol)
-		ifTrue: 
-			[Notification signal: ('Warning: Wrapper method <1p>>><2s> not generated due to selector clash.'
-						expandMacrosWith: aClass
-						with: aSymbol).
-			false]
-		ifFalse: [true]!
+	| selector existing |
+	selector := aSymbol asSymbol.
+	existing := aClass compiledMethodAt: aSymbol ifAbsent: nil.
+	^existing isNil or: 
+			[(self autoGenCategoryName asMethodCategory includesMethod: existing) or: 
+					[Notification signal: ('Warning: Wrapper method <1p>>><2s> not generated due to selector clash.'
+								expandMacrosWith: aClass
+								with: selector).
+					false]]!
 
 canGenerateMethodNamed: anAXMethodName
 	"Private - Answer whether an auto-generated method implementing the message with
@@ -6064,7 +6079,7 @@ customAttributes
 	The keys of the dictionary are the GUIDs which uniquely identify the attribute type, and the
 	values are the value of that attribute in this case."
 
-	^self getCustData contents!
+	^self getCustData asLookupTable!
 
 defineFunctionTables
 	"Answer whether #defineFunction methods will be defined in the classes of 
@@ -6134,15 +6149,11 @@ generationFlags: anObject
 
 getCustData
 	^self tlbInterface
-		ifNil: [#()]
-		ifNotNil: 
-			[:iti2 |
-			| custData answer array |
-			custData := iti2 getAllCustData.
-			array := custData prgCustData.
-			answer := array isNull ifTrue: [#()] ifFalse: [array copy].
-			custData free.
-			answer]!
+		ifNil: 
+			[CUSTDATA new
+				beUnfinalizable;
+				yourself]
+		ifNotNil: [:iti2 | iti2 allCustData]!
 
 guidClashSignal
 	"Answer the <exceptionSelector>/<exceptionSignaler> which can be signalled to

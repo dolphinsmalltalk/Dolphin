@@ -78,7 +78,7 @@ customAttributes
 	"Answer the collection of custom attributes defined on the member. This is a lookup table
 	mapping <GUID> attribute id to the attribute value, usally a string."
 
-	^(customAttributes ifNil: [customAttributes := self getAllCustData]) contents!
+	^(customAttributes ifNil: [customAttributes := self getAllCustData]) asLookupTable!
 
 documentation
 	"Answer a four element array containing the documentation for the receiver itself.

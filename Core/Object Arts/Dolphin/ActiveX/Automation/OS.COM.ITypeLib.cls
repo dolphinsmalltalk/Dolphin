@@ -19,6 +19,9 @@ ITypeLib is primarily of use in the construction of programming tools (it is fun
 !OS.COM.ITypeLib categoriesForClass!COM-Interfaces!OCIDL-Interfaces! !
 !OS.COM.ITypeLib methodsFor!
 
+allCustData
+	^self getAllCustData!
+
 FindName: findName lHashVal: lHashVal ppTInfo: ppTInfo rgMemId: rgMemId pcFound: pcFound
 	"Invoke the FindName() method of the COM object wrapped by the receiver.
 
@@ -242,6 +245,7 @@ typekindAt: anInteger
 	self GetTypeInfoType: anInteger-1 pTKind: answer.
 	^answer value! !
 !OS.COM.ITypeLib categoriesForMethods!
+allCustData!public! !
 FindName:lHashVal:ppTInfo:rgMemId:pcFound:!COM Interfaces-ITypeLib!primitives!public! !
 getAllCustData!accessing!public! !
 GetDocumentation:pBstrName:pBstrDocString:pdwHelpContext:pBstrHelpFile:!COM Interfaces-ITypeLib!primitives!private! !

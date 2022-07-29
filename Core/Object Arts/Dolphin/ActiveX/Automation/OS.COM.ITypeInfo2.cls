@@ -14,6 +14,12 @@ ITypeInfo2 is a refinement of ITypeInfo which adds some bits Microsoft forget ab
 !OS.COM.ITypeInfo2 categoriesForClass!COM-Interfaces! !
 !OS.COM.ITypeInfo2 methodsFor!
 
+basicFree
+	"Private - Free the receiver's external resources by releasing the interface."
+
+	allCustData free.
+	super basicFree!
+
 getAllCustData
 	"Answer the <CUSTDATA> result of invoking the COM Object's GetAllCustData() method."
 
@@ -334,6 +340,7 @@ typekind
 	self GetTypeKind: answer.
 	^answer asSignedInteger! !
 !OS.COM.ITypeInfo2 categoriesForMethods!
+basicFree!public!realizing/unrealizing! !
 getAllCustData!**auto generated**!public! !
 GetAllCustData:!COM Interfaces-OAIDL.ITypeInfo2!private! !
 getAllFuncCustData:!**auto generated**!public! !

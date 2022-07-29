@@ -268,6 +268,11 @@ isDual
 
 !
 
+isEnum
+	"Answer whether the receiver describes an enumeration."
+
+	^false!
+
 isGeneratedAs: aClass
 	^self hasFunctions not
 		or: [aClass methodDictionary notEmpty or: [aClass class methodDictionary notEmpty]]!
@@ -375,6 +380,9 @@ suggestedBinding
 
 	^self typeLib suggestBindingForType: self!
 
+targetOfType: aTYPEDESC
+	^aTYPEDESC!
+
 tdesc
 	^self attributes tdesc!
 
@@ -462,6 +470,7 @@ includeIDLInClassComment!constants!private! !
 index!constants!public! !
 isDispatchable!public!testing! !
 isDual!public!testing! !
+isEnum!public!testing! !
 isGeneratedAs:!private!testing! !
 isHidden!public!testing! !
 isStructure!public!testing! !
@@ -479,6 +488,7 @@ releaseVarDesc:!private!realizing/unrealizing! !
 setTypeInfo:!accessing!private! !
 setTypeInfo:typeLib:index:!accessing!private! !
 suggestedBinding!accessing!private! !
+targetOfType:!private! !
 tdesc!accessing!constants!public! !
 typeFlags!accessing!public! !
 typekind!constants!public! !

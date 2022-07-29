@@ -42,6 +42,11 @@ constants
 
 	^self variables!
 
+isEnum
+	"Answer whether the receiver describes an enumeration."
+
+	^true!
+
 isGeneratedAs: aNamespace
 	^self hasConstantsGeneratedAs: aNamespace!
 
@@ -70,6 +75,7 @@ vt
 baseClass!constants!private! !
 binding!accessing!private! !
 constants!enumerating!public! !
+isEnum!public!testing! !
 isGeneratedAs:!private!testing! !
 name!accessing!public! !
 suggestedBinding!accessing!private! !

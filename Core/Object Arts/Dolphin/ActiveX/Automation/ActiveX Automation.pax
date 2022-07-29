@@ -623,7 +623,7 @@ OS.COM.IUnknown subclass: #'OS.COM.ITypeComp'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OS.COM.IUnknown subclass: #'OS.COM.ITypeInfo'
-	instanceVariableNames: 'attributes'
+	instanceVariableNames: 'attributes allCustData'
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})
 	classInstanceVariableNames: ''

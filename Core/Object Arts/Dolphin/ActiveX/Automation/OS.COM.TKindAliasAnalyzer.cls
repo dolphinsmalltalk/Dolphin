@@ -42,6 +42,9 @@ isUnion
 realTypeInfo
 	^self tdesc realTypeInfo!
 
+targetOfType: aTYPEDESC
+	^self tdesc targetType!
+
 vt
 	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
 	type when represented in a <VARIANT>."
@@ -54,6 +57,7 @@ isAnonymous!public!testing! !
 isStructure!public!testing! !
 isUnion!public!testing! !
 realTypeInfo!accessing!public! !
+targetOfType:!private! !
 vt!accessing!constants!public! !
 !
 

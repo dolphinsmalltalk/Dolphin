@@ -60,9 +60,10 @@ tdesc
 	is the destruction of the <AXTypeInfoStructure> which we wish to postpone for the
 	lifetime of the TYPEDESC."
 
-	tdesc isNil 
+	tdesc isNil
 		ifTrue: 
-			[tdesc := (self tdescElem)
+			[self assert: [owner notNil].
+			tdesc := self tdescElem
 						owner: owner;
 						yourself].
 	^tdesc!
