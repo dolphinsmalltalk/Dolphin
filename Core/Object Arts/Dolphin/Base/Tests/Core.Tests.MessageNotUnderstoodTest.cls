@@ -13,8 +13,7 @@ Core.Tests.MessageNotUnderstoodTest comment: ''!
 testDescription
 	| subject |
 	subject := [self blah] on: MessageNotUnderstood do: [:ex | ex].
-	self assert: subject description
-		equals: 'Core.Tests.MessageNotUnderstoodTest does not understand #blah'! !
+	self assert: subject description equals: 'Tests.MessageNotUnderstoodTest does not understand #blah'! !
 !Core.Tests.MessageNotUnderstoodTest categoriesForMethods!
 testDescription!public! !
 !

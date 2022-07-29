@@ -8,7 +8,6 @@ Kernel.Tests.AbstractNamespaceTest subclass: #'Kernel.Tests.NamespaceTest'
 	classConstants: {}!
 Kernel.Tests.NamespaceTest guid: (Core.GUID fromString: '{1528fd18-37cc-469b-bd8e-ea26ea522759}')!
 Kernel.Tests.NamespaceTest comment: ''!
-!Kernel.Tests.NamespaceTest categoriesForClass!Unclassified! !
 !Kernel.Tests.NamespaceTest methodsFor!
 
 canonicalSubject
@@ -260,7 +259,10 @@ testShortName
 	self assert: TestRunConsoleLogger shortName equals: 'XProgramming.SUnit.TestRunConsoleLogger'.
 	"Where there is ambiguity in imported namespaces, the order of imports takes precedence (Core is imported into Smaltlalk before Kernel)."
 	self assert: Core.Tests shortName equals: 'Tests'.
-	self assert: Kernel.Tests shortName equals: 'Kernel.Tests'!
+	self assert: Kernel.Tests shortName equals: 'Kernel.Tests'.
+	"The short name of a class in a nested namespace should be qualified with the short name of its namespace, not necessarily the full name"
+	self assert: Core.Tests.ObjectTest shortName equals: 'Tests.ObjectTest'.
+	self assert: Kernel.Tests.NamespaceTest shortName equals: 'Kernel.Tests.NamespaceTest'!
 
 testSimpleName
 	"#simpleName is defined for compatibility. It is the same as the #unqualifiedName (or indeed the #name)."

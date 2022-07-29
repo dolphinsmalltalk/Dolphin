@@ -18,7 +18,7 @@ testAsDword
 	self
 		should: [super testAsDword]
 		raise: Error
-		matching: [:ex | ex description equals: self subjectClass fullName , ' should not implement #asDword']! !
+		matching: [:ex | ex description = (self subjectClass printString , ' should not implement #asDword')]! !
 !Graphics.Gdiplus.Tests.POINTFTest categoriesForMethods!
 subjectClass!constants!private! !
 testAsDword!public!unit tests! !

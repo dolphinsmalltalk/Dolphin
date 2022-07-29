@@ -121,7 +121,7 @@ shortNameFor: aString in: aNamespace
 						ifNil: [self imports anySatisfy: [:each | each valueOrNil == aNamespace]]
 						ifNotNil: [:binding | binding environment == aNamespace or: [binding environment == self]]]])
 		ifTrue: [aString]
-		ifFalse: [aNamespace fullNameFor: aString]!
+		ifFalse: [aNamespace shortName , '.' , aString]!
 
 staticVariableRemoved: aVariableBinding
 	self
