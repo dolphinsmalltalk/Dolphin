@@ -12,6 +12,12 @@ External.POINT comment: '`POINT` is the abstract class of structures representin
 !External.POINT categoriesForClass!External-Data-Structured! !
 !External.POINT methodsFor!
 
+= anObject
+	"Answer whether the receiver is considered equivalent to the	<Object> argument."
+
+	^self == anObject
+		or: [self species == anObject species and: [self x = anObject x and: [self y = anObject y]]]!
+
 asDword
 	"Answer the receiver in a form suitable for passing or returning 
 	as a 32-bit value (i.e. a 32-bit integer)."
@@ -34,6 +40,19 @@ asUIntPtr
 	as a  machine-word sized (32 or 64-bit) value."
 
 	^self asPoint asUIntPtr!
+
+hash
+	"Answer the <integer> hash value for the receiver."
+
+	^(self x hash bitShift: 2) bitXor: self y hash!
+
+isZero
+	"Answer whether the receiver is equal to Point zero."
+
+	^self asPoint isZero!
+
+species
+	^UI.Point!
 
 value
 	"Answer the receiver's value field as an equivalent Smalltalk object (a <Point>)."
@@ -59,10 +78,14 @@ y
 y: anObject
 	self subclassResponsibility! !
 !External.POINT categoriesForMethods!
+=!comparing!public! !
 asDword!converting!public! !
 asObject!converting!public! !
 asPoint!converting!public! !
 asUIntPtr!converting!public! !
+hash!comparing!public! !
+isZero!public!testing! !
+species!comparing!public! !
 value!accessing!public! !
 value:!accessing!public! !
 x!accessing!public! !
@@ -86,6 +109,12 @@ icon
 
 	^Graphics.Point icon!
 
+marshal: aPoint
+	"Answer a new instance of the receiver representing aPoint."
+
+	aPoint class == self class ifTrue: [^aPoint].
+	^self x: aPoint x y: aPoint y!
+
 x: x y: y
 	"Answer a new instance of the receiver representing the Point whose 
 	cartesian coordinates are the arguments."
@@ -98,6 +127,7 @@ x: x y: y
 fromPoint:!instance creation!public! !
 getFieldNames!constants!private! !
 icon!constants!development!public! !
+marshal:!instance creation!public! !
 x:y:!instance creation!public! !
 !
 

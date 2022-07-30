@@ -526,6 +526,11 @@ truncated
 
 	^self species origin: origin truncated corner: corner truncated!
 
+vertices
+	"Answer <Array> of <Point>s representing the 4 corners of the receiver in the clockwise order from the origin (top-left)."
+
+	^{self topLeft. self topRight. self bottomRight. self bottomLeft}!
+
 width
 	"Answer the width of the receiver."
 
@@ -620,6 +625,7 @@ topRight:!accessing!public! !
 translateBy:!public!transforming! !
 translatedBy:!public!transforming! !
 truncated!converting!public! !
+vertices!accessing!public! !
 width!accessing!public! !
 width:!accessing!public! !
 !

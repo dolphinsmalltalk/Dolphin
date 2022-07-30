@@ -27,41 +27,43 @@ Arithmetic operations can be carried out between two Points or between a Point a
 	^anArithmeticValue subtractFromPoint: self!
 
 * anArithmeticValue
-	"Answer a Point with the receiver's coordinates multiplied by anArithmeticValue."
+	"Answer a <Point> with the receiver's coordinates multiplied by the <arithmeticValue> argument."
 
 	^anArithmeticValue multiplyByPoint: self!
 
-/ operand
-	"Answer a Point with the receiver's coordinates divided by the <number>, 
-	operand. If the operand is zero then a <ZeroDivide> is raised."
+/ anArithmeticValue
+	"Answer a <Point> with the receiver's coordinates divided by the <ArithmeticValue> argument. If the operand is zero then a <ZeroDivide> is raised."
 
-	^operand divideIntoPoint: self!
+	^anArithmeticValue divideIntoPoint: self!
 
-@ zCoord
-	"Answer a Point3D with the receiver as X, Y coordinates and the argument as Z."
+@ aNumber
+	"Answer a <Point3D> with the receiver as X, Y coordinates and the <number> argument as Z."
 
-	^Point3D x: x y: y z: zCoord!
+	^Point3D
+		x: x
+		y: y
+		z: aNumber!
 
 + anArithmeticValue
-	"Answer the sum of receiver and aPoint as a Point."
+	"Answer the <Point> sum of receiver and the <arithmeticValue> argument."
 
 	^anArithmeticValue addToPoint: self!
 
-< anArithmeticValue
-	"Answer whether the receiver is above and to the left of anArithmeticValue.
-	N.B. No double dispatch, as would need to do for more than just #<."
+< aMagnitude
+	"Answer whether the receiver is above and to the left of the <magnitude> argument.
+	N.B. No double dispatch to reduce the number of methods that must be implemented."
 
 	| aPoint |
-	aPoint := anArithmeticValue asPoint.
-	^x < aPoint x and: [ y < aPoint y ]!
+	aPoint := aMagnitude asGenericPoint.
+	^x < aPoint x and: [y < aPoint y]!
 
-<= anArithmeticValue
-	"Answer whether the receiver is neither below nor to the right of anArithmeticValue.
-	A double dispatch of #< with the superclass implementation of #<= would not work here."
+<= aMagnitude
+	"Answer whether the receiver is neither below nor to the right of the <magnitude> argument.
+	N.B. No double dispatch to reduce the number of methods that must be implemented."
 
 	| aPoint |
-	aPoint := anArithmeticValue asPoint.
-	^x <= aPoint x and: [ y <= aPoint y ]!
+	aPoint := aMagnitude asGenericPoint.
+	^x <= aPoint x and: [y <= aPoint y]!
 
 = anObject
 	"Answer whether the receiver is considered equivalent to the	<Object> argument."
@@ -71,33 +73,13 @@ Arithmetic operations can be carried out between two Points or between a Point a
 				ifTrue: [x = anObject x and: [y = anObject y]]
 				ifFalse: [super = anObject]]!
 
-> anArithmeticValue
-	"Answer whether the receiver is below and to the right of anArithmeticValue.
-	A double dispatch of #< with the superclass implementation of #> would not work here."
-
-	| aPoint |
-	aPoint := anArithmeticValue asPoint.
-	^x > aPoint x and: [y > aPoint y]
-!
-
->= anArithmeticValue
-	"Answer whether the receiver is neither above nor to the left of anArithmeticValue.
-	A double dispatch of #< with the superclass implementation of #>= would not work here."
-	
-	| aPoint |
-	aPoint := anArithmeticValue asPoint.
-	^x >= aPoint x and: [ y >= aPoint y ]
-!
-
 abs
 	"Answer a <Point> that is the absolute value (positive magnitude) of the receiver."
 
 	^x abs @ y abs!
 
 addToPoint: aPoint
-	"Private - Answer the result of adding the receiver to the known Point,
-	aPoint, by coercing the less general of it and the receiver. Overridden by 
-	subclasses which can implement more efficiently."
+	"Private - Answer the <point> result of adding the receiver to the known <point> argument."
 
 	^(aPoint x + x) @ (aPoint y + y)!
 
@@ -106,6 +88,11 @@ asDword
 	procedure (or passing to a function expecting a 32-bit value)."
 
 	^(External.DWORD fromPoint: self) value!
+
+asGenericPoint
+	"Answer the receiver"
+
+	^self!
 
 asParameter
 	"Answer the receiver in a form suitable for passing to an external function."
@@ -137,10 +124,9 @@ ceiling
 	^x ceiling @ y ceiling!
 
 coerce: anArithmeticValue
-	"Private - Answer the lower generality ArithmeticValue, anArithmeticValue, 
-	converted to a Point."
+	"Private - Answer the lower generality <arithmeticValue> argument converted to a <point>."
 
-	^anArithmeticValue asPoint!
+	^anArithmeticValue asGenericPoint!
 
 corner: aPoint
 	"Answers a Rectangle defined by the receiver and aPoint."
@@ -166,9 +152,7 @@ dist: aPoint
 	^(aPoint - self) r!
 
 divideIntoPoint: aPoint
-	"Private - Answer the result of dividing the receiver into the known Point, aPoint, by 
-	coercing the less general of it and the receiver. Overridden by subclasses which 
-	can implement more efficiently."
+	"Private - Answer the <point> result of dividing the receiver into the known <point> argument."
 
 	^(aPoint x / x) @ (aPoint y / y)!
 
@@ -205,11 +189,24 @@ isSelfEvaluating
 
 	^true!
 
+isZero
+	^x = 0 and: [y = 0]!
+
+max
+	"Answer the maximum of the receiver's x and y co-ordinates."
+
+	^x max: y!
+
 max: aPoint
 	"Answer a new Point with the maximum of the x coordinates
 	and the maximum of the y coordinates of the receiver and aPoint"
 
 	^(x max: aPoint x) @ (y max: aPoint y)!
+
+min
+	"Answer the maximum of the receiver's x and y co-ordinates."
+
+	^x min: y!
 
 min: aPoint
 	"Answer a new Point with the maximum of the x coordinates
@@ -218,9 +215,7 @@ min: aPoint
 	^(x min: aPoint x) @ (y min: aPoint y)!
 
 multiplyByPoint: aPoint
-	"Private - Answer the result of multiplying the known Point, aPoint,
-	by the receiver, by coercing the less general of it and the recever.
-	Overridden by subclasses which can implement more efficiently."
+	"Private - Answer the <point> result of mulplying the receiver by the known <point> argument."
 
 	^(x * aPoint x) @ (y * aPoint y)!
 
@@ -253,12 +248,12 @@ rounded
 	^x rounded @ y rounded!
 
 roundTo: aNumber 
-	"Answer a new Point3D with the x, y values of the receiver rounded."
+	"Answer a new <point> with the x, y values of the receiver rounded."
 
 	^(x roundTo: aNumber) @ (y roundTo: aNumber)!
 
 subtractFromPoint: aPoint
-	"Private - Answer the result of subtracting the receiver from the known Point, aPoint."
+	"Private - Answer the <point> result of subtracting the receiver from the known <point> argument."
 
 	^Point x: aPoint x - x y: aPoint y - y!
 
@@ -308,11 +303,10 @@ y: aNumber
 <!comparing!public! !
 <=!comparing!public! !
 =!comparing!public! !
->!comparing!public! !
->=!comparing!public! !
 abs!arithmetic!public! !
 addToPoint:!double dispatch!private! !
 asDword!converting!public! !
+asGenericPoint!converting!public! !
 asParameter!converting!public! !
 asPoint!converting!public! !
 asPoint3D!converting!public! !
@@ -329,7 +323,10 @@ floor!public!truncation and round off! !
 generality!coercing!private! !
 hash!comparing!public! !
 isSelfEvaluating!public!testing! !
+isZero!public! !
+max!comparing!public! !
 max:!comparing!public! !
+min!comparing!public! !
 min:!comparing!public! !
 multiplyByPoint:!double dispatch!private! !
 printOn:!printing!public! !
@@ -346,6 +343,8 @@ x:y:!accessing!private! !
 y!accessing!public! !
 y:!accessing!public! !
 !
+
+Graphics.Point methodProtocol: #point attributes: #(#readOnly) selectors: #(#- #% #* #** #/ #// #\\ #+ #< #<= #> #>= #abs #addToFloat: #addToFraction: #addToInteger: #addToPoint: #addToPoint3D: #addToScaledDecimal: #asGenericPoint #asPoint #between:and: #ceiling #corner: #degrees #dist: #divideIntoFloat: #divideIntoFraction: #divideIntoInteger: #divideIntoPoint: #divideIntoPoint3D: #divideIntoScaledDecimal: #dotProduct: #equalToFloat: #equalToFraction: #equalToInteger: #equalToScaledDecimal: #extent: #floor #fractionPart #generality #greaterOrEqualToFloat: #greaterOrEqualToFraction: #greaterOrEqualToInteger: #greaterOrEqualToScaledDecimal: #greaterThanFloat: #greaterThanFraction: #greaterThanInteger: #greaterThanScaledDecimal: #integerPart #isZero #max: #min: #multiplyByFloat: #multiplyByFraction: #multiplyByInteger: #multiplyByPoint: #multiplyByPoint3D: #multiplyByScaledDecimal: #negated #negative #positive #quo: #r #raisedTo: #raisedToInteger: #reciprocal #rem: #roundDownTo: #rounded #roundTo: #roundUpTo: #sign #squared #strictlyPositive #subtractFromFloat: #subtractFromFraction: #subtractFromInteger: #subtractFromPoint: #subtractFromPoint3D: #subtractFromScaledDecimal: #truncated #truncateTo: #understandsArithmetic #x #x: #y #y:)!
 
 !Graphics.Point class methodsFor!
 

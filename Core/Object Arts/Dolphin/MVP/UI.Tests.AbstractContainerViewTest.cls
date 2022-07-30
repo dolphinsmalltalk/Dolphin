@@ -115,7 +115,7 @@ testNcCalcSize
 
 	| containerView rect params ret parentRect |
 	containerView := self view.
-	rect := RECTL fromRectangle: containerView rectangle.
+	rect := RECTL marshal: containerView rectangle.
 	self assert: rect asRectangle equals: self initialParentRect.
 	ret := containerView
 				sendMessage: WM_NCCALCSIZE
@@ -127,7 +127,7 @@ testNcCalcSize
 	"Border off advanced test"
 	params := NCCALCSIZE_PARAMS new.
 	parentRect := containerView rectangle.
-	params rgrc at: 1 put: (RECTL fromRectangle: parentRect).
+	params rgrc at: 1 put: (RECTL marshal: parentRect).
 	ret := containerView
 				sendMessage: WM_NCCALCSIZE
 				wParam: true asParameter
@@ -136,7 +136,7 @@ testNcCalcSize
 
 	"Border on simple test"
 	containerView hasBorder: true.
-	rect := RECTL fromRectangle: containerView rectangle.
+	rect := RECTL marshal: containerView rectangle.
 	self assert: rect asRectangle equals: self initialParentRect.
 	ret := containerView
 				sendMessage: WM_NCCALCSIZE
@@ -149,7 +149,7 @@ testNcCalcSize
 	"Border on advanced test"
 	params := NCCALCSIZE_PARAMS new.
 	parentRect := containerView rectangle.
-	params rgrc at: 1 put: (RECTL fromRectangle: parentRect).
+	params rgrc at: 1 put: (RECTL marshal: parentRect).
 	ret := containerView
 				sendMessage: WM_NCCALCSIZE
 				wParam: true asParameter

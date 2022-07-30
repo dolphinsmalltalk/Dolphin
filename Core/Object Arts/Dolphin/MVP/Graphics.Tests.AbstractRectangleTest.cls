@@ -9,7 +9,6 @@ Core.Tests.DolphinTest subclass: #'Graphics.Tests.AbstractRectangleTest'
 Graphics.Tests.AbstractRectangleTest guid: (Core.GUID fromString: '{87bd8e07-c183-4124-a098-05b9e73fbd86}')!
 Graphics.Tests.AbstractRectangleTest isNonInstantiable: true!
 Graphics.Tests.AbstractRectangleTest comment: ''!
-!Graphics.Tests.AbstractRectangleTest categoriesForClass!Unclassified! !
 !Graphics.Tests.AbstractRectangleTest methodsFor!
 
 setUp
@@ -41,6 +40,15 @@ testCenterRight
 testCenterX
 	self assert: desktop centerX equals: 640.
 	self assert: oddDesktop centerX equals: 639!
+
+testComparing
+	| rectangle |
+	self assert: oddDesktop equals: oddDesktop.
+	self assert: oddDesktop species identicalTo: Rectangle.
+	rectangle := -1 @ 2 corner: 1279 @ 1023.
+	self assert: oddDesktop hash equals: rectangle hash.
+	self assert: oddDesktop equals: rectangle.
+	self assert: rectangle equals: oddDesktop!
 
 testHeight
 	self assert: oddDesktop height equals: 1021!
@@ -90,6 +98,7 @@ testBottom!public!unit tests! !
 testCenter!public!unit tests! !
 testCenterRight!public!unit tests! !
 testCenterX!public!unit tests! !
+testComparing!public! !
 testHeight!public!unit tests! !
 testLeft!public!unit tests! !
 testOriginCorner!public!unit tests! !

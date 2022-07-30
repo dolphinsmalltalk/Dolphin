@@ -534,7 +534,7 @@ calcRectangleFromClientRectangle: aRectangle
 	from the default."
 
 	| rect |
-	rect := RECTL fromRectangle: aRectangle.
+	rect := RECTL marshal: aRectangle.
 	User32
 		adjustWindowRectEx: rect
 		dwStyle: self baseStyle
@@ -5419,7 +5419,7 @@ mapRectangle: aRectangle from: aSourceView to: aDestinationView
 	into that of aDestinationView"
 
 	| rect |
-	rect := RECTL fromRectangle: aRectangle.
+	rect := RECTL marshal: aRectangle.
 	User32
 		mapWindowPoints: aSourceView asParameter
 		hWndTo: aDestinationView asParameter

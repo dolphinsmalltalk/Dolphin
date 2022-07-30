@@ -12,6 +12,12 @@ External.RECT comment: '`RECT` is the abstract class of structures representing 
 !External.RECT categoriesForClass!Win32-Structs! !
 !External.RECT methodsFor!
 
+= anObject
+	"Answer whether the receiver is considered equivalent to the argument	anObject."
+
+	^self species == anObject species
+		and: [self origin = anObject origin and: [self corner = anObject corner]]!
+
 area
 	"Answer the area of the receiver; the product of width and height."
 
@@ -82,6 +88,12 @@ extent: newExtent
 	self right: self left + newExtent x.
 	self bottom: self top + newExtent y!
 
+hash
+	"Answer the <integer> hash value for the receiver such that for any two Rectangles which
+	compare equivalent, they have the same hash value."
+
+	^self origin hash bitXor: self corner hash!
+
 height
 	"Answer the height of the receiver."
 
@@ -105,6 +117,9 @@ right
 right: anObject
 	self subclassResponsibility!
 
+species
+	^UI.Rectangle!
+
 top
 	^self subclassResponsibility!
 
@@ -121,6 +136,7 @@ width
 
 	^self right - self left! !
 !External.RECT categoriesForMethods!
+=!comparing!public! !
 area!accessing!public! !
 asObject!converting!public! !
 asRectangle!converting!public! !
@@ -134,12 +150,14 @@ centerY!accessing!public! !
 corner!accessing!public! !
 extent!accessing!public! !
 extent:!accessing!public! !
+hash!comparing!public! !
 height!accessing!public! !
 left!accessing!public! !
 left:!accessing!public! !
 origin!accessing!public! !
 right!accessing!public! !
 right:!accessing!public! !
+species!comparing!public! !
 top!accessing!public! !
 top:!accessing!public! !
 topLeft!accessing!public! !
@@ -186,6 +204,17 @@ left: left top: top width: width height: height
 		bottom: top+height
 !
 
+marshal: aRectangle
+	"Answer the argument marshalled as an instance of the receiver."
+
+	self == aRectangle class ifTrue: [^aRectangle].
+	^self 
+		left: aRectangle left
+		top: aRectangle top
+		right: aRectangle right
+		bottom: aRectangle bottom
+!
+
 origin: originPoint corner: cornerPoint
 	"Answer a new instance of the receiver with the specified origin and opposite corner"
 
@@ -209,6 +238,7 @@ fromRectangle:!instance creation!public! !
 icon!constants!public! !
 left:top:right:bottom:!instance creation!public! !
 left:top:width:height:!instance creation!public! !
+marshal:!instance creation!public! !
 origin:corner:!instance creation!public! !
 origin:extent:!instance creation!public! !
 !

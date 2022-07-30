@@ -24,6 +24,11 @@ asUIntPtr
 
 	^VMConstants.IsWin64 ifTrue: [bytes uintPtrAtOffset: 0] ifFalse: [self asPoint asUIntPtr]!
 
+isZero
+	"Answer whether the receiver is equal to Point zero."
+
+	^(bytes qwordAtOffset: 0) == 0!
+
 x
 	"Answer the <Integer> value of the receiver's 'x' field."
 
@@ -51,6 +56,7 @@ y: anInteger
 	bytes sdwordAtOffset: _OffsetOf_y put: anInteger! !
 !OS.POINTL categoriesForMethods!
 asUIntPtr!converting!public! !
+isZero!public!testing! !
 x!**compiled accessors**!public! !
 x:!**compiled accessors**!public! !
 x:y:!initializing!public! !

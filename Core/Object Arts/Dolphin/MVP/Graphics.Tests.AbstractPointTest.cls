@@ -9,7 +9,6 @@ Core.Tests.DolphinTest subclass: #'Graphics.Tests.AbstractPointTest'
 Graphics.Tests.AbstractPointTest guid: (Core.GUID fromString: '{a0f6e2b2-8bd1-44bc-b0ad-3343d7aa2c0f}')!
 Graphics.Tests.AbstractPointTest isNonInstantiable: true!
 Graphics.Tests.AbstractPointTest comment: ''!
-!Graphics.Tests.AbstractPointTest categoriesForClass!Unclassified! !
 !Graphics.Tests.AbstractPointTest methodsFor!
 
 subjectClass
@@ -22,6 +21,24 @@ testAsPoint
 	self assert: point class equals: Point.
 	self assert: point x equals: 101.
 	self assert: point y equals: 202!
+
+testComparing
+	| subject point |
+	point := 101 @ 102.
+	subject := self subjectClass x: point x y: point y.
+	self assert: subject equals: subject.
+	self assert: subject species identicalTo: Point.
+	self assert: subject hash equals: point hash.
+	self assert: subject equals: point.
+	self assert: point equals: subject!
+
+testIsZero
+	| subject |
+	subject := self subjectClass x: 101 y: 202.
+	self deny: subject isZero.
+	subject := self subjectClass new.
+	self assert: subject isZero
+	!
 
 testMakePoint
 	| point point2 originalMethod testMethod |
@@ -40,6 +57,8 @@ testMakePoint
 !Graphics.Tests.AbstractPointTest categoriesForMethods!
 subjectClass!constants!private! !
 testAsPoint!public!unit tests! !
+testComparing!public!unit tests! !
+testIsZero!public!unit tests! !
 testMakePoint!public!unit tests! !
 !
 

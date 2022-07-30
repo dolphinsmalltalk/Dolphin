@@ -109,7 +109,7 @@ calcRectangleFromClientRectangle: aRectangle
 	Implementation Note: We must override here because of EDIT control's implicit border."
 
 	| rect |
-	rect := RECTL fromRectangle: aRectangle.
+	rect := RECTL marshal: aRectangle.
 	User32
 		adjustWindowRectEx: rect
 		dwStyle: self baseStyle | WS_BORDER

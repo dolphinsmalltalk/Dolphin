@@ -8,7 +8,6 @@ Graphics.Tests.AbstractRectangleTest subclass: #'Graphics.Tests.RectangleTest'
 	classConstants: {}!
 Graphics.Tests.RectangleTest guid: (Core.GUID fromString: '{aceafc61-24f9-482c-a8e7-0aff0e7fcc85}')!
 Graphics.Tests.RectangleTest comment: ''!
-!Graphics.Tests.RectangleTest categoriesForClass!Unclassified! !
 !Graphics.Tests.RectangleTest methodsFor!
 
 subjectClass
@@ -43,10 +42,14 @@ testInsetBy
 	self assert: (desktop insetBy: 2 @ 2) equals: (2 @ 2 corner: 1278 @ 1022).
 	self assert: (desktop insetBy: 1 @ 2) equals: (1 @ 2 corner: 1279 @ 1022).
 	self assert: ((1 @ 2 corner: 3 @ 4) insetBy: (2 @ 0 corner: 0 @ 0)) equals: (3 @ 2 corner: 3 @ 4).
-	#todo	"Add more insetBy: <Rectangle> tests"! !
+	#todo	"Add more insetBy: <Rectangle> tests"!
+
+testVertices
+	self assert: oddDesktop vertices equals: {-1 @ 2. 1279 @ 2. 1279 @ 1023. -1 @ 1023}! !
 !Graphics.Tests.RectangleTest categoriesForMethods!
 subjectClass!constants!private! !
 testAreasOutside!public!unit tests! !
 testInsetBy!public!unit tests! !
+testVertices!public!unit tests! !
 !
 
