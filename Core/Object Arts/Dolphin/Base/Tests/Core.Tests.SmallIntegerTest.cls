@@ -8,11 +8,14 @@ Core.Tests.IntegerTest subclass: #'Core.Tests.SmallIntegerTest'
 	classConstants: {}!
 Core.Tests.SmallIntegerTest guid: (Core.GUID fromString: '{3fc98bda-cdeb-45ea-a355-2968f5fd5e3a}')!
 Core.Tests.SmallIntegerTest comment: ''!
-!Core.Tests.SmallIntegerTest categoriesForClass!Unclassified! !
 !Core.Tests.SmallIntegerTest methodsFor!
 
 canonicalInstance
 	^123!
+
+test1234
+	self assert: 3 >= (2@3).
+	self deny: 2 >= (2@3)!
 
 testAbs
 	self assert: -4 abs identicalTo: 4!
@@ -106,6 +109,87 @@ testExp10
 testGcd
 	self assert: (55 gcd: 30) identicalTo: 5!
 
+testGreaterOrEqualPoint
+	self assert: 3 >= (2@3).
+	self deny: 2 >= (2@3)!
+
+testGreaterOrEqualToFloat
+	| pos neg zero |
+	pos := SmallInteger maximum.
+	neg := SmallInteger minimum.
+	"+ve"
+	self deny: (pos greaterOrEqualToFloat: Float infinity).
+	self deny: (pos greaterOrEqualToFloat: Float nan).
+	self assert: (pos greaterOrEqualToFloat: Float negativeInfinity).
+	self assert: (pos greaterOrEqualToFloat: Float negativeZero).
+	self assert: (pos greaterOrEqualToFloat: Float zero).
+	self deny: (pos greaterOrEqualToFloat: Float fmax).
+	self assert: (pos greaterOrEqualToFloat: Float fmin).
+	self assert: (pos greaterOrEqualToFloat: Float fminDenormalized).
+	self assert: (pos greaterOrEqualToFloat: pos asFloat).
+	self assert: (pos greaterOrEqualToFloat: neg asFloat).
+	"-ve"
+	self deny: (neg greaterOrEqualToFloat: Float infinity).
+	self deny: (neg greaterOrEqualToFloat: Float nan).
+	self assert: (neg greaterOrEqualToFloat: Float negativeInfinity).
+	self deny: (neg greaterOrEqualToFloat: Float negativeZero).
+	self deny: (neg greaterOrEqualToFloat: Float zero).
+	self deny: (neg greaterOrEqualToFloat: Float pi).
+	self deny: (neg greaterOrEqualToFloat: pos asFloat).
+	self assert: (neg greaterOrEqualToFloat: neg asFloat).
+	self deny: (neg greaterOrEqualToFloat: Float fmin negated).
+	self deny: (neg greaterOrEqualToFloat: Float fminDenormalized negated).
+	self assert: (neg greaterOrEqualToFloat: Float fmax negated).
+	"Zero"
+	zero := 0.
+	self deny: (zero greaterOrEqualToFloat: Float infinity).
+	self deny: (zero greaterOrEqualToFloat: Float nan).
+	self assert: (zero greaterOrEqualToFloat: Float negativeInfinity).
+	self assert: (zero greaterOrEqualToFloat: Float negativeZero).
+	self assert: (zero greaterOrEqualToFloat: Float zero).
+	self assert: (zero greaterOrEqualToFloat: Float fmin negated).
+	self assert: (zero greaterOrEqualToFloat: Float fminDenormalized negated).
+	self assert: (zero greaterOrEqualToFloat: Float fmax negated)!
+
+testGreaterThanFloat
+	| pos neg zero |
+	pos := 3.
+	neg := -3.
+	"+ve"
+	self deny: (pos greaterThanFloat: Float infinity).
+	self deny: (pos greaterThanFloat: Float nan).
+	self assert: (pos greaterThanFloat: Float negativeInfinity).
+	self assert: (pos greaterThanFloat: Float negativeZero).
+	self assert: (pos greaterThanFloat: Float zero).
+	self deny: (pos greaterThanFloat: Float fmax).
+	self assert: (pos greaterThanFloat: Float fmin).
+	self assert: (pos greaterThanFloat: Float fminDenormalized).
+	self deny: (pos greaterThanFloat: Float pi).
+	self deny: (pos greaterThanFloat: pos asFloat).
+	self assert: (pos greaterThanFloat: neg asFloat).
+	"-ve"
+	self deny: (neg greaterThanFloat: Float infinity).
+	self deny: (neg greaterThanFloat: Float nan).
+	self assert: (neg greaterThanFloat: Float negativeInfinity).
+	self deny: (neg greaterThanFloat: Float negativeZero).
+	self deny: (neg greaterThanFloat: Float zero).
+	self deny: (neg greaterThanFloat: Float pi).
+	self deny: (neg greaterThanFloat: pos asFloat).
+	self deny: (neg greaterThanFloat: neg asFloat).
+	self deny: (neg greaterThanFloat: Float fmin negated).
+	self deny: (neg greaterThanFloat: Float fminDenormalized negated).
+	self assert: (neg greaterThanFloat: Float fmax negated).
+	"zero"
+	zero := 0.
+	self deny: (zero greaterThanFloat: Float infinity).
+	self deny: (zero greaterThanFloat: Float nan).
+	self assert: (zero greaterThanFloat: Float negativeInfinity).
+	self deny: (zero greaterThanFloat: Float negativeZero).
+	self deny: (zero greaterThanFloat: Float zero).
+	self assert: (zero greaterThanFloat: Float fmin negated).
+	self assert: (zero greaterThanFloat: Float fminDenormalized negated).
+	self assert: (zero greaterThanFloat: Float fmax negated)!
+
 testHighBit
 	self should: [-1 highBit] raise: Error.
 	self assert: 0 highBit equals: 0.
@@ -137,6 +221,104 @@ testLargeSmallComparisons
 
 testLcm
 	self assert: (6 lcm: 10) identicalTo: 30!
+
+testLessOrEqualToFloat
+	| pos neg zero |
+	pos := 3.
+	neg := -3.
+	"+ve"
+	self assert: pos <= Float infinity.
+	self deny: pos <= Float nan.
+	self deny: pos <= Float negativeInfinity.
+	self deny: pos <= Float negativeZero.
+	self deny: pos <= Float zero.
+	self assert: pos <= Float pi.
+	self assert: pos <= pos asFloat.
+	self deny: pos <= neg asFloat.
+	"-ve"
+	self assert: neg <= Float infinity.
+	self deny: neg <= Float nan.
+	self deny: neg <= Float negativeInfinity.
+	self assert: neg <= Float negativeZero.
+	self assert: neg <= Float zero.
+	self assert: neg <= Float pi.
+	self assert: neg <= pos asFloat.
+	self assert: neg <= neg asFloat.
+	"zero"
+	zero := 0.
+	self assert: zero <= Float infinity.
+	self deny: zero <= Float nan.
+	self deny: zero <= Float negativeInfinity.
+	self assert: zero <= Float negativeZero.
+	self assert: zero <= Float zero!
+
+testLessOrEqualToFraction
+	| pos neg zero posFraction negFraction |
+	pos := 1.
+	neg := -1.
+	posFraction := 3 / 2.
+	negFraction := -3 / 2.
+	"+ve"
+	self assert: pos <= posFraction.
+	self deny: pos <= negFraction.
+	self assert: pos <= (5 / 4).
+	"-ve"
+	self assert: neg <= posFraction.
+	self deny: neg <= negFraction.
+	self assert: neg <= (-3 / 4).
+	"Zero"
+	zero := 0.
+	self assert: zero <= posFraction.
+	self deny: zero <= negFraction!
+
+testLessThanFloat
+	| pos neg zero |
+	pos := 3.
+	neg := -3.
+	"+ve"
+	self assert: pos < Float infinity.
+	self deny: pos < Float nan.
+	self deny: pos < Float negativeInfinity.
+	self deny: pos < Float negativeZero.
+	self deny: pos < Float zero.
+	self assert: pos < Float pi.
+	self deny: pos < pos asFloat.
+	self deny: pos < neg asFloat.
+	"-ve"
+	self assert: neg < Float infinity.
+	self deny: neg < Float nan.
+	self deny: neg < Float negativeInfinity.
+	self assert: neg < Float negativeZero.
+	self assert: neg < Float zero.
+	self assert: neg < Float pi.
+	self assert: neg < pos asFloat.
+	self deny: neg < neg asFloat.
+	"zero"
+	zero := 0.
+	self assert: zero < Float infinity.
+	self deny: zero < Float nan.
+	self deny: zero < Float negativeInfinity.
+	self deny: zero < Float negativeZero.
+	self deny: zero < Float zero!
+
+testLessThanFraction
+	| pos neg zero posFraction negFraction |
+	pos := 1.
+	neg := -1.
+	posFraction := 3 / 2.
+	negFraction := -3 / 2.
+	"+ve"
+	self assert: pos < posFraction.
+	self deny: pos < negFraction.
+	self deny: pos < (3 / 4).
+	"-ve"
+	self assert: neg < posFraction.
+	self deny: neg < negFraction.
+	self deny: neg < (-5 / 4).
+	"Zero"
+	zero := 0.
+	self assert: zero < posFraction.
+	self deny: zero < negFraction!
 
 testLowBit
 	0 to: 30 do: [:each | 
@@ -301,6 +483,7 @@ testSubtract
 	self assert: (5 - 2.125 equals: 2.875)! !
 !Core.Tests.SmallIntegerTest categoriesForMethods!
 canonicalInstance!public!unit tests! !
+test1234!public! !
 testAbs!public!unit tests! !
 testAllMask!public!unit tests! !
 testAnyMask!public!unit tests! !
@@ -314,10 +497,17 @@ testDivide!public!unit tests! !
 testEven!public!unit tests! !
 testExp10!public!unit tests! !
 testGcd!public!unit tests! !
+testGreaterOrEqualPoint!public! !
+testGreaterOrEqualToFloat!public! !
+testGreaterThanFloat!public! !
 testHighBit!public!unit tests! !
 testIntegerDivide!public!unit tests! !
 testLargeSmallComparisons!public!unit tests! !
 testLcm!public!unit tests! !
+testLessOrEqualToFloat!public!unit tests! !
+testLessOrEqualToFraction!public!unit tests! !
+testLessThanFloat!public!unit tests! !
+testLessThanFraction!public!unit tests! !
 testLowBit!public!unit tests! !
 testMaxVal!public!unit tests! !
 testMinMax!public!unit tests! !

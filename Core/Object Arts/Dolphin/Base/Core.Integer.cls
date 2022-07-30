@@ -63,10 +63,10 @@ Core.Integer comment: ''!
 
 	^aNumber addToInteger: self!
 
-< aNumber
-	"Answer whether the receiver is less than the argument, aNumber."
+< aMagnitude
+	"Answer whether the receiver is less than the <magnitude> argument."
 
-	^aNumber greaterThanInteger: self!
+	^aMagnitude greaterThanInteger: self!
 
 << anInteger
 	"Answer the result of shifting the receiver left anInteger bits.
@@ -89,8 +89,7 @@ addToFloat: aFloat
 	^aFloat + self asFloat!
 
 addToFraction: aFraction
-	"Private - Add the receiver to the known Fraction, aFraction.
-	There is no need to normalise the result."
+	"Private - Answer the <Fraction> result of adding the receiver to the known <Fraction> argument."
 
 	^Fraction numerator: self * aFraction denominator + aFraction numerator
 		denominator: aFraction denominator!
@@ -286,7 +285,7 @@ clearBit: index
 	^self maskClear: (1 bitShift: index-1)!
 
 coerce: anArithmeticValue
-	"Private - Answer the Integer representation of anArithmeticValue."
+	"Private - Coerce the <arithmeticValue> argument (which is assumed to be of a lower generality than the receiver) to an <integer>."
 
 	^anArithmeticValue asInteger!
 
@@ -458,19 +457,39 @@ gcdbin: operand
 			whileFalse.
 	^u bitShift: k!
 
+greaterOrEqualToFloat: aFloat
+	"Private - Answer whether the receiver is greater than or equal to the know <Float> argument."
+
+	| fpclass negativeArg |
+	negativeArg := (fpclass := aFloat fpClass) anyMask: Float.FpClassNegative.
+	(fpclass anyMask: Float.FpClassFinite)
+		ifFalse: 
+			["aFloat is a NaN, -∞ or ∞, so obviously we are only >= if it is -∞."
+			^negativeArg].
+	self < 0 ~~ negativeArg
+		ifTrue: 
+			["Different signs - receiver >= if the argument is negative"
+			^negativeArg].
+	^self greaterOrEqualToFraction: aFloat asTrueFraction!
+
+greaterOrEqualToFraction: aFraction
+	"Private - Answer whether the receiver is greater than or equal to the known <Fraction>, aFraction"
+
+	^self * aFraction denominator >= aFraction numerator!
+
 greaterThanFloat: aFloat
 	"Private - Answer whether the receiver is greater than the known Float, aFloat."
 
-	| fpclass |
-	fpclass := aFloat fpClass.
-	^(fpclass anyMask: Float.FpClassFinite)
-		ifTrue: [self greaterThanFraction: aFloat asTrueFraction]
+	| fpclass negativeArg |
+	negativeArg := (fpclass := aFloat fpClass) anyMask: Float.FpClassNegative.
+	(fpclass anyMask: Float.FpClassFinite)
 		ifFalse: 
-			["aFloat is NaN, -∞ or ∞, so obviously we are only greater if it is -∞"
-			fpclass anyMask: Float.FpClassNegative]!
+			["aFloat is NaN, -∞ or ∞, so obviously we are only >= if it is -∞."
+			^negativeArg].
+	^self greaterThanFraction: aFloat asTrueFraction!
 
 greaterThanFraction: aFraction
-	"Private - Answer whether the receiver is greater than the known Fraction, aFraction"
+	"Private - Answer whether the receiver is greater than the known <Fraction>, aFraction"
 
 	^aFraction numerator < (self * aFraction denominator)!
 
@@ -857,6 +876,8 @@ floor!public!truncation and round off! !
 fractionPart!accessing!public! !
 gcd:!factorization!public! !
 gcdbin:!factorization!public! !
+greaterOrEqualToFloat:!double dispatch!private! !
+greaterOrEqualToFraction:!double dispatch!private! !
 greaterThanFloat:!double dispatch!private! !
 greaterThanFraction:!double dispatch!private! !
 hashMultiply!comparing!public! !

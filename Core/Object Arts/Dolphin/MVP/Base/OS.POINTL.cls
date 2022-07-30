@@ -11,7 +11,7 @@ External.POINT subclass: #'OS.POINTL'
 		'_POINTL_Size' -> 16r8
 	}!
 OS.POINTL guid: (Core.GUID fromString: '{dbeaf6a6-d2f7-4153-a02e-a389955a892f}')!
-OS.POINTL comment: '`POINTL` is an `ExternalStructure` class to wrap the Win32 POINTL structure. Instances of `POINTL` represent a cartesian coordinate with 32-bit signed integer x and y values.
+OS.POINTL comment: '`POINTL` is an `External.Structure` class to wrap the Win32 POINTL structure. Instances of `POINTL` represent a cartesian coordinate with 32-bit signed integer x and y values.
 '!
 !OS.POINTL categoriesForClass!Win32-Structs! !
 !OS.POINTL methodsFor!

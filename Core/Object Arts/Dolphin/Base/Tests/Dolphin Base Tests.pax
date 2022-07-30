@@ -39,6 +39,7 @@ package setClassNames: #(
 	#{Core.Tests.FileStreamTest}
 	#{Core.Tests.FileTest}
 	#{Core.Tests.FloatTest}
+	#{Core.Tests.FractionTest}
 	#{Core.Tests.IdentityDictionaryTest}
 	#{Core.Tests.IntegerTest}
 	#{Core.Tests.IntervalTest}
@@ -444,6 +445,12 @@ Core.Tests.DolphinTest subclass: #'OS.Tests.FILETIMETest'
 	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'Core.Tests.FloatTest'
 	instanceVariableNames: 'fpeMask'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'Core.Tests.FractionTest'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

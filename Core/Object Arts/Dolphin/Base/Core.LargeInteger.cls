@@ -60,11 +60,11 @@ LargeInteger includes high performance primitive implementations for the common 
 	<primitive: 23>
 	^operand greaterThanInteger: self!
 
-<= operand
-	"Answer whether the receiver is less than or equal to the <number>, operand."
+<= anArithmeticValue
+	"Answer whether the receiver is less than or equal to the <arithmeticValue> argument"
 
 	<primitive: 25>
-	^super <= operand!
+	^anArithmeticValue greaterOrEqualToInteger: self!
 
 = comperand
 	"Answer whether the receiver is equal to the <Object>, comperand."
@@ -85,8 +85,7 @@ LargeInteger includes high performance primitive implementations for the common 
 	^super >= aNumber!
 
 addToInteger: anInteger
-	"Private - Add the receiver to the known Integer, anInteger. 
-	We should only normally get here if anInteger is a SmallInteger."
+	"Private - Answer the <integer> result of adding the known <integer> to the receivers. We should only normally get here if anInteger is a SmallInteger."
 
 	"Implementation Notes: As addition is commutative we can use the large integer add primitive. We do not supersend if the primitive fails because it does not fail for Integer arguments, and a non-Integer argument breaks the preconditions of this method."
 
@@ -352,6 +351,19 @@ limbSize
 
 	^self basicSize bitShift: -2!
 
+lowBit
+	"Answer the index of the lowest order bit of the receiver which is set."
+
+	| i |
+	i := 1.
+	"An invariant is that the receiver is normalized, and so cannot be zero"
+	
+	[| byte |
+	byte := self basicAt: i.
+	byte == 0 ifFalse: [^byte lowBit + ((i - 1) * 8)].
+	i := i + 1]
+			repeat!
+
 multiplyByInteger: anInteger
 	"Private - Answer the result of multiplying the receiver by the argument, anInteger."
 
@@ -520,6 +532,7 @@ highBit!bit manipulation!public! !
 intPtrAtOffset:put:!initializing!primitives!private! !
 isZero!public!testing! !
 limbSize!accessing!private! !
+lowBit!bit manipulation!public! !
 multiplyByInteger:!double dispatch!private! !
 negated!arithmetic!public! !
 normalize!converting!private! !

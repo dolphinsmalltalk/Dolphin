@@ -9,7 +9,6 @@ Graphics.Tests.AbstractPointTest subclass: #'External.Tests.POINTTest'
 External.Tests.POINTTest guid: (Core.GUID fromString: '{9f425d20-35a5-4ddb-892b-1be3b6997ee3}')!
 External.Tests.POINTTest isNonInstantiable: true!
 External.Tests.POINTTest comment: ''!
-!External.Tests.POINTTest categoriesForClass!Unclassified! !
 !External.Tests.POINTTest methodsFor!
 
 testAsDword

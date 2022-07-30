@@ -55,24 +55,25 @@ We are grateful to Richard A. Harmon for contributing his ANSI compliant ScaledD
 	^operand addToScaledDecimal: self
 !
 
-< operand
-	"Answer whether the receiver is less than the <number>, operand."
+< aMagnitude
+	"Answer whether the receiver is less than the <magnitude>, aMagnitude."
 
-	^operand greaterThanScaledDecimal: self
+	^aMagnitude greaterThanScaledDecimal: self
 !
+
+<= anArithmeticValue
+	^anArithmeticValue greaterOrEqualToScaledDecimal: self!
 
 = anObject
 	"Answer whether the receiver is numerically equivalent to the <Object>, anObject - i.e. whether the difference between the receiver and comparand is zero."
 
 	^anObject understandsArithmetic and: [anObject equalToScaledDecimal: self]!
 
-addToScaledDecimal: operand
-	"Private - Answer the <ScaledDecimal> result of adding the receiver
-	to the known <ScaledDecimal>."
+addToScaledDecimal: aScaledDecimal
+	"Private - Answer the <ScaledDecimal> result of adding the receiver to the known <ScaledDecimal> argument."
 
-	^self species
-		newFromNumber: operand asFraction + fraction
-		scale: (scale max: operand scale)!
+	^self species newFromNumber: aScaledDecimal asFraction + fraction
+		scale: (scale max: aScaledDecimal scale)!
 
 asFloat
 	"Answer the receiver represented as the nearest possible <Float>."
@@ -94,11 +95,9 @@ asScaledDecimal: newScale
 		scale: newScale!
 
 coerce: coercee
-	"Private - Coerce the <ArithmeticValue>, coercee, which must be of a lower generality than the receiver, to be the 
-	same type as the receiver."
+	"Private - Coerce the <arithmeticValue> argument (which is assumed to be of a lower generality than the receiver) to a <ScaledDecimal>."
 
-	^coercee asScaledDecimal: scale
-!
+	^coercee asScaledDecimal: scale!
 
 denominator
 	"Answer the <integer> denominator of the receiver."
@@ -130,12 +129,12 @@ displayOn: aPuttableStream
 					quo := rem quo: scaler.
 					aPuttableStream nextPut: (Character digitValue: quo)]]!
 
-divideIntoScaledDecimal: operand
-	"Private - Answer the result of dividing the known <ScaledDecimal>, operand, by the receiver."
+divideIntoScaledDecimal: aScaledDecimal
+	"Private - Answer the <ScaledDecimal> result of dividing the known <ScaledDecimal> argument by the receiver."
 
 	^self species
-		newFromNumber: operand asFraction / fraction
-		scale: (scale max: operand scale)!
+		newFromNumber: aScaledDecimal asFraction / fraction
+		scale: (scale max: aScaledDecimal scale)!
 
 equalToInteger: anInteger
 	"Private - Answer whether the receiver is equal to the known <Integer>, anInteger."
@@ -169,10 +168,23 @@ generality
 
 	^35!
 
-greaterThanScaledDecimal: comperand
-	"Private - Answer whether the receiver is greater than the known <ScaledDecimal>, comperand."
+greaterOrEqualToFloat: aFloat
+	"Private - Answer whether the receiver is greater than or equal to the known <Float> argument."
 
-	^comperand asFraction < fraction!
+	^self asFloat >= aFloat!
+
+greaterOrEqualToScaledDecimal: aScaledDecimal
+	"Private - Answer whether the receiver is greater than the known <ScaledDecimal> argument."
+
+	^aScaledDecimal asFraction <= fraction!
+
+greaterThanFloat: aFloat
+	^self asFloat > aFloat!
+
+greaterThanScaledDecimal: aScaledDecimal
+	"Private - Answer whether the receiver is greater than the known <ScaledDecimal> argument."
+
+	^aScaledDecimal asFraction < fraction!
 
 hash
 	"Answer the <integer> hash value for the receiver." 
@@ -199,8 +211,7 @@ isZero
 	^fraction isZero!
 
 multiplyByScaledDecimal: operand
-	"Private - Multiply the receiver by the known <ScaledDecimal>, operand,
-	answering the result."
+	"Private -Answer the <ScaledDecimal> result of multiplying the receiver by the known <integer> argument."
 
 	^self species
 		newFromNumber: operand asFraction * fraction
@@ -275,20 +286,16 @@ storeOn: aStream
 				print: scale;
 				nextPut: $)]!
 
-subtractFromInteger: operand
-	"Private - Subtract the receiver from the known integer, anInteger, and answer the result."
+subtractFromInteger: anInteger
+	"Private - Answer the <ScaledDecimal> result of subtracting the receiver from the known <integer> argument."
 
-	^self species
-		newFromNumber: operand asFraction - fraction
-		scale: scale!
+	^self species newFromNumber: anInteger asFraction - fraction scale: scale!
 
-subtractFromScaledDecimal: operand
-	"Private - Answer the result of subtracting the receiver from the 
-	known <ScaledDecimal>, operand."
+subtractFromScaledDecimal: aScaledDecimal
+	"Private - Answer the <ScaledDecimal> result of subtracting the receiver from the known <ScaledDecimal>argument."
 
-	^self species
-		newFromNumber: operand asFraction - fraction
-		scale: (scale max: operand scale)!
+	^self species newFromNumber: aScaledDecimal asFraction - fraction
+		scale: (scale max: aScaledDecimal scale)!
 
 truncated
 	"Answer the <integer> nearest the receiver toward zero."
@@ -302,6 +309,7 @@ truncated
 //!arithmetic!public! !
 +!arithmetic!public! !
 <!comparing!public! !
+<=!public! !
 =!comparing!public! !
 addToScaledDecimal:!double dispatch!private! !
 asFloat!converting!public! !
@@ -315,6 +323,9 @@ equalToInteger:!double dispatch!private! !
 equalToScaledDecimal:!double dispatch!private! !
 fractionPart!accessing!public! !
 generality!coercing!private! !
+greaterOrEqualToFloat:!double dispatch!private! !
+greaterOrEqualToScaledDecimal:!double dispatch!private! !
+greaterThanFloat:!public! !
 greaterThanScaledDecimal:!double dispatch!private! !
 hash!comparing!public! !
 integerPart!accessing!public! !
@@ -329,7 +340,7 @@ reciprocal!arithmetic!public! !
 scale!accessing!public! !
 setFraction:scale:!initializing!private! !
 storeOn:!public!storing! !
-subtractFromInteger:!double dispatch!public! !
+subtractFromInteger:!double dispatch!private! !
 subtractFromScaledDecimal:!double dispatch!private! !
 truncated!public!truncation and round off! !
 !

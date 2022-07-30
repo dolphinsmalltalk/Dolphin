@@ -16,19 +16,17 @@ Subclasses of Magnitude must implement the following comparing protocol (at the 
 !Core.Magnitude categoriesForClass!Magnitude-General! !
 !Core.Magnitude methodsFor!
 
-< operand
-	"Answer whether the receiver is less than the <magnitude>, operand.
+< aMagnitude
+	"Answer whether the receiver is less than the <magnitude> argument.
 
-	Only this relational operator need be implemented by subclasses, since the others can 
-	be implemented in terms of it (though performance may dictate otherwise)."
+	Only this relational operator need be implemented by subclasses, since the others can generally be implemented in terms of it (though performance or special characteristics may dictate otherwise)."
 
 	^self subclassResponsibility!
 
-<= operand
-	"Answer whether the receiver is less than or equal to the <magnitude>, operand.
-	Implemented in terms of #<, which must be implemented by subclasses."
+<= aMagnitude
+	"Answer whether the receiver is less than or equal to the <magnitude> argument."
 
-	^(operand isNaN or: [operand < self]) not!
+	^(aMagnitude < self) not!
 
 <=> aMagnitude
 	"Answer the receiver's <integer> collation order with respect to the <Number> argument. Colloquially known as the spaceship operator.
@@ -38,21 +36,19 @@ Subclasses of Magnitude must implement the following comparing protocol (at the 
 	^self = aMagnitude ifTrue: [0] ifFalse: [self < aMagnitude ifTrue: [-1] ifFalse: [1]]!
 
 = aMagnitude
-	"Answer whether the receiver is equivalent to the argument, aMagnitude."
+	"Answer whether the receiver is equivalent to the <magnitude> argument."
 
 	^self subclassResponsibility!
 
-> operand
-	"Answer whether the receiver is greater than the <magnitude>, operand.
-	Implemented in terms of #<, which must be implemented by subclasses."
+> aMagnitude
+	"Answer whether the receiver is greater than the <magnitude> argument."
 
-	^operand < self!
+	^aMagnitude < self!
 
->= operand
-	"Answer whether the receiver is greater than or equal to the <magnitude>, operand.
-	Implemented in terms of #<, which must be implemented by subclasses."
+>= aMagnitude
+	"Answer whether the receiver is greater than or equal to the <magnitude>, argument."
 
-	^(operand isNaN or: [self < operand]) not!
+	^aMagnitude <= self!
 
 between: min and: max
 	"Answer whether the receiver is inclusively between the <magnitude> arguments, 
@@ -73,11 +69,6 @@ hash
 	necessarily vice-versa). Like #=, and #<, must be implemented by subclasses."
 
 	^self subclassResponsibility!
-
-isNaN
-	"Answer whether the receiver is Not a Number."
-
-	^false!
 
 max: operand
 	"Answer the greater of the receiver and the <magnitude>, operand.
@@ -114,7 +105,6 @@ printString
 between:and:!comparing!public! !
 clampBetween:and:!comparing!public! !
 hash!comparing!public! !
-isNaN!public!testing! !
 max:!comparing!public! !
 min:!comparing!public! !
 printString!printing!public! !

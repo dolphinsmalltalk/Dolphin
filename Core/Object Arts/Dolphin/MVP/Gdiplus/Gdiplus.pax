@@ -126,6 +126,7 @@ package basicPackageVersion: '6.2'.
 
 
 package setClassNames: #(
+	#{External.POINTF}
 	#{Graphics.Gdiplus}
 	#{Graphics.Gdiplus.AdjustableArrowCap}
 	#{Graphics.Gdiplus.AdjustableArrowCapInitializer}
@@ -203,7 +204,6 @@ package setClassNames: #(
 	#{Graphics.Gdiplus.PenFromBrushInitializer}
 	#{Graphics.Gdiplus.PenFromColorInitializer}
 	#{Graphics.Gdiplus.PenInitializer}
-	#{Graphics.Gdiplus.POINTF}
 	#{Graphics.Gdiplus.PrivateFontCollection}
 	#{Graphics.Gdiplus.PrivateFontCollectionInitializer}
 	#{Graphics.Gdiplus.RECTF}
@@ -1808,7 +1808,7 @@ External.Structure subclass: #'Graphics.Gdiplus.METAHEADER'
 		'_OffsetOf_mtType' -> 16r0.
 		'_OffsetOf_mtVersion' -> 16r4
 	}!
-External.POINT subclass: #'Graphics.Gdiplus.POINTF'
+External.POINT subclass: #'External.POINTF'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

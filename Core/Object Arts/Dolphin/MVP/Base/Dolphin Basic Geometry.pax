@@ -23,10 +23,21 @@ package setMethodNames: #(
 	#(#{Core.ArithmeticValue} #_expandRectangle:)
 	#(#{Core.ArithmeticValue} #_insetRectangle:)
 	#(#{Core.ArithmeticValue} #_offsetRectangle:)
+	#(#{Core.ArithmeticValue} #addToPoint:)
+	#(#{Core.ArithmeticValue} #asGenericPoint)
 	#(#{Core.ArithmeticValue} #asPoint)
+	#(#{Core.ArithmeticValue} #divideIntoPoint:)
+	#(#{Core.ArithmeticValue} #divideIntoPoint3D:)
+	#(#{Core.ArithmeticValue} #multiplyByPoint:)
+	#(#{Core.ArithmeticValue} #subtractFromPoint:)
 	#(#{Core.Number} #@)
+	#(#{Core.Number} #addToPoint:)
+	#(#{Core.Number} #asGenericPoint)
 	#(#{Core.Number} #asPoint)
 	#(#{Core.Number} #asPoint3D)
+	#(#{Core.Number} #divideIntoPoint:)
+	#(#{Core.Number} #multiplyByPoint:)
+	#(#{Core.Number} #subtractFromPoint:)
 	#(#{External.DWORD class} #fromPoint:)
 	#(#{OS.UserLibrary} #subtractRect:lprcSrc1:lprcSrc2:)
 ).
@@ -129,15 +140,56 @@ _offsetRectangle: aRectangle
 
 	^aRectangle species origin: aRectangle origin + self corner: aRectangle corner + self!
 
+addToPoint: aPoint
+	"Private - Answer the <point> result of adding the receiver to the known <Point> argument, by coercing the less general of it and the receiver. 
+	Can be overridden by subclasses that can implement more efficiently."
+
+	^aPoint retry: #+ coercing: self!
+
+asGenericPoint
+	"Answer a <point> with the receiver as both co-ordinates."
+
+	^self asPoint!
+
 asPoint
 	"Answer a Point with the receiver as both co-ordinates."
 
-	^self subclassResponsibility! !
+	^self subclassResponsibility!
+
+divideIntoPoint: aPoint
+	"Private - Answer the result of dividing the receiver into the known <point> argument, by coercing the less general of it and the receiver. 
+	Overridden by subclasses which can implement more efficiently."
+
+	^aPoint retry: #/ coercing: self!
+
+divideIntoPoint3D: aPoint3D
+	"Private - Answer the result of dividing the receiver into the known <Point3D> argument, by coercing the less general of it and the receiver. 
+	Can be overridden by subclasses that can implement more efficiently."
+
+	^aPoint3D retry: #/ coercing: self!
+
+multiplyByPoint: aPoint
+	"Private - Answer the result of multiplying the known <point> argument by the receiver, by coercing the less general of it and the recever.
+	Can be overridden by subclasses that can implement more efficiently."
+
+	^aPoint retry: #* coercing: self!
+
+subtractFromPoint: aPoint
+	"Private - Answer the result of subtracting the receiver from the known <point> argument, by coercing the less general of it and the receiver. 
+	Can be overridden by subclasses that can implement more efficiently."
+
+	^aPoint retry: #- coercing: self! !
 !Core.ArithmeticValue categoriesForMethods!
 _expandRectangle:!double dispatch!private! !
 _insetRectangle:!double dispatch!private! !
 _offsetRectangle:!double dispatch!private! !
+addToPoint:!double dispatch!private! !
+asGenericPoint!converting!public! !
 asPoint!converting!public! !
+divideIntoPoint:!double dispatch!private! !
+divideIntoPoint3D:!double dispatch!private! !
+multiplyByPoint:!double dispatch!private! !
+subtractFromPoint:!double dispatch!private! !
 !
 
 !Core.Number methodsFor!
@@ -150,6 +202,16 @@ asPoint!converting!public! !
 
 	^Graphics.Point x: self y: yCoord!
 
+addToPoint: aPoint
+	"Private - Answer the <point> result of adding the receiver to the known <point> argument."
+
+	^(aPoint x + self) @ (aPoint y + self)!
+
+asGenericPoint
+	"Answer a <point> with the receiver as both co-ordinates."
+
+	^self @ self!
+
 asPoint
 	"Answer a Point with the receiver as both co-ordinates."
 
@@ -158,11 +220,31 @@ asPoint
 asPoint3D
 	"Answer a Point with the receiver as all three co-ordinates."
 
-	^self @ self @ self! !
+	^self @ self @ self!
+
+divideIntoPoint: aPoint
+	"Private - Answer the result of dividing the receiver into the known <Point> argument, by coercing the less general of it and the receiver. "
+
+	^(aPoint x / self) @ (aPoint y / self)!
+
+multiplyByPoint: aPoint
+	"Private - Answer the result of multiplying the receiver by the known <Point> argument."
+
+	^(aPoint x * self) @ (aPoint y * self)!
+
+subtractFromPoint: aPoint
+	"Private - Answer the result of subtracting the receiver from the known <point> argument."
+
+	^(aPoint x - self) @ (aPoint y - self)! !
 !Core.Number categoriesForMethods!
 @!converting!public! !
+addToPoint:!double dispatch!private! !
+asGenericPoint!converting!public! !
 asPoint!converting!public! !
 asPoint3D!converting!public! !
+divideIntoPoint:!double dispatch!private! !
+multiplyByPoint:!double dispatch!private! !
+subtractFromPoint:!double dispatch!private! !
 !
 
 !External.DWORD class methodsFor!

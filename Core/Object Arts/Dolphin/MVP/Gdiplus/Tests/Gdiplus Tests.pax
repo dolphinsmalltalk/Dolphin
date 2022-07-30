@@ -10,6 +10,7 @@ package basicPackageVersion: '6.1'.
 
 
 package setClassNames: #(
+	#{External.Tests.POINTFTest}
 	#{Graphics.Gdiplus.Tests}
 	#{Graphics.Gdiplus.Tests.AdjustableArrowCapTest}
 	#{Graphics.Gdiplus.Tests.BaseTest}
@@ -43,7 +44,6 @@ package setClassNames: #(
 	#{Graphics.Gdiplus.Tests.PenFromBrushInitializerTest}
 	#{Graphics.Gdiplus.Tests.PenFromColorInitializerTest}
 	#{Graphics.Gdiplus.Tests.PenTest}
-	#{Graphics.Gdiplus.Tests.POINTFTest}
 	#{Graphics.Gdiplus.Tests.RECTFTest}
 	#{Graphics.Gdiplus.Tests.SolidBrushFromColorInitializerTest}
 	#{Graphics.Gdiplus.Tests.StringFormatTest}
@@ -54,6 +54,7 @@ package setMethodNames: #(
 	#(#{Graphics.Bitmap} #basicHdc)
 	#(#{Graphics.Bitmap class} #gdipCopyOfIcon:extent:backcolor:)
 	#(#{Graphics.Bitmap class} #gdipCopyOfImageIndex:extent:backcolor:)
+	#(#{Graphics.Tests.AbstractPointTest} #testComparePOINTF)
 	#(#{Graphics.Tests.BitmapTest} #testAsColorKeyedBitmap)
 ).
 
@@ -92,7 +93,7 @@ XProgramming.SUnit.TestCase subclass: #'Graphics.Gdiplus.Tests.GdiplusTest'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.Tests.POINTTest subclass: #'Graphics.Gdiplus.Tests.POINTFTest'
+External.Tests.POINTTest subclass: #'External.Tests.POINTFTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -343,6 +344,21 @@ gdipCopyOfImageIndex: anIndex extent: extent backcolor: aColor
 !Graphics.Bitmap class categoriesForMethods!
 gdipCopyOfIcon:extent:backcolor:!instance creation!public! !
 gdipCopyOfImageIndex:extent:backcolor:!instance creation!public! !
+!
+
+!Graphics.Tests.AbstractPointTest methodsFor!
+
+testComparePOINTF
+	| subject point |
+	point := POINTF fromPoint: 101.0 @ 102.0.
+	subject := self subjectClass x: point x y: point y.
+	self assert: subject equals: subject.
+	self assert: subject species identicalTo: Point.
+	self assert: subject hash equals: point hash.
+	self assert: subject equals: point.
+	self assert: point equals: subject! !
+!Graphics.Tests.AbstractPointTest categoriesForMethods!
+testComparePOINTF!public!unit tests! !
 !
 
 !Graphics.Tests.BitmapTest methodsFor!

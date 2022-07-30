@@ -50,6 +50,11 @@ Instance Variables:
 
 	^aNumber greaterThanFraction: self!
 
+<= aNumber
+	"Answer whether the receiver is less than or equal to the argument, aNumber."
+
+	^aNumber greaterOrEqualToFraction: self!
+
 = anObject
 	"Answer whether the receiver is numerically equivalent to the <Object>, anObject - i.e. whether the difference between the receiver and comparand is zero."
 
@@ -62,8 +67,9 @@ addToFloat: aFloat
 !
 
 addToFraction: aFraction
-	"Private - Add the known Fraction, aFraction, to the receiver. This is obviously fastest
-	if the receiver and aFraction have the same denominator"
+	"Private - Answer the <Fraction> result of adding the receiver to the known <Fraction> argument."
+
+	"This is obviously fastest if the receiver and aFraction have the same denominator."
 
 	^denominator = aFraction denominator
 		ifTrue: [Fraction rationalisedNumerator: numerator + aFraction numerator denominator: denominator]
@@ -73,8 +79,7 @@ addToFraction: aFraction
 				denominator: denominator * aFraction denominator]!
 
 addToInteger: anInteger
-	"Private - Add the known integer, anInteger, to the receiver. There is no need
-	to rationalise the result."
+	"Private - Answer the <Fraction> result of adding the known <integer> to the receiver. There is no need to rationalise the result."
 
 	^Fraction numerator: anInteger * denominator + numerator denominator: denominator!
 
@@ -131,8 +136,7 @@ asFraction
 !
 
 coerce: anArithmeticValue
-	"Private - Answer the lower generality <ArithmeticValue>, anArithmeticValue,
-	converted to a Fraction"
+	"Private - Coerce the <arithmeticValue> argument (which is assumed to be of a lower generality than the receiver) to a <Fraction>."
 
 	^Fraction numerator: anArithmeticValue denominator: 1!
 
@@ -194,13 +198,50 @@ generality
 	^30
 !
 
-greaterThanFloat: aFloat
-	"Private - Answer whether the receiver is greater than the known Float, aFloat"
+greaterOrEqualToFloat: aFloat
+	"Private - Answer whether the receiver is greater than or equal to the known <Float> argument."
 
-	| fpclass |
-	fpclass := aFloat fpClass.
-	^((fpclass anyMask: Float.FpClassFinite) and: [self greaterThanFraction: aFloat asTrueFraction])
-		or: [fpclass anyMask: Float.FpClassNegative]!
+	| fpclass negativeArg |
+	negativeArg := (fpclass := aFloat fpClass) anyMask: Float.FpClassNegative.
+	(fpclass anyMask: Float.FpClassFinite)
+		ifFalse: 
+			["aFloat is a NaN, -∞ or ∞, so obviously we are only greater if it is -∞."
+			^negativeArg].
+	numerator < 0 ~~ negativeArg
+		ifTrue: 
+			["Different signs - as the receiver cannot be zero, it is greater if the argument is negative"
+			^negativeArg].
+	"Fast cases eliminated, we need to compare fractions"
+	^self greaterOrEqualToFraction: aFloat asTrueFraction!
+
+greaterOrEqualToFraction: aFraction
+	"Private - Answer whether the receiver is greater than the known Fraction, aFraction"
+
+	^numerator * aFraction denominator >= (aFraction numerator * denominator)!
+
+greaterOrEqualToInteger: anInteger
+	"Private - Answer whether the receiver is greater than the known integer, anInteger"
+
+	^anInteger * denominator <= numerator!
+
+greaterThanFloat: aFloat
+	"Private - Answer whether the receiver is greater than the known Float argument."
+
+	"Implementation Note: The FP classification checks are expanded inline for performance reasons, but essentially this is:
+	"
+
+	| fpclass negativeArg |
+	negativeArg := (fpclass := aFloat fpClass) anyMask: Float.FpClassNegative.
+	(fpclass anyMask: Float.FpClassFinite)
+		ifFalse: 
+			["aFloat is NaN, -∞ or ∞, so obviously we are only greater if it is -∞."
+			^negativeArg].
+	numerator < 0 ~~ negativeArg
+		ifTrue: 
+			["Different signs - as the receiver cannot be zero, it is greater if the argument is negative"
+			^negativeArg].
+	"Fast cases eliminated, we need to compare fractions"
+	^self greaterThanFraction: aFloat asTrueFraction!
 
 greaterThanFraction: aFraction
 	"Private - Answer whether the receiver is greater than the known Fraction, aFraction"
@@ -367,6 +408,7 @@ truncated
 //!arithmetic!public! !
 +!arithmetic!public! !
 <!comparing!public! !
+<=!comparing!public! !
 =!comparing!public! !
 addToFloat:!double dispatch!private! !
 addToFraction:!double dispatch!private! !
@@ -384,6 +426,9 @@ equalToFraction:!double dispatch!private! !
 equalToInteger:!double dispatch!private! !
 equalToScaledDecimal:!double dispatch!private! !
 generality!coercing!private! !
+greaterOrEqualToFloat:!double dispatch!private! !
+greaterOrEqualToFraction:!double dispatch!private! !
+greaterOrEqualToInteger:!double dispatch!private! !
 greaterThanFloat:!double dispatch!private! !
 greaterThanFraction:!double dispatch!private! !
 greaterThanInteger:!double dispatch!private! !

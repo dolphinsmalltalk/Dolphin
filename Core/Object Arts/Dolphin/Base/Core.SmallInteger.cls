@@ -13,11 +13,11 @@ Wherever an Integer may be represented as a SmallInteger, then its only truly va
 !Core.SmallInteger categoriesForClass!Magnitude-Numbers! !
 !Core.SmallInteger methodsFor!
 
-- operand
-	"Answer the result of subtracting the <number>, operand, from the receiver. The primitive fails iff the operand is not a SmallInteger."
+- anArithmeticValue
+	"Answer the result of subtracting the <ArithmeticValue> argument from the receiver. The primitive fails iff the operand is not a SmallInteger."
 
 	<primitive: 14>
-	^operand subtractFromInteger: self!
+	^anArithmeticValue subtractFromInteger: self!
 
 & anInteger
 	"Answer the result of a bitwise AND between the receiver and the argument, anInteger. N.B.	Use of #bitAnd: is preferred (even though it is more typing) because it is a special selector (i.e. it is more compact and faster), and is portable. The primitive fails iff aNumber is not a SmallInteger."
@@ -103,7 +103,7 @@ _deepCopy: anIdentityDictionary
 	"The primitive fails if aNumber is not an Integer."
 
 	<primitive: 20>
-	^super <= aNumber!
+	^aNumber greaterOrEqualToInteger: self!
 
 = aNumber
 	"Answer whether the receiver is equal to aNumber. Numbers are considered equal if their difference is zero."
@@ -263,10 +263,9 @@ byteSize
 	^VMConstants.IntPtrSize!
 
 coerce: anArithmeticValue
-	"Private - Answer anArithmeticValue coerced to be a SmallInteger."
+	"Private - Coerce the <arithmeticValue> argument (which is assumed to be of a lower generality than the receiver) to an <integer>."
 
-	^anArithmeticValue truncated
-!
+	^anArithmeticValue truncated!
 
 decimalDigitLength
 	"Private - Answer the number of digits (only) necessary to print this number in base 10."

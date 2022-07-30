@@ -22,38 +22,37 @@ Arithmetic operations can be carried out between two Point3Ds or between a Point
 !Graphics.Point3D methodsFor!
 
 - anArithmeticValue
-	"Answer the receiver minus anArithmeticValue as a Point3D."
+	"Answer the receiver minus the <arithmeticValue> argument as a <Point3D>."
 
 	^anArithmeticValue subtractFromPoint3D: self!
 
 * anArithmeticValue
-	"Answer a Point3D with the receiver's coordinates multiplied by anArithmeticValue."
+	"Answer a <Point3D> with the receiver's coordinates multiplied by the <arithmeticValue> argument."
 
 	^anArithmeticValue multiplyByPoint3D: self!
 
 / operand
-	"Answer a Point3D with the receiver's coordinates divided by the <number>, 
-	operand. If the operand is zero then a <ZeroDivide> is raised."
+	"Answer a <Point3D> with the receiver's coordinates divided by the <arithmeticValue> argument. If the operand is zero then a <ZeroDivide> is raised."
 
 	^operand divideIntoPoint3D: self!
 
 + anArithmeticValue
-	"Answer the sum of receiver and anArithmeticValue as a Point3D."
+	"Answer the sum of receiver and the <arithmeticValue> argument as a <Point3D>."
 
 	^anArithmeticValue addToPoint3D: self!
 
-< anArithmeticValue
-	"Answer whether the receiver is above and to the left of anArithmeticValue."
+< aMagnitude
+	"Answer whether the receiver is above and to the left of the <magnitude> argument."
 
 	| aPoint3D |
-	aPoint3D := anArithmeticValue asPoint3D.
+	aPoint3D := aMagnitude asPoint3D.
 	^x < aPoint3D x and: [y < aPoint3D y and: [z < aPoint3D z]]!
 
-<= anArithmeticValue
-	"Answer whether the receiver is neither below nor to the right of anArithmeticValue."
+<= aMagnitude
+	"Answer whether the receiver is neither below nor to the right of the <magnitude> argument."
 
 	| aPoint3D |
-	aPoint3D := anArithmeticValue asPoint3D.
+	aPoint3D := aMagnitude asPoint3D.
 	^x <= aPoint3D x and: [y <= aPoint3D y and: [z <= aPoint3D z]]!
 
 = anObject
@@ -83,7 +82,7 @@ abs
 	^x abs @ y abs @ z abs!
 
 addToPoint3D: aPoint3D
-	"Private - Answer the result of adding the receiver to the known Point3D"
+	"Private - Answer the result of adding the receiver to the known <Point3D> argument."
 
 	^(aPoint3D x + x) @ (aPoint3D y + y) @ (aPoint3D z + z)!
 
@@ -104,8 +103,7 @@ ceiling
 	^x ceiling @ y ceiling @ z ceiling!
 
 coerce: anArithmeticValue
-	"Private - Answer the lower generality ArithmeticValue, anArithmeticValue, 
-	converted to a Point3D."
+	"Private - Coerce the <arithmeticValue> argument (which is assumed to be of a lower generality than the receiver) to a <Point3D>."
 
 	^anArithmeticValue asPoint3D!
 
@@ -115,7 +113,7 @@ dist: aPoint
 	^(aPoint - self) r!
 
 divideIntoPoint3D: aPoint3D
-	"Private - Answer the result of dividing the receiver into the known Point3D"
+	"Private - Answer the result of dividing the receiver into the known <Point3D> argument."
 
 	^(aPoint3D x / x) @ (aPoint3D y / y) @ (aPoint3D z / z)
 !
@@ -162,7 +160,7 @@ min: aPoint3D
 !
 
 multiplyByPoint3D: aPoint3D
-	"Private - Answer the result of multiplying the receiver by aPoint3D"
+	"Private - Answer the result of multiplying the receiver by the known <Point3D> argument."
 
 	^(x * aPoint3D x) @ (y * aPoint3D y) @ (z* aPoint3D z)!
 
@@ -205,7 +203,7 @@ roundTo: aNumber
 	^(x roundTo: aNumber) @ (y roundTo: aNumber) @ (z roundTo: aNumber)!
 
 subtractFromPoint3D: aPoint3D
-	"Private - Answer the result of subtracting the receiver from aPoint3D"
+	"Private - Answer the result of subtracting the receiver from the known <Point3D> argument."
 
 	^(aPoint3D x - x) @ (aPoint3D y - y) @ (aPoint3D z - z)
 !
@@ -260,8 +258,8 @@ z: aNumber
 <!comparing!public! !
 <=!comparing!public! !
 =!comparing!public! !
->!comparing!public! !
->=!comparing!public! !
+>!public! !
+>=!public! !
 abs!arithmetic!public! !
 addToPoint3D:!double dispatch!private! !
 asPoint!converting!public! !

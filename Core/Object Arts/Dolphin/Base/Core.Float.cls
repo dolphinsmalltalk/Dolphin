@@ -79,7 +79,7 @@ Core.Float comment: 'Float is the class of double precision floating point Numbe
 	"The primitive will fail if aNumber is not a SmallInteger of Float."
 
 	<primitive: 162>
-	^self isNaN not and: [aNumber greaterThanFloat: self]!
+	^aNumber greaterThanFloat: self!
 
 <= aNumber
 	"Answer whether the receiver is less than or equal to the argument, aNumber."
@@ -87,7 +87,7 @@ Core.Float comment: 'Float is the class of double precision floating point Numbe
 	"Implementation Note: Superclass implementation does not work correctly for comparisons against NaN, which must always be false (except for ~=)."
 
 	<primitive: 214>
-	^(self isNaN or: [aNumber < self]) not!
+	^aNumber greaterOrEqualToFloat: self!
 
 = anObject
 	"Answer whether the receiver is numerically equivalent to the argument, anObject (e.g. 1 = 1.0 is true). If either receiver or argument are NaN, then answer false."
@@ -111,7 +111,7 @@ Core.Float comment: 'Float is the class of double precision floating point Numbe
 	"Implementation Note: Superclass implementation does not work correctly for comparisons against NaN, which must always be false (except for ~=)."
 
 	<primitive: 46>
-	^(self isNaN or: [aNumber > self]) not!
+	^aNumber <= self!
 
 abs
 	"Answer a <Float> that is the absolute value - positive magnitude - of the receiver."
@@ -370,14 +370,12 @@ addToFloat: aFloat
 	^[aFloat + self] ensure: [Float exceptionMask: mask]!
 
 addToFraction: aFraction
-	"Private - Answer the result of adding the receiver to the known fraction, aFraction, 
-	by coercing the less general of it and the receiver."
+	"Private - Answer the <Float> result of adding the receiver to the known <Fraction> argument."
 
 	^aFraction asFloat + self!
 
 addToInteger: anInteger
-	"Private - Add the known integer, anInteger, to the receiver, converting anInteger 
-	to a Float. Answer the result"
+	"Private - Answer the <Float> result of adding the known <integer> to the receiver, first converting it to a <Float>."
 
 	^anInteger asFloat + self!
 
@@ -465,7 +463,7 @@ asTrueFraction
 	" Extract the bits of an IEEE double float "
 
 	| shifty sign expPart exp fraction fractionPart |
-	self isFinite
+	(self fpClass anyMask: FpClassFinite)
 		ifFalse: [ArithmeticError signal: ('Cannot represent <1p> as a fraction' expandMacrosWith: self)].
 	shifty := self qwordAtOffset: 0.
 	" Extract the sign and the biased exponent "
@@ -474,10 +472,10 @@ asTrueFraction
 
 	" Extract fractional part; answer 0 if this is a true 0.0 value "
 	fractionPart := shifty bitAnd: 16r000FFFFFFFFFFFFF.
-	(expPart == 0 and: [fractionPart = 0]) ifTrue: [^0].
+	(expPart == 0 and: [fractionPart == 0]) ifTrue: [^0].
 
 	"Add implied leading 1 into fraction"
-	fraction := expPart = 0
+	fraction := expPart == 0
 				ifTrue: [fractionPart bitShift: 1]
 				ifFalse: [fractionPart bitOr: 16r0010000000000000].
 
@@ -486,16 +484,13 @@ asTrueFraction
 
 	"Form the result. When exp>52, the exponent is adjusted by the number of trailing zero bits
 	in the fraction to minimize the (huge) time otherwise spent in #gcd:. "
-	^exp negative
+	^exp < 0
 		ifTrue: [sign * fraction bitShift: exp negated]
 		ifFalse: 
 			[| zeroBitsCount |
-			zeroBitsCount := fraction lowBit - 1.
-			exp := exp - zeroBitsCount.
+			exp := exp - (zeroBitsCount := fraction lowBit - 1).
 			exp <= 0
-				ifTrue: 
-					[zeroBitsCount := zeroBitsCount + exp.
-					sign * fraction bitShift: zeroBitsCount negated]
+				ifTrue: [sign * fraction bitShift: (zeroBitsCount + exp) negated]
 				ifFalse: 
 					[Fraction numerator: (sign * fraction bitShift: zeroBitsCount negated) denominator: (1 bitShift: exp)]]!
 
@@ -518,11 +513,9 @@ ceiling
 	^self asTrueFraction ceiling!
 
 coerce: anArithmeticValue
-	"Private - Answer the lower generality ArithmeticValue, anArithmeticValue, 
-	converted to a Float."
+	"Private - Coerce the <arithmeticValue> argument (which is assumed to be of a lower generality than the receiver) to a <Float>."
 
-	^anArithmeticValue asFloat
-!
+	^anArithmeticValue asFloat!
 
 cos
 	"Answer a <Float> which is the cosine of the receiver, which is treated as an angle in radians. May raise FloatingPointException, depending on the value of the receiver and the current FP exception mask."
@@ -652,6 +645,18 @@ greaterOrEquals: aNumber
 	(self equals: aNumber) ifTrue: [^true].
 	^self > aNumber!
 
+greaterOrEqualToFraction: aFraction
+	| fpclass |
+	fpclass := self fpClass.
+	^(fpclass anyMask: Float.FpClassFinite)
+		ifTrue: [self asTrueFraction greaterOrEqualToFraction: aFraction]
+		ifFalse: [(fpclass bitAnd: ##(FpClassNaN | FpClassNegative)) == 0]!
+
+greaterOrEqualToInteger: anInteger
+	"Private - Answer whether the receiver is greater than the known Integer, anInteger."
+
+	^anInteger asFloat <= self!
+
 greaterThanFraction: aFraction
 	"Private - Answer whether the receiver is greater than the known Fraction, aFraction."
 
@@ -664,7 +669,7 @@ greaterThanFraction: aFraction
 greaterThanInteger: anInteger
 	"Private - Answer whether the receiver is greater than the known Integer, anInteger."
 
-	^self isNaN not and: [anInteger asFloat < self]!
+	^anInteger asFloat < self!
 
 hash
 	"Answer the <SmallInteger> hash value for the receiver. If the receiver is a whole
@@ -1058,6 +1063,8 @@ fpClass!helpers!private! !
 fractionPart!accessing!public! !
 generality!coercing!private! !
 greaterOrEquals:!comparing!public! !
+greaterOrEqualToFraction:!double dispatch!private! !
+greaterOrEqualToInteger:!double dispatch!private! !
 greaterThanFraction:!double dispatch!private! !
 greaterThanInteger:!double dispatch!private! !
 hash!comparing!public! !

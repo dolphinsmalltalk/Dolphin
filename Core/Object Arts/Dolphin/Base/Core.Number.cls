@@ -148,13 +148,6 @@ floorLog: operand
 	
 	^(self log: operand) floor!
 
-fractionPart
-	"Answer a <number> of the same type as the receiver, representing the 
-	fractional part of  the receiver."
-
-	^self - self truncated
-!
-
 hour
 	^self hours!
 
@@ -162,12 +155,6 @@ hours
 	"Answer a <Duration> which is equivalent to the number of hours represented by the receiver."
 
 	^Duration hours: self!
-
-integerPart
-	"Answer an <integer>  representing the whole integer part of 
-	the receiver."
-
-	^self truncated!
 
 isFloat
 	"Answer true if receiver is an instance of class Float, else answer false."
@@ -186,6 +173,11 @@ isLiteral
 	is recognised by the Compiler"
 
 	^true!
+
+isNaN
+	"Answer whether the receiver is Not a Number."
+
+	^false!
 
 isNumber
 	"Coerces numbers to true and everything else to false."
@@ -328,13 +320,12 @@ divideIntoDuration:!double dispatch!durations!private! !
 even!public!testing! !
 exp!mathematical!public! !
 floorLog:!mathematical!public! !
-fractionPart!accessing!public! !
 hour!converting!durations!public! !
 hours!converting!durations!public! !
-integerPart!accessing!public! !
 isFloat!public!testing! !
 isFraction!public!testing! !
 isLiteral!public!testing! !
+isNaN!public!testing! !
 isNumber!public!testing! !
 ln!mathematical!public! !
 log!mathematical!public! !

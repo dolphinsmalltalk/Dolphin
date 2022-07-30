@@ -12,6 +12,11 @@ External.SIZE comment: '`SizeStructure` is the abstract class of structures repr
 !External.SIZE categoriesForClass!Win32-Structs! !
 !External.SIZE methodsFor!
 
+asGenericPoint
+	"Answer a suitable Smalltalk object to represent the receiver's value, in this case a <Point>."
+
+	^self asPoint!
+
 asObject
 	"Answer a suitable Smalltalk object to represent the receiver's value, in this case
 	a <Point>."
@@ -42,6 +47,7 @@ x
 y
 	^self height! !
 !External.SIZE categoriesForMethods!
+asGenericPoint!converting!public! !
 asObject!converting!public! !
 asPoint!converting!public! !
 height!accessing!public! !

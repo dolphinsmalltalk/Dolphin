@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Core.Tests.FloatTest'
 	classConstants: {}!
 Core.Tests.FloatTest guid: (Core.GUID fromString: '{b2b95b67-e8f3-4991-a4b4-94edc5e83f28}')!
 Core.Tests.FloatTest comment: ''!
-!Core.Tests.FloatTest categoriesForClass!Unclassified! !
 !Core.Tests.FloatTest methodsFor!
 
 assertFloat: result equals: aFloat
@@ -934,15 +933,15 @@ testLog
 	self assert: Float nan log isNaN!
 
 testNaNComparisons
-	| comparisons subject comparand |
+	| comparisons subject comparands |
 	comparisons := #(#< #<= #> #>= #=).
 	subject := Float nan.
-	comparand := self normals
+	comparands := self normals
 				, {0. 1. 2.3. Float infinity. Float nan copy. 2 / 3. 1.25s2. 2 raisedTo: 50}.
-	Float denormalized ifTrue: [comparand := comparand copyWith: Float fminDenormalized].
-	comparand := comparand , (comparand collect: [:e | e negated]).
-	comparand := comparand , {0 @ 0. -1 @ -1 @ -1}.
-	comparand do: 
+	Float denormalized ifTrue: [comparands := comparands copyWith: Float fminDenormalized].
+	comparands := comparands , (comparands collect: [:e | e negated]).
+	comparands := comparands , {0 @ 0. -1 @ -1 @ -1. SmallInteger maximum. SmallInteger minimum}.
+	comparands do: 
 			[:comp2 |
 			comparisons do: 
 					[:op2 |
