@@ -470,7 +470,7 @@ variableClassification: aStVariableNode
 	methodClass := context methodClass.
 	(methodClass allInstanceVariableNames includes: aStVariableNode name) ifTrue: [^#instance].
 	(methodClass hierarchyBindingFor: aStVariableNode name) ifNotNil: [^#class].
-	(context environment fullBindingFor: aStVariableNode name)
+	((context environment ?? Smalltalk) fullBindingFor: aStVariableNode name)
 		ifNotNil: [:var | ^var isClassBinding ifTrue: [#classGlobal] ifFalse: [#global]].
 	"Variable name not found in this context"
 	^nil!
