@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'Graphics.Gdiplus.GpBitmapData'
+Graphics.Gdiplus.GpStructure subclass: #'Graphics.Gdiplus.BitmapData'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_GpBitmapData_Size' -> 16r18.
+		'_BitmapData_Size' -> 16r18.
 		'_OffsetOf_Height' -> 16r4.
 		'_OffsetOf_PixelFormat' -> 16rC.
 		'_OffsetOf_Reserved' -> 16r14.
@@ -14,8 +14,8 @@ External.Structure subclass: #'Graphics.Gdiplus.GpBitmapData'
 		'_OffsetOf_Stride' -> 16r8.
 		'_OffsetOf_Width' -> 16r0
 	}!
-Graphics.Gdiplus.GpBitmapData guid: (Core.GUID fromString: '{8b358d63-cec7-4ae5-87c2-72d86f11e109}')!
-Graphics.Gdiplus.GpBitmapData comment: '<GpBitmapData> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpBitmapData'' from type information in the ''GDI+ Library 1.0'' library.
+Graphics.Gdiplus.BitmapData guid: (Core.GUID fromString: '{8b358d63-cec7-4ae5-87c2-72d86f11e109}')!
+Graphics.Gdiplus.BitmapData comment: '<GpBitmapData> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpBitmapData'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
 
@@ -33,8 +33,8 @@ struct tagGpBitmapData {
 	unsigned int Reserved;
 } GpBitmapData;
 '!
-!Graphics.Gdiplus.GpBitmapData categoriesForClass!Unclassified! !
-!Graphics.Gdiplus.GpBitmapData methodsFor!
+!Graphics.Gdiplus.BitmapData categoriesForClass!Gdiplus-Structs! !
+!Graphics.Gdiplus.BitmapData methodsFor!
 
 Height
 	"Answer the <Integer> value of the receiver's 'Height' field."
@@ -57,14 +57,14 @@ PixelFormat: anInteger
 	bytes sdwordAtOffset: _OffsetOf_PixelFormat put: anInteger!
 
 Scan0
-	"Answer the <ExternalAddress> value of the receiver's 'Scan0' field."
+	"Answer the <Address> value of the receiver's 'Scan0' field."
 
 	^(bytes uintPtrAtOffset: _OffsetOf_Scan0) asExternalAddress!
 
-Scan0: anExternalAddress
-	"Set the receiver's 'Scan0' field to the value of the argument, anExternalAddress"
+Scan0: anAddress
+	"Set the receiver's 'Scan0' field to the value of the argument, anAddress"
 
-	bytes uintPtrAtOffset: _OffsetOf_Scan0 put: anExternalAddress!
+	bytes uintPtrAtOffset: _OffsetOf_Scan0 put: anAddress!
 
 Stride
 	"Answer the <Integer> value of the receiver's 'Stride' field."
@@ -85,7 +85,7 @@ Width: anInteger
 	"Set the receiver's 'Width' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_Width put: anInteger! !
-!Graphics.Gdiplus.GpBitmapData categoriesForMethods!
+!Graphics.Gdiplus.BitmapData categoriesForMethods!
 Height!**compiled accessors**!public! !
 Height:!**compiled accessors**!public! !
 PixelFormat!**compiled accessors**!public! !
@@ -98,10 +98,10 @@ Width!**compiled accessors**!public! !
 Width:!**compiled accessors**!public! !
 !
 
-!Graphics.Gdiplus.GpBitmapData class methodsFor!
+!Graphics.Gdiplus.BitmapData class methodsFor!
 
 byteSize
-	^_GpBitmapData_Size!
+	^_BitmapData_Size!
 
 defineFields
 	"Define the fields of the GpBitmapData structure.
@@ -141,7 +141,7 @@ defineFields
 
 getFieldNames
 	^#(#Width #Height #Stride #PixelFormat #Scan0)! !
-!Graphics.Gdiplus.GpBitmapData class categoriesForMethods!
+!Graphics.Gdiplus.BitmapData class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

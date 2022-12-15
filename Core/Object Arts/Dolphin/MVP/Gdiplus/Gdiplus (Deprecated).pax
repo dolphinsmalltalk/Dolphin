@@ -1,0 +1,246 @@
+﻿| package |
+package := Package name: 'Gdiplus (Deprecated)'.
+package paxVersion: 2.1;
+	basicComment: ''.
+
+
+package setMethodNames: #(
+	#(#{Graphics.Gdiplus.FontFamily class} #fromName:)
+	#(#{Graphics.Gdiplus.FontFamily class} #fromName:fontCollection:)
+	#(#{Graphics.Gdiplus.GradientBrush} #blendFactors)
+	#(#{Graphics.Gdiplus.Matrix} #rotateTransform:)
+	#(#{Graphics.Gdiplus.Matrix} #rotateTransform:order:)
+	#(#{Graphics.Gdiplus.Matrix} #scaleTransform:)
+	#(#{Graphics.Gdiplus.Matrix} #scaleTransform:order:)
+	#(#{Graphics.Gdiplus.Matrix} #shearTransform:)
+	#(#{Graphics.Gdiplus.Matrix} #shearTransform:order:)
+	#(#{Graphics.Gdiplus.Matrix} #translateTransform:)
+	#(#{Graphics.Gdiplus.Matrix} #translateTransform:order:)
+	#(#{Graphics.Gdiplus.Matrix class} #m11:m12:m21:m22:m31:m32:)
+	#(#{Graphics.Gdiplus.PathGradientBrush} #blendColors)
+	#(#{Graphics.Gdiplus.Region} #complementPath:)
+	#(#{Graphics.Gdiplus.Region} #complementRegion:)
+	#(#{Graphics.Gdiplus.Region} #intersectRegion:)
+	#(#{Graphics.Gdiplus.Region} #isVisible:)
+	#(#{Graphics.Gdiplus.Region} #isVisible:graphics:)
+	#(#{Graphics.Gdiplus.Region} #unionRegion:)
+	#(#{Graphics.Gdiplus.Region} #xorRegion:)
+	#(#{Graphics.Gdiplus.TransformableBrush} #multiplyTransform:)
+	#(#{Graphics.Gdiplus.TransformableBrush} #multiplyTransform:order:)
+	#(#{Graphics.Gdiplus.TransformableBrush} #rotateTransform:)
+	#(#{Graphics.Gdiplus.TransformableBrush} #rotateTransform:order:)
+	#(#{Graphics.Gdiplus.TransformableBrush} #scaleTransform:)
+	#(#{Graphics.Gdiplus.TransformableBrush} #scaleTransform:order:)
+	#(#{Graphics.Gdiplus.TransformableBrush} #translateTransform:)
+	#(#{Graphics.Gdiplus.TransformableBrush} #translateTransform:order:)
+	#(#{Graphics.Rectangle} #asGdiplusRectangle)
+).
+
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+	'..\Base\Dolphin Basic Geometry'
+	'Gdiplus'
+).
+
+package!
+
+"Loose Methods"!
+
+!Graphics.Gdiplus.FontFamily class methodsFor!
+
+fromName: aString
+	#deprecated.
+	^self name: aString!
+
+fromName: aString fontCollection: aFontCollection
+	#deprecated.
+	^self name: aString fontCollection: aFontCollection! !
+!Graphics.Gdiplus.FontFamily class categoriesForMethods!
+fromName:!instance creation!public! !
+fromName:fontCollection:!instance creation!public! !
+!
+
+!Graphics.Gdiplus.GradientBrush methodsFor!
+
+blendFactors
+	| customBlend |
+	#deprecated.
+	customBlend := initializer customBlendGet: self handle.
+	^{customBlend factors. customBlend positions}! !
+!Graphics.Gdiplus.GradientBrush categoriesForMethods!
+blendFactors!accessing!public! !
+!
+
+!Graphics.Gdiplus.Matrix methodsFor!
+
+rotateTransform: aRealAngle
+	#deprecated.
+	self rotate: aRealAngle!
+
+rotateTransform: aFloat order: aMatrixOrderConstant
+	#deprecated.
+	self rotate: aFloat order: aMatrixOrderConstant!
+
+scaleTransform: aPoint
+	#deprecated.
+	self scale: aPoint!
+
+scaleTransform: aPoint order: aMatrixOrderConstant
+	#deprecated.
+	self scale: aPoint order: aMatrixOrderConstant!
+
+shearTransform: aPoint
+	#deprecated.
+	self shear: aPoint!
+
+shearTransform: aPoint order: aMatrixOrderConstant
+	#deprecated.
+	self shear: aPoint order: aMatrixOrderConstant!
+
+translateTransform: aPoint
+	#deprecated.
+	self translate: aPoint!
+
+translateTransform: aPoint order: aMatrixOrderConstant
+	#deprecated.
+	self translate: aPoint order: aMatrixOrderConstant! !
+!Graphics.Gdiplus.Matrix categoriesForMethods!
+rotateTransform:!operations!public!transformations! !
+rotateTransform:order:!operations!public!transformations! !
+scaleTransform:!operations!public!transformations! !
+scaleTransform:order:!operations!public!transformations! !
+shearTransform:!operations!public!transformations! !
+shearTransform:order:!operations!public!transformations! !
+translateTransform:!operations!public!transformations! !
+translateTransform:order:!operations!public!transformations! !
+!
+
+!Graphics.Gdiplus.Matrix class methodsFor!
+
+m11: aNumber11 m12: aNumber12 m21: aNumber21 m22: aNumber22 m31: dxNumber m32: dyNumber
+	#deprecated.
+	^self
+		m11: aNumber11
+		m12: aNumber12
+		m21: aNumber21
+		m22: aNumber22
+		dx: dxNumber
+		dy: dyNumber! !
+!Graphics.Gdiplus.Matrix class categoriesForMethods!
+m11:m12:m21:m22:m31:m32:!instance creation!public! !
+!
+
+!Graphics.Gdiplus.PathGradientBrush methodsFor!
+
+blendColors
+	| blend |
+	#deprecated.	"Confusingly named - doesn't just return the Colors, and should return a specific custom object rather than an Array tuple. See #blend."
+	blend := self blend.
+	^blend isCustom ifTrue: [#(#() #())] ifFalse: [{blend colors. blend positions}]! !
+!Graphics.Gdiplus.PathGradientBrush categoriesForMethods!
+blendColors!accessing!public! !
+!
+
+!Graphics.Gdiplus.Region methodsFor!
+
+complementPath: aPath
+	#deprecated.
+	self combinePath: aPath mode: CombineModeComplement!
+
+complementRegion: aRegion
+	#deprecated.
+	self combineRegion: aRegion mode: CombineModeComplement!
+
+intersectRegion: aRegion
+	#deprecated.
+	self combineRegion: aRegion mode: CombineModeIntersect!
+
+isVisible: aPoint
+	"Answer whether aPoint is inside the receiver."
+
+	#deprecated.
+	^self containsPoint: aPoint!
+
+isVisible: aPoint graphics: aGraphics
+	#deprecated.
+	^self containsPoint: aPoint graphics: aGraphics!
+
+unionRegion: aRegion
+	"Note that this updates in place rather than returning a new <Region> that is the union of the receiver and the argument, but see #union:"
+
+	#deprecated.
+	self combineRegion: aRegion mode: CombineModeUnion!
+
+xorRegion: aRegion
+	"Update the receiver to the nonintersecting portions of itself and aRegion."
+
+	#deprecated.
+	self combineRegion: aRegion mode: CombineModeXor! !
+!Graphics.Gdiplus.Region categoriesForMethods!
+complementPath:!combining!public! !
+complementRegion:!combining!public! !
+intersectRegion:!combining!public! !
+isVisible:!public!testing! !
+isVisible:graphics:!public!testing! !
+unionRegion:!combining!public! !
+xorRegion:!combining!public! !
+!
+
+!Graphics.Gdiplus.TransformableBrush methodsFor!
+
+multiplyTransform: aMatrix
+	#deprecated.
+	self multiply: aMatrix!
+
+multiplyTransform: aMatrix order: aMatrixOrderConstant
+	#deprecated.
+	self multiply: aMatrix order: aMatrixOrderConstant!
+
+rotateTransform: aFloat
+	#deprecated.
+	self rotate: aFloat!
+
+rotateTransform: aNumber order: aMatrixOrderConstant
+	#deprecated.
+	self rotate: aNumber order: aMatrixOrderConstant!
+
+scaleTransform: aPoint
+	#deprecated.
+	self scale: aPoint!
+
+scaleTransform: aPoint order: aMatrixOrderConstant
+	#deprecated.
+	self scale: aPoint order: aMatrixOrderConstant
+!
+
+translateTransform: aPoint
+	#deprecated.
+	self translate: aPoint!
+
+translateTransform: aPoint order: aMatrixOrderConstant
+	#deprecated.
+	self translate: aPoint order: aMatrixOrderConstant! !
+!Graphics.Gdiplus.TransformableBrush categoriesForMethods!
+multiplyTransform:!public!transformations! !
+multiplyTransform:order:!public!transformations! !
+rotateTransform:!public!transformations! !
+rotateTransform:order:!public!transformations! !
+scaleTransform:!public!transformations! !
+scaleTransform:order:!public!transformations! !
+translateTransform:!public!transformations! !
+translateTransform:order:!public!transformations! !
+!
+
+!Graphics.Rectangle methodsFor!
+
+asGdiplusRectangle
+	"In Gdiplus the rectangle coordinates include the lower right border"
+
+	#deprecated. "Not used"
+	^self position extent: self extent - 1 asPoint! !
+!Graphics.Rectangle categoriesForMethods!
+asGdiplusRectangle!converting!public! !
+!
+
+"End of package definition"!
+

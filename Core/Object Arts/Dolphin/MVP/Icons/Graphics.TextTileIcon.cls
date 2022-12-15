@@ -23,16 +23,16 @@ The resulting "icon" can be substituted for an actual `Icon` for essentially any
 
 Examples:
 
-	(TextTileIcon text: ''aA'' fontName: ''Georgia'' color: Color darkBlue) bitmapWithExtent: 256@256
+	"Gradient-filled background"
+	(TextTileIcon text: ''aA'' fontName: ''Georgia'' color: (Gdiplus.LinearGradientBrush rect: (0@0 extent: 1@1) color1: Color white color2: Color darkBlue mode: Gdiplus.LinearGradientModeForwardDiagonal)) bitmapWithExtent: 256@256
 
 	"White Dolphin on a green tile"
 	(TextTileIcon text: Character dolphin fontName: ''Segoe UI Symbol'' color: (ARGB named: #seaGreen)) bitmapWithExtent: 64@64
 
 	"For St Patrick''s day"
-	((TextTileIcon text: $\x2618 fontName: ''Segoe UI Symbol'' color: Color darkGreen) fontStyle: #bold) bitmapWithExtent: 128@128.
+	((TextTileIcon text: $\x2618 fontName: ''Segoe UI Symbol'') textcolor: Color darkGreen; fontStyle: #bold) bitmapWithExtent: 128@128.
 
 	'!
-!Graphics.TextTileIcon categoriesForClass!Unclassified! !
 !Graphics.TextTileIcon methodsFor!
 
 = anObject
@@ -79,8 +79,8 @@ applyTransforms: aGdiplusGraphics rect: aRectangle
 					m12: 1.0
 					m21: -1.0
 					m22: 0.0
-					m31: (y + x) / 2.0
-					m32: (y - x) / 2.0].
+					dx: (y + x) / 2.0
+					dy: (y - x) / 2.0].
 				
 				[:x :y |
 				Matrix
@@ -88,8 +88,8 @@ applyTransforms: aGdiplusGraphics rect: aRectangle
 					m12: 0.0
 					m21: 0.0
 					m22: -1.0
-					m31: x
-					m32: y].
+					dx: x
+					dy: y].
 				
 				[:x :y |
 				Matrix
@@ -97,8 +97,8 @@ applyTransforms: aGdiplusGraphics rect: aRectangle
 					m12: -1.0
 					m21: 1.0
 					m22: 0.0
-					m31: (x - y) / 2.0
-					m32: (x + y) / 2.0]})
+					dx: (x - y) / 2.0
+					dy: (x + y) / 2.0]})
 					at: i) value: aRectangle left + aRectangle right value: aRectangle top + aRectangle bottom.
 	aGdiplusGraphics transform: matrix.
 	matrix free!
@@ -181,17 +181,17 @@ drawOn: aCanvas at: dstOrigin extent: dstExtent
 		extent: dstExtent.
 	graphics free!
 
-drawOnGraphics: graphics at: originPoint extent: aPoint
-	| scale textExtent height faceName utf16 font rect textBrush width style |
-	aPoint isZero ifTrue: [^self].
-	rect := originPoint extent: aPoint.
+drawOnGraphics: graphics at: originPoint extent: extentPoint
+	| scale height faceName utf16 font rect textExtent width style format textBrush |
+	extentPoint isZero ifTrue: [^self].
+	rect := originPoint extent: extentPoint.
 	tilecolor
 		ifNotNil: 
 			[| backbrush |
-			backbrush := SolidBrush color: tilecolor.
+			backbrush := tilecolor gdiplusBrush: rect.
 			graphics fillRectangle: rect brush: backbrush.
 			backbrush free.
-			rect := rect insetBy: 1 @ 0].
+			rect := rect	"insetBy: 1 @ 0"].
 	utf16 := self text asUtf16String.
 	"TextTileIcon can be used to render empty tiles efficiently if no text is provided."
 	utf16 isEmpty ifTrue: [^self].
@@ -207,27 +207,32 @@ drawOnGraphics: graphics at: originPoint extent: aPoint
 				pixelSize: height
 				style: style.
 	graphics textRenderingHint: TextRenderingHintAntiAlias.
+	format := StringFormat genericTypographic.
 	textExtent := (graphics
 				measureString: utf16
 				font: font
-				rect: RECTF new
-				format: StringFormat genericTypographic) extent.
-	font free.
+				rect: RectF new
+				format: format) extent.
 	scale := width asFloat / textExtent x.
-	scale * textExtent y > height ifTrue: [scale := height asFloat / textExtent y].
+	scale * textExtent y > height
+		ifTrue: 
+			[format := self stringFormat.
+			scale := height asFloat / textExtent y].
+	font free.
 	font := Gdiplus.Font
 				name: faceName
 				pixelSize: (height * scale max: 1)
 				style: style.
-	textBrush := SolidBrush color: self actualTextcolor.
+	textBrush := Gdiplus.Brush color: self actualTextcolor.
 	graphics
 		drawString: utf16
 		font: font
 		rect: rect
-		format: self stringFormat
+		format: format
 		brush: textBrush.
 	font free.
-	textBrush free!
+	textBrush free.
+	graphics resetTransform!
 
 drawOnGraphics: aGraphics at: dstOrigin extent: dstExtent from: srcOrigin extent: srcExtent unit: aUnit attributes: aImageAtt 
 	"For compatibility with GdiplusImageView. The source origin, source extent, unit and attributes arguments are ignored."
@@ -406,7 +411,7 @@ withExtent: arg1
 
 	^Error notYetImplemented! !
 !Graphics.TextTileIcon categoriesForMethods!
-=!comparison!public! !
+=!comparing!public! !
 actualFontName!accessing!private! !
 actualFontStyle!accessing!private! !
 actualTextcolor!accessing!private! !
@@ -432,7 +437,7 @@ fontName!accessing!public! !
 fontStyle!accessing!public! !
 fontStyle:!accessing!public! !
 freeDC!public! !
-hash!comparison!public! !
+hash!comparing!public! !
 hotspot!accessing!public! !
 icon!accessing!public! !
 imageIndex!image management!public! !

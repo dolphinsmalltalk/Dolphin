@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'Graphics.Gdiplus.GpWMFRect16'
+Graphics.Gdiplus.GpStructure subclass: #'Graphics.Gdiplus.WMFRect16'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_GpWMFRect16_Size' -> 16r8.
 		'_OffsetOf_bottom' -> 16r6.
 		'_OffsetOf_left' -> 16r0.
 		'_OffsetOf_right' -> 16r4.
-		'_OffsetOf_top' -> 16r2
+		'_OffsetOf_top' -> 16r2.
+		'_WMFRect16_Size' -> 16r8
 	}!
-Graphics.Gdiplus.GpWMFRect16 guid: (Core.GUID fromString: '{1713ca90-9e3e-465b-9c3d-3c7b201f00ee}')!
-Graphics.Gdiplus.GpWMFRect16 comment: '<GpWMFRect16> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpWMFRect16'' from type information in the ''GDI+ Library 1.0'' library.
+Graphics.Gdiplus.WMFRect16 guid: (Core.GUID fromString: '{1713ca90-9e3e-465b-9c3d-3c7b201f00ee}')!
+Graphics.Gdiplus.WMFRect16 comment: '<GpWMFRect16> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpWMFRect16'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
 
@@ -29,8 +29,7 @@ struct tagGpWMFRect16 {
 	short bottom;
 } GpWMFRect16;
 '!
-!Graphics.Gdiplus.GpWMFRect16 categoriesForClass!Unclassified! !
-!Graphics.Gdiplus.GpWMFRect16 methodsFor!
+!Graphics.Gdiplus.WMFRect16 methodsFor!
 
 bottom
 	"Answer the <Integer> value of the receiver's 'bottom' field."
@@ -71,7 +70,7 @@ top: anInteger
 	"Set the receiver's 'top' field to the value of the argument, anInteger"
 
 	bytes swordAtOffset: _OffsetOf_top put: anInteger! !
-!Graphics.Gdiplus.GpWMFRect16 categoriesForMethods!
+!Graphics.Gdiplus.WMFRect16 categoriesForMethods!
 bottom!**compiled accessors**!public! !
 bottom:!**compiled accessors**!public! !
 left!**compiled accessors**!public! !
@@ -82,10 +81,10 @@ top!**compiled accessors**!public! !
 top:!**compiled accessors**!public! !
 !
 
-!Graphics.Gdiplus.GpWMFRect16 class methodsFor!
+!Graphics.Gdiplus.WMFRect16 class methodsFor!
 
 byteSize
-	^_GpWMFRect16_Size!
+	^_WMFRect16_Size!
 
 defineFields
 	"Define the fields of the GpWMFRect16 structure.
@@ -117,7 +116,7 @@ defineFields
 
 getFieldNames
 	^#(#left #top #right #bottom)! !
-!Graphics.Gdiplus.GpWMFRect16 class categoriesForMethods!
+!Graphics.Gdiplus.WMFRect16 class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

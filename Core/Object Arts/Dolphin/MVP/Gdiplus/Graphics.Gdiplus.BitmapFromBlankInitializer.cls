@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.BitmapFromBlankInitializer'
+Graphics.Gdiplus.BitmapInitializer subclass: #'Graphics.Gdiplus.BitmapFromBlankInitializer'
 	instanceVariableNames: 'width height format'
 	classVariableNames: ''
 	imports: #()
@@ -8,10 +8,14 @@ Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.BitmapFromBlankInitial
 	classConstants: {}!
 Graphics.Gdiplus.BitmapFromBlankInitializer guid: (Core.GUID fromString: '{0a5beb4b-18f8-4ebe-bb4e-68ce5d088f33}')!
 Graphics.Gdiplus.BitmapFromBlankInitializer comment: ''!
-!Graphics.Gdiplus.BitmapFromBlankInitializer categoriesForClass!Unclassified! !
 !Graphics.Gdiplus.BitmapFromBlankInitializer methodsFor!
 
-createHandle
+= anObject
+	^self == anObject or: 
+			[self species = anObject species
+				and: [width = anObject width and: [height = anObject height and: [format = anObject format]]]]!
+
+basicCreateHandle
 	"Private -  Bitmap::Bitmap(
 	    IN INT width,
 	    IN INT height,
@@ -29,7 +33,7 @@ createHandle
 
 	| gpHandle |
 	gpHandle := Handle new.
-	self library
+	Gdip
 		gdipCreateBitmapFromScan0: width
 		height: height
 		stride: 0
@@ -38,24 +42,33 @@ createHandle
 		bitmap: gpHandle.
 	^gpHandle!
 
+format
+	^format!
+
+hash
+	^(((self species hash + width hash) hashMultiply + height hash) hashMultiply + format hash)
+		hashMultiply!
+
+height
+	^height!
+
 pixelFormatName
-	"This wont be fast..."
+	^self class nameOfPixelFormat: format!
 
-	Graphics.Gdiplus keysAndValuesDo: [:eachKey :eachValue | 
-		(eachValue = format and: [eachKey beginsWith: 'PixelFormat']) ifTrue: [^eachKey]].
-	^'PixelFormatDontCare'!
-
-printImage: aBitmap on: aWriteStream
+printImage: aGdiplusBitmap on: aWriteStream
 	"Private - Print an expression on the <WriteStream> argument that will create a copy of the <Image> initialized by the receiver."
 
 	aWriteStream
-		print: aBitmap class;
+		print: aGdiplusBitmap class;
 		nextPutAll: ' width: ';
 		print: width;
 		nextPutAll: ' height: ';
 		print: height;
 		nextPutAll: ' format: ';
-		nextPutAll: (Graphics.Gdiplus fullNameFor: self pixelFormatName)!
+		nextPutAll: (Smalltalk shortNameFor: self pixelFormatName in: Gdiplus)!
+
+width
+	^width!
 
 width: widthInteger height: heightInteger format: aPixelFormat
 	width := widthInteger.
@@ -63,9 +76,14 @@ width: widthInteger height: heightInteger format: aPixelFormat
 	format := aPixelFormat.
 	^self! !
 !Graphics.Gdiplus.BitmapFromBlankInitializer categoriesForMethods!
-createHandle!private!realizing/unrealizing! !
+=!comparing!public! !
+basicCreateHandle!private!realizing/unrealizing! !
+format!accessing!private! !
+hash!comparing!public! !
+height!accessing!private! !
 pixelFormatName!private!realizing/unrealizing! !
 printImage:on:!printing!private! !
+width!accessing!private! !
 width:height:format:!initializing!private! !
 !
 

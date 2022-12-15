@@ -11,36 +11,72 @@ Graphics.Gdiplus.Brush isNonInstantiable: true!
 Graphics.Gdiplus.Brush comment: 'GdiplusBrush is an abstract class that defines an object used to paint the interior of graphics shapes, such as rectangles, ellipses, pies, polygons, strings, regions and paths.
 
 '!
-!Graphics.Gdiplus.Brush categoriesForClass!Unclassified! !
 !Graphics.Gdiplus.Brush methodsFor!
 
-basicFree
-	"Private - Free up external resources held by the receiver.
-	Ignore any errors which might arise."
-
-	Gdip gdipDeleteBrush: handle!
-
-clone
-	"Answer a copy of the receiver."
-
+createGpPen: aFloat
 	| gpHandle |
 	gpHandle := Handle new.
-	Gdip gdipCloneBrush: self handle cloneBrush: gpHandle.
-	^(self class fromOwnedHandle: gpHandle)
-		initializer: initializer;
-		yourself! !
+	Gdip
+		gdipCreatePen2: self handle
+		width: aFloat
+		unit: UnitWorld
+		pen: gpHandle.
+	^gpHandle!
+
+gdiplusBrush: aPoint
+	"Answer a Gdiplus.Brush configured for painting with a brush like the receiver but with the specified extent."
+
+	^self!
+
+isNone
+	"Answer whether the receiver paints nothing (is transparent)."
+
+	^false!
+
+luminance
+	"Answer a <Number> in the range [0,1] representing the luminance of the receiver, a brightness value weighted by the human eye's color sensitivity. 
+	For a brush this is often very approximate, although correct for solid brushes."
+
+	^0.5
+
+	!
+
+type
+	| buf |
+	buf := UInt32Bytes new.
+	Gdip gdipGetBrushType: self handle type: buf.
+	^buf asInteger! !
 !Graphics.Gdiplus.Brush categoriesForMethods!
-basicFree!private!realizing/unrealizing! !
-clone!copying!public! !
+createGpPen:!operations!private! !
+gdiplusBrush:!converting!public! !
+isNone!public!testing! !
+luminance!accessing!public! !
+type!accessing!public! !
 !
 
 !Graphics.Gdiplus.Brush class methodsFor!
 
-icon
-	"Answers an Icon that can be used to represent this class"
+black
+	^self color: Color.Black!
 
-	^Graphics.Brush icon! !
+blue
+	^self color: Color blue!
+
+color: aColor
+	"Creates a SolidBrush object based on a color."
+
+	^SolidBrush color: aColor!
+
+green
+	^self color: Color green!
+
+red
+	^self color: Color red! !
 !Graphics.Gdiplus.Brush class categoriesForMethods!
-icon!constants!development!public! !
+black!instance creation!public! !
+blue!instance creation!public! !
+color:!instance creation!public! !
+green!instance creation!public! !
+red!instance creation!public! !
 !
 

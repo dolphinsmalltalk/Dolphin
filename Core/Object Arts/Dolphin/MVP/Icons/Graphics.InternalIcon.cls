@@ -27,8 +27,8 @@ This will prompt you for a suitable image file (again PNG files work best) and w
 !Graphics.InternalIcon categoriesForClass!Kernel-Objects! !
 !Graphics.InternalIcon methodsFor!
 
-= comperand 
-	^super = comperand and: [self tileColor = comperand tileColor]!
+= comperand
+	^super = comperand and: [tileColor = comperand tileColor]!
 
 addToImageList: aWinImageList mask: aColorOrNil 
 	^(tileColor isNil ifTrue: [gdiplusBitmap] ifFalse: [self tileBitmapWithExtent: aWinImageList extent]) 
@@ -55,9 +55,11 @@ asParameter
 bitmap
 	^tileColor isNil ifTrue: [gdiplusBitmap] ifFalse: [self tileBitmapWithExtent: gdiplusBitmap extent]!
 
-drawOn: aCanvas at: dstOrigin extent: dstExtent 
-	tileColor ifNotNil: [aCanvas fillRectangle: (dstOrigin extent: dstExtent) color: tileColor].
-	self gdiplusBitmap 
+drawOn: aCanvas at: dstOrigin extent: dstExtent
+	tileColor
+		ifNotNil: 
+			[aCanvas fillRectangle: (dstOrigin extent: dstExtent) brush: (tileColor gdiplusBrush: dstExtent)].
+	self gdiplusBitmap
 		drawOn: aCanvas
 		at: dstOrigin
 		extent: dstExtent!
@@ -65,7 +67,7 @@ drawOn: aCanvas at: dstOrigin extent: dstExtent
 drawOnGraphics: aGraphics at: dstOrigin extent: dstExtent from: srcOrigin extent: srcExtent unit: aUnit attributes: aImageAtt
 	tileColor
 		ifNotNil: 
-			[aGraphics fillRectangle: (dstOrigin extent: dstExtent) brush: (SolidBrush color: tileColor)].
+			[aGraphics fillRectangle: (dstOrigin extent: dstExtent) brush: (tileColor gdiplusBrush: dstExtent)].
 	^self gdiplusBitmap
 		drawOnGraphics: aGraphics
 		at: dstOrigin
@@ -76,7 +78,7 @@ drawOnGraphics: aGraphics at: dstOrigin extent: dstExtent from: srcOrigin extent
 		attributes: aImageAtt!
 
 hash
-	^super hash + tileColor hash!
+	^(super hash + tileColor hash) hashMultiply!
 
 hotspot
 	^self extent / 2!
@@ -90,21 +92,20 @@ imageManager
 imageType
 	^Win32Constants.IMAGE_ICON!
 
-tileBitmapWithExtent: extent 
+tileBitmapWithExtent: extent
 	| tileBitmap graphics |
 	tileBitmap := Gdiplus.Bitmap extent: extent.
 	graphics := tileBitmap graphics.
-	
-	[graphics interpolationMode: InterpolationModeHighQualityBicubic.
-	self 
+	graphics interpolationMode: InterpolationModeHighQualityBicubic.
+	self
 		drawOnGraphics: graphics
 		at: Point zero
 		extent: extent
 		from: Point zero
 		extent: self extent
 		unit: nil
-		attributes: nil] 
-			ensure: [graphics free].
+		attributes: nil.
+	graphics free.
 	^tileBitmap!
 
 tileColor
@@ -113,7 +114,7 @@ tileColor
 tileColor: aColor 
 	tileColor := aColor! !
 !Graphics.InternalIcon categoriesForMethods!
-=!comparing!comparison!public! !
+=!comparing!public! !
 addToImageList:mask:!double dispatch!private! !
 asAlphaBitmap:!converting!public! !
 asMenuBitmap!converting!public! !
@@ -121,7 +122,7 @@ asParameter!converting!public! !
 bitmap!accessing!public! !
 drawOn:at:extent:!drawing-bitmaps!public! !
 drawOnGraphics:at:extent:from:extent:unit:attributes:!drawing-gdiplus!public! !
-hash!comparing!comparison!public! !
+hash!comparing!public! !
 hotspot!accessing!public! !
 imageIndex!accessing!public! !
 imageManager!public! !

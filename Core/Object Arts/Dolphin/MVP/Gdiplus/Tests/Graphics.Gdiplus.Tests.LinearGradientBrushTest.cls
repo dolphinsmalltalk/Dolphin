@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.Tests.GdiplusTest subclass: #'Graphics.Gdiplus.Tests.LinearGradientBrushTest'
+Graphics.Gdiplus.Tests.GradientBrushTest subclass: #'Graphics.Gdiplus.Tests.LinearGradientBrushTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -8,112 +8,183 @@ Graphics.Gdiplus.Tests.GdiplusTest subclass: #'Graphics.Gdiplus.Tests.LinearGrad
 	classConstants: {}!
 Graphics.Gdiplus.Tests.LinearGradientBrushTest guid: (Core.GUID fromString: '{da79074f-df9f-4e17-85cb-3cbe8999807f}')!
 Graphics.Gdiplus.Tests.LinearGradientBrushTest comment: ''!
-!Graphics.Gdiplus.Tests.LinearGradientBrushTest categoriesForClass!Unclassified! !
 !Graphics.Gdiplus.Tests.LinearGradientBrushTest methodsFor!
 
-setSample1
-	model := LinearGradientBrush
+brushType
+	^BrushTypeLinearGradient!
+
+createCanonicalSubject
+	^self subjectClass
+		point1: 0 @ 0
+		point2: 255 @ 0
+		color1: Color red
+		color2: Color blue
+		wrapMode: Gdiplus.WrapModeTileFlipXY!
+
+gdipGetTransform: aHandle matrix: matrix
+	Gdip gdipGetLineTransform: aHandle matrix: matrix handle!
+
+subjectClass
+	^LinearGradientBrush!
+
+testColors
+	| recreated blend bitmap newColors |
+	self newCanonicalModel.
+	self assert: model colors equals: {Color red. Color blue}.
+	newColors := {Color green. Color blue}.
+	model colors: newColors.
+	self assert: model colors equals: newColors.
+	self assert: (model initializer colorsGet: model handle) equals: newColors.
+	"Should round trip via STB"
+	recreated := self assertPersistedValid.
+	self assert: recreated colors equals: newColors.
+	"What happens if we change the colours with a blend?"
+	blend := GradientPresetBlend colors: {Color red. Color green. Color magenta} positions: #(0 0.2 1).
+	model blend: blend.
+	"Original linear colours are not changed"
+	self assert: model colors equals: newColors.
+	self assert: (model initializer colorsGet: model handle) equals: newColors.
+	false
+		ifTrue: 
+			[bitmap := Bitmap extent: model bounds extent + 20.
+			bitmap graphics
+				fillRectangle: (10 @ 10 extent: model bounds extent) brush: model;
+				free.
+			bitmap showExample]!
+
+testConstructFromPoints
+	self newCanonicalModel.
+	model asParameter!
+
+testConstructFromRectangle
+	| recreated rect |
+	rect := 5 @ 15 extent: 250 @ 240.
+	model := self subjectClass
+				rect: rect
+				color1: Color red
+				color2: Color blue
+				mode: LinearGradientModeHorizontal.
+	self assert: model bounds equals: rect.
+	self assert: model colors equals: {Color red. Color blue}.
+	self deny: model isGammaCorrected.
+	self assert: model wrapMode equals: WrapModeTile.
+	model isGammaCorrected: true.
+	recreated := self assertPersistedValid.
+	self assert: recreated isGammaCorrected!
+
+testHorizontalGradient
+	| bitmap |
+	self newCanonicalModel.
+	bitmap := Bitmap extent: 256 @ 256.
+	bitmap graphics
+		fillRectangle: (0 @ 0 extent: 256 @ 256) brush: model;
+		free.
+	false ifTrue: [bitmap showExample].
+	self assert: (bitmap pixelAt: 0 @ 0) equals: Color red.
+	self assert: (bitmap pixelAt: 128 @ 0) equals: Color purple.
+	self assert: (bitmap pixelAt: 255 @ 0) equals: Color blue.
+	self assert: (bitmap pixelAt: 0 @ 128) equals: Color red.
+	self assert: (bitmap pixelAt: 0 @ 255) equals: Color red.
+	self assert: (bitmap pixelAt: 255 @ 255) equals: Color blue!
+
+testLumninance
+	model := self subjectClass
 				point1: 0 @ 0
 				point2: 255 @ 0
-				color1: Color red
-				color2: Color blue!
-
-testClone
-	"force realize"
-
-	| clone |
-	self setSample1.
-	model handle.
-	clone := model clone.
-	self assert: model initializer identicalTo: clone initializer.
-	self denyIsNil: clone basicHandle!
-
-testConstructor1
-	self setSample1.
-	model asParameter.
-	self assertPersistedValid!
-
-testConstructor2
-	model := LinearGradientBrush
-				rect: (0 @ 0 extent: 255 @ 255)
-				color1: (Color fromArgbCode: 16rFFFF0000)
-				color2: (Color fromArgbCode: 16rFF0000FF)
-				mode: 0.
-	model asParameter.
-	self assertPersistedValid!
-
-testFillingHorizontal
-	| bitmap graphics canvas |
-	bitmap := DIBSection displayCompatibleWithExtent: 256 @ 256.
-	canvas := bitmap canvas.
-	graphics := GdiplusGraphics fromCanvas: canvas.
-	self setSample1.
-	graphics fillRectangle: (0 @ 0 extent: 256 @ 256) brush: model.
-	graphics free.
-	self assert: (canvas pixelAt: 0 @ 0) equals: Color red.
-	self assert: (canvas pixelAt: 128 @ 0) equals: Color purple.
-	self assert: (canvas pixelAt: 255 @ 0) equals: Color blue!
-
-testGetBlend
-	| args answer |
-	self setSample1.
-	args := {#(0.0 0.5 1.0). #(0.0 0.8 1.0)}.
-	"Test the roundtrip; setting then getting"
-	model blendFactors: args first positions: args second.
-	answer := model blendFactors.
-	args first with: answer first do: [:f1 :f2 | self assert: (self compare: f1 to: f2)].
-	"SW: How many bits of precision does REAL have?
-	BSM: Its probably only single precision, so only about 6 or 7 digits
-	LAS: In which case why isn't DignificantDifference in Float = 0.000001 so that Float>>equals: will work or 
-	suggestion: a Float>>equals:epsilon: method (in the base image)?"
-	args second with: answer second do: [:f1 :f2 | self assert: (self compare: f1 to: f2)]!
-
-testGetBlendCount
-	self setSample1.
-	"MSDN: If no custom blend has been set by using LinearGradientBrush::SetBlend, or if invalid positions were passed to LinearGradientBrush::SetBlend, then LinearGradientBrush::GetBlend returns 1."
-	self assert: model blendCount equals: 1.
-	model blendFactors: #(0.0 0.5 1.0) positions: #(0.0 0.8 1.0).
-	self assert: model blendCount equals: 3!
-
-testIsGammaCorrected
-	self setSample1.
-	model isGammaCorrected: true.
-	self assert: model isGammaCorrected.
-	model isGammaCorrected: false.
-	self deny: model isGammaCorrected!
+				color1: Color white
+				color2: Color gray.
+	self assert: (model luminance roundTo: 0.01) equals: 0.75!
 
 testPersistentArgument
 	"Create an object that has a constructor argument that itself needs to be realised"
 
-	| brush pen |
-	brush := LinearGradientBrush
-				point1: 0 @ 0
-				point2: 255 @ 0
-				color1: Color red
-				color2: Color blue.
-	pen := Pen brush: brush width: nil.
+	| pen |
+	self newCanonicalModel.
+	pen := Pen brush: model.
 	"realize it"
 	pen asParameter.
-	self assert: brush isRealized.
+	self assert: model isRealized.
 	"re-realize it"
 	pen free.
 	pen asParameter.
 	"re-realize all"
 	pen free.
-	brush free.
+	model free.
 	pen asParameter.
-	self assert: brush isRealized.
-	self assert: pen initializer brush identicalTo: brush
-	"for gc reasons .. the pen must always hold a reference to the brush"! !
+	self assert: model isRealized.
+	self assert: pen ink identicalTo: model
+	"for gc reasons .. the pen must always hold a reference to the brush"!
+
+testPrintString
+	| expr |
+	self newCanonicalModel.
+	expr := model printString.
+	self assert: expr
+		equals: '(Gdiplus.LinearGradientBrush point1: (0@0) point2: (255@0) color1: Color red color2: Color blue wrapMode: Gdiplus.WrapModeTileFlipXY)'.
+	self assert: (Compiler evaluate: expr) equals: model.
+	model rotate: 45.
+	self assert: model printString
+		equals: 'a Gdiplus.LinearGradientBrush(point1: (0@0) point2: (255@0) color1: Color red color2: Color blue wrapMode: Gdiplus.WrapModeTileFlipXY; transform: (Gdiplus.Matrix fromArray: #(0.707106709 0.70710665 -0.707106709 0.707106709 -0.0 -0.0)))'!
+
+testStlUpgradeFromD7
+	| brushes |
+	brushes := Object
+				fromLiteralStoreArray: #(#'!!STL' 4 34 2 1704710 ##(Smalltalk.GdiplusLinearGradientBrush) nil true 2950406 ##(Smalltalk.GdiplusLinearGradientBrushFromRectInitializer) nil 590342 ##(Smalltalk.Rectangle) 328198 ##(Smalltalk.Point) 3 5 514 151 101 327686 ##(Smalltalk.Color) #blue 562 #cyan 5 418 nil true 3081478 ##(Smalltalk.GdiplusLinearGradientBrushFromPointsInitializer) nil 514 11 21 514 401 21 562 #black 562 #red).
+	self assert: brushes first
+		equals: (self subjectClass
+				rect: (1 @ 2 corner: 75 @ 50)
+				color1: Color blue
+				color2: Color cyan
+				mode: LinearGradientModeForwardDiagonal).
+	self assert: brushes second
+		equals: (self subjectClass
+				point1: 5 @ 10
+				point2: 200 @ 10
+				color1: Color black
+				color2: Color red)!
+
+testVerticalGradient
+	| bitmap |
+	bitmap := Bitmap extent: 256 @ 256.
+	model := self subjectClass
+				point1: 0 @ 0
+				point2: 0 @ 255
+				color1: Color red
+				color2: Color blue.
+	bitmap graphics
+		fillRectangle: (0 @ 0 extent: 256 @ 256) brush: model;
+		free.
+	false ifTrue: [bitmap showExample].
+	self assert: (bitmap pixelAt: 0 @ 0) equals: Color red.
+	self assert: (bitmap pixelAt: 128 @ 0) equals: Color red.
+	self assert: (bitmap pixelAt: 255 @ 0) equals: Color red.
+	self assert: (bitmap pixelAt: 0 @ 128) equals: Color purple.
+	self assert: (bitmap pixelAt: 0 @ 255) equals: Color blue.
+	self assert: (bitmap pixelAt: 255 @ 255) equals: Color blue!
+
+validWrapModes
+	^super validWrapModes copyWithout: WrapModeClamp!
+
+verifyEqualToModel: aGdiplusObject
+	super verifyEqualToModel: aGdiplusObject.
+	self assert: aGdiplusObject startingColor equals: model startingColor.
+	self assert: aGdiplusObject endingColor equals: model endingColor.
+	self assert: aGdiplusObject mode equals: model mode! !
 !Graphics.Gdiplus.Tests.LinearGradientBrushTest categoriesForMethods!
-setSample1!accessing!public! !
-testClone!public!unit tests! !
-testConstructor1!public!unit tests! !
-testConstructor2!public!unit tests! !
-testFillingHorizontal!public!unit tests! !
-testGetBlend!public!unit tests! !
-testGetBlendCount!public!unit tests! !
-testIsGammaCorrected!public!unit tests! !
+brushType!constants!private! !
+createCanonicalSubject!initializing!private! !
+gdipGetTransform:matrix:!private!transformations! !
+subjectClass!constants!initializing!private! !
+testColors!public!unit tests! !
+testConstructFromPoints!public!unit tests! !
+testConstructFromRectangle!public!unit tests! !
+testHorizontalGradient!public!unit tests! !
+testLumninance!public!unit tests! !
 testPersistentArgument!public!unit tests! !
+testPrintString!public!unit tests! !
+testStlUpgradeFromD7!public!unit tests! !
+testVerticalGradient!public!unit tests! !
+validWrapModes!constants!private! !
+verifyEqualToModel:!helpers!private! !
 !
 

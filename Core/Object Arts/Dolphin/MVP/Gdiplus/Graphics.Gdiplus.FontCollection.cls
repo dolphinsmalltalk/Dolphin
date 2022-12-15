@@ -11,27 +11,21 @@ Graphics.Gdiplus.FontCollection isNonInstantiable: true!
 Graphics.Gdiplus.FontCollection comment: 'GdiplusFontCollection is an abstract class that contains methods for enumerating the font families in a collection of fonts.
 
 '!
-!Graphics.Gdiplus.FontCollection categoriesForClass!Unclassified! !
 !Graphics.Gdiplus.FontCollection methodsFor!
-
-basicFree
-	"Private - Overridden to suppress error message."
-
-	!
 
 families
 	^self families: self familyCount!
 
 families: anInteger
 	| numFound families clonedHandle gpHandles |
-	numFound := ByteArray newFixed: 4.
-	gpHandles := DWORDArray new: anInteger.
+	numFound := UInt32Bytes new.
+	gpHandles := UINT_PTRArray new: anInteger.
 	Gdip
 		gdipGetFontCollectionFamilyList: self asParameter
 		numSought: anInteger
 		gpfamilies: gpHandles
 		numFound: numFound.
-	numFound := numFound sdwordAtOffset: 0.
+	numFound := numFound asSignedInteger.
 	families := Array new: numFound.
 	gpHandles
 		from: 1
@@ -43,17 +37,24 @@ families: anInteger
 			families at: eachKey put: (FontFamily fromOwnedHandle: clonedHandle)].
 	^families!
 
+familiesByName
+	| families count |
+	count := self familyCount.
+	families := LookupTable new: count.
+	(self families: count) do: [:each | families at: each name put: each].
+	^families!
+
 familyCount
 	"Answer the number of font families contained in the receiver."
 
 	| count |
-	count := ByteArray newFixed: 4.
+	count := UInt32Bytes new.
 	Gdip gdipGetFontCollectionFamilyCount: self asParameter numFound: count.
-	^count sdwordAtOffset: 0! !
+	^count asSignedInteger! !
 !Graphics.Gdiplus.FontCollection categoriesForMethods!
-basicFree!private!realizing/unrealizing! !
 families!accessing!public! !
-families:!public! !
+families:!accessing!public! !
+familiesByName!accessing!public! !
 familyCount!accessing!public! !
 !
 
@@ -62,8 +63,16 @@ familyCount!accessing!public! !
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^Graphics.Font icon! !
+	^Font icon!
+
+installed
+	^InstalledFontCollection new!
+
+installedFamilies
+	^self installed familiesByName! !
 !Graphics.Gdiplus.FontCollection class categoriesForMethods!
 icon!constants!development!public! !
+installed!instance creation!public! !
+installedFamilies!enquiries!public! !
 !
 

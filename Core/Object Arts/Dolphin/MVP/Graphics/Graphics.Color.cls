@@ -77,6 +77,9 @@ argbCode
 	^self alphaMask bitOr: (((bgr bitShift: -16) bitAnd: 16rFF)
 				bitOr: ((bgr bitAnd: 16r00FF00) bitOr: ((bgr bitAnd: 16rFF) bitShift: 16)))!
 
+asColor
+	^self!
+
 asColorRef
 	"Answer the receiver as a <ColorRef> (an <RGB> or one of the standard pseudo-colour constants Color default and Color none)."
 
@@ -142,6 +145,11 @@ chroma
 	"Answer a <Number> in the range [0,1] representing the chroma value of the receiver."
 
 	^self asRGB chroma!
+
+darker
+	"Answer a darker shade of this color."
+
+	^ self adjustBrightness: -0.08!
 
 defaultPalette
 	"Private - Answer the default palette."
@@ -402,6 +410,7 @@ alpha:!accessing!public! !
 alphaMask!accessing!private! !
 argbClass!constants!private! !
 argbCode!accessing!public! !
+asColor!converting!public! !
 asColorRef!converting!public! !
 asCOLORREF!accessing!public! !
 asDword!converting!public! !
@@ -414,6 +423,7 @@ brightness!accessing!public! !
 brush!converting!public! !
 brushClass!constants!private! !
 chroma!accessing!public! !
+darker!public! !
 defaultPalette!constants!private! !
 faded!converting!public! !
 fadedBy:!converting!public! !

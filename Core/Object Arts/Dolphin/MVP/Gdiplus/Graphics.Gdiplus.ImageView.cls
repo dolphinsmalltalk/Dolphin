@@ -201,7 +201,7 @@ stbVersion
 interpolationStyles!constants!public! !
 interpolationStyleTable!constants!public! !
 stbConvert:fromVersion:!binary filing!public! !
-stbConvertFromVersion13:!public! !
-stbVersion!public! !
+stbConvertFromVersion13:!binary filing!public! !
+stbVersion!binary filing!public! !
 !
 

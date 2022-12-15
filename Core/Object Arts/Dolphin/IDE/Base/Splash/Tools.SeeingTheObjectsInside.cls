@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.Gdiplus.DoubleBufferedView subclass: #'Tools.SeeingTheObjectsInside'
-	instanceVariableNames: 'background dolphinOutline points sun stepProcess random insideObjectsScale dolphinIntensity textureMap objects dolphins dolphinInside hintBubble startTime info baseScale'
+	instanceVariableNames: 'background points sun stepProcess random insideObjectsScale dolphinIntensity objects dolphins dolphinInside hintBubble startTime info baseScale cachedBackground cachedOutline'
 	classVariableNames: ''
 	imports: #(#{Graphics private} #{Graphics.Gdiplus private})
 	classInstanceVariableNames: 'splashPlayTheGame'
@@ -36,10 +36,11 @@ background
 	^background
 		ifNil: 
 			[background := self splashBitmap.
-			self baseStyle = 1
+			self baseScale = 1
 				ifFalse: 
 					[background := Gdiplus.Bitmap fromImage: background
-								centeredIn: (background extent * self baseScale) rounded]]!
+								centeredIn: (background extent * self baseScale) rounded].
+			background]!
 
 baseScale
 	"Answer a scale that fits the receiver to the desktop"
@@ -78,34 +79,26 @@ dolphinMinScale
 	^0.3!
 
 dolphinOutline
-	^dolphinOutline 
-		ifNil: 
-			[dolphinOutline := Gdiplus.Bitmap fromFile: 'Resources\DolphinOutline.png'
-						usingLocator: FileLocator installRelative.
-			self baseStyle = 1 
-				ifFalse: [dolphinOutline := Gdiplus.Bitmap fromImage: dolphinOutline scaledBy: self baseScale]]!
+	| dolphinOutline |
+	dolphinOutline := Gdiplus.Bitmap fromFile: 'Resources\DolphinOutline.png'
+				usingLocator: FileLocator installRelative.
+	self baseStyle = 1
+		ifFalse: [dolphinOutline := Gdiplus.Bitmap fromImage: dolphinOutline scaledBy: self baseScale].
+	^dolphinOutline!
 
-dolphinSplashBackcolor
-	"Private - The ambient background colour in the Dolphin splash bitmap as shipped. We could pull a pixel out of the bitmap, but that is very slow, so it is hard coded below."
-
-	^Color seaGreen!
-
-drawInfoTextOn: graphics
-	| fontCopyright brush stringFormat |
-	brush := SolidBrush color: Color white.
+drawInfoTextOn: aGdiplusGraphics
+	| fontCopyright brush |
+	brush := Gdiplus.Brush color: Color white.
 	fontCopyright := Gdiplus.Font name: 'Arial' pointSize: 9.
-	stringFormat := StringFormat genericDefault.
-	graphics
+	aGdiplusGraphics
 		textRenderingHint: TextRenderingHintAntiAlias;
 		drawString: info
 			font: fontCopyright
 			at: (48 @ 630 * self baseScale) rounded
-			format: stringFormat
+			format: StringFormat genericDefault
 			brush: brush.
-	stringFormat free.
 	fontCopyright free.
-	brush free.
-!
+	brush free!
 
 elapsedTime
 	"Answer the elapsed time in ms since the start of the animation"
@@ -113,14 +106,13 @@ elapsedTime
 	^Delay millisecondClockValue - startTime!
 
 fill
-	| dolphinPt graphics min max pts |
+	| dolphinPt min max pts |
 	self model removeAll.
 
 	"Render the Dolphin outline so we can fit out objects inside"
 	self render.
 	dolphinInside := (self randomFrom: dolphins) copy.
 	dolphinInside rotation: (random next * 360) rounded.
-	graphics := self graphics.
 
 	"Find a suitable position and scale for the dolphin inside"
 	min := self dolphinMinScale.
@@ -143,14 +135,14 @@ fill
 			[:pt |
 			| object |
 			object := (self randomFrom: objects) copy.
-			object position: pt.
-			object rotation: (random next * 180) truncated - 90.
+			object
+				position: pt;
+				rotation: (random next * 180) truncated - 90.
 			self
 				addInsideObject: object
 				minScale: min
 				maxScale: max.
 			object drawOn: graphics].
-	graphics free.
 
 	"Re-render to fill the Dolphin with objects of the correct scale"
 	dolphinInside color: self dolphinInsideBaseColor.
@@ -195,6 +187,14 @@ initialize
 	baseScale := (scale x min: scale y) min: 1.
 	self startStepProcess!
 
+initializeSurfacesFor: aPointExtent
+	"Private - Initialize the front and back surfaces for a view size of aPointExtent"
+
+	super initializeSurfacesFor: aPointExtent.
+	graphics := backSurface graphics.
+	cachedBackground := CachedBitmap bitmap: self background graphics: graphics.
+	cachedOutline := CachedBitmap bitmap: self dolphinOutline graphics: graphics!
+
 insideObjectMaxScale
 	^1!
 
@@ -217,20 +217,21 @@ isPointInDolphin: aPoint
 	^pixel = dolphinInside color!
 
 loadTextureMap: mapName
-	| textureFileName mapFileName texture map scale |
-	textureFileName := 'Resources\' , (File default: mapName extension: 'png').
-	texture := Gdiplus.Bitmap fromFile: textureFileName usingLocator: FileLocator installRelative.
-	mapFileName := 'Resources\' , (File default: mapName extension: 'txt').
-	map := FileStream read: (FileLocator installRelative localFileSpecFor: mapFileName) text: true.
+	| texture map textureMap |
+	texture := Gdiplus.Bitmap fromFile: 'Resources\' , (File default: mapName extension: 'png')
+				usingLocator: FileLocator installRelative.
+	map := FileStream read: (FileLocator installRelative
+						localFileSpecFor: 'Resources\' , (File default: mapName extension: 'txt'))
+				text: true.
 	textureMap := LookupTable new.
-	scale := View desktop extent * 0.75 / self originalBitmapExtent.
-	baseScale := (scale x min: scale y) min: 1.
+	baseScale := View desktop extent * 0.75 / self originalBitmapExtent.
+	baseScale := (baseScale x min: baseScale y) min: 1.
 	[map atEnd] whileFalse: 
-			[| elements pos ext bm |
+			[| elements bm |
 			elements := $, split: map nextLine.
-			pos := elements second trimBlanks asNumber @ elements third trimBlanks asNumber.
-			ext := elements fourth trimBlanks asNumber @ elements fifth trimBlanks asNumber.
-			bm := Gdiplus.Bitmap fromImage: texture crop: (pos extent: ext).
+			bm := Gdiplus.Bitmap fromImage: texture
+						crop: (elements second trimBlanks asNumber @ elements third trimBlanks asNumber
+								extent: elements fourth trimBlanks asNumber @ elements fifth trimBlanks asNumber).
 			textureMap at: elements first put: (ObjectInside fromImage: bm scaledBy: baseScale)].
 	sun := textureMap removeKey: 'SeeingTheObjects.png'.
 	dolphins := {textureMap removeKey: 'Dolphin1.png'. textureMap removeKey: 'Dolphin2.png'}.
@@ -293,9 +294,6 @@ points
 							((mask pixelAt: pt) alpha = 0 and: [random next > 0.2]) ifTrue: [points add: pt]]].
 			points]!
 
-random
-	^random ifNil: [random := Random new] !
-
 randomFrom: anOrderedCollection
 	| index |
 	index := (random next * anOrderedCollection size) truncated + 1.
@@ -305,32 +303,24 @@ render
 	"Private - Render the background image"
 
 	
-	[| graphics dolphin back |
-	graphics := self graphics.
-	graphics clear: Color white.
+	[| surface |
+	surface := self graphics.
+	surface clear: Color white.
 	self model do: 
 			[:each |
 			| existingScale |
 			existingScale := each scale.
 			each scale: existingScale * insideObjectsScale.
-			each drawOn: graphics.
+			each drawOn: surface.
 			each scale: existingScale].
-	back := self background.
-	graphics
-		drawImage: back
-		at: Point zero
-		extent: back extent.
-	dolphin := self dolphinOutline.
-	graphics
-		drawImage: dolphin
-		at: Point zero
-		extent: dolphin extent.
+	surface
+		drawCachedBitmap: cachedBackground at: Point.Zero;
+		drawCachedBitmap: cachedOutline at: Point.Zero.
 	sun
 		position: self sunPosition;
-		drawOn: graphics.
-	self drawInfoTextOn: graphics.
-	super render.
-	graphics free]
+		drawOn: surface.
+	self drawInfoTextOn: surface.
+	super render]
 			on: Error
 			do: 
 				[:ex |
@@ -348,22 +338,20 @@ showHintBubble
 		notify: 'Find the dolphin inside and click to continue.'!
 
 splashBitmap
-	| bitmap rawBitmap extent imageAttr |
+	| bitmap rawBitmap extent imageAttr bitmapBackcolor systemBackcolor |
 	rawBitmap := Gdiplus.Bitmap fromFile: 'Resources\DolphinSplash.png'
 				usingLocator: FileLocator installRelative.
 	extent := rawBitmap extent.
 	bitmap := Gdiplus.Bitmap extent: extent.
-	imageAttr := ImageAttributes new
-				remapColor: self dolphinSplashBackcolor to: SmalltalkSystemShell backcolor;
-				yourself.
+	bitmapBackcolor := rawBitmap pixelAt: Point.Zero.
+	systemBackcolor := SmalltalkSystemShell backcolor.
+	imageAttr := bitmapBackcolor = systemBackcolor
+				ifFalse: 
+					[ImageAttributes new
+						remapColor: bitmapBackcolor to: systemBackcolor;
+						yourself].
 	bitmap graphics
-		drawImage: rawBitmap
-			at: Point.Zero
-			extent: extent
-			from: Point.Zero
-			extent: extent
-			unit: nil
-			attributes: imageAttr;
+		drawImage: rawBitmap attributes: imageAttr;
 		free.
 	imageAttr free.
 	^bitmap!
@@ -420,13 +408,13 @@ dolphinInsideIntensityTime!constants!operations!public! !
 dolphinMaxScale!public! !
 dolphinMinScale!public! !
 dolphinOutline!accessing!private! !
-dolphinSplashBackcolor!constants!private! !
 drawInfoTextOn:!operations!private! !
 elapsedTime!operations!public! !
 fill!event handling!private! !
 frameRate!constants!public! !
 hasHintBubble!event handling!private!testing! !
 initialize!initializing!private! !
+initializeSurfacesFor:!initializing!private! !
 insideObjectMaxScale!constants!public! !
 insideObjectMinScale!constants!public! !
 insideObjectScaleInPeriod!constants!operations!public! !
@@ -440,7 +428,6 @@ onViewCreated!event handling!private! !
 originalBitmapExtent!constants!public! !
 pointResolution!constants!public! !
 points!accessing!private! !
-random!operations!private! !
 randomFrom:!private! !
 render!operations!private! !
 showHintBubble!private! !

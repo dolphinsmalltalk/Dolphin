@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'Graphics.Gdiplus.GpEncoderParameters'
+Graphics.Gdiplus.GpStructure subclass: #'Graphics.Gdiplus.EncoderParameters'
 	instanceVariableNames: 'valueBuffer'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_GpEncoderParameters_Size' -> 16r20.
+		'_EncoderParameters_Size' -> 16r20.
 		'_OffsetOf_Count' -> 16r0.
 		'_OffsetOf_Parameter' -> 16r4
 	}!
-Graphics.Gdiplus.GpEncoderParameters guid: (Core.GUID fromString: '{7aa7c3a4-85d9-4298-ad05-11c85d76c885}')!
-Graphics.Gdiplus.GpEncoderParameters comment: '<GpEncoderParameters> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpEncoderParameters'' from type information in the ''GDI+ Library 1.0'' library.
+Graphics.Gdiplus.EncoderParameters guid: (Core.GUID fromString: '{7aa7c3a4-85d9-4298-ad05-11c85d76c885}')!
+Graphics.Gdiplus.EncoderParameters comment: '<GpEncoderParameters> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpEncoderParameters'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
 
@@ -25,13 +25,12 @@ struct tagGpEncoderParameters {
 	GpEncoderParameter Parameter[1];
 } GpEncoderParameters;
 '!
-!Graphics.Gdiplus.GpEncoderParameters categoriesForClass!Unclassified! !
-!Graphics.Gdiplus.GpEncoderParameters methodsFor!
+!Graphics.Gdiplus.EncoderParameters methodsFor!
 
 byteSize
 	"Same approach as BITMAPINFO>>byteSize."
 
-	^super byteSize + ((self Count - 1) * GpEncoderParameter._GpEncoderParameter_Size)!
+	^super byteSize + ((self Count - 1) * EncoderParameter._EncoderParameter_Size)!
 
 Count
 	"Answer the <Integer> value of the receiver's 'Count' field."
@@ -49,7 +48,7 @@ Parameter
 	^StructureArray
 		fromAddress: bytes yourAddress + _OffsetOf_Parameter
 		length: self Count
-		elementClass: GpEncoderParameter!
+		elementClass: EncoderParameter!
 
 Parameter: aStructureArrayOfGpEncoderParameter
 	"Set the receiver's 'Parameter' field to the value of the argument, aStructureArrayOfGpEncoderParameter"
@@ -65,19 +64,19 @@ Parameter: aStructureArrayOfGpEncoderParameter
 
 valueBuffer: aByteArray
 	valueBuffer := aByteArray! !
-!Graphics.Gdiplus.GpEncoderParameters categoriesForMethods!
+!Graphics.Gdiplus.EncoderParameters categoriesForMethods!
 byteSize!accessing!public! !
 Count!**compiled accessors**!public! !
 Count:!**compiled accessors**!public! !
 Parameter!**compiled accessors**!public! !
 Parameter:!**compiled accessors**!public! !
-valueBuffer:!public! !
+valueBuffer:!accessing!public! !
 !
 
-!Graphics.Gdiplus.GpEncoderParameters class methodsFor!
+!Graphics.Gdiplus.EncoderParameters class methodsFor!
 
 byteSize
-	^_GpEncoderParameters_Size!
+	^_EncoderParameters_Size!
 
 defineFields
 	"Define the fields of the GpEncoderParameters structure.
@@ -95,7 +94,7 @@ defineFields
 			type: DWORDField new
 			offset: 0;
 		defineField: #Parameter
-			type: (StructureArrayField type: GpEncoderParameter
+			type: (StructureArrayField type: EncoderParameter
 					arrayLength: (ConformantArrayFieldLength lengthField: #Count))
 			offset: 4.
 	"The byteSize includes space for one parameter, i.e. as in the above structure definition"
@@ -108,13 +107,13 @@ length: anInteger
 	"Answer a new instance of the receiver with sufficient capacity to contain the specified
 	number of parameters."
 
-	^(self new: _GpEncoderParameters_Size + ((anInteger - 1) * GpEncoderParameter._GpEncoderParameter_Size))
+	^(self new: _EncoderParameters_Size + ((anInteger - 1) * EncoderParameter._EncoderParameter_Size))
 		Count: anInteger;
 		yourself! !
-!Graphics.Gdiplus.GpEncoderParameters class categoriesForMethods!
+!Graphics.Gdiplus.EncoderParameters class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
-length:!public! !
+length:!instance creation!public! !
 !
 

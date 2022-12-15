@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.SolidBrushFromColorInitializer'
+Graphics.Gdiplus.BrushInitializer subclass: #'Graphics.Gdiplus.SolidBrushFromColorInitializer'
 	instanceVariableNames: 'color'
 	classVariableNames: ''
 	imports: #()
@@ -8,13 +8,14 @@ Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.SolidBrushFromColorIni
 	classConstants: {}!
 Graphics.Gdiplus.SolidBrushFromColorInitializer guid: (Core.GUID fromString: '{02b80350-515e-40c3-8ec4-b328a7a4bcbb}')!
 Graphics.Gdiplus.SolidBrushFromColorInitializer comment: ''!
-!Graphics.Gdiplus.SolidBrushFromColorInitializer categoriesForClass!Unclassified! !
 !Graphics.Gdiplus.SolidBrushFromColorInitializer methodsFor!
 
-color: aColor
-	color := aColor!
+= anObject
+	"Answer whether the receiver and anObject are equivalent."
 
-createHandle
+	^self == anObject or: [self species == anObject species and: [color = anObject color]]!
+
+basicCreateHandle
 	"Private -  SolidBrush(IN const Color& color)
     	{
        	 GpSolidFill *brush = NULL;
@@ -24,11 +25,53 @@ createHandle
 
 	| gpHandle |
 	gpHandle := Handle new.
-	self library gdipCreateSolidFill: color argbCode brush: gpHandle.
-	^gpHandle! !
+	Gdip gdipCreateSolidFill: color argbCode brush: gpHandle.
+	^gpHandle!
+
+color
+	^color!
+
+color: aColor
+	color := aColor.
+	^self!
+
+colorOf: aSolidBrush set: aColor
+	Gdip gdipSetSolidFillColor: aSolidBrush handle color: aColor argbCode.
+	color := aColor!
+
+hash
+	"Answer the <integer> hash value for the receiver."
+
+	^(self species hash + color hash) hashMultiply!
+
+initializeFromHandle: aGpHatchBrushHandle
+	"Private - Cache all the attributes of the native Gdiplus SolidBrush identified by the specified <External.Handle> into the receiver."
+
+	| buf |
+	buf := ARGBBytes new.
+	Gdip gdipGetSolidFillColor: aGpHatchBrushHandle color: buf.
+	color := buf value!
+
+isSelfEvaluating
+	"Answer whether or not the receiver has a printString representation that evaluates back to an equivalent object."
+
+	^true!
+
+printAttributesOn: aStream
+	aStream
+		nextPutAll: #color:;
+		space;
+		print: color! !
 !Graphics.Gdiplus.SolidBrushFromColorInitializer categoriesForMethods!
+=!comparing!public! !
+basicCreateHandle!private!realizing/unrealizing! !
+color!accessing!private! !
 color:!initializing!private! !
-createHandle!private!realizing/unrealizing! !
+colorOf:set:!attributes!private! !
+hash!comparing!public! !
+initializeFromHandle:!initializing!private! !
+isSelfEvaluating!public!testing! !
+printAttributesOn:!printing!private! !
 !
 
 !Graphics.Gdiplus.SolidBrushFromColorInitializer class methodsFor!

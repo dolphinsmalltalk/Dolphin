@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.BitmapFromIconInitializer'
+Graphics.Gdiplus.BitmapInitializer subclass: #'Graphics.Gdiplus.BitmapFromIconInitializer'
 	instanceVariableNames: 'icon'
 	classVariableNames: ''
 	imports: #()
@@ -8,10 +8,12 @@ Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.BitmapFromIconInitiali
 	classConstants: {}!
 Graphics.Gdiplus.BitmapFromIconInitializer guid: (Core.GUID fromString: '{c320278a-5152-4eda-8a58-6911de50cc40}')!
 Graphics.Gdiplus.BitmapFromIconInitializer comment: ''!
-!Graphics.Gdiplus.BitmapFromIconInitializer categoriesForClass!Unclassified! !
 !Graphics.Gdiplus.BitmapFromIconInitializer methodsFor!
 
-createHandle
+= anObject
+	^self == anObject or: [self species = anObject species and: [icon = anObject icon]]!
+
+basicCreateHandle
 	"Private -  Bitmap::FromHICON(
 	    IN HICON hicon
 	    )
@@ -21,14 +23,33 @@ createHandle
 
 	| gpHandle |
 	gpHandle := Handle new.
-	self library gdipCreateBitmapFromHICON: icon asParameter bitmap: gpHandle.
+	Gdip gdipCreateBitmapFromHICON: icon asParameter bitmap: gpHandle.
 	^gpHandle!
 
+hash
+	^(self species hash + icon hash) hashMultiply!
+
+icon
+	^icon!
+
 icon: anIcon
-	icon := anIcon! !
+	icon := anIcon.
+	^self!
+
+printImage: aGdiplusBitmap on: aWriteStream
+	aWriteStream
+		nextPut: $(;
+		print: aGdiplusBitmap class;
+		nextPutAll: ' fromIcon: ';
+		print: icon;
+		nextPut: $)! !
 !Graphics.Gdiplus.BitmapFromIconInitializer categoriesForMethods!
-createHandle!private!realizing/unrealizing! !
+=!comparing!public! !
+basicCreateHandle!private!realizing/unrealizing! !
+hash!comparing!public! !
+icon!accessing!private! !
 icon:!initializing!private! !
+printImage:on:!printing!public! !
 !
 
 !Graphics.Gdiplus.BitmapFromIconInitializer class methodsFor!

@@ -53,27 +53,19 @@ drawEdgePointsOn: aGdiplusGraphics
 	self edgePoints do: [:each | aGdiplusGraphics drawRectangle: (each extent: 1)]!
 
 drawOn: aGdiplusGraphics
-	| attributes extent |
-	extent := self extent.
+	| attributes |
 	attributes := ImageAttributes new.
 	self color ifNotNil: [:col | attributes remapColor: self baseColor to: col].
 	self alpha
 		ifNotNil: 
 			[:alph |
-			| colorMatrix |
-			colorMatrix := GpColorMatrix identity.
-			colorMatrix atPoint: 4 @ 4 put: alph.
-			attributes colorMatrix: colorMatrix].
+			attributes colorMatrix: (ColorMatrix identity
+						atPoint: 4 @ 4 put: alph;
+						yourself)].
 	aGdiplusGraphics
 		interpolationMode: InterpolationModeHighQualityBicubic;
 		transform: self matrix;
-		drawImage: self image
-			at: Point.Zero
-			extent: extent
-			from: Point.Zero
-			extent: extent
-			unit: UnitPixel
-			attributes: attributes;
+		drawImage: self image attributes: attributes;
 		resetTransform.
 	attributes free!
 
@@ -113,7 +105,7 @@ findEdgePoints
 						ifTrue: 
 							[pts addLast: x @ y.
 							found := found not]]].
-	^pts!
+	^pts asArray!
 
 image
 	^image!
@@ -128,13 +120,13 @@ initialize
 !
 
 matrix
-	^matrix 
+	^matrix
 		ifNil: 
-			[matrix := (Matrix new)
-						translateTransform: self position;
-						rotateTransform: self rotation;
-						scaleTransform: self scale asPoint;
-						translateTransform: self center negated;
+			[matrix := Matrix new
+						translate: self position;
+						rotate: self rotation;
+						scale: self scale asPoint;
+						translate: self center negated;
 						yourself]!
 
 position
@@ -168,9 +160,8 @@ setImage: aGdiplusImage
 !
 
 testCollisionIn: aGdiplusBitmap
-	| white color1 bitmapHandle |
-	white := Color white argbCode asSDword.
-	color1 := ByteArray new: 4.
+	| color1 bitmapHandle |
+	color1 := ByteArray newFixed: 4.
 	bitmapHandle := aGdiplusBitmap asParameter.
 	^(self matrix transformPoints: self edgePoints) anySatisfy: 
 			[:each |
@@ -179,7 +170,7 @@ testCollisionIn: aGdiplusBitmap
 				x: each x
 				y: each y
 				color: color1) == Ok
-				and: [(color1 sdwordAtOffset: 0) ~= white]]!
+				and: [(color1 sdwordAtOffset: 0) ~= ##(Color white argbCode asSDword)]]!
 
 x
 	^self position x!

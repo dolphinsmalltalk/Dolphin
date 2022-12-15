@@ -1,44 +1,75 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.PathGradientFromPointsInitializer'
-	instanceVariableNames: 'pathPoints wrapMode'
+Graphics.Gdiplus.PathGradientBrushInitializer subclass: #'Graphics.Gdiplus.PathGradientFromPointsInitializer'
+	instanceVariableNames: 'points'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Graphics.Gdiplus.PathGradientFromPointsInitializer guid: (Core.GUID fromString: '{8f2007e1-7d6c-11d7-b609-00e0987e8081}')!
 Graphics.Gdiplus.PathGradientFromPointsInitializer comment: ''!
-!Graphics.Gdiplus.PathGradientFromPointsInitializer categoriesForClass!Unclassified! !
 !Graphics.Gdiplus.PathGradientFromPointsInitializer methodsFor!
 
-createHandle
-	| gpHandle points |
+= anObject
+	"Answer whether the receiver and anObject are equivalent."
+
+	^self == anObject or: [super = anObject and: [points = anObject points]]!
+
+basicCreateHandle
+	| gpHandle |
 	gpHandle := Handle new.
-	points := StructureArray
-				withAll: pathPoints
-				elementClass: POINTL
-				initializer: [:pointl :point | pointl x: point x y: point y].
-	points beUnfinalizable.
-	self library
+	Gdip
 		gdipCreatePathGradientI: points
-		count: pathPoints size
+		count: points size
 		wrapMode: wrapMode
 		polyGradient: gpHandle.
 	^gpHandle!
 
-points: points wrapMode: aWrapModeConstant
-	pathPoints := points.
-	wrapMode := aWrapModeConstant! !
+defaultCenterColor
+	^Color.Black!
+
+hash
+	"Answer the <integer> hash value for the receiver."
+
+	^(super hash + points hash) hashMultiply!
+
+path
+	^points size > 2
+		ifTrue: [GraphicsPath polygon: points]
+		ifFalse: 
+			[GraphicsPath points: points types: (ByteArray new: points size withAll: PathPointTypeLine)]!
+
+points
+	^points!
+
+points: aSequenceOfPoints wrapMode: aWrapModeConstant
+	points := POINTLArray marshal: aSequenceOfPoints.
+	wrapMode := aWrapModeConstant.
+	centerColor := self defaultCenterColor.
+	^self!
+
+printAttributesOn: aStream
+	aStream
+		nextPutAll: #points:;
+		space;
+		print: points asArray.
+	super printAttributesOn: aStream! !
 !Graphics.Gdiplus.PathGradientFromPointsInitializer categoriesForMethods!
-createHandle!private!realizing/unrealizing! !
+=!comparing!public! !
+basicCreateHandle!private!realizing/unrealizing! !
+defaultCenterColor!constants!private! !
+hash!comparing!public! !
+path!accessing!private! !
+points!accessing!private! !
 points:wrapMode:!initializing!private! !
+printAttributesOn:!printing!private! !
 !
 
 !Graphics.Gdiplus.PathGradientFromPointsInitializer class methodsFor!
 
-points: points wrapMode: aWrapModeConstant
-	^self new points: points wrapMode: aWrapModeConstant! !
+stbConvertFrom: anSTBClassFormat
+	^[:data | self points: (data at: 2) wrapMode: (data at: 3)]! !
 !Graphics.Gdiplus.PathGradientFromPointsInitializer class categoriesForMethods!
-points:wrapMode:!instance creation!public! !
+stbConvertFrom:!binary filing!public! !
 !
 

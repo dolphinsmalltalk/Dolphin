@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.FromFileInitializer subclass: #'Graphics.Gdiplus.BitmapFromFileInitializer'
+Graphics.Gdiplus.AbstractImageFromFileInitializer subclass: #'Graphics.Gdiplus.BitmapFromFileInitializer'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -8,10 +8,9 @@ Graphics.Gdiplus.FromFileInitializer subclass: #'Graphics.Gdiplus.BitmapFromFile
 	classConstants: {}!
 Graphics.Gdiplus.BitmapFromFileInitializer guid: (Core.GUID fromString: '{22318a95-8a19-46a9-8774-f3e8c2d5db86}')!
 Graphics.Gdiplus.BitmapFromFileInitializer comment: ''!
-!Graphics.Gdiplus.BitmapFromFileInitializer categoriesForClass!Unclassified! !
 !Graphics.Gdiplus.BitmapFromFileInitializer methodsFor!
 
-createHandle
+basicCreateHandle
 	"Private - GdiplusBitmap.h
 		Bitmap::Bitmap(
 	    IN const WCHAR *filename, 
@@ -26,9 +25,9 @@ createHandle
 
 	| gpHandle |
 	gpHandle := Handle new.
-	self library gdipCreateBitmapFromFile: self absoluteFilename bitmap: gpHandle.
+	Gdip gdipCreateBitmapFromFile: self absoluteFilename bitmap: gpHandle.
 	^gpHandle! !
 !Graphics.Gdiplus.BitmapFromFileInitializer categoriesForMethods!
-createHandle!private!realizing/unrealizing! !
+basicCreateHandle!private!realizing/unrealizing! !
 !
 

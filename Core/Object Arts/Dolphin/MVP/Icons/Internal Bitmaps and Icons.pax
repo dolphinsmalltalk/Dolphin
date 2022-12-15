@@ -158,7 +158,7 @@ internalize
 
 	^self class fromByteArray: (self asByteArray: 'image/png')! !
 !Graphics.Gdiplus.Image categoriesForMethods!
-internalize!public! !
+internalize!operations!public! !
 !
 
 "End of package definition"!

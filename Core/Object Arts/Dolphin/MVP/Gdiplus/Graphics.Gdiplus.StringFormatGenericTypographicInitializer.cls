@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.StringFormatInitializer subclass: #'Graphics.Gdiplus.StringFormatGenericTypographicInitializer'
+Graphics.Gdiplus.StringFormatGenericInitializer subclass: #'Graphics.Gdiplus.StringFormatGenericTypographicInitializer'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -8,23 +8,42 @@ Graphics.Gdiplus.StringFormatInitializer subclass: #'Graphics.Gdiplus.StringForm
 	classConstants: {}!
 Graphics.Gdiplus.StringFormatGenericTypographicInitializer guid: (Core.GUID fromString: '{cbe1bbee-b46a-4c95-90e4-d4bec63775e9}')!
 Graphics.Gdiplus.StringFormatGenericTypographicInitializer comment: ''!
-!Graphics.Gdiplus.StringFormatGenericTypographicInitializer categoriesForClass!Unclassified! !
 !Graphics.Gdiplus.StringFormatGenericTypographicInitializer methodsFor!
 
-createHandle
+basicCreateHandle
 	| gpHandle |
 	gpHandle := Handle new.
-	self library gdipStringFormatGetGenericTypographic: gpHandle.
-	^gpHandle! !
+	Gdip gdipStringFormatGetGenericTypographic: gpHandle.
+	^gpHandle!
+
+flags
+	^##(StringFormatFlagsNoClip | StringFormatFlagsLineLimit | StringFormatFlagsNoFitBlackBox)!
+
+isGenericTypographic
+	^true!
+
+printAttributesOn: aStream
+	aStream nextPutAll: #genericTypographic!
+
+trimming
+	^StringTrimmingNone! !
 !Graphics.Gdiplus.StringFormatGenericTypographicInitializer categoriesForMethods!
-createHandle!private!realizing/unrealizing! !
+basicCreateHandle!private!realizing/unrealizing! !
+flags!attributes!public! !
+isGenericTypographic!public!testing! !
+printAttributesOn:!attributes!printing!private! !
+trimming!attributes!public! !
 !
 
 !Graphics.Gdiplus.StringFormatGenericTypographicInitializer class methodsFor!
 
+stbConvertFrom: anSTBClassFormat
+	^[:data | self genericTypographic]!
+
 uninitialize
 	GenericTypographic := nil! !
 !Graphics.Gdiplus.StringFormatGenericTypographicInitializer class categoriesForMethods!
+stbConvertFrom:!binary filing!public! !
 uninitialize!class hierarchy-removing!private! !
 !
 

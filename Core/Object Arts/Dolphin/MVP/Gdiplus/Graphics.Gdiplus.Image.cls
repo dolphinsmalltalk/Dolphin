@@ -8,7 +8,6 @@ Graphics.Gdiplus.GdiplusBase subclass: #'Graphics.Gdiplus.Image'
 	classConstants: {}!
 Graphics.Gdiplus.Image guid: (Core.GUID fromString: '{00b83139-f011-4475-99dd-34afd09c2e06}')!
 Graphics.Gdiplus.Image comment: 'GdiplusImage provides methods for loading and saving raster images (bitmaps) and vector images (metafiles).  Various methods are available to manipulate and display an image.  Different file types can be read from and saved to - see #encoderMimeTypes and #decoderMimeTypes.'!
-!Graphics.Gdiplus.Image categoriesForClass!Unclassified! !
 !Graphics.Gdiplus.Image methodsFor!
 
 addToImageList: aWinImageList mask: aColorOrNil
@@ -56,12 +55,6 @@ asByteArray: mimeString compression: anIntegerOrNil
 	pStream free.
 	^bytes!
 
-basicFree
-	"Private - Free up external resources held by the receiver.
-	Ignore any errors which might arise."
-
-	Gdip gdipDisposeImage: handle!
-
 basicRotate: aRotateConstant
 	"Rotate the receiver according to aRotateConstant."
 
@@ -71,21 +64,23 @@ bounds
 	"Answer the receiver's bounding rectangle.  Most images will have Point zero as the 
 	upper-left corner, though a metafile may not, depending on the commands used to create it."
 
-	| bounds |
-	bounds := self getBounds first.
-	^bounds origin rounded corner: bounds corner rounded!
+	| bounds rect |
+	bounds := self getBounds.
+	"Here we are assuming pels"
+	self assert: bounds last = UnitPixel.
+	rect := bounds first.
+	^rect origin rounded corner: rect corner rounded!
 
 buildCompressionParameters: anIntegerOrNil
 	| quality params encoderParameter |
-	params := GpEncoderParameters new.
+	params := EncoderParameters new.
 	params Count: 1.
 	(encoderParameter := params Parameter first)
 		Guid: EncoderQuality;
 		Type: EncoderParameterValueTypeLong;
 		NumberOfValues: 1.
-	quality := ByteArray newFixed: 4.
+	quality := UInt32Bytes fromInteger: anIntegerOrNil.
 	encoderParameter Value: quality yourAddress.
-	quality dwordAtOffset: 0 put: anIntegerOrNil.
 	"We have to ensure not to leave a dangling pointer to the parameter value"
 	params valueBuffer: quality.
 	^params!
@@ -93,11 +88,8 @@ buildCompressionParameters: anIntegerOrNil
 clone
 	"Answer a copy of the receiver."
 
-	| gpHandle |
-	gpHandle := Handle new.
-	Gdip gdipCloneImage: self handle cloneImage: gpHandle.
-	^(self class fromOwnedHandle: gpHandle)
-		initializer: initializer;
+	^super clone
+		initializer: initializer copy;
 		yourself!
 
 copy
@@ -170,7 +162,7 @@ encoderParameterList: aCLSID
 
 	| size buffer |
 	size := self encoderParameterListSize: aCLSID.
-	buffer := GpEncoderParameters new: size.
+	buffer := EncoderParameters new: size.
 	Gdip
 		gdipGetEncoderParameterList: self asParameter
 		clsidEncoder: aCLSID
@@ -182,23 +174,31 @@ encoderParameterListSize: aCLSID
 	"Answer the size, in bytes, of the parameter list for the image encoder specified by aCLSID."
 
 	| size |
-	size := ByteArray newFixed: 4.
+	size := UInt32Bytes new.
 	Gdip
 		gdipGetEncoderParameterListSize: self asParameter
 		clsidEncoder: aCLSID
 		size: size.
-	^size dwordAtOffset: 0!
+	^size asInteger!
+
+erase
+	"Clear the image to solid white."
+
+	| graphics |
+	graphics := self graphics.
+	graphics clear: Color white.
+	graphics free!
 
 extent
 	"Answer a <Point> specifying the dimensions of the receiver in pixels."
 
 	| buf width hImage |
-	buf := ByteArray new: 4.
+	buf := UInt32Bytes new.
 	hImage := self asParameter.
 	Gdip gdipGetImageWidth: hImage width: buf.
-	width := buf dwordAtOffset: 0.
+	width := buf asInteger.
 	Gdip gdipGetImageHeight: hImage height: buf.
-	^width @ (buf dwordAtOffset: 0)!
+	^width @ buf asInteger!
 
 filename
 	"Answer the <readableString> filename associated with the receiver.
@@ -210,9 +210,9 @@ flags
 	"Answer an <Integer> specifying single-bit flags (attributes) of the receiver."
 
 	| flags |
-	flags := ByteArray newFixed: 4.
+	flags := UInt32Bytes new.
 	Gdip gdipGetImageFlags: self asParameter flags: flags.
-	^flags dwordAtOffset: 0!
+	^flags asInteger!
 
 flipX
 	"Flip the receiver on the horizontal axis (i.e., a mirror image)."
@@ -233,12 +233,12 @@ frameCount: aFrameDimensionGUID
 	"Answer the number of frames in the specified dimension of the receiver."
 
 	| count |
-	count := ByteArray newFixed: 4.
+	count := UInt32Bytes new.
 	Gdip
 		gdipImageGetFrameCount: self asParameter
 		dimensionID: aFrameDimensionGUID asParameter
 		count: count.
-	^count dwordAtOffset: 0!
+	^count asInteger!
 
 frameDimension
 	"Private - Answer the <GUID> associated with the receiver's filename, or nil.
@@ -253,9 +253,9 @@ frameDimensionsCount
 	single- or multi-frame, have just 1, but they can have more."
 
 	| count |
-	count := ByteArray newFixed: 4.
+	count := UInt32Bytes new.
 	Gdip gdipImageGetFrameDimensionsCount: self asParameter count: count.
-	^count dwordAtOffset: 0!
+	^count asInteger!
 
 frameDimensionsList
 	"Answer a collection of GUIDs that represent the receiver's frame dimensions."
@@ -290,18 +290,33 @@ getBounds
 	element the UnitConstant that indicates the unit of measure for the bounding rectangle."
 
 	| rect unit |
-	rect := RECTF new.
-	unit := ByteArray newFixed: 4.
+	rect := RectF new.
+	unit := UInt32Bytes new.
 	Gdip
 		gdipGetImageBounds: self asParameter
 		srcRect: rect
 		srcUnit: unit.
-	^{rect asRectangle. unit sdwordAtOffset: 0}!
+	^{rect asRectangle. unit asSignedInteger}!
 
 graphics
 	"Answer a GdiplusGraphics instance based on the receiver."
 
 	^GdiplusGraphics fromImage: self!
+
+hasAlpha
+	"Answer whether the image has an alpha channel."
+
+	^self flags allMask: ImageFlagsHasAlpha!
+
+hasDPI
+	"Answer whether the image contains DPI information."
+
+	^self flags allMask: ImageFlagsHasRealDPI!
+
+hasPixelSize
+	"Answer whether the image contains pixel size information."
+
+	^self flags allMask: ImageFlagsHasRealPixelSize!
 
 hasPropertyId: aPropertyTagConstant
 	"Answer whether the receiver contains the GpPropertyItem specified by aPropertyTagConstant."
@@ -320,28 +335,78 @@ hasThumbnailData
 
 	^self hasPropertyId: PropertyTagThumbnailData!
 
+hasTranslucency
+	"Answer whether there are any translucent pixels in the receiver (i.e. that have alpha other than 0 (completely transparent) or 255 (opaque)."
+
+	^self flags allMask: ImageFlagsHasTranslucent!
+
 height
 	"Answer an <Integer> specifying the height of the receiver in pixels."
 
 	| buf |
-	buf := ByteArray newFixed: 4.
+	buf := UInt32Bytes new.
 	Gdip gdipGetImageHeight: self asParameter height: buf.
-	^buf dwordAtOffset: 0!
+	^buf asInteger!
+
+initializerClass
+	"Answer the class of initializer usually associated with the receiver and which understands how to perform operations on the native Gdiplus objects such as disposing of them."
+
+	^ImageInitializer!
+
+isCMYK
+	"Answer whether the image is using the CMYK colour space."
+
+	^self flags allMask: ImageFlagsColorSpaceCMYK!
+
+isGrayScale
+	"Answer whether the image is a grey-scale image"
+
+	^self flags allMask: ImageFlagsColorSpaceGRAY!
 
 isLandscape
 	"Answer whether the receiver is wider than its height."
 
 	^self extent x > self extent y!
 
+isPartiallyScalable
+	"Answer whether the image allows for some scaling, even if not seamlessly scalable to any size."
+
+	^self flags allMask: ImageFlagsPartiallyScalable!
+
 isPortrait
 	"Answer whether the receiver is narrower than its width."
 
 	^self isLandscape not!
 
+isReadOnly
+	"Answer whether the image is read-only."
+
+	^self flags allMask: ImageFlagsReadOnly!
+
+isRGB
+	"Answer whether the image is using the RGB colour space."
+
+	^self flags allMask: ImageFlagsColorSpaceRGB!
+
+isScalable
+	"Answer whether the image is fully scalable (e.g. vector graphics)."
+
+	^self flags allMask: ImageFlagsScalable!
+
 isValid
 	"Answer whether the receiver can be realized."
 
 	^[self handle notNull] on: Error do: [:err | false]!
+
+isYCBCR
+	"Answer whether the image is using the YCBCR colour space."
+
+	^self flags allMask: ImageFlagsColorSpaceYCBCR!
+
+isYCCK
+	"Answer whether the image is using the YCCK colour space."
+
+	^self flags allMask: ImageFlagsColorSpaceYCCK!
 
 mimeType
 	"Answer the <readableString> mimeType of the filename associated with the receiver.
@@ -350,35 +415,38 @@ mimeType
 	^self class encoderMimeTypeForExtension: (File splitExtensionFrom: self filename)!
 
 palette
-	"Answer the receiver's color palette, a <GpColorPalette>."
+	"Answer the receiver's color palette, a <ColorPalette>."
 
 	| size palette |
 	size := self paletteSize.
-	palette := GpColorPalette new: size.
+	palette := ColorPalette new: size.
 	Gdip
-		gdipGetImagePalette: self asParameter
+		gdipGetImagePalette: self handle
 		palette: palette
 		size: size.
 	^palette!
 
-palette: aGpColorPalette
-	"Set the receiver's color palette to aGpColorPalette."
+palette: aColorPalette
+	"Set the receiver's color palette to the <ColorPalette> argument."
 
-	Gdip gdipSetImagePalette: self asParameter palette: aGpColorPalette asParameter!
+	Gdip gdipSetImagePalette: self handle palette: aColorPalette asParameter!
 
 paletteSize
 	"Private - Answer the size, in bytes, of the receiver's color palette."
 
 	| size |
-	size := ByteArray newFixed: 4.
+	size := UInt32Bytes new.
 	Gdip gdipGetImagePaletteSize: self asParameter size: size.
-	^size dwordAtOffset: 0!
+	^size asInteger!
 
 pixelFormat
 	| flags |
-	flags := ByteArray newFixed: 4.
-	Gdip gdipGetImagePixelFormat: self asParameter format: flags.
-	^flags sdwordAtOffset: 0!
+	flags := UInt32Bytes new.
+	Gdip gdipGetImagePixelFormat: self handle format: flags.
+	^flags asSignedInteger!
+
+pixelFormatName
+	^BitmapInitializer nameOfPixelFormat: self pixelFormat!
 
 printOn: aStream
 	initializer printImage: self on: aStream!
@@ -392,9 +460,9 @@ propertiesCount
 	"Private - Answer an <Integer> specifying the number of properties of the receiver."
 
 	| propertyCount |
-	propertyCount := ByteArray newFixed: 4.
+	propertyCount := UInt32Bytes new.
 	Gdip gdipGetPropertyCount: self asParameter numOfProperty: propertyCount.
-	^propertyCount dwordAtOffset: 0!
+	^propertyCount asInteger!
 
 propertiesSize
 	"Private - Answer the total size, in bytes, of all the receiver's property items."
@@ -423,7 +491,7 @@ propertyFromId: aPropertyTagConstant
 
 	| propertyItem propSize |
 	propSize := self propertySize: aPropertyTagConstant.
-	propertyItem := GpPropertyItem new: propSize.
+	propertyItem := PropertyItem new: propSize.
 	Gdip
 		gdipGetPropertyItem: self asParameter
 		propId: aPropertyTagConstant
@@ -448,12 +516,12 @@ propertySize: aPropertyTagConstant
 	"Private - Answer the integer size of the receiver's property identified by aPropertyTagConstant."
 
 	| size |
-	size := ByteArray newFixed: 4.
+	size := UInt32Bytes new.
 	Gdip
 		gdipGetPropertyItemSize: self asParameter
 		propId: aPropertyTagConstant
 		size: size.
-	^size dwordAtOffset: 0!
+	^size asInteger!
 
 propertyTagDateTime
 	"Answer a String that is the date and time the image was created, or nil, if the property doesn't exist."
@@ -487,6 +555,14 @@ rectScaledToFit: aRectangle centered: aBoolean
 	aBoolean ifTrue: [origin := origin + ((aRectangle extent - extent) / 2)].
 	"NB: might need to use truncate instead of rounded below"
 	^origin rounded extent: extent truncated!
+
+resolution
+	| buf x |
+	buf := ByteArray new: 4.
+	Gdip gdipGetImageHorizontalResolution: self asParameter resolution: buf.
+	x := buf floatAtOffset: 0.
+	Gdip gdipGetImageVerticalResolution: handle resolution: buf.
+	^x @ (buf floatAtOffset: 0)!
 
 rotateLeft
 	"Rotate the receiver 90 degrees counterclockwise."
@@ -655,37 +731,8 @@ thumbnailWithExtent: aPoint
 	the resolution will not be as good as if the receiver was resized directly, assuming that the 
 	receiver's size is greater than aPoint.  See also GdiplusBitmap class>>fromImage:extent:"
 
-	| gpImage |
-	gpImage := Handle new.
-	Gdip
-		gdipGetImageThumbnail: self asParameter
-		thumbWidth: aPoint x
-		thumbHeight: aPoint y
-		thumbImage: gpImage
-		pfnCallback: nil
-		callbackData: nil.
-	^(self class fromOwnedHandle: gpImage)
-		initializer: (self class fromFile: self filename) initializer;
-		yourself!
-
-thumbnailWithExtent2: aPoint
-	"Answer a copy of the receiver sized to aPoint.  If the receiver has embedded thumbnail data,
-	that data will be used, else it will generate the thumbnail.  NB:  If the receiver has an embedded
-	thumbnail and it is smaller than aPoint, the thumbnail will be resized to aPoint, in which case
-	the resolution will not be as good as if the receiver was resized directly, assuming that the 
-	receiver's size is greater than aPoint.  See also GdiplusBitmap class>>fromImage:extent:"
-
-	| gpImage |
-	gpImage := Handle new.
-	Gdip
-		gdipGetImageThumbnail: self asParameter
-		thumbWidth: aPoint x
-		thumbHeight: aPoint y
-		thumbImage: gpImage
-		pfnCallback: nil
-		callbackData: nil.
-	^(self class fromOwnedHandle: gpImage)
-		initializer: self initializer;
+	^Image new
+		initializer: (ImageThumbnailInitializer image: self extent: aPoint);
 		yourself!
 
 thumbnailWithHeight: anInteger
@@ -699,15 +746,14 @@ width
 	"Answer an <Integer> specifying the width of the receiver in pixels."
 
 	| buf |
-	buf := ByteArray newFixed: 4.
+	buf := UInt32Bytes new.
 	Gdip gdipGetImageWidth: self asParameter width: buf.
-	^buf dwordAtOffset: 0! !
+	^buf asInteger! !
 !Graphics.Gdiplus.Image categoriesForMethods!
-addToImageList:mask:!private! !
+addToImageList:mask:!double dispatch!private! !
 asBitmap!converting!public! !
 asByteArray:!converting!public! !
 asByteArray:compression:!converting!public! !
-basicFree!private!realizing/unrealizing! !
 basicRotate:!operations!public! !
 bounds!accessing!public! !
 buildCompressionParameters:!converting!helpers!private! !
@@ -722,6 +768,7 @@ drawOn:at:extent:from:extent:!drawing-bitmaps!public! !
 drawOnGraphics:at:extent:from:extent:unit:attributes:!drawing-gdiplus!public! !
 encoderParameterList:!accessing-encoders!private! !
 encoderParameterListSize:!accessing-encoders!private! !
+erase!drawing!public! !
 extent!accessing!public! !
 filename!accessing!public! !
 flags!accessing!public! !
@@ -733,21 +780,35 @@ frameDimension!accessing-frames!private! !
 frameDimensionsCount!accessing-frames!public! !
 frameDimensionsList!accessing-frames!public! !
 frames!accessing-frames!public! !
-freeDC!public! !
+freeDC!public!realizing/unrealizing! !
 getBounds!accessing!private! !
 graphics!accessing!public! !
+hasAlpha!public!testing! !
+hasDPI!public!testing! !
+hasPixelSize!public!testing! !
 hasPropertyId:!accessing-properties!public!testing! !
 hasThumbnail!private!testing!thumbnails! !
 hasThumbnailData!public!testing!thumbnails! !
+hasTranslucency!public!testing! !
 height!accessing!public! !
+initializerClass!private!realizing/unrealizing! !
+isCMYK!public!testing! !
+isGrayScale!public!testing! !
 isLandscape!public!testing! !
+isPartiallyScalable!public!testing! !
 isPortrait!public!testing! !
+isReadOnly!public!testing! !
+isRGB!public!testing! !
+isScalable!public!testing! !
 isValid!public!testing! !
+isYCBCR!public!testing! !
+isYCCK!public!testing! !
 mimeType!accessing!public! !
 palette!accessing!public! !
 palette:!accessing!public! !
 paletteSize!accessing!private! !
 pixelFormat!accessing!public! !
+pixelFormatName!accessing!public! !
 printOn:!printing!public! !
 properties!accessing-properties!public! !
 propertiesCount!accessing-properties!private! !
@@ -760,6 +821,7 @@ propertySize:!accessing-properties!private! !
 propertyTagDateTime!accessing-properties!public! !
 rectScaledToFit:!helpers!public! !
 rectScaledToFit:centered:!helpers!public! !
+resolution!public!testing! !
 rotateLeft!operations!public! !
 rotateRight!operations!public! !
 saveAdd:!file operations!public! !
@@ -780,10 +842,11 @@ thumbnailHeight!public!thumbnails! !
 thumbnailScaledBy:!operations!public!thumbnails! !
 thumbnailWidth!public!thumbnails! !
 thumbnailWithExtent:!operations!public!thumbnails! !
-thumbnailWithExtent2:!operations!public!thumbnails! !
 thumbnailWithHeight:!operations!public!thumbnails! !
 width!accessing!public! !
 !
+
+Graphics.Gdiplus.Image methodProtocol: #image attributes: #(#readOnly) selectors: #(#drawOn: #drawOn:at: #drawOn:at:extent: #extent #freeDC #isPersistent)!
 
 !Graphics.Gdiplus.Image class methodsFor!
 
@@ -863,764 +926,6 @@ encoders
 
 	^self getImageCodecs: true!
 
-exampleGdipIDecoderFileExtensions
-	"This example displays the file extensions for all of the available image decoders.
-
-		UI.RichTextPresenter showOn: self exampleGdipIDecoderFileExtensions
-	"
-
-	| strm |
-	strm := String writeStream.
-	strm
-		display: 'Decoder file extensions: ';
-		cr.
-	self decoderFileExtensions do: 
-			[:e |
-			strm
-				tab;
-				display: e;
-				cr].
-	^strm contents!
-
-exampleGdipIDecoders
-	"MSDN:  Using GDI+ >  Using Image Encoders and Decoders > Listing Installed Decoders
-	This example displays the mime types for all of the available image decoders.
-
-		UI.RichTextPresenter showOn: self exampleGdipIDecoders
-	"
-
-	| strm |
-	strm := String writeStream.
-	strm
-		display: 'Decoder mime types: ';
-		cr.
-	self decoderMimeTypes do: 
-			[:e |
-			strm
-				tab;
-				display: e;
-				cr].
-	^strm contents!
-
-exampleGdipIEncoderClsid
-	"MSDN:  Using GDI+ >  Using Image Encoders and Decoders > Retrieving the Class Identifier
-	This example displays information about the image encoder for the png mime type.
-
-		UI.RichTextPresenter showOn: self exampleGdipIEncoderClsid
-	"
-
-	self encoders keysAndValuesDo: 
-			[:i :e |
-			e MimeType asString = 'image/png'
-				ifTrue: 
-					[^String writeStream
-						display: 'An ImageCodecInfo object representing the PNG encoder';
-						cr;
-						display: 'was found at position ';
-						display: i;
-						display: ' in the array.';
-						cr;
-						display: 'The CLSID of the PNG encoder is ';
-						display: e Clsid;
-						contents]]!
-
-exampleGdipIEncoderFileExtensions
-	"This example displays the file extensions for all of the available image encoders.
-
-		UI.RichTextPresenter showOn: self exampleGdipIEncoderFileExtensions
-	"
-
-	| strm |
-	strm := String writeStream.
-	strm
-		display: 'Encoder file extensions: ';
-		cr.
-	self encoderFileExtensions do: 
-			[:e |
-			strm
-				tab;
-				display: e;
-				cr].
-	^strm contents!
-
-exampleGdipIEncoderParameters
-	"MSDN: Using GDI+ >  Using Image Encoders & Decoders > Determining Parameters Supported
-	This example displays information about the image encoder for the jpeg mime type, as well as
-	one of the encoder parameters - EncoderQuality.
-
-		UI.RichTextPresenter showOn: self exampleGdipIEncoderParameters
-	"
-
-	| image mimeType encoderClsid listSize encoderParameters encoder encoderParameterName valueType |
-	image := Bitmap new.
-	mimeType := 'image/jpeg'.
-	encoderClsid := Image encoderClsid: mimeType.
-	listSize := image encoderParameterListSize: encoderClsid.
-	encoderParameters := image encoderParameterList: encoderClsid.
-	encoder := encoderParameters Parameter at: 2.
-	encoderParameterName := (image class guidsEncoder detect: [:e | e value = encoder Guid]) key.
-	valueType := ULARGE_INTEGER atAddress: encoder Value.
-	^String writeStream
-		display: 'Parameters supported by mime type <s><n><n>' << mimeType;
-		display: 'The parameter list requires <d> bytes.<n>' << listSize;
-		display: 'There are <d> GpEncoderParameter objects in the array.<n><n>' << encoderParameters Count;
-		display: 'Parameter 2: <s><n>' << encoderParameterName;
-		display: 'The GUID is <d><n>' << encoder Guid;
-		display: 'The value type is ';
-		display: (image class enumsEncoderParameterValueType detect: [:t | t value = encoder Type]) key;
-		nextPutAll: ' (';
-		display: encoder Type;
-		nextPut: $);
-		cr;
-		display: 'The number of values is <d><n>' << encoder NumberOfValues;
-		display: '	The minimum possible quality value is <d><n>' << valueType lowPart;
-		display: '	The maximum possible quality value is <d><n>' << valueType highPart;
-		contents!
-
-exampleGdipIEncoders
-	"MSDN:  Using GDI+ >  Using Image Encoders and Decoders > Listing Installed Encoders
-	This example displays the mime types for all of the available image encoders.
-
-		UI.RichTextPresenter showOn: self exampleGdipIEncoders
-	"
-
-	| strm |
-	strm := String writeStream.
-	strm
-		display: 'Encoder mime types: ';
-		cr.
-	self encoderMimeTypes do: 
-			[:e |
-			strm
-				tab;
-				display: e;
-				cr].
-	^strm contents!
-
-exampleGdipIEncoderValues
-	"MSDN: Using GDI+ >  Using Image Encoders & Decoders > Determining Parameters > EncoderValue
-	A given encoder supports certain parameter categories, and for each of those categories, that encoder
-	allows certain values.  This example displays information about the image encoder for the jpeg mime 
-	type.
-
-		UI.RichTextPresenter showOn: self exampleGdipIEncoderValues
-	"
-
-	| image mimeType encoderClsid listSize encoderParameters strm |
-	image := Bitmap new.
-	mimeType := 'image/jpeg'.
-	encoderClsid := Image encoderClsid: mimeType.
-	listSize := image encoderParameterListSize: encoderClsid.
-	encoderParameters := image encoderParameterList: encoderClsid.
-	strm := String new writeStream.
-	strm
-		display: 'Parameters supported by mime type <p>:<n><n>' << mimeType;
-		display: 'The parameter list requires <d> bytes.<n>' << listSize;
-		display: 'There are <d> EncoderParameter objects in the array.<n>' << encoderParameters Count.
-	encoderParameters Parameter keysAndValuesDo: 
-			[:i :encoder |
-			| encoderParameterName valueType valueTypeName |
-			encoderParameterName := (image class guidsEncoder detect: [:e | e value = encoder Guid]
-						ifNone: ['Unknown' -> encoder Guid]) key.
-			valueType := DWORDArray fromAddress: encoder Value yourAddress length: encoder NumberOfValues.
-			valueTypeName := (image class enumsEncoderParameterValueType detect: [:e | e value = encoder Type])
-						key.
-			strm 
-				display: '<n>Parameter <d>: <s><n>' << {i. encoderParameterName};
-				display: 'The GUID is <d>.<n>' << encoder Guid;
-				display: 'The value type is <d>, which is type <s>.<n>' << {encoder Type. valueTypeName};
-				display: 'The number of values is <d>.<n>' << encoder NumberOfValues.
-			encoder NumberOfValues > 0
-				ifTrue: 
-					[strm
-						display: 'The allowable values are:';
-						cr.
-					valueType do: 
-							[:e |
-							strm
-								tab;
-								display: e asInteger;
-								nextPutAll: ' (';
-								nextPutAll: (image class enumsEncoderParameterValueType detect: [:t | t value = encoder Type]) key;
-								nextPut: $);
-								cr]]].
-	^strm contents!
-
-exampleGdipIFlags
-	"This example enumerates the ImageFlags values for an image.
-
-		UI.RichTextPresenter showOn: self exampleGdipIFlags
-	"
-
-	| image flags strm |
-	image := self fromFile: self fileResource pafEyeJpg.
-	flags := image flags.
-	strm := String writeStream.
-	strm
-		display: 'Image flags for file <p>:<n>' << image filename.
-	GdiplusBase enumsImageFlags do: 
-			[:e |
-			e value == 0
-				ifFalse: 
-					[strm
-						tab;
-						display: (e key midString: e key size - 10 from: 11);
-						nextPutAll: ' = ';
-						display: (flags anyMask: e value);
-						cr]].
-	^strm contents!
-
-exampleGdipIInterpMode
-	"MSDN: GDI+ > Using GDI+ > Using Images, Bitmaps, and Metafiles 
-		> Using Interpolation Mode to Control Image Quality During Scaling
-	This example displays the same image drawn using different interpolation modes.
-
-		self exampleGdipIInterpMode showExample
-	"
-
-	| bitmap image |
-	image := Image fromFile: self fileResource pafEyeJpg.
-	bitmap := Bitmap extent: 600 @ 420.
-	(bitmap graphics)
-		interpolationMode: InterpolationModeLowQuality;
-		drawImage: image
-			at: 0 @ 0
-			extent: (0.4 * image extent) rounded;
-		drawString: 'LowQuality' at: 0 @ 0;
-		interpolationMode: InterpolationModeBilinear;
-		drawImage: image
-			at: 0 @ 210
-			extent: (0.4 * image extent) rounded;
-		drawString: 'Bilinear' at: 0 @ 210;
-		interpolationMode: InterpolationModeNearestNeighbor;
-		drawImage: image
-			at: 300 @ 0
-			extent: (0.4 * image extent) rounded;
-		drawString: 'NearestNeighbor' at: 300 @ 0;
-		interpolationMode: InterpolationModeHighQualityBicubic;
-		drawImage: image
-			at: 300 @ 210
-			extent: (0.4 * image extent) rounded;
-		drawString: 'HighQualityBicubic' at: 300 @ 210.
-	^bitmap!
-
-exampleGdipIJPEGCompression
-	"MSDN: Using GDI+ >  Using Image Encoders & Decoders > Setting JPEG Compression Level
-	This example saves the same image to several different files, using different compression levels.
-	It then reads all files back and displays the images.
-
-		self exampleGdipIJPEGCompression showExample
-	"
-
-	| image encoderParameters encoderParameter quality images bitmap toFile points |
-	image := Image fromFile: self fileResource pafEyeJpg.
-	encoderParameters := GpEncoderParameters new.
-	encoderParameters Count: 1.
-	(encoderParameter := encoderParameters Parameter first)
-		Guid: EncoderQuality;
-		Type: EncoderParameterValueTypeLong;
-		NumberOfValues: 1.
-	quality := UInt32Bytes new.
-	encoderParameter Value: quality yourAddress.
-	images := OrderedCollection new.
-	#(0 30 70 100) do: 
-			[:num |
-			quality value: num.
-			toFile := self fileResource fileLocator localFileSpecFor: 'test' , num displayString , '.jpg'.
-			image saveToFile: toFile encoderParams: encoderParameters.
-			images add: (Image fromFile: toFile)].
-	bitmap := Bitmap extent: 810 @ 610.
-	points := {0 @ 0. 410 @ 0. 0 @ 310. 410 @ 310}.
-	images keysAndValuesDo: 
-			[:i :e |
-			| point fileSize text |
-			fileSize := ((File find: e filename) first fileSize / 1024) rounded.
-			point := points at: i.
-			text := (File splitFilenameFrom: e filename) , ' (' , fileSize displayString , ' kb)'.
-			bitmap graphics
-				drawImage: e
-					at: point
-					extent: 400 @ 300;
-				drawString: text at: point].
-	^bitmap!
-
-exampleGdipILoadImage
-	"This example loads an image from a file.
-
-		self exampleGdipILoadImage showExample
-	"
-
-	^Image fromFile: self fileResource pafRgb0000FF_100x100bmp!
-
-exampleGdipILoadImages
-	"From MSDN: Using GDI+ > Using Images, Bitmaps, and Metafiles > Loading and Displaying Bitmaps
-	This example displays two images, one loaded from a disk file, the other from an Icon resource.
-
-		self exampleGdipILoadImages showExample
-	"
-
-	| bitmap image |
-	bitmap := Bitmap extent: 400 @ 300.
-	image := Image fromFile: 'Resources/Beach Ball.bmp' usingLocator: FileLocator installRelative.
-	bitmap graphics drawImage: image at: 60 @ 10.
-	image := Bitmap fromIcon: Icon warning.
-	bitmap graphics drawImage: image at: 10 @ 60.
-	^bitmap!
-
-exampleGdipILosslessRotation
-	"MSDN:  Using GDI+ >  Using Image Encoders & Decoders > Transforming a JPEG Without Loss
-	This example creates a GdiplusImage, rotates it left, saves it under a new filename, and answers 
-	a GdiplusImage from the new file.  Note: only image files whose width and height are
-	multiples of 16 can be rotated with no loss in quality.
-
-		self exampleGdipILosslessRotation showExample
-	"
-
-	| image encoderParameters toFilename encValue |
-	image := Image fromFile: self fileResource pafEyeJpg.
-	"self assert: [image extent / 16 truncated * 16 = image extent]."
-	encoderParameters := GpEncoderParameters new Count: 1.
-	encValue := DWORD fromInteger: EncoderValueTransformRotate90.
-	encoderParameters Parameter first
-		Guid: EncoderTransformation;
-		Type: EncoderParameterValueTypeLong;
-		NumberOfValues: 1;
-		Value: encValue yourAddress.
-	toFilename := self fileResource fileLocator localFileSpecFor: 'testLosslessRotation.jpg'.
-	image saveToFile: toFilename encoderParams: encoderParameters.
-	^Image fromFile: toFilename!
-
-exampleGdipIMetadata
-	"MSDN:  GDI+ >  Using GDI+ >  Using Images, Bitmaps, and Metafiles > Reading and Writing Metadata
-	This example reads and displays a file's property items (metadata).
-
-		UI.Examples.WordPad showOn: self exampleGdipIMetadata
-	"
-
-	| image strm |
-	image := Image fromFile: self fileResource pafEyeJpg.
-	strm := String writeStream.
-	strm
-		display: 'File: <s><n>' << image filename;
-		display: 'There are <d> property items in the file.<n>' << image propertiesCount;
-		display: 'The total size of all property items is <d> bytes.<n>' << image propertiesSize.
-	image properties keysAndValuesDo: 
-			[:i :e |
-			strm
-				display: 'Property item <d><n>' << i;
-				display: '  id: <s><n>' << e id hex;
-				display: '  type: <s><n>' << e typeName;
-				display: '  length: <d><n>' << e length].
-	^strm contents!
-
-exampleGdipIMetadata2
-	"This example lists all of a file's image property items' descriptions and values.
-
-		UI.Examples.WordPad showOn: self exampleGdipIMetadata2
-	"
-
-	| image strm |
-	image := Image fromFile: self fileResource pafEyeJpg.
-	(strm := String writeStream)
-		nextPutAll: image filename;
-		cr;
-		cr.
-	image properties do: 
-			[:e |
-			e id printOn: strm base: 16.
-			strm
-				nextPutAll: ': ';
-				nextPutAll: e name;
-				nextPutAll: ' = ';
-				display: e valueArray;
-				cr].
-	^strm contents!
-
-exampleGdipIMultiFrame
-	"MSDN:  Using GDI+ >  Using Image Encoders & Decoders > Multiple-Frame Image 
-	This example creates a multiple-frame image and saves it to disk.  It then loads the file
-	and displays some frame information.
-
-		UI.RichTextPresenter showOn: self exampleGdipIMultiFrame
-	"
-
-	| encoderParameters parameter value image1 image2 image3 toFile guids |
-	encoderParameters := GpEncoderParameters new Count: 1.
-	parameter := encoderParameters Parameter first.
-	value := UInt32Bytes new.
-	parameter
-		Guid: EncoderSaveFlag;
-		Type: EncoderParameterValueTypeLong;
-		NumberOfValues: 1;
-		Value: value yourAddress.
-	image1 := Image fromFile: self fileResource pafEyeJpg.
-	image2 := Image fromFile: self fileResource pafFish32x32png.
-	image3 := Image fromFile: self fileResource pafRgb0000FF_100x100bmp.
-	toFile := self fileResource fileLocator localFileSpecFor: 'testMultiframeImage.tif'.
-	value value: EncoderValueMultiFrame.
-	image1 saveToFile: toFile encoderParams: encoderParameters.
-	value value: EncoderValueFrameDimensionPage.
-	image1 saveAddImage: image2 encoderParams: encoderParameters.
-	image1 saveAddImage: image3 encoderParams: encoderParameters.
-	value value: EncoderValueFlush.
-	image1 saveAdd: encoderParameters.
-	image1 := Image fromFile: toFile.
-	guids := image1 frameDimensionsList.
-	^String writeStream
-		nextPutAll: 'Frame information for file: <p>:<n>' << image1 filename;
-		nextPutAll: 'The number of dimensions is <d>.<n>' << image1 frameDimensionsCount;
-		nextPutAll: 'The first dimension ID is <d>.<n>' << guids first;
-		nextPutAll: 'The number of frames in that dimension is <d>.<n>' << (image1 frameCount: guids first);
-		contents!
-
-exampleGdipIMultiFrame2
-	"MSDN:  Using GDI+ >  Using Image Encoders & Decoders > Copying Individual Frames 
-	This example saves each frame in a multiple-frame image to its own file on disk.  
-	It then loads all images from these files and displays them on a single bitmap.
-
-		self exampleGdipIMultiFrame2 showExample
-	"
-
-	| image bitmap graphics srcFile dstFile0 dstFile1 dstFile2 |
-	srcFile := self fileResource fileLocator localFileSpecFor: 'testMultiframeImage.tif'.
-	(File exists: srcFile) ifFalse: [^nil].
-	dstFile0 := self fileResource fileLocator localFileSpecFor: 'testMultiframe0.png'.
-	dstFile1 := self fileResource fileLocator localFileSpecFor: 'testMultiframe1.png'.
-	dstFile2 := self fileResource fileLocator localFileSpecFor: 'testMultiframe2.png'.
-	image := Image fromFile: srcFile.
-	image selectActiveFrame: 0.
-	image saveToFile: dstFile0.
-	image selectActiveFrame: 1.
-	image saveToFile: dstFile1.
-	image selectActiveFrame: 2.
-	image saveToFile: dstFile2.
-	bitmap := Bitmap extent: 260 @ 350.
-	graphics := bitmap graphics.
-	image := Image fromFile: dstFile0.
-	graphics
-		drawImage: image
-		at: 10 @ 10
-		extent: 240 @ 180.
-	image := Image fromFile: dstFile1.
-	graphics drawImage: image at: 10 @ 200.
-	image := Image fromFile: dstFile2.
-	graphics drawImage: image at: 10 @ 240.
-	^bitmap!
-
-exampleGdipIMultiFrame3
-	"This example prompts for a multi-frame image file, e.g., an animated gif.  
-	It then displays every sixth frame in a separate view.
-
-		self exampleGdipIMultiFrame3
-	"
-
-	| frames |
-	frames := Image prompt frames.
-	1 to: frames size
-		by: 6
-		do: [:i | UI.ImagePresenter show: 'Basic image' on: (frames at: i)]!
-
-exampleGdipIPrinting1
-	"This example prints an image, plain and simple.  No units conversion or scaling is done.
-	The sample image has an extent of 909@682 which in default units of hundredths of inches
-	is 9.09 in. wide by 6.82 in. high.  If the prompted-for printer is set for portrait, the image will
-	be clipped, if set for landscape the full picture should print.
-
-		self exampleGdipIPrinting1
-	"
-
-	| printer graphics image |
-	printer := PrinterCanvas choose.
-	graphics := GdiplusGraphics fromCanvas: printer.
-	image := Image fromFile: self fileResource pafSeattleNightJpg.
-	printer startDoc.
-	graphics drawImage: image.
-	printer endDoc!
-
-exampleGdipIPrinting2
-	"This example draws an image scaled to fit the page's longer dimension.  It prompts for a 
-	printer and displays a preview, then prompts for whether the image should be printed.
-
-		self exampleGdipIPrinting2
-	"
-
-	| printer graphics image pageExtent layoutRect bitmap graphicsB |
-	printer := PrinterCanvas choose.
-	graphics := GdiplusGraphics fromCanvas: printer.
-	image := Image fromFile: self fileResource pafSeattleNightJpg.
-	"Convert pixels to hundredths of inches."
-	pageExtent := (printer extent * 100 / graphics resolution) truncated.
-	pageExtent x < pageExtent y ifTrue: [image rotateLeft].
-	layoutRect := Point zero extent: (image extent scaledTo: pageExtent) truncated.
-	"Preview image"
-	bitmap := Bitmap extent: (pageExtent / 2) rounded.
-	graphicsB := bitmap graphics.
-	graphicsB scaleTransform: 0.5 @ 0.5 order: nil.
-	graphicsB drawImage: image rectangle: layoutRect.
-	bitmap showExample.
-	"Print image"
-	(UI.MessageBox confirm: 'Ok to print?') ifFalse: [^nil].
-	printer startDoc.
-	graphics drawImage: image rectangle: layoutRect.
-	printer endDoc!
-
-exampleGdipIPrinting3
-	"This example prints some example bitmaps.  The page is divided into three sections - 2 quarter pages at the top and a half page at the bottom.  
-
-		self exampleGdipIPrinting3
-	"
-
-	| printer graphics image1 image2 image3 res margin pageSize layoutSize boundingRect layoutRect |
-	image1 := self exampleGdipIMultiFrame2.
-	image2 := GdiplusGraphics exampleGdipGDrawingShapes rotateLeft.
-	image3 := HatchBrush exampleGdipHBStyles.
-	printer := PrinterCanvas choose.
-	printer ifNil: [^self].
-	graphics := GdiplusGraphics fromCanvas: printer.
-	"Calculate 1/4 of page in hundredths of inches."
-	res := graphics resolution.
-	pageSize := ((printer extent x / res x) @ (printer extent y / res y) * 100) truncated.
-	margin := 25.
-	layoutSize := ((pageSize - margin) / 2) truncated.
-	pageSize x > pageSize y ifTrue: [graphics rotate: 90 at: pageSize x @ 0].
-	"Print first image in upper left."
-	printer startDoc.
-	boundingRect := Point zero extent: layoutSize.
-	layoutRect := image1 rectScaledToFit: boundingRect centered: true.
-	graphics drawImage: image1 rectangle: layoutRect.
-	graphics drawRectangle: boundingRect.
-	"Print second image in upper right."
-	boundingRect := (pageSize x - layoutSize x) @ 0 extent: layoutSize.
-	layoutRect := image2 rectScaledToFit: boundingRect centered: true.
-	graphics drawImage: image2 rectangle: layoutRect.
-	graphics drawRectangle: boundingRect.
-	"Print third image in lower half."
-	boundingRect := 0 @ (pageSize y - layoutSize y) extent: pageSize x @ layoutSize y.
-	layoutRect := image3 rectScaledToFit: boundingRect centered: true.
-	graphics drawImage: image3 rectangle: layoutRect.
-	graphics drawRectangle: boundingRect.
-	printer endDoc!
-
-exampleGdipIPrinting4LabeledToAPage
-	"This example prompts for and prints 4 images on a page.  First the printer dialog is shown and
-	then a file open dialog (four times).  A text label (e.g., filename or date) is printed for each 
-	picture, within the picture's frame at the lower right, taking into account any rotation.  A preview 
-	window shows what the printed page will look like and a prompt is issued whether to print or not.
-
-		self exampleGdipIPrinting4LabeledToAPage
-	"
-
-	| printer graphicsPrn res pagesize isPrinterPortrait margin quarterExtent font images image rotate extents corners bitmap graphicsB labels angle extent measure drawBlock x |
-	printer := PrinterCanvas choose.
-	graphicsPrn := GdiplusGraphics fromCanvas: printer.
-	res := graphicsPrn resolution.
-	pagesize := (printer extent / res * 100) truncated.	"hundredths of inches"
-	isPrinterPortrait := pagesize x < pagesize y.
-	margin := 25.	"1/4 inch"
-	"Calculate 1/4 of page in hundredths of inches."
-	quarterExtent := ((printer extent / res * 100 - margin) / 2) truncated.
-	font := Font name: 'Arial' pointSize: 6.
-
-	"Load images, rotate as needed, calculate extents, assign labels."
-	images := Array new: 4.
-	rotate := Array new: 4.
-	extents := Array new: 4.
-	labels := Array new: 4.
-	1 to: 4
-		do: 
-			[:i |
-			image := Image prompt.
-			images at: i put: image.
-			labels at: i put: (File splitStemFrom: image filename).
-			image isLandscape = isPrinterPortrait
-				ifTrue: 
-					[rotate at: i put: true.
-					extents at: i put: (image extent transpose scaledTo: quarterExtent) truncated]
-				ifFalse: 
-					[rotate at: i put: false.
-					extents at: i put: (image extent scaledTo: quarterExtent) truncated]].
-
-	"Calculate corners for each image."
-	corners := Array new: 4.
-	corners at: 1 put: Point zero.
-	corners at: 2 put: ((extents at: 1) x + margin) @ 0.
-	corners at: 3 put: 0 @ (quarterExtent y + margin).
-	corners at: 4 put: ((extents at: 3) x + margin) @ (corners at: 3) y.
-
-	"This could easily be a separate method."
-	drawBlock := 
-			[:graphics :scale |
-			1 to: 4
-				do: 
-					[:i |
-					angle := (rotate at: i) ifTrue: [90] ifFalse: [0].
-					extent := (rotate at: i) ifTrue: [(extents at: i) transpose] ifFalse: [extents at: i].
-					x := (rotate at: i) ifTrue: [(extents at: i) x] ifFalse: [0].
-					measure := graphics measureString: (labels at: i) font: font.
-					graphics
-						resetTransform;
-						scaleTransform: scale order: nil;
-						translateTransform: (corners at: i);
-						rotate: angle at: x @ 0;
-						drawImage: (images at: i)
-							at: 0 @ 0
-							extent: extent;
-						drawString: (labels at: i)
-							font: font
-							at: extent - measure
-							format: nil
-							brush: SolidBrush red]].
-
-	"Preview images.  Draw them on a bitmap that's scaled to half the printer page."
-	bitmap := Bitmap extent: (pagesize / 2) rounded.
-	graphicsB := bitmap graphics.
-	drawBlock value: graphicsB value: 0.5 @ 0.5.
-	bitmap showExample.
-
-	"Print images"
-	(UI.MessageBox confirm: 'Ok to print?') ifFalse: [^nil].
-	printer startDoc.
-	drawBlock value: graphicsPrn value: 1 @ 1.
-	printer endDoc!
-
-exampleGdipIPropertiesCopy
-	"This example takes an image from an existing file, resizes the image, copies all
-	of the first image's property items to the second, and saves the second image to file.  
-	It then loads the second file image and answers the image.
-
-		self exampleGdipIPropertiesCopy showExample
-	"
-
-	| image resizedImage toFile |
-	image := self fromFile: self fileResource pafEyeJpg.
-	resizedImage := Bitmap fromImage: image scaledBy: 1 / 4.
-	resizedImage copyPropertiesFrom: image.
-	toFile := self fileResource fileLocator localFileSpecFor: 'testPropertiesCopy.jpg'.
-	resizedImage saveToFile: toFile.
-	^self fromFile: toFile!
-
-exampleGdipIPropertyItem
-	"MSDN:  GDI+ >  GDI+ Reference >  Classes >  Image >  Image Methods > SetPropertyItem 
-	This example creates an Image object based on a jpeg file (some image formats, e.g., bmp,
-	don't support properties), sets the Title property, then retrieves and displays the new title.  Note
-	that it does not save the image back to file.
-
-		self exampleGdipIPropertyItem
-	"
-
-	| image title propItem |
-	image := Image fromFile: 'Resources/LagoonSideBar.jpg' usingLocator: FileLocator installRelative.
-	title := 'Lagoon Sidebar'.
-	(propItem := GpPropertyItem new)
-		id: PropertyTagImageTitle;
-		length: title size;
-		Type: PropertyTagTypeASCII;
-		Value: title yourAddress.
-	image property: propItem.
-	propItem := title := nil.
-	propItem := image propertyFromId: PropertyTagImageTitle.
-	^title := AnsiString fromAddress: propItem Value!
-
-exampleGdipIPropertyItems
-	"This example prompts for a directory.  For each jpeg in the directory, the filename,
-	number of properties, and file extent are displayed.   It also checks for certain properties 
-	of each image and displays them if they exist.
-
-		UI.RichTextPresenter show value: self exampleGdipIPropertyItems
-	"
-
-	| directory filenames strm image |
-	(directory := #{UI.BrowseFolderDialog} value new
-				value: #{Shell32} value myPictures;
-				showModal) ifNil: [^nil].
-	filenames := (File find: (File composePath: directory subPath: '*.jpg')) collect: [:e | e path].
-	strm := String writeStream.
-	filenames do: 
-			[:filename |
-			image := Image fromFile: filename.
-			"Force realization now."
-			(
-			[image handle.
-			true] on: Error do: [:err | false])
-				ifTrue: 
-					[strm
-						display: image propertiesCount;
-						nextPutAll: ': ';
-						nextPutAll: filename;
-						nextPutAll: ', extent = ';
-						display: image extent;
-						cr.
-					(image hasPropertyId: PropertyTagExifUserComment)
-						ifTrue: 
-							[strm
-								tab;
-								nextPutAll: 'PropertyTagExifUserComment: ';
-								nextPutAll: (image propertyFromId: PropertyTagExifUserComment) valueArray asString trimNulls
-											trimBlanks;
-								cr].
-					(image hasPropertyId: PropertyTagSoftwareUsed)
-						ifTrue: 
-							[strm
-								tab;
-								nextPutAll: 'PropertyTagSoftwareUsed: ';
-								nextPutAll: (image propertyFromId: PropertyTagSoftwareUsed) valueArray asString trimNulls trimBlanks;
-								cr].
-					(image hasPropertyId: PropertyTagThumbnailWidth)
-						ifTrue: 
-							[strm
-								tab;
-								nextPutAll: 'PropertyTagThumbnailWidth: ';
-								display: (image propertyFromId: PropertyTagThumbnailWidth) valueArray first;
-								cr].
-					(image hasPropertyId: PropertyTagThumbnailData)
-						ifTrue: 
-							[strm
-								tab;
-								nextPutAll: 'Image has PropertyTagThumbnailData';
-								cr]]].
-	^strm contents!
-
-exampleGdipISaveFrames
-	"This example prompts for a multi-frame file (e.g., an animated gif) and saves each frame to a separate file.
-	Output files are saved in the GdiplusTests file resource directory.
-
-		self exampleGdipISaveFrames
-	"
-
-	Image prompt saveFramesToFiles: self fileResource fileLocator basePath!
-
-exampleGdipISkewing
-	"MSDN: GDI+ > Using GDI+ > Using Images, Bitmaps, and Metafiles 
-	> Rotating, Reflecting, and Skewing Images
-
-		self exampleGdipISkewing showExample
-	"
-
-	| bitmap image graphics |
-	bitmap := Bitmap extent: 300 @ 250.
-	graphics := bitmap graphics.
-	image := (Image fromFile: 'Resources/Beach Ball.bmp' usingLocator: FileLocator installRelative)
-				thumbnailWithHeight: 75.
-	graphics
-		drawImage: image at: 10 @ 10;
-		drawImage: image points: {200 @ 20. 110 @ 200. 250 @ 50}.
-	^bitmap!
-
-exampleGdipIThumbnails
-	"MSDN: GDI+ > Using GDI+ > Using Images, Bitmaps, and Metafiles > Creating Thumbnail Images
-
-		self exampleGdipIThumbnails	 showExample
-	"
-
-	| bitmap image thumbnail |
-	bitmap := Bitmap extent: 600 @ 300.
-	image := Image fromFile: 'Resources/Beach Ball.bmp' usingLocator: FileLocator installRelative.
-	thumbnail := image thumbnailScaledBy: 0.4.
-	bitmap graphics
-		drawImage: image at: 10 @ 10;
-		drawImage: thumbnail at: 10 @ 200.
-	^bitmap!
-
 fileTypes
 	"Answer an array of file types for use with the <FileOpenDialog>."
 
@@ -1698,7 +1003,7 @@ getImageCodecs: aBoolean
 	codecs := StructureArray
 				fromAddress: buf
 				length: numCodecs
-				elementClass: GpImageCodecInfo.
+				elementClass: ImageCodecInfo.
 	^codecs!
 
 icon
@@ -1716,12 +1021,8 @@ mimeTypeForExtension: aString
 		detect: [:e | (e FilenameExtension asLowercase indexOfSubCollection: aString asLowercase) > 0]
 		ifNone: nil) ifNotNil: [:encoder | encoder MimeType]!
 
-prompt
-	"Prompt for an image file.  Answer an Image created from that file or nil."
-
-	^((UI.FileOpenDialog new fileTypes: self fileTypes)
-		defaultExtension: 'png';
-		showModal) ifNotNil: [:file | self fromFile: file]! !
+nameOfImageFlag: anInteger
+	^Gdiplus.ImageFlagsNames at: anInteger highBit + 1! !
 !Graphics.Gdiplus.Image class categoriesForMethods!
 decoderFileExtensions!enquiries!public! !
 decoderMimeTypes!enquiries!public! !
@@ -1732,34 +1033,6 @@ encoderFileExtensions!enquiries!public! !
 encoderMimeTypeForExtension:!enquiries!private! !
 encoderMimeTypes!enquiries!public! !
 encoders!enquiries!public! !
-exampleGdipIDecoderFileExtensions!examples!public!sunit! !
-exampleGdipIDecoders!examples!public!sunit! !
-exampleGdipIEncoderClsid!examples!public!sunit! !
-exampleGdipIEncoderFileExtensions!examples!public!sunit! !
-exampleGdipIEncoderParameters!examples!public!sunit! !
-exampleGdipIEncoders!examples!public!sunit! !
-exampleGdipIEncoderValues!examples!public!sunit! !
-exampleGdipIFlags!examples!public!sunit! !
-exampleGdipIInterpMode!examples!public!sunit! !
-exampleGdipIJPEGCompression!examples!public!sunit! !
-exampleGdipILoadImage!examples!public!sunit! !
-exampleGdipILoadImages!examples!public!sunit! !
-exampleGdipILosslessRotation!examples!public!sunit! !
-exampleGdipIMetadata!examples!public!sunit! !
-exampleGdipIMetadata2!examples!public!sunit! !
-exampleGdipIMultiFrame!examples!public!sunit! !
-exampleGdipIMultiFrame2!examples!public!sunit! !
-exampleGdipIMultiFrame3!examples!public! !
-exampleGdipIPrinting1!examples!public! !
-exampleGdipIPrinting2!examples!public! !
-exampleGdipIPrinting3!examples!public! !
-exampleGdipIPrinting4LabeledToAPage!examples!public! !
-exampleGdipIPropertiesCopy!examples!public!sunit! !
-exampleGdipIPropertyItem!examples!public!sunit! !
-exampleGdipIPropertyItems!examples!public! !
-exampleGdipISaveFrames!examples!public! !
-exampleGdipISkewing!examples!public!sunit! !
-exampleGdipIThumbnails!examples!public!sunit! !
 fileTypes!enquiries!public! !
 fromByteArray:!instance creation!public! !
 fromFile:!instance creation!public! !
@@ -1768,6 +1041,6 @@ fromIStream:!instance creation!public! !
 getImageCodecs:!helpers!private! !
 icon!constants!public! !
 mimeTypeForExtension:!enquiries!private! !
-prompt!development!instance creation!public! !
+nameOfImageFlag:!enquiries!public! !
 !
 

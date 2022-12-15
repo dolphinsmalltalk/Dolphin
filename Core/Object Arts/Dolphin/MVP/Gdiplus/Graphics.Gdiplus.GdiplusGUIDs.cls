@@ -23,4 +23,3 @@ Kernel.SharedPool subclass: #'Graphics.Gdiplus.GdiplusGUIDs'
 Graphics.Gdiplus.GdiplusGUIDs guid: (Core.GUID fromString: '{84863640-2c7c-4142-96d7-cc4986906b7b}')!
 Graphics.Gdiplus.GdiplusGUIDs isNonInstantiable: true!
 Graphics.Gdiplus.GdiplusGUIDs comment: ''!
-!Graphics.Gdiplus.GdiplusGUIDs categoriesForClass!Unclassified! !

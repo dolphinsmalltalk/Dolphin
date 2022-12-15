@@ -8,28 +8,31 @@ Graphics.Gdiplus.Tests.InitializerTests subclass: #'Graphics.Gdiplus.Tests.Graph
 	classConstants: {}!
 Graphics.Gdiplus.Tests.GraphicsFromImageInitializerTest guid: (Core.GUID fromString: '{de9caa66-14ef-49f9-8e8b-dbda54c36c53}')!
 Graphics.Gdiplus.Tests.GraphicsFromImageInitializerTest comment: ''!
-!Graphics.Gdiplus.Tests.GraphicsFromImageInitializerTest categoriesForClass!Unclassified! !
 !Graphics.Gdiplus.Tests.GraphicsFromImageInitializerTest methodsFor!
 
-gdipGetImageGraphicsContext: image graphics: graphics 
-	constructorArgs := Processor activeProcess topFrame arguments.
-	^Ok!
-
-setUp
-	super setUp.
-	model := GraphicsFromImageInitializer new library: self!
+subjectClass
+	^GraphicsFromImageInitializer!
 
 testCreateHandle
-	| image |
+	| constructor image messages |
 	image := Image fromFile: self fileResource pafRgb0000FF_100x100bmp.
-	model image: image.
-	model createHandle.
-	self assert: constructorArgs size equals: 2.
-	self assert: constructorArgs first identicalTo: image asParameter.
-	self assertLastArgIsHandle! !
+	model surface: image.
+	messages := self createHandle.
+	self assertNotNil: image basicHandle.
+	constructor := messages last.
+	self assert: constructor selector identicalTo: #gdipGetImageGraphicsContext:graphics:.
+	self assert: constructor arguments size equals: 2.
+	self assert: constructor arguments first identicalTo: image basicHandle.
+	self assert: constructor arguments last isKindOf: Handle.
+	image free!
+
+testIsPersistent
+	"Cant persist an <IStream>"
+
+	self deny: model isPersistent! !
 !Graphics.Gdiplus.Tests.GraphicsFromImageInitializerTest categoriesForMethods!
-gdipGetImageGraphicsContext:graphics:!accessing!public! !
-setUp!public!setup! !
+subjectClass!constants!private! !
 testCreateHandle!public!unit tests! !
+testIsPersistent!public!unit tests! !
 !
 

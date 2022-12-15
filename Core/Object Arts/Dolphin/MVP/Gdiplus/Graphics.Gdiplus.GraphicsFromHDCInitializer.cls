@@ -1,20 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.GraphicsFromHDCInitializer'
-	instanceVariableNames: 'canvas'
+Graphics.Gdiplus.GraphicsInitializer subclass: #'Graphics.Gdiplus.GraphicsFromHDCInitializer'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Graphics.Gdiplus.GraphicsFromHDCInitializer guid: (Core.GUID fromString: '{83cb0a86-604f-48a0-9336-619cfce00e47}')!
 Graphics.Gdiplus.GraphicsFromHDCInitializer comment: ''!
-!Graphics.Gdiplus.GraphicsFromHDCInitializer categoriesForClass!Unclassified! !
 !Graphics.Gdiplus.GraphicsFromHDCInitializer methodsFor!
 
-canvas: aCanvas
-	canvas := aCanvas!
-
-createHandle
+basicCreateHandle
 	"Private -  Graphics(IN HDC hdc)
     	{
 	        GpGraphics *graphics = NULL;
@@ -26,11 +22,10 @@ createHandle
 
 	| gpHandle |
 	gpHandle := Handle new.
-	self library gdipCreateFromHDC: canvas asParameter graphics: gpHandle.
+	Gdip gdipCreateFromHDC: surface asParameter graphics: gpHandle.
 	^gpHandle! !
 !Graphics.Gdiplus.GraphicsFromHDCInitializer categoriesForMethods!
-canvas:!initializing!private! !
-createHandle!private!realizing/unrealizing! !
+basicCreateHandle!private!realizing/unrealizing! !
 !
 
 !Graphics.Gdiplus.GraphicsFromHDCInitializer class methodsFor!
@@ -38,7 +33,7 @@ createHandle!private!realizing/unrealizing! !
 canvas: aCanvas
 	"Creates a Graphics object that is associated with a specified device context."
 
-	^self new canvas: aCanvas! !
+	^self new surface: aCanvas! !
 !Graphics.Gdiplus.GraphicsFromHDCInitializer class categoriesForMethods!
 canvas:!instance creation!public! !
 !

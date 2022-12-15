@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'Graphics.Gdiplus.GpMetafileHeader'
+Graphics.Gdiplus.GpStructure subclass: #'Graphics.Gdiplus.MetafileHeader'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_GpMetafileHeader_Size' -> 16r8C.
+		'_MetafileHeader_Size' -> 16r8C.
 		'_OffsetOf_DpiX' -> 16r10.
 		'_OffsetOf_DpiY' -> 16r14.
 		'_OffsetOf_EmfHeader' -> 16r28.
@@ -23,8 +23,8 @@ External.Structure subclass: #'Graphics.Gdiplus.GpMetafileHeader'
 		'_OffsetOf_x' -> 16r18.
 		'_OffsetOf_y' -> 16r1C
 	}!
-Graphics.Gdiplus.GpMetafileHeader guid: (Core.GUID fromString: '{83583420-dbfc-415f-ab1b-93e52a2206ef}')!
-Graphics.Gdiplus.GpMetafileHeader comment: '<GpMetafileHeader> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpMetafileHeader'' from type information in the ''GDI+ Library 1.0'' library.
+Graphics.Gdiplus.MetafileHeader guid: (Core.GUID fromString: '{83583420-dbfc-415f-ab1b-93e52a2206ef}')!
+Graphics.Gdiplus.MetafileHeader comment: '<GpMetafileHeader> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpMetafileHeader'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
 
@@ -50,8 +50,7 @@ struct tagGpMetafileHeader {
 	int LogicalDpiY;
 } GpMetafileHeader;
 '!
-!Graphics.Gdiplus.GpMetafileHeader categoriesForClass!Unclassified! !
-!Graphics.Gdiplus.GpMetafileHeader methodsFor!
+!Graphics.Gdiplus.MetafileHeader methodsFor!
 
 DpiX
 	"Answer the <Float> value of the receiver's 'DpiX' field."
@@ -210,7 +209,7 @@ y: anInteger
 	"Set the receiver's 'y' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_y put: anInteger! !
-!Graphics.Gdiplus.GpMetafileHeader categoriesForMethods!
+!Graphics.Gdiplus.MetafileHeader categoriesForMethods!
 DpiX!**compiled accessors**!public! !
 DpiX:!**compiled accessors**!public! !
 DpiY!**compiled accessors**!public! !
@@ -243,10 +242,10 @@ y!**compiled accessors**!public! !
 y:!**compiled accessors**!public! !
 !
 
-!Graphics.Gdiplus.GpMetafileHeader class methodsFor!
+!Graphics.Gdiplus.MetafileHeader class methodsFor!
 
 byteSize
-	^_GpMetafileHeader_Size!
+	^_MetafileHeader_Size!
 
 defineFields
 	"Define the fields of the GpMetafileHeader structure.
@@ -324,7 +323,7 @@ defineFields
 
 getFieldNames
 	^#(#type #size #Version #EmfPlusFlags #DpiX #DpiY #x #y #width #height #EmfHeader #WmfHeader #EmfPlusHeaderSize #LogicalDpiX #LogicalDpiY)! !
-!Graphics.Gdiplus.GpMetafileHeader class categoriesForMethods!
+!Graphics.Gdiplus.MetafileHeader class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

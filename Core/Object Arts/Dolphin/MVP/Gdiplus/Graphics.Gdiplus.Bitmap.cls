@@ -8,7 +8,6 @@ Graphics.Gdiplus.Image subclass: #'Graphics.Gdiplus.Bitmap'
 	classConstants: {}!
 Graphics.Gdiplus.Bitmap guid: (Core.GUID fromString: '{206fb497-cb98-42d3-a48f-1f83e25cce07}')!
 Graphics.Gdiplus.Bitmap comment: 'GdiplusBitmap expands on GdiplusImage by providing additional methods for creating and manipulating raster images.'!
-!Graphics.Gdiplus.Bitmap categoriesForClass!Unclassified! !
 !Graphics.Gdiplus.Bitmap methodsFor!
 
 asBitmap
@@ -30,58 +29,53 @@ asIcon
 	Gdip gdipCreateHICONFromBitmap: self asParameter hbmReturn: hbmReturn.
 	^Icon fromOwnedHandle: hbmReturn!
 
-cloneBitmapRectangle: aRectangle format: aPixelFormatConstant
-	"Private - Answer a copy of the receiver."
-
-	| gpHandle |
-	gpHandle := Handle new.
-	Gdip
-		gdipCloneBitmapAreaI: aRectangle left
-		y: aRectangle top
-		width: aRectangle width
-		height: aRectangle height
-		format: aPixelFormatConstant
-		srcBitmap: self handle
-		dstBitmap: gpHandle.
-	^(self class fromOwnedHandle: gpHandle)
-		initializer: initializer;
-		yourself!
-
 cloneFormat: aPixelFormatConstant
-	"Answer a copy of the receiver."
+	"Answer a copy of the receiver, but with the specified PixelFormat."
 
-	^self cloneBitmapRectangle: (Rectangle extent: self extent) format: aPixelFormatConstant!
+	^self cloneRectangle: (Rectangle extent: self extent) format: aPixelFormatConstant!
 
-lockBits: rect flags: flags format: format lockedBitmapData: lockedBitmapData
+cloneRectangle: aRectangle
+	^self cloneRectangle: aRectangle format: self pixelFormat!
+
+cloneRectangle: aRectangle format: aPixelFormatConstant
+	^self class fromInitializer: (BitmapFromBitmapAreaInitializer
+				bitmap: self
+				rectangle: aRectangle
+				format: aPixelFormatConstant)!
+
+initializerClass
+	"Answer the class of initializer usually associated with the receiver and which understands how to perform operations on the native Gdiplus objects such as disposing of them."
+
+	^BitmapInitializer!
+
+lockBits: aRectangle
+	^self lockBits: aRectangle flags: ImageLockModeRead!
+
+lockBits: aRectangle flags: flagsInteger
+	^self lockBits: aRectangle flags: flagsInteger format: PixelFormat32bppARGB!
+
+lockBits: aRectangle flags: flagsInteger format: formatInteger
+	| data |
+	data := BitmapData newBuffer.
 	Gdip
 		gdipBitmapLockBits: self handle
-		rect: rect
-		flags: flags
-		format: format
-		lockedBitmapData: lockedBitmapData
-	"Invoke the GdipBitmapLockBits() function of the module wrapped by the receiver.
-
-		Status __stdcall GdipBitmapLockBits(
-			[in] ExternalHandle bitmap,
-			[in] RECT* rect,
-			[in] unsigned int flags,
-			[in] int format,
-			[out, retval] GpBitmapData* lockedBitmapData);
-
-	<stdcall: sdword GdipBitmapLockBits  handle RECT* dword sdword GpBitmapData*>
-	^self invalidCall"!
+		rect: (Rect marshal: aRectangle)
+		flags: flagsInteger
+		format: formatInteger
+		lockedBitmapData: data.
+	^data!
 
 pixelAt: aPoint
 	"Answer an ARGB that is the color of the receiver at aPoint."
 
 	| color |
-	color := ByteArray newFixed: 4.
+	color := ARGBBytes new.
 	Gdip
-		gdipBitmapGetPixel: self asParameter
+		gdipBitmapGetPixel: self handle
 		x: aPoint x
 		y: aPoint y
 		color: color.
-	^Color fromArgbCode: (color dwordAtOffset: 0)!
+	^color value!
 
 pixelAt: aPoint put: anARGB
 	"Set the pixel at aPoint to be anARGB"
@@ -95,11 +89,15 @@ pixelAt: aPoint put: anARGB
 unlockBits: lockedBitmapData
 	Gdip gdipBitmapUnlockBits: self handle lockedBitmapData: lockedBitmapData! !
 !Graphics.Gdiplus.Bitmap categoriesForMethods!
-asBitmap!public! !
-asIcon!public! !
-cloneBitmapRectangle:format:!copying!private! !
+asBitmap!converting!public! !
+asIcon!converting!public! !
 cloneFormat:!copying!public! !
-lockBits:flags:format:lockedBitmapData:!accessing!public! !
+cloneRectangle:!copying!public! !
+cloneRectangle:format:!copying!public! !
+initializerClass!private!realizing/unrealizing! !
+lockBits:!accessing!public! !
+lockBits:flags:!accessing!public! !
+lockBits:flags:format:!accessing!public! !
 pixelAt:!accessing!public! !
 pixelAt:put:!accessing!public! !
 unlockBits:!accessing!public! !
@@ -107,139 +105,18 @@ unlockBits:!accessing!public! !
 
 !Graphics.Gdiplus.Bitmap class methodsFor!
 
-exampleGdipBFromBitmap
-	"This example displays a GdiplusBitmap created from a bitmap that's a copy of an icon.
-
-		self exampleGdipBFromBitmap showExample
-	"
-
-	| bmp |
-	bmp := Graphics.Bitmap
-				gdipCopyOfIcon: self icon
-				extent: 32 @ 32
-				backcolor: Color black.
-	^Bitmap fromBitmap: bmp!
-
-exampleGdipBFromByteArray
-	"This example displays a GdiplusBitmap created from a ByteArray.
-
-		self exampleGdipBFromByteArray showExample
-	"
-
-	| testBytes |
-	testBytes := self fileResource fish32x32pngBytes.
-	^Bitmap fromByteArray: testBytes!
-
-exampleGdipBFromDIB
-	"This example creates aGdiplusBitmap from a DIBSection.
-
-		self exampleGdipBFromDIB showExample
-	"
-
-	| bmp |
-	bmp := DIBSection
-				gdipCopyOfIcon: self icon
-				extent: 256 @ 256
-				backcolor: Color black.
-	^Gdiplus.Bitmap fromBitmap: bmp!
-
-exampleGdipBFromXPIcon
-	"This example creates aGdiplusBitmap from an Icon file.
-	The file contains  three XP formats; 16x16/32x32/48x48
-
-		self exampleGdipBFromXPIcon showExample
-	"
-
-	| testIcon |
-	testIcon := Icon fromFile: self fileResource pafWinXP32x32ico.
-	^Bitmap fromIcon: testIcon!
-
-exampleGdipBResize1
-	"This example creates an image from an existing file and then creates several copies 
-	of the image, each resized a different way.  The copies are all displayed, each with a 
-	thin black line around the image bounds.
-
-		self exampleGdipBResize1 showExample
-	"
-
-	| bitmap image copy1 copy2 copy3 copy4 |
-	bitmap := Bitmap extent: 620 @ 200.
-	image := Image fromFile: self fileResource pafEyeJpg.
-	copy1 := Bitmap fromImage: image extent: 100 @ 150.
-	copy2 := Bitmap fromImage: image centeredIn: 100 @ 150.
-	copy3 := Bitmap fromImage: image scaledBy: 1 / 4.
-	copy4 := Bitmap fromImage: image crop: (180 @ 220 extent: 200 @ 150).
-	bitmap graphics
-		drawImage: copy1 at: 10 @ 10;
-		drawRectangle: (10 @ 10 extent: copy1 extent);
-		drawString: 'withExtent:' at: 10 @ 170;
-		drawImage: copy2 at: 120 @ 10;
-		drawRectangle: (120 @ 10 extent: copy2 extent);
-		drawString: 'withCentering:' at: 120 @ 170;
-		drawImage: copy3 at: 230 @ 10;
-		drawRectangle: (230 @ 10 extent: copy3 extent);
-		drawString: 'withScale:' at: 230 @ 170;
-		drawImage: copy4 at: 400 @ 10;
-		drawRectangle: (400 @ 10 extent: copy4 extent);
-		drawString: 'withCrop:' at: 400 @ 170.
-	^bitmap!
-
-exampleGdipBResize2
-	"This example resizes an image from an existing file and saves the resized image to a file.
-
-		self exampleGdipBResize2 showExample
-	"
-
-	| image resizedImage toFile |
-	image := self fromFile: self fileResource pafSeattleNightJpg.
-	resizedImage := Bitmap fromImage: image scaledBy: 1 / 3.
-	toFile := self fileResource fileLocator localFileSpecFor: 'testResize.jpg'.
-	resizedImage saveToFile: toFile.
-	^self fromFile: toFile!
-
-exampleGdipBResize3
-	"This example resizes an image from an existing file and saves the resized image to a file.
-
-		self exampleGdipBResize3 showExample
-	"
-
-	| image resizedImage toFile |
-	image := self fromFile: self fileResource pafSeattleNightJpg.
-	resizedImage := Bitmap fromImage: image centeredIn: 400 @ 200.
-	toFile := self fileResource fileLocator localFileSpecFor: 'testResize.png'.
-	resizedImage saveToFile: toFile.
-	^self fromFile: toFile!
-
-exampleLockBitsTest1Bmp
-	| bitmap redBrush blueBrush |
-	bitmap := Bitmap width: 30 height: 16.
-	redBrush := SolidBrush red.
-	blueBrush := SolidBrush blue.
-	(bitmap graphics)
-		fillRectangle: (0 @ 0 extent: 30 @ 4) brush: redBrush;
-		fillRectangle: (0 @ 4 extent: 30 @ 4) brush: blueBrush;
-		fillRectangle: (0 @ 8 extent: 30 @ 4) brush: redBrush;
-		fillRectangle: (0 @ 12 extent: 30 @ 4) brush: blueBrush.
-	^bitmap
-!
-
-exampleLockBitsTest2Bmp
-	| bitmap redBrush blueBrush |
-	bitmap := Bitmap width: 120 height: 60.
-	redBrush := SolidBrush red.
-	blueBrush := SolidBrush blue.
-	(bitmap graphics)
-		fillRectangle: (0 @ 0 extent: 120 @ 12) brush: redBrush;
-		fillRectangle: (0 @ 12 extent: 120 @ 12) brush: blueBrush;
-		fillRectangle: (0 @ 24 extent: 120 @ 12) brush: redBrush;
-		fillRectangle: (0 @ 36 extent: 120 @ 12) brush: blueBrush;
-		fillRectangle: (0 @ 48 extent: 120 @ 12) brush: redBrush.
-	^bitmap!
-
 extent: aPoint
 	"Creates a Bitmap object of a specified size with the default pixel format PixelFormat32bppARGB."
 
 	^self width: aPoint x height: aPoint y!
+
+extent: aPoint format: aPixelFormat
+	"Creates a Bitmap object of a specified size and PixelFormat."
+
+	^self
+		width: aPoint x
+		height: aPoint y
+		format: aPixelFormat!
 
 fromBitmap: aBitmap
 	"Creates a Bitmap object based on a handle to a Microsoft® Windows®
@@ -286,14 +163,17 @@ fromImage: aGdiplusImage centeredIn: aPoint
 fromImage: aGdiplusImage crop: aRectangle
 	"Answer an instance of the receiver containing the portion of aGdiplusImage specified by aRectangle"
 
-	| bitmap |
-	bitmap := self extent: aRectangle extent.
+	"The gdipCloneBitmapArea API seems to be rather slow; directly drawing the area into a new bitmap takes about half as long, although the result will not be persistable."
+
+	| bitmap extent |
+	extent := aRectangle extent.
+	bitmap := self extent: extent.
 	bitmap graphics
 		drawImage: aGdiplusImage
 			at: Point.Zero
-			extent: bitmap extent
+			extent: extent
 			from: aRectangle origin
-			extent: aRectangle extent;
+			extent: extent;
 		free.
 	^bitmap!
 
@@ -349,16 +229,8 @@ width: width height: height format: aPixelFormat
 				height: height
 				format: aPixelFormat)! !
 !Graphics.Gdiplus.Bitmap class categoriesForMethods!
-exampleGdipBFromBitmap!examples!public!sunit! !
-exampleGdipBFromByteArray!examples!public!sunit! !
-exampleGdipBFromDIB!examples!public!sunit! !
-exampleGdipBFromXPIcon!examples!public!sunit! !
-exampleGdipBResize1!examples!public!sunit! !
-exampleGdipBResize2!examples!public!sunit! !
-exampleGdipBResize3!examples!public!sunit! !
-exampleLockBitsTest1Bmp!examples!private! !
-exampleLockBitsTest2Bmp!examples!private! !
 extent:!instance creation!public! !
+extent:format:!instance creation!public! !
 fromBitmap:!instance creation!public! !
 fromByteArray:!instance creation!public! !
 fromFile:usingLocator:!instance creation!public! !
@@ -368,7 +240,7 @@ fromImage:crop:!instance creation!public! !
 fromImage:extent:!instance creation!public! !
 fromImage:scaledBy:!instance creation!public! !
 fromIStream:!instance creation!public! !
-fromView:!public! !
+fromView:!instance creation!public! !
 new!instance creation!public! !
 width:height:!instance creation!public! !
 width:height:format:!instance creation!public! !

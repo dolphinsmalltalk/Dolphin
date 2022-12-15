@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'Graphics.Gdiplus.GpColorMap'
+Graphics.Gdiplus.GpStructure subclass: #'Graphics.Gdiplus.ColorMap'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_GpColorMap_Size' -> 16r8.
+		'_ColorMap_Size' -> 16r8.
 		'_OffsetOf_newColor' -> 16r4.
 		'_OffsetOf_oldColor' -> 16r0
 	}!
-Graphics.Gdiplus.GpColorMap guid: (Core.GUID fromString: '{16b02cc4-3683-4fdc-8bdc-c450ef3137b2}')!
-Graphics.Gdiplus.GpColorMap comment: '<GpColorMap> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpColorMap'' from type information in the ''GDI+ Library 1.0'' library.
+Graphics.Gdiplus.ColorMap guid: (Core.GUID fromString: '{16b02cc4-3683-4fdc-8bdc-c450ef3137b2}')!
+Graphics.Gdiplus.ColorMap comment: '<GpColorMap> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpColorMap'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
 
@@ -25,8 +25,8 @@ struct tagGpColorMap {
 	unsigned long newColor;
 } GpColorMap;
 '!
-!Graphics.Gdiplus.GpColorMap categoriesForClass!Unclassified! !
-!Graphics.Gdiplus.GpColorMap methodsFor!
+!Graphics.Gdiplus.ColorMap categoriesForClass!Gdiplus-Structs! !
+!Graphics.Gdiplus.ColorMap methodsFor!
 
 newColor
 	"Answer the <Integer> value of the receiver's 'newColor' field."
@@ -47,41 +47,38 @@ oldColor: anInteger
 	"Set the receiver's 'oldColor' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_oldColor put: anInteger! !
-!Graphics.Gdiplus.GpColorMap categoriesForMethods!
+!Graphics.Gdiplus.ColorMap categoriesForMethods!
 newColor!**compiled accessors**!public! !
 newColor:!**compiled accessors**!public! !
 oldColor!**compiled accessors**!public! !
 oldColor:!**compiled accessors**!public! !
 !
 
-!Graphics.Gdiplus.GpColorMap class methodsFor!
+!Graphics.Gdiplus.ColorMap class methodsFor!
 
 byteSize
-	^_GpColorMap_Size!
+	^_ColorMap_Size!
 
 defineFields
-	"Define the fields of the GpColorMap structure.
-		GpColorMap compileDefinition
-	
-		typedef [uuid(16B02CC4-3683-4FDC-8BDC-C450EF3137B2)]
-		struct tagGpColorMap {
-			unsigned long oldColor;
-			unsigned long newColor;
-		} GpColorMap;
+	"Define the fields of the ColorMap structure.
+
+	ColorMap compileDefinition
+
+		typedef [uuid(16b02cc4-3683-4fdc-8bdc-c450ef3137b2)]
+		struct tagColorMap {
+			Color oldColor;
+			Color newColor;
+		} ColorMap;
 "
 
 	self
-		defineField: #oldColor
-			type: DWORDField new
-			offset: 0;
-		defineField: #newColor
-			type: DWORDField new
-			offset: 4.
+		defineField: #oldColor type: DWORDField new offset: 0;
+		defineField: #newColor type: DWORDField new offset: 4.
 	self byteSize: 8!
 
 getFieldNames
 	^#(#oldColor #newColor)! !
-!Graphics.Gdiplus.GpColorMap class categoriesForMethods!
+!Graphics.Gdiplus.ColorMap class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

@@ -8,36 +8,31 @@ Graphics.Gdiplus.Tests.InitializerTests subclass: #'Graphics.Gdiplus.Tests.Linea
 	classConstants: {}!
 Graphics.Gdiplus.Tests.LinearGradientBrushFromRectInitializerTest guid: (Core.GUID fromString: '{4159f1e0-74dd-4646-832a-12d38b4281c9}')!
 Graphics.Gdiplus.Tests.LinearGradientBrushFromRectInitializerTest comment: ''!
-!Graphics.Gdiplus.Tests.LinearGradientBrushFromRectInitializerTest categoriesForClass!Unclassified! !
 !Graphics.Gdiplus.Tests.LinearGradientBrushFromRectInitializerTest methodsFor!
 
-gdipCreateLineBrushFromRectI: rect color1: color1 color2: color2 mode: mode wrapMode: wrapMode lineGradient: lineGradient 
-	constructorArgs := Processor activeProcess topFrame arguments.
-	^Ok!
-
-setUp
-	super setUp.
-	model := LinearGradientBrushFromRectInitializer new library: self!
+subjectClass
+	^LinearGradientBrushFromRectInitializer!
 
 testCreateHandle
-	| rectangle |
+	| rectangle constructor |
 	model
 		rect: (rectangle := 1 @ 2 corner: 3 @ 4)
 		color1: (Color fromArgbCode: 1)
 		color2: (Color fromArgbCode: 2)
 		mode: LinearGradientModeBackwardDiagonal.
-	model createHandle.
-	self assert: constructorArgs size equals: 6.
-	self assert: constructorArgs first class identicalTo: RECTL.
-	self assert: constructorArgs first asRectangle equals: rectangle.
-	self assert: constructorArgs second equals: 1.
-	self assert: constructorArgs third equals: 2.
-	self assert: constructorArgs fourth equals: LinearGradientModeBackwardDiagonal.
-	self assert: (constructorArgs at: 5) equals: WrapModeTile.
-	self assertLastArgIsHandle! !
+	constructor := self createHandle single.
+	self assert: constructor selector
+		identicalTo: #gdipCreateLineBrushFromRectI:color1:color2:mode:wrapMode:lineGradient:.
+	self assert: constructor arguments size equals: 6.
+	self assert: constructor arguments first class identicalTo: Rect.
+	self assert: constructor arguments first asRectangle equals: rectangle.
+	self assert: constructor arguments second equals: 1.
+	self assert: constructor arguments third equals: 2.
+	self assert: constructor arguments fourth equals: LinearGradientModeBackwardDiagonal.
+	self assert: (constructor arguments at: 5) equals: WrapModeTile.
+	self assert: constructor arguments last isKindOf: Handle! !
 !Graphics.Gdiplus.Tests.LinearGradientBrushFromRectInitializerTest categoriesForMethods!
-gdipCreateLineBrushFromRectI:color1:color2:mode:wrapMode:lineGradient:!accessing!public! !
-setUp!public!setup! !
+subjectClass!constants!private! !
 testCreateHandle!public!unit tests! !
 !
 

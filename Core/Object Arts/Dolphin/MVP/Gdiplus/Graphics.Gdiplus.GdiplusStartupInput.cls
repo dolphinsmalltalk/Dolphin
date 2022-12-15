@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'Graphics.Gdiplus.GdiplusStartupInput'
+Graphics.Gdiplus.GpStructure subclass: #'Graphics.Gdiplus.GdiplusStartupInput'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -29,7 +29,6 @@ struct tagGdiplusStartupInput {
 	long SuppressExternalCodecs;
 } GdiplusStartupInput;
 '!
-!Graphics.Gdiplus.GdiplusStartupInput categoriesForClass!Unclassified! !
 !Graphics.Gdiplus.GdiplusStartupInput methodsFor!
 
 GdiplusVersion: anInteger

@@ -7,14 +7,30 @@ Graphics.Gdiplus.GdiplusBase subclass: #'Graphics.Gdiplus.Font'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Graphics.Gdiplus.Font guid: (Core.GUID fromString: '{5b5d4ae1-5c87-11d7-b609-00e0987e8081}')!
-Graphics.Gdiplus.Font comment: 'GdiplusFont encapsulates the characteristics, such as family, height, size, and style (or combination of styles), of a specific font. A GdiplusFont is used when drawing strings on a GdiplusGraphics.'!
-!Graphics.Gdiplus.Font categoriesForClass!Unclassified! !
+Graphics.Gdiplus.Font comment: '<Gdiplus.Font> encapsulates the characteristics, such as family, height, size, and style (or combination of styles), of a specific font. A <Gdiplus.Font> is used when drawing strings on a GdiplusGraphics.
+
+Font instances do not have any attributes that can be altered after instantiation.
+
+'!
 !Graphics.Gdiplus.Font methodsFor!
 
-basicFree
-	"Private - Free up external resources held by the receiver.  Ignore any errors which might arise."
+cellHeight
+	"Answer the receiver's cell height, i.e. the maximum height of a character, including ascenders and descenders, but excluding line spacing.
+	The height will be in the receiver's units, typically pixels."
 
-	Gdip gdipDeleteFont: handle!
+	| family |
+	family := self family.
+	^self emSize * (family cellAscent + family cellDescent) / family emHeight!
+
+clone
+	"Answer a copy of the receiver."
+
+	"The cloned Font references the same FontFamily instance, so although we can rebuild from the handle we just copy across the initializer to avoid attaching two Smalltalk FontFamily owners of the same native object.
+	This also preserves the generic singletons, which we may as well do since Fonts are immutable."
+
+	^super clone
+		initializer: initializer copy;
+		yourself!
 
 emSize
 	"Answer the font size (commonly called the em size) of this Font object. The size is in the units of this Font object."
@@ -27,12 +43,7 @@ emSize
 family
 	"Answer the FontFamily on which the receiver is based."
 
-	| gpHandle fontFamily |
-	gpHandle := Handle new.
-	Gdip gdipGetFamily: self asParameter family: gpHandle.
-	fontFamily := FontFamily fromOwnedHandle: gpHandle.
-	fontFamily initializer: (FontFamilyInitializer name: (fontFamily getName: 0) fontCollection: nil).
-	^fontFamily!
+	^self initializer fontFamily!
 
 height
 	"Answer the receiver's line spacing, in pixels. The line spacing is the vertical distance
@@ -42,7 +53,7 @@ height
 	| height |
 	height := ByteArray newFixed: 4.
 	Gdip
-		gdipGetFontHeightGivenDPI: self asParameter
+		gdipGetFontHeightGivenDPI: self handle
 		dpi: UI.DesktopView current resolution y
 		height: height.
 	^height floatAtOffset: 0!
@@ -60,59 +71,37 @@ heightFromGraphics: aGdiplusGraphics
 		height: height.
 	^height floatAtOffset: 0!
 
+initializerClass
+	"Answer the class of initializer usually associated with the receiver and which understands how to perform operations on the native Gdiplus objects such as disposing of them."
+
+	^FontFromFontFamilyInitializer!
+
 name
 	"Answer the FontFamily name on which the receiver is based."
 
 	^self family name!
 
+style
+	^self initializer style!
+
 unit
 	"Answer an Integer, that represents the receiver's unit of measure."
 
-	| unit |
-	unit := ByteArray newFixed: 4.
-	Gdip gdipGetFontUnit: self asParameter unit: unit.
-	^unit sdwordAtOffset: 0! !
+	^self initializer unit! !
 !Graphics.Gdiplus.Font categoriesForMethods!
-basicFree!private!realizing/unrealizing! !
+cellHeight!accessing!public! !
+clone!copying!public! !
 emSize!accessing!public! !
 family!accessing!public! !
 height!accessing!public! !
 heightFromGraphics:!accessing!public! !
+initializerClass!constants!private! !
 name!accessing!public! !
+style!accessing!public! !
 unit!accessing!public! !
 !
 
 !Graphics.Gdiplus.Font class methodsFor!
-
-exampleGdipFontHeight
-	"MSDN:  Font::GetHeight
-	This example gets a font's line spacing and draws a few strings with different spacings between them.
-
-		self exampleGdipFontHeight showExample
-	"
-
-	| bitmap graphics font height |
-	bitmap := Bitmap extent: 450 @ 150.
-	graphics := bitmap graphics.
-	font := Font name: 'Arial' pointSize: 18.
-	height := font heightFromGraphics: graphics.
-	graphics
-		drawString: 'The first line of text at the very top'
-			font: font
-			at: Point zero
-			format: nil
-			brush: nil;
-		drawString: 'The second line of text maybe too close'
-			font: font
-			at: 0 @ 0.6 * height
-			format: nil
-			brush: nil;
-		drawString: 'The third line of text is single spaced'
-			font: font
-			at: 0 @ 1.6 * height
-			format: nil
-			brush: nil.
-	^bitmap!
 
 fontFamily: fontFamily emSize: emSize
 	Notification deprecated.
@@ -120,7 +109,7 @@ fontFamily: fontFamily emSize: emSize
 
 fontFamily: fontFamily emSize: emSize style: style unit: unit
 	^self fromInitializer: (FontFromFontFamilyInitializer
-				fontFamily: fontFamily asParameter
+				fontFamily: fontFamily
 				emSize: emSize
 				style: style
 				unit: unit)!
@@ -132,10 +121,35 @@ fontFamily: aGdiplusFontFamily pointSize: anInteger
 		style: FontStyleRegular
 		unit: UnitPoint!
 
-icon
-	"Answers an Icon that can be used to represent this class"
+genericMonospace
+	"Answer a new generic monospace font of the default size."
 
-	^Graphics.Font icon!
+	^self genericMonospace: Graphics.Font default pointSize!
+
+genericMonospace: anInteger
+	"Answer a new generic monospace font of the specified point size."
+
+	^self fontFamily: FontFamily genericMonospace pointSize: anInteger!
+
+genericSansSerif
+	"Answer a new sans-serif instance of the receiver of default size."
+
+	^self genericSansSerif: Graphics.Font default pointSize!
+
+genericSansSerif: anInteger
+	"Answer a new sans-serif instance of the receiver of specified point size."
+
+	^self fontFamily: FontFamily genericSansSerif pointSize: anInteger!
+
+genericSerif
+	"Answer a new generic serif font of the default size."
+
+	^self genericSerif: Graphics.Font default pointSize!
+
+genericSerif: anInteger
+	"Answer a new generic serif font of the specified point size."
+
+	^self fontFamily: FontFamily genericSerif pointSize: anInteger!
 
 name: aFontFamilyString emSize: emSize
 	Notification deprecated.
@@ -143,7 +157,7 @@ name: aFontFamilyString emSize: emSize
 
 name: aFontFamilyString emSize: emSize style: style unit: unit
 	^self
-		fontFamily: (FontFamily fromName: aFontFamilyString)
+		fontFamily: (FontFamily name: aFontFamilyString)
 		emSize: emSize
 		style: style
 		unit: unit!
@@ -178,13 +192,17 @@ name: aFontFamilyString pointSize: emSize style: styleInteger
 new
 	"Answer a new initialized instance of the receiver for the default font."
 
-	^self fontFamily: FontFamily genericSansSerif pointSize: Graphics.Font default pointSize! !
+	^self genericSansSerif! !
 !Graphics.Gdiplus.Font class categoriesForMethods!
-exampleGdipFontHeight!examples!public!sunit! !
 fontFamily:emSize:!instance creation!public! !
 fontFamily:emSize:style:unit:!instance creation!public! !
 fontFamily:pointSize:!instance creation!public! !
-icon!constants!development!public! !
+genericMonospace!instance creation!public! !
+genericMonospace:!instance creation!public! !
+genericSansSerif!instance creation!public! !
+genericSansSerif:!instance creation!public! !
+genericSerif!instance creation!public! !
+genericSerif:!instance creation!public! !
 name:emSize:!instance creation!public! !
 name:emSize:style:unit:!instance creation!public! !
 name:pixelSize:!instance creation!public! !

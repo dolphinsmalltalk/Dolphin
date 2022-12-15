@@ -10,15 +10,14 @@ Graphics.Gdiplus.CachedBitmap guid: (Core.GUID fromString: '{28e34ab0-3f39-40a2-
 Graphics.Gdiplus.CachedBitmap comment: 'GdiplusCachedBitmap stores a bitmap in a format that is optimized for display on a particular device. To display an instance, call the GdiplusGraphics>>drawCachedBitmap method.
 
 '!
-!Graphics.Gdiplus.CachedBitmap categoriesForClass!Unclassified! !
 !Graphics.Gdiplus.CachedBitmap methodsFor!
 
-basicFree
-	"Private - Free up external resources held by the receiver.  Ignore any errors which might arise."
+initializerClass
+	"Answer the class of initializer usually associated with the receiver and which understands how to perform operations on the native Gdiplus objects such as disposing of them."
 
-	Gdip gdipDeleteCachedBitmap: handle! !
+	^CachedBitmapInitializer! !
 !Graphics.Gdiplus.CachedBitmap categoriesForMethods!
-basicFree!private!realizing/unrealizing! !
+initializerClass!private!realizing/unrealizing! !
 !
 
 !Graphics.Gdiplus.CachedBitmap class methodsFor!
@@ -28,39 +27,12 @@ bitmap: aBitmap graphics: aGraphics
 
 	^self fromInitializer: (CachedBitmapInitializer bitmap: aBitmap graphics: aGraphics)!
 
-exampleGdipCBPerformance
-	"MSDN: Using GDI+ > Using Images, Bitmaps, and Metafiles > Using a Cached Bitmap to Improve Performance
-	This example creates an image from file and a cached bitmap from the image.  It draws 
-	each a number of times, then shows the elapsed times.
-
-		UI.RichTextPresenter showOn: self exampleGdipCBPerformance
-	"
-
-	| bitmap graphics image cachedBitmap strm time1 time2 |
-	bitmap := Bitmap new.
-	graphics := bitmap graphics.
-	image := Image fromFile: 'Resources/Beach Ball.bmp' usingLocator: FileLocator installRelative.
-	cachedBitmap := CachedBitmap bitmap: image graphics: graphics.
-	strm := String smalltalkWriteStream.
-	strm
-		display: 'CachedBitmap drawing time';
-		cr.
-	time1 := [100 timesRepeat: [graphics drawImage: image at: 10 @ 10]] timeToRun.
-	strm display: '#drawImage: '.
-	time1 displayOn: strm.
-	strm cr.
-	time2 := [100 timesRepeat: [graphics drawCachedBitmap: cachedBitmap at: 10 @ 200]] timeToRun.
-	strm display: '#drawCachedBitmap: '.
-	time2 displayOn: strm.
-	^strm contents!
-
 icon
 	"Answers an Icon that can be used to represent this class"
 
 	^Bitmap icon! !
 !Graphics.Gdiplus.CachedBitmap class categoriesForMethods!
 bitmap:graphics:!instance creation!public! !
-exampleGdipCBPerformance!examples!public!sunit! !
 icon!constants!development!public! !
 !
 

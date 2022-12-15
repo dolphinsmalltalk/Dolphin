@@ -8,91 +8,57 @@ Graphics.Gdiplus.Brush subclass: #'Graphics.Gdiplus.SolidBrush'
 	classConstants: {}!
 Graphics.Gdiplus.SolidBrush guid: (Core.GUID fromString: '{7f8ddb06-89ba-471a-a00c-73f32cbb0af7}')!
 Graphics.Gdiplus.SolidBrush comment: 'A solid brush paints a single, constant color that can be opaque or transparent.'!
-!Graphics.Gdiplus.SolidBrush categoriesForClass!Unclassified! !
 !Graphics.Gdiplus.SolidBrush methodsFor!
 
+asColor
+	^self color!
+
 color
-	| color |
-	color := ByteArray newFixed: 4.
-	Gdip gdipGetSolidFillColor: self asParameter color: color.
-	^Color fromArgbCode: (color dwordAtOffset: 0)!
+	^initializer color!
 
 color: aColor
-	Gdip gdipSetSolidFillColor: self asParameter color: aColor argbCode! !
+	"Change the receiver's colour."
+
+	initializer colorOf: self set: aColor!
+
+evaluationClass
+	^Brush!
+
+initializerClass
+	"Answer the class of initializer usually associated with the receiver and which understands how to perform operations on the native Gdiplus objects such as disposing of them."
+
+	^SolidBrushFromColorInitializer!
+
+isNone
+	"Answer whether the receiver paints nothing (is transparent)."
+
+	^self color isNone!
+
+luminance
+	"Answer a <Number> in the range [0,1] representing the luminance of the receiver, a brightness value weighted by the human eye's color sensitivity. For a SolidBrush this is accurate."
+
+	^self color luminance! !
 !Graphics.Gdiplus.SolidBrush categoriesForMethods!
+asColor!converting!public! !
 color!accessing!public! !
 color:!accessing!public! !
+evaluationClass!constants!private! !
+initializerClass!constants!private! !
+isNone!public!testing! !
+luminance!accessing!public! !
 !
 
 !Graphics.Gdiplus.SolidBrush class methodsFor!
-
-black
-	^self color: Color black!
-
-blue
-	^self color: Color blue!
 
 color: aColor
 	"Creates a SolidBrush object based on a color."
 
 	^self fromInitializer: (SolidBrushFromColorInitializer color: aColor)!
 
-exampleGdipDropShadow
-	"
-	self exampleGdipDropShadow showExample
-	"
-
-	| rect shadowRect shadow bitmap offset |
-	rect := 0 @ 0 corner: 100 @ 60.
-	offset := 8 @ 8.
-	shadowRect := rect topLeft // offset corner: rect extent // offset.
-	shadow := Bitmap extent: shadowRect extent.
-	shadow graphics fillRectangle: shadowRect
-		brush: (SolidBrush color: (Color
-						a: 128
-						r: 0
-						g: 0
-						b: 0)).
-	bitmap := Bitmap extent: rect extent + (offset * 2).
-	bitmap graphics
-		interpolationMode: InterpolationModeHighQualityBicubic;
-		drawImage: shadow
-			at: offset
-			extent: rect extent
-			from: 0 @ 0
-			extent: shadowRect extent.
-	bitmap graphics
-		fillRectangle: rect brush: (SolidBrush color: Color white);
-		drawRectangle: rect.
-	^bitmap!
-
-exampleGdipSBFillAShape
-	"MSDN: GDI+ > Using GDI+ > Using a Brush to Fill Shapes > Filling a Shape with a Solid Color
-
-		self exampleGdipSBFillAShape showExample
-	"
-
-	| bitmap |
-	bitmap := Bitmap extent: 200 @ 150.
-	bitmap graphics fillEllipse: (50 @ 50 extent: 100 @ 60) brush: SolidBrush red.
-	^bitmap!
-
-green
-	^self color: Color green!
-
 new
-	^self black!
-
-red
-	^self color: Color red! !
+	^self black! !
 !Graphics.Gdiplus.SolidBrush class categoriesForMethods!
-black!instance creation!public! !
-blue!instance creation!public! !
 color:!instance creation!public! !
-exampleGdipDropShadow!examples!public!sunit! !
-exampleGdipSBFillAShape!examples!public!sunit! !
-green!instance creation!public! !
 new!instance creation!public! !
-red!instance creation!public! !
 !
 

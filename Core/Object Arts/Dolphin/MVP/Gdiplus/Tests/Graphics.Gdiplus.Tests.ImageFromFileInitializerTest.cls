@@ -8,16 +8,10 @@ Graphics.Gdiplus.Tests.InitializerTests subclass: #'Graphics.Gdiplus.Tests.Image
 	classConstants: {}!
 Graphics.Gdiplus.Tests.ImageFromFileInitializerTest guid: (Core.GUID fromString: '{a57cca61-cd3f-43b3-a963-3e534232e776}')!
 Graphics.Gdiplus.Tests.ImageFromFileInitializerTest comment: ''!
-!Graphics.Gdiplus.Tests.ImageFromFileInitializerTest categoriesForClass!Unclassified! !
 !Graphics.Gdiplus.Tests.ImageFromFileInitializerTest methodsFor!
 
-gdipLoadImageFromFile: filename image: image 
-	constructorArgs := Processor activeProcess topFrame arguments.
-	^Ok!
-
-setUp
-	super setUp.
-	model := ImageFromFileInitializer new library: self!
+subjectClass
+	^ImageFromFileInitializer!
 
 testAbsoluteFilename
 	model filename: 'c:\test' fileLocator: nil.
@@ -29,14 +23,15 @@ testAbsoluteFilename
 		equals: (FileLocator imageRelative localFileSpecFor: 'test')!
 
 testCreateHandle
+	| constructor |
 	model filename: self fileResource pafRgb0000FF_100x100bmp fileLocator: nil.
-	model createHandle.
-	self assert: constructorArgs size equals: 2.
-	self assert: constructorArgs first equals: self fileResource pafRgb0000FF_100x100bmp.
-	self assertLastArgIsHandle! !
+	constructor := self createHandle single.
+	self assert: constructor selector identicalTo: #gdipLoadImageFromFile:image:.
+	self assert: constructor arguments size equals: 2.
+	self assert: constructor arguments first equals: self fileResource pafRgb0000FF_100x100bmp.
+	self assert: constructor arguments last isKindOf: Handle! !
 !Graphics.Gdiplus.Tests.ImageFromFileInitializerTest categoriesForMethods!
-gdipLoadImageFromFile:image:!accessing!public! !
-setUp!public!setup! !
+subjectClass!constants!private! !
 testAbsoluteFilename!public!unit tests! !
 testCreateHandle!public!unit tests! !
 !

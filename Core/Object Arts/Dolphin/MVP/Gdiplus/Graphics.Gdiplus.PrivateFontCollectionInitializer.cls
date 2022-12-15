@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.PrivateFontCollectionInitializer'
+Graphics.Gdiplus.FontCollectionInitializer subclass: #'Graphics.Gdiplus.PrivateFontCollectionInitializer'
 	instanceVariableNames: ''
 	classVariableNames: 'Default'
 	imports: #()
@@ -8,16 +8,25 @@ Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.PrivateFontCollectionI
 	classConstants: {}!
 Graphics.Gdiplus.PrivateFontCollectionInitializer guid: (Core.GUID fromString: '{c09d8c07-5f28-11d7-b609-00e0987e8081}')!
 Graphics.Gdiplus.PrivateFontCollectionInitializer comment: ''!
-!Graphics.Gdiplus.PrivateFontCollectionInitializer categoriesForClass!Unclassified! !
 !Graphics.Gdiplus.PrivateFontCollectionInitializer methodsFor!
 
-createHandle
+basicCreateHandle
 	| gpHandle |
 	gpHandle := Handle new.
-	self library gdipNewPrivateFontCollection: gpHandle.
-	^gpHandle! !
+	Gdip gdipNewPrivateFontCollection: gpHandle.
+	^gpHandle!
+
+freeHandle: aHandle
+	Gdip gdipDeletePrivateFontCollection: aHandle!
+
+isPersistent
+	"Answer true if the receiver holds sufficient information such that it can recreate the Gdiplus native object it describes exactly as it was across Smalltalk image save/restore. This is generally true."
+
+	^false! !
 !Graphics.Gdiplus.PrivateFontCollectionInitializer categoriesForMethods!
-createHandle!private!realizing/unrealizing! !
+basicCreateHandle!private!realizing/unrealizing! !
+freeHandle:!private!realizing/unrealizing! !
+isPersistent!public!testing! !
 !
 
 !Graphics.Gdiplus.PrivateFontCollectionInitializer class methodsFor!

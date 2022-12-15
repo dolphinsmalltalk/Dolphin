@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'Graphics.Gdiplus.GpColorPalette'
+Graphics.Gdiplus.GpStructure subclass: #'Graphics.Gdiplus.ColorPalette'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_GpColorPalette_Size' -> 16rC.
+		'_ColorPalette_Size' -> 16rC.
 		'_OffsetOf_Count' -> 16r4.
 		'_OffsetOf_Entries' -> 16r8.
 		'_OffsetOf_Flags' -> 16r0
 	}!
-Graphics.Gdiplus.GpColorPalette guid: (Core.GUID fromString: '{585419f2-d5ab-4e85-bf56-56d115cbe7b2}')!
-Graphics.Gdiplus.GpColorPalette comment: '<GpColorPalette> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpColorPalette'' from type information in the ''GDI+ Library 1.0'' library.
+Graphics.Gdiplus.ColorPalette guid: (Core.GUID fromString: '{585419f2-d5ab-4e85-bf56-56d115cbe7b2}')!
+Graphics.Gdiplus.ColorPalette comment: '<GpColorPalette> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpColorPalette'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
 
@@ -27,8 +27,15 @@ struct tagGpColorPalette {
 	unsigned long Entries[1];
 } GpColorPalette;
 '!
-!Graphics.Gdiplus.GpColorPalette categoriesForClass!Unclassified! !
-!Graphics.Gdiplus.GpColorPalette methodsFor!
+!Graphics.Gdiplus.ColorPalette methodsFor!
+
+asArray
+	^self Entries!
+
+byteSize
+	"Same approach as BITMAPINFO>>byteSize."
+
+	^super byteSize + ((self Count - 1) * 4)!
 
 Count
 	"Answer the <Integer> value of the receiver's 'Count' field."
@@ -41,26 +48,21 @@ Count: anInteger
 	bytes dwordAtOffset: _OffsetOf_Count put: anInteger!
 
 Entries
-	"Answer the receiver's Entries field as a Smalltalk object."
+	"Answer the <ARGBArray> value of the receiver's 'Entries' field."
 
-	"Implementation Note: We must define this manually because there is no field type for a
-	variable length DWORDArray."
+	^ARGBArray fromAddress: bytes yourAddress + _OffsetOf_Entries length: self Count!
 
-	^DWORDArray fromAddress: bytes yourAddress + 8 length: self Count!
-
-Entries: anObject 
-	"Set the receiver's Entries field to the value of anObject."
-
-	"Implementation Note: We must define this manually because there is no field type for a
-	variable length DWORDArray."
+Entries: anARGBArray
+	"Set the receiver's 'Entries' field to the value of the argument, anARGBArray"
 
 	| size |
-	size := anObject byteSize.
-	anObject 
+	size := anARGBArray byteSize.
+	anARGBArray
 		replaceBytesOf: bytes
-		from: 9
-		to: 8 + size
-		startingAt: 1!
+		from: ##(_OffsetOf_Entries + 1)
+		to: _OffsetOf_Entries + size
+		startingAt: 1.
+	self Count: anARGBArray size!
 
 Flags
 	"Answer the <Integer> value of the receiver's 'Flags' field."
@@ -71,47 +73,44 @@ Flags: anInteger
 	"Set the receiver's 'Flags' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_Flags put: anInteger! !
-!Graphics.Gdiplus.GpColorPalette categoriesForMethods!
+!Graphics.Gdiplus.ColorPalette categoriesForMethods!
+asArray!converting!public! !
+byteSize!accessing!public! !
 Count!**compiled accessors**!public! !
 Count:!**compiled accessors**!public! !
-Entries!accessing!public! !
-Entries:!accessing!public! !
+Entries!**compiled accessors**!public! !
+Entries:!**compiled accessors**!public! !
 Flags!**compiled accessors**!public! !
 Flags:!**compiled accessors**!public! !
 !
 
-!Graphics.Gdiplus.GpColorPalette class methodsFor!
+!Graphics.Gdiplus.ColorPalette class methodsFor!
 
 byteSize
-	^_GpColorPalette_Size!
+	^_ColorPalette_Size!
 
 defineFields
-	"Define the fields of the GpColorPalette structure.
-		GpColorPalette compileDefinition
-	
-		typedef [uuid(585419F2-D5AB-4E85-BF56-56D115CBE7B2)]
-		struct tagGpColorPalette {
+	"Define the fields of the ColorPalette structure.
+
+	ColorPalette compileDefinition
+
+		typedef [uuid(585419f2-d5ab-4e85-bf56-56d115cbe7b2)]
+		struct tagColorPalette {
 			[helpstring('Palette flags')] unsigned int Flags;
 			[helpstring('Number of color entries')] unsigned int Count;
-			[helpstring('Palette color entries')] unsigned long Entries[1];
-		} GpColorPalette;
+			[size_is('Count')] ARGB Entries[1];
+		} ColorPalette;
 "
 
 	self
-		defineField: #Flags
-			type: DWORDField new
-			offset: 0;
-		defineField: #Count
-			type: DWORDField new
-			offset: 4;
-		defineField: #Entries
-			type: (ArrayField type: DWORDArray length: 1)
-			offset: 8.
+		defineField: #Flags type: DWORDField new offset: 0;
+		defineField: #Count type: DWORDField new offset: 4;
+		defineField: #Entries type: (ArrayField type: ARGBArray lengthField: #Count) offset: 8.
 	self byteSize: 12!
 
 getFieldNames
 	^#(#Flags #Count #Entries)! !
-!Graphics.Gdiplus.GpColorPalette class categoriesForMethods!
+!Graphics.Gdiplus.ColorPalette class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

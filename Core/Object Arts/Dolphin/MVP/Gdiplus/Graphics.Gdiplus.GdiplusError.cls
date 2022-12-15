@@ -10,7 +10,6 @@ Core.Error subclass: #'Graphics.Gdiplus.GdiplusError'
 	}!
 Graphics.Gdiplus.GdiplusError guid: (Core.GUID fromString: '{2fdb3661-122f-4b12-b60d-ce33dbab46f6}')!
 Graphics.Gdiplus.GdiplusError comment: ''!
-!Graphics.Gdiplus.GdiplusError categoriesForClass!Unclassified! !
 !Graphics.Gdiplus.GdiplusError methodsFor!
 
 _descriptionArguments

@@ -5,17 +5,19 @@ External.DynamicLinkLibrary subclass: #'Graphics.Gdiplus.GdiplusLibrary'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'FlatnessDefault' -> 0.25.
+		'PixelFormatMax' -> 16rF.
+		'PixelFormatUndefined' -> 16r0
+	}!
 Graphics.Gdiplus.GdiplusLibrary guid: (Core.GUID fromString: '{de97dca0-ad17-4002-a790-a4b99480a5b8}')!
-Graphics.Gdiplus.GdiplusLibrary comment: 'Gdiplus is the <ExternalLibrary> class to represent the dynamic link library, ''GDIPLUS.DLL''. It was generated from IDL built from the GDI+ header files. It contains wrapper methods for each of the methods in the GDI+ Flat API. The GDI+ class library (a set of C++ classes) sits on top of the flat API. There is very little documentation for the flat API, but the class library is, for the most part, a thin layer on top so it is easy to map between the C++ class library documentation and the corresponding flat API calls.
+Graphics.Gdiplus.GdiplusLibrary comment: 'Gdiplus is the `DynamicLinkLibrary` class to represent the dynamic link library, ''GDIPLUS.DLL''. It was generated from IDL built from the GDI+ header files. It contains wrapper methods for each of the methods in the GDI+ Flat API. The GDI+ class library (a set of C++ classes) sits on top of the flat API. There is very little documentation for the flat API, but the class library is, for the most part, a thin layer on top so it is easy to map between the C++ class library documentation and the corresponding flat API calls.
 '!
 !Graphics.Gdiplus.GdiplusLibrary categoriesForClass!External-Libraries-Win32! !
 !Graphics.Gdiplus.GdiplusLibrary methodsFor!
 
 close
-	"Release the reference the receiver has to the External Library	it represents. This may
-	not cause the library to be unloaded, so it may still function. Answer whether the
-	library was successfully closed. We also free any standard IMalloc instances."
+	"Release the reference the receiver has to the External Library it represents. This may not cause the library to be unloaded, so it may still function. Answer whether the library was successfully closed."
 
 	handle notNull ifTrue: [self uninitialize].
 	^super close!
@@ -27,8 +29,8 @@ gdipAddPathArc: path x: x y: y width: width height: height startAngle: startAngl
 			PGpPath path,
 			REAL x,
 			REAL y,
-			REAL Width,
-			REAL Height,
+			REAL width,
+			REAL height,
 			REAL startAngle,
 			REAL sweepAngle);"
 
@@ -42,8 +44,8 @@ gdipAddPathArcI: path x: x y: y width: width height: height startAngle: startAng
 			PGpPath path,
 			int x,
 			int y,
-			int Width,
-			int Height,
+			int width,
+			int height,
 			REAL startAngle,
 			REAL sweepAngle);"
 
@@ -89,7 +91,7 @@ gdipAddPathBeziers: path points: points count: count
 
 		GpStatus __stdcall GdipAddPathBeziers(
 			PGpPath path,
-			[in]GpPointF* Points,
+			[in]POINTF* Points,
 			int Count);"
 
 	<stdcall: errno GdipAddPathBeziers handle POINTF* sdword>
@@ -100,7 +102,7 @@ gdipAddPathBeziersI: path points: points count: count
 
 		GpStatus __stdcall GdipAddPathBeziersI(
 			PGpPath path,
-			[in]GpPoint* Points,
+			[in]POINTL* Points,
 			int Count);"
 
 	<stdcall: errno GdipAddPathBeziersI handle POINTL* sdword>
@@ -111,7 +113,7 @@ gdipAddPathClosedCurve: path points: points count: count
 
 		GpStatus __stdcall GdipAddPathClosedCurve(
 			PGpPath path,
-			[in]GpPointF* Points,
+			[in]POINTF* Points,
 			int Count);"
 
 	<stdcall: errno GdipAddPathClosedCurve handle POINTF* sdword>
@@ -122,7 +124,7 @@ gdipAddPathClosedCurve2: path points: points count: count tension: tension
 
 		GpStatus __stdcall GdipAddPathClosedCurve2(
 			PGpPath path,
-			[in]GpPointF* Points,
+			[in]POINTF* Points,
 			int Count,
 			REAL tension);"
 
@@ -134,7 +136,7 @@ gdipAddPathClosedCurve2I: path points: points count: count tension: tension
 
 		GpStatus __stdcall GdipAddPathClosedCurve2I(
 			PGpPath path,
-			[in]GpPoint* Points,
+			[in]POINTL* Points,
 			int Count,
 			REAL tension);"
 
@@ -146,7 +148,7 @@ gdipAddPathClosedCurveI: path points: points count: count
 
 		GpStatus __stdcall GdipAddPathClosedCurveI(
 			PGpPath path,
-			[in]GpPoint* Points,
+			[in]POINTL* Points,
 			int Count);"
 
 	<stdcall: errno GdipAddPathClosedCurveI handle POINTL* sdword>
@@ -157,7 +159,7 @@ gdipAddPathCurve: path points: points count: count
 
 		GpStatus __stdcall GdipAddPathCurve(
 			PGpPath path,
-			[in]GpPointF* Points,
+			[in]POINTF* Points,
 			int Count);"
 
 	<stdcall: errno GdipAddPathCurve handle POINTF* sdword>
@@ -168,7 +170,7 @@ gdipAddPathCurve2: path points: points count: count tension: tension
 
 		GpStatus __stdcall GdipAddPathCurve2(
 			PGpPath path,
-			[in]GpPointF* Points,
+			[in]POINTF* Points,
 			int Count,
 			REAL tension);"
 
@@ -180,7 +182,7 @@ gdipAddPathCurve2I: path points: points count: count tension: tension
 
 		GpStatus __stdcall GdipAddPathCurve2I(
 			PGpPath path,
-			[in]GpPoint* Points,
+			[in]POINTL* Points,
 			int Count,
 			REAL tension);"
 
@@ -192,9 +194,9 @@ gdipAddPathCurve3: path points: points count: count offset: offset numberOfSegme
 
 		GpStatus __stdcall GdipAddPathCurve3(
 			PGpPath path,
-			[in]GpPointF* Points,
+			[in]POINTF* Points,
 			int Count,
-			int offset,
+			int Offset,
 			int numberOfSegments,
 			REAL tension);"
 
@@ -206,9 +208,9 @@ gdipAddPathCurve3I: path points: points count: count offset: offset numberOfSegm
 
 		GpStatus __stdcall GdipAddPathCurve3I(
 			PGpPath path,
-			[in]GpPoint* Points,
+			[in]POINTL* Points,
 			int Count,
-			int offset,
+			int Offset,
 			int numberOfSegments,
 			REAL tension);"
 
@@ -220,7 +222,7 @@ gdipAddPathCurveI: path points: points count: count
 
 		GpStatus __stdcall GdipAddPathCurveI(
 			PGpPath path,
-			[in]GpPoint* Points,
+			[in]POINTL* Points,
 			int Count);"
 
 	<stdcall: errno GdipAddPathCurveI handle POINTL* sdword>
@@ -233,8 +235,8 @@ gdipAddPathEllipse: path x: x y: y width: width height: height
 			PGpPath path,
 			REAL x,
 			REAL y,
-			REAL Width,
-			REAL Height);"
+			REAL width,
+			REAL height);"
 
 	<stdcall: errno GdipAddPathEllipse handle float float float float>
 	^self invalidCall: _failureCode!
@@ -246,8 +248,8 @@ gdipAddPathEllipseI: path x: x y: y width: width height: height
 			PGpPath path,
 			int x,
 			int y,
-			int Width,
-			int Height);"
+			int width,
+			int height);"
 
 	<stdcall: errno GdipAddPathEllipseI handle sdword sdword sdword sdword>
 	^self invalidCall: _failureCode!
@@ -270,7 +272,7 @@ gdipAddPathLine2: path points: points count: count
 
 		GpStatus __stdcall GdipAddPathLine2(
 			PGpPath path,
-			[in]GpPointF* Points,
+			[in]POINTF* Points,
 			int Count);"
 
 	<stdcall: errno GdipAddPathLine2 handle POINTF* sdword>
@@ -281,7 +283,7 @@ gdipAddPathLine2I: path points: points count: count
 
 		GpStatus __stdcall GdipAddPathLine2I(
 			PGpPath path,
-			[in]GpPoint* Points,
+			[in]POINTL* Points,
 			int Count);"
 
 	<stdcall: errno GdipAddPathLine2I handle POINTL* sdword>
@@ -306,9 +308,9 @@ gdipAddPathPath: path addingPath: addingPath connect: connect
 		GpStatus __stdcall GdipAddPathPath(
 			PGpPath path,
 			[in]PGpPath addingPath,
-			long connect);"
+			BOOL connect);"
 
-	<stdcall: errno GdipAddPathPath handle handle sdword>
+	<stdcall: errno GdipAddPathPath handle handle bool>
 	^self invalidCall: _failureCode!
 
 gdipAddPathPie: path x: x y: y width: width height: height startAngle: startAngle sweepAngle: sweepAngle
@@ -318,8 +320,8 @@ gdipAddPathPie: path x: x y: y width: width height: height startAngle: startAngl
 			PGpPath path,
 			REAL x,
 			REAL y,
-			REAL Width,
-			REAL Height,
+			REAL width,
+			REAL height,
 			REAL startAngle,
 			REAL sweepAngle);"
 
@@ -333,8 +335,8 @@ gdipAddPathPieI: path x: x y: y width: width height: height startAngle: startAng
 			PGpPath path,
 			int x,
 			int y,
-			int Width,
-			int Height,
+			int width,
+			int height,
 			REAL startAngle,
 			REAL sweepAngle);"
 
@@ -346,7 +348,7 @@ gdipAddPathPolygon: path points: points count: count
 
 		GpStatus __stdcall GdipAddPathPolygon(
 			PGpPath path,
-			[in]GpPointF* Points,
+			[in]POINTF* Points,
 			int Count);"
 
 	<stdcall: errno GdipAddPathPolygon handle POINTF* sdword>
@@ -357,7 +359,7 @@ gdipAddPathPolygonI: path points: points count: count
 
 		GpStatus __stdcall GdipAddPathPolygonI(
 			PGpPath path,
-			[in]GpPoint* Points,
+			[in]POINTL* Points,
 			int Count);"
 
 	<stdcall: errno GdipAddPathPolygonI handle POINTL* sdword>
@@ -370,8 +372,8 @@ gdipAddPathRectangle: path x: x y: y width: width height: height
 			PGpPath path,
 			REAL x,
 			REAL y,
-			REAL Width,
-			REAL Height);"
+			REAL width,
+			REAL height);"
 
 	<stdcall: errno GdipAddPathRectangle handle float float float float>
 	^self invalidCall: _failureCode!
@@ -383,8 +385,8 @@ gdipAddPathRectangleI: path x: x y: y width: width height: height
 			PGpPath path,
 			int x,
 			int y,
-			int Width,
-			int Height);"
+			int width,
+			int height);"
 
 	<stdcall: errno GdipAddPathRectangleI handle sdword sdword sdword sdword>
 	^self invalidCall: _failureCode!
@@ -394,10 +396,10 @@ gdipAddPathRectangles: path rects: rects count: count
 
 		GpStatus __stdcall GdipAddPathRectangles(
 			PGpPath path,
-			[in]GpRectF* rects,
+			[in]RectF* rects,
 			int Count);"
 
-	<stdcall: errno GdipAddPathRectangles handle RECTF* sdword>
+	<stdcall: errno GdipAddPathRectangles handle RectF* sdword>
 	^self invalidCall: _failureCode!
 
 gdipAddPathRectanglesI: path rects: rects count: count
@@ -405,10 +407,10 @@ gdipAddPathRectanglesI: path rects: rects count: count
 
 		GpStatus __stdcall GdipAddPathRectanglesI(
 			PGpPath path,
-			[in]GpRect* rects,
+			[in]Rect* rects,
 			int Count);"
 
-	<stdcall: errno GdipAddPathRectanglesI handle RECTL* sdword>
+	<stdcall: errno GdipAddPathRectanglesI handle Rect* sdword>
 	^self invalidCall: _failureCode!
 
 gdipAddPathString: path string: string length: length family: family style: style emSize: emSize layoutRect: layoutRect format: format
@@ -421,10 +423,10 @@ gdipAddPathString: path string: string length: length family: family style: styl
 			[in]PGpFontFamily family,
 			int style,
 			REAL emSize,
-			[in]RECTF* layoutRect,
+			[in]RectF* layoutRect,
 			[in]PGpStringFormat format);"
 
-	<stdcall: errno GdipAddPathString handle lpwstr sdword handle sdword float RECTF* handle>
+	<stdcall: errno GdipAddPathString handle lpwstr sdword handle sdword float RectF* handle>
 	^self invalidCall: _failureCode!
 
 gdipAddPathStringI: path string: string length: length family: family style: style emSize: emSize layoutRect: layoutRect format: format
@@ -437,10 +439,10 @@ gdipAddPathStringI: path string: string length: length family: family style: sty
 			[in]PGpFontFamily family,
 			int style,
 			REAL emSize,
-			[in]RECTL* layoutRect,
+			[in]Rect* layoutRect,
 			[in]PGpStringFormat format);"
 
-	<stdcall: errno GdipAddPathStringI handle lpwstr sdword handle sdword float RECTL* handle>
+	<stdcall: errno GdipAddPathStringI handle lpwstr sdword handle sdword float Rect* handle>
 	^self invalidCall: _failureCode!
 
 gdipBeginContainer: graphics dstrect: dstrect srcRect: srcRect unit: unit state: state
@@ -448,12 +450,12 @@ gdipBeginContainer: graphics dstrect: dstrect srcRect: srcRect unit: unit state:
 
 		GpStatus __stdcall GdipBeginContainer(
 			PGpGraphics graphics,
-			[in]GpRectF* dstrect,
-			[in]GpRectF* srcRect,
+			[in]RectF* dstrect,
+			[in]RectF* srcRect,
 			GpUnit Unit,
 			GraphicsContainer* state);"
 
-	<stdcall: errno GdipBeginContainer handle RECTF* RECTF* sdword dword*>
+	<stdcall: errno GdipBeginContainer handle RectF* RectF* sdword dword*>
 	^self invalidCall: _failureCode!
 
 gdipBeginContainer2: graphics state: state
@@ -471,18 +473,88 @@ gdipBeginContainerI: graphics dstrect: dstrect srcRect: srcRect unit: unit state
 
 		GpStatus __stdcall GdipBeginContainerI(
 			PGpGraphics graphics,
-			[in]GpRect* dstrect,
-			[in]GpRect* srcRect,
+			[in]Rect* dstrect,
+			[in]Rect* srcRect,
 			GpUnit Unit,
 			GraphicsContainer* state);"
 
-	<stdcall: errno GdipBeginContainerI handle RECTL* RECTL* sdword dword*>
+	<stdcall: errno GdipBeginContainerI handle Rect* Rect* sdword dword*>
+	^self invalidCall: _failureCode!
+
+gdipBitmapApplyEffect: bitmap effect: effect roi: roi useAuxData: useAuxData auxData: auxData auxDataSize: auxDataSize
+	"Invoke the GdipBitmapApplyEffect() function of the module wrapped by the receiver.
+
+		GpStatus __stdcall GdipBitmapApplyEffect(
+			PGpBitmap bitmap,
+			PCGpEffect effect,
+			Rect* roi,
+			BOOL useAuxData,
+			void** auxData,
+			int* auxDataSize);"
+
+	<stdcall: errno GdipBitmapApplyEffect handle handle Rect* bool void** sdword*>
+	^self invalidCall: _failureCode!
+
+gdipBitmapConvertFormat: pInputBitmap format: format ditherType: ditherType paletteType: paletteType palette: palette alphaThresholdPercent: alphaThresholdPercent
+	"Invoke the GdipBitmapConvertFormat() function of the module wrapped by the receiver.
+
+		GpStatus __stdcall GdipBitmapConvertFormat(
+			PGpBitmap pInputBitmap,
+			PixelFormat format,
+			DitherType DitherType,
+			PaletteType PaletteType,
+			ColorPalette* palette,
+			REAL alphaThresholdPercent);"
+
+	<stdcall: errno GdipBitmapConvertFormat handle sdword sdword sdword ColorPalette* float>
+	^self invalidCall: _failureCode!
+
+gdipBitmapCreateApplyEffect: inputBitmaps numInputs: numInputs effect: effect roi: roi outputRect: outputRect outputBitmap: outputBitmap useAuxData: useAuxData auxData: auxData auxDataSize: auxDataSize
+	"Invoke the GdipBitmapCreateApplyEffect() function of the module wrapped by the receiver.
+
+		GpStatus __stdcall GdipBitmapCreateApplyEffect(
+			PGpBitmap* inputBitmaps,
+			int numInputs,
+			PCGpEffect effect,
+			Rect* roi,
+			Rect* outputRect,
+			PGpBitmap* outputBitmap,
+			BOOL useAuxData,
+			void** auxData,
+			int* auxDataSize);"
+
+	<stdcall: errno GdipBitmapCreateApplyEffect handle* sdword handle Rect* Rect* handle* bool void** sdword*>
+	^self invalidCall: _failureCode!
+
+gdipBitmapGetHistogram: bitmap format: format numberOfEntries: numberOfEntries channel0: channel0 channel1: channel1 channel2: channel2 channel3: channel3
+	"Invoke the GdipBitmapGetHistogram() function of the module wrapped by the receiver.
+
+		GpStatus __stdcall GdipBitmapGetHistogram(
+			PGpBitmap bitmap,
+			HistogramFormat format,
+			unsigned int NumberOfEntries,
+			unsigned int* channel0,
+			unsigned int* channel1,
+			unsigned int* channel2,
+			unsigned int* channel3);"
+
+	<stdcall: errno GdipBitmapGetHistogram handle sdword dword dword* dword* dword* dword*>
+	^self invalidCall: _failureCode!
+
+gdipBitmapGetHistogramSize: format numberOfEntries: numberOfEntries
+	"Invoke the GdipBitmapGetHistogramSize() function of the module wrapped by the receiver.
+
+		GpStatus __stdcall GdipBitmapGetHistogramSize(
+			HistogramFormat format,
+			[out]unsigned int* NumberOfEntries);"
+
+	<stdcall: errno GdipBitmapGetHistogramSize sdword dword*>
 	^self invalidCall: _failureCode!
 
 gdipBitmapGetPixel: bitmap x: x y: y color: color
 	"Invoke the GdipBitmapGetPixel() function of the module wrapped by the receiver.
 
-		GpStatus __stdcall GdipBitmapGetPixel(
+		GpStatus_NoThrow __stdcall GdipBitmapGetPixel(
 			[in]PGpBitmap bitmap,
 			[in]int x,
 			[in]int y,
@@ -496,12 +568,12 @@ gdipBitmapLockBits: bitmap rect: rect flags: flags format: format lockedBitmapDa
 
 		GpStatus __stdcall GdipBitmapLockBits(
 			[in]PGpBitmap bitmap,
-			[in]GpRect* rect,
+			[in]Rect* Rect,
 			[in]unsigned int Flags,
 			[in]PixelFormat format,
 			[out, retval]BitmapData* lockedBitmapData);"
 
-	<stdcall: errno GdipBitmapLockBits handle RECTL* dword sdword GpBitmapData*>
+	<stdcall: errno GdipBitmapLockBits handle Rect* dword sdword BitmapData*>
 	^self invalidCall: _failureCode!
 
 gdipBitmapSetPixel: bitmap x: x y: y color: color
@@ -534,7 +606,7 @@ gdipBitmapUnlockBits: bitmap lockedBitmapData: lockedBitmapData
 			[in]PGpBitmap bitmap,
 			[in]BitmapData* lockedBitmapData);"
 
-	<stdcall: errno GdipBitmapUnlockBits handle GpBitmapData*>
+	<stdcall: errno GdipBitmapUnlockBits handle BitmapData*>
 	^self invalidCall: _failureCode!
 
 gdipClearPathMarkers: path
@@ -552,8 +624,8 @@ gdipCloneBitmapArea: x y: y width: width height: height format: format srcBitmap
 		GpStatus __stdcall GdipCloneBitmapArea(
 			[in]REAL x,
 			[in]REAL y,
-			[in]REAL Width,
-			[in]REAL Height,
+			[in]REAL width,
+			[in]REAL height,
 			[in]PixelFormat format,
 			[in]PGpBitmap srcBitmap,
 			[out, retval]PGpBitmap* dstBitmap);"
@@ -567,8 +639,8 @@ gdipCloneBitmapAreaI: x y: y width: width height: height format: format srcBitma
 		GpStatus __stdcall GdipCloneBitmapAreaI(
 			[in]int x,
 			[in]int y,
-			[in]int Width,
-			[in]int Height,
+			[in]int width,
+			[in]int height,
 			[in]PixelFormat format,
 			[in]PGpBitmap srcBitmap,
 			[out, retval]PGpBitmap* dstBitmap);"
@@ -720,10 +792,10 @@ gdipCombineRegionRect: region rect: rect combineMode: combineMode
 
 		GpStatus __stdcall GdipCombineRegionRect(
 			PGpRegion region,
-			[in]GpRectF* rect,
+			[in]RectF* Rect,
 			CombineMode CombineMode);"
 
-	<stdcall: errno GdipCombineRegionRect handle RECTF* sdword>
+	<stdcall: errno GdipCombineRegionRect handle RectF* sdword>
 	^self invalidCall: _failureCode!
 
 gdipCombineRegionRectI: region rect: rect combineMode: combineMode
@@ -731,10 +803,10 @@ gdipCombineRegionRectI: region rect: rect combineMode: combineMode
 
 		GpStatus __stdcall GdipCombineRegionRectI(
 			PGpRegion region,
-			[in]GpRect* rect,
+			[in]Rect* Rect,
 			CombineMode CombineMode);"
 
-	<stdcall: errno GdipCombineRegionRectI handle RECTL* sdword>
+	<stdcall: errno GdipCombineRegionRectI handle Rect* sdword>
 	^self invalidCall: _failureCode!
 
 gdipCombineRegionRegion: region region2: region2 combineMode: combineMode
@@ -754,21 +826,65 @@ gdipComment: graphics sizeData: sizeData data: data
 		GpStatus __stdcall GdipComment(
 			PGpGraphics graphics,
 			unsigned int sizeData,
-			[in]BYTE* data);"
+			[in]BYTE* Data);"
 
 	<stdcall: errno GdipComment handle dword byte*>
+	^self invalidCall: _failureCode!
+
+gdipConvertToEmfPlus: refGraphics metafile: metafile conversionFailureFlag: conversionFailureFlag emfType: emfType description: description out_metafile: out_metafile
+	"Invoke the GdipConvertToEmfPlus() function of the module wrapped by the receiver.
+
+		GpStatus __stdcall GdipConvertToEmfPlus(
+			PGpGraphics refGraphics,
+			PGpMetafile metafile,
+			int* conversionFailureFlag,
+			EmfType EmfType,
+			WCHAR* description,
+			[out, retval]PGpMetafile* out_metafile);"
+
+	<stdcall: errno GdipConvertToEmfPlus handle handle sdword* sdword word* handle*>
+	^self invalidCall: _failureCode!
+
+gdipConvertToEmfPlusToFile: refGraphics metafile: metafile conversionFailureFlag: conversionFailureFlag filename: filename emfType: emfType description: description out_metafile: out_metafile
+	"Invoke the GdipConvertToEmfPlusToFile() function of the module wrapped by the receiver.
+
+		GpStatus __stdcall GdipConvertToEmfPlusToFile(
+			PGpGraphics refGraphics,
+			PGpMetafile metafile,
+			int* conversionFailureFlag,
+			WCHAR* filename,
+			EmfType EmfType,
+			WCHAR* description,
+			[out, retval]PGpMetafile* out_metafile);"
+
+	<stdcall: errno GdipConvertToEmfPlusToFile handle handle sdword* word* sdword word* handle*>
+	^self invalidCall: _failureCode!
+
+gdipConvertToEmfPlusToStream: refGraphics metafile: metafile conversionFailureFlag: conversionFailureFlag stream: stream emfType: emfType description: description out_metafile: out_metafile
+	"Invoke the GdipConvertToEmfPlusToStream() function of the module wrapped by the receiver.
+
+		GpStatus __stdcall GdipConvertToEmfPlusToStream(
+			PGpGraphics refGraphics,
+			PGpMetafile metafile,
+			int* conversionFailureFlag,
+			IStream* stream,
+			EmfType EmfType,
+			WCHAR* description,
+			[out, retval]PGpMetafile* out_metafile);"
+
+	<stdcall: errno GdipConvertToEmfPlusToStream handle handle sdword* OS.COM.IStream* sdword word* handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateAdjustableArrowCap: height width: width isFilled: isFilled cap: cap
 	"Invoke the GdipCreateAdjustableArrowCap() function of the module wrapped by the receiver.
 
 		GpStatus __stdcall GdipCreateAdjustableArrowCap(
-			REAL Height,
-			REAL Width,
-			long isFilled,
+			REAL height,
+			REAL width,
+			BOOL isFilled,
 			[out, retval]PGpAdjustableArrowCap* cap);"
 
-	<stdcall: errno GdipCreateAdjustableArrowCap float float sdword handle*>
+	<stdcall: errno GdipCreateAdjustableArrowCap float float bool handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateBitmapFromDirectDrawSurface: surface bitmap: bitmap
@@ -806,7 +922,7 @@ gdipCreateBitmapFromGdiDib: gdiBitmapInfo gdiBitmapData: gdiBitmapData bitmap: b
 
 		GpStatus __stdcall GdipCreateBitmapFromGdiDib(
 			[in]BITMAPINFO* gdiBitmapInfo,
-			[in]VOID* gdiBitmapData,
+			[in]void* gdiBitmapData,
 			[out, retval]PGpBitmap* bitmap);"
 
 	<stdcall: errno GdipCreateBitmapFromGdiDib void* void* handle*>
@@ -816,8 +932,8 @@ gdipCreateBitmapFromGraphics: width height: height target: target bitmap: bitmap
 	"Invoke the GdipCreateBitmapFromGraphics() function of the module wrapped by the receiver.
 
 		GpStatus __stdcall GdipCreateBitmapFromGraphics(
-			[in]int Width,
-			[in]int Height,
+			[in]int width,
+			[in]int height,
 			[in]PGpGraphics target,
 			[out, retval]PGpBitmap* bitmap);"
 
@@ -845,23 +961,23 @@ gdipCreateBitmapFromHICON: hicon bitmap: bitmap
 	<stdcall: errno GdipCreateBitmapFromHICON handle handle*>
 	^self invalidCall: _failureCode!
 
-gdipCreateBitmapFromResource: hInstance lpBitmapName: lpBitmapName bitmap: bitmap
+gdipCreateBitmapFromResource: hinstance lpBitmapName: lpBitmapName bitmap: bitmap
 	"Invoke the GdipCreateBitmapFromResource() function of the module wrapped by the receiver.
 
 		GpStatus __stdcall GdipCreateBitmapFromResource(
-			[in]void* hInstance,
+			[in]HINSTANCE HINSTANCE,
 			[in]LPWSTR lpBitmapName,
 			[out, retval]PGpBitmap* bitmap);"
 
-	<stdcall: errno GdipCreateBitmapFromResource void* lpwstr handle*>
+	<stdcall: errno GdipCreateBitmapFromResource handle lpwstr handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateBitmapFromScan0: width height: height stride: stride format: format scan0: scan0 bitmap: bitmap
 	"Invoke the GdipCreateBitmapFromScan0() function of the module wrapped by the receiver.
 
 		GpStatus __stdcall GdipCreateBitmapFromScan0(
-			[in]int Width,
-			[in]int Height,
+			[in]int width,
+			[in]int height,
 			[in]int Stride,
 			[in]PixelFormat format,
 			[in]BYTE* Scan0,
@@ -877,7 +993,7 @@ gdipCreateBitmapFromStream: stream bitmap: bitmap
 			[in]IStream* stream,
 			[out, retval]PGpBitmap* bitmap);"
 
-	<stdcall: errno GdipCreateBitmapFromStream COM.IStream* handle*>
+	<stdcall: errno GdipCreateBitmapFromStream OS.COM.IStream* handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateBitmapFromStreamICM: stream bitmap: bitmap
@@ -887,7 +1003,7 @@ gdipCreateBitmapFromStreamICM: stream bitmap: bitmap
 			[in]IStream* stream,
 			[out, retval]PGpBitmap* bitmap);"
 
-	<stdcall: errno GdipCreateBitmapFromStreamICM COM.IStream* handle*>
+	<stdcall: errno GdipCreateBitmapFromStreamICM OS.COM.IStream* handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateCachedBitmap: bitmap graphics: graphics cachedBitmap: cachedBitmap
@@ -896,9 +1012,9 @@ gdipCreateCachedBitmap: bitmap graphics: graphics cachedBitmap: cachedBitmap
 		GpStatus __stdcall GdipCreateCachedBitmap(
 			PGpBitmap bitmap,
 			PGpGraphics graphics,
-			[out, retval]GpCachedBitmap** cachedBitmap);"
+			[out, retval]PGpCachedBitmap* cachedBitmap);"
 
-	<stdcall: errno GdipCreateCachedBitmap handle handle handle**>
+	<stdcall: errno GdipCreateCachedBitmap handle handle handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateCustomLineCap: fillPath strokePath: strokePath baseCap: baseCap baseInset: baseInset customCap: customCap
@@ -930,7 +1046,7 @@ gdipCreateFont: fontFamily emSize: emSize style: style unit: unit font: font
 gdipCreateFontFamilyFromName: name fontCollection: fontCollection fontFamily: fontFamily
 	"Invoke the GdipCreateFontFamilyFromName() function of the module wrapped by the receiver.
 
-		GpStatus __stdcall GdipCreateFontFamilyFromName(
+		GpStatus_NoThrow __stdcall GdipCreateFontFamilyFromName(
 			[in]LPWSTR name,
 			[in]PGpFontCollection fontCollection,
 			[out, retval]PGpFontFamily* FontFamily);"
@@ -960,14 +1076,14 @@ gdipCreateFontFromLogfontA: hdc logfont: logfont font: font
 	^self invalidCall: _failureCode!
 
 gdipCreateFontFromLogfontW: hdc logfont: logfont font: font
-	"Invoke the GdipCreateFontFromLogfontA() function of the module wrapped by the receiver.
+	"Invoke the GdipCreateFontFromLogfontW() function of the module wrapped by the receiver.
 
-		GpStatus __stdcall GdipCreateFontFromLogfontA(
+		GpStatus __stdcall GdipCreateFontFromLogfontW(
 			HDC HDC,
 			[in]LOGFONTW* LOGFONT,
 			[out, retval]PGpFont* font);"
 
-	<stdcall: errno GdipCreateFontFromLogfontA handle LOGFONTW* handle*>
+	<stdcall: errno GdipCreateFontFromLogfontW handle LOGFONTW* handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateFromHDC: hdc graphics: graphics
@@ -985,10 +1101,10 @@ gdipCreateFromHDC2: hdc hDevice: hDevice graphics: graphics
 
 		GpStatus __stdcall GdipCreateFromHDC2(
 			HDC HDC,
-			void* hDevice,
+			HANDLE hDevice,
 			[out, retval]PGpGraphics* graphics);"
 
-	<stdcall: errno GdipCreateFromHDC2 handle void* handle*>
+	<stdcall: errno GdipCreateFromHDC2 handle handle handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateFromHWND: hwnd graphics: graphics
@@ -1066,8 +1182,8 @@ gdipCreateLineBrush: point1 point2: point2 color1: color1 color2: color2 wrapMod
 	"Invoke the GdipCreateLineBrush() function of the module wrapped by the receiver.
 
 		GpStatus __stdcall GdipCreateLineBrush(
-			[in]GpPointF* point1,
-			[in]GpPointF* point2,
+			[in]POINTF* point1,
+			[in]POINTF* point2,
 			[in]ARGB color1,
 			[in]ARGB color2,
 			[in]GpWrapMode WrapMode,
@@ -1080,66 +1196,66 @@ gdipCreateLineBrushFromRect: rect color1: color1 color2: color2 mode: mode wrapM
 	"Invoke the GdipCreateLineBrushFromRect() function of the module wrapped by the receiver.
 
 		GpStatus __stdcall GdipCreateLineBrushFromRect(
-			[in]GpRectF* rect,
+			[in]RectF* Rect,
 			ARGB color1,
 			ARGB color2,
 			LinearGradientMode mode,
 			GpWrapMode WrapMode,
 			[out, retval]PGpLineGradient* lineGradient);"
 
-	<stdcall: errno GdipCreateLineBrushFromRect RECTF* dword dword sdword sdword handle*>
+	<stdcall: errno GdipCreateLineBrushFromRect RectF* dword dword sdword sdword handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateLineBrushFromRectI: rect color1: color1 color2: color2 mode: mode wrapMode: wrapMode lineGradient: lineGradient
 	"Invoke the GdipCreateLineBrushFromRectI() function of the module wrapped by the receiver.
 
 		GpStatus __stdcall GdipCreateLineBrushFromRectI(
-			[in]GpRect* rect,
+			[in]Rect* Rect,
 			ARGB color1,
 			ARGB color2,
 			LinearGradientMode mode,
 			GpWrapMode WrapMode,
 			[out, retval]PGpLineGradient* lineGradient);"
 
-	<stdcall: errno GdipCreateLineBrushFromRectI RECTL* dword dword sdword sdword handle*>
+	<stdcall: errno GdipCreateLineBrushFromRectI Rect* dword dword sdword sdword handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateLineBrushFromRectWithAngle: rect color1: color1 color2: color2 angle: angle isAngleScalable: isAngleScalable wrapMode: wrapMode lineGradient: lineGradient
 	"Invoke the GdipCreateLineBrushFromRectWithAngle() function of the module wrapped by the receiver.
 
 		GpStatus __stdcall GdipCreateLineBrushFromRectWithAngle(
-			[in]GpRectF* rect,
+			[in]RectF* Rect,
 			ARGB color1,
 			ARGB color2,
 			REAL angle,
-			long isAngleScalable,
+			BOOL isAngleScalable,
 			GpWrapMode WrapMode,
 			[out, retval]PGpLineGradient* lineGradient);"
 
-	<stdcall: errno GdipCreateLineBrushFromRectWithAngle RECTF* dword dword float sdword sdword handle*>
+	<stdcall: errno GdipCreateLineBrushFromRectWithAngle RectF* dword dword float bool sdword handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateLineBrushFromRectWithAngleI: rect color1: color1 color2: color2 angle: angle isAngleScalable: isAngleScalable wrapMode: wrapMode lineGradient: lineGradient
 	"Invoke the GdipCreateLineBrushFromRectWithAngleI() function of the module wrapped by the receiver.
 
 		GpStatus __stdcall GdipCreateLineBrushFromRectWithAngleI(
-			[in]GpRect* rect,
+			[in]Rect* Rect,
 			ARGB color1,
 			ARGB color2,
 			REAL angle,
-			long isAngleScalable,
+			BOOL isAngleScalable,
 			GpWrapMode WrapMode,
 			[out, retval]PGpLineGradient* lineGradient);"
 
-	<stdcall: errno GdipCreateLineBrushFromRectWithAngleI RECTL* dword dword float sdword sdword handle*>
+	<stdcall: errno GdipCreateLineBrushFromRectWithAngleI Rect* dword dword float bool sdword handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateLineBrushI: point1 point2: point2 color1: color1 color2: color2 wrapMode: wrapMode lineGradient: lineGradient
 	"Invoke the GdipCreateLineBrushI() function of the module wrapped by the receiver.
 
 		GpStatus __stdcall GdipCreateLineBrushI(
-			[in]GpPoint* point1,
-			[in]GpPoint* point2,
+			[in]POINTL* point1,
+			[in]POINTL* point2,
 			ARGB color1,
 			ARGB color2,
 			GpWrapMode WrapMode,
@@ -1176,22 +1292,22 @@ gdipCreateMatrix3: rect dstplg: dstplg matrix: matrix
 	"Invoke the GdipCreateMatrix3() function of the module wrapped by the receiver.
 
 		GpStatus __stdcall GdipCreateMatrix3(
-			[in]GpRectF* rect,
-			[in]GpPointF* dstplg,
+			[in]RectF* Rect,
+			[in]POINTF* dstplg,
 			[out, retval]PGpMatrix* matrix);"
 
-	<stdcall: errno GdipCreateMatrix3 RECTF* POINTF* handle*>
+	<stdcall: errno GdipCreateMatrix3 RectF* POINTF* handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateMatrix3I: rect dstplg: dstplg matrix: matrix
 	"Invoke the GdipCreateMatrix3I() function of the module wrapped by the receiver.
 
 		GpStatus __stdcall GdipCreateMatrix3I(
-			[in]GpRect* rect,
-			[in]GpPoint* dstplg,
+			[in]Rect* Rect,
+			[in]POINTL* dstplg,
 			[out, retval]PGpMatrix* matrix);"
 
-	<stdcall: errno GdipCreateMatrix3I RECTL* POINTL* handle*>
+	<stdcall: errno GdipCreateMatrix3I Rect* POINTL* handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateMetafileFromEmf: hEmf deleteEmf: deleteEmf metafile: metafile
@@ -1199,10 +1315,10 @@ gdipCreateMetafileFromEmf: hEmf deleteEmf: deleteEmf metafile: metafile
 
 		GpStatus __stdcall GdipCreateMetafileFromEmf(
 			HENHMETAFILE hEmf,
-			long deleteEmf,
+			BOOL deleteEmf,
 			[out, retval]PGpMetafile* metafile);"
 
-	<stdcall: errno GdipCreateMetafileFromEmf handle sdword handle*>
+	<stdcall: errno GdipCreateMetafileFromEmf handle bool handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateMetafileFromFile: file metafile: metafile
@@ -1222,7 +1338,7 @@ gdipCreateMetafileFromStream: stream metafile: metafile
 			IStream* stream,
 			[out, retval]PGpMetafile* metafile);"
 
-	<stdcall: errno GdipCreateMetafileFromStream COM.IStream* handle*>
+	<stdcall: errno GdipCreateMetafileFromStream OS.COM.IStream* handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateMetafileFromWmf: hWmf deleteWmf: deleteWmf wmfPlaceableFileHeader: wmfPlaceableFileHeader metafile: metafile
@@ -1230,11 +1346,11 @@ gdipCreateMetafileFromWmf: hWmf deleteWmf: deleteWmf wmfPlaceableFileHeader: wmf
 
 		GpStatus __stdcall GdipCreateMetafileFromWmf(
 			HMETAFILE hWmf,
-			long deleteWmf,
+			BOOL deleteWmf,
 			[in]WmfPlaceableFileHeader* WmfPlaceableFileHeader,
 			[out, retval]PGpMetafile* metafile);"
 
-	<stdcall: errno GdipCreateMetafileFromWmf handle sdword GpWmfPlaceableFileHeader* handle*>
+	<stdcall: errno GdipCreateMetafileFromWmf handle bool WmfPlaceableFileHeader* handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateMetafileFromWmfFile: file wmfPlaceableFileHeader: wmfPlaceableFileHeader metafile: metafile
@@ -1245,7 +1361,7 @@ gdipCreateMetafileFromWmfFile: file wmfPlaceableFileHeader: wmfPlaceableFileHead
 			[in]WmfPlaceableFileHeader* WmfPlaceableFileHeader,
 			[out, retval]PGpMetafile* metafile);"
 
-	<stdcall: errno GdipCreateMetafileFromWmfFile lpwstr GpWmfPlaceableFileHeader* handle*>
+	<stdcall: errno GdipCreateMetafileFromWmfFile lpwstr WmfPlaceableFileHeader* handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreatePath: brushMode path: path
@@ -1262,7 +1378,7 @@ gdipCreatePath2: points types: types count: count fillMode: fillMode path: path
 	"Invoke the GdipCreatePath2() function of the module wrapped by the receiver.
 
 		GpStatus __stdcall GdipCreatePath2(
-			[in]GpPointF* Points,
+			[in]POINTF* Points,
 			[in]BYTE* Types,
 			int Count,
 			GpFillMode FillMode,
@@ -1275,7 +1391,7 @@ gdipCreatePath2I: points types: types count: count fillMode: fillMode path: path
 	"Invoke the GdipCreatePath2I() function of the module wrapped by the receiver.
 
 		GpStatus __stdcall GdipCreatePath2I(
-			[in]GpPoint* Points,
+			[in]POINTL* Points,
 			[in]BYTE* Types,
 			int Count,
 			GpFillMode FillMode,
@@ -1288,7 +1404,7 @@ gdipCreatePathGradient: points count: count wrapMode: wrapMode polyGradient: pol
 	"Invoke the GdipCreatePathGradient() function of the module wrapped by the receiver.
 
 		GpStatus __stdcall GdipCreatePathGradient(
-			[in]GpPointF* Points,
+			[in]POINTF* Points,
 			int Count,
 			GpWrapMode WrapMode,
 			[out, retval]PGpPathGradient* polyGradient);"
@@ -1310,7 +1426,7 @@ gdipCreatePathGradientI: points count: count wrapMode: wrapMode polyGradient: po
 	"Invoke the GdipCreatePathGradientI() function of the module wrapped by the receiver.
 
 		GpStatus __stdcall GdipCreatePathGradientI(
-			[in]GpPoint* Points,
+			[in]POINTL* Points,
 			int Count,
 			GpWrapMode WrapMode,
 			[out, retval]PGpPathGradient* polyGradient);"
@@ -1333,7 +1449,7 @@ gdipCreatePen1: color width: width unit: unit pen: pen
 
 		GpStatus __stdcall GdipCreatePen1(
 			ARGB Color,
-			REAL Width,
+			REAL width,
 			GpUnit Unit,
 			[out, retval]PGpPen* pen);"
 
@@ -1345,7 +1461,7 @@ gdipCreatePen2: brush width: width unit: unit pen: pen
 
 		GpStatus __stdcall GdipCreatePen2(
 			PGpBrush brush,
-			REAL Width,
+			REAL width,
 			GpUnit Unit,
 			[out, retval]PGpPen* pen);"
 
@@ -1365,10 +1481,10 @@ gdipCreateRegionHrgn: hRgn region: region
 	"Invoke the GdipCreateRegionHrgn() function of the module wrapped by the receiver.
 
 		GpStatus __stdcall GdipCreateRegionHrgn(
-			void* hRgn,
+			wireHRGN hRgn,
 			[out, retval]PGpRegion* region);"
 
-	<stdcall: errno GdipCreateRegionHrgn void* handle*>
+	<stdcall: errno GdipCreateRegionHrgn handle handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateRegionPath: path region: region
@@ -1385,20 +1501,20 @@ gdipCreateRegionRect: rect region: region
 	"Invoke the GdipCreateRegionRect() function of the module wrapped by the receiver.
 
 		GpStatus __stdcall GdipCreateRegionRect(
-			[in]GpRectF* rect,
+			[in]RectF* Rect,
 			[out, retval]PGpRegion* region);"
 
-	<stdcall: errno GdipCreateRegionRect RECTF* handle*>
+	<stdcall: errno GdipCreateRegionRect RectF* handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateRegionRectI: rect region: region
 	"Invoke the GdipCreateRegionRectI() function of the module wrapped by the receiver.
 
 		GpStatus __stdcall GdipCreateRegionRectI(
-			[in]GpRect* rect,
+			[in]Rect* Rect,
 			[out, retval]PGpRegion* region);"
 
-	<stdcall: errno GdipCreateRegionRectI RECTL* handle*>
+	<stdcall: errno GdipCreateRegionRectI Rect* handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateRegionRgnData: regionData size: size region: region
@@ -1406,7 +1522,7 @@ gdipCreateRegionRgnData: regionData size: size region: region
 
 		GpStatus __stdcall GdipCreateRegionRgnData(
 			[in]BYTE* regionData,
-			int size,
+			int Size,
 			[out, retval]PGpRegion* region);"
 
 	<stdcall: errno GdipCreateRegionRgnData byte* sdword handle*>
@@ -1430,7 +1546,7 @@ gdipCreateStreamOnFile: filename access: access stream: stream
 			unsigned int access,
 			[out, retval]IStream** stream);"
 
-	<stdcall: errno GdipCreateStreamOnFile lpwstr dword COM.IStream**>
+	<stdcall: errno GdipCreateStreamOnFile lpwstr dword OS.COM.IStream**>
 	^self invalidCall: _failureCode!
 
 gdipCreateStringFormat: formatAttributes language: language format: format
@@ -1463,8 +1579,8 @@ gdipCreateTexture2: image wrapMode: wrapMode x: x y: y width: width height: heig
 			[in]GpWrapMode WrapMode,
 			[in]REAL x,
 			[in]REAL y,
-			[in]REAL Width,
-			[in]REAL Height,
+			[in]REAL width,
+			[in]REAL height,
 			[out, retval]PGpTexture* texture);"
 
 	<stdcall: errno GdipCreateTexture2 handle sdword float float float float handle*>
@@ -1478,8 +1594,8 @@ gdipCreateTexture2I: image wrapMode: wrapMode x: x y: y width: width height: hei
 			[in]GpWrapMode WrapMode,
 			[in]int x,
 			[in]int y,
-			[in]int Width,
-			[in]int Height,
+			[in]int width,
+			[in]int height,
 			[out, retval]PGpTexture* texture);"
 
 	<stdcall: errno GdipCreateTexture2I handle sdword sdword sdword sdword sdword handle*>
@@ -1493,8 +1609,8 @@ gdipCreateTextureIA: image imageAttributes: imageAttributes x: x y: y width: wid
 			[in]PGpImageAttributes imageAttributes,
 			[in]REAL x,
 			[in]REAL y,
-			[in]REAL Width,
-			[in]REAL Height,
+			[in]REAL width,
+			[in]REAL height,
 			[out, retval]PGpTexture* texture);"
 
 	<stdcall: errno GdipCreateTextureIA handle handle float float float float handle*>
@@ -1508,8 +1624,8 @@ gdipCreateTextureIAI: image imageAttributes: imageAttributes x: x y: y width: wi
 			[in]PGpImageAttributes imageAttributes,
 			[in]int x,
 			[in]int y,
-			[in]int Width,
-			[in]int Height,
+			[in]int width,
+			[in]int height,
 			[out, retval]PGpTexture* texture);"
 
 	<stdcall: errno GdipCreateTextureIAI handle handle sdword sdword sdword sdword handle*>
@@ -1518,7 +1634,7 @@ gdipCreateTextureIAI: image imageAttributes: imageAttributes x: x y: y width: wi
 gdipDeleteBrush: brush
 	"Invoke the GdipDeleteBrush() function of the module wrapped by the receiver.
 
-		GpStatus __stdcall GdipDeleteBrush(
+		GpStatus_NoThrow __stdcall GdipDeleteBrush(
 			PGpBrush brush);"
 
 	<stdcall: sdword GdipDeleteBrush handle>
@@ -1527,16 +1643,16 @@ gdipDeleteBrush: brush
 gdipDeleteCachedBitmap: cachedBitmap
 	"Invoke the GdipDeleteCachedBitmap() function of the module wrapped by the receiver.
 
-		GpStatus __stdcall GdipDeleteCachedBitmap(
-			GpCachedBitmap* cachedBitmap);"
+		GpStatus_NoThrow __stdcall GdipDeleteCachedBitmap(
+			PGpCachedBitmap cachedBitmap);"
 
-	<stdcall: sdword GdipDeleteCachedBitmap handle*>
+	<stdcall: sdword GdipDeleteCachedBitmap handle>
 	^self invalidCall: _failureCode!
 
 gdipDeleteCustomLineCap: customCap
 	"Invoke the GdipDeleteCustomLineCap() function of the module wrapped by the receiver.
 
-		GpStatus __stdcall GdipDeleteCustomLineCap(
+		GpStatus_NoThrow __stdcall GdipDeleteCustomLineCap(
 			PGpCustomLineCap customCap);"
 
 	<stdcall: sdword GdipDeleteCustomLineCap handle>
@@ -1545,7 +1661,7 @@ gdipDeleteCustomLineCap: customCap
 gdipDeleteFont: font
 	"Invoke the GdipDeleteFont() function of the module wrapped by the receiver.
 
-		GpStatus __stdcall GdipDeleteFont(
+		GpStatus_NoThrow __stdcall GdipDeleteFont(
 			PGpFont font);"
 
 	<stdcall: sdword GdipDeleteFont handle>
@@ -1554,7 +1670,7 @@ gdipDeleteFont: font
 gdipDeleteFontFamily: fontFamily
 	"Invoke the GdipDeleteFontFamily() function of the module wrapped by the receiver.
 
-		GpStatus __stdcall GdipDeleteFontFamily(
+		GpStatus_NoThrow __stdcall GdipDeleteFontFamily(
 			PGpFontFamily FontFamily);"
 
 	<stdcall: sdword GdipDeleteFontFamily handle>
@@ -1563,7 +1679,7 @@ gdipDeleteFontFamily: fontFamily
 gdipDeleteGraphics: graphics
 	"Invoke the GdipDeleteGraphics() function of the module wrapped by the receiver.
 
-		GpStatus __stdcall GdipDeleteGraphics(
+		GpStatus_NoThrow __stdcall GdipDeleteGraphics(
 			PGpGraphics graphics);"
 
 	<stdcall: sdword GdipDeleteGraphics handle>
@@ -1572,7 +1688,7 @@ gdipDeleteGraphics: graphics
 gdipDeleteMatrix: matrix
 	"Invoke the GdipDeleteMatrix() function of the module wrapped by the receiver.
 
-		GpStatus __stdcall GdipDeleteMatrix(
+		GpStatus_NoThrow __stdcall GdipDeleteMatrix(
 			PGpMatrix matrix);"
 
 	<stdcall: sdword GdipDeleteMatrix handle>
@@ -1581,7 +1697,7 @@ gdipDeleteMatrix: matrix
 gdipDeletePath: path
 	"Invoke the GdipDeletePath() function of the module wrapped by the receiver.
 
-		GpStatus __stdcall GdipDeletePath(
+		GpStatus_NoThrow __stdcall GdipDeletePath(
 			PGpPath path);"
 
 	<stdcall: sdword GdipDeletePath handle>
@@ -1590,16 +1706,16 @@ gdipDeletePath: path
 gdipDeletePathIter: iterator
 	"Invoke the GdipDeletePathIter() function of the module wrapped by the receiver.
 
-		GpStatus __stdcall GdipDeletePathIter(
+		GpStatus_NoThrow __stdcall GdipDeletePathIter(
 			[in]PGpPathIterator iterator);"
 
-	<stdcall: errno GdipDeletePathIter handle>
+	<stdcall: sdword GdipDeletePathIter handle>
 	^self invalidCall: _failureCode!
 
 gdipDeletePen: pen
 	"Invoke the GdipDeletePen() function of the module wrapped by the receiver.
 
-		GpStatus __stdcall GdipDeletePen(
+		GpStatus_NoThrow __stdcall GdipDeletePen(
 			PGpPen pen);"
 
 	<stdcall: sdword GdipDeletePen handle>
@@ -1608,16 +1724,16 @@ gdipDeletePen: pen
 gdipDeletePrivateFontCollection: fontCollection
 	"Invoke the GdipDeletePrivateFontCollection() function of the module wrapped by the receiver.
 
-		GpStatus __stdcall GdipDeletePrivateFontCollection(
+		GpStatus_NoThrow __stdcall GdipDeletePrivateFontCollection(
 			[out, retval]PGpFontCollection* fontCollection);"
 
-	<stdcall: errno GdipDeletePrivateFontCollection handle*>
+	<stdcall: sdword GdipDeletePrivateFontCollection handle*>
 	^self invalidCall: _failureCode!
 
 gdipDeleteRegion: region
 	"Invoke the GdipDeleteRegion() function of the module wrapped by the receiver.
 
-		GpStatus __stdcall GdipDeleteRegion(
+		GpStatus_NoThrow __stdcall GdipDeleteRegion(
 			PGpRegion region);"
 
 	<stdcall: sdword GdipDeleteRegion handle>
@@ -1626,7 +1742,7 @@ gdipDeleteRegion: region
 gdipDeleteStringFormat: format
 	"Invoke the GdipDeleteStringFormat() function of the module wrapped by the receiver.
 
-		GpStatus __stdcall GdipDeleteStringFormat(
+		GpStatus_NoThrow __stdcall GdipDeleteStringFormat(
 			PGpStringFormat format);"
 
 	<stdcall: sdword GdipDeleteStringFormat handle>
@@ -1635,7 +1751,7 @@ gdipDeleteStringFormat: format
 gdipDisposeImage: image
 	"Invoke the GdipDisposeImage() function of the module wrapped by the receiver.
 
-		GpStatus __stdcall GdipDisposeImage(
+		GpStatus_NoThrow __stdcall GdipDisposeImage(
 			[in]PGpImage image);"
 
 	<stdcall: sdword GdipDisposeImage handle>
@@ -1644,7 +1760,7 @@ gdipDisposeImage: image
 gdipDisposeImageAttributes: imageattr
 	"Invoke the GdipDisposeImageAttributes() function of the module wrapped by the receiver.
 
-		GpStatus __stdcall GdipDisposeImageAttributes(
+		GpStatus_NoThrow __stdcall GdipDisposeImageAttributes(
 			PGpImageAttributes imageattr);"
 
 	<stdcall: sdword GdipDisposeImageAttributes handle>
@@ -1658,8 +1774,8 @@ gdipDrawArc: graphics pen: pen x: x y: y width: width height: height startAngle:
 			PGpPen pen,
 			REAL x,
 			REAL y,
-			REAL Width,
-			REAL Height,
+			REAL width,
+			REAL height,
 			REAL startAngle,
 			REAL sweepAngle);"
 
@@ -1674,8 +1790,8 @@ gdipDrawArcI: graphics pen: pen x: x y: y width: width height: height startAngle
 			PGpPen pen,
 			int x,
 			int y,
-			int Width,
-			int Height,
+			int width,
+			int height,
 			REAL startAngle,
 			REAL sweepAngle);"
 
@@ -1724,7 +1840,7 @@ gdipDrawBeziers: graphics pen: pen points: points count: count
 		GpStatus __stdcall GdipDrawBeziers(
 			PGpGraphics graphics,
 			PGpPen pen,
-			[in]GpPointF* Points,
+			[in]POINTF* Points,
 			int Count);"
 
 	<stdcall: errno GdipDrawBeziers handle handle POINTF* sdword>
@@ -1736,7 +1852,7 @@ gdipDrawBeziersI: graphics pen: pen points: points count: count
 		GpStatus __stdcall GdipDrawBeziersI(
 			PGpGraphics graphics,
 			PGpPen pen,
-			[in]GpPoint* Points,
+			[in]POINTL* Points,
 			int Count);"
 
 	<stdcall: errno GdipDrawBeziersI handle handle POINTL* sdword>
@@ -1747,11 +1863,11 @@ gdipDrawCachedBitmap: graphics cachedBitmap: cachedBitmap x: x y: y
 
 		GpStatus __stdcall GdipDrawCachedBitmap(
 			PGpGraphics graphics,
-			GpCachedBitmap* cachedBitmap,
+			PGpCachedBitmap cachedBitmap,
 			int x,
 			int y);"
 
-	<stdcall: errno GdipDrawCachedBitmap handle handle* sdword sdword>
+	<stdcall: errno GdipDrawCachedBitmap handle handle sdword sdword>
 	^self invalidCall: _failureCode!
 
 gdipDrawClosedCurve: graphics pen: pen points: points count: count
@@ -1760,7 +1876,7 @@ gdipDrawClosedCurve: graphics pen: pen points: points count: count
 		GpStatus __stdcall GdipDrawClosedCurve(
 			PGpGraphics graphics,
 			PGpPen pen,
-			[in]GpPointF* Points,
+			[in]POINTF* Points,
 			int Count);"
 
 	<stdcall: errno GdipDrawClosedCurve handle handle POINTF* sdword>
@@ -1772,7 +1888,7 @@ gdipDrawClosedCurve2: graphics pen: pen points: points count: count tension: ten
 		GpStatus __stdcall GdipDrawClosedCurve2(
 			PGpGraphics graphics,
 			PGpPen pen,
-			[in]GpPointF* Points,
+			[in]POINTF* Points,
 			int Count,
 			REAL tension);"
 
@@ -1785,7 +1901,7 @@ gdipDrawClosedCurve2I: graphics pen: pen points: points count: count tension: te
 		GpStatus __stdcall GdipDrawClosedCurve2I(
 			PGpGraphics graphics,
 			PGpPen pen,
-			[in]GpPoint* Points,
+			[in]POINTL* Points,
 			int Count,
 			REAL tension);"
 
@@ -1798,7 +1914,7 @@ gdipDrawClosedCurveI: graphics pen: pen points: points count: count
 		GpStatus __stdcall GdipDrawClosedCurveI(
 			PGpGraphics graphics,
 			PGpPen pen,
-			[in]GpPoint* Points,
+			[in]POINTL* Points,
 			int Count);"
 
 	<stdcall: errno GdipDrawClosedCurveI handle handle POINTL* sdword>
@@ -1810,7 +1926,7 @@ gdipDrawCurve: graphics pen: pen points: points count: count
 		GpStatus __stdcall GdipDrawCurve(
 			PGpGraphics graphics,
 			PGpPen pen,
-			[in]GpPointF* Points,
+			[in]POINTF* Points,
 			int Count);"
 
 	<stdcall: errno GdipDrawCurve handle handle POINTF* sdword>
@@ -1822,7 +1938,7 @@ gdipDrawCurve2: graphics pen: pen points: points count: count tension: tension
 		GpStatus __stdcall GdipDrawCurve2(
 			PGpGraphics graphics,
 			PGpPen pen,
-			[in]GpPointF* Points,
+			[in]POINTF* Points,
 			int Count,
 			REAL tension);"
 
@@ -1835,7 +1951,7 @@ gdipDrawCurve2I: graphics pen: pen points: points count: count tension: tension
 		GpStatus __stdcall GdipDrawCurve2I(
 			PGpGraphics graphics,
 			PGpPen pen,
-			[in]GpPoint* Points,
+			[in]POINTL* Points,
 			int Count,
 			REAL tension);"
 
@@ -1848,9 +1964,9 @@ gdipDrawCurve3: graphics pen: pen points: points count: count offset: offset num
 		GpStatus __stdcall GdipDrawCurve3(
 			PGpGraphics graphics,
 			PGpPen pen,
-			[in]GpPointF* Points,
+			[in]POINTF* Points,
 			int Count,
-			int offset,
+			int Offset,
 			int numberOfSegments,
 			REAL tension);"
 
@@ -1863,9 +1979,9 @@ gdipDrawCurve3I: graphics pen: pen points: points count: count offset: offset nu
 		GpStatus __stdcall GdipDrawCurve3I(
 			PGpGraphics graphics,
 			PGpPen pen,
-			[in]GpPoint* Points,
+			[in]POINTL* Points,
 			int Count,
-			int offset,
+			int Offset,
 			int numberOfSegments,
 			REAL tension);"
 
@@ -1878,7 +1994,7 @@ gdipDrawCurveI: graphics pen: pen points: points count: count
 		GpStatus __stdcall GdipDrawCurveI(
 			PGpGraphics graphics,
 			PGpPen pen,
-			[in]GpPoint* Points,
+			[in]POINTL* Points,
 			int Count);"
 
 	<stdcall: errno GdipDrawCurveI handle handle POINTL* sdword>
@@ -1908,8 +2024,8 @@ gdipDrawEllipse: graphics pen: pen x: x y: y width: width height: height
 			PGpPen pen,
 			REAL x,
 			REAL y,
-			REAL Width,
-			REAL Height);"
+			REAL width,
+			REAL height);"
 
 	<stdcall: errno GdipDrawEllipse handle handle float float float float>
 	^self invalidCall: _failureCode!
@@ -1922,8 +2038,8 @@ gdipDrawEllipseI: graphics pen: pen x: x y: y width: width height: height
 			PGpPen pen,
 			int x,
 			int y,
-			int Width,
-			int Height);"
+			int width,
+			int height);"
 
 	<stdcall: errno GdipDrawEllipseI handle handle sdword sdword sdword sdword>
 	^self invalidCall: _failureCode!
@@ -1938,6 +2054,21 @@ gdipDrawImage: graphics image: image x: x y: y
 			REAL y);"
 
 	<stdcall: errno GdipDrawImage handle handle float float>
+	^self invalidCall: _failureCode!
+
+gdipDrawImageFX: graphics image: image source: source xForm: xForm effect: effect imageAttributes: imageAttributes srcUnit: srcUnit
+	"Invoke the GdipDrawImageFX() function of the module wrapped by the receiver.
+
+		GpStatus __stdcall GdipDrawImageFX(
+			PGpGraphics graphics,
+			PGpImage image,
+			RectF* source,
+			PGpMatrix xForm,
+			PCGpEffect effect,
+			PGpImageAttributes imageAttributes,
+			GpUnit srcUnit);"
+
+	<stdcall: errno GdipDrawImageFX handle handle RectF* handle handle handle sdword>
 	^self invalidCall: _failureCode!
 
 gdipDrawImageI: graphics image: image x: x y: y
@@ -1992,7 +2123,7 @@ gdipDrawImagePoints: graphics image: image dstpoints: dstpoints count: count
 		GpStatus __stdcall GdipDrawImagePoints(
 			PGpGraphics graphics,
 			PGpImage image,
-			[in]GpPointF* dstpoints,
+			[in]POINTF* dstpoints,
 			int Count);"
 
 	<stdcall: errno GdipDrawImagePoints handle handle POINTF* sdword>
@@ -2004,7 +2135,7 @@ gdipDrawImagePointsI: graphics image: image dstpoints: dstpoints count: count
 		GpStatus __stdcall GdipDrawImagePointsI(
 			PGpGraphics graphics,
 			PGpImage image,
-			[in]GpPoint* dstpoints,
+			[in]POINTL* dstpoints,
 			int Count);"
 
 	<stdcall: errno GdipDrawImagePointsI handle handle POINTL* sdword>
@@ -2016,7 +2147,7 @@ gdipDrawImagePointsRect: graphics image: image points: points count: count srcx:
 		GpStatus __stdcall GdipDrawImagePointsRect(
 			PGpGraphics graphics,
 			PGpImage image,
-			[in]GpPointF* Points,
+			[in]POINTF* Points,
 			int Count,
 			REAL srcx,
 			REAL srcy,
@@ -2024,8 +2155,8 @@ gdipDrawImagePointsRect: graphics image: image points: points count: count srcx:
 			REAL srcheight,
 			GpUnit srcUnit,
 			[in]PGpImageAttributes imageAttributes,
-			DrawImageAbort callback,
-			VOID* callbackData);"
+			DrawImageAbort CALLBACK,
+			void* callbackData);"
 
 	<stdcall: errno GdipDrawImagePointsRect handle handle POINTF* sdword float float float float sdword handle void* void*>
 	^self invalidCall: _failureCode!
@@ -2036,7 +2167,7 @@ gdipDrawImagePointsRectI: graphics image: image points: points count: count srcx
 		GpStatus __stdcall GdipDrawImagePointsRectI(
 			PGpGraphics graphics,
 			PGpImage image,
-			[in]GpPoint* Points,
+			[in]POINTL* Points,
 			int Count,
 			int srcx,
 			int srcy,
@@ -2044,8 +2175,8 @@ gdipDrawImagePointsRectI: graphics image: image points: points count: count srcx
 			int srcheight,
 			GpUnit srcUnit,
 			[in]PGpImageAttributes imageAttributes,
-			DrawImageAbort callback,
-			VOID* callbackData);"
+			DrawImageAbort CALLBACK,
+			void* callbackData);"
 
 	<stdcall: errno GdipDrawImagePointsRectI handle handle POINTL* sdword sdword sdword sdword sdword sdword handle void* void*>
 	^self invalidCall: _failureCode!
@@ -2058,8 +2189,8 @@ gdipDrawImageRect: graphics image: image x: x y: y width: width height: height
 			PGpImage image,
 			REAL x,
 			REAL y,
-			REAL Width,
-			REAL Height);"
+			REAL width,
+			REAL height);"
 
 	<stdcall: errno GdipDrawImageRect handle handle float float float float>
 	^self invalidCall: _failureCode!
@@ -2072,8 +2203,8 @@ gdipDrawImageRectI: graphics image: image x: x y: y width: width height: height
 			PGpImage image,
 			int x,
 			int y,
-			int Width,
-			int Height);"
+			int width,
+			int height);"
 
 	<stdcall: errno GdipDrawImageRectI handle handle sdword sdword sdword sdword>
 	^self invalidCall: _failureCode!
@@ -2094,8 +2225,8 @@ gdipDrawImageRectRect: graphics image: image dstx: dstx dsty: dsty dstwidth: dst
 			REAL srcheight,
 			GpUnit srcUnit,
 			[in]PGpImageAttributes imageAttributes,
-			DrawImageAbort callback,
-			VOID* callbackData);"
+			DrawImageAbort CALLBACK,
+			void* callbackData);"
 
 	<stdcall: errno GdipDrawImageRectRect handle handle float float float float float float float float sdword handle void* void*>
 	^self invalidCall: _failureCode!
@@ -2116,8 +2247,8 @@ gdipDrawImageRectRectI: graphics image: image dstx: dstx dsty: dsty dstwidth: ds
 			int srcheight,
 			GpUnit srcUnit,
 			[in]PGpImageAttributes imageAttributes,
-			DrawImageAbort callback,
-			VOID* callbackData);"
+			DrawImageAbort CALLBACK,
+			void* callbackData);"
 
 	<stdcall: errno GdipDrawImageRectRectI handle handle sdword sdword sdword sdword sdword sdword sdword sdword sdword handle void* void*>
 	^self invalidCall: _failureCode!
@@ -2156,7 +2287,7 @@ gdipDrawLines: graphics pen: pen points: points count: count
 		GpStatus __stdcall GdipDrawLines(
 			PGpGraphics graphics,
 			PGpPen pen,
-			[in]GpPointF* Points,
+			[in]POINTF* Points,
 			int Count);"
 
 	<stdcall: errno GdipDrawLines handle handle POINTF* sdword>
@@ -2168,7 +2299,7 @@ gdipDrawLinesI: graphics pen: pen points: points count: count
 		GpStatus __stdcall GdipDrawLinesI(
 			PGpGraphics graphics,
 			PGpPen pen,
-			[in]GpPoint* Points,
+			[in]POINTL* Points,
 			int Count);"
 
 	<stdcall: errno GdipDrawLinesI handle handle POINTL* sdword>
@@ -2193,8 +2324,8 @@ gdipDrawPie: graphics pen: pen x: x y: y width: width height: height startAngle:
 			PGpPen pen,
 			REAL x,
 			REAL y,
-			REAL Width,
-			REAL Height,
+			REAL width,
+			REAL height,
 			REAL startAngle,
 			REAL sweepAngle);"
 
@@ -2209,8 +2340,8 @@ gdipDrawPieI: graphics pen: pen x: x y: y width: width height: height startAngle
 			PGpPen pen,
 			int x,
 			int y,
-			int Width,
-			int Height,
+			int width,
+			int height,
 			REAL startAngle,
 			REAL sweepAngle);"
 
@@ -2223,7 +2354,7 @@ gdipDrawPolygon: graphics pen: pen points: points count: count
 		GpStatus __stdcall GdipDrawPolygon(
 			PGpGraphics graphics,
 			PGpPen pen,
-			[in]GpPointF* Points,
+			[in]POINTF* Points,
 			int Count);"
 
 	<stdcall: errno GdipDrawPolygon handle handle POINTF* sdword>
@@ -2235,7 +2366,7 @@ gdipDrawPolygonI: graphics pen: pen points: points count: count
 		GpStatus __stdcall GdipDrawPolygonI(
 			PGpGraphics graphics,
 			PGpPen pen,
-			[in]GpPoint* Points,
+			[in]POINTL* Points,
 			int Count);"
 
 	<stdcall: errno GdipDrawPolygonI handle handle POINTL* sdword>
@@ -2249,8 +2380,8 @@ gdipDrawRectangle: graphics pen: pen x: x y: y width: width height: height
 			PGpPen pen,
 			REAL x,
 			REAL y,
-			REAL Width,
-			REAL Height);"
+			REAL width,
+			REAL height);"
 
 	<stdcall: errno GdipDrawRectangle handle handle float float float float>
 	^self invalidCall: _failureCode!
@@ -2263,8 +2394,8 @@ gdipDrawRectangleI: graphics pen: pen x: x y: y width: width height: height
 			PGpPen pen,
 			int x,
 			int y,
-			int Width,
-			int Height);"
+			int width,
+			int height);"
 
 	<stdcall: errno GdipDrawRectangleI handle handle sdword sdword sdword sdword>
 	^self invalidCall: _failureCode!
@@ -2275,10 +2406,10 @@ gdipDrawRectangles: graphics pen: pen rects: rects count: count
 		GpStatus __stdcall GdipDrawRectangles(
 			PGpGraphics graphics,
 			PGpPen pen,
-			[in]GpRectF* rects,
+			[in]RectF* rects,
 			int Count);"
 
-	<stdcall: errno GdipDrawRectangles handle handle RECTF* sdword>
+	<stdcall: errno GdipDrawRectangles handle handle RectF* sdword>
 	^self invalidCall: _failureCode!
 
 gdipDrawRectanglesI: graphics pen: pen rects: rects count: count
@@ -2287,10 +2418,10 @@ gdipDrawRectanglesI: graphics pen: pen rects: rects count: count
 		GpStatus __stdcall GdipDrawRectanglesI(
 			PGpGraphics graphics,
 			PGpPen pen,
-			[in]GpRect* rects,
+			[in]Rect* rects,
 			int Count);"
 
-	<stdcall: errno GdipDrawRectanglesI handle handle RECTL* sdword>
+	<stdcall: errno GdipDrawRectanglesI handle handle Rect* sdword>
 	^self invalidCall: _failureCode!
 
 gdipDrawString: graphics str: str length: length font: font layoutRect: layoutRect stringFormat: stringFormat brush: brush
@@ -2301,11 +2432,11 @@ gdipDrawString: graphics str: str length: length font: font layoutRect: layoutRe
 			[in]LPWSTR str,
 			int length,
 			[in]PGpFont font,
-			[in]RECTF* layoutRect,
+			[in]RectF* layoutRect,
 			[in]PGpStringFormat stringFormat,
 			[in]PGpBrush brush);"
 
-	<stdcall: errno GdipDrawString handle lpwstr sdword handle RECTF* handle handle>
+	<stdcall: errno GdipDrawString handle lpwstr sdword handle RectF* handle handle>
 	^self invalidCall: _failureCode!
 
 gdipEmfToWmfBits: hEmf cbData16: cbData16 pData16: pData16 iMapMode: iMapMode eFlags: eFlags
@@ -2339,7 +2470,7 @@ gdipEnumerateMetafileDestPoint: graphics metafile: metafile destPoint: destPoint
 			[in]PGpMetafile metafile,
 			[in]POINTF* destPoint,
 			[in]EnumerateMetafileProc fnCallback,
-			[in]VOID* callbackData,
+			[in]void* callbackData,
 			[in]PGpImageAttributes imageAttributes);"
 
 	<stdcall: errno GdipEnumerateMetafileDestPoint handle handle POINTF* void* void* handle>
@@ -2351,9 +2482,9 @@ gdipEnumerateMetafileDestPointI: graphics metafile: metafile destPoint: destPoin
 		GpStatus __stdcall GdipEnumerateMetafileDestPointI(
 			PGpGraphics graphics,
 			[in]PGpMetafile metafile,
-			[in]POINTL* destPoint,
+			[in]POINT* destPoint,
 			EnumerateMetafileProc fnCallback,
-			VOID* callbackData,
+			void* callbackData,
 			[in]PGpImageAttributes imageAttributes);"
 
 	<stdcall: errno GdipEnumerateMetafileDestPointI handle handle POINTL* void* void* handle>
@@ -2368,7 +2499,7 @@ gdipEnumerateMetafileDestPoints: graphics metafile: metafile destPoints: destPoi
 			[in]POINTF* destPoints,
 			int Count,
 			EnumerateMetafileProc fnCallback,
-			VOID* callbackData,
+			void* callbackData,
 			[in]PGpImageAttributes imageAttributes);"
 
 	<stdcall: errno GdipEnumerateMetafileDestPoints handle handle POINTF* sdword void* void* handle>
@@ -2380,10 +2511,10 @@ gdipEnumerateMetafileDestPointsI: graphics metafile: metafile destPoints: destPo
 		GpStatus __stdcall GdipEnumerateMetafileDestPointsI(
 			PGpGraphics graphics,
 			[in]PGpMetafile metafile,
-			[in]POINTL* destPoints,
+			[in]POINT* destPoints,
 			int Count,
 			EnumerateMetafileProc fnCallback,
-			VOID* callbackData,
+			void* callbackData,
 			[in]PGpImageAttributes imageAttributes);"
 
 	<stdcall: errno GdipEnumerateMetafileDestPointsI handle handle POINTL* sdword void* void* handle>
@@ -2395,12 +2526,12 @@ gdipEnumerateMetafileDestRect: graphics metafile: metafile destRect: destRect fn
 		GpStatus __stdcall GdipEnumerateMetafileDestRect(
 			PGpGraphics graphics,
 			[in]PGpMetafile metafile,
-			[in]RECTF* destRect,
+			[in]RectF* destRect,
 			EnumerateMetafileProc fnCallback,
-			VOID* callbackData,
+			void* callbackData,
 			[in]PGpImageAttributes imageAttributes);"
 
-	<stdcall: errno GdipEnumerateMetafileDestRect handle handle RECTF* void* void* handle>
+	<stdcall: errno GdipEnumerateMetafileDestRect handle handle RectF* void* void* handle>
 	^self invalidCall: _failureCode!
 
 gdipEnumerateMetafileDestRectI: graphics metafile: metafile destRect: destRect fnCallback: fnCallback callbackData: callbackData imageAttributes: imageAttributes
@@ -2409,12 +2540,12 @@ gdipEnumerateMetafileDestRectI: graphics metafile: metafile destRect: destRect f
 		GpStatus __stdcall GdipEnumerateMetafileDestRectI(
 			PGpGraphics graphics,
 			[in]PGpMetafile metafile,
-			[in]RECTL* destRect,
+			[in]Rect* destRect,
 			EnumerateMetafileProc fnCallback,
-			VOID* callbackData,
+			void* callbackData,
 			[in]PGpImageAttributes imageAttributes);"
 
-	<stdcall: errno GdipEnumerateMetafileDestRectI handle handle RECTL* void* void* handle>
+	<stdcall: errno GdipEnumerateMetafileDestRectI handle handle Rect* void* void* handle>
 	^self invalidCall: _failureCode!
 
 gdipEnumerateMetafileSrcRectDestPoint: graphics metafile: metafile destPoint: destPoint srcRect: srcRect srcUnit: srcUnit fnCallback: fnCallback callbackData: callbackData imageAttributes: imageAttributes
@@ -2424,13 +2555,13 @@ gdipEnumerateMetafileSrcRectDestPoint: graphics metafile: metafile destPoint: de
 			PGpGraphics graphics,
 			[in]PGpMetafile metafile,
 			[in]POINTF* destPoint,
-			[in]RECTF* srcRect,
+			[in]RectF* srcRect,
 			Unit srcUnit,
 			EnumerateMetafileProc fnCallback,
-			VOID* callbackData,
+			void* callbackData,
 			[in]PGpImageAttributes imageAttributes);"
 
-	<stdcall: errno GdipEnumerateMetafileSrcRectDestPoint handle handle POINTF* RECTF* sdword void* void* handle>
+	<stdcall: errno GdipEnumerateMetafileSrcRectDestPoint handle handle POINTF* RectF* sdword void* void* handle>
 	^self invalidCall: _failureCode!
 
 gdipEnumerateMetafileSrcRectDestPointI: graphics metafile: metafile destPoint: destPoint srcRect: srcRect srcUnit: srcUnit fnCallback: fnCallback callbackData: callbackData imageAttributes: imageAttributes
@@ -2439,14 +2570,14 @@ gdipEnumerateMetafileSrcRectDestPointI: graphics metafile: metafile destPoint: d
 		GpStatus __stdcall GdipEnumerateMetafileSrcRectDestPointI(
 			PGpGraphics graphics,
 			[in]PGpMetafile metafile,
-			[in]POINTL* destPoint,
-			[in]RECTL* srcRect,
+			[in]POINT* destPoint,
+			[in]Rect* srcRect,
 			Unit srcUnit,
 			EnumerateMetafileProc fnCallback,
-			VOID* callbackData,
+			void* callbackData,
 			[in]PGpImageAttributes imageAttributes);"
 
-	<stdcall: errno GdipEnumerateMetafileSrcRectDestPointI handle handle POINTL* RECTL* sdword void* void* handle>
+	<stdcall: errno GdipEnumerateMetafileSrcRectDestPointI handle handle POINTL* Rect* sdword void* void* handle>
 	^self invalidCall: _failureCode!
 
 gdipEnumerateMetafileSrcRectDestPoints: graphics metafile: metafile destPoints: destPoints count: count srcRect: srcRect srcUnit: srcUnit fnCallback: fnCallback callbackData: callbackData imageAttributes: imageAttributes
@@ -2457,13 +2588,13 @@ gdipEnumerateMetafileSrcRectDestPoints: graphics metafile: metafile destPoints: 
 			[in]PGpMetafile metafile,
 			[in]POINTF* destPoints,
 			int Count,
-			[in]RECTF* srcRect,
+			[in]RectF* srcRect,
 			Unit srcUnit,
 			EnumerateMetafileProc fnCallback,
-			VOID* callbackData,
+			void* callbackData,
 			[in]PGpImageAttributes imageAttributes);"
 
-	<stdcall: errno GdipEnumerateMetafileSrcRectDestPoints handle handle POINTF* sdword RECTF* sdword void* void* handle>
+	<stdcall: errno GdipEnumerateMetafileSrcRectDestPoints handle handle POINTF* sdword RectF* sdword void* void* handle>
 	^self invalidCall: _failureCode!
 
 gdipEnumerateMetafileSrcRectDestPointsI: graphics metafile: metafile destPoints: destPoints count: count srcRect: srcRect srcUnit: srcUnit fnCallback: fnCallback callbackData: callbackData imageAttributes: imageAttributes
@@ -2472,15 +2603,15 @@ gdipEnumerateMetafileSrcRectDestPointsI: graphics metafile: metafile destPoints:
 		GpStatus __stdcall GdipEnumerateMetafileSrcRectDestPointsI(
 			PGpGraphics graphics,
 			[in]PGpMetafile metafile,
-			[in]POINTL* destPoints,
+			[in]POINT* destPoints,
 			int Count,
-			[in]RECTL* srcRect,
+			[in]Rect* srcRect,
 			Unit srcUnit,
 			EnumerateMetafileProc fnCallback,
-			VOID* callbackData,
+			void* callbackData,
 			[in]PGpImageAttributes imageAttributes);"
 
-	<stdcall: errno GdipEnumerateMetafileSrcRectDestPointsI handle handle POINTL* sdword RECTL* sdword void* void* handle>
+	<stdcall: errno GdipEnumerateMetafileSrcRectDestPointsI handle handle POINTL* sdword Rect* sdword void* void* handle>
 	^self invalidCall: _failureCode!
 
 gdipEnumerateMetafileSrcRectDestRect: graphics metafile: metafile destRect: destRect srcRect: srcRect srcUnit: srcUnit fnCallback: fnCallback callbackData: callbackData imageAttributes: imageAttributes
@@ -2489,14 +2620,14 @@ gdipEnumerateMetafileSrcRectDestRect: graphics metafile: metafile destRect: dest
 		GpStatus __stdcall GdipEnumerateMetafileSrcRectDestRect(
 			PGpGraphics graphics,
 			[in]PGpMetafile metafile,
-			[in]RECTF* destRect,
-			[in]RECTF* srcRect,
+			[in]RectF* destRect,
+			[in]RectF* srcRect,
 			Unit srcUnit,
 			EnumerateMetafileProc fnCallback,
-			VOID* callbackData,
+			void* callbackData,
 			[in]PGpImageAttributes imageAttributes);"
 
-	<stdcall: errno GdipEnumerateMetafileSrcRectDestRect handle handle RECTF* RECTF* sdword void* void* handle>
+	<stdcall: errno GdipEnumerateMetafileSrcRectDestRect handle handle RectF* RectF* sdword void* void* handle>
 	^self invalidCall: _failureCode!
 
 gdipEnumerateMetafileSrcRectDestRectI: graphics metafile: metafile destRect: destRect srcRect: srcRect srcUnit: srcUnit fnCallback: fnCallback callbackData: callbackData imageAttributes: imageAttributes
@@ -2505,14 +2636,14 @@ gdipEnumerateMetafileSrcRectDestRectI: graphics metafile: metafile destRect: des
 		GpStatus __stdcall GdipEnumerateMetafileSrcRectDestRectI(
 			PGpGraphics graphics,
 			[in]PGpMetafile metafile,
-			[in]RECTL* destRect,
-			[in]RECTL* srcRect,
+			[in]Rect* destRect,
+			[in]Rect* srcRect,
 			Unit srcUnit,
 			EnumerateMetafileProc fnCallback,
-			VOID* callbackData,
+			void* callbackData,
 			[in]PGpImageAttributes imageAttributes);"
 
-	<stdcall: errno GdipEnumerateMetafileSrcRectDestRectI handle handle RECTL* RECTL* sdword void* void* handle>
+	<stdcall: errno GdipEnumerateMetafileSrcRectDestRectI handle handle Rect* Rect* sdword void* void* handle>
 	^self invalidCall: _failureCode!
 
 gdipFillClosedCurve: graphics brush: brush points: points count: count
@@ -2521,7 +2652,7 @@ gdipFillClosedCurve: graphics brush: brush points: points count: count
 		GpStatus __stdcall GdipFillClosedCurve(
 			PGpGraphics graphics,
 			PGpBrush brush,
-			[in]GpPointF* Points,
+			[in]POINTF* Points,
 			int Count);"
 
 	<stdcall: errno GdipFillClosedCurve handle handle POINTF* sdword>
@@ -2533,7 +2664,7 @@ gdipFillClosedCurve2: graphics brush: brush points: points count: count tension:
 		GpStatus __stdcall GdipFillClosedCurve2(
 			PGpGraphics graphics,
 			PGpBrush brush,
-			[in]GpPointF* Points,
+			[in]POINTF* Points,
 			int Count,
 			REAL tension,
 			GpFillMode FillMode);"
@@ -2547,7 +2678,7 @@ gdipFillClosedCurve2I: graphics brush: brush points: points count: count tension
 		GpStatus __stdcall GdipFillClosedCurve2I(
 			PGpGraphics graphics,
 			PGpBrush brush,
-			[in]GpPoint* Points,
+			[in]POINTL* Points,
 			int Count,
 			REAL tension,
 			GpFillMode FillMode);"
@@ -2561,7 +2692,7 @@ gdipFillClosedCurveI: graphics brush: brush points: points count: count
 		GpStatus __stdcall GdipFillClosedCurveI(
 			PGpGraphics graphics,
 			PGpBrush brush,
-			[in]GpPoint* Points,
+			[in]POINTL* Points,
 			int Count);"
 
 	<stdcall: errno GdipFillClosedCurveI handle handle POINTL* sdword>
@@ -2575,8 +2706,8 @@ gdipFillEllipse: graphics brush: brush x: x y: y width: width height: height
 			PGpBrush brush,
 			REAL x,
 			REAL y,
-			REAL Width,
-			REAL Height);"
+			REAL width,
+			REAL height);"
 
 	<stdcall: errno GdipFillEllipse handle handle float float float float>
 	^self invalidCall: _failureCode!
@@ -2589,8 +2720,8 @@ gdipFillEllipseI: graphics brush: brush x: x y: y width: width height: height
 			PGpBrush brush,
 			int x,
 			int y,
-			int Width,
-			int Height);"
+			int width,
+			int height);"
 
 	<stdcall: errno GdipFillEllipseI handle handle sdword sdword sdword sdword>
 	^self invalidCall: _failureCode!
@@ -2614,8 +2745,8 @@ gdipFillPie: graphics brush: brush x: x y: y width: width height: height startAn
 			PGpBrush brush,
 			REAL x,
 			REAL y,
-			REAL Width,
-			REAL Height,
+			REAL width,
+			REAL height,
 			REAL startAngle,
 			REAL sweepAngle);"
 
@@ -2630,8 +2761,8 @@ gdipFillPieI: graphics brush: brush x: x y: y width: width height: height startA
 			PGpBrush brush,
 			int x,
 			int y,
-			int Width,
-			int Height,
+			int width,
+			int height,
 			REAL startAngle,
 			REAL sweepAngle);"
 
@@ -2644,7 +2775,7 @@ gdipFillPolygon: graphics brush: brush points: points count: count fillMode: fil
 		GpStatus __stdcall GdipFillPolygon(
 			PGpGraphics graphics,
 			PGpBrush brush,
-			[in]GpPointF* Points,
+			[in]POINTF* Points,
 			int Count,
 			GpFillMode FillMode);"
 
@@ -2657,7 +2788,7 @@ gdipFillPolygon2: graphics brush: brush points: points count: count
 		GpStatus __stdcall GdipFillPolygon2(
 			PGpGraphics graphics,
 			PGpBrush brush,
-			[in]GpPointF* Points,
+			[in]POINTF* Points,
 			int Count);"
 
 	<stdcall: errno GdipFillPolygon2 handle handle POINTF* sdword>
@@ -2669,7 +2800,7 @@ gdipFillPolygon2I: graphics brush: brush points: points count: count
 		GpStatus __stdcall GdipFillPolygon2I(
 			PGpGraphics graphics,
 			PGpBrush brush,
-			[in]GpPoint* Points,
+			[in]POINTL* Points,
 			int Count);"
 
 	<stdcall: errno GdipFillPolygon2I handle handle POINTL* sdword>
@@ -2681,7 +2812,7 @@ gdipFillPolygonI: graphics brush: brush points: points count: count fillMode: fi
 		GpStatus __stdcall GdipFillPolygonI(
 			PGpGraphics graphics,
 			PGpBrush brush,
-			[in]GpPoint* Points,
+			[in]POINTL* Points,
 			int Count,
 			GpFillMode FillMode);"
 
@@ -2696,8 +2827,8 @@ gdipFillRectangle: graphics brush: brush x: x y: y width: width height: height
 			PGpBrush brush,
 			REAL x,
 			REAL y,
-			REAL Width,
-			REAL Height);"
+			REAL width,
+			REAL height);"
 
 	<stdcall: errno GdipFillRectangle handle handle float float float float>
 	^self invalidCall: _failureCode!
@@ -2710,8 +2841,8 @@ gdipFillRectangleI: graphics brush: brush x: x y: y width: width height: height
 			PGpBrush brush,
 			int x,
 			int y,
-			int Width,
-			int Height);"
+			int width,
+			int height);"
 
 	<stdcall: errno GdipFillRectangleI handle handle sdword sdword sdword sdword>
 	^self invalidCall: _failureCode!
@@ -2722,10 +2853,10 @@ gdipFillRectangles: graphics brush: brush rects: rects count: count
 		GpStatus __stdcall GdipFillRectangles(
 			PGpGraphics graphics,
 			PGpBrush brush,
-			[in]GpRectF* rects,
+			[in]RectF* rects,
 			int Count);"
 
-	<stdcall: errno GdipFillRectangles handle handle RECTF* sdword>
+	<stdcall: errno GdipFillRectangles handle handle RectF* sdword>
 	^self invalidCall: _failureCode!
 
 gdipFillRectanglesI: graphics brush: brush rects: rects count: count
@@ -2734,10 +2865,10 @@ gdipFillRectanglesI: graphics brush: brush rects: rects count: count
 		GpStatus __stdcall GdipFillRectanglesI(
 			PGpGraphics graphics,
 			PGpBrush brush,
-			[in]GpRect* rects,
+			[in]Rect* rects,
 			int Count);"
 
-	<stdcall: errno GdipFillRectanglesI handle handle RECTL* sdword>
+	<stdcall: errno GdipFillRectanglesI handle handle Rect* sdword>
 	^self invalidCall: _failureCode!
 
 gdipFillRegion: graphics brush: brush region: region
@@ -2749,6 +2880,26 @@ gdipFillRegion: graphics brush: brush region: region
 			PGpRegion region);"
 
 	<stdcall: errno GdipFillRegion handle handle handle>
+	^self invalidCall: _failureCode!
+
+gdipFindFirstImageItem: image item: item
+	"Invoke the GdipFindFirstImageItem() function of the module wrapped by the receiver.
+
+		GpStatus __stdcall GdipFindFirstImageItem(
+			[in]PGpImage image,
+			ImageItemData* item);"
+
+	<stdcall: errno GdipFindFirstImageItem handle ImageItemData*>
+	^self invalidCall: _failureCode!
+
+gdipFindNextImageItem: image item: item
+	"Invoke the GdipFindNextImageItem() function of the module wrapped by the receiver.
+
+		GpStatus __stdcall GdipFindNextImageItem(
+			[in]PGpImage image,
+			ImageItemData* item);"
+
+	<stdcall: errno GdipFindNextImageItem handle ImageItemData*>
 	^self invalidCall: _failureCode!
 
 gdipFlattenPath: path matrix: matrix flatness: flatness
@@ -2778,7 +2929,7 @@ gdipFontCollectionEnumerable: fontCollection graphics: graphics numFound: numFou
 		GpStatus __stdcall GdipFontCollectionEnumerable(
 			PGpFontCollection fontCollection,
 			PGpGraphics graphics,
-			int* numFound);"
+			[out]int* numFound);"
 
 	<stdcall: errno GdipFontCollectionEnumerable handle handle sdword*>
 	^self invalidCall: _failureCode!
@@ -2790,7 +2941,7 @@ gdipFontCollectionEnumerate: fontCollection numSought: numSought gpfamilies: gpf
 			PGpFontCollection fontCollection,
 			int numSought,
 			PGpFontFamily* gpfamilies,
-			int* numFound,
+			[out]int* numFound,
 			PGpGraphics graphics);"
 
 	<stdcall: errno GdipFontCollectionEnumerate handle sdword handle* sdword* handle>
@@ -2801,9 +2952,9 @@ gdipGetAdjustableArrowCapFillState: cap fillState: fillState
 
 		GpStatus __stdcall GdipGetAdjustableArrowCapFillState(
 			PGpAdjustableArrowCap cap,
-			long* fillState);"
+			BOOL* fillState);"
 
-	<stdcall: errno GdipGetAdjustableArrowCapFillState handle sdword*>
+	<stdcall: errno GdipGetAdjustableArrowCapFillState handle bool*>
 	^self invalidCall: _failureCode!
 
 gdipGetAdjustableArrowCapHeight: cap height: height
@@ -2811,7 +2962,7 @@ gdipGetAdjustableArrowCapHeight: cap height: height
 
 		GpStatus __stdcall GdipGetAdjustableArrowCapHeight(
 			PGpAdjustableArrowCap cap,
-			REAL* Height);"
+			REAL* height);"
 
 	<stdcall: errno GdipGetAdjustableArrowCapHeight handle float*>
 	^self invalidCall: _failureCode!
@@ -2831,7 +2982,7 @@ gdipGetAdjustableArrowCapWidth: cap width: width
 
 		GpStatus __stdcall GdipGetAdjustableArrowCapWidth(
 			PGpAdjustableArrowCap cap,
-			REAL* Width);"
+			REAL* width);"
 
 	<stdcall: errno GdipGetAdjustableArrowCapWidth handle float*>
 	^self invalidCall: _failureCode!
@@ -2845,7 +2996,7 @@ gdipGetAllPropertyItems: image totalBufferSize: totalBufferSize numProperties: n
 			[in]unsigned int numProperties,
 			PropertyItem* allItems);"
 
-	<stdcall: errno GdipGetAllPropertyItems handle dword dword GpPropertyItem*>
+	<stdcall: errno GdipGetAllPropertyItems handle dword dword PropertyItem*>
 	^self invalidCall: _failureCode!
 
 gdipGetBrushType: brush type: type
@@ -2864,7 +3015,7 @@ gdipGetCellAscent: family style: style cellAscent: cellAscent
 		GpStatus __stdcall GdipGetCellAscent(
 			[in]PGpFontFamily family,
 			int style,
-			UINT16* CellAscent);"
+			[out, retval]UINT16* CellAscent);"
 
 	<stdcall: errno GdipGetCellAscent handle sdword word*>
 	^self invalidCall: _failureCode!
@@ -2875,7 +3026,7 @@ gdipGetCellDescent: family style: style cellDescent: cellDescent
 		GpStatus __stdcall GdipGetCellDescent(
 			[in]PGpFontFamily family,
 			int style,
-			UINT16* CellDescent);"
+			[out, retval]UINT16* CellDescent);"
 
 	<stdcall: errno GdipGetCellDescent handle sdword word*>
 	^self invalidCall: _failureCode!
@@ -2895,9 +3046,9 @@ gdipGetClipBounds: graphics rect: rect
 
 		GpStatus __stdcall GdipGetClipBounds(
 			PGpGraphics graphics,
-			GpRectF* rect);"
+			RectF* Rect);"
 
-	<stdcall: errno GdipGetClipBounds handle RECTF*>
+	<stdcall: errno GdipGetClipBounds handle RectF*>
 	^self invalidCall: _failureCode!
 
 gdipGetClipBoundsI: graphics rect: rect
@@ -2905,9 +3056,9 @@ gdipGetClipBoundsI: graphics rect: rect
 
 		GpStatus __stdcall GdipGetClipBoundsI(
 			PGpGraphics graphics,
-			GpRect* rect);"
+			Rect* Rect);"
 
-	<stdcall: errno GdipGetClipBoundsI handle RECTL*>
+	<stdcall: errno GdipGetClipBoundsI handle Rect*>
 	^self invalidCall: _failureCode!
 
 gdipGetCompositingMode: graphics compositingMode: compositingMode
@@ -3027,7 +3178,7 @@ gdipGetEmHeight: family style: style emHeight: emHeight
 		GpStatus __stdcall GdipGetEmHeight(
 			[in]PGpFontFamily family,
 			int style,
-			UINT16* EmHeight);"
+			[out, retval]UINT16* EmHeight);"
 
 	<stdcall: errno GdipGetEmHeight handle sdword word*>
 	^self invalidCall: _failureCode!
@@ -3038,10 +3189,10 @@ gdipGetEncoderParameterList: image clsidEncoder: clsidEncoder size: size buffer:
 		GpStatus __stdcall GdipGetEncoderParameterList(
 			[in]PGpImage image,
 			[in]GUID* clsidEncoder,
-			[in]unsigned int size,
+			[in]unsigned int Size,
 			[out, retval]EncoderParameters* buffer);"
 
-	<stdcall: errno GdipGetEncoderParameterList handle guid* dword GpEncoderParameters*>
+	<stdcall: errno GdipGetEncoderParameterList handle guid* dword EncoderParameters*>
 	^self invalidCall: _failureCode!
 
 gdipGetEncoderParameterListSize: image clsidEncoder: clsidEncoder size: size
@@ -3050,7 +3201,7 @@ gdipGetEncoderParameterListSize: image clsidEncoder: clsidEncoder size: size
 		GpStatus __stdcall GdipGetEncoderParameterListSize(
 			[in]PGpImage image,
 			[in]GUID* clsidEncoder,
-			[out, retval]unsigned int* size);"
+			[out, retval]unsigned int* Size);"
 
 	<stdcall: errno GdipGetEncoderParameterListSize handle guid* dword*>
 	^self invalidCall: _failureCode!
@@ -3068,10 +3219,10 @@ gdipGetFamily: font family: family
 gdipGetFamilyName: family name: name language: language
 	"Invoke the GdipGetFamilyName() function of the module wrapped by the receiver.
 
-		Status __stdcall GdipGetFamilyName(
-			ExternalHandle family,
-			short name[32],
-			unsigned short language);"
+		GpStatus __stdcall GdipGetFamilyName(
+			[in]PGpFontFamily family,
+			[out, string]WCHAR name[32],
+			[in]LANGID language);"
 
 	<stdcall: errno GdipGetFamilyName handle lpwstr word>
 	^self invalidCall: _failureCode!
@@ -3104,7 +3255,7 @@ gdipGetFontHeight: font graphics: graphics height: height
 		GpStatus __stdcall GdipGetFontHeight(
 			[in]PGpFont font,
 			[in]PGpGraphics graphics,
-			REAL* Height);"
+			REAL* height);"
 
 	<stdcall: errno GdipGetFontHeight handle handle float*>
 	^self invalidCall: _failureCode!
@@ -3115,7 +3266,7 @@ gdipGetFontHeightGivenDPI: font dpi: dpi height: height
 		GpStatus __stdcall GdipGetFontHeightGivenDPI(
 			[in]PGpFont font,
 			REAL dpi,
-			REAL* Height);"
+			REAL* height);"
 
 	<stdcall: errno GdipGetFontHeightGivenDPI handle float float*>
 	^self invalidCall: _failureCode!
@@ -3125,7 +3276,7 @@ gdipGetFontSize: font size: size
 
 		GpStatus __stdcall GdipGetFontSize(
 			PGpFont font,
-			REAL* size);"
+			REAL* Size);"
 
 	<stdcall: errno GdipGetFontSize handle float*>
 	^self invalidCall: _failureCode!
@@ -3225,7 +3376,7 @@ gdipGetImageAttributesAdjustedPalette: imageattr colorPalette: colorPalette colo
 			ColorPalette* ColorPalette,
 			ColorAdjustType ColorAdjustType);"
 
-	<stdcall: errno GdipGetImageAttributesAdjustedPalette handle GpColorPalette* sdword>
+	<stdcall: errno GdipGetImageAttributesAdjustedPalette handle ColorPalette* sdword>
 	^self invalidCall: _failureCode!
 
 gdipGetImageBounds: image srcRect: srcRect srcUnit: srcUnit
@@ -3233,10 +3384,10 @@ gdipGetImageBounds: image srcRect: srcRect srcUnit: srcUnit
 
 		GpStatus __stdcall GdipGetImageBounds(
 			[in]PGpImage image,
-			GpRectF* srcRect,
+			RectF* srcRect,
 			GpUnit* srcUnit);"
 
-	<stdcall: errno GdipGetImageBounds handle RECTF* sdword*>
+	<stdcall: errno GdipGetImageBounds handle RectF* sdword*>
 	^self invalidCall: _failureCode!
 
 gdipGetImageDecoders: numDecoders size: size decoders: decoders
@@ -3244,10 +3395,10 @@ gdipGetImageDecoders: numDecoders size: size decoders: decoders
 
 		GpStatus __stdcall GdipGetImageDecoders(
 			unsigned int numDecoders,
-			unsigned int size,
+			unsigned int Size,
 			ImageCodecInfo* decoders);"
 
-	<stdcall: errno GdipGetImageDecoders dword dword GpImageCodecInfo*>
+	<stdcall: errno GdipGetImageDecoders dword dword ImageCodecInfo*>
 	^self invalidCall: _failureCode!
 
 gdipGetImageDecodersSize: numDecoders size: size
@@ -3255,7 +3406,7 @@ gdipGetImageDecodersSize: numDecoders size: size
 
 		GpStatus __stdcall GdipGetImageDecodersSize(
 			unsigned int* numDecoders,
-			unsigned int* size);"
+			unsigned int* Size);"
 
 	<stdcall: errno GdipGetImageDecodersSize dword* dword*>
 	^self invalidCall: _failureCode!
@@ -3265,8 +3416,8 @@ gdipGetImageDimension: image width: width height: height
 
 		GpStatus __stdcall GdipGetImageDimension(
 			[in]PGpImage image,
-			[out]REAL* Width,
-			[out]REAL* Height);"
+			[out]REAL* width,
+			[out]REAL* height);"
 
 	<stdcall: errno GdipGetImageDimension handle float* float*>
 	^self invalidCall: _failureCode!
@@ -3276,10 +3427,10 @@ gdipGetImageEncoders: numEncoders size: size encoders: encoders
 
 		GpStatus __stdcall GdipGetImageEncoders(
 			[in]unsigned int numEncoders,
-			[in]unsigned int size,
+			[in]unsigned int Size,
 			[in, out]ImageCodecInfo* encoders);"
 
-	<stdcall: errno GdipGetImageEncoders dword dword GpImageCodecInfo*>
+	<stdcall: errno GdipGetImageEncoders dword dword ImageCodecInfo*>
 	^self invalidCall: _failureCode!
 
 gdipGetImageEncodersSize: numEncoders size: size
@@ -3287,7 +3438,7 @@ gdipGetImageEncodersSize: numEncoders size: size
 
 		GpStatus __stdcall GdipGetImageEncodersSize(
 			[out]unsigned int* numEncoders,
-			[out]unsigned int* size);"
+			[out]unsigned int* Size);"
 
 	<stdcall: errno GdipGetImageEncodersSize dword* dword*>
 	^self invalidCall: _failureCode!
@@ -3317,7 +3468,7 @@ gdipGetImageHeight: image height: height
 
 		GpStatus __stdcall GdipGetImageHeight(
 			[in]PGpImage image,
-			[out, retval]unsigned int* Height);"
+			[out, retval]unsigned int* height);"
 
 	<stdcall: errno GdipGetImageHeight handle dword*>
 	^self invalidCall: _failureCode!
@@ -3332,15 +3483,25 @@ gdipGetImageHorizontalResolution: image resolution: resolution
 	<stdcall: errno GdipGetImageHorizontalResolution handle float*>
 	^self invalidCall: _failureCode!
 
+gdipGetImageItemData: image item: item
+	"Invoke the GdipGetImageItemData() function of the module wrapped by the receiver.
+
+		GpStatus __stdcall GdipGetImageItemData(
+			[in]PGpImage image,
+			ImageItemData* item);"
+
+	<stdcall: errno GdipGetImageItemData handle ImageItemData*>
+	^self invalidCall: _failureCode!
+
 gdipGetImagePalette: image palette: palette size: size
 	"Invoke the GdipGetImagePalette() function of the module wrapped by the receiver.
 
 		GpStatus __stdcall GdipGetImagePalette(
 			[in]PGpImage image,
 			ColorPalette* palette,
-			int size);"
+			int Size);"
 
-	<stdcall: errno GdipGetImagePalette handle GpColorPalette* sdword>
+	<stdcall: errno GdipGetImagePalette handle ColorPalette* sdword>
 	^self invalidCall: _failureCode!
 
 gdipGetImagePaletteSize: image size: size
@@ -3348,7 +3509,7 @@ gdipGetImagePaletteSize: image size: size
 
 		GpStatus __stdcall GdipGetImagePaletteSize(
 			[in]PGpImage image,
-			[out, retval]int* size);"
+			[out, retval]int* Size);"
 
 	<stdcall: errno GdipGetImagePaletteSize handle sdword*>
 	^self invalidCall: _failureCode!
@@ -3382,7 +3543,7 @@ gdipGetImageThumbnail: image thumbWidth: thumbWidth thumbHeight: thumbHeight thu
 			[in]unsigned int thumbHeight,
 			[out]PGpImage* thumbImage,
 			[in]GetThumbnailImageAbort pfnCallback,
-			[in]VOID* callbackData);"
+			[in]void* callbackData);"
 
 	<stdcall: errno GdipGetImageThumbnail handle dword dword handle* void* void*>
 	^self invalidCall: _failureCode!
@@ -3412,7 +3573,7 @@ gdipGetImageWidth: image width: width
 
 		GpStatus __stdcall GdipGetImageWidth(
 			[in]PGpImage image,
-			[out, retval]unsigned int* Width);"
+			[out, retval]unsigned int* width);"
 
 	<stdcall: errno GdipGetImageWidth handle dword*>
 	^self invalidCall: _failureCode!
@@ -3464,9 +3625,9 @@ gdipGetLineGammaCorrection: brush useGammaCorrection: useGammaCorrection
 
 		GpStatus __stdcall GdipGetLineGammaCorrection(
 			PGpLineGradient brush,
-			long* useGammaCorrection);"
+			BOOL* useGammaCorrection);"
 
-	<stdcall: errno GdipGetLineGammaCorrection handle sdword*>
+	<stdcall: errno GdipGetLineGammaCorrection handle bool*>
 	^self invalidCall: _failureCode!
 
 gdipGetLinePresetBlend: brush blend: blend positions: positions count: count
@@ -3496,9 +3657,9 @@ gdipGetLineRect: brush rect: rect
 
 		GpStatus __stdcall GdipGetLineRect(
 			PGpLineGradient brush,
-			GpRectF* rect);"
+			RectF* Rect);"
 
-	<stdcall: errno GdipGetLineRect handle RECTF*>
+	<stdcall: errno GdipGetLineRect handle RectF*>
 	^self invalidCall: _failureCode!
 
 gdipGetLineRectI: brush rect: rect
@@ -3506,9 +3667,9 @@ gdipGetLineRectI: brush rect: rect
 
 		GpStatus __stdcall GdipGetLineRectI(
 			PGpLineGradient brush,
-			GpRect* rect);"
+			Rect* Rect);"
 
-	<stdcall: errno GdipGetLineRectI handle RECTL*>
+	<stdcall: errno GdipGetLineRectI handle Rect*>
 	^self invalidCall: _failureCode!
 
 gdipGetLineSpacing: family style: style lineSpacing: lineSpacing
@@ -3517,7 +3678,7 @@ gdipGetLineSpacing: family style: style lineSpacing: lineSpacing
 		GpStatus __stdcall GdipGetLineSpacing(
 			[in]PGpFontFamily family,
 			int style,
-			UINT16* LineSpacing);"
+			[out, retval]UINT16* LineSpacing);"
 
 	<stdcall: errno GdipGetLineSpacing handle sdword word*>
 	^self invalidCall: _failureCode!
@@ -3553,10 +3714,10 @@ gdipGetLogFontA: font graphics: graphics logfonta: logfonta
 	<stdcall: errno GdipGetLogFontA handle handle LOGFONT*>
 	^self invalidCall: _failureCode!
 
-gdipGetLogFontW: font graphics: graphics logfonta: logfonta
-	"Invoke the GdipGetLogFontA() function of the module wrapped by the receiver.
+gdipGetLogFontW: font graphics: graphics logfontw: logfontw
+	"Invoke the GdipGetLogFontW() function of the module wrapped by the receiver.
 
-		GpStatus __stdcall GdipGetLogFontA(
+		GpStatus __stdcall GdipGetLogFontW(
 			PGpFont font,
 			PGpGraphics graphics,
 			LOGFONTW* LOGFONTW);"
@@ -3591,7 +3752,7 @@ gdipGetMetafileHeaderFromEmf: hEmf header: header
 			HENHMETAFILE hEmf,
 			MetafileHeader* header);"
 
-	<stdcall: errno GdipGetMetafileHeaderFromEmf handle GpMetafileHeader*>
+	<stdcall: errno GdipGetMetafileHeaderFromEmf handle MetafileHeader*>
 	^self invalidCall: _failureCode!
 
 gdipGetMetafileHeaderFromFile: filename header: header
@@ -3601,7 +3762,7 @@ gdipGetMetafileHeaderFromFile: filename header: header
 			[in]LPWSTR filename,
 			MetafileHeader* header);"
 
-	<stdcall: errno GdipGetMetafileHeaderFromFile lpwstr GpMetafileHeader*>
+	<stdcall: errno GdipGetMetafileHeaderFromFile lpwstr MetafileHeader*>
 	^self invalidCall: _failureCode!
 
 gdipGetMetafileHeaderFromMetafile: metafile header: header
@@ -3611,7 +3772,7 @@ gdipGetMetafileHeaderFromMetafile: metafile header: header
 			PGpMetafile metafile,
 			MetafileHeader* header);"
 
-	<stdcall: errno GdipGetMetafileHeaderFromMetafile handle GpMetafileHeader*>
+	<stdcall: errno GdipGetMetafileHeaderFromMetafile handle MetafileHeader*>
 	^self invalidCall: _failureCode!
 
 gdipGetMetafileHeaderFromStream: stream header: header
@@ -3621,7 +3782,7 @@ gdipGetMetafileHeaderFromStream: stream header: header
 			IStream* stream,
 			MetafileHeader* header);"
 
-	<stdcall: errno GdipGetMetafileHeaderFromStream COM.IStream* GpMetafileHeader*>
+	<stdcall: errno GdipGetMetafileHeaderFromStream COM.IStream* MetafileHeader*>
 	^self invalidCall: _failureCode!
 
 gdipGetMetafileHeaderFromWmf: hWmf wmfPlaceableFileHeader: wmfPlaceableFileHeader header: header
@@ -3632,7 +3793,7 @@ gdipGetMetafileHeaderFromWmf: hWmf wmfPlaceableFileHeader: wmfPlaceableFileHeade
 			[in]WmfPlaceableFileHeader* WmfPlaceableFileHeader,
 			MetafileHeader* header);"
 
-	<stdcall: errno GdipGetMetafileHeaderFromWmf handle GpWmfPlaceableFileHeader* GpMetafileHeader*>
+	<stdcall: errno GdipGetMetafileHeaderFromWmf handle WmfPlaceableFileHeader* MetafileHeader*>
 	^self invalidCall: _failureCode!
 
 gdipGetNearestColor: graphics argb: argb
@@ -3672,7 +3833,7 @@ gdipGetPathData: path pathData: pathData
 			PGpPath path,
 			GpPathData* pathData);"
 
-	<stdcall: errno GdipGetPathData handle GpPathData*>
+	<stdcall: errno GdipGetPathData handle PathData*>
 	^self invalidCall: _failureCode!
 
 gdipGetPathFillMode: path fillMode: fillMode
@@ -3722,7 +3883,7 @@ gdipGetPathGradientCenterPoint: brush points: points
 
 		GpStatus __stdcall GdipGetPathGradientCenterPoint(
 			PGpPathGradient brush,
-			GpPointF* Points);"
+			POINTF* Points);"
 
 	<stdcall: errno GdipGetPathGradientCenterPoint handle POINTF*>
 	^self invalidCall: _failureCode!
@@ -3732,7 +3893,7 @@ gdipGetPathGradientCenterPointI: brush points: points
 
 		GpStatus __stdcall GdipGetPathGradientCenterPointI(
 			PGpPathGradient brush,
-			GpPoint* Points);"
+			POINTL* Points);"
 
 	<stdcall: errno GdipGetPathGradientCenterPointI handle POINTL*>
 	^self invalidCall: _failureCode!
@@ -3753,9 +3914,9 @@ gdipGetPathGradientGammaCorrection: brush useGammaCorrection: useGammaCorrection
 
 		GpStatus __stdcall GdipGetPathGradientGammaCorrection(
 			PGpPathGradient brush,
-			long* useGammaCorrection);"
+			BOOL* useGammaCorrection);"
 
-	<stdcall: errno GdipGetPathGradientGammaCorrection handle sdword*>
+	<stdcall: errno GdipGetPathGradientGammaCorrection handle bool*>
 	^self invalidCall: _failureCode!
 
 gdipGetPathGradientPath: brush path: path
@@ -3805,9 +3966,9 @@ gdipGetPathGradientRect: brush rect: rect
 
 		GpStatus __stdcall GdipGetPathGradientRect(
 			PGpPathGradient brush,
-			GpRectF* rect);"
+			RectF* Rect);"
 
-	<stdcall: errno GdipGetPathGradientRect handle RECTF*>
+	<stdcall: errno GdipGetPathGradientRect handle RectF*>
 	^self invalidCall: _failureCode!
 
 gdipGetPathGradientRectI: brush rect: rect
@@ -3815,9 +3976,9 @@ gdipGetPathGradientRectI: brush rect: rect
 
 		GpStatus __stdcall GdipGetPathGradientRectI(
 			PGpPathGradient brush,
-			GpRect* rect);"
+			Rect* Rect);"
 
-	<stdcall: errno GdipGetPathGradientRectI handle RECTL*>
+	<stdcall: errno GdipGetPathGradientRectI handle Rect*>
 	^self invalidCall: _failureCode!
 
 gdipGetPathGradientSurroundColorCount: brush count: count
@@ -3866,7 +4027,7 @@ gdipGetPathLastPoint: path lastPoint: lastPoint
 
 		GpStatus __stdcall GdipGetPathLastPoint(
 			PGpPath path,
-			GpPointF* lastPoint);"
+			POINTF* lastPoint);"
 
 	<stdcall: errno GdipGetPathLastPoint handle POINTF*>
 	^self invalidCall: _failureCode!
@@ -3876,7 +4037,7 @@ gdipGetPathPoints: path points: points count: count
 
 		GpStatus __stdcall GdipGetPathPoints(
 			PGpPath path,
-			GpPointF* Points,
+			POINTF* Points,
 			int Count);"
 
 	<stdcall: errno GdipGetPathPoints handle POINTF* sdword>
@@ -3887,7 +4048,7 @@ gdipGetPathPointsI: path points: points count: count
 
 		GpStatus __stdcall GdipGetPathPointsI(
 			PGpPath path,
-			GpPoint* Points,
+			POINTL* Points,
 			int Count);"
 
 	<stdcall: errno GdipGetPathPointsI handle POINTL* sdword>
@@ -3909,11 +4070,11 @@ gdipGetPathWorldBounds: path bounds: bounds matrix: matrix pen: pen
 
 		GpStatus __stdcall GdipGetPathWorldBounds(
 			PGpPath path,
-			GpRectF* bounds,
+			RectF* bounds,
 			[in]PGpMatrix matrix,
 			[in]PGpPen pen);"
 
-	<stdcall: errno GdipGetPathWorldBounds handle RECTF* handle handle>
+	<stdcall: errno GdipGetPathWorldBounds handle RectF* handle handle>
 	^self invalidCall: _failureCode!
 
 gdipGetPathWorldBoundsI: path bounds: bounds matrix: matrix pen: pen
@@ -3921,11 +4082,11 @@ gdipGetPathWorldBoundsI: path bounds: bounds matrix: matrix pen: pen
 
 		GpStatus __stdcall GdipGetPathWorldBoundsI(
 			PGpPath path,
-			GpRect* bounds,
+			Rect* bounds,
 			[in]PGpMatrix matrix,
 			[in]PGpPen pen);"
 
-	<stdcall: errno GdipGetPathWorldBoundsI handle RECTL* handle handle>
+	<stdcall: errno GdipGetPathWorldBoundsI handle Rect* handle handle>
 	^self invalidCall: _failureCode!
 
 gdipGetPenBrushFill: pen brush: brush
@@ -4025,7 +4186,7 @@ gdipGetPenDashOffset: pen offset: offset
 
 		GpStatus __stdcall GdipGetPenDashOffset(
 			PGpPen pen,
-			REAL* offset);"
+			REAL* Offset);"
 
 	<stdcall: errno GdipGetPenDashOffset handle float*>
 	^self invalidCall: _failureCode!
@@ -4125,7 +4286,7 @@ gdipGetPenWidth: pen width: width
 
 		GpStatus __stdcall GdipGetPenWidth(
 			PGpPen pen,
-			REAL* Width);"
+			REAL* width);"
 
 	<stdcall: errno GdipGetPenWidth handle float*>
 	^self invalidCall: _failureCode!
@@ -4180,7 +4341,7 @@ gdipGetPropertyItem: image propId: propId propSize: propSize buffer: buffer
 			[in]unsigned int propSize,
 			PropertyItem* buffer);"
 
-	<stdcall: errno GdipGetPropertyItem handle dword dword GpPropertyItem*>
+	<stdcall: errno GdipGetPropertyItem handle dword dword PropertyItem*>
 	^self invalidCall: _failureCode!
 
 gdipGetPropertyItemSize: image propId: propId size: size
@@ -4189,7 +4350,7 @@ gdipGetPropertyItemSize: image propId: propId size: size
 		GpStatus __stdcall GdipGetPropertyItemSize(
 			[in]PGpImage image,
 			[in]unsigned long propId,
-			unsigned int* size);"
+			unsigned int* Size);"
 
 	<stdcall: errno GdipGetPropertyItemSize handle dword dword*>
 	^self invalidCall: _failureCode!
@@ -4211,9 +4372,9 @@ gdipGetRegionBounds: region graphics: graphics rect: rect
 		GpStatus __stdcall GdipGetRegionBounds(
 			PGpRegion region,
 			PGpGraphics graphics,
-			GpRectF* rect);"
+			RectF* Rect);"
 
-	<stdcall: errno GdipGetRegionBounds handle handle RECTF*>
+	<stdcall: errno GdipGetRegionBounds handle handle RectF*>
 	^self invalidCall: _failureCode!
 
 gdipGetRegionBoundsI: region graphics: graphics rect: rect
@@ -4222,9 +4383,9 @@ gdipGetRegionBoundsI: region graphics: graphics rect: rect
 		GpStatus __stdcall GdipGetRegionBoundsI(
 			PGpRegion region,
 			PGpGraphics graphics,
-			GpRect* rect);"
+			Rect* Rect);"
 
-	<stdcall: errno GdipGetRegionBoundsI handle handle RECTL*>
+	<stdcall: errno GdipGetRegionBoundsI handle handle Rect*>
 	^self invalidCall: _failureCode!
 
 gdipGetRegionData: region buffer: buffer bufferSize: bufferSize sizeFilled: sizeFilled
@@ -4255,9 +4416,9 @@ gdipGetRegionHRgn: region graphics: graphics hRgn: hRgn
 		GpStatus __stdcall GdipGetRegionHRgn(
 			PGpRegion region,
 			PGpGraphics graphics,
-			void** hRgn);"
+			wireHRGN* hRgn);"
 
-	<stdcall: errno GdipGetRegionHRgn handle handle void**>
+	<stdcall: errno GdipGetRegionHRgn handle handle handle*>
 	^self invalidCall: _failureCode!
 
 gdipGetRegionScans: region rects: rects count: count matrix: matrix
@@ -4265,11 +4426,11 @@ gdipGetRegionScans: region rects: rects count: count matrix: matrix
 
 		GpStatus __stdcall GdipGetRegionScans(
 			PGpRegion region,
-			GpRectF* rects,
+			RectF* rects,
 			int* Count,
 			PGpMatrix matrix);"
 
-	<stdcall: errno GdipGetRegionScans handle RECTF* sdword* handle>
+	<stdcall: errno GdipGetRegionScans handle RectF* sdword* handle>
 	^self invalidCall: _failureCode!
 
 gdipGetRegionScansCount: region count: count matrix: matrix
@@ -4288,11 +4449,11 @@ gdipGetRegionScansI: region rects: rects count: count matrix: matrix
 
 		GpStatus __stdcall GdipGetRegionScansI(
 			PGpRegion region,
-			GpRect* rects,
+			Rect* rects,
 			int* Count,
 			PGpMatrix matrix);"
 
-	<stdcall: errno GdipGetRegionScansI handle RECTL* sdword* handle>
+	<stdcall: errno GdipGetRegionScansI handle Rect* sdword* handle>
 	^self invalidCall: _failureCode!
 
 gdipGetRenderingOrigin: graphics x: x y: y
@@ -4474,9 +4635,9 @@ gdipGetVisibleClipBounds: graphics rect: rect
 
 		GpStatus __stdcall GdipGetVisibleClipBounds(
 			PGpGraphics graphics,
-			GpRectF* rect);"
+			RectF* Rect);"
 
-	<stdcall: errno GdipGetVisibleClipBounds handle RECTF*>
+	<stdcall: errno GdipGetVisibleClipBounds handle RectF*>
 	^self invalidCall: _failureCode!
 
 gdipGetVisibleClipBoundsI: graphics rect: rect
@@ -4484,9 +4645,9 @@ gdipGetVisibleClipBoundsI: graphics rect: rect
 
 		GpStatus __stdcall GdipGetVisibleClipBoundsI(
 			PGpGraphics graphics,
-			GpRect* rect);"
+			Rect* Rect);"
 
-	<stdcall: errno GdipGetVisibleClipBoundsI handle RECTL*>
+	<stdcall: errno GdipGetVisibleClipBoundsI handle Rect*>
 	^self invalidCall: _failureCode!
 
 gdipGetWorldTransform: graphics matrix: matrix
@@ -4507,6 +4668,16 @@ gdipGraphicsClear: graphics color: color
 			ARGB Color);"
 
 	<stdcall: errno GdipGraphicsClear handle dword>
+	^self invalidCall: _failureCode!
+
+gdipGraphicsSetAbort: pGraphics pIAbort: pIAbort
+	"Invoke the GdipGraphicsSetAbort() function of the module wrapped by the receiver.
+
+		GpStatus __stdcall GdipGraphicsSetAbort(
+			PGpGraphics pGraphics,
+			GdiplusAbort* pIAbort);"
+
+	<stdcall: errno GdipGraphicsSetAbort handle void**>
 	^self invalidCall: _failureCode!
 
 gdipImageForceValidation: image
@@ -4571,6 +4742,29 @@ gdipImageSelectActiveFrame: image dimensionID: dimensionID frameIndex: frameInde
 	<stdcall: errno GdipImageSelectActiveFrame handle guid* dword>
 	^self invalidCall: _failureCode!
 
+gdipImageSetAbort: pImage pIAbort: pIAbort
+	"Invoke the GdipImageSetAbort() function of the module wrapped by the receiver.
+
+		GpStatus __stdcall GdipImageSetAbort(
+			PGpImage pImage,
+			GdiplusAbort* pIAbort);"
+
+	<stdcall: errno GdipImageSetAbort handle void**>
+	^self invalidCall: _failureCode!
+
+gdipInitializePalette: palette paletteType: paletteType optimalColors: optimalColors useTransparentColor: useTransparentColor bitmap: bitmap
+	"Invoke the GdipInitializePalette() function of the module wrapped by the receiver.
+
+		GpStatus __stdcall GdipInitializePalette(
+			[out]ColorPalette* palette,
+			PaletteType PaletteType,
+			int optimalColors,
+			BOOL useTransparentColor,
+			PGpBitmap bitmap);"
+
+	<stdcall: errno GdipInitializePalette ColorPalette* sdword sdword bool handle>
+	^self invalidCall: _failureCode!
+
 gdipInvertMatrix: matrix
 	"Invoke the GdipInvertMatrix() function of the module wrapped by the receiver.
 
@@ -4585,9 +4779,9 @@ gdipIsClipEmpty: graphics result: result
 
 		GpStatus __stdcall GdipIsClipEmpty(
 			PGpGraphics graphics,
-			long* result);"
+			BOOL* result);"
 
-	<stdcall: errno GdipIsClipEmpty handle sdword*>
+	<stdcall: errno GdipIsClipEmpty handle bool*>
 	^self invalidCall: _failureCode!
 
 gdipIsEmptyRegion: region graphics: graphics result: result
@@ -4596,9 +4790,9 @@ gdipIsEmptyRegion: region graphics: graphics result: result
 		GpStatus __stdcall GdipIsEmptyRegion(
 			PGpRegion region,
 			PGpGraphics graphics,
-			long* result);"
+			BOOL* result);"
 
-	<stdcall: errno GdipIsEmptyRegion handle handle sdword*>
+	<stdcall: errno GdipIsEmptyRegion handle handle bool*>
 	^self invalidCall: _failureCode!
 
 gdipIsEqualRegion: region region2: region2 graphics: graphics result: result
@@ -4608,9 +4802,9 @@ gdipIsEqualRegion: region region2: region2 graphics: graphics result: result
 			PGpRegion region,
 			PGpRegion region2,
 			PGpGraphics graphics,
-			long* result);"
+			BOOL* result);"
 
-	<stdcall: errno GdipIsEqualRegion handle handle handle sdword*>
+	<stdcall: errno GdipIsEqualRegion handle handle handle bool*>
 	^self invalidCall: _failureCode!
 
 gdipIsInfiniteRegion: region graphics: graphics result: result
@@ -4619,9 +4813,9 @@ gdipIsInfiniteRegion: region graphics: graphics result: result
 		GpStatus __stdcall GdipIsInfiniteRegion(
 			PGpRegion region,
 			PGpGraphics graphics,
-			long* result);"
+			BOOL* result);"
 
-	<stdcall: errno GdipIsInfiniteRegion handle handle sdword*>
+	<stdcall: errno GdipIsInfiniteRegion handle handle bool*>
 	^self invalidCall: _failureCode!
 
 gdipIsMatrixEqual: matrix matrix2: matrix2 result: result
@@ -4630,9 +4824,9 @@ gdipIsMatrixEqual: matrix matrix2: matrix2 result: result
 		GpStatus __stdcall GdipIsMatrixEqual(
 			[in]PGpMatrix matrix,
 			[in]PGpMatrix matrix2,
-			long* result);"
+			BOOL* result);"
 
-	<stdcall: errno GdipIsMatrixEqual handle handle sdword*>
+	<stdcall: errno GdipIsMatrixEqual handle handle bool*>
 	^self invalidCall: _failureCode!
 
 gdipIsMatrixIdentity: matrix result: result
@@ -4640,9 +4834,9 @@ gdipIsMatrixIdentity: matrix result: result
 
 		GpStatus __stdcall GdipIsMatrixIdentity(
 			[in]PGpMatrix matrix,
-			long* result);"
+			BOOL* result);"
 
-	<stdcall: errno GdipIsMatrixIdentity handle sdword*>
+	<stdcall: errno GdipIsMatrixIdentity handle bool*>
 	^self invalidCall: _failureCode!
 
 gdipIsMatrixInvertible: matrix result: result
@@ -4650,9 +4844,9 @@ gdipIsMatrixInvertible: matrix result: result
 
 		GpStatus __stdcall GdipIsMatrixInvertible(
 			[in]PGpMatrix matrix,
-			long* result);"
+			BOOL* result);"
 
-	<stdcall: errno GdipIsMatrixInvertible handle sdword*>
+	<stdcall: errno GdipIsMatrixInvertible handle bool*>
 	^self invalidCall: _failureCode!
 
 gdipIsOutlineVisiblePathPoint: path x: x y: y pen: pen graphics: graphics result: result
@@ -4664,9 +4858,9 @@ gdipIsOutlineVisiblePathPoint: path x: x y: y pen: pen graphics: graphics result
 			REAL y,
 			PGpPen pen,
 			PGpGraphics graphics,
-			long* result);"
+			BOOL* result);"
 
-	<stdcall: errno GdipIsOutlineVisiblePathPoint handle float float handle handle sdword*>
+	<stdcall: errno GdipIsOutlineVisiblePathPoint handle float float handle handle bool*>
 	^self invalidCall: _failureCode!
 
 gdipIsOutlineVisiblePathPointI: path x: x y: y pen: pen graphics: graphics result: result
@@ -4678,9 +4872,9 @@ gdipIsOutlineVisiblePathPointI: path x: x y: y pen: pen graphics: graphics resul
 			int y,
 			PGpPen pen,
 			PGpGraphics graphics,
-			long* result);"
+			BOOL* result);"
 
-	<stdcall: errno GdipIsOutlineVisiblePathPointI handle sdword sdword handle handle sdword*>
+	<stdcall: errno GdipIsOutlineVisiblePathPointI handle sdword sdword handle handle bool*>
 	^self invalidCall: _failureCode!
 
 gdipIsStyleAvailable: family style: style isStyleAvailable: isStyleAvailable
@@ -4689,9 +4883,9 @@ gdipIsStyleAvailable: family style: style isStyleAvailable: isStyleAvailable
 		GpStatus __stdcall GdipIsStyleAvailable(
 			[in]PGpFontFamily family,
 			int style,
-			long* IsStyleAvailable);"
+			[out, retval]BOOL* IsStyleAvailable);"
 
-	<stdcall: errno GdipIsStyleAvailable handle sdword sdword*>
+	<stdcall: errno GdipIsStyleAvailable handle sdword bool*>
 	^self invalidCall: _failureCode!
 
 gdipIsVisibleClipEmpty: graphics result: result
@@ -4699,9 +4893,9 @@ gdipIsVisibleClipEmpty: graphics result: result
 
 		GpStatus __stdcall GdipIsVisibleClipEmpty(
 			PGpGraphics graphics,
-			long* result);"
+			BOOL* result);"
 
-	<stdcall: errno GdipIsVisibleClipEmpty handle sdword*>
+	<stdcall: errno GdipIsVisibleClipEmpty handle bool*>
 	^self invalidCall: _failureCode!
 
 gdipIsVisiblePathPoint: path x: x y: y graphics: graphics result: result
@@ -4712,9 +4906,9 @@ gdipIsVisiblePathPoint: path x: x y: y graphics: graphics result: result
 			REAL x,
 			REAL y,
 			PGpGraphics graphics,
-			long* result);"
+			BOOL* result);"
 
-	<stdcall: errno GdipIsVisiblePathPoint handle float float handle sdword*>
+	<stdcall: errno GdipIsVisiblePathPoint handle float float handle bool*>
 	^self invalidCall: _failureCode!
 
 gdipIsVisiblePathPointI: path x: x y: y graphics: graphics result: result
@@ -4725,9 +4919,9 @@ gdipIsVisiblePathPointI: path x: x y: y graphics: graphics result: result
 			int x,
 			int y,
 			PGpGraphics graphics,
-			long* result);"
+			BOOL* result);"
 
-	<stdcall: errno GdipIsVisiblePathPointI handle sdword sdword handle sdword*>
+	<stdcall: errno GdipIsVisiblePathPointI handle sdword sdword handle bool*>
 	^self invalidCall: _failureCode!
 
 gdipIsVisiblePoint: graphics x: x y: y result: result
@@ -4737,9 +4931,9 @@ gdipIsVisiblePoint: graphics x: x y: y result: result
 			PGpGraphics graphics,
 			REAL x,
 			REAL y,
-			long* result);"
+			BOOL* result);"
 
-	<stdcall: errno GdipIsVisiblePoint handle float float sdword*>
+	<stdcall: errno GdipIsVisiblePoint handle float float bool*>
 	^self invalidCall: _failureCode!
 
 gdipIsVisiblePointI: graphics x: x y: y result: result
@@ -4749,9 +4943,9 @@ gdipIsVisiblePointI: graphics x: x y: y result: result
 			PGpGraphics graphics,
 			int x,
 			int y,
-			long* result);"
+			BOOL* result);"
 
-	<stdcall: errno GdipIsVisiblePointI handle sdword sdword sdword*>
+	<stdcall: errno GdipIsVisiblePointI handle sdword sdword bool*>
 	^self invalidCall: _failureCode!
 
 gdipIsVisibleRect: graphics x: x y: y width: width height: height result: result
@@ -4761,11 +4955,11 @@ gdipIsVisibleRect: graphics x: x y: y width: width height: height result: result
 			PGpGraphics graphics,
 			REAL x,
 			REAL y,
-			REAL Width,
-			REAL Height,
-			long* result);"
+			REAL width,
+			REAL height,
+			BOOL* result);"
 
-	<stdcall: errno GdipIsVisibleRect handle float float float float sdword*>
+	<stdcall: errno GdipIsVisibleRect handle float float float float bool*>
 	^self invalidCall: _failureCode!
 
 gdipIsVisibleRectI: graphics x: x y: y width: width height: height result: result
@@ -4775,11 +4969,11 @@ gdipIsVisibleRectI: graphics x: x y: y width: width height: height result: resul
 			PGpGraphics graphics,
 			int x,
 			int y,
-			int Width,
-			int Height,
-			long* result);"
+			int width,
+			int height,
+			BOOL* result);"
 
-	<stdcall: errno GdipIsVisibleRectI handle sdword sdword sdword sdword sdword*>
+	<stdcall: errno GdipIsVisibleRectI handle sdword sdword sdword sdword bool*>
 	^self invalidCall: _failureCode!
 
 gdipIsVisibleRegionPoint: region x: x y: y graphics: graphics result: result
@@ -4790,9 +4984,9 @@ gdipIsVisibleRegionPoint: region x: x y: y graphics: graphics result: result
 			REAL x,
 			REAL y,
 			PGpGraphics graphics,
-			long* result);"
+			BOOL* result);"
 
-	<stdcall: errno GdipIsVisibleRegionPoint handle float float handle sdword*>
+	<stdcall: errno GdipIsVisibleRegionPoint handle float float handle bool*>
 	^self invalidCall: _failureCode!
 
 gdipIsVisibleRegionPointI: region x: x y: y graphics: graphics result: result
@@ -4803,9 +4997,9 @@ gdipIsVisibleRegionPointI: region x: x y: y graphics: graphics result: result
 			int x,
 			int y,
 			PGpGraphics graphics,
-			long* result);"
+			BOOL* result);"
 
-	<stdcall: errno GdipIsVisibleRegionPointI handle sdword sdword handle sdword*>
+	<stdcall: errno GdipIsVisibleRegionPointI handle sdword sdword handle bool*>
 	^self invalidCall: _failureCode!
 
 gdipIsVisibleRegionRect: region x: x y: y width: width height: height graphics: graphics result: result
@@ -4815,12 +5009,12 @@ gdipIsVisibleRegionRect: region x: x y: y width: width height: height graphics: 
 			PGpRegion region,
 			REAL x,
 			REAL y,
-			REAL Width,
-			REAL Height,
+			REAL width,
+			REAL height,
 			PGpGraphics graphics,
-			long* result);"
+			BOOL* result);"
 
-	<stdcall: errno GdipIsVisibleRegionRect handle float float float float handle sdword*>
+	<stdcall: errno GdipIsVisibleRegionRect handle float float float float handle bool*>
 	^self invalidCall: _failureCode!
 
 gdipIsVisibleRegionRectI: region x: x y: y width: width height: height graphics: graphics result: result
@@ -4830,12 +5024,12 @@ gdipIsVisibleRegionRectI: region x: x y: y width: width height: height graphics:
 			PGpRegion region,
 			int x,
 			int y,
-			int Width,
-			int Height,
+			int width,
+			int height,
 			PGpGraphics graphics,
-			long* result);"
+			BOOL* result);"
 
-	<stdcall: errno GdipIsVisibleRegionRectI handle sdword sdword sdword sdword handle sdword*>
+	<stdcall: errno GdipIsVisibleRegionRectI handle sdword sdword sdword sdword handle bool*>
 	^self invalidCall: _failureCode!
 
 gdipLoadImageFromFile: filename image: image
@@ -4865,7 +5059,7 @@ gdipLoadImageFromStream: stream image: image
 			[in]IStream* stream,
 			[out, retval]PGpImage* image);"
 
-	<stdcall: errno GdipLoadImageFromStream COM.IStream* handle*>
+	<stdcall: errno GdipLoadImageFromStream OS.COM.IStream* handle*>
 	^self invalidCall: _failureCode!
 
 gdipLoadImageFromStreamICM: stream image: image
@@ -4875,45 +5069,45 @@ gdipLoadImageFromStreamICM: stream image: image
 			[in]IStream* stream,
 			[out, retval]PGpImage* image);"
 
-	<stdcall: errno GdipLoadImageFromStreamICM COM.IStream* handle*>
+	<stdcall: errno GdipLoadImageFromStreamICM OS.COM.IStream* handle*>
 	^self invalidCall: _failureCode!
 
 gdiplusNotificationHook: token1
 	"Invoke the GdiplusNotificationHook() function of the module wrapped by the receiver.
 
 		GpStatus __stdcall GdiplusNotificationHook(
-			ULONG_PTR* token);"
+			unsigned long* token);"
 
-	<stdcall: errno GdiplusNotificationHook uintptr*>
+	<stdcall: errno GdiplusNotificationHook dword*>
 	^self invalidCall: _failureCode!
 
 gdiplusNotificationUnhook: token1
 	"Invoke the GdiplusNotificationUnhook() function of the module wrapped by the receiver.
 
 		void __stdcall GdiplusNotificationUnhook(
-			ULONG_PTR token);"
+			unsigned long token);"
 
-	<stdcall: void GdiplusNotificationUnhook uintptr>
+	<stdcall: void GdiplusNotificationUnhook dword>
 	^self invalidCall: _failureCode!
 
 gdiplusShutdown: token1
 	"Invoke the GdiplusShutdown() function of the module wrapped by the receiver.
 
 		void __stdcall GdiplusShutdown(
-			[in]ULONG_PTR token);"
+			[in]unsigned long token);"
 
-	<stdcall: void GdiplusStartup uintptr>
+	<stdcall: void GdiplusStartup dword>
 	^self invalidCall: _failureCode!
 
 gdiplusStartup: token1 input: input output: output
 	"Invoke the GdiplusStartup() function of the module wrapped by the receiver.
 
 		GpStatus __stdcall GdiplusStartup(
-			[out]ULONG_PTR* token,
+			[out]unsigned long* token,
 			[in]GdiplusStartupInput* input,
 			[out]GdiplusStartupOutput* output);"
 
-	<stdcall: errno GdiplusStartup uintptr* GdiplusStartupInput* GdiplusStartupOutput*>
+	<stdcall: errno GdiplusStartup dword* GdiplusStartupInput* GdiplusStartupOutput*>
 	^self invalidCall: _failureCode!
 
 gdipMeasureCharacterRanges: graphics str: str length: length font: font layoutRect: layoutRect stringFormat: stringFormat regionCount: regionCount regions: regions
@@ -4924,12 +5118,12 @@ gdipMeasureCharacterRanges: graphics str: str length: length font: font layoutRe
 			[in]LPWSTR str,
 			int length,
 			[in]PGpFont font,
-			[in]RECTF* layoutRect,
+			[in]RectF* layoutRect,
 			[in]PGpStringFormat stringFormat,
 			int regionCount,
 			[out, retval]PGpRegion* regions);"
 
-	<stdcall: errno GdipMeasureCharacterRanges handle lpwstr sdword handle RECTF* handle sdword handle*>
+	<stdcall: errno GdipMeasureCharacterRanges handle lpwstr sdword handle RectF* handle sdword handle*>
 	^self invalidCall: _failureCode!
 
 gdipMeasureDriverString: graphics text: text length: length font: font positions: positions flags: flags matrix: matrix boundingBox: boundingBox
@@ -4943,9 +5137,9 @@ gdipMeasureDriverString: graphics text: text length: length font: font positions
 			[in]POINTF* positions,
 			int Flags,
 			[in]PGpMatrix matrix,
-			RECTF* BoundingBox);"
+			RectF* BoundingBox);"
 
-	<stdcall: errno GdipMeasureDriverString handle word* sdword handle POINTF* sdword handle RECTF*>
+	<stdcall: errno GdipMeasureDriverString handle word* sdword handle POINTF* sdword handle RectF*>
 	^self invalidCall: _failureCode!
 
 gdipMeasureString: graphics str: str length: length font: font layoutRect: layoutRect stringFormat: stringFormat boundingBox: boundingBox codepointsFitted: codepointsFitted linesFilled: linesFilled
@@ -4956,13 +5150,13 @@ gdipMeasureString: graphics str: str length: length font: font layoutRect: layou
 			[in]LPWSTR str,
 			int length,
 			[in]PGpFont font,
-			[in]RECTF* layoutRect,
+			[in]RectF* layoutRect,
 			[in]PGpStringFormat stringFormat,
-			RECTF* BoundingBox,
+			RectF* BoundingBox,
 			int* codepointsFitted,
 			int* linesFilled);"
 
-	<stdcall: errno GdipMeasureString handle lpwstr sdword handle RECTF* handle RECTF* sdword* sdword*>
+	<stdcall: errno GdipMeasureString handle lpwstr sdword handle RectF* handle RectF* sdword* sdword*>
 	^self invalidCall: _failureCode!
 
 gdipMultiplyLineTransform: brush matrix: matrix order: order
@@ -5055,7 +5249,7 @@ gdipPathIterCopyData: iterator resultCount: resultCount points: points types: ty
 		GpStatus __stdcall GdipPathIterCopyData(
 			PGpPathIterator iterator,
 			int* resultCount,
-			GpPointF* Points,
+			POINTF* Points,
 			BYTE* Types,
 			int startIndex,
 			int endIndex);"
@@ -5069,7 +5263,7 @@ gdipPathIterEnumerate: iterator resultCount: resultCount points: points types: t
 		GpStatus __stdcall GdipPathIterEnumerate(
 			PGpPathIterator iterator,
 			int* resultCount,
-			GpPointF* Points,
+			POINTF* Points,
 			BYTE* Types,
 			int Count);"
 
@@ -5101,9 +5295,9 @@ gdipPathIterHasCurve: iterator hasCurve: hasCurve
 
 		GpStatus __stdcall GdipPathIterHasCurve(
 			PGpPathIterator iterator,
-			long* hasCurve);"
+			BOOL* hasCurve);"
 
-	<stdcall: errno GdipPathIterHasCurve handle sdword*>
+	<stdcall: errno GdipPathIterHasCurve handle bool*>
 	^self invalidCall: _failureCode!
 
 gdipPathIterIsValid: iterator valid: valid
@@ -5111,9 +5305,9 @@ gdipPathIterIsValid: iterator valid: valid
 
 		GpStatus __stdcall GdipPathIterIsValid(
 			PGpPathIterator iterator,
-			long* valid);"
+			BOOL* valid);"
 
-	<stdcall: errno GdipPathIterIsValid handle sdword*>
+	<stdcall: errno GdipPathIterIsValid handle bool*>
 	^self invalidCall: _failureCode!
 
 gdipPathIterNextMarker: iterator resultCount: resultCount startIndex: startIndex endIndex: endIndex
@@ -5160,9 +5354,9 @@ gdipPathIterNextSubpath: iterator resultCount: resultCount startIndex: startInde
 			int* resultCount,
 			int* startIndex,
 			int* endIndex,
-			long* isClosed);"
+			BOOL* isClosed);"
 
-	<stdcall: errno GdipPathIterNextSubpath handle sdword* sdword* sdword* sdword*>
+	<stdcall: errno GdipPathIterNextSubpath handle sdword* sdword* sdword* bool*>
 	^self invalidCall: _failureCode!
 
 gdipPathIterNextSubpathPath: iterator resultCount: resultCount path: path isClosed: isClosed
@@ -5172,9 +5366,9 @@ gdipPathIterNextSubpathPath: iterator resultCount: resultCount path: path isClos
 			PGpPathIterator iterator,
 			int* resultCount,
 			PGpPath path,
-			long* isClosed);"
+			BOOL* isClosed);"
 
-	<stdcall: errno GdipPathIterNextSubpathPath handle sdword* handle sdword*>
+	<stdcall: errno GdipPathIterNextSubpathPath handle sdword* handle bool*>
 	^self invalidCall: _failureCode!
 
 gdipPathIterRewind: iterator
@@ -5193,8 +5387,8 @@ gdipPlayMetafileRecord: metafile recordType: recordType flags: flags dataSize: d
 			[in]PGpMetafile metafile,
 			EmfPlusRecordType recordType,
 			unsigned int Flags,
-			unsigned int dataSize,
-			[in]BYTE* data);"
+			unsigned int DataSize,
+			[in]BYTE* Data);"
 
 	<stdcall: errno GdipPlayMetafileRecord handle sdword dword dword byte*>
 	^self invalidCall: _failureCode!
@@ -5226,12 +5420,12 @@ gdipRecordMetafile: referenceHdc type: type frameRect: frameRect frameUnit: fram
 		GpStatus __stdcall GdipRecordMetafile(
 			HDC referenceHdc,
 			EmfType Type,
-			[in]GpRectF* frameRect,
+			[in]RectF* frameRect,
 			MetafileFrameUnit frameUnit,
 			[in]LPWSTR description,
 			[out, retval]PGpMetafile* metafile);"
 
-	<stdcall: errno GdipRecordMetafile handle sdword RECTF* sdword lpwstr handle*>
+	<stdcall: errno GdipRecordMetafile handle sdword RectF* sdword lpwstr handle*>
 	^self invalidCall: _failureCode!
 
 gdipRecordMetafileFileName: filename referenceHdc: referenceHdc type: type frameRect: frameRect frameUnit: frameUnit description: description metafile: metafile
@@ -5241,12 +5435,12 @@ gdipRecordMetafileFileName: filename referenceHdc: referenceHdc type: type frame
 			[in]LPWSTR filename,
 			HDC referenceHdc,
 			EmfType Type,
-			[in]GpRectF* frameRect,
+			[in]RectF* frameRect,
 			MetafileFrameUnit frameUnit,
 			[in]LPWSTR description,
 			[out, retval]PGpMetafile* metafile);"
 
-	<stdcall: errno GdipRecordMetafileFileName lpwstr handle sdword RECTF* sdword lpwstr handle*>
+	<stdcall: errno GdipRecordMetafileFileName lpwstr handle sdword RectF* sdword lpwstr handle*>
 	^self invalidCall: _failureCode!
 
 gdipRecordMetafileFileNameI: filename referenceHdc: referenceHdc type: type frameRect: frameRect frameUnit: frameUnit description: description metafile: metafile
@@ -5256,12 +5450,12 @@ gdipRecordMetafileFileNameI: filename referenceHdc: referenceHdc type: type fram
 			[in]LPWSTR filename,
 			HDC referenceHdc,
 			EmfType Type,
-			[in]GpRect* frameRect,
+			[in]Rect* frameRect,
 			MetafileFrameUnit frameUnit,
 			[in]LPWSTR description,
 			[out, retval]PGpMetafile* metafile);"
 
-	<stdcall: errno GdipRecordMetafileFileNameI lpwstr handle sdword RECTL* sdword lpwstr handle*>
+	<stdcall: errno GdipRecordMetafileFileNameI lpwstr handle sdword Rect* sdword lpwstr handle*>
 	^self invalidCall: _failureCode!
 
 gdipRecordMetafileI: referenceHdc type: type frameRect: frameRect frameUnit: frameUnit description: description metafile: metafile
@@ -5270,12 +5464,12 @@ gdipRecordMetafileI: referenceHdc type: type frameRect: frameRect frameUnit: fra
 		GpStatus __stdcall GdipRecordMetafileI(
 			HDC referenceHdc,
 			EmfType Type,
-			[in]GpRect* frameRect,
+			[in]Rect* frameRect,
 			MetafileFrameUnit frameUnit,
 			[in]LPWSTR description,
 			[out, retval]PGpMetafile* metafile);"
 
-	<stdcall: errno GdipRecordMetafileI handle sdword RECTL* sdword lpwstr handle*>
+	<stdcall: errno GdipRecordMetafileI handle sdword Rect* sdword lpwstr handle*>
 	^self invalidCall: _failureCode!
 
 gdipRecordMetafileStream: stream referenceHdc: referenceHdc type: type frameRect: frameRect frameUnit: frameUnit description: description metafile: metafile
@@ -5285,12 +5479,12 @@ gdipRecordMetafileStream: stream referenceHdc: referenceHdc type: type frameRect
 			IStream* stream,
 			HDC referenceHdc,
 			EmfType Type,
-			[in]GpRectF* frameRect,
+			[in]RectF* frameRect,
 			MetafileFrameUnit frameUnit,
 			[in]LPWSTR description,
 			[out, retval]PGpMetafile* metafile);"
 
-	<stdcall: errno GdipRecordMetafileStream COM.IStream* handle sdword RECTF* sdword lpwstr handle*>
+	<stdcall: errno GdipRecordMetafileStream OS.COM.IStream* handle sdword RectF* sdword lpwstr handle*>
 	^self invalidCall: _failureCode!
 
 gdipRecordMetafileStreamI: stream referenceHdc: referenceHdc type: type frameRect: frameRect frameUnit: frameUnit description: description metafile: metafile
@@ -5300,12 +5494,12 @@ gdipRecordMetafileStreamI: stream referenceHdc: referenceHdc type: type frameRec
 			IStream* stream,
 			HDC referenceHdc,
 			EmfType Type,
-			[in]GpRect* frameRect,
+			[in]Rect* frameRect,
 			MetafileFrameUnit frameUnit,
 			[in]LPWSTR description,
 			[out, retval]PGpMetafile* metafile);"
 
-	<stdcall: errno GdipRecordMetafileStreamI COM.IStream* handle sdword RECTL* sdword lpwstr handle*>
+	<stdcall: errno GdipRecordMetafileStreamI OS.COM.IStream* handle sdword Rect* sdword lpwstr handle*>
 	^self invalidCall: _failureCode!
 
 gdipReleaseDC: graphics hdc: hdc
@@ -5502,7 +5696,7 @@ gdipSaveAdd: image encoderParams: encoderParams
 			[in]PGpImage image,
 			[in]EncoderParameters* encoderParams);"
 
-	<stdcall: errno GdipSaveAdd handle GpEncoderParameters*>
+	<stdcall: errno GdipSaveAdd handle EncoderParameters*>
 	^self invalidCall: _failureCode!
 
 gdipSaveAddImage: image newImage: newImage encoderParams: encoderParams
@@ -5513,7 +5707,7 @@ gdipSaveAddImage: image newImage: newImage encoderParams: encoderParams
 			[in]PGpImage newImage,
 			[in]EncoderParameters* encoderParams);"
 
-	<stdcall: errno GdipSaveAddImage handle handle GpEncoderParameters*>
+	<stdcall: errno GdipSaveAddImage handle handle EncoderParameters*>
 	^self invalidCall: _failureCode!
 
 gdipSaveGraphics: graphics state: state
@@ -5535,7 +5729,7 @@ gdipSaveImageToFile: image filename: filename clsidEncoder: clsidEncoder encoder
 			[in]GUID* clsidEncoder,
 			[in]EncoderParameters* encoderParams);"
 
-	<stdcall: errno GdipSaveImageToFile handle lpwstr guid* GpEncoderParameters*>
+	<stdcall: errno GdipSaveImageToFile handle lpwstr guid* EncoderParameters*>
 	^self invalidCall: _failureCode!
 
 gdipSaveImageToStream: image stream: stream clsidEncoder: clsidEncoder encoderParams: encoderParams
@@ -5547,7 +5741,7 @@ gdipSaveImageToStream: image stream: stream clsidEncoder: clsidEncoder encoderPa
 			[in]GUID* clsidEncoder,
 			[in]EncoderParameters* encoderParams);"
 
-	<stdcall: errno GdipSaveImageToStream handle COM.IStream* guid* GpEncoderParameters*>
+	<stdcall: errno GdipSaveImageToStream handle COM.IStream* guid* EncoderParameters*>
 	^self invalidCall: _failureCode!
 
 gdipScaleLineTransform: brush sx: sx sy: sy order: order
@@ -5627,9 +5821,9 @@ gdipSetAdjustableArrowCapFillState: cap fillState: fillState
 
 		GpStatus __stdcall GdipSetAdjustableArrowCapFillState(
 			PGpAdjustableArrowCap cap,
-			long fillState);"
+			BOOL fillState);"
 
-	<stdcall: errno GdipSetAdjustableArrowCapFillState handle sdword>
+	<stdcall: errno GdipSetAdjustableArrowCapFillState handle bool>
 	^self invalidCall: _failureCode!
 
 gdipSetAdjustableArrowCapHeight: cap height: height
@@ -5637,7 +5831,7 @@ gdipSetAdjustableArrowCapHeight: cap height: height
 
 		GpStatus __stdcall GdipSetAdjustableArrowCapHeight(
 			PGpAdjustableArrowCap cap,
-			REAL Height);"
+			REAL height);"
 
 	<stdcall: errno GdipSetAdjustableArrowCapHeight handle float>
 	^self invalidCall: _failureCode!
@@ -5657,7 +5851,7 @@ gdipSetAdjustableArrowCapWidth: cap width: width
 
 		GpStatus __stdcall GdipSetAdjustableArrowCapWidth(
 			PGpAdjustableArrowCap cap,
-			REAL Width);"
+			REAL width);"
 
 	<stdcall: errno GdipSetAdjustableArrowCapWidth handle float>
 	^self invalidCall: _failureCode!
@@ -5678,10 +5872,10 @@ gdipSetClipHrgn: graphics hRgn: hRgn combineMode: combineMode
 
 		GpStatus __stdcall GdipSetClipHrgn(
 			PGpGraphics graphics,
-			void* hRgn,
+			wireHRGN hRgn,
 			CombineMode CombineMode);"
 
-	<stdcall: errno GdipSetClipHrgn handle void* sdword>
+	<stdcall: errno GdipSetClipHrgn handle handle sdword>
 	^self invalidCall: _failureCode!
 
 gdipSetClipPath: graphics path: path combineMode: combineMode
@@ -5702,8 +5896,8 @@ gdipSetClipRect: graphics x: x y: y width: width height: height combineMode: com
 			PGpGraphics graphics,
 			REAL x,
 			REAL y,
-			REAL Width,
-			REAL Height,
+			REAL width,
+			REAL height,
 			CombineMode CombineMode);"
 
 	<stdcall: errno GdipSetClipRect handle float float float float sdword>
@@ -5716,8 +5910,8 @@ gdipSetClipRectI: graphics x: x y: y width: width height: height combineMode: co
 			PGpGraphics graphics,
 			int x,
 			int y,
-			int Width,
-			int Height,
+			int width,
+			int height,
 			CombineMode CombineMode);"
 
 	<stdcall: errno GdipSetClipRectI handle sdword sdword sdword sdword sdword>
@@ -5819,9 +6013,9 @@ gdipSetImageAttributesCachedBackground: imageattr enableFlag: enableFlag
 
 		GpStatus __stdcall GdipSetImageAttributesCachedBackground(
 			PGpImageAttributes imageattr,
-			long enableFlag);"
+			BOOL enableFlag);"
 
-	<stdcall: errno GdipSetImageAttributesCachedBackground handle sdword>
+	<stdcall: errno GdipSetImageAttributesCachedBackground handle bool>
 	^self invalidCall: _failureCode!
 
 gdipSetImageAttributesColorKeys: imageattr type: type enableFlag: enableFlag colorLow: colorLow colorHigh: colorHigh
@@ -5830,11 +6024,11 @@ gdipSetImageAttributesColorKeys: imageattr type: type enableFlag: enableFlag col
 		GpStatus __stdcall GdipSetImageAttributesColorKeys(
 			PGpImageAttributes imageattr,
 			ColorAdjustType Type,
-			long enableFlag,
+			BOOL enableFlag,
 			ARGB colorLow,
 			ARGB colorHigh);"
 
-	<stdcall: errno GdipSetImageAttributesColorKeys handle sdword sdword dword dword>
+	<stdcall: errno GdipSetImageAttributesColorKeys handle sdword bool dword dword>
 	^self invalidCall: _failureCode!
 
 gdipSetImageAttributesColorMatrix: imageattr type: type enableFlag: enableFlag colorMatrix: colorMatrix grayMatrix: grayMatrix flags: flags
@@ -5843,12 +6037,12 @@ gdipSetImageAttributesColorMatrix: imageattr type: type enableFlag: enableFlag c
 		GpStatus __stdcall GdipSetImageAttributesColorMatrix(
 			PGpImageAttributes imageattr,
 			ColorAdjustType Type,
-			long enableFlag,
+			BOOL enableFlag,
 			[in]ColorMatrix* ColorMatrix,
 			[in]ColorMatrix* grayMatrix,
 			ColorMatrixFlags Flags);"
 
-	<stdcall: errno GdipSetImageAttributesColorMatrix handle sdword sdword GpColorMatrix* GpColorMatrix* sdword>
+	<stdcall: errno GdipSetImageAttributesColorMatrix handle sdword bool ColorMatrix* ColorMatrix* sdword>
 	^self invalidCall: _failureCode!
 
 gdipSetImageAttributesGamma: imageattr type: type enableFlag: enableFlag gamma: gamma
@@ -5857,10 +6051,10 @@ gdipSetImageAttributesGamma: imageattr type: type enableFlag: enableFlag gamma: 
 		GpStatus __stdcall GdipSetImageAttributesGamma(
 			PGpImageAttributes imageattr,
 			ColorAdjustType Type,
-			long enableFlag,
+			BOOL enableFlag,
 			REAL gamma);"
 
-	<stdcall: errno GdipSetImageAttributesGamma handle sdword sdword float>
+	<stdcall: errno GdipSetImageAttributesGamma handle sdword bool float>
 	^self invalidCall: _failureCode!
 
 gdipSetImageAttributesICMMode: imageattr on: on
@@ -5868,9 +6062,9 @@ gdipSetImageAttributesICMMode: imageattr on: on
 
 		GpStatus __stdcall GdipSetImageAttributesICMMode(
 			PGpImageAttributes imageattr,
-			long on);"
+			BOOL on);"
 
-	<stdcall: errno GdipSetImageAttributesICMMode handle sdword>
+	<stdcall: errno GdipSetImageAttributesICMMode handle bool>
 	^self invalidCall: _failureCode!
 
 gdipSetImageAttributesNoOp: imageattr type: type enableFlag: enableFlag
@@ -5879,9 +6073,9 @@ gdipSetImageAttributesNoOp: imageattr type: type enableFlag: enableFlag
 		GpStatus __stdcall GdipSetImageAttributesNoOp(
 			PGpImageAttributes imageattr,
 			ColorAdjustType Type,
-			long enableFlag);"
+			BOOL enableFlag);"
 
-	<stdcall: errno GdipSetImageAttributesNoOp handle sdword sdword>
+	<stdcall: errno GdipSetImageAttributesNoOp handle sdword bool>
 	^self invalidCall: _failureCode!
 
 gdipSetImageAttributesOutputChannel: imageattr type: type enableFlag: enableFlag channelFlags: channelFlags
@@ -5890,10 +6084,10 @@ gdipSetImageAttributesOutputChannel: imageattr type: type enableFlag: enableFlag
 		GpStatus __stdcall GdipSetImageAttributesOutputChannel(
 			PGpImageAttributes imageattr,
 			ColorAdjustType Type,
-			long enableFlag,
+			BOOL enableFlag,
 			ColorChannelFlags channelFlags);"
 
-	<stdcall: errno GdipSetImageAttributesOutputChannel handle sdword sdword sdword>
+	<stdcall: errno GdipSetImageAttributesOutputChannel handle sdword bool sdword>
 	^self invalidCall: _failureCode!
 
 gdipSetImageAttributesOutputChannelColorProfile: imageattr type: type enableFlag: enableFlag colorProfileFilename: colorProfileFilename
@@ -5902,10 +6096,10 @@ gdipSetImageAttributesOutputChannelColorProfile: imageattr type: type enableFlag
 		GpStatus __stdcall GdipSetImageAttributesOutputChannelColorProfile(
 			PGpImageAttributes imageattr,
 			ColorAdjustType Type,
-			long enableFlag,
+			BOOL enableFlag,
 			[in]LPWSTR colorProfileFilename);"
 
-	<stdcall: errno GdipSetImageAttributesOutputChannelColorProfile handle sdword sdword lpwstr>
+	<stdcall: errno GdipSetImageAttributesOutputChannelColorProfile handle sdword bool lpwstr>
 	^self invalidCall: _failureCode!
 
 gdipSetImageAttributesRemapTable: imageattr type: type enableFlag: enableFlag mapSize: mapSize map: map
@@ -5914,11 +6108,11 @@ gdipSetImageAttributesRemapTable: imageattr type: type enableFlag: enableFlag ma
 		GpStatus __stdcall GdipSetImageAttributesRemapTable(
 			PGpImageAttributes imageattr,
 			ColorAdjustType Type,
-			long enableFlag,
+			BOOL enableFlag,
 			unsigned int mapSize,
 			[in]ColorMap* map);"
 
-	<stdcall: errno GdipSetImageAttributesRemapTable handle sdword sdword dword GpColorMap*>
+	<stdcall: errno GdipSetImageAttributesRemapTable handle sdword bool dword ColorMap*>
 	^self invalidCall: _failureCode!
 
 gdipSetImageAttributesThreshold: imageattr type: type enableFlag: enableFlag threshold: threshold
@@ -5927,10 +6121,10 @@ gdipSetImageAttributesThreshold: imageattr type: type enableFlag: enableFlag thr
 		GpStatus __stdcall GdipSetImageAttributesThreshold(
 			PGpImageAttributes imageattr,
 			ColorAdjustType Type,
-			long enableFlag,
+			BOOL enableFlag,
 			REAL threshold);"
 
-	<stdcall: errno GdipSetImageAttributesThreshold handle sdword sdword float>
+	<stdcall: errno GdipSetImageAttributesThreshold handle sdword bool float>
 	^self invalidCall: _failureCode!
 
 gdipSetImageAttributesToIdentity: imageattr type: type
@@ -5950,9 +6144,9 @@ gdipSetImageAttributesWrapMode: imageattr wrap: wrap argb: argb clamp: clamp
 			PGpImageAttributes imageattr,
 			WrapMode wrap,
 			ARGB ARGB,
-			long clamp);"
+			BOOL clamp);"
 
-	<stdcall: errno GdipSetImageAttributesWrapMode handle sdword dword sdword>
+	<stdcall: errno GdipSetImageAttributesWrapMode handle sdword dword bool>
 	^self invalidCall: _failureCode!
 
 gdipSetImagePalette: image palette: palette
@@ -5962,7 +6156,7 @@ gdipSetImagePalette: image palette: palette
 			[in]PGpImage image,
 			[in]ColorPalette* palette);"
 
-	<stdcall: errno GdipSetImagePalette handle GpColorPalette*>
+	<stdcall: errno GdipSetImagePalette handle ColorPalette*>
 	^self invalidCall: _failureCode!
 
 gdipSetInfinite: region
@@ -6012,9 +6206,9 @@ gdipSetLineGammaCorrection: brush useGammaCorrection: useGammaCorrection
 
 		GpStatus __stdcall GdipSetLineGammaCorrection(
 			PGpLineGradient brush,
-			long useGammaCorrection);"
+			BOOL useGammaCorrection);"
 
-	<stdcall: errno GdipSetLineGammaCorrection handle sdword>
+	<stdcall: errno GdipSetLineGammaCorrection handle bool>
 	^self invalidCall: _failureCode!
 
 gdipSetLineLinearBlend: brush focus: focus scale: scale
@@ -6153,7 +6347,7 @@ gdipSetPathGradientCenterPoint: brush points: points
 
 		GpStatus __stdcall GdipSetPathGradientCenterPoint(
 			PGpPathGradient brush,
-			[in]GpPointF* Points);"
+			[in]POINTF* Points);"
 
 	<stdcall: errno GdipSetPathGradientCenterPoint handle POINTF*>
 	^self invalidCall: _failureCode!
@@ -6163,7 +6357,7 @@ gdipSetPathGradientCenterPointI: brush points: points
 
 		GpStatus __stdcall GdipSetPathGradientCenterPointI(
 			PGpPathGradient brush,
-			[in]GpPoint* Points);"
+			[in]POINTL* Points);"
 
 	<stdcall: errno GdipSetPathGradientCenterPointI handle POINTL*>
 	^self invalidCall: _failureCode!
@@ -6184,9 +6378,9 @@ gdipSetPathGradientGammaCorrection: brush useGammaCorrection: useGammaCorrection
 
 		GpStatus __stdcall GdipSetPathGradientGammaCorrection(
 			PGpPathGradient brush,
-			long useGammaCorrection);"
+			BOOL useGammaCorrection);"
 
-	<stdcall: errno GdipSetPathGradientGammaCorrection handle sdword>
+	<stdcall: errno GdipSetPathGradientGammaCorrection handle bool>
 	^self invalidCall: _failureCode!
 
 gdipSetPathGradientLinearBlend: brush focus: focus scale: scale
@@ -6335,6 +6529,12 @@ gdipSetPenDashArray: pen dash: dash count: count
 	<stdcall: errno GdipSetPenDashArray handle float* sdword>
 	^self invalidCall: _failureCode!
 
+gdipSetPenDashArray: aHandle dashes: aCollectionOfNumbers
+	self
+		gdipSetPenDashArray: aHandle
+		dash: (FLOATArray marshal: aCollectionOfNumbers)
+		count: aCollectionOfNumbers size!
+
 gdipSetPenDashCap197819: pen dashCap: dashCap
 	"Invoke the GdipSetPenDashCap197819() function of the module wrapped by the receiver.
 
@@ -6350,7 +6550,7 @@ gdipSetPenDashOffset: pen offset: offset
 
 		GpStatus __stdcall GdipSetPenDashOffset(
 			PGpPen pen,
-			REAL offset);"
+			REAL Offset);"
 
 	<stdcall: errno GdipSetPenDashOffset handle float>
 	^self invalidCall: _failureCode!
@@ -6452,7 +6652,7 @@ gdipSetPenWidth: pen width: width
 
 		GpStatus __stdcall GdipSetPenWidth(
 			PGpPen pen,
-			REAL Width);"
+			REAL width);"
 
 	<stdcall: errno GdipSetPenWidth handle float>
 	^self invalidCall: _failureCode!
@@ -6474,7 +6674,7 @@ gdipSetPropertyItem: image item: item
 			[in]PGpImage image,
 			[in]PropertyItem* item);"
 
-	<stdcall: errno GdipSetPropertyItem handle GpPropertyItem*>
+	<stdcall: errno GdipSetPropertyItem handle PropertyItem*>
 	^self invalidCall: _failureCode!
 
 gdipSetRenderingOrigin: graphics x: x y: y
@@ -6567,7 +6767,7 @@ gdipSetStringFormatMeasurableCharacterRanges: format rangeCount: rangeCount rang
 			int rangeCount,
 			[in]CharacterRange* ranges);"
 
-	<stdcall: errno GdipSetStringFormatMeasurableCharacterRanges handle sdword GpCharacterRange*>
+	<stdcall: errno GdipSetStringFormatMeasurableCharacterRanges handle sdword CharacterRange*>
 	^self invalidCall: _failureCode!
 
 gdipSetStringFormatTabStops: format firstTabOffset: firstTabOffset count: count tabStops: tabStops
@@ -6686,7 +6886,7 @@ gdipTestControl: cntrl param: param
 
 		GpStatus __stdcall GdipTestControl(
 			GpTestControlEnum cntrl,
-			VOID* param);"
+			void* param);"
 
 	<stdcall: errno GdipTestControl sdword void*>
 	^self invalidCall: _failureCode!
@@ -6696,7 +6896,7 @@ gdipTransformMatrixPoints: matrix pts: pts count: count
 
 		GpStatus __stdcall GdipTransformMatrixPoints(
 			PGpMatrix matrix,
-			GpPointF* pts,
+			POINTF* pts,
 			int Count);"
 
 	<stdcall: errno GdipTransformMatrixPoints handle POINTF* sdword>
@@ -6707,7 +6907,7 @@ gdipTransformMatrixPointsI: matrix pts: pts count: count
 
 		GpStatus __stdcall GdipTransformMatrixPointsI(
 			PGpMatrix matrix,
-			GpPoint* pts,
+			POINTL* pts,
 			int Count);"
 
 	<stdcall: errno GdipTransformMatrixPointsI handle POINTL* sdword>
@@ -6730,7 +6930,7 @@ gdipTransformPoints: graphics destSpace: destSpace srcSpace: srcSpace points: po
 			PGpGraphics graphics,
 			GpCoordinateSpace destSpace,
 			GpCoordinateSpace srcSpace,
-			GpPointF* Points,
+			POINTF* Points,
 			int Count);"
 
 	<stdcall: errno GdipTransformPoints handle sdword sdword POINTF* sdword>
@@ -6743,7 +6943,7 @@ gdipTransformPointsI: graphics destSpace: destSpace srcSpace: srcSpace points: p
 			PGpGraphics graphics,
 			GpCoordinateSpace destSpace,
 			GpCoordinateSpace srcSpace,
-			GpPoint* Points,
+			POINTL* Points,
 			int Count);"
 
 	<stdcall: errno GdipTransformPointsI handle sdword sdword POINTL* sdword>
@@ -6880,7 +7080,7 @@ gdipVectorTransformMatrixPoints: matrix pts: pts count: count
 
 		GpStatus __stdcall GdipVectorTransformMatrixPoints(
 			PGpMatrix matrix,
-			GpPointF* pts,
+			POINTF* pts,
 			int Count);"
 
 	<stdcall: errno GdipVectorTransformMatrixPoints handle POINTF* sdword>
@@ -6891,7 +7091,7 @@ gdipVectorTransformMatrixPointsI: matrix pts: pts count: count
 
 		GpStatus __stdcall GdipVectorTransformMatrixPointsI(
 			PGpMatrix matrix,
-			GpPoint* pts,
+			POINTL* pts,
 			int Count);"
 
 	<stdcall: errno GdipVectorTransformMatrixPointsI handle POINTL* sdword>
@@ -6903,7 +7103,7 @@ gdipWarpPath: path matrix: matrix points: points count: count srcx: srcx srcy: s
 		GpStatus __stdcall GdipWarpPath(
 			PGpPath path,
 			PGpMatrix matrix,
-			[in]GpPointF* Points,
+			[in]POINTF* Points,
 			int Count,
 			REAL srcx,
 			REAL srcy,
@@ -6942,8 +7142,8 @@ initialize
 	"Private - Initialize and answer the receiver."
 
 	| input newToken |
-	input := GdiplusStartupInput new.
-	input GdiplusVersion: 1.
+	input := GdiplusStartupInputEx new.
+	input GdiplusVersion: 2.
 	newToken := UInt32Bytes new.
 	self
 		gdiplusStartup: newToken
@@ -6965,624 +7165,652 @@ invalidCall: anInteger
 uninitialize
 	"Private - Reverse the initialize"
 
-	token isNil ifTrue: [^self].
+	token ifNil: [^self].
 	self gdiplusShutdown: token.
-	token := nil! !
+	token := nil!
+
+unmarshalFloats: aByteArrayOrAddress count: anInteger
+	| offset points |
+	points := Array new: anInteger.
+	offset := 0.
+	1 to: anInteger
+		do: 
+			[:i |
+			points at: i put: (aByteArrayOrAddress floatAtOffset: offset).
+			offset := offset + 4].
+	^points! !
 !Graphics.Gdiplus.GdiplusLibrary categoriesForMethods!
 close!public!realizing/unrealizing! !
-gdipAddPathArc:x:y:width:height:startAngle:sweepAngle:!**auto generated**!public! !
-gdipAddPathArcI:x:y:width:height:startAngle:sweepAngle:!**auto generated**!public! !
-gdipAddPathBezier:x1:y1:x2:y2:x3:y3:x4:y4:!**auto generated**!public! !
-gdipAddPathBezierI:x1:y1:x2:y2:x3:y3:x4:y4:!**auto generated**!public! !
-gdipAddPathBeziers:points:count:!**auto generated**!public! !
-gdipAddPathBeziersI:points:count:!**auto generated**!public! !
-gdipAddPathClosedCurve:points:count:!**auto generated**!public! !
-gdipAddPathClosedCurve2:points:count:tension:!**auto generated**!public! !
-gdipAddPathClosedCurve2I:points:count:tension:!**auto generated**!public! !
-gdipAddPathClosedCurveI:points:count:!**auto generated**!public! !
-gdipAddPathCurve:points:count:!**auto generated**!public! !
-gdipAddPathCurve2:points:count:tension:!**auto generated**!public! !
-gdipAddPathCurve2I:points:count:tension:!**auto generated**!public! !
-gdipAddPathCurve3:points:count:offset:numberOfSegments:tension:!**auto generated**!public! !
-gdipAddPathCurve3I:points:count:offset:numberOfSegments:tension:!**auto generated**!public! !
-gdipAddPathCurveI:points:count:!**auto generated**!public! !
-gdipAddPathEllipse:x:y:width:height:!**auto generated**!public! !
-gdipAddPathEllipseI:x:y:width:height:!**auto generated**!public! !
-gdipAddPathLine:x1:y1:x2:y2:!**auto generated**!public! !
-gdipAddPathLine2:points:count:!**auto generated**!public! !
-gdipAddPathLine2I:points:count:!**auto generated**!public! !
-gdipAddPathLineI:x1:y1:x2:y2:!**auto generated**!public! !
-gdipAddPathPath:addingPath:connect:!**auto generated**!public! !
-gdipAddPathPie:x:y:width:height:startAngle:sweepAngle:!**auto generated**!public! !
-gdipAddPathPieI:x:y:width:height:startAngle:sweepAngle:!**auto generated**!public! !
-gdipAddPathPolygon:points:count:!**auto generated**!public! !
-gdipAddPathPolygonI:points:count:!**auto generated**!public! !
-gdipAddPathRectangle:x:y:width:height:!**auto generated**!public! !
-gdipAddPathRectangleI:x:y:width:height:!**auto generated**!public! !
-gdipAddPathRectangles:rects:count:!**auto generated**!public! !
-gdipAddPathRectanglesI:rects:count:!**auto generated**!public! !
-gdipAddPathString:string:length:family:style:emSize:layoutRect:format:!**auto generated**!public! !
-gdipAddPathStringI:string:length:family:style:emSize:layoutRect:format:!**auto generated**!public! !
-gdipBeginContainer:dstrect:srcRect:unit:state:!**auto generated**!public! !
-gdipBeginContainer2:state:!**auto generated**!public! !
-gdipBeginContainerI:dstrect:srcRect:unit:state:!**auto generated**!public! !
-gdipBitmapGetPixel:x:y:color:!**auto generated**!public! !
-gdipBitmapLockBits:rect:flags:format:lockedBitmapData:!**auto generated**!public! !
-gdipBitmapSetPixel:x:y:color:!**auto generated**!public! !
-gdipBitmapSetResolution:xdpi:ydpi:!**auto generated**!public! !
-gdipBitmapUnlockBits:lockedBitmapData:!**auto generated**!public! !
-gdipClearPathMarkers:!**auto generated**!public! !
-gdipCloneBitmapArea:y:width:height:format:srcBitmap:dstBitmap:!**auto generated**!public! !
-gdipCloneBitmapAreaI:y:width:height:format:srcBitmap:dstBitmap:!**auto generated**!public! !
-gdipCloneBrush:cloneBrush:!**auto generated**!public! !
-gdipCloneCustomLineCap:clonedCap:!**auto generated**!public! !
-gdipCloneFont:cloneFont:!**auto generated**!public! !
-gdipCloneFontFamily:clonedFontFamily:!**auto generated**!public! !
-gdipCloneImage:cloneImage:!**auto generated**!public! !
-gdipCloneImageAttributes:cloneImageattr:!**auto generated**!public! !
-gdipCloneMatrix:cloneMatrix:!**auto generated**!public! !
-gdipClonePath:clonePath:!**auto generated**!public! !
-gdipClonePen:clonepen:!**auto generated**!public! !
-gdipCloneRegion:cloneRegion:!**auto generated**!public! !
-gdipCloneStringFormat:newFormat:!**auto generated**!public! !
-gdipClosePathFigure:!**auto generated**!public! !
-gdipClosePathFigures:!**auto generated**!public! !
-gdipCombineRegionPath:path:combineMode:!**auto generated**!public! !
-gdipCombineRegionRect:rect:combineMode:!**auto generated**!public! !
-gdipCombineRegionRectI:rect:combineMode:!**auto generated**!public! !
-gdipCombineRegionRegion:region2:combineMode:!**auto generated**!public! !
-gdipComment:sizeData:data:!**auto generated**!public! !
-gdipCreateAdjustableArrowCap:width:isFilled:cap:!**auto generated**!public! !
-gdipCreateBitmapFromDirectDrawSurface:bitmap:!**auto generated**!public! !
-gdipCreateBitmapFromFile:bitmap:!**auto generated**!public! !
-gdipCreateBitmapFromFileICM:bitmap:!**auto generated**!public! !
-gdipCreateBitmapFromGdiDib:gdiBitmapData:bitmap:!**auto generated**!public! !
-gdipCreateBitmapFromGraphics:height:target:bitmap:!**auto generated**!public! !
-gdipCreateBitmapFromHBITMAP:hpal:bitmap:!**auto generated**!public! !
-gdipCreateBitmapFromHICON:bitmap:!**auto generated**!public! !
-gdipCreateBitmapFromResource:lpBitmapName:bitmap:!**auto generated**!public! !
-gdipCreateBitmapFromScan0:height:stride:format:scan0:bitmap:!**auto generated**!public! !
-gdipCreateBitmapFromStream:bitmap:!**auto generated**!public! !
-gdipCreateBitmapFromStreamICM:bitmap:!**auto generated**!public! !
-gdipCreateCachedBitmap:graphics:cachedBitmap:!**auto generated**!public! !
-gdipCreateCustomLineCap:strokePath:baseCap:baseInset:customCap:!**auto generated**!public! !
-gdipCreateFont:emSize:style:unit:font:!**auto generated**!public! !
-gdipCreateFontFamilyFromName:fontCollection:fontFamily:!public! !
-gdipCreateFontFromDC:font:!**auto generated**!public! !
-gdipCreateFontFromLogfontA:logfont:font:!**auto generated**!public! !
-gdipCreateFontFromLogfontW:logfont:font:!**auto generated**!public! !
-gdipCreateFromHDC:graphics:!**auto generated**!public! !
-gdipCreateFromHDC2:hDevice:graphics:!**auto generated**!public! !
-gdipCreateFromHWND:graphics:!**auto generated**!public! !
-gdipCreateFromHWNDICM:graphics:!**auto generated**!public! !
-gdipCreateHalftonePalette!**auto generated**!public! !
-gdipCreateHatchBrush:forecol:backcol:brush:!**auto generated**!public! !
-gdipCreateHBITMAPFromBitmap:hbmReturn:background:!**auto generated**!public! !
-gdipCreateHICONFromBitmap:hbmReturn:!**auto generated**!public! !
-gdipCreateImageAttributes:!**auto generated**!public! !
-gdipCreateLineBrush:point2:color1:color2:wrapMode:lineGradient:!**auto generated**!public! !
-gdipCreateLineBrushFromRect:color1:color2:mode:wrapMode:lineGradient:!**auto generated**!public! !
-gdipCreateLineBrushFromRectI:color1:color2:mode:wrapMode:lineGradient:!**auto generated**!public! !
-gdipCreateLineBrushFromRectWithAngle:color1:color2:angle:isAngleScalable:wrapMode:lineGradient:!**auto generated**!public! !
-gdipCreateLineBrushFromRectWithAngleI:color1:color2:angle:isAngleScalable:wrapMode:lineGradient:!**auto generated**!public! !
-gdipCreateLineBrushI:point2:color1:color2:wrapMode:lineGradient:!**auto generated**!public! !
-gdipCreateMatrix:!**auto generated**!public! !
-gdipCreateMatrix2:m12:m21:m22:dx:dy:matrix:!**auto generated**!public! !
-gdipCreateMatrix3:dstplg:matrix:!**auto generated**!public! !
-gdipCreateMatrix3I:dstplg:matrix:!**auto generated**!public! !
-gdipCreateMetafileFromEmf:deleteEmf:metafile:!**auto generated**!public! !
-gdipCreateMetafileFromFile:metafile:!**auto generated**!public! !
-gdipCreateMetafileFromStream:metafile:!**auto generated**!public! !
-gdipCreateMetafileFromWmf:deleteWmf:wmfPlaceableFileHeader:metafile:!**auto generated**!public! !
-gdipCreateMetafileFromWmfFile:wmfPlaceableFileHeader:metafile:!**auto generated**!public! !
-gdipCreatePath:path:!**auto generated**!public! !
-gdipCreatePath2:types:count:fillMode:path:!**auto generated**!public! !
-gdipCreatePath2I:types:count:fillMode:path:!**auto generated**!public! !
-gdipCreatePathGradient:count:wrapMode:polyGradient:!**auto generated**!public! !
-gdipCreatePathGradientFromPath:polyGradient:!**auto generated**!public! !
-gdipCreatePathGradientI:count:wrapMode:polyGradient:!**auto generated**!public! !
-gdipCreatePathIter:path:!**auto generated**!public! !
-gdipCreatePen1:width:unit:pen:!**auto generated**!public! !
-gdipCreatePen2:width:unit:pen:!**auto generated**!public! !
-gdipCreateRegion:!**auto generated**!public! !
-gdipCreateRegionHrgn:region:!**auto generated**!public! !
-gdipCreateRegionPath:region:!**auto generated**!public! !
-gdipCreateRegionRect:region:!**auto generated**!public! !
-gdipCreateRegionRectI:region:!**auto generated**!public! !
-gdipCreateRegionRgnData:size:region:!**auto generated**!public! !
-gdipCreateSolidFill:brush:!**auto generated**!public! !
-gdipCreateStreamOnFile:access:stream:!**auto generated**!public! !
-gdipCreateStringFormat:language:format:!**auto generated**!public! !
-gdipCreateTexture:wrapMode:texture:!**auto generated**!public! !
-gdipCreateTexture2:wrapMode:x:y:width:height:texture:!**auto generated**!public! !
-gdipCreateTexture2I:wrapMode:x:y:width:height:texture:!**auto generated**!public! !
-gdipCreateTextureIA:imageAttributes:x:y:width:height:texture:!**auto generated**!public! !
-gdipCreateTextureIAI:imageAttributes:x:y:width:height:texture:!**auto generated**!public! !
-gdipDeleteBrush:!public! !
-gdipDeleteCachedBitmap:!public! !
-gdipDeleteCustomLineCap:!public! !
-gdipDeleteFont:!**auto generated**!public! !
-gdipDeleteFontFamily:!public! !
-gdipDeleteGraphics:!public! !
-gdipDeleteMatrix:!public! !
-gdipDeletePath:!public! !
-gdipDeletePathIter:!**auto generated**!public! !
-gdipDeletePen:!public! !
-gdipDeletePrivateFontCollection:!**auto generated**!public! !
-gdipDeleteRegion:!**auto generated**!public! !
-gdipDeleteStringFormat:!**auto generated**!public! !
-gdipDisposeImage:!public! !
-gdipDisposeImageAttributes:!public! !
-gdipDrawArc:pen:x:y:width:height:startAngle:sweepAngle:!**auto generated**!public! !
-gdipDrawArcI:pen:x:y:width:height:startAngle:sweepAngle:!**auto generated**!public! !
-gdipDrawBezier:pen:x1:y1:x2:y2:x3:y3:x4:y4:!**auto generated**!public! !
-gdipDrawBezierI:pen:x1:y1:x2:y2:x3:y3:x4:y4:!**auto generated**!public! !
-gdipDrawBeziers:pen:points:count:!**auto generated**!public! !
-gdipDrawBeziersI:pen:points:count:!**auto generated**!public! !
-gdipDrawCachedBitmap:cachedBitmap:x:y:!**auto generated**!public! !
-gdipDrawClosedCurve:pen:points:count:!**auto generated**!public! !
-gdipDrawClosedCurve2:pen:points:count:tension:!**auto generated**!public! !
-gdipDrawClosedCurve2I:pen:points:count:tension:!**auto generated**!public! !
-gdipDrawClosedCurveI:pen:points:count:!**auto generated**!public! !
-gdipDrawCurve:pen:points:count:!**auto generated**!public! !
-gdipDrawCurve2:pen:points:count:tension:!**auto generated**!public! !
-gdipDrawCurve2I:pen:points:count:tension:!**auto generated**!public! !
-gdipDrawCurve3:pen:points:count:offset:numberOfSegments:tension:!**auto generated**!public! !
-gdipDrawCurve3I:pen:points:count:offset:numberOfSegments:tension:!**auto generated**!public! !
-gdipDrawCurveI:pen:points:count:!**auto generated**!public! !
-gdipDrawDriverString:text:length:font:brush:positions:flags:matrix:!**auto generated**!public! !
-gdipDrawEllipse:pen:x:y:width:height:!**auto generated**!public! !
-gdipDrawEllipseI:pen:x:y:width:height:!**auto generated**!public! !
-gdipDrawImage:image:x:y:!**auto generated**!public! !
-gdipDrawImageI:image:x:y:!**auto generated**!public! !
-gdipDrawImagePointRect:image:x:y:srcx:srcy:srcwidth:srcheight:srcUnit:!**auto generated**!public! !
-gdipDrawImagePointRectI:image:x:y:srcx:srcy:srcwidth:srcheight:srcUnit:!**auto generated**!public! !
-gdipDrawImagePoints:image:dstpoints:count:!**auto generated**!public! !
-gdipDrawImagePointsI:image:dstpoints:count:!**auto generated**!public! !
-gdipDrawImagePointsRect:image:points:count:srcx:srcy:srcwidth:srcheight:srcUnit:imageAttributes:callback:callbackData:!**auto generated**!public! !
-gdipDrawImagePointsRectI:image:points:count:srcx:srcy:srcwidth:srcheight:srcUnit:imageAttributes:callback:callbackData:!**auto generated**!public! !
-gdipDrawImageRect:image:x:y:width:height:!**auto generated**!public! !
-gdipDrawImageRectI:image:x:y:width:height:!**auto generated**!public! !
-gdipDrawImageRectRect:image:dstx:dsty:dstwidth:dstheight:srcx:srcy:srcwidth:srcheight:srcUnit:imageAttributes:callback:callbackData:!**auto generated**!public! !
-gdipDrawImageRectRectI:image:dstx:dsty:dstwidth:dstheight:srcx:srcy:srcwidth:srcheight:srcUnit:imageAttributes:callback:callbackData:!**auto generated**!public! !
-gdipDrawLine:pen:x1:y1:x2:y2:!**auto generated**!public! !
-gdipDrawLineI:pen:x1:y1:x2:y2:!**auto generated**!public! !
-gdipDrawLines:pen:points:count:!**auto generated**!public! !
-gdipDrawLinesI:pen:points:count:!**auto generated**!public! !
-gdipDrawPath:pen:path:!**auto generated**!public! !
-gdipDrawPie:pen:x:y:width:height:startAngle:sweepAngle:!**auto generated**!public! !
-gdipDrawPieI:pen:x:y:width:height:startAngle:sweepAngle:!**auto generated**!public! !
-gdipDrawPolygon:pen:points:count:!**auto generated**!public! !
-gdipDrawPolygonI:pen:points:count:!**auto generated**!public! !
-gdipDrawRectangle:pen:x:y:width:height:!**auto generated**!public! !
-gdipDrawRectangleI:pen:x:y:width:height:!**auto generated**!public! !
-gdipDrawRectangles:pen:rects:count:!**auto generated**!public! !
-gdipDrawRectanglesI:pen:rects:count:!**auto generated**!public! !
-gdipDrawString:str:length:font:layoutRect:stringFormat:brush:!**auto generated**!public! !
-gdipEmfToWmfBits:cbData16:pData16:iMapMode:eFlags:!**auto generated**!public! !
-gdipEndContainer:state:!**auto generated**!public! !
-gdipEnumerateMetafileDestPoint:metafile:destPoint:fnCallback:callbackData:imageAttributes:!**auto generated**!public! !
-gdipEnumerateMetafileDestPointI:metafile:destPoint:fnCallback:callbackData:imageAttributes:!**auto generated**!public! !
-gdipEnumerateMetafileDestPoints:metafile:destPoints:count:fnCallback:callbackData:imageAttributes:!**auto generated**!public! !
-gdipEnumerateMetafileDestPointsI:metafile:destPoints:count:fnCallback:callbackData:imageAttributes:!**auto generated**!public! !
-gdipEnumerateMetafileDestRect:metafile:destRect:fnCallback:callbackData:imageAttributes:!**auto generated**!public! !
-gdipEnumerateMetafileDestRectI:metafile:destRect:fnCallback:callbackData:imageAttributes:!**auto generated**!public! !
-gdipEnumerateMetafileSrcRectDestPoint:metafile:destPoint:srcRect:srcUnit:fnCallback:callbackData:imageAttributes:!**auto generated**!public! !
-gdipEnumerateMetafileSrcRectDestPointI:metafile:destPoint:srcRect:srcUnit:fnCallback:callbackData:imageAttributes:!**auto generated**!public! !
-gdipEnumerateMetafileSrcRectDestPoints:metafile:destPoints:count:srcRect:srcUnit:fnCallback:callbackData:imageAttributes:!**auto generated**!public! !
-gdipEnumerateMetafileSrcRectDestPointsI:metafile:destPoints:count:srcRect:srcUnit:fnCallback:callbackData:imageAttributes:!**auto generated**!public! !
-gdipEnumerateMetafileSrcRectDestRect:metafile:destRect:srcRect:srcUnit:fnCallback:callbackData:imageAttributes:!**auto generated**!public! !
-gdipEnumerateMetafileSrcRectDestRectI:metafile:destRect:srcRect:srcUnit:fnCallback:callbackData:imageAttributes:!**auto generated**!public! !
-gdipFillClosedCurve:brush:points:count:!**auto generated**!public! !
-gdipFillClosedCurve2:brush:points:count:tension:fillMode:!**auto generated**!public! !
-gdipFillClosedCurve2I:brush:points:count:tension:fillMode:!**auto generated**!public! !
-gdipFillClosedCurveI:brush:points:count:!**auto generated**!public! !
-gdipFillEllipse:brush:x:y:width:height:!**auto generated**!public! !
-gdipFillEllipseI:brush:x:y:width:height:!**auto generated**!public! !
-gdipFillPath:brush:path:!**auto generated**!public! !
-gdipFillPie:brush:x:y:width:height:startAngle:sweepAngle:!**auto generated**!public! !
-gdipFillPieI:brush:x:y:width:height:startAngle:sweepAngle:!**auto generated**!public! !
-gdipFillPolygon:brush:points:count:fillMode:!**auto generated**!public! !
-gdipFillPolygon2:brush:points:count:!**auto generated**!public! !
-gdipFillPolygon2I:brush:points:count:!**auto generated**!public! !
-gdipFillPolygonI:brush:points:count:fillMode:!**auto generated**!public! !
-gdipFillRectangle:brush:x:y:width:height:!**auto generated**!public! !
-gdipFillRectangleI:brush:x:y:width:height:!**auto generated**!public! !
-gdipFillRectangles:brush:rects:count:!**auto generated**!public! !
-gdipFillRectanglesI:brush:rects:count:!**auto generated**!public! !
-gdipFillRegion:brush:region:!**auto generated**!public! !
-gdipFlattenPath:matrix:flatness:!**auto generated**!public! !
-gdipFlush:intention:!**auto generated**!public! !
-gdipFontCollectionEnumerable:graphics:numFound:!**auto generated**!public! !
-gdipFontCollectionEnumerate:numSought:gpfamilies:numFound:graphics:!**auto generated**!public! !
-gdipGetAdjustableArrowCapFillState:fillState:!**auto generated**!public! !
-gdipGetAdjustableArrowCapHeight:height:!**auto generated**!public! !
-gdipGetAdjustableArrowCapMiddleInset:middleInset:!**auto generated**!public! !
-gdipGetAdjustableArrowCapWidth:width:!**auto generated**!public! !
-gdipGetAllPropertyItems:totalBufferSize:numProperties:allItems:!**auto generated**!public! !
-gdipGetBrushType:type:!**auto generated**!public! !
-gdipGetCellAscent:style:cellAscent:!**auto generated**!public! !
-gdipGetCellDescent:style:cellDescent:!**auto generated**!public! !
-gdipGetClip:region:!**auto generated**!public! !
-gdipGetClipBounds:rect:!**auto generated**!public! !
-gdipGetClipBoundsI:rect:!**auto generated**!public! !
-gdipGetCompositingMode:compositingMode:!**auto generated**!public! !
-gdipGetCompositingQuality:compositingQuality:!**auto generated**!public! !
-gdipGetCustomLineCapBaseCap:baseCap:!**auto generated**!public! !
-gdipGetCustomLineCapBaseInset:inset:!**auto generated**!public! !
-gdipGetCustomLineCapStrokeCaps:startCap:endCap:!**auto generated**!public! !
-gdipGetCustomLineCapStrokeJoin:lineJoin:!**auto generated**!public! !
-gdipGetCustomLineCapType:capType:!**auto generated**!public! !
-gdipGetCustomLineCapWidthScale:widthScale:!**auto generated**!public! !
-gdipGetDC:hdc:!**auto generated**!public! !
-gdipGetDpiX:dpi:!**auto generated**!public! !
-gdipGetDpiY:dpi:!**auto generated**!public! !
-gdipGetEmHeight:style:emHeight:!**auto generated**!public! !
-gdipGetEncoderParameterList:clsidEncoder:size:buffer:!**auto generated**!public! !
-gdipGetEncoderParameterListSize:clsidEncoder:size:!**auto generated**!public! !
-gdipGetFamily:family:!**auto generated**!public! !
-gdipGetFamilyName:name:language:!modified!public! !
-gdipGetFontCollectionFamilyCount:numFound:!**auto generated**!public! !
-gdipGetFontCollectionFamilyList:numSought:gpfamilies:numFound:!**auto generated**!public! !
-gdipGetFontHeight:graphics:height:!**auto generated**!public! !
-gdipGetFontHeightGivenDPI:dpi:height:!**auto generated**!public! !
-gdipGetFontSize:size:!**auto generated**!public! !
-gdipGetFontStyle:style:!**auto generated**!public! !
-gdipGetFontUnit:unit:!**auto generated**!public! !
-gdipGetGenericFontFamilyMonospace:!**auto generated**!public! !
-gdipGetGenericFontFamilySansSerif:!**auto generated**!public! !
-gdipGetGenericFontFamilySerif:!**auto generated**!public! !
-gdipGetHatchBackgroundColor:backcol:!**auto generated**!public! !
-gdipGetHatchForegroundColor:forecol:!**auto generated**!public! !
-gdipGetHatchStyle:hatchStyle:!**auto generated**!public! !
-gdipGetHemfFromMetafile:hEmf:!**auto generated**!public! !
-gdipGetImageAttributesAdjustedPalette:colorPalette:colorAdjustType:!**auto generated**!public! !
-gdipGetImageBounds:srcRect:srcUnit:!**auto generated**!public! !
-gdipGetImageDecoders:size:decoders:!**auto generated**!public! !
-gdipGetImageDecodersSize:size:!**auto generated**!public! !
-gdipGetImageDimension:width:height:!**auto generated**!public! !
-gdipGetImageEncoders:size:encoders:!**auto generated**!public! !
-gdipGetImageEncodersSize:size:!**auto generated**!public! !
-gdipGetImageFlags:flags:!**auto generated**!public! !
-gdipGetImageGraphicsContext:graphics:!**auto generated**!public! !
-gdipGetImageHeight:height:!**auto generated**!public! !
-gdipGetImageHorizontalResolution:resolution:!**auto generated**!public! !
-gdipGetImagePalette:palette:size:!**auto generated**!public! !
-gdipGetImagePaletteSize:size:!**auto generated**!public! !
-gdipGetImagePixelFormat:format:!**auto generated**!public! !
-gdipGetImageRawFormat:format:!**auto generated**!public! !
-gdipGetImageThumbnail:thumbWidth:thumbHeight:thumbImage:pfnCallback:callbackData:!**auto generated**!public! !
-gdipGetImageType:type:!**auto generated**!public! !
-gdipGetImageVerticalResolution:resolution:!**auto generated**!public! !
-gdipGetImageWidth:width:!**auto generated**!public! !
-gdipGetInterpolationMode:interpolationMode:!**auto generated**!public! !
-gdipGetLineBlend:blend:positions:count:!**auto generated**!public! !
-gdipGetLineBlendCount:count:!**auto generated**!public! !
-gdipGetLineColors:colors:!**auto generated**!public! !
-gdipGetLineGammaCorrection:useGammaCorrection:!**auto generated**!public! !
-gdipGetLinePresetBlend:blend:positions:count:!**auto generated**!public! !
-gdipGetLinePresetBlendCount:count:!**auto generated**!public! !
-gdipGetLineRect:rect:!**auto generated**!public! !
-gdipGetLineRectI:rect:!**auto generated**!public! !
-gdipGetLineSpacing:style:lineSpacing:!**auto generated**!public! !
-gdipGetLineTransform:matrix:!**auto generated**!public! !
-gdipGetLineWrapMode:wrapMode:!**auto generated**!public! !
-gdipGetLogFontA:graphics:logfonta:!**auto generated**!public! !
-gdipGetLogFontW:graphics:logfonta:!**auto generated**!public! !
-gdipGetMatrixElements:matrixOut:!**auto generated**!public! !
-gdipGetMetafileDownLevelRasterizationLimit:metafileRasterizationLimitDpi:!**auto generated**!public! !
-gdipGetMetafileHeaderFromEmf:header:!**auto generated**!public! !
-gdipGetMetafileHeaderFromFile:header:!**auto generated**!public! !
-gdipGetMetafileHeaderFromMetafile:header:!**auto generated**!public! !
-gdipGetMetafileHeaderFromStream:header:!**auto generated**!public! !
-gdipGetMetafileHeaderFromWmf:wmfPlaceableFileHeader:header:!**auto generated**!public! !
-gdipGetNearestColor:argb:!**auto generated**!public! !
-gdipGetPageScale:scale:!**auto generated**!public! !
-gdipGetPageUnit:unit:!**auto generated**!public! !
-gdipGetPathData:pathData:!**auto generated**!public! !
-gdipGetPathFillMode:fillMode:!**auto generated**!public! !
-gdipGetPathGradientBlend:blend:positions:count:!**auto generated**!public! !
-gdipGetPathGradientBlendCount:count:!**auto generated**!public! !
-gdipGetPathGradientCenterColor:colors:!**auto generated**!public! !
-gdipGetPathGradientCenterPoint:points:!**auto generated**!public! !
-gdipGetPathGradientCenterPointI:points:!**auto generated**!public! !
-gdipGetPathGradientFocusScales:xScale:yScale:!**auto generated**!public! !
-gdipGetPathGradientGammaCorrection:useGammaCorrection:!**auto generated**!public! !
-gdipGetPathGradientPath:path:!**auto generated**!public! !
-gdipGetPathGradientPointCount:count:!**auto generated**!public! !
-gdipGetPathGradientPresetBlend:blend:positions:count:!**auto generated**!public! !
-gdipGetPathGradientPresetBlendCount:count:!**auto generated**!public! !
-gdipGetPathGradientRect:rect:!**auto generated**!public! !
-gdipGetPathGradientRectI:rect:!**auto generated**!public! !
-gdipGetPathGradientSurroundColorCount:count:!**auto generated**!public! !
-gdipGetPathGradientSurroundColorsWithCount:color:count:!**auto generated**!public! !
-gdipGetPathGradientTransform:matrix:!**auto generated**!public! !
-gdipGetPathGradientWrapMode:wrapMode:!**auto generated**!public! !
-gdipGetPathLastPoint:lastPoint:!**auto generated**!public! !
-gdipGetPathPoints:points:count:!**auto generated**!public! !
-gdipGetPathPointsI:points:count:!**auto generated**!public! !
-gdipGetPathTypes:types:count:!**auto generated**!public! !
-gdipGetPathWorldBounds:bounds:matrix:pen:!**auto generated**!public! !
-gdipGetPathWorldBoundsI:bounds:matrix:pen:!**auto generated**!public! !
-gdipGetPenBrushFill:brush:!**auto generated**!public! !
-gdipGetPenColor:argb:!**auto generated**!public! !
-gdipGetPenCompoundArray:dash:count:!**auto generated**!public! !
-gdipGetPenCompoundCount:count:!**auto generated**!public! !
-gdipGetPenCustomEndCap:customCap:!**auto generated**!public! !
-gdipGetPenCustomStartCap:customCap:!**auto generated**!public! !
-gdipGetPenDashArray:dash:count:!**auto generated**!public! !
-gdipGetPenDashCap197819:dashCap:!**auto generated**!public! !
-gdipGetPenDashCount:count:!**auto generated**!public! !
-gdipGetPenDashOffset:offset:!**auto generated**!public! !
-gdipGetPenDashStyle:dashStyle:!**auto generated**!public! !
-gdipGetPenEndCap:endCap:!**auto generated**!public! !
-gdipGetPenFillType:type:!**auto generated**!public! !
-gdipGetPenLineJoin:lineJoin:!**auto generated**!public! !
-gdipGetPenMiterLimit:miterLimit:!**auto generated**!public! !
-gdipGetPenMode:penMode:!**auto generated**!public! !
-gdipGetPenStartCap:startCap:!**auto generated**!public! !
-gdipGetPenTransform:matrix:!**auto generated**!public! !
-gdipGetPenUnit:unit:!**auto generated**!public! !
-gdipGetPenWidth:width:!**auto generated**!public! !
-gdipGetPixelOffsetMode:pixelOffsetMode:!**auto generated**!public! !
-gdipGetPointCount:count:!**auto generated**!public! !
-gdipGetPropertyCount:numOfProperty:!**auto generated**!public! !
-gdipGetPropertyIdList:numOfProperty:list:!**auto generated**!public! !
-gdipGetPropertyItem:propId:propSize:buffer:!**auto generated**!public! !
-gdipGetPropertyItemSize:propId:size:!**auto generated**!public! !
-gdipGetPropertySize:totalBufferSize:numProperties:!**auto generated**!public! !
-gdipGetRegionBounds:graphics:rect:!**auto generated**!public! !
-gdipGetRegionBoundsI:graphics:rect:!**auto generated**!public! !
-gdipGetRegionData:buffer:bufferSize:sizeFilled:!**auto generated**!public! !
-gdipGetRegionDataSize:bufferSize:!**auto generated**!public! !
-gdipGetRegionHRgn:graphics:hRgn:!**auto generated**!public! !
-gdipGetRegionScans:rects:count:matrix:!**auto generated**!public! !
-gdipGetRegionScansCount:count:matrix:!**auto generated**!public! !
-gdipGetRegionScansI:rects:count:matrix:!**auto generated**!public! !
-gdipGetRenderingOrigin:x:y:!**auto generated**!public! !
-gdipGetSmoothingMode:smoothingMode:!**auto generated**!public! !
-gdipGetSolidFillColor:color:!**auto generated**!public! !
-gdipGetStringFormatAlign:align:!**auto generated**!public! !
-gdipGetStringFormatDigitSubstitution:language:substitute:!**auto generated**!public! !
-gdipGetStringFormatFlags:flags:!**auto generated**!public! !
-gdipGetStringFormatHotkeyPrefix:hotkeyPrefix:!**auto generated**!public! !
-gdipGetStringFormatLineAlign:align:!**auto generated**!public! !
-gdipGetStringFormatMeasurableCharacterRangeCount:count:!**auto generated**!public! !
-gdipGetStringFormatTabStopCount:count:!**auto generated**!public! !
-gdipGetStringFormatTabStops:count:firstTabOffset:tabStops:!**auto generated**!public! !
-gdipGetStringFormatTrimming:trimming:!**auto generated**!public! !
-gdipGetTextContrast:contrast:!**auto generated**!public! !
-gdipGetTextRenderingHint:mode:!**auto generated**!public! !
-gdipGetTextureImage:image:!**auto generated**!public! !
-gdipGetTextureTransform:matrix:!**auto generated**!public! !
-gdipGetTextureWrapMode:wrapMode:!**auto generated**!public! !
-gdipGetVisibleClipBounds:rect:!**auto generated**!public! !
-gdipGetVisibleClipBoundsI:rect:!**auto generated**!public! !
-gdipGetWorldTransform:matrix:!**auto generated**!public! !
-gdipGraphicsClear:color:!**auto generated**!public! !
-gdipImageForceValidation:!**auto generated**!public! !
-gdipImageGetFrameCount:dimensionID:count:!**auto generated**!public! !
-gdipImageGetFrameDimensionsCount:count:!**auto generated**!public! !
-gdipImageGetFrameDimensionsList:dimensionIDs:count:!**auto generated**!public! !
-gdipImageRotateFlip:rfType:!**auto generated**!public! !
-gdipImageSelectActiveFrame:dimensionID:frameIndex:!**auto generated**!public! !
-gdipInvertMatrix:!**auto generated**!public! !
-gdipIsClipEmpty:result:!**auto generated**!public! !
-gdipIsEmptyRegion:graphics:result:!**auto generated**!public! !
-gdipIsEqualRegion:region2:graphics:result:!**auto generated**!public! !
-gdipIsInfiniteRegion:graphics:result:!**auto generated**!public! !
-gdipIsMatrixEqual:matrix2:result:!**auto generated**!public! !
-gdipIsMatrixIdentity:result:!**auto generated**!public! !
-gdipIsMatrixInvertible:result:!**auto generated**!public! !
-gdipIsOutlineVisiblePathPoint:x:y:pen:graphics:result:!**auto generated**!public! !
-gdipIsOutlineVisiblePathPointI:x:y:pen:graphics:result:!**auto generated**!public! !
-gdipIsStyleAvailable:style:isStyleAvailable:!**auto generated**!public! !
-gdipIsVisibleClipEmpty:result:!**auto generated**!public! !
-gdipIsVisiblePathPoint:x:y:graphics:result:!**auto generated**!public! !
-gdipIsVisiblePathPointI:x:y:graphics:result:!**auto generated**!public! !
-gdipIsVisiblePoint:x:y:result:!**auto generated**!public! !
-gdipIsVisiblePointI:x:y:result:!**auto generated**!public! !
-gdipIsVisibleRect:x:y:width:height:result:!**auto generated**!public! !
-gdipIsVisibleRectI:x:y:width:height:result:!**auto generated**!public! !
-gdipIsVisibleRegionPoint:x:y:graphics:result:!**auto generated**!public! !
-gdipIsVisibleRegionPointI:x:y:graphics:result:!**auto generated**!public! !
-gdipIsVisibleRegionRect:x:y:width:height:graphics:result:!**auto generated**!public! !
-gdipIsVisibleRegionRectI:x:y:width:height:graphics:result:!**auto generated**!public! !
-gdipLoadImageFromFile:image:!**auto generated**!public! !
-gdipLoadImageFromFileICM:image:!**auto generated**!public! !
-gdipLoadImageFromStream:image:!**auto generated**!public! !
-gdipLoadImageFromStreamICM:image:!**auto generated**!public! !
-gdiplusNotificationHook:!**auto generated**!public! !
-gdiplusNotificationUnhook:!**auto generated**!public! !
-gdiplusShutdown:!**auto generated**!public! !
-gdiplusStartup:input:output:!**auto generated**!public! !
-gdipMeasureCharacterRanges:str:length:font:layoutRect:stringFormat:regionCount:regions:!**auto generated**!public! !
-gdipMeasureDriverString:text:length:font:positions:flags:matrix:boundingBox:!**auto generated**!public! !
-gdipMeasureString:str:length:font:layoutRect:stringFormat:boundingBox:codepointsFitted:linesFilled:!**auto generated**!public! !
-gdipMultiplyLineTransform:matrix:order:!**auto generated**!public! !
-gdipMultiplyMatrix:matrix2:order:!**auto generated**!public! !
-gdipMultiplyPathGradientTransform:matrix:order:!**auto generated**!public! !
-gdipMultiplyPenTransform:matrix:order:!**auto generated**!public! !
-gdipMultiplyTextureTransform:matrix:order:!**auto generated**!public! !
-gdipMultiplyWorldTransform:matrix:order:!**auto generated**!public! !
-gdipNewInstalledFontCollection:!**auto generated**!public! !
-gdipNewPrivateFontCollection:!**auto generated**!public! !
-gdipPathIterCopyData:resultCount:points:types:startIndex:endIndex:!**auto generated**!public! !
-gdipPathIterEnumerate:resultCount:points:types:count:!**auto generated**!public! !
-gdipPathIterGetCount:count:!**auto generated**!public! !
-gdipPathIterGetSubpathCount:count:!**auto generated**!public! !
-gdipPathIterHasCurve:hasCurve:!**auto generated**!public! !
-gdipPathIterIsValid:valid:!**auto generated**!public! !
-gdipPathIterNextMarker:resultCount:startIndex:endIndex:!**auto generated**!public! !
-gdipPathIterNextMarkerPath:resultCount:path:!**auto generated**!public! !
-gdipPathIterNextPathType:resultCount:pathType:startIndex:endIndex:!**auto generated**!public! !
-gdipPathIterNextSubpath:resultCount:startIndex:endIndex:isClosed:!**auto generated**!public! !
-gdipPathIterNextSubpathPath:resultCount:path:isClosed:!**auto generated**!public! !
-gdipPathIterRewind:!**auto generated**!public! !
-gdipPlayMetafileRecord:recordType:flags:dataSize:data:!**auto generated**!public! !
-gdipPrivateAddFontFile:filename:!**auto generated**!public! !
-gdipPrivateAddMemoryFont:memory:length:!**auto generated**!public! !
-gdipRecordMetafile:type:frameRect:frameUnit:description:metafile:!**auto generated**!public! !
-gdipRecordMetafileFileName:referenceHdc:type:frameRect:frameUnit:description:metafile:!**auto generated**!public! !
-gdipRecordMetafileFileNameI:referenceHdc:type:frameRect:frameUnit:description:metafile:!**auto generated**!public! !
-gdipRecordMetafileI:type:frameRect:frameUnit:description:metafile:!**auto generated**!public! !
-gdipRecordMetafileStream:referenceHdc:type:frameRect:frameUnit:description:metafile:!**auto generated**!public! !
-gdipRecordMetafileStreamI:referenceHdc:type:frameRect:frameUnit:description:metafile:!**auto generated**!public! !
-gdipReleaseDC:hdc:!**auto generated**!public! !
-gdipRemovePropertyItem:propId:!**auto generated**!public! !
-gdipResetClip:!**auto generated**!public! !
-gdipResetImageAttributes:type:!**auto generated**!public! !
-gdipResetLineTransform:!**auto generated**!public! !
-gdipResetPageTransform:!**auto generated**!public! !
-gdipResetPath:!**auto generated**!public! !
-gdipResetPathGradientTransform:!**auto generated**!public! !
-gdipResetPenTransform:!**auto generated**!public! !
-gdipResetTextureTransform:!**auto generated**!public! !
-gdipResetWorldTransform:!**auto generated**!public! !
-gdipRestoreGraphics:state:!**auto generated**!public! !
-gdipReversePath:!**auto generated**!public! !
-gdipRotateLineTransform:angle:order:!**auto generated**!public! !
-gdipRotateMatrix:angle:order:!**auto generated**!public! !
-gdipRotatePathGradientTransform:angle:order:!**auto generated**!public! !
-gdipRotatePenTransform:angle:order:!**auto generated**!public! !
-gdipRotateTextureTransform:angle:order:!**auto generated**!public! !
-gdipRotateWorldTransform:angle:order:!**auto generated**!public! !
-gdipSaveAdd:encoderParams:!**auto generated**!public! !
-gdipSaveAddImage:newImage:encoderParams:!**auto generated**!public! !
-gdipSaveGraphics:state:!**auto generated**!public! !
-gdipSaveImageToFile:filename:clsidEncoder:encoderParams:!**auto generated**!public! !
-gdipSaveImageToStream:stream:clsidEncoder:encoderParams:!**auto generated**!public! !
-gdipScaleLineTransform:sx:sy:order:!**auto generated**!public! !
-gdipScaleMatrix:scaleX:scaleY:order:!**auto generated**!public! !
-gdipScalePathGradientTransform:sx:sy:order:!**auto generated**!public! !
-gdipScalePenTransform:sx:sy:order:!**auto generated**!public! !
-gdipScaleTextureTransform:sx:sy:order:!**auto generated**!public! !
-gdipScaleWorldTransform:sx:sy:order:!**auto generated**!public! !
-gdipSetAdjustableArrowCapFillState:fillState:!**auto generated**!public! !
-gdipSetAdjustableArrowCapHeight:height:!**auto generated**!public! !
-gdipSetAdjustableArrowCapMiddleInset:middleInset:!**auto generated**!public! !
-gdipSetAdjustableArrowCapWidth:width:!**auto generated**!public! !
-gdipSetClipGraphics:srcgraphics:combineMode:!**auto generated**!public! !
-gdipSetClipHrgn:hRgn:combineMode:!**auto generated**!public! !
-gdipSetClipPath:path:combineMode:!**auto generated**!public! !
-gdipSetClipRect:x:y:width:height:combineMode:!**auto generated**!public! !
-gdipSetClipRectI:x:y:width:height:combineMode:!**auto generated**!public! !
-gdipSetClipRegion:region:combineMode:!**auto generated**!public! !
-gdipSetCompositingMode:compositingMode:!**auto generated**!public! !
-gdipSetCompositingQuality:compositingQuality:!**auto generated**!public! !
-gdipSetCustomLineCapBaseCap:baseCap:!**auto generated**!public! !
-gdipSetCustomLineCapBaseInset:inset:!**auto generated**!public! !
-gdipSetCustomLineCapStrokeCaps:startCap:endCap:!**auto generated**!public! !
-gdipSetCustomLineCapStrokeJoin:lineJoin:!**auto generated**!public! !
-gdipSetCustomLineCapWidthScale:widthScale:!**auto generated**!public! !
-gdipSetEmpty:!**auto generated**!public! !
-gdipSetImageAttributesCachedBackground:enableFlag:!**auto generated**!public! !
-gdipSetImageAttributesColorKeys:type:enableFlag:colorLow:colorHigh:!**auto generated**!public! !
-gdipSetImageAttributesColorMatrix:type:enableFlag:colorMatrix:grayMatrix:flags:!**auto generated**!public! !
-gdipSetImageAttributesGamma:type:enableFlag:gamma:!**auto generated**!public! !
-gdipSetImageAttributesICMMode:on:!**auto generated**!public! !
-gdipSetImageAttributesNoOp:type:enableFlag:!**auto generated**!public! !
-gdipSetImageAttributesOutputChannel:type:enableFlag:channelFlags:!**auto generated**!public! !
-gdipSetImageAttributesOutputChannelColorProfile:type:enableFlag:colorProfileFilename:!**auto generated**!public! !
-gdipSetImageAttributesRemapTable:type:enableFlag:mapSize:map:!**auto generated**!public! !
-gdipSetImageAttributesThreshold:type:enableFlag:threshold:!**auto generated**!public! !
-gdipSetImageAttributesToIdentity:type:!**auto generated**!public! !
-gdipSetImageAttributesWrapMode:wrap:argb:clamp:!**auto generated**!public! !
-gdipSetImagePalette:palette:!**auto generated**!public! !
-gdipSetInfinite:!**auto generated**!public! !
-gdipSetInterpolationMode:interpolationMode:!**auto generated**!public! !
-gdipSetLineBlend:blend:positions:count:!**auto generated**!public! !
-gdipSetLineColors:color1:color2:!**auto generated**!public! !
-gdipSetLineGammaCorrection:useGammaCorrection:!**auto generated**!public! !
-gdipSetLineLinearBlend:focus:scale:!**auto generated**!public! !
-gdipSetLinePresetBlend:blend:positions:count:!**auto generated**!public! !
-gdipSetLineSigmaBlend:focus:scale:!**auto generated**!public! !
-gdipSetLineTransform:matrix:!**auto generated**!public! !
-gdipSetLineWrapMode:wrapMode:!**auto generated**!public! !
-gdipSetMatrixElements:m11:m12:m21:m22:dx:dy:!**auto generated**!public! !
-gdipSetMetafileDownLevelRasterizationLimit:metafileRasterizationLimitDpi:!**auto generated**!public! !
-gdipSetPageScale:scale:!**auto generated**!public! !
-gdipSetPageUnit:unit:!**auto generated**!public! !
-gdipSetPathFillMode:fillMode:!**auto generated**!public! !
-gdipSetPathGradientBlend:blend:positions:count:!**auto generated**!public! !
-gdipSetPathGradientCenterColor:colors:!**auto generated**!public! !
-gdipSetPathGradientCenterPoint:points:!**auto generated**!public! !
-gdipSetPathGradientCenterPointI:points:!**auto generated**!public! !
-gdipSetPathGradientFocusScales:xScale:yScale:!**auto generated**!public! !
-gdipSetPathGradientGammaCorrection:useGammaCorrection:!**auto generated**!public! !
-gdipSetPathGradientLinearBlend:focus:scale:!**auto generated**!public! !
-gdipSetPathGradientPath:path:!**auto generated**!public! !
-gdipSetPathGradientPresetBlend:blend:positions:count:!**auto generated**!public! !
-gdipSetPathGradientSigmaBlend:focus:scale:!**auto generated**!public! !
-gdipSetPathGradientSurroundColorsWithCount:color:count:!**auto generated**!public! !
-gdipSetPathGradientTransform:matrix:!**auto generated**!public! !
-gdipSetPathGradientWrapMode:wrapMode:!**auto generated**!public! !
-gdipSetPathMarker:!**auto generated**!public! !
-gdipSetPenBrushFill:brush:!**auto generated**!public! !
-gdipSetPenColor:argb:!**auto generated**!public! !
-gdipSetPenCompoundArray:dash:count:!**auto generated**!public! !
-gdipSetPenCustomEndCap:customCap:!**auto generated**!public! !
-gdipSetPenCustomStartCap:customCap:!**auto generated**!public! !
-gdipSetPenDashArray:dash:count:!**auto generated**!public! !
-gdipSetPenDashCap197819:dashCap:!**auto generated**!public! !
-gdipSetPenDashOffset:offset:!**auto generated**!public! !
-gdipSetPenDashStyle:dashStyle:!**auto generated**!public! !
-gdipSetPenEndCap:endCap:!**auto generated**!public! !
-gdipSetPenLineCap197819:startCap:endCap:dashCap:!**auto generated**!public! !
-gdipSetPenLineJoin:lineJoin:!**auto generated**!public! !
-gdipSetPenMiterLimit:miterLimit:!**auto generated**!public! !
-gdipSetPenMode:penMode:!**auto generated**!public! !
-gdipSetPenStartCap:startCap:!**auto generated**!public! !
-gdipSetPenTransform:matrix:!**auto generated**!public! !
-gdipSetPenUnit:unit:!**auto generated**!public! !
-gdipSetPenWidth:width:!**auto generated**!public! !
-gdipSetPixelOffsetMode:pixelOffsetMode:!**auto generated**!public! !
-gdipSetPropertyItem:item:!**auto generated**!public! !
-gdipSetRenderingOrigin:x:y:!**auto generated**!public! !
-gdipSetSmoothingMode:smoothingMode:!**auto generated**!public! !
-gdipSetSolidFillColor:color:!**auto generated**!public! !
-gdipSetStringFormatAlign:align:!**auto generated**!public! !
-gdipSetStringFormatDigitSubstitution:language:substitute:!**auto generated**!public! !
-gdipSetStringFormatFlags:flags:!**auto generated**!public! !
-gdipSetStringFormatHotkeyPrefix:hotkeyPrefix:!**auto generated**!public! !
-gdipSetStringFormatLineAlign:align:!**auto generated**!public! !
-gdipSetStringFormatMeasurableCharacterRanges:rangeCount:ranges:!**auto generated**!public! !
-gdipSetStringFormatTabStops:firstTabOffset:count:tabStops:!**auto generated**!public! !
-gdipSetStringFormatTrimming:trimming:!**auto generated**!public! !
-gdipSetTextContrast:contrast:!**auto generated**!public! !
-gdipSetTextRenderingHint:mode:!**auto generated**!public! !
-gdipSetTextureTransform:matrix:!**auto generated**!public! !
-gdipSetTextureWrapMode:wrapMode:!**auto generated**!public! !
-gdipSetWorldTransform:matrix:!**auto generated**!public! !
-gdipShearMatrix:shearX:shearY:order:!**auto generated**!public! !
-gdipStartPathFigure:!**auto generated**!public! !
-gdipStringFormatGetGenericDefault:!**auto generated**!public! !
-gdipStringFormatGetGenericTypographic:!**auto generated**!public! !
-gdipTestControl:param:!**auto generated**!public! !
-gdipTransformMatrixPoints:pts:count:!**auto generated**!public! !
-gdipTransformMatrixPointsI:pts:count:!**auto generated**!public! !
-gdipTransformPath:matrix:!**auto generated**!public! !
-gdipTransformPoints:destSpace:srcSpace:points:count:!**auto generated**!public! !
-gdipTransformPointsI:destSpace:srcSpace:points:count:!**auto generated**!public! !
-gdipTransformRegion:matrix:!**auto generated**!public! !
-gdipTranslateClip:dx:dy:!**auto generated**!public! !
-gdipTranslateClipI:dx:dy:!**auto generated**!public! !
-gdipTranslateLineTransform:dx:dy:order:!**auto generated**!public! !
-gdipTranslateMatrix:offsetX:offsetY:order:!**auto generated**!public! !
-gdipTranslatePathGradientTransform:dx:dy:order:!**auto generated**!public! !
-gdipTranslatePenTransform:dx:dy:order:!**auto generated**!public! !
-gdipTranslateRegion:dx:dy:!**auto generated**!public! !
-gdipTranslateRegionI:dx:dy:!**auto generated**!public! !
-gdipTranslateTextureTransform:dx:dy:order:!**auto generated**!public! !
-gdipTranslateWorldTransform:dx:dy:order:!**auto generated**!public! !
-gdipVectorTransformMatrixPoints:pts:count:!**auto generated**!public! !
-gdipVectorTransformMatrixPointsI:pts:count:!**auto generated**!public! !
-gdipWarpPath:matrix:points:count:srcx:srcy:srcwidth:srcheight:warpMode:flatness:!**auto generated**!public! !
-gdipWidenPath:pen:matrix:flatness:!**auto generated**!public! !
-gdipWindingModeOutline:matrix:flatness:!**auto generated**!public! !
+gdipAddPathArc:x:y:width:height:startAngle:sweepAngle:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipAddPathArcI:x:y:width:height:startAngle:sweepAngle:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipAddPathBezier:x1:y1:x2:y2:x3:y3:x4:y4:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipAddPathBezierI:x1:y1:x2:y2:x3:y3:x4:y4:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipAddPathBeziers:points:count:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipAddPathBeziersI:points:count:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipAddPathClosedCurve:points:count:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipAddPathClosedCurve2:points:count:tension:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipAddPathClosedCurve2I:points:count:tension:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipAddPathClosedCurveI:points:count:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipAddPathCurve:points:count:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipAddPathCurve2:points:count:tension:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipAddPathCurve2I:points:count:tension:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipAddPathCurve3:points:count:offset:numberOfSegments:tension:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipAddPathCurve3I:points:count:offset:numberOfSegments:tension:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipAddPathCurveI:points:count:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipAddPathEllipse:x:y:width:height:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipAddPathEllipseI:x:y:width:height:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipAddPathLine:x1:y1:x2:y2:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipAddPathLine2:points:count:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipAddPathLine2I:points:count:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipAddPathLineI:x1:y1:x2:y2:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipAddPathPath:addingPath:connect:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipAddPathPie:x:y:width:height:startAngle:sweepAngle:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipAddPathPieI:x:y:width:height:startAngle:sweepAngle:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipAddPathPolygon:points:count:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipAddPathPolygonI:points:count:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipAddPathRectangle:x:y:width:height:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipAddPathRectangleI:x:y:width:height:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipAddPathRectangles:rects:count:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipAddPathRectanglesI:rects:count:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipAddPathString:string:length:family:style:emSize:layoutRect:format:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipAddPathStringI:string:length:family:style:emSize:layoutRect:format:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipBeginContainer:dstrect:srcRect:unit:state:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipBeginContainer2:state:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipBeginContainerI:dstrect:srcRect:unit:state:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipBitmapApplyEffect:effect:roi:useAuxData:auxData:auxDataSize:!**auto generated**!GDI+ Flat API-Bitmap Functions!public! !
+gdipBitmapConvertFormat:format:ditherType:paletteType:palette:alphaThresholdPercent:!**auto generated**!GDI+ Flat API-Bitmap Functions!public! !
+gdipBitmapCreateApplyEffect:numInputs:effect:roi:outputRect:outputBitmap:useAuxData:auxData:auxDataSize:!**auto generated**!GDI+ Flat API-Bitmap Functions!public! !
+gdipBitmapGetHistogram:format:numberOfEntries:channel0:channel1:channel2:channel3:!**auto generated**!GDI+ Flat API-Bitmap Functions!public! !
+gdipBitmapGetHistogramSize:numberOfEntries:!**auto generated**!GDI+ Flat API-Bitmap Functions!public! !
+gdipBitmapGetPixel:x:y:color:!**auto generated**!GDI+ Flat API-Bitmap Functions!public! !
+gdipBitmapLockBits:rect:flags:format:lockedBitmapData:!**auto generated**!GDI+ Flat API-Bitmap Functions!public! !
+gdipBitmapSetPixel:x:y:color:!**auto generated**!GDI+ Flat API-Bitmap Functions!public! !
+gdipBitmapSetResolution:xdpi:ydpi:!**auto generated**!GDI+ Flat API-Bitmap Functions!public! !
+gdipBitmapUnlockBits:lockedBitmapData:!**auto generated**!GDI+ Flat API-Bitmap Functions!public! !
+gdipClearPathMarkers:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipCloneBitmapArea:y:width:height:format:srcBitmap:dstBitmap:!**auto generated**!GDI+ Flat API-Bitmap Functions!public! !
+gdipCloneBitmapAreaI:y:width:height:format:srcBitmap:dstBitmap:!**auto generated**!GDI+ Flat API-Bitmap Functions!public! !
+gdipCloneBrush:cloneBrush:!**auto generated**!GDI+ Flat API-Brush Functions!public! !
+gdipCloneCustomLineCap:clonedCap:!**auto generated**!GDI+ Flat API-CustomLineCap Functions!public! !
+gdipCloneFont:cloneFont:!**auto generated**!GDI+ Flat API-Font Functions!public! !
+gdipCloneFontFamily:clonedFontFamily:!**auto generated**!GDI+ Flat API-FontFamily Functions!public! !
+gdipCloneImage:cloneImage:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipCloneImageAttributes:cloneImageattr:!**auto generated**!GDI+ Flat API-ImageAttributes Functions!public! !
+gdipCloneMatrix:cloneMatrix:!**auto generated**!GDI+ Flat API-Matrix Functions!public! !
+gdipClonePath:clonePath:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipClonePen:clonepen:!**auto generated**!GDI+ Flat API-Pen Functions!public! !
+gdipCloneRegion:cloneRegion:!**auto generated**!GDI+ Flat API-Region Functions!public! !
+gdipCloneStringFormat:newFormat:!**auto generated**!GDI+ Flat API-String Format Functions!public! !
+gdipClosePathFigure:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipClosePathFigures:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipCombineRegionPath:path:combineMode:!**auto generated**!GDI+ Flat API-Region Functions!public! !
+gdipCombineRegionRect:rect:combineMode:!**auto generated**!GDI+ Flat API-Region Functions!public! !
+gdipCombineRegionRectI:rect:combineMode:!**auto generated**!GDI+ Flat API-Region Functions!public! !
+gdipCombineRegionRegion:region2:combineMode:!**auto generated**!GDI+ Flat API-Region Functions!public! !
+gdipComment:sizeData:data:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipConvertToEmfPlus:metafile:conversionFailureFlag:emfType:description:out_metafile:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipConvertToEmfPlusToFile:metafile:conversionFailureFlag:filename:emfType:description:out_metafile:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipConvertToEmfPlusToStream:metafile:conversionFailureFlag:stream:emfType:description:out_metafile:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipCreateAdjustableArrowCap:width:isFilled:cap:!**auto generated**!GDI+ Flat API-AdjustableArrowCap Functions!public! !
+gdipCreateBitmapFromDirectDrawSurface:bitmap:!**auto generated**!GDI+ Flat API-Bitmap Functions!public! !
+gdipCreateBitmapFromFile:bitmap:!**auto generated**!GDI+ Flat API-Bitmap Functions!public! !
+gdipCreateBitmapFromFileICM:bitmap:!**auto generated**!GDI+ Flat API-Bitmap Functions!public! !
+gdipCreateBitmapFromGdiDib:gdiBitmapData:bitmap:!**auto generated**!GDI+ Flat API-Bitmap Functions!public! !
+gdipCreateBitmapFromGraphics:height:target:bitmap:!**auto generated**!GDI+ Flat API-Bitmap Functions!public! !
+gdipCreateBitmapFromHBITMAP:hpal:bitmap:!**auto generated**!GDI+ Flat API-Bitmap Functions!public! !
+gdipCreateBitmapFromHICON:bitmap:!**auto generated**!GDI+ Flat API-Bitmap Functions!public! !
+gdipCreateBitmapFromResource:lpBitmapName:bitmap:!**auto generated**!GDI+ Flat API-Bitmap Functions!public! !
+gdipCreateBitmapFromScan0:height:stride:format:scan0:bitmap:!**auto generated**!GDI+ Flat API-Bitmap Functions!public! !
+gdipCreateBitmapFromStream:bitmap:!**auto generated**!GDI+ Flat API-Bitmap Functions!public! !
+gdipCreateBitmapFromStreamICM:bitmap:!**auto generated**!GDI+ Flat API-Bitmap Functions!public! !
+gdipCreateCachedBitmap:graphics:cachedBitmap:!**auto generated**!GDI+ Flat API-CachedBitmap Functions!public! !
+gdipCreateCustomLineCap:strokePath:baseCap:baseInset:customCap:!**auto generated**!GDI+ Flat API-CustomLineCap Functions!public! !
+gdipCreateFont:emSize:style:unit:font:!**auto generated**!GDI+ Flat API-Font Functions!public! !
+gdipCreateFontFamilyFromName:fontCollection:fontFamily:!**auto generated**!GDI+ Flat API-FontFamily Functions!public! !
+gdipCreateFontFromDC:font:!**auto generated**!GDI+ Flat API-Font Functions!public! !
+gdipCreateFontFromLogfontA:logfont:font:!**auto generated**!GDI+ Flat API-Font Functions!public! !
+gdipCreateFontFromLogfontW:logfont:font:!**auto generated**!GDI+ Flat API-Font Functions!public! !
+gdipCreateFromHDC:graphics:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipCreateFromHDC2:hDevice:graphics:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipCreateFromHWND:graphics:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipCreateFromHWNDICM:graphics:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipCreateHalftonePalette!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipCreateHatchBrush:forecol:backcol:brush:!**auto generated**!GDI+ Flat API-HatchBrush Functions!public! !
+gdipCreateHBITMAPFromBitmap:hbmReturn:background:!**auto generated**!GDI+ Flat API-Bitmap Functions!public! !
+gdipCreateHICONFromBitmap:hbmReturn:!**auto generated**!GDI+ Flat API-Bitmap Functions!public! !
+gdipCreateImageAttributes:!**auto generated**!GDI+ Flat API-ImageAttributes Functions!public! !
+gdipCreateLineBrush:point2:color1:color2:wrapMode:lineGradient:!**auto generated**!GDI+ Flat API-LinearGradientBrush Functions!public! !
+gdipCreateLineBrushFromRect:color1:color2:mode:wrapMode:lineGradient:!**auto generated**!GDI+ Flat API-LinearGradientBrush Functions!public! !
+gdipCreateLineBrushFromRectI:color1:color2:mode:wrapMode:lineGradient:!**auto generated**!GDI+ Flat API-LinearGradientBrush Functions!public! !
+gdipCreateLineBrushFromRectWithAngle:color1:color2:angle:isAngleScalable:wrapMode:lineGradient:!**auto generated**!GDI+ Flat API-LinearGradientBrush Functions!public! !
+gdipCreateLineBrushFromRectWithAngleI:color1:color2:angle:isAngleScalable:wrapMode:lineGradient:!**auto generated**!GDI+ Flat API-LinearGradientBrush Functions!public! !
+gdipCreateLineBrushI:point2:color1:color2:wrapMode:lineGradient:!**auto generated**!GDI+ Flat API-LinearGradientBrush Functions!public! !
+gdipCreateMatrix:!**auto generated**!GDI+ Flat API-Matrix Functions!public! !
+gdipCreateMatrix2:m12:m21:m22:dx:dy:matrix:!**auto generated**!GDI+ Flat API-Matrix Functions!public! !
+gdipCreateMatrix3:dstplg:matrix:!**auto generated**!GDI+ Flat API-Matrix Functions!public! !
+gdipCreateMatrix3I:dstplg:matrix:!**auto generated**!GDI+ Flat API-Matrix Functions!public! !
+gdipCreateMetafileFromEmf:deleteEmf:metafile:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipCreateMetafileFromFile:metafile:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipCreateMetafileFromStream:metafile:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipCreateMetafileFromWmf:deleteWmf:wmfPlaceableFileHeader:metafile:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipCreateMetafileFromWmfFile:wmfPlaceableFileHeader:metafile:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipCreatePath:path:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipCreatePath2:types:count:fillMode:path:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipCreatePath2I:types:count:fillMode:path:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipCreatePathGradient:count:wrapMode:polyGradient:!**auto generated**!GDI+ Flat API-PathGradientBrush Functions!public! !
+gdipCreatePathGradientFromPath:polyGradient:!**auto generated**!GDI+ Flat API-PathGradientBrush Functions!public! !
+gdipCreatePathGradientI:count:wrapMode:polyGradient:!**auto generated**!GDI+ Flat API-PathGradientBrush Functions!public! !
+gdipCreatePathIter:path:!**auto generated**!GDI+ Flat API-PathIterator Functions!public! !
+gdipCreatePen1:width:unit:pen:!**auto generated**!GDI+ Flat API-Pen Functions!public! !
+gdipCreatePen2:width:unit:pen:!**auto generated**!GDI+ Flat API-Pen Functions!public! !
+gdipCreateRegion:!**auto generated**!GDI+ Flat API-Region Functions!public! !
+gdipCreateRegionHrgn:region:!**auto generated**!GDI+ Flat API-Region Functions!public! !
+gdipCreateRegionPath:region:!**auto generated**!GDI+ Flat API-Region Functions!public! !
+gdipCreateRegionRect:region:!**auto generated**!GDI+ Flat API-Region Functions!public! !
+gdipCreateRegionRectI:region:!**auto generated**!GDI+ Flat API-Region Functions!public! !
+gdipCreateRegionRgnData:size:region:!**auto generated**!GDI+ Flat API-Region Functions!public! !
+gdipCreateSolidFill:brush:!**auto generated**!GDI+ Flat API-SolidBrush Functions!public! !
+gdipCreateStreamOnFile:access:stream:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipCreateStringFormat:language:format:!**auto generated**!GDI+ Flat API-String Format Functions!public! !
+gdipCreateTexture:wrapMode:texture:!**auto generated**!GDI+ Flat API-TextureBrush Functions!public! !
+gdipCreateTexture2:wrapMode:x:y:width:height:texture:!**auto generated**!GDI+ Flat API-TextureBrush Functions!public! !
+gdipCreateTexture2I:wrapMode:x:y:width:height:texture:!**auto generated**!GDI+ Flat API-TextureBrush Functions!public! !
+gdipCreateTextureIA:imageAttributes:x:y:width:height:texture:!**auto generated**!GDI+ Flat API-TextureBrush Functions!public! !
+gdipCreateTextureIAI:imageAttributes:x:y:width:height:texture:!**auto generated**!GDI+ Flat API-TextureBrush Functions!public! !
+gdipDeleteBrush:!**auto generated**!GDI+ Flat API-Brush Functions!public! !
+gdipDeleteCachedBitmap:!**auto generated**!GDI+ Flat API-CachedBitmap Functions!public! !
+gdipDeleteCustomLineCap:!**auto generated**!GDI+ Flat API-CustomLineCap Functions!public! !
+gdipDeleteFont:!**auto generated**!GDI+ Flat API-Font Functions!public! !
+gdipDeleteFontFamily:!**auto generated**!GDI+ Flat API-FontFamily Functions!public! !
+gdipDeleteGraphics:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipDeleteMatrix:!**auto generated**!GDI+ Flat API-Matrix Functions!public! !
+gdipDeletePath:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipDeletePathIter:!**auto generated**!GDI+ Flat API-PathIterator Functions!public! !
+gdipDeletePen:!**auto generated**!GDI+ Flat API-Pen Functions!public! !
+gdipDeletePrivateFontCollection:!**auto generated**!GDI+ Flat API-Font Functions!public! !
+gdipDeleteRegion:!**auto generated**!GDI+ Flat API-Region Functions!public! !
+gdipDeleteStringFormat:!**auto generated**!GDI+ Flat API-String Format Functions!public! !
+gdipDisposeImage:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipDisposeImageAttributes:!**auto generated**!GDI+ Flat API-ImageAttributes Functions!public! !
+gdipDrawArc:pen:x:y:width:height:startAngle:sweepAngle:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipDrawArcI:pen:x:y:width:height:startAngle:sweepAngle:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipDrawBezier:pen:x1:y1:x2:y2:x3:y3:x4:y4:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipDrawBezierI:pen:x1:y1:x2:y2:x3:y3:x4:y4:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipDrawBeziers:pen:points:count:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipDrawBeziersI:pen:points:count:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipDrawCachedBitmap:cachedBitmap:x:y:!**auto generated**!GDI+ Flat API-CachedBitmap Functions!public! !
+gdipDrawClosedCurve:pen:points:count:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipDrawClosedCurve2:pen:points:count:tension:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipDrawClosedCurve2I:pen:points:count:tension:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipDrawClosedCurveI:pen:points:count:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipDrawCurve:pen:points:count:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipDrawCurve2:pen:points:count:tension:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipDrawCurve2I:pen:points:count:tension:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipDrawCurve3:pen:points:count:offset:numberOfSegments:tension:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipDrawCurve3I:pen:points:count:offset:numberOfSegments:tension:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipDrawCurveI:pen:points:count:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipDrawDriverString:text:length:font:brush:positions:flags:matrix:!**auto generated**!GDI+ Flat API-Text Functions!public! !
+gdipDrawEllipse:pen:x:y:width:height:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipDrawEllipseI:pen:x:y:width:height:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipDrawImage:image:x:y:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipDrawImageFX:image:source:xForm:effect:imageAttributes:srcUnit:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipDrawImageI:image:x:y:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipDrawImagePointRect:image:x:y:srcx:srcy:srcwidth:srcheight:srcUnit:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipDrawImagePointRectI:image:x:y:srcx:srcy:srcwidth:srcheight:srcUnit:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipDrawImagePoints:image:dstpoints:count:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipDrawImagePointsI:image:dstpoints:count:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipDrawImagePointsRect:image:points:count:srcx:srcy:srcwidth:srcheight:srcUnit:imageAttributes:callback:callbackData:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipDrawImagePointsRectI:image:points:count:srcx:srcy:srcwidth:srcheight:srcUnit:imageAttributes:callback:callbackData:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipDrawImageRect:image:x:y:width:height:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipDrawImageRectI:image:x:y:width:height:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipDrawImageRectRect:image:dstx:dsty:dstwidth:dstheight:srcx:srcy:srcwidth:srcheight:srcUnit:imageAttributes:callback:callbackData:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipDrawImageRectRectI:image:dstx:dsty:dstwidth:dstheight:srcx:srcy:srcwidth:srcheight:srcUnit:imageAttributes:callback:callbackData:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipDrawLine:pen:x1:y1:x2:y2:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipDrawLineI:pen:x1:y1:x2:y2:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipDrawLines:pen:points:count:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipDrawLinesI:pen:points:count:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipDrawPath:pen:path:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipDrawPie:pen:x:y:width:height:startAngle:sweepAngle:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipDrawPieI:pen:x:y:width:height:startAngle:sweepAngle:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipDrawPolygon:pen:points:count:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipDrawPolygonI:pen:points:count:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipDrawRectangle:pen:x:y:width:height:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipDrawRectangleI:pen:x:y:width:height:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipDrawRectangles:pen:rects:count:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipDrawRectanglesI:pen:rects:count:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipDrawString:str:length:font:layoutRect:stringFormat:brush:!**auto generated**!GDI+ Flat API-Text Functions!public! !
+gdipEmfToWmfBits:cbData16:pData16:iMapMode:eFlags:!**auto generated**!GDI+ Flat API-CachedBitmap Functions!public! !
+gdipEndContainer:state:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipEnumerateMetafileDestPoint:metafile:destPoint:fnCallback:callbackData:imageAttributes:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipEnumerateMetafileDestPointI:metafile:destPoint:fnCallback:callbackData:imageAttributes:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipEnumerateMetafileDestPoints:metafile:destPoints:count:fnCallback:callbackData:imageAttributes:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipEnumerateMetafileDestPointsI:metafile:destPoints:count:fnCallback:callbackData:imageAttributes:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipEnumerateMetafileDestRect:metafile:destRect:fnCallback:callbackData:imageAttributes:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipEnumerateMetafileDestRectI:metafile:destRect:fnCallback:callbackData:imageAttributes:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipEnumerateMetafileSrcRectDestPoint:metafile:destPoint:srcRect:srcUnit:fnCallback:callbackData:imageAttributes:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipEnumerateMetafileSrcRectDestPointI:metafile:destPoint:srcRect:srcUnit:fnCallback:callbackData:imageAttributes:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipEnumerateMetafileSrcRectDestPoints:metafile:destPoints:count:srcRect:srcUnit:fnCallback:callbackData:imageAttributes:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipEnumerateMetafileSrcRectDestPointsI:metafile:destPoints:count:srcRect:srcUnit:fnCallback:callbackData:imageAttributes:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipEnumerateMetafileSrcRectDestRect:metafile:destRect:srcRect:srcUnit:fnCallback:callbackData:imageAttributes:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipEnumerateMetafileSrcRectDestRectI:metafile:destRect:srcRect:srcUnit:fnCallback:callbackData:imageAttributes:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipFillClosedCurve:brush:points:count:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipFillClosedCurve2:brush:points:count:tension:fillMode:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipFillClosedCurve2I:brush:points:count:tension:fillMode:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipFillClosedCurveI:brush:points:count:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipFillEllipse:brush:x:y:width:height:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipFillEllipseI:brush:x:y:width:height:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipFillPath:brush:path:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipFillPie:brush:x:y:width:height:startAngle:sweepAngle:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipFillPieI:brush:x:y:width:height:startAngle:sweepAngle:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipFillPolygon:brush:points:count:fillMode:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipFillPolygon2:brush:points:count:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipFillPolygon2I:brush:points:count:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipFillPolygonI:brush:points:count:fillMode:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipFillRectangle:brush:x:y:width:height:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipFillRectangleI:brush:x:y:width:height:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipFillRectangles:brush:rects:count:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipFillRectanglesI:brush:rects:count:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipFillRegion:brush:region:!**auto generated**!GDI+ Flat API-Region Functions!public! !
+gdipFindFirstImageItem:item:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipFindNextImageItem:item:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipFlattenPath:matrix:flatness:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipFlush:intention:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipFontCollectionEnumerable:graphics:numFound:!**auto generated**!GDI+ Flat API-Font Functions!public! !
+gdipFontCollectionEnumerate:numSought:gpfamilies:numFound:graphics:!**auto generated**!GDI+ Flat API-Font Functions!public! !
+gdipGetAdjustableArrowCapFillState:fillState:!**auto generated**!GDI+ Flat API-AdjustableArrowCap Functions!public! !
+gdipGetAdjustableArrowCapHeight:height:!**auto generated**!GDI+ Flat API-AdjustableArrowCap Functions!public! !
+gdipGetAdjustableArrowCapMiddleInset:middleInset:!**auto generated**!GDI+ Flat API-AdjustableArrowCap Functions!public! !
+gdipGetAdjustableArrowCapWidth:width:!**auto generated**!GDI+ Flat API-AdjustableArrowCap Functions!public! !
+gdipGetAllPropertyItems:totalBufferSize:numProperties:allItems:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipGetBrushType:type:!**auto generated**!GDI+ Flat API-Brush Functions!public! !
+gdipGetCellAscent:style:cellAscent:!**auto generated**!GDI+ Flat API-FontFamily Functions!public! !
+gdipGetCellDescent:style:cellDescent:!**auto generated**!GDI+ Flat API-FontFamily Functions!public! !
+gdipGetClip:region:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipGetClipBounds:rect:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipGetClipBoundsI:rect:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipGetCompositingMode:compositingMode:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipGetCompositingQuality:compositingQuality:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipGetCustomLineCapBaseCap:baseCap:!**auto generated**!GDI+ Flat API-CustomLineCap Functions!public! !
+gdipGetCustomLineCapBaseInset:inset:!**auto generated**!GDI+ Flat API-CustomLineCap Functions!public! !
+gdipGetCustomLineCapStrokeCaps:startCap:endCap:!**auto generated**!GDI+ Flat API-CustomLineCap Functions!public! !
+gdipGetCustomLineCapStrokeJoin:lineJoin:!**auto generated**!GDI+ Flat API-CustomLineCap Functions!public! !
+gdipGetCustomLineCapType:capType:!**auto generated**!GDI+ Flat API-CustomLineCap Functions!public! !
+gdipGetCustomLineCapWidthScale:widthScale:!**auto generated**!GDI+ Flat API-CustomLineCap Functions!public! !
+gdipGetDC:hdc:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipGetDpiX:dpi:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipGetDpiY:dpi:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipGetEmHeight:style:emHeight:!**auto generated**!GDI+ Flat API-FontFamily Functions!public! !
+gdipGetEncoderParameterList:clsidEncoder:size:buffer:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipGetEncoderParameterListSize:clsidEncoder:size:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipGetFamily:family:!**auto generated**!GDI+ Flat API-Font Functions!public! !
+gdipGetFamilyName:name:language:!**auto generated**!GDI+ Flat API-FontFamily Functions!public! !
+gdipGetFontCollectionFamilyCount:numFound:!**auto generated**!GDI+ Flat API-Font Functions!public! !
+gdipGetFontCollectionFamilyList:numSought:gpfamilies:numFound:!**auto generated**!GDI+ Flat API-Font Functions!public! !
+gdipGetFontHeight:graphics:height:!**auto generated**!GDI+ Flat API-Font Functions!public! !
+gdipGetFontHeightGivenDPI:dpi:height:!**auto generated**!GDI+ Flat API-Font Functions!public! !
+gdipGetFontSize:size:!**auto generated**!GDI+ Flat API-Font Functions!public! !
+gdipGetFontStyle:style:!**auto generated**!GDI+ Flat API-Font Functions!public! !
+gdipGetFontUnit:unit:!**auto generated**!GDI+ Flat API-Font Functions!public! !
+gdipGetGenericFontFamilyMonospace:!**auto generated**!GDI+ Flat API-FontFamily Functions!public! !
+gdipGetGenericFontFamilySansSerif:!**auto generated**!GDI+ Flat API-FontFamily Functions!public! !
+gdipGetGenericFontFamilySerif:!**auto generated**!GDI+ Flat API-FontFamily Functions!public! !
+gdipGetHatchBackgroundColor:backcol:!**auto generated**!GDI+ Flat API-HatchBrush Functions!public! !
+gdipGetHatchForegroundColor:forecol:!**auto generated**!GDI+ Flat API-HatchBrush Functions!public! !
+gdipGetHatchStyle:hatchStyle:!**auto generated**!GDI+ Flat API-HatchBrush Functions!public! !
+gdipGetHemfFromMetafile:hEmf:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipGetImageAttributesAdjustedPalette:colorPalette:colorAdjustType:!**auto generated**!GDI+ Flat API-ImageAttributes Functions!public! !
+gdipGetImageBounds:srcRect:srcUnit:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipGetImageDecoders:size:decoders:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipGetImageDecodersSize:size:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipGetImageDimension:width:height:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipGetImageEncoders:size:encoders:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipGetImageEncodersSize:size:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipGetImageFlags:flags:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipGetImageGraphicsContext:graphics:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipGetImageHeight:height:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipGetImageHorizontalResolution:resolution:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipGetImageItemData:item:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipGetImagePalette:palette:size:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipGetImagePaletteSize:size:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipGetImagePixelFormat:format:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipGetImageRawFormat:format:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipGetImageThumbnail:thumbWidth:thumbHeight:thumbImage:pfnCallback:callbackData:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipGetImageType:type:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipGetImageVerticalResolution:resolution:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipGetImageWidth:width:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipGetInterpolationMode:interpolationMode:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipGetLineBlend:blend:positions:count:!**auto generated**!GDI+ Flat API-LinearGradientBrush Functions!public! !
+gdipGetLineBlendCount:count:!**auto generated**!GDI+ Flat API-LinearGradientBrush Functions!public! !
+gdipGetLineColors:colors:!**auto generated**!GDI+ Flat API-LinearGradientBrush Functions!public! !
+gdipGetLineGammaCorrection:useGammaCorrection:!**auto generated**!GDI+ Flat API-LinearGradientBrush Functions!public! !
+gdipGetLinePresetBlend:blend:positions:count:!**auto generated**!GDI+ Flat API-LinearGradientBrush Functions!public! !
+gdipGetLinePresetBlendCount:count:!**auto generated**!GDI+ Flat API-LinearGradientBrush Functions!public! !
+gdipGetLineRect:rect:!**auto generated**!GDI+ Flat API-LinearGradientBrush Functions!public! !
+gdipGetLineRectI:rect:!**auto generated**!GDI+ Flat API-LinearGradientBrush Functions!public! !
+gdipGetLineSpacing:style:lineSpacing:!**auto generated**!GDI+ Flat API-FontFamily Functions!public! !
+gdipGetLineTransform:matrix:!**auto generated**!GDI+ Flat API-LinearGradientBrush Functions!public! !
+gdipGetLineWrapMode:wrapMode:!**auto generated**!GDI+ Flat API-LinearGradientBrush Functions!public! !
+gdipGetLogFontA:graphics:logfonta:!**auto generated**!GDI+ Flat API-Font Functions!public! !
+gdipGetLogFontW:graphics:logfontw:!**auto generated**!GDI+ Flat API-Font Functions!public! !
+gdipGetMatrixElements:matrixOut:!**auto generated**!GDI+ Flat API-Matrix Functions!public! !
+gdipGetMetafileDownLevelRasterizationLimit:metafileRasterizationLimitDpi:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipGetMetafileHeaderFromEmf:header:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipGetMetafileHeaderFromFile:header:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipGetMetafileHeaderFromMetafile:header:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipGetMetafileHeaderFromStream:header:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipGetMetafileHeaderFromWmf:wmfPlaceableFileHeader:header:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipGetNearestColor:argb:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipGetPageScale:scale:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipGetPageUnit:unit:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipGetPathData:pathData:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipGetPathFillMode:fillMode:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipGetPathGradientBlend:blend:positions:count:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipGetPathGradientBlendCount:count:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipGetPathGradientCenterColor:colors:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipGetPathGradientCenterPoint:points:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipGetPathGradientCenterPointI:points:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipGetPathGradientFocusScales:xScale:yScale:!**auto generated**!GDI+ Flat API-PathGradientBrush Functions!public! !
+gdipGetPathGradientGammaCorrection:useGammaCorrection:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipGetPathGradientPath:path:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipGetPathGradientPointCount:count:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipGetPathGradientPresetBlend:blend:positions:count:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipGetPathGradientPresetBlendCount:count:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipGetPathGradientRect:rect:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipGetPathGradientRectI:rect:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipGetPathGradientSurroundColorCount:count:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipGetPathGradientSurroundColorsWithCount:color:count:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipGetPathGradientTransform:matrix:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipGetPathGradientWrapMode:wrapMode:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipGetPathLastPoint:lastPoint:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipGetPathPoints:points:count:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipGetPathPointsI:points:count:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipGetPathTypes:types:count:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipGetPathWorldBounds:bounds:matrix:pen:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipGetPathWorldBoundsI:bounds:matrix:pen:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipGetPenBrushFill:brush:!**auto generated**!GDI+ Flat API-Pen Functions!public! !
+gdipGetPenColor:argb:!**auto generated**!GDI+ Flat API-Pen Functions!public! !
+gdipGetPenCompoundArray:dash:count:!**auto generated**!GDI+ Flat API-Pen Functions!public! !
+gdipGetPenCompoundCount:count:!**auto generated**!GDI+ Flat API-Pen Functions!public! !
+gdipGetPenCustomEndCap:customCap:!**auto generated**!GDI+ Flat API-Pen Functions!public! !
+gdipGetPenCustomStartCap:customCap:!**auto generated**!GDI+ Flat API-Pen Functions!public! !
+gdipGetPenDashArray:dash:count:!**auto generated**!GDI+ Flat API-Pen Functions!public! !
+gdipGetPenDashCap197819:dashCap:!**auto generated**!GDI+ Flat API-Pen Functions!public! !
+gdipGetPenDashCount:count:!**auto generated**!GDI+ Flat API-Pen Functions!public! !
+gdipGetPenDashOffset:offset:!**auto generated**!GDI+ Flat API-Pen Functions!public! !
+gdipGetPenDashStyle:dashStyle:!**auto generated**!GDI+ Flat API-Pen Functions!public! !
+gdipGetPenEndCap:endCap:!**auto generated**!GDI+ Flat API-Pen Functions!public! !
+gdipGetPenFillType:type:!**auto generated**!GDI+ Flat API-Pen Functions!public! !
+gdipGetPenLineJoin:lineJoin:!**auto generated**!GDI+ Flat API-Pen Functions!public! !
+gdipGetPenMiterLimit:miterLimit:!**auto generated**!GDI+ Flat API-Pen Functions!public! !
+gdipGetPenMode:penMode:!**auto generated**!GDI+ Flat API-Pen Functions!public! !
+gdipGetPenStartCap:startCap:!**auto generated**!GDI+ Flat API-Pen Functions!public! !
+gdipGetPenTransform:matrix:!**auto generated**!GDI+ Flat API-Pen Functions!public! !
+gdipGetPenUnit:unit:!**auto generated**!GDI+ Flat API-Pen Functions!public! !
+gdipGetPenWidth:width:!**auto generated**!GDI+ Flat API-Pen Functions!public! !
+gdipGetPixelOffsetMode:pixelOffsetMode:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipGetPointCount:count:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipGetPropertyCount:numOfProperty:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipGetPropertyIdList:numOfProperty:list:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipGetPropertyItem:propId:propSize:buffer:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipGetPropertyItemSize:propId:size:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipGetPropertySize:totalBufferSize:numProperties:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipGetRegionBounds:graphics:rect:!**auto generated**!GDI+ Flat API-Region Functions!public! !
+gdipGetRegionBoundsI:graphics:rect:!**auto generated**!GDI+ Flat API-Region Functions!public! !
+gdipGetRegionData:buffer:bufferSize:sizeFilled:!**auto generated**!GDI+ Flat API-Region Functions!public! !
+gdipGetRegionDataSize:bufferSize:!**auto generated**!GDI+ Flat API-Region Functions!public! !
+gdipGetRegionHRgn:graphics:hRgn:!**auto generated**!GDI+ Flat API-Region Functions!public! !
+gdipGetRegionScans:rects:count:matrix:!**auto generated**!GDI+ Flat API-Region Functions!public! !
+gdipGetRegionScansCount:count:matrix:!**auto generated**!GDI+ Flat API-Region Functions!public! !
+gdipGetRegionScansI:rects:count:matrix:!**auto generated**!GDI+ Flat API-Region Functions!public! !
+gdipGetRenderingOrigin:x:y:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipGetSmoothingMode:smoothingMode:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipGetSolidFillColor:color:!**auto generated**!GDI+ Flat API-SolidBrush Functions!public! !
+gdipGetStringFormatAlign:align:!**auto generated**!GDI+ Flat API-String Format Functions!public! !
+gdipGetStringFormatDigitSubstitution:language:substitute:!**auto generated**!GDI+ Flat API-String Format Functions!public! !
+gdipGetStringFormatFlags:flags:!**auto generated**!GDI+ Flat API-String Format Functions!public! !
+gdipGetStringFormatHotkeyPrefix:hotkeyPrefix:!**auto generated**!GDI+ Flat API-String Format Functions!public! !
+gdipGetStringFormatLineAlign:align:!**auto generated**!GDI+ Flat API-String Format Functions!public! !
+gdipGetStringFormatMeasurableCharacterRangeCount:count:!**auto generated**!GDI+ Flat API-String Format Functions!public! !
+gdipGetStringFormatTabStopCount:count:!**auto generated**!GDI+ Flat API-String Format Functions!public! !
+gdipGetStringFormatTabStops:count:firstTabOffset:tabStops:!**auto generated**!GDI+ Flat API-String Format Functions!public! !
+gdipGetStringFormatTrimming:trimming:!**auto generated**!GDI+ Flat API-String Format Functions!public! !
+gdipGetTextContrast:contrast:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipGetTextRenderingHint:mode:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipGetTextureImage:image:!**auto generated**!GDI+ Flat API-TextureBrush Functions!public! !
+gdipGetTextureTransform:matrix:!**auto generated**!GDI+ Flat API-TextureBrush Functions!public! !
+gdipGetTextureWrapMode:wrapMode:!**auto generated**!GDI+ Flat API-TextureBrush Functions!public! !
+gdipGetVisibleClipBounds:rect:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipGetVisibleClipBoundsI:rect:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipGetWorldTransform:matrix:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipGraphicsClear:color:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipGraphicsSetAbort:pIAbort:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipImageForceValidation:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipImageGetFrameCount:dimensionID:count:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipImageGetFrameDimensionsCount:count:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipImageGetFrameDimensionsList:dimensionIDs:count:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipImageRotateFlip:rfType:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipImageSelectActiveFrame:dimensionID:frameIndex:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipImageSetAbort:pIAbort:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipInitializePalette:paletteType:optimalColors:useTransparentColor:bitmap:!**auto generated**!GDI+ Flat API-Bitmap Functions!public! !
+gdipInvertMatrix:!**auto generated**!GDI+ Flat API-Matrix Functions!public! !
+gdipIsClipEmpty:result:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipIsEmptyRegion:graphics:result:!**auto generated**!GDI+ Flat API-Region Functions!public! !
+gdipIsEqualRegion:region2:graphics:result:!**auto generated**!GDI+ Flat API-Region Functions!public! !
+gdipIsInfiniteRegion:graphics:result:!**auto generated**!GDI+ Flat API-Region Functions!public! !
+gdipIsMatrixEqual:matrix2:result:!**auto generated**!GDI+ Flat API-Matrix Functions!public! !
+gdipIsMatrixIdentity:result:!**auto generated**!GDI+ Flat API-Matrix Functions!public! !
+gdipIsMatrixInvertible:result:!**auto generated**!GDI+ Flat API-Matrix Functions!public! !
+gdipIsOutlineVisiblePathPoint:x:y:pen:graphics:result:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipIsOutlineVisiblePathPointI:x:y:pen:graphics:result:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipIsStyleAvailable:style:isStyleAvailable:!**auto generated**!GDI+ Flat API-FontFamily Functions!public! !
+gdipIsVisibleClipEmpty:result:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipIsVisiblePathPoint:x:y:graphics:result:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipIsVisiblePathPointI:x:y:graphics:result:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipIsVisiblePoint:x:y:result:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipIsVisiblePointI:x:y:result:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipIsVisibleRect:x:y:width:height:result:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipIsVisibleRectI:x:y:width:height:result:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipIsVisibleRegionPoint:x:y:graphics:result:!**auto generated**!GDI+ Flat API-Region Functions!public! !
+gdipIsVisibleRegionPointI:x:y:graphics:result:!**auto generated**!GDI+ Flat API-Region Functions!public! !
+gdipIsVisibleRegionRect:x:y:width:height:graphics:result:!**auto generated**!GDI+ Flat API-Region Functions!public! !
+gdipIsVisibleRegionRectI:x:y:width:height:graphics:result:!**auto generated**!GDI+ Flat API-Region Functions!public! !
+gdipLoadImageFromFile:image:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipLoadImageFromFileICM:image:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipLoadImageFromStream:image:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipLoadImageFromStreamICM:image:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdiplusNotificationHook:!**auto generated**!GDI+ Flat API-Notification Functions!public! !
+gdiplusNotificationUnhook:!**auto generated**!GDI+ Flat API-Notification Functions!public! !
+gdiplusShutdown:!**auto generated**!GDI+ Flat API-Other Functions!public! !
+gdiplusStartup:input:output:!**auto generated**!GDI+ Flat API-Other Functions!public! !
+gdipMeasureCharacterRanges:str:length:font:layoutRect:stringFormat:regionCount:regions:!**auto generated**!GDI+ Flat API-Font Functions!public! !
+gdipMeasureDriverString:text:length:font:positions:flags:matrix:boundingBox:!**auto generated**!GDI+ Flat API-Text Functions!public! !
+gdipMeasureString:str:length:font:layoutRect:stringFormat:boundingBox:codepointsFitted:linesFilled:!**auto generated**!GDI+ Flat API-Text Functions!public! !
+gdipMultiplyLineTransform:matrix:order:!**auto generated**!GDI+ Flat API-LinearGradientBrush Functions!public! !
+gdipMultiplyMatrix:matrix2:order:!**auto generated**!GDI+ Flat API-Matrix Functions!public! !
+gdipMultiplyPathGradientTransform:matrix:order:!**auto generated**!GDI+ Flat API-PathGradientBrush Functions!public! !
+gdipMultiplyPenTransform:matrix:order:!**auto generated**!GDI+ Flat API-Pen Functions!public! !
+gdipMultiplyTextureTransform:matrix:order:!**auto generated**!GDI+ Flat API-TextureBrush Functions!public! !
+gdipMultiplyWorldTransform:matrix:order:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipNewInstalledFontCollection:!**auto generated**!GDI+ Flat API-Font Functions!public! !
+gdipNewPrivateFontCollection:!**auto generated**!GDI+ Flat API-Font Functions!public! !
+gdipPathIterCopyData:resultCount:points:types:startIndex:endIndex:!**auto generated**!GDI+ Flat API-PathIterator Functions!public! !
+gdipPathIterEnumerate:resultCount:points:types:count:!**auto generated**!GDI+ Flat API-PathIterator Functions!public! !
+gdipPathIterGetCount:count:!**auto generated**!GDI+ Flat API-PathIterator Functions!public! !
+gdipPathIterGetSubpathCount:count:!**auto generated**!GDI+ Flat API-PathIterator Functions!public! !
+gdipPathIterHasCurve:hasCurve:!**auto generated**!GDI+ Flat API-PathIterator Functions!public! !
+gdipPathIterIsValid:valid:!**auto generated**!GDI+ Flat API-PathIterator Functions!public! !
+gdipPathIterNextMarker:resultCount:startIndex:endIndex:!**auto generated**!GDI+ Flat API-PathIterator Functions!public! !
+gdipPathIterNextMarkerPath:resultCount:path:!**auto generated**!GDI+ Flat API-PathIterator Functions!public! !
+gdipPathIterNextPathType:resultCount:pathType:startIndex:endIndex:!**auto generated**!GDI+ Flat API-PathIterator Functions!public! !
+gdipPathIterNextSubpath:resultCount:startIndex:endIndex:isClosed:!**auto generated**!GDI+ Flat API-PathIterator Functions!public! !
+gdipPathIterNextSubpathPath:resultCount:path:isClosed:!**auto generated**!GDI+ Flat API-PathIterator Functions!public! !
+gdipPathIterRewind:!**auto generated**!GDI+ Flat API-PathIterator Functions!public! !
+gdipPlayMetafileRecord:recordType:flags:dataSize:data:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipPrivateAddFontFile:filename:!**auto generated**!GDI+ Flat API-Font Functions!public! !
+gdipPrivateAddMemoryFont:memory:length:!**auto generated**!GDI+ Flat API-Font Functions!public! !
+gdipRecordMetafile:type:frameRect:frameUnit:description:metafile:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipRecordMetafileFileName:referenceHdc:type:frameRect:frameUnit:description:metafile:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipRecordMetafileFileNameI:referenceHdc:type:frameRect:frameUnit:description:metafile:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipRecordMetafileI:type:frameRect:frameUnit:description:metafile:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipRecordMetafileStream:referenceHdc:type:frameRect:frameUnit:description:metafile:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipRecordMetafileStreamI:referenceHdc:type:frameRect:frameUnit:description:metafile:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipReleaseDC:hdc:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipRemovePropertyItem:propId:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipResetClip:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipResetImageAttributes:type:!**auto generated**!GDI+ Flat API-ImageAttributes Functions!public! !
+gdipResetLineTransform:!**auto generated**!GDI+ Flat API-LinearGradientBrush Functions!public! !
+gdipResetPageTransform:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipResetPath:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipResetPathGradientTransform:!**auto generated**!GDI+ Flat API-PathGradientBrush Functions!public! !
+gdipResetPenTransform:!**auto generated**!GDI+ Flat API-Pen Functions!public! !
+gdipResetTextureTransform:!**auto generated**!GDI+ Flat API-TextureBrush Functions!public! !
+gdipResetWorldTransform:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipRestoreGraphics:state:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipReversePath:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipRotateLineTransform:angle:order:!**auto generated**!GDI+ Flat API-LinearGradientBrush Functions!public! !
+gdipRotateMatrix:angle:order:!**auto generated**!GDI+ Flat API-Matrix Functions!public! !
+gdipRotatePathGradientTransform:angle:order:!**auto generated**!GDI+ Flat API-PathGradientBrush Functions!public! !
+gdipRotatePenTransform:angle:order:!**auto generated**!GDI+ Flat API-Pen Functions!public! !
+gdipRotateTextureTransform:angle:order:!**auto generated**!GDI+ Flat API-TextureBrush Functions!public! !
+gdipRotateWorldTransform:angle:order:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipSaveAdd:encoderParams:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipSaveAddImage:newImage:encoderParams:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipSaveGraphics:state:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipSaveImageToFile:filename:clsidEncoder:encoderParams:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipSaveImageToStream:stream:clsidEncoder:encoderParams:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipScaleLineTransform:sx:sy:order:!**auto generated**!GDI+ Flat API-LinearGradientBrush Functions!public! !
+gdipScaleMatrix:scaleX:scaleY:order:!**auto generated**!GDI+ Flat API-Matrix Functions!public! !
+gdipScalePathGradientTransform:sx:sy:order:!**auto generated**!GDI+ Flat API-PathGradientBrush Functions!public! !
+gdipScalePenTransform:sx:sy:order:!**auto generated**!GDI+ Flat API-Pen Functions!public! !
+gdipScaleTextureTransform:sx:sy:order:!**auto generated**!GDI+ Flat API-TextureBrush Functions!public! !
+gdipScaleWorldTransform:sx:sy:order:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipSetAdjustableArrowCapFillState:fillState:!**auto generated**!GDI+ Flat API-AdjustableArrowCap Functions!public! !
+gdipSetAdjustableArrowCapHeight:height:!**auto generated**!GDI+ Flat API-AdjustableArrowCap Functions!public! !
+gdipSetAdjustableArrowCapMiddleInset:middleInset:!**auto generated**!GDI+ Flat API-AdjustableArrowCap Functions!public! !
+gdipSetAdjustableArrowCapWidth:width:!**auto generated**!GDI+ Flat API-AdjustableArrowCap Functions!public! !
+gdipSetClipGraphics:srcgraphics:combineMode:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipSetClipHrgn:hRgn:combineMode:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipSetClipPath:path:combineMode:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipSetClipRect:x:y:width:height:combineMode:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipSetClipRectI:x:y:width:height:combineMode:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipSetClipRegion:region:combineMode:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipSetCompositingMode:compositingMode:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipSetCompositingQuality:compositingQuality:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipSetCustomLineCapBaseCap:baseCap:!**auto generated**!GDI+ Flat API-CustomLineCap Functions!public! !
+gdipSetCustomLineCapBaseInset:inset:!**auto generated**!GDI+ Flat API-CustomLineCap Functions!public! !
+gdipSetCustomLineCapStrokeCaps:startCap:endCap:!**auto generated**!GDI+ Flat API-CustomLineCap Functions!public! !
+gdipSetCustomLineCapStrokeJoin:lineJoin:!**auto generated**!GDI+ Flat API-CustomLineCap Functions!public! !
+gdipSetCustomLineCapWidthScale:widthScale:!**auto generated**!GDI+ Flat API-CustomLineCap Functions!public! !
+gdipSetEmpty:!**auto generated**!GDI+ Flat API-Region Functions!public! !
+gdipSetImageAttributesCachedBackground:enableFlag:!**auto generated**!GDI+ Flat API-ImageAttributes Functions!public! !
+gdipSetImageAttributesColorKeys:type:enableFlag:colorLow:colorHigh:!**auto generated**!GDI+ Flat API-ImageAttributes Functions!public! !
+gdipSetImageAttributesColorMatrix:type:enableFlag:colorMatrix:grayMatrix:flags:!**auto generated**!GDI+ Flat API-ImageAttributes Functions!public! !
+gdipSetImageAttributesGamma:type:enableFlag:gamma:!**auto generated**!GDI+ Flat API-ImageAttributes Functions!public! !
+gdipSetImageAttributesICMMode:on:!**auto generated**!GDI+ Flat API-ImageAttributes Functions!public! !
+gdipSetImageAttributesNoOp:type:enableFlag:!**auto generated**!GDI+ Flat API-ImageAttributes Functions!public! !
+gdipSetImageAttributesOutputChannel:type:enableFlag:channelFlags:!**auto generated**!GDI+ Flat API-ImageAttributes Functions!public! !
+gdipSetImageAttributesOutputChannelColorProfile:type:enableFlag:colorProfileFilename:!**auto generated**!GDI+ Flat API-ImageAttributes Functions!public! !
+gdipSetImageAttributesRemapTable:type:enableFlag:mapSize:map:!**auto generated**!GDI+ Flat API-ImageAttributes Functions!public! !
+gdipSetImageAttributesThreshold:type:enableFlag:threshold:!**auto generated**!GDI+ Flat API-ImageAttributes Functions!public! !
+gdipSetImageAttributesToIdentity:type:!**auto generated**!GDI+ Flat API-ImageAttributes Functions!public! !
+gdipSetImageAttributesWrapMode:wrap:argb:clamp:!**auto generated**!GDI+ Flat API-ImageAttributes Functions!public! !
+gdipSetImagePalette:palette:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipSetInfinite:!**auto generated**!GDI+ Flat API-Region Functions!public! !
+gdipSetInterpolationMode:interpolationMode:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipSetLineBlend:blend:positions:count:!**auto generated**!GDI+ Flat API-LinearGradientBrush Functions!public! !
+gdipSetLineColors:color1:color2:!**auto generated**!GDI+ Flat API-LinearGradientBrush Functions!public! !
+gdipSetLineGammaCorrection:useGammaCorrection:!**auto generated**!GDI+ Flat API-LinearGradientBrush Functions!public! !
+gdipSetLineLinearBlend:focus:scale:!**auto generated**!GDI+ Flat API-LinearGradientBrush Functions!public! !
+gdipSetLinePresetBlend:blend:positions:count:!**auto generated**!GDI+ Flat API-LinearGradientBrush Functions!public! !
+gdipSetLineSigmaBlend:focus:scale:!**auto generated**!GDI+ Flat API-LinearGradientBrush Functions!public! !
+gdipSetLineTransform:matrix:!**auto generated**!GDI+ Flat API-LinearGradientBrush Functions!public! !
+gdipSetLineWrapMode:wrapMode:!**auto generated**!GDI+ Flat API-LinearGradientBrush Functions!public! !
+gdipSetMatrixElements:m11:m12:m21:m22:dx:dy:!**auto generated**!GDI+ Flat API-Matrix Functions!public! !
+gdipSetMetafileDownLevelRasterizationLimit:metafileRasterizationLimitDpi:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipSetPageScale:scale:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipSetPageUnit:unit:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipSetPathFillMode:fillMode:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipSetPathGradientBlend:blend:positions:count:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipSetPathGradientCenterColor:colors:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipSetPathGradientCenterPoint:points:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipSetPathGradientCenterPointI:points:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipSetPathGradientFocusScales:xScale:yScale:!**auto generated**!GDI+ Flat API-PathGradientBrush Functions!public! !
+gdipSetPathGradientGammaCorrection:useGammaCorrection:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipSetPathGradientLinearBlend:focus:scale:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipSetPathGradientPath:path:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipSetPathGradientPresetBlend:blend:positions:count:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipSetPathGradientSigmaBlend:focus:scale:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipSetPathGradientSurroundColorsWithCount:color:count:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipSetPathGradientTransform:matrix:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipSetPathGradientWrapMode:wrapMode:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipSetPathMarker:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipSetPenBrushFill:brush:!**auto generated**!GDI+ Flat API-Pen Functions!public! !
+gdipSetPenColor:argb:!**auto generated**!GDI+ Flat API-Pen Functions!public! !
+gdipSetPenCompoundArray:dash:count:!**auto generated**!GDI+ Flat API-Pen Functions!public! !
+gdipSetPenCustomEndCap:customCap:!**auto generated**!GDI+ Flat API-Pen Functions!public! !
+gdipSetPenCustomStartCap:customCap:!**auto generated**!GDI+ Flat API-Pen Functions!public! !
+gdipSetPenDashArray:dash:count:!**auto generated**!GDI+ Flat API-Pen Functions!public! !
+gdipSetPenDashArray:dashes:!operations!public! !
+gdipSetPenDashCap197819:dashCap:!**auto generated**!GDI+ Flat API-Pen Functions!public! !
+gdipSetPenDashOffset:offset:!**auto generated**!GDI+ Flat API-Pen Functions!public! !
+gdipSetPenDashStyle:dashStyle:!**auto generated**!GDI+ Flat API-Pen Functions!public! !
+gdipSetPenEndCap:endCap:!**auto generated**!GDI+ Flat API-Pen Functions!public! !
+gdipSetPenLineCap197819:startCap:endCap:dashCap:!**auto generated**!GDI+ Flat API-Pen Functions!public! !
+gdipSetPenLineJoin:lineJoin:!**auto generated**!GDI+ Flat API-Pen Functions!public! !
+gdipSetPenMiterLimit:miterLimit:!**auto generated**!GDI+ Flat API-Pen Functions!public! !
+gdipSetPenMode:penMode:!**auto generated**!GDI+ Flat API-Pen Functions!public! !
+gdipSetPenStartCap:startCap:!**auto generated**!GDI+ Flat API-Pen Functions!public! !
+gdipSetPenTransform:matrix:!**auto generated**!GDI+ Flat API-Pen Functions!public! !
+gdipSetPenUnit:unit:!**auto generated**!GDI+ Flat API-Pen Functions!public! !
+gdipSetPenWidth:width:!**auto generated**!GDI+ Flat API-Pen Functions!public! !
+gdipSetPixelOffsetMode:pixelOffsetMode:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipSetPropertyItem:item:!**auto generated**!GDI+ Flat API-Image Functions!public! !
+gdipSetRenderingOrigin:x:y:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipSetSmoothingMode:smoothingMode:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipSetSolidFillColor:color:!**auto generated**!GDI+ Flat API-SolidBrush Functions!public! !
+gdipSetStringFormatAlign:align:!**auto generated**!GDI+ Flat API-String Format Functions!public! !
+gdipSetStringFormatDigitSubstitution:language:substitute:!**auto generated**!GDI+ Flat API-String Format Functions!public! !
+gdipSetStringFormatFlags:flags:!**auto generated**!GDI+ Flat API-String Format Functions!public! !
+gdipSetStringFormatHotkeyPrefix:hotkeyPrefix:!**auto generated**!GDI+ Flat API-String Format Functions!public! !
+gdipSetStringFormatLineAlign:align:!**auto generated**!GDI+ Flat API-String Format Functions!public! !
+gdipSetStringFormatMeasurableCharacterRanges:rangeCount:ranges:!**auto generated**!GDI+ Flat API-String Format Functions!public! !
+gdipSetStringFormatTabStops:firstTabOffset:count:tabStops:!**auto generated**!GDI+ Flat API-String Format Functions!public! !
+gdipSetStringFormatTrimming:trimming:!**auto generated**!GDI+ Flat API-String Format Functions!public! !
+gdipSetTextContrast:contrast:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipSetTextRenderingHint:mode:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipSetTextureTransform:matrix:!**auto generated**!GDI+ Flat API-TextureBrush Functions!public! !
+gdipSetTextureWrapMode:wrapMode:!**auto generated**!GDI+ Flat API-TextureBrush Functions!public! !
+gdipSetWorldTransform:matrix:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipShearMatrix:shearX:shearY:order:!**auto generated**!GDI+ Flat API-Matrix Functions!public! !
+gdipStartPathFigure:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipStringFormatGetGenericDefault:!**auto generated**!GDI+ Flat API-String Format Functions!public! !
+gdipStringFormatGetGenericTypographic:!**auto generated**!GDI+ Flat API-String Format Functions!public! !
+gdipTestControl:param:!**auto generated**!GDI+ Flat API-Text Functions!public! !
+gdipTransformMatrixPoints:pts:count:!**auto generated**!GDI+ Flat API-Matrix Functions!public! !
+gdipTransformMatrixPointsI:pts:count:!**auto generated**!GDI+ Flat API-Matrix Functions!public! !
+gdipTransformPath:matrix:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipTransformPoints:destSpace:srcSpace:points:count:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipTransformPointsI:destSpace:srcSpace:points:count:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipTransformRegion:matrix:!**auto generated**!GDI+ Flat API-Region Functions!public! !
+gdipTranslateClip:dx:dy:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipTranslateClipI:dx:dy:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipTranslateLineTransform:dx:dy:order:!**auto generated**!GDI+ Flat API-LinearGradientBrush Functions!public! !
+gdipTranslateMatrix:offsetX:offsetY:order:!**auto generated**!GDI+ Flat API-Matrix Functions!public! !
+gdipTranslatePathGradientTransform:dx:dy:order:!**auto generated**!GDI+ Flat API-PathGradientBrush Functions!public! !
+gdipTranslatePenTransform:dx:dy:order:!**auto generated**!GDI+ Flat API-Pen Functions!public! !
+gdipTranslateRegion:dx:dy:!**auto generated**!GDI+ Flat API-Region Functions!public! !
+gdipTranslateRegionI:dx:dy:!**auto generated**!GDI+ Flat API-Region Functions!public! !
+gdipTranslateTextureTransform:dx:dy:order:!**auto generated**!GDI+ Flat API-TextureBrush Functions!public! !
+gdipTranslateWorldTransform:dx:dy:order:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
+gdipVectorTransformMatrixPoints:pts:count:!**auto generated**!GDI+ Flat API-Matrix Functions!public! !
+gdipVectorTransformMatrixPointsI:pts:count:!**auto generated**!GDI+ Flat API-Matrix Functions!public! !
+gdipWarpPath:matrix:points:count:srcx:srcy:srcwidth:srcheight:warpMode:flatness:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipWidenPath:pen:matrix:flatness:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
+gdipWindingModeOutline:matrix:flatness:!**auto generated**!GDI+ Flat API-GraphicsPath Functions!public! !
 initialize!initializing!private! !
 invalidCall:!exceptions!private! !
 uninitialize!private!realizing/unrealizing! !
+unmarshalFloats:count:!helpers!private! !
 !
 
 !Graphics.Gdiplus.GdiplusLibrary class methodsFor!

@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'Graphics.Gdiplus.GpEncoderParameter'
+Graphics.Gdiplus.GpStructure subclass: #'Graphics.Gdiplus.EncoderParameter'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_GpEncoderParameter_Size' -> 16r1C.
+		'_EncoderParameter_Size' -> 16r1C.
 		'_OffsetOf_Guid' -> 16r0.
 		'_OffsetOf_NumberOfValues' -> 16r10.
 		'_OffsetOf_Type' -> 16r14.
 		'_OffsetOf_Value' -> 16r18
 	}!
-Graphics.Gdiplus.GpEncoderParameter guid: (Core.GUID fromString: '{d4caa392-ba63-47ec-9ae5-093a1081a016}')!
-Graphics.Gdiplus.GpEncoderParameter comment: '<GpEncoderParameter> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpEncoderParameter'' from type information in the ''GDI+ Library 1.0'' library.
+Graphics.Gdiplus.EncoderParameter guid: (Core.GUID fromString: '{d4caa392-ba63-47ec-9ae5-093a1081a016}')!
+Graphics.Gdiplus.EncoderParameter comment: '<GpEncoderParameter> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpEncoderParameter'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
 
@@ -29,8 +29,7 @@ struct tagGpEncoderParameter {
 	void* Value;
 } GpEncoderParameter;
 '!
-!Graphics.Gdiplus.GpEncoderParameter categoriesForClass!Unclassified! !
-!Graphics.Gdiplus.GpEncoderParameter methodsFor!
+!Graphics.Gdiplus.EncoderParameter methodsFor!
 
 Guid
 	"Answer the <GUID> value of the receiver's 'Guid' field."
@@ -75,7 +74,7 @@ Value: anAddress
 	"Set the receiver's 'Value' field to the value of the argument, anAddress"
 
 	bytes uintPtrAtOffset: _OffsetOf_Value put: anAddress! !
-!Graphics.Gdiplus.GpEncoderParameter categoriesForMethods!
+!Graphics.Gdiplus.EncoderParameter categoriesForMethods!
 Guid!**compiled accessors**!public! !
 Guid:!**compiled accessors**!public! !
 NumberOfValues!**compiled accessors**!public! !
@@ -86,10 +85,10 @@ Value!**compiled accessors**!public! !
 Value:!**compiled accessors**!public! !
 !
 
-!Graphics.Gdiplus.GpEncoderParameter class methodsFor!
+!Graphics.Gdiplus.EncoderParameter class methodsFor!
 
 byteSize
-	^_GpEncoderParameter_Size!
+	^_EncoderParameter_Size!
 
 defineFields
 	"Define the fields of the GpEncoderParameter structure.
@@ -121,7 +120,7 @@ defineFields
 
 getFieldNames
 	^#(#Guid #NumberOfValues #Type #Value)! !
-!Graphics.Gdiplus.GpEncoderParameter class categoriesForMethods!
+!Graphics.Gdiplus.EncoderParameter class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

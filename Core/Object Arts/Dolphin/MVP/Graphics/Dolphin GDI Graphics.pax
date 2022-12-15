@@ -332,7 +332,9 @@ Graphics.GraphicsTool subclass: #'Graphics.Pen'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'LineJoinNames' -> #('LineJoinMiter' 'LineJoinBevel' 'LineJoinRound' 'LineJoinMiterClipped')
+	}!
 Graphics.GraphicsTool subclass: #'Graphics.Region'
 	instanceVariableNames: ''
 	classVariableNames: ''

@@ -51,7 +51,6 @@ struct tagENHMETAHEADER3 {
 	SIZEL szlMillimeters;
 } ENHMETAHEADER3;
 '!
-!Graphics.Gdiplus.ENHMETAHEADER3 categoriesForClass!Unclassified! !
 !Graphics.Gdiplus.ENHMETAHEADER3 methodsFor!
 
 dSignature

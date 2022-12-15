@@ -119,6 +119,7 @@ contents
 		add: #('Core\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Gdiplus\Gdiplus.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\MVP\Gdiplus\Gdiplus (Deprecated).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Gdiplus\Gdiplus (Old Names).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Views\Styled Views\Dolphin Styled Views.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Presenters\Collection\Dolphin Collection Presenters.pax' #plain #imageBased);

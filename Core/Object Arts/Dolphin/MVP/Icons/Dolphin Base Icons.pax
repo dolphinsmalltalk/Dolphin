@@ -394,7 +394,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	<namespace: Graphics>
-	^##((TextTileIcon text: '⅞' fontName: 'Arial')
+	^##((TextTileIcon text: '⅞' fontName: 'Georgia')
 		textcolor: Color darkBlue;
 		yourself)! !
 !Core.Fraction class categoriesForMethods!
@@ -417,7 +417,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	<namespace: Graphics>
-	^##((TextTileIcon text: '42' fontName: 'Arial Narrow')
+	^##((TextTileIcon text: '42' fontName: 'Arial')
 		textcolor: Color darkBlue;
 		yourself)! !
 !Core.Integer class categoriesForMethods!
@@ -656,7 +656,7 @@ icon!public! !
 
 icon
 	<namespace: Graphics>
-	^##((TextTileIcon text: $\x1F522 fontName: 'Segoe UI Emoji')
+	^##((TextTileIcon text: $\x24E5 fontName: 'Segoe UI Emoji')
 		textcolor: Color navy;
 		yourself)! !
 !Core.SemVer class categoriesForMethods!

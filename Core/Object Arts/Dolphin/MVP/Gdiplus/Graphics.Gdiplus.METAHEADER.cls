@@ -35,7 +35,6 @@ struct tagMETAHEADER {
 	unsigned short mtNoParameters;
 } METAHEADER;
 '!
-!Graphics.Gdiplus.METAHEADER categoriesForClass!Unclassified! !
 !Graphics.Gdiplus.METAHEADER methodsFor!
 
 mtHeaderSize

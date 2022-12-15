@@ -1,14 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 UI.View subclass: #'Graphics.Gdiplus.DoubleBufferedView'
-	instanceVariableNames: 'backSurface requiresRender'
+	instanceVariableNames: 'backSurface requiresRender graphics'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Graphics.Gdiplus.DoubleBufferedView guid: (Core.GUID fromString: '{3c1e8025-eba8-41c4-bd23-e8ba0536f783}')!
 Graphics.Gdiplus.DoubleBufferedView comment: ''!
-!Graphics.Gdiplus.DoubleBufferedView categoriesForClass!Unclassified! !
 !Graphics.Gdiplus.DoubleBufferedView methodsFor!
 
 backSurface
@@ -32,8 +31,7 @@ flip
 graphics
 	"Answer a <GdiplusGraphics> onto the back surface"
 
-	^backSurface graphics
-		!
+	^graphics ifNil: [graphics := backSurface graphics]!
 
 initialize
 	"Private - Initialise the receiver."
@@ -133,6 +131,6 @@ wmNcHitTest:wParam:lParam:!event handling-win32!private! !
 defaultModel
 	^UI.ListModel new! !
 !Graphics.Gdiplus.DoubleBufferedView class categoriesForMethods!
-defaultModel!public! !
+defaultModel!constants!public! !
 !
 

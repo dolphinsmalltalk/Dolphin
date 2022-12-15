@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'Graphics.Gdiplus.GpColorMatrix'
+Graphics.Gdiplus.GpStructure subclass: #'Graphics.Gdiplus.ColorMatrix'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_GpColorMatrix_Size' -> 16r64.
+		'_ColorMatrix_Size' -> 16r64.
 		'_OffsetOf_m' -> 16r0
 	}!
-Graphics.Gdiplus.GpColorMatrix guid: (Core.GUID fromString: '{6b5ab37e-5cc3-447e-99ef-9135f516ccc0}')!
-Graphics.Gdiplus.GpColorMatrix comment: '<GpColorMatrix> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpColorMatrix'' from type information in the ''GDI+ Library 1.0'' library.
+Graphics.Gdiplus.ColorMatrix guid: (Core.GUID fromString: '{6b5ab37e-5cc3-447e-99ef-9135f516ccc0}')!
+Graphics.Gdiplus.ColorMatrix comment: '<GpColorMatrix> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpColorMatrix'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
 
@@ -23,17 +23,23 @@ struct tagGpColorMatrix {
 	single m[5][5];
 } GpColorMatrix;
 '!
-!Graphics.Gdiplus.GpColorMatrix categoriesForClass!Unclassified! !
-!Graphics.Gdiplus.GpColorMatrix methodsFor!
+!Graphics.Gdiplus.ColorMatrix categoriesForClass!Gdiplus-Structs! !
+!Graphics.Gdiplus.ColorMatrix methodsFor!
 
-atPoint: aPoint 
-	^self row: aPoint x col: aPoint y!
+asArray
+	^self m!
+
+atPoint: aPoint
+	^bytes floatAtOffset: ((aPoint x - 1) * 5 + aPoint y - 1) * 4!
 
 atPoint: aPoint put: aNumber
-	self 
-		row: aPoint x
-		col: aPoint y
-		put: aNumber!
+	bytes floatAtOffset: ((aPoint x - 1) * 5 + aPoint y - 1) * 4 put: aNumber!
+
+closeTo: aNumber
+	^self closeTo: aNumber precision: 0.0000001!
+
+closeTo: aColorMatrix precision: aFloat
+	^self m closeTo: aColorMatrix asArray precision: aFloat!
 
 m
 	"Answer the <FLOATArray> value of the receiver's 'm' field."
@@ -51,39 +57,41 @@ m: aFLOATArray
 		to: size
 		startingAt: 1!
 
-row: rowInteger col: colInteger 
-	^self m at: (rowInteger - 1) * 5 + colInteger!
+row: rowInteger col: colInteger
+	^bytes floatAtOffset: ((rowInteger - 1) * 5 + colInteger - 1) * 4!
 
 row: rowInteger col: colInteger put: aNumber
-	self m at: (rowInteger - 1) * 5 + colInteger put: aNumber! !
-!Graphics.Gdiplus.GpColorMatrix categoriesForMethods!
+	bytes floatAtOffset: ((rowInteger - 1) * 5 + colInteger - 1) * 4 put: aNumber! !
+!Graphics.Gdiplus.ColorMatrix categoriesForMethods!
+asArray!converting!public! !
 atPoint:!accessing!public! !
 atPoint:put:!accessing!public! !
+closeTo:!comparing!public! !
+closeTo:precision:!comparing!public! !
 m!**compiled accessors**!public! !
 m:!**compiled accessors**!public! !
 row:col:!accessing!public! !
 row:col:put:!accessing!public! !
 !
 
-!Graphics.Gdiplus.GpColorMatrix class methodsFor!
+!Graphics.Gdiplus.ColorMatrix class methodsFor!
 
 byteSize
-	^_GpColorMatrix_Size!
+	^_ColorMatrix_Size!
 
 defineFields
-	"Define the fields of the GpColorMatrix structure.
-		GpColorMatrix compileDefinition
-	
-		typedef [uuid(6B5AB37E-5CC3-447E-99EF-9135F516CCC0), helpstring('Color matrix')]
-		struct tagGpColorMatrix {
-			float m[5][5];
-		} GpColorMatrix;
+	"Define the fields of the ColorMatrix structure.
+
+	ColorMatrix compileDefinition
+
+		typedef [uuid(6b5ab37e-5cc3-447e-99ef-9135f516ccc0), helpstring('Color matrix')]
+		struct tagColorMatrix {
+			REAL m[5][5];
+		} ColorMatrix;
 "
 
 	self
-		defineField: #m
-		type: (ArrayField type: FLOATArray length: 25)
-		offset: 0.
+		defineField: #m type: (ArrayField type: FLOATArray length: 25) offset: 0.
 	self byteSize: 100!
 
 getFieldNames
@@ -92,25 +100,32 @@ getFieldNames
 identity
 	"Answer an instance of the receiver that represents an identity matrix."
 
-	^self withAll: self identityArray!
-
-identityArray
-	"Answer an <Array> which can be used to construct an identity instance.
-	Note: do not modify this literal array directly"
-
-	^#(1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1)!
+	^self basicNew
+		bytes: #[0 0 128 63 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 128 63 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 128 63 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 128 63 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 128 63]
+					shallowCopy;
+		yourself!
 
 withAll: anArray
-	"Answer an instance created from anArray.
-	anArray should have 25 <Magnitude> elements"
+	"Answer an instance created from anArray. anArray must have 25 <Number> elements"
 
-	^self new m: (FLOATArray withAll: anArray)! !
-!Graphics.Gdiplus.GpColorMatrix class categoriesForMethods!
+	| floats bytes |
+	anArray size == 25
+		ifFalse: [InvalidArgumentError signal: 'ColorMatrix requires 25 elements' with: 'anArray'].
+	floats := FLOATArray marshal: anArray.
+	^floats == anArray
+		ifTrue: 
+			[self newBuffer
+				m: floats;
+				yourself]
+		ifFalse: 
+			[self basicNew
+				bytes: floats bytes;
+				yourself]! !
+!Graphics.Gdiplus.ColorMatrix class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 identity!instance creation!public! !
-identityArray!constants!public! !
 withAll:!instance creation!public! !
 !
 

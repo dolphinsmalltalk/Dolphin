@@ -1,210 +1,420 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.GdiplusBase subclass: #'Graphics.Gdiplus.Path'
+Graphics.Gdiplus.GdiplusBase subclass: #'Graphics.Gdiplus.GraphicsPath'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Path guid: (Core.GUID fromString: '{1a1a5ea0-6151-11d7-b609-00e0987e8081}')!
-Graphics.Gdiplus.Path comment: 'GdiplusGraphicsPath stores a sequence of lines, curves, and shapes.  The entire sequence can be drawn by calling the drawPath method of a GdiplusGraphics object.  You can partition the sequence of lines, curves, and shapes into figures, and with the help of a GdiplusGraphicsPathIterator object, selected figures can be drawn.  Selected portions of the path can also be drawn by placing markers in the sequence.
+Graphics.Gdiplus.GraphicsPath guid: (Core.GUID fromString: '{1a1a5ea0-6151-11d7-b609-00e0987e8081}')!
+Graphics.Gdiplus.GraphicsPath comment: 'GdiplusGraphicsPath stores a sequence of lines, curves, and shapes.  The entire sequence can be drawn by calling the drawPath method of a GdiplusGraphics object.  You can partition the sequence of lines, curves, and shapes into figures, and with the help of a GdiplusGraphicsPathIterator object, selected figures can be drawn.  Selected portions of the path can also be drawn by placing markers in the sequence.
 
 '!
-!Graphics.Gdiplus.Path categoriesForClass!Unclassified! !
-!Graphics.Gdiplus.Path methodsFor!
+!Graphics.Gdiplus.GraphicsPath methodsFor!
+
+_clipGpGraphics: aGpGraphics mode: anInteger
+	aGpGraphics clipRegion: (Region fromPath: self) combineMode: anInteger!
+
+_combineGpRegion: aGdiplusRegion mode: aCombineModeConstants
+	^aGdiplusRegion combinePath: self mode: aCombineModeConstants!
 
 addArc: aRectangle angles: aPoint
 	"Add an arc to the receiver whose bounds are aRectangle and whose start and sweep 
 	angles are specified by aPoint."
 
 	Gdip
-		gdipAddPathArcI: self asParameter
+		gdipAddPathArcI: self handle
 		x: aRectangle left
 		y: aRectangle top
 		width: aRectangle width
 		height: aRectangle height
 		startAngle: aPoint x
-		sweepAngle: aPoint y!
+		sweepAngle: aPoint y.
+	initializer := nil!
 
 addClosedCurve: aPointsCollection
 	Gdip
-		gdipAddPathClosedCurveI: self asParameter
-		points: (StructureArray withAll: (aPointsCollection collect: [:e | POINTL fromPoint: e])
-				elementClass: POINTL)
-		count: aPointsCollection size!
+		gdipAddPathClosedCurveI: self handle
+		points: (POINTLArray marshal: aPointsCollection)
+		count: aPointsCollection size.
+	initializer := nil!
 
 addCurve: aPointsCollection
 	Gdip
-		gdipAddPathCurveI: self asParameter
-		points: (StructureArray withAll: (aPointsCollection collect: [:e | POINTL fromPoint: e])
-				elementClass: POINTL)
-		count: aPointsCollection size!
+		gdipAddPathCurveI: self handle
+		points: (POINTLArray marshal: aPointsCollection)
+		count: aPointsCollection size.
+	initializer := nil!
+
+addCurve: aPointsCollection tension: aNumber
+	Gdip
+		gdipAddPathCurve2I: self handle
+		points: (POINTLArray marshal: aPointsCollection)
+		count: aPointsCollection size
+		tension: aNumber.
+	initializer := nil!
 
 addEllipse: aRectangle
 	"Add an ellipse to the receiver whose bounds are aRectangle."
 
 	Gdip
-		gdipAddPathEllipseI: self asParameter
+		gdipAddPathEllipseI: self handle
 		x: aRectangle left
 		y: aRectangle top
 		width: aRectangle width
-		height: aRectangle height!
+		height: aRectangle height.
+	initializer := nil!
 
 addLineFrom: startPoint to: endPoint
 	Gdip
-		gdipAddPathLineI: self asParameter
+		gdipAddPathLineI: self handle
 		x1: startPoint x
 		y1: startPoint y
 		x2: endPoint x
-		y2: endPoint y!
+		y2: endPoint y.
+	initializer := nil!
 
-addLines: aPointsCollection 
-	1 to: aPointsCollection size - 1
-		do: [:i | self addLineFrom: (aPointsCollection at: i) to: (aPointsCollection at: i + 1)]!
-
-addPolygon: aPointsCollection
+addLines: aSequenceOfPoints
 	Gdip
-		gdipAddPathPolygonI: self asParameter
-		points: (StructureArray withAll: (aPointsCollection collect: [:e | POINTL fromPoint: e])
-				elementClass: POINTL)
-		count: aPointsCollection size!
+		gdipAddPathLine2I: self handle
+		points: (POINTLArray marshal: aSequenceOfPoints)
+		count: aSequenceOfPoints size.
+	initializer := nil!
 
-addRectangle: aRectangle
+addPie: aRectangle startAngle: startNumber sweepAngle: sweepNumber
 	Gdip
-		gdipAddPathRectangleI: self asParameter
+		gdipAddPathPieI: self handle
 		x: aRectangle left
 		y: aRectangle top
 		width: aRectangle width
-		height: aRectangle height!
+		height: aRectangle height
+		startAngle: startNumber
+		sweepAngle: sweepNumber.
+	initializer := nil!
 
-basicFree
-	"Private - Free up external resources held by the receiver.  Ignore any errors which might arise."
+addPolygon: aPointsCollection
+	Gdip
+		gdipAddPathPolygonI: self handle
+		points: (POINTLArray marshal: aPointsCollection)
+		count: aPointsCollection size.
+	initializer := nil!
 
-	Gdip gdipDeletePath: handle!
+addRectangle: aRectangle
+	Gdip
+		gdipAddPathRectangleI: self handle
+		x: aRectangle left
+		y: aRectangle top
+		width: aRectangle width
+		height: aRectangle height.
+	initializer := nil!
+
+addString: aString font: aFont rectangle: aRectangle format: aStringFormat
+	Gdip
+		gdipAddPathStringI: self handle
+		string: aString
+		length: aString size
+		family: aFont family handle
+		style: aFont style
+		emSize: aFont emSize
+		layoutRect: (RECTL marshal: aRectangle)
+		format: aStringFormat asParameter.
+	initializer := nil!
 
 bounds
 	"Answer a bounding Rectangle for the receiver."
 
-	^self getBounds: nil pen: nil!
+	^self bounds: nil withPen: nil!
 
-closeFigure
-	Gdip gdipClosePathFigure: self asParameter!
-
-fillMode
-	"Answer the receiver's fillMode, a FillMode constant."
-
-	| fillMode |
-	fillMode := ByteArray newFixed: 4.
-	Gdip gdipGetPathFillMode: self asParameter fillMode: fillMode.
-	^fillMode sdwordAtOffset: 0!
-
-fillMode: aFillModeConstant
-	"Set the receiver's fillMode to aFillModeConstant."
-
-	Gdip gdipSetPathFillMode: self asParameter fillMode: aFillModeConstant!
-
-getBounds: aGdiplusMatrix pen: aGdiplusPen
-	"Private - Answer a bounding Rectangle for the receiver.  aGdiplusMatrix specifies a temporary 
-	transformation to be applied to the receiver's path before the bounding rectangle is 
-	calculated.  aGdiplusPen influences the size of the bounding rectangle which will be 
-	large enough to enclose the receiver even if the path is drawn with a wide pen."
+bounds: aGdiplusMatrix withPen: aGdiplusPen
+	"Answer a bounding Rectangle for the receiver as if drawn with the transformation specified by the <Matrix> 1st argument, using the <Pen> 2nd argument."
 
 	| rect |
-	rect := RECTL newBuffer.
+	rect := Rect newBuffer.
 	Gdip
-		gdipGetPathWorldBoundsI: self asParameter
+		gdipGetPathWorldBoundsI: self handle
 		bounds: rect
 		matrix: aGdiplusMatrix asParameter
 		pen: aGdiplusPen asParameter.
 	^rect asRectangle!
 
+boundsWithPen: aGdiplusPen
+	^self bounds: nil withPen: aGdiplusPen!
+
+clearMarkers
+	Gdip gdipClearPathMarkers: self handle.
+	initializer := nil!
+
+closeAllFigures
+	"Make all sub-paths in the path into closed polygons."
+
+	Gdip gdipClosePathFigures: self handle.
+	initializer := nil!
+
+closeFigure
+	"Make the sub-path being added into a closed polygon."
+
+	"Closing the figure will not add any extra point, but it changes the type of the last point to include the PathPointTypeCloseSubpath flag"
+
+	Gdip gdipClosePathFigure: self handle.
+	initializer := nil!
+
+containsFillPoint: aPoint graphics: aGdiplusGraphics
+	| result |
+	result := UInt32Bytes new.
+	Gdip
+		gdipIsVisiblePathPointI: self handle
+		x: aPoint x
+		y: aPoint y
+		graphics: aGdiplusGraphics asParameter
+		result: result.
+	^result asBoolean!
+
+containsPoint: aPoint
+	^self containsPoint: aPoint graphics: nil!
+
+containsPoint: aPoint graphics: aGdiplusGraphics
+	| result |
+	result := UInt32Bytes new.
+	Gdip
+		gdipIsVisiblePathPointI: self handle
+		x: aPoint x
+		y: aPoint y
+		graphics: aGdiplusGraphics asParameter
+		result: result.
+	^result asBoolean!
+
+fillMode
+	"Answer the receiver's fillMode, a FillMode constant."
+
+	^self initializer fillMode!
+
+fillMode: aFillModeConstant
+	"Set the receiver's fillMode to aFillModeConstant."
+
+	self initializer fillModeOf: self set: aFillModeConstant!
+
+fillsPoint: aPoint graphics: aGdiplusGraphics
+	| result |
+	result := UInt32Bytes new.
+	Gdip
+		gdipIsVisiblePathPointI: self handle
+		x: aPoint x
+		y: aPoint y
+		graphics: aGdiplusGraphics asParameter
+		result: result.
+	^result asBoolean!
+
+flatten: aMatrix
+	self flatten: aMatrix flatness: FlatnessDefault!
+
+flatten: aMatrix flatness: aNumber
+	"Transform the path, flattening curves into a sequence of connected lines."
+
+	Gdip
+		gdipFlattenPath: self handle
+		matrix: aMatrix asParameter
+		flatness: aNumber.
+	initializer := nil!
+
+initializerClass
+	"Answer the class of initializer usually associated with the receiver and which understands how to perform operations on the native Gdiplus objects such as disposing of them."
+
+	^GraphicsPathInitializer!
+
+mark
+	"Mark the last point (i.e. include the PathPointTypeMarker flag in its type)."
+
+	Gdip gdipSetPathMarker: self handle.
+	initializer := nil!
+
+markLast
+	"Mark the last point (i.e. include the PathPointTypeMarker flag in its type)."
+
+	Gdip gdipSetPathMarker: self handle.
+	initializer := nil!
+
+outline: aMatrix
+	self outline: aMatrix flatness: FlatnessDefault!
+
+outline: aMatrix flatness: aNumber
+	Gdip
+		gdipWindingModeOutline: self handle
+		matrix: aMatrix asParameter
+		flatness: aNumber.
+	initializer := nil!
+
 pointCount
 	"Answer the number of points in the receiver."
 
-	| count |
-	count := ByteArray newFixed: 4.
-	Gdip gdipGetPointCount: self asParameter count: count.
-	^count sdwordAtOffset: 0!
+	^self points size!
+
+points
+	"Answer an <Array> of the <Point>s in the path."
+
+	^self initializer pathPoints!
+
+reset
+	Gdip gdipResetPath: self handle.
+	initializer := nil!
+
+reverse
+	Gdip gdipReversePath: self handle.
+	initializer := nil!
+
+rotate: aNumber
+	"Rotate the points of the receiver by the <Number> angle in degrees argument."
+
+	self transform: (Matrix identity
+				rotate: aNumber;
+				yourself)!
+
+scale: aPoint
+	"Scale the points in the receiver by the horizontal and vertical factors that are the x and y co-ordinates of the <Point> argument."
+
+	self transform: (Matrix identity
+				scale: aPoint;
+				yourself)!
+
+shear: aPoint
+	"Apply a shearing transformation to the receiver's points of the horizontal and vertical factors that are the x and y co-ordinates of the <Point> argument."
+
+	self transform: (Matrix identity
+				shear: aPoint;
+				yourself)!
 
 startFigure
-	Gdip gdipStartPathFigure: self asParameter! !
-!Graphics.Gdiplus.Path categoriesForMethods!
-addArc:angles:!operations!public! !
-addClosedCurve:!operations!public! !
-addCurve:!operations!public! !
-addEllipse:!operations!public! !
-addLineFrom:to:!operations!public! !
-addLines:!operations!public! !
-addPolygon:!operations!public! !
-addRectangle:!operations!public! !
-basicFree!private!realizing/unrealizing! !
-bounds!accessing!public! !
-closeFigure!operations!public! !
+	Gdip gdipStartPathFigure: self handle!
+
+touchesPoint: aPoint
+	^self
+		touchesPoint: aPoint
+		pen: Pen new
+		graphics: nil!
+
+touchesPoint: aPoint pen: aPen
+	^self
+		touchesPoint: aPoint
+		pen: aPen
+		graphics: nil!
+
+touchesPoint: aPoint pen: aPen graphics: aGdiplusGraphics
+	| result |
+	result := UInt32Bytes new.
+	Gdip
+		gdipIsOutlineVisiblePathPointI: self handle
+		x: aPoint x
+		y: aPoint y
+		pen: aPen asParameter
+		graphics: aGdiplusGraphics asParameter
+		result: result.
+	^result asBoolean!
+
+transform: aMatrix
+	"Apply a transformation to the receiver's points."
+
+	"Note that the transformation permanently changes the points in the path:
+		- The transformation cannot be reset (although it could be reversed, the accuracy of which will depend on rounding error);
+		- The effect of a series of transformation is as if the MatrixOrderAppend were specified each time."
+
+	Gdip gdipTransformPath: self handle matrix: aMatrix asParameter.
+	"The points will have changed."
+	initializer := nil!
+
+translate: aPoint
+	"Translate the receiver's points by the horizontal and vertical offsets that are the x and y co-ordinates of the <Point> argument."
+
+	self transform: (Matrix identity translate: aPoint)!
+
+types
+	"Answer an <ByteArray>, the elements of which are the PathPointType's of each point in the path."
+
+	^self initializer pathTypes!
+
+widen: aMatrix
+	"Transform the path into a series of curves that would enclose the original path when drawn with a default 1-pixel wide <Pen>, applying an optional transformation and flattening."
+
+	self
+		widen: aMatrix
+		pen: Pen new
+		flatness: FlatnessDefault!
+
+widen: aMatrix pen: aPen
+	"Transform the path into a series of curves that would enclose the original path when drawn with the specified <Pen>, applying an optional transformation and default flattening."
+
+	self
+		widen: aMatrix
+		pen: aPen
+		flatness: FlatnessDefault!
+
+widen: aMatrix pen: aPen flatness: aNumber
+	"Transform the path into a series of curves that would enclose the original path when drawn with the specified <Pen>, applying an optional transformation and flattening."
+
+	"Note that this may not do what you expect. It does not enclose the fill path, but supposedly the path as it would be drawn by the Pen. It can have some pretty weird effects, especially with the default, centred, alignment mode of pens. It seems more predictable with inset pens, but you may need to experiment."
+
+	Gdip
+		gdipWidenPath: self handle
+		pen: aPen asParameter
+		matrix: aMatrix asParameter
+		flatness: aNumber.
+	initializer := nil! !
+!Graphics.Gdiplus.GraphicsPath categoriesForMethods!
+_clipGpGraphics:mode:!double dispatch!private! !
+_combineGpRegion:mode:!double dispatch!private! !
+addArc:angles:!adding!public! !
+addClosedCurve:!adding!public! !
+addCurve:!adding!public! !
+addCurve:tension:!adding!public! !
+addEllipse:!adding!public! !
+addLineFrom:to:!adding!public! !
+addLines:!adding!public! !
+addPie:startAngle:sweepAngle:!adding!public! !
+addPolygon:!adding!public! !
+addRectangle:!adding!public! !
+addString:font:rectangle:format:!adding!public! !
+bounds!enquiries!public! !
+bounds:withPen:!enquiries!public! !
+boundsWithPen:!enquiries!public! !
+clearMarkers!marking!public! !
+closeAllFigures!adding!public! !
+closeFigure!adding!public! !
+containsFillPoint:graphics:!enquiries!public! !
+containsPoint:!enquiries!public! !
+containsPoint:graphics:!enquiries!public! !
 fillMode!accessing!public! !
 fillMode:!accessing!public! !
-getBounds:pen:!accessing!private! !
+fillsPoint:graphics:!enquiries!public! !
+flatten:!public!transformations! !
+flatten:flatness:!public!transformations! !
+initializerClass!constants!private! !
+mark!marking!public! !
+markLast!marking!public! !
+outline:!public!transformations! !
+outline:flatness:!public!transformations! !
 pointCount!accessing!public! !
-startFigure!operations!public! !
+points!accessing!public! !
+reset!public!transformations! !
+reverse!public!transformations! !
+rotate:!public!transformations! !
+scale:!public!transformations! !
+shear:!public!transformations! !
+startFigure!adding!public! !
+touchesPoint:!enquiries!public! !
+touchesPoint:pen:!enquiries!public! !
+touchesPoint:pen:graphics:!enquiries!public! !
+transform:!public!transformations! !
+translate:!public!transformations! !
+types!accessing!public! !
+widen:!public!transformations! !
+widen:pen:!public!transformations! !
+widen:pen:flatness:!public!transformations! !
 !
 
-!Graphics.Gdiplus.Path class methodsFor!
+!Graphics.Gdiplus.GraphicsPath class methodsFor!
 
-exampleGdipGPCreatingFigures
-	"MSDN:  Using GDI+ >  Constructing and Drawing Paths > Creating Figures from Lines, Curves, and Shapes
-
-		self exampleGdipGPCreatingFigures showExample
-	"
-
-	| bitmap graphics path pen brush |
-	bitmap := Bitmap extent: 400 @ 300.
-	graphics := bitmap graphics.
-	pen := Pen red.
-	path := Path new.
-	path addArc: (0 @ 0 extent: 50 @ 50) angles: 0 @ -180.
-	graphics drawPath: path pen: pen.
-	"Create and draw a path that has two figures. The first is an arc followed by a line. The second 
-	is a line followed by a curve, followed by a line. The first is left open, and the second is closed."
-	pen color: Color blue.
-	path := Path new.
-	graphics translateTransform: 100 @ 0 order: nil.
-	path addArc: (175 @ 50 extent: 50 @ 50) angles: 0 @ 180.
-	path addLineFrom: 100 @ 0 to: 250 @ 20.
-	path startFigure.
-	path addLineFrom: 50 @ 20 to: 5 @ 90.
-	path addCurve: {40 @ 60. 50 @ 70. 30 @ 90}.
-	path addLineFrom: 50 @ 150 to: 150 @ 180.
-	path closeFigure.
-	graphics drawPath: path pen: pen.
-	"Create, draw and fill a path that has two lines, a rectangle, and an ellipse."
-	path := Path new.
-	graphics translateTransform: -100 @ 100 order: nil.
-	pen color: Color red.
-	brush := SolidBrush color: Color darkGreen.
-	path addLineFrom: 10 @ 10 to: 100 @ 40.
-	path addLineFrom: 100 @ 60 to: 30 @ 60.
-	path addRectangle: (50 @ 35 extent: 20 @ 40).
-	path addEllipse: (10 @ 75 extent: 40 @ 30).
-	graphics drawPath: path pen: pen.
-	graphics fillPath: path brush: brush.
-	^bitmap!
-
-exampleGdipGPFillingFigures
-	"MSDN:   GDI+ >  Using GDI+ >  Constructing and Drawing Paths > Filling Open Figures
-
-		self exampleGdipGPFillingFigures showExample
-	"
-
-	| path pen brush bitmap |
-	path := Path new.
-	path addArc: (0 @ 0 extent: 150 @ 120) angles: 30 @ 120.
-	path addEllipse: (50 @ 50 extent: 50 @ 100).
-	pen := Pen blue width: 5.
-	brush := SolidBrush red.
-	bitmap := Bitmap extent: 200 @ 200.
-	bitmap graphics
-		fillPath: path brush: brush;
-		drawPath: path pen: pen.
-	^bitmap!
+ellipse: aRectangle
+	^self new
+		addEllipse: aRectangle;
+		yourself!
 
 fillMode: aFillModeConstant
 	"Answer a new instance of the receiver with specified FillMode constants.
@@ -214,25 +424,67 @@ fillMode: aFillModeConstant
 	since the initializer does not hold any information on the added figures but will recreate an instance
 	with no points."
 
-	^self fromInitializer: (PathInitializer fillMode: aFillModeConstant)!
+	^self fromInitializer: (GraphicsPathInitializer
+				points: #()
+				types: #[]
+				fillMode: aFillModeConstant)!
+
+fromRectangle: aRectangle
+	^self points: aRectangle vertices
+		types: ##({PathPointTypeStart.
+				PathPointTypeLine.
+				PathPointTypeLine.
+				PathPointTypeLine | PathPointTypeCloseSubpath} asByteArray)!
+
+lines: aCollectionOfPoints
+	| count |
+	count := aCollectionOfPoints size.
+	count < 1 ifTrue: [^self new].
+	^self points: aCollectionOfPoints
+		types: ((ByteArray new: count withAll: 1)
+				at: 1 put: 0;
+				yourself)!
 
 new
 	"Answer a new instance of the receiver with default fillMode.  NB: See #fillMode: for usage notes."
 
-	^self fillMode: nil!
+	^self fillMode: FillModeAlternate!
 
-points: points types: types fillMode: aFillModeConstant
+points: anArrayOfPoints types: anArrayOfPathPointTypeIntegers
 	"Answer a new instance of the receiver with attributes specified by points, types, and aFillModeConstant."
 
-	^self fromInitializer: (PathFromPointsInitializer
-				points: points
-				types: types
-				fillMode: aFillModeConstant)! !
-!Graphics.Gdiplus.Path class categoriesForMethods!
-exampleGdipGPCreatingFigures!examples!public!sunit! !
-exampleGdipGPFillingFigures!examples!public!sunit! !
+	^self
+		points: anArrayOfPoints
+		types: anArrayOfPathPointTypeIntegers
+		fillMode: FillModeAlternate!
+
+points: aSequenceOfPoints types: aSequenceOfPathPointTypeConstants fillMode: aFillModeConstant
+	"Answer a new instance of the receiver with attributes specified by points, types, and aFillModeConstant."
+
+	^self fromInitializer: (GraphicsPathInitializer
+				points: aSequenceOfPoints
+				types: aSequenceOfPathPointTypeConstants
+				fillMode: aFillModeConstant)!
+
+polygon: anArrayOfPoints
+	"Answer a new instance of the receiver representing the polygon described by the closed path of straight lines between the <Point>s in the argument."
+
+	| count |
+	count := anArrayOfPoints size.
+	count < 3 ifTrue: [self error: 'A polygon must have a least 3 vertices'].
+	^self points: anArrayOfPoints
+		types: ((ByteArray new: count withAll: PathPointTypeLine)
+				at: 1 put: PathPointTypeStart;
+				at: count put: ##(PathPointTypeLine | PathPointTypeCloseSubpath);
+				yourself)! !
+!Graphics.Gdiplus.GraphicsPath class categoriesForMethods!
+ellipse:!instance creation!public! !
 fillMode:!instance creation!public! !
+fromRectangle:!instance creation!public! !
+lines:!instance creation!public! !
 new!instance creation!public! !
+points:types:!instance creation!public! !
 points:types:fillMode:!instance creation!public! !
+polygon:!instance creation!public! !
 !
 

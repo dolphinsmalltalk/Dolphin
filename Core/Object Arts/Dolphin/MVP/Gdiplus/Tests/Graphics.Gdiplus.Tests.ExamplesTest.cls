@@ -8,8 +8,10 @@ Graphics.Gdiplus.Tests.GdiplusTest subclass: #'Graphics.Gdiplus.Tests.ExamplesTe
 	classConstants: {}!
 Graphics.Gdiplus.Tests.ExamplesTest guid: (Core.GUID fromString: '{a138a00e-d195-4a62-8029-e372575e15ea}')!
 Graphics.Gdiplus.Tests.ExamplesTest comment: ''!
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesForClass!Unclassified! !
 !Graphics.Gdiplus.Tests.ExamplesTest methodsFor!
+
+subjectClass
+	^self shouldNotImplement!
 
 testExampleGdipBFromBitmap
 	"This method was auto-generated"
@@ -99,12 +101,12 @@ testExampleGdipGMeasureString
 testExampleGdipGPCreatingFigures
 	"This method was auto-generated"
 
-	Path exampleGdipGPCreatingFigures!
+	GraphicsPath exampleGdipGPCreatingFigures!
 
 testExampleGdipGPFillingFigures
 	"This method was auto-generated"
 
-	Path exampleGdipGPFillingFigures!
+	GraphicsPath exampleGdipGPFillingFigures!
 
 testExampleGdipGRotate
 	"This method was auto-generated"
@@ -316,6 +318,11 @@ testExampleGdipLGTiling
 
 	LinearGradientBrush exampleGdipLGTiling!
 
+testExampleGdipMeasureCharacterRanges
+	"This method was auto-generated"
+
+	GdiplusGraphics exampleGdipMeasureCharacterRanges!
+
 testExampleGdipMShadows
 	"This method was auto-generated"
 
@@ -486,6 +493,7 @@ testExampleGdipTBTilingAShape
 
 	TextureBrush exampleGdipTBTilingAShape! !
 !Graphics.Gdiplus.Tests.ExamplesTest categoriesForMethods!
+subjectClass!constants!private! !
 testExampleGdipBFromBitmap!**auto generated**!public! !
 testExampleGdipBFromByteArray!**auto generated**!public! !
 testExampleGdipBFromDIB!**auto generated**!public! !
@@ -547,6 +555,7 @@ testExampleGdipLGDiagonal!**auto generated**!public! !
 testExampleGdipLGHorizontal!**auto generated**!public! !
 testExampleGdipLGModeConstants!**auto generated**!public! !
 testExampleGdipLGTiling!**auto generated**!public! !
+testExampleGdipMeasureCharacterRanges!**auto generated**!public! !
 testExampleGdipMShadows!**auto generated**!public! !
 testExampleGdipMShear!**auto generated**!public! !
 testExampleGdipMTranslate!**auto generated**!public! !

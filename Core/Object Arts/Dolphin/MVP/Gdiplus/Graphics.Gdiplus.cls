@@ -8,6 +8,7 @@ Graphics subclass: #'Graphics.Gdiplus'
 	classConstants: {
 		'Aborted' -> 16r9.
 		'AccessDenied' -> 16rC.
+		'AnchorCapNames' -> #('LineCapNoAnchor' 'LineCapSquareAnchor' 'LineCapRoundAnchor' 'LineCapDiamondAnchor' 'LineCapArrowAnchor').
 		'BrushTypeHatchFill' -> 16r1.
 		'BrushTypeLinearGradient' -> 16r4.
 		'BrushTypePathGradient' -> 16r3.
@@ -255,6 +256,7 @@ Graphics subclass: #'Graphics.Gdiplus'
 		'EncoderParameterValueTypeByte' -> 16r1.
 		'EncoderParameterValueTypeLong' -> 16r4.
 		'EncoderParameterValueTypeLongRange' -> 16r6.
+		'EncoderParameterValueTypeNames' -> #('EncoderParameterValueTypeNone' 'EncoderParameterValueTypeByte' 'EncoderParameterValueTypeASCII' 'EncoderParameterValueTypeShort' 'EncoderParameterValueTypeLong' 'EncoderParameterValueTypeRational' 'EncoderParameterValueTypeLongRange' 'EncoderParameterValueTypeUndefined' 'EncoderParameterValueTypeRationalRange' 'EncoderParameterValueTypePointer').
 		'EncoderParameterValueTypePointer' -> 16r9.
 		'EncoderParameterValueTypeRational' -> 16r5.
 		'EncoderParameterValueTypeRationalRange' -> 16r8.
@@ -287,18 +289,23 @@ Graphics subclass: #'Graphics.Gdiplus'
 		'FileNotFound' -> 16rA.
 		'FillModeAlternate' -> 16r0.
 		'FillModeWinding' -> 16r1.
-		'FlatnessDefault' -> 0.0.
+		'FlatnessDefault' -> 0.25.
 		'FlushIntentionFlush' -> 16r0.
 		'FlushIntentionSync' -> 16r1.
 		'FontFamilyNotFound' -> 16rE.
 		'FontStyleBold' -> 16r1.
 		'FontStyleBoldItalic' -> 16r3.
 		'FontStyleItalic' -> 16r2.
+		'FontStyleNames' -> #('FontStyleRegular' 'FontStyleBold' 'FontStyleItalic' 'FontStyleBoldItalic').
 		'FontStyleNotFound' -> 16rF.
 		'FontStyleRegular' -> 16r0.
 		'FontStyleStrikeout' -> 16r8.
 		'FontStyleUnderline' -> 16r4.
 		'GdiplusNotInitialized' -> 16r12.
+		'GdiplusStartupDefault' -> 16r0.
+		'GdiplusStartupNoSetRound' -> 16r1.
+		'GdiplusStartupSetPSValue' -> 16r2.
+		'GdiplusStartupTransparencyMask' -> 16rFF000000.
 		'GenericError' -> 16r1.
 		'GenericFontFamilyMonospace' -> 16r2.
 		'GenericFontFamilySansSerif' -> 16r1.
@@ -361,6 +368,7 @@ Graphics subclass: #'Graphics.Gdiplus'
 		'HatchStyleWideUpwardDiagonal' -> 16r17.
 		'HatchStyleZigZag' -> 16r24.
 		'HotkeyPrefixHide' -> 16r2.
+		'HotkeyPrefixNames' -> #('HotkeyPrefixNone' 'HotkeyPrefixShow' 'HotkeyPrefixHide').
 		'HotkeyPrefixNone' -> 16r0.
 		'HotkeyPrefixShow' -> 16r1.
 		'ImageFlagsCaching' -> 16r20000.
@@ -373,10 +381,14 @@ Graphics subclass: #'Graphics.Gdiplus'
 		'ImageFlagsHasRealDPI' -> 16r1000.
 		'ImageFlagsHasRealPixelSize' -> 16r2000.
 		'ImageFlagsHasTranslucent' -> 16r4.
+		'ImageFlagsNames' -> #('ImageFlagsNone' 'ImageFlagsScalable' 'ImageFlagsHasAlpha' 'ImageFlagsHasTranslucent' 'ImageFlagsPartiallyScalable' 'ImageFlagsColorSpaceRGB' 'ImageFlagsColorSpaceCMYK' 'ImageFlagsColorSpaceGRAY' 'ImageFlagsColorSpaceYCBCR' 'ImageFlagsColorSpaceYCCK' nil nil nil 'ImageFlagsHasRealDPI' 'ImageFlagsHasRealPixelSize' nil nil 'ImageFlagsReadOnly' 'ImageFlagsCaching').
 		'ImageFlagsNone' -> 16r0.
 		'ImageFlagsPartiallyScalable' -> 16r8.
 		'ImageFlagsReadOnly' -> 16r10000.
 		'ImageFlagsScalable' -> 16r1.
+		'ImageLockModeRead' -> 16r1.
+		'ImageLockModeUserInputBuf' -> 16r4.
+		'ImageLockModeWrite' -> 16r2.
 		'ImageTypeBitmap' -> 16r1.
 		'ImageTypeMetafile' -> 16r2.
 		'ImageTypeUnknown' -> 16r0.
@@ -394,12 +406,14 @@ Graphics subclass: #'Graphics.Gdiplus'
 		'LinearGradientModeBackwardDiagonal' -> 16r3.
 		'LinearGradientModeForwardDiagonal' -> 16r2.
 		'LinearGradientModeHorizontal' -> 16r0.
+		'LinearGradientModeNames' -> #('LinearGradientModeHorizontal' 'LinearGradientModeVertical' 'LinearGradientModeForwardDiagonal' 'LinearGradientModeBackwardDiagonal').
 		'LinearGradientModeVertical' -> 16r1.
 		'LineCapAnchorMask' -> 16rF0.
 		'LineCapArrowAnchor' -> 16r14.
 		'LineCapCustom' -> 16rFF.
 		'LineCapDiamondAnchor' -> 16r13.
 		'LineCapFlat' -> 16r0.
+		'LineCapNames' -> #('LineCapFlat' 'LineCapSquare' 'LineCapRound' 'LineCapTriangle').
 		'LineCapNoAnchor' -> 16r10.
 		'LineCapRound' -> 16r2.
 		'LineCapRoundAnchor' -> 16r12.
@@ -409,6 +423,7 @@ Graphics subclass: #'Graphics.Gdiplus'
 		'LineJoinBevel' -> 16r1.
 		'LineJoinMiter' -> 16r0.
 		'LineJoinMiterClipped' -> 16r3.
+		'LineJoinNames' -> #('LineJoinMiter' 'LineJoinBevel' 'LineJoinRound' 'LineJoinMiterClipped').
 		'LineJoinRound' -> 16r2.
 		'MatrixOrderAppend' -> 16r1.
 		'MatrixOrderPrepend' -> 16r0.
@@ -741,11 +756,14 @@ Graphics subclass: #'Graphics.Gdiplus'
 		'SmoothingModeNone' -> 16r3.
 		'StringAlignmentCenter' -> 16r1.
 		'StringAlignmentFar' -> 16r2.
+		'StringAlignmentNames' -> #('StringAlignmentNear' 'StringAlignmentCenter' 'StringAlignmentFar').
 		'StringAlignmentNear' -> 16r0.
 		'StringDigitSubstituteNational' -> 16r2.
 		'StringDigitSubstituteNone' -> 16r1.
 		'StringDigitSubstituteTraditional' -> 16r3.
 		'StringDigitSubstituteUser' -> 16r0.
+		'StringDigitSubstitutionNames' -> #('StringDigitSubstituteUser' 'StringDigitSubstituteNone' 'StringDigitSubstituteNational' 'StringDigitSubstituteTraditional').
+		'StringFormatFlagsBypassGDI' -> -16r80000000.
 		'StringFormatFlagsDirectionRightToLeft' -> 16r1.
 		'StringFormatFlagsDirectionVertical' -> 16r2.
 		'StringFormatFlagsDisplayFormatControl' -> 16r20.
@@ -759,6 +777,7 @@ Graphics subclass: #'Graphics.Gdiplus'
 		'StringTrimmingEllipsisCharacter' -> 16r3.
 		'StringTrimmingEllipsisPath' -> 16r5.
 		'StringTrimmingEllipsisWord' -> 16r4.
+		'StringTrimmingNames' -> #('StringTrimmingNone' 'StringTrimmingCharacter' 'StringTrimmingWord' 'StringTrimmingEllipsisCharacter' 'StringTrimmingEllipsisWord' 'StringTrimmingEllipsisPath').
 		'StringTrimmingNone' -> 16r0.
 		'StringTrimmingWord' -> 16r2.
 		'TestControlForceBilinear' -> 16r0.
@@ -774,6 +793,7 @@ Graphics subclass: #'Graphics.Gdiplus'
 		'UnitDocument' -> 16r5.
 		'UnitInch' -> 16r4.
 		'UnitMillimeter' -> 16r6.
+		'UnitNames' -> #('UnitWorld' 'UnitDisplay' 'UnitPixel' 'UnitPoint' 'UnitInch' 'UnitDocument' 'UnitMillimeter').
 		'UnitPixel' -> 16r2.
 		'UnitPoint' -> 16r3.
 		'UnitWorld' -> 16r0.
@@ -863,6 +883,7 @@ Graphics subclass: #'Graphics.Gdiplus'
 		'WmfRecordTypeStretchDIB' -> 16r10F43.
 		'WmfRecordTypeTextOut' -> 16r10521.
 		'WrapModeClamp' -> 16r4.
+		'WrapModeNames' -> #('WrapModeTile' 'WrapModeTileFlipX' 'WrapModeTileFlipY' 'WrapModeTileFlipXY' 'WrapModeClamp').
 		'WrapModeTile' -> 16r0.
 		'WrapModeTileFlipX' -> 16r1.
 		'WrapModeTileFlipXY' -> 16r3.
@@ -873,3 +894,16 @@ Graphics.Gdiplus guid: (Core.GUID fromString: '{4d5dfe22-b977-4eea-8fe7-379b8f43
 Graphics.Gdiplus isNonInstantiable: true!
 Graphics.Gdiplus comment: ''!
 !Graphics.Gdiplus categoriesForClass!Kernel-Objects! !
+!Graphics.Gdiplus class methodsFor!
+
+nameOfLineCap: aLineCapConstant
+	^(aLineCapConstant anyMask: LineCapAnchorMask)
+		ifTrue: 
+			[aLineCapConstant == LineCapCustom
+				ifTrue: ['LineCapCustom']
+				ifFalse: [AnchorCapNames at: (aLineCapConstant bitAnd: 16rF) + 1]]
+		ifFalse: [LineCapNames at: aLineCapConstant + 1]! !
+!Graphics.Gdiplus class categoriesForMethods!
+nameOfLineCap:!printing!public! !
+!
+

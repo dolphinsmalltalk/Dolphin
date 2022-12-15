@@ -8,11 +8,13 @@ This package includes legacy aliases for Gdiplus classes that have been renamed 
 
 package setVariableNames: #(
 	#{Smalltalk.GdiplusAdjustableArrowCap}
+	#{Smalltalk.GdiplusAdjustableArrowCapInitializer}
 	#{Smalltalk.GdiplusBase}
 	#{Smalltalk.GdiplusBitmap}
 	#{Smalltalk.GdiplusCachedBitmap}
 	#{Smalltalk.GdiplusConstants}
 	#{Smalltalk.GdiplusCustomLineCap}
+	#{Smalltalk.GdiplusCustomLineCapInitializer}
 	#{Smalltalk.GdiplusDoubleBufferedView}
 	#{Smalltalk.GdiplusFont}
 	#{Smalltalk.GdiplusFontCollection}
@@ -20,6 +22,7 @@ package setVariableNames: #(
 	#{Smalltalk.GdiplusFromBytesInitializer}
 	#{Smalltalk.GdiplusGraphics}
 	#{Smalltalk.GdiplusGraphicsPath}
+	#{Smalltalk.GdiplusGraphicsPathFromPointsInitializer}
 	#{Smalltalk.GdiplusHatchBrush}
 	#{Smalltalk.GdiplusImage}
 	#{Smalltalk.GdiplusImageAttributes}
@@ -28,9 +31,15 @@ package setVariableNames: #(
 	#{Smalltalk.GdiplusInstalledFontCollection}
 	#{Smalltalk.GdiplusLibrary}
 	#{Smalltalk.GdiplusLinearGradientBrush}
+	#{Smalltalk.GdiplusLinearGradientBrushFromPointsInitializer}
+	#{Smalltalk.GdiplusLinearGradientBrushFromRectInitializer}
 	#{Smalltalk.GdiplusMatrix}
 	#{Smalltalk.GdiplusPathGradientBrush}
+	#{Smalltalk.GdiplusPathGradientFromPathInitializer}
+	#{Smalltalk.GdiplusPathGradientFromPointsInitializer}
 	#{Smalltalk.GdiplusPen}
+	#{Smalltalk.GdiplusPenFromBrushInitializer}
+	#{Smalltalk.GdiplusPenFromColorInitializer}
 	#{Smalltalk.GdiplusPrivateFontCollection}
 	#{Smalltalk.GdiplusRegion}
 	#{Smalltalk.GdiplusSolidBrush}
@@ -38,15 +47,18 @@ package setVariableNames: #(
 	#{Smalltalk.GdiplusTextureBrush}
 	#{Smalltalk.GpColorMap}
 	#{Smalltalk.GpColorMatrix}
+	#{Smalltalk.RECTF}
 ).
 
 package setAliasVariableNames: #(
 	#{Smalltalk.GdiplusAdjustableArrowCap}
+	#{Smalltalk.GdiplusAdjustableArrowCapInitializer}
 	#{Smalltalk.GdiplusBase}
 	#{Smalltalk.GdiplusBitmap}
 	#{Smalltalk.GdiplusCachedBitmap}
 	#{Smalltalk.GdiplusConstants}
 	#{Smalltalk.GdiplusCustomLineCap}
+	#{Smalltalk.GdiplusCustomLineCapInitializer}
 	#{Smalltalk.GdiplusDoubleBufferedView}
 	#{Smalltalk.GdiplusFont}
 	#{Smalltalk.GdiplusFontCollection}
@@ -54,6 +66,7 @@ package setAliasVariableNames: #(
 	#{Smalltalk.GdiplusFromBytesInitializer}
 	#{Smalltalk.GdiplusGraphics}
 	#{Smalltalk.GdiplusGraphicsPath}
+	#{Smalltalk.GdiplusGraphicsPathFromPointsInitializer}
 	#{Smalltalk.GdiplusHatchBrush}
 	#{Smalltalk.GdiplusImage}
 	#{Smalltalk.GdiplusImageAttributes}
@@ -62,9 +75,15 @@ package setAliasVariableNames: #(
 	#{Smalltalk.GdiplusInstalledFontCollection}
 	#{Smalltalk.GdiplusLibrary}
 	#{Smalltalk.GdiplusLinearGradientBrush}
+	#{Smalltalk.GdiplusLinearGradientBrushFromPointsInitializer}
+	#{Smalltalk.GdiplusLinearGradientBrushFromRectInitializer}
 	#{Smalltalk.GdiplusMatrix}
 	#{Smalltalk.GdiplusPathGradientBrush}
+	#{Smalltalk.GdiplusPathGradientFromPathInitializer}
+	#{Smalltalk.GdiplusPathGradientFromPointsInitializer}
 	#{Smalltalk.GdiplusPen}
+	#{Smalltalk.GdiplusPenFromBrushInitializer}
+	#{Smalltalk.GdiplusPenFromColorInitializer}
 	#{Smalltalk.GdiplusPrivateFontCollection}
 	#{Smalltalk.GdiplusRegion}
 	#{Smalltalk.GdiplusSolidBrush}
@@ -72,6 +91,7 @@ package setAliasVariableNames: #(
 	#{Smalltalk.GdiplusTextureBrush}
 	#{Smalltalk.GpColorMap}
 	#{Smalltalk.GpColorMatrix}
+	#{Smalltalk.RECTF}
 ).
 
 package setPrerequisites: #(
@@ -85,6 +105,8 @@ package!
 
 Smalltalk.GdiplusAdjustableArrowCap := Graphics.Gdiplus.AdjustableArrowCap!
 
+Smalltalk.GdiplusAdjustableArrowCapInitializer := Graphics.Gdiplus.AdjustableArrowCapInitializer!
+
 Smalltalk.GdiplusBase := Graphics.Gdiplus.GdiplusBase!
 
 Smalltalk.GdiplusBitmap := Graphics.Gdiplus.Bitmap!
@@ -95,6 +117,8 @@ Smalltalk.GdiplusConstants := Graphics.Gdiplus!
 
 Smalltalk.GdiplusCustomLineCap := Graphics.Gdiplus.CustomLineCap!
 
+Smalltalk.GdiplusCustomLineCapInitializer := Graphics.Gdiplus.CustomLineCapInitializer!
+
 Smalltalk.GdiplusDoubleBufferedView := Graphics.Gdiplus.DoubleBufferedView!
 
 Smalltalk.GdiplusFont := Graphics.Gdiplus.Font!
@@ -103,11 +127,13 @@ Smalltalk.GdiplusFontCollection := Graphics.Gdiplus.FontCollection!
 
 Smalltalk.GdiplusFontFamily := Graphics.Gdiplus.FontFamily!
 
-Smalltalk.GdiplusFromBytesInitializer := Graphics.Gdiplus.FromBytesInitializer!
+Smalltalk.GdiplusFromBytesInitializer := Graphics.Gdiplus.AbstractImageFromBytesInitializer!
 
 Smalltalk.GdiplusGraphics := Graphics.Gdiplus.GdiplusGraphics!
 
-Smalltalk.GdiplusGraphicsPath := Graphics.Gdiplus.Path!
+Smalltalk.GdiplusGraphicsPath := Graphics.Gdiplus.GraphicsPath!
+
+Smalltalk.GdiplusGraphicsPathFromPointsInitializer := Graphics.Gdiplus.GraphicsPathInitializer!
 
 Smalltalk.GdiplusHatchBrush := Graphics.Gdiplus.HatchBrush!
 
@@ -125,11 +151,23 @@ Smalltalk.GdiplusLibrary := Graphics.Gdiplus.GdiplusLibrary!
 
 Smalltalk.GdiplusLinearGradientBrush := Graphics.Gdiplus.LinearGradientBrush!
 
+Smalltalk.GdiplusLinearGradientBrushFromPointsInitializer := Graphics.Gdiplus.LinearGradientBrushFromPointsInitializer!
+
+Smalltalk.GdiplusLinearGradientBrushFromRectInitializer := Graphics.Gdiplus.LinearGradientBrushFromRectInitializer!
+
 Smalltalk.GdiplusMatrix := Graphics.Gdiplus.Matrix!
 
 Smalltalk.GdiplusPathGradientBrush := Graphics.Gdiplus.PathGradientBrush!
 
+Smalltalk.GdiplusPathGradientFromPathInitializer := Graphics.Gdiplus.PathGradientFromPathInitializer!
+
+Smalltalk.GdiplusPathGradientFromPointsInitializer := Graphics.Gdiplus.PathGradientFromPointsInitializer!
+
 Smalltalk.GdiplusPen := Graphics.Gdiplus.Pen!
+
+Smalltalk.GdiplusPenFromBrushInitializer := Graphics.Gdiplus.PenInitializer!
+
+Smalltalk.GdiplusPenFromColorInitializer := Graphics.Gdiplus.PenInitializer!
 
 Smalltalk.GdiplusPrivateFontCollection := Graphics.Gdiplus.PrivateFontCollection!
 
@@ -141,9 +179,11 @@ Smalltalk.GdiplusStringFormat := Graphics.Gdiplus.StringFormat!
 
 Smalltalk.GdiplusTextureBrush := Graphics.Gdiplus.TextureBrush!
 
-Smalltalk.GpColorMap := Graphics.Gdiplus.GpColorMap!
+Smalltalk.GpColorMap := Graphics.Gdiplus.ColorMap!
 
-Smalltalk.GpColorMatrix := Graphics.Gdiplus.GpColorMatrix!
+Smalltalk.GpColorMatrix := Graphics.Gdiplus.ColorMatrix!
+
+Smalltalk.RECTF := Graphics.Gdiplus.RectF!
 
 
 "End of package definition"!

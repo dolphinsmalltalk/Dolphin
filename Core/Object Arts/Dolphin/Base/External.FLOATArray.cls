@@ -11,6 +11,18 @@ External.FLOATArray comment: 'Specialized <ExternalArray> to represent contiguou
 !External.FLOATArray categoriesForClass!External-Data-Structured! !
 !External.FLOATArray methodsFor!
 
+closeTo: aNumber
+	^self closeTo: aNumber precision: 0.0000001!
+
+closeTo: aSequenceOfNumbers precision: precisionFloat
+	aSequenceOfNumbers size = length ifFalse: [^false].
+	1 to: length
+		do: 
+			[:i |
+			((self uncheckedAt: i) closeTo: (aSequenceOfNumbers at: i) precision: precisionFloat)
+				ifFalse: [^false]].
+	^true!
+
 displayOn: aPuttableStream
 	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see.
 	There are only 6 guaranteed digits of precision in a single-precision float, so we limit output to that so that the string representation would round trip."
@@ -40,6 +52,8 @@ uncheckedAt: anInteger put: aFloat
 
 	^bytes floatAtOffset: (anInteger - 1) * VMConstants.FloatSize put: aFloat! !
 !External.FLOATArray categoriesForMethods!
+closeTo:!comparing!public! !
+closeTo:precision:!comparing!public! !
 displayOn:!printing!private! !
 uncheckedAt:!accessing!private! !
 uncheckedAt:put:!accessing!private! !

@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.RegionFromPathInitializer'
+Graphics.Gdiplus.RegionInitializer subclass: #'Graphics.Gdiplus.RegionFromPathInitializer'
 	instanceVariableNames: 'path'
 	classVariableNames: ''
 	imports: #()
@@ -8,24 +8,32 @@ Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.RegionFromPathInitiali
 	classConstants: {}!
 Graphics.Gdiplus.RegionFromPathInitializer guid: (Core.GUID fromString: '{2e7c1bb2-37d2-4d8b-9135-3eb9ab2ed1bb}')!
 Graphics.Gdiplus.RegionFromPathInitializer comment: ''!
-!Graphics.Gdiplus.RegionFromPathInitializer categoriesForClass!Unclassified! !
 !Graphics.Gdiplus.RegionFromPathInitializer methodsFor!
 
-createHandle
+basicCreateHandle
 	| gpHandle |
 	gpHandle := Handle new.
-	self library gdipCreateRegionPath: path asParameter region: gpHandle.
+	Gdip gdipCreateRegionPath: path asParameter region: gpHandle.
 	^gpHandle!
 
 isPersistent
+	"Answer true if the receiver holds sufficient information such that it can recreate the Gdiplus native object it describes exactly as it was across Smalltalk image save/restore."
+
 	^path isPersistent!
 
 path: aPath
-	path := aPath! !
+	path := aPath.
+	^self!
+
+printAttributesOn: aStream
+	aStream
+		nextPutAll: 'fromPath: ';
+		print: path! !
 !Graphics.Gdiplus.RegionFromPathInitializer categoriesForMethods!
-createHandle!private!realizing/unrealizing! !
-isPersistent!public! !
+basicCreateHandle!private!realizing/unrealizing! !
+isPersistent!public!testing! !
 path:!initializing!private! !
+printAttributesOn:!attributes!printing!private! !
 !
 
 !Graphics.Gdiplus.RegionFromPathInitializer class methodsFor!

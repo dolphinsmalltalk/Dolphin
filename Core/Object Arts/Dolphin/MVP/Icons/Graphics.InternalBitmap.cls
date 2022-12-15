@@ -41,10 +41,10 @@ asBitmap
 
 asByteArray
 	"Ideally, we don't want to duplicate pixel byte arrays unnecessarily. Hence the ugly type
-	test here. If the receiver has been created from a GdiplusFromBytesInitializer then we
+	test here. If the receiver has been created from a AbstractImageFromBytesInitializer then we
 	can just answer the original bytes"
 
-	(gdiplusBitmap initializer isKindOf: Gdiplus.FromBytesInitializer) 
+	(gdiplusBitmap initializer isKindOf: Gdiplus.AbstractImageFromBytesInitializer) 
 		ifTrue: [^gdiplusBitmap initializer bytes].
 
 	"Otherwise ask GDI+ to yield the PNG bytes for the image"
@@ -160,7 +160,7 @@ printOn: aStream
 setBitmap: aGdiplusBitmap 
 	gdiplusBitmap := aGdiplusBitmap! !
 !Graphics.InternalBitmap categoriesForMethods!
-=!comparing!comparison!public! !
+=!comparing!public! !
 addToImageList:mask:!double dispatch!private! !
 asBitmap!public! !
 asByteArray!converting!public! !
@@ -178,7 +178,7 @@ fullIdentifier!public! !
 gdiplusBitmap!initializing!private! !
 graphics!accessing!drawing-gdiplus!public! !
 handle!public! !
-hash!comparing!comparison!public! !
+hash!comparing!public! !
 imageType!public! !
 internalize!public! !
 isShared:!public! !

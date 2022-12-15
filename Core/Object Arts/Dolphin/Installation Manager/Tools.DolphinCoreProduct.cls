@@ -81,6 +81,7 @@ contents
 	"Additional development tools"
 	contents
 		add: #('Core\Object Arts\Dolphin\IDE\Community Edition\ActiveX Automation Development.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\MVP\Gdiplus\Gdiplus Development.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\IDE\Base\Splash\Seeing the Objects Inside.pax' #plain #imageBased);
 		yourself.
 

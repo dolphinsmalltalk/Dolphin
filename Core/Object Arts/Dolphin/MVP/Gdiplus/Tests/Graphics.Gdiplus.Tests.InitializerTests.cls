@@ -9,18 +9,50 @@ Graphics.Gdiplus.Tests.GdiplusTest subclass: #'Graphics.Gdiplus.Tests.Initialize
 Graphics.Gdiplus.Tests.InitializerTests guid: (Core.GUID fromString: '{6547b0a9-3786-40b7-bacc-48ed66bf651d}')!
 Graphics.Gdiplus.Tests.InitializerTests isNonInstantiable: true!
 Graphics.Gdiplus.Tests.InitializerTests comment: ''!
-!Graphics.Gdiplus.Tests.InitializerTests categoriesForClass!Unclassified! !
 !Graphics.Gdiplus.Tests.InitializerTests methodsFor!
 
-assertLastArgIsHandle
-	self assert: constructorArgs last class identicalTo: Handle!
+createHandle
+	| messages |
+	self mockGdip.
+	[model createHandle] ensure: [messages := self unmockGdip].
+	^messages!
+
+mockGdip
+	| binding |
+	binding := #{Gdip} binding.
+	GdiplusLibrary default == binding value ifFalse: [^self].
+	binding
+		isImmutable: false;
+		value: MockGdiplusLibrary new!
+
+setUp
+	super setUp.
+	self newCanonicalModel!
+
+tearDown
+	self unmockGdip.
+	super tearDown!
 
 testIsPersistent
 	"By default initializers can be persisted"
 
-	self assert: model isPersistent! !
+	self assert: model isPersistent!
+
+unmockGdip
+	| binding messages |
+	binding := #{Gdip} binding.
+	GdiplusLibrary default == binding value ifTrue: [^self].
+	messages := binding value messages.
+	binding
+		value: GdiplusLibrary default;
+		isImmutable: true.
+	^messages! !
 !Graphics.Gdiplus.Tests.InitializerTests categoriesForMethods!
-assertLastArgIsHandle!asserting!public! !
+createHandle!private!unit tests! !
+mockGdip!private!running! !
+setUp!public!running! !
+tearDown!public!running! !
 testIsPersistent!public!unit tests! !
+unmockGdip!private!running! !
 !
 

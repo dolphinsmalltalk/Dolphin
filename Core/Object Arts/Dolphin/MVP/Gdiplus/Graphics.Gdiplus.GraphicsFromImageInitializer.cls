@@ -1,17 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.GraphicsFromImageInitializer'
-	instanceVariableNames: 'image'
+Graphics.Gdiplus.GraphicsInitializer subclass: #'Graphics.Gdiplus.GraphicsFromImageInitializer'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Graphics.Gdiplus.GraphicsFromImageInitializer guid: (Core.GUID fromString: '{2b0e6f89-db02-4889-b235-64d9b48047f7}')!
 Graphics.Gdiplus.GraphicsFromImageInitializer comment: ''!
-!Graphics.Gdiplus.GraphicsFromImageInitializer categoriesForClass!Unclassified! !
 !Graphics.Gdiplus.GraphicsFromImageInitializer methodsFor!
 
-createHandle
+basicCreateHandle
 	"Private -  Graphics(IN Image* image)
     {
         GpGraphics *graphics = NULL;
@@ -24,21 +23,9 @@ createHandle
 
 	| gpHandle |
 	gpHandle := Handle new.
-	self library gdipGetImageGraphicsContext: image asParameter graphics: gpHandle.
-	^gpHandle!
-
-image: aGdiplusImage
-	image := aGdiplusImage! !
+	Gdip gdipGetImageGraphicsContext: surface asParameter graphics: gpHandle.
+	^gpHandle! !
 !Graphics.Gdiplus.GraphicsFromImageInitializer categoriesForMethods!
-createHandle!private!realizing/unrealizing! !
-image:!initializing!private! !
-!
-
-!Graphics.Gdiplus.GraphicsFromImageInitializer class methodsFor!
-
-image: aGdiplusImage
-	^self new image: aGdiplusImage! !
-!Graphics.Gdiplus.GraphicsFromImageInitializer class categoriesForMethods!
-image:!instance creation!public! !
+basicCreateHandle!private!realizing/unrealizing! !
 !
 

@@ -10,220 +10,225 @@ Graphics.Gdiplus.Matrix guid: (Core.GUID fromString: '{1a1a5ea7-6151-11d7-b609-0
 Graphics.Gdiplus.Matrix comment: 'GdiplusMatrix represents a 3 ×3 matrix that, in turn, represents an affine transformation. An instance stores only six of the 9 numbers in a 3 ×3 matrix because all 3 ×3 matrices that represent affine transformations have the same third column (0, 0, 1).  An instance is typically used to transform characteristics of another object (see definitions of #transform:).
 
 '!
-!Graphics.Gdiplus.Matrix categoriesForClass!Unclassified! !
 !Graphics.Gdiplus.Matrix methodsFor!
 
+= anObject
+	"Answer whether the receiver and anObject are equivalent."
+
+	self == anObject ifTrue: [^true].
+	^self class == anObject class and: [self isEqualMatrix: anObject]!
+
 asArray
-	| array |
-	array := FLOATArray new: 6.
-	Gdip gdipGetMatrixElements: self asParameter matrixOut: array.
-	^array asArray!
+	^self elements!
 
-basicFree
-	"Private - Free up external resources held by the receiver.  Ignore any errors which might arise."
+closeTo: aNumber
+	^self closeTo: aNumber precision: 0.0000001!
 
-	Gdip gdipDeleteMatrix: handle!
+closeTo: aMatrix precision: precisionFloat
+	^self elements closeTo: aMatrix asArray precision: precisionFloat!
 
-printOn: aStream
-	self basicPrintOn: aStream.
+createHandle
+	^initializer
+		ifNil: 
+			[| gpMatrix |
+			gpMatrix := Handle new.
+			Gdip gdipCreateMatrix: gpMatrix.
+			gpMatrix]
+		ifNotNil: [initializer createHandle]!
+
+displayOn: aStream
 	aStream nextPut: $(.
-	self isRealized ifTrue: [
-		self asArray do: [:each | aStream print: (each roundTo: 0.000001)] separatedBy: [aStream nextPutAll: ', ']].
+	self elements do: [:each | each printOn: aStream significantFigures: 6]
+		separatedBy: 
+			[aStream
+				nextPutAll: aStream locale listSeparator;
+				space].
 	aStream nextPut: $)!
 
-rotateTransform: aRealAngle
-	self rotateTransform: aRealAngle order: MatrixOrderPrepend!
+elements
+	^self initializer elements!
 
-rotateTransform: aRealAngle order: aMatrixOrderConstant
+elements: aSequencedReadableCollection
 	Gdip
-		gdipRotateMatrix: self asParameter
-		angle: aRealAngle
-		order: aMatrixOrderConstant!
+		gdipSetMatrixElements: self handle
+		m11: (aSequencedReadableCollection at: 1)
+		m12: (aSequencedReadableCollection at: 2)
+		m21: (aSequencedReadableCollection at: 3)
+		m22: (aSequencedReadableCollection at: 4)
+		dx: (aSequencedReadableCollection at: 5)
+		dy: (aSequencedReadableCollection at: 6).
+	initializer := nil!
 
-scaleTransform: aPoint
-	self scaleTransform: aPoint order: MatrixOrderPrepend!
+initializerClass
+	"Answer the class of initializer usually associated with the receiver and which understands how to perform operations on the native Gdiplus objects such as disposing of them."
 
-scaleTransform: aPoint order: aMatrixOrderConstant
+	^MatrixInitializer!
+
+isEqualMatrix: aMatrix
+	"Private - Answer whether the receiver and anObject are equivalent matrices.
+	This uses the official comparison provided by the GdipIsMatrixEqual function, but is arguably over-precise as it does not take into account the very limited precision available in a single-precision IEEEE float. See also #closeTo:[precision:]"
+
+	| bool |
+	bool := UInt32Bytes new.
 	Gdip
-		gdipScaleMatrix: self asParameter
-		scaleX: aPoint x
-		scaleY: aPoint y
-		order: aMatrixOrderConstant!
+		gdipIsMatrixEqual: self handle
+		matrix2: aMatrix asParameter
+		result: bool.
+	^bool asBoolean!
 
-shearTransform: aPoint
-	self shearTransform: aPoint order: MatrixOrderPrepend!
+isIdentity
+	"Answer whether the receiver is an identity matrix, i.e. (1, 0, 0, 1, 0, 0)"
 
-shearTransform: aPoint order: aMatrixOrderConstant
+	^self initializer isIdentity!
+
+isSelfEvaluating
+	"Answer whether or not the receiver has a printString representation that evaluates back to an equivalent object."
+
+	^true!
+
+offsetX
+	^self elements at: 5!
+
+offsetY
+	^self elements at: 6!
+
+rotate: aNumber
+	"Prepend a rotation to the receiver of the <Number> angle in degrees argument."
+
+	self rotate: aNumber order: MatrixOrderPrepend!
+
+rotate: aRealAngle at: aPoint
+	"Translate the receiver's transformation matrix by a Point and then rotate it by aRealAngle."
+
+	self
+		translate: aPoint;
+		rotate: aRealAngle!
+
+rotate: aNumber order: aMatrixOrderConstant
+	"Rotate the receiver by the <Number> angle in degrees 1st argument, with the order of transformation specified by MatrixOrder <integer> 2nd argument."
+
 	Gdip
-		gdipShearMatrix: self asParameter
-		shearX: aPoint x
-		shearY: aPoint y
-		order: aMatrixOrderConstant!
+		gdipRotateMatrix: self handle
+		angle: aNumber asFloat
+		order: aMatrixOrderConstant.
+	initializer := nil!
+
+scale: aPoint
+	"Prepend a scaling transformation to the receiver of the horizontal and vertical factors that are the x and y co-ordinates of the <Point> argument."
+
+	self scale: aPoint order: MatrixOrderPrepend!
+
+scale: aPoint order: aMatrixOrderConstant
+	"Scale the receiver by the horizontal and vertical factors that are the x and y co-ordinates of the <Point> 1st argument, in the order specified by the <integer> MatrixOrder 2nd argument."
+
+	Gdip
+		gdipScaleMatrix: self handle
+		scaleX: aPoint x asFloat
+		scaleY: aPoint y asFloat
+		order: aMatrixOrderConstant.
+	initializer := nil!
+
+shear: aPoint
+	"Prepend a shearing transformation to the receiver of the horizontal and vertical factors that are the x and y co-ordinates of the <Point> argument."
+
+	self shear: aPoint order: MatrixOrderPrepend!
+
+shear: aPoint order: aMatrixOrderConstant
+	"Shear the receiver by the horizontal and vertical factors that are the x and y co-ordinates of the <Point> 1st argument, in the order specified by the <integer> MatrixOrder 2nd argument."
+
+	Gdip
+		gdipShearMatrix: self handle
+		shearX: aPoint x asFloat
+		shearY: aPoint y asFloat
+		order: aMatrixOrderConstant.
+	initializer := nil!
 
 transformPoints: aPointsCollection
-	| pts |
-	pts := StructureArray
-				withAll: aPointsCollection
-				elementClass: POINTL
-				initializer: [:pointl :point | pointl x: point x y: point y].
-	pts beUnfinalizable.
+	"Transform the <collection> of <Point> argument using this matrix, answering the transformed collection.
+	Note that if a <POINTLArray> is passed as the argument, it will be updated in place."
+
+	| nativePoints |
+	nativePoints := POINTLArray marshal: aPointsCollection.
 	Gdip
 		gdipTransformMatrixPointsI: self handle
-		pts: pts
+		pts: nativePoints
 		count: aPointsCollection size.
-	^pts!
+	^nativePoints!
 
-translateTransform: aPoint
-	self translateTransform: aPoint order: MatrixOrderPrepend!
+translate: aPoint
+	"Prepend the translation (shift) to the receiver that is specified by the horizontal and vertical offsets that are the x and y co-ordinates of the <Point> argument."
 
-translateTransform: aPoint order: aMatrixOrderConstant
+	self translate: aPoint order: MatrixOrderPrepend!
+
+translate: aPoint order: aMatrixOrderConstant
+	"Translate the receiver by the horizontal and vertical offsets that are the x and y co-ordinates of the <Point> first argument, in the order specified by the <integer> MatrixOrder second argument."
+
 	Gdip
-		gdipTranslateMatrix: self asParameter
+		gdipTranslateMatrix: self handle
 		offsetX: aPoint x
 		offsetY: aPoint y
-		order: aMatrixOrderConstant! !
+		order: aMatrixOrderConstant.
+	initializer := nil! !
 !Graphics.Gdiplus.Matrix categoriesForMethods!
+=!comparing!public! !
 asArray!converting!public! !
-basicFree!private!realizing/unrealizing! !
-printOn:!printing!public! !
-rotateTransform:!operations!public! !
-rotateTransform:order:!operations!public! !
-scaleTransform:!operations!public! !
-scaleTransform:order:!operations!public! !
-shearTransform:!operations!public! !
-shearTransform:order:!operations!public! !
+closeTo:!comparing!public! !
+closeTo:precision:!comparing!public! !
+createHandle!public!realizing/unrealizing! !
+displayOn:!printing!public! !
+elements!converting!public! !
+elements:!converting!public! !
+initializerClass!private!realizing/unrealizing! !
+isEqualMatrix:!comparing!private! !
+isIdentity!public!testing! !
+isSelfEvaluating!public!testing! !
+offsetX!converting!public! !
+offsetY!converting!public! !
+rotate:!public!transformations! !
+rotate:at:!public!transformations! !
+rotate:order:!public!transformations! !
+scale:!public!transformations! !
+scale:order:!public!transformations! !
+shear:!public!transformations! !
+shear:order:!public!transformations! !
 transformPoints:!operations!public! !
-translateTransform:!operations!public! !
-translateTransform:order:!operations!public! !
+translate:!public!transformations! !
+translate:order:!public!transformations! !
 !
 
 !Graphics.Gdiplus.Matrix class methodsFor!
 
-exampleGdipMShadows
-	"This example shows various transformations (shear, scale and translate) to display a string
-	in large font and its shadow.
-
-		self exampleGdipMShadows showExample
-	"
-
-	| bitmap graphics font matrix brush |
-	bitmap := Bitmap extent: 750 @ 200.
-	graphics := bitmap graphics.
-	(matrix := Matrix new)
-		shearTransform: -1.4 @ 0;
-		scaleTransform: 1 @ 0.6;
-		translateTransform: 180 @ 86.
-	graphics transform: matrix.
-	font := Font name: 'Times New Roman' pointSize: 100.
-	brush := SolidBrush color: Color gray.
-	#(50 150 250 330 415 510 560) with: 'DOLPHIN'
-		do: 
-			[:num :char |
-			graphics
-				drawString: char asString
-				font: font
-				at: num @ 10
-				format: nil
-				brush: brush].
-	graphics resetTransform.
-	brush color: Color blue.
-	#(50 150 250 330 415 510 560) with: 'DOLPHIN'
-		do: 
-			[:num :char |
-			graphics
-				drawString: char asString
-				font: font
-				at: num @ 10
-				format: nil
-				brush: brush].
-	^bitmap!
-
-exampleGdipMShear
-	" MSDN:  GDI+ >  GDI+ Reference >  Classes >  Matrix >  Matrix Methods > Shear
-	This example creates a Matrix object and performs first a scale, then a shearing transformation on it.
-	A rectangle is drawn initially and then again after each transformation.  This particular shearing
-	slides the bottom edge of the rectangle to the right. The distance that the bottom edge slides is
-	3 multiplied by the height of the rectangle after it is stretched by the scaling transformation.
-
-		self exampleGdipMShear showExample
-	"
-
-	| bitmap graphics rect matrix |
-	bitmap := Bitmap extent: 550 @ 150.
-	graphics := bitmap graphics.
-	rect := 0 @ 0 extent: 100 @ 50.
-	graphics drawRectangle: rect pen: Pen black.
-	matrix := Matrix new.
-	matrix scaleTransform: 2 @ 2.
-	graphics transform: matrix.
-	graphics drawRectangle: rect pen: Pen blue.
-	matrix shearTransform: 3 @ 0 order: MatrixOrderAppend.
-	graphics transform: matrix.
-	graphics drawRectangle: rect pen: Pen red.
-	^bitmap!
-
-exampleGdipMTranslate
-	"This example creates a GdiplusMatrix object, sets its elements to a rotation, then updates 
-	the matrix with the product of itself and a translation matrix. At that point, the matrix 
-	represents a composite transformation: first rotate, then translate, and it is used to set the 
-	world transformation of a GdiplusGraphics object, on which an ellipse is drawn.
-
-		self exampleGdipMTranslate showExample
-	"
-
-	| bitmap matrix pen |
-	bitmap := Bitmap extent: 500 @ 300.
-	(matrix := Matrix new)
-		rotateTransform: 30;
-		translateTransform: 250 @ 100 order: MatrixOrderAppend.
-	pen := Pen blue.
-	bitmap graphics
-		drawEllipse: (Point zero extent: 200 @ 100) pen: pen;
-		drawString: 'Original' at: 60 @ 40;
-		transform: matrix;
-		drawEllipse: (Point zero extent: 200 @ 100) pen: pen;
-		drawString: 'Rotated and Translated' at: 20 @ 40;
-		drawLine: (-100 @ 0 corner: 100 @ 0) pen: pen;
-		drawLine: (0 @ -100 corner: 0 @ 100) pen: pen;
-		drawString: '0 @ 0' at: 0 @ 0.
-	^bitmap!
+dashed
+	^self withStyleName: #dashed!
 
 fromArray: anArray
-	^self
-		m11: (anArray at: 1)
-		m12: (anArray at: 2)
-		m21: (anArray at: 3)
-		m22: (anArray at: 4)
-		m31: (anArray at: 5)
-		m32: (anArray at: 6)!
+	^self fromInitializer: (MatrixInitializer fromArray: anArray)!
 
-m11: aNumber11 m12: aNumber12 m21: aNumber21 m22: aNumber22 m31: aNumber31 m32: aNumber32
+identity
+	^self new!
+
+m11: aNumber11 m12: aNumber12 m21: aNumber21 m22: aNumber22 dx: dxNumber dy: dyNumber
 	^self fromInitializer: (MatrixInitializer
-				m11: aNumber11 asFloat
-				m12: aNumber12 asFloat
-				m21: aNumber21 asFloat
-				m22: aNumber22 asFloat
-				m31: aNumber31 asFloat
-				m32: aNumber32 asFloat)!
-
-new
-	^self fromArray: #(1 0 0 1 0 0)!
+				m11: aNumber11
+				m12: aNumber12
+				m21: aNumber21
+				m22: aNumber22
+				dx: dxNumber
+				dy: dyNumber)!
 
 rectangle: aRectangle point: aPoint
-	^self 
+	^self
 		m11: aRectangle left
 		m12: aRectangle top
 		m21: aRectangle width
 		m22: aRectangle height
-		m31: aPoint x
-		m32: aPoint y! !
+		dx: aPoint x
+		dy: aPoint y! !
 !Graphics.Gdiplus.Matrix class categoriesForMethods!
-exampleGdipMShadows!examples!public!sunit! !
-exampleGdipMShear!examples!public!sunit! !
-exampleGdipMTranslate!examples!public!sunit! !
+dashed!instance creation!public! !
 fromArray:!instance creation!public! !
-m11:m12:m21:m22:m31:m32:!instance creation!public! !
-new!instance creation!public! !
+identity!instance creation!public! !
+m11:m12:m21:m22:dx:dy:!instance creation!public! !
 rectangle:point:!instance creation!public! !
 !
 

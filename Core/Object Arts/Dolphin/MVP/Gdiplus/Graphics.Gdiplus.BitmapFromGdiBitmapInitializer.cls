@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.BitmapFromGdiBitmapInitializer'
+Graphics.Gdiplus.BitmapInitializer subclass: #'Graphics.Gdiplus.BitmapFromGdiBitmapInitializer'
 	instanceVariableNames: 'bitmap'
 	classVariableNames: ''
 	imports: #()
@@ -8,13 +8,12 @@ Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.BitmapFromGdiBitmapIni
 	classConstants: {}!
 Graphics.Gdiplus.BitmapFromGdiBitmapInitializer guid: (Core.GUID fromString: '{72187357-d718-4876-aaea-2cfefd2c5fd7}')!
 Graphics.Gdiplus.BitmapFromGdiBitmapInitializer comment: ''!
-!Graphics.Gdiplus.BitmapFromGdiBitmapInitializer categoriesForClass!Unclassified! !
 !Graphics.Gdiplus.BitmapFromGdiBitmapInitializer methodsFor!
 
-bitmap: aBitmap
-	bitmap := aBitmap!
+= anObject
+	^self == anObject or: [self species = anObject species and: [bitmap = anObject bitmap]]!
 
-createHandle
+basicCreateHandle
 	"Private -  Bitmap::Bitmap(
 	    IN HBITMAP hbm, 
 	    IN HPALETTE hpal
@@ -33,14 +32,36 @@ createHandle
 
 	"SW: This handles 'currently' ,,, but what about 'or was previously' ???"
 	bitmap freeDC.
-	self library
+	Gdip
 		gdipCreateBitmapFromHBITMAP: bitmap asParameter
 		hpal: hPalette
 		bitmap: gpHandle.
-	^gpHandle! !
+	^gpHandle!
+
+bitmap
+	^bitmap!
+
+bitmap: aBitmap
+	bitmap := aBitmap.
+	^self!
+
+hash
+	^(self species hash + bitmap hash) hashMultiply!
+
+printImage: aGdiplusBitmap on: aWriteStream
+	aWriteStream
+		nextPut: $(;
+		print: aGdiplusBitmap class;
+		nextPutAll: ' bitmap: ';
+		print: bitmap;
+		nextPut: $)! !
 !Graphics.Gdiplus.BitmapFromGdiBitmapInitializer categoriesForMethods!
+=!comparing!public! !
+basicCreateHandle!private!realizing/unrealizing! !
+bitmap!accessing!private! !
 bitmap:!initializing!private! !
-createHandle!private!realizing/unrealizing! !
+hash!comparing!public! !
+printImage:on:!printing!public! !
 !
 
 !Graphics.Gdiplus.BitmapFromGdiBitmapInitializer class methodsFor!

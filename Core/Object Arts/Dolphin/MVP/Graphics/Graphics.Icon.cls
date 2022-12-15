@@ -407,6 +407,11 @@ fromSystemId: anIntegerId
 
 	^self initializer: (self newSystemInitializer: anIntegerId)!
 
+fromSystemId: anIntegerId extent: aPoint
+	"Answer a new instance of the Windows pre-defined icon specified by anIntegerID."
+
+	^self initializer: (IconFromSystemInitializer extent: aPoint identifier: anIntegerId)!
+
 hand
 	"Answer a new instance of the Hand-shaped icon (used in serious warning messages)"
 
@@ -535,6 +540,7 @@ extraLargeExtent!constants!public! !
 filesType!constants!private! !
 freeHandle:!private!realizing/unrealizing! !
 fromSystemId:!instance creation!public! !
+fromSystemId:extent:!instance creation!public! !
 hand!instance creation!public! !
 icon!constants!public! !
 imageManager!accessing!public! !

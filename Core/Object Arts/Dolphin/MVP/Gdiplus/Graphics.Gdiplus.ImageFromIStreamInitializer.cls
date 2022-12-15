@@ -1,17 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.ImageFromIStreamInitializer'
-	instanceVariableNames: 'iStream'
+Graphics.Gdiplus.AbstractImageFromIStreamInitializer subclass: #'Graphics.Gdiplus.ImageFromIStreamInitializer'
+	instanceVariableNames: 'iStream2'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Graphics.Gdiplus.ImageFromIStreamInitializer guid: (Core.GUID fromString: '{0a3984b0-2193-4a59-abd8-6f6d3f8ed0f7}')!
 Graphics.Gdiplus.ImageFromIStreamInitializer comment: ''!
-!Graphics.Gdiplus.ImageFromIStreamInitializer categoriesForClass!Unclassified! !
 !Graphics.Gdiplus.ImageFromIStreamInitializer methodsFor!
 
-createHandle
+basicCreateHandle
 	"Private -  Image::Image(
     IN IStream* stream,
     IN BOOL useEmbeddedColorManagement
@@ -32,27 +31,13 @@ createHandle
 
 	| gpHandle |
 	gpHandle := Handle new.
-	self library gdipLoadImageFromStream: iStream asParameter image: gpHandle.
+	Gdip gdipLoadImageFromStream: iStream asParameter image: gpHandle.
 	^gpHandle!
 
-isPersistent
-	"The IStream will no longer be valid when restoring from a saved image or binary filed content."
-
-	^false!
-
-iStream: pStream
-	iStream := pStream! !
+hash
+	^(self species hash + iStream hash) hashMultiply! !
 !Graphics.Gdiplus.ImageFromIStreamInitializer categoriesForMethods!
-createHandle!private!realizing/unrealizing! !
-isPersistent!constants!public!realizing/unrealizing!testing! !
-iStream:!constants!initializing!private!realizing/unrealizing!testing! !
-!
-
-!Graphics.Gdiplus.ImageFromIStreamInitializer class methodsFor!
-
-iStream: pStream
-	^self new iStream: pStream! !
-!Graphics.Gdiplus.ImageFromIStreamInitializer class categoriesForMethods!
-iStream:!instance creation!public! !
+basicCreateHandle!private!realizing/unrealizing! !
+hash!comparing!public! !
 !
 

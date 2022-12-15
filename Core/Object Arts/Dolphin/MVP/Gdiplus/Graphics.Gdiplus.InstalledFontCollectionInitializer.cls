@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.InstalledFontCollectionInitializer'
+Graphics.Gdiplus.FontCollectionInitializer subclass: #'Graphics.Gdiplus.InstalledFontCollectionInitializer'
 	instanceVariableNames: ''
 	classVariableNames: 'Default'
 	imports: #()
@@ -8,16 +8,23 @@ Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.InstalledFontCollectio
 	classConstants: {}!
 Graphics.Gdiplus.InstalledFontCollectionInitializer guid: (Core.GUID fromString: '{c09d8c04-5f28-11d7-b609-00e0987e8081}')!
 Graphics.Gdiplus.InstalledFontCollectionInitializer comment: ''!
-!Graphics.Gdiplus.InstalledFontCollectionInitializer categoriesForClass!Unclassified! !
 !Graphics.Gdiplus.InstalledFontCollectionInitializer methodsFor!
 
-createHandle
+= anObject
+	^self species == anObject species!
+
+basicCreateHandle
 	| gpHandle |
 	gpHandle := Handle new.
-	self library gdipNewInstalledFontCollection: gpHandle.
-	^gpHandle! !
+	Gdip gdipNewInstalledFontCollection: gpHandle.
+	^gpHandle!
+
+hash
+	^self species hash! !
 !Graphics.Gdiplus.InstalledFontCollectionInitializer categoriesForMethods!
-createHandle!private!realizing/unrealizing! !
+=!comparing!public! !
+basicCreateHandle!private!realizing/unrealizing! !
+hash!comparing!public! !
 !
 
 !Graphics.Gdiplus.InstalledFontCollectionInitializer class methodsFor!

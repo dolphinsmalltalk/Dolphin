@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.FromBytesInitializer subclass: #'Graphics.Gdiplus.BitmapFromBytesInitializer'
+Graphics.Gdiplus.AbstractImageFromBytesInitializer subclass: #'Graphics.Gdiplus.BitmapFromBytesInitializer'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -8,10 +8,9 @@ Graphics.Gdiplus.FromBytesInitializer subclass: #'Graphics.Gdiplus.BitmapFromByt
 	classConstants: {}!
 Graphics.Gdiplus.BitmapFromBytesInitializer guid: (Core.GUID fromString: '{6e7e335e-9dd7-44fa-8648-96e7d9528f11}')!
 Graphics.Gdiplus.BitmapFromBytesInitializer comment: ''!
-!Graphics.Gdiplus.BitmapFromBytesInitializer categoriesForClass!Unclassified! !
 !Graphics.Gdiplus.BitmapFromBytesInitializer methodsFor!
 
-createHandle
+basicCreateHandle
 	"Private -  Bitmap::Bitmap(
 	    IN IStream *stream, 
 	    IN BOOL useEmbeddedColorManagement
@@ -24,10 +23,10 @@ createHandle
 	| gpHandle stm |
 	gpHandle := Handle new.
 	stm := self iStream.
-	self library gdipCreateBitmapFromStream: stm bitmap: gpHandle.
+	Gdip gdipCreateBitmapFromStream: stm bitmap: gpHandle.
 	stm free.
 	^gpHandle! !
 !Graphics.Gdiplus.BitmapFromBytesInitializer categoriesForMethods!
-createHandle!private!realizing/unrealizing! !
+basicCreateHandle!private!realizing/unrealizing! !
 !
 

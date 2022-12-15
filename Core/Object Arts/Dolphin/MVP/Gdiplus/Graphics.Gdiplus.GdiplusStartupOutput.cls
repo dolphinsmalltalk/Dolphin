@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'Graphics.Gdiplus.GdiplusStartupOutput'
+Graphics.Gdiplus.GpStructure subclass: #'Graphics.Gdiplus.GdiplusStartupOutput'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -24,7 +24,6 @@ struct tagGdiplusStartupOutput {
 	[helpstring("''NotificationUnhook'' should be called after the message loop ends.")] void* NotificationUnhook;
 } GdiplusStartupOutput;
 '!
-!Graphics.Gdiplus.GdiplusStartupOutput categoriesForClass!Unclassified! !
 !Graphics.Gdiplus.GdiplusStartupOutput methodsFor!
 
 NotificationHook

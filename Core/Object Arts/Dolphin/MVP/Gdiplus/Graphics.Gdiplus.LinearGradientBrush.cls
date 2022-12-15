@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.Brush subclass: #'Graphics.Gdiplus.LinearGradientBrush'
+Graphics.Gdiplus.GradientBrush subclass: #'Graphics.Gdiplus.LinearGradientBrush'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -8,230 +8,122 @@ Graphics.Gdiplus.Brush subclass: #'Graphics.Gdiplus.LinearGradientBrush'
 	classConstants: {}!
 Graphics.Gdiplus.LinearGradientBrush guid: (Core.GUID fromString: '{0ea671c7-823f-4367-89b3-c28e45a365ea}')!
 Graphics.Gdiplus.LinearGradientBrush comment: 'GdiplusLinearGradientBrush paints a color gradient in which the color changes evenly from the starting boundary line of an instance to its ending boundary line. Boundary lines are two parallel straight lines. The color gradient is perpendicular to the boundary lines, changing gradually across the stroke from starting to ending boundary lines. The color gradient has one color at the starting boundary line and another color at the ending boundary line.'!
-!Graphics.Gdiplus.LinearGradientBrush categoriesForClass!Unclassified! !
 !Graphics.Gdiplus.LinearGradientBrush methodsFor!
 
-blendCount
-	"Private - Answer the number of blend factors currently set for the receiver."
+colors
+	^{self startingColor. self endingColor}!
 
-	| count |
-	count := ByteArray newFixed: 4.
-	Gdip gdipGetLineBlendCount: self asParameter count: count.
-	^count sdwordAtOffset: 0!
+colors: aPair
+	self startingColor: aPair first endingColor: aPair second!
 
-blendFactors
-	"Answer a two-element array that holds two arrays that contain the receiver's blend factors 
-	and their corresponding blend positions."
+endingColor
+	^initializer color2!
 
-	| count factorsArray positionsArray |
-	count := self blendCount.
-	factorsArray := FLOATArray new length: count.
-	positionsArray := FLOATArray new length: count.
-	Gdip
-		gdipGetLineBlend: self asParameter
-		blend: factorsArray
-		positions: positionsArray
-		count: count.
-	^{factorsArray asArray. positionsArray asArray}!
+initializerClass
+	"Answer the class of initializer usually associated with the receiver and which understands how to perform operations on the native Gdiplus objects such as disposing of them."
 
-blendFactors: factorsArray positions: positionsArray
-	"Set the receiver's blend factors and blend positions to create a custom blend."
+	^LinearGradientBrushInitializer!
 
-	self assert: [factorsArray size = positionsArray size].
-	self assert: [positionsArray size >= 2].
-	self assert: [factorsArray allSatisfy: [:each | each between: 0 and: 1]].
-	self assert: [positionsArray first = 0 and: [positionsArray last = 1]].
-	Gdip
-		gdipSetLineBlend: self asParameter
-		blend: (FLOATArray withAll: factorsArray)
-		positions: (FLOATArray withAll: positionsArray)
-		count: positionsArray size!
+luminance
+	"Answer a <Number> in the range [0,1] representing the luminance of the receiver, a brightness value weighted by the human eye's color sensitivity.
+	For a gradient brush we approximate based on the the mid-point colour, although this may be very inaccurate if the blend is customised."
 
-isGammaCorrected
-	"Answer whether gamma correction is applied to the receiver when rendering."
+	^(self startingColor luminance + self endingColor luminance) / 2.0!
 
-	| result |
-	result := ByteArray newFixed: 4.
-	Gdip gdipGetLineGammaCorrection: self asParameter useGammaCorrection: result.
-	^(result sdwordAtOffset: 0) ~~ 0!
+mode
+	^initializer mode!
 
-isGammaCorrected: aBoolean
-	"Set whether gamma correction is applied to the receiver when rendering."
-
-	Gdip gdipSetLineGammaCorrection: self asParameter useGammaCorrection: aBoolean asParameter!
+startingColor
+	^initializer color1!
 
 startingColor: startColor endingColor: endColor
 	"Set the receiver's starting and ending colors."
 
-	Gdip
-		gdipSetLineColors: self asParameter
-		color1: startColor argbCode
-		color2: endColor argbCode! !
+	initializer
+		colorsSet: self asParameter
+		start: endColor
+		end: startColor! !
 !Graphics.Gdiplus.LinearGradientBrush categoriesForMethods!
-blendCount!accessing!private! !
-blendFactors!accessing!public! !
-blendFactors:positions:!accessing!public! !
-isGammaCorrected!accessing!public! !
-isGammaCorrected:!accessing!public! !
+colors!accessing!public! !
+colors:!accessing!public! !
+endingColor!accessing!public! !
+initializerClass!constants!private! !
+luminance!accessing!public! !
+mode!accessing!public! !
+startingColor!accessing!public! !
 startingColor:endingColor:!accessing!public! !
 !
 
 !Graphics.Gdiplus.LinearGradientBrush class methodsFor!
 
-exampleGdipLGChangingColors
-	"This example shows changing starting and ending colors.
+newPoint1: point1 point2: point2 color1: color1 color2: color2 wrapMode: aWrapModeConstant
+	"Answer a LinearGradientBrush using a set of boundary points and boundary colors."
 
-		self exampleGdipLGChangingColors showExample
-	"
-
-	| bitmap graphics points colors brush |
-	bitmap := Bitmap new.
-	graphics := bitmap graphics.
-	points := {0 @ 0. 300 @ 0. 0 @ 200. 300 @ 200}.
-	colors := #(#red #green #blue #magenta #cyan).
-	brush := LinearGradientBrush
-				point1: 0 @ 0
-				point2: 0 @ 200
-				color1: Color blue
-				color2: Color blue.
-	points keysAndValuesDo: 
-			[:i :point |
-			brush startingColor: (Color named: (colors at: i)) endingColor: (Color named: (colors at: i + 1)).
-			graphics fillRectangle: (point extent: 300 @ 200) brush: brush].
-	^bitmap!
-
-exampleGdipLGCustom
-	"MSDN:   Using GDI+ >  Filling Shapes with a Gradient Brush > Creating a Linear Gradient, Custom
-	This example uses a customized linear gradient brush to fill an ellipse and a rectangle.
-
-		self exampleGdipLGCustom showExample
-	"
-
-	| bitmap brush |
-	bitmap := Bitmap extent: 600 @ 400.
-	brush := LinearGradientBrush
-				point1: 0 @ 10
-				point2: 200 @ 10
-				color1: Color black
-				color2: Color red.
-	brush blendFactors: #(0.0 0.5 1.0) positions: #(0.0 0.2 1.0).
-	bitmap graphics
-		fillEllipse: (0 @ 30 extent: 200 @ 100) brush: brush;
-		fillRectangle: (0 @ 155 extent: 500 @ 30) brush: brush.
-	^bitmap!
-
-exampleGdipLGDiagonal
-	"MSDN:   Using GDI+ >  Filling Shapes with a Gradient Brush > Creating a Linear Gradient, Diagonal
-	This example uses a customized linear gradient brush to fill an ellipse and a line.
-
-		self exampleGdipLGDiagonal showExample
-	"
-
-	| bitmap brush pen |
-	bitmap := Bitmap extent: 600 @ 400.
-	brush := LinearGradientBrush
-				point1: 0 @ 0
-				point2: 200 @ 100
-				color1: Color blue
-				color2: Color green.
-	pen := Pen brush: brush width: 10.
-	bitmap graphics
-		drawLine: (0 @ 0 extent: 600 @ 300) pen: pen;
-		fillEllipse: (10 @ 100 extent: 200 @ 100) brush: brush.
-	^bitmap!
-
-exampleGdipLGHorizontal
-	"MSDN:   Using GDI+ >  Filling Shapes with a Gradient Brush > Creating a Linear Gradient, Horizontal
-	This example uses a horizontal linear gradient brush to draw a line and fill an ellipse and rectangle.
-
-		self exampleGdipLGHorizontal showExample
-	"
-
-	| bitmap brush pen |
-	bitmap := Bitmap extent: 600 @ 250.
-	brush := LinearGradientBrush
-				point1: 0 @ 10
-				point2: 200 @ 10
-				color1: Color red
-				color2: Color blue.
-	pen := Pen brush: brush width: 3.
-	bitmap graphics
-		drawLine: (0 @ 10 corner: 200 @ 10) pen: pen;
-		fillEllipse: (0 @ 30 extent: 200 @ 100) brush: brush;
-		fillRectangle: (0 @ 155 extent: 500 @ 30) brush: brush.
-	^bitmap!
-
-exampleGdipLGModeConstants
-	"This example shows the different effects of LinearGradientMode constants.
-
-		self exampleGdipLGModeConstants showExample
-	"
-
-	| bitmap graphics points enum brush |
-	bitmap := Bitmap new.
-	graphics := bitmap graphics.
-	points := {0 @ 0. 300 @ 0. 0 @ 200. 300 @ 200}.
-	points keysAndValuesDo: 
-			[:i :point |
-			enum := self enumsLinearGradientMode at: i.
-			brush := LinearGradientBrush
-						rect: (0 @ 0 corner: 300 @ 200)
-						color1: Color red
-						color2: Color yellow
-						mode: enum value.
-			graphics
-				fillRectangle: (point extent: 300 @ 200) brush: brush;
-				drawString: enum key at: point].
-	^bitmap!
-
-exampleGdipLGTiling
-	"This example shows the different effects of tiling with LinearGradientMode constants.
-
-		self exampleGdipLGTiling showExample
-	"
-
-	| bitmap graphics points enum brush |
-	bitmap := Bitmap new.
-	graphics := bitmap graphics.
-	points := {0 @ 0. 300 @ 0. 0 @ 200. 300 @ 200}.
-	points keysAndValuesDo: 
-			[:i :point |
-			enum := self enumsLinearGradientMode at: i.
-			brush := LinearGradientBrush
-						rect: (0 @ 0 corner: 75 @ 50)
-						color1: Color blue
-						color2: Color cyan
-						mode: enum value.
-			graphics
-				fillRectangle: (point extent: 300 @ 200) brush: brush;
-				drawString: enum key at: point].
-	^bitmap!
+	| rect extent mode |
+	rect := point1 corner: point2.
+	extent := rect extent.
+	extent x = 0
+		ifTrue: 
+			[mode := LinearGradientModeVertical.
+			extent := extent y.
+			rect := ((point1 x - extent) // 2) @ point1 y extent: extent @ extent]
+		ifFalse: 
+			[extent y = 0
+				ifTrue: 
+					[extent := extent x.
+					rect := point1 x @ ((point1 y - extent) // 2) extent: extent @ extent]
+				ifFalse: [#todo	"Implement for x and y extents"]].
+	^self
+		rect: rect
+		color1: color1
+		color2: color2
+		mode: mode
+		wrapMode: aWrapModeConstant!
 
 point1: point1 point2: point2 color1: color1 color2: color2
+	"Answer a LinearGradientBrush using a set of boundary points and boundary colors."
+
+	^self
+		point1: point1
+		point2: point2
+		color1: color1
+		color2: color2
+		wrapMode: WrapModeTile!
+
+point1: point1 point2: point2 color1: color1 color2: color2 wrapMode: aWrapModeConstant
 	"Answer a LinearGradientBrush using a set of boundary points and boundary colors."
 
 	^self fromInitializer: (LinearGradientBrushFromPointsInitializer
 				point1: point1
 				point2: point2
 				color1: color1
-				color2: color2)!
+				color2: color2
+				wrapMode: aWrapModeConstant)!
 
-rect: rect color1: color1 color2: color2 mode: aLinearGradientMode
-	"Answer a LinearGradientBrush using a set of boundary points and boundary colors."
+rect: aRectangle color1: aColor1 color2: aColor2 mode: aLinearGradientMode
+	"Answer a LinearGradientBrush using a set of boundary points specified by a Rectangle, and boundary colors."
 
 	^self fromInitializer: (LinearGradientBrushFromRectInitializer
-				rect: rect
-				color1: color1
-				color2: color2
-				mode: aLinearGradientMode)! !
+				rect: aRectangle
+				color1: aColor1
+				color2: aColor2
+				mode: aLinearGradientMode)!
+
+rect: aRectangle color1: aColor1 color2: aColor2 mode: aLinearGradientMode wrapMode: aWrapModeConstant
+	"Answer a LinearGradientBrush using a set of boundary points specified by a Rectangle, and boundary colors."
+
+	^(self fromInitializer: (LinearGradientBrushFromRectInitializer
+				rect: aRectangle
+				color1: aColor1
+				color2: aColor2
+				mode: aLinearGradientMode))
+		wrapMode: aWrapModeConstant;
+		yourself! !
 !Graphics.Gdiplus.LinearGradientBrush class categoriesForMethods!
-exampleGdipLGChangingColors!examples!public!sunit! !
-exampleGdipLGCustom!examples!public!sunit! !
-exampleGdipLGDiagonal!examples!public!sunit! !
-exampleGdipLGHorizontal!examples!public!sunit! !
-exampleGdipLGModeConstants!examples!public!sunit! !
-exampleGdipLGTiling!examples!public!sunit! !
+newPoint1:point2:color1:color2:wrapMode:!instance creation!public! !
 point1:point2:color1:color2:!instance creation!public! !
+point1:point2:color1:color2:wrapMode:!instance creation!public! !
 rect:color1:color2:mode:!instance creation!public! !
+rect:color1:color2:mode:wrapMode:!instance creation!public! !
 !
 

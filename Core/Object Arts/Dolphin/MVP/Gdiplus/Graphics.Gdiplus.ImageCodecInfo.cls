@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'Graphics.Gdiplus.GpImageCodecInfo'
+Graphics.Gdiplus.GpStructure subclass: #'Graphics.Gdiplus.ImageCodecInfo'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_GpImageCodecInfo_Size' -> 16r4C.
+		'_ImageCodecInfo_Size' -> 16r4C.
 		'_OffsetOf_Clsid' -> 16r0.
 		'_OffsetOf_CodecName' -> 16r20.
 		'_OffsetOf_DllName' -> 16r24.
@@ -21,8 +21,8 @@ External.Structure subclass: #'Graphics.Gdiplus.GpImageCodecInfo'
 		'_OffsetOf_SigSize' -> 16r40.
 		'_OffsetOf_Version' -> 16r38
 	}!
-Graphics.Gdiplus.GpImageCodecInfo guid: (Core.GUID fromString: '{059e6e3a-2877-4ea7-a11c-7e5c1ac62165}')!
-Graphics.Gdiplus.GpImageCodecInfo comment: '<GpImageCodecInfo> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpImageCodecInfo'' from type information in the ''GDI+ Library 1.0'' library.
+Graphics.Gdiplus.ImageCodecInfo guid: (Core.GUID fromString: '{059e6e3a-2877-4ea7-a11c-7e5c1ac62165}')!
+Graphics.Gdiplus.ImageCodecInfo comment: '<GpImageCodecInfo> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpImageCodecInfo'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
 
@@ -47,8 +47,7 @@ struct tagGpImageCodecInfo {
 	BYTE* SigMask;
 } GpImageCodecInfo;
 '!
-!Graphics.Gdiplus.GpImageCodecInfo categoriesForClass!Unclassified! !
-!Graphics.Gdiplus.GpImageCodecInfo methodsFor!
+!Graphics.Gdiplus.ImageCodecInfo methodsFor!
 
 Clsid
 	"Answer the <GUID> value of the receiver's 'Clsid' field."
@@ -187,7 +186,7 @@ Version: anInteger
 	"Set the receiver's 'Version' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_Version put: anInteger! !
-!Graphics.Gdiplus.GpImageCodecInfo categoriesForMethods!
+!Graphics.Gdiplus.ImageCodecInfo categoriesForMethods!
 Clsid!**compiled accessors**!public! !
 Clsid:!**compiled accessors**!public! !
 CodecName!**compiled accessors**!public! !
@@ -216,10 +215,10 @@ Version!**compiled accessors**!public! !
 Version:!**compiled accessors**!public! !
 !
 
-!Graphics.Gdiplus.GpImageCodecInfo class methodsFor!
+!Graphics.Gdiplus.ImageCodecInfo class methodsFor!
 
 byteSize
-	^_GpImageCodecInfo_Size!
+	^_ImageCodecInfo_Size!
 
 defineFields
 	"Define the fields of the GpImageCodecInfo structure.
@@ -287,7 +286,7 @@ defineFields
 
 getFieldNames
 	^#(#Clsid #FormatID #CodecName #DllName #FormatDescription #FilenameExtension #MimeType #Flags #Version #SigCount #SigSize #SigPattern #SigMask)! !
-!Graphics.Gdiplus.GpImageCodecInfo class categoriesForMethods!
+!Graphics.Gdiplus.ImageCodecInfo class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

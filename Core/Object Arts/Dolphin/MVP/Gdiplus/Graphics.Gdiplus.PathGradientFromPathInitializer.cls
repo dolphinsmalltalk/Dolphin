@@ -1,38 +1,64 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.PathGradientFromPathInitializer'
+Graphics.Gdiplus.PathGradientBrushInitializer subclass: #'Graphics.Gdiplus.PathGradientFromPathInitializer'
 	instanceVariableNames: 'path'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.PathGradientFromPathInitializer guid: (Core.GUID fromString: '{8f2007e2-7d6c-11d7-b609-00e0987e8081}')!
+Graphics.Gdiplus.PathGradientFromPathInitializer guid: (Core.GUID fromString: '{24f2dee8-57f6-4e28-a553-6d886de15dda}')!
 Graphics.Gdiplus.PathGradientFromPathInitializer comment: ''!
-!Graphics.Gdiplus.PathGradientFromPathInitializer categoriesForClass!Unclassified! !
 !Graphics.Gdiplus.PathGradientFromPathInitializer methodsFor!
 
-createHandle
+= anObject
+	"Answer whether the receiver and anObject are equivalent."
+
+	^self == anObject or: [super = anObject and: [path = anObject path]]!
+
+basicCreateHandle
 	| gpHandle |
 	gpHandle := Handle new.
-	self library gdipCreatePathGradientFromPath: path asParameter polyGradient: gpHandle.
+	Gdip gdipCreatePathGradientFromPath: path asParameter polyGradient: gpHandle.
 	^gpHandle!
 
-isPersistent
-	^path isPersistent!
+defaultCenterColor
+	^Color.White!
 
-path: aGdiplusPath
-	path := aGdiplusPath! !
+hash
+	"Answer the <integer> hash value for the receiver."
+
+	^(super hash + path hash) hashMultiply!
+
+path
+	^path!
+
+path: aGraphicsPath wrapMode: aWrapModeConstant
+	path := aGraphicsPath.
+	wrapMode := aWrapModeConstant.
+	centerColor := self defaultCenterColor.
+	^self!
+
+printAttributesOn: aStream
+	aStream
+		nextPutAll: #path:;
+		space;
+		print: path.
+	super printAttributesOn: aStream! !
 !Graphics.Gdiplus.PathGradientFromPathInitializer categoriesForMethods!
-createHandle!private!realizing/unrealizing! !
-isPersistent!public! !
-path:!initializing!private! !
+=!comparing!public! !
+basicCreateHandle!private!realizing/unrealizing! !
+defaultCenterColor!constants!private! !
+hash!comparing!public! !
+path!accessing!private! !
+path:wrapMode:!initializing!private! !
+printAttributesOn:!printing!private! !
 !
 
 !Graphics.Gdiplus.PathGradientFromPathInitializer class methodsFor!
 
-path: aGdiplusPath
-	^self new path: aGdiplusPath! !
+stbConvertFrom: anSTBClassFormat
+	^[:data | self path: (data at: 2) wrapMode: WrapModeClamp]! !
 !Graphics.Gdiplus.PathGradientFromPathInitializer class categoriesForMethods!
-path:!instance creation!public! !
+stbConvertFrom:!binary filing!public! !
 !
 

@@ -10,44 +10,63 @@ package basicPackageVersion: '6.1'.
 
 
 package setClassNames: #(
+	#{External.Tests.POINTFArrayTest}
 	#{External.Tests.POINTFTest}
 	#{Graphics.Gdiplus.Tests}
+	#{Graphics.Gdiplus.Tests.AbstractCustomLineCapTest}
 	#{Graphics.Gdiplus.Tests.AdjustableArrowCapTest}
-	#{Graphics.Gdiplus.Tests.BaseTest}
-	#{Graphics.Gdiplus.Tests.BitmapFromBitmapInitializerTest}
+	#{Graphics.Gdiplus.Tests.ARGBArrayTest}
 	#{Graphics.Gdiplus.Tests.BitmapFromBlankInitializerTest}
 	#{Graphics.Gdiplus.Tests.BitmapFromFileInitializerTest}
+	#{Graphics.Gdiplus.Tests.BitmapFromGdiBitmapInitializerTest}
 	#{Graphics.Gdiplus.Tests.BitmapFromIconInitializerTest}
 	#{Graphics.Gdiplus.Tests.BitmapFromIStreamInitializerTest}
 	#{Graphics.Gdiplus.Tests.BitmapTest}
+	#{Graphics.Gdiplus.Tests.BrushTest}
+	#{Graphics.Gdiplus.Tests.ColorMatrixTest}
 	#{Graphics.Gdiplus.Tests.CustomLineCapTest}
 	#{Graphics.Gdiplus.Tests.ExamplesTest}
 	#{Graphics.Gdiplus.Tests.FileResource}
+	#{Graphics.Gdiplus.Tests.FontCollectionTest}
+	#{Graphics.Gdiplus.Tests.FontFamilyTest}
+	#{Graphics.Gdiplus.Tests.FontTest}
 	#{Graphics.Gdiplus.Tests.GdiplusGraphicsTest}
+	#{Graphics.Gdiplus.Tests.GdiplusObjectTest}
 	#{Graphics.Gdiplus.Tests.GdiplusTest}
-	#{Graphics.Gdiplus.Tests.GpColorMatrixTest}
+	#{Graphics.Gdiplus.Tests.GpRectTest}
+	#{Graphics.Gdiplus.Tests.GradientBlendTest}
+	#{Graphics.Gdiplus.Tests.GradientBrushTest}
+	#{Graphics.Gdiplus.Tests.GradientCustomBlendTest}
+	#{Graphics.Gdiplus.Tests.GradientPresetBlendTest}
 	#{Graphics.Gdiplus.Tests.GraphicsFromHDCInitializerTest}
 	#{Graphics.Gdiplus.Tests.GraphicsFromImageInitializerTest}
 	#{Graphics.Gdiplus.Tests.GraphicsPathTest}
 	#{Graphics.Gdiplus.Tests.HatchBrushTest}
 	#{Graphics.Gdiplus.Tests.ImageAttributesInitializerTest}
+	#{Graphics.Gdiplus.Tests.ImageAttributesTest}
 	#{Graphics.Gdiplus.Tests.ImageFromFileInitializerTest}
 	#{Graphics.Gdiplus.Tests.ImageFromIStreamInitializerTest}
 	#{Graphics.Gdiplus.Tests.ImageTest}
 	#{Graphics.Gdiplus.Tests.ImageTests}
-	#{Graphics.Gdiplus.Tests.InitializerTest}
 	#{Graphics.Gdiplus.Tests.InitializerTests}
+	#{Graphics.Gdiplus.Tests.InstalledFontCollectionTest}
 	#{Graphics.Gdiplus.Tests.LinearGradientBrushFromPointsInitializerTest}
 	#{Graphics.Gdiplus.Tests.LinearGradientBrushFromRectInitializerTest}
 	#{Graphics.Gdiplus.Tests.LinearGradientBrushTest}
+	#{Graphics.Gdiplus.Tests.MatrixTest}
+	#{Graphics.Gdiplus.Tests.MockGdiplusLibrary}
 	#{Graphics.Gdiplus.Tests.PathGradientBrushTest}
-	#{Graphics.Gdiplus.Tests.PenFromBrushInitializerTest}
-	#{Graphics.Gdiplus.Tests.PenFromColorInitializerTest}
+	#{Graphics.Gdiplus.Tests.PenInitializerTest}
 	#{Graphics.Gdiplus.Tests.PenTest}
+	#{Graphics.Gdiplus.Tests.PrivateFontCollectionTest}
 	#{Graphics.Gdiplus.Tests.RECTFTest}
+	#{Graphics.Gdiplus.Tests.RegionTest}
 	#{Graphics.Gdiplus.Tests.SolidBrushFromColorInitializerTest}
+	#{Graphics.Gdiplus.Tests.SolidBrushTest}
 	#{Graphics.Gdiplus.Tests.StringFormatTest}
-	#{Graphics.Gdiplus.Tests.TestInitializer}
+	#{Graphics.Gdiplus.Tests.TextureBrushInitializerTest}
+	#{Graphics.Gdiplus.Tests.TextureBrushTest}
+	#{Graphics.Gdiplus.Tests.TransformableBrushTest}
 ).
 
 package setMethodNames: #(
@@ -60,11 +79,13 @@ package setMethodNames: #(
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
+	'..\..\..\Base\Tests\Dolphin Base Tests'
 	'..\..\Base\Dolphin Basic Geometry'
 	'..\..\Graphics\Dolphin GDI Graphics'
 	'..\..\Graphics\Tests\Dolphin GDI Graphics Tests'
 	'..\..\Dolphin MVP Tests'
 	'..\Gdiplus'
+	'..\Gdiplus (Old Names)'
 	'..\..\..\ActiveX\Structured Storage\OLE Structured Storage'
 	'..\..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
 	'..\..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitPreload'
@@ -81,8 +102,8 @@ Graphics.Gdiplus subclass: #'Graphics.Gdiplus.Tests'
 	imports: #(#{XProgramming.SUnit})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.Tests.TestInitializer'
-	instanceVariableNames: 'mockHandle arg1'
+Graphics.Gdiplus.GdiplusLibrary subclass: #'Graphics.Gdiplus.Tests.MockGdiplusLibrary'
+	instanceVariableNames: 'process messages'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -99,25 +120,31 @@ External.Tests.POINTTest subclass: #'External.Tests.POINTFTest'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+External.Tests.RECTTest subclass: #'Graphics.Gdiplus.Tests.GpRectTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 External.Tests.RECTTest subclass: #'Graphics.Gdiplus.Tests.RECTFTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.GdiplusTest subclass: #'Graphics.Gdiplus.Tests.AdjustableArrowCapTest'
+External.Tests.ExternalArrayTest subclass: #'Graphics.Gdiplus.Tests.ARGBArrayTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.GdiplusTest subclass: #'Graphics.Gdiplus.Tests.BaseTest'
+External.Tests.ExternalArrayTest subclass: #'External.Tests.POINTFArrayTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.GdiplusTest subclass: #'Graphics.Gdiplus.Tests.CustomLineCapTest'
+Graphics.Gdiplus.Tests.GdiplusTest subclass: #'Graphics.Gdiplus.Tests.ColorMatrixTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -129,31 +156,13 @@ Graphics.Gdiplus.Tests.GdiplusTest subclass: #'Graphics.Gdiplus.Tests.ExamplesTe
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.GdiplusTest subclass: #'Graphics.Gdiplus.Tests.GdiplusGraphicsTest'
-	instanceVariableNames: 'bitmap graphics canvas'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Graphics.Gdiplus.Tests.GdiplusTest subclass: #'Graphics.Gdiplus.Tests.GpColorMatrixTest'
-	instanceVariableNames: 'matrix'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Graphics.Gdiplus.Tests.GdiplusTest subclass: #'Graphics.Gdiplus.Tests.GraphicsPathTest'
-	instanceVariableNames: 'fillMode'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Graphics.Gdiplus.Tests.GdiplusTest subclass: #'Graphics.Gdiplus.Tests.HatchBrushTest'
+Graphics.Gdiplus.Tests.GdiplusTest subclass: #'Graphics.Gdiplus.Tests.GdiplusObjectTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.GdiplusTest subclass: #'Graphics.Gdiplus.Tests.ImageTests'
+Graphics.Gdiplus.Tests.GdiplusTest subclass: #'Graphics.Gdiplus.Tests.GradientBlendTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -165,25 +174,145 @@ Graphics.Gdiplus.Tests.GdiplusTest subclass: #'Graphics.Gdiplus.Tests.Initialize
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.GdiplusTest subclass: #'Graphics.Gdiplus.Tests.LinearGradientBrushTest'
+Graphics.Gdiplus.Tests.GdiplusObjectTest subclass: #'Graphics.Gdiplus.Tests.AbstractCustomLineCapTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.GdiplusTest subclass: #'Graphics.Gdiplus.Tests.PathGradientBrushTest'
+Graphics.Gdiplus.Tests.GdiplusObjectTest subclass: #'Graphics.Gdiplus.Tests.BrushTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.GdiplusTest subclass: #'Graphics.Gdiplus.Tests.PenTest'
+Graphics.Gdiplus.Tests.GdiplusObjectTest subclass: #'Graphics.Gdiplus.Tests.FontCollectionTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.GdiplusTest subclass: #'Graphics.Gdiplus.Tests.StringFormatTest'
+Graphics.Gdiplus.Tests.GdiplusObjectTest subclass: #'Graphics.Gdiplus.Tests.FontFamilyTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Tests.GdiplusObjectTest subclass: #'Graphics.Gdiplus.Tests.FontTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Tests.GdiplusObjectTest subclass: #'Graphics.Gdiplus.Tests.GdiplusGraphicsTest'
+	instanceVariableNames: 'bitmap'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Tests.GdiplusObjectTest subclass: #'Graphics.Gdiplus.Tests.GraphicsPathTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Tests.GdiplusObjectTest subclass: #'Graphics.Gdiplus.Tests.ImageAttributesTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Tests.GdiplusObjectTest subclass: #'Graphics.Gdiplus.Tests.ImageTests'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Tests.GdiplusObjectTest subclass: #'Graphics.Gdiplus.Tests.MatrixTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Tests.GdiplusObjectTest subclass: #'Graphics.Gdiplus.Tests.PenTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Tests.GdiplusObjectTest subclass: #'Graphics.Gdiplus.Tests.RegionTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Tests.GdiplusObjectTest subclass: #'Graphics.Gdiplus.Tests.StringFormatTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Tests.AbstractCustomLineCapTest subclass: #'Graphics.Gdiplus.Tests.AdjustableArrowCapTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Tests.AbstractCustomLineCapTest subclass: #'Graphics.Gdiplus.Tests.CustomLineCapTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Tests.BrushTest subclass: #'Graphics.Gdiplus.Tests.HatchBrushTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Tests.BrushTest subclass: #'Graphics.Gdiplus.Tests.SolidBrushTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Tests.BrushTest subclass: #'Graphics.Gdiplus.Tests.TransformableBrushTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Tests.TransformableBrushTest subclass: #'Graphics.Gdiplus.Tests.GradientBrushTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Tests.TransformableBrushTest subclass: #'Graphics.Gdiplus.Tests.TextureBrushTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Tests.GradientBrushTest subclass: #'Graphics.Gdiplus.Tests.LinearGradientBrushTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Tests.GradientBrushTest subclass: #'Graphics.Gdiplus.Tests.PathGradientBrushTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Tests.FontCollectionTest subclass: #'Graphics.Gdiplus.Tests.InstalledFontCollectionTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Tests.FontCollectionTest subclass: #'Graphics.Gdiplus.Tests.PrivateFontCollectionTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -201,7 +330,13 @@ Graphics.Gdiplus.Tests.ImageTests subclass: #'Graphics.Gdiplus.Tests.ImageTest'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.InitializerTests subclass: #'Graphics.Gdiplus.Tests.BitmapFromBitmapInitializerTest'
+Graphics.Gdiplus.Tests.GradientBlendTest subclass: #'Graphics.Gdiplus.Tests.GradientCustomBlendTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Tests.GradientBlendTest subclass: #'Graphics.Gdiplus.Tests.GradientPresetBlendTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -214,6 +349,12 @@ Graphics.Gdiplus.Tests.InitializerTests subclass: #'Graphics.Gdiplus.Tests.Bitma
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Graphics.Gdiplus.Tests.InitializerTests subclass: #'Graphics.Gdiplus.Tests.BitmapFromFileInitializerTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Tests.InitializerTests subclass: #'Graphics.Gdiplus.Tests.BitmapFromGdiBitmapInitializerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -261,12 +402,6 @@ Graphics.Gdiplus.Tests.InitializerTests subclass: #'Graphics.Gdiplus.Tests.Image
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.InitializerTests subclass: #'Graphics.Gdiplus.Tests.InitializerTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 Graphics.Gdiplus.Tests.InitializerTests subclass: #'Graphics.Gdiplus.Tests.LinearGradientBrushFromPointsInitializerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -279,13 +414,7 @@ Graphics.Gdiplus.Tests.InitializerTests subclass: #'Graphics.Gdiplus.Tests.Linea
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.InitializerTests subclass: #'Graphics.Gdiplus.Tests.PenFromBrushInitializerTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Graphics.Gdiplus.Tests.InitializerTests subclass: #'Graphics.Gdiplus.Tests.PenFromColorInitializerTest'
+Graphics.Gdiplus.Tests.InitializerTests subclass: #'Graphics.Gdiplus.Tests.PenInitializerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -297,8 +426,14 @@ Graphics.Gdiplus.Tests.InitializerTests subclass: #'Graphics.Gdiplus.Tests.Solid
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Graphics.Gdiplus.Tests.InitializerTests subclass: #'Graphics.Gdiplus.Tests.TextureBrushInitializerTest'
+	instanceVariableNames: 'image'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 XProgramming.SUnit.TestResource subclass: #'Graphics.Gdiplus.Tests.FileResource'
-	instanceVariableNames: ''
+	instanceVariableNames: 'tempDir tempFileLocator'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

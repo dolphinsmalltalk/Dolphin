@@ -8,33 +8,28 @@ Graphics.Gdiplus.Tests.InitializerTests subclass: #'Graphics.Gdiplus.Tests.Bitma
 	classConstants: {}!
 Graphics.Gdiplus.Tests.BitmapFromIStreamInitializerTest guid: (Core.GUID fromString: '{264cb8bf-7428-488c-8342-807ed863ef1c}')!
 Graphics.Gdiplus.Tests.BitmapFromIStreamInitializerTest comment: ''!
-!Graphics.Gdiplus.Tests.BitmapFromIStreamInitializerTest categoriesForClass!Unclassified! !
 !Graphics.Gdiplus.Tests.BitmapFromIStreamInitializerTest methodsFor!
 
-gdipCreateBitmapFromStream: stream bitmap: bitmap 
-	constructorArgs := Processor activeProcess topFrame arguments.
-	^Ok!
-
-setUp
-	super setUp.
-	model := BitmapFromIStreamInitializer new library: self!
+subjectClass
+	^BitmapFromIStreamInitializer!
 
 testCreateHandle
-	| pStream |
+	| pStream constructor |
 	pStream := COM.IStream onHGLOBAL.
 	model iStream: pStream.
-	model createHandle.
-	self assert: constructorArgs size equals: 2.
-	self assert: constructorArgs first identicalTo: pStream.
-	self assertLastArgIsHandle!
+	constructor := self createHandle single.
+	self assert: constructor selector identicalTo: #gdipCreateBitmapFromStream:bitmap:.
+	self assert: constructor arguments size equals: 2.
+	self assert: constructor arguments first identicalTo: pStream.
+	self assert: constructor arguments last isKindOf: Handle.
+	pStream free!
 
 testIsPersistent
 	"Cant persist an <IStream>"
 
 	self deny: model isPersistent! !
 !Graphics.Gdiplus.Tests.BitmapFromIStreamInitializerTest categoriesForMethods!
-gdipCreateBitmapFromStream:bitmap:!accessing!public! !
-setUp!public!setup! !
+subjectClass!constants!private! !
 testCreateHandle!public!unit tests! !
 testIsPersistent!public!unit tests! !
 !

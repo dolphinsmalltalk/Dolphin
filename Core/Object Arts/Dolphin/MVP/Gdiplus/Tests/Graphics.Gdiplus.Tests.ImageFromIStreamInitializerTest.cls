@@ -8,33 +8,28 @@ Graphics.Gdiplus.Tests.InitializerTests subclass: #'Graphics.Gdiplus.Tests.Image
 	classConstants: {}!
 Graphics.Gdiplus.Tests.ImageFromIStreamInitializerTest guid: (Core.GUID fromString: '{fd12183c-22dc-4ca1-8ebc-e1d9e66485c2}')!
 Graphics.Gdiplus.Tests.ImageFromIStreamInitializerTest comment: ''!
-!Graphics.Gdiplus.Tests.ImageFromIStreamInitializerTest categoriesForClass!Unclassified! !
 !Graphics.Gdiplus.Tests.ImageFromIStreamInitializerTest methodsFor!
 
-gdipLoadImageFromStream: stream image: image 
-	constructorArgs := Processor activeProcess topFrame arguments.
-	^Ok!
-
-setUp
-	super setUp.
-	model := ImageFromIStreamInitializer new library: self!
+subjectClass
+	^ImageFromIStreamInitializer!
 
 testCreateHandle
-	| pStream |
+	| constructor pStream |
 	pStream := COM.IStream onHGLOBAL.
 	model iStream: pStream.
-	model createHandle.
-	self assert: constructorArgs size equals: 2.
-	self assert: constructorArgs first identicalTo: pStream.
-	self assertLastArgIsHandle!
+	constructor := self createHandle single.
+	self assert: constructor selector identicalTo: #gdipLoadImageFromStream:image:.
+	self assert: constructor arguments size equals: 2.
+	self assert: constructor arguments first identicalTo: pStream.
+	self assert: constructor arguments last isKindOf: Handle.
+	pStream free!
 
 testIsPersistent
 	"Cant persist an <IStream>"
 
 	self deny: model isPersistent! !
 !Graphics.Gdiplus.Tests.ImageFromIStreamInitializerTest categoriesForMethods!
-gdipLoadImageFromStream:image:!accessing!public! !
-setUp!public!setup! !
+subjectClass!constants!private! !
 testCreateHandle!public!unit tests! !
 testIsPersistent!public!unit tests! !
 !

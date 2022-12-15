@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'Graphics.Gdiplus.GpPropertyItem'
+Graphics.Gdiplus.GpStructure subclass: #'Graphics.Gdiplus.PropertyItem'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_GpPropertyItem_Size' -> 16r10.
 		'_OffsetOf_id' -> 16r0.
 		'_OffsetOf_length' -> 16r4.
 		'_OffsetOf_Type' -> 16r8.
-		'_OffsetOf_Value' -> 16rC
+		'_OffsetOf_Value' -> 16rC.
+		'_PropertyItem_Size' -> 16r10
 	}!
-Graphics.Gdiplus.GpPropertyItem guid: (Core.GUID fromString: '{dad9cd42-c61c-4040-bcd2-2f2e8d725fca}')!
-Graphics.Gdiplus.GpPropertyItem comment: '<GpPropertyItem> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpPropertyItem'' from type information in the ''GDI+ Library 1.0'' library.
+Graphics.Gdiplus.PropertyItem guid: (Core.GUID fromString: '{dad9cd42-c61c-4040-bcd2-2f2e8d725fca}')!
+Graphics.Gdiplus.PropertyItem comment: '<GpPropertyItem> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpPropertyItem'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
 
@@ -29,8 +29,7 @@ struct tagGpPropertyItem {
 	void* Value;
 } GpPropertyItem;
 '!
-!Graphics.Gdiplus.GpPropertyItem categoriesForClass!Unclassified! !
-!Graphics.Gdiplus.GpPropertyItem methodsFor!
+!Graphics.Gdiplus.PropertyItem methodsFor!
 
 id
 	"Answer the <Integer> value of the receiver's 'id' field."
@@ -106,7 +105,7 @@ valueArray
 	"Next line won't work with an array value, i.e., if length > 8."
 	type == PropertyTagTypeSRational ifTrue: [^(address sdwordAtOffset: 0) / (address sdwordAtOffset: 4)].
 	self error: 'unrecognised type'! !
-!Graphics.Gdiplus.GpPropertyItem categoriesForMethods!
+!Graphics.Gdiplus.PropertyItem categoriesForMethods!
 id!**compiled accessors**!public! !
 id:!**compiled accessors**!public! !
 length!**compiled accessors**!public! !
@@ -120,10 +119,10 @@ Value:!**compiled accessors**!public! !
 valueArray!accessing!public! !
 !
 
-!Graphics.Gdiplus.GpPropertyItem class methodsFor!
+!Graphics.Gdiplus.PropertyItem class methodsFor!
 
 byteSize
-	^_GpPropertyItem_Size!
+	^_PropertyItem_Size!
 
 defineFields
 	"Define the fields of the GpPropertyItem structure.
@@ -155,7 +154,7 @@ defineFields
 
 getFieldNames
 	^#(#id #length #Type #Value)! !
-!Graphics.Gdiplus.GpPropertyItem class categoriesForMethods!
+!Graphics.Gdiplus.PropertyItem class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

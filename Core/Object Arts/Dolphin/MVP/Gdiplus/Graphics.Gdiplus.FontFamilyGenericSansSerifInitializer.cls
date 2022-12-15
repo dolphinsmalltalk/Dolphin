@@ -1,23 +1,26 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.FontFamilyInitializer subclass: #'Graphics.Gdiplus.FontFamilyGenericSansSerifInitializer'
+Graphics.Gdiplus.FontFamilyGenericInitializer subclass: #'Graphics.Gdiplus.FontFamilyGenericSansSerifInitializer'
 	instanceVariableNames: ''
-	classVariableNames: 'Default'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Graphics.Gdiplus.FontFamilyGenericSansSerifInitializer guid: (Core.GUID fromString: '{f784e19e-0b3b-498c-a5c4-456c191906c7}')!
 Graphics.Gdiplus.FontFamilyGenericSansSerifInitializer comment: ''!
-!Graphics.Gdiplus.FontFamilyGenericSansSerifInitializer categoriesForClass!Unclassified! !
 !Graphics.Gdiplus.FontFamilyGenericSansSerifInitializer methodsFor!
 
-createHandle
+basicCreateHandle
 	| gpHandle |
 	gpHandle := Handle new.
-	self library gdipGetGenericFontFamilySansSerif: gpHandle.
-	^gpHandle! !
+	Gdip gdipGetGenericFontFamilySansSerif: gpHandle.
+	^gpHandle!
+
+printAttributesOn: aStream
+	aStream nextPutAll: #genericSansSerif! !
 !Graphics.Gdiplus.FontFamilyGenericSansSerifInitializer categoriesForMethods!
-createHandle!private!realizing/unrealizing! !
+basicCreateHandle!private!realizing/unrealizing! !
+printAttributesOn:!printing!private! !
 !
 
 !Graphics.Gdiplus.FontFamilyGenericSansSerifInitializer class methodsFor!

@@ -8,36 +8,33 @@ Graphics.Gdiplus.FontCollection subclass: #'Graphics.Gdiplus.InstalledFontCollec
 	classConstants: {}!
 Graphics.Gdiplus.InstalledFontCollection guid: (Core.GUID fromString: '{c09d8c03-5f28-11d7-b609-00e0987e8081}')!
 Graphics.Gdiplus.InstalledFontCollection comment: 'GdiplusInstalledFontCollection class represents the fonts installed on the system.'!
-!Graphics.Gdiplus.InstalledFontCollection categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.InstalledFontCollection methodsFor!
+
+clone
+	^self class new!
+
+initializerClass
+	"Answer the class of initializer usually associated with the receiver and which understands how to perform operations on the native Gdiplus objects such as disposing of them."
+
+	^InstalledFontCollectionInitializer!
+
+ownedHandle: aHandle
+	"Private - Set the handle of the external graphics's tool object represented and owned by the receiver to be the argument."
+
+	"The underlying handle is to a singleton object. We don't want to (or need to) free it, so don't take ownership"
+	ownsHandle := false.
+	self handle: aHandle! !
+!Graphics.Gdiplus.InstalledFontCollection categoriesForMethods!
+clone!copying!public! !
+initializerClass!constants!private! !
+ownedHandle:!accessing!private! !
+!
+
 !Graphics.Gdiplus.InstalledFontCollection class methodsFor!
-
-exampleGdipIFCEnumerating
-	"MSDN:  GDI+ >  Using GDI+ >  Using Text and Fonts > Enumerating Installed Fonts
-	This example displays the names of all installed fonts in a rectangle that's inset from
-	the bounds of the bitmap.
-
-		self exampleGdipIFCEnumerating showExample
-	"
-
-	| bitmap rect names stream |
-	bitmap := Bitmap extent: 500 @ 400.
-	rect := bitmap bounds insetBy: 40.
-	names := InstalledFontCollection new families collect: [:e | e name].
-	(stream := String new writeStream)
-		display: 'There are ';
-		display: names size;
-		display: ' installed fonts.  The family names are: ';
-		display: names first.
-	(2 to: names size) do: [:i | stream display: ', ' , (names at: i)].
-	bitmap graphics
-		drawString: stream contents layoutRect: rect;
-		drawRectangle: rect.
-	^bitmap!
 
 new
 	^self fromInitializer: InstalledFontCollectionInitializer default! !
 !Graphics.Gdiplus.InstalledFontCollection class categoriesForMethods!
-exampleGdipIFCEnumerating!examples!public!sunit! !
 new!instance creation!public! !
 !
 

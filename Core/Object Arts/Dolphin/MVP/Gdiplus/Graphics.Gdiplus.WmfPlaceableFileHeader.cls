@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'Graphics.Gdiplus.GpWmfPlaceableFileHeader'
+Graphics.Gdiplus.GpStructure subclass: #'Graphics.Gdiplus.WmfPlaceableFileHeader'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_GpWmfPlaceableFileHeader_Size' -> 16r18.
 		'_OffsetOf_BoundingBox' -> 16r6.
 		'_OffsetOf_Checksum' -> 16r14.
 		'_OffsetOf_Hmf' -> 16r4.
 		'_OffsetOf_Inch' -> 16rE.
 		'_OffsetOf_Key' -> 16r0.
-		'_OffsetOf_Reserved' -> 16r10
+		'_OffsetOf_Reserved' -> 16r10.
+		'_WmfPlaceableFileHeader_Size' -> 16r18
 	}!
-Graphics.Gdiplus.GpWmfPlaceableFileHeader guid: (Core.GUID fromString: '{e244edf0-9096-42dd-944d-3be54248689f}')!
-Graphics.Gdiplus.GpWmfPlaceableFileHeader comment: '<GpWmfPlaceableFileHeader> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpWmfPlaceableFileHeader'' from type information in the ''GDI+ Library 1.0'' library.
+Graphics.Gdiplus.WmfPlaceableFileHeader guid: (Core.GUID fromString: '{e244edf0-9096-42dd-944d-3be54248689f}')!
+Graphics.Gdiplus.WmfPlaceableFileHeader comment: '<GpWmfPlaceableFileHeader> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpWmfPlaceableFileHeader'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
 
@@ -33,13 +33,12 @@ struct tagGpWmfPlaceableFileHeader {
 	short Checksum;
 } GpWmfPlaceableFileHeader;
 '!
-!Graphics.Gdiplus.GpWmfPlaceableFileHeader categoriesForClass!Unclassified! !
-!Graphics.Gdiplus.GpWmfPlaceableFileHeader methodsFor!
+!Graphics.Gdiplus.WmfPlaceableFileHeader methodsFor!
 
 BoundingBox
 	"Answer the <GpWMFRect16> value of the receiver's 'BoundingBox' field."
 
-	^GpWMFRect16 fromAddress: bytes yourAddress + _OffsetOf_BoundingBox!
+	^WMFRect16 fromAddress: bytes yourAddress + _OffsetOf_BoundingBox!
 
 BoundingBox: aGpWMFRect16
 	"Set the receiver's 'BoundingBox' field to the value of the argument, aGpWMFRect16"
@@ -47,7 +46,7 @@ BoundingBox: aGpWMFRect16
 	aGpWMFRect16
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_BoundingBox + 1)
-		to: ##(_OffsetOf_BoundingBox + GpWMFRect16._GpWMFRect16_Size)
+		to: ##(_OffsetOf_BoundingBox + WMFRect16._WMFRect16_Size)
 		startingAt: 1!
 
 Checksum
@@ -99,7 +98,7 @@ Reserved: anInteger
 	"Set the receiver's 'Reserved' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_Reserved put: anInteger! !
-!Graphics.Gdiplus.GpWmfPlaceableFileHeader categoriesForMethods!
+!Graphics.Gdiplus.WmfPlaceableFileHeader categoriesForMethods!
 BoundingBox!**compiled accessors**!public! !
 BoundingBox:!**compiled accessors**!public! !
 Checksum!**compiled accessors**!public! !
@@ -114,10 +113,10 @@ Reserved!**compiled accessors**!public! !
 Reserved:!**compiled accessors**!public! !
 !
 
-!Graphics.Gdiplus.GpWmfPlaceableFileHeader class methodsFor!
+!Graphics.Gdiplus.WmfPlaceableFileHeader class methodsFor!
 
 byteSize
-	^_GpWmfPlaceableFileHeader_Size!
+	^_WmfPlaceableFileHeader_Size!
 
 defineFields
 	"Define the fields of the GpWmfPlaceableFileHeader structure.
@@ -142,7 +141,7 @@ defineFields
 			type: SWORDField new
 			offset: 4;
 		defineField: #BoundingBox
-			type: (StructureField type: GpWMFRect16)
+			type: (StructureField type: WMFRect16)
 			offset: 6;
 		defineField: #Inch
 			type: SWORDField new
@@ -157,7 +156,7 @@ defineFields
 
 getFieldNames
 	^#(#Key #Hmf #BoundingBox #Inch #Reserved #Checksum)! !
-!Graphics.Gdiplus.GpWmfPlaceableFileHeader class categoriesForMethods!
+!Graphics.Gdiplus.WmfPlaceableFileHeader class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
