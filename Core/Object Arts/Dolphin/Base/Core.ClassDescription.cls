@@ -541,9 +541,7 @@ instanceVariableNames
 	"Answer a <sequencedReadableCollection> of the receiver's instance variable names."
 
 	instanceVariables ifNil: [^#()].
-	^instanceVariables isString
-		ifTrue: [($\x20 split: instanceVariables) reject: [:each | each isEmpty]]
-		ifFalse: [instanceVariables]!
+	^instanceVariables isString ifTrue: [instanceVariables subStrings] ifFalse: [instanceVariables]!
 
 instanceVariableString
 	"Answer a string containing the names of the instance variables in instances of the

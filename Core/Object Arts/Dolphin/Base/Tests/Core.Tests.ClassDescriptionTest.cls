@@ -9,7 +9,6 @@ Core.Tests.DolphinTest subclass: #'Core.Tests.ClassDescriptionTest'
 Core.Tests.ClassDescriptionTest guid: (Core.GUID fromString: '{2e47ba8b-6e05-41a9-87ce-ccfeabd45cb7}')!
 Core.Tests.ClassDescriptionTest isNonInstantiable: true!
 Core.Tests.ClassDescriptionTest comment: ''!
-!Core.Tests.ClassDescriptionTest categoriesForClass!Unclassified! !
 !Core.Tests.ClassDescriptionTest methodsFor!
 
 allClassHierarchyInstancesDo: aMonadicValuable
@@ -20,6 +19,16 @@ canonicalInstance
 
 testClassBindingNames
 	self subclassResponsibility!
+
+testInstanceVariableString
+	"Originally the instance variable names of a class were stored as a space-separated String, rather than an array of Strings. This is still supported."
+
+	| subject |
+	subject := self canonicalInstance newAnonymousSubclass.
+	subject instanceVariableString: 'a  b cd '.
+	self assert: subject instanceVariableString equals: 'a  b cd '.
+	self assert: subject instanceVariableNames equals: #('a' 'b' 'cd').
+	self assert: Association instanceVariableString equals: 'key value'!
 
 testInstVarName
 	Smalltalk allClasses do: 
@@ -60,6 +69,7 @@ testWhichClassDefinesClassVar
 allClassHierarchyInstancesDo:!helpers!private! !
 canonicalInstance!constants!public! !
 testClassBindingNames!public! !
+testInstanceVariableString!public!unit tests! !
 testInstVarName!public!unit tests! !
 testIsLiteral!public! !
 testIsSelfEvaluating!public! !
