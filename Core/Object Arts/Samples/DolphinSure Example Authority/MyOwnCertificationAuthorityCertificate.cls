@@ -1,15 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Security.DolphinSureCertificationAuthorityCertificate subclass: #'Security.Examples.MyOwnCertificationAuthorityCertificate'
+DolphinSureCertificationAuthorityCertificate subclass: #MyOwnCertificationAuthorityCertificate
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Security.Examples.MyOwnCertificationAuthorityCertificate guid: (Core.GUID fromString: '{3a6b1632-077d-49f5-81be-ed0688e9c2b0}')!
-Security.Examples.MyOwnCertificationAuthorityCertificate comment: ''!
-!Security.Examples.MyOwnCertificationAuthorityCertificate categoriesForClass!Cryptography-Certificates! !
-!Security.Examples.MyOwnCertificationAuthorityCertificate methodsFor!
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+MyOwnCertificationAuthorityCertificate guid: (GUID fromString: '{3a6b1632-077d-49f5-81be-ed0688e9c2b0}')!
+MyOwnCertificationAuthorityCertificate comment: ''!
+!MyOwnCertificationAuthorityCertificate categoriesForClass!Cryptography-Certificates! !
+!MyOwnCertificationAuthorityCertificate methodsFor!
 
 publicKey
 	"Answer the public key of the receiver"
@@ -20,12 +19,12 @@ publisherPublicKey
 	"Private - Answer the publisher's public key"
 
 	^self publicKey! !
-!Security.Examples.MyOwnCertificationAuthorityCertificate categoriesForMethods!
+!MyOwnCertificationAuthorityCertificate categoriesForMethods!
 publicKey!accessing!public! !
 publisherPublicKey!accessing!private! !
 !
 
-!Security.Examples.MyOwnCertificationAuthorityCertificate class methodsFor!
+!MyOwnCertificationAuthorityCertificate class methodsFor!
 
 generate
 	"Private - Generates an instance of the receiver
@@ -34,7 +33,7 @@ generate
 	"
 
 	| oaCert info |
-	info := (Root.Security.DolphinSureCertificateInfo serial: 'MY100001' owner: 'My Own Company Inc.' publicKey: self publicKey).
+	info := (DolphinSureCertificateInfo serial: 'MY100001' owner: 'My Own Company Inc.' publicKey: self publicKey).
 	^(oaCert := self basicNew)
 		publisherCertificate: oaCert;
 		info: info privateKey: self privateKey.
@@ -78,7 +77,7 @@ validYears
 	for by default. Nil indicates valid indefinitely."
 
 	^nil! !
-!Security.Examples.MyOwnCertificationAuthorityCertificate class categoriesForMethods!
+!MyOwnCertificationAuthorityCertificate class categoriesForMethods!
 generate!instance creation!private! !
 new!instance creation!public! !
 privateKey!constants!private! !

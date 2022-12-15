@@ -10,7 +10,6 @@ Security.Examples.ProtectedScribbleSessionManager guid: (Core.GUID fromString: '
 Security.Examples.ProtectedScribbleSessionManager comment: 'This is a version of the standard Scribble application that is protect by serial number. Try deploying this application and then entering the following serial number on startup:
 
 	CWDH-UA9B-VS9Q-TAVQ-FP0C-YBSY-NZ5G-DB'!
-!Security.Examples.ProtectedScribbleSessionManager categoriesForClass!Unclassified! !
 !Security.Examples.ProtectedScribbleSessionManager methodsFor!
 
 encryptedPackageNames

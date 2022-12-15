@@ -1,0 +1,42 @@
+﻿| package |
+package := Package name: 'DolphinSure (Old Names)'.
+package paxVersion: 2.1;
+	basicComment: 'DolphinSure Old (pre-namespace) Names 
+
+This package includes legacy aliases for DolphinSure classes that have been renamed in Dolphin 8.x following the addition of Namespaces.
+The names are deprecated, but may be referenced by pre-8.x packages.'.
+
+
+package setVariableNames: #(
+	#{Smalltalk.DolphinSureCertificate}
+	#{Smalltalk.DolphinSureCertificateInfo}
+	#{Smalltalk.DolphinSureCertificateStore}
+	#{Smalltalk.DolphinSureCertificationAuthorityCertificate}
+).
+
+package setAliasVariableNames: #(
+	#{Smalltalk.DolphinSureCertificate}
+	#{Smalltalk.DolphinSureCertificateInfo}
+	#{Smalltalk.DolphinSureCertificateStore}
+	#{Smalltalk.DolphinSureCertificationAuthorityCertificate}
+).
+
+package setPrerequisites: #(
+	'DolphinSure'
+).
+
+package!
+
+"Variable Aliases"!
+
+Smalltalk.DolphinSureCertificate := Security.DolphinSureCertificate!
+
+Smalltalk.DolphinSureCertificateInfo := Security.DolphinSureCertificateInfo!
+
+Smalltalk.DolphinSureCertificateStore := Security.DolphinSureCertificateStore!
+
+Smalltalk.DolphinSureCertificationAuthorityCertificate := Security.DolphinSureCertificationAuthorityCertificate!
+
+
+"End of package definition"!
+

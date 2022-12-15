@@ -1,0 +1,27 @@
+﻿| package |
+package := Package name: 'Security Examples'.
+package paxVersion: 2.1;
+	basicComment: ''.
+
+
+package setClassNames: #(
+	#{Security.Examples}
+).
+
+package setPrerequisites: #(
+	'..\Dolphin\DolphinSure\DolphinSure'
+).
+
+package!
+
+"Class Definitions"!
+
+Security subclass: #'Security.Examples'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"End of package definition"!
+

@@ -1,15 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Security.DolphinSureCertificate subclass: #'Security.Examples.MyOwnCertificate'
+DolphinSureCertificate subclass: #MyOwnCertificate
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Security.Examples.MyOwnCertificate guid: (Core.GUID fromString: '{a2592b78-b801-4788-885c-e1c32f062980}')!
-Security.Examples.MyOwnCertificate comment: ''!
-!Security.Examples.MyOwnCertificate categoriesForClass!Cryptography-Certificates! !
-!Security.Examples.MyOwnCertificate methodsFor!
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+MyOwnCertificate guid: (GUID fromString: '{a2592b78-b801-4788-885c-e1c32f062980}')!
+MyOwnCertificate comment: ''!
+!MyOwnCertificate categoriesForClass!Cryptography-Certificates! !
+!MyOwnCertificate methodsFor!
 
 backgroundImageFile
 	"Private - Answers the resource name of the background image file
@@ -37,13 +36,13 @@ purpose
 	"Answers the purpose of this certificate"
 
 	^'This certificate ensures that the content is from a known individual and guarantees that it has not been modified since it was originally created.'! !
-!Security.Examples.MyOwnCertificate categoriesForMethods!
+!MyOwnCertificate categoriesForMethods!
 backgroundImageFile!constants!private! !
 imageAttributes!drawing!helpers!private! !
 purpose!accessing!public! !
 !
 
-!Security.Examples.MyOwnCertificate class methodsFor!
+!MyOwnCertificate class methodsFor!
 
 info: certificateInfo 
 	"Answers an instance of the receiver"
@@ -64,7 +63,7 @@ info: certificateInfo authority: aCertificationAuthorityCertificate authorityPri
 rootCertificateClass
 	"This method must answer the class of the certification authority certificate"
 
-	^Security.Examples.MyOwnCertificationAuthorityCertificate!
+	^MyOwnCertificationAuthorityCertificate!
 
 serial: serial owner: owner details: details 
 	"Answers a certificate definition given the above detail. This definition is presented in a Smalltalk
@@ -125,7 +124,7 @@ trustedData validData asString "Display it".
 trustedData data at: 1 put: 0 "Change the data".
 trustedData validData asString "Now try to Display it"."' 
 				formatWith: keys first displayString).
-	Tools.SmalltalkWorkspaceDocument show setDocumentData: stream contents.
+	SmalltalkWorkspaceDocument show setDocumentData: stream contents.
 	^cert!
 
 validYears
@@ -133,7 +132,7 @@ validYears
 	for by default. Nil indicates valid indefinitely."
 
 	^1! !
-!Security.Examples.MyOwnCertificate class categoriesForMethods!
+!MyOwnCertificate class categoriesForMethods!
 info:!instance creation!public! !
 info:authority:authorityPrivateKey:!instance creation!public! !
 rootCertificateClass!instance creation!public! !

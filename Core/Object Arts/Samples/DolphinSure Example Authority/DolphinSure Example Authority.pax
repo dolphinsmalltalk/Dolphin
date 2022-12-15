@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'DolphinSure Example Authority'.
-package paxVersion: 2.1;
+package paxVersion: 1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Example Authority for DolphinSure Sample
 Copyright (c) Object Arts Ltd, 2006.
@@ -16,40 +16,41 @@ MyOwnCertificate serial: ''MY100002'' owner: ''My Own Company Inc.'' details: ''
 Evaluate the above to create an example certificate for My Own Company inc.'.
 
 
-package setClassNames: #(
-	#{Security.Examples}
-	#{Security.Examples.MyOwnCertificate}
-	#{Security.Examples.MyOwnCertificationAuthorityCertificate}
-).
+package classNames
+	add: #MyOwnCertificate;
+	add: #MyOwnCertificationAuthorityCertificate;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
 
 package setPrerequisites: #(
 	'..\..\Dolphin\IDE\Base\Development System'
 	'..\..\Dolphin\Base\Dolphin'
-	'..\..\Dolphin\DolphinSure\DolphinSure'
-).
+	'..\..\Dolphin\DolphinSure\DolphinSure').
 
 package!
 
 "Class Definitions"!
 
-Security subclass: #'Security.Examples'
+DolphinSureCertificate subclass: #MyOwnCertificate
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Security.DolphinSureCertificate subclass: #'Security.Examples.MyOwnCertificate'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinSureCertificationAuthorityCertificate subclass: #MyOwnCertificationAuthorityCertificate
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Security.DolphinSureCertificationAuthorityCertificate subclass: #'Security.Examples.MyOwnCertificationAuthorityCertificate'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
 
 "End of package definition"!
 

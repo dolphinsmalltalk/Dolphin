@@ -45,6 +45,7 @@ contents
 		add: #('Core\Object Arts\Dolphin\Lagoon\Product Protection Base.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Lagoon\Product Protection.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\DolphinSure\DolphinSure.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\DolphinSure\DolphinSure (Old Names).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\DolphinSure\DolphinSure UI.pax' #plain #imageBased);
 		yourself.
 

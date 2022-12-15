@@ -15,10 +15,10 @@ package setClassNames: #(
 ).
 
 package setPrerequisites: #(
-	'..\..\DolphinSure Example Authority\DolphinSure Example Authority'
 	'..\..\..\Dolphin\Lagoon\Product Protection'
 	'..\..\..\Dolphin\Lagoon\Product Protection Base'
 	'..\..\MVP\Scribble\Scribble'
+	'..\..\Security Examples'
 ).
 
 package!

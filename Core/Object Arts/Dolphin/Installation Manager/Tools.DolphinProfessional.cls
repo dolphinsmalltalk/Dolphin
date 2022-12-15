@@ -53,6 +53,7 @@ contents
 		add: #('Core\Object Arts\Samples\Console\Hello World\Hello World (Console).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Samples\Console\Catenate\Catenate.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Samples\Console\Calculator\Calculator (Console).pax' #plain #imageBased);
+		add: #('Core\Object Arts\Samples\Security Examples.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Samples\Lagoon\Protected Product\Protected Scribble.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Samples\Lagoon\Protected Product\Protected Notepad.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Samples\Utilities\File System Monitor\File System Monitor.pax' #plain #imageBased);

@@ -12,7 +12,6 @@ Security.Examples.ProtectedNotepadSessionManager comment: 'This is a version of 
 	29PS-EV22-WA3C-PT7S-US87-FBWU-U1PM-D80V-7VAL-RSJQ-YH5C-THJV-KNWD-8VKG-AWRY-Q2L0-Y3CN-A3LK-MQEX-S6MJ-XB38-BWUP-VQYH-EBWN-13HY-AAT5-YCUK-8XMN-GHTJ-SHTG-YJ29-K7SE-MNRJ-1HJQ-3ADX-E8Q4-PKS8-958/DLJP-FY8E-VMYE-58GX-VKQ1-LVQF-NKU2-03YK-NPAD-L0NC-8ALE-VNC3-YXCR-7R8S-9U1S-AZWG-REJ7-EXP2-E8GP-AG73-UAVH-SMKV-BF3N-VQLD-2K1F-G3AA-KFMZ-3M3P-YKPE-X1LY-D987-3YKU-HCBC-BX68-PSVK-5QDV-MP97-9VL
 
 Which is -- of course -- too long to be practical.  TODO: change this example to use a key file.'!
-!Security.Examples.ProtectedNotepadSessionManager categoriesForClass!Unclassified! !
 !Security.Examples.ProtectedNotepadSessionManager methodsFor!
 
 encryptedPackageNames

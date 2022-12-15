@@ -10,7 +10,6 @@ Security.Examples.MyCompanySerialNumber guid: (Core.GUID fromString: '{c1ed7586-
 Security.Examples.MyCompanySerialNumber comment: 'This class is a serial number factory for products of "MyCompany". Any <ProtectedProductSessionManager> that wishes to make use of these serial numbers should override it''s #serialNumberClass to answer this class. New serial numbers can be generated for MyCompany''s products by evaluating:
 
 MyCompanySerialNumber new displayString "Display it"'!
-!Security.Examples.MyCompanySerialNumber categoriesForClass!Unclassified! !
 !Security.Examples.MyCompanySerialNumber class methodsFor!
 
 instanceDecodingKey
