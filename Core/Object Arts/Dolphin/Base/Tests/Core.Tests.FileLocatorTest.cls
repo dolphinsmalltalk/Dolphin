@@ -8,12 +8,26 @@ Core.Tests.DolphinTest subclass: #'Core.Tests.FileLocatorTest'
 	classConstants: {}!
 Core.Tests.FileLocatorTest guid: (Core.GUID fromString: '{635f7234-ba5a-4a72-97b1-40d81990cad7}')!
 Core.Tests.FileLocatorTest comment: ''!
-!Core.Tests.FileLocatorTest categoriesForClass!Unclassified! !
 !Core.Tests.FileLocatorTest methodsFor!
+
+testAbsoluteFileLocator
+	| locator workingDir relative absolute |
+	locator := FileLocator absolute.
+	self assert: locator isSelfEvaluating.
+	self assert: (Compiler evaluate: locator printString) equals: locator.
+	workingDir := File workingDirectory.
+	absolute := SessionManager current imageFileName.
+	relative := File relativePathOf: absolute to: workingDir.
+	"Rather counterintuitively from an API perspective, the absolute locator will convert a path relative to the working directory to an absolute path when sent #relativePathTo:, but this is because that API is misnamed. Really we are asking the locator to convert a path to the minimal form that it can reverse back to a full path, i.e. translate to locator namespace. For an absolute locator, the minimal form is always a full path."
+	self assert: (locator relativePathTo: relative) equals: absolute.
+	"Doesn't perform any translation to local file spec (which is really the request for the locator to map from a path in its minimal form back to the full path of the file, i.e. translate from locator namespace to global namespace)"
+	self assert: (locator localFileSpecFor: absolute) equals: absolute!
 
 testImageRelativeFileLocator
 	| locator relative fullpath |
 	locator := FileLocator imageRelative.
+	self assert: locator isSelfEvaluating.
+	self assert: (Compiler evaluate: locator printString) equals: locator.
 
 	"File in base directory."
 	fullpath := File composePath: SessionManager current imageBase subPath: 'dolphin.img'.
@@ -54,6 +68,8 @@ testImageRelativeFileLocator
 testInstallRelativeFileLocator
 	| locator relative fullpath base |
 	locator := FileLocator installRelative.
+	self assert: locator isSelfEvaluating.
+	self assert: (Compiler evaluate: locator printString) equals: locator.
 
 	"File in base directory."
 	base := SessionManager current installationDirectory.
@@ -100,6 +116,7 @@ testSingletonSerialisationToStb
 	bytes := singletons binaryStoreBytes.
 	self assert: ((Object fromBinaryStoreBytes: bytes) asIdentitySet - singletons) isEmpty! !
 !Core.Tests.FileLocatorTest categoriesForMethods!
+testAbsoluteFileLocator!public!unit tests! !
 testImageRelativeFileLocator!public!unit tests! !
 testInstallRelativeFileLocator!public!unit tests! !
 testSingletonSerialisationToStb!public!unit tests! !

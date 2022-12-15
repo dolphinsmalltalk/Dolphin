@@ -17,12 +17,24 @@ FileLocator absolute localFileSpecFor: relativePath. "Display It"'!
 !Kernel.AbsoluteFileLocator categoriesForClass!System-Support! !
 !Kernel.AbsoluteFileLocator methodsFor!
 
+isSelfEvaluating
+	"Answer whether or not the receiver has a printString representation that evaluates back to an equivalent object."
+
+	^true!
+
 localFileSpecFor: aStringFilename
 	"Answer a filespec for aStringFilename, which is expected to be an absolute path already."
 
 	^aStringFilename
 
 !
+
+printOn: aStream
+	"Append a developer friendly textual representation of the receiver to aStream."
+
+	aStream
+		print: self class;
+		nextPutAll: ' current'!
 
 relativePathTo: aFilename
 	"Answer a minimal <readableString> relative path to the resource with the 
@@ -36,7 +48,9 @@ stbSaveOn: anSTBOutFiler
 
 	anSTBOutFiler writePreambleFor: self! !
 !Kernel.AbsoluteFileLocator categoriesForMethods!
+isSelfEvaluating!public!testing! !
 localFileSpecFor:!accessing!public! !
+printOn:!printing!public! !
 relativePathTo:!accessing!public! !
 stbSaveOn:!binary filing!public! !
 !

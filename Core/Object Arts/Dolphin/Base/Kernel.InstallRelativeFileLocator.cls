@@ -16,12 +16,26 @@ Instances of this class always locate files relative to the image directory, unl
 basePath
 	^SessionManager current installationDirectory!
 
+isSelfEvaluating
+	"Answer whether or not the receiver has a printString representation that evaluates back to an equivalent object."
+
+	^true!
+
+printOn: aStream
+	"Append a developer friendly textual representation of the receiver to aStream."
+
+	aStream
+		print: self class;
+		nextPutAll: ' current'!
+
 stbSaveOn: anSTBOutFiler 
 	"Save out a binary representation of the receiver to anSTBOutFiler."
 
 	anSTBOutFiler writePreambleFor: self! !
 !Kernel.InstallRelativeFileLocator categoriesForMethods!
 basePath!accessing!public! !
+isSelfEvaluating!public!testing! !
+printOn:!printing!public! !
 stbSaveOn:!binary filing!public! !
 !
 
