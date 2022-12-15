@@ -8,7 +8,6 @@ Core.Tests.LocaleTest subclass: #'OS.Tests.WindowsLocaleTest'
 	classConstants: {}!
 OS.Tests.WindowsLocaleTest guid: (Core.GUID fromString: '{1cc6ee0d-11ce-44fd-940d-7126f73516ba}')!
 OS.Tests.WindowsLocaleTest comment: ''!
-!OS.Tests.WindowsLocaleTest categoriesForClass!Unclassified! !
 !OS.Tests.WindowsLocaleTest methodsFor!
 
 defaultSubject
@@ -153,6 +152,11 @@ testIndexOfMonth
 		pairsDo: [:month :index | self assert: (subject indexOfMonth: month) equals: index].
 	#('en-US' 'en-GB') do: [:each | self verifyIndexOfEnglishMonths: (Locale named: each)]!
 
+testListSeparator
+	| subject |
+	subject := Locale named: 'fr-FR'.
+	self assert: subject listSeparator equals: ';'!
+
 testLongDateFormats
 	self assert: ((Locale standard: 'en-US') longDateFormats includes: 'MMMM dd, yyyy').
 	self assert: ((Locale standard: 'en-GB') longDateFormats includes: 'dd MMMM yyyy')!
@@ -281,6 +285,7 @@ testDisplayFloatOnNegativeModes!public!unit tests! !
 testEnglishName!public!unit tests! !
 testFirstDayOfWeek!public!unit tests! !
 testIndexOfMonth!public!unit tests! !
+testListSeparator!public!unit tests! !
 testLongDateFormats!public!unit tests! !
 testLowercaseString!public!unit tests! !
 testMonthAbbreviation!public!unit tests! !

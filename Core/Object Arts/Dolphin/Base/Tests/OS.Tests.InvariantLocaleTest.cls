@@ -8,7 +8,6 @@ Core.Tests.LocaleTest subclass: #'OS.Tests.InvariantLocaleTest'
 	classConstants: {}!
 OS.Tests.InvariantLocaleTest guid: (Core.GUID fromString: '{297397a3-1ee2-48b4-b815-f58a5308bc8c}')!
 OS.Tests.InvariantLocaleTest comment: ''!
-!OS.Tests.InvariantLocaleTest categoriesForClass!Unclassified! !
 !OS.Tests.InvariantLocaleTest methodsFor!
 
 defaultSubject
@@ -56,6 +55,9 @@ testFirstDayOfWeek
 
 testIndexOfMonth
 	self verifyIndexOfEnglishMonths: self defaultSubject!
+
+testListSeparator
+	self assert: self defaultSubject listSeparator equals: ','!
 
 testLowercaseString
 	| subject |
@@ -152,6 +154,7 @@ testDayOfWeekName!public!unit tests! !
 testDisplayFloatOn!public!unit tests! !
 testFirstDayOfWeek!public!unit tests! !
 testIndexOfMonth!public!unit tests! !
+testListSeparator!public!unit tests! !
 testLowercaseString!public!unit tests! !
 testMonthAbbreviations!public!unit tests! !
 testMonthName!public!unit tests! !

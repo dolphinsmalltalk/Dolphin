@@ -8,7 +8,6 @@ Core.Tests.LocaleTest subclass: #'Kernel.Tests.SmalltalkLocaleTest'
 	classConstants: {}!
 Kernel.Tests.SmalltalkLocaleTest guid: (Core.GUID fromString: '{0a445b92-78d1-4c9c-a3f4-7be49f0c2932}')!
 Kernel.Tests.SmalltalkLocaleTest comment: ''!
-!Kernel.Tests.SmalltalkLocaleTest categoriesForClass!Unclassified! !
 !Kernel.Tests.SmalltalkLocaleTest methodsFor!
 
 defaultSubject
@@ -55,6 +54,9 @@ testFirstDayOfWeek
 
 testIndexOfMonth
 	self verifyIndexOfEnglishMonths: self defaultSubject!
+
+testListSeparator
+	self assert: self defaultSubject listSeparator isEmpty!
 
 testLowercaseString
 	| subject |
@@ -149,6 +151,7 @@ testDayOfWeekName!public!unit tests! !
 testDisplayFloatOn!public!unit tests! !
 testFirstDayOfWeek!public!unit tests! !
 testIndexOfMonth!public!unit tests! !
+testListSeparator!public!unit tests! !
 testLowercaseString!public!unit tests! !
 testMonthAbbreviations!public!unit tests! !
 testMonthName!public!unit tests! !

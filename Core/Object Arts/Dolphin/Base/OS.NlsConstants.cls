@@ -41,6 +41,8 @@ Kernel.SharedPool subclass: #'OS.NlsConstants'
 		'DATE_SHORTDATE' -> 16r1.
 		'DATE_USE_ALT_CALENDAR' -> 16r4.
 		'DATE_YEARMONTH' -> 16r8.
+		'LANG_INVARIANT' -> 16r7F.
+		'LANG_NEUTRAL' -> 16r0.
 		'LCID_INSTALLED' -> 16r1.
 		'LCID_SUPPORTED' -> 16r2.
 		'LCMAP_BYTEREV' -> 16r800.
@@ -209,7 +211,10 @@ Kernel.SharedPool subclass: #'OS.NlsConstants'
 		'NORM_IGNORENONCASE' -> 16r2.
 		'NORM_IGNORESYMBOLS' -> 16r4.
 		'NORM_IGNOREWIDTH' -> 16r20000.
-		'NORM_LINGUISTIC_CASING' -> 16r8000000
+		'NORM_LINGUISTIC_CASING' -> 16r8000000.
+		'SORT_DEFAULT' -> 16r0.
+		'SUBLANG_DEFAULT' -> 16r1.
+		'SUBLANG_NEUTRAL' -> 16r0
 	}!
 OS.NlsConstants guid: (Core.GUID fromString: '{6d273e59-fb86-438c-9db3-004a0114bb19}')!
 OS.NlsConstants isNonInstantiable: true!

@@ -252,9 +252,9 @@ lastTwoDigitYear
 	^29!
 
 listSeparator
-	"Answer the String used in the receiver locale to separate items in lists, typically a comma."
+	"Answer the String used in the receiver locale to separate items in lists, typically a comma. In Smalltalk no separator is used."
 
-	^','!
+	^''!
 
 localizedDisplayName
 	"Answer the <String> name of the Locale in the current UI language of the host system."

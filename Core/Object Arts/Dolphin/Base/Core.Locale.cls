@@ -762,7 +762,7 @@ stbSaveOn: anSTBOutFiler
 subLanguageId
 	"Answer the <integer> Windows sub-language id (the 6 high-order bits of the LCID)."
 
-	^self lcid bitShift: -10!
+	^(self lcid bitShift: -10) bitAnd: 16r3F!
 
 tag
 	"Answer the RFC4646 language tag for this locale."
@@ -947,7 +947,7 @@ makeLangId: langIdBits subLang: subLangIdBits
 	"Private - Answer a Win32 language Id word constructed from langIdBits (10 bits
 	are significant) and subLangIdBits (6 bits are significant)."
 
-	^(subLangIdBits bitAnd: 63) << 10 bitOr: (langIdBits bitAnd: 1023)!
+	^(subLangIdBits bitAnd: 16r3F) << 10 bitOr: (langIdBits bitAnd: 16r3FF)!
 
 makeLcId: langIdWord sortId: sortIdBits
 	"Private - Answer a Win32 Locale Id dword constructed from langIdWord and 
