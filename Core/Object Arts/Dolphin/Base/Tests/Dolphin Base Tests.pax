@@ -47,6 +47,7 @@ package setClassNames: #(
 	#{Core.Tests.LinkTest}
 	#{Core.Tests.LocaleTest}
 	#{Core.Tests.LookupTableTest}
+	#{Core.Tests.MessageNotUnderstoodTest}
 	#{Core.Tests.MessageTest}
 	#{Core.Tests.MetaclassTest}
 	#{Core.Tests.MethodCategoryTest}
@@ -490,6 +491,12 @@ Core.Tests.DolphinTest subclass: #'Core.Tests.LocaleTest'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'Kernel.Tests.MemoryManagerTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'Core.Tests.MessageNotUnderstoodTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
