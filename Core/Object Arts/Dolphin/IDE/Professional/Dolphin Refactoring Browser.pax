@@ -1234,24 +1234,21 @@ getOptionVariableTypes: choicesCollection selected: suggestionsCollection
 		multipleChoices: ((choicesCollection union: suggestionsCollection)
 				asSortedCollection: [:a :b | a name < b name])
 		caption: 'Select class(es) of new method… ')
+		newPrompterBlock: 
+				[:newModel |
+				Smalltalk developmentSystem classChooserClass createOn: (newModel ?? class) realClass];
 		newCaption: 'Add Other Class…';
 		validater: 
-				[:aString |
+				[:aClass |
 				| result |
 				result := ValidationResult new.
-				(self resolveClass: aString)
-					ifNil: [result errorMessage: '<1s> is not a valid class name' << aString].
+				(self model classFor: aClass) ifNil: [result errorMessage: '<1s> is not a visible class' << aClass].
 				result];
-		newBlock: [:aString | self resolveClass: aString];
+		newBlock: [:aClass | self model classFor: aClass];
 		showModal!
 
-resolveClass: aString
-	| binding |
-	aString isEmpty ifTrue: [^nil].
-	binding := aString asQualifiedReference bindingOrNil.
-	^(binding notNil
-		and: [binding isClassBinding and: [self model environment includesClass: binding value]])
-			ifTrue: [self model classFor: binding value]! !
+resolveClass: aClass
+	^self model classFor: aClass! !
 !Refactory.Browser.MoveMethodRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
 getOptionSelfArgumentName!public! !

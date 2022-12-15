@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 UI.ValueDialog subclass: #'Tools.ChooseClassDialog'
-	instanceVariableNames: 'classesPresenter allowNil nilButtonCaption'
+	instanceVariableNames: 'classesPresenter allowNil nilButtonCaption validater'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -100,7 +100,18 @@ queryCommand: query
 		ifTrue: 
 			[query isEnabled: allowNil.
 			^true].
-	^super queryCommand: query! !
+	^super queryCommand: query!
+
+validate
+	^self validater value: self value!
+
+validater
+	^self model validater!
+
+validater: aMonadicValuable
+	"Set the <monadicValuable> used to validate the user's reply. The valuable is passed the current reply text as its argument first argument, and is expected to answer a <ValuationResult>, the value of which indicates whether the text is considered valid in context. The OK button is not enabled until the ValidationResult's value is true. The validator can also pass out a hint details to be displayed in a message bubble if desired (see ValidationResult for the options available). The hint is primarily intended as a means to explain to the user why the OK button is disabled, as this can otherwise be difficult to understand."
+
+	self model validater: aMonadicValuable! !
 !Tools.ChooseClassDialog categoriesForMethods!
 allowNil!accessing!public! !
 allowNil:!accessing!public! !
@@ -117,6 +128,9 @@ onClassSelected!event handling!public! !
 onViewOpened!event handling!public! !
 packages:!public!selection! !
 queryCommand:!commands!private! !
+validate!operations!public! !
+validater!accessing!public! !
+validater:!initializing!public! !
 !
 
 !Tools.ChooseClassDialog class methodsFor!

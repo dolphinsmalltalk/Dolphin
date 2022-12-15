@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 UI.ValueDialog subclass: #'UI.ChoicePrompter'
-	instanceVariableNames: 'choicePresenter newBlock newCaption newPrompt validater'
+	instanceVariableNames: 'choicePresenter newBlock newCaption newPrompt validater newPrompterBlock'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -88,7 +88,11 @@ initialize
 	super initialize.
 	newBlock := [:each | each yourself].
 	newPrompt := 'New name:'.
-	newCaption := 'New…'!
+	newCaption := 'New…'.
+	newPrompterBlock := [:newModel | Prompter
+				createOn: newModel
+				prompt: self newPrompt
+				caption: self newCaption].!
 
 model: aSubjectModel
 	"Connect the receiver to aSubjectModel. The choice presenter shares this
@@ -140,10 +144,11 @@ newPrompt
 
 	^newPrompt!
 
-newPrompt: anObject
-	"Set the value of the receiver's 'newPrompt' instance variable to the argument, anObject."
+newPrompt: aString
+	newPrompt := aString!
 
-	newPrompt := anObject!
+newPrompterBlock: aMonadicValuable
+	newPrompterBlock := aMonadicValuable!
 
 nilChoice: anObject
 	"Sets the choice that can be used to represent a nil value in the model"
@@ -151,12 +156,8 @@ nilChoice: anObject
 	choicePresenter nilChoice: anObject!
 
 promptForNewNamed: anObject
-	| newPrompter default |
-	default := anObject ifNil: [''] ifNotNil: [choicePresenter view getTextBlock value: anObject].
-	newPrompter := Prompter
-				createOn: default
-				prompt: self newPrompt
-				caption: self newCaption.
+	| newPrompter |
+	newPrompter := newPrompterBlock value: anObject.
 	self validater ifNotNil: [:v | newPrompter validater: v].
 	^newPrompter showModal ifNotNil: [:chosenName | newBlock value: chosenName]!
 
@@ -184,6 +185,7 @@ newChoice!commands!public! !
 newMultipleChoice!commands!public! !
 newPrompt!accessing!public! !
 newPrompt:!accessing!public! !
+newPrompterBlock:!accessing!public! !
 nilChoice:!accessing!public! !
 promptForNewNamed:!helpers!private! !
 validater!accessing!public! !
