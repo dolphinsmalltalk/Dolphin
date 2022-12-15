@@ -37,23 +37,21 @@ printSelectorOn: aPuttableStream
 printSignatureOn: aPuttableStream
 	"Emit the method signature described by the receiver to the <puttableStream> argument."
 
-	argumentNames isEmpty
-		ifTrue: 
-			["Unary selector"
-			aPuttableStream nextPutAll: keywords first]
-		ifFalse: 
-			[| separator |
-			separator := 
-					[separator := ' '.
-					''].
-			keywords with: argumentNames
-				do: 
-					[:eachKeyword :eachArgument |
-					aPuttableStream
-						nextPutAll: separator value;
-						nextPutAll: eachKeyword;
-						space;
-						display: eachArgument]]!
+	| argc |
+	argc := argumentNames size.
+	aPuttableStream nextPutAll: keywords first.
+	argc == 0 ifTrue: [^self].
+	aPuttableStream
+		space;
+		display: argumentNames first.
+	2 to: argc
+		do: 
+			[:i |
+			aPuttableStream
+				space;
+				nextPutAll: (keywords at: i);
+				space;
+				display: (argumentNames at: i)]!
 
 selector
 	| stream |

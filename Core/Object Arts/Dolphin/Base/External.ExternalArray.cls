@@ -24,7 +24,7 @@ Instance Variables:
 	| size |
 	self == comparand ifTrue: [^true].
 	self species == comparand species ifFalse: [^false].
-	size := self size.
+	size := self length.
 	size = comparand size ifFalse: [^false].
 	1 to: size do: [:i | (self uncheckedAt: i) = (comparand at: i) ifFalse: [^false]].
 	^true!
@@ -33,7 +33,7 @@ allSatisfy: discriminator
 	"Answer whether the <monadicValuable>, discriminator, evaluates to true for
 	every element of the receiver."
 
-	1 to: self size do: [:i | (discriminator value: (self uncheckedAt: i)) ifFalse: [^false]].
+	1 to: self length do: [:i | (discriminator value: (self uncheckedAt: i)) ifFalse: [^false]].
 	^true!
 
 anySatisfy: discriminator
@@ -55,7 +55,13 @@ appendToStream: puttableStream
 asArray
 	"Answer an <Array> containing the constituent elements of the receiver."
 
-	^self collect: [:each | each]!
+	| answer size |
+	answer := Array new: (size := self length).
+	self
+		uncheckedFrom: 1
+		to: size
+		keysAndValuesDo: [:i :each | answer basicAt: i put: each].
+	^answer!
 
 asOrderedCollection
 	"Answer an <OrderedCollection> whose elements are those of the receiver
@@ -68,7 +74,7 @@ asOrderedCollection
 	count their elements to determine their size, which may be very slow."
 
 	| answer |
-	answer := OrderedCollection new: self size.
+	answer := OrderedCollection new: self length.
 	self do: [:elem | answer addLast: elem].
 	^answer!
 
@@ -76,7 +82,7 @@ at: anInteger
 	"Answer the element of the receiver at the specified index.
 	Raise an error if the index if out of bounds."
 
-	(anInteger < 1 or: [anInteger > self size]) 
+	(anInteger < 1 or: [anInteger > self length]) 
 		ifTrue: [^self errorSubscriptBounds: anInteger].
 	^self uncheckedAt: anInteger!
 
@@ -85,7 +91,7 @@ at: index ifAbsent: exceptionBlock
 	at the specified index. If the index is out of bounds answer
 	the result of evaluating the <niladicValuable> exceptionBlock."
 
-	^(index > 0 and: [index <= self size]) 
+	^(index > 0 and: [index <= self length]) 
 		ifTrue: [self uncheckedAt: index]
 		ifFalse: [exceptionBlock value]!
 
@@ -100,7 +106,7 @@ atAllPut: anObject
 	"Replace all the elements of the receiver with the native representation of the <Object> argument.
 	The behaviour is undefined if the argument cannot be represented as an element of the array - an error may be thrown, or an invalid element stored."
 
-	1 to: self size do: [:i | self uncheckedAt: i put: anObject]!
+	1 to: self length do: [:i | self uncheckedAt: i put: anObject]!
 
 basicLength: anInteger
 	"Private - Set the length (in elements, not bytes) of the receiver."
@@ -131,7 +137,7 @@ collect: transformer
 	type of array and therefore we must store them in an <Array>."
 
 	| answer size |
-	size := self size.
+	size := self length.
 	answer := self copyingClass new: size.
 	self
 		uncheckedFrom: 1
@@ -203,7 +209,7 @@ do: aMonadicValuable separatedBy: aNiladicValuable
 	"Evaluate the <monadicValuable> first argument for each of the receiver's elements, interspersed with evaluations of the <niladicValuable> second argument. The separator argument is first evaluated after the first element, and is not evaluated after the last element (i.e. it is not evaluated at all if there are less than two elements)."
 
 	| count |
-	(count := self size) == 0 ifTrue: [^self].
+	(count := self length) == 0 ifTrue: [^self].
 	aMonadicValuable value: (self uncheckedAt: 1).
 	2 to: count
 		do: 
@@ -243,7 +249,7 @@ from: start keysAndValuesDo: operation
 
 	self 
 		from: start
-		to: self size
+		to: self length
 		keysAndValuesDo: operation!
 
 from: startInteger to: stopInteger keysAndValuesDo: operation 
@@ -255,7 +261,7 @@ from: startInteger to: stopInteger keysAndValuesDo: operation
 	on each access."
 
 	startInteger < 1 ifTrue: [self errorSubscriptBounds: startInteger].
-	stopInteger > self size ifTrue: [self errorSubscriptBounds: stopInteger].
+	stopInteger > self length ifTrue: [self errorSubscriptBounds: stopInteger].
 	self 
 		uncheckedFrom: startInteger
 		to: stopInteger
@@ -267,18 +273,18 @@ hash
 	"Implementation Note: This is a copy of the (not terribly good) hash function of SequenceableCollection, because ExternalArrays should compare equal to Arrays of equivalent values."
 
 	| size |
-	(size := self size) == 0 ifTrue: [^17171].
+	(size := self length) == 0 ifTrue: [^17171].
 	^size + (self at: 1) hash + (self at: size) hash!
 
 includes: target
 	"Answer whether the argument, target, is one of the elements of the receiver.
 	Implementation Note: Override superclass to revert to element search."
 
-	1 to: self size do: [:i | target = (self at: i) ifTrue: [^true]].
+	1 to: self length do: [:i | target = (self at: i) ifTrue: [^true]].
 	^false!
 
 includesKey: anInteger
-	^anInteger between: 1 and: self size!
+	^anInteger between: 1 and: self length!
 
 initializePointer
 	length := 0!
@@ -299,7 +305,7 @@ inject: initialValue into: operation
 isEmpty
 	"Answer whether the receiver contains no elements."
 
-	^self size == 0
+	^self length == 0
 !
 
 isSelfEvaluating
@@ -308,7 +314,7 @@ isSelfEvaluating
 keys
 	"Answer a <collection> containing the receiver's keys."
 
-	^1 to: self size!
+	^1 to: self length!
 
 keysAndValuesDo: operation 
 	"Evaluate the <dyadicValuable>, operation, for each element of the receiver
@@ -318,11 +324,11 @@ keysAndValuesDo: operation
 
 	self 
 		uncheckedFrom: 1
-		to: self size
+		to: self length
 		keysAndValuesDo: operation!
 
 last
-	^self at: self size!
+	^self at: self length!
 
 length
 	"Answer the number of elements in the receiver."
@@ -341,7 +347,7 @@ length: anInteger
 lookup: keyInteger
 	"Answer the value named by the <Integer> argument, keyInteger, or nil if there is no such key in the receiver."
 
-	^(keyInteger > 0 and: [keyInteger <= self size]) ifTrue: [self uncheckedAt: keyInteger]!
+	^(keyInteger > 0 and: [keyInteger <= self length]) ifTrue: [self uncheckedAt: keyInteger]!
 
 maxEncoding
 	^1!
@@ -368,9 +374,17 @@ replaceElementsOf: anIndexableObject from: startInteger to: stopInteger starting
 	anIndexableObject, between startInteger and stopInteger inclusive with values from the
 	receiver starting from startAtInteger. Answers anIndexableObject."
 
-	| offset |
-	offset := startAtInteger - startInteger.
-	startInteger to: stopInteger do: [:i | anIndexableObject basicAt: i put: (self at: offset + i)].
+	| count offset stop |
+	count := stopInteger - startInteger + 1.
+	count <= 0 ifTrue: [^anIndexableObject].
+	startAtInteger < 1 ifTrue: [self errorSubscriptBounds: startAtInteger].
+	(stop := startAtInteger + count - 1) > self length
+		ifTrue: [self errorSubscriptBounds: self length + 1].
+	offset := startInteger - startAtInteger.
+	self
+		uncheckedFrom: startAtInteger
+		to: stop
+		keysAndValuesDo: [:i :each | anIndexableObject basicAt: offset + i put: each].
 	^anIndexableObject!
 
 replaceFrom: startInteger to: stopInteger with: aByteObject startingAt: startAtInteger 
@@ -410,13 +424,13 @@ species
 	^Array!
 
 uncheckedAt: anInteger 
-	"Private - Answer an 16-bit unsigned <SmallInteger> representing the element of the 
+	"Private - Answer an 8-bit unsigned <SmallInteger> representing the element of the 
 	receiver at the specified <integer> index. No bounds checks are performed on the subscript."
 
 	^bytes byteAtOffset: anInteger - 1!
 
 uncheckedAt: indexInteger put: valueInteger 
-	"Private - Replace the 16-bit unsigned integer value at the specified index in the receiver
+	"Private - Replace the 8-bit unsigned integer value at the specified index in the receiver
 	with the <integer> argument. No bounds checks are performed on the subscript."
 
 	^bytes byteAtOffset: indexInteger - 1 put: valueInteger!
@@ -435,7 +449,7 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: operation
 with: aCollection do: aDyadicValuable
 	"Evaluate the <dyadicValuable> argument with each of the receiver's element values along with the corresponding element from the <collection> argument, aCollection. The collection is enumerated in its #do: order."
 
-	self size = aCollection size ifFalse: [^self error: 'collections are of different sizes'].
+	self length = aCollection size ifFalse: [^self error: 'collections are of different sizes'].
 	self keysAndValuesDo: [:i :elem | aDyadicValuable value: elem value: (aCollection at: i)]! !
 !External.ExternalArray categoriesForMethods!
 =!comparing!public! !

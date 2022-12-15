@@ -480,12 +480,12 @@ greaterOrEqualToFraction: aFraction
 greaterThanFloat: aFloat
 	"Private - Answer whether the receiver is greater than the known Float, aFloat."
 
-	| fpclass negativeArg |
-	negativeArg := (fpclass := aFloat fpClass) anyMask: Float.FpClassNegative.
+	| fpclass |
+	fpclass := aFloat fpClass.
 	(fpclass anyMask: Float.FpClassFinite)
 		ifFalse: 
 			["aFloat is NaN, -∞ or ∞, so obviously we are only >= if it is -∞."
-			^negativeArg].
+			^fpclass anyMask: Float.FpClassNegative].
 	^self greaterThanFraction: aFloat asTrueFraction!
 
 greaterThanFraction: aFraction

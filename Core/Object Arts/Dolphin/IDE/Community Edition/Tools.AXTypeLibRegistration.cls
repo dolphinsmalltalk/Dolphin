@@ -38,14 +38,6 @@ Instance Variables:
 
 	^comparand species == self species and: [comparand libid = self libid]!
 
-buildVersionNumbers
-	"Private -"
-
-	| versionParts |
-	versionParts := $. split: self versionString asUppercase.
-	major := Integer readFrom: (versionParts at: 1 ifAbsent: '') readStream radix: 16.
-	minor := Integer readFrom: (versionParts at: 2 ifAbsent: '') readStream radix: 16!
-
 description
 	"Answer the description from the typelib's registration details."
 
@@ -73,30 +65,40 @@ libid
 majorVersion
 	"Answer the receiver's minor version number."
 
-	major isNil ifTrue: [self buildVersionNumbers].
+	major isNil ifTrue: [self parseRegistryVersion].
 	^major!
 
 minorVersion
 	"Answer the receiver's minor version number."
 
-	minor isNil ifTrue: [self buildVersionNumbers].
+	minor isNil ifTrue: [self parseRegistryVersion].
 	^minor!
+
+parseRegistryVersion
+	"Private -"
+
+	| versionParts |
+	versionParts := $. split: versionString asUppercase.
+	major := Integer readFrom: (versionParts at: 1 ifAbsent: '') readStream radix: 16.
+	minor := Integer readFrom: (versionParts at: 2 ifAbsent: '') readStream radix: 16.
+	versionString := '<1p>.<2p>' << {major. minor}!
 
 versionString
 	"Answer the version string from the typelib's registration details."
 
+	major ifNil: [self parseRegistryVersion].
 	^versionString! !
 !Tools.AXTypeLibRegistration categoriesForMethods!
 <!comparing!public! !
 <=!comparing!public! !
 =!comparing!public! !
-buildVersionNumbers!accessing!helpers!private! !
 description!accessing!public! !
 description:guidString:versionString:!initializing!private! !
 hash!comparing!public! !
 libid!accessing!public! !
 majorVersion!accessing!public! !
 minorVersion!accessing!public! !
+parseRegistryVersion!accessing!helpers!private! !
 versionString!accessing!public! !
 !
 

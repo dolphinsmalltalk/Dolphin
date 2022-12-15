@@ -128,8 +128,7 @@ displayOn: aPuttableStream
 free
 	"Private - Frees the receiver's external resources by releasing the interface."
 
-	self asInteger == 0
-		ifFalse: [self basicFree].
+	self isNull ifFalse: [self basicFree].
 	self beUnfinalizable!
 
 onStartup

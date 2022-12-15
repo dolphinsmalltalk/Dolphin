@@ -82,6 +82,12 @@ y:!**compiled accessors**!public! !
 
 !External.POINTF class methodsFor!
 
+arrayType
+	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
+	represent arrays of the receiver's field type in other structures."
+
+	^POINTFArray!
+
 byteSize
 	^_POINTF_Size!
 
@@ -111,6 +117,7 @@ x: x y: y
 				floatAtOffset: _OffsetOf_y put: y;
 				yourself)! !
 !External.POINTF class categoriesForMethods!
+arrayType!constants!private! !
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 x:y:!instance creation!public! !

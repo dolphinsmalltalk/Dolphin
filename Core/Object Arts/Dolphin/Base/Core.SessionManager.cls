@@ -540,7 +540,7 @@ logEvent: message type: typeCode
 				ifTrue: 
 					["Event log not available"
 					^self]].
-	inserts := External.DWORDArray new: 2.
+	inserts := External.UINT_PTRArray new: 2.
 	app := self applicationName asUtf16String.
 	msg := message asUtf16String.
 	inserts at: 1 put: app yourAddress.

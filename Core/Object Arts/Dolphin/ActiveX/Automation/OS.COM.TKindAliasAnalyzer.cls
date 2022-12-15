@@ -72,7 +72,7 @@ initialize
 	"
 
 	BaseTypes := LookupTable new.
-	self basicTypes do: [:each | BaseTypes at: each name asString put: each].
+	self basicTypes do: [:each | BaseTypes at: each name put: each].
 	BaseTypes
 		at: 'guid' put: GUID;
 		at: 'ULONG_PTR' put: UINT_PTR;

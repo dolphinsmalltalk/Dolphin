@@ -8,7 +8,6 @@ OS.COM.TypeInfoAnalyzer subclass: #'OS.COM.StructureTypeAnalyzer'
 	classConstants: {}!
 OS.COM.StructureTypeAnalyzer guid: (Core.GUID fromString: '{17f3ff59-eb25-47b0-8831-7e0d0960d84d}')!
 OS.COM.StructureTypeAnalyzer comment: ''!
-!OS.COM.StructureTypeAnalyzer categoriesForClass!Unclassified! !
 !OS.COM.StructureTypeAnalyzer methodsFor!
 
 baseClass
@@ -77,9 +76,9 @@ suggestedBinding
 	| id |
 	self isAnonymous ifTrue: [^nil].
 	(id := self guid) isNull ifTrue: [^super suggestedBinding].
-	^(Structure classForGUID: id ifNone: []) 
+	^(Structure classForGUID: id ifNone: nil)
 		ifNil: [super suggestedBinding]
-		ifNotNil: [:structClass | structClass environment associationAt: structClass name]! !
+		ifNotNil: [:structClass | structClass binding]! !
 !OS.COM.StructureTypeAnalyzer categoriesForMethods!
 baseClass!constants!private! !
 byteSize!accessing!public! !

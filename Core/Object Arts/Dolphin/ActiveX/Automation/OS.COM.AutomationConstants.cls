@@ -168,6 +168,7 @@ Kernel.SharedPool subclass: #'OS.COM.AutomationConstants'
 		'VT_I4' -> 16r3.
 		'VT_I8' -> 16r14.
 		'VT_INT' -> 16r16.
+		'VT_INT_PTR' -> 16r25.
 		'VT_LPSTR' -> 16r1E.
 		'VT_LPWSTR' -> 16r1F.
 		'VT_NULL' -> 16r1.
@@ -186,6 +187,7 @@ Kernel.SharedPool subclass: #'OS.COM.AutomationConstants'
 		'VT_UI4' -> 16r13.
 		'VT_UI8' -> 16r15.
 		'VT_UINT' -> 16r17.
+		'VT_UINT_PTR' -> 16r26.
 		'VT_UNKNOWN' -> 16rD.
 		'VT_USERDEFINED' -> 16r1D.
 		'VT_VARIANT' -> 16rC.
@@ -195,4 +197,3 @@ Kernel.SharedPool subclass: #'OS.COM.AutomationConstants'
 OS.COM.AutomationConstants guid: (Core.GUID fromString: '{e4e5f374-c852-48e6-9a06-8e05b8ae6578}')!
 OS.COM.AutomationConstants isNonInstantiable: true!
 OS.COM.AutomationConstants comment: ''!
-!OS.COM.AutomationConstants categoriesForClass!Unclassified! !

@@ -111,11 +111,68 @@ testAtAndAtPut
 
 testComparing
 	| subject array |
+	subject := self newNumericArray: 0.
+	self assert: subject equals: #().
+	self assert: subject hash equals: #() hash.
 	subject := self newNumericArray: 5.
 	array := subject asArray.
 	self assert: subject hash equals: array hash.
 	self assert: subject equals: array.
 	self assert: array equals: subject!
+
+testCopyFromTo
+	| array |
+	array := self newNumericArray: 0.
+	self assert: (array copyFrom: 1 to: 0) equals: #().
+	self
+		should: [array copyFrom: 0 to: 0]
+		raise: BoundsError
+		matching: [:ex | ex tag = 0].
+	self
+		should: [array copyFrom: 1 to: 2]
+		raise: BoundsError
+		matching: [:ex | ex tag = 1].
+	array := self newNumericArray: 1.
+	self assert: (array copyFrom: 1 to: 0) equals: #().
+	self assert: (array copyFrom: 1 to: 1) equals: {self elementFromValue: 1}.
+	2 to: 3
+		do: 
+			[:i |
+			self
+				should: [array copyFrom: 1 to: i]
+				raise: BoundsError
+				matching: [:ex | ex tag = 2]].
+	array := self newNumericArray: 2.
+	self assert: (array copyFrom: 1 to: 0) equals: #().
+	self assert: (array copyFrom: 1 to: 1) equals: {self elementFromValue: 1}.
+	self assert: (array copyFrom: 2 to: 2) equals: {self elementFromValue: 2}.
+	self assert: (array copyFrom: 1 to: 2) equals: {self elementFromValue: 1. self elementFromValue: 2}.
+	3 to: 4
+		do: 
+			[:i |
+			self
+				should: [array copyFrom: 1 to: i]
+				raise: BoundsError
+				matching: [:ex | ex tag = 3]].
+	array := self newNumericArray: 3.
+	self assert: (array copyFrom: 1 to: 0) equals: #().
+	self assert: (array copyFrom: 1 to: 1) equals: {self elementFromValue: 1}.
+	self assert: (array copyFrom: 2 to: 2) equals: {self elementFromValue: 2}.
+	self assert: (array copyFrom: 3 to: 3) equals: {self elementFromValue: 3}.
+	self assert: (array copyFrom: 1 to: 2) equals: {self elementFromValue: 1. self elementFromValue: 2}.
+	self assert: (array copyFrom: 2 to: 3) equals: {self elementFromValue: 2. self elementFromValue: 3}.
+	self assert: (array copyFrom: 1 to: 3)
+		equals: {self elementFromValue: 1. self elementFromValue: 2. self elementFromValue: 3}.
+	1 to: 3
+		do: 
+			[:j |
+			4 to: 5
+				do: 
+					[:i |
+					self
+						should: [array copyFrom: j to: i]
+						raise: BoundsError
+						matching: [:ex | ex tag = 4]]]!
 
 testDoSeparatedBy
 	0 to: 4
@@ -292,6 +349,7 @@ testAllSatisfy!public! !
 testAtAllPut!public! !
 testAtAndAtPut!public!unit tests! !
 testComparing!public!unit tests! !
+testCopyFromTo!public!unit tests! !
 testDoSeparatedBy!public!unit tests! !
 testElementClass!public!unit tests! !
 testFromToKeysAndValuesDo!public!unit tests! !

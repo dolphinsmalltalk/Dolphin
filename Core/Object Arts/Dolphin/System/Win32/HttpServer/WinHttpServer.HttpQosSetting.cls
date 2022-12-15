@@ -5,9 +5,7 @@ WinHttpServer.HTTP_PROPERTY_FLAGS subclass: #'WinHttpServer.HttpQosSetting'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_HttpQosSetting_Size' -> 16r4
-	}!
+	classConstants: {}!
 WinHttpServer.HttpQosSetting guid: (Core.GUID fromString: '{9468481b-e27a-44f4-8468-2e5f2fdef275}')!
 WinHttpServer.HttpQosSetting isNonInstantiable: true!
 WinHttpServer.HttpQosSetting comment: ''!

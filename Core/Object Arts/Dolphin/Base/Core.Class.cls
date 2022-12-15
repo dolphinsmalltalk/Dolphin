@@ -683,7 +683,7 @@ removeClassVarName: aString
 	speaking any modification to a class should be made through a <ClassBuilder>."
 
 	self removeBindingFor: aString.
-	classPool isEmpty ifTrue: [classPool := nil]!
+	(classPool notNil and: [classPool isEmpty]) ifTrue: [classPool := nil]!
 
 removeFromCategory: category
 	"Remove the receiver from the aCategoryOrString, while leaving it in any other

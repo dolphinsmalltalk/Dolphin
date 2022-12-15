@@ -127,6 +127,7 @@ package basicPackageVersion: '6.2'.
 
 package setClassNames: #(
 	#{External.POINTF}
+	#{External.POINTFArray}
 	#{Graphics.Gdiplus}
 	#{Graphics.Gdiplus.AdjustableArrowCap}
 	#{Graphics.Gdiplus.AdjustableArrowCapInitializer}
@@ -1624,6 +1625,12 @@ External.Structure subclass: #'Graphics.Gdiplus.GdiplusStartupOutput'
 		'_OffsetOf_NotificationHook' -> 16r0.
 		'_OffsetOf_NotificationUnhook' -> 16r4
 	}!
+External.POINTArray subclass: #'External.POINTFArray'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 External.Structure subclass: #'Graphics.Gdiplus.GpBitmapData'
 	instanceVariableNames: ''
 	classVariableNames: ''

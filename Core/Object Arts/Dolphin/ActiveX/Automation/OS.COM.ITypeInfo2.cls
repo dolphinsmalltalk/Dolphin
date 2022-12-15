@@ -80,7 +80,7 @@ getAllParamCustData: indexFunc indexParam: indexParam
 	"Answer the <CUSTDATA> result of invoking the COM Object's GetAllParamCustData() method."
 
 	| pCustData |
-	pCustData := CUSTDATA new.
+	pCustData := CUSTDATA newBuffer.
 	self
 		GetAllParamCustData: indexFunc
 		indexParam: indexParam
@@ -322,6 +322,13 @@ GetVarIndexOfMemId: memid pVarIndex: pVarIndex
 	<virtual stdcall: hresult 26 sdword dword*>
 	^self invalidCall: _failureCode!
 
+libraryAndIndex
+	"Answer an <Association> between an <ITypeLib2>, which is the receiver's containing type library, and an <integer>, which is the one-based index of the receiver in that type library ."
+
+	| lib myIndex |
+	self GetContainingTypeLib: (lib := ITypeLib2 newPointer) pIndex: (myIndex := UInt32Bytes new).
+	^lib -> (myIndex asInteger + 1)!
+
 typeFlags
 	"Answer the receiver's type flags (from the TYPEFLAGS enumeration).
 	Implementation Note: The type flags are retrieved directly and are 
@@ -369,6 +376,7 @@ getVarCustData:guid:!**auto generated**!public! !
 GetVarCustData:guid:pVarVal:!COM Interfaces-OAIDL.ITypeInfo2!private! !
 getVarIndexOfMemId:!**auto generated**!public! !
 GetVarIndexOfMemId:pVarIndex:!COM Interfaces-OAIDL.ITypeInfo2!private! !
+libraryAndIndex!accessing!public! !
 typeFlags!accessing!public! !
 typekind!accessing!public! !
 !

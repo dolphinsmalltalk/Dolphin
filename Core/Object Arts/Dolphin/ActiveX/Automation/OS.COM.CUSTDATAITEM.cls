@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 OS.COM.OLEStructure subclass: #'OS.COM.CUSTDATAITEM'
-	instanceVariableNames: ''
+	instanceVariableNames: 'key value'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -17,17 +17,52 @@ CUSTDATAITEM is used to represent blocks of custom data stored in a type library
 !OS.COM.CUSTDATAITEM categoriesForClass!OAIDL-Structs! !
 !OS.COM.CUSTDATAITEM methodsFor!
 
+= anAssociation
+	"Answer whether the receiver is equal to the argument."
+
+	^self == anAssociation or: 
+			[self species == anAssociation species
+				and: [self key = anAssociation key and: [self value = anAssociation value]]]!
+
+asObject
+	^self!
+
 guid
 	"Answer the <GUID> value of the receiver's 'guid' field."
 
 	^GUID fromAddress: bytes yourAddress!
+
+hash
+	"Answer the hash value of the receiver's key."
+
+	^self key hash
+!
+
+key
+	^key
+		ifNil: 
+			[| id |
+			id := self guid.
+			key := CUSTDATA.WellKnownCustomAttributes at: id ifAbsent: id]!
+
+species
+	^Association!
+
+value
+	^value ifNil: [value := self varValue value]!
 
 varValue
 	"Answer the <VARIANT> value of the receiver's 'varValue' field."
 
 	^VARIANT fromAddress: bytes yourAddress + _OffsetOf_varValue! !
 !OS.COM.CUSTDATAITEM categoriesForMethods!
+=!comparing!public! !
+asObject!public! !
 guid!**compiled accessors**!public! !
+hash!comparing!public! !
+key!accessing!public! !
+species!accessing!public! !
+value!accessing!public! !
 varValue!**compiled accessors**!public! !
 !
 

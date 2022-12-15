@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 OS.COM.AbstractELEMDESC subclass: #'OS.COM.ELEMDESC'
-	instanceVariableNames: 'param'
+	instanceVariableNames: 'param index custData'
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
@@ -26,14 +26,29 @@ Instance Variables:
 !OS.COM.ELEMDESC categoriesForClass!External-Data-Structured-COM! !
 !OS.COM.ELEMDESC methodsFor!
 
+customAttributes
+	"Answer the collection of custom attributes defined on the member. This is a lookup table
+	mapping <GUID> attribute id to the attribute value, usally a string."
+
+	^self getCustData!
+
 defaultValue
 	"Answer a <VARIANT> which is the default value for the parameter described
 	by the receiver, or nil if it doesn't have a default value."
 
 	^self param defaultValue!
 
+getAllCustData
+	^owner analyzer tlbInterface getAllParamCustData: owner index indexParam: index!
+
+getCustData
+	^custData ifNil: [custData := self getAllCustData]!
+
 hasDefaultValue
 	^self param hasDefaultValue!
+
+index: anInteger 
+	index := anInteger!
 
 isIn
 	"Answer whether the receiver is describing an input argument."
@@ -70,8 +85,12 @@ paramdesc
 
 	^PARAMDESC fromAddress: bytes yourAddress + _OffsetOf_paramdesc! !
 !OS.COM.ELEMDESC categoriesForMethods!
+customAttributes!accessing!public! !
 defaultValue!accessing!public! !
+getAllCustData!accessing!private! !
+getCustData!accessing!private! !
 hasDefaultValue!development!helpers!private! !
+index:!initializing!public! !
 isIn!public!testing! !
 isOptional!public!testing! !
 isOut!public!testing! !

@@ -85,10 +85,14 @@ elementSize
 
 	^VMConstants.IntPtrSize!
 
+new
+	^self newFixed: VMConstants.IntPtrSize!
+
 valueAtAddress: anAddress 
 	^anAddress asExternalAddress uintPtrAtOffset: 0! !
 !External.UIntPtrBytes class categoriesForMethods!
 elementSize!constants!private! !
+new!public! !
 valueAtAddress:!instance creation!private! !
 !
 

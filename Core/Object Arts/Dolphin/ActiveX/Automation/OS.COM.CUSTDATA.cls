@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 OS.COM.FinalizableStructure subclass: #'OS.COM.CUSTDATA'
-	instanceVariableNames: 'contents'
+	instanceVariableNames: 'associations table'
 	classVariableNames: 'WellKnownCustomAttributes'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -19,52 +19,71 @@ Warning: This comment was automatically generated from the struct''s type inform
 !OS.COM.CUSTDATA categoriesForClass!External-Data-Structured-COM! !
 !OS.COM.CUSTDATA methodsFor!
 
-asLookupTable
-	"Answer a <LookupTable> containing the custom attribute entries in the receiver. The keys of
-	the table are either the <GUID> attribute ids, or for some well known custom attributes
-	symbolic names, and the values the custom attribute <VARIANT> values."
+associations
+	"Answer a <Collection> containing the receiver's CUSTDATAITEMs, which are associations between a key and a value. The underlying keys are GUIDs. For some well known cases the GUIDs are mapped to symbols. The values are VARIANTs."
 
-	^contents ifNil: [contents := self buildContents]!
+	^associations ifNil: [associations := self prgCustData asArray]!
 
-buildContents
-	| attrs |
-	attrs := LookupTable new.
-	self do: 
-			[:each |
-			| id |
-			id := each guid.
-			attrs at: (WellKnownCustomAttributes at: id ifAbsent: [id]) put: each varValue].
-	^attrs!
+at: aSymbolOrGuid
+	"Answer the value at the specified <Object> key in the receiver, or if the key	is not found raise a <NotFoundError>."
+
+	"Note that there can be multiple custom attributes with the same GUID in the cust data. Which of the values is returned when there are multiple occurrences of the same attribute is undefined."
+
+	^self table at: aSymbolOrGuid!
+
+at: aSymbolOrGuid ifAbsent: aNiladicValuable 
+	"Answer the value named by the <Object> argument, key.  If key is not found, answer the result of evaluating the <niladicValuable>, operation."
+
+	^self table at: aSymbolOrGuid ifAbsent: aNiladicValuable!
 
 cCustData
 	"Private - Answer the <Integer> value of the receiver's 'cCustData' field."
 
 	^bytes dwordAtOffset: _OffsetOf_cCustData!
 
-contents
-	"Answer a <LookupTable> containing the custom attribute entries in the receiver. The keys of
-	the table are either the <GUID> attribute ids, or for some well known custom attributes
-	symbolic names, and the values the custom attribute <VARIANT> values."
+includesKey: aSymbolOrGuid
+	"Answer whether the receiver has at least one attribute with the specified identifier."
 
-	^contents ifNil: [contents := self buildContents]!
+	^self table includesKey: aSymbolOrGuid!
 
-do: aMonadicValuable
-	self prgCustData do: aMonadicValuable!
+isEmpty
+	"Answer whether the receiver contains no elements."
+
+	^self cCustData == 0!
+
+keysAndValuesDo: operation 
+	"Evaluate the <dyadicValuable>, operation, for each key/value pair in the receiver.
+	The key/values pairs are visited in an arbitray order.
+	Implementation Note: Could use #associationsDo:, but performance important here."
+
+	self associations do: [:each | operation value: each key value: each value]!
+
+notEmpty
+	"Answer whether the receiver contains any elements."
+
+	^self isEmpty not!
 
 prgCustData
-	"Answer the <StructureArray> value of the receiver's 'prgCustData' field."
+	"Private - Answer the <StructureArray> value of the receiver's 'prgCustData' field."
 
 	^StructureArray
 		fromAddress: (bytes intPtrAtOffset: _OffsetOf_prgCustData)
 		length: self cCustData
-		elementClass: CUSTDATAITEM! !
+		elementClass: CUSTDATAITEM!
+
+table
+	^table ifNil: [table := Dictionary withAll: self associations]! !
 !OS.COM.CUSTDATA categoriesForMethods!
-asLookupTable!public! !
-buildContents!printing-IDL!private! !
+associations!public! !
+at:!accessing!public! !
+at:ifAbsent:!accessing!public! !
 cCustData!**compiled accessors**!private! !
-contents!printing-IDL!public! !
-do:!private! !
-prgCustData!**compiled accessors**!public! !
+includesKey:!public!searching! !
+isEmpty!public!testing! !
+keysAndValuesDo:!enumerating!public! !
+notEmpty!public!testing! !
+prgCustData!**compiled accessors**!private! !
+table!private! !
 !
 
 !OS.COM.CUSTDATA class methodsFor!
@@ -96,18 +115,17 @@ getFieldNames
 	^#(#cCustData #prgCustData)!
 
 initialize
-	"Define some custom attributes to work around the limitiations of type libraries in not
-	supporting certain key IDL attributes that are required to correctly describe C structures;
-	size_is and length_is are not supported at all, and 'string' cannot be applied to fixed or
-	conformant arrays of characters (only pointers)."
+	"Define some custom attributes. This allows us to work around the limitiations of type libraries in not supporting certain key IDL attributes that are required to correctly describe C structures; size_is and length_is are not supported at all, and 'string' cannot be applied to fixed or conformant arrays of characters (only pointers). We can also use it to introduce some extra useful features, such as the ability to specify a method category for library functions.
+		self initialize
+	"
 
 	WellKnownCustomAttributes := LookupTable new.
 	WellKnownCustomAttributes
 		at: (GUID fromString: '{664f8323-a768-4acc-a2c8-8fa05d138897}') put: #string;
 		at: (GUID fromString: '{82a85647-bd20-4075-823b-d9758c4391eb}') put: #length_is;
 		at: (GUID fromString: '{be29f9d9-7844-49e1-aacb-8e19386529df}') put: #size_is;
-		at: (GUID fromString: '{8e229a94-5e3f-45bd-88bd-06d9f8fef430}') put: #errno;
-		at: (GUID fromString: '{905342e6-276b-4ca5-84cf-9e714b8e40e3}') put: #category;
+		at: (GUID fromString: '{8e229a94-5e3f-45bd-88bd-06d9f8fef430}') put: #__errno;
+		at: (GUID fromString: '{905342e6-276b-4ca5-84cf-9e714b8e40e3}') put: #__category;
 		shrink! !
 !OS.COM.CUSTDATA class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !

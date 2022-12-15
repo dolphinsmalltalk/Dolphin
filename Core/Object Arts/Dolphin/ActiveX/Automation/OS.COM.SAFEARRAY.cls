@@ -57,7 +57,7 @@ asObject
 	(an <Array> of <Objects>)."
 
 	^self elementClass == BYTE 
-		ifTrue: [ByteArray fromAddress: self base length: self size]
+		ifTrue: [ByteArray fromAddress: self base length: self length]
 		ifFalse: [self asArray]!
 
 asSAFEARRAY

@@ -17,7 +17,6 @@ For the Shell API, namespace objects are usually identified by a pointer to thei
 
 Instance Variables:
 	back	<ITEMIDLIST>	Used to prevent an ITEMIDLIST being garbage collected when a new ITEMIDLIST has been constructed on the same memory.'!
-!OS.ITEMIDLIST categoriesForClass!Unclassified! !
 !OS.ITEMIDLIST methodsFor!
 
 append: anITEMIDLIST 
@@ -136,12 +135,7 @@ onStartup
 	"Instead of doing this, should we be freeing the Shell memory on shut down?"
 
 	bytes beUnfinalizable.
-	bytes := nil!
-
-pointerClass
-	"Private - Answer the default class to use as a pointer"
-
-	^WindowsShellMemory! !
+	bytes := nil! !
 !OS.ITEMIDLIST categoriesForMethods!
 append:!operations!public! !
 back!accessing!private! !
@@ -158,7 +152,6 @@ isDesktopID!public!testing! !
 isSingle!public!testing! !
 isValid!public!testing! !
 onStartup!event handling!public! !
-pointerClass!constants!private! !
 !
 
 !OS.ITEMIDLIST class methodsFor!

@@ -5,9 +5,7 @@ External.DOUBLE subclass: #'OS.COM.DATE'
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_DATE_Size' -> 16r8
-	}!
+	classConstants: {}!
 OS.COM.DATE guid: (Core.GUID fromString: '{c06f3b6d-0868-11d3-93af-00a024ca708a}')!
 OS.COM.DATE comment: ''!
 !OS.COM.DATE categoriesForClass!External-Data-Structured! !

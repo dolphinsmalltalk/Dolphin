@@ -353,7 +353,7 @@ notNull
 pointerClass
 	"Private - Answer the default class to use as a pointer"
 
-	^External.Address!
+	^self class pointerClass!
 
 printString
 	"Answer a <readableString> whose characters are a description of the receiver 
@@ -525,8 +525,8 @@ changedByteSizeFrom: anInteger
 
 	| newByteSize |
 	newByteSize := self basicByteSize.
-	anInteger ~= newByteSize ifFalse: [^self].
 	self defineSizeConstant: newByteSize.
+	anInteger ~= newByteSize ifFalse: [^self].
 	self recompileReferences!
 
 clear: addressOrBytes
@@ -572,7 +572,11 @@ defineFields
 !
 
 defineSizeConstant: newByteSize
-	self addClassConstant: '_<1s>_Size' << (self unqualifiedName ?? '') value: newByteSize!
+	| constName |
+	constName := '_<1s>_Size' << (self unqualifiedName ?? '').
+	self definesNewFields
+		ifTrue: [self addClassConstant: constName value: newByteSize]
+		ifFalse: [self removeClassVarName: constName]!
 
 definesNewFields
 	"Private - Answer whether the receiver defines any new fields, as opposed to
@@ -760,7 +764,9 @@ newPointer
 	"Answer a new instance of the receiver suitable for use as a reference
 	to an externally allocated object."
 
-	^self basicNew beNullPointer!
+	^self basicNew
+		initializeAtAddress: self pointerClass new;
+		yourself!
 
 newPointer: pointerClass
 	"Answer a new instance of the receiver suitable for use as a reference
@@ -831,7 +837,7 @@ paddedSizeFor: size
 pointerClass
 	"Private - Answer the default class to use as a pointer"
 
-	^External.Address!
+	^Address!
 
 recompileReferences
 	"Private - Recompile all directly referencing external call methods that might need to

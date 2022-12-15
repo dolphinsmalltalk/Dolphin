@@ -325,7 +325,7 @@ fractionPart!accessing!public! !
 generality!coercing!private! !
 greaterOrEqualToFloat:!double dispatch!private! !
 greaterOrEqualToScaledDecimal:!double dispatch!private! !
-greaterThanFloat:!public! !
+greaterThanFloat:!double dispatch!private! !
 greaterThanScaledDecimal:!double dispatch!private! !
 hash!comparing!public! !
 integerPart!accessing!public! !

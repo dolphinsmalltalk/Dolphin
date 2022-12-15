@@ -58,20 +58,15 @@ GetField: pvData szFieldName: szFieldName pvarField: pvarField
 getFieldNames
 	"Answer a <collection> of the names of the receiver's fields."
 
-	| cNames size bstr pNames |
+	| cNames size pNames array |
 	cNames := DWORD new.
 	self GetFieldNames: cNames rgBstrNames: nil.
 	size := cNames asInteger.
-	pNames := DWORDArray new: size.
+	pNames := BSTRArray new: size.
 	self GetFieldNames: cNames rgBstrNames: pNames.
-	bstr := BSTR new.
-	^pNames collect: 
-			[:e |
-			| name |
-			bstr attach: e.
-			name := bstr asString.
-			bstr basicFree.
-			name]!
+	array := pNames asArray.
+	pNames free.
+	^array!
 
 GetFieldNames: pcNames rgBstrNames: rgBstrNames
 	"Private - Invoke the GetFieldNames() method of the COM object wrapped by the receiver.

@@ -12,8 +12,8 @@ OS.COM.FinalizableStructure subclass: #'OS.COM.VARIANT'
 		'_OffsetOf_wReserved2' -> 16r4.
 		'_OffsetOf_wReserved3' -> 16r6.
 		'_VARIANT_Size' -> 16r10.
-		'VTClasses' -> #(#{Core.UndefinedObject} #{Core.UndefinedObject} #{External.SWORD} #{External.SDWORD} #{External.FLOAT} #{External.DOUBLE} #{OS.COM.CURRENCY} #{OS.COM.DATE} #{OS.COM.BSTR} #{OS.COM.IDispatch} #{OS.HRESULT} #{OS.COM.VARIANT_BOOL} #{OS.COM.VARIANT} #{OS.COM.IUnknown} #{OS.COM.DECIMAL} nil #{External.SBYTE} #{External.BYTE} #{External.WORD} #{External.DWORD} #{OS.LARGE_INTEGER} #{OS.ULARGE_INTEGER} #{External.SDWORD} #{External.DWORD} #{External.VOID} #{OS.HRESULT} #{External.Address} #{OS.COM.SAFEARRAY} #{External.Array} #{OS.COM.Record} #{Core.AnsiString} #{Core.Utf16String} nil nil nil nil #{External.Structure} nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #{OS.FILETIME} #{Core.ByteArray} #{OS.COM.IStream} #{OS.COM.IStorage} #{OS.COM.IStream} #{OS.COM.IStorage} #{Core.ByteArray} #{External.DWORD} #{OS.COM.CLSID}).
-		'VTNames' -> #(#nil #null #sword #sdword #float #double #cy #date #bstr #dispatch #hresult #varbool #variant #unknown #decimal #badVarType #sbyte #byte #word #dword #sqword #qword #sdword #dword #void #hresult #lpvoid #safearray #carray #typedef #lpstr #lpwstr #badVarType #badVarType #badVarType #badVarType #struct #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #filetime #blob #stream #storage #streamed_object #stored_object #blob_object #cf #clsid)
+		'VTClasses' -> #(#{Core.UndefinedObject} #{Core.UndefinedObject} #{External.SWORD} #{External.SDWORD} #{External.FLOAT} #{External.DOUBLE} #{OS.COM.CURRENCY} #{OS.COM.DATE} #{OS.COM.BSTR} #{OS.COM.IDispatch} #{OS.HRESULT} #{OS.COM.VARIANT_BOOL} #{OS.COM.VARIANT} #{OS.COM.IUnknown} #{OS.COM.DECIMAL} nil #{External.SBYTE} #{External.BYTE} #{External.WORD} #{External.DWORD} #{OS.LARGE_INTEGER} #{OS.ULARGE_INTEGER} #{External.SDWORD} #{External.DWORD} #{External.VOID} #{OS.HRESULT} #{External.Address} #{OS.COM.SAFEARRAY} #{External.Array} #{OS.COM.Record} #{Core.AnsiString} #{Core.Utf16String} nil nil nil nil #{External.Structure} #{External.INT_PTR} #{External.UINT_PTR} nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #{OS.FILETIME} #{Core.ByteArray} #{OS.COM.IStream} #{OS.COM.IStorage} #{OS.COM.IStream} #{OS.COM.IStorage} #{Core.ByteArray} #{External.DWORD} #{OS.COM.CLSID}).
+		'VTNames' -> #(#nil #null #sword #sdword #float #double #cy #date #bstr #dispatch #hresult #varbool #variant #unknown #decimal #badVarType #sbyte #byte #word #dword #sqword #qword #sdword #dword #void #hresult #lpvoid #safearray #carray #typedef #lpstr #lpwstr #badVarType #badVarType #badVarType #badVarType #struct #intptr #uintptr #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #filetime #blob #stream #storage #streamed_object #stored_object #blob_object #cf #clsid)
 	}!
 OS.COM.VARIANT guid: (Core.GUID fromString: '{c06f3b65-0868-11d3-93af-00a024ca708a}')!
 OS.COM.VARIANT comment: 'VARIANT is an <ExternalStructure> to represent the OLE Automation VARIANT and VARIANTARG types.
@@ -1134,6 +1134,8 @@ vtClasses
 		at: VT_VARIANT+1			put: #{OS.COM.VARIANT};		"Reference to another VARIANT"
 		at: VT_VOID+1			put: #{External.VOID};			"C void - TYPEDESC only, for generic pointer outputs"
 		at: VT_HRESULT+1			put: #{OS.HRESULT}; 			"HRESULT return code - TYPEDESC only"
+		at: VT_INT_PTR+1			put: #{External.INT_PTR};			"signed machine register size width - TYPEDESC only"
+		at: VT_UINT_PTR+1			put: #{External.UINT_PTR};		"unsigned machine register size width - TYPEDESC only"
 		yourself!
 
 vtNames 
@@ -1179,6 +1181,8 @@ vtNames
 		at: VT_RECORD+1		put: #struct;
 		at: VT_VARIANT+1		put: #variant;		"Reference to another VARIANT"
 		at: VT_VOID+1			put: #void;			"C void - TYPEDESC only"
+		at: VT_INT_PTR+1			put: #intptr;			"signed machine register size width - TYPEDESC only"
+		at: VT_UINT_PTR+1			put: #uintptr;		"unsigned machine register size width - TYPEDESC only"
 		yourself! !
 !OS.COM.VARIANT class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !

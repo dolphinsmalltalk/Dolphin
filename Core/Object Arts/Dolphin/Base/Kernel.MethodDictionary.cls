@@ -59,12 +59,31 @@ removeKey: key ifAbsent: exceptionHandler
 			newMe basicValues basicAt: index put: nil.
 			newMe removeIndex: index.
 			self become: newMe.
-			method]! !
+			method]!
+
+removeSelectors: aCollection
+	| count newMe selectors removed |
+	count := aCollection size.
+	count <= 1
+		ifTrue: 
+			[count == 0 ifTrue: [^#()].
+			^Set with: (self removeKey: aCollection anyOne ifAbsent: nil)].
+	newMe := self class new: self size - count.
+	removed := IdentitySet new: count.
+	selectors := aCollection asSet.
+	self do: 
+			[:each |
+			(selectors includes: each selector)
+				ifTrue: [removed add: each]
+				ifFalse: [newMe at: each selector put: each]].
+	self become: newMe.
+	^removed! !
 !Kernel.MethodDictionary categoriesForMethods!
 findKeyOrNil:!private!searching! !
 hash:max:!private!searching! !
 privateAt:put:!accessing!private! !
 removeKey:ifAbsent:!public!removing! !
+removeSelectors:!public!removing! !
 !
 
 !Kernel.MethodDictionary class methodsFor!

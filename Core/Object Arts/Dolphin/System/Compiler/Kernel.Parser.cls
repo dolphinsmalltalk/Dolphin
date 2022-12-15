@@ -326,8 +326,7 @@ parseExternalArgType
 				indirections: 0;
 				yourself].
 	structClass := nil.
-	valueType := External.FunctionDescriptor typeFromName: currentToken value
-				ifAbsent: [ExtCallArgSTRUCT].
+	valueType := External.FunctionDescriptor typeFromName: currentToken value ifAbsent: ExtCallArgSTRUCT.
 	"We can't look up the struct class until semantic analysis, so hold as a variable for later resolution"
 	structClass := valueType == ExtCallArgSTRUCT ifTrue: [StVariableNode identifierToken: currentToken].
 	typeToken := currentToken.

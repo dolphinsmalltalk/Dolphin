@@ -52,7 +52,7 @@ addClass: aClass to: aPackageOrNil
 				selectors removeAllKeys: toRemove]].
 	source
 		ifNotNil: 
-			[packagedVariables removeKey: aClass fullyQualifiedReference.
+			[packagedVariables removeKey: aClass fullyQualifiedReference ifAbsent: nil.
 			source basicRemoveClass: aClass].
 	destination
 		ifNotNil: 

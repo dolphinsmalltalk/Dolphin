@@ -648,7 +648,7 @@ typeFromName: typeName ifAbsent: exceptionHandler
 	or the result of executing the niladic valuable, exceptionHandler, if the
 	type is not recognised."
 
-	^ValueTypes at: typeName ifAbsent: [^exceptionHandler value]!
+	^ValueTypes at: typeName ifAbsent: exceptionHandler!
 
 typeHasArgument: ordinalType
 	"Private - Answer whether the specified type (identified by ordinal) has an argument

@@ -737,11 +737,10 @@ onTypeLib: piTypeLib
 
 	| libAttr lib |
 	libAttr := piTypeLib getLibAttr.
-	lib := TypeLibs at: libAttr
-				ifAbsent: 
-					["Notification signal: 'New type lib opened: ', piTypeLib printString."
-
-					| key |
+	lib := (TypeLibs lookup: libAttr)
+				ifNil: 
+					[| key |
+					"Notification signal: 'New type lib opened: ', piTypeLib printString."
 					key := libAttr copy.
 					TypeLibs at: key put: (self basicNew setTypeLib: piTypeLib attributes: key)].
 	piTypeLib ReleaseTLibAttr: libAttr.

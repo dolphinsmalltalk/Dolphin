@@ -104,7 +104,6 @@ getAllFuncCustData: index
 getAllVarCustData: anInteger
 	"Answer a <CUSTDATA> for the variable of the type described by the receiver with the specified zero-based index."
 
-
 	^self nullCustData!
 
 GetContainingTypeLib: ppTLib pIndex: pIndex
@@ -259,22 +258,17 @@ getNamesOfMember: memid count: cMaxNames
 	"Answer an array containing the names of the member of the
 	receiver identified by the <MEMBERID>, memid."
 
-	| names bstr cNames |
-	names := UINT_PTRArray new: cMaxNames.
+	| names cNames strings |
+	names := BSTRArray new: cMaxNames.
 	cNames := UInt32Bytes new.
 	self
 		GetNames: memid
 		rgBstrNames: names
 		cMaxNames: cMaxNames
 		pcNames: cNames.
-	bstr := BSTR basicNew.
-	^names collect: 
-			[:each |
-			| name |
-			bstr basicUIntPtrAtOffset: 0 put: each.
-			name := (bstr value: each) asString.
-			bstr basicFree.
-			name]!
+	strings := names copyFrom: 1 to: cNames asInteger.
+	names free.
+	^strings!
 
 getRefTypeInfo: hreftype
 	"Answer the <ITypeInfo> result of invoking the COM Object's GetRefTypeInfo() method."
@@ -448,19 +442,15 @@ isHidden
 	^self typeFlags allMask: TYPEFLAG_FHIDDEN!
 
 libraryAndIndex
-	"Answer an <Association> between an <ITypeLib>, which is the receiver's containing 
-	type library, and an <integer>, which is the one-based index of the receiver in that 
-	type library ."
+	"Answer an <Association> between an <ITypeLib>, which is the receiver's containing type library, and an <integer>, which is the one-based index of the receiver in that type library ."
 
-	| lib myIndex lib2 |
-	lib := ITypeLib newPointer.
-	myIndex := UInt32Bytes new.
-	self GetContainingTypeLib: lib pIndex: myIndex.
-	lib2 := lib queryInterface: ITypeLib2 ifNone: [].
-	^(lib2 isNil
-		ifTrue: [lib]
-		ifFalse: 
-			[lib free.
+	| lib myIndex |
+	self GetContainingTypeLib: (lib := ITypeLib newPointer) pIndex: (myIndex := UInt32Bytes new).
+	^((lib queryInterface: ITypeLib2 ifNone: nil)
+		ifNil: [lib]
+		ifNotNil: 
+			[:lib2 |
+			lib free.
 			lib2]) -> (myIndex asInteger + 1)!
 
 nameOfID: anInteger
@@ -702,6 +692,6 @@ stbVersion
 !OS.COM.ITypeInfo class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 stbConvertFrom:!binary filing!public! !
-stbVersion!public! !
+stbVersion!binary filing!public! !
 !
 

@@ -2156,7 +2156,7 @@ mapPoint: aPoint to: anotherView
 	"Maps aPoint from the coordinate system of the receiver into that of anotherView"
 
 	| pt |
-	pt := POINTL fromPoint: aPoint.
+	pt := POINTL marshal: aPoint.
 	User32
 		mapWindowPoints: handle
 		hWndTo: anotherView asParameter
@@ -2168,7 +2168,7 @@ mapPointToScreen: aPoint
 	"Maps the `Point` argument from the coordinate system of the receiver to screen coordindates."
 
 	| pt |
-	pt := POINTL fromPoint: aPoint.
+	pt := POINTL marshal: aPoint.
 	User32 clientToScreen: handle lpPoint: pt.
 	^pt asPoint!
 
@@ -2185,7 +2185,7 @@ mapScreenToClient: aPoint
 	"Maps the `Point` argument from screen coordinates to the coordinate system of the receiver."
 
 	| pt |
-	pt := POINTL fromPoint: aPoint.
+	pt := POINTL marshal: aPoint.
 	User32 screenToClient: handle lpPoint: pt.
 	^pt asPoint!
 

@@ -171,7 +171,7 @@ emitCategories: aCollection for: aSymbol in: aClass
 		space;
 		nextPutAll: #categoriesFor:;
 		space.
-	self emitString: aSymbol printString.
+	self emitString: aSymbol fullPrintString.
 	stream nextPut: $!!.
 	aCollection asSortedArray do: [:each | self nextChunkPut: each name].
 	self endChunk!

@@ -41,7 +41,7 @@ Class Variables:
 = comperand
 	"Answer whether the receiver is equivalent to the <Object>, comperand."
 
-	^self species = comperand species and: [self <=> comperand == 0]!
+	^self species == comperand species and: [self <=> comperand == 0]!
 
 asByteArray
 	"Answer the raw contents of the receiver as a ByteArray."
@@ -289,7 +289,7 @@ fromAddress: ptr
 	the  GUID pointed at by ptr"
 
 	^ptr asExternalAddress
-		replaceBytesOf: self newNull
+		replaceBytesOf: (self new: _GUID_Size)
 		from: 1
 		to: _GUID_Size
 		startingAt: 1!

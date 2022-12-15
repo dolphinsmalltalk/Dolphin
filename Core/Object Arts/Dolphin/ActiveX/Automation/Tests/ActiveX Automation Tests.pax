@@ -6,6 +6,7 @@ package paxVersion: 2.1;
 
 
 package setClassNames: #(
+	#{OS.COM.Tests.BSTRArrayTest}
 	#{OS.COM.Tests.BSTRTest}
 	#{OS.COM.Tests.IDispatchTest}
 	#{OS.COM.Tests.SAFEARRAYTest}
@@ -59,6 +60,12 @@ Core.Tests.DolphinTest subclass: #'OS.COM.Tests.VARIANTTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+External.Tests.ExternalArrayTest subclass: #'OS.COM.Tests.BSTRArrayTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 External.Tests.GenericExternalArrayTest subclass: #'OS.COM.Tests.SAFEARRAYTest'

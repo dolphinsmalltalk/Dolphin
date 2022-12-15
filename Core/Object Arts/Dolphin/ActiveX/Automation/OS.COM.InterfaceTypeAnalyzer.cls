@@ -101,7 +101,7 @@ suggestedBinding
 
 	"Implementation Note: Override because there is a global table of interface classes which we can use to look up any existing interface wrapper class."
 
-	^(Interface classForIID: self iid ifNone: [])
+	^(Interface classForIID: self iid ifNone: nil)
 		ifNil: [super suggestedBinding]
 		ifNotNil: [:interfaceClass | interfaceClass binding]!
 

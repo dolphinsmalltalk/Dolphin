@@ -55,9 +55,7 @@ isOut
 	Note that it is possible for the direction not to be specified, in which case we
 	assume that it is for input only (is this right?)"
 
-	| flags |
-	flags := self directionFlags.
-	^flags anyMask: PARAMFLAG_FOUT!
+	^self wParamFlags anyMask: PARAMFLAG_FOUT!
 
 isRetVal
 	"Answer whether the receiver is describing a retval (i.e. return value) argument."

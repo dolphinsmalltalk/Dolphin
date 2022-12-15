@@ -946,9 +946,7 @@ WinHttpServer.HTTP_PROPERTY_FLAGS subclass: #'WinHttpServer.HttpQosSetting'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_HttpQosSetting_Size' -> 16r4
-	}!
+	classConstants: {}!
 WinHttpServer.HttpQosSetting subclass: #'WinHttpServer.HTTP_BANDWIDTH_LIMIT_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''

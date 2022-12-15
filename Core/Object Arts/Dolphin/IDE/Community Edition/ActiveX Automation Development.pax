@@ -119,6 +119,7 @@ package setMethodNames: #(
 	#(#{OS.COM.APIInfoAnalyzer} #isMethodWrapperRequiredFor:)
 	#(#{OS.COM.APIInfoAnalyzer} #methodCommentDescription)
 	#(#{OS.COM.APIInfoAnalyzer} #mungeSelectorKeywords:forMember:)
+	#(#{OS.COM.APIInfoAnalyzer} #printArgumentType:on:)
 	#(#{OS.COM.APIInfoAnalyzer} #printCommentPrefixOn:isPrivate:)
 	#(#{OS.COM.APIInfoAnalyzer} #printExternalType:on:)
 	#(#{OS.COM.APIInfoAnalyzer} #printFunctionPrototype:on:indent:)
@@ -136,7 +137,6 @@ package setMethodNames: #(
 	#(#{OS.COM.APIInfoAnalyzer} #proputrefWrapperPrefix)
 	#(#{OS.COM.APIInfoAnalyzer} #rawMethodNameForFunction:)
 	#(#{OS.COM.APIInfoAnalyzer} #reinventBadSelector:member:)
-	#(#{OS.COM.APIInfoAnalyzer} #selectorForFunction:)
 	#(#{OS.COM.BSTR class} #newInstanceAspect:class:)
 	#(#{OS.COM.BSTR class} #printDefaultValue:on:)
 	#(#{OS.COM.BSTR class} #printMethodArgument:elemdesc:indirections:on:for:)
@@ -147,6 +147,7 @@ package setMethodNames: #(
 	#(#{OS.COM.CURRENCY} #printOn:)
 	#(#{OS.COM.CURRENCY class} #mustWrapOptionalArgument:)
 	#(#{OS.COM.CURRENCY class} #newInstanceAspect:class:)
+	#(#{OS.COM.CUSTDATA} #idlAttributes)
 	#(#{OS.COM.CUSTDATAITEM} #printIDLOn:)
 	#(#{OS.COM.DATE class} #newInstanceAspect:class:)
 	#(#{OS.COM.DATE class} #printDefaultValue:on:)
@@ -251,7 +252,6 @@ package setMethodNames: #(
 	#(#{OS.COM.ITypeLib} #printOn:)
 	#(#{OS.COM.MemberDesc} #idlAttributes)
 	#(#{OS.COM.MemberDesc} #idlAttributesAndId)
-	#(#{OS.COM.MemberDesc} #idlCustomAttributes)
 	#(#{OS.COM.MemberDesc} #isInspectable)
 	#(#{OS.COM.MemberDesc} #printIDL)
 	#(#{OS.COM.MemberDesc} #printIDLOn:)
@@ -1017,7 +1017,7 @@ printArrayField: aVARDESC type: extClass on: aCodeGenerationContext
 printConformantArrayLength: aVARDESC on: aCodeGenerationContext
 	| sizeIs stream |
 	stream := aCodeGenerationContext writeStream.
-	sizeIs := Parser parseExpression: (aVARDESC customAttributes at: #size_is) value.
+	sizeIs := Parser parseExpression: (aVARDESC customAttributes at: #size_is).
 	sizeIs isVariable
 		ifTrue: 
 			["Simple size_is expression which names another field, e.g. size_is(cbBytes)."
@@ -1668,6 +1668,12 @@ methodCommentDescription
 mungeSelectorKeywords: aSequencedReadableCollection forMember: aFUNCDESC 
 	^self reinventBadSelector: aSequencedReadableCollection member: aFUNCDESC!
 
+printArgumentType: anELEMDESC on: aPuttableStream
+	#todo.	"Hack for string args that are arrays"
+	(anELEMDESC customAttributes includesKey: #string)
+		ifTrue: [aPuttableStream nextPutAll: 'lpwstr']
+		ifFalse: [self printType: anELEMDESC tdesc on: aPuttableStream]!
+
 printCommentPrefixOn: aPuttableStream isPrivate: aBoolean
 	aPuttableStream
 		tab;
@@ -1686,6 +1692,7 @@ printFunctionPrototype: aFUNCDESC on: target indent: tabs
 	"Private - Generate an IDL-style prototype for the method described by the <FUNCDESC>, funcDesc,
 	on the <puttableStream>, target. This is useful for documentatary purposes in the method comment."
 
+	| types argc |
 	target tab: tabs.
 	self
 		printIDLDecl: ''
@@ -1700,16 +1707,19 @@ printFunctionPrototype: aFUNCDESC on: target indent: tabs
 	target
 		nextPutAll: aFUNCDESC name;
 		nextPut: $(.
-	aFUNCDESC argumentCount > 0
+	types := aFUNCDESC arguments.
+	argc := types size.
+	argc > 0
 		ifTrue: 
-			[| params types |
+			[| params |
 			params := aFUNCDESC argumentNames.
-			types := aFUNCDESC arguments.
-			(1 to: params size) do: 
+			1 to: argc
+				do: 
 					[:i |
 					| name type |
-					type := types at: i.
+					i == 1 ifFalse: [target nextPut: $,].
 					target crtab: tabs + 1.
+					type := types at: i.
 					self
 						printIDLAttributes: type idlAttributes
 						on: target
@@ -1719,8 +1729,7 @@ printFunctionPrototype: aFUNCDESC on: target indent: tabs
 					self
 						printIDLDecl: name
 						type: type tdesc
-						on: target]
-				separatedBy: [target nextPut: $,]].
+						on: target]].
 	target nextPutAll: ');'!
 
 printFunctionPrototypeComment: aFUNCDESC on: aPuttableStream
@@ -1805,8 +1814,10 @@ printRawMethodCommentPreamble: aFUNCDESC on: aPuttableStream isPrivate: aBoolean
 printReturnType: aFUNCDESC on: aPuttableStream
 	| returnType |
 	returnType := aFUNCDESC tdescFunc.
-	#todo.	"This is a hack to special case Errno return values. The printing of types should be reworked to be delegated to the types, rather than using the #classDesc mechanism to map to a Smalltalk type."
-	(returnType isEnum and: [returnType realTypeInfo customAttributes includesKey: #errno])
+	(returnType isUserDefined and: 
+			[| realType |
+			realType := returnType realTypeInfo.
+			realType isEnum and: [realType customAttributes includesKey: #__errno]])
 		ifTrue: [aPuttableStream nextPutAll: 'errno']
 		ifFalse: [self printType: returnType on: aPuttableStream]!
 
@@ -1841,13 +1852,12 @@ reinventBadSelector: aSequencedReadableCollection member: aMemberDesc
 	"Implementation Note: The algorithm is basically to append underscore characters as a suffix to the primary keyword until a non-reserved selector is found. As ST methods typically don't tend to have underscores in them, this should be sucessful first time around. Note that this algorithm doesn't work for binary selectors, but that shouldn't be a problem as operators cannot be used as method/property names."
 
 	| selector reserved primary |
-	self assert: [aSequencedReadableCollection notEmpty].
+	(reserved := self reservedSelectors) isEmpty ifTrue: [^aSequencedReadableCollection].
 	"Because most selectors only have one or two components, it is quicker to string concatenate than use a stream"
 	selector := primary := aSequencedReadableCollection first.
 	aSequencedReadableCollection from: 2 do: [:each | selector := selector , each].
 	selector := selector asSymbol.
-	reserved := self reservedSelectors.
-	^(reserved includes: selector)
+	^(reserved identityIncludes: selector)
 		ifTrue: 
 			[| tail unique |
 			primary := selector upTo: $:.
@@ -1855,7 +1865,7 @@ reinventBadSelector: aSequencedReadableCollection member: aMemberDesc
 			
 			[primary := primary , '_'.
 			unique := (primary , tail) asSymbol.
-			reserved includes: unique]
+			reserved identityIncludes: unique]
 					whileTrue.
 			(tail notEmpty and: [tail first = $:]) ifTrue: [primary := primary , ':'].
 			Notification signal: ('Warning: Selector <1p> for <2s> is reserved, using <3p> instead'
@@ -1863,13 +1873,7 @@ reinventBadSelector: aSequencedReadableCollection member: aMemberDesc
 						with: aMemberDesc fullName
 						with: unique).
 			{primary} , aSequencedReadableCollection allButFirst]
-		ifFalse: [aSequencedReadableCollection]!
-
-selectorForFunction: aFUNCDESC
-	"Private - Answer a suitable Smalltalk selector for the method of the receiver's
-	interface described by the <FUNCDESC> argument."
-
-	^(self rawMethodNameForFunction: aFUNCDESC) selector! !
+		ifFalse: [aSequencedReadableCollection]! !
 !OS.COM.APIInfoAnalyzer categoriesForMethods!
 areWrappersRequired!private!testing! !
 compileMethodWrapper:!private! !
@@ -1885,6 +1889,7 @@ isDefaultedWrapperRequiredFor:!private!testing! !
 isMethodWrapperRequiredFor:!private!testing! !
 methodCommentDescription!private! !
 mungeSelectorKeywords:forMember:!helpers!private! !
+printArgumentType:on:!private! !
 printCommentPrefixOn:isPrivate:!private! !
 printExternalType:on:!private! !
 printFunctionPrototype:on:indent:!printing!private! !
@@ -1902,7 +1907,6 @@ printType:on:!private! !
 proputrefWrapperPrefix!constants!private! !
 rawMethodNameForFunction:!helpers!private! !
 reinventBadSelector:member:!helpers!private! !
-selectorForFunction:!helpers!private! !
 !
 
 !OS.COM.BSTR class methodsFor!
@@ -2004,6 +2008,42 @@ mustWrapOptionalArgument:!private!testing! !
 newInstanceAspect:class:!adapters!private! !
 !
 
+!OS.COM.CUSTDATA methodsFor!
+
+idlAttributes
+	| attrs |
+	attrs := Array writeStream: self associations size.
+	associations do: 
+			[:each |
+			| attr variant key |
+			attr := String writeStream.
+			variant := each varValue.
+			key := each key.
+			key isSymbol
+				ifTrue: 
+					[attr display: key.
+					(variant isEmpty or: 
+							["Doesn't seem to be possible to actually set the value of a custom attribute to VT_EMPTY, so we treat an empty string as no argument"
+							variant value = ''])
+						ifFalse: 
+							[attr nextPut: $(.
+							variant printIDLOn: attr.
+							attr nextPut: $)]]
+				ifFalse: 
+					[attr
+						nextPutAll: 'custom(';
+						nextPutAll: key idlString.
+					variant isEmpty
+						ifFalse: 
+							[attr nextPutAll: ', '.
+							variant printIDLOn: attr.
+							attr nextPutAll: $)]].
+			attrs nextPut: attr contents].
+	^attrs grabContents! !
+!OS.COM.CUSTDATA categoriesForMethods!
+idlAttributes!accessing!public! !
+!
+
 !OS.COM.CUSTDATAITEM methodsFor!
 
 printIDLOn: target
@@ -2057,7 +2097,7 @@ idlAttributes
 	"Private - Answer a <sequencedReadableCollection> of flag names (IDL attributes)
 	from the receiver."
 
-	^self paramdesc idlAttributes! !
+	^self paramdesc idlAttributes , self getCustData idlAttributes! !
 !OS.COM.ELEMDESC categoriesForMethods!
 idlAttributes!printing-IDL!private! !
 !
@@ -2065,46 +2105,41 @@ idlAttributes!printing-IDL!private! !
 !OS.COM.FUNCDESC methodsFor!
 
 buildMethodName
-	| monikers keywords argc argumentNames funcName indices forceLower |
+	| monikers argc arg keywords argumentNames forceLower |
 	monikers := self names.
 	argc := monikers size - 1.
-	funcName := monikers first.
-	self assert: [funcName notEmpty].
-	forceLower := self analyzer forceLowercaseIdentifiers.
-	argc > 0
-		ifFalse: 
-			["Zero arguments"
-			indices := argumentNames := #().
-			keywords := {funcName}]
+	argc < 1
 		ifTrue: 
-			[| firstArg j |
-			"First argument must be treated differently"
-			keywords := Array new: argc.
-			argumentNames := Array new: argc.
-			indices := 1 to: argc.
-			firstArg := monikers second.
-			keywords at: 1 put: funcName , ':'.
-			argumentNames at: 1
-				put: (firstArg isEmpty ifTrue: ['arg1'] ifFalse: [self argumentNameFor: firstArg]).
-			j := 2.
-			monikers from: 3
-				do: 
-					[:each |
-					each isEmpty
-						ifTrue: 
-							[keywords at: j put: '_:'.
-							argumentNames at: j put: 'arg' , j printString]
-						ifFalse: 
-							[| param |
-							param := self argumentNameFor: each.
-							keywords at: j put: (forceLower ifTrue: [param] ifFalse: [each]) , ':'.
-							argumentNames at: j put: param].
-					j := j + 1].
-			self reinventBadVarNames: argumentNames].
+			["Zero arguments"
+			^Tools.AXMethodName
+				keywords: {monikers first}
+				argumentNames: #()
+				indices: #()].
+	"First argument must be treated differently"
+	keywords := Array new: argc.
+	keywords at: 1 put: monikers first , ':'.
+	argumentNames := Array new: argc.
+	argumentNames at: 1
+		put: ((arg := monikers second) isEmpty ifTrue: ['arg1'] ifFalse: [self argumentNameFor: arg]).
+	forceLower := self analyzer forceLowercaseIdentifiers.
+	2 to: argc
+		do: 
+			[:j |
+			arg := monikers at: j + 1.
+			arg isEmpty
+				ifTrue: 
+					[keywords at: j put: '_:'.
+					argumentNames at: j put: 'arg' , j printString]
+				ifFalse: 
+					[| param |
+					param := self argumentNameFor: arg.
+					keywords at: j put: (forceLower ifTrue: [param] ifFalse: [arg]) , ':'.
+					argumentNames at: j put: param]].
+	self reinventBadVarNames: argumentNames.
 	^Tools.AXMethodName
 		keywords: keywords
 		argumentNames: argumentNames
-		indices: indices!
+		indices: (1 to: argc)!
 
 displayOn: aPuttable
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
@@ -2176,16 +2211,14 @@ printOn: aStream
 	self displayOn: aStream.
 	aStream nextPut: $)!
 
-reinventBadVarNames: anOrderedCollection
-	"Private - Reinvent any bad variable names in the keyword-and-argument-name
-	argument, wordsAndArgs. Answer the squeaky clean result."
+reinventBadVarNames: aSequencedReadableCollection
+	"Private - Reinvent any bad variable names in the keyword-and-argument-name	argument. Answer the squeaky clean result."
 
 	| badNames |
 	badNames := (Set withAll: self analyzer programObject allInstanceVariableNames)
-				addAll: #('self' 'super' 'nil' 'true' 'false' 'thisContext');
-				addAll: #('answer' '_' 'outputs');
+				addAll: #('self' 'super' 'nil' 'true' 'false' 'thisContext' 'answer' '_' 'outputs');
 				yourself.
-	anOrderedCollection keysAndValuesDo: 
+	aSequencedReadableCollection keysAndValuesDo: 
 			[:i :each |
 			| suffix arg |
 			suffix := 0.
@@ -2194,10 +2227,10 @@ reinventBadVarNames: anOrderedCollection
 					["Invent a suitable non-clashing name by just adding a digit on the end"
 					suffix := suffix + 1.
 					arg := each , suffix printString].
-			anOrderedCollection at: i put: arg.
+			aSequencedReadableCollection at: i put: arg.
 			"We obviously can't use a duplicate argument name"
 			badNames add: arg].
-	^anOrderedCollection! !
+	^aSequencedReadableCollection! !
 !OS.COM.FUNCDESC categoriesForMethods!
 buildMethodName!private! !
 displayOn:!printing!public! !
@@ -3349,44 +3382,14 @@ printOn:!printing!public! !
 !OS.COM.MemberDesc methodsFor!
 
 idlAttributes
-	^(OrderedCollection new)
+	^OrderedCollection new
 		addAllLast: self basicIdlAttributes;
 		addAllLast: self documentation idlAttributes;
-		addAllLast: self idlCustomAttributes;
+		addAllLast: self getCustData idlAttributes;
 		yourself!
 
 idlAttributesAndId
 	^{self idlId} , self idlAttributes!
-
-idlCustomAttributes
-	| attrs |
-	attrs := Array writeStream.
-	(self customAttributes associations
-		asSortedArray: [:a :b | a key displayString < b key displayString]) do: 
-				[:each |
-				| attr |
-				attr := String writeStream.
-				each key isSymbol
-					ifTrue: 
-						[attr display: each key.
-						(each value isEmpty or: 
-								["Doesn't seem to be possible to actually set the value of a custom attribute to VT_EMPTY, to we treat an empty string as no argument"
-								each value value = ''])
-							ifFalse: 
-								[attr nextPut: $(.
-								each value printIDLOn: attr.
-								attr nextPut: $)]]
-					ifFalse: 
-						[attr
-							nextPutAll: 'custom(';
-							nextPutAll: each key idlString.
-						each value isEmpty
-							ifFalse: 
-								[attr nextPutAll: ', '.
-								each value printIDLOn: attr.
-								attr nextPutAll: $)]].
-				attrs nextPut: attr contents].
-	^attrs contents!
 
 isInspectable
 	"Answer whether the receiver is describing a 'browsable' property that is not 'restricted'
@@ -3415,7 +3418,6 @@ printIDLOn: target indent: tabs
 !OS.COM.MemberDesc categoriesForMethods!
 idlAttributes!printing-IDL!private! !
 idlAttributesAndId!accessing!private! !
-idlCustomAttributes!accessing!public! !
 isInspectable!public!testing! !
 printIDL!printing-IDL!public! !
 printIDLOn:!printing-IDL!public! !
@@ -3442,11 +3444,11 @@ idlAttributes
 	from the receiver."
 
 	| answer flags |
-	answer := OrderedCollection new: 3.
+	answer := Array writeStream.
 	flags := self wParamFlags.
-	(flags anyMask: PARAMFLAG_FIN) ifTrue: [answer addLast: 'in'].
-	(flags anyMask: PARAMFLAG_FOUT) ifTrue: [answer addLast: 'out'].
-	(flags anyMask: PARAMFLAG_FRETVAL) ifTrue: [answer addLast: 'retval'].
+	(flags anyMask: PARAMFLAG_FIN) ifTrue: [answer nextPut: 'in'].
+	(flags anyMask: PARAMFLAG_FOUT) ifTrue: [answer nextPut: 'out'].
+	(flags anyMask: PARAMFLAG_FRETVAL) ifTrue: [answer nextPut: 'retval'].
 	"defaultvalue() implies optional"
 	self hasDefaultValue
 		ifTrue: 
@@ -3455,9 +3457,11 @@ idlAttributes
 			stm nextPutAll: 'defaultvalue('.
 			self defaultValue printIDLOn: stm.
 			stm nextPut: $).
-			answer addLast: stm contents]
-		ifFalse: [(flags anyMask: PARAMFLAG_FOPT) ifTrue: [answer addLast: 'optional']].
-	^answer! !
+			answer nextPut: stm contents]
+		ifFalse: [(flags anyMask: PARAMFLAG_FOPT) ifTrue: [answer nextPut: 'optional']].
+	^answer grabContents
+
+! !
 !OS.COM.PARAMDESC categoriesForMethods!
 idlAttributes!accessing!private! !
 !
@@ -5079,7 +5083,7 @@ generateMethodWrappers
 	"Private - Generate a method to wrap each of the functions in the module described by the
 	receiver."
 
-	self functions do: [:each | self generateMethodWrappers: each]!
+	self ephemeralFunctionsDo: [:each | self generateMethodWrappers: each]!
 
 generateWrapper
 	"Private - Generate a new subclass of IDispatch that wraps the properties and methods 
@@ -5114,21 +5118,21 @@ instanceMethodCategories: aFUNCDESC raw: aBoolean
 
 	| categories |
 	categories := {self autoGenCategoryName. aBoolean ifTrue: ['private'] ifFalse: ['public']}.
-	(aFUNCDESC customAttributes at: #category ifAbsent: nil)
-		ifNotNil: [:category | categories := categories copyWith: category value].
+	(aFUNCDESC customAttributes at: #__category ifAbsent: nil)
+		ifNotNil: [:category | categories := categories copyWith: category].
 	^categories!
 
 methodCommentDescription
 	^'function of the module wrapped by the receiver'!
 
-mungeSelectorKeywords: aSequencedReadableCollection forMember: aFUNCDESC 
+mungeSelectorKeywords: aSequencedReadableCollection forMember: aFUNCDESC
 	"#1332: Override in order to generate Dolphin Smalltalk format external library call selectors (as
 	documented in the 'External Method Selector' pattern, see
 	http://www.object-arts.com/Lib/EducationCentre4/htm/externalmethodselector.htm"
 
-	| keywords |
-	keywords := aSequencedReadableCollection collect: [:each | self identifierFrom: each].
-	^self reinventBadSelector: keywords member: aFUNCDESC!
+	^self
+		reinventBadSelector: (aSequencedReadableCollection collect: [:each | self identifierFrom: each])
+		member: aFUNCDESC!
 
 printClassCommentPreambleOn: target
 	"Private - Print a comment preamble appropriate for the receiver onto the 
@@ -5146,31 +5150,31 @@ printClassCommentPreambleOn: target
 		print: lib helpstring;
 		nextPutAll: ' library. It contains methods for each of the functions defined by the corresponding module in that type library.'!
 
-printIDLBodyOn: target indent: tabs 
+printIDLBodyOn: target indent: tabs
 	"Private - Print the IDL description for the receiver on the <puttableStream>, target."
 
 	| childIndent vars |
-	childIndent := tabs + 1.
 	super printIDLBodyOn: target indent: tabs.
 	target
 		crtab: tabs;
 		nextPut: ${.
+	childIndent := tabs + 1.
 	vars := self variables.
 	vars do: 
-			[:each | 
+			[:each |
 			target crtab: childIndent.
-			self 
+			self
 				printIDLForVariable: each
 				on: target
-				indent: tabs + 1].
+				indent: childIndent].
 	vars isEmpty ifFalse: [target cr].
-	self functions do: 
-			[:each | 
-			target crtab: tabs + 1.
-			self 
+	self ephemeralFunctionsDo: 
+			[:each |
+			target crtab: childIndent.
+			self
 				printIDLForFunction: each
 				on: target
-				indent: tabs + 1].
+				indent: childIndent].
 	target
 		crtab: tabs;
 		nextPutAll: '};';
@@ -5194,18 +5198,19 @@ printRawMethodBody: aFUNCDESC name: anAXMethodName on: aPuttableStream
 		space.
 	"Here we want to print the actual return type of the function, as opposed to any retval argument."
 	self printReturnType: aFUNCDESC on: aPuttableStream.
-	aPuttableStream space.
 	entry := self getDllEntry: aFUNCDESC.
 	procName := (entry at: 2) trimBlanks.
 	procName isEmpty
 		ifTrue: 
 			[procName := entry at: 3.
-			procName = 0 ifTrue: [procName := aFUNCDESC name]].
-	aPuttableStream display: procName.
-	aFUNCDESC argumentTypes do: 
+			procName == 0 ifTrue: [procName := aFUNCDESC name]].
+	aPuttableStream
+		space;
+		display: procName.
+	aFUNCDESC arguments do: 
 			[:each |
 			aPuttableStream space.
-			self printType: each on: aPuttableStream].
+			self printArgumentType: each on: aPuttableStream].
 	aPuttableStream
 		nextPut: $>;
 		crtab;
@@ -5806,7 +5811,6 @@ printIDLDecl: aString type: aTYPEDESC on: aPuttableStream
 
 	| vt |
 	vt := aTYPEDESC vt.
-	self assert: [vt <= 16rFFF	"modifier flags not valid in a TYPEDESC"].
 	vt == VT_CARRAY
 		ifTrue: 
 			[| array |
@@ -5906,10 +5910,9 @@ removeOldWrappers: aClass
 	self removeAutoGeneratedMethods: aClass!
 
 reservedSelectors
-	"Answer a <Set> of all the selectors which are reserved, and should not be overridden by any
-	auto-generated method."
+	"Answer a <Collection> of all the selectors which are reserved, and should not be overridden by any auto-generated method."
 
-	^IdentitySet new!
+	^#()!
 
 resolveExistingClass: aVariableBinding
 	"Private - Attempt to locate an existing class which matches the receiver's type, starting with value associated with the <VariableBinding> argument, but prompting the user for further global names if necessary. Answer a <VariableBinding> which is either an existing static variable binding, or a suggested new variable."
@@ -6046,16 +6049,11 @@ basicIdlAttributes
 	| attrs uuid |
 	attrs := OrderedCollection new: 5.
 	uuid := self guid.
-	uuid = GUID null ifFalse: [attrs addLast: 'uuid(' , uuid idlString , ')'].
+	uuid isNull ifFalse: [attrs addLast: 'uuid(' , uuid idlString , ')'].
 	attrs addAll: self documentation idlAttributes.
 	self isHidden ifTrue: [attrs addLast: 'hidden'].
 	self isRestricted ifTrue: [attrs addLast: 'restricted'].
-	self getCustData do: 
-			[:each |
-			| attr |
-			attr := String writeStream.
-			each printIDLOn: attr.
-			attrs addLast: attr contents].
+	attrs addAll: self getCustData idlAttributes.
 	^attrs!
 
 classComments
@@ -6079,7 +6077,7 @@ customAttributes
 	The keys of the dictionary are the GUIDs which uniquely identify the attribute type, and the
 	values are the value of that attribute in this case."
 
-	^self getCustData asLookupTable!
+	^self getCustData!
 
 defineFunctionTables
 	"Answer whether #defineFunction methods will be defined in the classes of 
@@ -6479,7 +6477,7 @@ addVariableToPackage: aVariableBinding
 	Package manager addVariableNamed: aVariableBinding fullyQualifiedReference to: self package!
 
 aliasFor: aString
-	^(self aliasMap lookup: aString) ifNil: [StandardAliases lookup: aString]!
+	^(aliasMap lookup: aString) ifNil: [StandardAliases lookup: aString]!
 
 binding
 	"Private - Answer the VariableBinding for the variable being generated for the receiver."
@@ -6557,7 +6555,7 @@ generateClass: aVariableBinding for: aTypeInfoObject imports: anArray
 					[Notification signal: 'Modifying existing class ' , existingClass name , ' to wrap '
 								, aTypeInfoObject fullyQualifiedName].
 			"Need to re-generate, but try and preserved existing details"
-			imports := existingClass imports union: imports.
+			imports := (existingClass imports union: imports) asArray.
 			classVars := existingClass classVariableString.
 			instVars := existingClass instanceVariableString.
 			baseClass := aTypeInfoObject determineNewBase: baseClass forExistingWrapper: existingClass.

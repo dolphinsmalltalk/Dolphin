@@ -105,8 +105,7 @@ displayOn: aPuttableStream
 documentation
 	"Answer an <AXTypeLibDocumentation> object containing the documentation for this type."
 
-	documentation isNil ifTrue: [documentation := self documentationForMember: MEMBERID_NIL].
-	^documentation!
+	^documentation ifNil: [documentation := self documentationForMember: MEMBERID_NIL]!
 
 documentationForMember: memid
 	"Answer an <AXTypeLibDocumentation> object containing the documentation for the 
@@ -141,9 +140,9 @@ documentationForMember: memid ifAbsent: exceptionHandler
 			[hr = AutomationErrors.TYPE_E_ELEMENTNOTFOUND ifTrue: [^exceptionHandler value].
 			^HRESULTError signalWith: hr].
 	answer := TypeLibDocumentation new
-				name: bstrName asString
-				helpstring: bstrDocString asString
-				helpcontext: dwHelpContext value
+				name: bstrName asUtf16String
+				helpstring: bstrDocString asUtf16String
+				helpcontext: dwHelpContext asInteger
 				helpfile: ''.
 	bstrName basicFree.
 	bstrDocString basicFree.
@@ -153,6 +152,21 @@ environment
 	"Answer the namespace into which global representing the receiver type will be/has been generated."
 
 	^self typeLib environment!
+
+ephemeralFunctionsDo: aMonadicValuable
+	"Evaluate the <monadicValuable> argument for each of the functions described by the receiver, passing a FUNCDESC for each. The valuable must not capture the <FUNDESC>s it is passed, because they are only valid for the duration of the evaluation, being explicitly free'd as soon as the valuable returns. This is for the purpose of avoiding the creation of finalizable garbage. If there is a need to capture the <FUNCDESC>s, use either #functionsDo: or #functions."
+
+	| itypeinfo |
+	itypeinfo := self tlbInterface.
+	^1 to: self functionCount
+		do: 
+			[:i |
+			| funcdesc |
+			funcdesc := (itypeinfo getFuncDesc: i - 1)
+						setAnalyzer: self index: i - 1;
+						yourself.
+			aMonadicValuable value: funcdesc.
+			funcdesc free]!
 
 fullyQualifiedName
 	"Private - Answer the unique name for the receiver (assuming its library name is unique)
@@ -171,12 +185,15 @@ funcDescAt: anInteger
 		setAnalyzer: self index: funcIndex;
 		yourself!
 
+functionCount
+	^self attributes cFuncs!
+
 functions
 	"Answer a <sequencedReadableCollection> of FUNCDESC structures describing the
 	methods in the receiver (assumes it is an interface). If the receiver is not of a TYPEKIND
 	which holds functions, then the resulting collection will be empty."
 
-	^(1 to: self attributes cFuncs) collect: [:i | self funcDescAt: i]!
+	^(1 to: self functionCount) collect: [:i | self funcDescAt: i]!
 
 functionsByName
 	"Answer a <LookupTable> of FUNCDESC structures keyed by function name describing the methods
@@ -185,8 +202,13 @@ functionsByName
 
 	| answer |
 	answer := LookupTable new.
-	self functions do: [:each | answer add: each name -> each].
+	self functionsDo: [:each | answer at: each name put: each].
 	^answer!
+
+functionsDo: aMonadicValuable
+	"Evaluate the <monadicValuable> argument for each of the functions described by the receiver, passing a FUNCDESC for each."
+
+	^1 to: self functionCount do: [:i | aMonadicValuable value: (self funcDescAt: i)]!
 
 generateVariableDefinition: aVariableBinding
 	"Private - Generate a minimal definition of the receiver which will enable it to be seen,
@@ -211,11 +233,15 @@ getNamesOfMember: memid count: cMaxNames
 
 	^self tlbInterface getNamesOfMember: memid count: cMaxNames!
 
-getRefType: href 
+getRefType: href
 	"Private - Retrieve another ITypeInfo referenced by the receiver as the HREFTYPE, href.
 	Implementation Note: Attempts to resolve to the actual implementation type."
 
-	^(self class onTypeInfo: (self tlbInterface getRefTypeInfo: href)) asImplType!
+	| refTypeInfo refType |
+	refTypeInfo := self tlbInterface getRefTypeInfo: href.
+	refType := (self class onTypeInfo: refTypeInfo) asImplType.
+	refTypeInfo free.
+	^refType!
 
 guid
 	"Answer the guid associated with the receiver."
@@ -453,10 +479,13 @@ documentation!accessing!public! !
 documentationForMember:!accessing!public! !
 documentationForMember:ifAbsent:!accessing!public! !
 environment!constants!public! !
+ephemeralFunctionsDo:!public! !
 fullyQualifiedName!constants!private! !
 funcDescAt:!accessing!private! !
+functionCount!public! !
 functions!enumerating!public! !
 functionsByName!enumerating!public! !
+functionsDo:!enumerating!public! !
 generateVariableDefinition:!private! !
 getImplTypeInfoAt:!accessing!public! !
 getNamesOfMember:count:!accessing!private! !
@@ -517,7 +546,7 @@ onTypeInfo: piTypeInfo
 	| contain answer lib |
 	contain := piTypeInfo libraryAndIndex.
 	lib := contain key.
-	answer := (TypeLibraryAnalyzer onTypeLib: contain key) typeAnalyzerAt: contain value.
+	answer := (TypeLibraryAnalyzer onTypeLib: lib) typeAnalyzerAt: contain value.
 	lib free.
 	^answer!
 

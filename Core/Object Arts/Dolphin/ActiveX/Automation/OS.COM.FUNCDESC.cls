@@ -82,12 +82,12 @@ arguments
 	"Answer a <sequencedReadableCollection> containing <ELEMDESC> structures
 	describing each of the receiver's parameters."
 
-	arguments isNil ifTrue: [arguments := self lprgelemdescParam collect: [:e | e owner: self; yourself]].
-	^arguments!
+	^arguments ifNil: [self buildArguments]!
 
 basicFree
 	"Private - Free external resources owned by the receiver."
 
+	super basicFree.
 	analyzer releaseFuncDesc: self!
 
 basicIdlAttributes
@@ -100,6 +100,20 @@ basicIdlAttributes
 	self isPropPutRef ifTrue: [answer add: 'propputref'].
 	self isPropGet ifTrue: [answer add: 'propget'].
 	^answer!
+
+buildArguments
+	| argc elemdescs |
+	argc := self cParams.
+	argc == 0 ifTrue: [^arguments := #()].
+	elemdescs := self lprgelemdescParam.
+	arguments := Array new: argc.
+	elemdescs keysAndValuesDo: 
+			[:eachKey :eachValue |
+			eachValue
+				owner: self;
+				index: eachKey - 1.
+			arguments at: eachKey put: eachValue].
+	^arguments!
 
 callconv
 	"Answer the <Integer> value of the receiver's 'callconv' field."
@@ -267,12 +281,7 @@ names
 	"Private -  Answer a <sequencedReadableCollection> of <String>, consisting of the 
 	the function described by the receiver, and subsequently the names of its parameters."
 
-	names isNil 
-		ifTrue: 
-			[| count |
-			count := self cParams + 1.
-			names := analyzer getNamesOfMember: self memid count: count].
-	^names!
+	^names ifNil: [names := analyzer getNamesOfMember: self memid count: self cParams + 1]!
 
 optionalInputs
 	"Private - Answer the indices of the input arguments of the receiver which are optional."
@@ -375,6 +384,7 @@ argumentNames!accessing!public! !
 arguments!accessing!public! !
 basicFree!private!realizing/unrealizing! !
 basicIdlAttributes!printing-IDL!private! !
+buildArguments!helpers!private! !
 callconv!**compiled accessors**!public! !
 callingConvention!accessing!public! !
 clearMethodName!development!initializing!private! !

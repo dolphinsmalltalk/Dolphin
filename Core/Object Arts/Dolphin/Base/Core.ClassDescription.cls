@@ -815,19 +815,23 @@ removeProtocol: protocol ifAbsent: exceptionHandler
 		ifTrue: [^exceptionHandler value].
 	protocols isEmpty ifTrue: [protocols := nil]!
 
-removeSelector: aSelector fromCategory: category
-	"Private - Remove aSelector from aCategory. If no selectors are associated with
-	aCategory as the outcome of this, then aCategory is removed"
+removeSelector: aSymbol fromCategory: aMethodCategory
+	"Private - Remove the selector, aSymbol, from the method category, aMethodCategory, in the receiver. If no selectors are associated with category as the outcome of this, then category is removed from the receiver's catalogue."
 
 	| catalogue |
 	catalogue := self methodsCatalogue.
-	(catalogue lookup: category)
+	(catalogue lookup: aMethodCategory)
 		ifNotNil: 
 			[:selectors |
-			| sels |
-			(selectors identityIncludes: aSelector) ifFalse: [^self].
-			sels := catalogue at: category put: (selectors copyWithout: aSelector).
-			sels isEmpty ifTrue: [catalogue removeKey: category].
+			| index count |
+			index := selectors
+						nextIdentityIndexOf: aSymbol
+						from: 1
+						to: (count := selectors size).
+			index == 0 ifTrue: [^self].
+			count == 1
+				ifTrue: [catalogue removeKey: aMethodCategory]
+				ifFalse: [catalogue at: aMethodCategory put: (selectors copyWithoutIndex: index)].
 			self methodsCatalogue: catalogue]!
 
 removeSelector: aSymbol ifAbsent: aBlock

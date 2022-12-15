@@ -23,14 +23,15 @@ baseClass
 dllNameIfNone: exceptionHandler
 	"Answer the name of the DLL associated with the receiver."
 
-	^(self getDllEntry: (self functions at: 1 ifAbsent: [^exceptionHandler value])) first!
+	self hasFunctions ifFalse: [^exceptionHandler value].
+	^(self getDllEntry: (self funcDescAt: 1)) first!
 
 getDllEntry: funcDesc
 	"Private - Answer an array of info. about a member of the receiver."
 
 	| pBstrDllName pBstrName pwOrdinal answer |
-	pBstrDllName := BSTR new.
-	pBstrName := BSTR new.
+	pBstrDllName := BSTR basicNew.
+	pBstrName := BSTR basicNew.
 	pwOrdinal := UInt32Bytes new.
 	self tlbInterface
 		GetDllEntry: funcDesc memid
@@ -38,7 +39,7 @@ getDllEntry: funcDesc
 		pBstrDllName: pBstrDllName
 		pBstrName: pBstrName
 		pwOrdinal: pwOrdinal.
-	answer := {pBstrDllName asString. pBstrName asString. pwOrdinal value}.
+	answer := {pBstrDllName asUtf16String. pBstrName asUtf16String. pwOrdinal asInteger}.
 	pBstrDllName free.
 	pBstrName free.
 	^answer!

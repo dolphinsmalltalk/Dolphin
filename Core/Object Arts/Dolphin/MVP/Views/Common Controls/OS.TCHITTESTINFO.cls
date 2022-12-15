@@ -5,9 +5,7 @@ OS.CCHITTESTINFO subclass: #'OS.TCHITTESTINFO'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_TCHITTESTINFO_Size' -> 16rC
-	}!
+	classConstants: {}!
 OS.TCHITTESTINFO guid: (Core.GUID fromString: '{a369fa40-e397-4c16-b3f5-b254fd07aebe}')!
 OS.TCHITTESTINFO comment: 'TCHITTESTINFO is an ExternalStructure class to represent the Win32 common control structure of the same name.
 

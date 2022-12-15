@@ -33,11 +33,6 @@ Instance Variables:
 !OS.COM.TYPEDESC categoriesForClass!External-Data-Structured-COM! !
 !OS.COM.TYPEDESC methodsFor!
 
-analyzer
-	"Private - Answer the <AXTypeInfoAnalyzer> from which the receiver originated."
-
-	^owner analyzer!
-
 arrayDesc
 	"Private - Recurse down through any typedefs to the underlying ARRAYDESC. Anwer nil if the type does not describe an array."
 
@@ -74,11 +69,10 @@ classDesc
 	"Private - Answer a Dolphin class and indirection count pair which can be used to
 	represent the external type described by the receiver."
 
-	classDesc isNil ifTrue: [classDesc := self buildClassDesc].
-	^classDesc!
+	^classDesc ifNil: [classDesc := self buildClassDesc]!
 
 getRefType
-	^self analyzer getRefType: self hreftype!
+	^owner analyzer getRefType: self hreftype!
 
 hreftype
 	"Answer the <Integer> value of the receiver's 'hreftype' field."
@@ -210,7 +204,6 @@ vtName
 
 	^VARIANT nameOfVT: self vartype! !
 !OS.COM.TYPEDESC categoriesForMethods!
-analyzer!accessing!private! !
 arrayDesc!development!private! !
 buildClassDesc!helpers!private! !
 classDesc!accessing!private! !

@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 OS.COM.TypeInfoStructure subclass: #'OS.COM.MemberDesc'
-	instanceVariableNames: 'index customAttributes documentation'
+	instanceVariableNames: 'index custData documentation'
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
@@ -36,11 +36,8 @@ argumentTypes
 	^self arguments collect: [:e | e tdesc]!
 
 basicFree
-	customAttributes isNull
-		ifFalse: 
-			[customAttributes free.
-			customAttributes := nil].
-	^super basicFree!
+	custData free.
+	custData := nil!
 
 basicIdlAttributes
 	"Private - Answer a <sequencedReadableCollection> of the string names
@@ -78,7 +75,7 @@ customAttributes
 	"Answer the collection of custom attributes defined on the member. This is a lookup table
 	mapping <GUID> attribute id to the attribute value, usally a string."
 
-	^(customAttributes ifNil: [customAttributes := self getAllCustData]) asLookupTable!
+	^self getCustData!
 
 documentation
 	"Answer a four element array containing the documentation for the receiver itself.
@@ -97,6 +94,9 @@ flags
 
 getAllCustData
 	^self subclassResponsibility!
+
+getCustData
+	^custData ifNil: [custData := self getAllCustData]!
 
 hash
 	"Answer <integer> hash value for the receiver."
@@ -231,6 +231,7 @@ documentation!accessing!public! !
 elemDesc!accessing!private! !
 flags!accessing!private! !
 getAllCustData!accessing!private! !
+getCustData!accessing!private! !
 hash!comparing!public! !
 helpstring!accessing!public! !
 idlId!printing-IDL!private! !

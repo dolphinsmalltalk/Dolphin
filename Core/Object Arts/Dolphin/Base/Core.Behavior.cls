@@ -776,8 +776,7 @@ removeSelectors: aCollection
 
 	| methods |
 	methodDictionary ifNil: [^#()].
-	"Take advantage of the fact that Sets ignores requests to add nil"
-	methods := aCollection asSet collect: [:each | methodDictionary removeKey: each ifAbsent: nil].
+	methods := methodDictionary removeSelectors: aCollection.
 	methodDictionary isEmpty ifTrue: [methodDictionary := nil].
 	self flushMethodCache.
 	methods do: [:each | Smalltalk trigger: #methodRemoved: with: each].

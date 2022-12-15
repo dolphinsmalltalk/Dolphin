@@ -47,9 +47,6 @@ binding
 binding: aVariableBindingOrNil
 	binding := aVariableBindingOrNil!
 
-customData
-	^self getCustData asLookupTable!
-
 documentation
 	"Answer an <AXTypeLibDocumentation> object containing the documentation for this type."
 
@@ -154,7 +151,6 @@ attributes!accessing!public! !
 basicName!accessing!private! !
 binding!accessing!private! !
 binding:!accessing!private! !
-customData!private! !
 documentation!accessing!public! !
 environment!constants!public! !
 free!public!realizing/unrealizing! !

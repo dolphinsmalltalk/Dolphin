@@ -259,7 +259,7 @@ setMethod: aCompiledMethod categories: aCollectionOfCategories
 	not in 'categories' are removed)."
 
 	| nonPseudo newCategories original unwanted |
-	nonPseudo := IdentitySet new.
+	nonPseudo := IdentitySet new: aCollectionOfCategories size.
 	aCollectionOfCategories do: 
 			[:each |
 			| category |

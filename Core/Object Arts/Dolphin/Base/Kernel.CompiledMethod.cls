@@ -182,10 +182,11 @@ protocols
 !
 
 realCategories
-	"Answer a <Collection> of all the 'real' (i.e. non-virtual) method categories in which 
-	the receiver is included. Note that this does include the public/private categories."
+	"Answer a <Collection> of all the 'real' (i.e. non-virtual) method categories in which the receiver is included. Note that this does include the public/private categories."
 
-	^self methodClass whichCategoriesIncludeSelector: self selector!
+	^(self methodClass whichNonVirtualCategoriesIncludeSelector: self selector)
+		add: self privacyCategory;
+		yourself!
 
 recompile
 	"Private - Recompile the receiver."
