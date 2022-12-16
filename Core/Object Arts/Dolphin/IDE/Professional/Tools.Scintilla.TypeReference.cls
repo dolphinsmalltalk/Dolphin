@@ -91,14 +91,17 @@ resetTypeMap
 				at: 'line' put: LineTypeReference new;
 				at: 'position' put: PositionTypeReference new;
 				at: 'bool' put: BoolTypeReference new;
-				at: 'textrange' put: (PointerTypeReference name: 'textrange' objectClass: OS.TEXTRANGE);
+				at: 'textrangefull'
+					put: (PointerTypeReference name: 'textrangefull' objectClass: UI.Scintilla.TextRangeFull);
 				at: 'stringresult' put: (PointerTypeReference name: 'stringresult' objectClass: String);
 				at: 'pointer' put: (PointerTypeReference name: 'pointer' objectClass: External.Address);
 				at: 'colour' put: ColourTypeReference new;
 				at: 'colouralpha' put: ColourAlphaTypeReference new;
 				at: 'keymod' put: KeyModTypeReference new;
-				at: 'findtext' put: (PointerTypeReference name: 'findtext' objectClass: OS.FINDTEXTEX);
-				at: 'formatrange' put: (PointerTypeReference name: 'formatrange' objectClass: OS.FORMATRANGE);
+				at: 'findtextfull'
+					put: (PointerTypeReference name: 'findtext' objectClass: UI.Scintilla.TextToFindFull);
+				at: 'formatrangefull'
+					put: (PointerTypeReference name: 'formatrange' objectClass: UI.Scintilla.RangeToFormatFull);
 				yourself! !
 !Tools.Scintilla.TypeReference class categoriesForMethods!
 declareEnum:prefix:!constants!public! !

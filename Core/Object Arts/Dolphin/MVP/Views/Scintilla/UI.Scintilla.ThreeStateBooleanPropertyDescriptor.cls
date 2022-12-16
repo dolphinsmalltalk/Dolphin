@@ -8,7 +8,6 @@ UI.Scintilla.PropertyDescriptor subclass: #'UI.Scintilla.ThreeStateBooleanProper
 	classConstants: {}!
 UI.Scintilla.ThreeStateBooleanPropertyDescriptor guid: (Core.GUID fromString: '{32c7fd36-f0c3-4d7b-83a2-5278270a3e8c}')!
 UI.Scintilla.ThreeStateBooleanPropertyDescriptor comment: ''!
-!UI.Scintilla.ThreeStateBooleanPropertyDescriptor categoriesForClass!Unclassified! !
 !UI.Scintilla.ThreeStateBooleanPropertyDescriptor methodsFor!
 
 defaultFlags

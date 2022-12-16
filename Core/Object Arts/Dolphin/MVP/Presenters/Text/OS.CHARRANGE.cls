@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.CHARRANGE'
+OS.AbstractCHARRANGE subclass: #'OS.CHARRANGE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -28,11 +28,6 @@ struct tagCHARRANGE {
 !OS.CHARRANGE categoriesForClass!Win-Structs! !
 !OS.CHARRANGE methodsFor!
 
-asObject
-	"Answer the <Object> value represented by the receiver."
-
-	^self cpMin to: self cpMax!
-
 cpMax
 	"Answer the <Integer> value of the receiver's 'cpMax' field."
 
@@ -53,7 +48,6 @@ cpMin: anInteger
 
 	bytes sdwordAtOffset: _OffsetOf_cpMin put: anInteger! !
 !OS.CHARRANGE categoriesForMethods!
-asObject!accessing!public! !
 cpMax!**compiled accessors**!public! !
 cpMax:!**compiled accessors**!public! !
 cpMin!**compiled accessors**!public! !
@@ -78,13 +72,9 @@ defineFields
 
 	self
 		defineField: #cpMin type: SDWORDField new;
-		defineField: #cpMax type: SDWORDField new!
-
-getFieldNames
-	^#(#cpMin #cpMax)! !
+		defineField: #cpMax type: SDWORDField new! !
 !OS.CHARRANGE class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
-getFieldNames!**compiled accessors**!constants!private! !
 !
 

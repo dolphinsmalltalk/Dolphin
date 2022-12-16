@@ -11,6 +11,9 @@ package basicPackageVersion: '6.2'.
 
 
 package setClassNames: #(
+	#{OS.AbstractCHARRANGE}
+	#{OS.AbstractFORMATRANGE}
+	#{OS.AbstractTEXTRANGE}
 	#{OS.CHARRANGE}
 	#{OS.FINDTEXTEX}
 	#{OS.TextEditConstants}
@@ -141,7 +144,34 @@ UI.ValuePresenter subclass: #'UI.TextPresenter'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.Win32Structure subclass: #'OS.CHARRANGE'
+OS.Win32Structure subclass: #'OS.AbstractCHARRANGE'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_CHARRANGE_Size' -> 16r8
+	}!
+OS.Win32Structure subclass: #'OS.AbstractFORMATRANGE'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_AbstractFORMATRANGE_Size' -> 16r28.
+		'_FORMATRANGE_Size' -> 16r30.
+		'_OffsetOf_hdc' -> 16r0.
+		'_OffsetOf_hdcTarget' -> 16r4.
+		'_OffsetOf_rc' -> 16r8.
+		'_OffsetOf_rcPage' -> 16r18
+	}!
+OS.Win32Structure subclass: #'OS.AbstractTEXTRANGE'
+	instanceVariableNames: 'text'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.AbstractCHARRANGE subclass: #'OS.CHARRANGE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -151,8 +181,19 @@ OS.Win32Structure subclass: #'OS.CHARRANGE'
 		'_OffsetOf_cpMax' -> 16r4.
 		'_OffsetOf_cpMin' -> 16r0
 	}!
-OS.Win32Structure subclass: #'OS.TEXTRANGE'
-	instanceVariableNames: 'text'
+OS.AbstractTEXTRANGE subclass: #'OS.FINDTEXTEX'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_FINDTEXTEX_Size' -> 16r14.
+		'_OffsetOf_chrg' -> 16r0.
+		'_OffsetOf_chrgText' -> 16rC.
+		'_OffsetOf_lpstrText' -> 16r8
+	}!
+OS.AbstractTEXTRANGE subclass: #'OS.TEXTRANGE'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -160,15 +201,6 @@ OS.Win32Structure subclass: #'OS.TEXTRANGE'
 		'_OffsetOf_chrg' -> 16r0.
 		'_OffsetOf_lpstrText' -> 16r8.
 		'_TEXTRANGE_Size' -> 16rC
-	}!
-OS.TEXTRANGE subclass: #'OS.FINDTEXTEX'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'_FINDTEXTEX_Size' -> 16r14.
-		'_OffsetOf_chrgText' -> 16rC
 	}!
 UI.ValueConvertingControlView subclass: #'UI.TextEdit'
 	instanceVariableNames: 'teFlags'

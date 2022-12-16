@@ -376,20 +376,6 @@ OS.Win32Structure subclass: #'OS.EDITSTREAM'
 		'_OffsetOf_dwError' -> 16r4.
 		'_OffsetOf_pfnCallback' -> 16r8
 	}!
-OS.Win32Structure subclass: #'OS.FORMATRANGE'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'_FORMATRANGE_Size' -> 16r30.
-		'_OffsetOf_cpMax' -> 16r2C.
-		'_OffsetOf_cpMin' -> 16r28.
-		'_OffsetOf_hdc' -> 16r0.
-		'_OffsetOf_hdcTarget' -> 16r4.
-		'_OffsetOf_rc' -> 16r8.
-		'_OffsetOf_rcPage' -> 16r18
-	}!
 OS.Win32Structure subclass: #'OS.GETTEXTEX'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -420,6 +406,16 @@ OS.Win32Structure subclass: #'OS.PARAFORMAT'
 		'_OffsetOf_wEffects' -> 16rA.
 		'_OffsetOf_wNumbering' -> 16r8.
 		'_PARAFORMAT_Size' -> 16r9C
+	}!
+OS.AbstractFORMATRANGE subclass: #'OS.FORMATRANGE'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_FORMATRANGE_Size' -> 16r30.
+		'_OffsetOf_cpMax' -> 16r2C.
+		'_OffsetOf_cpMin' -> 16r28
 	}!
 OS.NMHDR subclass: #'OS.ENLINK'
 	instanceVariableNames: ''

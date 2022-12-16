@@ -53,6 +53,7 @@ This class provides at least a basic interface to all of Scintilla''s extensive 
 	Folding						(requires lexer support)
 	Annotations
 	Multiple-selection
+	Change History				Note that the change history cannot be persisted, so will not survive image saves, etc
 	
 Features of Scintilla that are not currently exposed at any level higher than the basic message interface include:
 	Error handling				(not currently used much by Scintilla itself)
@@ -1079,6 +1080,14 @@ centerCurrentLine
 		msg: SCI_VERTICALCENTRECARET
 		wParam: 0
 		lParam: 0!
+
+changeHistoryMode
+	^self class changeHistoryModes at: self sciGetChangeHistory ifAbsent: #disabled!
+
+changeHistoryMode: aSymbol
+	self sciSetChangeHistory: (aSymbol
+				ifNil: [SC_CHANGE_HISTORY_DISABLED]
+				ifNotNil: [self class changeHistoryModes keyAtValue: aSymbol])!
 
 characterAt: anInteger
 	"Answer the <Character> at the specified one-based <integer> index in the receiver's text.
@@ -2212,11 +2221,11 @@ find: aString range: anInterval flags: anInteger
 	start := anInterval start - 1.
 	stop := anInterval stop.
 	stop < start ifTrue: [stop := stop - 1].
-	findText := FINDTEXTEX
+	findText := TextToFindFull
 				from: start
 				to: stop
 				text: (stringClass coerceString: aString).
-	self sciFindText: anInteger ft: findText.
+	self sciFindTextFull: anInteger ft: findText.
 	range := findText chrgText.
 	^range cpMin + 1 to: range cpMax!
 
@@ -2259,19 +2268,7 @@ findStyleStart: aSymbol before: anInteger
 foldAll
 	"Collapse the document at the fold points identified by the language lexer."
 
-	"Implementation Note: Scintilla's SCI_FOLDALL operation just folds at the top-level, and then expanding that again shows the entire document again. Frankly this isn't very useful. What the user most likely wants is to recursively fold the entire document, such that when one expands it again, it unfolds only the top-level. This makes it possible to collapse a large XML document, and then walk down expanding just the branches of the fold tree that one wants to see."
-
-	| lines line |
-	lines := self lineCount.
-	line := 1.
-	[line <= lines] whileTrue: 
-			[| lastChild |
-			lastChild := self lastChildLine: line level: -1.
-			lastChild > line
-				ifTrue: 
-					[self foldChildren: line action: SC_FOLDACTION_CONTRACT.
-					line := lastChild].
-			line := line + 1]!
+	self sciFoldAll: ##(SC_FOLDACTION_CONTRACT | SC_FOLDACTION_CONTRACT_EVERY_LEVEL)!
 
 foldChildren: lineInteger action: actionInteger
 	"Expand or contract a fold header and its children."
@@ -3456,6 +3453,13 @@ isSelectionEmpty
 		wParam: 0
 		lParam: 0!
 
+isSelectionHidden
+	^library
+		directBooleanFunction: this
+		msg: SCI_GETSELECTIONHIDDEN
+		wParam: 0
+		lParam: 0!
+
 isSelectionKept
 	"Answer true if the receiver is set to maintain selection even after losing focus."
 
@@ -4494,11 +4498,11 @@ plainTextFrom: startInteger to: stopInteger
 	startInteger < 1 ifTrue: [^self errorSubscriptBounds: startInteger].
 	stopInteger < startInteger ifTrue: [^String new].
 	stopInteger > self textLength ifTrue: [^self errorSubscriptBounds: stopInteger].
-	range := TEXTRANGE
+	range := TextRangeFull
 				from: startInteger - 1
 				to: stopInteger
 				type: stringClass.
-	self sciGetTextRange: range.
+	self sciGetTextRangeFull: range.
 	^range text!
 
 positionCacheSize
@@ -5647,7 +5651,7 @@ sciEOLAnnotationSetVisible: visibleInteger
 		lParam: 0!
 
 sciFindIndicatorFlash: startInteger end: endInteger
-	"Private - On OS X, flash a find indicator, then fade out."
+	"Private - On macOS, flash a find indicator, then fade out."
 
 	library
 		directFunction: this
@@ -5656,7 +5660,7 @@ sciFindIndicatorFlash: startInteger end: endInteger
 		lParam: endInteger - 1!
 
 sciFindIndicatorHide
-	"Private - On OS X, hide the find indicator."
+	"Private - On macOS, hide the find indicator."
 
 	library
 		directFunction: this
@@ -5665,7 +5669,7 @@ sciFindIndicatorHide
 		lParam: 0!
 
 sciFindIndicatorShow: startInteger end: endInteger
-	"Private - On OS X, show a find indicator."
+	"Private - On macOS, show a find indicator."
 
 	library
 		directFunction: this
@@ -5673,14 +5677,14 @@ sciFindIndicatorShow: startInteger end: endInteger
 		wParam: startInteger - 1
 		lParam: endInteger - 1!
 
-sciFindText: searchFlagsInteger ft: ftFINDTEXTEX
+sciFindTextFull: searchFlagsInteger ft: ftTextToFindFull
 	"Private - Find some text in the document."
 
 	^(library
 		directFunction: this
-		msg: SCI_FINDTEXT
+		msg: SCI_FINDTEXTFULL
 		wParam: searchFlagsInteger
-		lpParam: ftFINDTEXTEX) + 1!
+		lpParam: ftTextToFindFull) + 1!
 
 sciFoldAll: actionInteger
 	"Private - Expand or contract all fold headers."
@@ -5709,14 +5713,14 @@ sciFoldDisplayTextSetStyle: styleInteger
 		wParam: styleInteger
 		lParam: 0!
 
-sciFormatRange: drawBoolean fr: frFORMATRANGE
-	"Private - On Windows, will draw the document into a display context such as a printer."
+sciFormatRangeFull: drawBoolean fr: frRangeToFormatFull
+	"Private - Draw the document into a display context such as a printer."
 
 	^(library
 		directFunction: this
-		msg: SCI_FORMATRANGE
+		msg: SCI_FORMATRANGEFULL
 		wParam: drawBoolean asParameter
-		lpParam: frFORMATRANGE) + 1!
+		lpParam: frRangeToFormatFull) + 1!
 
 sciFreeSubStyles
 	"Private - Free allocated sub styles"
@@ -5797,6 +5801,15 @@ sciGetCaretStyle
 	^library
 		directFunction: this
 		msg: SCI_GETCARETSTYLE
+		wParam: 0
+		lParam: 0!
+
+sciGetChangeHistory
+	"Private - Report change history status."
+
+	^library
+		directFunction: this
+		msg: SCI_GETCHANGEHISTORY
 		wParam: 0
 		lParam: 0!
 
@@ -6411,15 +6424,15 @@ sciGetSelectionNStartVirtualSpace: selectionInteger
 		wParam: selectionInteger
 		lParam: 0) + 1!
 
-sciGetStyledText: trTEXTRANGE
-	"Private - Retrieve a buffer of cells. Returns the number of bytes in the buffer not
-	including terminating NULs."
+sciGetStyledTextFull: trTextRangeFull
+	"Private - Retrieve a buffer of cells that can be past 2GB. Returns the number of bytes in
+	the buffer not including terminating NULs."
 
 	^library
 		directFunction: this
-		msg: SCI_GETSTYLEDTEXT
+		msg: SCI_GETSTYLEDTEXTFULL
 		wParam: 0
-		lpParam: trTEXTRANGE!
+		lpParam: trTextRangeFull!
 
 sciGetStyleFromSubStyle: subStyleInteger
 	"Private - For a sub style, return the base style, else return the argument."
@@ -6528,14 +6541,14 @@ sciGetTechnology
 		wParam: 0
 		lParam: 0!
 
-sciGetTextRange: trTEXTRANGE
-	"Private - Retrieve a range of text. Return the length of the text."
+sciGetTextRangeFull: trTextRangeFull
+	"Private - Retrieve a range of text that can be past 2GB. Return the length of the text."
 
 	^library
 		directFunction: this
-		msg: SCI_GETTEXTRANGE
+		msg: SCI_GETTEXTRANGEFULL
 		wParam: 0
-		lpParam: trTEXTRANGE!
+		lpParam: trTextRangeFull!
 
 sciGetViewWS
 	"Private - Are white space characters currently visible? Returns one of SCWS_* constants."
@@ -7183,6 +7196,16 @@ sciReplaceTarget: lengthInteger text: textString
 		wParam: lengthInteger
 		lpParam: textString!
 
+sciReplaceTargetMinimal: lengthInteger text: textString
+	"Private - Replace the target text with the argument text but ignore prefix and suffix that
+	are the same as current."
+
+	^(library
+		directFunction: this
+		msg: SCI_REPLACETARGETMINIMAL
+		wParam: lengthInteger
+		lpParam: textString) + 1!
+
 sciReplaceTargetRE: lengthInteger text: textString
 	"Private - Replace the target text with the argument text after \d processing. Text is
 	counted so it can contain NULs. Looks for \d where d is between 1 and 9 and replaces these
@@ -7352,6 +7375,15 @@ sciSetCaretWidth: pixelWidthInteger
 		directFunction: this
 		msg: SCI_SETCARETWIDTH
 		wParam: pixelWidthInteger
+		lParam: 0!
+
+sciSetChangeHistory: changeHistoryInteger
+	"Private - Enable or disable change history."
+
+	library
+		directFunction: this
+		msg: SCI_SETCHANGEHISTORY
+		wParam: changeHistoryInteger
 		lParam: 0!
 
 sciSetCharacterCategoryOptimization: countCharactersInteger
@@ -8031,6 +8063,27 @@ sciStyleClearAll
 		wParam: 0
 		lParam: 0!
 
+sciStyleGetInvisibleRepresentation: styleInteger
+	"Private - Get the invisible representation for a style."
+
+	| len |
+	len := library
+				directFunction: this
+				msg: SCI_STYLEGETINVISIBLEREPRESENTATION
+				wParam: styleInteger
+				lpParam: nil.
+	^len == 0
+		ifTrue: [stringClass empty]
+		ifFalse: 
+			[| result |
+			result := stringClass newFixed: len.
+			library
+				directFunction: this
+				msg: SCI_STYLEGETINVISIBLEREPRESENTATION
+				wParam: styleInteger
+				lpParam: result.
+			result]!
+
 sciStyleResetDefault
 	"Private - Reset the default style to its state at startup"
 
@@ -8039,6 +8092,15 @@ sciStyleResetDefault
 		msg: SCI_STYLERESETDEFAULT
 		wParam: 0
 		lParam: 0!
+
+sciStyleSetInvisibleRepresentation: styleInteger representation: representationString
+	"Private - Set the invisible representation for a style."
+
+	library
+		directFunction: this
+		msg: SCI_STYLESETINVISIBLEREPRESENTATION
+		wParam: styleInteger
+		lpParam: representationString!
 
 sciSupportsFeature: featureInteger
 	"Private - Get whether a feature is supported"
@@ -9171,7 +9233,7 @@ state
 
 	| answer |
 	answer := super state.
-	#(#(#sciSetMouseDwellTime: #sciGetMouseDwellTime ##(SC_TIME_FOREVER)) #(#setIndicators: #indicators #()) #(#sciSetCaretStyle: #sciGetCaretStyle ##(CARETSTYLE_LINE)) #(#caretWidth: #caretWidth 1) #(#sciSetCaretSticky: #sciGetCaretSticky ##(SC_CARETSTICKY_OFF)) #(#isCurrentLineHighlightedAlways: #isCurrentLineHighlightedAlways false) #(#sciSetEOLMode: #sciGetEOLMode ##(SC_EOL_CRLF)) #(#hasVisibleLineEndings: #hasVisibleLineEndings false) #(#wordWrap: #wordWrap false) #(#sciSetLayoutCache: #sciGetLayoutCache ##(SC_CACHE_CARET)) #(#margins: #margins nil) #(#markers: #markers ##(IdentitySet
+	#(#(#sciSetChangeHistory: #sciGetChangeHistory ##(SC_CHANGE_HISTORY_DISABLED)) #(#sciSetMouseDwellTime: #sciGetMouseDwellTime ##(SC_TIME_FOREVER)) #(#setIndicators: #indicators #()) #(#sciSetCaretStyle: #sciGetCaretStyle ##(CARETSTYLE_LINE)) #(#caretWidth: #caretWidth 1) #(#sciSetCaretSticky: #sciGetCaretSticky ##(SC_CARETSTICKY_OFF)) #(#isCurrentLineHighlightedAlways: #isCurrentLineHighlightedAlways false) #(#sciSetEOLMode: #sciGetEOLMode ##(SC_EOL_CRLF)) #(#hasVisibleLineEndings: #hasVisibleLineEndings false) #(#wordWrap: #wordWrap false) #(#sciSetLayoutCache: #sciGetLayoutCache ##(SC_CACHE_CARET)) #(#margins: #margins nil) #(#markers: #markers ##(IdentitySet
 		new)) #(#isOvertypeEnabled: #isOvertypeEnabled false) #(#printMagnification: #printMagnification 0) #(#printColourMode: #printColourMode ##(SC_PRINT_NORMAL)) #(#canHScroll: #canHScroll true) #(#canScrollPastEnd: #canScrollPastEnd true) #(#scrollWidth: #scrollWidth 2000) #(#xOffset: #xOffset 0) #(#sciSetSelectionMode: #sciGetSelectionMode ##(SC_SEL_STREAM)) #(#backspaceUnindents: #backspaceUnindents false) #(#sciSetIndentationGuides: #sciGetIndentationGuides ##(SC_IV_NONE)) #(#indentation: #indentation 0) #(#tabIndents: #tabIndents true) #(#tabWidth: #tabWidth 8) #(#isUsingTabs: #isUsingTabs true) #(#tabMinimumWidth: #tabMinimumWidth 2) #(#targetRange: #targetRange ##(0
 		to: -1)) #(#sciSetViewWS: #sciGetViewWS ##(SCWS_INVISIBLE)) #(#autoCompletionSeparator: #autoCompletionSeparator $\x20) #(#autoCompletionImageIdSeparator: #autoCompletionImageIdSeparator $?) #(#isAutoCompletionCancelledAtStart: #isAutoCompletionCancelledAtStart true) #(#isAutoCompletionCaseInsensitive: #isAutoCompletionCaseInsensitive false) #(#isAutoCompletionCancelledWhenNoMatch: #isAutoCompletionCancelledWhenNoMatch true) #(#isAutoCompletionTruncating: #isAutoCompletionTruncating false) #(#maxCompletionListHeight: #maxCompletionListHeight 5) #(#maxCompletionListWidth: #maxCompletionListWidth 0) #(#edgeColumn: #edgeColumn 1) #(#sciSetEdgeMode: #sciGetEdgeMode ##(EDGE_NONE)) #(#zoomLevel: #zoomLevel 0) #(#setLexerLanguage: #lexer #container) #(#controlCharacter: #controlCharacter nil) #(#positionCacheSize: #positionCacheSize 1024) #(#areHotspotsSingleLine: #areHotspotsSingleLine true) #(#sciAnnotationSetVisible: #sciAnnotationGetVisible ##(ANNOTATION_HIDDEN)) #(#setRawAnnotations: #getRawAnnotations #()) #(#sciEOLAnnotationSetVisible: #sciEOLAnnotationGetVisible ##(ANNOTATION_HIDDEN)) #(#setEolAnnotations: #getEolAnnotations #()) #(#extraAscent: #extraAscent 0) #(#extraDescent: #extraDescent 0) #(#areAdditionalCaretsVisible: #areAdditionalCaretsVisible true) #(#sciSetTechnology: #sciGetTechnology ##(SC_TECHNOLOGY_DEFAULT)) #(#sciSetFontQuality: #sciGetFontQuality ##(SC_EFF_QUALITY_DEFAULT)) #(#whitespaceMarkerSize: #whitespaceMarkerSize 1) #(#sciSetMultiPaste: #sciGetMultiPaste ##(SC_MULTIPASTE_ONCE)) #(#sciSetIMEInteraction: #sciGetIMEInteraction ##(SC_IME_WINDOWED)) #(#sciAutoCSetOrder: #sciAutoCGetOrder ##(SC_ORDER_PRESORTED)) #(#sciSetPhasesDraw: #sciGetPhasesDraw ##(SC_PHASES_TWO)) #(#sciSetIdleStyling: #sciGetIdleStyling ##(SC_IDLESTYLING_NONE)) #(#isMouseWheelCaptured: #isMouseWheelCaptured true) #(#sciSetTabDrawMode: #sciGetTabDrawMode 0) #(#sciSetAccessibility: #sciGetAccessibility 0) #(#currentLineFrameWidth: #currentLineFrameWidth 0) #(#isAccessibilityEnabled: #isAccessibilityEnabled false) #(#sciSetWrapIndentMode: #sciGetWrapIndentMode ##(SC_WRAPINDENT_FIXED)) #(#sciFoldDisplayTextSetStyle: #sciFoldDisplayTextGetStyle 0) #(#defaultFoldTextTag: #defaultFoldTextTag '') #(#hasAdditionalSelectionTyping: #hasAdditionalSelectionTyping false) #(#sciSetSelectionLayer: #sciGetSelectionLayer ##(SC_LAYER_BASE)) #(#sciSetCaretLineLayer: #sciGetCaretLineLayer ##(SC_LAYER_BASE)) #(#isOnlyUnwrappedLineHighlighted: #isOnlyUnwrappedLineHighlighted false) #(#maxLayoutThreads: #maxLayoutThreads 1))
 			do: 
@@ -9223,21 +9285,21 @@ styledTextFrom: startInteger to: stopInteger
 	stopInteger > self textLength ifTrue: [self errorSubscriptBounds: stopInteger].
 	"Note extra two bytes needed for null-terminator"
 	bytes := ByteArray newFixed: (stopInteger - startInteger + 1 + 1) * 2.
-	range := TEXTRANGE
+	range := TextRangeFull
 				from: startInteger - 1
 				to: stopInteger
 				text: bytes.
-	self sciGetStyledText: range.
+	self sciGetStyledTextFull: range.
 	"Drop the redundant null terms"
 	bytes resize: bytes size - 2.
 	^bytes!
 
 styleIdAt: posInteger
-	"Returns the style byte at the position."
+	"Returns the unsigned style byte at the position."
 
 	^library
 		directFunction: this
-		msg: SCI_GETSTYLEAT
+		msg: SCI_GETSTYLEINDEXAT
 		wParam: posInteger - 1
 		lParam: 0!
 
@@ -10088,6 +10150,8 @@ caretStyle:!caret, selection, and hotspot styles!public! !
 caretWidth!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface! !
 caretWidth:!caret, selection, and hotspot styles!public!scintilla interface! !
 centerCurrentLine!**auto generated**!commands!public!scintilla interface! !
+changeHistoryMode!change history!other settings!public! !
+changeHistoryMode:!change history!other settings!public! !
 characterAt:!public!text retrieval & modification! !
 characterRepresentations!accessing!character representations!public! !
 characterRepresentations:!accessing!character representations!public! !
@@ -10368,6 +10432,7 @@ isScrollWidthTracking:!**auto generated**!public!scintilla interface!scrolling! 
 isSelectionBackcolorExtendedToEndOfLine!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface!testing! !
 isSelectionBackcolorExtendedToEndOfLine:!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface! !
 isSelectionEmpty!**auto generated**!public!scintilla interface!selection! !
+isSelectionHidden!**auto generated**!public!scintilla interface! !
 isSelectionKept!public!testing! !
 isSelectionRectangular!**auto generated**!public!scintilla interface!selection!testing! !
 isStylingEnabled!public!styling!testing! !
@@ -10603,11 +10668,11 @@ sciEOLAnnotationSetVisible:!**auto generated**!private!scintilla interface! !
 sciFindIndicatorFlash:end:!**auto generated**!indicators!private!scintilla interface!searching & replacing! !
 sciFindIndicatorHide!**auto generated**!indicators!private!scintilla interface!searching & replacing! !
 sciFindIndicatorShow:end:!**auto generated**!indicators!private!scintilla interface!searching & replacing! !
-sciFindText:ft:!**auto generated**!private!scintilla interface!searching & replacing! !
+sciFindTextFull:ft:!**auto generated**!private!scintilla interface! !
 sciFoldAll:!**auto generated**!folding!private!scintilla interface! !
 sciFoldDisplayTextGetStyle!**auto generated**!private!scintilla interface! !
 sciFoldDisplayTextSetStyle:!**auto generated**!folding!private!scintilla interface! !
-sciFormatRange:fr:!**auto generated**!printing!private!scintilla interface! !
+sciFormatRangeFull:fr:!**auto generated**!private!scintilla interface! !
 sciFreeSubStyles!**auto generated**!lexer-substyles!private!scintilla interface! !
 sciGetAccessibility!**auto generated**!accessibility!private!scintilla interface! !
 sciGetAutomaticFold!**auto generated**!folding!private!scintilla interface! !
@@ -10617,6 +10682,7 @@ sciGetCaretLineLayer!**auto generated**!caret, selection, and hotspot styles!pri
 sciGetCaretPeriod!**auto generated**!other settings!private!scintilla interface! !
 sciGetCaretSticky!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface! !
 sciGetCaretStyle!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface! !
+sciGetChangeHistory!**auto generated**!private!scintilla interface! !
 sciGetCharacterCategoryOptimization!**auto generated**!private!scintilla interface!words! !
 sciGetCharAt:!**auto generated**!private!scintilla interface! !
 sciGetCodePage!**auto generated**!other settings!private!scintilla interface! !
@@ -10677,7 +10743,7 @@ sciGetSelectionNCaret:!**auto generated**!accessing!multiple selection and virtu
 sciGetSelectionNCaretVirtualSpace:!**auto generated**!multiple selection and virtual space!private!scintilla interface!selection! !
 sciGetSelectionNEndVirtualSpace:!**auto generated**!multiple selection and virtual space!private!scintilla interface! !
 sciGetSelectionNStartVirtualSpace:!**auto generated**!multiple selection and virtual space!private!scintilla interface! !
-sciGetStyledText:!**auto generated**!private!scintilla interface!text retrieval & modification! !
+sciGetStyledTextFull:!**auto generated**!private!scintilla interface! !
 sciGetStyleFromSubStyle:!**auto generated**!lexer-substyles!private!scintilla interface! !
 sciGetSubStyleBases!**auto generated**!lexer-substyles!private!scintilla interface! !
 sciGetSubStylesLength:!**auto generated**!lexer-substyles!private!scintilla interface! !
@@ -10687,7 +10753,7 @@ sciGetTag:!**auto generated**!private!scintilla interface!search & replace using
 sciGetTargetEndVirtualSpace!**auto generated**!private!scintilla interface!search & replace using target! !
 sciGetTargetStartVirtualSpace!**auto generated**!private!scintilla interface!search & replace using target! !
 sciGetTechnology!**auto generated**!other settings!private!scintilla interface! !
-sciGetTextRange:!**auto generated**!private!scintilla interface!text retrieval & modification! !
+sciGetTextRangeFull:!**auto generated**!private!scintilla interface! !
 sciGetViewWS!**auto generated**!private!scintilla interface!white space! !
 sciGetVirtualSpaceOptions!**auto generated**!multiple selection and virtual space!private!scintilla interface! !
 sciGetWhitespaceChars!**auto generated**!character classes!private!scintilla interface!white space!words! !
@@ -10750,6 +10816,7 @@ sciReleaseLineCharacterIndex:!**auto generated**!by character or utf16 code unit
 sciReplaceRectangular:text:!**auto generated**!private!scintilla interface!selection! !
 sciReplaceSel:!**auto generated**!private!scintilla interface!text retrieval & modification! !
 sciReplaceTarget:text:!**auto generated**!private!scintilla interface!searching & replacing! !
+sciReplaceTargetMinimal:text:!**auto generated**!private!scintilla interface! !
 sciReplaceTargetRE:text:!**auto generated**!private!scintilla interface!searching & replacing! !
 sciResetElementColour:!**auto generated**!private!scintilla interface! !
 sciRGBAImageSetHeight:!**auto generated**!markers!private!scintilla interface! !
@@ -10768,6 +10835,7 @@ sciSetCaretPeriod:!**auto generated**!caret, selection, and hotspot styles!priva
 sciSetCaretSticky:!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface! !
 sciSetCaretStyle:!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface! !
 sciSetCaretWidth:!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface! !
+sciSetChangeHistory:!**auto generated**!private!scintilla interface! !
 sciSetCharacterCategoryOptimization:!**auto generated**!private!scintilla interface!words! !
 sciSetCharsDefault!**auto generated**!character classes!private!scintilla interface!words! !
 sciSetCodePage:!**auto generated**!other settings!private!scintilla interface! !
@@ -10841,7 +10909,9 @@ sciSetWrapVisualFlagsLocation:!**auto generated**!line wrapping!private!scintill
 sciSetXCaretPolicy:caretSlop:!**auto generated**!private!scintilla interface!scrolling! !
 sciSetYCaretPolicy:caretSlop:!**auto generated**!private!scintilla interface!scrolling! !
 sciStyleClearAll!**auto generated**!private!scintilla interface!style definition! !
+sciStyleGetInvisibleRepresentation:!**auto generated**!private!scintilla interface! !
 sciStyleResetDefault!**auto generated**!private!scintilla interface!style definition! !
+sciStyleSetInvisibleRepresentation:representation:!**auto generated**!private!scintilla interface! !
 sciSupportsFeature:!**auto generated**!private!scintilla interface! !
 sciTagsOfStyle:!**auto generated**!lexer-style metadata!private!scintilla interface! !
 sciTargetAsUTF8!**auto generated**!private!scintilla interface!selection! !
@@ -11060,6 +11130,13 @@ autoCompletionSortModes
 
 caretStyles
 	^#(#invisible #line #block)!
+
+changeHistoryModes
+	^##(LookupTable withAll: {SC_CHANGE_HISTORY_DISABLED -> #disabled.
+				(SC_CHANGE_HISTORY_ENABLED | SC_CHANGE_HISTORY_MARKERS) -> #markers.
+				(SC_CHANGE_HISTORY_ENABLED | SC_CHANGE_HISTORY_INDICATORS) -> #indicators.
+				(SC_CHANGE_HISTORY_ENABLED | SC_CHANGE_HISTORY_MARKERS | SC_CHANGE_HISTORY_INDICATORS)
+					-> #markersAndIndicators})!
 
 defaultAnnotationStyles
 	"Answer the default annotation style settings to be used for new instances of the receiver."
@@ -11932,6 +12009,7 @@ xmlTextStyles
 annotationModes!constants!public! !
 autoCompletionSortModes!constants!private! !
 caretStyles!constants!public! !
+changeHistoryModes!constants!public! !
 defaultAnnotationStyles!constants!public!style definition! !
 defaultCallTipStyle!constants!public!style definition! !
 defaultKeyMap!constants!key bindings!private! !

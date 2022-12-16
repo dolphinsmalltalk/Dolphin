@@ -422,7 +422,7 @@ glyphNames
 	names := names , #(#empty).
 	names := names , #(#arrowDown #minus #plus).
 	"Shapes for fold margin"
-	names := names 
+	names := names
 				, #(#verticalLine #leftCorner #teeJunction #boxPlus #boxPlusConnected #boxMinus #boxMinusConnected #leftCornerCurve #teeJunctionCurve #circlePlus #circlePlusConnected #circleMinus #circleMinusConnected).
 	"Invisible marker that sets the line background colour to match that defined for the marker"
 	names := names , #(#background).
@@ -438,7 +438,10 @@ glyphNames
 	"RGBA image - not fully supported"
 	names := names , #(#rgbaImage).
 	names := names , #(#bookmark #verticalBookmark).
-	names)!
+	"5.3.2"
+	names := names , #(#bar).
+	names)
+!
 
 initialize
 	"

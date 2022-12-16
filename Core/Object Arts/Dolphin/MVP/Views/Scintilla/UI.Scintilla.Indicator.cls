@@ -36,12 +36,8 @@ setStyleName: aSymbolOrInteger range: anInterval tag: anObject
 	tag := anObject!
 
 styleName
-	"Answer the symbolic name of the style of indicator to be used to represent the receiver in
-	the <ScintillaView>. It is expected that the view will have a <ScintillaIndicatorStyle>
-	defined of the same name that specifies the style of indicator drawn, it's colour, etc. If
-	there is no such indicator style, then the standard indicator 0 is used. The name could also
-	be an integer id from 0 to 7 if identifying one of the styles reserved for use by lexers, in
-	which case no corresponding style need be defined in the view."
+	"Answer the symbolic name of the style of indicator to be used to represent the receiver in the <ScintillaView>. 
+	It is expected that the view will have a <Scintilla.IndicatorStyle>defined of the same name that specifies the style of indicator drawn, it's colour, etc. If there is no such indicator style, then the standard indicator 0 is used. The name could also be an integer id from 0 to 7 if identifying one of the styles reserved for use by lexers, in which case no corresponding style need be defined in the view."
 
 	^styleName!
 

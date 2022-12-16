@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Scintilla.Attribute subclass: #'UI.Scintilla.TextStyle'
-	instanceVariableNames: 'forecolor backcolor flags fontName centiPointSize characterSet case name description weight _reserved12'
+	instanceVariableNames: 'forecolor backcolor flags fontName centiPointSize characterSet case name description weight invisibleRepresentation'
 	classVariableNames: 'PredefinedStyleNames'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -168,6 +168,14 @@ getThreeStateFlag: anInteger
 initialize
 	flags := 0.
 !
+
+invisibleRepresentation
+	^invisibleRepresentation!
+
+invisibleRepresentation: aString
+	"Set the text to be used in place of text with this style when invisible. Only the first character of the string is used. By default this is not set (nil)."
+
+	invisibleRepresentation := aString!
 
 isBackcolorExtendedToEndOfLine
 	"Answer whether the background colour of this style will be extended to the end of the line if the last 
@@ -382,6 +390,8 @@ forecolor!accessing!public! !
 forecolor:!accessing!public! !
 getThreeStateFlag:!helpers!private! !
 initialize!initializing!private! !
+invisibleRepresentation!accessing!public! !
+invisibleRepresentation:!accessing!public! !
 isBackcolorExtendedToEndOfLine!public!testing! !
 isBackcolorExtendedToEndOfLine:!accessing!public! !
 isBold!public!testing! !
@@ -474,6 +484,7 @@ buildPropertyDescriptors
 			defaultValue: nil
 			setMessage: SCI_STYLESETSIZEFRACTIONAL)
 			getSelector: #centiPointSize;
+			beNullable;
 			yourself.
 		(ThreeStateBooleanPropertyDescriptor
 			key: #isBackcolorExtendedToEndOfLine
@@ -513,6 +524,15 @@ buildPropertyDescriptors
 			setMessage: SCI_STYLESETCHECKMONOSPACED)
 			flagsMask: CheckMonospacedMask;
 			isNonBrowsable: true;
+			yourself.
+		(StringPropertyDescriptor
+			key: #invisibleRepresentation
+			defaultValue: nil
+			setMessage: SCI_STYLESETINVISIBLEREPRESENTATION)
+			getMessage: SCI_STYLEGETINVISIBLEREPRESENTATION;
+			setSelector: #invisibleRepresentation:;
+			beNullable;
+"			isNonBrowsable: true;"
 			yourself}!
 
 caseNames

@@ -671,6 +671,7 @@ package setMethodNames: #(
 	#(#{UI.Scintilla.ScintillaView} #publishedAspects)
 	#(#{UI.Scintilla.ScintillaView class} #publishedAspectsOfInstances)
 	#(#{UI.Scintilla.ScintillaView class} #publishedEventsOfInstances)
+	#(#{UI.Scintilla.StringPropertyDescriptor} #aspectDescriptor)
 	#(#{UI.Scintilla.TextStyle class} #newInstanceAspect:class:)
 	#(#{UI.Scintilla.TextStyle class} #publishedAspectsOfInstances)
 	#(#{UI.Scintilla.ThreeStateBooleanPropertyDescriptor} #aspectDescriptor)
@@ -7951,6 +7952,16 @@ publishedEventsOfInstances
 !UI.Scintilla.ScintillaView class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 publishedEventsOfInstances!events!public! !
+!
+
+!UI.Scintilla.StringPropertyDescriptor methodsFor!
+
+aspectDescriptor
+	^(Aspect string: key)
+		isNullable: self isNullable;
+		yourself! !
+!UI.Scintilla.StringPropertyDescriptor categoriesForMethods!
+aspectDescriptor!development!public! !
 !
 
 !UI.Scintilla.TextStyle class methodsFor!

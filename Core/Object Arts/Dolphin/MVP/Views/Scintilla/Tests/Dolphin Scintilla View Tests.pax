@@ -6,7 +6,7 @@ package paxVersion: 2.1;
 
 package setClassNames: #(
 	#{UI.Scintilla.Tests}
-	#{UI.Scintilla.Tests.ScintillaIndicatorTest}
+	#{UI.Scintilla.Tests.IndicatorTest}
 	#{UI.Scintilla.Tests.ScintillaLexerMetadataTest}
 	#{UI.Scintilla.Tests.ScintillaLexerPropertyTest}
 	#{UI.Scintilla.Tests.ScintillaViewTest}
@@ -38,7 +38,7 @@ UI.Scintilla subclass: #'UI.Scintilla.Tests'
 	imports: #(#{XProgramming.SUnit})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'UI.Scintilla.Tests.ScintillaIndicatorTest'
+Core.Tests.DolphinTest subclass: #'UI.Scintilla.Tests.IndicatorTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

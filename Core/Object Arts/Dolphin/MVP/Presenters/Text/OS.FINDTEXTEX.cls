@@ -1,13 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.TEXTRANGE subclass: #'OS.FINDTEXTEX'
+OS.AbstractTEXTRANGE subclass: #'OS.FINDTEXTEX'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_FINDTEXTEX_Size' -> 16r14.
-		'_OffsetOf_chrgText' -> 16rC
+		'_OffsetOf_chrg' -> 16r0.
+		'_OffsetOf_chrgText' -> 16rC.
+		'_OffsetOf_lpstrText' -> 16r8
 	}!
 OS.FINDTEXTEX guid: (Core.GUID fromString: '{be0e52c5-c59b-4277-ac2a-cb775eac3904}')!
 OS.FINDTEXTEX comment: '<FINDTEXTEX> is an <ExternalStructure> class to wrap the struct ''Win.FINDTEXTEX'' from type information in the ''Windows API (ANSI)'' library.
@@ -29,9 +31,15 @@ struct tagFINDTEXTEX {
 chrgText
 	"Answer the <CHARRANGE> value of the receiver's 'chrgText' field."
 
-	^CHARRANGE fromAddress: bytes yourAddress + _OffsetOf_chrgText! !
+	^CHARRANGE fromAddress: bytes yourAddress + _OffsetOf_chrgText!
+
+lpstrText: anUtf16String
+	"Set the receiver's 'lpstrText' field to the value of the argument, anUtf16String"
+
+	bytes uintPtrAtOffset: _OffsetOf_lpstrText put: anUtf16String yourAddress! !
 !OS.FINDTEXTEX categoriesForMethods!
 chrgText!**compiled accessors**!public! !
+lpstrText:!**compiled accessors**!public! !
 !
 
 !OS.FINDTEXTEX class methodsFor!
@@ -50,8 +58,10 @@ defineFields
 			CHARRANGE chrgText;
 		} FINDTEXTEX;"
 
-	super defineFields.
-	self defineField: #chrgText type: (StructureField type: CHARRANGE) beReadOnly!
+	self
+		defineField: #chrg type: (StructureField type: CHARRANGE) beUncompiled;
+		defineField: #lpstrText type: (PointerField type: Utf16String) beWriteOnly;
+		defineField: #chrgText type: (StructureField type: CHARRANGE) beReadOnly!
 
 getFieldNames
 	^#(#chrg #lpstrText #chrgText)! !
