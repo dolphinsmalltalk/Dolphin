@@ -273,7 +273,7 @@ bool __stdcall ObjectMemory::inheritsFrom(const BehaviorOTE* behaviorPointer, co
 
 template <class T> inline size_t hash_value(const TOTE<T>* ote)
 {
-	return stdext::hash_value(ote->getIndex());
+	return std::hash<int>{}(ote->getIndex());
 }
 
 template<class _Kty,
