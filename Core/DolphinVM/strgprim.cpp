@@ -23,6 +23,7 @@
 
 #include "StrgPrim.h"
 
+codepage_t Interpreter::m_ansiApiCodePage;
 codepage_t Interpreter::m_ansiCodePage;
 WCHAR Interpreter::m_unicodeReplacementChar;
 char Interpreter::m_ansiReplacementChar;

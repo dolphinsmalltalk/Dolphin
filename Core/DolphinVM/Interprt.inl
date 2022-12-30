@@ -33,14 +33,6 @@ inline void Interpreter::RelinquishAsyncProtect()
 //Stack Inlines 
 //=============
 
-inline void Interpreter::push(LPCSTR pStr)
-{
-	if (pStr)
-		pushNewObject((OTE*)AnsiString::New(pStr, strlen(pStr)));
-	else
-		pushNil();
-}
-
 inline void Interpreter::pushHandle(HANDLE h)
 {
 	if (h)

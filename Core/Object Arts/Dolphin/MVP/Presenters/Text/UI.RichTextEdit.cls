@@ -578,11 +578,14 @@ richText: aRichText
 	self rtfText: aRichText rtf!
 
 rtfText
-	"Answer an <AnsiString> containing the RTF contents of the receiver in 'rtf1' format. See also #urtfText."
+	"Answer an <String> containing the RTF contents of the receiver in 'rtf1' format. See also #urtfText."
+
+	"Implementation note: EM_STREAMOUT does not work correctly to return ANSI encoded rtf if the app code page is CP_UTF8."
 
 	| aStream |
+	"Kernel32 getACP == NlsConstants.CP_UTF8 ifTrue: [^self urtfText]."
 	aStream := AnsiString writeStream: 4096.
-	self streamOutOn: aStream format: SF_RTF.
+	self streamOutOn: aStream format: Character.AnsiCodePage << 16 | ##(SF_USECODEPAGE | SF_RTF).
 	^aStream contents!
 
 rtfText: aString
@@ -698,7 +701,8 @@ selectionRtf
 
 	| s |
 	s := AnsiString writeStream: 512.
-	self streamOutOn: s format: ##(SFF_SELECTION | SF_RTF).
+	self streamOutOn: s
+		format: Character.AnsiCodePage << 16 | ##(SF_USECODEPAGE | SFF_SELECTION) | SF_RTF.
 	^s contents!
 
 selectionUrtf

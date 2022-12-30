@@ -23,11 +23,11 @@ extern NewExternalStructurePointer:near32
 NewExternalStructure EQU ?New@ExternalStructure@ST@@SIPAV?$TOTE@VObject@ST@@@@PAV?$TOTE@VBehavior@ST@@@@PAX@Z
 extern NewExternalStructure:near32
 
-NewAnsiString EQU ?New@?$ByteStringT@$0A@$0FE@VAnsiStringOTE@@D@ST@@SIPAVAnsiStringOTE@@PIBD@Z
-extern NewAnsiString:near32
+NewAnsiApiString EQU ?NewAnsiApiString@Interpreter@@SIPAV?$TOTE@VObject@ST@@@@PBD@Z
+extern NewAnsiApiString:near32
 
-NewAnsiStringFromUtf16 EQU ?New@?$ByteStringT@$0A@$0FE@VAnsiStringOTE@@D@ST@@SIPAVAnsiStringOTE@@PB_W@Z
-extern NewAnsiStringFromUtf16:near32
+NewAnsiApiStringFromUtf16 EQU ?NewAnsiApiStringFromUtf16@Interpreter@@SIPAV?$TOTE@VObject@ST@@@@PB_W@Z
+extern NewAnsiApiStringFromUtf16:near32
 
 NewUtf16String EQU ?New@Utf16String@ST@@SIPAVUtf16StringOTE@@PB_W@Z
 extern NewUtf16String:near32
@@ -1055,7 +1055,7 @@ ExtCallArgLPWSTR:
 
 @@:
 	mov		ecx, ARG
-	call	NewUtf16StringFromString					; Create new Utf16String instance from the byte string using the ANSI or UTF8 code page as appropriate
+	call	NewUtf16StringFromString					; Create new Utf16String instance from the byte string using the ANSI or UTF-8 code page as appropriate
 	ASSUME	eax:PTR OTE
 
 	;; Now we need some way to ensure this is ref'd and destroyed, and the easiest way is to stuff
@@ -1088,14 +1088,14 @@ ExtCallArgLPSTR:
 	mov		ARG, [ARG].m_location
 	ASSUME	ARG:PTR String
 
-	cmp		TEMP, [Pointers.ClassUtf16String]			; If its a wide string it will need conversion. We assume the API is expecting an ANSI string
+	cmp		TEMP, [Pointers.ClassUtf16String]			; If its a wide string it will need conversion.
 	je		@F
 
 	PushLoopNext <ARG>									; ByteString of some sort, just push that pointer. Note we assume encoding is as expected
 
 @@:
 	mov		ecx, ARG
-	call	NewAnsiStringFromUtf16						; Assume its an ANSI API and will not understand Utf8 (which is generally true of byte string APIs on Windows, unfortunately)
+	call	NewAnsiApiStringFromUtf16						; Convert to a byte string of an encoding appropriate for an Windows 'A' API. This can be UTF-8 no Windows post May 2019 update if system code page is CP_UTF8
 	ASSUME	ARG:PTR OTE
 
 	mov		[_SP+OOPSIZE], eax
@@ -1864,7 +1864,7 @@ extCallRetLPSTR:
 	jz		returnNil
 
 	mov		ecx, RESULT							; Pass RESULT in ECX
-	call	NewAnsiString
+	call	NewAnsiApiString					; if GetACP() == CP_UTF8, result will be Utf8String, otherwise AnsiString
 	AnswerObjectResult
 
 extCallRetLPPVOID:

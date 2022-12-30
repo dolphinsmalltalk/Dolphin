@@ -132,7 +132,9 @@ public:
 
 	// External interface
 	static SymbolOTE* __stdcall NewSymbol(const char8_t* name, size_t length);
-	
+	static OTE* __fastcall NewAnsiApiString(const char* psz);
+	static OTE* __fastcall NewAnsiApiStringFromUtf16(const wchar_t* psz);
+
 	// Private helpers
 	
 	static BytesOTE* __fastcall NewUint32(uint32_t value, BehaviorOTE* classPointer);
@@ -878,6 +880,7 @@ private:
 	static DWORD		m_dwQueueStatusMask;			// Input flags passed to GetQueueStatus to poll for arriving input events
 
 public:
+	static codepage_t	m_ansiApiCodePage;
 	static codepage_t	m_ansiCodePage;
 	static WCHAR		m_unicodeReplacementChar;
 	static char			m_ansiReplacementChar;

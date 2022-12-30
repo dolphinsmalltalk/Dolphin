@@ -156,9 +156,9 @@ AddressOTE* __fastcall NewBSTR(OTE* ote)
 		switch (strClass->Encoding)
 		{
 		case StringEncoding::Ansi:
-			return NewBSTR<CP_ACP, AnsiString::CU>(reinterpret_cast<AnsiStringOTE*>(ote)->m_location->m_characters, ote->getSize());
+			return NewBSTR<AnsiString::CP, AnsiString::CU>(reinterpret_cast<AnsiStringOTE*>(ote)->m_location->m_characters, ote->getSize());
 		case StringEncoding::Utf8:
-			return NewBSTR<CP_UTF8, Utf8String::CU>(reinterpret_cast<Utf8StringOTE*>(ote)->m_location->m_characters, ote->getSize());
+			return NewBSTR<Utf8String::CP, Utf8String::CU>(reinterpret_cast<Utf8StringOTE*>(ote)->m_location->m_characters, ote->getSize());
 		case StringEncoding::Utf16:
 			return NewBSTR(reinterpret_cast<Utf16StringOTE*>(ote)->m_location->m_characters, ote->getSize() / sizeof(Utf16String::CU));
 		case StringEncoding::Utf32:
@@ -175,7 +175,7 @@ AddressOTE* __fastcall NewBSTR(OTE* ote)
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// Answer a new wide string converted from any othre type of string
+// Answer a new wide string converted from any other type of string
 // Used for lpwstr arguments
 
 Utf16StringOTE* __fastcall ST::Utf16String::New(OTE* oteString)
@@ -202,8 +202,30 @@ Utf16StringOTE* __fastcall ST::Utf16String::New(OTE* oteString)
 	return nullptr;
 }
 
+POTE __fastcall Interpreter::NewAnsiApiStringFromUtf16(const wchar_t* psz)
+{
+	return m_ansiApiCodePage == CP_UTF8
+		? reinterpret_cast<POTE>(Utf8String::New(psz))
+		: reinterpret_cast<POTE>(AnsiString::New(psz));
+}
+
+POTE __fastcall Interpreter::NewAnsiApiString(const char* psz)
+{
+	return m_ansiApiCodePage == CP_UTF8
+		? reinterpret_cast<POTE>(Utf8String::New(reinterpret_cast<Utf8String::PCSZ>(psz)))
+		: reinterpret_cast<POTE>(AnsiString::New(psz));
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // 
+
+inline void Interpreter::push(LPCSTR pStr)
+{
+	if (pStr)
+		pushNewObject(NewAnsiApiString(pStr));
+	else
+		pushNil();
+}
 
 inline void Interpreter::push(LPCWSTR pStr)
 {

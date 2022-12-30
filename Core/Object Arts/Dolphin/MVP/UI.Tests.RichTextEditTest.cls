@@ -71,7 +71,7 @@ testStreamInAnsiText
 	presenter selectLine: 10.
 	actual := presenter selectionRtf.
 	"This test is locale sensitive and may need revision"
-	rtf := '{\rtf1\ansi\deff0{\fonttbl{\f0\fnil\fcharset0 Segoe UI;}}
+	rtf := '{\rtf1\ansi\ansicpg<1d>\deff0{\fonttbl{\f0\fnil\fcharset0 Segoe UI;}}
 \uc1\pard\lang<2d>\f0\fs20 over the lazy dog}
 '
 				expandMacrosWithArguments: {Character.AnsiCodePage. Locale systemDefault lcid}
@@ -87,7 +87,7 @@ testStreamInAnsiText
 	presenter rtfText: rtf!
 
 testStreamInUtfText
-	| text rtf actual |
+	| text rtf actual ansi |
 	"The control asks for the text in blocks of just under 4k, so provide a little more to ensure the buffer it provides is insufficiently large to hold all the text."
 	text := Utf8String writeStream: 4200.
 	[text size < 4100] whileTrue: 
@@ -123,12 +123,12 @@ testStreamInUtfText
 	presenter selectLine: 10.
 	actual := presenter selectionUrtf.
 	"This test is locale sensitive and may need revision"
-	rtf := '{\urtf1\ansi\ansicpg<1d>\deff0{\fonttbl{\f0\fnil\fcharset0 Segoe UI;}{\f1\fnil\fcharset238 Segoe UI;}}
+	ansi := '{\urtf1\ansi\ansicpg<1d>\deff0{\fonttbl{\f0\fnil\fcharset0 Segoe UI;}{\f1\fnil\fcharset238 Segoe UI;}}
 \uc1\pard\lang<2d>\f0\fs20 ĉṓɲṩḙċ\f1 ť\f0 ᶒțûɾ ấɖḯƥĭṩ\f1 čį\f0 ɳġ ḝ\f1 łį\f0 ʈ}
 '
 				expandMacrosWithArguments: {Character.AnsiCodePage. Locale systemDefault lcid}
 				locale: Locale invariant.
-	self assert: actual equals: rtf.
+	self assert: actual equals: ansi.
 
 	"Check round-trip as ANSI RTF (which has an escape syntax to preserve international characters)"
 	presenter text: text.

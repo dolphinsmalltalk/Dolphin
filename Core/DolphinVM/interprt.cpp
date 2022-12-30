@@ -235,14 +235,14 @@ HRESULT Interpreter::initializeCharMaps()
 	for (auto i = 0u; i < 256; i++)
 		byteCharSet[i] = static_cast<char>(i);
 
+	m_ansiApiCodePage = ::GetACP();
 	CPINFOEX cpInfo;
-	::GetCPInfoExW(::GetACP(), 0, &cpInfo);
+	::GetCPInfoExW(m_ansiApiCodePage, 0, &cpInfo);
 
-	// First check some assumptions about the code page
+	// First check some assumptions about the code page for AnsiString instances
 	// 1. We expect code page to have a maximum character size of 1.
-	// 2. Empirical evidence is that none of the standard code pages will map any of the ansi code units to more 
-	// than one UTF16 code unit. 
-	// If either assumption is not true, the implementation will not work correctly, so we switch to Windows 1252
+	// 2. Empirical evidence is that none of the standard code pages will map any of the ansi code units to more than one UTF16 code unit. 
+	// If either assumption is not true, the legacy AnsiString implementation will not work correctly, so we switch to Windows 1252
 	if (cpInfo.MaxCharSize != 1 || ::MultiByteToWideChar(cpInfo.CodePage, 0, byteCharSet, 256, nullptr, 0) > 256)
 	{
 		trace(IDP_UNSUPPORTED_ACP, cpInfo.CodePage);

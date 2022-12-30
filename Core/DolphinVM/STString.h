@@ -66,21 +66,22 @@ namespace ST
 	public:
 	};
 
-	template <codepage_t CP, size_t I, class OTE, class TChar> class ByteStringT : public ArrayedCollection
+	template <codepage_t ACP, size_t I, class OTE, class TChar> class ByteStringT : public ArrayedCollection
 	{
 	public:
 		typedef TChar CU;
 		typedef const TChar * __restrict PCSZ;
 		static const size_t PointersIndex = I;
+		static const codepage_t CP = ACP;
 
 		CU m_characters[1];		// Variable length array of data
 
 		typedef ByteStringT<CP, PointersIndex, OTE, TChar> MyType;
 		typedef OTE* POTE;
 
-		static codepage_t CodePage()
+		static constexpr codepage_t CodePage()
 		{
-			return CP == CP_ACP ? Interpreter::m_ansiCodePage : CP;
+			return ACP == CP_ACP ? Interpreter::m_ansiCodePage : ACP;
 		}
 
 		static POTE __fastcall New(size_t cch)
