@@ -583,7 +583,6 @@ rtfText
 	"Implementation note: EM_STREAMOUT does not work correctly to return ANSI encoded rtf if the app code page is CP_UTF8."
 
 	| aStream |
-	"Kernel32 getACP == NlsConstants.CP_UTF8 ifTrue: [^self urtfText]."
 	aStream := AnsiString writeStream: 4096.
 	self streamOutOn: aStream format: Character.AnsiCodePage << 16 | ##(SF_USECODEPAGE | SF_RTF).
 	^aStream contents!

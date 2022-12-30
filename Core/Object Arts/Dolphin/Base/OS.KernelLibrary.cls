@@ -2,9 +2,9 @@
 
 External.PermanentLibrary subclass: #'OS.KernelLibrary'
 	instanceVariableNames: ''
-	classVariableNames: 'WinVerOrGreaterMask'
+	classVariableNames: 'EnumNamesDescriptor WinVerOrGreaterMask'
 	imports: #()
-	classInstanceVariableNames: 'enumNamesDescriptor'
+	classInstanceVariableNames: ''
 	classConstants: {
 		'LongPathPrefix' -> '\\?\'
 	}!
@@ -290,11 +290,11 @@ enumDateFormats: localeInteger dwFlags: flagsInteger
 					[:format |
 					formats nextPut: format.
 					true]
-				descriptor: self class enumNamesDescriptor.
+				descriptor: EnumNamesDescriptor.
 	(self
 		enumDateFormats: enum asParameter
 		locale: localeInteger
-		dwFlags: (NlsConstants.LOCALE_USE_CP_ACP bitOr: flagsInteger)) ifFalse: [self systemError].
+		dwFlags: flagsInteger) ifFalse: [self systemError].
 	enum free.
 	^formats contents!
 
@@ -321,9 +321,8 @@ enumSystemCodePages: flagsInteger
 					[:format |
 					codePages nextPut: format.
 					true]
-				descriptor: self class enumNamesDescriptor.
-	(self enumSystemCodePages: enum asParameter
-		dwFlags: (NlsConstants.LOCALE_USE_CP_ACP bitOr: flagsInteger)) ifFalse: [self systemError].
+				descriptor: EnumNamesDescriptor.
+	(self enumSystemCodePages: enum asParameter dwFlags: flagsInteger) ifFalse: [self systemError].
 	enum free.
 	^codePages contents!
 
@@ -338,7 +337,7 @@ enumSystemLocales: flagsInteger
 					[:format |
 					locales nextPut: format.
 					true]
-				descriptor: self class enumNamesDescriptor.
+				descriptor: EnumNamesDescriptor.
 	(self enumSystemLocales: enum asParameter dwFlags: flagsInteger) ifFalse: [self systemError].
 	enum free.
 	^locales contents!
@@ -363,11 +362,11 @@ enumTimeFormats: localeInteger dwFlags: flagsInteger
 					[:format |
 					formats nextPut: format.
 					true]
-				descriptor: self class enumNamesDescriptor.
+				descriptor: EnumNamesDescriptor.
 	(self
 		enumTimeFormats: enum asParameter
 		locale: localeInteger
-		dwFlags: (NlsConstants.LOCALE_USE_CP_ACP bitOr: flagsInteger)) ifFalse: [self systemError].
+		dwFlags: flagsInteger) ifFalse: [self systemError].
 	enum free.
 	^formats contents!
 
@@ -392,7 +391,7 @@ enumUILanguages: flagsInteger
 					[:language :lParam |
 					languages nextPut: language.
 					true]
-				descriptor: self class enumUILanguagesDescriptor.
+				descriptor: (FunctionDescriptor returnType: 'bool' argumentTypes: 'lpwstr uintptr').
 	(self
 		enumUILanguages: enum asParameter
 		dwFlags: flagsInteger
@@ -479,9 +478,6 @@ findClose: hFindFile
 	<stdcall: bool FindClose handle>
 	^self invalidCall: _failureCode!
 
-findFilesStructClass
-	^WIN32_FIND_DATAW!
-
 findFirstFile: lpFileName lpFindFileData: aWIN32_FIND_DATA
 	"Search a directory for a file or subdirectory whose name matches the specified filename.
 
@@ -554,26 +550,23 @@ formatMessage: messageId source: aHandleOrString flags: dwFlag withArguments: ar
 	string (see Win32 help) and the arguments in the <sequencedReadableCollection>, arguments,
 	which will be substitued for the argument identified as %1..%n in the format string."
 
-	| args wideStrings argc stringClass len ptr |
+	| args wideStrings argc len ptr |
 	ptr := External.Address new.
 	argc := arguments size.
 	args := ByteArray new: argc * VMConstants.IntPtrSize.
 	wideStrings := Array writeStream: argc.
 	"FormatMessageA errors on Utf-8 string insertions with extended characters, so we stick with FormatMessageW"
-	stringClass := Utf16String.
 	arguments keysAndValuesDo: 
 			[:i :a |
 			args uintPtrAtOffset: (i - 1) * VMConstants.IntPtrSize
 				put: (a isInteger
 						ifTrue: [a]
 						ifFalse: 
-							[a isString
-								ifTrue: [(wideStrings nextPut: (stringClass coerceString: a)) yourAddress]
-								ifFalse: [a yourAddress]])].
+							[a isString ifTrue: [(wideStrings nextPut: a asUtf16String) yourAddress] ifFalse: [a yourAddress]])].
 	len := self
 				setLastError: 0;
 				formatMessage: (dwFlag bitOr: ##(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_ARGUMENT_ARRAY))
-					lpSource: (stringClass coerceString: aHandleOrString)
+					lpSource: aHandleOrString asUtf16String
 					dwMessageId: messageId
 					dwLanguageId: 0
 					lpBuffer: ptr basicYourAddress
@@ -589,17 +582,12 @@ formatMessage: messageId source: aHandleOrString flags: dwFlag withArguments: ar
 			String new]
 		ifFalse: 
 			[| msg |
-			msg := stringClass fromAddress: ptr length: len.
+			msg := Utf16String fromAddress: ptr length: len.
 			self
 				heapFree: self getProcessHeap
 				dwFlags: 0
 				lpMem: ptr.
-			msg]
-
-	"
-('Blah %1 blah %2!!d!!' formatWithArguments: #('a 🐬 £' 123)) 
-Kernel32 becomeA: KernelLibraryUtf8
-"!
+			msg]!
 
 freeConsole
 	"Invoke the FreeConsole() function of the module wrapped by the receiver.
@@ -625,7 +613,7 @@ getACP
 
 getAtomName: anInteger
 	| buf |
-	buf := self stringBufferClass newFixed: 255.
+	buf := Utf16String newFixed: 255.
 	^buf copyFrom: 1
 		to: (self
 				getAtomName: anInteger
@@ -695,7 +683,7 @@ getCommandLine
 
 getComputerName
 	| name nameSize |
-	name := self stringBufferClass newFixed: MAX_COMPUTERNAME_LENGTH.
+	name := Utf16String newFixed: MAX_COMPUTERNAME_LENGTH.
 	nameSize := External.UInt32Bytes fromInteger: name size + 1.
 	(self getComputerName: name nSize: nameSize) ifFalse: [self systemError].
 	^name copyFrom: 1 to: nameSize asInteger!
@@ -731,7 +719,7 @@ getCurrentDirectory
 
 	| len buf |
 	(len := self getCurrentDirectory: 0 lpBuffer: nil) == 0 ifTrue: [^self systemError].
-	buf := self stringBufferClass newFixed: len - 1.
+	buf := Utf16String newFixed: len - 1.
 	(self getCurrentDirectory: len lpBuffer: buf) == 0 ifTrue: [^self systemError].
 	^buf!
 
@@ -798,7 +786,7 @@ getEnvironmentVariable: aString
 				lpBuffer: nil
 				nSize: 0.
 	size == 0 ifTrue: [^nil].
-	buf := self stringBufferClass newFixed: size - 1.	"Dolphin Strings alloc. extra space for null terminator"
+	buf := Utf16String newFixed: size - 1.	"Dolphin Strings alloc. extra space for null terminator"
 	self
 		getEnvironmentVariable: aString
 		lpBuffer: buf
@@ -863,7 +851,7 @@ getFinalPathNameByHandle: hFile
 				dwFlags: FILE_NAME_NORMALIZED.
 	size == 0 ifTrue: [^self systemError].
 	"For the 'W' version of the function, the buffer size returned includes space for the null (which is allocated implicitly in Dolphin's strings)"
-	buf := self stringBufferClass newFixed: size - 1.
+	buf := Utf16String newFixed: size - 1.
 	"Rather inconsistently, when we actually pass a buffer the returned size is the number of chars written not including the null, but we don't care"
 	(self
 		getFinalPathNameByHandle: hFile
@@ -928,8 +916,7 @@ getLastError
 getLocaleInfo: lcid integer: lcType
 	| buf |
 	buf := ByteArray newFixed: 4.
-	"Note that the API is expecting a data count expressed as the number of (wide) characters, so for a 32-bit buffer the correct size is 2.
-	This would need to be overridden in KernelLibraryUtf8 if the GetLocaleInfoA API worked correctly for the CP_UTF8 code page, but there are various bugs so we can't use it anyway."
+	"Note that the API is expecting a data count expressed as the number of (wide) characters, so for a 32-bit buffer the correct size is 2."
 	(self
 		getLocaleInfo: lcid
 		lCType: (lcType bitOr: NlsConstants.LOCALE_RETURN_NUMBER)
@@ -951,20 +938,17 @@ getLocaleInfo: locale lCType: lcType lpLCData: outputStringOutput cchData: anInt
 	^self invalidCall: _failureCode!
 
 getLocaleInfo: lcid string: lcType
-	| size buf type |
-	"If using the 'A' api with CP_UTF8 as system code page, we need to tell the API to encode in that rather than locale's default code page"
-	type := NlsConstants.LOCALE_USE_CP_ACP bitOr: lcType.
+	| size buf |
 	size := self
 				getLocaleInfo: lcid
-				lCType: type
+				lCType: lcType
 				lpLCData: nil
 				cchData: 0.
 	size == 0 ifTrue: [^self systemError].
-	"The 'A' API fails for some info types, e.g. LOCALE_SNATIVEDISPLAYNAME, so we don't override in KernelLibraryUTF8"
 	buf := Utf16String newFixed: size - 1.
 	self
 		getLocaleInfo: lcid
-		lCType: type
+		lCType: lcType
 		lpLCData: buf
 		cchData: size.
 	^buf!
@@ -995,7 +979,7 @@ getModuleFilename: aLibOrHandle
 	"Start with MAX_PATH, but if insufficient retry doubling the buffer each time. The API does not provide a way to query the size, so we have to use trial and error for long paths."
 	bufSize := MAX_PATH.
 	
-	[buf := self stringBufferClass newFixed: bufSize.
+	[buf := Utf16String newFixed: bufSize.
 	ret := self
 				getModuleFileName: aLibOrHandle asParameter
 				lpFilename: buf
@@ -1064,11 +1048,10 @@ getProcessHeap
 	^self invalidCall: _failureCode!
 
 getShortPathName: aString
-	| path shortpath len bufferClass |
-	bufferClass := self stringBufferClass.
-	path := bufferClass coerceString: aString.
+	| path shortpath len |
+	path := aString asUtf16String.
 	len := path size.
-	shortpath := bufferClass newFixed: len.
+	shortpath := Utf16String newFixed: len.
 	(self
 		getShortPathName: path
 		lpszShortPath: shortpath
@@ -1106,7 +1089,7 @@ getSystemDefaultLCID
 getSystemDirectory
 	| path len |
 	(len := self getSystemDirectory: nil uSize: 0) == 0 ifTrue: [self systemError].
-	path := self stringBufferClass newFixed: len - 1.
+	path := Utf16String newFixed: len - 1.
 	(self getSystemDirectory: path uSize: len) == 0 ifTrue: [self systemError].
 	^path!
 
@@ -1155,7 +1138,7 @@ getSystemWindowsDirectory
 	| path len |
 	len := self getSystemWindowsDirectory: nil uSize: 0.
 	len == 0 ifTrue: [^self systemError].
-	path := self stringBufferClass newFixed: len - 1.
+	path := Utf16String newFixed: len - 1.
 	len := self getSystemWindowsDirectory: path uSize: len.
 	^path!
 
@@ -1169,8 +1152,7 @@ getSystemWindowsDirectory: lpBuffer uSize: uSize
 
 getTempFileName: dirString lpPrefixString: prefixString
 	| buf |
-	#todo.	"Support long filenames? May not be possible as API does not."
-	buf := self stringBufferClass newFixed: MAX_PATH.
+	buf := Utf16String newFixed: MAX_PATH.
 	^(self
 		getTempFileName: dirString
 		lpPrefixString: prefixString
@@ -1198,7 +1180,7 @@ getTempFileName: pathString lpPrefixString: prefixString uUnique: anInteger lpTe
 getTempPath
 	| buf len |
 	(len := self getTempPath: 0 lpBuffer: nil) == 0 ifTrue: [self systemError].
-	buf := self stringBufferClass newFixed: len - 1.
+	buf := Utf16String newFixed: len - 1.
 	(self getTempPath: len lpBuffer: buf) == 0 ifTrue: [self systemError].
 	^buf!
 
@@ -1896,9 +1878,6 @@ sleepEx: anInteger bAlertable: aBoolean
 	<stdcall: void SleepEx dword bool>
 	^self invalidCall: _failureCode!
 
-stringBufferClass
-	^Utf16String!
-
 systemTimeToFileTime: lpSystemTime lpFileTime: lpFileTime
 	"Convert a SYSTEMTIME to a FILETIME, answering whether the conversion succeeded.
 		BOOL SystemTimeToFileTime(
@@ -2139,7 +2118,6 @@ expandEnvironmentStrings:lpDst:nSize:!public!win32 functions-process and thread!
 fileTimeToLocalTime:lpLocalFileTime:!public!win32 functions-date and time! !
 fileTimeToSystemTime:lpSystemTime:!public!win32 functions-date and time! !
 findClose:!public!win32 functions-file management! !
-findFilesStructClass!constants!private! !
 findFirstFile:lpFindFileData:!public!win32 functions-file management! !
 findNextFile:lpFindFileData:!public!win32 functions-file management! !
 findResource:lpName:lpType:!public!win32 functions-resource! !
@@ -2271,7 +2249,6 @@ setVolumeLabel:lpVolumeName:!public!win32 functions-file system! !
 sizeOfResource:hResInfo:!public!win32 functions-resource! !
 sleep:!public!win32 functions-process and thread! !
 sleepEx:bAlertable:!public!win32 functions-process and thread! !
-stringBufferClass!constants!private! !
 systemTimeToFileTime:lpFileTime:!public!win32 functions-date and time! !
 terminateProcess:exitCode:!public!win32 functions-process and thread! !
 terminateProcessId:!helpers!public! !
@@ -2293,12 +2270,6 @@ zeroMemory:length:!public!win32 functions-memory management! !
 
 !OS.KernelLibrary class methodsFor!
 
-enumNamesDescriptor
-	^enumNamesDescriptor!
-
-enumUILanguagesDescriptor
-	^FunctionDescriptor returnType: 'bool' argumentTypes: 'lpwstr uintptr'!
-
 fileName
 	"Answer the host system file name of the external library which
 	the receiver represents."
@@ -2306,7 +2277,9 @@ fileName
 	^'KERNEL32'!
 
 initialize
-	enumNamesDescriptor := FunctionDescriptor returnType: 'bool' argumentTypes: 'lpwstr'!
+	self addClassVariable: 'EnumNamesDescriptor'
+		value: (FunctionDescriptor returnType: 'bool' argumentTypes: 'lpwstr').
+	self addClassConstant: 'LongPathPrefix' value: '\\?\' asUtf16String!
 
 open
 	"Answer a new instance of the receiver to represent the Kernel32 DLL. Special handling 
@@ -2320,8 +2293,6 @@ open
 sharedVariableName
 	^#{Kernel32}! !
 !OS.KernelLibrary class categoriesForMethods!
-enumNamesDescriptor!constants!private! !
-enumUILanguagesDescriptor!constants!private! !
 fileName!constants!public! !
 initialize!class initialization!development!public! !
 open!instance creation!public! !

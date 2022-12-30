@@ -3332,9 +3332,9 @@ External.PermanentLibrary subclass: #'OS.CRTLibrary'
 	classConstants: {}!
 External.PermanentLibrary subclass: #'OS.KernelLibrary'
 	instanceVariableNames: ''
-	classVariableNames: 'WinVerOrGreaterMask'
+	classVariableNames: 'EnumNamesDescriptor WinVerOrGreaterMask'
 	imports: #()
-	classInstanceVariableNames: 'enumNamesDescriptor'
+	classInstanceVariableNames: ''
 	classConstants: {
 		'LongPathPrefix' -> '\\?\'
 	}!
@@ -3357,12 +3357,6 @@ External.PermanentLibrary subclass: #'Kernel.VMLibrary'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OS.CRTLibrary subclass: #'OS.CRTLibraryNonBlocking'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-OS.KernelLibrary subclass: #'OS.KernelLibraryUtf8'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -4609,17 +4603,6 @@ OS.FILETIME subclass: #'OS.LocalFILETIME'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.WIN32_FIND_DATA subclass: #'OS.WIN32_FIND_DATAA'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'_OffsetOf_cAlternateFileName' -> 16r130.
-		'_OffsetOf_cFileName' -> 16r2C.
-		'_WIN32_FIND_DATAA_Size' -> 16r140.
-		'_WIN32_FIND_DATAW_Size' -> 16r250
-	}!
 OS.WIN32_FIND_DATA subclass: #'OS.WIN32_FIND_DATAW'
 	instanceVariableNames: ''
 	classVariableNames: ''

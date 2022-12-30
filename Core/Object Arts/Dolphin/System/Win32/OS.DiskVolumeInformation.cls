@@ -153,7 +153,7 @@ getVolumeInformation
 
 	| volumeNameBuffer volumeSerialNumber maximumComponentLengthBuffer fileSystemFlagsBuffer fileSystemNameBuffer |
 	"Max size of volume name buffer is documented as MAX_PATH + 1 - we implicitly allocate the null terminator"
-	volumeNameBuffer := Kernel32 stringBufferClass newFixed: Win32Constants.MAX_PATH.
+	volumeNameBuffer := Utf16String newFixed: Win32Constants.MAX_PATH.
 	volumeSerialNumber := UInt32Bytes new.
 	maximumComponentLengthBuffer := UInt32Bytes new.
 	fileSystemFlagsBuffer := UInt32Bytes new.

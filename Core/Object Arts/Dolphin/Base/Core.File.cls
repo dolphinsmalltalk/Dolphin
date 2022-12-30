@@ -787,7 +787,7 @@ for: matchString in: dirString do: operation
 	"For each file/directory matching the wildcarded string argument, matchString, in the directory named, dirString, evaluate the monadic valuable, operation, with a WIN32_FIND_DATA describing the file/directory as the argument."
 
 	| hFind findStruct pattern |
-	findStruct := Kernel32 findFilesStructClass new.
+	findStruct := WIN32_FIND_DATAW new.
 	findStruct directory: dirString.
 	pattern := self composePath: dirString subPath: matchString.
 	hFind := Kernel32 findFirstFile: pattern lpFindFileData: findStruct.
