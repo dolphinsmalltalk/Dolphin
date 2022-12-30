@@ -48,6 +48,9 @@ testDisplayFloatOn
 				actual := each first displayString: subject.
 				self assert: actual equals: each second]!
 
+testDisplayName
+	self assert: self defaultSubject displayName equals: 'Invariant Language (Invariant Region)'!
+
 testFirstDayOfWeek
 	"The Invariant locale generally follows US conventions"
 
@@ -152,6 +155,7 @@ defaultSubject!helpers!private! !
 testDayOfWeek!public!unit tests! !
 testDayOfWeekName!public!unit tests! !
 testDisplayFloatOn!public!unit tests! !
+testDisplayName!public!unit tests! !
 testFirstDayOfWeek!public!unit tests! !
 testIndexOfMonth!public!unit tests! !
 testListSeparator!public!unit tests! !

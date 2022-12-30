@@ -43,7 +43,7 @@ printOn: aStream
 		nextPut: $(;
 		print: Locale;
 		space;
-		display: #named:;
+		display: (self noUserOverrides ifTrue: [#standard:] ifFalse: [#named:]);
 		space;
 		print: self name;
 		nextPut: $)! !

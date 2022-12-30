@@ -9,8 +9,17 @@ Core.Tests.SequenceableCollectionTest subclass: #'Core.Tests.ArrayedCollectionTe
 Core.Tests.ArrayedCollectionTest guid: (Core.GUID fromString: '{48d15c8e-983b-48d0-8c62-51b644ba6bdb}')!
 Core.Tests.ArrayedCollectionTest isNonInstantiable: true!
 Core.Tests.ArrayedCollectionTest comment: ''!
-!Core.Tests.ArrayedCollectionTest categoriesForClass!Unclassified! !
 !Core.Tests.ArrayedCollectionTest methodsFor!
+
+testNewWithAll
+	| subject elem |
+	0 to: 3
+		do: 
+			[:i |
+			elem := self assimilate: i.
+			subject := self collectionClass new: i withAll: elem.
+			self assert: subject size equals: i.
+			subject allSatisfy: [:each | each = elem]]!
 
 testReplaceIdentityWith
 	| a rep |
@@ -34,6 +43,7 @@ testSortColon
 	self assert: subject equals: (self newCollection: #(4 3 2 1)).
 ! !
 !Core.Tests.ArrayedCollectionTest categoriesForMethods!
+testNewWithAll!public! !
 testReplaceIdentityWith!public!unit tests! !
 testSortColon!public!unit tests! !
 !

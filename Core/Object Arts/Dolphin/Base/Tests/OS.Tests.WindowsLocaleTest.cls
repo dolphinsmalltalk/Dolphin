@@ -27,6 +27,26 @@ testComparing
 	"WindowsLocale with user-override suppression is not equal to the same named WindowsLocale without override suppression"
 	self deny: subject equals: (Locale named: subject name)!
 
+testDayNames
+	| subject actual expected |
+	subject := Locale named: 'ja-JP'.
+	actual := subject dayNames.
+	expected := Dictionary withAll: {'日' -> 1.
+						'日曜日' -> 1.
+						'月' -> 2.
+						'月曜日' -> 2.
+						'火' -> 3.
+						'火曜日' -> 3.
+						'水' -> 4.
+						'水曜日' -> 4.
+						'木' -> 5.
+						'木曜日' -> 5.
+						'金' -> 6.
+						'金曜日' -> 6.
+						'土' -> 7.
+						'土曜日' -> 7}.
+	self assert: actual equals: expected!
+
 testDayOfWeek
 	| subject |
 	subject := Locale named: 'tr-Tr'.
@@ -132,8 +152,13 @@ testDisplayFloatOnNegativeModes
 	self assert: (subject printFloat: -0.0001 format: format) equals: '0.00'.
 	self assert: (subject printFloat: -123456789.123456789 format: format) equals: '123,456,789.12 -'!
 
+testDisplayName
+	self assert: (Locale standard: 'ja-JP') displayName equals: '日本語 (日本)'.
+	self assert: (Locale standard: 'mn-MN') displayName equals: 'монгол (Монгол)'.
+	self assert: (Locale standard: 'dz-BT') displayName equals: 'རྫོང་ཁ (འབྲུག)'!
+
 testEnglishName
-	#('smalltalk' 'English' 'en-US' 'English' 'en-GB' 'English' 'es-ES_tradnl' 'Spanish' 'cy-GB' 'Welsh' 'es-AR' 'Spanish')
+	#('smalltalk' 'English' 'en-US' 'English' 'en-GB' 'English' 'es-ES_tradnl' 'Spanish' 'cy-GB' 'Welsh' 'es-AR' 'Spanish' 'ja-JP' 'Japanese' 'dz-BT' 'Dzongkha')
 		pairsDo: [:lcid :language | self assert: (Locale named: lcid) englishLanguageName equals: language]!
 
 testFirstDayOfWeek
@@ -144,6 +169,11 @@ testFirstDayOfWeek
 	self assert: (Locale standard: 'en-US') firstDayOfWeek equals: 7.
 	"In the UK the first day of the week is traditionally Monday"
 	self assert: (Locale standard: 'en-GB') firstDayOfWeek equals: 1!
+
+testGetCalendarInfoString
+	| subject |
+	subject := Locale named: 'ja-JP'.
+	self assert: (subject getCalendarInfoString: NlsConstants.CAL_SNAME) equals: '西暦 (日本語)'!
 
 testIndexOfMonth
 	| subject |
@@ -159,7 +189,13 @@ testListSeparator
 
 testLongDateFormats
 	self assert: ((Locale standard: 'en-US') longDateFormats includes: 'MMMM dd, yyyy').
-	self assert: ((Locale standard: 'en-GB') longDateFormats includes: 'dd MMMM yyyy')!
+	self assert: ((Locale standard: 'en-GB') longDateFormats includes: 'dd MMMM yyyy').
+	"Some interesting cases with extended chars embedded in the formats"
+	self assert: (Locale standard: 'ja-JP') longDateFormat equals: 'yyyy''年''M''月''d''日'''.
+	self assert: (Locale standard: 'zh-CN') longDateFormat equals: 'yyyy''年''M''月''d''日'''.
+	self assert: (Locale standard: 'ko-KR') longDateFormat equals: 'yyyy''년'' M''월'' d''일'' dddd'.
+	self assert: ((Locale standard: 'dz-BT') longDateFormat
+				equals: 'dddd, སྤྱི་ལོ་yyyy MMMM ཚེས་dd')!
 
 testLowercaseString
 	| subject |
@@ -171,10 +207,39 @@ testLowercaseString
 	self assert: (subject lowercaseString: 'INTERESTİNG') equals: 'ınteresting'!
 
 testMonthAbbreviation
-	#('en-US' 'en-GB') do: [:each | self verifyEnglishMonthAbbreviations: (Locale named: each)]!
+	#('en-US' 'en-GB') do: [:each | self verifyEnglishMonthAbbreviations: (Locale standard: each)]!
 
 testMonthName
-	#('en-US' 'en-GB') do: [:each | self verifyEnglishMonthNames: (Locale named: each)]!
+	#('en-US' 'en-GB') do: [:each | self verifyEnglishMonthNames: (Locale standard: each)]!
+
+testMonthNames
+	| subject |
+	subject := Locale standard: 'ja-JP'.
+	self assert: subject monthNames
+		equals: (Dictionary withAll: {'1月' -> 1.
+						'1' -> 1.
+						'2月' -> 2.
+						'2' -> 2.
+						'3月' -> 3.
+						'3' -> 3.
+						'4' -> 4.
+						'4月' -> 4.
+						'5' -> 5.
+						'5月' -> 5.
+						'6' -> 6.
+						'6月' -> 6.
+						'7月' -> 7.
+						'7' -> 7.
+						'8月' -> 8.
+						'8' -> 8.
+						'9' -> 9.
+						'9月' -> 9.
+						'10' -> 10.
+						'10月' -> 10.
+						'11月' -> 11.
+						'11' -> 11.
+						'12月' -> 12.
+						'12' -> 12})!
 
 testName
 	#(1033 'en-US' 2057 'en-GB' 1106 'cy-GB' 11274 'es-AR')
@@ -185,11 +250,14 @@ testNamed
 
 testNameOfDay
 	| subject |
-	subject := Locale named: 'tr-Tr'.
-	self assert: ((1 to: 7) collect: [:i | subject nameOfDay: i]) equals: #('Pazartesi' 'Salı' 'Çarşamba' 'Perşembe' 'Cuma' 'Cumartesi' 'Pazar').
-	#('en-US' 'en-GB') do: [:each | self verifyEnglishNamesOfDays: (Locale named: each)]!
+	subject := Locale standard: 'tr-Tr'.
+	self assert: ((1 to: 7) collect: [:i | subject nameOfDay: i])
+		equals: #('Pazartesi' 'Salı' 'Çarşamba' 'Perşembe' 'Cuma' 'Cumartesi' 'Pazar').
+	#('en-US' 'en-GB') do: [:each | self verifyEnglishNamesOfDays: (Locale standard: each)]!
 
 testNoUserOverrides
+	self deny: (Locale named: 'ja-JP') noUserOverrides.
+	self assert: (Locale standard: 'ja-JP') noUserOverrides.
 	self assert: self defaultSubject noUserOverrides!
 
 testPrintFloatGrouping
@@ -209,6 +277,18 @@ testPrintNoLeadingZero
 	format hasLeadingZero: false.
 	self assert: (subject printFloat: 1234567890.123 format: format) equals: '1,234,567,890.12'.
 	self assert: (subject printFloat: 0.123 format: format) equals: '.12'!
+
+testPrintString
+	#('en-GB' 'ja-JP' 'mn-MN' 'dz-BT') do: 
+			[:each |
+			self assert: (Locale named: each) printString equals: '(Locale named: <1p>)' << each.
+			self assert: (Locale standard: each) printString equals: '(Locale standard: <1p>)' << each]!
+
+testShortDateFormats
+	self assert: ((Locale standard: 'en-US') shortDateFormats includes: 'M/d/yy').
+	self assert: ((Locale standard: 'en-GB') shortDateFormats includes: 'dd/MM/yy').
+	self assert: ((Locale standard: 'ja-JP') shortDateFormats includes: 'ggy''年''M''月''d''日''').
+	self assert: (Locale named: 'tk-TM') shortDateFormat equals: 'dd.MM.yy ''ý.'''!
 
 testStbConvertFromVersion0
 	| subject |
@@ -232,7 +312,7 @@ testStbRoundTripDefault
 	subject := Object fromBinaryStoreBytes: bytes.
 	self assert: subject identicalTo: Locale userDefault.
 	"Switch to a different default - we expect preservation of the logical user default, not the original concrete locale"
-	Locale userDefault: (Locale named: 'es-ES').
+	Locale userDefault: (Locale standard: 'es-ES').
 	self deny: Locale userDefault equals: subject.
 	subject := Object fromBinaryStoreBytes: bytes.
 	self assert: subject identicalTo: Locale userDefault!
@@ -250,21 +330,21 @@ testStbRoundTripUserDefault
 	subject := Object fromBinaryStoreBytes: bytes.
 	self assert: subject identicalTo: Locale userDefault.
 	"Switch to a different default - we expect preservation of the logical user default, not the original concrete locale"
-	Locale userDefault: (Locale named: 'es-ES').
+	Locale userDefault: (Locale standard: 'es-ES').
 	self deny: Locale userDefault equals: subject.
 	subject := Object fromBinaryStoreBytes: bytes.
 	self assert: subject identicalTo: Locale userDefault!
 
 testTitlecaseString
 	| subject |
-	subject := Locale named: 'tr-Tr'.
+	subject := Locale standard: 'tr-Tr'.
 	self assert: (subject titlecaseString: 'istanbul') equals: 'İstanbul'.
-	subject := Locale named: 'en-GB'.
-	self assert: (subject titlecaseString: 'istanbul') equals: 'Istanbul'.!
+	subject := Locale standard: 'en-GB'.
+	self assert: (subject titlecaseString: 'istanbul') equals: 'Istanbul'!
 
 testUppercaseString
 	| subject |
-	subject := Locale named: 'de-DE'.
+	subject := Locale standard: 'de-DE'.
 	self assert: (subject uppercaseString: '') equals: ''.
 	"There are two lower-case forms of the greek letter Sigma."
 	self assert: (subject uppercaseString: 'Ὀδυσσεύς') equals: 'ὈΔΥΣΣΕΎΣ'.
@@ -273,23 +353,27 @@ testUppercaseString
 	self deny: (subject uppercaseString: 'Straße') equals: 'STRAẞE'.
 	self assert: (subject uppercaseString: 'Straße') equals: 'STRAßE'.
 	"Turkish dotted and dotless i should be converted correctly preserved the dot or absence of dot"
-	subject := Locale named: 'tr-TR'.
+	subject := Locale standard: 'tr-TR'.
 	self assert: (subject uppercaseString: 'ınteresting') equals: 'INTERESTİNG'! !
 !OS.Tests.WindowsLocaleTest categoriesForMethods!
 defaultSubject!helpers!private! !
 testComparing!public!unit tests! !
+testDayNames!public!unit tests! !
 testDayOfWeek!public!unit tests! !
 testDayOfWeekName!public!unit tests! !
 testDisplayFloatOn!public!unit tests! !
 testDisplayFloatOnNegativeModes!public!unit tests! !
+testDisplayName!public!unit tests! !
 testEnglishName!public!unit tests! !
 testFirstDayOfWeek!public!unit tests! !
+testGetCalendarInfoString!public!unit tests! !
 testIndexOfMonth!public!unit tests! !
 testListSeparator!public!unit tests! !
 testLongDateFormats!public!unit tests! !
 testLowercaseString!public!unit tests! !
 testMonthAbbreviation!public!unit tests! !
 testMonthName!public!unit tests! !
+testMonthNames!public!unit tests! !
 testName!public!unit tests! !
 testNamed!public!unit tests! !
 testNameOfDay!public!unit tests! !
@@ -297,6 +381,8 @@ testNoUserOverrides!public!unit tests! !
 testPrintFloatGrouping!public!unit tests! !
 testPrintFloatSeparators!public!unit tests! !
 testPrintNoLeadingZero!public!unit tests! !
+testPrintString!public!unit tests! !
+testShortDateFormats!public!unit tests! !
 testStbConvertFromVersion0!public!unit tests! !
 testStbRoundTrip!public!unit tests! !
 testStbRoundTripDefault!public!unit tests! !

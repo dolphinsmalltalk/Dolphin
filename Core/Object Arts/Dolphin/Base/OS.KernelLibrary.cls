@@ -4,8 +4,10 @@ External.PermanentLibrary subclass: #'OS.KernelLibrary'
 	instanceVariableNames: ''
 	classVariableNames: 'WinVerOrGreaterMask'
 	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: 'enumNamesDescriptor'
+	classConstants: {
+		'LongPathPrefix' -> '\\?\'
+	}!
 OS.KernelLibrary guid: (Core.GUID fromString: '{64674048-3a82-101b-8181-00aa003743d3}')!
 OS.KernelLibrary comment: 'KernelLibrary is the <ExternalLibrary> which represents the Win32 System DLL, KERNEL32.DLL. 
 
@@ -98,6 +100,18 @@ compareString: locale dwCmpFlags: dwCmpFlags lpString1: lpString1 cchCount1: cch
 	<stdcall: sdword CompareStringW dword dword lpwstr sdword lpwstr sdword>
 	^self invalidCall: _failureCode!
 
+compareString: localeInteger dwCmpFlags: flagsInteger string1: aString1 string2: aString2
+	| utf1 utf2 |
+	utf1 := aString1 asUtf16String.
+	utf2 := aString2 asUtf16String.
+	^self
+		compareString: localeInteger
+		dwCmpFlags: flagsInteger
+		lpString1: utf1
+		cchCount1: utf1 size
+		lpString2: utf2
+		cchCount2: utf2 size!
+
 compareStringOrdinal: lpString1 cchCount1: cchCount1 lpString2: lpString2 cchCount2: cchCount2 bIgnoreCase: bIgnoreCase
 	<stdcall: sdword CompareStringOrdinal lpwstr sdword lpwstr sdword bool>
 	^self invalidCall: _failureCode!
@@ -116,6 +130,15 @@ copyFile: fromString lpNewFileName: toString bfailIfExists: fail
 	<overlap stdcall: bool CopyFileW lpwstr lpwstr bool>
 	^self invalidCall: _failureCode!
 
+copyFile: fromString to: toString
+	"Copies the file named fromString to a file named toString."
+
+	#todo.	"Due to a VM bug, auto-conversion of Strings is not thread-safe in overlapped calls, so convert explicitly."
+	(self
+		copyFile: fromString asUtf16String
+		lpNewFileName: toString asUtf16String
+		bfailIfExists: false) ifFalse: [self systemError: Processor activeProcess lastError]!
+
 copyMemory: destination source: source length: length
 	"CopyMemory is a macro defined to RtlCopyMemory, which in turn is a macro defined to memcpy"
 
@@ -124,6 +147,18 @@ copyMemory: destination source: source length: length
 		destSize: length
 		src: source
 		count: length!
+
+createDirectory: aString
+	| utf16 |
+	utf16 := aString asUtf16String.
+	"[As documented](https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-createdirectory), there is a 248 character limit on the directory name size, after which the long path prefix is required. Unfortunately this is less than the size (MAX_PATH, or 260) that would cause the combine and canonicalize functions of the PatchCch api set to prepend the prefix automatically. This kind of Windows API inconsistency makes long paths hard to work with, so we intervene here to add in the long path prefix when required to try and hide some of the complexity."
+	(utf16 size >= 248 and: [(utf16 beginsWith: LongPathPrefix) not])
+		ifTrue: [utf16 := LongPathPrefix , utf16].
+	^(self createDirectory: utf16 lpSecurityAttributes: nil) or: 
+			[| err |
+			err := self getLastError.
+			err == ERROR_ALREADY_EXISTS ifFalse: [^self systemError: err].
+			false	"already existed"]!
 
 createDirectory: path lpSecurityAttributes: aSECURITYATTRIBUTES
 	"Create a new directory with the specified <String> path, 
@@ -145,7 +180,7 @@ createEvent: lpEventAttributes bManualReset: bManualReset bInitialState: bInitia
 			[in]SECURITY_ATTRIBUTES* lpEventAttributes,
 			BOOL bManualReset,
 			BOOL bInitialState,
-			LPCSTR lpName);"
+			LPCWSTR lpName);"
 
 	<stdcall: handle CreateEventW lpvoid bool bool lpwstr>
 	^self invalidCall: _failureCode!
@@ -175,7 +210,7 @@ createMutex: lpMutexAttributes bInitialOwner: bInitialOwner lpName: lpName
 		HANDLE __stdcall CreateMutex(
 			[in]void* lpMutexAttributes,
 			BOOL bInitialOwner,
-			LPSTR lpName);"
+			LPWSTR lpName);"
 
 	<stdcall: handle CreateMutexW void* bool lpwstr>
 	^self invalidCall: _failureCode!
@@ -248,6 +283,21 @@ endUpdateResource: hUpdate fDiscard: aBoolean
 	<stdcall: bool EndUpdateResourceW handle bool>
 	^self invalidCall: _failureCode!
 
+enumDateFormats: localeInteger dwFlags: flagsInteger
+	| enum formats |
+	formats := Array writeStream: 4.
+	enum := Callback block: 
+					[:format |
+					formats nextPut: format.
+					true]
+				descriptor: self class enumNamesDescriptor.
+	(self
+		enumDateFormats: enum asParameter
+		locale: localeInteger
+		dwFlags: (NlsConstants.LOCALE_USE_CP_ACP bitOr: flagsInteger)) ifFalse: [self systemError].
+	enum free.
+	^formats contents!
+
 enumDateFormats: aCallbackThunk locale: locale dwFlags: dwFlags
 	"Enumerates the long or short date formats that are available for the specified locale, including 
 	date formats for any alternate calendars. The argument, dwFlags, determines whether the long 
@@ -264,9 +314,34 @@ enumDateFormats: aCallbackThunk locale: locale dwFlags: dwFlags
 	<stdcall: bool EnumDateFormatsW lpvoid dword dword>
 	^self invalidCall: _failureCode!
 
+enumSystemCodePages: flagsInteger
+	| enum codePages |
+	codePages := Array writeStream: 30.
+	enum := Callback block: 
+					[:format |
+					codePages nextPut: format.
+					true]
+				descriptor: self class enumNamesDescriptor.
+	(self enumSystemCodePages: enum asParameter
+		dwFlags: (NlsConstants.LOCALE_USE_CP_ACP bitOr: flagsInteger)) ifFalse: [self systemError].
+	enum free.
+	^codePages contents!
+
 enumSystemCodePages: aCallbackThunk dwFlags: dwFlags
 	<stdcall: bool EnumSystemCodePagesW lpvoid dword>
 	^self invalidCall: _failureCode!
+
+enumSystemLocales: flagsInteger
+	| enum locales |
+	locales := Array writeStream: 30.
+	enum := Callback block: 
+					[:format |
+					locales nextPut: format.
+					true]
+				descriptor: self class enumNamesDescriptor.
+	(self enumSystemLocales: enum asParameter dwFlags: flagsInteger) ifFalse: [self systemError].
+	enum free.
+	^locales contents!
 
 enumSystemLocales: aCallbackThunk dwFlags: dwFlags
 	"Enumerates the locales that are either installed on or supported by a system, depending on the 
@@ -281,6 +356,21 @@ enumSystemLocales: aCallbackThunk dwFlags: dwFlags
 	<stdcall: bool EnumSystemLocalesW lpvoid dword>
 	^self invalidCall: _failureCode!
 
+enumTimeFormats: localeInteger dwFlags: flagsInteger
+	| enum formats |
+	formats := Array writeStream: 4.
+	enum := Callback block: 
+					[:format |
+					formats nextPut: format.
+					true]
+				descriptor: self class enumNamesDescriptor.
+	(self
+		enumTimeFormats: enum asParameter
+		locale: localeInteger
+		dwFlags: (NlsConstants.LOCALE_USE_CP_ACP bitOr: flagsInteger)) ifFalse: [self systemError].
+	enum free.
+	^formats contents!
+
 enumTimeFormats: aCallbackThunk locale: locale dwFlags: dwFlags
 	"Enumerates the time formats that are available for the specified locale. The function passes
 	the time format strings, one at a time, to the callback thunk, aCallbackThunk, continuing
@@ -294,6 +384,21 @@ enumTimeFormats: aCallbackThunk locale: locale dwFlags: dwFlags
 
 	<stdcall: bool EnumTimeFormatsW lpvoid dword dword>
 	^self invalidCall: _failureCode!
+
+enumUILanguages: flagsInteger
+	| enum languages |
+	languages := Array writeStream: 4.
+	enum := Callback block: 
+					[:language :lParam |
+					languages nextPut: language.
+					true]
+				descriptor: self class enumUILanguagesDescriptor.
+	(self
+		enumUILanguages: enum asParameter
+		dwFlags: flagsInteger
+		lParam: 0) ifFalse: [self systemError].
+	enum free.
+	^languages contents!
 
 enumUILanguages: aCallbackThunk dwFlags: dwFlags lParam: lParam
 	<stdcall: bool EnumUILanguagesW lpvoid dword uintptr>
@@ -311,16 +416,15 @@ expandEnvironmentStrings: aString
 				expandEnvironmentStrings: aString
 				lpDst: nil
 				nSize: 0.
-	size = 0 ifTrue: [self systemError].
-	"If the function succeeds, the return value is the number of TCHARs stored in the
-	destination buffer, including the terminating null character."
+	size == 0 ifTrue: [^self systemError].
+	"If the function succeeds, the return value is the number of TCHARs stored in the destination buffer, including the terminating null character."
 	answer := Utf16String newFixed: size - 1.
-	(self
+	^(self
 		expandEnvironmentStrings: aString
 		lpDst: answer
-		nSize: size) = 0
-		ifTrue: [self systemError].
-	^answer!
+		nSize: size) == 0
+		ifTrue: [self systemError]
+		ifFalse: [answer]!
 
 expandEnvironmentStrings: lpSrc lpDst: lpDst nSize: bufSize
 	"Replace environment-variable strings with their defined values. 
@@ -374,6 +478,9 @@ findClose: hFindFile
 
 	<stdcall: bool FindClose handle>
 	^self invalidCall: _failureCode!
+
+findFilesStructClass
+	^WIN32_FIND_DATAW!
 
 findFirstFile: lpFileName lpFindFileData: aWIN32_FIND_DATA
 	"Search a directory for a file or subdirectory whose name matches the specified filename.
@@ -447,22 +554,26 @@ formatMessage: messageId source: aHandleOrString flags: dwFlag withArguments: ar
 	string (see Win32 help) and the arguments in the <sequencedReadableCollection>, arguments,
 	which will be substitued for the argument identified as %1..%n in the format string."
 
-	| ptr len msg args wideStrings argc |
+	| args wideStrings argc stringClass len ptr |
 	ptr := External.Address new.
 	argc := arguments size.
 	args := ByteArray new: argc * VMConstants.IntPtrSize.
 	wideStrings := Array writeStream: argc.
+	"FormatMessageA errors on Utf-8 string insertions with extended characters, so we stick with FormatMessageW"
+	stringClass := Utf16String.
 	arguments keysAndValuesDo: 
 			[:i :a |
 			args uintPtrAtOffset: (i - 1) * VMConstants.IntPtrSize
 				put: (a isInteger
 						ifTrue: [a]
 						ifFalse: 
-							[a isString ifTrue: [(wideStrings nextPut: a asUtf16String) yourAddress] ifFalse: [a yourAddress]])].
+							[a isString
+								ifTrue: [(wideStrings nextPut: (stringClass coerceString: a)) yourAddress]
+								ifFalse: [a yourAddress]])].
 	len := self
 				setLastError: 0;
 				formatMessage: (dwFlag bitOr: ##(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_ARGUMENT_ARRAY))
-					lpSource: aHandleOrString asUtf16String
+					lpSource: (stringClass coerceString: aHandleOrString)
 					dwMessageId: messageId
 					dwLanguageId: 0
 					lpBuffer: ptr basicYourAddress
@@ -470,22 +581,24 @@ formatMessage: messageId source: aHandleOrString flags: dwFlag withArguments: ar
 					arguments: args.	"To enable us to distinguish the error case from the empty string case"
 
 	"FormatMessage() unhelpfully treats the empty string result as an error, so we must handle specially."
-	len == 0
+	^len == 0
 		ifTrue: 
 			[| err |
 			err := self getLastError.
 			err ~~ 0 ifTrue: [self systemError: err].
-			msg := String new]
+			String new]
 		ifFalse: 
-			[msg := Utf16String fromAddress: ptr length: len.
+			[| msg |
+			msg := stringClass fromAddress: ptr length: len.
 			self
 				heapFree: self getProcessHeap
 				dwFlags: 0
-				lpMem: ptr].
-	^msg
+				lpMem: ptr.
+			msg]
 
 	"
-('Blah %1 blah %2!!d!!' formatWithArguments: #('abc' 123)) 
+('Blah %1 blah %2!!d!!' formatWithArguments: #('a 🐬 £' 123)) 
+Kernel32 becomeA: KernelLibraryUtf8
 "!
 
 freeConsole
@@ -509,6 +622,15 @@ getACP
 
 	<stdcall: dword GetACP>
 	^self invalidCall: _failureCode!
+
+getAtomName: anInteger
+	| buf |
+	buf := self stringBufferClass newFixed: 255.
+	^buf copyFrom: 1
+		to: (self
+				getAtomName: anInteger
+				lpBuffer: buf
+				nSize: buf size)!
 
 getAtomName: id lpBuffer: aString nSize: anInteger
 	"The GetAtomName function retrieves a copy of the character string associated with the specified local atom.
@@ -542,6 +664,27 @@ getCalendarInfo: locale calendar: calendar calType: calType lpCalData: lpCalData
 	<stdcall: sdword GetCalendarInfoW dword dword dword lpwstr sdword dword*>
 	^self invalidCall: _failureCode!
 
+getCalendarInfoString: locale calendar: calendar calType: calType
+	| buf size |
+	size := self
+				getCalendarInfo: locale
+				calendar: calendar
+				calType: calType
+				lpCalData: nil
+				cchData: 0
+				lpValue: nil.
+	size == 0 ifTrue: [^self systemError].
+	"Note that even if we include LOCALE_USE_CP_ACP with calType flags, the string returned by the function may still be encoded at least partially incorrectly, e.g. for CAL_SNAME of ja-JP we get '西暦 (�' rather than '西暦 (日本語)'. Therefore we stick with UTF-16 API even if the running with CP_ACP == CP_UTF8."
+	buf := Utf16String newFixed: size - 1.
+	self
+		getCalendarInfo: locale
+		calendar: calendar
+		calType: calType
+		lpCalData: buf
+		cchData: size
+		lpValue: nil.
+	^buf!
+
 getCommandLine
 	"Answer a pointer to the command-line string.
 
@@ -549,6 +692,13 @@ getCommandLine
 
 	<stdcall: lpwstr GetCommandLineW>
 	^self invalidCall: _failureCode!
+
+getComputerName
+	| name nameSize |
+	name := self stringBufferClass newFixed: MAX_COMPUTERNAME_LENGTH.
+	nameSize := External.UInt32Bytes fromInteger: name size + 1.
+	(self getComputerName: name nSize: nameSize) ifFalse: [self systemError].
+	^name copyFrom: 1 to: nameSize asInteger!
 
 getComputerName: buffer nSize: pBufSize
 	"Retrieves the computer name of the current system into the argument, buffer (which must be large
@@ -564,17 +714,6 @@ getComputerName: buffer nSize: pBufSize
 	<stdcall: bool GetComputerNameW lpwstr dword*>
 	^self invalidCall: _failureCode!
 
-getConsoleTitle: lpConsoleTitle nSize: nSize
-	"Invoke the GetConsoleTitle() function of the module wrapped by the receiver.
-	Helpstring: Retrieves the title for the current console window.
-
-		DWORD __stdcall GetConsoleTitle(
-			[out]LPWSTR lpConsoleTitle,
-			[in]DWORD nSize);"
-
-	<stdcall: dword GetConsoleTitleW lpwstr dword>
-	^self invalidCall: _failureCode!
-
 getCPInfoExW: codepage dwFlags: dwFlags lpCPInfoEx: lpCPInfoEx
 	"Invoke the GetCPInfoExW() function of the module wrapped by the receiver.
 	Helpstring: Retrieves information about any valid installed or available code page.
@@ -586,6 +725,15 @@ getCPInfoExW: codepage dwFlags: dwFlags lpCPInfoEx: lpCPInfoEx
 
 	<stdcall: bool GetCPInfoExW dword dword CPINFOEXW*>
 	^self invalidCall: _failureCode!
+
+getCurrentDirectory
+	"Answer the <readableString> current working directory path"
+
+	| len buf |
+	(len := self getCurrentDirectory: 0 lpBuffer: nil) == 0 ifTrue: [^self systemError].
+	buf := self stringBufferClass newFixed: len - 1.
+	(self getCurrentDirectory: len lpBuffer: buf) == 0 ifTrue: [^self systemError].
+	^buf!
 
 getCurrentDirectory: nBufferLength lpBuffer: lpBuffer
 	<stdcall: dword GetCurrentDirectoryW dword lpwstr>
@@ -642,6 +790,23 @@ getDiskFreeSpaceEx: lpDirectoryName lpFreeBytesAvailable: lpFreeBytesAvailable l
 	<stdcall: bool GetDiskFreeSpaceExW lpwstr qword* qword* qword*>
 	^self invalidCall: _failureCode!
 
+getEnvironmentVariable: aString
+	| buf size |
+	"N.B. Size answered includes null terminator IF not enough space (or nil buffer)."
+	size := self
+				getEnvironmentVariable: aString
+				lpBuffer: nil
+				nSize: 0.
+	size == 0 ifTrue: [^nil].
+	buf := self stringBufferClass newFixed: size - 1.	"Dolphin Strings alloc. extra space for null terminator"
+	self
+		getEnvironmentVariable: aString
+		lpBuffer: buf
+		nSize: size.
+	^buf
+
+!
+
 getEnvironmentVariable: nameString lpBuffer: bufString nSize: bufSize
 	"Populate bufString with the value of the specified environment variable.
 		DWORD GetEnvironmentVariable(
@@ -689,6 +854,25 @@ getFileType: anExternalHandle
 	<stdcall: dword GetFileType handle>
 	^self invalidCall: _failureCode!
 
+getFinalPathNameByHandle: hFile
+	| size buf |
+	size := self
+				getFinalPathNameByHandle: hFile
+				lpszFilePath: nil
+				cchFilePath: 0
+				dwFlags: FILE_NAME_NORMALIZED.
+	size == 0 ifTrue: [^self systemError].
+	"For the 'W' version of the function, the buffer size returned includes space for the null (which is allocated implicitly in Dolphin's strings)"
+	buf := self stringBufferClass newFixed: size - 1.
+	"Rather inconsistently, when we actually pass a buffer the returned size is the number of chars written not including the null, but we don't care"
+	(self
+		getFinalPathNameByHandle: hFile
+		lpszFilePath: buf
+		cchFilePath: size
+		dwFlags: FILE_NAME_NORMALIZED) == 0
+		ifTrue: [^self systemError].
+	^buf!
+
 getFinalPathNameByHandle: hFile lpszFilePath: lpszFilePath cchFilePath: cchFilePath dwFlags: dwFlags
 	"DWORD GetFinalPathNameByHandleW(
 		HANDLE hFile,
@@ -699,6 +883,27 @@ getFinalPathNameByHandle: hFile lpszFilePath: lpszFilePath cchFilePath: cchFileP
 
 	<stdcall: dword GetFinalPathNameByHandleW handle lpwstr dword dword>
 	^self invalidCall: _failureCode!
+
+getFullPathName: aPathnameString
+	| buffer path bufferSize pathLength |
+	"The 'A' version of the API is limited to paths up to MAX_PATH - it errors on long filenames - so even if the system code page is CP_UTF8, we have to use the 'W' version of the function."
+	path := aPathnameString asUtf16String.
+	(bufferSize := self
+				getFullPathName: path
+				nBufferLength: 0
+				lpBuffer: nil
+				lpFilePart: nil) == 0
+		ifTrue: [^self systemError].
+	"The API is a bit asymmetric. If the buffer is large enough, it returns the number of characters copied to the buffer. If the buffer is too small, it returns the required size of buffer required, including null terminator (i.e. characters + 1). Also the API has a bug that if the path to be expanded starts with .\, then the buffer size returned includes space for the leading .\, even though these will be removed, so the buffer is too large and will have two extra nulls at its end. In this case the returned size written will be 3 less than the buffer size reported (rather than 1)."
+	buffer := Utf16String newFixed: bufferSize - 1.
+	^(pathLength := self
+				getFullPathName: path
+				nBufferLength: bufferSize
+				lpBuffer: buffer
+				lpFilePart: nil) + 1
+		== bufferSize
+			ifTrue: [buffer]
+			ifFalse: [pathLength == 0 ifTrue: [self systemError] ifFalse: [buffer copyFrom: 1 to: pathLength]]!
 
 getFullPathName: fname nBufferLength: anInteger lpBuffer: path lpFilePart: aDWORD
 	"Retrieves the full path and filename of the file with name fname, into the buffer, path.
@@ -720,6 +925,19 @@ getLastError
 	<stdcall: dword GetLastError>
 	^self invalidCall: _failureCode!
 
+getLocaleInfo: lcid integer: lcType
+	| buf |
+	buf := ByteArray newFixed: 4.
+	"Note that the API is expecting a data count expressed as the number of (wide) characters, so for a 32-bit buffer the correct size is 2.
+	This would need to be overridden in KernelLibraryUtf8 if the GetLocaleInfoA API worked correctly for the CP_UTF8 code page, but there are various bugs so we can't use it anyway."
+	(self
+		getLocaleInfo: lcid
+		lCType: (lcType bitOr: NlsConstants.LOCALE_RETURN_NUMBER)
+		lpLCData: buf
+		cchData: 2) == 0
+		ifTrue: [self systemError].
+	^buf dwordAtOffset: 0!
+
 getLocaleInfo: locale lCType: lcType lpLCData: outputStringOutput cchData: anInteger
 	"Answer information about a locale. 
 		int GetLocaleInfo(
@@ -731,6 +949,25 @@ getLocaleInfo: locale lCType: lcType lpLCData: outputStringOutput cchData: anInt
 
 	<stdcall: sdword GetLocaleInfoW dword dword lpvoid sdword>
 	^self invalidCall: _failureCode!
+
+getLocaleInfo: lcid string: lcType
+	| size buf type |
+	"If using the 'A' api with CP_UTF8 as system code page, we need to tell the API to encode in that rather than locale's default code page"
+	type := NlsConstants.LOCALE_USE_CP_ACP bitOr: lcType.
+	size := self
+				getLocaleInfo: lcid
+				lCType: type
+				lpLCData: nil
+				cchData: 0.
+	size == 0 ifTrue: [^self systemError].
+	"The 'A' API fails for some info types, e.g. LOCALE_SNATIVEDISPLAYNAME, so we don't override in KernelLibraryUTF8"
+	buf := Utf16String newFixed: size - 1.
+	self
+		getLocaleInfo: lcid
+		lCType: type
+		lpLCData: buf
+		cchData: size.
+	^buf!
 
 getLocaleInfoEx: lpLocalName lCType: lcType lpLCData: outputStringOutput cchData: anInteger
 	"Answer information about a locale. 
@@ -752,6 +989,20 @@ getLocalTime: aWinSYSTEMTIME
 
 	<stdcall: void GetLocalTime SYSTEMTIME*>
 	^self invalidCall: _failureCode!
+
+getModuleFilename: aLibOrHandle
+	| bufSize buf ret |
+	"Start with MAX_PATH, but if insufficient retry doubling the buffer each time. The API does not provide a way to query the size, so we have to use trial and error for long paths."
+	bufSize := MAX_PATH.
+	
+	[buf := self stringBufferClass newFixed: bufSize.
+	ret := self
+				getModuleFileName: aLibOrHandle asParameter
+				lpFilename: buf
+				nSize: bufSize + 1.
+	bufSize + 1 == ret and: [self getLastError == ERROR_INSUFFICIENT_BUFFER]]
+			whileTrue: [bufSize := bufSize bitShift: 1].
+	^buf resize: ret!
 
 getModuleFileName: aHandle lpFilename: aString nSize: anInteger
 	"Retrieve the full path and filename for the executable file containing the specified module.
@@ -812,6 +1063,19 @@ getProcessHeap
 	<stdcall: handle GetProcessHeap>
 	^self invalidCall: _failureCode!
 
+getShortPathName: aString
+	| path shortpath len bufferClass |
+	bufferClass := self stringBufferClass.
+	path := bufferClass coerceString: aString.
+	len := path size.
+	shortpath := bufferClass newFixed: len.
+	(self
+		getShortPathName: path
+		lpszShortPath: shortpath
+		cchBuffer: len + 1) == 0
+		ifTrue: [self systemError].
+	^shortpath trimNulls!
+
 getShortPathName: lpszLongPath lpszShortPath: lpszShortPath cchBuffer: cchBuffer
 	"Answers the short pathname form of lpszLongPath in lpszShortPath"
 
@@ -838,6 +1102,13 @@ getSystemDefaultLCID
 
 	<stdcall: dword GetSystemDefaultLCID>
 	^self invalidCall: _failureCode!
+
+getSystemDirectory
+	| path len |
+	(len := self getSystemDirectory: nil uSize: 0) == 0 ifTrue: [self systemError].
+	path := self stringBufferClass newFixed: len - 1.
+	(self getSystemDirectory: path uSize: len) == 0 ifTrue: [self systemError].
+	^path!
 
 getSystemDirectory: lpBuffer uSize: uSize
 	"Answer the path of the windows system directory.
@@ -880,6 +1151,14 @@ getSystemTimePreciseAsFileTime: lpSystemTimeAsFileTime
 	"Introduced in Windows 8. Windows 7 support will end in January 2020, but until then fall back on GetSystemTimeAsFileTime"
 	^self getSystemTimeAsFileTime: lpSystemTimeAsFileTime!
 
+getSystemWindowsDirectory
+	| path len |
+	len := self getSystemWindowsDirectory: nil uSize: 0.
+	len == 0 ifTrue: [^self systemError].
+	path := self stringBufferClass newFixed: len - 1.
+	len := self getSystemWindowsDirectory: path uSize: len.
+	^path!
+
 getSystemWindowsDirectory: lpBuffer uSize: uSize
 	"	UINT GetSystemWindowsDirectory(
 			LPTSTR lpBuffer, 
@@ -887,6 +1166,18 @@ getSystemWindowsDirectory: lpBuffer uSize: uSize
 
 	<stdcall: dword GetSystemWindowsDirectoryW lpwstr dword>
 	^self invalidCall: _failureCode!
+
+getTempFileName: dirString lpPrefixString: prefixString
+	| buf |
+	#todo.	"Support long filenames? May not be possible as API does not."
+	buf := self stringBufferClass newFixed: MAX_PATH.
+	^(self
+		getTempFileName: dirString
+		lpPrefixString: prefixString
+		uUnique: 0
+		lpTempFileName: buf) == 0
+		ifTrue: [self systemError]
+		ifFalse: [buf trimNulls]!
 
 getTempFileName: pathString lpPrefixString: prefixString uUnique: anInteger lpTempFileName: bufferString
 	"Generate a temporary file name by concatenating the specified path and prefix strings, and a hexadecimal string formed from 
@@ -903,6 +1194,13 @@ getTempFileName: pathString lpPrefixString: prefixString uUnique: anInteger lpTe
 
 	<stdcall: dword GetTempFileNameW lpwstr lpwstr dword lpwstr>
 	^self invalidCall: _failureCode!
+
+getTempPath
+	| buf len |
+	(len := self getTempPath: 0 lpBuffer: nil) == 0 ifTrue: [self systemError].
+	buf := self stringBufferClass newFixed: len - 1.
+	(self getTempPath: len lpBuffer: buf) == 0 ifTrue: [self systemError].
+	^buf!
 
 getTempPath: nBufferLength lpBuffer: lpBuffer
 	"Populate the <String> buffer, lpBuffer, with the system directory designated for temporary files.
@@ -995,16 +1293,6 @@ getVolumeInformation: lpRootPathName lpVolumeNameBuffer: lpVolumeNameBuffer nVol
 			DWORD nFileSystemNameSize);"
 
 	<stdcall: bool GetVolumeInformationW lpwstr lpwstr dword dword* dword* dword* lpwstr dword>
-	^self invalidCall: _failureCode!
-
-getWindowsDirectory: lpBuffer uSize: uSize
-	"Answer the path of the windows directory.
-
-		UINT GetWindowsDirectory(
-			LPWSTR lpBuffer, 
-			UINT uSize); "
-
-	<stdcall: dword GetWindowsDirectoryW lpwstr dword>
 	^self invalidCall: _failureCode!
 
 globalAlloc: uFlags dwBytes: dwBytes
@@ -1608,6 +1896,9 @@ sleepEx: anInteger bAlertable: aBoolean
 	<stdcall: void SleepEx dword bool>
 	^self invalidCall: _failureCode!
 
+stringBufferClass
+	^Utf16String!
+
 systemTimeToFileTime: lpSystemTime lpFileTime: lpFileTime
 	"Convert a SYSTEMTIME to a FILETIME, answering whether the conversion succeeded.
 		BOOL SystemTimeToFileTime(
@@ -1786,18 +2077,6 @@ wideCharToMultiByte: codePage dwFlags: dwFlags lpWideCharStr: lpWideCharStr cchW
 	<stdcall: sdword WideCharToMultiByte dword dword lpvoid sdword lpvoid sdword lpstr lpvoid>
 	^self invalidCall: _failureCode!
 
-winExec: lpstrCmdLine uCmdShow: nCmdShow
-	"Spawn the specified application. 
-		UINT WinExec(
-  			LPCSTR lpCmdLine,	// address of command line 
-			UINT uCmdShow 	// window style for new application 
-		);
-	Note that this is run as an overlapped call to avoid delaying the entire
-	Smalltalk image."
-
-	<overlap stdcall: dword WinExec lpstr dword>
-	^self invalidCall: _failureCode!
-
 writeFile: aHandle lpBuffer: anAddress nNumberOfBytesToWrite: anIntegerBytesToWrite lpNumberOfBytesWritten: anAddressBytesWritten lpOverlapped: anOVERLAPPED
 	"The WriteFile function writes data to a file and is designed for both synchronous and asynchronous operation.
 	The function starts writing data to the file at the position indicated by the file pointer. After the write
@@ -1830,9 +2109,12 @@ beginUpdateResource:bDeleteExistingResources:!public!win32 functions-resource! !
 close!public!realizing/unrealizing! !
 closeHandle:!public!win32 functions-handles and objects! !
 compareString:dwCmpFlags:lpString1:cchCount1:lpString2:cchCount2:!public!win32 functions-national language support! !
+compareString:dwCmpFlags:string1:string2:!public!win32 functions-national language support! !
 compareStringOrdinal:cchCount1:lpString2:cchCount2:bIgnoreCase:!public!win32 functions-national language support! !
 copyFile:lpNewFileName:bfailIfExists:!public!win32 functions-file management! !
+copyFile:to:!public!win32 functions-file management! !
 copyMemory:source:length:!public!win32 functions-memory management! !
+createDirectory:!public!win32 functions-file management! !
 createDirectory:lpSecurityAttributes:!public!win32 functions-file management! !
 createEvent:bManualReset:bInitialState:lpName:!**auto generated**!public!win32 functions-synchronization! !
 createFile:dwDesiredAccess:dwSharedMode:lpSecurityAttributes:dwCreationDistribution:dwFlagsAndAttributes:hTemplateFile:!public!win32 functions-file management! !
@@ -1842,16 +2124,22 @@ deleteFile:!public!win32 functions-file management! !
 deviceIoControl:dwIoControlCode:lpInBuffer:nInBufferSize:lpOutBuffer:nOutBufferSize:lpBytesReturned:lpoverlapped:!public! !
 duplicateHandle:hSourceHandle:hTargetProcessHandle:lpTargetHandle:dwDesiredAccess:bInheritHandle:dwOptions:!public!win32 functions-handles and objects! !
 endUpdateResource:fDiscard:!public!win32 functions-resource! !
+enumDateFormats:dwFlags:!public!win32 functions-national language support! !
 enumDateFormats:locale:dwFlags:!public!win32 functions-national language support! !
+enumSystemCodePages:!public!win32 functions-national language support! !
 enumSystemCodePages:dwFlags:!public!win32 functions-national language support! !
+enumSystemLocales:!public!win32 functions-national language support! !
 enumSystemLocales:dwFlags:!public!win32 functions-national language support! !
+enumTimeFormats:dwFlags:!public!win32 functions-national language support! !
 enumTimeFormats:locale:dwFlags:!public!win32 functions-national language support! !
+enumUILanguages:!public!win32 functions-national language support! !
 enumUILanguages:dwFlags:lParam:!public!win32 functions-national language support! !
 expandEnvironmentStrings:!public!win32 functions-process and thread! !
 expandEnvironmentStrings:lpDst:nSize:!public!win32 functions-process and thread! !
 fileTimeToLocalTime:lpLocalFileTime:!public!win32 functions-date and time! !
 fileTimeToSystemTime:lpSystemTime:!public!win32 functions-date and time! !
 findClose:!public!win32 functions-file management! !
+findFilesStructClass!constants!private! !
 findFirstFile:lpFindFileData:!public!win32 functions-file management! !
 findNextFile:lpFindFileData:!public!win32 functions-file management! !
 findResource:lpName:lpType:!public!win32 functions-resource! !
@@ -1861,45 +2149,59 @@ formatMessage:source:flags:withArguments:!helpers!public! !
 freeConsole!**auto generated**!public!win32 functions-console! !
 freeLibrary:!public!win32 functions-dynamic link library! !
 getACP!**auto generated**!public!win32 functions-national language support! !
+getAtomName:!public!win32 functions-atom! !
 getAtomName:lpBuffer:nSize:!public!win32 functions-atom! !
 getCalendarInfo:calendar:calType:lpCalData:cchData:lpValue:!**auto generated**!public!win32 functions-national language support! !
+getCalendarInfoString:calendar:calType:!public!win32 functions-national language support! !
 getCommandLine!public!win32 functions-process and thread! !
+getComputerName!public!win32 functions-system information! !
 getComputerName:nSize:!public!win32 functions-system information! !
-getConsoleTitle:nSize:!**auto generated**!public!win32 functions-console! !
 getCPInfoExW:dwFlags:lpCPInfoEx:!**auto generated**!public!win32 functions-national language support! !
+getCurrentDirectory!public!win32 functions-directory management! !
 getCurrentDirectory:lpBuffer:!public!win32 functions-directory management! !
 getCurrentProcess!public!win32 functions-process and thread! !
 getCurrentThread!public!win32 functions-process and thread! !
 getCurrentThreadId!public!win32 functions-process and thread! !
 getDiskFreeSpace:lpSectorsPerCluster:lpBytesPerSector:lpNumberOfFreeClusters:lpTotalNumberOfClusters:!public!win32 functions-file management! !
 getDiskFreeSpaceEx:lpFreeBytesAvailable:lpTotalNumberOfBytes:lpTotalNumberOfFreeBytes:!public!win32 functions-file system! !
+getEnvironmentVariable:!public!win32 functions-process and thread! !
 getEnvironmentVariable:lpBuffer:nSize:!public!win32 functions-process and thread! !
 getFileAttributes:!public!win32 functions-file management! !
 getFileSizeEx:lpFileSize:!**auto generated**!public!win32 functions-file management! !
 getFileTime:lpCreationTime:lpLastAccessTime:lpLastWriteTime:!public!win32 functions-file management! !
 getFileType:!public!win32 functions-file system! !
+getFinalPathNameByHandle:!public!win32 functions-file management! !
 getFinalPathNameByHandle:lpszFilePath:cchFilePath:dwFlags:!public!win32 functions-file management! !
+getFullPathName:!public!win32 functions-file management! !
 getFullPathName:nBufferLength:lpBuffer:lpFilePart:!public!win32 functions-file management! !
 getLastError!public!win32 functions-error! !
+getLocaleInfo:integer:!public!win32 functions-national language support! !
 getLocaleInfo:lCType:lpLCData:cchData:!public!win32 functions-national language support! !
+getLocaleInfo:string:!public!win32 functions-national language support! !
 getLocaleInfoEx:lCType:lpLCData:cchData:!public!win32 functions-national language support! !
 getLocalTime:!public!win32 functions-date and time! !
+getModuleFilename:!public!win32 functions-dynamic link library! !
 getModuleFileName:lpFilename:nSize:!public!win32 functions-dynamic link library! !
 getModuleHandle:!public!win32 functions-dynamic link library! !
 getNumberFormat:dwFlags:lpValue:lpFormat:lpNumberStr:cchNumber:!**auto generated**!public!win32 functions-national language support! !
 getProcAddress:lpProcName:!public!win32 functions-dynamic link library! !
 getProcAddressDWORD:lpProcName:!private!win32 functions-dynamic link library! !
 getProcessHeap!public!win32 functions-memory management! !
+getShortPathName:!public!win32 functions-file management! !
 getShortPathName:lpszShortPath:cchBuffer:!public!win32 functions-file management! !
 getStdHandle:!public!win32 functions-console! !
 getStringType:lpSrcStr:cchSrc:lpCharType:!**auto generated**!public!win32 functions-national language support! !
 getSystemDefaultLCID!public!win32 functions-national language support! !
+getSystemDirectory!public!win32 functions-system information! !
 getSystemDirectory:uSize:!public!win32 functions-system information! !
 getSystemTime:!**auto generated**!public!win32 functions-date and time! !
 getSystemTimeAsFileTime:!**auto generated**!public!win32 functions-date and time! !
 getSystemTimePreciseAsFileTime:!**auto generated**!public!win32 functions-date and time! !
+getSystemWindowsDirectory!public!win32 functions-system information! !
 getSystemWindowsDirectory:uSize:!public!win32 functions-system information! !
+getTempFileName:lpPrefixString:!public!win32 functions-file management! !
 getTempFileName:lpPrefixString:uUnique:lpTempFileName:!public!win32 functions-file management! !
+getTempPath!public!win32 functions-file management! !
 getTempPath:lpBuffer:!public!win32 functions-file management! !
 getThreadTimes:lpCreationTime:lpExitTime:lpKernelTime:lpUserTime:!public!win32 functions-process and thread! !
 getThreadUILanguage!public!win32 functions-national language support! !
@@ -1907,7 +2209,6 @@ getTickCount!public!win32 functions-date and time!win32 functions-system informa
 getTimeZoneInformation:!public!win32 functions-date and time! !
 getUserDefaultLCID!public!win32 functions-national language support! !
 getVolumeInformation:lpVolumeNameBuffer:nVolumeNameSize:lpVolumeSerialNumber:lpMaximumComponentLength:lpFileSystemFlags:lpFileSystemNameBuffer:nFileSystemNameSize:!**auto generated**!public!win32 functions-file system! !
-getWindowsDirectory:uSize:!public!win32 functions-system information! !
 globalAlloc:dwBytes:!public!win32 functions-memory management! !
 globalFree:!public!win32 functions-memory management! !
 globalLock:!public!win32 functions-memory management! !
@@ -1970,6 +2271,7 @@ setVolumeLabel:lpVolumeName:!public!win32 functions-file system! !
 sizeOfResource:hResInfo:!public!win32 functions-resource! !
 sleep:!public!win32 functions-process and thread! !
 sleepEx:bAlertable:!public!win32 functions-process and thread! !
+stringBufferClass!constants!private! !
 systemTimeToFileTime:lpFileTime:!public!win32 functions-date and time! !
 terminateProcess:exitCode:!public!win32 functions-process and thread! !
 terminateProcessId:!helpers!public! !
@@ -1985,18 +2287,26 @@ virtualProtect:dwSize:flNewProtect:lpflOldProtect:!**auto generated**!public!win
 virtualQuery:lpBuffer:dwLength:!**auto generated**!public!win32 functions-memory management! !
 waitForSingleObject:dwMilliseconds:!**auto generated**!public!win32 functions-synchronization! !
 wideCharToMultiByte:dwFlags:lpWideCharStr:cchWideChar:lpMultiByteStr:cchMultiByte:lpDefaultChar:lpUsedDefaultChar:!public!win32 functions-string manipulation! !
-winExec:uCmdShow:!public!win32 functions-process and thread! !
 writeFile:lpBuffer:nNumberOfBytesToWrite:lpNumberOfBytesWritten:lpOverlapped:!public!win32 functions-file management! !
 zeroMemory:length:!public!win32 functions-memory management! !
 !
 
 !OS.KernelLibrary class methodsFor!
 
+enumNamesDescriptor
+	^enumNamesDescriptor!
+
+enumUILanguagesDescriptor
+	^FunctionDescriptor returnType: 'bool' argumentTypes: 'lpwstr uintptr'!
+
 fileName
 	"Answer the host system file name of the external library which
 	the receiver represents."
 
 	^'KERNEL32'!
+
+initialize
+	enumNamesDescriptor := FunctionDescriptor returnType: 'bool' argumentTypes: 'lpwstr'!
 
 open
 	"Answer a new instance of the receiver to represent the Kernel32 DLL. Special handling 
@@ -2010,7 +2320,10 @@ open
 sharedVariableName
 	^#{Kernel32}! !
 !OS.KernelLibrary class categoriesForMethods!
+enumNamesDescriptor!constants!private! !
+enumUILanguagesDescriptor!constants!private! !
 fileName!constants!public! !
+initialize!class initialization!development!public! !
 open!instance creation!public! !
 sharedVariableName!constants!initializing!private! !
 !

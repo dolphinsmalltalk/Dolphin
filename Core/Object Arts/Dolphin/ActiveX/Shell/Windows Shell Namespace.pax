@@ -123,7 +123,8 @@ getDesktopFolder
 
 pathFromIDList: idList
 	| pathname |
-	pathname := File pathBuffer.
+	#todo.	"Support long filenames? May not be possible as API does not."
+	pathname := Utf16String newFixed: MAX_PATH.
 	^(self SHGetPathFromIDList: idList pszPath: pathname) ifTrue: [pathname trimNulls]!
 
 SHBrowseForFolder: aWin32BROWSEINFO

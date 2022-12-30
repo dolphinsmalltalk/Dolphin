@@ -443,19 +443,12 @@ load: aString flags: anInteger
 				loadLibraryEx: aString
 				hFile: nil
 				dwFlags: anInteger.
-	^hLibrary ifNil: [Win32Error signal: aString printString]!
+	^hLibrary ifNil: [Win32Error signal]!
 
 moduleFileName: aLibOrHandle
 	"Private - Answer the `Utf16String` file name of the receiver's loaded module."
 
-	| buf size |
-	#todo. "Fix for long filenames - the API does not make this easy"
-	buf := Utf16String newFixed: CRTConstants._MAX_PATH.
-	size := Kernel32
-				getModuleFileName: aLibOrHandle asParameter
-				lpFilename: buf
-				nSize: buf size + 1.
-	^buf resize: size!
+	^Kernel32 getModuleFilename: aLibOrHandle!
 
 onExit
 	"Private - Perform shut down processing."

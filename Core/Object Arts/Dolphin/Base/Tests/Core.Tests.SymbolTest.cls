@@ -11,7 +11,6 @@ Core.Tests.SymbolTest comment: 'This is the unit test for the class Symbol. Unit
 	- http://www.c2.com/cgi/wiki?UnitTest
 	- http://minnow.cc.gatech.edu/squeak/1547
 	- the sunit class category'!
-!Core.Tests.SymbolTest categoriesForClass!Unclassified! !
 !Core.Tests.SymbolTest methodsFor!
 
 assimilateString: aString
@@ -77,6 +76,12 @@ testKeywords
 	self assert: #'a:b' keywords equals: #('a:b').	"Trailing : is expected"
 	self assert: #':a::b:' keywords equals: #(':' #a: ':' 'b:').
 	self assert: #':' keywords equals: #(':')!
+
+testNewWithAll
+	self
+		should: [super testNewWithAll]
+		raise: Error
+		matching: [:ex | ex messageText = 'Symbol class should not implement #new:']!
 
 testPrintLiteral
 	self assert: #_ printString equals: '#_'.
@@ -153,6 +158,7 @@ testAtPut!public!unit tests! !
 testEncodeOnPut!public!unit tests! !
 testInstVarAtPut!public!unit tests! !
 testKeywords!public!unit tests! !
+testNewWithAll!public! !
 testPrintLiteral!public!unit tests! !
 testPrintString!helpers!public! !
 testRefersToLiteral!public!unit tests! !

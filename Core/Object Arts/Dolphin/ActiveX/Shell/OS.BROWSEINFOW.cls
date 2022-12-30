@@ -47,7 +47,8 @@ initialize: anInteger
 	"Private - Initialize the state of the receiver."
 
 	super initialize: anInteger.
-	displayName := File pathBuffer.
+	#todo.	"Support long filenames? Not sure we can as seems to be an API limitation."
+	displayName := Utf16String newFixed: MAX_PATH.
 	self pszDisplayName: displayName!
 
 lpfnHook: anExternalAddress

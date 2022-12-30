@@ -103,10 +103,10 @@ instVarMapFor: aClass
 
 lookupReferencedObject: aString
 	^objects
-		at: (currentKey rootKey newSubKey: (Shlwapi
-						pathCombine: (Utf16String newFixed: Win32Constants.MAX_PATH)
-						lpszDir: currentKey pathFromRoot
-						lpszFile: aString)
+		at: (currentKey rootKey newSubKey: (PathCch
+						pathCombine: currentKey pathFromRoot
+						pszMore: aString
+						dwFlags: PATHCCH_NONE)
 				sam: WinRegConstants.KEY_READ)!
 
 namesAndObjectsDo: aDyadicValuable

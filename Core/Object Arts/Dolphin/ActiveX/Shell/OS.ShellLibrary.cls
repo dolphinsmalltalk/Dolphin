@@ -77,7 +77,8 @@ findExecutable: lpFile directory: directoryString
 	"Retrieves the name of the executable associated with the specified path."
 
 	| buf hInst |
-	buf := File pathBuffer.
+	#todo.	"Support long filenames? May not be possible as API does not."
+	buf := Utf16String newFixed: MAX_PATH.
 	hInst := self
 				findExecutable: lpFile
 				lpDirectory: directoryString
@@ -106,7 +107,8 @@ getSpecialFolderLocation: anInteger
 	"
 
 	| pszPath |
-	pszPath := File pathBuffer.
+	#todo.	"Support long paths? May not be possible as the API does not."
+	pszPath := Utf16String newFixed: MAX_PATH.
 	self
 		shGetFolderPath: nil
 		nFolder: anInteger

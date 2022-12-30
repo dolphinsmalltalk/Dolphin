@@ -2,7 +2,7 @@
 
 Core.Locale subclass: #'OS.AbstractWindowsLocale'
 	instanceVariableNames: 'info'
-	classVariableNames: 'EnumNamesDescriptor'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -158,49 +158,20 @@ getCalendarInfoInteger: anInteger
 getCalendarInfoString: anIntegerLcType
 	"Private - Get the specified <Utf8String> calendar information from Windows."
 
-	| buf size calType lcid calId |
-	calType := self noUserOverrides
+	^(Kernel32
+		getCalendarInfoString: self lcid
+		calendar: self calendarId
+		calType: (self noUserOverrides
 				ifTrue: [anIntegerLcType bitOr: CAL_NOUSEROVERRIDE]
-				ifFalse: [anIntegerLcType].
-	lcid := self lcid.
-	calId := self calendarId.
-	size := Kernel32
-				getCalendarInfo: lcid
-				calendar: calId
-				calType: calType
-				lpCalData: nil
-				cchData: 0
-				lpValue: nil.
-	size == 0 ifTrue: [^Kernel32 systemError].
-	"Strings allocate extra space for null automatically"
-	buf := Utf16String newFixed: size - 1.
-	Kernel32
-		getCalendarInfo: lcid
-		calendar: calId
-		calType: anIntegerLcType
-		lpCalData: buf
-		cchData: size
-		lpValue: nil.
-	^buf asUtf8String!
+				ifFalse: [anIntegerLcType]))
+			asUtf8String!
 
 getDateFormats: aBoolean
 	"Private - Answer a collection of the date formats for the specified locale, with short
 	or long formats according to the argument, aBoolean."
 
-	| enum formats |
-	formats := Array writeStream: 4.
-	enum := Callback block: 
-					[:format |
-					formats nextPut: format.
-					true]
-				descriptor: EnumNamesDescriptor.
-	(Kernel32
-		enumDateFormats: enum asParameter
-		locale: self asParameter
-		dwFlags: (aBoolean ifTrue: [DATE_LONGDATE] ifFalse: [DATE_SHORTDATE]))
-			ifFalse: [Kernel32 systemError].
-	enum free.
-	^formats contents!
+	^Kernel32 enumDateFormats: self asParameter
+		dwFlags: (aBoolean ifTrue: [DATE_LONGDATE] ifFalse: [DATE_SHORTDATE])!
 
 getIntegerInfo: anIntegerLcType
 	"Private - Get the specified <integer> locale information from Windows, caching for subsequent use."
@@ -209,41 +180,19 @@ getIntegerInfo: anIntegerLcType
 		ifNil: [info at: anIntegerLcType put: (self getLocaleInfoInteger: anIntegerLcType)]!
 
 getLocaleInfoInteger: anIntegerLcType
-	| buf |
-	buf := ByteArray newFixed: 4.
-	"Note that the API is expecting a data count expressed as the number of (wide) characters, so for a 32-bit buffer the correct size is 2"
-	(Kernel32
-		getLocaleInfo: self lcid
-		lCType: (anIntegerLcType bitOr: (self noUserOverrides
-						ifTrue: [##(LOCALE_RETURN_NUMBER | LOCALE_NOUSEROVERRIDE)]
-						ifFalse: [LOCALE_RETURN_NUMBER]))
-		lpLCData: buf
-		cchData: 2) == 0
-		ifTrue: [Kernel32 systemError].
-	^buf dwordAtOffset: 0!
+	^Kernel32 getLocaleInfo: self lcid
+		integer: (self noUserOverrides
+				ifTrue: [anIntegerLcType bitOr: LOCALE_NOUSEROVERRIDE]
+				ifFalse: [anIntegerLcType])!
 
 getLocaleInfoString: anIntegerLcType
 	"Private - Get the specified <Utf8String> locale information from Windows."
 
-	| buf size lcType lcid |
-	lcType := self noUserOverrides
+	^(Kernel32 getLocaleInfo: self lcid
+		string: (self noUserOverrides
 				ifTrue: [anIntegerLcType bitOr: LOCALE_NOUSEROVERRIDE]
-				ifFalse: [anIntegerLcType].
-	lcid := self lcid.
-	size := Kernel32
-				getLocaleInfo: lcid
-				lCType: lcType
-				lpLCData: nil
-				cchData: 0.
-	size == 0 ifTrue: [^Kernel32 systemError].
-	"Strings allocate extra space for null automatically"
-	buf := Utf16String newFixed: size - 1.
-	Kernel32
-		getLocaleInfo: lcid
-		lCType: lcType
-		lpLCData: buf
-		cchData: size.
-	^buf asUtf8String!
+				ifFalse: [anIntegerLcType]))
+			asUtf8String!
 
 getStringInfo: anIntegerLcType
 	"Private - Answer a locale specific date String of the specified type for the receiver's locale."
@@ -252,19 +201,7 @@ getStringInfo: anIntegerLcType
 		ifNil: [info at: anIntegerLcType put: (self getLocaleInfoString: anIntegerLcType)]!
 
 getTimeFormats
-	| formats enum |
-	formats := Array writeStream: 4.
-	enum := Callback block: 
-					[:format |
-					formats nextPut: format.
-					true]
-				descriptor: EnumNamesDescriptor.
-	(Kernel32
-		enumTimeFormats: enum asParameter
-		locale: self asParameter
-		dwFlags: 0) ifFalse: [Kernel32 systemError].
-	enum free.
-	^formats contents!
+	^Kernel32 enumTimeFormats: self asParameter dwFlags: 0!
 
 hasLeadingZero
 	"Answer whether a leading zero is prepended to a displayed number in this locale if it has only a fractional.
@@ -555,27 +492,13 @@ yearMonthFormat!constants!public! !
 
 !OS.AbstractWindowsLocale class methodsFor!
 
-initialize
-	EnumNamesDescriptor := FunctionDescriptor returnType: 'bool' argumentTypes: 'lpwstr'!
-
 installedUILanguages: anInteger
 	"Private - Answer a collection of UI languages installed on the system.
 		self installedUILanguages: MUI_LANGUAGE_LICENSED.
 	"
 
-	| enum languages |
-	languages := Array writeStream.
-	enum := Callback block: 
-					[:language :lParam |
-					languages nextPut: language.
-					true]
-				descriptor: (FunctionDescriptor returnType: 'bool' argumentTypes: 'lpwstr uintptr').
-	Kernel32
-		enumUILanguages: enum asParameter
-		dwFlags: (MUI_LANGUAGE_NAME bitOr: anInteger)
-		lParam: 0.
-	enum free.
-	^languages contents collect: [:each | self named: each]!
+	^(Kernel32 enumUILanguages: (MUI_LANGUAGE_NAME bitOr: anInteger))
+		collect: [:each | self named: each]!
 
 lcid: anInteger
 	"Answer an instance of the receiver to represent the Locale with the specified LCID."
@@ -598,18 +521,9 @@ reset
 systemLocales: anInteger
 	"Private - Answer a collection of system locales, depending on the flags argument, anInteger."
 
-	| enum locales |
-	locales := OrderedCollection new: 30.
-	enum := Callback block: 
-					[:locale |
-					locales addLast: locale.
-					true]
-				descriptor: EnumNamesDescriptor.
-	Kernel32 enumSystemLocales: enum asParameter dwFlags: anInteger.
-	enum free.
-	^locales collect: [:s | self lcid: (Integer readFrom: s asUppercase readStream radix: 16)]! !
+	^(Kernel32 enumSystemLocales: anInteger)
+		collect: [:s | self lcid: (Integer readFrom: s asUppercase readStream radix: 16)]! !
 !OS.AbstractWindowsLocale class categoriesForMethods!
-initialize!class initialization!development!public! !
 installedUILanguages:!enquiries!private! !
 lcid:!instance creation!public! !
 lcid:withOverrides:!instance creation!private! !

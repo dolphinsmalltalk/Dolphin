@@ -66,7 +66,8 @@ urlDownloadToCacheFile: url
 	has completed)."
 
 	| filename |
-	filename := File pathBuffer.	"String auto allocates extra byte for null terminator"
+	#todo.	"Support long filenames? May not be possible as API does not."
+	filename := Utf16String newFixed: MAX_PATH.	"String auto allocates extra byte for null terminator"
 	self
 		overlappedURLDownloadToCacheFile: nil
 		szURL: url asUtf16String

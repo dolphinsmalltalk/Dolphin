@@ -478,6 +478,15 @@ testMidString
 	self assert: (subject midString: 3 from: (subject indexOf: $£)) equals: '£文🍺'.
 	self should: [subject midString: 3 from: (subject indexOf: $\x6587)] raise: Error!
 
+testNewWithAll
+	| subject |
+	0 to: 3
+		do: 
+			[:i |
+			subject := self collectionClass new: i withAll: $\x1F42C.
+			self assert: subject asArray size equals: i.
+			subject allSatisfy: [:each | each = $\x1F42C]]!
+
 testOccurrencesOf
 	| subject |
 	subject := self assimilateString: '🐬a£文🐬Ā🍺'.
@@ -653,6 +662,7 @@ testLastColon!public!unit tests! !
 testLeftString!public!unit tests! !
 testMatchExtended!public! !
 testMidString!public!unit tests! !
+testNewWithAll!public! !
 testOccurrencesOf!public!unit tests! !
 testPairsDo!public!unit tests! !
 testReject!public!unit tests! !

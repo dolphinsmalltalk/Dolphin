@@ -432,15 +432,6 @@ fromAddress: anAddress length: anInteger
 		to: anInteger * 2
 		startingAt: 1!
 
-fromAtomId: anInteger
-	"Answer a new string which is a copy of the atom with id anInteger."
-
-	| atomName |
-	^(atomName := self new: 255) leftString: (OS.Kernel32
-				getAtomName: anInteger
-				lpBuffer: atomName
-				nSize: atomName size)!
-
 fromBytes: aByteArray codePage: anInteger
 	"Answer an instance of the receiver constructed from the specified byte-string assumed to be encoded per the specified code page."
 
@@ -507,7 +498,6 @@ elementSize!constants!public! !
 encoding!constants!public! !
 fromAddress:!instance creation!public! !
 fromAddress:length:!instance creation!public! !
-fromAtomId:!instance creation!public! !
 fromBytes:codePage:!instance creation!public! !
 fromUtf16String:!instance creation!public! !
 initialize!development!initializing!public! !

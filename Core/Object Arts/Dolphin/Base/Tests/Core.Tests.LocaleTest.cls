@@ -9,7 +9,6 @@ Core.Tests.DolphinTest subclass: #'Core.Tests.LocaleTest'
 Core.Tests.LocaleTest guid: (Core.GUID fromString: '{85b9dbfa-a1e2-46f3-ae44-d016f209b03b}')!
 Core.Tests.LocaleTest isNonInstantiable: true!
 Core.Tests.LocaleTest comment: ''!
-!Core.Tests.LocaleTest categoriesForClass!Unclassified! !
 !Core.Tests.LocaleTest methodsFor!
 
 defaultSubject
@@ -29,6 +28,9 @@ tearDown
 	super tearDown!
 
 testDisplayFloatOn
+	self subclassResponsibility!
+
+testDisplayName
 	self subclassResponsibility!
 
 testName
@@ -230,6 +232,7 @@ defaultSubject!helpers!private! !
 setUp!private!running! !
 tearDown!private!running! !
 testDisplayFloatOn!public!unit tests! !
+testDisplayName!public!unit tests! !
 testName!public!unit tests! !
 testNoUserOverrides!public!unit tests! !
 testPrimary!public!unit tests! !

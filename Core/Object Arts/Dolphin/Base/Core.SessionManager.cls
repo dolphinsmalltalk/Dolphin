@@ -206,11 +206,7 @@ computerName
 	"Answer the name of the computer hosting the current session. 
 	Signals an exception if the request fails."
 
-	| name nameSize |
-	name := Utf16String newFixed: MAX_COMPUTERNAME_LENGTH.
-	nameSize := External.UInt32Bytes fromInteger: name size + 1.
-	(Kernel32 getComputerName: name nSize: nameSize asParameter) ifFalse: [Kernel32 systemError].
-	^name leftString: nameSize asInteger!
+	^Kernel32 getComputerName!
 
 comShutdown
 	"Private - The system is about to shut down, so clear up any COM hangers on.
@@ -326,19 +322,7 @@ getenv: aString
 	"Answer the value of the specified environment variable, or nil if it does not exist.
 	N.B. Size answered includes null terminator IF not enough space (or nil buffer)."
 
-	| buf size |
-	"N.B. Size answered includes null terminator IF not enough space (or nil buffer)."
-	size := Kernel32
-				getEnvironmentVariable: aString
-				lpBuffer: nil
-				nSize: 0.
-	size == 0 ifTrue: [^nil].
-	buf := Utf16String newFixed: size - 1.	"Dolphin Strings alloc. extra space for null terminator"
-	Kernel32
-		getEnvironmentVariable: aString
-		lpBuffer: buf
-		nSize: size.
-	^buf!
+	^Kernel32 getEnvironmentVariable: aString!
 
 getEvents
 	"Private - Answer the EventsCollection belonging to the receiver, or nil if the receiver
@@ -1058,11 +1042,7 @@ systemDirectory
 	"Answer the path of the Windows system directory on the host computer for the current
 	session."
 
-	| path len |
-	(len := Kernel32 getSystemDirectory: nil uSize: 0) == 0 ifTrue: [Kernel32 systemError].
-	path := Utf16String newFixed: len - 1.
-	(Kernel32 getSystemDirectory: path uSize: len) == 0 ifTrue: [Kernel32 systemError].
-	^path!
+	^Kernel32 getSystemDirectory!
 
 tertiaryStartup
 	"Perform last startup operations before the main process is started - this includes firing the onStartup

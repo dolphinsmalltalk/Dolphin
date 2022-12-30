@@ -101,6 +101,8 @@ package methodNames
 	add: 'Delay class' -> #resolution:set:;
 	add: 'File class' -> #change:extension:;
 	add: 'File class' -> #for:inAndBelow:do:;
+	add: 'File class' -> #maxPath;
+	add: 'File class' -> #pathBuffer;
 	add: 'FunctionDescriptor class' -> #fromString:;
 	add: 'NTLibrary class' -> #isWine;
 	add: 'SortAlgorithm class' -> #sortBlock:;
@@ -585,10 +587,24 @@ for: matchString inAndBelow: dirString do: operation
 	^self 
 		forAll: matchString
 		in: dirString
-		do: [:each | operation value: each directory value: each]! !
+		do: [:each | operation value: each directory value: each]!
+
+maxPath
+	"Answers the maximum number of characters in a file pathname"
+
+	#deprecated.	"Not compatible with long paths"
+	^MAX_PATH!
+
+pathBuffer
+	"Answer a buffer of sufficient size to contain a full path."
+
+	#deprecated. "Not long filename compatible"
+	^Utf16String newFixed: MAX_PATH! !
 !File class categoriesForMethods!
 change:extension:!filename manipulation!public! !
 for:inAndBelow:do:!enumerating!public! !
+maxPath!constants!public! !
+pathBuffer!helpers!public! !
 !
 
 !FunctionDescriptor class methodsFor!

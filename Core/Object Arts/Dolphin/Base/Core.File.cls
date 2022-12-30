@@ -272,19 +272,7 @@ openFlags
 pathName
 	"Answer the actual path name of the open file."
 
-	| size buf |
-	size := Kernel32
-				getFinalPathNameByHandle: handle
-				lpszFilePath: nil
-				cchFilePath: 0
-				dwFlags: 0.
-	buf := Utf16String newFixed: size - 1.
-	Kernel32
-		getFinalPathNameByHandle: handle
-		lpszFilePath: buf
-		cchFilePath: size
-		dwFlags: 0.
-	^buf!
+	^Kernel32 getFinalPathNameByHandle: handle!
 
 position
 	"Answer the absolute Integer position of the receiver's file pointer
@@ -588,6 +576,11 @@ appendPathDelimiter: aString
 attributes: aFileNameString
 	^Kernel32 getFileAttributes: aFileNameString!
 
+canonicalizePath: aString
+	"Converts the path <String> argument into a canonical form, removing any embedded '..' and '.' components, and adding a long path prefix if required."
+
+	^PathCch pathCanonicalize: aString dwFlags: PATHCCH_ALLOW_LONG_PATHS!
+
 commonPrefixOf: pathString1 and: pathString2
 	"Answer the <readableString> common prefix shared between the two paths.
 	This will be empty if the paths share no common prefix."
@@ -613,15 +606,13 @@ composePath: aPathString stem: aStemString extension: anExtensionString
 
 	^self makePath: {nil. aPathString. aStemString. anExtensionString}!
 
-composePath: path subPath: subpath
+composePath: pathString subPath: subpathString
 	"Composes a full pathname from path and subpath components."
 
-	| buffer |
-	buffer := self pathBuffer.
-	^Shlwapi
-		pathCombine: buffer
-		lpszDir: path
-		lpszFile: subpath!
+	^PathCch
+		pathCombine: pathString
+		pszMore: subpathString
+		dwFlags: PATHCCH_ALLOW_LONG_PATHS!
 
 composeShortStem: aStemString extension: anExtensionString 
 	"Answer a String which is a file name abbreviated from aStemString and anExtensionString.
@@ -651,23 +642,13 @@ copy: oldFileNameString to: newFileNameString
 	"Copy the file specified by oldFileNameString to newFileNameString.
 	Signal a HostSystemError if the copy fails."
 
-	#todo.	"Due to a VM bug, auto-conversion of Strings is not thread-safe in overlapped calls, so convert explicitly."
-	(Kernel32
-		copyFile: oldFileNameString asUtf16String
-		lpNewFileName: newFileNameString asUtf16String
-		bfailIfExists: false) ifFalse: [Kernel32 systemError: Processor activeProcess lastError]!
+	Kernel32 copyFile: oldFileNameString to: newFileNameString!
 
 createDirectory: path
-	"Create a directory with the specified path.
-	Answer whether the directory was actually created, or already existed.
-	Raise a Win32Error if the call fails for any other reason than that the
-	directory already exists."
+	"Create a directory with the specified path. Answer whether the directory was actually created, or already existed.
+	Raise a Win32Error if the call fails for any other reason than that the directory already exists."
 
-	^(Kernel32 createDirectory: path lpSecurityAttributes: nil) or: 
-			[| err |
-			err := Kernel32 getLastError.
-			err = Win32Errors.ERROR_ALREADY_EXISTS ifFalse: [^Kernel32 systemError: err].
-			false	"already existed"]!
+	^Kernel32 createDirectory: path!
 
 createDirectoryPath: path
 	"Create a directory tree with the specified path - i.e. this will create a nested set of directories
@@ -684,7 +665,7 @@ createDirectoryPath: path
 		ifTrue: 
 			[pos := 3.
 			2 timesRepeat: 
-					["Skip UNC machine name and share"
+					["Skip UNC machine name and share, or long path prefix"
 					pos := path indexOfAnyOf: delims startingAt: pos.
 					pos == 0 ifTrue: [^Win32Error signalWith: Win32Errors.ERROR_INVALID_NAME].
 					pos := pos + 1]]
@@ -803,30 +784,27 @@ for: aString do: operation
 		do: operation!
 
 for: matchString in: dirString do: operation
-	"For each file/directory matching the wildcarded string argument, matchString, 
-	in the directory named, dirString, evaluate the monadic valuable, operation, with 
-	a WIN32_FIND_DATA describing the file/directory as the argument."
+	"For each file/directory matching the wildcarded string argument, matchString, in the directory named, dirString, evaluate the monadic valuable, operation, with a WIN32_FIND_DATA describing the file/directory as the argument."
 
-	| handle findStruct |
-	findStruct := WIN32_FIND_DATAW new.
+	| hFind findStruct pattern |
+	findStruct := Kernel32 findFilesStructClass new.
 	findStruct directory: dirString.
-	handle := Kernel32 findFirstFile: (File composePath: dirString subPath: matchString)
-				lpFindFileData: findStruct.
-	handle = INVALID_HANDLE_VALUE
+	pattern := self composePath: dirString subPath: matchString.
+	hFind := Kernel32 findFirstFile: pattern lpFindFileData: findStruct.
+	hFind = INVALID_HANDLE_VALUE
 		ifTrue: 
 			[| err |
 			err := Kernel32 getLastError.
 			^(err == Win32Errors.ERROR_FILE_NOT_FOUND or: [err == Win32Errors.ERROR_ACCESS_DENIED])
-				ifTrue: [self]
 				ifFalse: [Kernel32 systemError: err]].
 	
 	[| error |
 	
 	[operation value: findStruct.
-	Kernel32 findNextFile: handle lpFindFileData: findStruct] whileTrue.
+	Kernel32 findNextFile: hFind lpFindFileData: findStruct] whileTrue.
 	error := Kernel32 getLastError.
 	error == Win32Errors.ERROR_NO_MORE_FILES ifFalse: [^Kernel32 systemError: error]]
-			ensure: [Kernel32 findClose: handle]!
+			ensure: [Kernel32 findClose: hFind]!
 
 forAll: matchString in: dirString do: operation
 	"For each file or directory matching the wildcarded path string, fileSpec, 
@@ -914,27 +892,7 @@ fromHandle: aHandle
 fullPathOf: aPathnameString
 	"Answers the full path of aPathnameString"
 
-	| buffer size path |
-	buffer := self pathBuffer.
-	path := aPathnameString asUtf16String.
-	(size := Kernel32
-				getFullPathName: path
-				nBufferLength: buffer size + 1
-				lpBuffer: buffer
-				lpFilePart: nil) == 0
-		ifTrue: [Kernel32 systemError].
-	"The API is a bit asymmetric. If the buffer is large enough, it returns the number of characters copied to the buffer. If the buffer is too small, it returns the required size of buffer required, including null terminator (i.e. characters + 1). However it does have a bug that if the path to be expanded starts with .\, then the buffer size returned is too large and there will be two extra nulls at the end of the string."
-	size > buffer size
-		ifTrue: 
-			["Long path - a relatively rare boundary case"
-			buffer := Utf16String newFixed: size - 1.
-			(size := Kernel32
-						getFullPathName: path
-						nBufferLength: size
-						lpBuffer: buffer
-						lpFilePart: nil) == 0
-				ifTrue: [Kernel32 systemError]].
-	^buffer copyFrom: 1 to: size!
+	^Kernel32 getFullPathName: aPathnameString!
 
 fullPathOf: aPathnameString relativeTo: aBasePathString
 	"Answers the full path of aPathnameString. If this is a truly relative
@@ -999,7 +957,7 @@ isRelativePath: aFileNameString
 isRootPath: aString
 	"Answer whether the <String> argument is a root path, e.g. 'c:\'"
 
-	^Shlwapi pathIsRoot: aString!
+	^PathCch pathCchIsRoot: aString!
 
 isWriteable: aString
 	"Answer whether the file at the specified path is writeable. If there is no such file, then
@@ -1090,11 +1048,6 @@ makePath: anArray
 		ext: ext.
 	^path trimNulls!
 
-maxPath
-	"Answers the maximum number of characters in a file pathname"
-
-	^CRTConstants._MAX_PATH!
-
 new
 	"Answer a new initialized instance of the receiver."
 
@@ -1162,11 +1115,6 @@ path: pathString extension: extString
 		ifFalse: 
 			[(extString at: 1) == $. ifTrue: [pathString , extString] ifFalse: [pathString , '.' , extString]]!
 
-pathBuffer
-	"Answer a buffer of sufficient size to contain a full path."
-
-	^Utf16String newFixed: self maxPath!
-
 pathDelimiter
 	"Answers the character that delimits a path (or parts thereof)"
 
@@ -1223,7 +1171,8 @@ relativePathOf: aPathString to: aBasePathString
 	treated as if it were a file name)."
 
 	| relPath toPath |
-	relPath := self pathBuffer.
+	#todo. "Relative paths cannot be long, but the from/to paths theoretically could be. The API itself does not support long filenames, so will have to be replaced."
+	relPath := Utf16String newFixed: MAX_PATH.
 	toPath := aPathString asUtf16String.
 	relPath := (Shlwapi
 				pathRelativePathTo: relPath
@@ -1327,16 +1276,7 @@ shortenComponent: aString max: anInteger
 shortPathOf: aPathnameString
 	"Answers the short path version of aPathnameString"
 
-	| shortpath path len |
-	path := aPathnameString asUtf16String.
-	len := path size.
-	shortpath := Utf16String newFixed: len.
-	(Kernel32
-		getShortPathName: path
-		lpszShortPath: shortpath
-		cchBuffer: len + 1) == 0
-		ifTrue: [Kernel32 systemError].
-	^shortpath trimNulls!
+	^Kernel32 getShortPathName: aPathnameString!
 
 sniffEncoding: aString
 	"Answer a best guess at the encoding of the file with the specified path. If the file does
@@ -1483,50 +1423,28 @@ temporaryFilename
 	!
 
 temporaryFilenameWithPrefix: prefixString
-	"Answer a temporary filename built from prefixString in the user's temporary files
-	directory. Note that this will create the temp file in order to guarantee uniqueness. You
-	are responsible for deleting the file when it is no longer required. Signals a Win32Error if
-	the operation fails."
+	"Answer a temporary filename built from prefixString in the user's temporary files directory. Note that this will create the temp file in order to guarantee uniqueness. You are responsible for deleting the file when it is no longer required. Signals a Win32Error if the operation fails, e.g. if the tempPath is longer than MAX_PATH-14 as the API does not support long filenames."
 
-	| returnBuf |
-	returnBuf := self pathBuffer.
-	(Kernel32
-		getTempFileName: self tempPath
-		lpPrefixString: prefixString
-		uUnique: 0
-		lpTempFileName: returnBuf) == 0
-		ifTrue: [^Kernel32 systemError].
-	^returnBuf trimNulls!
+	^Kernel32 getTempFileName: self tempPath lpPrefixString: prefixString!
 
 tempPath
 	"Answer the path of the directory designated for temporary files on the host system."
 
-	| buf len |
-	(len := Kernel32 getTempPath: 0 lpBuffer: nil) == 0 ifTrue: [Kernel32 systemError].
-	buf := Utf16String newFixed: len - 1.
-	(Kernel32 getTempPath: len lpBuffer: buf) == 0 ifTrue: [Kernel32 systemError].
-	^buf!
+	^Kernel32 getTempPath!
 
 windowsDirectory
 	"Answer the path of the Windows directory on the host computer for the current session. Note
 	that under Terminal Server this will be the shared Windows directory, not the per-user
 	Windows directory. See MSDN KB281316  for further information."
 
-	| len path |
-	len := Kernel32 getSystemWindowsDirectory: nil uSize: 0.
-	len == 0 ifTrue: [^Kernel32 systemError].
-	path := Utf16String newFixed: len - 1.
-	len := Kernel32 getSystemWindowsDirectory: path uSize: len.
-	^path!
+	^Kernel32 getSystemWindowsDirectory!
 
 workingDirectory
 	"Answer the current working directory. The result always has a trailing separator."
 
-	| len buf |
-	(len := Kernel32 getCurrentDirectory: 0 lpBuffer: nil) == 0 ifTrue: [^Kernel32 systemError].
-	buf := Utf16String newFixed: len - 1.
-	(Kernel32 getCurrentDirectory: len lpBuffer: buf) == 0 ifTrue: [^Kernel32 systemError].
-	^(buf at: len - 1) = $\ ifTrue: [buf] ifFalse: [buf copyWith: $\]!
+	| dir |
+	dir := Kernel32 getCurrentDirectory.
+	^dir lastCodeUnit == $\ ifTrue: [dir] ifFalse: [dir copyWith: $\]!
 
 workingDirectory: aString
 	"Set the current working directory."
@@ -1535,6 +1453,7 @@ workingDirectory: aString
 !Core.File class categoriesForMethods!
 appendPathDelimiter:!filename manipulation!public!testing! !
 attributes:!file operations!public! !
+canonicalizePath:!filename manipulation!public! !
 commonPrefixOf:and:!filename manipulation!public! !
 composePath:stem:extension:!filename manipulation!public! !
 composePath:subPath:!filename manipulation!public! !
@@ -1569,14 +1488,12 @@ isWriteable:set:!file operations!public! !
 lastWriteTime:!enquiries!public! !
 locateFilename:in:!filename manipulation!public! !
 makePath:!filename manipulation!public! !
-maxPath!constants!public! !
 new!instance creation!public! !
 open:!instance creation!public! !
 open:mode:!instance creation!public! !
 open:mode:check:!instance creation!public! !
 open:mode:check:share:!instance creation!public! !
 path:extension:!filename manipulation!public! !
-pathBuffer!helpers!public! !
 pathDelimiter!constants!public! !
 pathDelimiters!constants!public! !
 readAllBytes:!file operations!public! !

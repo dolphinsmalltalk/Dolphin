@@ -530,18 +530,8 @@ with:do:!enumerating!public! !
 codePage
 	"Answer the Windows code page constant for the receiver's encoding."
 
-	^self subclassResponsibility!
-
-new: anInteger withAll: aCharacter
-	"Answer a new instance of the receiver with <integer>, anInteger, elements, each of which is initialized to the <Character>, aCharacter.
-	Note that the result will be of size elementCount * codeUnitsFor(elementValue)."
-
-	| stream |
-	stream := self writeStream: anInteger.
-	anInteger timesRepeat: [stream nextPut: aCharacter].
-	^stream contents! !
+	^self subclassResponsibility! !
 !Core.UtfEncodedString class categoriesForMethods!
 codePage!constants!public! !
-new:withAll:!instance creation!public! !
 !
 

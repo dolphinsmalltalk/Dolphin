@@ -162,6 +162,7 @@ package setClassNames: #(
 	#{OS.Tests.FILETIMETest}
 	#{OS.Tests.HRESULTTest}
 	#{OS.Tests.InvariantLocaleTest}
+	#{OS.Tests.KernelLibraryTest}
 	#{OS.Tests.ShlwapiLibraryTest}
 	#{OS.Tests.StdioFileStreamTest}
 	#{OS.Tests.WindowsLocaleTest}
@@ -480,6 +481,12 @@ Core.Tests.DolphinTest subclass: #'Core.Tests.IntegerTest'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'External.Tests.INTEGERTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'OS.Tests.KernelLibraryTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

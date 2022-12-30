@@ -619,9 +619,26 @@ testFindStringStartingAtIgnoreCase
 				ignoreCase: true)
 		equals: 7!
 
+testFormatWith
+	| actual |
+	actual := 'Hello from %1, 🍺 cheers' formatWith: '🐬 Smalltalk'.
+	self assert: actual equals: 'Hello from 🐬 Smalltalk, 🍺 cheers'!
+
 testFromAddress
 	self assertIsNil: (self collectionClass fromAddress: 0).
 	self assertIsNil: (self collectionClass fromAddress: 0 length: 0)!
+
+testFromAtomId
+	| atom id |
+	atom := self collectionClass fromAtomId: 0.
+	self assert: atom isEmpty.
+	atom := self collectionClass fromAtomId: 1.
+	self assert: atom equals: '#1'.
+	atom := self collectionClass fromAtomId: 16rBFFF.
+	self assert: atom equals: '#49151'.
+	id := OS.Kernel32 addAtom: '🐬 Smalltalk'.
+	atom := self collectionClass fromAtomId: id.
+	self assert: atom equals: '🐬 Smalltalk'!
 
 testHash
 	| abc |
@@ -1238,7 +1255,9 @@ testExpandMacrosWith!public!unit tests! !
 testExpandMacrosWithArguments!public!unit tests! !
 testFindStringStartingAt!public!unit tests! !
 testFindStringStartingAtIgnoreCase!public!unit tests! !
+testFormatWith!public!unit tests! !
 testFromAddress!public!unit tests! !
+testFromAtomId!public!unit tests! !
 testHash!public!unit tests! !
 testIndexOfStartingAt!public!unit tests! !
 testInvalidComparisons!public!unit tests! !

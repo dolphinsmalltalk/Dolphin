@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Kernel.Tests.SessionManagerTest'
 	classConstants: {}!
 Kernel.Tests.SessionManagerTest guid: (Core.GUID fromString: '{06f1fe94-5aa1-43f9-9d5c-1d4de4f5b519}')!
 Kernel.Tests.SessionManagerTest comment: ''!
-!Kernel.Tests.SessionManagerTest categoriesForClass!Unclassified! !
 !Kernel.Tests.SessionManagerTest methodsFor!
 
 testComputerName
@@ -27,31 +26,16 @@ testGetEnv
 	self assert: (File isDirectory: actual).
 	self assert: (File exists: (File composePath: actual subPath: 'win.ini'))!
 
-testSystemDirectory
-	| actual |
-	actual := SessionManager current systemDirectory.
-	self assert: (File isDirectory: actual).
-	self assert: (Kernel32 fileName beginsWith: actual ignoreCase: true)!
-
 testUsername
 	"Assumes that getenv: is working"
 
 	| actual |
 	actual := SessionManager current getenv: 'USERNAME'.
-	self assert: (actual sameAs: SessionManager current userName)!
-
-testWindowsDirectory
-	| windows actual |
-	windows := 'C:\WINDOWS'.
-	actual := SessionManager current windowsDirectory.
-	self assert: (File isDirectory: actual).
-	self assert: (actual sameAs: windows)! !
+	self assert: (actual sameAs: SessionManager current userName)! !
 !Kernel.Tests.SessionManagerTest categoriesForMethods!
 testComputerName!public!unit tests! !
 testDocumentsDirectory!public!unit tests! !
 testGetEnv!public!unit tests! !
-testSystemDirectory!public!unit tests! !
 testUsername!public!unit tests! !
-testWindowsDirectory!public!unit tests! !
 !
 

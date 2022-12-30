@@ -108,17 +108,12 @@ _sameAsString: aString
 	Also the comparison respects the currently configured default locale of the host operating system, and the performance may disappoint in some cases."
 
 	<primitive: 51>
-	| string1 string2 |
 	aString isString ifFalse: [^self error: 'Invalid comparand'].
-	string1 := self asUtf16String.
-	string2 := aString asUtf16String.
 	^(OS.Kernel32
 		compareString: LOCALE_USER_DEFAULT
 		dwCmpFlags: 0
-		lpString1: string1
-		cchCount1: string1 size
-		lpString2: string2
-		cchCount2: string2 size) - 2!
+		string1: self
+		string2: aString) - 2!
 
 <=> aString
 	"Answer the receiver's <integer> collation order with respect to the <readableString> argument. Colloquially known as the spaceship operator.
@@ -127,18 +122,13 @@ _sameAsString: aString
 	Note that this can be a relatively complex comparison and may be substantially slower than a simple ordinal comparison."
 
 	<primitive: 56>
-	| string1 string2 |
 	aString isString ifFalse: [^self error: 'Invalid comparand'].
-	"The primitive works with any supported string encoding (ANSI, UTF-8 and UTF-16) and invokes the OS StringCompare function, in essence as follows:"
-	string1 := self asUtf16String.
-	string2 := aString asUtf16String.
+	"The primitive works with any supported string encoding (ANSI, UTF-8 and UTF-16) and invokes the OS StringCompare function"
 	^(OS.Kernel32
 		compareString: LOCALE_USER_DEFAULT
 		dwCmpFlags: ##(NORM_IGNORECASE | NORM_LINGUISTIC_CASING)
-		lpString1: string1
-		cchCount1: string1 size
-		lpString2: string2
-		cchCount2: string2 size) - 2!
+		string1: self
+		string2: aString) - 2!
 
 = anObject
 	"Answer whether the receiver and the <Object> argument are both <String>s containing identical code points.
@@ -802,7 +792,7 @@ join: aCollection
 lastCodeUnit
 	"Answer a <Character> representing the last code unit in the receiver. Raise an exception if the receiver is empty."
 
-	"Note that this may not be a surrogate character and so may not t represent an entire code point."
+	"Note that this may not be a surrogate character and so may not represent an entire code point."
 
 	^self at: self size!
 
@@ -1495,7 +1485,7 @@ fromAddress: anAddress length: anInteger
 fromAtomId: anInteger
 	"Answer a new string which is a copy of the atom with id anInteger."
 
-	^self coerceString: (Utf16String fromAtomId: anInteger)!
+	^OS.Kernel32 getAtomName: anInteger!
 
 fromByteArray: aByteArray
 	^self
@@ -1603,7 +1593,7 @@ initialize
 	empty := ''!
 
 installedCodePages
-	"Answer the names of all code pages installed on the host system."
+	"Answer details of all code pages installed on the host system."
 
 	^self systemCodePages: CP_INSTALLED!
 
@@ -1627,6 +1617,15 @@ new: aSmallInteger
 			["Attempt to instantiate abstract class String, so answer an instance of the default concrete class, Utf8String"
 			^Utf8String new: aSmallInteger].
 	^self primitiveFailed: _failureCode!
+
+new: anInteger withAll: aCharacter
+	"Answer a new instance of the receiver with <integer>, anInteger, elements, each of which is initialized to the <Character>, aCharacter.
+	Note that the result will be of size elementCount * codeUnitsFor(elementValue)."
+
+	| stream |
+	stream := self writeStream: anInteger.
+	anInteger timesRepeat: [stream nextPut: aCharacter].
+	^stream contents!
 
 newFixed: aSmallInteger
 	"Answer a sub-instance of the receiver of size aSmallInteger bytes (this method is 
@@ -1689,7 +1688,7 @@ stbVersion
 	^1!
 
 supportedCodePages
-	"Answer the names of all code pages installed on the host system.
+	"Answer details of all code pages installed on the host system.
 		self supportedCodePages
 	"
 
@@ -1700,16 +1699,8 @@ systemCodePages: anInteger
 	anInteger. Note that this will take a while to run first time through as it causes the OS to
 	load all the code page information."
 
-	| enum ids |
-	ids := OrderedCollection new: 30.
-	enum := External.Callback block: 
-					[:codePage |
-					ids addLast: codePage.
-					true]
-				descriptor: (External.FunctionDescriptor returnType: 'bool' argumentTypes: 'lpwstr').
-	OS.Kernel32 enumSystemCodePages: enum asParameter dwFlags: anInteger.
-	enum free.
-	^ids collect: [:each | OS.CPINFOEXW codePage: (Integer fromString: each)]!
+	^(OS.Kernel32 enumSystemCodePages: anInteger)
+		collect: [:each | OS.CPINFOEXW codePage: (Integer fromString: each)]!
 
 tab
 	"Answer an instance of the receiver containing a tab character."
@@ -1813,6 +1804,7 @@ installedCodePages!enquiries!public! !
 lf!constants!public! !
 lineDelimiter!instance creation!public! !
 new:!instance creation!public! !
+new:withAll:!instance creation!public! !
 newFixed:!instance creation!public! !
 readFrom:!instance creation!public! !
 smalltalkWriteStream!instance creation!public!streaming! !

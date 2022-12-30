@@ -276,6 +276,8 @@ Kernel.SharedPool subclass: #'OS.Win32Constants'
 		'FILE_FLAG_BACKUP_SEMANTICS' -> 16r2000000.
 		'FILE_FLAG_OVERLAPPED' -> 16r40000000.
 		'FILE_LIST_DIRECTORY' -> 16r1.
+		'FILE_NAME_NORMALIZED' -> 16r0.
+		'FILE_NAME_OPENED' -> 16r8.
 		'FILE_SHARE_DELETE' -> 16r4.
 		'FILE_SHARE_READ' -> 16r1.
 		'FILE_SHARE_WRITE' -> 16r2.
@@ -954,6 +956,10 @@ Kernel.SharedPool subclass: #'OS.Win32Constants'
 		'VK_UP' -> 16r26.
 		'VK_XBUTTON1' -> 16r5.
 		'VK_XBUTTON2' -> 16r6.
+		'VOLUME_NAME_DOS' -> 16r0.
+		'VOLUME_NAME_GUID' -> 16r1.
+		'VOLUME_NAME_NONE' -> 16r4.
+		'VOLUME_NAME_NT' -> 16r2.
 		'WA_ACTIVE' -> 16r1.
 		'WA_CLICKACTIVE' -> 16r2.
 		'WA_INACTIVE' -> 16r0.

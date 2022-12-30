@@ -253,7 +253,7 @@ prepareStruct
 	"Private - Initialize the parameter structure to be passed to the Win32 API associated with this common dialog, immediately prior to the call to that API."
 
 	| buf defext |
-	buf := Utf16String newFixed: self maxFileCount * self averageFilenameLength + File maxPath.
+	buf := Utf16String newFixed: self maxFileCount * self averageFilenameLength + MAX_PATH.
 	self value
 		ifNotNil: 
 			[:filename |

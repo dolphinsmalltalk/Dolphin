@@ -113,11 +113,7 @@ toolboxImage
 						ifTrue: [toolboxImage := self defaultToolboxBitmap]
 						ifFalse: 
 							[| resLib |
-							path := File pathBuffer.
-							Kernel32
-								expandEnvironmentStrings: pathAndId first
-								lpDst: path
-								nSize: path size + 1.
+							path := Kernel32 expandEnvironmentStrings: pathAndId first.
 							resLib := ResourceLibrary open: path.
 							toolboxImage := Graphics.Bitmap fromId: id in: resLib.
 							toolboxImage setMap3DColors: true]]].

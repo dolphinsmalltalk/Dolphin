@@ -31,7 +31,16 @@ Kernel.Namespace subclass: #OS
 	classVariableNames: ''
 	imports: #(#{Core} #{External} #{Kernel private})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'PATHCCH_ALLOW_LONG_PATHS' -> 16r1.
+		'PATHCCH_CANONICALIZE_SLASHES' -> 16r40.
+		'PATHCCH_DO_NOT_NORMALIZE_SEGMENTS' -> 16r8.
+		'PATHCCH_ENSURE_IS_EXTENDED_LENGTH_PATH' -> 16r10.
+		'PATHCCH_ENSURE_TRAILING_SLASH' -> 16r20.
+		'PATHCCH_FORCE_DISABLE_LONG_NAME_PROCESS' -> 16r4.
+		'PATHCCH_FORCE_ENABLE_LONG_NAME_PROCESS' -> 16r2.
+		'PATHCCH_NONE' -> 16r0
+	}!
 Kernel.Namespace subclass: #Root
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -505,6 +514,7 @@ Kernel.SharedPool subclass: #'OS.NlsConstants'
 		'LOCALE_STIMEFORMAT' -> 16r1003.
 		'LOCALE_SYEARMONTH' -> 16r1006.
 		'LOCALE_SYSTEM_DEFAULT' -> 16r800.
+		'LOCALE_USE_CP_ACP' -> 16r40000000.
 		'LOCALE_USER_DEFAULT' -> 16r400.
 		'MUI_FULL_LANGUAGE' -> 16r1.
 		'MUI_LANGUAGE_ID' -> 16r4.
@@ -1042,6 +1052,8 @@ Kernel.SharedPool subclass: #'OS.Win32Constants'
 		'FILE_FLAG_BACKUP_SEMANTICS' -> 16r2000000.
 		'FILE_FLAG_OVERLAPPED' -> 16r40000000.
 		'FILE_LIST_DIRECTORY' -> 16r1.
+		'FILE_NAME_NORMALIZED' -> 16r0.
+		'FILE_NAME_OPENED' -> 16r8.
 		'FILE_SHARE_DELETE' -> 16r4.
 		'FILE_SHARE_READ' -> 16r1.
 		'FILE_SHARE_WRITE' -> 16r2.
@@ -1720,6 +1732,10 @@ Kernel.SharedPool subclass: #'OS.Win32Constants'
 		'VK_UP' -> 16r26.
 		'VK_XBUTTON1' -> 16r5.
 		'VK_XBUTTON2' -> 16r6.
+		'VOLUME_NAME_DOS' -> 16r0.
+		'VOLUME_NAME_GUID' -> 16r1.
+		'VOLUME_NAME_NONE' -> 16r4.
+		'VOLUME_NAME_NT' -> 16r2.
 		'WA_ACTIVE' -> 16r1.
 		'WA_CLICKACTIVE' -> 16r2.
 		'WA_INACTIVE' -> 16r0.
@@ -2003,6 +2019,7 @@ Kernel.SharedPool subclass: #'OS.Win32Errors'
 		'ERROR_INVALID_NAME' -> 16r7B.
 		'ERROR_INVALID_PARAMETER' -> 16r57.
 		'ERROR_INVALID_WINDOW_HANDLE' -> 16r578.
+		'ERROR_MOD_NOT_FOUND' -> 16r7E.
 		'ERROR_MORE_DATA' -> 16rEA.
 		'ERROR_MR_MID_NOT_FOUND' -> 16r13D.
 		'ERROR_NO_MORE_FILES' -> 16r12.
@@ -3263,6 +3280,14 @@ External.DynamicLinkLibrary subclass: #'Kernel.CompilerLibrary'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+External.DynamicLinkLibrary subclass: #'OS.PathCchLibrary'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'PATHCCH_MAX_CCH' -> 16r8000
+	}!
 External.DynamicLinkLibrary subclass: #'External.PermanentLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -3309,8 +3334,10 @@ External.PermanentLibrary subclass: #'OS.KernelLibrary'
 	instanceVariableNames: ''
 	classVariableNames: 'WinVerOrGreaterMask'
 	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: 'enumNamesDescriptor'
+	classConstants: {
+		'LongPathPrefix' -> '\\?\'
+	}!
 External.PermanentLibrary subclass: #'OS.NTLibrary'
 	instanceVariableNames: 'isWine'
 	classVariableNames: ''
@@ -3330,6 +3357,12 @@ External.PermanentLibrary subclass: #'Kernel.VMLibrary'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OS.CRTLibrary subclass: #'OS.CRTLibraryNonBlocking'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.KernelLibrary subclass: #'OS.KernelLibraryUtf8'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -3624,7 +3657,7 @@ Core.Link variableSubclass: #'Core.Process'
 	}!
 Core.Locale subclass: #'OS.AbstractWindowsLocale'
 	instanceVariableNames: 'info'
-	classVariableNames: 'EnumNamesDescriptor'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -4553,14 +4586,12 @@ OS.Win32Structure subclass: #'OS.VS_FIXEDFILEINFO'
 		'_OffsetOf_dwStrucVersion' -> 16r4.
 		'_VS_FIXEDFILEINFO_Size' -> 16r34
 	}!
-OS.Win32Structure subclass: #'OS.WIN32_FIND_DATAW'
+OS.Win32Structure subclass: #'OS.WIN32_FIND_DATA'
 	instanceVariableNames: 'directory'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_cAlternateFileName' -> 16r234.
-		'_OffsetOf_cFileName' -> 16r2C.
 		'_OffsetOf_dwFileAttributes' -> 16r0.
 		'_OffsetOf_dwReserved0' -> 16r24.
 		'_OffsetOf_dwReserved1' -> 16r28.
@@ -4569,6 +4600,7 @@ OS.Win32Structure subclass: #'OS.WIN32_FIND_DATAW'
 		'_OffsetOf_ftLastWriteTime' -> 16r14.
 		'_OffsetOf_nFileSizeHigh' -> 16r1C.
 		'_OffsetOf_nFileSizeLow' -> 16r20.
+		'_WIN32_FIND_DATA_Size' -> 16r2C.
 		'_WIN32_FIND_DATAW_Size' -> 16r250
 	}!
 OS.FILETIME subclass: #'OS.LocalFILETIME'
@@ -4577,6 +4609,27 @@ OS.FILETIME subclass: #'OS.LocalFILETIME'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+OS.WIN32_FIND_DATA subclass: #'OS.WIN32_FIND_DATAA'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cAlternateFileName' -> 16r130.
+		'_OffsetOf_cFileName' -> 16r2C.
+		'_WIN32_FIND_DATAA_Size' -> 16r140.
+		'_WIN32_FIND_DATAW_Size' -> 16r250
+	}!
+OS.WIN32_FIND_DATA subclass: #'OS.WIN32_FIND_DATAW'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cAlternateFileName' -> 16r234.
+		'_OffsetOf_cFileName' -> 16r2C.
+		'_WIN32_FIND_DATAW_Size' -> 16r250
+	}!
 Kernel.ProtoObject subclass: #'External.DynamicLinkLibraryStub'
 	instanceVariableNames: 'libraryClass'
 	classVariableNames: ''

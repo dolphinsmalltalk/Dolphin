@@ -14,7 +14,7 @@ buildTestPathOfLength: anInteger
 	| maxPath |
 	maxPath := String writeStream.
 	maxPath nextPutAll: 'c:\'.
-	0 to: anInteger - 8 do: [:i | maxPath nextPut: ('abcdefghij\' at: i % 11 + 1)].
+	0 to: anInteger - 8 do: [:i | maxPath nextPut: ('a🍺cd£eghij\' at: i % 11 + 1)].
 	maxPath := maxPath contents.
 	maxPath last = $\ ifTrue: [maxPath := maxPath allButLast , 'a'].
 	maxPath := maxPath , '.txt'.
@@ -78,10 +78,10 @@ createTestDirectories
 	dir := 'c:\FileTest1\BranchWithLeafWithFiles🐬\'.
 	File createDirectoryPath: dir.
 	File createDirectoryPath: dir , 'LeafWithFiles'.
-	(FileStream write: dir , '\LeafWithFiles\blah1.txt')
+	(FileStream write: dir , '\LeafWithFiles\a🐬b.txt')
 		nextPutAll: 'Blah blah blah';
 		close.
-	(FileStream write: dir , '\LeafWithFiles\blah2.txt')
+	(FileStream write: dir , '\LeafWithFiles\a£b.txt')
 		nextPutAll: 'Blah blah blah';
 		close!
 
@@ -95,9 +95,6 @@ deleteTestDirectories
 
 maxFname
 	^_MAX_FNAME!
-
-maxPath
-	^File maxPath!
 
 printFilenameOfLength: anInteger on: path
 	(1 to: anInteger) do: [:i | path nextPut: (Character codePoint: $a codePoint + (i % 10))].
@@ -173,16 +170,43 @@ test64BitSeek
 	pointer := tempFile seek: dist negated sense: FILE_CURRENT.
 	self assert: pointer equals: 0!
 
+testCanonicalizePath
+	"Test File class>>composePath:subPath:"
+
+	"Mainstream case"
+
+	self assert: (File canonicalizePath: 'd:\£oo\bar\a🐬b\baz.txt')
+		equals: 'd:\£oo\bar\a🐬b\baz.txt'.
+	"Unecessary long path prefix"
+	self assert: (File canonicalizePath: '\\?\d:\£oo\bar\a🐬b\baz.txt')
+		equals: 'd:\£oo\bar\a🐬b\baz.txt'.
+	"Empty - inconsistent behaviour, although consistently inconsistent with PathCombine API"
+	self assert: (File canonicalizePath: '') equals: '\'.
+	self assert: (File canonicalizePath: 'c:') equals: 'c:'.
+
+	".. and . components"
+	self assert: (File canonicalizePath: 'C:\£oo\bar\a£\..\.\..\🐬.txt') equals: 'C:\£oo\🐬.txt'.
+	self assert: (File canonicalizePath: '.\🐬-🐬.txt') equals: '🐬-🐬.txt'.
+
+	"MAX_PATH"
+	self assert: (File canonicalizePath: 'c:\' , (String new: MAX_PATH - 4 withAll: $a))
+		equals: 'c:\' , (String new: MAX_PATH - 4 withAll: $a).
+
+	"> MAX_PATH"
+	self assert: (File canonicalizePath: 'c:\' , (String new: MAX_PATH - 3 withAll: $a))
+		equals: '\\?\c:\' , (String new: MAX_PATH - 3 withAll: $a).
+	self assert: (File canonicalizePath: '\\?\c:\' , (String new: MAX_PATH - 3 withAll: $a))
+		equals: '\\?\c:\' , (String new: MAX_PATH - 3 withAll: $a)!
+
 testClassAppendPathSeparator
 	"N.B. To path is assumed to be a directory only if it has a trailing slash, *otherwise the last portion is ignored*"
 
-	| unicode |
 	self assert: (File appendPathDelimiter: 'c:\') equals: 'c:\'.
 	self assert: (File appendPathDelimiter: 'c:/') equals: 'c:/'.
 	self assert: (File appendPathDelimiter: 'c:.') equals: 'c:.\'.
 	self assert: (File appendPathDelimiter: '') equals: '\'.
-	unicode := 'a' , $\x1F595 asUtf8String.
-	self assert: (File appendPathDelimiter: unicode) equals: unicode , '\'.
+	self assert: (File appendPathDelimiter: 'a🖕b') equals: 'a🖕b\'.
+	self assert: (File appendPathDelimiter: 'a') equals: 'a\'.
 	self assert: (File appendPathDelimiter: 'a\') equals: 'a\'.
 	self assert: (File appendPathDelimiter: 'a\\') equals: 'a\\'.
 	self assert: (File appendPathDelimiter: '\') equals: '\'.
@@ -207,7 +231,7 @@ testClassDefaultExtension
 				nextPut: $\;
 				nextPutAll: GUID newUnique idlString].
 	s := s contents.
-	self assert: s size > File maxPath.
+	self assert: s size > MAX_PATH.
 	s2 := File default: s extension: 'txt'.
 	self assert: s2 equals: s , '.txt'.
 	s2 := File default: s extension: '.blah'.
@@ -229,7 +253,7 @@ testClassPathExtension
 				nextPut: $\;
 				nextPutAll: GUID newUnique idlString].
 	s := s contents.
-	self assert: s size > File maxPath.
+	self assert: s size > MAX_PATH.
 	s2 := File path: s extension: 'txt'.
 	self assert: s2 equals: s , '.txt'.
 	s2 := File path: s extension: '.blah'.
@@ -248,18 +272,18 @@ testClassRelativePathOfTo
 	self assert: (self relativePathOf: '.' to: '..\') equals: '.'.
 	self assert: (self relativePathOf: '.\' to: '..\') equals: ''.
 	self assert: (self relativePathOf: 'c:\' to: 'd:\') equals: 'c:\'.
-	self assert: (self relativePathOf: 'c:\1\blah.txt' to: 'c:\') equals: '1\blah.txt'.
-	self assert: (self relativePathOf: 'c:\1\blah.txt' to: 'c:\1\') equals: 'blah.txt'.
-	self assert: (self relativePathOf: 'c:\1\blah.txt' to: 'c:\1') equals: '1\blah.txt'.
-	self assert: (self relativePathOf: 'c:\1\blah.txt' to: 'c:\1.txt') equals: '1\blah.txt'.
-	self assert: (self relativePathOf: 'c:\1\blah.txt' to: 'c:\2\') equals: '..\1\blah.txt'.
-	self assert: (self relativePathOf: 'c:\1\blah.txt' to: 'c:\2') equals: '1\blah.txt'.
-	self assert: (self relativePathOf: 'c:\1\blah.txt' to: 'c:\2.txt') equals: '1\blah.txt'.
-	self assert: (self relativePathOf: 'c:\1\11\blah.txt' to: 'c:\1') equals: '1\11\blah.txt'.
-	self assert: (self relativePathOf: 'c:\1\11\blah.txt' to: 'c:\1\') equals: '11\blah.txt'.
-	self assert: (self relativePathOf: 'c:\1\11\blah.txt' to: 'c:\2\21\') equals: '..\..\1\11\blah.txt'.
-	self assert: (self relativePathOf: 'c:\1\11\blah.txt' to: 'c:\2\21') equals: '..\1\11\blah.txt'.
-	self assert: (self relativePathOf: 'c:\1\11\blah.txt' to: 'c:\2\21.txt') equals: '..\1\11\blah.txt'.
+	self assert: (self relativePathOf: 'c:\1\a🐬b.txt' to: 'c:\') equals: '1\a🐬b.txt'.
+	self assert: (self relativePathOf: 'c:\1\a🐬b.txt' to: 'c:\1\') equals: 'a🐬b.txt'.
+	self assert: (self relativePathOf: 'c:\1\a🐬b.txt' to: 'c:\1') equals: '1\a🐬b.txt'.
+	self assert: (self relativePathOf: 'c:\1\a🐬b.txt' to: 'c:\1.txt') equals: '1\a🐬b.txt'.
+	self assert: (self relativePathOf: 'c:\1\a🐬b.txt' to: 'c:\2\') equals: '..\1\a🐬b.txt'.
+	self assert: (self relativePathOf: 'c:\1\a🐬b.txt' to: 'c:\2') equals: '1\a🐬b.txt'.
+	self assert: (self relativePathOf: 'c:\1\a🐬b.txt' to: 'c:\2.txt') equals: '1\a🐬b.txt'.
+	self assert: (self relativePathOf: 'c:\1\11\a🐬b.txt' to: 'c:\1') equals: '1\11\a🐬b.txt'.
+	self assert: (self relativePathOf: 'c:\1\11\a🐬b.txt' to: 'c:\1\') equals: '11\a🐬b.txt'.
+	self assert: (self relativePathOf: 'c:\1\11\a🐬b.txt' to: 'c:\2\21\') equals: '..\..\1\11\a🐬b.txt'.
+	self assert: (self relativePathOf: 'c:\1\11\a🐬b.txt' to: 'c:\2\21') equals: '..\1\11\a🐬b.txt'.
+	self assert: (self relativePathOf: 'c:\1\11\a🐬b.txt' to: 'c:\2\21.txt') equals: '..\1\11\a🐬b.txt'.
 
 	"Example from MS IMoniker documentation"
 	self assert: (self relativePathOf: 'c:\projects\secret\art\pict1.bmp'
@@ -300,6 +324,84 @@ testCommonPrefixOfAnd
 		assert: (File commonPrefixOf: 'D:\dev\Dolphin\DolphinVM7.DLL' and: 'C:\dev\Dolphin\DolphinVM7.DLL')
 				isEmpty!
 
+testComposePath
+	"Test File class>>composePath:subPath:"
+
+	"Mainstream cases"
+
+	self assert: (File composePath: 'd:\£oo\bar\' subPath: 'a🐬b\baz.txt')
+		equals: 'd:\£oo\bar\a🐬b\baz.txt'.
+	self assert: (File composePath: '\\?\d:\£oo\bar\' subPath: 'a🐬b\baz.txt')
+		equals: 'd:\£oo\bar\a🐬b\baz.txt'.
+	"Empty base path"
+	self assert: (File composePath: '' subPath: '🐬.txt') equals: '🐬.txt'.
+	"Empty sub path"
+	self assert: (File composePath: 'c:\£oo\bar.txt' subPath: '') equals: 'c:\£oo\bar.txt'.
+	"Both parts empty - the Windows PathCombine functions are documented to do this. Doesn't seem consistent with earlier empty base path case."
+	self assert: (File composePath: '' subPath: '') equals: '\'.
+	"Similar case that doesn't seem right either"
+	self assert: (File composePath: '£oo🐬bar' subPath: '..') equals: '\'.
+
+	".. and . components"
+	self assert: (File composePath: 'C:\£oo\bar\a£\..\.' subPath: '..\🐬.txt')
+		equals: 'C:\£oo\🐬.txt'.
+	self assert: (File composePath: '.' subPath: '🐬-🐬.txt') equals: '🐬-🐬.txt'.
+	self assert: (File composePath: '🐬-🐬.txt' subPath: '.') equals: '🐬-🐬.txt'.
+	self assert: (File composePath: 'c:' subPath: '.') equals: 'c:\'.
+	self assert: (File composePath: '.' subPath: 'e:') equals: 'e:\'.
+
+	"Cases where the result is (one) longer than the sum of the lengths of the two parts"
+	self assert: (File composePath: 'c:' subPath: '🐬-🐬.txt') equals: 'c:\🐬-🐬.txt'.
+	"PathAllocCombine behaves differently here than the old PathCombine function - it doesn't append a backslash, which wasn't really correct anyway."
+	self assert: (File composePath: 'd:' subPath: '') equals: 'd:'.
+
+	"MAX_PATH"
+	self assert: (File composePath: 'c:' subPath: (String new: MAX_PATH - 4 withAll: $a))
+		equals: 'c:\' , (String new: MAX_PATH - 4 withAll: $a).
+
+	"MAX_PATH+1 - Path*Combine prepends the long path prefix, \\?\"
+	self assert: (File composePath: 'c:' subPath: (String new: MAX_PATH - 3 withAll: $a))
+		equals: '\\?\c:\' , (String new: MAX_PATH - 3 withAll: $a).
+	self assert: (File composePath: '\\?\c:' subPath: (String new: MAX_PATH - 3 withAll: $a))
+		equals: '\\?\c:\' , (String new: MAX_PATH - 3 withAll: $a)!
+
+testCreateDirectoryPath
+	| tempDir |
+	tempDir := File createTemporaryDirectory asUtf16String.
+	
+	[| path |
+	path := File composePath: tempDir subPath: 'one'.
+	File createDirectoryPath: path.
+	self assert: (File isDirectory: path).
+	path := File composePath: tempDir subPath: 'one\two\three'.
+	File createDirectoryPath: path.
+	self assert: (File isDirectory: path).
+	path := File composePath: tempDir subPath: (String new: 248 - tempDir size - 1 withAll: $a).
+	self assert: path size equals: 248.
+	self deny: (path beginsWith: '\\?\').
+	File createDirectoryPath: path.
+	self assert: (File isDirectory: path).
+	path := File composePath: tempDir subPath: (String new: 248 - tempDir size withAll: $b).
+	self assert: path size equals: 249.
+	self deny: (path beginsWith: '\\?\').
+	File createDirectoryPath: path.
+	self assert: (File isDirectory: path).
+	path := File composePath: tempDir subPath: (String new: 255 - tempDir size - 1 withAll: $b).
+	self assert: path size equals: 255.
+	self deny: (path beginsWith: '\\?\').
+	File createDirectoryPath: path.
+	self assert: (File isDirectory: path).
+	path := File composePath: tempDir subPath: (String new: MAX_PATH - tempDir size - 2 withAll: $c).
+	self assert: path size equals: MAX_PATH - 1.
+	self deny: (path beginsWith: '\\?\').
+	File createDirectoryPath: path.
+	self assert: (File isDirectory: path).
+	path := File composePath: tempDir subPath: 'long\' , (String new: 250 withAll: $£).
+	self assert: (path beginsWith: '\\?\').
+	File createDirectoryPath: path.
+	self assert: (File isDirectory: path)]
+			ensure: [File deleteDirectory: tempDir]!
+
 testCreateTemporaryDirectory
 	| tempDir tempDir2 |
 	tempDir := File createTemporaryDirectory.
@@ -321,6 +423,15 @@ testDeleteDirectory
 	self deleteDirectory: 'c:\FileTest1\BranchWithLeafWithFile\'.
 	self deleteDirectory: 'c:\FileTest1\BranchWithLeafWithFiles🐬\'!
 
+testFindFiles
+	| found |
+	found := Set new.
+	File
+		for: '*.' , SessionManager current imageExtension
+		in: FileLocator imageRelative basePath
+		do: [:data | found add: data path].
+	self assert: (found includes: SessionManager current imageFileName)!
+
 testForDirectoriesIn
 	| all windir |
 	all := OrderedCollection new.
@@ -337,16 +448,47 @@ testForDirectoriesIn
 			self assert: (File isDirectory: dirPath)]!
 
 testFullPathOf
-	| longPath |
+	| longPath longFilename |
 	self assert: (File fullPathOf: 'Dolphin') equals: File workingDirectory , 'Dolphin'.
+	"With extended characters"
+	self assert: (File fullPathOf: 'a🐬.£b') equals: File workingDirectory , 'a🐬.£b'.
 	"An odd case where the first call to GetFullPath (to request the buffer size) returns space for two extra chars, presumably the '.\', but returns the correct size when actually invoked with a buffer."
 	self assert: (File fullPathOf: '.\Dolphin') equals: File workingDirectory , 'Dolphin'.
+	"Exactly MAX_PATH"
+	longFilename := String new: MAX_PATH - File workingDirectory size withAll: $x.
+	longPath := File fullPathOf: longFilename.
+	self assert: longPath size equals: MAX_PATH.
+	self assert: longPath equals: File workingDirectory , longFilename.
+	"MAX_PATH + 1"
+	longFilename := String new: MAX_PATH - File workingDirectory size + 1 withAll: $y.
+	longPath := File fullPathOf: longFilename.
+	self assert: longPath size equals: MAX_PATH + 1.
+	self assert: longPath equals: File workingDirectory , longFilename.
+	"Very long absolute path in long format"
 	longPath := String writeStream.
 	longPath nextPutAll: '\\?'.
 	20 timesRepeat: [longPath nextPutAll: '\abcdefghijklmnopqrstuvwxyz'].
 	longPath := longPath contents.
-	self assert: longPath size > File maxPath.
+	self assert: longPath size > MAX_PATH.
 	self assert: (File fullPathOf: longPath) equals: longPath!
+
+testIsRootPath
+	"Test File class>>isRootPath:"
+
+	self assert: (File isRootPath: 'c:\').
+	self assert: (File isRootPath: '\\?\c:\').
+	"This is really a root path, but uncanonicalized"
+	self deny: (File isRootPath: 'c:\.').
+	"Ditto"
+	self deny: (File isRootPath: 'c:\foo\..').
+	self deny: (File isRootPath: '\\?\c:\foo\..').
+	self assert: (File isRootPath: '\').
+	self deny: (File isRootPath: '/').
+	self deny: (File isRootPath: 'c:/').
+	self deny: (File isRootPath: 'c:\blah.txt').
+	self deny: (File isRootPath: '.\blah.txt').
+	self deny: (File isRootPath: 'c:').
+	self deny: (File isRootPath: 'con:\')!
 
 testMakePath
 	| filename split |
@@ -359,7 +501,7 @@ testMakePath
 	self assert: (File makePath: #('c' 'abc' '' '')) equals: 'c:abc\'.
 	self assert: (File makePath: #('c' '' 'file' '')) equals: 'c:file'.
 	self assert: (File makePath: #('c' '' '' 'txt')) equals: 'c:.txt'.
-	self assert: (File makePath: #('c' '' 'a b c' 'txt')) equals: 'c:a b c.txt'.
+	self assert: (File makePath: #('c' '' 'a 🐬 c' 'txt')) equals: 'c:a 🐬 c.txt'.
 	self assert: (File makePath: #('c' 'a/b' 'file' '')) equals: 'c:a/b\file'.
 	self assert: (File makePath: #('c' '\' '' '')) equals: 'c:\'.
 	self assert: (File makePath: #('' 'a\b' '' '')) equals: 'a\b\'.
@@ -396,7 +538,7 @@ testRemoveExtension
 	self assert: (File removeExtension: '.exe') equals: ''.
 	self assert: (File removeExtension: '.') equals: ''.
 	self assert: (File removeExtension: '') equals: ''.
-	self assert: (File removeExtension: '1234.1234.exe') equals: '1234.1234'.
+	self assert: (File removeExtension: '1234.123🐬.exe') equals: '1234.123🐬'.
 	self assert: (File removeExtension: '1234.1234.+') equals: '1234.1234'.
 	self assert: (File removeExtension: 'a.b\c') equals: 'a.b\c'.
 	self assert: (File removeExtension: 'a.b\') equals: 'a.b\'.
@@ -407,7 +549,7 @@ testRemoveExtension
 	path := path contents.
 	self assert: (File removeExtension: path) equals: (path subStrings: $.) first.
 	"Doesn't matter if the path is notionally too long"
-	path := self buildTestPathOfLength: self maxPath * 2.
+	path := self buildTestPathOfLength: MAX_PATH * 2.
 	self assert: (File removeExtension: path) equals: (path subStrings: $.) first!
 
 testRemovePathDelimiter
@@ -428,13 +570,22 @@ testRemovePathDelimiter
 			self assert: (File removePathDelimiter: each , '\') equals: each]!
 
 testSetReadOnly
-	| temp |
-	temp := File temporaryFilename.
-	self assert: (File isWriteable: temp).
-	File isWriteable: temp set: false.
-	self deny: (File isWriteable: temp).
-	File isWriteable: temp set: true.
-	File delete: temp!
+	| tempDir temp |
+	tempDir := File createTemporaryDirectory.
+	
+	[{Character dolphin asString , (String new: 255 - 2 withAll: $£).
+		String new: MAX_PATH - tempDir asUtf16String size - 2 withAll: $b.
+		String new: MAX_PATH - tempDir asUtf16String size - 1 withAll: $c} do: 
+				[:each |
+				temp := File composePath: tempDir subPath: each.
+				(FileStream write: temp)
+					nextPutAll: 'Hello world';
+					close.
+				self assert: (File isWriteable: temp).
+				File isWriteable: temp set: false.
+				self deny: (File isWriteable: temp).
+				File isWriteable: temp set: true]]
+			ensure: [File deleteDirectory: tempDir]!
 
 testShortPath
 	| sysdir tmpDir tmpFile |
@@ -443,7 +594,7 @@ testShortPath
 	sysdir := SessionManager current systemDirectory.
 	self assert: (File shortPathOf: sysdir) asAnsiString equals: sysdir.
 	tmpDir := File tempPath , GUID newUnique asString , Character dolphin asUtf8String.
-	tmpFile := File composePath: tmpDir subPath: $\x1F595 asUtf8String , '.txt'.
+	tmpFile := File composePath: tmpDir subPath: '🖕.txt'.
 	File createDirectory: tmpDir.
 	
 	[| short |
@@ -492,7 +643,7 @@ testSniffEncoding
 testSplitDriveFrom
 	self should: [File splitDriveFrom: nil] raise: Error.
 	self assert: (File splitDriveFrom: 'c:\a\a2/b.txt') equals: 'c:'.
-	self assert: (File splitDriveFrom: 'a\b.txt') equals: ''.
+	self assert: (File splitDriveFrom: 'a\🐬.txt') equals: ''.
 	self assert: (File splitDriveFrom: 'b.txt') equals: ''.
 	self assert: (File splitDriveFrom: '.txt') equals: ''.
 	self assert: (File splitDriveFrom: '.') equals: ''.
@@ -507,22 +658,22 @@ testSplitExtensionFrom
 	unicode := $\x1F595 asUtf16String , '2'.
 	self assert: (File splitExtensionFrom: 'c:\a\a2/b.' , unicode) equals: unicode.
 	self assert: (File splitExtensionFrom: 'a\b.txt') equals: 'txt'.
-	self assert: (File splitExtensionFrom: 'b.txt') equals: 'txt'.
+	self assert: (File splitExtensionFrom: 'b.a🐬£') equals: 'a🐬£'.
 	self assert: (File splitExtensionFrom: 'b.') equals: ''.
 	self assert: (File splitExtensionFrom: '.txt') equals: 'txt'.
 	self assert: (File splitExtensionFrom: '.') equals: ''.
 	self assert: (File splitExtensionFrom: '') equals: ''.
 	self assert: (File splitExtensionFrom: 'c:\a\b\') equals: ''.
-	self assert: (File splitExtensionFrom: 'c:/a b\c d.txt') equals: 'txt'.
+	self assert: (File splitExtensionFrom: 'c:/a b\c d.a🐬b') equals: 'a🐬b'.
 	self assert: (File splitExtensionFrom: '1234.1234.exe') equals: 'exe'.
 	self assert: (File splitExtensionFrom: 'a.b\c') equals: ''.
 	self assert: (File splitExtensionFrom: 'a.b\') equals: ''.
-	path := self buildTestPathOfLength: self maxPath.
+	path := self buildTestPathOfLength: MAX_PATH.
 	self assert: (File splitExtensionFrom: path) equals: 'txt'.
 	"The CRT functions works even if the path is too long because we ignore everything but the extension"
 	path := path , 'x'.
 	self assert: (File splitExtensionFrom: path) equals: 'txtx'.
-	path := self buildTestPathOfLength: self maxPath * 2.
+	path := self buildTestPathOfLength: MAX_PATH * 2.
 	self assert: (File splitExtensionFrom: path) equals: 'txt'.
 	"Try a very filename with very long extension (of max length)."
 	path := String writeStream.
@@ -539,7 +690,7 @@ testSplitFilenameFrom
 	self should: [File splitFilenameFrom: nil] raise: Error.
 	self assert: (File splitFilenameFrom: '.') equals: '.'.
 	self assert: (File splitFilenameFrom: 'c:\a\a2/b.txt') equals: 'b.txt'.
-	self assert: (File splitFilenameFrom: 'a\b.txt') equals: 'b.txt'.
+	self assert: (File splitFilenameFrom: 'a£b\🐬.txt') equals: '🐬.txt'.
 	self assert: (File splitFilenameFrom: 'b.txt') equals: 'b.txt'.
 	self assert: (File splitFilenameFrom: 'b.') equals: 'b.'.
 	self assert: (File splitFilenameFrom: '.txt') equals: '.txt'.
@@ -550,7 +701,7 @@ testSplitFilenameFrom
 	self assert: (File splitFilenameFrom: '1234.1234.exe') equals: '1234.1234.exe'.
 	self assert: (File splitFilenameFrom: 'a.b\c') equals: 'c'.
 	self assert: (File splitFilenameFrom: 'a.b\') equals: ''.
-	path := self buildTestPathOfLength: self maxPath.
+	path := self buildTestPathOfLength: MAX_PATH.
 	self assert: (File splitFilenameFrom: path) equals: (path subStrings: $\) last.
 	"Try a very long filename (> max length), this will still work."
 	path := String writeStream.
@@ -560,7 +711,7 @@ testSplitFilenameFrom
 	self assert: (File splitFilenameFrom: path) equals: (path copyFrom: 4)!
 
 testSplitPathFrom
-	| path unicode |
+	| path |
 	self should: [File splitPathFrom: nil] raise: Error.
 	self assert: (File splitPathFrom: '.') equals: ''.
 	self assert: (File splitPathFrom: 'c:\a\a2/b.txt') equals: 'c:\a\a2/'.
@@ -575,28 +726,27 @@ testSplitPathFrom
 	self assert: (File splitPathFrom: '.txt') equals: ''.
 	self assert: (File splitPathFrom: '') equals: ''.
 	self assert: (File splitPathFrom: 'c:\a\b\') equals: 'c:\a\b\'.
-	unicode := 'c ' , $\x1F595 asUtf16String , ' d.txt'.
-	self assert: (File splitPathFrom: 'c:/a b\' , unicode) equals: 'c:/a b\'.
+	self assert: (File splitPathFrom: 'c:/a b\c 🖕d.txt') equals: 'c:/a b\'.
 	self assert: (File splitPathFrom: '1234.1234.exe') equals: ''.
 	self assert: (File splitPathFrom: 'a.b\c') equals: 'a.b\'.
 	self assert: (File splitPathFrom: 'a.b\') equals: 'a.b\'.
-	path := self buildTestPathOfLength: self maxPath.
-	self assert: (File splitPathFrom: path) equals: ($\ join: (path subStrings: $\) allButLast), '\'.
+	path := self buildTestPathOfLength: MAX_PATH.
+	self assert: (File splitPathFrom: path) equals: ($\ join: (path subStrings: $\) allButLast) , '\'.
 	"Try a very long filename (> max length), this will still work."
 	path := String writeStream.
 	path nextPutAll: 'c:\'.
 	self printFilenameOfLength: self maxFname * 2 on: path.
 	path nextPutAll: '/a.txt'.
 	path := path contents.
-	self assert: (File splitPathFrom: path) equals: (path upTo: $/), '/'!
+	self assert: (File splitPathFrom: path) equals: (path upTo: $/) , '/'!
 
 testSplitStemFrom
 	| path |
 	self assert: (File splitStemFrom: '.') equals: ''.
-	self assert: (File splitStemFrom: 'c:\a\a2/b.txt') equals: 'b'.
+	self assert: (File splitStemFrom: 'c:\a\a🐬/b.txt') equals: 'b'.
 	self assert: (File splitStemFrom: 'a\b.txt') equals: 'b'.
 	self assert: (File splitStemFrom: 'b.txt') equals: 'b'.
-	self assert: (File splitStemFrom: 'ab.txt') equals: 'ab'.
+	self assert: (File splitStemFrom: 'a🐬.txt') equals: 'a🐬'.
 	self assert: (File splitStemFrom: 'b.') equals: 'b'.
 	self assert: (File splitStemFrom: '.txt') equals: ''.
 	self assert: (File splitStemFrom: '') equals: ''.
@@ -604,11 +754,11 @@ testSplitStemFrom
 	self assert: (File splitStemFrom: 'c:\') equals: ''.
 	self assert: (File splitStemFrom: 'c:\.txt') equals: ''.
 	self assert: (File splitStemFrom: 'c:\a\b\') equals: ''.
-	self assert: (File splitStemFrom: 'c:/a b\c d.txt') equals: 'c d'.
+	self assert: (File splitStemFrom: 'c:/a b\c 🐬.txt') equals: 'c 🐬'.
 	self assert: (File splitStemFrom: '1234.1234.exe') equals: '1234.1234'.
 	self assert: (File splitStemFrom: 'a.b\c') equals: 'c'.
 	self assert: (File splitStemFrom: 'a.b\') equals: ''.
-	path := self buildTestPathOfLength: self maxPath.
+	path := self buildTestPathOfLength: MAX_PATH.
 	self assert: (File splitStemFrom: path) equals: ((path subStrings: $\) last upTo: $.).
 	"Try a very long filename (> max length), this will still work."
 	path := String writeStream.
@@ -622,21 +772,25 @@ createTestDirectories!helpers!private! !
 deleteDirectory:!helpers!public! !
 deleteTestDirectories!private!Running! !
 maxFname!public!unit tests! !
-maxPath!public!unit tests! !
 printFilenameOfLength:on:!helpers!private! !
 relativePathOf:to:!helpers!public! !
 removeDirectory:!helpers!private! !
 tearDown!private!Running! !
 test64BitSeek!public!unit tests! !
+testCanonicalizePath!public!unit tests! !
 testClassAppendPathSeparator!public!unit tests! !
 testClassDefaultExtension!public!unit tests! !
 testClassPathExtension!public!unit tests! !
 testClassRelativePathOfTo!public!unit tests! !
 testCommonPrefixOfAnd!public!unit tests! !
+testComposePath!public!unit tests! !
+testCreateDirectoryPath!public!unit tests! !
 testCreateTemporaryDirectory!public!unit tests! !
 testDeleteDirectory!public!unit tests! !
+testFindFiles!public!unit tests! !
 testForDirectoriesIn!public!unit tests! !
 testFullPathOf!public!unit tests! !
+testIsRootPath!public!unit tests! !
 testMakePath!public!unit tests! !
 testPathName!public!unit tests! !
 testRemoveDirectory!public!unit tests! !

@@ -11,7 +11,6 @@ OS.DiskVolumeInformation comment: 'DiskVolumeInformation can be used to access v
 
 Example Usage:
 	DiskVolumeInformation forPath: ''c:\'''!
-!OS.DiskVolumeInformation categoriesForClass!Unclassified! !
 !OS.DiskVolumeInformation methodsFor!
 
 bytesPerSector
@@ -153,7 +152,8 @@ getVolumeInformation
 	"Private - Call the Win32 GetVolumeInformation() API to retrieve the label, etc."
 
 	| volumeNameBuffer volumeSerialNumber maximumComponentLengthBuffer fileSystemFlagsBuffer fileSystemNameBuffer |
-	volumeNameBuffer := Utf16String newFixed: CRTConstants._MAX_PATH.
+	"Max size of volume name buffer is documented as MAX_PATH + 1 - we implicitly allocate the null terminator"
+	volumeNameBuffer := Kernel32 stringBufferClass newFixed: Win32Constants.MAX_PATH.
 	volumeSerialNumber := UInt32Bytes new.
 	maximumComponentLengthBuffer := UInt32Bytes new.
 	fileSystemFlagsBuffer := UInt32Bytes new.
