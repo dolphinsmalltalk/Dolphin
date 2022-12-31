@@ -1,4 +1,7 @@
 version: 7.1.{build}
+branches:
+  only:
+  - release/7.1
 skip_non_tags: true
 image: Visual Studio 2022
 configuration: Release
