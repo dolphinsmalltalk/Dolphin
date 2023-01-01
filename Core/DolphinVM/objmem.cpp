@@ -271,9 +271,21 @@ bool __stdcall ObjectMemory::inheritsFrom(const BehaviorOTE* behaviorPointer, co
 
 #pragma code_seg(GC_SEG)
 
+namespace stdext {
+	template <class _Kty>
+	_NODISCARD size_t hash_value(const _Kty& _Keyval) noexcept {
+		if constexpr (_STD is_pointer_v<_Kty> || _STD is_null_pointer_v<_Kty>) {
+			return reinterpret_cast<size_t>(_Keyval) ^ 0xdeadbeefu;
+		}
+		else {
+			return static_cast<size_t>(_Keyval) ^ 0xdeadbeefu;
+		}
+	}
+};
+
 template <class T> inline size_t hash_value(const TOTE<T>* ote)
 {
-	return std::hash<int>{}(ote->getIndex());
+	return stdext::hash_value(ote->getIndex());
 }
 
 template<class _Kty,
