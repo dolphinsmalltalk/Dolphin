@@ -432,11 +432,11 @@ classForIID: aGUID ifNone: exceptionHandler
 	!
 
 clear: addressOrBytes
-	"Finalize an instance of the structure which instances of the receiver wrap
-	which resides at the specified address. Note that this is not about freeing
-	the specified memory block, but any resources which it references."
+	"Finalize an instance of the structure which instances of the receiver wrap which resides at the specified address. Note that this is not about freeing the specified memory block, but any resources which it references."
 
-	(IUnknown attach: addressOrBytes) free!
+	"In this case we are given the address of a slot holding an COM interface pointer, i.e. an IUnknown**, so we have to dereference the address to get the interface pointer, i.e. this is like #atAddress:, except that we don't want to add a further reference."
+
+	(IUnknown attach: (addressOrBytes dwordAtOffset: 0)) free!
 
 clsid
 	"Answer the component id for the receiver's COM class."
@@ -490,7 +490,7 @@ compileFunction: anInteger
 		nextPut: $>;
 		cr;
 		tab;
-		nextPutAll: '^self invalidCall'.
+		nextPutAll: '^self invalidCall: _failureCode'.
 
 	"	Notification signal: aStream contents."
 	self compile: aStream contents categories: self generatedFunctionCategories!
