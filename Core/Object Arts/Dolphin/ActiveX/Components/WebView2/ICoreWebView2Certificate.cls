@@ -218,9 +218,9 @@ pemEncodedIssuerCertificateChain!**auto generated**!properties!public! !
 printableProperties!printing!private! !
 subject!properties!public! !
 toPemEncoding!methods!public! !
-ToPemEncoding:!**auto generated**!COM Interfaces-ICoreWebView2ClientCertificate!private! !
+ToPemEncoding:!COM Interfaces-ICoreWebView2Certificate!private! !
 validFrom!properties!public! !
-validTo!**auto generated**!properties!public! !
+validTo!properties!public! !
 !
 
 !ICoreWebView2Certificate class methodsFor!

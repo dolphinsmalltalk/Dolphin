@@ -191,7 +191,13 @@ get_AreHostObjectsAllowed: allowed
 	^self invalidCall: _failureCode!
 
 get_HiddenPdfToolbarItems: hidden_pdf_toolbar_items
-	^E_NOTIMPL!
+	"Private - Get the value of the 'HiddenPdfToolbarItems' property of the receiver.
+
+		HRESULT __stdcall HiddenPdfToolbarItems(
+			[out, retval]COREWEBVIEW2_PDF_TOOLBAR_ITEMS* hidden_pdf_toolbar_items);"
+
+	hidden_pdf_toolbar_items value: WebView2Constants.COREWEBVIEW2_PDF_TOOLBAR_ITEMS_NONE.
+	^S_OK!
 
 get_IsBuiltInErrorPageEnabled: enabled
 	"Private - Get the value of the 'IsBuiltInErrorPageEnabled' property of the receiver.
@@ -470,6 +476,12 @@ put_AreHostObjectsAllowed: allowed
 	^self invalidCall: _failureCode!
 
 put_HiddenPdfToolbarItems: hidden_pdf_toolbar_items
+	"Private - Set the value of the 'HiddenPdfToolbarItems' property of the object wrapped by the 
+	 receiver to the <sdword> argument, hidden_pdf_toolbar_items.
+
+		HRESULT __stdcall HiddenPdfToolbarItems(
+			[in]COREWEBVIEW2_PDF_TOOLBAR_ITEMS hidden_pdf_toolbar_items);"
+
 	^E_NOTIMPL!
 
 put_IsBuiltInErrorPageEnabled: enabled
@@ -597,7 +609,7 @@ get_AreDefaultContextMenusEnabled:!**auto generated**!COM Interfaces-ICoreWebVie
 get_AreDefaultScriptDialogsEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
 get_AreDevToolsEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
 get_AreHostObjectsAllowed:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
-get_HiddenPdfToolbarItems:!**auto generated**!COM Interfaces-ICoreWebView2Settings7!private! !
+get_HiddenPdfToolbarItems:!COM Interfaces-ICoreWebView2Settings7!private! !
 get_IsBuiltInErrorPageEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
 get_IsGeneralAutofillEnabled:!COM Interfaces-ICoreWebView2Settings4!private! !
 get_IsPasswordAutosaveEnabled:!COM Interfaces-ICoreWebView2Settings4!private! !
@@ -634,7 +646,7 @@ put_AreDefaultContextMenusEnabled:!**auto generated**!COM Interfaces-ICoreWebVie
 put_AreDefaultScriptDialogsEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
 put_AreDevToolsEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
 put_AreHostObjectsAllowed:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
-put_HiddenPdfToolbarItems:!**auto generated**!COM Interfaces-ICoreWebView2Settings7!private! !
+put_HiddenPdfToolbarItems:!COM Interfaces-ICoreWebView2Settings7!private! !
 put_IsBuiltInErrorPageEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
 put_IsGeneralAutofillEnabled:!COM Interfaces-ICoreWebView2Settings4!private! !
 put_IsPasswordAutosaveEnabled:!COM Interfaces-ICoreWebView2Settings4!private! !

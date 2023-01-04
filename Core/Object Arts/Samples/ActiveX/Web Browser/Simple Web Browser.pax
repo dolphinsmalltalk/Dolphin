@@ -58,6 +58,7 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\MVP\Icons\Dolphin Text Tile Icons'
 	'..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models'
+	'..\..\..\Dolphin\MVP\Gdiplus\Gdiplus'
 	'..\..\..\Dolphin\ActiveX\Components\WebView2\WebView2'
 	'..\..\..\Dolphin\ActiveX\Shell\Windows Shell').
 

@@ -593,7 +593,7 @@ Close!**auto generated**!COM Interfaces-ICoreWebView2Controller!private! !
 coreWebView2!**auto generated**!properties!public! !
 defaultBackgroundColor!properties!public! !
 defaultBackgroundColor:!properties!public! !
-get_AllowExternalDrop:!**auto generated**!COM Interfaces-ICoreWebView2Controller4!private! !
+get_AllowExternalDrop:!COM Interfaces-ICoreWebView2Controller4!private! !
 get_Bounds:!**auto generated**!COM Interfaces-ICoreWebView2Controller!private! !
 get_BoundsMode:!COM Interfaces-ICoreWebView2Controller3!private!properties! !
 get_CoreWebView2:!**auto generated**!COM Interfaces-ICoreWebView2Controller!private! !
@@ -612,7 +612,7 @@ NotifyParentWindowPositionChanged!**auto generated**!COM Interfaces-ICoreWebView
 parentWindow!**auto generated**!properties!public! !
 parentWindow:!**auto generated**!properties!public! !
 printableProperties!printing!private! !
-put_AllowExternalDrop:!**auto generated**!COM Interfaces-ICoreWebView2Controller4!private! !
+put_AllowExternalDrop:!COM Interfaces-ICoreWebView2Controller4!private! !
 put_Bounds:!**auto generated**!COM Interfaces-ICoreWebView2Controller!private! !
 put_BoundsMode:!COM Interfaces-ICoreWebView2Controller3!private!properties! !
 put_DefaultBackgroundColor:!COM Interfaces-ICoreWebView2Controller2!private!properties! !
