@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Kernel.Tests.CompilerTest'
 	classConstants: {}!
 Kernel.Tests.CompilerTest guid: (Core.GUID fromString: '{5aff22bd-5d99-4b24-9b1d-c8d1ede77213}')!
 Kernel.Tests.CompilerTest comment: ''!
-!Kernel.Tests.CompilerTest categoriesForClass!Unclassified! !
 !Kernel.Tests.CompilerTest methodsFor!
 
 assertBlocksOptimized: compiled
@@ -1395,7 +1394,7 @@ testTextMapsOfCleanBlocks
 testTimesRepeat
 	"This is erroneous, but compiler does not detect that, just looks for literal zero arg block, which is OK I think"
 
-	| result method src |
+	| result method src warnings |
 	result := self compileExpression: '5 timesRepeat: []'.
 	method := result method.
 	self denyIsNil: method.
@@ -1413,13 +1412,17 @@ testTimesRepeat
 
 	"Test case which cannot be inlined"
 	src := '| aBlock i | i := 0. aBlock := [i := i + 1]. 5 timesRepeat: aBlock. i.'.
-	self
-		should: [result := self compileExpression: src]
-		raise: self compilationWarningClass
-		matching: 
+	warnings := OrderedCollection new.
+	[result := self compileExpression: src] on: self compilationWarningClass
+		do: 
 			[:ex |
-			ex errorCode = CWarnExpectNiladicBlockArg
-				and: [(src copyFrom: ex range start to: ex range stop) = 'timesRepeat:']].
+			warnings add: ex.
+			ex resume].
+	self
+		assert: (warnings anySatisfy: 
+					[:each |
+					each errorCode = CWarnExpectNiladicBlockArg
+						and: [(src copyFrom: each range start to: each range stop) = 'timesRepeat:']]).
 	method := result method.
 	self denyIsNil: method.
 	self assert: method needsContext.

@@ -184,15 +184,7 @@ should: aBlock raise: anException matching: discriminator
 		self should: [array at: $1] raise: Error matching: [:ex | ex messageText = 'Index: $1 is not an integer'].
 	"
 
-	| raised |
-	raised := false.
-	aBlock on: anException
-		do: 
-			[:exception | 
-			(discriminator value: exception) ifTrue: [raised := true].
-			"If the exception is resumable, such as a warning, then allow execution of the block to continue"
-			exception exit: nil].
-	self assert: raised!
+	self should: aBlock raise: (anException matching: discriminator)!
 
 should: aZeroArgBlock trigger: aSymbol against: anObject
 	"Example Usage:

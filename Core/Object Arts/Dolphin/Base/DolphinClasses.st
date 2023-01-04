@@ -2316,6 +2316,12 @@ Core.Object subclass: #'Core.Exception'
 	imports: #(#{OS.Win32Constants private} #{OS.Win32Errors private} #{OS.MessageBoxConstants private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Core.Object subclass: #'Kernel.ExceptionFilter'
+	instanceVariableNames: 'outer discriminator'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Core.Object subclass: #'Kernel.ExceptionHandlerAbstract'
 	instanceVariableNames: 'outer protectedBlock returnContinuation'
 	classVariableNames: 'RetryCookie'

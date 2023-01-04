@@ -75,6 +75,9 @@ makeResumable
 
 	resumable := true!
 
+matching: aMonadicValuable 
+	^ExceptionFilter select: self matching: aMonadicValuable!
+
 newException
 	"Answer a new <Exception> instantiated on the receiver, but as yet unsignalled."
 
@@ -144,6 +147,7 @@ initialize!initializing!private! !
 isResumable!public!testing! !
 makeNonResumable!accessing!public! !
 makeResumable!accessing!public! !
+matching:!filtering!public! !
 newException!public!raising! !
 printOn:!printing!public! !
 resumable:!accessing!public! !

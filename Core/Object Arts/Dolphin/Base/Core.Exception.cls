@@ -608,6 +608,11 @@ handles: exception
 
 	^exception isKindOf: self!
 
+matching: aMonadicValuable
+	"Answer an <exceptionSelector> for catching subinstances of the receiver for which the <monadicValuable> argument evaluates to true."
+
+	^ExceptionFilter select: self matching: aMonadicValuable!
+
 mbIconId
 	^0!
 
@@ -668,6 +673,7 @@ signalWith: signallerTag
 ,!filtering!public! !
 beep!parping!public! !
 handles:!filtering!public! !
+matching:!filtering!public! !
 mbIconId!constants!private! !
 messageText:!instance creation!public! !
 new!debugger-step through!instance creation!public! !
