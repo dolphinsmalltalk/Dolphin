@@ -1,11 +1,15 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 OLEStructure subclass: #BIND_OPTS
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwSize _OffsetOf_dwTickCountDeadline _OffsetOf_grfFlags _OffsetOf_grfMode'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 BIND_OPTS guid: (GUID fromString: '{87b4c5b3-026e-11d3-9fd7-00a0cc3e4a32}')!
+BIND_OPTS addClassConstant: '_OffsetOf_dwSize' value: 16r0!
+BIND_OPTS addClassConstant: '_OffsetOf_dwTickCountDeadline' value: 16rC!
+BIND_OPTS addClassConstant: '_OffsetOf_grfFlags' value: 16r4!
+BIND_OPTS addClassConstant: '_OffsetOf_grfMode' value: 16r8!
 BIND_OPTS comment: 'BIND_OPTS is an external structure class to represent the OLE moniker structure of the same name.
 
 BIND_OPTS is used to specify options to be taken account of when a moniker is being bound. These options are set into the bind context with IBindCtx:::SetBindOptions, and retrived with IBindCtx::GetBindOptions.
@@ -14,61 +18,49 @@ BIND_OPTS has been superceded by BIND_OPTS2 with the advent of DCOM.'!
 !BIND_OPTS categoriesForClass!External-Data-Structured-COM! !
 !BIND_OPTS methodsFor!
 
-dwSize: anObject
-	"Set the receiver's dwSize field to the value of anObject.
-	This method has been automatically generated from the class' structure template.
-	Any modifications you make will be lost the next time it is so generated."
+dwSize: anInteger
+	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anObject!
+	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
 
 dwTickCountDeadline
-	"Answer the receiver's dwTickCountDeadline field as a Smalltalk object.
-	This method has been automatically generated from the class' structure template.
-	Any modifications you make will be lost the next time it is so generated."
+	"Answer the <Integer> value of the receiver's 'dwTickCountDeadline' field."
 
-	^(bytes dwordAtOffset: 12)!
+	^bytes dwordAtOffset: _OffsetOf_dwTickCountDeadline!
 
-dwTickCountDeadline: anObject
-	"Set the receiver's dwTickCountDeadline field to the value of anObject.
-	This method has been automatically generated from the class' structure template.
-	Any modifications you make will be lost the next time it is so generated."
+dwTickCountDeadline: anInteger
+	"Set the receiver's 'dwTickCountDeadline' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 12 put: anObject!
+	bytes dwordAtOffset: _OffsetOf_dwTickCountDeadline put: anInteger!
 
 grfFlags
-	"Answer the receiver's grfFlags field as a Smalltalk object.
-	This method has been automatically generated from the class' structure template.
-	Any modifications you make will be lost the next time it is so generated."
+	"Answer the <Integer> value of the receiver's 'grfFlags' field."
 
-	^(bytes dwordAtOffset: 4)!
+	^bytes dwordAtOffset: _OffsetOf_grfFlags!
 
-grfFlags: anObject
-	"Set the receiver's grfFlags field to the value of anObject.
-	This method has been automatically generated from the class' structure template.
-	Any modifications you make will be lost the next time it is so generated."
+grfFlags: anInteger
+	"Set the receiver's 'grfFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 4 put: anObject!
+	bytes dwordAtOffset: _OffsetOf_grfFlags put: anInteger!
 
 grfMode
-	"Answer the receiver's grfMode field as a Smalltalk object.
-	This method has been automatically generated from the class' structure template.
-	Any modifications you make will be lost the next time it is so generated."
+	"Answer the <Integer> value of the receiver's 'grfMode' field."
 
-	^(bytes dwordAtOffset: 8)!
+	^bytes dwordAtOffset: _OffsetOf_grfMode!
 
-grfMode: anObject
-	"Set the receiver's grfMode field to the value of anObject.
-	This method has been automatically generated from the class' structure template.
-	Any modifications you make will be lost the next time it is so generated."
+grfMode: anInteger
+	"Set the receiver's 'grfMode' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 8 put: anObject! !
-!BIND_OPTS categoriesFor: #dwSize:!**compiled accessors**!public! !
-!BIND_OPTS categoriesFor: #dwTickCountDeadline!**compiled accessors**!public! !
-!BIND_OPTS categoriesFor: #dwTickCountDeadline:!**compiled accessors**!public! !
-!BIND_OPTS categoriesFor: #grfFlags!**compiled accessors**!public! !
-!BIND_OPTS categoriesFor: #grfFlags:!**compiled accessors**!public! !
-!BIND_OPTS categoriesFor: #grfMode!**compiled accessors**!public! !
-!BIND_OPTS categoriesFor: #grfMode:!**compiled accessors**!public! !
+	bytes dwordAtOffset: _OffsetOf_grfMode put: anInteger! !
+!BIND_OPTS categoriesForMethods!
+dwSize:!**compiled accessors**!public! !
+dwTickCountDeadline!**compiled accessors**!public! !
+dwTickCountDeadline:!**compiled accessors**!public! !
+grfFlags!**compiled accessors**!public! !
+grfFlags:!**compiled accessors**!public! !
+grfMode!**compiled accessors**!public! !
+grfMode:!**compiled accessors**!public! !
+!
 
 !BIND_OPTS class methodsFor!
 
@@ -91,6 +83,12 @@ defineFields
 		defineField: #dwSize				type: DWORDField writeOnly beOverride;
 		defineField: #grfFlags				type: DWORDField new;
 		defineField: #grfMode				type: DWORDField new;
-		defineField: #dwTickCountDeadline	type: DWORDField new! !
-!BIND_OPTS class categoriesFor: #defineFields!initializing!public! !
+		defineField: #dwTickCountDeadline	type: DWORDField new!
+
+getFieldNames
+	^#(#dwSize #grfFlags #grfMode #dwTickCountDeadline)! !
+!BIND_OPTS class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

@@ -1,148 +1,104 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 IUnknown subclass: #IBinding
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IBinding guid: (IID fromString: '{79EAC9C0-BAF9-11CE-8C82-00AA004BA90B}')!
+IBinding guid: (IID fromString: '{79eac9c0-baf9-11ce-8c82-00aa004ba90b}')!
 IBinding comment: '<IBinding> is a wrapper class for the COM interface ''OCIDL.IBinding'' generated from type information in the ''OCIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
 WARNING: This comment was automatically generated from the interface''s type information and any changes made here may be overwritten the next time this wrapper class is so generated.'!
-!IBinding categoriesForClass!COM-Interfaces! !
+!IBinding categoriesForClass!COM-Interfaces!Win32-Interfaces! !
 !IBinding methodsFor!
 
-abort  
-	"Invoke the Abort() method of the COM Object."
+Abort
+	"Invoke the Abort() method of the COM object.
 
-	self Abort
-!
-
-Abort 
-	"Private - Invoke the Abort() method of the COM object wrapped by the receiver.
-
-		HRESULT __stdcall Abort();
-	"
+		HRESULT __stdcall Abort();"
 
 	<virtual stdcall: hresult 4>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
-GetBindResult: dwReserved 
-	"Invoke the GetBindResult() method of the COM Object."
+getBindResult
+	"Invoke the GetBindResult() method of the COM object."
 
-	| answer |
-	answer := (Array new: 3)
-				basicAt: 1 put: GUID new;
-				basicAt: 2 put: (DWORD new);
-				basicAt: 3 put: (StructurePointer newNull: COMTaskMemory elementClass: UnicodeString);
-				yourself.
+	| outputs |
+	outputs := {GUID new.
+				DWORD new.
+				StructurePointer newNull: COMTaskMemory elementClass: Utf16String}.
 	self
-		GetBindResult: (answer basicAt: 1)
-		pdwResult: (answer basicAt: 2)
-		pszResult: (answer basicAt: 3)
-		dwReserved: dwReserved.
-	^answer collect: [:e | e asObject]
-!
+		GetBindResult: (outputs basicAt: 1)
+		pdwResult: (outputs basicAt: 2)
+		pszResult: (outputs basicAt: 3)
+		dwReserved: 0.
+	^outputs collect: [:each | each asObject]!
 
 GetBindResult: pclsidProtocol pdwResult: pdwResult pszResult: pszResult dwReserved: dwReserved
-	"Private - Invoke the GetBindResult() method of the COM object wrapped by the receiver.
+	"Private - Invoke the GetBindResult() method of the COM object.
 
 		HRESULT __stdcall GetBindResult(
-			[out] GUID* pclsidProtocol,
-			[out] unsigned long* pdwResult,
-			[out] LPWSTR* pszResult,
-			[in] unsigned long dwReserved);
-	"
+			[out]GUID* pclsidProtocol,
+			[out]DWORD* pdwResult,
+			[out]LPWSTR* pszResult,
+			[in]DWORD dwReserved);"
 
-	<virtual stdcall: hresult 9 GUID* dword* lpwstr* dword>
-	^self invalidCall
-!
+	<virtual stdcall: hresult 9 guid* dword* lpwstr* dword>
+	^self invalidCall: _failureCode!
 
 getPriority
-	"Answer the <SDWORD> result of invoking the COM Object's GetPriority() method."
+	"Answer the <SDWORD> result of invoking the GetPriority() method of the COM object."
 
 	| answer |
-	answer := (SDWORD new).
-	self
-		GetPriority: answer.
-	^answer asObject
-!
+	answer := SDWORD new.
+	self GetPriority: answer.
+	^answer asObject!
 
 GetPriority: pnPriority
-	"Private - Invoke the GetPriority() method of the COM object wrapped by the receiver.
+	"Private - Invoke the GetPriority() method of the COM object.
 
 		HRESULT __stdcall GetPriority(
-			[out] long* pnPriority);
-	"
+			[out]long* pnPriority);"
 
 	<virtual stdcall: hresult 8 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
-resume  
-	"Invoke the Resume() method of the COM Object."
+Resume
+	"Invoke the Resume() method of the COM object.
 
-	self Resume
-!
-
-Resume 
-	"Private - Invoke the Resume() method of the COM object wrapped by the receiver.
-
-		HRESULT __stdcall Resume();
-	"
+		HRESULT __stdcall Resume();"
 
 	<virtual stdcall: hresult 6>
-	^self invalidCall
-!
-
-setPriority: nPriority 
-	"Invoke the SetPriority() method of the COM Object."
-
-	self
-		SetPriority: nPriority
-!
+	^self invalidCall: _failureCode!
 
 SetPriority: nPriority
-	"Private - Invoke the SetPriority() method of the COM object wrapped by the receiver.
+	"Invoke the SetPriority() method of the COM object.
 
 		HRESULT __stdcall SetPriority(
-			[in] long nPriority);
-	"
+			[in]long nPriority);"
 
 	<virtual stdcall: hresult 7 sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
-suspend  
-	"Invoke the Suspend() method of the COM Object."
+Suspend
+	"Invoke the Suspend() method of the COM object.
 
-	self Suspend
-!
-
-Suspend 
-	"Private - Invoke the Suspend() method of the COM object wrapped by the receiver.
-
-		HRESULT __stdcall Suspend();
-	"
+		HRESULT __stdcall Suspend();"
 
 	<virtual stdcall: hresult 5>
-	^self invalidCall
-! !
-!IBinding categoriesFor: #abort!**auto generated**!methods!public! !
-!IBinding categoriesFor: #Abort!**auto generated**!COM Interfaces-IBinding!private! !
-!IBinding categoriesFor: #GetBindResult:!methods!public! !
-!IBinding categoriesFor: #GetBindResult:pdwResult:pszResult:dwReserved:!COM Interfaces-IBinding!private! !
-!IBinding categoriesFor: #getPriority!**auto generated**!methods!public! !
-!IBinding categoriesFor: #GetPriority:!**auto generated**!COM Interfaces-IBinding!private! !
-!IBinding categoriesFor: #resume!**auto generated**!methods!public! !
-!IBinding categoriesFor: #Resume!**auto generated**!COM Interfaces-IBinding!private! !
-!IBinding categoriesFor: #setPriority:!**auto generated**!methods!public! !
-!IBinding categoriesFor: #SetPriority:!**auto generated**!COM Interfaces-IBinding!private! !
-!IBinding categoriesFor: #suspend!**auto generated**!methods!public! !
-!IBinding categoriesFor: #Suspend!**auto generated**!COM Interfaces-IBinding!private! !
+	^self invalidCall: _failureCode! !
+!IBinding categoriesForMethods!
+Abort!**auto generated**!COM Interfaces-IBinding!public! !
+getBindResult!methods!public! !
+GetBindResult:pdwResult:pszResult:dwReserved:!**auto generated**!COM Interfaces-IBinding!private! !
+getPriority!**auto generated**!methods!public! !
+GetPriority:!**auto generated**!COM Interfaces-IBinding!private! !
+Resume!**auto generated**!COM Interfaces-IBinding!public! !
+SetPriority:!**auto generated**!COM Interfaces-IBinding!public! !
+Suspend!**auto generated**!COM Interfaces-IBinding!public! !
+!
 
 !IBinding class methodsFor!
 
@@ -162,5 +118,7 @@ defineFunctions
 		defineFunction: #GetBindResult:pdwResult:pszResult:dwReserved:
 			argumentTypes: 'GUID* dword* lpwstr* dword'
 ! !
-!IBinding class categoriesFor: #defineFunctions!initializing!public! !
+!IBinding class categoriesForMethods!
+defineFunctions!initializing!public! !
+!
 

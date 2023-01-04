@@ -1,0 +1,41 @@
+﻿| package |
+package := Package name: 'OLE Persistence and Data Transfer Tests'.
+package paxVersion: 1;
+	basicComment: ''.
+
+
+package classNames
+	add: #IMonikerTest;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: #(
+	'..\..\..\Base\Dolphin'
+	'..\..\..\Base\Dolphin Base Tests'
+	'..\..\..\Registry\Dolphin Registry Access'
+	'..\..\COM\OLE COM'
+	'..\OLE Persistence and Data Transfer'
+	'..\OLE Persistence Base').
+
+package!
+
+"Class Definitions"!
+
+DolphinTest subclass: #IMonikerTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

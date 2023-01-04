@@ -1,78 +1,70 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 IUnknown subclass: #IAdviseSink
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IAdviseSink guid: (IID fromString: '{0000010F-0000-0000-C000-000000000046}')!
+IAdviseSink guid: (IID fromString: '{0000010f-0000-0000-c000-000000000046}')!
 IAdviseSink comment: '<IAdviseSink> is a wrapper class for the COM interface ''OCIDL.IAdviseSink'' generated from type information in the ''OCIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
 WARNING: This comment was automatically generated from the interface''s type information and any changes made here may be overwritten the next time this wrapper class is so generated.'!
-!IAdviseSink categoriesForClass!COM-Interfaces! !
+!IAdviseSink categoriesForClass!OBJIDL-Interfaces! !
 !IAdviseSink methodsFor!
 
-OnClose 
-	"Private - Invoke the OnClose() method of the COM object wrapped by the receiver.
+OnClose
+	"Invoke the RemoteOnClose() method of the COM object.
 
-		void __stdcall OnClose();
-	"
+		HRESULT __stdcall RemoteOnClose();"
 
 	<virtual stdcall: hresult 8>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
-OnDataChange: pFormatetc pStgmed: pStgmed
-	"Private - Invoke the OnDataChange() method of the COM object wrapped by the receiver.
+OnDataChange: pformatetc pStgmed: pStgmed
+	"Invoke the OnDataChange() method of the COM object.
 
-		void __stdcall OnDataChange(
-			[in] FORMATETC* pFormatetc,
-			[in] STGMEDIUM* pStgmed);
-	"
+		HRESULT __stdcall OnDataChange(
+			[in]FORMATETC* pformatetc,
+			[in]STGMEDIUM* pStgmed);"
 
 	<virtual stdcall: hresult 4 FORMATETC* STGMEDIUM*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 OnRename: pmk
-	"Private - Invoke the OnRename() method of the COM object wrapped by the receiver.
+	"Invoke the OnRename() method of the COM object.
 
-		void __stdcall OnRename(
-			[in] IMoniker* pmk);
-	"
+		HRESULT __stdcall OnRename(
+			[in]IMoniker* pmk);"
 
 	<virtual stdcall: hresult 6 IMoniker*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 OnSave
-	"Private - Invoke the OnSave() method of the COM object wrapped by the receiver.
+	"Invoke the OnSave() method of the COM object.
 
-		void OnSave()
-	"
+		HRESULT __stdcall OnSave();"
 
 	<virtual stdcall: hresult 7>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 OnViewChange: dwAspect lindex: lindex
-	"Private - Invoke the RemoteOnViewChange() method of the COM object wrapped by the receiver.
+	"Invoke the OnViewChange() method of the COM object.
 
-		void __stdcall RemoteOnViewChange(
-			[in] unsigned long dwAspect,
-			[in] long lindex);
-	"
+		HRESULT __stdcall OnViewChange(
+			[in]unsigned long dwAspect,
+			[in]long lindex);"
 
 	<virtual stdcall: hresult 5 dword sdword>
-	^self invalidCall
-! !
-!IAdviseSink categoriesFor: #OnClose!COM Interfaces-IAdviseSink!private! !
-!IAdviseSink categoriesFor: #OnDataChange:pStgmed:!COM Interfaces-IAdviseSink!private! !
-!IAdviseSink categoriesFor: #OnRename:!COM Interfaces-IAdviseSink!private! !
-!IAdviseSink categoriesFor: #OnSave!COM Interfaces-IAdviseSink!private! !
-!IAdviseSink categoriesFor: #OnViewChange:lindex:!COM Interfaces-IAdviseSink!private! !
+	^self invalidCall: _failureCode! !
+!IAdviseSink categoriesForMethods!
+OnClose!**auto generated**!COM Interfaces-IAdviseSink!public! !
+OnDataChange:pStgmed:!**auto generated**!COM Interfaces-IAdviseSink!public! !
+OnRename:!**auto generated**!COM Interfaces-IAdviseSink!public! !
+OnSave!**auto generated**!COM Interfaces-IAdviseSink!public! !
+OnViewChange:lindex:!**auto generated**!COM Interfaces-IAdviseSink!public! !
+!
 
 IAdviseSink methodProtocol: #IAdviseSink attributes: #() selectors: #(#OnClose #OnDataChange:pStgmed: #OnRename: #OnSave #OnViewChange:lindex:)!
 
@@ -100,5 +92,7 @@ defineFunctions
 		defineFunction: #OnClose
 			returnType: 'void'
 ! !
-!IAdviseSink class categoriesFor: #defineFunctions!initializing!public! !
+!IAdviseSink class categoriesForMethods!
+defineFunctions!initializing!public! !
+!
 

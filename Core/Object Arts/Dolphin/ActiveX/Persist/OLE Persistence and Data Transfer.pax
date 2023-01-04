@@ -1,19 +1,20 @@
-| package |
+﻿| package |
 package := Package name: 'OLE Persistence and Data Transfer'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk OLE Persistence and Data Transfer Package. 
-Copyright (c) Object Arts Ltd 1998-2001.
+Copyright (c) Object Arts Ltd 1998-2023.
 
 OLE persistence to structure storage, streams, memory, property bags, etc, and also uniform data transfer. Mainly wrapper classes for COM interfaces and structs.
 
-This package is a "Work In Progress".'.
+This package is as yet incomplete.'.
 
-package basicPackageVersion: '6.1'.
+package basicPackageVersion: '7.1'.
 
 
 package classNames
 	add: #BIND_OPTS;
 	add: #BIND_OPTS2;
+	add: #BIND_OPTS3;
 	add: #BINDINFO;
 	add: #DVTARGETDEVICE;
 	add: #FORMATETC;
@@ -21,13 +22,9 @@ package classNames
 	add: #IAdviseSink2;
 	add: #IAdviseSinkEx;
 	add: #IBindCtx;
-	add: #IBindHost;
-	add: #IBinding;
-	add: #IBindStatusCallback;
 	add: #IDataObject;
 	add: #IEnumMoniker;
 	add: #IMoniker;
-	add: #IParseDisplayName;
 	add: #IRunningObjectTable;
 	add: #STATDATA;
 	add: #STGMEDIUM;
@@ -35,6 +32,7 @@ package classNames
 
 package methodNames
 	add: #OLELibrary -> #createBindCtx:ppbc:;
+	add: #OLELibrary -> #createClassMoniker:ppmk:;
 	add: #OLELibrary -> #createFileMoniker:ppmk:;
 	add: #OLELibrary -> #createItemMoniker:lpszItem:ppmk:;
 	add: #OLELibrary -> #createPointerMoniker:ppmk:;
@@ -52,12 +50,11 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\Base\Dolphin';
-	add: '..\COM\OLE COM';
-	add: 'OLE Persistence Base';
-	add: '..\Structured Storage\OLE Structured Storage';
-	yourself).
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+	'..\COM\OLE COM (Old Names)'
+	'OLE Persistence Base (Old Names)'
+	'..\Structured Storage\OLE Structured Storage (Old Names)').
 
 package!
 
@@ -73,27 +70,7 @@ IUnknown subclass: #IBindCtx
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IUnknown subclass: #IBindHost
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-IUnknown subclass: #IBinding
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-IUnknown subclass: #IBindStatusCallback
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 IUnknown subclass: #IDataObject
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-IUnknown subclass: #IParseDisplayName
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -125,37 +102,42 @@ IPersistStream subclass: #IMoniker
 	classInstanceVariableNames: ''!
 OLEStructure subclass: #BIND_OPTS
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwSize _OffsetOf_dwTickCountDeadline _OffsetOf_grfFlags _OffsetOf_grfMode'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 OLEStructure subclass: #BINDINFO
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cbstgmedData _OffsetOf_dwBindVerb _OffsetOf_dwSize _OffsetOf_grfBindInfoF _OffsetOf_stgmedData _OffsetOf_szCustomVerb _OffsetOf_szExtraInfo'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 OLEStructure subclass: #DVTARGETDEVICE
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_tdDeviceNameOffset _OffsetOf_tdDriverNameOffset _OffsetOf_tdExtDevmodeOffset _OffsetOf_tdPortNameOffset _OffsetOf_tdSize'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 OLEStructure subclass: #FORMATETC
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cfFormat _OffsetOf_dwAspect _OffsetOf_lindex _OffsetOf_ptd _OffsetOf_tymed'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 OLEStructure subclass: #STATDATA
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_advf _OffsetOf_dwConnection _OffsetOf_formatetc _OffsetOf_pAdvSink'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 BIND_OPTS subclass: #BIND_OPTS2
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwClassContext _OffsetOf_dwTrackFlags _OffsetOf_locale _OffsetOf_pServerInfo'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+BIND_OPTS2 subclass: #BIND_OPTS3
+	instanceVariableNames: ''
+	classVariableNames: '_OffsetOf_hwnd'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 OLEFinalizableStructure subclass: #STGMEDIUM
 	instanceVariableNames: 'value'
-	classVariableNames: 'GetSelectors'
+	classVariableNames: '_OffsetOf_handle _OffsetOf_lpszFileName _OffsetOf_pstg _OffsetOf_pstm _OffsetOf_pUnkForRelease _OffsetOf_tymed GetSelectors'
 	poolDictionaries: 'OLEPersistConstants'
 	classInstanceVariableNames: ''!
 
@@ -177,6 +159,16 @@ createBindCtx: reserved ppbc: piBindCtx
 
 	<stdcall: hresult CreateBindCtx dword lppvoid>
 	^self invalidCall!
+
+createClassMoniker: rclsid ppmk: ppmk
+	"Invoke the CreateClassMoniker() function of the module wrapped by the receiver.
+
+		HRESULT __stdcall CreateClassMoniker(
+			GUID* rclsid,
+			IMoniker** ppmk);"
+
+	<stdcall: hresult CreateClassMoniker guid* IMoniker**>
+	^self invalidCall: _failureCode!
 
 createFileMoniker: path ppmk: anIMoniker
 	"Create a File Moniker on the path, answering it through 
@@ -223,13 +215,16 @@ releaseStgMedium: aSTGMEDIUM
 		);"
 
 	<stdcall: void ReleaseStgMedium STGMEDIUM* >
-	^self invalidCall! !
-!OLELibrary categoriesFor: #createBindCtx:ppbc:!OLE Functions-Persistent Objects!private! !
-!OLELibrary categoriesFor: #createFileMoniker:ppmk:!OLE Functions-Persistent Objects!public! !
-!OLELibrary categoriesFor: #createItemMoniker:lpszItem:ppmk:!OLE Functions-Persistent Objects!public! !
-!OLELibrary categoriesFor: #createPointerMoniker:ppmk:!OLE Functions-Persistent Objects!primitives!private! !
-!OLELibrary categoriesFor: #getRunningObjectTable:pprot:!OLE Functions-OLE!public! !
-!OLELibrary categoriesFor: #releaseStgMedium:!**auto generated**!OLE Functions-Uniform Data Transfer!public! !
+	^self invalidCall: _failureCode! !
+!OLELibrary categoriesForMethods!
+createBindCtx:ppbc:!OLE Functions-Persistent Objects!private! !
+createClassMoniker:ppmk:!**auto generated**!public! !
+createFileMoniker:ppmk:!OLE Functions-Persistent Objects!public! !
+createItemMoniker:lpszItem:ppmk:!OLE Functions-Persistent Objects!public! !
+createPointerMoniker:ppmk:!OLE Functions-Persistent Objects!primitives!private! !
+getRunningObjectTable:pprot:!OLE Functions-OLE!public! !
+releaseStgMedium:!**auto generated**!OLE Functions-Uniform Data Transfer!public! !
+!
 
 "End of package definition"!
 

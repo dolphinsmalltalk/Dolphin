@@ -1,70 +1,76 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 OLEStructure subclass: #STATDATA
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_advf _OffsetOf_dwConnection _OffsetOf_formatetc _OffsetOf_pAdvSink'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 STATDATA guid: (GUID fromString: '{25f9c177-b0f1-4161-87a4-188c3de0b3e4}')!
+STATDATA addClassConstant: '_OffsetOf_advf' value: 16r14!
+STATDATA addClassConstant: '_OffsetOf_dwConnection' value: 16r1C!
+STATDATA addClassConstant: '_OffsetOf_formatetc' value: 16r0!
+STATDATA addClassConstant: '_OffsetOf_pAdvSink' value: 16r18!
 STATDATA comment: '<STATDATA> is an <ExternalStructure> class to wrap the struct ''OCIDL.STATDATA'' from type information in the ''OCIDL Library'' library.
 
 The type library contains no documentation for this struct
 
 WARNING: This comment was automatically generated from the struct''s type information and any changes made here may be overwritten the next time this wrapper class is so generated.'!
-!STATDATA categoriesForClass!No category! !
+!STATDATA categoriesForClass!External-Data-Structured-COM! !
 !STATDATA methodsFor!
 
 advf
-	"Answer the receiver's advf field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'advf' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #advf)!
+	^bytes dwordAtOffset: _OffsetOf_advf!
 
-advf: anObject 
-	"Set the receiver's advf field to the value of anObject."
+advf: anInteger
+	"Set the receiver's 'advf' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #advf) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_advf put: anInteger!
 
 dwConnection
-	"Answer the receiver's dwConnection field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwConnection' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwConnection)!
+	^bytes dwordAtOffset: _OffsetOf_dwConnection!
 
-dwConnection: anObject 
-	"Set the receiver's dwConnection field to the value of anObject."
+dwConnection: anInteger
+	"Set the receiver's 'dwConnection' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwConnection) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_dwConnection put: anInteger!
 
 formatetc
-	"Answer the receiver's formatetc field as a Smalltalk object."
+	"Answer the <FORMATETC> value of the receiver's 'formatetc' field."
 
 	^FORMATETC fromAddress: bytes yourAddress!
 
-formatetc: anObject 
-	"Set the receiver's formatetc field to the value of anObject."
+formatetc: aFORMATETC
+	"Set the receiver's 'formatetc' field to the value of the argument, aFORMATETC"
 
-	anObject 
+	aFORMATETC
 		replaceBytesOf: bytes
-		from: 1
-		to: ##(FORMATETC basicByteSize)
+		from: ##(_OffsetOf_formatetc + 1)
+		to: ##(_OffsetOf_formatetc + FORMATETC basicByteSize)
 		startingAt: 1!
 
 pAdvSink
-	"Answer the receiver's pAdvSink field as a Smalltalk object."
+	"Answer the <IAdviseSink> value of the receiver's 'pAdvSink' field."
 
-	^IAdviseSink fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pAdvSink))!
+	^IAdviseSink fromAddress: (bytes intPtrAtOffset: _OffsetOf_pAdvSink)!
 
-pAdvSink: anObject 
-	"Set the receiver's pAdvSink field to the value of anObject."
+pAdvSink: anIAdviseSink
+	"Set the receiver's 'pAdvSink' field to the value of the argument, anIAdviseSink"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pAdvSink) put: anObject yourAddress! !
-!STATDATA categoriesFor: #advf!**compiled accessors**!public! !
-!STATDATA categoriesFor: #advf:!**compiled accessors**!public! !
-!STATDATA categoriesFor: #dwConnection!**compiled accessors**!public! !
-!STATDATA categoriesFor: #dwConnection:!**compiled accessors**!public! !
-!STATDATA categoriesFor: #formatetc!**compiled accessors**!public! !
-!STATDATA categoriesFor: #formatetc:!**compiled accessors**!public! !
-!STATDATA categoriesFor: #pAdvSink!**compiled accessors**!public! !
-!STATDATA categoriesFor: #pAdvSink:!**compiled accessors**!public! !
+	bytes uintPtrAtOffset: _OffsetOf_pAdvSink put: anIAdviseSink yourAddress! !
+!STATDATA categoriesForMethods!
+advf!**compiled accessors**!public! !
+advf:!**compiled accessors**!public! !
+dwConnection!**compiled accessors**!public! !
+dwConnection:!**compiled accessors**!public! !
+formatetc!**compiled accessors**!public! !
+formatetc:!**compiled accessors**!public! !
+pAdvSink!**compiled accessors**!public! !
+pAdvSink:!**compiled accessors**!public! !
+!
 
 !STATDATA class methodsFor!
 
@@ -85,6 +91,12 @@ defineFields
 		defineField: #formatetc type: (StructureField type: FORMATETC);
 		defineField: #advf type: DWORDField new;
 		defineField: #pAdvSink type: (PointerField type: IAdviseSink);
-		defineField: #dwConnection type: DWORDField new! !
-!STATDATA class categoriesFor: #defineFields!initializing!public! !
+		defineField: #dwConnection type: DWORDField new!
+
+getFieldNames
+	^#(#formatetc #advf #pAdvSink #dwConnection)! !
+!STATDATA class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

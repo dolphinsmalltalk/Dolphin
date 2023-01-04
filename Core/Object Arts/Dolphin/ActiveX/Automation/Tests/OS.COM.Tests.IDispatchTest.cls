@@ -11,10 +11,8 @@ OS.COM.Tests.IDispatchTest comment: ''!
 !OS.COM.Tests.IDispatchTest methodsFor!
 
 testDisplayOn
-	self
-		assert: (IDispatch createObject: 'Scripting.FileSystemObject') displayString = 'a FileSystemObject'.
-	self assert: ((IDispatch createObject: 'Scripting.FileSystemObject') drives displayString
-				beginsWith: 'an OrderedCollection(')!
+	self assert: ((IDispatch createObject:'Scripting.FileSystemObject') displayString = 'a FileSystemObject').
+	self assert: ((IDispatch createObject:'Scripting.FileSystemObject') drives displayString beginsWith: 'an Array(C:').!
 
 testDNU
 	| fs dict path ts |
