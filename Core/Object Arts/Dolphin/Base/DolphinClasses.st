@@ -138,6 +138,12 @@ Object subclass: #Exception
 	poolDictionaries: 'MessageBoxConstants Win32Constants Win32Errors'
 	classInstanceVariableNames: ''!
 
+Object subclass: #ExceptionFilter
+	instanceVariableNames: 'outer discriminator'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
 Object subclass: #ExceptionHandlerAbstract
 	instanceVariableNames: 'outer protectedBlock returnContinuation'
 	classVariableNames: 'RetryCookie'

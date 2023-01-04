@@ -48,6 +48,7 @@ package classNames
 	add: #DWORDBytesTest;
 	add: #EqualitySearchPolicyTest;
 	add: #EventMessageSendTest;
+	add: #ExceptionTest;
 	add: #ExceptionTesterClasses;
 	add: #ExternalAddressTest;
 	add: #ExternalArrayTest;
@@ -308,6 +309,12 @@ DolphinTest subclass: #DurationTest
 	classInstanceVariableNames: ''!
 
 DolphinTest subclass: #EventMessageSendTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+DolphinTest subclass: #'ExceptionTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
