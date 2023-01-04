@@ -40,6 +40,7 @@ package classNames
 	add: #ICoreWebView2_12;
 	add: #ICoreWebView2_13;
 	add: #ICoreWebView2_14;
+	add: #ICoreWebView2_15;
 	add: #ICoreWebView2_2;
 	add: #ICoreWebView2_3;
 	add: #ICoreWebView2_4;
@@ -70,6 +71,7 @@ package classNames
 	add: #ICoreWebView2CompletedHandler;
 	add: #ICoreWebView2CompositionController;
 	add: #ICoreWebView2CompositionController2;
+	add: #ICoreWebView2CompositionController3;
 	add: #ICoreWebView2ContainsFullScreenElementChangedEventHandler;
 	add: #ICoreWebView2ContentLoadingEventArgs;
 	add: #ICoreWebView2ContentLoadingEventHandler;
@@ -118,6 +120,7 @@ package classNames
 	add: #ICoreWebView2EventArgs;
 	add: #ICoreWebView2EventHandler;
 	add: #ICoreWebView2ExecuteScriptCompletedHandler;
+	add: #ICoreWebView2FaviconChangedEventHandler;
 	add: #ICoreWebView2FocusChangedEventHandler;
 	add: #ICoreWebView2FocusGainedEventHandler;
 	add: #ICoreWebView2FocusLostEventHandler;
@@ -138,6 +141,7 @@ package classNames
 	add: #ICoreWebView2FramePermissionRequestedEventHandler;
 	add: #ICoreWebView2FrameWebMessageReceivedEventHandler;
 	add: #ICoreWebView2GetCookiesCompletedHandler;
+	add: #ICoreWebView2GetFaviconCompletedHandler;
 	add: #ICoreWebView2HistoryChangedEventHandler;
 	add: #ICoreWebView2HttpHeadersCollection;
 	add: #ICoreWebView2HttpHeadersCollectionIterator;
@@ -234,6 +238,7 @@ package setPrerequisites: #(
 	'..\..\..\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\..\MVP\Models\Value\Dolphin Value Models'
 	'..\..\COM\OLE COM'
+	'..\..\Persist\OLE Persistence and Data Transfer'
 	'..\..\Structured Storage\OLE Structured Storage'
 	'..\..\Shell\Windows Shell').
 
@@ -501,6 +506,11 @@ ICoreWebView2_13 subclass: #ICoreWebView2_14
 	classVariableNames: ''
 	poolDictionaries: 'WebView2Constants'
 	classInstanceVariableNames: ''!
+ICoreWebView2_14 subclass: #ICoreWebView2_15
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'WebView2Constants'
+	classInstanceVariableNames: ''!
 ICoreWebView2Certificate subclass: #ICoreWebView2ClientCertificate
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -611,6 +621,11 @@ ICoreWebView2CompletedHandler subclass: #ICoreWebView2GetCookiesCompletedHandler
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+ICoreWebView2CompletedHandler subclass: #ICoreWebView2GetFaviconCompletedHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 ICoreWebView2CompletedHandler subclass: #ICoreWebView2PrintToPdfCompletedHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -627,6 +642,11 @@ ICoreWebView2CompletedHandler subclass: #ICoreWebView2WebResourceResponseViewGet
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2CompositionController subclass: #ICoreWebView2CompositionController2
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'WebView2Constants'
+	classInstanceVariableNames: ''!
+ICoreWebView2CompositionController2 subclass: #ICoreWebView2CompositionController3
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'WebView2Constants'
@@ -902,6 +922,11 @@ ICoreWebView2EventHandler subclass: #ICoreWebView2DownloadStartingEventHandler
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2EventHandler subclass: #ICoreWebView2EstimatedEndTimeChangedEventHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventHandler subclass: #ICoreWebView2FaviconChangedEventHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

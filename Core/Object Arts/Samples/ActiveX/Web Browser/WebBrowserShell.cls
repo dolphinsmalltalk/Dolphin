@@ -52,6 +52,9 @@ createSchematicWiring
 			to: self;
 		when: #processFailed:
 			send: #onProcessFailed:
+			to: self;
+		when: #favIconChanged
+			send: #onFavIconChanged
 			to: self.
 	"We don't really need all these other events, but observe them for illustrative purposes"
 	WebView2View webview2Events do: 
@@ -87,6 +90,10 @@ onDocumentTitleChanged
 	"Private - Event fired by Edge WebView2 when the document title has changed, so update the browser caption."
 
 	self caption: browser view documentTitle!
+
+onFavIconChanged
+	browser view webview getFavIcon: WebView2Constants.COREWEBVIEW2_FAVICON_IMAGE_FORMAT_PNG
+		thenDo: [:hr :stream | self view smallIcon: (GdiplusBitmap fromIStream: stream) asIcon]!
 
 onProcessFailed: anICoreWebView2ProcessFailedEventArgs
 	| stream |
@@ -183,6 +190,7 @@ home!commands!public! !
 homePage!commands!private! !
 navigate!commands!public! !
 onDocumentTitleChanged!event handling!private! !
+onFavIconChanged!public! !
 onProcessFailed:!event handling!private! !
 onSourceChanged:!event handling!private! !
 onViewOpened!event handling!public! !
