@@ -5,10 +5,12 @@ package paxVersion: 2.1;
 
 
 package setVariableNames: #(
+	#{Smalltalk.IDataObject}
 	#{Smalltalk.IMoniker}
 ).
 
 package setAliasVariableNames: #(
+	#{Smalltalk.IDataObject}
 	#{Smalltalk.IMoniker}
 ).
 
@@ -19,6 +21,8 @@ package setPrerequisites: #(
 package!
 
 "Variable Aliases"!
+
+Smalltalk.IDataObject := OS.COM.IDataObject!
 
 Smalltalk.IMoniker := OS.COM.IMoniker!
 

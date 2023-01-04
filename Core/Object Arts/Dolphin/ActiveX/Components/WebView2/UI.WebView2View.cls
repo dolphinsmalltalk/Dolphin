@@ -328,6 +328,7 @@ observeWindowEvents
 		ICoreWebView2DocumentTitleChangedEventHandler.
 		ICoreWebView2DOMContentLoadedEventHandler.
 		ICoreWebView2DownloadStartingEventHandler.
+		Smalltalk.ICoreWebView2FaviconChangedEventHandler.
 		ICoreWebView2FrameCreatedEventHandler.
 		ICoreWebView2FrameNavigationCompletedEventHandler.
 		ICoreWebView2FrameNavigationStartingEventHandler.
@@ -461,21 +462,20 @@ queryEnvironmentInterface: anICoreWebView2Environment
 	^anICoreWebView2Environment!
 
 querySettingsInterface
-	| settings |
+	| settings interfaceClass |
 	settings := webview settings.
-	##({ICoreWebView2Settings6.
-		ICoreWebView2Settings5.
-		ICoreWebView2Settings4.
-		ICoreWebView2Settings3.
-		ICoreWebView2Settings2})
-			do: [:each | (settings queryInterface: each ifNone: []) ifNotNil: [:itf | ^itf]].
+	interfaceClass := ICoreWebView2Settings7.
+	
+	[(webview queryInterface: interfaceClass ifNone: []) ifNotNil: [:interface | ^interface].
+	(interfaceClass := interfaceClass superclass) == ICoreWebView2Settings]
+			whileFalse.
 	^settings!
 
 queryWindowInterface
 	| webview2 interfaceClass |
 	webview2 := webviewController coreWebView2.
 	"Work up from the latest interface class until we find one that the control implements"
-	interfaceClass := ICoreWebView2_14.
+	interfaceClass := Smalltalk.ICoreWebView2_15.
 	
 	[(webview2 queryInterface: interfaceClass ifNone: []) ifNotNil: [:interface | ^interface].
 	(interfaceClass := interfaceClass superclass) == ICoreWebView2]
@@ -675,7 +675,7 @@ initialize
 webview2Events
 	"This is the full set of events. Not all are actually published currently; for example the frame and download events are not."
 
-	^#(#acceleratorKeyPressed: #basicAuthenticationRequested: #browseProcessExited: #bytesReceivedChanged #clientCertificateRequested: #containsFullScreenElementChanged #contentLoading: #contextMenuRequested: #cursorChanged #devToolsProtocolEvent: #documentTitleChanged #domContentLoaded: #downloadStarting: #dowloadStateChanged #focusGained #focusLost #frameContentLoading: #frameCreated: #frameDestroyed #frameDomContentLoaded: #frameNameChanged #frameNavigationCompleted: #frameNavigationStarting: #framePermissionRequested: #frameWebMessageReceived: #historyChanged #isDefaultDownloadDialogOpenChanged #isDocumentPlayingAudioChanged #isMutedChanged #moveFocusRequested: #navigationCompleted: #navigationStarting: #newBrowserVersionAvailable #newWindowRequested: #permissionRequested: #processFailed: #processInfosChanged #rasterizationScaleChanged #scriptDialogOpening: #serverCertificateErrorDetected: #sourceChanged: #statusBarTextChanged #webMessageReceived: #webResourceRequested: #webResourceResponseReceived: #webviewAvailable #windowCloseRequested #zoomFactorChanged)!
+	^#(#acceleratorKeyPressed: #basicAuthenticationRequested: #browseProcessExited: #bytesReceivedChanged #clientCertificateRequested: #containsFullScreenElementChanged #contentLoading: #contextMenuRequested: #cursorChanged #devToolsProtocolEvent: #documentTitleChanged #domContentLoaded: #downloadStarting: #dowloadStateChanged #favIconChanged #focusGained #focusLost #frameContentLoading: #frameCreated: #frameDestroyed #frameDomContentLoaded: #frameNameChanged #frameNavigationCompleted: #frameNavigationStarting: #framePermissionRequested: #frameWebMessageReceived: #historyChanged #isDefaultDownloadDialogOpenChanged #isDocumentPlayingAudioChanged #isMutedChanged #moveFocusRequested: #navigationCompleted: #navigationStarting: #newBrowserVersionAvailable #newWindowRequested: #permissionRequested: #processFailed: #processInfosChanged #rasterizationScaleChanged #scriptDialogOpening: #serverCertificateErrorDetected: #sourceChanged: #statusBarTextChanged #webMessageReceived: #webResourceRequested: #webResourceResponseReceived: #webviewAvailable #windowCloseRequested #zoomFactorChanged)!
 
 winClassName
 	"Private - Answer the Windows class name, or atom, to be used when creating Windows attached

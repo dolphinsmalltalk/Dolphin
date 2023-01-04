@@ -43,6 +43,7 @@ package setClassNames: #(
 	#{WebView2.ICoreWebView2_12}
 	#{WebView2.ICoreWebView2_13}
 	#{WebView2.ICoreWebView2_14}
+	#{Smalltalk.ICoreWebView2_15}
 	#{WebView2.ICoreWebView2_2}
 	#{WebView2.ICoreWebView2_3}
 	#{WebView2.ICoreWebView2_4}
@@ -73,6 +74,7 @@ package setClassNames: #(
 	#{WebView2.ICoreWebView2CompletedHandler}
 	#{WebView2.ICoreWebView2CompositionController}
 	#{WebView2.ICoreWebView2CompositionController2}
+	#{Smalltalk.ICoreWebView2CompositionController3}
 	#{WebView2.ICoreWebView2ContainsFullScreenElementChangedEventHandler}
 	#{WebView2.ICoreWebView2ContentLoadingEventArgs}
 	#{WebView2.ICoreWebView2ContentLoadingEventHandler}
@@ -121,6 +123,7 @@ package setClassNames: #(
 	#{WebView2.ICoreWebView2EventArgs}
 	#{WebView2.ICoreWebView2EventHandler}
 	#{WebView2.ICoreWebView2ExecuteScriptCompletedHandler}
+	#{Smalltalk.ICoreWebView2FaviconChangedEventHandler}
 	#{WebView2.ICoreWebView2FocusChangedEventHandler}
 	#{WebView2.ICoreWebView2FocusGainedEventHandler}
 	#{WebView2.ICoreWebView2FocusLostEventHandler}
@@ -141,6 +144,7 @@ package setClassNames: #(
 	#{WebView2.ICoreWebView2FramePermissionRequestedEventHandler}
 	#{WebView2.ICoreWebView2FrameWebMessageReceivedEventHandler}
 	#{WebView2.ICoreWebView2GetCookiesCompletedHandler}
+	#{Smalltalk.ICoreWebView2GetFaviconCompletedHandler}
 	#{WebView2.ICoreWebView2HistoryChangedEventHandler}
 	#{WebView2.ICoreWebView2HttpHeadersCollection}
 	#{WebView2.ICoreWebView2HttpHeadersCollectionIterator}
@@ -226,6 +230,7 @@ package setPrerequisites: #(
 	'..\..\..\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\..\MVP\Models\Value\Dolphin Value Models'
 	'..\..\COM\OLE COM'
+	'..\..\Persist\OLE Persistence and Data Transfer (Old Names)'
 	'..\..\Structured Storage\OLE Structured Storage'
 	'..\..\Shell\Windows Shell'
 ).
@@ -285,6 +290,8 @@ Kernel.Namespace subclass: #WebView2
 		'COREWEBVIEW2_DOWNLOAD_STATE_COMPLETED' -> 16r2.
 		'COREWEBVIEW2_DOWNLOAD_STATE_IN_PROGRESS' -> 16r0.
 		'COREWEBVIEW2_DOWNLOAD_STATE_INTERRUPTED' -> 16r1.
+		'COREWEBVIEW2_FAVICON_IMAGE_FORMAT_JPEG' -> 16r1.
+		'COREWEBVIEW2_FAVICON_IMAGE_FORMAT_PNG' -> 16r0.
 		'COREWEBVIEW2_HOST_RESOURCE_ACCESS_KIND_ALLOW' -> 16r1.
 		'COREWEBVIEW2_HOST_RESOURCE_ACCESS_KIND_DENY' -> 16r0.
 		'COREWEBVIEW2_HOST_RESOURCE_ACCESS_KIND_DENY_CORS' -> 16r2.
@@ -319,6 +326,10 @@ Kernel.Namespace subclass: #WebView2
 		'COREWEBVIEW2_MOVE_FOCUS_REASON_NEXT' -> 16r1.
 		'COREWEBVIEW2_MOVE_FOCUS_REASON_PREVIOUS' -> 16r2.
 		'COREWEBVIEW2_MOVE_FOCUS_REASON_PROGRAMMATIC' -> 16r0.
+		'COREWEBVIEW2_PDF_TOOLBAR_ITEMS_NONE' -> 16r0.
+		'COREWEBVIEW2_PDF_TOOLBAR_ITEMS_PRINT' -> 16r2.
+		'COREWEBVIEW2_PDF_TOOLBAR_ITEMS_SAVE' -> 16r1.
+		'COREWEBVIEW2_PDF_TOOLBAR_ITEMS_SAVE_AS' -> 16r3.
 		'COREWEBVIEW2_PERMISSION_KIND_CAMERA' -> 16r2.
 		'COREWEBVIEW2_PERMISSION_KIND_CLIPBOARD_READ' -> 16r6.
 		'COREWEBVIEW2_PERMISSION_KIND_GEOLOCATION' -> 16r3.
@@ -716,6 +727,12 @@ WebView2.ICoreWebView2_13 subclass: #'WebView2.ICoreWebView2_14'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+WebView2.ICoreWebView2_14 subclass: #ICoreWebView2_15
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 WebView2.ICoreWebView2Certificate subclass: #'WebView2.ICoreWebView2ClientCertificate'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -848,6 +865,12 @@ WebView2.ICoreWebView2CompletedHandler subclass: #'WebView2.ICoreWebView2GetCook
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+WebView2.ICoreWebView2CompletedHandler subclass: #ICoreWebView2GetFaviconCompletedHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 WebView2.ICoreWebView2CompletedHandler subclass: #'WebView2.ICoreWebView2PrintToPdfCompletedHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -867,6 +890,12 @@ WebView2.ICoreWebView2CompletedHandler subclass: #'WebView2.ICoreWebView2WebReso
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2CompositionController subclass: #'WebView2.ICoreWebView2CompositionController2'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2CompositionController2 subclass: #ICoreWebView2CompositionController3
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1203,6 +1232,12 @@ WebView2.ICoreWebView2EventHandler subclass: #'WebView2.ICoreWebView2EstimatedEn
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2EventHandler subclass: #'WebView2.ICoreWebView2FocusChangedEventHandler'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2EventHandler subclass: #ICoreWebView2FaviconChangedEventHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

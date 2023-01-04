@@ -46,6 +46,7 @@ contents
 		add: #('Core\Object Arts\Dolphin\ActiveX\Persist\OLE Persistence Base.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Persist\OLE Persistence Base (Old Names).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Persist\OLE Persistence and Data Transfer.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\ActiveX\Persist\OLE Persistence and Data Transfer (Old Names).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Connection Points\ActiveX Connection Points.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Connection Points\ActiveX Connection Points (Old Names).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Categories\ActiveX Categories.pax' #plain #imageBased);

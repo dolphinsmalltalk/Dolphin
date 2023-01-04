@@ -22,6 +22,5 @@ package!
 
 Smalltalk.IPersistStream := OS.COM.IPersistStream!
 
-
 "End of package definition"!
 

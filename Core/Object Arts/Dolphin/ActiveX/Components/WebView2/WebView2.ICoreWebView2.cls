@@ -277,6 +277,11 @@ Add_DownloadStarting: eventHandler token: token
 
 	^E_NOTIMPL!
 
+Add_FaviconChanged: eventHandler token: token
+	"Not supported by this version"
+
+	^E_NOTIMPL!
+
 Add_FrameCreated: eventHandler token: token
 	"Not supported by this version"
 
@@ -902,6 +907,20 @@ GetDevToolsProtocolEventReceiver: eventName receiver: receiver
 	<virtual stdcall: hresult 43 lpwstr ICoreWebView2DevToolsProtocolEventReceiver**>
 	^self invalidCall: _failureCode!
 
+GetFavicon: format completedHandler: completedHandler
+	"Not supported by this version"
+
+	^E_NOTIMPL!
+
+getFavIcon: formatInteger thenDo: aDyadicValuable
+	"Invoke the CallDevToolsProtocolMethod() method of the COM object."
+
+	| handler |
+	handler := (WebView2CompletionHandler completionBlock: aDyadicValuable)
+				queryInterface: Smalltalk.ICoreWebView2GetFaviconCompletedHandler.
+	self GetFavicon: formatInteger completedHandler: handler.
+	handler free!
+
 goBack
 	"Invoke the GoBack() method of the COM object."
 
@@ -1188,6 +1207,11 @@ Remove_DOMContentLoaded: token
 	^E_NOTIMPL!
 
 Remove_DownloadStarting: token
+	"Not supported by this version"
+
+	^E_NOTIMPL!
+
+Remove_FaviconChanged: token
 	"Not supported by this version"
 
 	^E_NOTIMPL!
@@ -1490,6 +1514,7 @@ Add_ContextMenuRequested:token:!COM Interfaces-ICoreWebView2_11!private! !
 Add_DocumentTitleChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2!events!private! !
 Add_DOMContentLoaded:token:!COM Interfaces-ICoreWebView2_2!events!private! !
 Add_DownloadStarting:token:!COM Interfaces-ICoreWebView2_4!private! !
+Add_FaviconChanged:token:!COM Interfaces-ICoreWebView2_15!private! !
 Add_FrameCreated:token:!COM Interfaces-ICoreWebView2_4!private! !
 Add_FrameNavigationCompleted:token:!**auto generated**!COM Interfaces-ICoreWebView2!events!private! !
 Add_FrameNavigationStarting:token:!**auto generated**!COM Interfaces-ICoreWebView2!events!private! !
@@ -1503,9 +1528,9 @@ Add_NewWindowRequested:token:!**auto generated**!COM Interfaces-ICoreWebView2!ev
 Add_PermissionRequested:token:!**auto generated**!COM Interfaces-ICoreWebView2!events!private! !
 Add_ProcessFailed:token:!**auto generated**!COM Interfaces-ICoreWebView2!events!private! !
 Add_ScriptDialogOpening:token:!**auto generated**!COM Interfaces-ICoreWebView2!events!private! !
-Add_ServerCertificateErrorDetected:token:!**auto generated**!COM Interfaces-ICoreWebView2_14!private! !
+Add_ServerCertificateErrorDetected:token:!COM Interfaces-ICoreWebView2_14!private! !
 Add_SourceChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2!events!private! !
-Add_StatusBarTextChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2_12!private! !
+Add_StatusBarTextChanged:token:!COM Interfaces-ICoreWebView2_12!private! !
 Add_WebMessageReceived:token:!**auto generated**!COM Interfaces-ICoreWebView2!events!private! !
 Add_WebResourceRequested:token:!**auto generated**!COM Interfaces-ICoreWebView2!events!private! !
 Add_WebResourceResponseReceived:token:!COM Interfaces-ICoreWebView2_2!events!private! !
@@ -1513,21 +1538,21 @@ Add_WindowCloseRequested:token:!**auto generated**!COM Interfaces-ICoreWebView2!
 addHostObjectToScript:object:!**auto generated**!methods!public! !
 AddHostObjectToScript:object:!**auto generated**!COM Interfaces-ICoreWebView2!methods!private! !
 AddScriptToExecuteOnDocumentCreated:handler:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
-addScriptToExecuteOnDocumentCreated:thenDo:!methods!public! !
+addScriptToExecuteOnDocumentCreated:thenDo:!async requests!public! !
 addWebResourceRequestedFilter:resourceContext:!**auto generated**!methods!public! !
 AddWebResourceRequestedFilter:resourceContext:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 browserProcessId!**auto generated**!properties!public! !
 CallDevToolsProtocolMethod:parametersAsJson:handler:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
-callDevToolsProtocolMethod:parametersAsJson:thenDo:!methods!public! !
+callDevToolsProtocolMethod:parametersAsJson:thenDo:!async requests!public! !
 CallDevToolsProtocolMethodForSession:methodName:parametersAsJson:handler:!COM Interfaces-ICoreWebView2_11!private! !
-callDevToolsProtocolMethodForSession:methodName:parametersAsJson:thenDo:!methods!public! !
+callDevToolsProtocolMethodForSession:methodName:parametersAsJson:thenDo:!async requests!public! !
 canGoBack!properties!public! !
 canGoForward!properties!public! !
 canPrintToPdf!public!testing! !
 CapturePreview:imageStream:handler:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
-capturePreview:imageStream:thenDo:!methods!public! !
-ClearServerCertificateErrorActions:!**auto generated**!COM Interfaces-ICoreWebView2_14!private! !
-clearServerCertificateErrorActionsThenDo:!methods!public! !
+capturePreview:imageStream:thenDo:!async requests!public! !
+ClearServerCertificateErrorActions:!COM Interfaces-ICoreWebView2_14!private! !
+clearServerCertificateErrorActionsThenDo:!async requests!public! !
 clearVirtualHostNameToFolderMapping:!methods!public! !
 ClearVirtualHostNameToFolderMapping:!COM Interfaces-ICoreWebView2_3!private! !
 closeDefaultDownloadDialog!methods!public! !
@@ -1542,7 +1567,7 @@ displayOn:!displaying!public! !
 documentTitle!properties!public! !
 environment!properties!public! !
 ExecuteScript:handler:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
-executeScript:thenDo:!methods!public! !
+executeScript:thenDo:!async requests!public! !
 get_BrowserProcessId:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 get_CanGoBack:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 get_CanGoForward:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
@@ -1556,12 +1581,14 @@ get_IsDefaultDownloadDialogOpen:!COM Interfaces-ICoreWebView2_9!private! !
 get_IsDocumentPlayingAudio:!COM Interfaces-ICoreWebView2_8!private! !
 get_IsMuted:!COM Interfaces-ICoreWebView2_8!private! !
 get_IsSuspended:!COM Interfaces-ICoreWebView2_3!private! !
-get_Profile:!**auto generated**!COM Interfaces-ICoreWebView2_13!private! !
+get_Profile:!COM Interfaces-ICoreWebView2_13!private! !
 get_Settings:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 get_Source:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
-get_StatusBarText:!**auto generated**!COM Interfaces-ICoreWebView2_12!private! !
+get_StatusBarText:!COM Interfaces-ICoreWebView2_12!private! !
 getDevToolsProtocolEventReceiver:!**auto generated**!methods!public! !
 GetDevToolsProtocolEventReceiver:receiver:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
+GetFavicon:completedHandler:!COM Interfaces-ICoreWebView2_15!private! !
+getFavIcon:thenDo:!async requests!public! !
 goBack!**auto generated**!methods!public! !
 GoBack!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 goForward!**auto generated**!methods!public! !
@@ -1594,7 +1621,7 @@ put_DefaultDownloadDialogMargin:!COM Interfaces-ICoreWebView2_9!private! !
 put_IsMuted:!COM Interfaces-ICoreWebView2_8!private! !
 reload!**auto generated**!methods!public! !
 Reload!**auto generated**!COM Interfaces-ICoreWebView2!private! !
-Remove_BasicAuthenticationRequested:!**auto generated**!COM Interfaces-ICoreWebView2_10!private! !
+Remove_BasicAuthenticationRequested:!COM Interfaces-ICoreWebView2_10!private! !
 Remove_ClientCertificateRequested:!COM Interfaces-ICoreWebView2_5!private! !
 Remove_ContainsFullScreenElementChanged:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 Remove_ContentLoading:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
@@ -1602,6 +1629,7 @@ Remove_ContextMenuRequested:!COM Interfaces-ICoreWebView2_11!private! !
 Remove_DocumentTitleChanged:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 Remove_DOMContentLoaded:!COM Interfaces-ICoreWebView2_2!events!private! !
 Remove_DownloadStarting:!COM Interfaces-ICoreWebView2_4!private! !
+Remove_FaviconChanged:!**auto generated**!COM Interfaces-ICoreWebView2_15!private! !
 Remove_FrameCreated:!COM Interfaces-ICoreWebView2_4!private! !
 Remove_FrameNavigationCompleted:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 Remove_FrameNavigationStarting:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
@@ -1615,9 +1643,9 @@ Remove_NewWindowRequested:!**auto generated**!COM Interfaces-ICoreWebView2!priva
 Remove_PermissionRequested:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 Remove_ProcessFailed:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 Remove_ScriptDialogOpening:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
-Remove_ServerCertificateErrorDetected:!**auto generated**!COM Interfaces-ICoreWebView2_14!private! !
+Remove_ServerCertificateErrorDetected:!COM Interfaces-ICoreWebView2_14!private! !
 Remove_SourceChanged:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
-Remove_StatusBarTextChanged:!**auto generated**!COM Interfaces-ICoreWebView2_12!private! !
+Remove_StatusBarTextChanged:!COM Interfaces-ICoreWebView2_12!private! !
 Remove_WebMessageReceived:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 Remove_WebResourceRequested:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 Remove_WebResourceResponseReceived:!COM Interfaces-ICoreWebView2_2!events!private! !
