@@ -576,6 +576,16 @@ appendPathDelimiter: aString
 attributes: aFileNameString
 	^Kernel32 getFileAttributes: aFileNameString!
 
+attributesEx: aString
+	"Answer the <WIN32_FILE_ATTRIBUTE_DATA> for the file with the specified path, or nil if no such file exists."
+
+	| attributes |
+	attributes := Smalltalk.WIN32_FILE_ATTRIBUTE_DATA newBuffer.
+	^(KernelLibrary default
+		getFileAttributesEx: aString
+		fInfoLevelId: 0
+		lpFileInformation: attributes) ifTrue: [attributes]!
+
 canonicalizePath: aString
 	"Converts the path <String> argument into a canonical form, removing any embedded '..' and '.' components, and adding a long path prefix if required."
 
@@ -758,6 +768,11 @@ extensionDelimiter
 	"Answers the character that delimits a filename from its extension"
 
 	^ $.!
+
+fileSize: aString
+	"Answer the <integer> byte size of the file with the specified path, or nil if no such file exists."
+
+	^(self attributesEx: aString) ifNotNil: [:attributes | attributes fileSize]!
 
 find: fileSpec
 	"Answer a collection of WIN32_FIND_DATA structs for each file matching the 
@@ -981,17 +996,9 @@ isWriteable: aString set: aBoolean
 			ifFalse: [Kernel32 systemError]!
 
 lastWriteTime: aString
-	"Answer a <FILETIME> representing the time when the file with the specified filename was
-	last modified, or nil if no such file exists."
+	"Answer a <FILETIME> representing the time when the file with the specified filename was last modified, or nil if no such file exists."
 
-	| file |
-	(self exists: aString) ifFalse: [^nil].
-	file := File
-				open: aString
-				mode: #read
-				check: true
-				share: #read.
-	^[file lastWriteTime] ensure: [file close]!
+	^(self attributesEx: aString) ifNotNil: [:attributes | attributes ftLastWriteTime]!
 
 locateFilename: aFilenameString in: searchPath 
 	"Answers the full pathname of aFilenameString searched for in the ordered collection
@@ -1452,7 +1459,8 @@ workingDirectory: aString
 	^Kernel32 setCurrentDirectory: aString! !
 !Core.File class categoriesForMethods!
 appendPathDelimiter:!filename manipulation!public!testing! !
-attributes:!file operations!public! !
+attributes:!enquiries!public! !
+attributesEx:!enquiries!public! !
 canonicalizePath:!filename manipulation!public! !
 commonPrefixOf:and:!filename manipulation!public! !
 composePath:stem:extension:!filename manipulation!public! !
@@ -1466,8 +1474,9 @@ createTemporaryDirectory!file operations!public! !
 default:extension:!filename manipulation!public! !
 delete:!file operations!public! !
 deleteDirectory:!file operations!public! !
-exists:!file operations!public! !
+exists:!enquiries!public! !
 extensionDelimiter!constants!public! !
+fileSize:!enquiries!public! !
 find:!public!searching! !
 for:do:!enumerating!public! !
 for:in:do:!enumerating!public! !
@@ -1480,10 +1489,10 @@ fromHandle:!instance creation!public! !
 fullPathOf:!filename manipulation!public! !
 fullPathOf:relativeTo:!filename manipulation!public! !
 initialize!development!initializing!public! !
-isDirectory:!public!testing! !
-isRelativePath:!filename manipulation!public!testing! !
+isDirectory:!enquiries!public! !
+isRelativePath:!enquiries!public! !
 isRootPath:!filename manipulation!public! !
-isWriteable:!public!testing! !
+isWriteable:!enquiries!public! !
 isWriteable:set:!file operations!public! !
 lastWriteTime:!enquiries!public! !
 locateFilename:in:!filename manipulation!public! !
@@ -1501,12 +1510,12 @@ readAllText:!file operations!public! !
 relativePathOf:to:!filename manipulation!public! !
 removeDirectory:!file operations!public! !
 removeExtension:!filename manipulation!public! !
-removePathDelimiter:!filename manipulation!public!testing! !
+removePathDelimiter:!filename manipulation!public! !
 rename:to:!file operations!public! !
 replacePath:with:!filename manipulation!public! !
 shortenComponent:max:!helpers!private! !
 shortPathOf:!filename manipulation!public! !
-sniffEncoding:!public! !
+sniffEncoding:!enquiries!public! !
 splitDriveFrom:!filename manipulation!public! !
 splitExtensionFrom:!filename manipulation!public! !
 splitFilenameFrom:!filename manipulation!public! !
@@ -1514,11 +1523,11 @@ splitPath:!filename manipulation!public! !
 splitPathFrom:!filename manipulation!public! !
 splitStemFrom:!filename manipulation!public! !
 temporary!instance creation!public! !
-temporaryFilename!filename manipulation!public! !
-temporaryFilenameWithPrefix:!filename manipulation!public! !
-tempPath!filename manipulation!public! !
-windowsDirectory!accessing!public! !
-workingDirectory!file operations!public! !
+temporaryFilename!helpers!public! !
+temporaryFilenameWithPrefix:!helpers!public! !
+tempPath!enquiries!public! !
+windowsDirectory!enquiries!public! !
+workingDirectory!enquiries!public! !
 workingDirectory:!file operations!public! !
 !
 

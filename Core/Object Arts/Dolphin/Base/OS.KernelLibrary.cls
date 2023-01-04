@@ -815,6 +815,18 @@ getFileAttributes: aFileName
 	<stdcall: sdword GetFileAttributesW lpwstr>
 	^self invalidCall: _failureCode!
 
+getFileAttributesEx: lpFileName fInfoLevelId: fInfoLevelId lpFileInformation: lpFileInformation
+	"Invoke the GetFileAttributesEx() function of the module wrapped by the receiver.
+	Helpstring: Gets file attribute bitflags
+
+		BOOL __stdcall GetFileAttributesEx(
+			LPCWSTR lpFileName,
+			GET_FILEEX_INFO_LEVELS fInfoLevelId,
+			LPVOID lpFileInformation);"
+
+	<stdcall: bool GetFileAttributesExW lpwstr sdword void*>
+	^self invalidCall: _failureCode!
+
 getFileSizeEx: hfile lpFileSize: lpFileSize
 	"Invoke the GetFileSizeEx() function of the module wrapped by the receiver.
 	Helpstring: Retrieves the size, in bytes, of the specified file
@@ -2145,6 +2157,7 @@ getDiskFreeSpaceEx:lpFreeBytesAvailable:lpTotalNumberOfBytes:lpTotalNumberOfFree
 getEnvironmentVariable:!public!win32 functions-process and thread! !
 getEnvironmentVariable:lpBuffer:nSize:!public!win32 functions-process and thread! !
 getFileAttributes:!public!win32 functions-file management! !
+getFileAttributesEx:fInfoLevelId:lpFileInformation:!**auto generated**!public! !
 getFileSizeEx:lpFileSize:!**auto generated**!public!win32 functions-file management! !
 getFileTime:lpCreationTime:lpLastAccessTime:lpLastWriteTime:!public!win32 functions-file management! !
 getFileType:!public!win32 functions-file system! !
