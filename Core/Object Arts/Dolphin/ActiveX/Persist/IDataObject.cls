@@ -1,66 +1,100 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 IUnknown subclass: #IDataObject
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IDataObject guid: (IID fromString: '{0000010E-0000-0000-C000-000000000046}')!
-IDataObject comment: '<IDataObject> is a wrapper class for the COM interface ''OCIDL.IDataObject'' generated from type information in the ''OCIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
+IDataObject guid: (IID fromString: '{0000010e-0000-0000-c000-000000000046}')!
+IDataObject comment: '`IDataObject` is a wrapper class for the COM interface ''OCIDL.IDataObject'' generated from type information in the ''OCIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
-WARNING: This comment was automatically generated from the interface''s type information and any changes made here may be overwritten the next time this wrapper class is so generated.'!
-!IDataObject categoriesForClass!COM-Interfaces! !
+IDL definition follows:
+```
+[
+	object, 
+	uuid(0000010e-0000-0000-c000-000000000046)
+]
+interface IDataObject : IUnknown
+ {
+	[id(0x60010000)]
+	HRESULT __stdcall GetData(
+		[in]FORMATETC* pformatetcIn,
+		[out]STGMEDIUM* pRemoteMedium);
+	[id(0x60010001)]
+	HRESULT __stdcall GetDataHere(
+		[in]FORMATETC* pformatetc,
+		[in, out]STGMEDIUM* pRemoteMedium);
+	[id(0x60010002)]
+	HRESULT __stdcall QueryGetData(
+		[in]FORMATETC* pformatetc);
+	[id(0x60010003)]
+	HRESULT __stdcall GetCanonicalFormatEtc(
+		[in]FORMATETC* pformatectIn,
+		[out]FORMATETC* pformatetcOut);
+	[id(0x60010004)]
+	HRESULT __stdcall SetData(
+		[in]FORMATETC* pformatetc,
+		[in]STGMEDIUM* pmedium,
+		[in]long fRelease);
+	[id(0x60010005)]
+	HRESULT __stdcall EnumFormatEtc(
+		[in]unsigned long dwDirection,
+		[out]IEnumFORMATETC** ppenumFormatEtc);
+	[id(0x60010006)]
+	HRESULT __stdcall DAdvise(
+		[in]FORMATETC* pformatetc,
+		[in]unsigned long advf,
+		[in]IAdviseSink* pAdvSink,
+		[out]unsigned long* pdwConnection);
+	[id(0x60010007)]
+	HRESULT __stdcall DUnadvise(
+		[in]unsigned long dwConnection);
+	[id(0x60010008)]
+	HRESULT __stdcall EnumDAdvise(
+		[out]IEnumSTATDATA** ppenumAdvise);
+};
+```
+'!
+!IDataObject categoriesForClass!OBJIDL-Interfaces! !
 !IDataObject methodsFor!
 
-dAdvise: pFormatetc advf: advf pAdvSink: pAdvSink 
-	"Answer the <DWORD> result of invoking the COM Object's DAdvise() method."
+dAdvise: pformatetc advf: advf pAdvSink: pAdvSink
+	"Answer the <DWORD> result of invoking the DAdvise() method of the COM object."
 
 	| answer |
-	answer := (DWORD new).
+	answer := DWORD new.
 	self
-		DAdvise: pFormatetc
+		DAdvise: pformatetc
 		advf: advf
 		pAdvSink: pAdvSink
 		pdwConnection: answer.
-	^answer asObject
-!
+	^answer asObject!
 
-DAdvise: pFormatetc advf: advf pAdvSink: pAdvSink pdwConnection: pdwConnection
-	"Private - Invoke the DAdvise() method of the COM object wrapped by the receiver.
+DAdvise: pformatetc advf: advf pAdvSink: pAdvSink pdwConnection: pdwConnection
+	"Private - Invoke the DAdvise() method of the COM object.
 
 		HRESULT __stdcall DAdvise(
-			[in] FORMATETC* pFormatetc,
-			[in] unsigned long advf,
-			[in] IAdviseSink* pAdvSink,
-			[out] unsigned long* pdwConnection);
-	"
+			[in]FORMATETC* pformatetc,
+			[in]unsigned long advf,
+			[in]IAdviseSink* pAdvSink,
+			[out]unsigned long* pdwConnection);"
 
 	<virtual stdcall: hresult 10 FORMATETC* dword IAdviseSink* dword*>
-	^self invalidCall
-!
-
-dUnadvise: dwConnection 
-	"Invoke the DUnadvise() method of the COM Object."
-
-	self
-		DUnadvise: dwConnection
-!
+	^self invalidCall: _failureCode!
 
 DUnadvise: dwConnection
-	"Private - Invoke the DUnadvise() method of the COM object wrapped by the receiver.
+	"Invoke the DUnadvise() method of the COM object.
 
 		HRESULT __stdcall DUnadvise(
-			[in] unsigned long dwConnection);
-	"
+			[in]unsigned long dwConnection);"
 
 	<virtual stdcall: hresult 11 dword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 enumDAdvise
-	"Answer the <IEnumSTATDATA> result of invoking the COM Object's EnumDAdvise() method."
+	"Answer the <IEnumSTATDATA> result of invoking the EnumDAdvise() method of the COM object."
 
 	| answer |
 	answer := IEnumStruct elementClass: STATDATA.
@@ -68,18 +102,16 @@ enumDAdvise
 	^answer!
 
 EnumDAdvise: ppenumAdvise
-	"Private - Invoke the EnumDAdvise() method of the COM object wrapped by the receiver.
+	"Private - Invoke the EnumDAdvise() method of the COM object.
 
 		HRESULT __stdcall EnumDAdvise(
-			[out] IEnumSTATDATA** ppenumAdvise);
-	"
+			[out]IEnumSTATDATA** ppenumAdvise);"
 
-	<virtual stdcall: hresult 12 void**>
-	^self invalidCall
-!
+	<virtual stdcall: hresult 12 IUnknown**>
+	^self invalidCall: _failureCode!
 
-enumFormatEtc: dwDirection 
-	"Answer the <IEnumFORMATETC> result of invoking the COM Object's EnumFormatEtc() method."
+enumFormatEtc: dwDirection
+	"Answer the <IEnumFORMATETC> result of invoking the EnumFormatEtc() method of the COM object."
 
 	| answer |
 	answer := IEnumStruct elementClass: FORMATETC.
@@ -87,62 +119,50 @@ enumFormatEtc: dwDirection
 	^answer asObject!
 
 EnumFormatEtc: dwDirection ppenumFormatEtc: ppenumFormatEtc
-	"Private - Invoke the EnumFormatEtc() method of the COM object wrapped by the receiver.
+	"Private - Invoke the EnumFormatEtc() method of the COM object.
 
 		HRESULT __stdcall EnumFormatEtc(
-			[in] unsigned long dwDirection,
-			[out] IEnumFORMATETC** ppenumFormatEtc);
-	"
+			[in]unsigned long dwDirection,
+			[out]IEnumFORMATETC** ppenumFormatEtc);"
 
-	<virtual stdcall: hresult 9 dword void**>
-	^self invalidCall
-!
+	<virtual stdcall: hresult 9 dword IUnknown**>
+	^self invalidCall: _failureCode!
 
-getCanonicalFormatEtc: pformatectIn 
-	"Answer the <FORMATETC> result of invoking the COM Object's GetCanonicalFormatEtc() method."
+getCanonicalFormatEtc: pformatectIn
+	"Answer the <FORMATETC> result of invoking the GetCanonicalFormatEtc() method of the COM object."
 
 	| answer |
-	answer := (FORMATETC new).
-	self
-		GetCanonicalFormatEtc: pformatectIn
-		pformatetcOut: answer.
-	^answer asObject
-!
+	answer := FORMATETC new.
+	self GetCanonicalFormatEtc: pformatectIn pformatetcOut: answer.
+	^answer asObject!
 
 GetCanonicalFormatEtc: pformatectIn pformatetcOut: pformatetcOut
-	"Private - Invoke the GetCanonicalFormatEtc() method of the COM object wrapped by the receiver.
+	"Private - Invoke the GetCanonicalFormatEtc() method of the COM object.
 
 		HRESULT __stdcall GetCanonicalFormatEtc(
-			[in] FORMATETC* pformatectIn,
-			[out] FORMATETC* pformatetcOut);
-	"
+			[in]FORMATETC* pformatectIn,
+			[out]FORMATETC* pformatetcOut);"
 
 	<virtual stdcall: hresult 7 FORMATETC* FORMATETC*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
-getData: pFormatetc
-	"Answer the <STGMEDIUM> result of invoking the COM Object's GetDataHere() method."
+getData: pformatetcIn
+	"Answer the <STGMEDIUM> result of invoking the GetData() method of the COM object."
 
 	| answer |
 	answer := STGMEDIUM new.
-	self
-		GetData: pFormatetc
-		pmedium: answer.
-	^answer
-!
+	self GetData: pformatetcIn pmedium: answer.
+	^answer!
 
-GetData: pformatetcIn pmedium: pMedium
-	"Private - Invoke the GetData() method of the COM object wrapped by the receiver.
+GetData: pformatetcIn pmedium: pRemoteMedium
+	"Private - Invoke the GetData() method of the COM object.
 
 		HRESULT __stdcall GetData(
-			[in] FORMATETC* pformatetcIn,
-			[out]STGMEDIUM* pmedium);
-	"
+			[in]FORMATETC* pformatetcIn,
+			[out]STGMEDIUM* pmedium);"
 
 	<virtual stdcall: hresult 4 FORMATETC* STGMEDIUM*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 getDataHere: pFormatetc pmedium: pMedium 
 	"Answer the <STGMEDIUM> result of invoking the COM Object's GetDataHere() method."
@@ -153,17 +173,15 @@ getDataHere: pFormatetc pmedium: pMedium
 	^pMedium
 !
 
-GetDataHere: pFormatetc pmedium: pMedium
-	"Private - Invoke the GetDataHere() method of the COM object wrapped by the receiver.
+GetDataHere: pformatetc pmedium: pRemoteMedium
+	"Private - Invoke the GetDataHere() method of the COM object.
 
 		HRESULT __stdcall GetDataHere(
-			[in] FORMATETC* pFormatetc,
-			[in, out] wireSTGMEDIUM* pMedium);
-	"
+			[in]FORMATETC* pformatetc,
+			[in, out]STGMEDIUM* pmedium);"
 
 	<virtual stdcall: hresult 5 FORMATETC* STGMEDIUM*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 queryGetData: pFormatetc 
 	"Answer whether data of the specified format is available."
@@ -171,83 +189,62 @@ queryGetData: pFormatetc
 	^(self QueryGetData: pFormatetc) == S_OK
 !
 
-QueryGetData: pFormatetc
-	"Private - Invoke the QueryGetData() method of the COM object wrapped by the receiver.
+QueryGetData: pformatetc
+	"Invoke the QueryGetData() method of the COM object.
 
 		HRESULT __stdcall QueryGetData(
-			[in] FORMATETC* pFormatetc);
-	"
+			[in]FORMATETC* pformatetc);"
 
 	<virtual stdcall: hresult 6 FORMATETC*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
-setData: pFormatetc pmedium: pmedium fRelease: fRelease 
-	"Invoke the SetData() method of the COM Object."
-
-	self
-		SetData: pFormatetc
-		pmedium: pmedium
-		fRelease: fRelease asParameter
-!
-
-SetData: pFormatetc pmedium: pmedium fRelease: fRelease
-	"Private - Invoke the SetData() method of the COM object wrapped by the receiver.
+SetData: pformatetc pmedium: pmedium fRelease: fRelease
+	"Invoke the SetData() method of the COM object.
 
 		HRESULT __stdcall SetData(
-			[in] FORMATETC* pFormatetc,
-			[in] STGMEDIUM* pmedium,
-			[in] long fRelease);
-	"
+			[in]FORMATETC* pformatetc,
+			[in]STGMEDIUM* pmedium,
+			[in]long fRelease);"
 
 	<virtual stdcall: hresult 8 FORMATETC* STGMEDIUM* sdword>
-	^self invalidCall
-! !
-!IDataObject categoriesFor: #dAdvise:advf:pAdvSink:!**auto generated**!methods!public! !
-!IDataObject categoriesFor: #DAdvise:advf:pAdvSink:pdwConnection:!**auto generated**!COM Interfaces-IDataObject!private! !
-!IDataObject categoriesFor: #dUnadvise:!**auto generated**!methods!public! !
-!IDataObject categoriesFor: #DUnadvise:!**auto generated**!COM Interfaces-IDataObject!private! !
-!IDataObject categoriesFor: #enumDAdvise!methods!public! !
-!IDataObject categoriesFor: #EnumDAdvise:!**auto generated**!COM Interfaces-IDataObject!private! !
-!IDataObject categoriesFor: #enumFormatEtc:!methods!public! !
-!IDataObject categoriesFor: #EnumFormatEtc:ppenumFormatEtc:!**auto generated**!COM Interfaces-IDataObject!private! !
-!IDataObject categoriesFor: #getCanonicalFormatEtc:!**auto generated**!methods!public! !
-!IDataObject categoriesFor: #GetCanonicalFormatEtc:pformatetcOut:!**auto generated**!COM Interfaces-IDataObject!private! !
-!IDataObject categoriesFor: #getData:!methods!public! !
-!IDataObject categoriesFor: #GetData:pmedium:!COM Interfaces-IDataObject!private! !
-!IDataObject categoriesFor: #getDataHere:pmedium:!methods!public! !
-!IDataObject categoriesFor: #GetDataHere:pmedium:!COM Interfaces-IDataObject!private! !
-!IDataObject categoriesFor: #queryGetData:!methods!public! !
-!IDataObject categoriesFor: #QueryGetData:!**auto generated**!COM Interfaces-IDataObject!private! !
-!IDataObject categoriesFor: #setData:pmedium:fRelease:!methods!public! !
-!IDataObject categoriesFor: #SetData:pmedium:fRelease:!COM Interfaces-IDataObject!private! !
+	^self invalidCall: _failureCode! !
+!IDataObject categoriesForMethods!
+dAdvise:advf:pAdvSink:!**auto generated**!methods!public! !
+DAdvise:advf:pAdvSink:pdwConnection:!**auto generated**!COM Interfaces-IDataObject!private! !
+DUnadvise:!**auto generated**!COM Interfaces-IDataObject!public! !
+enumDAdvise!methods!public! !
+EnumDAdvise:!**auto generated**!COM Interfaces-IDataObject!private! !
+enumFormatEtc:!methods!public! !
+EnumFormatEtc:ppenumFormatEtc:!**auto generated**!COM Interfaces-IDataObject!private! !
+getCanonicalFormatEtc:!**auto generated**!methods!public! !
+GetCanonicalFormatEtc:pformatetcOut:!**auto generated**!COM Interfaces-IDataObject!private! !
+getData:!methods!public! !
+GetData:pmedium:!**auto generated**!COM Interfaces-IDataObject!private! !
+getDataHere:pmedium:!methods!public! !
+GetDataHere:pmedium:!**auto generated**!COM Interfaces-IDataObject!private! !
+queryGetData:!methods!public! !
+QueryGetData:!**auto generated**!COM Interfaces-IDataObject!public! !
+SetData:pmedium:fRelease:!**auto generated**!COM Interfaces-IDataObject!public! !
+!
 
 !IDataObject class methodsFor!
 
 defineFunctions
-	"Declare the virtual function table for the COM interface 'OCIDL.IDataObject'
-		IDataObject defineTemplate
-	"
+	"Declare the virtual function table for the COM interface 'WebView2.IDataObject'
+		IDataObject defineTemplate"
 
 	self
-		defineFunction: #GetData:pmedium:
-			argumentTypes: 'FORMATETC* STGMEDIUM*';
-		defineFunction: #GetDataHere:pmedium:
-			argumentTypes: 'FORMATETC* STGMEDIUM*';
-		defineFunction: #QueryGetData:
-			argumentTypes: 'FORMATETC*';
-		defineFunction: #GetCanonicalFormatEtc:pformatetcOut:
-			argumentTypes: 'FORMATETC* FORMATETC*';
-		defineFunction: #SetData:pmedium:fRelease:
-			argumentTypes: 'FORMATETC* STGMEDIUM** sdword';
-		defineFunction: #EnumFormatEtc:ppenumFormatEtc:
-			argumentTypes: 'dword void**';
+		defineFunction: #GetData:pmedium: argumentTypes: 'FORMATETC* STGMEDIUM*';
+		defineFunction: #GetDataHere:pmedium: argumentTypes: 'FORMATETC* STGMEDIUM*';
+		defineFunction: #QueryGetData: argumentTypes: 'FORMATETC*';
+		defineFunction: #GetCanonicalFormatEtc:pformatetcOut: argumentTypes: 'FORMATETC* FORMATETC*';
+		defineFunction: #SetData:pmedium:fRelease: argumentTypes: 'FORMATETC* STGMEDIUM* sdword';
+		defineFunction: #EnumFormatEtc:ppenumFormatEtc: argumentTypes: 'dword IUnknown**';
 		defineFunction: #DAdvise:advf:pAdvSink:pdwConnection:
 			argumentTypes: 'FORMATETC* dword IAdviseSink* dword*';
-		defineFunction: #DUnadvise:
-			argumentTypes: 'dword';
-		defineFunction: #EnumDAdvise:
-			argumentTypes: 'void**'
-! !
-!IDataObject class categoriesFor: #defineFunctions!initializing!public! !
+		defineFunction: #DUnadvise: argumentTypes: 'dword';
+		defineFunction: #EnumDAdvise: argumentTypes: 'IUnknown**'! !
+!IDataObject class categoriesForMethods!
+defineFunctions!initializing!public! !
+!
 

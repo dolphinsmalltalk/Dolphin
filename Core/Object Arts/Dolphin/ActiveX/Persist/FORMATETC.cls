@@ -1,78 +1,85 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 OLEStructure subclass: #FORMATETC
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cfFormat _OffsetOf_dwAspect _OffsetOf_lindex _OffsetOf_ptd _OffsetOf_tymed'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 FORMATETC guid: (GUID fromString: '{93cc6a56-76b0-48ed-9d91-a4b4b891ef2e}')!
+FORMATETC addClassConstant: '_OffsetOf_cfFormat' value: 16r0!
+FORMATETC addClassConstant: '_OffsetOf_dwAspect' value: 16r8!
+FORMATETC addClassConstant: '_OffsetOf_lindex' value: 16rC!
+FORMATETC addClassConstant: '_OffsetOf_ptd' value: 16r4!
+FORMATETC addClassConstant: '_OffsetOf_tymed' value: 16r10!
 FORMATETC comment: '<FORMATETC> is an <ExternalStructure> class to wrap the struct ''OCIDL.FORMATETC'' from type information in the ''OCIDL Library'' library.
 
 The type library contains no documentation for this struct
 
 WARNING: This comment was automatically generated from the struct''s type information and any changes made here may be overwritten the next time this wrapper class is so generated.'!
-!FORMATETC categoriesForClass!No category! !
+!FORMATETC categoriesForClass!External-Data-Structured-COM! !
 !FORMATETC methodsFor!
 
 cfFormat
-	"Answer the receiver's cfFormat field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cfFormat' field."
 
-	^(bytes wordAtOffset: 0)!
+	^bytes wordAtOffset: _OffsetOf_cfFormat!
 
-cfFormat: anObject
-	"Set the receiver's cfFormat field to the value of anObject."
+cfFormat: anInteger
+	"Set the receiver's 'cfFormat' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 0 put: anObject!
+	bytes wordAtOffset: _OffsetOf_cfFormat put: anInteger!
 
 dwAspect
-	"Answer the receiver's dwAspect field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwAspect' field."
 
-	^(bytes dwordAtOffset: 8)!
+	^bytes dwordAtOffset: _OffsetOf_dwAspect!
 
-dwAspect: anObject
-	"Set the receiver's dwAspect field to the value of anObject."
+dwAspect: anInteger
+	"Set the receiver's 'dwAspect' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 8 put: anObject!
+	bytes dwordAtOffset: _OffsetOf_dwAspect put: anInteger!
 
 lindex
-	"Answer the receiver's lindex field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'lindex' field."
 
-	^(bytes sdwordAtOffset: 12)!
+	^bytes sdwordAtOffset: _OffsetOf_lindex!
 
-lindex: anObject
-	"Set the receiver's lindex field to the value of anObject."
+lindex: anInteger
+	"Set the receiver's 'lindex' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 12 put: anObject!
+	bytes sdwordAtOffset: _OffsetOf_lindex put: anInteger!
 
 ptd
-	"Answer the receiver's ptd field as a Smalltalk object."
+	"Answer the <DVTARGETDEVICE> value of the receiver's 'ptd' field."
 
-	^DVTARGETDEVICE fromAddress: (bytes intPtrAtOffset: 4)!
+	^DVTARGETDEVICE fromAddress: (bytes intPtrAtOffset: _OffsetOf_ptd)!
 
-ptd: anObject 
-	"Set the receiver's ptd field to the value of anObject."
+ptd: aDVTARGETDEVICE
+	"Set the receiver's 'ptd' field to the value of the argument, aDVTARGETDEVICE"
 
-	bytes uintPtrAtOffset: 4 put: anObject yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_ptd put: aDVTARGETDEVICE yourAddress!
 
 tymed
-	"Answer the receiver's tymed field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'tymed' field."
 
-	^(bytes dwordAtOffset: 16)!
+	^bytes dwordAtOffset: _OffsetOf_tymed!
 
-tymed: anObject
-	"Set the receiver's tymed field to the value of anObject."
+tymed: anInteger
+	"Set the receiver's 'tymed' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 16 put: anObject! !
-!FORMATETC categoriesFor: #cfFormat!**compiled accessors**!public! !
-!FORMATETC categoriesFor: #cfFormat:!**compiled accessors**!public! !
-!FORMATETC categoriesFor: #dwAspect!**compiled accessors**!public! !
-!FORMATETC categoriesFor: #dwAspect:!**compiled accessors**!public! !
-!FORMATETC categoriesFor: #lindex!**compiled accessors**!public! !
-!FORMATETC categoriesFor: #lindex:!**compiled accessors**!public! !
-!FORMATETC categoriesFor: #ptd!**compiled accessors**!public! !
-!FORMATETC categoriesFor: #ptd:!**compiled accessors**!public! !
-!FORMATETC categoriesFor: #tymed!**compiled accessors**!public! !
-!FORMATETC categoriesFor: #tymed:!**compiled accessors**!public! !
+	bytes dwordAtOffset: _OffsetOf_tymed put: anInteger! !
+!FORMATETC categoriesForMethods!
+cfFormat!**compiled accessors**!public! !
+cfFormat:!**compiled accessors**!public! !
+dwAspect!**compiled accessors**!public! !
+dwAspect:!**compiled accessors**!public! !
+lindex!**compiled accessors**!public! !
+lindex:!**compiled accessors**!public! !
+ptd!**compiled accessors**!public! !
+ptd:!**compiled accessors**!public! !
+tymed!**compiled accessors**!public! !
+tymed:!**compiled accessors**!public! !
+!
 
 !FORMATETC class methodsFor!
 
@@ -97,6 +104,12 @@ defineFields
 		defineField: #ptd type: (PointerField type: DVTARGETDEVICE);
 		defineField: #dwAspect type: DWORDField new;
 		defineField: #lindex type: SDWORDField new;
-		defineField: #tymed type: DWORDField new! !
-!FORMATETC class categoriesFor: #defineFields!initializing!public! !
+		defineField: #tymed type: DWORDField new!
+
+getFieldNames
+	^#(#cfFormat #ptd #dwAspect #lindex #tymed)! !
+!FORMATETC class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

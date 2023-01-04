@@ -1,11 +1,15 @@
-"Filed out from Dolphin Smalltalk 7"!
+ï»¿"Filed out from Dolphin Smalltalk"!
 
 BIND_OPTS subclass: #BIND_OPTS2
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwClassContext _OffsetOf_dwTrackFlags _OffsetOf_locale _OffsetOf_pServerInfo'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 BIND_OPTS2 guid: (GUID fromString: '{87b4c5bf-026e-11d3-9fd7-00a0cc3e4a32}')!
+BIND_OPTS2 addClassConstant: '_OffsetOf_dwClassContext' value: 16r14!
+BIND_OPTS2 addClassConstant: '_OffsetOf_dwTrackFlags' value: 16r10!
+BIND_OPTS2 addClassConstant: '_OffsetOf_locale' value: 16r18!
+BIND_OPTS2 addClassConstant: '_OffsetOf_pServerInfo' value: 16r1C!
 BIND_OPTS2 comment: 'BIND_OPTS2 is an <ExternalStructure> class to represent the COM structure of the same name.
 
 BIND_OPTS2 is a DCOM extentsion of BIND_OPTS which adds a COSERVERINFO field to enable a remote machine to be specified as the bind destination.'!
@@ -13,52 +17,60 @@ BIND_OPTS2 is a DCOM extentsion of BIND_OPTS which adds a COSERVERINFO field to 
 !BIND_OPTS2 methodsFor!
 
 dwClassContext
-	"Answer the receiver's dwClassContext field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwClassContext' field."
 
-	^(bytes dwordAtOffset: 20)!
+	^bytes dwordAtOffset: _OffsetOf_dwClassContext!
 
-dwClassContext: anObject
-	"Set the receiver's dwClassContext field to the value of anObject."
+dwClassContext: anInteger
+	"Set the receiver's 'dwClassContext' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 20 put: anObject!
+	bytes dwordAtOffset: _OffsetOf_dwClassContext put: anInteger!
+
+dwSize: anInteger
+	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
+
+	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
 
 dwTrackFlags
-	"Answer the receiver's dwTrackFlags field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwTrackFlags' field."
 
-	^(bytes dwordAtOffset: 16)!
+	^bytes dwordAtOffset: _OffsetOf_dwTrackFlags!
 
-dwTrackFlags: anObject
-	"Set the receiver's dwTrackFlags field to the value of anObject."
+dwTrackFlags: anInteger
+	"Set the receiver's 'dwTrackFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 16 put: anObject!
+	bytes dwordAtOffset: _OffsetOf_dwTrackFlags put: anInteger!
 
 locale
-	"Answer the receiver's locale field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'locale' field."
 
-	^(bytes dwordAtOffset: 24)!
+	^bytes dwordAtOffset: _OffsetOf_locale!
 
-locale: anObject
-	"Set the receiver's locale field to the value of anObject."
+locale: anInteger
+	"Set the receiver's 'locale' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 24 put: anObject!
+	bytes dwordAtOffset: _OffsetOf_locale put: anInteger!
 
 pServerInfo
-	"Answer the receiver's pServerInfo field as a Smalltalk object."
+	"Answer the <COSERVERINFO> value of the receiver's 'pServerInfo' field."
 
-	^COSERVERINFO fromAddress: (bytes intPtrAtOffset: 28)!
+	^COSERVERINFO fromAddress: (bytes intPtrAtOffset: _OffsetOf_pServerInfo)!
 
-pServerInfo: anObject 
-	"Set the receiver's pServerInfo field to the value of anObject."
+pServerInfo: aCOSERVERINFO
+	"Set the receiver's 'pServerInfo' field to the value of the argument, aCOSERVERINFO"
 
-	bytes uintPtrAtOffset: 28 put: anObject yourAddress! !
-!BIND_OPTS2 categoriesFor: #dwClassContext!**compiled accessors**!public! !
-!BIND_OPTS2 categoriesFor: #dwClassContext:!**compiled accessors**!public! !
-!BIND_OPTS2 categoriesFor: #dwTrackFlags!**compiled accessors**!public! !
-!BIND_OPTS2 categoriesFor: #dwTrackFlags:!**compiled accessors**!public! !
-!BIND_OPTS2 categoriesFor: #locale!**compiled accessors**!public! !
-!BIND_OPTS2 categoriesFor: #locale:!**compiled accessors**!public! !
-!BIND_OPTS2 categoriesFor: #pServerInfo!**compiled accessors**!public! !
-!BIND_OPTS2 categoriesFor: #pServerInfo:!**compiled accessors**!public! !
+	bytes uintPtrAtOffset: _OffsetOf_pServerInfo put: aCOSERVERINFO yourAddress! !
+!BIND_OPTS2 categoriesForMethods!
+dwClassContext!**compiled accessors**!public! !
+dwClassContext:!**compiled accessors**!public! !
+dwSize:!**compiled accessors**!public! !
+dwTrackFlags!**compiled accessors**!public! !
+dwTrackFlags:!**compiled accessors**!public! !
+locale!**compiled accessors**!public! !
+locale:!**compiled accessors**!public! !
+pServerInfo!**compiled accessors**!public! !
+pServerInfo:!**compiled accessors**!public! !
+!
 
 !BIND_OPTS2 class methodsFor!
 
@@ -74,7 +86,7 @@ defineFields
 			DWORD	grfMode;
 			DWORD 	dwTickCountDeadline;
 			DWORD   dwTrackFlags;
-			DWORD   dwClassContext;    
+			DWORD   dwClassContext;
 			LCID        locale;
 			COSERVERINFO * pServerInfo;
 		};
@@ -82,9 +94,15 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #dwTrackFlags		type: DWORDField new;
-		defineField: #dwClassContext	type: DWORDField new;
-		defineField: #locale			type: DWORDField new;
-		defineField: #pServerInfo		type: (PointerField type: COSERVERINFO)! !
-!BIND_OPTS2 class categoriesFor: #defineFields!initializing!public! !
+		defineField: #dwTrackFlags type: DWORDField new;
+		defineField: #dwClassContext type: DWORDField new;
+		defineField: #locale type: DWORDField new;
+		defineField: #pServerInfo type: (PointerField type: COSERVERINFO)!
+
+getFieldNames
+	^#(#dwSize #grfFlags #grfMode #dwTickCountDeadline #dwTrackFlags #dwClassContext #locale #pServerInfo)! !
+!BIND_OPTS2 class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

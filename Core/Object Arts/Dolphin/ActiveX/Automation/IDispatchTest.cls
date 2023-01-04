@@ -12,7 +12,7 @@ IDispatchTest comment: ''!
 
 testDisplayOn
 	self assert: ((IDispatch createObject:'Scripting.FileSystemObject') displayString = 'a FileSystemObject').
-	self assert: ((IDispatch createObject:'Scripting.FileSystemObject') drives displayString beginsWith: 'an OrderedCollection(').!
+	self assert: ((IDispatch createObject:'Scripting.FileSystemObject') drives displayString beginsWith: '#(an IDispatch(''C:'')').!
 
 testDNU
 	| fs dict path ts |
