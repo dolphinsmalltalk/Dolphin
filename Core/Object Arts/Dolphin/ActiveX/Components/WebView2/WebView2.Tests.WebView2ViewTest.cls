@@ -72,7 +72,7 @@ waitForNavigationCompleted
 	| start |
 	start := DateAndTime now.
 	SessionManager inputState
-		loopWhile: [navigationCompleted isNil and: [DateAndTime now - start < 30 minutes]]! !
+		loopWhile: [navigationCompleted isNil and: [DateAndTime now - start < 2 minutes]]! !
 !WebView2.Tests.WebView2ViewTest categoriesForMethods!
 classToTest!helpers!private! !
 initializePresenter!public!Running! !
