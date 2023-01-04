@@ -1,29 +1,18 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 IUnknown subclass: #IBindStatusCallback
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IBindStatusCallback guid: (IID fromString: '{79EAC9C1-BAF9-11CE-8C82-00AA004BA90B}')!
+IBindStatusCallback guid: (IID fromString: '{79eac9c1-baf9-11ce-8c82-00aa004ba90b}')!
 IBindStatusCallback comment: '<IBindStatusCallback> is a wrapper class for the COM interface ''OCIDL.IBindStatusCallback'' generated from type information in the ''OCIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
-WARNING: This comment was automatically generated from the interface''s type information and any changes made here may be overwritten the next time this wrapper class is so generated.'!
+This is a callback interface to be passed to IBindHost.MonikerBindToObject or IBindHost.MonikerBindToStorage.'!
 !IBindStatusCallback categoriesForClass!COM-Interfaces! !
 !IBindStatusCallback methodsFor!
-
-getBindInfo: pbindinfo
-	"Invoke the GetBindInfo() method of the COM Object."
-
-	| answer |
-	answer := DWORD new.
-	self
-		GetBindInfo: answer
-		pbindinfo: pbindinfo.
-	^answer asObject
-!
 
 GetBindInfo: grfBINDF pbindinfo: pbindinfo
 	"Private - Invoke the GetBindInfo() method of the COM object wrapped by the receiver.
@@ -34,17 +23,7 @@ GetBindInfo: grfBINDF pbindinfo: pbindinfo
 	"
 
 	<virtual stdcall: hresult 9 dword* BINDINFO*>
-	^self invalidCall
-!
-
-getPriority
-	"Answer the <SDWORD> result of invoking the COM Object's GetPriority() method."
-
-	| answer |
-	answer := (SDWORD new).
-	self
-		GetPriority: answer.
-	^answer asObject
+	^self invalidCall: _failureCode
 !
 
 GetPriority: pnPriority
@@ -55,18 +34,7 @@ GetPriority: pnPriority
 	"
 
 	<virtual stdcall: hresult 5 sdword*>
-	^self invalidCall
-!
-
-onDataAvailable: grfBSCF dwSize: dwSize pFormatetc: pFormatetc pStgmed: pStgmed 
-	"Invoke the OnDataAvailable() method of the COM Object."
-
-	self
-		OnDataAvailable: grfBSCF
-		dwSize: dwSize
-		pFormatetc: pFormatetc
-		pStgmed: pStgmed
-!
+	^self invalidCall: _failureCode!
 
 OnDataAvailable: grfBSCF dwSize: dwSize pFormatetc: pFormatetc pStgmed: pStgmed
 	"Private - Invoke the OnDataAvailable() method of the COM object wrapped by the receiver.
@@ -79,14 +47,7 @@ OnDataAvailable: grfBSCF dwSize: dwSize pFormatetc: pFormatetc pStgmed: pStgmed
 	"
 
 	<virtual stdcall: hresult 10 dword dword FORMATETC* STGMEDIUM*>
-	^self invalidCall
-!
-
-onLowResource: reserved 
-	"Invoke the OnLowResource() method of the COM Object."
-
-	self
-		OnLowResource: reserved
+	^self invalidCall: _failureCode
 !
 
 OnLowResource: reserved
@@ -97,15 +58,7 @@ OnLowResource: reserved
 	"
 
 	<virtual stdcall: hresult 6 dword>
-	^self invalidCall
-!
-
-onObjectAvailable: riid pUnk: pUnk 
-	"Invoke the OnObjectAvailable() method of the COM Object."
-
-	self
-		OnObjectAvailable: riid
-		pUnk: pUnk
+	^self invalidCall: _failureCode
 !
 
 OnObjectAvailable: riid pUnk: pUnk
@@ -117,18 +70,7 @@ OnObjectAvailable: riid pUnk: pUnk
 	"
 
 	<virtual stdcall: hresult 11 GUID* IUnknown*>
-	^self invalidCall
-!
-
-onProgress: ulProgress ulProgressMax: ulProgressMax ulStatusCode: ulStatusCode szStatusText: szStatusText 
-	"Invoke the OnProgress() method of the COM Object."
-
-	self
-		OnProgress: ulProgress
-		ulProgressMax: ulProgressMax
-		ulStatusCode: ulStatusCode
-		szStatusText: szStatusText asUnicodeString
-!
+	^self invalidCall: _failureCode!
 
 OnProgress: ulProgress ulProgressMax: ulProgressMax ulStatusCode: ulStatusCode szStatusText: szStatusText
 	"Private - Invoke the OnProgress() method of the COM object wrapped by the receiver.
@@ -141,15 +83,7 @@ OnProgress: ulProgress ulProgressMax: ulProgressMax ulStatusCode: ulStatusCode s
 	"
 
 	<virtual stdcall: hresult 7 dword dword dword lpwstr>
-	^self invalidCall
-!
-
-onStartBinding: dwReserved pib: pib 
-	"Invoke the OnStartBinding() method of the COM Object."
-
-	self
-		OnStartBinding: dwReserved
-		pib: pib
+	^self invalidCall: _failureCode
 !
 
 OnStartBinding: dwReserved pib: pib
@@ -161,15 +95,7 @@ OnStartBinding: dwReserved pib: pib
 	"
 
 	<virtual stdcall: hresult 4 dword IBinding*>
-	^self invalidCall
-!
-
-onStopBinding: hresult szError: szError 
-	"Invoke the OnStopBinding() method of the COM Object."
-
-	self
-		OnStopBinding: hresult
-		szError: szError asUnicodeString
+	^self invalidCall: _failureCode
 !
 
 OnStopBinding: hresult szError: szError
@@ -181,24 +107,17 @@ OnStopBinding: hresult szError: szError
 	"
 
 	<virtual stdcall: hresult 8 hresult lpwstr>
-	^self invalidCall
-! !
-!IBindStatusCallback categoriesFor: #getBindInfo:!methods!public! !
-!IBindStatusCallback categoriesFor: #GetBindInfo:pbindinfo:!COM Interfaces-IBindStatusCallback!private! !
-!IBindStatusCallback categoriesFor: #getPriority!**auto generated**!methods!public! !
-!IBindStatusCallback categoriesFor: #GetPriority:!**auto generated**!COM Interfaces-IBindStatusCallback!private! !
-!IBindStatusCallback categoriesFor: #onDataAvailable:dwSize:pFormatetc:pStgmed:!methods!public! !
-!IBindStatusCallback categoriesFor: #OnDataAvailable:dwSize:pFormatetc:pStgmed:!COM Interfaces-IBindStatusCallback!private! !
-!IBindStatusCallback categoriesFor: #onLowResource:!**auto generated**!methods!public! !
-!IBindStatusCallback categoriesFor: #OnLowResource:!**auto generated**!COM Interfaces-IBindStatusCallback!private! !
-!IBindStatusCallback categoriesFor: #onObjectAvailable:pUnk:!**auto generated**!methods!public! !
-!IBindStatusCallback categoriesFor: #OnObjectAvailable:pUnk:!**auto generated**!COM Interfaces-IBindStatusCallback!private! !
-!IBindStatusCallback categoriesFor: #onProgress:ulProgressMax:ulStatusCode:szStatusText:!**auto generated**!methods!public! !
-!IBindStatusCallback categoriesFor: #OnProgress:ulProgressMax:ulStatusCode:szStatusText:!**auto generated**!COM Interfaces-IBindStatusCallback!private! !
-!IBindStatusCallback categoriesFor: #onStartBinding:pib:!**auto generated**!methods!public! !
-!IBindStatusCallback categoriesFor: #OnStartBinding:pib:!**auto generated**!COM Interfaces-IBindStatusCallback!private! !
-!IBindStatusCallback categoriesFor: #onStopBinding:szError:!**auto generated**!methods!public! !
-!IBindStatusCallback categoriesFor: #OnStopBinding:szError:!**auto generated**!COM Interfaces-IBindStatusCallback!private! !
+	^self invalidCall: _failureCode! !
+!IBindStatusCallback categoriesForMethods!
+GetBindInfo:pbindinfo:!COM Interfaces-IBindStatusCallback!private! !
+GetPriority:!**auto generated**!COM Interfaces-IBindStatusCallback!private! !
+OnDataAvailable:dwSize:pFormatetc:pStgmed:!COM Interfaces-IBindStatusCallback!private! !
+OnLowResource:!**auto generated**!COM Interfaces-IBindStatusCallback!private! !
+OnObjectAvailable:pUnk:!**auto generated**!COM Interfaces-IBindStatusCallback!private! !
+OnProgress:ulProgressMax:ulStatusCode:szStatusText:!**auto generated**!COM Interfaces-IBindStatusCallback!private! !
+OnStartBinding:pib:!**auto generated**!COM Interfaces-IBindStatusCallback!private! !
+OnStopBinding:szError:!**auto generated**!COM Interfaces-IBindStatusCallback!private! !
+!
 
 !IBindStatusCallback class methodsFor!
 
@@ -225,5 +144,7 @@ defineFunctions
 		defineFunction: #OnObjectAvailable:pUnk:
 			argumentTypes: 'GUID* IUnknown*'
 ! !
-!IBindStatusCallback class categoriesFor: #defineFunctions!initializing!public! !
+!IBindStatusCallback class categoriesForMethods!
+defineFunctions!initializing!public! !
+!
 

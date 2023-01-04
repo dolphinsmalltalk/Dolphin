@@ -206,9 +206,9 @@ upToEnd
 	position to the end)."
 
 	| elements |
-	elements := OrderedCollection new.
-	self upToEndDo: [:e | elements addLast: e].
-	^elements!
+	elements := Array writeStream: 1.
+	self upToEndDo: [:e | elements nextPut: e].
+	^elements grabContents!
 
 upToEndDo: operation
 	"Private - Evaluate the <monadicValuable> argument, transformer, for 

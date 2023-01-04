@@ -1,11 +1,17 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 OLEFinalizableStructure subclass: #STGMEDIUM
 	instanceVariableNames: 'value'
-	classVariableNames: 'GetSelectors'
+	classVariableNames: '_OffsetOf_handle _OffsetOf_lpszFileName _OffsetOf_pstg _OffsetOf_pstm _OffsetOf_pUnkForRelease _OffsetOf_tymed GetSelectors'
 	poolDictionaries: 'OLEPersistConstants'
 	classInstanceVariableNames: ''!
 STGMEDIUM guid: (GUID fromString: '{cc17569a-49c6-475d-a47c-86eaae187d18}')!
+STGMEDIUM addClassConstant: '_OffsetOf_handle' value: 16r4!
+STGMEDIUM addClassConstant: '_OffsetOf_lpszFileName' value: 16r4!
+STGMEDIUM addClassConstant: '_OffsetOf_pstg' value: 16r4!
+STGMEDIUM addClassConstant: '_OffsetOf_pstm' value: 16r4!
+STGMEDIUM addClassConstant: '_OffsetOf_pUnkForRelease' value: 16r8!
+STGMEDIUM addClassConstant: '_OffsetOf_tymed' value: 16r0!
 STGMEDIUM comment: 'Note: It might be preferable to apply the conditional elimination refactoring and employ different STGMEDIUM subclasses to represent the different types, but as we frequently don''t get to create the STGMEDIUM, we''d need some kind of downcast. I''m thinking about it though. At least we can use ReleaseStgMedium() to avoid the need for a switch on release.
 '!
 !STGMEDIUM categoriesForClass!No category! !
@@ -77,24 +83,24 @@ globalMemory: mem
 !
 
 handle
-	"Answer the receiver's handle field as a Smalltalk object."
+	"Answer the <ExternalHandle> value of the receiver's 'handle' field."
 
-	^(bytes uintPtrAtOffset: 4) asExternalHandle!
+	^(bytes uintPtrAtOffset: _OffsetOf_handle) asExternalHandle!
 
-handle: anObject 
-	"Set the receiver's handle field to the value of anObject."
+handle: anExternalHandle
+	"Set the receiver's 'handle' field to the value of the argument, anExternalHandle"
 
-	bytes uintPtrAtOffset: 4 put: anObject!
+	bytes uintPtrAtOffset: _OffsetOf_handle put: anExternalHandle!
 
 lpszFileName
-	"Answer the receiver's lpszFileName field as a Smalltalk object."
+	"Answer the <Utf16String> value of the receiver's 'lpszFileName' field."
 
-	^UnicodeString fromAddress: (bytes intPtrAtOffset: 4)!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_lpszFileName)!
 
-lpszFileName: anObject 
-	"Set the receiver's lpszFileName field to the value of anObject."
+lpszFileName: anUtf16String
+	"Set the receiver's 'lpszFileName' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: 4 put: anObject yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_lpszFileName put: anUtf16String yourAddress!
 
 metafile
 	"Answer the metafile picture handle stored in the receiver.
@@ -141,9 +147,8 @@ path: path
 	"Set a the path into the receiver."
 
 	self tymed: TYMED_FILE.
-	value := path asUnicodeString.
-	^self lpszFileName: value
-!
+	value := path asUtf16String.
+	^self lpszFileName: value!
 
 printOn: aStream
 	"Append a textual representation of the receiver to aStream.
@@ -160,77 +165,78 @@ printOn: aStream
 		nextPut: $)!
 
 pstg
-	"Answer the receiver's pstg field as a Smalltalk object."
+	"Answer the <IStorage> value of the receiver's 'pstg' field."
 
-	^IStorage fromAddress: (bytes intPtrAtOffset: 4)!
+	^IStorage fromAddress: (bytes intPtrAtOffset: _OffsetOf_pstg)!
 
-pstg: anObject 
-	"Set the receiver's pstg field to the value of anObject."
+pstg: anIStorage
+	"Set the receiver's 'pstg' field to the value of the argument, anIStorage"
 
-	bytes uintPtrAtOffset: 4 put: anObject yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_pstg put: anIStorage yourAddress!
 
 pstm
-	"Answer the receiver's pstm field as a Smalltalk object."
+	"Answer the <IStream> value of the receiver's 'pstm' field."
 
-	^IStream fromAddress: (bytes intPtrAtOffset: 4)!
+	^IStream fromAddress: (bytes intPtrAtOffset: _OffsetOf_pstm)!
 
-pstm: anObject 
-	"Set the receiver's pstm field to the value of anObject."
+pstm: anIStream
+	"Set the receiver's 'pstm' field to the value of the argument, anIStream"
 
-	bytes uintPtrAtOffset: 4 put: anObject yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_pstm put: anIStream yourAddress!
 
 pUnkForRelease
-	"Answer the receiver's pUnkForRelease field as a Smalltalk object."
+	"Answer the <IUnknown> value of the receiver's 'pUnkForRelease' field."
 
-	^IUnknown fromAddress: (bytes intPtrAtOffset: 8)!
+	^IUnknown fromAddress: (bytes intPtrAtOffset: _OffsetOf_pUnkForRelease)!
 
-pUnkForRelease: anObject 
-	"Set the receiver's pUnkForRelease field to the value of anObject."
+pUnkForRelease: anIUnknown
+	"Set the receiver's 'pUnkForRelease' field to the value of the argument, anIUnknown"
 
-	bytes uintPtrAtOffset: 8 put: anObject yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_pUnkForRelease put: anIUnknown yourAddress!
 
 tymed
-	"Answer the receiver's tymed field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'tymed' field."
 
-	^(bytes dwordAtOffset: 0)!
+	^bytes dwordAtOffset: _OffsetOf_tymed!
 
-tymed: anObject
-	"Set the receiver's tymed field to the value of anObject."
+tymed: anInteger
+	"Set the receiver's 'tymed' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anObject!
+	bytes dwordAtOffset: _OffsetOf_tymed put: anInteger!
 
 value
-	"Answer the 'value' currently contained in the receiver (which
-	is a tag discriminated union)."
+	"Answer the 'value' currently contained in the receiver (which is a tag discriminated union)."
 
 	^self perform: (GetSelectors at: self tymed)! !
-!STGMEDIUM categoriesFor: #bitmap!accessing!public! !
-!STGMEDIUM categoriesFor: #bitmap:!accessing!public! !
-!STGMEDIUM categoriesFor: #enhancedMetafile!accessing!public! !
-!STGMEDIUM categoriesFor: #enhancedMetafile:!accessing!public! !
-!STGMEDIUM categoriesFor: #free!public!realizing/unrealizing! !
-!STGMEDIUM categoriesFor: #globalMemory!accessing!public! !
-!STGMEDIUM categoriesFor: #globalMemory:!accessing!public! !
-!STGMEDIUM categoriesFor: #handle!**compiled accessors**!public! !
-!STGMEDIUM categoriesFor: #handle:!**compiled accessors**!public! !
-!STGMEDIUM categoriesFor: #lpszFileName!**compiled accessors**!public! !
-!STGMEDIUM categoriesFor: #lpszFileName:!**compiled accessors**!public! !
-!STGMEDIUM categoriesFor: #metafile!accessing!public! !
-!STGMEDIUM categoriesFor: #metafile:!accessing!public! !
-!STGMEDIUM categoriesFor: #null!accessing!public! !
-!STGMEDIUM categoriesFor: #null:!accessing!public! !
-!STGMEDIUM categoriesFor: #path!accessing!public! !
-!STGMEDIUM categoriesFor: #path:!accessing!public! !
-!STGMEDIUM categoriesFor: #printOn:!printing!public! !
-!STGMEDIUM categoriesFor: #pstg!**compiled accessors**!public! !
-!STGMEDIUM categoriesFor: #pstg:!**compiled accessors**!public! !
-!STGMEDIUM categoriesFor: #pstm!**compiled accessors**!public! !
-!STGMEDIUM categoriesFor: #pstm:!**compiled accessors**!public! !
-!STGMEDIUM categoriesFor: #pUnkForRelease!**compiled accessors**!public! !
-!STGMEDIUM categoriesFor: #pUnkForRelease:!**compiled accessors**!public! !
-!STGMEDIUM categoriesFor: #tymed!**compiled accessors**!public! !
-!STGMEDIUM categoriesFor: #tymed:!**compiled accessors**!public! !
-!STGMEDIUM categoriesFor: #value!accessing!public! !
+!STGMEDIUM categoriesForMethods!
+bitmap!accessing!public! !
+bitmap:!accessing!public! !
+enhancedMetafile!accessing!public! !
+enhancedMetafile:!accessing!public! !
+free!public!realizing/unrealizing! !
+globalMemory!accessing!public! !
+globalMemory:!accessing!public! !
+handle!**compiled accessors**!public! !
+handle:!**compiled accessors**!public! !
+lpszFileName!**compiled accessors**!public! !
+lpszFileName:!**compiled accessors**!public! !
+metafile!accessing!public! !
+metafile:!accessing!public! !
+null!accessing!public! !
+null:!accessing!public! !
+path!accessing!public! !
+path:!accessing!public! !
+printOn:!printing!public! !
+pstg!**compiled accessors**!public! !
+pstg:!**compiled accessors**!public! !
+pstm!**compiled accessors**!public! !
+pstm:!**compiled accessors**!public! !
+pUnkForRelease!**compiled accessors**!public! !
+pUnkForRelease:!**compiled accessors**!public! !
+tymed!**compiled accessors**!public! !
+tymed:!**compiled accessors**!public! !
+value!accessing!public! !
+!
 
 !STGMEDIUM class methodsFor!
 
@@ -274,7 +280,7 @@ defineFields
 	"Other union fields"
 	self
 		defineField: #lpszFileName
-			type: (PointerField type: UnicodeString)
+			type: (PointerField type: Utf16String)
 			offset: 4;
 		defineField: #pstm
 			type: (PointerField type: IStream)
@@ -282,6 +288,9 @@ defineFields
 		defineField: #pstg
 			type: (PointerField type: IStorage)
 			offset: 4!
+
+getFieldNames
+	^#(#tymed #handle #lpszFileName #pstg #pstm #pUnkForRelease)!
 
 initialize
 	"Private - Initialize the class variables of the receiver.
@@ -297,20 +306,19 @@ initializeMessageMap
 	N.B. This method must not be stripped because otherwise there is a danger that the accessor methods
 	will be stripped."
 
-	GetSelectors := 
-		LookupTable new
-			at: TYMED_GDI 		put: #bitmap;
-			at: TYMED_MFPICT	put: #metafile;
-			at: TYMED_ENHMF	put: #enhancedMetafile;
-			at: TYMED_HGLOBAL	put: #globalHandle;
-			at: TYMED_FILE		put: #path;
-			at: TYMED_ISTREAM	put: #pstm;
-			at: TYMED_ISTORAGE	put: #pstg;
-			at: TYMED_NULL		put: #null;
-			shrink;
-			yourself! !
-!STGMEDIUM class categoriesFor: #clear:!public!realizing/unrealizing! !
-!STGMEDIUM class categoriesFor: #defineFields!initializing!public! !
-!STGMEDIUM class categoriesFor: #initialize!initializing!private! !
-!STGMEDIUM class categoriesFor: #initializeMessageMap!initializing!must not strip!private! !
+	GetSelectors := LookupTable withAll: {TYMED_GDI -> #bitmap.
+						TYMED_MFPICT -> #metafile.
+						TYMED_ENHMF -> #enhancedMetafile.
+						TYMED_HGLOBAL -> #globalHandle.
+						TYMED_FILE -> #path.
+						TYMED_ISTREAM -> #pstm.
+						TYMED_ISTORAGE -> #pstg.
+						TYMED_NULL -> #null}! !
+!STGMEDIUM class categoriesForMethods!
+clear:!public!realizing/unrealizing! !
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+initialize!initializing!private! !
+initializeMessageMap!initializing!must not strip!private! !
+!
 

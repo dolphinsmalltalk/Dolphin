@@ -37,6 +37,7 @@ contents
 	"Active-X control hosting and support packages"
 	contents
 		add: #('Core\Object Arts\Dolphin\ActiveX\Persist\OLE Persistence Base.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\ActiveX\Persist\OLE Persistence and Data Transfer.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Connection Points\ActiveX Connection Points.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Categories\ActiveX Categories.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\OCX\ActiveX Control Hosting.pax' #plain #imageBased);

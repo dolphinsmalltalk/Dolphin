@@ -1,17 +1,22 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 OLEStructure subclass: #DVTARGETDEVICE
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_tdDeviceNameOffset _OffsetOf_tdDriverNameOffset _OffsetOf_tdExtDevmodeOffset _OffsetOf_tdPortNameOffset _OffsetOf_tdSize'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DVTARGETDEVICE guid: (GUID fromString: '{48447b1a-95e7-4ede-be68-a34481486812}')!
+DVTARGETDEVICE addClassConstant: '_OffsetOf_tdDeviceNameOffset' value: 16r6!
+DVTARGETDEVICE addClassConstant: '_OffsetOf_tdDriverNameOffset' value: 16r4!
+DVTARGETDEVICE addClassConstant: '_OffsetOf_tdExtDevmodeOffset' value: 16rA!
+DVTARGETDEVICE addClassConstant: '_OffsetOf_tdPortNameOffset' value: 16r8!
+DVTARGETDEVICE addClassConstant: '_OffsetOf_tdSize' value: 16r0!
 DVTARGETDEVICE comment: '<DVTARGETDEVICE> is an <ExternalStructure> class to wrap the struct ''OCIDL.DVTARGETDEVICE'' from type information in the ''OCIDL Library'' library.
 
 The type library contains no documentation for this struct
 
 WARNING: This comment was automatically generated from the struct''s type information and any changes made here may be overwritten the next time this wrapper class is so generated.'!
-!DVTARGETDEVICE categoriesForClass!No category! !
+!DVTARGETDEVICE categoriesForClass!External-Data-Structured-COM! !
 !DVTARGETDEVICE methodsFor!
 
 tdData
@@ -33,66 +38,68 @@ tdData: anObject
 		startingAt: 1!
 
 tdDeviceNameOffset
-	"Answer the receiver's tdDeviceNameOffset field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'tdDeviceNameOffset' field."
 
-	^(bytes wordAtOffset: 6)!
+	^bytes wordAtOffset: _OffsetOf_tdDeviceNameOffset!
 
-tdDeviceNameOffset: anObject
-	"Set the receiver's tdDeviceNameOffset field to the value of anObject."
+tdDeviceNameOffset: anInteger
+	"Set the receiver's 'tdDeviceNameOffset' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 6 put: anObject!
+	bytes wordAtOffset: _OffsetOf_tdDeviceNameOffset put: anInteger!
 
 tdDriverNameOffset
-	"Answer the receiver's tdDriverNameOffset field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'tdDriverNameOffset' field."
 
-	^(bytes wordAtOffset: 4)!
+	^bytes wordAtOffset: _OffsetOf_tdDriverNameOffset!
 
-tdDriverNameOffset: anObject
-	"Set the receiver's tdDriverNameOffset field to the value of anObject."
+tdDriverNameOffset: anInteger
+	"Set the receiver's 'tdDriverNameOffset' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 4 put: anObject!
+	bytes wordAtOffset: _OffsetOf_tdDriverNameOffset put: anInteger!
 
 tdExtDevmodeOffset
-	"Answer the receiver's tdExtDevmodeOffset field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'tdExtDevmodeOffset' field."
 
-	^(bytes wordAtOffset: 10)!
+	^bytes wordAtOffset: _OffsetOf_tdExtDevmodeOffset!
 
-tdExtDevmodeOffset: anObject
-	"Set the receiver's tdExtDevmodeOffset field to the value of anObject."
+tdExtDevmodeOffset: anInteger
+	"Set the receiver's 'tdExtDevmodeOffset' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 10 put: anObject!
+	bytes wordAtOffset: _OffsetOf_tdExtDevmodeOffset put: anInteger!
 
 tdPortNameOffset
-	"Answer the receiver's tdPortNameOffset field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'tdPortNameOffset' field."
 
-	^(bytes wordAtOffset: 8)!
+	^bytes wordAtOffset: _OffsetOf_tdPortNameOffset!
 
-tdPortNameOffset: anObject
-	"Set the receiver's tdPortNameOffset field to the value of anObject."
+tdPortNameOffset: anInteger
+	"Set the receiver's 'tdPortNameOffset' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 8 put: anObject!
+	bytes wordAtOffset: _OffsetOf_tdPortNameOffset put: anInteger!
 
 tdSize
-	"Answer the receiver's tdSize field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'tdSize' field."
 
-	^(bytes dwordAtOffset: 0)!
+	^bytes dwordAtOffset: _OffsetOf_tdSize!
 
-tdSize: anObject
-	"Set the receiver's tdSize field to the value of anObject."
+tdSize: anInteger
+	"Set the receiver's 'tdSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anObject! !
-!DVTARGETDEVICE categoriesFor: #tdData!accessing!public! !
-!DVTARGETDEVICE categoriesFor: #tdData:!accessing!public! !
-!DVTARGETDEVICE categoriesFor: #tdDeviceNameOffset!**compiled accessors**!public! !
-!DVTARGETDEVICE categoriesFor: #tdDeviceNameOffset:!**compiled accessors**!public! !
-!DVTARGETDEVICE categoriesFor: #tdDriverNameOffset!**compiled accessors**!public! !
-!DVTARGETDEVICE categoriesFor: #tdDriverNameOffset:!**compiled accessors**!public! !
-!DVTARGETDEVICE categoriesFor: #tdExtDevmodeOffset!**compiled accessors**!public! !
-!DVTARGETDEVICE categoriesFor: #tdExtDevmodeOffset:!**compiled accessors**!public! !
-!DVTARGETDEVICE categoriesFor: #tdPortNameOffset!**compiled accessors**!public! !
-!DVTARGETDEVICE categoriesFor: #tdPortNameOffset:!**compiled accessors**!public! !
-!DVTARGETDEVICE categoriesFor: #tdSize!**compiled accessors**!public! !
-!DVTARGETDEVICE categoriesFor: #tdSize:!**compiled accessors**!public! !
+	bytes dwordAtOffset: _OffsetOf_tdSize put: anInteger! !
+!DVTARGETDEVICE categoriesForMethods!
+tdData!accessing!public! !
+tdData:!accessing!public! !
+tdDeviceNameOffset!**compiled accessors**!public! !
+tdDeviceNameOffset:!**compiled accessors**!public! !
+tdDriverNameOffset!**compiled accessors**!public! !
+tdDriverNameOffset:!**compiled accessors**!public! !
+tdExtDevmodeOffset!**compiled accessors**!public! !
+tdExtDevmodeOffset:!**compiled accessors**!public! !
+tdPortNameOffset!**compiled accessors**!public! !
+tdPortNameOffset:!**compiled accessors**!public! !
+tdSize!**compiled accessors**!public! !
+tdSize:!**compiled accessors**!public! !
+!
 
 !DVTARGETDEVICE class methodsFor!
 
@@ -127,6 +134,12 @@ defineFields
 	"defineField: #tdData type: ... offset: 12"
 
 	"Type lib thinks this is a 16-byte structure, but in fact it is 12+"
-	"self byteSize: 16"! !
-!DVTARGETDEVICE class categoriesFor: #defineFields!initializing!public! !
+	"self byteSize: 16"!
+
+getFieldNames
+	^#(#tdSize #tdDriverNameOffset #tdDeviceNameOffset #tdPortNameOffset #tdExtDevmodeOffset)! !
+!DVTARGETDEVICE class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

@@ -1,242 +1,186 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 IUnknown subclass: #IBindCtx
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IBindCtx guid: (IID fromString: '{0000000E-0000-0000-C000-000000000046}')!
+IBindCtx guid: (IID fromString: '{0000000e-0000-0000-c000-000000000046}')!
 IBindCtx comment: '<IBindCtx> is a wrapper class for the custom interface ''OBJIDL.IBindCtx'' generated from type information in the ''ObjIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface.
 
 No function table has been generated for IBindCtx because this interface is implemented by the system and it is not expected that there will be any reason to implement it in Dolphin.'!
-!IBindCtx categoriesForClass!COM-Interfaces! !
+!IBindCtx categoriesForClass!OBJIDL-Interfaces! !
 !IBindCtx methodsFor!
 
-bindOptions
-	"Answer a BIND_OPTS2 describing the current bind options."
-
-	| answer |
-	answer := BIND_OPTS2 new.
-	self GetBindOptions: answer.
-	^answer!
-
 enumObjectParam
-	"Answer the <IEnumString> result of invoking the COM Object's EnumObjectParam() method."
+	"Answer the <IEnumString> result of invoking the EnumObjectParam() method of the COM object."
 
 	| answer |
 	answer := IEnumString newPointer.
-	self
-		EnumObjectParam: answer.
-	^answer asObject
-!
+	self EnumObjectParam: answer.
+	^answer asObject!
 
 EnumObjectParam: ppenum
-	"Private - Invoke the EnumObjectParam() method of the COM object wrapped by the receiver.
+	"Private - Invoke the EnumObjectParam() method of the COM object.
 
 		HRESULT __stdcall EnumObjectParam(
-			[out] IEnumString** ppenum);
-	"
+			[out]IEnumString** ppenum);"
 
 	<virtual stdcall: hresult 12 IEnumString**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 getBindOptions
-	"Answer the <BIND_OPTS2> result of invoking the COM Object's GetBindOptions() method."
+	"Answer the <BIND_OPTS3> result of invoking the COM Object's GetBindOptions() method."
 
 	| answer |
-	answer := BIND_OPTS2 new.
+	answer := BIND_OPTS3 new.
 	self GetBindOptions: answer.
 	^answer
 !
 
 GetBindOptions: pbindopts
-	"Private - Invoke the GetBindOptions() method of the COM object wrapped by the receiver.
+	"Private - Invoke the GetBindOptions() method of the COM object.
 
 		HRESULT __stdcall GetBindOptions(
-			[in, out] BIND_OPTS2* pbindopts);
-	"
+			[in, out]BIND_OPTS2* pbindopts);"
 
 	<virtual stdcall: hresult 8 BIND_OPTS2*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
-getObjectParam: pszKey 
-	"Answer the <IUnknown> result of invoking the COM Object's GetObjectParam() method."
+getObjectParam: pszKey
+	"Answer the <IUnknown> result of invoking the GetObjectParam() method of the COM object."
 
 	| answer |
 	answer := IUnknown newPointer.
-	self
-		GetObjectParam: pszKey asUnicodeString
-		ppunk: answer.
-	^answer asObject
-!
+	self GetObjectParam: pszKey asUtf16String ppunk: answer.
+	^answer asObject!
 
 GetObjectParam: pszKey ppunk: ppunk
-	"Private - Invoke the GetObjectParam() method of the COM object wrapped by the receiver.
+	"Private - Invoke the GetObjectParam() method of the COM object.
 
 		HRESULT __stdcall GetObjectParam(
-			[in] LPWSTR pszKey,
-			[out] IUnknown** ppunk);
-	"
+			[in]LPWSTR pszKey,
+			[out]IUnknown** ppunk);"
 
 	<virtual stdcall: hresult 11 lpwstr IUnknown**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 getRunningObjectTable
-	"Answer the <IRunningObjectTable> result of invoking the COM Object's GetRunningObjectTable() method."
+	"Answer the <IRunningObjectTable> result of invoking the GetRunningObjectTable() method of the COM object."
 
 	| answer |
 	answer := IRunningObjectTable newPointer.
-	self
-		GetRunningObjectTable: answer.
-	^answer asObject
-!
+	self GetRunningObjectTable: answer.
+	^answer asObject!
 
 GetRunningObjectTable: pprot
-	"Private - Invoke the GetRunningObjectTable() method of the COM object wrapped by the receiver.
+	"Private - Invoke the GetRunningObjectTable() method of the COM object.
 
 		HRESULT __stdcall GetRunningObjectTable(
-			[out] IRunningObjectTable** pprot);
-	"
+			[out]IRunningObjectTable** pprot);"
 
 	<virtual stdcall: hresult 9 IRunningObjectTable**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
-registerObjectBound: punk 
-	"Invoke the RegisterObjectBound() method of the COM Object."
-
-	self
-		RegisterObjectBound: punk
-!
-
-RegisterObjectBound: punk
-	"Private - Invoke the RegisterObjectBound() method of the COM object wrapped by the receiver.
+RegisterObjectBound: pUnk
+	"Invoke the RegisterObjectBound() method of the COM object.
 
 		HRESULT __stdcall RegisterObjectBound(
-			[in] IUnknown* punk);
-	"
+			[in]IUnknown* pUnk);"
 
 	<virtual stdcall: hresult 4 IUnknown*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
-registerObjectParam: pszKey punk: punk 
-	"Invoke the RegisterObjectParam() method of the COM Object."
-
-	self
-		RegisterObjectParam: pszKey asUnicodeString
-		punk: punk
-!
-
-RegisterObjectParam: pszKey punk: punk
-	"Private - Invoke the RegisterObjectParam() method of the COM object wrapped by the receiver.
+RegisterObjectParam: pszKey pUnk: pUnk
+	"Invoke the RegisterObjectParam() method of the COM object.
 
 		HRESULT __stdcall RegisterObjectParam(
-			[in] LPWSTR pszKey,
-			[in] IUnknown* punk);
-	"
+			[in]LPWSTR pszKey,
+			[in]IUnknown* pUnk);"
 
 	<virtual stdcall: hresult 10 lpwstr IUnknown*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
-releaseBoundObjects  
-	"Invoke the ReleaseBoundObjects() method of the COM Object."
+ReleaseBoundObjects
+	"Invoke the ReleaseBoundObjects() method of the COM object.
 
-	self ReleaseBoundObjects
-!
-
-ReleaseBoundObjects 
-	"Private - Invoke the ReleaseBoundObjects() method of the COM object wrapped by the receiver.
-
-		HRESULT __stdcall ReleaseBoundObjects();
-	"
+		HRESULT __stdcall ReleaseBoundObjects();"
 
 	<virtual stdcall: hresult 6>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
-revokeObjectBound: punk 
-	"Invoke the RevokeObjectBound() method of the COM Object."
-
-	self
-		RevokeObjectBound: punk
-!
-
-RevokeObjectBound: punk
-	"Private - Invoke the RevokeObjectBound() method of the COM object wrapped by the receiver.
+RevokeObjectBound: pUnk
+	"Invoke the RevokeObjectBound() method of the COM object.
 
 		HRESULT __stdcall RevokeObjectBound(
-			[in] IUnknown* punk);
-	"
+			[in]IUnknown* pUnk);"
 
 	<virtual stdcall: hresult 5 IUnknown*>
-	^self invalidCall
-!
-
-revokeObjectParam: pszKey 
-	"Invoke the RevokeObjectParam() method of the COM Object."
-
-	self
-		RevokeObjectParam: pszKey asUnicodeString
-!
+	^self invalidCall: _failureCode!
 
 RevokeObjectParam: pszKey
-	"Private - Invoke the RevokeObjectParam() method of the COM object wrapped by the receiver.
+	"Invoke the RevokeObjectParam() method of the COM object.
 
 		HRESULT __stdcall RevokeObjectParam(
-			[in] LPWSTR pszKey);
-	"
+			[in]LPWSTR pszKey);"
 
 	<virtual stdcall: hresult 13 lpwstr>
-	^self invalidCall
-!
-
-setBindOptions: pbindopts 
-	"Invoke the SetBindOptions() method of the COM Object."
-
-	self
-		setBindOptions: pbindopts
-!
+	^self invalidCall: _failureCode!
 
 SetBindOptions: pbindopts
-	"Private - Invoke the SetBindOptions() method of the COM object wrapped by the receiver.
+	"Invoke the SetBindOptions() method of the COM object.
 
 		HRESULT __stdcall SetBindOptions(
-			[in] BIND_OPTS2* pbindopts);
-	"
+			[in]BIND_OPTS2* pbindopts);"
 
 	<virtual stdcall: hresult 7 BIND_OPTS2*>
-	^self invalidCall
-! !
-!IBindCtx categoriesFor: #bindOptions!accessing!public! !
-!IBindCtx categoriesFor: #enumObjectParam!**auto generated**!public! !
-!IBindCtx categoriesFor: #EnumObjectParam:!**auto generated**!private! !
-!IBindCtx categoriesFor: #getBindOptions!accessing!public! !
-!IBindCtx categoriesFor: #GetBindOptions:!**auto generated**!private! !
-!IBindCtx categoriesFor: #getObjectParam:!**auto generated**!public! !
-!IBindCtx categoriesFor: #GetObjectParam:ppunk:!**auto generated**!private! !
-!IBindCtx categoriesFor: #getRunningObjectTable!**auto generated**!public! !
-!IBindCtx categoriesFor: #GetRunningObjectTable:!**auto generated**!private! !
-!IBindCtx categoriesFor: #registerObjectBound:!**auto generated**!public! !
-!IBindCtx categoriesFor: #RegisterObjectBound:!**auto generated**!private! !
-!IBindCtx categoriesFor: #registerObjectParam:punk:!**auto generated**!public! !
-!IBindCtx categoriesFor: #RegisterObjectParam:punk:!**auto generated**!private! !
-!IBindCtx categoriesFor: #releaseBoundObjects!**auto generated**!public! !
-!IBindCtx categoriesFor: #ReleaseBoundObjects!**auto generated**!private! !
-!IBindCtx categoriesFor: #revokeObjectBound:!**auto generated**!public! !
-!IBindCtx categoriesFor: #RevokeObjectBound:!**auto generated**!private! !
-!IBindCtx categoriesFor: #revokeObjectParam:!**auto generated**!public! !
-!IBindCtx categoriesFor: #RevokeObjectParam:!**auto generated**!private! !
-!IBindCtx categoriesFor: #setBindOptions:!**auto generated**!public! !
-!IBindCtx categoriesFor: #SetBindOptions:!**auto generated**!private! !
+	^self invalidCall: _failureCode! !
+!IBindCtx categoriesForMethods!
+enumObjectParam!**auto generated**!methods!public! !
+EnumObjectParam:!**auto generated**!COM Interfaces-IBindCtx!private! !
+getBindOptions!accessing!public! !
+GetBindOptions:!**auto generated**!COM Interfaces-IBindCtx!private! !
+getObjectParam:!**auto generated**!methods!public! !
+GetObjectParam:ppunk:!**auto generated**!COM Interfaces-IBindCtx!private! !
+getRunningObjectTable!**auto generated**!methods!public! !
+GetRunningObjectTable:!**auto generated**!COM Interfaces-IBindCtx!private! !
+RegisterObjectBound:!**auto generated**!COM Interfaces-IBindCtx!public! !
+RegisterObjectParam:pUnk:!**auto generated**!COM Interfaces-IBindCtx!public! !
+ReleaseBoundObjects!**auto generated**!COM Interfaces-IBindCtx!public! !
+RevokeObjectBound:!**auto generated**!COM Interfaces-IBindCtx!public! !
+RevokeObjectParam:!**auto generated**!COM Interfaces-IBindCtx!public! !
+SetBindOptions:!**auto generated**!COM Interfaces-IBindCtx!public! !
+!
 
 !IBindCtx class methodsFor!
+
+defineFunctions
+	"Declare the virtual function table for the COM interface 'Win32.IBindCtx'
+		IBindCtx defineTemplate"
+
+	self
+		defineFunction: #RegisterObjectBound:
+			argumentTypes: 'IUnknown*';
+		defineFunction: #RevokeObjectBound:
+			argumentTypes: 'IUnknown*';
+		defineFunction: #ReleaseBoundObjects;
+		defineFunction: #SetBindOptions:
+			argumentTypes: 'BIND_OPTS2*';
+		defineFunction: #GetBindOptions:
+			argumentTypes: 'BIND_OPTS2*';
+		defineFunction: #GetRunningObjectTable:
+			argumentTypes: 'IRunningObjectTable**';
+		defineFunction: #RegisterObjectParam:pUnk:
+			argumentTypes: 'lpwstr IUnknown*';
+		defineFunction: #GetObjectParam:ppunk:
+			argumentTypes: 'lpwstr IUnknown**';
+		defineFunction: #EnumObjectParam:
+			argumentTypes: 'IEnumString**';
+		defineFunction: #RevokeObjectParam:
+			argumentTypes: 'lpwstr'
+!
 
 new
 	"Answer a new Bind Context (implemented by system)"
@@ -245,5 +189,8 @@ new
 	answer := self newPointer.
 	OLELibrary default createBindCtx: 0 ppbc: answer.
 	^answer! !
-!IBindCtx class categoriesFor: #new!instance creation!public! !
+!IBindCtx class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+new!instance creation!public! !
+!
 
