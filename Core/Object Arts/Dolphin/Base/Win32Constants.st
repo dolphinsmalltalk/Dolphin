@@ -636,6 +636,7 @@ Win32Constants at: 'MAPVK_VSC_TO_VK' put: 16r1!
 Win32Constants at: 'MAPVK_VSC_TO_VK_CHAR' put: 16r2!
 Win32Constants at: 'MAPVK_VSC_TO_VK_EX' put: 16r3!
 Win32Constants at: 'MAX_COMPUTERNAME_LENGTH' put: 16rF!
+Win32Constants at: 'MAX_PATH' put: 16r104!
 Win32Constants at: 'MAX_UCSCHAR' put: 16r10FFFF!
 Win32Constants at: 'MB_ERR_INVALID_CHARS' put: 16r8!
 Win32Constants at: 'MEM_COMMIT' put: 16r1000!

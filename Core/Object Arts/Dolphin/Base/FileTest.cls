@@ -313,6 +313,17 @@ testForDirectoriesIn
 			dirPath := File composePath: windir subPath: each.
 			self assert: (File isDirectory: dirPath)]!
 
+testLastWriteTime
+	| expected actual |
+	actual := File lastWriteTime: SourceManager default changesFileName.
+	expected := SourceManager default changesStream file lastWriteTime.
+	self assert: actual equals: expected.
+	"Can also request last modification time of a directory"
+	actual := File lastWriteTime: File tempPath.
+	self assert: actual notNil.
+	"Nil result for a File that does not exist"
+	self assertIsNil: (File lastWriteTime: 'c:\' , GUID newUnique idlString)!
+
 testMakePath
 	| filename split |
 	self assert: (File makePath: #('c:' 'a/b 2/c/' 'a file' '.anextension'))
@@ -567,6 +578,7 @@ testClassRelativePathOfTo!public!unit tests! !
 testCommonPrefixOfAnd!public!unit tests! !
 testDeleteDirectory!public!unit tests! !
 testForDirectoriesIn!public!unit tests! !
+testLastWriteTime!public!unit tests! !
 testMakePath!public!unit tests! !
 testPathName!public!unit tests! !
 testRemoveDirectory!public!unit tests! !

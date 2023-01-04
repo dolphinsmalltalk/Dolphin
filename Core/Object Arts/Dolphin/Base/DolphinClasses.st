@@ -1330,14 +1330,19 @@ Win32Structure subclass: #VS_FIXEDFILEINFO
 	classVariableNames: '_OffsetOf_dwFileDateLS _OffsetOf_dwFileDateMS _OffsetOf_dwFileFlags _OffsetOf_dwFileFlagsMask _OffsetOf_dwFileOS _OffsetOf_dwFileSubtype _OffsetOf_dwFileType _OffsetOf_dwFileVersionLS _OffsetOf_dwFileVersionMS _OffsetOf_dwProductVersionLS _OffsetOf_dwProductVersionMS _OffsetOf_dwSignature _OffsetOf_dwStrucVersion'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Win32Structure subclass: #WIN32_FIND_DATAW
-	instanceVariableNames: 'directory'
-	classVariableNames: '_OffsetOf_cAlternateFileName _OffsetOf_cFileName _OffsetOf_dwFileAttributes _OffsetOf_dwReserved0 _OffsetOf_dwReserved1 _OffsetOf_ftCreationTime _OffsetOf_ftLastAccessTime _OffsetOf_ftLastWriteTime _OffsetOf_nFileSizeHigh _OffsetOf_nFileSizeLow'
-	poolDictionaries: 'Win32Constants'
+Win32Structure subclass: #WIN32_FILE_ATTRIBUTE_DATA
+	instanceVariableNames: ''
+	classVariableNames: '_OffsetOf_dwFileAttributes _OffsetOf_ftCreationTime _OffsetOf_ftLastAccessTime _OffsetOf_ftLastWriteTime _OffsetOf_nFileSizeHigh _OffsetOf_nFileSizeLow'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 FILETIME subclass: #LocalFILETIME
 	instanceVariableNames: ''
 	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WIN32_FILE_ATTRIBUTE_DATA subclass: #WIN32_FIND_DATAW
+	instanceVariableNames: 'directory'
+	classVariableNames: '_OffsetOf_cAlternateFileName _OffsetOf_cFileName _OffsetOf_dwReserved0 _OffsetOf_dwReserved1'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 FileLocator subclass: #AbsoluteFileLocator

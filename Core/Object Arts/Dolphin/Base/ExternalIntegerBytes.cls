@@ -50,6 +50,12 @@ displayOn: aStream
 
 	self asInteger printOn: aStream base: 16 showRadix: true!
 
+expandMacrosIn: aString
+
+	"Private - Expand aString with the replaceable argument represented by the receiver."
+
+	^aString expandMacrosWith: self!
+
 hash
 	"Answer the SmallInteger hash value for the receiver."
 
@@ -92,6 +98,7 @@ asUIntPtr!converting!public! !
 byteSize!accessing!public! !
 clear!initializing!public! !
 displayOn:!displaying!public! !
+expandMacrosIn:!double dispatch!private! !
 hash!comparing!public! !
 isNull!public!testing! !
 printOn:!printing!public! !
