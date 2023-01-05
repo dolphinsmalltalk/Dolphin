@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 PresenterTest subclass: #WebView2ViewTest
-	instanceVariableNames: 'domContentLoaded navigationCompleted processFailed'
+	instanceVariableNames: 'domContentLoaded navigationCompleted processFailed webViewReady'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -14,7 +14,8 @@ classToTest
 	^URLPresenter!
 
 initializePresenter
-	super initializePresenter.
+	| start |
+	presenter := URLPresenter on: URLPresenter defaultModel.
 	presenter
 		when: #domContentLoaded:
 			send: #onDomContentLoaded:
@@ -24,7 +25,16 @@ initializePresenter
 			to: self;
 		when: #processFailed:
 			send: #onProcessFailed:
-			to: self!
+			to: self;
+		when: #webviewAvailable
+			send: #onWebViewAvailable
+			to: self.
+	webViewReady := false.
+	presenter createView: URLPresenter defaultView.
+	"We need to wait until the web view is ready before we commence any testing"
+	start := DateAndTime now.
+	SessionManager inputState loopWhile: [webViewReady not and: [DateAndTime now - start < 10 seconds]].
+	self assert: webViewReady!
 
 onDomContentLoaded: anICoreWebView2DOMContentLoadedEventArgs
 	domContentLoaded := anICoreWebView2DOMContentLoadedEventArgs!
@@ -35,6 +45,9 @@ onNavigationCompleted: anICoreWebView2NavigationCompletedEventArgs2
 onProcessFailed: anICoreWebView2ProcessFailedEventArgs2 
 	processFailed := anICoreWebView2ProcessFailedEventArgs2
 !
+
+onWebViewAvailable
+	webViewReady := true!
 
 testBrowserCrashRecovery
 	"Test browser recovery after a crash of the browser process that causes it to exit"
@@ -79,6 +92,7 @@ initializePresenter!public!Running! !
 onDomContentLoaded:!event handling!private! !
 onNavigationCompleted:!event handling!private! !
 onProcessFailed:!event handling!private! !
+onWebViewAvailable!event handling!private! !
 testBrowserCrashRecovery!public!unit tests! !
 testNavigateToString!public!unit tests! !
 waitForNavigationCompleted!helpers!private! !
