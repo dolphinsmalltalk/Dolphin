@@ -3,8 +3,7 @@
 Win32Structure subclass: #WIN32_FILE_ATTRIBUTE_DATA
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_dwFileAttributes _OffsetOf_ftCreationTime _OffsetOf_ftLastAccessTime _OffsetOf_ftLastWriteTime _OffsetOf_nFileSizeHigh _OffsetOf_nFileSizeLow'
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	imports: #()!
 WIN32_FILE_ATTRIBUTE_DATA guid: (GUID fromString: '{93f205f7-0707-40b3-813b-cad835330f3e}')!
 WIN32_FILE_ATTRIBUTE_DATA addClassConstant: '_OffsetOf_dwFileAttributes' value: 16r0!
 WIN32_FILE_ATTRIBUTE_DATA addClassConstant: '_OffsetOf_ftCreationTime' value: 16r4!
