@@ -736,6 +736,16 @@ executeScript: javaScript thenDo: aDyadicValuable
 	self ExecuteScript: javaScript asUtf16String handler: handler.
 	handler free!
 
+faviconUri
+	"Answer the <lpwstr> value of the 'FaviconUri' property of the receiver."
+
+	| ptr answer |
+	ptr := COMTaskMemory new.
+	self get_FaviconUri: ptr.
+	answer := Utf16String fromAddress: ptr.
+	ptr free.
+	^answer!
+
 get_BrowserProcessId: value
 	"Private - Get the value of the 'BrowserProcessId' property of the receiver.
 
@@ -820,6 +830,15 @@ get_Environment: environment
 	^E_NOTIMPL
 
 !
+
+get_FaviconUri: value
+	"Private - Get the value of the 'FaviconUri' property of the receiver.
+
+		HRESULT __stdcall FaviconUri(
+			[out, retval]LPWSTR* value);"
+
+	"Not implemented in this version of WebView2"
+	^E_NOTIMPL!
 
 get_IsDefaultDownloadDialogOpen: value
 	"Private - Get the value of the 'IsDefaultDownloadDialogOpen' property of the receiver.
@@ -969,6 +988,9 @@ isMuted
 	answer := BOOL newBuffer.
 	self get_IsMuted: answer.
 	^answer asObject!
+
+isMuted: aBoolean
+	self put_IsMuted: aBoolean asParameter!
 
 isSuspended
 	"Answer the <Boolean> value of the 'IsSuspended' property of the receiver."
@@ -1567,6 +1589,7 @@ documentTitle!properties!public! !
 environment!properties!public! !
 ExecuteScript:handler:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 executeScript:thenDo:!async requests!public! !
+faviconUri!properties!public! !
 get_BrowserProcessId:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 get_CanGoBack:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 get_CanGoForward:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
@@ -1576,6 +1599,7 @@ get_DefaultDownloadDialogCornerAlignment:!COM Interfaces-ICoreWebView2_9!private
 get_DefaultDownloadDialogMargin:!COM Interfaces-ICoreWebView2_9!private! !
 get_DocumentTitle:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 get_Environment:!COM Interfaces-ICoreWebView2_2!private!properties! !
+get_FaviconUri:!**auto generated**!COM Interfaces-ICoreWebView2_15!private! !
 get_IsDefaultDownloadDialogOpen:!COM Interfaces-ICoreWebView2_9!private! !
 get_IsDocumentPlayingAudio:!COM Interfaces-ICoreWebView2_8!private! !
 get_IsMuted:!COM Interfaces-ICoreWebView2_8!private! !
@@ -1595,6 +1619,7 @@ GoForward!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 isDefaultDownloadDialogOpen!properties!public! !
 isDocumentPlayingAudio!properties!public! !
 isMuted!properties!public! !
+isMuted:!properties!public! !
 isSuspended!properties!public! !
 navigate:!**auto generated**!methods!public! !
 Navigate:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
