@@ -51,16 +51,6 @@ Add_FaviconChanged: eventHandler token: token
 	<virtual stdcall: hresult 110 ICoreWebView2FaviconChangedEventHandler* sqword*>
 	^self invalidCall: _failureCode!
 
-faviconUri
-	"Answer the <lpwstr> value of the 'FaviconUri' property of the receiver."
-
-	| ptr answer |
-	ptr := TaskMemory new.
-	self get_FaviconUri: ptr.
-	answer := Utf16String fromAddress: ptr.
-	ptr free.
-	^answer!
-
 get_FaviconUri: value
 	"Private - Get the value of the 'FaviconUri' property of the receiver.
 
@@ -90,7 +80,6 @@ Remove_FaviconChanged: token
 	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2_15 categoriesForMethods!
 Add_FaviconChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2_15!private! !
-faviconUri!properties!public! !
 get_FaviconUri:!**auto generated**!COM Interfaces-ICoreWebView2_15!private! !
 GetFavicon:completedHandler:!**auto generated**!COM Interfaces-ICoreWebView2_15!private! !
 Remove_FaviconChanged:!**auto generated**!COM Interfaces-ICoreWebView2_15!private! !
