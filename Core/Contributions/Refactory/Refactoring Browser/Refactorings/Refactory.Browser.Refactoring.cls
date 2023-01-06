@@ -424,7 +424,12 @@ rewriteStaleVariableReferences: aCollectionOfMethods
 	rewriter := self buildVariableReferenceRewriter.
 	aCollectionOfMethods do: 
 			[:each |
-			each parseTree classScope clearVariableCache.
+			| classScope |
+			classScope := each parseTree classScope.
+			"We must clear out any static variable bindings cached before the refactoring transformation as these may no longer bind the same way"
+			classScope clearVariableCache.
+			"If an instance method we must also clear out the meta scope's cache in case the method includes any optimised expressions that are compiled as if class methods"
+			classScope metaScope == classScope ifFalse: [classScope metaScope clearVariableCache].
 			self convertMethod: each using: rewriter]!
 
 safeMethodNameFor: aClass basedOn: aString 

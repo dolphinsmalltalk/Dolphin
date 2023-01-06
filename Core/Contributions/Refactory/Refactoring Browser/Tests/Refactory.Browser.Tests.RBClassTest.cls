@@ -250,7 +250,7 @@ testMethodsReferencingExternals1
 		equals: (class metaclass methodFor: #testSkip).
 	subclass := class subclasses first.
 	self assert: (subclass methodsReferencingExternals collect: [:each | each selector]) asSortedArray
-		equals: #(#externalReference:_: #refersToClassFullyQualified #refersToClassPartiallyQualified1 #refersToClassPartiallyQualified2 #refersToClassPartiallyQualifiedBinding1 #refersToClassPartiallyQualifiedBinding2 #refersToClassUnqualified #refersToClassUnqualifiedBinding #refersToInheritedClassVariableUnqualifiedBinding #refersToOtherClassPartiallyQualifiedBinding #testSkip #unqualifiedBindingReference)!
+		equals: #(externalReference:_: refersToClassFullyQualified refersToClassPartiallyQualified1 refersToClassPartiallyQualified2 refersToClassPartiallyQualifiedBinding1 refersToClassPartiallyQualifiedBinding2 refersToClassUnqualified refersToClassUnqualifiedBinding refersToClassUnqualifiedHybrid refersToClassUnqualifiedStaticExpression refersToInheritedClassVariableUnqualifiedBinding refersToOtherClassPartiallyQualifiedBinding testSkip unqualifiedBindingReference)!
 
 testMethodsReferencingExternals2
 	| class referers |
@@ -280,7 +280,7 @@ testMethodsReferencingExternals3
 	class := model classFor: SubclassOfClassToRename.
 	referers := (class methodsReferencingExternals asArray collect: [:each | each selector]) sort.
 	self assert: referers
-		equals: #(#externalReference:_: #refersToClassFullyQualified #refersToClassPartiallyQualified1 #refersToClassPartiallyQualified2 #refersToClassPartiallyQualifiedBinding1 #refersToClassPartiallyQualifiedBinding2 #refersToClassUnqualified #refersToClassUnqualifiedBinding #refersToInheritedClassVariableUnqualifiedBinding #refersToOtherClassPartiallyQualifiedBinding #testSkip #unqualifiedBindingReference)!
+		equals: #(externalReference:_: refersToClassFullyQualified refersToClassPartiallyQualified1 refersToClassPartiallyQualified2 refersToClassPartiallyQualifiedBinding1 refersToClassPartiallyQualifiedBinding2 refersToClassUnqualified refersToClassUnqualifiedBinding refersToClassUnqualifiedHybrid refersToClassUnqualifiedStaticExpression refersToInheritedClassVariableUnqualifiedBinding refersToOtherClassPartiallyQualifiedBinding testSkip unqualifiedBindingReference)!
 
 testModel
 	| myClass |

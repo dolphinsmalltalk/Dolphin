@@ -55,8 +55,14 @@ refersToClassUnqualified
 refersToClassUnqualifiedBinding
 	^#{ClassToRename}!
 
+refersToClassUnqualifiedHybrid
+	^##(ClassToRename fullName) -> ClassToRename!
+
 refersToClassUnqualifiedName
 	^#ClassToRename!
+
+refersToClassUnqualifiedStaticExpression
+	^##(ClassToRename fullName)!
 
 refersToInheritedClassConstant
 	^ClassConst1!
@@ -121,7 +127,9 @@ refersToClassPartiallyQualifiedBinding2!performing!public! !
 refersToClassPartiallyQualifiedName!performing!public! !
 refersToClassUnqualified!performing!public! !
 refersToClassUnqualifiedBinding!performing!public! !
+refersToClassUnqualifiedHybrid!performing!public! !
 refersToClassUnqualifiedName!performing!public! !
+refersToClassUnqualifiedStaticExpression!performing!public! !
 refersToInheritedClassConstant!public! !
 refersToInheritedClassVariable!public! !
 refersToInheritedClassVariableFullyQualified!public! !

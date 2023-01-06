@@ -353,6 +353,7 @@ testRenameClass
 			symbolicRefs := refs collect: [:each | each method].
 			true].
 	self executeRefactoring: refactoring.
+	"model browseChanges."
 	newFullName := oldName asQualifiedReference environment fullNameFor: 'NewClassName'.
 	self assert: newFullName equals: 'Refactory.Browser.Tests.NewClassName'.
 	newClass := model classNamed: newFullName.
@@ -653,7 +654,7 @@ verifyRenames: aRBClass unqualified: unqualified full: fullyQualified partial: p
 						verifyMethod: selector
 						of: eachClass
 						equals: (eachClass realClass >> selector) getSource]].
-	"Variable references are replaced with the minimal qualification required - in this case unqualified"
+	"Variable references are replaced with the minimal qualification required - in this case unqualified new name"
 	#(#refersToClassUnqualified #refersToClassFullyQualified #refersToClassPartiallyQualified1 #refersToClassPartiallyQualified2)
 		do: 
 			[:each |
@@ -661,6 +662,14 @@ verifyRenames: aRBClass unqualified: unqualified full: fullyQualified partial: p
 				verifyMethod: each
 				of: subclassInNamespace
 				equals: '<1s> ^<2s>' << {each. unqualified}].
+	self
+		verifyMethod: #refersToClassUnqualifiedStaticExpression
+		of: subclassInNamespace
+		equals: 'refersToClassUnqualifiedStaticExpression ^##(<1s> fullName)' << unqualified.
+	self
+		verifyMethod: #refersToClassUnqualifiedHybrid
+		of: subclassInNamespace
+		equals: 'refersToClassUnqualifiedHybrid ^##(<1s> fullName) -> <1s>' << unqualified.
 	self
 		verifyMethod: #refersToClassUnqualified
 		of: classInOtherNamespace
