@@ -1,28 +1,31 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OLEStructure subclass: #DVTARGETDEVICE
+OS.COM.OLEStructure subclass: #'OS.COM.DVTARGETDEVICE'
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_tdDeviceNameOffset _OffsetOf_tdDriverNameOffset _OffsetOf_tdExtDevmodeOffset _OffsetOf_tdPortNameOffset _OffsetOf_tdSize'
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-DVTARGETDEVICE guid: (GUID fromString: '{48447b1a-95e7-4ede-be68-a34481486812}')!
-DVTARGETDEVICE addClassConstant: '_OffsetOf_tdDeviceNameOffset' value: 16r6!
-DVTARGETDEVICE addClassConstant: '_OffsetOf_tdDriverNameOffset' value: 16r4!
-DVTARGETDEVICE addClassConstant: '_OffsetOf_tdExtDevmodeOffset' value: 16rA!
-DVTARGETDEVICE addClassConstant: '_OffsetOf_tdPortNameOffset' value: 16r8!
-DVTARGETDEVICE addClassConstant: '_OffsetOf_tdSize' value: 16r0!
-DVTARGETDEVICE comment: '<DVTARGETDEVICE> is an <ExternalStructure> class to wrap the struct ''OCIDL.DVTARGETDEVICE'' from type information in the ''OCIDL Library'' library.
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_DVTARGETDEVICE_Size' -> 16rC.
+		'_OffsetOf_tdDeviceNameOffset' -> 16r6.
+		'_OffsetOf_tdDriverNameOffset' -> 16r4.
+		'_OffsetOf_tdExtDevmodeOffset' -> 16rA.
+		'_OffsetOf_tdPortNameOffset' -> 16r8.
+		'_OffsetOf_tdSize' -> 16r0
+	}!
+OS.COM.DVTARGETDEVICE guid: (Core.GUID fromString: '{48447b1a-95e7-4ede-be68-a34481486812}')!
+OS.COM.DVTARGETDEVICE comment: '<DVTARGETDEVICE> is an <ExternalStructure> class to wrap the struct ''OCIDL.DVTARGETDEVICE'' from type information in the ''OCIDL Library'' library.
 
 The type library contains no documentation for this struct
 
 WARNING: This comment was automatically generated from the struct''s type information and any changes made here may be overwritten the next time this wrapper class is so generated.'!
-!DVTARGETDEVICE categoriesForClass!External-Data-Structured-COM! !
-!DVTARGETDEVICE methodsFor!
+!OS.COM.DVTARGETDEVICE categoriesForClass!External-Data-Structured-COM! !
+!OS.COM.DVTARGETDEVICE methodsFor!
 
 tdData
 	"Answer a pointer to the receiver's variable data part."
 
-	^(ExternalPointer fromAddress: (bytes yourAddress + 12))
+	^(Pointer fromAddress: (bytes yourAddress + 12))
 		byteSize: (self tdSize - 12);
 		yourself!
 
@@ -86,7 +89,7 @@ tdSize: anInteger
 	"Set the receiver's 'tdSize' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_tdSize put: anInteger! !
-!DVTARGETDEVICE categoriesForMethods!
+!OS.COM.DVTARGETDEVICE categoriesForMethods!
 tdData!accessing!public! !
 tdData:!accessing!public! !
 tdDeviceNameOffset!**compiled accessors**!public! !
@@ -101,7 +104,7 @@ tdSize!**compiled accessors**!public! !
 tdSize:!**compiled accessors**!public! !
 !
 
-!DVTARGETDEVICE class methodsFor!
+!OS.COM.DVTARGETDEVICE class methodsFor!
 
 defineFields
 	"Define the fields of the DVTARGETDEVICE structure.
@@ -138,7 +141,7 @@ defineFields
 
 getFieldNames
 	^#(#tdSize #tdDriverNameOffset #tdDeviceNameOffset #tdPortNameOffset #tdExtDevmodeOffset)! !
-!DVTARGETDEVICE class categoriesForMethods!
+!OS.COM.DVTARGETDEVICE class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

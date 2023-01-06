@@ -1,41 +1,33 @@
 ﻿| package |
 package := Package name: 'OLE Persistence and Data Transfer Tests'.
-package paxVersion: 1;
+package paxVersion: 2.1;
 	basicComment: ''.
 
 
-package classNames
-	add: #IMonikerTest;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{OS.COM.Tests.IMonikerTest}
+).
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
-	'..\..\..\Base\Dolphin Base Tests'
+	'..\..\..\Base\Tests\Dolphin Base Tests'
 	'..\..\..\Registry\Dolphin Registry Access'
 	'..\..\COM\OLE COM'
+	'..\..\COM\Tests\OLE COM Tests'
 	'..\OLE Persistence and Data Transfer'
-	'..\OLE Persistence Base').
+	'..\OLE Persistence Base'
+).
 
 package!
 
 "Class Definitions"!
 
-DolphinTest subclass: #IMonikerTest
+Core.Tests.DolphinTest subclass: #'OS.COM.Tests.IMonikerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

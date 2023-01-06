@@ -1,18 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-IUnknown subclass: #IBindCtx
+OS.COM.IUnknown subclass: #'OS.COM.IBindCtx'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-IBindCtx guid: (IID fromString: '{0000000e-0000-0000-c000-000000000046}')!
-IBindCtx comment: '<IBindCtx> is a wrapper class for the custom interface ''OBJIDL.IBindCtx'' generated from type information in the ''ObjIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IBindCtx guid: (OS.COM.IID fromString: '{0000000e-0000-0000-c000-000000000046}')!
+OS.COM.IBindCtx comment: '<IBindCtx> is a wrapper class for the custom interface ''OBJIDL.IBindCtx'' generated from type information in the ''ObjIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface.
 
 No function table has been generated for IBindCtx because this interface is implemented by the system and it is not expected that there will be any reason to implement it in Dolphin.'!
-!IBindCtx categoriesForClass!OBJIDL-Interfaces! !
-!IBindCtx methodsFor!
+!OS.COM.IBindCtx categoriesForClass!OBJIDL-Interfaces! !
+!OS.COM.IBindCtx methodsFor!
 
 enumObjectParam
 	"Answer the <IEnumString> result of invoking the EnumObjectParam() method of the COM object."
@@ -37,8 +38,7 @@ getBindOptions
 	| answer |
 	answer := BIND_OPTS3 new.
 	self GetBindOptions: answer.
-	^answer
-!
+	^answer!
 
 GetBindOptions: pbindopts
 	"Private - Invoke the GetBindOptions() method of the COM object.
@@ -137,7 +137,7 @@ SetBindOptions: pbindopts
 
 	<virtual stdcall: hresult 7 BIND_OPTS2*>
 	^self invalidCall: _failureCode! !
-!IBindCtx categoriesForMethods!
+!OS.COM.IBindCtx categoriesForMethods!
 enumObjectParam!**auto generated**!methods!public! !
 EnumObjectParam:!**auto generated**!COM Interfaces-IBindCtx!private! !
 getBindOptions!accessing!public! !
@@ -154,7 +154,7 @@ RevokeObjectParam:!**auto generated**!COM Interfaces-IBindCtx!public! !
 SetBindOptions:!**auto generated**!COM Interfaces-IBindCtx!public! !
 !
 
-!IBindCtx class methodsFor!
+!OS.COM.IBindCtx class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'Win32.IBindCtx'
@@ -187,9 +187,9 @@ new
 
 	| answer |
 	answer := self newPointer.
-	OLELibrary default createBindCtx: 0 ppbc: answer.
+	Ole32 createBindCtx: 0 ppbc: answer.
 	^answer! !
-!IBindCtx class categoriesForMethods!
+!OS.COM.IBindCtx class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 new!instance creation!public! !
 !

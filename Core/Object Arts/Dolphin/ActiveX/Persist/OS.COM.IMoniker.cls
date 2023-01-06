@@ -1,18 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-IPersistStream subclass: #IMoniker
+OS.COM.IPersistStream subclass: #'OS.COM.IMoniker'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-IMoniker guid: (IID fromString: '{0000000f-0000-0000-c000-000000000046}')!
-IMoniker comment: '<IMoniker> is a wrapper class for the custom interface ''OBJIDL.IMoniker'' generated from type information in the ''ObjIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IMoniker guid: (OS.COM.IID fromString: '{0000000f-0000-0000-c000-000000000046}')!
+OS.COM.IMoniker comment: '<IMoniker> is a wrapper class for the custom interface ''OBJIDL.IMoniker'' generated from type information in the ''ObjIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface.
 
 WARNING: This comment was automatically generated from the interface''s type information and any changes made here may be overwritten the next time this wrapper class is so generated.'!
-!IMoniker categoriesForClass!OBJIDL-Interfaces! !
-!IMoniker methodsFor!
+!OS.COM.IMoniker categoriesForClass!OBJIDL-Interfaces! !
+!OS.COM.IMoniker methodsFor!
 
 = anObject
 	"Answer whether the receiver is equal to the argument."
@@ -150,7 +151,9 @@ enum: forward
 	enum := IEnumMoniker newPointer.
 	hr := self Enum: forward ppenumMoniker: enum.
 	(hr < 0 and: [hr ~= E_NOTIMPL]) ifTrue: [HRESULTError signal: hr].
-	^enum isNull ifTrue: [COMInterfaceEnumerator newEnumerator: IEnumMoniker on: #()] ifFalse: [enum]!
+	^enum isNull
+		ifTrue: [InterfaceEnumerator newEnumerator: IEnumMoniker on: #()]
+		ifFalse: [enum]!
 
 Enum: fForward ppenumMoniker: ppenumMoniker
 	"Private - Invoke the Enum() method of the COM object.
@@ -173,7 +176,7 @@ getDisplayName: aDuration
 			bindOpts := pbc getBindOptions.
 			bindOpts dwTickCountDeadline: aDuration asMilliseconds.
 			pbc SetBindOptions: bindOpts].
-	ppszDisplayName := COMTaskMemory new.
+	ppszDisplayName := TaskMemory new.
 	self
 		GetDisplayName: pbc
 		pmkToLeft: nil
@@ -220,7 +223,7 @@ hash
 	"Answer the hash value for the receiver."
 
 	| answer |
-	answer := DWORDBytes new.
+	answer := UInt32Bytes new.
 	self Hash: answer.
 	^answer value!
 
@@ -290,7 +293,7 @@ isSystemMoniker
 	implementation provided by OLE itself."
 
 	| mksys |
-	mksys := DWORDBytes new.
+	mksys := UInt32Bytes new.
 	^(self IsSystemMoniker: mksys) == S_OK!
 
 IsSystemMoniker: pdwMksys
@@ -384,7 +387,7 @@ systemMonikerKind
 	"Answer the symbolic name of the system moniker kind of the receiver, or #none if not a system moniker."
 
 	| mksys |
-	mksys := DWORDBytes new.
+	mksys := UInt32Bytes new.
 	self IsSystemMoniker: mksys.
 	mksys := mksys asInteger.
 	^#(#none #composite #file #anti #item #pointer #url #class #objref #session #lua) at: mksys + 1!
@@ -402,7 +405,7 @@ timeOfLastChange
 		pFileTime: answer.
 	pbc free.
 	^answer! !
-!IMoniker categoriesForMethods!
+!OS.COM.IMoniker categoriesForMethods!
 =!comparing!public! !
 asString!converting!public! !
 bindToObject:!methods!public! !
@@ -445,7 +448,7 @@ systemMonikerKind!accessing!public! !
 timeOfLastChange!accessing!public! !
 !
 
-!IMoniker class methodsFor!
+!OS.COM.IMoniker class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'Win32.IMoniker'
@@ -481,7 +484,7 @@ defineFunctions
 forCLSID: aCLSID
 	| answer |
 	answer := self newPointer.
-	OLELibrary default createClassMoniker: aCLSID ppmk: answer.
+	Ole32 createClassMoniker: aCLSID ppmk: answer.
 	^answer!
 
 forItem: itemName
@@ -498,7 +501,7 @@ forItem: itemName delimiter: separatorString
 
 	| answer |
 	answer := self newPointer.
-	OLELibrary default
+	Ole32
 		createItemMoniker: separatorString asUtf16String
 		lpszItem: itemName asUtf16String
 		ppmk: answer.
@@ -510,7 +513,7 @@ forPath: path
 
 	| answer |
 	answer := self newPointer.
-	OLELibrary default createFileMoniker: path asUtf16String ppmk: answer.
+	Ole32 createFileMoniker: path asUtf16String ppmk: answer.
 	^answer!
 
 forPointer: anIUnknown
@@ -519,9 +522,9 @@ forPointer: anIUnknown
 
 	| answer |
 	answer := self newPointer.
-	OLELibrary default createPointerMoniker: anIUnknown ppmk: answer.
+	Ole32 createPointerMoniker: anIUnknown ppmk: answer.
 	^answer! !
-!IMoniker class categoriesForMethods!
+!OS.COM.IMoniker class categoriesForMethods!
 defineFunctions!initializing!public! !
 forCLSID:!instance creation!public! !
 forItem:!instance creation!public! !

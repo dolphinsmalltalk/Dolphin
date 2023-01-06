@@ -1,14 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-DolphinTest subclass: #IMonikerTest
+Core.Tests.DolphinTest subclass: #'OS.COM.Tests.IMonikerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-IMonikerTest guid: (GUID fromString: '{12c38016-378e-4ac7-9a33-8e88d5f9f709}')!
-IMonikerTest comment: ''!
-!IMonikerTest categoriesForClass!Unclassified! !
-!IMonikerTest methodsFor!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.Tests.IMonikerTest guid: (Core.GUID fromString: '{12c38016-378e-4ac7-9a33-8e88d5f9f709}')!
+OS.COM.Tests.IMonikerTest comment: ''!
+!OS.COM.Tests.IMonikerTest methodsFor!
 
 getMonikerRegisteredClass: anIMoniker
 	^((RegKey classesRoot: #read) at: 'CLSID\' , anIMoniker clsid asString) value!
@@ -222,7 +222,7 @@ testTimeOfLastChange
 	"3) Pointer moniker, not implemented:"
 	subject := IMoniker forPointer: IMalloc task.
 	self shouldRaiseNotImplemented: [subject timeOfLastChange]! !
-!IMonikerTest categoriesForMethods!
+!OS.COM.Tests.IMonikerTest categoriesForMethods!
 getMonikerRegisteredClass:!helpers!private! !
 should:raiseHRESULT:!helpers!private! !
 shouldRaiseNotBindable:!helpers!private! !

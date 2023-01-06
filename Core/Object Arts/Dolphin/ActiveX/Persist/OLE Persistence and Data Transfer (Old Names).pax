@@ -1,0 +1,27 @@
+﻿| package |
+package := Package name: 'OLE Persistence and Data Transfer (Old Names)'.
+package paxVersion: 2.1;
+	basicComment: ''.
+
+
+package setVariableNames: #(
+	#{Smalltalk.IMoniker}
+).
+
+package setAliasVariableNames: #(
+	#{Smalltalk.IMoniker}
+).
+
+package setPrerequisites: #(
+	'OLE Persistence and Data Transfer'
+).
+
+package!
+
+"Variable Aliases"!
+
+Smalltalk.IMoniker := OS.COM.IMoniker!
+
+
+"End of package definition"!
+

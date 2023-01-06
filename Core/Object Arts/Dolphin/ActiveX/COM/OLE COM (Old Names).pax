@@ -12,11 +12,13 @@ package setVariableNames: #(
 	#{Smalltalk.COMInterfaceImp}
 	#{Smalltalk.COMTaskMemory}
 	#{Smalltalk.COSERVERINFO}
+	#{Smalltalk.IClassFactory}
 	#{Smalltalk.IEnumString}
 	#{Smalltalk.IEnumStruct}
 	#{Smalltalk.IEnumUnknown}
 	#{Smalltalk.IEnumXXXX}
 	#{Smalltalk.IID}
+	#{Smalltalk.IMalloc}
 	#{Smalltalk.IUnknown}
 	#{Smalltalk.OLEFinalizableStructure}
 	#{Smalltalk.OLELibrary}
@@ -31,11 +33,13 @@ package setAliasVariableNames: #(
 	#{Smalltalk.COMInterfaceImp}
 	#{Smalltalk.COMTaskMemory}
 	#{Smalltalk.COSERVERINFO}
+	#{Smalltalk.IClassFactory}
 	#{Smalltalk.IEnumString}
 	#{Smalltalk.IEnumStruct}
 	#{Smalltalk.IEnumUnknown}
 	#{Smalltalk.IEnumXXXX}
 	#{Smalltalk.IID}
+	#{Smalltalk.IMalloc}
 	#{Smalltalk.IUnknown}
 	#{Smalltalk.OLEFinalizableStructure}
 	#{Smalltalk.OLELibrary}
@@ -64,6 +68,8 @@ Smalltalk.COMTaskMemory := OS.COM.TaskMemory!
 
 Smalltalk.COSERVERINFO := OS.COM.COSERVERINFO!
 
+Smalltalk.IClassFactory := OS.COM.IClassFactory!
+
 Smalltalk.IEnumString := OS.COM.IEnumString!
 
 Smalltalk.IEnumStruct := OS.COM.IEnumStruct!
@@ -73,6 +79,8 @@ Smalltalk.IEnumUnknown := OS.COM.IEnumUnknown!
 Smalltalk.IEnumXXXX := OS.COM.IEnumXXXX!
 
 Smalltalk.IID := OS.COM.IID!
+
+Smalltalk.IMalloc := OS.COM.IMalloc!
 
 Smalltalk.IUnknown := OS.COM.IUnknown!
 

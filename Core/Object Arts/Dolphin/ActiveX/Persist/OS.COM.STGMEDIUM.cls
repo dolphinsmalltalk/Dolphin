@@ -1,21 +1,24 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OLEFinalizableStructure subclass: #STGMEDIUM
+OS.COM.FinalizableStructure subclass: #'OS.COM.STGMEDIUM'
 	instanceVariableNames: 'value'
-	classVariableNames: '_OffsetOf_handle _OffsetOf_lpszFileName _OffsetOf_pstg _OffsetOf_pstm _OffsetOf_pUnkForRelease _OffsetOf_tymed GetSelectors'
-	poolDictionaries: 'OLEPersistConstants'
-	classInstanceVariableNames: ''!
-STGMEDIUM guid: (GUID fromString: '{cc17569a-49c6-475d-a47c-86eaae187d18}')!
-STGMEDIUM addClassConstant: '_OffsetOf_handle' value: 16r4!
-STGMEDIUM addClassConstant: '_OffsetOf_lpszFileName' value: 16r4!
-STGMEDIUM addClassConstant: '_OffsetOf_pstg' value: 16r4!
-STGMEDIUM addClassConstant: '_OffsetOf_pstm' value: 16r4!
-STGMEDIUM addClassConstant: '_OffsetOf_pUnkForRelease' value: 16r8!
-STGMEDIUM addClassConstant: '_OffsetOf_tymed' value: 16r0!
-STGMEDIUM comment: 'Note: It might be preferable to apply the conditional elimination refactoring and employ different STGMEDIUM subclasses to represent the different types, but as we frequently don''t get to create the STGMEDIUM, we''d need some kind of downcast. I''m thinking about it though. At least we can use ReleaseStgMedium() to avoid the need for a switch on release.
+	classVariableNames: 'GetSelectors'
+	imports: #(#{OS.COM.PersistConstants})
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_handle' -> 16r4.
+		'_OffsetOf_lpszFileName' -> 16r4.
+		'_OffsetOf_pstg' -> 16r4.
+		'_OffsetOf_pstm' -> 16r4.
+		'_OffsetOf_pUnkForRelease' -> 16r8.
+		'_OffsetOf_tymed' -> 16r0.
+		'_STGMEDIUM_Size' -> 16rC
+	}!
+OS.COM.STGMEDIUM guid: (Core.GUID fromString: '{cc17569a-49c6-475d-a47c-86eaae187d18}')!
+OS.COM.STGMEDIUM comment: 'Note: It might be preferable to apply the conditional elimination refactoring and employ different STGMEDIUM subclasses to represent the different types, but as we frequently don''t get to create the STGMEDIUM, we''d need some kind of downcast. I''m thinking about it though. At least we can use ReleaseStgMedium() to avoid the need for a switch on release.
 '!
-!STGMEDIUM categoriesForClass!No category! !
-!STGMEDIUM methodsFor!
+!OS.COM.STGMEDIUM categoriesForClass!No category! !
+!OS.COM.STGMEDIUM methodsFor!
 
 bitmap
 	"Answer the bitmap handle stored in the receiver.
@@ -208,7 +211,7 @@ value
 	"Answer the 'value' currently contained in the receiver (which is a tag discriminated union)."
 
 	^self perform: (GetSelectors at: self tymed)! !
-!STGMEDIUM categoriesForMethods!
+!OS.COM.STGMEDIUM categoriesForMethods!
 bitmap!accessing!public! !
 bitmap:!accessing!public! !
 enhancedMetafile!accessing!public! !
@@ -238,13 +241,13 @@ tymed:!**compiled accessors**!public! !
 value!accessing!public! !
 !
 
-!STGMEDIUM class methodsFor!
+!OS.COM.STGMEDIUM class methodsFor!
 
 clear: addressOrBytes
 	"Free external resources referenced by STGMEDIUM
 	structure at the specified address."
 
-	OLELibrary default releaseStgMedium: addressOrBytes!
+	Ole32 releaseStgMedium: addressOrBytes!
 
 defineFields
 	"Define the fields of the OLE COM STGMEDIUM structure.
@@ -314,7 +317,7 @@ initializeMessageMap
 						TYMED_ISTREAM -> #pstm.
 						TYMED_ISTORAGE -> #pstg.
 						TYMED_NULL -> #null}! !
-!STGMEDIUM class categoriesForMethods!
+!OS.COM.STGMEDIUM class categoriesForMethods!
 clear:!public!realizing/unrealizing! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

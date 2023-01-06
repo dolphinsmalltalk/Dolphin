@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'OLE Persistence and Data Transfer'.
-package paxVersion: 1;
+package paxVersion: 2.1;
 	basicComment: 'Dolphin Smalltalk OLE Persistence and Data Transfer Package. 
 Copyright (c) Object Arts Ltd 1998-2023.
 
@@ -11,142 +11,223 @@ This package is as yet incomplete.'.
 package basicPackageVersion: '7.1'.
 
 
-package classNames
-	add: #BIND_OPTS;
-	add: #BIND_OPTS2;
-	add: #BIND_OPTS3;
-	add: #BINDINFO;
-	add: #DVTARGETDEVICE;
-	add: #FORMATETC;
-	add: #IAdviseSink;
-	add: #IAdviseSink2;
-	add: #IAdviseSinkEx;
-	add: #IBindCtx;
-	add: #IDataObject;
-	add: #IEnumMoniker;
-	add: #IMoniker;
-	add: #IRunningObjectTable;
-	add: #STATDATA;
-	add: #STGMEDIUM;
-	yourself.
+package setClassNames: #(
+	#{OS.COM.BIND_OPTS}
+	#{OS.COM.BIND_OPTS2}
+	#{OS.COM.BIND_OPTS3}
+	#{OS.COM.BINDINFO}
+	#{OS.COM.DVTARGETDEVICE}
+	#{OS.COM.FORMATETC}
+	#{OS.COM.IAdviseSink}
+	#{OS.COM.IAdviseSink2}
+	#{OS.COM.IAdviseSinkEx}
+	#{OS.COM.IBindCtx}
+	#{OS.COM.IDataObject}
+	#{OS.COM.IEnumMoniker}
+	#{OS.COM.IMoniker}
+	#{OS.COM.IRunningObjectTable}
+	#{OS.COM.PersistConstants}
+	#{OS.COM.STATDATA}
+	#{OS.COM.STGMEDIUM}
+).
 
-package methodNames
-	add: #OLELibrary -> #createBindCtx:ppbc:;
-	add: #OLELibrary -> #createClassMoniker:ppmk:;
-	add: #OLELibrary -> #createFileMoniker:ppmk:;
-	add: #OLELibrary -> #createItemMoniker:lpszItem:ppmk:;
-	add: #OLELibrary -> #createPointerMoniker:ppmk:;
-	add: #OLELibrary -> #getRunningObjectTable:pprot:;
-	add: #OLELibrary -> #releaseStgMedium:;
-	yourself.
-
-package globalNames
-	add: #OLEPersistConstants;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{OS.COM.OLELibrary} #createBindCtx:ppbc:)
+	#(#{OS.COM.OLELibrary} #createClassMoniker:ppmk:)
+	#(#{OS.COM.OLELibrary} #createFileMoniker:ppmk:)
+	#(#{OS.COM.OLELibrary} #createItemMoniker:lpszItem:ppmk:)
+	#(#{OS.COM.OLELibrary} #createPointerMoniker:ppmk:)
+	#(#{OS.COM.OLELibrary} #getRunningObjectTable:pprot:)
+	#(#{OS.COM.OLELibrary} #releaseStgMedium:)
+).
 
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
-	'..\COM\OLE COM (Old Names)'
-	'OLE Persistence Base (Old Names)'
-	'..\Structured Storage\OLE Structured Storage (Old Names)').
+	'..\COM\OLE COM'
+	'OLE Persistence Base'
+	'..\Structured Storage\OLE Structured Storage'
+).
 
 package!
 
 "Class Definitions"!
 
-IUnknown subclass: #IAdviseSink
+Kernel.SharedPool subclass: #'OS.COM.PersistConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-IUnknown subclass: #IBindCtx
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'ADVF_DATAONSTOP' -> 16r40.
+		'ADVF_NODATA' -> 16r1.
+		'ADVF_ONLYONCE' -> 16r4.
+		'ADVF_PRIMEFIRST' -> 16r2.
+		'ADVFCACHE_FORCEBUILTIN' -> 16r10.
+		'ADVFCACHE_NOHANDLER' -> 16r8.
+		'ADVFCACHE_ONSAVE' -> 16r20.
+		'DATADIR_GET' -> 16r1.
+		'DATADIR_SET' -> 16r2.
+		'TYMED_ENHMF' -> 16r40.
+		'TYMED_FILE' -> 16r2.
+		'TYMED_GDI' -> 16r10.
+		'TYMED_HGLOBAL' -> 16r1.
+		'TYMED_ISTORAGE' -> 16r8.
+		'TYMED_ISTREAM' -> 16r4.
+		'TYMED_MFPICT' -> 16r20.
+		'TYMED_NULL' -> 16r0
+	}!
+OS.COM.IUnknown subclass: #'OS.COM.IAdviseSink'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-IUnknown subclass: #IDataObject
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'OS.COM.IBindCtx'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-IUnknown subclass: #IRunningObjectTable
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'OS.COM.IDataObject'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-IAdviseSink subclass: #IAdviseSink2
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'OS.COM.IRunningObjectTable'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-IAdviseSink subclass: #IAdviseSinkEx
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IAdviseSink subclass: #'OS.COM.IAdviseSink2'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-IEnumUnknown subclass: #IEnumMoniker
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IAdviseSink subclass: #'OS.COM.IAdviseSinkEx'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-IPersistStream subclass: #IMoniker
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IEnumUnknown subclass: #'OS.COM.IEnumMoniker'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-OLEStructure subclass: #BIND_OPTS
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IPersistStream subclass: #'OS.COM.IMoniker'
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwSize _OffsetOf_dwTickCountDeadline _OffsetOf_grfFlags _OffsetOf_grfMode'
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-OLEStructure subclass: #BINDINFO
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.OLEStructure subclass: #'OS.COM.BIND_OPTS'
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cbstgmedData _OffsetOf_dwBindVerb _OffsetOf_dwSize _OffsetOf_grfBindInfoF _OffsetOf_stgmedData _OffsetOf_szCustomVerb _OffsetOf_szExtraInfo'
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-OLEStructure subclass: #DVTARGETDEVICE
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_BIND_OPTS_Size' -> 16r10.
+		'_OffsetOf_dwSize' -> 16r0.
+		'_OffsetOf_dwTickCountDeadline' -> 16rC.
+		'_OffsetOf_grfFlags' -> 16r4.
+		'_OffsetOf_grfMode' -> 16r8
+	}!
+OS.COM.OLEStructure subclass: #'OS.COM.BINDINFO'
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_tdDeviceNameOffset _OffsetOf_tdDriverNameOffset _OffsetOf_tdExtDevmodeOffset _OffsetOf_tdPortNameOffset _OffsetOf_tdSize'
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-OLEStructure subclass: #FORMATETC
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_BINDINFO_Size' -> 16r24.
+		'_OffsetOf_cbstgmedData' -> 16r20.
+		'_OffsetOf_dwBindVerb' -> 16r18.
+		'_OffsetOf_dwSize' -> 16r0.
+		'_OffsetOf_grfBindInfoF' -> 16r14.
+		'_OffsetOf_stgmedData' -> 16r8.
+		'_OffsetOf_szCustomVerb' -> 16r1C.
+		'_OffsetOf_szExtraInfo' -> 16r4
+	}!
+OS.COM.OLEStructure subclass: #'OS.COM.DVTARGETDEVICE'
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cfFormat _OffsetOf_dwAspect _OffsetOf_lindex _OffsetOf_ptd _OffsetOf_tymed'
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-OLEStructure subclass: #STATDATA
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_DVTARGETDEVICE_Size' -> 16rC.
+		'_OffsetOf_tdDeviceNameOffset' -> 16r6.
+		'_OffsetOf_tdDriverNameOffset' -> 16r4.
+		'_OffsetOf_tdExtDevmodeOffset' -> 16rA.
+		'_OffsetOf_tdPortNameOffset' -> 16r8.
+		'_OffsetOf_tdSize' -> 16r0
+	}!
+OS.COM.OLEStructure subclass: #'OS.COM.FORMATETC'
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_advf _OffsetOf_dwConnection _OffsetOf_formatetc _OffsetOf_pAdvSink'
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-BIND_OPTS subclass: #BIND_OPTS2
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_FORMATETC_Size' -> 16r14.
+		'_OffsetOf_cfFormat' -> 16r0.
+		'_OffsetOf_dwAspect' -> 16r8.
+		'_OffsetOf_lindex' -> 16rC.
+		'_OffsetOf_ptd' -> 16r4.
+		'_OffsetOf_tymed' -> 16r10
+	}!
+OS.COM.OLEStructure subclass: #'OS.COM.STATDATA'
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwClassContext _OffsetOf_dwTrackFlags _OffsetOf_locale _OffsetOf_pServerInfo'
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-BIND_OPTS2 subclass: #BIND_OPTS3
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_advf' -> 16r14.
+		'_OffsetOf_dwConnection' -> 16r1C.
+		'_OffsetOf_formatetc' -> 16r0.
+		'_OffsetOf_pAdvSink' -> 16r18.
+		'_STATDATA_Size' -> 16r20
+	}!
+OS.COM.BIND_OPTS subclass: #'OS.COM.BIND_OPTS2'
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_hwnd'
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-OLEFinalizableStructure subclass: #STGMEDIUM
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_BIND_OPTS2_Size' -> 16r20.
+		'_OffsetOf_dwClassContext' -> 16r14.
+		'_OffsetOf_dwTrackFlags' -> 16r10.
+		'_OffsetOf_locale' -> 16r18.
+		'_OffsetOf_pServerInfo' -> 16r1C
+	}!
+OS.COM.BIND_OPTS2 subclass: #'OS.COM.BIND_OPTS3'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_BIND_OPTS3_Size' -> 16r24.
+		'_OffsetOf_hwnd' -> 16r20
+	}!
+OS.COM.FinalizableStructure subclass: #'OS.COM.STGMEDIUM'
 	instanceVariableNames: 'value'
-	classVariableNames: '_OffsetOf_handle _OffsetOf_lpszFileName _OffsetOf_pstg _OffsetOf_pstm _OffsetOf_pUnkForRelease _OffsetOf_tymed GetSelectors'
-	poolDictionaries: 'OLEPersistConstants'
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classVariableNames: 'GetSelectors'
+	imports: #(#{OS.COM.PersistConstants})
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_handle' -> 16r4.
+		'_OffsetOf_lpszFileName' -> 16r4.
+		'_OffsetOf_pstg' -> 16r4.
+		'_OffsetOf_pstm' -> 16r4.
+		'_OffsetOf_pUnkForRelease' -> 16r8.
+		'_OffsetOf_tymed' -> 16r0.
+		'_STGMEDIUM_Size' -> 16rC
+	}!
 
 "Loose Methods"!
 
-!OLELibrary methodsFor!
+!OS.COM.OLELibrary methodsFor!
 
 createBindCtx: reserved ppbc: piBindCtx
 	"Create a Bind Context Object, answering an IBindCtx interface on it through the out
@@ -158,7 +239,7 @@ createBindCtx: reserved ppbc: piBindCtx
 		);"
 
 	<stdcall: hresult CreateBindCtx dword lppvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 createClassMoniker: rclsid ppmk: ppmk
 	"Invoke the CreateClassMoniker() function of the module wrapped by the receiver.
@@ -167,7 +248,7 @@ createClassMoniker: rclsid ppmk: ppmk
 			GUID* rclsid,
 			IMoniker** ppmk);"
 
-	<stdcall: hresult CreateClassMoniker guid* IMoniker**>
+	<stdcall: hresult CreateClassMoniker guid* COM.IMoniker**>
 	^self invalidCall: _failureCode!
 
 createFileMoniker: path ppmk: anIMoniker
@@ -179,13 +260,13 @@ createFileMoniker: path ppmk: anIMoniker
 		);"
 
 	<stdcall: hresult CreateFileMoniker lpwstr lppvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 createItemMoniker: separatorString lpszItem: lpszItem ppmk: ppmk
 	"Create an Item Moniker."
 
 	<stdcall: hresult CreateItemMoniker lpwstr lpwstr lppvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 createPointerMoniker: anIUnknown ppmk: anIMoniker
 	"Create a pointer moniker on the specified IUnknown, answering it through 
@@ -196,7 +277,7 @@ createPointerMoniker: anIUnknown ppmk: anIMoniker
 		);"
 
 	<stdcall: hresult CreatePointerMoniker IUnknown* lppvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getRunningObjectTable: reserved pprot: pprot
 	"Get an IRunningObjectTable on the ROT
@@ -205,8 +286,8 @@ getRunningObjectTable: reserved pprot: pprot
 			LPRUNNINGOBJECTTABLE *pprot
 		);"
 
-	<stdcall: hresult GetRunningObjectTable dword IRunningObjectTable**>
-	^self invalidCall!
+	<stdcall: hresult GetRunningObjectTable dword COM.IRunningObjectTable**>
+	^self invalidCall: _failureCode!
 
 releaseStgMedium: aSTGMEDIUM
 	"Free the STGMEDIUM argument in the appropriate way for the type of data it contains.
@@ -214,9 +295,9 @@ releaseStgMedium: aSTGMEDIUM
 			STGMEDIUM * pmedium	//Pointer to storage medium to be freed
 		);"
 
-	<stdcall: void ReleaseStgMedium STGMEDIUM* >
+	<stdcall: void ReleaseStgMedium COM.STGMEDIUM* >
 	^self invalidCall: _failureCode! !
-!OLELibrary categoriesForMethods!
+!OS.COM.OLELibrary categoriesForMethods!
 createBindCtx:ppbc:!OLE Functions-Persistent Objects!private! !
 createClassMoniker:ppmk:!**auto generated**!public! !
 createFileMoniker:ppmk:!OLE Functions-Persistent Objects!public! !

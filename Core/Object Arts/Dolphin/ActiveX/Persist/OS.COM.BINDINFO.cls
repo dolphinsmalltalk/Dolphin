@@ -1,22 +1,25 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OLEStructure subclass: #BINDINFO
+OS.COM.OLEStructure subclass: #'OS.COM.BINDINFO'
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cbstgmedData _OffsetOf_dwBindVerb _OffsetOf_dwSize _OffsetOf_grfBindInfoF _OffsetOf_stgmedData _OffsetOf_szCustomVerb _OffsetOf_szExtraInfo'
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-BINDINFO guid: (GUID fromString: '{464f7fac-9ba3-4055-8492-dc95aba83383}')!
-BINDINFO addClassConstant: '_OffsetOf_cbstgmedData' value: 16r20!
-BINDINFO addClassConstant: '_OffsetOf_dwBindVerb' value: 16r18!
-BINDINFO addClassConstant: '_OffsetOf_dwSize' value: 16r0!
-BINDINFO addClassConstant: '_OffsetOf_grfBindInfoF' value: 16r14!
-BINDINFO addClassConstant: '_OffsetOf_stgmedData' value: 16r8!
-BINDINFO addClassConstant: '_OffsetOf_szCustomVerb' value: 16r1C!
-BINDINFO addClassConstant: '_OffsetOf_szExtraInfo' value: 16r4!
-BINDINFO comment: '<BINDINFO> is an <ExternalStructure> class to wrap the struct ''UrlMon.tagBINDINFO'' from type information in the ''UrlMon Library'' library.
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_BINDINFO_Size' -> 16r24.
+		'_OffsetOf_cbstgmedData' -> 16r20.
+		'_OffsetOf_dwBindVerb' -> 16r18.
+		'_OffsetOf_dwSize' -> 16r0.
+		'_OffsetOf_grfBindInfoF' -> 16r14.
+		'_OffsetOf_stgmedData' -> 16r8.
+		'_OffsetOf_szCustomVerb' -> 16r1C.
+		'_OffsetOf_szExtraInfo' -> 16r4
+	}!
+OS.COM.BINDINFO guid: (Core.GUID fromString: '{464f7fac-9ba3-4055-8492-dc95aba83383}')!
+OS.COM.BINDINFO comment: '<BINDINFO> is an <ExternalStructure> class to wrap the struct ''UrlMon.tagBINDINFO'' from type information in the ''UrlMon Library'' library.
 '!
-!BINDINFO categoriesForClass!OCIDL-Structs! !
-!BINDINFO methodsFor!
+!OS.COM.BINDINFO categoriesForClass!OCIDL-Structs! !
+!OS.COM.BINDINFO methodsFor!
 
 cbstgmedData
 	"Answer the <Integer> value of the receiver's 'cbstgmedData' field."
@@ -86,7 +89,7 @@ szExtraInfo: anUtf16String
 	"Set the receiver's 'szExtraInfo' field to the value of the argument, anUtf16String"
 
 	bytes uintPtrAtOffset: _OffsetOf_szExtraInfo put: anUtf16String yourAddress! !
-!BINDINFO categoriesForMethods!
+!OS.COM.BINDINFO categoriesForMethods!
 cbstgmedData!**compiled accessors**!public! !
 cbstgmedData:!**compiled accessors**!public! !
 dwBindVerb!**compiled accessors**!public! !
@@ -102,7 +105,7 @@ szExtraInfo!**compiled accessors**!public! !
 szExtraInfo:!**compiled accessors**!public! !
 !
 
-!BINDINFO class methodsFor!
+!OS.COM.BINDINFO class methodsFor!
 
 defineFields
 	"Define the fields of the BINDINFO structure.
@@ -131,7 +134,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #szExtraInfo #stgmedData #grfBindInfoF #dwBindVerb #szCustomVerb #cbstgmedData)! !
-!BINDINFO class categoriesForMethods!
+!OS.COM.BINDINFO class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

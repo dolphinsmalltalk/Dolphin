@@ -1,20 +1,23 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-BIND_OPTS subclass: #BIND_OPTS2
+OS.COM.BIND_OPTS subclass: #'OS.COM.BIND_OPTS2'
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwClassContext _OffsetOf_dwTrackFlags _OffsetOf_locale _OffsetOf_pServerInfo'
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-BIND_OPTS2 guid: (GUID fromString: '{87b4c5bf-026e-11d3-9fd7-00a0cc3e4a32}')!
-BIND_OPTS2 addClassConstant: '_OffsetOf_dwClassContext' value: 16r14!
-BIND_OPTS2 addClassConstant: '_OffsetOf_dwTrackFlags' value: 16r10!
-BIND_OPTS2 addClassConstant: '_OffsetOf_locale' value: 16r18!
-BIND_OPTS2 addClassConstant: '_OffsetOf_pServerInfo' value: 16r1C!
-BIND_OPTS2 comment: 'BIND_OPTS2 is an <ExternalStructure> class to represent the COM structure of the same name.
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_BIND_OPTS2_Size' -> 16r20.
+		'_OffsetOf_dwClassContext' -> 16r14.
+		'_OffsetOf_dwTrackFlags' -> 16r10.
+		'_OffsetOf_locale' -> 16r18.
+		'_OffsetOf_pServerInfo' -> 16r1C
+	}!
+OS.COM.BIND_OPTS2 guid: (Core.GUID fromString: '{87b4c5bf-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.COM.BIND_OPTS2 comment: 'BIND_OPTS2 is an <ExternalStructure> class to represent the COM structure of the same name.
 
 BIND_OPTS2 is a DCOM extentsion of BIND_OPTS which adds a COSERVERINFO field to enable a remote machine to be specified as the bind destination.'!
-!BIND_OPTS2 categoriesForClass!External-Data-Structured-COM! !
-!BIND_OPTS2 methodsFor!
+!OS.COM.BIND_OPTS2 categoriesForClass!External-Data-Structured-COM! !
+!OS.COM.BIND_OPTS2 methodsFor!
 
 dwClassContext
 	"Answer the <Integer> value of the receiver's 'dwClassContext' field."
@@ -60,7 +63,7 @@ pServerInfo: aCOSERVERINFO
 	"Set the receiver's 'pServerInfo' field to the value of the argument, aCOSERVERINFO"
 
 	bytes uintPtrAtOffset: _OffsetOf_pServerInfo put: aCOSERVERINFO yourAddress! !
-!BIND_OPTS2 categoriesForMethods!
+!OS.COM.BIND_OPTS2 categoriesForMethods!
 dwClassContext!**compiled accessors**!public! !
 dwClassContext:!**compiled accessors**!public! !
 dwSize:!**compiled accessors**!public! !
@@ -72,7 +75,7 @@ pServerInfo!**compiled accessors**!public! !
 pServerInfo:!**compiled accessors**!public! !
 !
 
-!BIND_OPTS2 class methodsFor!
+!OS.COM.BIND_OPTS2 class methodsFor!
 
 defineFields
 	"Define the additional fields of the BIND_OPTS2 structure.
@@ -101,7 +104,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #grfFlags #grfMode #dwTickCountDeadline #dwTrackFlags #dwClassContext #locale #pServerInfo)! !
-!BIND_OPTS2 class categoriesForMethods!
+!OS.COM.BIND_OPTS2 class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

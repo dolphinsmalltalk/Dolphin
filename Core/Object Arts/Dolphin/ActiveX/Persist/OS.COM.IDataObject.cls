@@ -1,12 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-IUnknown subclass: #IDataObject
+OS.COM.IUnknown subclass: #'OS.COM.IDataObject'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-IDataObject guid: (IID fromString: '{0000010e-0000-0000-c000-000000000046}')!
-IDataObject comment: '`IDataObject` is a wrapper class for the COM interface ''OCIDL.IDataObject'' generated from type information in the ''OCIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IDataObject guid: (OS.COM.IID fromString: '{0000010e-0000-0000-c000-000000000046}')!
+OS.COM.IDataObject comment: '`IDataObject` is a wrapper class for the COM interface ''OCIDL.IDataObject'' generated from type information in the ''OCIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -57,8 +58,8 @@ interface IDataObject : IUnknown
 };
 ```
 '!
-!IDataObject categoriesForClass!OBJIDL-Interfaces! !
-!IDataObject methodsFor!
+!OS.COM.IDataObject categoriesForClass!OBJIDL-Interfaces! !
+!OS.COM.IDataObject methodsFor!
 
 dAdvise: pformatetc advf: advf pAdvSink: pAdvSink
 	"Answer the <DWORD> result of invoking the DAdvise() method of the COM object."
@@ -107,7 +108,7 @@ EnumDAdvise: ppenumAdvise
 		HRESULT __stdcall EnumDAdvise(
 			[out]IEnumSTATDATA** ppenumAdvise);"
 
-	<virtual stdcall: hresult 12 IUnknown**>
+	<virtual stdcall: hresult 12 Smalltalk.IUnknown**>
 	^self invalidCall: _failureCode!
 
 enumFormatEtc: dwDirection
@@ -125,7 +126,7 @@ EnumFormatEtc: dwDirection ppenumFormatEtc: ppenumFormatEtc
 			[in]unsigned long dwDirection,
 			[out]IEnumFORMATETC** ppenumFormatEtc);"
 
-	<virtual stdcall: hresult 9 dword IUnknown**>
+	<virtual stdcall: hresult 9 dword Smalltalk.IUnknown**>
 	^self invalidCall: _failureCode!
 
 getCanonicalFormatEtc: pformatectIn
@@ -208,7 +209,7 @@ SetData: pformatetc pmedium: pmedium fRelease: fRelease
 
 	<virtual stdcall: hresult 8 FORMATETC* STGMEDIUM* sdword>
 	^self invalidCall: _failureCode! !
-!IDataObject categoriesForMethods!
+!OS.COM.IDataObject categoriesForMethods!
 dAdvise:advf:pAdvSink:!**auto generated**!methods!public! !
 DAdvise:advf:pAdvSink:pdwConnection:!**auto generated**!COM Interfaces-IDataObject!private! !
 DUnadvise:!**auto generated**!COM Interfaces-IDataObject!public! !
@@ -227,7 +228,7 @@ QueryGetData:!**auto generated**!COM Interfaces-IDataObject!public! !
 SetData:pmedium:fRelease:!**auto generated**!COM Interfaces-IDataObject!public! !
 !
 
-!IDataObject class methodsFor!
+!OS.COM.IDataObject class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.IDataObject'
@@ -244,7 +245,7 @@ defineFunctions
 			argumentTypes: 'FORMATETC* dword IAdviseSink* dword*';
 		defineFunction: #DUnadvise: argumentTypes: 'dword';
 		defineFunction: #EnumDAdvise: argumentTypes: 'IUnknown**'! !
-!IDataObject class categoriesForMethods!
+!OS.COM.IDataObject class categoriesForMethods!
 defineFunctions!initializing!public! !
 !
 

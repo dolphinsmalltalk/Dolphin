@@ -1,18 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-IUnknown subclass: #IRunningObjectTable
+OS.COM.IUnknown subclass: #'OS.COM.IRunningObjectTable'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-IRunningObjectTable guid: (IID fromString: '{00000010-0000-0000-c000-000000000046}')!
-IRunningObjectTable comment: '<IRunningObjectTable> is a wrapper class for the custom interface ''OBJIDL.IRunningObjectTable'' generated from type information in the ''ObjIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IRunningObjectTable guid: (OS.COM.IID fromString: '{00000010-0000-0000-c000-000000000046}')!
+OS.COM.IRunningObjectTable comment: '<IRunningObjectTable> is a wrapper class for the custom interface ''OBJIDL.IRunningObjectTable'' generated from type information in the ''ObjIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface.
 
 No function table has been generated for IRunningObjectTable because this interface is implemented by the system and it is not expected that there will be any reason to implement it in Dolphin.'!
-!IRunningObjectTable categoriesForClass!OBJIDL-Interfaces! !
-!IRunningObjectTable methodsFor!
+!OS.COM.IRunningObjectTable categoriesForClass!OBJIDL-Interfaces! !
+!OS.COM.IRunningObjectTable methodsFor!
 
 enumRunning
 	"Answer the <IEnumMoniker> result of invoking the EnumRunning() method of the COM object."
@@ -121,14 +122,14 @@ Revoke: dwRegister
 
 running
 	"Answer a <collection> of all monikers for all running objects."
-	
+
 	| enum answer |
 	enum := IEnumMoniker newPointer.
 	self EnumRunning: enum.
 	answer := enum contents.
 	enum free.
 	^answer! !
-!IRunningObjectTable categoriesForMethods!
+!OS.COM.IRunningObjectTable categoriesForMethods!
 enumRunning!**auto generated**!methods!public! !
 EnumRunning:!**auto generated**!COM Interfaces-IRunningObjectTable!private! !
 getObject:!**auto generated**!methods!public! !
@@ -143,7 +144,7 @@ Revoke:!**auto generated**!COM Interfaces-IRunningObjectTable!public! !
 running!enumerating!public! !
 !
 
-!IRunningObjectTable class methodsFor!
+!OS.COM.IRunningObjectTable class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'Win32.IRunningObjectTable'
@@ -171,9 +172,9 @@ new
 
 	| answer |
 	answer := self newPointer.
-	OLELibrary default getRunningObjectTable: 0 pprot: answer.
+	Ole32 getRunningObjectTable: 0 pprot: answer.
 	^answer! !
-!IRunningObjectTable class categoriesForMethods!
+!OS.COM.IRunningObjectTable class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 new!instance creation!public! !
 !

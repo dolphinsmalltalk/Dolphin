@@ -1,14 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-IAdviseSink subclass: #IAdviseSink2
+OS.COM.IAdviseSink subclass: #'OS.COM.IAdviseSink2'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-IAdviseSink2 guid: (IID fromString: '{3d3f4f89-8502-4d89-bfd6-024365e274fc}')!
-IAdviseSink2 comment: ''!
-!IAdviseSink2 categoriesForClass!OBJIDL-Interfaces! !
-!IAdviseSink2 methodsFor!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IAdviseSink2 guid: (OS.COM.IID fromString: '{3d3f4f89-8502-4d89-bfd6-024365e274fc}')!
+OS.COM.IAdviseSink2 comment: ''!
+!OS.COM.IAdviseSink2 categoriesForClass!OBJIDL-Interfaces! !
+!OS.COM.IAdviseSink2 methodsFor!
 
 OnLinkSrcChange: onLinkSrcChange
 	"Callout for the IAdviseSink2::OnLinkSrcChange() interface function.
@@ -17,11 +18,11 @@ OnLinkSrcChange: onLinkSrcChange
 
 	<virtual stdcall: void 9 IMoniker*>
 	^self invalidCall: _failureCode! !
-!IAdviseSink2 categoriesForMethods!
+!OS.COM.IAdviseSink2 categoriesForMethods!
 OnLinkSrcChange:!COM Interfaces-IAdviseSink2!public! !
 !
 
-!IAdviseSink2 class methodsFor!
+!OS.COM.IAdviseSink2 class methodsFor!
 
 defineFunctions
 	"Declare the virtual functions supported by the receiver.
@@ -31,7 +32,7 @@ defineFunctions
 
 	self
 		defineFunction: #OnLinkSrcChange: returnType: 'void' argumentTypes: 'IMoniker*'! !
-!IAdviseSink2 class categoriesForMethods!
+!OS.COM.IAdviseSink2 class categoriesForMethods!
 defineFunctions!initializing!public! !
 !
 

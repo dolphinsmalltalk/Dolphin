@@ -1,22 +1,25 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OLEStructure subclass: #STATDATA
+OS.COM.OLEStructure subclass: #'OS.COM.STATDATA'
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_advf _OffsetOf_dwConnection _OffsetOf_formatetc _OffsetOf_pAdvSink'
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-STATDATA guid: (GUID fromString: '{25f9c177-b0f1-4161-87a4-188c3de0b3e4}')!
-STATDATA addClassConstant: '_OffsetOf_advf' value: 16r14!
-STATDATA addClassConstant: '_OffsetOf_dwConnection' value: 16r1C!
-STATDATA addClassConstant: '_OffsetOf_formatetc' value: 16r0!
-STATDATA addClassConstant: '_OffsetOf_pAdvSink' value: 16r18!
-STATDATA comment: '<STATDATA> is an <ExternalStructure> class to wrap the struct ''OCIDL.STATDATA'' from type information in the ''OCIDL Library'' library.
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_advf' -> 16r14.
+		'_OffsetOf_dwConnection' -> 16r1C.
+		'_OffsetOf_formatetc' -> 16r0.
+		'_OffsetOf_pAdvSink' -> 16r18.
+		'_STATDATA_Size' -> 16r20
+	}!
+OS.COM.STATDATA guid: (Core.GUID fromString: '{25f9c177-b0f1-4161-87a4-188c3de0b3e4}')!
+OS.COM.STATDATA comment: '<STATDATA> is an <ExternalStructure> class to wrap the struct ''OCIDL.STATDATA'' from type information in the ''OCIDL Library'' library.
 
 The type library contains no documentation for this struct
 
 WARNING: This comment was automatically generated from the struct''s type information and any changes made here may be overwritten the next time this wrapper class is so generated.'!
-!STATDATA categoriesForClass!External-Data-Structured-COM! !
-!STATDATA methodsFor!
+!OS.COM.STATDATA categoriesForClass!External-Data-Structured-COM! !
+!OS.COM.STATDATA methodsFor!
 
 advf
 	"Answer the <Integer> value of the receiver's 'advf' field."
@@ -61,7 +64,7 @@ pAdvSink: anIAdviseSink
 	"Set the receiver's 'pAdvSink' field to the value of the argument, anIAdviseSink"
 
 	bytes uintPtrAtOffset: _OffsetOf_pAdvSink put: anIAdviseSink yourAddress! !
-!STATDATA categoriesForMethods!
+!OS.COM.STATDATA categoriesForMethods!
 advf!**compiled accessors**!public! !
 advf:!**compiled accessors**!public! !
 dwConnection!**compiled accessors**!public! !
@@ -72,7 +75,7 @@ pAdvSink!**compiled accessors**!public! !
 pAdvSink:!**compiled accessors**!public! !
 !
 
-!STATDATA class methodsFor!
+!OS.COM.STATDATA class methodsFor!
 
 defineFields
 	"Define the fields of the STATDATA 'structure'.
@@ -95,7 +98,7 @@ defineFields
 
 getFieldNames
 	^#(#formatetc #advf #pAdvSink #dwConnection)! !
-!STATDATA class categoriesForMethods!
+!OS.COM.STATDATA class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

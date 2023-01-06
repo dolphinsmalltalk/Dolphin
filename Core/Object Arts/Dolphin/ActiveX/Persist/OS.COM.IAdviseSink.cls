@@ -1,18 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-IUnknown subclass: #IAdviseSink
+OS.COM.IUnknown subclass: #'OS.COM.IAdviseSink'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-IAdviseSink guid: (IID fromString: '{0000010f-0000-0000-c000-000000000046}')!
-IAdviseSink comment: '<IAdviseSink> is a wrapper class for the COM interface ''OCIDL.IAdviseSink'' generated from type information in the ''OCIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IAdviseSink guid: (OS.COM.IID fromString: '{0000010f-0000-0000-c000-000000000046}')!
+OS.COM.IAdviseSink comment: '<IAdviseSink> is a wrapper class for the COM interface ''OCIDL.IAdviseSink'' generated from type information in the ''OCIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
 WARNING: This comment was automatically generated from the interface''s type information and any changes made here may be overwritten the next time this wrapper class is so generated.'!
-!IAdviseSink categoriesForClass!OBJIDL-Interfaces! !
-!IAdviseSink methodsFor!
+!OS.COM.IAdviseSink categoriesForClass!OBJIDL-Interfaces! !
+!OS.COM.IAdviseSink methodsFor!
 
 OnClose
 	"Invoke the RemoteOnClose() method of the COM object.
@@ -58,7 +59,7 @@ OnViewChange: dwAspect lindex: lindex
 
 	<virtual stdcall: hresult 5 dword sdword>
 	^self invalidCall: _failureCode! !
-!IAdviseSink categoriesForMethods!
+!OS.COM.IAdviseSink categoriesForMethods!
 OnClose!**auto generated**!COM Interfaces-IAdviseSink!public! !
 OnDataChange:pStgmed:!**auto generated**!COM Interfaces-IAdviseSink!public! !
 OnRename:!**auto generated**!COM Interfaces-IAdviseSink!public! !
@@ -66,9 +67,9 @@ OnSave!**auto generated**!COM Interfaces-IAdviseSink!public! !
 OnViewChange:lindex:!**auto generated**!COM Interfaces-IAdviseSink!public! !
 !
 
-IAdviseSink methodProtocol: #IAdviseSink attributes: #() selectors: #(#OnClose #OnDataChange:pStgmed: #OnRename: #OnSave #OnViewChange:lindex:)!
+OS.COM.IAdviseSink methodProtocol: #IAdviseSink attributes: #() selectors: #(#OnClose #OnDataChange:pStgmed: #OnRename: #OnSave #OnViewChange:lindex:)!
 
-!IAdviseSink class methodsFor!
+!OS.COM.IAdviseSink class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'OCIDL.IAdviseSink'
@@ -92,7 +93,7 @@ defineFunctions
 		defineFunction: #OnClose
 			returnType: 'void'
 ! !
-!IAdviseSink class categoriesForMethods!
+!OS.COM.IAdviseSink class categoriesForMethods!
 defineFunctions!initializing!public! !
 !
 

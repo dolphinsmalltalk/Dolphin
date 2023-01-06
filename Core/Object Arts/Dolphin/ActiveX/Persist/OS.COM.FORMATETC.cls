@@ -1,23 +1,26 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OLEStructure subclass: #FORMATETC
+OS.COM.OLEStructure subclass: #'OS.COM.FORMATETC'
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cfFormat _OffsetOf_dwAspect _OffsetOf_lindex _OffsetOf_ptd _OffsetOf_tymed'
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-FORMATETC guid: (GUID fromString: '{93cc6a56-76b0-48ed-9d91-a4b4b891ef2e}')!
-FORMATETC addClassConstant: '_OffsetOf_cfFormat' value: 16r0!
-FORMATETC addClassConstant: '_OffsetOf_dwAspect' value: 16r8!
-FORMATETC addClassConstant: '_OffsetOf_lindex' value: 16rC!
-FORMATETC addClassConstant: '_OffsetOf_ptd' value: 16r4!
-FORMATETC addClassConstant: '_OffsetOf_tymed' value: 16r10!
-FORMATETC comment: '<FORMATETC> is an <ExternalStructure> class to wrap the struct ''OCIDL.FORMATETC'' from type information in the ''OCIDL Library'' library.
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_FORMATETC_Size' -> 16r14.
+		'_OffsetOf_cfFormat' -> 16r0.
+		'_OffsetOf_dwAspect' -> 16r8.
+		'_OffsetOf_lindex' -> 16rC.
+		'_OffsetOf_ptd' -> 16r4.
+		'_OffsetOf_tymed' -> 16r10
+	}!
+OS.COM.FORMATETC guid: (Core.GUID fromString: '{93cc6a56-76b0-48ed-9d91-a4b4b891ef2e}')!
+OS.COM.FORMATETC comment: '<FORMATETC> is an <ExternalStructure> class to wrap the struct ''OCIDL.FORMATETC'' from type information in the ''OCIDL Library'' library.
 
 The type library contains no documentation for this struct
 
 WARNING: This comment was automatically generated from the struct''s type information and any changes made here may be overwritten the next time this wrapper class is so generated.'!
-!FORMATETC categoriesForClass!External-Data-Structured-COM! !
-!FORMATETC methodsFor!
+!OS.COM.FORMATETC categoriesForClass!External-Data-Structured-COM! !
+!OS.COM.FORMATETC methodsFor!
 
 cfFormat
 	"Answer the <Integer> value of the receiver's 'cfFormat' field."
@@ -68,7 +71,7 @@ tymed: anInteger
 	"Set the receiver's 'tymed' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_tymed put: anInteger! !
-!FORMATETC categoriesForMethods!
+!OS.COM.FORMATETC categoriesForMethods!
 cfFormat!**compiled accessors**!public! !
 cfFormat:!**compiled accessors**!public! !
 dwAspect!**compiled accessors**!public! !
@@ -81,7 +84,7 @@ tymed!**compiled accessors**!public! !
 tymed:!**compiled accessors**!public! !
 !
 
-!FORMATETC class methodsFor!
+!OS.COM.FORMATETC class methodsFor!
 
 defineFields
 	"Define the fields of the FORMATETC structure.
@@ -108,7 +111,7 @@ defineFields
 
 getFieldNames
 	^#(#cfFormat #ptd #dwAspect #lindex #tymed)! !
-!FORMATETC class categoriesForMethods!
+!OS.COM.FORMATETC class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !
