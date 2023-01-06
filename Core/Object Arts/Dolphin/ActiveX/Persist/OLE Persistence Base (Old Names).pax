@@ -1,0 +1,27 @@
+﻿| package |
+package := Package name: 'OLE Persistence Base (Old Names)'.
+package paxVersion: 2.1;
+	basicComment: ''.
+
+
+package setVariableNames: #(
+	#{Smalltalk.IPersistStream}
+).
+
+package setAliasVariableNames: #(
+	#{Smalltalk.IPersistStream}
+).
+
+package setPrerequisites: #(
+	'OLE Persistence Base'
+).
+
+package!
+
+"Variable Aliases"!
+
+Smalltalk.IPersistStream := OS.COM.IPersistStream!
+
+
+"End of package definition"!
+

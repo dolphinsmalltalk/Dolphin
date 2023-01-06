@@ -29,11 +29,14 @@ contents
 		addAll: #(#('Core\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Choice Prompter.pax' #plain #imageBased) #('Core\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin In-place Text Editor.pax' #plain #imageBased) #('Core\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Integer Prompter.pax' #plain #imageBased) #('Core\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Key-Value Prompter.pax' #plain #imageBased) #('Core\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Prompter.pax' #plain #imageBased));
 
 		add: #('Core\Object Arts\Dolphin\ActiveX\COM\OLE COM.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\ActiveX\COM\OLE COM (Old Names).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Structured Storage\OLE Structured Storage.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Structured Storage\OLE Structured Storage (Old Names).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Shell\Windows Shell.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Automation\ActiveX Automation.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\ActiveX\Automation\ActiveX Automation (Old Names).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\Picture\OLE Picture.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\ActiveX\Components\Picture\OLE Picture (Old Names).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\Font\OLE Font.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Presenters\ListTree\Dolphin List Tree Presenter.pax' #plain #imageBased);
 		yourself.
@@ -41,14 +44,15 @@ contents
 	"Active-X control hosting and support packages"
 	contents
 		add: #('Core\Object Arts\Dolphin\ActiveX\Persist\OLE Persistence Base.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\ActiveX\Persist\OLE Persistence Base (Old Names).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Connection Points\ActiveX Connection Points.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\ActiveX\Connection Points\ActiveX Connection Points (Old Names).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Categories\ActiveX Categories.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\OCX\ActiveX Control Hosting.pax' #plain #imageBased);
 		yourself.
 
 	"The advanced find dialog - depends on the VBScript RegExp package"
 	contents
-		add: #('Core\Object Arts\Dolphin\ActiveX\Deprecated\ActiveX (Old Names).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\VBScript\VBScript Regular Expressions.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\VBScript\VBScript Regular Expressions (Old Names).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Dialogs\Find\Dolphin Find Dialog.pax' #plain #imageBased);

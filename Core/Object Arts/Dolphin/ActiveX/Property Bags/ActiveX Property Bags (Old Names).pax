@@ -1,0 +1,35 @@
+﻿| package |
+package := Package name: 'ActiveX Property Bags (Old Names)'.
+package paxVersion: 2.1;
+	basicComment: ''.
+
+
+package setVariableNames: #(
+	#{Smalltalk.AXPropertyBag}
+	#{Smalltalk.AXPropertyBagErrorLog}
+	#{Smalltalk.AXPropertyReadError}
+).
+
+package setAliasVariableNames: #(
+	#{Smalltalk.AXPropertyBag}
+	#{Smalltalk.AXPropertyBagErrorLog}
+	#{Smalltalk.AXPropertyReadError}
+).
+
+package setPrerequisites: #(
+	'ActiveX Property Bags'
+).
+
+package!
+
+"Variable Aliases"!
+
+Smalltalk.AXPropertyBag := OS.COM.PropertyBag!
+
+Smalltalk.AXPropertyBagErrorLog := OS.COM.PropertyBagErrorLog!
+
+Smalltalk.AXPropertyReadError := OS.COM.PropertyReadError!
+
+
+"End of package definition"!
+

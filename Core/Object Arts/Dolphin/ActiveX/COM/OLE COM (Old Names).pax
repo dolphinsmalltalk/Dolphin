@@ -1,0 +1,87 @@
+﻿| package |
+package := Package name: 'OLE COM (Old Names)'.
+package paxVersion: 2.1;
+	basicComment: 'Legacy bindings in Smalltalk for OLE COM package classes, e.g. IUnknown. Assists with loading of pre-8 (pre-namespace) packages.'.
+
+
+package setVariableNames: #(
+	#{Smalltalk.BSTR}
+	#{Smalltalk.CLSID}
+	#{Smalltalk.COMInterface}
+	#{Smalltalk.COMInterfaceEnumerator}
+	#{Smalltalk.COMInterfaceImp}
+	#{Smalltalk.COMTaskMemory}
+	#{Smalltalk.COSERVERINFO}
+	#{Smalltalk.IEnumString}
+	#{Smalltalk.IEnumStruct}
+	#{Smalltalk.IEnumUnknown}
+	#{Smalltalk.IEnumXXXX}
+	#{Smalltalk.IID}
+	#{Smalltalk.IUnknown}
+	#{Smalltalk.OLEFinalizableStructure}
+	#{Smalltalk.OLELibrary}
+	#{Smalltalk.OLEStructure}
+).
+
+package setAliasVariableNames: #(
+	#{Smalltalk.BSTR}
+	#{Smalltalk.CLSID}
+	#{Smalltalk.COMInterface}
+	#{Smalltalk.COMInterfaceEnumerator}
+	#{Smalltalk.COMInterfaceImp}
+	#{Smalltalk.COMTaskMemory}
+	#{Smalltalk.COSERVERINFO}
+	#{Smalltalk.IEnumString}
+	#{Smalltalk.IEnumStruct}
+	#{Smalltalk.IEnumUnknown}
+	#{Smalltalk.IEnumXXXX}
+	#{Smalltalk.IID}
+	#{Smalltalk.IUnknown}
+	#{Smalltalk.OLEFinalizableStructure}
+	#{Smalltalk.OLELibrary}
+	#{Smalltalk.OLEStructure}
+).
+
+package setPrerequisites: #(
+	'OLE COM'
+).
+
+package!
+
+"Variable Aliases"!
+
+Smalltalk.BSTR := OS.COM.BSTR!
+
+Smalltalk.CLSID := OS.COM.CLSID!
+
+Smalltalk.COMInterface := OS.COM.Interface!
+
+Smalltalk.COMInterfaceEnumerator := OS.COM.InterfaceEnumerator!
+
+Smalltalk.COMInterfaceImp := OS.COM.InterfaceImplementation!
+
+Smalltalk.COMTaskMemory := OS.COM.TaskMemory!
+
+Smalltalk.COSERVERINFO := OS.COM.COSERVERINFO!
+
+Smalltalk.IEnumString := OS.COM.IEnumString!
+
+Smalltalk.IEnumStruct := OS.COM.IEnumStruct!
+
+Smalltalk.IEnumUnknown := OS.COM.IEnumUnknown!
+
+Smalltalk.IEnumXXXX := OS.COM.IEnumXXXX!
+
+Smalltalk.IID := OS.COM.IID!
+
+Smalltalk.IUnknown := OS.COM.IUnknown!
+
+Smalltalk.OLEFinalizableStructure := OS.COM.FinalizableStructure!
+
+Smalltalk.OLELibrary := OS.COM.OLELibrary!
+
+Smalltalk.OLEStructure := OS.COM.OLEStructure!
+
+
+"End of package definition"!
+

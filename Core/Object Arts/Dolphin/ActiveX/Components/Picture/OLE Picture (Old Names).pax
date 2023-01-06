@@ -1,0 +1,31 @@
+﻿| package |
+package := Package name: 'OLE Picture (Old Names)'.
+package paxVersion: 2.1;
+	basicComment: ''.
+
+
+package setVariableNames: #(
+	#{Smalltalk.IPicture}
+	#{Smalltalk.OLEPicture}
+).
+
+package setAliasVariableNames: #(
+	#{Smalltalk.IPicture}
+	#{Smalltalk.OLEPicture}
+).
+
+package setPrerequisites: #(
+	'OLE Picture'
+).
+
+package!
+
+"Variable Aliases"!
+
+Smalltalk.IPicture := OS.COM.IPicture!
+
+Smalltalk.OLEPicture := OS.COM.Picture!
+
+
+"End of package definition"!
+

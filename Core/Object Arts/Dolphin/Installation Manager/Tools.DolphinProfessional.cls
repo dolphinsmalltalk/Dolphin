@@ -39,6 +39,7 @@ contents
 		add: #('Core\Object Arts\Dolphin\System\Win32\Windows Data Protection API.pax' #encrypted #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\Win32\Windows Ini Files.pax' #encrypted #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Property Bags\ActiveX Property Bags.pax' #encrypted #imageBased);
+		add: #('Core\Object Arts\Dolphin\ActiveX\Property Bags\ActiveX Property Bags (Old Names).pax' #encrypted #imageBased);
 		addAll: #(#('Core\Object Arts\Dolphin\MVP\Metafiles\Dolphin Metafile Records.pax' #encrypted #imageBased) #('Core\Object Arts\Dolphin\MVP\Metafiles\Dolphin Metafiles.pax' #encrypted #imageBased));
 		add: #('Core\Object Arts\Dolphin\Utilities\Tutorials\Tutorial Player.pax' #encrypted #imageBased);
 		add: #('Core\Object Arts\Dolphin\Utilities\Tutorials\Learn Smalltalk.pax' #encrypted #imageBased);

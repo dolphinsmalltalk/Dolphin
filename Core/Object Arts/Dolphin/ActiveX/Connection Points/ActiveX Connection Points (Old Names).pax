@@ -1,0 +1,31 @@
+﻿| package |
+package := Package name: 'ActiveX Connection Points (Old Names)'.
+package paxVersion: 2.1;
+	basicComment: ''.
+
+
+package setVariableNames: #(
+	#{Smalltalk.AXEventSink}
+	#{Smalltalk.IConnectionPoint}
+).
+
+package setAliasVariableNames: #(
+	#{Smalltalk.AXEventSink}
+	#{Smalltalk.IConnectionPoint}
+).
+
+package setPrerequisites: #(
+	'ActiveX Connection Points'
+).
+
+package!
+
+"Variable Aliases"!
+
+Smalltalk.AXEventSink := OS.COM.EventSink!
+
+Smalltalk.IConnectionPoint := OS.COM.IConnectionPoint!
+
+
+"End of package definition"!
+

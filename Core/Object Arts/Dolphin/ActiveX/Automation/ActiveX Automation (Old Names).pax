@@ -1,0 +1,95 @@
+﻿| package |
+package := Package name: 'ActiveX Automation (Old Names)'.
+package paxVersion: 2.1;
+	basicComment: ''.
+
+
+package setVariableNames: #(
+	#{Smalltalk.AXDualImp}
+	#{Smalltalk.AXTypeLibraryAnalyzer}
+	#{Smalltalk.DATE}
+	#{Smalltalk.DISPPARAMS}
+	#{Smalltalk.FUNCDESC}
+	#{Smalltalk.IDispatch}
+	#{Smalltalk.ITypeInfo}
+	#{Smalltalk.ITypeInfo2}
+	#{Smalltalk.ITypeLib2}
+	#{Smalltalk.LPBSTR}
+	#{Smalltalk.MemberDesc}
+	#{Smalltalk.SAFEARRAY}
+	#{Smalltalk.TKindDispatchAnalyzer}
+	#{Smalltalk.TKindInterfaceAnalyzer}
+	#{Smalltalk.TLIBATTR}
+	#{Smalltalk.TYPEATTR}
+	#{Smalltalk.VARIANT}
+	#{Smalltalk.VARIANT_BOOL}
+).
+
+package setAliasVariableNames: #(
+	#{Smalltalk.AXDualImp}
+	#{Smalltalk.AXTypeLibraryAnalyzer}
+	#{Smalltalk.DATE}
+	#{Smalltalk.DISPPARAMS}
+	#{Smalltalk.FUNCDESC}
+	#{Smalltalk.IDispatch}
+	#{Smalltalk.ITypeInfo}
+	#{Smalltalk.ITypeInfo2}
+	#{Smalltalk.ITypeLib2}
+	#{Smalltalk.LPBSTR}
+	#{Smalltalk.MemberDesc}
+	#{Smalltalk.SAFEARRAY}
+	#{Smalltalk.TKindDispatchAnalyzer}
+	#{Smalltalk.TKindInterfaceAnalyzer}
+	#{Smalltalk.TLIBATTR}
+	#{Smalltalk.TYPEATTR}
+	#{Smalltalk.VARIANT}
+	#{Smalltalk.VARIANT_BOOL}
+).
+
+package setPrerequisites: #(
+	'ActiveX Automation'
+).
+
+package!
+
+"Variable Aliases"!
+
+Smalltalk.AXDualImp := OS.COM.DualInterfaceImplementation!
+
+Smalltalk.AXTypeLibraryAnalyzer := OS.COM.TypeLibraryAnalyzer!
+
+Smalltalk.DATE := OS.COM.DATE!
+
+Smalltalk.DISPPARAMS := OS.COM.DISPPARAMS!
+
+Smalltalk.FUNCDESC := OS.COM.FUNCDESC!
+
+Smalltalk.IDispatch := OS.COM.IDispatch!
+
+Smalltalk.ITypeInfo := OS.COM.ITypeInfo!
+
+Smalltalk.ITypeInfo2 := OS.COM.ITypeInfo2!
+
+Smalltalk.ITypeLib2 := OS.COM.ITypeLib2!
+
+Smalltalk.LPBSTR := OS.COM.LPBSTR!
+
+Smalltalk.MemberDesc := OS.COM.MemberDesc!
+
+Smalltalk.SAFEARRAY := OS.COM.SAFEARRAY!
+
+Smalltalk.TKindDispatchAnalyzer := OS.COM.TKindDispatchAnalyzer!
+
+Smalltalk.TKindInterfaceAnalyzer := OS.COM.TKindInterfaceAnalyzer!
+
+Smalltalk.TLIBATTR := OS.COM.TLIBATTR!
+
+Smalltalk.TYPEATTR := OS.COM.TYPEATTR!
+
+Smalltalk.VARIANT := OS.COM.VARIANT!
+
+Smalltalk.VARIANT_BOOL := OS.COM.VARIANT_BOOL!
+
+
+"End of package definition"!
+
