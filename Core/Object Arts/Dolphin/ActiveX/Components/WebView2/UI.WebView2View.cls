@@ -328,7 +328,7 @@ observeWindowEvents
 		ICoreWebView2DocumentTitleChangedEventHandler.
 		ICoreWebView2DOMContentLoadedEventHandler.
 		ICoreWebView2DownloadStartingEventHandler.
-		Smalltalk.ICoreWebView2FaviconChangedEventHandler.
+		ICoreWebView2FaviconChangedEventHandler.
 		ICoreWebView2FrameCreatedEventHandler.
 		ICoreWebView2FrameNavigationCompletedEventHandler.
 		ICoreWebView2FrameNavigationStartingEventHandler.
@@ -475,7 +475,7 @@ queryWindowInterface
 	| webview2 interfaceClass |
 	webview2 := webviewController coreWebView2.
 	"Work up from the latest interface class until we find one that the control implements"
-	interfaceClass := Smalltalk.ICoreWebView2_15.
+	interfaceClass := ICoreWebView2_15.
 	
 	[(webview2 queryInterface: interfaceClass ifNone: []) ifNotNil: [:interface | ^interface].
 	(interfaceClass := interfaceClass superclass) == ICoreWebView2]

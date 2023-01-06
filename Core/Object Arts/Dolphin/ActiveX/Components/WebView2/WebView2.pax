@@ -43,7 +43,7 @@ package setClassNames: #(
 	#{WebView2.ICoreWebView2_12}
 	#{WebView2.ICoreWebView2_13}
 	#{WebView2.ICoreWebView2_14}
-	#{Smalltalk.ICoreWebView2_15}
+	#{WebView2.ICoreWebView2_15}
 	#{WebView2.ICoreWebView2_2}
 	#{WebView2.ICoreWebView2_3}
 	#{WebView2.ICoreWebView2_4}
@@ -74,7 +74,7 @@ package setClassNames: #(
 	#{WebView2.ICoreWebView2CompletedHandler}
 	#{WebView2.ICoreWebView2CompositionController}
 	#{WebView2.ICoreWebView2CompositionController2}
-	#{Smalltalk.ICoreWebView2CompositionController3}
+	#{WebView2.ICoreWebView2CompositionController3}
 	#{WebView2.ICoreWebView2ContainsFullScreenElementChangedEventHandler}
 	#{WebView2.ICoreWebView2ContentLoadingEventArgs}
 	#{WebView2.ICoreWebView2ContentLoadingEventHandler}
@@ -123,7 +123,7 @@ package setClassNames: #(
 	#{WebView2.ICoreWebView2EventArgs}
 	#{WebView2.ICoreWebView2EventHandler}
 	#{WebView2.ICoreWebView2ExecuteScriptCompletedHandler}
-	#{Smalltalk.ICoreWebView2FaviconChangedEventHandler}
+	#{WebView2.ICoreWebView2FaviconChangedEventHandler}
 	#{WebView2.ICoreWebView2FocusChangedEventHandler}
 	#{WebView2.ICoreWebView2FocusGainedEventHandler}
 	#{WebView2.ICoreWebView2FocusLostEventHandler}
@@ -144,7 +144,7 @@ package setClassNames: #(
 	#{WebView2.ICoreWebView2FramePermissionRequestedEventHandler}
 	#{WebView2.ICoreWebView2FrameWebMessageReceivedEventHandler}
 	#{WebView2.ICoreWebView2GetCookiesCompletedHandler}
-	#{Smalltalk.ICoreWebView2GetFaviconCompletedHandler}
+	#{WebView2.ICoreWebView2GetFaviconCompletedHandler}
 	#{WebView2.ICoreWebView2HistoryChangedEventHandler}
 	#{WebView2.ICoreWebView2HttpHeadersCollection}
 	#{WebView2.ICoreWebView2HttpHeadersCollectionIterator}
@@ -230,7 +230,7 @@ package setPrerequisites: #(
 	'..\..\..\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\..\MVP\Models\Value\Dolphin Value Models'
 	'..\..\COM\OLE COM'
-	'..\..\Persist\OLE Persistence and Data Transfer (Old Names)'
+	'..\..\Persist\OLE Persistence and Data Transfer'
 	'..\..\Structured Storage\OLE Structured Storage'
 	'..\..\Shell\Windows Shell'
 ).
@@ -727,7 +727,7 @@ WebView2.ICoreWebView2_13 subclass: #'WebView2.ICoreWebView2_14'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-WebView2.ICoreWebView2_14 subclass: #ICoreWebView2_15
+WebView2.ICoreWebView2_14 subclass: #'WebView2.ICoreWebView2_15'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -865,7 +865,7 @@ WebView2.ICoreWebView2CompletedHandler subclass: #'WebView2.ICoreWebView2GetCook
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-WebView2.ICoreWebView2CompletedHandler subclass: #ICoreWebView2GetFaviconCompletedHandler
+WebView2.ICoreWebView2CompletedHandler subclass: #'WebView2.ICoreWebView2GetFaviconCompletedHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -895,7 +895,7 @@ WebView2.ICoreWebView2CompositionController subclass: #'WebView2.ICoreWebView2Co
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-WebView2.ICoreWebView2CompositionController2 subclass: #ICoreWebView2CompositionController3
+WebView2.ICoreWebView2CompositionController2 subclass: #'WebView2.ICoreWebView2CompositionController3'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1231,13 +1231,13 @@ WebView2.ICoreWebView2EventHandler subclass: #'WebView2.ICoreWebView2EstimatedEn
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-WebView2.ICoreWebView2EventHandler subclass: #'WebView2.ICoreWebView2FocusChangedEventHandler'
+WebView2.ICoreWebView2EventHandler subclass: #'WebView2.ICoreWebView2FaviconChangedEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-WebView2.ICoreWebView2EventHandler subclass: #ICoreWebView2FaviconChangedEventHandler
+WebView2.ICoreWebView2EventHandler subclass: #'WebView2.ICoreWebView2FocusChangedEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -13,6 +13,9 @@ Graphics.ImageFromHandleInitializer comment: ''!
 createImage: anImage extent: aPoint
 	^handle!
 
+extent: aPoint 
+	"Ignore the request. We have an extent dictated by the image supplied as a handle."!
+
 handle: anExternalhandle
 	handle := anExternalhandle.
 	^self!
@@ -33,6 +36,7 @@ printImage: anImage on: aWriteStream
 		nextPut: $)! !
 !Graphics.ImageFromHandleInitializer categoriesForMethods!
 createImage:extent:!private!realizing/unrealizing! !
+extent:!accessing!public! !
 handle:!initializing!private! !
 image:valueWithHandle:extent:!private!realizing/unrealizing! !
 isPersistent!public!testing! !

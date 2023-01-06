@@ -1,12 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2CompositionController2 subclass: #ICoreWebView2CompositionController3
+WebView2.ICoreWebView2CompositionController2 subclass: #'WebView2.ICoreWebView2CompositionController3'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebView2CompositionController3 guid: (IID fromString: '{9570570e-4d76-4361-9ee1-f04d0dbdfb1e}')!
-ICoreWebView2CompositionController3 comment: '`ICoreWebView2CompositionController3` is a wrapper class for the COM interface ''WebView2.ICoreWebView2CompositionController3'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2CompositionController3 guid: (OS.COM.IID fromString: '{9570570e-4d76-4361-9ee1-f04d0dbdfb1e}')!
+WebView2.ICoreWebView2CompositionController3 comment: '`ICoreWebView2CompositionController3` is a wrapper class for the COM interface ''WebView2.ICoreWebView2CompositionController3'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -42,8 +43,8 @@ interface ICoreWebView2CompositionController3 : ICoreWebView2CompositionControll
 };
 ```
 '!
-!ICoreWebView2CompositionController3 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2CompositionController3 methodsFor!
+!WebView2.ICoreWebView2CompositionController3 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2CompositionController3 methodsFor!
 
 dragEnter: dataObject keyState: keyState point: point
 	"Answer the <DWORD> result of invoking the DragEnter() method of the COM object."
@@ -127,7 +128,7 @@ Drop: dataObject keyState: keyState point: point effect: effect
 
 	<virtual stdcall: hresult 16 IDataObject* dword POINTL dword*>
 	^self invalidCall: _failureCode! !
-!ICoreWebView2CompositionController3 categoriesForMethods!
+!WebView2.ICoreWebView2CompositionController3 categoriesForMethods!
 dragEnter:keyState:point:!**auto generated**!methods!public! !
 DragEnter:keyState:point:effect:!**auto generated**!COM Interfaces-ICoreWebView2CompositionController3!private! !
 dragLeave!**auto generated**!methods!public! !
@@ -138,7 +139,7 @@ drop:keyState:point:!**auto generated**!methods!public! !
 Drop:keyState:point:effect:!**auto generated**!COM Interfaces-ICoreWebView2CompositionController3!private! !
 !
 
-!ICoreWebView2CompositionController3 class methodsFor!
+!WebView2.ICoreWebView2CompositionController3 class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2CompositionController3'
@@ -153,7 +154,7 @@ defineFunctions
 		defineFunction: #Drop:keyState:point:effect:
 			argumentTypes: 'IDataObject* dword POINTL dword*'
 ! !
-!ICoreWebView2CompositionController3 class categoriesForMethods!
+!WebView2.ICoreWebView2CompositionController3 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

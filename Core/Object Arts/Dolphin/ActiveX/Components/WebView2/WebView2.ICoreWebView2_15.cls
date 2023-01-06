@@ -1,12 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2_14 subclass: #ICoreWebView2_15
+WebView2.ICoreWebView2_14 subclass: #'WebView2.ICoreWebView2_15'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebView2_15 guid: (IID fromString: '{517b2d1d-7dae-4a66-a4f4-10352ffb9518}')!
-ICoreWebView2_15 comment: '`ICoreWebView2_15` is a wrapper class for the COM interface ''WebView2.ICoreWebView2_15'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2_15 guid: (OS.COM.IID fromString: '{517b2d1d-7dae-4a66-a4f4-10352ffb9518}')!
+WebView2.ICoreWebView2_15 comment: '`ICoreWebView2_15` is a wrapper class for the COM interface ''WebView2.ICoreWebView2_15'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -37,8 +38,8 @@ interface ICoreWebView2_15 : ICoreWebView2_14
 };
 ```
 '!
-!ICoreWebView2_15 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2_15 methodsFor!
+!WebView2.ICoreWebView2_15 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2_15 methodsFor!
 
 Add_FaviconChanged: eventHandler token: token
 	"Private - Invoke the add_FaviconChanged() method of the COM object.
@@ -54,7 +55,7 @@ faviconUri
 	"Answer the <lpwstr> value of the 'FaviconUri' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_FaviconUri: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -87,7 +88,7 @@ Remove_FaviconChanged: token
 
 	<virtual stdcall: hresult 111 sqword>
 	^self invalidCall: _failureCode! !
-!ICoreWebView2_15 categoriesForMethods!
+!WebView2.ICoreWebView2_15 categoriesForMethods!
 Add_FaviconChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2_15!private! !
 faviconUri!properties!public! !
 get_FaviconUri:!**auto generated**!COM Interfaces-ICoreWebView2_15!private! !
@@ -95,7 +96,7 @@ GetFavicon:completedHandler:!**auto generated**!COM Interfaces-ICoreWebView2_15!
 Remove_FaviconChanged:!**auto generated**!COM Interfaces-ICoreWebView2_15!private! !
 !
 
-!ICoreWebView2_15 class methodsFor!
+!WebView2.ICoreWebView2_15 class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2_15'
@@ -111,7 +112,7 @@ defineFunctions
 		defineFunction: #GetFavicon:completedHandler:
 			argumentTypes: 'sdword ICoreWebView2GetFaviconCompletedHandler*'
 ! !
-!ICoreWebView2_15 class categoriesForMethods!
+!WebView2.ICoreWebView2_15 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

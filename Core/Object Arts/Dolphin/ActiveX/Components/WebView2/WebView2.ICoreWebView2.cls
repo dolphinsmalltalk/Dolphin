@@ -917,7 +917,7 @@ getFavIcon: formatInteger thenDo: aDyadicValuable
 
 	| handler |
 	handler := (WebView2CompletionHandler completionBlock: aDyadicValuable)
-				queryInterface: Smalltalk.ICoreWebView2GetFaviconCompletedHandler.
+				queryInterface: ICoreWebView2GetFaviconCompletedHandler.
 	self GetFavicon: formatInteger completedHandler: handler.
 	handler free!
 
