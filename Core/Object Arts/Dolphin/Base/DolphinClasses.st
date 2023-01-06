@@ -4586,12 +4586,14 @@ OS.Win32Structure subclass: #'OS.VS_FIXEDFILEINFO'
 		'_OffsetOf_dwStrucVersion' -> 16r4.
 		'_VS_FIXEDFILEINFO_Size' -> 16r34
 	}!
-OS.Win32Structure subclass: #'OS.WIN32_FIND_DATA'
+OS.Win32Structure subclass: #'OS.WIN32_FIND_DATAW'
 	instanceVariableNames: 'directory'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_OffsetOf_cAlternateFileName' -> 16r234.
+		'_OffsetOf_cFileName' -> 16r2C.
 		'_OffsetOf_dwFileAttributes' -> 16r0.
 		'_OffsetOf_dwReserved0' -> 16r24.
 		'_OffsetOf_dwReserved1' -> 16r28.
@@ -4600,7 +4602,6 @@ OS.Win32Structure subclass: #'OS.WIN32_FIND_DATA'
 		'_OffsetOf_ftLastWriteTime' -> 16r14.
 		'_OffsetOf_nFileSizeHigh' -> 16r1C.
 		'_OffsetOf_nFileSizeLow' -> 16r20.
-		'_WIN32_FIND_DATA_Size' -> 16r2C.
 		'_WIN32_FIND_DATAW_Size' -> 16r250
 	}!
 OS.FILETIME subclass: #'OS.LocalFILETIME'
@@ -4609,16 +4610,6 @@ OS.FILETIME subclass: #'OS.LocalFILETIME'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.WIN32_FIND_DATA subclass: #'OS.WIN32_FIND_DATAW'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'_OffsetOf_cAlternateFileName' -> 16r234.
-		'_OffsetOf_cFileName' -> 16r2C.
-		'_WIN32_FIND_DATAW_Size' -> 16r250
-	}!
 Kernel.ProtoObject subclass: #'External.DynamicLinkLibraryStub'
 	instanceVariableNames: 'libraryClass'
 	classVariableNames: ''
