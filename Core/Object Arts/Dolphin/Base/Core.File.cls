@@ -580,7 +580,7 @@ attributesEx: aString
 	"Answer the <WIN32_FILE_ATTRIBUTE_DATA> for the file with the specified path, or nil if no such file exists."
 
 	| attributes |
-	attributes := Smalltalk.WIN32_FILE_ATTRIBUTE_DATA newBuffer.
+	attributes := WIN32_FILE_ATTRIBUTE_DATA newBuffer.
 	^(KernelLibrary default
 		getFileAttributesEx: aString
 		fInfoLevelId: 0

@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WIN32_FILE_ATTRIBUTE_DATA subclass: #'OS.WIN32_FIND_DATAW'
+OS.WIN32_FILE_ATTRIBUTE_DATA subclass: #'OS.WIN32_FIND_DATAW'
 	instanceVariableNames: 'directory'
 	classVariableNames: ''
 	imports: #()

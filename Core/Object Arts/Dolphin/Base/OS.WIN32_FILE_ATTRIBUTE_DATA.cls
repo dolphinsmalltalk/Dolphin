@@ -1,17 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Win32Structure subclass: #WIN32_FILE_ATTRIBUTE_DATA
+OS.Win32Structure subclass: #'OS.WIN32_FILE_ATTRIBUTE_DATA'
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwFileAttributes _OffsetOf_ftCreationTime _OffsetOf_ftLastAccessTime _OffsetOf_ftLastWriteTime _OffsetOf_nFileSizeHigh _OffsetOf_nFileSizeLow'
-	imports: #()!
-WIN32_FILE_ATTRIBUTE_DATA guid: (GUID fromString: '{93f205f7-0707-40b3-813b-cad835330f3e}')!
-WIN32_FILE_ATTRIBUTE_DATA addClassConstant: '_OffsetOf_dwFileAttributes' value: 16r0!
-WIN32_FILE_ATTRIBUTE_DATA addClassConstant: '_OffsetOf_ftCreationTime' value: 16r4!
-WIN32_FILE_ATTRIBUTE_DATA addClassConstant: '_OffsetOf_ftLastAccessTime' value: 16rC!
-WIN32_FILE_ATTRIBUTE_DATA addClassConstant: '_OffsetOf_ftLastWriteTime' value: 16r14!
-WIN32_FILE_ATTRIBUTE_DATA addClassConstant: '_OffsetOf_nFileSizeHigh' value: 16r1C!
-WIN32_FILE_ATTRIBUTE_DATA addClassConstant: '_OffsetOf_nFileSizeLow' value: 16r20!
-WIN32_FILE_ATTRIBUTE_DATA comment: '`WIN32_FILE_ATTRIBUTE_DATA` is an `ExternalStructure` class to wrap the struct ''Win32.WIN32_FILE_ATTRIBUTE_DATA'' from type information in the ''Win32 API'' library.
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwFileAttributes' -> 16r0.
+		'_OffsetOf_ftCreationTime' -> 16r4.
+		'_OffsetOf_ftLastAccessTime' -> 16rC.
+		'_OffsetOf_ftLastWriteTime' -> 16r14.
+		'_OffsetOf_nFileSizeHigh' -> 16r1C.
+		'_OffsetOf_nFileSizeLow' -> 16r20.
+		'_WIN32_FILE_ATTRIBUTE_DATA_Size' -> 16r24
+	}!
+OS.WIN32_FILE_ATTRIBUTE_DATA guid: (Core.GUID fromString: '{93f205f7-0707-40b3-813b-cad835330f3e}')!
+OS.WIN32_FILE_ATTRIBUTE_DATA comment: '`WIN32_FILE_ATTRIBUTE_DATA` is an `ExternalStructure` class to wrap the struct ''Win32.WIN32_FILE_ATTRIBUTE_DATA'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
 	"Contains attribute information for a file or directory. The GetFileAttributesEx function uses this structure."
@@ -31,8 +35,8 @@ struct tagWIN32_FILE_ATTRIBUTE_DATA {
 } WIN32_FILE_ATTRIBUTE_DATA;
 ```
 '!
-!WIN32_FILE_ATTRIBUTE_DATA categoriesForClass!Win32-Structs! !
-!WIN32_FILE_ATTRIBUTE_DATA methodsFor!
+!OS.WIN32_FILE_ATTRIBUTE_DATA categoriesForClass!Win32-Structs! !
+!OS.WIN32_FILE_ATTRIBUTE_DATA methodsFor!
 
 dwFileAttributes
 	"Answer the <Integer> value of the receiver's 'dwFileAttributes' field."
@@ -80,7 +84,7 @@ nFileSizeLow
 	"Answer the <Integer> value of the receiver's 'nFileSizeLow' field."
 
 	^bytes dwordAtOffset: _OffsetOf_nFileSizeLow! !
-!WIN32_FILE_ATTRIBUTE_DATA categoriesForMethods!
+!OS.WIN32_FILE_ATTRIBUTE_DATA categoriesForMethods!
 dwFileAttributes!**compiled accessors**!public! !
 fileSize!accessing!public! !
 ftCreationTime!public! !
@@ -92,7 +96,7 @@ nFileSizeHigh!**compiled accessors**!public! !
 nFileSizeLow!**compiled accessors**!public! !
 !
 
-!WIN32_FILE_ATTRIBUTE_DATA class methodsFor!
+!OS.WIN32_FILE_ATTRIBUTE_DATA class methodsFor!
 
 defineFields
 	"Define the fields of the WIN32_FILE_ATTRIBUTE_DATA structure.
@@ -121,7 +125,7 @@ defineFields
 
 getFieldNames
 	^#(#dwFileAttributes #ftCreationTime #ftLastAccessTime #ftLastWriteTime #nFileSizeHigh #nFileSizeLow)! !
-!WIN32_FILE_ATTRIBUTE_DATA class categoriesForMethods!
+!OS.WIN32_FILE_ATTRIBUTE_DATA class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

@@ -4586,7 +4586,7 @@ OS.Win32Structure subclass: #'OS.VS_FIXEDFILEINFO'
 		'_OffsetOf_dwStrucVersion' -> 16r4.
 		'_VS_FIXEDFILEINFO_Size' -> 16r34
 	}!
-OS.Win32Structure subclass: #WIN32_FILE_ATTRIBUTE_DATA
+OS.Win32Structure subclass: #'OS.WIN32_FILE_ATTRIBUTE_DATA'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -4598,7 +4598,7 @@ OS.Win32Structure subclass: #WIN32_FILE_ATTRIBUTE_DATA
 		'_OffsetOf_ftLastWriteTime' -> 16r14.
 		'_OffsetOf_nFileSizeHigh' -> 16r1C.
 		'_OffsetOf_nFileSizeLow' -> 16r20.
-		'_WIN32_FIND_DATAW_Size' -> 16r250
+		'_WIN32_FILE_ATTRIBUTE_DATA_Size' -> 16r24
 	}!
 OS.FILETIME subclass: #'OS.LocalFILETIME'
 	instanceVariableNames: ''
@@ -4606,7 +4606,7 @@ OS.FILETIME subclass: #'OS.LocalFILETIME'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-WIN32_FILE_ATTRIBUTE_DATA subclass: #'OS.WIN32_FIND_DATAW'
+OS.WIN32_FILE_ATTRIBUTE_DATA subclass: #'OS.WIN32_FIND_DATAW'
 	instanceVariableNames: 'directory'
 	classVariableNames: ''
 	imports: #()
