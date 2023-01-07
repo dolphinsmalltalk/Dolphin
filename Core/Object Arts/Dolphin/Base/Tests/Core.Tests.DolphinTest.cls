@@ -55,7 +55,9 @@ isLogging
 	^true!
 
 isOnline
-	^true!
+	| flags |
+	flags := External.UInt32Bytes new.
+	^OS.WinInetLibrary default internetGetConnectedState: flags dwReserved: 0!
 
 methodContextClass
 	^Context!

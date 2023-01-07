@@ -23,6 +23,10 @@ internetCheckConnection: url dwFlags: flags dwReserved: reserved
 	<stdcall: bool InternetCheckConnectionW lpwstr dword dword>
 	^self invalidCall: _failureCode!
 
+internetGetConnectedState: flagsBuf dwReserved: reserved
+	<stdcall: bool InternetGetConnectedState dword* dword>
+	^self invalidCall: _failureCode!
+
 internetGoOnline: url hwndParent: parent dwReserved: reserved
 	"Prompts the user for permission to initiate connection to a URL.
 
@@ -53,6 +57,7 @@ ping: aURL
 	^self internetCheckConnection: aURL dwFlags: 1 dwReserved: 0! !
 !OS.WinInetLibrary categoriesForMethods!
 internetCheckConnection:dwFlags:dwReserved:!public!win32 functions-internet! !
+internetGetConnectedState:dwReserved:!public!win32 functions-internet! !
 internetGoOnline:hwndParent:dwReserved:!public!win32 functions-internet! !
 internetOpen:dwAccessType:lpszProxyName:lpszProxyBypass:dwFlags:!public!win32 functions-internet! !
 ping:!operations!public! !

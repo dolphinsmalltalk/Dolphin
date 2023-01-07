@@ -12,7 +12,7 @@ Net.Tests.InternetAddressTest comment: ''!
 
 testAllForHost
 	| addresses |
-	self isOnline ifFalse: [^self].
+	self skipUnless: [self isOnline].
 
 	"dns.google has two fixed and well-known IP addresses"
 	addresses := InternetAddress allForHost: 'dns.google'.
@@ -26,7 +26,7 @@ testAllForHost
 
 testHost
 	| name ip |
-	self isOnline ifFalse: [^self].
+	self skipUnless: [self isOnline].
 	name := InternetAddress host: 'dns.google'.
 	ip := InternetAddress ipAddress: name ipAddress.
 	self assert: ip host equals: name host!

@@ -212,6 +212,7 @@ package setPrerequisites: #(
 	'..\..\System\Compiler\Smalltalk Parser'
 	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
 	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitPreload'
+	'..\..\Sockets\WinInet'
 	'..\..\ActiveX\Components\XML DOM\XML DOM'
 ).
 
