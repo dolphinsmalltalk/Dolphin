@@ -153,18 +153,18 @@ get_Width: value
 hasPosition
 	"Answer the <Boolean> value of the 'HasPosition' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_HasPosition: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_HasPosition: buf.
+	^buf asBoolean!
 
 hasSize
 	"Answer the <Boolean> value of the 'HasSize' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_HasSize: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_HasSize: buf.
+	^buf asBoolean!
 
 height
 	"Answer the <dword> value of the 'Height' property of the receiver."
@@ -197,34 +197,34 @@ printableProperties
 shouldDisplayMenuBar
 	"Answer the <Boolean> value of the 'ShouldDisplayMenuBar' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_ShouldDisplayMenuBar: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_ShouldDisplayMenuBar: buf.
+	^buf asBoolean!
 
 shouldDisplayScrollBars
 	"Answer the <Boolean> value of the 'ShouldDisplayScrollBars' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer .
-	self get_ShouldDisplayScrollBars: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_ShouldDisplayScrollBars: buf.
+	^buf asBoolean!
 
 shouldDisplayStatus
 	"Answer the <Boolean> value of the 'ShouldDisplayStatus' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_ShouldDisplayStatus: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_ShouldDisplayStatus: buf.
+	^buf asBoolean!
 
 shouldDisplayToolbar
 	"Answer the <Boolean> value of the 'ShouldDisplayToolbar' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_ShouldDisplayToolbar: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_ShouldDisplayToolbar: buf.
+	^buf asBoolean!
 
 top
 	"Answer the <dword> value of the 'top' property of the receiver."

@@ -54,10 +54,10 @@ get_NavigationId: navigationId
 isErrorPage
 	"Answer the <Boolean> value of the 'IsErrorPage' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_IsErrorPage: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_IsErrorPage: buf.
+	^buf asBoolean!
 
 navigationId
 	"Answer the <qword> value of the 'NavigationId' property of the receiver."

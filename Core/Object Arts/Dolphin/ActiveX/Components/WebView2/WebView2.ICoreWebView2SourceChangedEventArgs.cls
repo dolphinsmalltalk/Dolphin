@@ -42,10 +42,10 @@ get_IsNewDocument: isNewDocument
 isNewDocument
 	"Answer the <Boolean> value of the 'IsNewDocument' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_IsNewDocument: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_IsNewDocument: buf.
+	^buf asBoolean!
 
 printableProperties
 	^#(#isNewDocument)! !

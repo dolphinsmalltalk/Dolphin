@@ -119,10 +119,10 @@ GetDeferral: deferral
 handled
 	"Answer the <Boolean> value of the 'Handled' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_Handled: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_Handled: buf.
+	^buf asBoolean!
 
 handled: handled
 	"Set the 'Handled' property of the receiver to the <sdword> value of the argument."
@@ -132,10 +132,10 @@ handled: handled
 isUserInitiated
 	"Answer the <Boolean> value of the 'IsUserInitiated' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_IsUserInitiated: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_IsUserInitiated: buf.
+	^buf asBoolean!
 
 name
 	"Answer the <lpwstr> value of the 'name' property of the receiver."

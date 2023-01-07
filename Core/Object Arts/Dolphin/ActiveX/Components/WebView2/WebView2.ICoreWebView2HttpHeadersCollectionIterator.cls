@@ -62,10 +62,10 @@ GetCurrentHeader: name value: value
 hasCurrent
 	"Answer whether there are any remaining elements in the collection to iterate over."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_HasCurrentHeader: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_HasCurrentHeader: buf.
+	^buf asBoolean!
 
 keysAndValuesDo: aDyadicValuable
 	"Evaluate the <dyadicValuable> argument for each of the remaining key/valube pairsr in the receiver (i.e. from the current position to the end).

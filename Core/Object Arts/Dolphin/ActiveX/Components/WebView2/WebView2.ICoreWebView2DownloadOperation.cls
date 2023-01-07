@@ -138,10 +138,10 @@ Cancel
 canResume
 	"Answer the <Boolean> value of the 'CanResume' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_CanResume: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_CanResume: buf.
+	^buf asBoolean!
 
 contentDisposition
 	"Answer the <lpwstr> value of the 'ContentDisposition' property of the receiver."

@@ -101,10 +101,10 @@ GetDeferral: deferral
 isUserInitiated
 	"Answer the <Boolean> value of the 'IsUserInitiated' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_IsUserInitiated: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_IsUserInitiated: buf.
+	^buf asBoolean!
 
 permissionKind
 	"Answer the <sdword> value of the 'PermissionKind' property of the receiver."

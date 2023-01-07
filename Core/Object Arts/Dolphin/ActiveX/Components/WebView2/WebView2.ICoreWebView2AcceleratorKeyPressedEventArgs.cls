@@ -93,10 +93,10 @@ get_VirtualKey: virtualKey
 handled
 	"Answer the <Boolean> value of the 'Handled' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_Handled: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_Handled: buf.
+	^buf asBoolean!
 
 handled: handled
 	"Set the 'Handled' property of the receiver to the <sdword> value of the argument."

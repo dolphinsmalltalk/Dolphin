@@ -352,7 +352,7 @@ onControllerCreated: anICoreWebView2Controller
 	webviewController := self queryControllerInterface: anICoreWebView2Controller.
 	self observeControllerEvents.
 	self resizeContentToFit.
-	webview := self queryWindowInterface.
+	webview := webviewController coreWebView2.
 	self initializeControl!
 
 onDestroyed
@@ -366,7 +366,7 @@ onDestroyed
 	^super onDestroyed!
 
 onEnvironmentCreated: anICoreWebView2Environment
-	webviewEnvironment := self queryEnvironmentInterface: anICoreWebView2Environment.
+	webviewEnvironment := anICoreWebView2Environment downCast.
 	self observeEnvironmentEvents.
 	self createWebView!
 
@@ -449,39 +449,6 @@ queryControllerInterface: anIUnknown
 			whileFalse.
 	^anIUnknown queryInterface: ICoreWebView2Controller!
 
-queryEnvironmentInterface: anICoreWebView2Environment
-	"Private - There are already 10 versions of the ICoreWebView2Environment; answer the latest available. A little more forethought in the design so as to not have to define 10 versions of a public interface in a year or two might be nice!!"
-
-	| interfaceClass |
-	interfaceClass := ICoreWebView2Environment10.
-	
-	[(anICoreWebView2Environment queryInterface: interfaceClass ifNone: [])
-		ifNotNil: [:interface | ^interface].
-	(interfaceClass := interfaceClass superclass) == ICoreWebView2Environment]
-			whileFalse.
-	^anICoreWebView2Environment!
-
-querySettingsInterface
-	| settings interfaceClass |
-	settings := webview settings.
-	interfaceClass := ICoreWebView2Settings7.
-	
-	[(webview queryInterface: interfaceClass ifNone: []) ifNotNil: [:interface | ^interface].
-	(interfaceClass := interfaceClass superclass) == ICoreWebView2Settings]
-			whileFalse.
-	^settings!
-
-queryWindowInterface
-	| webview2 interfaceClass |
-	webview2 := webviewController coreWebView2.
-	"Work up from the latest interface class until we find one that the control implements"
-	interfaceClass := ICoreWebView2_15.
-	
-	[(webview2 queryInterface: interfaceClass ifNone: []) ifNotNil: [:interface | ^interface].
-	(interfaceClass := interfaceClass superclass) == ICoreWebView2]
-			whileFalse.
-	^webview2!
-
 registerEventSink: aWebView2EventSink
 	aWebView2EventSink register.
 	^eventHandlers add: aWebView2EventSink!
@@ -499,9 +466,6 @@ releaseWebView
 
 resizeContentToFit
 	self content rectangle: self clientRectangle!
-
-settings
-	^webview settings!
 
 showWithStyle: anInteger
 	| result |
@@ -552,7 +516,7 @@ webviewEnvironment
 	^webviewEnvironment!
 
 webviewSettings
-	^self querySettingsInterface!
+	^webview settings!
 
 zoomFactor
 	^self webviewController zoomFactor!
@@ -625,13 +589,9 @@ onViewCreated!event handling!public! !
 profile!commands!public! !
 queryCommand:!commands!public! !
 queryControllerInterface:!helpers!private! !
-queryEnvironmentInterface:!helpers!private! !
-querySettingsInterface!helpers!private! !
-queryWindowInterface!helpers!private! !
 registerEventSink:!helpers!private! !
 releaseWebView!operations!private!realizing/unrealizing! !
 resizeContentToFit!helpers!private! !
-settings!commands!public! !
 showWithStyle:!operations!private! !
 stop!commands!public! !
 subclassWindow:!operations!private! !

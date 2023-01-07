@@ -84,10 +84,10 @@ interface ICoreWebView2Settings : IUnknown
 areBrowserAcceleratorKeysEnabled
 	"Answer the <Boolean> value of the 'AreBrowserAcceleratorKeysEnabled' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_AreBrowserAcceleratorKeysEnabled: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_AreBrowserAcceleratorKeysEnabled: buf.
+	^buf asBoolean!
 
 areBrowserAcceleratorKeysEnabled: areBrowserAcceleratorKeysEnabled
 	"Set the 'AreBrowserAcceleratorKeysEnabled' property of the receiver to the <sdword> value of the argument."
@@ -97,10 +97,10 @@ areBrowserAcceleratorKeysEnabled: areBrowserAcceleratorKeysEnabled
 areDefaultContextMenusEnabled
 	"Answer the <sdword> value of the 'AreDefaultContextMenusEnabled' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_AreDefaultContextMenusEnabled: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_AreDefaultContextMenusEnabled: buf.
+	^buf asBoolean!
 
 areDefaultContextMenusEnabled: enabled
 	"Set the 'AreDefaultContextMenusEnabled' property of the receiver to the <sdword> value of the argument."
@@ -111,9 +111,9 @@ areDefaultScriptDialogsEnabled
 	"Answer the <Boolean> value of the 'AreDefaultScriptDialogsEnabled' property of the receiver."
 
 	| answer |
-	answer := BOOL newBuffer.
+	answer := UInt32Bytes new.
 	self get_AreDefaultScriptDialogsEnabled: answer.
-	^answer asObject!
+	^answer asBoolean!
 
 areDefaultScriptDialogsEnabled: areDefaultScriptDialogsEnabled
 	"Set the 'AreDefaultScriptDialogsEnabled' property of the receiver to the <sdword> value of the argument."
@@ -123,10 +123,10 @@ areDefaultScriptDialogsEnabled: areDefaultScriptDialogsEnabled
 areDevToolsEnabled
 	"Answer the <Boolean> value of the 'AreDevToolsEnabled' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_AreDevToolsEnabled: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_AreDevToolsEnabled: buf.
+	^buf asBoolean!
 
 areDevToolsEnabled: areDevToolsEnabled
 	"Set the 'AreDevToolsEnabled' property of the receiver to the <sdword> value of the argument."
@@ -136,15 +136,26 @@ areDevToolsEnabled: areDevToolsEnabled
 areHostObjectsAllowed
 	"Answer the <Boolean> value of the 'AreHostObjectsAllowed' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_AreHostObjectsAllowed: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_AreHostObjectsAllowed: buf.
+	^buf asBoolean!
 
 areHostObjectsAllowed: allowed
 	"Set the 'AreHostObjectsAllowed' property of the receiver to the <sdword> value of the argument."
 
 	self put_AreHostObjectsAllowed: allowed asParameter!
+
+downCast
+	"Private - Answer the most recent settings interface available on the underlying COM object."
+
+	| interfaceClass |
+	interfaceClass := ICoreWebView2Settings7.
+	
+	[(self queryInterface: interfaceClass ifNone: []) ifNotNil: [:interface | ^interface].
+	(interfaceClass := interfaceClass superclass) == self class]
+			whileFalse.
+	^self!
 
 get_AreBrowserAcceleratorKeysEnabled: areBrowserAcceleratorKeysEnabled
 	"Private - Get the value of the 'AreBrowserAcceleratorKeysEnabled' property of the receiver.
@@ -216,7 +227,7 @@ get_IsGeneralAutofillEnabled: value
 			[out, retval]long* value);"
 
 	value value: 1.
-	^S_OK!
+	^S_FALSE!
 
 get_IsPasswordAutosaveEnabled: value
 	"Private - Get the value of the 'IsPasswordAutosaveEnabled' property of the receiver.
@@ -224,8 +235,8 @@ get_IsPasswordAutosaveEnabled: value
 		HRESULT __stdcall IsPasswordAutosaveEnabled(
 			[out, retval]long* value);"
 
-	value value: 1.
-	^S_OK!
+	value value: 0.
+	^S_FALSE!
 
 get_IsPinchZoomEnabled: enabled
 	"Private - Get the value of the 'IsPinchZoomEnabled' property of the receiver.
@@ -233,8 +244,8 @@ get_IsPinchZoomEnabled: enabled
 		HRESULT __stdcall IsPinchZoomEnabled(
 			[out, retval]long* enabled);"
 
-	enabled value: 0.
-	^S_OK!
+	enabled value: 1.
+	^S_FALSE!
 
 get_IsScriptEnabled: isScriptEnabled
 	"Private - Get the value of the 'IsScriptEnabled' property of the receiver.
@@ -260,8 +271,8 @@ get_IsSwipeNavigationEnabled: enabled
 		HRESULT __stdcall IsSwipeNavigationEnabled(
 			[out, retval]long* enabled);"
 
-	enabled value: 0.
-	^S_OK!
+	enabled value: 1.
+	^S_FALSE!
 
 get_IsWebMessageEnabled: isWebMessageEnabled
 	"Private - Get the value of the 'IsWebMessageEnabled' property of the receiver.
@@ -287,11 +298,7 @@ get_UserAgent: userAgent
 		HRESULT __stdcall UserAgent(
 			[out, retval]LPWSTR* UserAgent);"
 
-	| taskMem |
-	taskMem := 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.85 Safari/537.36 Edg/90.0.818.46'
-				asUtf16String copyToCOMTaskMemory.
-	userAgent value: taskMem.
-	taskMem beUnfinalizable.
+	userAgent value: self class defaultUserAgent asUtf16String copyToCOMTaskMemory detach.
 	^S_OK!
 
 hiddenPdfToolbarItems
@@ -310,10 +317,10 @@ hiddenPdfToolbarItems: hidden_pdf_toolbar_items
 isBuiltInErrorPageEnabled
 	"Answer the <Boolean> value of the 'IsBuiltInErrorPageEnabled' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_IsBuiltInErrorPageEnabled: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_IsBuiltInErrorPageEnabled: buf.
+	^buf asBoolean!
 
 isBuiltInErrorPageEnabled: enabled
 	"Set the 'IsBuiltInErrorPageEnabled' property of the receiver to the <sdword> value of the argument."
@@ -323,10 +330,10 @@ isBuiltInErrorPageEnabled: enabled
 isGeneralAutofillEnabled
 	"Answer the <Boolean> value of the 'IsGeneralAutofillEnabled' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_IsGeneralAutofillEnabled: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_IsGeneralAutofillEnabled: buf.
+	^buf asBoolean!
 
 isGeneralAutofillEnabled: value
 	"Set the 'IsGeneralAutofillEnabled' property of the receiver to the <sdword> value of the argument."
@@ -336,10 +343,10 @@ isGeneralAutofillEnabled: value
 isPasswordAutosaveEnabled
 	"Answer the <Boolean> value of the 'IsPasswordAutosaveEnabled' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_IsPasswordAutosaveEnabled: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_IsPasswordAutosaveEnabled: buf.
+	^buf asBoolean!
 
 isPasswordAutosaveEnabled: value
 	"Set the 'IsPasswordAutosaveEnabled' property of the receiver to the <sdword> value of the argument."
@@ -362,10 +369,10 @@ isPinchZoomEnabled: enabled
 isScriptEnabled
 	"Answer the <Boolean> value of the 'IsScriptEnabled' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_IsScriptEnabled: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_IsScriptEnabled: buf.
+	^buf asBoolean!
 
 isScriptEnabled: isScriptEnabled
 	"Set the 'IsScriptEnabled' property of the receiver to the <sdword> value of the argument."
@@ -375,10 +382,10 @@ isScriptEnabled: isScriptEnabled
 isStatusBarEnabled
 	"Answer the <Boolean> value of the 'IsStatusBarEnabled' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_IsStatusBarEnabled: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_IsStatusBarEnabled: buf.
+	^buf asBoolean!
 
 isStatusBarEnabled: isStatusBarEnabled
 	"Set the 'IsStatusBarEnabled' property of the receiver to the <sdword> value of the argument."
@@ -396,15 +403,15 @@ isSwipeNavigationEnabled
 isSwipeNavigationEnabled: enabled
 	"Set the 'IsSwipeNavigationEnabled' property of the receiver to the <sdword> value of the argument."
 
-	self put_IsSwipeNavigationEnabled: enabled!
+	self put_IsSwipeNavigationEnabled: enabled asParameter!
 
 isWebMessageEnabled
 	"Answer the <Boolean> value of the 'IsWebMessageEnabled' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_IsWebMessageEnabled: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_IsWebMessageEnabled: buf.
+	^buf asBoolean!
 
 isWebMessageEnabled: isWebMessageEnabled
 	"Set the 'IsWebMessageEnabled' property of the receiver to the <sdword> value of the argument."
@@ -414,10 +421,10 @@ isWebMessageEnabled: isWebMessageEnabled
 isZoomControlEnabled
 	"Answer the <Boolean> value of the 'IsZoomControlEnabled' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_IsZoomControlEnabled: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_IsZoomControlEnabled: buf.
+	^buf asBoolean!
 
 isZoomControlEnabled: enabled
 	"Set the 'IsZoomControlEnabled' property of the receiver to the <sdword> value of the argument."
@@ -605,6 +612,7 @@ areDevToolsEnabled!properties!public! !
 areDevToolsEnabled:!properties!public! !
 areHostObjectsAllowed!properties!public! !
 areHostObjectsAllowed:!properties!public! !
+downCast!properties!public! !
 get_AreBrowserAcceleratorKeysEnabled:!COM Interfaces-ICoreWebView2Settings3!private! !
 get_AreDefaultContextMenusEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
 get_AreDefaultScriptDialogsEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
@@ -664,6 +672,9 @@ userAgent:!**auto generated**!properties!public! !
 
 !WebView2.ICoreWebView2Settings class methodsFor!
 
+defaultUserAgent
+	^'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.85 Safari/537.36 Edg/90.0.818.46'!
+
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2Settings'
 		ICoreWebView2Settings defineTemplate"
@@ -707,6 +718,7 @@ defineFunctions
 			argumentTypes: 'sdword'
 ! !
 !WebView2.ICoreWebView2Settings class categoriesForMethods!
+defaultUserAgent!COM Interfaces-ICoreWebView2Settings2!private! !
 defineFunctions!**auto generated**!initializing!public! !
 !
 

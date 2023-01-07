@@ -498,10 +498,10 @@ scaleFactor: scaleFactor
 shouldPrintBackgrounds
 	"Answer the <Boolean> value of the 'ShouldPrintBackgrounds' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_ShouldPrintBackgrounds: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_ShouldPrintBackgrounds: buf.
+	^buf asBoolean!
 
 shouldPrintBackgrounds: shouldPrintBackgrounds
 	"Set the 'ShouldPrintBackgrounds' property of the receiver to the <sdword> value of the argument."
@@ -511,10 +511,10 @@ shouldPrintBackgrounds: shouldPrintBackgrounds
 shouldPrintHeaderAndFooter
 	"Answer the <Boolean> value of the 'ShouldPrintHeaderAndFooter' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_ShouldPrintHeaderAndFooter: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_ShouldPrintHeaderAndFooter: buf.
+	^buf asBoolean!
 
 shouldPrintHeaderAndFooter: shouldPrintHeaderAndFooter
 	"Set the 'ShouldPrintHeaderAndFooter' property of the receiver to the <sdword> value of the argument."
@@ -524,10 +524,10 @@ shouldPrintHeaderAndFooter: shouldPrintHeaderAndFooter
 shouldPrintSelectionOnly
 	"Answer the <Boolean> value of the 'ShouldPrintSelectionOnly' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_ShouldPrintSelectionOnly: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_ShouldPrintSelectionOnly: buf.
+	^buf asBoolean!
 
 shouldPrintSelectionOnly: shouldPrintSelectionOnly
 	"Set the 'ShouldPrintSelectionOnly' property of the receiver to the <sdword> value of the argument."

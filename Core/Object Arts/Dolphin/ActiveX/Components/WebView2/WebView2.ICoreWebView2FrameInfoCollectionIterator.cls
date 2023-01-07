@@ -76,10 +76,10 @@ GetCurrent: frameInfo
 hasCurrent
 	"Answer the <Boolean> value of the 'hasCurrent' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_hasCurrent: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_hasCurrent: buf.
+	^buf asBoolean!
 
 MoveNext: hasNext
 	"Private - Invoke the MoveNext() method of the COM object.

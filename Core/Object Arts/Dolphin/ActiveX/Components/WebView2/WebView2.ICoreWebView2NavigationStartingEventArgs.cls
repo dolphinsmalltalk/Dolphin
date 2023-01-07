@@ -66,10 +66,10 @@ additionalAllowedFrameAncestors: value
 cancel
 	"Answer whether the navigation is to be cancelled."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_Cancel: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_Cancel: buf.
+	^buf asBoolean!
 
 cancel: aBoolean
 	"Set whether the navigation should be cancelled."
@@ -136,18 +136,18 @@ get_uri: uri
 isRedirected
 	"Answer whether the navigation is a redirection."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_IsRedirected: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_IsRedirected: buf.
+	^buf asBoolean!
 
 isUserInitiated
 	"Answer whether the navigation is user initiated, which includes programmatic navigations."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_IsUserInitiated: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_IsUserInitiated: buf.
+	^buf asBoolean!
 
 navigationId
 	"Answer the <qword> value of the 'NavigationId' property of the receiver."

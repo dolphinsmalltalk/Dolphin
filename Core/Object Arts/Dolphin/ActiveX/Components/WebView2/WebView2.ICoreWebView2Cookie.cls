@@ -176,10 +176,10 @@ get_value: value
 isHttpOnly
 	"Answer the <Boolean> value of the 'IsHttpOnly' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_IsHttpOnly: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_IsHttpOnly: buf.
+	^buf asBoolean!
 
 isHttpOnly: isHttpOnly
 	"Set the 'IsHttpOnly' property of the receiver to the <sdword> value of the argument."
@@ -189,10 +189,10 @@ isHttpOnly: isHttpOnly
 isSecure
 	"Answer the <Boolean> value of the 'IsSecure' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_IsSecure: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_IsSecure: buf.
+	^buf asBoolean!
 
 isSecure: isSecure
 	"Set the 'IsSecure' property of the receiver to the <sdword> value of the argument."
@@ -202,10 +202,10 @@ isSecure: isSecure
 isSession
 	"Answer the <Boolean> value of the 'IsSession' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_IsSession: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_IsSession: buf.
+	^buf asBoolean!
 
 name
 	"Answer the <lpwstr> value of the 'name' property of the receiver."
@@ -290,10 +290,10 @@ put_value: value
 sameSite
 	"Answer the <Boolean> value of the 'SameSite' property of the receiver."
 
-	| answer |
-	answer := BOOL newBuffer.
-	self get_SameSite: answer.
-	^answer asObject!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_SameSite: buf.
+	^buf asBoolean!
 
 sameSite: sameSite
 	"Set the 'SameSite' property of the receiver to the <sdword> value of the argument."

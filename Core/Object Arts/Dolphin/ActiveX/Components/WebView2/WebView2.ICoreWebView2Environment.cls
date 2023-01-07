@@ -282,6 +282,17 @@ displayOn: aWriteStream
 		ifTrue: [super displayOn: aWriteStream]
 		ifFalse: [aWriteStream nextPutAll: self browserVersionString]!
 
+downCast
+	"Private - Answer the most recent environment interface available on the underlying COM object. There are already 10 versions of the ICoreWebView2Environment; answer the latest available. A little more forethought in the design so as to not have to define 10 versions of a public interface in a year or two might be nice!!"
+
+	| interfaceClass |
+	interfaceClass := ICoreWebView2Environment10.
+	
+	[(self queryInterface: interfaceClass ifNone: []) ifNotNil: [:interface | ^interface].
+	(interfaceClass := interfaceClass superclass) == self class]
+			whileFalse.
+	^self!
+
 get_BrowserVersionString: versionInfo
 	"Private - Get the value of the 'BrowserVersionString' property of the receiver.
 
@@ -396,6 +407,7 @@ CreateWebResourceRequest:method:postData:headers:request:!COM Interfaces-ICoreWe
 createWebResourceResponse:statusCode:reasonPhrase:headers:!**auto generated**!methods!public! !
 CreateWebResourceResponse:statusCode:reasonPhrase:headers:response:!**auto generated**!COM Interfaces-ICoreWebView2Environment!private! !
 displayOn:!displaying!public! !
+downCast!properties!public! !
 get_BrowserVersionString:!**auto generated**!COM Interfaces-ICoreWebView2Environment!private! !
 get_UserDataFolder:!COM Interfaces-ICoreWebView2Environment7!private!properties! !
 GetProcessInfos:!COM Interfaces-ICoreWebView2Environment8!methods!private! !
