@@ -26,16 +26,18 @@ classesDo: aBlock
 			[:eachPackage |
 			eachPackage classNames do: 
 					[:each |
-					| class |
-					class := each value.
-					(environment includesClass: class)
-						ifTrue: 
-							[seen add: each.
-							aBlock value: class].
-					(environment includesClass: class class)
-						ifTrue: 
-							[seen add: each meta.
-							aBlock value: class class]].
+					(seen includes: each)
+						ifFalse: 
+							[| class |
+							class := each value.
+							(environment includesClass: class)
+								ifTrue: 
+									[seen add: each.
+									aBlock value: class].
+							(environment includesClass: class class)
+								ifTrue: 
+									[seen add: each meta.
+									aBlock value: class class]]].
 			eachPackage methodNames do: 
 					[:each |
 					| className |

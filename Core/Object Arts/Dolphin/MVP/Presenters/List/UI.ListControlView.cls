@@ -188,7 +188,7 @@ handleFromObject: anObject ifAbsent: exceptionHandler
 
 	^self model keyAtValue: anObject ifAbsent: exceptionHandler!
 
-handlesFromObjects: aCollection whenAbsent: exceptionHandler 
+handlesFromObjects: aCollection whenAbsent: exceptionHandler
 	"Private - Answer a collection of the handles of the <collection> of <Object>, objects,
 	evaluating the <monadicValuable>, exceptionHandler, once for each object which is
 	not in the receiver."
@@ -196,13 +196,10 @@ handlesFromObjects: aCollection whenAbsent: exceptionHandler
 	| handles |
 	handles := OrderedCollection new: aCollection size.
 	aCollection do: 
-			[:candidate | 
-			| i |
-			i := self handleFromObject: candidate
-						ifAbsent: 
-							[exceptionHandler value: candidate.
-							nil].
-			i notNil ifTrue: [handles addLast: i]].
+			[:candidate |
+			(self handleFromObject: candidate ifAbsent: nil)
+				ifNil: [exceptionHandler value: candidate]
+				ifNotNil: [:h | handles addLast: h]].
 	^handles!
 
 hasSelection

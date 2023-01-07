@@ -494,8 +494,7 @@ onDropOverPackage: session
 	^true!
 
 onFilterSelected
-	"Private - A filter directory has been selected. Refresh the packages list to include only
-	those withing the filter directory hierarchy"
+	"Private - A filter directory has been selected. Refresh the packages list to include only those within the filter directory hierarchy"
 
 	self refresh!
 

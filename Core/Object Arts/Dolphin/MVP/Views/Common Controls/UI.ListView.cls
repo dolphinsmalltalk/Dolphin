@@ -2128,7 +2128,7 @@ selections: aCollection ifAbsent: aNiladicOrMonadicValuable
 	<collection> of the missing items."
 
 	| missing indices |
-	missing := OrderedCollection new.
+	missing := OrderedCollection new: aCollection size.
 	indices := self handlesFromObjects: aCollection whenAbsent: [:e | missing addLast: e].
 	self setSelectionsByIndex: indices.
 	^missing isEmpty ifTrue: [aCollection] ifFalse: [aNiladicOrMonadicValuable cull: missing]!

@@ -30,7 +30,8 @@ classNamesFor: aPackageEnvironment
 
 testPackageEnvironment
 	| env selectors |
-	env := universalEnvironment forPackages: {Package manager packageNamed: 'Dolphin Common Dialogs'}.
+	env := universalEnvironment
+				forPackages: {OS.PrintDialogConstants owningPackage. OS.ComDlgLibrary owningPackage}.
 	self universalTestFor: env.
 	self assert: (env includesClass: Font).
 	self deny: (env definesClass: Font).

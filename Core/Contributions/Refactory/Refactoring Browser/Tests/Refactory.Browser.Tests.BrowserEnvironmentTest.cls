@@ -338,12 +338,12 @@ totalSelectors
 	^totalSelectors ifNil: [totalSelectors := universalEnvironment numberSelectors]!
 
 uniqueClassesIn: aBrowserEnvironment
-	| allClasses |
-	allClasses := Set new.
+	| allBehaviors |
+	allBehaviors := Set new.
 	aBrowserEnvironment classesDo: 
 			[:each |
-			self deny: (allClasses includes: each).
-			allClasses add: each]!
+			self deny: (allBehaviors includes: each).
+			allBehaviors add: each]!
 
 universalTestFor: aBrowserEnvironment
 	self labelFor: aBrowserEnvironment.
