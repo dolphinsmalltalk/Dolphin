@@ -71,6 +71,11 @@ defaultDownloadFolderPath: value
 
 	self put_DefaultDownloadFolderPath: value asUtf16String!
 
+downCast
+	"Private - Answer the most recent settings interface available on the underlying COM object."
+
+	^self queryInterface: ICoreWebView2Profile2 ifNone: [self]!
+
 get_DefaultDownloadFolderPath: value
 	"Private - Get the value of the 'DefaultDownloadFolderPath' property of the receiver.
 
@@ -191,6 +196,7 @@ ClearBrowsingDataAll:!COM Interfaces-ICoreWebView2Profile2!private! !
 ClearBrowsingDataInTimeRange:startTime:endTime:handler:!COM Interfaces-ICoreWebView2Profile2!private! !
 defaultDownloadFolderPath!properties!public! !
 defaultDownloadFolderPath:!**auto generated**!properties!public! !
+downCast!properties!public! !
 get_DefaultDownloadFolderPath:!**auto generated**!COM Interfaces-ICoreWebView2Profile!private! !
 get_IsInPrivateModeEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Profile!private! !
 get_PreferredColorScheme:!**auto generated**!COM Interfaces-ICoreWebView2Profile!private! !

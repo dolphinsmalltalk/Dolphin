@@ -18,6 +18,7 @@ package globalAliases: (Set new
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
 	'..\..\..\Base\Dolphin Base Tests'
+	'..\..\..\MVP\Base\Dolphin MVP Base'
 	'..\..\..\MVP\Dolphin MVP Tests'
 	'WebView2').
 

@@ -703,13 +703,23 @@ documentTitle
 	ptr free.
 	^answer!
 
+downCast
+	| interfaceClass |
+	interfaceClass := ICoreWebView2_15.
+	
+	[(self queryInterface: interfaceClass ifNone: []) ifNotNil: [:interface | ^interface].
+	(interfaceClass := interfaceClass superclass) == self class]
+			whileFalse.
+	^self!
+
 environment
 	"Answer the <ICoreWebView2Environment> value of the 'Environment' property of the receiver."
 
-	| answer |
-	answer := ICoreWebView2Environment newPointer.
-	self get_Environment: answer.
-	^answer asObject!
+	| environment |
+	environment := ICoreWebView2Environment newPointer.
+	self get_Environment: environment.
+	environment isNull ifTrue: [^nil].
+	^environment downCast!
 
 ExecuteScript: javaScript handler: handler
 	"Private - Invoke the ExecuteScript() method of the COM object.
@@ -797,9 +807,10 @@ get_DefaultDownloadDialogCornerAlignment: value
 		HRESULT __stdcall DefaultDownloadDialogCornerAlignment(
 			[out, retval]COREWEBVIEW2_DEFAULT_DOWNLOAD_DIALOG_CORNER_ALIGNMENT* value);"
 
-	"Not supported at this level"
+	"Not really supported at this level"
 
-	^E_NOTIMPL!
+	value value: 1.
+	^S_FALSE!
 
 get_DefaultDownloadDialogMargin: value
 	"Private - Get the value of the 'DefaultDownloadDialogMargin' property of the receiver.
@@ -807,9 +818,9 @@ get_DefaultDownloadDialogMargin: value
 		HRESULT __stdcall DefaultDownloadDialogMargin(
 			[out, retval]POINT* value);"
 
-	"Not supported at this level"
-
-	^E_NOTIMPL!
+	"Not really supported at this level"
+	value value: 30@10.
+	^S_FALSE!
 
 get_DocumentTitle: title
 	"Private - Get the value of the 'DocumentTitle' property of the receiver.
@@ -837,8 +848,9 @@ get_FaviconUri: value
 		HRESULT __stdcall FaviconUri(
 			[out, retval]LPWSTR* value);"
 
-	"Not implemented in this version of WebView2"
-	^E_NOTIMPL!
+	"Not really implemented in this version of WebView2"
+	value value: ('' asUtf16String copyToCOMTaskMemory detach).
+	^S_FALSE!
 
 get_IsDefaultDownloadDialogOpen: value
 	"Private - Get the value of the 'IsDefaultDownloadDialogOpen' property of the receiver.
@@ -846,9 +858,10 @@ get_IsDefaultDownloadDialogOpen: value
 		HRESULT __stdcall IsDefaultDownloadDialogOpen(
 			[out, retval]long* value);"
 
-	"Not supported at this level"
+	"Not really supported at this level"
 
-	^E_NOTIMPL!
+	value value: 0.
+	^S_FALSE!
 
 get_IsDocumentPlayingAudio: value
 	"Private - Get the value of the 'IsDocumentPlayingAudio' property of the receiver.
@@ -856,7 +869,8 @@ get_IsDocumentPlayingAudio: value
 		HRESULT __stdcall IsDocumentPlayingAudio(
 			[out, retval]long* value);"
 
-	^E_NOTIMPL!
+	value value: 0.
+	^S_FALSE!
 
 get_IsMuted: value
 	"Private - Get the value of the 'IsMuted' property of the receiver.
@@ -865,7 +879,7 @@ get_IsMuted: value
 			[out, retval]long* value);"
 
 	value value: 0.
-	^S_OK!
+	^S_FALSE!
 
 get_IsSuspended: isSuspended
 	"Private - Get the value of the 'IsSuspended' property of the receiver.
@@ -874,7 +888,7 @@ get_IsSuspended: isSuspended
 			[out, retval]long* IsSuspended);"
 
 	isSuspended value: 0.
-	^S_OK!
+	^S_FALSE!
 
 get_Profile: value
 	"Private - Get the value of the 'Profile' property of the receiver.
@@ -903,9 +917,10 @@ get_Source: uri
 	^self invalidCall: _failureCode!
 
 get_StatusBarText: value
-	"Not supported at this level"
+	"Not really supported at this level"
 
-	^E_NOTIMPL!
+	value value: ('' asUtf16String copyToCOMTaskMemory detach).
+	^S_FALSE!
 
 getDevToolsProtocolEventReceiver: eventName
 	"Answer the <ICoreWebView2DevToolsProtocolEventReceiver> result of invoking the GetDevToolsProtocolEventReceiver() method of the COM object."
@@ -1138,7 +1153,7 @@ profile
 	| answer |
 	answer := ICoreWebView2Profile newPointer.
 	self get_Profile: answer.
-	^answer notNull ifTrue: [answer queryInterface: ICoreWebView2Profile2 ifNone: [answer]]!
+	^answer notNull ifTrue: [answer downCast]!
 
 put_DefaultDownloadDialogCornerAlignment: value
 	"Private - Set the value of the 'DefaultDownloadDialogCornerAlignment' property of the object wrapped by the 
@@ -1451,10 +1466,11 @@ Resume
 settings
 	"Answer the <ICoreWebView2Settings> value of the 'Settings' property of the receiver."
 
-	| answer |
-	answer := ICoreWebView2Settings newPointer.
-	self get_Settings: answer.
-	^answer asObject!
+	| settings |
+	settings := ICoreWebView2Settings newPointer.
+	self get_Settings: settings.
+	settings isNull ifTrue: [^nil].
+	^settings downCast!
 
 setVirtualHostNameToFolderMapping: hostName folderPath: folderPath accessKind: accessKind
 	"Invoke the SetVirtualHostNameToFolderMapping() method of the COM object."
@@ -1586,6 +1602,7 @@ defaultDownloadDialogMargin!properties!public! !
 defaultDownloadDialogMargin:!properties!public! !
 displayOn:!displaying!public! !
 documentTitle!properties!public! !
+downCast!helpers!private! !
 environment!properties!public! !
 ExecuteScript:handler:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 executeScript:thenDo:!async requests!public! !
@@ -1682,7 +1699,7 @@ removeWebResourceRequestedFilter:resourceContext:!**auto generated**!methods!pub
 RemoveWebResourceRequestedFilter:resourceContext:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 resume!methods!public! !
 Resume!COM Interfaces-ICoreWebView2_3!private! !
-settings!**auto generated**!properties!public! !
+settings!properties!public! !
 setVirtualHostNameToFolderMapping:folderPath:accessKind:!methods!public! !
 SetVirtualHostNameToFolderMapping:folderPath:accessKind:!COM Interfaces-ICoreWebView2_3!private! !
 source!properties!public! !

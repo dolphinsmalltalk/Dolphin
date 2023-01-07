@@ -162,10 +162,8 @@ allowExternalDrop
 	self get_AllowExternalDrop: answer.
 	^answer value!
 
-allowExternalDrop: value
-	"Set the 'AllowExternalDrop' property of the receiver to the <sdword> value of the argument."
-
-	self put_AllowExternalDrop: value!
+allowExternalDrop: aBoolean
+	self put_AllowExternalDrop: aBoolean asParameter!
 
 bounds
 	"Answer the <RECT> value of the 'Bounds' property of the receiver."
@@ -209,10 +207,10 @@ Close
 coreWebView2
 	"Answer the <ICoreWebView2> value of the 'CoreWebView2' property of the receiver."
 
-	| answer |
-	answer := ICoreWebView2 newPointer.
-	self get_CoreWebView2: answer.
-	^answer asObject!
+	| webview2 |
+	webview2 := ICoreWebView2 newPointer.
+	self get_CoreWebView2: webview2.
+	^webview2 downCast!
 
 defaultBackgroundColor
 	"Answer the <Color> value of the 'DefaultBackgroundColor' property of the receiver."
@@ -233,7 +231,8 @@ get_AllowExternalDrop: value
 		HRESULT __stdcall AllowExternalDrop(
 			[out, retval]long* value);"
 
-	^E_NOTIMPL!
+	value value: 1.
+	^S_FALSE!
 
 get_Bounds: bounds
 	"Private - Get the value of the 'Bounds' property of the receiver.
@@ -250,9 +249,9 @@ get_BoundsMode: boundsMode
 		HRESULT __stdcall BoundsMode(
 			[out, retval]COREWEBVIEW2_BOUNDS_MODE* BoundsMode);"
 
-	"Not supported by this version"
-
-	^E_NOTIMPL!
+	"Not really supported by this version"
+	boundsMode value: WebView2Constants.COREWEBVIEW2_BOUNDS_MODE_USE_RAW_PIXELS.
+	^S_FALSE!
 
 get_CoreWebView2: coreWebView2
 	"Private - Get the value of the 'CoreWebView2' property of the receiver.
@@ -296,8 +295,10 @@ get_RasterizationScale: scale
 		HRESULT __stdcall RasterizationScale(
 			[out, retval]double* scale);"
 
+	"Not really supported by this version"
+
 	scale value: 1.0.
-	^S_OK!
+	^S_FALSE!
 
 get_ShouldDetectMonitorScaleChanges: pBool
 	"Private - Get the value of the 'ShouldDetectMonitorScaleChanges' property of the receiver.
@@ -305,10 +306,10 @@ get_ShouldDetectMonitorScaleChanges: pBool
 		HRESULT __stdcall ShouldDetectMonitorScaleChanges(
 			[out, retval]long* value);"
 
-	"Not supported by this version"
+	"Not really supported by this version"
 
 	pBool value: 1.
-	^S_OK!
+	^S_FALSE!
 
 get_ZoomFactor: zoomFactor
 	"Private - Get the value of the 'ZoomFactor' property of the receiver.
@@ -583,14 +584,14 @@ Add_MoveFocusRequested:token:!**auto generated**!COM Interfaces-ICoreWebView2Con
 Add_RasterizationScaleChanged:token:!COM Interfaces-ICoreWebView2Controller3!events!private! !
 Add_ZoomFactorChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2Controller!private! !
 allowExternalDrop!properties!public! !
-allowExternalDrop:!**auto generated**!properties!public! !
+allowExternalDrop:!properties!public! !
 bounds!**auto generated**!properties!public! !
 bounds:!**auto generated**!properties!public! !
 boundsMode!properties!public! !
 boundsMode:!properties!public! !
 close!**auto generated**!methods!public! !
 Close!**auto generated**!COM Interfaces-ICoreWebView2Controller!private! !
-coreWebView2!**auto generated**!properties!public! !
+coreWebView2!properties!public! !
 defaultBackgroundColor!properties!public! !
 defaultBackgroundColor:!properties!public! !
 get_AllowExternalDrop:!COM Interfaces-ICoreWebView2Controller4!private! !
