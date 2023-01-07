@@ -145,6 +145,17 @@ areHostObjectsAllowed: allowed
 
 	self put_AreHostObjectsAllowed: allowed asParameter!
 
+downCast
+	"Private - Answer the most recent settings interface available on the underlying COM object."
+
+	| interfaceClass |
+	interfaceClass := ICoreWebView2Settings7.
+	
+	[(self queryInterface: interfaceClass ifNone: []) ifNotNil: [:interface | ^interface].
+	(interfaceClass := interfaceClass superclass) == self class]
+			whileFalse.
+	^self!
+
 get_AreBrowserAcceleratorKeysEnabled: areBrowserAcceleratorKeysEnabled
 	"Private - Get the value of the 'AreBrowserAcceleratorKeysEnabled' property of the receiver.
 
@@ -215,7 +226,7 @@ get_IsGeneralAutofillEnabled: value
 			[out, retval]long* value);"
 
 	value value: 1.
-	^S_OK!
+	^S_FALSE!
 
 get_IsPasswordAutosaveEnabled: value
 	"Private - Get the value of the 'IsPasswordAutosaveEnabled' property of the receiver.
@@ -223,8 +234,8 @@ get_IsPasswordAutosaveEnabled: value
 		HRESULT __stdcall IsPasswordAutosaveEnabled(
 			[out, retval]long* value);"
 
-	value value: 1.
-	^S_OK!
+	value value: 0.
+	^S_FALSE!
 
 get_IsPinchZoomEnabled: enabled
 	"Private - Get the value of the 'IsPinchZoomEnabled' property of the receiver.
@@ -232,8 +243,8 @@ get_IsPinchZoomEnabled: enabled
 		HRESULT __stdcall IsPinchZoomEnabled(
 			[out, retval]long* enabled);"
 
-	enabled value: 0.
-	^S_OK!
+	enabled value: 1.
+	^S_FALSE!
 
 get_IsScriptEnabled: isScriptEnabled
 	"Private - Get the value of the 'IsScriptEnabled' property of the receiver.
@@ -259,8 +270,8 @@ get_IsSwipeNavigationEnabled: enabled
 		HRESULT __stdcall IsSwipeNavigationEnabled(
 			[out, retval]long* enabled);"
 
-	enabled value: 0.
-	^S_OK!
+	enabled value: 1.
+	^S_FALSE!
 
 get_IsWebMessageEnabled: isWebMessageEnabled
 	"Private - Get the value of the 'IsWebMessageEnabled' property of the receiver.
@@ -286,11 +297,7 @@ get_UserAgent: userAgent
 		HRESULT __stdcall UserAgent(
 			[out, retval]LPWSTR* UserAgent);"
 
-	| taskMem |
-	taskMem := 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.85 Safari/537.36 Edg/90.0.818.46'
-				asUtf16String copyToCOMTaskMemory.
-	userAgent value: taskMem.
-	taskMem beUnfinalizable.
+	userAgent value: self class defaultUserAgent asUtf16String copyToCOMTaskMemory detach.
 	^S_OK!
 
 hiddenPdfToolbarItems
@@ -395,7 +402,7 @@ isSwipeNavigationEnabled
 isSwipeNavigationEnabled: enabled
 	"Set the 'IsSwipeNavigationEnabled' property of the receiver to the <sdword> value of the argument."
 
-	self put_IsSwipeNavigationEnabled: enabled!
+	self put_IsSwipeNavigationEnabled: enabled asParameter!
 
 isWebMessageEnabled
 	"Answer the <Boolean> value of the 'IsWebMessageEnabled' property of the receiver."
@@ -604,6 +611,7 @@ areDevToolsEnabled!properties!public! !
 areDevToolsEnabled:!properties!public! !
 areHostObjectsAllowed!properties!public! !
 areHostObjectsAllowed:!properties!public! !
+downCast!properties!public! !
 get_AreBrowserAcceleratorKeysEnabled:!COM Interfaces-ICoreWebView2Settings3!private! !
 get_AreDefaultContextMenusEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
 get_AreDefaultScriptDialogsEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
@@ -663,6 +671,9 @@ userAgent:!**auto generated**!properties!public! !
 
 !ICoreWebView2Settings class methodsFor!
 
+defaultUserAgent
+	^'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.85 Safari/537.36 Edg/90.0.818.46'!
+
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2Settings'
 		ICoreWebView2Settings defineTemplate"
@@ -706,6 +717,7 @@ defineFunctions
 			argumentTypes: 'sdword'
 ! !
 !ICoreWebView2Settings class categoriesForMethods!
+defaultUserAgent!COM Interfaces-ICoreWebView2Settings2!private! !
 defineFunctions!**auto generated**!initializing!public! !
 !
 
