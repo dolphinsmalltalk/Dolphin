@@ -584,7 +584,7 @@ Add_LostFocus:token:!**auto generated**!COM Interfaces-ICoreWebView2Controller!p
 Add_MoveFocusRequested:token:!**auto generated**!COM Interfaces-ICoreWebView2Controller!private! !
 Add_RasterizationScaleChanged:token:!COM Interfaces-ICoreWebView2Controller3!events!private! !
 Add_ZoomFactorChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2Controller!private! !
-allowExternalDrop!properties!public! !
+allowExternalDrop!properties!public!testing! !
 allowExternalDrop:!properties!public! !
 bounds!**auto generated**!properties!public! !
 bounds:!**auto generated**!properties!public! !

@@ -393,7 +393,7 @@ isStatusBarEnabled: isStatusBarEnabled
 	self put_IsStatusBarEnabled: isStatusBarEnabled asParameter!
 
 isSwipeNavigationEnabled
-	"Answer the <sdword> value of the 'IsSwipeNavigationEnabled' property of the receiver."
+	"Answer the <Boolean> value of the 'IsSwipeNavigationEnabled' property of the receiver."
 
 	| answer |
 	answer := BOOL newBuffer.
@@ -602,15 +602,15 @@ userAgent: userAgent
 
 	self put_UserAgent: userAgent asUtf16String! !
 !WebView2.ICoreWebView2Settings categoriesForMethods!
-areBrowserAcceleratorKeysEnabled!properties!public! !
+areBrowserAcceleratorKeysEnabled!properties!public!testing! !
 areBrowserAcceleratorKeysEnabled:!properties!public! !
-areDefaultContextMenusEnabled!properties!public! !
+areDefaultContextMenusEnabled!properties!public!testing! !
 areDefaultContextMenusEnabled:!properties!public! !
-areDefaultScriptDialogsEnabled!properties!public! !
+areDefaultScriptDialogsEnabled!properties!public!testing! !
 areDefaultScriptDialogsEnabled:!properties!public! !
-areDevToolsEnabled!properties!public! !
+areDevToolsEnabled!properties!public!testing! !
 areDevToolsEnabled:!properties!public! !
-areHostObjectsAllowed!properties!public! !
+areHostObjectsAllowed!properties!public!testing! !
 areHostObjectsAllowed:!properties!public! !
 downCast!properties!public! !
 get_AreBrowserAcceleratorKeysEnabled:!COM Interfaces-ICoreWebView2Settings3!private! !
@@ -631,23 +631,23 @@ get_IsZoomControlEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Setting
 get_UserAgent:!COM Interfaces-ICoreWebView2Settings2!private! !
 hiddenPdfToolbarItems!properties!public! !
 hiddenPdfToolbarItems:!properties!public! !
-isBuiltInErrorPageEnabled!properties!public! !
+isBuiltInErrorPageEnabled!properties!public!testing! !
 isBuiltInErrorPageEnabled:!properties!public! !
-isGeneralAutofillEnabled!properties!public! !
+isGeneralAutofillEnabled!properties!public!testing! !
 isGeneralAutofillEnabled:!properties!public! !
-isPasswordAutosaveEnabled!properties!public! !
+isPasswordAutosaveEnabled!properties!public!testing! !
 isPasswordAutosaveEnabled:!properties!public! !
-isPinchZoomEnabled!properties!public! !
+isPinchZoomEnabled!properties!public!testing! !
 isPinchZoomEnabled:!properties!public! !
-isScriptEnabled!properties!public! !
+isScriptEnabled!properties!public!testing! !
 isScriptEnabled:!properties!public! !
-isStatusBarEnabled!properties!public! !
+isStatusBarEnabled!properties!public!testing! !
 isStatusBarEnabled:!properties!public! !
-isSwipeNavigationEnabled!properties!public! !
+isSwipeNavigationEnabled!properties!public!testing! !
 isSwipeNavigationEnabled:!properties!public! !
-isWebMessageEnabled!properties!public! !
+isWebMessageEnabled!properties!public!testing! !
 isWebMessageEnabled:!properties!public! !
-isZoomControlEnabled!properties!public! !
+isZoomControlEnabled!properties!public!testing! !
 isZoomControlEnabled:!properties!public! !
 printableProperties!printing!private! !
 put_AreBrowserAcceleratorKeysEnabled:!COM Interfaces-ICoreWebView2Settings3!private! !

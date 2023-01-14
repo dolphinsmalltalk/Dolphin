@@ -66,11 +66,14 @@ package!
 "Class Definitions"!
 
 UI.Shell subclass: #'OS.COM.Examples.WebBrowserShell'
-	instanceVariableNames: 'address browser statusModel logEvents zoomModel'
+	instanceVariableNames: 'address browser statusModel zoomModel flags'
 	classVariableNames: ''
 	imports: #(#{UI})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'ImagesBlockedMask' -> 16r2.
+		'LogEventsMask' -> 16r1
+	}!
 UI.RuntimeSessionManager subclass: #'OS.COM.Examples.WebBrowserSessionManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
