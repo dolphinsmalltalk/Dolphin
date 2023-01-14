@@ -85,6 +85,12 @@ GetDeferral: deferral
 	<virtual stdcall: hresult 7 ICoreWebView2Deferral**>
 	^self invalidCall: _failureCode!
 
+printPropertiesOn: aStream
+	self request printPropertiesOn: aStream.
+	aStream
+		nextPutAll: ', resourceContext: ';
+		print: self resourceContext!
+
 put_Response: response
 	"Private - Set the value of the 'Response' property of the object wrapped by the 
 	 receiver to the <ICoreWebView2WebResourceResponse*> argument, response.
@@ -129,6 +135,7 @@ get_ResourceContext:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceR
 get_Response:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceRequestedEventArgs!private! !
 getDeferral!**auto generated**!methods!public! !
 GetDeferral:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceRequestedEventArgs!private! !
+printPropertiesOn:!development!printing!private! !
 put_Response:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceRequestedEventArgs!private! !
 request!**auto generated**!properties!public! !
 resourceContext!**auto generated**!properties!public! !
