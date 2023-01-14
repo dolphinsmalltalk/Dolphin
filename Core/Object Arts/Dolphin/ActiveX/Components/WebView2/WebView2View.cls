@@ -2,7 +2,7 @@
 
 ValueConvertingControlView subclass: #WebView2View
 	instanceVariableNames: 'settingsFlags unavailableLink webviewEnvironment webviewController webview eventHandlers'
-	classVariableNames: 'CanNavigateToStrings DisableBrowserAcceleratorKeysMask DisableBuiltInErrorPageMask DisableDefaultContextMenuMask DisableDefaultScriptDialogsMask DisableDevToolsMask DisableGeneralAutofillMask DisableHostObjectsMask DisablePasswordAutosaveMask DisablePinchZoomMask DisableScriptMask DisableStatusBarMask DisableWebmessageMask DisableZoomControlMask'
+	classVariableNames: 'CanNavigateToStrings DisableBrowserAcceleratorKeysMask DisableBuiltInErrorPageMask DisableDefaultContextMenuMask DisableDefaultScriptDialogsMask DisableDevToolsMask DisableExternalDropsMask DisableGeneralAutofillMask DisableHostObjectsMask DisablePasswordAutosaveMask DisablePinchZoomMask DisableScriptMask DisableStatusBarMask DisableSwipeNavigationMask DisableWebmessageMask DisableZoomControlMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 WebView2View guid: (GUID fromString: '{3a9f720c-51f6-49f2-8267-f2b3b878129c}')!
@@ -12,12 +12,14 @@ WebView2View addClassConstant: 'DisableBuiltInErrorPageMask' value: 16r20!
 WebView2View addClassConstant: 'DisableDefaultContextMenuMask' value: 16r1!
 WebView2View addClassConstant: 'DisableDefaultScriptDialogsMask' value: 16r4!
 WebView2View addClassConstant: 'DisableDevToolsMask' value: 16r8!
+WebView2View addClassConstant: 'DisableExternalDropsMask' value: 16r4000!
 WebView2View addClassConstant: 'DisableGeneralAutofillMask' value: 16r400!
 WebView2View addClassConstant: 'DisableHostObjectsMask' value: 16r10!
 WebView2View addClassConstant: 'DisablePasswordAutosaveMask' value: 16r800!
 WebView2View addClassConstant: 'DisablePinchZoomMask' value: 16r1000!
 WebView2View addClassConstant: 'DisableScriptMask' value: 16r40!
 WebView2View addClassConstant: 'DisableStatusBarMask' value: 16r80!
+WebView2View addClassConstant: 'DisableSwipeNavigationMask' value: 16r8000!
 WebView2View addClassConstant: 'DisableWebmessageMask' value: 16r100!
 WebView2View addClassConstant: 'DisableZoomControlMask' value: 16r200!
 WebView2View comment: '`WebView2View` is a `<valueView>` that wraps the Microsoft Edge WebView2 embeddable browser to display content downloaded from a URL, or provided as a string.'!
@@ -34,7 +36,18 @@ allowContextMenu: aBoolean
 	Note that this (like any other settings changes) will only take effect after a navigation."
 
 	settingsFlags := settingsFlags mask: DisableDefaultContextMenuMask set: aBoolean not.
-	self webviewSettings areDefaultContextMenusEnabled: aBoolean!
+	self webviewSettings ifNotNil: [:settings | settings areDefaultContextMenusEnabled: aBoolean]!
+
+allowExternalDrop
+	"Answer whether exterbally sourced drag & drops should be received."
+
+	^settingsFlags noMask: DisableExternalDropsMask!
+
+allowExternalDrop: aBoolean
+	"Set whether exterbally sourced drag & drops should be received."
+
+	settingsFlags := settingsFlags mask: DisableExternalDropsMask set: aBoolean not.
+	self webviewController ifNotNil: [:controller | controller allowExternalDrop: aBoolean]!
 
 areBrowserAcceleratorKeysEnabled
 	"Answer whether the Edge default accelerator keys should be enabled."
@@ -45,28 +58,28 @@ areBrowserAcceleratorKeysEnabled: aBoolean
 	"Set whether the Edge default accelerator keys should be enabled."
 
 	settingsFlags := settingsFlags mask: DisableBrowserAcceleratorKeysMask set: aBoolean not.
-	self webviewSettings areBrowserAcceleratorKeysEnabled: aBoolean!
+	self webviewSettings ifNotNil: [:settings | settings areBrowserAcceleratorKeysEnabled: aBoolean]!
 
 areDefaultScriptDialogsEnabled
 	^settingsFlags noMask: DisableDefaultScriptDialogsMask!
 
 areDefaultScriptDialogsEnabled: aBoolean
 	settingsFlags := settingsFlags mask: DisableDefaultScriptDialogsMask set: aBoolean not.
-	self webviewSettings areDefaultScriptDialogsEnabled: aBoolean!
+	self webviewSettings ifNotNil: [:settings | settings areDefaultScriptDialogsEnabled: aBoolean]!
 
 areDevToolsEnabled
 	^settingsFlags noMask: DisableDevToolsMask!
 
 areDevToolsEnabled: aBoolean
 	settingsFlags := settingsFlags mask: DisableDevToolsMask set: aBoolean not.
-	self webviewSettings areDevToolsEnabled: aBoolean!
+	self webviewSettings ifNotNil: [:settings | settings areDevToolsEnabled: aBoolean]!
 
 areHostObjectsAllowed
 	^settingsFlags noMask: DisableHostObjectsMask!
 
 areHostObjectsAllowed: aBoolean
 	settingsFlags := settingsFlags mask: DisableHostObjectsMask set: aBoolean not.
-	self webviewSettings areHostObjectsAllowed: aBoolean!
+	self webviewSettings ifNotNil: [:settings | settings areHostObjectsAllowed: aBoolean]!
 
 browserVersion
 	^self webviewEnvironment browserVersionString!
@@ -208,56 +221,63 @@ isBuiltInErrorPageEnabled
 
 isBuiltInErrorPageEnabled: aBoolean
 	settingsFlags := settingsFlags mask: DisableBuiltInErrorPageMask set: aBoolean not.
-	self webviewSettings isBuiltInErrorPageEnabled: aBoolean!
+	self webviewSettings ifNotNil: [:settings | settings isBuiltInErrorPageEnabled: aBoolean]!
 
 isGeneralAutofillEnabled
 	^settingsFlags noMask: DisableGeneralAutofillMask!
 
 isGeneralAutofillEnabled: aBoolean
 	settingsFlags := settingsFlags mask: DisableGeneralAutofillMask set: aBoolean not.
-	self webviewSettings isGeneralAutofillEnabled: aBoolean!
+	self webviewSettings ifNotNil: [:settings | settings isGeneralAutofillEnabled: aBoolean]!
 
 isPasswordAutosaveEnabled
 	^settingsFlags noMask: DisablePasswordAutosaveMask!
 
 isPasswordAutosaveEnabled: aBoolean
 	settingsFlags := settingsFlags mask: DisablePasswordAutosaveMask set: aBoolean not.
-	self webviewSettings isPasswordAutosaveEnabled: aBoolean!
+	self webviewSettings ifNotNil: [:settings | settings isPasswordAutosaveEnabled: aBoolean]!
 
 isPinchZoomEnabled
 	^settingsFlags noMask: DisablePinchZoomMask!
 
 isPinchZoomEnabled: aBoolean
 	settingsFlags := settingsFlags mask: DisablePinchZoomMask set: aBoolean not.
-	self webviewSettings isPinchZoomEnabled: aBoolean!
+	self webviewSettings ifNotNil: [:settings | settings isPinchZoomEnabled: aBoolean]!
 
 isScriptEnabled
 	^settingsFlags noMask: DisableScriptMask!
 
 isScriptEnabled: aBoolean
 	settingsFlags := settingsFlags mask: DisableScriptMask set: aBoolean not.
-	self webviewSettings isScriptEnabled: aBoolean!
+	self webviewSettings ifNotNil: [:settings | settings isScriptEnabled: aBoolean]!
 
 isStatusBarEnabled
 	^settingsFlags noMask: DisableStatusBarMask!
 
 isStatusBarEnabled: aBoolean
 	settingsFlags := settingsFlags mask: DisableStatusBarMask set: aBoolean not.
-	self webviewSettings isStatusBarEnabled: aBoolean!
+	self webviewSettings ifNotNil: [:settings | settings isStatusBarEnabled: aBoolean]!
+
+isSwipeNavigationEnabled
+	^settingsFlags noMask: DisableSwipeNavigationMask!
+
+isSwipeNavigationEnabled: aBoolean
+	settingsFlags := settingsFlags mask: DisableSwipeNavigationMask set: aBoolean not.
+	self webviewSettings ifNotNil: [:settings | settings isSwipeNavigationEnabled: aBoolean]!
 
 isWebMessageEnabled
 	^settingsFlags noMask: DisableWebmessageMask!
 
 isWebMessageEnabled: aBoolean
 	settingsFlags := settingsFlags mask: DisableWebmessageMask set: aBoolean not.
-	self webviewSettings isWebMessageEnabled: aBoolean!
+	self webviewSettings ifNotNil: [:settings | settings isWebMessageEnabled: aBoolean]!
 
 isZoomControlEnabled
 	^settingsFlags noMask: DisableZoomControlMask!
 
 isZoomControlEnabled: aBoolean
 	settingsFlags := settingsFlags mask: DisableZoomControlMask set: aBoolean not.
-	self webviewSettings isZoomControlEnabled: aBoolean!
+	self webviewSettings ifNotNil: [:settings | settings isZoomControlEnabled: aBoolean]!
 
 notifyMove
 	webviewController ifNil: [^self].
@@ -465,6 +485,9 @@ releaseWebView
 resizeContentToFit
 	self content rectangle: self clientRectangle!
 
+settings
+	"Do nothing here. Could show a settings dialog"!
+
 showWithStyle: anInteger
 	| result |
 	result := super showWithStyle: anInteger.
@@ -486,6 +509,10 @@ unregisterEvents
 	eventHandlers ifNil: [^self].
 	eventHandlers do: [:each | each free].
 	eventHandlers := nil!
+
+unregisterEventSink: aWebView2EventSink
+	aWebView2EventSink free.
+	eventHandlers remove: aWebView2EventSink ifAbsent: []!
 
 updateSettings
 	| settings |
@@ -514,7 +541,7 @@ webviewEnvironment
 	^webviewEnvironment!
 
 webviewSettings
-	^webview settings!
+	^webview isNull ifFalse: [webview settings]!
 
 zoomFactor
 	^self webviewController zoomFactor!
@@ -526,6 +553,8 @@ zoomFactor: aNumber
 !WebView2View categoriesForMethods!
 allowContextMenu!public!settings! !
 allowContextMenu:!public!settings! !
+allowExternalDrop!public!settings! !
+allowExternalDrop:!public!settings! !
 areBrowserAcceleratorKeysEnabled!public!settings! !
 areBrowserAcceleratorKeysEnabled:!public!settings! !
 areDefaultScriptDialogsEnabled!public!settings! !
@@ -565,6 +594,8 @@ isScriptEnabled!public!settings! !
 isScriptEnabled:!public!settings! !
 isStatusBarEnabled!public!settings! !
 isStatusBarEnabled:!public!settings! !
+isSwipeNavigationEnabled!public!settings! !
+isSwipeNavigationEnabled:!public!settings! !
 isWebMessageEnabled!public!settings! !
 isWebMessageEnabled:!public!settings! !
 isZoomControlEnabled!public!settings! !
@@ -587,14 +618,16 @@ onViewCreated!event handling!public! !
 profile!commands!public! !
 queryCommand:!commands!public! !
 queryControllerInterface:!helpers!private! !
-registerEventSink:!helpers!private! !
+registerEventSink:!helpers!public! !
 releaseWebView!operations!private!realizing/unrealizing! !
 resizeContentToFit!helpers!private! !
+settings!public! !
 showWithStyle:!operations!private! !
 stop!commands!public! !
 subclassWindow:!operations!private! !
 subViews!hierarchy!public!sub views! !
 unregisterEvents!private!realizing/unrealizing! !
+unregisterEventSink:!helpers!public! !
 updateSettings!private!realizing/unrealizing! !
 webview!accessing!public! !
 webviewController!accessing!public! !
@@ -614,20 +647,22 @@ icon
 initialize
 	"self initialize"
 	self
-		addClassConstant: 'DisableDefaultContextMenuMask' value: 1;
-		addClassConstant: 'DisableBrowserAcceleratorKeysMask' value: 2;
-		addClassConstant: 'DisableDefaultScriptDialogsMask' value: 4;
-		addClassConstant: 'DisableDevToolsMask' value: 8;
-		addClassConstant: 'DisableHostObjectsMask' value: 16;
-		addClassConstant: 'DisableBuiltInErrorPageMask' value: 32;
-		addClassConstant: 'DisableScriptMask' value: 64;
-		addClassConstant: 'DisableStatusBarMask' value: 128;
-		addClassConstant: 'DisableWebmessageMask' value: 256;
-		addClassConstant: 'DisableZoomControlMask' value: 512;
-		addClassConstant: 'DisableGeneralAutofillMask' value: 1024;
-		addClassConstant: 'DisablePasswordAutosaveMask' value: 2048;
-		addClassConstant: 'DisablePinchZoomMask' value: 4096;
-		addClassConstant: 'CanNavigateToStrings' value: 8192
+		addClassConstant: 'DisableDefaultContextMenuMask' value: 16r1;
+		addClassConstant: 'DisableBrowserAcceleratorKeysMask' value: 16r2;
+		addClassConstant: 'DisableDefaultScriptDialogsMask' value: 16r4;
+		addClassConstant: 'DisableDevToolsMask' value: 16r8;
+		addClassConstant: 'DisableHostObjectsMask' value: 16r10;
+		addClassConstant: 'DisableBuiltInErrorPageMask' value: 16r20;
+		addClassConstant: 'DisableScriptMask' value: 16r40;
+		addClassConstant: 'DisableStatusBarMask' value: 16r80;
+		addClassConstant: 'DisableWebmessageMask' value: 16r100;
+		addClassConstant: 'DisableZoomControlMask' value: 16r200;
+		addClassConstant: 'DisableGeneralAutofillMask' value: 16r400;
+		addClassConstant: 'DisablePasswordAutosaveMask' value: 16r800;
+		addClassConstant: 'DisablePinchZoomMask' value: 16r1000;
+		addClassConstant: 'CanNavigateToStrings' value: 16r2000;
+		addClassConstant: 'DisableExternalDropsMask' value: 16r4000;
+		addClassConstant: 'DisableSwipeNavigationMask' value: 16r8000
 !
 
 webview2Events
