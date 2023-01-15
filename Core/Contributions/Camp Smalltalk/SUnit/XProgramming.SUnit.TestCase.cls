@@ -74,15 +74,6 @@ deny: aBoolean description: aStringOrValuable resumable: resumableBoolean
 		description: aStringOrValuable
 		resumable: resumableBoolean!
 
-executeShould: aBlock inScopeOf: anExceptionalEvent
-	^
-	[aBlock value.
-	false]
-			on: anExceptionalEvent
-			do: [:ex | true]
-			on: TestResult error
-			do: [:ex | false]!
-
 fail: aString
 	self logFailure: aString.
 	TestResult failure signal: aString!
@@ -175,11 +166,18 @@ should: aBlock
 should: aBlock description: aStringOrValuable
 	self assert: aBlock value description: aStringOrValuable!
 
-should: aBlock raise: anExceptionalEvent 
-	^self assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent)!
+should: aBlock raise: anExceptionalEvent
+	self
+		should: aBlock
+		raise: anExceptionalEvent
+		description: ['Expected ' , anExceptionalEvent printString]!
 
 should: aBlock raise: anExceptionalEvent description: aStringOrValuable
-	^self assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent)
+	"If the code completes without the expected error (or any other) assert. If any other error occurs, let it pass to outer handlers (or likely go unhandled) so that the error stack is preserved for debugging, or to allow nesting of should/shouldnt:raise:. In the original implementation other errors would also cause an assertion failure, losing crucial information for debugging and preventing nesting."
+
+	^self assert: (
+			[aBlock value.
+			false] on: anExceptionalEvent do: [:ex | true])
 		description: aStringOrValuable!
 
 shouldnt: aBlock
@@ -188,12 +186,24 @@ shouldnt: aBlock
 shouldnt: aBlock description: aStringOrValuable
 	self deny: aBlock value description: aStringOrValuable!
 
-shouldnt: aBlock raise: anExceptionalEvent 
-	^self assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent) not!
+shouldnt: aBlock raise: anExceptionalEvent
+	self
+		shouldnt: aBlock
+		raise: anExceptionalEvent
+		description: ['Unexpected exception: ' , anExceptionalEvent printString]!
 
 shouldnt: aBlock raise: anExceptionalEvent description: aStringOrValuable
-	^self assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent) not
-		description: aStringOrValuable!
+	[aBlock value]
+		on: anExceptionalEvent
+		do: 
+			[:ex |
+			"In the original SUnit implementation the exception info was lost because the code asserted after completion of the handler block. By asserting from the handler, we preserve the original exception info on the stack for debugging purposes."
+			self fail: aStringOrValuable value]
+		on: Error
+		do: 
+			[:ex |
+			"Historically other errors have been suppressed. This doesn't seem right (hey, I don't want this particular error, but any other is fine?), but would be a breaking change to fix."
+			]!
 
 signalFailure: aString
 	TestResult failure signal: aString!
@@ -221,7 +231,6 @@ debugAsFailure!public!running! !
 deny:!asserting!public! !
 deny:description:!asserting!public! !
 deny:description:resumable:!asserting!public! !
-executeShould:inScopeOf:!private!running! !
 fail:!asserting!public! !
 failureLog!Accessing!public! !
 isLogging!accessing!public! !

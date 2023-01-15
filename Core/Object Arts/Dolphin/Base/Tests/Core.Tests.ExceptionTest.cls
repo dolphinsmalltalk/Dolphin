@@ -18,9 +18,14 @@ testMatching
 	self should: [self error: 'Foo'] raise: selector.
 	self shouldnt: [self error: 'Bar'] raise: selector.
 	self shouldnt: [Notification signal: 'Foo'] raise: selector.
-	self should: [Notification signal: 'Foo'. self error: 'Foo'] raise: selector.
-	self shouldnt: [self error: 'Bar'. self error: 'Foo'] raise: selector.
-! !
+	self should: 
+			[Notification signal: 'Foo'.
+			self error: 'Foo']
+		raise: selector.
+	self shouldnt: 
+			[self error: 'Bar'.
+			self error: 'Foo']
+		raise: selector! !
 !Core.Tests.ExceptionTest categoriesForMethods!
 testMatching!public! !
 !

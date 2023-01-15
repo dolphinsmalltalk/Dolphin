@@ -131,6 +131,43 @@ testShould
 	self should: [true].
 	self shouldnt: [false]!
 
+testShouldRaise
+	self should: [#(1 2) at: 3] raise: BoundsError.
+	self
+		should: [#(1 2) at: 3]
+		raise: BoundsError
+		matching: [:ex | ex description = 'Index 3 is out of bounds'].
+	"If the discriminator doesn't match, the error should be passed along, not converted to an assertion failure as this loses crucial information for debugging."
+	self should: 
+			[self
+				should: [#(1 2) at: 3]
+				raise: BoundsError
+				matching: [:ex | ex description = 'Index 4 is out of bounds']]
+		raise: BoundsError.
+	"#should:raise: asserts if the block doesn't raise the exception specified, or any other"
+	self
+		should: [self should: ['Foo'] raise: InvalidArgumentError]
+		raise: TestFailure
+		matching: [:ex | ex messageText = 'Expected InvalidArgumentError'].
+	"#shouldnt:raise: asserts if the block does raise the exception specified"
+	self
+		should: [self shouldnt: [InvalidArgumentError signal: 'Foo' with: 'Bar'] raise: InvalidArgumentError]
+		raise: TestFailure.
+	self
+		should: [self shouldnt: [InvalidArgumentError signal: 'Foo' with: 'Bar'] raise: InvalidArgumentError]
+		raise: TestFailure
+		matching: [:ex | ex messageText = 'Unexpected exception: InvalidArgumentError'].
+	self
+		should: 
+			[self
+				shouldnt: [InvalidArgumentError signal: 'Foo' with: 'Bar']
+				raise: InvalidArgumentError
+				description: 'Unexpected Foo Bar']
+		raise: TestFailure
+		matching: [:ex | ex messageText = 'Unexpected Foo Bar'].
+	"Historic sunit behaviour - suppresses other errors. Seems to be relied on in some tests, although it seems undesirable to ignore any other error than a specific one."
+	self shouldnt: [self error: 'Foo'] raise: InvalidArgumentError!
+
 testSkip
 	| case result |
 	case := self class selector: #skipped.
@@ -179,6 +216,7 @@ testRanOnlyOnce!public!Testing! !
 testResult!public!Testing! !
 testRunning!public!Testing! !
 testShould!public!Testing! !
+testShouldRaise!public!Testing! !
 testSkip!public!Testing! !
 testSuite!public!Testing! !
 !
