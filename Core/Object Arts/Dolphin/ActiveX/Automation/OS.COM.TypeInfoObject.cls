@@ -130,7 +130,7 @@ suggestedGlobalName
 	"Private - Answer a <readableString> name suggested as the (unprefixed) for a global
 	generated to represent the receiver's type."
 
-	^self name!
+	^self name capitalized!
 
 tlbInterface
 	tlbInterface isNull ifTrue: [self realize].
