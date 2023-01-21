@@ -32,9 +32,10 @@ interface ICoreWebView2ClearBrowsingDataCompletedHandler : IUnknown
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2ClearBrowsingDataCompletedHandler'
-		ICoreWebView2ClearBrowsingDataCompletedHandler defineTemplate"
+		ICoreWebView2ClearBrowsingDataCompletedHandler defineTemplate
+	"
 
-	self defineFunction: #value: argumentTypes: 'hresult'! !
+	self defineFunction: #Invoke: argumentTypes: 'hresult'! !
 !WebView2.ICoreWebView2ClearBrowsingDataCompletedHandler class categoriesForMethods!
 defineFunctions!initializing!public! !
 !

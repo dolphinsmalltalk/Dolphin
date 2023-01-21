@@ -32,9 +32,10 @@ interface ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler : IUnk
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler'
-		ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler defineTemplate"
+		ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler defineTemplate
+	"
 
-	self defineFunction: #value: argumentTypes: 'hresult'! !
+	self defineFunction: #Invoke: argumentTypes: 'hresult'! !
 !WebView2.ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

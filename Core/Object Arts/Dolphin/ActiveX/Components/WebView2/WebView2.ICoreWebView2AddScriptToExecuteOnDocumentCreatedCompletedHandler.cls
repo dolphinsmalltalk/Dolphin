@@ -36,7 +36,7 @@ defineFunctions
 		ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler defineTemplate
 	"
 
-	self defineFunction: #value:value: argumentTypes: 'hresult lpwstr'! !
+	self defineFunction: #Invoke:arg: argumentTypes: 'hresult lpwstr'! !
 !WebView2.ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler class categoriesForMethods!
 defineFunctions!initializing!public! !
 !

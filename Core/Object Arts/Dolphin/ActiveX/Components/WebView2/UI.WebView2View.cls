@@ -317,7 +317,7 @@ observeEvent: anICoreWebView2EventHandlerClass from: anICoreWebView2EventSource
 					[argsClass superclass isNonInstantiable
 						ifTrue: [[:source :args | self presenter trigger: event with: args]]
 						ifFalse: 
-							["Here we are assuming that there is only every Args and Args2. This is true currently. If more depth is added, we could walk up the hierarchy querying"
+							["Here we are assuming that there is only ever xxxEventArgs and xxxEventArgs2. This is true currently. If more depth is added, we could walk up the hierarchy querying"
 							[:source :args | self presenter trigger: event with: (args queryInterface: argsClass ifNone: [args])]]].
 	^self registerEventSink: (WebView2EventSink
 				source: anICoreWebView2EventSource

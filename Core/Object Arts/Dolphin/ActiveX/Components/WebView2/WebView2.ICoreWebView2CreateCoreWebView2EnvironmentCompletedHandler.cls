@@ -36,7 +36,7 @@ defineFunctions
 		ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler defineTemplate
 	"
 
-	self defineFunction: #value:value: argumentTypes: 'hresult ICoreWebView2Environment*'! !
+	self defineFunction: #Invoke:arg: argumentTypes: 'hresult ICoreWebView2Environment*'! !
 !WebView2.ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler class categoriesForMethods!
 defineFunctions!initializing!public! !
 !
