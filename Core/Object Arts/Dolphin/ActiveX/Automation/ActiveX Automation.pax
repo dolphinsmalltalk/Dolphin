@@ -1882,7 +1882,8 @@ GetTypeInfo: ppTypeInfo
 initializeRegister
 	"Private - Initialize the register of GUIDs to record classes."
 
-	RecordClasses := LookupTable new!
+	RecordClasses := WeakLookupTable new
+!
 
 IsMatchingType: pRecordInfo
 	"Implement the IRecordInfo::IsMatchingType() method for the UDT described by the receiver.
