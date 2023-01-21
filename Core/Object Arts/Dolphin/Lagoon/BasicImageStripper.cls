@@ -691,7 +691,7 @@ _speciallySentMessages
 	"Private - A number of messages can be sent without  appearing in the literal
 	frame of any method. Answer a Set of these selectors here."
 
-	^VMLibrary.Registry select: [:each | each class == Symbol]!
+	^VMLibrary.Registry select: [:each | each ~~ #namespace: and: [each class == Symbol]]!
 
 _startElement: aString attributes: aCollectionOfAttributes
 	self _deploymentContext _startElement: aString attributes: aCollectionOfAttributes!
