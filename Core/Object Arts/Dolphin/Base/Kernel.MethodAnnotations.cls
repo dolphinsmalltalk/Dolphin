@@ -39,11 +39,6 @@ at: anInteger put: aMessage
 
 	^self shouldNotImplement!
 
-basicNextIdentityIndexOf: anObject from: startInteger to: stopInteger
-	<primitive: 59>
-	startInteger to: stopInteger do: [:i | (self at: i) == anObject ifTrue: [^i]].
-	^0!
-
 copyingClass
 	^Array!
 
@@ -85,7 +80,7 @@ environment
 
 	| index |
 	^(index := self
-				basicNextIdentityIndexOf: #namespace:
+				basicIdentityIndexOf: #namespace:
 				from: 1
 				to: self basicSize) == 0
 		ifFalse: [(self basicAt: index + 1) at: 1]!
@@ -99,7 +94,7 @@ includesSelector: aSymbol
 	"Answer whether any of the annotations in the receiver have the selector named by the <Symbol> argument."
 
 	^(self
-		basicNextIdentityIndexOf: aSymbol
+		basicIdentityIndexOf: aSymbol
 		from: 1
 		to: self basicSize) odd!
 
@@ -161,7 +156,7 @@ withSelector: aSymbol do: aMonadicValuable
 	i := 0.
 	
 	[(i := self
-				basicNextIdentityIndexOf: aSymbol
+				basicIdentityIndexOf: aSymbol
 				from: i + 1
 				to: stop) even
 		ifFalse: [aMonadicValuable value: (self basicAt: i + 1)].
@@ -172,7 +167,6 @@ withSelector: aSymbol do: aMonadicValuable
 add:!adding!public! !
 at:!enumerating!public! !
 at:put:!accessing!public! !
-basicNextIdentityIndexOf:from:to:!private!searching! !
 copyingClass!copying!private! !
 displayOn:!printing!public! !
 do:!enumerating!public! !

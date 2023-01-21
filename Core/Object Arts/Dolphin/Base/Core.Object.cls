@@ -329,11 +329,7 @@ basicIdentityIndexOf: anElement from: start to: stop
 	condition (e.g. See WeakArray>>corpsesDo:)."
 
 	<primitive: 59>
-	| index |
-	index := start.
-	[index > stop] whileFalse: 
-			[(self basicAt: index) == anElement ifTrue: [^index].
-			index := index + 1].
+	start to: stop do: [:i | (self basicAt: i) == anElement ifTrue: [^i]].
 	^0!
 
 basicPrintOn: aStream

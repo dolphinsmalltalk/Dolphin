@@ -526,6 +526,8 @@ testFromToKeysAndValuesDo2
 
 testIdentityIncludes
 	| searchee |
+	searchee := self newCollection: ''.
+	self deny: (searchee identityIncludes: (self assimilate: $a)).
 	searchee := self newCollection: 'abc'.
 	self assert: (searchee identityIncludes: (self assimilate: $a)).
 	self assert: (searchee identityIncludes: (self assimilate: $b)).
@@ -536,6 +538,8 @@ testIdentityIncludes
 
 testIncludes
 	| searchee |
+	searchee := self newCollection: ''.
+	self deny: (searchee includes: (self assimilate: $a)).
 	searchee := self newCollection: 'abc'.
 	self assert: (searchee includes: (self assimilate: $a)).
 	self assert: (searchee includes: (self assimilate: $b)).

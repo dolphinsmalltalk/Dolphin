@@ -135,6 +135,14 @@ basicAddAll: aCollection
 	aCollection do: [:each | self basicAt: (lastIndex := lastIndex + 1) put: each].
 	^aCollection!
 
+basicNextIdentityIndexOf: anElement from: start to: stop
+	"Private - Answer the index of the next occurrence of anElement in the receiver's indexable
+	variables between startIndex and stopIndex inclusive. If there are no such occurrences, answer 0."
+
+	<primitive: 59>
+	start to: stop do: [:i | (self basicAt: i) == anElement ifTrue: [^i]].
+	^0!
+
 basicReplaceElementsOf: anIndexableObject from: startInteger to: stopInteger startingAt: startAtInteger
 	"Private - Replace the indexable instance variables of the variable pointer object, anIndexableObject, between
 	startInteger and stopInteger inclusive with elements of the receiver starting from startAtInteger. Answers
@@ -248,6 +256,16 @@ firstIndex: first lastIndex: last
 	firstIndex := first.
 	lastIndex := last
 !
+
+identityIncludes: anObject
+	"Answer whether the argument, anObject, is one of the receiver's elements."
+
+	"Implementation Note: Override superclass to provide a more efficient implementation using the identity search primitive."
+
+	^(self
+		basicIdentityIndexOf: anObject
+		from: firstIndex
+		to: lastIndex) ~~ 0!
 
 includes: target
 	"Answer whether the argument, target, is one of the elements of the receiver.
@@ -534,6 +552,7 @@ at:!accessing!public! !
 at:ifAbsent:!accessing!public! !
 at:put:!accessing!public! !
 basicAddAll:!adding!private! !
+basicNextIdentityIndexOf:from:to:!private!searching! !
 basicReplaceElementsOf:from:to:startingAt:!private!replacing! !
 copyWith:!copying!public! !
 copyWithout:!copying!public! !
@@ -544,6 +563,7 @@ do:separatedBy:!enumerating!public! !
 findFirst:!public!searching! !
 first!accessing!public! !
 firstIndex:lastIndex:!accessing!private! !
+identityIncludes:!public!searching! !
 includes:!public!searching! !
 initialize!initializing!public! !
 inject:into:!enumerating!public! !

@@ -142,8 +142,9 @@ findFirst: discriminator
 	^0!
 
 identityIncludes: anObject
-	"Answer whether the argument, anObject, is one of the receiver's elements.
-	Override superclass to provide a more efficient implementation."
+	"Answer whether the argument, anObject, is one of the receiver's elements."
+
+	"Implementation Note: Override superclass to provide a more efficient implementation using the identity search primitive."
 
 	^(self
 		nextIdentityIndexOf: anObject
