@@ -786,7 +786,7 @@ _logRemainingSharedVariables
 					[self
 						_logElement: 'VariableBinding'
 						attributes: #()
-						value: each key]].
+						value: each fullName]].
 	self _endElement: true!
 
 _logRequiredMethodCategories
