@@ -4329,9 +4329,13 @@ generateMockMethods
 			Graphics.Gdiplus.Tests.MockGdiplusLibrary compile: source contents classified: autogen]!
 
 new
-	^super new initialize! !
+	^super new initialize!
+
+sharedVariableName
+	^nil! !
 !Graphics.Gdiplus.Tests.MockGdiplusLibrary class categoriesForMethods!
 generateMockMethods!helpers!private! !
 new!instance creation!public! !
+sharedVariableName!constants!private! !
 !
 
