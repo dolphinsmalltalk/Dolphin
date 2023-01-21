@@ -35,7 +35,7 @@ defineFunctions
 		ICoreWebView2TrySuspendCompletedHandler defineTemplate
 	"
 
-	self defineFunction: #value:value: argumentTypes: 'hresult sdword'! !
+	self defineFunction: #Invoke:arg: argumentTypes: 'hresult sdword'! !
 !ICoreWebView2TrySuspendCompletedHandler class categoriesForMethods!
 defineFunctions!initializing!public! !
 !

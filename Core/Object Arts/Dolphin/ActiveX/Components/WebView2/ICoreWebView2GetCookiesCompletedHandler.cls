@@ -35,7 +35,7 @@ defineFunctions
 		ICoreWebView2GetCookiesCompletedHandler defineTemplate
 	"
 
-	self defineFunction: #value:value: argumentTypes: 'hresult ICoreWebView2CookieList*'! !
+	self defineFunction: #Invoke:arg: argumentTypes: 'hresult ICoreWebView2CookieList*'! !
 !ICoreWebView2GetCookiesCompletedHandler class categoriesForMethods!
 defineFunctions!initializing!public! !
 !

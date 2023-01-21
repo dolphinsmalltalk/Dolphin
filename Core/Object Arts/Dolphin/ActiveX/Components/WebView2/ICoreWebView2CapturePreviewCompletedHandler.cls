@@ -34,7 +34,7 @@ defineFunctions
 		ICoreWebView2CapturePreviewCompletedHandler defineTemplate
 	"
 
-	self defineFunction: #value: argumentTypes: 'hresult'! !
+	self defineFunction: #Invoke: argumentTypes: 'hresult'! !
 !ICoreWebView2CapturePreviewCompletedHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

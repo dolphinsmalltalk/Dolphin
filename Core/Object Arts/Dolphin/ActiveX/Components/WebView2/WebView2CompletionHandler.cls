@@ -13,8 +13,12 @@ WebView2CompletionHandler comment: ''!
 completionBlock: aValuable
 	completionBlock := aValuable!
 
-Invoke: sender arg: args
-	completionBlock value: sender value: args.
+Invoke: hresultInteger
+	completionBlock value: hresultInteger.
+	^S_OK!
+
+Invoke: hresultInteger arg: anObject
+	completionBlock value: hresultInteger value: anObject.
 	^S_OK!
 
 queryInterface: anInterfaceClass ifNone: exceptionHandler
@@ -23,13 +27,14 @@ queryInterface: anInterfaceClass ifNone: exceptionHandler
 	result of evaluating the niladic valuable, exceptionHandler."
 
 	^(anInterfaceClass inheritsFrom: ICoreWebView2CompletedHandler)
-		ifTrue: [anInterfaceClass on: self implementor: completionBlock]
+		ifTrue: [anInterfaceClass on: self]
 		ifFalse: [exceptionHandler value]!
 
 supportedInterfaces
 	^ICoreWebView2CompletedHandler subclasses! !
 !WebView2CompletionHandler categoriesForMethods!
 completionBlock:!initializing!private! !
+Invoke:!COM Interfaces-ICoreWebView2CompletedHandler!public! !
 Invoke:arg:!COM Interfaces-ICoreWebView2CompletedHandler!public! !
 queryInterface:ifNone:!accessing!accessing-interfaces!public! !
 supportedInterfaces!constants!public! !

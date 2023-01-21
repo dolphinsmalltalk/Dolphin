@@ -33,7 +33,7 @@ defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2ClearBrowsingDataCompletedHandler'
 		ICoreWebView2ClearBrowsingDataCompletedHandler defineTemplate"
 
-	self defineFunction: #value: argumentTypes: 'hresult'! !
+	self defineFunction: #Invoke: argumentTypes: 'hresult'! !
 !ICoreWebView2ClearBrowsingDataCompletedHandler class categoriesForMethods!
 defineFunctions!initializing!public! !
 !

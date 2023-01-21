@@ -35,7 +35,7 @@ defineFunctions
 		ICoreWebView2WebResourceResponseViewGetContentCompletedHandler defineTemplate
 	"
 
-	self defineFunction: #value:value: argumentTypes: 'hresult IStream*'! !
+	self defineFunction: #Invoke:arg: argumentTypes: 'hresult IStream*'! !
 !ICoreWebView2WebResourceResponseViewGetContentCompletedHandler class categoriesForMethods!
 defineFunctions!initializing!public! !
 !

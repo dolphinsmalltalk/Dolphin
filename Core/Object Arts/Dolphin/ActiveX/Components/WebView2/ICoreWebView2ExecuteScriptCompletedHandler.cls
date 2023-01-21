@@ -35,7 +35,7 @@ defineFunctions
 		ICoreWebView2ExecuteScriptCompletedHandler defineTemplate
 	"
 
-	self defineFunction: #value:value: argumentTypes: 'hresult lpwstr'! !
+	self defineFunction: #Invoke:arg: argumentTypes: 'hresult lpwstr'! !
 !ICoreWebView2ExecuteScriptCompletedHandler class categoriesForMethods!
 defineFunctions!initializing!public! !
 !
