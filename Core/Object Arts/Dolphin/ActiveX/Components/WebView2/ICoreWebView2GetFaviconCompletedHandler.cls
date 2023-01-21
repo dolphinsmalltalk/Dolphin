@@ -32,10 +32,11 @@ interface ICoreWebView2GetFaviconCompletedHandler : IUnknown
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2GetFaviconCompletedHandler'
-		ICoreWebView2GetFaviconCompletedHandler defineTemplate"
+		ICoreWebView2GetFaviconCompletedHandler defineTemplate
+	"
 
 	self
-		defineFunction: #value:value:
+		defineFunction: #Invoke:arg:
 			argumentTypes: 'hresult IStream*'
 ! !
 !ICoreWebView2GetFaviconCompletedHandler class categoriesForMethods!

@@ -35,7 +35,7 @@ defineFunctions
 		ICoreWebView2PrintToPdfCompletedHandler defineTemplate
 	"
 
-	self defineFunction: #value:value: argumentTypes: 'hresult bool'! !
+	self defineFunction: #Invoke:arg: argumentTypes: 'hresult bool'! !
 !ICoreWebView2PrintToPdfCompletedHandler class categoriesForMethods!
 defineFunctions!initializing!public! !
 !

@@ -34,8 +34,7 @@ defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2CreateCoreWebView2ControllerCompletedHandler'
 		ICoreWebView2CreateCoreWebView2ControllerCompletedHandler defineTemplate
 	"
-
-	self defineFunction: #value:value: argumentTypes: 'hresult ICoreWebView2Controller*'! !
+	self defineFunction: #Invoke:arg: argumentTypes: 'hresult ICoreWebView2Controller*'! !
 !ICoreWebView2CreateCoreWebView2ControllerCompletedHandler class categoriesForMethods!
 defineFunctions!initializing!public! !
 !

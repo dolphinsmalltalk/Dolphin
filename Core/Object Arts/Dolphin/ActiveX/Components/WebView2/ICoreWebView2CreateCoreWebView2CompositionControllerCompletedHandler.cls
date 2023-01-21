@@ -35,7 +35,7 @@ defineFunctions
 		ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler defineTemplate
 	"
 
-	self defineFunction: #value:value: argumentTypes: 'hresult ICoreWebView2CompositionController*'! !
+	self defineFunction: #Invoke:arg: argumentTypes: 'hresult ICoreWebView2CompositionController*'! !
 !ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler class categoriesForMethods!
 defineFunctions!initializing!public! !
 !

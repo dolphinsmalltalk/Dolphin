@@ -35,7 +35,7 @@ defineFunctions
 		ICoreWebView2CallDevToolsProtocolMethodCompletedHandler defineTemplate
 	"
 
-	self defineFunction: #value:value: argumentTypes: 'hresult lpwstr'! !
+	self defineFunction: #Invoke:arg: argumentTypes: 'hresult lpwstr'! !
 !ICoreWebView2CallDevToolsProtocolMethodCompletedHandler class categoriesForMethods!
 defineFunctions!initializing!public! !
 !
