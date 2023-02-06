@@ -1015,6 +1015,26 @@ Oop* PRIMCALL Interpreter::primitiveCharacterClassify(Oop* const sp, primargcoun
 	return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
 }
 
+Oop* Interpreter::primitiveCharacterEquals(Oop* const sp, primargcount_t)
+{
+	Oop oopArg = *sp;
+	CharOTE* oteReceiver = reinterpret_cast<CharOTE*>(*(sp - 1));
+	if (!ObjectMemoryIsIntegerObject(oopArg))
+	{
+		CharOTE* oteArg = reinterpret_cast<CharOTE*>(oopArg);
+		*(sp - 1) = (oteArg == oteReceiver || ((oteArg->m_oteClass == oteReceiver->m_oteClass) && 
+												oteArg->m_location->m_code == oteReceiver->m_location->m_code))
+						? reinterpret_cast<Oop>(Pointers.True)
+						: reinterpret_cast<Oop>(Pointers.False);
+		return sp - 1;
+	}
+	else
+	{
+		*(sp - 1) = reinterpret_cast<Oop>(Pointers.False);
+		return sp - 1;
+	}
+}
+
 Oop* Interpreter::primitiveBytesEqual(Oop* const sp, primargcount_t)
 {
 	Oop oopArg = *sp;

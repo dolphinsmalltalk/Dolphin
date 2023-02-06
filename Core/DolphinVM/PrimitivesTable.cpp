@@ -239,7 +239,7 @@ extern "C" PRIMTABLEDECL Interpreter::PrimitiveFp primitivesTable[256] = {
 	Interpreter::primitiveStringEqual<EqualIA, EqualIW, false>					, // case 226: String>>#equalsIgnoreCase:
 	Interpreter::primitiveHashIgnoreCase										, // case 227: String>>#hashIgnoreCase
 	Interpreter::primitiveStringLessOrEqual										, // case 228: String>>#<=
-	Interpreter::unusedPrimitive												, // case 229:
+	Interpreter::primitiveCharacterEquals										, // case 229: Character>>#=
 	Interpreter::unusedPrimitive												, // case 230:
 	Interpreter::unusedPrimitive												, // case 231:
 	Interpreter::unusedPrimitive												, // case 232:

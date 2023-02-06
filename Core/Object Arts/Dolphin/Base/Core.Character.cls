@@ -88,12 +88,11 @@ _separateSubStringsIn: tokens
 	^self codePoint < aCharacter asInteger
 !
 
-= comperand
-	"Answer whether the receiver is the sames as the parameter, comperand.
-	There is a unique Character instance for each possible byte-character value,
-	but the instances are not unique for codepoints > 255."
+= anObject
+	"Answer whether the receiver is equal to the argument. There is a unique Character instance for each codepoint < 256, but instances for higher code points are not unique."
 
-	^self == comperand or: [comperand class == Character and: [comperand code == code]]!
+	<primitive: 229>
+	^self == anObject or: [anObject class == Character and: [anObject code == code]]!
 
 > aCharacter
 	"Answer whether the receiver is greater than the parameter aCharacter."

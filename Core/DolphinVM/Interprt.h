@@ -611,6 +611,7 @@ public:
 
 	static Oop* PRIMCALL primitiveNewCharacter(Oop * const sp, primargcount_t);
 	static Oop* PRIMCALL primitiveCharacterClassify(Oop* const sp, primargcount_t);
+	static Oop* PRIMCALL primitiveCharacterEquals(Oop* const sp, primargcount_t);
 
 	///////////////////////////////////////////////////////////////////////////
 	// String Class Primitives
