@@ -14,31 +14,62 @@ assertButton: aPushButton isDefault: aBoolean
 	self assert: aPushButton isDefault equals: aBoolean.
 	aBoolean ifTrue: [self assert: aPushButton topShell defaultButtonId equals: aPushButton id]!
 
-setUp
-	super setUp.
-	shell := ShellView show.
-	shellButtonA := shell addSubView: PushButton new.
-	shellButtonB := shell addSubView: PushButton new.
+getButton: aPushButton textExtent: actualText
+	| textExtent canvas |
+	canvas := aPushButton canvas.
+	canvas font: aPushButton actualFont.
+	textExtent := canvas textExtent: actualText.
+	canvas free.
+	^textExtent!
 
+showDialogWithButtons
 	dialog := DialogView show.
 	dialogButtonA := dialog addSubView: PushButton new.
-	dialogButtonB := dialog addSubView: PushButton new.
+	dialogButtonB := dialog addSubView: PushButton new!
 
-	
-!
+showShellWithButtons
+	shell := ShellView show.
+	shellButtonA := shell addSubView: PushButton new.
+	shellButtonB := shell addSubView: PushButton new!
 
 tearDown
-	shell destroy.
-	shell := shellButtonA := shellButtonB := nil.
-	dialog destroy.
-	dialog := dialogButtonA := dialogButtonB := nil.
-	super tearDown
-!
+	shell
+		ifNotNil: 
+			[shell destroy.
+			shell := shellButtonA := shellButtonB := nil].
+	dialog
+		ifNotNil: 
+			[dialog destroy.
+			dialog := dialogButtonA := dialogButtonB := nil].
+	super tearDown!
+
+testCalculateExtent
+	"Test that checkboxes are able to resize to fit their text (and button). We really don't need to verify this precisely as we aren't testing the control's behaviour, rather that it does size to fit."
+
+	| actualText textWidth |
+	self showShellWithButtons.
+	shellButtonA usePreferredExtent: true.
+	"Use a non-proportional font to make calculating the expected result predictable"
+	actualText := '	The quick brown 狐狸 jumped over the lazy Лиса'.
+	shellButtonA text: actualText.
+	shell
+		extent: 500 @ 75;
+		layoutManager: FlowLayout new.
+	actualText := '	The quick brown 狐狸 jumped over the lazy Лиса'.
+	shellButtonA text: actualText.
+	textWidth := (self getButton: shellButtonA textExtent: actualText) x.
+	self assert: (shellButtonA extent x between: textWidth and: textWidth + 25).
+	"Button should shrink if given less text"
+	shellButtonA text: 'abc'.
+	textWidth := (self getButton: shellButtonA textExtent: 'abc') x.
+	self assert: (shellButtonA extent x between: textWidth and: textWidth + 25)!
 
 testDialogDefaultButtons
+	self showDialogWithButtons.
 	self tryDefaultButtonsA: dialogButtonA B: dialogButtonB!
 
 testShellDefaultButtons
+	self showShellWithButtons.
 	self tryDefaultButtonsA: shellButtonA B: shellButtonB!
 
 tryDefaultButtonsA: buttonA B: buttonB 
@@ -77,8 +108,11 @@ tryDefaultButtonsA: buttonA B: buttonB
 	self assertButton: buttonB isDefault: false! !
 !PushButtonTest categoriesForMethods!
 assertButton:isDefault:!helpers!private! !
-setUp!public!running! !
+getButton:textExtent:!helpers!private! !
+showDialogWithButtons!helpers!private! !
+showShellWithButtons!helpers!private! !
 tearDown!public!running! !
+testCalculateExtent!public!unit tests! !
 testDialogDefaultButtons!public!unit tests! !
 testShellDefaultButtons!public!unit tests! !
 tryDefaultButtonsA:B:!private!unit tests! !

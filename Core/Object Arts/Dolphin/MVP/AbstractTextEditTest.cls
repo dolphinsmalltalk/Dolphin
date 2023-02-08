@@ -14,9 +14,6 @@ AbstractTextEditTest comment: ''!
 margins
 	^self subclassResponsibility!
 
-nonProportionalFont
-	^Font name: 'Courier'!
-
 testPositionOfChar
 	| text canvas lineHeight metrics i |
 	text := self text.
@@ -49,7 +46,6 @@ text
 	^self subclassResponsibility! !
 !AbstractTextEditTest categoriesForMethods!
 margins!private!unit tests! !
-nonProportionalFont!constants!private! !
 testPositionOfChar!public!unit tests! !
 text!constants!private! !
 !
