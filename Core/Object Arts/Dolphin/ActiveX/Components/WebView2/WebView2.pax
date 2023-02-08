@@ -408,7 +408,7 @@ ICoreWebView2Interface subclass: #ICoreWebView2PrintSettings
 	classInstanceVariableNames: ''!
 ICoreWebView2Interface subclass: #ICoreWebView2ProcessInfo
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'KindNames'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2Interface subclass: #ICoreWebView2Profile

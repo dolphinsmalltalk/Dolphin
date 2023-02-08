@@ -2,10 +2,11 @@
 
 ICoreWebView2Interface subclass: #ICoreWebView2ProcessInfo
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'KindNames'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2ProcessInfo guid: (IID fromString: '{84fa7612-3f3d-4fbf-889d-fad000492d72}')!
+ICoreWebView2ProcessInfo addClassConstant: 'KindNames' value: #('BROWSER' 'RENDERER' 'UTILITY' 'SANDBOX_HELPER' 'GPU' 'PPAPI_PLUGIN' 'PPAPI_BROKER')!
 ICoreWebView2ProcessInfo comment: '`ICoreWebView2ProcessInfo` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ProcessInfo'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -89,8 +90,11 @@ kind
 	self get_Kind: answer.
 	^answer asObject!
 
+kindName
+	^(KindNames lookup: self kind + 1) ?? '(Unknown process kind)'!
+
 printableProperties
-	^#(#kind #processId)!
+	^#(#kindName #processId)!
 
 processId
 	"Answer the <sdword> value of the 'ProcessId' property of the receiver."
@@ -106,6 +110,7 @@ ClearBrowsingDataInTimeRange:startTime:endTime:handler:!**auto generated**!COM I
 get_Kind:!**auto generated**!COM Interfaces-ICoreWebView2ProcessInfo!private! !
 get_ProcessId:!**auto generated**!COM Interfaces-ICoreWebView2ProcessInfo!private! !
 kind!**auto generated**!properties!public! !
+kindName!properties!public! !
 printableProperties!printing!private! !
 processId!**auto generated**!properties!public! !
 !
@@ -121,8 +126,13 @@ defineFunctions
 			argumentTypes: 'sdword*';
 		defineFunction: #get_Kind:
 			argumentTypes: 'sdword*'
-! !
+!
+
+initialize
+	self addClassConstant: 'KindNames'
+		value: #('BROWSER' 'RENDERER' 'UTILITY' 'SANDBOX_HELPER' 'GPU' 'PPAPI_PLUGIN' 'PPAPI_BROKER')! !
 !ICoreWebView2ProcessInfo class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
+initialize!initializing!public! !
 !
 

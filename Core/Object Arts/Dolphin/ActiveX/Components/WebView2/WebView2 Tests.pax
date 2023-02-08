@@ -31,7 +31,7 @@ DolphinTest subclass: #WebView2EnvironmentOptionsTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 PresenterTest subclass: #WebView2ViewTest
-	instanceVariableNames: 'domContentLoaded navigationCompleted processFailed webViewReady'
+	instanceVariableNames: 'domContentLoaded navigationCompleted processFailed webViewReady webViewClosed'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
