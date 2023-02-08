@@ -76,10 +76,11 @@ isBrowserProcessExit
 	^self processFailedKind = WebView2Constants.COREWEBVIEW2_PROCESS_FAILED_KIND_BROWSER_PROCESS_EXITED!
 
 printableProperties
-	| propertyNames failureKind |
+	| propertyNames failureKind desc |
 	propertyNames := OrderedCollection withAll: #(#processFailedKind).
 	propertyNames addLast: #exitCode.
-	self processDescription isEmpty ifFalse: [propertyNames add: #processDescription].
+	desc := self processDescription.
+	(desc notNil and: [desc notEmpty]) ifTrue: [propertyNames add: #processDescription].
 	failureKind := self processFailedKind.
 	failureKind = WebView2Constants.COREWEBVIEW2_PROCESS_FAILED_KIND_BROWSER_PROCESS_EXITED
 		ifFalse: [propertyNames add: #reason].
