@@ -42,6 +42,9 @@ leftClickAt: aPoint
 	^self.
 !
 
+nonProportionalFont
+	^Font name: 'Courier'!
+
 setUp
 	self initializePresenter!
 
@@ -49,14 +52,19 @@ tearDown
 	presenter topShell close.
 	presenter := nil!
 
+view
+	^presenter view!
+
 waitForInputIdle
 	SessionManager inputState pumpMessages! !
 !PresenterTest categoriesForMethods!
 classToTest!helpers!private! !
 initializePresenter!public!Running! !
 leftClickAt:!private!unit tests! !
+nonProportionalFont!constants!private! !
 setUp!public!Running! !
 tearDown!public!Running! !
+view!accessing!private! !
 waitForInputIdle!private!unit tests! !
 !
 

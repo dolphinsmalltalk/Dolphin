@@ -16,6 +16,8 @@ package classNames
 	add: #BorderLayoutTest;
 	add: #BrushTest;
 	add: #CanvasTest;
+	add: #CheckBoxTest;
+	add: #CheckButtonTest;
 	add: #ChoicePresenterTest;
 	add: #ClipboardTest;
 	add: #ColorDialogTest;
@@ -60,6 +62,7 @@ package classNames
 	add: #ProportionalLayoutTest;
 	add: #PushButtonTest;
 	add: #RadioButtonSetPresenterTest;
+	add: #RadioButtonTest;
 	add: #RectangleTest;
 	add: #RECTLTest;
 	add: #ReferenceViewTest;
@@ -401,6 +404,11 @@ PresenterTest subclass: #AbstractTextEditTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+PresenterTest subclass: #CheckButtonTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 PresenterTest subclass: #ChoicePresenterTest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -475,6 +483,16 @@ MultilineTextEditTest subclass: #ScintillaViewTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ScintillaConstants'
+	classInstanceVariableNames: ''!
+CheckButtonTest subclass: #CheckBoxTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+CheckButtonTest subclass: #RadioButtonTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ImageViewAbstractTest subclass: #ImageViewTest
 	instanceVariableNames: ''
