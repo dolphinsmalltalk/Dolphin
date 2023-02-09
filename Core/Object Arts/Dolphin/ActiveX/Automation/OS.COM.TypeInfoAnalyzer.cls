@@ -214,7 +214,7 @@ generateVariableDefinition: aVariableBinding
 	"Private - Generate a minimal definition of the receiver which will enable it to be seen,
 	if not heard, in the development environment."
 
-	^self shouldNotImplement!
+	^self error: 'Unable to define new shared variable ', aVariableBinding printString!
 
 getImplTypeInfoAt: subscript 
 	"Answer an <AXInterfaceTypeInfo> describing the interface with the one-based <integer> 

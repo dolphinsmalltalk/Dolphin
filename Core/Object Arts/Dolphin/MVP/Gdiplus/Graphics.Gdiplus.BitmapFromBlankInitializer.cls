@@ -38,7 +38,7 @@ basicCreateHandle
 		height: height
 		stride: 0
 		format: format
-		scan0: 0
+		scan0: nil
 		bitmap: gpHandle.
 	^gpHandle!
 

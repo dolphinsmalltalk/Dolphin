@@ -205,13 +205,7 @@ near
 new
 	"Answer an instance of the receiver with no format flags set and which uses the user's default language."
 
-	^self flags: 0 language: OS.NlsConstants.LANG_NEUTRAL!
-
-onPreStripImage
-	"Private -  Allow the receiver and subclasses to be stripped by clearing lazy initialized class variables
-	which hold sub-instance of the receiver."
-
-	self uninitialize! !
+	^self flags: 0 language: OS.NlsConstants.LANG_NEUTRAL! !
 !Graphics.Gdiplus.StringFormat class categoriesForMethods!
 centered!instance creation!public! !
 far!instance creation!public! !
@@ -221,6 +215,5 @@ genericDefault!instance creation!public! !
 genericTypographic!instance creation!public! !
 near!instance creation!public! !
 new!instance creation!public! !
-onPreStripImage!class hierarchy-removing!private! !
 !
 

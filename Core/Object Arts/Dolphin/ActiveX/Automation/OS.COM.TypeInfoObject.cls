@@ -108,7 +108,7 @@ namespaceBinding
 	^self binding environment binding!
 
 newPool: aSymbol
-	^self shouldNotImplement!
+	^self error: 'Unable to define new namespace ' , aSymbol!
 
 realize
 	"Private - Load the receiver's COM interface from its owning type library."
@@ -162,7 +162,7 @@ isNull!public!testing! !
 isRestricted!public!testing! !
 name!accessing!public! !
 namespaceBinding!accessing!public! !
-newPool:!accessing!private! !
+newPool:!generating!private! !
 realize!private!realizing/unrealizing! !
 resolveExistingPool:!private! !
 suggestedGlobalName!accessing!private! !

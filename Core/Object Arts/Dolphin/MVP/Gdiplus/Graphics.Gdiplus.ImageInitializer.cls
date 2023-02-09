@@ -11,9 +11,13 @@ Graphics.Gdiplus.ImageInitializer isNonInstantiable: true!
 Graphics.Gdiplus.ImageInitializer comment: ''!
 !Graphics.Gdiplus.ImageInitializer methodsFor!
 
+absoluteFilename
+	^nil!
+
 printAttributesOn: aStream
 	"Private"! !
 !Graphics.Gdiplus.ImageInitializer categoriesForMethods!
+absoluteFilename!enquiries!public! !
 printAttributesOn:!printing!private! !
 !
 

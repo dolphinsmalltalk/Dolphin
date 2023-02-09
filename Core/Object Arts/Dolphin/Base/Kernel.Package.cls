@@ -1837,6 +1837,8 @@ uninstallMethods
 	"Private - Uninstall the methods owned by the receiver that belong to classes which are not
 	owned by the receiver (i.e. methods installed into classes outside this package)."
 
+	"Note that we can enumerate over the methodNames collection while removing methods only because the PackageManager will not be forwarding events, so the collection will not be modified as the methods are removed."
+
 	self methodNames
 		do: [:methodName | methodName valueOrNil ifNotNil: [:method | method methodClass removeSelector: method selector]]!
 

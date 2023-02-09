@@ -21,6 +21,7 @@ Smalltalk developmentSystem saveImage.	"Save the image if you don''t want to los
 	rootPackage: OS.COM.Examples.WebBrowserShell owningPackage;
 	executableName: ''WebBrowser.exe'';
 	stripDeprecatedMethods: true;
+	"logReferencesToClasses: true;"
 	deploy
 ```
 
