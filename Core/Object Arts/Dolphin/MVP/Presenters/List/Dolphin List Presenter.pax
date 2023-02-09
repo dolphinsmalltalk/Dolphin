@@ -216,11 +216,12 @@ UI.BasicListAbstract subclass: #'UI.ComboBox'
 	}!
 UI.BasicListAbstract subclass: #'UI.ListBox'
 	instanceVariableNames: 'approvedSelIndices'
-	classVariableNames: 'SelectionModes'
+	classVariableNames: ''
 	imports: #(#{OS.ListBoxConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'SelectionModeMask' -> 16r808
+		'SelectionModeMask' -> 16r808.
+		'SelectionModes' -> (IdentityDictionary withAll: {#toggle -> 16r8. #multi -> 16r800. #single -> 16r0})
 	}!
 
 "Loose Methods"!

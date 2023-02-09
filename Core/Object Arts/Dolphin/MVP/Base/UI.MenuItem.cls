@@ -2,10 +2,11 @@
 
 Core.Object subclass: #'UI.MenuItem'
 	instanceVariableNames: 'flags'
-	classVariableNames: 'Dividers'
+	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {
+		'Dividers' -> (LookupTable withAll: {'-' -> #separator. '||' -> #barBreak. '|' -> #break}).
 		'StringSeparator' -> $/.
 		'StylesMask' -> 16rFFFFF
 	}!
@@ -227,19 +228,6 @@ fromString: menuString
 					^CommandMenuItem new commandDescription: commandDescription]
 				ifFalse: [self errorIllegalMenuString: menuString]]!
 
-initialize
-	"Private - Initialize the class variables of the receiver:
-		MenuItem initialize
-	"
-
-	self addClassConstant: 'Dividers'
-		value: ##(LookupTable new
-				at: '-' put: #separator;
-				at: '|' put: #break;
-				at: '||' put: #barBreak;
-				shrink;
-				yourself)!
-
 new
 	"Private - MenuItem is abstract"
 
@@ -275,7 +263,6 @@ stbVersion
 !UI.MenuItem class categoriesForMethods!
 errorIllegalMenuString:!exceptions!private! !
 fromString:!instance creation!public! !
-initialize!development!initializing!private! !
 new!instance creation!private! !
 stbConvertFrom:!binary filing!public! !
 stbVersion!binary filing!public! !

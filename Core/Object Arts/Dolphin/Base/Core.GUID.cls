@@ -24,6 +24,13 @@ Class Variables:
 !Core.GUID categoriesForClass!External-Data-Structured-COM! !
 !Core.GUID methodsFor!
 
+<==> aGUID
+	"Answer the receiver's <integer> collation order with respect to the <Magitude> argument."
+
+	"Defined for polymorphism with Strings, where this version of the spaceship operator is case-sensitive (#<=> is not). For GUIDs this is equivalent to #<=>."
+
+	^self <=> aGUID!
+
 <=> aGUID
 	"Answer the ordering relationship between the receiver and the argument.
 	Colloquially known as the spaceship operator."
@@ -191,6 +198,7 @@ value: guidBytes
 		to: _GUID_Size
 		startingAt: 1! !
 !Core.GUID categoriesForMethods!
+<==>!comparing!public! !
 <=>!comparing!public! !
 =!comparing!public! !
 asByteArray!converting!public! !

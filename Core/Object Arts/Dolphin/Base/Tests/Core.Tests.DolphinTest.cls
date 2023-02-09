@@ -11,6 +11,9 @@ Core.Tests.DolphinTest isNonInstantiable: true!
 Core.Tests.DolphinTest comment: ''!
 !Core.Tests.DolphinTest methodsFor!
 
+allDeepCopiedInstVarsOf: anObject
+	^(1 to: anObject class instSize + anObject basicSize) collect: [:i | anObject instVarAt: i]!
+
 assertIs: cloneObject deepCopyOf: sourceObject
 	self
 		assertIs: cloneObject
@@ -24,12 +27,12 @@ assertIs: cloneObject deepCopyOf: sourceObject visited: anIdentityDictionary
 	self assert: cloneObject basicClass identicalTo: sourceObject basicClass.
 	self assert: cloneObject basicSize identicalTo: sourceObject basicSize.
 	anIdentityDictionary at: cloneObject put: sourceObject.
-	1 to: cloneObject class instSize + self basicSize
+	(self allDeepCopiedInstVarsOf: sourceObject) with: (self allDeepCopiedInstVarsOf: cloneObject)
 		do: 
-			[:i |
+			[:eachSource :eachClone |
 			self
-				assertIs: (cloneObject instVarAt: i)
-				deepCopyOf: (sourceObject instVarAt: i)
+				assertIs: eachClone
+				deepCopyOf: eachSource
 				visited: anIdentityDictionary]!
 
 compare: x to: y epsilon: epsilon
@@ -117,7 +120,8 @@ verifyPropertyManagerOf: subject
 versionFromParts: versionNumbers
 	^versionNumbers inject: 0 into: [:sum :each | (sum << 16) + each]! !
 !Core.Tests.DolphinTest categoriesForMethods!
-assertIs:deepCopyOf:!public!unit tests! !
+allDeepCopiedInstVarsOf:!private!unit tests! !
+assertIs:deepCopyOf:!private!unit tests! !
 assertIs:deepCopyOf:visited:!private!unit tests! !
 compare:to:epsilon:!comparing!public! !
 createPackage:!helpers!public! !

@@ -59,12 +59,23 @@ testEnvironmentNameInScope
 	self assert: subject environmentName equals: 'XProgramming.SUnit'!
 
 testEqualsInScope
-	self assert: (self newSubjectWithPath: #('Core'))
-		equals: (self subjectClass simpleName: 'Core' in: Smalltalk).
-	self assert: (self newSubjectWithPath: #('_' 'Object') scope: self class)
-		equals: (self newSubjectWithPath: #(#Object) scope: self class).
-	self assert: (self newSubjectWithPath: #('Core' 'Object') scope: self class)
-		equals: (self newSubjectWithPath: #('Core' 'Object') scope: (self class lookupMethod: self selector))!
+	| subject1 subject2 subject1a subject1b |
+	subject1 := self newSubjectWithPath: #('Core').
+	subject2 := self subjectClass simpleName: 'Core' in: Smalltalk.
+	self assert: subject1 equals: subject2.
+	self assert: subject1 <=> subject2 equals: 0.
+	self assert: subject1 <==> subject2 equals: 0.
+	subject1 := self newSubjectWithPath: #('_' 'Object') scope: self class.
+	subject2 := self newSubjectWithPath: #(#Object) scope: self class.
+	self assert: subject1 equals: subject2.
+	self assert: subject1 <=> subject2 equals: 0.
+	self assert: subject1 <==> subject2 equals: 0.
+	subject1 := self newSubjectWithPath: #('Core' 'Object') scope: self class.
+	subject2 := self newSubjectWithPath: #('Core' 'Object')
+				scope: (self class lookupMethod: self selector).
+	self assert: subject1 equals: subject2.
+	self assert: subject1 <=> subject2 equals: 0.
+	self assert: subject1 <==> subject2 equals: 0!
 
 testHashInScope
 	self assert: (self newSubjectWithPath: #('Core' 'Object')) hash

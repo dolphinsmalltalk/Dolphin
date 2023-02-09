@@ -188,11 +188,8 @@ testDeepCopy
 	"#2066"
 
 	| copy any dictionary |
-	dictionary := self newDictionary.
+	dictionary := self newEmpty.
 	1 to: 5 do: [:i | dictionary at: (Character value: $A codePoint + i) put: (self assimilate: i)].
-	"Ensure that the hashed collection is the standard capacity for size of contents as the assertIs:deepCopyOf: method expects
-	the basic size of the two objects to be the same (which is not relevant for hashed collections)."
-	dictionary shrink.
 	any := dictionary keys.
 	any do: [:each | self assert: (dictionary includesKey: each)].
 	copy := dictionary deepCopy.
@@ -236,11 +233,56 @@ testIncludesKey
 	self deny: (dictionary includesKey: #value).
 	self deny: (dictionary includesKey: nil)!
 
+testIsSelfEvaluating
+	| subject |
+	self newCollection: {1}.
+	self assert: self newEmpty isSelfEvaluating.
+	self assert: (self newCollection: {1}) isSelfEvaluating.
+	self assert: (self newCollection: {1. $b}) isSelfEvaluating.
+	subject := self newDictionary.
+	subject at: #key put: (self assimilate: Object new).
+	self deny: subject isSelfEvaluating.
+	subject at: #key put: (self assimilate: subject).
+	self deny: subject isSelfEvaluating!
+
 testNilKey
 	| dictionary |
 	dictionary := self newEmpty.
 	self should: [dictionary at: nil put: 1] raise: Error.
 	self should: [dictionary at: nil ifAbsentPut: [1]] raise: Error!
+
+testPrintString
+	| dictionaryClass subject key key2 |
+	dictionaryClass := self collectionClass.
+	subject := self newEmpty.
+	self assert: subject printString equals: '<1p> new' << dictionaryClass.
+	key := self makeKey: $o.
+	subject at: key put: (self assimilate: 1).
+	self assert: subject printString
+		equals: '(<1p> with: <2p> -> <3p>)' << {dictionaryClass. key. subject at: key}.
+	subject := self newCollection: #($a $b $c $d $e).
+	self assert: subject printString
+		equals: '(<1p> withAll: <2p>)' << {dictionaryClass. subject associations sort}.
+	key := self makeKey: 1.
+	subject := dictionaryClass new
+				at: key put: (self assimilate: Object);
+				yourself.
+	self assert: subject printString
+		equals: '(<1p> with: <2p> -> <3p>)' << {dictionaryClass. key. subject at: key}.
+	"Multiple elements"
+	key2 := self makeKey: 2.
+	subject at: key2 put: (self assimilate: Association).
+	self assert: subject printString
+		equals: '(<1p> withAll: {<2p> -> <3p>. <4p> -> <5p>})' << {dictionaryClass. key. subject at: key. key2. subject at: key2}.
+	"Non-evaluable"
+	subject := dictionaryClass new
+				at: key put: (self assimilate: Object new);
+				yourself.
+	self assert: subject printString
+		equals: '<2?an:a> <1p>(<3p> -> <4p>)'
+				<< {dictionaryClass. dictionaryClass shortName first isVowel. key. subject at: key}.
+
+!
 
 testRemoveAssociationAt
 	| dictionary removed |
@@ -325,7 +367,9 @@ testCyclicRefPrinting!public! !
 testDeepCopy!public!unit tests! !
 testEquals!public!unit tests! !
 testIncludesKey!public!unit tests! !
+testIsSelfEvaluating!public!unit tests! !
 testNilKey!public!unit tests! !
+testPrintString!public!unit tests! !
 testRemoveAssociationAt!public!unit tests! !
 testRemoveKey!public!unit tests! !
 testStrongTalkTests!benchmarking!public! !

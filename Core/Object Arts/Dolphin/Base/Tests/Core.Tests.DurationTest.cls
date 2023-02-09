@@ -341,6 +341,19 @@ testPrintString
 			expected := expected contents.
 			self assert: nanos nanoseconds printString equals: expected]!
 
+testSpaceships
+	{{1 nanoseconds. 0 seconds. 1}.
+		{0 nanoseconds. 1 nanoseconds. -1}.
+		{1 nanoseconds. 1 nanoseconds. 0}.
+		{1 nanoseconds. 2 nanoseconds. -1}.
+		{3 nanoseconds. 2 nanoseconds. 1}.
+		{1 nanoseconds. -1 seconds. 1}} do: 
+				[:each |
+				self assert: each first <=> each second equals: each third.
+				self assert: each first <==> each second equals: each third.
+				self assert: each second <=> each first equals: each third negated.
+				self assert: each second <==> each first equals: each third negated]!
+
 testStoreOn
 	| stored collection |
 	collection := OrderedCollection new
@@ -390,6 +403,7 @@ testNumberNanoseconds!public!unit tests! !
 testNumberSeconds!public!unit tests! !
 testPositive!public!unit tests! !
 testPrintString!public!unit tests! !
+testSpaceships!public!unit tests! !
 testStoreOn!public!testing! !
 testSubtract!public!unit tests! !
 !

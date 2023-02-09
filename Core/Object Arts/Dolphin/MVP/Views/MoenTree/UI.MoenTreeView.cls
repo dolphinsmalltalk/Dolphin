@@ -2,14 +2,15 @@
 
 UI.View subclass: #'UI.MoenTreeView'
 	instanceVariableNames: 'anchorNode getTextBlock getImageBlock mtvFlags leading imageManager calculatedExtent parentSpacing selection linePen iconExtent maxTextExtent dtFlags margin textInset _mtvReserved0 _mtvReserved1 _mtvReserved2'
-	classVariableNames: 'ViewModes'
+	classVariableNames: ''
 	imports: #(#{OS.ThemeConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'AutoExpandingMask' -> 16r8000000.
 		'HasButtonsMask' -> 16r1.
 		'MultilineMask' -> 16rA010.
-		'SingleLineMask' -> 16r8024
+		'SingleLineMask' -> 16r8024.
+		'ViewModes' -> (IdentityDictionary withAll: {#largeIcons -> (16r20@16r20). #noIcons -> (-16r1@16r0). #mediumIcons -> (16r18@16r18). #smallIcons -> (16r10@16r10). #custom -> nil. #tileIcons -> (16r30@16r30)})
 	}!
 UI.MoenTreeView guid: (Core.GUID fromString: '{68f4ac03-2f95-11d3-93ba-00a024ca708a}')!
 UI.MoenTreeView comment: 'MoenTreeView is a <treeView> for displaying a <treeModel> in a graphic layout. It supports the single <selectableItems> protocol for handling item selection. MoenTreeViews can be used to display any type of object with the exception of the ''nil'' object which is used to distinguish the root.
@@ -1979,18 +1980,7 @@ initialize
 	"
 
 	self addClassConstant: 'SingleLineMask' value: DT_SINGLELINE | DT_VCENTER | DT_END_ELLIPSIS.
-	self addClassConstant: 'MultilineMask' value: DT_WORDBREAK | DT_EDITCONTROL | DT_END_ELLIPSIS.
-	self addClassConstant: 'ViewModes'
-		value: (IdentityDictionary new
-				at: #noIcons put: -1 @ 0;
-				at: #smallIcons put: 16 @ 16;
-				at: #mediumIcons put: 24 @ 24;
-				at: #largeIcons put: 32 @ 32;
-				at: #tileIcons put: 48 @ 48;
-				at: #custom put: nil;
-				shrink;
-				isImmutable: true;
-				yourself)!
+	self addClassConstant: 'MultilineMask' value: DT_WORDBREAK | DT_EDITCONTROL | DT_END_ELLIPSIS!
 
 stbConvertFromVersion10: anArray
 	"Private - Perform an STB conversion from a version 9 (or earlier) <View> to version 10,

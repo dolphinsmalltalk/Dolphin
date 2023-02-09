@@ -318,6 +318,13 @@ includesKey: anObject
 
 	^(self basicAt: (self findKeyOrNil: anObject)) notNil!
 
+isSelfEvaluating: visitedSet
+	"Private - Answer whether the receiver can be represented as a literal (i.e. it has a printed
+	representation which can be directly understood by the compiler)."
+
+	^(visitedSet addNewElement: self)
+		and: [self associations allSatisfy: [:element | element isSelfEvaluating: visitedSet]]!
+
 keyAtEqualValue: anObject ifAbsent: aNiladicValuable 
 	"Answer the key of the <Object> value argument. If there is no such value, answer
 	the result of evaluating the <niladicValuable> argument.
@@ -419,13 +426,42 @@ printOn: aStream
 	We must override because we'd like to print out the associations as this
 	is more useful, otherwise this is the same as the superclass implementation."
 
-	aStream visit: self
-		do: 
+	self isSelfEvaluating
+		ifTrue: [self printSelfEvaluatingOn: aStream]
+		ifFalse: 
+			[aStream visit: self
+				do: 
+					[aStream
+						basicPrint: self;
+						nextPut: $(.
+					self associationsDo: [:each | each printOn: aStream] separatedBy: [aStream space].
+					aStream nextPut: $)]]!
+
+printSelfEvaluatingOn: aStream
+	tally == 0
+		ifTrue: 
 			[aStream
-				basicPrint: self;
-				nextPut: $(.
-			self associationsDo: [:each | each printOn: aStream] separatedBy: [aStream space].
-			aStream nextPut: $)]!
+				print: self class;
+				space;
+				nextPutAll: #new.
+			^self].
+	aStream
+		nextPut: $(;
+		print: self class;
+		space.
+	tally == 1
+		ifTrue: 
+			[aStream
+				nextPutAll: #with:;
+				space;
+				print: self associations single;
+				nextPut: $)]
+		ifFalse: 
+			[aStream
+				nextPutAll: #withAll:;
+				space;
+				print: (self sortSelfEvaluatingElements: self associations locale: aStream locale);
+				nextPut: $)]!
 
 remove: anObject ifAbsent: aBlock
 	"Elements of Dictionaries must be removed by key."
@@ -576,6 +612,7 @@ identityIncludes:!public!searching! !
 includes:!public!searching! !
 includesAssociation:!public!searching! !
 includesKey:!public!searching! !
+isSelfEvaluating:!private!testing! !
 keyAtEqualValue:ifAbsent:!accessing!public! !
 keyAtValue:!accessing!public! !
 keyAtValue:ifAbsent:!accessing!public! !
@@ -588,6 +625,7 @@ newAssociation:value:!helpers!private! !
 occurrencesOf:!public!searching! !
 postCopy!copying!public! !
 printOn:!printing!public! !
+printSelfEvaluatingOn:!printing!private! !
 remove:ifAbsent:!public!removing! !
 removeAllKeys:!public!removing! !
 removeAllKeys:ifAbsent:!public!removing! !

@@ -88,6 +88,16 @@ _separateSubStringsIn: tokens
 	^self codePoint < aCharacter asInteger
 !
 
+<==> aCharacter
+	"Answer the receiver's case-sensitive <integer> collation order with respect to the <Character> argument. Note that this is a code point ordering and not a linguistic one, so for example $A is considered to occur before $a."
+
+	^(self codePoint - aCharacter codePoint) sign!
+
+<=> aCharacter
+	"Answer the receiver's case-insensitive <integer> collation order with respect to the <Character> argument. "
+
+	^self asUppercase <==> aCharacter asUppercase!
+
 = anObject
 	"Answer whether the receiver is equal to the argument. There is a unique Character instance for each codepoint < 256, but instances for higher code points are not unique."
 
@@ -527,6 +537,8 @@ to: aCharacter
 _beginsString:!comparing!double dispatch!private! !
 _separateSubStringsIn:!private!tokenizing! !
 <!comparing!public! !
+<==>!comparing!public! !
+<=>!comparing!public! !
 =!comparing!public! !
 >!comparing!public! !
 ansiValue!accessing!public! !

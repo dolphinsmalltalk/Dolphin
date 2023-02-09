@@ -238,6 +238,18 @@ isHealthy
 		do: [:i | (self basicAt: i) ifNotNil: [:element | (self findElementOrNil: element) == i ifFalse: [^false]]].
 	^true!
 
+isSelfEvaluating
+	"Answer whether or not the receiver has a printString representation that evaluates back to an equivalent object."
+
+	^self isEmpty or: [self isSelfEvaluating: IdentitySet new]!
+
+isSelfEvaluating: visitedSet
+	"Private - Answer whether the receiver can be represented as a literal (i.e. it has a printed
+	representation which can be directly understood by the compiler)."
+
+	^(visitedSet addNewElement: self)
+		and: [self allSatisfy: [:element | element isSelfEvaluating: visitedSet]]!
+
 moveFrom: fromIndex to: toIndex
 	"Private - Destructively move the element at index, fromIndex, over
 	the element (normally nil) at index, toIndex. Must be overridden by subclasses
@@ -264,6 +276,32 @@ preResize: newMe
 	See also, #postResize and #copyEmpty: (which is subtly different, since it is used for creating copies of the
 	receiver, not for rebuilding it). Subclasses should implement as necessary."
 !
+
+printSelfEvaluatingOn: aStream
+	tally == 0
+		ifTrue: 
+			[aStream
+				print: self class;
+				space;
+				nextPutAll: #new.
+			^self].
+	aStream
+		nextPut: $(;
+		print: self class;
+		space.
+	tally == 1
+		ifTrue: 
+			[aStream
+				nextPutAll: #with:;
+				space;
+				print: self anyOne;
+				nextPut: $)]
+		ifFalse: 
+			[aStream
+				nextPutAll: #withAll:;
+				space;
+				print: (self sortSelfEvaluatingElements: self asArray locale: aStream locale);
+				nextPut: $)]!
 
 privateAt: index put: newObject
 	"Private - Insert newObject as the element of the receiver at index. Attempts to maintain the
@@ -345,6 +383,28 @@ size
 
 	^tally!
 
+sortSelfEvaluatingElements: anArray locale: aLocale
+	"Private - We want the elements printed in a stable order, e.g. so that if in source code we don't get gratuitous diffs occurring. We use the natural sort order of the elements if possible (generally this is true for self-evaluating forms in source), but if not we sort by the printed order of the source representation. As we want the order to be stable, we use case-sensitive comparison."
+
+	^[anArray sort: [:a :b | a <==> b <= 0]] on: Error
+		do: 
+			[:ex |
+			| stream |
+			"Very unlikely we'll get here, but if the elements are heterogenous or don't respond to #<==>, sort them according to their printString representation"
+			stream := String writeStream
+						locale: aLocale;
+						yourself.
+			anArray sort: 
+					[:a :b |
+					| ap bp |
+					stream reset.
+					a printOn: stream.
+					ap := stream contents.
+					stream reset.
+					b printOn: stream.
+					bp := stream contents.
+					ap <==> bp <= 0]]!
+
 stbSaveOn: anSTBOutFiler
 	"Save out a binary representation of the receiver to anSTBOutFiler."
 
@@ -386,10 +446,13 @@ identityIncludes:!public!searching! !
 includes:!public!searching! !
 initialize!initializing!private! !
 isHealthy!public! !
+isSelfEvaluating!public!testing! !
+isSelfEvaluating:!private!testing! !
 moveFrom:to:!private!removing! !
 occurrencesOf:!public!searching! !
 postResize:!adding!private! !
 preResize:!adding!private! !
+printSelfEvaluatingOn:!printing!private! !
 privateAt:put:!accessing!private! !
 rehash!operations!public! !
 remove:ifAbsent:!public!removing! !
@@ -398,6 +461,7 @@ removeIndex:!private!removing! !
 resize:!mutating!private! !
 shrink!mutating!public! !
 size!accessing!public! !
+sortSelfEvaluatingElements:locale:!printing!private! !
 stbSaveOn:!binary filing!public! !
 uncheckedAdd:!adding!private! !
 !

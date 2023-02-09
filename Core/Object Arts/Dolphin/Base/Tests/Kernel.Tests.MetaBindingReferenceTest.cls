@@ -38,7 +38,9 @@ testLessOrEqual
 	a := self newSubjectWithPathString: 'Core.Object'.
 	b := self newSubjectWithPathString: 'Core.object'.
 	self deny: a <= b instance.
-	self deny: a <= b instance!
+	self assert: a <=> b equals: 0.
+	self deny: a <= b instance.
+	self assert: a <=> b instance equals: 1!
 
 testLiteral
 	| subject |

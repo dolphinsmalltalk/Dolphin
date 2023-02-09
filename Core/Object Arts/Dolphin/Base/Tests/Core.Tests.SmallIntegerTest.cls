@@ -210,11 +210,18 @@ testIntegerDivide
 testLargeSmallComparisons
 	self assert: SmallInteger maximum < (SmallInteger maximum + 1).
 	self assert: SmallInteger maximum <= (SmallInteger maximum + 1).
+	self assert: SmallInteger maximum <=> (SmallInteger maximum + 1) equals: -1.
+	self assert: SmallInteger maximum <==> (SmallInteger maximum + 1) equals: -1.
 	self deny: SmallInteger maximum equals: SmallInteger maximum + 1.
+	self assert: SmallInteger maximum equals: SmallInteger maximum.
+	self assert: SmallInteger maximum <=> SmallInteger maximum equals: 0.
+	self assert: SmallInteger maximum <==> SmallInteger maximum equals: 0.
 	self deny: SmallInteger maximum > (SmallInteger maximum + 1).
 	self deny: SmallInteger maximum >= (SmallInteger maximum + 1).
 	self assert: SmallInteger maximum + 1 > SmallInteger maximum.
 	self assert: SmallInteger maximum + 1 >= SmallInteger maximum.
+	self assert: SmallInteger maximum + 1 <=> SmallInteger maximum equals: 1.
+	self assert: SmallInteger maximum + 1 <==> SmallInteger maximum equals: 1.
 	self deny: SmallInteger maximum + 1 <= SmallInteger maximum.
 	self deny: SmallInteger maximum + 1 equals: SmallInteger maximum.
 	self deny: SmallInteger maximum + 1 < SmallInteger maximum!

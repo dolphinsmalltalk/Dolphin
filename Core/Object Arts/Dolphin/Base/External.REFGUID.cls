@@ -18,6 +18,13 @@ REFGUID fromAddress: Object guid yourAddress'!
 !External.REFGUID categoriesForClass!External-Data-Unstructured! !
 !External.REFGUID methodsFor!
 
+<==> aGUID
+	"Answer the receiver's <integer> collation order with respect to the <Magitude> argument."
+
+	"Defined for polymorphism with Strings, where this version of the spaceship operator is case-sensitive (#<=> is not). For GUIDs this is equivalent to #<=>."
+
+	^self <=> aGUID!
+
 <=> aGUID
 	"Answer the ordering relationship between the receiver and the argument."
 
@@ -78,6 +85,7 @@ value: guid
 
 	self replaceFrom: 1 to: 16 with: guid startingAt: 1! !
 !External.REFGUID categoriesForMethods!
+<==>!comparing!public! !
 <=>!comparing!public! !
 =!comparing!public! !
 asString!converting!public! !

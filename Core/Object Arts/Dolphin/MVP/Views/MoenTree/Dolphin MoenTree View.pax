@@ -58,14 +58,15 @@ Core.Link subclass: #'UI.MoenLink'
 	classConstants: {}!
 UI.View subclass: #'UI.MoenTreeView'
 	instanceVariableNames: 'anchorNode getTextBlock getImageBlock mtvFlags leading imageManager calculatedExtent parentSpacing selection linePen iconExtent maxTextExtent dtFlags margin textInset _mtvReserved0 _mtvReserved1 _mtvReserved2'
-	classVariableNames: 'ViewModes'
+	classVariableNames: ''
 	imports: #(#{OS.ThemeConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'AutoExpandingMask' -> 16r8000000.
 		'HasButtonsMask' -> 16r1.
 		'MultilineMask' -> 16rA010.
-		'SingleLineMask' -> 16r8024
+		'SingleLineMask' -> 16r8024.
+		'ViewModes' -> (IdentityDictionary withAll: {#largeIcons -> (16r20@16r20). #noIcons -> (-16r1@16r0). #mediumIcons -> (16r18@16r18). #smallIcons -> (16r10@16r10). #custom -> nil. #tileIcons -> (16r30@16r30)})
 	}!
 
 "Loose Methods"!

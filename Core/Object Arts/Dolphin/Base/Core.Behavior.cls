@@ -2,7 +2,7 @@
 
 Core.Object subclass: #'Core.Behavior'
 	instanceVariableNames: 'superclass methodDictionary instanceSpec'
-	classVariableNames: '_NullMethodDictionary'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
@@ -16,6 +16,7 @@ Core.Object subclass: #'Core.Behavior'
 		'_IsWeakMask' -> 16r12.
 		'_MournerMask' -> 16r400.
 		'_NonInstantiableMask' -> 16r200.
+		'_NullMethodDictionary' -> MethodDictionary new.
 		'_NullTermMask' -> 16r4000.
 		'_PointersMask' -> 16r2000.
 		'_ShapeMask' -> 16r70FF.

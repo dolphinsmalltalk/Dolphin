@@ -2,10 +2,11 @@
 
 Core.ReadWriteStream subclass: #'Core.FileStream'
 	instanceVariableNames: 'file flags pageBase logicalFileSize offset'
-	classVariableNames: 'BufferClasses'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'BufferClasses' -> (IdentityDictionary withAll: {#utf8 -> Utf8String. #binary -> ByteArray. #ansi -> AnsiString}).
 		'BufferUpdatedMask' -> 16r3.
 		'DirtyBufferMask' -> 16r2.
 		'LimitsChangedMask' -> 16r1.
@@ -617,17 +618,6 @@ file: aFile mode: modeSymbol type: encSymbol
 		mode: modeSymbol
 		type: encSymbol!
 
-initialize
-	"Private - Initialize class variables of the receiver."
-
-	#todo.	"#utf16le->Utf16String and #utf32 ->Utf32String to be added when implemented."
-	self addClassConstant: 'BufferClasses'
-		value: (IdentityDictionary new
-				at: #utf8 put: Utf8String;
-				at: #binary put: ByteArray;
-				at: #ansi put: AnsiString;
-				yourself)!
-
 on: aFile
 	"Answer an instance of the receiver attached to the open file aFile."
 
@@ -809,7 +799,6 @@ write: aString type: aSymbol
 !Core.FileStream class categoriesForMethods!
 bufferSize!constants!public! !
 file:mode:type:!instance creation!private! !
-initialize!development!initializing!private! !
 on:!instance creation!public! !
 on:text:!instance creation!public! !
 on:type:!instance creation!public! !

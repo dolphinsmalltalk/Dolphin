@@ -52,6 +52,11 @@ initialize
 	searchPolicy := self class defaultSearchPolicy
 !
 
+isSelfEvaluating
+	"Answer whether or not the receiver has a printString representation that evaluates back to an equivalent object."
+
+	^searchPolicy isSelfEvaluating and: [super isSelfEvaluating]!
+
 newSelection
 	"Private - Answer a new empty collection like the receiver to 
 	contain a selection of the receiver's elements."
@@ -87,6 +92,7 @@ copyingClass!copying!private! !
 findElementOrNil:!private!searching! !
 hash:max:!private!searching! !
 initialize!initializing!private! !
+isSelfEvaluating!public!testing! !
 newSelection!enumerating!private! !
 preResize:!adding!public! !
 searchPolicy!accessing!public! !
@@ -107,10 +113,10 @@ new: anInteger searchPolicy: aSearchPolicy
 
 	^(self new: anInteger) setSearchPolicy: aSearchPolicy!
 
-searchPolicy: policy
+searchPolicy: aSearchPolicy
 	"Answer a new, empty, instance of the receiver with the specified <searchPolicy>."
 
-	^self new setSearchPolicy: policy! !
+	^self new setSearchPolicy: aSearchPolicy! !
 !Core.PluggableSet class categoriesForMethods!
 defaultSearchPolicy!constants!public! !
 new:searchPolicy:!instance creation!public! !

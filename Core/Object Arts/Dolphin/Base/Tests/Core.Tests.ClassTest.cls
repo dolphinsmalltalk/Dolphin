@@ -41,6 +41,52 @@ testClassVariableNames
 		equals: #('_AssertionFailureSignal' '_DependentsRegister' '_EventsRegister' '_PropertyRegister').
 	self assert: Kernel classVariableNames equals: #()!
 
+testComparing
+	"See also testLessOrEqual - here we are mainly interested in testing the spaceship operators"
+	| tempClass tempNamespace |
+	self assert: Kernel.MemoryManager <= Kernel.MemoryManager.
+	self assert: Kernel.MemoryManager <=> Kernel.MemoryManager equals: 0.
+	self assert: Kernel.MemoryManager <==> Kernel.MemoryManager equals: 0.
+	self assert: Kernel.MemoryManager <= Core.Message.
+	self assert: Kernel.MemoryManager <=> Core.Message equals: -1.
+	self assert: Kernel.MemoryManager <==> Core.Message equals: -1.
+	self deny: Kernel.MemoryManager <= Core.Magnitude.
+	self assert: Kernel.MemoryManager <=> Core.Magnitude equals: 1.
+	self assert: Kernel.MemoryManager <==> Core.Magnitude equals: 1.
+	"Same short name"
+	self assert: Core.Tests <= Kernel.Tests.
+	self assert: Core.Tests <=> Kernel.Tests equals: -1.
+	self assert: Core.Tests <==> Kernel.Tests equals: -1.
+	self deny: Kernel.Tests <= Core.Tests.
+	self assert: Kernel.Tests <=> Core.Tests equals: 1.
+	self assert: Kernel.Tests <==> Core.Tests equals: 1.
+	"class cf Meta"
+	self assert: Core.Tests <= Core.Tests class.
+	self assert: Core.Tests <=> Core.Tests class equals: -1.
+	self assert: Core.Tests <==> Core.Tests class equals: -1.
+	self deny: Core.Tests class <= Core.Tests.
+	self assert: Core.Tests class <=> Core.Tests equals: 1.
+	self assert: Core.Tests class <==> Core.Tests equals: 1.
+	"Case difference in short name only"
+	tempClass := self class newAnonymousSubclass.
+	tempClass setName: #Classtest environment: Core.Tests.
+	self deny: self class <= tempClass.
+	self assert: self class <=> tempClass equals: 0.
+	self assert: self class <==> tempClass equals: 1.
+	self assert: tempClass <= self class.
+	self assert: tempClass <=> self class equals: 0.
+	self assert: tempClass <==> self class equals: -1.
+	"Case different in environment name (only)"
+	tempNamespace := Core.Tests newAnonymousSubclass.
+	tempNamespace setName: #tests environment: Core.
+	tempClass setName: #ClassTest environment: tempNamespace.
+	self deny: self class <= tempClass.
+	self assert: self class <=> tempClass equals: 0.
+	self assert: self class <==> tempClass equals: 1.
+	self assert: tempClass <= self class.
+	self assert: tempClass <=> self class equals: 0.
+	self assert: tempClass <==> self class equals: -1.!
+
 testImportsValid
 	Smalltalk allClasses do: [:each | self assert: (each imports allSatisfy: [:i | i isDefined])]!
 
@@ -110,6 +156,7 @@ testAllRoots!public!unit tests! !
 testClassBindingNames!public! !
 testClassPoolsWellFormed!public!unit tests! !
 testClassVariableNames!public! !
+testComparing!public! !
 testImportsValid!public!unit tests! !
 testIncludesNamespace!public!unit tests! !
 testLessOrEqual!public!unit tests! !

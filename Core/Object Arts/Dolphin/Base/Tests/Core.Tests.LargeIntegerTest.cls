@@ -1421,6 +1421,40 @@ testRem
 					"Sanity check"
 					self assert: quotient * divisor + actual equals: dividend]]!
 
+testSpaceship
+	self largePositive do: 
+			[:each |
+			self assert: each <=> each equals: 0.
+			self assert: each <==> each equals: 0.
+			self smallIntegerComparisons do: 
+					[:i |
+					self assert: each <=> i equals: 1.
+					self assert: each <==> i equals: 1.
+					self assert: i <=> each equals: -1.
+					self assert: i <==> each equals: -1]].
+	self largeNegative do: 
+			[:each |
+			self assert: each <=> each equals: 0.
+			self assert: each <==> each equals: 0.
+			self smallIntegerComparisons do: 
+					[:i |
+					self assert: each <=> i equals: -1.
+					self assert: each <==> i equals: -1.
+					self assert: i <=> each equals: 1.
+					self assert: i <==> each equals: 1]].
+	self largeComparisonPairs do: 
+			[:pair |
+			self assert: pair first <=> pair first equals: 0.
+			self assert: pair first <==> pair first equals: 0.
+			self assert: pair last <=> pair last equals: 0.
+			self assert: pair last <==> pair last equals: 0.
+			self assert: pair first <=> pair last equals: -1.
+			self assert: pair first <==> pair last equals: -1.
+			self assert: pair last <=> pair first equals: 1.
+			self assert: pair last <==> pair first equals: 1].
+	self should: [SmallInteger maximum + 1 <=> nil] raise: MessageNotUnderstood.
+	self should: [SmallInteger maximum + 1 <==> nil] raise: MessageNotUnderstood!
+
 testSubFromQuad
 	"Test adding various sized boundary case large integers to boundary case quad-limbed large positive integers."
 
@@ -1560,6 +1594,7 @@ testQuoRem2!public!unit tests! !
 testQuoRem3!public!unit tests! !
 testRaisedToInteger!public!unit tests! !
 testRem!public!unit tests! !
+testSpaceship!public!unit tests! !
 testSubFromQuad!public!unit tests! !
 testSubFromQuadNeg!public!unit tests! !
 testSubtractSmall!public!unit tests! !

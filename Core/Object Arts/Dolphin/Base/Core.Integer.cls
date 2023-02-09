@@ -573,6 +573,9 @@ isPrime
 			i := i + 6].
 	^true!
 
+isSelfEvaluating
+	^true!
+
 lcm: anInteger 
 	"Answer the least common multiple of the receiver and the <integer> argument."
 
@@ -897,6 +900,7 @@ isInteger!public!testing! !
 isNull!public!testing! !
 isPowerOfTwo!public!testing! !
 isPrime!public!testing! !
+isSelfEvaluating!public!testing! !
 lcm:!factorization!public! !
 lowBit!bit manipulation!public! !
 lowPart!bit manipulation!public! !

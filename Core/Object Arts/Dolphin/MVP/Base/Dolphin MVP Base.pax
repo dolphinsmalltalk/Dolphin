@@ -1393,10 +1393,11 @@ Core.Object subclass: #'UI.LayoutManager'
 	classConstants: {}!
 Core.Object subclass: #'UI.MenuItem'
 	instanceVariableNames: 'flags'
-	classVariableNames: 'Dividers'
+	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {
+		'Dividers' -> (LookupTable withAll: {'-' -> #separator. '||' -> #barBreak. '|' -> #break}).
 		'StringSeparator' -> $/.
 		'StylesMask' -> 16rFFFFF
 	}!
@@ -1614,13 +1615,14 @@ UI.LayoutManager subclass: #'UI.BorderLayout'
 	classConstants: {}!
 UI.LayoutManager subclass: #'UI.FlowLayout'
 	instanceVariableNames: 'horizontalGap verticalGap flags'
-	classVariableNames: 'AlignmentMap'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'AlignBottom' -> 16r8.
 		'AlignHCenter' -> 16r1.
 		'AlignLeft' -> 16r0.
+		'AlignmentMap' -> (IdentityDictionary withAll: {#bottomCenter -> 16r9. #rightCenter -> 16r6. #leftCenter -> 16r4. #topCenter -> 16r1. #bottomLeft -> 16r8. #center -> 16r5. #bottomRight -> 16rA. #topRight -> 16r2. #topLeft -> 16r0}).
 		'AlignmentMask' -> 16rF.
 		'AlignRight' -> 16r2.
 		'AlignTop' -> 16r0.
@@ -2129,10 +2131,12 @@ UI.ShellView subclass: #'UI.Splash'
 	classConstants: {}!
 UI.ControlView subclass: #'UI.StaticRectangle'
 	instanceVariableNames: ''
-	classVariableNames: 'StyleMap'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'StyleMap' -> (IdentityDictionary withAll: {#blackFrame -> 16r7. #whiteFrame -> 16r9. #blackRectangle -> 16r4. #etchedHorizontal -> 16r10. #grayRectangle -> 16r5. #grayFrame -> 16r8. #etchedVertical -> 16r11. #etchedFrame -> 16r12. #whiteRectangle -> 16r6})
+	}!
 UI.ControlView subclass: #'UI.ValueConvertingControlView'
 	instanceVariableNames: 'typeconverter'
 	classVariableNames: ''
@@ -2147,19 +2151,22 @@ UI.ValueConvertingControlView subclass: #'UI.StaticView'
 	classConstants: {}!
 UI.StaticView subclass: #'UI.ImageViewAbstract'
 	instanceVariableNames: 'image viewMode ivFlags insets imageBorder'
-	classVariableNames: 'EdgeStyles'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'DoubleBufferMask' -> 16r2.
+		'EdgeStyles' -> (IdentityDictionary withAll: {#raised -> 16r5. #sunken -> 16rA. #bump -> 16r9. #etched -> 16r6. #none -> 16r0}).
 		'EraseWholeMask' -> 16r1
 	}!
 UI.StaticView subclass: #'UI.StaticText'
 	instanceVariableNames: ''
-	classVariableNames: 'AlignmentMap'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'AlignmentMap' -> (IdentityDictionary withAll: {#leftNoWrap -> 16rC. #simple -> 16rB. #right -> 16r2. #center -> 16r1. #left -> 16r0})
+	}!
 
 "Loose Methods"!
 

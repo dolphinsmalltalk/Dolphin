@@ -186,33 +186,46 @@ testBinarySelectorExpandMacrosWithArguments
 	self assert: pattern << #(1.23 4.56s2 $Z true false) equals: expectedResult!
 
 testBinarySelectorExpandMacrosWithCollection
-
 	"Test special handling of collections when using << expandMacrosWith... binary selector"
 
 	"A collection should be treated as a collection of arguments"
-	self assert: (self assimilateString: 'test <1d> <2d> <3d> displayString') << (1 to: 10) equals: 'test 1 2 3 displayString'.
-	self assert: (self assimilateString: 'test <1p> <2p> <3p> printString') << #(4 5 6) equals: 'test 4 5 6 printString'.
-	self assert: (self assimilateString: 'test <1s><2s><3s> asString') << #($a $b $c) equals: 'test abc asString'.
+
+	self assert: (self assimilateString: 'test <1d> <2d> <3d> displayString') << (1 to: 10)
+		equals: 'test 1 2 3 displayString'.
+	self assert: (self assimilateString: 'test <1p> <2p> <3p> printString') << #(4 5 6)
+		equals: 'test 4 5 6 printString'.
+	self assert: (self assimilateString: 'test <1s><2s><3s> asString') << #($a $b $c)
+		equals: 'test abc asString'.
 
 	"Wrap in an Array to treat the collection as an individual argument"
-	self assert: (self assimilateString: 'test <1d> displayString') << {(1 to: 10)} equals: 'test 1 .. 10 displayString'.
-	self assert: (self assimilateString: 'test <1p> printString') << {#(4 5 6)} equals: 'test #(4 5 6) printString'.
-	self assert: (self assimilateString: 'test <1s> asString') << {#($a $b $c)} equals: 'test abc asString'.
+	self assert: (self assimilateString: 'test <1d> displayString') << {1 to: 10}
+		equals: 'test 1 .. 10 displayString'.
+	self assert: (self assimilateString: 'test <1p> printString') << {#(4 5 6)}
+		equals: 'test #(4 5 6) printString'.
+	self assert: (self assimilateString: 'test <1s> asString') << {#($a $b $c)}
+		equals: 'test abc asString'.
 
 	"...but a String should always be treated as an individual argument"
-	self assert: (self assimilateString: 'test <1d> displayString') << 'hello world' equals: 'test hello world displayString'.
-	self assert: (self assimilateString: 'test <1p> printString') << 'hello world' equals: 'test ''hello world'' printString'.
-	self assert: (self assimilateString: 'test <1s> asString') << 'hello world' equals: 'test hello world asString'.
-
-	self assert: (self assimilateString: 'test <1d> displayString') << {'hello world'} equals: 'test hello world displayString'.
-	self assert: (self assimilateString: 'test <1p> printString') << {'hello world'} equals: 'test ''hello world'' printString'.
-	self assert: (self assimilateString: 'test <1s> asString') << {'hello world'} equals: 'test hello world asString'.
+	self assert: (self assimilateString: 'test <1d> displayString') << 'hello world'
+		equals: 'test hello world displayString'.
+	self assert: (self assimilateString: 'test <1p> printString') << 'hello world'
+		equals: 'test ''hello world'' printString'.
+	self assert: (self assimilateString: 'test <1s> asString') << 'hello world'
+		equals: 'test hello world asString'.
+	self assert: (self assimilateString: 'test <1d> displayString') << {'hello world'}
+		equals: 'test hello world displayString'.
+	self assert: (self assimilateString: 'test <1p> printString') << {'hello world'}
+		equals: 'test ''hello world'' printString'.
+	self assert: (self assimilateString: 'test <1s> asString') << {'hello world'}
+		equals: 'test hello world asString'.
 
 	"Similarly any non-sequenceable collection"
-	self assert: (self assimilateString: 'test <1d> displayString') << (Set with: 1) equals: 'test a Set(1) displayString'.
-	self assert: (self assimilateString: 'test <1p> printString') << (Set with: 1) equals: 'test a Set(1) printString'.
-	self should: [self assert: (self assimilateString: 'test <1s> asString') << (Set with: 1)] raise: Error
-!
+	self assert: (self assimilateString: 'test <1d> displayString') << (Set with: Object new)
+		equals: 'test a Set(an Object) displayString'.
+	self assert: (self assimilateString: 'test <1p> printString') << (Set with: Object new)
+		equals: 'test a Set(an Object) printString'.
+	self should: [self assert: (self assimilateString: 'test <1s> asString') << (Set with: 1)]
+		raise: Error!
 
 testCapitalized
 	| string cap |
@@ -292,7 +305,9 @@ testCompareIgnoreCase
 			self assert: subject hashIgnoreCase equals: upper hashIgnoreCase.
 			"The hash value should be equivalent to the hash of the UTF-8 encoded bytes of the uppercased string"
 			self assert: upper asUtf8String asByteArray hash equals: subject hashIgnoreCase.
+			self assert: subject <=> upper equals: 0.
 			self assert: (subject compare: upper ignoreCase: true) equals: 0.
+			self assert: upper <=> subject equals: 0.
 			self assert: (upper compare: subject ignoreCase: true) equals: 0]!
 
 testCopyToComTaskMemory
@@ -323,15 +338,26 @@ testEquals
 	| abc |
 	self equalityTestCases do: 
 			[:each |
-			| subject |
+			| subject copy utf8 utf16 |
 			subject := self assimilateString: each.
 			"Identical must be equal"
 			self assert: subject equals: subject.
+			self assert: subject <=> subject equals: 0.
+			self assert: subject <==> subject equals: 0.
 			"Same characters must be equal"
-			self assert: subject equals: subject copy.
+			copy := subject copy.
+			self assert: subject equals: copy.
+			self assert: subject <=> copy equals: 0.
+			self assert: subject <==> copy equals: 0.
 			each isEmpty ifFalse: [self deny: subject equals: subject asUppercase].
-			self assert: subject equals: subject asUtf8String.
-			self assert: subject equals: subject asUtf16String.
+			utf8 := subject asUtf8String.
+			self assert: subject equals: utf8.
+			self assert: subject <=> utf8 equals: 0.
+			self assert: subject <==> utf8 equals: 0.
+			utf16 := subject asUtf16String.
+			self assert: subject equals: utf16.
+			self assert: subject <=> utf16 equals: 0.
+			self assert: subject <==> utf16 equals: 0.
 			"Not equal to ByteArrays"
 			self deny: subject asByteArray equals: subject.
 			self deny: subject equals: subject asByteArray.
@@ -342,27 +368,37 @@ testEquals
 	abc := self assimilateString: 'abc'.
 	self assert: #abc equals: abc.
 	self assert: abc equals: #abc.
-!
+	self assert: #abc <=> 'abc' equals: 0.
+	self assert: 'abc' <==> #abc equals: 0!
 
 testEqualsIgnoreCase
 	| filenames |
 	self equalityTestCases do: 
 			[:each |
-			| subject upper lower |
+			| subject upper lower copy utf8 utf16 |
 			subject := self assimilateString: each.
 			"Identical must be equal"
 			self assert: subject equalsIgnoreCase: subject.
+			self assert: subject <=> subject equals: 0.
 			"Same characters must be equal"
-			self assert: subject equalsIgnoreCase: subject copy.
+			copy := subject copy.
+			self assert: subject equalsIgnoreCase: copy.
+			self assert: subject <=> copy equals: 0.
 			upper := subject asUppercase.
 			self assert: subject equalsIgnoreCase: upper.
+			self assert: subject <=> upper equals: 0.
 			lower := subject asLowercase.
 			self assert: subject equalsIgnoreCase: lower.
+			self assert: subject <=> lower equals: 0.
 			self assert: upper hashIgnoreCase equals: subject hashIgnoreCase.
 			self assert: lower hashIgnoreCase equals: subject hashIgnoreCase.
 			self assert: upper hash equals: subject hashIgnoreCase.
-			self assert: subject equalsIgnoreCase: subject asUtf8String.
-			self assert: subject equalsIgnoreCase: subject asUtf16String.
+			utf8 := subject asUtf8String.
+			self assert: subject equalsIgnoreCase: utf8.
+			self assert: subject <=> utf8 equals: 0.
+			utf16 := subject asUtf16String.
+			self assert: subject equalsIgnoreCase: utf16.
+			self assert: subject <=> utf16 equals: 0.
 			"Not equal to ByteArrays"
 			self deny: subject equalsIgnoreCase: subject asByteArray.
 			"Nor Arrays of characters"
@@ -376,6 +412,7 @@ testEqualsIgnoreCase
 			string2 := self assimilateString: each second.
 			"Sanity check - the test cases are equal by a linguistic comparison, even if not ordinally"
 			self assert: each first <=> each second equals: 0.
+			self assert: each second <=> each first equals: 0.
 			cmp := each third.
 			self assert: (string1 compare: string2 ignoreCase: true) equals: cmp.
 			cmp == 0

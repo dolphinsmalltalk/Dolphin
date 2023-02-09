@@ -228,6 +228,18 @@ testCodePointString
 	#($a 'U+0061' $£ 'U+00A3' $€ 'U+20AC' $\x1F42C 'U+1F42C' $ÿ 'U+00FF' $\x100 'U+0100' $\xFFF 'U+0FFF' $\x1000 'U+1000' $\xFFFD 'U+FFFD' $\x10000 'U+10000' $\x10FFFD 'U+10FFFD')
 		pairsDo: [:char :expected | self assert: char codePointString equals: expected]!
 
+testComparing
+	self assert: (Character codePoint: 97) <=> $a equals: 0.
+	self assert: (Character codePoint: 97) <==> $a equals: 0.
+	
+	self deny: $a equals: $A.
+	self assert: (Character codePoint: 0) equals: $\0.
+	self assert: (Character codePoint: 255) equals: $ÿ.
+	self deny: $\xFFFC equals: $\xFFFD.
+	self deny: $\x200E equals: 16r200E.
+	self deny: (Character utf8Value: 240) equals: $ð.
+	self deny: (Character utf8Value: 16r80) equals: $\x80!
+
 testDigitValue
 	self assert: Character null digitValue equals: -1.
 	self assert: $: digitValue equals: -1.
@@ -647,6 +659,32 @@ testSize
 	self assert: $a size equals: 0.
 	self assert: Character dolphin size equals: 0!
 
+testSpaceships
+	"Note that <==> is a case-sensitive ordinal (codepoint) ordering"
+
+	self assert: (Character codePoint: 97) <=> $a equals: 0.
+	self assert: (Character codePoint: 97) <==> $a equals: 0.
+	self assert: $a <=> $A equals: 0.
+	"Code point ordering, so $A < $a"
+	self assert: $a <==> $A equals: 1.
+	self assert: $A <==> $a equals: -1.
+	self assert: $a <=> $B equals: -1.
+	self assert: $a <==> $b equals: -1.
+	self assert: $a <==> $B equals: 1.
+	self assert: $A <=> $b equals: -1.
+	self assert: $A <==> $b equals: -1.
+	"'Non-ascii: ě cf Ě"
+	self assert: $\x11B <=> $\x11A equals: 0.
+	self assert: $\x11A <=> $\x11B equals: 0.
+	self assert: $\x11B <==> $\x11A equals: 1.
+	self assert: $\x11A <==> $\x11B equals: -1.
+	"'Non-ascii: ě/Ě cf Ď"
+	self assert: $\x11B <=> $\x10E equals: 1.
+	self assert: $\x10E <=> $\x11B equals: -1.
+	self assert: $\x11A <=> $\x10E equals: 1.
+	self assert: $\x11B <==> $\x10E equals: 1.
+	self assert: $\x10E <==> $\x11B equals: -1!
+
 testSplit
 	"Test single character delimiter"
 
@@ -695,6 +733,7 @@ testClassify!public!unit tests! !
 testClassNewCode!public! !
 testCodePoint!public!unit tests! !
 testCodePointString!public!unit tests! !
+testComparing!public!unit tests! !
 testDigitValue!public!unit tests! !
 testEquals!public!unit tests! !
 testIdentity!public!unit tests! !
@@ -714,6 +753,7 @@ testIsWhitespace!public!unit tests! !
 testJoin!public!unit tests! !
 testPrintString!public!unit tests! !
 testSize!public!unit tests! !
+testSpaceships!public!unit tests! !
 testSplit!public!unit tests! !
 testStb!public!unit tests! !
 !

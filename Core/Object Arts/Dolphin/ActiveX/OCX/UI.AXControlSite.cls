@@ -2,7 +2,7 @@
 
 UI.ControlView subclass: #'UI.AXControlSite'
 	instanceVariableNames: 'progId dispControl host sink hostFlags propertyMap ambientDispatch unkControl licenseKey _reserved1 _reserved2'
-	classVariableNames: 'StandardPropNames WM_ATLGETHOST'
+	classVariableNames: 'WM_ATLGETHOST'
 	imports: #(#{OS.COM.AutomationConstants private} #{OS.COM.AutomationErrors private} #{OS.COM private})
 	classInstanceVariableNames: ''
 	classConstants: {
@@ -13,6 +13,7 @@ UI.ControlView subclass: #'UI.AXControlSite'
 		'FireControlEventsMask' -> 16r4.
 		'FirePropertyEventsMask' -> 16r1.
 		'ReflectMask' -> 16r100.
+		'StandardPropNames' -> (LookupTable withAll: {16r0 -> #Value. -16r1F7 -> #BorderColor. -16r1FB -> #DrawMode. -16r1FF -> #FillStyle. -16r203 -> #Hwnd. -16r207 -> #BorderVisible. -16r20B -> #Picture. -16r20F -> #Selected. -16r213 -> #ListCount. -16r217 -> #Scrollbars. -16r21B -> #NumberOfColumns. -16r21F -> #Accelerator. -16r223 -> #SelStart. -16r1F6 -> #BackStyle. -16r1FE -> #FillColor. -16r202 -> #Enabled. -16r206 -> #Caption. -16r20A -> #MouseIcon. -16r20E -> #ListIndex. -16r216 -> #PasswordChar. -16r21A -> #NumberOfRows. -16r21E -> #IMEMode. -16r222 -> #SelText. -16r1F5 -> #BackColor. -16r1F9 -> #BorderWidth. -16r1FD -> #DrawWidth. -16r201 -> #ForeColor. -16r205 -> #Text. -16r209 -> #MousePointer. -16r20D -> #ReadyState. -16r211 -> #Column. -16r215 -> #MaxLength. -16r219 -> #Multiline. -16r21D -> #GroupName. -16r221 -> #TabKeyBehavior. -16r1F4 -> #Autosize. -16r1F8 -> #BorderStyle. -16r1FC -> #DrawStyle. -16r200 -> #Font. -16r204 -> #Tabstop. -16r208 -> #Appearance. -16r20C -> #Valid. -16r210 -> #List. -16r214 -> #MultiSelect. -16r218 -> #Wordwrap. -16r21C -> #DisplayStyle. -16r220 -> #EnterKeyBehavior. -16r224 -> #SelLength}).
 		'TraceEventsMask' -> 16r2.
 		'UserModeMask' -> 16r40.
 		'WM_FORWARDMSG' -> 16r37F
@@ -1092,56 +1093,56 @@ initialize
 	IPersistStream.	"Deliberately create a dependency on 'OLE Persistence Base' package"
 	self addClassConstant: 'StandardPropNames'
 		value: (LookupTable new
-				at: 0 put: #Value;
-				at: -500 put: #Autosize;
-				at: -501 put: #BackColor;
-				at: -502 put: #BackStyle;
-				at: -503 put: #BorderColor;
-				at: -504 put: #BorderStyle;
-				at: -505 put: #BorderWidth;
-				at: -507 put: #DrawMode;
-				at: -508 put: #DrawStyle;
-				at: -509 put: #DrawWidth;
-				at: -510 put: #FillColor;
-				at: -511 put: #FillStyle;
-				at: -512 put: #Font;
-				at: -513 put: #ForeColor;
-				at: -514 put: #Enabled;
-				at: -515 put: #Hwnd;
-				at: -516 put: #Tabstop;
-				at: -517 put: #Text;
-				at: -518 put: #Caption;
-				at: -519 put: #BorderVisible;
-				at: -520 put: #Appearance;
-				at: -521 put: #MousePointer;
-				at: -522 put: #MouseIcon;
-				at: -523 put: #Picture;
-				at: -524 put: #Valid;
-				at: -525 put: #ReadyState;
-				at: -526 put: #ListIndex;
-				at: -527 put: #Selected;
-				at: -528 put: #List;
-				at: -529 put: #Column;
-				at: -531 put: #ListCount;
-				at: -532 put: #MultiSelect;
-				at: -533 put: #MaxLength;
-				at: -534 put: #PasswordChar;
-				at: -535 put: #Scrollbars;
-				at: -536 put: #Wordwrap;
-				at: -537 put: #Multiline;
-				at: -538 put: #NumberOfRows;
-				at: -539 put: #NumberOfColumns;
-				at: -540 put: #DisplayStyle;
-				at: -541 put: #GroupName;
-				at: -542 put: #IMEMode;
-				at: -543 put: #Accelerator;
-				at: -544 put: #EnterKeyBehavior;
-				at: -545 put: #TabKeyBehavior;
-				at: -546 put: #SelText;
-				at: -547 put: #SelStart;
-				at: -548 put: #SelLength;
+				at: DISPID_VALUE put: #Value;
+				at: DISPID_AUTOSIZE put: #Autosize;
+				at: DISPID_BACKCOLOR put: #BackColor;
+				at: DISPID_BACKSTYLE put: #BackStyle;
+				at: DISPID_BORDERCOLOR put: #BorderColor;
+				at: DISPID_BORDERSTYLE put: #BorderStyle;
+				at: DISPID_BORDERWIDTH put: #BorderWidth;
+				at: DISPID_DRAWMODE put: #DrawMode;
+				at: DISPID_DRAWSTYLE put: #DrawStyle;
+				at: DISPID_DRAWWIDTH put: #DrawWidth;
+				at: DISPID_FILLCOLOR put: #FillColor;
+				at: DISPID_FILLSTYLE put: #FillStyle;
+				at: DISPID_FONT put: #Font;
+				at: DISPID_FORECOLOR put: #ForeColor;
+				at: DISPID_ENABLED put: #Enabled;
+				at: DISPID_HWND put: #Hwnd;
+				at: DISPID_TABSTOP put: #Tabstop;
+				at: DISPID_TEXT put: #Text;
+				at: DISPID_CAPTION put: #Caption;
+				at: DISPID_BORDERVISIBLE put: #BorderVisible;
+				at: DISPID_APPEARANCE put: #Appearance;
+				at: DISPID_MOUSEPOINTER put: #MousePointer;
+				at: DISPID_MOUSEICON put: #MouseIcon;
+				at: DISPID_PICTURE put: #Picture;
+				at: DISPID_VALID put: #Valid;
+				at: DISPID_READYSTATE put: #ReadyState;
+				at: DISPID_LISTINDEX put: #ListIndex;
+				at: DISPID_SELECTED put: #Selected;
+				at: DISPID_LIST put: #List;
+				at: DISPID_COLUMN put: #Column;
+				at: DISPID_LISTCOUNT put: #ListCount;
+				at: DISPID_MULTISELECT put: #MultiSelect;
+				at: DISPID_MAXLENGTH put: #MaxLength;
+				at: DISPID_PASSWORDCHAR put: #PasswordChar;
+				at: DISPID_SCROLLBARS put: #Scrollbars;
+				at: DISPID_WORDWRAP put: #Wordwrap;
+				at: DISPID_MULTILINE put: #Multiline;
+				at: DISPID_NUMBEROFROWS put: #NumberOfRows;
+				at: DISPID_NUMBEROFCOLUMNS put: #NumberOfColumns;
+				at: DISPID_DISPLAYSTYLE put: #DisplayStyle;
+				at: DISPID_GROUPNAME put: #GroupName;
+				at: DISPID_IMEMODE put: #IMEMode;
+				at: DISPID_ACCELERATOR put: #Accelerator;
+				at: DISPID_ENTERKEYBEHAVIOR put: #EnterKeyBehavior;
+				at: DISPID_TABKEYBEHAVIOR put: #TabKeyBehavior;
+				at: DISPID_SELTEXT put: #SelText;
+				at: DISPID_SELSTART put: #SelStart;
+				at: DISPID_SELLENGTH put: #SelLength;
 				shrink;
-				yourself)	"DISPID_VALUE"	"DISPID_AUTOSIZE"	"DISPID_BACKCOLOR"	"DISPID_BACKSTYLE"	"DISPID_BORDERCOLOR"	"DISPID_BORDERSTYLE"	"DISPID_BORDERWIDTH"	"DISPID_DRAWMODE"	"DISPID_DRAWSTYLE"	"DISPID_DRAWWIDTH"	"DISPID_FILLCOLOR"	"DISPID_FILLSTYLE"	"DISPID_FONT"	"DISPID_FORECOLOR"	"DISPID_ENABLED"	"DISPID_HWND"	"DISPID_TABSTOP"	"DISPID_TEXT"	"DISPID_CAPTION"	"DISPID_BORDERVISIBLE"	"DISPID_APPEARANCE"	"DISPID_MOUSEPOINTER"	"DISPID_MOUSEICON"	"DISPID_PICTURE"	"DISPID_VALID"	"DISPID_READYSTATE"	"DISPID_LISTINDEX"	"DISPID_SELECTED"	"DISPID_LIST"	"DISPID_COLUMN"	"DISPID_LISTCOUNT"	"DISPID_MULTISELECT"	"DISPID_MAXLENGTH"	"DISPID_PASSWORDCHAR"	"DISPID_SCROLLBARS"	"DISPID_WORDWRAP"	"DISPID_MULTILINE"	"DISPID_NUMBEROFROWS"	"DISPID_NUMBEROFCOLUMNS"	"DISPID_DISPLAYSTYLE"	"DISPID_GROUPNAME"	"DISPID_IMEMODE"	"DISPID_ACCELERATOR"	"DISPID_ENTERKEYBEHAVIOR"	"DISPID_TABKEYBEHAVIOR"	"DISPID_SELTEXT"	"DISPID_SELSTART"	"DISPID_SELLENGTH"!
+				yourself)!
 
 onStartup
 	"The system is starting: Initialize the host window class and register the window message

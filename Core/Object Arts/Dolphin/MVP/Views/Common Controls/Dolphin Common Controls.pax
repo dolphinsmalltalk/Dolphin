@@ -811,26 +811,31 @@ OS.NMGETINFOTIP subclass: #'OS.NMTVGETINFOTIPW'
 	}!
 UI.ListControlView subclass: #'UI.IconicListAbstract'
 	instanceVariableNames: 'getImageBlock imageManager stateImageManager getInfoTipBlock customDrawBlock largeIconExtent thumbnailsImageManager'
-	classVariableNames: 'ViewModes'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'ViewModes' -> (IdentityDictionary withAll: {#largeIcons -> (16r20@16r20). #noIcons -> (16r0@16r0). #mediumIcons -> (16r18@16r18). #extraLargeIcons -> (16r100@16r100). #smallIcons -> (16r10@16r10). #tileIcons -> (16r30@16r30)})
+	}!
 UI.IconicListAbstract subclass: #'UI.ListView'
 	instanceVariableNames: 'lastClickedColIndex columns viewMode lastSelIndices iconSpacing lvStyle thumbnailExtent lvFlags backImage backImageOffset backImageAlpha approvedSelIndices noRedrawCount _unused36 _unused37 _unused38 _unused39 _unused40 _unused41 _unused42 _unused43 _unused44 _unused45'
-	classVariableNames: 'LvModes SelectionStateMask UnknownItem'
+	classVariableNames: 'SelectionStateMask UnknownItem'
 	imports: #(#{OS.ListViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'BackImageIsTiledMask' -> 16r1.
+		'LvModes' -> (IdentityDictionary withAll: {#largeIcons -> 16r0. #extraLargeIcons -> 16r0. #smallIcons -> 16r2. #list -> 16r3. #thumbnails -> 16r0. #tileIcons -> 16r0. #report -> 16r1}).
 		'NoImageIndex' -> 16r0
 	}!
 UI.IconicListAbstract subclass: #'UI.TabView'
 	instanceVariableNames: 'viewMode'
-	classVariableNames: 'TabOrientations TabViewModes'
+	classVariableNames: ''
 	imports: #(#{OS.TabViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'OrientationMask' -> 16r82
+		'OrientationMask' -> 16r82.
+		'TabOrientations' -> (IdentityDictionary withAll: {16r0 -> #top. 16r82 -> #right. 16r80 -> #left. 16r2 -> #bottom}).
+		'TabViewModes' -> (IdentityDictionary withAll: {#largeIcons -> (16r20@16r20). #mediumSmallIcons -> (16r14@16r14). #noIcons -> (16r0@16r0). #mediumIcons -> (16r18@16r18). #extraLargeIcons -> (16r100@16r100). #smallIcons -> (16r10@16r10). #thumbnails -> (16r40@16r40). #tileIcons -> (16r30@16r30)})
 	}!
 UI.IconicListAbstract subclass: #'UI.TreeView'
 	instanceVariableNames: 'handleObjectMap indentSeparation viewMode tvFlags objectHandleMap'

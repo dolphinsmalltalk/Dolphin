@@ -29,7 +29,8 @@ testComparing
 						ifTrue: 
 							[self assert: semver2 hash equals: hash1.
 							self assert: semver1 equals: semver2.
-							self assert: semver1 <=> semver2 equals: 0]
+							self assert: semver1 <=> semver2 equals: 0.
+							self assert: semver1 <==> semver2 equals: 0]
 						ifFalse: 
 							[self deny: semver2 hash equals: hash1.
 							self deny: semver1 equals: semver2]]]!

@@ -60,7 +60,7 @@ isSelfEvaluating
 	^self isSelfEvaluating: IdentitySet new!
 
 isSelfEvaluating: visitedSet
-	"Answer whether the receiver can be represented as a literal (i.e. it has a printed
+	"Private - Answer whether the receiver can be represented as a literal (i.e. it has a printed
 	representation which can be directly understood by the compiler)."
 
 	^(visitedSet addNewElement: self)
@@ -165,7 +165,7 @@ displayOn:!printing!public! !
 isLiteral!public!testing! !
 isLiteral:!public!testing! !
 isSelfEvaluating!public!testing! !
-isSelfEvaluating:!public!testing! !
+isSelfEvaluating:!private!testing! !
 printOn:!printing!public! !
 printOn:do:!printing!private! !
 refersTo:asLiteralOf:!private!testing! !

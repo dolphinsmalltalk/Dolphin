@@ -10,6 +10,20 @@ Core.Tests.LookupTableTest guid: (Core.GUID fromString: '{5c366850-2830-493e-a38
 Core.Tests.LookupTableTest comment: ''!
 !Core.Tests.LookupTableTest methodsFor!
 
+assertIs: copyDictionary deepCopyOf: sourceDictionary
+	| visited |
+	self deny: copyDictionary identicalTo: sourceDictionary.
+	self deny: copyDictionary basicValues identicalTo: sourceDictionary basicValues.
+	visited := IdentityDictionary with: copyDictionary -> sourceDictionary.
+	self
+		assertIs: copyDictionary keys asSortedArray
+		deepCopyOf: sourceDictionary keys asSortedArray
+		visited: visited.
+	self
+		assertIs: copyDictionary values asSortedArray
+		deepCopyOf: sourceDictionary values asSortedArray
+		visited: visited!
+
 collectionClass
 	^LookupTable!
 
@@ -30,6 +44,7 @@ testImmutability
 	self assert: (subject at: #key) equals: 1.2
 ! !
 !Core.Tests.LookupTableTest categoriesForMethods!
+assertIs:deepCopyOf:!private!unit tests! !
 collectionClass!helpers!private! !
 testImmutability!public! !
 !

@@ -2,13 +2,14 @@
 
 UI.LayoutManager subclass: #'UI.FlowLayout'
 	instanceVariableNames: 'horizontalGap verticalGap flags'
-	classVariableNames: 'AlignmentMap'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'AlignBottom' -> 16r8.
 		'AlignHCenter' -> 16r1.
 		'AlignLeft' -> 16r0.
+		'AlignmentMap' -> (IdentityDictionary withAll: {#bottomCenter -> 16r9. #rightCenter -> 16r6. #leftCenter -> 16r4. #topCenter -> 16r1. #bottomLeft -> 16r8. #center -> 16r5. #bottomRight -> 16rA. #topRight -> 16r2. #topLeft -> 16r0}).
 		'AlignmentMask' -> 16rF.
 		'AlignRight' -> 16r2.
 		'AlignTop' -> 16r0.

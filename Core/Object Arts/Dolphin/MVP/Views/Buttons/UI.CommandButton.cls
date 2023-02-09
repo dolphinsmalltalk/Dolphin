@@ -2,10 +2,12 @@
 
 UI.ControlView subclass: #'UI.CommandButton'
 	instanceVariableNames: 'commandDescription'
-	classVariableNames: 'StandardCommands'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'StandardCommands' -> (IdentityDictionary withAll: {#cancel -> 16r2. #continue -> 16rB. #retry -> 16rA. #abort -> 16r3. #yes -> 16r6. #help -> 16r9. #no -> 16r7. #ignore -> 16r5. #close -> 16r8})
+	}!
 UI.CommandButton guid: (Core.GUID fromString: '{7e1607a8-cdec-4c98-b2a8-c1376e58380e}')!
 UI.CommandButton comment: 'CommandButton is the abstract class of <ControlView>s that act as <commandSource>s, holding a <CommandDescription> detailing the command that should be fired when the button is clicked. The command is subject to the normal command routing followed by all commands in Dolphin, e.g. those initiated from menus, toolbars and keyboard accelerators. See the <CommandDescription> comment for further details.
 

@@ -2,7 +2,7 @@
 
 Core.Object subclass: #'Kernel.ClassBuilder'
 	instanceVariableNames: 'currentClass className instanceVariables superclass instanceSpec classVariables imports comment flags categories classConstants environment'
-	classVariableNames: 'FixedInitialLayout FixedLayout Unsubclassable'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
@@ -26,10 +26,13 @@ Core.Object subclass: #'Kernel.ClassBuilder'
 		'ErrorSuperclassIsSubclass' -> '<1p> is a subclass of the class being changed.'.
 		'ErrorTooManyInstVars' -> 'Classes are allowed a maximum of <1p> instance variables.'.
 		'ErrorUnsubclassable' -> '<1p> is not subclassable.'.
+		'FixedInitialLayout' -> (Set withAll: {ProcessorScheduler. PositionableStream. Process. Semaphore. Metaclass. Class. VariableBinding}).
+		'FixedLayout' -> (Set withAll: {Message. Array. False. BlockClosure. SmallInteger. Object. Context. UndefinedObject. ExternalMethod. MethodDictionary. Character. True}).
 		'FixedName' -> #(#Smalltalk #Root).
 		'IgnoreInstsMask' -> 16r2.
 		'QuietMask' -> 16r4.
-		'RecompileMask' -> 16r1
+		'RecompileMask' -> 16r1.
+		'Unsubclassable' -> (IdentitySet withAll: {SmallInteger. Character})
 	}!
 Kernel.ClassBuilder guid: (Core.GUID fromString: '{87b4c461-026e-11d3-9fd7-00a0cc3e4a32}')!
 Kernel.ClassBuilder comment: ''!

@@ -17,8 +17,20 @@ a key and a value. It is used for the elements of Dictionaries.'!
 
 	^key < anAssociation key!
 
-<= operand
-	^key <= operand key!
+<= anAssociation
+	"Answer whether the receiver is considered 'less than or equals to' the argument."
+
+	^key <= anAssociation key!
+
+<==> anAssociation
+	"Answer the receiver's <integer> collation order with respect to the <Association> argument, based on case-sensitive (where relevant) comparison of the keys only."
+
+	^key <==> anAssociation key!
+
+<=> anAssociation
+	"Answer the receiver's <integer> collation order with respect to the <Association> argument, based on case-insensitive (where relevant) comparison of the keys only."
+
+	^key <=> anAssociation key!
 
 = anAssociation
 	"Answer whether the receiver is equal to the argument."
@@ -111,6 +123,8 @@ value: aValue
 !Core.Association categoriesForMethods!
 <!comparing!public! !
 <=!comparing!public! !
+<==>!comparing!public! !
+<=>!comparing!public! !
 =!comparing!public! !
 displayOn:!printing!public! !
 hash!comparing!public! !

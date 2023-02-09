@@ -549,11 +549,19 @@ encoding
 initialize
 	self extraInstanceSpec: EncodingUtf8.
 	empty := ''.
-	VM registryAt: #Utf8String put: self! !
+	VM registryAt: #Utf8String put: self!
+
+with: aCharacter
+	"Answer a new instance of the receiver containing the <Character> argument as its single code point element. Note that this does not mean the String will have a code-unit size of 1 - it may have to be larger, depending on the number of code units of the string encoding that are required to represent the code point."
+
+	^(WriteStream on: (self new: 2))
+		nextPut: aCharacter;
+		grabContents! !
 !Core.Utf8String class categoriesForMethods!
 characterForCodeUnit:!enquiries!public! !
 codePage!instance creation!public! !
 encoding!constants!public! !
 initialize!development!initializing!public! !
+with:!instance creation!public! !
 !
 

@@ -9,6 +9,7 @@ package setClassNames: #(
 	#{Core.Tests}
 	#{Core.Tests.AbstractDictionaryTest}
 	#{Core.Tests.AbstractFileStreamTest}
+	#{Core.Tests.AbstractSetTest}
 	#{Core.Tests.AnsiStringTest}
 	#{Core.Tests.ArrayedCollectionTest}
 	#{Core.Tests.ArrayTest}
@@ -41,7 +42,9 @@ package setClassNames: #(
 	#{Core.Tests.FileTest}
 	#{Core.Tests.FloatTest}
 	#{Core.Tests.FractionTest}
+	#{Core.Tests.GUIDTest}
 	#{Core.Tests.IdentityDictionaryTest}
+	#{Core.Tests.IdentitySetTest}
 	#{Core.Tests.IntegerTest}
 	#{Core.Tests.IntervalTest}
 	#{Core.Tests.LargeIntegerTest}
@@ -58,6 +61,7 @@ package setClassNames: #(
 	#{Core.Tests.ObjectTest}
 	#{Core.Tests.OrderedCollectionTest}
 	#{Core.Tests.PairTest}
+	#{Core.Tests.PluggableSetTest}
 	#{Core.Tests.PositionableStreamTest}
 	#{Core.Tests.ProcessTest}
 	#{Core.Tests.ReadStreamTest}
@@ -469,6 +473,12 @@ Core.Tests.DolphinTest subclass: #'External.Tests.FunctionDescriptorTest'
 	imports: #(#{External.ExtCallArgTypes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'Core.Tests.GUIDTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'External.Tests.GUIDTest'
 	instanceVariableNames: ''
 	classVariableNames: 'Default'
@@ -771,6 +781,12 @@ Core.Tests.CollectionTest subclass: #'Core.Tests.AbstractDictionaryTest'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Core.Tests.CollectionTest subclass: #'Core.Tests.AbstractSetTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Core.Tests.CollectionTest subclass: #'Core.Tests.BagTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -778,12 +794,6 @@ Core.Tests.CollectionTest subclass: #'Core.Tests.BagTest'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Tests.CollectionTest subclass: #'Core.Tests.SequenceableCollectionTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Core.Tests.CollectionTest subclass: #'Core.Tests.SetTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -820,6 +830,24 @@ Core.Tests.LookupTableTest subclass: #'Core.Tests.IdentityDictionaryTest'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Tests.LookupTableTest subclass: #'Core.Tests.WeakIdentityDictionaryTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.AbstractSetTest subclass: #'Core.Tests.IdentitySetTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.AbstractSetTest subclass: #'Core.Tests.PluggableSetTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.AbstractSetTest subclass: #'Core.Tests.SetTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

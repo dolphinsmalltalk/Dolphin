@@ -64,6 +64,11 @@ A `Duration` represents a length of time, at any resolution, and is independent 
 
 	^seconds < aDuration asSeconds!
 
+<=> aDuration
+	"Answer the receiver's <integer> collation order with respect to the <Duration> argument. "
+
+	^(seconds - aDuration asSeconds) sign!
+
 = aDuration
 	"Answer true if the comparand, aDuration, is a <Duration> representing the same length of time as the receiver"
 
@@ -311,6 +316,7 @@ wait
 /!arithmetic!public! !
 +!arithmetic!public! !
 <!comparing!public! !
+<=>!comparing!public! !
 =!comparing!public! !
 abs!arithmetic!public! !
 asMicroseconds!converting!public! !

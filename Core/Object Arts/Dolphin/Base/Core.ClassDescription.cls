@@ -21,9 +21,24 @@ Instance Variables:
 	"Answer whether the receiver should sort before the argument, e.g. in a SortedCollection using the default sort block. We use a case sensitive comparison for stability. The class name is the primary sort order, but for equal names the namespace is then used.
 	This provides a stable order that is reasonable for working with unqualified names, and which is therefore useful for backwards compatibility, but it doesn't necessarily make sense for fully qualified names. Generally it is preferable to specify one's own sort order comparison rather than relying on the default."
 
+	^self == aClassDescription or: 
+			[| cmp |
+			cmp := self name <==> aClassDescription name.
+			cmp == 0 ifTrue: [self fullName <==> aClassDescription fullName <= 0] ifFalse: [cmp < 0]]!
+
+<==> aClassDescription
+	"Answer the receiver's <integer> collation order with respect to the <ClassDescription> argument, based on case-sensitive comparison of the class name."
+
 	| cmp |
 	cmp := self name <==> aClassDescription name.
-	^cmp == 0 ifTrue: [self fullName <= aClassDescription fullName] ifFalse: [cmp < 0]!
+	^cmp == 0 ifTrue: [self fullName <==> aClassDescription fullName] ifFalse: [cmp]!
+
+<=> aClassDescription
+	"Answer the receiver's <integer> collation order with respect to the <ClassDescription> argument, based on case-insensitive comparison of the class name."
+
+	| cmp |
+	cmp := self name <=> aClassDescription name.
+	^cmp == 0 ifTrue: [self fullName <=> aClassDescription fullName] ifFalse: [cmp]!
 
 >> aSymbol
 	^self compiledMethodAt: aSymbol!
@@ -968,8 +983,7 @@ storeClassCategories
 	"Ignored in the absence of the development system"!
 
 storeOn: aStream
-	"Append to the <puttableStream> argument, target, an expression which when 
-	evaluated will answer a collection similar to the receiver."
+	"Append to the <puttableStream> argument an expression which when evaluated will answer the receiver."
 
 	self printFullNameOn: aStream!
 
@@ -1055,6 +1069,8 @@ withAllSubclassesDo: aMonadicValuable
 	self allSubclassesDo: aMonadicValuable! !
 !Core.ClassDescription categoriesForMethods!
 <=!comparing!public! !
+<==>!comparing!public! !
+<=>!comparing!public! !
 >>!accessing!public! !
 absoluteReference!accessing!namespaces!public! !
 addInstVarName:!class hierarchy-mutating!instance variables!public! !

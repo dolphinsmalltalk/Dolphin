@@ -140,14 +140,26 @@ testEnvironmentName
 			self assert: subject environmentName equals: expected]!
 
 testEquals
-	self assert: (self newSubjectWithPath: #(#Smalltalk))
-		equals: (self newSubjectWithPathString: #Smalltalk).
-	self assert: (self newSubjectWithPath: #(#Smalltalk #Object))
-		equals: (self newSubjectWithPathString: 'Smalltalk.Object').
+	| subject1 subject2 |
+	subject1 := self newSubjectWithPath: #(#Smalltalk).
+	subject2 := self newSubjectWithPathString: #Smalltalk.
+	self assert: subject1 equals: subject2.
+	self assert: subject1 <=> subject2 equals: 0.
+	self assert: subject1 <==> subject2 equals: 0.
+	subject1 := self newSubjectWithPath: #(#Smalltalk #Object).
+	subject2 := self newSubjectWithPathString: 'Smalltalk.Object'.
+	self assert: subject1 equals: subject2.
+	self assert: subject1 <=> subject2 equals: 0.
+	self assert: subject1 <==> subject2 equals: 0.
 	self deny: (self newSubjectWithPath: #(#Smalltalk)) equals: Object new.
 	"BindingReference equality is a stable property based on the path and starting point. Different paths to the same target binding (of which there may be many) are not equal."
-	self deny: (self newSubjectWithPath: #(#Core #Object))
-		equals: (self newSubjectWithPath: #(#Smalltalk #Object))!
+	subject1 := self newSubjectWithPath: #(#Core #Object).
+	subject2 := self newSubjectWithPath: #(#Smalltalk #Object).
+	self deny: subject1 equals: subject2.
+	self assert: subject1 <=> subject2 equals: -1.
+	self assert: subject2 <=> subject1 equals: 1.
+	self assert: subject1 <==> subject2 equals: -1.
+	self assert: subject2 <==> subject1 equals: 1!
 
 testHash
 	self assert: (self newSubjectWithPath: #(#Kernel 'OpcodePool' 'Nop')) hash
@@ -225,9 +237,19 @@ testLessOrEqual
 	a1 := self newSubjectWithPathString: 'Core.Object'.
 	b := self newSubjectWithPathString: 'Core.object'.
 	self assert: a <= a.
+	self assert: a <=> a equals: 0.
+	self assert: a <==> a equals: 0.
 	self assert: a <= a1.
+	self assert: a <=> a1 equals: 0.
+	self assert: a <==> a1 equals: 0.
 	self assert: a1 <= a.
-	self deny: a <= b!
+	self assert: a1 <=> a equals: 0.
+	self assert: a1 <==> a equals: 0.
+	self deny: a <= b.
+	self assert: a <=> b equals: 0.
+	self assert: a <==> b equals: 1.
+	self assert: b <=> a equals: 0.
+	self assert: b <==> a equals: -1!
 
 testMeta
 	| subject meta |

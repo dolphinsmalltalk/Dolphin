@@ -2,11 +2,12 @@
 
 UI.StaticView subclass: #'UI.ImageViewAbstract'
 	instanceVariableNames: 'image viewMode ivFlags insets imageBorder'
-	classVariableNames: 'EdgeStyles'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'DoubleBufferMask' -> 16r2.
+		'EdgeStyles' -> (IdentityDictionary withAll: {#raised -> 16r5. #sunken -> 16rA. #bump -> 16r9. #etched -> 16r6. #none -> 16r0}).
 		'EraseWholeMask' -> 16r1
 	}!
 UI.ImageViewAbstract guid: (Core.GUID fromString: '{49987909-4a1f-4e2e-8b1f-2cc2f3ca2c3c}')!
@@ -350,17 +351,6 @@ icon
 
 	^Icon fromId: 'ImageView.ico'!
 
-initialize
-	self addClassConstant: 'EdgeStyles'
-		value: (IdentityDictionary new
-				at: #none put: 0;
-				at: #raised put: 5;
-				at: #sunken put: 10;
-				at: #etched put: 6;
-				at: #bump put: 9;
-				isImmutable: true;
-				yourself)!
-
 stbConvertFromVersion12: anArray
 	"Private - Perform an STB conversion from a version 12 <View> to version 13. 13 adds
 	inheritable background colours if the backcolor is nil (similar to the way fonts are
@@ -384,7 +374,6 @@ winClassName
 edgeStyles!constants!public! !
 edgeStyleTable!constants!public! !
 icon!constants!public! !
-initialize!development!initializing!private! !
 stbConvertFromVersion12:!binary filing!private! !
 viewModes!constants!public! !
 winClassName!constants!private! !

@@ -85,7 +85,14 @@ testLessOrEqual
 	a := self newSubjectWithPathString: 'Core.Object'.
 	b := self newSubjectWithPathString: 'Core.object'.
 	self assert: a <= a meta.
-	self deny: a <= b meta!
+	self assert: a <=> a meta equals: -1.
+	self assert: a <==> a meta equals: -1.
+	self deny: a <= b.
+	self deny: a <= b meta.
+	self assert: a <=> b equals: 0.
+	self assert: a <=> b meta equals: -1.
+	self assert: a <==> b equals: 1.
+	self assert: a <=> b meta equals: -1!
 
 testLiteral
 	| subject |

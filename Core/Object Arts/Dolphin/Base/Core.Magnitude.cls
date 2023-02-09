@@ -28,6 +28,13 @@ Subclasses of Magnitude must implement the following comparing protocol (at the 
 
 	^(aMagnitude < self) not!
 
+<==> aMagnitude
+	"Answer the receiver's <integer> collation order with respect to the <Magitude> argument."
+
+	"Defined for polymorphism with Strings, where this version of the spaceship operator is case-sensitive (#<=> is not). For Magnitudes this is equivalent to #<=>."
+
+	^self <=> aMagnitude!
+
 <=> aMagnitude
 	"Answer the receiver's <integer> collation order with respect to the <Number> argument. Colloquially known as the spaceship operator.
 	The answer is < 0 if the receiver should collate before the argument, 0 if they have the same collation order, or > 0 if the receiver should collate after the argument.
@@ -98,6 +105,7 @@ printString
 !Core.Magnitude categoriesForMethods!
 <!comparing!public! !
 <=!comparing!public! !
+<==>!comparing!public! !
 <=>!comparing!public! !
 =!comparing!public! !
 >!comparing!public! !

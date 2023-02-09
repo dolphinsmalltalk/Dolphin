@@ -27,16 +27,20 @@ package!
 
 UI.ControlView subclass: #'UI.CommandButton'
 	instanceVariableNames: 'commandDescription'
-	classVariableNames: 'StandardCommands'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'StandardCommands' -> (IdentityDictionary withAll: {#cancel -> 16r2. #continue -> 16rB. #retry -> 16rA. #abort -> 16r3. #yes -> 16r6. #help -> 16r9. #no -> 16r7. #ignore -> 16r5. #close -> 16r8})
+	}!
 UI.CommandButton subclass: #'UI.PushButton'
 	instanceVariableNames: 'image isDefault note _reserved1 _reserved2'
-	classVariableNames: 'ButtonStyleMap'
+	classVariableNames: ''
 	imports: #(#{OS.ButtonConstants})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'ButtonStyleMap' -> (IdentityDictionary withAll: {#check -> 16r2. #push -> 16r0. #link -> 16rE. #toggle -> 16r1002})
+	}!
 
 "Loose Methods"!
 

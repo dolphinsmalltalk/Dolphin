@@ -161,7 +161,7 @@ OS.COM.OLEStructure subclass: #'OS.COM.OLEVERB'
 	}!
 UI.ControlView subclass: #'UI.AXControlSite'
 	instanceVariableNames: 'progId dispControl host sink hostFlags propertyMap ambientDispatch unkControl licenseKey _reserved1 _reserved2'
-	classVariableNames: 'StandardPropNames WM_ATLGETHOST'
+	classVariableNames: 'WM_ATLGETHOST'
 	imports: #(#{OS.COM.AutomationConstants private} #{OS.COM.AutomationErrors private} #{OS.COM private})
 	classInstanceVariableNames: ''
 	classConstants: {
@@ -172,6 +172,7 @@ UI.ControlView subclass: #'UI.AXControlSite'
 		'FireControlEventsMask' -> 16r4.
 		'FirePropertyEventsMask' -> 16r1.
 		'ReflectMask' -> 16r100.
+		'StandardPropNames' -> (LookupTable withAll: {16r0 -> #Value. -16r1F7 -> #BorderColor. -16r1FB -> #DrawMode. -16r1FF -> #FillStyle. -16r203 -> #Hwnd. -16r207 -> #BorderVisible. -16r20B -> #Picture. -16r20F -> #Selected. -16r213 -> #ListCount. -16r217 -> #Scrollbars. -16r21B -> #NumberOfColumns. -16r21F -> #Accelerator. -16r223 -> #SelStart. -16r1F6 -> #BackStyle. -16r1FE -> #FillColor. -16r202 -> #Enabled. -16r206 -> #Caption. -16r20A -> #MouseIcon. -16r20E -> #ListIndex. -16r216 -> #PasswordChar. -16r21A -> #NumberOfRows. -16r21E -> #IMEMode. -16r222 -> #SelText. -16r1F5 -> #BackColor. -16r1F9 -> #BorderWidth. -16r1FD -> #DrawWidth. -16r201 -> #ForeColor. -16r205 -> #Text. -16r209 -> #MousePointer. -16r20D -> #ReadyState. -16r211 -> #Column. -16r215 -> #MaxLength. -16r219 -> #Multiline. -16r21D -> #GroupName. -16r221 -> #TabKeyBehavior. -16r1F4 -> #Autosize. -16r1F8 -> #BorderStyle. -16r1FC -> #DrawStyle. -16r200 -> #Font. -16r204 -> #Tabstop. -16r208 -> #Appearance. -16r20C -> #Valid. -16r210 -> #List. -16r214 -> #MultiSelect. -16r218 -> #Wordwrap. -16r21C -> #DisplayStyle. -16r220 -> #EnterKeyBehavior. -16r224 -> #SelLength}).
 		'TraceEventsMask' -> 16r2.
 		'UserModeMask' -> 16r40.
 		'WM_FORWARDMSG' -> 16r37F

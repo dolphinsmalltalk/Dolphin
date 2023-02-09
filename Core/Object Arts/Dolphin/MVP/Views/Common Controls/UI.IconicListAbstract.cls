@@ -2,10 +2,12 @@
 
 UI.ListControlView subclass: #'UI.IconicListAbstract'
 	instanceVariableNames: 'getImageBlock imageManager stateImageManager getInfoTipBlock customDrawBlock largeIconExtent thumbnailsImageManager'
-	classVariableNames: 'ViewModes'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'ViewModes' -> (IdentityDictionary withAll: {#largeIcons -> (16r20@16r20). #noIcons -> (16r0@16r0). #mediumIcons -> (16r18@16r18). #extraLargeIcons -> (16r100@16r100). #smallIcons -> (16r10@16r10). #tileIcons -> (16r30@16r30)})
+	}!
 UI.IconicListAbstract guid: (Core.GUID fromString: '{87b4c728-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.IconicListAbstract isNonInstantiable: true!
 UI.IconicListAbstract comment: 'IconicListAbstract is an abstract class whose subclasses implement various Windows iconic list common controls.
@@ -871,23 +873,6 @@ wmDestroy:wParam:lParam:!event handling-win32!private! !
 
 !UI.IconicListAbstract class methodsFor!
 
-initialize
-	"Private - Initialise the receiver's class variables.
-		IconicListAbstract initialize
-	"
-
-	self addClassConstant: 'ViewModes'
-		value: (IdentityDictionary new
-				at: #noIcons put: 0 @ 0;
-				at: #smallIcons put: 16 @ 16;
-				at: #mediumIcons put: 24 @ 24;
-				at: #largeIcons put: 32 @ 32;
-				at: #tileIcons put: 48 @ 48;
-				at: #extraLargeIcons put: 256 @ 256;
-				shrink;
-				isImmutable: true;
-				yourself)!
-
 stbConvertFromVersion3: anArray
 	"Private - Perform an STB conversion from a version 3 (or earlier) <View> to version 4, 
 	i.e. add getInfoTipBlock inst var in IconicListAbstract and subclasses."
@@ -940,7 +925,6 @@ value: anObject
 viewModes
 	^ViewModes! !
 !UI.IconicListAbstract class categoriesForMethods!
-initialize!development!initializing!private! !
 stbConvertFromVersion3:!binary filing!private! !
 stbConvertFromVersion9:!binary filing!private! !
 value:!evaluating!private! !

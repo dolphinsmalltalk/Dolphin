@@ -1717,12 +1717,15 @@ utf8Class
 
 	^Utf16String!
 
-with: character
-	"Answer a new instance of the receiver containing the single <Character> element, element1."
+with: aCharacter
+	"Answer a new instance of the receiver containing the <Character> argument as its single code point element. Note that this does not mean the String will have a code-unit size of 1 - it may have to be larger, depending on the number of code units of the string encoding that are required to represent the code point."
 
-	^(self writeStream: 2)
-		nextPut: character;
-		contents!
+	^aCharacter isAscii
+		ifTrue: [AnsiString with: aCharacter]
+		ifFalse: 
+			[^(WriteStream on: (self new: 2))
+				nextPut: aCharacter;
+				grabContents]!
 
 with: firstCharacter with: secondCharacter
 	"Answer an instance of the receiver containing the <Character> arguments as its elements"

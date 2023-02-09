@@ -47,6 +47,16 @@ Given the above you may be forgiven for thinking that relative binding reference
 			cmp := self pathString <==> aBindingReference pathString.
 			cmp == 0 ifTrue: [self isMeta not or: [aBindingReference isMeta]] ifFalse: [cmp < 0]]!
 
+<==> aBindingReference
+	"Answer the receiver's <integer> collation order with respect to the <ClassDescription> argument, based on case-sensitive comparison of the receiver's string representation."
+
+	^self asString <==> aBindingReference asString!
+
+<=> aBindingReference
+	"Answer the receiver's <integer> collation order with respect to the <BindingReference> argument, based on case-insensitive comparison of the receiver's string representation."
+
+	^self asString <=> aBindingReference asString!
+
 = anObject
 	"Answer whether the receiver and the <Object> argument should be considered equivalent. Binding references are considered equivalent if they have the same path and starting point.
 	Note that two binding references that would resolve to the same actual variable binding may not be considered equivalent as the binding resolution is a dynamic quality determined 
@@ -347,6 +357,8 @@ valueOrNil
 	^self bindingOrNil ifNotNil: [:var | self valueOfBinding: var]! !
 !Kernel.BindingReference categoriesForMethods!
 <=!comparing!public! !
+<==>!comparing!public! !
+<=>!comparing!public! !
 =!comparing!public! !
 append:!copying!public! !
 asFullyQualifiedReference!converting!public! !

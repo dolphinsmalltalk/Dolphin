@@ -1511,10 +1511,12 @@ Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.RegionInitializer'
 	classConstants: {}!
 Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.StringFormatInitializer'
 	instanceVariableNames: ''
-	classVariableNames: 'FormatFlagNames GenericDefault GenericTypographic'
+	classVariableNames: 'GenericDefault GenericTypographic'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'FormatFlagNames' -> (IdentityDictionary withAll: {16r400 -> 'StringFormatFlagsNoFontFallback'. 16r20 -> 'StringFormatFlagsDisplayFormatControl'. 16r4000 -> 'StringFormatFlagsNoClip'. 16r2000 -> 'StringFormatFlagsLineLimit'. 16r1 -> 'StringFormatFlagsDirectionRightToLeft'. 16r1000 -> 'StringFormatFlagsNoWrap'. 16r800 -> 'StringFormatFlagsMeasureTrailingSpaces'. -16r80000000 -> 'StringFormatFlagsBypassGDI'. 16r4 -> 'StringFormatFlagsNoFitBlackBox'. 16r2 -> 'StringFormatFlagsDirectionVertical'})
+	}!
 Graphics.Gdiplus.AbstractCustomLineCapInitializer subclass: #'Graphics.Gdiplus.AdjustableArrowCapInitializer'
 	instanceVariableNames: 'height width isFilled middleInset'
 	classVariableNames: ''
@@ -1677,10 +1679,12 @@ Graphics.Gdiplus.ImageInitializer subclass: #'Graphics.Gdiplus.AbstractImageFrom
 	classConstants: {}!
 Graphics.Gdiplus.ImageInitializer subclass: #'Graphics.Gdiplus.BitmapInitializer'
 	instanceVariableNames: ''
-	classVariableNames: 'PixelFormats'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'PixelFormats' -> (IdentityDictionary withAll: {16r0 -> 'PixelFormatDontCare'. 16r10000 -> 'PixelFormatIndexed'. 16r61007 -> 'PixelFormat16bppARGB1555'. 16r200000 -> 'PixelFormatCanonical'. 16r40000 -> 'PixelFormatAlpha'. 16r30101 -> 'PixelFormat1bppIndexed'. 16r30402 -> 'PixelFormat4bppIndexed'. 16r101004 -> 'PixelFormat16bppGrayScale'. 16r34400D -> 'PixelFormat64bppARGB'. 16r21006 -> 'PixelFormat16bppRGB565'. 16rF -> 'PixelFormatMax'. 16r30803 -> 'PixelFormat8bppIndexed'. 16r22009 -> 'PixelFormat32bppRGB'. 16rE200B -> 'PixelFormat32bppPARGB'. 16r1C400E -> 'PixelFormat64bppPARGB'. 16r10300C -> 'PixelFormat48bppRGB'. 16r100000 -> 'PixelFormatExtended'. 16r21808 -> 'PixelFormat24bppRGB'. 16r21005 -> 'PixelFormat16bppRGB555'. 16r20000 -> 'PixelFormatGDI'. 16r26200A -> 'PixelFormat32bppARGB'. 16r80000 -> 'PixelFormatPAlpha'})
+	}!
 Graphics.Gdiplus.ImageInitializer subclass: #'Graphics.Gdiplus.ImageThumbnailInitializer'
 	instanceVariableNames: 'image extent'
 	classVariableNames: ''
