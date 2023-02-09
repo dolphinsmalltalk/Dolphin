@@ -37,13 +37,17 @@ onStyleNeeded: aScintillaView from: startInteger to: stopInteger
 	"Callback from Scintilla requesting that the specified range of text be coloured.
 	In this case we just set to the default style, regardless."
 
-	aScintillaView applyStyle: self normalStyleName toNext: stopInteger - startInteger + 1! !
+	aScintillaView applyStyle: self normalStyleName toNext: stopInteger - startInteger + 1!
+
+tokenBefore: anInteger 
+	^nil! !
 !UI.Scintilla.NullStyler categoriesForMethods!
 colorText:in:startingAt:!operations!private! !
 initialize!initializing!public! !
 normalStyleName!accessing!public! !
 normalStyleName:!accessing!public! !
 onStyleNeeded:from:to:!event handling!public! !
+tokenBefore:!helpers!public! !
 !
 
 !UI.Scintilla.NullStyler class methodsFor!

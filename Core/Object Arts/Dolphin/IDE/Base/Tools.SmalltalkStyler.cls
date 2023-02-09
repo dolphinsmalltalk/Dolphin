@@ -436,7 +436,7 @@ scannerClass!constants!private! !
 styleForBar!helpers!private! !
 styleForToken:!helpers!private! !
 stylingStartBefore:in:!helpers!private! !
-tokenBefore:!helpers!private! !
+tokenBefore:!helpers!public! !
 visitAssignmentToken:!public!visiting! !
 visitBinarySelectorToken:!public!visiting! !
 visitErrorToken:!public!visiting! !
