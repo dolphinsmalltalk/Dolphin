@@ -102,7 +102,7 @@ customDrawClassList: anNMLVCUSTOMDRAW
 	class := anNMLVCUSTOMDRAW item.
 	(browserEnvironment definesClass: class)
 		ifFalse: [anNMLVCUSTOMDRAW forecolor: ClassBrowserAbstract.LooseMethodColor].
-	self systemModel setCustomDrawAttributes: anNMLVCUSTOMDRAW forClass: class!
+	self developmentSystem setCustomDrawAttributes: anNMLVCUSTOMDRAW forClass: class!
 
 customDrawClassTree: anNMTVCUSTOMDRAW
 	"Private - Custom drawing to implement the emphasis in a class or namespace hierarchy tree. 
@@ -121,7 +121,7 @@ customDrawClassTree: anNMTVCUSTOMDRAW
 		ifFalse: 
 			[anNMTVCUSTOMDRAW
 				forecolor: (anNMTVCUSTOMDRAW forecolor fadedBy: ClassBrowserAbstract.GrayedMethodFadeFactor)].
-	self systemModel setCustomDrawAttributes: anNMTVCUSTOMDRAW forClass: class!
+	self developmentSystem setCustomDrawAttributes: anNMTVCUSTOMDRAW forClass: class!
 
 deleteItCommand
 	"Private - Answer the command that the context-sensitive 'Browse-It' command would be linked
@@ -198,7 +198,7 @@ onSelectionChanged
 
 onViewClosed
 	super onViewClosed.
-	self systemModel removeEventsTriggeredFor: self.
+	self developmentSystem removeEventsTriggeredFor: self.
 	Package manager removeEventsTriggeredFor: self!
 
 renameClass

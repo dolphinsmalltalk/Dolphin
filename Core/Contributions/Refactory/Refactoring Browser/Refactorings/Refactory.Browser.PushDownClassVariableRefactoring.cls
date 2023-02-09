@@ -42,7 +42,7 @@ signalReferenceError: errorString
 	class realClass isNil
 		ifTrue: [self refactoringError: errorString]
 		ifFalse: 
-			[self refactoringError: ('<1s><n>Browse references?' expandMacrosWith: errorString)
+			[self refactoringError: ('<1s><n><n>Browse references?' expandMacrosWith: errorString)
 				with: 
 					[#rbFix.	"Should only browse references within the environment visible to the refactoring here"
 					self openBrowserOn: (self model environment classVarRefsTo: variableName in: class realClass)]]!

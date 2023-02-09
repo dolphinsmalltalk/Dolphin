@@ -61,7 +61,7 @@ applyOptions
 			(methodList respondsTo: #hasInfoTips:) ifTrue: [methodList hasInfoTips: hasTips]]!
 
 browseCompilationFailures
-	(self systemModel methodsThatFailedToCompileIn: self searchEnvironment) 
+	(self systemModel methodsThatFailedToCompileIn: self searchEnvironment)
 		ifNotNil: [:failed | self browseMethodsIn: failed]!
 
 browseCompilationIssues
@@ -71,7 +71,7 @@ browseCompilationIssues
 browseContainingText
 	"Prompt for a string and browse the methods containing that string."
 
-	(self systemModel 
+	(self developmentSystem 
 		methodsContainingText: ''
 		in: self searchEnvironment
 		prompt: true) ifNotNil: [:env | self browseMethodsIn: env]!
@@ -84,13 +84,19 @@ browseDefinitions
 
 browseDefinitionsMatching: aMethodSearch in: aBrowserEnvironment
 	| definitions |
-	definitions := OrderedCollection
-				with: (self systemModel definitionsMatching: aMethodSearch in: aBrowserEnvironment).
+	definitions := OrderedCollection with: (aBrowserEnvironment definitionsMatching: aMethodSearch).
 	parentPresenter parseContext
 		ifNotNil: 
 			[:context |
-			definitions add: (self systemModel definitionsMatching: aMethodSearch
-						in: (aBrowserEnvironment forClassHierarchyOf: context methodClass))].
+			| class |
+			class := context methodClass.
+			(aBrowserEnvironment label beginsWith: 'Local hierarchy of <1p>' << class)
+				ifFalse: 
+					[definitions
+						addLast: ((aBrowserEnvironment forClassHierarchyOf: class) definitionsMatching: aMethodSearch)]].
+	aBrowserEnvironment isSystem
+		ifFalse: 
+			[definitions addLast: (self developmentSystem browserEnvironment definitionsMatching: aMethodSearch)].
 	self routeCommand: (CommandDescription
 				command: (Message selector: #browseMethodsInEnvironments: argument: definitions))!
 
@@ -103,7 +109,7 @@ browseDefinitionsOfSelector: aSymbol in: aBrowserEnvironment
 browseHierarchy
 	"Open a class hierarchy browser on the current method"
 
-	self systemModel browseClassHierarchyOfMethod: self selection!
+	self developmentSystem browseClassHierarchyOfMethod: self selection!
 
 browseIt
 	"Open a default browser on the current method(s)"
@@ -122,17 +128,15 @@ browseMessage
 	self browseMessagesIn: self searchEnvironment!
 
 browseMessageDefinitions
-	"Prompt for a selector and open a method browser displaying the implementors of that
-	selector."
+	"Prompt for a selector and open a method browser displaying the implementors of that selector."
 
-	self browseMessageDefinitions: '' in: self searchEnvironment!
+	self browseMessageDefinitionsIn: self searchEnvironment!
 
-browseMessageDefinitions: aString in: aBrowserEnvironment
-	"Private - Prompt for a selector and open a method explorer displaying the implementors of
-	that selector, both globally and in the local hierarchy."
+browseMessageDefinitionsIn: aBrowserEnvironment
+	"Private - Prompt for a selector and open a method explorer displaying the implementors of that selector, both globally and in the local hierarchy."
 
-	(self systemModel promptForSelector: aString caption: 'Definitions of…')
-		ifNotNil: [:search | Cursor wait showWhile: [self browseDefinitionsMatching: search in: self searchEnvironment]]!
+	(self developmentSystem promptForDefinitionsOf: '' in: aBrowserEnvironment)
+		ifNotNil: [:search | self browseDefinitionsMatching: search in: self searchEnvironment]!
 
 browseMessageReferences
 	"Prompt for a selector and open a method browserdisplaying the references to that selector
@@ -146,68 +150,64 @@ browseMessageReferences: aString in: aBrowserEnvironment
 	selector, using the <readableString> argument as the initial suggestion (or if that is empty
 	the first word of the clipboard text)."
 
-	(self systemModel promptForSelector: aString caption: 'References to…')
-		ifNotNil: [:search | Cursor wait showWhile: [self browseReferencesMatching: search in: aBrowserEnvironment]]!
+	(self developmentSystem promptForReferencesTo: aString in: aBrowserEnvironment)
+		ifNotNil: [:search | self browseReferencesMatching: search in: aBrowserEnvironment]!
 
 browseMessagesIn: aBrowserEnvironment
 	"Private - Prompt for a selector and open a method browser displaying the references to that
 	selector, using the <readableString> argument as the initial suggestion (or if that is empty
 	the first word of the clipboard text)."
 
-	(self systemModel promptForSelector: '' caption: 'Browse Messages Matching…')
-		ifNotNil: [:search | Cursor wait showWhile: [self browseMessagesMatching: search in: aBrowserEnvironment]]!
+	(self developmentSystem promptForSelector: ''
+		caption: 'Browse Matching Messages in <1p>…' << aBrowserEnvironment)
+			ifNotNil: [:search | self browseMessagesMatching: search in: aBrowserEnvironment]!
 
 browseMessagesMatching: aMethodSearch in: aBrowserEnvironment
 	| searches |
-	searches := OrderedCollection
-				with: (self systemModel definitionsMatching: aMethodSearch in: aBrowserEnvironment)
-				with: (self systemModel referencesMatching: aMethodSearch in: aBrowserEnvironment).
+	searches := aBrowserEnvironment messagesMatching: aMethodSearch.
 	parentPresenter parseContext
 		ifNotNil: 
 			[:context |
-			| hierarchy |
-			hierarchy := aBrowserEnvironment forClassHierarchyOf: context methodClass.
-			searches
-				add: (self systemModel definitionsMatching: aMethodSearch in: hierarchy);
-				add: (self systemModel referencesMatching: aMethodSearch in: hierarchy)].
+			| class hierarchy |
+			class := context methodClass.
+			(aBrowserEnvironment label beginsWith: 'Local hierarchy of <1p>' << class)
+				ifFalse: 
+					[hierarchy := aBrowserEnvironment forClassHierarchyOf: class.
+					searches := searches , (hierarchy messagesMatching: aMethodSearch)]].
 	self routeCommand: (CommandDescription
 				command: (Message selector: #browseMethodsInEnvironments: argument: searches))!
 
 browseMethodClasses
 	"Open a class browser on the selected method(s) class(es)."
 
-	"Implementation Note: If a single method is selected, then a default class browser is opened
-	with that method selected, otherwise if methods of a single class are selected then a
-	default class browser is opened on that class, otherwise an Environment Browser is opened on
-	the methods' classes."
+	"Implementation Note: If a single method is selected, then a default class browser is opened with that method selected, otherwise if methods of a single class are selected then a default class browser is opened on that class, otherwise an Environment Browser is opened on the methods' classes."
 
 	| selections |
 	selections := self selections.
-	^selections size = 1
-		ifTrue: [selections anyOne browse]
+	^(selections size = 1
+		ifTrue: [selections anyOne]
 		ifFalse: 
 			[| classes |
 			classes := (selections collect: [:each | each methodClass]) asSet.
-			classes size = 1
-				ifTrue: [classes anyOne browse]
-				ifFalse: [(BrowserEnvironment new forClasses: classes) openEditor]]!
+			classes size = 1 ifTrue: [classes anyOne] ifFalse: [BrowserEnvironment new forClasses: classes]])
+			browse!
 
 browseMethodInheritanceChain
 	"Open a method browser displaying the definitions of the 
 	current selector in the superclass chain."
 
-	self systemModel browseMethodHierarchyFrom: self selection!
+	self developmentSystem browseMethodHierarchyFrom: self selection in: self searchEnvironment!
 
 browseMethodPackages
 	"Open a package browser on the current methods' owning packages."
 
-	self systemModel browsePackages: (self selections collect: [:each | each owningPackage]) asSet.!
+	self developmentSystem browsePackages: (self selections collect: [:each | each owningPackage]) asSet.!
 
 browseMethodsIn: aBrowserEnvironment 
 	parentPresenter browseMethodsIn: aBrowserEnvironment!
 
-browseMethodsMatching: aMethodSearch in: aBrowserEnvironment 
-	self browseMethodsIn: (self systemModel referencesMatching: aMethodSearch in: aBrowserEnvironment)!
+browseMethodsMatching: aMethodSearch in: aBrowserEnvironment
+	self browseMethodsIn: (aBrowserEnvironment referencesMatching: aMethodSearch)!
 
 browsePackages
 	"Implement the context-sensitive browse packages command by browsing the package
@@ -225,13 +225,19 @@ browseReferences
 
 browseReferencesMatching: aMethodSearch in: aBrowserEnvironment
 	| references |
-	references := OrderedCollection
-				with: (self systemModel referencesMatching: aMethodSearch in: aBrowserEnvironment).
+	references := OrderedCollection with: (aBrowserEnvironment referencesMatching: aMethodSearch).
 	parentPresenter parseContext
 		ifNotNil: 
 			[:context |
-			references add: (self systemModel referencesMatching: aMethodSearch
-						in: (aBrowserEnvironment forClassHierarchyOf: context methodClass))].
+			| class |
+			class := context methodClass.
+			(aBrowserEnvironment label beginsWith: 'Local hierarchy of <1p>' << class)
+				ifFalse: 
+					[references
+						addLast: ((aBrowserEnvironment forClassHierarchyOf: class) referencesMatching: aMethodSearch)]].
+	aBrowserEnvironment isSystem
+		ifFalse: 
+			[references addLast: (self developmentSystem browserEnvironment referencesMatching: aMethodSearch)].
 	self routeCommand: (CommandDescription
 				command: (Message selector: #browseMethodsInEnvironments: argument: references))!
 
@@ -239,8 +245,12 @@ browseReferencesToGlobal
 	"Prompt for a global name and open a method browser displaying the
 	references to that global."
 
-	(self systemModel promptForReferencesToGlobal: self selectedWord in: self searchEnvironment) 
-		ifNotNil: [:env | self browseMethodsIn: env]!
+	| devsys variableName |
+	devsys := self developmentSystem.
+	variableName := devsys promptForSharedVariableName: self selectedWord.
+	variableName ifNil: [^self].
+	self browseMethodsIn: (self searchEnvironment
+				referencesToVariable: variableName asQualifiedReference binding)!
 
 browseReferencesToLiteral: anObject in: aBrowserEnvironment
 	"Private - Opens a MethodBrowser on all the methods that refer to aString from their literal frames
@@ -255,7 +265,7 @@ browserEnvironment
 browseSystem
 	"Open a system browser on the current method"
 
-	self systemModel browseSystemOnMethod: self selection!
+	self developmentSystem browseSystemOnMethod: self selection!
 
 browseVariableReferences: aVariableBinding in: aBrowserEnvironment
 	"Private - Opens a new Method Browser on all the methods which refer to the shared variable represented by the <VariableBinding> first argument. Also includes methods that refer directly to the current value of the variable."
@@ -362,16 +372,16 @@ createComponents
 				name: 'methods'
 				helpId: 10742.
 	sourcePresenter := self
-				add: self systemModel methodWorkspaceClass new yourself
+				add: self developmentSystem methodWorkspaceClass new yourself
 				name: 'source'
 				helpId: 10490.
-	refactoringTool := self systemModel newMethodRefactoringToolFor: self!
+	refactoringTool := self developmentSystem newMethodRefactoringToolFor: self!
 
 createSchematicWiring
 	"Create the trigger wiring for the receiver"
 
 	super createSchematicWiring.
-	(self selectableItems)
+	self selectableItems
 		when: #actionPerformed
 			send: #browseIt
 			to: self;
@@ -393,7 +403,7 @@ createSchematicWiring
 		when: #drop:
 			send: #onDropOver:
 			to: self.
-	(self systemModel)
+	self developmentSystem
 		when: #methodAdded:
 			send: #onMethodAdded:
 			to: self;
@@ -410,7 +420,7 @@ createSchematicWiring
 customDrawMethodClass: anNMLVCUSTOMDRAW
 	"Private - Custom drawing to implement the emphasis in a method browser's class column."
 
-	self systemModel setCustomDrawAttributes: anNMLVCUSTOMDRAW
+	self developmentSystem setCustomDrawAttributes: anNMLVCUSTOMDRAW
 		forClass: anNMLVCUSTOMDRAW item methodClass!
 
 customDrawSelector: anNMLVCUSTOMDRAW
@@ -424,6 +434,9 @@ customDrawSelector: anNMLVCUSTOMDRAW
 deleteItCommand
 	methodsPresenter hasFocus ifTrue: [^#removeMethod].
 	^nil!
+
+developmentSystem
+	^SmalltalkSystem current!
 
 enableSource: aBoolean 
 	"Private - Enable the source pane of the receiver according to aBoolean."
@@ -508,7 +521,6 @@ initialize
 	"Initially the filter excludes all methods, this fixes the bug where a class browser
 	without selection was picking up all methods added/modified."
 	filter := [:aCompiledMethod | aCompiledMethod isNil].
-	searchEnvironment := self systemModel systemEnvironment.
 	namespaceModel := ValueHolder new!
 
 inspectIt
@@ -552,7 +564,7 @@ method: aCompiledMethodOrNil
 methodCategorizationPolicy
 	"Private - Answer the <MethodCategorizationPolicy> used by the receiver."
 
-	^self systemModel methodCategorizationPolicy!
+	^self developmentSystem methodCategorizationPolicy!
 
 methodPackage
 	"Prompt for the user to repackage the selected method(s)."
@@ -624,7 +636,7 @@ newMethod
 noMethodsView
 	^view viewNamed: 'noMethodsText' ifNone: [methodsPresenter view]!
 
-onAboutToDisplayMenu: aMenu 
+onAboutToDisplayMenu: aMenu
 	"The pop-up <Menu>, popup, is about to be displayed.
 	This is our opportunity to update it, e.g. to add/remove items."
 
@@ -634,8 +646,8 @@ onAboutToDisplayMenu: aMenu
 	menuName == #addCategoryMenu ifTrue: [^self buildAddCategoryMenu: aMenu].
 	menuName == #removeCategoryMenu ifTrue: [^self buildRemoveCategoryMenu: aMenu].
 
-	"Otherwise pass on to the dev. system model to populate message menus"
-	self systemModel 
+	"Otherwise pass on to the dev. system to populate message menus"
+	self developmentSystem
 		populateMessagesMenus: aMenu
 		fromMethods: self selections
 		environment: self searchEnvironment!
@@ -649,7 +661,7 @@ onCloseRequested: boolValueHolder
 onDrag: aDragDropSession 
 	"A drag has been started. Drag the currently selected methods."
 
-	self systemModel beginDrag: aDragDropSession methods: self selections!
+	self developmentSystem beginDrag: aDragDropSession methods: self selections!
 
 onDragCut: aDragDropSession
 	"Private - A <DragDropSession> has just completed a successful move operation. The receiver is now
@@ -666,7 +678,7 @@ onDragCut: aDragDropSession
 					[| method |
 					method := each format: #CompiledMethod.
 					methods add: method]].
-	self systemModel basicRemoveMethods: methods!
+	self developmentSystem basicRemoveMethods: methods!
 
 onDragOver: session
 	"Private - A drag operation described by the <DragDropSession>, session, has 
@@ -797,7 +809,7 @@ onViewClosed
 	Disconnect from any events triggered by the devlopment system"
 
 	super onViewClosed.
-	self systemModel removeEventsTriggeredFor: self!
+	self developmentSystem removeEventsTriggeredFor: self!
 
 onViewOpened
 	"Received when the receiver's view is been connected. "
@@ -806,16 +818,7 @@ onViewOpened
 	self applyOptions!
 
 parseContext
-	^self selectedMethod
-		ifNil: [parentPresenter ifNotNil: [parentPresenter parseContext]]
-		ifNotNil: 
-			[:method |
-			| package class |
-			package := method owningPackageIfLoose.
-			class := method methodClass.
-			(method customEnvironment notNil or: [package isNil and: [class owningPackage isNil]])
-				ifTrue: [method]
-				ifFalse: [ParseContext methodClass: class environment: (package ?? class) environment]]!
+	^parentPresenter ifNotNil: [parentPresenter parseContext]!
 
 parseTree
 	^sourcePresenter parseTree!
@@ -840,6 +843,10 @@ queryCommand: aCommandQuery
 	| selector method methods |
 	selector := aCommandQuery commandSymbol.
 	#browseIt == selector ifTrue: [selector := self browseItCommand].
+	#browseOther == selector
+		ifTrue: 
+			[aCommandQuery isEnabled: true.
+			^true].
 	#clearSelection == selector
 		ifTrue: 
 			[selector := self deleteItCommand.
@@ -882,16 +889,15 @@ queryCommand: aCommandQuery
 				^true].
 	#browseMethodClasses == selector
 		ifTrue: 
-			[| text |
-			text := method isNil
+			[| methodClasses |
+			methodClasses := (methods collect: [:each | each methodClass]) asSet.
+			aCommandQuery text: (methodClasses size ~~ 1
 						ifTrue: 
 							[aCommandQuery isEnabled: methods notEmpty.
-							'Classes']
+							'Method Classes']
 						ifFalse: 
 							[aCommandQuery isEnabled: true.
-							method methodClass name].
-			aCommandQuery text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: {text}
-						locale: Locale smalltalk).
+							'Class <1p>' expandMacrosWithArguments: {methodClasses anyOne} locale: Locale smalltalk]).
 			^true].
 	#browseMethodPackages == selector
 		ifTrue: 
@@ -926,14 +932,11 @@ queryCommand: aCommandQuery
 refactoringTool
 	^refactoringTool!
 
-refactoringTool: aMethodRefactoringTool 
-	refactoringTool := aMethodRefactoringTool!
-
 removeMethod
 	"Removes the selected method(s) from the system"
 
 	self promptToSaveChanges ifFalse: [^self].
-	self systemModel removeMethods: self selections!
+	self developmentSystem removeMethods: self selections!
 
 saveMethod: aString in: aClass environment: aNamespace categories: aCollection package: aPackageOrNil
 	| modified originalSelection change newMethod |
@@ -943,7 +946,7 @@ saveMethod: aString in: aClass environment: aNamespace categories: aCollection p
 		clearErrors;
 		isModified: false.
 	
-	[change := self systemModel
+	[change := self developmentSystem
 				compile: aString
 				in: aClass
 				environment: aNamespace
@@ -984,7 +987,7 @@ saveNewMethod: aString
 	parentPresenter saveNewMethod: aString!
 
 searchEnvironment
-	^searchEnvironment!
+	^searchEnvironment ifNil: [parentPresenter browserEnvironment]!
 
 searchEnvironment: aBrowserEnvironment 
 	"Set the <BrowserEnvironment> used as the context for searches such as those for references to a selector..
@@ -1060,7 +1063,7 @@ sourceSelection
 	^sourcePresenter view selection!
 
 systemModel
-	^SmalltalkSystem current!
+	^self parentPresenter systemModel!
 
 togglePrivate
 	"Private - Toggle the selected method between public and private status."
@@ -1070,8 +1073,8 @@ togglePrivate
 	methods do: 
 			[:method | 
 			method isPrivate 
-				ifTrue: [self systemModel publicizeMethod: method]
-				ifFalse: [self systemModel privatizeMethod: method]]!
+				ifTrue: [self developmentSystem publicizeMethod: method]
+				ifFalse: [self developmentSystem privatizeMethod: method]]!
 
 updateMethodNamespace
 	namespaceModel value: (self parseContext ifNotNil: [:context | context environment])! !
@@ -1090,7 +1093,7 @@ browseIt!browsing!commands!public! !
 browseItCommand!browsing!helpers!private! !
 browseMessage!commands!public! !
 browseMessageDefinitions!commands!public! !
-browseMessageDefinitions:in:!browsing!private! !
+browseMessageDefinitionsIn:!browsing!commands!private! !
 browseMessageReferences!commands!public! !
 browseMessageReferences:in:!browsing!private! !
 browseMessagesIn:!browsing!private! !
@@ -1121,6 +1124,7 @@ createSchematicWiring!initializing!public! !
 customDrawMethodClass:!helpers!private! !
 customDrawSelector:!helpers!private! !
 deleteItCommand!helpers!private! !
+developmentSystem!commands!private! !
 enableSource:!modes!private! !
 ensureSourceVisible!operations!public! !
 errorModel!accessing!public! !
@@ -1177,7 +1181,6 @@ promptToCopyChanges!event handling!public! !
 promptToSaveChanges!helpers!private! !
 queryCommand:!commands!private! !
 refactoringTool!accessing!public! !
-refactoringTool:!accessing!private! !
 removeMethod!commands!public! !
 saveMethod:in:environment:categories:package:!operations!private! !
 saveNewMethod:!helpers!public! !
@@ -1198,7 +1201,7 @@ source!accessing!public! !
 sourcePresenter!accessing!private! !
 sourcePresenter:!accessing!private! !
 sourceSelection!accessing!public! !
-systemModel!accessing!private! !
+systemModel!commands!private! !
 togglePrivate!commands!private! !
 updateMethodNamespace!event handling!private! !
 !
@@ -1293,8 +1296,8 @@ resource_Method_browser_method_list
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Method_browser_method_list)
 	"
 
-	^#(#'!!STL' 5 985166 10 #{UI.STBViewProxy} #{UI.WizardCardContainer} 34 15 nil nil 34 2 8 1409286144 131073 416 nil nil nil 5 461638 4 #{UI.Menu} nil true 34 11 482 nil true 8 #() 8 '&Definitions of' #definitionsMenu 1 nil nil nil nil nil 482 nil true 8 #() 8 'Re&ferences to' #referencesMenu 1 nil nil nil nil nil 482 nil true 34 10 1180742 2 #{UI.CommandMenuItem} 1 1377606 4 #{UI.CommandDescription} #browseReferencesToGlobal 8 'R&eferences to Global…' 1 1 nil nil nil 658 1 690 #browseContainingText 8 'C&ontaining Text…' 1 1 852806 4 #{Graphics.Icon} nil true 2819078 #{Graphics.ImageFromStringResourceInitializer} 8 'SearchText.ico' 2490894 #{Kernel.STBExternalResourceLibraryProxy} 8 'dolphindr8.dll' nil 65541 nil nil nil 658 1 690 #browseMethodCategory 8 'Cate&gory…' 1 1 nil nil nil 658 1 690 #browseCompilationFailures 8 'Compilation &Failures' 1 1 nil nil nil 1179974 1 #{UI.DividerMenuItem} 4097 658 1 690 #browseMethodPackages 8 '&Package <s>' 1 1 786 nil true 818 8 'PackageBrowserShell.ico' 880 65541 nil nil nil 658 1 690 #browseMethodClasses 8 '&Class <s>' 1 1 786 nil true 818 8 'ClassBrowserShell.ico' 880 65541 nil nil nil 1010 4097 658 1 690 #browseMethodHistory 8 'Change &History' 1 1 786 nil true 818 8 'MethodHistory.ico' 880 65541 nil nil nil 658 1 690 #browseAllChangedMethods 8 '&All Changed Methods' 1 1 nil nil nil 8 '&Browse other' nil 134217729 nil nil nil nil nil 1010 4097 658 1 690 #removeMethod 8 'Re&move' 1 1 786 nil true 818 8 'MethodDelete.ico' 880 65541 nil nil nil 482 nil true 34 16 658 1 690 #renameMethod 8 'Re&name' 1 1 nil nil nil 658 1 690 #renameMethodReferences 8 'Rename Re&ferences…' 1 1 nil nil nil 1010 4097 658 1 690 #addParameter 8 'Add &Parameter…' 1 1 nil nil nil 482 nil true 8 #() 8 'Remo&ve Parameter' #removeParameterMenu 134217729 nil nil nil nil nil 482 nil true 8 #() 8 'Rena&me Parameter' #renameParameterMenu 134217729 nil nil nil nil nil 482 nil true 8 #() 8 '&Inline Parameter' #inlineParameterMenu 134217729 nil nil nil nil nil 1010 4097 482 nil true 8 #() 8 'Rename &Temporary' #renameTempMenu 134217729 nil nil nil nil nil 482 nil true 8 #() 8 'Conv&ert Temp to Inst. Var.' #convertTempToInstVarMenu 134217729 nil nil nil nil nil 1010 4097 658 1 690 #inlineAllSelfSends 8 'Inline &Self Sends' 1 1 nil nil nil 658 1 690 #pushUpMethods 8 'Push &Up' 9325 1 nil nil nil 658 1 690 #pushDownMethods 8 'Push &Down' 9327 1 nil nil nil 658 1 690 #overrideMethods 8 'Ove&rride <1d>' 1 1 nil nil nil 658 1 690 #moveMethod 8 'Move to &Component…' 1 1 nil nil nil 8 '&Refactorings' #methodRefactoringsMenu 134217729 786 nil true 818 8 'Refactoring.ico' 880 65541 nil nil nil nil nil 1010 4097 658 1 690 #methodPackage 8 '&Package…' 1 1 786 nil true 818 8 'Package.ico' 880 65541 nil nil nil 482 nil true 8 #() 8 'Add to &Category' #addCategoryMenu 134217729 nil nil nil nil nil 482 nil true 8 #() 8 'Remo&ve from Category' #removeCategoryMenu 134217729 nil nil nil nil nil 658 1 690 #togglePrivate 8 'Priva&te' 1 1 nil nil nil 8 '&Method' nil 134217729 nil nil nil nil nil nil nil 416 853318 1 #{UI.CardLayout} 138 144 34 2 1049094 #{Core.Association} 3 410 #{UI.ListView} 34 45 nil 416 34 2 8 1140920393 1 2656 787270 2 #{UI.ListModel} 138 144 8 #() nil 1769478 #{Kernel.IdentitySearchPolicy} 917510 #{Graphics.Color} #default nil 13 nil nil nil 2656 nil 8 1815049392 786950 #{Core.Message} #displayString 8 #() 2866 #iconImageIndex 2768 1639750 1 #{Graphics.IconImageManager} nil nil nil nil nil nil 138 144 34 5 1117254 5 #{UI.ListViewColumn} 8 'Selector' 335 #left 2866 #selector 8 #() 1246566 3 #{Kernel.BlockClosure} 0 nil 1639718 #{Kernel.CompiledExpression} 2 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:a :b | a selector <= b selector]' 8 #[30 105 226 0 226 32 130 106] #selector 3088 7 513 nil nil nil 2656 nil 1 2866 #infoTip 8 #() 3074 0 nil 3106 4 1 3072 8 'doIt' 8 '[:ctx | ctx view parentPresenter customDrawSelector: ctx]' 8 #[32 105 226 0 159 17 178 106] #view #parentPresenter #customDrawSelector: 3216 7 257 nil 2994 8 'Class' 333 #left 2866 #name 8 #() 2866 #<= 8 #() 2866 #methodClass 8 #() nil 2656 2912 1 nil 3074 0 nil 3106 4 1 3072 8 'doIt' 8 '[:ctx | ctx view parentPresenter customDrawMethodClass: ctx]' 8 #[32 105 226 0 159 17 178 106] #view #parentPresenter #customDrawMethodClass: 3424 7 257 nil 2994 8 'Namespace' 301 #left 2866 #fullName 8 #() 3074 0 nil 3106 2 1 3072 8 'doIt' 8 '[:a :b | a fullName <= b fullName ]' 8 #[30 105 226 0 226 32 130 106] #fullName 3568 7 513 nil 2866 #environment 8 #() nil 2656 nil 1 nil nil 2994 8 'Package' 65 #left 2866 #name 8 #() 3074 0 nil 3106 2 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:a :b | a name <= b name]' 8 #[30 105 226 0 226 32 130 106] #name 3744 7 513 nil 2866 #owningPackage 8 #() nil 2656 2912 3 nil nil 2994 8 '' 33 #center nil 3074 0 nil 3106 3 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:m1 :m2 | m1 isPublic = m2 isPublic ifTrue: [m1 selector <= m2 selector] ifFalse: [m1 isPublic]]' 8 #[31 105 17 158 18 158 132 123 17 159 18 159 130 106 17 158 106] #isPublic #selector 3888 7 513 nil nil nil 2656 2912 1 nil nil #report 8 #() nil 133221 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 1310982 #{Core.MessageSequence} 34 3 1049350 #{Core.MessageSend} #createAt:extent: 34 2 918022 #{Graphics.Point} 1 1 4082 971 421 2656 4034 #text: 34 1 8 'Selector' 2656 4034 #columnOrder: 34 1 8 #(5 1 2 3 4) 2656 1179910 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 229 1 0 0 210 0 0 0] 8 #() 4082 193 193 nil 35 2626 5 410 #{UI.StaticText} 34 16 nil 416 34 2 8 1140850945 1 4320 nil 2818 #window nil 5 nil nil nil 4320 nil 8 1815137184 1049094 #{UI.NullConverter} nil nil nil 3986 34 3 4034 #createAt:extent: 34 2 4082 1 1 4082 971 421 4320 4034 #isEnabled: 8 #(false) 4320 4034 #text: 34 1 8 '
-There are no methods to browse' 4320 4226 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 229 1 0 0 210 0 0 0] 8 #() 4288 nil 27 2656 nil nil nil 170 192 34 4 4320 8 'noMethodsText' 2656 8 'methods' nil 3986 34 2 4034 #createAt:extent: 34 2 4082 12287 21 4082 971 421 416 4034 #contextMenu: 34 1 496 416 4226 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 228 25 0 0 220 0 0 0] 34 2 2656 4320 4288 nil 27)!
+	^#(#'!!STL' 5 985166 10 #{UI.STBViewProxy} #{UI.WizardCardContainer} 34 15 nil nil 34 2 8 1409286144 131073 416 nil nil nil 5 461638 4 #{UI.Menu} nil true 34 11 482 nil true 8 #() 8 '&Definitions of' #definitionsMenu 1 nil nil nil nil nil 482 nil true 8 #() 8 'Re&ferences to' #referencesMenu 1 nil nil nil nil nil 482 nil true 34 10 1180742 2 #{UI.CommandMenuItem} 1 1377606 4 #{UI.CommandDescription} #browseReferencesToGlobal 8 'R&eferences to Global…' 1 1 nil nil nil 658 1 690 #browseContainingText 8 'C&ontaining Text…' 1 1 852806 4 #{Graphics.Icon} nil true 2819078 #{Graphics.ImageFromStringResourceInitializer} 8 'SearchText.ico' 2490894 #{Kernel.STBExternalResourceLibraryProxy} 8 'dolphindr8.dll' nil 65541 nil nil nil 658 1 690 #browseMethodCategory 8 'Cate&gory…' 1 1 nil nil nil 658 1 690 #browseCompilationFailures 8 'Compilation &Failures' 1 1 nil nil nil 1179974 1 #{UI.DividerMenuItem} 4097 658 1 690 #browseMethodPackages 8 '&Package <s>' 1 1 786 nil true 818 8 'PackageBrowserShell.ico' 880 65541 nil nil nil 658 1 690 #browseMethodClasses 8 '&Class <s>' 1 1 786 nil true 818 8 'ClassBrowserShell.ico' 880 65541 nil nil nil 1010 4097 658 1 690 #browseMethodHistory 8 'Change &History' 1 1 786 nil true 818 8 'MethodHistory.ico' 880 65541 nil nil nil 658 1 690 #browseAllChangedMethods 8 '&All Changed Methods' 1 1 nil nil nil 8 '&Browse other' #browseOther 134217729 nil nil nil nil nil 1010 4097 658 1 690 #removeMethod 8 'Re&move' 1 1 786 nil true 818 8 'MethodDelete.ico' 880 65541 nil nil nil 482 nil true 34 16 658 1 690 #renameMethod 8 'Re&name' 1 1 nil nil nil 658 1 690 #renameMethodReferences 8 'Rename Re&ferences…' 1 1 nil nil nil 1010 4097 658 1 690 #addParameter 8 'Add &Parameter…' 1 1 nil nil nil 482 nil true 8 #() 8 'Remo&ve Parameter' #removeParameterMenu 134217729 nil nil nil nil nil 482 nil true 8 #() 8 'Rena&me Parameter' #renameParameterMenu 134217729 nil nil nil nil nil 482 nil true 8 #() 8 '&Inline Parameter' #inlineParameterMenu 134217729 nil nil nil nil nil 1010 4097 482 nil true 8 #() 8 'Rename &Temporary' #renameTempMenu 134217729 nil nil nil nil nil 482 nil true 8 #() 8 'Conv&ert Temp to Inst. Var.' #convertTempToInstVarMenu 134217729 nil nil nil nil nil 1010 4097 658 1 690 #inlineAllSelfSends 8 'Inline &Self Sends' 1 1 nil nil nil 658 1 690 #pushUpMethods 8 'Push &Up' 9325 1 nil nil nil 658 1 690 #pushDownMethods 8 'Push &Down' 9327 1 nil nil nil 658 1 690 #overrideMethods 8 'Ove&rride <1d>' 1 1 nil nil nil 658 1 690 #moveMethod 8 'Move to &Component…' 1 1 nil nil nil 8 '&Refactorings' #methodRefactoringsMenu 134217729 786 nil true 818 8 'Refactoring.ico' 880 65541 nil nil nil nil nil 1010 4097 658 1 690 #methodPackage 8 '&Package…' 1 1 786 nil true 818 8 'Package.ico' 880 65541 nil nil nil 482 nil true 8 #() 8 'Add to &Category' #addCategoryMenu 134217729 nil nil nil nil nil 482 nil true 8 #() 8 'Remo&ve from Category' #removeCategoryMenu 134217729 nil nil nil nil nil 658 1 690 #togglePrivate 8 'Priva&te' 1 1 nil nil nil 8 '&Method' nil 134217729 nil nil nil nil nil nil nil 416 853318 1 #{UI.CardLayout} 138 144 34 2 1049094 #{Core.Association} 3 410 #{UI.ListView} 34 45 nil 416 34 2 8 1140920393 1 2656 787270 2 #{UI.ListModel} 138 144 8 #() nil 1769478 #{Kernel.IdentitySearchPolicy} 917510 #{Graphics.Color} #default nil 13 nil nil nil 2656 nil 8 1824663824 786950 #{Core.Message} #displayString 8 #() 2866 #iconImageIndex 8 #() 1639750 1 #{Graphics.IconImageManager} nil nil nil nil nil nil 138 144 34 5 1117254 5 #{UI.ListViewColumn} 8 'Selector' 335 #left 2866 #selector 8 #() 1246566 3 #{Kernel.BlockClosure} 0 nil 1639718 #{Kernel.CompiledExpression} 2 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:a :b | a selector <= b selector]' 8 #[30 105 226 0 226 32 130 106] #selector 3104 7 513 nil nil nil 2656 nil 1 2866 #infoTip 8 #() 3090 0 nil 3122 4 1 3088 8 'doIt' 8 '[:ctx | ctx view parentPresenter customDrawSelector: ctx]' 8 #[32 105 226 0 159 17 178 106] #view #parentPresenter #customDrawSelector: 3232 7 257 nil 3010 8 'Class' 333 #left 2866 #name 8 #() 2866 #<= 8 #() 2866 #methodClass 8 #() nil 2656 2912 1 nil 3090 0 nil 3122 4 1 3088 8 'doIt' 8 '[:ctx | ctx view parentPresenter customDrawMethodClass: ctx]' 8 #[32 105 226 0 159 17 178 106] #view #parentPresenter #customDrawMethodClass: 3440 7 257 nil 3010 8 'Namespace' 301 #left 2866 #fullName 8 #() 3090 0 nil 3122 2 1 3088 8 'doIt' 8 '[:a :b | a fullName <= b fullName ]' 8 #[30 105 226 0 226 32 130 106] #fullName 3584 7 513 nil 2866 #environment 8 #() nil 2656 nil 1 nil nil 3010 8 'Package' 65 #left 2866 #name 8 #() 3090 0 nil 3122 2 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:a :b | a name <= b name]' 8 #[30 105 226 0 226 32 130 106] #name 3760 7 513 nil 2866 #owningPackage 8 #() nil 2656 2912 3 nil nil 3010 8 '' 33 #center nil 3090 0 nil 3122 3 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:m1 :m2 | m1 isPublic = m2 isPublic ifTrue: [m1 selector <= m2 selector] ifFalse: [m1 isPublic]]' 8 #[31 105 17 158 18 158 132 123 17 159 18 159 130 106 17 158 106] #isPublic #selector 3904 7 513 nil nil nil 2656 2912 1 nil nil #report 8 #() nil 133221 nil 1 nil nil nil nil 1 nil nil nil nil nil nil nil nil nil nil 1310982 #{Core.MessageSequence} 34 3 1049350 #{Core.MessageSend} #createAt:extent: 34 2 918022 #{Graphics.Point} 1 1 4098 971 421 2656 4050 #text: 34 1 8 'Selector' 2656 4050 #columnOrder: 34 1 8 #(5 1 2 3 4) 2656 1179910 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 229 1 0 0 210 0 0 0] 8 #() 4098 193 193 nil 35 2626 5 410 #{UI.StaticText} 34 16 nil 416 34 2 8 1140850945 1 4336 nil 2818 #window nil 5 nil nil nil 4336 nil 8 1824808112 1049094 #{UI.NullConverter} nil nil nil 4002 34 3 4050 #createAt:extent: 34 2 4098 1 1 4098 971 421 4336 4050 #isEnabled: 8 #(false) 4336 4050 #text: 34 1 8 '
+There are no methods to browse' 4336 4242 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 229 1 0 0 210 0 0 0] 8 #() 4304 nil 27 2656 nil nil nil 170 192 34 4 4336 8 'noMethodsText' 2656 8 'methods' nil 4002 34 1 4050 #createAt:extent: 34 2 4098 6143 21 4098 971 421 416 4242 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 228 13 0 0 220 0 0 0] 34 2 2656 4336 4304 nil 27)!
 
 setAdditionalKeyBindings: anArray
 	AdditionalAccelerators := anArray!

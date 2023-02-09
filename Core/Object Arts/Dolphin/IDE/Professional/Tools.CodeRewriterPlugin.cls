@@ -14,7 +14,7 @@ Tools.CodeRewriterPlugin comment: ''!
 browseRuleResults: aLintRule 
 	| matching |
 	matching := aLintRule result.
-	self systemModel 
+	self developmentSystem 
 		browseMethodsIn: matching
 		filter: (self methodFilterForRule: aLintRule inEnvironment: self browserEnvironment)!
 

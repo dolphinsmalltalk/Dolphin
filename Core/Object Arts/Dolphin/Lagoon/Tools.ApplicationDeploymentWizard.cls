@@ -297,7 +297,8 @@ sessionManagerOrShellChoices
 showLog
 	"displays the exsiting log sile written by a previous invocation of the receiver"
 
-	EnvironmentBrowserShell show browseExecutableManifestFile: logFileName value!
+	EnvironmentBrowserShell
+		showOn: (SmalltalkSystem current systemModelFromDeploymentLog: logFileName value)!
 
 strip
 	"Private - Strips the image according to the receiver's image stripper

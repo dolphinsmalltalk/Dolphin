@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Refactory.Browser.RBModel'
-	instanceVariableNames: 'changes environment rootClasses implementorsCache sendersCache rootNamespace smalltalkNamespace'
+Core.Model subclass: #'Refactory.Browser.RBModel'
+	instanceVariableNames: 'changes environment rootClasses implementorsCache sendersCache rootNamespace smalltalkNamespace selectorsCache'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -93,6 +93,18 @@ allReferencesToClass: aRBClass
 
 allReferencesToClass: aRBClass do: aBlock
 	self allBehaviorsDo: [:each | (each whichMethodsReferToClass: aRBClass) do: aBlock]!
+
+allSelectors
+	^selectorsCache ifNil: [selectorsCache := self buildAllSelectors]!
+
+browserEnvironment
+	^environment!
+
+buildAllSelectors
+	| set |
+	set := IdentitySet new: 256.
+	self allBehaviorsDo: [:each | set addAll: each selectors].
+	^set!
 
 changes
 	^changes!
@@ -206,7 +218,7 @@ environment
 	^environment!
 
 flushCaches
-	implementorsCache := sendersCache := nil!
+	selectorsCache := implementorsCache := sendersCache := nil!
 
 fullBindingFor: aString
 	^smalltalkNamespace fullBindingFor: aString!
@@ -216,6 +228,9 @@ import: anArrayOfBindingReferences into: aRBClass
 
 includesClassNamed: aString
 	^(self classNamed: aString) notNil!
+
+includesImplementorsOf: aSymbol
+	^self allSelectors includes: aSymbol!
 
 includesStaticVariable: aString
 	"Does the argument resolve to a static variable in the receiver? See also #definesStaticVariable:"
@@ -372,6 +387,9 @@ allReferencesToBinding:!helpers!private! !
 allReferencesToBinding:do:!accessing!public! !
 allReferencesToClass:!helpers!private! !
 allReferencesToClass:do:!accessing!public! !
+allSelectors!accessing!public! !
+browserEnvironment!accessing!public! !
+buildAllSelectors!helpers!private! !
 changes!accessing!public! !
 changes:!accessing!public! !
 classFor:!accessing/classes!public! !
@@ -389,6 +407,7 @@ flushCaches!changes!private! !
 fullBindingFor:!binding!public! !
 import:into:!changes!public! !
 includesClassNamed:!public!testing! !
+includesImplementorsOf:!public!testing! !
 includesStaticVariable:!public!testing! !
 instanceClassFor:!accessing/classes!public! !
 instanceClassNamed:!accessing/classes!public! !

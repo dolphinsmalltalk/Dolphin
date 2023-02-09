@@ -26,15 +26,16 @@ environment: aNamespace
 instanceVariables
 	^instanceVariables
 		ifNil: 
-			[| names |
+			[| names count |
 			names := methodClass allInstanceVariableNames.
-			instanceVariables := LookupTable new: names size.
-			names keysAndValuesDo: 
-					[:i :v |
+			instanceVariables := LookupTable new: (count := names size).
+			1 to: count
+				do: 
+					[:i |
+					| v |
+					v := names at: i.
 					instanceVariables at: v
-						put: ((StInstanceVariable index: i name: v)
-								scope: self;
-								yourself)].
+						put: (StInstanceVariable scope: self index: i name: v)].
 			instanceVariables]!
 
 metaScope

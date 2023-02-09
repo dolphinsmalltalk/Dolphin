@@ -87,10 +87,14 @@ package setClassNames: #(
 package setMethodNames: #(
 	#(#{Core.Array} #hasLiteralMatching:)
 	#(#{Core.Class} #classInModel:)
+	#(#{Core.Class} #instancesAreClasses)
 	#(#{Core.Class} #newClassInModel:)
 	#(#{Core.Class class} #rootsOfTheWorld)
 	#(#{Core.ClassDescription} #classInModel:)
+	#(#{Core.ClassDescription} #instancesAreClasses)
+	#(#{Core.ClassDescription} #realClass)
 	#(#{Core.Metaclass} #classInModel:)
+	#(#{Core.Metaclass} #instancesAreClasses)
 	#(#{Kernel.BindingReference} #referenceInModel:)
 	#(#{Kernel.CompiledCode} #hasLiteralMatching:)
 	#(#{Kernel.Namespace class} #newClassInModel:)
@@ -113,6 +117,7 @@ package setMethodNames: #(
 	#(#{Kernel.StVariableNode} #isBindingChanged)
 	#(#{Kernel.StVariableNode} #refersToBinding:)
 	#(#{Kernel.StVariableNode} #refersToClass:)
+	#(#{Kernel.VariableBinding} #realBinding)
 	#(#{Kernel.VariableBinding} #refersToBinding:)
 	#(#{Kernel.VariableBinding} #refersToClass:)
 	#(#{Root class} #classInModel:)
@@ -158,12 +163,6 @@ Core.Object subclass: #'Refactory.Browser.RBMethodName'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'Refactory.Browser.RBModel'
-	instanceVariableNames: 'changes environment rootClasses implementorsCache sendersCache rootNamespace smalltalkNamespace'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 Core.Object subclass: #'Refactory.Browser.Refactoring'
 	instanceVariableNames: 'model options'
 	classVariableNames: 'RefactoringOptions'
@@ -190,6 +189,12 @@ Core.Error subclass: #'Refactory.Browser.RefactoringError'
 	classConstants: {}!
 Kernel.VariableBinding subclass: #'Refactory.Browser.RBVariableBinding'
 	instanceVariableNames: 'realBinding'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Model subclass: #'Refactory.Browser.RBModel'
+	instanceVariableNames: 'changes environment rootClasses implementorsCache sendersCache rootNamespace smalltalkNamespace selectorsCache'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -583,10 +588,14 @@ hasLiteralMatching:!private!testing! !
 classInModel: aRBModel
 	^((environment classInModel: aRBModel) localBindingFor: name) value!
 
+instancesAreClasses
+	^false!
+
 newClassInModel: aRBModel
 	^Refactory.Browser.RBClass new model: aRBModel existing: self! !
 !Core.Class categoriesForMethods!
 classInModel:!public! !
+instancesAreClasses!public! !
 newClassInModel:!private!refactoring! !
 !
 
@@ -602,17 +611,29 @@ rootsOfTheWorld!class hierarchy-accessing!private! !
 !Core.ClassDescription methodsFor!
 
 classInModel: aRBModel
-	^self subclassResponsibility! !
+	^self subclassResponsibility!
+
+instancesAreClasses
+	^self subclassResponsibility!
+
+realClass
+	^self! !
 !Core.ClassDescription categoriesForMethods!
 classInModel:!public! !
+instancesAreClasses!public! !
+realClass!public! !
 !
 
 !Core.Metaclass methodsFor!
 
 classInModel: aRBModel
-	^(instanceClass classInModel: aRBModel) metaclass! !
+	^(instanceClass classInModel: aRBModel) metaclass!
+
+instancesAreClasses
+	^true! !
 !Core.Metaclass categoriesForMethods!
 classInModel:!public! !
+instancesAreClasses!public! !
 !
 
 !Kernel.BindingReference methodsFor!
@@ -779,6 +800,9 @@ refersToClass:!public!testing! !
 
 !Kernel.VariableBinding methodsFor!
 
+realBinding
+	^self!
+
 refersToBinding: aVariableBinding
 	^self == aVariableBinding or: 
 			[aVariableBinding isClassBinding and: [self environment includesEnvironment: aVariableBinding value]]!
@@ -786,6 +810,7 @@ refersToBinding: aVariableBinding
 refersToClass: aClass
 	^(self isClassBinding and: [value == aClass]) or: [self environment includesEnvironment: aClass]! !
 !Kernel.VariableBinding categoriesForMethods!
+realBinding!accessing!public! !
 refersToBinding:!public!testing! !
 refersToClass:!public!testing! !
 !

@@ -96,7 +96,7 @@ browseDefinitionsCommand
 browseMessage
 	| node |
 	node := self selectedMessageNode.
-	self systemModel browseMethod: ((self targetOfMessage: node) lookupMethod: node selector)!
+	self developmentSystem browseMethod: ((self targetOfMessage: node) lookupMethod: node selector)"Private - Answer the development system model."!
 
 browseReferencesCommand
 	"Private - Answer the context-sensitive 'Browse References' command for the selected node."
@@ -164,7 +164,7 @@ createComponents
 	been initialized."
 
 	super createComponents.
-	refactoringTool := self systemModel newCodeRefactoringToolFor: self!
+	refactoringTool := self developmentSystem newCodeRefactoringToolFor: self"Private - Answer the development system model."!
 
 createSchematicWiring
 	"Create the trigger wiring for the receiver"

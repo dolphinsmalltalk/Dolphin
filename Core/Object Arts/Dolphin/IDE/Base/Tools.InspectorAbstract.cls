@@ -15,12 +15,12 @@ Tools.InspectorAbstract comment: ''!
 browseClass
 	"Private - Open a new default class browser on the class of the object being inspected."
 
-	self systemModel browseClass: self browseObject class!
+	self developmentSystem browseClass: self browseObject class!
 
 browseHierarchy
 	"Private - Open a new class browser on the class of the object being inspected."
 
-	self systemModel browseHierarchy: self browseObject class!
+	self developmentSystem browseHierarchy: self browseObject class!
 
 browseIt
 	"Open a default browser on the current object."
@@ -35,7 +35,10 @@ browseObject
 browseSystem
 	"Open a new system browser on the class of the object being inspected."
 	
-	self systemModel browseSystem: self browseObject class!
+	self developmentSystem browseSystem: self browseObject class!
+
+developmentSystem
+	^SmalltalkSystem current!
 
 inspecteeSelection
 	"Private - Answer the value associated with the currently selected object"
@@ -54,13 +57,14 @@ object: anObject
 !
 
 systemModel
-	^SmalltalkSystem current! !
+	^self developmentSystem! !
 !Tools.InspectorAbstract categoriesForMethods!
 browseClass!commands!private! !
 browseHierarchy!commands!private! !
 browseIt!commands!public! !
 browseObject!accessing!private! !
 browseSystem!commands!public! !
+developmentSystem!accessing!private! !
 inspecteeSelection!accessing!private! !
 inspectIt!commands!public! !
 object:!accessing!public! !

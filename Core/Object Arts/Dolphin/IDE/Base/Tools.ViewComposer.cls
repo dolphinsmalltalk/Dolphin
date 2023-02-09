@@ -157,7 +157,7 @@ alignTops
 	self matchGeometryAspect: #topAlign.!
 
 allResourceIdentifiers
-	^SmalltalkSystem current allResourceIdentifiers!
+	^self systemModel allResourceIdentifiers!
 
 areDragObjects: aCollection acceptableFor: operationSymbol inView: aView 
 	"Private - Answer whether aDragDropObjectCollection are all acceptable for the operation described by
@@ -275,7 +275,7 @@ basicPasteResource: aResourceArray context: contextView
 	Generally, #pasteResource:context:position: should be used instead, as that will take care
 	of selection etc."
 
-	^self systemModel loadViewResource: aResourceArray inContext: contextView!
+	^self developmentSystem loadViewResource: aResourceArray inContext: contextView!
 
 basicPasteResourceLink: aLiteralResourceIdentifier context: contextView 
 	"Private - Pastes reference to aLiteralResourceIdentifier into contextView. Answers the
@@ -2033,7 +2033,7 @@ restoreUndoState: aLiteralStoreArray
 			self arena noRedrawDo: 
 					[| restoredView |
 					self endComposition.
-					state := self systemModel loadViewResource: aLiteralStoreArray inContext: View desktop.
+					state := self developmentSystem loadViewResource: aLiteralStoreArray inContext: View desktop.
 					restoredView := state at: 1.
 					self composingView: restoredView isOwned: restoredView notNil.
 					restoredView ifNotNil: [restoredView hasVisibleStyle: true].

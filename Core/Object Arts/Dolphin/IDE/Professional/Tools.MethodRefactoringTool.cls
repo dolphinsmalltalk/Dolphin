@@ -17,7 +17,7 @@ addParameter
 	"Command to invoke the Add Parameter to Method refactoring."
 
 	presenter 
-		performMethodRenameRefactoring: [:method | self systemModel addParameterToMethod: method]!
+		performMethodRenameRefactoring: [:method | self developmentSystem addParameterToMethod: method]!
 
 allMethodTemps
 	^self parseTree ifNil: [#()] ifNotNil: [:ast | ast allTemporaryVariableNodes]!
@@ -48,7 +48,7 @@ inlineAllSelfSends
 
 	presenter performMethodsRefactoring: 
 			[:methods | 
-			self systemModel inlineAllSelfSendsOf: methods within: presenter searchEnvironment]
+			self developmentSystem inlineAllSelfSendsOf: methods within: presenter searchEnvironment]
 		name: 'Inline Self Sends'!
 
 methodArguments
@@ -64,12 +64,12 @@ moveMethod
 	the class of some variable in that method's scope."
 
 	| variable |
-	variable := self systemModel selectTargetVariableOf: presenter selectedMethod methodClass
+	variable := self developmentSystem selectTargetVariableOf: presenter selectedMethod methodClass
 				parseTree: self parseTree.
 	variable isNil ifTrue: [^self].
 	presenter performMethodRefactoring: 
 			[:method | 
-			self systemModel 
+			self developmentSystem 
 				moveToComponent: method selector
 				in: method methodClass
 				variable: variable]!
@@ -130,7 +130,7 @@ pushMethods: aBoolean
 	"Pushes up or down the selected methods, depending on the <boolean> argument."
 
 	^presenter
-		performMethodsRefactoring: [:methods | self systemModel pushMethods: methods up: aBoolean]
+		performMethodsRefactoring: [:methods | self developmentSystem pushMethods: methods up: aBoolean]
 		name: ('Push Methods <1?Up:Down>' expandMacrosWith: aBoolean)!
 
 pushUpMethods
@@ -140,44 +140,49 @@ pushUpMethods
 
 	^self pushMethods: true!
 
-queryCommand: aCommandQuery command: aCommand 
+queryCommand: aCommandQuery command: aCommand
 	| method selector |
 	selector := aCommand asSymbol.
-	#methodRefactoringsMenu == selector 
+	#methodRefactoringsMenu == selector
 		ifTrue: 
 			[aCommandQuery isEnabled: true.
 			^true].
-	(#(#inlineAllSelfSends) identityIncludes: selector) 
+	(#(#inlineAllSelfSends) identityIncludes: selector)
 		ifTrue: 
 			[aCommandQuery isEnabled: presenter hasEditableMethodsSelected.
 			^true].
-	#moveMethod == selector 
+	#moveMethod == selector
 		ifTrue: 
 			[aCommandQuery isEnabled: presenter canMoveMethods.
 			^true].
-	(#(#renameMethod #renameMethodReferences #addParameter) identityIncludes: selector) 
+	(#(#renameMethod #renameMethodReferences #addParameter) identityIncludes: selector)
 		ifTrue: 
 			[aCommandQuery isEnabled: presenter hasRefactorableMethodSelected.
 			^true].
-	#pushUpMethods == selector 
+	#pushUpMethods == selector
 		ifTrue: 
 			[aCommandQuery isEnabled: (Keyboard default isShiftDown not and: [self canPushUpMethods]).
 			^true].
-	#pushDownMethods == selector 
+	#pushDownMethods == selector
 		ifTrue: 
 			[aCommandQuery isEnabled: (Keyboard default isShiftDown not and: [self canPushDownMethods]).
 			^true].
 	method := presenter selectedMethod.
-	(#(#removeParameterMenu #inlineParameterMenu #renameParameterMenu) identityIncludes: selector) 
+	(#(#removeParameterMenu #inlineParameterMenu #renameParameterMenu) identityIncludes: selector)
 		ifTrue: 
-			[aCommandQuery isEnabled: (presenter hasRefactorableMethodSelected 
+			[aCommandQuery isEnabled: (presenter hasRefactorableMethodSelected
 						and: [method isNil or: [method argumentCount > 0]]).
 			^true].
-	(#(#convertTempToInstVarMenu #renameTempMenu) identityIncludes: selector) 
+	(#(#convertTempToInstVarMenu #renameTempMenu) identityIncludes: selector)
 		ifTrue: 
-			[aCommandQuery 
+			[aCommandQuery
 				isEnabled: (presenter hasRefactorableMethodSelected and: [method isNil or: [method tempCount > 0]]).
 			^true].
+	#overrideMethods == selector
+		ifTrue: 
+			[aCommandQuery
+				isEnabled: false;
+				text: aCommandQuery commandDescription menuText << $…].
 	^false!
 
 renameItCommand
@@ -194,7 +199,7 @@ renameMethod
 
 renameMethod: aCompiledMethod 
 	presenter 
-		performMethodRenameRefactoring: [:method | self systemModel renameMethod: aCompiledMethod]!
+		performMethodRenameRefactoring: [:method | self developmentSystem renameMethod: aCompiledMethod]!
 
 renameMethodReferences
 	"Initiate a 'Rename References' method refactoring against the selected method to rename
@@ -202,7 +207,7 @@ renameMethodReferences
 	removing a duplicate method."
 
 	presenter 
-		performMethodRenameRefactoring: [:method | self systemModel renameMethodReferences: method]! !
+		performMethodRenameRefactoring: [:method | self developmentSystem renameMethodReferences: method]! !
 !Tools.MethodRefactoringTool categoriesForMethods!
 addParameter!commands!public!refactoring! !
 allMethodTemps!event handling!menus!public! !

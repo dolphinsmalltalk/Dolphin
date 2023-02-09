@@ -52,6 +52,7 @@ package setMethodNames: #(
 	#(#{Tools.SmalltalkSystem} #openIdeaSpace)
 	#(#{Tools.SmalltalkSystem} #updateHelpMenus)
 	#(#{Tools.SmalltalkToolShell} #addToNewIdeaSpace)
+	#(#{Tools.SmalltalkToolShell} #browseMethodsInEnvironments:)
 	#(#{Tools.SmalltalkToolShell} #browseSystem)
 	#(#{Tools.SmalltalkToolShell} #destroy)
 	#(#{Tools.SmalltalkToolShell} #dragToolToIdeaSpace)
@@ -304,7 +305,7 @@ publishedAspectsOfInstances!constants!public! !
 browseDeployed
 	"Open a new <EnvironmentBrowserShell> on the deployed application content as read from the stripper log."
 
-	[self systemModel browseDeployedPackage: self singlePackage] on: Error
+	[self developmentSystem browseDeployedPackage: self singlePackage] on: Error
 		do: 
 			[:ex |
 			MessageBox new
@@ -377,10 +378,15 @@ updateHelpMenus!private!utilities! !
 addToNewIdeaSpace
 	^self class addToNewIdeaSpace: self!
 
+browseMethodsInEnvironments: aCollectionOfBrowserEnvironment
+	^(self developmentSystem browseMethodsInEnvironments: aCollectionOfBrowserEnvironment)
+		model: self model;
+		yourself!
+
 browseSystem
 	"Open a new system browser on Object."
 
-	^self systemModel browseSystem!
+	^self developmentSystem browseSystem!
 
 destroy
 	"Attempt to forcibly close the receiver's view. If this is an IdeaSpace card then we ask the IdeaSpace to destroy it."
@@ -398,6 +404,7 @@ exit
 	^super exit! !
 !Tools.SmalltalkToolShell categoriesForMethods!
 addToNewIdeaSpace!public! !
+browseMethodsInEnvironments:!browsing!public! !
 browseSystem!commands!public! !
 destroy!commands!public! !
 dragToolToIdeaSpace!public! !

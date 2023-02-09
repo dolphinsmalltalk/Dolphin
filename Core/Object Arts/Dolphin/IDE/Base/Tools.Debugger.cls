@@ -73,7 +73,7 @@ accept: aBoolean methodSource: aString
 	originalSelection := sourcePresenter view selectionRange.
 	method := self selectedMethod.
 	hadErrors := false.
-	devsys := self systemModel.
+	devsys := self developmentSystem.
 	
 	[devsys
 		compile: aString
@@ -108,16 +108,13 @@ acceptNoRestart
 
 	self accept: false methodSource: self source!
 
-addToCommandRoute: route 
-	"Update the <OrderedCollection>, path, with the receiver's contribution to the command path
-	held by the <CommandPolicy>, route. Answer the next <Presenter> to visit.
-	The receiver is guaranteed not to be on the command path already."
+addToCommandRoute: aCommandPolicy
+	"Update the command routing path of the <CommandPolicy> argument with the receiver's contribution to the command path. "
 
-	"Implementation Note: We add our method refactoring tool to the command route, but only in
-	DPRO"
+	"Implementation Note: We add our method refactoring tool to the command route, but only in DPRO"
 
-	refactoringTool notNil ifTrue: [route appendTarget: refactoringTool].
-	^super addToCommandRoute: route!
+	refactoringTool ifNotNil: [aCommandPolicy appendTarget: refactoringTool].
+	^super addToCommandRoute: aCommandPolicy!
 
 allFrames
 	"Private - Include all stack frames in the call stack. There cannot possibly be any more
@@ -210,16 +207,15 @@ browseDefinitions
 	self browseDefinitionsMatching: (MethodSearch newSelector: self selectedMethod selector)
 		in: self searchEnvironment!
 
-browseDefinitionsMatching: aMethodSearch in: aBrowserEnvironment 
+browseDefinitionsMatching: aMethodSearch in: aBrowserEnvironment
 	| definitions |
-	definitions := OrderedCollection 
-				with: (self systemModel definitionsMatching: aMethodSearch in: aBrowserEnvironment).
-	self selectedMethod 
+	definitions := OrderedCollection with: (aBrowserEnvironment definitionsMatching: aMethodSearch).
+	self selectedMethod
 		ifNotNil: 
-			[:method | 
-			definitions add: (self systemModel definitionsMatching: aMethodSearch
-						in: (aBrowserEnvironment forClassHierarchyOf: method methodClass))].
-	self systemModel browseMethodsInEnvironments: definitions!
+			[:method |
+			definitions add: ((aBrowserEnvironment forClassHierarchyOf: method methodClass)
+						definitionsMatching: aMethodSearch)].
+	self developmentSystem browseMethodsInEnvironments: definitions!
 
 browseDefinitionsOfSelector: aSymbol in: aBrowserEnvironment
 	"Private - Opens a MethodBrowser on all the methods whose selectors match the specified
@@ -236,8 +232,8 @@ browseHierarchy
 	method."
 
 	self selectedMethod selector == #doesNotUnderstand: 
-		ifTrue: [self systemModel browseHierarchy: self frame receiver class]
-		ifFalse: [self systemModel browseClassHierarchyOfMethod: self selectedMethod]!
+		ifTrue: [self developmentSystem browseHierarchy: self frame receiver class]
+		ifFalse: [self developmentSystem browseClassHierarchyOfMethod: self selectedMethod]!
 
 browseIt
 	"Open a default browser on the current method"
@@ -264,16 +260,15 @@ browseReferences
 	self browseReferencesMatching: (MethodSearch newSelector: self selectedMethod selector)
 		in: self searchEnvironment!
 
-browseReferencesMatching: aMethodSearch in: aBrowserEnvironment 
+browseReferencesMatching: aMethodSearch in: aBrowserEnvironment
 	| references |
-	references := OrderedCollection 
-				with: (self systemModel referencesMatching: aMethodSearch in: aBrowserEnvironment).
-	self selectedMethod 
+	references := OrderedCollection with: (aBrowserEnvironment referencesMatching: aMethodSearch).
+	self selectedMethod
 		ifNotNil: 
-			[:method | 
-			references add: (self systemModel referencesMatching: aMethodSearch
-						in: (aBrowserEnvironment forClassHierarchyOf: method methodClass))].
-	self systemModel browseMethodsInEnvironments: references!
+			[:method |
+			references
+				add: ((aBrowserEnvironment forClassHierarchyOf: method methodClass) referencesMatching: aMethodSearch)].
+	self browseMethodsInEnvironments: references!
 
 browseReferencesToLiteral: anObject in: aBrowserEnvironment
 	"Private - Opens a MethodBrowser on all the methods that refer to aString from their literal frames
@@ -366,7 +361,7 @@ createComponents
 	sourcePresenter
 		areVariableTipsEnabled: true;
 		variableMetadataProvider: self.
-	refactoringTool := self systemModel newMethodRefactoringToolFor: self!
+	refactoringTool := self developmentSystem newMethodRefactoringToolFor: self!
 
 createSchematicWiring
 	"Create the trigger wiring for the receiver"
@@ -565,7 +560,7 @@ frames
 	^stackPresenter list!
 
 generateStubFor: aMessage inClass: aClass
-	^(self systemModel
+	^(self developmentSystem
 		compile: (self stubTextFor: aMessage inClass: aClass)
 		in: aClass
 		environment: nil
@@ -698,7 +693,7 @@ moreFrames
 	self depth: depth + StackDepthIncrement!
 
 nameForArgument: anObject 
-	^self systemModel nameForArgument: anObject!
+	^self developmentSystem nameForArgument: anObject!
 
 newLocalsTreeWithRoots: anOrderedCollection
 	| treeModel |
@@ -728,8 +723,8 @@ onAboutToDisplayMenu: aMenu
 		ifTrue: 
 			[self populateImplementMenu: aMenu.
 			^self].
-	"Otherwise pass on to the dev. system model to populate message menus"
-	self model
+	"Otherwise pass on to the dev. system to populate message menus"
+	self developmentSystem
 		populateMessagesMenus: aMenu
 		fromMethods: {self selectedMethod}
 		environment: self searchEnvironment!
@@ -958,7 +953,7 @@ onWalkback: titleString topFrame: aStackFrame resumable: aBoolean
 	self suspendProcess!
 
 parseContext
-	^self selectedMethod!
+	^self selectedMethod ifNotNil: [:method | method parseContext]!
 
 parseTree
 	^sourcePresenter parseTree!
@@ -1503,7 +1498,7 @@ saveNewMethod: aString
 	self accept: self class restartOnMethodSave methodSource: aString!
 
 searchEnvironment
-	^self systemModel systemEnvironment!
+	^self developmentSystem browserEnvironment!
 
 selectedMethod
 	"Answer the method in the currently selected stack frame, or nil if none."

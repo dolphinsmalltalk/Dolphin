@@ -55,7 +55,7 @@ filterMethods: aMonadicValuable
 	The resulting BrowserEnvironment is not a static list, but will always include whichever methods pass the filter at the particular point in time that the enquiry is made."
 
 	^(PluggableEnvironment onEnvironment: self select: aMonadicValuable)
-		label: 'Some methods from ' , self label;
+		label: (self subEnvironmentLabel: #someMethods for: aMonadicValuable);
 		yourself!
 
 forPackages: aCollection

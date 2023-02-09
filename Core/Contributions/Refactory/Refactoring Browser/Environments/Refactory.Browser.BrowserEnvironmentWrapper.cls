@@ -95,6 +95,26 @@ isEmpty
 isSystem
 	^false!
 
+labelFormats
+	^##(IdentityDictionary withAll: {#definitions -> 'Definitions of <1p> in <2p>'.
+				#bindingReferences -> 'References to <1p> in <2p>'.
+				#classReferences -> 'References to class <1p>, or its variables, in <2p>'.
+				#classVarReferences -> 'Methods that reference <1p>.<2s> in <3p>'.
+				#instVarReferences -> 'Methods that reference <1p>.<2s> in <3p>'.
+				#instVarReaders -> 'Methods that read <1p>.<2s> in <3p>'.
+				#instVarWriters -> 'Methods that assign to <1p>.<2s> in <3p>'.
+				#literalReferences -> 'References to <1p> in <2p>'.
+				#method -> '<1p>>><2p>'.
+				#methodCategory -> 'Methods of <2p> in category <1d>'.
+				#methodCategories -> 'Methods of <2p> in categories <1d>'.
+				#references -> 'References to <1p> in <2p>'.
+				#variableReferences -> 'References to <1p> in <2p>'.
+				#localHierarchy -> 'Local hierarchy of <1p> in <2p>'.
+				#subclassHierarchy -> 'Subclass hierarchy of <1p> in <2p>'.
+				#superclassHierarchy -> 'Superclass hierarchy of <1p> in <2p>'.
+				#someMethods -> 'Some methods in <2p>'.
+				#someMethodsOf -> 'Some methods of <1p> in <2p>'})!
+
 numberSelectors
 	| total |
 	total := 0.
@@ -130,6 +150,7 @@ includesProtocol:in:!public!testing! !
 includesSelector:in:!public!testing! !
 isEmpty!public!testing! !
 isSystem!public!testing! !
+labelFormats!constants!public! !
 numberSelectors!accessing!public! !
 onEnvironment:!initialize/release!public! !
 progressBlock!accessing!public! !

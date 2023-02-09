@@ -15,21 +15,23 @@ browseDeployedPackage: aPackage
 	self browseDeploymentLog: aPackage imageStripper logFileName!
 
 browseDeploymentLog: aString
-	self browseEnvironment: (self
-				browserEnvFromDeploymentLog: (FileLocator imageRelative localFileSpecFor: aString))!
+	self browseSystemModel: (self
+				systemModelFromDeploymentLog: (FileLocator imageRelative localFileSpecFor: aString))!
 
 browseEnvironment: aBrowserEnvironment
 	"Open an Environment Browser Shell on all classes and methods included in the specified <BrowserEnvironment>."
 
 	^EnvironmentBrowserShell onEnvironment: aBrowserEnvironment!
 
-browserEnvFromDeploymentLog: aString
-	^self browserEnvFromDom: (self openDeploymentLog: aString)!
-
 browseSources
 	"Open a browser on the sources for the entire system,"
 
 	SourceBrowser show!
+
+browseSystemModel: aSystemModel
+	"Open an Environment Browser Shell on all classes and methods included in the specified <systemModel>."
+
+	^EnvironmentBrowserShell showOn: aSystemModel!
 
 browseSystemOnMethod: aCompiledMethod 
 	"Open a new system browser on aCompiledMethod."
@@ -133,13 +135,16 @@ systemBrowserClass: toolClass
 	"Set the class of System Browser (a <SmalltalkToolShell>)
 	to be used by default in the development environment."
 
-	systemBrowserClass := toolClass! !
+	systemBrowserClass := toolClass!
+
+systemModelFromDeploymentLog: aString
+	^self browserEnvFromDom: (self openDeploymentLog: aString)! !
 !Tools.ProfessionalSmalltalkSystem categoriesForMethods!
 browseDeployedPackage:!helpers!public! !
 browseDeploymentLog:!helpers!public! !
 browseEnvironment:!browsing!public! !
-browserEnvFromDeploymentLog:!helpers!private! !
 browseSources!commands!public! !
+browseSystemModel:!browsing!public! !
 browseSystemOnMethod:!browsing!public! !
 browseSystemPackages:!browsing!public! !
 classBrowserClasses!accessing!public! !
@@ -156,6 +161,7 @@ queryCommand:!commands!private! !
 recompileDiffs:!public! !
 systemBrowserClass!accessing!public! !
 systemBrowserClass:!accessing!public! !
+systemModelFromDeploymentLog:!helpers!private! !
 !
 
 !Tools.ProfessionalSmalltalkSystem class methodsFor!

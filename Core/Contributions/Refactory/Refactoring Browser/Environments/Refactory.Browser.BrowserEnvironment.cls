@@ -154,19 +154,27 @@ forClass: aClass protocols: protocolCollection
 		protocols: protocolCollection!
 
 forClass: aClass selectors: selectorCollection
-	^(SelectorEnvironment
+	^SelectorEnvironment
 		onMethods: selectorCollection
 		forClass: aClass
-		in: self)
-		label: aClass fullName , '>>#' , (selectorCollection detect: [:each | true] ifNone: '');
-		yourself!
+		in: self!
 
 forClasses: classCollection
 	^ClassEnvironment onEnvironment: self classes: classCollection!
 
+forClassesAndTheirMetaclasses: aCollection
+	| behaviors |
+	behaviors := WriteStream on: (Array new: aCollection size * 2).
+	aCollection do: 
+			[:each |
+			behaviors
+				nextPut: each instanceClass;
+				nextPut: each instanceClass class].
+	^self forClasses: behaviors grabContents!
+
 forClassHierarchyOf: aClass
 	"Answers a <BrowserEnvironment> that includes aClass, its superclasses and subclasses, and the corresponding
-	metaclasses. See also #forClassHierarchyFrom:."
+	metaclasses. See also #forClassHierarchyFrom:/#forClassHierarchyTo:."
 
 	| classes |
 	#rbFix.	"Extracted from #referencesTo:in:"
@@ -176,18 +184,18 @@ forClassHierarchyOf: aClass
 		addAll: aClass class withAllSuperclasses;
 		addAll: aClass class allSubclasses.
 	^(self forClasses: classes)
-		label: ('Local hierarchy of <1p> in <2p>' expandMacrosWith: aClass with: self);
+		label: (self subEnvironmentLabel: #localHierarchy for: aClass);
 		yourself!
 
 forMethods: methodCollection
 	^(SelectorEnvironment onMethods: methodCollection in: self)
-		label: ('Some methods in <1p>' expandMacrosWith: self);
+		label: (self subEnvironmentLabel: #someMethods for: methodCollection);
 		yourself!
 
 forMethodsIn: aBrowserEnvironment
 	| env |
 	env := (SelectorEnvironment onEnvironment: self)
-				label: ('Some methods in <1d>' expandMacrosWith: self);
+				label: (self subEnvironmentLabel: #someMethods for: aBrowserEnvironment);
 				yourself.
 	aBrowserEnvironment
 		classesAndSelectorsDo: [:class :selector | env addClass: class selector: selector].
@@ -275,6 +283,26 @@ label
 label: aString
 	label := aString!
 
+labelFormats
+	^##(IdentityDictionary withAll: {#definitions -> 'All definitions of <1p>'.
+				#bindingReferences -> 'All references to <1p>'.
+				#classReferences -> 'All references to class <1p> or its variables'.
+				#classVarReferences -> 'All methods that reference <1p>.<2s>'.
+				#instVarReferences -> 'All methods that reference <1p>.<2s>'.
+				#instVarReaders -> 'All methods that read <1p>.<2s>'.
+				#instVarWriters -> 'All methods that assign to <1p>.<2s>'.
+				#literalReferences -> 'All references to <1p>'.
+				#method -> '<1p>>><2p>'.
+				#methodCategory -> 'All methods in category <1d>'.
+				#methodCategories -> 'All methods in categories <1d>'.
+				#references -> 'All references to <1p>'.
+				#variableReferences -> 'All references to <1p>'.
+				#localHierarchy -> 'Local hierarchy of <1p>'.
+				#subclassHierarchy -> 'Subclass hierarchy of <1p>'.
+				#superclassHierarchy -> 'Superclass hierarchy of <1p>'.
+				#someMethods -> 'Some methods'.
+				#someMethodsOf -> 'Some methods of <1p>'})!
+
 lookup: aKey
 	^(self associationAt: aKey) value!
 
@@ -328,15 +356,13 @@ referencesTo: aLiteral in: aClass
 
 referencesToClass: aClass
 	^(self filterMethods: [:method | method refersToLiteral: aClass])
-		label: ('References to class <1s>, or its variables, in <2p>' expandMacrosWith: aClass shortName
-					with: self);
+		label: (self subEnvironmentLabel: #classReferences for: aClass);
 		addSearchString: aClass unqualifiedName;
 		yourself!
 
 referencesToVariable: aVariableBinding
 	^(self filterMethods: [:method | method refersToLiteral: aVariableBinding])
-		label: ('Direct references to <1s> in <2p>' expandMacrosWith: aVariableBinding key
-					with: self);
+		label: (self subEnvironmentLabel: #variableReferences for: aVariableBinding fullName);
 		addSearchString: aVariableBinding key;
 		yourself
 	"addSearchString: aVariableBinding fullName;"!
@@ -420,6 +446,7 @@ forCategories:!environments!public! !
 forClass:protocols:!environments!public! !
 forClass:selectors:!environments!public! !
 forClasses:!environments!public! !
+forClassesAndTheirMetaclasses:!browsing!public! !
 forClassHierarchyOf:!environments!public! !
 forMethods:!environments!public! !
 forMethodsIn:!environments!public! !
@@ -442,6 +469,7 @@ isSystem!public!testing! !
 keys!accessing/classes!accessing-classes!public! !
 label!accessing!private! !
 label:!initialize/release!public! !
+labelFormats!constants!public! !
 lookup:!accessing/classes!public! !
 matches:!environments!public! !
 methodsDo:!public! !

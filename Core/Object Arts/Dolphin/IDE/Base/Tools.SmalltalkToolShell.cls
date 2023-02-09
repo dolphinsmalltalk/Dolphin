@@ -29,8 +29,17 @@ Class Instance Variables:
 !Tools.SmalltalkToolShell categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools! !
 !Tools.SmalltalkToolShell methodsFor!
 
+addToCommandRoute: aCommandPolicy
+	"Update the command routing path of the <CommandPolicy> argument with the receiver's contribution to the command path. "
+
+	super addToCommandRoute: aCommandPolicy.
+	"The development system is normally needed at the end of the path to provide the standard development commands needed in most tools. In many cases it will be the receiver's model, and so will have been added already unless the receiver has a different model (e.g. an RBModel)"
+	aCommandPolicy appendTarget: self developmentSystem.
+	"Answer self to have the command policy decide where to go next - default routing is up to the parent presenter, but there typically isn't one for a shell so the traversal is usually over."
+	^self!
+
 applyOptions
-	self systemModel applyOptionsToTool: self!
+	SmalltalkSystem current applyOptionsToTool: self!
 
 browseIt
 	"Open a new default browser at the same point as the receiver.
@@ -40,6 +49,14 @@ browseIt
 
 	Object browse!
 
+browseMethodsIn: aBrowserEnvironment
+	^(self developmentSystem browseMethodsIn: aBrowserEnvironment)
+		model: self model;
+		yourself!
+
+browserEnvironment
+	^self systemModel browserEnvironment!
+
 buildPopupForCommand: aSymbol 
 	aSymbol == #newIdeaSpace ifTrue: [^self class buildIdeaSpacePopup].
 	^nil!
@@ -48,7 +65,7 @@ canRefactor
 	"Private - Answer whether the development tools support refactoring (requires that the Refactoring Engine be
 	installed."
 
-	^self systemModel canRefactor!
+	^SmalltalkSystem current canRefactor!
 
 canSaveState
 	"Private - Answer true if the receiver can successfully have it's state saved by #saveStateOn:. Some
@@ -86,8 +103,11 @@ createSchematicWiring
 	self
 		when: #dropFiles:
 		send: #onDropFiles:over:
-		to: self systemModel
+		to: self developmentSystem
 		withArguments: {nil. self}!
+
+developmentSystem
+	^SmalltalkSystem current!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
@@ -129,7 +149,7 @@ help
 	"Bring up a help page for this tool."
 
 	<acceleratorKey: 'F1'>
-	self systemModel openHelpTopicForTool: self!
+	self developmentSystem openHelpTopicForTool: self!
 
 historyBack
 	"Private - Return to the previously visited method."
@@ -166,7 +186,7 @@ ideaSpace
 inspectSystemOptions
 	"Open a <PropertyInspector> on the system options."
 
-	^(self systemModel inspectSystemOptions)
+	^(self developmentSystem inspectSystemOptions)
 		selectionOrNil: self class;
 		yourself!
 
@@ -209,7 +229,7 @@ onViewOpened
 packageManager
 	"Private - Answer the current PackageManager."
 
-	^self systemModel packageManager!
+	^self developmentSystem packageManager!
 
 performCommand: aCommand
 	aCommand commandDescription isAbortable ifFalse: [^super performCommand: aCommand].
@@ -301,8 +321,7 @@ searchForPackage: aPackage
 searchForSymbol: aSymbol
 	self
 		routeCommand: (CommandDescription command: (Message selector: #browseMethodsInEnvironments:
-						argument: (self systemModel messagesMatching: (MethodSearch newSelector: aSymbol)
-								in: BrowserEnvironment new)))!
+						argument: (self browserEnvironment messagesMatching: (MethodSearch newSelector: aSymbol))))!
 
 searchSmalltalk
 	<acceleratorKey: 'Ctrl+Shift+F'>
@@ -360,19 +379,23 @@ statusModel
 	^[:ex | ex toTrace]!
 
 systemModel
-	^SmalltalkSystem current!
+	^self developmentSystem!
 
 workspaceClass
 	^SmalltalkSystem current workspaceClass! !
 !Tools.SmalltalkToolShell categoriesForMethods!
+addToCommandRoute:!commands!public! !
 applyOptions!private! !
 browseIt!commands!public! !
+browseMethodsIn:!operations!public! !
+browserEnvironment!accessing!public! !
 buildPopupForCommand:!private! !
 canRefactor!private!testing! !
 canSaveState!private!saved state! !
 configureFromSavedStateString:!public! !
 createComponents!initializing!private! !
 createSchematicWiring!initializing!private! !
+developmentSystem!public! !
 displayOn:!displaying!public! !
 fontSize!public! !
 fontSize:!public! !

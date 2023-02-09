@@ -17,7 +17,6 @@ package setMethodNames: #(
 ).
 
 package setPrerequisites: #(
-	'..\IDE\Base\Development System'
 	'..\IDE\Base\Development System Tests'
 	'..\Base\Dolphin'
 	'..\Base\Tests\Dolphin Base Tests'

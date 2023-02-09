@@ -33,22 +33,26 @@ name
 
 	^name!
 
-setIndex: anInteger name: aString
+setScope: aStLexicalScope index: anInteger name: aString
+	scope := aStLexicalScope.
 	index := anInteger.
-	name := aString.
-	self initialize! !
+	name := aString! !
 !Kernel.StInstanceVariable categoriesForMethods!
 index!accessing!public! !
 isInstanceVariable!public!testing! !
 name!accessing!public! !
-setIndex:name:!initializing!private! !
+setScope:index:name:!initializing!private! !
 !
 
 !Kernel.StInstanceVariable class methodsFor!
 
-index: anInteger name: aString
-	^self new setIndex: anInteger name: aString! !
+scope: aStClassScope index: anInteger name: aString
+	<primitive: 157>
+	^self new
+		setScope: aStClassScope
+		index: anInteger
+		name: aString! !
 !Kernel.StInstanceVariable class categoriesForMethods!
-index:name:!public! !
+scope:index:name:!public! !
 !
 

@@ -255,7 +255,7 @@ implementorsOf: aSelector in: anEnvironment
 						put: selectors]].
 	^(self onEnvironment: anEnvironment)
 		classSelectors: classDict metaClassSelectors: metaDict;
-		label: ('Definitions of <1p> in <2p>' expandMacrosWith: aSelector with: anEnvironment);
+		label: (anEnvironment subEnvironmentLabel: #definitions for: aSelector);
 		yourself!
 
 matches: aString in: anEnvironment
@@ -272,10 +272,13 @@ matches: aString in: anEnvironment
 				do: [:lit | lit isString ifTrue: [(aString match: lit) ifTrue: [newEnvironment addClass: each selector: sel]]]].
 	^newEnvironment!
 
-onMethods: selectorCollection forClass: aClass in: anEnvironment 
+onMethods: selectorCollection forClass: aClass in: anEnvironment
 	| env |
 	env := self onEnvironment: anEnvironment.
 	selectorCollection do: [:each | env addClass: aClass selector: each].
+	env label: (selectorCollection size = 1
+				ifTrue: [(anEnvironment labelFormats at: #method) << {aClass. selectorCollection single}]
+				ifFalse: [anEnvironment subEnvironmentLabel: #someMethodsOf: for: aClass]).
 	^env!
 
 onMethods: methodCollection in: anEnvironment 
@@ -284,9 +287,8 @@ onMethods: methodCollection in: anEnvironment
 		yourself!
 
 referencesTo: aLiteral in: aBrowserEnvironment
-	| classDict label |
+	| classDict |
 	#rbFix.	"Change the label"
-	label := 'References to <1p> in <2p>' expandMacrosWith: aLiteral with: aBrowserEnvironment.
 	classDict := LookupTable new.
 	aBrowserEnvironment classesDo: 
 			[:class |
@@ -296,7 +298,7 @@ referencesTo: aLiteral in: aBrowserEnvironment
 			selectors notEmpty ifTrue: [classDict at: class put: selectors]].
 	^(self onEnvironment: aBrowserEnvironment)
 		on: classDict;
-		label: label;
+		label: (aBrowserEnvironment subEnvironmentLabel: #references for: aLiteral);
 		searchStrings: {aLiteral printString};
 		yourself! !
 !Refactory.Browser.SelectorEnvironment class categoriesForMethods!

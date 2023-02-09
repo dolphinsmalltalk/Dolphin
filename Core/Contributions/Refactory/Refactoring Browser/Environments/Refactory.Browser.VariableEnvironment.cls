@@ -368,25 +368,25 @@ storeOn:!printing!public! !
 
 on: anEnvironment readersOfInstanceVariable: aString in: aClass
 	^(self onEnvironment: anEnvironment)
-		label: 'Readers of ''' , aString , ''' in ' , aClass fullName;
+		label: (anEnvironment labelFormats at: #instVarReaders) << {aClass. aString. anEnvironment};
 		addClass: aClass instanceVariableReader: aString;
 		yourself!
 
 on: anEnvironment referencesToClassVariable: aString in: aClass
 	^(self onEnvironment: anEnvironment)
-		label: 'References to ''' , aString , ''' in ' , aClass fullName;
+		label: (anEnvironment labelFormats at: #classVarReferences) << {aClass. aString. anEnvironment};
 		addClass: aClass classVariable: aString;
 		yourself!
 
 on: anEnvironment referencesToInstanceVariable: aString in: aClass
 	^(self onEnvironment: anEnvironment)
-		label: 'References to ''' , aString , ''' in ' , aClass fullName;
+		label: (anEnvironment labelFormats at: #instVarReferences) << {aClass. aString. anEnvironment};
 		addClass: aClass instanceVariable: aString;
 		yourself!
 
 on: anEnvironment writersOfInstanceVariable: aString in: aClass
 	^(self onEnvironment: anEnvironment)
-		label: 'Writers of ''' , aString , ''' in ' , aClass fullName;
+		label: (anEnvironment labelFormats at: #instVarWriters) << {aClass. aString. anEnvironment};
 		addClass: aClass instanceVariableWriter: aString;
 		yourself!
 

@@ -38,7 +38,7 @@ literal
 
 literal: anObject
 	literal := anObject.
-	self pattern: anObject displayString.
+	self pattern: (anObject isString ifTrue: [anObject] ifFalse: [anObject displayString]).
 	self searchMode: #text!
 
 literalDefinitionFilter

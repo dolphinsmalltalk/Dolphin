@@ -83,13 +83,16 @@ createSchematicWiring
 		when: #drop:
 			send: #onDropOverCategory:
 			to: self.
-	(self systemModel)
+	(self developmentSystem)
 		when: #methodAdded:
 			send: #onMethodAdded:
 			to: self;
 		when: #methodRemoved:
 			send: #onMethodRemoved:
 			to: self!
+
+developmentSystem
+	^SmalltalkSystem current!
 
 imageForCategory: aString 
 	^(iconMap at: aString ifAbsent: [^nil]) imageIndex!
@@ -245,9 +248,7 @@ selectCategory: aStringOrNil
 	^categoriesPresenter selections: {aStringOrNil}!
 
 systemModel
-	"Private - Answer the development system model."
-
-	^SmalltalkSystem current! !
+	^self parentPresenter systemModel! !
 !Tools.ResourceToolboxPresenter categoriesForMethods!
 add:toCategory:!operations!private! !
 addResourceIdentifierFor:!helpers!private! !
@@ -257,6 +258,7 @@ categorizeResource!commands!public! !
 configureColumns!helpers!private! !
 createComponents!initializing!private! !
 createSchematicWiring!initializing!private! !
+developmentSystem!commands!private! !
 imageForCategory:!helpers!private! !
 initialize!initializing!private! !
 localResourceCategoriesOf:!helpers!private! !

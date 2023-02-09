@@ -52,11 +52,23 @@ abstractInstanceVariables: aCollectionOfAssociations within: aBrowserEnvironment
 		variables: aCollectionOfAssociations
 		within: aBrowserEnvironment!
 
+accessorsFor: nameString isClassVariable: aBoolean of: aClass within: aBrowserEnvironment
+	| finder accessors |
+	finder := CreateAccessorsForVariableRefactoring
+				model: (RBModel onEnvironment: aBrowserEnvironment)
+				variable: nameString
+				class: aClass
+				classVariable: aBoolean.
+	accessors := OrderedCollection new.
+	finder findGetterMethod ifNotNil: [:getter | accessors addLast: getter].
+	finder findSetterMethod ifNotNil: [:setter | accessors addLast: setter].
+	^accessors!
+
 addClassVariable: aString to: aClass
 	self
 		executeVariableRefactoring: AddClassVariableRefactoring
 		variables: {aClass -> aString}
-		within: self systemEnvironment!
+		within: self browserEnvironment!
 
 addClassVariableTo: aClass
 	"Implements the Add Class Variable class refactoring."
@@ -98,7 +110,7 @@ addInstanceVariable: aString to: aClass
 	self
 		executeVariableRefactoring: AddInstanceVariableRefactoring
 		variables: {aClass -> aString}
-		within: self systemEnvironment!
+		within: self browserEnvironment!
 
 addInstanceVariableTo: aClass
 	"Implements the Add Instance Variable class refactoring."
@@ -115,7 +127,7 @@ addParameterToMethod: aCompiledMethod
 	^self addParameterToMethod: aCompiledMethod inPackages: #()!
 
 addParameterToMethod: aCompiledMethod inPackages: aCollectionOfPackages
-	| args argc newName suffix newArg selector model refactoring |
+	| args argc newName suffix newArg selector model refactoring prompter |
 	newName := ScopedMethodName fromMethod: aCompiledMethod.
 	args := newName arguments.
 	argc := args size.
@@ -126,17 +138,17 @@ addParameterToMethod: aCompiledMethod inPackages: aCollectionOfPackages
 	args addLast: newArg.
 	selector := aCompiledMethod selector.
 	newName selector: (argc == 0 ifTrue: [selector , ':'] ifFalse: [selector]).
-	newName := ((aCollectionOfPackages isEmpty
-				ifTrue: [RenameMethodDialog]
+	prompter := (aCollectionOfPackages isEmpty
+				ifTrue: [RenameMethodDialog createOn: newName]
 				ifFalse: 
-					[newName addScope: (self systemEnvironment forPackages: aCollectionOfPackages) name: #'Package(s)'.
-					MethodNameDialog])
-					createOn: newName)
+					[newName addScope: (self browserEnvironment forPackages: aCollectionOfPackages) name: #'Package(s)'.
+					MethodNameDialog create: 'Refactoring view' on: newName])
 				allowParameterReordering: false;
 				allowParameterRename: false;
 				caption: 'Add Parameter to <1p><2? in Package(s)...>'
 							<< {aCompiledMethod selector. aCollectionOfPackages notEmpty};
-				showModal.
+				yourself.
+	newName := prompter showModal.
 	newName isNil ifTrue: [^nil].
 	model := RBModel onEnvironment: newName scope.
 	"Reset the enviornment label to the default rather than one of the abbreviated labels used in the MethodNameDialog."
@@ -149,11 +161,9 @@ addParameterToMethod: aCompiledMethod inPackages: aCollectionOfPackages
 				initializer: 'nil'.
 	^(self promptForInitializationExpression: refactoring)
 		ifNotNil: 
-			[self performRefactoring: 
-					[model name: refactoring displayString.
-					refactoring
-						execute;
-						yourself]]!
+			[model name: refactoring displayString.
+			refactoring shouldShowChanges: prompter showChanges.
+			self performRefactoring: refactoring]!
 
 addSharedVariable: aString to: aNamespace
 	self changeManager performChange: (AddSharedVariableChange addSharedVariable: aString to: aNamespace )!
@@ -167,24 +177,26 @@ basicCreateSubclass: aClassDetails subclasses: aCollection
 
 	| ref |
 	ref := aClassDetails classReference.
-	self
-		performRefactoring: [(AddClassRefactoring details: aClassDetails subclasses: aCollection) execute].
+	self performRefactoring: (AddClassRefactoring details: aClassDetails subclasses: aCollection).
 	^ref valueOrNil!
 
-basicRemoveMethods: aCollectionOfCompiledMethods within: aBrowserEnvironment
+basicRemoveMethods: aCollectionOfCompiledMethods within: aBrowserEnvironment showChanges: aBoolean
 	| classes |
 	classes := (aCollectionOfCompiledMethods collect: [:each | each methodClass]) asSet.
 	classes size = 1
 		ifTrue: 
 			[self
-				safeRemoveSelectors: (aCollectionOfCompiledMethods collect: [:each | each selector])
+				basicRemoveSelectors: (aCollectionOfCompiledMethods collect: [:each | each selector])
 				from: classes anyOne
-				inEnvironment: aBrowserEnvironment]
+				within: aBrowserEnvironment
+				showChanges: aBoolean]
 		ifFalse: 
-			[self basicRemoveMethodsIn: (aBrowserEnvironment forMethods: aCollectionOfCompiledMethods)
-				within: aBrowserEnvironment]!
+			[self
+				basicRemoveMethodsIn: (aBrowserEnvironment forMethods: aCollectionOfCompiledMethods)
+				within: aBrowserEnvironment
+				showChanges: aBoolean]!
 
-basicRemoveMethodsIn: methodsEnvironment within: searchEnvironment
+basicRemoveMethodsIn: methodsEnvironment within: searchEnvironment showChanges: aBoolean
 	| model errors confirmed |
 	model := RBModel onEnvironment: searchEnvironment.
 	model name: 'Safe Remove ' , methodsEnvironment label.
@@ -230,7 +242,18 @@ basicRemoveMethodsIn: methodsEnvironment within: searchEnvironment
 			mb buttonStyle: #okCancel.
 			mb caption: model name.
 			(mb warning: prompt contents) == #cancel ifTrue: [^self]].
-	self changeManager performChange: model changes!
+	aBoolean ifTrue: [model browseChanges] ifFalse: [self changeManager performChange: model changes]!
+
+basicRemoveSelectors: anArrayOfSelectors from: aClass within: aBrowserEnvironment showChanges: aBoolean
+	| refactoring model |
+	model := RBModel onEnvironment: aBrowserEnvironment.
+	refactoring := RemoveMethodRefactoring
+				model: model
+				removeMethods: anArrayOfSelectors
+				from: aClass.
+	refactoring shouldShowChanges: aBoolean.
+	model name: refactoring displayString.
+	^self performRefactoring: refactoring!
 
 browseMethodsIn: aBrowserEnvironment
 	| browser |
@@ -297,7 +320,7 @@ chooseSelectorInEnvironment: aBrowserEnvironment caption: aString
 	^ChoicePrompter choices: selectors caption: aString!
 
 cloneClass: aClass as: newClassName under: superclass in: package
-	^self performRefactoring: 
+	^self performRefactoringAction: 
 			[| newClass |
 			(CopyClassRefactoring
 				clone: aClass
@@ -314,17 +337,16 @@ confirmRenameClass: aClass to: aString
 					<< {aClass fullName. aString};
 		customButtons: #(#(#yes '&Rename') #(#no 'Cancel'));
 		isCancellable: true;
-		checkboxText: 'Show refactoring changes?';
+		checkboxText: self showChangesText;
 		yourself!
 
 convertTemporaryToInstanceVariable: aString in: aClass selector: aSelector
 	"Implement the 'Convert to Instance Variable' code refactoring."
 
-	self performRefactoring: 
-			[(TemporaryToInstanceVariableRefactoring
+	self performRefactoring: (TemporaryToInstanceVariableRefactoring
 				class: aClass
 				selector: aSelector
-				variable: aString) execute]!
+				variable: aString)!
 
 convertToSibling: aClass
 	"Implement the 'Convert to Sibling' class refactoring: 'Converts a concrete superclass to be
@@ -339,7 +361,7 @@ convertToSibling: aClass
 				subclasses: aClass subclasses))
 		ifNotNil: 
 			[:refactoring |
-			self performRefactoring: 
+			self performRefactoringAction: 
 					[refactoring execute.
 					refactoring className asQualifiedReference
 						ifDefined: [:newSuperclass | newSuperclass owningPackage: aClass owningPackage]]]!
@@ -352,10 +374,17 @@ createInstanceVariableAccessors: aString in: aClass within: aBrowserEnvironment
 		classVariables: false
 		within: aBrowserEnvironment!
 
+createNewClass: subclassName inPackage: aPackage
+	| dialog |
+	dialog := CreateSubclassDialog newSubclassOf: Object inPackage: aPackage.
+	dialog subclassFullName: subclassName.
+	dialog showModal.
+	^dialog answer ifNotNil: [self createSubclass: dialog classDetails subclasses: dialog subclasses]!
+
 createVariableAccessors: variableNamePairs classVariables: aBoolean within: aBrowserEnvironment
 	"Generate get and set accessors for the specified class and variable name pairs."
 
-	^self performRefactoring: 
+	^self performRefactoringAction: 
 			[| model name |
 			model := RBModel onEnvironment: aBrowserEnvironment.
 			name := String writeStream.
@@ -419,8 +448,17 @@ duplicateSuperclassMethodsOf: aClass
 					answer add: (self duplicateOf: eachMethod in: nearest)]].
 	^answer!
 
+executeRefactoring: aBlock
+	"Private - Evaluate the refactoring <niladicValuable>, aBlock, trapping any refactoring
+	errors it raises and reporting to the user appropriately. If any unhandled error occurs, or
+	the refactoring is aborted, then answer nil, otherwise answer the value from the block."
+
+	^aBlock
+		on: self refactoringError
+		do: [:ex | self handleRefactoringException: ex]!
+
 executeVariableRefactoring: refactoringClass variables: aCollectionOfPairs within: aBrowserEnvironment
-	^self performRefactoring: 
+	^self performRefactoringAction: 
 			[| namespace refactoring caption |
 			namespace := RBModel onEnvironment: aBrowserEnvironment.
 			caption := String writeStream.
@@ -450,7 +488,7 @@ executeVariableRefactoring: refactoringClass variables: aCollectionOfPairs withi
 extendMethodBrowserMenus: browser
 	| ctxMenu otherMenu |
 	ctxMenu := (browser view viewNamed: 'methodlist') presenterConnectionPoint contextMenu.
-	otherMenu := ctxMenu find: 'Browse other'.
+	otherMenu := ctxMenu findCommand: #browseOther.
 	otherMenu
 		insertItem: (CommandMenuItem commandDescription: (ClosedCommandDescription
 						command: (Message selector: #recompileDiffs)
@@ -469,11 +507,10 @@ extractMethod: anInterval from: aSymbol in: aBehavior
 	method. This refactoring determines what temporary variables are needed in the new method, 
 	and prompts for a selector that takes these arguments.'"
 
-	^self performRefactoring: 
-			[(ExtractMethodRefactoring
+	^self performRefactoring: (ExtractMethodRefactoring
 				extract: anInterval
 				from: aSymbol
-				in: aBehavior) execute]!
+				in: aBehavior)!
 
 extractToComponent: anInterval from: aSelector in: aClass
 	"Create a component from the selection of source text in the range identified
@@ -482,11 +519,10 @@ extractToComponent: anInterval from: aSelector in: aClass
 	information.
 	Implements the 'Extract to Component' refactoring."
 
-	self performRefactoring: 
-			[(ExtractMethodToComponentRefactoring
+	self performRefactoring: (ExtractMethodToComponentRefactoring
 				extract: anInterval
 				from: aSelector
-				in: aClass) execute]!
+				in: aClass)!
 
 extractToTemporary: anInterval from: aSelector in: aClass
 	"Extract the expression in the range, anInterval, of the source code of the method
@@ -511,12 +547,11 @@ extractToTemporary: anInterval from: aSelector in: aClass
 				showHintWhenEmpty: false;
 				showModal.
 	newName isNil ifTrue: [^nil].
-	^self performRefactoring: 
-			[(ExtractToTemporaryRefactoring
+	^self performRefactoring: (ExtractToTemporaryRefactoring
 				extract: anInterval
 				to: newName
 				from: aSelector
-				in: aClass) execute]!
+				in: aClass)!
 
 handleRefactoringException: aRefactoringException
 	| text mb |
@@ -553,7 +588,7 @@ inlineAllSelfSendsOf: aCollectionOfMethods within: aBrowserEnvironment
 	namespace := RBModel onEnvironment: aBrowserEnvironment.
 	caption := String writeStream.
 	caption nextPutAll: 'Inline self sends of '.
-	^self performRefactoring: 
+	^self performRefactoringAction: 
 			[aCollectionOfMethods do: 
 					[:each |
 					(InlineAllSendersRefactoring
@@ -601,7 +636,7 @@ inlineParameter: aString from: aSelector in: aClass
 	an assignment at the beginning of the method. This can only be performed if all senders of the method have 
 	the same value for the parameter'"
 
-	^self performRefactoring: 
+	^self performRefactoringAction: 
 			[(InlineParameterRefactoring
 				inlineParameter: aString
 				in: aClass
@@ -615,11 +650,10 @@ inlineTemporary: anInterval from: aSelector in: aClass
 	chosen by the user.
 	Implements the 'Inline Temporary' refactoring."
 
-	self performRefactoring: 
-			[(InlineTemporaryRefactoring
+	self performRefactoring: (InlineTemporaryRefactoring
 				inline: anInterval
 				from: aSelector
-				in: aClass) execute]!
+				in: aClass)!
 
 isOAD
 	"Private - Is this an Object Arts Development version"
@@ -630,7 +664,8 @@ isOAD
 isOAD: aBoolean
 	"Private - Set this an Object Arts Development version according to aBoolean"
 
-	isOAD := aBoolean!
+	isOAD := aBoolean
+!
 
 moveAllTempsToInnerScope: aBrowserEnvironment
 	| model errorCount |
@@ -649,8 +684,8 @@ moveAllTempsToInnerScope: aBrowserEnvironment
 			mb buttonStyle: #okCancel.
 			mb headline: model name.
 			(mb
-				warning: ('<1p> non-fatal errors occured while constructing the refactoring. Please see Transcript for further details.<n><n>If you contine with the refactoring then the erroneous methods will be ignored. The Refactoring is undoable.<n><n>Press OK to proceed, or Cancel to abort.'
-						expandMacrosWith: errorCount))
+				warning: '<1p> non-fatal errors occured while constructing the refactoring. Please see Transcript for further details.<n><n>If you contine with the refactoring then the erroneous methods will be ignored. The Refactoring is undoable.<n><n>Press OK to proceed, or Cancel to abort.'
+						<< errorCount)
 					== #cancel ifTrue: [^self]].
 	self changeManager performChange: model changes!
 
@@ -738,7 +773,7 @@ moveTempToInnerScope: anInterval in: aClass selector: aSelector
 	"Implement the 'Move to Inner Scope' code refactoring: 'Moves a temporary variable definition 
 	into the tightest scope that contains both the variable assignment and references.'"
 
-	^self performRefactoring: 
+	^self performRefactoringAction: 
 			[(MoveVariableDefinitionRefactoring
 				bindTight: anInterval
 				in: aClass
@@ -749,14 +784,20 @@ moveToComponent: aSelector in: aClass variable: aString
 	to another class (or classes) as defined by the variable named, aString.
 	Implements the 'Move to Component' refactoring."
 
-	self performRefactoring: 
-			[(MoveMethodRefactoring
+	self performRefactoring: (MoveMethodRefactoring
 				selector: aSelector
 				class: aClass
-				variable: aString) execute]!
+				variable: aString)!
 
 newCodeRefactoringToolFor: aMethodWorkspace
 	^CodeRefactoringTool forPresenter: aMethodWorkspace!
+
+newMethodNamePrompter: aRBMethodName caption: aString allowExisting: aBoolean
+	^(RenameMethodDialog createOn: aRBMethodName)
+		allowParameterRename: false;
+		allowExistingSelector: aBoolean;
+		caption: aString;
+		yourself!
 
 newMethodRefactoringToolFor: aMethodBrowser
 	^MethodRefactoringTool forPresenter: aMethodBrowser!
@@ -765,14 +806,19 @@ nukeChangeHistory
 	super nukeChangeHistory.
 	RefactoringManager nuke!
 
-performRefactoring: aBlock
+performRefactoring: aRefactoring
+	self performRefactoringAction: [aRefactoring primitiveExecute].
+	aRefactoring shouldShowChanges
+		ifTrue: [aRefactoring model browseChanges]
+		ifFalse: [RefactoringManager instance addRefactoring: aRefactoring].
+	^aRefactoring!
+
+performRefactoringAction: aBlock
 	"Private - Evaluate the refactoring <niladicValuable>, aBlock, trapping any refactoring
 	errors it raises and reporting to the user appropriately. If any unhandled error occurs, or
 	the refactoring is aborted, then answer nil, otherwise answer the value from the block."
 
-	^aBlock
-		on: self refactoringError
-		do: [:ex | self handleRefactoringException: ex]!
+	^aBlock on: self refactoringError do: [:ex | self handleRefactoringException: ex]!
 
 performRefactorings: aCollectionOfRefactorings showChanges: aBoolean
 	| count rbModel refactorings |
@@ -786,7 +832,7 @@ performRefactorings: aCollectionOfRefactorings showChanges: aBoolean
 	(ProgressDialog operation: 
 			[:progress |
 			
-			[self performRefactoring: 
+			[self performRefactoringAction: 
 					[refactorings keysAndValuesDo: 
 							[:index :each |
 							"All the refactorings must have the same model"
@@ -824,25 +870,47 @@ promptForInitializationExpression: anAddParameterRefactoring
 				result];
 		showModal!
 
-promptForMethodName: aRBMethodName caption: aString allowExisting: aBoolean
-	^(RenameMethodDialog createOn: aRBMethodName)
-		allowParameterRename: false;
-		allowExistingSelector: aBoolean;
-		caption: aString;
-		showModal!
-
-promptForMethodRename: aCompiledMethod caption: aString allowExisting: aBoolean
-	^self
-		promptForMethodName: (ScopedMethodName fromMethod: aCompiledMethod)
-		caption: aString
-		allowExisting: aBoolean!
+promptToRemoveMethods: aCollectionOfMethods inEnvironment: aBrowserEnvironment
+	| mb |
+	mb := MessageBox new.
+	aCollectionOfMethods size > 1
+		ifTrue: 
+			[| details |
+			mb
+				headline: 'Remove methods if unused/redundant?';
+				checkboxText: self showChangesText.
+			details := String smalltalkWriteStream.
+			details
+				nextPutAll: 'The following methods are the candidates for removal:';
+				cr.
+			aCollectionOfMethods asSortedCollection do: 
+					[:each |
+					details
+						cr;
+						nextPutAll: '    ';
+						display: each].
+			mb
+				detailsText: details contents;
+				text: 'The methods will be removed if they have no references in <1p> or are equivalent to the superclass implementations.'
+							<< {aBrowserEnvironment}]
+		ifFalse: 
+			[mb
+				uniqueId: [self] method displayString;
+				isSuppressible: true;
+				headline: 'Remove method if unused/redundant?';
+				text: '<1p> will be removed if it has no references in <2p> or is equivalent to the superclass implementation.'
+							<< {aCollectionOfMethods first. aBrowserEnvironment}].
+	mb
+		isCancellable: true;
+		customButtons: #(#(#yes '&Remove') #(#no 'Cancel'));
+		confirm.
+	^mb!
 
 protectInstanceVariable: aString in: aClass
 	"Implement the 'Protect/Concrete instance variable' class refactoring: 'Converts all variable 
 	accessor sends to direct variable references. If the accessor is no longer used then it will be removed.'"
 
-	self
-		performRefactoring: [(ProtectInstanceVariableRefactoring variable: aString class: aClass) execute]!
+	self performRefactoring: (ProtectInstanceVariableRefactoring variable: aString class: aClass)!
 
 protectInstanceVariables: pairs 
 	"Invoke the 'Protect/Concrete Instance Variable' refactoring for each of the 
@@ -856,7 +924,7 @@ pullUpClassVariable: aString into: aClass
 	^self 
 		pullUpClassVariable: aString
 		into: aClass
-		within: self systemEnvironment!
+		within: self browserEnvironment!
 
 pullUpClassVariable: aString into: aClass within: aBrowserEnvironment
 	"Implement the 'Pull Up Class Variable' class refactoring: 'Move a variable definition
@@ -873,7 +941,7 @@ pullUpInstanceVariable: aString into: aClass
 	self 
 		pullUpInstanceVariable: aString
 		into: aClass
-		within: self systemEnvironment!
+		within: self browserEnvironment!
 
 pullUpInstanceVariable: aString into: aClass within: aBrowserEnvironment
 	"Implement the 'Pull Up Instance Variable' class refactoring: 'Move a variable definition
@@ -891,7 +959,7 @@ pushDownClassVariable: aString in: aClass
 	self 
 		pushDownClassVariable: aString
 		in: aClass
-		within: self systemEnvironment!
+		within: self browserEnvironment!
 
 pushDownClassVariable: aString in: aClass within: aBrowserEnvironment
 	"Implement the 'Push Down Class Variable' class refactoring within the scope of the
@@ -914,7 +982,7 @@ pushDownInstanceVariable: aString in: aClass
 	self 
 		pushDownInstanceVariable: aString
 		in: aClass
-		within: self systemEnvironment!
+		within: self browserEnvironment!
 
 pushDownInstanceVariable: aString in: aClass within: aBrowserEnvironment
 	"Implement the 'Push Down Instance Variable' class refactoring: 'Moves a variable definition
@@ -944,7 +1012,7 @@ pushDownMethods: aCollectionOfMethods
 pushMethods: aCollectionOfMethods up: aBoolean
 	"Private - Implement a multi-method push up or push down refactoring as an atomic unit."
 
-	^self performRefactoring: 
+	^self performRefactoringAction: 
 			[| caption namespace byClass |
 			byClass := LookupTable new.
 			aCollectionOfMethods
@@ -1007,24 +1075,85 @@ refactoringError
 
 	^RefactoringSignal!
 
+refactoringToRenameVariable: nameString to: newNameString isClassVariable: aBoolean of: aClass within: aBrowserEnvironment
+	| accessors refactoring |
+	accessors := self
+				accessorsFor: nameString
+				isClassVariable: aBoolean
+				of: aClass
+				within: aBrowserEnvironment.
+	accessors isEmpty
+		ifTrue: 
+			[refactoring := (aBoolean
+						ifTrue: [RenameClassVariableRefactoring]
+						ifFalse: [RenameInstanceVariableRefactoring])
+							model: (RBModel onEnvironment: aBrowserEnvironment)
+							rename: nameString
+							to: newNameString
+							in: aClass]
+		ifFalse: 
+			[| model dialog |
+			dialog := RenameAccessorsDialog create
+						caption: 'Rename <3?class:instance> variable <1p>.<2s> …' << {aClass. nameString. aBoolean};
+						selectors: accessors;
+						yourself.
+			dialog showModal
+				ifNil: 
+					["Cancelled"
+					^nil]
+				ifNotNil: 
+					[:scope |
+					scope == #None
+						ifTrue: 
+							[refactoring := (aBoolean
+										ifTrue: [RenameClassVariableRefactoring]
+										ifFalse: [RenameInstanceVariableRefactoring])
+											model: (RBModel onEnvironment: aBrowserEnvironment)
+											rename: nameString
+											to: newNameString
+											in: aClass]
+						ifFalse: 
+							[| env |
+							env := aBrowserEnvironment.
+							scope == #Class
+								ifTrue: [env := aBrowserEnvironment forClasses: {aClass instanceClass. aClass instanceClass class}].
+							scope == #Hierarchy ifTrue: [env := aBrowserEnvironment forClassHierarchyFrom: aClass].
+							scope == #'Package(s)'
+								ifTrue: 
+									[env := aBrowserEnvironment
+												forPackages: (accessors collect: [:each | (aClass compiledMethodAt: each) owningPackage]) asSet].
+							scope == #'Method(s)' ifTrue: [env := aBrowserEnvironment forClass: aClass selectors: accessors].
+							model := RBModel onEnvironment: env.
+							refactoring := (aBoolean
+										ifTrue: [RenameClassVariableAndAccessorsRefactoring]
+										ifFalse: [RenameInstanceVariableAndAccessorsRefactoring])
+											model: model
+											rename: nameString
+											to: newNameString
+											in: aClass]].
+			dialog showChanges ifTrue: [refactoring shouldShowChanges: true]].
+	refactoring model name: refactoring displayString.
+	^refactoring!
+
 removeClasses: aCollection
 	"Removes aClass from the system using the 'Remove Class' refactoring, which won't remove
 	the class if referenced, and which promotes all subclasses."
 
-	| count single |
+	| count single refactoring messageBox |
 	count := aCollection size.
 	count = 0 ifTrue: [^self].
 	single := count = 1.
-	(MessageBox new
-		uniqueId: [self] method;
-		isSuppressible: true;
+	messageBox := MessageBox new.
+	(messageBox
 		headline: (single
 					ifTrue: ['Remove class <1s>?' << aCollection first fullName]
 					ifFalse: ['Remove <1d> classes?' << count]);
+		checkboxText: self showChangesText;
 		confirm: 'The class<1?:es> will only be removed if <1?it has:they have> no references.' << single)
 			ifFalse: [^false].
-	self performRefactoring: 
-			[(RemoveClassRefactoring classNames: (aCollection collect: [:each | each fullName])) execute].
+	refactoring := RemoveClassRefactoring classNames: (aCollection collect: [:each | each fullName]).
+	messageBox isChecked ifTrue: [refactoring shouldShowChanges: true].
+	self performRefactoring: refactoring.
 	^true!
 
 removeClassVariable: aString from: aClass within: aBrowserEnvironment
@@ -1071,57 +1200,75 @@ removeInstanceVariables: aCollectionOfAssociations within: aBrowserEnvironment
 		variables: aCollectionOfAssociations
 		within: aBrowserEnvironment!
 
-removeMethods: aCollectionOfCompiledMethods
-	self basicRemoveMethods: aCollectionOfCompiledMethods within: self systemEnvironment!
+removeMethods: aCollectionOfMethods
+	| classes env messageBox count |
+	count := aCollectionOfMethods size.
+	count = 0 ifTrue: [^self].
+	env := self browserEnvironment.
+	messageBox := self promptToRemoveMethods: aCollectionOfMethods inEnvironment: env.
+	messageBox isConfirmed ifFalse: [^self].
+	classes := (aCollectionOfMethods collect: [:each | each methodClass]) asSet.
+	classes size > 1
+		ifTrue: 
+			[self
+				basicRemoveMethodsIn: (env forMethods: aCollectionOfMethods)
+				within: env
+				showChanges: messageBox isChecked]
+		ifFalse: 
+			[self
+				basicRemoveSelectors: (aCollectionOfMethods collect: [:each | each selector])
+				from: classes single
+				within: env
+				showChanges: (count > 1 and: [messageBox isChecked])]!
 
 removeMethodsDuplicatedInSuperclassOf: aClass
 	"Private - Identify all methods of the <Behavior>, aClass, that have an equivalent definition in a superclass,
 	list them for the user, and remove them depending on the response. Answers whether there were
 	actually any duplicate methods, regardless of whether they were removed."
 
-	| duplicated msg |
+	| duplicated details messageBox |
 	duplicated := self duplicateSuperclassMethodsOf: aClass.
 	duplicated isEmpty ifTrue: [^false].
-	msg := String smalltalkWriteStream.
-	msg
+	details := String smalltalkWriteStream.
+	details
 		nextPutAll: 'The following duplicate methods will be removed:';
 		cr.
 	duplicated := duplicated asSortedArray: [:a :b | a printString < b printString].
 	duplicated do: 
 			[:each |
-			msg
+			details
 				cr;
 				nextPutAll: '    ';
 				print: each].
-	(MessageBox new
-		headline: 'Remove duplicate methods in <1p>?' << aClass;
-		isSuppressible: true;
-		uniqueId: [self] method;
-		confirm: msg contents)
-			ifTrue: 
-				[self performRefactoring: 
-						[(RemoveMethodRefactoring removeMethods: (duplicated collect: [:each | each selector]) from: aClass)
-							execute]].
+	messageBox := MessageBox new
+				headline: 'Remove duplicate methods in <1p>?' << aClass;
+				checkboxText: self showChangesText;
+				detailsText: details contents;
+				customButtons: #(#(#yes '&Remove Duplicates') #(#no 'Cancel')) yourself.
+	messageBox confirm
+		ifTrue: 
+			[| refactoring |
+			refactoring := RemoveMethodRefactoring removeMethods: (duplicated collect: [:each | each selector])
+						from: aClass.
+			messageBox isChecked ifTrue: [refactoring shouldShowChanges: true].
+			self performRefactoring: refactoring].
 	^true!
 
-removeParameter: aString from: aSelector in: aClass environment: aBrowserEnvironment
+removeParameter: aString from: aSelector in: aClass within: aBrowserEnvironment
 	"Implements the Remove Parameter refactoring: 'Removes an unused parameter from 
 	all implementors of the method, and removes it from the message sends.' The <readableString>,
 	aString, identifies the name of the argument which is removed, not the selector keyword.
 	Answer the new selector after removal of the parameter."
 
-	^self performRefactoring: 
-			[| model refactoring |
-			model := RBModel onEnvironment: aBrowserEnvironment.
-			refactoring := RemoveParameterRefactoring
-						model: model
-						removeParameter: aString
-						in: aClass
-						selector: aSelector.
-			model name: refactoring displayString.
-			refactoring
-				execute;
-				yourself]!
+	| model refactoring |
+	model := RBModel onEnvironment: aBrowserEnvironment.
+	refactoring := RemoveParameterRefactoring
+				model: model
+				removeParameter: aString
+				in: aClass
+				selector: aSelector.
+	model name: refactoring displayString.
+	^self performRefactoring: refactoring!
 
 removeStaticVariables: aCollectionOfAssociations within: aBrowserEnvironment
 	"Invoke the 'Remove Static Variable' refactoring for each of the {class, var. name} pairs in
@@ -1136,82 +1283,88 @@ removeStaticVariables: aCollectionOfAssociations within: aBrowserEnvironment
 renameClass: aClass to: newClassName showChanges: aBoolean
 	| refactoring |
 	refactoring := RenameClassRefactoring rename: aClass to: newClassName.
-	self performRefactoring: [refactoring primitiveExecute].
-	aBoolean
-		ifTrue: [refactoring model browseChanges]
-		ifFalse: [RefactoringManager instance addRefactoring: refactoring]!
+	refactoring shouldShowChanges: aBoolean.
+	^self performRefactoring: refactoring!
 
-renameClassVariable: aString to: newName in: aClass within: aBrowserEnvironment 
-	self 
+renameClassVariable: aString to: newName in: aClass within: aBrowserEnvironment
+	self
 		renameVariable: aString
 		to: newName
-		in: aClass
-		classVariable: true
+		isClassVariable: true
+		of: aClass
 		within: aBrowserEnvironment!
 
-renameInstanceVariable: aString to: newName in: aClass within: aBrowserEnvironment 
-	self 
+renameInstanceVariable: aString to: newName in: aClass within: aBrowserEnvironment
+	self
 		renameVariable: aString
 		to: newName
-		in: aClass
-		classVariable: false
+		isClassVariable: false
+		of: aClass
 		within: aBrowserEnvironment!
 
 renameMethod: aCompiledMethod
 	"Implement the 'Rename' method refactoring: 'Renames all implementors of a method, all senders, 
 	and all symbols references. In addition to strict renaming, it also allows you to rearrange the parameters. 
 	However, when rearranging the parameters, it cannot permute any symbols that are performed.'
-	Answer the new selector, or nil if no rename actually took place."
+	Answer the new refactoring, or nil if no rename actually took place."
 
-	| newName |
-	newName := self
-				promptForMethodRename: aCompiledMethod
+	| prompter |
+	prompter := self
+				newMethodNamePrompter: (ScopedMethodName fromMethod: aCompiledMethod)
 				caption: ('Rename <1p> …' expandMacrosWith: aCompiledMethod)
 				allowExisting: false.
-	^newName isNil ifFalse: [self renameMethod: aCompiledMethod to: newName]!
+	^prompter showModal
+		ifNotNil: 
+			[:newName |
+			self
+				renameMethod: aCompiledMethod
+				to: newName
+				showChanges: prompter showChanges]!
 
-renameMethod: aCompiledMethod to: aRBMethodName
-	^self performRefactoring: 
-			[| model refactoring |
-			model := RBModel onEnvironment: aRBMethodName scope.
-			refactoring := RenameMethodRefactoring
-						model: model
-						renameMethod: aCompiledMethod selector
-						in: aCompiledMethod methodClass
-						to: aRBMethodName selector
-						permutation: aRBMethodName permutation.
-			model name: refactoring displayString.
-			refactoring
-				execute;
-				yourself]!
+renameMethod: aCompiledMethod to: aRBMethodName showChanges: aBoolean
+	| model refactoring |
+	model := RBModel onEnvironment: aRBMethodName scope.
+	refactoring := RenameMethodRefactoring
+				model: model
+				renameMethod: aCompiledMethod selector
+				in: aCompiledMethod methodClass
+				to: aRBMethodName selector
+				permutation: aRBMethodName permutation.
+	refactoring shouldShowChanges: aBoolean.
+	model name: refactoring displayString.
+	^self performRefactoring: refactoring!
 
 renameMethodReferences: aCompiledMethod
 	"Implement the 'Rename' method refactoring: 'Renames all implementors of a method, all senders, 
 	and all symbols references. In addition to strict renaming, it also allows you to rearrange the parameters. 
 	However, when rearranging the parameters, it cannot permute any symbols that are performed.'
-	Answer the new selector, or nil if no rename actually took place."
+	Answer the refactoring, or nil if no rename actually took place."
 
-	| newName |
-	newName := self
-				promptForMethodRename: aCompiledMethod
+	| prompter |
+	prompter := self
+				newMethodNamePrompter: (ScopedMethodName fromMethod: aCompiledMethod)
 				caption: 'Rename References to <1p> …' << aCompiledMethod
 				allowExisting: true.
-	^newName notNil ifTrue: [self renameMethodReferences: aCompiledMethod to: newName]!
+	^prompter showModal
+		ifNotNil: 
+			[:newName |
+			self
+				renameMethodReferences: aCompiledMethod
+				to: newName
+				showChanges: prompter showChanges]!
 
-renameMethodReferences: aCompiledMethod to: aRBMethodName
-	^self performRefactoring: 
-			[| model refactoring |
-			model := RBModel onEnvironment: aRBMethodName scope.
-			refactoring := RenameMethodReferencesTransformation
-						model: model
-						renameMethod: aCompiledMethod selector
-						in: aCompiledMethod methodClass
-						to: aRBMethodName selector
-						permutation: aRBMethodName permutation.
-			model name: refactoring displayString.
-			refactoring
-				execute;
-				yourself]!
+renameMethodReferences: aCompiledMethod to: aRBMethodName showChanges: aBoolean
+	| model refactoring |
+	model := RBModel onEnvironment: aRBMethodName scope.
+	refactoring := RenameMethodReferencesTransformation
+				model: model
+				renameMethod: aCompiledMethod selector
+				in: aCompiledMethod methodClass
+				to: aRBMethodName selector
+				permutation: aRBMethodName permutation.
+	refactoring shouldShowChanges: aBoolean.
+	model name: refactoring displayString.
+	^self performRefactoring: refactoring!
 
 renameTemporary: aStVariableNode to: aString in: aClass selector: aSelector
 	"Rename the temporary variable in the range, anInterval, of the source code of the method of
@@ -1248,113 +1401,20 @@ renameTemporary: aStVariableNode to: aString in: aClass selector: aSelector
 			newName])
 			ifNotNil: 
 				[:newName |
-				self performRefactoring: 
+				self performRefactoringAction: 
 						[(RenameTemporaryRefactoring
 							renameTemporaryFrom: aStVariableNode sourceInterval
 							to: newName
 							in: aClass
 							selector: aSelector) execute]]!
 
-renameVariable: aString to: newName in: aClass classVariable: aBoolean within: aBrowserEnvironment
-	^self performRefactoring: 
-			[| refactoringClass env model refactoring |
-			"Drop through"
-			env := self
-						scopeToRenameAccessorsFor: aString
-						in: aClass
-						classVariable: aBoolean
-						within: aBrowserEnvironment.
-			refactoringClass := env isNil
-						ifTrue: 
-							[env := aBrowserEnvironment.
-							aBoolean ifTrue: [RenameClassVariableRefactoring] ifFalse: [RenameInstanceVariableRefactoring]]
-						ifFalse: 
-							[aBoolean
-								ifTrue: [RenameClassVariableAndAccessorsRefactoring]
-								ifFalse: [RenameInstanceVariableAndAccessorsRefactoring]].
-			model := RBModel onEnvironment: env.
-			refactoring := refactoringClass
-						model: model
-						rename: aString
-						to: newName
-						in: aClass.
-			model name: refactoring displayString.
-			refactoring execute.
-			newName]!
-
-safeRemoveSelectors: anArrayOfSelectors from: aClass inEnvironment: aBrowserEnvironment
-	| mb |
-	mb := MessageBox new.
-	mb
-		uniqueId: [self] method displayString;
-		isSuppressible: true.
-	anArrayOfSelectors size > 1
-		ifTrue: 
-			[| details |
-			mb headline: 'Remove methods if unused/redundant?'.
-			details := String smalltalkWriteStream.
-			details
-				nextPutAll: 'The following methods are the candidates for removal:';
-				cr.
-			anArrayOfSelectors asSortedCollection do: 
-					[:each |
-					details
-						cr;
-						nextPutAll: '    ';
-						display: each].
-			mb
-				detailsText: details contents;
-				text: 'The methods of <1p> will be removed if they have no references in <2p> or are equivalent to the superclass implementations.'
-							<< {aClass. aBrowserEnvironment}]
-		ifFalse: 
-			[mb
-				headline: 'Remove method if unused/redundant?';
-				text: '<1p>>><2s> will be removed if it has no references in <3p> or is equivalent to the superclass implementation.'
-							<< {aClass. anArrayOfSelectors first. aBrowserEnvironment}].
-	(mb
-		isCancellable: true;
-		customButtons: #(#(#yes '&Remove') #(#no 'Cancel'));
-		confirm) ifFalse: [^false].
-	^self performRefactoring: 
-			[| model refactoring |
-			model := RBModel onEnvironment: aBrowserEnvironment.
-			refactoring := RemoveMethodRefactoring
-						model: model
-						removeMethods: anArrayOfSelectors
-						from: aClass.
-			model name: refactoring displayString.
-			refactoring
-				execute;
-				yourself]!
-
-scopeToRenameAccessorsFor: aString in: aClass classVariable: aBoolean within: aBrowserEnvironment
-	| finder dialog selectors scope |
-	finder := CreateAccessorsForVariableRefactoring
-				variable: aString
-				class: aClass
-				classVariable: aBoolean.
-	selectors := OrderedCollection new.
-	finder findGetterMethod ifNotNil: [:getter | selectors addLast: getter].
-	finder findSetterMethod ifNotNil: [:setter | selectors addLast: setter].
-	selectors isEmpty ifTrue: [^nil].
-	dialog := RenameAccessorsDialog create.
-	dialog caption: ('Rename <3s> variable <1p>.<2s> …'
-				expandMacrosWith: aClass
-				with: aString
-				with: (aBoolean ifTrue: ['class'] ifFalse: ['instance'])).
-	dialog selectors: selectors.
-	scope := dialog showModal.
-	scope isNil ifTrue: [self abortSignal signal].
-	scope == #Class
-		ifTrue: [^aBrowserEnvironment forClasses: {aClass instanceClass. aClass instanceClass class}].
-	scope == #Hierarchy ifTrue: [^aBrowserEnvironment forClassHierarchyFrom: aClass].
-	scope == #'Package(s)'
-		ifTrue: 
-			[^aBrowserEnvironment
-				forPackages: (selectors collect: [:each | (aClass compiledMethodAt: each) owningPackage])].
-	scope == #'Method(s)' ifTrue: [^aBrowserEnvironment forClass: aClass selectors: selectors].
-	scope == #Global ifTrue: [^aBrowserEnvironment].
-	^nil!
+renameVariable: oldNameString to: newNameString isClassVariable: aBoolean of: aClass within: aBrowserEnvironment
+	^(self
+		refactoringToRenameVariable: oldNameString
+		to: newNameString
+		isClassVariable: aBoolean
+		of: aClass
+		within: aBrowserEnvironment) ifNotNil: [:refactoring | self performRefactoring: refactoring]!
 
 selectTargetVariableOf: aClass parseTree: aStMethodNode
 	| variables default classes |
@@ -1389,6 +1449,9 @@ selectTargetVariableOf: aClass parseTree: aStMethodNode
 		caption: 'Choose target variable…')
 		getTextBlock: [:each | each key ifNil: [each value] ifNotNil: [:eachClass | eachClass unqualifiedName , '.' , each value]];
 		showModal) value!
+
+showChangesText
+	^'Show proposed changes?'!
 
 validateNewClassVarName: aString for: aClass
 	^(AddClassVariableRefactoring variable: aString class: aClass) preconditions validate
@@ -1441,6 +1504,7 @@ abstractClassVariable:in:within:!public!refactoring! !
 abstractClassVariables:within:!public!refactoring! !
 abstractInstanceVariable:in:within:!public!refactoring! !
 abstractInstanceVariables:within:!public!refactoring! !
+accessorsFor:isClassVariable:of:within:!private!refactoring! !
 addClassVariable:to:!public!refactoring! !
 addClassVariableTo:!public!refactoring! !
 addFilteredMethod:forLintRule:!public!refactoring! !
@@ -1451,8 +1515,9 @@ addParameterToMethod:!commands!public!refactoring! !
 addParameterToMethod:inPackages:!public!refactoring! !
 addSharedVariable:to:!commands!public! !
 basicCreateSubclass:subclasses:!private!refactoring! !
-basicRemoveMethods:within:!private!refactoring! !
-basicRemoveMethodsIn:within:!private!refactoring! !
+basicRemoveMethods:within:showChanges:!private!refactoring! !
+basicRemoveMethodsIn:within:showChanges:!private!refactoring! !
+basicRemoveSelectors:from:within:showChanges:!private!refactoring! !
 browseMethodsIn:!browsing!public! !
 browseMethodsInEnvironments:!browsing!public! !
 browseSelectors:caption:environment:!browsing!private! !
@@ -1466,9 +1531,11 @@ confirmRenameClass:to:!event handling!private! !
 convertTemporaryToInstanceVariable:in:selector:!public!refactoring! !
 convertToSibling:!public!refactoring! !
 createInstanceVariableAccessors:in:within:!public!refactoring! !
+createNewClass:inPackage:!public!refactoring! !
 createVariableAccessors:classVariables:within:!public!refactoring! !
 duplicateOf:in:!helpers!private! !
 duplicateSuperclassMethodsOf:!enquiries!private! !
+executeRefactoring:!private!refactoring! !
 executeVariableRefactoring:variables:within:!helpers!private!refactoring! !
 extendMethodBrowserMenus:!browsing!private! !
 extractMethod:from:in:!public!refactoring! !
@@ -1488,13 +1555,14 @@ moveClasses:toNamespace:showChanges:!commands!private!refactoring! !
 moveTempToInnerScope:in:selector:!public!refactoring! !
 moveToComponent:in:variable:!public!refactoring! !
 newCodeRefactoringToolFor:!helpers!private!refactoring! !
+newMethodNamePrompter:caption:allowExisting:!helpers!private!refactoring! !
 newMethodRefactoringToolFor:!helpers!private!refactoring! !
 nukeChangeHistory!private!refactoring! !
-performRefactoring:!private!refactoring! !
-performRefactorings:showChanges:!commands!private!refactoring! !
+performRefactoring:!public!refactoring! !
+performRefactoringAction:!private!refactoring! !
+performRefactorings:showChanges:!private!refactoring! !
 promptForInitializationExpression:!private!refactoring! !
-promptForMethodName:caption:allowExisting:!helpers!private!refactoring! !
-promptForMethodRename:caption:allowExisting:!helpers!private!refactoring! !
+promptToRemoveMethods:inEnvironment:!private!refactoring! !
 protectInstanceVariable:in:!public!refactoring! !
 protectInstanceVariables:!public!refactoring! !
 pullUpClassVariable:into:!public!refactoring! !
@@ -1511,6 +1579,7 @@ pushMethods:up:!private!refactoring! !
 pushUpMethods:!public!refactoring! !
 queryCommand:!commands!private! !
 refactoringError!constants!private! !
+refactoringToRenameVariable:to:isClassVariable:of:within:!private!refactoring! !
 removeClasses:!public!refactoring! !
 removeClassVariable:from:within:!public!refactoring! !
 removeFilteredMethod:forLintRule:!public!refactoring! !
@@ -1519,20 +1588,19 @@ removeInstanceVariable:from:within:!public!refactoring! !
 removeInstanceVariables:within:!public!refactoring! !
 removeMethods:!public!refactoring! !
 removeMethodsDuplicatedInSuperclassOf:!private!refactoring! !
-removeParameter:from:in:environment:!public!refactoring! !
+removeParameter:from:in:within:!public!refactoring! !
 removeStaticVariables:within:!public!refactoring! !
 renameClass:to:showChanges:!public!refactoring! !
 renameClassVariable:to:in:within:!private!refactoring! !
 renameInstanceVariable:to:in:within:!private!refactoring! !
 renameMethod:!public!refactoring! !
-renameMethod:to:!public!refactoring! !
+renameMethod:to:showChanges:!private!refactoring! !
 renameMethodReferences:!public!refactoring! !
-renameMethodReferences:to:!private!refactoring! !
+renameMethodReferences:to:showChanges:!private!refactoring! !
 renameTemporary:to:in:selector:!public!refactoring! !
-renameVariable:to:in:classVariable:within:!private!refactoring! !
-safeRemoveSelectors:from:inEnvironment:!private!refactoring! !
-scopeToRenameAccessorsFor:in:classVariable:within:!private!refactoring! !
+renameVariable:to:isClassVariable:of:within:!private!refactoring! !
 selectTargetVariableOf:parseTree:!helpers!private!refactoring! !
+showChangesText!constants!private! !
 validateNewClassVarName:for:!helpers!private!refactoring! !
 validateNewInstanceVariableName:for:!enquiries!helpers!private!refactoring! !
 validateRenameClass:to:!helpers!private! !

@@ -52,20 +52,19 @@ browseCompilationFailures
 	"Open a method browser on all methods in the system which have failed compilation (i.e.
 	which are instances of CompileFailedMethod)."
 
-	self systemModel browseCompilationFailuresIn: self searchEnvironment!
+	self developmentSystem browseCompilationFailuresIn: self searchEnvironment!
 
 browseCompilationIssues
 	"Open a method browser on all methods in the system which have failed compilation (i.e.
 	which are instances of CompileFailedMethod)."
 
-	self systemModel browseCompilationIssuesIn: self searchEnvironment!
+	self developmentSystem browseCompilationIssuesIn: self searchEnvironment!
 
 browseDeprecatedMethods
 	self browseMethodCategory: '*-deprecated'!
 
 browseMessageDefinitions
-	"Prompt for a selector and open a method browser displaying the implementors of that
-	selector."
+	"Prompt for a selector and open a method browser displaying the implementors of that selector."
 
 	self model browseMessageDefinitionsIn: self searchEnvironment!
 
@@ -246,7 +245,7 @@ resetWhenInvisible
 	the windows entirely off screen. The system detects this as having no visible windows, and therefore "!
 
 searchEnvironment
-	^self model systemEnvironment!
+	^self model browserEnvironment!
 
 systemFolderPresenter
 	^systemFolderPresenter!
@@ -405,7 +404,7 @@ firstReset
 	"
 
 	self reset.
-	self default systemModel helpContents!
+	SmalltalkSystem current helpContents!
 
 free
 	"Close and release the current system shell (e.g. to create a runtime image).

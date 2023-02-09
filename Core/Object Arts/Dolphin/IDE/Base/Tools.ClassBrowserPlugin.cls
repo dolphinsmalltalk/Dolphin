@@ -78,7 +78,10 @@ promptToSaveClassChanges: aSelectionChangingEvent
 	value of the out parameter, aBooleanValue, should be set to false. Also answers whether the
 	selection change can continue."
 
-	^true! !
+	^true!
+
+systemModel
+	^model systemModel! !
 !Tools.ClassBrowserPlugin categoriesForMethods!
 applyOptions!options!private! !
 browser!accessing!public! !
@@ -92,6 +95,7 @@ onBrowserCardChangedFrom:to:!event handling!private! !
 onShownInBrowser!event handling!private! !
 onViewOpened!event handling!private! !
 promptToSaveClassChanges:!helpers!public! !
+systemModel!public! !
 !
 
 Tools.ClassBrowserPlugin methodProtocol: #classBrowserPlugin attributes: #(#readOnly) selectors: #(#browser #isCurrentCard #onShownInBrowser)!

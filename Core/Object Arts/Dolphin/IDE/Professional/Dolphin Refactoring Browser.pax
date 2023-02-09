@@ -28,6 +28,7 @@ package basicPackageVersion: '6.1'.
 package setClassNames: #(
 	#{Refactory.Browser.CopyClassRefactoring}
 	#{Refactory.Browser.RenameMethodReferencesTransformation}
+	#{Tools.ChooseImportDialog}
 	#{Tools.CodeMentorPlugin}
 	#{Tools.CodeRefactoringTool}
 	#{Tools.CodeRewriterPlugin}
@@ -124,15 +125,26 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.PushUpMethodRefactoring} #displayOn:)
 	#(#{Refactory.Browser.PushUpMethodRefactoring} #getOptionCopyDownSuperclassMethod:)
 	#(#{Refactory.Browser.PushUpMethodRefactoring} #getOptionPushUpRemoveDuplicates:in:)
+	#(#{Refactory.Browser.RBAbstractClass} #allSubclassesDo:)
+	#(#{Refactory.Browser.RBAbstractClass} #allSubclassesPreOrderDo:)
 	#(#{Refactory.Browser.RBAbstractClass class} #icon)
+	#(#{Refactory.Browser.RBAbstractClass class} #instancesAreClasses)
 	#(#{Refactory.Browser.RBAbstractCondition} #validate)
 	#(#{Refactory.Browser.RBAbstractCondition} #validate:)
 	#(#{Refactory.Browser.RBAbstractCondition class} #icon)
 	#(#{Refactory.Browser.RBClass} #icon)
+	#(#{Refactory.Browser.RBClass class} #instancesAreClasses)
 	#(#{Refactory.Browser.RBMetaclass class} #icon)
+	#(#{Refactory.Browser.RBMetaclass class} #instancesAreClasses)
+	#(#{Refactory.Browser.RBMethod} #hasCompilationFailures)
+	#(#{Refactory.Browser.RBMethod} #hasCompilationIssues)
 	#(#{Refactory.Browser.RBMethod} #owningPackage)
 	#(#{Refactory.Browser.RBMethod class} #icon)
+	#(#{Refactory.Browser.RBModel} #allResourceIdentifiers)
 	#(#{Refactory.Browser.RBModel} #browseChanges)
+	#(#{Refactory.Browser.RBModel} #methodsThatFailedToCompileIn:)
+	#(#{Refactory.Browser.RBModel} #methodsWithCompilationIssuesIn:)
+	#(#{Refactory.Browser.RBModel} #modelClassFor:)
 	#(#{Refactory.Browser.RBModel class} #icon)
 	#(#{Refactory.Browser.RBNamespaceClass class} #icon)
 	#(#{Refactory.Browser.RBRootNamespace class} #icon)
@@ -190,6 +202,7 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.VariableRefactoring} #displayPrefix)
 	#(#{Refactory.Browser.VariableRefactoring} #getOptionPullUpNonSharedInstVar:)
 	#(#{Refactory.Browser.VariableRefactoring class} #displayPrefix)
+	#(#{Tools.ChooseNamespaceDialog class} #resource_Refactoring_view)
 	#(#{Tools.ClassBrowserAbstract} #abstractInstanceVariables)
 	#(#{Tools.ClassBrowserAbstract} #methodRefactoringTool)
 	#(#{Tools.ClassBrowserAbstract} #methodsToOverride)
@@ -203,7 +216,7 @@ package setMethodNames: #(
 	#(#{Tools.ClassBrowserAbstract} #removeInstanceVariables)
 	#(#{Tools.ClassBrowserAbstract} #renameMethod)
 	#(#{Tools.ClassBrowserAbstract} #selectedOverridableMethods)
-	#(#{Tools.ClassBrowserPlugin} #systemModel)
+	#(#{Tools.ClassBrowserPlugin} #developmentSystem)
 	#(#{Tools.ClassSelector} #abstractClassVariables)
 	#(#{Tools.ClassSelector} #abstractInstanceVariables)
 	#(#{Tools.ClassSelector} #addClassVariable)
@@ -231,6 +244,7 @@ package setMethodNames: #(
 	#(#{Tools.ClassSelector} #removeDuplicateMethods)
 	#(#{Tools.ClassSelector} #removeImport)
 	#(#{Tools.ClassSelector} #removeInstanceVariables)
+	#(#{Tools.CreateSubclassDialog class} #resource_Refactoring_view)
 	#(#{Tools.Debugger} #canMoveMethods)
 	#(#{Tools.Debugger} #hasRefactorableMethodSelected)
 	#(#{Tools.Debugger} #performMethodRefactoring:)
@@ -254,6 +268,7 @@ package setMethodNames: #(
 	#(#{Tools.PackageBrowserShell} #changeClassNamespace)
 	#(#{Tools.PackageBrowserShell} #chooseMethodsForRefactoring:)
 	#(#{Tools.PackageBrowserShell} #hasRefactorableMethodSelected)
+	#(#{Tools.PackageBrowserShell} #newMethodNamePrompter:caption:allowExisting:)
 	#(#{Tools.PackageBrowserShell} #onClass:renameTo:accept:)
 	#(#{Tools.PackageBrowserShell} #onRenameClass:to:showChanges:)
 	#(#{Tools.PackageBrowserShell} #parseTree)
@@ -274,6 +289,7 @@ package setMethodNames: #(
 	#(#{Tools.SmalltalkToolShell} #chooseMethodForRefactoring:)
 	#(#{Tools.SmalltalkToolShell} #queryRefactoringCommand:)
 	#(#{UI.Dialog} #validationDwell)
+	#(#{UI.Presenter class} #resource_Refactoring_OK_Cancel_button_block)
 ).
 
 package setPrerequisites: #(
@@ -292,6 +308,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Views\Control Bars\Dolphin Control Bars'
 	'..\..\MVP\Presenters\Difference\Dolphin Differences Presenter'
 	'..\..\MVP\Graphics\Dolphin GDI Graphics'
+	'..\..\MVP\Views\GroupBox\Dolphin GroupBox'
 	'..\..\MVP\Presenters\Prompters\Dolphin In-place Text Editor'
 	'..\..\MVP\Presenters\Prompters\Dolphin Key-Value Prompter'
 	'..\..\MVP\Models\List\Dolphin List Models'
@@ -304,6 +321,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Dialogs\Progress\Dolphin Progress Dialog'
 	'..\..\MVP\Presenters\Prompters\Dolphin Prompter'
 	'..\..\MVP\Views\Buttons\Dolphin Push Buttons'
+	'..\..\MVP\Views\Scintilla\Dolphin Scintilla View'
 	'..\..\MVP\Views\Splitter\Dolphin Splitter Control'
 	'..\..\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\MVP\Icons\Dolphin Text Tile Icons'
@@ -365,7 +383,7 @@ UI.Dialog subclass: #'Tools.ConvertToSiblingDialog'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.Dialog subclass: #'Tools.MethodNameDialog'
-	instanceVariableNames: 'selectorPresenter parametersPresenter parameterNamesPresenter hintBubble'
+	instanceVariableNames: 'selectorPresenter parametersPresenter parameterNamesPresenter hintBubble showChangesPresenter'
 	classVariableNames: ''
 	imports: #(#{Refactory.Browser private})
 	classInstanceVariableNames: ''
@@ -377,9 +395,15 @@ Tools.MethodNameDialog subclass: #'Tools.RenameMethodDialog'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.ValueDialog subclass: #'Tools.RenameAccessorsDialog'
-	instanceVariableNames: 'selectorsPresenter scopePresenter'
+	instanceVariableNames: 'selectorsPresenter scopePresenter showChangesPresenter'
 	classVariableNames: ''
 	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Tools.ChooseNamespaceDialog subclass: #'Tools.ChooseImportDialog'
+	instanceVariableNames: 'private hintBubble namespacesOnly'
+	classVariableNames: ''
+	imports: #(#{Refactory.Browser private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Tools.SmalltalkToolShell subclass: #'Tools.RewriteChangesBrowser'
@@ -395,7 +419,7 @@ Tools.MethodBrowserShell subclass: #'Tools.LintRuleFailuresBrowserShell'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Refactory.Browser.RBMethodName subclass: #'Tools.ScopedMethodName'
-	instanceVariableNames: 'methodClass originalArguments originalSelector scope scopes'
+	instanceVariableNames: 'methodClass originalArguments originalSelector scopeName scopes'
 	classVariableNames: ''
 	imports: #(#{Refactory.Browser})
 	classInstanceVariableNames: ''
@@ -765,7 +789,8 @@ getOptionRenameAllDefinitions: aCollection of: aSymbol
 	count := aCollection size.
 	^MessageBox new
 		caption: self displayString;
-		headline: 'Rename <1p> methods defined in <2d> classes?' << {aSymbol. count};
+		headline: 'Rename <1p> methods defined in <2d> classes in <3p>?'
+					<< {aSymbol. count. model environment};
 		customButtons: #(#(#yes '&Rename All') #(#no 'Cancel'));
 		defaultButton: 2;
 		detailsText: details contents;
@@ -1097,8 +1122,7 @@ getOptionAlreadyDefined: aClass selector: aSymbol
 	response := MessageBox new
 				caption: self displayString;
 				headline: 'Extract to existing selector?';
-				text: ('<1p> is already defined in the <2d> hierarchy.' expandMacrosWith: aSymbol
-							with: aClass unqualifiedName);
+				text: '<1p> is already defined in the <2p> hierarchy.' << {aSymbol. aClass};
 				customButtons: #(#(#yes '&Continue') #(#no 'Choose &Another') #(#cancel 'Cancel'));
 				defaultButton: 2;
 				detailsText: 'Extracting to an existing selector may change the behavior of the class hierarchy, for example by overriding an inherited method. You should only continue if you do not require a true behavior-preserving refactoring. Otherwise choose another selector.'
@@ -1135,22 +1159,25 @@ getOptionInlineExpression: aString
 getOptionNewMethodName: aRBMethodName classes: anArray
 	| dialog |
 	self generateDefaultSelector: aRBMethodName.
-	dialog := MethodNameDialog createOn: aRBMethodName.
+	dialog := MethodNameDialog create: 'Refactoring view' on: aRBMethodName.
 	dialog validater: 
 			[:methodName |
-			| sel |
-			sel := methodName selectorSymbol.
+			| selector |
+			selector := methodName selectorSymbol.
 			(anArray inject: methodName conditions
-				into: [:conditions :each | conditions & (Refactory.Browser.RBCondition definesSelector: sel in: each) not])
+				into: [:conditions :each | conditions & (Refactory.Browser.RBCondition definesSelector: selector in: each) not])
 					validate].
-	^dialog showModal ifNotNil: [aRBMethodName]!
+	^dialog showModal
+		ifNotNil: 
+			[dialog showChanges ifTrue: [self shouldShowChanges: true].
+			aRBMethodName]!
 
 getOptionRemoveMethod: aSymbol referencedIn: aCollection
 	| details response |
 	details := String writeStream.
-	details
-		nextPutAll: 'Removing the method may not preserve behaviour. It is recommended that you first browse these references to verify that the method is safe to remove:';
-		cr.
+	'Removing the method may not preserve behaviour. It is recommended that you first browse <?these references:this reference> to verify that the method is safe to remove:<n>'
+		expandMacrosWithArguments: {aCollection size > 1}
+		on: details.
 	self
 		printNameList: (aCollection asArray collect: [:each | each printString]) sort
 		on: details
@@ -1158,16 +1185,17 @@ getOptionRemoveMethod: aSymbol referencedIn: aCollection
 		type: 'methods'.
 	response := MessageBox new
 				caption: self displayString;
-				headline: '<1p> may not be safe to remove' << aSymbol;
-				text: ('The selector <1p> is referenced from <2d> other methods.' expandMacrosWith: aSymbol
-							with: aCollection size);
+				headline: '<1s>>><2p> may not be safe to remove' << {class shortName. aSymbol};
+				text: 'The selector <1p> is referenced from <2d> other method<3?s:> in <4p>.'
+							<< {aSymbol. aCollection size. aCollection size > 1. self model environment};
 				customButtons: #(#(#yes '&Remove Anyway') #(#no '&Browse References') #(#cancel 'Cancel'));
 				defaultButton: 2;
 				detailsText: details contents;
 				iconStyle: #warning;
 				confirmOrCancel.
 	response == #yes ifTrue: [^true].
-	response == #no ifTrue: [self openBrowserOn: (self model environment referencesTo: aSymbol)].
+	response == #no
+		ifTrue: [SmalltalkSystem current browseReferencesToLiteral: aSymbol in: self model environment].
 	^false! !
 !Refactory.Browser.MethodRefactoring categoriesForMethods!
 generateDefaultSelector:!options!public! !
@@ -1195,7 +1223,7 @@ displayOn: aPuttableStream
 
 	aPuttableStream
 		nextPutAll: 'Move ';
-		nextPutAll: class unqualifiedName;
+		nextPutAll: class shortName;
 		nextPutAll: '>>';
 		print: selector;
 		nextPutAll: '  to ';
@@ -1406,12 +1434,35 @@ getOptionCopyDownSuperclassMethod:!options!public! !
 getOptionPushUpRemoveDuplicates:in:!options!public! !
 !
 
+!Refactory.Browser.RBAbstractClass methodsFor!
+
+allSubclassesDo: aMonadicValuable
+	"Evaluate the <monadicValuable> argument for each of the receiver's subclasses using a pre-order depth first traversal."
+
+	self allSubclassesPreOrderDo: aMonadicValuable!
+
+allSubclassesPreOrderDo: aMonadicValuable
+	"Private - Evaluate the <monadicValuable> argument for each of the receiver's subclasses, visiting the receiver before its subclasses (i.e. a pre-order traversal)."
+
+	self subclasses do: 
+			[:each |
+			aMonadicValuable value: each.
+			each allSubclassesPreOrderDo: aMonadicValuable]! !
+!Refactory.Browser.RBAbstractClass categoriesForMethods!
+allSubclassesDo:!class hierarchy-accessing!enumerating!public! !
+allSubclassesPreOrderDo:!class hierarchy-accessing!private! !
+!
+
 !Refactory.Browser.RBAbstractClass class methodsFor!
 
 icon
-	^Class icon! !
+	^Class icon!
+
+instancesAreClasses
+	^self subclassResponsibility! !
 !Refactory.Browser.RBAbstractClass class categoriesForMethods!
 icon!public! !
+instancesAreClasses!public! !
 !
 
 !Refactory.Browser.RBAbstractCondition methodsFor!
@@ -1449,21 +1500,50 @@ icon
 icon!accessing!public! !
 !
 
+!Refactory.Browser.RBClass class methodsFor!
+
+instancesAreClasses
+	^true! !
+!Refactory.Browser.RBClass class categoriesForMethods!
+instancesAreClasses!public! !
+!
+
 !Refactory.Browser.RBMetaclass class methodsFor!
 
 icon
-	^Metaclass icon! !
+	^Metaclass icon!
+
+instancesAreClasses
+	^false! !
 !Refactory.Browser.RBMetaclass class categoriesForMethods!
 icon!public! !
+instancesAreClasses!public! !
 !
 
 !Refactory.Browser.RBMethod methodsFor!
+
+hasCompilationFailures
+	^
+	[self parseTree analyze.
+	false]
+			on: Compiler errorClass
+			do: [:ex | ex return: true]
+			on: Compiler notificationClass
+			do: [:ex | ex resume]!
+
+hasCompilationIssues
+	^
+	[self parseTree analyze.
+	false] on: Compiler notificationClass
+			do: [:ex | ex severityClass == Notification ifTrue: [ex resume] ifFalse: [ex return: true]]!
 
 owningPackage
 	^compiledMethod isNil 
 		ifTrue: [class owningPackage]
 		ifFalse: [compiledMethod owningPackage]! !
 !Refactory.Browser.RBMethod categoriesForMethods!
+hasCompilationFailures!public!testing! !
+hasCompilationIssues!public!testing! !
 owningPackage!accessing!public! !
 !
 
@@ -1477,10 +1557,54 @@ icon!public! !
 
 !Refactory.Browser.RBModel methodsFor!
 
+allResourceIdentifiers
+	^SmalltalkSystem current allResourceIdentifiers select: [:each | environment includesResource: each]!
+
 browseChanges
-	Tools.RewriteChangesBrowser showOn: self changes! !
+	Tools.RewriteChangesBrowser showOn: self changes!
+
+methodsThatFailedToCompileIn: aBrowserEnvironment
+	| caption env |
+	caption := 'Finding methods with compilation failures in <1p>' expandMacrosWith: aBrowserEnvironment.
+	env := SmalltalkSystem current
+				selectMethods: 
+					[:each |
+					| modelClass |
+					modelClass := self classFor: each methodClass.
+					modelClass notNil and: 
+							[| modelMethod |
+							modelMethod := modelClass methodFor: each selector.
+							modelMethod notNil and: [modelMethod hasCompilationFailures]]]
+				in: aBrowserEnvironment
+				withProgress: caption.
+	env label: ('Compilation failures in <1p>' expandMacrosWith: aBrowserEnvironment).
+	^env!
+
+methodsWithCompilationIssuesIn: aBrowserEnvironment
+	| caption env |
+	caption := 'Finding methods with compilation issues in <1p>' expandMacrosWith: aBrowserEnvironment.
+	env := SmalltalkSystem current
+				selectMethods: 
+					[:each |
+					| modelClass |
+					modelClass := self classFor: each methodClass.
+					modelClass notNil and: 
+							[| modelMethod |
+							modelMethod := modelClass methodFor: each selector.
+							modelMethod notNil and: [modelMethod hasCompilationIssues]]]
+				in: aBrowserEnvironment
+				withProgress: caption.
+	env label: ('Compilation issues in <1p>' expandMacrosWith: aBrowserEnvironment).
+	^env!
+
+modelClassFor: aBehavior
+	^aBehavior classInModel: self! !
 !Refactory.Browser.RBModel categoriesForMethods!
+allResourceIdentifiers!public! !
 browseChanges!helpers!public! !
+methodsThatFailedToCompileIn:!browsing!public! !
+methodsWithCompilationIssuesIn:!public!searching! !
+modelClassFor:!accessing/classes!public! !
 !
 
 !Refactory.Browser.RBModel class methodsFor!
@@ -1666,8 +1790,9 @@ getOptionRemoveClass: aRBClass referencedIn: aCollection
 	response == #yes ifTrue: [^true].
 	response == #no
 		ifTrue: 
-			[self
-				openBrowserOn: ((self model environment forMethods: (aCollection collect: [:each | each method]))
+			[| env |
+			env := self model environment.
+			self openBrowserOn: ((env forMethods: (aCollection collect: [:each | each method]))
 						label: 'References to class <1p>, or its name' << aRBClass;
 						yourself)].
 	^false! !
@@ -1778,11 +1903,9 @@ icon!constants!public! !
 displayOn: aPuttableStream
 	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	aPuttableStream
-		nextPutAll: 'Remove ';
-		print: (selectors size == 1 ifTrue: [selectors first] ifFalse: [selectors]);
-		nextPutAll: ' from ';
-		nextPutAll: class unqualifiedName!
+	(selectors size == 1 ifTrue: ['Remove <1p>>><4p>'] ifFalse: ['Remove <3p> methods from <1p>'])
+		expandMacrosWithArguments: {class. selectors. selectors size. selectors first}
+		on: aPuttableStream!
 
 getOptionRemoveDuplicatesWithSupersends: superMessages
 	| details |
@@ -2247,6 +2370,21 @@ displayPrefix
 displayPrefix!constants!displaying!public! !
 !
 
+!Tools.ChooseNamespaceDialog class methodsFor!
+
+resource_Refactoring_view
+	"Answer the literal data from which the 'Refactoring view' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Refactoring_view)
+	"
+
+	^#(#'!!STL' 5 985166 10 #{UI.STBViewProxy} #{UI.DialogView} 34 30 nil nil 8 #(13369344 65536) 416 nil 1245702 #{Graphics.ThemeColor} #dialog nil 167 nil 852998 #{Graphics.Font} nil true 721158 #{OS.LOGFONTW} 8 #[244 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 83 0 101 0 103 0 111 0 101 0 32 0 85 0 73 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 918022 #{Graphics.Point} 193 193 nil 416 984838 #{UI.BorderLayout} 1 11 nil 410 #{UI.ReferenceView} 34 14 nil 416 34 2 8 1140850688 131073 640 nil nil nil 7 nil nil nil 640 1376838 1 #{UI.ResourceIdentifier} #{UI.Presenter} #resource_Refactoring_OK_Cancel_button_block nil 1310982 #{Core.MessageSequence} 34 1 1049350 #{Core.MessageSend} #createAt:extent: 34 2 578 21 669 578 689 65 640 1179910 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 10 0 0 0 78 1 0 0 98 1 0 0 110 1 0 0] 8 #() 578 193 193 nil 27 nil nil 410 #{UI.ReferenceView} 34 14 nil 416 34 2 8 1140850688 132097 944 nil nil nil 7 nil nil nil 944 706 #{Tools.ClassHierarchySelector} #resource_Default_view nil 738 34 1 786 #createAt:extent: 34 2 578 21 21 578 689 639 944 866 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 10 0 0 0 10 0 0 0 98 1 0 0 73 1 0 0] 912 928 nil 27 170 192 34 2 944 8 'classSelector' 1180166 #{Graphics.Rectangle} 578 21 21 578 21 11 nil nil nil nil 19321 nil nil nil 578 661 521 1 nil nil 918278 #{Core.Semaphore} nil nil 1 nil 8 1997373888 738 34 2 786 #createAt:extent: 34 2 578 6143 21 578 761 821 416 786 #text: 34 1 8 'Choose Target Namespace…' 416 866 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 123 13 0 0 164 1 0 0] 34 2 944 640 928 nil 27)! !
+!Tools.ChooseNamespaceDialog class categoriesForMethods!
+resource_Refactoring_view!public!resources-views! !
+!
+
 !Tools.ClassBrowserAbstract methodsFor!
 
 abstractInstanceVariables
@@ -2275,23 +2413,24 @@ methodsToOverride
 			ifNotNil: [:selectors | selectors collect: [:each | selectedClass lookupMethod: each]]!
 
 overrideMethods
-	| stream class changes name methods |
+	| stream class changes name methods devsys |
 	class := self actualClass.
 	stream := String writeStream.
 	changes := CompositeRefactoryChange new.
 	methods := self methodsToOverride.
 	(methods isNil or: [methods isEmpty]) ifTrue: [^self].
+	devsys := self developmentSystem.
 	methods do: 
 			[:each |
 			| keywordsAndArgs |
 			stream reset.
-			keywordsAndArgs := self systemModel keywordsAndArgsOfMethod: each.
-			self systemModel printSignatureForKeywordsAndArgs: keywordsAndArgs on: stream.
+			keywordsAndArgs := devsys keywordsAndArgsOfMethod: each.
+			devsys printSignatureForKeywordsAndArgs: keywordsAndArgs on: stream.
 			stream
 				crtab;
 				nextPutAll: '^super';
 				space.
-			self systemModel printSignatureForKeywordsAndArgs: keywordsAndArgs on: stream.
+			devsys printSignatureForKeywordsAndArgs: keywordsAndArgs on: stream.
 			changes addChange: (AddMethodChange
 						compile: stream contents
 						in: class
@@ -2307,7 +2446,7 @@ overrideMethods
 				nextPutAll: ' methods']
 		ifFalse: [name print: methods first].
 	changes name: name contents.
-	self systemModel changeManager performChange: changes.
+	devsys changeManager performChange: changes.
 	self selectedMethods: (methodBrowserPresenter methodsPresenter list
 				intersection: ((methods collect: [:each | each selector]) asSet
 						collect: [:each | class compiledMethodAt: each ifAbsent: nil]))!
@@ -2380,7 +2519,7 @@ queryRefactoringCommand: aCommandQuery
 				isEnabled: class superclass notNil;
 				text: (aCommandQuery commandDescription menuText
 							expandMacrosWithArguments: {methods isEmpty
-										ifTrue: ['…']
+										ifTrue: [$…]
 										ifFalse: [methods size == 1 ifTrue: [methods first] ifFalse: ['Methods']]}
 							locale: Locale smalltalk).
 			^true].
@@ -2417,12 +2556,10 @@ selectedOverridableMethods!accessing!private! !
 
 !Tools.ClassBrowserPlugin methodsFor!
 
-systemModel
-	"Private - Answer the development system model."
-
+developmentSystem
 	^SmalltalkSystem current! !
 !Tools.ClassBrowserPlugin categoriesForMethods!
-systemModel!commands!private! !
+developmentSystem!commands!private! !
 !
 
 !Tools.ClassSelector methodsFor!
@@ -2434,7 +2571,7 @@ abstractClassVariables
 	choose only one instance variable at a time."
 
 	(self chooseVariables: true caption: 'Abstract Class Variables…')
-		ifNotNil: [:varNames | self systemModel abstractClassVariables: varNames within: BrowserEnvironment new]!
+		ifNotNil: [:varNames | self developmentSystem abstractClassVariables: varNames within: BrowserEnvironment new]!
 
 abstractInstanceVariables
 	"Invoke the 'Abstract Instance Variable' refactoring on the users choice of instance variables.
@@ -2443,23 +2580,23 @@ abstractInstanceVariables
 	choose only one instance variable at a time."
 
 	(self chooseVariables: false caption: 'Abstract Instance Variables…')
-		ifNotNil: [:varNames | self systemModel abstractInstanceVariables: varNames within: BrowserEnvironment new]!
+		ifNotNil: [:varNames | self developmentSystem abstractInstanceVariables: varNames within: BrowserEnvironment new]!
 
 addClassVariable
 	"Private - Invoke the 'Add Class Variable' refactoring to add a class variable to the
 	currently selected class."
 
-	self systemModel
+	self developmentSystem
 		addClassVariableTo: self selection!
 
 addImport
-	self systemModel addImportToClasses: self selections!
+	self developmentSystem addImportToClasses: self selections!
 
 addInstanceVariable
 	"Private - Invoke the 'Add Instance Variable' refactoring to add an instance variable to the
 	currently selected class."
 
-	self systemModel
+	self developmentSystem
 		addInstanceVariableTo: self actualClass!
 
 buildInstVarMenu: aMenu selectors: selectors
@@ -2502,7 +2639,7 @@ buildVariablesMenu: aMenu instVarSelectors: instVarSelectors classVarSelectors: 
 	self populateClassVarMenu: aMenu selectors: classVarSelectors!
 
 changeClassNamespace
-	self systemModel changeNamespaceOfClasses: self selections!
+	self developmentSystem changeNamespaceOfClasses: self selections!
 
 cloneClass: aClass under: superClass changes: aCompositeRefactoryChange
 	| namespace newName |
@@ -2525,7 +2662,7 @@ convertToSibling
 	class and its current subclasses, copying common methods to the new superclass and adding 
 	#subclassResponsibility methods as necessary)."
 
-	self systemModel
+	self developmentSystem
 		convertToSibling: self selection!
 
 createClassVariableAccessors
@@ -2582,7 +2719,7 @@ populatePullUpVariableMenu: aMenu forClass: aClass command: commandSymbol classV
 						| msg varName |
 						varName := each value.
 						msg := MessageSend
-									receiver: self systemModel
+									receiver: self developmentSystem
 									selector: commandSymbol
 									arguments: {varName. aClass}.
 						aMenu addCommand: msg description: each key name , '.' , varName]]!
@@ -2646,7 +2783,7 @@ protectInstanceVariables
 	choose only one instance variable at a time."
 
 	(self chooseVariables: false caption: 'Protect Instance Variables…') 
-		ifNotNil: [:varNames | self systemModel protectInstanceVariables: varNames]!
+		ifNotNil: [:varNames | self developmentSystem protectInstanceVariables: varNames]!
 
 pullUpClassVariables
 	"Invoke the 'Pull Up Class Variable' refactoring on the users choice of subclass' class variables.
@@ -2669,7 +2806,7 @@ pullUpClassVariables
 	pairs isNil
 		ifFalse: 
 			[| devsys |
-			devsys := self systemModel.
+			devsys := self developmentSystem.
 			pairs do: [:each | devsys pullUpClassVariable: each value into: class]]!
 
 pullUpInstanceVariables
@@ -2693,7 +2830,7 @@ pullUpInstanceVariables
 	pairs isNil
 		ifFalse: 
 			[| devsys |
-			devsys := self systemModel.
+			devsys := self developmentSystem.
 			pairs do: [:each | devsys pullUpInstanceVariable: each value into: class]]!
 
 pullUpVariableNamePairs: aBoolean for: class maximum: anInteger
@@ -2718,7 +2855,7 @@ pushDownClassVariables
 	choose only one instance variable at a time."
 
 	(self chooseVariables: true caption: 'Push Down Class Variables…') 
-		ifNotNil: [:varNames | self systemModel pushDownInstanceVariables: varNames]!
+		ifNotNil: [:varNames | self developmentSystem pushDownInstanceVariables: varNames]!
 
 pushDownInstanceVariables
 	"Invoke the 'Push Down Instance Variable' refactoring on the users choice of instance variables.
@@ -2727,7 +2864,7 @@ pushDownInstanceVariables
 	choose only one instance variable at a time."
 
 	(self chooseVariables: false caption: 'Push Down Instance Variables…') 
-		ifNotNil: [:varNames | self systemModel pushDownInstanceVariables: varNames]!
+		ifNotNil: [:varNames | self developmentSystem pushDownInstanceVariables: varNames]!
 
 queryRefactoringCommand: aCommandQuery
 	"Private - Enter details about a potential refactoring command for the receiver 
@@ -2736,7 +2873,7 @@ queryRefactoringCommand: aCommandQuery
 	| selector class |
 	selector := aCommandQuery commandSymbol.
 	class := self actualClass.
-	(#(#classRefactoringsMenu #addClassVariable) identityIncludes: selector)
+	(#(#classRefactoringsMenu #addClassVariable #addImport) identityIncludes: selector)
 		ifTrue: 
 			[aCommandQuery isEnabled: class notNil.
 			^true].
@@ -2761,13 +2898,14 @@ queryRefactoringCommand: aCommandQuery
 			^true].
 	#pushDownVariables == selector
 		ifTrue: 
-			[aCommandQuery isEnabled: (class notNil
-						and: [class subclasses notEmpty and: [class instanceVariableNames notEmpty or: [class classPool notEmpty]]]).
+			[aCommandQuery
+				isEnabled: (class notNil and: 
+							[class subclasses notEmpty and: [class instanceVariableNames notEmpty or: [class classPool notEmpty]]]).
 			^true].
 	#pullUpInstanceVariables == selector
 		ifTrue: 
-			[aCommandQuery
-				isEnabled: (class notNil and: [class allSubclasses anySatisfy: [:each | each instanceVariableNames notEmpty]]).
+			[aCommandQuery isEnabled: (class notNil
+						and: [class allSubclasses anySatisfy: [:each | each instanceVariableNames notEmpty]]).
 			^true].
 	#pullUpClassVariables == selector
 		ifTrue: 
@@ -2800,7 +2938,8 @@ queryRefactoringCommand: aCommandQuery
 							isFixed := ClassBuilder isFixedLayout: class.
 							class allSubclasses anySatisfy: 
 									[:each |
-									(isFixed not and: [each instanceVariableNames notEmpty]) or: [each instanceClass classBindingNames notEmpty]]]).
+									(isFixed not and: [each instanceVariableNames notEmpty])
+										or: [each instanceClass classBindingNames notEmpty]]]).
 			^true].
 
 	"Not a recognised refactoring command"
@@ -2813,12 +2952,12 @@ removeClassVariables
 	choose only one instance variable at a time."
 
 	(self chooseVariables: true caption: 'Remove Class Variables…')
-		ifNotNil: [:pairs | self systemModel removeStaticVariables: pairs within: self searchEnvironment]!
+		ifNotNil: [:pairs | self developmentSystem removeStaticVariables: pairs within: self searchEnvironment]!
 
 removeDuplicateMethods
 	| class |
 	class := self actualClass.
-	(self systemModel removeMethodsDuplicatedInSuperclassOf: class)
+	(self developmentSystem removeMethodsDuplicatedInSuperclassOf: class)
 		ifFalse: 
 			[MessageBox new
 				iconStyle: #notify;
@@ -2828,7 +2967,7 @@ removeDuplicateMethods
 				open]!
 
 removeImport
-	self systemModel removeImportFromClasses: self selections!
+	self developmentSystem removeImportFromClasses: self selections!
 
 removeInstanceVariables
 	"Invoke the 'Remove Instance Variable' refactoring on the users choice of instance variables.
@@ -2837,7 +2976,7 @@ removeInstanceVariables
 	choose only one instance variable at a time."
 
 	(self chooseVariables: false caption: 'Remove Instance Variables…') 
-		ifNotNil: [:varNames | self systemModel removeInstanceVariables: varNames within: self searchEnvironment]! !
+		ifNotNil: [:varNames | self developmentSystem removeInstanceVariables: varNames within: self searchEnvironment]! !
 !Tools.ClassSelector categoriesForMethods!
 abstractClassVariables!commands!public!refactoring! !
 abstractInstanceVariables!commands!public!refactoring! !
@@ -2866,6 +3005,21 @@ removeClassVariables!commands!public!refactoring! !
 removeDuplicateMethods!commands!private!refactoring! !
 removeImport!commands!public!refactoring! !
 removeInstanceVariables!commands!public!refactoring! !
+!
+
+!Tools.CreateSubclassDialog class methodsFor!
+
+resource_Refactoring_view
+	"Answer the literal data from which the 'Refactoring view' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Refactoring_view)
+	"
+
+	^#(#'!!STL' 5 985166 10 #{UI.STBViewProxy} #{UI.DialogView} 34 30 nil nil 8 #(13369344 65536) 416 nil 1245702 #{Graphics.ThemeColor} #dialog nil 167 nil 852998 #{Graphics.Font} nil true 721158 #{OS.LOGFONTW} 8 #[244 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 83 0 101 0 103 0 111 0 101 0 32 0 85 0 73 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 918022 #{Graphics.Point} 193 193 nil 416 984838 #{UI.BorderLayout} 1 11 nil 410 #{UI.ReferenceView} 34 14 nil 416 34 2 8 1140850688 131073 640 nil nil nil 7 nil nil nil 640 1376838 1 #{UI.ResourceIdentifier} #{UI.Presenter} #resource_Refactoring_OK_Cancel_button_block nil 1310982 #{Core.MessageSequence} 34 1 1049350 #{Core.MessageSend} #createAt:extent: 34 2 578 25 803 578 841 65 640 1179910 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 12 0 0 0 145 1 0 0 176 1 0 0 177 1 0 0] 8 #() 578 193 193 nil 27 nil nil 410 #{UI.ContainerView} 34 15 nil 416 34 2 8 1140850688 131073 944 nil nil nil 7 nil nil nil 944 610 1 1 410 #{UI.ContainerView} 34 15 nil 944 34 2 8 1140850688 131073 1024 nil nil nil 7 nil nil nil 1024 1048838 #{UI.FramingLayout} 170 176 34 18 410 #{UI.ContainerView} 34 15 nil 1024 34 2 8 1140850688 131073 1152 nil nil nil 7 nil nil nil 1152 1090 170 176 34 8 410 #{UI.CheckBox} 34 16 nil 1152 34 2 8 1409363203 1 1264 918598 2 #{UI.ValueHolder} nil nil 1572870 #{Kernel.NeverSearchPolicy} false nil nil 7 nil nil nil 1264 nil 8 1824603504 1049094 #{UI.NullConverter} nil nil nil 738 34 2 786 #createAt:extent: 34 2 578 185 37 578 177 45 1264 786 #text: 34 1 8 '&Indexable?' 1264 866 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 92 0 0 0 18 0 0 0 180 0 0 0 40 0 0 0] 8 #() 928 nil 27 1378374 2 #{UI.FramingConstraints} 1377286 #{UI.FramingCalculation} #fixedPreviousRight 1 1666 #fixedViewLeft 177 1666 #fixedPreviousTop 1 1666 #fixedViewTop 45 410 #{UI.CheckBox} 34 16 nil 1152 34 2 8 1409363203 1 1744 1330 nil nil 1376 false nil nil 7 nil nil nil 1744 nil 8 1824603504 1410 nil nil nil 738 34 2 786 #createAt:extent: 34 2 578 361 37 578 111 45 1744 786 #text: 34 1 8 '&Bytes?' 1744 866 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 180 0 0 0 18 0 0 0 235 0 0 0 40 0 0 0] 8 #() 928 nil 27 1634 1680 1 1696 111 1712 1 1728 45 410 #{UI.CheckBox} 34 16 nil 1152 34 2 8 1409363203 1 2064 1330 nil nil 1376 false nil nil 7 nil nil nil 2064 nil 8 1824603504 1410 nil nil nil 738 34 2 786 #createAt:extent: 34 2 578 25 37 578 161 45 2064 786 #text: 34 1 8 '&Abstract?' 2064 866 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 12 0 0 0 18 0 0 0 92 0 0 0 40 0 0 0] 8 #() 928 nil 27 1634 1666 #fixedParentLeft 25 1696 161 1666 #fixedParentTop 37 1728 45 410 #{UI.GroupBox} 34 14 nil 1152 34 2 8 1140981767 1 2416 nil nil nil 7 nil nil nil 2416 nil 8 1824603504 738 34 2 786 #createAt:extent: 34 2 578 1 1 578 841 101 2416 786 #text: 34 1 8 'Attributes' 2416 866 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 164 1 0 0 50 0 0 0] 8 #() 928 nil 27 1634 2384 1 1666 #fixedParentRight 1 2400 1 1666 #fixedParentBottom 1 170 192 34 6 1264 8 'isVariable' 1744 8 'isBytes' 2064 8 'isNonInstantiable' nil 738 34 1 786 #createAt:extent: 34 2 578 1 167 578 841 101 1152 866 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 83 0 0 0 164 1 0 0 133 0 0 0] 34 4 2064 1264 1744 2416 928 nil 27 1634 2384 1 2704 1 1666 #fixedPreviousBottom 13 1728 101 410 #{UI.StaticText} 34 16 nil 1024 34 2 8 1140850944 1 2992 nil nil nil 7 nil nil nil 2992 nil 8 1824808112 1410 nil nil nil 738 34 2 786 #createAt:extent: 34 2 578 1 5 578 201 45 2992 786 #text: 34 1 8 'New &class name:' 2992 866 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 2 0 0 0 100 0 0 0 24 0 0 0] 8 #() 928 nil 27 1634 2384 1 1696 201 2400 5 1728 45 410 #{UI.TextEdit} 34 16 nil 1024 34 2 8 1140916352 1025 3296 nil 917510 #{Graphics.Color} #default nil 7 nil nil nil 3296 nil 8 1824596208 1410 nil nil 5 738 34 2 786 #createAt:extent: 34 2 578 201 1 578 587 45 3296 786 #setMarginWidths: 34 1 8 #(3 3) 3296 866 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 100 0 0 0 0 0 0 0 137 1 0 0 22 0 0 0] 8 #() 928 nil 27 1634 1680 1 2704 -53 1712 -3 1728 45 410 #{UI.StaticText} 34 16 nil 1024 34 2 8 1140850944 1 3632 nil nil nil 7 nil nil nil 3632 nil 8 1824808112 1410 nil nil nil 738 34 2 786 #createAt:extent: 34 2 578 1 117 578 201 45 3632 786 #text: 34 1 8 '&Superclass:' 3632 866 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 58 0 0 0 100 0 0 0 80 0 0 0] 8 #() 928 nil 27 1634 2384 1 1696 201 2976 17 1728 45 410 #{UI.StaticText} 34 16 nil 1024 34 2 8 1140850944 1 3936 nil nil nil 7 nil nil nil 3936 nil 8 1824808112 1410 nil nil nil 738 34 2 786 #createAt:extent: 34 2 578 1 61 578 201 45 3936 786 #text: 34 1 8 '&Namespace:' 3936 866 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 30 0 0 0 100 0 0 0 52 0 0 0] 8 #() 928 nil 27 1634 2384 1 1696 201 2976 17 1728 45 410 #{UI.TextEdit} 34 16 nil 1024 34 2 8 1140850816 262145 4240 nil nil nil 7 nil nil nil 4240 nil 8 1824596208 1410 nil nil 7 738 34 2 786 #createAt:extent: 34 2 578 201 115 578 587 41 4240 786 #setMarginWidths: 34 1 8 #(3 3) 4240 866 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 100 0 0 0 57 0 0 0 137 1 0 0 77 0 0 0] 8 #() 928 nil 27 1634 1680 1 2704 -53 1712 -1 1728 41 410 #{UI.PushButton} 34 20 nil 1024 34 2 8 1140924416 1 4544 nil 3376 nil 7 nil nil nil 4544 nil 8 1824603504 1377606 4 #{UI.CommandDescription} #chooseNamespace 8 '…' 1 1 nil nil false nil nil nil 738 34 3 786 #createAt:extent: 34 2 578 801 61 578 41 41 4544 786 #isEnabled: 8 #(false) 4544 786 #text: 34 1 8 '…' 4544 866 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 144 1 0 0 30 0 0 0 164 1 0 0 50 0 0 0] 8 #() 928 nil 29 1634 1680 15 1696 41 1712 1 1728 41 410 #{UI.TextEdit} 34 16 nil 1024 34 2 8 1140850816 262145 4912 nil 3376 nil 7 nil nil nil 4912 nil 8 1824596208 1410 nil nil 7 738 34 2 786 #createAt:extent: 34 2 578 201 61 578 587 41 4912 786 #setMarginWidths: 34 1 8 #(3 3) 4912 866 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 100 0 0 0 30 0 0 0 137 1 0 0 50 0 0 0] 8 #() 928 nil 27 1634 1680 1 2704 -53 1712 1 1728 41 410 #{UI.PushButton} 34 20 nil 1024 34 2 8 1140924416 1 5216 nil 3376 nil 7 nil nil nil 5216 nil 8 1824603504 4626 #chooseSuperclass 8 '…' 1 1 nil nil false nil nil nil 738 34 3 786 #createAt:extent: 34 2 578 801 115 578 41 41 5216 786 #isEnabled: 8 #(false) 5216 786 #text: 34 1 8 '…' 5216 866 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 144 1 0 0 57 0 0 0 164 1 0 0 77 0 0 0] 8 #() 928 nil 29 1634 1680 15 1696 41 1712 1 1728 41 170 192 34 10 1152 8 'attributes' 3296 8 'className' 4240 8 'superclass' 4544 8 'chooseNamespace' 4912 8 'namespace' nil 738 34 1 786 #createAt:extent: 34 2 578 1 1 578 841 279 1024 866 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 164 1 0 0 139 0 0 0] 34 9 2992 3296 3936 4912 4544 3632 4240 5216 1152 928 nil 27 nil nil nil 410 #{UI.ContainerView} 34 15 nil 944 34 2 8 1140850688 131073 5824 nil nil nil 7 nil nil nil 5824 1376774 #{UI.ProportionalLayout} 170 176 912 false 170 192 34 2 410 #{UI.ListView} 34 45 nil 5824 34 2 8 1140953161 1025 5968 787270 2 #{UI.ListModel} 138 144 912 nil 1769478 #{Kernel.IdentitySearchPolicy} 3376 nil 7 nil nil nil 5968 nil 8 1824663824 786950 #{Core.Message} #displayString 8 #() 6130 #iconImageIndex 6160 1639750 1 #{Graphics.IconImageManager} nil nil nil 578 65 65 nil nil 138 144 34 1 1117254 5 #{UI.ListViewColumn} 8 'Subclasses' 409 #left 6144 6130 #<= 8 #() nil nil 5968 nil 3 nil nil #report 8 #() nil 133185 nil 1 nil nil nil nil 1 nil nil nil nil nil nil nil nil nil nil 738 34 2 786 #createAt:extent: 34 2 578 425 7 578 417 489 5968 786 #text: 34 1 8 'Subclasses' 5968 866 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 212 0 0 0 3 0 0 0 164 1 0 0 247 0 0 0] 8 #() 928 nil 35 8 'subclasses' 1180166 #{Graphics.Rectangle} 578 1 7 578 1 1 738 34 1 786 #createAt:extent: 34 2 578 1 279 578 841 495 5824 866 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 139 0 0 0 164 1 0 0 130 1 0 0] 34 3 410 #{UI.ContainerView} 34 15 nil 5824 34 2 8 1140850688 131073 6784 nil nil nil 23 nil nil nil 6784 610 1 1 410 #{UI.CheckBox} 34 16 nil 6784 34 2 8 1140924419 1 6864 1330 nil false 1835526 #{Kernel.PluggableSearchPolicy} 6130 #= 8 #() 6130 #hash 8 #() false nil nil 7 nil nil nil 6864 nil 8 1824603504 1410 nil nil nil 738 34 2 786 #createAt:extent: 34 2 578 1 -1 578 415 51 6864 786 #text: 34 1 8 '&Packaged?' 6864 866 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 255 255 255 255 207 0 0 0 24 0 0 0] 8 #() 928 nil 27 nil nil nil 410 #{UI.ReferenceView} 34 14 nil 6784 34 2 8 1140850688 131073 7264 nil nil nil 7 nil nil nil 7264 706 #{Tools.PackageSelector} #resource_Choice_view nil 738 34 1 786 #createAt:extent: 34 2 578 1 49 578 415 441 7264 866 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 24 0 0 0 207 0 0 0 244 0 0 0] 912 928 nil 27 170 192 34 4 6864 8 'setPackage' 7264 8 'package' 6578 578 1 -1 578 1 1 738 34 1 786 #createAt:extent: 34 2 578 1 7 578 415 489 6784 866 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 3 0 0 0 207 0 0 0 247 0 0 0] 34 2 6864 7264 928 nil 27 410 #{UI.Splitter} 34 12 nil 5824 34 2 8 1140850688 1 7728 nil nil nil 519 nil nil nil 1707078 1 #{UI.DraggableViewInteractor} 7728 nil 1 #left nil nil nil 578 1 1 578 9 9 nil 7824 nil 738 34 1 786 #createAt:extent: 34 2 578 415 7 578 11 489 7728 866 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 207 0 0 0 3 0 0 0 212 0 0 0 247 0 0 0] 8 #() 928 nil 27 5968 928 nil 27 170 192 912 6578 578 1 1 578 1 1 738 34 1 786 #createAt:extent: 34 2 578 25 21 578 841 773 944 866 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 12 0 0 0 10 0 0 0 176 1 0 0 140 1 0 0] 34 2 1024 5824 928 nil 27 170 192 912 6578 578 25 21 578 25 17 nil nil nil nil 21059 nil nil nil 578 621 581 1 nil nil 918278 #{Core.Semaphore} nil nil 1 nil 8 1997373888 738 34 2 786 #createAt:extent: 34 2 578 6143 21 578 921 961 416 786 #text: 34 1 8 'Create Class…' 416 866 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 203 13 0 0 234 1 0 0] 34 2 944 640 928 nil 27)! !
+!Tools.CreateSubclassDialog class categoriesForMethods!
+resource_Refactoring_view!public!resources-views! !
 !
 
 !Tools.Debugger methodsFor!
@@ -2946,7 +3100,7 @@ performMethodsRefactoring:name:!helpers!private!refactoring! !
 canRefactor
 	^self isEditable and: 
 			[self isModified not and: 
-					[self systemModel canRefactor 
+					[self developmentSystem canRefactor 
 						and: [parentPresenter notNil and: [parentPresenter hasRefactorableMethodSelected]]]]!
 
 executeRefactoring: aMonadicValuable
@@ -3050,7 +3204,7 @@ addParameterToMethod
 	self addParameterTo: self selectedMethod!
 
 changeClassNamespace
-	self systemModel changeNamespaceOfClasses: self selectedClasses!
+	self developmentSystem changeNamespaceOfClasses: self selectedClasses!
 
 chooseMethodsForRefactoring: aString
 	| selector methods definitions searchEnv |
@@ -3069,6 +3223,15 @@ chooseMethodsForRefactoring: aString
 hasRefactorableMethodSelected
 	^self hasEditableMethodSelected!
 
+newMethodNamePrompter: aCompiledMethod caption: aString allowExisting: aBoolean
+	| methodName |
+	methodName := ScopedMethodName fromMethod: aCompiledMethod.
+	methodName packages: self packages.
+	^self developmentSystem
+		newMethodNamePrompter: methodName
+		caption: aString
+		allowExisting: aBoolean!
+
 onClass: aClass renameTo: aString accept: booleanValue
 	"Private - The user has initiated a rename of the class, aClass, by editing the label in the class
 	tree. Ask the user to confirm the action, and if so queue a deferred action to perform the
@@ -3081,7 +3244,7 @@ onClass: aClass renameTo: aString accept: booleanValue
 		ifTrue: 
 			[booleanValue value: false.
 			^self].
-	prompter := self systemModel confirmRenameClass: aClass to: aString.
+	prompter := self developmentSystem confirmRenameClass: aClass to: aString.
 	prompter confirm ifFalse: [^self].
 	"Queue deferred action as we can't delete the old item now while still in use (causes GPF in TreeView)"
 	
@@ -3099,7 +3262,7 @@ onRenameClass: aClass to: aString showChanges: aBoolean
 
 	
 	[Cursor wait showWhile: 
-			[self systemModel
+			[self developmentSystem
 				renameClass: aClass
 				to: aString
 				showChanges: aBoolean]]
@@ -3131,13 +3294,10 @@ performMethodsRefactoring: aMonadicValuable name: aString
 			ex resume]!
 
 promptForMethodName: aCompiledMethod caption: aString allowExisting: aBoolean
-	| methodName |
-	methodName := ScopedMethodName fromMethod: aCompiledMethod.
-	methodName packages: self packages.
-	^self systemModel
-		promptForMethodName: methodName
+	^(self
+		newMethodNamePrompter: aCompiledMethod
 		caption: aString
-		allowExisting: aBoolean!
+		allowExisting: aBoolean) showModal!
 
 queryRefactoringCommand: aCommandQuery
 	"Private - Enters details about a potential refactoring command for the receiver into the 
@@ -3184,7 +3344,11 @@ removeMethod
 	| methods |
 	methods := self chooseMethodsForRefactoring: 'Safe Remove Methods from Package(s)…'.
 	methods isEmpty
-		ifFalse: [self model basicRemoveMethodsIn: methods within: self selectionEnvironment]!
+		ifFalse: 
+			[self model
+				basicRemoveMethodsIn: methods
+				within: self selectionEnvironment
+				showChanges: false]!
 
 removeMethods
 	"Private - 'Loose Methods' card context menu command to invoke the 'Safe Remove Method' 
@@ -3192,13 +3356,21 @@ removeMethods
 	of the selected packages (i.e. references from methods owned by other packages are not
 	considered as part of the decision as to whether it will be safe to remove the method)."
 
-	(MessageBox new
-		headline: 'Remove unreferenced loose methods?';
-		defaultButton: 2;
-		customButtons: #(#(#yes '&Remove') #(#no '&Don''t Remove'));
-		isCancellable: true;
+	| mb |
+	mb := MessageBox new
+				headline: 'Remove unreferenced loose methods?';
+				defaultButton: 2;
+				customButtons: #(#(#yes '&Remove') #(#no '&Don''t Remove'));
+				isCancellable: true;
+				checkboxText: self developmentSystem showChangesText;
+				yourself.
+	(mb
 		confirm: 'The selected methods will be removed if unreferenced from the selected packages. This may not preserve behaviour if the methods are referenced from other packages.')
-			ifTrue: [self model basicRemoveMethods: self selectedMethods within: self selectionEnvironment]!
+			ifTrue: 
+				[self model
+					basicRemoveMethods: self selectedMethods
+					within: self selectionEnvironment
+					showChanges: mb isChecked]!
 
 removeParameter
 	"Private - Command to invoke the Remove Parameter to Method refactoring, but constrained to operate
@@ -3239,12 +3411,18 @@ renameMethod
 		ifNotNil: [:method | methodRefactoringTool renameMethod: method]!
 
 renameMethodReferences: aCompiledMethod
-	| methodName |
-	methodName := self
-				promptForMethodName: aCompiledMethod
+	| methodName prompter |
+	prompter := self
+				newMethodNamePrompter: aCompiledMethod
 				caption: 'Rename References to <1p> in Package(s)…' << aCompiledMethod selector
 				allowExisting: true.
-	methodName notNil ifTrue: [self model renameMethodReferences: aCompiledMethod to: methodName]! !
+	methodName := prompter showModal.
+	methodName notNil
+		ifTrue: 
+			[self model
+				renameMethodReferences: aCompiledMethod
+				to: methodName
+				showChanges: prompter showChanges]! !
 !Tools.PackageBrowserShell categoriesForMethods!
 addParameter!commands!private!refactoring! !
 addParameterTo:!private!refactoring! !
@@ -3252,6 +3430,7 @@ addParameterToMethod!commands!public!refactoring! !
 changeClassNamespace!commands!public!refactoring! !
 chooseMethodsForRefactoring:!private!refactoring! !
 hasRefactorableMethodSelected!private!refactoring!testing! !
+newMethodNamePrompter:caption:allowExisting:!helpers!private!refactoring! !
 onClass:renameTo:accept:!event handling!private! !
 onRenameClass:to:showChanges:!event handling!private! !
 parseTree!commands!private! !
@@ -3276,7 +3455,7 @@ moveAllTempsToInnerScope
 		confirm: 'This refactoring will move all temporaries in all methods in the selected package(s) into the tightest scope that contains both the variable assignment and references. Any unreferenced temporaries will be removed.
 
 Are you sure that you would like to proceed?')
-			ifTrue: [self systemModel moveAllTempsToInnerScope: self selectionEnvironment]!
+			ifTrue: [self developmentSystem moveAllTempsToInnerScope: self selectionEnvironment]!
 
 queryRefactoringCommand: aCommandQuery 
 	"Private - Enters details about a potential refactoring command for the receiver into the 
@@ -3284,7 +3463,7 @@ queryRefactoringCommand: aCommandQuery
 
 	| cmd canRefactor |
 	cmd := aCommandQuery commandSymbol.
-	canRefactor := self systemModel canRefactor and: [self hasPackages].
+	canRefactor := self developmentSystem canRefactor and: [self hasPackages].
 	(#(#removeDuplicateMethods) identityIncludes: cmd) 
 		ifTrue: 
 			[aCommandQuery isEnabled: canRefactor.
@@ -3300,7 +3479,7 @@ removeDuplicateMethods
 			[:progress |
 			| i devsys |
 			i := 0.
-			devsys := self systemModel.
+			devsys := self developmentSystem.
 			pkgs do: 
 					[:eachPackage |
 					progress text: eachPackage name.
@@ -3320,7 +3499,7 @@ removeDuplicateMethods!development!private! !
 !Tools.SmalltalkToolShell methodsFor!
 
 chooseMethodForRefactoring: aString 
-	^self systemModel chooseMethodFromEnvironment: self selectionEnvironment caption: aString!
+	^self developmentSystem chooseMethodFromEnvironment: self selectionEnvironment caption: aString!
 
 queryRefactoringCommand: aCommandQuery 
 	"Private - Enter details about a potential refactoring command for the receiver 
@@ -3340,6 +3519,21 @@ validationDwell
 	^1 seconds! !
 !UI.Dialog categoriesForMethods!
 validationDwell!constants!public! !
+!
+
+!UI.Presenter class methodsFor!
+
+resource_Refactoring_OK_Cancel_button_block
+	"Answer the literal data from which the 'Refactoring OK Cancel button block' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Refactoring_OK_Cancel_button_block)
+	"
+
+	^#(#'!!STL' 5 985166 10 #{UI.STBViewProxy} #{UI.ContainerView} 34 15 nil nil 34 2 8 1140850688 131073 416 nil nil nil 7 nil nil nil 416 984838 #{UI.BorderLayout} 1 1 nil nil 410 #{UI.ContainerView} 34 15 nil 416 34 2 8 1409286144 131073 512 nil nil nil 7 nil nil nil 512 852806 1 #{UI.FlowLayout} 17 17 21 170 192 8 #() 1180166 #{Graphics.Rectangle} 918022 #{Graphics.Point} 11 11 674 1 1 1310982 #{Core.MessageSequence} 34 1 1049350 #{Core.MessageSend} #createAt:extent: 34 2 674 561 1 674 341 61 512 1179910 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 24 1 0 0 0 0 0 0 194 1 0 0 30 0 0 0] 34 2 410 #{UI.PushButton} 34 20 nil 512 34 2 8 1141055488 1 912 nil nil nil 7 nil nil nil 912 nil 8 1833975152 1377606 4 #{UI.CommandDescription} #ok 8 'OK' 1 1 nil nil true nil nil nil 722 34 2 770 #createAt:extent: 34 2 674 25 11 674 151 47 912 770 #text: 34 1 8 'OK' 912 850 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 12 0 0 0 5 0 0 0 87 0 0 0 28 0 0 0] 8 #() 674 193 193 nil 29 410 #{UI.PushButton} 34 20 nil 512 34 2 8 1140924416 1 1248 nil nil nil 7 nil nil nil 1248 nil 8 1833975152 994 #cancel 8 'Cancel' 1 1 nil nil false nil nil nil 722 34 2 770 #createAt:extent: 34 2 674 191 11 674 151 47 1248 770 #text: 34 1 8 'Cancel' 1248 850 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 95 0 0 0 5 0 0 0 170 0 0 0 28 0 0 0] 8 #() 1232 nil 29 1232 nil 27 410 #{UI.CheckBox} 34 16 nil 416 34 2 8 1409363203 1 1552 918598 2 #{UI.ValueHolder} nil nil 1572870 #{Kernel.NeverSearchPolicy} false 917510 #{Graphics.Color} #transparent nil 7 nil nil nil 1552 nil 8 1833975152 1049094 #{UI.NullConverter} nil nil nil 722 34 2 770 #createAt:extent: 34 2 674 1 1 674 351 61 1552 770 #text: 34 1 8 'Show proposed changes?' 1552 850 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 175 0 0 0 30 0 0 0] 8 #() 1232 nil 27 nil 170 192 34 2 1552 8 'showChanges' nil 722 34 1 770 #createAt:extent: 34 2 674 6143 21 674 901 61 416 850 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 193 13 0 0 40 0 0 0] 34 2 512 1552 1232 nil 27)! !
+!UI.Presenter class categoriesForMethods!
+resource_Refactoring_OK_Cancel_button_block!public!resources-views! !
 !
 
 "End of package definition"!

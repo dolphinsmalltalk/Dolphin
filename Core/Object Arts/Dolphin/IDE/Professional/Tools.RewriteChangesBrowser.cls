@@ -16,7 +16,11 @@ acceptAllChanges
 	self exit!
 
 acceptChanges
-	self acceptChanges: self changes!
+	| changes |
+	changes := self changes.
+	compositeChange changesSize = changes size
+		ifTrue: [self acceptAllChanges]
+		ifFalse: [self acceptChanges: changes]!
 
 acceptChanges: aCollection 
 	RefactoryChangeManager instance performChange: (compositeChange
@@ -83,7 +87,7 @@ createSchematicWiring
 		when: #selectionChanged
 			send: #onChangeSelected
 			to: self.
-	(self systemModel)
+	self developmentSystem
 		when: #methodAdded:
 			send: #onMethodAdded:
 			to: self;

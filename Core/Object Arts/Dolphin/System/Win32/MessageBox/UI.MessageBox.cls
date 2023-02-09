@@ -262,7 +262,8 @@ collapseLabel: aString
 confirm
 	self hasIcon ifFalse: [self iconStyle: #prompt].
 	self buttonStyle: #yesNo.
-	^self open == #yes!
+	self open.
+	^self isConfirmed!
 
 confirm: aString
 	"Display a message box with the specified `String` prompt, and Yes and No push buttons. Answer whether the user confirmed (by pressing the Yes button)."
@@ -550,6 +551,9 @@ isChecked
 
 isChecked: aBoolean
 	verified := aBoolean!
+
+isConfirmed
+	^self result == #yes!
 
 isDefaultable
 	"Answer whether this message box will be give the user the option to remember their response and use that in future without showing the message."
@@ -1161,6 +1165,7 @@ isCancellable!accessing-styles!public! !
 isCancellable:!accessing-styles!public! !
 isChecked!accessing-styles!public! !
 isChecked:!accessing-styles!public! !
+isConfirmed!public!testing! !
 isDefaultable!accessing-styles!public! !
 isDefaultable:!accessing-styles!public! !
 isExpandedInFooter!accessing-styles!public! !

@@ -262,18 +262,9 @@ allSelectors
 	^allSelectors!
 
 allSelectorsImplementedIn: aBrowserEnvironment
-	"Answer an <IdentitySet> of all the <Symbol>s which currently have at least one implementation in 
-	the scope of the <BrowserEnvironment> argument."
+	"Answer an <IdentitySet> of all the <Symbol>s which currently have at least one implementation in the scope of the <BrowserEnvironment> argument."
 
-	| selectors classes |
-	selectors := IdentitySet new: 1000.
-	classes := IdentitySet new: 50.
-	aBrowserEnvironment classesAndSelectorsDo: 
-			[:class :selector |
-			selectors add: selector.
-			((classes addNewElement: class) and: [aBrowserEnvironment definesClass: class])
-				ifTrue: [class dynamicSelectorsDo: [:each | selectors add: each]]].
-	^selectors!
+	^aBrowserEnvironment allSelectorsImplemented!
 
 allSelectorsSentIn: aBrowserEnvironment
 	"Answer a <Set> of all the <Symbol>s which are directly sent by methods in the specified <BrowserEnvironment>.
@@ -282,15 +273,7 @@ allSelectorsSentIn: aBrowserEnvironment
 		SmalltalkSystem current allSelectorsSentIn: (PackageEnvironment onEnvironment: BrowserEnvironment new packageNames: #('ActiveX Automation'))
 	"
 
-	| selectors excluded |
-	selectors := (IdentitySet new: 512)
-				addAll: VM specialSelectors;
-				yourself.
-	excluded := 'examples' asMethodCategory methods.
-	aBrowserEnvironment methodsDo: 
-			[:each |
-			(excluded includes: each) ifFalse: [each messagesDo: [:selector | selectors add: selector]]].
-	^selectors!
+	^aBrowserEnvironment allSelectorsSent!
 
 allSymbolsReferencedIn: aBrowserEnvironment
 	"Answer a <Set> of all the <Symbol>s which might be selectors which are referenced from
@@ -346,7 +329,7 @@ allUnimplementedSelectors
 			do: [:m | SmalltalkSystem current browseReferencesTo: m]
 	"
 
-	^self unimplementedSelectorsIn: self systemEnvironment!
+	^self unimplementedSelectorsIn: self browserEnvironment!
 
 applyOptionsToTool: aSmalltalkToolShell
 	aSmalltalkToolShell view managedSubViews
@@ -410,11 +393,14 @@ basicRemoveMethods: aCollection
 	self changeManager
 		performChange: (aCollection size = 1 ifTrue: [changes changes first] ifFalse: [changes])!
 
-basicRemoveMethods: aCollection within: aBrowserEnvironment
+basicRemoveMethods: aCollection within: aBrowserEnvironment showChanges: aBoolean
 	self basicRemoveMethods: aCollection!
 
-basicRemoveMethodsIn: aBrowserEnvironment within: searchEnvironment
-	self basicRemoveMethods: aBrowserEnvironment allMethods within: searchEnvironment!
+basicRemoveMethodsIn: aBrowserEnvironment within: searchEnvironment showChanges: aBoolean
+	self
+		basicRemoveMethods: aBrowserEnvironment allMethods
+		within: searchEnvironment
+		showChanges: aBoolean!
 
 beginDrag: aDragDropSession methods: aCollection
 	| ddObjects stream chunks |
@@ -451,7 +437,7 @@ browseAllChangedMethods
 	"Open a method browser on all methods in the system which have been changed (i.e. which
 	have source in the change log and are in classes marked as changed)."
 
-	self browseMethodsIn: (self changedMethodsIn: self systemEnvironment)!
+	self browseMethodsIn: (self changedMethodsIn: self browserEnvironment)!
 
 browseAllUnimplementedSelectors
 	"
@@ -459,9 +445,9 @@ browseAllUnimplementedSelectors
 	"
 
 	| env |
-	env := self systemEnvironment.
-	self 
-		browseSelectors: (self unimplementedSelectorsIn: env) asSortedCollection
+	env := self browserEnvironment.
+	self
+		browseSelectors: env unimplementedSelectors asSortedCollection
 		caption: 'Unimplemented Selectors'
 		environment: env!
 
@@ -504,7 +490,7 @@ browseClassHierarchyOfMethod: aCompiledMethod
 browseClassReferences: aClass 
 	"Opens a new MethodBrowser on all the methods which refer to the <Class>, aClass."
 
-	self browseClassReferences: aClass in: self systemEnvironment!
+	self browseClassReferences: aClass in: self browserEnvironment!
 
 browseClassReferences: aClass in: aBrowserEnvironment
 	"Opens a new MethodBrowser on all the methods defined in the specified <BrowserEnvironment>
@@ -528,13 +514,13 @@ browseClassVariables: aClass
 			[self
 				browseReferencesToClassVar: aVariable
 				of: aClass
-				within: self systemEnvironment]!
+				within: self browserEnvironment]!
 
 browseCompilationFailures
 	"Open a method browser on all methods in the system which have failed compilation (i.e. which
 	are instances of CompileFailedMethod)."
 
-	self browseCompilationFailuresIn: self systemEnvironment!
+	self browseCompilationFailuresIn: self browserEnvironment!
 
 browseCompilationFailuresIn: aBrowserEnvironment 
 	"Open a method browser on all methods defined in the specified <BrowserEnvironment> which
@@ -547,7 +533,7 @@ browseCompilationIssues
 	"Open a method browser on all methods in the system which have compilation issues of any
 	sort as detected by either the smalltalk parser of semantic analyser."
 
-	self browseCompilationIssuesIn: self systemEnvironment!
+	self browseCompilationIssuesIn: self browserEnvironment!
 
 browseCompilationIssuesIn: aBrowserEnvironment 
 	"Open a method browser on all methods defined in the specified <BrowserEnvironment> which
@@ -561,7 +547,7 @@ browseContainingText
 	"Prompt for a search string, using contents of the clipboard as the initial suggestion, and open 
 	a Method Browser on all the methods that contain that search string in their source."
 
-	self browseContainingTextIn: self systemEnvironment!
+	self browseContainingTextIn: self browserEnvironment!
 
 browseContainingText: aString 
 	"Open a Method Browser on all the methods that contain the search string, aString, in their
@@ -569,7 +555,7 @@ browseContainingText: aString
 
 	self 
 		browseContainingText: aString
-		in: self systemEnvironment
+		in: self browserEnvironment
 		prompt: false!
 
 browseContainingText: aString in: aBrowserEnvironment prompt: aBoolean 
@@ -590,12 +576,12 @@ browseContainingTextIn: aBrowserEnvironment
 		in: aBrowserEnvironment
 		prompt: true!
 
-browseDefinitionsMatching: aMethodSearch in: aBrowserEnvironment 
+browseDefinitionsMatching: aMethodSearch in: aBrowserEnvironment
 	"Private - Open a MethodBrowser on all the methods whose selectors are matched by the <MethodSearch>
 	argument in the specified <readableString> pattern in the scope of the specified
 	<BrowserEnvironment>."
 
-	self browseMethodsIn: (self definitionsMatching: aMethodSearch in: aBrowserEnvironment)!
+	self browseMethodsIn: (aBrowserEnvironment definitionsMatching: aMethodSearch)!
 
 browseDefinitionsMatching: aMethodSearch inHierarchyOf: aBehavior within: aBrowserEnvironment 
 	"Private - Open a MethodBrowser on all the methods whos' selectors match the <MethodSearch>
@@ -612,7 +598,7 @@ browseDefinitionsOf: selectorPattern
 	<readableString> pattern."
 
 	self browseDefinitionsMatching: (MethodSearch newPattern: selectorPattern)
-		in: self systemEnvironment!
+		in: self browserEnvironment!
 
 browseDefinitionsOfSelector: aSymbol in: aBrowserEnvironment
 	"Opens a MethodBrowser on all the methods whose selectors match the specified
@@ -645,7 +631,7 @@ browseInstanceVariables: browseClass
 	self 
 		browseInstanceVariables: browseClass
 		action: #browseReferencesToInstVar:inHierarchyOf:within:
-		in: self systemEnvironment!
+		in: self browserEnvironment!
 
 browseInstanceVariables: browseClass action: selector in: aBrowserEnvironment
 	| instVars varName |
@@ -667,7 +653,7 @@ browseMessageDefinitions: aString in: aBrowserEnvironment
 	"Private - Prompt for a selector and open a method browser displaying the
 	implementors of that selector."
 
-	(self promptForSelector: aString caption: 'Definitions of…')
+	(self promptForDefinitionsOf: aString in: aBrowserEnvironment)
 		ifNotNil: [:search | Cursor wait showWhile: [self browseDefinitionsMatching: search in: aBrowserEnvironment]]!
 
 browseMessageDefinitionsIn: aBrowserEnvironment 
@@ -681,8 +667,8 @@ browseMessageReferences: aString in: aBrowserEnvironment
 	selector, using the <readableString> argument as the initial suggestion (or if that is empty
 	the first word of the clipboard text)."
 
-	(self promptForSelector: aString caption: 'References to…')
-		ifNotNil: [:search | Cursor wait showWhile: [self browseReferencesMatching: search in: aBrowserEnvironment]]!
+	(self promptForReferencesTo: aString in: aBrowserEnvironment)
+		ifNotNil: [:search | self browseReferencesMatching: search in: aBrowserEnvironment]!
 
 browseMessageReferencesIn: aBrowserEnvironment 
 	"Private - Prompt for a selector and open a method browser displaying the references to that
@@ -694,18 +680,17 @@ browseMessageReferencesInHierarchyOf: aClass within: aBrowserEnvironment
 	"Private - Prompt for a selector and open a method browser displaying the
 	references to that selector from the local hierarchy of aClass."
 
-	| search |
-	search := self promptForSelector: '' caption: 'Hierarchy References to…'.
-	search isNil ifTrue: [^self].
-	Cursor wait showWhile: 
-			[self browseReferencesMatching: search in: (aBrowserEnvironment forClassHierarchyOf: aClass)]!
+	| hierarchyEnv |
+	hierarchyEnv := aBrowserEnvironment forClassHierarchyOf: aClass.
+	(self promptForReferencesTo: '' in: hierarchyEnv)
+		ifNotNil: [:search | self browseReferencesMatching: search in: hierarchyEnv]!
 
-browseMessagesMatching: aMethodSearch in: aBrowserEnvironment 
+browseMessagesMatching: aMethodSearch in: aBrowserEnvironment
 	"Private - Open a MethodBrowser on all the methods whose selectors are matched by the <MethodSearch>
 	argument in the specified <readableString> pattern in the scope of the specified
 	<BrowserEnvironment>."
 
-	self browseMethodsIn: (self messagesMatching: aMethodSearch in: aBrowserEnvironment)!
+	self browseMethodsIn: (aBrowserEnvironment messagesMatching: aMethodSearch)!
 
 browseMessagesSentBy: aCompiledMethod in: aBrowserEnvironment
 	"Private - Prompt the user with a list of messages sent from the specified <CompiledMethod>,
@@ -735,7 +720,7 @@ browseMethodCategories: aCollection
 	"Browse the set of methods which is the union of all those belonging to at least one of the
 	<collection> of <MethodCategory> which is the argument."
 
-	self browseMethodCategories: aCollection in: self systemEnvironment!
+	self browseMethodCategories: aCollection in: self browserEnvironment!
 
 browseMethodCategories: aCollection in: aBrowserEnvironment
 	"Browse the set of methods defined in the specified <BrowserEnvironment> which is the union
@@ -770,13 +755,17 @@ browseMethodCategory
 				showModal.
 	chosenCategory notNil ifTrue: [self browseMethodCategories: {chosenCategory}]!
 
-browseMethodHierarchyFrom: aCompiledMethod 
+browseMethodHierarchyFrom: aCompiledMethod
 	"Opens a MethodBrowser on all the overidden methods in the superclass chain for aCompiledMethod."
 
-	| chain selector classes browser |
-	selector := aCompiledMethod selector.
-	classes := aCompiledMethod methodClass withAllSuperclasses.
-	chain := (self systemEnvironment forClasses: classes) definitionsOf: selector.
+	self browseMethodHierarchyFrom: aCompiledMethod in: self browserEnvironment!
+
+browseMethodHierarchyFrom: aCompiledMethod in: aBrowserEnvironment
+	"Opens a MethodBrowser on all the overidden methods in the superclass chain for aCompiledMethod that are visible in the specified <BrowserEnvironment>."
+
+	| chain browser |
+	chain := (aBrowserEnvironment forClassHierarchyTo: aCompiledMethod methodClass)
+				definitionsOf: aCompiledMethod selector.
 	browser := self browseMethodsIn: chain.
 	"We want to display the methods in hierarchy order, nearest first, so we must apply a sort block."
 	browser browser beSorted: [:a :b | a methodClass inheritsFrom: b methodClass].
@@ -788,7 +777,7 @@ browseMethodProtocols: protocolNames
 
 	| protocols env |
 	protocols := protocolNames collect: [:each | MethodProtocol name: each asSymbol].
-	env := MethodProtocolEnvironment onEnvironment: self systemEnvironment protocols: protocols.
+	env := MethodProtocolEnvironment onEnvironment: self browserEnvironment protocols: protocols.
 	self browseMethodsIn: env!
 
 browseMethodsIn: aBrowserEnvironment 
@@ -819,7 +808,7 @@ browseMethodsWithFullBlocks
 	"
 
 	| methods |
-	methods := self systemEnvironment filterMethods: [:method | method needsContext].
+	methods := self browserEnvironment filterMethods: [:method | method needsContext].
 	methods label: 'Methods with Full Blocks'.
 	self browseMethodsIn: methods!
 
@@ -850,25 +839,31 @@ browseProtocols
 	
 	^self protocolBrowserClass show!
 
-browseReferencesMatching: aMethodSearch in: aBrowserEnvironment 
+browseReferencesMatching: aMethodSearch in: aBrowserEnvironment
 	"Private - Opens a MethodBrowser on all the methods that refer to aString from their literal frames
 	(aString is normally a symbolic selector), within the scope of the specified
 	<BrowserEnvironment>."
 
-	self browseMethodsIn: (self referencesMatching: aMethodSearch in: aBrowserEnvironment)!
+	self browseMethodsIn: (aBrowserEnvironment referencesMatching: aMethodSearch)!
 
 browseReferencesTo: anObject 
 	"Open a Method Browser on all the methods that refer to anObject from their literal frames."
 
-	^self browseReferencesToLiteral: anObject in: self systemEnvironment!
+	^self browseReferencesToLiteral: anObject in: self browserEnvironment!
 
-browseReferencesToClassVar: aString of: browseClass within: aBrowserEnvironment
-	"Private - Open a MethodBrowser on all the methods that reference the class variable named,
-	aString, in the hierarchy of the <Behavior>, browseClass."
+browseReferencesToClassVar: aString of: aClass within: aBrowserEnvironment
+	"Private - Open a MethodBrowser on all the methods that reference the class variable named, aString, in the hierarchy of the <Behavior>, aClass."
 
-	| binding refs |
-	binding := browseClass hierarchyBindingFor: aString.
-	refs := self directReferencesToVariable: binding in: aBrowserEnvironment.
+	| binding refs matched |
+	binding := aClass hierarchyBindingFor: aString.
+	matched := aBrowserEnvironment filterMethods: [:method1 | method1 refersToLiteral: binding].
+	matched
+		label: ('All methods that reference <1p>.<2s> in <3p>'
+					expandMacrosWith: binding environment
+					with: binding key
+					with: aBrowserEnvironment);
+		addSearchString: binding key.
+	refs := matched.
 	binding isImmutable
 		ifTrue: [self browseMethodsIn: refs]
 		ifFalse: 
@@ -886,7 +881,7 @@ browseReferencesToClassVar: aString of: browseClass within: aBrowserEnvironment
 			self browseMethodsInEnvironments: {refs. readers. writers}]!
 
 browseReferencesToGlobal: aString 
-	self browseReferencesToGlobal: aString in: self systemEnvironment!
+	self browseReferencesToGlobal: aString in: self browserEnvironment!
 
 browseReferencesToGlobal: aString in: aBrowserEnvironment 
 	(self promptForReferencesToGlobal: aString in: aBrowserEnvironment) 
@@ -896,34 +891,10 @@ browseReferencesToInstVar: aString inHierarchyOf: aBehavior within: aBrowserEnvi
 	"Private - Open a method browser on all the methods that refer to the instance variable
 	named by the <readableString> argument, in the hierarchy of the <Behavior> argument."
 
-	| definingBehavior label env writers readers references |
-	definingBehavior := aBehavior whichClassDefinesInstVar: aString.
-	env := definingBehavior == aBehavior
-				ifTrue: 
-					[label := 'All methods that %<1s> <1p>.<2s> in <4p>'.
-					aBrowserEnvironment]
-				ifFalse: 
-					[label := 'Methods that %<1s> <1p>.<2s> in the hierarchy of <3p> within <4p>'.
-					aBrowserEnvironment forClassHierarchyOf: aBehavior instanceClass].
-	label := label
-				expandMacrosWith: definingBehavior
-				with: aString
-				with: aBehavior
-				with: aBrowserEnvironment.
-	references := env instVarRefsTo: aString in: definingBehavior.
-	references
-		label: (label expandMacrosWith: 'reference');
-		addSearchString: aString.
-	writers := env instVarWritersTo: aString in: definingBehavior.
-	writers
-		label: (label expandMacrosWith: 'assign to');
-		addSearchString: aString.
-	readers := env instVarReadersTo: aString in: definingBehavior.
-	readers
-		label: (label expandMacrosWith: 'read');
-		addSearchString: aString.
-	#todo.	"VariableEnvironment caches list of methods that access an inst. var. It needs to flush this cache when a new method is defined (or drop it altogether)."
-	self browseMethodsInEnvironments: {references. readers. writers}!
+	self browseMethodsInEnvironments: (self
+				referencesToInstVar: aString
+				inHierarchyOf: aBehavior
+				within: aBrowserEnvironment)!
 
 browseReferencesToLiteral: anObject in: aBrowserEnvironment 
 	"Opens a MethodBrowser on all the methods that refer to aString from their literal frames
@@ -936,10 +907,10 @@ browseReferencesToVariable: anAssociation
 	"Open a MethodBrowser on all the methods that refer to the variable, anAssociation
 	(which is presumably a variable from some PoolDictionary)."
 
-	self browseReferencesToLiteral: anAssociation in: self systemEnvironment!
+	self browseReferencesToLiteral: anAssociation in: self browserEnvironment!
 
 browserEnvFromDom: anIXMLDOMDocument
-	| manifest classes env exeName time |
+	| manifest classes env exeName time model deletedSharedVars retainedSharedVars |
 	manifest := anIXMLDOMDocument selectSingleNode: './/Manifest'.
 	classes := manifest selectNodes: 'Classes/Class'.
 	env := SelectorEnvironment new.
@@ -957,17 +928,27 @@ browserEnvFromDom: anIXMLDOMDocument
 					classMethods := each selectNodes: 'ClassMethods/Method'.
 					env addClass: class class
 						selectors: (classMethods collect: [:eachMethod | eachMethod text asSymbol])]].
-	^env!
+	model := RBModel onEnvironment: env.
+	retainedSharedVars := (manifest selectNodes: 'RemainingSharedVariables/VariableBinding')
+				collect: [:each | each text].
+	deletedSharedVars := LookupTable new.
+	model rootNamespace allClassesDo: 
+			[:each |
+			| toDelete |
+			toDelete := each bindings reject: 
+							[:eachVar |
+							eachVar isClassBinding
+								or: [eachVar isClassVariable or: [retainedSharedVars includes: eachVar fullName]]].
+			toDelete isEmpty ifFalse: [deletedSharedVars at: each put: toDelete]].
+	deletedSharedVars
+		keysAndValuesDo: [:eachClass :deadVars | deadVars do: [:each | eachClass removeBindingFor: each key]].
+	^model!
 
-browserEnvironmentForClasses: aCollection 
-	| behaviors |
-	behaviors := OrderedCollection new: aCollection size * 2.
-	aCollection do: 
-			[:each | 
-			behaviors
-				addLast: each instanceClass;
-				addLast: each instanceClass class].
-	^self systemEnvironment forClasses: behaviors!
+browserEnvironment
+	^BrowserEnvironment new!
+
+browserEnvironmentForClasses: aCollection
+	^self browserEnvironment forClassesAndTheirMetaclasses: aCollection!
 
 browseResourceIdentifier: aResourceIdentifier 
 	"Open a browser onto aResourceIdentifier."
@@ -1005,7 +986,7 @@ browseSharedVariableReferences: aBindingReference in: aBrowserEnvironment
 
 	^self browseMethodsIn: (aBindingReference bindingOrNil
 				ifNotNil: [:var | aBrowserEnvironment referencesToVariable: var]
-				ifNil: [self referencesToBinding: aBindingReference in: aBrowserEnvironment])!
+				ifNil: [aBrowserEnvironment referencesToBinding: aBindingReference])!
 
 browseSystem
 	"Open a new system browser at the root of the standard class hierarchy."
@@ -1638,13 +1619,6 @@ defaultPublishedAspectsLiteralsMapOf: aTool
 	^aTool propertyAt: #_defaultPublishedAspectsLiteralsMap
 		ifAbsent: [self saveDefaultPublishedAspectsOf: aTool]!
 
-definitionsMatching: aMethodSearch in: aBrowserEnvironment
-	^(aBrowserEnvironment filterMethods: aMethodSearch methodDefinitionFilter)
-		label: ('Definitions of <1p> in <2p>' expandMacrosWith: aMethodSearch pattern
-					with: aBrowserEnvironment);
-		search: aMethodSearch;
-		yourself!
-
 definitionsMatching: aMethodSearch inHierarchyOf: aBehavior within: aBrowserEnvironment
 	| class hierarchy |
 	class := aBehavior instanceClass.
@@ -1655,7 +1629,7 @@ definitionsMatching: aMethodSearch inHierarchyOf: aBehavior within: aBrowserEnvi
 		yourself!
 
 definitionsOf: aSymbol
-	^self definitionsMatching: (MethodSearch newSelector: aSymbol) in: self systemEnvironment!
+	^self browserEnvironment definitionsMatching: (MethodSearch newSelector: aSymbol)!
 
 deleteResource: aResourceIdentifier
 	(MessageBox confirm: 'Are you sure you wish to delete ' , aResourceIdentifier displayString)
@@ -1668,17 +1642,6 @@ deprecatedIcon
 	"Private - Answers an Icon that can be used to represent a deprecated method"
 
 	^Icon warning!
-
-directReferencesToVariable: aVariableBinding in: aBrowserEnvironment
-	| matched |
-	matched := aBrowserEnvironment filterMethods: [:method | method refersToLiteral: aVariableBinding].
-	matched
-		label: ('All methods that reference <1p>.<2s> in <3p>'
-					expandMacrosWith: aVariableBinding environment
-					with: aVariableBinding key
-					with: aBrowserEnvironment);
-		addSearchString: aVariableBinding key.
-	^matched!
 
 disassembleMethod: aCompiledCode 
 	^'Disassembly is only available in Dolphin Professional'!
@@ -1933,6 +1896,9 @@ imageFilesType
 	ext := SessionManager current imageExtension.
 	^{'Smalltalk Images (*.' , ext , ')'. '*.' , ext}!
 
+includesImplementorsOf: aSymbol
+	^self allSelectors includes: aSymbol!
+
 initialize
 	"Private - Initialize the receiver.
 
@@ -2113,10 +2079,6 @@ loadViewResource: aResourceArray inContext: contextView
 				defaultExtentBlock: nil;
 				createHookBlock: nil]!
 
-messagesMatching: aMethodSearch in: aBrowserEnvironment
-	^{self definitionsMatching: aMethodSearch in: aBrowserEnvironment.
-		self referencesMatching: aMethodSearch in: aBrowserEnvironment}!
-
 methodCategorizationPolicy
 	"Private - Answer the <MethodCategorizationPolicy> used by the receiver."
 
@@ -2182,11 +2144,10 @@ methodsWithBytecode: anInteger in: aBrowserEnvironment
 		yourself!
 
 methodsWithCompilationIssuesIn: aBrowserEnvironment
-	| caption filter env |
+	| caption env |
 	caption := 'Finding methods with compilation issues in <1p>' expandMacrosWith: aBrowserEnvironment.
-	filter := [:each | each hasCompilationIssues].
 	env := self
-				selectMethods: filter
+				selectMethods: [:each | each hasCompilationIssues]
 				in: aBrowserEnvironment
 				withProgress: caption.
 	env label: ('Compilation issues in <1p>' expandMacrosWith: aBrowserEnvironment).
@@ -2195,7 +2156,7 @@ methodsWithCompilationIssuesIn: aBrowserEnvironment
 methodsWithNewBytecodes
 	"Private - Answer a <BrowserEnvironment> containing all the methods that would have different bytecodes if recompiled with the current compiler."
 
-	^self methodsWithNewBytecodesIn: self systemEnvironment!
+	^self methodsWithNewBytecodesIn: self browserEnvironment!
 
 methodsWithNewBytecodesIn: aBrowserEnvironment
 	"Private - Answer a <BrowserEnvironment> containing all the methods in the
@@ -2228,6 +2189,9 @@ minimizeAll
 
 	View topLevelViews
 		do: [:each | (each class canUnderstandProtocol: #topView) ifTrue: [each minimize]]!
+
+modelClassFor: aBehavior
+	^aBehavior ifNotNil: [aBehavior realClass]!
 
 myDolphinAccount
 	self openUrl: self sessionManager myDolphinUrl!
@@ -2676,7 +2640,7 @@ packageInstallWarning: aWarning
 			== #ok!
 
 packageManager
-	"Private - Answer the package manager to be used by the receiver."
+	"Answer the package manager to be used by the receiver."
 
 	^Package manager!
 
@@ -3116,7 +3080,7 @@ promptForClass
 	"Prompt for a, possibly wildcarded, class name. Answer the <Class> if it exists or nil 
 	if it does not or if the user cancels the acion."
 
-	^self promptForClassIn: self systemEnvironment!
+	^self promptForClassIn: self browserEnvironment!
 
 promptForClassIn: aBrowserEnvironment
 	| class className |
@@ -3156,6 +3120,9 @@ promptForClassVarName: nameString in: aClass prompt: promptString caption: capti
 				showModal.
 	^newName!
 
+promptForDefinitionsOf: aString in: aBrowserEnvironment
+	^self promptForSelector: aString caption: 'Definitions of message in <1p>…' << aBrowserEnvironment!
+
 promptForInstVarName: nameString in: aClass prompt: promptString caption: captionString
 	| newName |
 	newName := (Prompter
@@ -3167,25 +3134,12 @@ promptForInstVarName: nameString in: aClass prompt: promptString caption: captio
 				showModal.
 	^newName!
 
+promptForReferencesTo: aString in: aBrowserEnvironment
+	^self promptForSelector: aString caption: 'References to message in <1p>…' << aBrowserEnvironment!
+
 promptForReferencesToGlobal: aString in: aBrowserEnvironment
-	| suggestion |
-	suggestion := aString isEmpty ifTrue: [Clipboard current getTextOrEmpty] ifFalse: [aString].
-	^((Prompter
-		createOn: suggestion
-		prompt: 'Enter the name of a global:'
-		caption: 'Browse References to Global…')
-		validater: 
-				[:value |
-				| result |
-				result := ValidationResult new.
-				(BindingReference isValidQualifiedName: value)
-					ifFalse: [result errorMessage: '<1p> is not a valid qualified name' << value]
-					ifTrue: 
-						[value asQualifiedReference isDefined ifFalse: [result errorMessage: '<1p> is undefined' << value]].
-				result];
-		showHintWhenEmpty: false;
-		showModal)
-			ifNotNil: [:globalName | aBrowserEnvironment referencesToVariable: globalName asQualifiedReference binding]!
+	^(self promptForSharedVariableName: aString)
+		ifNotNil: [:globalName | aBrowserEnvironment referencesToVariable: globalName asQualifiedReference binding]!
 
 promptForSearchString: aFindDetails caption: aString
 	^(AdvancedFindDialog create: 'Directionless view' on: aFindDetails)
@@ -3207,6 +3161,25 @@ promptForSelector: suggestionString caption: captionString
 		isWildCardEnabled: true;
 		validationBlock: self findSelectorValidationBlock.
 	^dialog showModal ifNotNil: [:search | MethodSearch newFindDetails: search]!
+
+promptForSharedVariableName: aString
+	| suggestion |
+	suggestion := aString isEmpty ifTrue: [Clipboard current getTextOrEmpty] ifFalse: [aString].
+	^(Prompter
+		createOn: suggestion
+		prompt: 'Enter the name of a shared (static) variable:'
+		caption: 'Browse References to Shared Variable…')
+		validater: 
+				[:value |
+				| result |
+				result := ValidationResult new.
+				(BindingReference isValidQualifiedName: value)
+					ifFalse: [result errorMessage: '<1p> is not a valid qualified name' << value]
+					ifTrue: 
+						[value asQualifiedReference isDefined ifFalse: [result errorMessage: '<1p> is undefined' << value]].
+				result];
+		showHintWhenEmpty: false;
+		showModal!
 
 protocolBrowserClass
 	"Answer the class of browser to be used for browsing method protocols in the development system."
@@ -3335,48 +3308,33 @@ redoChange
 
 	self changeManager redoOperation!
 
-referencesMatching: aMethodSearch in: aBrowserEnvironment
-	^(aBrowserEnvironment filterMethods: aMethodSearch methodReferenceFilter)
-		label: ('References to <1p> in <2p>' expandMacrosWith: aMethodSearch pattern
-					with: aBrowserEnvironment);
-		search: aMethodSearch;
-		yourself!
-
 referencesTo: anObject 
 	"Answer a <BrowserEnvironment> that includes all methods in the entire system that reference
 	the <Object> argument from their literal frame."
 
-	^self referencesTo: anObject in: self systemEnvironment!
+	^self referencesTo: anObject in: self browserEnvironment!
 
 referencesTo: anObject in: aBrowserEnvironment
 	"Answer a <BrowserEnvironment> that includes all methods defined in the <BrowserEnvironment>
 	argument that reference the <Object> argument from their literal frame."
 
-	"Implementation Note: Rather than use BrowserEnvironment>>referencesTo: (which creates a
-	SelectorEnvironment), we use our own FilteredEnvionment with a suitable filter block. This
-	is slightly faster, and also the FilteredEnvironment is dynamically calculated, so it will
-	include any subsequently defined references."
+	"Implementation Note: Rather than use BrowserEnvironment>>referencesTo: (which creates a SelectorEnvironment containing a snapshot of the references), we use our own FilteredEnvionment with a suitable filter block. This is slightly faster, and also the FilteredEnvironment is dynamically calculated, so it will include any subsequently defined references."
 
-	| search |
-	search := MethodSearch newLiteral: anObject.
-	^(aBrowserEnvironment filterMethods: search simpleReferenceFilter)
-		label: ('References to <1p> in <2p>' expandMacrosWith: anObject with: aBrowserEnvironment);
-		addSearchString: search pattern;
-		yourself!
+	^aBrowserEnvironment liveReferencesTo: anObject!
 
-referencesToBinding: aBindingReference in: aBrowserEnvironment
-	^(aBrowserEnvironment filterMethods: [:method | method refersToLiteral: aBindingReference])
-		label: ('References to <1p> in <2p>' expandMacrosWith: aBindingReference with: aBrowserEnvironment);
-		addSearchString: aBindingReference printString;
-		yourself!
+referencesToInstVar: aString inHierarchyOf: aBehavior within: aBrowserEnvironment
+	| definingBehavior env |
+	definingBehavior := aBehavior whichClassDefinesInstVar: aString.
+	env := definingBehavior == aBehavior
+				ifTrue: [aBrowserEnvironment]
+				ifFalse: [aBrowserEnvironment forClassHierarchyOf: aBehavior instanceClass].
+	#todo.	"VariableEnvironment caches list of methods that access an inst. var. It needs to flush this cache when a new method is defined (or drop it altogether)."
+	^{env instVarRefsTo: aString in: definingBehavior.
+		env instVarReadersTo: aString in: definingBehavior.
+		env instVarWritersTo: aString in: definingBehavior}!
 
 referencesToLiteral: anObject in: aBrowserEnvironment
-	| search |
-	search := MethodSearch newLiteral: anObject.
-	^(aBrowserEnvironment filterMethods: search simpleReferenceFilter)
-		label: ('References to <1p> in <2p>' expandMacrosWith: anObject with: aBrowserEnvironment);
-		search: search;
-		yourself!
+	^aBrowserEnvironment referencesToLiteral: anObject!
 
 reformatAllMethodsIn: aBrowserEnvironment
 	| changes |
@@ -3468,7 +3426,7 @@ removeClasses: aCollection
 			mb := MessageBox new.
 			mb uniqueId: [self] method displayString.
 			mb defaultButton: 1.
-			scope := self systemEnvironment.
+			scope := self browserEnvironment.
 			changes := CompositeRefactoryChange new.
 			subclasses isEmpty
 				ifTrue: 
@@ -3692,7 +3650,7 @@ renameClass: aClass to: newClassName showChanges: aBoolean
 
 	| oldClassName references |
 	oldClassName := aClass name asString.
-	references := self systemEnvironment referencesToClass: aClass.
+	references := self browserEnvironment referencesToClass: aClass.
 	ClassBuilder renameClass: aClass to: newClassName.
 	references isEmpty
 		ifTrue: [MessageBox notify: 'No methods referenced ' , oldClassName]
@@ -3708,7 +3666,7 @@ renameClassVariable: aString in: aClass
 	self 
 		renameClassVariable: aString
 		in: aClass
-		within: self systemEnvironment!
+		within: self browserEnvironment!
 
 renameClassVariable: aString in: aClass within: aBrowserEnvironment
 	"Implements the Rename Class Variable refactoring."
@@ -3727,6 +3685,13 @@ renameClassVariable: aString in: aClass within: aBrowserEnvironment
 				in: aClass
 				within: aBrowserEnvironment]!
 
+renameClassVariable: oldName to: newName in: definingBehavior
+	^self
+		renameClassVariable: oldName
+		to: newName
+		in: definingBehavior
+		within: self browserEnvironment!
+
 renameClassVariable: aString to: newName in: aClass within: aBrowserEnvironment
 	aClass renameClassVar: aString to: newName.
 	self
@@ -3740,7 +3705,7 @@ renameInstanceVariable: aString in: aClass
 	self 
 		renameInstanceVariable: aString
 		in: aClass
-		within: self systemEnvironment!
+		within: self browserEnvironment!
 
 renameInstanceVariable: aString in: aClass within: aBrowserEnvironment
 	| newName |
@@ -3756,6 +3721,13 @@ renameInstanceVariable: aString in: aClass within: aBrowserEnvironment
 				to: newName
 				in: aClass
 				within: aBrowserEnvironment]!
+
+renameInstanceVariable: oldName to: newName in: definingBehavior
+	^self
+		renameInstanceVariable: oldName
+		to: newName
+		in: definingBehavior
+		within: self browserEnvironment!
 
 renameInstanceVariable: aString to: newName in: aClass within: aBrowserEnvironment 
 	aClass renameInstVar: aString to: newName.
@@ -3996,9 +3968,6 @@ suggestedWord: aString
 	stream skipWhile: [:c | c isSeparator not].
 	^suggestion copyFrom: start to: stream position!
 
-systemEnvironment
-	^BrowserEnvironment new!
-
 systemFolder
 	"Answer the <TreeModel> that holds the system folder hierarchy.
 	We'll lazily initialize this in order to avoid problems with the boot."
@@ -4049,16 +4018,10 @@ undoChange
 
 	self changeManager undoOperation!
 
-unimplementedSelectorsIn: aBrowserEnvironment 
-	"Answer a <Set> of all the <Symbol>s which are selectors which are referenced from methods
-	in the <BrowserEnvironment> argument but which have no corresponding implementation in that
-	browser environment. N.B. This may not include any messages sent dynamically with #perform:
-	and friends, and so should not be considered a guarantee that no send will ever result in a
-	DNU (which, of course, cannot be guaranteed anyway because there is no way of knowing that
-	the object to which the message is sent actually implements that message)."
+unimplementedSelectorsIn: aBrowserEnvironment
+	"Answer a <Set> of all the <Symbol>s which are selectors which are referenced from methods in the <BrowserEnvironment> argument but which have no corresponding implementation in that browser environment. N.B. This may not include any messages sent dynamically with #perform: and friends, and so should not be considered a guarantee that no send will ever result in a DNU (which, of course, cannot be guaranteed anyway because there is no way of knowing that the object to which the message is sent actually implements that message)."
 
-	^(self allSelectorsSentIn: aBrowserEnvironment) 
-		difference: (self allSelectorsImplementedIn: aBrowserEnvironment)!
+	^aBrowserEnvironment unimplementedSelectors!
 
 uninitialize
 	"Private - Uninitialize the receiver."
@@ -4075,7 +4038,7 @@ upgradeAllResourcesReferencingClassNamed: aSymbol
 	"Load and resave all view resources referencing the named class. This will apply any pending STB version upgrade."
 
 	| refs |
-	refs := self systemEnvironment referencesToClass: aSymbol asQualifiedReference value.
+	refs := self browserEnvironment referencesToClass: aSymbol asQualifiedReference value.
 	refs allMethods do: [:each | (ResourceIdentifier forMethod: each) ifNotNil: [:ri | ri reassign]]!
 
 userPreferencesIcon
@@ -4113,14 +4076,14 @@ viewComposerClass: toolClass
 	
 	viewComposerClass := toolClass!
 
-viewResourcesMatching: matchBlock do: doBlock 
+viewResourcesMatching: matchBlock do: doBlock
 	| vc |
 	vc := self openViewComposerEmpty.
-	(self resourceManager allResourceIdentifiers select: matchBlock) do: 
-			[:rid | 
+	(self allResourceIdentifiers select: matchBlock) do: 
+			[:rid |
 			vc openOn: rid.
 			(doBlock value: vc) ifTrue: [vc fileSave].
-			(MemoryManager current)
+			MemoryManager current
 				collectGarbage;
 				administerLastRites].
 	vc exit!
@@ -4268,8 +4231,8 @@ backupOnImageSave!accessing!public! !
 backupOnImageSave:!accessing!public! !
 basicCreateSubclass:subclasses:!private!refactoring! !
 basicRemoveMethods:!helpers!private! !
-basicRemoveMethods:within:!helpers!private! !
-basicRemoveMethodsIn:within:!helpers!private! !
+basicRemoveMethods:within:showChanges:!helpers!private! !
+basicRemoveMethodsIn:within:showChanges:!helpers!private! !
 beginDrag:methods:!event handling!helpers!private! !
 beNotChanged!operations!private! !
 binaryClassFilesType!constants!private! !
@@ -4315,6 +4278,7 @@ browseMethodCategories:!browsing!public! !
 browseMethodCategories:in:!browsing!public! !
 browseMethodCategory!browsing!public! !
 browseMethodHierarchyFrom:!browsing!public! !
+browseMethodHierarchyFrom:in:!browsing!public! !
 browseMethodProtocols:!browsing!public! !
 browseMethodsIn:!browsing!public! !
 browseMethodsIn:filter:!browsing!public! !
@@ -4334,6 +4298,7 @@ browseReferencesToInstVar:inHierarchyOf:within:!browsing!private! !
 browseReferencesToLiteral:in:!browsing!public! !
 browseReferencesToVariable:!browsing!public! !
 browserEnvFromDom:!helpers!private! !
+browserEnvironment!accessing!public! !
 browserEnvironmentForClasses:!browsing!public! !
 browseResourceIdentifier:!browsing!commands!public! !
 browseResources!browsing!commands!public! !
@@ -4407,12 +4372,10 @@ defaultMethodCategories!accessing!public! !
 defaultPackage!accessing!public! !
 defaultPackage:!accessing!public! !
 defaultPublishedAspectsLiteralsMapOf:!accessing!private!theming! !
-definitionsMatching:in:!browsing!private! !
 definitionsMatching:inHierarchyOf:within:!browsing!private! !
 definitionsOf:!browsing!private! !
 deleteResource:!browsing!commands!public! !
 deprecatedIcon!constants!private! !
-directReferencesToVariable:in:!enquiries!private! !
 disassembleMethod:!public! !
 disassemblyStylerClass!constants!public! !
 displayItLocale!options!public! !
@@ -4457,6 +4420,7 @@ hierarchyBrowserClass:!options!public! !
 iconForMethod:!helpers!public! !
 ideaSpaceFilesType!constants!private! !
 imageFilesType!constants!private! !
+includesImplementorsOf:!enquiries!public! !
 initialize!initializing!private! !
 initializeArgumentClasses!initializing!private! !
 initializeFrom:!public! !
@@ -4474,7 +4438,6 @@ isRegisteredTool:!public!testing! !
 keywordsAndArgsForSelector:!autocompletion!helpers!private! !
 keywordsAndArgsOfMethod:!autocompletion!helpers!private! !
 loadViewResource:inContext:!helpers!private! !
-messagesMatching:in:!browsing!private! !
 methodCategorizationPolicy!constants!private! !
 methodExplorerClass!options!public! !
 methodExplorerClass:!options!public! !
@@ -4487,6 +4450,7 @@ methodsWithNewBytecodes!browsing!private! !
 methodsWithNewBytecodesIn:!browsing!private! !
 methodWorkspaceClass!options!public! !
 minimizeAll!commands!public! !
+modelClassFor:!accessing/classes!public! !
 myDolphinAccount!accessing!public! !
 nameForArgument:!helpers!private! !
 nameForBlockOfArity:!helpers!private! !
@@ -4541,7 +4505,7 @@ packageBrowserClass:!options!public! !
 packagedResourceIdentifierDialogClass!options!public! !
 packageFilesType!constants!private! !
 packageInstallWarning:!commands!private! !
-packageManager!accessing!private! !
+packageManager!accessing!public! !
 packageOpenFileDialogTypes!constants!private! !
 panic!commands!public! !
 patchLevel!patching!public! !
@@ -4565,20 +4529,22 @@ promptForClass!enquiries!public! !
 promptForClassIn:!enquiries!public! !
 promptForClassName:!helpers!private! !
 promptForClassVarName:in:prompt:caption:!helpers!private!refactoring! !
+promptForDefinitionsOf:in:!browsing!commands!private! !
 promptForInstVarName:in:prompt:caption:!helpers!private! !
+promptForReferencesTo:in:!commands!private! !
 promptForReferencesToGlobal:in:!browsing!private! !
 promptForSearchString:caption:!browsing!commands!private! !
 promptForSelector:caption:!helpers!private! !
+promptForSharedVariableName:!browsing!private! !
 protocolBrowserClass!options!public! !
 protocolBrowserClass:!options!public! !
 publicizeMethod:!operations!private! !
 publicMethodIcon!constants!private! !
 queryCommand:!commands!private! !
 redoChange!commands!public! !
-referencesMatching:in:!enquiries!private! !
 referencesTo:!enquiries!public! !
 referencesTo:in:!enquiries!public! !
-referencesToBinding:in:!enquiries!private! !
+referencesToInstVar:inHierarchyOf:within:!browsing!public! !
 referencesToLiteral:in:!browsing!public! !
 reformatAllMethodsIn:!commands!private! !
 reformatSource:in:!commands!private! !
@@ -4599,9 +4565,11 @@ renameClass:to:!public!refactoring! !
 renameClass:to:showChanges:!operations!public! !
 renameClassVariable:in:!public!refactoring! !
 renameClassVariable:in:within:!public!refactoring! !
+renameClassVariable:to:in:!private!refactoring! !
 renameClassVariable:to:in:within:!private!refactoring! !
 renameInstanceVariable:in:!public!refactoring! !
 renameInstanceVariable:in:within:!public!refactoring! !
+renameInstanceVariable:to:in:!private!refactoring! !
 renameInstanceVariable:to:in:within:!private!refactoring! !
 renameVariable:to:!operations!public! !
 requestPackageFileName:!operations!private! !
@@ -4635,7 +4603,6 @@ splashShowAtStartup:!accessing!public! !
 stbSaveOn:!binary filing!public! !
 stonOn:!public!ston! !
 suggestedWord:!helpers!private! !
-systemEnvironment!commands!private! !
 systemFolder!accessing!public! !
 systemFolderClass!constants!public! !
 systemFolderClass:!constants!public! !
@@ -4669,6 +4636,7 @@ wrapText:toWidth:indent:tabWidth:!public!utilities! !
 !
 
 Tools.SmalltalkSystem methodProtocol: #commandTarget attributes: #(#readOnly) selectors: #(#queryCommand:)!
+Tools.SmalltalkSystem methodProtocol: #systemModel attributes: #() selectors: #(#allResourceIdentifiers #allSelectors #browserEnvironment #includesImplementorsOf: #methodsWithCompilationIssuesIn: #modelClassFor:)!
 
 !Tools.SmalltalkSystem class methodsFor!
 

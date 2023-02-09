@@ -158,19 +158,16 @@ addMethodProtocol
 				showModal.
 	newProtocol notNil ifTrue: [self model addClass: actualClass toProtocol: newProtocol]!
 
-addToCommandRoute: route
-	"Update the <OrderedCollection>, path, with the receiver's contribution to the command path
-	held by the <CommandPolicy>, route. Answer self to have the command policy decide where
-	to go next.
-	Implementation Note: We want to make sure that the methods and classes presenter are always
-	in the route, and that they appear before SmalltalkSystem but after the receiver (if not already
-	in the route)."
+addToCommandRoute: aCommandPolicy
+	"Update the command routing path of the <CommandPolicy> argument with the receiver's contribution to the command path. "
 
-	route 
+	"Implementation Note: We want to make sure that the methods and classes presenter are always in the route, and that they appear before SmalltalkSystem (added by the supersend) but after the receiver (if not already in the route)."
+
+	aCommandPolicy
 		appendTarget: self;
 		appendTarget: methodBrowserPresenter;
-		appendTarget: classesPresenter;
-		appendPresenter: self.!
+		appendTarget: classesPresenter.
+	^super addToCommandRoute: aCommandPolicy!
 
 allCategoriesOfMethod: aCompiledMethod
 	"Answer a collection of all the categories that contain the <CompiledMethod> argument, 
@@ -205,15 +202,13 @@ browseContainingText
 	self model browseContainingTextIn: self searchEnvironment!
 
 browseDefinitionsMatching: aMethodSearch in: aBrowserEnvironment
-	| devsys |
-	devsys := self systemModel.
-	devsys
-		browseMethodsInEnvironments: {devsys definitionsMatching: aMethodSearch in: aBrowserEnvironment.
-				devsys definitionsMatching: aMethodSearch
-					in: (aBrowserEnvironment forClassHierarchyOf: self actualClass)}!
+	self developmentSystem
+		browseMethodsInEnvironments: {aBrowserEnvironment definitionsMatching: aMethodSearch.
+				(aBrowserEnvironment forClassHierarchyOf: self actualClass)
+					definitionsMatching: aMethodSearch}!
 
 browseHierarchy
-	self systemModel browseHierarchy: self actualClass!
+	self developmentSystem browseHierarchy: self actualClass!
 
 browseInstVarReferences
 	"Browse methods that reference all of the selected instance variables of the selected class."
@@ -247,23 +242,20 @@ browseMessageDefinitionsIn: aBrowserEnvironment
 	"Private - Prompt for a selector and open a method browser displaying all definitions of
 	that selector in the specified <BrowserEnvironment>."
 
-	(self systemModel promptForSelector: '' caption: 'Definitions of…')
-		ifNotNil: [:search | Cursor wait showWhile: [self browseDefinitionsMatching: search in: aBrowserEnvironment]]!
+	(self developmentSystem promptForDefinitionsOf: '' in: aBrowserEnvironment)
+		ifNotNil: [:search | self browseDefinitionsMatching: search in: aBrowserEnvironment]!
 
 browseMessageReferencesIn: aBrowserEnvironment
 	"Private - Prompt for a selector and open a method browser displaying the references to that
 	selector from methods defined in the specified <BrowserEnvironment>."
 
-	(self systemModel promptForSelector: '' caption: 'References to…')
-		ifNotNil: [:search | Cursor wait showWhile: [self browseReferencesMatching: search in: aBrowserEnvironment]]!
+	(self developmentSystem promptForReferencesTo: '' in: aBrowserEnvironment)
+		ifNotNil: [:search | self browseReferencesMatching: search in: aBrowserEnvironment]!
 
 browseMethodCategory
 	"Private - Browse all the methods which are in the currently selected category."
 
 	self model browseMethodCategories: self categories in: self searchEnvironment!
-
-browseMethodsIn: aBrowserEnvironment 
-	self systemModel browseMethodsIn: aBrowserEnvironment!
 
 browseOverriddenMethod
 	"Reposition the browser to the method which the currently selected method is overridding."
@@ -282,12 +274,9 @@ browseReferences
 	self browseInstVarReferences!
 
 browseReferencesMatching: aMethodSearch in: aBrowserEnvironment
-	| devsys |
-	devsys := self systemModel.
-	devsys
-		browseMethodsInEnvironments: {devsys referencesMatching: aMethodSearch in: aBrowserEnvironment.
-				devsys referencesMatching: aMethodSearch
-					in: (aBrowserEnvironment forClassHierarchyOf: self actualClass)}!
+	self browseMethodsInEnvironments: {aBrowserEnvironment referencesMatching: aMethodSearch.
+				(aBrowserEnvironment forClassHierarchyOf: self actualClass)
+					referencesMatching: aMethodSearch}!
 
 browserEnvironment
 	^classesPresenter browserEnvironment!
@@ -310,7 +299,7 @@ browseSelectorsInProtocol
 browseSystem
 	"Open a new system browser on at the same point as the receiver."
 
-	self systemModel browseSystem: self actualClass!
+	self developmentSystem browseSystem: self actualClass!
 
 buildHistoryFutureMenu
 	"Private - Answer a dynamically created future visit menu."
@@ -410,7 +399,7 @@ classDefinition
 
 classForNewMethod
 	^self actualClass ifNil: 
-			[self systemModel 
+			[self developmentSystem 
 				chooseClass: nil asValue
 				caption: 'Choose Class of New Method…'
 				allowNil: false]!
@@ -1103,7 +1092,7 @@ onDragCategory: aDragDropSession
 							[:eachMethod |
 							(self isMethodVisible: eachMethod)
 								and: [categories anySatisfy: [:eachCategory | eachCategory includesMethod: eachMethod]]]]).
-	self systemModel beginDrag: aDragDropSession methods: methods!
+	self developmentSystem beginDrag: aDragDropSession methods: methods!
 
 onDragMethodsCut: aDragDropSession
 	"Private - The <DragDropSession>, session, has just completed a successful move operation. 
@@ -1118,7 +1107,7 @@ onDragMethodsCut: aDragDropSession
 					[| method |
 					method := each format: #CompiledMethod.
 					methods add: method]].
-	self systemModel basicRemoveMethods: methods!
+	self developmentSystem basicRemoveMethods: methods!
 
 onDragOverCategory: session
 	"Private - The user is dragging over the category hierarchy pane.
@@ -1180,7 +1169,7 @@ onDragVariableRefs: aDragDropSession
 	when refactoring and pulling an instance variable up or pushing down). Enter details into
 	the <DragDropSession>, session."
 
-	self systemModel beginDrag: aDragDropSession methods: (self methodsMatching: self variablesFilter)!
+	self developmentSystem beginDrag: aDragDropSession methods: (self methodsMatching: self variablesFilter)!
 
 onDropOverCategory: aDragDropSession
 	"Private - The drag operation described by <DragDropSession>, session, would like to do a drop.
@@ -1488,17 +1477,17 @@ onRenameInstVar: anAssociation to: aString
 	selections := variablesPresenter selectionsByIndex.
 	"Release any mouse capture that might have been made by the control where the label was edited, otherwise the cursor may disappear when the dialog is shown."
 	View releaseCapture.
-	(self model
+	(self developmentSystem
 		renameInstanceVariable: anAssociation value
 		to: aString
 		in: anAssociation key
-		within: BrowserEnvironment new) ifNotNil: [variablesPresenter view selectionsByIndex: selections]!
+		within: BrowserEnvironment new) ifNotNil: [variablesPresenter selectionsByIndex: selections]!
 
 onRenameInstVar: anAssociation to: aString accept: aValueHolder
 	"Private - In-place inst var rename has been made by the user, validate it."
 
 	| result |
-	result := self systemModel
+	result := self developmentSystem
 				validateRenameInstVar: anAssociation value
 				to: aString
 				in: anAssociation key.
@@ -1673,10 +1662,14 @@ parseContext
 					ns := self packageForNewMethod
 								ifNil: [class environment]
 								ifNotNil: [:package | package environment ifNil: [class environment]].
-					ParseContext methodClass: class environment: ns]]!
+					ParseContext methodClass: class environment: ns]]
+		ifNotNil: [:method | method parseContext]!
 
 parseTree
 	^methodBrowserPresenter parseTree!
+
+printBasicCaptionOn: aPuttableStream
+	aPuttableStream display: self class!
 
 printCaptionForClass: aClass on: aWriteStream 
 	"Private - Answer a suitable caption for the selected method."
@@ -1992,21 +1985,27 @@ removeMethodsInCategory
 	"Private - Remove all of the methods in the currently selected category. As this is rather
 	drastic the user will be prompted."
 
-	| classEnvironment categoryEnvironment searchEnvironment |
-	classEnvironment := self searchEnvironment forClasses: {self actualClass}.
+	| classEnvironment categoryEnvironment searchEnvironment mb |
+	searchEnvironment := self searchEnvironment.
+	classEnvironment := searchEnvironment forClasses: {self actualClass}.
 	categoryEnvironment := classEnvironment forMethodCategories: self categories.
 	categoryEnvironment label: ('methods of <1p> in the ''<2d>'' category and its subcategories'
 				expandMacrosWith: classEnvironment
 				with: self category).
-	searchEnvironment := self searchEnvironment.
-	(MessageBox new
-		headline: 'Remove Methods?';
-		defaultButton: 2;
-		customButtons: #(#(#yes '&Remove') #(#no '&Don''t Remove'));
-		isCancellable: true;
-		confirm: 'Are you sure you would like to remove <1p>?' << categoryEnvironment)
-			ifTrue: [self systemModel basicRemoveMethodsIn: categoryEnvironment within: searchEnvironment].
-	self systemModel!
+	mb := MessageBox new
+				headline: 'Remove Methods?';
+				defaultButton: 2;
+				customButtons: #(#(#yes '&Remove') #(#no '&Don''t Remove'));
+				isCancellable: true;
+				yourself.
+	self developmentSystem canRefactor
+		ifTrue: [mb checkboxText: self developmentSystem showChangesText].
+	(mb confirm: 'Are you sure you would like to remove <1p>?' << categoryEnvironment)
+		ifTrue: 
+			[self developmentSystem
+				basicRemoveMethodsIn: categoryEnvironment
+				within: searchEnvironment
+				showChanges: mb isChecked]!
 
 removeMethodsInProtocol
 	"Private - Remove all of the methods in the currently selected protocol.
@@ -2228,7 +2227,7 @@ selectionEnvironment
 			[| methods |
 			methods := self selectedMethods.
 			env := methods isEmpty
-						ifFalse: [(env forMethods: methods) label: 'Some methods of ' , classesPresenter selection printString]
+						ifFalse: [(env forMethods: methods) label: 'Some methods of <1p>' << classesPresenter selection]
 						ifTrue: [classesPresenter selectionEnvironment]].
 	^env!
 
@@ -2280,6 +2279,9 @@ statusModel
 statusText: aString
 	self statusModel value: (aString isNil ifFalse: [Notification messageText: aString])!
 
+systemModel
+	^self model!
+
 toggleFilterObjectMethods
 	"Toggle between showing <Object> methods or not"
 
@@ -2309,7 +2311,7 @@ updateCaption
 		ifNotNil: [:method | self printCaptionForMethod: method on: stream]
 		ifNil: 
 			[self actualClass
-				ifNil: [stream display: self class]
+				ifNil: [self printBasicCaptionOn: stream]
 				ifNotNil: [:class | self printCaptionForClass: class on: stream]].
 	self isModified ifTrue: [stream nextPut: $*].
 	self caption: stream contents!
@@ -2544,7 +2546,6 @@ browseItCommand!helpers!private! !
 browseMessageDefinitionsIn:!commands!private! !
 browseMessageReferencesIn:!commands!private! !
 browseMethodCategory!commands!private! !
-browseMethodsIn:!operations!public! !
 browseOverriddenMethod!commands!public! !
 browseReferences!commands!public! !
 browseReferencesMatching:in:!helpers!private! !
@@ -2675,6 +2676,7 @@ packageNames:!accessing!public! !
 packages:!accessing!public! !
 parseContext!accessing!public! !
 parseTree!accessing!private! !
+printBasicCaptionOn:!private!updating! !
 printCaptionForClass:on:!helpers!private! !
 printCaptionForMethod:on:!private!updating! !
 printClassTitle:on:!private!updating! !
@@ -2723,6 +2725,7 @@ slideyPinNames!accessing!private! !
 sourceCardName!constants!private! !
 statusModel!accessing!public! !
 statusText:!accessing!private! !
+systemModel!accessing!private! !
 toggleFilterObjectMethods!commands!public! !
 toggleProtocolReadOnly!commands!public! !
 toggleShowInheritedMethods!commands!public! !

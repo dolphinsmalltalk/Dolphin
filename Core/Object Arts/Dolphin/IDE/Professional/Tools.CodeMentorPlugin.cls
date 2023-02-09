@@ -115,14 +115,14 @@ createSchematicWiring
 	"Create the trigger wiring for the receiver"
 
 	super createSchematicWiring.
-	(self model)
+	self model
 		when: #methodSelected
 			send: #onBrowserEnvironmentSelected
 			to: self;
 		when: #classSelected
 			send: #onBrowserEnvironmentSelected
 			to: self.
-	(self systemModel)
+	self developmentSystem
 		when: #classUpdated:
 			send: #onClassUpdated:
 			to: self;
@@ -135,7 +135,7 @@ createSchematicWiring
 		when: #lintRuleFilterChanged:
 			send: #onLintRuleFilterChanged:
 			to: self.
-	failuresPresenter 
+	failuresPresenter
 		when: #selectionChanged
 		send: #onFailureSelected
 		to: self!
@@ -193,7 +193,7 @@ filterInRules: rules
 					[:eachClass :eachSelector | 
 					| method |
 					method := eachClass compiledMethodAt: eachSelector.
-					self systemModel removeFilteredMethod: method forLintRule: eachRule]]!
+					self developmentSystem removeFilteredMethod: method forLintRule: eachRule]]!
 
 filterOutRule
 	"Add the current method to the filters for the current failed rule(s) so that it won't be classed as a failure next time around"
@@ -201,14 +201,14 @@ filterOutRule
 	self filterOutRules: self failedRule failedRules.
 !
 
-filterOutRules: rules 
+filterOutRules: rules
 	"Private - Add filters for the supplied rules"
 
 	rules do: 
-			[:eachRule | 
+			[:eachRule |
 			| methods |
 			methods := eachRule failedMethods.
-			methods do: [:each | self systemModel addFilteredMethod: each forLintRule: eachRule]]!
+			methods do: [:each | self developmentSystem addFilteredMethod: each forLintRule: eachRule]]!
 
 getRuleInfo: aLintRule
 	| xpath parts |
@@ -411,8 +411,7 @@ onViewClosed
 	Disconnect from any events triggered by the devlopment system"
 
 	super onViewClosed.
-	self systemModel removeEventsTriggeredFor: self
-!
+	self developmentSystem removeEventsTriggeredFor: self!
 
 onViewDestroyed
 	self stopCheckerProcess.

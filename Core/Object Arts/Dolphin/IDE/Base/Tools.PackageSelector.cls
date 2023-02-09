@@ -66,7 +66,7 @@ applicationEnvironment
 				ifFalse: 
 					[closure add: each.
 					closure addAll: each allPrerequisites]].
-	^self systemModel systemEnvironment forPackages: closure!
+	^self systemModel browserEnvironment forPackages: closure!
 
 autoSelect
 	^autoSelect!
@@ -77,7 +77,7 @@ autoSelect: aBoolean
 browseFolder
 	| folder |
 	folder := self selectedFolder.
-	[self systemModel browseFolder: folder] on: OS.Win32Error
+	[self developmentSystem browseFolder: folder] on: OS.Win32Error
 		do: 
 			[:ex |
 			MessageBox new
@@ -98,7 +98,7 @@ browseItCommand
 	^nil!
 
 browsePackages
-	self systemModel browsePackages: self packages!
+	self developmentSystem browsePackages: self packages!
 
 browseUnimplemented
 	"Open a method browser on all methods in the selected packages that themselves send a
@@ -108,8 +108,8 @@ browseUnimplemented
 	| sendingEnvironment implementingEnvironment unimplemented |
 	sendingEnvironment := self selectionEnvironment.
 	implementingEnvironment := self applicationEnvironment.
-	unimplemented := self systemModel unimplementedSelectorsIn: implementingEnvironment.
-	self systemModel
+	unimplemented := implementingEnvironment unimplementedSelectors.
+	self developmentSystem
 		browseSelectors: unimplemented asSortedCollection
 		caption: ('Unimplemented Selectors in <1p> (and prerequisites)' expandMacrosWith: sendingEnvironment)
 		environment: implementingEnvironment!
@@ -269,6 +269,9 @@ deleteItCommand
 	packagesPresenter hasFocus ifTrue: [^#removePackage].
 	^nil!
 
+developmentSystem
+	^SmalltalkSystem current!
+
 filter
 	"Answer the current value of the filter. This is nil if there is no directory node selected,
 	and the empty string if the root ($) folder is selected."
@@ -363,7 +366,7 @@ newPackage
 			].
 	dialog := FileSaveDialog new
 				initialDirectory: directory;
-				fileTypes: {self systemModel pacFileDialogType};
+				fileTypes: {self developmentSystem pacFileDialogType};
 				defaultExtension: Package packageExtension;
 				caption: 'New Package'.
 	pathname := dialog showModal.
@@ -400,7 +403,7 @@ okToSavePackage: aPackage
 		checkboxText: 'Browse packages prerequisites?';
 		isChecked: true;
 		open.
-	mb isChecked ifTrue: [self systemModel showPrerequisitesForPackage: aPackage].
+	mb isChecked ifTrue: [self developmentSystem showPrerequisitesForPackage: aPackage].
 	^false!
 
 onDragOverFolder: aDragDropSession
@@ -543,7 +546,7 @@ openPackage
 
 	| pathname fileDialog |
 	fileDialog := FileOpenDialog new.
-	fileDialog fileTypes: self systemModel packageOpenFileDialogTypes.
+	fileDialog fileTypes: self developmentSystem packageOpenFileDialogTypes.
 	self filter
 		ifNotNil: [:filter | fileDialog initialDirectory: (FileLocator imageRelative localFileSpecFor: filter)].
 	fileDialog caption: 'Install Package'.
@@ -555,7 +558,7 @@ openPackage
 
 openPackageFile: aString 
 	| packages |
-	packages := self systemModel installPackage: aString.
+	packages := self developmentSystem installPackage: aString.
 	packages notEmpty 
 		ifTrue: 
 			[self packages: packages.
@@ -569,7 +572,7 @@ operationAbortedSignal
 packageManager
 	"Private - Answer the current PackageManager."
 
-	^self systemModel packageManager
+	^Package manager
 
 !
 
@@ -807,7 +810,7 @@ rootFolder
 saveFileDialogTypes
 	"Private - Answer a file types array for use with a FileDialog to save packages."
 
-	^{self systemModel pacFileDialogType. self systemModel paxFileDialogType}!
+	^{self developmentSystem pacFileDialogType. self developmentSystem paxFileDialogType}!
 
 savePackageAs
 	"Save the selected package to a user set pathname."
@@ -943,7 +946,7 @@ systemModel
 	^SmalltalkSystem current!
 
 testBrowserClass
-	^self systemModel testBrowserClass!
+	^self developmentSystem testBrowserClass!
 
 toggleLegacySourceFormat
 	"Private - Toggles the use of legacy source format; either pre-namespaces (legacy), or with namespaces (current)."
@@ -979,7 +982,7 @@ uninstall: package
 		on: Notification
 		do: 
 			[:ex |
-			self systemModel sourceManager logComment: ex description.
+			self developmentSystem sourceManager logComment: ex description.
 			ex resume].
 
 	"Select nearest available folder in filter hierarchy"
@@ -1004,6 +1007,7 @@ confirmUninstall:!helpers!private! !
 createComponents!initializing!private! !
 createSchematicWiring!initializing!private! !
 deleteItCommand!helpers!private! !
+developmentSystem!commands!private! !
 filter!accessing!public! !
 filteredPackages!helpers!private! !
 filterPresenter!accessing!private! !

@@ -49,7 +49,7 @@ checkUnimplemented: aStMessageNode
 								forNode: aStMessageNode
 								extras: {selector. receiver isVariable ifTrue: [receiver name] ifFalse: ['literal']. receiverClass}]].
 			^self].
-	(SmalltalkSystem current allSelectors includes: selector)
+	(self methodClass model includesImplementorsOf: selector)
 		ifFalse: 
 			[self
 				signalError: CWarnUndefinedSelector
@@ -97,6 +97,9 @@ targetOfMessage: aStMessageNode
 	receiver isLiteralNode ifTrue: [^receiver valueClass].
 	^nil!
 
+undeclaredVariable: aStVariableNode
+	self signalError: CErrUndeclared forNode: aStVariableNode!
+
 visitMessageNode: aMessageNode
 	"Process a message send (check for unimplemented selectors)"
 
@@ -124,6 +127,7 @@ contextBindingFor:!helpers!private! !
 initialize!initializing!public! !
 readStaticVariable:!helpers!private! !
 targetOfMessage:!commands!private!refactoring! !
+undeclaredVariable:!error handling!private! !
 visitMessageNode:!public!visitor/double dispatching! !
 visitSequenceNode:!public!visitor/double dispatching! !
 !

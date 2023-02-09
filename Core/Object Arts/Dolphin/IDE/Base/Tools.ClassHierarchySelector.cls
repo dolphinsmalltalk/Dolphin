@@ -20,7 +20,7 @@ createComponents
 customDrawClassTree: anNMTVCUSTOMDRAW
 	"Private - Custom drawing to implement the emphasis in the class hierarchy tree."
 
-	self systemModel setCustomDrawAttributes: anNMTVCUSTOMDRAW forClass: anNMTVCUSTOMDRAW item!
+	self developmentSystem setCustomDrawAttributes: anNMTVCUSTOMDRAW forClass: anNMTVCUSTOMDRAW item!
 
 expand: aClass
 	"Expands aClass in the displayed hierarchy"
@@ -44,7 +44,7 @@ newClass
 	| aClass package |
 	aClass := self selectionOrNil.
 	package := aClass isNil ifFalse: [aClass owningPackage].
-	(self systemModel createSubclassOf: aClass inPackage: package) 
+	(self developmentSystem createSubclassOf: aClass inPackage: package) 
 		ifNotNil: [:newClass | self actualClass: newClass]! !
 !Tools.ClassHierarchySelector categoriesForMethods!
 createComponents!initializing!public! !

@@ -17,7 +17,10 @@ Instance Variables:
 !Tools.MethodCategoryEnvironment methodsFor!
 
 categories: aCollection
-	categories := aCollection asArray!
+	categories := aCollection asSortedArray.
+	self label: (categories size = 1
+				ifTrue: [environment subEnvironmentLabel: #methodCategory for: categories first]
+				ifFalse: [environment subEnvironmentLabel: #methodCategories for: categories])!
 
 categoryNames: aCollection
 	self categories: (aCollection collect: [:each | each asMethodCategory])!

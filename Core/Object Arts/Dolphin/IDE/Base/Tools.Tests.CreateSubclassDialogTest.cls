@@ -34,7 +34,7 @@ testNameValidation
 	self assert: validationResult hint messageText
 		equals: ClassBuilder.ErrorAlreadyExists << {Core. 'Object'}.
 	"We could in theory define a new Object class in this namespace even if it wouldn't be a very good idea"
-	subject namespace: self class environment.
+	subject subclassNamespace: self class environment.
 	self assert: subject canApply.
 	"Empty name"
 	self assert: validationResult presenter view identicalTo: nameView.
@@ -61,7 +61,7 @@ testNameValidation
 
 testNewNamespaceSubclass
 	subject := CreateSubclassDialog newSubclassOf: Namespace inPackage: nil.
-	self assert: subject namespace equals: Root.
+	self assert: subject subclassNamespace equals: Root.
 	self assert: subject subclassFullName equals: ''.
 	self deny: subject canApply.
 	subject subclassFullName: 'Root.__Namespace__'.
@@ -70,13 +70,13 @@ testNewNamespaceSubclass
 	subject subclassFullName: '__Namespace__'.
 	self assert: subject subclassFullName equals: 'Smalltalk.__Namespace__'.
 	self assert: subject canApply.
-	subject namespace: Core.
+	subject subclassNamespace: Core.
 	self assert: subject canApply.
 	self assert: subject subclassFullName equals: 'Core.__Namespace__'!
 
 testNewRootNamespaceSubclass
 	subject := CreateSubclassDialog newSubclassOf: Root inPackage: nil.
-	self assert: subject namespace equals: Root.
+	self assert: subject subclassNamespace equals: Root.
 	self assert: subject subclassFullName equals: ''.
 	self deny: subject canApply.
 	subject subclassFullName: 'Root.__Root__'.

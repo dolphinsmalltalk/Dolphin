@@ -30,7 +30,7 @@ aboutDolphin
 	self model aboutDolphin!
 
 applyOptions
-	self systemModel applyOptionsToTool: self!
+	self developmentSystem applyOptionsToTool: self!
 
 browsePackages
 	"Open a new package browser."
@@ -69,7 +69,7 @@ createSchematicWiring
 	self
 		when: #dropFiles:
 		send: #onDropFiles:over:
-		to: self systemModel
+		to: self developmentSystem
 		withArguments: {nil. self}!
 
 defaultHelpId
@@ -80,6 +80,9 @@ destroy
 
 	self isIdeaSpaceCard ifTrue: [^self ideaSpace destroyCard: self].
 	^super destroy!
+
+developmentSystem
+	^SmalltalkSystem current!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
@@ -296,8 +299,7 @@ searchForPackage: aPackage
 searchForSymbol: aSymbol
 	self
 		routeCommand: (CommandDescription command: (Message selector: #browseMethodsInEnvironments:
-						argument: (self systemModel messagesMatching: (MethodSearch newSelector: aSymbol)
-								in: BrowserEnvironment new)))!
+						argument: (self systemModel browserEnvironment messagesMatching: (MethodSearch newSelector: aSymbol))))!
 
 searchSmalltalk
 	<acceleratorKey: 'Ctrl+Shift+F'>
@@ -335,7 +337,7 @@ smalltalkExit
 	self model smalltalkExit!
 
 systemModel
-	^SmalltalkSystem current!
+	^self developmentSystem!
 
 workspace
 	"Answers the SmalltalkWorkspace held by the receiver."
@@ -352,6 +354,7 @@ createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
 defaultHelpId!public! !
 destroy!commands!public! !
+developmentSystem!accessing!private! !
 displayOn:!displaying!public! !
 dropClassFile:!commands!private! !
 dropPackageFile:!commands!private! !

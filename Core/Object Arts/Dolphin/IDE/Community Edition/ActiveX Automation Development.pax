@@ -6996,7 +6996,7 @@ maybeChangeNamespaceOf:!generating!private! !
 moveClassToPackage:!helpers!private! !
 namespaceBinding!accessing!public! !
 namespaceImports!accessing!private! !
-newPool:!accessing!private! !
+newPool:!generating!private! !
 package!accessing!public! !
 package:!accessing!public! !
 packageCheck:!helpers!private! !

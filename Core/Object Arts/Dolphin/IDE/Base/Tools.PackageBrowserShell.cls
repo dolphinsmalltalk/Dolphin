@@ -71,29 +71,19 @@ browseClass
 	classes := self selectedClasses.
 	^classes size = 1
 		ifTrue: [classes anyOne browse]
-		ifFalse: 
-			[| env |
-			env := SmalltalkSystem current browserEnvironmentForClasses: classes.
-			^#{EnvironmentBrowserShell} valueOrNil
-				ifNil: 
-					[MessageBox notify: 'This feature is only available in the Professional edition'
-						caption: 'Cannot browse multiple classes'.
-					nil]
-				ifNotNil: 
-					[:environmentBrowserClass |
-					environmentBrowserClass show
-						browserEnvironment: env;
-						yourself]]!
+		ifFalse: [(self model browserEnvironment forClassesAndTheirMetaclasses: classes) browse]!
 
 browseClassReferences
 	"Browse all the methods in the entire system which refer to the class selected in the
 	receiver."
 
-	self browseClassReferencesIn: self systemModel systemEnvironment!
+	self browseClassReferencesIn: self browserEnvironment!
 
-browseClassReferencesIn: aBrowserEnvironment 
-	#todo.	"Make this work for multiple class selections"
-	self model browseClassReferences: self selectedClass in: aBrowserEnvironment!
+browseClassReferencesIn: aBrowserEnvironment
+	| class |
+	class := self selectedClass.
+	self browseMethodsInEnvironments: {aBrowserEnvironment referencesToVariable: class binding.
+				aBrowserEnvironment referencesToClass: class}!
 
 browseDefinitions
 	^self browseMessageDefinitions!
@@ -102,10 +92,10 @@ browseHierarchy
 	"Private - Open a hierarchy browser on the currently selected class or method."
 
 	(self selectedMethod notNil and: [currentCard == #methods]) 
-		ifTrue: [^self systemModel browseClassHierarchyOfMethod: self selectedMethod].
+		ifTrue: [^self developmentSystem browseClassHierarchyOfMethod: self selectedMethod].
 	(self selectedClass notNil and: [currentCard == #classes]) 
-		ifTrue: [^self systemModel browseHierarchy: self selectedClass].
-	self systemModel browseHierarchy!
+		ifTrue: [^self developmentSystem browseHierarchy: self selectedClass].
+	self developmentSystem browseHierarchy!
 
 browseIt
 	"Open a default browser on the currently selected class or method."
@@ -142,28 +132,32 @@ browseLocalMessageReferences
 
 	self browseMessageReferencesIn: self searchEnvironment!
 
-browseLooseMethods: aCollection 
+browseLooseMethods: aCollection
 	| env packageEnv |
 	packageEnv := packagesPresenter selectionEnvironment.
 	env := packageEnv forMethods: aCollection.
-	env label: 'Loose methods from package(s): ' , packageEnv printString.
+	env label: 'Loose methods from package(s): <1p>' << packageEnv.
 	self model browseMethodsIn: env!
 
 browseMessageDefinitions
-	"Open a method browser displaying all implementors of the current selector in the entire
-	system."
+	"Open a method browser displaying all implementors of the current selector in the system."
 
-	self browseMessageDefinitionsIn: self systemModel systemEnvironment!
+	self browseMessageDefinitionsIn: self browserEnvironment!
 
-browseMessageDefinitionsIn: aBrowserEnvironment 
-	self selectedMethod 
-		ifNil: [self model browseMessageDefinitionsIn: aBrowserEnvironment]
-		ifNotNil: [:method | self model browseDefinitionsOfSelector: method selector in: aBrowserEnvironment]!
+browseMessageDefinitionsIn: aBrowserEnvironment
+	self selectedMethod
+		ifNil: 
+			[(self developmentSystem promptForDefinitionsOf: '' in: aBrowserEnvironment)
+				ifNotNil: [:search | self browseMethodsIn: (aBrowserEnvironment definitionsMatching: search)]]
+		ifNotNil: 
+			[:method |
+			self browseMethodsIn: (aBrowserEnvironment
+						definitionsMatching: (MethodSearch newSelector: method selector))]!
 
 browseMessageReferences
 	"Open a method browser displaying all references to the current selector in the entire system."
 
-	self browseMessageReferencesIn: self systemModel systemEnvironment!
+	self browseMessageReferencesIn: self browserEnvironment!
 
 browseMessageReferencesIn: aBrowserEnvironment 
 	self selectedMethod 
@@ -200,7 +194,7 @@ browseSystem
 	| pkgs method class browser |
 	pkgs := self packages.
 	pkgs isEmpty ifTrue: [^super browseSystem].
-	browser := self systemModel browseSystemPackages: pkgs.
+	browser := self developmentSystem browseSystemPackages: pkgs.
 	browser isNil ifTrue: [^nil].
 	(currentCard == #methods and: [(method := self selectedMethod) notNil]) 
 		ifTrue: [browser selectMethod: method].
@@ -212,7 +206,7 @@ browseVariableReferences
 	"Browse all the methods which refer to the shared variable selected in the receiver."
 
 	self model browseSharedVariableReferences: self sharedVariable
-		in: self systemModel systemEnvironment!
+		in: self browserEnvironment!
 
 buildPopupForCommand: aSymbol 
 	"Private - Dynamically build an appropriate popup menu for aSymbol command."
@@ -292,7 +286,7 @@ createComponents
 				name: 'methods'
 				helpId: 10812.
 	methodsPresenter beSorted: [:x :y | x selector <= y selector].
-	methodRefactoringTool := self systemModel newMethodRefactoringToolFor: self.
+	methodRefactoringTool := self developmentSystem newMethodRefactoringToolFor: self.
 	variablesPresenter := (self
 				add: ListPresenter new
 				name: 'variables'
@@ -459,7 +453,7 @@ createSchematicWiring
 customDrawClassList: anNMLVCUSTOMDRAW
 	"Private - Custom drawing to implement the emphasis in the classes list tree."
 
-	self systemModel setCustomDrawAttributes: anNMLVCUSTOMDRAW forClass: anNMLVCUSTOMDRAW subItem!
+	self developmentSystem setCustomDrawAttributes: anNMLVCUSTOMDRAW forClass: anNMLVCUSTOMDRAW subItem!
 
 defaultHelpId
 	^10807!
@@ -620,7 +614,7 @@ onDragClasses: session
 onDragMethods: aDragDropSession 
 	"Private - A drag has been started. Drag the currently selected methods."
 
-	self systemModel beginDrag: aDragDropSession methods: self selectedMethods!
+	self developmentSystem beginDrag: aDragDropSession methods: self selectedMethods!
 
 onDragOver: session type: format 
 	"Private - A drag session is passing over one of the receiver's panes.
@@ -857,7 +851,7 @@ openWorkspace
 	"Create a new workspace window on a file"
 
 	| workspaceClass |
-	workspaceClass := SmalltalkSystem current workspaceShellClass.
+	workspaceClass := self developmentSystem workspaceShellClass.
 	^(FileOpenDialog new
 		fileTypes: workspaceClass fileTypes;
 		defaultExtension: workspaceClass defaultFileExtension;

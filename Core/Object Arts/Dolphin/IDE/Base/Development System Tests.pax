@@ -15,6 +15,7 @@ package setClassNames: #(
 	#{Tools.Tests.KeyedAspectTest}
 	#{Tools.Tests.MenuPainterTest}
 	#{Tools.Tests.MethodCategoryEnvironmentTest}
+	#{Tools.Tests.MethodSearchTest}
 	#{Tools.Tests.MockScintillaView}
 	#{Tools.Tests.PackageEnvironmentTest}
 	#{Tools.Tests.ProductReleaseTest}
@@ -113,6 +114,12 @@ Core.Tests.DolphinTest subclass: #'Tools.Tests.KeyedAspectTest'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'Tools.Tests.MenuPainterTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'Tools.Tests.MethodSearchTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -24,15 +24,18 @@ convertTempToInstVar: aStVariableNode
 
 	presenter performMethodRefactoring: 
 			[:method | 
-			self systemModel 
+			self developmentSystem 
 				convertTemporaryToInstanceVariable: aStVariableNode name
 				in: method methodClass
 				selector: method selector]!
 
+developmentSystem
+	^SmalltalkSystem current!
+
 inlineParameter: aStVariableNode 
 	presenter performMethodRenameRefactoring: 
 			[:method | 
-			self systemModel 
+			self developmentSystem 
 				inlineParameter: aStVariableNode name
 				from: method selector
 				in: method methodClass]!
@@ -76,11 +79,11 @@ removeParameter: aStVariableNode
 		performMethodRenameRefactoring: [:method | self removeParameter: aStVariableNode from: method]!
 
 removeParameter: aStVariableNode from: method 
-	^self systemModel 
+	^self developmentSystem 
 		removeParameter: aStVariableNode name
 		from: method selector
 		in: method methodClass
-		environment: presenter searchEnvironment!
+		within: presenter searchEnvironment!
 
 renameIt
 	"Context-sensitive #renameIt command, usually bound to the F2 key."
@@ -100,19 +103,17 @@ renameTemporary: aStVariableNode
 
 	presenter performMethodRefactoring: 
 			[:method | 
-			self systemModel 
+			self developmentSystem 
 				renameTemporary: aStVariableNode
 				to: nil
 				in: method methodClass
 				selector: method selector]!
 
 setPresenter: aPresenter 
-	presenter := aPresenter!
-
-systemModel
-	^SmalltalkSystem current! !
+	presenter := aPresenter! !
 !Tools.RefactoringTool categoriesForMethods!
 convertTempToInstVar:!public!refactoring! !
+developmentSystem!constants!public! !
 inlineParameter:!private!refactoring! !
 onAboutToDisplayMenu:!event handling!public! !
 parseTree!accessing!private! !
@@ -124,7 +125,6 @@ renameIt!commands!public!refactoring! !
 renameItCommand!private!refactoring! !
 renameTemporary:!operations!private!refactoring! !
 setPresenter:!initializing!private! !
-systemModel!constants!public! !
 !
 
 Tools.RefactoringTool methodProtocol: #commandTarget attributes: #(#readOnly) selectors: #(#queryCommand:)!

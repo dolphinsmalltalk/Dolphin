@@ -24,12 +24,12 @@ browseClass
 	"Open a new class browser, of the users preferred type, on the owning class of the selected
 	resource."
 	
-	self systemModel browseClass: self resourceIdentifier owningClass!
+	self developmentSystem browseClass: self resourceIdentifier owningClass!
 
 browseHierarchy
 	"Open a new class browser on the hierarchy at the same point as the receiver."
 
-	self systemModel browseHierarchy: self resourceIdentifier owningClass!
+	self developmentSystem browseHierarchy: self resourceIdentifier owningClass!
 
 browseIt
 	"Open a new browser (i.e. a view composer) on the selected resource."
@@ -38,12 +38,12 @@ browseIt
 
 browseReferences
 	<acceleratorKey: 'Shift+F12'>
-	self systemModel browseResourcesReferencingView: self resourceIdentifier!
+	self developmentSystem browseResourcesReferencingView: self resourceIdentifier!
 
 browseSystem
 	"Open a new system browser on the hierarchy at the same point as the receiver."
 	
-	self systemModel browseSystem: self resourceIdentifier owningClass!
+	self developmentSystem browseSystem: self resourceIdentifier owningClass!
 
 caption
 	^''!
@@ -74,7 +74,7 @@ createSchematicWiring
 	"Create the trigger wiring for the receiver"
 
 	super createSchematicWiring.
-	(self selectableItems)
+	self selectableItems
 		when: #drag:
 			send: #onDragResource:
 			to: self;
@@ -84,17 +84,16 @@ createSchematicWiring
 		when: #selectionChanged
 			send: #onResourceSelected
 			to: self.
-	self systemModel packageManager 
+	self developmentSystem packageManager
 		when: #resourceRepackaged:from:to:
-		send: #onResourceRepackaged:from:to:
-		to: self.
-	(self systemModel )
+			send: #onResourceRepackaged:from:to:
+			to: self;
 		when: #methodRemoved:
 			send: #onMethodRemoved:
 			to: self;
 		when: #methodAdded:
 			send: #onMethodAdded:
-			to: self";
+			to: self	";
 		when: #resourceUpdated:
 			send: #onResourceUpdated:
 			to: self"!
@@ -107,11 +106,14 @@ defaultSortBlock
 deleteResource
 	"Remove the selected resources from the system."
 
-	self selections do: [:each | self systemModel deleteResource: each]!
+	self selections do: [:each | self developmentSystem deleteResource: each]!
+
+developmentSystem
+	^SmalltalkSystem current!
 
 editResource
 	"Invoke an appropriate editor on the selected resource."
-	self systemModel openViewComposerOn: self resourceIdentifier!
+	self developmentSystem openViewComposerOn: self resourceIdentifier!
 
 filterBlock: monadicValuable 
 	"Set the receiver's filterBlock inst var to monadicValuable. The monadicValuable is used as a
@@ -126,7 +128,7 @@ filterBlock: monadicValuable
 imageFromResource: aResourceIdentifier 
 	| shell resourceView |
 	shell := View desktop.
-	resourceView := [self systemModel loadViewResource: aResourceIdentifier resource inContext: shell] 
+	resourceView := [self developmentSystem loadViewResource: aResourceIdentifier resource inContext: shell] 
 				on: Error
 				do: [:x | ].
 	^resourceView notNil 
@@ -296,9 +298,7 @@ showResourcesReferencingView: aResourceIdentifier
 						and: [each viewClass == ReferenceView and: [(each instVars at: idIndex) = aResourceIdentifier]]]]!
 
 systemModel
-	"Private - Answer the development system model."
-
-	^SmalltalkSystem current! !
+	^self parentPresenter systemModel! !
 !Tools.ResourceListPresenter categoriesForMethods!
 browseClass!commands!public! !
 browseHierarchy!commands!public! !
@@ -312,6 +312,7 @@ createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
 defaultSortBlock!constants!private!sorting! !
 deleteResource!commands!public! !
+developmentSystem!commands!private! !
 editResource!commands!public! !
 filterBlock:!accessing!public! !
 imageFromResource:!helpers!private! !

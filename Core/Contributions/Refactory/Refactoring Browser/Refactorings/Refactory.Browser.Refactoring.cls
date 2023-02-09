@@ -231,6 +231,9 @@ getOptionReplaceReferencesTo: oldSymbol with: newSymbol
 getOptionSelfArgumentName
 	^self prompt: 'Enter name for argument to refer to "self" in extracted method'!
 
+getOptionShowChanges
+	^false!
+
 getOptionUpgradeLegacyPackage: aPackage
 	^self
 		confirm: 'The package <1p> is in legacy source format, which does not support namespace classes. In order to proceed with the refactoring the package will have to be upgraded. Once upgraded, the package will no longer be loadable in older versions of Dolphin such as 7.1.<n><n>Are you sure you want to proceed?'
@@ -492,6 +495,12 @@ shouldExtractAssignmentTo: aString
 shouldPullUpNonSharedInstanceVariable: aString
 	^(self lookupOption: #pullUpNonSharedInstVar) cull: self cull: aString!
 
+shouldShowChanges
+	^(self lookupOption: #showChanges) cull: self!
+
+shouldShowChanges: aBoolean
+	self setOption: #showChanges toUse: [aBoolean]!
+
 transform
 	self subclassResponsibility!
 
@@ -534,34 +543,35 @@ convertMethod:using:!public!support! !
 copyOptionsFrom:!operations!public! !
 defaultEnvironment!public!transforming! !
 execute!public!transforming! !
-getOptionAbstractVariables!options!public! !
-getOptionAddImports:!options!public! !
-getOptionAlreadyDefined:selector:!options!public! !
-getOptionBrowseEnvironments:!options!public! !
-getOptionConvertReadBeforeWritten:!options!public! !
-getOptionCopyDownSuperclassMethod:!public! !
-getOptionExtractAssignment:!options!public! !
-getOptionIgnoreSymbolicClassReferences:!options!public! !
-getOptionImplementorToInline:!options!public! !
-getOptionInlineExpression:!options!public! !
-getOptionInlineOverridden:of:!options!public! !
-getOptionInlineReordered:into:!options!public! !
-getOptionNewMethodName:classes:!options!public! !
-getOptionOpenBrowser:!options!public! !
-getOptionPullUpNonSharedInstVar:!options!public! !
-getOptionPushUpRemoveDuplicates:in:!options!public! !
-getOptionRemoveClass:referencedIn:!options!public! !
-getOptionRemoveDuplicatesWithSupersends:!options!public! !
-getOptionRemoveMethod:referencedIn:!options!public! !
-getOptionRemoveVariable:referencedIn:!options!public! !
-getOptionRenameAllDefinitions:of:!options!public! !
-getOptionRenameReferencesTo:!options!public! !
-getOptionReplaceReferencesTo:with:!options!public! !
-getOptionSelfArgumentName!options!public! !
-getOptionUpgradeLegacyPackage:!options!public! !
-getOptionUseExistingMethod:!options!public! !
-getOptionVariableToMoveToOf:in:!options!public! !
-getOptionVariableTypes:selected:!options!public! !
+getOptionAbstractVariables!options!private! !
+getOptionAddImports:!options!private! !
+getOptionAlreadyDefined:selector:!options!private! !
+getOptionBrowseEnvironments:!options!private! !
+getOptionConvertReadBeforeWritten:!options!private! !
+getOptionCopyDownSuperclassMethod:!options!private! !
+getOptionExtractAssignment:!options!private! !
+getOptionIgnoreSymbolicClassReferences:!options!private! !
+getOptionImplementorToInline:!options!private! !
+getOptionInlineExpression:!options!private! !
+getOptionInlineOverridden:of:!options!private! !
+getOptionInlineReordered:into:!options!private! !
+getOptionNewMethodName:classes:!options!private! !
+getOptionOpenBrowser:!options!private! !
+getOptionPullUpNonSharedInstVar:!options!private! !
+getOptionPushUpRemoveDuplicates:in:!options!private! !
+getOptionRemoveClass:referencedIn:!options!private! !
+getOptionRemoveDuplicatesWithSupersends:!options!private! !
+getOptionRemoveMethod:referencedIn:!options!private! !
+getOptionRemoveVariable:referencedIn:!options!private! !
+getOptionRenameAllDefinitions:of:!options!private! !
+getOptionRenameReferencesTo:!options!private! !
+getOptionReplaceReferencesTo:with:!options!private! !
+getOptionSelfArgumentName!options!private! !
+getOptionShowChanges!options!private! !
+getOptionUpgradeLegacyPackage:!options!private! !
+getOptionUseExistingMethod:!options!private! !
+getOptionVariableToMoveToOf:in:!options!private! !
+getOptionVariableTypes:selected:!options!private! !
 importedVariableNamesFor:!public!utilities! !
 isStaleLiteralReference:!helpers!private! !
 isStaleStaticVariable:!private!transforming! !
@@ -593,7 +603,9 @@ setOption:toUse:!accessing!options!public! !
 shortestNameForStaticVariable:!private!utilities! !
 shortestNameToBind:from:!private!utilities! !
 shouldExtractAssignmentTo:!public!requests! !
-shouldPullUpNonSharedInstanceVariable:!preconditions!public! !
+shouldPullUpNonSharedInstanceVariable:!options!public! !
+shouldShowChanges!options!public! !
+shouldShowChanges:!options!public! !
 transform!public!transforming! !
 uniqueMethodNameFor:!helpers!private! !
 whichVariableNode:inInterval:name:!public!utilities! !
@@ -663,7 +675,8 @@ initializeRefactoringOptions
 						#useExistingMethod
 							-> [:refactoring :selector | refactoring getOptionUseExistingMethod: selector].
 						#variableTypes
-							-> [:refactoring :initial :selected | refactoring getOptionVariableTypes: initial selected: selected]})
+							-> [:refactoring :initial :selected | refactoring getOptionVariableTypes: initial selected: selected].
+						#showChanges -> [:refactoring | refactoring getOptionShowChanges]})
 				isImmutable: true;
 				yourself!
 

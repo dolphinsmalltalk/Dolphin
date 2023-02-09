@@ -62,7 +62,7 @@ actualClasses
 browseChangedMethods
 	"Browse the changed methods in the selected classes"
 
-	self systemModel browseChangedMethodsOf: self selection!
+	self developmentSystem browseChangedMethodsOf: self selection!
 
 browseClass
 	self selection browse!
@@ -73,30 +73,34 @@ browseClassPackage
 	| pkg |
 	pkg := self selection owningPackage.
 	pkg isNil
-		ifTrue: [self systemModel browsePackages]
+		ifTrue: [self developmentSystem browsePackages]
 		ifFalse: [pkg browse]!
 
 browseClassReferences
-	"Browse all the methods which refer to the class selected in
-	the receiver."
+	"Browse all the methods which refer to the class selected in the receiver."
 
-	self systemModel browseClassReferences: self selection in: self searchEnvironment!
+	| env class |
+	class := self selection.
+	env := self searchEnvironment.
+	self
+		routeCommand: (CommandDescription command: (Message selector: #browseMethodsInEnvironments:
+						argument: {env referencesToVariable: class binding. env referencesToClass: class}))!
 
 browseClassVariables
 	"Browse one of the class variables of the selected class."
 
-	self systemModel browseClassVariables: self selection!
+	self developmentSystem browseClassVariables: self selection!
 
 browseHierarchy
 	"Open a new class hierarchy browser on the hierarchy at the same point as the receiver."
 
-	self systemModel browseHierarchy: self actualClass
+	self developmentSystem browseHierarchy: self actualClass
 !
 
 browseInstanceVariables
 	"Browse methods in the selected class and its subclasses that reference one of its variables."
 
-	self systemModel browseInstanceVariables: self actualClass!
+	self developmentSystem browseInstanceVariables: self actualClass!
 
 browseIt
 	"Browse the selected item in the pane with focus."
@@ -153,7 +157,7 @@ browserEnvironment
 browseSystem
 	"Open a new system browser on at the same point as the receiver."
 
-	self systemModel browseSystem: self actualClass
+	self developmentSystem browseSystem: self actualClass
 !
 
 buildAllVariablesMenu: aMenu
@@ -211,7 +215,7 @@ buildViewsMenu: aMenu command: selector
 			class defaultView = each name ifTrue: [aMenu setDefault: aMenu items size]]!
 
 canRefactor
-	^self systemModel canRefactor!
+	^self developmentSystem canRefactor!
 
 categorizeClass
 	"Invokes a dialog to categorize the current class"
@@ -269,7 +273,7 @@ clearSelection
 	self perform: self deleteItCommand!
 
 copyClass
-	(self systemModel copyClass: self selection) ifNotNil: [:newClass | self actualClass: newClass]!
+	(self developmentSystem copyClass: self selection) ifNotNil: [:newClass | self actualClass: newClass]!
 
 createInstanceVariableAccessors
 	"Prompt to generate compiled 'get' and 'set' accessor methods for each of the immediate
@@ -316,7 +320,7 @@ createVariableAccessors: aBoolean
 	(self chooseVariables: aBoolean caption: 'Create Accessors for…') 
 		ifNotNil: 
 			[:varNames | 
-			self systemModel 
+			self developmentSystem 
 				createVariableAccessors: varNames
 				classVariables: aBoolean
 				within: self searchEnvironment]!
@@ -324,6 +328,9 @@ createVariableAccessors: aBoolean
 deleteItCommand
 	classesPresenter hasFocus ifTrue: [^#removeClass].
 	^nil!
+
+developmentSystem
+	^SmalltalkSystem current!
 
 dropClass: aSourceClass onto: aTargetClass changes: aCompositeRefactoryChange
 	"Private - Handle the drop of aSourceClass on aTargetClass in the receiver"
@@ -366,24 +373,24 @@ editView: viewName
 	"Open the ViewComposer on an existing view resource belonging to the
 	selected class of the specified name."
 
-	self systemModel openViewComposerOn: (ResourceIdentifier class: self selection name: viewName)!
+	self developmentSystem openViewComposerOn: (ResourceIdentifier class: self selection name: viewName)!
 
 fileInClass
 	"Files in the selected class via the package that owns it"
 
-	self systemModel classFileIn: self selection!
+	self developmentSystem classFileIn: self selection!
 
 fileOutClass
 	"Files out the selected class via the package that owns it"
 
-	self systemModel classFileOut: self selection
+	self developmentSystem classFileOut: self selection
 !
 
 findClass
 	"Prompts for a class name and finds it within the receiver. Will accept wild-
 	carded class name from the user."
 
-	(SmalltalkSystem current promptForClassIn: self searchEnvironment)
+	(self developmentSystem promptForClassIn: self searchEnvironment)
 		ifNotNil: 
 			[:class |
 			class notNil ifTrue: [self actualClass: class].
@@ -451,7 +458,7 @@ newView
 	selected class. If there are several possibilities allow the user to select
 	the one to edit"
 
-	self systemModel openViewComposerOnNewViewFor: self selection
+	self developmentSystem openViewComposerOnNewViewFor: self selection
 	!
 
 onAboutToDisplayMenu: aMenu 
@@ -469,7 +476,7 @@ onAboutToDisplayMenu: aMenu
 onAboutToRenameClass: aLabelEditingEvent
 	| class env |
 	class := aLabelEditingEvent object.
-	(self systemModel canRenameClass: class) ifFalse: [aLabelEditingEvent cancel: true].
+	(self developmentSystem canRenameClass: class) ifFalse: [aLabelEditingEvent cancel: true].
 	aLabelEditingEvent text: class fullName.
 	class isVisiblyAbstract
 		ifTrue: [aLabelEditingEvent font: (self view actualFont copy
@@ -497,7 +504,7 @@ onClass: aClass renameTo: aString accept: booleanValue
 		ifTrue: 
 			[booleanValue value: false.
 			^self].
-	prompter := self systemModel confirmRenameClass: aClass to: aString.
+	prompter := self developmentSystem confirmRenameClass: aClass to: aString.
 	prompter confirm ifFalse: [^self].
 	"Queue deferred action as we can't delete the old item now while still in use (causes GPF in TreeView)"
 	
@@ -596,7 +603,7 @@ onDropOver: aDragDropSession
 								under: dropClass
 								changes: changes]].
 			(each isFormatAvailable: #MethodProtocol)
-				ifTrue: [self systemModel addClass: dropClass toProtocol: (each format: #MethodProtocol)]].
+				ifTrue: [self developmentSystem addClass: dropClass toProtocol: (each format: #MethodProtocol)]].
 	aDragDropSession resetOperation.
 	self performDropChanges: changes target: dropClass!
 
@@ -608,7 +615,7 @@ onRenameClass: aClass to: aString showChanges: aBoolean
 
 	
 	[Cursor wait showWhile: 
-			[self systemModel
+			[self developmentSystem
 				renameClass: aClass
 				to: aString
 				showChanges: aBoolean]]
@@ -657,7 +664,7 @@ performDropChanges: aCompositeRefactoryChange target: aClass
 				ifFalse: [aCompositeRefactoryChange]
 				ifTrue: [aCompositeRefactoryChange changes first].
 	errors := 0.
-	[self systemModel changeManager performChange: change]
+	[self developmentSystem changeManager performChange: change]
 		on: Error
 		do: [:ex | ex okToContinue]
 		on: MethodCompileFailed
@@ -691,7 +698,7 @@ populateVarMenu: aMenu class: class command: cmdSelector variables: aCollection 
 			[:each |
 			| msg |
 			msg := MessageSend
-						receiver: self systemModel
+						receiver: self developmentSystem
 						selector: cmdSelector
 						arguments: {each value. class. self searchEnvironment}.
 			(aMenu addCommand: msg
@@ -759,9 +766,9 @@ queryCommand: aCommandQuery
 				^true].
 	#renameClass == selector
 		ifTrue: 
-			[aCommandQuery isEnabled: (self systemModel canRenameClass: class).
+			[aCommandQuery isEnabled: (self developmentSystem canRenameClass: class).
 			^true].
-	(#(#removeClass #addImport) identityIncludes: selector)
+	(#(#removeClass) identityIncludes: selector)
 		ifTrue: 
 			[aCommandQuery isEnabled: self hasSelection.
 			^true].
@@ -774,7 +781,7 @@ queryCommand: aCommandQuery
 			^true].
 	#changeClassNamespace == selector
 		ifTrue: 
-			[aCommandQuery isEnabled: (self systemModel canChangeClassNamespaces: self selections).
+			[aCommandQuery isEnabled: (self developmentSystem canChangeClassNamespaces: self selections).
 			^true].
 	#browsePublishedEvents == selector
 		ifTrue: 
@@ -819,7 +826,7 @@ queryMoveClass: aClass toPackage: aPackage
 	the user agrees."
 
 	| classPackage packMan subclasses mb response |
-	packMan := self systemModel packageManager.
+	packMan := self developmentSystem packageManager.
 	classPackage := packMan packageOfClass: aClass.
 	subclasses := (aClass allSubclasses
 				collect: [:s | Pair first: s second: (packMan packageOfClass: s)])
@@ -858,7 +865,7 @@ queryMoveClass: aClass toPackage: aPackage
 removeClass
 	"Removes the selected class(es) from the system. If refactoring is available, then the 'Remove Class' refactoring is employed."
 
-	self permitSelectionChange ifTrue: [self systemModel removeClasses: self selections]!
+	self permitSelectionChange ifTrue: [self developmentSystem removeClasses: self selections]!
 
 renameClass
 	"Private - Initiate in-place label edit for the selected class."
@@ -873,7 +880,7 @@ renameClassVariable
 	class := self selection.
 	classVar := ChoicePrompter choices: class classBindingNames asSortedCollection
 				caption: 'Rename Class Variable…'.
-	classVar isNil ifFalse: [self systemModel renameClassVariable: classVar in: class]!
+	classVar isNil ifFalse: [self developmentSystem renameClassVariable: classVar in: class]!
 
 renameInstanceVariable
 	"Private - Initiate the rename of an instance variable. Note that the view may also implement this 
@@ -883,7 +890,7 @@ renameInstanceVariable
 	class := self actualClass.
 	instVar := ChoicePrompter choices: class instanceVariableNames asSortedCollection
 				caption: 'Rename Instance Variable…'.
-	instVar isNil ifFalse: [self systemModel renameInstanceVariable: instVar in: class]!
+	instVar isNil ifFalse: [self developmentSystem renameInstanceVariable: instVar in: class]!
 
 searchEnvironment
 	^searchEnvironment!
@@ -914,13 +921,8 @@ showPresenter: viewName
 	self selection show: viewName
 	!
 
-systemModel
-	"Private - Answer the development system model."
-
-	^SmalltalkSystem current!
-
 testBrowserClass
-	^self systemModel testBrowserClass!
+	^SmalltalkSystem current testBrowserClass!
 
 toggleShowFullNames
 	"Private - Enable/disable the display of class full names (i.e. with namespace qualifier) in the class hierarchy view. There is no good reason to do this in the class list, as this already has a Namespace column showing the qualifier."
@@ -963,6 +965,7 @@ createInstanceVariableAccessors!commands!public!refactoring! !
 createSchematicWiring!initializing!public! !
 createVariableAccessors:!commands!public!refactoring! !
 deleteItCommand!helpers!private! !
+developmentSystem!commands!private! !
 dropClass:onto:changes:!operations!private! !
 dropMethod:onto:isMove:changes:!helpers!private! !
 editView:!commands!public! !
@@ -1006,7 +1009,6 @@ selectableItems!accessing!private! !
 selectionEnvironment!accessing!private! !
 setInitialFocus!operations!public! !
 showPresenter:!commands!public! !
-systemModel!commands!private! !
 testBrowserClass!constants!private! !
 toggleShowFullNames!commands!private!refactoring! !
 !

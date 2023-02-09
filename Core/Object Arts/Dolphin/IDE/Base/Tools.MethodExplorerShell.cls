@@ -23,32 +23,28 @@ Class Variables:
 addSearch: aBrowserEnvironment under: parentBrowserEnvironment 
 	historyTree model add: aBrowserEnvironment asChildOf: parentBrowserEnvironment!
 
-addToCommandRoute: route 
-	"Update the <OrderedCollection>, path, with the receiver's contribution to the command path
-	held by the <CommandPolicy>, route. Answer self to have the command policy decide where
-	to go next."
+addToCommandRoute: aCommandPolicy
+	"Update the command routing path of the <CommandPolicy> argument with the receiver's contribution to the command path. "
 
-	"Implementation Note: We want to make sure that the methods presenter is always
-	in the route, and that it appears before SmalltalkSystem but after the receiver (if not already
-	in the route)."
+	"Implementation Note: We want to make sure that the methods presenter is always in the route, and that it appears before SmalltalkSystem (added by the supersend) but after the receiver (if not already in the route)."
 
-	route
+	aCommandPolicy
 		appendTarget: self;
-		appendTarget: browserPresenter;
-		appendPresenter: self!
+		appendTarget: browserPresenter.
+	^super addToCommandRoute: aCommandPolicy!
 
 browseMethodsIn: aBrowserEnvironment 
 	self addSearch: aBrowserEnvironment under: historyTree selectionOrNil.
 	historyTree selection: aBrowserEnvironment.
 	self setInitialFocus!
 
-browseMethodsInEnvironments: aCollectionOfBrowserEnvironments 
-	| first |
-	aCollectionOfBrowserEnvironments do: 
-			[:each | 
-			first ifNil: [first := each].
-			self addSearch: each under: historyTree selectionOrNil].
-	first ifNotNil: [historyTree selection: first].
+browseMethodsInEnvironments: aCollectionOfBrowserEnvironments
+	(aCollectionOfBrowserEnvironments inject: nil
+		into: 
+			[:first :each |
+			self addSearch: each under: historyTree selectionOrNil.
+			first ?? each])
+			ifNotNil: [:first | historyTree selection: first].
 	self setInitialFocus!
 
 buildHistoryFutureMenu

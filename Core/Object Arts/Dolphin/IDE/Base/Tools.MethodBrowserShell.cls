@@ -17,9 +17,6 @@ Instance Variables:
 !Tools.MethodBrowserShell categoriesForClass!MVP-Presenters! !
 !Tools.MethodBrowserShell methodsFor!
 
-browseMethodsIn: aBrowserEnvironment 
-	self systemModel browseMethodsIn: aBrowserEnvironment!
-
 browser
 	"Answer the <MethodBrowser> held by the receiver"
 
@@ -109,10 +106,24 @@ onViewOpened
 		ifNotNil: [:item | item model: browserPresenter namespaceModel]!
 
 parseContext
-	^self selectedMethod!
+	^self selectedMethod
+		ifNil: 
+			[ParseContext methodClass: (model modelClassFor: UndefinedObject)
+				environment: (model modelClassFor: Smalltalk)]
+		ifNotNil: 
+			[:method |
+			| class package |
+			package := method owningPackageIfLoose.
+			class := model modelClassFor: method methodClass.
+			(method customEnvironment notNil or: [package isNil and: [class owningPackage isNil]])
+				ifTrue: [class methodFor: method selector]
+				ifFalse: 
+					[| env |
+					env := package ifNil: [class environment] ifNotNil: [package environment ifNil: [class environment]].
+					ParseContext methodClass: class environment: (model modelClassFor: env)]]!
 
 recompileDiffs
-	self systemModel recompileDiffs: self method!
+	self developmentSystem recompileDiffs: self selectedMethod!
 
 saveNewMethod: aString
 	| method package |
@@ -142,9 +153,11 @@ statusModel
 	^self browser errorModel!
 
 statusText: aString
-	self statusModel value: (aString isNil ifFalse: [Notification messageText: aString])! !
+	self statusModel value: (aString isNil ifFalse: [Notification messageText: aString])!
+
+systemModel
+	^self model! !
 !Tools.MethodBrowserShell categoriesForMethods!
-browseMethodsIn:!public! !
 browser!accessing!public! !
 canSaveMethod!commands!private! !
 createComponents!initializing!public! !
@@ -170,6 +183,7 @@ selectedMethod!accessing!public! !
 setInitialFocus!operations!public! !
 statusModel!event handling!public! !
 statusText:!accessing!private! !
+systemModel!accessing!private! !
 !
 
 Tools.MethodBrowserShell methodProtocol: #methodBrowserHost attributes: #(#readOnly) selectors: #(#hasEditableMethodSelected #isEditableMethod: #parseContext #saveNewMethod:)!

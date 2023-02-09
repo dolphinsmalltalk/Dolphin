@@ -53,7 +53,8 @@ moveMethod
 				selector: extractedMethodSelector
 				class: class
 				variable: variable.
-	self performComponentRefactoring: refactoring!
+	self performComponentRefactoring: refactoring.
+	self shouldShowChanges: refactoring shouldShowChanges!
 
 preconditions
 	^RBCondition empty!

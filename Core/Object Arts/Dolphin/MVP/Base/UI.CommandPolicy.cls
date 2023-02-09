@@ -43,17 +43,13 @@ appendPresenter: presenter
 		ifTrue: [self appendTarget: model].
 	^presenter parentPresenter!
 
-appendTarget: target
-	"Append the <commandTarget>, target, to the existing chain-of-command if not already
-	present. Answers the target if it was added, or nil if already in the path.
-	This can be used by the presenter answering the command policy to amend the
-	default routing by inserting new command targets at its end. Note that the new
-	target will not be added if already present in the path."
+appendTarget: aCommandTarget
+	"Append the <commandTarget> argument to the existing chain-of-command if not already present. Answers the target if it was appended, or nil if already in the path. This can be used by the presenter answering the command policy to amend the default routing by appending new command targets. Note that the new target will not be appended if already present in the path."
 
 	| cofc |
 	cofc := self commandPath.
-	^(cofc identityIncludes: target)
-		ifFalse: [cofc addLast: target]		!
+	^(cofc identityIncludes: aCommandTarget)
+		ifFalse: [cofc addLast: aCommandTarget]		!
 
 commandPath
 	"Answer an <OrderedCollection> of <commandTarget>s which is the chain-of-command
@@ -66,6 +62,11 @@ commandQueryClass
 	"Answer the class of <CommandQuery> to use for querying the status of commands."
 
 	^CommandQuery!
+
+includesTarget: aCommandTarget
+	"Append whether the receiver's path already includes the specified <commandTarget>."
+
+	^self commandPath identityIncludes: aCommandTarget!
 
 insertTarget: newTarget after: existingTarget
 	"Insert the <commandTarget>, newTarget, into the existing chain-of-command 
@@ -220,6 +221,7 @@ appendPresenter:!adding!public! !
 appendTarget:!adding!public! !
 commandPath!accessing!public! !
 commandQueryClass!constants!public! !
+includesTarget:!adding!public! !
 insertTarget:after:!adding!public! !
 insertTarget:atIndex:!adding!public! !
 insertTarget:before:!adding!public! !

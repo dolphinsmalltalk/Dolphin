@@ -29,11 +29,11 @@ CodeRefactoringTool implements the following refactorings:
 !Tools.CodeRefactoringTool methodsFor!
 
 addClassVariable: aStVariableNode to: aClass 
-	self systemModel addClassVariable: aStVariableNode name to: aClass.
+	self developmentSystem addClassVariable: aStVariableNode name to: aClass.
 	presenter clearParseTree!
 
 addInstanceVariable: aStVariableNode to: aClass 
-	self systemModel addInstanceVariable: aStVariableNode name to: aClass.
+	self developmentSystem addInstanceVariable: aStVariableNode name to: aClass.
 	presenter clearParseTree!
 
 addParameterCommand
@@ -46,14 +46,14 @@ addParameterCommand
 					self 
 						changeSignatureCommandFor: node
 						in: target
-						operation: [:method | self systemModel addParameterToMethod: method]
+						operation: [:method | self developmentSystem addParameterToMethod: method]
 						title: 'Add Parameter']]!
 
 addParameterToMessage
 	self addParameterCommand value: self!
 
 addSharedVariable: aStVariableNode to: aNamespace
-	self systemModel addSharedVariable: aStVariableNode name to: aNamespace.
+	self developmentSystem addSharedVariable: aStVariableNode name to: aNamespace.
 	presenter clearParseTree!
 
 canPerformCodeRefactoring
@@ -97,13 +97,8 @@ convertTempToInstVar
 	self convertTempToInstVar: self selectedNode!
 
 createClassForVariable: aStVariableNode
-	| dialog |
-	dialog := CreateSubclassDialog newSubclassOf: Object inPackage: presenter parseContext owningPackage.
-	dialog subclassFullName: aStVariableNode name.
-	dialog showModal.
-	dialog answer ifNil: [^self].
-	self systemModel createSubclass: dialog classDetails subclasses: dialog subclasses.
-	presenter clearParseTree!
+	(self developmentSystem createNewClass: aStVariableNode name
+		inPackage: presenter parseContext owningPackage) ifNotNil: [presenter clearParseTree]!
 
 declareAllUndeclaredVariablesAsTemps
 	| ast undeclared |
@@ -185,7 +180,7 @@ extractMethod
 			[:method | 
 			| interval |
 			interval := self extractionRange.
-			(self systemModel 
+			(self developmentSystem 
 				extractMethod: interval
 				from: method selector
 				in: method methodClass) isNil 
@@ -197,7 +192,7 @@ extractToComponent
 
 	presenter performMethodRefactoring: 
 			[:method | 
-			self systemModel 
+			self developmentSystem 
 				extractToComponent: self extractionRange
 				from: method selector
 				in: method methodClass]!
@@ -211,7 +206,7 @@ extractToTemporary
 			| line interval result |
 			interval := node sourceInterval.
 			line := presenter lineFromPosition: interval start.
-			result := self systemModel 
+			result := self developmentSystem 
 						extractToTemporary: interval
 						from: method selector
 						in: method methodClass.
@@ -241,7 +236,7 @@ hasUndeclaredVariables
 
 implementMessage: aStMessageNode
 	| dialog |
-	dialog := self systemModel classChooserClass create.
+	dialog := self developmentSystem classChooserClass create.
 	dialog
 		caption: 'Choose Target Class…';
 		allowNil: false.
@@ -250,7 +245,7 @@ implementMessage: aStMessageNode
 
 implementMessage: aStMessageNode inClass: aClass
 	| change |
-	change := self systemModel
+	change := self developmentSystem
 				compile: (self stubTextFor: aStMessageNode inClass: aClass)
 				in: aClass
 				environment: nil
@@ -259,7 +254,7 @@ implementMessage: aStMessageNode inClass: aClass
 				extraFlags: 0.
 	presenter clearParseTree.
 	change method
-		ifNotNil: [:method | (self systemModel methodCategorizationPolicy bestSuggestionFor: method) addMethod: method]!
+		ifNotNil: [:method | (self developmentSystem methodCategorizationPolicy bestSuggestionFor: method) addMethod: method]!
 
 inlineMessage
 	"Invoke the 'Inline Message' refactoring to inline the selected
@@ -269,7 +264,7 @@ inlineMessage
 			[:method :node | 
 			| line result |
 			line := presenter lineFromPosition: node sourceInterval start.
-			result := self systemModel 
+			result := self developmentSystem 
 						inlineMessage: node
 						inMethod: method selector
 						of: method methodClass.
@@ -305,7 +300,7 @@ inlineTemporary: aCompiledMethod in: aStProgramNode
 				signal: ('There are no assignments to <1p> to inline' expandMacrosWith: aStProgramNode name).
 			^nil].
 	line := presenter lineFromPosition: aStProgramNode sourceInterval start.
-	result := self systemModel
+	result := self developmentSystem
 				inlineTemporary: assignment sourceInterval
 				from: aCompiledMethod selector
 				in: aCompiledMethod methodClass.
@@ -327,7 +322,7 @@ moveTempToInnerScope
 			| interval anchor |
 			interval := node sourceInterval.
 			anchor := interval start.
-			(self systemModel 
+			(self developmentSystem 
 				moveTempToInnerScope: interval
 				in: method methodClass
 				selector: method selector) isNil 
@@ -343,14 +338,14 @@ nameForArgument: aStProgramNode
 						ifNotNil: 
 							[:aClass |
 							| type |
-							type := self systemModel typeForArgumentClass: aClass.
+							type := self developmentSystem typeForArgumentClass: aClass.
 							aClass isMeta
 								ifTrue: ['aClass']
 								ifFalse: [(type name first isVowel ifTrue: ['an'] ifFalse: ['a']) , type name]]].
 			^aStProgramNode name].
-	aStProgramNode isLiteralNode ifTrue: [^self systemModel nameForArgument: aStProgramNode value].
+	aStProgramNode isLiteralNode ifTrue: [^self developmentSystem nameForArgument: aStProgramNode value].
 	aStProgramNode isBlock
-		ifTrue: [^self systemModel nameForBlockOfArity: aStProgramNode argumentCount].
+		ifTrue: [^self developmentSystem nameForBlockOfArity: aStProgramNode argumentCount].
 	^'anObject'!
 
 onAboutToDisplayMenu: aMenu 
@@ -624,55 +619,51 @@ removeTempDecl: aStVariableNode
 	scintilla clearRange: range!
 
 renameClass: aStVariableNode
-	| class model method |
-	model := self systemModel.
+	| class devsys method |
+	devsys := self developmentSystem.
 	method := self selectedMethod.
 	class := (method fullBindingFor: aStVariableNode name) value.
 	presenter
 		renameVariable: aStVariableNode
-		operation: [:newName | model renameClass: class to: newName]
-		validationBlock: [:name | model validateRenameClass: class to: name]!
+		operation: [:newName | devsys renameClass: class to: newName]
+		validationBlock: [:name | devsys validateRenameClass: class to: name]!
 
-renameClassVariable: aStVariableNode 
-	| definingBehavior methodClass oldName model |
+renameClassVariable: aStVariableNode
+	| definingBehavior methodClass oldName |
 	methodClass := presenter selectedMethod methodClass.
 	oldName := aStVariableNode name.
 	definingBehavior := methodClass whichClassDefinesClassVar: oldName.
-	model := self systemModel.
-	presenter 
+	presenter
 		renameVariable: aStVariableNode
 		operation: 
-			[:newName | 
-			model 
+			[:newName |
+			self developmentSystem
 				renameClassVariable: oldName
 				to: newName
-				in: definingBehavior
-				within: model systemEnvironment]
+				in: definingBehavior]
 		validationBlock: 
-			[:name | 
-			model 
+			[:name |
+			self developmentSystem
 				validateRenameClassVar: oldName
 				to: name
 				in: definingBehavior]!
 
-renameInstanceVariable: aStVariableNode 
-	| definingBehavior methodClass oldName model |
+renameInstanceVariable: aStVariableNode
+	| definingBehavior methodClass oldName |
 	methodClass := presenter selectedMethod methodClass.
 	oldName := aStVariableNode name.
 	definingBehavior := methodClass whichClassDefinesInstVar: oldName.
-	model := self systemModel.
-	presenter 
+	presenter
 		renameVariable: aStVariableNode
 		operation: 
-			[:newName | 
-			model 
+			[:newName |
+			self developmentSystem
 				renameInstanceVariable: oldName
 				to: newName
-				in: definingBehavior
-				within: model systemEnvironment]
+				in: definingBehavior]
 		validationBlock: 
-			[:candidateName | 
-			model 
+			[:candidateName |
+			self developmentSystem
 				validateRenameInstVar: oldName
 				to: candidateName
 				in: definingBehavior]!
@@ -702,7 +693,7 @@ renameMessageCommand
 					self 
 						changeSignatureCommandFor: node
 						in: target
-						operation: [:method | self systemModel renameMethod: method]
+						operation: [:method | self developmentSystem renameMethod: method]
 						title: 'Rename']]!
 
 renameNode
@@ -710,21 +701,21 @@ renameNode
 	command := self renameItCommand.
 	[command value: self] postToMessageQueue!
 
-renameTemporary: aStVariableNode 
+renameTemporary: aStVariableNode
 	| method |
 	method := self selectedMethod.
-	presenter 
+	presenter
 		renameVariable: aStVariableNode
 		operation: 
-			[:newName | 
-			presenter systemModel 
+			[:newName |
+			self developmentSystem
 				renameTemporary: aStVariableNode
 				to: newName
 				in: method methodClass
 				selector: method selector]
 		validationBlock: 
-			[:candidate | 
-			presenter systemModel 
+			[:candidate |
+			self developmentSystem
 				validateRenameTemp: aStVariableNode
 				to: candidate
 				in: method methodClass]!

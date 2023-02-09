@@ -31,7 +31,6 @@ package setClassNames: #(
 	#{Tools.CategoryTreeModel}
 	#{Tools.ChangedMethodsCategory}
 	#{Tools.ChooseClassDialog}
-	#{Tools.ChooseImportDialog}
 	#{Tools.ChooseNamespaceDialog}
 	#{Tools.ClassAspectPlugin}
 	#{Tools.ClassBrowserAbstract}
@@ -178,6 +177,7 @@ package setMethodNames: #(
 	#(#{Core.ClassDescription} #isVisiblyAbstract)
 	#(#{Core.ClassDescription} #methodsFor:)
 	#(#{Core.ClassDescription} #methodsFor:stamp:)
+	#(#{Core.ClassDescription} #model)
 	#(#{Core.ClassDescription} #newInstanceAspect:class:)
 	#(#{Core.ClassDescription} #privateMethods)
 	#(#{Core.ClassDescription} #publicMethods)
@@ -403,11 +403,13 @@ package setMethodNames: #(
 	#(#{Kernel.CompiledCode} #stylerClass)
 	#(#{Kernel.CompiledCode class} #publishedAspectsOfInstances)
 	#(#{Kernel.CompiledExpression} #asDebugMethod)
+	#(#{Kernel.CompiledExpression} #parseContext)
 	#(#{Kernel.CompiledExpression} #stylerClass)
 	#(#{Kernel.CompiledMethod} #asDebugMethod)
 	#(#{Kernel.CompiledMethod} #browse)
 	#(#{Kernel.CompiledMethod} #icon)
 	#(#{Kernel.CompiledMethod} #infoTip)
+	#(#{Kernel.CompiledMethod} #parseContext)
 	#(#{Kernel.CompiledMethod} #searchForInTool:)
 	#(#{Kernel.CompiledMethod} #stylerClass)
 	#(#{Kernel.CompiledMethod class} #overriddenIcon)
@@ -465,6 +467,7 @@ package setMethodNames: #(
 	#(#{Kernel.StBlockScope} #category)
 	#(#{Kernel.StCascadeNode} #displayOn:)
 	#(#{Kernel.StClassScope} #category)
+	#(#{Kernel.StClassScope} #isVisibleSelector:)
 	#(#{Kernel.StEvalScope} #category)
 	#(#{Kernel.StGeneratedTempVariable} #category)
 	#(#{Kernel.StInstanceVariable} #printInfoTipOn:)
@@ -534,25 +537,34 @@ package setMethodNames: #(
 	#(#{OS.VersionInfo class} #publishedAspectsOfInstances)
 	#(#{OS.VS_FIXEDFILEINFO class} #publishedAspectsOfInstances)
 	#(#{OS.WINDOWPOS} #printOn:)
-	#(#{Refactory.Browser.AndEnvironment} #includesResource:)
 	#(#{Refactory.Browser.BrowserEnvironment} #allMethods)
 	#(#{Refactory.Browser.BrowserEnvironment} #allResourcesDo:)
+	#(#{Refactory.Browser.BrowserEnvironment} #allSelectorsImplemented)
+	#(#{Refactory.Browser.BrowserEnvironment} #allSelectorsSent)
 	#(#{Refactory.Browser.BrowserEnvironment} #browse)
+	#(#{Refactory.Browser.BrowserEnvironment} #definitionsMatching:)
 	#(#{Refactory.Browser.BrowserEnvironment} #definitionsOf:)
 	#(#{Refactory.Browser.BrowserEnvironment} #dynamicReferencesTo:)
 	#(#{Refactory.Browser.BrowserEnvironment} #forClassHierarchyFrom:)
+	#(#{Refactory.Browser.BrowserEnvironment} #forClassHierarchyTo:)
 	#(#{Refactory.Browser.BrowserEnvironment} #forMethodCategories:)
 	#(#{Refactory.Browser.BrowserEnvironment} #forPackagesClosure:)
 	#(#{Refactory.Browser.BrowserEnvironment} #includesMethod:)
 	#(#{Refactory.Browser.BrowserEnvironment} #includesMethodUncached:)
+	#(#{Refactory.Browser.BrowserEnvironment} #liveReferencesTo:)
+	#(#{Refactory.Browser.BrowserEnvironment} #messagesMatching:)
 	#(#{Refactory.Browser.BrowserEnvironment} #openEditor)
+	#(#{Refactory.Browser.BrowserEnvironment} #referencesMatching:)
+	#(#{Refactory.Browser.BrowserEnvironment} #referencesToBinding:)
+	#(#{Refactory.Browser.BrowserEnvironment} #referencesToLiteral:)
 	#(#{Refactory.Browser.BrowserEnvironment} #search)
 	#(#{Refactory.Browser.BrowserEnvironment} #search:)
+	#(#{Refactory.Browser.BrowserEnvironment} #subEnvironmentLabel:for:)
+	#(#{Refactory.Browser.BrowserEnvironment} #unimplementedSelectors)
 	#(#{Refactory.Browser.BrowserEnvironmentWrapper} #includesResource:)
 	#(#{Refactory.Browser.BrowserEnvironmentWrapper} #openEditor)
 	#(#{Refactory.Browser.ClassDetails class} #icon)
 	#(#{Refactory.Browser.ClassEnvironment} #includesResource:)
-	#(#{Refactory.Browser.OrEnvironment} #includesResource:)
 	#(#{Refactory.Browser.RBConfigurableFormatter class} #publishedAspects)
 	#(#{Refactory.Browser.RBFormatter class} #publishedAspects)
 	#(#{Refactory.Browser.RBMethod class} #publishedAspectsOfInstances)
@@ -1354,12 +1366,6 @@ Tools.ChooseClassDialog subclass: #'Tools.ChooseNamespaceDialog'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.ChooseNamespaceDialog subclass: #'Tools.ChooseImportDialog'
-	instanceVariableNames: 'private hintBubble namespacesOnly'
-	classVariableNames: ''
-	imports: #(#{Refactory.Browser private})
-	classInstanceVariableNames: ''
-	classConstants: {}!
 Tools.MenuComposer subclass: #'Tools.MenuBarComposer'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -1601,11 +1607,12 @@ UI.ContainerView subclass: #'Tools.MenuComposerArena'
 	classConstants: {}!
 UI.DialogView subclass: #'Tools.WalkbackDialog'
 	instanceVariableNames: 'callStack resumable caption debuggable'
-	classVariableNames: 'Commands'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'CallStackId' -> 16r3E9.
+		'Commands' -> (LookupTable withAll: {16r4 -> #copy. 16r3 -> #resume. 16r2 -> #terminate. 16r1 -> #debug}).
 		'IconId' -> 16r3F1
 	}!
 UI.ImageViewAbstract subclass: #'Tools.ImageListView'
@@ -1993,6 +2000,9 @@ methodsFor: name stamp: aString
 		inContext: self
 		atEnd: []!
 
+model
+	^SmalltalkSystem current!
+
 newInstanceAspect: aSymbol class: aspectClass 
 	"Private - Answer a new <Aspect> of the class, aspectClass, and with name, aSymbol, 
     	which is appropriate for representing aspects of the receiver's type."
@@ -2040,6 +2050,7 @@ isDeprecated!public!source filing! !
 isVisiblyAbstract!private!testing! !
 methodsFor:!public!source filing-methods! !
 methodsFor:stamp:!public!source filing-methods!squeak! !
+model!public!source filing-methods! !
 newInstanceAspect:class:!adapters!private! !
 privateMethods!public!source filing-methods! !
 publicMethods!public!source filing-methods! !
@@ -4550,10 +4561,19 @@ asDebugMethod
 	debugMethod sourceDescriptor: self sourceDescriptor.
 	^debugMethod!
 
+parseContext
+	^self customEnvironment
+		ifNotNil: [self]
+		ifNil: 
+			[| class |
+			class := self methodClass.
+			ParseContext methodClass: class environment: class environment]!
+
 stylerClass
 	^SmalltalkSystem current expressionStylerClass! !
 !Kernel.CompiledExpression categoriesForMethods!
 asDebugMethod!private! !
+parseContext!public! !
 stylerClass!constants!public! !
 !
 
@@ -4601,6 +4621,14 @@ infoTip
 	stream nextPut: $).
 	^stream contents!
 
+parseContext
+	| class package |
+	package := self owningPackageIfLoose.
+	class := self methodClass.
+	^(self customEnvironment notNil or: [package isNil and: [class owningPackage isNil]])
+		ifTrue: [self]
+		ifFalse: [ParseContext methodClass: class environment: (package ?? class) environment]!
+
 searchForInTool: aSmalltalkToolShell 
 	aSmalltalkToolShell searchForMethod: self!
 
@@ -4611,6 +4639,7 @@ asDebugMethod!private! !
 browse!public! !
 icon!constants!public! !
 infoTip!accessing!development!private! !
+parseContext!accessing!public! !
 searchForInTool:!public! !
 stylerClass!constants!public! !
 !
@@ -5259,9 +5288,13 @@ displayOn:!printing!public! !
 category
 	"Answer a descriptive category name for this scope."
 
-	^'Class'! !
+	^'Class'!
+
+isVisibleSelector: aSymbol
+	^SmalltalkSystem current allSelectors includes: aSymbol! !
 !Kernel.StClassScope categoriesForMethods!
 category!constants!public! !
+isVisibleSelector:!helpers!private! !
 !
 
 !Kernel.StEvalScope methodsFor!
@@ -5547,7 +5580,7 @@ valueClass
 
 	"The scope will be an StClassScope which knows the method class."
 
-	^scope methodClass!
+	^scope methodClass realClass!
 
 valueClass: aStackFrame
 	^aStackFrame receiver basicClass! !
@@ -5629,12 +5662,12 @@ staticValueClass
 
 	"In the case of static variables, we can only offer a variable type with confidence (without resort to type inference) if the variable binding is constant (which includes class bindings). If it isn't then the variable could assume different types through the course of the method or even across different invocations (if a global, or class variable). This might cause false reports of unimplemented messages in the debugger. Therefore we have to be conservative here in suggesting the variable type."
 
-	^binding isImmutable ifTrue: [binding value basicClass]!
+	^binding isImmutable ifTrue: [self valueClass]!
 
 valueClass
 	"Answer the class of the variables value, if this is known, or nil if unknown."
 
-	^binding value basicClass! !
+	^binding realBinding value basicClass! !
 !Kernel.StStaticVariable categoriesForMethods!
 printInfoTipOn:!accessing!public! !
 staticValueClass!accessing!public! !
@@ -5653,7 +5686,7 @@ printInfoTipOn: aStream
 valueClass
 	"Answer the class of the variables value, if this is known, or nil if unknown."
 
-	^scope methodClass superclass!
+	^scope methodClass superclass realClass!
 
 valueClass: aStackFrame
 	^aStackFrame method methodClass superclass! !
@@ -6068,15 +6101,6 @@ printOn: aStream
 printOn:!printing!public! !
 !
 
-!Refactory.Browser.AndEnvironment methodsFor!
-
-includesResource: aResourceIdentifier 
-	^(environment includesResource: aResourceIdentifier) 
-		and: [andedEnvironment includesResource: aResourceIdentifier]! !
-!Refactory.Browser.AndEnvironment categoriesForMethods!
-includesResource:!public!testing! !
-!
-
 !Refactory.Browser.BrowserEnvironment methodsFor!
 
 allMethods
@@ -6090,8 +6114,44 @@ allMethods
 allResourcesDo: aBlock
 	ResourceIdentifier allResourceIdentifiersDo: aBlock!
 
+allSelectorsImplemented
+	"Answer an <IdentitySet> of all the <Symbol>s which currently have at least one implementation in the scope of the receiver. This can include so-called 'dynamic selectors', which are messages that classes may respond to but which are not within the static set for which they implement methods."
+
+	| selectors classes |
+	selectors := IdentitySet new: 1000.
+	classes := IdentitySet new: 50.
+	self classesAndSelectorsDo: 
+			[:class :selector |
+			selectors add: selector.
+			((classes addNewElement: class) and: [self definesClass: class])
+				ifTrue: [class dynamicSelectorsDo: [:each | selectors add: each]]].
+	^selectors!
+
+allSelectorsSent
+	"Answer a <Set> of all the <Symbol>s which are directly sent by methods in the scope of the receiver.
+	N.B. This may take some time (depending on the BrowserEnvironment used), and will not contain any selectors 
+	which are only sent dynamically with #perform(etc).
+		(PackageEnvironment onEnvironment: BrowserEnvironment new packageNames: #('ActiveX Automation')) allSelectorsSent
+	"
+
+	| selectors excluded |
+	selectors := (IdentitySet new: 512)
+				addAll: VM specialSelectors;
+				yourself.
+	excluded := 'examples' asMethodCategory methods.
+	self methodsDo: 
+			[:each |
+			(excluded includes: each) ifFalse: [each messagesDo: [:selector | selectors add: selector]]].
+	^selectors!
+
 browse
 	^self openEditor!
+
+definitionsMatching: aMethodSearch
+	^(self filterMethods: aMethodSearch methodDefinitionFilter)
+		label: (self subEnvironmentLabel: #definitions for: aMethodSearch pattern);
+		search: aMethodSearch;
+		yourself!
 
 definitionsOf: aString 
 	"Answer a <BrowserEnvironment> that includes all methods with selectors matching
@@ -6106,13 +6166,23 @@ dynamicReferencesTo: aLiteral
 	^MethodCategoryEnvironment referencesTo: aLiteral in: self!
 
 forClassHierarchyFrom: aClass
- 	"Answers a <BrowserEnvironment> that includes only aClass and its subclasses, and the corresponding
- 	metaclasses. See also #forClassHierarchyOf:."
- 
- 	| classes |
- 	classes := aClass withAllSubclasses asSet.
-	classes addAll: aClass class withAllSubclasses.
- 	^self forClasses: classes!
+	"Answers a <BrowserEnvironment> that includes only aClass and its subclasses, and the corresponding metaclasses. See also #forClassHierarchyOf:."
+
+	^(self forClasses: (aClass withAllSubclasses asSet
+				addAll: aClass class withAllSubclasses;
+				yourself))
+		label: (self subEnvironmentLabel: #subclassHierarchy for: aClass);
+		yourself!
+
+forClassHierarchyTo: aClass
+	"Answers a <BrowserEnvironment> that includes aClass, its superclasses and subclasses, and the corresponding
+	metaclasses. See also #forClassHierarchyFrom: and #forClassHierarchyOf:"
+
+	^(self forClasses: (aClass withAllSuperclasses asSet
+				addAll: aClass class withAllSuperclasses;
+				yourself))
+		label: (self subEnvironmentLabel: #superclassHierarchy for: aClass);
+		yourself!
 
 forMethodCategories: categoryList
 	^MethodCategoryEnvironment onEnvironment: self categories: categoryList!
@@ -6138,37 +6208,87 @@ includesMethodUncached: aCompiledMethod
 
 	^self includesMethod: aCompiledMethod!
 
+liveReferencesTo: anObject
+	| aMethodSearch |
+	aMethodSearch := MethodSearch newLiteral: anObject.
+	^(self filterMethods: aMethodSearch simpleReferenceFilter)
+		label: (self subEnvironmentLabel: #references for: anObject);
+		addSearchString: aMethodSearch pattern;
+		yourself!
+
+messagesMatching: aMethodSearch
+	^{self definitionsMatching: aMethodSearch. self referencesMatching: aMethodSearch}!
+
 openEditor
 	"Open an appropriate Dolphin browser on this environment."
 
 	SmalltalkSystem current browseClass!
+
+referencesMatching: aMethodSearch
+	^(self filterMethods: aMethodSearch methodReferenceFilter)
+		label: (self subEnvironmentLabel: #references for: aMethodSearch pattern);
+		search: aMethodSearch;
+		yourself!
+
+referencesToBinding: aBindingReference
+	^(self filterMethods: [:method | method refersToLiteral: aBindingReference])
+		label: (self subEnvironmentLabel: #bindingReferences for: aBindingReference);
+		addSearchString: aBindingReference printString;
+		yourself!
+
+referencesToLiteral: anObject
+	| methodSearch |
+	methodSearch := MethodSearch newLiteral: anObject.
+	^(self filterMethods: methodSearch simpleReferenceFilter)
+		label: (self subEnvironmentLabel: #literalReferences for: anObject);
+		search: methodSearch;
+		yourself!
 
 search
 	^search ifNil: [MethodSearch newPattern: (self searchStrings at: 1 ifAbsent: '')]!
 
 search: aMethodSearch 
 	search := aMethodSearch.
-	self addSearchString: search pattern! !
+	self addSearchString: search pattern!
+
+subEnvironmentLabel: aSymbol for: anObject
+	^(self labelFormats at: aSymbol) << {anObject. self}!
+
+unimplementedSelectors
+	"Answer a <Set> of all the <Symbol>s which are selectors actually sent by methods in the receiver but which have no corresponding implementation in the receiver. N.B. This may not include any messages sent dynamically with #perform:	and friends, and so should not be considered a guarantee that no send will ever result in a DNU (which, of course, cannot be guaranteed anyway because there is no way of knowing that the object to which the message is sent actually implements that message)."
+
+	^self allSelectorsSent difference: self allSelectorsImplemented! !
 !Refactory.Browser.BrowserEnvironment categoriesForMethods!
 allMethods!public! !
 allResourcesDo:!enumerating!public! !
+allSelectorsImplemented!enquiries!public! !
+allSelectorsSent!enquiries!public! !
 browse!public! !
+definitionsMatching:!browsing!public! !
 definitionsOf:!enquiries!public! !
 dynamicReferencesTo:!environments!public! !
 forClassHierarchyFrom:!environments!public! !
+forClassHierarchyTo:!environments!public! !
 forMethodCategories:!environments!public! !
 forPackagesClosure:!helpers!public! !
 includesMethod:!public!testing! !
 includesMethodUncached:!public!testing! !
+liveReferencesTo:!enquiries!public! !
+messagesMatching:!enquiries!public! !
 openEditor!browsing!public! !
+referencesMatching:!enquiries!public! !
+referencesToBinding:!enquiries!public! !
+referencesToLiteral:!browsing!public! !
 search!accessing!public! !
 search:!accessing!public! !
+subEnvironmentLabel:for:!environments!public! !
+unimplementedSelectors!enquiries!public! !
 !
 
 !Refactory.Browser.BrowserEnvironmentWrapper methodsFor!
 
-includesResource: aResourceIdentifier 
-	^false!
+includesResource: aResourceIdentifier
+	^self includesSelector: aResourceIdentifier selector in: aResourceIdentifier owningClass class!
 
 openEditor
 	"Open an appropriate Dolphin browser on this environment."
@@ -6194,15 +6314,6 @@ icon!constants!public! !
 includesResource: aResourceIdentifier 
 	^self definesClass: aResourceIdentifier owningClass! !
 !Refactory.Browser.ClassEnvironment categoriesForMethods!
-includesResource:!public!testing! !
-!
-
-!Refactory.Browser.OrEnvironment methodsFor!
-
-includesResource: aResourceIdentifier 
-	^(environment includesResource: aResourceIdentifier) 
-		and: [oredEnvironment includesResource: aResourceIdentifier]! !
-!Refactory.Browser.OrEnvironment categoriesForMethods!
 includesResource:!public!testing! !
 !
 
@@ -7114,12 +7225,12 @@ arrangementAspect!accessing!private! !
 publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
-	^super publishedAspectsOfInstances
-		add: (Aspect boolean: #canHScroll);
-		add: (Aspect boolean: #hasPermanentScrollbars);
-		add: (Aspect extent: #horizontalExtent);
-		add: (Aspect symbol: #selectionMode from: ##(SelectionModes keys asSortedArray));
-		yourself! !
+	| aspects |
+	aspects := super publishedAspectsOfInstances.
+	#(#canHScroll #hasPermanentScrollbars #isReadOnly) do: [:each | aspects add: (Aspect boolean: each)].
+	aspects add: (Aspect extent: #horizontalExtent).
+	aspects add: (Aspect symbol: #selectionMode from: ##(SelectionModes keys asSortedArray)).
+	^aspects! !
 !UI.ListBox class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !

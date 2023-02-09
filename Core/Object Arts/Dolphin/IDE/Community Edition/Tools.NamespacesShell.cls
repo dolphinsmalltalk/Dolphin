@@ -28,7 +28,7 @@ addVariable
 	dictionariesPresenter inspectorPresenter refresh!
 
 browseEntryReferences
-	self systemModel browseMethodsIn: (self selectedBinding
+	self developmentSystem browseMethodsIn: (self selectedBinding
 				ifNil: [self searchEnvironment forMethods: #()]
 				ifNotNil: [:var | self searchEnvironment referencesToVariable: var])!
 
@@ -65,7 +65,7 @@ namespacePackage
 newClass
 	| selection |
 	selection := self selectionOrNil.
-	(self systemModel createSubclassOf: selection ?? SharedPool
+	(self developmentSystem createSubclassOf: selection ?? SharedPool
 		inPackage: (selection ifNotNil: [selection owningPackage]))
 			ifNotNil: [:newClass | self selectionOrNil: newClass]!
 
@@ -103,20 +103,20 @@ removeNamespace
 	| pool |
 	pool := self selectionOrNil.
 	pool ifNil: [^self].
-	self systemModel removeClasses: {pool}!
+	self developmentSystem removeClasses: {pool}!
 
 removeVariable
 	| var |
 	var := self selectedBinding.
 	var ifNil: [^self].
 	var isClassBinding
-		ifTrue: [self systemModel removeClasses: {var value}]
+		ifTrue: [self developmentSystem removeClasses: {var value}]
 		ifFalse: 
-			[self systemModel removeStaticVariables: {var environment -> var key} within: self searchEnvironment].
+			[self developmentSystem removeStaticVariables: {var environment -> var key} within: self searchEnvironment].
 	dictionariesPresenter inspectorPresenter refresh!
 
 searchEnvironment
-	^self systemModel systemEnvironment!
+	^self developmentSystem browserEnvironment!
 
 selectedBinding
 	^self selectedItemAccessorOrNil

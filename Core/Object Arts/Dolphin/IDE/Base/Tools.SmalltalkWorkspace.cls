@@ -488,12 +488,15 @@ defaultParseContext
 defaultStylerClass
 	^SmalltalkExpressionStyler!
 
+developmentSystem
+	^SmalltalkSystem current!
+
 displayIt
 	"Evaluate the currently selected text (or the current line if there is no selection). 
 	Display the result at the current insert point (i.e. immediately after the selection)."
 
 	<acceleratorKey: 'Ctrl+D'>
-	self evaluateAndDisplay: [:obj | obj displayString: self systemModel displayItLocale]!
+	self evaluateAndDisplay: [:obj | obj displayString: self developmentSystem displayItLocale]"Private - Answer the development system model."!
 
 dragOver: aDragDropSession
 	"The drag operation described by the <DragDropSession> argument has moved to a new position
@@ -615,7 +618,7 @@ evaluateRange: anInterval ifFail: failBlock debug: aBoolean
 				ifFail: failBlock
 				debug: aBoolean.
 	expr := result method.
-	self systemModel sourceManager logEvaluate: expr getSource.
+	self developmentSystem sourceManager logEvaluate: expr getSource.
 
 	".. if it is a debug request then associate a debugger with the active process"
 	aBoolean
@@ -630,7 +633,7 @@ evaluateRange: anInterval ifFail: failBlock debug: aBoolean
 	"... and evaluate the expression"
 	result := expr value: self evaluationContext.
 	self trigger: #expressionEvaluated: with: result.
-	^result!
+	^result"Private - Answer the development system model."!
 
 evaluationContext
 	"Answers the evaluation context for this workspace."
@@ -672,7 +675,7 @@ getCompletionSignatureFor: aString at: anInteger
 	prev isNil
 		ifTrue: 
 			[(self selfClass lookupMethod: selector)
-				ifNotNil: [:method | ^self systemModel signatureOfMethod: method]]
+				ifNotNil: [:method | ^self developmentSystem signatureOfMethod: method]]
 		ifFalse: 
 			[receiverStyle := prev value.
 			receiverStyle == #identifier
@@ -687,15 +690,15 @@ getCompletionSignatureFor: aString at: anInteger
 						ifNotNil: 
 							[:methodClass |
 							(methodClass lookupMethod: selector)
-								ifNotNil: [:method | ^self systemModel signatureOfMethod: method]]]].
+								ifNotNil: [:method | ^self developmentSystem signatureOfMethod: method]]]].
 	"Perform a breadth-first traversal of the class hierarchy to find the highest definition of
 	the selector and use the signature of that."
 	Smalltalk allBehaviorsDo: 
 			[:each |
 			(each includesSelector: selector)
-				ifTrue: [^self systemModel signatureOfMethod: (each compiledMethodAt: selector)]].
+				ifTrue: [^self developmentSystem signatureOfMethod: (each compiledMethodAt: selector)]].
 	"Should never get here - user shouldn't be offered choice of a selector that is not implemented."
-	^self systemModel buildSimpleSignatureFor: selector!
+	^self developmentSystem buildSimpleSignatureFor: selector!
 
 hasErrors
 	"Answer whether there are any errors in the source code (not warnings)"
@@ -1250,9 +1253,10 @@ resolveVariable: aStIdentifierToken
 	^(nameContext methodClass indexOfInstVar: name ifAbsent: nil)
 		ifNotNil: 
 			[:i |
-			(StInstanceVariable index: i name: name)
-				scope: classScope;
-				yourself]
+			StInstanceVariable
+				scope: classScope
+				index: i
+				name: name]
 		ifNil: 
 			[(nameContext methodClass fullBindingFor: name environment: nameContext environment)
 				ifNotNil: [:var | StStaticVariable scope: classScope binding: var]
@@ -1264,7 +1268,7 @@ resolveVariable: aStIdentifierToken
 							^StWorkspaceVariable scope: (StEvalScope pools: {self workspacePool} outer: nil) binding: var]]]!
 
 searchEnvironment
-	^searchEnvironment ifNil: [self systemModel systemEnvironment]!
+	^searchEnvironment ifNil: [self systemModel browserEnvironment]!
 
 searchEnvironment: aBrowserEnvironment 
 	searchEnvironment := aBrowserEnvironment!
@@ -1587,9 +1591,7 @@ symbolsStartingWith: aString maxItems: anInteger
 	^stream contents!
 
 systemModel
-	"Private - Answer the development system model."
-
-	^SmalltalkSystem current!
+	^self parentPresenter systemModel!
 
 text
 	"Answer the receiver's text contents - always plainText in DX6 and later."
@@ -1662,11 +1664,11 @@ wrapLinesInRange: anInterval indent: anInteger
 	| scintilla justified |
 	scintilla := self view.
 	scintilla targetRange: anInterval.
-	justified := self systemModel 
+	justified := self developmentSystem 
 				wrapText: scintilla targetText
 				indent: anInteger
 				tabWidth: scintilla tabWidth.
-	scintilla replaceTarget: justified! !
+	scintilla replaceTarget: justified"Private - Answer the development system model."! !
 !Tools.SmalltalkWorkspace categoriesForMethods!
 allDefinedVariablesDo:!autocompletion!enumerating!private! !
 allPools!accessing!private! !
@@ -1712,6 +1714,7 @@ debugItIfFail:!helpers!private! !
 defaultCompilerFlags!constants!private! !
 defaultParseContext!accessing!autocompletion!private! !
 defaultStylerClass!constants!private! !
+developmentSystem!constants!private! !
 displayIt!commands!public! !
 dragOver:!drag & drop!public! !
 drop:!drag & drop!public! !

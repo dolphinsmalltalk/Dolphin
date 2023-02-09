@@ -50,6 +50,9 @@ selectors!accessing!public! !
 clearCache
 	Literals := Selectors := nil!
 
+developmentSystem
+	^SmalltalkSystem current!
+
 initialize
 	"Private - Initialize the receiver. Monitor the devlopment environment to see if the cache has been invalidated
 
@@ -57,7 +60,7 @@ initialize
 	"
 
 	Mtx := Mutex new.
-	self systemModel
+	self developmentSystem
 		removeEventsTriggeredFor: self;
 		when: #methodAdded:
 			send: #clearCache
@@ -80,17 +83,14 @@ isSafeToEncryptWithProductProtection
 
 	^false!
 
-systemModel
-	^SmalltalkSystem current!
-
 uninitialize
 	self clearCache.
-	self systemModel removeEventsTriggeredFor: self! !
+	self developmentSystem removeEventsTriggeredFor: self! !
 !Tools.SmalllintCachingContext class categoriesForMethods!
 clearCache!operations!private! !
+developmentSystem!accessing!private! !
 initialize!class initialization!private! !
 isSafeToEncryptWithProductProtection!constants!public!testing! !
-systemModel!accessing!private! !
 uninitialize!class initialization!private! !
 !
 

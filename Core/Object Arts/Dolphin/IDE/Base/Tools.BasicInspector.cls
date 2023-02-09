@@ -47,12 +47,12 @@ accept
 browseClass
 	"Private - Open a new default class browser on the class of the object being inspected."
 
-	self systemModel browseClass: self browseObject class!
+	SmalltalkSystem current browseClass: self browseObject class!
 
 browseHierarchy
 	"Private - Open a new class browser on the class of the object being inspected."
 
-	self systemModel browseHierarchy: self browseObject class!
+	SmalltalkSystem current browseHierarchy: self browseObject class!
 
 browseIt
 	"Open a default browser on the current object"

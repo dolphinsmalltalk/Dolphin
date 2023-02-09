@@ -93,7 +93,7 @@ allImports
 	^all contents!
 
 allInstanceVariableNames
-	^self superclass
+	^self modelSuperclass
 		ifNil: [self instanceVariableNames]
 		ifNotNil: [:sprClass | sprClass allInstanceVariableNames , self instanceVariableNames]!
 
@@ -310,6 +310,8 @@ directlyImportsNamespace: aBindingReference
 	^self imports anySatisfy: [:each | each pathString = pathString]!
 
 environment
+	"Answer the receiver's namespace (i.e. an instance of RBNamespaceClass). This is the RBClass' environment as the term is used the Behavior/ClassDescription/Class/Metaclass hierarchy, and not a BrowserEnvironment (another type of scope) environment of the RBModel (Refactoring model) class."
+
 	^self basicEnvironment!
 
 environmentName
@@ -565,6 +567,11 @@ methodsReferencingExternals
 model
 	^self subclassResponsibility!
 
+modelSuperclass
+	"Answer the model superclass of the receiver, whether or not it is defined in the model's environment."
+
+	^self subclassResponsibility!
+
 name
 	"Answer the name of the non-metaclass. Note that in Dolphin 8 this is always a fully-qualified name. It does not include the ' class' suffix for metaclasses."
 
@@ -573,8 +580,8 @@ name
 nearestRealClass
 	^self subclassResponsibility!
 
-newMethodFor: each
-	^RBMethod for: self fromMethod: each!
+newMethodFor: aCompiledMethod
+	^RBMethod for: self fromMethod: aCompiledMethod!
 
 newMethods
 	^newMethods ?? ##(IdentityDictionary new
@@ -684,6 +691,15 @@ unqualifiedName
 	"Answer the unqualified name of the class."
 
 	^self subclassResponsibility!
+
+whichClassIncludesSelector: selector
+	"Answer the first class on the receiver's superclass chain (including the receiver) where 
+	the argument, selector, can be founds as a message selector. Answer nil if no class includes
+	the selector."
+
+	^(self directlyDefinesMethod: selector)
+		ifTrue: [self]
+		ifFalse: [self superclass ifNotNil: [:superclass | superclass whichClassIncludesSelector: selector]]!
 
 whichMethodsReferToBinding: aRBVariableBinding
 	| methods binding |
@@ -810,7 +826,7 @@ allImports!namespaces!public! !
 allInstanceVariableNames!accessing!public! !
 allSelectors!method accessing!public! !
 allSubclasses!accessing!public! !
-allSubclassesBreadthFirstDo:!accessing!public! !
+allSubclassesBreadthFirstDo:!class hierarchy-accessing!enumerating!public! !
 allSuperclasses!accessing!public! !
 allSuperclassesDo:!accessing!public! !
 asQualifiedReference!converting!public! !
@@ -887,6 +903,7 @@ methodFor:!method accessing!public! !
 methodsDo:!method accessing!public! !
 methodsReferencingExternals!method accessing!public! !
 model!accessing!public! !
+modelSuperclass!accessing!public! !
 name!accessing!public! !
 nearestRealClass!accessing!private! !
 newMethodFor:!method accessing!private! !
@@ -912,6 +929,7 @@ subclassRedefines:!public!testing! !
 superclass!accessing!public! !
 typeOfClassVariable:!public!variable accessing! !
 unqualifiedName!accessing!public! !
+whichClassIncludesSelector:!methods-testing!public! !
 whichMethodsReferToBinding:!method accessing!public! !
 whichMethodsReferToClass:!method accessing!public! !
 whichMethodsReferToSymbol:!method accessing!public! !

@@ -65,6 +65,13 @@ metaclass
 model
 	^instanceClass model!
 
+modelSuperclass
+	"Answer the model superclass of the receiver, whether or not it is defined in the model's environment."
+
+	^instanceClass superclass
+		ifNil: [Class classInModel: self model]
+		ifNotNil: [:superclass | superclass metaclass]!
+
 name
 	"Answer the name of the non-metaclass. Note that in Dolphin 8 this is always a fully-qualified name."
 
@@ -107,6 +114,7 @@ isMeta!public!testing! !
 localScope!accessing!public! !
 metaclass!accessing!public! !
 model!accessing!public! !
+modelSuperclass!accessing!public! !
 name!accessing!public! !
 nearestRealClass!accessing!private! !
 realClass!accessing!public! !

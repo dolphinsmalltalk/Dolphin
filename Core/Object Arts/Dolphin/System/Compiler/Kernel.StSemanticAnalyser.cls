@@ -434,8 +434,12 @@ visitExternalArgTypeNode: aStExternalArgTypeNode
 					[:static |
 					| structClass |
 					(static isStaticVariable and: 
-							[structClass := static binding value.
-							structClass class isMeta and: [structClass isBytes or: [structClass instSize >= 1]]])
+							[| binding |
+							binding := static binding.
+							structClass := binding value.
+							(binding isClassBinding or: [structClass class instancesAreClasses]) and: 
+									[structClass := structClass realClass.
+									structClass isBytes or: [structClass instSize >= 1]]])
 						ifTrue: 
 							[| indirections |
 							indirections := aStExternalArgTypeNode indirections.

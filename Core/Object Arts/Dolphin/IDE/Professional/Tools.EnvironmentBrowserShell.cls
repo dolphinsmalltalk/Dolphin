@@ -22,13 +22,10 @@ browseExecutableManifest
 	self browseExecutableManifestFile: filename!
 
 browseExecutableManifestFile: filename
-	| dom |
-	dom := MSXML newDocument.
-	dom loadURL: 'file://' , filename.
-	self browserEnvironment: (SmalltalkSystem current browserEnvFromDom: dom)!
+	self model: (self developmentSystem systemModelFromDeploymentLog: filename)!
 
 browserEnvironment: aBrowserEnvironment 
-	"Set the <BrowserEnvironment> that defines the list of classes displayed in the receiver."
+	"Private - Set the <BrowserEnvironment> that defines the list of classes displayed in the receiver."
 
 	classesPresenter
 		browserEnvironment: aBrowserEnvironment;
@@ -44,8 +41,8 @@ browseUnimplemented
 
 	| environment unimplemented |
 	environment := self searchEnvironment.
-	unimplemented := self systemModel unimplementedSelectorsIn: environment.
-	self systemModel
+	unimplemented := environment unimplementedSelectors.
+	self developmentSystem
 		browseSelectors: unimplemented asSortedCollection
 		caption: ('Unimplemented Selectors in <1p>' expandMacrosWith: environment)
 		environment: environment!
@@ -82,6 +79,10 @@ isMethodVisible: aCompiledMethod
 	^(self browserEnvironment includesMethod: aCompiledMethod) 
 		and: [super isMethodVisible: aCompiledMethod]!
 
+model: aSystemModel
+	super model: aSystemModel.
+	self browserEnvironment: aSystemModel browserEnvironment!
+
 onTipTextRequired: tool
 	"Private - Tool tip text is required for the <ToolbarItem>, tool."
 
@@ -93,13 +94,35 @@ onTipTextRequired: tool
 				ifFalse: ['Browse local hierarchy of ', self selectedClass name])].
 	^super onTipTextRequired: tool!
 
-printCaptionForClass: aClass on: aWriteStream 
-	"Private - Answer a suitable caption for the selected method."
+parseContext
+	^self method
+		ifNil: 
+			[self actualClass
+				ifNotNil: 
+					[:class |
+					| ns |
+					ns := self packageForNewMethod
+								ifNil: [class environment]
+								ifNotNil: [:package | package environment ifNil: [class environment]].
+					ParseContext methodClass: (model modelClassFor: class) environment: (model modelClassFor: ns)]]
+		ifNotNil: 
+			[:method |
+			| class package |
+			package := method owningPackageIfLoose.
+			class := model modelClassFor: method methodClass.
+			(method customEnvironment notNil or: [package isNil and: [class owningPackage isNil]])
+				ifTrue: [class methodFor: method selector]
+				ifFalse: 
+					[ParseContext methodClass: class environment: (model modelClassFor: (package ?? class) environment)]]!
 
-	^aWriteStream display: self browserEnvironment!
+printBasicCaptionOn: aPuttableStream
+	self browserEnvironment displayOn: aPuttableStream!
+
+printCaptionForClass: aClass on: aWriteStream
+	self printBasicCaptionOn: aWriteStream!
 
 printCaptionForMethod: aCompiledMethod on: aWriteStream
-	self browserEnvironment displayOn: aWriteStream!
+	self printBasicCaptionOn: aWriteStream!
 
 queryCommand: aCommandQuery 
 	"Private - Enter details about a potential command for the receiver 
@@ -145,7 +168,7 @@ saveStateOn: aWriteStream
 	aWriteStream nextPut: $]!
 
 searchEnvironment
-	^classesPresenter browserEnvironment!
+	^model browserEnvironment!
 
 toggleLocalHierarchy
 	"Toggle between the entire hierarchy and showing only the current class and its subclasses."
@@ -170,7 +193,7 @@ toggleLocalHierarchy
 !Tools.EnvironmentBrowserShell categoriesForMethods!
 browseExecutableManifest!commands!public! !
 browseExecutableManifestFile:!commands!public! !
-browserEnvironment:!accessing!public! !
+browserEnvironment:!initializing!private! !
 browseUnimplemented!commands!public! !
 createComponents!initializing!public! !
 defaultHelpId!constants!public! !
@@ -178,7 +201,10 @@ displayLocalHierarchyOf:!private!updating! !
 isLocalHierarchyMode!private!testing! !
 isLocalHierarchyMode:!accessing!private! !
 isMethodVisible:!private!testing! !
+model:!accessing!public! !
 onTipTextRequired:!event handling!private! !
+parseContext!public! !
+printBasicCaptionOn:!private!updating! !
 printCaptionForClass:on:!private!updating! !
 printCaptionForMethod:on:!private!updating! !
 queryCommand:!commands!private! !
@@ -210,9 +236,10 @@ initializeTool
 		addSystemFolderIcon: self toolsFolderIcon;
 		registerTool: self!
 
-onEnvironment: aBrowserEnvironment 
-	^(self show)
+onEnvironment: aBrowserEnvironment
+	^self create
 		browserEnvironment: aBrowserEnvironment;
+		showShell;
 		yourself!
 
 resource_Default_view

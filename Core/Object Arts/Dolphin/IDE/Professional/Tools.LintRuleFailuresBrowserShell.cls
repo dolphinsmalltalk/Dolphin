@@ -29,7 +29,7 @@ ignoreFailure
 
 	| index methods |
 	methods := self browser selections.
-	methods do: [:each | self systemModel addFilteredMethod: each forLintRule: self lintRule].
+	methods do: [:each | self developmentSystem addFilteredMethod: each forLintRule: self lintRule].
 	index := self browser selectionsByIndex first.
 	self browser model removeAll: methods.
 	self browser selectionByIndex: index ifAbsent: []!

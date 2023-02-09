@@ -75,8 +75,7 @@ baseEnvironment
 	^model smalltalkNamespace!
 
 basicEnvironment
-	"Rather confusingly, this is environment in the sense of being a namespace (i.e. an instance of RBNamespaceClass) and is compatible with the use of the term in the Behavior/ClassDescription/Class/Metaclass hierarchy.
-	It's not the BrowserEnvironment (another type of scope) environment of the RBModel (Refactoring model) class."
+	"Answer the receiver's namespace (i.e. an instance of RBNamespaceClass). This is the RBClass' environment as the term is used the Behavior/ClassDescription/Class/Metaclass hierarchy, and not a BrowserEnvironment (another type of scope) environment of the RBModel (Refactoring model) class."
 
 	^environment ifNil: [environment := self getEnvironment]!
 
@@ -133,9 +132,6 @@ classConstants: aCollectionOfAssociations
 						isImmutable: true;
 						yourself)]!
 
-classInModel: aRBModel
-	^self!
-
 classInstanceVariableNames
 	^self metaclass instanceVariableNames!
 
@@ -167,12 +163,6 @@ definition
 
 details
 	^ClassDetails fromClass: self!
-
-environment
-	"Rather confusingly, this is environment in the sense of being a namespace (i.e. an instance of RBNamespaceClass) and is compatible with the use of the term in the Behavior/ClassDescription/Class/Metaclass hierarchy.
-	It's not the BrowserEnvironment (another type of scope) environment of the RBNamespace (Refactoring model) class. I think I might rename RBNamespace...."
-
-	^self basicEnvironment!
 
 fullName: aString
 	name = aString ifTrue: [^self].
@@ -294,6 +284,13 @@ model: aRBModel named: aSymbol
 	(metaclass := RBMetaclass basicNew) instanceClass: self.
 	comment := LookupComment.
 	^self!
+
+modelSuperclass
+	"Answer the model superclass of the receiver, whether or not it is defined in the model's environment."
+
+	^superclass == LookupSuperclass
+		ifTrue: [self realClass superclass ifNotNil: [:sprClass | sprClass classInModel: model]]
+		ifFalse: [superclass]!
 
 name
 	"Answer the name of the non-metaclass. Note that in Dolphin 8 this is always a fully-qualified name."
@@ -534,7 +531,6 @@ categoryNames:!accessing!public! !
 changeImports:!namespaces!private! !
 classCategories!accessing!public! !
 classConstants:!accessing!public! !
-classInModel:!converting!public! !
 classInstanceVariableNames!accessing!public! !
 classPool!accessing!public! !
 classVariableNames:!accessing!public! !
@@ -543,7 +539,6 @@ comment:!accessing!public! !
 defaultInstanceSpec!constants!private! !
 definition!accessing!public! !
 details!accessing!public! !
-environment!accessing!public! !
 fullName:!accessing!private! !
 fullNameFor:!helpers!private! !
 fullyQualifiedReference!accessing!namespaces!public! !
@@ -569,6 +564,7 @@ model!accessing!public! !
 model:!initialize/release!private! !
 model:existing:!private! !
 model:named:!private! !
+modelSuperclass!public! !
 name!accessing!public! !
 name:!accessing!public! !
 nearestRealClass!accessing!private! !

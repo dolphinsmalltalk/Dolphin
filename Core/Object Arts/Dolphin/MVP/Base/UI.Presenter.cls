@@ -85,13 +85,10 @@ additionalKeyBindings
 
 	^self class additionalKeyBindings!
 
-addToCommandRoute: route
-	"Update the <OrderedCollection>, path, with the receiver's contribution to the command path
-	held by the <CommandPolicy>, route. Answer the next <Presenter> to visit.
-	The receiver is guaranteed not to be on the command path already.
-	Implementation Note: By default we fire it straight back."
+addToCommandRoute: aCommandPolicy
+	"Update the command routing path of the <CommandPolicy> argument with the receiver's contribution to the command path.  Answer the next <Presenter> to visit, or nil to terminate the chain."
 
-	^route appendPresenter: self!
+	^aCommandPolicy appendPresenter: self!
 
 addToImageList: aWinImageList mask: aColorOrNil 
 	"Private - Add a pictorial representation of the receiver to aWinImageList. Typically this is used to create

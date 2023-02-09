@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.RBMethodName subclass: #'Tools.ScopedMethodName'
-	instanceVariableNames: 'methodClass originalArguments originalSelector scope scopes'
+	instanceVariableNames: 'methodClass originalArguments originalSelector scopeName scopes'
 	classVariableNames: ''
 	imports: #(#{Refactory.Browser})
 	classInstanceVariableNames: ''
@@ -20,43 +20,36 @@ Instance Variables:
 !Tools.ScopedMethodName categoriesForClass!Refactory-Support! !
 !Tools.ScopedMethodName methodsFor!
 
-addScope: aBrowserEnvironment 
-	^scopes at: aBrowserEnvironment label put: aBrowserEnvironment!
+addScope: aBrowserEnvironment name: aString
+	"aBrowserEnvironment label: aString."
 
-addScope: aBrowserEnvironment name: aString 
-	aBrowserEnvironment label: aString.
-	^self addScope: aBrowserEnvironment!
+	^scopes at: aString put: aBrowserEnvironment!
 
 addScopesForMethod: aCompiledMethod
-	| package env |
-	self addScope: (BrowserEnvironment new
-				forClasses: {aCompiledMethod methodClass. aCompiledMethod methodClass class})
-		name: 'Class'.
+	| globalEnv |
+	globalEnv := self scopeNamed: 'Global'.
 	self
-		addScope: (BrowserEnvironment new forClass: self methodClass selectors: {aCompiledMethod selector})
+		addScope: (globalEnv forClasses: {aCompiledMethod methodClass. aCompiledMethod methodClass class})
+		name: 'Class'.
+	self addScope: (globalEnv forClass: self methodClass selectors: {aCompiledMethod selector})
 		name: 'Method'.
-	self addScope: (BrowserEnvironment new forClassHierarchyFrom: aCompiledMethod methodClass)
-		name: 'Hierarchy'.
-	package := aCompiledMethod owningPackage.
-	package isNil ifTrue: [^self].
-	env := (BrowserEnvironment new forPackages: {package})
-				label: 'Package';
-				yourself.
-	self addScope: env!
+	self addScope: (globalEnv forClassHierarchyFrom: aCompiledMethod methodClass) name: 'Hierarchy'.
+	aCompiledMethod owningPackage
+		ifNotNil: [:package | self addScope: (globalEnv forPackages: {package}) name: 'Package']!
 
 defaultScope
-	^scopes at: 'Global'!
+	^'Global'!
 
 hasNewSignature
 	^self selector ~= self originalSelector or: [self arguments ~= self originalArguments]!
 
-initializeForMethod: aCompiledMethod 
+initializeForMethod: aCompiledMethod
 	selector := originalSelector := aCompiledMethod selector.
 	methodClass := aCompiledMethod methodClass.
 	originalArguments := aCompiledMethod parseTree argumentNames asOrderedCollection.
 	arguments := originalArguments copy.
 	self addScopesForMethod: aCompiledMethod.
-	scope := self defaultScope.
+	scopeName := self defaultScope.
 	self assert: [self isValid]!
 
 methodClass
@@ -69,30 +62,36 @@ originalSelector
 	^originalSelector!
 
 packages: aCollectionOfPackages
+	| scope |
 	aCollectionOfPackages isEmpty ifTrue: [^self].
-	scope := (BrowserEnvironment new forPackages: aCollectionOfPackages)
-				label: (aCollectionOfPackages size > 1 ifTrue: ['Packages'] ifFalse: ['Package']);
-				yourself.
-	self addScope: scope!
+	scopeName := aCollectionOfPackages size > 1 ifTrue: ['Packages'] ifFalse: ['Package'].
+	scope := BrowserEnvironment new forPackages: aCollectionOfPackages.
+	self addScope: scope name: scopeName!
 
 permutation
 	^arguments collect: [:a | originalArguments indexOf: a]!
 
 scope
-	^scope!
+	^self scopeNamed: scopeName!
 
-scope: aBrowserEnvironment 
-	scope := aBrowserEnvironment!
+scopeName
+	^scopeName!
+
+scopeName: aString
+	scopeName := aString.
+	self trigger: #scopeChanged!
+
+scopeNamed: aString
+	^aString ifNotNil: [scopes at: aString]!
 
 scopeNames
-	^scopes asSortedCollection: [:a :b | a label <= b label]!
+	^scopes keys asSortedArray!
 
 setSelector: aSymbol arguments: anArray
 	super setSelector: aSymbol arguments: anArray.
 	scopes := LookupTable new.
 	self addScope: BrowserEnvironment new name: 'Global'! !
 !Tools.ScopedMethodName categoriesForMethods!
-addScope:!adding!public! !
 addScope:name:!adding!public! !
 addScopesForMethod:!initializing!private! !
 defaultScope!initializing!public! !
@@ -104,7 +103,9 @@ originalSelector!accessing!public! !
 packages:!accessing!public! !
 permutation!accessing!public! !
 scope!accessing!public! !
-scope:!accessing!public! !
+scopeName!accessing!public! !
+scopeName:!accessing!public! !
+scopeNamed:!constants!public! !
 scopeNames!constants!public! !
 setSelector:arguments:!initializing!private! !
 !

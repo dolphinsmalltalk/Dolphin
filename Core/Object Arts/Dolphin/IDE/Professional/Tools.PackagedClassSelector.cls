@@ -83,7 +83,7 @@ newClass
 	aClass := self selectionOrNil.
 	package := self packagesPresenter singlePackage
 				ifNil: [aClass isNil ifFalse: [aClass owningPackage]].
-	(self systemModel createSubclassOf: aClass ?? Object inPackage: package)
+	(self developmentSystem createSubclassOf: aClass ?? Object inPackage: package)
 		ifNotNil: 
 			[:newClass |
 			self updateClasses.
