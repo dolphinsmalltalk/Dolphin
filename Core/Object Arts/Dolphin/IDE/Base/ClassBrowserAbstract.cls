@@ -1523,8 +1523,10 @@ onRenameInstVar: anAssociation to: aString
 	"Implementation Note: Selection will be lost by #classUpdated: event, unless we explicitly maintain it"
 
 	| selections |
-	selections := variablesPresenter view selectionsByIndex.
-	(self model 
+	selections := variablesPresenter selectionsByIndex.
+	"Release any mouse capture that might have been made by the control where the label was edited, otherwise the cursor may disappear when the dialog is shown."
+	View releaseCapture.
+	(self model
 		renameInstanceVariable: anAssociation value
 		to: aString
 		in: anAssociation key
