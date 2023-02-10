@@ -30,8 +30,7 @@ compare: operand1 with: operand2
 hash: operand
 	"Answer a suitable hash value for the <Object>, operand, under this search policy."
 
-	#todo. "Use ICU case-folding instead of asUppercase, or use ICU sort key, to fix e.g. eszett case"
-	^operand asString asUppercase hash!
+	^operand asString caseFolded hash!
 
 keyAtValue: value in: collection ifAbsent: operation
 	"Answer the <Object> key of the <Object> argument, value in the keyed

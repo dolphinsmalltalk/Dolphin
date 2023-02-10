@@ -236,10 +236,14 @@ testGetCalendarInfoString
 
 testIndexOfMonth
 	| subject |
-	subject := Locale named: 'tr-Tr'.
+	subject := Locale standard: 'tr-Tr'.
 	#('Ekim' 10 'EKİM' 10 'Mayıs' 5 'MAYIS' 5 'Nis' 4 'NİS' 4 'Ağu' 8)
 		pairsDo: [:month :index | self assert: (subject indexOfMonth: month) equals: index].
-	#('en-US' 'en-GB') do: [:each | self verifyIndexOfEnglishMonths: (Locale named: each)]!
+	#('en-US' 'en-GB') do: [:each | self verifyIndexOfEnglishMonths: (Locale standard: each)].
+
+	"Exhaustively"
+	Locale installedSystemLocales
+		do: [:each | 1 to: 12 do: [:i | self assert: (each indexOfMonth: (each monthName: i)) equals: i]]!
 
 testIsTurkic
 	self assert: (Locale named: 'tr-TR') isTurkic.
@@ -260,15 +264,6 @@ testLongDateFormats
 	self assert: (Locale standard: 'ko-KR') longDateFormat equals: 'yyyy''년'' M''월'' d''일'' dddd'.
 	self assert: ((Locale standard: 'dz-BT') longDateFormat
 				equals: 'dddd, སྤྱི་ལོ་yyyy MMMM ཚེས་dd')!
-
-testLowercaseString
-	| subject |
-	subject := Locale named: 'de-DE'.
-	self assert: (subject lowercaseString: '') equals: ''.
-	self assert: (subject lowercaseString: 'STRAẞE') equals: 'straße'.
-	"Turkish dotted and non-dotted i"
-	subject := Locale named: 'tr-TR'.
-	self assert: (subject lowercaseString: 'INTERESTİNG') equals: 'ınteresting'!
 
 testMonthAbbreviation
 	#('en-US' 'en-GB') do: [:each | self verifyEnglishMonthAbbreviations: (Locale standard: each)]!
@@ -323,16 +318,6 @@ testNoUserOverrides
 	self deny: (Locale named: 'ja-JP') noUserOverrides.
 	self assert: (Locale standard: 'ja-JP') noUserOverrides.
 	self assert: self defaultSubject noUserOverrides!
-
-testPrintFloatGrouping
-	"Test printing with different number grouping."
-
-	self verifyPrintFloatGrouping!
-
-testPrintFloatSeparators
-	"Test printing with different number grouping."
-
-	self verifyPrintFloatSeparators!
 
 testPrintNoLeadingZero
 	| subject format |
@@ -397,28 +382,7 @@ testStbRoundTripUserDefault
 	Locale userDefault: (Locale standard: 'es-ES').
 	self deny: Locale userDefault equals: subject.
 	subject := Object fromBinaryStoreBytes: bytes.
-	self assert: subject identicalTo: Locale userDefault!
-
-testTitlecaseString
-	| subject |
-	subject := Locale standard: 'tr-Tr'.
-	self assert: (subject titlecaseString: 'istanbul') equals: 'İstanbul'.
-	subject := Locale standard: 'en-GB'.
-	self assert: (subject titlecaseString: 'istanbul') equals: 'Istanbul'!
-
-testUppercaseString
-	| subject |
-	subject := Locale standard: 'de-DE'.
-	self assert: (subject uppercaseString: '') equals: ''.
-	"There are two lower-case forms of the greek letter Sigma."
-	self assert: (subject uppercaseString: 'Ὀδυσσεύς') equals: 'ὈΔΥΣΣΕΎΣ'.
-
-	"Note that although there is a Unicode uppercase eszett, the Windows LCMapString API's linguistic conversion for de-DE does not recognise it. This is either because it is a relatively new addition to Unicode, or because its use in case translations is open to debate."
-	self deny: (subject uppercaseString: 'Straße') equals: 'STRAẞE'.
-	self assert: (subject uppercaseString: 'Straße') equals: 'STRAßE'.
-	"Turkish dotted and dotless i should be converted correctly preserved the dot or absence of dot"
-	subject := Locale standard: 'tr-TR'.
-	self assert: (subject uppercaseString: 'ınteresting') equals: 'INTERESTİNG'! !
+	self assert: subject identicalTo: Locale userDefault! !
 !OS.Tests.WindowsLocaleTest categoriesForMethods!
 defaultSubject!helpers!private! !
 testComparing!public!unit tests! !
@@ -437,7 +401,6 @@ testIndexOfMonth!public!unit tests! !
 testIsTurkic!public!unit tests! !
 testListSeparator!public!unit tests! !
 testLongDateFormats!public!unit tests! !
-testLowercaseString!public!unit tests! !
 testMonthAbbreviation!public!unit tests! !
 testMonthName!public!unit tests! !
 testMonthNames!public!unit tests! !
@@ -445,8 +408,6 @@ testName!public!unit tests! !
 testNamed!public!unit tests! !
 testNameOfDay!public!unit tests! !
 testNoUserOverrides!public!unit tests! !
-testPrintFloatGrouping!public!unit tests! !
-testPrintFloatSeparators!public!unit tests! !
 testPrintNoLeadingZero!public!unit tests! !
 testPrintString!public!unit tests! !
 testShortDateFormats!public!unit tests! !
@@ -455,7 +416,5 @@ testStbRoundTrip!public!unit tests! !
 testStbRoundTripDefault!public!unit tests! !
 testStbRoundTripSystemDefault!public!unit tests! !
 testStbRoundTripUserDefault!public!unit tests! !
-testTitlecaseString!public!unit tests! !
-testUppercaseString!public!unit tests! !
 !
 

@@ -236,39 +236,57 @@ testEquals
 testFoldcase
 	"Unicode case folding is similar to lower-casing."
 
-	self assert: $a asFoldcase identicalTo: $a.
-	self assert: $A asFoldcase identicalTo: $a.
-	self assert: $\0 asFoldcase identicalTo: $\0.
+	self assert: $a caseFolded identicalTo: $a.
+	self assert: $A caseFolded identicalTo: $a.
+	self assert: $\0 caseFolded identicalTo: $\0.
 	"Euro symbol - still a unique ANSI encoded char"
-	self assert: $€ asFoldcase identicalTo: $€.
-	self assert: $\x80 asFoldcase equals: $\x80.
+	self assert: $€ caseFolded identicalTo: $€.
+	self assert: $\x80 caseFolded equals: $\x80.
 	"Turkish, but 8-bit"
-	self assert: $Ç asFoldcase equals: $ç.
+	self assert: $Ç caseFolded equals: $ç.
 	"Turkish dotted İ"
-	self assert: $İ asFoldcase equals: $İ.
+	self assert: $İ caseFolded equals: $İ.
 	"Cyrillic, 16-bit"
-	self assert: $Ѐ asFoldcase equals: $ѐ.
+	self assert: $Ѐ caseFolded equals: $ѐ.
 	"Greek delta"
-	self assert: $Δ asFoldcase equals: $δ.
+	self assert: $Δ caseFolded equals: $δ.
 	"U+1E9E Latin Capital Letter Sharp S  -> (U+00DF Latin Small Letter Sharp S)."
-	self assert: $ẞ asFoldcase equals: $ß.
-	self assert: $ß asFoldcase equals: $ß.
+	self assert: $ẞ caseFolded equals: $ß.
+	self assert: $ß caseFolded equals: $ß.
 	"Thai 7 - not a letter"
-	self assert: $๗ asFoldcase equals: $๗.
+	self assert: $๗ caseFolded equals: $๗.
 	"U+01C5 Latin Capital Letter D with Small Letter Z with Caron -> U+01C6 Latin Small Letter Dz with Caron"
-	self assert: $ǅ asFoldcase equals: $ǆ.
+	self assert: $ǅ caseFolded equals: $ǆ.
 	"U+037F Greek Capital Letter Yot -> U+03F3 Greek Letter Yot"
-	self assert: $Ϳ asFoldcase equals: $ϳ.
+	self assert: $Ϳ caseFolded equals: $ϳ.
 	"U+052A Cyrillic Capital Letter Dzzhe -> U+052B Cyrillic Small Letter Dzzhe"
-	self assert: $Ԫ asFoldcase equals: $ԫ.
+	self assert: $Ԫ caseFolded equals: $ԫ.
 	"Outside BMP"
 	"Emoji"
-	self assert: $🐬 asFoldcase equals: $🐬.
+	self assert: $🐬 caseFolded equals: $🐬.
 	"Supplementary multi-lingual plane"
 	"U+16E5A Medefaidrin Capital Letter Oe -> U+16E7A Medefaidrin Small Letter Oe"
-	self assert: $𖹚 asFoldcase equals: $𖹺.
+	self assert: $𖹚 caseFolded equals: $𖹺.
 	"U+1E921 Adlam Capital Letter Sha -> U+1E943 Adlam Small Letter Sha"
-	self assert: $𞤡 asFoldcase equals: $𞥃!
+	self assert: $𞤡 caseFolded equals: $𞥃!
+
+testFoldCaseICU
+	"Transcription of ICU case folding test."
+
+	| simple tr de |
+	simple := #(#(16r61 16r61 16r61) #(16r49 16r69 16r131) #(16r130 16r130 16r69) #(16r131 16r131 16r131) #(16rDF 16rDF 16rDF) #(16rFB03 16rFB03 16rFB03) #(16r1040E 16r10436 16r10436) #(16r5FFFF 16r5FFFF 16r5FFFF)).
+	tr := Locale named: 'tr-TR'.
+	de := Locale named: 'de-DE'.
+	simple do: 
+			[:each |
+			| subject |
+			subject := Character utf16Value: each first
+						ifInvalid: 
+							["Test data contains invalid character, but Dolphin deliberately makes it difficult to create strings with invalid characters (or indeed just to instantiate invalid characters)."
+							Character newCode: (each first bitOr: Character.Utf32Mask)].
+			self assert: subject caseFolded codePoint equals: each second.
+			self assert: (subject caseFolded: de) codePoint equals: each second.
+			self assert: (subject caseFolded: tr) codePoint equals: each third]!
 
 testIdentity
 	self assert: (Character codePoint: 97) identicalTo: $a.
@@ -853,6 +871,7 @@ testComparing!public!unit tests! !
 testDigitValue!public!unit tests! !
 testEquals!public!unit tests! !
 testFoldcase!public!unit tests! !
+testFoldCaseICU!public!unit tests! !
 testIdentity!public!unit tests! !
 testIsAlphaNumeric!public!unit tests! !
 testIsControl!public!unit tests! !

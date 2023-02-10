@@ -25,16 +25,19 @@ testCompareWith
 	self assert: (policy compare: 'I' with: 'i').
 	self assert: (policy compare: $ě with: $Ě).
 	"linguistic comparison - German double-s is mapped"
-	self assert: (policy compare: 'ß' with: 'ss')!
+	self assert: (policy compare: 'ß' with: 'ss').
+	"Also ligatures, e.g. U+FB03 - Latin Small Ligature Ffi"
+	self assert: (policy compare: $ﬃ asString with: 'ffi')!
 
 testHash
 	self assert: (policy hash: 'aa') equals: (policy hash: 'Aa').
 	self deny: (policy hash: 'aa') equals: (policy hash: 'Ab').
 	self assert: (policy hash: 'i') equals: (policy hash: 'I').
-	self deny: (policy hash: ((Locale named: 'tr-Tr') uppercaseString: 'i') asLowercase) equals: (policy hash: 'i').
-	#todo.	"This does not work correctly because Windows API doesn't do single to multi-character mappings, but should work with ICU case-folding"
-	self skip.
-	self assert: (policy hash: 'ß') equals: (policy hash: 'ss')! !
+	self deny: (policy hash: 'İ') equals: (policy hash: 'i').
+	"Multi-character mapping"
+	self assert: (policy hash: 'ß') equals: (policy hash: 'ss').
+	"Also ligatures, e.g. U+FB03 - Latin Small Ligature Ffi should have same hash as individual letters"
+	self assert: (policy hash: $ﬃ asString) equals: (policy hash: 'ffi')! !
 !Kernel.Tests.CaseInsensitiveSearchPolicyTest categoriesForMethods!
 policyClass!private!unit tests! !
 testCompareWith!public!unit tests! !

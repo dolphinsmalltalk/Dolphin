@@ -127,14 +127,6 @@ asciiValue
 
 	^code < 128 ifTrue: [code] ifFalse: [self error: 'Non-ascii code point']!
 
-asFoldcase
-	"Answer a <Character> which is the case-folded equivalent of the receiver. The folding is independent of locale, so 
-	Note that this is single code point mapping, so does not properly take account of composite characters. Case-conversions for a string should ideally be performed directly, and not character-by-character."
-
-	"Implementation Note: ICU case folding. This is basically a Unicode standard mapping as implemented by ICU, and as such supports letters outside the BMP (unlike the Windows API). Performs default mappings independent of locale - i.e. $İ is not mapped to $i, and $I maps to $i, not $ı"
-
-	^VM u_foldCase: self options: U_FOLD_CASE_DEFAULT!
-
 asInteger
 	"Answer the <integer> character encoding (i.e. the Unicode code point) that the receiver
 	represents."
@@ -184,6 +176,20 @@ basicShallowCopy
 	"Answer the receiver as Characters are immutable."
 
 	^self!
+
+caseFolded
+	"Answer a <Character> which is the case-folded equivalent of the receiver. The folding uses default Unicode mappings.
+	Note that this is single code point mapping, so does not properly take account of composite characters. Case-conversions for a string should ideally be performed directly, and not character-by-character."
+
+	"Implementation Note: ICU case folding. This is basically a Unicode standard mapping as implemented by ICU, and as such supports letters outside the BMP (unlike the Windows API). Performs default mappings independent of locale - i.e. $İ is not mapped to $i, and $I maps to $i, not $ı, but see also #asFoldcase:"
+
+	^VM u_foldCase: self options: U_FOLD_CASE_DEFAULT!
+
+caseFolded: aLocale
+	"Answer a <Character> which is the case-folded equivalent of the receiver. The folding uses default mappings, unless the <Locale> argument is turkic.
+	Note that this is single code point mapping, so does not properly take account of composite characters. Case-conversions for a string should ideally be performed directly, and not character-by-character."
+
+	^VM u_foldCase: self options: aLocale icuCaseFoldingOptions!
 
 code
 	^code!
@@ -556,7 +562,6 @@ _separateSubStringsIn:!private!tokenizing! !
 ansiValue!accessing!public! !
 asAnsiString!converting!public! !
 asciiValue!accessing!public! !
-asFoldcase!converting!public! !
 asInteger!converting!public! !
 asLowercase!converting!public! !
 asString!converting!public! !
@@ -566,6 +571,8 @@ asUtf16String!converting!public! !
 asUtf8String!converting!public! !
 basicEncoding!accessing!private! !
 basicShallowCopy!copying!public! !
+caseFolded!converting!public! !
+caseFolded:!converting!public! !
 code!accessing!private! !
 codePoint!accessing!public! !
 codePointString!printing!public! !

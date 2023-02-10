@@ -128,7 +128,34 @@ testPrintDurationOnFormat
 testPrintFloatGrouping
 	"Test printing with different number grouping."
 
-	self subclassResponsibility!
+	| format subject |
+	subject := self defaultSubject.
+	format := subject numberFormat copy.
+	#(#(0 '0' '1234567890.12') #(1 '1' '1,2,3,4,5,6,7,8,9,0.12') #(2 '2' '12,34,56,78,90.12') #(3 '3' '1,234,567,890.12') #(4 '4' '12,3456,7890.12') #(5 '5' '12345,67890.12') #(6 '6' '1234,567890.12') #(7 '7' '123,4567890.12') #(8 '8' '12,34567890.12') #(9 '9' '1,234567890.12') #(10 '1;0;0' '123456789,0.12') #(11 '1;1' '1,2,3,4,5,6,7,8,9,0.12') #(12 '1;2' '1,23,45,67,89,0.12') #(32 '3;2' '1,23,45,67,890.12') #(92 '9;2' '1,234567890.12'))
+		do: 
+			[:each |
+			format grouping: each first.
+			self assert: format numberGrouping equals: each second.
+			format numberGrouping: each second.
+			self assert: format grouping equals: each first.
+			self assert: (subject printFloat: 1234567890.123 format: format) equals: each last].	"The grouping is actually much more flexible than the documentation suggests. Up to four number groups are supported (the last repeating)."
+	#(#(98 '9;8' '2,00000000,00000000,00000000,000000000.00') #(89 '8;9' '20000000,000000000,000000000,00000000.00') #(99 '9;9' '2000000,000000000,000000000,000000000.00') #(120 '1;2;0;0' '2000000000000000000000000000000,00,0.00') #(123 '1;2;3' '2,000,000,000,000,000,000,000,000,000,000,00,0.00') #(1230 '1;2;3;0;0' '2000000000000000000000000000,000,00,0.00') #(1234 '1;2;3;4' '2000,0000,0000,0000,0000,0000,0000,000,00,0.00') #(4321 '4;3;2;1' '2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,00,000,0000.00') #(9999 '9;9;9;9' '2000000,000000000,000000000,000000000.00'))
+		do: 
+			[:each |
+			format grouping: each first.
+			self assert: format numberGrouping equals: each second.
+			format numberGrouping: each second.
+			self assert: format grouping equals: each first.
+			self assert: (subject printFloat: 2.0e33 format: format) equals: each last].
+	#(-1 10000) do: 
+			[:each |
+			self should: [format grouping: each] raise: Error.
+			format Grouping: each.
+			self
+				should: [subject printFloat: 1.23 format: format]
+				raise: OS.HRESULTError
+				matching: [:ex | ex tag = (OS.HRESULT win32Error: OS.Win32Errors.ERROR_INVALID_PARAMETER)]].
+	self should: [format numberGrouping: '1;2;3;4;5'] raise: Error!
 
 testPrintFloatNumDigits
 	"Test printing different numbers of decimal places, and also what happens beyond the limits as the GetNumberFormatAPI only supports 0..9 decimal digits."
@@ -159,9 +186,17 @@ testPrintFloatNumDigits
 				matching: [:ex | ex tag = (OS.HRESULT win32Error: OS.Win32Errors.ERROR_INVALID_PARAMETER)]]!
 
 testPrintFloatSeparators
-	"Test printing with specific decimal and group separators."
+	"Test printing with different number grouping."
 
-	self subclassResponsibility!
+	| format subject |
+	subject := self defaultSubject.
+	format := subject numberFormat copy.
+	format
+		decimalPlaces: 3;
+		grouping: 43;
+		decimalSeparator: $@;
+		thousandSeparator: $^.
+	self assert: (subject printFloat: 1234567890.123 format: format) equals: '123^456^7890@123'!
 
 testStbRoundTrip
 	| rehydrated bytes subject |
@@ -170,12 +205,6 @@ testStbRoundTrip
 	rehydrated := Object fromBinaryStoreBytes: bytes.
 	self assert: rehydrated first identicalTo: subject.
 	self assert: rehydrated second first identicalTo: subject.!
-
-testTitlecaseString
-	self subclassResponsibility!
-
-testUppercaseString
-	self subclassResponsibility!
 
 verifyEnglishDayOfWeek: aLocale
 	"Note that this test is not sensitive to the configured first day of the week, because Locale>>dayOfWeek: always uses the US convention that Sunday is day 1. This is for interoperability with `Core.Date`."
@@ -205,49 +234,7 @@ verifyEnglishNamesOfDays: aLocale
 
 verifyIndexOfEnglishMonths: aLocale
 	#('january' 'feb' 'march' 'apr' 'may' 'jun' 'july' 'aug' 'september' 'oct' 'november' 'dec')
-		keysAndValuesDo: [:eachKey :eachValue | self assert: (aLocale indexOfMonth: eachValue) equals: eachKey]!
-
-verifyPrintFloatGrouping
-	| format subject |
-	subject := self defaultSubject.
-	format := subject numberFormat copy.
-	#(#(0 '0' '1234567890.12') #(1 '1' '1,2,3,4,5,6,7,8,9,0.12') #(2 '2' '12,34,56,78,90.12') #(3 '3' '1,234,567,890.12') #(4 '4' '12,3456,7890.12') #(5 '5' '12345,67890.12') #(6 '6' '1234,567890.12') #(7 '7' '123,4567890.12') #(8 '8' '12,34567890.12') #(9 '9' '1,234567890.12') #(10 '1;0;0' '123456789,0.12') #(11 '1;1' '1,2,3,4,5,6,7,8,9,0.12') #(12 '1;2' '1,23,45,67,89,0.12') #(32 '3;2' '1,23,45,67,890.12') #(92 '9;2' '1,234567890.12'))
-		do: 
-			[:each |
-			format grouping: each first.
-			self assert: format numberGrouping equals: each second.
-			format numberGrouping: each second.
-			self assert: format grouping equals: each first.
-			self assert: (subject printFloat: 1234567890.123 format: format) equals: each last].
-	"The grouping is actually much more flexible than the documentation suggests. Up to four number groups are supported (the last repeating)."
-	#(#(98 '9;8' '2,00000000,00000000,00000000,000000000.00') #(89 '8;9' '20000000,000000000,000000000,00000000.00') #(99 '9;9' '2000000,000000000,000000000,000000000.00') #(120 '1;2;0;0' '2000000000000000000000000000000,00,0.00') #(123 '1;2;3' '2,000,000,000,000,000,000,000,000,000,000,00,0.00') #(1230 '1;2;3;0;0' '2000000000000000000000000000,000,00,0.00') #(1234 '1;2;3;4' '2000,0000,0000,0000,0000,0000,0000,000,00,0.00') #(4321 '4;3;2;1' '2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,00,000,0000.00') #(9999 '9;9;9;9' '2000000,000000000,000000000,000000000.00'))
-		do: 
-			[:each |
-			format grouping: each first.
-			self assert: format numberGrouping equals: each second.
-			format numberGrouping: each second.
-			self assert: format grouping equals: each first.
-			self assert: (subject printFloat: 2.0e33 format: format) equals: each last].
-	#(-1 10000) do: 
-			[:each |
-			self should: [format grouping: each] raise: Error.
-			format Grouping: each.
-			self
-				should: [subject printFloat: 1.23 format: format]
-				raise: OS.HRESULTError
-				matching: [:ex | ex tag = (OS.HRESULT win32Error: OS.Win32Errors.ERROR_INVALID_PARAMETER)]].
-	self should: [format numberGrouping: '1;2;3;4;5'] raise: Error!
-
-verifyPrintFloatSeparators
-	| format subject |
-	subject := self defaultSubject.
-	format := subject numberFormat copy.
-	format
-		decimalPlaces: 3;
-		grouping: 43;
-		decimalSeparator: $@;
-		thousandSeparator: $^.
-	self assert: (subject printFloat: 1234567890.123 format: format) equals: '123^456^7890@123'! !
+		keysAndValuesDo: [:eachKey :eachValue | self assert: (aLocale indexOfMonth: eachValue) equals: eachKey]! !
 !Core.Tests.LocaleTest categoriesForMethods!
 defaultSubject!helpers!private! !
 displayScaledDecimal:in:!helpers!private! !
@@ -266,15 +253,11 @@ testPrintFloatGrouping!public!unit tests! !
 testPrintFloatNumDigits!public!unit tests! !
 testPrintFloatSeparators!public!unit tests! !
 testStbRoundTrip!public!unit tests! !
-testTitlecaseString!public!unit tests! !
-testUppercaseString!public!unit tests! !
 verifyEnglishDayOfWeek:!helpers!private! !
 verifyEnglishDayOfWeekNames:!helpers!private! !
 verifyEnglishMonthAbbreviations:!helpers!private! !
 verifyEnglishMonthNames:!helpers!private! !
 verifyEnglishNamesOfDays:!helpers!private! !
 verifyIndexOfEnglishMonths:!helpers!private! !
-verifyPrintFloatGrouping!helpers!private! !
-verifyPrintFloatSeparators!helpers!private! !
 !
 

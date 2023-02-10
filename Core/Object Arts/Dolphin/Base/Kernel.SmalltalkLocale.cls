@@ -480,7 +480,7 @@ stbSaveOn: anSTBOutFiler
 tag
 	"Answer the RFC4646 language tag for this locale."
 
-	^''	"Treat as Invariant"!
+	^LOCALE_NAME_INVARIANT!
 
 thousandSeparator
 	"Answer the thousands separator String used in the receiver locale."

@@ -2,7 +2,7 @@
 
 OS.AbstractWindowsLocale
 	subclass: #'OS.WindowsLocale'
-	instanceVariableNames: 'lcid'
+	instanceVariableNames: 'lcid tag'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -22,12 +22,15 @@ basicLcid
 
 	^lcid!
 
+icuCaseFoldingOptions
+	^self isTurkic
+		ifTrue: [OS.ICUConstants.U_FOLD_CASE_EXCLUDE_SPECIAL_I]
+		ifFalse: [OS.ICUConstants.U_FOLD_CASE_DEFAULT]!
+
 isTurkic
 	"Answer whether the receiver is a turkic locale (tr or az language)."
 
-	| language |
-	language := self iso639LanguageName.
-	^language = 'tr' or: [language = 'az']!
+	^(self tag beginsWith: 'tr') or: [tag beginsWith: 'az']!
 
 lcid: anLCID
 	lcid := anLCID.
@@ -54,13 +57,20 @@ printOn: aStream
 		display: (self noUserOverrides ifTrue: [#standard:] ifFalse: [#named:]);
 		space;
 		print: self name;
-		nextPut: $)! !
+		nextPut: $)!
+
+tag
+	"Answer the RFC4646 language name, aka 'tag', for this locale."
+
+	^tag ifNil: [tag := self getLocaleInfoString: LOCALE_SNAME]! !
 !OS.WindowsLocale categoriesForMethods!
 =!comparing!public! !
 basicLcid!accessing!private! !
+icuCaseFoldingOptions!constants!private! !
 isTurkic!public!testing! !
 lcid:!initializing!private! !
 printOn:!development!printing!public! !
+tag!constants!public! !
 !
 
 !OS.WindowsLocale class methodsFor!

@@ -49,5 +49,7 @@ u_ispunct
 u_tolower
 u_toupper
 u_foldCase
-
-
+u_strFoldCase
+u_strToLower
+u_strToUpper
+u_strToTitle

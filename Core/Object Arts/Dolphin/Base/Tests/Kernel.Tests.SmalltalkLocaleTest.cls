@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.LocaleTest
+OS.Tests.AbstractInvariantLocaleTest
 	subclass: #'Kernel.Tests.SmalltalkLocaleTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -14,19 +14,17 @@ Kernel.Tests.SmalltalkLocaleTest comment: ''!
 defaultSubject
 	^Locale smalltalk!
 
-testDayOfWeek
-	self verifyEnglishDayOfWeek: self defaultSubject!
-
-testDayOfWeekName
-	self verifyEnglishDayOfWeekNames: self defaultSubject!
+subjectName
+	^'smalltalk'!
 
 testDisplayCharacterOn
 	| subject |
 	subject := self defaultSubject.
-	#($a 'a' $£ '£' $€ '€' $\x20 '␣' $\x1F42C '🐬' $\0 '␀' $\x7F '␡' $\x80 '(U+0080)' $\xFEFF '(U+FEFF)' $\xEFFFD '(U+EFFFD)') pairsDo: 
+	#($a 'a' $£ '£' $€ '€' $\x20 '␣' $🐬 '🐬' $\0 '␀' $\x7F '␡' $\x80 '(U+0080)' $\xFEFF '(U+FEFF)' $\xEFFFD '(U+EFFFD)')
+		pairsDo: 
 			[:ch :expected |
 			| stream |
-			stream := String smalltalkWriteStream.
+			stream := String writeStream.
 			subject displayCharacter: ch on: stream.
 			self assert: stream contents equals: expected]!
 
@@ -61,41 +59,6 @@ testDisplayFloatOn
 testDisplayName
 	self assert: self defaultSubject displayName equals: 'Smalltalk'!
 
-testFirstDayOfWeek
-	"In the US the first day of the week is Sunday, and for obvious historical reasons Smalltalk tends to follow US rules"
-
-	self assert: self defaultSubject firstDayOfWeek equals: 7!
-
-testIndexOfMonth
-	self verifyIndexOfEnglishMonths: self defaultSubject!
-
-testListSeparator
-	self assert: self defaultSubject listSeparator isEmpty!
-
-testLowercaseString
-	| subject |
-	subject := self defaultSubject.
-	self assert: (subject lowercaseString: '') equals: ''.
-	"Upper-case german eszett is not converted by Smalltalk Locale, which uses ordinal conversions."
-	self assert: (subject lowercaseString: 'STRAẞE') equals: 'straẞe'.
-	"Turkish dotted and non-dotted i; invariant lowercase-i is always dotted, turkish dotted uppercase-i unconverted by ordinal conversion"
-	self assert: (subject lowercaseString: 'INTERESTİNG') equals: 'interestİng'!
-
-testMonthAbbreviations
-	self verifyEnglishMonthAbbreviations: self defaultSubject!
-
-testMonthName
-	self verifyEnglishMonthNames: self defaultSubject!
-
-testName
-	self assert: self defaultSubject name equals: 'smalltalk'!
-
-testNamed
-	self assert: (Locale named: #Smalltalk) identicalTo: self defaultSubject!
-
-testNameOfDay
-	self verifyEnglishNamesOfDays: self defaultSubject!
-
 testPrintFloatGrouping
 	"Test printing with different number grouping."
 
@@ -129,56 +92,15 @@ testStbConvertFromVersion0
 	self assert: subject first identicalTo: self defaultSubject.
 	self assert: subject third first identicalTo: self defaultSubject.
 	self assert: subject fourth identicalTo: #foo.
-	self assert: subject second identicalTo: subject last!
-
-testStbRoundTrip
-	| rehydrated bytes subject |
-	subject := self defaultSubject.
-	bytes := {subject. {subject}} binaryStoreBytes.
-	rehydrated := Object fromBinaryStoreBytes: bytes.
-	self assert: rehydrated first identicalTo: subject.
-	self assert: rehydrated second first identicalTo: subject.!
-
-testTitlecaseString
-	| subject |
-	subject := self defaultSubject.
-	"The invariant locale does perform linguistic case conversions, but only the turkic locales recognise the disinction between dotted and dotless 'i'"
-	self assert: (subject titlecaseString: 'istanbul') equals: 'Istanbul'!
-
-testUppercaseString
-	| subject |
-	subject := self defaultSubject.
-	self assert: (subject uppercaseString: '') equals: ''.
-	self assert: (subject uppercaseString: 'Straße') equals: 'STRAßE'.
-	"Turkish uppercase dotted-i; invariant uppercase-i always non-dotted, turkish dotless-lowercase-i unconverted by ordinal conversion"
-	self assert: (subject uppercaseString: 'ınteresting') equals: 'ıNTERESTING'.
-
-	"There are two lower-case forms of the greek letter Sigma - one of these won't translate with a non-linguistic conversion, such as String>>asUppercase"
-	self assert: (subject uppercaseString: 'Ὀδυσσεύς') equals: 'ὈΔΥΣΣΕΎς'
-
-
-! !
+	self assert: subject second identicalTo: subject last! !
 !Kernel.Tests.SmalltalkLocaleTest categoriesForMethods!
 defaultSubject!helpers!private! !
-testDayOfWeek!public!unit tests! !
-testDayOfWeekName!public!unit tests! !
+subjectName!constants!public! !
 testDisplayCharacterOn!public!unit tests! !
 testDisplayFloatOn!public!unit tests! !
 testDisplayName!public!unit tests! !
-testFirstDayOfWeek!public!unit tests! !
-testIndexOfMonth!public!unit tests! !
-testListSeparator!public!unit tests! !
-testLowercaseString!public!unit tests! !
-testMonthAbbreviations!public!unit tests! !
-testMonthName!public!unit tests! !
-testName!public!unit tests! !
-testNamed!public!unit tests! !
-testNameOfDay!public!unit tests! !
 testPrintFloatGrouping!public!unit tests! !
 testPrintFloatSeparators!public!unit tests! !
 testStbConvertFromVersion0!public!unit tests! !
-testStbRoundTrip!public!unit tests! !
-testTitlecaseString!public!unit tests! !
-testUppercaseString!public!unit tests! !
 !
 

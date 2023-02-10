@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.LocaleTest
+OS.Tests.AbstractInvariantLocaleTest
 	subclass: #'OS.Tests.InvariantLocaleTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -14,11 +14,8 @@ OS.Tests.InvariantLocaleTest comment: ''!
 defaultSubject
 	^Locale invariant!
 
-testDayOfWeek
-	self verifyEnglishDayOfWeek: self defaultSubject!
-
-testDayOfWeekName
-	self verifyEnglishDayOfWeekNames: self defaultSubject!
+subjectName
+	^'invariant'!
 
 testDisplayFloatOn
 	| subject |
@@ -52,50 +49,8 @@ testDisplayFloatOn
 testDisplayName
 	self assert: self defaultSubject displayName equals: 'Invariant Language (Invariant Region)'!
 
-testFirstDayOfWeek
-	"The Invariant locale generally follows US conventions"
-
-	self assert: self defaultSubject firstDayOfWeek equals: 7!
-
-testIndexOfMonth
-	self verifyIndexOfEnglishMonths: self defaultSubject!
-
 testListSeparator
 	self assert: self defaultSubject listSeparator equals: ','!
-
-testLowercaseString
-	| subject |
-	subject := self defaultSubject.
-	self assert: (subject lowercaseString: '') equals: ''.
-	"Upper-case german eszett is converted by invariant Locale as it still requests linguistic case translations, and the letter is only used in German so is not ambiguous."
-	self assert: (subject lowercaseString: 'STRAẞE') equals: 'straße'.
-	"Turkish dotted and non-dotted i; invariant lowercase-i is always dotted"
-	self assert: (subject lowercaseString: 'INTERESTİNG') equals: 'interesting'!
-
-testMonthAbbreviations
-	self verifyEnglishMonthAbbreviations: self defaultSubject!
-
-testMonthName
-	self verifyEnglishMonthNames: self defaultSubject!
-
-testName
-	self assert: self defaultSubject name equals: 'invariant'!
-
-testNamed
-	self assert: (Locale named: 'Invariant') identicalTo: self defaultSubject!
-
-testNameOfDay
-	self verifyEnglishNamesOfDays: self defaultSubject!
-
-testPrintFloatGrouping
-	"Test printing with different number grouping."
-
-	self verifyPrintFloatGrouping!
-
-testPrintFloatSeparators
-	"Test printing with different number grouping."
-
-	self verifyPrintFloatSeparators!
 
 testStbConvertFromVersion0
 	| subject |
@@ -105,74 +60,13 @@ testStbConvertFromVersion0
 	self assert: subject first identicalTo: Locale invariant.
 	self assert: subject third first identicalTo: Locale invariant.
 	self assert: subject fourth identicalTo: #foo.
-	self assert: subject second identicalTo: subject last.!
-
-testStbRoundTrip
-	| subject bytes |
-	bytes := self defaultSubject binaryStoreBytes.
-	subject := Object fromBinaryStoreBytes: bytes.
-	self assert: subject identicalTo: Locale invariant!
-
-testStbRoundTripUserDefault
-	| subject bytes |
-	bytes := Locale userDefault binaryStoreBytes.
-	subject := Object fromBinaryStoreBytes: bytes.
-	self assert: subject identicalTo: Locale userDefault.
-	"Switch to a different default - we expect preservation of the logical user default, not the original concrete locale"
-	Locale userDefault: (Locale named: 'es-ES').
-	self deny: Locale userDefault equals: subject.
-	subject := Object fromBinaryStoreBytes: bytes.
-	self assert: subject identicalTo: Locale userDefault!
-
-testTitlecaseString
-	| subject |
-	subject := self defaultSubject.
-	"The invariant locale does perform linguistic case conversions, but only the turkic locales recognise the disinction between dotted and dotless 'i'"
-	self assert: (subject titlecaseString: 'istanbul') equals: 'Istanbul'!
-
-testUppercaseString
-	| subject |
-	subject := self defaultSubject.
-	self assert: (subject uppercaseString: '') equals: ''.
-	self assert: (subject uppercaseString: 'Straße') equals: 'STRAßE'.
-	"Turkish uppercase dotted-i; invariant uppercase-i always non-dotted"
-	self assert: (subject uppercaseString: 'ınteresting') equals: 'INTERESTING'.
-	"There are two lower-case forms of the greek letter Sigma."
-	self assert: (subject uppercaseString: 'Ὀδυσσεύς') equals: 'ὈΔΥΣΣΕΎΣ'.
-!
-
-verifyPrintFloatSeparators
-	| format subject |
-	subject := self defaultSubject.
-	format := subject numberFormat copy.
-	format
-		decimalPlaces: 3;
-		grouping: 43;
-		decimalSeparator: $@;
-		thousandSeparator: $^.
-	self assert: (subject printFloat: 1234567890.123 format: format) equals: '123^456^7890@123'! !
+	self assert: subject second identicalTo: subject last.! !
 !OS.Tests.InvariantLocaleTest categoriesForMethods!
 defaultSubject!helpers!private! !
-testDayOfWeek!public!unit tests! !
-testDayOfWeekName!public!unit tests! !
+subjectName!constants!private! !
 testDisplayFloatOn!public!unit tests! !
 testDisplayName!public!unit tests! !
-testFirstDayOfWeek!public!unit tests! !
-testIndexOfMonth!public!unit tests! !
 testListSeparator!public!unit tests! !
-testLowercaseString!public!unit tests! !
-testMonthAbbreviations!public!unit tests! !
-testMonthName!public!unit tests! !
-testName!public!unit tests! !
-testNamed!public!unit tests! !
-testNameOfDay!public!unit tests! !
-testPrintFloatGrouping!public!unit tests! !
-testPrintFloatSeparators!public!unit tests! !
 testStbConvertFromVersion0!public!unit tests! !
-testStbRoundTrip!public!unit tests! !
-testStbRoundTripUserDefault!public!unit tests! !
-testTitlecaseString!public!unit tests! !
-testUppercaseString!public!unit tests! !
-verifyPrintFloatSeparators!helpers!private! !
 !
 

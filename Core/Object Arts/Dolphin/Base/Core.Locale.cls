@@ -301,6 +301,32 @@ firstDayOfWeek
 
 	^self subclassResponsibility!
 
+foldcaseString: aString
+	"Answer a <readableString> which is a copy of the argument, but with the contents case-folded following the Unicode folding rules appropriate for this locale."
+
+	| utf16 errorCode destLength srcLength |
+	"Attempt conversion in place for mainstream case"
+	utf16 := aString asUtf16StringCopy.
+	destLength := VM
+				u_strFoldCase: utf16
+				destCapacity: (srcLength := utf16 size) + 1
+				src: utf16
+				srcLength: srcLength
+				options: self icuCaseFoldingOptions
+				pErrorCode: (errorCode := ByteArray newFixed: 4).
+	destLength == srcLength ifTrue: [^utf16].
+	errorCode int32AtOffset: 0 put: 0.
+	VM
+		u_strFoldCase: (utf16 := Utf16String new: destLength)
+		destCapacity: destLength + 1
+		src: aString
+		srcLength: srcLength
+		options: self icuCaseFoldingOptions
+		pErrorCode: errorCode.
+	^(errorCode int32AtOffset: 0) == 0
+		ifTrue: [utf16]
+		ifFalse: [self error: 'ICU error <p> in u_strFoldCase']!
+
 getNumberFormat
 	^OS.NUMBERFMTW new
 		decimalPlaces: self decimalPlaces;
@@ -348,6 +374,9 @@ hasLeadingZero
 	So for example if this is true then 0.5 is displayed as '0.5', but if false as '.5'."
 
 	^self subclassResponsibility!
+
+icuCaseFoldingOptions
+	^OS.ICUConstants.U_FOLD_CASE_DEFAULT!
 
 indexOfMonth: aString
 	"Answer the 1-based <integer> index in a year (i.e. 1..12) of the month named by the <String> argument, asString, which is expected to be the full locale specific name of a month, or its abbreviated form, in upper or lower case."
@@ -441,47 +470,30 @@ longTimeFormat
 	^self subclassResponsibility!
 
 lowercaseString: aString
-	"Answer the lowercase equivalent of the `String` argument, using the case conversions conventional for this locale."
+	"Answer a <readableString> which is a copy of the argument, but with the contents converted to lowercase following the linguisitic case conventions of the receiver."
 
-	^self mapString: aString flags: self mapLowercaseFlags!
-
-mapLowercaseFlags
-	^LCMAP_LOWERCASE!
-
-mapString: aString flags: anInteger
-	| src cchSrc cchDest dest |
-	(OS.Kernel32
-		lcMapString: self lcid
-		dwMapFlags: anInteger
-		lpScrStr: (src := aString asUtf16StringCopy)
-		cchSrc: (cchSrc := src size)
-		lpDestStr: src
-		cchDest: cchSrc) == cchSrc
-		ifTrue: [^src].
-	"At the time of writing, Windows doesn't implement Unicode case conversions that change the number of code units. Maybe it will in future. If and when that happens, the above in-place conversion may fail, in which (rare) case fall back on the slower way making a pair of calls; the first to establish the required buffer size, and the 2nd to perform the actual conversion."
-	cchDest := OS.Kernel32
-				lcMapString: self lcid
-				dwMapFlags: anInteger
-				lpScrStr: src
-				cchSrc: cchSrc
-				lpDestStr: nil
-				cchDest: 0.
-	dest := Utf16String newFixed: cchDest.
-	^(OS.Kernel32
-		lcMapString: self lcid
-		dwMapFlags: anInteger
-		lpScrStr: src
-		cchSrc: cchSrc
-		lpDestStr: dest
-		cchDest: cchDest) == 0
-		ifFalse: [dest]
-		ifTrue: [OS.Win32Error signal]!
-
-mapTitlecaseFlags
-	^LCMAP_TITLECASE!
-
-mapUppercaseFlags
-	^LCMAP_UPPERCASE!
+	| srcLength errorCode destLength utf16 |
+	destLength := VM
+				u_strToLower: (utf16 := aString asUtf16StringCopy)
+				destCapacity: (srcLength := utf16 size) + 1
+				src: utf16
+				srcLength: srcLength
+				locale: self tag
+				pErrorCode: (errorCode := ByteArray newFixed: 4).
+	"The above in-place conversion may fail, in which (rare) case we need to allocate a large buffer and try again."
+	destLength == srcLength ifTrue: [^utf16].
+	utf16 := Utf16String new: destLength.
+	errorCode int32AtOffset: 0 put: 0.
+	VM
+		u_strToLower: utf16
+		destCapacity: destLength + 1
+		src: aString
+		srcLength: srcLength
+		locale: self tag
+		pErrorCode: errorCode.
+	^(errorCode int32AtOffset: 0) == 0
+		ifTrue: [utf16]
+		ifFalse: [aString error: 'ICU error <p> in u_strToLower' << (errorCode int32AtOffset: 0)]!
 
 monthAbbreviation: anInteger
 	"Answer a <String> that is the localised short name of the month whose index is the argument, anInteger, where January is 1 and December is 12."
@@ -572,7 +584,7 @@ pmDesignator
 primary
 	"Answer the primary language locale for this Locale. For example fr-Fr is the primary locale for all the various French locales such as fr-CA."
 
-	^self class named: (self name copyFrom: 1 to: 2)!
+	^self class named: (self tag copyFrom: 1 to: 2)!
 
 print: anObject on: aWriteStream format: formatString alphabet: formatChars formatters: aLookupTable
 	| ch formatStream tokenStream |
@@ -795,14 +807,57 @@ timeFormat
 	^self longTimeFormat!
 
 titlecaseString: aString
-	"Answer the title-cased equivalent of the `String` argument, using the case conversions conventional for this locale."
+	"Answer a <readableString> which is a copy of the argument but with the first letter of each major word capitalized following the linguisitc conventions of this locale."
 
-	^self mapString: aString flags: self mapTitlecaseFlags!
+	| srcLength errorCode destLength utf16 |
+	destLength := VM
+				u_strToTitle: (utf16 := aString asUtf16StringCopy)
+				destCapacity: (srcLength := utf16 size) + 1
+				src: utf16
+				srcLength: srcLength
+				titleIter: nil
+				locale: self tag
+				pErrorCode: (errorCode := ByteArray newFixed: 4).
+	destLength == srcLength ifTrue: [^utf16].
+	utf16 := Utf16String new: destLength.
+	errorCode int32AtOffset: 0 put: 0.
+	VM
+		u_strToTitle: utf16
+		destCapacity: destLength + 1
+		src: aString
+		srcLength: srcLength
+		titleIter: nil
+		locale: self tag
+		pErrorCode: errorCode.
+	^(errorCode int32AtOffset: 0) == 0
+		ifTrue: [utf16]
+		ifFalse: [aString error: 'ICU error <p> in u_ustToTitle' << (errorCode int32AtOffset: 0)]!
 
 uppercaseString: aString
-	"Answer the uppercase equivalent of the `String` argument, using the case conversions conventional for this locale."
+	"Answer a <readableString> which is a copy of the argument, but with the contents converted to uppercase following the linguisitic conventions of the receiver."
 
-	^self mapString: aString flags: self mapUppercaseFlags!
+	| srcLength errorCode destLength utf16 |
+	destLength := VM
+				u_strToUpper: (utf16 := aString asUtf16StringCopy)
+				destCapacity: (srcLength := utf16 size) + 1
+				src: utf16
+				srcLength: srcLength
+				locale: self tag
+				pErrorCode: (errorCode := ByteArray newFixed: 4).
+	destLength == srcLength ifTrue: [^utf16].
+	"The above in-place conversion may fail (e.g. ß -> SS), in which (rare) case we need to allocate a large buffer and try again."
+	utf16 := Utf16String new: destLength.
+	errorCode int32AtOffset: 0 put: 0.
+	VM
+		u_strToUpper: utf16
+		destCapacity: destLength + 1
+		src: aString
+		srcLength: srcLength
+		locale: self tag
+		pErrorCode: errorCode.
+	^(errorCode int32AtOffset: 0) == 0
+		ifTrue: [utf16]
+		ifFalse: [aString error: 'ICU error <p> in u_strToUpper' << (errorCode int32AtOffset: 0)]!
 
 yearMonthFormat
 	"Answer the year/month date format for the receiver locale."
@@ -836,11 +891,13 @@ durationFormat!constants!public! !
 englishDisplayName!constants!public! !
 englishLanguageName!constants!public! !
 firstDayOfWeek!constants!public! !
+foldcaseString:!converting!public! !
 getNumberFormat!helpers!private! !
 hash!comparing!public! !
 hashString:!comparing!public! !
 hashString:flags:!comparing!public! !
 hasLeadingZero!constants!public! !
+icuCaseFoldingOptions!constants!private! !
 indexOfMonth:!enquiries!public! !
 infinity!constants!public! !
 isInstalled!public!testing! !
@@ -857,10 +914,6 @@ localizeDecimal:format:!printing!private! !
 longDateFormat!constants!public! !
 longTimeFormat!constants!public! !
 lowercaseString:!converting!public! !
-mapLowercaseFlags!constants!public! !
-mapString:flags:!converting!private! !
-mapTitlecaseFlags!constants!private! !
-mapUppercaseFlags!constants!public! !
 monthAbbreviation:!enquiries!public! !
 monthName:!enquiries!public! !
 monthNames!constants!public! !
@@ -925,7 +978,7 @@ initialize
 		to: self!
 
 installedSystemLocales
-	"Private - Answer the installed Win32 system locales.
+	"Answer the installed Win32 system locales.
 		Locale installedSystemLocales
 	"
 
@@ -974,9 +1027,10 @@ named: aString
 named: aString withOverrides: aBoolean
 	"Private - Answer a sub-instance of the receiver to represent the Locale with the specified name."
 
-	| lcid |
-	(aString compareOrdinals: 'smalltalk' ignoringCase: true) == 0 ifTrue: [^self smalltalk].
-	(aString compareOrdinals: 'invariant' ignoringCase: true) == 0 ifTrue: [^self invariant].
+	| lcid lower |
+	lower := aString asLowercase.
+	lower = 'smalltalk' ifTrue: [^self smalltalk].
+	lower = 'invariant' ifTrue: [^self invariant].
 	lcid := OS.Kernel32 localeNameToLCID: aString dwFlags: 0.
 	lcid == 0 ifTrue: [OS.Kernel32 systemError].
 	^OS.WindowsLocale lcid: lcid withOverrides: aBoolean!
@@ -1080,7 +1134,7 @@ userDefault: aLocale
 default!accessing!public! !
 getTimeZoneInfo!enquiries!public! !
 initialize!class initialization!public! !
-installedSystemLocales!enquiries!private! !
+installedSystemLocales!enquiries!public! !
 installedUILanguages!enquiries!public! !
 invariant!instance creation!public! !
 lcid:!instance creation!public! !

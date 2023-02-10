@@ -200,11 +200,10 @@ getLocaleInfoInteger: anIntegerLcType
 getLocaleInfoString: anIntegerLcType
 	"Private - Get the specified <Utf8String> locale information from Windows."
 
-	^(Kernel32 getLocaleInfo: self lcid
-		string: (self noUserOverrides
-				ifTrue: [anIntegerLcType bitOr: LOCALE_NOUSEROVERRIDE]
-				ifFalse: [anIntegerLcType]))
-			asUtf8String!
+	| id |
+	id := self basicLcid.
+	^(Kernel32 getLocaleInfo: (id bitAnd: ##(NLS_VALID_LOCALE_MASK | (16rF << 20)	"sort version"))
+		string: (anIntegerLcType bitOr: ((id bitAnd: NoUserOverrideMask) bitShift: 7))) asUtf8String!
 
 getStringInfo: anIntegerLcType
 	"Private - Answer a locale specific date String of the specified type for the receiver's locale."
@@ -275,15 +274,6 @@ longTimeFormat
 	"Answer the long time format for the receiver locale."
 
 	^self getStringInfo: LOCALE_STIMEFORMAT!
-
-mapLowercaseFlags
-	^##(LCMAP_LOWERCASE | LCMAP_LINGUISTIC_CASING)!
-
-mapTitlecaseFlags
-	^##(LCMAP_TITLECASE | LCMAP_LINGUISTIC_CASING)!
-
-mapUppercaseFlags
-	^##(LCMAP_UPPERCASE | LCMAP_LINGUISTIC_CASING)!
 
 monthAbbreviation: anInteger
 	"Answer a String that is the localised short name of the month whose index is the argument, anInteger, where January is 1 and December is 12."
@@ -485,9 +475,6 @@ localizedDisplayName!constants!public! !
 longDateFormat!constants!public! !
 longDateFormats!constants!public! !
 longTimeFormat!constants!public! !
-mapLowercaseFlags!constants!private! !
-mapTitlecaseFlags!constants!private! !
-mapUppercaseFlags!constants!private! !
 monthAbbreviation:!constants!public! !
 monthName:!enquiries!public! !
 monthNames!enquiries!public! !

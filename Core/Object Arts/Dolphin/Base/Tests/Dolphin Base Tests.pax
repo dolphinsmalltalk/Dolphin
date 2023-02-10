@@ -163,6 +163,7 @@ package setClassNames: #(
 	#{Kernel.Tests.VariableBindingTest}
 	#{Kernel.Tests.VMTest}
 	#{OS.Tests}
+	#{OS.Tests.AbstractInvariantLocaleTest}
 	#{OS.Tests.CRTErrorTest}
 	#{OS.Tests.CRTLibraryTest}
 	#{OS.Tests.DiskVolumeInformationTest}
@@ -1176,14 +1177,7 @@ Core.Tests.IntegerTest
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Tests.LocaleTest
-	subclass: #'OS.Tests.InvariantLocaleTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Core.Tests.LocaleTest
-	subclass: #'Kernel.Tests.SmalltalkLocaleTest'
+	subclass: #'OS.Tests.AbstractInvariantLocaleTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1191,6 +1185,20 @@ Core.Tests.LocaleTest
 	classConstants: {}!
 Core.Tests.LocaleTest
 	subclass: #'OS.Tests.WindowsLocaleTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.Tests.AbstractInvariantLocaleTest
+	subclass: #'OS.Tests.InvariantLocaleTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.Tests.AbstractInvariantLocaleTest
+	subclass: #'Kernel.Tests.SmalltalkLocaleTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

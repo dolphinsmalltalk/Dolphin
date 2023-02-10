@@ -32,7 +32,7 @@ testHash
 	self deny: (policy hash: 'aa') equals: (policy hash: 'Ab').
 	self assert: (policy hash: 'i') equals: (policy hash: 'I').
 	"Ordinal, not a linguistic comparison"
-	self deny: (policy hash: ((Locale named: 'tr-Tr') uppercaseString: 'i')) equals: (policy hash: 'I')! !
+	self deny: (policy hash: ('i' asUppercase: (Locale named: 'tr-Tr'))) equals: (policy hash: 'I')! !
 !Kernel.Tests.OrdinalCaseInsensitiveSearchPolicyTest categoriesForMethods!
 policyClass!private!unit tests! !
 testCompareWith!public!unit tests! !

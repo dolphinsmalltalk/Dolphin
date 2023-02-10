@@ -181,10 +181,9 @@ asByteArray
 		startingAt: 1!
 
 asLowercase
-	"Answer a <readableString> which is a copy of the receiver but with the contents converted to lowercase.
-	See #asUppercase for specific details of the conversion."
+	"Answer a <readableString> which is a copy of the receiver but with the contents converted to lowercase according to the linguistic conventions of the user's default locale."
 
-	^Locale.UserDefault mapString: self flags: LCMAP_LOWERCASE!
+	^self asLowercase: Locale.UserDefault!
 
 asLowercase: aLocale
 	"Answer a <readableString> which is a copy of the receiver but with the contents converted to lowercase using the conventions of the specified <Locale>, including any linguistic case conversions relavent in that locale."
@@ -266,15 +265,9 @@ asUIntPtr
 	^self yourAddress!
 
 asUppercase
-	"Answer a <readableString> which is a copy of the receiver but with the contents converted to uppercase."
+	"Answer a <readableString> which is a copy of the receiver but with the contents converted to uppercase according to the conventions of the user's default locale."
 
-	"The case conversion is based on the user's default locale, but does not use linguistic case conversions, so sending this message is _not_ equivalent to `string asUppercase: Locale userDefault`. The non-linguistic conversion performed will not (for example) respect the Turkish-i conversions if the user's default locale is tr-Tr, i.e. the following is always false, regardless of user deafult locale:
-
-		'i' asUppercase = ('i' asUppercase: (Locale named: 'tr-Tr'))
-		
-	We no longer use the Win32 CharUpper/CharLower APIs, but under the covers these call LCMapStringEx, passing LOCALE_NAME_USER_DEFAULT, but only the LCMAP_UPPERCASE, or LCMAP_LOWERCASE flags. They do not pass LCMAP_LINGUISTIC_CASING. This may seem odd, but it makes sense for a general purpose function as many of the strings passed for case conversion will be from languages that may be foreign in the locale (typically English), the conventions for the primary language of the locale may not apply. For this reason, and for backwards compatbility, now that we are calling LCMapString directly, we retain the same mapping flags."
-
-	^Locale.UserDefault mapString: self flags: LCMAP_UPPERCASE!
+	^self asUppercase: Locale.UserDefault!
 
 asUppercase: aLocale
 	"Answer a <readableString> which is a copy of the receiver but with the contents converted to uppercase using the conventions of the specified <Locale>, including any linguistic case conversions relavent in that locale."
@@ -408,6 +401,16 @@ capitalized
 	write nextPut: read next asUppercase.
 	write nextPutAll: read upToEnd.
 	^write contents!
+
+caseFolded
+	"Answer a <readableString> which is a copy of the receiver but with the contents case-folded using the conventions of the user's default <Locale>, including any linguistic case conversions conventional in that locale."
+
+	^self caseFolded: Locale.UserDefault!
+
+caseFolded: aLocale
+	"Answer a <readableString> which is a copy of the receiver but with the contents case-folded using the conventions of the specified <Locale>, including any linguistic case conversions conventional in that locale."
+
+	^aLocale foldcaseString: self!
 
 codePage
 	"Answer the Windows code page constant for the receiver's encoding."
@@ -731,7 +734,7 @@ hashOrdinalsIgnoringCase
 	"Answer the case-insensitive <integer> hash value for the receiver, i.e. the hash is the same for two strings regardless of case. This is complementary to #compareOrdinals:ignoringCase:, and is based on an ordinal (non-linguistic) hash of the UTF-8 encodings of the individually case-folded characters, however see Locale>>#hashString:."
 
 	<primitive: 227>
-	^(self asUtf8String collect: [:each | each asFoldcase]) hash!
+	^(self asUtf8String collect: [:each | each caseFolded]) hash!
 
 indexOfAnyOf: aCollectionOfCharacters startingAt: anInteger 
 	"Answer the one-based integer index of the first encountered element of the receiver which
@@ -1161,7 +1164,12 @@ subStrings: separatorOrSeparators
 titleCased
 	"Answer a <readableString> which is a copy of the receiver but with the first letter of each major word capitalized."
 
-	^Locale default titlecaseString: self!
+	^self titleCased: Locale.UserDefault!
+
+titleCased: aLocale
+	"Answer a <readableString> which is a copy of the receiver but with the first letter of each major word capitalized."
+
+	^aLocale titlecaseString: self!
 
 trimBlanks
 	"Answer a copy of the receiver with leading and trailing white space removed."
@@ -1270,6 +1278,8 @@ byteAt:!accessing!public! !
 byteAt:put:!accessing!public! !
 byteSize!accessing!private! !
 capitalized!converting!public! !
+caseFolded!public! !
+caseFolded:!converting!public! !
 codePage!constants!public! !
 codePointsDo:!enumerating!public! !
 compareOrdinals:ignoringCase:!comparing!public! !
@@ -1340,6 +1350,7 @@ strlen!accessing!private! !
 subStrings!public!tokenizing! !
 subStrings:!public!tokenizing! !
 titleCased!converting!public! !
+titleCased:!converting!public! !
 trimBlanks!copying!public! !
 trimNulls!copying!public! !
 truncateTo:!converting!public! !

@@ -23,7 +23,7 @@ N.B. Unlike most other SearchPolicy classes, instances of this class are only ap
 compare: operand1 with: operand2
 	"Answer whether the <Object>, operand1, is considered equivalent to the <Object> argument, operand2, by this search policy."
 
-	"Note that this is an ordinal case-insensitive comparison, not a linguistic one, and hence uses String>>#equalsIgnoreCase:, rather than the spaceship operator, String>>#<=>."
+	"Note that this is an ordinal case-insensitive comparison, not a linguistic one, and hence uses String>>#compareOrdinals:ignoringCase:, rather than the spaceship operator, String>>#<=>."
 
 	^(operand1 asString compareOrdinals: operand2 asString ignoringCase: true) == 0!
 

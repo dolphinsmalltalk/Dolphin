@@ -21,10 +21,9 @@ beforeTestCases
 		, #(#('Ā🐬' $\x1F42C $\x100) #('🐬🍺' $\x1F37A $\x1F42C) #('文Ā' $\x100 $\x6587))!
 
 caseConversionCases
-	"Note that we don't expect the turkish dotless lowercase 'i' to be translated to 'İ'. This wouldn't happen even if the user's default locale is turkic because the standard asUppercase and asLowercase conversions are non-linguistic."
+	"Turkic i's are tested separately as these are non-standard cases."
 
-	^super caseConversionCases
-		, #(#('кракозябры' 'КРАКОЗЯБРЫ') #('文字化け') #('маймуница' 'МАЙМУНИЦА') #('ａｂｃ' 'ＡＢＣ') #('straße' 'STRAßE') #('ınteresting' 'ıNTERESTING'))!
+	^self ordinalCaseConversionCases , #(#('straße' 'STRASSE'))!
 
 decodeIncompleteContinuations
 	^self subclassResponsibility!
@@ -34,6 +33,10 @@ decodeInvalidContinuations
 
 decodeTestCases
 	^self subclassResponsibility!
+
+equalityTestCases
+	^super equalityTestCases
+		, #(#('Ḽơᶉëᶆ ȋṕšᶙṁ ḍỡḽǭᵳ ʂǐť ӓṁệẗ, ĉṓɲṩḙċťᶒțûɾ ấɖḯƥĭṩčįɳġ ḝłįʈ, șếᶑ ᶁⱺ ẽḭŭŝḿꝋď ṫĕᶆᶈṓɍ ỉñḉīḑȋᵭṵńť ṷŧ ḹẩḇőꝛế éȶ đꝍꞎôꝛȇ ᵯáꞡᶇā ąⱡîɋṹẵ' 'ḼƠᶉËᶆ ȊṔŠᶙṀ ḌỠḼǬᵳ ʂǏŤ ӒṀỆẗ, ĈṒƝṨḘĊŤᶒȚÛɾ ẤƉḮƤĬṨČĮɳĠ ḜŁĮƮ, ȘẾᶑ ᶁⱺ ẼḬŬŜḾꝊĎ ṪĔᶆᶈṒɌ ỈÑḈĪḐȊᵭṴŃŤ ṶŦ ḸẨḆŐꝚẾ Éȶ ĐꝌꞎÔꝚȆ ᵯÁꞡᶇĀ ĄⱠÎɊṸẴ') #('a🐬' 'A🐬'))!
 
 indexOfTestCases
 	^super indexOfTestCases, #('' $文 'a£ö🐬👨🏻‍🍳' $文 '' $🐬 'a£文🍺👨🏻‍🍳' $🐬'a£a文a🍺a👨🏻‍🍳a' $a 'a£文🍺👨🏻‍🍳' $b 'a文£文ö文🐬文👨🏻‍🍳文' $文 'a🐬£🐬文🐬🍺🐬👨🏻‍🍳🐬' $🐬)!
@@ -51,6 +54,10 @@ makeStringFromCodeUnits: data
 
 matchingPairs
 	^super matchingPairs , #(#('#' '🐬') #('#€#a' '🐬€🍺a'))!
+
+ordinalCaseConversionCases
+	^super ordinalCaseConversionCases
+		, #(#('кракозябры' 'КРАКОЗЯБРЫ') #('文字化け') #('маймуница' 'МАЙМУНИЦА') #('ａｂｃ' 'ＡＢＣ'))!
 
 reverseTestCases
 	"Private - #reverse doesn't work correctly for multi-byte encodings of UTF-8 and UTF-16."
@@ -124,6 +131,44 @@ testAsAnsiStringDotlessI
 			[subject := self assimilateString: 'İiıI'.
 			actual := subject asAnsiString.
 			self assert: actual equals: 'IiiI']!
+
+testAsLowercase
+	| de tr |
+	de := Locale named: 'de-DE'.
+	self assert: ('' asLowercase: de) equals: ''.
+	self assert: ('STRAẞE' asLowercase: de) equals: 'straße'.
+	"Turkish dotted and non-dotted i"
+	tr := Locale named: 'tr-TR'.
+	self assert: ('INTERESTİNG' asLowercase: tr) equals: 'ınteresting'.
+	"Invariant"
+	{ Locale invariant. Locale smalltalk } do: 
+			[:invariant |
+			self assert: ('' asLowercase: invariant) equals: ''.
+			"Upper-case german eszett is converted by invariant Locale as it still requests linguistic case translations, and the letter is only used in German so is not ambiguous."
+			self assert: ('STRAẞE' asLowercase: invariant) equals: 'straße'.
+			"Turkish dotted and non-dotted i; invariant lowercase-i is always dotted"
+			self deny: invariant isTurkic.
+			"Note that with ICU we get a U+0307 (Combining dot above) after the lowercase, presumably to preserve that it was a conversion from U+0130"
+			self assert: ('INTERESTİNG' asLowercase: invariant) equals: 'interesti̇ng']!
+
+testAsUppercase
+	| de tr |
+	de := Locale standard: 'de-DE'.
+	self assert: ('' asUppercase: de) equals: ''.
+	"There are two lower-case forms of the greek letter Sigma."
+	self assert: ('Ὀδυσσεύς' asUppercase: de) equals: 'ὈΔΥΣΣΕΎΣ'.
+	self deny: ('Straße' asUppercase: de) equals: 'STRAẞE'.
+	"Turkish dotted and dotless i should be converted correctly preserved the dot or absence of dot"
+	tr := Locale standard: 'tr-TR'.
+	self assert: ('ınteresting' asUppercase: tr) equals: 'INTERESTİNG'.
+	{ Locale invariant. Locale smalltalk } do: 
+			[:subject |
+			self assert: ('' asUppercase: subject) equals: ''.
+			"With ICU the eszett is now uppercased correctly"
+			self assert: ('Straße' asUppercase: subject) equals: 'STRASSE'.
+			self assert: ('ınteresting' asUppercase: subject) equals: 'INTERESTING'.
+			"There are two lower-case forms of the greek letter Sigma."
+			self assert: ('Ὀδυσσεύς' asUppercase: subject) equals: 'ὈΔΥΣΣΕΎΣ']!
 
 testBeginsWithExtended
 	| subject comparand |
@@ -356,6 +401,26 @@ testFirstColon
 	self should: [subject first: 6] raise: Error.
 	self should: [self collectionClass empty first: 1] raise: Error!
 
+testFoldCaseICU
+	"Transcription of ICU case folding test."
+
+	| mixed foldedDefault foldedExcludeSpecialI subject tr de |
+	mixed := Utf16String
+				withAll: (#(16r61 16r42 16r130 16r49 16r131 16r3D0 16rDF 16rFB03 16rD93F 16rDFFF)
+						collect: [:each | Character utf16Value: each]).
+	foldedDefault := Utf16String
+				withAll: (#(16r61 16r62 16r69 16r307 16r69 16r131 16r3B2 16r73 16r73 16r66 16r66 16r69 16rD93F 16rDFFF)
+						collect: [:each | Character utf16Value: each]).
+	foldedExcludeSpecialI := Utf16String
+				withAll: (#(16r61 16r62 16r69 16r131 16r131 16r3B2 16r73 16r73 16r66 16r66 16r69 16rD93F 16rDFFF)
+						collect: [:each | Character utf16Value: each]).
+	tr := Locale named: 'tr-TR'.
+	de := Locale named: 'de-DE'.
+	subject := self assimilateString: mixed.
+	self assert: subject caseFolded equals: foldedDefault.
+	self assert: (subject caseFolded: de) equals: foldedDefault.
+	self assert: (subject caseFolded: tr) equals: foldedExcludeSpecialI!
+
 testFromToKeysAndValuesDo
 	| subject expected actual |
 	super testFromToKeysAndValuesDo.
@@ -477,12 +542,13 @@ testLeftString
 	self assert: (self collectionClass empty leftString: 1) equals: ''!
 
 testLetterICaseConversions
-	"Letter i is a a bit of a special case"
+	"Letter i is a a bit of a special case. Note that we don't test asLowercase/asUppercase/caseFolded, as the outcome of these depends on the default locale so is unstable. The conversions without a parameter are equivalent to, e.g. `string asLocale: Locale userDefault`"
 
-	| tr de az capitalDotted smallDotted capitalDotless smallDotless |
+	| tr de az en capitalDotted smallDotted capitalDotless smallDotless |
 	tr := Locale named: 'tr-TR'.
 	de := Locale named: 'de-DE'.
 	az := Locale named: 'az-Latn-AZ'.
+	en := Locale named: 'en-GB'.
 	"All the i forms"
 	"[U+0049 LATIN CAPITAL LETTER I](https://codepoints.net/U+0049)"
 	capitalDotless := self collectionClass with: $I.
@@ -495,48 +561,48 @@ testLetterICaseConversions
 	"Conversion of letter to own case should be a nop"
 	self assert: (smallDotted asLowercase: tr) equals: smallDotted.
 	self assert: (smallDotted asLowercase: de) equals: smallDotted.
+	self assert: (smallDotted asLowercase: en) equals: smallDotted.
 	self assert: smallDotted asLowercase equals: smallDotted.
 	self assert: (smallDotless asLowercase: tr) equals: smallDotless.
 	self assert: (smallDotless asLowercase: de) equals: smallDotless.
+	self assert: (smallDotless asLowercase: en) equals: smallDotless.
 	self assert: smallDotless asLowercase equals: smallDotless.
 	self assert: (capitalDotted asUppercase: tr) equals: capitalDotted.
 	self assert: (capitalDotted asUppercase: de) equals: capitalDotted.
+	self assert: (capitalDotted asUppercase: en) equals: capitalDotted.
 	self assert: capitalDotted asUppercase equals: capitalDotted.
 	self assert: (capitalDotless asUppercase: tr) equals: capitalDotless.
 	self assert: (capitalDotless asUppercase: de) equals: capitalDotless.
+	self assert: (capitalDotless asUppercase: en) equals: capitalDotless.
 	self assert: capitalDotless asUppercase equals: capitalDotless.
 
-	"In any locale, linguistic lowercase of U+0130 is U+0069"
+	"In turkic locales, linguistic lowercase of U+0130 is U+0069"
 	self assert: (capitalDotted asLowercase: tr) equals: smallDotted.
-	self assert: (capitalDotted asLowercase: de) equals: smallDotted.
-	"The non-linguistic version does not convert U+0130."
-	self assert: capitalDotted asLowercase equals: capitalDotted.
+	"In de-DE we get the U+0069 U+0307 sequence"
+	self assert: (capitalDotted asLowercase: de) equals: smallDotted , (self collectionClass with: $̇).
+	self assert: (capitalDotted asLowercase: en) equals: smallDotted , (self collectionClass with: $̇).
 
 	"In turkic locales expect U+0049 to lowercase to U+0131"
 	self assert: (capitalDotless asLowercase: tr) equals: smallDotless.
 	"But not elsewhere"
 	self assert: (capitalDotless asLowercase: de) equals: smallDotted.
-	self assert: capitalDotless asLowercase equals: smallDotted.
 
 	"Linguistic Uppercase of U+0131 is always to U+0049"
 	self assert: (smallDotless asUppercase: tr) equals: capitalDotless.
 	self assert: (smallDotless asUppercase: de) equals: capitalDotless.
-	"But non-linguistic conversion does not convert"
-	self assert: smallDotless asUppercase equals: smallDotless.
 
 	"In turkic locales expect U+0069 to uppercase to U+0130"
 	self assert: (smallDotted asUppercase: tr) equals: capitalDotted.
 	"But not elsewhere"
 	self assert: (smallDotted asUppercase: de) equals: capitalDotless.
-	self assert: smallDotted asUppercase equals: capitalDotless.
 
 	"In summary"
 	self assert: ('İiıI' asLowercase: az) equals: 'iiıı'.
 	self assert: ('İiıI' asUppercase: az) equals: 'İİII'.
-	self assert: ('İiıI' asLowercase: de) equals: 'iiıi'.
+	self assert: ('İiıI' asLowercase: de) equals: 'i̇iıi'.
 	self assert: ('İiıI' asUppercase: de) equals: 'İIII'.
-	self assert: 'İiıI' asLowercase equals: 'İiıi'.
-	self assert: 'İiıI' asUppercase equals: 'İIıI'!
+	self assert: ('İiıI' asLowercase: en) equals: 'i̇iıi'.
+	self assert: ('İiıI' asUppercase: en) equals: 'İIII'!
 
 testMatchExtended
 	#(#('#' '🐬') #('*#' '🐬') #('*#a' '🐬A') #('*#€#🍺*B*' '🐬€a🍺b') #('*€文a#b*c' '🐬🍺€文a🍺€文a🍺bc'))
@@ -694,10 +760,12 @@ caseConversionCases!constants!private! !
 decodeIncompleteContinuations!constants!private! !
 decodeInvalidContinuations!constants!private! !
 decodeTestCases!constants!private! !
+equalityTestCases!constants!private! !
 indexOfTestCases!constants!private! !
 lengthTestCases!constants!private! !
 makeStringFromCodeUnits:!helpers!private! !
 matchingPairs!public! !
+ordinalCaseConversionCases!constants!private! !
 reverseTestCases!constants!private! !
 testAllButFirst!public!unit tests! !
 testAllButLast!public!unit tests! !
@@ -706,6 +774,8 @@ testAnsiStringRoundTrip!public!unit tests! !
 testAnyone!public!unit tests! !
 testAnySatisfy!public!unit tests! !
 testAsAnsiStringDotlessI!public!unit tests! !
+testAsLowercase!public!unit tests! !
+testAsUppercase!public!unit tests! !
 testBeginsWithExtended!public!unit tests! !
 testBeginsWithIgnoreCase!public!unit tests! !
 testCollect!public!unit tests! !
@@ -723,6 +793,7 @@ testFindLast!public!unit tests! !
 testFindStringStartingAt!public!unit tests! !
 testFirst!public!unit tests! !
 testFirstColon!public!unit tests! !
+testFoldCaseICU!public! !
 testFromToKeysAndValuesDo!public!unit tests! !
 testGothicSubStrings!public!unit tests! !
 testIdentityIncludes!public!unit tests! !

@@ -25,11 +25,10 @@ beforeTestCases
 	^#(#('ab' $b $a) #('ca£d' $£ $a) #('ca£d' $d $£))!
 
 caseConversionCases
-	^#(#('' '') #('abc £12' 'ABC £12') #('oña' 'OÑA') #('árvízturo tükörfúrógép' 'ÁRVÍZTURO TÜKÖRFÚRÓGÉP'))
-		, {{AnsiString fromByteArray: #[97 0 98]. AnsiString fromByteArray: #[65 0 66]}}!
+	^self ordinalCaseConversionCases!
 
 equalityTestCases
-	^#('' 'a' 'abc' '' 'tükörfúrógép' 'Ḽơᶉëᶆ ȋṕšᶙṁ ḍỡḽǭᵳ ʂǐť ӓṁệẗ, ĉṓɲṩḙċťᶒțûɾ ấɖḯƥĭṩčįɳġ ḝłįʈ, șếᶑ ᶁⱺ ẽḭŭŝḿꝋď ṫĕᶆᶈṓɍ ỉñḉīḑȋᵭṵńť ṷŧ ḹẩḇőꝛế éȶ đꝍꞎôꝛȇ ᵯáꞡᶇā ąⱡîɋṹẵ' 'a🐬' 'a £=1.2€')!
+	^#(#('' '') #('a' 'A') #('abc' 'ABC') #('tükörfúrógép' 'TÜKÖRFÚRÓGÉP') #('a £=1.2€' 'A £=1.2€'))!
 
 findActualIndicesOf: aCharacter in: aString
 	| i found stream |
@@ -56,6 +55,10 @@ mismatchedPairs
 
 newNumericArray: anInteger
 	^self newCollection: ((1 to: anInteger) collect: [:each | Character digitValue: each])!
+
+ordinalCaseConversionCases
+	^#(#('' '') #('abc £12' 'ABC £12') #('oña' 'OÑA') #('árvízturo tükörfúrógép' 'ÁRVÍZTURO TÜKÖRFÚRÓGÉP'))
+		, { { AnsiString fromByteArray: #[97 0 98]. AnsiString fromByteArray: #[65 0 66] } }!
 
 reverseTestCases
 	^{#('' '').
@@ -242,23 +245,32 @@ testCapitalized
 	self assert: string equals: (self assimilateString: 'Ab')!
 
 testCaseConversions
+	| de |
+	de := Locale named: 'de-DE'.
 	self caseConversionCases do: 
 			[:each |
 			| subject actual expected |
 			subject := self assimilateString: each first.
 			expected := self assimilateString: each last.
-			"Sanity check that the test cases are equal ordinally ignoring case"
-			self assert: (subject compareOrdinals: expected ignoringCase: true) equals: 0.
-			actual := subject asUppercase.
+			"Sanity check that the test cases are equal ignoring case"
+			self assert: subject <=> expected equals: 0.
+			subject asArray size = expected asArray size
+				ifTrue: [self assert: (subject compareOrdinals: expected ignoringCase: true) equals: 0].
+			self assert: (subject caseFolded: de) equals: (expected caseFolded: de).
+			actual := subject asUppercase: de.
 			self assert: actual equals: expected mutableCopy.
-			actual := expected asLowercase.
-			self assert: actual equals: subject mutableCopy]!
+			"Not necessarily reversible, e.g. 'straße' -> 'STRASSE' -> 'strasse'"
+			actual := expected asLowercase: de.
+			self assert: actual <=> expected equals: 0.
+			self assert: actual <=> subject equals: 0.
+			subject asArray size = expected asArray size
+				ifTrue: [self assert: actual equals: subject mutableCopy]]!
 
 testClassFromAddress
 	self equalityTestCases do: 
 			[:each |
 			| actual expected |
-			expected := self assimilateString: each.
+			expected := self assimilateString: each first.
 			actual := self collectionClass fromAddress: expected yourAddress.
 			self assert: actual equals: expected]!
 
@@ -317,13 +329,13 @@ testEquals
 	self equalityTestCases do: 
 			[:each |
 			| subject copy utf8 utf16 |
-			subject := self assimilateString: each.
+			subject := self assimilateString: each first.
 			"Identical must be equal"
 			self assert: subject equals: subject.
 			"Same characters must be equal"
 			copy := subject copy.
 			self assert: subject equals: copy.
-			each isEmpty ifFalse: [self deny: subject equals: subject asUppercase].
+			subject isEmpty ifFalse: [self deny: subject equals: subject asUppercase].
 			utf8 := subject asUtf8String.
 			self assert: subject equals: utf8.
 			utf16 := subject asUtf16String.
@@ -334,6 +346,7 @@ testEquals
 			"Nor Arrays of characters"
 			self deny: subject asArray equals: subject.
 			self deny: subject equals: subject asArray].
+
 	"Symbols are now equal to strings with the same characters"
 	abc := self assimilateString: 'abc'.
 	self assert: #abc equals: abc.
@@ -591,7 +604,7 @@ testHash
 	self equalityTestCases do: 
 			[:each |
 			| subject |
-			subject := self assimilateString: each.
+			subject := self assimilateString: each first.
 			"Same characters must be equal"
 			self assert: subject hash equals: subject copy hash.
 			"If representable as an ANSI string, should still have the same hash value (hash value is always that of the Utf-8 bytes"
@@ -698,14 +711,14 @@ testMutableCopy
 			self assert: (actual compareOrdinals: subject ignoringCase: false) equals: 0]!
 
 testOrdinalCaseInsensitiveComparison
-	self caseConversionCases do: 
+	self ordinalCaseConversionCases do: 
 			[:each |
 			| subject upper |
 			subject := self assimilateString: each first.
 			upper := self assimilateString: each last.
 			self assert: subject hashOrdinalsIgnoringCase equals: upper hashOrdinalsIgnoringCase.
 			"The hash value should be equivalent to the hash of the UTF-8 encoded bytes of the uppercased characters of the string"
-			self assert: (subject collect: [:ch | ch asFoldcase]) asUtf8String asByteArray hash
+			self assert: (subject collect: [:ch | ch caseFolded]) asUtf8String asByteArray hash
 				equals: subject hashOrdinalsIgnoringCase.
 			self assert: (subject compareOrdinals: upper ignoringCase: true) equals: 0.
 			self assert: (upper compareOrdinals: subject ignoringCase: true) equals: 0]!
@@ -715,7 +728,7 @@ testOrdinalCaseInsensitiveEquality
 	self equalityTestCases do: 
 			[:each |
 			| subject upper lower copy utf8 utf16 |
-			subject := self assimilateString: each.
+			subject := self assimilateString: each first.
 			"Identical must be equal"
 			self assert: (subject compareOrdinals: subject ignoringCase: true) equals: 0.
 			self assert: subject <=> subject equals: 0.
@@ -723,7 +736,7 @@ testOrdinalCaseInsensitiveEquality
 			copy := subject copy.
 			self assert: (subject compareOrdinals: copy ignoringCase: true) equals: 0.
 			self assert: subject <=> copy equals: 0.
-			upper := subject asUppercase.
+			upper := self assimilateString: each second.
 			self assert: (subject compareOrdinals: upper ignoringCase: true) equals: 0.
 			self assert: subject <=> upper equals: 0.
 			lower := subject asLowercase.
@@ -829,16 +842,25 @@ testSpaceships
 	| abc |
 	self equalityTestCases do: 
 			[:each |
-			| subject copy utf8 utf16 |
-			subject := self assimilateString: each.
+			| subject copy upper utf8 utf16 |
+			subject := self assimilateString: each first.
 			"Identical must be equal"
 			self assert: subject <=> subject equals: 0.
 			self assert: subject <==> subject equals: 0.
 			"Same characters must be equal"
 			copy := subject copy.
 			self assert: subject <=> copy equals: 0.
+			self assert: (subject compareOrdinals: copy ignoringCase: false) equals: 0.
+			self assert: (subject compareOrdinals: copy ignoringCase: true) equals: 0.
 			self assert: subject <==> copy equals: 0.
-			each isEmpty ifFalse: [self deny: subject equals: subject asUppercase].
+			upper := self assimilateString: each second.
+			self assert: subject <=> upper equals: 0.
+			self assert: (subject compareOrdinals: upper ignoringCase: true) equals: 0.
+			subject isEmpty
+				ifFalse: 
+					[self deny: subject equals: upper.
+					self deny: subject <==> upper equals: 0.
+					self deny: (subject compareOrdinals: upper ignoringCase: false) equals: 0].
 			utf8 := subject asUtf8String.
 			self assert: subject <=> utf8 equals: 0.
 			self assert: subject <==> utf8 equals: 0.
@@ -1088,6 +1110,14 @@ testSubStringsByString
 						assimilateString: (String streamContents: [:strm | i timesRepeat: [strm nextPutAll: 'ab']]).
 			self assert: (subject subStrings: 'ab') equals: (Array new: i + 1 withAll: empty)]!
 
+testTitlecaseString
+	| subject |
+	self assert: ('istanbul' titleCased: (Locale standard: 'tr-Tr')) equals: 'İstanbul'.
+	self assert: ('istanbul' titleCased: (Locale standard: 'en-GB')) equals: 'Istanbul'.
+	subject := Locale invariant.
+	"The invariant locale does perform linguistic case conversions, but only the turkic locales recognise the disinction between dotted and dotless 'i'"
+	self assert: ('istanbul' titleCased: subject) equals: 'Istanbul'!
+
 testTrimNulls
 	"#1187"
 
@@ -1269,6 +1299,7 @@ lengthTestCases!constants!private! !
 matchingPairs!public! !
 mismatchedPairs!public! !
 newNumericArray:!helpers!private! !
+ordinalCaseConversionCases!constants!private! !
 reverseTestCases!constants!private! !
 testAfter!public!unit tests! !
 testAsByteArray!public!unit tests! !
@@ -1318,6 +1349,7 @@ testSplitSingle!public!unit tests! !
 testStreamUtfRoundTrip!public!unit tests! !
 testSubStringsByCharacter!public!unit tests! !
 testSubStringsByString!public!unit tests! !
+testTitlecaseString!public!unit tests! !
 testTrimNulls!public!unit tests! !
 testUrlDecoded!public!unit tests! !
 testUrlEncoded!public!unit tests! !

@@ -51,7 +51,12 @@ stbSaveOn: anSTBOutFiler
 	anSTBOutFiler
 		writeClass: Locale withPrefix: STBPrefix forData;
 		register: self.
-	anSTBOutFiler nextPut: #invariant! !
+	anSTBOutFiler nextPut: #invariant!
+
+tag
+	"Answer the RFC4646 language aka tag for this locale."
+
+	^LOCALE_NAME_INVARIANT! !
 !OS.InvariantLocale categoriesForMethods!
 basicLcid!constants!private! !
 displayScaledDecimal:on:!displaying!public! !
@@ -60,6 +65,7 @@ name!accessing!public! !
 primary!printing!public! !
 printOn:!printing!public! !
 stbSaveOn:!binary filing!public! !
+tag!constants!public! !
 !
 
 !OS.InvariantLocale class methodsFor!

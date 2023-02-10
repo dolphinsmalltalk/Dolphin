@@ -577,6 +577,86 @@ u_ispunct: aCharacter
 	<cdecl: bool8 u_ispunct char32>
 	^self invalidCall: _failureCode!
 
+u_strFoldCase: destString destCapacity: capacityInteger src: srcString srcLength: lenInteger options: optionsInteger pErrorCode: anInt32
+	"/**
+ * Case-folds the characters in a string.
+ *
+ * Case-folding is locale-independent and not context-sensitive,
+ * but there is an option for whether to include or exclude mappings for dotted I
+ * and dotless i that are marked with 'T' in CaseFolding.txt.
+ *
+ * The result may be longer or shorter than the original.
+ * The source string and the destination buffer are allowed to overlap.
+ *
+ * @param dest      A buffer for the result string. The result will be zero-terminated if
+ *                  the buffer is large enough.
+ * @param destCapacity The size of the buffer (number of UChars). If it is 0, then
+ *                  dest may be NULL and the function will only return the length of the result
+ *                  without writing any of the result string.
+ * @param src       The original string
+ * @param srcLength The length of the original string. If -1, then src must be zero-terminated.
+ * @param options   Either U_FOLD_CASE_DEFAULT or U_FOLD_CASE_EXCLUDE_SPECIAL_I
+ * @param pErrorCode Must be a valid pointer to an error code value,
+ *                  which must not indicate a failure before the function call.
+ * @return The length of the result string. It may be greater than destCapacity. In that case,
+ *         only some of the result was written to the destination buffer.
+ * @stable ICU 2.0
+ */"
+
+	<cdecl: int32 u_strFoldCase char16* int32 char16* int32 uint32 int32*>
+	^self invalidCall: _failureCode!
+
+u_strToLower: destString destCapacity: capacityInteger src: srcString srcLength: lenInteger locale: localeString pErrorCode: anInt32
+	<cdecl: int32 u_strToLower char16* int32 char16* int32 char8* int32*>
+	^self invalidCall: _failureCode!
+
+u_strToTitle: destString destCapacity: capacityInteger src: srcString srcLength: lenInteger titleIter: aCallback locale: localeString pErrorCode: anInt32
+	"/**
+ * Titlecase a string.
+ * Casing is locale-dependent and context-sensitive.
+ * Titlecasing uses a break iterator to find the first characters of words
+ * that are to be titlecased. It titlecases those characters and lowercases
+ * all others.
+ *
+ * The titlecase break iterator can be provided to customize for arbitrary
+ * styles, using rules and dictionaries beyond the standard iterators.
+ * It may be more efficient to always provide an iterator to avoid
+ * opening and closing one for each string.
+ * The standard titlecase iterator for the root locale implements the
+ * algorithm of Unicode TR 21.
+ *
+ * This function uses only the setText(), first() and next() methods of the
+ * provided break iterator.
+ *
+ * The result may be longer or shorter than the original.
+ * The source string and the destination buffer are allowed to overlap.
+ *
+ * @param dest      A buffer for the result string. The result will be zero-terminated if
+ *                  the buffer is large enough.
+ * @param destCapacity The size of the buffer (number of UChars). If it is 0, then
+ *                  dest may be NULL and the function will only return the length of the result
+ *                  without writing any of the result string.
+ * @param src       The original string
+ * @param srcLength The length of the original string. If -1, then src must be zero-terminated.
+ * @param titleIter A break iterator to find the first characters of words
+ *                  that are to be titlecased.
+ *                  If none is provided (NULL), then a standard titlecase
+ *                  break iterator is opened.
+ * @param locale    The locale to consider, or "" for the root locale or NULL for the default locale.
+ * @param pErrorCode Must be a valid pointer to an error code value,
+ *                  which must not indicate a failure before the function call.
+ * @return The length of the result string. It may be greater than destCapacity. In that case,
+ *         only some of the result was written to the destination buffer.
+ * @stable ICU 2.1
+ */"
+
+	<cdecl: int32 u_strToTitle char16* int32 char16* int32 void* char8* int32*>
+	^self invalidCall: _failureCode!
+
+u_strToUpper: destString destCapacity: capacityInteger src: srcString srcLength: lenInteger locale: localeString pErrorCode: anInt32
+	<cdecl: int32 u_strToUpper char16* int32 char16* int32 char8* int32*>
+	^self invalidCall: _failureCode!
+
 u_tolower: aCharacter
 "/**
  * The given character is mapped to its lowercase equivalent according to
@@ -716,6 +796,10 @@ u_isalpha:!icu functions!public! !
 u_iscntrl:!icu functions!public! !
 u_isgraph:!icu functions!public! !
 u_ispunct:!icu functions!public! !
+u_strFoldCase:destCapacity:src:srcLength:options:pErrorCode:!icu functions!public! !
+u_strToLower:destCapacity:src:srcLength:locale:pErrorCode:!icu functions!public! !
+u_strToTitle:destCapacity:src:srcLength:titleIter:locale:pErrorCode:!icu functions!public! !
+u_strToUpper:destCapacity:src:srcLength:locale:pErrorCode:!icu functions!public! !
 u_tolower:!public! !
 u_toupper:!public! !
 unregisterObject:!accessing-registry!private! !

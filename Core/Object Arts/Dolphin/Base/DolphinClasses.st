@@ -583,6 +583,7 @@ Kernel.SharedPool
 			'LOCALE_IPOSSIGNPOSN' -> 16r52.
 			'LOCALE_IPOSSYMPRECEDES' -> 16r54.
 			'LOCALE_IREADINGLAYOUT' -> 16r70.
+			'LOCALE_NAME_INVARIANT' -> ''.
 			'LOCALE_NEUTRAL' -> 16r0.
 			'LOCALE_NOUSEROVERRIDE' -> 16r80000000.
 			'LOCALE_RETURN_GENITIVE_NAMES' -> 16r10000000.
@@ -4334,7 +4335,7 @@ OS.AbstractWindowsLocale
 	classConstants: {}!
 OS.AbstractWindowsLocale
 	subclass: #'OS.WindowsLocale'
-	instanceVariableNames: 'lcid'
+	instanceVariableNames: 'lcid tag'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
