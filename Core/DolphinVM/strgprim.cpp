@@ -34,10 +34,6 @@ unsigned char Interpreter::m_unicodeToAnsiCharMap[65536];
 
 static constexpr uint32_t Fnv1aHashSeed = 2166136261U;
 
-#undef toupper
-// Fast ToUpper for ascii
-#define toupper(ch) (((ch) >= 'a' && (ch) <= 'z') ? ((ch) - 'a' + 'A') : ch)
-
 CharOTE* Character::NewUtf32(char32_t value)
 {
 	if (value <= 0x7f)
@@ -1020,38 +1016,6 @@ Oop* Interpreter::primitiveBytesEqual(Oop* const sp, primargcount_t)
 	}
 }
 
-char32_t ToUpper(char32_t ch)
-{
-	WCHAR unitsUpper[2];
-	int cchDest;
-	if (ch <= 0xffff)
-	{
-		cchDest = ::LCMapStringEx(LOCALE_NAME_INVARIANT, LCMAP_UPPERCASE, reinterpret_cast<LPCWSTR>(&ch), 1, unitsUpper, 2, NULL, 0, 0);
-	}
-	else
-	{
-		WCHAR units[2] = { static_cast<WCHAR>(((ch) >> 10) + 0xd7c0), static_cast<WCHAR>(((ch) & 0x3ff) | 0xdc00) };
-		cchDest = ::LCMapStringEx(LOCALE_NAME_INVARIANT, LCMAP_UPPERCASE, units, 2, unitsUpper, 2, NULL, 0, 0);
-	}
-
-	switch (cchDest)
-	{
-	case 0:
-		return ch;
-	case 1:
-		return unitsUpper[0];
-	case 2:
-	{
-		size_t i = 0;
-		char32_t chUp;
-		U16_NEXT_UNSAFE(unitsUpper, i, chUp);
-		return chUp;
-	}
-	default:
-		_assume(false);
-	}
-}
-
 __forceinline uint32_t foldHash(uint32_t hash)
 {
 	// Xor-fold down to 30 bits so it will always fit in a SmallInteger. 
@@ -1149,7 +1113,7 @@ template <class T, class Next=NextChar<T>> struct NextUpper
 	__forceinline char32_t operator() (const T* pch, size_t& i) const
 	{
 		char32_t ch = Next()(pch, i);
-		return ch <= 0x7f ? toupper(ch) : ToUpper(ch);
+		return ch >= 'a' && ch <= 'z' ? _toupper(ch) : u_toupper(ch);
 	}
 };
 
@@ -1227,7 +1191,7 @@ extern "C" SmallInteger __cdecl HashBytes(const uint8_t* bytes, size_t size)
 	return bytes != nullptr ? hashBytes(bytes, size) : 0;
 }
 
-Oop* PRIMCALL Interpreter::primitiveHashIgnoreCase(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveOrdinalHashIgnoreCase(Oop* const sp, primargcount_t)
 {
 	BytesOTE* receiver = reinterpret_cast<BytesOTE*>(*sp);
 
@@ -1551,7 +1515,6 @@ template <class OpA, class OpW, bool Utf8_OpA> static Oop* PRIMCALL Interpreter:
 }
 
 template Oop* Interpreter::primitiveStringEqual<EqualA, EqualW, true>(Oop* const, primargcount_t);
-template Oop* Interpreter::primitiveStringEqual<EqualIA, EqualIW, false>(Oop* const, primargcount_t);
 
 Oop* PRIMCALL Interpreter::primitiveBeginsWith(Oop* const sp, primargcount_t)
 {

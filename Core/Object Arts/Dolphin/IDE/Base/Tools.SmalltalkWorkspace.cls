@@ -416,9 +416,7 @@ completeWordAt: anInteger with: aString
 	^addSpace!
 
 completionListSortBlock
-	^self isAutoCompletionCaseInsensitive
-		ifTrue: [[:a :b | (OS.Ucrt _wcsicmp: a displayString string2: b displayString) <= 0]]
-		ifFalse: [[:a :b | (OS.Ucrt strcmp: a displayString string2: b displayString) <= 0]]!
+	^ScintillaView listSortBlock: self isAutoCompletionCaseInsensitive!
 
 completionStringFor: aString at: anInteger
 	| rawContents answer |

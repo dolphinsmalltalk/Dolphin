@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.SearchPolicyTest
-	subclass: #'Kernel.Tests.CaseInsensitiveSearchPolicyTest'
+	subclass: #'Kernel.Tests.OrdinalCaseInsensitiveSearchPolicyTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.Tests.CaseInsensitiveSearchPolicyTest guid: (Core.GUID fromString: '{9f0abf77-47aa-49cb-8b9b-96343696cb2e}')!
-Kernel.Tests.CaseInsensitiveSearchPolicyTest comment: ''!
-!Kernel.Tests.CaseInsensitiveSearchPolicyTest methodsFor!
+Kernel.Tests.OrdinalCaseInsensitiveSearchPolicyTest guid: (Core.GUID fromString: '{9f0abf77-47aa-49cb-8b9b-96343696cb2e}')!
+Kernel.Tests.OrdinalCaseInsensitiveSearchPolicyTest comment: ''!
+!Kernel.Tests.OrdinalCaseInsensitiveSearchPolicyTest methodsFor!
 
 policyClass
-	^CaseInsensitiveSearchPolicy!
+	^OrdinalCaseInsensitiveSearchPolicy!
 
 testCompareWith
 	self assert: (policy compare: 'aa' with: 'aa').
@@ -24,18 +24,16 @@ testCompareWith
 	self assert: (policy compare: 'i' with: 'I').
 	self assert: (policy compare: 'I' with: 'i').
 	self assert: (policy compare: $ě with: $Ě).
-	"linguistic comparison - German double-s is mapped"
-	self assert: (policy compare: 'ß' with: 'ss')!
+	"non-linguistic comparison, so German double-s not mapped"
+	self deny: (policy compare: 'ß' with: 'ss')!
 
 testHash
 	self assert: (policy hash: 'aa') equals: (policy hash: 'Aa').
 	self deny: (policy hash: 'aa') equals: (policy hash: 'Ab').
 	self assert: (policy hash: 'i') equals: (policy hash: 'I').
-	self deny: (policy hash: ((Locale named: 'tr-Tr') uppercaseString: 'i') asLowercase) equals: (policy hash: 'i').
-	#todo.	"This does not work correctly because Windows API doesn't do single to multi-character mappings, but should work with ICU case-folding"
-	self skip.
-	self assert: (policy hash: 'ß') equals: (policy hash: 'ss')! !
-!Kernel.Tests.CaseInsensitiveSearchPolicyTest categoriesForMethods!
+	"Ordinal, not a linguistic comparison"
+	self deny: (policy hash: ((Locale named: 'tr-Tr') uppercaseString: 'i')) equals: (policy hash: 'I')! !
+!Kernel.Tests.OrdinalCaseInsensitiveSearchPolicyTest categoriesForMethods!
 policyClass!private!unit tests! !
 testCompareWith!public!unit tests! !
 testHash!public!unit tests! !

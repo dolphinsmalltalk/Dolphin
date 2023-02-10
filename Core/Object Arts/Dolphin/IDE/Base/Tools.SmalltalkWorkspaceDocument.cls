@@ -572,7 +572,7 @@ isLoadingOptions
 	^self optionFlags allMask: LoadingMask!
 
 isRichTextFile: aString
-	^aString notNil and: [(File splitExtensionFrom: aString) equalsIgnoreCase: 'rtf']!
+	^aString notNil and: [((File splitExtensionFrom: aString) compareOrdinals: 'rtf' ignoringCase: true) == 0]!
 
 loadOptions
 	SmalltalkToolShell loadOptionsFor: self!

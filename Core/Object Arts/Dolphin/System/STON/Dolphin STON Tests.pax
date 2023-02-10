@@ -398,7 +398,9 @@ testProcessor
 	self assert: (self serialize: Processor) equals: 'ProcessorScheduler'!
 
 testSearchPolicy
-	self assert: (self serialize: SearchPolicy caseInsensitive) equals: 'SearchPolicy[#caseInsensitive]'!
+	self assert: (self serialize: SearchPolicy caseInsensitive) equals: 'SearchPolicy[#caseInsensitive]'.
+	self assert: (self serialize: SearchPolicy ordinalCaseInsensitive) equals: 'SearchPolicy[#ordinalCaseInsensitive]'.
+!
 
 testSymbolMultiByte
 	"https://github.com/svenvc/ston/issues/25"

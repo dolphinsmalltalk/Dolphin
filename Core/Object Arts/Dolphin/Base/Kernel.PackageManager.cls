@@ -442,7 +442,7 @@ initialize
 	triggers to ensure that the receiver's packages remove references to any system objects which
 	are removed."
 
-	packages := PluggableLookupTable searchPolicy: SearchPolicy caseInsensitive.
+	packages := PluggableLookupTable searchPolicy: SearchPolicy ordinalCaseInsensitive.
 	processEvents := 0.
 	packagedVariables := LookupTable new!
 
@@ -473,7 +473,7 @@ install: aString
 				loadPrereqsForPackage: startPackage
 				relativeTo: startPackage path
 				extension: (File splitExtensionFrom: filename)
-				loaded: (PluggableSet searchPolicy: SearchPolicy caseInsensitive)
+				loaded: (PluggableSet searchPolicy: SearchPolicy ordinalCaseInsensitive)
 				trail: OrderedCollection new]
 			on: PackageNotFoundSignal
 			do: 

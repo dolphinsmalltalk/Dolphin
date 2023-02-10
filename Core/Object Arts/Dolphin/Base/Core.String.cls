@@ -132,7 +132,7 @@ _sameAsString: aString
 		string2: aString) - 2!
 
 = anObject
-	"Answer whether the receiver and the <Object> argument are both <String>s containing identical code points.
+	"Answer whether the receiver and the <Object> argument are both <String>s containing identical code points (this is not a linguistic comparison).
 	Note that <Symbol>s are now considered equal to <String>s with the same characters.
 
 	Primitive failure results:
@@ -140,7 +140,7 @@ _sameAsString: aString
 		AssertionFailure	- anObject and/or receiver encoding not recognised."
 
 	<primitive: 219>
-	^self == anObject or: [anObject isString and: [(self compare: anObject) == 0]]!
+	^self == anObject or: [anObject isString and: [(self compareOrdinals: anObject ignoringCase: false) == 0]]!
 
 > aString
 	"Answer whether the receiver is lexically greater than the <readableString> argument, ignoring case, according to the implementation defined collation sequence (see <=>)."
@@ -419,16 +419,9 @@ codePointsDo: operation
 
 	self subclassResponsibility!
 
-compare: aString
-	"Answer the receiver's <integer> ORDINAL (i.e. binary) collation order with respect to the <readableString> argument.
-	The answer is < 0 if the receiver is ordinally before the argument, 0 if ordinally equivalent, or > 0 if ordinally after the argument. 
-	This comparison is fast and locale insensitive, however the ordering it provides isn't of use for non-technical purposes since it is based on the code unit values."
-
-	^self compare: aString ignoreCase: false!
-
-compare: aString ignoreCase: aBoolean
+compareOrdinals: aString ignoringCase: aBoolean
 	"Answer the receiver's <integer> ORDINAL (i.e. binary) collation order with respect to the <readableString> first argument. If the <boolean> last argument is true, then the comparison ignores letter case, if false the comparison is case-sensitive. The answer is < 0 if the receiver is ordinally before the argument, 0 if ordinally equivalent, or > 0 if ordinally after the argument. 
-	This comparison is fast and locale insensitive, however the ordering it provides isn't of use for non-technical purposes since it is based on the code unit values."
+	This comparison is fast and locale insensitive, however the ordering it provides isn't intended for non-technical purposes since it is based on the code unit values."
 
 	"Primitive failure results:
 		InvalidParameter1  	- aString is not a null-terminated object.
@@ -510,17 +503,6 @@ encodeOn: aWriteStream put: aCharacter
 	UTF-8 encoded bytes necessary to represent the Unicode code point of the character."
 
 	^self subclassResponsibility!
-
-equalsIgnoreCase: anObject
-	"Answer whether the receiver and the <Object> argument are both <String>s containing the same code points, ignoring case.
-	This is an ORDINAL comparison, not a linguistic one. As such is suitable for use with Windows file names.
-
-	Primitive failure results:
-		InvalidParameter1  	- anObject is not a null-terminated object.
-		AssertionFailure	- anObject and/or receiver encoding not recognised."
-
-	<primitive: 226>
-	^self == anObject or: [anObject isString and: [(self compare: anObject ignoreCase: true) == 0]]!
 
 expandMacros
 	"Expand the receiver with replacable arguments.
@@ -745,8 +727,8 @@ hash
 	^(hash bitShift: ##(VMConstants.SmallIntegerMax highBit negated))
 		bitXor: (hash bitAnd: VMConstants.SmallIntegerMax)!
 
-hashIgnoreCase
-	"Answer the case-insensitive <integer> hash value for the receiver, i.e. the hash is the same for two strings regardless of case. This is complementary to #equalsIgnoreCase:, and is based on an ordinal (non-linguistic) comparison, however see Locale>>#hashString:."
+hashOrdinalsIgnoringCase
+	"Answer the case-insensitive <integer> hash value for the receiver, i.e. the hash is the same for two strings regardless of case. This is complementary to #compareOrdinals:ignoringCase:, and is based on an ordinal (non-linguistic) comparison, however see Locale>>#hashString:."
 
 	<primitive: 227>
 	^(SmalltalkLocale.Current uppercaseString: self) hash!
@@ -1290,8 +1272,7 @@ byteSize!accessing!private! !
 capitalized!converting!public! !
 codePage!constants!public! !
 codePointsDo:!enumerating!public! !
-compare:!comparing!public! !
-compare:ignoreCase:!comparing!public! !
+compareOrdinals:ignoringCase:!comparing!public! !
 contains:!public!searching! !
 copyReplaceAll:with:!copying!public! !
 copyToBuffer:ofSize:!copying!private! !
@@ -1302,7 +1283,6 @@ displayOn:!printing!public! !
 displayString!printing!public! !
 encodedSizeAt:!encode/decode!private! !
 encodeOn:put:!encode/decode!private! !
-equalsIgnoreCase:!comparing!public! !
 expandMacros!printing!public! !
 expandMacrosIn:!double dispatch!private! !
 expandMacrosWith:!printing!public! !
@@ -1321,7 +1301,7 @@ formatWith:with:with:!printing!public! !
 formatWith:with:with:with:!printing!public! !
 formatWithArguments:!printing!public! !
 hash!comparing!public! !
-hashIgnoreCase!comparing!public! !
+hashOrdinalsIgnoringCase!comparing!public! !
 indexOfAnyOf:startingAt:!public!searching! !
 indexOfSubCollection:startingAt:!public!searching! !
 isLiteral!public!testing! !

@@ -134,8 +134,7 @@ always
 	^AlwaysSearchPolicy current!
 
 caseInsensitive
-	"Answer the singleton sub-instance of the receiver which supports a search policy
-	based on case-insensitive string comparisons."
+	"Answer the singleton sub-instance of the receiver which supports a search policy	based on linguistic case-insensitive string comparisons."
 
 	^CaseInsensitiveSearchPolicy current!
 
@@ -162,7 +161,12 @@ newCompareBlock: discriminator hashBlock: hasher
 	"Answer a new instance of the receiver configured with the <dyadicValuable comparison block,
 	discriminator, and the <monadicValuable> hashing block, hasher."
 
-	^PluggableSearchPolicy basicNew compareBlock: discriminator hashBlock: hasher! !
+	^PluggableSearchPolicy basicNew compareBlock: discriminator hashBlock: hasher!
+
+ordinalCaseInsensitive
+	"Answer the singleton sub-instance of the receiver which supports a search policy	based on ordinal (i.e. binary, non-linguistic) case-insensitive string comparisons."
+
+	^OrdinalCaseInsensitiveSearchPolicy current! !
 !Core.SearchPolicy class categoriesForMethods!
 always!instance creation!public! !
 caseInsensitive!instance creation!public! !
@@ -170,5 +174,6 @@ equality!instance creation!public! !
 identity!instance creation!public! !
 never!instance creation!public! !
 newCompareBlock:hashBlock:!instance creation!public! !
+ordinalCaseInsensitive!instance creation!public! !
 !
 

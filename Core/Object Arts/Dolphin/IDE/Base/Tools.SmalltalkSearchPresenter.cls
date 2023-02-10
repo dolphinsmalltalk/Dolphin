@@ -54,7 +54,7 @@ completeWordAt: anInteger with: aString
 		replaceSelection: aString!
 
 completionListSortBlock
-	^[:a :b | (a displayString compare: b displayString) <= 0]!
+	^ScintillaView listSortBlock: false!
 
 createSchematicWiring
 	"Private - Create the trigger wiring for the receiver"

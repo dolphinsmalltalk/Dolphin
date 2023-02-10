@@ -44,18 +44,33 @@ testAsLowercase
 	self assert: $\0 asLowercase identicalTo: $\0.
 	"Euro symbol - still a unique ANSI encoded char"
 	self assert: $€ asLowercase identicalTo: $€.
+	self assert: $\x80 asLowercase equals: $\x80.
 	"Turkish, but 8-bit"
 	self assert: $Ç asLowercase equals: $ç.
-	"Turkish dotted İ, 16-bit, note not lowercased by default conversion" 
-	self assert: $İ asLowercase equals: $İ.
+	"Turkish dotted İ"
+	self assert: $İ asLowercase equals: $i.
 	"Cyrillic, 16-bit"
-	self assert: $\x400 asLowercase equals: $\x450.
+	self assert: $Ѐ asLowercase equals: $ѐ.
 	"Greek delta"
-	self assert: $\x394 asLowercase equals: $\x3B4.
+	self assert: $Δ asLowercase equals: $δ.
+	"U+1E9E Latin Capital Letter Sharp S  -> (U+00DF Latin Small Letter Sharp S)."
+	self assert: $ẞ asLowercase equals: $ß.
 	"Thai 7 - not a letter"
-	self assert: $\xE57 asLowercase equals: $\xE57.
-	"Symbol outside BMP"
-	self assert: Character dolphin asLowercase equals: Character dolphin!
+	self assert: $๗ asLowercase equals: $๗.
+	"U+01C5 Latin Capital Letter D with Small Letter Z with Caron -> U+01C6 Latin Small Letter Dz with Caron"
+	self assert: $ǅ asLowercase equals: $ǆ.
+	"U+037F Greek Capital Letter Yot -> U+03F3 Greek Letter Yot"
+	self assert: $Ϳ asLowercase equals: $ϳ.
+	"U+052A Cyrillic Capital Letter Dzzhe -> U+052B Cyrillic Small Letter Dzzhe"
+	self assert: $Ԫ asLowercase equals: $ԫ.
+	"Outside BMP"
+	"Emoji"
+	self assert: $🐬 asLowercase equals: $🐬.
+	"Supplementary multi-lingual plane"
+	"U+16E5A Medefaidrin Capital Letter Oe -> U+16E7A Medefaidrin Small Letter Oe"
+	self assert: $𖹚 asLowercase equals: $𖹺.
+	"U+1E921 Adlam Capital Letter Sha -> U+1E943 Adlam Small Letter Sha"
+	self assert: $𞤡 asLowercase equals: $𞥃!
 
 testAsUppercase
 	"Ascii chars have unique instances in the ANSI set"
@@ -65,18 +80,33 @@ testAsUppercase
 	self assert: $\0 asUppercase identicalTo: $\0.
 	"Euro symbol - still a unique ANSI encoded char"
 	self assert: $€ asUppercase identicalTo: $€.
+	self assert: $\x80 asUppercase equals: $\x80.
 	"Turkish, but 8-bit"
 	self assert: $ç asUppercase equals: $Ç.
-	"Turkish un-dotted İ, 16-bit, note not uppercase by default conversion" 
-	self assert: $ı asUppercase equals: $ı.
+	"Turkish dottless-i"
+	self assert: $ı asUppercase equals: $I.
 	"Cyrillic, 16-bit"
-	self assert: $\x450 asUppercase equals: $\x400.
+	self assert: $ѐ asUppercase equals: $Ѐ.
 	"Greek delta"
-	self assert: $\x3B4 asUppercase equals: $\x394.
+	self assert: $δ asUppercase equals: $Δ.
+	"U+00DF Latin Small Letter Sharp S (eszett) - there has been an official capitalized version for some time (U+1E9E Latin Capital Letter Sharp S), but not converted by ICU at this time."
+	self assert: $ß asUppercase equals: $ß.
 	"Thai 7 - not a letter"
-	self assert: $\xE57 asUppercase equals: $\xE57.
-	"Symbol outside BMP"
-	self assert: Character dolphin asUppercase equals: Character dolphin!
+	self assert: $๗ asUppercase equals: $๗.
+	"U+01C6 Latin Small Letter Dz with Caron -> U+01C4 Latin Capital Letter DZ with Caron"
+	self assert: $ǆ asUppercase equals: $Ǆ.
+	"U+03F3 Greek Letter Yot -> U+037F Greek Capital Letter Yot"
+	self assert: $ϳ asUppercase equals: $Ϳ.
+	"U+052B Cyrillic Small Letter Dzzhe -> U+052A Cyrillic Capital Letter Dzzhe "
+	self assert: $ԫ asUppercase equals: $Ԫ.
+	"Outside BMP"
+	"Emoji"
+	self assert: $🐬 asUppercase equals: $🐬.
+	"Supplementary multi-lingual plane"
+	"U+16E7A Medefaidrin Small Letter Oe -> U+16E5A Medefaidrin Capital Letter Oe"
+	self assert: $𖹺 asUppercase equals: $𖹚.
+	" U+1E943 Adlam Small Letter Sha -> U+1E921 Adlam Capital Letter Sha"
+	self assert: $𞥃 asUppercase equals: $𞤡!
 
 testAsUtf16String
 	#(#($A #[65 0]) #($\x7F #[16r7F 0]) #($\x20AC #[16rAC 16r20]) #($\x7FF #[16rFF 16r07]) #($\x800 #[16r00 16r08]) #($\x10000 #[16r00 16rD8 16r00 16rDC]) #($\x1F42C #[16r3D 16rD8 16r2C 16rDC]))
@@ -710,7 +740,9 @@ testSpaceships
 
 	self assert: (Character codePoint: 97) <=> $a equals: 0.
 	self assert: (Character codePoint: 97) <==> $a equals: 0.
-	self assert: $a <=> $A equals: 0.
+	self assert: $i <=> $I equals: 0.
+	self assert: $I <=> $i equals: 0.
+
 	"Code point ordering, so $A < $a"
 	self assert: $a <==> $A equals: 1.
 	self assert: $A <==> $a equals: -1.
@@ -720,16 +752,16 @@ testSpaceships
 	self assert: $A <=> $b equals: -1.
 	self assert: $A <==> $b equals: -1.
 	"'Non-ascii: ě cf Ě"
-	self assert: $\x11B <=> $\x11A equals: 0.
-	self assert: $\x11A <=> $\x11B equals: 0.
-	self assert: $\x11B <==> $\x11A equals: 1.
-	self assert: $\x11A <==> $\x11B equals: -1.
+	self assert: $ě <=> $Ě equals: 0.
+	self assert: $Ě <=> $ě equals: 0.
+	self assert: $ě <==> $Ě equals: 1.
+	self assert: $Ě <==> $ě equals: -1.
 	"'Non-ascii: ě/Ě cf Ď"
-	self assert: $\x11B <=> $\x10E equals: 1.
-	self assert: $\x10E <=> $\x11B equals: -1.
-	self assert: $\x11A <=> $\x10E equals: 1.
-	self assert: $\x11B <==> $\x10E equals: 1.
-	self assert: $\x10E <==> $\x11B equals: -1!
+	self assert: $ě <=> $Ď equals: 1.
+	self assert: $Ď <=> $ě equals: -1.
+	self assert: $Ě <=> $Ď equals: 1.
+	self assert: $ě <==> $Ď equals: 1.
+	self assert: $Ď <==> $ě equals: -1!
 
 testSplit
 	"Test single character delimiter"

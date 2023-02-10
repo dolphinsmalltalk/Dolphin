@@ -22,7 +22,7 @@ External.ResourceLibrary comment: 'ExternalResourceLibrary is a generic type of 
 						ifTrue: [handle = anObject handle]
 						ifFalse: 
 							["Filenames should be compared using an ordinal case-insensitive comparison"
-							fileName equalsIgnoreCase: anObject fileName]]]!
+							(fileName compareOrdinals: anObject fileName ignoringCase: true) == 0]]]!
 
 attemptToOpen: aString
 	^
@@ -38,7 +38,7 @@ fileName
 hash
 	"Answer whether the receiver and anObject are equivalent."
 
-	^fileName hashIgnoreCase!
+	^fileName hashOrdinalsIgnoringCase!
 
 isSelfEvaluating
 	^true!

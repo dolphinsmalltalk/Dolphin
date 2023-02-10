@@ -25,20 +25,6 @@ blockInput: aBoolean
 	<stdcall: bool BlockInput bool>
 	^self invalidCall: _failureCode!
 
-charLower: aCharacter
-	"Answer the lowercase equivalent of aCharacter. This will be dependent on the semantics of the 
-	language selected by the user during setup or by using Control Panel."
-
-	<stdcall: uint16 CharLowerW intptr>
-	^self invalidCall: _failureCode!
-
-charUpper: aCharacter
-	"Answer the uppercase equivalent of aCharacter. This will be dependent on the semantics 
-	of the language selected by the user during setup or by using Control Panel."
-
-	<stdcall: uint16 CharUpperW intptr>
-	^self invalidCall: _failureCode!
-
 createDialog: hInstance lpTemplate: template hWndParent: hParent lpDialogFunc: dlgProc dwInitParam: lParam
 	"Create a modeless dialog box from a dialog box template resource. 
 		HWND CreateDialog(
@@ -648,8 +634,6 @@ vkKeyScan: aChar
 	^self invalidCall: _failureCode! !
 !OS.UserLibrary categoriesForMethods!
 blockInput:!public!win32 functions-window! !
-charLower:!public!win32 functions-string manipulation! !
-charUpper:!public!win32 functions-string manipulation! !
 createDialog:lpTemplate:hWndParent:lpDialogFunc:dwInitParam:!public!win32 functions-dialog box! !
 defDlgProc:msg:wParam:lParam:!public!win32 functions-window procedure! !
 defWindowProc:msg:wParam:lParam:!public!win32 functions-window procedure! !

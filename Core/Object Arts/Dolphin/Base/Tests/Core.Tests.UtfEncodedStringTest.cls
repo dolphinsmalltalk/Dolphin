@@ -114,8 +114,8 @@ testAnySatisfy
 
 testAsAnsiStringDotlessI
 	| subject actual |
-	"Note that turkish i's are not normally preserved on conversion to an ANSI string, unless using a turkish code page."
-	Locale userDefault primary = (Locale named: 'Tr-tr')
+	"Note that turkic i's are not normally preserved on conversion to an ANSI string, unless using a turkic code page."
+	Locale userDefault isTurkic
 		ifTrue: 
 			[subject := self assimilateString: 'İiıI'.
 			actual := subject asAnsiString.
@@ -159,6 +159,14 @@ testCollect
 					Character value: each codePoint + 1].
 	self assert: actual equals: 'b¤斈🐭2🍻'.
 	self assert: (self collectionClass empty collect: [:each | self assert: false]) equals: ''!
+
+testCompareEszett
+	| lower upper |
+	lower := 'straße'.
+	upper := 'STRASSE'.
+	self assert: lower <=> upper equals: 0.
+	self assert: upper <=> lower equals: 0.
+!
 
 testCopyReplaceAllWith
 	| subject actual |
@@ -468,6 +476,68 @@ testLeftString
 	self assert: (subject leftString: 6) equals: '🐬a£文🍺'.
 	self assert: (self collectionClass empty leftString: 1) equals: ''!
 
+testLetterICaseConversions
+	"Letter i is a a bit of a special case"
+
+	| tr de az capitalDotted smallDotted capitalDotless smallDotless |
+	tr := Locale named: 'tr-TR'.
+	de := Locale named: 'de-DE'.
+	az := Locale named: 'az-Latn-AZ'.
+	"All the i forms"
+	"[U+0049 LATIN CAPITAL LETTER I](https://codepoints.net/U+0049)"
+	capitalDotless := self collectionClass with: $I.
+	"[U+0130 Latin Capital Letter I with Dot Above](https://codepoints.net/U+0130)"
+	capitalDotted := self collectionClass with: $İ.
+	"[U+0069 Latin Small Letter I](https://codepoints.net/U+0069)"
+	smallDotted := self collectionClass with: $i.
+	" [U+0131 Latin Small Letter Dotless I](https://codepoints.net/U+0131)"
+	smallDotless := self collectionClass with: $ı.
+	"Conversion of letter to own case should be a nop"
+	self assert: (smallDotted asLowercase: tr) equals: smallDotted.
+	self assert: (smallDotted asLowercase: de) equals: smallDotted.
+	self assert: smallDotted asLowercase equals: smallDotted.
+	self assert: (smallDotless asLowercase: tr) equals: smallDotless.
+	self assert: (smallDotless asLowercase: de) equals: smallDotless.
+	self assert: smallDotless asLowercase equals: smallDotless.
+	self assert: (capitalDotted asUppercase: tr) equals: capitalDotted.
+	self assert: (capitalDotted asUppercase: de) equals: capitalDotted.
+	self assert: capitalDotted asUppercase equals: capitalDotted.
+	self assert: (capitalDotless asUppercase: tr) equals: capitalDotless.
+	self assert: (capitalDotless asUppercase: de) equals: capitalDotless.
+	self assert: capitalDotless asUppercase equals: capitalDotless.
+
+	"In any locale, linguistic lowercase of U+0130 is U+0069"
+	self assert: (capitalDotted asLowercase: tr) equals: smallDotted.
+	self assert: (capitalDotted asLowercase: de) equals: smallDotted.
+	"The non-linguistic version does not convert U+0130."
+	self assert: capitalDotted asLowercase equals: capitalDotted.
+
+	"In turkic locales expect U+0049 to lowercase to U+0131"
+	self assert: (capitalDotless asLowercase: tr) equals: smallDotless.
+	"But not elsewhere"
+	self assert: (capitalDotless asLowercase: de) equals: smallDotted.
+	self assert: capitalDotless asLowercase equals: smallDotted.
+
+	"Linguistic Uppercase of U+0131 is always to U+0049"
+	self assert: (smallDotless asUppercase: tr) equals: capitalDotless.
+	self assert: (smallDotless asUppercase: de) equals: capitalDotless.
+	"But non-linguistic conversion does not convert"
+	self assert: smallDotless asUppercase equals: smallDotless.
+
+	"In turkic locales expect U+0069 to uppercase to U+0130"
+	self assert: (smallDotted asUppercase: tr) equals: capitalDotted.
+	"But not elsewhere"
+	self assert: (smallDotted asUppercase: de) equals: capitalDotless.
+	self assert: smallDotted asUppercase equals: capitalDotless.
+
+	"In summary"
+	self assert: ('İiıI' asLowercase: az) equals: 'iiıı'.
+	self assert: ('İiıI' asUppercase: az) equals: 'İİII'.
+	self assert: ('İiıI' asLowercase: de) equals: 'iiıi'.
+	self assert: ('İiıI' asUppercase: de) equals: 'İIII'.
+	self assert: 'İiıI' asLowercase equals: 'İiıi'.
+	self assert: 'İiıI' asUppercase equals: 'İIıI'!
+
 testMatchExtended
 	#(#('#' '🐬') #('*#' '🐬') #('*#a' '🐬A') #('*#€#🍺*B*' '🐬€a🍺b') #('*€文a#b*c' '🐬🍺€文a🍺€文a🍺bc'))
 		do: [:each | self verifyPattern: each first matches: each second]!
@@ -639,6 +709,7 @@ testAsAnsiStringDotlessI!public!unit tests! !
 testBeginsWithExtended!public!unit tests! !
 testBeginsWithIgnoreCase!public!unit tests! !
 testCollect!public!unit tests! !
+testCompareEszett!public! !
 testCopyReplaceAllWith!public!unit tests! !
 testCopyReplacingWithObject!public!unit tests! !
 testCopyWithout!public!unit tests! !
@@ -661,6 +732,7 @@ testKeysAndValuesDo!public!unit tests! !
 testLast!public!unit tests! !
 testLastColon!public!unit tests! !
 testLeftString!public!unit tests! !
+testLetterICaseConversions!public!unit tests! !
 testMatchExtended!public! !
 testMidString!public!unit tests! !
 testNewWithAll!public! !

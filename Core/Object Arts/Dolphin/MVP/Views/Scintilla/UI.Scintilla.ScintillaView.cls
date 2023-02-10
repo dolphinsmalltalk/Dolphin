@@ -11471,6 +11471,14 @@ lineEndings
 
 	^#(#crlf #cr #lf)!
 
+listSortBlock: aBoolean
+	"Answer a <dyadicValuable> that can be used to sort strings in the same order as Scintilla expects them to be in lists, e.g. auto-completion lists.
+	This order ensures that incremental search will work properly in the list. The <Boolean> argument specifies whether the sort-order should ignore case differences or not."
+
+	^aBoolean
+		ifTrue: [[:a :b | (Ucrt _wcsicmp: a displayString string2: b displayString) <= 0]]
+		ifFalse: [[:a :b | (Ucrt strcmp: a displayString string2: b displayString) <= 0]]!
+
 markdownTextStyles
 	"Answer the default Markdown text style settings to be used for new instances of the receiver.
 	These are the styles used as the defaults for Markdown files in Scite."
@@ -12070,6 +12078,7 @@ layerNames!constants!public! !
 layoutCachingModes!constants!public! !
 lexerLanguages!constants!public! !
 lineEndings!constants!public! !
+listSortBlock:!constants!public! !
 markdownTextStyles!constants!public!style definition! !
 mergeKeyBindings:!key bindings!public! !
 multiPasteModes!constants!public! !

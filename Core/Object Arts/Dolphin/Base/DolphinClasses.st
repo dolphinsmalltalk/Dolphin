@@ -4562,6 +4562,13 @@ Kernel.SingletonSearchPolicy
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Kernel.SingletonSearchPolicy
+	subclass: #'Kernel.OrdinalCaseInsensitiveSearchPolicy'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Core.SessionManager
 	subclass: #'Kernel.BootSessionManager'
 	instanceVariableNames: 'productDetails startTime'

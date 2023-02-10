@@ -18,7 +18,7 @@ addToRecentList: aRecentString
 
 	| recentList |
 	recentList := self getRecentList.
-	recentList := recentList reject: [:each | each equalsIgnoreCase: aRecentString].
+	recentList := recentList reject: [:each | (each compareOrdinals: aRecentString ignoringCase: true) == 0].
 	recentList addFirst: aRecentString.
 	self setRecentList: recentList!
 

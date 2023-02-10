@@ -34,6 +34,20 @@ testDisplayFloatOn
 testDisplayName
 	self subclassResponsibility!
 
+testDisplayScaledDecimainOn
+	| subject |
+	subject := self defaultSubject.
+	self assert: (self displayScaledDecimal: 0.0s2 in: subject) equals: '0.00'.
+	self assert: (self displayScaledDecimal: -1.25s in: subject) equals: '-1.25'.
+	self assert: (self displayScaledDecimal: -0.0001s in: subject) equals: '-0.0001'.
+	"ScaledDecimals support arbitrary precision"
+	self
+		assert: (self displayScaledDecimal: -123456789123456789123456789.1234567890987654321s in: subject)
+		equals: '-123456789123456789123456789.1234567890987654321'!
+
+testIsTurkic
+	self deny: self defaultSubject isTurkic!
+
 testName
 	self subclassResponsibility!
 
@@ -234,6 +248,8 @@ setUp!private!running! !
 tearDown!private!running! !
 testDisplayFloatOn!public!unit tests! !
 testDisplayName!public!unit tests! !
+testDisplayScaledDecimainOn!public!unit tests! !
+testIsTurkic!public!unit tests! !
 testName!public!unit tests! !
 testNoUserOverrides!public!unit tests! !
 testPrimary!public!unit tests! !

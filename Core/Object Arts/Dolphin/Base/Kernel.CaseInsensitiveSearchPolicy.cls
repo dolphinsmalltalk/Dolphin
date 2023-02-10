@@ -8,14 +8,14 @@ Kernel.SingletonSearchPolicy
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Kernel.CaseInsensitiveSearchPolicy guid: (Core.GUID fromString: '{46f9c2fc-d025-11d3-93da-00a024ca708a}')!
-Kernel.CaseInsensitiveSearchPolicy comment: 'CaseInsensitiveSearchPolicy is for configuring pluggable collections and models of strings to use case-insensitive equality based search and comparisons, i.e. using #equalsIgnoreCase: and the #hashIgnoreCase: of the string. Note that these comparisons are not linguistic (i.e. it is ordinal case-insensitive), which makes this policy suitable for use with OS file names/paths, and other named OS objects, but it may not be suitable for cases where language rules mean that two strings should be considered equal but they are not under ordinal case-insensitive comparison rules. For example if the user''s default locale is ''tr-Tr'', then ''i'' is not equivalent to ''I'' ignoring case following linguistic rules, but would always be considered so by this search policy.
+Kernel.CaseInsensitiveSearchPolicy comment: 'CaseInsensitiveSearchPolicy is for configuring pluggable collections and models of strings to use case-insensitive equality based search and comparisons, i.e. using `String>>#<=>` and the hash of the case-folded string. Note that these comparisons are linguistic, which makes this policy unsuitable for use with OS file names/paths, and other named OS objects, but more suitable for cases where language rules mean that two strings should be considered equal but they are not under ordinal case-insensitive comparison rules. For example under this policy the German double-s (eszett) is considered equivalent to ''ss''.
 
 ```
-	SearchPolicy caseInsensitive compare: ''i'' with: ''I''.	"=> true"
-	SearchPolicy caseInsensitive compare: ((Locale named: ''tr-Tr'')  uppercaseString: ''i'') with: ''I''.	"=> false"
+	SearchPolicy caseInsensitive compare: ''ß'' with: ''ss''. "=> true"
+	(SearchPolicy caseInsensitive hash: ''ß'') = (SearchPolicy caseInsensitive hash: ''SS'') "=> true"
 ```
 
-N.B. Unlike other SearchPolicy classes, instances of this class are only appropriate for comparing and searching collections of strings, or objects which can be represented as strings (i.e. implementors of #asString).
+N.B. Unlike most other SearchPolicy classes, instances of this class are only appropriate for comparing and searching collections of strings, or objects which can be represented as strings (i.e. implementors of #asString).
 
 
 '!
@@ -25,14 +25,13 @@ N.B. Unlike other SearchPolicy classes, instances of this class are only appropr
 compare: operand1 with: operand2
 	"Answer whether the <Object>, operand1, is considered equivalent to the <Object> argument, operand2, by this search policy."
 
-	"Note that this is an ordinal case-insensitive comparison, not a linguistic one, and hence uses String>>#equalsIgnoreCase:, rather than the spaceship operator, String>>#<=>."
-
-	^operand1 asString equalsIgnoreCase: operand2 asString!
+	^operand1 asString <=> operand2 asString == 0!
 
 hash: operand
 	"Answer a suitable hash value for the <Object>, operand, under this search policy."
 
-	^operand asString hashIgnoreCase!
+	#todo. "Use ICU case-folding instead of asUppercase, or use ICU sort key, to fix e.g. eszett case"
+	^operand asString asUppercase hash!
 
 keyAtValue: value in: collection ifAbsent: operation
 	"Answer the <Object> key of the <Object> argument, value in the keyed

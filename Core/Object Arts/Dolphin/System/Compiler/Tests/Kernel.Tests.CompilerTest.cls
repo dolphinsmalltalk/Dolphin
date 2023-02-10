@@ -1213,7 +1213,7 @@ testSpecialLiteralsAsUnarySelectors
 				raise: self compilationErrorClass.
 			self denyIsNil: method]!
 
-testStringFolding
+testStringLiteralFolding
 	"String literals should be folded to a single immutable instance in the literal frame if they occur more than once."
 
 	| expr literals |
@@ -1223,7 +1223,7 @@ testStringFolding
 	self assert: (expr value: nil withArguments: #()).
 	self assert: expr literalCount equals: 6.
 	literals := expr literals.
-	self assert: (literals noDifference: #('a' #blah 'A' #asLowercase #asUtf8String #and: )).
+	self assert: (literals noDifference: #('a' #blah 'A' #asLowercase #asUtf8String #and:)).
 	self assert: (literals allSatisfy: [:each | each isImmutable])!
 
 testStringLiteralWithEmbeddedNulls
@@ -1752,7 +1752,7 @@ testScanningScaledDecimals!public!unit tests! !
 testScope!public!unit tests! !
 testSharedOuterTemps!public!unit tests! !
 testSpecialLiteralsAsUnarySelectors!public! !
-testStringFolding!public!unit tests! !
+testStringLiteralFolding!public!unit tests! !
 testStringLiteralWithEmbeddedNulls!public!unit tests! !
 testSymbolScanning!public!unit tests! !
 testTempMapOuterDepthExhaustive!public!unit tests-long running! !

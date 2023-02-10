@@ -76,20 +76,4 @@ struct CmpOrdinalIW
 	}
 };
 
-struct EqualIA
-{
-	__forceinline bool operator() (LPCSTR psz1, size_t cch1, LPCSTR psz2, size_t cch2) const
-	{
-		return cch1 == cch2 && CmpOrdinalIA()(psz1, cch1, psz2, cch2) == 0;
-	}
-};
-
-struct EqualIW
-{
-	__forceinline bool operator() (const Utf16String::CU* psz1, size_t cch1, const Utf16String::CU* psz2, size_t cch2) const
-	{
-		return cch1 == cch2 && ::CompareStringOrdinal((LPCWCH)psz1, cch1, (LPCWCH)psz2, cch2, TRUE) == CSTR_EQUAL;
-	}
-};
-
 static void hashCombine(char32_t& ch, uint32_t& hash);

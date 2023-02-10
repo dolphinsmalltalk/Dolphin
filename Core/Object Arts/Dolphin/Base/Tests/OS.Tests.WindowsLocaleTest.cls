@@ -64,7 +64,7 @@ testDayOfWeekName
 testDisplayCharacterOn
 	| subject |
 	subject := self defaultSubject.
-	{ $a. 'a'. $£. '£'. $€. '€'. $\x20. ' '. $\x1F42C. '🐬'. $\0. $\0 asString. $\x7F. $\x7F asString. $\x80. $\x80 asString. $\xFEFF. $\xFEFF asString}
+	{ $a. 'a'. $£. '£'. $€. '€'. $\x20. ' '. $\x1F42C. '🐬'. $\0. $\0 asString. $\x7F. $\x7F asString. $\x80. $\x80 asString. $\xFEFF. $\xFEFF asString.  $\xEFFFD. $\xEFFFD asString}
 		pairsDo: 
 			[:ch :expected |
 			| stream |
@@ -193,6 +193,11 @@ testIndexOfMonth
 	#('Ekim' 10 'EKİM' 10 'Mayıs' 5 'MAYIS' 5 'Nis' 4 'NİS' 4 'Ağu' 8)
 		pairsDo: [:month :index | self assert: (subject indexOfMonth: month) equals: index].
 	#('en-US' 'en-GB') do: [:each | self verifyIndexOfEnglishMonths: (Locale named: each)]!
+
+testIsTurkic
+	self assert: (Locale named: 'tr-TR') isTurkic.
+	self assert: (Locale named: 'az-Latn-AZ') isTurkic.
+	self deny: (Locale named: 'cy-GB') isTurkic!
 
 testListSeparator
 	| subject |
@@ -381,6 +386,7 @@ testEnglishName!public!unit tests! !
 testFirstDayOfWeek!public!unit tests! !
 testGetCalendarInfoString!public!unit tests! !
 testIndexOfMonth!public!unit tests! !
+testIsTurkic!public!unit tests! !
 testListSeparator!public!unit tests! !
 testLongDateFormats!public!unit tests! !
 testLowercaseString!public!unit tests! !

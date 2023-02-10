@@ -4409,13 +4409,15 @@ newInstanceAspect:class:!adapters!private! !
 choose
 	| filename |
 	filename := FileOpenDialog new
-				fileTypes: {#('PNG Files (*.png)' '*.png').
+				fileTypes: {
+							#('PNG Files (*.png)' '*.png').
 							#('Icon Files (*.ico)' '*.ico').
-							FileDialog allFilesType};
+							FileDialog allFilesType
+						};
 				showModal.
 	^filename notNil
 		ifTrue: 
-			[((File splitExtensionFrom: filename) equalsIgnoreCase: 'png')
+			[((File splitExtensionFrom: filename) compareOrdinals: 'png' ignoringCase: true) == 0
 				ifTrue: [self fromFile: filename]
 				ifFalse: [Icon fromFile: filename]]! !
 !Graphics.InternalIcon class categoriesForMethods!

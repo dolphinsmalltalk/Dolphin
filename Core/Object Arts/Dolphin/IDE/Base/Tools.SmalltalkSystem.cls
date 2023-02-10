@@ -2702,7 +2702,7 @@ populateMenu: popup tree: folderModel items: folderItems
 	"Private - Populate the menu, popup, with items from the system folder, folder."
 
 	| accels aMonadicValuable |
-	accels := PluggableSet searchPolicy: SearchPolicy caseInsensitive.
+	accels := PluggableSet searchPolicy: SearchPolicy ordinalCaseInsensitive.
 	"Ensure any existing keyboard shortcuts are accounted for"
 	aMonadicValuable := 
 			[:each |

@@ -15,12 +15,12 @@ UI.Folder comment: ''!
 <= aFolder
 	"Answer whether the receiver is less than or equal to the <Folder> argument."
 
-	^(pathname compare: aFolder pathname ignoreCase: true) <= 0!
+	^(pathname compareOrdinals: aFolder pathname ignoringCase: true) <= 0!
 
 = anObject
 	"Answer whether the receiver is equivalent to argument."
 
-	^self species == anObject species and: [pathname equalsIgnoreCase: anObject pathname]!
+	^self species == anObject species and: [(pathname compareOrdinals: anObject pathname ignoringCase: true) == 0]!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
@@ -37,7 +37,7 @@ folderName
 hash
 	"Answer the <SmallInteger> hash value for the receiver"
 
-	^pathname hashIgnoreCase!
+	^pathname hashOrdinalsIgnoringCase!
 
 name
 	"Answer the folder name of the receiver"

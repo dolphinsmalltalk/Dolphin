@@ -69,7 +69,9 @@ testGetEnvironmentVariable
 testGetModuleFilename
 	| dir lib testDll maxDllFilestem maxComponent |
 	self assert: ((Kernel32 getModuleFilename: Kernel32)
-				equalsIgnoreCase: (File composePath: SessionManager current systemDirectory subPath: 'KERNEL32.DLL')).
+				compareOrdinals: (File composePath: SessionManager current systemDirectory subPath: 'KERNEL32.DLL')
+				ignoringCase: true)
+		equals: 0.
 	"GetModuleFilename is documented to fail for libraries opened only to read resources, but historically we have returned an empty string in this case rather than raising an error"
 	lib := ResourceLibrary open: 'notepad.exe'.
 	self assertNotNil: lib asParameter.
@@ -87,12 +89,14 @@ testGetModuleFilename
 	subDir := String new: maxComponent withAll: $x.
 	File createDirectory: '\\?\' , dir , '\' , subDir.
 	"The maximum size of a short path to a DLL is quite a bit less than MAX_PATH."
-	{String new: maxComponent - dir size - 5 - 10 withAll: $a.
+	{
+		String new: maxComponent - dir size - 5 - 10 withAll: $a.
 		String new: maxComponent - dir size - 5 - 5 withAll: $b.
 		String new: maxComponent - dir size - 5 - 4 withAll: $c.
 		String new: maxComponent - dir size - 4 withAll: $d.
 		String new: maxDllFilestem withAll: $e.
-		subDir , '\' , (String new: maxDllFilestem withAll: $f)} do: 
+		subDir , '\' , (String new: maxDllFilestem withAll: $f)
+	} do: 
 				[:each |
 				path := File
 							composePath: dir
@@ -114,14 +118,14 @@ testGetSystemDirectory
 	actual := Kernel32 getSystemDirectory.
 	self assert: (File isDirectory: actual).
 	expected := $\ join: (($\ split: Kernel32 fileName) copyFrom: 1 to: 3).
-	self assert: (actual equalsIgnoreCase: expected)!
+	self assert: (actual compareOrdinals: expected ignoringCase: true) equals: 0!
 
 testGetSystemWindowsDirectory
 	| actual expected |
 	actual := Kernel32 getSystemWindowsDirectory.
 	self assert: (File isDirectory: actual).
 	expected := $\ join: (($\ split: Kernel32 fileName) copyFrom: 1 to: 2).
-	self assert: (actual equalsIgnoreCase: expected)!
+	self assert: (actual compareOrdinals: expected ignoringCase: true) equals: 0!
 
 testGetTempPath
 	self assert: (File appendPathDelimiter: Kernel32 getTempPath)

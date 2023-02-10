@@ -32,7 +32,7 @@ buildVKeyMaps
 	| nameToVk vkToName invariantKeys count |
 	invariantKeys := self class invariant virtualKeys.
 	count := invariantKeys size.
-	nameToVk := PluggableLookupTable new: count searchPolicy: SearchPolicy caseInsensitive.
+	nameToVk := PluggableLookupTable new: count searchPolicy: SearchPolicy ordinalCaseInsensitive.
 	vkToName := IdentityDictionary new: count.
 	invariantKeys do: 
 			[:each |
@@ -158,7 +158,7 @@ modifierKeys
 		ifNil: 
 			[| vks |
 			vks := self keyNames.
-			modifierKeys := SearchPolicy caseInsensitive newLookupTable
+			modifierKeys := SearchPolicy ordinalCaseInsensitive newLookupTable
 						at: (vks at: VK_CONTROL) put: FCONTROL;
 						at: (vks at: VK_SHIFT) put: FSHIFT;
 						at: (vks at: VK_MENU) put: FALT;
@@ -277,7 +277,7 @@ invariantVKeyMap
 
 	"Yes, VK_OEM_PLUS really does translate to the key name '='"
 
-	^SearchPolicy caseInsensitive newLookupTable
+	^SearchPolicy ordinalCaseInsensitive newLookupTable
 		addAll: {'BACKSPACE' -> VK_BACK.
 					'TAB' -> VK_TAB.
 					'ENTER' -> VK_RETURN.

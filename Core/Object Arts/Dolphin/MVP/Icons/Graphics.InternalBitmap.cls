@@ -192,10 +192,9 @@ setBitmap:!initializing!private! !
 chooseFile
 	| filename |
 	filename := UI.FileOpenDialog showModal.
-	((File splitExtensionFrom: filename) equalsIgnoreCase: 'ico') 
+	((File splitExtensionFrom: filename) compareOrdinals: 'ico' ignoringCase: true) == 0
 		ifTrue: 
-			[#todo.	"Anyone care to fix this?"
-			UI.MessageBox 
+			[UI.MessageBox
 				warning: 'Can''t currently internalize ICO files. 
 
 Why not use: 

@@ -22,6 +22,13 @@ basicLcid
 
 	^lcid!
 
+isTurkic
+	"Answer whether the receiver is a turkic locale (tr or az language)."
+
+	| language |
+	language := self iso639LanguageName.
+	^language = 'tr' or: [language = 'az']!
+
 lcid: anLCID
 	lcid := anLCID.
 	self initialize!
@@ -51,6 +58,7 @@ printOn: aStream
 !OS.WindowsLocale categoriesForMethods!
 =!comparing!public! !
 basicLcid!accessing!private! !
+isTurkic!public!testing! !
 lcid:!initializing!private! !
 printOn:!development!printing!public! !
 !

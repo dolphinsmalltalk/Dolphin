@@ -531,7 +531,7 @@ testPathName
 	"We'll get a long path name"
 	expected := '\\?\' , (File change: SessionManager current imageFileName extension: 'chg').
 	actual := SourceManager default changesStream file pathName.
-	self assert: actual equals: expected!
+	self assert: (actual compareOrdinals: expected ignoringCase: true) equals: 0!
 
 testRemoveDirectory
 	self createTestDirectories.

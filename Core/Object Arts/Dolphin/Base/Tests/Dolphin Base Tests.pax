@@ -144,6 +144,7 @@ package setClassNames: #(
 	#{Kernel.Tests.NamespaceImportTest}
 	#{Kernel.Tests.NamespaceTest}
 	#{Kernel.Tests.NeverSearchPolicyTest}
+	#{Kernel.Tests.OrdinalCaseInsensitiveSearchPolicyTest}
 	#{Kernel.Tests.PackageManagerTest}
 	#{Kernel.Tests.PackageTest}
 	#{Kernel.Tests.PoolConstantsDictionaryTest}
@@ -1225,6 +1226,13 @@ Core.Tests.SearchPolicyTest
 	classConstants: {}!
 Core.Tests.SearchPolicyTest
 	subclass: #'Kernel.Tests.NeverSearchPolicyTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.SearchPolicyTest
+	subclass: #'Kernel.Tests.OrdinalCaseInsensitiveSearchPolicyTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

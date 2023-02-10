@@ -114,10 +114,9 @@ createIconMethod: methodName OfSize: pixelSize
 createIconMethod: methodName ofSize: pixelSize fromFile: imageFileName
 	| extent internalIcon methodSourceStream |
 	extent := pixelSize asPoint.
-	((File splitExtensionFrom: imageFileName) equalsIgnoreCase: 'ico')
+	((File splitExtensionFrom: imageFileName) compareOrdinals: 'ico' ignoringCase: true) == 0
 		ifTrue: 
-			[#todo.	"Anyone care to fix this?"
-			UI.MessageBox
+			[UI.MessageBox
 				warning: 'Can''t currently compile from ICO files. 
 
 Why not use: 
@@ -143,7 +142,7 @@ to convert to PNG format first?'.
 	"
 	^'.
 	internalIcon printOn: methodSourceStream.
-	self class compile: methodSourceStream contents categories: {'public'. 'constants'}! !
+	self class compile: methodSourceStream contents categories: { 'public'. 'constants' }! !
 !Core.ClassDescription categoriesForMethods!
 createBadgeMethod!development!public! !
 createIconMethod!development!public! !

@@ -15,8 +15,9 @@ Graphics.ImageFromFileInitializer comment: ''!
 	"Answer whether the receiver and anObject are equivalent. Two Images loaded by identifier are equal if they are of the same species, and have the same id and are from the same resource modules."
 
 	^self == anObject or: 
-			[self species == anObject species
-				and: [(filename equalsIgnoreCase: anObject filename) and: [fileLocator = anObject fileLocator]]]!
+			[self species == anObject species and: 
+					[(filename compareOrdinals: anObject filename ignoringCase: true) == 0
+						and: [fileLocator = anObject fileLocator]]]!
 
 createImage: anImage extent: aPoint
 	^(anImage
@@ -64,7 +65,7 @@ flags: anObject
 hash
 	"Answer the <integer> hash value for the receiver."
 
-	^filename hashIgnoreCase!
+	^filename hashOrdinalsIgnoringCase!
 
 printImage: anImage on: aWriteStream
 	"Private - Print an expression on the <WriteStream> argument that will create a copy of the <Image> initialized by the receiver."

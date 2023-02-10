@@ -16,12 +16,12 @@ Graphics.ImageFromStringResourceInitializer comment: ''!
 
 	^self == anObject or: 
 			[self species == anObject species
-				and: [(identifier equalsIgnoreCase: anObject identifier) and: [module = anObject module]]]!
+				and: [(identifier compareOrdinals: anObject identifier ignoringCase: true) == 0 and: [module = anObject module]]]!
 
 hash
 	"Answer the <integer> hash value for the receiver."
 
-	^identifier hashIgnoreCase!
+	^identifier hashOrdinalsIgnoringCase!
 
 tryLoadFromFile: anImage extent: aPoint
 	^anImage

@@ -23,7 +23,7 @@ testDayOfWeekName
 testDisplayCharacterOn
 	| subject |
 	subject := self defaultSubject.
-	#($a 'a' $£ '£' $€ '€' $\x20 '␣' $\x1F42C '🐬' $\0 '␀' $\x7F '␡' $\x80 '(U+0080)' $\xFEFF '(U+FEFF)') pairsDo: 
+	#($a 'a' $£ '£' $€ '€' $\x20 '␣' $\x1F42C '🐬' $\0 '␀' $\x7F '␡' $\x80 '(U+0080)' $\xFEFF '(U+FEFF)' $\xEFFFD '(U+EFFFD)') pairsDo: 
 			[:ch :expected |
 			| stream |
 			stream := String smalltalkWriteStream.

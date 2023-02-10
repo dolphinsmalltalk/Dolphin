@@ -638,7 +638,7 @@ public:
 	template<class OpA, class OpW, bool> static Oop* PRIMCALL primitiveStringEqual(Oop* const sp, primargcount_t);
 	static Oop* PRIMCALL primitiveStringCompareOrdinal(Oop* const sp, primargcount_t argCount);
 	static Oop* PRIMCALL primitiveStringLessOrEqual(Oop* sp, primargcount_t);
-	static Oop* PRIMCALL primitiveHashIgnoreCase(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveOrdinalHashIgnoreCase(Oop* const sp, primargcount_t argCount);
 	static Oop* PRIMCALL primitiveBytesEqual(Oop* const sp, primargcount_t argCount);
 	static Oop* PRIMCALL primitiveBeginsWith(Oop* const sp, primargcount_t);
 

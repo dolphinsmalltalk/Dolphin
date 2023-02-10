@@ -91,3 +91,5 @@ uncompress
 	u_isgraph
 	u_isprint
 	u_ispunct
+	u_tolower
+	u_toupper

@@ -130,7 +130,7 @@ Note that in general, the UndefinedObject, nil, is interchangeable with 0, or NU
 						ifTrue: [handle = anObject handle]
 						ifFalse: 
 							["Filenames should be compared using an ordinal case-insensitive comparison"
-							self class fileName equalsIgnoreCase: anObject class fileName]]]!
+							(self class fileName compareOrdinals: anObject class fileName ignoringCase: true) == 0]]]!
 
 asParameter
 	"Answer the receiver in a form appropriate for passing to an external
@@ -206,7 +206,7 @@ handle: aHandle
 	handle := aHandle ifNotNil: [aHandle asExternalHandle]!
 
 hash
-	^self class fileName hashIgnoreCase!
+	^self class fileName hashOrdinalsIgnoringCase!
 
 invalidArgErrorClass
 	"Private - Answer the class of Error to be signalled when an invalid argument is passed to one of 

@@ -134,16 +134,11 @@ asInteger
 	^self codePoint!
 
 asLowercase
-	"Answer a <Character> which is the lowercase equivalent of the receiver."
+	"Answer a <Character> which is the lowercase equivalent of the receiver. Note that this is single code point mapping, so does not properly take account of composite characters. Case-conversions for a string should always be performed directly, and never character-by-character."
 
-	"Implementation Note: Apart from the ANSI asLowercase character mappings (basically all the
-	uppercase letters are mapped to lowercase letters), this implementation will map other
-	characters, depending on the configured locale of the host OS."
+	"Implementation Note: Unicode standard mappings as implemented by ICU, and as such supports letters outside the BMP (unlike the Windows API). Does not depend on host OS locale (e.g. Turkish dotted-I mapping will always take place)."
 
-	| ucp |
-	^(ucp := self codePoint) <= 16rFFFF
-		ifTrue: [self class codePoint: (OS.User32 charLower: ucp)]
-		ifFalse: [self]!
+	^VM u_tolower: self!
 
 asString
 	"Answer a new <String> whose sole element is the receiver."
@@ -156,16 +151,11 @@ asSymbol
 	^Symbol internCharacter: self!
 
 asUppercase
-	"Answer a <Character> which is the uppercase equivalent of the receiver."
+	"Answer a <Character> which is the uppercase equivalent of the receiver. Note that this is single code point mapping, so does not properly take account of context. Case-conversions for a string should always be performed directly, and never character-by-character."
 
-	"Implementation Note: Apart from the ASCII asUppercase character mappings (basically all the
-	lowercase letters are mapped to uppercase letters), this implementation will map other
-	characters, depending on the configured locale of the host OS."
+	"Implementation Note: Unicode standard mappings as implemented by ICU, and as such supports letters outside the BMP (unlike the Windows API). Does not depend on host OS locale."
 
-	| ucp |
-	^(ucp := self codePoint) <= 16rFFFF
-		ifTrue: [self class codePoint: (OS.User32 charUpper: ucp)]
-		ifFalse: [self]!
+	^VM u_toupper: self!
 
 asUtf16String
 	"Answer a new UTF-16 encoded <String> whose sole element is the receiver."

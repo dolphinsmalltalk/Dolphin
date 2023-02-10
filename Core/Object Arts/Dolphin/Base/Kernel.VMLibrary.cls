@@ -551,6 +551,59 @@ u_ispunct: aCharacter
 	<cdecl: bool8 u_ispunct char32>
 	^self invalidCall: _failureCode!
 
+u_tolower: aCharacter
+"/**
+ * The given character is mapped to its lowercase equivalent according to
+ * UnicodeData.txt; if the character has no lowercase equivalent, the character
+ * itself is returned.
+ *
+ * Same as java.lang.Character.toLowerCase().
+ *
+ * This function only returns the simple, single-code point case mapping.
+ * Full case mappings should be used whenever possible because they produce
+ * better results by working on whole strings.
+ * They take into account the string context and the language and can map
+ * to a result string with a different length as appropriate.
+ * Full case mappings are applied by the string case mapping functions,
+ * see ustring.h and the UnicodeString class.
+ * See also the User Guide chapter on C/POSIX migration:
+ * http://icu-project.org/userguide/posix.html#case_mappings
+ *
+ * @param c the code point to be mapped
+ * @return the Simple_Lowercase_Mapping of the code point, if any;
+ *         otherwise the code point itself.
+ * @stable ICU 2.0
+ */"
+	<cdecl: char32 u_tolower char32>
+	^self invalidCall: _failureCode!
+
+u_toupper: aCharacter
+"/**
+ * The given character is mapped to its uppercase equivalent according to UnicodeData.txt;
+ * if the character has no uppercase equivalent, the character itself is
+ * returned.
+ *
+ * Same as java.lang.Character.toUpperCase().
+ *
+ * This function only returns the simple, single-code point case mapping.
+ * Full case mappings should be used whenever possible because they produce
+ * better results by working on whole strings.
+ * They take into account the string context and the language and can map
+ * to a result string with a different length as appropriate.
+ * Full case mappings are applied by the string case mapping functions,
+ * see ustring.h and the UnicodeString class.
+ * See also the User Guide chapter on C/POSIX migration:
+ * http://icu-project.org/userguide/posix.html#case_mappings
+ *
+ * @param c the code point to be mapped
+ * @return the Simple_Uppercase_Mapping of the code point, if any;
+ *         otherwise the code point itself.
+ * @stable ICU 2.0
+ */"
+
+	<cdecl: char32 u_toupper char32>
+	^self invalidCall: _failureCode!
+
 unregisterObject: anObject
 	| i |
 	i := self registry identityIndexOf: anObject.
@@ -636,6 +689,8 @@ u_isalpha:!icu functions!public! !
 u_iscntrl:!icu functions!public! !
 u_isgraph:!icu functions!public! !
 u_ispunct:!icu functions!public! !
+u_tolower:!public! !
+u_toupper:!public! !
 unregisterObject:!accessing-registry!private! !
 unsignedFromSigned:!helpers!private! !
 utf16StringFromAddress:!helpers!private! !

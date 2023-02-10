@@ -230,14 +230,14 @@ extern "C" PRIMTABLEDECL Interpreter::PrimitiveFp primitivesTable[256] = {
 	Interpreter::primitiveStringAsByteString									, // case 217: String>>#asAnsiString
 	Interpreter::primitiveStringConcatenate										, // case 218: String>>#,
 	Interpreter::primitiveStringEqual<EqualA, EqualW, true>						, // case 219: String>>#=
-	Interpreter::primitiveStringCompareOrdinal									, // case 220: String>>#compare:ignoreCase:
+	Interpreter::primitiveStringCompareOrdinal									, // case 220: String>>#compareOrdinals:ignoringCase:
 	Interpreter::primitiveBasicNext												, // case 221: ReadStream|FileStream|ReadWriteStream>>#basicNext, ReadStream>>#basicNextAvailable
 	Interpreter::primitiveBasicNextPut											, // case 222: WriteStream>>#basicNextPut:, FileStream|WriteStream>>#primitiveBasicNextPut:
 	Interpreter::primitiveStringAsUtf32String									, // case 223: Currently unimplemented/unused
 	Interpreter::primitiveBeginsWith											, // case 224: String>>#beginsWith:
 	Interpreter::unusedPrimitive												, // case 225:
-	Interpreter::primitiveStringEqual<EqualIA, EqualIW, false>					, // case 226: String>>#equalsIgnoreCase:
-	Interpreter::primitiveHashIgnoreCase										, // case 227: String>>#hashIgnoreCase
+	Interpreter::unusedPrimitive												, // case 226:
+	Interpreter::primitiveOrdinalHashIgnoreCase									, // case 227: String>>#hashOrdinalsIgnoringCase:
 	Interpreter::primitiveStringLessOrEqual										, // case 228: String>>#<=
 	Interpreter::primitiveCharacterEquals										, // case 229: Character>>#=
 	Interpreter::unusedPrimitive												, // case 230:

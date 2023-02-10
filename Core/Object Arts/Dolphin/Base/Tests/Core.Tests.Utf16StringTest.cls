@@ -11,8 +11,8 @@ Core.Tests.Utf16StringTest guid: (Core.GUID fromString: '{e12792f7-8bb1-44b6-84c
 Core.Tests.Utf16StringTest comment: ''!
 !Core.Tests.Utf16StringTest methodsFor!
 
-assimilate: each
-	^Character utf16Value: each asInteger!
+assimilate: anObject
+	^Character utf16Value: anObject asInteger!
 
 assimilateString: aString
 	^aString asUtf16String!
