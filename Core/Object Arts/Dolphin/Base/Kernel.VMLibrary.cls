@@ -419,6 +419,138 @@ stdout
 	<cdecl: handle StdOut>
 	^self invalidCall: _failureCode!
 
+u_charType: aCharacter
+"/**
+ * Returns the general category value for the code point.
+ *
+ * Same as java.lang.Character.getType().
+ *
+ * @param c the code point to be tested
+ * @return the general category (UCharCategory) value
+ *
+ * @see UCharCategory
+ * @stable ICU 2.0
+ */"
+
+	<cdecl: int8 u_charType char32>
+	^self invalidCall: _failureCode!
+
+u_hasBinaryProperty: aCharacter which: anIntege
+"/**
+ * Check a binary Unicode property for a code point.
+ *
+ * Unicode, especially in version 3.2, defines many more properties than the
+ * original set in UnicodeData.txt.
+ *
+ * The properties APIs are intended to reflect Unicode properties as defined
+ * in the Unicode Character Database (UCD) and Unicode Technical Reports (UTR).
+ * For details about the properties see http://www.unicode.org/ucd/ .
+ * For names of Unicode properties see the UCD file PropertyAliases.txt.
+ *
+ * Important: If ICU is built with UCD files from Unicode versions below 3.2,
+ * then properties marked with ""new in Unicode 3.2"" are not or not fully available.
+ *
+ * @param c Code point to test.
+ * @param which UProperty selector constant, identifies which binary property to check.
+ *        Must be UCHAR_BINARY_START<=which<UCHAR_BINARY_LIMIT.
+ * @return true or false according to the binary Unicode property value for c.
+ *         Also false if 'which' is out of bounds or if the Unicode version
+ *         does not have data for the property at all, or not for this code point.
+ *
+ * @see UProperty
+ * @see u_getBinaryPropertySet
+ * @see u_getIntPropertyValue
+ * @see u_getUnicodeVersion
+ * @stable ICU 2.1
+ */
+"
+	<cdecl: bool8 u_hasBinaryProperty char32 uint32>
+	^self invalidCall: _failureCode!
+
+u_isalpha: aCharacter
+"/**
+ * Determines whether the specified code point is a letter character.
+ * True for general categories ""L"" (letters).
+ *
+ * Same as java.lang.Character.isLetter().
+ *
+ * In addition to being equivalent to a Java function, this also serves
+ * as a C/POSIX migration function.
+ * See the comments about C/POSIX character classification functions in the
+ * documentation at the top of this header file.
+ *
+ * @param c the code point to be tested
+ * @return true if the code point is a letter character
+ *
+ * @see u_isdigit
+ * @see u_isalnum
+ * @stable ICU 2.0
+ */"
+	<cdecl: bool8 u_isalpha char32>
+	^self invalidCall: _failureCode!
+
+u_iscntrl: aCharacter
+"/**
+ * Determines whether the specified code point is a control character
+ * (as defined by this function).
+ * A control character is one of the following:
+ * - ISO 8-bit control character (U+0000..U+001f and U+007f..U+009f)
+ * - U_CONTROL_CHAR (Cc)
+ * - U_FORMAT_CHAR (Cf)
+ * - U_LINE_SEPARATOR (Zl)
+ * - U_PARAGRAPH_SEPARATOR (Zp)
+ *
+ * This is a C/POSIX migration function.
+ * See the comments about C/POSIX character classification functions in the
+ * documentation at the top of this header file.
+ *
+ * @param c the code point to be tested
+ * @return true if the code point is a control character
+ *
+ * @see UCHAR_DEFAULT_IGNORABLE_CODE_POINT
+ * @see u_isprint
+ * @stable ICU 2.0
+ */"
+	<cdecl: bool8 u_iscntrl char32>
+	^self invalidCall: _failureCode!
+
+u_isgraph: aCharacter
+"/**
+ * Determines whether the specified code point is a ""graphic"" character
+ * (printable, excluding spaces).
+ * true for all characters except those with general categories
+ * ""Cc"" (control codes), ""Cf"" (format controls), ""Cs"" (surrogates),
+ * ""Cn"" (unassigned), and ""Z"" (separators).
+ *
+ * This is a C/POSIX migration function.
+ * See the comments about C/POSIX character classification functions in the
+ * documentation at the top of this header file.
+ *
+ * @param c the code point to be tested
+ * @return true if the code point is a ""graphic"" character
+ *
+ * @stable ICU 2.6
+ */"
+	<cdecl: bool8 u_isgraph char32>
+	^self invalidCall: _failureCode!
+
+u_ispunct: aCharacter
+"/**
+ * Determines whether the specified code point is a punctuation character.
+ * True for characters with general categories ""P"" (punctuation).
+ *
+ * This is a C/POSIX migration function.
+ * See the comments about C/POSIX character classification functions in the
+ * documentation at the top of this header file.
+ *
+ * @param c the code point to be tested
+ * @return true if the code point is a punctuation character
+ *
+ * @stable ICU 2.6
+ */"
+	<cdecl: bool8 u_ispunct char32>
+	^self invalidCall: _failureCode!
+
 unregisterObject: anObject
 	| i |
 	i := self registry identityIndexOf: anObject.
@@ -498,6 +630,12 @@ specialSelectors!accessing-registry!private! !
 stderr!accessing-handles!private! !
 stdin!accessing-handles!private! !
 stdout!accessing-handles!private! !
+u_charType:!icu functions!public! !
+u_hasBinaryProperty:which:!icu functions!public! !
+u_isalpha:!icu functions!public! !
+u_iscntrl:!icu functions!public! !
+u_isgraph:!icu functions!public! !
+u_ispunct:!icu functions!public! !
 unregisterObject:!accessing-registry!private! !
 unsignedFromSigned:!helpers!private! !
 utf16StringFromAddress:!helpers!private! !

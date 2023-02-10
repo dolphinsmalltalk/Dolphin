@@ -93,3 +93,12 @@ uncompress
 ; VMLibrary
 
 	_snprintf_s
+
+; ICU
+	u_charType
+	u_hasBinaryProperty
+	u_isalpha
+	u_iscntrl
+	u_isgraph
+	u_isprint
+	u_ispunct

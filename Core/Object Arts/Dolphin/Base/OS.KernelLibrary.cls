@@ -1084,10 +1084,6 @@ getStdHandle: nStdHandle
 	<stdcall: handle GetStdHandle uint32>
 	^self invalidCall: _failureCode!
 
-getStringType: dwInfoType lpSrcStr: lpSrcStr cchSrc: cchSrc lpCharType: lpCharType
-	<stdcall: bool GetStringTypeW uint32 lpwstr int32 uint16*>
-	^self invalidCall: _failureCode!
-
 getSystemDefaultLCID
 	"Answer the system default locale identifier. 
 
@@ -2180,7 +2176,6 @@ getProcessHeap!public!win32 functions-memory management! !
 getShortPathName:!public!win32 functions-file management! !
 getShortPathName:lpszShortPath:cchBuffer:!public!win32 functions-file management! !
 getStdHandle:!public!win32 functions-console! !
-getStringType:lpSrcStr:cchSrc:lpCharType:!**auto generated**!public!win32 functions-national language support! !
 getSystemDefaultLCID!public!win32 functions-national language support! !
 getSystemDirectory!public!win32 functions-system information! !
 getSystemDirectory:uSize:!public!win32 functions-system information! !

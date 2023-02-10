@@ -303,6 +303,156 @@ Kernel.SharedPool
 			'FACILITY_WINDOWS' -> 16r8
 		}!
 Kernel.SharedPool
+	subclass: #'OS.ICUConstants'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'U_CHAR_CATEGORY_COUNT' -> 16r1E.
+			'U_COMBINING_SPACING_MARK' -> 16r8.
+			'U_CONNECTOR_PUNCTUATION' -> 16r16.
+			'U_CONTROL_CHAR' -> 16rF.
+			'U_CURRENCY_SYMBOL' -> 16r19.
+			'U_DASH_PUNCTUATION' -> 16r13.
+			'U_DECIMAL_DIGIT_NUMBER' -> 16r9.
+			'U_ENCLOSING_MARK' -> 16r7.
+			'U_END_PUNCTUATION' -> 16r15.
+			'U_FINAL_PUNCTUATION' -> 16r1D.
+			'U_FORMAT_CHAR' -> 16r10.
+			'U_GENERAL_OTHER_TYPES' -> 16r0.
+			'U_INITIAL_PUNCTUATION' -> 16r1C.
+			'U_LETTER_NUMBER' -> 16rA.
+			'U_LINE_SEPARATOR' -> 16rD.
+			'U_LOWERCASE_LETTER' -> 16r2.
+			'U_MATH_SYMBOL' -> 16r18.
+			'U_MODIFIER_LETTER' -> 16r4.
+			'U_MODIFIER_SYMBOL' -> 16r1A.
+			'U_NON_SPACING_MARK' -> 16r6.
+			'U_OTHER_LETTER' -> 16r5.
+			'U_OTHER_NUMBER' -> 16rB.
+			'U_OTHER_PUNCTUATION' -> 16r17.
+			'U_OTHER_SYMBOL' -> 16r1B.
+			'U_PARAGRAPH_SEPARATOR' -> 16rE.
+			'U_PRIVATE_USE_CHAR' -> 16r11.
+			'U_SPACE_SEPARATOR' -> 16rC.
+			'U_START_PUNCTUATION' -> 16r14.
+			'U_SURROGATE' -> 16r12.
+			'U_TITLECASE_LETTER' -> 16r3.
+			'U_UNASSIGNED' -> 16r0.
+			'U_UPPERCASE_LETTER' -> 16r1.
+			'UCHAR_AGE' -> 16r4000.
+			'UCHAR_ALPHABETIC' -> 16r0.
+			'UCHAR_ASCII_HEX_DIGIT' -> 16r1.
+			'UCHAR_BIDI_CLASS' -> 16r1000.
+			'UCHAR_BIDI_CONTROL' -> 16r2.
+			'UCHAR_BIDI_MIRRORED' -> 16r3.
+			'UCHAR_BIDI_MIRRORING_GLYPH' -> 16r4001.
+			'UCHAR_BIDI_PAIRED_BRACKET' -> 16r400D.
+			'UCHAR_BIDI_PAIRED_BRACKET_TYPE' -> 16r1015.
+			'UCHAR_BLOCK' -> 16r1001.
+			'UCHAR_CANONICAL_COMBINING_CLASS' -> 16r1002.
+			'UCHAR_CASE_FOLDING' -> 16r4002.
+			'UCHAR_CASE_IGNORABLE' -> 16r32.
+			'UCHAR_CASE_SENSITIVE' -> 16r22.
+			'UCHAR_CASED' -> 16r31.
+			'UCHAR_CHANGES_WHEN_CASEFOLDED' -> 16r36.
+			'UCHAR_CHANGES_WHEN_CASEMAPPED' -> 16r37.
+			'UCHAR_CHANGES_WHEN_LOWERCASED' -> 16r33.
+			'UCHAR_CHANGES_WHEN_NFKC_CASEFOLDED' -> 16r38.
+			'UCHAR_CHANGES_WHEN_TITLECASED' -> 16r35.
+			'UCHAR_CHANGES_WHEN_UPPERCASED' -> 16r34.
+			'UCHAR_DASH' -> 16r4.
+			'UCHAR_DECOMPOSITION_TYPE' -> 16r1003.
+			'UCHAR_DEFAULT_IGNORABLE_CODE_POINT' -> 16r5.
+			'UCHAR_DEPRECATED' -> 16r6.
+			'UCHAR_DIACRITIC' -> 16r7.
+			'UCHAR_DOUBLE_START' -> 16r3000.
+			'UCHAR_EAST_ASIAN_WIDTH' -> 16r1004.
+			'UCHAR_EMOJI' -> 16r39.
+			'UCHAR_EMOJI_COMPONENT' -> 16r3D.
+			'UCHAR_EMOJI_MODIFIER' -> 16r3B.
+			'UCHAR_EMOJI_MODIFIER_BASE' -> 16r3C.
+			'UCHAR_EMOJI_PRESENTATION' -> 16r3A.
+			'UCHAR_EXTENDED_PICTOGRAPHIC' -> 16r40.
+			'UCHAR_EXTENDER' -> 16r8.
+			'UCHAR_FULL_COMPOSITION_EXCLUSION' -> 16r9.
+			'UCHAR_GENERAL_CATEGORY' -> 16r1005.
+			'UCHAR_GENERAL_CATEGORY_MASK' -> 16r2000.
+			'UCHAR_GRAPHEME_BASE' -> 16rA.
+			'UCHAR_GRAPHEME_CLUSTER_BREAK' -> 16r1012.
+			'UCHAR_GRAPHEME_EXTEND' -> 16rB.
+			'UCHAR_GRAPHEME_LINK' -> 16rC.
+			'UCHAR_HANGUL_SYLLABLE_TYPE' -> 16r100B.
+			'UCHAR_HEX_DIGIT' -> 16rD.
+			'UCHAR_HYPHEN' -> 16rE.
+			'UCHAR_ID_CONTINUE' -> 16rF.
+			'UCHAR_ID_START' -> 16r10.
+			'UCHAR_IDEOGRAPHIC' -> 16r11.
+			'UCHAR_IDS_BINARY_OPERATOR' -> 16r12.
+			'UCHAR_IDS_TRINARY_OPERATOR' -> 16r13.
+			'UCHAR_INDIC_POSITIONAL_CATEGORY' -> 16r1016.
+			'UCHAR_INDIC_SYLLABIC_CATEGORY' -> 16r1017.
+			'UCHAR_INVALID_CODE' -> -16r1.
+			'UCHAR_JOIN_CONTROL' -> 16r14.
+			'UCHAR_JOINING_GROUP' -> 16r1006.
+			'UCHAR_JOINING_TYPE' -> 16r1007.
+			'UCHAR_LEAD_CANONICAL_COMBINING_CLASS' -> 16r1010.
+			'UCHAR_LINE_BREAK' -> 16r1008.
+			'UCHAR_LOGICAL_ORDER_EXCEPTION' -> 16r15.
+			'UCHAR_LOWERCASE' -> 16r16.
+			'UCHAR_LOWERCASE_MAPPING' -> 16r4004.
+			'UCHAR_MASK_START' -> 16r2000.
+			'UCHAR_MATH' -> 16r17.
+			'UCHAR_NAME' -> 16r4005.
+			'UCHAR_NFC_INERT' -> 16r27.
+			'UCHAR_NFC_QUICK_CHECK' -> 16r100E.
+			'UCHAR_NFD_INERT' -> 16r25.
+			'UCHAR_NFD_QUICK_CHECK' -> 16r100C.
+			'UCHAR_NFKC_INERT' -> 16r28.
+			'UCHAR_NFKC_QUICK_CHECK' -> 16r100F.
+			'UCHAR_NFKD_INERT' -> 16r26.
+			'UCHAR_NFKD_QUICK_CHECK' -> 16r100D.
+			'UCHAR_NONCHARACTER_CODE_POINT' -> 16r18.
+			'UCHAR_NUMERIC_TYPE' -> 16r1009.
+			'UCHAR_NUMERIC_VALUE' -> 16r3000.
+			'UCHAR_OTHER_PROPERTY_START' -> 16r7000.
+			'UCHAR_PATTERN_SYNTAX' -> 16r2A.
+			'UCHAR_PATTERN_WHITE_SPACE' -> 16r2B.
+			'UCHAR_POSIX_ALNUM' -> 16r2C.
+			'UCHAR_POSIX_BLANK' -> 16r2D.
+			'UCHAR_POSIX_GRAPH' -> 16r2E.
+			'UCHAR_POSIX_PRINT' -> 16r2F.
+			'UCHAR_POSIX_XDIGIT' -> 16r30.
+			'UCHAR_PREPENDED_CONCATENATION_MARK' -> 16r3F.
+			'UCHAR_QUOTATION_MARK' -> 16r19.
+			'UCHAR_RADICAL' -> 16r1A.
+			'UCHAR_REGIONAL_INDICATOR' -> 16r3E.
+			'UCHAR_S_TERM' -> 16r23.
+			'UCHAR_SCRIPT' -> 16r100A.
+			'UCHAR_SCRIPT_EXTENSIONS' -> 16r7000.
+			'UCHAR_SEGMENT_STARTER' -> 16r29.
+			'UCHAR_SENTENCE_BREAK' -> 16r1013.
+			'UCHAR_SIMPLE_CASE_FOLDING' -> 16r4006.
+			'UCHAR_SIMPLE_LOWERCASE_MAPPING' -> 16r4007.
+			'UCHAR_SIMPLE_TITLECASE_MAPPING' -> 16r4008.
+			'UCHAR_SIMPLE_UPPERCASE_MAPPING' -> 16r4009.
+			'UCHAR_SOFT_DOTTED' -> 16r1B.
+			'UCHAR_STRING_START' -> 16r4000.
+			'UCHAR_TERMINAL_PUNCTUATION' -> 16r1C.
+			'UCHAR_TITLECASE_MAPPING' -> 16r400A.
+			'UCHAR_TRAIL_CANONICAL_COMBINING_CLASS' -> 16r1011.
+			'UCHAR_UNIFIED_IDEOGRAPH' -> 16r1D.
+			'UCHAR_UPPERCASE' -> 16r1E.
+			'UCHAR_UPPERCASE_MAPPING' -> 16r400C.
+			'UCHAR_VARIATION_SELECTOR' -> 16r24.
+			'UCHAR_VERTICAL_ORIENTATION' -> 16r1018.
+			'UCHAR_WHITE_SPACE' -> 16r1F.
+			'UCHAR_WORD_BREAK' -> 16r1014.
+			'UCHAR_XID_CONTINUE' -> 16r20.
+			'UCHAR_XID_START' -> 16r21
+		}!
+Kernel.SharedPool
 	subclass: #'OS.MessageBoxConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -4137,40 +4287,40 @@ Core.Locale
 	classConstants: {
 			'ControlCodePictures'
 				-> (IdentityDictionary withAll: {
-								$\0 -> $\x2400.
-								$\x1 -> $\x2401.
-								$\x2 -> $\x2402.
-								$\x3 -> $\x2403.
-								$\x4 -> $\x2404.
-								$\x5 -> $\x2405.
-								$\x6 -> $\x2406.
-								$\a -> $\x2407.
-								$\b -> $\x2408.
-								$\t -> $\x2409.
-								$\n -> $\x240A.
-								$\v -> $\x240B.
-								$\f -> $\x240C.
-								$\r -> $\x240D.
-								$\xE -> $\x240E.
-								$\xF -> $\x240F.
-								$\x10 -> $\x2410.
-								$\x11 -> $\x2411.
-								$\x12 -> $\x2412.
-								$\x13 -> $\x2413.
-								$\x14 -> $\x2414.
-								$\x15 -> $\x2415.
-								$\x16 -> $\x2416.
-								$\x17 -> $\x2417.
-								$\x18 -> $\x2418.
-								$\x19 -> $\x2419.
-								$\x1A -> $\x241A.
-								$\x1B -> $\x241B.
-								$\x1C -> $\x241C.
-								$\x1D -> $\x241D.
-								$\x1E -> $\x241E.
-								$\x1F -> $\x241F.
-								$\x20 -> $\x2423.
-								$\x7F -> $\x2421
+								$\0 -> $␀.
+								$\x1 -> $␁.
+								$\x2 -> $␂.
+								$\x3 -> $␃.
+								$\x4 -> $␄.
+								$\x5 -> $␅.
+								$\x6 -> $␆.
+								$\a -> $␇.
+								$\b -> $␈.
+								$\t -> $␉.
+								$\n -> $␊.
+								$\v -> $␋.
+								$\f -> $␌.
+								$\r -> $␍.
+								$\xE -> $␎.
+								$\xF -> $␏.
+								$\x10 -> $␐.
+								$\x11 -> $␑.
+								$\x12 -> $␒.
+								$\x13 -> $␓.
+								$\x14 -> $␔.
+								$\x15 -> $␕.
+								$\x16 -> $␖.
+								$\x17 -> $␗.
+								$\x18 -> $␘.
+								$\x19 -> $␙.
+								$\x1A -> $␚.
+								$\x1B -> $␛.
+								$\x1C -> $␜.
+								$\x1D -> $␝.
+								$\x1E -> $␞.
+								$\x1F -> $␟.
+								$\x20 -> $␣.
+								$\x7F -> $␡
 							})
 		}!
 OS.AbstractWindowsLocale
@@ -4205,7 +4355,7 @@ Core.Magnitude
 	subclass: #'Core.Character'
 	instanceVariableNames: 'code'
 	classVariableNames: 'AnsiCharacters AnsiCodePage AnsiCodePoints CharacterSet Utf8Default'
-	imports: #(#{OS.NlsConstants private})
+	imports: #(#{OS.NlsConstants private} #{OS.ICUConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'EncodingMask' -> 16r3F000000.

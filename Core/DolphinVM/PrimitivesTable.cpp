@@ -235,7 +235,7 @@ extern "C" PRIMTABLEDECL Interpreter::PrimitiveFp primitivesTable[256] = {
 	Interpreter::primitiveBasicNextPut											, // case 222: WriteStream>>#basicNextPut:, FileStream|WriteStream>>#primitiveBasicNextPut:
 	Interpreter::primitiveStringAsUtf32String									, // case 223: Currently unimplemented/unused
 	Interpreter::primitiveBeginsWith											, // case 224: String>>#beginsWith:
-	Interpreter::primitiveCharacterClassify										, // case 225: Character>>#classify:
+	Interpreter::unusedPrimitive												, // case 225:
 	Interpreter::primitiveStringEqual<EqualIA, EqualIW, false>					, // case 226: String>>#equalsIgnoreCase:
 	Interpreter::primitiveHashIgnoreCase										, // case 227: String>>#hashIgnoreCase
 	Interpreter::primitiveStringLessOrEqual										, // case 228: String>>#<=
