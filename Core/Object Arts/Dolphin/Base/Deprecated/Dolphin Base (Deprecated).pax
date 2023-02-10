@@ -585,7 +585,7 @@ invalidCall
 	"The primitive failure code is now an implicit temp of the primitive method, and so must be passed. The instance variable of Process formerly used to store the failure code is no longer used."
 
 	Notification deprecated.
-	^self invalidCall: Failed! !
+	^self invalidCall: Failed fromFrame: Processor activeProcess topFrame sender! !
 !ExternalLibrary categoriesForMethods!
 invalidCall!exceptions!public! !
 !
