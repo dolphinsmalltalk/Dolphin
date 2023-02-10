@@ -119,6 +119,9 @@ selectionsByIndex
 
 	^self selectableItems selectionsByIndex!
 
+selectionsByIndex: aCollectionOfIntegers
+	self selectableItems selectionsByIndex: aCollectionOfIntegers!
+
 sortAlgorithmClass
 	"Answer the class of algorithm to be used for sorting the receiver's contents. Use a stable sorting algorithm."
 
@@ -147,6 +150,7 @@ selectionByIndex:!public!selection! !
 selectionByIndex:ifAbsent:!public!selection! !
 selectionByIndexIfNone:!public!selection! !
 selectionsByIndex!public!selection! !
+selectionsByIndex:!public!selection! !
 sortAlgorithmClass!accessing!public! !
 sortBlock!accessing!private!sorting! !
 sortBlock:!accessing!private!sorting! !

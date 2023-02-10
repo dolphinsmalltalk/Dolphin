@@ -280,9 +280,8 @@ initialize
 	View registerMessageMappings: {WM_CTLCOLORLISTBOX -> #wmCtlColor:wParam:lParam:}!
 
 stbConvertFromVersion10: anArray
-	"Private - Perform an STB conversion from a version 10 <ListView> to version 11,
-	i.e. merge column and primaryColumns instance variables into one, and add a couple 
-	of new spare inst. var slots."
+	"Private - Perform an STB conversion from a version 10 <BasicListAbstract> to version 11.
+	Version 11 adds the lastSelIndices selection cache."
 
 	| array |
 	array := super stbConvertFromVersion10: anArray.

@@ -316,6 +316,19 @@ isMultiSelect: aBoolean
 
 	self selectionMode: (aBoolean ifTrue: [#multi] ifFalse: [#single])!
 
+isReadOnly
+	"Answer whether the receiver's contents can be selected."
+
+	^self baseStyleAllMask: LBS_NOSEL!
+
+isReadOnly: aBoolean
+	"Set whether the receiver's contents can be selected."
+
+	self
+		baseStyleMask: LBS_NOSEL
+		set: aBoolean
+		recreateIfChanged: true	"Must recreate in order for this change to take effect"!
+
 itemCount
 	"Answers the count of elements in the receiver. This may be 
 	different from the answer to #size if the model has been updated but
@@ -619,7 +632,7 @@ basicClear!private!removing! !
 basicItemFromPoint:!enquiries!private! !
 basicRemoveAtIndex:!private!removing! !
 basicResetSelection!private!selection! !
-canHScroll!public!testing! !
+canHScroll!accessing-styles!public!testing! !
 canHScroll:!accessing-styles!public! !
 caretIndex!public!selection! !
 caretIndex:!public!selection! !
@@ -635,17 +648,19 @@ getMultipleSelections!private!selection! !
 getSelectedCount!private!selection! !
 getSelectionsByIndex!private!selection! !
 getSingleSelection!helpers!private!selection! !
-hasPermanentScrollbars!public!testing! !
+hasPermanentScrollbars!accessing-styles!public!testing! !
 hasPermanentScrollbars:!accessing-styles!public! !
-hasToggleSelection!accessing-styles!public! !
+hasToggleSelection!accessing-styles!public!testing! !
 hasToggleSelection:!accessing-styles!public! !
 hideDropHighlight!drag & drop!private! !
 horizontalExtent!accessing!public! !
 horizontalExtent:!accessing!public! !
 initStorageFor:!helpers!private! !
 isDragSource:!accessing!public! !
-isMultiSelect!public!selection!testing! !
-isMultiSelect:!public!testing! !
+isMultiSelect!accessing-styles!public!selection!testing! !
+isMultiSelect:!accessing-styles!public! !
+isReadOnly!accessing-styles!public!testing! !
+isReadOnly:!accessing-styles!public! !
 itemCount!accessing!public! !
 itemFromPoint:!enquiries!private! !
 itemRect:!accessing!public! !
