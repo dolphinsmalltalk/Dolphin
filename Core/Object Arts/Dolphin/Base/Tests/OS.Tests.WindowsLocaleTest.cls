@@ -61,6 +61,17 @@ testDayOfWeekName
 		pairsDo: [:day :index | self assert: (subject dayOfWeek: day) equals: index].
 	#('en-US' 'en-GB') do: [:each | self verifyEnglishDayOfWeekNames: (Locale named: each)]!
 
+testDisplayCharacterOn
+	| subject |
+	subject := self defaultSubject.
+	{ $a. 'a'. $£. '£'. $€. '€'. $\x20. ' '. $\x1F42C. '🐬'. $\0. $\0 asString. $\x7F. $\x7F asString. $\x80. $\x80 asString. $\xFEFF. $\xFEFF asString}
+		pairsDo: 
+			[:ch :expected |
+			| stream |
+			stream := String smalltalkWriteStream.
+			subject displayCharacter: ch on: stream.
+			self assert: stream contents equals: expected]!
+
 testDisplayFloatOn
 	| subject |
 	{{Locale standard: 'en-GB'.
@@ -362,6 +373,7 @@ testComparing!public!unit tests! !
 testDayNames!public!unit tests! !
 testDayOfWeek!public!unit tests! !
 testDayOfWeekName!public!unit tests! !
+testDisplayCharacterOn!public!unit tests! !
 testDisplayFloatOn!public!unit tests! !
 testDisplayFloatOnNegativeModes!public!unit tests! !
 testDisplayName!public!unit tests! !

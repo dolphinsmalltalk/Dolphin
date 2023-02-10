@@ -80,6 +80,11 @@ contents
 	contents
 		add: #('Core\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin In-place Text Editor.pax' #encrypted #imageBased);
 		add: #('Core\Object Arts\Dolphin\IDE\Professional\Dolphin Refactoring Browser.pax' #encrypted #imageBased).
+
+	"Scintilla View generation tool"
+	contents
+		add: #('Core\Object Arts\Dolphin\IDE\Professional\Scintilla View Generator.pax' #plain #imageBased).
+
 	^contents!
 
 defaultSystemFolderExtent

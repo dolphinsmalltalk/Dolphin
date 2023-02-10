@@ -226,7 +226,7 @@ testCodePoint
 			self assert: ch codePoint equals: each]!
 
 testCodePointString
-	#($a 'U+0061' $£ 'U+00A3' $€ 'U+20AC' $\x1F42C 'U+1F42C' $ÿ 'U+00FF' $\x100 'U+0100' $\xFFF 'U+0FFF' $\x1000 'U+1000' $\xFFFD 'U+FFFD' $\x10000 'U+10000' $\x10FFFD 'U+10FFFD')
+	#($\x0 'U+0000' $a 'U+0061' $£ 'U+00A3' $€ 'U+20AC' $\x1F42C 'U+1F42C' $ÿ 'U+00FF' $\x100 'U+0100' $\xFFF 'U+0FFF' $\x1000 'U+1000' $\xFFFD 'U+FFFD' $\x10000 'U+10000' $\x10FFFD 'U+10FFFD')
 		pairsDo: [:char :expected | self assert: char codePointString equals: expected]!
 
 testComparing

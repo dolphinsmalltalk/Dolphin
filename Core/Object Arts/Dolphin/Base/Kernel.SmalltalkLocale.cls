@@ -6,7 +6,45 @@ Core.Locale
 	classVariableNames: 'Current Hex'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'ControlCodePictures'
+				-> (IdentityDictionary withAll: {
+								$\0 -> $\x2400.
+								$\x1 -> $\x2401.
+								$\x2 -> $\x2402.
+								$\x3 -> $\x2403.
+								$\x4 -> $\x2404.
+								$\x5 -> $\x2405.
+								$\x6 -> $\x2406.
+								$\a -> $\x2407.
+								$\b -> $\x2408.
+								$\t -> $\x2409.
+								$\n -> $\x240A.
+								$\v -> $\x240B.
+								$\f -> $\x240C.
+								$\r -> $\x240D.
+								$\xE -> $\x240E.
+								$\xF -> $\x240F.
+								$\x10 -> $\x2410.
+								$\x11 -> $\x2411.
+								$\x12 -> $\x2412.
+								$\x13 -> $\x2413.
+								$\x14 -> $\x2414.
+								$\x15 -> $\x2415.
+								$\x16 -> $\x2416.
+								$\x17 -> $\x2417.
+								$\x18 -> $\x2418.
+								$\x19 -> $\x2419.
+								$\x1A -> $\x241A.
+								$\x1B -> $\x241B.
+								$\x1C -> $\x241C.
+								$\x1D -> $\x241D.
+								$\x1E -> $\x241E.
+								$\x1F -> $\x241F.
+								$\x20 -> $\x2423.
+								$\x7F -> $\x2421
+							})
+		}!
 Kernel.SmalltalkLocale guid: (Core.GUID fromString: '{06088e6e-01bc-4518-a4a5-73088615fdd8}')!
 Kernel.SmalltalkLocale comment: ''!
 !Kernel.SmalltalkLocale categoriesForClass!System-Localization! !
@@ -69,6 +107,18 @@ decimalSeparator
 	"Answer the decimal separator <String> used in the receiver locale in the representation of numbers with a fractional part."
 
 	^'.'!
+
+displayCharacter: aCharacter on: aStream
+	aCharacter isGraph
+		ifTrue: [aStream nextPut: aCharacter]
+		ifFalse: 
+			[(ControlCodePictures lookup: aCharacter)
+				ifNil: 
+					[aStream
+						nextPut: $(;
+						nextPutAll: aCharacter codePointString;
+						nextPut: $)]
+				ifNotNil: [:alternate | aStream nextPut: alternate]]!
 
 displayDuration: aDuration on: aPuttableStream
 	"Display a friendly but concise representation of the <Duration> argument onto the <puttableStream> argument.
@@ -446,9 +496,10 @@ dayOfWeekName:!constants!public! !
 dayOfWeekShortAbbreviation:!constants!public! !
 decimalPlaces!constants!public! !
 decimalSeparator!constants!public! !
-displayDuration:on:!printing!public! !
-displayFloat:on:!printing!public! !
-displayInteger:on:!printing!public! !
+displayCharacter:on:!displaying!public! !
+displayDuration:on:!displaying!public! !
+displayFloat:on:!displaying!public! !
+displayInteger:on:!displaying!public! !
 displayName!displaying!public! !
 displayOn:!displaying!public! !
 durationFormat!constants!public! !
@@ -501,6 +552,7 @@ current
 	^Current!
 
 initialize
+	| controlPictures |
 	Current := self new
 				integerBase: 10;
 				numberFormat;
@@ -510,7 +562,12 @@ initialize
 				integerBase: 16;
 				numberFormat;
 				isImmutable: true;
-				yourself!
+				yourself.
+	controlPictures := IdentityDictionary new.
+	($\x0 to: $\x1F) do: [:ch | controlPictures at: ch put: (Character codePoint: 16r2400 + ch codePoint)].
+	controlPictures at: $\x20 put: $\x2423.
+	controlPictures at: $\x7F put: $\x2421.
+	self addClassConstant: 'ControlCodePictures' value: controlPictures!
 
 reset
 	Current ifNotNil: [:current | current numberFormat: nil]!

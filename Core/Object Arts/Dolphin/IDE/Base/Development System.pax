@@ -102,6 +102,9 @@ package setClassNames: #(
 	#{Tools.ResourceIdentifierDialog}
 	#{Tools.ResourceListPresenter}
 	#{Tools.ResourceToolboxPresenter}
+	#{Tools.Scintilla}
+	#{Tools.Scintilla.CharacterClassificationAspect}
+	#{Tools.Scintilla.CharacterClassificationBatchAccessor}
 	#{Tools.SequenceableCollectionInspector}
 	#{Tools.SetBatchAspectAccessor}
 	#{Tools.SingleChunkReader}
@@ -672,6 +675,8 @@ package setMethodNames: #(
 	#(#{UI.RichTextPresenter class} #publishedEventsOfInstances)
 	#(#{UI.Scintilla.Attribute class} #publishedAspectsOfInstances)
 	#(#{UI.Scintilla.BoolPropertyDescriptor} #aspectDescriptor)
+	#(#{UI.Scintilla.CharacterClassifications} #publishedAspects)
+	#(#{UI.Scintilla.CharacterClassifications} #publishedKeyedAspects)
 	#(#{UI.Scintilla.CharacterRepresentation class} #publishedAspectsOfInstances)
 	#(#{UI.Scintilla.ColourAlphaPropertyDescriptor} #aspectDescriptor)
 	#(#{UI.Scintilla.ColourPropertyDescriptor} #aspectDescriptor)
@@ -861,6 +866,13 @@ Tools
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Tools
+	subclass: #'Tools.Scintilla'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Core.Object
 	subclass: #'Tools.CodeGenerationContext'
 	instanceVariableNames: 'writeStream targetClass'
@@ -950,6 +962,51 @@ Tools.KeyedAspect
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Tools.KeyedAspect
+	subclass: #'Tools.Scintilla.CharacterClassificationAspect'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'ControlCodeNames'
+				-> (IdentityDictionary withAll: {
+								$\0 -> 'NUL'.
+								$\x1 -> 'SOH'.
+								$\x2 -> 'SOT'.
+								$\x3 -> 'EOT'.
+								$\x4 -> 'EOT'.
+								$\x5 -> 'ENQ'.
+								$\x6 -> 'ACK'.
+								$\a -> 'BEL'.
+								$\b -> 'BS'.
+								$\t -> 'TAB'.
+								$\n -> 'LF'.
+								$\v -> 'VT'.
+								$\f -> 'FF'.
+								$\r -> 'CR'.
+								$\xE -> 'SO'.
+								$\xF -> 'SI'.
+								$\x10 -> 'DLE'.
+								$\x11 -> 'DC1'.
+								$\x12 -> 'DC2'.
+								$\x13 -> 'DC3'.
+								$\x14 -> 'DC4'.
+								$\x15 -> 'NAK'.
+								$\x16 -> 'SYN'.
+								$\x17 -> 'EOB'.
+								$\x18 -> 'CAN'.
+								$\x19 -> 'EM'.
+								$\x1A -> 'SUB'.
+								$\x1B -> 'ESC'.
+								$\x1C -> 'FS'.
+								$\x1D -> 'GS'.
+								$\x1E -> 'RS'.
+								$\x1F -> 'US'.
+								$\x20 -> 'SP'.
+								$\x7F -> 'DEL'
+							})
+		}!
 Tools.KeyedAspect
 	subclass: #'Tools.InstVarAspect'
 	instanceVariableNames: ''
@@ -1190,6 +1247,13 @@ Tools.IndexedInstVarBatchAccessor
 	classConstants: {}!
 Tools.KeyedAspectBatchAccessor
 	subclass: #'Tools.AnonymousKeyedAspectBatchAccessor'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Tools.KeyedAspectBatchAccessor
+	subclass: #'Tools.Scintilla.CharacterClassificationBatchAccessor'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -7957,6 +8021,35 @@ aspectDescriptor
 aspectDescriptor!development!public! !
 !
 
+!UI.Scintilla.CharacterClassifications methodsFor!
+
+publishedAspects
+	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
+
+	"This override is necessary to avoid implementation details being included by the 
+    	default implementation in Object>>publishedAspects for an empty Dictionary."
+
+	^(self publishedKeyedAspects)
+		addAll: self class publishedAspectsOfInstances;
+		yourself!
+
+publishedKeyedAspects
+	"Answers a <LookupTable> of the published aspects of the 
+    	receiver's keyed contents."
+
+	^LookupTable new
+		addAll: ((Scintilla.CharacterClassificationBatchAccessor
+					subject: self
+					keys: self keys
+					startingAt: 1
+					batchSize: 128) getBatchAccessors
+					collect: [:each | each aspectDescriptor]);
+		yourself! !
+!UI.Scintilla.CharacterClassifications categoriesForMethods!
+publishedAspects!constants!public! !
+publishedKeyedAspects!public! !
+!
+
 !UI.Scintilla.CharacterRepresentation class methodsFor!
 
 publishedAspectsOfInstances
@@ -8143,6 +8236,7 @@ publishedAspectsOfInstances
 		add: (Aspect symbol: #endOfLineMode from: self lineEndings);
 		add: (Aspect duration: #mouseDwellTime);
 		add: (Aspect symbol: #drawingTechnology from: self drawingTechnologies);
+		add: (Aspect name: #characterClassifications) beImmutable;
 		yourself.
 	answer add: ((Aspect choice: #styler
 				evaluationFrom: 

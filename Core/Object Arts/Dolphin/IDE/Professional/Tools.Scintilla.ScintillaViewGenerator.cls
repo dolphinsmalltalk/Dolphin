@@ -1473,7 +1473,7 @@ generateNotificationMap
 	stream
 		nextPutAll: 'yourself) ';
 		display: #lookup:;
-		nextPutAll: ' (pNMHDR sdwordAtOffset: 8) - ##(';
+		nextPutAll: ' (pNMHDR int32AtOffset: 8) - ##(';
 		nextPutAll: scnFirst;
 		nextPutAll: ' - 1))
 		ifNotNil: [:action | self perform: action with: pNMHDR]'.

@@ -2,7 +2,7 @@
 
 UI.MultilineTextEdit
 	subclass: #'UI.Scintilla.ScintillaView'
-	instanceVariableNames: 'this currentTextStyles styleIdMap styler markerDefinitions markers wordChars registeredImages modificationEventMask autoCStops autoCFillups elementColors caretBlinkTime characterRepresentations library indicators callTipTabWidth punctuation callTipHighlightColor braceChars whitespaces scFlags allTextStyles foldMarginColor foldMarginHiColor foldMarkerStyle foldFlags stringClass keyBindings indicatorStyles _unused47 _unused48 annotationStyles _unused50 _unused51 edgeColor'
+	instanceVariableNames: 'this currentTextStyles styleIdMap styler markerDefinitions markers _unused23 registeredImages modificationEventMask autoCStops autoCFillups elementColors caretBlinkTime characterRepresentations library indicators callTipTabWidth _unused34 callTipHighlightColor braceChars _unused37 scFlags allTextStyles foldMarginColor foldMarginHiColor foldMarkerStyle foldFlags stringClass keyBindings indicatorStyles characterClassifications _unused48 annotationStyles _unused50 _unused51 edgeColor'
 	classVariableNames: 'DefaultKeyBindings DefaultTextStyles'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -27,38 +27,42 @@ Scintilla is a very powerful control with an extensive range of features. It is 
 This class provides at least a basic interface to all of Scintilla''s extensive functionality; almost every `SCI_XXX` message listed in the documentation has a corresponding wrapper method in this class. The wrapper methods have been auto-generated from Scintilla''s interface definition file (Scintilla.iface), and are either of the form `#sciXXX:etc`, or have had a more readable symbol allocated. These can all be found in the ''scintilla interface'' method category. Likewise each of the `SCN_XXX` notification messages has a corresponding `#scnXXX` event handler that is (or can be) used to hook the event. These can all be found in the ''event handling-scintilla'' method category. In addition `ScintillaView` implements higher-level functionality to allow it to be used as a drop-in replacement for a `MultilineTextEdit`, and which also simplifies the use of most of its additional capabilities. 
 
 `ScintillaView` provides high-level object-oriented wrappings for the following Scintilla features:
-	Text retrieval and modification	(though not get/set of styled text, and based around the standard `<textView>` protocol)
-	Searching and replacing 		(`TextEdit` implementation is inherited, but does not include RegExp replace)
+	Text retrieval and
+		modification			(though not get/set of styled text, and based around the standard `<textView>` protocol)
+	Searching and replacing 	(`TextEdit` implementation is inherited, but does not include RegExp replace)
 	Overtype
-	Cut, copy and paste			(implements standard MVP protocols)
+	Cut, copy and paste		(implements standard MVP protocols)
 	Undo and Redo
-	Mouse capture				(supported as `#willCaptureMouse` aspect, but not really required - use MVP''s `MouseTracker` instead)
+	Mouse capture			(supported as `#willCaptureMouse` aspect, but not really required - use MVP''s `MouseTracker` instead)
 	Line endings
-	Styling						(an extensive Smalltalk framework is provided - stylers can be implemented in Smalltalk e.g. `Tools.SmalltalkStyler` based on `Kernel.Scanner`)
-	Style definition				(full control is possible by altering aspects of a collection of `TextStyle` objects, UI editors are provided for this too).
+	Words					See `CharacterClassification`
+	Styling					(an extensive Smalltalk framework is provided - stylers can be implemented in Smalltalk e.g. `Tools.SmalltalkStyler` based on `Kernel.Scanner`)
+	Style definition			(full control is possible by altering aspects of a collection of `TextStyle` objects, UI editors are provided for this too).
 	Element colours
 	Caret, selection, 
-		and hotspot styles			(not hotspot styles)
-	Character Representations
-	Margins
-	Other Settings					(mostly)
+		and hotspot styles		(not hotspot styles)
+	Character Representations	See `CharacterRepresentation`
+	Margins					See `Margin`
+	Other Settings				(mostly)
 	Brace highlighting
 	Tab and Indentation Guides
-	Markers
-	Indicators					Named "modern" indicators are now supported. Indicator values are unused at present and probably not needed.
-	Autocompletion				(note that the container needs to invoke auto-completion when appropriate)
+	Markers					See `MarkerDefinition` and `Marker`
+	Indicators				Named "modern" indicators are now supported. Indicator values are unused at present and probably not needed. See `IndicatorStyle` and `Indicator`.
+	Autocompletion			(note that the container needs to invoke auto-completion when appropriate)
 	User lists
-	Call tips
-	Keyboard commands			(some are bound to existing commands)
-	Key bindings
+	Call tips					See `CallTipStyle`
+	Keyboard commands		(some are bound to existing commands)
+	Key bindings				See `KeyBinding`
 	Line wrapping
 	Zooming
 	Long lines
-	Direct access					(i.e. direct calls to the control, rather than through the message queue, faster but not thread safe)
-	Folding						(requires lexer support)
-	Annotations
+	Direct access				(i.e. direct calls to the control, rather than through the message queue, faster but not thread safe)
+	Folding					(requires lexer support)
+	Annotations				See `Annotation`
 	Multiple-selection
-	Change History				Note that the change history cannot be persisted, so will not survive image saves, etc
+	Change History			Note that the change history cannot be persisted, so will not survive image saves, etc
+
+To understand how to use these features, it is recommended to first read the relevant section of the [Scintilla documentation](https://www.scintilla.org/ScintillaDoc.html), and then see the method category named after the feature, e.g. the ''character classes'' category contains all `Scintilla` methods associated with this feature. Some of the more complex features have additional classes defined to provide a better Smalltalk abstraction, e.g. `TextStyle`.
 	
 Features of Scintilla that are not currently exposed at any level higher than the basic message interface include:
 	Error handling				(not currently used much by Scintilla itself)
@@ -69,18 +73,18 @@ Features of Scintilla that are not currently exposed at any level higher than th
 	Multiple views				(alternatives exist using the MVP framework, though this could be useful in some applications)
 	Margin text
 	
-N.B. Scintilla is an excellent editor control, but does not do much parameter validation. Thus if using the low-level API be careful not to pass in invalid parameters as these may cause unexpected behaviour. For example if length passed to `SCI_SETSTYLING` is -1, then the control goes into a loop (at the time of writing).
+N.B. Scintilla is an excellent editor control with very rich functionality, but it does not do much parameter validation. Thus if using the low-level API be careful not to pass in invalid parameters as these may cause unexpected behaviour. For example if length passed to `SCI_SETSTYLING` is -1, then the control goes into a loop (at the time of writing).
 
 ## Instance Variables:
 
-  `this`						`External.Handle`. C++ ''this'' pointer for direct function invocation.
+  `this`						`<integer>`. C++ ''this'' pointer of the underlying Scintilla control for direct function invocation.
   `currentTextStyles`				`IdentityDictionary` mapping `Symbol` to `TextStyle` for the current lexer.
   `styleIdMap`					`Array` 
   `styler`						`ScintillaStyler`. Responsible for dynamically ''colouring'' text in the view.
   `markerDefinitions`			`IdentityDictionary` mapping `Symbol` to `MarkerDefinition`.
   `markers`					`IdentitySet` of `Marker`s. All markers currently set in the view.
   `wordChars`					`String` of characters considered to be word delimiters.
-  `registeredImages`			`LookupTable`
+  `registeredImages`			`LookupTable` of `<integer>` keyed by `<image>`.
   `modificationEventMask`		 `<integer>` bit mask controlling `SCN_MODIFIED` notifications (see Scintilla docs).
   `autoCStops`					`String` or `nil`. The characters which cancel an auto-completion list when typed.
   `autoCFillups`				`String` or `nil`. The characters which accept the selection in an auto-completion list when typed.
@@ -90,10 +94,8 @@ N.B. Scintilla is an excellent editor control, but does not do much parameter va
   `library`						`ScintillaLibrary` instance for direct function invocation. Can be a `NullScintillaLibrary` if the view is unrealised.
   `indicators`					`Array` of `Indicator`s
   `callTipTabWidth`				`integer` width of tabs in call tips
-  `punctuation`					`String` or nil. Used to identify word boundaries.
   `callTipHighlightColor`			`Color` or `nil`. The hilight colour for calltips.
-  `braceChars`					`String` of characters considered to be brace characters, e.g. ''(){}\[\]''.
-  `whitespaces`					`String` of characters considered to be whitespace.
+  `braceChars`					`IdentityDictionary` of `String` keyed by `Symbol`. Maps style names to the set of characters considered to be brace characters of that style, e.g. `''()''` for `#literalArray`.
   `scFlags`						`<integer>`. Various flags.
   `allTextStyles`					`IdentityDictionary` mapping `Symbol`ic lexer name to dictionary of text styles for that lexer.
   `foldMarginColor` 			`Color` or `nil`. The fold margin background colour (if visible)
@@ -101,19 +103,27 @@ N.B. Scintilla is an excellent editor control, but does not do much parameter va
   `foldMarkerStyle`				`Symbol`. Name of the fold (outlining) marker style employed in the fold margin.
   `foldFlags`					`<integer>`. Lexer fold flags.
   `stringClass`					Either `AnsiString` or `Utf8String`, depending on whether in Unicode mode. Default and recommended for most uses is Utf8.
-  `keyBindings`					`IdentityDictionary` mapping Dolphin accelerator key codes to Scintilla messages. `nil` by default (default bindings are used).
+  `keyBindings`					`<collection>` of `KeyBinding`s mapping Dolphin accelerator key codes to Scintilla messages. `nil` by default (default Scintilla bindings are used).
   `indicatorStyles`				`IdentityDictionary` mapping `Symbol` or `<integer>` indicator style names to `IndicatorStyle`s.
-  `annotationStyles`				`IdentityDictionary`
+  `characterClassifications`		`CharacterClassifications`. Classifies the ASCII characters as word, whitespace or punctuation. All other characters are punctuation (Scintilla limitation).
+  `annotationStyles`				`IdentityDictionary` of `TextStyle`s keyed by `Symbol`. Associates annotations by name with the text styling to be used to display annotations of that type.
   `edgeColor`					`Color` or `nil.` 
 
 ## Class Variables:
-CodePages DefaultKeyBindings DefaultTextStyles LexerKeywords
 
-  `CodePages`				`IdentityDictionary` mapping `<integer>` to `Symbol`
-  `DefaultKeyBindings`		`LookupTable` mapping Dolphin accelerator key codes to Scintilla messages for the default key bindings.
-  `DefaultTextStyles`			`IdentityDictionary` of default text style maps by lexer name.
-  `LexerKeywords`			`LookupTable` of `Array` of String, keyed by lexer `Symbol`
+  `DefaultKeyBindings`			`IdentityDictionary` of `KeyBinding`s keyed by `<integer>` mapping Dolphin accelerator key codes to Scintilla messages for the default key bindings.
+  `DefaultTextStyles`				`LookupTable` of `IdentityDictionary`s keyed by  `Symbol`. Maps lexer names to the default `TextStyle` maps for that lexer.
 
+## ClassConstants:
+  `AnnotationStylesOffset`		`<integer>` 
+  `BackgroundDwellEvents`		`<integer>`
+  `BraceHilightingMask` 			`<integer>`
+  `CodePages`					`IdentityDictionary` mapping `<integer>` code page number to `Symbol` naming that code page.
+  `DefaultCallTipTabWidth`		`<integer>`
+  `FoldingMask`				`<integer>`
+  `LexerKeywords`				`LookupTable` of `Array` of String, keyed by lexer `Symbol`
+  `NumAnnotationStyles`			`<integer>`
+  `NumMarginStyles`			`<integer>`
 '!
 !UI.Scintilla.ScintillaView categoriesForClass!MVP-Views! !
 !UI.Scintilla.ScintillaView methodsFor!
@@ -1101,6 +1111,20 @@ characterAt: anInteger
 	| ch |
 	ch := (self sciGetCharAt: anInteger) bitAnd: 16rFF.
 	^stringClass characterForCodeUnit: ch!
+
+characterClassifications
+	^characterClassifications ifNil: [self getCharacterClassifications]!
+
+characterClassifications: aCharacterClassifications
+	"Set the receiver's notion of word-characters, punctuation and whitespace as defined by the <CharacterClassifications> argument.
+	If the argument is nil, then the classifications are reset to the control's defaults. 
+	See the [Words](https://www.scintilla.org/ScintillaDoc.html#Words) section of the Scintilla documentation for further details."
+
+	(aCharacterClassifications isNil or: [aCharacterClassifications isDefault])
+		ifTrue: 
+			[characterClassifications := nil.
+			self sciSetCharsDefault]
+		ifFalse: [(characterClassifications := aCharacterClassifications) applyToView: self]!
 
 characterRepresentations
 	^(characterRepresentations ifNil: [#()] ifNotNil: [characterRepresentations])
@@ -2477,6 +2501,10 @@ formFeed
 		wParam: 0
 		lParam: 0!
 
+getCharacterClassifications
+	^CharacterClassifications whitespaces: self sciGetWhitespaceChars
+		punctuation: self sciGetPunctuationChars!
+
 getDirectPointer
 	library := ScintillaLibrary default.
 	this := User32
@@ -3019,7 +3047,7 @@ initializeControl
 	self updateControlStyles.
 	styler ifNotNil: [self invalidateStyling].
 	self sciSetCodePage: stringClass codePage.
-	self setCharacterClasses.
+	characterClassifications ifNotNil: [characterClassifications applyToView: self].
 	autoCFillups ifNotNil: [self sciAutoCSetFillUps: autoCFillups].
 	autoCStops ifNotNil: [self sciAutoCStops: autoCStops].
 	foldFlags ifNotNil: [self setFoldFlags].
@@ -4602,11 +4630,14 @@ printMagnification: magnificationInteger
 		lParam: 0!
 
 punctuation
-	^punctuation ifNil: [self sciGetPunctuationChars]!
+	"Answer a <String> representing the set of characters considered to be punctuation (non-whitespace characters that are word separators) in the receiver."
 
-punctuation: aStringOrNil 
-	punctuation := aStringOrNil.
-	punctuation ifNil: [self setCharacterClasses] ifNotNil: [self sciSetPunctuationChars: punctuation]!
+	^self characterClassifications punctuation!
+
+punctuation: aStringOrNil
+	self characterClassifications: (self characterClassifications
+				punctuation: aStringOrNil;
+				yourself)!
 
 queryCommand: aCommandQuery 
 	"Private - Enters details about a potential command for the receiver into the 
@@ -6280,10 +6311,10 @@ sciGetPunctuationChars
 				wParam: 0
 				lpParam: nil.
 	^len == 0
-		ifTrue: [stringClass empty]
+		ifTrue: [AnsiString empty]
 		ifFalse: 
 			[| result |
-			result := stringClass newFixed: len.
+			result := AnsiString newFixed: len.
 			library
 				directFunction: this
 				msg: SCI_GETPUNCTUATIONCHARS
@@ -6459,10 +6490,10 @@ sciGetSubStyleBases
 				wParam: 0
 				lpParam: nil.
 	^len == 0
-		ifTrue: [Core.ByteArray empty]
+		ifTrue: [ByteArray empty]
 		ifFalse: 
 			[| result |
-			result := Core.ByteArray newFixed: len.
+			result := ByteArray newFixed: len.
 			library
 				directFunction: this
 				msg: SCI_GETSUBSTYLEBASES
@@ -6584,10 +6615,10 @@ sciGetWhitespaceChars
 				wParam: 0
 				lpParam: nil.
 	^len == 0
-		ifTrue: [stringClass empty]
+		ifTrue: [AnsiString empty]
 		ifFalse: 
 			[| result |
-			result := stringClass newFixed: len.
+			result := AnsiString newFixed: len.
 			library
 				directFunction: this
 				msg: SCI_GETWHITESPACECHARS
@@ -6606,10 +6637,10 @@ sciGetWordChars
 				wParam: 0
 				lpParam: nil.
 	^len == 0
-		ifTrue: [stringClass empty]
+		ifTrue: [AnsiString empty]
 		ifFalse: 
 			[| result |
-			result := stringClass newFixed: len.
+			result := AnsiString newFixed: len.
 			library
 				directFunction: this
 				msg: SCI_GETWORDCHARS
@@ -8148,10 +8179,10 @@ sciTargetAsUTF8
 				wParam: 0
 				lpParam: nil.
 	^len == 0
-		ifTrue: [Core.Utf8String empty]
+		ifTrue: [Utf8String empty]
 		ifFalse: 
 			[| result |
-			result := Core.Utf8String newFixed: len.
+			result := Utf8String newFixed: len.
 			library
 				directFunction: this
 				msg: SCI_TARGETASUTF8
@@ -8890,16 +8921,6 @@ setCaretBlinkTime
 	self sciSetCaretPeriod: (caretBlinkTime
 				ifNil: [User32 getCaretBlinkTime]
 				ifNotNil: [caretBlinkTime asMilliseconds])!
-
-setCharacterClasses
-	"Private - Configure the control with current character class settings. 
-	Setting word chars causes Scintilla to reset other character classes to defaults, so 
-	we have to set all these immediately after setting the word characters."
-
-	wordChars ifNil: [self sciSetCharsDefault] ifNotNil: [self sciSetWordChars: wordChars].
-	"Whitepace and punctutation character classes will have been reset to defaults."
-	whitespaces ifNotNil: [self sciSetWhitespaceChars: whitespaces].
-	punctuation ifNotNil: [self sciSetPunctuationChars: punctuation]!
 
 setCurrentTextStyles: aCollection
 	| newStylesByName allocatedStyles newStylesById availableStyles count |
@@ -9780,21 +9801,16 @@ whitespaceMarkerSize: sizeInteger
 		lParam: 0!
 
 whitespaces
-	"Answer a <String> representing the set of characters considered to be whitespace in the receiver."
+	"Answer a <String> representing the set of characters considered to be whitespace in the receiver. Note that this does not include carriage return and newline characters. By default includes all the ASCII characters up to 0x1F (including 0/null), plus 32/space."
 
-	^(whitespaces isNil or: [whitespaces isEmpty]) ifTrue: [self sciGetWhitespaceChars]!
+	^self characterClassifications whitespaces!
 
-whitespaces: aStringOrNil 
+whitespaces: aStringOrNil
 	"Set the characters considered to be whitespace in the receiver to be those in the <String> argument.
 	If the argument is nil (or empty), then use the default set of whitespace characters."
 
-	(aStringOrNil isNil or: [aStringOrNil isEmpty]) 
-		ifTrue: 
-			[whitespaces := nil.
-			self setCharacterClasses]
-		ifFalse: 
-			[whitespaces := aStringOrNil.
-			self sciSetWhitespaceChars: whitespaces]!
+	self characterClassifications: (self characterClassifications
+				whitespaces: ((aStringOrNil isNil or: [aStringOrNil isEmpty]) ifFalse: [aStringOrNil]))!
 
 whitespaceVisibility
 	"Answer a <Symbol> naming the level of whitespace marking currently configured in the receiver."
@@ -9900,25 +9916,21 @@ wmTimer: message wParam: wParam lParam: lParam
 				lParam: lParam]!
 
 wordChars
-	"Answer a <String> containing the set of characters considered to be those valid as
-	characters in a single word. All other characters are considered to be delimiters. This
-	setting controls word-oriented cursor movements and selections."
+	"Answer a <String> containing the set of characters considered to be those valid as characters in a single word. All other characters are considered to be delimiters (whitespace or punctuation). This setting controls word-oriented cursor movements and selections."
 
-	^wordChars
-		ifNil: 
-			["Note the caveat in the documentation that SCI_GETWORDCHARS doesn't work
-			 correctly when using non-ANSI code pages, such as UTF-8, for characters
-			 with code points >= 0x80 (i.e. non-ASCII), so we filter out the nonsense."
-			self sciGetWordChars select: [:each | each isAscii]]!
+	"Note the caveat in the documentation that SCI_GETWORDCHARS doesn't work correctly when using non-ANSI code pages, such as UTF-8, for characters with code points >= 0x80 (i.e. non-ASCII), so we filter out the nonsense."
 
-wordChars: aStringOrNil 
+	^self characterClassifications wordChars select: [:each | each isAscii]!
+
+wordChars: aStringOrNil
 	"Set the set of characters considered to be those valid as characters in a single word. All
 	other characters are considered to be delimiters. This setting controls word-oriented cursor
 	movements and selections. If the argument is nil, then the word characters are restored to
 	the default Scintilla setting (see #defaultWordChars)."
 
-	wordChars := aStringOrNil.
-	self setCharacterClasses!
+	self characterClassifications: (self characterClassifications
+				wordChars: aStringOrNil;
+				yourself)!
 
 wordEndAt: posInteger onlyWordCharacters: onlyWordCharactersBoolean
 	"Get position of end of word."
@@ -10150,6 +10162,8 @@ centerCurrentLine!**auto generated**!commands!public!scintilla interface! !
 changeHistoryMode!change history!other settings!public! !
 changeHistoryMode:!change history!other settings!public! !
 characterAt:!public!text retrieval & modification! !
+characterClassifications!character classes!public! !
+characterClassifications:!character classes!public! !
 characterRepresentations!accessing!character representations!public! !
 characterRepresentations:!accessing!character representations!public! !
 charCloseToPosition:!public!selection! !
@@ -10310,6 +10324,7 @@ fontQuality:!other settings!public! !
 forecolor:!accessing!public! !
 formatRectangle!accessing!public! !
 formFeed!**auto generated**!commands!public!scintilla interface! !
+getCharacterClassifications!character classes!private! !
 getDirectPointer!helpers!private! !
 getElementColor:!element colors!private! !
 getEolAnnotations!annotations!private! !
@@ -10984,7 +10999,6 @@ sendMessage:wParam:lpParam:!operations!private! !
 setCallTipHighlightColor!call tips!private! !
 setCallTipTabWidth!helpers!private! !
 setCaretBlinkTime!caret, selection, and hotspot styles!private! !
-setCharacterClasses!character classes!helpers!private! !
 setCurrentTextStyles:!private!style definition! !
 setDefaultTextStyle!private!style definition! !
 setElement:color:!autocompletion!element colors!private! !
@@ -11702,6 +11716,7 @@ stbConvert: instVarArray fromVersion: verInteger
 	verInteger < 15 ifTrue: [instVars := self stbConvertFromVersion14: instVars].
 	verInteger < 16 ifTrue: [instVars := self stbConvertFromVersion15: instVars].
 	verInteger < 17 ifTrue: [instVars := self stbConvertFromVersion16: instVars].
+	verInteger < 18 ifTrue: [instVars := self stbConvertFromVersion17: instVars].
 	^instVars!
 
 stbConvertFromVersion13: anArray
@@ -11783,6 +11798,32 @@ stbConvertFromVersion16: anArray
 			instVars at: 30 put: nil].
 	^instVars!
 
+stbConvertFromVersion17: anArray
+	"Private - Perform an STB conversion from a version 17 <ScintillaView> to version 18.
+	Change in the representation of character classifications (whitespace, punctuation and word-characters). Since these are mutually exclusive (a character can only be in one class), these are better represented as a single property."
+
+	| instVars whitespaces punctuation wordChars |
+	instVars := anArray shallowCopy.
+	"Historically empty whitespaces was treated same as default, which is not especially helpful"
+	whitespaces := instVars at: 37.
+	instVars at: 37 put: nil.
+	whitespaces ifNotNil: [whitespaces isEmpty ifTrue: [whitespaces := nil]].
+	punctuation := instVars at: 34.
+	instVars at: 34 put: nil.
+	wordChars := instVars at: 23.
+	instVars at: 23 put: nil.
+	instVars at: 47
+		put: ((wordChars isNil and: [punctuation isNil and: [whitespaces isNil]])
+				ifFalse: 
+					[| characterClassifications |
+					characterClassifications := CharacterClassifications new.
+					"It is possible that the wordChars, whitespace and punctuation are not mutually exclusive. This is an issue with the separate APIs that the CharacterClassifications abstract is designed to address. In order to handle any ambiguity in the same was as the old setCharacterClassifications method, we apply in the same order that it did so that the end result is the same even if the classifications overlap. The effect is that whitespaces take priority over word chars, and punctuation take priority over both."
+					wordChars ifNotNil: [characterClassifications wordChars: wordChars].
+					whitespaces ifNotNil: [characterClassifications whitespaces: whitespaces].
+					punctuation ifNotNil: [characterClassifications punctuation: punctuation].
+					characterClassifications]).
+	^instVars!
+
 stbConvertFromVersion9: anArray 
 	"Private - Perform an STB conversion from a version 9 (or earlier) <ScintillaView> to version 10.
 	The single collection of text styles was replaced by a current collection, and a collection of collections
@@ -11798,7 +11839,7 @@ stbConvertFromVersion9: anArray
 	^array!
 
 stbVersion
-	^17!
+	^18!
 
 tabDrawModes
 	^#(#longArrow #strikeOut)!
@@ -12040,6 +12081,7 @@ stbConvertFromVersion13:!binary filing!private! !
 stbConvertFromVersion14:!binary filing!private! !
 stbConvertFromVersion15:!binary filing!private! !
 stbConvertFromVersion16:!binary filing!private! !
+stbConvertFromVersion17:!binary filing!private! !
 stbConvertFromVersion9:!binary filing!private! !
 stbVersion!binary filing!public! !
 tabDrawModes!constants!public! !

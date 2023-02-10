@@ -4134,7 +4134,45 @@ Core.Locale
 	classVariableNames: 'Current Hex'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'ControlCodePictures'
+				-> (IdentityDictionary withAll: {
+								$\0 -> $\x2400.
+								$\x1 -> $\x2401.
+								$\x2 -> $\x2402.
+								$\x3 -> $\x2403.
+								$\x4 -> $\x2404.
+								$\x5 -> $\x2405.
+								$\x6 -> $\x2406.
+								$\a -> $\x2407.
+								$\b -> $\x2408.
+								$\t -> $\x2409.
+								$\n -> $\x240A.
+								$\v -> $\x240B.
+								$\f -> $\x240C.
+								$\r -> $\x240D.
+								$\xE -> $\x240E.
+								$\xF -> $\x240F.
+								$\x10 -> $\x2410.
+								$\x11 -> $\x2411.
+								$\x12 -> $\x2412.
+								$\x13 -> $\x2413.
+								$\x14 -> $\x2414.
+								$\x15 -> $\x2415.
+								$\x16 -> $\x2416.
+								$\x17 -> $\x2417.
+								$\x18 -> $\x2418.
+								$\x19 -> $\x2419.
+								$\x1A -> $\x241A.
+								$\x1B -> $\x241B.
+								$\x1C -> $\x241C.
+								$\x1D -> $\x241D.
+								$\x1E -> $\x241E.
+								$\x1F -> $\x241F.
+								$\x20 -> $\x2423.
+								$\x7F -> $\x2421
+							})
+		}!
 OS.AbstractWindowsLocale
 	subclass: #'OS.InvariantLocale'
 	instanceVariableNames: ''

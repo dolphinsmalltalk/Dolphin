@@ -209,6 +209,9 @@ decimalSeparator
 
 	^self subclassResponsibility!
 
+displayCharacter: aCharacter on: aPuttableStream
+	aPuttableStream nextPut: aCharacter!
+
 displayDate: aDate on: aWriteStream
 	"Append to the <puttableStream> argument, aWriteStream, a String whose characters are a representation of the <Date>, aDate, that a user in this <Locale> might expect to see."
 
@@ -808,7 +811,7 @@ amDesignator!constants!public! !
 basicLcid!accessing!private! !
 boolFormat!constants!public! !
 code!constants!public! !
-dateAndTimeFormatters!printing!private! !
+dateAndTimeFormatters!constants!private! !
 dateFormat!constants!public! !
 dayNames!constants!public! !
 dayOfWeek:!mapping!public! !
@@ -817,13 +820,14 @@ dayOfWeekName:!constants!public! !
 dayOfWeekShortAbbreviation:!constants!public! !
 decimalPlaces!constants!public! !
 decimalSeparator!constants!public! !
-displayDate:on:!printing!public! !
-displayDateTime:on:!printing!public! !
-displayDuration:on:!printing!public! !
-displayFloat:on:!printing!public! !
-displayInteger:on:!printing!public! !
+displayCharacter:on:!displaying!public! !
+displayDate:on:!displaying!public! !
+displayDateTime:on:!displaying!public! !
+displayDuration:on:!displaying!public! !
+displayFloat:on:!displaying!public! !
+displayInteger:on:!displaying!public! !
 displayName!displaying!public! !
-displayTime:on:!printing!public! !
+displayTime:on:!displaying!public! !
 durationFormat!constants!public! !
 englishDisplayName!constants!public! !
 englishLanguageName!constants!public! !
@@ -847,10 +851,10 @@ localizedDisplayName!constants!public! !
 longDateFormat!constants!public! !
 longTimeFormat!constants!public! !
 lowercaseString:!converting!public! !
-mapLowercaseFlags!constants!private! !
+mapLowercaseFlags!constants!public! !
 mapString:flags:!converting!private! !
 mapTitlecaseFlags!constants!private! !
-mapUppercaseFlags!constants!private! !
+mapUppercaseFlags!constants!public! !
 monthAbbreviation:!enquiries!public! !
 monthName:!enquiries!public! !
 monthNames!constants!public! !
@@ -867,7 +871,7 @@ numberFormat:!accessing!private! !
 numberGrouping!constants!public! !
 percentSymbol!constants!public! !
 pmDesignator!constants!public! !
-primary!printing!public! !
+primary!accessing!public! !
 print:on:format:alphabet:formatters:!printing!private! !
 printDate:on:format:!printing!public! !
 printDateTime:on:format:!printing!public! !

@@ -9,7 +9,6 @@ It is suggested that you run the generator in preview mode, which is the default
 
 
 package setClassNames: #(
-	#{Tools.Scintilla}
 	#{Tools.Scintilla.BoolTypeReference}
 	#{Tools.Scintilla.ColourAlphaTypeReference}
 	#{Tools.Scintilla.ColourTypeReference}
@@ -44,13 +43,6 @@ package!
 
 "Class Definitions"!
 
-Tools
-	subclass: #'Tools.Scintilla'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 Core.Object
 	subclass: #'Tools.Scintilla.InterfaceDefinition'
 	instanceVariableNames: 'id name isDeprecated comment selector constName'

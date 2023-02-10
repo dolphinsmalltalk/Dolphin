@@ -11,6 +11,18 @@ UI.Scintilla.Tests.ScintillaViewTest guid: (Core.GUID fromString: '{3c6fbe95-74e
 UI.Scintilla.Tests.ScintillaViewTest comment: ''!
 !UI.Scintilla.Tests.ScintillaViewTest methodsFor!
 
+assertClassifiesAscii: subject
+	self assert: (($\0 to: $\x7F)
+				difference: (subject wordChars , subject punctuation , subject whitespaces) asSet)
+		equals: #($\n $\r)!
+
+assertDefaultClassifications: aCharacterClassifications
+	self assert: aCharacterClassifications isDefault.
+	self assert: aCharacterClassifications wordChars equals: CharacterClassifications.DefaultWordChars.
+	self assert: aCharacterClassifications punctuation equals: CharacterClassifications.DefaultPunctuation.
+	self assert: aCharacterClassifications whitespaces equals: CharacterClassifications.DefaultWhitespaces.
+	self assertClassifiesAscii: aCharacterClassifications!
+
 classToTest
 	^(self selector beginsWith: 'testStbUpgrade') ifFalse: [ScintillaView]!
 
@@ -45,6 +57,62 @@ testCallTipColors
 	self assert: fore equals: Color purple.
 	back := Color fromRgbCode: (presenter sendMessage: SCI_STYLEGETBACK wParam: STYLE_CALLTIP).
 	self assert: back equals: Color green!
+
+testChangePunctuation
+	| subject punctuation |
+	subject := self view characterClassifications.
+	self assertDefaultClassifications: subject.
+	punctuation := subject punctuation, #($_ $\b).
+	subject punctuation: punctuation.
+	self assert: subject punctuation asSet equals: punctuation asSet.
+	self assert: subject wordChars equals: (CharacterClassifications.DefaultWordChars copyWithout: $_).
+	self assert: subject whitespaces equals: (CharacterClassifications.DefaultWhitespaces copyWithout: $\b).
+	self assertClassifiesAscii: subject.
+	self view characterClassifications: subject.
+	self assert: self view characterClassifications identicalTo: subject.
+	self assert: self view getCharacterClassifications equals: subject.
+	self view punctuation: nil.
+	self assertDefaultClassifications: subject.
+	self assertDefaultClassifications: self view getCharacterClassifications
+!
+
+testChangeWhitespace
+	| subject whitespaces |
+	subject := self view characterClassifications.
+	self assertDefaultClassifications: subject.
+	whitespaces := #($\x20 $\t $\f $\v).
+	subject whitespaces: whitespaces.
+	self assert: subject whitespaces asSet equals: (whitespaces copyWith: $\0) asSet.
+	self assert: subject wordChars equals: CharacterClassifications.DefaultWordChars.
+	self assert: subject punctuation asSet
+		equals: ((CharacterClassifications.DefaultPunctuation , CharacterClassifications.DefaultWhitespaces)
+				asSet difference: (whitespaces copyWith: $\0)).
+	self assertClassifiesAscii: subject.
+	self view characterClassifications: subject.
+	self assert: self view characterClassifications identicalTo: subject.
+	self assert: self view getCharacterClassifications equals: subject.
+	self view whitespaces: nil.
+	self assertDefaultClassifications: subject.
+	self assertDefaultClassifications: self view getCharacterClassifications!
+
+testChangeWordChars
+	| subject wordChars |
+	subject := self view characterClassifications.
+	self assertDefaultClassifications: subject.
+	wordChars := subject wordChars , #($: $\v $#).
+	subject wordChars: wordChars.
+	self assert: subject wordChars asSet equals: wordChars asSet.
+	self assert: subject punctuation
+		equals: (CharacterClassifications.DefaultPunctuation difference: #($: $#)).
+	self assert: subject whitespaces
+		equals: (CharacterClassifications.DefaultWhitespaces difference: #($\v)).
+	self assertClassifiesAscii: subject.
+	self view characterClassifications: subject.
+	self assert: self view characterClassifications identicalTo: subject.
+	self assert: self view getCharacterClassifications equals: subject.
+	self view wordChars: nil.
+	self assertDefaultClassifications: subject.
+	self assertDefaultClassifications: self view getCharacterClassifications!
 
 testFindStringStartingAt
 	| found found2 |
@@ -191,31 +259,50 @@ verifyUpgradedView: anInteger
 	#(29 30 34 47 48 50 51) do: [:i | self assertIsNil: (view instVarAt: i)].	"The element colour instance variables should have been nil'd, and replaced with entries in the elementColors dictionary. Any alpha settings should be transferred to the relevant colour(s)"
 	self assert: (view instVarAt: 31) identicalTo: UI.Scintilla.ScintillaLibrary default.
 	self assert: view callTipTabWidth equals: ScintillaView.DefaultCallTipTabWidth.
-	self assert: ({AnsiString. Utf8String} includes: view stringClass).
-	anInteger >= 16
+	self assert: ({ AnsiString. Utf8String } includes: view stringClass).
+	anInteger < 16
 		ifTrue: 
-			[self assert: view caretForecolor equals: Color navy.
-			self assert: view secondaryCaretForecolor equals: Color purple.
-			self assert: view currentLineBackcolor equals: (Color cyan alpha: 63).
-			self assert: view whitespaceBackcolor equals: Color tooltip.
-			self assert: view whitespaceForecolor equals: Color lightSkyBlue.
-			self assert: view selectionBackcolor equals: (Color highlight alpha: 127).
-			self assert: view selectionForecolor equals: Color white.
-			self assert: view secondarySelectionForecolor equals: Color yellowGreen.
-			self assert: view secondarySelectionBackcolor equals: (Color oliveDrab alpha: 98).
-			self assert: view edgeColor equals: Color grayText.
-			self assert: view activeHotspotBackcolor equals: Color darkSlateBlue.
-			self assert: view activeHotspotForecolor equals: Color lightSkyBlue.
-			self assert: view edgeColumn equals: 120.
-			self assert: view isCurrentLineHighlighted]
-		ifFalse: 
-			[self assert: view elementColors associations asArray equals: {SC_ELEMENT_CARET -> Color windowText}.
-			anInteger < 15 ifTrue: [self assert: view selectionBackcolor equals: Color silver]]! !
+			[self assert: view elementColors associations asArray
+				equals: { SC_ELEMENT_CARET -> Color windowText }.
+			anInteger < 15 ifTrue: [self assert: view selectionBackcolor equals: Color silver].
+			^self].
+	anInteger = 16
+		ifTrue: [self verifyUpgradedViewFrom16: view]
+		ifFalse: [self verifyUpgradedViewFrom17: view]!
+
+verifyUpgradedViewFrom16: aScintillaView
+	"Former separately stored colours transitioned to element colours"
+
+	self assert: aScintillaView caretForecolor equals: Color navy.
+	self assert: aScintillaView secondaryCaretForecolor equals: Color purple.
+	self assert: aScintillaView currentLineBackcolor equals: (Color cyan alpha: 63).
+	self assert: aScintillaView whitespaceBackcolor equals: Color tooltip.
+	self assert: aScintillaView whitespaceForecolor equals: Color lightSkyBlue.
+	self assert: aScintillaView selectionBackcolor equals: (Color highlight alpha: 127).
+	self assert: aScintillaView selectionForecolor equals: Color white.
+	self assert: aScintillaView secondarySelectionForecolor equals: Color yellowGreen.
+	self assert: aScintillaView secondarySelectionBackcolor equals: (Color oliveDrab alpha: 98).
+	self assert: aScintillaView edgeColor equals: Color grayText.
+	self assert: aScintillaView activeHotspotBackcolor equals: Color darkSlateBlue.
+	self assert: aScintillaView activeHotspotForecolor equals: Color lightSkyBlue.
+	self assert: aScintillaView edgeColumn equals: 120.
+	self assert: aScintillaView isCurrentLineHighlighted!
+
+verifyUpgradedViewFrom17: aScintillaView
+	"Version 18 introduced the CharacterClassifications abstraction replacing wordChars, whitespaces, and punctuation"
+	
+	#(23 34 37) do: [:i | self assertIsNil: (aScintillaView instVarAt: i)].
+	self assert: aScintillaView characterClassifications isDefault! !
 !UI.Scintilla.Tests.ScintillaViewTest categoriesForMethods!
+assertClassifiesAscii:!helpers!private! !
+assertDefaultClassifications:!helpers!private! !
 classToTest!helpers!private! !
 initializePresenter!public!Running! !
 margins!private!unit tests! !
 testCallTipColors!public!unit tests! !
+testChangePunctuation!character classes!public!unit tests! !
+testChangeWhitespace!character classes!public!unit tests! !
+testChangeWordChars!character classes!public!unit tests! !
 testFindStringStartingAt!public!unit tests! !
 testImmersiveColorSetChange!public!unit tests! !
 testLanguages!public!unit tests! !
@@ -224,6 +311,8 @@ testSetGetAnnotations!public!unit tests! !
 testSetGetEndOfLineAnnotations!public!unit tests! !
 testStateRestoral!public!unit tests! !
 verifyUpgradedView:!helpers!private! !
+verifyUpgradedViewFrom16:!helpers!private! !
+verifyUpgradedViewFrom17:!helpers!private! !
 !
 
 !UI.Scintilla.Tests.ScintillaViewTest class methodsFor!
@@ -269,19 +358,32 @@ resource_Scintilla_view_15
 	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.Scintilla.ScintillaView) 34 50 nil nil 34 2 8 1411449156 262145 416 918598 2 ##(UI.ValueHolder) nil false 1769478 ##(Kernel.EqualitySearchPolicy) nil nil nil 21 nil nil nil 416 nil 8 2031697384 1049094 ##(UI.NullConverter) nil nil 73 1848902001 170 192 34 4 #normal 1444934 1 ##(UI.Scintilla.TextStyle) 1 nil nil 1 nil nil nil nil #normal nil nil nil #callTip 626 77 917510 ##(Graphics.Color) #gray 674 #white 1 nil nil nil nil #callTip nil nil nil nil 2032902 ##(Tools.SmalltalkExpressionStyler) 1 nil nil false 138 144 8 #() 170 192 768 138 ##(Core.IdentitySet) 768 nil 170 176 768 nil nil nil nil nil 674 #silver nil nil 65 nil nil 170 192 34 6 #specialCharacter 8 '()[]<>' #literalArray 8 '()' #literalBytes 8 '[]' 8 '' 1 170 192 34 2 #container 592 nil nil nil nil 208 138 ##(Core.Set) 34 5 1507846 ##(UI.Scintilla.KeyBinding) 9385 4345 1010 9951 4345 1010 9353 4345 1010 9435 4345 1010 9431 4345 170 192 34 4 #Warning 1772614 3 ##(UI.Scintilla.IndicatorStyle) 17 416 674 #blue 3 false #Warning nil nil nil nil nil nil #Error 1138 19 416 674 #red 3 false #Error nil nil nil nil nil nil nil nil 170 192 34 6 #Notification 626 1029 nil 674 #gainsboro 1 nil nil nil nil #Notification nil nil nil #Warning 626 1027 674 #darkGoldenrod 674 #ivory 1 nil nil nil nil #Warning nil nil nil #Error 626 1031 674 #firebrick 674 #floralWhite 1 nil nil nil nil #Error nil nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 8 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 918022 ##(Graphics.Point) 6143 21 1490 371 39 416 1442 #hoverTime: 8 #(500) 416 1442 #caretPeriod: 8 #(530) 416 1442 #margins: 34 1 34 3 1247302 3 ##(UI.Scintilla.Margin) 1 416 1 3 nil nil nil nil 1650 3 416 1 nil nil 67108863 nil nil 1650 5 416 1 nil nil nil nil nil 416 1442 #canHScroll: 8 #(false) 416 1442 #targetRange: 34 1 852742 ##(Core.Interval) 1 -1 3 416 1442 #maxCompletionListHeight: 8 #(9) 416 1442 #edgeColumn: 8 #(1) 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 184 12 0 0 29 0 0 0] 8 #() 1490 193 193 nil 31)!
 
 resource_Scintilla_view_16
-	"Answer the literal data from which the 'Scintilla view' resource can be reconstituted.
-	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+	"The TextPresenter `Scintilla view` resource from Dolphin 7.1.
 
-	If you wish to modify this resource evaluate:
+	If you wish to view this resource evaluate:
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Scintilla_view_16)
+	
+	DO NOT MODIFY/SAVE, as to do so will invalidate the test.
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ScintillaView) 34 50 nil nil 34 2 8 1445007428 1025 416 721990 2 ##(Smalltalk.ValueHolder) nil false 1310726 ##(Smalltalk.EqualitySearchPolicy) nil 327686 ##(Smalltalk.Color) #default nil 5 nil nil nil 416 nil 8 1533163101 852486 ##(Smalltalk.NullConverter) nil nil 9 nil 170 192 34 4 #normal 1182790 1 ##(Smalltalk.ScintillaTextStyle) 1 nil nil 1 nil nil nil nil #normal nil nil nil #callTip 658 77 546 #gray 546 #white 1 nil nil nil nil #callTip nil nil nil nil 1245510 1 ##(Smalltalk.NullScintillaStyler) #normal 170 192 34 2 #default 1641542 2 ##(Smalltalk.ScintillaMarkerDefinition) 1 nil nil nil 416 #circle nil nil nil nil nil nil 138 ##(Smalltalk.IdentitySet) 8 #() nil 170 176 848 nil nil nil nil nil 546 #silver nil nil 65 nil nil nil 8 '' 3 170 192 34 2 #container 624 nil nil nil nil 130003 nil 170 192 34 6 1 1510470 3 ##(Smalltalk.ScintillaIndicatorStyle) 1 416 546 #commonGreen 3 false 1 nil nil nil nil nil nil 3 978 3 416 546 #blue 5 false 3 nil nil nil nil nil nil 5 978 5 416 546 #red 1 false 5 nil nil nil nil nil nil nil nil 170 192 34 6 #Warning 658 1027 546 #darkGoldenrod 546 #ivory 1 nil nil nil nil #Warning nil nil nil #Notification 658 1029 nil 546 #gainsboro 1 nil nil nil nil #Notification nil nil nil #Error 658 1031 546 #firebrick 546 #floralWhite 1 nil nil nil nil #Error nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 8 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 7039 21 1362 631 501 416 1314 #textLimit: 8 #(1073741823) 416 1314 #caretPeriod: 8 #(530) 416 1314 #margins: 34 1 34 3 985158 3 ##(Smalltalk.ScintillaMargin) 1 416 1 3 nil nil nil nil 1522 3 416 33 nil 3 67108863 nil nil 1522 5 416 1 nil 3 -67108863 nil nil 416 1314 #tabWidth: 8 #(4) 416 1314 #targetRange: 34 1 525062 ##(Smalltalk.Interval) 1 -1 3 416 1314 #maxCompletionListHeight: 8 #(9) 416 1314 #edgeColumn: 8 #(1) 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 250 14 0 0 4 1 0 0] 8 #() 1362 193 193 nil 29 )! !
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ScintillaView) 34 50 nil nil 34 2 8 1445007428 1025 416 721990 2 ##(Smalltalk.ValueHolder) nil false 1310726 ##(Smalltalk.EqualitySearchPolicy) nil 327686 ##(Smalltalk.Color) #default nil 5 nil nil nil 416 nil 8 1533163101 852486 ##(Smalltalk.NullConverter) nil nil 9 nil 170 192 34 4 #normal 1182790 1 ##(Smalltalk.ScintillaTextStyle) 1 nil nil 1 nil nil nil nil #normal nil nil nil #callTip 658 77 546 #gray 546 #white 1 nil nil nil nil #callTip nil nil nil nil 1245510 1 ##(Smalltalk.NullScintillaStyler) #normal 170 192 34 2 #default 1641542 2 ##(Smalltalk.ScintillaMarkerDefinition) 1 nil nil nil 416 #circle nil nil nil nil nil nil 138 ##(Smalltalk.IdentitySet) 8 #() nil 170 176 848 nil nil nil nil nil 546 #silver nil nil 65 nil nil nil 8 '' 3 170 192 34 2 #container 624 nil nil nil nil 130003 nil 170 192 34 6 1 1510470 3 ##(Smalltalk.ScintillaIndicatorStyle) 1 416 546 #commonGreen 3 false 1 nil nil nil nil nil nil 3 978 3 416 546 #blue 5 false 3 nil nil nil nil nil nil 5 978 5 416 546 #red 1 false 5 nil nil nil nil nil nil nil nil 170 192 34 6 #Warning 658 1027 546 #darkGoldenrod 546 #ivory 1 nil nil nil nil #Warning nil nil nil #Notification 658 1029 nil 546 #gainsboro 1 nil nil nil nil #Notification nil nil nil #Error 658 1031 546 #firebrick 546 #floralWhite 1 nil nil nil nil #Error nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 8 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 7039 21 1362 631 501 416 1314 #textLimit: 8 #(1073741823) 416 1314 #caretPeriod: 8 #(530) 416 1314 #margins: 34 1 34 3 985158 3 ##(Smalltalk.ScintillaMargin) 1 416 1 3 nil nil nil nil 1522 3 416 33 nil 3 67108863 nil nil 1522 5 416 1 nil 3 -67108863 nil nil 416 1314 #tabWidth: 8 #(4) 416 1314 #targetRange: 34 1 525062 ##(Smalltalk.Interval) 1 -1 3 416 1314 #maxCompletionListHeight: 8 #(9) 416 1314 #edgeColumn: 8 #(1) 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 250 14 0 0 4 1 0 0] 8 #() 1362 193 193 nil 29 )!
+
+resource_Scintilla_view_17
+	"The TextPresenter `Scintilla view` resource from some earlier Dolphin 8 versions. but edited to include character classifications.
+
+	If you wish to view this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Scintilla_view_17)
+	
+	DO NOT MODIFY/SAVE, as to do so will invalidate the test.
+	"
+
+	^#(#'!!STL' 5 985166 10 #{UI.STBViewProxy} #{UI.Scintilla.ScintillaView} 34 52 nil nil 34 2 8 1445007428 1025 416 918598 2 #{UI.ValueHolder} nil false 1769478 #{Kernel.EqualitySearchPolicy} nil 917510 #{Graphics.Color} #default nil 5 nil nil nil 416 nil 8 1395533126 1049094 #{UI.NullConverter} nil nil 9 nil 170 192 34 4 #callTip 1444934 1 #{UI.Scintilla.TextStyle} 77 546 #gray 546 #white 1 nil nil nil nil #callTip nil nil nil #normal 658 1 nil nil 1 nil nil nil nil #normal nil nil nil nil 1507654 1 #{UI.Scintilla.NullStyler} #normal 170 192 34 2 #default 1903686 2 #{UI.Scintilla.MarkerDefinition} 1 nil nil nil 416 #circle nil nil nil nil nil nil 138 #{Core.IdentitySet} 8 #() nil 170 176 848 nil nil nil 170 176 34 2 81 546 #windowText nil nil 2162950 #{UI.Scintilla.NullScintillaLibrary} nil 65 nil nil nil 8 '' 3 170 192 34 2 #container 624 nil nil nil nil 208 nil 170 192 34 6 1 1772614 4 #{UI.Scintilla.IndicatorStyle} 1 416 546 #commonGreen 3 3 1 nil nil nil nil nil nil 3 1042 3 416 546 #blue 5 3 3 nil nil nil nil nil nil 5 1042 5 416 546 #red 1 3 5 nil nil nil nil nil nil nil nil 170 192 34 6 #Notification 658 1029 nil 546 #gainsboro 1 nil nil nil nil #Notification nil nil nil #Error 658 1031 546 #firebrick 546 #floralWhite 1 nil nil nil nil #Error nil nil nil #Warning 658 1027 546 #darkGoldenrod 546 #ivory 1 nil nil nil nil #Warning nil nil nil nil nil nil 1310982 #{Core.MessageSequence} 34 7 1049350 #{Core.MessageSend} #createAt:extent: 34 2 918022 #{Graphics.Point} 12287 21 1410 631 501 416 1362 #margins: 34 1 34 3 1247302 3 #{UI.Scintilla.Margin} 1 416 1 3 nil nil nil nil 1506 3 416 33 nil 3 67108863 nil nil 1506 5 416 1 nil 3 -67108863 nil nil 416 1362 #tabWidth: 8 #(4) 416 1362 #maxCompletionListHeight: 8 #(9) 416 1362 #sciSetTechnology: 8 #(1) 416 1362 #sciSetFontQuality: 8 #(3) 416 1362 #sciSetSelectionLayer: 8 #(1) 416 1179910 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 58 25 0 0 4 1 0 0] 8 #() 1410 193 193 nil 35)! !
 !UI.Scintilla.Tests.ScintillaViewTest class categoriesForMethods!
 resource_Scintilla_view_13!public!resources-views! !
 resource_Scintilla_view_14!public!resources-views! !
 resource_Scintilla_view_14b!public!resources-views! !
 resource_Scintilla_view_15!public!resources-views! !
 resource_Scintilla_view_16!public!resources-views! !
+resource_Scintilla_view_17!public!resources-views! !
 !
 

@@ -45,6 +45,7 @@ package setClassNames: #(
 	#{UI.Scintilla.Attribute}
 	#{UI.Scintilla.BoolPropertyDescriptor}
 	#{UI.Scintilla.CallTipStyle}
+	#{UI.Scintilla.CharacterClassifications}
 	#{UI.Scintilla.CharacterRangeFull}
 	#{UI.Scintilla.CharacterRepresentation}
 	#{UI.Scintilla.ColourAlphaPropertyDescriptor}
@@ -1394,6 +1395,25 @@ Core.Object
 	classInstanceVariableNames: 'propertyDescriptors'
 	classConstants: {}!
 Core.Object
+	subclass: #'UI.Scintilla.CharacterClassifications'
+	instanceVariableNames: 'classifications'
+	classVariableNames: 'DefaultWhitespaces'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'ClassificationNames' -> #(#whitespace #newline #word #punctuation).
+			'DefaultClassifications'
+				-> #[0 0 0 0 0 0 0 0 0 0 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 2 2 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 3 3 3 3 2 3 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 3 3 3 3 0 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2].
+			'DefaultPunctuation' -> '~}|{`^]\[@?>=<;:/.-,+*)(''&%$#"!!'.
+			'DefaultWordChars'
+				-> 'zyxwvutsrqponmlkjihgfedcba_ZYXWVUTSRQPONMLKJIHGFEDCBA9876543210'.
+			'FoldingMask' -> 16r2.
+			'Newline' -> 16r1.
+			'Punctuation' -> 16r3.
+			'Whitespace' -> 16r0.
+			'Word' -> 16r2
+		}!
+Core.Object
 	subclass: #'UI.Scintilla.CharacterRepresentation'
 	instanceVariableNames: 'character representation appearance color'
 	classVariableNames: ''
@@ -1835,7 +1855,7 @@ UI.Scintilla.Styler
 	classConstants: {}!
 UI.MultilineTextEdit
 	subclass: #'UI.Scintilla.ScintillaView'
-	instanceVariableNames: 'this currentTextStyles styleIdMap styler markerDefinitions markers wordChars registeredImages modificationEventMask autoCStops autoCFillups elementColors caretBlinkTime characterRepresentations library indicators callTipTabWidth punctuation callTipHighlightColor braceChars whitespaces scFlags allTextStyles foldMarginColor foldMarginHiColor foldMarkerStyle foldFlags stringClass keyBindings indicatorStyles _unused47 _unused48 annotationStyles _unused50 _unused51 edgeColor'
+	instanceVariableNames: 'this currentTextStyles styleIdMap styler markerDefinitions markers _unused23 registeredImages modificationEventMask autoCStops autoCFillups elementColors caretBlinkTime characterRepresentations library indicators callTipTabWidth _unused34 callTipHighlightColor braceChars _unused37 scFlags allTextStyles foldMarginColor foldMarginHiColor foldMarkerStyle foldFlags stringClass keyBindings indicatorStyles characterClassifications _unused48 annotationStyles _unused50 _unused51 edgeColor'
 	classVariableNames: 'DefaultKeyBindings DefaultTextStyles'
 	imports: #()
 	classInstanceVariableNames: ''

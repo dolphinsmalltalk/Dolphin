@@ -20,6 +20,16 @@ testDayOfWeek
 testDayOfWeekName
 	self verifyEnglishDayOfWeekNames: self defaultSubject!
 
+testDisplayCharacterOn
+	| subject |
+	subject := self defaultSubject.
+	#($a 'a' $£ '£' $€ '€' $\x20 '␣' $\x1F42C '🐬' $\0 '␀' $\x7F '␡' $\x80 '(U+0080)' $\xFEFF '(U+FEFF)') pairsDo: 
+			[:ch :expected |
+			| stream |
+			stream := String smalltalkWriteStream.
+			subject displayCharacter: ch on: stream.
+			self assert: stream contents equals: expected]!
+
 testDisplayFloatOn
 	| subject |
 	subject := self defaultSubject.
@@ -152,6 +162,7 @@ testUppercaseString
 defaultSubject!helpers!private! !
 testDayOfWeek!public!unit tests! !
 testDayOfWeekName!public!unit tests! !
+testDisplayCharacterOn!public!unit tests! !
 testDisplayFloatOn!public!unit tests! !
 testDisplayName!public!unit tests! !
 testFirstDayOfWeek!public!unit tests! !

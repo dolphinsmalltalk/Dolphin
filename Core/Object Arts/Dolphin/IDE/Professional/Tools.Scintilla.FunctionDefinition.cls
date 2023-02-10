@@ -131,7 +131,9 @@ emitStringResultFunctionOn: aPuttableStream
 		nextPutAll: self selector;
 		crtab.
 	self emitMethodPreambleOn: aPuttableStream.
-	resultClassExpression := self fixedClassStringResults at: constName ifAbsent: ['stringClass'].
+	resultClassExpression := (self fixedClassStringResults lookup: constName)
+				ifNil: ['stringClass']
+				ifNotNil: [:resultClass | resultClass shortName].
 	aPuttableStream
 		nextPutAll: '| len | len := library directFunction: this msg: ';
 		nextPutAll: self constName;
@@ -194,6 +196,9 @@ fixedClassStringResults
 		at: 'SCI_ANNOTATIONGETSTYLES' put: ByteArray;
 		at: 'SCI_GETSUBSTYLEBASES' put: ByteArray;
 		at: 'SCI_TARGETASUTF8' put: Utf8String;
+		at: 'SCI_GETPUNCTUATIONCHARS' put: AnsiString;
+		at: 'SCI_GETWHITESPACECHARS' put: AnsiString;
+		at: 'SCI_GETWORDCHARS' put: AnsiString;
 		yourself)!
 
 funcType: aString 

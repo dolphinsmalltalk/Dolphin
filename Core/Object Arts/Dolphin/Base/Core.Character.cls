@@ -225,10 +225,11 @@ codePoint
 			code bitAnd: 16rFFFFFF]!
 
 codePointString
-	"Answer the Unicode code string for the receiver as typically shown in tables of Unicode characters, e.g. U+0061 for $a"
+	"Answer the Unicode code string for the receiver as typically shown in tables of Unicode characters, e.g. [U+0061](https://codepoints.net/U+0061) for $a"
 
-	^'U+'
-		, (self codePoint printStringBase: 16 nDigits: ((self codePoint numberOfDigitsInBase: 16) max: 4))!
+	| codePoint |
+	codePoint := self codePoint.
+	^'U+' , (codePoint printStringBase: 16 nDigits: ((codePoint numberOfDigitsInBase: 16) max: 4))!
 
 codeUnit
 	"Answer the <integer> character code for the character in its native encoding. This can
@@ -252,7 +253,7 @@ digitValue
 displayOn: aPuttableStream
 	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	aPuttableStream nextPut: self!
+	aPuttableStream locale displayCharacter: self on: aPuttableStream!
 
 encoding
 	"Answer a <Symbol> naming the encoding of the character, which will be one of #ansi, #utf8, #utf16le or #utf32."
