@@ -26,9 +26,9 @@ apply
 	"Apply the aspects held by the receiver in the model copy back to the 
 	original model"
 
-	aspects do: [:each | 
-		self subject perform: each putSelector with: each value ]
-!
+	| target |
+	target := self subject.
+	aspects do: [:each | each appyTo: target]!
 
 aspectValue: anAspectSymbol
 	"Answer a ValueAspectAdapter for anAspectSymbol of our copied model. 

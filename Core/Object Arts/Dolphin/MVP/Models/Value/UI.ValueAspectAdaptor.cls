@@ -27,6 +27,9 @@ Instance Variables:
 			and: [self aspect == comperand aspect 
 				and: [self subject == comperand subject]]]!
 
+appyTo: anObject
+	^anObject perform: self putSelector with: self value!
+
 aspect
 	"Private - Answers the aspect of the subject that the receiver is to treat as a value"
 
@@ -38,6 +41,11 @@ aspectTriggers: aSymbol
 
 	subject when: aSymbol send: #notifyChanged to: self
 !
+
+beReadOnly
+	"Suppress any attempt to write back the value into the subject. Useful for display-only aspects."
+
+	putSelector := #==!
 
 canGet
 	"Private - Answer whether the receiver can be read using #value."
@@ -98,8 +106,10 @@ value
 	^self getValue! !
 !UI.ValueAspectAdaptor categoriesForMethods!
 =!comparing!public! !
+appyTo:!commands!public! !
 aspect!accessing!private! !
 aspectTriggers:!accessing!public! !
+beReadOnly!public! !
 canGet!private!testing! !
 canSet!private!testing! !
 displayOn:!displaying!public! !
