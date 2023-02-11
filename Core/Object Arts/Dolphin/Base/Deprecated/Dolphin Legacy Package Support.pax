@@ -61,31 +61,36 @@ package!
 
 "Class Definitions"!
 
-Core.Object subclass: #'Kernel.Bytecode'
+Core.Object
+	subclass: #'Kernel.Bytecode'
 	instanceVariableNames: 'instruction args jumpTarget ip'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object variableSubclass: #MethodContext
+Core.Object
+	variableSubclass: #MethodContext
 	instanceVariableNames: 'frame method receiver'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.PoolDictionary variableSubclass: #PoolConstantsDictionary
+Kernel.PoolDictionary
+	variableSubclass: #PoolConstantsDictionary
 	instanceVariableNames: 'name'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.LiteralPrinter subclass: #'Kernel.LegacySTLPrinter'
+Kernel.LiteralPrinter
+	subclass: #'Kernel.LegacySTLPrinter'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.AbstractChunkSourceFiler subclass: #'Kernel.LegacyChunkSourceFiler'
+Kernel.AbstractChunkSourceFiler
+	subclass: #'Kernel.LegacyChunkSourceFiler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

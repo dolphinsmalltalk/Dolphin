@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Set variableSubclass: #'Core.Dictionary'
+Core.Set
+	variableSubclass: #'Core.Dictionary'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -457,7 +458,9 @@ printSelfEvaluatingOn: aStream
 				print: self associations single;
 				nextPut: $)]
 		ifFalse: 
-			[aStream
+			[| assocs |
+			assocs := self associations.
+			aStream
 				nextPutAll: #withAll:;
 				space;
 				print: (self sortSelfEvaluatingElements: self associations locale: aStream locale);

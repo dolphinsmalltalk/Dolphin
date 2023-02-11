@@ -31,12 +31,14 @@ package setMethodNames: #(
 	#(#{Kernel.AbstractChunkSourceFiler} #fileOutProtocols:ofBehavior:)
 	#(#{Kernel.AbstractChunkSourceFiler} #logEvaluation:)
 	#(#{Kernel.AbstractChunkSourceFiler} #printBasicDefinitionOfClass:)
-	#(#{Kernel.AbstractChunkSourceFiler} #printVariables:string:)
+	#(#{Kernel.AbstractChunkSourceFiler} #printBasicDefinitionOfClass:on:)
+	#(#{Kernel.AbstractChunkSourceFiler} #printVariables:string:on:)
 	#(#{Kernel.AbstractChunkSourceFiler} #specialBehaviorAttributes)
 	#(#{Kernel.AbstractChunkSourceFiler} #storeCommentString:forClass:)
 	#(#{Kernel.AbstractChunkSourceFiler} #storeCommentString:forPackage:)
 	#(#{Kernel.AbstractChunkSourceFiler} #storeSource:for:)
 	#(#{Kernel.BootSessionManager} #saveImageTo:)
+	#(#{Kernel.ChunkSourceFiler} #printBasicDefinitionOfClass:on:)
 	#(#{Kernel.ChunkSourceFiler} #storeSource:for:)
 	#(#{Kernel.CompiledMethod} #storeCategories)
 	#(#{Kernel.SourceFiler} #collateClass:against:)
@@ -93,7 +95,8 @@ package!
 
 "Class Definitions"!
 
-Core.Error subclass: #'Kernel.SourceFormatNotSupportedError'
+Core.Error
+	subclass: #'Kernel.SourceFormatNotSupportedError'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -166,7 +169,7 @@ emitBinaryVariableDefinition: aBindingReference
 
 emitCategories: aCollection for: aSymbol in: aClass
 	stream nextPut: $!!.
-	self emitClassName: aClass.
+	self emitClassName: aClass on: stream.
 	stream
 		space;
 		nextPutAll: #categoriesFor:;
@@ -182,7 +185,7 @@ emitCategoriesForMethods: aSequencableCollection of: aClass
 
 	aSequencableCollection isEmpty ifTrue: [^self].
 	stream nextPut: $!!.
-	self emitClassName: aClass.
+	self emitClassName: aClass on: stream.
 	stream
 		space;
 		nextPutAll: #categoriesForMethods;
@@ -202,7 +205,7 @@ emitCategoriesOfClass: aClass
 	"Private - Emit a chunk to source stream to reclassify the <Class>, aClass, in all its existing categories."
 
 	stream nextPut: $!!.
-	self emitClassName: aClass.
+	self emitClassName: aClass on: stream.
 	stream
 		space;
 		nextPutAll: #categoriesForClass;
@@ -234,13 +237,12 @@ emitCommentOfClass: aClass
 	"Private - Emit a chunk which defines the comment for the <Class>, aClass, to the <puttableStream>
 	aWriteStream."
 
-	self emitClassName: aClass.
+	self emitClassName: aClass on: stream.
 	stream
 		space;
 		display: #comment:;
 		space.
-	self
-		nextChunkPut: aClass comment fullPrintString!
+	self nextChunkPut: aClass comment fullPrintString!
 
 emitFileOutHeader
 	self
@@ -262,7 +264,7 @@ emitSpecialBehaviorAttributesOfClass: aClass
 			(aClass perform: each first)
 				ifTrue: 
 					[(count := count + 1) > 1 ifTrue: [stream cr].
-					self emitClassName: aClass.
+					self emitClassName: aClass on: stream.
 					stream
 						space;
 						nextPutAll: each last;
@@ -320,7 +322,7 @@ fileOutProtocols: aCollection ofBehavior: aClassDescription
 	aCollection isEmpty ifTrue: [^self].
 	(aCollection asSortedArray: [:a :b | a name <==> b name <= 0]) do: 
 			[:p |
-			self emitClassName: aClassDescription.
+			self emitClassName: aClassDescription on: stream.
 			stream
 				nextPutAll: ' methodProtocol: ';
 				print: p asSymbol;
@@ -342,9 +344,14 @@ logEvaluation: aString
 	self fileOutExpression: aString!
 
 printBasicDefinitionOfClass: aClass
+	self printBasicDefinitionOfClass: aClass on: stream!
+
+printBasicDefinitionOfClass: aClass on: aPuttableStream
 	| classConstants |
-	aClass superclass ifNil: [stream nextPutAll: 'nil'] ifNotNil: [:base | self emitClassName: base].
-	stream
+	aClass superclass
+		ifNil: [aPuttableStream nextPutAll: 'nil']
+		ifNotNil: [:base | self emitClassName: base on: aPuttableStream].
+	aPuttableStream
 		space;
 		nextPutAll: aClass kindOfSubclass;
 		space;
@@ -352,16 +359,25 @@ printBasicDefinitionOfClass: aClass
 					ifTrue: [aClass unqualifiedName]
 					ifFalse: [aClass fullName asSymbol]);
 		crtab.
-	self printVariables: aClass instanceVariableNames string: 'instanceVariableNames:'.
-	stream crtab.
-	self printVariables: aClass classVariableNames asSortedArray string: 'classVariableNames:'.
-	stream
+	self
+		printVariables: aClass instanceVariableNames
+		string: 'instanceVariableNames:'
+		on: aPuttableStream.
+	aPuttableStream crtab.
+	self
+		printVariables: aClass classVariableNames asSortedArray
+		string: 'classVariableNames:'
+		on: aPuttableStream.
+	aPuttableStream
 		crtab;
 		nextPutAll: 'imports: ';
 		print: aClass imports;
 		crtab.
-	self printVariables: aClass classInstanceVariableNames string: 'classInstanceVariableNames:'.
-	stream
+	self
+		printVariables: aClass classInstanceVariableNames
+		string: 'classInstanceVariableNames:'
+		on: aPuttableStream.
+	aPuttableStream
 		crtab;
 		nextPutAll: 'classConstants: {'.
 	classConstants := aClass classConstants.
@@ -369,19 +385,19 @@ printBasicDefinitionOfClass: aClass
 		ifFalse: 
 			[classConstants asSortedArray do: 
 					[:each |
-					stream
+					aPuttableStream
 						crtab: 2;
 						print: each]
-				separatedBy: [stream nextPut: $.].
-			stream crtab].
-	stream nextPut: $}!
+				separatedBy: [aPuttableStream nextPut: $.].
+			aPuttableStream crtab].
+	aPuttableStream nextPut: $}!
 
-printVariables: aCollection string: aString
-	stream
+printVariables: aCollection string: aString on: aPuttableStream
+	aPuttableStream
 		nextPutAll: aString;
 		nextPutAll: ' '''.
-	aCollection do: [:each | stream nextPutAll: each] separatedBy: [stream space].
-	stream nextPut: $'!
+	aCollection do: [:each | aPuttableStream nextPutAll: each] separatedBy: [aPuttableStream space].
+	aPuttableStream nextPut: $'!
 
 specialBehaviorAttributes
 	^#(#(#isIndirection) #(#isNullTerminated) #(#isNonInstantiable) #(isMourner))!
@@ -436,7 +452,8 @@ fileOutMessages:ofBehavior:!public!source filing! !
 fileOutProtocols:ofBehavior:!public!source filing-file out! !
 logEvaluation:!private!source filing-file out! !
 printBasicDefinitionOfClass:!public!source filing-file out! !
-printVariables:string:!private!source filing-file out! !
+printBasicDefinitionOfClass:on:!private!source filing-file out! !
+printVariables:string:on:!private!source filing-file out! !
 specialBehaviorAttributes!constants!public!source filing! !
 storeCommentString:forClass:!public!source filing-file out! !
 storeCommentString:forPackage:!public!source filing-file out! !
@@ -492,6 +509,52 @@ saveImageTo:!operations-saving!private! !
 
 !Kernel.ChunkSourceFiler methodsFor!
 
+printBasicDefinitionOfClass: aClass on: aPuttableStream
+	| classConstants |
+	aClass superclass
+		ifNil: [aPuttableStream nextPutAll: 'nil']
+		ifNotNil: [:base | self emitClassName: base on: aPuttableStream].
+	aPuttableStream
+		space;
+		nextPutAll: aClass kindOfSubclass;
+		space;
+		print: (aClass isInBaseEnvironment
+					ifTrue: [aClass unqualifiedName]
+					ifFalse: [aClass fullName asSymbol]);
+		crtab.
+	self
+		printVariables: aClass instanceVariableNames
+		string: 'instanceVariableNames:'
+		on: aPuttableStream.
+	aPuttableStream crtab.
+	self
+		printVariables: aClass classVariableNames asSortedArray
+		string: 'classVariableNames:'
+		on: aPuttableStream.
+	aPuttableStream
+		crtab;
+		nextPutAll: 'imports: ';
+		print: aClass imports;
+		crtab.
+	self
+		printVariables: aClass classInstanceVariableNames
+		string: 'classInstanceVariableNames:'
+		on: aPuttableStream.
+	aPuttableStream
+		crtab;
+		nextPutAll: 'classConstants: {'.
+	classConstants := aClass classConstants.
+	classConstants isEmpty
+		ifFalse: 
+			[classConstants asSortedArray do: 
+					[:each |
+					aPuttableStream
+						crtab: 2;
+						print: each]
+				separatedBy: [aPuttableStream nextPut: $.].
+			aPuttableStream crtab].
+	aPuttableStream nextPut: $}!
+
 storeSource: aString for: aSourceObject 
 	"Private - Store the <readableString>, aString, as the source text for the <sourceObject>,
 	aSourceObject. If the receiver has been associated with a source file (i.e. the
@@ -505,6 +568,7 @@ storeSource: aString for: aSourceObject
 		ifTrue: 
 			[aSourceObject sourceDescriptor: (aString isEmpty ifFalse: [self sourceDescriptorForIndex: sourceFileIndex position: position])]! !
 !Kernel.ChunkSourceFiler categoriesForMethods!
+printBasicDefinitionOfClass:on:!private!source filing-file out! !
 storeSource:for:!private!source filing-file out! !
 !
 

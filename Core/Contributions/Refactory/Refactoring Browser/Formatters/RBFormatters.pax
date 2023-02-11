@@ -26,19 +26,22 @@ package!
 
 "Class Definitions"!
 
-Kernel.ParseNodeVisitor subclass: #'Refactory.Browser.RBSourceFormatter'
+Kernel.ParseNodeVisitor
+	subclass: #'Refactory.Browser.RBSourceFormatter'
 	instanceVariableNames: 'codeStream lineStart indent'
 	classVariableNames: 'MaxLineLength PeriodsAtEndOfMethod'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.RBSourceFormatter subclass: #'Refactory.Browser.RBConfigurableFormatter'
+Refactory.Browser.RBSourceFormatter
+	subclass: #'Refactory.Browser.RBConfigurableFormatter'
 	instanceVariableNames: 'lookaheadCode originalSource'
 	classVariableNames: 'FormatCommentWithStatements IndentsForKeywords IndentString LineUpBlockBrackets MethodSignatureOnMultipleLines MinimumNewLinesBetweenStatements NewLineAfterCascade NewLineBeforeFirstCascade NewLineBeforeFirstKeyword NewLinesAfterMethodComment NewLinesAfterMethodPattern NewLinesAfterTemporaries NumberOfArgumentsForMultiLine PeriodsAtEndOfBlock RetainBlankLinesBetweenStatements StringFollowingReturn StringInsideBlocks StringInsideParentheses TraditionalBinaryPrecedence UseTraditionalBinaryPrecedenceForParentheses'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.RBSourceFormatter subclass: #'Refactory.Browser.RBFormatter'
+Refactory.Browser.RBSourceFormatter
+	subclass: #'Refactory.Browser.RBFormatter'
 	instanceVariableNames: 'firstLineLength'
 	classVariableNames: 'MaximumArgumentsPerLine SelectorsToLeaveOnLine SelectorsToStartOnNewLine'
 	imports: #(#{External.ExtCallArgTypes})

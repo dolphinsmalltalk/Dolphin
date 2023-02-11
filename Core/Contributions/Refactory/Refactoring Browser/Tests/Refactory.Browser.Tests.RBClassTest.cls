@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tests.RBClassTest'
+Refactory.Browser.Tests.RefactoringBrowserTest
+	subclass: #'Refactory.Browser.Tests.RBClassTest'
 	instanceVariableNames: 'model objectClass newClass messageNodeClass'
 	classVariableNames: ''
 	imports: #()
@@ -111,21 +112,21 @@ testDefinesPoolDictionary
 
 testDefinitionString
 	self assert: objectClass definition
-		equals: 'nil subclass: #''Core.Object''
+		equals: 'nil
+	subclass: #''Core.Object''
 	instanceVariableNames: ''''
 	classVariableNames: ''_AssertionFailureSignal _DependentsRegister _EventsRegister _PropertyRegister ModelOnlyClassVariable''
 	imports: #()
 	classInstanceVariableNames: ''''
 	classConstants: {}'.
 	self assert: newClass definition
-		equals: 'Core.Object subclass: #SomeClassName
+		equals: 'Core.Object
+	subclass: #SomeClassName
 	instanceVariableNames: ''instanceVariable1 instanceVariable2''
 	classVariableNames: ''ClassVariable1''
 	imports: #(#{Kernel.OpcodePool})
 	classInstanceVariableNames: ''''
-	classConstants: {
-		''ClassConstant1'' -> 1.23
-	}'.
+	classConstants: { ''ClassConstant1'' -> 1.23 }'.
 	{External.FunctionDescriptor. External.Structure. SessionManager. Scanner} do: 
 			[:each |
 			| class |
@@ -206,7 +207,8 @@ testLegacyDefinitionString
 	| scribble |
 	scribble := model classNamed: #Scribble.
 	self assert: scribble definition
-		equals: 'UI.Presenter subclass: #''Smalltalk.Scribble''
+		equals: 'UI.Presenter
+	subclass: #''Smalltalk.Scribble''
 	instanceVariableNames: ''newStroke trackingCanvas''
 	classVariableNames: ''''
 	imports: #()

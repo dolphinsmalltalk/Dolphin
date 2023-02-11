@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.Tests.ChangeObjectTest subclass: #'Refactory.Browser.Tests.RemoveClassConstantChangeTest'
+Refactory.Browser.Tests.ChangeObjectTest
+	subclass: #'Refactory.Browser.Tests.RemoveClassConstantChangeTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -29,7 +30,8 @@ testPrinting
 				from: TransformationRuleTestData.
 	self assert: subject beforeText equals: TransformationRuleTestData definition.
 	self assert: subject afterText
-		equals: 'Refactory.Browser.TestData.FooLintRuleTestData subclass: #''Refactory.Browser.TestData.TransformationRuleTestData''
+		equals: 'Refactory.Browser.TestData.FooLintRuleTestData
+	subclass: #''Refactory.Browser.TestData.TransformationRuleTestData''
 	instanceVariableNames: ''rewriteRule builder class''
 	classVariableNames: ''RecursiveSelfRule''
 	imports: #()

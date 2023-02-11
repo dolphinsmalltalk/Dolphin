@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.SourceFiler subclass: #'Kernel.AbstractChunkSourceFiler'
+Kernel.SourceFiler
+	subclass: #'Kernel.AbstractChunkSourceFiler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'NormalizeEolsMask' -> 16r2
-	}!
+	classConstants: {'NormalizeEolsMask' -> 2}!
 Kernel.AbstractChunkSourceFiler guid: (Core.GUID fromString: '{558b318a-9ff3-4346-a445-76ee18d5458b}')!
 Kernel.AbstractChunkSourceFiler isNonInstantiable: true!
 Kernel.AbstractChunkSourceFiler comment: ''!
@@ -33,12 +32,12 @@ emitGUIDOfClass: aClass
 
 	| guid |
 	guid := aClass guid.
-	self emitClassName: aClass.
+	self emitClassName: aClass on: stream.
 	stream
 		space;
 		nextPutAll: #guid:;
 		nextPutAll: ' ('.
-	self emitClassName: guid class.
+	self emitClassName: guid class on: stream.
 	stream
 		space;
 		nextPutAll: #fromString:;
@@ -50,7 +49,7 @@ emitHeaderForMethodsOf: aClass
 	"Private - Emits a category header for the class, aClass, to the source stream."
 
 	stream nextPut: $!!.
-	self emitClassName: aClass.
+	self emitClassName: aClass on: stream.
 	stream
 		space;
 		nextPutAll: #methodsFor;

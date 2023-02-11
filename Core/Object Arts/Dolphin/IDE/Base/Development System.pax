@@ -390,6 +390,7 @@ package setMethodNames: #(
 	#(#{Kernel.BlockFrame} #isRestartable)
 	#(#{Kernel.BlockFrame} #makeDebug)
 	#(#{Kernel.BlockFrame} #mapInitialIpFrom:to:)
+	#(#{Kernel.ChunkSourceFiler} #printBasicDefinitionOfClass:)
 	#(#{Kernel.ClassBuilder class} #publishedEventsOfInstances)
 	#(#{Kernel.CompiledCode} #alternateInspectorClass)
 	#(#{Kernel.CompiledCode} #asDebugMethod)
@@ -853,775 +854,880 @@ package!
 
 "Class Definitions"!
 
-Tools subclass: #'Tools.Examples'
+Tools
+	subclass: #'Tools.Examples'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'Tools.CodeGenerationContext'
+Core.Object
+	subclass: #'Tools.CodeGenerationContext'
 	instanceVariableNames: 'writeStream targetClass'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'Tools.Grabber'
+Core.Object
+	subclass: #'Tools.Grabber'
 	instanceVariableNames: 'rectangle aspect constrain view composer'
 	classVariableNames: 'Cursors'
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'Tools.MenuPainter'
+Core.Object
+	subclass: #'Tools.MenuPainter'
 	instanceVariableNames: 'menu conflictingMnemonics conflictingAccelerators'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants private} #{OS private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'Tools.MethodCategorizationPolicy'
+Core.Object
+	subclass: #'Tools.MethodCategorizationPolicy'
 	instanceVariableNames: ''
 	classVariableNames: 'Default'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'Tools.MethodSearch'
+Core.Object
+	subclass: #'Tools.MethodSearch'
 	instanceVariableNames: 'findDetails regexp literal'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'IgnoreCaseMask' -> 16r1
-	}!
-Core.Object subclass: #'Tools.ParseContext'
+	classConstants: { 'IgnoreCaseMask' -> 16r1 }!
+Core.Object
+	subclass: #'Tools.ParseContext'
 	instanceVariableNames: 'methodClass environment'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'Tools.SmalltalkSearchCandidate'
+Core.Object
+	subclass: #'Tools.SmalltalkSearchCandidate'
 	instanceVariableNames: 'matchingName object'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'Tools.SmalltalkSystemIcon'
+Core.Object
+	subclass: #'Tools.SmalltalkSystemIcon'
 	instanceVariableNames: 'openBlock icon description tool helpId'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'Tools.VisualShellFinder'
+Core.Object
+	subclass: #'Tools.VisualShellFinder'
 	instanceVariableNames: 'mouseTracker foundObject foundCursor notFoundCursor shellClassFilter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.AttributeDescriptor subclass: #'Tools.Aspect'
+Kernel.AttributeDescriptor
+	subclass: #'Tools.Aspect'
 	instanceVariableNames: 'name presenterBlock editBlock immediateActionBlock category getBlock putBlock type icon defaultValue'
 	classVariableNames: 'DefaultPresenterBlock'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'EditInPlaceMask' -> 16r80000.
-		'MultilineValueMask' -> 16r40000.
-		'ReadOnlyPresenterBlockMask' -> 16r10000.
-		'ValueWorkspaceEditorMask' -> 16r20000
-	}!
-Tools.Aspect subclass: #'Tools.KeyedAspect'
+			'EditInPlaceMask' -> 16r80000.
+			'MultilineValueMask' -> 16r40000.
+			'ReadOnlyPresenterBlockMask' -> 16r10000.
+			'ValueWorkspaceEditorMask' -> 16r20000
+		}!
+Tools.Aspect
+	subclass: #'Tools.KeyedAspect'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.KeyedAspect subclass: #'Tools.AnonymousKeyedAspect'
+Tools.KeyedAspect
+	subclass: #'Tools.AnonymousKeyedAspect'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.KeyedAspect subclass: #'Tools.InstVarAspect'
+Tools.KeyedAspect
+	subclass: #'Tools.InstVarAspect'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.KeyedAspect subclass: #'Tools.KeyedAspectBatch'
+Tools.KeyedAspect
+	subclass: #'Tools.KeyedAspectBatch'
 	instanceVariableNames: 'batchSize keys accessorClass'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.KeyedAspect subclass: #'Tools.StackFrameSlot'
+Tools.KeyedAspect
+	subclass: #'Tools.StackFrameSlot'
 	instanceVariableNames: 'index'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.AnonymousKeyedAspect subclass: #'Tools.BasicKeyedAspect'
+Tools.AnonymousKeyedAspect
+	subclass: #'Tools.BasicKeyedAspect'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Tools.MethodCategoryEnvironment'
+Refactory.Browser.BrowserEnvironmentWrapper
+	subclass: #'Tools.MethodCategoryEnvironment'
 	instanceVariableNames: 'categories'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Category subclass: #'Tools.IntermediateCategory'
+Core.Category
+	subclass: #'Tools.IntermediateCategory'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.MethodCategory subclass: #'Tools.DebuggerMethodCategory'
+Core.MethodCategory
+	subclass: #'Tools.DebuggerMethodCategory'
 	instanceVariableNames: 'mask'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.MethodCategory subclass: #'Tools.VirtualMethodCategory'
+Core.MethodCategory
+	subclass: #'Tools.VirtualMethodCategory'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.VirtualMethodCategory subclass: #'Tools.AllMethodsCategory'
+Tools.VirtualMethodCategory
+	subclass: #'Tools.AllMethodsCategory'
 	instanceVariableNames: ''
 	classVariableNames: 'Current'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.VirtualMethodCategory subclass: #'Tools.ChangedMethodsCategory'
+Tools.VirtualMethodCategory
+	subclass: #'Tools.ChangedMethodsCategory'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.VirtualMethodCategory subclass: #'Tools.MethodPrivacyCategory'
+Tools.VirtualMethodCategory
+	subclass: #'Tools.MethodPrivacyCategory'
 	instanceVariableNames: 'privacy'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.VirtualMethodCategory subclass: #'Tools.PluggableVirtualMethodCategory'
+Tools.VirtualMethodCategory
+	subclass: #'Tools.PluggableVirtualMethodCategory'
 	instanceVariableNames: 'filter isSlowToEnumerate'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.VirtualMethodCategory subclass: #'Tools.ReferencesCategory'
+Tools.VirtualMethodCategory
+	subclass: #'Tools.ReferencesCategory'
 	instanceVariableNames: 'literal'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.VirtualMethodCategory subclass: #'Tools.UnclassifiedMethodsCategory'
+Tools.VirtualMethodCategory
+	subclass: #'Tools.UnclassifiedMethodsCategory'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.ReferencesCategory subclass: #'Tools.PackedReferencesCategory'
+Tools.ReferencesCategory
+	subclass: #'Tools.PackedReferencesCategory'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.ReferencesCategory subclass: #'Tools.SingleUnarySendMethodCategory'
+Tools.ReferencesCategory
+	subclass: #'Tools.SingleUnarySendMethodCategory'
 	instanceVariableNames: 'selector'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.ReferencesCategory subclass: #'Tools.SpecialReferencesCategory'
+Tools.ReferencesCategory
+	subclass: #'Tools.SpecialReferencesCategory'
 	instanceVariableNames: 'index'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.ChunkReader subclass: #'Tools.SingleChunkReader'
+Kernel.ChunkReader
+	subclass: #'Tools.SingleChunkReader'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Error subclass: #'Tools.InvalidInstallationError'
+Core.Error
+	subclass: #'Tools.InvalidInstallationError'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Folder subclass: #'Tools.PackageFolder'
+UI.Folder
+	subclass: #'Tools.PackageFolder'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.MenuPainter subclass: #'Tools.MenuBarPainter'
+Tools.MenuPainter
+	subclass: #'Tools.MenuBarPainter'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.MenuPainter subclass: #'Tools.PopupMenuPainter'
+Tools.MenuPainter
+	subclass: #'Tools.PopupMenuPainter'
 	instanceVariableNames: 'itemWidth textOffset submenuOffset acceleratorOffset'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.MethodSearch subclass: #'Tools.MethodSourceSearch'
+Tools.MethodSearch
+	subclass: #'Tools.MethodSourceSearch'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Model subclass: #'Tools.SmalltalkSystem'
+Core.Model
+	subclass: #'Tools.SmalltalkSystem'
 	instanceVariableNames: 'systemFolderClass workspaceClass defaultInspectorClass defaultBrowserClass systemFolder packageBrowserClass debuggerClass viewComposerClass protocolBrowserClass workspaceShellClass resourceBrowserClass changedIcon hierarchyBrowserClass preferAlternateInspectors formatterClass classChooserClass resourceIdentifierDialogClass findDetails methodWorkspaceClass allSelectors argumentClasses methodExplorerClass aboutBoxClass testBrowserClass toolbarBitmapSize displayItLocale'
 	classVariableNames: 'ChangedIcon Current FileDrops RegisteredTools'
 	imports: #(#{Kernel.CompilerFlags} #{Refactory.Browser} #{Kernel.ParseErrorCodes} #{XProgramming.SUnit private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.TreeModel subclass: #'Tools.CategoryTreeModel'
+UI.TreeModel
+	subclass: #'Tools.CategoryTreeModel'
 	instanceVariableNames: 'title'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.FolderHierarchyModel subclass: #'Tools.PackageHierarchyModel'
+UI.FolderHierarchyModel
+	subclass: #'Tools.PackageHierarchyModel'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.VirtualTreeModel subclass: #'Tools.AbstractClassHierarchyModel'
+UI.VirtualTreeModel
+	subclass: #'Tools.AbstractClassHierarchyModel'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.AbstractClassHierarchyModel subclass: #'Tools.ClassHierarchyModel'
+Tools.AbstractClassHierarchyModel
+	subclass: #'Tools.ClassHierarchyModel'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.AbstractClassHierarchyModel subclass: #'Tools.NamespaceHierarchyModel'
+Tools.AbstractClassHierarchyModel
+	subclass: #'Tools.NamespaceHierarchyModel'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.ValueAdaptor subclass: #'Tools.AspectAccessor'
+UI.ValueAdaptor
+	subclass: #'Tools.AspectAccessor'
 	instanceVariableNames: 'aspectDescriptor'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.AspectAccessor subclass: #'Tools.BatchAspectAccessor'
+Tools.AspectAccessor
+	subclass: #'Tools.BatchAspectAccessor'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.BatchAspectAccessor subclass: #'Tools.IndexedInstVarBatchAccessor'
+Tools.BatchAspectAccessor
+	subclass: #'Tools.IndexedInstVarBatchAccessor'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.BatchAspectAccessor subclass: #'Tools.KeyedAspectBatchAccessor'
+Tools.BatchAspectAccessor
+	subclass: #'Tools.KeyedAspectBatchAccessor'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.IndexedInstVarBatchAccessor subclass: #'Tools.SetBatchAspectAccessor'
+Tools.IndexedInstVarBatchAccessor
+	subclass: #'Tools.SetBatchAspectAccessor'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.KeyedAspectBatchAccessor subclass: #'Tools.AnonymousKeyedAspectBatchAccessor'
+Tools.KeyedAspectBatchAccessor
+	subclass: #'Tools.AnonymousKeyedAspectBatchAccessor'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.ParseNodeVisitor subclass: #'Tools.MessageNodeCollector'
+Kernel.ParseNodeVisitor
+	subclass: #'Tools.MessageNodeCollector'
 	instanceVariableNames: 'messages'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.StSemanticAnalyser subclass: #'Tools.BrowserSemanticAnalyser'
+Kernel.StSemanticAnalyser
+	subclass: #'Tools.BrowserSemanticAnalyser'
 	instanceVariableNames: 'isStub'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Presenter subclass: #'Tools.ClassBrowserPlugin'
+UI.Presenter
+	subclass: #'Tools.ClassBrowserPlugin'
 	instanceVariableNames: ''
 	classVariableNames: 'DefaultPlugins'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Presenter subclass: #'Tools.PackageDependencyPresenter'
+UI.Presenter
+	subclass: #'Tools.PackageDependencyPresenter'
 	instanceVariableNames: 'treePresenter tracesPresenter traces packages'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Presenter subclass: #'Tools.SmalltalkSearchPresenter'
+UI.Presenter
+	subclass: #'Tools.SmalltalkSearchPresenter'
 	instanceVariableNames: 'environment'
 	classVariableNames: 'AutoCompleteDwell'
 	imports: #(#{UI.Scintilla private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Presenter subclass: #'Tools.SmalltalkWorkspace'
+UI.Presenter
+	subclass: #'Tools.SmalltalkWorkspace'
 	instanceVariableNames: 'evaluationContext errorModel findDetails workspacePool namespaces compilationErrors textStyles searchEnvironment modifiedModel flags indicatorStyles variableMetadataProvider'
 	classVariableNames: 'Abbreviations AnnotationMode AutoCompleteDwell DefaultCaretColor DefaultFont DefaultTabWidth FontQuality IndicatorStyles KeyBindings KeywordCompletions MaxAutoCompletionListHeight MaxAutoCompletionListSize MaxAutoCompletionListWidth OptionFlags StandardUnaryReturnTypes TextStyles WrapIndentMode'
 	imports: #(#{Kernel.CompilerFlags} #{UI.Scintilla private} #{Refactory.Browser private})
 	classInstanceVariableNames: 'additionalKeyBindings commandQueryHandlers'
 	classConstants: {
-		'AutoCompleteMask' -> 16r8.
-		'AutoCompletionCaseInsensitiveMask' -> 16r80.
-		'AutoCompletionEnabledMask' -> 16r10.
-		'AutoCompletionSpaceAddedMask' -> 16r40.
-		'AutoCompletionTruncatingMask' -> 16r20.
-		'LoadingMask' -> 16r1.
-		'UseDirectWriteMask' -> 16r100.
-		'VariableTipsMask' -> 16r2.
-		'WordWrapMask' -> 16r4
-	}!
-UI.Presenter subclass: #'Tools.TwinLevelInspector'
+			'AutoCompleteMask' -> 16r8.
+			'AutoCompletionCaseInsensitiveMask' -> 16r80.
+			'AutoCompletionEnabledMask' -> 16r10.
+			'AutoCompletionSpaceAddedMask' -> 16r40.
+			'AutoCompletionTruncatingMask' -> 16r20.
+			'LoadingMask' -> 16r1.
+			'UseDirectWriteMask' -> 16r100.
+			'VariableTipsMask' -> 16r2.
+			'WordWrapMask' -> 16r4
+		}!
+UI.Presenter
+	subclass: #'Tools.TwinLevelInspector'
 	instanceVariableNames: 'contentsPresenter inspectorPresenter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.ClassBrowserPlugin subclass: #'Tools.AstPlugin'
+Tools.ClassBrowserPlugin
+	subclass: #'Tools.AstPlugin'
 	instanceVariableNames: 'astPresenter sourcePresenter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.ClassBrowserPlugin subclass: #'Tools.ClassAspectPlugin'
+Tools.ClassBrowserPlugin
+	subclass: #'Tools.ClassAspectPlugin'
 	instanceVariableNames: 'textPresenter originalText currentClass'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.ClassAspectPlugin subclass: #'Tools.ClassCommentPlugin'
+Tools.ClassAspectPlugin
+	subclass: #'Tools.ClassCommentPlugin'
 	instanceVariableNames: ''
 	classVariableNames: 'TextStyles WordWrap'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.PackageDependencyPresenter subclass: #'Tools.PackageDependents'
+Tools.PackageDependencyPresenter
+	subclass: #'Tools.PackageDependents'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.PackageDependencyPresenter subclass: #'Tools.PackagePrerequisites'
+Tools.PackageDependencyPresenter
+	subclass: #'Tools.PackagePrerequisites'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.SelectableItemsPresenter subclass: #'Tools.ClassSelector'
+UI.SelectableItemsPresenter
+	subclass: #'Tools.ClassSelector'
 	instanceVariableNames: 'classesPresenter searchEnvironment'
 	classVariableNames: ''
 	imports: #(#{Refactory.Browser private} #{XProgramming.SUnit private})
 	classInstanceVariableNames: 'commandQueryHandlers'
-	classConstants: {
-		'ClassModeMask' -> 16r1.
-		'ShowFullNamesMask' -> 16r2
-	}!
-UI.SelectableItemsPresenter subclass: #'Tools.PackageSelector'
+	classConstants: { 'ClassModeMask' -> 16r1. 'ShowFullNamesMask' -> 16r2 }!
+UI.SelectableItemsPresenter
+	subclass: #'Tools.PackageSelector'
 	instanceVariableNames: 'filterPresenter packagesPresenter autoSelect'
 	classVariableNames: ''
 	imports: #(#{XProgramming.SUnit private} #{Refactory.Browser private})
 	classInstanceVariableNames: 'commandQueryHandlers'
 	classConstants: {}!
-Tools.ClassSelector subclass: #'Tools.ClassHierarchySelector'
+Tools.ClassSelector
+	subclass: #'Tools.ClassHierarchySelector'
 	instanceVariableNames: 'flags'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.ClassSelector subclass: #'Tools.ClassListSelector'
+Tools.ClassSelector
+	subclass: #'Tools.ClassListSelector'
 	instanceVariableNames: 'flags classesListPresenter browserEnvironment namespacesPresenter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.ListPresenter subclass: #'Tools.MethodBrowser'
+UI.ListPresenter
+	subclass: #'Tools.MethodBrowser'
 	instanceVariableNames: 'methodsPresenter sourcePresenter filter searchEnvironment refactoringTool namespaceModel'
 	classVariableNames: 'AdditionalAccelerators AutoFormat InfoTips WordWrap'
 	imports: #(#{Kernel.CompilerFlags} #{Refactory.Browser private})
 	classInstanceVariableNames: 'commandQueryHandlers'
 	classConstants: {}!
-UI.ListPresenter subclass: #'Tools.ResourceListPresenter'
+UI.ListPresenter
+	subclass: #'Tools.ResourceListPresenter'
 	instanceVariableNames: 'filterBlock resourcesPresenter previewPresenter resourceIdModel'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.ListPresenter subclass: #'Tools.ResourceToolboxPresenter'
+UI.ListPresenter
+	subclass: #'Tools.ResourceToolboxPresenter'
 	instanceVariableNames: 'categoriesPresenter resourcesPresenter iconMap'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Shell subclass: #'Tools.SmalltalkToolShell'
+UI.Shell
+	subclass: #'Tools.SmalltalkToolShell'
 	instanceVariableNames: 'searchPresenter fontSizePresenter'
 	classVariableNames: 'HistoryDwellTime SearchFieldFlashes'
 	imports: #(#{Refactory.Browser private})
 	classInstanceVariableNames: 'optionFlags defaultView defaultExtent defaultSlideyPinsMap additionalKeyBindings commandQueryHandlers'
 	classConstants: {
-		'CanUseIdeaSpaceMask' -> 16r2.
-		'LoadingMask' -> 16r1.
-		'ReuseIfOpenMask' -> 16r4.
-		'ShowOptionLoadingTimes' -> false
-	}!
-UI.AbstractDocumentShell subclass: #'Tools.SmalltalkWorkspaceDocument'
+			'CanUseIdeaSpaceMask' -> 16r2.
+			'LoadingMask' -> 16r1.
+			'ReuseIfOpenMask' -> 16r4.
+			'ShowOptionLoadingTimes' -> false
+		}!
+UI.AbstractDocumentShell
+	subclass: #'Tools.SmalltalkWorkspaceDocument'
 	instanceVariableNames: 'workspacePresenter searchPresenter'
 	classVariableNames: 'DefaultExtent DefaultView LanguageExtensions OptionFlags'
 	imports: #(#{Refactory.Browser private})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'CanUseIdeaSpaceMask' -> 16r8.
-		'LoadingMask' -> 16r1.
-		'ReUseIfOpenMask' -> 16r2.
-		'VariableTipsMask' -> 16r4
-	}!
-UI.Dialog subclass: #'Tools.AspectEditorDialog'
+			'CanUseIdeaSpaceMask' -> 16r8.
+			'LoadingMask' -> 16r1.
+			'ReUseIfOpenMask' -> 16r2.
+			'VariableTipsMask' -> 16r4
+		}!
+UI.Dialog
+	subclass: #'Tools.AspectEditorDialog'
 	instanceVariableNames: 'aspectPresenterInDialog hookPresenter subjectModel aspect aspectRectangle'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Dialog subclass: #'Tools.CreateSubclassDialog'
+UI.Dialog
+	subclass: #'Tools.CreateSubclassDialog'
 	instanceVariableNames: 'packagesPresenter subclassesPresenter namePresenter namespacePresenter usePackagePresenter package superclassPresenter hintBubble isNonInstantiablePresenter isVariablePresenter isBytesPresenter attributesPresenter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Dialog subclass: #'Tools.MenuItemDialog'
+UI.Dialog
+	subclass: #'Tools.MenuItemDialog'
 	instanceVariableNames: 'titlePresenter commandPresenter iconPresenter imageModel iconIdPresenter inspector cardsPresenter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Dialog subclass: #'Tools.ResourceIdentifierDialog'
+UI.Dialog
+	subclass: #'Tools.ResourceIdentifierDialog'
 	instanceVariableNames: 'classesPresenter resourceNamePresenter classValue'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.MenuItemDialog subclass: #'Tools.CommandMenuItemDialog'
+Tools.MenuItemDialog
+	subclass: #'Tools.CommandMenuItemDialog'
 	instanceVariableNames: 'acceleratorPresenter isRadioButtonStylePresenter isDefaultPresenter isModalPresenter'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.MenuItemDialog subclass: #'Tools.MenuDialog'
+Tools.MenuItemDialog
+	subclass: #'Tools.MenuDialog'
 	instanceVariableNames: 'autoDismissPresenter checkColumnModePresenter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.ValueDialog subclass: #'Tools.CategoryPrompter'
+UI.ValueDialog
+	subclass: #'Tools.CategoryPrompter'
 	instanceVariableNames: 'treePresenter flags categoryClass'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
-	classConstants: {
-		'AllowIntermediatesMask' -> 16r1.
-		'AllowReadOnlyMask' -> 16r2
-	}!
-UI.ValueDialog subclass: #'Tools.ChooseClassDialog'
+	classConstants: { 'AllowIntermediatesMask' -> 16r1. 'AllowReadOnlyMask' -> 16r2 }!
+UI.ValueDialog
+	subclass: #'Tools.ChooseClassDialog'
 	instanceVariableNames: 'classesPresenter allowNil nilButtonCaption validater'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.ValueDialog subclass: #'Tools.MenuComposer'
+UI.ValueDialog
+	subclass: #'Tools.MenuComposer'
 	instanceVariableNames: 'arena menuViews conflictingAccelerators'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.ValueDialog subclass: #'Tools.PackagePrompter'
+UI.ValueDialog
+	subclass: #'Tools.PackagePrompter'
 	instanceVariableNames: 'packagesPresenter notPackagedPresenter defaultPackage validationBlock'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.ChooseClassDialog subclass: #'Tools.ChooseNamespaceDialog'
+Tools.ChooseClassDialog
+	subclass: #'Tools.ChooseNamespaceDialog'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.MenuComposer subclass: #'Tools.MenuBarComposer'
+Tools.MenuComposer
+	subclass: #'Tools.MenuBarComposer'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.SmalltalkToolShell subclass: #'Tools.ClassBrowserAbstract'
+Tools.SmalltalkToolShell
+	subclass: #'Tools.ClassBrowserAbstract'
 	instanceVariableNames: 'classesPresenter categoriesPresenter methodBrowserPresenter definitionPresenter modePresenter flags history variablesPresenter protocolsPresenter filterPresenter packageModel statusModel cardsPresenter loadedPlugins methodCategories'
 	classVariableNames: 'GrayedMethodFadeFactor HistoryListSize LooseMethodColor WordWrapDefinition'
 	imports: #()
 	classInstanceVariableNames: 'plugins'
-	classConstants: {
-		'FilterObjectMethodsMask' -> 16r200.
-		'ShowInheritedMethodsMask' -> 16r100
-	}!
-Tools.SmalltalkToolShell subclass: #'Tools.Debugger'
+	classConstants: { 'FilterObjectMethodsMask' -> 16r200. 'ShowInheritedMethodsMask' -> 16r100 }!
+Tools.SmalltalkToolShell
+	subclass: #'Tools.Debugger'
 	instanceVariableNames: 'process topFrame localAccessor depth flags breakWhen stackPresenter sourcePresenter variablesPresenter inspectorPresenter breakAction suspendingList _method refactoringTool'
 	classVariableNames: 'AnimatePause DefaultStackDepth EnableDynamicMenus RestartOnMethodSave RunToCursorBehavior ShowWalkbacks SkipTable'
 	imports: #(#{Kernel.CompilerFlags} #{Kernel.OpcodePool})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'AnimateMask' -> 16r10.
-		'DisassemblyMask' -> 16r4.
-		'MainMask' -> 16r1.
-		'ResumableMask' -> 16r8.
-		'RunMask' -> 16r2.
-		'StackDepthIncrement' -> 16r64
-	}!
-Tools.SmalltalkToolShell subclass: #'Tools.FlipperInspector'
+			'AnimateMask' -> 16r10.
+			'DisassemblyMask' -> 16r4.
+			'MainMask' -> 16r1.
+			'ResumableMask' -> 16r8.
+			'RunMask' -> 16r2.
+			'StackDepthIncrement' -> 16r64
+		}!
+Tools.SmalltalkToolShell
+	subclass: #'Tools.FlipperInspector'
 	instanceVariableNames: 'cards'
 	classVariableNames: 'Renderers'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.SmalltalkToolShell subclass: #'Tools.InspectorShell'
+Tools.SmalltalkToolShell
+	subclass: #'Tools.InspectorShell'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.SmalltalkToolShell subclass: #'Tools.MethodBrowserShell'
+Tools.SmalltalkToolShell
+	subclass: #'Tools.MethodBrowserShell'
 	instanceVariableNames: 'browserPresenter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.SmalltalkToolShell subclass: #'Tools.PackageBrowserShell'
+Tools.SmalltalkToolShell
+	subclass: #'Tools.PackageBrowserShell'
 	instanceVariableNames: 'packagesPresenter classesPresenter methodsPresenter methodRefactoringTool variablesPresenter resourcesPresenter currentCard commentPresenter cardsPresenter updateFlags scriptTextPresenter scriptNamesPresenter prerequisitesPresenter dependentsPresenter statusModel'
 	classVariableNames: 'WordWrapComment'
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.SmalltalkToolShell subclass: #'Tools.ResourceBrowser'
+Tools.SmalltalkToolShell
+	subclass: #'Tools.ResourceBrowser'
 	instanceVariableNames: 'resourceToolboxPresenter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.SmalltalkToolShell subclass: #'Tools.SmalltalkSystemShell'
+Tools.SmalltalkToolShell
+	subclass: #'Tools.SmalltalkSystemShell'
 	instanceVariableNames: 'systemFolderPresenter'
 	classVariableNames: 'Backcolor BackImage BackImageAlphaPercent BackImageIsTiled Default HotKey PlaySystemSounds ResetWhenInvisible Textcolor ViewMode'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.SmalltalkToolShell subclass: #'Tools.ViewComposer'
+Tools.SmalltalkToolShell
+	subclass: #'Tools.ViewComposer'
 	instanceVariableNames: 'toolboxPresenter status arenaPresenter inspector composingView ownsComposingView resourceIdentifier addPositionOffset grabbers selections grid viewHierarchyPresenter adornmentRegion primarySelection vcFlags modificationStatus image undoList'
 	classVariableNames: 'Clipboard DefaultGridResolution ExtentImage PositionImage'
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'AdornmentModifiedFlag' -> 16r4.
-		'ModifiedFlag' -> 16r1.
-		'MouseClickFlag' -> 16r2.
-		'RefreshFlag' -> 16r8.
-		'UndoRedoFlag' -> 16r10
-	}!
-Tools.ClassBrowserAbstract subclass: #'Tools.ClassBrowserShell'
+			'AdornmentModifiedFlag' -> 16r4.
+			'ModifiedFlag' -> 16r1.
+			'MouseClickFlag' -> 16r2.
+			'RefreshFlag' -> 16r8.
+			'UndoRedoFlag' -> 16r10
+		}!
+Tools.ClassBrowserAbstract
+	subclass: #'Tools.ClassBrowserShell'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'LocalHierarchyMask' -> 16r10
-	}!
-Tools.MethodBrowserShell subclass: #'Tools.MethodExplorerShell'
+	classConstants: { 'LocalHierarchyMask' -> 16r10 }!
+Tools.MethodBrowserShell
+	subclass: #'Tools.MethodExplorerShell'
 	instanceVariableNames: 'historyTree historyList'
 	classVariableNames: 'HistoryListSize'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.SmalltalkWorkspace subclass: #'Tools.MethodWorkspace'
+Tools.SmalltalkWorkspace
+	subclass: #'Tools.MethodWorkspace'
 	instanceVariableNames: 'parseTree refactoringTool'
 	classVariableNames: 'AutoParseDwell'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'NoAutoParseMask' -> 16r100000.
-		'NoSelectionMatching' -> 16r200000
-	}!
-Tools.SmalltalkWorkspace subclass: #'Tools.ValueWorkspace'
+	classConstants: { 'NoAutoParseMask' -> 16r100000. 'NoSelectionMatching' -> 16r200000 }!
+Tools.SmalltalkWorkspace
+	subclass: #'Tools.ValueWorkspace'
 	instanceVariableNames: 'textModel'
 	classVariableNames: 'ValueIsSelfCookie'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.ValuePresenter subclass: #'Tools.BasicInspector'
+UI.ValuePresenter
+	subclass: #'Tools.BasicInspector'
 	instanceVariableNames: 'variableNamesPresenter sourcePresenter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.ValuePresenter subclass: #'Tools.InspectorAbstract'
+UI.ValuePresenter
+	subclass: #'Tools.InspectorAbstract'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.BasicInspector subclass: #'Tools.CompiledMethodInspector'
+Tools.BasicInspector
+	subclass: #'Tools.CompiledMethodInspector'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'MethodTypes' -> #('Normal' 'Return nil' 'Return true' 'Return false' 'Return literal constant 0' 'Return self' 'Return instance variable' 'Set instance variable')
-	}!
-Tools.BasicInspector subclass: #'Tools.DictionaryInspector'
+			'MethodTypes'
+				-> #('Normal' 'Return nil' 'Return true' 'Return false' 'Return literal constant 0' 'Return self' 'Return instance variable' 'Set instance variable')
+		}!
+Tools.BasicInspector
+	subclass: #'Tools.DictionaryInspector'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.BasicInspector subclass: #'Tools.SequenceableCollectionInspector'
+Tools.BasicInspector
+	subclass: #'Tools.SequenceableCollectionInspector'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.BasicInspector subclass: #'Tools.StructureInspector'
+Tools.BasicInspector
+	subclass: #'Tools.StructureInspector'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.InspectorAbstract subclass: #'Tools.AspectInspector'
+Tools.InspectorAbstract
+	subclass: #'Tools.AspectInspector'
 	instanceVariableNames: 'aspectTreePresenter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: 'treeUpdateMode treeHasGridLines'
 	classConstants: {}!
-Tools.InspectorAbstract subclass: #'Tools.VisualObjectFinder'
+Tools.InspectorAbstract
+	subclass: #'Tools.VisualObjectFinder'
 	instanceVariableNames: 'mouseTracker finderIcon heading workspace foundView'
 	classVariableNames: 'FindNonDolphinWindows'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.AspectInspector subclass: #'Tools.AbstractPublishedAspectInspector'
+Tools.AspectInspector
+	subclass: #'Tools.AbstractPublishedAspectInspector'
 	instanceVariableNames: 'aspectValueHolder aspectPresenter isRootAspectVisible isSingleLevelOnly'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.AspectInspector subclass: #'Tools.InstVarInspector'
+Tools.AspectInspector
+	subclass: #'Tools.InstVarInspector'
 	instanceVariableNames: 'sourcePresenter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.AbstractPublishedAspectInspector subclass: #'Tools.PropertyInspector'
+Tools.AbstractPublishedAspectInspector
+	subclass: #'Tools.PropertyInspector'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.AbstractPublishedAspectInspector subclass: #'Tools.PublishedAspectInspector'
+Tools.AbstractPublishedAspectInspector
+	subclass: #'Tools.PublishedAspectInspector'
 	instanceVariableNames: 'displayPresenter workspacePresenter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.Scanner subclass: #'Tools.SmalltalkStylingScanner'
+Kernel.Scanner
+	subclass: #'Tools.SmalltalkStylingScanner'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.SingletonSearchPolicy subclass: #'Tools.CompiledMethodSearchPolicy'
+Kernel.SingletonSearchPolicy
+	subclass: #'Tools.CompiledMethodSearchPolicy'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.GUISessionManager subclass: #'Tools.DevelopmentSessionManager'
+UI.GUISessionManager
+	subclass: #'Tools.DevelopmentSessionManager'
 	instanceVariableNames: 'imageStamp installationDirectory backupOnImageSave productDetails showSplashAtStartup'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.SmalltalkSystemIcon subclass: #'Tools.SmalltalkSystemFolder'
+Tools.SmalltalkSystemIcon
+	subclass: #'Tools.SmalltalkSystemFolder'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.STBInFiler subclass: #'Tools.STBDebugger'
+Kernel.STBInFiler
+	subclass: #'Tools.STBDebugger'
 	instanceVariableNames: 'indentLevel traceStream printOffsets'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Scintilla.Styler subclass: #'Tools.SmalltalkStyler'
+UI.Scintilla.Styler
+	subclass: #'Tools.SmalltalkStyler'
 	instanceVariableNames: 'arrayDepth view last inTag stack'
 	classVariableNames: ''
 	imports: #(#{UI.Scintilla private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.SmalltalkStyler subclass: #'Tools.SmalltalkExpressionStyler'
+Tools.SmalltalkStyler
+	subclass: #'Tools.SmalltalkExpressionStyler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.SmalltalkStyler subclass: #'Tools.SmalltalkMethodStyler'
+Tools.SmalltalkStyler
+	subclass: #'Tools.SmalltalkMethodStyler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.View subclass: #'Tools.MenuComposerView'
+UI.View
+	subclass: #'Tools.MenuComposerView'
 	instanceVariableNames: 'selectionIndex painter'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.ContainerView subclass: #'Tools.MenuComposerArena'
+UI.ContainerView
+	subclass: #'Tools.MenuComposerArena'
 	instanceVariableNames: 'dragImageList dragPoint dragMenuIndex dragSource _unused'
 	classVariableNames: ''
 	imports: #(#{OS.CommCtrlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.DialogView subclass: #'Tools.WalkbackDialog'
+UI.DialogView
+	subclass: #'Tools.WalkbackDialog'
 	instanceVariableNames: 'callStack resumable caption debuggable'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'CallStackId' -> 16r3E9.
-		'Commands' -> (LookupTable withAll: {16r4 -> #copy. 16r3 -> #resume. 16r2 -> #terminate. 16r1 -> #debug}).
-		'IconId' -> 16r3F1
-	}!
-UI.ImageViewAbstract subclass: #'Tools.ImageListView'
+			'CallStackId' -> 16r3E9.
+			'Commands'
+				-> (LookupTable withAll: { 16r1 -> #debug. 16r2 -> #terminate. 16r3 -> #resume. 16r4 -> #copy }).
+			'IconId' -> 16r3F1
+		}!
+UI.ImageViewAbstract
+	subclass: #'Tools.ImageListView'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.ImageView subclass: #'Tools.ViewComposerArena'
+UI.ImageView
+	subclass: #'Tools.ViewComposerArena'
 	instanceVariableNames: 'composer'
 	classVariableNames: ''
 	imports: #()
@@ -4426,6 +4532,20 @@ makeDebug!private! !
 mapInitialIpFrom:to:!private! !
 !
 
+!Kernel.ChunkSourceFiler methodsFor!
+
+printBasicDefinitionOfClass: aClass
+	| definitionStream |
+	definitionStream := (String writeStream: 384)
+				locale: stream locale;
+				yourself.
+	self printBasicDefinitionOfClass: aClass on: definitionStream.
+	definitionStream := definitionStream contents.
+	self emitString: (Parser parseExpression: definitionStream) formattedCode! !
+!Kernel.ChunkSourceFiler categoriesForMethods!
+printBasicDefinitionOfClass:!public!source filing-file out! !
+!
+
 !Kernel.ClassBuilder class methodsFor!
 
 publishedEventsOfInstances
@@ -5109,9 +5229,9 @@ emitResourceMethodHeader: aResourceIdentifier
 		crtab;
 		nextPutAll: 'If you wish to modify this resource evaluate:';
 		crtab.
-	self emitClassName: Tools.ViewComposer.
+	self emitClassName: Tools.ViewComposer on: stream.
 	stream nextPutAll: ' openOn: ('.
-	self emitClassName: ResourceIdentifier.
+	self emitClassName: ResourceIdentifier on: stream.
 	stream
 		nextPutAll: ' class: self selector: ';
 		print: aResourceIdentifier selector;

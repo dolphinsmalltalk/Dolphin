@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Kernel.SourceFiler'
+Core.Object
+	subclass: #'Kernel.SourceFiler'
 	instanceVariableNames: 'stream evaluationContext flags'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'SourceOnlyMask' -> 16r1
-	}!
+	classConstants: {'SourceOnlyMask' -> 1}!
 Kernel.SourceFiler guid: (Core.GUID fromString: '{847f25f1-cd60-490c-817f-3f0f2cefd567}')!
 Kernel.SourceFiler isNonInstantiable: true!
 Kernel.SourceFiler comment: ''!
@@ -30,10 +29,10 @@ cr
 
 	stream cr!
 
-emitClassName: aClass
+emitClassName: aClass on: aPuttableStream
 	aClass isInBaseEnvironment
-		ifTrue: [stream nextPutAll: aClass name]
-		ifFalse: [aClass printFullNameOn: stream]!
+		ifTrue: [aPuttableStream nextPutAll: aClass name]
+		ifFalse: [aClass printFullNameOn: aPuttableStream]!
 
 emitGUIDOfClass: aClass
 	"Private - Emit a GUID definition chunk for the <Class>, aClass, to the source stream."
@@ -108,7 +107,7 @@ stream
 atEnd!public!testing! !
 close!operations!public! !
 cr!accessing!public! !
-emitClassName:!private!source filing-file out! !
+emitClassName:on:!private!source filing-file out! !
 emitGUIDOfClass:!private!source filing! !
 evaluationContext!accessing!public! !
 evaluationContext:!accessing!public! !

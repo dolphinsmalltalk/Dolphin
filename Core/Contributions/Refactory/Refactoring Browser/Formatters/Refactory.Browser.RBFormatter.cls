@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.RBSourceFormatter subclass: #'Refactory.Browser.RBFormatter'
+Refactory.Browser.RBSourceFormatter
+	subclass: #'Refactory.Browser.RBFormatter'
 	instanceVariableNames: 'firstLineLength'
 	classVariableNames: 'MaximumArgumentsPerLine SelectorsToLeaveOnLine SelectorsToStartOnNewLine'
 	imports: #(#{External.ExtCallArgTypes})
@@ -36,12 +37,15 @@ firstLineLength
 	^firstLineLength isNil ifTrue: [codeStream position] ifFalse: [firstLineLength]!
 
 formatArray: anArrayNode
-	| formattedArgs multiline length |
-	formattedArgs := Array writeStream: anArrayNode statements size.
+	| formattedArgs multiline length statements count |
+	statements := anArrayNode statements.
+	count := statements size.
+	count == 0 ifTrue: [^self].
+	formattedArgs := Array writeStream: count.
 	multiline := false.
 	length := 0.
 	indent := indent + 1.
-	anArrayNode statements do: 
+	statements do: 
 			[:each |
 			| formatter string |
 			formatter := self copy.
@@ -51,11 +55,13 @@ formatArray: anArrayNode
 			multiline := multiline or: [formatter isMultiLine]].
 	formattedArgs := formattedArgs collection.
 	multiline := multiline or: [length + 1 + self currentLineLength > MaxLineLength].
-	formattedArgs do: [:each | codeStream nextPutAll: each]
-		separatedBy: 
-			[codeStream nextPut: $..
-			multiline ifTrue: [self newLine] ifFalse: [self space]].
-	indent := indent - 1!
+	formattedArgs do: 
+			[:each |
+			multiline ifTrue: [self newLine] ifFalse: [self space].
+			codeStream nextPutAll: each]
+		separatedBy: [codeStream nextPut: $.].
+	indent := indent - 1.
+	multiline ifTrue: [self newLine] ifFalse: [self space]!
 
 formatMessage: aMessageNode cascade: cascadeBoolean
 	| selectorParts arguments multiLine formattedArgs length firstArgLength argumentCount |

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.Tests.ChangeObjectTest subclass: #'Refactory.Browser.Tests.RemoveClassVariableChangeTest'
+Refactory.Browser.Tests.ChangeObjectTest
+	subclass: #'Refactory.Browser.Tests.RemoveClassVariableChangeTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -27,14 +28,13 @@ testPrinting
 	subject := self subjectClass remove: 'RecursiveSelfRule' from: TransformationRuleTestData.
 	self assert: subject beforeText equals: TransformationRuleTestData definition.
 	self assert: subject afterText
-		equals: 'Refactory.Browser.TestData.FooLintRuleTestData subclass: #''Refactory.Browser.TestData.TransformationRuleTestData''
+		equals: 'Refactory.Browser.TestData.FooLintRuleTestData
+	subclass: #''Refactory.Browser.TestData.TransformationRuleTestData''
 	instanceVariableNames: ''rewriteRule builder class''
 	classVariableNames: ''''
 	imports: #()
 	classInstanceVariableNames: ''''
-	classConstants: {
-		''Bar'' -> 16r7B
-	}'.
+	classConstants: { ''Bar'' -> 16r7B }'.
 	self assert: subject changeString
 		equals: 'Remove class variable named, RecursiveSelfRule, from Refactory.Browser.TestData.TransformationRuleTestData'.
 	self assert: subject printString

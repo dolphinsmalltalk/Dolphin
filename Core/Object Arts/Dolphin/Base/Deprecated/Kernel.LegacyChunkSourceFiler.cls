@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.AbstractChunkSourceFiler subclass: #'Kernel.LegacyChunkSourceFiler'
+Kernel.AbstractChunkSourceFiler
+	subclass: #'Kernel.LegacyChunkSourceFiler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -42,8 +43,8 @@ emitBinaryVariableDefinition: aBindingReference
 		nextPut: $!!;
 		cr!
 
-emitClassName: aClass
-	stream nextPutAll: ((Smalltalk oldNames lookup: aClass) ifNil: [self getShortName: aClass])!
+emitClassName: aClass on: aPuttableStream
+	aPuttableStream nextPutAll: ((Smalltalk oldNames lookup: aClass) ifNil: [self getShortName: aClass])!
 
 emitClassPoolOfClass: aClass
 	"Private - Emit initialization expressions for each of the literal constants in the class pool of aClass."
@@ -311,12 +312,6 @@ fileOutAttributesOfClass: aClass
 		cr;
 		emitCategoriesOfClass: aClass!
 
-fileOutBasicDefinitionOfClass: aClass
-	"Print a definition of the <Class>, aClass, onto the receiver's stream."
-
-	self printBasicDefinitionOfClass: aClass.
-	stream nextPut: $!!!
-
 fileOutClass: aClass ofPackage: aPackage
 	(aClass inheritsFrom: SharedPool)
 		ifTrue: [self fileOutPoolDictionary: (self makePoolConstsFromSharedPool: aClass)]
@@ -458,13 +453,13 @@ makePoolConstsFromSharedPool: aSharedPoolClass
 packageClassesInFileoutOrder: aPackage
 	^aPackage classesInHierarchyOrder reject: [:each | each inheritsFrom: SharedPool]!
 
-printBasicDefinitionOfClass: aClass
-	"We may not be able to file out the class in legacy format if it's superclass requires a qualified name - if not, an error will be raised here when we try to resolve the short name. It is usually possible to workaround this problem by adding an alias for the superclass into the Smalltalk namespace. The alias variable should be added to an 'Old Names' package."
+printBasicDefinitionOfClass: aClass on: aPuttableStream
+	"Private - We may not be able to file out the class in legacy format if it's superclass requires a qualified name - if not, an error will be raised here when we try to resolve the short name. It is usually possible to workaround this problem by adding an alias for the superclass into the Smalltalk namespace. The alias variable should be added to an 'Old Names' package."
 
 	aClass superclass
-		ifNil: [stream print: nil]
-		ifNotNil: [:superclass | stream nextPutAll: (self shortNameForClass: superclass)].
-	stream
+		ifNil: [aPuttableStream print: nil]
+		ifNotNil: [:superclass | aPuttableStream nextPutAll: (self shortNameForClass: superclass)].
+	aPuttableStream
 		space;
 		nextPutAll: aClass kindOfSubclass;
 		space;
@@ -474,15 +469,24 @@ printBasicDefinitionOfClass: aClass
 						["Not supported by the format, but we print the qualified name here anyway as this method is used to print the class definition for display in browsers. The file out error is detected elsewhere."
 						aClass fullName asSymbol]);
 		crtab.
-	self printVariables: aClass instanceVariableNames string: 'instanceVariableNames:'.
-	stream
+	self
+		printVariables: aClass instanceVariableNames
+		string: 'instanceVariableNames:'
+		on: stream.
+	aPuttableStream
 		crtab;
 		nextPutAll: 'classVariableNames: ';
 		print: aClass classVariableString;
 		crtab.
-	self printVariables: aClass sharedPoolNames asSortedArray string: 'poolDictionaries:'.
-	stream crtab.
-	self printVariables: aClass classInstanceVariableNames string: 'classInstanceVariableNames:'!
+	self
+		printVariables: aClass sharedPoolNames asSortedArray
+		string: 'poolDictionaries:'
+		on: stream.
+	aPuttableStream crtab.
+	self
+		printVariables: aClass classInstanceVariableNames
+		string: 'classInstanceVariableNames:'
+		on: stream!
 
 sharedPoolNames: aClass
 	^aClass imports collect: 
@@ -498,7 +502,7 @@ specialBehaviorAttributes
 !Kernel.LegacyChunkSourceFiler categoriesForMethods!
 collateClass:against:!private!source filing! !
 emitBinaryVariableDefinition:!public!source filing-file out! !
-emitClassName:!private!source filing-file out! !
+emitClassName:on:!private!source filing-file out! !
 emitClassPoolOfClass:!private!source filing-file out! !
 emitDeclarationForClass:variable:!private!source filing-file out! !
 emitFileOutHeader!private!source filing! !
@@ -519,7 +523,6 @@ environment!accessing!public! !
 environment:!accessing!public! !
 equivalentLegacyPrerequisites!constants!private! !
 fileOutAttributesOfClass:!public!source filing! !
-fileOutBasicDefinitionOfClass:!public!source filing-file out! !
 fileOutClass:ofPackage:!public!source filing! !
 fileOutPackageMethods:!private!source filing! !
 fileOutPackageSourceVariables:!private! !
@@ -530,7 +533,7 @@ getSmalltalkVariableName:!helpers!private! !
 legacyPackagePaths!constants!private! !
 makePoolConstsFromSharedPool:!helpers!private! !
 packageClassesInFileoutOrder:!helpers!private! !
-printBasicDefinitionOfClass:!public!source filing-file out! !
+printBasicDefinitionOfClass:on:!private!source filing-file out! !
 sharedPoolNames:!public!source filing-file out! !
 shortNameForClass:!public!source filing-file out! !
 specialBehaviorAttributes!constants!public! !

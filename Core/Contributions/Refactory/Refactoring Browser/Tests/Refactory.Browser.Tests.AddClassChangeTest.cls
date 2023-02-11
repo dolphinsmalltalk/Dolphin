@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.Tests.ChangeObjectTest subclass: #'Refactory.Browser.Tests.AddClassChangeTest'
+Refactory.Browser.Tests.ChangeObjectTest
+	subclass: #'Refactory.Browser.Tests.AddClassChangeTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -15,15 +16,13 @@ canonicalSubject
 	^self subjectClass definition: self definitionWithEverything!
 
 definitionWithEverything
-	^'Core.Model subclass: #''Refactory.Browser.Tests.ClassWithEverything''
+	^'Core.Model
+	subclass: #''Refactory.Browser.Tests.ClassWithEverything''
 	instanceVariableNames: ''instvar1 instvar2''
 	classVariableNames: ''ClassVar1 ClassVar2''
 	imports: #(#{UI private} #{Core.Missing})
 	classInstanceVariableNames: ''classInstVar1 classInstVar2''
-	classConstants: {
-		''ClassConst1'' -> 16r1.
-		''ClassConst2'' -> 16r2
-	}'!
+	classConstants: { ''ClassConst1'' -> 16r1. ''ClassConst2'' -> 16r2 }'!
 
 subjectClass
 	^AddClassChange!
@@ -43,19 +42,17 @@ testAsUndoModify
 	definition := ClassDetails fromClass: ClassToRename.
 	definition imports: #(#{Refactory.Browser.TestData}).
 	definition classInstanceVariableNames: #().
-	definition classConstants: {'ClassConst1' -> 16r2. 'ClassConst3' -> '3'}.
+	definition classConstants: { 'ClassConst1' -> 16r2. 'ClassConst3' -> '3' }.
 	subject := self subjectClass details: definition.
 	self assert: subject beforeText equals: ClassToRename definition.
 	self assert: subject afterText
-		equals: 'Core.Model subclass: #''Refactory.Browser.Tests.ClassToRename''
+		equals: 'Core.Model
+	subclass: #''Refactory.Browser.Tests.ClassToRename''
 	instanceVariableNames: ''rewriteRule builder class''
 	classVariableNames: ''ClassVar1''
 	imports: #(#{Refactory.Browser.TestData})
 	classInstanceVariableNames: ''''
-	classConstants: {
-		''ClassConst1'' -> 16r2.
-		''ClassConst3'' -> ''3''
-	}'.
+	classConstants: { ''ClassConst1'' -> 16r2. ''ClassConst3'' -> ''3'' }'.
 	undo := subject asUndoOperation.
 	self assert: undo isKindOf: self undoClass.
 	self assert: undo changeClass identicalTo: subject changeClass.

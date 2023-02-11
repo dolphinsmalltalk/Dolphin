@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTest subclass: #'Kernel.Tests.ChunkSourceFilerTest'
+Core.Tests.DolphinTest
+	subclass: #'Kernel.Tests.ChunkSourceFilerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -18,18 +19,21 @@ testPrintDefinitionOfClassInSmalltalk
 			self
 				verifyClass: Smalltalk.ScribbleDocument
 				environment: each
-				definitionPrefix: 'UI.AbstractDocumentShell subclass: #ScribbleDocument']!
+				definitionPrefix: 'UI.AbstractDocumentShell
+	subclass: #ScribbleDocument']!
 
 testPrintDefinitionOfClassWithSuperclassInSmalltalk
 	self
 		verifyClass: #{UI.Examples.EtchASketchDocument} value
 		environment: nil
-		definitionPrefix: 'ScribbleDocument subclass: #''UI.Examples.EtchASketchDocument'''.
+		definitionPrefix: 'ScribbleDocument
+	subclass: #''UI.Examples.EtchASketchDocument'''.
 	"Classes that are namespaced with superclasses in Smalltalk are a special case for the browsers, as the superclass name may not be bindable as an unqualified name from another namespace. Therefore if the compilation environment is not Smalltalk, the full superclass name should be used."
 	self
 		verifyClass: #{UI.Examples.EtchASketchDocument} value
 		environment: #{UI.Examples} value
-		definitionPrefix: 'Smalltalk.ScribbleDocument subclass: #''UI.Examples.EtchASketchDocument'''!
+		definitionPrefix: 'Smalltalk.ScribbleDocument
+	subclass: #''UI.Examples.EtchASketchDocument'''!
 
 testPrintDefinitionOfNamespace
 	"Namespace should be like any other normal class from a definition printing perspective."
@@ -39,7 +43,8 @@ testPrintDefinitionOfNamespace
 			self
 				verifyClass: Namespace
 				environment: each
-				definitionPrefix: 'Core.Object subclass: #''Kernel.Namespace''']!
+				definitionPrefix: 'Core.Object
+	subclass: #''Kernel.Namespace''']!
 
 testPrintDefinitionOfNestedNamespace
 	{nil. Root. Smalltalk. #{UI} value. Kernel.Tests} do: 
@@ -47,13 +52,15 @@ testPrintDefinitionOfNestedNamespace
 			self
 				verifyClass: #{UI.Scintilla} value
 				environment: each
-				definitionPrefix: 'UI subclass: #''UI.Scintilla'''].
+				definitionPrefix: 'UI
+	subclass: #''UI.Scintilla'''].
 	{nil. Root. Smalltalk. #{UI} value. Kernel.Tests} do: 
 			[:each |
 			self
 				verifyClass: #{UI.Scintilla.Tests} value
 				environment: each
-				definitionPrefix: 'UI.Scintilla subclass: #''UI.Scintilla.Tests''']!
+				definitionPrefix: 'UI.Scintilla
+	subclass: #''UI.Scintilla.Tests''']!
 
 testPrintDefinitionOfRootClass
 	"A subclass of nil"
@@ -63,7 +70,8 @@ testPrintDefinitionOfRootClass
 			self
 				verifyClass: Object
 				environment: each
-				definitionPrefix: 'nil subclass: #''Core.Object''']!
+				definitionPrefix: 'nil
+	subclass: #''Core.Object''']!
 
 testPrintDefinitionOfRootNamespace
 	{nil. Root. Smalltalk. Core. Kernel.Tests} do: 
@@ -71,7 +79,8 @@ testPrintDefinitionOfRootNamespace
 			self
 				verifyClass: Root
 				environment: each
-				definitionPrefix: 'Kernel.Namespace subclass: #Root']!
+				definitionPrefix: 'Kernel.Namespace
+	subclass: #Root']!
 
 testPrintDefinitionOfSmalltalkNamespace
 	{nil. Root. Smalltalk. Core. Kernel.Tests} do: 
@@ -79,7 +88,8 @@ testPrintDefinitionOfSmalltalkNamespace
 			self
 				verifyClass: Smalltalk
 				environment: each
-				definitionPrefix: 'Kernel.Namespace subclass: #Smalltalk']!
+				definitionPrefix: 'Kernel.Namespace
+	subclass: #Smalltalk']!
 
 testPrintDefinitionOfTopLevelNamespace
 	"Note that the name of a namespace defined in Root prints as #<unqualifiedName>, not #'<fullName>', although the full name of Kernel is Kernel anyway (the absolute name is Root.Kernel).
@@ -91,7 +101,8 @@ testPrintDefinitionOfTopLevelNamespace
 			self
 				verifyClass: Kernel
 				environment: each
-				definitionPrefix: 'Kernel.Namespace subclass: #Kernel']!
+				definitionPrefix: 'Kernel.Namespace
+	subclass: #Kernel']!
 
 verifyClass: aClass environment: aNamespaceOrNil definitionPrefix: aString
 	| subject actual stream |

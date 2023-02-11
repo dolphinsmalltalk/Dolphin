@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.AbstractChunkSourceFiler subclass: #'Kernel.ChunkSourceFiler'
+Kernel.AbstractChunkSourceFiler
+	subclass: #'Kernel.ChunkSourceFiler'
 	instanceVariableNames: 'sourceFileIndex environment'
 	classVariableNames: ''
 	imports: #()
@@ -11,7 +12,7 @@ Kernel.ChunkSourceFiler comment: '`ChunkSourceFiler` is the standard chunk-forma
 !Kernel.ChunkSourceFiler categoriesForClass!Development! !
 !Kernel.ChunkSourceFiler methodsFor!
 
-emitClassName: aClass
+emitClassName: aClass on: aPuttableStream
 	(aClass isInBaseEnvironment and: 
 			[| localEnv |
 			localEnv := self environment ?? Smalltalk.
@@ -19,8 +20,8 @@ emitClassName: aClass
 					[| var |
 					var := localEnv fullBindingFor: aClass unqualifiedName.
 					var notNil and: [var value == aClass]]])
-		ifTrue: [stream nextPutAll: aClass name]
-		ifFalse: [aClass printFullNameOn: stream]!
+		ifTrue: [aPuttableStream nextPutAll: aClass name]
+		ifFalse: [aClass printFullNameOn: aPuttableStream]!
 
 environment
 	^environment
@@ -35,7 +36,7 @@ sourceFileIndex: anInteger
 
 	sourceFileIndex := anInteger! !
 !Kernel.ChunkSourceFiler categoriesForMethods!
-emitClassName:!private!source filing-file out! !
+emitClassName:on:!private!source filing-file out! !
 environment!accessing!public! !
 environment:!accessing!public! !
 sourceFileIndex:!accessing!private! !

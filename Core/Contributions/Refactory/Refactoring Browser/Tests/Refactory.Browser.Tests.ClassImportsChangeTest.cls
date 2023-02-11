@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.Tests.ChangeObjectTest subclass: #'Refactory.Browser.Tests.ClassImportsChangeTest'
+Refactory.Browser.Tests.ChangeObjectTest
+	subclass: #'Refactory.Browser.Tests.ClassImportsChangeTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -31,7 +32,8 @@ testPrinting
 				into: UI.
 	self assert: subject beforeText equals: UI definition.
 	self assert: subject afterText
-		equals: 'Kernel.Namespace subclass: #UI
+		equals: 'Kernel.Namespace
+	subclass: #UI
 	instanceVariableNames: ''''
 	classVariableNames: ''''
 	imports: #(#{Core} #{Graphics.Gdiplus private} #{OS private} #{Kernel private})
