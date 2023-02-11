@@ -8,7 +8,6 @@ UI.Dialog subclass: #'MSScriptControl.SimpleAXScriptEditor'
 	classConstants: {}!
 MSScriptControl.SimpleAXScriptEditor guid: (Core.GUID fromString: '{46f9c2fb-d025-11d3-93da-00a024ca708a}')!
 MSScriptControl.SimpleAXScriptEditor comment: 'Simple editor for creating ActiveXScriptlets.'!
-!MSScriptControl.SimpleAXScriptEditor categoriesForClass!Unclassified! !
 !MSScriptControl.SimpleAXScriptEditor methodsFor!
 
 createComponents

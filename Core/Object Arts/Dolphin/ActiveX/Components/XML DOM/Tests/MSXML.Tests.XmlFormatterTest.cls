@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'MSXML.Tests.XmlFormatterTest'
 	classConstants: {}!
 MSXML.Tests.XmlFormatterTest guid: (Core.GUID fromString: '{834290a8-1967-49c5-ad9f-f47cb1ed5d12}')!
 MSXML.Tests.XmlFormatterTest comment: ''!
-!MSXML.Tests.XmlFormatterTest categoriesForClass!Unclassified! !
 !MSXML.Tests.XmlFormatterTest methodsFor!
 
 assertReformat: text toCanonical: canonical

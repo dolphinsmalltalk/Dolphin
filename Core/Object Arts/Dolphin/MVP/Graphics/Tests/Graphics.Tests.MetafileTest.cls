@@ -8,7 +8,6 @@ Graphics.Tests.ImageTest subclass: #'Graphics.Tests.MetafileTest'
 	classConstants: {}!
 Graphics.Tests.MetafileTest guid: (Core.GUID fromString: '{698db9d3-9835-41ab-9c8f-11ed9e78700a}')!
 Graphics.Tests.MetafileTest comment: ''!
-!Graphics.Tests.MetafileTest categoriesForClass!Unclassified! !
 !Graphics.Tests.MetafileTest methodsFor!
 
 canonicalInstance

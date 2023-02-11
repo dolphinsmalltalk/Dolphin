@@ -8,7 +8,6 @@ Database.Tests.DBConnectionTestResource subclass: #'Database.Tests.AccessNorthwi
 	classConstants: {}!
 Database.Tests.AccessNorthwindDB guid: (Core.GUID fromString: '{65bcf4a5-dc5c-461b-a4df-2f29574d34c3}')!
 Database.Tests.AccessNorthwindDB comment: ''!
-!Database.Tests.AccessNorthwindDB categoriesForClass!Unclassified! !
 !Database.Tests.AccessNorthwindDB methodsFor!
 
 connectString

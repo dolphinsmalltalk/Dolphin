@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Core.Tests.SemVerTest'
 	classConstants: {}!
 Core.Tests.SemVerTest guid: (Core.GUID fromString: '{a407e9c9-f1a9-48c2-bfdb-ce30877bede0}')!
 Core.Tests.SemVerTest comment: ''!
-!Core.Tests.SemVerTest categoriesForClass!Unclassified! !
 !Core.Tests.SemVerTest methodsFor!
 
 comparisonCases

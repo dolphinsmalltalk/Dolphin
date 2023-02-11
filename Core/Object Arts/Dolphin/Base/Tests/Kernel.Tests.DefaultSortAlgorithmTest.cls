@@ -8,7 +8,6 @@ Core.Tests.SortAlgorithmTest subclass: #'Kernel.Tests.DefaultSortAlgorithmTest'
 	classConstants: {}!
 Kernel.Tests.DefaultSortAlgorithmTest guid: (Core.GUID fromString: '{71c746e5-ead8-4695-8835-1778d1ca56fd}')!
 Kernel.Tests.DefaultSortAlgorithmTest comment: ''!
-!Kernel.Tests.DefaultSortAlgorithmTest categoriesForClass!Unclassified! !
 !Kernel.Tests.DefaultSortAlgorithmTest methodsFor!
 
 add: aCollection sortBlock: block

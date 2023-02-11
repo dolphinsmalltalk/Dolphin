@@ -8,7 +8,6 @@ Core.Tests.AbstractDictionaryTest subclass: #'Kernel.Tests.MethodDictionaryTest'
 	classConstants: {}!
 Kernel.Tests.MethodDictionaryTest guid: (Core.GUID fromString: '{d47df8c5-dba6-468f-8bf4-4211e21a132b}')!
 Kernel.Tests.MethodDictionaryTest comment: ''!
-!Kernel.Tests.MethodDictionaryTest categoriesForClass!Unclassified! !
 !Kernel.Tests.MethodDictionaryTest methodsFor!
 
 collectionClass

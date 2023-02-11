@@ -24,7 +24,6 @@ To read changes one simply sends the #next message to the FileSystemChangeStream
 The changes are described by instances of <FileSystemChange>. This has attributes that represent the symbolic name of the change, the names of the files changed, and also the time that the change was first recorded. Note that this not necessarily the time that the change actually occurred, as there is some latency before Windows notifies changes.
 
 '!
-!OS.FileSystemChangeStream categoriesForClass!Unclassified! !
 !OS.FileSystemChangeStream methodsFor!
 
 handleError: anInteger 

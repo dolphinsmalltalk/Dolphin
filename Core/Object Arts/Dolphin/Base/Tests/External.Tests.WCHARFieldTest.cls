@@ -8,7 +8,6 @@ External.Tests.ExternalFieldTest subclass: #'External.Tests.WCHARFieldTest'
 	classConstants: {}!
 External.Tests.WCHARFieldTest guid: (Core.GUID fromString: '{5fae7240-e0b0-4632-b957-750ef821559c}')!
 External.Tests.WCHARFieldTest comment: ''!
-!External.Tests.WCHARFieldTest categoriesForClass!Unclassified! !
 !External.Tests.WCHARFieldTest methodsFor!
 
 testReadFrom

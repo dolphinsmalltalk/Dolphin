@@ -36,7 +36,6 @@ That has implications for use in Product Protection, which is why the checksum i
 The actual implementation is stronger than that because it incldues a checksum (actually a SHA1 hash reduced to 40 bits by default) of the data.  That gives significant extra protection, but is not perfect because a brute-force search over 2**40 possible checksums is feasible on modern computers.
 
 If you need protection against more than ingenuity and determination, then it would be advisable not to use the extra fields. A better solution would be to create a different subclass of SerialNumberProtector  encrypts the serial number in a way that scrambles all the bits together, so that changing any one will change the entire message, and so the attacker cannot change any part of the serial number without (almost certainly) invalidating it.  The ElgamalSerialNumberProtector illustrates how to develop and plug in a replacement encryption policy.'!
-!Security.PC1SerialNumberProtector categoriesForClass!Unclassified! !
 !Security.PC1SerialNumberProtector methodsFor!
 
 checksumBits

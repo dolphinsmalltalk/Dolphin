@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'OS.Tests.IniFileTest'
 	classConstants: {}!
 OS.Tests.IniFileTest guid: (Core.GUID fromString: '{5fc93855-8e32-4463-9906-50705ecb9acc}')!
 OS.Tests.IniFileTest comment: ''!
-!OS.Tests.IniFileTest categoriesForClass!Unclassified! !
 !OS.Tests.IniFileTest methodsFor!
 
 fileResource

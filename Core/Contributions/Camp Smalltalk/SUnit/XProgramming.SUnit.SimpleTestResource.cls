@@ -8,7 +8,6 @@ XProgramming.SUnit.TestResource subclass: #'XProgramming.SUnit.SimpleTestResourc
 	classConstants: {}!
 XProgramming.SUnit.SimpleTestResource guid: (Core.GUID fromString: '{8276a29a-e3aa-40ab-83f8-c49d4189cb1e}')!
 XProgramming.SUnit.SimpleTestResource comment: ''!
-!XProgramming.SUnit.SimpleTestResource categoriesForClass!Unclassified! !
 !XProgramming.SUnit.SimpleTestResource methodsFor!
 
 hasRun

@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Core.Tests.SemaphoreTest'
 	classConstants: {}!
 Core.Tests.SemaphoreTest guid: (Core.GUID fromString: '{b3d4af7f-c066-4ac2-8421-722762fe6ec9}')!
 Core.Tests.SemaphoreTest comment: ''!
-!Core.Tests.SemaphoreTest categoriesForClass!Unclassified! !
 !Core.Tests.SemaphoreTest methodsFor!
 
 testCriticalEarlyTermination

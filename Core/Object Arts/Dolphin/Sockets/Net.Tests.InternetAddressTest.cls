@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Net.Tests.InternetAddressTest'
 	classConstants: {}!
 Net.Tests.InternetAddressTest guid: (Core.GUID fromString: '{3d606958-5c0e-4788-a978-70bf30cf372d}')!
 Net.Tests.InternetAddressTest comment: ''!
-!Net.Tests.InternetAddressTest categoriesForClass!Unclassified! !
 !Net.Tests.InternetAddressTest methodsFor!
 
 testAllForHost

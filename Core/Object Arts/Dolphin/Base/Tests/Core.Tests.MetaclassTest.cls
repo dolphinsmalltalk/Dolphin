@@ -8,7 +8,6 @@ Core.Tests.ClassDescriptionTest subclass: #'Core.Tests.MetaclassTest'
 	classConstants: {}!
 Core.Tests.MetaclassTest guid: (Core.GUID fromString: '{0643eed4-cf1f-4bfa-84f5-4af3a05fe655}')!
 Core.Tests.MetaclassTest comment: ''!
-!Core.Tests.MetaclassTest categoriesForClass!Unclassified! !
 !Core.Tests.MetaclassTest methodsFor!
 
 allClassHierarchyInstancesDo: aMonadicValuable

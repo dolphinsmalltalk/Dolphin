@@ -15,7 +15,6 @@ One is that each time a serial number is issues it MUST be joined with a new "ra
 
 Secondly, the encrypted form is rather long -- an order of magnitude longer than the plaintext.  That makes it unsuitable for applications where the user is expected to type in a serial number to unlock an application.  One way around that problem is to use an unlock file instead of a string.  Your application could either read the contents of the file each time it started, or could copy the file''s contents into the Windows registry when it is first unlocked, and thereafter use the registry to find the data.
 '!
-!Security.ElgamalSerialNumberProtector categoriesForClass!Unclassified! !
 !Security.ElgamalSerialNumberProtector methodsFor!
 
 dataFromString: aString

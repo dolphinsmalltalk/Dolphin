@@ -8,7 +8,6 @@ Core.Tests.AbstractFileStreamTest subclass: #'OS.Tests.StdioFileStreamTest'
 	classConstants: {}!
 OS.Tests.StdioFileStreamTest guid: (Core.GUID fromString: '{d3e882fd-385f-45ec-b975-c31f9e777b4b}')!
 OS.Tests.StdioFileStreamTest comment: ''!
-!OS.Tests.StdioFileStreamTest categoriesForClass!Unclassified! !
 !OS.Tests.StdioFileStreamTest methodsFor!
 
 bufferSize

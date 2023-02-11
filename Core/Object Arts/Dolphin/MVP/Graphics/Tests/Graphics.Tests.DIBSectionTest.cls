@@ -8,7 +8,6 @@ Graphics.Tests.AbstractBitmapTest subclass: #'Graphics.Tests.DIBSectionTest'
 	classConstants: {}!
 Graphics.Tests.DIBSectionTest guid: (Core.GUID fromString: '{068ce8da-6f60-49fc-82ee-64b8f1b16fcb}')!
 Graphics.Tests.DIBSectionTest comment: ''!
-!Graphics.Tests.DIBSectionTest categoriesForClass!Unclassified! !
 !Graphics.Tests.DIBSectionTest methodsFor!
 
 beachBallColorDepth

@@ -21,9 +21,9 @@ testAsDword
 		should: [super testAsDword]
 		raise: Error
 		matching: [:ex | ex description = (self subjectClass printString , ' should not implement #asDword')]! !
-!External.Tests.POINTTest categoriesForMethods!
-subjectClass!constants!private! !
-subjectSupportNonIntegralValues!private!testing! !
-testAsDword!public!unit tests! !
+!External.Tests.POINTFTest categoriesForMethods!
+subjectClass!public! !
+subjectSupportNonIntegralValues!public! !
+testAsDword!public! !
 !
 

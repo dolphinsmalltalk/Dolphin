@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'OS.Tests.RegKeyTest'
 	classConstants: {}!
 OS.Tests.RegKeyTest guid: (Core.GUID fromString: '{a67b125d-54b1-4bf8-9634-222b74e70c77}')!
 OS.Tests.RegKeyTest comment: ''!
-!OS.Tests.RegKeyTest categoriesForClass!Unclassified! !
 !OS.Tests.RegKeyTest methodsFor!
 
 keyPath

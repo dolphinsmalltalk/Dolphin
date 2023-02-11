@@ -8,7 +8,6 @@ Core.Tests.SearchPolicyTest subclass: #'Kernel.Tests.CaseInsensitiveSearchPolicy
 	classConstants: {}!
 Kernel.Tests.CaseInsensitiveSearchPolicyTest guid: (Core.GUID fromString: '{9f0abf77-47aa-49cb-8b9b-96343696cb2e}')!
 Kernel.Tests.CaseInsensitiveSearchPolicyTest comment: ''!
-!Kernel.Tests.CaseInsensitiveSearchPolicyTest categoriesForClass!Unclassified! !
 !Kernel.Tests.CaseInsensitiveSearchPolicyTest methodsFor!
 
 policyClass

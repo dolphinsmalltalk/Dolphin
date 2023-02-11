@@ -9,7 +9,6 @@ Core.Tests.DolphinTest subclass: #'UI.Tests.LayoutManagerTest'
 UI.Tests.LayoutManagerTest guid: (Core.GUID fromString: '{a94f94cc-98cb-4a2e-801e-7c115e70d1f8}')!
 UI.Tests.LayoutManagerTest isNonInstantiable: true!
 UI.Tests.LayoutManagerTest comment: ''!
-!UI.Tests.LayoutManagerTest categoriesForClass!Unclassified! !
 !UI.Tests.LayoutManagerTest methodsFor!
 
 layoutManagerClass

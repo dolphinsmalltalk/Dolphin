@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Graphics.Tests.BrushTest'
 	classConstants: {}!
 Graphics.Tests.BrushTest guid: (Core.GUID fromString: '{1128ddc3-7330-4539-bc63-7a60b93fe7bc}')!
 Graphics.Tests.BrushTest comment: ''!
-!Graphics.Tests.BrushTest categoriesForClass!Unclassified! !
 !Graphics.Tests.BrushTest methodsFor!
 
 testBitmapBrush

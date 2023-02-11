@@ -8,7 +8,6 @@ Kernel.Tests.AbstractParserErrorTest subclass: #'Kernel.Tests.CompilerErrorTest'
 	classConstants: {}!
 Kernel.Tests.CompilerErrorTest guid: (Core.GUID fromString: '{46595911-e729-41d5-92f4-57241cf25eac}')!
 Kernel.Tests.CompilerErrorTest comment: ''!
-!Kernel.Tests.CompilerErrorTest categoriesForClass!Unclassified! !
 !Kernel.Tests.CompilerErrorTest methodsFor!
 
 defaultCompileFlags

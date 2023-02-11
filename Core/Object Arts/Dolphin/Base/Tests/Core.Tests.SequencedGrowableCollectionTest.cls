@@ -9,7 +9,6 @@ Core.Tests.SequenceableCollectionTest subclass: #'Core.Tests.SequencedGrowableCo
 Core.Tests.SequencedGrowableCollectionTest guid: (Core.GUID fromString: '{7c5c4663-14ac-4420-85af-2c2644e54463}')!
 Core.Tests.SequencedGrowableCollectionTest isNonInstantiable: true!
 Core.Tests.SequencedGrowableCollectionTest comment: ''!
-!Core.Tests.SequencedGrowableCollectionTest categoriesForClass!Unclassified! !
 !Core.Tests.SequencedGrowableCollectionTest methodsFor!
 
 testAddAfterIndex

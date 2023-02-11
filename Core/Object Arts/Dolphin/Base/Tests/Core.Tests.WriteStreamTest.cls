@@ -8,7 +8,6 @@ Core.Tests.PositionableStreamTest subclass: #'Core.Tests.WriteStreamTest'
 	classConstants: {}!
 Core.Tests.WriteStreamTest guid: (Core.GUID fromString: '{9d14176b-5486-40dc-bc22-694add104427}')!
 Core.Tests.WriteStreamTest comment: ''!
-!Core.Tests.WriteStreamTest categoriesForClass!Unclassified! !
 !Core.Tests.WriteStreamTest methodsFor!
 
 streamClass

@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Kernel.Tests.BlockClosureTest'
 	classConstants: {}!
 Kernel.Tests.BlockClosureTest guid: (Core.GUID fromString: '{346b84aa-d94e-4ee6-9461-5195ef00255b}')!
 Kernel.Tests.BlockClosureTest comment: ''!
-!Kernel.Tests.BlockClosureTest categoriesForClass!Unclassified! !
 !Kernel.Tests.BlockClosureTest methodsFor!
 
 blockWithCopiedValue: anObject

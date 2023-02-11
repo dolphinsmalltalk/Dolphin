@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Kernel.Tests.MethodAnnotationsTest'
 	classConstants: {}!
 Kernel.Tests.MethodAnnotationsTest guid: (Core.GUID fromString: '{7c7e34ae-c64b-4a95-8ee7-28f444305c8e}')!
 Kernel.Tests.MethodAnnotationsTest comment: ''!
-!Kernel.Tests.MethodAnnotationsTest categoriesForClass!Unclassified! !
 !Kernel.Tests.MethodAnnotationsTest methodsFor!
 
 canonicalSubject

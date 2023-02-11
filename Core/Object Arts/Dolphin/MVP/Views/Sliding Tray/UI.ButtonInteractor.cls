@@ -23,7 +23,6 @@ An example use of a `ButtonInteractor` is with the `SlidingCardTray` pin.
   `ButtonStateMask`	`<integer>` flags mask for all button state flags.
 
 '!
-!UI.ButtonInteractor categoriesForClass!Unclassified! !
 !UI.ButtonInteractor methodsFor!
 
 buttonRectangle

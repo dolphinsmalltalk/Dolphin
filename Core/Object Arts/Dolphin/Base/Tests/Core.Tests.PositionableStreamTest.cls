@@ -9,7 +9,6 @@ Core.Tests.StreamTest subclass: #'Core.Tests.PositionableStreamTest'
 Core.Tests.PositionableStreamTest guid: (Core.GUID fromString: '{3abcc3a3-be2b-417d-bdb7-cf6a64cc2c6b}')!
 Core.Tests.PositionableStreamTest isNonInstantiable: true!
 Core.Tests.PositionableStreamTest comment: ''!
-!Core.Tests.PositionableStreamTest categoriesForClass!Unclassified! !
 !Core.Tests.PositionableStreamTest methodsFor!
 
 arrayedCollections

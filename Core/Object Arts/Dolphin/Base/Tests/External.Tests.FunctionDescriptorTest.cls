@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'External.Tests.FunctionDescriptorTest'
 	classConstants: {}!
 External.Tests.FunctionDescriptorTest guid: (Core.GUID fromString: '{d809ef14-78cf-4e10-8dc1-0249d46b4b5f}')!
 External.Tests.FunctionDescriptorTest comment: ''!
-!External.Tests.FunctionDescriptorTest categoriesForClass!Unclassified! !
 !External.Tests.FunctionDescriptorTest methodsFor!
 
 externalTypes

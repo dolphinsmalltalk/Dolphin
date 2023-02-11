@@ -8,7 +8,6 @@ OS.COM.InterfaceFunction subclass: #'OS.COM.DispatchFunction'
 	classConstants: {}!
 OS.COM.DispatchFunction guid: (Core.GUID fromString: '{4596042f-9e7a-4481-8f6c-d71e47fc990c}')!
 OS.COM.DispatchFunction comment: ''!
-!OS.COM.DispatchFunction categoriesForClass!Unclassified! !
 !OS.COM.DispatchFunction methodsFor!
 
 callback: stub interface: aCOMInterface withArgumentsAt: anAddress 

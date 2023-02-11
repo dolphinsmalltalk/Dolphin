@@ -9,7 +9,6 @@ Core.Tests.DolphinTest subclass: #'Kernel.Tests.AbstractParserErrorTest'
 Kernel.Tests.AbstractParserErrorTest guid: (Core.GUID fromString: '{5f42cbdc-9ab6-40b0-826d-b9cb9dd30c78}')!
 Kernel.Tests.AbstractParserErrorTest isNonInstantiable: true!
 Kernel.Tests.AbstractParserErrorTest comment: ''!
-!Kernel.Tests.AbstractParserErrorTest categoriesForClass!Unclassified! !
 !Kernel.Tests.AbstractParserErrorTest methodsFor!
 
 buildNestedBlocks: nesting 

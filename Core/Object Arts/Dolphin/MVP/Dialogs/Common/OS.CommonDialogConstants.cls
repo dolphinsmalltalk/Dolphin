@@ -107,4 +107,3 @@ Kernel.SharedPool subclass: #'OS.CommonDialogConstants'
 OS.CommonDialogConstants guid: (Core.GUID fromString: '{ed2934fa-9bfe-4b32-a7c2-12deba52b3a6}')!
 OS.CommonDialogConstants isNonInstantiable: true!
 OS.CommonDialogConstants comment: ''!
-!OS.CommonDialogConstants categoriesForClass!Unclassified! !

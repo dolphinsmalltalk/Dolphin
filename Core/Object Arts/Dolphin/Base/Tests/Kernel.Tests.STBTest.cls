@@ -8,7 +8,6 @@ Kernel.Tests.AbstractSTBFilerTest subclass: #'Kernel.Tests.STBTest'
 	classConstants: {}!
 Kernel.Tests.STBTest guid: (Core.GUID fromString: '{0e66d9d1-027f-4559-a87a-33e13ae709b8}')!
 Kernel.Tests.STBTest comment: ''!
-!Kernel.Tests.STBTest categoriesForClass!Unclassified! !
 !Kernel.Tests.STBTest methodsFor!
 
 deserialize: aByteArray

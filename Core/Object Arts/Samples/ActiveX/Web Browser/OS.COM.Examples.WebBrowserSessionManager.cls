@@ -8,7 +8,6 @@ UI.RuntimeSessionManager subclass: #'OS.COM.Examples.WebBrowserSessionManager'
 	classConstants: {}!
 OS.COM.Examples.WebBrowserSessionManager guid: (Core.GUID fromString: '{3a7bff88-3535-4b52-be21-3a61a9a2370e}')!
 OS.COM.Examples.WebBrowserSessionManager comment: ''!
-!OS.COM.Examples.WebBrowserSessionManager categoriesForClass!Unclassified! !
 !OS.COM.Examples.WebBrowserSessionManager methodsFor!
 
 main

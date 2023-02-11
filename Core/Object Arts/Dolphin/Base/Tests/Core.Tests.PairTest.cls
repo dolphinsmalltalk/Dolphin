@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Core.Tests.PairTest'
 	classConstants: {}!
 Core.Tests.PairTest guid: (Core.GUID fromString: '{752723a5-58e1-45a4-ba7e-10c92064d896}')!
 Core.Tests.PairTest comment: ''!
-!Core.Tests.PairTest categoriesForClass!Unclassified! !
 !Core.Tests.PairTest methodsFor!
 
 testEquals

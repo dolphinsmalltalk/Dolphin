@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Tools.Tests.LagoonTests'
 	classConstants: {}!
 Tools.Tests.LagoonTests guid: (Core.GUID fromString: '{1d062465-a28b-438e-882d-da296eb78bfa}')!
 Tools.Tests.LagoonTests comment: ''!
-!Tools.Tests.LagoonTests categoriesForClass!Unclassified! !
 !Tools.Tests.LagoonTests methodsFor!
 
 testExternalStructureAfterTemplateRemoval

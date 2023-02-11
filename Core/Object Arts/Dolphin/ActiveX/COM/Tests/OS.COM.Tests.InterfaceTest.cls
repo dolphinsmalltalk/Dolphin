@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'OS.COM.Tests.InterfaceTest'
 	classConstants: {}!
 OS.COM.Tests.InterfaceTest guid: (Core.GUID fromString: '{3cbd4156-925e-437d-b6b6-e862481e60c6}')!
 OS.COM.Tests.InterfaceTest comment: ''!
-!OS.COM.Tests.InterfaceTest categoriesForClass!Unclassified! !
 !OS.COM.Tests.InterfaceTest methodsFor!
 
 testAllRegistered

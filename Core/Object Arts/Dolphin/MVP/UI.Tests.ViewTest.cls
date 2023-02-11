@@ -8,7 +8,6 @@ UI.Tests.PresenterTest subclass: #'UI.Tests.ViewTest'
 	classConstants: {}!
 UI.Tests.ViewTest guid: (Core.GUID fromString: '{cf223394-a19e-45f9-a270-551c288901ef}')!
 UI.Tests.ViewTest comment: ''!
-!UI.Tests.ViewTest categoriesForClass!Unclassified! !
 !UI.Tests.ViewTest methodsFor!
 
 classToTest

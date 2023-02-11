@@ -8,7 +8,6 @@ External.Tests.ExternalArrayTest subclass: #'External.Tests.DWORDArrayTest'
 	classConstants: {}!
 External.Tests.DWORDArrayTest guid: (Core.GUID fromString: '{4cf3a550-fd9e-46c2-a81b-367815cdf70d}')!
 External.Tests.DWORDArrayTest comment: ''!
-!External.Tests.DWORDArrayTest categoriesForClass!Unclassified! !
 !External.Tests.DWORDArrayTest methodsFor!
 
 arrayClass

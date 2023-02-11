@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Graphics.Tests.Point3DTest'
 	classConstants: {}!
 Graphics.Tests.Point3DTest guid: (Core.GUID fromString: '{e1ecedad-639e-42fc-b8a0-04911e61fcb5}')!
 Graphics.Tests.Point3DTest comment: 'Test the Point3D class'!
-!Graphics.Tests.Point3DTest categoriesForClass!Unclassified! !
 !Graphics.Tests.Point3DTest methodsFor!
 
 testAsPoint

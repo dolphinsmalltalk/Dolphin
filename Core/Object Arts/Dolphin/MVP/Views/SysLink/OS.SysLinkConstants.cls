@@ -27,4 +27,3 @@ Kernel.SharedPool subclass: #'OS.SysLinkConstants'
 OS.SysLinkConstants guid: (Core.GUID fromString: '{54002e75-84c6-4186-99a4-0b0b1c9a909d}')!
 OS.SysLinkConstants isNonInstantiable: true!
 OS.SysLinkConstants comment: ''!
-!OS.SysLinkConstants categoriesForClass!Unclassified! !

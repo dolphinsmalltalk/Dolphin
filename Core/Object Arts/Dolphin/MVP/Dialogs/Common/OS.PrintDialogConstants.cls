@@ -34,4 +34,3 @@ Kernel.SharedPool subclass: #'OS.PrintDialogConstants'
 OS.PrintDialogConstants guid: (Core.GUID fromString: '{79306617-0b72-4010-83fd-e228cde8f379}')!
 OS.PrintDialogConstants isNonInstantiable: true!
 OS.PrintDialogConstants comment: ''!
-!OS.PrintDialogConstants categoriesForClass!Unclassified! !

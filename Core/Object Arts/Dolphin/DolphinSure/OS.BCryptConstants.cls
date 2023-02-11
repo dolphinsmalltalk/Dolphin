@@ -58,4 +58,3 @@ Kernel.SharedPool subclass: #'OS.BCryptConstants'
 OS.BCryptConstants guid: (Core.GUID fromString: '{ddf7b6ba-2a04-4f31-b6f9-c1c1be1ae8ef}')!
 OS.BCryptConstants isNonInstantiable: true!
 OS.BCryptConstants comment: ''!
-!OS.BCryptConstants categoriesForClass!Unclassified! !

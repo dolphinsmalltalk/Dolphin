@@ -8,7 +8,6 @@ ADODB.ADOCollection subclass: #'ADODB.ADODynaCollection'
 	classConstants: {}!
 ADODB.ADODynaCollection guid: (Core.GUID fromString: '{cf1fb266-a204-4f8e-b6bb-bcb2806ef724}')!
 ADODB.ADODynaCollection comment: ''!
-!ADODB.ADODynaCollection categoriesForClass!Unclassified! !
 !ADODB.ADODynaCollection methodsFor!
 
 add: newElement

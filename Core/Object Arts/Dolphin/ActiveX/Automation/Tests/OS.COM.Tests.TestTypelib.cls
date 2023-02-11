@@ -8,7 +8,6 @@ XProgramming.SUnit.TestResource subclass: #'OS.COM.Tests.TestTypelib'
 	classConstants: {}!
 OS.COM.Tests.TestTypelib guid: (Core.GUID fromString: '{bda93d8c-df4b-4461-8950-9db6e8797384}')!
 OS.COM.Tests.TestTypelib comment: ''!
-!OS.COM.Tests.TestTypelib categoriesForClass!Unclassified! !
 !OS.COM.Tests.TestTypelib methodsFor!
 
 analyzer

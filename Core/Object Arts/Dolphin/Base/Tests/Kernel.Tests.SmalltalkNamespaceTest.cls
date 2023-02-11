@@ -8,7 +8,6 @@ Kernel.Tests.SystemNamespaceTest subclass: #'Kernel.Tests.SmalltalkNamespaceTest
 	classConstants: {}!
 Kernel.Tests.SmalltalkNamespaceTest guid: (Core.GUID fromString: '{2aa58b1b-4203-4bcd-bd4b-b7497c69d4df}')!
 Kernel.Tests.SmalltalkNamespaceTest comment: ''!
-!Kernel.Tests.SmalltalkNamespaceTest categoriesForClass!Unclassified! !
 !Kernel.Tests.SmalltalkNamespaceTest methodsFor!
 
 subject

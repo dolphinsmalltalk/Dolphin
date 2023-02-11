@@ -8,7 +8,6 @@ Graphics.ImageInitializer subclass: #'Graphics.DisplayCompatibleBitmapInitialize
 	classConstants: {}!
 Graphics.DisplayCompatibleBitmapInitializer guid: (Core.GUID fromString: '{e8abc724-cdba-4047-a3d4-d44430d1a05f}')!
 Graphics.DisplayCompatibleBitmapInitializer comment: ''!
-!Graphics.DisplayCompatibleBitmapInitializer categoriesForClass!Unclassified! !
 !Graphics.DisplayCompatibleBitmapInitializer methodsFor!
 
 createImage: anImage extent: aPoint

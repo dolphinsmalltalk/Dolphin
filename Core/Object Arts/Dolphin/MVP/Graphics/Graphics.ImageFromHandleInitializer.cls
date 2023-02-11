@@ -8,7 +8,6 @@ Graphics.ImageInitializer subclass: #'Graphics.ImageFromHandleInitializer'
 	classConstants: {}!
 Graphics.ImageFromHandleInitializer guid: (Core.GUID fromString: '{d019573c-ce12-419d-ab3d-f8bafb3540b0}')!
 Graphics.ImageFromHandleInitializer comment: ''!
-!Graphics.ImageFromHandleInitializer categoriesForClass!Unclassified! !
 !Graphics.ImageFromHandleInitializer methodsFor!
 
 createImage: anImage extent: aPoint

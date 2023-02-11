@@ -8,7 +8,6 @@ Core.Tests.ArrayedCollectionTest subclass: #'Core.Tests.RunArrayTest'
 	classConstants: {}!
 Core.Tests.RunArrayTest guid: (Core.GUID fromString: '{656416ed-47db-44fd-a18d-124febcc1ddf}')!
 Core.Tests.RunArrayTest comment: ''!
-!Core.Tests.RunArrayTest categoriesForClass!Unclassified! !
 !Core.Tests.RunArrayTest methodsFor!
 
 collectionClass

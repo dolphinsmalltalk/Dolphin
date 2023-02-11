@@ -8,7 +8,6 @@ Refactory.Browser.RenameInstanceVariableRefactoring subclass: #'Refactory.Browse
 	classConstants: {}!
 Refactory.Browser.RenameInstanceVariableAndAccessorsRefactoring guid: (Core.GUID fromString: '{9d161ae8-1686-4173-b598-1114660c578b}')!
 Refactory.Browser.RenameInstanceVariableAndAccessorsRefactoring comment: ''!
-!Refactory.Browser.RenameInstanceVariableAndAccessorsRefactoring categoriesForClass!Unclassified! !
 !Refactory.Browser.RenameInstanceVariableAndAccessorsRefactoring methodsFor!
 
 initializeAccessorsRefactoring

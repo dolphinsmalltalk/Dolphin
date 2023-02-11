@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Security.Tests.DolphinSureTrustedDataTest'
 	classConstants: {}!
 Security.Tests.DolphinSureTrustedDataTest guid: (Core.GUID fromString: '{2ed3ecdf-4736-4144-87cc-6b51d3857654}')!
 Security.Tests.DolphinSureTrustedDataTest comment: ''!
-!Security.Tests.DolphinSureTrustedDataTest categoriesForClass!Unclassified! !
 !Security.Tests.DolphinSureTrustedDataTest methodsFor!
 
 testBinaryReadOldCertificate

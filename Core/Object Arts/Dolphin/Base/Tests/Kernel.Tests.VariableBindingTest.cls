@@ -10,7 +10,6 @@ Core.Tests.AssociationTest subclass: #'Kernel.Tests.VariableBindingTest'
 	}!
 Kernel.Tests.VariableBindingTest guid: (Core.GUID fromString: '{dcc8c223-2afb-4398-8a76-d777493f6b70}')!
 Kernel.Tests.VariableBindingTest comment: ''!
-!Kernel.Tests.VariableBindingTest categoriesForClass!Unclassified! !
 !Kernel.Tests.VariableBindingTest methodsFor!
 
 testAbsoluteName

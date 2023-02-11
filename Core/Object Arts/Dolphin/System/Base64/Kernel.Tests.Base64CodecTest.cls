@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Kernel.Tests.Base64CodecTest'
 	classConstants: {}!
 Kernel.Tests.Base64CodecTest guid: (Core.GUID fromString: '{29f3cfca-13c2-49dd-bcac-20c64297a7f0}')!
 Kernel.Tests.Base64CodecTest comment: ''!
-!Kernel.Tests.Base64CodecTest categoriesForClass!Unclassified! !
 !Kernel.Tests.Base64CodecTest methodsFor!
 
 roundTrip: bytes

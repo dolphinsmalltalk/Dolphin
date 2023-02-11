@@ -8,7 +8,6 @@ Core.Tests.OrderedCollectionTest subclass: #'Core.Tests.SortedCollectionTest'
 	classConstants: {}!
 Core.Tests.SortedCollectionTest guid: (Core.GUID fromString: '{5ae7c3bc-62c7-454a-9917-c6accd854be1}')!
 Core.Tests.SortedCollectionTest comment: ''!
-!Core.Tests.SortedCollectionTest categoriesForClass!Unclassified! !
 !Core.Tests.SortedCollectionTest methodsFor!
 
 collectionClass

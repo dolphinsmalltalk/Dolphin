@@ -32,4 +32,3 @@ Kernel.SharedPool subclass: #'OS.StatusBarConstants'
 OS.StatusBarConstants guid: (Core.GUID fromString: '{5eb59648-a696-4acd-8357-fd9eaae3010f}')!
 OS.StatusBarConstants isNonInstantiable: true!
 OS.StatusBarConstants comment: ''!
-!OS.StatusBarConstants categoriesForClass!Unclassified! !

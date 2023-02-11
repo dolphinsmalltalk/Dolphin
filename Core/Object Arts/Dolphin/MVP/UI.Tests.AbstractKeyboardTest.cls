@@ -9,7 +9,6 @@ Core.Tests.DolphinTest subclass: #'UI.Tests.AbstractKeyboardTest'
 UI.Tests.AbstractKeyboardTest guid: (Core.GUID fromString: '{973884cb-33cb-45e6-a489-48d76699c608}')!
 UI.Tests.AbstractKeyboardTest isNonInstantiable: true!
 UI.Tests.AbstractKeyboardTest comment: ''!
-!UI.Tests.AbstractKeyboardTest categoriesForClass!Unclassified! !
 !UI.Tests.AbstractKeyboardTest methodsFor!
 
 setCurrentKeyboardLayout: aString

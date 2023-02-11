@@ -70,4 +70,3 @@ Kernel.SharedPool subclass: #'OS.TabViewConstants'
 OS.TabViewConstants guid: (Core.GUID fromString: '{b17ee2d0-3b54-4ffd-a62e-eac4ee36000b}')!
 OS.TabViewConstants isNonInstantiable: true!
 OS.TabViewConstants comment: ''!
-!OS.TabViewConstants categoriesForClass!Unclassified! !

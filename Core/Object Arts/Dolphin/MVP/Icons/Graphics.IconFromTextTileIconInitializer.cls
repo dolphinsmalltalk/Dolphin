@@ -8,7 +8,6 @@ Graphics.ImageInitializer subclass: #'Graphics.IconFromTextTileIconInitializer'
 	classConstants: {}!
 Graphics.IconFromTextTileIconInitializer guid: (Core.GUID fromString: '{53a894b4-e429-4ab9-ae95-a2a1e56cb506}')!
 Graphics.IconFromTextTileIconInitializer comment: ''!
-!Graphics.IconFromTextTileIconInitializer categoriesForClass!Unclassified! !
 !Graphics.IconFromTextTileIconInitializer methodsFor!
 
 = anObject

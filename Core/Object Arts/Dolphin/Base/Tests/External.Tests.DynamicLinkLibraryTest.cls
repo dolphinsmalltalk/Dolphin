@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'External.Tests.DynamicLinkLibraryTest'
 	classConstants: {}!
 External.Tests.DynamicLinkLibraryTest guid: (Core.GUID fromString: '{52518745-7c3c-4567-8599-3090af0e6567}')!
 External.Tests.DynamicLinkLibraryTest comment: ''!
-!External.Tests.DynamicLinkLibraryTest categoriesForClass!Unclassified! !
 !External.Tests.DynamicLinkLibraryTest methodsFor!
 
 makeTestMethodFrom: anExternalMethod overlapped: aBoolean 

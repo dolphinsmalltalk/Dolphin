@@ -8,7 +8,6 @@ UI.Tests.LayoutManagerTest subclass: #'UI.Tests.FramingLayoutTest'
 	classConstants: {}!
 UI.Tests.FramingLayoutTest guid: (Core.GUID fromString: '{fa16fdd5-bd9e-4198-bc61-f33e43c14edc}')!
 UI.Tests.FramingLayoutTest comment: ''!
-!UI.Tests.FramingLayoutTest categoriesForClass!Unclassified! !
 !UI.Tests.FramingLayoutTest methodsFor!
 
 layoutManagerClass

@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'UI.Tests.ValueConverterTest'
 	classConstants: {}!
 UI.Tests.ValueConverterTest guid: (Core.GUID fromString: '{fd184d86-16e0-422a-a2c7-0084d567972c}')!
 UI.Tests.ValueConverterTest comment: 'Tests the ValueConverter class.'!
-!UI.Tests.ValueConverterTest categoriesForClass!Unclassified! !
 !UI.Tests.ValueConverterTest methodsFor!
 
 onValueChanged

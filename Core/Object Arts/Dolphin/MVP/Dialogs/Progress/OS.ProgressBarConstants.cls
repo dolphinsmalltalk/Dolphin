@@ -27,4 +27,3 @@ Kernel.SharedPool subclass: #'OS.ProgressBarConstants'
 OS.ProgressBarConstants guid: (Core.GUID fromString: '{dd75854c-9e8c-4afe-b86a-d99b4dbaa1b1}')!
 OS.ProgressBarConstants isNonInstantiable: true!
 OS.ProgressBarConstants comment: ''!
-!OS.ProgressBarConstants categoriesForClass!Unclassified! !

@@ -8,7 +8,6 @@ XProgramming.SUnit.TestResource subclass: #'Database.Tests.DBConnectionTestResou
 	classConstants: {}!
 Database.Tests.DBConnectionTestResource guid: (Core.GUID fromString: '{2661c6fe-6796-4f00-a5c4-6ac7f74bb107}')!
 Database.Tests.DBConnectionTestResource comment: ''!
-!Database.Tests.DBConnectionTestResource categoriesForClass!Unclassified! !
 !Database.Tests.DBConnectionTestResource methodsFor!
 
 canConnect

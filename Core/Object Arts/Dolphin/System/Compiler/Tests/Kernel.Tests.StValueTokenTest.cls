@@ -9,7 +9,6 @@ Kernel.Tests.StTokenTest subclass: #'Kernel.Tests.StValueTokenTest'
 Kernel.Tests.StValueTokenTest guid: (Core.GUID fromString: '{e1fb19ba-f9b5-4c51-b277-d6e1ffa5e66a}')!
 Kernel.Tests.StValueTokenTest isNonInstantiable: true!
 Kernel.Tests.StValueTokenTest comment: ''!
-!Kernel.Tests.StValueTokenTest categoriesForClass!Unclassified! !
 !Kernel.Tests.StValueTokenTest methodsFor!
 
 exampleSource

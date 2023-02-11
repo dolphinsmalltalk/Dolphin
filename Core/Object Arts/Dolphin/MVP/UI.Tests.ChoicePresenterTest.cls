@@ -8,7 +8,6 @@ UI.Tests.PresenterTest subclass: #'UI.Tests.ChoicePresenterTest'
 	classConstants: {}!
 UI.Tests.ChoicePresenterTest guid: (Core.GUID fromString: '{f39cda5e-17b7-48ee-ae77-57c882174716}')!
 UI.Tests.ChoicePresenterTest comment: ''!
-!UI.Tests.ChoicePresenterTest categoriesForClass!Unclassified! !
 !UI.Tests.ChoicePresenterTest methodsFor!
 
 classToTest

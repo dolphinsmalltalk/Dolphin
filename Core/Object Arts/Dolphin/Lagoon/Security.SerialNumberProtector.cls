@@ -11,7 +11,6 @@ Security.SerialNumberProtector isNonInstantiable: true!
 Security.SerialNumberProtector comment: 'One of these handles the actual cryptography for a (subclass of) ProtectedProductSerialNumber.  The idea of factoring this code out is to allow cryptography (which is really a policy decision) to vary independently of the choice of what data is encoded in a serial number.
 
 Note that instances only look after the cryptography for serial numbers, they are not responsible for the encryption used to protect the bytecodes of methods (which have different cryptographic requirements), see ProductProtector for that.'!
-!Security.SerialNumberProtector categoriesForClass!Unclassified! !
 !Security.SerialNumberProtector methodsFor!
 
 dataFromString: aString

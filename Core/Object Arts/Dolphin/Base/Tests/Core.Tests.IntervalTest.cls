@@ -8,7 +8,6 @@ Core.Tests.SequenceableCollectionTest subclass: #'Core.Tests.IntervalTest'
 	classConstants: {}!
 Core.Tests.IntervalTest guid: (Core.GUID fromString: '{73485185-925f-48a9-bdf0-df459c5acb25}')!
 Core.Tests.IntervalTest comment: ''!
-!Core.Tests.IntervalTest categoriesForClass!Unclassified! !
 !Core.Tests.IntervalTest methodsFor!
 
 assimilate: anObject 

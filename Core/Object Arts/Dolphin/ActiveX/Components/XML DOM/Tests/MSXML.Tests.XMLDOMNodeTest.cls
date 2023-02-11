@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'MSXML.Tests.XMLDOMNodeTest'
 	classConstants: {}!
 MSXML.Tests.XMLDOMNodeTest guid: (Core.GUID fromString: '{956b7839-a2fb-47f1-9c74-2aacae4bdffb}')!
 MSXML.Tests.XMLDOMNodeTest comment: ''!
-!MSXML.Tests.XMLDOMNodeTest categoriesForClass!Unclassified! !
 !MSXML.Tests.XMLDOMNodeTest methodsFor!
 
 testDisplayOn

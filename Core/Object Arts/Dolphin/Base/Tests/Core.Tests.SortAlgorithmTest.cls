@@ -9,7 +9,6 @@ Core.Tests.DolphinTest subclass: #'Core.Tests.SortAlgorithmTest'
 Core.Tests.SortAlgorithmTest guid: (Core.GUID fromString: '{50fde7dc-5db4-4eda-9ee2-61882b8ee3e5}')!
 Core.Tests.SortAlgorithmTest isNonInstantiable: true!
 Core.Tests.SortAlgorithmTest comment: ''!
-!Core.Tests.SortAlgorithmTest categoriesForClass!Unclassified! !
 !Core.Tests.SortAlgorithmTest methodsFor!
 
 add: aCollection sortBlock: aDyadicValuable

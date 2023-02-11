@@ -8,7 +8,6 @@ UI.RuntimeSessionManager subclass: #'UI.Examples.SlidingBallSessionManager'
 	classConstants: {}!
 UI.Examples.SlidingBallSessionManager guid: (Core.GUID fromString: '{df9f9b7f-7863-4331-9258-06e55d9fb118}')!
 UI.Examples.SlidingBallSessionManager comment: ''!
-!UI.Examples.SlidingBallSessionManager categoriesForClass!Unclassified! !
 !UI.Examples.SlidingBallSessionManager methodsFor!
 
 main

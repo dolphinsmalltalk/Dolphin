@@ -8,7 +8,6 @@ Graphics.Tests.ImageTest subclass: #'OS.COM.Tests.PictureTest'
 	classConstants: {}!
 OS.COM.Tests.PictureTest guid: (Core.GUID fromString: '{757ce423-a612-4964-abe1-c1e2d65ea27a}')!
 OS.COM.Tests.PictureTest comment: ''!
-!OS.COM.Tests.PictureTest categoriesForClass!Unclassified! !
 !OS.COM.Tests.PictureTest methodsFor!
 
 canonicalInstance

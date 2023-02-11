@@ -8,7 +8,6 @@ External.Tests.ExternalArrayTest subclass: #'External.Tests.DOUBLEArrayTest'
 	classConstants: {}!
 External.Tests.DOUBLEArrayTest guid: (Core.GUID fromString: '{d4fa7f6e-7be8-407b-a002-47d609d8d311}')!
 External.Tests.DOUBLEArrayTest comment: ''!
-!External.Tests.DOUBLEArrayTest categoriesForClass!Unclassified! !
 !External.Tests.DOUBLEArrayTest methodsFor!
 
 arrayClass

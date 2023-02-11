@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Core.Tests.AssociationTest'
 	classConstants: {}!
 Core.Tests.AssociationTest guid: (Core.GUID fromString: '{c99d4b53-db6c-4b09-9f2a-7a914d14a0d1}')!
 Core.Tests.AssociationTest comment: ''!
-!Core.Tests.AssociationTest categoriesForClass!Unclassified! !
 !Core.Tests.AssociationTest methodsFor!
 
 testIsSelfEvaluating

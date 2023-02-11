@@ -20,7 +20,6 @@ OS.Win32Structure subclass: #'OS.PANOSE'
 	}!
 OS.PANOSE guid: (Core.GUID fromString: '{fd0c19a2-34cf-4a99-a522-d4fd0cc0f003}')!
 OS.PANOSE comment: ''!
-!OS.PANOSE categoriesForClass!Unclassified! !
 !OS.PANOSE methodsFor!
 
 bArmStyle

@@ -10,7 +10,6 @@ Kernel.AXDllSessionManager guid: (Core.GUID fromString: '{56681788-e7fe-4454-897
 Kernel.AXDllSessionManager comment: 'AXDllSessionManager is the class of <SessionManager>s used to manage the life-cycle of a deployed Active-X/COM component DLL that has no GUI elements.
 
 Use this class of SessionManager when deploying your Active-X DLL if it is a non-visual component.'!
-!Kernel.AXDllSessionManager categoriesForClass!Unclassified! !
 !Kernel.AXDllSessionManager methodsFor!
 
 basicTertiaryStartup

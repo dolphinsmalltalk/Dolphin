@@ -9,7 +9,6 @@ UI.Tests.AbstractTextEditTest subclass: #'UI.Tests.AbstractMultilineTextEditTest
 UI.Tests.AbstractMultilineTextEditTest guid: (Core.GUID fromString: '{8cec10d6-5d60-4f12-9a39-999fcc22b29d}')!
 UI.Tests.AbstractMultilineTextEditTest isNonInstantiable: true!
 UI.Tests.AbstractMultilineTextEditTest comment: ''!
-!UI.Tests.AbstractMultilineTextEditTest categoriesForClass!Unclassified! !
 !UI.Tests.AbstractMultilineTextEditTest methodsFor!
 
 testPlainTextAtLine

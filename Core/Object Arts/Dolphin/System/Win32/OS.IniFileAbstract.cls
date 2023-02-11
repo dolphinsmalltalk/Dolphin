@@ -9,7 +9,6 @@ Core.Collection subclass: #'OS.IniFileAbstract'
 OS.IniFileAbstract guid: (Core.GUID fromString: '{581771ef-b10d-40c8-a590-a926f4a57f5c}')!
 OS.IniFileAbstract isNonInstantiable: true!
 OS.IniFileAbstract comment: ''!
-!OS.IniFileAbstract categoriesForClass!Unclassified! !
 !OS.IniFileAbstract methodsFor!
 
 = comparand

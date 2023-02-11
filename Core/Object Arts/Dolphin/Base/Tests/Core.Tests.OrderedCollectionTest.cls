@@ -8,7 +8,6 @@ Core.Tests.SequencedGrowableCollectionTest subclass: #'Core.Tests.OrderedCollect
 	classConstants: {}!
 Core.Tests.OrderedCollectionTest guid: (Core.GUID fromString: '{c951706f-236d-4671-b849-626652dda25e}')!
 Core.Tests.OrderedCollectionTest comment: ''!
-!Core.Tests.OrderedCollectionTest categoriesForClass!Unclassified! !
 !Core.Tests.OrderedCollectionTest methodsFor!
 
 collectionClass

@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #SocketErrorTest
 	classConstants: {}!
 SocketErrorTest guid: (Core.GUID fromString: '{a421a921-77e2-485a-b403-fc20d4c13a43}')!
 SocketErrorTest comment: ''!
-!SocketErrorTest categoriesForClass!Unclassified! !
 !SocketErrorTest methodsFor!
 
 testSocketClosed

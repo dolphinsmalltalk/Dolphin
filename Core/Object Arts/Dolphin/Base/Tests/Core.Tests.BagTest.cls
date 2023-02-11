@@ -8,7 +8,6 @@ Core.Tests.CollectionTest subclass: #'Core.Tests.BagTest'
 	classConstants: {}!
 Core.Tests.BagTest guid: (Core.GUID fromString: '{31d1ecfc-cd30-4437-906f-69585c9e9c94}')!
 Core.Tests.BagTest comment: ''!
-!Core.Tests.BagTest categoriesForClass!Unclassified! !
 !Core.Tests.BagTest methodsFor!
 
 collectionClass

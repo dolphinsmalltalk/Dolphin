@@ -23,4 +23,3 @@ Kernel.SharedPool subclass: #'OS.FileSystemWatcherConstants'
 OS.FileSystemWatcherConstants guid: (Core.GUID fromString: '{b7763e83-4cda-4ba5-9352-abe5707f10a2}')!
 OS.FileSystemWatcherConstants isNonInstantiable: true!
 OS.FileSystemWatcherConstants comment: ''!
-!OS.FileSystemWatcherConstants categoriesForClass!Unclassified! !

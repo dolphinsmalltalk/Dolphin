@@ -9,7 +9,6 @@ Core.Tests.DolphinTest subclass: #AbstractSocketTest
 AbstractSocketTest guid: (Core.GUID fromString: '{4b35f00d-f9e0-442d-84fd-4721213f82fd}')!
 AbstractSocketTest isNonInstantiable: true!
 AbstractSocketTest comment: ''!
-!AbstractSocketTest categoriesForClass!Unclassified! !
 !AbstractSocketTest methodsFor!
 
 serverSocketClass

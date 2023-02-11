@@ -8,7 +8,6 @@ Graphics.IconFromSystemInitializer subclass: #'Graphics.IconFromShellStockInitia
 	classConstants: {}!
 Graphics.IconFromShellStockInitializer guid: (Core.GUID fromString: '{3ef7de96-b077-44ab-b925-2b403b972b56}')!
 Graphics.IconFromShellStockInitializer comment: ''!
-!Graphics.IconFromShellStockInitializer categoriesForClass!Unclassified! !
 !Graphics.IconFromShellStockInitializer methodsFor!
 
 createImage: anImage extent: aPoint

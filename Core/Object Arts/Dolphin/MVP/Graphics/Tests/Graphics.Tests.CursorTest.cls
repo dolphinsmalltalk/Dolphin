@@ -8,7 +8,6 @@ Graphics.Tests.ImageTest subclass: #'Graphics.Tests.CursorTest'
 	classConstants: {}!
 Graphics.Tests.CursorTest guid: (Core.GUID fromString: '{84acad1d-2783-48fc-a42a-94c73d6885ac}')!
 Graphics.Tests.CursorTest comment: ''!
-!Graphics.Tests.CursorTest categoriesForClass!Unclassified! !
 !Graphics.Tests.CursorTest methodsFor!
 
 expectedImageExtent

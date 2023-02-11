@@ -8,7 +8,6 @@ External.Tests.ExternalFieldTest subclass: #'External.Tests.StructureArrayPointe
 	classConstants: {}!
 External.Tests.StructureArrayPointerFieldTest guid: (Core.GUID fromString: '{05db20c0-4d73-4853-8820-50302b095632}')!
 External.Tests.StructureArrayPointerFieldTest comment: ''!
-!External.Tests.StructureArrayPointerFieldTest categoriesForClass!Unclassified! !
 !External.Tests.StructureArrayPointerFieldTest methodsFor!
 
 testGenerateAccessorsForSizedArray

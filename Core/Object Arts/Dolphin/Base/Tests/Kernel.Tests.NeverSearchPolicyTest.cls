@@ -8,7 +8,6 @@ Core.Tests.SearchPolicyTest subclass: #'Kernel.Tests.NeverSearchPolicyTest'
 	classConstants: {}!
 Kernel.Tests.NeverSearchPolicyTest guid: (Core.GUID fromString: '{64679112-614d-4f64-b585-6f9ef68a703d}')!
 Kernel.Tests.NeverSearchPolicyTest comment: ''!
-!Kernel.Tests.NeverSearchPolicyTest categoriesForClass!Unclassified! !
 !Kernel.Tests.NeverSearchPolicyTest methodsFor!
 
 policyClass

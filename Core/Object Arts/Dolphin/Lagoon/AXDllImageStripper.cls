@@ -10,7 +10,6 @@ AXDllImageStripper guid: (Core.GUID fromString: '{e6c57f56-c672-49b5-8157-893092
 AXDllImageStripper comment: 'AXDllImageStripper is a specialized <ImageStripper> for stripping and deploying in-process ActiveX/COM component DLLs.
 
 See the ''ActiveX In-Process Server Kit'' package comment for further details.'!
-!AXDllImageStripper categoriesForClass!Unclassified! !
 !AXDllImageStripper methodsFor!
 
 _updateStubResources: anExternalHandle

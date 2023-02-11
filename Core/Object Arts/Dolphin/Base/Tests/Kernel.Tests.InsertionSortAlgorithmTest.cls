@@ -8,7 +8,6 @@ Kernel.Tests.StableSortAlgorithmTest subclass: #'Kernel.Tests.InsertionSortAlgor
 	classConstants: {}!
 Kernel.Tests.InsertionSortAlgorithmTest guid: (Core.GUID fromString: '{6bc1bf9a-866d-4812-9e23-a22fa19d54c6}')!
 Kernel.Tests.InsertionSortAlgorithmTest comment: ''!
-!Kernel.Tests.InsertionSortAlgorithmTest categoriesForClass!Unclassified! !
 !Kernel.Tests.InsertionSortAlgorithmTest methodsFor!
 
 algorithmToTest

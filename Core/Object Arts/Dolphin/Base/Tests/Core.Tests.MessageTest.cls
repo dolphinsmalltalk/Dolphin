@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Core.Tests.MessageTest'
 	classConstants: {}!
 Core.Tests.MessageTest guid: (Core.GUID fromString: '{aaa1f3a5-03cb-48f2-b067-a1ec0392ad2b}')!
 Core.Tests.MessageTest comment: ''!
-!Core.Tests.MessageTest categoriesForClass!Unclassified! !
 !Core.Tests.MessageTest methodsFor!
 
 testPrintString

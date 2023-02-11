@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'OS.COM.Tests.BSTRTest'
 	classConstants: {}!
 OS.COM.Tests.BSTRTest guid: (Core.GUID fromString: '{d5abc1df-26e1-4722-bcb6-51e4b5c406f6}')!
 OS.COM.Tests.BSTRTest comment: ''!
-!OS.COM.Tests.BSTRTest categoriesForClass!Unclassified! !
 !OS.COM.Tests.BSTRTest methodsFor!
 
 stringConversionCases

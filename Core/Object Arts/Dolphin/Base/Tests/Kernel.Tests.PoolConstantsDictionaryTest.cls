@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Kernel.Tests.PoolConstantsDictionaryTest'
 	classConstants: {}!
 Kernel.Tests.PoolConstantsDictionaryTest guid: (Core.GUID fromString: '{9c4827fc-93b3-4424-bec2-99f6bd7d76e9}')!
 Kernel.Tests.PoolConstantsDictionaryTest comment: ''!
-!Kernel.Tests.PoolConstantsDictionaryTest categoriesForClass!Unclassified! !
 !Kernel.Tests.PoolConstantsDictionaryTest methodsFor!
 
 key3Value

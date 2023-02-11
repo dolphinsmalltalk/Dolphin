@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Core.Tests.DurationTest'
 	classConstants: {}!
 Core.Tests.DurationTest guid: (Core.GUID fromString: '{3cf86074-481f-4b92-b7ed-6c9cbbe394df}')!
 Core.Tests.DurationTest comment: ''!
-!Core.Tests.DurationTest categoriesForClass!Unclassified! !
 !Core.Tests.DurationTest methodsFor!
 
 testAbs

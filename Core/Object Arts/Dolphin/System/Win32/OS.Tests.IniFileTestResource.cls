@@ -8,7 +8,6 @@ XProgramming.SUnit.TestResource subclass: #'OS.Tests.IniFileTestResource'
 	classConstants: {}!
 OS.Tests.IniFileTestResource guid: (Core.GUID fromString: '{8e42730b-5040-4528-ae15-41e9f153c025}')!
 OS.Tests.IniFileTestResource comment: ''!
-!OS.Tests.IniFileTestResource categoriesForClass!Unclassified! !
 !OS.Tests.IniFileTestResource methodsFor!
 
 emptyFile

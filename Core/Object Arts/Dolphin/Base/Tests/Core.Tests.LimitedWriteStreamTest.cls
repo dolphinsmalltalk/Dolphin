@@ -8,7 +8,6 @@ Core.Tests.WriteStreamTest subclass: #'Core.Tests.LimitedWriteStreamTest'
 	classConstants: {}!
 Core.Tests.LimitedWriteStreamTest guid: (Core.GUID fromString: '{9744cad5-27af-421d-a0ce-d2c7d68cf05d}')!
 Core.Tests.LimitedWriteStreamTest comment: ''!
-!Core.Tests.LimitedWriteStreamTest categoriesForClass!Unclassified! !
 !Core.Tests.LimitedWriteStreamTest methodsFor!
 
 streamClass

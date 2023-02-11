@@ -8,4 +8,3 @@ Core.Object subclass: #'STON.Tests.TestKnownObject'
 	classConstants: {}!
 STON.Tests.TestKnownObject guid: (Core.GUID fromString: '{2b317ef3-5cd3-432a-bad1-866b9801ab51}')!
 STON.Tests.TestKnownObject comment: ''!
-!STON.Tests.TestKnownObject categoriesForClass!Unclassified! !

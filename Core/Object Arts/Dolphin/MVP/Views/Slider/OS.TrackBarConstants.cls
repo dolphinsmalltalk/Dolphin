@@ -62,4 +62,3 @@ Kernel.SharedPool subclass: #'OS.TrackBarConstants'
 OS.TrackBarConstants guid: (Core.GUID fromString: '{6abda823-2244-4c63-8344-b1225795298a}')!
 OS.TrackBarConstants isNonInstantiable: true!
 OS.TrackBarConstants comment: ''!
-!OS.TrackBarConstants categoriesForClass!Unclassified! !

@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'OS.COM.Tests.VARIANTTest'
 	classConstants: {}!
 OS.COM.Tests.VARIANTTest guid: (Core.GUID fromString: '{f436bdf8-12ff-47e4-ad1a-c96795760912}')!
 OS.COM.Tests.VARIANTTest comment: ''!
-!OS.COM.Tests.VARIANTTest categoriesForClass!Unclassified! !
 !OS.COM.Tests.VARIANTTest methodsFor!
 
 isValidNullString: aString

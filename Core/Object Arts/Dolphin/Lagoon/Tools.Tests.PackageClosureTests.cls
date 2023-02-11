@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Tools.Tests.PackageClosureTests'
 	classConstants: {}!
 Tools.Tests.PackageClosureTests guid: (Core.GUID fromString: '{d6f6b8a7-9e40-4fa0-a52c-d92bcafeeebf}')!
 Tools.Tests.PackageClosureTests comment: ''!
-!Tools.Tests.PackageClosureTests categoriesForClass!Unclassified! !
 !Tools.Tests.PackageClosureTests methodsFor!
 
 consoleAppUnimplemented

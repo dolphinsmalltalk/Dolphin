@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'External.Tests.ResourceLibraryTest'
 	classConstants: {}!
 External.Tests.ResourceLibraryTest guid: (Core.GUID fromString: '{53144b4f-aa74-4ab2-a1c5-7b9c8f0fffec}')!
 External.Tests.ResourceLibraryTest comment: ''!
-!External.Tests.ResourceLibraryTest categoriesForClass!Unclassified! !
 !External.Tests.ResourceLibraryTest methodsFor!
 
 testComparing

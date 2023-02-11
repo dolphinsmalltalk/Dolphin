@@ -9,7 +9,6 @@ Core.Tests.DolphinTest subclass: #'Graphics.Tests.ImageTest'
 Graphics.Tests.ImageTest guid: (Core.GUID fromString: '{b1d5b3fb-9bac-444a-883b-3c3dfed414b1}')!
 Graphics.Tests.ImageTest isNonInstantiable: true!
 Graphics.Tests.ImageTest comment: ''!
-!Graphics.Tests.ImageTest categoriesForClass!Unclassified! !
 !Graphics.Tests.ImageTest methodsFor!
 
 canonicalInstance

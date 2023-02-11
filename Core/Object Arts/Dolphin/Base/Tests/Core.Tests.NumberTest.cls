@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Core.Tests.NumberTest'
 	classConstants: {}!
 Core.Tests.NumberTest guid: (Core.GUID fromString: '{12458306-5b30-4c48-8c24-aed051baabd0}')!
 Core.Tests.NumberTest comment: 'SUnitBrowser openOnTestCase: self'!
-!Core.Tests.NumberTest categoriesForClass!Unclassified! !
 !Core.Tests.NumberTest methodsFor!
 
 scan: aString value: anInteger class: aClass

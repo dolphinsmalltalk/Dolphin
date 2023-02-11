@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'UI.Tests.MessageBoxTest'
 	classConstants: {}!
 UI.Tests.MessageBoxTest guid: (Core.GUID fromString: '{a542ef51-98e0-4476-82b5-0aaae88ef637}')!
 UI.Tests.MessageBoxTest comment: ''!
-!UI.Tests.MessageBoxTest categoriesForClass!Unclassified! !
 !UI.Tests.MessageBoxTest methodsFor!
 
 getDialogInfo

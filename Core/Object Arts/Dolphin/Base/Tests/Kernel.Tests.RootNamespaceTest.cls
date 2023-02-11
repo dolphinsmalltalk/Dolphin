@@ -8,7 +8,6 @@ Kernel.Tests.SystemNamespaceTest subclass: #'Kernel.Tests.RootNamespaceTest'
 	classConstants: {}!
 Kernel.Tests.RootNamespaceTest guid: (Core.GUID fromString: '{d86d3cf1-c931-498c-b32a-89afd6f71306}')!
 Kernel.Tests.RootNamespaceTest comment: ''!
-!Kernel.Tests.RootNamespaceTest categoriesForClass!Unclassified! !
 !Kernel.Tests.RootNamespaceTest methodsFor!
 
 subject

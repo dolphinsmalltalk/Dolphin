@@ -133,4 +133,3 @@ Kernel.SharedPool subclass: #'OS.EnhancedMetafileRecordTypes'
 OS.EnhancedMetafileRecordTypes guid: (Core.GUID fromString: '{c7e0098e-0256-4501-8c4c-ff3e15338278}')!
 OS.EnhancedMetafileRecordTypes isNonInstantiable: true!
 OS.EnhancedMetafileRecordTypes comment: ''!
-!OS.EnhancedMetafileRecordTypes categoriesForClass!Unclassified! !

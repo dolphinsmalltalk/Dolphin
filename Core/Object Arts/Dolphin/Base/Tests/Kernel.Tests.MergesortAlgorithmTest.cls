@@ -8,7 +8,6 @@ Kernel.Tests.StableSortAlgorithmTest subclass: #'Kernel.Tests.MergesortAlgorithm
 	classConstants: {}!
 Kernel.Tests.MergesortAlgorithmTest guid: (Core.GUID fromString: '{0b95c1d0-7833-43d1-9d22-fa3129287940}')!
 Kernel.Tests.MergesortAlgorithmTest comment: ''!
-!Kernel.Tests.MergesortAlgorithmTest categoriesForClass!Unclassified! !
 !Kernel.Tests.MergesortAlgorithmTest methodsFor!
 
 algorithmToTest

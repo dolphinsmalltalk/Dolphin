@@ -72,4 +72,3 @@ Kernel.SharedPool subclass: #'OS.TooltipConstants'
 OS.TooltipConstants guid: (Core.GUID fromString: '{19693950-d658-4428-a5e8-644838de7d68}')!
 OS.TooltipConstants isNonInstantiable: true!
 OS.TooltipConstants comment: ''!
-!OS.TooltipConstants categoriesForClass!Unclassified! !

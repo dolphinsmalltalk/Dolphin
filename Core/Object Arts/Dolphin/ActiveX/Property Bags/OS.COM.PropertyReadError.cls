@@ -8,7 +8,6 @@ Core.Error subclass: #'OS.COM.PropertyReadError'
 	classConstants: {}!
 OS.COM.PropertyReadError guid: (Core.GUID fromString: '{395bcbe7-6d49-461d-8e8e-617d944548f7}')!
 OS.COM.PropertyReadError comment: ''!
-!OS.COM.PropertyReadError categoriesForClass!Unclassified! !
 !OS.COM.PropertyReadError methodsFor!
 
 errorLog

@@ -8,7 +8,6 @@ Kernel.Tests.StValueTokenTest subclass: #'Kernel.Tests.StSpecialCharacterTokenTe
 	classConstants: {}!
 Kernel.Tests.StSpecialCharacterTokenTest guid: (Core.GUID fromString: '{adf66b34-f041-4d5f-bb4f-0843ea9096eb}')!
 Kernel.Tests.StSpecialCharacterTokenTest comment: ''!
-!Kernel.Tests.StSpecialCharacterTokenTest categoriesForClass!Unclassified! !
 !Kernel.Tests.StSpecialCharacterTokenTest methodsFor!
 
 exampleSource

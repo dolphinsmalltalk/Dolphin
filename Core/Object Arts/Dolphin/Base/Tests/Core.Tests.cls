@@ -9,7 +9,6 @@ Core subclass: #'Core.Tests'
 Core.Tests guid: (Core.GUID fromString: '{b7076594-2eba-46a9-89d2-4f1d0cfdf9d8}')!
 Core.Tests isNonInstantiable: true!
 Core.Tests comment: ''!
-!Core.Tests categoriesForClass!Unclassified! !
 !Core.Tests class methodsFor!
 
 icon

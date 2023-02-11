@@ -22,4 +22,3 @@ Kernel.SharedPool subclass: #'OS.HTMLHelpConstants'
 OS.HTMLHelpConstants guid: (Core.GUID fromString: '{8fa353ac-bdb2-4d52-9169-e27fc53fe1b2}')!
 OS.HTMLHelpConstants isNonInstantiable: true!
 OS.HTMLHelpConstants comment: ''!
-!OS.HTMLHelpConstants categoriesForClass!Unclassified! !

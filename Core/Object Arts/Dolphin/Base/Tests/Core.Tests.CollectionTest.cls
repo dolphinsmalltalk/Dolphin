@@ -9,7 +9,6 @@ Core.Tests.DolphinTest subclass: #'Core.Tests.CollectionTest'
 Core.Tests.CollectionTest guid: (Core.GUID fromString: '{c0608062-bc41-43cf-aefc-c89e6b500e6d}')!
 Core.Tests.CollectionTest isNonInstantiable: true!
 Core.Tests.CollectionTest comment: ''!
-!Core.Tests.CollectionTest categoriesForClass!Unclassified! !
 !Core.Tests.CollectionTest methodsFor!
 
 assimilate: anObject

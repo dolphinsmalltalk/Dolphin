@@ -14,7 +14,6 @@ Graphics.ColorDefault comment: '`ColorDefault` is the special `ColorRef` which r
 The superclass `code` instance variable has the value `Win32Constants.CLR_DEFAULT`.
 
 '!
-!Graphics.ColorDefault categoriesForClass!Unclassified! !
 !Graphics.ColorDefault methodsFor!
 
 = aColor

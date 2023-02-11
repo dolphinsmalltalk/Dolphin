@@ -19,7 +19,6 @@ Class Variables:
 	Current		<IPDolphin>. Singleton instance.
 
 '!
-!Kernel.IPDolphin categoriesForClass!Unclassified! !
 !Kernel.IPDolphin methodsFor!
 
 canUnloadNow

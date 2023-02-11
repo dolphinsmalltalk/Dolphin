@@ -19,7 +19,6 @@ To suppress exceptions in the asynchronous process wrap the deferred operation i
 		on: Error do: [:e | e]] deferredValue
 
 Alternatively create a subclass which overrides #_evaluate:withArguments: which includes such a generic error trap.'!
-!Core.DeferredValue categoriesForClass!Unclassified! !
 !Core.DeferredValue methodsFor!
 
 _evaluate: operation withArguments: args

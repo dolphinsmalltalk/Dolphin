@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'UI.Tests.RadioButtonSetPresenterTest'
 	classConstants: {}!
 UI.Tests.RadioButtonSetPresenterTest guid: (Core.GUID fromString: '{0b5f0660-ff27-42a8-a388-e35b1b76b3e4}')!
 UI.Tests.RadioButtonSetPresenterTest comment: ''!
-!UI.Tests.RadioButtonSetPresenterTest categoriesForClass!Unclassified! !
 !UI.Tests.RadioButtonSetPresenterTest methodsFor!
 
 selectedButton

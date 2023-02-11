@@ -76,4 +76,3 @@ Kernel.SharedPool subclass: #'OS.ListBoxConstants'
 OS.ListBoxConstants guid: (Core.GUID fromString: '{c4c55da7-4db0-459e-92fd-fc4d5f563fce}')!
 OS.ListBoxConstants isNonInstantiable: true!
 OS.ListBoxConstants comment: ''!
-!OS.ListBoxConstants categoriesForClass!Unclassified! !

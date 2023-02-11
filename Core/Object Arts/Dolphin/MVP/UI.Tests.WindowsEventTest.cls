@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'UI.Tests.WindowsEventTest'
 	classConstants: {}!
 UI.Tests.WindowsEventTest guid: (Core.GUID fromString: '{08ec4909-75d4-4bef-bbb8-0f443b78f834}')!
 UI.Tests.WindowsEventTest comment: ''!
-!UI.Tests.WindowsEventTest categoriesForClass!Unclassified! !
 !UI.Tests.WindowsEventTest methodsFor!
 
 newEvent: anInteger

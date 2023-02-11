@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'OS.Tests.CRTLibraryTest'
 	classConstants: {}!
 OS.Tests.CRTLibraryTest guid: (Core.GUID fromString: '{46ac94c8-b775-44c8-9cc9-bf70297081ff}')!
 OS.Tests.CRTLibraryTest comment: ''!
-!OS.Tests.CRTLibraryTest categoriesForClass!Unclassified! !
 !OS.Tests.CRTLibraryTest methodsFor!
 
 testSplitPathInvalidCall

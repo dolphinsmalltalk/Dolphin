@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'OS.COM.Tests.EventSinkTest'
 	classConstants: {}!
 OS.COM.Tests.EventSinkTest guid: (Core.GUID fromString: '{cdbe5d5c-f0bc-4943-b0d4-2d5e7e6419ca}')!
 OS.COM.Tests.EventSinkTest comment: ''!
-!OS.COM.Tests.EventSinkTest categoriesForClass!Unclassified! !
 !OS.COM.Tests.EventSinkTest methodsFor!
 
 onAxEvent: aSymbol withArguments: anArray 

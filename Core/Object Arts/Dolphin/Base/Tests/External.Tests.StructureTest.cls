@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'External.Tests.StructureTest'
 	classConstants: {}!
 External.Tests.StructureTest guid: (Core.GUID fromString: '{a9244232-e68c-4a65-bbf2-c8392aee459b}')!
 External.Tests.StructureTest comment: 'SUnitBrowser openOnTestCase: self'!
-!External.Tests.StructureTest categoriesForClass!Unclassified! !
 !External.Tests.StructureTest methodsFor!
 
 testCanUnderstand

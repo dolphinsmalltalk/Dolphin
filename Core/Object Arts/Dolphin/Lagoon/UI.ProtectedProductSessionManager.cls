@@ -9,7 +9,6 @@ UI.RuntimeSessionManager subclass: #'UI.ProtectedProductSessionManager'
 UI.ProtectedProductSessionManager guid: (Core.GUID fromString: '{a90c2f6f-8f92-4493-995a-1ec18066d054}')!
 UI.ProtectedProductSessionManager isNonInstantiable: true!
 UI.ProtectedProductSessionManager comment: ''!
-!UI.ProtectedProductSessionManager categoriesForClass!Unclassified! !
 !UI.ProtectedProductSessionManager methodsFor!
 
 encryptedClasses

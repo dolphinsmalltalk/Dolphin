@@ -8,7 +8,6 @@ Core.Tests.SearchPolicyTest subclass: #'Kernel.Tests.IdentitySearchPolicyTest'
 	classConstants: {}!
 Kernel.Tests.IdentitySearchPolicyTest guid: (Core.GUID fromString: '{05134366-7e1d-469d-98b0-5b757f38592b}')!
 Kernel.Tests.IdentitySearchPolicyTest comment: ''!
-!Kernel.Tests.IdentitySearchPolicyTest categoriesForClass!Unclassified! !
 !Kernel.Tests.IdentitySearchPolicyTest methodsFor!
 
 policyClass

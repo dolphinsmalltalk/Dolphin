@@ -71,4 +71,3 @@ Kernel.SharedPool subclass: #'OS.TaskDialogConstants'
 OS.TaskDialogConstants guid: (Core.GUID fromString: '{64cfd321-e4de-4816-829a-127c24d117fe}')!
 OS.TaskDialogConstants isNonInstantiable: true!
 OS.TaskDialogConstants comment: ''!
-!OS.TaskDialogConstants categoriesForClass!Unclassified! !

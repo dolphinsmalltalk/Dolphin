@@ -16,7 +16,6 @@ Instance Variables:
 	expression		<String>. Expression evaluated to get the value of the scriptlet.
 	procedures	<String>. Optional procedures to support the expression.
 '!
-!MSScriptControl.ActiveXScriptlet categoriesForClass!Unclassified! !
 !MSScriptControl.ActiveXScriptlet methodsFor!
 
 = comparand

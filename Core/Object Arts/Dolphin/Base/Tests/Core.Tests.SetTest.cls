@@ -8,7 +8,6 @@ Core.Tests.CollectionTest subclass: #'Core.Tests.SetTest'
 	classConstants: {}!
 Core.Tests.SetTest guid: (Core.GUID fromString: '{2108692a-0ee3-46ea-a9d6-46b3227871c6}')!
 Core.Tests.SetTest comment: ''!
-!Core.Tests.SetTest categoriesForClass!Unclassified! !
 !Core.Tests.SetTest methodsFor!
 
 assertCommutativelyEqual: aSet other: anotherSet

@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'OS.Tests.SERVENTTest'
 	classConstants: {}!
 OS.Tests.SERVENTTest guid: (Core.GUID fromString: '{9d6b8651-1dc9-4274-97cc-44e053e36b8a}')!
 OS.Tests.SERVENTTest comment: ''!
-!OS.Tests.SERVENTTest categoriesForClass!Unclassified! !
 !OS.Tests.SERVENTTest methodsFor!
 
 testFromInteger

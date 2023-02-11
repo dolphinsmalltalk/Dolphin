@@ -9,7 +9,6 @@ Core.Object subclass: #'XProgramming.SUnit.TestResource'
 XProgramming.SUnit.TestResource guid: (Core.GUID fromString: '{69aeb725-622f-43db-a9c7-095932055892}')!
 XProgramming.SUnit.TestResource isNonInstantiable: true!
 XProgramming.SUnit.TestResource comment: ''!
-!XProgramming.SUnit.TestResource categoriesForClass!Unclassified! !
 !XProgramming.SUnit.TestResource methodsFor!
 
 description

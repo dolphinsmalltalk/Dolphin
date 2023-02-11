@@ -9,7 +9,6 @@ Core.Tests.DolphinTest subclass: #'Kernel.Tests.AbstractSTBFilerTest'
 Kernel.Tests.AbstractSTBFilerTest guid: (Core.GUID fromString: '{5927e3bd-eb27-4032-a460-08beb17878b3}')!
 Kernel.Tests.AbstractSTBFilerTest isNonInstantiable: true!
 Kernel.Tests.AbstractSTBFilerTest comment: ''!
-!Kernel.Tests.AbstractSTBFilerTest categoriesForClass!Unclassified! !
 !Kernel.Tests.AbstractSTBFilerTest methodsFor!
 
 deserialize: aString

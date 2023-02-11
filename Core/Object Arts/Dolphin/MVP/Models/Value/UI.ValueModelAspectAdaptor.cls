@@ -8,7 +8,6 @@ UI.ValueAspectAdaptor subclass: #'UI.ValueModelAspectAdaptor'
 	classConstants: {}!
 UI.ValueModelAspectAdaptor guid: (Core.GUID fromString: '{29f1d21e-3179-4fa5-beff-50f95911c88a}')!
 UI.ValueModelAspectAdaptor comment: ''!
-!UI.ValueModelAspectAdaptor categoriesForClass!Unclassified! !
 !UI.ValueModelAspectAdaptor methodsFor!
 
 notifyChanged

@@ -8,7 +8,6 @@ OS.Tests.AbstractIN_ADDRTest subclass: #'OS.Tests.IN6_ADDRTest'
 	classConstants: {}!
 OS.Tests.IN6_ADDRTest guid: (Core.GUID fromString: '{302febaf-b335-4060-a958-94e5e30d43cf}')!
 OS.Tests.IN6_ADDRTest comment: ''!
-!OS.Tests.IN6_ADDRTest categoriesForClass!Unclassified! !
 !OS.Tests.IN6_ADDRTest methodsFor!
 
 canonicalInstance

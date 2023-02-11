@@ -8,7 +8,6 @@ External.DynamicLinkLibrary subclass: #'OS.HTMLHelpLibrary'
 	classConstants: {}!
 OS.HTMLHelpLibrary guid: (Core.GUID fromString: '{9e0d2430-3877-11d3-93bd-00a024ca708a}')!
 OS.HTMLHelpLibrary comment: ''!
-!OS.HTMLHelpLibrary categoriesForClass!Unclassified! !
 !OS.HTMLHelpLibrary methodsFor!
 
 close

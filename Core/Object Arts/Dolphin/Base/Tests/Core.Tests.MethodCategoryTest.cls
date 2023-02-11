@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Core.Tests.MethodCategoryTest'
 	classConstants: {}!
 Core.Tests.MethodCategoryTest guid: (Core.GUID fromString: '{d6293ad9-d0bd-4c64-8666-f44cdb20805a}')!
 Core.Tests.MethodCategoryTest comment: ''!
-!Core.Tests.MethodCategoryTest categoriesForClass!Unclassified! !
 !Core.Tests.MethodCategoryTest methodsFor!
 
 testMethodsInBehavior

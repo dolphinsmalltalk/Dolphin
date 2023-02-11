@@ -9,4 +9,3 @@ Core.Tests.SortAlgorithmTest subclass: #'Kernel.Tests.StableSortAlgorithmTest'
 Kernel.Tests.StableSortAlgorithmTest guid: (Core.GUID fromString: '{8720de2b-a524-4ff9-bfcb-e58828a59138}')!
 Kernel.Tests.StableSortAlgorithmTest isNonInstantiable: true!
 Kernel.Tests.StableSortAlgorithmTest comment: ''!
-!Kernel.Tests.StableSortAlgorithmTest categoriesForClass!Unclassified! !

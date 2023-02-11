@@ -8,7 +8,6 @@ Core.Dictionary variableSubclass: #'STON.Tests.TestMap'
 	classConstants: {}!
 STON.Tests.TestMap guid: (Core.GUID fromString: '{588069da-7c8c-4590-b393-27c089007c6a}')!
 STON.Tests.TestMap comment: ''!
-!STON.Tests.TestMap categoriesForClass!Unclassified! !
 !STON.Tests.TestMap methodsFor!
 
 printElementsOn: stream

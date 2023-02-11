@@ -8,7 +8,6 @@ Kernel.StValueToken subclass: #'Kernel.StLiteralArrayToken'
 	classConstants: {}!
 Kernel.StLiteralArrayToken guid: (Core.GUID fromString: '{93797e84-0be7-4528-8362-983d06286a99}')!
 Kernel.StLiteralArrayToken comment: ''!
-!Kernel.StLiteralArrayToken categoriesForClass!Unclassified! !
 !Kernel.StLiteralArrayToken methodsFor!
 
 acceptVisitor: aTokenVisitor

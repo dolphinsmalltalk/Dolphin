@@ -8,7 +8,6 @@ Core.Tests.AbstractFileStreamTest subclass: #'Core.Tests.FileStreamTest'
 	classConstants: {}!
 Core.Tests.FileStreamTest guid: (Core.GUID fromString: '{773617be-f790-4ae5-9ed9-f1ea47cbf664}')!
 Core.Tests.FileStreamTest comment: ''!
-!Core.Tests.FileStreamTest categoriesForClass!Unclassified! !
 !Core.Tests.FileStreamTest methodsFor!
 
 assertBufferEmptyOrDirty: fs 

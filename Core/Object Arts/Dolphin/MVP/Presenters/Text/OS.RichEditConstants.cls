@@ -280,4 +280,3 @@ Kernel.SharedPool subclass: #'OS.RichEditConstants'
 OS.RichEditConstants guid: (Core.GUID fromString: '{ab3403bd-a9f3-46e7-97ea-92bc8d64ac52}')!
 OS.RichEditConstants isNonInstantiable: true!
 OS.RichEditConstants comment: ''!
-!OS.RichEditConstants categoriesForClass!Unclassified! !

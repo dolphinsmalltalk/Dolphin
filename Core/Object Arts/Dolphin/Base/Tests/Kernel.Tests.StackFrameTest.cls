@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Kernel.Tests.StackFrameTest'
 	classConstants: {}!
 Kernel.Tests.StackFrameTest guid: (Core.GUID fromString: '{23991667-5a26-4271-a113-851da1870814}')!
 Kernel.Tests.StackFrameTest comment: ''!
-!Kernel.Tests.StackFrameTest categoriesForClass!Unclassified! !
 !Kernel.Tests.StackFrameTest methodsFor!
 
 testOnProcessIndex

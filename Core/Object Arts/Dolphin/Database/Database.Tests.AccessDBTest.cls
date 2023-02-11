@@ -8,7 +8,6 @@ Database.Tests.DBConnectionTest subclass: #'Database.Tests.AccessDBTest'
 	classConstants: {}!
 Database.Tests.AccessDBTest guid: (Core.GUID fromString: '{4f4de5da-13fa-4842-941a-f825ce1db278}')!
 Database.Tests.AccessDBTest comment: ''!
-!Database.Tests.AccessDBTest categoriesForClass!Unclassified! !
 !Database.Tests.AccessDBTest methodsFor!
 
 databaseResource

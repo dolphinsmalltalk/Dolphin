@@ -8,7 +8,6 @@ Core.Tests.SearchPolicyTest subclass: #'Kernel.Tests.EqualitySearchPolicyTest'
 	classConstants: {}!
 Kernel.Tests.EqualitySearchPolicyTest guid: (Core.GUID fromString: '{753e6e11-d8ca-4aa8-a751-8b5031838d22}')!
 Kernel.Tests.EqualitySearchPolicyTest comment: ''!
-!Kernel.Tests.EqualitySearchPolicyTest categoriesForClass!Unclassified! !
 !Kernel.Tests.EqualitySearchPolicyTest methodsFor!
 
 policyClass

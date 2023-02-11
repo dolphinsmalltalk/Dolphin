@@ -9,7 +9,6 @@ Core.Tests.DolphinTest subclass: #'Database.Tests.DBTest'
 Database.Tests.DBTest guid: (Core.GUID fromString: '{13e9a82d-7aae-43aa-864a-a15706b23ae3}')!
 Database.Tests.DBTest isNonInstantiable: true!
 Database.Tests.DBTest comment: ''!
-!Database.Tests.DBTest categoriesForClass!Unclassified! !
 !Database.Tests.DBTest methodsFor!
 
 databaseResource

@@ -8,7 +8,6 @@ Graphics.ImageInitializer subclass: #'Graphics.WatermarkBitmapInitializer'
 	classConstants: {}!
 Graphics.WatermarkBitmapInitializer guid: (Core.GUID fromString: '{58853b8d-ed91-47d3-a98e-ac2003604043}')!
 Graphics.WatermarkBitmapInitializer comment: ''!
-!Graphics.WatermarkBitmapInitializer categoriesForClass!Unclassified! !
 !Graphics.WatermarkBitmapInitializer methodsFor!
 
 createImage: aBitmap extent: aPoint

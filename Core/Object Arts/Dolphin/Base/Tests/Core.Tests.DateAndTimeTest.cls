@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Core.Tests.DateAndTimeTest'
 	classConstants: {}!
 Core.Tests.DateAndTimeTest guid: (Core.GUID fromString: '{833a97bb-3e1a-4dcb-a1db-181457c09c0f}')!
 Core.Tests.DateAndTimeTest comment: ''!
-!Core.Tests.DateAndTimeTest categoriesForClass!Unclassified! !
 !Core.Tests.DateAndTimeTest methodsFor!
 
 canonicalInstance

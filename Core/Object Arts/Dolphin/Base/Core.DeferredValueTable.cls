@@ -8,7 +8,6 @@ Core.SharedLookupTable variableSubclass: #'Core.DeferredValueTable'
 	classConstants: {}!
 Core.DeferredValueTable guid: (Core.GUID fromString: '{2acf1f74-b319-4eed-8755-3bcc738462c0}')!
 Core.DeferredValueTable comment: 'A DeferredValueTable is a <LookupTable> specialised to hold <DeferredValue>s. '!
-!Core.DeferredValueTable categoriesForClass!Unclassified! !
 !Core.DeferredValueTable methodsFor!
 
 at: key ifAbsent: exceptionHandler

@@ -9,7 +9,6 @@ Core.Object subclass: #'Graphics.ImageInitializer'
 Graphics.ImageInitializer guid: (Core.GUID fromString: '{37c30377-62f9-4396-a09b-b3c5a48ebfe3}')!
 Graphics.ImageInitializer isNonInstantiable: true!
 Graphics.ImageInitializer comment: ''!
-!Graphics.ImageInitializer categoriesForClass!Unclassified! !
 !Graphics.ImageInitializer methodsFor!
 
 createImage: anImage

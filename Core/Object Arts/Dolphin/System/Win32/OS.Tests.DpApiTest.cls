@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'OS.Tests.DpApiTest'
 	classConstants: {}!
 OS.Tests.DpApiTest guid: (Core.GUID fromString: '{9165806d-c1a3-45e6-bf08-54ea3a21b04c}')!
 OS.Tests.DpApiTest comment: ''!
-!OS.Tests.DpApiTest categoriesForClass!Unclassified! !
 !OS.Tests.DpApiTest methodsFor!
 
 testProtectUnprotectData

@@ -123,4 +123,3 @@ Kernel.SharedPool subclass: #'OS.ShellConstants'
 OS.ShellConstants guid: (Core.GUID fromString: '{6a23b879-50e2-472a-a9e4-cafafa121755}')!
 OS.ShellConstants isNonInstantiable: true!
 OS.ShellConstants comment: ''!
-!OS.ShellConstants categoriesForClass!Unclassified! !

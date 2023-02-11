@@ -8,7 +8,6 @@ Database.Tests.DBConnectionTestResource subclass: #'Database.Tests.SQLServerNort
 	classConstants: {}!
 Database.Tests.SQLServerNorthwindDB guid: (Core.GUID fromString: '{2575aff5-9fad-4133-bf64-34ff8442f774}')!
 Database.Tests.SQLServerNorthwindDB comment: ''!
-!Database.Tests.SQLServerNorthwindDB categoriesForClass!Unclassified! !
 !Database.Tests.SQLServerNorthwindDB methodsFor!
 
 connectString

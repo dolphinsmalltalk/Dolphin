@@ -165,4 +165,3 @@ Kernel.Namespace subclass: #WinHttpServer
 WinHttpServer guid: (Core.GUID fromString: '{bc245d26-a611-4cfb-a915-5f87a6763326}')!
 WinHttpServer isNonInstantiable: true!
 WinHttpServer comment: ''!
-!WinHttpServer categoriesForClass!Unclassified! !

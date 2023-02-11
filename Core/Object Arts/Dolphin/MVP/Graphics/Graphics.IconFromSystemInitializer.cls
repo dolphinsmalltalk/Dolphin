@@ -8,7 +8,6 @@ Graphics.ImageInitializer subclass: #'Graphics.IconFromSystemInitializer'
 	classConstants: {}!
 Graphics.IconFromSystemInitializer guid: (Core.GUID fromString: '{b837eb81-e528-4a29-8c00-af531894b3ab}')!
 Graphics.IconFromSystemInitializer comment: ''!
-!Graphics.IconFromSystemInitializer categoriesForClass!Unclassified! !
 !Graphics.IconFromSystemInitializer methodsFor!
 
 = anObject

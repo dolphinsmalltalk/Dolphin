@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Kernel.Tests.STLClassCollectorTest'
 	classConstants: {}!
 Kernel.Tests.STLClassCollectorTest guid: (Core.GUID fromString: '{c73c341b-d268-45b7-8893-0219243afb8c}')!
 Kernel.Tests.STLClassCollectorTest comment: ''!
-!Kernel.Tests.STLClassCollectorTest categoriesForClass!Unclassified! !
 !Kernel.Tests.STLClassCollectorTest methodsFor!
 
 testClassAndBindingReference

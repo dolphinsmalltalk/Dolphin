@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'UI.Tests.MoenTreeViewTest'
 	classConstants: {}!
 UI.Tests.MoenTreeViewTest guid: (Core.GUID fromString: '{547f1350-3d63-4e8c-9ea3-e13001609555}')!
 UI.Tests.MoenTreeViewTest comment: 'SUnitBrowser openOnTestCase: self'!
-!UI.Tests.MoenTreeViewTest categoriesForClass!Unclassified! !
 !UI.Tests.MoenTreeViewTest methodsFor!
 
 assertChildNode: node

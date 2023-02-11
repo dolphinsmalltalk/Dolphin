@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Core.Tests.TimeStampTest'
 	classConstants: {}!
 Core.Tests.TimeStampTest guid: (Core.GUID fromString: '{152f98a5-e614-445f-bb23-7db28a4d01b8}')!
 Core.Tests.TimeStampTest comment: ''!
-!Core.Tests.TimeStampTest categoriesForClass!Unclassified! !
 !Core.Tests.TimeStampTest methodsFor!
 
 currentTimeStamp

@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Core.Tests.LinkTest'
 	classConstants: {}!
 Core.Tests.LinkTest guid: (Core.GUID fromString: '{761927ef-cc81-4a3e-b25a-0eef922c3370}')!
 Core.Tests.LinkTest comment: ''!
-!Core.Tests.LinkTest categoriesForClass!Unclassified! !
 !Core.Tests.LinkTest methodsFor!
 
 testClassNextLink

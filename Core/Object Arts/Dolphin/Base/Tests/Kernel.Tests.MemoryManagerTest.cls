@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Kernel.Tests.MemoryManagerTest'
 	classConstants: {}!
 Kernel.Tests.MemoryManagerTest guid: (Core.GUID fromString: '{088afee2-2321-4479-b639-9f5fdc0e4418}')!
 Kernel.Tests.MemoryManagerTest comment: ''!
-!Kernel.Tests.MemoryManagerTest categoriesForClass!Unclassified! !
 !Kernel.Tests.MemoryManagerTest methodsFor!
 
 testBytesUsedByObject

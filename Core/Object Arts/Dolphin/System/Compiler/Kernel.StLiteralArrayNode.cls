@@ -8,7 +8,6 @@ Kernel.AbstractLiteralArrayNode subclass: #'Kernel.StLiteralArrayNode'
 	classConstants: {}!
 Kernel.StLiteralArrayNode guid: (Core.GUID fromString: '{d0aec5f6-fbc7-4020-8545-2bca5eeb2bca}')!
 Kernel.StLiteralArrayNode comment: ''!
-!Kernel.StLiteralArrayNode categoriesForClass!Unclassified! !
 !Kernel.StLiteralArrayNode methodsFor!
 
 acceptVisitor: aProgramNodeVisitor

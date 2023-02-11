@@ -8,7 +8,6 @@ OS.COM.FinalizableStructure subclass: #'OS.COM.Record'
 	classConstants: {}!
 OS.COM.Record guid: (Core.GUID fromString: '{4c783c74-4472-47ad-901f-ceb9de79dd8b}')!
 OS.COM.Record comment: ''!
-!OS.COM.Record categoriesForClass!Unclassified! !
 !OS.COM.Record methodsFor!
 
 basicFree

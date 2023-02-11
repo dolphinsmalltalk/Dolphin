@@ -12,7 +12,6 @@ UI.Examples.WordPad comment: 'Wordpad is a <topShell> sample application which i
 Example:
 	Wordpad show
 '!
-!UI.Examples.WordPad categoriesForClass!Unclassified! !
 !UI.Examples.WordPad methodsFor!
 
 about

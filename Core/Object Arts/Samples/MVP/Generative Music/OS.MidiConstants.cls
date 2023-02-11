@@ -14,4 +14,3 @@ Kernel.SharedPool subclass: #'OS.MidiConstants'
 OS.MidiConstants guid: (Core.GUID fromString: '{a3702d55-60b0-4480-9bf1-074fed5c6f11}')!
 OS.MidiConstants isNonInstantiable: true!
 OS.MidiConstants comment: ''!
-!OS.MidiConstants categoriesForClass!Unclassified! !

@@ -9,7 +9,6 @@ Graphics.Tests.ImageTest subclass: #'Graphics.Tests.AbstractBitmapTest'
 Graphics.Tests.AbstractBitmapTest guid: (Core.GUID fromString: '{298209a8-ba31-4a36-8c59-550f0222918b}')!
 Graphics.Tests.AbstractBitmapTest isNonInstantiable: true!
 Graphics.Tests.AbstractBitmapTest comment: ''!
-!Graphics.Tests.AbstractBitmapTest categoriesForClass!Unclassified! !
 !Graphics.Tests.AbstractBitmapTest methodsFor!
 
 canonicalInstance

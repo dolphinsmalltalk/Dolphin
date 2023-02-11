@@ -9,7 +9,6 @@ Core.Tests.DolphinTest subclass: #'Kernel.Tests.StTokenTest'
 Kernel.Tests.StTokenTest guid: (Core.GUID fromString: '{944596e9-aab5-4b72-85ee-a051a4913fd7}')!
 Kernel.Tests.StTokenTest isNonInstantiable: true!
 Kernel.Tests.StTokenTest comment: ''!
-!Kernel.Tests.StTokenTest categoriesForClass!Unclassified! !
 !Kernel.Tests.StTokenTest methodsFor!
 
 subjectClass

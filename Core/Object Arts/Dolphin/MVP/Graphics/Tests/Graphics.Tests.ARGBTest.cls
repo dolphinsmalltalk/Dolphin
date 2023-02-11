@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Graphics.Tests.ARGBTest'
 	classConstants: {}!
 Graphics.Tests.ARGBTest guid: (Core.GUID fromString: '{b9d1b1c9-fb62-46e9-a7d5-6807f64e5314}')!
 Graphics.Tests.ARGBTest comment: ''!
-!Graphics.Tests.ARGBTest categoriesForClass!Unclassified! !
 !Graphics.Tests.ARGBTest methodsFor!
 
 assertComponents: anArray isCode: anInteger

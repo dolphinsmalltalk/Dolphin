@@ -8,7 +8,6 @@ AbstractSocketTest subclass: #'Net.Tests.SocketTest'
 	classConstants: {}!
 Net.Tests.SocketTest guid: (Core.GUID fromString: '{25407553-d303-4d50-ad3d-b05b28a27c47}')!
 Net.Tests.SocketTest comment: ''!
-!Net.Tests.SocketTest categoriesForClass!Unclassified! !
 !Net.Tests.SocketTest methodsFor!
 
 clientSocketClass

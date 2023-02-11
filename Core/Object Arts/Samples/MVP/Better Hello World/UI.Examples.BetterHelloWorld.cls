@@ -8,7 +8,6 @@ UI.Shell subclass: #'UI.Examples.BetterHelloWorld'
 	classConstants: {}!
 UI.Examples.BetterHelloWorld guid: (Core.GUID fromString: '{00e258da-1b1a-42c4-89c3-e3ed1983a682}')!
 UI.Examples.BetterHelloWorld comment: 'This is the presenter for the Better Hello World example package. The full sample shows an MVP "triad" of elements consisting of a ValueModel, a composite ShellView (drawn with the ViewComposer) and this presenter class that ties all the pieces together. See the package comment for more details and links to tutorial videos that explain how this example was put together.'!
-!UI.Examples.BetterHelloWorld categoriesForClass!Unclassified! !
 !UI.Examples.BetterHelloWorld methodsFor!
 
 createComponents

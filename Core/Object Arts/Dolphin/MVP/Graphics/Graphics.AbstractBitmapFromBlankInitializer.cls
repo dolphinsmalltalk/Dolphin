@@ -9,7 +9,6 @@ Graphics.ImageInitializer subclass: #'Graphics.AbstractBitmapFromBlankInitialize
 Graphics.AbstractBitmapFromBlankInitializer guid: (Core.GUID fromString: '{aaa7476f-f764-4f83-91b9-cb518458e508}')!
 Graphics.AbstractBitmapFromBlankInitializer isNonInstantiable: true!
 Graphics.AbstractBitmapFromBlankInitializer comment: ''!
-!Graphics.AbstractBitmapFromBlankInitializer categoriesForClass!Unclassified! !
 !Graphics.AbstractBitmapFromBlankInitializer methodsFor!
 
 depth: anInteger

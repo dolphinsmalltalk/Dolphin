@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Kernel.Tests.CompiledExpressionTest'
 	classConstants: {}!
 Kernel.Tests.CompiledExpressionTest guid: (Core.GUID fromString: '{1fa499df-b290-49ea-9f78-1babcc5a62fd}')!
 Kernel.Tests.CompiledExpressionTest comment: ''!
-!Kernel.Tests.CompiledExpressionTest categoriesForClass!Unclassified! !
 !Kernel.Tests.CompiledExpressionTest methodsFor!
 
 testAsDebugMethodNoCustomEnvironment

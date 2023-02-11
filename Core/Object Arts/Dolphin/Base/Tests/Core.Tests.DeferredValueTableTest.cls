@@ -8,7 +8,6 @@ Core.Tests.LookupTableTest subclass: #'Core.Tests.DeferredValueTableTest'
 	classConstants: {}!
 Core.Tests.DeferredValueTableTest guid: (Core.GUID fromString: '{f7404400-6b8f-4fd7-ae47-8018e8aacb30}')!
 Core.Tests.DeferredValueTableTest comment: ''!
-!Core.Tests.DeferredValueTableTest categoriesForClass!Unclassified! !
 !Core.Tests.DeferredValueTableTest methodsFor!
 
 assimilate: anObject

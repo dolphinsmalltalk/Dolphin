@@ -8,7 +8,6 @@ Graphics.ImageInitializer subclass: #'Graphics.BitmapFromIconInitializer'
 	classConstants: {}!
 Graphics.BitmapFromIconInitializer guid: (Core.GUID fromString: '{cbd63799-b451-40d7-bd4e-a64a38e1860c}')!
 Graphics.BitmapFromIconInitializer comment: ''!
-!Graphics.BitmapFromIconInitializer categoriesForClass!Unclassified! !
 !Graphics.BitmapFromIconInitializer methodsFor!
 
 createImage: aBitmap extent: aPoint

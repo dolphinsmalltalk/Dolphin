@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Core.Tests.DateTest'
 	classConstants: {}!
 Core.Tests.DateTest guid: (Core.GUID fromString: '{b7ce73f6-9c8d-428d-8aae-86653eb3cf12}')!
 Core.Tests.DateTest comment: ''!
-!Core.Tests.DateTest categoriesForClass!Unclassified! !
 !Core.Tests.DateTest methodsFor!
 
 testFromDays

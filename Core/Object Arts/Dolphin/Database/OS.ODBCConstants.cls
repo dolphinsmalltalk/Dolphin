@@ -1374,4 +1374,3 @@ Kernel.SharedPool subclass: #'OS.ODBCConstants'
 OS.ODBCConstants guid: (Core.GUID fromString: '{8829338e-6d5a-47f4-bcd7-8574c58cd356}')!
 OS.ODBCConstants isNonInstantiable: true!
 OS.ODBCConstants comment: ''!
-!OS.ODBCConstants categoriesForClass!Unclassified! !

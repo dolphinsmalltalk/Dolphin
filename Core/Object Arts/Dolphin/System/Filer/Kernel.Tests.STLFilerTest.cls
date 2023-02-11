@@ -8,7 +8,6 @@ Kernel.Tests.AbstractSTBFilerTest subclass: #'Kernel.Tests.STLFilerTest'
 	classConstants: {}!
 Kernel.Tests.STLFilerTest guid: (Core.GUID fromString: '{5f151d4d-927e-4254-aed9-c51056aef954}')!
 Kernel.Tests.STLFilerTest comment: ''!
-!Kernel.Tests.STLFilerTest categoriesForClass!Unclassified! !
 !Kernel.Tests.STLFilerTest methodsFor!
 
 checkSimpleReadWriteOf: value 

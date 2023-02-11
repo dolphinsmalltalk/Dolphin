@@ -53,4 +53,3 @@ Kernel.SharedPool subclass: #'OS.COM.StructuredStorageConstants'
 OS.COM.StructuredStorageConstants guid: (Core.GUID fromString: '{3ed0417a-f038-403d-abb9-4bf66a49a04d}')!
 OS.COM.StructuredStorageConstants isNonInstantiable: true!
 OS.COM.StructuredStorageConstants comment: ''!
-!OS.COM.StructuredStorageConstants categoriesForClass!Unclassified! !

@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'OS.Tests.RegistrySerializerTest'
 	classConstants: {}!
 OS.Tests.RegistrySerializerTest guid: (Core.GUID fromString: '{dba1e292-4a5c-4484-b1d9-c3151b1df7c2}')!
 OS.Tests.RegistrySerializerTest comment: ''!
-!OS.Tests.RegistrySerializerTest categoriesForClass!Unclassified! !
 !OS.Tests.RegistrySerializerTest methodsFor!
 
 keyPath

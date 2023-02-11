@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Graphics.Tests.ColorTest'
 	classConstants: {}!
 Graphics.Tests.ColorTest guid: (Core.GUID fromString: '{7b5098b5-74d7-46c5-99de-ae2e0558fe5c}')!
 Graphics.Tests.ColorTest comment: ''!
-!Graphics.Tests.ColorTest categoriesForClass!Unclassified! !
 !Graphics.Tests.ColorTest methodsFor!
 
 shouldRaiseNotARealColorError: aNiladicValuable

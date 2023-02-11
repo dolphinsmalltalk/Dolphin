@@ -8,7 +8,6 @@ Graphics.Tests.VirtualColorTest subclass: #'Graphics.Tests.ThemeColorTest'
 	classConstants: {}!
 Graphics.Tests.ThemeColorTest guid: (Core.GUID fromString: '{9ed13d02-48b3-41cc-a5be-b5b070af8b53}')!
 Graphics.Tests.ThemeColorTest comment: ''!
-!Graphics.Tests.ThemeColorTest categoriesForClass!Unclassified! !
 !Graphics.Tests.ThemeColorTest methodsFor!
 
 testNameActualColor

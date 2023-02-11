@@ -38,4 +38,3 @@ Kernel.SharedPool subclass: #'OS.UpDownControlConstants'
 OS.UpDownControlConstants guid: (Core.GUID fromString: '{43828364-486d-4e85-b11c-ab07f6b6c5b6}')!
 OS.UpDownControlConstants isNonInstantiable: true!
 OS.UpDownControlConstants comment: ''!
-!OS.UpDownControlConstants categoriesForClass!Unclassified! !

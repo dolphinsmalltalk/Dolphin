@@ -8,7 +8,6 @@ OS.COM.InterfaceImplementation subclass: #'OS.COM.PropertyBag'
 	classConstants: {}!
 OS.COM.PropertyBag guid: (Core.GUID fromString: '{9c956c61-af27-11d3-b376-080046056106}')!
 OS.COM.PropertyBag comment: ''!
-!OS.COM.PropertyBag categoriesForClass!Unclassified! !
 !OS.COM.PropertyBag methodsFor!
 
 asVariant

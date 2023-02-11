@@ -8,7 +8,6 @@ OS.IniFileAbstract subclass: #'OS.IniFile'
 	classConstants: {}!
 OS.IniFile guid: (Core.GUID fromString: '{c373c097-bfde-42ca-968c-28008b7eff49}')!
 OS.IniFile comment: 'Implements <abstractDictionary> over a Windows .ini file'!
-!OS.IniFile categoriesForClass!Unclassified! !
 !OS.IniFile methodsFor!
 
 at: aString ifAbsent: aNiladicValuable

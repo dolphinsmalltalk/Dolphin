@@ -10,7 +10,6 @@ MSXML.DOMParseError guid: (Core.GUID fromString: '{80a8e9d9-c230-4610-8994-72021
 MSXML.DOMParseError comment: 'DOMParseError is an <Exception> class to wrap the IXMLDOMParseError interface from the Microsoft XML DOM. 
 
 Note that these exceptions are not raised automatically when the parsing of an XML document fails, e.g. in a call to IXMLDOMDocument>>load:, but must be raised (if desired) when the method returns false to indicate a failure.'!
-!MSXML.DOMParseError categoriesForClass!Unclassified! !
 !MSXML.DOMParseError methodsFor!
 
 _descriptionArguments

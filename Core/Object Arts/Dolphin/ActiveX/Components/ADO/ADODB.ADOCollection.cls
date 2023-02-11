@@ -12,7 +12,6 @@ All ADO interface methods that return a collection of some sort have been modifi
 
 Instance Variables:
 	interface		<ADO_Collection> subinstance.'!
-!ADODB.ADOCollection categoriesForClass!Unclassified! !
 !ADODB.ADOCollection methodsFor!
 
 add: newElement

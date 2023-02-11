@@ -8,7 +8,6 @@ Graphics.Tests.VirtualColorTest subclass: #'Graphics.Tests.PluggableColorTest'
 	classConstants: {}!
 Graphics.Tests.PluggableColorTest guid: (Core.GUID fromString: '{45e67cc5-eb59-46fa-9c66-7bd0cd8335d8}')!
 Graphics.Tests.PluggableColorTest comment: ''!
-!Graphics.Tests.PluggableColorTest categoriesForClass!Unclassified! !
 !Graphics.Tests.PluggableColorTest methodsFor!
 
 testWith

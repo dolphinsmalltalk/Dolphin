@@ -8,7 +8,6 @@ Graphics.AbstractBitmapFromBlankInitializer subclass: #'Graphics.BitmapFromBlank
 	classConstants: {}!
 Graphics.BitmapFromBlankInitializer guid: (Core.GUID fromString: '{648adf74-5ff3-466d-af73-9cd905f08616}')!
 Graphics.BitmapFromBlankInitializer comment: ''!
-!Graphics.BitmapFromBlankInitializer categoriesForClass!Unclassified! !
 !Graphics.BitmapFromBlankInitializer methodsFor!
 
 bytes

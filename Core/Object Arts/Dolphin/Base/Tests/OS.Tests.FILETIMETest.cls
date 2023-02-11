@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'OS.Tests.FILETIMETest'
 	classConstants: {}!
 OS.Tests.FILETIMETest guid: (Core.GUID fromString: '{60160261-ed86-485b-834c-ef305dad3be9}')!
 OS.Tests.FILETIMETest comment: ''!
-!OS.Tests.FILETIMETest categoriesForClass!Unclassified! !
 !OS.Tests.FILETIMETest methodsFor!
 
 assertFromIntegerInvertible: anInteger

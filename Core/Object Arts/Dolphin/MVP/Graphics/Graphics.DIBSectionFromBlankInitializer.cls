@@ -8,7 +8,6 @@ Graphics.AbstractBitmapFromBlankInitializer subclass: #'Graphics.DIBSectionFromB
 	classConstants: {}!
 Graphics.DIBSectionFromBlankInitializer guid: (Core.GUID fromString: '{0953f281-a3a6-4a0d-be96-7f12bd1fc826}')!
 Graphics.DIBSectionFromBlankInitializer comment: ''!
-!Graphics.DIBSectionFromBlankInitializer categoriesForClass!Unclassified! !
 !Graphics.DIBSectionFromBlankInitializer methodsFor!
 
 createImage: anImage extent: aPoint

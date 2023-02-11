@@ -11,7 +11,6 @@ Database.Tests.DBConnectionTest isNonInstantiable: true!
 Database.Tests.DBConnectionTest comment: 'SUnitBrowser openOnTestCase: self.
 
 If these tests fail make sure that Tests\NWind.mdb is available and NOT write protected.'!
-!Database.Tests.DBConnectionTest categoriesForClass!Unclassified! !
 !Database.Tests.DBConnectionTest methodsFor!
 
 databaseResource

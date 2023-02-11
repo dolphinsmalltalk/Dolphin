@@ -8,7 +8,6 @@ Database.Tests.DBConnectionTest subclass: #'Database.Tests.SQLServerDBTest'
 	classConstants: {}!
 Database.Tests.SQLServerDBTest guid: (Core.GUID fromString: '{375baeed-7973-4ad7-bb24-296438e82792}')!
 Database.Tests.SQLServerDBTest comment: ''!
-!Database.Tests.SQLServerDBTest categoriesForClass!Unclassified! !
 !Database.Tests.SQLServerDBTest methodsFor!
 
 databaseResource

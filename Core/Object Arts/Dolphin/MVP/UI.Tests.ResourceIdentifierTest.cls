@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'UI.Tests.ResourceIdentifierTest'
 	classConstants: {}!
 UI.Tests.ResourceIdentifierTest guid: (Core.GUID fromString: '{1e647bf5-1b62-4e30-af83-80b9bfbe65ad}')!
 UI.Tests.ResourceIdentifierTest comment: ''!
-!UI.Tests.ResourceIdentifierTest categoriesForClass!Unclassified! !
 !UI.Tests.ResourceIdentifierTest methodsFor!
 
 createResourceNamed: aString for: aView on: aPresenterClass

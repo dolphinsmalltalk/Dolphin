@@ -28,7 +28,6 @@ Class Variables:
 	Current			<SystemMetrics>. Singleton instance.
 
 '!
-!OS.SystemMetrics categoriesForClass!Unclassified! !
 !OS.SystemMetrics methodsFor!
 
 borderExtent

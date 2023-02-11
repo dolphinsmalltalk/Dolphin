@@ -8,7 +8,6 @@ Core.Tests.PositionableStreamTest subclass: #'Core.Tests.ReadStreamTest'
 	classConstants: {}!
 Core.Tests.ReadStreamTest guid: (Core.GUID fromString: '{29dd0ab5-9ebf-496f-aef0-ffc5ba1c2017}')!
 Core.Tests.ReadStreamTest comment: ''!
-!Core.Tests.ReadStreamTest categoriesForClass!Unclassified! !
 !Core.Tests.ReadStreamTest methodsFor!
 
 streamClass

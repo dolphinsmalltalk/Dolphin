@@ -16,4 +16,3 @@ Kernel.SharedPool subclass: #'OS.ODBCRetCodes'
 OS.ODBCRetCodes guid: (Core.GUID fromString: '{1d2958b4-30dc-440a-b023-ba7589e87908}')!
 OS.ODBCRetCodes isNonInstantiable: true!
 OS.ODBCRetCodes comment: ''!
-!OS.ODBCRetCodes categoriesForClass!Unclassified! !

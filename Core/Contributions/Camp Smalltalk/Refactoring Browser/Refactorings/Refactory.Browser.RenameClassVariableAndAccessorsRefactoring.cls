@@ -8,7 +8,6 @@ Refactory.Browser.RenameClassVariableRefactoring subclass: #'Refactory.Browser.R
 	classConstants: {}!
 Refactory.Browser.RenameClassVariableAndAccessorsRefactoring guid: (Core.GUID fromString: '{57103af9-2346-41c7-b725-60356588c950}')!
 Refactory.Browser.RenameClassVariableAndAccessorsRefactoring comment: ''!
-!Refactory.Browser.RenameClassVariableAndAccessorsRefactoring categoriesForClass!Unclassified! !
 !Refactory.Browser.RenameClassVariableAndAccessorsRefactoring methodsFor!
 
 initializeAccessorsRefactoring

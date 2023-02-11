@@ -179,4 +179,3 @@ Kernel.SharedPool subclass: #'OS.ToolbarConstants'
 OS.ToolbarConstants guid: (Core.GUID fromString: '{b3db8126-a20b-4003-9446-48a9f5b8c3af}')!
 OS.ToolbarConstants isNonInstantiable: true!
 OS.ToolbarConstants comment: ''!
-!OS.ToolbarConstants categoriesForClass!Unclassified! !

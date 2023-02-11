@@ -8,7 +8,6 @@ Kernel.StLiteralNode subclass: #'Kernel.StLiteralValueNode'
 	classConstants: {}!
 Kernel.StLiteralValueNode guid: (Core.GUID fromString: '{93764089-2da7-47ec-8bee-95e969f27b94}')!
 Kernel.StLiteralValueNode comment: ''!
-!Kernel.StLiteralValueNode categoriesForClass!Unclassified! !
 !Kernel.StLiteralValueNode methodsFor!
 
 = anObject

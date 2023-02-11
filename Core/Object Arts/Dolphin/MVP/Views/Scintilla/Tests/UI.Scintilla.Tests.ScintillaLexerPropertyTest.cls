@@ -8,7 +8,6 @@ UI.Scintilla.Tests.ScintillaLexerMetadataTest subclass: #'UI.Scintilla.Tests.Sci
 	classConstants: {}!
 UI.Scintilla.Tests.ScintillaLexerPropertyTest guid: (Core.GUID fromString: '{1b677d4d-c0bc-462a-8bc4-8a83f2b32b67}')!
 UI.Scintilla.Tests.ScintillaLexerPropertyTest comment: ''!
-!UI.Scintilla.Tests.ScintillaLexerPropertyTest categoriesForClass!Unclassified! !
 !UI.Scintilla.Tests.ScintillaLexerPropertyTest methodsFor!
 
 testViewId

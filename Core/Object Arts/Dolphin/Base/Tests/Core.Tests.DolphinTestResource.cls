@@ -9,7 +9,6 @@ XProgramming.SUnit.TestResource subclass: #'Core.Tests.DolphinTestResource'
 Core.Tests.DolphinTestResource guid: (Core.GUID fromString: '{1b75ff3b-eede-45ce-9144-898de51c1f3e}')!
 Core.Tests.DolphinTestResource isNonInstantiable: true!
 Core.Tests.DolphinTestResource comment: ''!
-!Core.Tests.DolphinTestResource categoriesForClass!Unclassified! !
 !Core.Tests.DolphinTestResource methodsFor!
 
 createPackage: aString

@@ -8,7 +8,6 @@ UI.Tests.AbstractKeyboardTest subclass: #'UI.Tests.AcceleratorTableTest'
 	classConstants: {}!
 UI.Tests.AcceleratorTableTest guid: (Core.GUID fromString: '{ffc00c13-8da5-4b75-b82d-f96bba254efe}')!
 UI.Tests.AcceleratorTableTest comment: ''!
-!UI.Tests.AcceleratorTableTest categoriesForClass!Unclassified! !
 !UI.Tests.AcceleratorTableTest methodsFor!
 
 numMultCode

@@ -15,7 +15,6 @@ Instance Variables:
 	guid		<GUID> of the object being loaded (e.g. CLSID).
 
 '!
-!OS.COM.PropertyBagErrorLog categoriesForClass!Unclassified! !
 !OS.COM.PropertyBagErrorLog methodsFor!
 
 AddError: pszPropName pExcepInfo: pExcepInfo 

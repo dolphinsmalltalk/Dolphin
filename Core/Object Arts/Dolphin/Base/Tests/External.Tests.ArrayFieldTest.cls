@@ -8,7 +8,6 @@ External.Tests.ExternalFieldTest subclass: #'External.Tests.ArrayFieldTest'
 	classConstants: {}!
 External.Tests.ArrayFieldTest guid: (Core.GUID fromString: '{56f5e127-bdcd-4629-863f-d4f002b58b46}')!
 External.Tests.ArrayFieldTest comment: ''!
-!External.Tests.ArrayFieldTest categoriesForClass!Unclassified! !
 !External.Tests.ArrayFieldTest methodsFor!
 
 testReadFrom

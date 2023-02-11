@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Core.Tests.DelayTest'
 	classConstants: {}!
 Core.Tests.DelayTest guid: (Core.GUID fromString: '{0b7c6875-1051-4b80-b137-cd1c02754bcd}')!
 Core.Tests.DelayTest comment: ''!
-!Core.Tests.DelayTest categoriesForClass!Unclassified! !
 !Core.Tests.DelayTest methodsFor!
 
 expectDelay: expectedDuration for: nowMicroseconds

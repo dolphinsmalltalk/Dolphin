@@ -12,7 +12,6 @@ Graphics.ColorNone comment: '`ColorNone` is the special `ColorRef` which represe
 `ColorNone`s singleton instance is accessed using the expression `Color transparent`.
 
 The superclass `code` instance variable has the value `Win32Constants.CLR_NONE`.'!
-!Graphics.ColorNone categoriesForClass!Unclassified! !
 !Graphics.ColorNone methodsFor!
 
 alpha

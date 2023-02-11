@@ -28,4 +28,3 @@ Kernel.SharedPool subclass: #'OS.WinCryptConstants'
 OS.WinCryptConstants guid: (Core.GUID fromString: '{0766bf98-26e5-46e9-936f-814d23452c3a}')!
 OS.WinCryptConstants isNonInstantiable: true!
 OS.WinCryptConstants comment: ''!
-!OS.WinCryptConstants categoriesForClass!Unclassified! !

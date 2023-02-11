@@ -8,7 +8,6 @@ Kernel.Tests.AbstractParserErrorTest subclass: #'Kernel.Tests.ParserErrorTest'
 	classConstants: {}!
 Kernel.Tests.ParserErrorTest guid: (Core.GUID fromString: '{67c4b011-40fa-43b7-83a4-cd8d616c16d0}')!
 Kernel.Tests.ParserErrorTest comment: ''!
-!Kernel.Tests.ParserErrorTest categoriesForClass!Unclassified! !
 !Kernel.Tests.ParserErrorTest methodsFor!
 
 ifNil: aBlock

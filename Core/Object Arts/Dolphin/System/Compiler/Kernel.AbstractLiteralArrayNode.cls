@@ -9,7 +9,6 @@ Kernel.StLiteralNode subclass: #'Kernel.AbstractLiteralArrayNode'
 Kernel.AbstractLiteralArrayNode guid: (Core.GUID fromString: '{96fc9b84-f4c6-403b-b79a-a316c89abbaf}')!
 Kernel.AbstractLiteralArrayNode isNonInstantiable: true!
 Kernel.AbstractLiteralArrayNode comment: ''!
-!Kernel.AbstractLiteralArrayNode categoriesForClass!Unclassified! !
 !Kernel.AbstractLiteralArrayNode methodsFor!
 
 = anObject

@@ -15,7 +15,6 @@ OS.COM.OLEStructure subclass: #'OS.COM.PICTDESC'
 	}!
 OS.COM.PICTDESC guid: (Core.GUID fromString: '{a1a65a80-aef9-11d3-b376-080046056106}')!
 OS.COM.PICTDESC comment: ''!
-!OS.COM.PICTDESC categoriesForClass!Unclassified! !
 !OS.COM.PICTDESC methodsFor!
 
 dw1

@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'UI.Tests.ClipboardTest'
 	classConstants: {}!
 UI.Tests.ClipboardTest guid: (Core.GUID fromString: '{ea86f353-088f-4e28-b4db-bdb8b09e5e82}')!
 UI.Tests.ClipboardTest comment: ''!
-!UI.Tests.ClipboardTest categoriesForClass!Unclassified! !
 !UI.Tests.ClipboardTest methodsFor!
 
 sampleAnsiString

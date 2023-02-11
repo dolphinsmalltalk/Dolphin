@@ -18,7 +18,6 @@ ProfStef goOn: MyOwnTutorial
 
 To see a table of contents with all defined tutorials:
 ProfStef contents'!
-!Tools.ProfStef categoriesForClass!Unclassified! !
 !Tools.ProfStef methodsFor!
 
 onViewDestroyed

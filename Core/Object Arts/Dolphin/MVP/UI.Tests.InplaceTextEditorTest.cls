@@ -8,7 +8,6 @@ UI.Tests.PresenterTest subclass: #'UI.Tests.InplaceTextEditorTest'
 	classConstants: {}!
 UI.Tests.InplaceTextEditorTest guid: (Core.GUID fromString: '{f5c0a24d-9521-4497-9801-efc620bbaf9a}')!
 UI.Tests.InplaceTextEditorTest comment: ''!
-!UI.Tests.InplaceTextEditorTest categoriesForClass!Unclassified! !
 !UI.Tests.InplaceTextEditorTest methodsFor!
 
 classToTest

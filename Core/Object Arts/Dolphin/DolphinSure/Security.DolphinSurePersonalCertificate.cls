@@ -8,7 +8,6 @@ Security.DolphinSureCertificate subclass: #'Security.DolphinSurePersonalCertific
 	classConstants: {}!
 Security.DolphinSurePersonalCertificate guid: (Core.GUID fromString: '{cd23937f-fc74-43fd-b678-bebeac42ee59}')!
 Security.DolphinSurePersonalCertificate comment: ''!
-!Security.DolphinSurePersonalCertificate categoriesForClass!Unclassified! !
 !Security.DolphinSurePersonalCertificate methodsFor!
 
 backgroundImageFile

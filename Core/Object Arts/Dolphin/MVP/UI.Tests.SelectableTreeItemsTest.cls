@@ -9,7 +9,6 @@ UI.Tests.SelectableItemsTest subclass: #'UI.Tests.SelectableTreeItemsTest'
 UI.Tests.SelectableTreeItemsTest guid: (Core.GUID fromString: '{cccec658-6b6a-4d9f-a9ac-2701da23a46e}')!
 UI.Tests.SelectableTreeItemsTest isNonInstantiable: true!
 UI.Tests.SelectableTreeItemsTest comment: ''!
-!UI.Tests.SelectableTreeItemsTest categoriesForClass!Unclassified! !
 !UI.Tests.SelectableTreeItemsTest methodsFor!
 
 addAllObjects: objects 

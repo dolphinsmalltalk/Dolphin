@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'OS.COM.Tests.TypeLibraryAnalyzerTest'
 	classConstants: {}!
 OS.COM.Tests.TypeLibraryAnalyzerTest guid: (Core.GUID fromString: '{64fc0f8b-7d1a-4a7f-9a9c-3fdbf7bfdae5}')!
 OS.COM.Tests.TypeLibraryAnalyzerTest comment: 'If these tests fail make sure you have registered TestTypelib by running regsvr32 on Tests\TLATest\Debug\TLATest.dll'!
-!OS.COM.Tests.TypeLibraryAnalyzerTest categoriesForClass!Unclassified! !
 !OS.COM.Tests.TypeLibraryAnalyzerTest methodsFor!
 
 setUp

@@ -9,7 +9,6 @@ Kernel.Tests.AbstractNamespaceTest subclass: #'Kernel.Tests.SystemNamespaceTest'
 Kernel.Tests.SystemNamespaceTest guid: (Core.GUID fromString: '{5a72a2ef-84cc-4954-a159-3ae6bc041f25}')!
 Kernel.Tests.SystemNamespaceTest isNonInstantiable: true!
 Kernel.Tests.SystemNamespaceTest comment: ''!
-!Kernel.Tests.SystemNamespaceTest categoriesForClass!Unclassified! !
 !Kernel.Tests.SystemNamespaceTest methodsFor!
 
 canonicalSubject

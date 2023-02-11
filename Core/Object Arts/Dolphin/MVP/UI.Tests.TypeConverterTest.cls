@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'UI.Tests.TypeConverterTest'
 	classConstants: {}!
 UI.Tests.TypeConverterTest guid: (Core.GUID fromString: '{a68a6616-456e-4a7f-85e0-50d168d1a828}')!
 UI.Tests.TypeConverterTest comment: ''!
-!UI.Tests.TypeConverterTest categoriesForClass!Unclassified! !
 !UI.Tests.TypeConverterTest methodsFor!
 
 setUp

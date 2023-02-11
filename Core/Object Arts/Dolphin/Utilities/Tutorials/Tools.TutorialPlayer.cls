@@ -8,7 +8,6 @@ UI.Shell subclass: #'Tools.TutorialPlayer'
 	classConstants: {}!
 Tools.TutorialPlayer guid: (Core.GUID fromString: '{0ba31b85-7347-43e6-87d6-5f582babde3d}')!
 Tools.TutorialPlayer comment: 'I can navigate through an AbstractTutorial subclass. With #next and #previous you can go forward and backward through the tutorial.'!
-!Tools.TutorialPlayer categoriesForClass!Unclassified! !
 !Tools.TutorialPlayer methodsFor!
 
 createComponents

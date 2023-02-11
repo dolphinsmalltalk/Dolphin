@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'External.Tests.AddressTest'
 	classConstants: {}!
 External.Tests.AddressTest guid: (Core.GUID fromString: '{55d8e17d-e5d8-4060-b20d-34dd8826180f}')!
 External.Tests.AddressTest comment: ''!
-!External.Tests.AddressTest categoriesForClass!Unclassified! !
 !External.Tests.AddressTest methodsFor!
 
 stringFromAddressTestClass: aStringClass

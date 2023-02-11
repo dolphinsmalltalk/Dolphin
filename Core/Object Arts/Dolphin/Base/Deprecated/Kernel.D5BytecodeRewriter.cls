@@ -8,7 +8,6 @@ Core.Object subclass: #'Kernel.D5BytecodeRewriter'
 	classConstants: {}!
 Kernel.D5BytecodeRewriter guid: (Core.GUID fromString: '{37e0086f-1ccb-4fd0-a9c1-ef51056facb4}')!
 Kernel.D5BytecodeRewriter comment: '`D5BytecodeRewriter` is a private system utility class for upgrading Dolphin 5 (pre-block closure) methods stored in STB files to be compatible with Dolphin 6 and later. Note that the translation is far from optimal, and where possible methods (blocks) saved in resources should be recompiled.'!
-!Kernel.D5BytecodeRewriter categoriesForClass!Unclassified! !
 !Kernel.D5BytecodeRewriter methodsFor!
 
 assemble

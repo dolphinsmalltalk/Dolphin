@@ -29,4 +29,3 @@ Kernel.SharedPool subclass: #'OS.MMFConstants'
 OS.MMFConstants guid: (Core.GUID fromString: '{f837fc43-e1a2-43b0-9726-37c308613aa0}')!
 OS.MMFConstants isNonInstantiable: true!
 OS.MMFConstants comment: ''!
-!OS.MMFConstants categoriesForClass!Unclassified! !

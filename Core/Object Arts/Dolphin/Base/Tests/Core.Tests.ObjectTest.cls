@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Core.Tests.ObjectTest'
 	classConstants: {}!
 Core.Tests.ObjectTest guid: (Core.GUID fromString: '{0699f873-06b5-439d-adcb-6642d40c7360}')!
 Core.Tests.ObjectTest comment: ''!
-!Core.Tests.ObjectTest categoriesForClass!Unclassified! !
 !Core.Tests.ObjectTest methodsFor!
 
 newEventSource

@@ -8,7 +8,6 @@ Core.Tests.ArrayedCollectionTest subclass: #'Core.Tests.ByteArrayTest'
 	classConstants: {}!
 Core.Tests.ByteArrayTest guid: (Core.GUID fromString: '{f83d3bb0-c4b4-4f92-9d89-fd89e6e25da1}')!
 Core.Tests.ByteArrayTest comment: ''!
-!Core.Tests.ByteArrayTest categoriesForClass!Unclassified! !
 !Core.Tests.ByteArrayTest methodsFor!
 
 assimilate: anObject 

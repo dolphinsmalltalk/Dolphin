@@ -9,7 +9,6 @@ Core.Tests.CollectionTest subclass: #'Core.Tests.AbstractDictionaryTest'
 Core.Tests.AbstractDictionaryTest guid: (Core.GUID fromString: '{5d8b76ad-dcc1-44ff-8a2a-cf5e50c4b434}')!
 Core.Tests.AbstractDictionaryTest isNonInstantiable: true!
 Core.Tests.AbstractDictionaryTest comment: ''!
-!Core.Tests.AbstractDictionaryTest categoriesForClass!Unclassified! !
 !Core.Tests.AbstractDictionaryTest methodsFor!
 
 assertCommutativelyEqual: aDictionary other: anotherDictionary

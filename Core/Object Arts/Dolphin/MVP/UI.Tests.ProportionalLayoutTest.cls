@@ -8,7 +8,6 @@ UI.Tests.LayoutManagerTest subclass: #'UI.Tests.ProportionalLayoutTest'
 	classConstants: {}!
 UI.Tests.ProportionalLayoutTest guid: (Core.GUID fromString: '{f4808f47-d710-405a-85b3-374be13718e9}')!
 UI.Tests.ProportionalLayoutTest comment: ''!
-!UI.Tests.ProportionalLayoutTest categoriesForClass!Unclassified! !
 !UI.Tests.ProportionalLayoutTest methodsFor!
 
 layoutManagerClass

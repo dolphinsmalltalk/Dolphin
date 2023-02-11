@@ -9,7 +9,6 @@ External.Memory variableByteSubclass: #'OS.WindowsShellMemory'
 OS.WindowsShellMemory guid: (Core.GUID fromString: '{7d4a2961-9f62-11d3-b376-080046056106}')!
 OS.WindowsShellMemory isIndirection: true!
 OS.WindowsShellMemory comment: ''!
-!OS.WindowsShellMemory categoriesForClass!Unclassified! !
 !OS.WindowsShellMemory class methodsFor!
 
 allocator

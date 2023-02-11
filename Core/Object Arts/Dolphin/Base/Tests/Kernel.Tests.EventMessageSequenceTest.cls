@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Kernel.Tests.EventMessageSequenceTest'
 	classConstants: {}!
 Kernel.Tests.EventMessageSequenceTest guid: (Core.GUID fromString: '{da236161-671a-45ed-95d6-c4c21c41e462}')!
 Kernel.Tests.EventMessageSequenceTest comment: ''!
-!Kernel.Tests.EventMessageSequenceTest categoriesForClass!Unclassified! !
 !Kernel.Tests.EventMessageSequenceTest methodsFor!
 
 testMessages

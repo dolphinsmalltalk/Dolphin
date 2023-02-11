@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'OS.COM.Tests.IDispatchTest'
 	classConstants: {}!
 OS.COM.Tests.IDispatchTest guid: (Core.GUID fromString: '{5f6be15f-132a-4eef-b9cb-960a4d8cab7c}')!
 OS.COM.Tests.IDispatchTest comment: ''!
-!OS.COM.Tests.IDispatchTest categoriesForClass!Unclassified! !
 !OS.COM.Tests.IDispatchTest methodsFor!
 
 testDisplayOn

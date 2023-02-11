@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Core.Tests.RandomTest'
 	classConstants: {}!
 Core.Tests.RandomTest guid: (Core.GUID fromString: '{e7d2feed-3b86-4c49-a1ef-784f24c9007b}')!
 Core.Tests.RandomTest comment: ''!
-!Core.Tests.RandomTest categoriesForClass!Unclassified! !
 !Core.Tests.RandomTest methodsFor!
 
 assert: rng generates: anArray epsilon: aFloat 

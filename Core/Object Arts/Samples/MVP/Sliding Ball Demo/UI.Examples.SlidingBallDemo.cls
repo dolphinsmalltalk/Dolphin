@@ -20,7 +20,6 @@ the work space (I would consider another button that would be where
 the user is required to pause and restart the movement)
 
 SlidingBallDemo new show'!
-!UI.Examples.SlidingBallDemo categoriesForClass!Unclassified! !
 !UI.Examples.SlidingBallDemo methodsFor!
 
 circleExtent

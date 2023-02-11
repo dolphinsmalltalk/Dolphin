@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Kernel.Tests.PackageManagerTest'
 	classConstants: {}!
 Kernel.Tests.PackageManagerTest guid: (Core.GUID fromString: '{f161630b-6480-4f0c-b958-a57ec75b9cbd}')!
 Kernel.Tests.PackageManagerTest comment: ''!
-!Kernel.Tests.PackageManagerTest categoriesForClass!Unclassified! !
 !Kernel.Tests.PackageManagerTest methodsFor!
 
 testAllClassesPackaged

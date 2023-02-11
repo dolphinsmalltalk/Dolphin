@@ -8,7 +8,6 @@ Kernel.Tests.StLiteralTokenTest subclass: #'Kernel.Tests.StNumberLiteralTokenTes
 	classConstants: {}!
 Kernel.Tests.StNumberLiteralTokenTest guid: (Core.GUID fromString: '{0b7f81b0-219f-40ce-9090-d116cb09e568}')!
 Kernel.Tests.StNumberLiteralTokenTest comment: ''!
-!Kernel.Tests.StNumberLiteralTokenTest categoriesForClass!Unclassified! !
 !Kernel.Tests.StNumberLiteralTokenTest methodsFor!
 
 exampleSource

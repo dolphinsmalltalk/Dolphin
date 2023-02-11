@@ -8,7 +8,6 @@ UI.DoubleBufferedView subclass: #'UI.Examples.BouncingBallView'
 	classConstants: {}!
 UI.Examples.BouncingBallView guid: (Core.GUID fromString: '{247666e7-6b23-4e88-86d1-76d228924535}')!
 UI.Examples.BouncingBallView comment: ''!
-!UI.Examples.BouncingBallView categoriesForClass!Unclassified! !
 !UI.Examples.BouncingBallView methodsFor!
 
 ballExtent

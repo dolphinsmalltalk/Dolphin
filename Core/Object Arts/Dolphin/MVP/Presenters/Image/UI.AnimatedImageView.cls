@@ -8,7 +8,6 @@ UI.DoubleBufferedView subclass: #'UI.AnimatedImageView'
 	classConstants: {}!
 UI.AnimatedImageView guid: (Core.GUID fromString: '{63997d2b-abca-455e-917b-8cf248b11e63}')!
 UI.AnimatedImageView comment: ''!
-!UI.AnimatedImageView categoriesForClass!Unclassified! !
 !UI.AnimatedImageView methodsFor!
 
 connectModel

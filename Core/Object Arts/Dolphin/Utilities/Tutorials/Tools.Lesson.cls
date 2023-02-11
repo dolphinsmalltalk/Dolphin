@@ -8,7 +8,6 @@ Core.Object subclass: #'Tools.Lesson'
 	classConstants: {}!
 Tools.Lesson guid: (Core.GUID fromString: '{430b4d82-364a-44fc-9c2b-5b546c048ef9}')!
 Tools.Lesson comment: ''!
-!Tools.Lesson categoriesForClass!Unclassified! !
 !Tools.Lesson methodsFor!
 
 contents

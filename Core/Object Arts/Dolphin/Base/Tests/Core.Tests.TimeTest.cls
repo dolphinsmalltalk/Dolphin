@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'Core.Tests.TimeTest'
 	classConstants: {}!
 Core.Tests.TimeTest guid: (Core.GUID fromString: '{5eb1cd02-030d-4b2f-b1df-b06465e5bb19}')!
 Core.Tests.TimeTest comment: ''!
-!Core.Tests.TimeTest categoriesForClass!Unclassified! !
 !Core.Tests.TimeTest methodsFor!
 
 comparePrintStreamFor: time hr24: hr24 showSeconds: showSeconds expected: expected

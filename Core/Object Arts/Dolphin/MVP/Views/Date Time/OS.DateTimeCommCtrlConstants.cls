@@ -104,4 +104,3 @@ Kernel.SharedPool subclass: #'OS.DateTimeCommCtrlConstants'
 OS.DateTimeCommCtrlConstants guid: (Core.GUID fromString: '{c283cb09-f08f-4bcb-a25f-9bb3eb1967f2}')!
 OS.DateTimeCommCtrlConstants isNonInstantiable: true!
 OS.DateTimeCommCtrlConstants comment: ''!
-!OS.DateTimeCommCtrlConstants categoriesForClass!Unclassified! !

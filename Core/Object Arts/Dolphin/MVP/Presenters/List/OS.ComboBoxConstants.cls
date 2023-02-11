@@ -78,4 +78,3 @@ Kernel.SharedPool subclass: #'OS.ComboBoxConstants'
 OS.ComboBoxConstants guid: (Core.GUID fromString: '{6358ea98-3267-4d2b-900c-2da6836d1331}')!
 OS.ComboBoxConstants isNonInstantiable: true!
 OS.ComboBoxConstants comment: ''!
-!OS.ComboBoxConstants categoriesForClass!Unclassified! !

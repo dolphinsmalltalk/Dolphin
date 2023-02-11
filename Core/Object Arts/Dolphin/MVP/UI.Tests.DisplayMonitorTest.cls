@@ -8,7 +8,6 @@ Core.Tests.DolphinTest subclass: #'UI.Tests.DisplayMonitorTest'
 	classConstants: {}!
 UI.Tests.DisplayMonitorTest guid: (Core.GUID fromString: '{a26059de-9a66-4eea-892a-2cc388096fb2}')!
 UI.Tests.DisplayMonitorTest comment: ''!
-!UI.Tests.DisplayMonitorTest categoriesForClass!Unclassified! !
 !UI.Tests.DisplayMonitorTest methodsFor!
 
 testActive

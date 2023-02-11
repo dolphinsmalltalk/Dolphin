@@ -8,7 +8,6 @@ Graphics.Tests.ImageTest subclass: #'Graphics.Tests.IconTest'
 	classConstants: {}!
 Graphics.Tests.IconTest guid: (Core.GUID fromString: '{96d9e7d9-8086-4706-b958-791a85a4e86c}')!
 Graphics.Tests.IconTest comment: ''!
-!Graphics.Tests.IconTest categoriesForClass!Unclassified! !
 !Graphics.Tests.IconTest methodsFor!
 
 imageFile

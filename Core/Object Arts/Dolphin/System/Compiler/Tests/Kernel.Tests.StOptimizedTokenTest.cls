@@ -8,7 +8,6 @@ Kernel.Tests.StTokenTest subclass: #'Kernel.Tests.StOptimizedTokenTest'
 	classConstants: {}!
 Kernel.Tests.StOptimizedTokenTest guid: (Core.GUID fromString: '{9b15fc9c-7c2c-41cb-b2b9-7a8e037ee1be}')!
 Kernel.Tests.StOptimizedTokenTest comment: ''!
-!Kernel.Tests.StOptimizedTokenTest categoriesForClass!Unclassified! !
 !Kernel.Tests.StOptimizedTokenTest methodsFor!
 
 subjectClass

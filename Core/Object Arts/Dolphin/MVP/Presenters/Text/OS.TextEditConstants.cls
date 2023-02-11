@@ -90,4 +90,3 @@ Kernel.SharedPool subclass: #'OS.TextEditConstants'
 OS.TextEditConstants guid: (Core.GUID fromString: '{a42eeb15-779c-49f7-9a50-ebe150e4d0b2}')!
 OS.TextEditConstants isNonInstantiable: true!
 OS.TextEditConstants comment: ''!
-!OS.TextEditConstants categoriesForClass!Unclassified! !

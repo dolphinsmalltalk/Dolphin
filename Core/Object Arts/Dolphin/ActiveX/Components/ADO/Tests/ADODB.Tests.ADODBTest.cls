@@ -8,7 +8,6 @@ Database.Tests.DBTest subclass: #'ADODB.Tests.ADODBTest'
 	classConstants: {}!
 ADODB.Tests.ADODBTest guid: (Core.GUID fromString: '{cbc7f08c-1041-4e55-a86a-5a963bba1649}')!
 ADODB.Tests.ADODBTest comment: ''!
-!ADODB.Tests.ADODBTest categoriesForClass!Unclassified! !
 !ADODB.Tests.ADODBTest methodsFor!
 
 field: aString fromRow: row 

@@ -12,7 +12,6 @@ All DOM interface methods that return an IXMLDOMNamedNodeMap have been modified 
 
 Instance Variables:
 	interface		<IXMLDOMNodeList>'!
-!MSXML.DOMNodeList categoriesForClass!Unclassified! !
 !MSXML.DOMNodeList methodsFor!
 
 add: newElement 

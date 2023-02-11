@@ -8,7 +8,6 @@ Core.Tests.UtfEncodedStringTest subclass: #'Core.Tests.Utf8StringTest'
 	classConstants: {}!
 Core.Tests.Utf8StringTest guid: (Core.GUID fromString: '{cc364a8d-e3ae-493e-8856-3f10c847c10d}')!
 Core.Tests.Utf8StringTest comment: ''!
-!Core.Tests.Utf8StringTest categoriesForClass!Unclassified! !
 !Core.Tests.Utf8StringTest methodsFor!
 
 assimilateString: aString
