@@ -303,7 +303,7 @@ get_nodeType: type
 		HRESULT __stdcall nodeType(
 			[out, retval]DOMNodeType* type);"
 
-	<virtual stdcall: hresult 11 sdword*>
+	<virtual stdcall: hresult 11 int32*>
 	^self invalidCall: _failureCode!
 
 get_nodeTypedValue: typedValue

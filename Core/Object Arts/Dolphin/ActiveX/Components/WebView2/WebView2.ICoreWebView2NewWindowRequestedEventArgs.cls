@@ -57,7 +57,7 @@ get_Handled: handled
 		HRESULT __stdcall Handled(
 			[out, retval]long* Handled);"
 
-	<virtual stdcall: hresult 8 sdword*>
+	<virtual stdcall: hresult 8 int32*>
 	^self invalidCall: _failureCode!
 
 get_IsUserInitiated: isUserInitiated
@@ -66,7 +66,7 @@ get_IsUserInitiated: isUserInitiated
 		HRESULT __stdcall IsUserInitiated(
 			[out, retval]long* IsUserInitiated);"
 
-	<virtual stdcall: hresult 9 sdword*>
+	<virtual stdcall: hresult 9 int32*>
 	^self invalidCall: _failureCode!
 
 get_name: value
@@ -170,7 +170,7 @@ put_Handled: handled
 		HRESULT __stdcall Handled(
 			[in]long Handled);"
 
-	<virtual stdcall: hresult 7 sdword>
+	<virtual stdcall: hresult 7 int32>
 	^self invalidCall: _failureCode!
 
 put_NewWindow: newWindow

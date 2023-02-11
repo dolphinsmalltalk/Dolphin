@@ -45,7 +45,7 @@ get_ExitCode: exitCode
 		HRESULT __stdcall ExitCode(
 			[out, retval]int* ExitCode);"
 
-	<virtual stdcall: hresult 6 sdword*>
+	<virtual stdcall: hresult 6 int32*>
 	^self invalidCall: _failureCode!
 
 get_FrameInfosForFailedProcess: frames
@@ -72,7 +72,7 @@ get_reason: reason
 		HRESULT __stdcall reason(
 			[out, retval]COREWEBVIEW2_PROCESS_FAILED_REASON* reason);"
 
-	<virtual stdcall: hresult 5 sdword*>
+	<virtual stdcall: hresult 5 int32*>
 	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2ProcessFailedEventArgs2 categoriesForMethods!
 get_ExitCode:!**auto generated**!COM Interfaces-ICoreWebView2ProcessFailedEventArgs2!private! !

@@ -89,7 +89,7 @@ AbsoluteChildNumber: pNode pNumber: pNumber
 			[in]IXMLDOMNode* pNode,
 			[out, retval]long* pNumber);"
 
-	<virtual stdcall: hresult 48 IXMLDOMNode* sdword*>
+	<virtual stdcall: hresult 48 IXMLDOMNode* int32*>
 	^self invalidCall: _failureCode!
 
 ancestorChildNumber: bstrNodeName pNode: pNode
@@ -111,7 +111,7 @@ AncestorChildNumber: bstrNodeName pNode: pNode pNumber: pNumber
 			[in]IXMLDOMNode* pNode,
 			[out, retval]long* pNumber);"
 
-	<virtual stdcall: hresult 47 bstr IXMLDOMNode* sdword*>
+	<virtual stdcall: hresult 47 bstr IXMLDOMNode* int32*>
 	^self invalidCall: _failureCode!
 
 childNumber: pNode
@@ -129,7 +129,7 @@ ChildNumber: pNode pNumber: pNumber
 			[in]IXMLDOMNode* pNode,
 			[out, retval]long* pNumber);"
 
-	<virtual stdcall: hresult 46 IXMLDOMNode* sdword*>
+	<virtual stdcall: hresult 46 IXMLDOMNode* int32*>
 	^self invalidCall: _failureCode!
 
 depth: pNode
@@ -147,7 +147,7 @@ Depth: pNode pDepth: pDepth
 			[in]IXMLDOMNode* pNode,
 			[out, retval]long* pDepth);"
 
-	<virtual stdcall: hresult 45 IXMLDOMNode* sdword*>
+	<virtual stdcall: hresult 45 IXMLDOMNode* int32*>
 	^self invalidCall: _failureCode!
 
 formatDate: varDate bstrFormat: bstrFormat
@@ -202,7 +202,7 @@ FormatIndex: lIndex bstrFormat: bstrFormat pbstrFormattedString: pbstrFormattedS
 			[in]BSTR bstrFormat,
 			[out, retval]BSTR* pbstrFormattedString);"
 
-	<virtual stdcall: hresult 49 sdword bstr bstr*>
+	<virtual stdcall: hresult 49 int32 bstr bstr*>
 	^self invalidCall: _failureCode!
 
 formatNumber: dblNumber bstrFormat: bstrFormat
@@ -275,7 +275,7 @@ UniqueID: pNode pID: pID
 			[in]IXMLDOMNode* pNode,
 			[out, retval]long* pID);"
 
-	<virtual stdcall: hresult 44 IXMLDOMNode* sdword*>
+	<virtual stdcall: hresult 44 IXMLDOMNode* int32*>
 	^self invalidCall: _failureCode! !
 !MSXML.IXTLRuntime categoriesForMethods!
 absoluteChildNumber:!**auto generated**!methods!public! !

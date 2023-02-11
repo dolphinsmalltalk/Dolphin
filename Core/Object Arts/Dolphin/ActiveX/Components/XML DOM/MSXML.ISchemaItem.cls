@@ -67,7 +67,7 @@ get_itemType: itemType
 		HRESULT __stdcall itemType(
 			[out, retval]SOMITEMTYPE* itemType);"
 
-	<virtual stdcall: hresult 12 sdword*>
+	<virtual stdcall: hresult 12 int32*>
 	^self invalidCall: _failureCode!
 
 get_name: name

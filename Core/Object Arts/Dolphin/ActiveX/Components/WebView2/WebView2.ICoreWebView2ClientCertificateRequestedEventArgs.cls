@@ -99,7 +99,7 @@ get_Cancel: value
 		HRESULT __stdcall Cancel(
 			[out, retval]long* value);"
 
-	<virtual stdcall: hresult 11 sdword*>
+	<virtual stdcall: hresult 11 int32*>
 	^self invalidCall: _failureCode!
 
 get_Handled: value
@@ -108,7 +108,7 @@ get_Handled: value
 		HRESULT __stdcall Handled(
 			[out, retval]long* value);"
 
-	<virtual stdcall: hresult 13 sdword*>
+	<virtual stdcall: hresult 13 int32*>
 	^self invalidCall: _failureCode!
 
 get_Host: value
@@ -126,7 +126,7 @@ get_IsProxy: value
 		HRESULT __stdcall IsProxy(
 			[out, retval]long* value);"
 
-	<virtual stdcall: hresult 6 sdword*>
+	<virtual stdcall: hresult 6 int32*>
 	^self invalidCall: _failureCode!
 
 get_MutuallyTrustedCertificates: value
@@ -144,7 +144,7 @@ get_Port: value
 		HRESULT __stdcall Port(
 			[out, retval]int* value);"
 
-	<virtual stdcall: hresult 5 sdword*>
+	<virtual stdcall: hresult 5 int32*>
 	^self invalidCall: _failureCode!
 
 get_SelectedCertificate: value
@@ -230,7 +230,7 @@ put_Cancel: value
 		HRESULT __stdcall Cancel(
 			[in]long value);"
 
-	<virtual stdcall: hresult 12 sdword>
+	<virtual stdcall: hresult 12 int32>
 	^self invalidCall: _failureCode!
 
 put_Handled: value
@@ -240,7 +240,7 @@ put_Handled: value
 		HRESULT __stdcall Handled(
 			[in]long value);"
 
-	<virtual stdcall: hresult 14 sdword>
+	<virtual stdcall: hresult 14 int32>
 	^self invalidCall: _failureCode!
 
 put_SelectedCertificate: value

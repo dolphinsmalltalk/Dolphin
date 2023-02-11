@@ -39,7 +39,7 @@ get_AllowExternalDrop: value
 		HRESULT __stdcall AllowExternalDrop(
 			[out, retval]long* value);"
 
-	<virtual stdcall: hresult 37 sdword*>
+	<virtual stdcall: hresult 37 int32*>
 	^self invalidCall: _failureCode!
 
 put_AllowExternalDrop: value
@@ -49,7 +49,7 @@ put_AllowExternalDrop: value
 		HRESULT __stdcall AllowExternalDrop(
 			[in]long value);"
 
-	<virtual stdcall: hresult 38 sdword>
+	<virtual stdcall: hresult 38 int32>
 	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2Controller4 categoriesForMethods!
 get_AllowExternalDrop:!**auto generated**!COM Interfaces-ICoreWebView2Controller4!private! !

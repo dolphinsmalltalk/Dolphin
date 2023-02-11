@@ -42,7 +42,7 @@ AddressOfMember: addressOfMember invKind: invKind ppv: ppv
 			[out] void** ppv);
 	"
 
-	<virtual stdcall: hresult 16 sdword sdword void**>
+	<virtual stdcall: hresult 16 int32 int32 void**>
 	^self invalidCall: _failureCode!
 
 allCustData
@@ -114,7 +114,7 @@ GetContainingTypeLib: ppTLib pIndex: pIndex
 			[out] unsigned int* pIndex);
 	"
 
-	<virtual stdcall: hresult 19 ITypeLib** dword*>
+	<virtual stdcall: hresult 19 ITypeLib** uint32*>
 	^self invalidCall: _failureCode!
 
 GetDllEntry: memid invkind: invkind pBstrDllName: pBstrDllName pBstrName: pBstrName pwOrdinal: pwOrdinal
@@ -128,7 +128,7 @@ GetDllEntry: memid invkind: invkind pBstrDllName: pBstrDllName pBstrName: pBstrN
 			[out] unsigned short* pwOrdinal);
 	"
 
-	<virtual stdcall: hresult 14 sdword sdword bstr* bstr* word*>
+	<virtual stdcall: hresult 14 int32 int32 bstr* bstr* uint16*>
 	^self invalidCall: _failureCode!
 
 GetDocumentation: memid pBstrName: pBstrName pBstrDocString: pBstrDocString pdwHelpContext: pdwHelpContext pBstrHelpFile: pBstrHelpFile
@@ -142,7 +142,7 @@ GetDocumentation: memid pBstrName: pBstrName pBstrDocString: pBstrDocString pdwH
 			[out] BSTR* pBstrHelpFile);
 	"
 
-	<virtual stdcall: sdword 13 sdword bstr* bstr* dword* bstr*>
+	<virtual stdcall: int32 13 int32 bstr* bstr* uint32* bstr*>
 	^self invalidCall: _failureCode!
 
 getFuncDesc: index
@@ -161,7 +161,7 @@ GetFuncDesc: index ppFuncDesc: ppFuncDesc
 			[out] FUNCDESC** ppFuncDesc);
 	"
 
-	<virtual stdcall: hresult 6 dword FUNCDESC**>
+	<virtual stdcall: hresult 6 uint32 FUNCDESC**>
 	^self invalidCall: _failureCode!
 
 getIDsOfNames: names
@@ -190,7 +190,7 @@ GetIDsOfNames: getIDsOfNames cNames: cNames pMemId: pMemId
         		        [out] MEMBERID * pMemId);
 	"
 
-	<virtual stdcall: sdword 11 lpwstr* dword sdword*>
+	<virtual stdcall: int32 11 lpwstr* uint32 int32*>
 	^self invalidCall: _failureCode!
 
 getImplTypeFlags: index 
@@ -210,7 +210,7 @@ GetImplTypeFlags: index pImplTypeFlags: pImplTypeFlags
 			[out] int* pImplTypeFlags);
 	"
 
-	<virtual stdcall: hresult 10 dword sdword*>
+	<virtual stdcall: hresult 10 uint32 int32*>
 	^self invalidCall: _failureCode!
 
 getImplTypeInfoAt: anInteger
@@ -238,7 +238,7 @@ GetMops: memid pBstrMops: pBstrMops
 			[out] BSTR* pBstrMops);
 	"
 
-	<virtual stdcall: hresult 18 sdword bstr*>
+	<virtual stdcall: hresult 18 int32 bstr*>
 	^self invalidCall: _failureCode!
 
 GetNames: memid rgBstrNames: rgBstrNames cMaxNames: cMaxNames pcNames: pcNames
@@ -251,7 +251,7 @@ GetNames: memid rgBstrNames: rgBstrNames cMaxNames: cMaxNames pcNames: pcNames
 			[out] unsigned int* pcNames);
 	"
 
-	<virtual stdcall: hresult 8 sdword bstr* dword dword*>
+	<virtual stdcall: hresult 8 int32 bstr* uint32 uint32*>
 	^self invalidCall: _failureCode!
 
 getNamesOfMember: memid count: cMaxNames
@@ -286,7 +286,7 @@ GetRefTypeInfo: hreftype ppTInfo: ppTInfo
 			[out] ITypeInfo** ppTInfo);
 	"
 
-	<virtual stdcall: hresult 15 dword ITypeInfo**>
+	<virtual stdcall: hresult 15 uint32 ITypeInfo**>
 	^self invalidCall: _failureCode!
 
 getRefTypeOfImplType: index 
@@ -307,7 +307,7 @@ GetRefTypeOfImplType: index pRefType: pRefType
 			[out] unsigned long* pRefType);
 	"
 
-	<virtual stdcall: hresult 9 dword dword*>
+	<virtual stdcall: hresult 9 uint32 uint32*>
 	^self invalidCall: _failureCode!
 
 getTypeAttr
@@ -363,7 +363,7 @@ GetVarDesc: index ppVarDesc: ppVarDesc
 			[out] VARDESC** ppVarDesc);
 	"
 
-	<virtual stdcall: hresult 7 dword VARDESC**>
+	<virtual stdcall: hresult 7 uint32 VARDESC**>
 	^self invalidCall: _failureCode!
 
 guid
@@ -424,7 +424,7 @@ Invoke: invoke memid: memid wFlags: wFlags pDispParams: pDispParams pVarResult: 
 			[out] dword* puArgErr);
 	"
 
-	<virtual stdcall: hresult 12 void* dword word DISPPARAMS* variant* EXCEPINFO* dword*>
+	<virtual stdcall: hresult 12 void* uint32 uint16 DISPPARAMS* variant* EXCEPINFO* uint32*>
 	^self invalidCall: _failureCode!
 
 isDual
@@ -538,7 +538,7 @@ safeInvoke: invoke memid: memid wFlags: wFlags pDispParams: pDispParams pVarResu
 	Implementation Note: We implement a non-exception version of this function
 	for efficiency of implementation of dual interfaces in Dolphin."
 
-	<virtual stdcall: sdword 12 void* dword word DISPPARAMS* variant* EXCEPINFO* dword*>
+	<virtual stdcall: int32 12 void* uint32 uint16 DISPPARAMS* variant* EXCEPINFO* uint32*>
 	^self invalidCall: _failureCode!
 
 typeComp

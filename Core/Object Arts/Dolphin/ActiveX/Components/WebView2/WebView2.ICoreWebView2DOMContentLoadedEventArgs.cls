@@ -36,7 +36,7 @@ get_NavigationId: navigationId
 		HRESULT __stdcall NavigationId(
 			[out, retval]unsigned __int64* NavigationId);"
 
-	<virtual stdcall: hresult 4 qword*>
+	<virtual stdcall: hresult 4 uint64*>
 	^self invalidCall: _failureCode!
 
 navigationId

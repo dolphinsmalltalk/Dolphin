@@ -105,7 +105,7 @@ AddAttributeFromIndex: varAtts nIndex: nIndex
 			[in]VARIANT varAtts,
 			[in]int nIndex);"
 
-	<virtual stdcall: hresult 9 variant sdword>
+	<virtual stdcall: hresult 9 variant int32>
 	^self invalidCall: _failureCode!
 
 Clear
@@ -134,7 +134,7 @@ RemoveAttribute: nIndex
 		HRESULT __stdcall removeAttribute(
 			[in]int nIndex);"
 
-	<virtual stdcall: hresult 11 sdword>
+	<virtual stdcall: hresult 11 int32>
 	^self invalidCall: _failureCode!
 
 SetAttribute: nIndex strURI: strURI strLocalName: strLocalName strQName: strQName strType: strType strValue: strValue
@@ -149,7 +149,7 @@ SetAttribute: nIndex strURI: strURI strLocalName: strLocalName strQName: strQNam
 			[in]BSTR strType,
 			[in]BSTR strValue);"
 
-	<virtual stdcall: hresult 12 sdword bstr bstr bstr bstr bstr>
+	<virtual stdcall: hresult 12 int32 bstr bstr bstr bstr bstr>
 	^self invalidCall: _failureCode!
 
 setAttributes: varAtts
@@ -176,7 +176,7 @@ SetLocalName: nIndex strLocalName: strLocalName
 			[in]int nIndex,
 			[in]BSTR strLocalName);"
 
-	<virtual stdcall: hresult 14 sdword bstr>
+	<virtual stdcall: hresult 14 int32 bstr>
 	^self invalidCall: _failureCode!
 
 SetQName: nIndex strQName: strQName
@@ -187,7 +187,7 @@ SetQName: nIndex strQName: strQName
 			[in]int nIndex,
 			[in]BSTR strQName);"
 
-	<virtual stdcall: hresult 15 sdword bstr>
+	<virtual stdcall: hresult 15 int32 bstr>
 	^self invalidCall: _failureCode!
 
 SetType: nIndex strType: strType
@@ -198,7 +198,7 @@ SetType: nIndex strType: strType
 			[in]int nIndex,
 			[in]BSTR strType);"
 
-	<virtual stdcall: hresult 16 sdword bstr>
+	<virtual stdcall: hresult 16 int32 bstr>
 	^self invalidCall: _failureCode!
 
 SetURI: nIndex strURI: strURI
@@ -209,7 +209,7 @@ SetURI: nIndex strURI: strURI
 			[in]int nIndex,
 			[in]BSTR strURI);"
 
-	<virtual stdcall: hresult 17 sdword bstr>
+	<virtual stdcall: hresult 17 int32 bstr>
 	^self invalidCall: _failureCode!
 
 SetValue: nIndex strValue: strValue
@@ -220,7 +220,7 @@ SetValue: nIndex strValue: strValue
 			[in]int nIndex,
 			[in]BSTR strValue);"
 
-	<virtual stdcall: hresult 18 sdword bstr>
+	<virtual stdcall: hresult 18 int32 bstr>
 	^self invalidCall: _failureCode! !
 !MSXML.IMXAttributes categoriesForMethods!
 AddAttribute:strLocalName:strQName:strType:strValue:!**auto generated**!COM Interfaces-IMXAttributes!public! !

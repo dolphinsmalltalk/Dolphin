@@ -67,7 +67,7 @@ get_Attributes: plAttributes
 		HRESULT __stdcall Attributes(
 			[out, retval]long* plAttributes);"
 
-	<virtual stdcall: hresult 12 sdword*>
+	<virtual stdcall: hresult 12 int32*>
 	^self invalidCall: _failureCode!
 
 get_Name: pbstr
@@ -85,7 +85,7 @@ get_Type: ptype
 		HRESULT __stdcall Type(
 			[out, retval]DataTypeEnum* ptype);"
 
-	<virtual stdcall: hresult 11 sdword*>
+	<virtual stdcall: hresult 11 int32*>
 	^self invalidCall: _failureCode!
 
 get_Value: pval
@@ -128,7 +128,7 @@ put_Attributes: plAttributes
 		HRESULT __stdcall Attributes(
 			[in]long plAttributes);"
 
-	<virtual stdcall: hresult 13 sdword>
+	<virtual stdcall: hresult 13 int32>
 	^self invalidCall: _failureCode!
 
 put_Value: pval

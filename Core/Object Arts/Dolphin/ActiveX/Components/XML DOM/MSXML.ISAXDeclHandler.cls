@@ -76,7 +76,7 @@ AttributeDecl: pwchElementName cchElementName: cchElementName pwchAttributeName:
 			[in]unsigned short* pwchValue,
 			[in]int cchValue);"
 
-	<virtual stdcall: hresult 5 word* sdword word* sdword word* sdword word* sdword word* sdword>
+	<virtual stdcall: hresult 5 uint16* int32 uint16* int32 uint16* int32 uint16* int32 uint16* int32>
 	^self invalidCall: _failureCode!
 
 ElementDecl: pwchName cchName: cchName pwchModel: pwchModel cchModel: cchModel
@@ -88,7 +88,7 @@ ElementDecl: pwchName cchName: cchName pwchModel: pwchModel cchModel: cchModel
 			[in]unsigned short* pwchModel,
 			[in]int cchModel);"
 
-	<virtual stdcall: hresult 4 word* sdword word* sdword>
+	<virtual stdcall: hresult 4 uint16* int32 uint16* int32>
 	^self invalidCall: _failureCode!
 
 ExternalEntityDecl: pwchName cchName: cchName pwchPublicId: pwchPublicId cchPublicId: cchPublicId pwchSystemId: pwchSystemId cchSystemId: cchSystemId
@@ -102,7 +102,7 @@ ExternalEntityDecl: pwchName cchName: cchName pwchPublicId: pwchPublicId cchPubl
 			[in]unsigned short* pwchSystemId,
 			[in]int cchSystemId);"
 
-	<virtual stdcall: hresult 7 word* sdword word* sdword word* sdword>
+	<virtual stdcall: hresult 7 uint16* int32 uint16* int32 uint16* int32>
 	^self invalidCall: _failureCode!
 
 InternalEntityDecl: pwchName cchName: cchName pwchValue: pwchValue cchValue: cchValue
@@ -114,7 +114,7 @@ InternalEntityDecl: pwchName cchName: cchName pwchValue: pwchValue cchValue: cch
 			[in]unsigned short* pwchValue,
 			[in]int cchValue);"
 
-	<virtual stdcall: hresult 6 word* sdword word* sdword>
+	<virtual stdcall: hresult 6 uint16* int32 uint16* int32>
 	^self invalidCall: _failureCode! !
 !MSXML.ISAXDeclHandler categoriesForMethods!
 AttributeDecl:cchElementName:pwchAttributeName:cchAttributeName:pwchType:cchType:pwchValueDefault:cchValueDefault:pwchValue:cchValue:!**auto generated**!COM Interfaces-ISAXDeclHandler!public! !

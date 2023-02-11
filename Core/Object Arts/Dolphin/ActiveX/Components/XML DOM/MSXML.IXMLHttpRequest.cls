@@ -31,7 +31,7 @@ get_readyState: plState
 		HRESULT __stdcall readyState(
 			[out, retval]long* plState);"
 
-	<virtual stdcall: hresult 20 sdword*>
+	<virtual stdcall: hresult 20 int32*>
 	^self invalidCall: _failureCode!
 
 get_responseBody: pvarBody
@@ -76,7 +76,7 @@ get_status: plStatus
 		HRESULT __stdcall status(
 			[out, retval]long* plStatus);"
 
-	<virtual stdcall: hresult 14 sdword*>
+	<virtual stdcall: hresult 14 int32*>
 	^self invalidCall: _failureCode!
 
 get_statusText: pbstrStatus

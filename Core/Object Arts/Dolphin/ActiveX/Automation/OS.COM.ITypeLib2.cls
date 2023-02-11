@@ -78,7 +78,7 @@ GetDocumentation2: index lcid: lcid pbstrHelpString: pbstrHelpString pdwHelpStri
 			[out] BSTR* pbstrHelpStringDll);
 	"
 
-	<virtual stdcall: hresult 16 sdword dword bstr* dword* bstr*>
+	<virtual stdcall: hresult 16 int32 uint32 bstr* uint32* bstr*>
 	^self invalidCall: _failureCode!
 
 getLibStatistics
@@ -99,7 +99,7 @@ GetLibStatistics: pcUniqueNames pcchUniqueNames: pcchUniqueNames
 			[out] unsigned long* pcchUniqueNames);
 	"
 
-	<virtual stdcall: hresult 15 dword* dword*>
+	<virtual stdcall: hresult 15 uint32* uint32*>
 	^self invalidCall: _failureCode! !
 !OS.COM.ITypeLib2 categoriesForMethods!
 getAllCustData!**auto generated**!public! !

@@ -88,7 +88,7 @@ get_Kind: kind
 		HRESULT __stdcall Kind(
 			[out, retval]COREWEBVIEW2_SCRIPT_DIALOG_KIND* Kind);"
 
-	<virtual stdcall: hresult 5 sdword*>
+	<virtual stdcall: hresult 5 int32*>
 	^self invalidCall: _failureCode!
 
 get_Message: message

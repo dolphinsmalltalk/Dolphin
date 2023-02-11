@@ -239,7 +239,7 @@ Add_ContainsFullScreenElementChanged: eventHandler token: token
 			[in]ICoreWebView2ContainsFullScreenElementChangedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 53 ICoreWebView2ContainsFullScreenElementChangedEventHandler* sqword*>
+	<virtual stdcall: hresult 53 ICoreWebView2ContainsFullScreenElementChangedEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 Add_ContentLoading: eventHandler token: token
@@ -249,7 +249,7 @@ Add_ContentLoading: eventHandler token: token
 			[in]ICoreWebView2ContentLoadingEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 10 ICoreWebView2ContentLoadingEventHandler* sqword*>
+	<virtual stdcall: hresult 10 ICoreWebView2ContentLoadingEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 Add_ContextMenuRequested: eventHandler token: token
@@ -264,7 +264,7 @@ Add_DocumentTitleChanged: eventHandler token: token
 			[in]ICoreWebView2DocumentTitleChangedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 47 ICoreWebView2DocumentTitleChangedEventHandler* sqword*>
+	<virtual stdcall: hresult 47 ICoreWebView2DocumentTitleChangedEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 Add_DOMContentLoaded: eventHandler token: token
@@ -294,7 +294,7 @@ Add_FrameNavigationCompleted: eventHandler token: token
 			[in]ICoreWebView2NavigationCompletedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 20 ICoreWebView2NavigationCompletedEventHandler* sqword*>
+	<virtual stdcall: hresult 20 ICoreWebView2NavigationCompletedEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 Add_FrameNavigationStarting: eventHandler token: token
@@ -304,7 +304,7 @@ Add_FrameNavigationStarting: eventHandler token: token
 			[in]ICoreWebView2NavigationStartingEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 18 ICoreWebView2NavigationStartingEventHandler* sqword*>
+	<virtual stdcall: hresult 18 ICoreWebView2NavigationStartingEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 Add_HistoryChanged: eventHandler token: token
@@ -314,7 +314,7 @@ Add_HistoryChanged: eventHandler token: token
 			[in]ICoreWebView2HistoryChangedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 14 ICoreWebView2HistoryChangedEventHandler* sqword*>
+	<virtual stdcall: hresult 14 ICoreWebView2HistoryChangedEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 Add_IsDefaultDownloadDialogOpenChanged: handler token: token
@@ -339,7 +339,7 @@ Add_NavigationCompleted: eventHandler token: token
 			[in]ICoreWebView2NavigationCompletedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 16 ICoreWebView2NavigationCompletedEventHandler* sqword*>
+	<virtual stdcall: hresult 16 ICoreWebView2NavigationCompletedEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 Add_NavigationStarting: eventHandler token: token
@@ -349,7 +349,7 @@ Add_NavigationStarting: eventHandler token: token
 			[in]ICoreWebView2NavigationStartingEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 8 ICoreWebView2NavigationStartingEventHandler* sqword*>
+	<virtual stdcall: hresult 8 ICoreWebView2NavigationStartingEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 Add_NewWindowRequested: eventHandler token: token
@@ -359,7 +359,7 @@ Add_NewWindowRequested: eventHandler token: token
 			[in]ICoreWebView2NewWindowRequestedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 45 ICoreWebView2NewWindowRequestedEventHandler* sqword*>
+	<virtual stdcall: hresult 45 ICoreWebView2NewWindowRequestedEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 Add_PermissionRequested: eventHandler token: token
@@ -369,7 +369,7 @@ Add_PermissionRequested: eventHandler token: token
 			[in]ICoreWebView2PermissionRequestedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 24 ICoreWebView2PermissionRequestedEventHandler* sqword*>
+	<virtual stdcall: hresult 24 ICoreWebView2PermissionRequestedEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 Add_ProcessFailed: eventHandler token: token
@@ -379,7 +379,7 @@ Add_ProcessFailed: eventHandler token: token
 			[in]ICoreWebView2ProcessFailedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 26 ICoreWebView2ProcessFailedEventHandler* sqword*>
+	<virtual stdcall: hresult 26 ICoreWebView2ProcessFailedEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 Add_ScriptDialogOpening: eventHandler token: token
@@ -389,7 +389,7 @@ Add_ScriptDialogOpening: eventHandler token: token
 			[in]ICoreWebView2ScriptDialogOpeningEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 22 ICoreWebView2ScriptDialogOpeningEventHandler* sqword*>
+	<virtual stdcall: hresult 22 ICoreWebView2ScriptDialogOpeningEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 Add_ServerCertificateErrorDetected: eventHandler token: token
@@ -408,7 +408,7 @@ Add_SourceChanged: eventHandler token: token
 			[in]ICoreWebView2SourceChangedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 12 ICoreWebView2SourceChangedEventHandler* sqword*>
+	<virtual stdcall: hresult 12 ICoreWebView2SourceChangedEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 Add_StatusBarTextChanged: eventHandler token: token
@@ -423,7 +423,7 @@ Add_WebMessageReceived: handler token: token
 			[in]ICoreWebView2WebMessageReceivedEventHandler* handler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 35 ICoreWebView2WebMessageReceivedEventHandler* sqword*>
+	<virtual stdcall: hresult 35 ICoreWebView2WebMessageReceivedEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 Add_WebResourceRequested: eventHandler token: token
@@ -433,7 +433,7 @@ Add_WebResourceRequested: eventHandler token: token
 			[in]ICoreWebView2WebResourceRequestedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 56 ICoreWebView2WebResourceRequestedEventHandler* sqword*>
+	<virtual stdcall: hresult 56 ICoreWebView2WebResourceRequestedEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 Add_WebResourceResponseReceived: eventHandler token: token
@@ -448,7 +448,7 @@ Add_WindowCloseRequested: eventHandler token: token
 			[in]ICoreWebView2WindowCloseRequestedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 60 ICoreWebView2WindowCloseRequestedEventHandler* sqword*>
+	<virtual stdcall: hresult 60 ICoreWebView2WindowCloseRequestedEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 addHostObjectToScript: name object: object
@@ -497,7 +497,7 @@ AddWebResourceRequestedFilter: uri resourceContext: resourceContext
 			[in]LPWSTR uri,
 			[in]COREWEBVIEW2_WEB_RESOURCE_CONTEXT ResourceContext);"
 
-	<virtual stdcall: hresult 58 lpwstr sdword>
+	<virtual stdcall: hresult 58 lpwstr int32>
 	^self invalidCall: _failureCode!
 
 browserProcessId
@@ -576,7 +576,7 @@ CapturePreview: imageFormat imageStream: imageStream handler: handler
 			[in]IStream* imageStream,
 			[in]ICoreWebView2CapturePreviewCompletedHandler* handler);"
 
-	<virtual stdcall: hresult 31 sdword IStream* ICoreWebView2CapturePreviewCompletedHandler*>
+	<virtual stdcall: hresult 31 int32 IStream* ICoreWebView2CapturePreviewCompletedHandler*>
 	^self invalidCall: _failureCode!
 
 capturePreview: anInteger imageStream: anIStream thenDo: aMonadicValuable
@@ -763,7 +763,7 @@ get_BrowserProcessId: value
 		HRESULT __stdcall BrowserProcessId(
 			[out, retval]unsigned int* value);"
 
-	<virtual stdcall: hresult 38 dword*>
+	<virtual stdcall: hresult 38 uint32*>
 	^self invalidCall: _failureCode!
 
 get_CanGoBack: canGoBack
@@ -790,7 +790,7 @@ get_ContainsFullScreenElement: containsFullScreenElement
 		HRESULT __stdcall ContainsFullScreenElement(
 			[out, retval]long* ContainsFullScreenElement);"
 
-	<virtual stdcall: hresult 55 sdword*>
+	<virtual stdcall: hresult 55 int32*>
 	^self invalidCall: _failureCode!
 
 get_CookieManager: cookieManager
@@ -1247,7 +1247,7 @@ Remove_ContainsFullScreenElementChanged: token
 		HRESULT __stdcall remove_ContainsFullScreenElementChanged(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 54 sqword>
+	<virtual stdcall: hresult 54 int64>
 	^self invalidCall: _failureCode!
 
 Remove_ContentLoading: token
@@ -1256,7 +1256,7 @@ Remove_ContentLoading: token
 		HRESULT __stdcall remove_ContentLoading(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 11 sqword>
+	<virtual stdcall: hresult 11 int64>
 	^self invalidCall: _failureCode!
 
 Remove_ContextMenuRequested: token
@@ -1270,7 +1270,7 @@ Remove_DocumentTitleChanged: token
 		HRESULT __stdcall remove_DocumentTitleChanged(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 48 sqword>
+	<virtual stdcall: hresult 48 int64>
 	^self invalidCall: _failureCode!
 
 Remove_DOMContentLoaded: token
@@ -1299,7 +1299,7 @@ Remove_FrameNavigationCompleted: token
 		HRESULT __stdcall remove_FrameNavigationCompleted(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 21 sqword>
+	<virtual stdcall: hresult 21 int64>
 	^self invalidCall: _failureCode!
 
 Remove_FrameNavigationStarting: token
@@ -1308,7 +1308,7 @@ Remove_FrameNavigationStarting: token
 		HRESULT __stdcall remove_FrameNavigationStarting(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 19 sqword>
+	<virtual stdcall: hresult 19 int64>
 	^self invalidCall: _failureCode!
 
 Remove_HistoryChanged: token
@@ -1317,7 +1317,7 @@ Remove_HistoryChanged: token
 		HRESULT __stdcall remove_HistoryChanged(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 15 sqword>
+	<virtual stdcall: hresult 15 int64>
 	^self invalidCall: _failureCode!
 
 Remove_IsDefaultDownloadDialogOpenChanged: token
@@ -1341,7 +1341,7 @@ Remove_NavigationCompleted: token
 		HRESULT __stdcall remove_NavigationCompleted(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 17 sqword>
+	<virtual stdcall: hresult 17 int64>
 	^self invalidCall: _failureCode!
 
 Remove_NavigationStarting: token
@@ -1350,7 +1350,7 @@ Remove_NavigationStarting: token
 		HRESULT __stdcall remove_NavigationStarting(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 9 sqword>
+	<virtual stdcall: hresult 9 int64>
 	^self invalidCall: _failureCode!
 
 Remove_NewWindowRequested: token
@@ -1359,7 +1359,7 @@ Remove_NewWindowRequested: token
 		HRESULT __stdcall remove_NewWindowRequested(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 46 sqword>
+	<virtual stdcall: hresult 46 int64>
 	^self invalidCall: _failureCode!
 
 Remove_PermissionRequested: token
@@ -1368,7 +1368,7 @@ Remove_PermissionRequested: token
 		HRESULT __stdcall remove_PermissionRequested(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 25 sqword>
+	<virtual stdcall: hresult 25 int64>
 	^self invalidCall: _failureCode!
 
 Remove_ProcessFailed: token
@@ -1377,7 +1377,7 @@ Remove_ProcessFailed: token
 		HRESULT __stdcall remove_ProcessFailed(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 27 sqword>
+	<virtual stdcall: hresult 27 int64>
 	^self invalidCall: _failureCode!
 
 Remove_ScriptDialogOpening: token
@@ -1386,7 +1386,7 @@ Remove_ScriptDialogOpening: token
 		HRESULT __stdcall remove_ScriptDialogOpening(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 23 sqword>
+	<virtual stdcall: hresult 23 int64>
 	^self invalidCall: _failureCode!
 
 Remove_ServerCertificateErrorDetected: token
@@ -1403,7 +1403,7 @@ Remove_SourceChanged: token
 		HRESULT __stdcall remove_SourceChanged(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 13 sqword>
+	<virtual stdcall: hresult 13 int64>
 	^self invalidCall: _failureCode!
 
 Remove_StatusBarTextChanged: token
@@ -1417,7 +1417,7 @@ Remove_WebMessageReceived: token
 		HRESULT __stdcall remove_WebMessageReceived(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 36 sqword>
+	<virtual stdcall: hresult 36 int64>
 	^self invalidCall: _failureCode!
 
 Remove_WebResourceRequested: token
@@ -1426,7 +1426,7 @@ Remove_WebResourceRequested: token
 		HRESULT __stdcall remove_WebResourceRequested(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 57 sqword>
+	<virtual stdcall: hresult 57 int64>
 	^self invalidCall: _failureCode!
 
 Remove_WebResourceResponseReceived: token
@@ -1440,7 +1440,7 @@ Remove_WindowCloseRequested: token
 		HRESULT __stdcall remove_WindowCloseRequested(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 61 sqword>
+	<virtual stdcall: hresult 61 int64>
 	^self invalidCall: _failureCode!
 
 removeHostObjectFromScript: name
@@ -1483,7 +1483,7 @@ RemoveWebResourceRequestedFilter: uri resourceContext: resourceContext
 			[in]LPWSTR uri,
 			[in]COREWEBVIEW2_WEB_RESOURCE_CONTEXT ResourceContext);"
 
-	<virtual stdcall: hresult 59 lpwstr sdword>
+	<virtual stdcall: hresult 59 lpwstr int32>
 	^self invalidCall: _failureCode!
 
 resume

@@ -47,7 +47,7 @@ Add: index ppPart: ppPart
 			[in, defaultvalue(-1)]long Index,
 			[out, retval]IBodyPart** ppPart);"
 
-	<virtual stdcall: hresult 13 sdword IBodyPart**>
+	<virtual stdcall: hresult 13 int32 IBodyPart**>
 	^self invalidCall: _failureCode!
 
 count
@@ -99,7 +99,7 @@ get_Count: varCount
 		HRESULT __stdcall Count(
 			[out, retval]long* varCount);"
 
-	<virtual stdcall: hresult 8 sdword*>
+	<virtual stdcall: hresult 8 int32*>
 	^self invalidCall: _failureCode!
 
 get_Item: index ppBody: ppBody
@@ -109,7 +109,7 @@ get_Item: index ppBody: ppBody
 			[in]long Index,
 			[out, retval]IBodyPart** ppBody);"
 
-	<virtual stdcall: hresult 9 sdword IBodyPart**>
+	<virtual stdcall: hresult 9 int32 IBodyPart**>
 	^self invalidCall: _failureCode!
 
 isExtensible

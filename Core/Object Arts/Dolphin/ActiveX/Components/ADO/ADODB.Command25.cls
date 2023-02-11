@@ -50,7 +50,7 @@ get_State: plObjState
 		HRESULT __stdcall State(
 			[out, retval]long* plObjState);"
 
-	<virtual stdcall: hresult 25 sdword*>
+	<virtual stdcall: hresult 25 int32*>
 	^self invalidCall: _failureCode!
 
 state

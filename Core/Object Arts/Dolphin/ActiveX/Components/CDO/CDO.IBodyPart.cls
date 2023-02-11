@@ -39,7 +39,7 @@ AddBodyPart: index ppPart: ppPart
 			[in, defaultvalue(-1)]long Index,
 			[out, retval]IBodyPart** ppPart);"
 
-	<virtual stdcall: hresult 23 sdword IBodyPart**>
+	<virtual stdcall: hresult 23 int32 IBodyPart**>
 	^self invalidCall: _failureCode!
 
 bodyParts

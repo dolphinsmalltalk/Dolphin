@@ -88,7 +88,7 @@ Characters: pwchChars cchChars: cchChars
 			[in]unsigned short* pwchChars,
 			[in]int cchChars);"
 
-	<virtual stdcall: hresult 11 word* sdword>
+	<virtual stdcall: hresult 11 uint16* int32>
 	^self invalidCall: _failureCode!
 
 EndDocument
@@ -110,7 +110,7 @@ EndElement: pwchNamespaceUri cchNamespaceUri: cchNamespaceUri pwchLocalName: pwc
 			[in]unsigned short* pwchQName,
 			[in]int cchQName);"
 
-	<virtual stdcall: hresult 10 word* sdword word* sdword word* sdword>
+	<virtual stdcall: hresult 10 uint16* int32 uint16* int32 uint16* int32>
 	^self invalidCall: _failureCode!
 
 EndPrefixMapping: pwchPrefix cchPrefix: cchPrefix
@@ -120,7 +120,7 @@ EndPrefixMapping: pwchPrefix cchPrefix: cchPrefix
 			[in]unsigned short* pwchPrefix,
 			[in]int cchPrefix);"
 
-	<virtual stdcall: hresult 8 word* sdword>
+	<virtual stdcall: hresult 8 uint16* int32>
 	^self invalidCall: _failureCode!
 
 IgnorableWhitespace: pwchChars cchChars: cchChars
@@ -130,7 +130,7 @@ IgnorableWhitespace: pwchChars cchChars: cchChars
 			[in]unsigned short* pwchChars,
 			[in]int cchChars);"
 
-	<virtual stdcall: hresult 12 word* sdword>
+	<virtual stdcall: hresult 12 uint16* int32>
 	^self invalidCall: _failureCode!
 
 ProcessingInstruction: pwchTarget cchTarget: cchTarget pwchData: pwchData cchData: cchData
@@ -142,7 +142,7 @@ ProcessingInstruction: pwchTarget cchTarget: cchTarget pwchData: pwchData cchDat
 			[in]unsigned short* pwchData,
 			[in]int cchData);"
 
-	<virtual stdcall: hresult 13 word* sdword word* sdword>
+	<virtual stdcall: hresult 13 uint16* int32 uint16* int32>
 	^self invalidCall: _failureCode!
 
 PutDocumentLocator: pLocator
@@ -161,7 +161,7 @@ SkippedEntity: pwchName cchName: cchName
 			[in]unsigned short* pwchName,
 			[in]int cchName);"
 
-	<virtual stdcall: hresult 14 word* sdword>
+	<virtual stdcall: hresult 14 uint16* int32>
 	^self invalidCall: _failureCode!
 
 StartDocument
@@ -184,7 +184,7 @@ StartElement: pwchNamespaceUri cchNamespaceUri: cchNamespaceUri pwchLocalName: p
 			[in]int cchQName,
 			[in]ISAXAttributes* pAttributes);"
 
-	<virtual stdcall: hresult 9 word* sdword word* sdword word* sdword ISAXAttributes*>
+	<virtual stdcall: hresult 9 uint16* int32 uint16* int32 uint16* int32 ISAXAttributes*>
 	^self invalidCall: _failureCode!
 
 StartPrefixMapping: pwchPrefix cchPrefix: cchPrefix pwchUri: pwchUri cchUri: cchUri
@@ -196,7 +196,7 @@ StartPrefixMapping: pwchPrefix cchPrefix: cchPrefix pwchUri: pwchUri cchUri: cch
 			[in]unsigned short* pwchUri,
 			[in]int cchUri);"
 
-	<virtual stdcall: hresult 7 word* sdword word* sdword>
+	<virtual stdcall: hresult 7 uint16* int32 uint16* int32>
 	^self invalidCall: _failureCode! !
 !MSXML.ISAXContentHandler categoriesForMethods!
 Characters:cchChars:!**auto generated**!COM Interfaces-ISAXContentHandler!public! !

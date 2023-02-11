@@ -45,7 +45,7 @@ get_IsSuccess: isSuccess
 		HRESULT __stdcall IsSuccess(
 			[out, retval]long* IsSuccess);"
 
-	<virtual stdcall: hresult 4 sdword*>
+	<virtual stdcall: hresult 4 int32*>
 	^self invalidCall: _failureCode!
 
 get_NavigationId: navigationId
@@ -54,7 +54,7 @@ get_NavigationId: navigationId
 		HRESULT __stdcall NavigationId(
 			[out, retval]unsigned __int64* NavigationId);"
 
-	<virtual stdcall: hresult 6 qword*>
+	<virtual stdcall: hresult 6 uint64*>
 	^self invalidCall: _failureCode!
 
 get_WebErrorStatus: webErrorStatus
@@ -63,7 +63,7 @@ get_WebErrorStatus: webErrorStatus
 		HRESULT __stdcall WebErrorStatus(
 			[out, retval]COREWEBVIEW2_WEB_ERROR_STATUS* WebErrorStatus);"
 
-	<virtual stdcall: hresult 5 sdword*>
+	<virtual stdcall: hresult 5 int32*>
 	^self invalidCall: _failureCode!
 
 httpStatusCode

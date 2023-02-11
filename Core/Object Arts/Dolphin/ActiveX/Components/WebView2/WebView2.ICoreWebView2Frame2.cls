@@ -79,7 +79,7 @@ Add_ContentLoading: eventHandler token: token
 			[in]ICoreWebView2FrameContentLoadingEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 14 ICoreWebView2FrameContentLoadingEventHandler* sqword*>
+	<virtual stdcall: hresult 14 ICoreWebView2FrameContentLoadingEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 Add_DOMContentLoaded: eventHandler token: token
@@ -89,7 +89,7 @@ Add_DOMContentLoaded: eventHandler token: token
 			[in]ICoreWebView2FrameDOMContentLoadedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 18 ICoreWebView2FrameDOMContentLoadedEventHandler* sqword*>
+	<virtual stdcall: hresult 18 ICoreWebView2FrameDOMContentLoadedEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 Add_NavigationCompleted: eventHandler token: token
@@ -99,7 +99,7 @@ Add_NavigationCompleted: eventHandler token: token
 			[in]ICoreWebView2FrameNavigationCompletedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 16 ICoreWebView2FrameNavigationCompletedEventHandler* sqword*>
+	<virtual stdcall: hresult 16 ICoreWebView2FrameNavigationCompletedEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 Add_NavigationStarting: eventHandler token: token
@@ -109,7 +109,7 @@ Add_NavigationStarting: eventHandler token: token
 			[in]ICoreWebView2FrameNavigationStartingEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 12 ICoreWebView2FrameNavigationStartingEventHandler* sqword*>
+	<virtual stdcall: hresult 12 ICoreWebView2FrameNavigationStartingEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 Add_WebMessageReceived: handler token: token
@@ -119,7 +119,7 @@ Add_WebMessageReceived: handler token: token
 			[in]ICoreWebView2FrameWebMessageReceivedEventHandler* handler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 23 ICoreWebView2FrameWebMessageReceivedEventHandler* sqword*>
+	<virtual stdcall: hresult 23 ICoreWebView2FrameWebMessageReceivedEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 ExecuteScript: javaScript handler: handler
@@ -156,7 +156,7 @@ Remove_ContentLoading: token
 		HRESULT __stdcall remove_ContentLoading(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 15 sqword>
+	<virtual stdcall: hresult 15 int64>
 	^self invalidCall: _failureCode!
 
 Remove_DOMContentLoaded: token
@@ -165,7 +165,7 @@ Remove_DOMContentLoaded: token
 		HRESULT __stdcall remove_DOMContentLoaded(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 19 sqword>
+	<virtual stdcall: hresult 19 int64>
 	^self invalidCall: _failureCode!
 
 Remove_NavigationCompleted: token
@@ -174,7 +174,7 @@ Remove_NavigationCompleted: token
 		HRESULT __stdcall remove_NavigationCompleted(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 17 sqword>
+	<virtual stdcall: hresult 17 int64>
 	^self invalidCall: _failureCode!
 
 Remove_NavigationStarting: token
@@ -183,7 +183,7 @@ Remove_NavigationStarting: token
 		HRESULT __stdcall remove_NavigationStarting(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 13 sqword>
+	<virtual stdcall: hresult 13 int64>
 	^self invalidCall: _failureCode!
 
 Remove_WebMessageReceived: token
@@ -192,7 +192,7 @@ Remove_WebMessageReceived: token
 		HRESULT __stdcall remove_WebMessageReceived(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 24 sqword>
+	<virtual stdcall: hresult 24 int64>
 	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2Frame2 categoriesForMethods!
 Add_ContentLoading:token:!**auto generated**!COM Interfaces-ICoreWebView2Frame2!events!private! !

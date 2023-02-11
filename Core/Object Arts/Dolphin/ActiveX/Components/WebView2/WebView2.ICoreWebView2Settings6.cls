@@ -39,7 +39,7 @@ get_IsSwipeNavigationEnabled: enabled
 		HRESULT __stdcall IsSwipeNavigationEnabled(
 			[out, retval]long* enabled);"
 
-	<virtual stdcall: hresult 32 sdword*>
+	<virtual stdcall: hresult 32 int32*>
 	^self invalidCall: _failureCode!
 
 put_IsSwipeNavigationEnabled: enabled
@@ -49,7 +49,7 @@ put_IsSwipeNavigationEnabled: enabled
 		HRESULT __stdcall IsSwipeNavigationEnabled(
 			[in]long enabled);"
 
-	<virtual stdcall: hresult 33 sdword>
+	<virtual stdcall: hresult 33 int32>
 	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2Settings6 categoriesForMethods!
 get_IsSwipeNavigationEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings6!private! !

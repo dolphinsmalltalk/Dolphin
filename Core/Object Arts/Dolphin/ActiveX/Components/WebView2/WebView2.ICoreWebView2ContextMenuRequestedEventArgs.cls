@@ -74,7 +74,7 @@ get_Handled: value
 		HRESULT __stdcall Handled(
 			[out, retval]long* value);"
 
-	<virtual stdcall: hresult 10 sdword*>
+	<virtual stdcall: hresult 10 int32*>
 	^self invalidCall: _failureCode!
 
 get_Location: value
@@ -101,7 +101,7 @@ get_SelectedCommandId: value
 		HRESULT __stdcall SelectedCommandId(
 			[out, retval]int* value);"
 
-	<virtual stdcall: hresult 8 sdword*>
+	<virtual stdcall: hresult 8 int32*>
 	^self invalidCall: _failureCode!
 
 getDeferral
@@ -160,7 +160,7 @@ put_Handled: value
 		HRESULT __stdcall Handled(
 			[in]long value);"
 
-	<virtual stdcall: hresult 9 sdword>
+	<virtual stdcall: hresult 9 int32>
 	^self invalidCall: _failureCode!
 
 put_SelectedCommandId: value
@@ -170,7 +170,7 @@ put_SelectedCommandId: value
 		HRESULT __stdcall SelectedCommandId(
 			[in]int value);"
 
-	<virtual stdcall: hresult 7 sdword>
+	<virtual stdcall: hresult 7 int32>
 	^self invalidCall: _failureCode!
 
 selectedCommandId

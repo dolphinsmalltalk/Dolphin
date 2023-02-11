@@ -147,7 +147,7 @@ BeginTrans: transactionLevel
 		HRESULT __stdcall BeginTrans(
 			[out, retval]long* TransactionLevel);"
 
-	<virtual stdcall: hresult 18 sdword*>
+	<virtual stdcall: hresult 18 int32*>
 	^self invalidCall: _failureCode!
 
 Close
@@ -266,7 +266,7 @@ Execute: commandText RecordsAffected: recordsAffected Options: options ppiRset: 
 			[in, defaultvalue(-1)]long Options,
 			[out, retval]_Recordset** ppiRset);"
 
-	<virtual stdcall: hresult 17 bstr variant* sdword _Recordset**>
+	<virtual stdcall: hresult 17 bstr variant* int32 _Recordset**>
 	^self invalidCall: _failureCode!
 
 get_Attributes: plAttr
@@ -275,7 +275,7 @@ get_Attributes: plAttr
 		HRESULT __stdcall Attributes(
 			[out, retval]long* plAttr);"
 
-	<virtual stdcall: hresult 27 sdword*>
+	<virtual stdcall: hresult 27 int32*>
 	^self invalidCall: _failureCode!
 
 get_CommandTimeout: plTimeout
@@ -284,7 +284,7 @@ get_CommandTimeout: plTimeout
 		HRESULT __stdcall CommandTimeout(
 			[out, retval]long* plTimeout);"
 
-	<virtual stdcall: hresult 11 sdword*>
+	<virtual stdcall: hresult 11 int32*>
 	^self invalidCall: _failureCode!
 
 get_ConnectionString: pbstr
@@ -302,7 +302,7 @@ get_ConnectionTimeout: plTimeout
 		HRESULT __stdcall ConnectionTimeout(
 			[out, retval]long* plTimeout);"
 
-	<virtual stdcall: hresult 13 sdword*>
+	<virtual stdcall: hresult 13 int32*>
 	^self invalidCall: _failureCode!
 
 get_CursorLocation: plCursorLoc
@@ -311,7 +311,7 @@ get_CursorLocation: plCursorLoc
 		HRESULT __stdcall CursorLocation(
 			[out, retval]CursorLocationEnum* plCursorLoc);"
 
-	<virtual stdcall: hresult 29 sdword*>
+	<virtual stdcall: hresult 29 int32*>
 	^self invalidCall: _failureCode!
 
 get_DefaultDatabase: pbstr
@@ -338,7 +338,7 @@ get_IsolationLevel: level
 		HRESULT __stdcall IsolationLevel(
 			[out, retval]IsolationLevelEnum* Level);"
 
-	<virtual stdcall: hresult 25 sdword*>
+	<virtual stdcall: hresult 25 int32*>
 	^self invalidCall: _failureCode!
 
 get_Mode: plMode
@@ -347,7 +347,7 @@ get_Mode: plMode
 		HRESULT __stdcall Mode(
 			[out, retval]ConnectModeEnum* plMode);"
 
-	<virtual stdcall: hresult 31 sdword*>
+	<virtual stdcall: hresult 31 int32*>
 	^self invalidCall: _failureCode!
 
 get_Provider: pbstr
@@ -365,7 +365,7 @@ get_State: plObjState
 		HRESULT __stdcall State(
 			[out, retval]long* plObjState);"
 
-	<virtual stdcall: hresult 35 sdword*>
+	<virtual stdcall: hresult 35 int32*>
 	^self invalidCall: _failureCode!
 
 get_Version: pbstr
@@ -442,7 +442,7 @@ Open: connectionString UserID: userID Password: password Options: options
 			[in, defaultvalue('')]BSTR Password,
 			[in, defaultvalue(-1)]long Options);"
 
-	<virtual stdcall: hresult 21 bstr bstr bstr sdword>
+	<virtual stdcall: hresult 21 bstr bstr bstr int32>
 	^self invalidCall: _failureCode!
 
 openSchema: schema
@@ -475,7 +475,7 @@ OpenSchema: schema Restrictions: restrictions SchemaID: schemaID pprset: pprset
 			[in, optional]VARIANT SchemaID,
 			[out, retval]_Recordset** pprset);"
 
-	<virtual stdcall: hresult 36 sdword variant variant _Recordset**>
+	<virtual stdcall: hresult 36 int32 variant variant _Recordset**>
 	^self invalidCall: _failureCode!
 
 provider
@@ -498,7 +498,7 @@ put_Attributes: plAttr
 		HRESULT __stdcall Attributes(
 			[in]long plAttr);"
 
-	<virtual stdcall: hresult 28 sdword>
+	<virtual stdcall: hresult 28 int32>
 	^self invalidCall: _failureCode!
 
 put_CommandTimeout: plTimeout
@@ -508,7 +508,7 @@ put_CommandTimeout: plTimeout
 		HRESULT __stdcall CommandTimeout(
 			[in]long plTimeout);"
 
-	<virtual stdcall: hresult 12 sdword>
+	<virtual stdcall: hresult 12 int32>
 	^self invalidCall: _failureCode!
 
 put_ConnectionString: pbstr
@@ -528,7 +528,7 @@ put_ConnectionTimeout: plTimeout
 		HRESULT __stdcall ConnectionTimeout(
 			[in]long plTimeout);"
 
-	<virtual stdcall: hresult 14 sdword>
+	<virtual stdcall: hresult 14 int32>
 	^self invalidCall: _failureCode!
 
 put_CursorLocation: plCursorLoc
@@ -538,7 +538,7 @@ put_CursorLocation: plCursorLoc
 		HRESULT __stdcall CursorLocation(
 			[in]CursorLocationEnum plCursorLoc);"
 
-	<virtual stdcall: hresult 30 sdword>
+	<virtual stdcall: hresult 30 int32>
 	^self invalidCall: _failureCode!
 
 put_DefaultDatabase: pbstr
@@ -558,7 +558,7 @@ put_IsolationLevel: level
 		HRESULT __stdcall IsolationLevel(
 			[in]IsolationLevelEnum Level);"
 
-	<virtual stdcall: hresult 26 sdword>
+	<virtual stdcall: hresult 26 int32>
 	^self invalidCall: _failureCode!
 
 put_Mode: plMode
@@ -568,7 +568,7 @@ put_Mode: plMode
 		HRESULT __stdcall Mode(
 			[in]ConnectModeEnum plMode);"
 
-	<virtual stdcall: hresult 32 sdword>
+	<virtual stdcall: hresult 32 int32>
 	^self invalidCall: _failureCode!
 
 put_Provider: pbstr

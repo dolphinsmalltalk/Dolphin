@@ -19,7 +19,7 @@ closeAlgorithmProvider: aAlgorithmHandle flags: aFlags
 		_Inout_	BCRYPT_ALG_HANDLE	hAlgorithm,
 		_In_		ULONG				dwFlags );"
 
-	<stdcall: ntstatus BCryptCloseAlgorithmProvider handle dword>
+	<stdcall: ntstatus BCryptCloseAlgorithmProvider handle uint32>
 	^self invalidCall: _failureCode!
 
 createHash: aAlgorithmHandle hashHandle: aHashHandle hashObject: aHashObject hashObjectSize: aHashObjectSize secret: aSecret secretSize: aSecretSize flags: aFlags
@@ -34,7 +34,7 @@ createHash: aAlgorithmHandle hashHandle: aHashHandle hashObject: aHashObject has
 		_In_		ULONG				cbSecret,
 		_In_		ULONG				dwFlags );"
 
-	<stdcall: ntstatus BCryptCreateHash handle handle* byte* dword byte* dword dword>
+	<stdcall: ntstatus BCryptCreateHash handle handle* uint8* uint32 uint8* uint32 uint32>
 	^self invalidCall: _failureCode!
 
 destroyHash: aHashHandle
@@ -55,7 +55,7 @@ finishHash: aHashHandle output: aOutput outputSize: aOutputSize flags: aFlags
 		_In_		ULONG				cbOutput,
 		_In_		ULONG				dwFlags );"
 
-	<stdcall: ntstatus BCryptFinishHash handle byte* dword dword>
+	<stdcall: ntstatus BCryptFinishHash handle uint8* uint32 uint32>
 	^self invalidCall: _failureCode!
 
 getProperty: aHandle property: aProperty output: aOutput outputSize: aOutputSize resultSize: aResultSize flags: aFlags
@@ -69,7 +69,7 @@ getProperty: aHandle property: aProperty output: aOutput outputSize: aOutputSize
 		_Out_	ULONG			*pcbResult,
 		_In_		ULONG			dwFlags ); "
 
-	<stdcall: ntstatus BCryptGetProperty handle lpwstr byte* dword dword* dword>
+	<stdcall: ntstatus BCryptGetProperty handle lpwstr uint8* uint32 uint32* uint32>
 	^self invalidCall: _failureCode!
 
 hashData: aHashHandle input: aInput inputSize: aInputSize flags: aFlags
@@ -81,7 +81,7 @@ hashData: aHashHandle input: aInput inputSize: aInputSize flags: aFlags
 		_In_		ULONG				cbInput,
 		_In_		ULONG				dwFlags );"
 
-	<stdcall: ntstatus BCryptHashData handle byte* dword dword>
+	<stdcall: ntstatus BCryptHashData handle uint8* uint32 uint32>
 	^self invalidCall: _failureCode!
 
 openAlgorithmProvider: aHandle id: anId implementation: anImplementation flags: aFlags
@@ -93,7 +93,7 @@ openAlgorithmProvider: aHandle id: anId implementation: anImplementation flags: 
 		_In_		LPCWSTR				pszImplementation,
 		_In_		DWORD				dwFlags );"
 
-	<stdcall: ntstatus BCryptOpenAlgorithmProvider handle* lpwstr lpwstr dword>
+	<stdcall: ntstatus BCryptOpenAlgorithmProvider handle* lpwstr lpwstr uint32>
 	^self invalidCall: _failureCode!
 
 shaAlgorithmHandle

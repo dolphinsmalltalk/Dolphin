@@ -59,7 +59,7 @@ Add_RasterizationScaleChanged: eventHandler token: token
 			[in]ICoreWebView2RasterizationScaleChangedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 33 ICoreWebView2RasterizationScaleChangedEventHandler* sqword*>
+	<virtual stdcall: hresult 33 ICoreWebView2RasterizationScaleChangedEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 get_BoundsMode: boundsMode
@@ -68,7 +68,7 @@ get_BoundsMode: boundsMode
 		HRESULT __stdcall BoundsMode(
 			[out, retval]COREWEBVIEW2_BOUNDS_MODE* BoundsMode);"
 
-	<virtual stdcall: hresult 35 sdword*>
+	<virtual stdcall: hresult 35 int32*>
 	^self invalidCall: _failureCode!
 
 get_RasterizationScale: scale
@@ -86,7 +86,7 @@ get_ShouldDetectMonitorScaleChanges: value
 		HRESULT __stdcall ShouldDetectMonitorScaleChanges(
 			[out, retval]long* value);"
 
-	<virtual stdcall: hresult 31 sdword*>
+	<virtual stdcall: hresult 31 int32*>
 	^self invalidCall: _failureCode!
 
 put_BoundsMode: boundsMode
@@ -96,7 +96,7 @@ put_BoundsMode: boundsMode
 		HRESULT __stdcall BoundsMode(
 			[in]COREWEBVIEW2_BOUNDS_MODE BoundsMode);"
 
-	<virtual stdcall: hresult 36 sdword>
+	<virtual stdcall: hresult 36 int32>
 	^self invalidCall: _failureCode!
 
 put_RasterizationScale: scale
@@ -116,7 +116,7 @@ put_ShouldDetectMonitorScaleChanges: value
 		HRESULT __stdcall ShouldDetectMonitorScaleChanges(
 			[in]long value);"
 
-	<virtual stdcall: hresult 32 sdword>
+	<virtual stdcall: hresult 32 int32>
 	^self invalidCall: _failureCode!
 
 Remove_RasterizationScaleChanged: token
@@ -125,7 +125,7 @@ Remove_RasterizationScaleChanged: token
 		HRESULT __stdcall remove_RasterizationScaleChanged(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 34 sqword>
+	<virtual stdcall: hresult 34 int64>
 	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2Controller3 categoriesForMethods!
 Add_RasterizationScaleChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2Controller3!private! !

@@ -57,7 +57,7 @@ OnViewChange: dwAspect lindex: lindex
 			[in]unsigned long dwAspect,
 			[in]long lindex);"
 
-	<virtual stdcall: hresult 5 dword sdword>
+	<virtual stdcall: hresult 5 uint32 int32>
 	^self invalidCall: _failureCode! !
 !OS.COM.IAdviseSink categoriesForMethods!
 OnClose!**auto generated**!COM Interfaces-IAdviseSink!public! !

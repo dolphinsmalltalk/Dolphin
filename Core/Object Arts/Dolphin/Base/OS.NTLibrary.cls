@@ -25,11 +25,11 @@ isWine
 	^isWine!
 
 ntQueryTimerResolution: pulMinimumResolution maximum: pulMaximumResolution actual: pulActualResolution
-	<stdcall: sdword NtQueryTimerResolution lpvoid lpvoid lpvoid>
+	<stdcall: int32 NtQueryTimerResolution lpvoid lpvoid lpvoid>
 	^self invalidCall: _failureCode!
 
 rtlNtStatusToDosError: anInteger
-	<stdcall: dword RtlNtStatusToDosError ntstatus>
+	<stdcall: uint32 RtlNtStatusToDosError ntstatus>
 	^self invalidCall: _failureCode!
 
 setTimerResolution: anInteger set: aBoolean actualResolution: actualResolution
@@ -41,7 +41,7 @@ setTimerResolution: anInteger set: aBoolean actualResolution: actualResolution
 			IN BOOLEAN Set,
 			OUT PULONG ActualResolution"
 
-	<stdcall: dword NtSetTimerResolution dword bool dword*>
+	<stdcall: uint32 NtSetTimerResolution uint32 bool uint32*>
 	^self invalidCall: _failureCode!
 
 wineGetVersion

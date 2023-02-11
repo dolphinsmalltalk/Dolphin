@@ -53,7 +53,7 @@ Save: destination PersistFormat: persistFormat
 			[in, optional]VARIANT Destination,
 			[in, defaultvalue(0)]PersistFormatEnum PersistFormat);"
 
-	<virtual stdcall: hresult 85 variant sdword>
+	<virtual stdcall: hresult 85 variant int32>
 	^self invalidCall: _failureCode! !
 !ADODB._Recordset categoriesForMethods!
 save!**auto generated**!methods!public! !

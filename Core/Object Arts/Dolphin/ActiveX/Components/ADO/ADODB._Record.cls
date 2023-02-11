@@ -172,7 +172,7 @@ CopyRecord: source Destination: destination UserName: userName Password: passwor
 			[in, defaultvalue(false)]VARIANT_BOOL Async,
 			[out, retval]BSTR* pbstrNewURL);"
 
-	<virtual stdcall: hresult 20 bstr bstr bstr bstr sdword varbool bstr*>
+	<virtual stdcall: hresult 20 bstr bstr bstr bstr int32 varbool bstr*>
 	^self invalidCall: _failureCode!
 
 deleteRecord
@@ -225,7 +225,7 @@ get_Mode: pMode
 		HRESULT __stdcall Mode(
 			[out, retval]ConnectModeEnum* pMode);"
 
-	<virtual stdcall: hresult 16 sdword*>
+	<virtual stdcall: hresult 16 int32*>
 	^self invalidCall: _failureCode!
 
 get_ParentURL: pbstrParentURL
@@ -243,7 +243,7 @@ get_RecordType: ptype
 		HRESULT __stdcall RecordType(
 			[out, retval]RecordTypeEnum* ptype);"
 
-	<virtual stdcall: hresult 25 sdword*>
+	<virtual stdcall: hresult 25 int32*>
 	^self invalidCall: _failureCode!
 
 get_Source: pvar
@@ -261,7 +261,7 @@ get_State: pState
 		HRESULT __stdcall State(
 			[out, retval]ObjectStateEnum* pState);"
 
-	<virtual stdcall: hresult 12 sdword*>
+	<virtual stdcall: hresult 12 int32*>
 	^self invalidCall: _failureCode!
 
 getChildren
@@ -344,7 +344,7 @@ MoveRecord: source Destination: destination UserName: userName Password: passwor
 			[in, defaultvalue(false)]VARIANT_BOOL Async,
 			[out, retval]BSTR* pbstrNewURL);"
 
-	<virtual stdcall: hresult 19 bstr bstr bstr bstr sdword varbool bstr*>
+	<virtual stdcall: hresult 19 bstr bstr bstr bstr int32 varbool bstr*>
 	^self invalidCall: _failureCode!
 
 open
@@ -384,7 +384,7 @@ Open: source ActiveConnection: activeConnection Mode: mode CreateOptions: create
 			[in, defaultvalue('')]BSTR UserName,
 			[in, defaultvalue('')]BSTR Password);"
 
-	<virtual stdcall: hresult 22 variant variant sdword sdword sdword bstr bstr>
+	<virtual stdcall: hresult 22 variant variant int32 int32 int32 bstr bstr>
 	^self invalidCall: _failureCode!
 
 parentURL
@@ -412,7 +412,7 @@ put_Mode: pMode
 		HRESULT __stdcall Mode(
 			[in]ConnectModeEnum pMode);"
 
-	<virtual stdcall: hresult 17 sdword>
+	<virtual stdcall: hresult 17 int32>
 	^self invalidCall: _failureCode!
 
 put_Source: pvar

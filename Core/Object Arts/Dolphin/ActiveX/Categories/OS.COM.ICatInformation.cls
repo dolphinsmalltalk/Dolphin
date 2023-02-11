@@ -102,7 +102,7 @@ EnumCategories: lcid ppenumCategoryInfo: ppenumCategoryInfo
 			[out] IEnumCATEGORYINFO** ppenumCategoryInfo);
 	"
 
-	<virtual stdcall: hresult 4 dword void**>
+	<virtual stdcall: hresult 4 uint32 void**>
 	^self invalidCall: _failureCode!
 
 enumClassesOfCategories: implementedCategoryGUIDs requiring: requiredCategoryGUIDs
@@ -142,7 +142,7 @@ EnumClassesOfCategories: cImplemented rgcatidImpl: rgcatidImpl cRequired: cRequi
 			[out] IEnumGUID** ppenumClsid);
 	"
 
-	<virtual stdcall: hresult 6 dword guid* dword guid* void**>
+	<virtual stdcall: hresult 6 uint32 guid* uint32 guid* void**>
 	^self invalidCall: _failureCode!
 
 EnumImplCategoriesOfClass: rclsid ppenumCatid: ppenumCatid
@@ -176,7 +176,7 @@ GetCategoryDesc: rcatid lcid: lcid pszDesc: pszDesc
 			[out] LPWSTR* pszDesc);
 	"
 
-	<virtual stdcall: hresult 5 guid* dword lpwstr*>
+	<virtual stdcall: hresult 5 guid* uint32 lpwstr*>
 	^self invalidCall: _failureCode!
 
 IsClassOfCategories: rclsid cImplemented: cImplemented rgcatidImpl: rgcatidImpl cRequired: cRequired rgcatidReq: rgcatidReq
@@ -190,7 +190,7 @@ IsClassOfCategories: rclsid cImplemented: cImplemented rgcatidImpl: rgcatidImpl 
 			[in] GUID* rgcatidReq);
 	"
 
-	<virtual stdcall: hresult 7 guid* dword guid* dword guid*>
+	<virtual stdcall: hresult 7 guid* uint32 guid* uint32 guid*>
 	^self invalidCall: _failureCode!
 
 requiredCategoriesOfClass: rclsid

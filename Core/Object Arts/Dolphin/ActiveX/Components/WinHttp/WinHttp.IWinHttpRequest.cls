@@ -131,7 +131,7 @@ get_Option: option value: value
 			[in]WinHttpRequestOption Option,
 			[out, retval]VARIANT* Value);"
 
-	<virtual stdcall: hresult 20 sdword variant*>
+	<virtual stdcall: hresult 20 int32 variant*>
 	^self invalidCall: _failureCode!
 
 get_ResponseBody: body
@@ -167,7 +167,7 @@ get_Status: status
 		HRESULT __stdcall Status(
 			[out, retval]long* Status);"
 
-	<virtual stdcall: hresult 15 sdword*>
+	<virtual stdcall: hresult 15 int32*>
 	^self invalidCall: _failureCode!
 
 get_StatusText: status
@@ -279,7 +279,7 @@ put_Option: option value: value
 			[in]WinHttpRequestOption Option,
 			[in]VARIANT Value);"
 
-	<virtual stdcall: hresult 21 sdword variant>
+	<virtual stdcall: hresult 21 int32 variant>
 	^self invalidCall: _failureCode!
 
 responseBody
@@ -345,7 +345,7 @@ SetAutoLogonPolicy: autoLogonPolicy
 		HRESULT __stdcall SetAutoLogonPolicy(
 			[in]WinHttpRequestAutoLogonPolicy AutoLogonPolicy);"
 
-	<virtual stdcall: hresult 26 sdword>
+	<virtual stdcall: hresult 26 int32>
 	^self invalidCall: _failureCode!
 
 setClientCertificate: clientCertificate
@@ -382,7 +382,7 @@ SetCredentials: userName password: password flags: flags
 			[in]BSTR Password,
 			[in]HTTPREQUEST_SETCREDENTIALS_FLAGS Flags);"
 
-	<virtual stdcall: hresult 9 bstr bstr sdword>
+	<virtual stdcall: hresult 9 bstr bstr int32>
 	^self invalidCall: _failureCode!
 
 setProxy: proxySetting
@@ -412,7 +412,7 @@ SetProxy: proxySetting proxyServer: proxyServer bypassList: bypassList
 			[in, optional]VARIANT ProxyServer,
 			[in, optional]VARIANT BypassList);"
 
-	<virtual stdcall: hresult 8 sdword variant variant>
+	<virtual stdcall: hresult 8 int32 variant variant>
 	^self invalidCall: _failureCode!
 
 setRequestHeader: header value: value
@@ -452,7 +452,7 @@ SetTimeouts: resolveTimeout connectTimeout: connectTimeout sendTimeout: sendTime
 			[in]long SendTimeout,
 			[in]long ReceiveTimeout);"
 
-	<virtual stdcall: hresult 24 sdword sdword sdword sdword>
+	<virtual stdcall: hresult 24 int32 int32 int32 int32>
 	^self invalidCall: _failureCode!
 
 status

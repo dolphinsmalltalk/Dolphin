@@ -116,7 +116,7 @@ get_IsHttpOnly: isHttpOnly
 		HRESULT __stdcall IsHttpOnly(
 			[out, retval]long* IsHttpOnly);"
 
-	<virtual stdcall: hresult 11 sdword*>
+	<virtual stdcall: hresult 11 int32*>
 	^self invalidCall: _failureCode!
 
 get_IsSecure: isSecure
@@ -125,7 +125,7 @@ get_IsSecure: isSecure
 		HRESULT __stdcall IsSecure(
 			[out, retval]long* IsSecure);"
 
-	<virtual stdcall: hresult 15 sdword*>
+	<virtual stdcall: hresult 15 int32*>
 	^self invalidCall: _failureCode!
 
 get_IsSession: isSession
@@ -134,7 +134,7 @@ get_IsSession: isSession
 		HRESULT __stdcall IsSession(
 			[out, retval]long* IsSession);"
 
-	<virtual stdcall: hresult 17 sdword*>
+	<virtual stdcall: hresult 17 int32*>
 	^self invalidCall: _failureCode!
 
 get_name: name
@@ -161,7 +161,7 @@ get_SameSite: sameSite
 		HRESULT __stdcall SameSite(
 			[out, retval]COREWEBVIEW2_COOKIE_SAME_SITE_KIND* SameSite);"
 
-	<virtual stdcall: hresult 13 sdword*>
+	<virtual stdcall: hresult 13 int32*>
 	^self invalidCall: _failureCode!
 
 get_value: value
@@ -254,7 +254,7 @@ put_IsHttpOnly: isHttpOnly
 		HRESULT __stdcall IsHttpOnly(
 			[in]long IsHttpOnly);"
 
-	<virtual stdcall: hresult 12 sdword>
+	<virtual stdcall: hresult 12 int32>
 	^self invalidCall: _failureCode!
 
 put_IsSecure: isSecure
@@ -264,7 +264,7 @@ put_IsSecure: isSecure
 		HRESULT __stdcall IsSecure(
 			[in]long IsSecure);"
 
-	<virtual stdcall: hresult 16 sdword>
+	<virtual stdcall: hresult 16 int32>
 	^self invalidCall: _failureCode!
 
 put_SameSite: sameSite
@@ -274,7 +274,7 @@ put_SameSite: sameSite
 		HRESULT __stdcall SameSite(
 			[in]COREWEBVIEW2_COOKIE_SAME_SITE_KIND SameSite);"
 
-	<virtual stdcall: hresult 14 sdword>
+	<virtual stdcall: hresult 14 int32>
 	^self invalidCall: _failureCode!
 
 put_value: value

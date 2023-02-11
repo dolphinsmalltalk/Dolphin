@@ -39,7 +39,7 @@ get_NumArgs: pcArgs
 		HRESULT __stdcall NumArgs(
 			[out, retval]long* pcArgs);"
 
-	<virtual stdcall: hresult 9 sdword*>
+	<virtual stdcall: hresult 9 int32*>
 	^self invalidCall: _failureCode!
 
 hasReturnValue

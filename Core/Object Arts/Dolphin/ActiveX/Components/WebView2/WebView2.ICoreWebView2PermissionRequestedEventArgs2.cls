@@ -39,7 +39,7 @@ get_Handled: handled
 		HRESULT __stdcall Handled(
 			[out, retval]long* Handled);"
 
-	<virtual stdcall: hresult 10 sdword*>
+	<virtual stdcall: hresult 10 int32*>
 	^self invalidCall: _failureCode!
 
 handled
@@ -62,7 +62,7 @@ put_Handled: handled
 		HRESULT __stdcall Handled(
 			[in]long Handled);"
 
-	<virtual stdcall: hresult 11 sdword>
+	<virtual stdcall: hresult 11 int32>
 	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2PermissionRequestedEventArgs2 categoriesForMethods!
 get_Handled:!**auto generated**!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs2!private! !

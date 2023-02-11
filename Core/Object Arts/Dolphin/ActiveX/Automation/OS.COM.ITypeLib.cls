@@ -33,7 +33,7 @@ FindName: findName lHashVal: lHashVal ppTInfo: ppTInfo rgMemId: rgMemId pcFound:
 			[in, out] unsigned short* pcFound);
 	"
 
-	<virtual stdcall: hresult 12 lpwstr dword lppvoid sdword* dword*>
+	<virtual stdcall: hresult 12 lpwstr uint32 lppvoid int32* uint32*>
 	^self invalidCall: _failureCode!
 
 getAllCustData
@@ -56,7 +56,7 @@ GetDocumentation: index pBstrName: pBstrName pBstrDocString: pBstrDocString pdwH
 	Note that we deliberately return the HRESULT code as an integer value rather than having an
 	exception raised."
 
-	<virtual stdcall: sdword 10 sdword lppvoid lppvoid dword* lppvoid>
+	<virtual stdcall: int32 10 int32 lppvoid lppvoid uint32* lppvoid>
 	^self invalidCall: _failureCode!
 
 getLibAttr
@@ -101,7 +101,7 @@ GetTypeComp: getTypeComp
 GetTypeInfo: index ppTInfo: ppTInfo
 	"Callout for the ITypeLib::GetTypeInfo() interface function."
 
-	<virtual stdcall: hresult 5 dword lppvoid>
+	<virtual stdcall: hresult 5 uint32 lppvoid>
 	^self invalidCall: _failureCode!
 
 GetTypeInfoCount
@@ -110,7 +110,7 @@ GetTypeInfoCount
 		DWORD__stdcall GetTypeInfoCount();
 	"
 
-	<virtual stdcall: dword 4>
+	<virtual stdcall: uint32 4>
 	^self invalidCall: _failureCode!
 
 getTypeInfoOfGuid: guid ifNone: exceptionHandler
@@ -136,13 +136,13 @@ GetTypeInfoOfGuid: guid ppTInfo: ppTInfo
 
 	"Modified to return integer code rather than raising an exception here"
 
-	<virtual stdcall: sdword 7 guid* ITypeInfo**>
+	<virtual stdcall: int32 7 guid* ITypeInfo**>
 	^self invalidCall: _failureCode!
 
 GetTypeInfoType: index pTKind: pTKind
 	"Callout for the ITypeLib::GetTypeInfoType() interface function."
 
-	<virtual stdcall: hresult 6 dword sdword*>
+	<virtual stdcall: hresult 6 uint32 int32*>
 	^self invalidCall: _failureCode!
 
 isName: aString
@@ -166,7 +166,7 @@ IsName: szNameBuf lHashVal: lHashVal pfName: pfName
 			[out] BSTR* pBstrLibName);
 	"
 
-	<virtual stdcall: hresult 11 lpwstr dword dword*>
+	<virtual stdcall: hresult 11 lpwstr uint32 uint32*>
 	^self invalidCall: _failureCode!
 
 nameAt: index

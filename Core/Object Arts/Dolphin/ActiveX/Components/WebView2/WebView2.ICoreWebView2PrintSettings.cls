@@ -183,7 +183,7 @@ get_Orientation: orientation
 		HRESULT __stdcall Orientation(
 			[out, retval]COREWEBVIEW2_PRINT_ORIENTATION* Orientation);"
 
-	<virtual stdcall: hresult 4 sdword*>
+	<virtual stdcall: hresult 4 int32*>
 	^self invalidCall: _failureCode!
 
 get_PageHeight: pageHeight
@@ -219,7 +219,7 @@ get_ShouldPrintBackgrounds: shouldPrintBackgrounds
 		HRESULT __stdcall ShouldPrintBackgrounds(
 			[out, retval]long* ShouldPrintBackgrounds);"
 
-	<virtual stdcall: hresult 20 sdword*>
+	<virtual stdcall: hresult 20 int32*>
 	^self invalidCall: _failureCode!
 
 get_ShouldPrintHeaderAndFooter: shouldPrintHeaderAndFooter
@@ -228,7 +228,7 @@ get_ShouldPrintHeaderAndFooter: shouldPrintHeaderAndFooter
 		HRESULT __stdcall ShouldPrintHeaderAndFooter(
 			[out, retval]long* ShouldPrintHeaderAndFooter);"
 
-	<virtual stdcall: hresult 24 sdword*>
+	<virtual stdcall: hresult 24 int32*>
 	^self invalidCall: _failureCode!
 
 get_ShouldPrintSelectionOnly: shouldPrintSelectionOnly
@@ -237,7 +237,7 @@ get_ShouldPrintSelectionOnly: shouldPrintSelectionOnly
 		HRESULT __stdcall ShouldPrintSelectionOnly(
 			[out, retval]long* ShouldPrintSelectionOnly);"
 
-	<virtual stdcall: hresult 22 sdword*>
+	<virtual stdcall: hresult 22 int32*>
 	^self invalidCall: _failureCode!
 
 headerTitle
@@ -422,7 +422,7 @@ put_Orientation: orientation
 		HRESULT __stdcall Orientation(
 			[in]COREWEBVIEW2_PRINT_ORIENTATION Orientation);"
 
-	<virtual stdcall: hresult 5 sdword>
+	<virtual stdcall: hresult 5 int32>
 	^self invalidCall: _failureCode!
 
 put_PageHeight: pageHeight
@@ -462,7 +462,7 @@ put_ShouldPrintBackgrounds: shouldPrintBackgrounds
 		HRESULT __stdcall ShouldPrintBackgrounds(
 			[in]long ShouldPrintBackgrounds);"
 
-	<virtual stdcall: hresult 21 sdword>
+	<virtual stdcall: hresult 21 int32>
 	^self invalidCall: _failureCode!
 
 put_ShouldPrintHeaderAndFooter: shouldPrintHeaderAndFooter
@@ -472,7 +472,7 @@ put_ShouldPrintHeaderAndFooter: shouldPrintHeaderAndFooter
 		HRESULT __stdcall ShouldPrintHeaderAndFooter(
 			[in]long ShouldPrintHeaderAndFooter);"
 
-	<virtual stdcall: hresult 25 sdword>
+	<virtual stdcall: hresult 25 int32>
 	^self invalidCall: _failureCode!
 
 put_ShouldPrintSelectionOnly: shouldPrintSelectionOnly
@@ -482,7 +482,7 @@ put_ShouldPrintSelectionOnly: shouldPrintSelectionOnly
 		HRESULT __stdcall ShouldPrintSelectionOnly(
 			[in]long ShouldPrintSelectionOnly);"
 
-	<virtual stdcall: hresult 23 sdword>
+	<virtual stdcall: hresult 23 int32>
 	^self invalidCall: _failureCode!
 
 scaleFactor

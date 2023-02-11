@@ -21,7 +21,7 @@ OnViewStatusChange: dwViewStatus
 		HRESULT __stdcall OnViewStatusChange(
 			[in]DWORD dwViewStatus);"
 
-	<virtual stdcall: hresult 9 dword>
+	<virtual stdcall: hresult 9 uint32>
 	^self invalidCall: _failureCode! !
 !OS.COM.IAdviseSinkEx categoriesForMethods!
 OnViewStatusChange:!**auto generated**!COM Interfaces-IAdviseSinkEx!public! !

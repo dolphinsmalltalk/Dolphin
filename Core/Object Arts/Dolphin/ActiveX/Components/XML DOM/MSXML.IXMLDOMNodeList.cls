@@ -37,7 +37,7 @@ get_item: index listItem: listItem
 			[in]long index,
 			[out, retval]IXMLDOMNode** listItem);"
 
-	<virtual stdcall: hresult 8 sdword IXMLDOMNode**>
+	<virtual stdcall: hresult 8 int32 IXMLDOMNode**>
 	^self invalidCall: _failureCode!
 
 get_length: listLength
@@ -46,7 +46,7 @@ get_length: listLength
 		HRESULT __stdcall length(
 			[out, retval]long* listLength);"
 
-	<virtual stdcall: hresult 9 sdword*>
+	<virtual stdcall: hresult 9 int32*>
 	^self invalidCall: _failureCode!
 
 isExtensible

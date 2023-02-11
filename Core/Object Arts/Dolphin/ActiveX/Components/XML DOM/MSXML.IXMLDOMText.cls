@@ -30,7 +30,7 @@ SplitText: offset rightHandTextNode: rightHandTextNode
 			[in]long offset,
 			[out, retval]IXMLDOMText** rightHandTextNode);"
 
-	<virtual stdcall: hresult 52 sdword IXMLDOMText**>
+	<virtual stdcall: hresult 52 int32 IXMLDOMText**>
 	^self invalidCall: _failureCode! !
 !MSXML.IXMLDOMText categoriesForMethods!
 splitText:!**auto generated**!methods!public! !

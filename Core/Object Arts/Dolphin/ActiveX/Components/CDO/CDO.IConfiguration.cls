@@ -82,7 +82,7 @@ Load: loadFrom URL: url
 			[in]CdoConfigSource LoadFrom,
 			[in, optional]BSTR URL);"
 
-	<virtual stdcall: hresult 9 sdword bstr>
+	<virtual stdcall: hresult 9 int32 bstr>
 	^self invalidCall: _failureCode!
 
 value

@@ -60,7 +60,7 @@ ClearBrowsingData: dataKinds handler: handler
 			[in]COREWEBVIEW2_BROWSING_DATA_KINDS dataKinds,
 			[in]ICoreWebView2ClearBrowsingDataCompletedHandler* handler);"
 
-	<virtual stdcall: hresult 11 sdword ICoreWebView2ClearBrowsingDataCompletedHandler*>
+	<virtual stdcall: hresult 11 int32 ICoreWebView2ClearBrowsingDataCompletedHandler*>
 	^self invalidCall: _failureCode!
 
 clearBrowsingData: dataKinds thenDo: aMonadicValuable
@@ -90,7 +90,7 @@ ClearBrowsingDataInTimeRange: dataKinds startTime: startTime endTime: endTime ha
 			[in]double endTime,
 			[in]ICoreWebView2ClearBrowsingDataCompletedHandler* handler);"
 
-	<virtual stdcall: hresult 12 sdword double double ICoreWebView2ClearBrowsingDataCompletedHandler*>
+	<virtual stdcall: hresult 12 int32 double double ICoreWebView2ClearBrowsingDataCompletedHandler*>
 	^self invalidCall: _failureCode!
 
 clearBrowsingDataThenDo: aMonadicValuable

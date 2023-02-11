@@ -238,7 +238,7 @@ createBindCtx: reserved ppbc: piBindCtx
  			LPBC FAR* ppbc 		// IBindCtx output
 		);"
 
-	<stdcall: hresult CreateBindCtx dword lppvoid>
+	<stdcall: hresult CreateBindCtx uint32 lppvoid>
 	^self invalidCall: _failureCode!
 
 createClassMoniker: rclsid ppmk: ppmk
@@ -286,7 +286,7 @@ getRunningObjectTable: reserved pprot: pprot
 			LPRUNNINGOBJECTTABLE *pprot
 		);"
 
-	<stdcall: hresult GetRunningObjectTable dword COM.IRunningObjectTable**>
+	<stdcall: hresult GetRunningObjectTable uint32 COM.IRunningObjectTable**>
 	^self invalidCall: _failureCode!
 
 releaseStgMedium: aSTGMEDIUM
@@ -295,7 +295,7 @@ releaseStgMedium: aSTGMEDIUM
 			STGMEDIUM * pmedium	//Pointer to storage medium to be freed
 		);"
 
-	<stdcall: void ReleaseStgMedium COM.STGMEDIUM* >
+	<stdcall: void ReleaseStgMedium COM.STGMEDIUM*>
 	^self invalidCall: _failureCode! !
 !OS.COM.OLELibrary categoriesForMethods!
 createBindCtx:ppbc:!OLE Functions-Persistent Objects!private! !

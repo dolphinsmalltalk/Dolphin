@@ -101,7 +101,7 @@ GetBaseURL: ppwchBaseUrl
 		HRESULT __stdcall getBaseURL(
 			[out, retval]unsigned short** ppwchBaseUrl);"
 
-	<virtual stdcall: hresult 16 word**>
+	<virtual stdcall: hresult 16 uint16**>
 	^self invalidCall: _failureCode!
 
 getContentHandler
@@ -187,7 +187,7 @@ GetFeature: pwchName pvfValue: pvfValue
 			[in]unsigned short* pwchName,
 			[out, retval]VARIANT_BOOL* pvfValue);"
 
-	<virtual stdcall: hresult 4 word* varbool*>
+	<virtual stdcall: hresult 4 uint16* varbool*>
 	^self invalidCall: _failureCode!
 
 getProperty: pwchName
@@ -205,7 +205,7 @@ GetProperty: pwchName pvarValue: pvarValue
 			[in]unsigned short* pwchName,
 			[out, retval]VARIANT* pvarValue);"
 
-	<virtual stdcall: hresult 6 word* variant*>
+	<virtual stdcall: hresult 6 uint16* variant*>
 	^self invalidCall: _failureCode!
 
 getSecureBaseURL
@@ -222,7 +222,7 @@ GetSecureBaseURL: ppwchSecureBaseUrl
 		HRESULT __stdcall getSecureBaseURL(
 			[out, retval]unsigned short** ppwchSecureBaseUrl);"
 
-	<virtual stdcall: hresult 18 word**>
+	<virtual stdcall: hresult 18 uint16**>
 	^self invalidCall: _failureCode!
 
 parse
@@ -251,7 +251,7 @@ ParseURL: pwchUrl
 		HRESULT __stdcall parseURL(
 			[in]unsigned short* pwchUrl);"
 
-	<virtual stdcall: hresult 21 word*>
+	<virtual stdcall: hresult 21 uint16*>
 	^self invalidCall: _failureCode!
 
 PutBaseURL: pwchBaseUrl
@@ -260,7 +260,7 @@ PutBaseURL: pwchBaseUrl
 		HRESULT __stdcall putBaseURL(
 			[in]unsigned short* pwchBaseUrl);"
 
-	<virtual stdcall: hresult 17 word*>
+	<virtual stdcall: hresult 17 uint16*>
 	^self invalidCall: _failureCode!
 
 PutContentHandler: pHandler
@@ -306,7 +306,7 @@ PutFeature: pwchName vfValue: vfValue
 			[in]unsigned short* pwchName,
 			[in]VARIANT_BOOL vfValue);"
 
-	<virtual stdcall: hresult 5 word* varbool>
+	<virtual stdcall: hresult 5 uint16* varbool>
 	^self invalidCall: _failureCode!
 
 putProperty: pwchName varValue: varValue
@@ -321,7 +321,7 @@ PutProperty: pwchName varValue: varValue
 			[in]unsigned short* pwchName,
 			[in]VARIANT varValue);"
 
-	<virtual stdcall: hresult 7 word* variant>
+	<virtual stdcall: hresult 7 uint16* variant>
 	^self invalidCall: _failureCode!
 
 PutSecureBaseURL: pwchSecureBaseUrl
@@ -330,7 +330,7 @@ PutSecureBaseURL: pwchSecureBaseUrl
 		HRESULT __stdcall putSecureBaseURL(
 			[in]unsigned short* pwchSecureBaseUrl);"
 
-	<virtual stdcall: hresult 19 word*>
+	<virtual stdcall: hresult 19 uint16*>
 	^self invalidCall: _failureCode! !
 !MSXML.ISAXXMLReader categoriesForMethods!
 getBaseURL!**auto generated**!methods!public! !

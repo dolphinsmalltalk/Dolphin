@@ -57,7 +57,7 @@ Add_IsDocumentPlayingAudioChanged: eventHandler token: token
 			[in]ICoreWebView2IsDocumentPlayingAudioChangedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 86 ICoreWebView2IsDocumentPlayingAudioChangedEventHandler* sqword*>
+	<virtual stdcall: hresult 86 ICoreWebView2IsDocumentPlayingAudioChangedEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 Add_IsMutedChanged: eventHandler token: token
@@ -67,7 +67,7 @@ Add_IsMutedChanged: eventHandler token: token
 			[in]ICoreWebView2IsMutedChangedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 82 ICoreWebView2IsMutedChangedEventHandler* sqword*>
+	<virtual stdcall: hresult 82 ICoreWebView2IsMutedChangedEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 get_IsDocumentPlayingAudio: value
@@ -76,7 +76,7 @@ get_IsDocumentPlayingAudio: value
 		HRESULT __stdcall IsDocumentPlayingAudio(
 			[out, retval]long* value);"
 
-	<virtual stdcall: hresult 88 sdword*>
+	<virtual stdcall: hresult 88 int32*>
 	^self invalidCall: _failureCode!
 
 get_IsMuted: value
@@ -85,7 +85,7 @@ get_IsMuted: value
 		HRESULT __stdcall IsMuted(
 			[out, retval]long* value);"
 
-	<virtual stdcall: hresult 84 sdword*>
+	<virtual stdcall: hresult 84 int32*>
 	^self invalidCall: _failureCode!
 
 put_IsMuted: value
@@ -95,7 +95,7 @@ put_IsMuted: value
 		HRESULT __stdcall IsMuted(
 			[in]long value);"
 
-	<virtual stdcall: hresult 85 sdword>
+	<virtual stdcall: hresult 85 int32>
 	^self invalidCall: _failureCode!
 
 Remove_IsDocumentPlayingAudioChanged: token
@@ -104,7 +104,7 @@ Remove_IsDocumentPlayingAudioChanged: token
 		HRESULT __stdcall remove_IsDocumentPlayingAudioChanged(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 87 sqword>
+	<virtual stdcall: hresult 87 int64>
 	^self invalidCall: _failureCode!
 
 Remove_IsMutedChanged: token
@@ -113,7 +113,7 @@ Remove_IsMutedChanged: token
 		HRESULT __stdcall remove_IsMutedChanged(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 83 sqword>
+	<virtual stdcall: hresult 83 int64>
 	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2_8 categoriesForMethods!
 Add_IsDocumentPlayingAudioChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2_8!private! !

@@ -61,7 +61,7 @@ get_ProcessFailedKind: processFailedKind
 		HRESULT __stdcall ProcessFailedKind(
 			[out, retval]COREWEBVIEW2_PROCESS_FAILED_KIND* ProcessFailedKind);"
 
-	<virtual stdcall: hresult 4 sdword*>
+	<virtual stdcall: hresult 4 int32*>
 	^self invalidCall: _failureCode!
 
 get_reason: reason

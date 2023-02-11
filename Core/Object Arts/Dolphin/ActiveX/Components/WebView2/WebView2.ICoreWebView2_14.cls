@@ -44,7 +44,7 @@ Add_ServerCertificateErrorDetected: eventHandler token: token
 			[in]ICoreWebView2ServerCertificateErrorDetectedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 107 ICoreWebView2ServerCertificateErrorDetectedEventHandler* sqword*>
+	<virtual stdcall: hresult 107 ICoreWebView2ServerCertificateErrorDetectedEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 ClearServerCertificateErrorActions: handler
@@ -62,7 +62,7 @@ Remove_ServerCertificateErrorDetected: token
 		HRESULT __stdcall remove_ServerCertificateErrorDetected(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 108 sqword>
+	<virtual stdcall: hresult 108 int64>
 	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2_14 categoriesForMethods!
 Add_ServerCertificateErrorDetected:token:!**auto generated**!COM Interfaces-ICoreWebView2_14!private! !

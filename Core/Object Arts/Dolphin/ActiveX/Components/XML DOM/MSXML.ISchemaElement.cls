@@ -102,7 +102,7 @@ get_disallowedSubstitutions: disallowed
 		HRESULT __stdcall disallowedSubstitutions(
 			[out, retval]SCHEMADERIVATIONMETHOD* disallowed);"
 
-	<virtual stdcall: hresult 25 sdword*>
+	<virtual stdcall: hresult 25 int32*>
 	^self invalidCall: _failureCode!
 
 get_fixedValue: fixedValue
@@ -174,7 +174,7 @@ get_substitutionGroupExclusions: exclusions
 		HRESULT __stdcall substitutionGroupExclusions(
 			[out, retval]SCHEMADERIVATIONMETHOD* exclusions);"
 
-	<virtual stdcall: hresult 24 sdword*>
+	<virtual stdcall: hresult 24 int32*>
 	^self invalidCall: _failureCode!
 
 get_type: type

@@ -44,7 +44,7 @@ Add_ProcessInfosChanged: eventHandler token: token
 			[in]ICoreWebView2ProcessInfosChangedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 17 ICoreWebView2ProcessInfosChangedEventHandler* sqword*>
+	<virtual stdcall: hresult 17 ICoreWebView2ProcessInfosChangedEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 GetProcessInfos: value
@@ -62,7 +62,7 @@ Remove_ProcessInfosChanged: token
 		HRESULT __stdcall remove_ProcessInfosChanged(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 18 sqword>
+	<virtual stdcall: hresult 18 int64>
 	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2Environment8 categoriesForMethods!
 Add_ProcessInfosChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2Environment8!private! !

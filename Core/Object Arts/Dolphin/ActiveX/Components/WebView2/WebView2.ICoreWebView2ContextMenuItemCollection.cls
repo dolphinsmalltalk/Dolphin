@@ -55,7 +55,7 @@ GetValueAtIndex: index value: value
 			[in]unsigned int index,
 			[out, retval]ICoreWebView2ContextMenuItem** value);"
 
-	<virtual stdcall: hresult 5 dword ICoreWebView2ContextMenuItem**>
+	<virtual stdcall: hresult 5 uint32 ICoreWebView2ContextMenuItem**>
 	^self invalidCall: _failureCode!
 
 InsertValueAtIndex: index value: value
@@ -65,7 +65,7 @@ InsertValueAtIndex: index value: value
 			[in]unsigned int index,
 			[in]ICoreWebView2ContextMenuItem* value);"
 
-	<virtual stdcall: hresult 7 dword ICoreWebView2ContextMenuItem*>
+	<virtual stdcall: hresult 7 uint32 ICoreWebView2ContextMenuItem*>
 	^self invalidCall: _failureCode!
 
 removeAtIndex: anInteger
@@ -83,7 +83,7 @@ RemoveValueAtIndex: index
 		HRESULT __stdcall RemoveValueAtIndex(
 			[in]unsigned int index);"
 
-	<virtual stdcall: hresult 6 dword>
+	<virtual stdcall: hresult 6 uint32>
 	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2ContextMenuItemCollection categoriesForMethods!
 add:beforeIndex:!**auto generated**!methods!public! !

@@ -24,7 +24,7 @@ rpcStringFree: lppstr
 			unsigned char * *  String	
 		);"
 
-	<stdcall: sdword RpcStringFreeA char**>
+	<stdcall: int32 RpcStringFreeA char**>
 	^self invalidCall: _failureCode!
 
 uuidCompare: uuid1 uuid2: uuid2 status: status
@@ -36,7 +36,7 @@ uuidCompare: uuid1 uuid2: uuid2 status: status
 			RPC_STATUS * Status
 		);"
 
-	<stdcall: sdword UuidCompare void* void* dword*>
+	<stdcall: int32 UuidCompare void* void* uint32*>
 	^self invalidCall: _failureCode!
 
 uuidCreate: uuidBuf
@@ -46,7 +46,7 @@ uuidCreate: uuidBuf
 			UUID *  Uuid  
 		);"
 
-	<stdcall: sdword UuidCreate void*>
+	<stdcall: int32 UuidCreate void*>
 	^self invalidCall: _failureCode!
 
 uuidFromString: uuid uuid: lppstr

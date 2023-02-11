@@ -58,7 +58,7 @@ NotationDecl: pwchName cchName: cchName pwchPublicId: pwchPublicId cchPublicId: 
 			[in]unsigned short* pwchSystemId,
 			[in]int cchSystemId);"
 
-	<virtual stdcall: hresult 4 word* sdword word* sdword word* sdword>
+	<virtual stdcall: hresult 4 uint16* int32 uint16* int32 uint16* int32>
 	^self invalidCall: _failureCode!
 
 UnparsedEntityDecl: pwchName cchName: cchName pwchPublicId: pwchPublicId cchPublicId: cchPublicId pwchSystemId: pwchSystemId cchSystemId: cchSystemId pwchNotationName: pwchNotationName cchNotationName: cchNotationName
@@ -74,7 +74,7 @@ UnparsedEntityDecl: pwchName cchName: cchName pwchPublicId: pwchPublicId cchPubl
 			[in]unsigned short* pwchNotationName,
 			[in]int cchNotationName);"
 
-	<virtual stdcall: hresult 5 word* sdword word* sdword word* sdword word* sdword>
+	<virtual stdcall: hresult 5 uint16* int32 uint16* int32 uint16* int32 uint16* int32>
 	^self invalidCall: _failureCode! !
 !MSXML.ISAXDTDHandler categoriesForMethods!
 NotationDecl:cchName:pwchPublicId:cchPublicId:pwchSystemId:cchSystemId:!**auto generated**!COM Interfaces-ISAXDTDHandler!public! !

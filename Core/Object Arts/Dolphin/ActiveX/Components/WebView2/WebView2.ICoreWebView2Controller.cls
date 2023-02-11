@@ -107,7 +107,7 @@ Add_AcceleratorKeyPressed: eventHandler token: token
 			[in]ICoreWebView2AcceleratorKeyPressedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 20 ICoreWebView2AcceleratorKeyPressedEventHandler* sqword*>
+	<virtual stdcall: hresult 20 ICoreWebView2AcceleratorKeyPressedEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 Add_GotFocus: eventHandler token: token
@@ -117,7 +117,7 @@ Add_GotFocus: eventHandler token: token
 			[in]ICoreWebView2FocusChangedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 16 ICoreWebView2FocusChangedEventHandler* sqword*>
+	<virtual stdcall: hresult 16 ICoreWebView2FocusChangedEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 Add_LostFocus: eventHandler token: token
@@ -127,7 +127,7 @@ Add_LostFocus: eventHandler token: token
 			[in]ICoreWebView2FocusChangedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 18 ICoreWebView2FocusChangedEventHandler* sqword*>
+	<virtual stdcall: hresult 18 ICoreWebView2FocusChangedEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 Add_MoveFocusRequested: eventHandler token: token
@@ -137,7 +137,7 @@ Add_MoveFocusRequested: eventHandler token: token
 			[in]ICoreWebView2MoveFocusRequestedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 14 ICoreWebView2MoveFocusRequestedEventHandler* sqword*>
+	<virtual stdcall: hresult 14 ICoreWebView2MoveFocusRequestedEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 Add_RasterizationScaleChanged: eventHandler token: token
@@ -152,7 +152,7 @@ Add_ZoomFactorChanged: eventHandler token: token
 			[in]ICoreWebView2ZoomFactorChangedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 10 ICoreWebView2ZoomFactorChangedEventHandler* sqword*>
+	<virtual stdcall: hresult 10 ICoreWebView2ZoomFactorChangedEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 allowExternalDrop
@@ -278,7 +278,7 @@ get_IsVisible: isVisible
 		HRESULT __stdcall IsVisible(
 			[out, retval]long* IsVisible);"
 
-	<virtual stdcall: hresult 4 sdword*>
+	<virtual stdcall: hresult 4 int32*>
 	^self invalidCall: _failureCode!
 
 get_ParentWindow: parentWindow
@@ -345,7 +345,7 @@ MoveFocus: reason
 		HRESULT __stdcall MoveFocus(
 			[in]COREWEBVIEW2_MOVE_FOCUS_REASON reason);"
 
-	<virtual stdcall: hresult 13 sdword>
+	<virtual stdcall: hresult 13 int32>
 	^self invalidCall: _failureCode!
 
 notifyParentWindowPositionChanged
@@ -423,7 +423,7 @@ put_IsVisible: isVisible
 		HRESULT __stdcall IsVisible(
 			[in]long IsVisible);"
 
-	<virtual stdcall: hresult 5 sdword>
+	<virtual stdcall: hresult 5 int32>
 	^self invalidCall: _failureCode!
 
 put_ParentWindow: parentWindow
@@ -493,7 +493,7 @@ Remove_AcceleratorKeyPressed: token
 		HRESULT __stdcall remove_AcceleratorKeyPressed(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 21 sqword>
+	<virtual stdcall: hresult 21 int64>
 	^self invalidCall: _failureCode!
 
 Remove_GotFocus: token
@@ -502,7 +502,7 @@ Remove_GotFocus: token
 		HRESULT __stdcall remove_GotFocus(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 17 sqword>
+	<virtual stdcall: hresult 17 int64>
 	^self invalidCall: _failureCode!
 
 Remove_LostFocus: token
@@ -511,7 +511,7 @@ Remove_LostFocus: token
 		HRESULT __stdcall remove_LostFocus(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 19 sqword>
+	<virtual stdcall: hresult 19 int64>
 	^self invalidCall: _failureCode!
 
 Remove_MoveFocusRequested: token
@@ -520,7 +520,7 @@ Remove_MoveFocusRequested: token
 		HRESULT __stdcall remove_MoveFocusRequested(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 15 sqword>
+	<virtual stdcall: hresult 15 int64>
 	^self invalidCall: _failureCode!
 
 Remove_RasterizationScaleChanged: token
@@ -534,7 +534,7 @@ Remove_ZoomFactorChanged: token
 		HRESULT __stdcall remove_ZoomFactorChanged(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 11 sqword>
+	<virtual stdcall: hresult 11 int64>
 	^self invalidCall: _failureCode!
 
 setBoundsAndZoomFactor: bounds zoomFactor: zoomFactor

@@ -28,14 +28,14 @@ _snprintf_s: buffer bufferSize: sizeInteger count: countInteger format: format w
 	"Private - Write data formatted by the format string into the buffer.
 	see _snprintf:count:format:with:with:with: for further information."
 
-	<cdecl: sdword _snprintf_s lpvoid intptr intptr lpstr lpvoid>
+	<cdecl: int32 _snprintf_s lpvoid intptr intptr lpstr lpvoid>
 	^self invalidCall: _failureCode!
 
 _snprintf_s: buffer bufferSize: sizeInteger count: countInteger format: format with: arg1 with: arg2
 	"Private - Write data formatted by the format string into the buffer.
 	see _snprintf:count:format:with:with:with: for further information."
 
-	<cdecl: sdword _snprintf_s lpvoid intptr intptr lpstr lpvoid lpvoid>
+	<cdecl: int32 _snprintf_s lpvoid intptr intptr lpstr lpvoid lpvoid>
 	^self invalidCall: _failureCode!
 
 addressFromInteger: anInteger
@@ -43,7 +43,7 @@ addressFromInteger: anInteger
 
 	"Implementation Note: AnswerIntPtr() is a simple function which returns its pointer-sized argument. By appropriately specifying the argument and return types, we can use external call primitive's argument coercion and return object instantiation, to perform useful type conversions very quickly."
 
-	<stdcall: lpvoid AnswerIntPtr dword>
+	<stdcall: lpvoid AnswerIntPtr uint32>
 	^self invalidCall: _failureCode!
 
 applicationHandle
@@ -54,7 +54,7 @@ applicationHandle
 argc
 	"Private - Answer the number of arguments passed to the host executable at startup"
 
-	<cdecl: sdword argc>
+	<cdecl: int32 argc>
 	^self invalidCall: _failureCode!
 
 argv
@@ -159,7 +159,7 @@ dump: msgString path: pathString stackDepth: slotsInteger walkbackDepth: framesI
 	non-continuable exception, and you want want to output a crash dump using
 	parameters (such as the log file) other than those in the registry."
 
-	<stdcall: void Dump lpwstr lpwstr sdword sdword>
+	<stdcall: void Dump lpwstr lpwstr int32 int32>
 	^self invalidCall: _failureCode!
 
 emptyBlock
@@ -231,13 +231,13 @@ hashBytes: aByteObject count: anInteger
 
 	"Implementation Notes: The algorithm is FNV1a."
 
-	<cdecl: dword HashBytes lpvoid dword>
+	<cdecl: uint32 HashBytes lpvoid uint32>
 	^self invalidCall: _failureCode!
 
 highBit: anInteger
 	"Answer the index of the high bit of the argument."
 
-	<stdcall: sdword highBit dword>
+	<stdcall: int32 highBit uint32>
 	^self invalidCall: _failureCode!
 
 indexOfSpecialSelector: aSymbol ifAbsent: exceptionHandler
@@ -281,14 +281,14 @@ largeSignedFromUnsigned: anInteger
 	"Private - Answer a 64-bit signed integer value instantiated from the unsigned integer
 	argument. Use the VM's external call primitive to perform the conversion very quickly."
 
-	<stdcall: sqword AnswerQWORD qword>
+	<stdcall: int64 AnswerQWORD uint64>
 	^self invalidCall: _failureCode!
 
 largeUnsignedFromSigned: anInteger
 	"Private - Answer a 64-bit signed integer value instantiated from the signed integer
 	argument. Use the VM's external call primitive to perform the conversion very quickly."
 
-	<stdcall: qword AnswerQWORD sqword>
+	<stdcall: uint64 AnswerQWORD int64>
 	^self invalidCall: _failureCode!
 
 makeLargeSigned: aLARGE_INTEGER
@@ -297,7 +297,7 @@ makeLargeSigned: aLARGE_INTEGER
 	This routine is used by the external call primitives, and is exported from the VM
 	for reuse from Smalltalk or external primitives."
 
-	<stdcall: sqword AnswerQWORD qword>
+	<stdcall: int64 AnswerQWORD uint64>
 	^self invalidCall: _failureCode!
 
 makeLargeSigned: highSDWORD highPart: lowSDWORD
@@ -306,14 +306,14 @@ makeLargeSigned: highSDWORD highPart: lowSDWORD
 	if highSDWORD has its high bit set.
 	This routine is an example of a function returing a signed 8-byte integer (sqword)."
 
-	<stdcall: sqword AnswerQWORD sdword dword>
+	<stdcall: int64 AnswerQWORD int32 uint32>
 	^self invalidCall: _failureCode!
 
 makeLargeUnsigned: eightBytes
 	"Private - Answer a positive Integer (i.e. a SmallInteger or a LargeInteger)
 	instantiated from the 64-bit argument."
 
-	<stdcall: qword AnswerQWORD qword>
+	<stdcall: uint64 AnswerQWORD uint64>
 	^self invalidCall: _failureCode!
 
 makeLargeUnsigned: lowDWORD highPart: highDWORD
@@ -321,7 +321,7 @@ makeLargeUnsigned: lowDWORD highPart: highDWORD
 	integer formed from the high and low order DWORD arguments.
 	This routine is an example of a qword (8-byte Integer) return type."
 
-	<stdcall: qword AnswerQWORD dword dword>
+	<stdcall: uint64 AnswerQWORD uint32 uint32>
 	^self invalidCall: _failureCode!
 
 onStartup
@@ -384,7 +384,7 @@ signedFromUnsigned: anInteger
 	"Private - Answer a 32-bit signed integer value instantiated from the unsigned 32-bit integer
 	argument. Use the VM's external call primitive to perform the conversion very quickly."
 
-	<stdcall: sdword AnswerDWORD dword>
+	<stdcall: int32 AnswerDWORD uint32>
 	^anInteger highBit > 32
 		ifTrue: [self errorIntegerMoreThan32Bits: anInteger]
 		ifFalse: [(16r80000000 + anInteger bitAnd: 16rFFFFFFFF) - 16r80000000]!
@@ -433,7 +433,7 @@ unsignedFromSigned: anInteger
 	primitive's argument coercion and return object instantiation, to perform useful type
 	conversions very quickly."
 
-	<stdcall: dword AnswerDWORD sdword>
+	<stdcall: uint32 AnswerDWORD int32>
 	^anInteger isInteger
 		ifTrue: [self errorIntegerMoreThan32Bits: anInteger]
 		ifFalse: [self invalidCall: _failureCode]!

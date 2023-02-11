@@ -12,23 +12,23 @@ UI.Scintilla.ScintillaLibrary comment: '`External.DynamcLinkLibrary` class to wr
 !UI.Scintilla.ScintillaLibrary methodsFor!
 
 directBooleanFunction: sciThis msg: msg wParam: wParam lParam: lParam
-	<stdcall: bool Scintilla_DirectFunction handle dword uintptr uintptr>
+	<stdcall: bool Scintilla_DirectFunction handle uint32 uintptr uintptr>
 	^self invalidCall: _failureCode!
 
 directFunction: sciThis msg: msg wParam: wParam lParam: lParam
-	<stdcall: intptr Scintilla_DirectFunction handle dword uintptr uintptr>
+	<stdcall: intptr Scintilla_DirectFunction handle uint32 uintptr uintptr>
 	^self invalidCall: _failureCode!
 
 directFunction: sciThis msg: msg wParam: wParam lpParam: lpParam
-	<stdcall: intptr Scintilla_DirectFunction handle dword uintptr void*>
+	<stdcall: intptr Scintilla_DirectFunction handle uint32 uintptr void*>
 	^self invalidCall: _failureCode!
 
 directFunction: sciThis msg: msg wpParam: wParam lParam: lpParam
-	<stdcall: intptr Scintilla_DirectFunction handle dword void* uintptr>
+	<stdcall: intptr Scintilla_DirectFunction handle uint32 void* uintptr>
 	^self invalidCall: _failureCode!
 
 directFunction: sciThis msg: msg wpParam: wParam lpParam: lpParam
-	<stdcall: intptr Scintilla_DirectFunction handle dword void* void*>
+	<stdcall: intptr Scintilla_DirectFunction handle uint32 void* void*>
 	^self invalidCall: _failureCode!
 
 versionFormatString

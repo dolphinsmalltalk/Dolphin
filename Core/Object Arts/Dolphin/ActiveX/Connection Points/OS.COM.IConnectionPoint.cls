@@ -33,7 +33,7 @@ Advise: pUnkSink pdwCookie: pdwCookie
 			[out] unsigned long* pdwCookie);
 	"
 
-	<virtual stdcall: hresult 6 IUnknown* dword*>
+	<virtual stdcall: hresult 6 IUnknown* uint32*>
 	^self invalidCall: _failureCode!
 
 connectionIID
@@ -130,7 +130,7 @@ Unadvise: dwCookie
 	rather than the auto-exception raising hresult.	
 	"
 
-	<virtual stdcall: sdword 7 dword>
+	<virtual stdcall: int32 7 uint32>
 	^self invalidCall: _failureCode! !
 !OS.COM.IConnectionPoint categoriesForMethods!
 advise:!adding!public! !

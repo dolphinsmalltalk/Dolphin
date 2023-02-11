@@ -66,7 +66,7 @@ get_Chapter: plChapter
 		HRESULT __stdcall Chapter(
 			[out, retval]ADO_LONGPTR* plChapter);"
 
-	<virtual stdcall: hresult 10 sdword*>
+	<virtual stdcall: hresult 10 int32*>
 	^self invalidCall: _failureCode!
 
 get_RowPosition: ppRowPos
@@ -94,7 +94,7 @@ put_Chapter: plChapter
 		HRESULT __stdcall Chapter(
 			[in]ADO_LONGPTR plChapter);"
 
-	<virtual stdcall: hresult 11 sdword>
+	<virtual stdcall: hresult 11 int32>
 	^self invalidCall: _failureCode!
 
 put_RowPosition: ppRowPos

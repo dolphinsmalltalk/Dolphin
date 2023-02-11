@@ -52,7 +52,7 @@ GetField: pvData szFieldName: szFieldName pvarField: pvarField
 	code for errors.
 	"
 
-	<virtual stdcall: sdword 11 void* lpwstr variant*>
+	<virtual stdcall: int32 11 void* lpwstr variant*>
 	^self invalidCall: _failureCode!
 
 getFieldNames
@@ -76,7 +76,7 @@ GetFieldNames: pcNames rgBstrNames: rgBstrNames
 			[out] BSTR* rgBstrNames);
 	"
 
-	<virtual stdcall: hresult 15 dword* bstr*>
+	<virtual stdcall: hresult 15 uint32* bstr*>
 	^self invalidCall: _failureCode!
 
 GetFieldNoCopy: pvData szFieldName: szFieldName pvarField: pvarField ppvDataCArray: ppvDataCArray
@@ -119,7 +119,7 @@ GetSize: pcbSize
 			[out] unsigned long* pcbSize);
 	"
 
-	<virtual stdcall: hresult 9 dword*>
+	<virtual stdcall: hresult 9 uint32*>
 	^self invalidCall: _failureCode!
 
 GetTypeInfo: ppTypeInfo
@@ -147,7 +147,7 @@ IsMatchingType: pRecordInfo
 			[in] IRecordInfo* pRecordInfo);
 	"
 
-	<virtual stdcall: sdword 16 IRecordInfo*>
+	<virtual stdcall: int32 16 IRecordInfo*>
 	^self invalidCall: _failureCode!
 
 name
@@ -173,7 +173,7 @@ PutField: wFlags pvData: pvData szFieldName: szFieldName pvarField: pvarField
 	to look up a field which is not present is a common occurrence. Callers must check the return
 	code for errors."
 
-	<virtual stdcall: sdword 13 dword void* lpwstr variant*>
+	<virtual stdcall: int32 13 uint32 void* lpwstr variant*>
 	^self invalidCall: _failureCode!
 
 PutFieldNoCopy: wFlags pvData: pvData szFieldName: szFieldName pvarField: pvarField
@@ -186,7 +186,7 @@ PutFieldNoCopy: wFlags pvData: pvData szFieldName: szFieldName pvarField: pvarFi
 			[in] VARIANT* pvarField);
 	"
 
-	<virtual stdcall: hresult 14 dword void* lpwstr variant*>
+	<virtual stdcall: hresult 14 uint32 void* lpwstr variant*>
 	^self invalidCall: _failureCode!
 
 RecordClear: pvExisting

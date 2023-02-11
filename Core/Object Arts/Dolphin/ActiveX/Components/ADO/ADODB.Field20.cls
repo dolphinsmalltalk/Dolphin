@@ -154,7 +154,7 @@ get_ActualSize: pl
 		HRESULT __stdcall ActualSize(
 			[out, retval]long* pl);"
 
-	<virtual stdcall: hresult 9 sdword*>
+	<virtual stdcall: hresult 9 int32*>
 	^self invalidCall: _failureCode!
 
 get_Attributes: pl
@@ -163,7 +163,7 @@ get_Attributes: pl
 		HRESULT __stdcall Attributes(
 			[out, retval]long* pl);"
 
-	<virtual stdcall: hresult 10 sdword*>
+	<virtual stdcall: hresult 10 int32*>
 	^self invalidCall: _failureCode!
 
 get_DataFormat: ppiDF
@@ -181,7 +181,7 @@ get_DefinedSize: pl
 		HRESULT __stdcall DefinedSize(
 			[out, retval]long* pl);"
 
-	<virtual stdcall: hresult 11 sdword*>
+	<virtual stdcall: hresult 11 int32*>
 	^self invalidCall: _failureCode!
 
 get_Name: pbstr
@@ -199,7 +199,7 @@ get_NumericScale: pbNumericScale
 		HRESULT __stdcall NumericScale(
 			[out, retval]BYTE* pbNumericScale);"
 
-	<virtual stdcall: hresult 17 byte*>
+	<virtual stdcall: hresult 17 uint8*>
 	^self invalidCall: _failureCode!
 
 get_OriginalValue: pvar
@@ -217,7 +217,7 @@ get_Precision: pbPrecision
 		HRESULT __stdcall Precision(
 			[out, retval]BYTE* pbPrecision);"
 
-	<virtual stdcall: hresult 16 byte*>
+	<virtual stdcall: hresult 16 uint8*>
 	^self invalidCall: _failureCode!
 
 get_Type: pDataType
@@ -226,7 +226,7 @@ get_Type: pDataType
 		HRESULT __stdcall Type(
 			[out, retval]DataTypeEnum* pDataType);"
 
-	<virtual stdcall: hresult 13 sdword*>
+	<virtual stdcall: hresult 13 int32*>
 	^self invalidCall: _failureCode!
 
 get_UnderlyingValue: pvar
@@ -262,7 +262,7 @@ GetChunk: length pvar: pvar
 			[in]long Length,
 			[out, retval]VARIANT* pvar);"
 
-	<virtual stdcall: hresult 19 sdword variant*>
+	<virtual stdcall: hresult 19 int32 variant*>
 	^self invalidCall: _failureCode!
 
 name
@@ -327,7 +327,7 @@ put_Attributes: pl
 		HRESULT __stdcall Attributes(
 			[in]long pl);"
 
-	<virtual stdcall: hresult 28 sdword>
+	<virtual stdcall: hresult 28 int32>
 	^self invalidCall: _failureCode!
 
 put_DefinedSize: pl
@@ -337,7 +337,7 @@ put_DefinedSize: pl
 		HRESULT __stdcall DefinedSize(
 			[in]long pl);"
 
-	<virtual stdcall: hresult 27 sdword>
+	<virtual stdcall: hresult 27 int32>
 	^self invalidCall: _failureCode!
 
 put_NumericScale: pbNumericScale
@@ -347,7 +347,7 @@ put_NumericScale: pbNumericScale
 		HRESULT __stdcall NumericScale(
 			[in]BYTE pbNumericScale);"
 
-	<virtual stdcall: hresult 25 byte>
+	<virtual stdcall: hresult 25 uint8>
 	^self invalidCall: _failureCode!
 
 put_Precision: pbPrecision
@@ -357,7 +357,7 @@ put_Precision: pbPrecision
 		HRESULT __stdcall Precision(
 			[in]BYTE pbPrecision);"
 
-	<virtual stdcall: hresult 24 byte>
+	<virtual stdcall: hresult 24 uint8>
 	^self invalidCall: _failureCode!
 
 put_Type: pDataType
@@ -367,7 +367,7 @@ put_Type: pDataType
 		HRESULT __stdcall Type(
 			[in]DataTypeEnum pDataType);"
 
-	<virtual stdcall: hresult 26 sdword>
+	<virtual stdcall: hresult 26 int32>
 	^self invalidCall: _failureCode!
 
 put_Value: pvar

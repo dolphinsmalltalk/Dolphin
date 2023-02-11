@@ -40,7 +40,7 @@ CreateInstance: pUnkOuter riid: riid ppvObject: ppvObject
 
 	"
 
-	<virtual stdcall: sdword 4 IUnknown* guid* IUnknown**>
+	<virtual stdcall: int32 4 IUnknown* guid* IUnknown**>
 	^self invalidCall: _failureCode!
 
 LockServer: fLock
@@ -51,7 +51,7 @@ LockServer: fLock
 
 	"
 
-	<virtual stdcall: hresult 5 sdword>
+	<virtual stdcall: hresult 5 int32>
 	^self invalidCall: _failureCode! !
 !OS.COM.IClassFactory categoriesForMethods!
 createInstance:iid:!instance creation!public! !

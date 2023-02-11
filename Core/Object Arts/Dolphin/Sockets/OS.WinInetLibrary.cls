@@ -20,11 +20,11 @@ internetCheckConnection: url dwFlags: flags dwReserved: reserved
 		IN DWORD dwReserved
 		);"
 
-	<stdcall: bool InternetCheckConnectionW lpwstr dword dword>
+	<stdcall: bool InternetCheckConnectionW lpwstr uint32 uint32>
 	^self invalidCall: _failureCode!
 
 internetGetConnectedState: flagsBuf dwReserved: reserved
-	<stdcall: bool InternetGetConnectedState dword* dword>
+	<stdcall: bool InternetGetConnectedState uint32* uint32>
 	^self invalidCall: _failureCode!
 
 internetGoOnline: url hwndParent: parent dwReserved: reserved
@@ -36,7 +36,7 @@ internetGoOnline: url hwndParent: parent dwReserved: reserved
 		IN DWORD dwReserved
 		);"
 
-	<stdcall: bool InternetGoOnlineW lpwstr handle dword>
+	<stdcall: bool InternetGoOnlineW lpwstr handle uint32>
 	^self invalidCall: _failureCode!
 
 internetOpen: agent dwAccessType: access lpszProxyName: proxyName lpszProxyBypass: proxyBypass dwFlags: flags
@@ -48,7 +48,7 @@ internetOpen: agent dwAccessType: access lpszProxyName: proxyName lpszProxyBypas
 		IN LPCTSTR lpszProxyBypass, 
 		IN DWORD dwFlags ); "
 
-	<stdcall: handle InternetOpenW lpwstr dword lpwstr lpwstr dword>
+	<stdcall: handle InternetOpenW lpwstr uint32 lpwstr lpwstr uint32>
 	^self invalidCall: _failureCode!
 
 ping: aURL

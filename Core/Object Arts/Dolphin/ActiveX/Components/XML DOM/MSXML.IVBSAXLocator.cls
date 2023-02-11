@@ -57,7 +57,7 @@ get_columnNumber: nColumn
 		HRESULT __stdcall columnNumber(
 			[out, retval]int* nColumn);"
 
-	<virtual stdcall: hresult 8 sdword*>
+	<virtual stdcall: hresult 8 int32*>
 	^self invalidCall: _failureCode!
 
 get_lineNumber: nLine
@@ -66,7 +66,7 @@ get_lineNumber: nLine
 		HRESULT __stdcall lineNumber(
 			[out, retval]int* nLine);"
 
-	<virtual stdcall: hresult 9 sdword*>
+	<virtual stdcall: hresult 9 int32*>
 	^self invalidCall: _failureCode!
 
 get_publicId: strPublicId

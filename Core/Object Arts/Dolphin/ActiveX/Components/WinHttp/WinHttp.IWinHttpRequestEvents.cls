@@ -51,7 +51,7 @@ OnError: errorNumber errorDescription: errorDescription
 			[in]long ErrorNumber,
 			[in]BSTR ErrorDescription);"
 
-	<virtual stdcall: void 7 sdword bstr>
+	<virtual stdcall: void 7 int32 bstr>
 	^self invalidCall: _failureCode!
 
 OnResponseDataAvailable: data
@@ -78,7 +78,7 @@ OnResponseStart: status contentType: contentType
 			[in]long Status,
 			[in]BSTR ContentType);"
 
-	<virtual stdcall: void 4 sdword bstr>
+	<virtual stdcall: void 4 int32 bstr>
 	^self invalidCall: _failureCode! !
 !WinHttp.IWinHttpRequestEvents categoriesForMethods!
 OnError:errorDescription:!**auto generated**!COM Interfaces-IWinHttpRequestEvents!public! !

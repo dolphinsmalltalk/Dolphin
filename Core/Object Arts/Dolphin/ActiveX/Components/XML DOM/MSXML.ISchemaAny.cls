@@ -51,7 +51,7 @@ get_processContents: processContents
 		HRESULT __stdcall processContents(
 			[out, retval]SCHEMAPROCESSCONTENTS* processContents);"
 
-	<virtual stdcall: hresult 18 sdword*>
+	<virtual stdcall: hresult 18 int32*>
 	^self invalidCall: _failureCode!
 
 namespaces

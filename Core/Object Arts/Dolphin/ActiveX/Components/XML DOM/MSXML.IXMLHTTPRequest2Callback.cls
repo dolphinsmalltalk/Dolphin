@@ -78,7 +78,7 @@ OnHeadersAvailable: pXHR dwStatus: dwStatus pwszStatus: pwszStatus
 			[in]unsigned long dwStatus,
 			[in]LPWSTR pwszStatus);"
 
-	<virtual stdcall: hresult 5 IXMLHTTPRequest2* dword lpwstr>
+	<virtual stdcall: hresult 5 IXMLHTTPRequest2* uint32 lpwstr>
 	^self invalidCall: _failureCode!
 
 OnRedirect: pXHR pwszRedirectUrl: pwszRedirectUrl

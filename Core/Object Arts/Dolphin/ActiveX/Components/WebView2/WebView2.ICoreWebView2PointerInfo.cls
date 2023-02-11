@@ -240,7 +240,7 @@ get_ButtonChangeKind: buttonChangeKind
 		HRESULT __stdcall ButtonChangeKind(
 			[out, retval]int* ButtonChangeKind);"
 
-	<virtual stdcall: hresult 34 sdword*>
+	<virtual stdcall: hresult 34 int32*>
 	^self invalidCall: _failureCode!
 
 get_DisplayRect: displayRect
@@ -258,7 +258,7 @@ get_FrameId: frameId
 		HRESULT __stdcall FrameId(
 			[out, retval]unsigned int* FrameId);"
 
-	<virtual stdcall: hresult 8 dword*>
+	<virtual stdcall: hresult 8 uint32*>
 	^self invalidCall: _failureCode!
 
 get_HimetricLocation: himetricLocation
@@ -285,7 +285,7 @@ get_HistoryCount: historyCount
 		HRESULT __stdcall HistoryCount(
 			[out, retval]unsigned int* HistoryCount);"
 
-	<virtual stdcall: hresult 26 dword*>
+	<virtual stdcall: hresult 26 uint32*>
 	^self invalidCall: _failureCode!
 
 get_InputData: inputData
@@ -294,7 +294,7 @@ get_InputData: inputData
 		HRESULT __stdcall InputData(
 			[out, retval]int* InputData);"
 
-	<virtual stdcall: hresult 28 sdword*>
+	<virtual stdcall: hresult 28 int32*>
 	^self invalidCall: _failureCode!
 
 get_KeyStates: keyStates
@@ -303,7 +303,7 @@ get_KeyStates: keyStates
 		HRESULT __stdcall KeyStates(
 			[out, retval]unsigned long* KeyStates);"
 
-	<virtual stdcall: hresult 30 dword*>
+	<virtual stdcall: hresult 30 uint32*>
 	^self invalidCall: _failureCode!
 
 get_PenFlags: penFlags
@@ -312,7 +312,7 @@ get_PenFlags: penFlags
 		HRESULT __stdcall PenFlags(
 			[out, retval]unsigned int* PenFlags);"
 
-	<virtual stdcall: hresult 36 dword*>
+	<virtual stdcall: hresult 36 uint32*>
 	^self invalidCall: _failureCode!
 
 get_PenMask: penMask
@@ -321,7 +321,7 @@ get_PenMask: penMask
 		HRESULT __stdcall PenMask(
 			[out, retval]unsigned int* PenMask);"
 
-	<virtual stdcall: hresult 38 dword*>
+	<virtual stdcall: hresult 38 uint32*>
 	^self invalidCall: _failureCode!
 
 get_PenPressure: penPressure
@@ -330,7 +330,7 @@ get_PenPressure: penPressure
 		HRESULT __stdcall PenPressure(
 			[out, retval]unsigned int* PenPressure);"
 
-	<virtual stdcall: hresult 40 dword*>
+	<virtual stdcall: hresult 40 uint32*>
 	^self invalidCall: _failureCode!
 
 get_PenRotation: penRotation
@@ -339,7 +339,7 @@ get_PenRotation: penRotation
 		HRESULT __stdcall PenRotation(
 			[out, retval]unsigned int* PenRotation);"
 
-	<virtual stdcall: hresult 42 dword*>
+	<virtual stdcall: hresult 42 uint32*>
 	^self invalidCall: _failureCode!
 
 get_PenTiltX: penTiltX
@@ -348,7 +348,7 @@ get_PenTiltX: penTiltX
 		HRESULT __stdcall PenTiltX(
 			[out, retval]int* PenTiltX);"
 
-	<virtual stdcall: hresult 44 sdword*>
+	<virtual stdcall: hresult 44 int32*>
 	^self invalidCall: _failureCode!
 
 get_PenTiltY: penTiltY
@@ -357,7 +357,7 @@ get_PenTiltY: penTiltY
 		HRESULT __stdcall PenTiltY(
 			[out, retval]int* PenTiltY);"
 
-	<virtual stdcall: hresult 46 sdword*>
+	<virtual stdcall: hresult 46 int32*>
 	^self invalidCall: _failureCode!
 
 get_PerformanceCount: performanceCount
@@ -366,7 +366,7 @@ get_PerformanceCount: performanceCount
 		HRESULT __stdcall PerformanceCount(
 			[out, retval]unsigned __int64* PerformanceCount);"
 
-	<virtual stdcall: hresult 32 qword*>
+	<virtual stdcall: hresult 32 uint64*>
 	^self invalidCall: _failureCode!
 
 get_PixelLocation: pixelLocation
@@ -402,7 +402,7 @@ get_PointerFlags: pointerFlags
 		HRESULT __stdcall PointerFlags(
 			[out, retval]unsigned int* PointerFlags);"
 
-	<virtual stdcall: hresult 10 dword*>
+	<virtual stdcall: hresult 10 uint32*>
 	^self invalidCall: _failureCode!
 
 get_PointerId: pointerId
@@ -411,7 +411,7 @@ get_PointerId: pointerId
 		HRESULT __stdcall PointerId(
 			[out, retval]unsigned int* PointerId);"
 
-	<virtual stdcall: hresult 6 dword*>
+	<virtual stdcall: hresult 6 uint32*>
 	^self invalidCall: _failureCode!
 
 get_PointerKind: pointerKind
@@ -420,7 +420,7 @@ get_PointerKind: pointerKind
 		HRESULT __stdcall PointerKind(
 			[out, retval]unsigned long* PointerKind);"
 
-	<virtual stdcall: hresult 4 dword*>
+	<virtual stdcall: hresult 4 uint32*>
 	^self invalidCall: _failureCode!
 
 get_Time: time
@@ -429,7 +429,7 @@ get_Time: time
 		HRESULT __stdcall Time(
 			[out, retval]unsigned long* Time);"
 
-	<virtual stdcall: hresult 24 dword*>
+	<virtual stdcall: hresult 24 uint32*>
 	^self invalidCall: _failureCode!
 
 get_TouchContact: touchContact
@@ -456,7 +456,7 @@ get_TouchFlags: touchFlags
 		HRESULT __stdcall TouchFlags(
 			[out, retval]unsigned int* TouchFlags);"
 
-	<virtual stdcall: hresult 48 dword*>
+	<virtual stdcall: hresult 48 uint32*>
 	^self invalidCall: _failureCode!
 
 get_TouchMask: touchMask
@@ -465,7 +465,7 @@ get_TouchMask: touchMask
 		HRESULT __stdcall TouchMask(
 			[out, retval]unsigned int* TouchMask);"
 
-	<virtual stdcall: hresult 50 dword*>
+	<virtual stdcall: hresult 50 uint32*>
 	^self invalidCall: _failureCode!
 
 get_TouchOrientation: touchOrientation
@@ -474,7 +474,7 @@ get_TouchOrientation: touchOrientation
 		HRESULT __stdcall TouchOrientation(
 			[out, retval]unsigned int* TouchOrientation);"
 
-	<virtual stdcall: hresult 56 dword*>
+	<virtual stdcall: hresult 56 uint32*>
 	^self invalidCall: _failureCode!
 
 get_TouchPressure: touchPressure
@@ -483,7 +483,7 @@ get_TouchPressure: touchPressure
 		HRESULT __stdcall TouchPressure(
 			[out, retval]unsigned int* TouchPressure);"
 
-	<virtual stdcall: hresult 58 dword*>
+	<virtual stdcall: hresult 58 uint32*>
 	^self invalidCall: _failureCode!
 
 himetricLocation
@@ -733,7 +733,7 @@ put_ButtonChangeKind: buttonChangeKind
 		HRESULT __stdcall ButtonChangeKind(
 			[in]int ButtonChangeKind);"
 
-	<virtual stdcall: hresult 35 sdword>
+	<virtual stdcall: hresult 35 int32>
 	^self invalidCall: _failureCode!
 
 put_DisplayRect: displayRect
@@ -753,7 +753,7 @@ put_FrameId: frameId
 		HRESULT __stdcall FrameId(
 			[in]unsigned int FrameId);"
 
-	<virtual stdcall: hresult 9 dword>
+	<virtual stdcall: hresult 9 uint32>
 	^self invalidCall: _failureCode!
 
 put_HimetricLocation: himetricLocation
@@ -783,7 +783,7 @@ put_HistoryCount: historyCount
 		HRESULT __stdcall HistoryCount(
 			[in]unsigned int HistoryCount);"
 
-	<virtual stdcall: hresult 27 dword>
+	<virtual stdcall: hresult 27 uint32>
 	^self invalidCall: _failureCode!
 
 put_InputData: inputData
@@ -793,7 +793,7 @@ put_InputData: inputData
 		HRESULT __stdcall InputData(
 			[in]int InputData);"
 
-	<virtual stdcall: hresult 29 sdword>
+	<virtual stdcall: hresult 29 int32>
 	^self invalidCall: _failureCode!
 
 put_KeyStates: keyStates
@@ -803,7 +803,7 @@ put_KeyStates: keyStates
 		HRESULT __stdcall KeyStates(
 			[in]unsigned long KeyStates);"
 
-	<virtual stdcall: hresult 31 dword>
+	<virtual stdcall: hresult 31 uint32>
 	^self invalidCall: _failureCode!
 
 put_PenFlags: penFlags
@@ -813,7 +813,7 @@ put_PenFlags: penFlags
 		HRESULT __stdcall PenFlags(
 			[in]unsigned int PenFlags);"
 
-	<virtual stdcall: hresult 37 dword>
+	<virtual stdcall: hresult 37 uint32>
 	^self invalidCall: _failureCode!
 
 put_PenMask: penMask
@@ -823,7 +823,7 @@ put_PenMask: penMask
 		HRESULT __stdcall PenMask(
 			[in]unsigned int PenMask);"
 
-	<virtual stdcall: hresult 39 dword>
+	<virtual stdcall: hresult 39 uint32>
 	^self invalidCall: _failureCode!
 
 put_PenPressure: penPressure
@@ -833,7 +833,7 @@ put_PenPressure: penPressure
 		HRESULT __stdcall PenPressure(
 			[in]unsigned int PenPressure);"
 
-	<virtual stdcall: hresult 41 dword>
+	<virtual stdcall: hresult 41 uint32>
 	^self invalidCall: _failureCode!
 
 put_PenRotation: penRotation
@@ -843,7 +843,7 @@ put_PenRotation: penRotation
 		HRESULT __stdcall PenRotation(
 			[in]unsigned int PenRotation);"
 
-	<virtual stdcall: hresult 43 dword>
+	<virtual stdcall: hresult 43 uint32>
 	^self invalidCall: _failureCode!
 
 put_PenTiltX: penTiltX
@@ -853,7 +853,7 @@ put_PenTiltX: penTiltX
 		HRESULT __stdcall PenTiltX(
 			[in]int PenTiltX);"
 
-	<virtual stdcall: hresult 45 sdword>
+	<virtual stdcall: hresult 45 int32>
 	^self invalidCall: _failureCode!
 
 put_PenTiltY: penTiltY
@@ -863,7 +863,7 @@ put_PenTiltY: penTiltY
 		HRESULT __stdcall PenTiltY(
 			[in]int PenTiltY);"
 
-	<virtual stdcall: hresult 47 sdword>
+	<virtual stdcall: hresult 47 int32>
 	^self invalidCall: _failureCode!
 
 put_PerformanceCount: performanceCount
@@ -873,7 +873,7 @@ put_PerformanceCount: performanceCount
 		HRESULT __stdcall PerformanceCount(
 			[in]unsigned __int64 PerformanceCount);"
 
-	<virtual stdcall: hresult 33 qword>
+	<virtual stdcall: hresult 33 uint64>
 	^self invalidCall: _failureCode!
 
 put_PixelLocation: pixelLocation
@@ -913,7 +913,7 @@ put_PointerFlags: pointerFlags
 		HRESULT __stdcall PointerFlags(
 			[in]unsigned int PointerFlags);"
 
-	<virtual stdcall: hresult 11 dword>
+	<virtual stdcall: hresult 11 uint32>
 	^self invalidCall: _failureCode!
 
 put_PointerId: pointerId
@@ -923,7 +923,7 @@ put_PointerId: pointerId
 		HRESULT __stdcall PointerId(
 			[in]unsigned int PointerId);"
 
-	<virtual stdcall: hresult 7 dword>
+	<virtual stdcall: hresult 7 uint32>
 	^self invalidCall: _failureCode!
 
 put_PointerKind: pointerKind
@@ -933,7 +933,7 @@ put_PointerKind: pointerKind
 		HRESULT __stdcall PointerKind(
 			[in]unsigned long PointerKind);"
 
-	<virtual stdcall: hresult 5 dword>
+	<virtual stdcall: hresult 5 uint32>
 	^self invalidCall: _failureCode!
 
 put_Time: time
@@ -943,7 +943,7 @@ put_Time: time
 		HRESULT __stdcall Time(
 			[in]unsigned long Time);"
 
-	<virtual stdcall: hresult 25 dword>
+	<virtual stdcall: hresult 25 uint32>
 	^self invalidCall: _failureCode!
 
 put_TouchContact: touchContact
@@ -973,7 +973,7 @@ put_TouchFlags: touchFlags
 		HRESULT __stdcall TouchFlags(
 			[in]unsigned int TouchFlags);"
 
-	<virtual stdcall: hresult 49 dword>
+	<virtual stdcall: hresult 49 uint32>
 	^self invalidCall: _failureCode!
 
 put_TouchMask: touchMask
@@ -983,7 +983,7 @@ put_TouchMask: touchMask
 		HRESULT __stdcall TouchMask(
 			[in]unsigned int TouchMask);"
 
-	<virtual stdcall: hresult 51 dword>
+	<virtual stdcall: hresult 51 uint32>
 	^self invalidCall: _failureCode!
 
 put_TouchOrientation: touchOrientation
@@ -993,7 +993,7 @@ put_TouchOrientation: touchOrientation
 		HRESULT __stdcall TouchOrientation(
 			[in]unsigned int TouchOrientation);"
 
-	<virtual stdcall: hresult 57 dword>
+	<virtual stdcall: hresult 57 uint32>
 	^self invalidCall: _failureCode!
 
 put_TouchPressure: touchPressure
@@ -1003,7 +1003,7 @@ put_TouchPressure: touchPressure
 		HRESULT __stdcall TouchPressure(
 			[in]unsigned int TouchPressure);"
 
-	<virtual stdcall: hresult 59 dword>
+	<virtual stdcall: hresult 59 uint32>
 	^self invalidCall: _failureCode!
 
 time

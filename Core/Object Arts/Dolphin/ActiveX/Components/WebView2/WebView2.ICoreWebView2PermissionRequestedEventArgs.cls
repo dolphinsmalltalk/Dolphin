@@ -51,7 +51,7 @@ get_IsUserInitiated: isUserInitiated
 		HRESULT __stdcall IsUserInitiated(
 			[out, retval]long* IsUserInitiated);"
 
-	<virtual stdcall: hresult 6 sdword*>
+	<virtual stdcall: hresult 6 int32*>
 	^self invalidCall: _failureCode!
 
 get_PermissionKind: permissionKind
@@ -60,7 +60,7 @@ get_PermissionKind: permissionKind
 		HRESULT __stdcall PermissionKind(
 			[out, retval]COREWEBVIEW2_PERMISSION_KIND* PermissionKind);"
 
-	<virtual stdcall: hresult 5 sdword*>
+	<virtual stdcall: hresult 5 int32*>
 	^self invalidCall: _failureCode!
 
 get_State: state
@@ -69,7 +69,7 @@ get_State: state
 		HRESULT __stdcall State(
 			[out, retval]COREWEBVIEW2_PERMISSION_STATE* State);"
 
-	<virtual stdcall: hresult 7 sdword*>
+	<virtual stdcall: hresult 7 int32*>
 	^self invalidCall: _failureCode!
 
 get_uri: uri
@@ -121,7 +121,7 @@ put_State: state
 		HRESULT __stdcall State(
 			[in]COREWEBVIEW2_PERMISSION_STATE State);"
 
-	<virtual stdcall: hresult 8 sdword>
+	<virtual stdcall: hresult 8 int32>
 	^self invalidCall: _failureCode!
 
 state

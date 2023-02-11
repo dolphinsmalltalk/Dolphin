@@ -542,7 +542,7 @@ accept: s addr: addr addrlen: addrlen
 			sockaddr* addr,
 			int* addrlen);"
 
-	<overlap stdcall: handle accept handle void* sdword*>
+	<overlap stdcall: handle accept handle void* int32*>
 	^self invalidCall: _failureCode!
 
 basicFree
@@ -562,7 +562,7 @@ bind: s name: name namelen: namelen
 			sockaddr* name,
 			int namelen);"
 
-	<overlap stdcall: errno bind handle void* sdword>
+	<overlap stdcall: errno bind handle void* int32>
 	^self invalidOverlappedCall: _failureCode!
 
 closesocket: s
@@ -571,7 +571,7 @@ closesocket: s
 		int __stdcall closesocket(
 			unsigned int s);"
 
-	<stdcall: sdword closesocket handle>
+	<stdcall: int32 closesocket handle>
 	^self invalidCall: _failureCode!
 
 connect: s name: name namelen: namelen
@@ -582,7 +582,7 @@ connect: s name: name namelen: namelen
 			sockaddr* name,
 			int namelen);"
 
-	<overlap stdcall: errno connect handle void* sdword>
+	<overlap stdcall: errno connect handle void* int32>
 	^self invalidOverlappedCall: _failureCode!
 
 gethostbyaddr: addr len: len type: type
@@ -593,7 +593,7 @@ gethostbyaddr: addr len: len type: type
 			int len,
 			int Type);"
 
-	<overlap stdcall: HOSTENT* gethostbyaddr lpvoid sdword sdword>
+	<overlap stdcall: HOSTENT* gethostbyaddr lpvoid int32 int32>
 	^self invalidCall: _failureCode!
 
 gethostbyname: name
@@ -612,7 +612,7 @@ gethostname: name namelen: namelen
 			CHAR* name,
 			int namelen);"
 
-	<stdcall: errno GetHostNameW lpwstr sdword>
+	<stdcall: errno GetHostNameW lpwstr int32>
 	^self invalidCall: _failureCode!
 
 getpeername: s name: name namelen: namelen
@@ -623,7 +623,7 @@ getpeername: s name: name namelen: namelen
 			sockaddr* name,
 			int* namelen);"
 
-	<stdcall: errno getpeername handle void* sdword*>
+	<stdcall: errno getpeername handle void* int32*>
 	^self invalidCall: _failureCode!
 
 getprotobyname: name
@@ -641,7 +641,7 @@ getprotobynumber: number
 		protoent* __stdcall getprotobynumber(
 			int number);"
 
-	<stdcall: PROTOENT* getprotobynumber sdword>
+	<stdcall: PROTOENT* getprotobynumber int32>
 	^self invalidCall: _failureCode!
 
 getservbyname: name proto: proto
@@ -661,7 +661,7 @@ getservbyport: port proto: proto
 			int Port,
 			CHAR* proto);"
 
-	<stdcall: SERVENT* getservbyport sdword lpstr>
+	<stdcall: SERVENT* getservbyport int32 lpstr>
 	^self invalidCall: _failureCode!
 
 getsockname: s name: name namelen: namelen
@@ -672,7 +672,7 @@ getsockname: s name: name namelen: namelen
 			sockaddr* name,
 			int* namelen);"
 
-	<stdcall: errno getsockname handle void* sdword*>
+	<stdcall: errno getsockname handle void* int32*>
 	^self invalidCall: _failureCode!
 
 getsockopt: s level: level optname: optname optval: optval optlen: optlen
@@ -685,7 +685,7 @@ getsockopt: s level: level optname: optname optval: optval optlen: optlen
 			CHAR* optval,
 			int* optlen);"
 
-	<stdcall: errno getsockopt dword sdword sdword lpstr sdword*>
+	<stdcall: errno getsockopt uint32 int32 int32 lpstr int32*>
 	^self invalidCall: _failureCode!
 
 htonl: hostlong
@@ -694,7 +694,7 @@ htonl: hostlong
 		unsigned long __stdcall htonl(
 			unsigned long hostlong);"
 
-	<stdcall: dword htonl dword>
+	<stdcall: uint32 htonl uint32>
 	^self invalidCall: _failureCode!
 
 htons: hostshort
@@ -703,7 +703,7 @@ htons: hostshort
 		unsigned short __stdcall htons(
 			unsigned short hostshort);"
 
-	<stdcall: word htons word>
+	<stdcall: uint16 htons uint16>
 	^self invalidCall: _failureCode!
 
 inet_addr: cp
@@ -712,19 +712,19 @@ inet_addr: cp
 		unsigned long __stdcall inet_addr(
 			CHAR* cp);"
 
-	<stdcall: dword inet_addr lpstr>
+	<stdcall: uint32 inet_addr lpstr>
 	^self invalidCall: _failureCode!
 
 inet_ntop: saInteger pAddr: anIN_ADDR pStringBuf: aString stringBufSize: sizeInteger
 	"Convert an IN_ADDR or IN6_ADDR to a string in canonical form."
 
-	<stdcall: lpstr inet_ntop sdword void* lpstr sdword>
+	<stdcall: lpstr inet_ntop int32 void* lpstr int32>
 	^self invalidCall: _failureCode!
 
 inet_pton: saInteger pszAddrString: aString pAddrBuf: anIN_ADDR
 	"Convert an internet address expressed as a string to an IN_ADDR or IN6_ADDR."
 
-	<stdcall: sdword inet_pton sdword lpstr void*>
+	<stdcall: int32 inet_pton int32 lpstr void*>
 	^self invalidCall: _failureCode!
 
 initialize
@@ -759,7 +759,7 @@ ioctlsocket: s cmd: cmd argp: argp
 			long cmd,
 			unsigned long* argp);"
 
-	<stdcall: errno ioctlsocket dword sdword dword*>
+	<stdcall: errno ioctlsocket uint32 int32 uint32*>
 	^self invalidCall: _failureCode!
 
 listen: s backlog: backlog
@@ -769,7 +769,7 @@ listen: s backlog: backlog
 			unsigned int s,
 			int backlog);"
 
-	<stdcall: errno listen dword sdword>
+	<stdcall: errno listen uint32 int32>
 	^self invalidCall: _failureCode!
 
 ntohl: netlong
@@ -778,7 +778,7 @@ ntohl: netlong
 		unsigned long __stdcall ntohl(
 			unsigned long netlong);"
 
-	<stdcall: dword ntohl dword>
+	<stdcall: uint32 ntohl uint32>
 	^self invalidCall: _failureCode!
 
 ntohs: netshort
@@ -787,7 +787,7 @@ ntohs: netshort
 		unsigned short __stdcall ntohs(
 			unsigned short netshort);"
 
-	<stdcall: word ntohs word>
+	<stdcall: uint16 ntohs uint16>
 	^self invalidCall: _failureCode!
 
 recv: s buf: buf len: len flags: flags
@@ -799,7 +799,7 @@ recv: s buf: buf len: len flags: flags
 			int len,
 			int flags);"
 
-	<overlap stdcall: sdword recv dword void* sdword sdword>
+	<overlap stdcall: int32 recv uint32 void* int32 int32>
 	^self invalidCall: _failureCode!
 
 recvfrom: s buf: buf len: len flags: flags from: from fromlen: fromlen
@@ -813,7 +813,7 @@ recvfrom: s buf: buf len: len flags: flags from: from fromlen: fromlen
 			sockaddr* from,
 			int* fromlen);"
 
-	<overlap stdcall: sdword recvfrom dword void* sdword sdword void* sdword*>
+	<overlap stdcall: int32 recvfrom uint32 void* int32 int32 void* int32*>
 	^self invalidCall: _failureCode!
 
 select: nfds readfds: readfds writefds: writefds exceptfds: exceptfds timeout: timeout
@@ -826,7 +826,7 @@ select: nfds readfds: readfds writefds: writefds exceptfds: exceptfds timeout: t
 			fd_set* exceptfds,
 			timeval* timeout);"
 
-	<overlap stdcall: sdword select sdword FD_SET* FD_SET* FD_SET* TIMEVAL*>
+	<overlap stdcall: int32 select int32 FD_SET* FD_SET* FD_SET* TIMEVAL*>
 	^self invalidCall: _failureCode!
 
 send: s buf: buf len: len flags: flags
@@ -838,7 +838,7 @@ send: s buf: buf len: len flags: flags
 			int len,
 			int flags);"
 
-	<overlap stdcall: sdword send dword void* sdword sdword>
+	<overlap stdcall: int32 send uint32 void* int32 int32>
 	^self invalidCall: _failureCode!
 
 sendto: s buf: buf len: len flags: flags to: to tolen: tolen
@@ -852,7 +852,7 @@ sendto: s buf: buf len: len flags: flags to: to tolen: tolen
 			sockaddr* to,
 			int tolen);"
 
-	<overlap stdcall: sdword sendto dword void* sdword sdword void* sdword>
+	<overlap stdcall: int32 sendto uint32 void* int32 int32 void* int32>
 	^self invalidCall: _failureCode!
 
 setsockopt: s level: level optname: optname optval: optval optlen: optlen
@@ -865,7 +865,7 @@ setsockopt: s level: level optname: optname optval: optval optlen: optlen
 			CHAR* optval,
 			int optlen);"
 
-	<stdcall: errno setsockopt dword sdword sdword lpvoid sdword>
+	<stdcall: errno setsockopt uint32 int32 int32 lpvoid int32>
 	^self invalidCall: _failureCode!
 
 shutdown: s how: how
@@ -875,7 +875,7 @@ shutdown: s how: how
 			unsigned int s,
 			int how);"
 
-	<stdcall: sdword shutdown dword sdword>
+	<stdcall: int32 shutdown uint32 int32>
 	^self invalidCall: _failureCode!
 
 socket: af type: type protocol: protocol
@@ -886,7 +886,7 @@ socket: af type: type protocol: protocol
 			int Type,
 			int protocol);"
 
-	<stdcall: handle socket sdword sdword sdword>
+	<stdcall: handle socket int32 int32 int32>
 	^self invalidCall: _failureCode!
 
 wsaAddressToStringW: lpsaAddress dwAddressLength: dwAddressLength lpProtocolInfo: lpProtocolInfo lpszAddressString: lpszAddressString lpdwAddressStringLength: lpdwAddressStringLength
@@ -899,7 +899,7 @@ wsaAddressToStringW: lpsaAddress dwAddressLength: dwAddressLength lpProtocolInfo
 			[in, out]LPWSTR lpszAddressString,
 			[in, out]unsigned long* lpdwAddressStringLength);"
 
-	<stdcall: errno WSAAddressToStringW SOCKADDR* dword void* lpwstr dword*>
+	<stdcall: errno WSAAddressToStringW SOCKADDR* uint32 void* lpwstr uint32*>
 	^self invalidCall: _failureCode!
 
 wsaCleanup
@@ -907,7 +907,7 @@ wsaCleanup
 
 		int __stdcall WSACleanup();"
 
-	<stdcall: sdword WSACleanup>
+	<stdcall: int32 WSACleanup>
 	^self invalidCall: _failureCode!
 
 wsaGetLastError
@@ -915,7 +915,7 @@ wsaGetLastError
 
 		int __stdcall WSAGetLastError();"
 
-	<stdcall: sdword WSAGetLastError>
+	<stdcall: int32 WSAGetLastError>
 	^self invalidCall: _failureCode!
 
 wsaStartup: wVersionRequested lpWSAData: lpWSAData
@@ -925,7 +925,7 @@ wsaStartup: wVersionRequested lpWSAData: lpWSAData
 			[in]unsigned short wVersionRequested,
 			[out]WSAData* lpWSAData);"
 
-	<stdcall: errno WSAStartup word WSADATA*>
+	<stdcall: errno WSAStartup uint16 WSADATA*>
 	^_failureCode > 0
 		ifTrue: [Net.SocketError signalWith: _failureCode]
 		ifFalse: [super invalidCall: _failureCode]! !

@@ -304,7 +304,7 @@ get_readyState: value
 		HRESULT __stdcall readyState(
 			[out, retval]long* value);"
 
-	<virtual stdcall: hresult 60 sdword*>
+	<virtual stdcall: hresult 60 int32*>
 	^self invalidCall: _failureCode!
 
 get_resolveExternals: isResolving

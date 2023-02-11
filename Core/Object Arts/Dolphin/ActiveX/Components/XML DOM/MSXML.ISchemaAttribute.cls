@@ -115,7 +115,7 @@ get_use: use
 		HRESULT __stdcall use(
 			[out, retval]SCHEMAUSE* use);"
 
-	<virtual stdcall: hresult 19 sdword*>
+	<virtual stdcall: hresult 19 int32*>
 	^self invalidCall: _failureCode!
 
 isReference

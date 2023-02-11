@@ -60,7 +60,7 @@ get_Kind: value
 		HRESULT __stdcall Kind(
 			[out, retval]COREWEBVIEW2_CLIENT_CERTIFICATE_KIND* value);"
 
-	<virtual stdcall: hresult 12 sdword*>
+	<virtual stdcall: hresult 12 int32*>
 	^self invalidCall: _failureCode!
 
 kind

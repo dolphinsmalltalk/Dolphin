@@ -66,7 +66,7 @@ ErrorParameters: index param: param
 			[in]long index,
 			[out, retval]BSTR* param);"
 
-	<virtual stdcall: hresult 17 sdword bstr*>
+	<virtual stdcall: hresult 17 int32 bstr*>
 	^self invalidCall: _failureCode!
 
 errorParametersCount
@@ -100,7 +100,7 @@ get_errorParametersCount: count
 		HRESULT __stdcall errorParametersCount(
 			[out, retval]long* count);"
 
-	<virtual stdcall: hresult 18 sdword*>
+	<virtual stdcall: hresult 18 int32*>
 	^self invalidCall: _failureCode!
 
 get_errorXPath: xpathexpr

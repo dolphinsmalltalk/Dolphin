@@ -32,7 +32,7 @@ GetSizeMax: pCbSize
 			[out] unsigned long* pCbSize);
 	"
 
-	<virtual stdcall: hresult 8 dword*>
+	<virtual stdcall: hresult 8 uint32*>
 	^self invalidCall: _failureCode!
 
 initNew  
@@ -75,7 +75,7 @@ Load: pMem cbSize: cbSize
 			[in] unsigned long cbSize);
 	"
 
-	<virtual stdcall: hresult 6 byte* dword>
+	<virtual stdcall: hresult 6 uint8* uint32>
 	^self invalidCall: _failureCode!
 
 save: fClearDirty
@@ -107,7 +107,7 @@ Save: pMem fClearDirty: fClearDirty cbSize: cbSize
 			[in] unsigned long cbSize);
 	"
 
-	<virtual stdcall: hresult 7 byte* sdword dword>
+	<virtual stdcall: hresult 7 uint8* int32 uint32>
 	^self invalidCall: _failureCode! !
 !OS.COM.IPersistMemory categoriesForMethods!
 getSizeMax!**auto generated**!methods!public! !

@@ -120,7 +120,7 @@ Read: pv cb: cb pcbRead: pcbRead
 			[out] unsigned long* pcbRead);
 	"
 
-	<virtual stdcall: hresult 4 sbyte* dword dword*>
+	<virtual stdcall: hresult 4 int8* uint32 uint32*>
 	^self invalidCall: _failureCode!
 
 read: buffer count: anInteger
@@ -176,7 +176,7 @@ Write: pv cb: cb pcbWritten: pcbWritten
 
 	"
 
-	<virtual stdcall: hresult 5 sbyte* dword dword*>
+	<virtual stdcall: hresult 5 int8* uint32 uint32*>
 	^self invalidCall: _failureCode!
 
 write: buffer count: anInteger

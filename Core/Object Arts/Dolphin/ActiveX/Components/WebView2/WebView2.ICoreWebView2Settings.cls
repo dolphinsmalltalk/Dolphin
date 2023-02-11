@@ -172,7 +172,7 @@ get_AreDefaultContextMenusEnabled: enabled
 		HRESULT __stdcall AreDefaultContextMenusEnabled(
 			[out, retval]long* enabled);"
 
-	<virtual stdcall: hresult 14 sdword*>
+	<virtual stdcall: hresult 14 int32*>
 	^self invalidCall: _failureCode!
 
 get_AreDefaultScriptDialogsEnabled: areDefaultScriptDialogsEnabled
@@ -181,7 +181,7 @@ get_AreDefaultScriptDialogsEnabled: areDefaultScriptDialogsEnabled
 		HRESULT __stdcall AreDefaultScriptDialogsEnabled(
 			[out, retval]long* AreDefaultScriptDialogsEnabled);"
 
-	<virtual stdcall: hresult 8 sdword*>
+	<virtual stdcall: hresult 8 int32*>
 	^self invalidCall: _failureCode!
 
 get_AreDevToolsEnabled: areDevToolsEnabled
@@ -190,7 +190,7 @@ get_AreDevToolsEnabled: areDevToolsEnabled
 		HRESULT __stdcall AreDevToolsEnabled(
 			[out, retval]long* AreDevToolsEnabled);"
 
-	<virtual stdcall: hresult 12 sdword*>
+	<virtual stdcall: hresult 12 int32*>
 	^self invalidCall: _failureCode!
 
 get_AreHostObjectsAllowed: allowed
@@ -199,7 +199,7 @@ get_AreHostObjectsAllowed: allowed
 		HRESULT __stdcall AreHostObjectsAllowed(
 			[out, retval]long* allowed);"
 
-	<virtual stdcall: hresult 16 sdword*>
+	<virtual stdcall: hresult 16 int32*>
 	^self invalidCall: _failureCode!
 
 get_HiddenPdfToolbarItems: hidden_pdf_toolbar_items
@@ -217,7 +217,7 @@ get_IsBuiltInErrorPageEnabled: enabled
 		HRESULT __stdcall IsBuiltInErrorPageEnabled(
 			[out, retval]long* enabled);"
 
-	<virtual stdcall: hresult 20 sdword*>
+	<virtual stdcall: hresult 20 int32*>
 	^self invalidCall: _failureCode!
 
 get_IsGeneralAutofillEnabled: value
@@ -253,7 +253,7 @@ get_IsScriptEnabled: isScriptEnabled
 		HRESULT __stdcall IsScriptEnabled(
 			[out, retval]long* IsScriptEnabled);"
 
-	<virtual stdcall: hresult 4 sdword*>
+	<virtual stdcall: hresult 4 int32*>
 	^self invalidCall: _failureCode!
 
 get_IsStatusBarEnabled: isStatusBarEnabled
@@ -262,7 +262,7 @@ get_IsStatusBarEnabled: isStatusBarEnabled
 		HRESULT __stdcall IsStatusBarEnabled(
 			[out, retval]long* IsStatusBarEnabled);"
 
-	<virtual stdcall: hresult 10 sdword*>
+	<virtual stdcall: hresult 10 int32*>
 	^self invalidCall: _failureCode!
 
 get_IsSwipeNavigationEnabled: enabled
@@ -280,7 +280,7 @@ get_IsWebMessageEnabled: isWebMessageEnabled
 		HRESULT __stdcall IsWebMessageEnabled(
 			[out, retval]long* IsWebMessageEnabled);"
 
-	<virtual stdcall: hresult 6 sdword*>
+	<virtual stdcall: hresult 6 int32*>
 	^self invalidCall: _failureCode!
 
 get_IsZoomControlEnabled: enabled
@@ -289,7 +289,7 @@ get_IsZoomControlEnabled: enabled
 		HRESULT __stdcall IsZoomControlEnabled(
 			[out, retval]long* enabled);"
 
-	<virtual stdcall: hresult 18 sdword*>
+	<virtual stdcall: hresult 18 int32*>
 	^self invalidCall: _failureCode!
 
 get_UserAgent: userAgent
@@ -450,7 +450,7 @@ put_AreDefaultContextMenusEnabled: enabled
 		HRESULT __stdcall AreDefaultContextMenusEnabled(
 			[in]long enabled);"
 
-	<virtual stdcall: hresult 15 sdword>
+	<virtual stdcall: hresult 15 int32>
 	^self invalidCall: _failureCode!
 
 put_AreDefaultScriptDialogsEnabled: areDefaultScriptDialogsEnabled
@@ -460,7 +460,7 @@ put_AreDefaultScriptDialogsEnabled: areDefaultScriptDialogsEnabled
 		HRESULT __stdcall AreDefaultScriptDialogsEnabled(
 			[in]long AreDefaultScriptDialogsEnabled);"
 
-	<virtual stdcall: hresult 9 sdword>
+	<virtual stdcall: hresult 9 int32>
 	^self invalidCall: _failureCode!
 
 put_AreDevToolsEnabled: areDevToolsEnabled
@@ -470,7 +470,7 @@ put_AreDevToolsEnabled: areDevToolsEnabled
 		HRESULT __stdcall AreDevToolsEnabled(
 			[in]long AreDevToolsEnabled);"
 
-	<virtual stdcall: hresult 13 sdword>
+	<virtual stdcall: hresult 13 int32>
 	^self invalidCall: _failureCode!
 
 put_AreHostObjectsAllowed: allowed
@@ -480,7 +480,7 @@ put_AreHostObjectsAllowed: allowed
 		HRESULT __stdcall AreHostObjectsAllowed(
 			[in]long allowed);"
 
-	<virtual stdcall: hresult 17 sdword>
+	<virtual stdcall: hresult 17 int32>
 	^self invalidCall: _failureCode!
 
 put_HiddenPdfToolbarItems: hidden_pdf_toolbar_items
@@ -499,7 +499,7 @@ put_IsBuiltInErrorPageEnabled: enabled
 		HRESULT __stdcall IsBuiltInErrorPageEnabled(
 			[in]long enabled);"
 
-	<virtual stdcall: hresult 21 sdword>
+	<virtual stdcall: hresult 21 int32>
 	^self invalidCall: _failureCode!
 
 put_IsGeneralAutofillEnabled: value
@@ -536,7 +536,7 @@ put_IsScriptEnabled: isScriptEnabled
 		HRESULT __stdcall IsScriptEnabled(
 			[in]long IsScriptEnabled);"
 
-	<virtual stdcall: hresult 5 sdword>
+	<virtual stdcall: hresult 5 int32>
 	^self invalidCall: _failureCode!
 
 put_IsStatusBarEnabled: isStatusBarEnabled
@@ -546,7 +546,7 @@ put_IsStatusBarEnabled: isStatusBarEnabled
 		HRESULT __stdcall IsStatusBarEnabled(
 			[in]long IsStatusBarEnabled);"
 
-	<virtual stdcall: hresult 11 sdword>
+	<virtual stdcall: hresult 11 int32>
 	^self invalidCall: _failureCode!
 
 put_IsSwipeNavigationEnabled: enabled
@@ -565,7 +565,7 @@ put_IsWebMessageEnabled: isWebMessageEnabled
 		HRESULT __stdcall IsWebMessageEnabled(
 			[in]long IsWebMessageEnabled);"
 
-	<virtual stdcall: hresult 7 sdword>
+	<virtual stdcall: hresult 7 int32>
 	^self invalidCall: _failureCode!
 
 put_IsZoomControlEnabled: enabled
@@ -575,7 +575,7 @@ put_IsZoomControlEnabled: enabled
 		HRESULT __stdcall IsZoomControlEnabled(
 			[in]long enabled);"
 
-	<virtual stdcall: hresult 19 sdword>
+	<virtual stdcall: hresult 19 int32>
 	^self invalidCall: _failureCode!
 
 put_UserAgent: userAgent

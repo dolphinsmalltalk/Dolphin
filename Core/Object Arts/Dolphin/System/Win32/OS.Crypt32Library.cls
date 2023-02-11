@@ -29,7 +29,7 @@ cryptProtectData: pDataIn szDataDescr: szDataDescr pOptionalEntropy: pOptionalEn
 			unsigned long dwFlags,
 			DATA_BLOB* pDataOut);"
 
-	<stdcall: bool CryptProtectData CRYPTOAPI_BLOB* lpwstr CRYPTOAPI_BLOB* void* CRYPTPROTECT_PROMPTSTRUCT* dword CRYPTOAPI_BLOB*>
+	<stdcall: bool CryptProtectData CRYPTOAPI_BLOB* lpwstr CRYPTOAPI_BLOB* void* CRYPTPROTECT_PROMPTSTRUCT* uint32 CRYPTOAPI_BLOB*>
 	^self invalidCall: _failureCode!
 
 cryptProtectMemory: pDataIn cbDataIn: cbDataIn dwFlags: dwFlags
@@ -40,7 +40,7 @@ cryptProtectMemory: pDataIn cbDataIn: cbDataIn dwFlags: dwFlags
 			unsigned long cbDataIn,
 			unsigned long dwFlags);"
 
-	<stdcall: bool CryptProtectMemory void* dword dword>
+	<stdcall: bool CryptProtectMemory void* uint32 uint32>
 	^self invalidCall: _failureCode!
 
 cryptUnprotectData: pDataIn ppszDataDescr: ppszDataDescr pOptionalEntropy: pOptionalEntropy pvReserved: pvReserved pPromptStruct: pPromptStruct dwFlags: dwFlags pDataOut: pDataOut
@@ -55,7 +55,7 @@ cryptUnprotectData: pDataIn ppszDataDescr: ppszDataDescr pOptionalEntropy: pOpti
 			unsigned long dwFlags,
 			DATA_BLOB* pDataOut);"
 
-	<stdcall: bool CryptUnprotectData CRYPTOAPI_BLOB* lpwstr* CRYPTOAPI_BLOB* void* CRYPTPROTECT_PROMPTSTRUCT* dword CRYPTOAPI_BLOB*>
+	<stdcall: bool CryptUnprotectData CRYPTOAPI_BLOB* lpwstr* CRYPTOAPI_BLOB* void* CRYPTPROTECT_PROMPTSTRUCT* uint32 CRYPTOAPI_BLOB*>
 	^self invalidCall: _failureCode!
 
 cryptUnprotectMemory: pDataIn cbDataIn: cbDataIn dwFlags: dwFlags
@@ -66,7 +66,7 @@ cryptUnprotectMemory: pDataIn cbDataIn: cbDataIn dwFlags: dwFlags
 			unsigned long cbDataIn,
 			unsigned long dwFlags);"
 
-	<stdcall: bool CryptUnprotectMemory void* dword dword>
+	<stdcall: bool CryptUnprotectMemory void* uint32 uint32>
 	^self invalidCall: _failureCode! !
 !OS.Crypt32Library categoriesForMethods!
 cryptProtectData:szDataDescr:pOptionalEntropy:pvReserved:pPromptStruct:dwFlags:pDataOut:!**auto generated**!public! !

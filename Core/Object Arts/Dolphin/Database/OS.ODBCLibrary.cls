@@ -23,7 +23,7 @@ Note that SQLRETURN is an alias for SQLSMALLINT'!
 !OS.ODBCLibrary methodsFor!
 
 sqlAllocHandle: anInteger inputHandle: parentExternalHandle outputHandlePtr: newExternalHandle
-	<stdcall: sword SQLAllocHandle sword handle handle*>
+	<stdcall: int16 SQLAllocHandle int16 handle handle*>
 	^self invalidCall: _failureCode!
 
 sqlBindCol: anExternalHandle columnNumber: anIntegerCol targetType: anIntegerType targetValuePtr: anExternalAddressBuf bufferLength: anIntegerMax strLenOrInd: anExternalAddressLen
@@ -53,7 +53,7 @@ sqlBindCol: anExternalHandle columnNumber: anIntegerCol targetType: anIntegerTyp
          then the objects will likely move on a garbage collect, and
          the DLL will then write into some other object!!"
 
-	<stdcall: sword SQLBindCol handle word sword lpvoid sdword lpvoid>
+	<stdcall: int16 SQLBindCol handle uint16 int16 lpvoid int32 lpvoid>
 	^self invalidCall: _failureCode!
 
 sqlBindParameter: anExternalHandle parameterNumber: parmNumInteger inputOutputType: ioInteger valueType: valueInteger parameterType: parmTypeInteger columnSize: sizeInteger decimalDigits: digitsInteger parameterValuePtr: parmBytes bufferLength: bufLenInteger strLenOrIndPtr: anSDWORD
@@ -69,7 +69,7 @@ sqlBindParameter: anExternalHandle parameterNumber: parmNumInteger inputOutputTy
 		SQLINTEGER     BufferLength,
 		SQLINTEGER *     StrLen_or_IndPtr);"
 
-	<stdcall: sword SQLBindParameter handle word sword sword sword dword sword lpvoid sdword lpvoid>
+	<stdcall: int16 SQLBindParameter handle uint16 int16 int16 int16 uint32 int16 lpvoid int32 lpvoid>
 	^self invalidCall: _failureCode!
 
 sqlBrowseConnect: anExternalHandle inConnectionString: aString stringLength1: anIntegerLen outConnectionString: anExternalBuffer bufferLength: anIntegerMax stringLength2Ptr: anIntegerParm
@@ -83,7 +83,7 @@ sqlBrowseConnect: anExternalHandle inConnectionString: aString stringLength1: an
 		SQLSMALLINT     BufferLength,
 		SQLSMALLINT *     StringLength2Ptr);"
 
-	<stdcall: sword SQLBrowseConnectW handle lpwstr sword lpwstr sword sword*>
+	<stdcall: int16 SQLBrowseConnectW handle lpwstr int16 lpwstr int16 int16*>
 	^self invalidCall: _failureCode!
 
 sqlCancel: anExternalHandle
@@ -95,15 +95,15 @@ sqlCancel: anExternalHandle
 	request has been satisfied, merely that it was accepted.
 	See ODBC API help"
 
-	<stdcall: sword SQLCancel handle>
+	<stdcall: int16 SQLCancel handle>
 	^self invalidCall: _failureCode!
 
 sqlCloseCursor: anExternalHandle
-	<stdcall: sword SQLCloseCursor handle>
+	<stdcall: int16 SQLCloseCursor handle>
 	^self invalidCall: _failureCode!
 
 sqlColAttribute: anExternalHandle columnNumber: columnInteger fieldIdentifier: idInteger characterAttributePtr: bytes bufferLength: sizeInteger stringLengthPtr: anSWORD numericAttributePtr: anExternalAddress
-	<stdcall: sword SQLColAttributeW handle word word lpvoid sword sword* lpvoid>
+	<stdcall: int16 SQLColAttributeW handle uint16 uint16 lpvoid int16 int16* lpvoid>
 	^self invalidCall: _failureCode!
 
 sqlColumns: anExternalHandleSTMT catalogName: aStringParmQual nameLength1: anIntegerQualLen schemaName: aStringParmOwner nameLength2: anIntegerOwnerLen tableName: aStringParmName nameLength3: anIntegerNameLen columnName: aStringParmType nameLength4: anIntegerTypeLen
@@ -118,7 +118,7 @@ sqlColumns: anExternalHandleSTMT catalogName: aStringParmQual nameLength1: anInt
 		SQLWCHAR *     ColumnName,
 		SQLSMALLINT     NameLength4);"
 
-	<stdcall: sword SQLColumnsW handle lpwstr sword lpwstr sword lpwstr sword lpwstr sword>
+	<stdcall: int16 SQLColumnsW handle lpwstr int16 lpwstr int16 lpwstr int16 lpwstr int16>
 	^self invalidCall: _failureCode!
 
 sqlConnect: anExternalHandle serverName: dsnString nameLength1: dsnInteger userName: uidString nameLength2: uidIInteger authentication: authString nameLength3: authInteger
@@ -133,7 +133,7 @@ sqlConnect: anExternalHandle serverName: dsnString nameLength1: dsnInteger userN
 		SQLCHAR * Authentication,
 		SQLSMALLINT NameLength3);"
 
-	<stdcall: sword SQLConnectW handle lpwstr sword lpwstr sword lpwstr sword>
+	<stdcall: int16 SQLConnectW handle lpwstr int16 lpwstr int16 lpwstr int16>
 	^self invalidCall: _failureCode!
 
 sqlDataSources: anExternalHandle direction: anIntegerConstant serverName: anExternalBuffer bufferLength1: anIntegerMax nameLength1Ptr: anIntegerParmLen description: anExternalBufferParm bufferLength2: anIntegerParmDMax nameLength2Ptr: anIntegerParmDLen
@@ -151,7 +151,7 @@ sqlDataSources: anExternalHandle direction: anIntegerConstant serverName: anExte
 	    Max length of szDSN (cbDSNMax) need not be longer than
 	    SQL_MAX_DSN_LENGTH+1)."
 
-	<stdcall: sword SQLDataSourcesW handle word lpwstr sword sword* lpwstr sword sword*>
+	<stdcall: int16 SQLDataSourcesW handle uint16 lpwstr int16 int16* lpwstr int16 int16*>
 	^self invalidCall: _failureCode!
 
 sqlDescribeCol: anExternalHandle columnNumber: columnInteger columnName: aString bufferLength: sizeInteger nameLengthPtr: maxSWORD dataTypePtr: typeSWORD columnSizePtr: precisionDWORD decimalDigitsPtr: scaleSWORD nullablePtr: nullableSWORD
@@ -166,11 +166,11 @@ sqlDescribeCol: anExternalHandle columnNumber: columnInteger columnName: aString
 		SQLSMALLINT *     DecimalDigitsPtr,
 		SQLSMALLINT *     NullablePtr);"
 
-	<stdcall: sword SQLDescribeColW handle word lpwstr sword sword* sword* dword* sword* sword*>
+	<stdcall: int16 SQLDescribeColW handle uint16 lpwstr int16 int16* int16* uint32* int16* int16*>
 	^self invalidCall: _failureCode!
 
 sqlDisconnect: anExternalHandle
-	<stdcall: sword SQLDisconnect handle>
+	<stdcall: int16 SQLDisconnect handle>
 	^self invalidCall: _failureCode!
 
 sqlDriverConnect: anExternalHandle windowHandle: aWinHandle inConnectionString: aStringConn stringLength1: anIntegerConn outConnectionString: aStringConnOut bufferLength: anIntegerConnOut stringLength2Ptr: anExternalShort driverCompletion: anIntegerOption
@@ -186,7 +186,7 @@ sqlDriverConnect: anExternalHandle windowHandle: aWinHandle inConnectionString: 
 		SQLSMALLINT *     StringLength2Ptr,
 		SQLUSMALLINT     DriverCompletion);"
 
-	<stdcall: sword SQLDriverConnectW handle handle lpwstr sword lpwstr sword sword* word>
+	<stdcall: int16 SQLDriverConnectW handle handle lpwstr int16 lpwstr int16 int16* uint16>
 	^self invalidCall: _failureCode!
 
 sqlEndTran: anExternalHandleEnv handle: anExternalHandleDBC completionType: anInteger
@@ -195,7 +195,7 @@ sqlEndTran: anExternalHandleEnv handle: anExternalHandleDBC completionType: anIn
 		SQLHANDLE     Handle,
 		SQLSMALLINT     CompletionType);"
 
-	<stdcall: sword SQLEndTran sword handle sword>
+	<stdcall: int16 SQLEndTran int16 handle int16>
 	^self invalidCall: _failureCode!
 
 sqlExecDirect: anExternalHandle statementText: aString textLength: anInteger
@@ -204,7 +204,7 @@ sqlExecDirect: anExternalHandle statementText: aString textLength: anInteger
 		SQLCHAR * StatementText,
 		SQLINTEGER TextLength);"
 
-	<stdcall: sword SQLExecDirectW handle lpwstr sdword>
+	<stdcall: int16 SQLExecDirectW handle lpwstr int32>
 	^self invalidCall: _failureCode!
 
 sqlExecute: anExternalHandle
@@ -212,11 +212,11 @@ sqlExecute: anExternalHandle
 	
 		SQLRETURN SQLExecute(HSTMT hstmt);"
 
-	<stdcall: sword SQLExecute handle>
+	<stdcall: int16 SQLExecute handle>
 	^self invalidCall: _failureCode!
 
 sqlFetchScroll: anExternalHandle fetchOrientation: orientationInteger fetchOffset: offsetInteger
-	<stdcall: sword SQLFetchScroll handle word sdword>
+	<stdcall: int16 SQLFetchScroll handle uint16 int32>
 	^self invalidCall: _failureCode!
 
 sqlForeignKeys: anExternalHandle pkCatalogName: aStringPkQual nameLength1: anIntegerPkQual pkSchemaName: aStringPkOwn nameLength2: anIntegerPkOwn pkTableName: aStringPkName nameLength3: anIntegerPkName fkCatalogName: aStringFkQual nameLength4: anIntegerFkQual fkSchemaName: aStringFkOwn nameLength5: anIntegerFkOwn fkTableName: aStringFkName nameLength6: anIntegerFkName
@@ -235,19 +235,19 @@ sqlForeignKeys: anExternalHandle pkCatalogName: aStringPkQual nameLength1: anInt
 		SQLWCHAR *     FKTableName,
 		SQLSMALLINT     NameLength6);"
 
-	<stdcall: sword SQLForeignKeysW handle lpwstr sword lpwstr sword lpwstr sword lpwstr sword lpwstr sword lpwstr sword>
+	<stdcall: int16 SQLForeignKeysW handle lpwstr int16 lpwstr int16 lpwstr int16 lpwstr int16 lpwstr int16 lpwstr int16>
 	^self invalidCall: _failureCode!
 
 sqlFreeHandle: anInteger handle: anExternalHandle
-	<stdcall: sword SQLFreeHandle sword handle>
+	<stdcall: int16 SQLFreeHandle int16 handle>
 	^self invalidCall: _failureCode!
 
 sqlFreeStmt: anExternalHandle option: anInteger
-	<stdcall: sword SQLFreeStmt handle word>
+	<stdcall: int16 SQLFreeStmt handle uint16>
 	^self invalidCall: _failureCode!
 
 sqlGetConnectAttr: anExternalHandle attribute: idInteger valuePtr: anIntegerOrStringOrBytes bufferLength: lengthInteger stringLengthPtr: anSDWORD
-	<stdcall: sword SQLGetConnectAttrW handle sdword lpvoid sdword sdword*>
+	<stdcall: int16 SQLGetConnectAttrW handle int32 lpvoid int32 int32*>
 	^self invalidCall: _failureCode!
 
 sqlGetData: anExternalHandleSTMT columnNumber: anIntegerPar targetType: anIntegerCType targetValuePtr: anExternalBuffer bufferLength: anIntegerMax strLenOrIndPtr: anSDWORD
@@ -259,7 +259,7 @@ sqlGetData: anExternalHandleSTMT columnNumber: anIntegerPar targetType: anIntege
 		SQLINTEGER     BufferLength,
 		SQLINTEGER *     StrLen_or_IndPtr);"
 
-	<stdcall: sword SQLGetData handle word sword lpvoid sdword sdword*>
+	<stdcall: int16 SQLGetData handle uint16 int16 lpvoid int32 int32*>
 	^self invalidCall: _failureCode!
 
 sqlGetDiagRec: anIntegerHandleType handle: anExternalHandle recNumber: anIntegerRecordNumber szSqlState: anSQLStateParm pfNativeError: anIntegerParmNErr szErrorMsg: anExternalBufferErrMsg cbErrorMsgMax: anInteger pcbErrorMsg: anIntegerParmLen
@@ -273,7 +273,7 @@ sqlGetDiagRec: anIntegerHandleType handle: anExternalHandle recNumber: anInteger
 		SQLSMALLINT     BufferLength,
 		SQLSMALLINT *   TextLengthPtr);"
 
-	<stdcall: sword SQLGetDiagRecW sword handle sword lpwstr sdword* lpwstr sword sword*>
+	<stdcall: int16 SQLGetDiagRecW int16 handle int16 lpwstr int32* lpwstr int16 int16*>
 	^self invalidCall: _failureCode!
 
 sqlGetEnvAttr: anExternalHandle infoType: anIntegerType infoValuePtr: bytes bufferLength: anIntegerMax stringLengthPtr: anSWORD
@@ -286,7 +286,7 @@ sqlGetEnvAttr: anExternalHandle infoType: anIntegerType infoValuePtr: bytes buff
 			SQLSMALLINT     BufferLength,
 			SQLSMALLINT *     StringLengthPtr);"
 
-	<stdcall: sword SQLGetEnvAttr handle dword lpvoid dword dword*>
+	<stdcall: int16 SQLGetEnvAttr handle uint32 lpvoid uint32 uint32*>
 	^self invalidCall: _failureCode!
 
 sqlGetFunctions: anExternalHandle functionId: anInteger supportedPtr: aWORD
@@ -298,7 +298,7 @@ sqlGetFunctions: anExternalHandle functionId: anInteger supportedPtr: aWORD
 			SQLUSMALLINT     FunctionId,
 			SQLUSMALLINT *     SupportedPtr);"
 
-	<stdcall: sword SQLGetFunctions handle word word*>
+	<stdcall: int16 SQLGetFunctions handle uint16 uint16*>
 	^self invalidCall: _failureCode!
 
 sqlGetInfo: anExternalHandle infoType: anIntegerType infoValuePtr: bytes bufferLength: anIntegerMax stringLengthPtr: anSWORD
@@ -312,11 +312,11 @@ sqlGetInfo: anExternalHandle infoType: anIntegerType infoValuePtr: bytes bufferL
 			SQLSMALLINT     BufferLength,
 			SQLSMALLINT *     StringLengthPtr);"
 
-	<stdcall: sword SQLGetInfoW handle word lpvoid sword sword*>
+	<stdcall: int16 SQLGetInfoW handle uint16 lpvoid int16 int16*>
 	^self invalidCall: _failureCode!
 
 sqlGetStmtAttr: anExternalHandle attribute: optionCode valuePtr: anIntegerOrStringOrBytes bufferLength: lengthInteger stringLengthPtr: anSDWORD
-	<stdcall: sword SQLGetStmtAttrW handle sdword lpvoid sdword sdword*>
+	<stdcall: int16 SQLGetStmtAttrW handle int32 lpvoid int32 int32*>
 	^self invalidCall: _failureCode!
 
 sqlNumResultCols: anExternalHandle pccol: anSWORD
@@ -326,7 +326,7 @@ sqlNumResultCols: anExternalHandle pccol: anSWORD
 			SQLHSTMT StatementHandle,
 			SQLSMALLINT * ColumnCountPtr);"
 
-	<stdcall: sword SQLNumResultCols handle sword*>
+	<stdcall: int16 SQLNumResultCols handle int16*>
 	^self invalidCall: _failureCode!
 
 sqlPrepare: anExternalHandle statementText: aString textLength: anInteger
@@ -335,7 +335,7 @@ sqlPrepare: anExternalHandle statementText: aString textLength: anInteger
 		SQLCHAR *     StatementText,
 		SQLINTEGER     TextLength);"
 
-	<stdcall: sword SQLPrepareW handle lpwstr sdword>
+	<stdcall: int16 SQLPrepareW handle lpwstr int32>
 	^self invalidCall: _failureCode!
 
 sqlPrimaryKeys: anExternalHandle catalogName: aStringQual nameLength1: anIntegerQual schemaName: aStringOwn nameLength2: anIntegerOwn tableName: aStringName nameLength3: anIntegerName
@@ -348,7 +348,7 @@ sqlPrimaryKeys: anExternalHandle catalogName: aStringQual nameLength1: anInteger
 		SQLWCHAR *     TableName,
 		SQLSMALLINT     NameLength3);"
 
-	<stdcall: sword SQLPrimaryKeysW handle lpwstr sword lpwstr sword lpwstr sword>
+	<stdcall: int16 SQLPrimaryKeysW handle lpwstr int16 lpwstr int16 lpwstr int16>
 	^self invalidCall: _failureCode!
 
 sqlProcedures: anExternalHandle catalogName: aStringParmPQ nameLength1: anIntegerPQ schemaName: aStringParmPO nameLength1: anIntegerPO procName: aStringParmPN nameLength3: anIntegerPN
@@ -361,7 +361,7 @@ sqlProcedures: anExternalHandle catalogName: aStringParmPQ nameLength1: anIntege
 		SQLWCHAR *     ProcName,
 		SQLSMALLINT     NameLength3);"
 
-	<stdcall: sword SQLProceduresW handle lpwstr sword lpwstr sword lpwstr sword>
+	<stdcall: int16 SQLProceduresW handle lpwstr int16 lpwstr int16 lpwstr int16>
 	^self invalidCall: _failureCode!
 
 sqlRowCount: anExternalHandle rowCountPtr: anSDWORD
@@ -372,15 +372,15 @@ sqlRowCount: anExternalHandle rowCountPtr: anSDWORD
 		SQLHSTMT StatementHandle,
 		SQLINTEGER * RowCountPtr)"
 
-	<stdcall: sword SQLRowCount handle sdword*>
+	<stdcall: int16 SQLRowCount handle int32*>
 	^self invalidCall: _failureCode!
 
 sqlSetConnectAttr: anExternalHandle attribute: idInteger valuePtr: bytes stringLength: lengthInteger
-	<stdcall: sword SQLSetConnectAttrW handle sdword lpvoid sdword>
+	<stdcall: int16 SQLSetConnectAttrW handle int32 lpvoid int32>
 	^self invalidCall: _failureCode!
 
 sqlSetEnvAttr: anExternalHandle attribute: anInteger valuePtr: anExternalAddress stringLength: lengthInteger
-	<stdcall: sword SQLSetEnvAttr handle sdword lpvoid sdword>
+	<stdcall: int16 SQLSetEnvAttr handle int32 lpvoid int32>
 	^self invalidCall: _failureCode!
 
 sqlSetPos: anExternalHandle rowNumber: anIntegerRow operation: anIntegerOption lockType: aBoolLock
@@ -390,11 +390,11 @@ sqlSetPos: anExternalHandle rowNumber: anIntegerRow operation: anIntegerOption l
 		SQLUSMALLINT     Operation,
 		SQLUSMALLINT     LockType);"
 
-	<stdcall: sword SQLSetPos handle word word word>
+	<stdcall: int16 SQLSetPos handle uint16 uint16 uint16>
 	^self invalidCall: _failureCode!
 
 sqlSetStmtAttr: anExternalHandle attribute: anInteger valuePtr: anExternalAddress stringLength: lengthInteger
-	<stdcall: sword SQLSetStmtAttrW handle sdword lpvoid sdword>
+	<stdcall: int16 SQLSetStmtAttrW handle int32 lpvoid int32>
 	^self invalidCall: _failureCode!
 
 sqlSpecialColumns: anExternalHandle identifierType: anInteger catalogName: aStringQual nameLength1: anIntegerQual schemaName: aStringOwn nameLength2: anIntegerOwn tableName: aStringName nameLength3: anIntegerName scope: anIntegerScope nullable: anIntegerNullable
@@ -410,7 +410,7 @@ sqlSpecialColumns: anExternalHandle identifierType: anInteger catalogName: aStri
 		SQLSMALLINT     Scope,
 		SQLSMALLINT     Nullable);"
 
-	<stdcall: sword SQLSpecialColumnsW handle sword lpwstr sword lpwstr sword lpwstr sword sword sword>
+	<stdcall: int16 SQLSpecialColumnsW handle int16 lpwstr int16 lpwstr int16 lpwstr int16 int16 int16>
 	^self invalidCall: _failureCode!
 
 sqlStatistics: anExternalHandle catalogName: aStringQual nameLength1: anIntegerQual schemaName: aStringOwn nameLength2: anIntegerOwn tableName: aStringName nameLength3: anIntegerName unique: anIntegerScope reserved: anIntegerNullable
@@ -425,7 +425,7 @@ sqlStatistics: anExternalHandle catalogName: aStringQual nameLength1: anIntegerQ
 		SQLUSMALLINT     Unique,
 		SQLUSMALLINT     Reserved);"
 
-	<stdcall: sword SQLStatisticsW handle lpwstr sword lpwstr sword lpwstr sword word word>
+	<stdcall: int16 SQLStatisticsW handle lpwstr int16 lpwstr int16 lpwstr int16 uint16 uint16>
 	^self invalidCall: _failureCode!
 
 sqlTables: anExternalHandleSTMT szTableQualifier: aStringParmQual cbTableQualifier: anIntegerQualLen szTableOwner: aStringParmOwner cbTableOwner: anIntegerOwnerLen szTableName: aStringParmName cbTableName: anIntegerNameLen szTableType: aStringParmType cbTableType: anIntegerTypeLen
@@ -440,7 +440,7 @@ sqlTables: anExternalHandleSTMT szTableQualifier: aStringParmQual cbTableQualifi
 		WCHAR  	*szTableType,
 		SWORD      cbTableType);"
 
-	<stdcall: sword SQLTablesW handle lpwstr sword lpwstr sword lpwstr sword lpwstr sword>
+	<stdcall: int16 SQLTablesW handle lpwstr int16 lpwstr int16 lpwstr int16 lpwstr int16>
 	^self invalidCall: _failureCode! !
 !OS.ODBCLibrary categoriesForMethods!
 sqlAllocHandle:inputHandle:outputHandlePtr:!public!win32 functions-odbc library! !

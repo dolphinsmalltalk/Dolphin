@@ -113,7 +113,7 @@ get_contentType: contentType
 		HRESULT __stdcall contentType(
 			[out, retval]SCHEMACONTENTTYPE* contentType);"
 
-	<virtual stdcall: hresult 35 sdword*>
+	<virtual stdcall: hresult 35 int32*>
 	^self invalidCall: _failureCode!
 
 get_isAbstract: abstract
@@ -131,7 +131,7 @@ get_prohibitedSubstitutions: prohibited
 		HRESULT __stdcall prohibitedSubstitutions(
 			[out, retval]SCHEMADERIVATIONMETHOD* prohibited);"
 
-	<virtual stdcall: hresult 37 sdword*>
+	<virtual stdcall: hresult 37 int32*>
 	^self invalidCall: _failureCode!
 
 isAbstract

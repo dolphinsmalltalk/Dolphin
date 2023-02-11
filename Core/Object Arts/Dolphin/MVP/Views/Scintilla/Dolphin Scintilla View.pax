@@ -1689,7 +1689,7 @@ UI.MultilineTextEdit subclass: #'UI.Scintilla.ScintillaView'
 !OS.UserLibrary methodsFor!
 
 getCaretBlinkTime
-	<stdcall: dword GetCaretBlinkTime>
+	<stdcall: uint32 GetCaretBlinkTime>
 	^self invalidCall: _failureCode! !
 !OS.UserLibrary categoriesForMethods!
 getCaretBlinkTime!public!win32 functions-carets! !

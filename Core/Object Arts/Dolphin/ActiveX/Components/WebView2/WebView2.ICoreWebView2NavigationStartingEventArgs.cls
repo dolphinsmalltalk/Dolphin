@@ -85,7 +85,7 @@ get_Cancel: cancel
 		HRESULT __stdcall Cancel(
 			[out, retval]long* Cancel);"
 
-	<virtual stdcall: hresult 8 sdword*>
+	<virtual stdcall: hresult 8 int32*>
 	^self invalidCall: _failureCode!
 
 get_IsRedirected: isRedirected
@@ -94,7 +94,7 @@ get_IsRedirected: isRedirected
 		HRESULT __stdcall IsRedirected(
 			[out, retval]long* IsRedirected);"
 
-	<virtual stdcall: hresult 6 sdword*>
+	<virtual stdcall: hresult 6 int32*>
 	^self invalidCall: _failureCode!
 
 get_IsUserInitiated: isUserInitiated
@@ -103,7 +103,7 @@ get_IsUserInitiated: isUserInitiated
 		HRESULT __stdcall IsUserInitiated(
 			[out, retval]long* IsUserInitiated);"
 
-	<virtual stdcall: hresult 5 sdword*>
+	<virtual stdcall: hresult 5 int32*>
 	^self invalidCall: _failureCode!
 
 get_NavigationId: navigationId
@@ -112,7 +112,7 @@ get_NavigationId: navigationId
 		HRESULT __stdcall NavigationId(
 			[out, retval]unsigned __int64* NavigationId);"
 
-	<virtual stdcall: hresult 10 qword*>
+	<virtual stdcall: hresult 10 uint64*>
 	^self invalidCall: _failureCode!
 
 get_RequestHeaders: requestHeaders
@@ -177,7 +177,7 @@ put_Cancel: cancel
 		HRESULT __stdcall Cancel(
 			[in]long Cancel);"
 
-	<virtual stdcall: hresult 9 sdword>
+	<virtual stdcall: hresult 9 int32>
 	^self invalidCall: _failureCode!
 
 requestHeaders

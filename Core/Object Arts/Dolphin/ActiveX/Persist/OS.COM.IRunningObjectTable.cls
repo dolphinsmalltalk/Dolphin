@@ -84,7 +84,7 @@ NoteChangeTime: dwRegister pfiletime: pfiletime
 			[in]unsigned long dwRegister,
 			[in]FILETIME* pfiletime);"
 
-	<virtual stdcall: hresult 8 dword FILETIME*>
+	<virtual stdcall: hresult 8 uint32 FILETIME*>
 	^self invalidCall: _failureCode!
 
 register: grfFlags punkObject: punkObject pmkObjectName: pmkObjectName
@@ -108,7 +108,7 @@ Register: grfFlags punkObject: punkObject pmkObjectName: pmkObjectName pdwRegist
 			[in]IMoniker* pmkObjectName,
 			[out]unsigned long* pdwRegister);"
 
-	<virtual stdcall: hresult 4 dword IUnknown* IMoniker* dword*>
+	<virtual stdcall: hresult 4 uint32 IUnknown* IMoniker* uint32*>
 	^self invalidCall: _failureCode!
 
 Revoke: dwRegister
@@ -117,7 +117,7 @@ Revoke: dwRegister
 		HRESULT __stdcall Revoke(
 			[in]unsigned long dwRegister);"
 
-	<virtual stdcall: hresult 5 dword>
+	<virtual stdcall: hresult 5 uint32>
 	^self invalidCall: _failureCode!
 
 running

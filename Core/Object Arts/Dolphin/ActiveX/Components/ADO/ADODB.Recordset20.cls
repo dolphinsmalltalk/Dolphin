@@ -92,7 +92,7 @@ _xSave: fileName PersistFormat: persistFormat
 			[in, defaultvalue('')]BSTR FileName,
 			[in, defaultvalue(0)]PersistFormatEnum PersistFormat);"
 
-	<virtual stdcall: hresult 72 bstr sdword>
+	<virtual stdcall: hresult 72 bstr int32>
 	^self invalidCall: _failureCode!
 
 activeCommand
@@ -132,7 +132,7 @@ Clone: lockType ppvObject: ppvObject
 			[in, defaultvalue(-1)]LockTypeEnum LockType,
 			[out, retval]_Recordset** ppvObject);"
 
-	<virtual stdcall: hresult 80 sdword _Recordset**>
+	<virtual stdcall: hresult 80 int32 _Recordset**>
 	^self invalidCall: _failureCode!
 
 compareBookmarks: bookmark1 bookmark2: bookmark2
@@ -154,7 +154,7 @@ CompareBookmarks: bookmark1 Bookmark2: bookmark2 pCompare: pCompare
 			[in]VARIANT Bookmark2,
 			[out, retval]CompareEnum* pCompare);"
 
-	<virtual stdcall: hresult 79 variant variant sdword*>
+	<virtual stdcall: hresult 79 variant variant int32*>
 	^self invalidCall: _failureCode!
 
 dataMember
@@ -250,7 +250,7 @@ GetString: stringFormat NumRows: numRows ColumnDelimeter: columnDelimeter RowDel
 			[in, defaultvalue('')]BSTR NullExpr,
 			[out, retval]BSTR* pRetString);"
 
-	<virtual stdcall: hresult 76 sdword sdword bstr bstr bstr bstr*>
+	<virtual stdcall: hresult 76 int32 int32 bstr bstr bstr bstr*>
 	^self invalidCall: _failureCode!
 
 put_DataMember: pbstrDataMember
@@ -296,7 +296,7 @@ Resync: affectRecords ResyncValues: resyncValues
 			[in, defaultvalue(3)]AffectEnum AffectRecords,
 			[in, defaultvalue(2)]ResyncEnum ResyncValues);"
 
-	<virtual stdcall: hresult 81 sdword sdword>
+	<virtual stdcall: hresult 81 int32 int32>
 	^self invalidCall: _failureCode!
 
 setDataSource: ppunkDataSource

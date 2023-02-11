@@ -60,7 +60,7 @@ GetDisplayString: dispID pbstr: pbstr
 			[in]long dispID,
 			[out]BSTR* pbstr);"
 
-	<virtual stdcall: hresult 4 sdword bstr*>
+	<virtual stdcall: hresult 4 int32 bstr*>
 	^self invalidCall: _failureCode!
 
 getPredefinedStrings: dispID
@@ -82,7 +82,7 @@ GetPredefinedStrings: dispID pCaStringsOut: pCaStringsOut pCaCookiesOut: pCaCook
 			[out]CALPOLESTR* pCaStringsOut,
 			[out]CADWORD* pCaCookiesOut);"
 
-	<virtual stdcall: hresult 6 sdword CALPOLESTR* CADWORD*>
+	<virtual stdcall: hresult 6 int32 CALPOLESTR* CADWORD*>
 	^self invalidCall: _failureCode!
 
 getPredefinedValue: dispID dwCookie: dwCookie
@@ -104,7 +104,7 @@ GetPredefinedValue: dispID dwCookie: dwCookie pVarOut: pVarOut
 			[in]DWORD dwCookie,
 			[out]VARIANT* pVarOut);"
 
-	<virtual stdcall: hresult 7 sdword dword variant*>
+	<virtual stdcall: hresult 7 int32 uint32 variant*>
 	^self invalidCall: _failureCode!
 
 getStringsAndValues: anInteger
@@ -150,7 +150,7 @@ MapPropertyToPage: dispID pclsid: pclsid
 			[in]long dispID,
 			[out]GUID* pclsid);"
 
-	<virtual stdcall: hresult 5 sdword guid*>
+	<virtual stdcall: hresult 5 int32 guid*>
 	^self invalidCall: _failureCode!
 
 stringsToValues: dispid

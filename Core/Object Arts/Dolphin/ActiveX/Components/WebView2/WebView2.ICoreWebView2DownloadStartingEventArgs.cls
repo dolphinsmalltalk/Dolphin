@@ -78,7 +78,7 @@ get_Cancel: cancel
 		HRESULT __stdcall Cancel(
 			[out, retval]long* Cancel);"
 
-	<virtual stdcall: hresult 5 sdword*>
+	<virtual stdcall: hresult 5 int32*>
 	^self invalidCall: _failureCode!
 
 get_DownloadOperation: downloadOperation
@@ -96,7 +96,7 @@ get_Handled: handled
 		HRESULT __stdcall Handled(
 			[out, retval]long* Handled);"
 
-	<virtual stdcall: hresult 9 sdword*>
+	<virtual stdcall: hresult 9 int32*>
 	^self invalidCall: _failureCode!
 
 get_ResultFilePath: resultFilePath
@@ -145,7 +145,7 @@ put_Cancel: cancel
 		HRESULT __stdcall Cancel(
 			[in]long Cancel);"
 
-	<virtual stdcall: hresult 6 sdword>
+	<virtual stdcall: hresult 6 int32>
 	^self invalidCall: _failureCode!
 
 put_Handled: handled
@@ -155,7 +155,7 @@ put_Handled: handled
 		HRESULT __stdcall Handled(
 			[in]long Handled);"
 
-	<virtual stdcall: hresult 10 sdword>
+	<virtual stdcall: hresult 10 int32>
 	^self invalidCall: _failureCode!
 
 put_ResultFilePath: resultFilePath

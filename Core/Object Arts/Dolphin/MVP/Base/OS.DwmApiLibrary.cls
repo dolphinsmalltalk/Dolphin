@@ -14,7 +14,7 @@ OS.DwmApiLibrary comment: ''!
 dwmIsCompositionEnabled: pfEnabled
 	"HRESULT DwmIsCompositionEnabled( BOOL *pfEnabled);"
 
-	<stdcall: hresult DwmIsCompositionEnabled BOOL*>
+	<stdcall: hresult DwmIsCompositionEnabled bool*>
 	^self invalidCall: _failureCode! !
 !OS.DwmApiLibrary categoriesForMethods!
 dwmIsCompositionEnabled:!public! !

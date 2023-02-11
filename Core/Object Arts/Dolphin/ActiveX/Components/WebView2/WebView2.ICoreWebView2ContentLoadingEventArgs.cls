@@ -39,7 +39,7 @@ get_IsErrorPage: isErrorPage
 		HRESULT __stdcall IsErrorPage(
 			[out, retval]long* IsErrorPage);"
 
-	<virtual stdcall: hresult 4 sdword*>
+	<virtual stdcall: hresult 4 int32*>
 	^self invalidCall: _failureCode!
 
 get_NavigationId: navigationId
@@ -48,7 +48,7 @@ get_NavigationId: navigationId
 		HRESULT __stdcall NavigationId(
 			[out, retval]unsigned __int64* NavigationId);"
 
-	<virtual stdcall: hresult 5 qword*>
+	<virtual stdcall: hresult 5 uint64*>
 	^self invalidCall: _failureCode!
 
 isErrorPage

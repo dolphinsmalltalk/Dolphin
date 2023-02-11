@@ -76,7 +76,7 @@ Append: name Type: type DefinedSize: definedSize Attrib: attrib FieldValue: fiel
 			[in, defaultvalue(-1)]FieldAttributeEnum Attrib,
 			[in, optional]VARIANT FieldValue);"
 
-	<virtual stdcall: hresult 14 bstr sdword sdword sdword variant>
+	<virtual stdcall: hresult 14 bstr int32 int32 int32 variant>
 	^self invalidCall: _failureCode!
 
 CancelUpdate
@@ -99,7 +99,7 @@ Resync: resyncValues
 		HRESULT __stdcall Resync(
 			[in, defaultvalue(2)]ResyncEnum ResyncValues);"
 
-	<virtual stdcall: hresult 16 sdword>
+	<virtual stdcall: hresult 16 int32>
 	^self invalidCall: _failureCode!
 
 Update

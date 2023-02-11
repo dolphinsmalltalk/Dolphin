@@ -116,7 +116,7 @@ EndOfRecordset: fMoreData adStatus: adStatus pRecordset: pRecordset
 			[in, out]EventStatusEnum* adStatus,
 			[in]_Recordset* pRecordset);"
 
-	<virtual stdcall: hresult 12 varbool* sdword* _Recordset*>
+	<virtual stdcall: hresult 12 varbool* int32* _Recordset*>
 	^self invalidCall: _failureCode!
 
 fetchComplete: pError adStatus: adStatus pRecordset: pRecordset
@@ -137,7 +137,7 @@ FetchComplete: pError adStatus: adStatus pRecordset: pRecordset
 			[in, out]EventStatusEnum* adStatus,
 			[in]_Recordset* pRecordset);"
 
-	<virtual stdcall: hresult 14 Error* sdword* _Recordset*>
+	<virtual stdcall: hresult 14 Error* int32* _Recordset*>
 	^self invalidCall: _failureCode!
 
 fetchProgress: progress maxProgress: maxProgress adStatus: adStatus pRecordset: pRecordset
@@ -160,7 +160,7 @@ FetchProgress: progress MaxProgress: maxProgress adStatus: adStatus pRecordset: 
 			[in, out]EventStatusEnum* adStatus,
 			[in]_Recordset* pRecordset);"
 
-	<virtual stdcall: hresult 13 sdword sdword sdword* _Recordset*>
+	<virtual stdcall: hresult 13 int32 int32 int32* _Recordset*>
 	^self invalidCall: _failureCode!
 
 fieldChangeComplete: cFields fields: fields pError: pError adStatus: adStatus pRecordset: pRecordset
@@ -185,7 +185,7 @@ FieldChangeComplete: cFields Fields: fields pError: pError adStatus: adStatus pR
 			[in, out]EventStatusEnum* adStatus,
 			[in]_Recordset* pRecordset);"
 
-	<virtual stdcall: hresult 5 sdword variant Error* sdword* _Recordset*>
+	<virtual stdcall: hresult 5 int32 variant Error* int32* _Recordset*>
 	^self invalidCall: _failureCode!
 
 moveComplete: adReason pError: pError adStatus: adStatus pRecordset: pRecordset
@@ -208,7 +208,7 @@ MoveComplete: adReason pError: pError adStatus: adStatus pRecordset: pRecordset
 			[in, out]EventStatusEnum* adStatus,
 			[in]_Recordset* pRecordset);"
 
-	<virtual stdcall: hresult 11 sdword Error* sdword* _Recordset*>
+	<virtual stdcall: hresult 11 int32 Error* int32* _Recordset*>
 	^self invalidCall: _failureCode!
 
 recordChangeComplete: adReason cRecords: cRecords pError: pError adStatus: adStatus pRecordset: pRecordset
@@ -233,7 +233,7 @@ RecordChangeComplete: adReason cRecords: cRecords pError: pError adStatus: adSta
 			[in, out]EventStatusEnum* adStatus,
 			[in]_Recordset* pRecordset);"
 
-	<virtual stdcall: hresult 7 sdword sdword Error* sdword* _Recordset*>
+	<virtual stdcall: hresult 7 int32 int32 Error* int32* _Recordset*>
 	^self invalidCall: _failureCode!
 
 recordsetChangeComplete: adReason pError: pError adStatus: adStatus pRecordset: pRecordset
@@ -256,7 +256,7 @@ RecordsetChangeComplete: adReason pError: pError adStatus: adStatus pRecordset: 
 			[in, out]EventStatusEnum* adStatus,
 			[in]_Recordset* pRecordset);"
 
-	<virtual stdcall: hresult 9 sdword Error* sdword* _Recordset*>
+	<virtual stdcall: hresult 9 int32 Error* int32* _Recordset*>
 	^self invalidCall: _failureCode!
 
 willChangeField: cFields fields: fields adStatus: adStatus pRecordset: pRecordset
@@ -279,7 +279,7 @@ WillChangeField: cFields Fields: fields adStatus: adStatus pRecordset: pRecordse
 			[in, out]EventStatusEnum* adStatus,
 			[in]_Recordset* pRecordset);"
 
-	<virtual stdcall: hresult 4 sdword variant sdword* _Recordset*>
+	<virtual stdcall: hresult 4 int32 variant int32* _Recordset*>
 	^self invalidCall: _failureCode!
 
 willChangeRecord: adReason cRecords: cRecords adStatus: adStatus pRecordset: pRecordset
@@ -302,7 +302,7 @@ WillChangeRecord: adReason cRecords: cRecords adStatus: adStatus pRecordset: pRe
 			[in, out]EventStatusEnum* adStatus,
 			[in]_Recordset* pRecordset);"
 
-	<virtual stdcall: hresult 6 sdword sdword sdword* _Recordset*>
+	<virtual stdcall: hresult 6 int32 int32 int32* _Recordset*>
 	^self invalidCall: _failureCode!
 
 willChangeRecordset: adReason adStatus: adStatus pRecordset: pRecordset
@@ -323,7 +323,7 @@ WillChangeRecordset: adReason adStatus: adStatus pRecordset: pRecordset
 			[in, out]EventStatusEnum* adStatus,
 			[in]_Recordset* pRecordset);"
 
-	<virtual stdcall: hresult 8 sdword sdword* _Recordset*>
+	<virtual stdcall: hresult 8 int32 int32* _Recordset*>
 	^self invalidCall: _failureCode!
 
 willMove: adReason adStatus: adStatus pRecordset: pRecordset
@@ -344,7 +344,7 @@ WillMove: adReason adStatus: adStatus pRecordset: pRecordset
 			[in, out]EventStatusEnum* adStatus,
 			[in]_Recordset* pRecordset);"
 
-	<virtual stdcall: hresult 10 sdword sdword* _Recordset*>
+	<virtual stdcall: hresult 10 int32 int32* _Recordset*>
 	^self invalidCall: _failureCode! !
 !ADODB.RecordsetEventsVt categoriesForMethods!
 endOfRecordset:adStatus:pRecordset:!**auto generated**!methods!public! !

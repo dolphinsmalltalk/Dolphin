@@ -24,7 +24,7 @@ Advise: pAdvSink pdwConnection: pdwConnection
 			[out] unsigned long* pdwConnection);
 	"
 
-	<virtual stdcall: hresult 20 IUnknown* dword*>
+	<virtual stdcall: hresult 20 IUnknown* uint32*>
 	^self invalidCall: _failureCode!
 
 appName
@@ -47,7 +47,7 @@ Close: dwSaveOption
 			[in] unsigned long dwSaveOption);
 	"
 
-	<virtual stdcall: sdword 7 dword>
+	<virtual stdcall: int32 7 uint32>
 	^self invalidCall: _failureCode!
 
 DoVerb: iVerb lpmsg: lpmsg pActiveSite: pActiveSite lindex: lindex hwndParent: hwndParent lprcPosRect: lprcPosRect
@@ -62,7 +62,7 @@ DoVerb: iVerb lpmsg: lpmsg pActiveSite: pActiveSite lindex: lindex hwndParent: h
 			[in] RECTL* lprcPosRect);
 	"
 
-	<virtual stdcall: hresult 12 sdword MSG* IOleClientSite* sdword handle RECTL*>
+	<virtual stdcall: hresult 12 int32 MSG* IOleClientSite* int32 handle RECTL*>
 	^self invalidCall: _failureCode!
 
 doVerb: iVerb msg: aMSG activeSite: piSite parentView: parentView rectangle: rect 
@@ -127,7 +127,7 @@ GetClipboardData: dwReserved ppDataObject: ppDataObject
 			[out] IDataObject** ppDataObject);
 	"
 
-	<virtual stdcall: hresult 11 dword IUnknown**>
+	<virtual stdcall: hresult 11 uint32 IUnknown**>
 	^self invalidCall: _failureCode!
 
 getExtent: dwDrawAspect
@@ -146,7 +146,7 @@ GetExtent: dwDrawAspect psizel: psizel
 			[out] SIZEL* psizel);
 	"
 
-	<virtual stdcall: hresult 19 dword SIZEL*>
+	<virtual stdcall: hresult 19 uint32 SIZEL*>
 	^self invalidCall: _failureCode!
 
 getMiscStatus: dwAspect 
@@ -168,7 +168,7 @@ GetMiscStatus: dwAspect pdwStatus: pdwStatus
 			[out] unsigned long* pdwStatus);
 	"
 
-	<virtual stdcall: hresult 23 dword dword*>
+	<virtual stdcall: hresult 23 uint32 uint32*>
 	^self invalidCall: _failureCode!
 
 GetMoniker: dwAssign dwWhichMoniker: dwWhichMoniker ppmk: ppmk
@@ -180,7 +180,7 @@ GetMoniker: dwAssign dwWhichMoniker: dwWhichMoniker ppmk: ppmk
 			[out] IMoniker** ppmk);
 	"
 
-	<virtual stdcall: hresult 9 dword dword IUnknown**>
+	<virtual stdcall: hresult 9 uint32 uint32 IUnknown**>
 	^self invalidCall: _failureCode!
 
 getUserClassID
@@ -223,7 +223,7 @@ GetUserType: dwFormOfType pszUserType: pszUserType
 			[out] LPWSTR* pszUserType);
 	"
 
-	<virtual stdcall: hresult 17 dword lpwstr*>
+	<virtual stdcall: hresult 17 uint32 lpwstr*>
 	^self invalidCall: _failureCode!
 
 InitFromData: pDataObject fCreation: fCreation dwReserved: dwReserved
@@ -235,7 +235,7 @@ InitFromData: pDataObject fCreation: fCreation dwReserved: dwReserved
 			[in] unsigned long dwReserved);
 	"
 
-	<virtual stdcall: hresult 10 IUnknown* sdword dword>
+	<virtual stdcall: hresult 10 IUnknown* int32 uint32>
 	^self invalidCall: _failureCode!
 
 IsUpToDate
@@ -254,7 +254,7 @@ SetClientSite: pClientSite
 			[in] IOleClientSite* pClientSite);
 	"
 
-	<virtual stdcall: sdword 4 IOleClientSite*>
+	<virtual stdcall: int32 4 IOleClientSite*>
 	^self invalidCall: _failureCode!
 
 SetColorScheme: pLogpal
@@ -292,7 +292,7 @@ SetExtent: dwDrawAspect psizel: psizel
 			[in] SIZEL* psizel);
 	"
 
-	<virtual stdcall: sdword 18 dword SIZEL*>
+	<virtual stdcall: int32 18 uint32 SIZEL*>
 	^self invalidCall: _failureCode!
 
 setHostNames: szContainerApp szContainerObj: szContainerObj
@@ -313,7 +313,7 @@ SetHostNames: szContainerApp szContainerObj: szContainerObj
 			[in] LPWSTR szContainerObj);
 	"
 
-	<virtual stdcall: sdword 6 lpwstr lpwstr>
+	<virtual stdcall: int32 6 lpwstr lpwstr>
 	^self invalidCall: _failureCode!
 
 SetMoniker: dwWhichMoniker pmk: pmk
@@ -324,7 +324,7 @@ SetMoniker: dwWhichMoniker pmk: pmk
 			[in] IMoniker* pmk);
 	"
 
-	<virtual stdcall: hresult 8 dword IUnknown*>
+	<virtual stdcall: hresult 8 uint32 IUnknown*>
 	^self invalidCall: _failureCode!
 
 shortName
@@ -348,7 +348,7 @@ Unadvise: dwConnection
 			[in] unsigned long dwConnection);
 	"
 
-	<virtual stdcall: sdword 21 dword>
+	<virtual stdcall: int32 21 uint32>
 	^self invalidCall: _failureCode!
 
 Update

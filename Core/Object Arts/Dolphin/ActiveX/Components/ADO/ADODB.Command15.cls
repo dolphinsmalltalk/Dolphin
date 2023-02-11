@@ -175,7 +175,7 @@ CreateParameter: name Type: type Direction: direction Size: size Value: value pp
 			[in, optional]VARIANT Value,
 			[out, retval]_Parameter** ppiprm);"
 
-	<virtual stdcall: hresult 19 bstr sdword sdword sdword variant _Parameter**>
+	<virtual stdcall: hresult 19 bstr int32 int32 int32 variant _Parameter**>
 	^self invalidCall: _failureCode!
 
 execute
@@ -205,7 +205,7 @@ Execute: recordsAffected Parameters: parameters Options: options ppiRs: ppiRs
 			[in, defaultvalue(-1)]long Options,
 			[out, retval]_Recordset** ppiRs);"
 
-	<virtual stdcall: hresult 18 variant* variant* sdword _Recordset**>
+	<virtual stdcall: hresult 18 variant* variant* int32 _Recordset**>
 	^self invalidCall: _failureCode!
 
 get_ActiveConnection: ppvObject
@@ -232,7 +232,7 @@ get_CommandTimeout: pl
 		HRESULT __stdcall CommandTimeout(
 			[out, retval]long* pl);"
 
-	<virtual stdcall: hresult 14 sdword*>
+	<virtual stdcall: hresult 14 int32*>
 	^self invalidCall: _failureCode!
 
 get_CommandType: plCmdType
@@ -241,7 +241,7 @@ get_CommandType: plCmdType
 		HRESULT __stdcall CommandType(
 			[out, retval]CommandTypeEnum* plCmdType);"
 
-	<virtual stdcall: hresult 22 sdword*>
+	<virtual stdcall: hresult 22 int32*>
 	^self invalidCall: _failureCode!
 
 get_Name: pbstrName
@@ -334,7 +334,7 @@ put_CommandTimeout: pl
 		HRESULT __stdcall CommandTimeout(
 			[in]long pl);"
 
-	<virtual stdcall: hresult 15 sdword>
+	<virtual stdcall: hresult 15 int32>
 	^self invalidCall: _failureCode!
 
 put_CommandType: plCmdType
@@ -344,7 +344,7 @@ put_CommandType: plCmdType
 		HRESULT __stdcall CommandType(
 			[in]CommandTypeEnum plCmdType);"
 
-	<virtual stdcall: hresult 21 sdword>
+	<virtual stdcall: hresult 21 int32>
 	^self invalidCall: _failureCode!
 
 put_Name: pbstrName

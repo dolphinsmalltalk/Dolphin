@@ -39,7 +39,7 @@ get_HiddenPdfToolbarItems: hidden_pdf_toolbar_items
 		HRESULT __stdcall HiddenPdfToolbarItems(
 			[out, retval]COREWEBVIEW2_PDF_TOOLBAR_ITEMS* hidden_pdf_toolbar_items);"
 
-	<virtual stdcall: hresult 34 sdword*>
+	<virtual stdcall: hresult 34 int32*>
 	^self invalidCall: _failureCode!
 
 put_HiddenPdfToolbarItems: hidden_pdf_toolbar_items
@@ -49,7 +49,7 @@ put_HiddenPdfToolbarItems: hidden_pdf_toolbar_items
 		HRESULT __stdcall HiddenPdfToolbarItems(
 			[in]COREWEBVIEW2_PDF_TOOLBAR_ITEMS hidden_pdf_toolbar_items);"
 
-	<virtual stdcall: hresult 35 sdword>
+	<virtual stdcall: hresult 35 int32>
 	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2Settings7 categoriesForMethods!
 get_HiddenPdfToolbarItems:!**auto generated**!COM Interfaces-ICoreWebView2Settings7!private! !

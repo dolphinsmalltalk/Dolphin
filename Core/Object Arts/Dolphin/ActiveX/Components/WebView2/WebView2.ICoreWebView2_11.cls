@@ -47,7 +47,7 @@ Add_ContextMenuRequested: eventHandler token: token
 			[in]ICoreWebView2ContextMenuRequestedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 101 ICoreWebView2ContextMenuRequestedEventHandler* sqword*>
+	<virtual stdcall: hresult 101 ICoreWebView2ContextMenuRequestedEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 CallDevToolsProtocolMethodForSession: sessionId methodName: methodName parametersAsJson: parametersAsJson handler: handler
@@ -68,7 +68,7 @@ Remove_ContextMenuRequested: token
 		HRESULT __stdcall remove_ContextMenuRequested(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 102 sqword>
+	<virtual stdcall: hresult 102 int64>
 	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2_11 categoriesForMethods!
 Add_ContextMenuRequested:token:!**auto generated**!COM Interfaces-ICoreWebView2_11!private! !

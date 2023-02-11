@@ -77,7 +77,7 @@ get_Count: plCount
 		HRESULT __stdcall Count(
 			[out, retval]long* plCount);"
 
-	<virtual stdcall: hresult 10 sdword*>
+	<virtual stdcall: hresult 10 int32*>
 	^self invalidCall: _failureCode!
 
 get_Item: index ppmod: ppmod

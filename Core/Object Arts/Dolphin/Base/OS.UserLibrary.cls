@@ -28,14 +28,14 @@ charLower: aCharacter
 	"Answer the lowercase equivalent of aCharacter. This will be dependent on the semantics of the 
 	language selected by the user during setup or by using Control Panel."
 
-	<stdcall: word CharLowerW intptr>
+	<stdcall: uint16 CharLowerW intptr>
 	^self invalidCall: _failureCode!
 
 charUpper: aCharacter
 	"Answer the uppercase equivalent of aCharacter. This will be dependent on the semantics 
 	of the language selected by the user during setup or by using Control Panel."
 
-	<stdcall: word CharUpperW intptr>
+	<stdcall: uint16 CharUpperW intptr>
 	^self invalidCall: _failureCode!
 
 createDialog: hInstance lpTemplate: template hWndParent: hParent lpDialogFunc: dlgProc dwInitParam: lParam
@@ -48,7 +48,7 @@ createDialog: hInstance lpTemplate: template hWndParent: hParent lpDialogFunc: d
 			LPARAM dwInitParam 		// value passed to wmInitDialog:
 		);"
 
-	<stdcall: sdword CreateDialogParamW handle lpvoid handle lpvoid sdword>
+	<stdcall: int32 CreateDialogParamW handle lpvoid handle lpvoid int32>
 	^self invalidCall: _failureCode!
 
 defDlgProc: hWnd msg: msg wParam: wParam lParam: lParam
@@ -62,7 +62,7 @@ defDlgProc: hWnd msg: msg wParam: wParam lParam: lParam
 			LPARAM lParam 	// second message parameter
 		);"
 
-	<stdcall: uintptr DefDlgProcW handle dword uintptr uintptr>
+	<stdcall: uintptr DefDlgProcW handle uint32 uintptr uintptr>
 	^self invalidCall: _failureCode!
 
 defWindowProc: hWnd msg: msg wParam: wParam lParam: lParam
@@ -76,7 +76,7 @@ defWindowProc: hWnd msg: msg wParam: wParam lParam: lParam
 			LPARAM lParam 	// second message parameter
 		);"
 
-	<stdcall: uintptr DefWindowProcW handle dword uintptr uintptr>
+	<stdcall: uintptr DefWindowProcW handle uint32 uintptr uintptr>
 	^self invalidCall: _failureCode!
 
 destroyWindow: aWindowHandle
@@ -104,7 +104,7 @@ dispatchMessage: aMSG
   			CONST MSG *lpmsg 	// pointer to structure with message
 		);"
 
-	<stdcall: sdword DispatchMessageW MSG*>
+	<stdcall: int32 DispatchMessageW MSG*>
 	^self invalidCall: _failureCode!
 
 enableWindow: aWindowHandle bEnable: aBoolean
@@ -124,7 +124,7 @@ getActiveWindow
 	^self invalidCall: _failureCode!
 
 getAsyncKeyState: virtualKeyCodeInteger
-	<stdcall: sword GetAsyncKeyState sdword>
+	<stdcall: int16 GetAsyncKeyState int32>
 	^self invalidCall: _failureCode!
 
 getDesktopWindow
@@ -145,11 +145,11 @@ getDlgItem: aWindowHandle nIDDlgItem: anIntegerId
 			int  nIDDlgItem 	// identifier of control
 		);"
 
-	<stdcall: handle GetDlgItem handle sdword>
+	<stdcall: handle GetDlgItem handle int32>
 	^self invalidCall: _failureCode!
 
 getKeyboardLayout: anInteger
-	<stdcall: handle GetKeyboardLayout sdword>
+	<stdcall: handle GetKeyboardLayout int32>
 	^self invalidCall: _failureCode!
 
 getKeyboardLayoutName: pwszKLID
@@ -173,7 +173,7 @@ getKeyNameText: lParam lpString: aString nSize: anInteger
 			int nSize 	// maximum length of key-name string length	
 		);"
 
-	<stdcall: sdword GetKeyNameTextW dword lpwstr sdword>
+	<stdcall: int32 GetKeyNameTextW uint32 lpwstr int32>
 	^self invalidCall: _failureCode!
 
 getKeyState: virtualKeyCodeInteger
@@ -181,7 +181,7 @@ getKeyState: virtualKeyCodeInteger
 
 		SHORT GetKeyState(int  nVirtKey);"
 
-	<stdcall: sword GetKeyState sdword>
+	<stdcall: int16 GetKeyState int32>
 	^self invalidCall: _failureCode!
 
 getMessage: aMSG hWnd: aWindowHandle wMsgFilterMin: anIntFilterMin wMsgFilterMax: anIntFilterMax
@@ -201,7 +201,7 @@ getMessage: aMSG hWnd: aWindowHandle wMsgFilterMin: anIntFilterMin wMsgFilterMax
 	it doesn't really (because of the error return value) so to avoid errors, as
 	suggested in the help), we have it return a signed integer)"
 
-	<stdcall: sdword GetMessageW MSG* handle dword dword>
+	<stdcall: int32 GetMessageW MSG* handle uint32 uint32>
 	^self invalidCall: _failureCode!
 
 getParent: hWnd
@@ -210,7 +210,7 @@ getParent: hWnd
 	window) then answer 0 (which is not the handle of the real Desktop window, but
 	is the handle of the Dolphin Desktop window). Confused? Me too."
 
-	<stdcall: dword GetParent handle>
+	<stdcall: uint32 GetParent handle>
 	^self invalidCall: _failureCode!
 
 getQueueStatus: integerFlags
@@ -221,7 +221,7 @@ getQueueStatus: integerFlags
 		);
 	See MSDN for further details."
 
-	<stdcall: dword GetQueueStatus dword>
+	<stdcall: uint32 GetQueueStatus uint32>
 	^self invalidCall: _failureCode!
 
 getSysColor: index
@@ -232,7 +232,7 @@ getSysColor: index
 			int nIndex 	// display element
 		);"
 
-	<stdcall: dword GetSysColor sdword>
+	<stdcall: uint32 GetSysColor int32>
 	^self invalidCall: _failureCode!
 
 getSysColorBrush: anInteger
@@ -241,7 +241,7 @@ getSysColorBrush: anInteger
   			int index
 		);"
 
-	<stdcall: handle GetSysColorBrush sdword>
+	<stdcall: handle GetSysColorBrush int32>
 	^self invalidCall: _failureCode!
 
 getSystemMetrics: index
@@ -250,7 +250,7 @@ getSystemMetrics: index
 			int nIndex 	// system metric or configuration setting to retrieve  
 		);"
 
-	<stdcall: sdword GetSystemMetrics sdword>
+	<stdcall: int32 GetSystemMetrics int32>
 	^self invalidCall: _failureCode!
 
 inSendMessage
@@ -284,7 +284,7 @@ killTimer: aWindowHandle uIDEvent: anInteger
 			UINT uIDEvent 	// timer identifier
 		);"
 
-	<stdcall: bool KillTimer handle dword>
+	<stdcall: bool KillTimer handle uint32>
 	^self invalidCall: _failureCode!
 
 loadCursor: anInstanceHandle lpCursorName: anIntegerID
@@ -300,7 +300,7 @@ loadCursor: anInstanceHandle lpCursorName: anIntegerID
 	^self invalidCall: _failureCode!
 
 loadKeyboardLayout: pwszKLID flags: flags
-	<stdcall: handle LoadKeyboardLayoutW lpwstr dword>
+	<stdcall: handle LoadKeyboardLayoutW lpwstr uint32>
 	^self invalidCall: _failureCode!
 
 loadString: anExternalHandle uID: anIntegerID lpBuffer: aString nBufferMax: anIntegerLength
@@ -315,7 +315,7 @@ loadString: anExternalHandle uID: anIntegerID lpBuffer: aString nBufferMax: anIn
 			int nBufferMax 		// size of buffer
 		);"
 
-	<stdcall: sdword LoadStringW handle dword lpvoid sdword>
+	<stdcall: int32 LoadStringW handle uint32 lpvoid int32>
 	^self invalidCall: _failureCode!
 
 mapVirtualKey: keyCode uMapType: mapType
@@ -333,7 +333,7 @@ mapVirtualKey: keyCode uMapType: mapType
 			UINT uCode,
 			UINT uMapType);"
 
-	<stdcall: dword MapVirtualKeyW dword dword>
+	<stdcall: uint32 MapVirtualKeyW uint32 uint32>
 	^self invalidCall: _failureCode!
 
 messageBeep: anInteger
@@ -342,7 +342,7 @@ messageBeep: anInteger
 			UINT uType 	// sound type  
 			);"
 
-	<stdcall: bool MessageBeep dword>
+	<stdcall: bool MessageBeep uint32>
 	^self invalidCall: _failureCode!
 
 messageBox: anExternalHandle text: textString caption: captionString style: styleInteger icon: iconIdentifier instance: hInstance
@@ -408,7 +408,7 @@ messageBoxIndirect: aMSGBOXPARAMS
 			LPMSGBOXPARRAMS lpMsgBoxParams;
 		);"
 
-	<stdcall: sdword MessageBoxIndirectW MSGBOXPARAMSW*>
+	<stdcall: int32 MessageBoxIndirectW MSGBOXPARAMSW*>
 	^self invalidCall: _failureCode!
 
 msgWaitForMultipleObjectsEx: countInteger pHandles: handles dwMilliseconds: millisecsInteger dwWakeMask: maskInteger dwFlags: aBoolean
@@ -443,7 +443,7 @@ msgWaitForMultipleObjectsEx: countInteger pHandles: handles dwMilliseconds: mill
 			DWORD dwFlags)
 	"
 
-	<stdcall: sdword MsgWaitForMultipleObjectsEx dword lpvoid dword dword dword>
+	<stdcall: int32 MsgWaitForMultipleObjectsEx uint32 lpvoid uint32 uint32 uint32>
 	^self invalidCall: _failureCode!
 
 overlappedMsgBoxIndirect: aMSGBOXPARAMS
@@ -455,7 +455,7 @@ overlappedMsgBoxIndirect: aMSGBOXPARAMS
 			LPMSGBOXPARRAMS lpMsgBoxParams;
 		);"
 
-	<overlap stdcall: sdword MessageBoxIndirectW MSGBOXPARAMSW*>
+	<overlap stdcall: int32 MessageBoxIndirectW MSGBOXPARAMSW*>
 	^self invalidCall: _failureCode!
 
 peekMessage: aMSG hWnd: aWindowHandle uMsgFilterMin: anIntFilterMin uMsgFilterMax: uMsgFilterMax wRemoveMsg: anIntFlags
@@ -476,7 +476,7 @@ peekMessage: aMSG hWnd: aWindowHandle uMsgFilterMin: anIntFilterMin uMsgFilterMa
 			UINT  wRemoveMsg 		// removal flags
 		);"
 
-	<stdcall: bool PeekMessageW MSG* handle dword dword dword>
+	<stdcall: bool PeekMessageW MSG* handle uint32 uint32 uint32>
 	^self invalidCall: _failureCode!
 
 postMessage: aWindowHandle msg: msg wParam: wParam lParam: lParam
@@ -489,7 +489,7 @@ postMessage: aWindowHandle msg: msg wParam: wParam lParam: lParam
 		LPARAM lParam 		// second message parameter
 	   );"
 
-	<stdcall: intptr PostMessageW handle dword uintptr intptr>
+	<stdcall: intptr PostMessageW handle uint32 uintptr intptr>
 	^self invalidCall: _failureCode!
 
 postQuitMessage: anInteger
@@ -498,7 +498,7 @@ postQuitMessage: anInteger
 			int  nExitCode 	// exit code
 		);"
 
-	<stdcall: void PostQuitMessage sdword>
+	<stdcall: void PostQuitMessage int32>
 	^self invalidCall: _failureCode!
 
 postThreadMessage: anIntegerId msg: msg wParam: wParam lParam: lParam
@@ -509,7 +509,7 @@ postThreadMessage: anIntegerId msg: msg wParam: wParam lParam: lParam
 			WPARAM  wParam,	// first message parameter
 			LPARAM  lParam 	// second message parameter);"
 
-	<stdcall: bool PostThreadMessageW handle dword uintptr uintptr>
+	<stdcall: bool PostThreadMessageW handle uint32 uintptr uintptr>
 	^self invalidCall: _failureCode!
 
 sendMessage: aWindowHandle msg: msg wParam: wParam lParam: lParam
@@ -533,7 +533,7 @@ sendMessage: aWindowHandle msg: msg wParam: wParam lParam: lParam
 		LPARAM lParam 		// second message parameter
 	   );"
 
-	<stdcall: intptr SendMessageW handle dword uintptr uintptr>
+	<stdcall: intptr SendMessageW handle uint32 uintptr uintptr>
 	^self invalidCall: _failureCode!
 
 setActiveWindow: aHandle
@@ -563,7 +563,7 @@ setDlgItemText: aWindowHandle nIDDlgItem: anIntegerId lpString: aString
 			LPCWSTR  lpString 	// text to set
 			);"
 
-	<stdcall: bool SetDlgItemTextW handle sdword lpwstr>
+	<stdcall: bool SetDlgItemTextW handle int32 lpwstr>
 	^self invalidCall: _failureCode!
 
 setKeyboardState: a256ByteArray
@@ -590,7 +590,7 @@ setTimer: aWindowHandle nIDEvent: anIntegerId uElapse: anInteger lpTimerFunc: ca
 			TIMERPROC lpTimerFunc 	// address of timer procedure
 		);"
 
-	<stdcall: dword SetTimer handle dword dword lpvoid>
+	<stdcall: uint32 SetTimer handle uint32 uint32 lpvoid>
 	^self invalidCall: _failureCode!
 
 setWindowText: aWindowHandle lpString: aString
@@ -612,7 +612,7 @@ showWindow: aWindowHandle nCmdShow: flags
 			int nCmdShow 	// show state of window
 		);"
 
-	<stdcall: bool ShowWindow handle sdword>
+	<stdcall: bool ShowWindow handle int32>
 	^self invalidCall: _failureCode!
 
 translateMessage: aMSG
@@ -643,7 +643,7 @@ vkKeyScan: aChar
 			WCHAR ch 	// character to translate
 	   );"
 
-	<stdcall: sword VkKeyScanW char>
+	<stdcall: int16 VkKeyScanW char>
 	^self invalidCall: _failureCode! !
 !OS.UserLibrary categoriesForMethods!
 blockInput:!public!win32 functions-window! !

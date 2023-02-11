@@ -165,7 +165,7 @@ get_Count: value
 		HRESULT __stdcall Count(
 			[out, retval]unsigned int* value);"
 
-	<virtual stdcall: hresult 4 dword*>
+	<virtual stdcall: hresult 4 uint32*>
 	^self invalidCall: _failureCode!
 
 GetValueAtIndex: index value: cookie

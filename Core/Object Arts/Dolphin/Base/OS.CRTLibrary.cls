@@ -20,24 +20,24 @@ _clearfp
 
 		unsigned int _clearfp( void );"
 
-	<cdecl: dword _clearfp>
+	<cdecl: uint32 _clearfp>
 	^self invalidCall: _failureCode!
 
 _close: anInteger
 	"Close the file associated with the descriptor, anInteger, and release the descriptor."
 
-	<cdecl: sdword _close sdword>
+	<cdecl: int32 _close int32>
 	^self invalidCall: _failureCode!
 
 _control87: newInteger mask: maskInteger
-	<cdecl: sdword _control87 dword dword>
+	<cdecl: int32 _control87 uint32 uint32>
 	^self invalidCall: _failureCode!
 
 _dup: anInteger
 	"Create and answer a duplicate file descriptor for the open file with descriptor, anInteger.
 	Note that the underlying file handle is also duplicated."
 
-	<cdecl: sdword _dup sdword>
+	<cdecl: int32 _dup int32>
 	^self invalidCall: _failureCode!
 
 _dup2: anInteger handle2: anInteger2
@@ -46,7 +46,7 @@ _dup2: anInteger handle2: anInteger2
 	descriptor is duplicated, and any open file associated with the target file descriptor is
 	closed."
 
-	<cdecl: sdword _dup2 sdword sdword>
+	<cdecl: int32 _dup2 int32 int32>
 	^self invalidCall: _failureCode!
 
 _errno
@@ -61,35 +61,35 @@ _fdopen: anInteger mode: aString
 	Note that we treat the stdio FILE* pointer as an opaque handle, as these
 	are automatically nulled on image load."
 
-	<cdecl: handle _fdopen sdword lpstr>
+	<cdecl: handle _fdopen int32 lpstr>
 	^self invalidCall: _failureCode!
 
 _filelengthi64: handleInteger
-	<cdecl: sqword _filelengthi64 sdword>
+	<cdecl: int64 _filelengthi64 int32>
 	^self invalidCall: _failureCode!
 
 _fileno: aFILE
 	"Answer the <integer> file number of a CRT FILE stream."
 
-	<cdecl: sdword _fileno handle>
+	<cdecl: int32 _fileno handle>
 	^self invalidCall: _failureCode!
 
 _fseeki64: aFILE offset: offsetInteger origin: originInteger
-	<cdecl: sdword _fseeki64 handle sqword sdword>
+	<cdecl: int32 _fseeki64 handle int64 int32>
 	^self invalidCall: _failureCode!
 
 _ftelli64: anExternalHandle
 	"Answer the <integer> position (zero-based) of the CRT FILE stream."
 
-	<cdecl: sqword _ftelli64 handle>
+	<cdecl: int64 _ftelli64 handle>
 	^self invalidCall: _failureCode!
 
 _get_osfhandle: anInteger
-	<cdecl: handle _get_osfhandle sdword>
+	<cdecl: handle _get_osfhandle int32>
 	^self invalidCall: _failureCode!
 
 _isatty: anInteger
-	<cdecl: bool _isatty sdword>
+	<cdecl: bool _isatty int32>
 	^self invalidCall: _failureCode!
 
 _makepath_s: path bufferSize: sizeInBytes drive: drive dir: dir fname: fname ext: ext
@@ -97,11 +97,11 @@ _makepath_s: path bufferSize: sizeInBytes drive: drive dir: dir fname: fname ext
 	^self invalidCall: _failureCode!
 
 _open_osfhandle: osfhandle flags: flags
-	<cdecl: sdword _open_osfhandle handle sdword>
+	<cdecl: int32 _open_osfhandle handle int32>
 	^self invalidCall: _failureCode!
 
 _setmode: fd mode: modeFlag
-	<cdecl: sdword _setmode sdword sdword>
+	<cdecl: int32 _setmode int32 int32>
 	^self invalidCall: _failureCode!
 
 _splitpath_s: path drive: drive driveLen: driveInteger dir: dir dirLen: dirInteger fname: fname fnameLen: nameInteger ext: ext extLen: extInteger
@@ -109,7 +109,7 @@ _splitpath_s: path drive: drive driveLen: driveInteger dir: dir dirLen: dirInteg
 	^self invalidCall: _failureCode!
 
 _statusfp
-	<cdecl: dword _statusfp>
+	<cdecl: uint32 _statusfp>
 	^self invalidCall: _failureCode!
 
 _stricmp: string1 string2: string2
@@ -117,7 +117,7 @@ _stricmp: string1 string2: string2
 	answer <0, 0, or >0 according to whether string1 is lexicographically less than, 
 	equal to, or greater than string2."
 
-	<cdecl: sdword _stricmp lpstr lpstr>
+	<cdecl: int32 _stricmp lpstr lpstr>
 	^self invalidCall: _failureCode!
 
 _wfopen_s: pFile filename: nameString mode: modeString
@@ -129,7 +129,7 @@ atoi: aString
 
 		int atoi( const char *string );"
 
-	<cdecl: sdword atoi lpstr>
+	<cdecl: int32 atoi lpstr>
 	^self invalidCall: _failureCode!
 
 close
@@ -146,7 +146,7 @@ fclose: anAddress
 	"Closes the specified stream. Answers 0 if successful.
 			int fclose( FILE *stream );"
 
-	<cdecl: sdword fclose handle>
+	<cdecl: int32 fclose handle>
 	^self invalidCall: _failureCode!
 
 feof: stream
@@ -154,43 +154,43 @@ feof: stream
 	^self invalidCall: _failureCode!
 
 fflush: anExternalAddress
-	<cdecl: sdword fflush handle>
+	<cdecl: int32 fflush handle>
 	^self invalidCall: _failureCode!
 
 fgetc: aFILE
-	<cdecl: sdword fgetc handle>
+	<cdecl: int32 fgetc handle>
 	^self invalidCall: _failureCode!
 
 fgets: buf n: bufsize stream: aFILE
-	<cdecl: sdword fgets lpstr sdword handle>
+	<cdecl: int32 fgets lpstr int32 handle>
 	^self invalidCall: _failureCode!
 
 fgetwc: aFILE
-	<cdecl: sdword fgetwc handle>
+	<cdecl: int32 fgetwc handle>
 	^self invalidCall: _failureCode!
 
 fgetws: buf n: bufsize stream: aFILE
-	<cdecl: intptr fgetws lpwstr sdword handle>
+	<cdecl: intptr fgetws lpwstr int32 handle>
 	^self invalidCall: _failureCode!
 
 fputc: charValue stream: aFILE
-	<cdecl: sdword fputc sdword handle>
+	<cdecl: int32 fputc int32 handle>
 	^self invalidCall: _failureCode!
 
 fputs: str stream: aFILE
-	<cdecl: sdword fputs lpstr handle>
+	<cdecl: int32 fputs lpstr handle>
 	^self invalidCall: _failureCode!
 
 fputwc: charValue stream: aFILE
-	<cdecl: sdword fputwc sdword handle>
+	<cdecl: int32 fputwc int32 handle>
 	^self invalidCall: _failureCode!
 
 fputws: str stream: aFILE
-	<cdecl: sdword fputws lpwstr handle>
+	<cdecl: int32 fputws lpwstr handle>
 	^self invalidCall: _failureCode!
 
 fread_s: buffer bufferSize: bufsizeInteger elementSize: elemSizeInteger count: countInteger stream: aFILE
-	<cdecl: sdword fread_s lpvoid intptr intptr intptr handle>
+	<cdecl: int32 fread_s lpvoid intptr intptr intptr handle>
 	^self invalidCall: _failureCode!
 
 free: memblock
@@ -198,7 +198,7 @@ free: memblock
 	^self invalidCall: _failureCode!
 
 fwrite: data size: sizeInteger count: countInteger stream: aFILE
-	<cdecl: sdword fwrite lpvoid intptr intptr handle>
+	<cdecl: int32 fwrite lpvoid intptr intptr handle>
 	^self invalidCall: _failureCode!
 
 initialize
@@ -221,11 +221,11 @@ memcmp: buf1 buf2: buf2 count: count
 
 		int memcmp( const void *buf1, const void *buf2, size_t count );"
 
-	<cdecl: sdword memcmp lpvoid lpvoid intptr>
+	<cdecl: int32 memcmp lpvoid lpvoid intptr>
 	^self invalidCall: _failureCode!
 
 memcpy_s: dest destSize: destSize src: src count: count
-	<cdecl: errno memcpy_s void* dword void* dword>
+	<cdecl: errno memcpy_s void* uint32 void* uint32>
 	^self invalidCall: _failureCode!
 
 setlocale: category locale: localeString
@@ -233,7 +233,7 @@ setlocale: category locale: localeString
 
 		char *setlocale( int category, const char *locale );	"
 
-	<cdecl: lpstr setlocale sdword lpstr>
+	<cdecl: lpstr setlocale int32 lpstr>
 	^self invalidCall: _failureCode!
 
 strcat_s: destString bufferSize: anInteger strSource: sourceString
@@ -246,19 +246,19 @@ strcmp: string1 string2: string2
 		int strcmp( const char *string1, const char *string2);
 	"
 
-	<cdecl: sdword strcmp lpstr lpstr>
+	<cdecl: int32 strcmp lpstr lpstr>
 	^self invalidCall: _failureCode!
 
 strcspn: string strCharSet: strCharSet
-	<cdecl: dword strcspn lpvoid char*>
+	<cdecl: uint32 strcspn lpvoid char*>
 	^self invalidCall: _failureCode!
 
 strerror_s: aString bufferSize: sizeInteger errnum: errnoInteger
-	<cdecl: errno strerror_s lpstr intptr sdword>
+	<cdecl: errno strerror_s lpstr intptr int32>
 	^_failureCode!
 
 strlen: aString
-	<cdecl: sdword strlen lpvoid>
+	<cdecl: int32 strlen lpvoid>
 	^self invalidCall: _failureCode!
 
 strncpy_s: desString bufferSize: anInteger strSource: sourceString count: countInteger
@@ -273,21 +273,21 @@ synchronizeLocale
 ungetc: c stream: stream
 	"Pushes the byte, c, back onto the FILE*, stream."
 
-	<cdecl: sdword ungetc sdword handle>
+	<cdecl: int32 ungetc int32 handle>
 	^self invalidCall: _failureCode!
 
 ungetwc: c stream: stream
 	"Pushes the UTF-16 code unit, c, back onto the FILE*, stream."
 
-	<cdecl: sdword ungetwc sdword handle>
+	<cdecl: int32 ungetwc int32 handle>
 	^self invalidCall: _failureCode!
 
 wcscspn: aWideString strCharSet: strCharSet
-	<cdecl: dword wcscspn lpvoid lpwstr>
+	<cdecl: uint32 wcscspn lpvoid lpwstr>
 	^self invalidCall: _failureCode!
 
 wcslen: aString
-	<cdecl: sdword wcslen lpvoid>
+	<cdecl: int32 wcslen lpvoid>
 	^self invalidCall: _failureCode!
 
 wcsncpy_s: strDestination bufferSize: numberOfElements strSource: strSource count: count

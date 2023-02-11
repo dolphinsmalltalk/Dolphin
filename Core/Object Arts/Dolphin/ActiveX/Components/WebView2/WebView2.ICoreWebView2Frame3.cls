@@ -41,7 +41,7 @@ Add_PermissionRequested: handler token: token
 			[in]ICoreWebView2FramePermissionRequestedEventHandler* handler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 25 ICoreWebView2FramePermissionRequestedEventHandler* sqword*>
+	<virtual stdcall: hresult 25 ICoreWebView2FramePermissionRequestedEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 Remove_PermissionRequested: token
@@ -50,7 +50,7 @@ Remove_PermissionRequested: token
 		HRESULT __stdcall remove_PermissionRequested(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 26 sqword>
+	<virtual stdcall: hresult 26 int64>
 	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2Frame3 categoriesForMethods!
 Add_PermissionRequested:token:!**auto generated**!COM Interfaces-ICoreWebView2Frame3!private! !

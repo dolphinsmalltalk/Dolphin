@@ -68,7 +68,7 @@ get_Count: c
 		HRESULT __stdcall Count(
 			[out, retval]long* c);"
 
-	<virtual stdcall: hresult 8 sdword*>
+	<virtual stdcall: hresult 8 int32*>
 	^self invalidCall: _failureCode!
 
 isExtensible

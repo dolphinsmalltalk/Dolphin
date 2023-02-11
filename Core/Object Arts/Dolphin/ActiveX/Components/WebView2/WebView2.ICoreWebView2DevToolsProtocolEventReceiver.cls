@@ -41,7 +41,7 @@ Add_DevToolsProtocolEventReceived: handler token: token
 			[in]ICoreWebView2DevToolsProtocolEventReceivedEventHandler* handler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 4 ICoreWebView2DevToolsProtocolEventReceivedEventHandler* sqword*>
+	<virtual stdcall: hresult 4 ICoreWebView2DevToolsProtocolEventReceivedEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 Remove_DevToolsProtocolEventReceived: token
@@ -50,7 +50,7 @@ Remove_DevToolsProtocolEventReceived: token
 		HRESULT __stdcall remove_DevToolsProtocolEventReceived(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 5 sqword>
+	<virtual stdcall: hresult 5 int64>
 	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2DevToolsProtocolEventReceiver categoriesForMethods!
 Add_DevToolsProtocolEventReceived:token:!**auto generated**!COM Interfaces-ICoreWebView2DevToolsProtocolEventReceiver!private! !

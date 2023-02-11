@@ -41,7 +41,7 @@ Add_BasicAuthenticationRequested: eventHandler token: token
 			[in]ICoreWebView2BasicAuthenticationRequestedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 98 ICoreWebView2BasicAuthenticationRequestedEventHandler* sqword*>
+	<virtual stdcall: hresult 98 ICoreWebView2BasicAuthenticationRequestedEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 Remove_BasicAuthenticationRequested: token
@@ -50,7 +50,7 @@ Remove_BasicAuthenticationRequested: token
 		HRESULT __stdcall remove_BasicAuthenticationRequested(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 99 sqword>
+	<virtual stdcall: hresult 99 int64>
 	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2_10 categoriesForMethods!
 Add_BasicAuthenticationRequested:token:!**auto generated**!COM Interfaces-ICoreWebView2_10!private! !

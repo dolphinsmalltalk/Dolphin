@@ -52,7 +52,7 @@ get_errorCode: errorCode
 		HRESULT __stdcall errorCode(
 			[out, retval]long* errorCode);"
 
-	<virtual stdcall: hresult 8 sdword*>
+	<virtual stdcall: hresult 8 int32*>
 	^self invalidCall: _failureCode!
 
 get_filepos: filePosition
@@ -61,7 +61,7 @@ get_filepos: filePosition
 		HRESULT __stdcall filepos(
 			[out, retval]long* filePosition);"
 
-	<virtual stdcall: hresult 14 sdword*>
+	<virtual stdcall: hresult 14 int32*>
 	^self invalidCall: _failureCode!
 
 get_line: lineNumber
@@ -70,7 +70,7 @@ get_line: lineNumber
 		HRESULT __stdcall line(
 			[out, retval]long* lineNumber);"
 
-	<virtual stdcall: hresult 12 sdword*>
+	<virtual stdcall: hresult 12 int32*>
 	^self invalidCall: _failureCode!
 
 get_linepos: linePosition
@@ -79,7 +79,7 @@ get_linepos: linePosition
 		HRESULT __stdcall linepos(
 			[out, retval]long* linePosition);"
 
-	<virtual stdcall: hresult 13 sdword*>
+	<virtual stdcall: hresult 13 int32*>
 	^self invalidCall: _failureCode!
 
 get_reason: reasonString

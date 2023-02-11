@@ -51,7 +51,7 @@ get_Handled: handled
 		HRESULT __stdcall Handled(
 			[out, retval]long* Handled);"
 
-	<virtual stdcall: hresult 8 sdword*>
+	<virtual stdcall: hresult 8 int32*>
 	^self invalidCall: _failureCode!
 
 get_KeyEventKind: keyEventKind
@@ -60,7 +60,7 @@ get_KeyEventKind: keyEventKind
 		HRESULT __stdcall KeyEventKind(
 			[out, retval]COREWEBVIEW2_KEY_EVENT_KIND* KeyEventKind);"
 
-	<virtual stdcall: hresult 4 sdword*>
+	<virtual stdcall: hresult 4 int32*>
 	^self invalidCall: _failureCode!
 
 get_KeyEventLParam: lParam
@@ -69,7 +69,7 @@ get_KeyEventLParam: lParam
 		HRESULT __stdcall KeyEventLParam(
 			[out, retval]int* lParam);"
 
-	<virtual stdcall: hresult 6 sdword*>
+	<virtual stdcall: hresult 6 int32*>
 	^self invalidCall: _failureCode!
 
 get_PhysicalKeyStatus: physicalKeyStatus
@@ -87,7 +87,7 @@ get_VirtualKey: virtualKey
 		HRESULT __stdcall VirtualKey(
 			[out, retval]unsigned int* VirtualKey);"
 
-	<virtual stdcall: hresult 5 dword*>
+	<virtual stdcall: hresult 5 uint32*>
 	^self invalidCall: _failureCode!
 
 handled
@@ -145,7 +145,7 @@ put_Handled: handled
 		HRESULT __stdcall Handled(
 			[in]long Handled);"
 
-	<virtual stdcall: hresult 9 sdword>
+	<virtual stdcall: hresult 9 int32>
 	^self invalidCall: _failureCode!
 
 virtualKey

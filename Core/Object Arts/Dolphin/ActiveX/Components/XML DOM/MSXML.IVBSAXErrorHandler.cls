@@ -63,7 +63,7 @@ Error: oLocator strErrorMessage: strErrorMessage nErrorCode: nErrorCode
 			[in, out]BSTR* strErrorMessage,
 			[in]long nErrorCode);"
 
-	<virtual stdcall: hresult 8 IVBSAXLocator* bstr* sdword>
+	<virtual stdcall: hresult 8 IVBSAXLocator* bstr* int32>
 	^self invalidCall: _failureCode!
 
 fatalError: oLocator strErrorMessage: strErrorMessage nErrorCode: nErrorCode
@@ -84,7 +84,7 @@ FatalError: oLocator strErrorMessage: strErrorMessage nErrorCode: nErrorCode
 			[in, out]BSTR* strErrorMessage,
 			[in]long nErrorCode);"
 
-	<virtual stdcall: hresult 9 IVBSAXLocator* bstr* sdword>
+	<virtual stdcall: hresult 9 IVBSAXLocator* bstr* int32>
 	^self invalidCall: _failureCode!
 
 ignorableWarning: oLocator strErrorMessage: strErrorMessage nErrorCode: nErrorCode
@@ -105,7 +105,7 @@ IgnorableWarning: oLocator strErrorMessage: strErrorMessage nErrorCode: nErrorCo
 			[in, out]BSTR* strErrorMessage,
 			[in]long nErrorCode);"
 
-	<virtual stdcall: hresult 10 IVBSAXLocator* bstr* sdword>
+	<virtual stdcall: hresult 10 IVBSAXLocator* bstr* int32>
 	^self invalidCall: _failureCode!
 
 isExtensible

@@ -48,7 +48,7 @@ Add_FaviconChanged: eventHandler token: token
 			[in]ICoreWebView2FaviconChangedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 110 ICoreWebView2FaviconChangedEventHandler* sqword*>
+	<virtual stdcall: hresult 110 ICoreWebView2FaviconChangedEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 get_FaviconUri: value
@@ -67,7 +67,7 @@ GetFavicon: format completedHandler: completedHandler
 			[in]COREWEBVIEW2_FAVICON_IMAGE_FORMAT format,
 			[in]ICoreWebView2GetFaviconCompletedHandler* completedHandler);"
 
-	<virtual stdcall: hresult 113 sdword ICoreWebView2GetFaviconCompletedHandler*>
+	<virtual stdcall: hresult 113 int32 ICoreWebView2GetFaviconCompletedHandler*>
 	^self invalidCall: _failureCode!
 
 Remove_FaviconChanged: token
@@ -76,7 +76,7 @@ Remove_FaviconChanged: token
 		HRESULT __stdcall remove_FaviconChanged(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 111 sqword>
+	<virtual stdcall: hresult 111 int64>
 	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2_15 categoriesForMethods!
 Add_FaviconChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2_15!private! !

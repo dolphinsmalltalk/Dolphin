@@ -63,7 +63,7 @@ Add_CursorChanged: eventHandler token: token
 			[in]ICoreWebView2CursorChangedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 10 ICoreWebView2CursorChangedEventHandler* sqword*>
+	<virtual stdcall: hresult 10 ICoreWebView2CursorChangedEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 currentCursor
@@ -105,7 +105,7 @@ get_SystemCursorId: systemCursorId
 		HRESULT __stdcall SystemCursorId(
 			[out, retval]unsigned int* SystemCursorId);"
 
-	<virtual stdcall: hresult 9 dword*>
+	<virtual stdcall: hresult 9 uint32*>
 	^self invalidCall: _failureCode!
 
 get_UIAProvider: provider
@@ -139,7 +139,7 @@ Remove_CursorChanged: token
 		HRESULT __stdcall remove_CursorChanged(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 11 sqword>
+	<virtual stdcall: hresult 11 int64>
 	^self invalidCall: _failureCode!
 
 rootVisualTarget
@@ -164,7 +164,7 @@ SendMouseInput: eventKind virtualKeys: virtualKeys mouseData: mouseData point: p
 			[in]unsigned int mouseData,
 			[in]POINT point);"
 
-	<virtual stdcall: hresult 6 sdword sdword dword POINTL>
+	<virtual stdcall: hresult 6 int32 int32 uint32 POINTL>
 	^self invalidCall: _failureCode!
 
 SendPointerInput: eventKind pointerInfo: pointerInfo
@@ -174,7 +174,7 @@ SendPointerInput: eventKind pointerInfo: pointerInfo
 			[in]COREWEBVIEW2_POINTER_EVENT_KIND eventKind,
 			[in]ICoreWebView2PointerInfo* pointerInfo);"
 
-	<virtual stdcall: hresult 7 sdword ICoreWebView2PointerInfo*>
+	<virtual stdcall: hresult 7 int32 ICoreWebView2PointerInfo*>
 	^self invalidCall: _failureCode!
 
 systemCursorId

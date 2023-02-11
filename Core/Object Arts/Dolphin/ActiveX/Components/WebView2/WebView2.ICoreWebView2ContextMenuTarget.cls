@@ -91,7 +91,7 @@ get_HasLinkText: value
 		HRESULT __stdcall HasLinkText(
 			[out, retval]long* value);"
 
-	<virtual stdcall: hresult 11 sdword*>
+	<virtual stdcall: hresult 11 int32*>
 	^self invalidCall: _failureCode!
 
 get_HasLinkUri: value
@@ -100,7 +100,7 @@ get_HasLinkUri: value
 		HRESULT __stdcall HasLinkUri(
 			[out, retval]long* value);"
 
-	<virtual stdcall: hresult 9 sdword*>
+	<virtual stdcall: hresult 9 int32*>
 	^self invalidCall: _failureCode!
 
 get_HasSelection: value
@@ -109,7 +109,7 @@ get_HasSelection: value
 		HRESULT __stdcall HasSelection(
 			[out, retval]long* value);"
 
-	<virtual stdcall: hresult 15 sdword*>
+	<virtual stdcall: hresult 15 int32*>
 	^self invalidCall: _failureCode!
 
 get_HasSourceUri: value
@@ -118,7 +118,7 @@ get_HasSourceUri: value
 		HRESULT __stdcall HasSourceUri(
 			[out, retval]long* value);"
 
-	<virtual stdcall: hresult 13 sdword*>
+	<virtual stdcall: hresult 13 int32*>
 	^self invalidCall: _failureCode!
 
 get_IsEditable: value
@@ -127,7 +127,7 @@ get_IsEditable: value
 		HRESULT __stdcall IsEditable(
 			[out, retval]long* value);"
 
-	<virtual stdcall: hresult 5 sdword*>
+	<virtual stdcall: hresult 5 int32*>
 	^self invalidCall: _failureCode!
 
 get_IsRequestedForMainFrame: value
@@ -136,7 +136,7 @@ get_IsRequestedForMainFrame: value
 		HRESULT __stdcall IsRequestedForMainFrame(
 			[out, retval]long* value);"
 
-	<virtual stdcall: hresult 6 sdword*>
+	<virtual stdcall: hresult 6 int32*>
 	^self invalidCall: _failureCode!
 
 get_Kind: value
@@ -145,7 +145,7 @@ get_Kind: value
 		HRESULT __stdcall Kind(
 			[out, retval]COREWEBVIEW2_CONTEXT_MENU_TARGET_KIND* value);"
 
-	<virtual stdcall: hresult 4 sdword*>
+	<virtual stdcall: hresult 4 int32*>
 	^self invalidCall: _failureCode!
 
 get_LinkText: value

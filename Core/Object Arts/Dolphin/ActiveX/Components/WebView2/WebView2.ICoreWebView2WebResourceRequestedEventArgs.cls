@@ -57,7 +57,7 @@ get_ResourceContext: context
 		HRESULT __stdcall ResourceContext(
 			[out, retval]COREWEBVIEW2_WEB_RESOURCE_CONTEXT* context);"
 
-	<virtual stdcall: hresult 8 sdword*>
+	<virtual stdcall: hresult 8 int32*>
 	^self invalidCall: _failureCode!
 
 get_Response: response

@@ -154,7 +154,7 @@ CopyTo: destStream CharNumber: charNumber
 			[in]_Stream* DestStream,
 			[in, defaultvalue(-1)]long CharNumber);"
 
-	<virtual stdcall: hresult 27 _Stream* sdword>
+	<virtual stdcall: hresult 27 _Stream* int32>
 	^self invalidCall: _failureCode!
 
 eos
@@ -197,7 +197,7 @@ get_LineSeparator: pLS
 		HRESULT __stdcall LineSeparator(
 			[out, retval]LineSeparatorEnum* pLS);"
 
-	<virtual stdcall: hresult 14 sdword*>
+	<virtual stdcall: hresult 14 int32*>
 	^self invalidCall: _failureCode!
 
 get_Mode: pMode
@@ -206,7 +206,7 @@ get_Mode: pMode
 		HRESULT __stdcall Mode(
 			[out, retval]ConnectModeEnum* pMode);"
 
-	<virtual stdcall: hresult 17 sdword*>
+	<virtual stdcall: hresult 17 int32*>
 	^self invalidCall: _failureCode!
 
 get_Position: pPos
@@ -215,7 +215,7 @@ get_Position: pPos
 		HRESULT __stdcall Position(
 			[out, retval]long* pPos);"
 
-	<virtual stdcall: hresult 10 sdword*>
+	<virtual stdcall: hresult 10 int32*>
 	^self invalidCall: _failureCode!
 
 get_Size: pSize
@@ -224,7 +224,7 @@ get_Size: pSize
 		HRESULT __stdcall Size(
 			[out, retval]long* pSize);"
 
-	<virtual stdcall: hresult 8 sdword*>
+	<virtual stdcall: hresult 8 int32*>
 	^self invalidCall: _failureCode!
 
 get_State: pState
@@ -233,7 +233,7 @@ get_State: pState
 		HRESULT __stdcall State(
 			[out, retval]ObjectStateEnum* pState);"
 
-	<virtual stdcall: hresult 16 sdword*>
+	<virtual stdcall: hresult 16 int32*>
 	^self invalidCall: _failureCode!
 
 get_Type: ptype
@@ -242,7 +242,7 @@ get_Type: ptype
 		HRESULT __stdcall Type(
 			[out, retval]StreamTypeEnum* ptype);"
 
-	<virtual stdcall: hresult 12 sdword*>
+	<virtual stdcall: hresult 12 int32*>
 	^self invalidCall: _failureCode!
 
 lineSeparator
@@ -311,7 +311,7 @@ Open: source Mode: mode Options: options UserName: userName Password: password
 			[in, defaultvalue('')]BSTR UserName,
 			[in, defaultvalue('')]BSTR Password);"
 
-	<virtual stdcall: hresult 22 variant sdword sdword bstr bstr>
+	<virtual stdcall: hresult 22 variant int32 int32 bstr bstr>
 	^self invalidCall: _failureCode!
 
 position
@@ -344,7 +344,7 @@ put_LineSeparator: pLS
 		HRESULT __stdcall LineSeparator(
 			[in]LineSeparatorEnum pLS);"
 
-	<virtual stdcall: hresult 15 sdword>
+	<virtual stdcall: hresult 15 int32>
 	^self invalidCall: _failureCode!
 
 put_Mode: pMode
@@ -354,7 +354,7 @@ put_Mode: pMode
 		HRESULT __stdcall Mode(
 			[in]ConnectModeEnum pMode);"
 
-	<virtual stdcall: hresult 18 sdword>
+	<virtual stdcall: hresult 18 int32>
 	^self invalidCall: _failureCode!
 
 put_Position: pPos
@@ -364,7 +364,7 @@ put_Position: pPos
 		HRESULT __stdcall Position(
 			[in]long pPos);"
 
-	<virtual stdcall: hresult 11 sdword>
+	<virtual stdcall: hresult 11 int32>
 	^self invalidCall: _failureCode!
 
 put_Type: ptype
@@ -374,7 +374,7 @@ put_Type: ptype
 		HRESULT __stdcall Type(
 			[in]StreamTypeEnum ptype);"
 
-	<virtual stdcall: hresult 13 sdword>
+	<virtual stdcall: hresult 13 int32>
 	^self invalidCall: _failureCode!
 
 read
@@ -398,7 +398,7 @@ Read: numBytes pval: pval
 			[in, defaultvalue(-1)]long NumBytes,
 			[out, retval]VARIANT* pval);"
 
-	<virtual stdcall: hresult 21 sdword variant*>
+	<virtual stdcall: hresult 21 int32 variant*>
 	^self invalidCall: _failureCode!
 
 readText
@@ -422,7 +422,7 @@ ReadText: numChars pbstr: pbstr
 			[in, defaultvalue(-1)]long NumChars,
 			[out, retval]BSTR* pbstr);"
 
-	<virtual stdcall: hresult 31 sdword bstr*>
+	<virtual stdcall: hresult 31 int32 bstr*>
 	^self invalidCall: _failureCode!
 
 saveToFile: fileName
@@ -438,7 +438,7 @@ SaveToFile: fileName Options: options
 			[in]BSTR FileName,
 			[in, defaultvalue(1)]SaveOptionsEnum Options);"
 
-	<virtual stdcall: hresult 29 bstr sdword>
+	<virtual stdcall: hresult 29 bstr int32>
 	^self invalidCall: _failureCode!
 
 SetEOS
@@ -513,7 +513,7 @@ WriteText: data Options: options
 			[in]BSTR Data,
 			[in, defaultvalue(0)]StreamWriteEnum Options);"
 
-	<virtual stdcall: hresult 32 bstr sdword>
+	<virtual stdcall: hresult 32 bstr int32>
 	^self invalidCall: _failureCode! !
 !ADODB._Stream categoriesForMethods!
 Cancel!**auto generated**!COM Interfaces-_Stream!public! !

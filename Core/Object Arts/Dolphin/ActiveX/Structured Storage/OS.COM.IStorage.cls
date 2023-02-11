@@ -51,7 +51,7 @@ Commit: grfCommitFlags
 
 	"
 
-	<virtual stdcall: hresult 10 dword>
+	<virtual stdcall: hresult 10 uint32>
 	^self invalidCall: _failureCode!
 
 copy: elementName to: anIStorage 
@@ -87,7 +87,7 @@ CopyTo: ciidExclude rgiidExclude: rgiidExclude snbExclude: snbExclude pstgDest: 
 
 	"
 
-	<virtual stdcall: hresult 8 dword guid* lpvoid IStorage*>
+	<virtual stdcall: hresult 8 uint32 guid* lpvoid IStorage*>
 	^self invalidCall: _failureCode!
 
 CreateStorage: pwcsName grfMode: grfMode dwStgFmt: dwStgFmt reserved2: reserved2 ppstg: ppstg
@@ -102,7 +102,7 @@ CreateStorage: pwcsName grfMode: grfMode dwStgFmt: dwStgFmt reserved2: reserved2
 
 	"
 
-	<virtual stdcall: hresult 6 lpwstr dword dword dword IStorage**>
+	<virtual stdcall: hresult 6 lpwstr uint32 uint32 uint32 IStorage**>
 	^self invalidCall: _failureCode!
 
 CreateStream: pwcsName grfMode: grfMode reserved1: reserved1 reserved2: reserved2 ppstm: ppstm
@@ -117,7 +117,7 @@ CreateStream: pwcsName grfMode: grfMode reserved1: reserved1 reserved2: reserved
 
 	"
 
-	<virtual stdcall: hresult 4 lpwstr dword dword dword IStream**>
+	<virtual stdcall: hresult 4 lpwstr uint32 uint32 uint32 IStream**>
 	^self invalidCall: _failureCode!
 
 defaultMode
@@ -169,7 +169,7 @@ EnumElements: reserved1 reserved2: reserved2 reserved3: reserved3 ppenum: ppenum
 
 	"
 
-	<virtual stdcall: hresult 12 dword sbyte* dword void**>
+	<virtual stdcall: hresult 12 uint32 int8* uint32 void**>
 	^self invalidCall: _failureCode!
 
 fastFlush
@@ -258,7 +258,7 @@ MoveElementTo: pwcsName pstgDest: pstgDest pwcsNewName: pwcsNewName grfFlags: gr
 
 	"
 
-	<virtual stdcall: hresult 9 lpwstr IStorage* lpwstr dword>
+	<virtual stdcall: hresult 9 lpwstr IStorage* lpwstr uint32>
 	^self invalidCall: _failureCode!
 
 newStorage: storageName 
@@ -342,7 +342,7 @@ OpenStorage: pwcsName pstgPriority: pstgPriority grfMode: grfMode snbExclude: sn
 
 	"
 
-	<virtual stdcall: hresult 7 lpwstr IStorage* dword lpvoid dword IStorage**>
+	<virtual stdcall: hresult 7 lpwstr IStorage* uint32 lpvoid uint32 IStorage**>
 	^self invalidCall: _failureCode!
 
 openStream: streamName 
@@ -377,7 +377,7 @@ OpenStream: pwcsName reserved1: reserved1 grfMode: grfMode reserved2: reserved2 
 
 	"
 
-	<virtual stdcall: hresult 5 lpwstr sbyte* dword dword IStream**>
+	<virtual stdcall: hresult 5 lpwstr int8* uint32 uint32 IStream**>
 	^self invalidCall: _failureCode!
 
 rename: string1 to: string2
@@ -456,7 +456,7 @@ SetStateBits: grfStateBits grfMask: grfMask
 
 	"
 
-	<virtual stdcall: hresult 17 dword dword>
+	<virtual stdcall: hresult 17 uint32 uint32>
 	^self invalidCall: _failureCode!
 
 stat
@@ -477,7 +477,7 @@ Stat: pstatstg grfStatFlag: grfStatFlag
 
 	"
 
-	<virtual stdcall: hresult 18 STATSTG* dword>
+	<virtual stdcall: hresult 18 STATSTG* uint32>
 	^self invalidCall: _failureCode! !
 !OS.COM.IStorage categoriesForMethods!
 close!operations!public! !

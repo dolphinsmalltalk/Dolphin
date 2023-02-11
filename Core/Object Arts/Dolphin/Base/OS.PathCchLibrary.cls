@@ -28,7 +28,7 @@ pathAllocCanonicalize: pszPathIn dwFlags: dwFlags ppszPathOut: ppszPathOut
 			ULONG dwFlags,
 			LPWSTR* ppszPathOut);"
 
-	<stdcall: hresult PathAllocCanonicalize lpwstr dword lpwstr*>
+	<stdcall: hresult PathAllocCanonicalize lpwstr uint32 lpwstr*>
 	^self invalidCall: _failureCode!
 
 pathAllocCombine: pszPathIn pszMore: pszMore dwFlags: dwFlags ppszPathOut: ppszPathOut
@@ -41,7 +41,7 @@ pathAllocCombine: pszPathIn pszMore: pszMore dwFlags: dwFlags ppszPathOut: ppszP
 			ULONG dwFlags,
 			LPWSTR* ppszPathOut);"
 
-	<stdcall: hresult PathAllocCombine lpwstr lpwstr dword lpwstr*>
+	<stdcall: hresult PathAllocCombine lpwstr lpwstr uint32 lpwstr*>
 	^self invalidCall: _failureCode!
 
 pathCanonicalize: pszPathIn dwFlags: dwFlags
@@ -113,7 +113,7 @@ pathCchAppendEx: pszPath cchPath: cchPath pszMore: pszMore dwFlags: dwFlags
 			LPCWSTR pszMore,
 			ULONG dwFlags);"
 
-	<stdcall: hresult PathCchAppendEx lpwstr uintptr lpwstr dword>
+	<stdcall: hresult PathCchAppendEx lpwstr uintptr lpwstr uint32>
 	^self invalidCall: _failureCode!
 
 pathCchCanonicalize: pszPathOut cchPathOut: cchPathOut pszPathIn: pszPathIn
@@ -138,7 +138,7 @@ pathCchCanonicalizeEx: pszPathOut cchPathOut: cchPathOut pszPathIn: pszPathIn dw
 			LPCWSTR pszPathIn,
 			ULONG dwFlags);"
 
-	<stdcall: hresult PathCchCanonicalizeEx lpwstr uintptr lpwstr dword>
+	<stdcall: hresult PathCchCanonicalizeEx lpwstr uintptr lpwstr uint32>
 	^self invalidCall: _failureCode!
 
 pathCchCombine: pszPathOut cchPathOut: cchPathOut pszPathIn: pszPathIn pszMore: pszMore
@@ -165,7 +165,7 @@ pathCchCombineEx: pszPathOut cchPathOut: cchPathOut pszPathIn: pszPathIn pszMore
 			LPCWSTR pszMore,
 			ULONG dwFlags);"
 
-	<stdcall: hresult PathCchCombineEx lpwstr uintptr lpwstr lpwstr dword>
+	<stdcall: hresult PathCchCombineEx lpwstr uintptr lpwstr lpwstr uint32>
 	^self invalidCall: _failureCode!
 
 pathCchFindExtension: pszPath cchPath: cchPath ppszExt: ppszExt

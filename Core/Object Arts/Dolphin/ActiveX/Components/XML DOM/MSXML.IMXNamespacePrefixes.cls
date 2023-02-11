@@ -64,7 +64,7 @@ get_item: index prefix: prefix
 			[in]long index,
 			[out, retval]BSTR* prefix);"
 
-	<virtual stdcall: hresult 8 sdword bstr*>
+	<virtual stdcall: hresult 8 int32 bstr*>
 	^self invalidCall: _failureCode!
 
 get_length: length
@@ -73,7 +73,7 @@ get_length: length
 		HRESULT __stdcall length(
 			[out, retval]long* length);"
 
-	<virtual stdcall: hresult 9 sdword*>
+	<virtual stdcall: hresult 9 int32*>
 	^self invalidCall: _failureCode!
 
 isExtensible

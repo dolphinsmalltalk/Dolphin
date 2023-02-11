@@ -124,7 +124,7 @@ get_length: length
 		HRESULT __stdcall length(
 			[out, retval]long* length);"
 
-	<virtual stdcall: hresult 11 sdword*>
+	<virtual stdcall: hresult 11 int32*>
 	^self invalidCall: _failureCode!
 
 get_namespaceURI: index length: length
@@ -134,7 +134,7 @@ get_namespaceURI: index length: length
 			[in]long index,
 			[out, retval]BSTR* length);"
 
-	<virtual stdcall: hresult 12 sdword bstr*>
+	<virtual stdcall: hresult 12 int32 bstr*>
 	^self invalidCall: _failureCode!
 
 isExtensible

@@ -366,7 +366,7 @@ beginBufferedAnimation: hwnd hdcTarget: hdcTarget prcTarget: prcTarget dwFormat:
 			[out]HDC* phdcFrom,
 			[out]HDC* phdcTo);"
 
-	<stdcall: handle BeginBufferedAnimation handle handle RECTL* sdword BP_PAINTPARAMS* BP_ANIMATIONPARAMS* handle* handle*>
+	<stdcall: handle BeginBufferedAnimation handle handle RECTL* int32 BP_PAINTPARAMS* BP_ANIMATIONPARAMS* handle* handle*>
 	^self invalidCall: _failureCode!
 
 beginBufferedPaint: hdcTarget prcTarget: prcTarget dwFormat: dwFormat pPaintParams: pPaintParams phDC: phDC
@@ -380,7 +380,7 @@ beginBufferedPaint: hdcTarget prcTarget: prcTarget dwFormat: dwFormat pPaintPara
 			[in]BP_PAINTPARAMS* pPaintParams,
 			[out]HDC* phDC);"
 
-	<stdcall: handle BeginBufferedPaint handle RECTL* sdword BP_PAINTPARAMS* handle*>
+	<stdcall: handle BeginBufferedPaint handle RECTL* int32 BP_PAINTPARAMS* handle*>
 	^self invalidCall: _failureCode!
 
 bufferedPaintClear: hBufferedPaint prc: prc
@@ -422,7 +422,7 @@ bufferedPaintSetAlpha: hBufferedPaint prc: prc alpha: alpha
 			[in]RECTL* prc,
 			[in]BYTE Alpha);"
 
-	<stdcall: hresult BufferedPaintSetAlpha handle RECTL* byte>
+	<stdcall: hresult BufferedPaintSetAlpha handle RECTL* uint8>
 	^self invalidCall: _failureCode!
 
 bufferedPaintStopAllAnimations: hwnd
@@ -442,7 +442,7 @@ bufferedPaintUnInit
 
 	"Ignore any errors from calling this function, as we call it on shutdown."
 
-	<stdcall: sdword BufferedPaintUnInit>
+	<stdcall: int32 BufferedPaintUnInit>
 	^self invalidCall: _failureCode!
 
 closeThemeData: htheme
@@ -452,7 +452,7 @@ closeThemeData: htheme
 		long __stdcall CloseThemeData(
 			[in]HTHEME HTHEME);"
 
-	<stdcall: sdword CloseThemeData handle>
+	<stdcall: int32 CloseThemeData handle>
 	^self invalidCall: _failureCode!
 
 drawThemeBackground: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pRect: pRect pClipRect: pClipRect
@@ -467,7 +467,7 @@ drawThemeBackground: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pRect: 
 			[in]RECTL* pRect,
 			[in]RECTL* pClipRect);"
 
-	<stdcall: hresult DrawThemeBackground handle handle sdword sdword RECTL* RECTL*>
+	<stdcall: hresult DrawThemeBackground handle handle int32 int32 RECTL* RECTL*>
 	^self invalidCall: _failureCode!
 
 drawThemeBackgroundEx: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pRect: pRect pOptions: pOptions
@@ -482,7 +482,7 @@ drawThemeBackgroundEx: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pRect
 			[in]RECTL* pRect,
 			[in]DTBGOPTS* pOptions);"
 
-	<stdcall: hresult DrawThemeBackgroundEx handle handle sdword sdword RECTL* DTBGOPTS*>
+	<stdcall: hresult DrawThemeBackgroundEx handle handle int32 int32 RECTL* DTBGOPTS*>
 	^self invalidCall: _failureCode!
 
 drawThemeEdge: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pDestRect: pDestRect uEdge: uEdge uFlags: uFlags pContentRect: pContentRect
@@ -499,7 +499,7 @@ drawThemeEdge: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pDestRect: pD
 			[in]UINT uFlags,
 			[out]RECTL* pContentRect);"
 
-	<stdcall: hresult DrawThemeEdge handle handle sdword sdword RECTL* dword dword RECTL*>
+	<stdcall: hresult DrawThemeEdge handle handle int32 int32 RECTL* uint32 uint32 RECTL*>
 	^self invalidCall: _failureCode!
 
 drawThemeIcon: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pRect: pRect himl: himl iImageIndex: iImageIndex
@@ -515,7 +515,7 @@ drawThemeIcon: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pRect: pRect 
 			[in]HIMAGELIST himl,
 			[in]int iImageIndex);"
 
-	<stdcall: hresult DrawThemeIcon handle handle sdword sdword RECTL* handle sdword>
+	<stdcall: hresult DrawThemeIcon handle handle int32 int32 RECTL* handle int32>
 	^self invalidCall: _failureCode!
 
 drawThemeParentBackground: hwnd hdc: hdc prc: prc
@@ -545,7 +545,7 @@ drawThemeText: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pszText: pszT
 			[in]DWORD dwTextFlags2,
 			[in]RECTL* pRect);"
 
-	<stdcall: hresult DrawThemeText handle handle sdword sdword lpwstr sdword dword dword RECTL*>
+	<stdcall: hresult DrawThemeText handle handle int32 int32 lpwstr int32 uint32 uint32 RECTL*>
 	^self invalidCall: _failureCode!
 
 enableThemeDialogTexture: hwnd dwFlags: dwFlags
@@ -556,7 +556,7 @@ enableThemeDialogTexture: hwnd dwFlags: dwFlags
 			[in]HWND HWND,
 			[in]DWORD dwFlags);"
 
-	<stdcall: hresult EnableThemeDialogTexture handle dword>
+	<stdcall: hresult EnableThemeDialogTexture handle uint32>
 	^self invalidCall: _failureCode!
 
 enableTheming: fEnable
@@ -589,7 +589,7 @@ getBufferedPaintBits: hBufferedPaint ppbBuffer: ppbBuffer pcxRow: pcxRow
 			[out]RGBQUAD** ppbBuffer,
 			[out]int* pcxRow);"
 
-	<stdcall: hresult GetBufferedPaintBits handle RGBQUAD** sdword*>
+	<stdcall: hresult GetBufferedPaintBits handle RGBQUAD** int32*>
 	^self invalidCall: _failureCode!
 
 getBufferedPaintDC: hBufferedPaint
@@ -635,7 +635,7 @@ getCurrentThemeName: pszThemeFileName cchMaxNameChars: cchMaxNameChars pszColorB
 			[out]LPWSTR pszSizeBuff,
 			[in]int cchMaxSizeChars);"
 
-	<stdcall: hresult GetCurrentThemeName lpwstr sdword lpwstr sdword lpwstr sdword>
+	<stdcall: hresult GetCurrentThemeName lpwstr int32 lpwstr int32 lpwstr int32>
 	^self invalidCall: _failureCode!
 
 getThemeAppProperties
@@ -644,7 +644,7 @@ getThemeAppProperties
 
 		DWORD __stdcall GetThemeAppProperties();"
 
-	<stdcall: dword GetThemeAppProperties>
+	<stdcall: uint32 GetThemeAppProperties>
 	^self invalidCall: _failureCode!
 
 getThemeBackgroundContentRect: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pBoundingRect: pBoundingRect pContentRect: pContentRect
@@ -659,7 +659,7 @@ getThemeBackgroundContentRect: htheme hdc: hdc iPartId: iPartId iStateId: iState
 			[in]RECTL* pBoundingRect,
 			[out]RECTL* pContentRect);"
 
-	<stdcall: hresult GetThemeBackgroundContentRect handle handle sdword sdword RECTL* RECTL*>
+	<stdcall: hresult GetThemeBackgroundContentRect handle handle int32 int32 RECTL* RECTL*>
 	^self invalidCall: _failureCode!
 
 getThemeBackgroundExtent: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pContentRect: pContentRect pExtentRect: pExtentRect
@@ -674,7 +674,7 @@ getThemeBackgroundExtent: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pC
 			[in]RECTL* pContentRect,
 			[out]RECTL* pExtentRect);"
 
-	<stdcall: hresult GetThemeBackgroundExtent handle handle sdword sdword RECTL* RECTL*>
+	<stdcall: hresult GetThemeBackgroundExtent handle handle int32 int32 RECTL* RECTL*>
 	^self invalidCall: _failureCode!
 
 getThemeBackgroundRegion: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pRect: pRect pRegion: pRegion
@@ -689,7 +689,7 @@ getThemeBackgroundRegion: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pR
 			[in]RECTL* pRect,
 			[out]HRGN* pRegion);"
 
-	<stdcall: hresult GetThemeBackgroundRegion handle handle sdword sdword RECTL* handle*>
+	<stdcall: hresult GetThemeBackgroundRegion handle handle int32 int32 RECTL* handle*>
 	^self invalidCall: _failureCode!
 
 getThemeBool: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId pfVal: pfVal
@@ -703,7 +703,7 @@ getThemeBool: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId pfVal:
 			[in]int iPropId,
 			[out]BOOL* pfVal);"
 
-	<stdcall: hresult GetThemeBool handle sdword sdword sdword bool*>
+	<stdcall: hresult GetThemeBool handle int32 int32 int32 bool*>
 	^self invalidCall: _failureCode!
 
 getThemeColor: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId pColor: pColor
@@ -717,7 +717,7 @@ getThemeColor: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId pColo
 			[in]int iPropId,
 			[out]COLORREF* pColor);"
 
-	<stdcall: hresult GetThemeColor handle sdword sdword sdword dword*>
+	<stdcall: hresult GetThemeColor handle int32 int32 int32 uint32*>
 	^self invalidCall: _failureCode!
 
 getThemeDocumentationProperty: pszThemeName pszPropertyName: pszPropertyName pszValueBuff: pszValueBuff cchMaxValChars: cchMaxValChars
@@ -730,7 +730,7 @@ getThemeDocumentationProperty: pszThemeName pszPropertyName: pszPropertyName psz
 			[out]LPWSTR pszValueBuff,
 			[in]int cchMaxValChars);"
 
-	<stdcall: hresult GetThemeDocumentationProperty lpwstr lpwstr lpwstr sdword>
+	<stdcall: hresult GetThemeDocumentationProperty lpwstr lpwstr lpwstr int32>
 	^self invalidCall: _failureCode!
 
 getThemeEnumValue: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId piVal: piVal
@@ -744,7 +744,7 @@ getThemeEnumValue: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId p
 			[in]int iPropId,
 			[out]int* piVal);"
 
-	<stdcall: hresult GetThemeEnumValue handle sdword sdword sdword sdword*>
+	<stdcall: hresult GetThemeEnumValue handle int32 int32 int32 int32*>
 	^self invalidCall: _failureCode!
 
 getThemeFilename: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId pszThemeFileName: pszThemeFileName cchMaxBuffChars: cchMaxBuffChars
@@ -759,7 +759,7 @@ getThemeFilename: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId ps
 			[out]LPWSTR pszThemeFileName,
 			[in]int cchMaxBuffChars);"
 
-	<stdcall: hresult GetThemeFilename handle sdword sdword sdword lpwstr sdword>
+	<stdcall: hresult GetThemeFilename handle int32 int32 int32 lpwstr int32>
 	^self invalidCall: _failureCode!
 
 getThemeFont: htheme hdc: hdc iPartId: iPartId iStateId: iStateId iPropId: iPropId pFont: pFont
@@ -774,7 +774,7 @@ getThemeFont: htheme hdc: hdc iPartId: iPartId iStateId: iStateId iPropId: iProp
 			[in]int iPropId,
 			[out]LOGFONTW* pFont);"
 
-	<stdcall: hresult GetThemeFont handle handle sdword sdword sdword LOGFONTW*>
+	<stdcall: hresult GetThemeFont handle handle int32 int32 int32 LOGFONTW*>
 	^self invalidCall: _failureCode!
 
 getThemeInt: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId piVal: piVal
@@ -788,7 +788,7 @@ getThemeInt: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId piVal: 
 			[in]int iPropId,
 			[out]int* piVal);"
 
-	<stdcall: hresult GetThemeInt handle sdword sdword sdword sdword*>
+	<stdcall: hresult GetThemeInt handle int32 int32 int32 int32*>
 	^self invalidCall: _failureCode!
 
 getThemeMargins: htheme hdc: hdc iPartId: iPartId iStateId: iStateId iPropId: iPropId prc: prc pMargins: pMargins
@@ -804,7 +804,7 @@ getThemeMargins: htheme hdc: hdc iPartId: iPartId iStateId: iStateId iPropId: iP
 			[in]RECTL* prc,
 			[out]MARGINS* pMargins);"
 
-	<stdcall: hresult GetThemeMargins handle handle sdword sdword sdword RECTL* MARGINS*>
+	<stdcall: hresult GetThemeMargins handle handle int32 int32 int32 RECTL* MARGINS*>
 	^self invalidCall: _failureCode!
 
 getThemeMetric: htheme hdc: hdc iPartId: iPartId iStateId: iStateId iPropId: iPropId piVal: piVal
@@ -819,7 +819,7 @@ getThemeMetric: htheme hdc: hdc iPartId: iPartId iStateId: iStateId iPropId: iPr
 			[in]int iPropId,
 			[out]int* piVal);"
 
-	<stdcall: hresult GetThemeMetric handle handle sdword sdword sdword sdword*>
+	<stdcall: hresult GetThemeMetric handle handle int32 int32 int32 int32*>
 	^self invalidCall: _failureCode!
 
 getThemePartSize: htheme hdc: hdc iPartId: iPartId iStateId: iStateId prc: prc eSize: eSize psz: psz
@@ -835,7 +835,7 @@ getThemePartSize: htheme hdc: hdc iPartId: iPartId iStateId: iStateId prc: prc e
 			[in]THEMESIZE eSize,
 			[out]SIZEL* psz);"
 
-	<stdcall: hresult GetThemePartSize handle handle sdword sdword RECTL* sdword SIZEL*>
+	<stdcall: hresult GetThemePartSize handle handle int32 int32 RECTL* int32 SIZEL*>
 	^self invalidCall: _failureCode!
 
 getThemePosition: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId pPoint: pPoint
@@ -849,7 +849,7 @@ getThemePosition: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId pP
 			[in]int iPropId,
 			[out]POINTL* pPoint);"
 
-	<stdcall: hresult GetThemePosition handle sdword sdword sdword POINTL*>
+	<stdcall: hresult GetThemePosition handle int32 int32 int32 POINTL*>
 	^self invalidCall: _failureCode!
 
 getThemePropertyOrigin: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId pOrigin: pOrigin
@@ -863,7 +863,7 @@ getThemePropertyOrigin: htheme iPartId: iPartId iStateId: iStateId iPropId: iPro
 			[in]int iPropId,
 			[out]PROPERTYORIGIN* pOrigin);"
 
-	<stdcall: hresult GetThemePropertyOrigin handle sdword sdword sdword sdword*>
+	<stdcall: hresult GetThemePropertyOrigin handle int32 int32 int32 int32*>
 	^self invalidCall: _failureCode!
 
 getThemeRect: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId pRect: pRect
@@ -877,7 +877,7 @@ getThemeRect: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId pRect:
 			[in]int iPropId,
 			[out]RECTL* pRect);"
 
-	<stdcall: hresult GetThemeRect handle sdword sdword sdword RECTL*>
+	<stdcall: hresult GetThemeRect handle int32 int32 int32 RECTL*>
 	^self invalidCall: _failureCode!
 
 getThemeString: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId pszBuff: pszBuff cchMaxBuffChars: cchMaxBuffChars
@@ -892,7 +892,7 @@ getThemeString: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId pszB
 			[out]LPWSTR pszBuff,
 			[in]int cchMaxBuffChars);"
 
-	<stdcall: hresult GetThemeString handle sdword sdword sdword lpwstr sdword>
+	<stdcall: hresult GetThemeString handle int32 int32 int32 lpwstr int32>
 	^self invalidCall: _failureCode!
 
 getThemeSysBool: htheme iBoolId: iBoolId
@@ -903,7 +903,7 @@ getThemeSysBool: htheme iBoolId: iBoolId
 			[in]HTHEME HTHEME,
 			[in]int iBoolId);"
 
-	<stdcall: bool GetThemeSysBool handle sdword>
+	<stdcall: bool GetThemeSysBool handle int32>
 	^self invalidCall: _failureCode!
 
 getThemeSysColor: htheme iColorId: iColorId
@@ -914,7 +914,7 @@ getThemeSysColor: htheme iColorId: iColorId
 			[in]HTHEME HTHEME,
 			[in]int iColorId);"
 
-	<stdcall: dword GetThemeSysColor handle sdword>
+	<stdcall: uint32 GetThemeSysColor handle int32>
 	^self invalidCall: _failureCode!
 
 getThemeSysColorBrush: htheme iColorId: iColorId
@@ -925,7 +925,7 @@ getThemeSysColorBrush: htheme iColorId: iColorId
 			[in]HTHEME HTHEME,
 			[in]int iColorId);"
 
-	<stdcall: handle GetThemeSysColorBrush handle sdword>
+	<stdcall: handle GetThemeSysColorBrush handle int32>
 	^self invalidCall: _failureCode!
 
 getThemeSysFont: htheme iFontId: iFontId plf: plf
@@ -937,7 +937,7 @@ getThemeSysFont: htheme iFontId: iFontId plf: plf
 			[in]int iFontId,
 			[out]LOGFONTW* plf);"
 
-	<stdcall: hresult GetThemeSysFont handle sdword LOGFONTW*>
+	<stdcall: hresult GetThemeSysFont handle int32 LOGFONTW*>
 	^self invalidCall: _failureCode!
 
 getThemeSysInt: htheme iIntId: iIntId piValue: piValue
@@ -949,7 +949,7 @@ getThemeSysInt: htheme iIntId: iIntId piValue: piValue
 			[in]int iIntId,
 			[out]int* piValue);"
 
-	<stdcall: hresult GetThemeSysInt handle sdword sdword*>
+	<stdcall: hresult GetThemeSysInt handle int32 int32*>
 	^self invalidCall: _failureCode!
 
 getThemeSysSize: htheme iSizeId: iSizeId
@@ -960,7 +960,7 @@ getThemeSysSize: htheme iSizeId: iSizeId
 			[in]HTHEME HTHEME,
 			[in]int iSizeId);"
 
-	<stdcall: sdword GetThemeSysSize handle sdword>
+	<stdcall: int32 GetThemeSysSize handle int32>
 	^self invalidCall: _failureCode!
 
 getThemeSysString: htheme iStringId: iStringId pszStringBuff: pszStringBuff cchMaxStringChars: cchMaxStringChars
@@ -973,7 +973,7 @@ getThemeSysString: htheme iStringId: iStringId pszStringBuff: pszStringBuff cchM
 			[out]LPWSTR pszStringBuff,
 			[in]int cchMaxStringChars);"
 
-	<stdcall: hresult GetThemeSysString handle sdword lpwstr sdword>
+	<stdcall: hresult GetThemeSysString handle int32 lpwstr int32>
 	^self invalidCall: _failureCode!
 
 getThemeTextExtent: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pszText: pszText iCharCount: iCharCount dwTextFlags: dwTextFlags pBoundingRect: pBoundingRect pExtentRect: pExtentRect
@@ -991,7 +991,7 @@ getThemeTextExtent: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pszText:
 			[in]RECTL* pBoundingRect,
 			[out]RECTL* pExtentRect);"
 
-	<stdcall: hresult GetThemeTextExtent handle handle sdword sdword lpwstr sdword dword RECTL* RECTL*>
+	<stdcall: hresult GetThemeTextExtent handle handle int32 int32 lpwstr int32 uint32 RECTL* RECTL*>
 	^self invalidCall: _failureCode!
 
 getThemeTextMetrics: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pTM: pTM
@@ -1005,7 +1005,7 @@ getThemeTextMetrics: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pTM: pT
 			[in]int iStateId,
 			[out]TEXTMETRICW* pTM);"
 
-	<stdcall: hresult GetThemeTextMetrics handle handle sdword sdword TEXTMETRICW*>
+	<stdcall: hresult GetThemeTextMetrics handle handle int32 int32 TEXTMETRICW*>
 	^self invalidCall: _failureCode!
 
 getWindowTheme: hwnd
@@ -1033,7 +1033,7 @@ hitTestThemeBackground: htheme hdc: hdc iPartId: iPartId iStateId: iStateId dwOp
 			[in]POINTL ptTest,
 			[out]WORD* pwHitTestCode);"
 
-	<stdcall: hresult HitTestThemeBackground handle handle sdword sdword dword RECTL* handle POINTL word*>
+	<stdcall: hresult HitTestThemeBackground handle handle int32 int32 uint32 RECTL* handle POINTL uint16*>
 	^self invalidCall: _failureCode!
 
 isAppThemed
@@ -1072,7 +1072,7 @@ isThemeBackgroundPartiallyTransparent: htheme iPartId: iPartId iStateId: iStateI
 			[in]int iPartId,
 			[in]int iStateId);"
 
-	<stdcall: bool IsThemeBackgroundPartiallyTransparent handle sdword sdword>
+	<stdcall: bool IsThemeBackgroundPartiallyTransparent handle int32 int32>
 	^self invalidCall: _failureCode!
 
 isThemeDialogTextureEnabled: hwnd
@@ -1094,7 +1094,7 @@ isThemePartDefined: htheme iPartId: iPartId iStateId: iStateId
 			[in]int iPartId,
 			[in]int iStateId);"
 
-	<stdcall: bool IsThemePartDefined handle sdword sdword>
+	<stdcall: bool IsThemePartDefined handle int32 int32>
 	^self invalidCall: _failureCode!
 
 onExit
@@ -1125,7 +1125,7 @@ setThemeAppProperties: dwFlags
 		void __stdcall SetThemeAppProperties(
 			[in]DWORD dwFlags);"
 
-	<stdcall: void SetThemeAppProperties dword>
+	<stdcall: void SetThemeAppProperties uint32>
 	^self invalidCall: _failureCode!
 
 setWindowTheme: hwnd pszSubAppName: pszSubAppName pszSubIdList: pszSubIdList

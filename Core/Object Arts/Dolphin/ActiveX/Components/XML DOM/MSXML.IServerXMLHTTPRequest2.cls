@@ -65,7 +65,7 @@ SetProxy: proxySetting varProxyServer: varProxyServer varBypassList: varBypassLi
 			[in, optional]VARIANT varProxyServer,
 			[in, optional]VARIANT varBypassList);"
 
-	<virtual stdcall: hresult 26 sdword variant variant>
+	<virtual stdcall: hresult 26 int32 variant variant>
 	^self invalidCall: _failureCode!
 
 SetProxyCredentials: bstrUserName bstrPassword: bstrPassword

@@ -32,7 +32,7 @@ CompareIDs: compareIDs pidl1: pidl1 pidl2: pidl2
 	N.B. This method has been automatically generated from 
 	the vtable defined in IShellFolder>>defineFunctions. DO NOT MODIFY!!"
 
-	<virtual stdcall: hresult 8 dword lpvoid lpvoid>
+	<virtual stdcall: hresult 8 uint32 lpvoid lpvoid>
 	^self invalidCall: _failureCode!
 
 CreateViewObject: createViewObject riid: riid ppvOut: ppvOut
@@ -48,7 +48,7 @@ EnumObjects: enumObjects grfFlags: grfFlags ppenumIDList: ppenumIDList
 	N.B. This method has been automatically generated from 
 	the vtable defined in IShellFolder>>defineFunctions. DO NOT MODIFY!!"
 
-	<virtual stdcall: hresult 5 handle dword lppvoid>
+	<virtual stdcall: hresult 5 handle uint32 lppvoid>
 	^self invalidCall: _failureCode!
 
 GetAttributesOf: getAttributesOf apidl: apidl rgfInOut: rgfInOut
@@ -56,7 +56,7 @@ GetAttributesOf: getAttributesOf apidl: apidl rgfInOut: rgfInOut
 	N.B. This method has been automatically generated from 
 	the vtable defined in IShellFolder>>defineFunctions. DO NOT MODIFY!!"
 
-	<virtual stdcall: hresult 10 dword lppvoid dword*>
+	<virtual stdcall: hresult 10 uint32 lppvoid uint32*>
 	^self invalidCall: _failureCode!
 
 GetDisplayNameOf: getDisplayNameOf uFlags: uFlags lpName: lpName
@@ -64,7 +64,7 @@ GetDisplayNameOf: getDisplayNameOf uFlags: uFlags lpName: lpName
 	N.B. This method has been automatically generated from 
 	the vtable defined in IShellFolder>>defineFunctions. DO NOT MODIFY!!"
 
-	<virtual stdcall: hresult 12 lpvoid dword lpvoid>
+	<virtual stdcall: hresult 12 lpvoid uint32 lpvoid>
 	^self invalidCall: _failureCode!
 
 GetUIObjectOf: getUIObjectOf cidl: cidl apidl: apidl riid: riid prgfInOut: prgfInOut ppvOut: ppvOut
@@ -72,7 +72,7 @@ GetUIObjectOf: getUIObjectOf cidl: cidl apidl: apidl riid: riid prgfInOut: prgfI
 	N.B. This method has been automatically generated from 
 	the vtable defined in IShellFolder>>defineFunctions. DO NOT MODIFY!!"
 
-	<virtual stdcall: hresult 11 handle dword lppvoid REFGUID dword* lppvoid>
+	<virtual stdcall: hresult 11 handle uint32 lppvoid REFGUID uint32* lppvoid>
 	^self invalidCall: _failureCode!
 
 idlFromPath: path 
@@ -85,7 +85,7 @@ ParseDisplayName: parseDisplayName pbc: pbc lpwszDisplayName: lpwszDisplayName p
 	N.B. This method has been automatically generated from 
 	the vtable defined in IShellFolder>>defineFunctions. DO NOT MODIFY!!"
 
-	<virtual stdcall: hresult 4 handle lpvoid lpwstr dword* lppvoid dword*>
+	<virtual stdcall: hresult 4 handle lpvoid lpwstr uint32* lppvoid uint32*>
 	^self invalidCall: _failureCode!
 
 pidlFromPath: path
@@ -107,7 +107,7 @@ SetNameOf: setNameOf pidl: pidl lpszName: lpszName uFlags: uFlags ppidlOut: ppid
 	N.B. This method has been automatically generated from 
 	the vtable defined in IShellFolder>>defineFunctions. DO NOT MODIFY!!"
 
-	<virtual stdcall: hresult 13 handle lpvoid lpwstr dword lppvoid>
+	<virtual stdcall: hresult 13 handle lpvoid lpwstr uint32 lppvoid>
 	^self invalidCall: _failureCode! !
 !OS.IShellFolder categoriesForMethods!
 BindToObject:pbc:riid:ppvOut:!COM Interfaces-IShellFolder!public! !

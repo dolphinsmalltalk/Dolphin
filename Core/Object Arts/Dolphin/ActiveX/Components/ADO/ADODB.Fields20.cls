@@ -59,7 +59,7 @@ _Append: name Type: type DefinedSize: definedSize Attrib: attrib
 			[in, defaultvalue(0)]long DefinedSize,
 			[in, defaultvalue(-1)]FieldAttributeEnum Attrib);"
 
-	<virtual stdcall: hresult 12 bstr sdword sdword sdword>
+	<virtual stdcall: hresult 12 bstr int32 int32 int32>
 	^self invalidCall: _failureCode!
 
 delete: index

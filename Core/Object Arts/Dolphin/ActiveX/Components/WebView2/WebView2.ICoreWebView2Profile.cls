@@ -92,7 +92,7 @@ get_IsInPrivateModeEnabled: value
 		HRESULT __stdcall IsInPrivateModeEnabled(
 			[out, retval]long* value);"
 
-	<virtual stdcall: hresult 5 sdword*>
+	<virtual stdcall: hresult 5 int32*>
 	^self invalidCall: _failureCode!
 
 get_PreferredColorScheme: value
@@ -101,7 +101,7 @@ get_PreferredColorScheme: value
 		HRESULT __stdcall PreferredColorScheme(
 			[out, retval]COREWEBVIEW2_PREFERRED_COLOR_SCHEME* value);"
 
-	<virtual stdcall: hresult 9 sdword*>
+	<virtual stdcall: hresult 9 int32*>
 	^self invalidCall: _failureCode!
 
 get_ProfileName: value
@@ -189,7 +189,7 @@ put_PreferredColorScheme: value
 		HRESULT __stdcall PreferredColorScheme(
 			[in]COREWEBVIEW2_PREFERRED_COLOR_SCHEME value);"
 
-	<virtual stdcall: hresult 10 sdword>
+	<virtual stdcall: hresult 10 int32>
 	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2Profile categoriesForMethods!
 ClearBrowsingData:handler:!COM Interfaces-ICoreWebView2Profile2!private! !

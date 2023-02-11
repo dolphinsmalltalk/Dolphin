@@ -48,7 +48,7 @@ Add_DownloadStarting: eventHandler token: token
 			[in]ICoreWebView2DownloadStartingEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 76 ICoreWebView2DownloadStartingEventHandler* sqword*>
+	<virtual stdcall: hresult 76 ICoreWebView2DownloadStartingEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 Add_FrameCreated: eventHandler token: token
@@ -62,7 +62,7 @@ Remove_DownloadStarting: token
 		HRESULT __stdcall remove_DownloadStarting(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 77 sqword>
+	<virtual stdcall: hresult 77 int64>
 	^self invalidCall: _failureCode!
 
 Remove_FrameCreated: token
@@ -71,7 +71,7 @@ Remove_FrameCreated: token
 		HRESULT __stdcall remove_FrameCreated(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 75 sqword>
+	<virtual stdcall: hresult 75 int64>
 	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2_4 categoriesForMethods!
 Add_DownloadStarting:token:!**auto generated**!COM Interfaces-ICoreWebView2_4!private! !

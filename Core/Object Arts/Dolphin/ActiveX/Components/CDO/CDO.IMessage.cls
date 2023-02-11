@@ -89,7 +89,7 @@ AddRelatedBodyPart: url Reference: reference ReferenceType: referenceType UserNa
 			[in, optional]BSTR Password,
 			[out, retval]IBodyPart** ppBody);"
 
-	<virtual stdcall: hresult 54 bstr bstr sdword bstr bstr IBodyPart**>
+	<virtual stdcall: hresult 54 bstr bstr int32 bstr bstr IBodyPart**>
 	^self invalidCall: _failureCode!
 
 attachments
@@ -190,7 +190,7 @@ CreateMHTMLBody: url Flags: flags UserName: userName Password: password
 			[in, optional]BSTR UserName,
 			[in, optional]BSTR Password);"
 
-	<virtual stdcall: hresult 56 bstr sdword bstr bstr>
+	<virtual stdcall: hresult 56 bstr int32 bstr bstr>
 	^self invalidCall: _failureCode!
 
 dataSource
@@ -361,7 +361,7 @@ get_DSNOptions: pDSNOptions
 		HRESULT __stdcall DSNOptions(
 			[out, retval]CdoDSNOptions* pDSNOptions);"
 
-	<virtual stdcall: hresult 27 sdword*>
+	<virtual stdcall: hresult 27 int32*>
 	^self invalidCall: _failureCode!
 
 get_EnvelopeFields: varEnvelopeFields
@@ -758,7 +758,7 @@ put_DSNOptions: pDSNOptions
 		HRESULT __stdcall DSNOptions(
 			[in]CdoDSNOptions pDSNOptions);"
 
-	<virtual stdcall: hresult 28 sdword>
+	<virtual stdcall: hresult 28 int32>
 	^self invalidCall: _failureCode!
 
 put_FollowUpTo: pFollowUpTo

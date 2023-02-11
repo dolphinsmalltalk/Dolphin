@@ -74,7 +74,7 @@ Add_CustomItemSelected: eventHandler token: token
 			[in]ICoreWebView2CustomItemSelectedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 15 ICoreWebView2CustomItemSelectedEventHandler* sqword*>
+	<virtual stdcall: hresult 15 ICoreWebView2CustomItemSelectedEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 children
@@ -108,7 +108,7 @@ get_CommandId: value
 		HRESULT __stdcall CommandId(
 			[out, retval]int* value);"
 
-	<virtual stdcall: hresult 6 sdword*>
+	<virtual stdcall: hresult 6 int32*>
 	^self invalidCall: _failureCode!
 
 get_Icon: value
@@ -126,7 +126,7 @@ get_IsChecked: value
 		HRESULT __stdcall IsChecked(
 			[out, retval]long* value);"
 
-	<virtual stdcall: hresult 13 sdword*>
+	<virtual stdcall: hresult 13 int32*>
 	^self invalidCall: _failureCode!
 
 get_IsEnabled: value
@@ -135,7 +135,7 @@ get_IsEnabled: value
 		HRESULT __stdcall IsEnabled(
 			[out, retval]long* value);"
 
-	<virtual stdcall: hresult 11 sdword*>
+	<virtual stdcall: hresult 11 int32*>
 	^self invalidCall: _failureCode!
 
 get_Kind: value
@@ -144,7 +144,7 @@ get_Kind: value
 		HRESULT __stdcall Kind(
 			[out, retval]COREWEBVIEW2_CONTEXT_MENU_ITEM_KIND* value);"
 
-	<virtual stdcall: hresult 9 sdword*>
+	<virtual stdcall: hresult 9 int32*>
 	^self invalidCall: _failureCode!
 
 get_Label: value
@@ -263,7 +263,7 @@ put_IsChecked: value
 		HRESULT __stdcall IsChecked(
 			[in]long value);"
 
-	<virtual stdcall: hresult 12 sdword>
+	<virtual stdcall: hresult 12 int32>
 	^self invalidCall: _failureCode!
 
 put_IsEnabled: value
@@ -273,7 +273,7 @@ put_IsEnabled: value
 		HRESULT __stdcall IsEnabled(
 			[in]long value);"
 
-	<virtual stdcall: hresult 10 sdword>
+	<virtual stdcall: hresult 10 int32>
 	^self invalidCall: _failureCode!
 
 Remove_CustomItemSelected: token
@@ -282,7 +282,7 @@ Remove_CustomItemSelected: token
 		HRESULT __stdcall remove_CustomItemSelected(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 16 sqword>
+	<virtual stdcall: hresult 16 int64>
 	^self invalidCall: _failureCode!
 
 shortcutKeyDescription

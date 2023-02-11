@@ -129,7 +129,7 @@ GetIndexFromName: pwchUri cchUri: cchUri pwchLocalName: pwchLocalName cchLocalNa
 			[in]int cchLocalName,
 			[out, retval]int* pnIndex);"
 
-	<virtual stdcall: hresult 9 word* sdword word* sdword sdword*>
+	<virtual stdcall: hresult 9 uint16* int32 uint16* int32 int32*>
 	^self invalidCall: _failureCode!
 
 getIndexFromQName: pwchQName cchQName: cchQName
@@ -151,7 +151,7 @@ GetIndexFromQName: pwchQName cchQName: cchQName pnIndex: pnIndex
 			[in]int cchQName,
 			[out, retval]int* pnIndex);"
 
-	<virtual stdcall: hresult 10 word* sdword sdword*>
+	<virtual stdcall: hresult 10 uint16* int32 int32*>
 	^self invalidCall: _failureCode!
 
 getLength
@@ -168,7 +168,7 @@ GetLength: pnLength
 		HRESULT __stdcall getLength(
 			[out, retval]int* pnLength);"
 
-	<virtual stdcall: hresult 4 sdword*>
+	<virtual stdcall: hresult 4 int32*>
 	^self invalidCall: _failureCode!
 
 getLocalName: nIndex
@@ -190,7 +190,7 @@ GetLocalName: nIndex ppwchLocalName: ppwchLocalName pcchLocalName: pcchLocalName
 			[out]unsigned short** ppwchLocalName,
 			[out]int* pcchLocalName);"
 
-	<virtual stdcall: hresult 6 sdword word** sdword*>
+	<virtual stdcall: hresult 6 int32 uint16** int32*>
 	^self invalidCall: _failureCode!
 
 getName: nIndex
@@ -225,7 +225,7 @@ GetName: nIndex ppwchUri: ppwchUri pcchUri: pcchUri ppwchLocalName: ppwchLocalNa
 			[out]unsigned short** ppwchQName,
 			[out]int* pcchQName);"
 
-	<virtual stdcall: hresult 8 sdword word** sdword* word** sdword* word** sdword*>
+	<virtual stdcall: hresult 8 int32 uint16** int32* uint16** int32* uint16** int32*>
 	^self invalidCall: _failureCode!
 
 getQName: nIndex
@@ -247,7 +247,7 @@ GetQName: nIndex ppwchQName: ppwchQName pcchQName: pcchQName
 			[out]unsigned short** ppwchQName,
 			[out]int* pcchQName);"
 
-	<virtual stdcall: hresult 7 sdword word** sdword*>
+	<virtual stdcall: hresult 7 int32 uint16** int32*>
 	^self invalidCall: _failureCode!
 
 getType: nIndex
@@ -269,7 +269,7 @@ GetType: nIndex ppwchType: ppwchType pcchType: pcchType
 			[out]unsigned short** ppwchType,
 			[out]int* pcchType);"
 
-	<virtual stdcall: hresult 11 sdword word** sdword*>
+	<virtual stdcall: hresult 11 int32 uint16** int32*>
 	^self invalidCall: _failureCode!
 
 getTypeFromName: pwchUri cchUri: cchUri pwchLocalName: pwchLocalName cchLocalName: cchLocalName
@@ -297,7 +297,7 @@ GetTypeFromName: pwchUri cchUri: cchUri pwchLocalName: pwchLocalName cchLocalNam
 			[out]unsigned short** ppwchType,
 			[out]int* pcchType);"
 
-	<virtual stdcall: hresult 12 word* sdword word* sdword word** sdword*>
+	<virtual stdcall: hresult 12 uint16* int32 uint16* int32 uint16** int32*>
 	^self invalidCall: _failureCode!
 
 getTypeFromQName: pwchQName cchQName: cchQName
@@ -321,7 +321,7 @@ GetTypeFromQName: pwchQName cchQName: cchQName ppwchType: ppwchType pcchType: pc
 			[out]unsigned short** ppwchType,
 			[out]int* pcchType);"
 
-	<virtual stdcall: hresult 13 word* sdword word** sdword*>
+	<virtual stdcall: hresult 13 uint16* int32 uint16** int32*>
 	^self invalidCall: _failureCode!
 
 getURI: nIndex
@@ -343,7 +343,7 @@ GetURI: nIndex ppwchUri: ppwchUri pcchUri: pcchUri
 			[out]unsigned short** ppwchUri,
 			[out]int* pcchUri);"
 
-	<virtual stdcall: hresult 5 sdword word** sdword*>
+	<virtual stdcall: hresult 5 int32 uint16** int32*>
 	^self invalidCall: _failureCode!
 
 getValue: nIndex
@@ -365,7 +365,7 @@ GetValue: nIndex ppwchValue: ppwchValue pcchValue: pcchValue
 			[out]unsigned short** ppwchValue,
 			[out]int* pcchValue);"
 
-	<virtual stdcall: hresult 14 sdword word** sdword*>
+	<virtual stdcall: hresult 14 int32 uint16** int32*>
 	^self invalidCall: _failureCode!
 
 getValueFromName: pwchUri cchUri: cchUri pwchLocalName: pwchLocalName cchLocalName: cchLocalName
@@ -393,7 +393,7 @@ GetValueFromName: pwchUri cchUri: cchUri pwchLocalName: pwchLocalName cchLocalNa
 			[out]unsigned short** ppwchValue,
 			[out]int* pcchValue);"
 
-	<virtual stdcall: hresult 15 word* sdword word* sdword word** sdword*>
+	<virtual stdcall: hresult 15 uint16* int32 uint16* int32 uint16** int32*>
 	^self invalidCall: _failureCode!
 
 getValueFromQName: pwchQName cchQName: cchQName
@@ -417,7 +417,7 @@ GetValueFromQName: pwchQName cchQName: cchQName ppwchValue: ppwchValue pcchValue
 			[out]unsigned short** ppwchValue,
 			[out]int* pcchValue);"
 
-	<virtual stdcall: hresult 16 word* sdword word** sdword*>
+	<virtual stdcall: hresult 16 uint16* int32 uint16** int32*>
 	^self invalidCall: _failureCode! !
 !MSXML.ISAXAttributes categoriesForMethods!
 getIndexFromName:cchUri:pwchLocalName:cchLocalName:!**auto generated**!methods!public! !

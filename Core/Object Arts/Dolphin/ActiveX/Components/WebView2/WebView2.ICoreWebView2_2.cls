@@ -57,7 +57,7 @@ Add_DOMContentLoaded: eventHandler token: token
 			[in]ICoreWebView2DOMContentLoadedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 65 ICoreWebView2DOMContentLoadedEventHandler* sqword*>
+	<virtual stdcall: hresult 65 ICoreWebView2DOMContentLoadedEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 Add_WebResourceResponseReceived: eventHandler token: token
@@ -67,7 +67,7 @@ Add_WebResourceResponseReceived: eventHandler token: token
 			[in]ICoreWebView2WebResourceResponseReceivedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 62 ICoreWebView2WebResourceResponseReceivedEventHandler* sqword*>
+	<virtual stdcall: hresult 62 ICoreWebView2WebResourceResponseReceivedEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 get_CookieManager: cookieManager
@@ -103,7 +103,7 @@ Remove_DOMContentLoaded: token
 		HRESULT __stdcall remove_DOMContentLoaded(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 66 sqword>
+	<virtual stdcall: hresult 66 int64>
 	^self invalidCall: _failureCode!
 
 Remove_WebResourceResponseReceived: token
@@ -112,7 +112,7 @@ Remove_WebResourceResponseReceived: token
 		HRESULT __stdcall remove_WebResourceResponseReceived(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 63 sqword>
+	<virtual stdcall: hresult 63 int64>
 	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2_2 categoriesForMethods!
 Add_DOMContentLoaded:token:!**auto generated**!COM Interfaces-ICoreWebView2_2!private! !

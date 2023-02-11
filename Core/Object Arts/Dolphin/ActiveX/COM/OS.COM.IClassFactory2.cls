@@ -58,7 +58,7 @@ RequestLicKey: dwReserved pBstrKey: pBstrKey
 
 	"
 
-	<virtual stdcall: hresult 7 dword bstr*>
+	<virtual stdcall: hresult 7 uint32 bstr*>
 	^self invalidCall: _failureCode! !
 !OS.COM.IClassFactory2 categoriesForMethods!
 CreateInstanceLic:pUnkReserved:riid:bstrKey:ppvObject:!**auto generated**!COM Interfaces-OCIDL.IClassFactory2!public! !

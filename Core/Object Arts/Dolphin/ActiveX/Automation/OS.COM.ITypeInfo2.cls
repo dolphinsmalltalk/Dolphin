@@ -54,7 +54,7 @@ GetAllFuncCustData: index pCustData: pCustData
 			[out] CUSTDATA* pCustData);
 	"
 
-	<virtual stdcall: hresult 34 dword CUSTDATA*>
+	<virtual stdcall: hresult 34 uint32 CUSTDATA*>
 	^self invalidCall: _failureCode!
 
 getAllImplTypeCustData: index
@@ -73,7 +73,7 @@ GetAllImplTypeCustData: index pCustData: pCustData
 			[out] CUSTDATA* pCustData);
 	"
 
-	<virtual stdcall: hresult 37 dword CUSTDATA*>
+	<virtual stdcall: hresult 37 uint32 CUSTDATA*>
 	^self invalidCall: _failureCode!
 
 getAllParamCustData: indexFunc indexParam: indexParam
@@ -96,7 +96,7 @@ GetAllParamCustData: indexFunc indexParam: indexParam pCustData: pCustData
 			[out] CUSTDATA* pCustData);
 	"
 
-	<virtual stdcall: hresult 35 dword dword CUSTDATA*>
+	<virtual stdcall: hresult 35 uint32 uint32 CUSTDATA*>
 	^self invalidCall: _failureCode!
 
 getAllVarCustData: index
@@ -115,7 +115,7 @@ GetAllVarCustData: index pCustData: pCustData
 			[out] CUSTDATA* pCustData);
 	"
 
-	<virtual stdcall: hresult 36 dword CUSTDATA*>
+	<virtual stdcall: hresult 36 uint32 CUSTDATA*>
 	^self invalidCall: _failureCode!
 
 getCustData: guid
@@ -164,7 +164,7 @@ GetDocumentation2: memid lcid: lcid pbstrHelpString: pbstrHelpString pdwHelpStri
 			[out] BSTR* pbstrHelpStringDll);
 	"
 
-	<virtual stdcall: hresult 32 sdword dword bstr* dword* bstr*>
+	<virtual stdcall: hresult 32 int32 uint32 bstr* uint32* bstr*>
 	^self invalidCall: _failureCode!
 
 getFuncCustData: index guid: guid
@@ -187,7 +187,7 @@ GetFuncCustData: index guid: guid pVarVal: pVarVal
 			[out] VARIANT* pVarVal);
 	"
 
-	<virtual stdcall: hresult 28 dword guid* variant*>
+	<virtual stdcall: hresult 28 uint32 guid* variant*>
 	^self invalidCall: _failureCode!
 
 getFuncIndexOfMemId: memid invkind: invkind 
@@ -208,7 +208,7 @@ GetFuncIndexOfMemId: memid invkind: invkind pFuncIndex: pFuncIndex
 			[out] unsigned int* pFuncIndex);
 	"
 
-	<virtual stdcall: hresult 25 sdword sdword dword*>
+	<virtual stdcall: hresult 25 int32 int32 uint32*>
 	^self invalidCall: _failureCode!
 
 getImplTypeCustData: index guid: guid
@@ -231,7 +231,7 @@ GetImplTypeCustData: index guid: guid pVarVal: pVarVal
 			[out] VARIANT* pVarVal);
 	"
 
-	<virtual stdcall: hresult 31 dword guid* variant*>
+	<virtual stdcall: hresult 31 uint32 guid* variant*>
 	^self invalidCall: _failureCode!
 
 getParamCustData: indexFunc indexParam: indexParam guid: guid
@@ -256,7 +256,7 @@ GetParamCustData: indexFunc indexParam: indexParam guid: guid pVarVal: pVarVal
 			[out] VARIANT* pVarVal);
 	"
 
-	<virtual stdcall: hresult 29 dword dword guid* variant*>
+	<virtual stdcall: hresult 29 uint32 uint32 guid* variant*>
 	^self invalidCall: _failureCode!
 
 GetTypeFlags: pTypeFlags
@@ -266,7 +266,7 @@ GetTypeFlags: pTypeFlags
 			[out] unsigned long* pTypeFlags);
 	"
 
-	<virtual stdcall: hresult 24 dword*>
+	<virtual stdcall: hresult 24 uint32*>
 	^self invalidCall: _failureCode!
 
 GetTypeKind: pTypeKind
@@ -276,7 +276,7 @@ GetTypeKind: pTypeKind
 			[out] TYPEKIND* pTypeKind);
 	"
 
-	<virtual stdcall: hresult 23 sdword*>
+	<virtual stdcall: hresult 23 int32*>
 	^self invalidCall: _failureCode!
 
 getVarCustData: index guid: guid
@@ -299,7 +299,7 @@ GetVarCustData: index guid: guid pVarVal: pVarVal
 			[out] VARIANT* pVarVal);
 	"
 
-	<virtual stdcall: hresult 30 dword guid* variant*>
+	<virtual stdcall: hresult 30 uint32 guid* variant*>
 	^self invalidCall: _failureCode!
 
 getVarIndexOfMemId: memid 
@@ -319,7 +319,7 @@ GetVarIndexOfMemId: memid pVarIndex: pVarIndex
 			[out] unsigned int* pVarIndex);
 	"
 
-	<virtual stdcall: hresult 26 sdword dword*>
+	<virtual stdcall: hresult 26 int32 uint32*>
 	^self invalidCall: _failureCode!
 
 libraryAndIndex

@@ -20,7 +20,7 @@ pathCommonPrefix: pszFile1 pszFile2: pszFile2 achPath: achPath
 			LPCWSTR pszFile2,
 			LPCWSTR achPath);"
 
-	<stdcall: sdword PathCommonPrefixW lpwstr lpwstr lpwstr>
+	<stdcall: int32 PathCommonPrefixW lpwstr lpwstr lpwstr>
 	^self invalidCall: _failureCode!
 
 pathCompactPath: hdc pszPath: pszPath dx: dx
@@ -32,7 +32,7 @@ pathCompactPath: hdc pszPath: pszPath dx: dx
 			LPWSTR pszPath,
 			UINT dx);"
 
-	<stdcall: bool PathCompactPathW handle lpwstr dword>
+	<stdcall: bool PathCompactPathW handle lpwstr uint32>
 	^self invalidCall: _failureCode!
 
 pathCompactPathEx: pszOut pszSrc: pszSrc cchMax: cchMax dwFlags: dwFlags
@@ -45,7 +45,7 @@ pathCompactPathEx: pszOut pszSrc: pszSrc cchMax: cchMax dwFlags: dwFlags
 			UINT cchMax,
 			DWORD dwFlags);"
 
-	<stdcall: bool PathCompactPathExW lpwstr lpwstr dword dword>
+	<stdcall: bool PathCompactPathExW lpwstr lpwstr uint32 uint32>
 	^self invalidCall: _failureCode!
 
 pathFindNextComponent: pszPath
@@ -85,7 +85,7 @@ pathParseIconLocation: pszIconFile
 		int __stdcall PathParseIconLocation(
 			LPWSTR pszIconFile);"
 
-	<stdcall: sdword PathParseIconLocationW lpwstr>
+	<stdcall: int32 PathParseIconLocationW lpwstr>
 	^self invalidCall: _failureCode!
 
 pathRelativePathTo: pszPath pszFrom: pszFrom dwAttrFrom: dwAttrFrom pszTo: pszTo dwAttrTo: dwAttrTo
@@ -99,7 +99,7 @@ pathRelativePathTo: pszPath pszFrom: pszFrom dwAttrFrom: dwAttrFrom pszTo: pszTo
 			LPCWSTR pszTo,
 			DWORD dwAttrTo);"
 
-	<stdcall: bool PathRelativePathToW lpwstr lpwstr dword lpwstr dword>
+	<stdcall: bool PathRelativePathToW lpwstr lpwstr uint32 lpwstr uint32>
 	^self invalidCall: _failureCode! !
 !OS.ShlwapiLibrary categoriesForMethods!
 pathCommonPrefix:pszFile2:achPath:!public!win32 functions-path! !

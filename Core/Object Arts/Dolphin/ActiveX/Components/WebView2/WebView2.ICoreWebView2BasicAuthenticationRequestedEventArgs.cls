@@ -76,7 +76,7 @@ get_Cancel: cancel
 		HRESULT __stdcall Cancel(
 			[out, retval]long* Cancel);"
 
-	<virtual stdcall: hresult 7 sdword*>
+	<virtual stdcall: hresult 7 int32*>
 	^self invalidCall: _failureCode!
 
 get_Challenge: challenge
@@ -133,7 +133,7 @@ put_Cancel: cancel
 		HRESULT __stdcall Cancel(
 			[in]long Cancel);"
 
-	<virtual stdcall: hresult 8 sdword>
+	<virtual stdcall: hresult 8 int32>
 	^self invalidCall: _failureCode!
 
 response

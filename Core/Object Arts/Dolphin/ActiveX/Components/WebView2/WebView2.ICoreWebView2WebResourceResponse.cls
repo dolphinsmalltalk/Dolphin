@@ -94,7 +94,7 @@ get_StatusCode: statusCode
 		HRESULT __stdcall StatusCode(
 			[out, retval]int* StatusCode);"
 
-	<virtual stdcall: hresult 7 sdword*>
+	<virtual stdcall: hresult 7 int32*>
 	^self invalidCall: _failureCode!
 
 headers
@@ -135,7 +135,7 @@ put_StatusCode: statusCode
 		HRESULT __stdcall StatusCode(
 			[in]int StatusCode);"
 
-	<virtual stdcall: hresult 8 sdword>
+	<virtual stdcall: hresult 8 int32>
 	^self invalidCall: _failureCode!
 
 reasonPhrase

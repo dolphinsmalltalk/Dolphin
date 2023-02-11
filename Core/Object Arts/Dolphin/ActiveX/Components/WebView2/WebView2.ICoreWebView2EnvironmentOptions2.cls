@@ -61,7 +61,7 @@ get_ExclusiveUserDataFolderAccess: value
 		HRESULT __stdcall ExclusiveUserDataFolderAccess(
 			[out, retval]long* value);"
 
-	<virtual stdcall: hresult 4 sdword*>
+	<virtual stdcall: hresult 4 int32*>
 	^self invalidCall: _failureCode!
 
 put_ExclusiveUserDataFolderAccess: value
@@ -71,7 +71,7 @@ put_ExclusiveUserDataFolderAccess: value
 		HRESULT __stdcall ExclusiveUserDataFolderAccess(
 			[in]long value);"
 
-	<virtual stdcall: hresult 5 sdword>
+	<virtual stdcall: hresult 5 int32>
 	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2EnvironmentOptions2 categoriesForMethods!
 exclusiveUserDataFolderAccess!properties!public! !

@@ -41,7 +41,7 @@ Add_BrowserProcessExited: eventHandler token: token
 			[in]ICoreWebView2BrowserProcessExitedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 13 ICoreWebView2BrowserProcessExitedEventHandler* sqword*>
+	<virtual stdcall: hresult 13 ICoreWebView2BrowserProcessExitedEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 Remove_BrowserProcessExited: token
@@ -50,7 +50,7 @@ Remove_BrowserProcessExited: token
 		HRESULT __stdcall remove_BrowserProcessExited(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 14 sqword>
+	<virtual stdcall: hresult 14 int64>
 	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2Environment5 categoriesForMethods!
 Add_BrowserProcessExited:token:!**auto generated**!COM Interfaces-ICoreWebView2Environment5!private! !

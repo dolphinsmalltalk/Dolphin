@@ -50,7 +50,7 @@ AddRef
 
 		unsigned long __stdcall AddRef();"
 
-	<virtual stdcall: dword 2>
+	<virtual stdcall: uint32 2>
 	^self invalidCall: _failureCode!
 
 asObject
@@ -73,7 +73,7 @@ QueryInterface: riid ppvObject: ppvObject
 	"Implementation Note: Return integer hresult value rather than have exception thrown, as
 	E_NOINTERFACE is not really an exceptional condition at all."
 
-	<virtual stdcall: sdword 1 guid* void**>
+	<virtual stdcall: int32 1 guid* void**>
 	^self invalidCall: _failureCode!
 
 Release
@@ -81,7 +81,7 @@ Release
 
 		unsigned long __stdcall Release();"
 
-	<virtual stdcall: dword 3>
+	<virtual stdcall: uint32 3>
 	^self invalidCall: _failureCode! !
 !OS.COM.IUnknown categoriesForMethods!
 addRef!methods!public! !

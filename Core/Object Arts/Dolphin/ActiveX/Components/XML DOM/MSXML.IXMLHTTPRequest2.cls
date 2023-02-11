@@ -121,7 +121,7 @@ GetCookie: pwszUrl pwszName: pwszName dwFlags: dwFlags pcCookies: pcCookies ppCo
 			[out]unsigned long* pcCookies,
 			[out]XHR_COOKIE** ppCookies);"
 
-	<virtual stdcall: hresult 12 lpwstr lpwstr dword dword* XHR_COOKIE**>
+	<virtual stdcall: hresult 12 lpwstr lpwstr uint32 uint32* XHR_COOKIE**>
 	^self invalidCall: _failureCode!
 
 getResponseHeader: pwszHeader
@@ -164,7 +164,7 @@ Send: pBody cbBody: cbBody
 			[in]ISequentialStream* pBody,
 			[in]unsigned __int64 cbBody);"
 
-	<virtual stdcall: hresult 5 ISequentialStream* qword>
+	<virtual stdcall: hresult 5 ISequentialStream* uint64>
 	^self invalidCall: _failureCode!
 
 setCookie: pCookie
@@ -182,7 +182,7 @@ SetCookie: pCookie pdwCookieState: pdwCookieState
 			[in]XHR_COOKIE* pCookie,
 			[out]unsigned long* pdwCookieState);"
 
-	<virtual stdcall: hresult 7 XHR_COOKIE* dword*>
+	<virtual stdcall: hresult 7 XHR_COOKIE* uint32*>
 	^self invalidCall: _failureCode!
 
 SetCustomResponseStream: pSequentialStream
@@ -201,7 +201,7 @@ SetProperty: eProperty ullValue: ullValue
 			[in]XHR_PROPERTY eProperty,
 			[in]unsigned __int64 ullValue);"
 
-	<virtual stdcall: hresult 9 sdword qword>
+	<virtual stdcall: hresult 9 int32 uint64>
 	^self invalidCall: _failureCode!
 
 SetRequestHeader: pwszHeader pwszValue: pwszValue

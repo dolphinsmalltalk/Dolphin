@@ -64,7 +64,7 @@ GetOption: option value: value
 			[in]SERVERXMLHTTP_OPTION option,
 			[out, retval]VARIANT* value);"
 
-	<virtual stdcall: hresult 24 sdword variant*>
+	<virtual stdcall: hresult 24 int32 variant*>
 	^self invalidCall: _failureCode!
 
 setOption: option value: value
@@ -81,7 +81,7 @@ SetOption: option value: value
 			[in]SERVERXMLHTTP_OPTION option,
 			[in]VARIANT value);"
 
-	<virtual stdcall: hresult 25 sdword variant>
+	<virtual stdcall: hresult 25 int32 variant>
 	^self invalidCall: _failureCode!
 
 SetTimeouts: resolveTimeout connectTimeout: connectTimeout sendTimeout: sendTimeout receiveTimeout: receiveTimeout
@@ -94,7 +94,7 @@ SetTimeouts: resolveTimeout connectTimeout: connectTimeout sendTimeout: sendTime
 			[in]long sendTimeout,
 			[in]long receiveTimeout);"
 
-	<virtual stdcall: hresult 22 sdword sdword sdword sdword>
+	<virtual stdcall: hresult 22 int32 int32 int32 int32>
 	^self invalidCall: _failureCode!
 
 waitForResponse

@@ -42,7 +42,7 @@ get_Handled: value
 		HRESULT __stdcall Handled(
 			[out, retval]long* value);"
 
-	<virtual stdcall: hresult 5 sdword*>
+	<virtual stdcall: hresult 5 int32*>
 	^self invalidCall: _failureCode!
 
 get_reason: reason
@@ -51,7 +51,7 @@ get_reason: reason
 		HRESULT __stdcall reason(
 			[out, retval]COREWEBVIEW2_MOVE_FOCUS_REASON* reason);"
 
-	<virtual stdcall: hresult 4 sdword*>
+	<virtual stdcall: hresult 4 int32*>
 	^self invalidCall: _failureCode!
 
 handled
@@ -74,7 +74,7 @@ put_Handled: value
 		HRESULT __stdcall Handled(
 			[in]long value);"
 
-	<virtual stdcall: hresult 6 sdword>
+	<virtual stdcall: hresult 6 int32>
 	^self invalidCall: _failureCode!
 
 reason

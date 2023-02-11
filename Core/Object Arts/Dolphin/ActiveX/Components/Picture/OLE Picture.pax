@@ -108,7 +108,7 @@ oleLoadPicture: pStream lSize: lSize fRunmode: fRunmode riid: riid ppvObj: ppvOb
 
 	"Avoid creating dependency on structured storage package by declaring stream as void*"
 
-	<stdcall: hresult OleLoadPicture void* sdword bool guid* void**>
+	<stdcall: hresult OleLoadPicture void* int32 bool guid* void**>
 	^self invalidCall: _failureCode!
 
 oleLoadPicturePath: szURLOrPath punkCaller: punk dwReserved: dw clrReserved: clr riid: iid ppvRet: ppv
@@ -124,7 +124,7 @@ oleLoadPicturePath: szURLOrPath punkCaller: punk dwReserved: dw clrReserved: clr
 			LPVOID *  ppvRet );
 	"
 
-	<stdcall: hresult OleLoadPicturePath lpwstr IUnknown* dword sdword guid* void**>
+	<stdcall: hresult OleLoadPicturePath lpwstr IUnknown* uint32 int32 guid* void**>
 	^self invalidCall: _failureCode! !
 !OS.COM.OLEAutLibrary categoriesForMethods!
 oleCreatePictureIndirect:riid:fOwn:ppvObj:!OLE Functions-OLE!public! !

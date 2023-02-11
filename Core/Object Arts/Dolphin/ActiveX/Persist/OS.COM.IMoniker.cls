@@ -162,7 +162,7 @@ Enum: fForward ppenumMoniker: ppenumMoniker
 			[in]bool fForward,
 			[out]IEnumMoniker** ppenumMoniker);"
 
-	<virtual stdcall: sdword 13 bool IEnumMoniker**>
+	<virtual stdcall: int32 13 bool IEnumMoniker**>
 	^self invalidCall: _failureCode!
 
 getDisplayName: aDuration
@@ -233,7 +233,7 @@ Hash: pdwHash
 		HRESULT __stdcall Hash(
 			[out]unsigned long* pdwHash);"
 
-	<virtual stdcall: hresult 15 dword*>
+	<virtual stdcall: hresult 15 uint32*>
 	^self invalidCall: _failureCode!
 
 inverse
@@ -302,7 +302,7 @@ IsSystemMoniker: pdwMksys
 		HRESULT __stdcall IsSystemMoniker(
 			[out]unsigned long* pdwMksys);"
 
-	<virtual stdcall: hresult 23 dword*>
+	<virtual stdcall: hresult 23 uint32*>
 	^self invalidCall: _failureCode!
 
 parseDisplayName: pbc pmkToLeft: pmkToLeft pszDisplayName: pszDisplayName
@@ -328,7 +328,7 @@ ParseDisplayName: pbc pmkToLeft: pmkToLeft pszDisplayName: pszDisplayName pchEat
 			[out]unsigned long* pchEaten,
 			[out]IMoniker** ppmkOut);"
 
-	<virtual stdcall: hresult 22 IBindCtx* IMoniker* lpwstr dword* IMoniker**>
+	<virtual stdcall: hresult 22 IBindCtx* IMoniker* lpwstr uint32* IMoniker**>
 	^self invalidCall: _failureCode!
 
 printOn: aStream
@@ -362,7 +362,7 @@ Reduce: pbc dwReduceHowFar: dwReduceHowFar ppmkToLeft: ppmkToLeft ppmkReduced: p
 			[in, out]IMoniker** ppmkToLeft,
 			[out]IMoniker** ppmkReduced);"
 
-	<virtual stdcall: hresult 11 IBindCtx* dword IMoniker** IMoniker**>
+	<virtual stdcall: hresult 11 IBindCtx* uint32 IMoniker** IMoniker**>
 	^self invalidCall: _failureCode!
 
 relativePathTo: anIMoniker

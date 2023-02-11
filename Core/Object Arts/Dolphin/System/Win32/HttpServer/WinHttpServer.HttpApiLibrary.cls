@@ -350,7 +350,7 @@ asyncReceiveHttpRequest: requestQueueHandle requestId: requestId flags: flags re
 			unsigned long* BytesReturned,
 			[in]LPOVERLAPPED OVERLAPPED);"
 
-	<overlap stdcall: dword HttpReceiveHttpRequest handle qword dword HTTP_REQUEST_V2* dword dword* OVERLAPPED*>
+	<overlap stdcall: uint32 HttpReceiveHttpRequest handle uint64 uint32 HTTP_REQUEST_V2* uint32 uint32* OVERLAPPED*>
 	^self invalidCall: _failureCode!
 
 asyncReceiveHttpRequestEntityBody: requestQueueHandle requestId: requestId flags: flags entityBuffer: entityBuffer entityBufferLength: entityBufferLength bytesReturned: bytesReturned overlapped: overlapped
@@ -365,7 +365,7 @@ asyncReceiveHttpRequestEntityBody: requestQueueHandle requestId: requestId flags
 			[out]ULONG* BytesReturned,
 			[in]LPOVERLAPPED OVERLAPPED);"
 
-	<overlap stdcall: dword HttpReceiveRequestEntityBody handle qword dword void* dword dword* OVERLAPPED*>
+	<overlap stdcall: uint32 HttpReceiveRequestEntityBody handle uint64 uint32 void* uint32 uint32* OVERLAPPED*>
 	^self invalidCall: _failureCode!
 
 asyncSendHttpResponse: requestQueueHandle requestId: requestId flags: flags httpResponse: httpResponse cachePolicy: cachePolicy bytesSent: bytesSent reserved2: reserved2 reserved3: reserved3 overlapped: overlapped logData: logData
@@ -384,7 +384,7 @@ asyncSendHttpResponse: requestQueueHandle requestId: requestId flags: flags http
 			[in]LPOVERLAPPED OVERLAPPED,
 			[in]PHTTP_LOG_DATA LogData);"
 
-	<overlap stdcall: dword HttpSendHttpResponse handle qword dword HTTP_RESPONSE_V2* HTTP_CACHE_POLICY* dword* void* dword OVERLAPPED* HTTP_LOG_FIELDS_DATA*>
+	<overlap stdcall: uint32 HttpSendHttpResponse handle uint64 uint32 HTTP_RESPONSE_V2* HTTP_CACHE_POLICY* uint32* void* uint32 OVERLAPPED* HTTP_LOG_FIELDS_DATA*>
 	^self invalidCall: _failureCode!
 
 bindQueue: anExternalHandle toUrlGroup: anIntegerGroupId
@@ -443,7 +443,7 @@ httpAddFragmentToCache: requestQueueHandle urlPrefix: urlPrefix dataChunk: dataC
 			[in]PHTTP_CACHE_POLICY CachePolicy,
 			[in]LPOVERLAPPED OVERLAPPED);"
 
-	<stdcall: dword HttpAddFragmentToCache handle lpwstr HTTP_DATA_CHUNK* HTTP_CACHE_POLICY* OVERLAPPED*>
+	<stdcall: uint32 HttpAddFragmentToCache handle lpwstr HTTP_DATA_CHUNK* HTTP_CACHE_POLICY* OVERLAPPED*>
 	^self invalidCall: _failureCode!
 
 httpAddUrlToUrlGroup: urlGroupId pFullyQualifiedUrl: pFullyQualifiedUrl urlContext: urlContext reserved: reserved
@@ -456,7 +456,7 @@ httpAddUrlToUrlGroup: urlGroupId pFullyQualifiedUrl: pFullyQualifiedUrl urlConte
 			[in]HTTP_URL_CONTEXT UrlContext,
 			[in]ULONG Reserved);"
 
-	<stdcall: dword HttpAddUrlToUrlGroup qword lpwstr qword dword>
+	<stdcall: uint32 HttpAddUrlToUrlGroup uint64 lpwstr uint64 uint32>
 	^self invalidCall: _failureCode!
 
 httpCancelHttpRequest: requestQueueHandle requestId: requestId overlapped: overlapped
@@ -468,7 +468,7 @@ httpCancelHttpRequest: requestQueueHandle requestId: requestId overlapped: overl
 			[in]unsigned __int64 RequestId,
 			[in]LPOVERLAPPED OVERLAPPED);"
 
-	<stdcall: dword HttpCancelHttpRequest handle qword OVERLAPPED*>
+	<stdcall: uint32 HttpCancelHttpRequest handle uint64 OVERLAPPED*>
 	^self invalidCall: _failureCode!
 
 httpCloseRequestQueue: requestQueueHandle
@@ -478,7 +478,7 @@ httpCloseRequestQueue: requestQueueHandle
 		ULONG __stdcall HttpCloseRequestQueue(
 			[in]HANDLE RequestQueueHandle);"
 
-	<stdcall: dword HttpCloseRequestQueue handle>
+	<stdcall: uint32 HttpCloseRequestQueue handle>
 	^self invalidCall: _failureCode!
 
 httpCloseServerSession: serverSessionId
@@ -488,7 +488,7 @@ httpCloseServerSession: serverSessionId
 		ULONG __stdcall HttpCloseServerSession(
 			[in]unsigned __int64 ServerSessionId);"
 
-	<stdcall: dword HttpCloseServerSession qword>
+	<stdcall: uint32 HttpCloseServerSession uint64>
 	^self invalidCall: _failureCode!
 
 httpCloseUrlGroup: urlGroupId
@@ -498,7 +498,7 @@ httpCloseUrlGroup: urlGroupId
 		ULONG __stdcall HttpCloseUrlGroup(
 			[in]unsigned __int64 UrlGroupId);"
 
-	<stdcall: dword HttpCloseUrlGroup qword>
+	<stdcall: uint32 HttpCloseUrlGroup uint64>
 	^self invalidCall: _failureCode!
 
 httpCreateRequestQueue: version name: name securityAttributes: securityAttributes flags: flags requestQueueHandle: requestQueueHandle
@@ -512,7 +512,7 @@ httpCreateRequestQueue: version name: name securityAttributes: securityAttribute
 			[in]ULONG Flags,
 			[out]HANDLE* RequestQueueHandle);"
 
-	<stdcall: dword HttpCreateRequestQueue dword lpwstr SECURITY_ATTRIBUTES* dword handle*>
+	<stdcall: uint32 HttpCreateRequestQueue uint32 lpwstr SECURITY_ATTRIBUTES* uint32 handle*>
 	^self invalidCall: _failureCode!
 
 httpCreateServerSession: version serverSessionId: serverSessionId reserved: reserved
@@ -524,7 +524,7 @@ httpCreateServerSession: version serverSessionId: serverSessionId reserved: rese
 			[out]unsigned __int64* ServerSessionId,
 			[in]ULONG Reserved);"
 
-	<stdcall: dword HttpCreateServerSession dword qword* dword>
+	<stdcall: uint32 HttpCreateServerSession uint32 uint64* uint32>
 	^self invalidCall: _failureCode!
 
 httpCreateUrlGroup: serverSessionId pUrlGroupId: pUrlGroupId reserved: reserved
@@ -536,7 +536,7 @@ httpCreateUrlGroup: serverSessionId pUrlGroupId: pUrlGroupId reserved: reserved
 			[out]unsigned __int64* pUrlGroupId,
 			[in]ULONG Reserved);"
 
-	<stdcall: dword HttpCreateUrlGroup qword qword* dword>
+	<stdcall: uint32 HttpCreateUrlGroup uint64 uint64* uint32>
 	^self invalidCall: _failureCode!
 
 httpDeclarePush: requestQueueHandle requestId: requestId verb: verb path: path query: query headers: headers
@@ -551,7 +551,7 @@ httpDeclarePush: requestQueueHandle requestId: requestId verb: verb path: path q
 			[in]LPCSTR Query,
 			[in]HTTP_REQUEST_HEADERS* Headers);"
 
-	<stdcall: dword HttpDeclarePush handle qword sdword lpwstr lpstr HTTP_REQUEST_HEADERS*>
+	<stdcall: uint32 HttpDeclarePush handle uint64 int32 lpwstr lpstr HTTP_REQUEST_HEADERS*>
 	^self invalidCall: _failureCode!
 
 httpDeleteServiceConfiguration: serviceHandle configId: configId pConfigInformation: pConfigInformation configInformationLength: configInformationLength pOverlapped: pOverlapped
@@ -565,7 +565,7 @@ httpDeleteServiceConfiguration: serviceHandle configId: configId pConfigInformat
 			[in]ULONG ConfigInformationLength,
 			[in]LPOVERLAPPED pOverlapped);"
 
-	<stdcall: dword HttpDeleteServiceConfiguration handle sdword void* dword OVERLAPPED*>
+	<stdcall: uint32 HttpDeleteServiceConfiguration handle int32 void* uint32 OVERLAPPED*>
 	^self invalidCall: _failureCode!
 
 httpFlushResponseCache: requestQueueHandle urlPrefix: urlPrefix flags: flags overlapped: overlapped
@@ -578,7 +578,7 @@ httpFlushResponseCache: requestQueueHandle urlPrefix: urlPrefix flags: flags ove
 			[in]ULONG Flags,
 			[in]LPOVERLAPPED OVERLAPPED);"
 
-	<stdcall: dword HttpFlushResponseCache handle lpwstr dword OVERLAPPED*>
+	<stdcall: uint32 HttpFlushResponseCache handle lpwstr uint32 OVERLAPPED*>
 	^self invalidCall: _failureCode!
 
 httpInitialize: version flags: flags pReserved: pReserved
@@ -590,7 +590,7 @@ httpInitialize: version flags: flags pReserved: pReserved
 			[in]ULONG Flags,
 			[in, out]PVOID pReserved);"
 
-	<stdcall: dword HttpInitialize dword dword void*>
+	<stdcall: uint32 HttpInitialize uint32 uint32 void*>
 	^self invalidCall: _failureCode!
 
 httpPrepareUrl: reserved flags: flags url: url preparedUrl: preparedUrl
@@ -603,7 +603,7 @@ httpPrepareUrl: reserved flags: flags url: url preparedUrl: preparedUrl
 			[in]LPCWSTR Url,
 			[out]LPWSTR* PreparedUrl);"
 
-	<stdcall: dword HttpPrepareUrl void* dword lpwstr lpwstr*>
+	<stdcall: uint32 HttpPrepareUrl void* uint32 lpwstr lpwstr*>
 	^self invalidCall: _failureCode!
 
 httpQueryRequestQueueProperty: requestQueueProperty property: property propertyInformation: propertyInformation propertyInformationLength: propertyInformationLength reserved1: reserved1 returnLength: returnLength reserved2: reserved2
@@ -619,7 +619,7 @@ httpQueryRequestQueueProperty: requestQueueProperty property: property propertyI
 			[out]ULONG* ReturnLength,
 			[in]PVOID Reserved2);"
 
-	<stdcall: dword HttpQueryRequestQueueProperty handle sdword void* dword dword dword* void*>
+	<stdcall: uint32 HttpQueryRequestQueueProperty handle int32 void* uint32 uint32 uint32* void*>
 	^self invalidCall: _failureCode!
 
 httpQueryServerSessionProperty: serverSessionId property: property propertyInformation: propertyInformation propertyInformationLength: propertyInformationLength returnLength: returnLength
@@ -633,7 +633,7 @@ httpQueryServerSessionProperty: serverSessionId property: property propertyInfor
 			[in]ULONG PropertyInformationLength,
 			[out]ULONG* ReturnLength);"
 
-	<stdcall: dword HttpQueryServerSessionProperty qword sdword void* dword dword*>
+	<stdcall: uint32 HttpQueryServerSessionProperty uint64 int32 void* uint32 uint32*>
 	^self invalidCall: _failureCode!
 
 httpQueryServiceConfiguration: serviceHandle configId: configId pInput: pInput inputLength: inputLength pOutput: pOutput outputLength: outputLength pReturnLength: pReturnLength pOverlapped: pOverlapped
@@ -650,7 +650,7 @@ httpQueryServiceConfiguration: serviceHandle configId: configId pInput: pInput i
 			[out]ULONG* pReturnLength,
 			[in]LPOVERLAPPED pOverlapped);"
 
-	<stdcall: dword HttpQueryServiceConfiguration handle sdword void* dword void* dword dword* OVERLAPPED*>
+	<stdcall: uint32 HttpQueryServiceConfiguration handle int32 void* uint32 void* uint32 uint32* OVERLAPPED*>
 	^self invalidCall: _failureCode!
 
 httpQueryUrlGroupProperty: urlGroupId property: property propertyInformation: propertyInformation propertyInformationLength: propertyInformationLength returnLength: returnLength
@@ -664,7 +664,7 @@ httpQueryUrlGroupProperty: urlGroupId property: property propertyInformation: pr
 			[in]ULONG PropertyInformationLength,
 			[out]ULONG* ReturnLength);"
 
-	<stdcall: dword HttpQueryUrlGroupProperty qword sdword void* dword dword*>
+	<stdcall: uint32 HttpQueryUrlGroupProperty uint64 int32 void* uint32 uint32*>
 	^self invalidCall: _failureCode!
 
 httpReadFragmentFromCache: requestQueueHandle urlPrefix: urlPrefix byteRange: byteRange buffer: buffer bufferLength: bufferLength bytesRead: bytesRead overlapped: overlapped
@@ -679,7 +679,7 @@ httpReadFragmentFromCache: requestQueueHandle urlPrefix: urlPrefix byteRange: by
 			[out]ULONG* BytesRead,
 			[in]LPOVERLAPPED OVERLAPPED);"
 
-	<stdcall: dword HttpReadFragmentFromCache handle lpwstr HTTP_BYTE_RANGE* void* dword dword* OVERLAPPED*>
+	<stdcall: uint32 HttpReadFragmentFromCache handle lpwstr HTTP_BYTE_RANGE* void* uint32 uint32* OVERLAPPED*>
 	^self invalidCall: _failureCode!
 
 httpReceiveClientCertificate: requestQueueHandle connectionId: connectionId flags: flags sslClientCertInfo: sslClientCertInfo sslClientCertInfoSize: sslClientCertInfoSize bytesReceived: bytesReceived overlapped: overlapped
@@ -694,7 +694,7 @@ httpReceiveClientCertificate: requestQueueHandle connectionId: connectionId flag
 			[out]ULONG* BytesReceived,
 			[in]LPOVERLAPPED OVERLAPPED);"
 
-	<stdcall: dword HttpReceiveClientCertificate handle qword dword HTTP_SSL_CLIENT_CERT_INFO* dword dword* OVERLAPPED*>
+	<stdcall: uint32 HttpReceiveClientCertificate handle uint64 uint32 HTTP_SSL_CLIENT_CERT_INFO* uint32 uint32* OVERLAPPED*>
 	^self invalidCall: _failureCode!
 
 httpReceiveHttpRequest: requestQueueHandle requestId: requestId flags: flags requestBuffer: requestBuffer requestBufferLength: requestBufferLength bytesReturned: bytesReturned overlapped: overlapped
@@ -710,7 +710,7 @@ httpReceiveHttpRequest: requestQueueHandle requestId: requestId flags: flags req
 			[out]ULONG* BytesReturned,
 			[in]LPOVERLAPPED OVERLAPPED);"
 
-	<stdcall: dword HttpReceiveHttpRequest handle qword dword HTTP_REQUEST_V2* dword dword* OVERLAPPED*>
+	<stdcall: uint32 HttpReceiveHttpRequest handle uint64 uint32 HTTP_REQUEST_V2* uint32 uint32* OVERLAPPED*>
 	^self invalidCall: _failureCode!
 
 httpReceiveRequestEntityBody: requestQueueHandle requestId: requestId flags: flags entityBuffer: entityBuffer entityBufferLength: entityBufferLength bytesReturned: bytesReturned overlapped: overlapped
@@ -725,7 +725,7 @@ httpReceiveRequestEntityBody: requestQueueHandle requestId: requestId flags: fla
 			[out]ULONG* BytesReturned,
 			[in]LPOVERLAPPED OVERLAPPED);"
 
-	<stdcall: dword HttpReceiveRequestEntityBody handle qword dword void* dword dword* OVERLAPPED*>
+	<stdcall: uint32 HttpReceiveRequestEntityBody handle uint64 uint32 void* uint32 uint32* OVERLAPPED*>
 	^self invalidCall: _failureCode!
 
 httpRemoveUrlFromUrlGroup: urlGroupId pFullyQualifiedUrl: pFullyQualifiedUrl flags: flags
@@ -737,7 +737,7 @@ httpRemoveUrlFromUrlGroup: urlGroupId pFullyQualifiedUrl: pFullyQualifiedUrl fla
 			[in]LPCWSTR pFullyQualifiedUrl,
 			[in]ULONG Flags);"
 
-	<stdcall: dword HttpRemoveUrlFromUrlGroup qword lpwstr dword>
+	<stdcall: uint32 HttpRemoveUrlFromUrlGroup uint64 lpwstr uint32>
 	^self invalidCall: _failureCode!
 
 httpSendHttpResponse: requestQueueHandle requestId: requestId flags: flags httpResponse: httpResponse cachePolicy: cachePolicy bytesSent: bytesSent reserved2: reserved2 reserved3: reserved3 overlapped: overlapped logData: logData
@@ -756,7 +756,7 @@ httpSendHttpResponse: requestQueueHandle requestId: requestId flags: flags httpR
 			[in]LPOVERLAPPED OVERLAPPED,
 			[in]PHTTP_LOG_DATA LogData);"
 
-	<stdcall: dword HttpSendHttpResponse handle qword dword HTTP_RESPONSE_V2* HTTP_CACHE_POLICY* dword* void* dword OVERLAPPED* HTTP_LOG_FIELDS_DATA*>
+	<stdcall: uint32 HttpSendHttpResponse handle uint64 uint32 HTTP_RESPONSE_V2* HTTP_CACHE_POLICY* uint32* void* uint32 OVERLAPPED* HTTP_LOG_FIELDS_DATA*>
 	^self invalidCall: _failureCode!
 
 httpSendResponseEntityBody: requestQueueHandle requestId: requestId flags: flags entityChunkCount: entityChunkCount entityChunks: entityChunks bytesSent: bytesSent reserved1: reserved1 reserved2: reserved2 overlapped: overlapped logData: logData
@@ -775,7 +775,7 @@ httpSendResponseEntityBody: requestQueueHandle requestId: requestId flags: flags
 			[in]LPOVERLAPPED OVERLAPPED,
 			[in]PHTTP_LOG_DATA LogData);"
 
-	<stdcall: dword HttpSendResponseEntityBody handle qword dword word HTTP_DATA_CHUNK* dword* void* dword OVERLAPPED* HTTP_LOG_FIELDS_DATA*>
+	<stdcall: uint32 HttpSendResponseEntityBody handle uint64 uint32 uint16 HTTP_DATA_CHUNK* uint32* void* uint32 OVERLAPPED* HTTP_LOG_FIELDS_DATA*>
 	^self invalidCall: _failureCode!
 
 httpSetRequestQueueProperty: requestQueueHandle property: property propertyInformation: propertyInformation propertyInformationLength: propertyInformationLength reserved1: reserved1 reserved2: reserved2
@@ -790,7 +790,7 @@ httpSetRequestQueueProperty: requestQueueHandle property: property propertyInfor
 			[in]ULONG Reserved1,
 			[in]PVOID Reserved2);"
 
-	<stdcall: dword HttpSetRequestQueueProperty handle sdword void* dword dword void*>
+	<stdcall: uint32 HttpSetRequestQueueProperty handle int32 void* uint32 uint32 void*>
 	^self invalidCall: _failureCode!
 
 httpSetServerSessionProperty: serverSessionId property: property propertyInformation: propertyInformation propertyInformationLength: propertyInformationLength
@@ -803,7 +803,7 @@ httpSetServerSessionProperty: serverSessionId property: property propertyInforma
 			[in]PVOID PropertyInformation,
 			[in]ULONG PropertyInformationLength);"
 
-	<stdcall: dword HttpSetServerSessionProperty qword sdword void* dword>
+	<stdcall: uint32 HttpSetServerSessionProperty uint64 int32 void* uint32>
 	^self invalidCall: _failureCode!
 
 httpSetServiceConfiguration: serviceHandle configId: configId pConfigInformation: pConfigInformation configInformationLength: configInformationLength pOverlapped: pOverlapped
@@ -817,7 +817,7 @@ httpSetServiceConfiguration: serviceHandle configId: configId pConfigInformation
 			[in]ULONG ConfigInformationLength,
 			[in]LPOVERLAPPED pOverlapped);"
 
-	<stdcall: dword HttpSetServiceConfiguration handle sdword void* dword OVERLAPPED*>
+	<stdcall: uint32 HttpSetServiceConfiguration handle int32 void* uint32 OVERLAPPED*>
 	^self invalidCall: _failureCode!
 
 httpSetUrlGroupProperty: urlGroupId property: property propertyInformation: propertyInformation propertyInformationLength: propertyInformationLength
@@ -830,7 +830,7 @@ httpSetUrlGroupProperty: urlGroupId property: property propertyInformation: prop
 			[in]PVOID PropertyInformation,
 			[in]ULONG PropertyInformationLength);"
 
-	<stdcall: dword HttpSetUrlGroupProperty qword sdword void* dword>
+	<stdcall: uint32 HttpSetUrlGroupProperty uint64 int32 void* uint32>
 	^self invalidCall: _failureCode!
 
 httpShutdownRequestQueue: requestQueueHandle
@@ -840,7 +840,7 @@ httpShutdownRequestQueue: requestQueueHandle
 		ULONG __stdcall HttpShutdownRequestQueue(
 			[in]HANDLE RequestQueueHandle);"
 
-	<stdcall: dword HttpShutdownRequestQueue handle>
+	<stdcall: uint32 HttpShutdownRequestQueue handle>
 	^self invalidCall: _failureCode!
 
 httpTerminate: flags pReserved: pReserved
@@ -851,7 +851,7 @@ httpTerminate: flags pReserved: pReserved
 			[in]ULONG Flags,
 			[in, out]PVOID pReserved);"
 
-	<stdcall: dword HttpTerminate dword void*>
+	<stdcall: uint32 HttpTerminate uint32 void*>
 	^self invalidCall: _failureCode!
 
 httpWaitForDemandStart: requestQueueHandle overlapped: overlapped
@@ -862,7 +862,7 @@ httpWaitForDemandStart: requestQueueHandle overlapped: overlapped
 			[in]HANDLE RequestQueueHandle,
 			[in]LPOVERLAPPED OVERLAPPED);"
 
-	<stdcall: dword HttpWaitForDemandStart handle OVERLAPPED*>
+	<stdcall: uint32 HttpWaitForDemandStart handle OVERLAPPED*>
 	^self invalidCall: _failureCode!
 
 httpWaitForDisconnect: requestQueueHandle connectionId: connectionId overlapped: overlapped
@@ -874,7 +874,7 @@ httpWaitForDisconnect: requestQueueHandle connectionId: connectionId overlapped:
 			[in]unsigned __int64 ConnectionId,
 			[in]LPOVERLAPPED OVERLAPPED);"
 
-	<stdcall: dword HttpWaitForDisconnect handle qword OVERLAPPED*>
+	<stdcall: uint32 HttpWaitForDisconnect handle uint64 OVERLAPPED*>
 	^self invalidCall: _failureCode!
 
 httpWaitForDisconnectEx: requestQueueHandle connectionId: connectionId reserved: reserved overlapped: overlapped
@@ -887,7 +887,7 @@ httpWaitForDisconnectEx: requestQueueHandle connectionId: connectionId reserved:
 			[in]ULONG Reserved,
 			[in]LPOVERLAPPED OVERLAPPED);"
 
-	<stdcall: dword HttpWaitForDisconnectEx handle qword dword OVERLAPPED*>
+	<stdcall: uint32 HttpWaitForDisconnectEx handle uint64 uint32 OVERLAPPED*>
 	^self invalidCall: _failureCode!
 
 initialize

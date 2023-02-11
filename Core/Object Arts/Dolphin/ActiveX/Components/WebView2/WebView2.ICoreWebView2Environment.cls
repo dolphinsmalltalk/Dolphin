@@ -60,7 +60,7 @@ Add_NewBrowserVersionAvailable: eventHandler token: token
 			[in]ICoreWebView2NewBrowserVersionAvailableEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 7 ICoreWebView2NewBrowserVersionAvailableEventHandler* sqword*>
+	<virtual stdcall: hresult 7 ICoreWebView2NewBrowserVersionAvailableEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 Add_ProcessInfosChanged: eventHandler token: token
@@ -274,7 +274,7 @@ CreateWebResourceResponse: content statusCode: statusCode reasonPhrase: reasonPh
 			[in]LPWSTR Headers,
 			[out, retval]ICoreWebView2WebResourceResponse** Response);"
 
-	<virtual stdcall: hresult 5 IStream* sdword lpwstr lpwstr ICoreWebView2WebResourceResponse**>
+	<virtual stdcall: hresult 5 IStream* int32 lpwstr lpwstr ICoreWebView2WebResourceResponse**>
 	^self invalidCall: _failureCode!
 
 displayOn: aWriteStream
@@ -383,7 +383,7 @@ Remove_NewBrowserVersionAvailable: token
 		HRESULT __stdcall remove_NewBrowserVersionAvailable(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 8 sqword>
+	<virtual stdcall: hresult 8 int64>
 	^self invalidCall: _failureCode!
 
 Remove_ProcessInfosChanged: token

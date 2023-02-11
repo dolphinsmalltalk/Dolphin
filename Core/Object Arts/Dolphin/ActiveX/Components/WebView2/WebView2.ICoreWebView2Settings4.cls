@@ -45,7 +45,7 @@ get_IsGeneralAutofillEnabled: value
 		HRESULT __stdcall IsGeneralAutofillEnabled(
 			[out, retval]long* value);"
 
-	<virtual stdcall: hresult 28 sdword*>
+	<virtual stdcall: hresult 28 int32*>
 	^self invalidCall: _failureCode!
 
 get_IsPasswordAutosaveEnabled: value
@@ -54,7 +54,7 @@ get_IsPasswordAutosaveEnabled: value
 		HRESULT __stdcall IsPasswordAutosaveEnabled(
 			[out, retval]long* value);"
 
-	<virtual stdcall: hresult 26 sdword*>
+	<virtual stdcall: hresult 26 int32*>
 	^self invalidCall: _failureCode!
 
 put_IsGeneralAutofillEnabled: value
@@ -64,7 +64,7 @@ put_IsGeneralAutofillEnabled: value
 		HRESULT __stdcall IsGeneralAutofillEnabled(
 			[in]long value);"
 
-	<virtual stdcall: hresult 29 sdword>
+	<virtual stdcall: hresult 29 int32>
 	^self invalidCall: _failureCode!
 
 put_IsPasswordAutosaveEnabled: value
@@ -74,7 +74,7 @@ put_IsPasswordAutosaveEnabled: value
 		HRESULT __stdcall IsPasswordAutosaveEnabled(
 			[in]long value);"
 
-	<virtual stdcall: hresult 27 sdword>
+	<virtual stdcall: hresult 27 int32>
 	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2Settings4 categoriesForMethods!
 get_IsGeneralAutofillEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings4!private! !

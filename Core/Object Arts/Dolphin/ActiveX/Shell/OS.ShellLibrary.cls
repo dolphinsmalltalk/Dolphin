@@ -42,7 +42,7 @@ dragQueryFile: hDrop iFile: iFile lpszFile: lpszFile cch: cch
 			LPWSTR lpszFile,
 			UINT cch);"
 
-	<stdcall: dword DragQueryFileW handle dword lpwstr dword>
+	<stdcall: uint32 DragQueryFileW handle uint32 lpwstr uint32>
 	^self invalidCall: _failureCode!
 
 dragQueryPoint: hDrop lppt: lppt
@@ -65,7 +65,7 @@ extractAssociatedIcon: hInst lpIconPath: lpIconPath lpiIcon: lpiIcon
 			LPWSTR lpIconPath,
 			WORD* lpiIcon);"
 
-	<stdcall: handle ExtractAssociatedIconW handle lpwstr word*>
+	<stdcall: handle ExtractAssociatedIconW handle lpwstr uint16*>
 	^self invalidCall: _failureCode!
 
 findExecutable: pathName
@@ -135,7 +135,7 @@ SHChangeNotify: wEventId uFlags: unit dwItem1: aLPCVOID1 dwItem2: aLPCVOID2
 		uFlags, a WIndows SHCNF constant that specifies what type of objects dwItem1 and dwItem2 are.
 		dwItem1 and dwItem2, objects involved in the change."
 
-	<stdcall: void SHChangeNotify dword dword lpvoid lpvoid>
+	<stdcall: void SHChangeNotify uint32 uint32 lpvoid lpvoid>
 	^self invalidCall: _failureCode!
 
 shellExecute: hwnd lpOperation: opString lpFile: fileString lpParameters: parmString lpDirectory: dirString nShowCmd: anInteger
@@ -149,7 +149,7 @@ shellExecute: hwnd lpOperation: opString lpFile: fileString lpParameters: parmSt
 			INT nShowCmd 			// whether file is shown when opened
 		);"
 
-	<stdcall: handle ShellExecuteW handle lpwstr lpwstr lpwstr lpwstr sdword>
+	<stdcall: handle ShellExecuteW handle lpwstr lpwstr lpwstr lpwstr int32>
 	^self invalidCall: _failureCode!
 
 shellOpen: fileString
@@ -193,7 +193,7 @@ shGetFolderPath: hwndOwner nFolder: nFolder hToken: hToken dwFlags: dwFlags pszP
 			DWORD dwFlags,
 			LPWSTR pszPath);"
 
-	<stdcall: hresult SHGetFolderPathW handle sdword handle dword lpwstr>
+	<stdcall: hresult SHGetFolderPathW handle int32 handle uint32 lpwstr>
 	^self invalidCall: _failureCode!
 
 shGetStockIconInfo: siid uFlags: uFlags psii: psii
@@ -205,7 +205,7 @@ shGetStockIconInfo: siid uFlags: uFlags psii: psii
 			unsigned int uFlags,
 			[in, out]SHSTOCKICONINFO* psii);"
 
-	<stdcall: hresult SHGetStockIconInfo sdword dword SHSTOCKICONINFO*>
+	<stdcall: hresult SHGetStockIconInfo int32 uint32 SHSTOCKICONINFO*>
 	^self invalidCall: _failureCode! !
 !OS.ShellLibrary categoriesForMethods!
 dragAcceptFiles:fAccept:!**auto generated**!public!win32 functions-shell library! !

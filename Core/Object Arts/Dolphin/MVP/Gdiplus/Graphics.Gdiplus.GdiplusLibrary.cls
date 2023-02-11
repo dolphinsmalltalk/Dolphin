@@ -49,7 +49,7 @@ gdipAddPathArcI: path x: x y: y width: width height: height startAngle: startAng
 			REAL startAngle,
 			REAL sweepAngle);"
 
-	<stdcall: errno GdipAddPathArcI handle sdword sdword sdword sdword float float>
+	<stdcall: errno GdipAddPathArcI handle int32 int32 int32 int32 float float>
 	^self invalidCall: _failureCode!
 
 gdipAddPathBezier: path x1: x1 y1: y1 x2: x2 y2: y2 x3: x3 y3: y3 x4: x4 y4: y4
@@ -83,7 +83,7 @@ gdipAddPathBezierI: path x1: x1 y1: y1 x2: x2 y2: y2 x3: x3 y3: y3 x4: x4 y4: y4
 			int x4,
 			int y4);"
 
-	<stdcall: errno GdipAddPathBezierI handle sdword sdword sdword sdword sdword sdword sdword sdword>
+	<stdcall: errno GdipAddPathBezierI handle int32 int32 int32 int32 int32 int32 int32 int32>
 	^self invalidCall: _failureCode!
 
 gdipAddPathBeziers: path points: points count: count
@@ -94,7 +94,7 @@ gdipAddPathBeziers: path points: points count: count
 			[in]POINTF* Points,
 			int Count);"
 
-	<stdcall: errno GdipAddPathBeziers handle POINTF* sdword>
+	<stdcall: errno GdipAddPathBeziers handle POINTF* int32>
 	^self invalidCall: _failureCode!
 
 gdipAddPathBeziersI: path points: points count: count
@@ -105,7 +105,7 @@ gdipAddPathBeziersI: path points: points count: count
 			[in]POINTL* Points,
 			int Count);"
 
-	<stdcall: errno GdipAddPathBeziersI handle POINTL* sdword>
+	<stdcall: errno GdipAddPathBeziersI handle POINTL* int32>
 	^self invalidCall: _failureCode!
 
 gdipAddPathClosedCurve: path points: points count: count
@@ -116,7 +116,7 @@ gdipAddPathClosedCurve: path points: points count: count
 			[in]POINTF* Points,
 			int Count);"
 
-	<stdcall: errno GdipAddPathClosedCurve handle POINTF* sdword>
+	<stdcall: errno GdipAddPathClosedCurve handle POINTF* int32>
 	^self invalidCall: _failureCode!
 
 gdipAddPathClosedCurve2: path points: points count: count tension: tension
@@ -128,7 +128,7 @@ gdipAddPathClosedCurve2: path points: points count: count tension: tension
 			int Count,
 			REAL tension);"
 
-	<stdcall: errno GdipAddPathClosedCurve2 handle POINTF* sdword float>
+	<stdcall: errno GdipAddPathClosedCurve2 handle POINTF* int32 float>
 	^self invalidCall: _failureCode!
 
 gdipAddPathClosedCurve2I: path points: points count: count tension: tension
@@ -140,7 +140,7 @@ gdipAddPathClosedCurve2I: path points: points count: count tension: tension
 			int Count,
 			REAL tension);"
 
-	<stdcall: errno GdipAddPathClosedCurve2I handle POINTL* sdword float>
+	<stdcall: errno GdipAddPathClosedCurve2I handle POINTL* int32 float>
 	^self invalidCall: _failureCode!
 
 gdipAddPathClosedCurveI: path points: points count: count
@@ -151,7 +151,7 @@ gdipAddPathClosedCurveI: path points: points count: count
 			[in]POINTL* Points,
 			int Count);"
 
-	<stdcall: errno GdipAddPathClosedCurveI handle POINTL* sdword>
+	<stdcall: errno GdipAddPathClosedCurveI handle POINTL* int32>
 	^self invalidCall: _failureCode!
 
 gdipAddPathCurve: path points: points count: count
@@ -162,7 +162,7 @@ gdipAddPathCurve: path points: points count: count
 			[in]POINTF* Points,
 			int Count);"
 
-	<stdcall: errno GdipAddPathCurve handle POINTF* sdword>
+	<stdcall: errno GdipAddPathCurve handle POINTF* int32>
 	^self invalidCall: _failureCode!
 
 gdipAddPathCurve2: path points: points count: count tension: tension
@@ -174,7 +174,7 @@ gdipAddPathCurve2: path points: points count: count tension: tension
 			int Count,
 			REAL tension);"
 
-	<stdcall: errno GdipAddPathCurve2 handle POINTF* sdword float>
+	<stdcall: errno GdipAddPathCurve2 handle POINTF* int32 float>
 	^self invalidCall: _failureCode!
 
 gdipAddPathCurve2I: path points: points count: count tension: tension
@@ -186,7 +186,7 @@ gdipAddPathCurve2I: path points: points count: count tension: tension
 			int Count,
 			REAL tension);"
 
-	<stdcall: errno GdipAddPathCurve2I handle POINTL* sdword float>
+	<stdcall: errno GdipAddPathCurve2I handle POINTL* int32 float>
 	^self invalidCall: _failureCode!
 
 gdipAddPathCurve3: path points: points count: count offset: offset numberOfSegments: numberOfSegments tension: tension
@@ -200,7 +200,7 @@ gdipAddPathCurve3: path points: points count: count offset: offset numberOfSegme
 			int numberOfSegments,
 			REAL tension);"
 
-	<stdcall: errno GdipAddPathCurve3 handle POINTF* sdword sdword sdword float>
+	<stdcall: errno GdipAddPathCurve3 handle POINTF* int32 int32 int32 float>
 	^self invalidCall: _failureCode!
 
 gdipAddPathCurve3I: path points: points count: count offset: offset numberOfSegments: numberOfSegments tension: tension
@@ -214,7 +214,7 @@ gdipAddPathCurve3I: path points: points count: count offset: offset numberOfSegm
 			int numberOfSegments,
 			REAL tension);"
 
-	<stdcall: errno GdipAddPathCurve3I handle POINTL* sdword sdword sdword float>
+	<stdcall: errno GdipAddPathCurve3I handle POINTL* int32 int32 int32 float>
 	^self invalidCall: _failureCode!
 
 gdipAddPathCurveI: path points: points count: count
@@ -225,7 +225,7 @@ gdipAddPathCurveI: path points: points count: count
 			[in]POINTL* Points,
 			int Count);"
 
-	<stdcall: errno GdipAddPathCurveI handle POINTL* sdword>
+	<stdcall: errno GdipAddPathCurveI handle POINTL* int32>
 	^self invalidCall: _failureCode!
 
 gdipAddPathEllipse: path x: x y: y width: width height: height
@@ -251,7 +251,7 @@ gdipAddPathEllipseI: path x: x y: y width: width height: height
 			int width,
 			int height);"
 
-	<stdcall: errno GdipAddPathEllipseI handle sdword sdword sdword sdword>
+	<stdcall: errno GdipAddPathEllipseI handle int32 int32 int32 int32>
 	^self invalidCall: _failureCode!
 
 gdipAddPathLine: path x1: x1 y1: y1 x2: x2 y2: y2
@@ -275,7 +275,7 @@ gdipAddPathLine2: path points: points count: count
 			[in]POINTF* Points,
 			int Count);"
 
-	<stdcall: errno GdipAddPathLine2 handle POINTF* sdword>
+	<stdcall: errno GdipAddPathLine2 handle POINTF* int32>
 	^self invalidCall: _failureCode!
 
 gdipAddPathLine2I: path points: points count: count
@@ -286,7 +286,7 @@ gdipAddPathLine2I: path points: points count: count
 			[in]POINTL* Points,
 			int Count);"
 
-	<stdcall: errno GdipAddPathLine2I handle POINTL* sdword>
+	<stdcall: errno GdipAddPathLine2I handle POINTL* int32>
 	^self invalidCall: _failureCode!
 
 gdipAddPathLineI: path x1: x1 y1: y1 x2: x2 y2: y2
@@ -299,7 +299,7 @@ gdipAddPathLineI: path x1: x1 y1: y1 x2: x2 y2: y2
 			int x2,
 			int y2);"
 
-	<stdcall: errno GdipAddPathLineI handle sdword sdword sdword sdword>
+	<stdcall: errno GdipAddPathLineI handle int32 int32 int32 int32>
 	^self invalidCall: _failureCode!
 
 gdipAddPathPath: path addingPath: addingPath connect: connect
@@ -340,7 +340,7 @@ gdipAddPathPieI: path x: x y: y width: width height: height startAngle: startAng
 			REAL startAngle,
 			REAL sweepAngle);"
 
-	<stdcall: errno GdipAddPathPieI handle sdword sdword sdword sdword float float>
+	<stdcall: errno GdipAddPathPieI handle int32 int32 int32 int32 float float>
 	^self invalidCall: _failureCode!
 
 gdipAddPathPolygon: path points: points count: count
@@ -351,7 +351,7 @@ gdipAddPathPolygon: path points: points count: count
 			[in]POINTF* Points,
 			int Count);"
 
-	<stdcall: errno GdipAddPathPolygon handle POINTF* sdword>
+	<stdcall: errno GdipAddPathPolygon handle POINTF* int32>
 	^self invalidCall: _failureCode!
 
 gdipAddPathPolygonI: path points: points count: count
@@ -362,7 +362,7 @@ gdipAddPathPolygonI: path points: points count: count
 			[in]POINTL* Points,
 			int Count);"
 
-	<stdcall: errno GdipAddPathPolygonI handle POINTL* sdword>
+	<stdcall: errno GdipAddPathPolygonI handle POINTL* int32>
 	^self invalidCall: _failureCode!
 
 gdipAddPathRectangle: path x: x y: y width: width height: height
@@ -388,7 +388,7 @@ gdipAddPathRectangleI: path x: x y: y width: width height: height
 			int width,
 			int height);"
 
-	<stdcall: errno GdipAddPathRectangleI handle sdword sdword sdword sdword>
+	<stdcall: errno GdipAddPathRectangleI handle int32 int32 int32 int32>
 	^self invalidCall: _failureCode!
 
 gdipAddPathRectangles: path rects: rects count: count
@@ -399,7 +399,7 @@ gdipAddPathRectangles: path rects: rects count: count
 			[in]RectF* rects,
 			int Count);"
 
-	<stdcall: errno GdipAddPathRectangles handle RectF* sdword>
+	<stdcall: errno GdipAddPathRectangles handle RectF* int32>
 	^self invalidCall: _failureCode!
 
 gdipAddPathRectanglesI: path rects: rects count: count
@@ -410,7 +410,7 @@ gdipAddPathRectanglesI: path rects: rects count: count
 			[in]Rect* rects,
 			int Count);"
 
-	<stdcall: errno GdipAddPathRectanglesI handle Rect* sdword>
+	<stdcall: errno GdipAddPathRectanglesI handle Rect* int32>
 	^self invalidCall: _failureCode!
 
 gdipAddPathString: path string: string length: length family: family style: style emSize: emSize layoutRect: layoutRect format: format
@@ -426,7 +426,7 @@ gdipAddPathString: path string: string length: length family: family style: styl
 			[in]RectF* layoutRect,
 			[in]PGpStringFormat format);"
 
-	<stdcall: errno GdipAddPathString handle lpwstr sdword handle sdword float RectF* handle>
+	<stdcall: errno GdipAddPathString handle lpwstr int32 handle int32 float RectF* handle>
 	^self invalidCall: _failureCode!
 
 gdipAddPathStringI: path string: string length: length family: family style: style emSize: emSize layoutRect: layoutRect format: format
@@ -442,7 +442,7 @@ gdipAddPathStringI: path string: string length: length family: family style: sty
 			[in]Rect* layoutRect,
 			[in]PGpStringFormat format);"
 
-	<stdcall: errno GdipAddPathStringI handle lpwstr sdword handle sdword float Rect* handle>
+	<stdcall: errno GdipAddPathStringI handle lpwstr int32 handle int32 float Rect* handle>
 	^self invalidCall: _failureCode!
 
 gdipBeginContainer: graphics dstrect: dstrect srcRect: srcRect unit: unit state: state
@@ -455,7 +455,7 @@ gdipBeginContainer: graphics dstrect: dstrect srcRect: srcRect unit: unit state:
 			GpUnit Unit,
 			GraphicsContainer* state);"
 
-	<stdcall: errno GdipBeginContainer handle RectF* RectF* sdword dword*>
+	<stdcall: errno GdipBeginContainer handle RectF* RectF* int32 uint32*>
 	^self invalidCall: _failureCode!
 
 gdipBeginContainer2: graphics state: state
@@ -465,7 +465,7 @@ gdipBeginContainer2: graphics state: state
 			PGpGraphics graphics,
 			GraphicsContainer* state);"
 
-	<stdcall: errno GdipBeginContainer2 handle dword*>
+	<stdcall: errno GdipBeginContainer2 handle uint32*>
 	^self invalidCall: _failureCode!
 
 gdipBeginContainerI: graphics dstrect: dstrect srcRect: srcRect unit: unit state: state
@@ -478,7 +478,7 @@ gdipBeginContainerI: graphics dstrect: dstrect srcRect: srcRect unit: unit state
 			GpUnit Unit,
 			GraphicsContainer* state);"
 
-	<stdcall: errno GdipBeginContainerI handle Rect* Rect* sdword dword*>
+	<stdcall: errno GdipBeginContainerI handle Rect* Rect* int32 uint32*>
 	^self invalidCall: _failureCode!
 
 gdipBitmapApplyEffect: bitmap effect: effect roi: roi useAuxData: useAuxData auxData: auxData auxDataSize: auxDataSize
@@ -492,7 +492,7 @@ gdipBitmapApplyEffect: bitmap effect: effect roi: roi useAuxData: useAuxData aux
 			void** auxData,
 			int* auxDataSize);"
 
-	<stdcall: errno GdipBitmapApplyEffect handle handle Rect* bool void** sdword*>
+	<stdcall: errno GdipBitmapApplyEffect handle handle Rect* bool void** int32*>
 	^self invalidCall: _failureCode!
 
 gdipBitmapConvertFormat: pInputBitmap format: format ditherType: ditherType paletteType: paletteType palette: palette alphaThresholdPercent: alphaThresholdPercent
@@ -506,7 +506,7 @@ gdipBitmapConvertFormat: pInputBitmap format: format ditherType: ditherType pale
 			ColorPalette* palette,
 			REAL alphaThresholdPercent);"
 
-	<stdcall: errno GdipBitmapConvertFormat handle sdword sdword sdword ColorPalette* float>
+	<stdcall: errno GdipBitmapConvertFormat handle int32 int32 int32 ColorPalette* float>
 	^self invalidCall: _failureCode!
 
 gdipBitmapCreateApplyEffect: inputBitmaps numInputs: numInputs effect: effect roi: roi outputRect: outputRect outputBitmap: outputBitmap useAuxData: useAuxData auxData: auxData auxDataSize: auxDataSize
@@ -523,7 +523,7 @@ gdipBitmapCreateApplyEffect: inputBitmaps numInputs: numInputs effect: effect ro
 			void** auxData,
 			int* auxDataSize);"
 
-	<stdcall: errno GdipBitmapCreateApplyEffect handle* sdword handle Rect* Rect* handle* bool void** sdword*>
+	<stdcall: errno GdipBitmapCreateApplyEffect handle* int32 handle Rect* Rect* handle* bool void** int32*>
 	^self invalidCall: _failureCode!
 
 gdipBitmapGetHistogram: bitmap format: format numberOfEntries: numberOfEntries channel0: channel0 channel1: channel1 channel2: channel2 channel3: channel3
@@ -538,7 +538,7 @@ gdipBitmapGetHistogram: bitmap format: format numberOfEntries: numberOfEntries c
 			unsigned int* channel2,
 			unsigned int* channel3);"
 
-	<stdcall: errno GdipBitmapGetHistogram handle sdword dword dword* dword* dword* dword*>
+	<stdcall: errno GdipBitmapGetHistogram handle int32 uint32 uint32* uint32* uint32* uint32*>
 	^self invalidCall: _failureCode!
 
 gdipBitmapGetHistogramSize: format numberOfEntries: numberOfEntries
@@ -548,7 +548,7 @@ gdipBitmapGetHistogramSize: format numberOfEntries: numberOfEntries
 			HistogramFormat format,
 			[out]unsigned int* NumberOfEntries);"
 
-	<stdcall: errno GdipBitmapGetHistogramSize sdword dword*>
+	<stdcall: errno GdipBitmapGetHistogramSize int32 uint32*>
 	^self invalidCall: _failureCode!
 
 gdipBitmapGetPixel: bitmap x: x y: y color: color
@@ -560,7 +560,7 @@ gdipBitmapGetPixel: bitmap x: x y: y color: color
 			[in]int y,
 			[out, retval]ARGB* Color);"
 
-	<stdcall: sdword GdipBitmapGetPixel handle sdword sdword dword*>
+	<stdcall: int32 GdipBitmapGetPixel handle int32 int32 uint32*>
 	^self invalidCall: _failureCode!
 
 gdipBitmapLockBits: bitmap rect: rect flags: flags format: format lockedBitmapData: lockedBitmapData
@@ -573,7 +573,7 @@ gdipBitmapLockBits: bitmap rect: rect flags: flags format: format lockedBitmapDa
 			[in]PixelFormat format,
 			[out, retval]BitmapData* lockedBitmapData);"
 
-	<stdcall: errno GdipBitmapLockBits handle Rect* dword sdword BitmapData*>
+	<stdcall: errno GdipBitmapLockBits handle Rect* uint32 int32 BitmapData*>
 	^self invalidCall: _failureCode!
 
 gdipBitmapSetPixel: bitmap x: x y: y color: color
@@ -585,7 +585,7 @@ gdipBitmapSetPixel: bitmap x: x y: y color: color
 			[in]int y,
 			[in]ARGB Color);"
 
-	<stdcall: errno GdipBitmapSetPixel handle sdword sdword dword>
+	<stdcall: errno GdipBitmapSetPixel handle int32 int32 uint32>
 	^self invalidCall: _failureCode!
 
 gdipBitmapSetResolution: bitmap xdpi: xdpi ydpi: ydpi
@@ -630,7 +630,7 @@ gdipCloneBitmapArea: x y: y width: width height: height format: format srcBitmap
 			[in]PGpBitmap srcBitmap,
 			[out, retval]PGpBitmap* dstBitmap);"
 
-	<stdcall: errno GdipCloneBitmapArea float float float float sdword handle handle*>
+	<stdcall: errno GdipCloneBitmapArea float float float float int32 handle handle*>
 	^self invalidCall: _failureCode!
 
 gdipCloneBitmapAreaI: x y: y width: width height: height format: format srcBitmap: srcBitmap dstBitmap: dstBitmap
@@ -645,7 +645,7 @@ gdipCloneBitmapAreaI: x y: y width: width height: height format: format srcBitma
 			[in]PGpBitmap srcBitmap,
 			[out, retval]PGpBitmap* dstBitmap);"
 
-	<stdcall: errno GdipCloneBitmapAreaI sdword sdword sdword sdword sdword handle handle*>
+	<stdcall: errno GdipCloneBitmapAreaI int32 int32 int32 int32 int32 handle handle*>
 	^self invalidCall: _failureCode!
 
 gdipCloneBrush: brush cloneBrush: cloneBrush
@@ -784,7 +784,7 @@ gdipCombineRegionPath: region path: path combineMode: combineMode
 			PGpPath path,
 			CombineMode CombineMode);"
 
-	<stdcall: errno GdipCombineRegionPath handle handle sdword>
+	<stdcall: errno GdipCombineRegionPath handle handle int32>
 	^self invalidCall: _failureCode!
 
 gdipCombineRegionRect: region rect: rect combineMode: combineMode
@@ -795,7 +795,7 @@ gdipCombineRegionRect: region rect: rect combineMode: combineMode
 			[in]RectF* Rect,
 			CombineMode CombineMode);"
 
-	<stdcall: errno GdipCombineRegionRect handle RectF* sdword>
+	<stdcall: errno GdipCombineRegionRect handle RectF* int32>
 	^self invalidCall: _failureCode!
 
 gdipCombineRegionRectI: region rect: rect combineMode: combineMode
@@ -806,7 +806,7 @@ gdipCombineRegionRectI: region rect: rect combineMode: combineMode
 			[in]Rect* Rect,
 			CombineMode CombineMode);"
 
-	<stdcall: errno GdipCombineRegionRectI handle Rect* sdword>
+	<stdcall: errno GdipCombineRegionRectI handle Rect* int32>
 	^self invalidCall: _failureCode!
 
 gdipCombineRegionRegion: region region2: region2 combineMode: combineMode
@@ -817,7 +817,7 @@ gdipCombineRegionRegion: region region2: region2 combineMode: combineMode
 			PGpRegion region2,
 			CombineMode CombineMode);"
 
-	<stdcall: errno GdipCombineRegionRegion handle handle sdword>
+	<stdcall: errno GdipCombineRegionRegion handle handle int32>
 	^self invalidCall: _failureCode!
 
 gdipComment: graphics sizeData: sizeData data: data
@@ -828,7 +828,7 @@ gdipComment: graphics sizeData: sizeData data: data
 			unsigned int sizeData,
 			[in]BYTE* Data);"
 
-	<stdcall: errno GdipComment handle dword byte*>
+	<stdcall: errno GdipComment handle uint32 uint8*>
 	^self invalidCall: _failureCode!
 
 gdipConvertToEmfPlus: refGraphics metafile: metafile conversionFailureFlag: conversionFailureFlag emfType: emfType description: description out_metafile: out_metafile
@@ -842,7 +842,7 @@ gdipConvertToEmfPlus: refGraphics metafile: metafile conversionFailureFlag: conv
 			WCHAR* description,
 			[out, retval]PGpMetafile* out_metafile);"
 
-	<stdcall: errno GdipConvertToEmfPlus handle handle sdword* sdword word* handle*>
+	<stdcall: errno GdipConvertToEmfPlus handle handle int32* int32 uint16* handle*>
 	^self invalidCall: _failureCode!
 
 gdipConvertToEmfPlusToFile: refGraphics metafile: metafile conversionFailureFlag: conversionFailureFlag filename: filename emfType: emfType description: description out_metafile: out_metafile
@@ -857,7 +857,7 @@ gdipConvertToEmfPlusToFile: refGraphics metafile: metafile conversionFailureFlag
 			WCHAR* description,
 			[out, retval]PGpMetafile* out_metafile);"
 
-	<stdcall: errno GdipConvertToEmfPlusToFile handle handle sdword* word* sdword word* handle*>
+	<stdcall: errno GdipConvertToEmfPlusToFile handle handle int32* uint16* int32 uint16* handle*>
 	^self invalidCall: _failureCode!
 
 gdipConvertToEmfPlusToStream: refGraphics metafile: metafile conversionFailureFlag: conversionFailureFlag stream: stream emfType: emfType description: description out_metafile: out_metafile
@@ -872,7 +872,7 @@ gdipConvertToEmfPlusToStream: refGraphics metafile: metafile conversionFailureFl
 			WCHAR* description,
 			[out, retval]PGpMetafile* out_metafile);"
 
-	<stdcall: errno GdipConvertToEmfPlusToStream handle handle sdword* OS.COM.IStream* sdword word* handle*>
+	<stdcall: errno GdipConvertToEmfPlusToStream handle handle int32* OS.COM.IStream* int32 uint16* handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateAdjustableArrowCap: height width: width isFilled: isFilled cap: cap
@@ -937,7 +937,7 @@ gdipCreateBitmapFromGraphics: width height: height target: target bitmap: bitmap
 			[in]PGpGraphics target,
 			[out, retval]PGpBitmap* bitmap);"
 
-	<stdcall: errno GdipCreateBitmapFromGraphics sdword sdword handle handle*>
+	<stdcall: errno GdipCreateBitmapFromGraphics int32 int32 handle handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateBitmapFromHBITMAP: hbm hpal: hpal bitmap: bitmap
@@ -983,7 +983,7 @@ gdipCreateBitmapFromScan0: width height: height stride: stride format: format sc
 			[in]BYTE* Scan0,
 			[out, retval]PGpBitmap* bitmap);"
 
-	<stdcall: errno GdipCreateBitmapFromScan0 sdword sdword sdword sdword byte* handle*>
+	<stdcall: errno GdipCreateBitmapFromScan0 int32 int32 int32 int32 uint8* handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateBitmapFromStream: stream bitmap: bitmap
@@ -1027,7 +1027,7 @@ gdipCreateCustomLineCap: fillPath strokePath: strokePath baseCap: baseCap baseIn
 			REAL baseInset,
 			[out, retval]PGpCustomLineCap* customCap);"
 
-	<stdcall: errno GdipCreateCustomLineCap handle handle sdword float handle*>
+	<stdcall: errno GdipCreateCustomLineCap handle handle int32 float handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateFont: fontFamily emSize: emSize style: style unit: unit font: font
@@ -1040,7 +1040,7 @@ gdipCreateFont: fontFamily emSize: emSize style: style unit: unit font: font
 			Unit Unit,
 			[out, retval]PGpFont* font);"
 
-	<stdcall: errno GdipCreateFont handle float sdword sdword handle*>
+	<stdcall: errno GdipCreateFont handle float int32 int32 handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateFontFamilyFromName: name fontCollection: fontCollection fontFamily: fontFamily
@@ -1051,7 +1051,7 @@ gdipCreateFontFamilyFromName: name fontCollection: fontCollection fontFamily: fo
 			[in]PGpFontCollection fontCollection,
 			[out, retval]PGpFontFamily* FontFamily);"
 
-	<stdcall: sdword GdipCreateFontFamilyFromName lpwstr handle handle*>
+	<stdcall: int32 GdipCreateFontFamilyFromName lpwstr handle handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateFontFromDC: hdc font: font
@@ -1145,7 +1145,7 @@ gdipCreateHatchBrush: hatchStyle forecol: forecol backcol: backcol brush: brush
 			ARGB backcol,
 			[out, retval]PGpHatch* brush);"
 
-	<stdcall: errno GdipCreateHatchBrush sdword dword dword handle*>
+	<stdcall: errno GdipCreateHatchBrush int32 uint32 uint32 handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateHBITMAPFromBitmap: bitmap hbmReturn: hbmReturn background: background
@@ -1156,7 +1156,7 @@ gdipCreateHBITMAPFromBitmap: bitmap hbmReturn: hbmReturn background: background
 			[out]HBITMAP* hbmReturn,
 			[in]ARGB background);"
 
-	<stdcall: errno GdipCreateHBITMAPFromBitmap handle handle* dword>
+	<stdcall: errno GdipCreateHBITMAPFromBitmap handle handle* uint32>
 	^self invalidCall: _failureCode!
 
 gdipCreateHICONFromBitmap: bitmap hbmReturn: hbmReturn
@@ -1189,7 +1189,7 @@ gdipCreateLineBrush: point1 point2: point2 color1: color1 color2: color2 wrapMod
 			[in]GpWrapMode WrapMode,
 			[out, retval]PGpLineGradient* lineGradient);"
 
-	<stdcall: errno GdipCreateLineBrush POINTF* POINTF* dword dword sdword handle*>
+	<stdcall: errno GdipCreateLineBrush POINTF* POINTF* uint32 uint32 int32 handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateLineBrushFromRect: rect color1: color1 color2: color2 mode: mode wrapMode: wrapMode lineGradient: lineGradient
@@ -1203,7 +1203,7 @@ gdipCreateLineBrushFromRect: rect color1: color1 color2: color2 mode: mode wrapM
 			GpWrapMode WrapMode,
 			[out, retval]PGpLineGradient* lineGradient);"
 
-	<stdcall: errno GdipCreateLineBrushFromRect RectF* dword dword sdword sdword handle*>
+	<stdcall: errno GdipCreateLineBrushFromRect RectF* uint32 uint32 int32 int32 handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateLineBrushFromRectI: rect color1: color1 color2: color2 mode: mode wrapMode: wrapMode lineGradient: lineGradient
@@ -1217,7 +1217,7 @@ gdipCreateLineBrushFromRectI: rect color1: color1 color2: color2 mode: mode wrap
 			GpWrapMode WrapMode,
 			[out, retval]PGpLineGradient* lineGradient);"
 
-	<stdcall: errno GdipCreateLineBrushFromRectI Rect* dword dword sdword sdword handle*>
+	<stdcall: errno GdipCreateLineBrushFromRectI Rect* uint32 uint32 int32 int32 handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateLineBrushFromRectWithAngle: rect color1: color1 color2: color2 angle: angle isAngleScalable: isAngleScalable wrapMode: wrapMode lineGradient: lineGradient
@@ -1232,7 +1232,7 @@ gdipCreateLineBrushFromRectWithAngle: rect color1: color1 color2: color2 angle: 
 			GpWrapMode WrapMode,
 			[out, retval]PGpLineGradient* lineGradient);"
 
-	<stdcall: errno GdipCreateLineBrushFromRectWithAngle RectF* dword dword float bool sdword handle*>
+	<stdcall: errno GdipCreateLineBrushFromRectWithAngle RectF* uint32 uint32 float bool int32 handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateLineBrushFromRectWithAngleI: rect color1: color1 color2: color2 angle: angle isAngleScalable: isAngleScalable wrapMode: wrapMode lineGradient: lineGradient
@@ -1247,7 +1247,7 @@ gdipCreateLineBrushFromRectWithAngleI: rect color1: color1 color2: color2 angle:
 			GpWrapMode WrapMode,
 			[out, retval]PGpLineGradient* lineGradient);"
 
-	<stdcall: errno GdipCreateLineBrushFromRectWithAngleI Rect* dword dword float bool sdword handle*>
+	<stdcall: errno GdipCreateLineBrushFromRectWithAngleI Rect* uint32 uint32 float bool int32 handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateLineBrushI: point1 point2: point2 color1: color1 color2: color2 wrapMode: wrapMode lineGradient: lineGradient
@@ -1261,7 +1261,7 @@ gdipCreateLineBrushI: point1 point2: point2 color1: color1 color2: color2 wrapMo
 			GpWrapMode WrapMode,
 			[out, retval]PGpLineGradient* lineGradient);"
 
-	<stdcall: errno GdipCreateLineBrushI POINTL* POINTL* dword dword sdword handle*>
+	<stdcall: errno GdipCreateLineBrushI POINTL* POINTL* uint32 uint32 int32 handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateMatrix: matrix
@@ -1371,7 +1371,7 @@ gdipCreatePath: brushMode path: path
 			GpFillMode brushMode,
 			[out, retval]PGpPath* path);"
 
-	<stdcall: errno GdipCreatePath sdword handle*>
+	<stdcall: errno GdipCreatePath int32 handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreatePath2: points types: types count: count fillMode: fillMode path: path
@@ -1384,7 +1384,7 @@ gdipCreatePath2: points types: types count: count fillMode: fillMode path: path
 			GpFillMode FillMode,
 			[out, retval]PGpPath* path);"
 
-	<stdcall: errno GdipCreatePath2 POINTF* byte* sdword sdword handle*>
+	<stdcall: errno GdipCreatePath2 POINTF* uint8* int32 int32 handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreatePath2I: points types: types count: count fillMode: fillMode path: path
@@ -1397,7 +1397,7 @@ gdipCreatePath2I: points types: types count: count fillMode: fillMode path: path
 			GpFillMode FillMode,
 			[out, retval]PGpPath* path);"
 
-	<stdcall: errno GdipCreatePath2I POINTL* byte* sdword sdword handle*>
+	<stdcall: errno GdipCreatePath2I POINTL* uint8* int32 int32 handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreatePathGradient: points count: count wrapMode: wrapMode polyGradient: polyGradient
@@ -1409,7 +1409,7 @@ gdipCreatePathGradient: points count: count wrapMode: wrapMode polyGradient: pol
 			GpWrapMode WrapMode,
 			[out, retval]PGpPathGradient* polyGradient);"
 
-	<stdcall: errno GdipCreatePathGradient POINTF* sdword sdword handle*>
+	<stdcall: errno GdipCreatePathGradient POINTF* int32 int32 handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreatePathGradientFromPath: path polyGradient: polyGradient
@@ -1431,7 +1431,7 @@ gdipCreatePathGradientI: points count: count wrapMode: wrapMode polyGradient: po
 			GpWrapMode WrapMode,
 			[out, retval]PGpPathGradient* polyGradient);"
 
-	<stdcall: errno GdipCreatePathGradientI POINTL* sdword sdword handle*>
+	<stdcall: errno GdipCreatePathGradientI POINTL* int32 int32 handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreatePathIter: iterator path: path
@@ -1453,7 +1453,7 @@ gdipCreatePen1: color width: width unit: unit pen: pen
 			GpUnit Unit,
 			[out, retval]PGpPen* pen);"
 
-	<stdcall: errno GdipCreatePen1 dword float sdword handle*>
+	<stdcall: errno GdipCreatePen1 uint32 float int32 handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreatePen2: brush width: width unit: unit pen: pen
@@ -1465,7 +1465,7 @@ gdipCreatePen2: brush width: width unit: unit pen: pen
 			GpUnit Unit,
 			[out, retval]PGpPen* pen);"
 
-	<stdcall: errno GdipCreatePen2 handle float sdword handle*>
+	<stdcall: errno GdipCreatePen2 handle float int32 handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateRegion: region
@@ -1525,7 +1525,7 @@ gdipCreateRegionRgnData: regionData size: size region: region
 			int Size,
 			[out, retval]PGpRegion* region);"
 
-	<stdcall: errno GdipCreateRegionRgnData byte* sdword handle*>
+	<stdcall: errno GdipCreateRegionRgnData uint8* int32 handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateSolidFill: color brush: brush
@@ -1535,7 +1535,7 @@ gdipCreateSolidFill: color brush: brush
 			[in]ARGB Color,
 			[out, retval]PGpSolidFill* brush);"
 
-	<stdcall: errno GdipCreateSolidFill dword handle*>
+	<stdcall: errno GdipCreateSolidFill uint32 handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateStreamOnFile: filename access: access stream: stream
@@ -1546,7 +1546,7 @@ gdipCreateStreamOnFile: filename access: access stream: stream
 			unsigned int access,
 			[out, retval]IStream** stream);"
 
-	<stdcall: errno GdipCreateStreamOnFile lpwstr dword OS.COM.IStream**>
+	<stdcall: errno GdipCreateStreamOnFile lpwstr uint32 OS.COM.IStream**>
 	^self invalidCall: _failureCode!
 
 gdipCreateStringFormat: formatAttributes language: language format: format
@@ -1557,7 +1557,7 @@ gdipCreateStringFormat: formatAttributes language: language format: format
 			LANGID language,
 			[out, retval]PGpStringFormat* format);"
 
-	<stdcall: errno GdipCreateStringFormat sdword word handle*>
+	<stdcall: errno GdipCreateStringFormat int32 uint16 handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateTexture: image wrapMode: wrapMode texture: texture
@@ -1568,7 +1568,7 @@ gdipCreateTexture: image wrapMode: wrapMode texture: texture
 			[in]GpWrapMode WrapMode,
 			[out, retval]PGpTexture* texture);"
 
-	<stdcall: errno GdipCreateTexture handle sdword handle*>
+	<stdcall: errno GdipCreateTexture handle int32 handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateTexture2: image wrapMode: wrapMode x: x y: y width: width height: height texture: texture
@@ -1583,7 +1583,7 @@ gdipCreateTexture2: image wrapMode: wrapMode x: x y: y width: width height: heig
 			[in]REAL height,
 			[out, retval]PGpTexture* texture);"
 
-	<stdcall: errno GdipCreateTexture2 handle sdword float float float float handle*>
+	<stdcall: errno GdipCreateTexture2 handle int32 float float float float handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateTexture2I: image wrapMode: wrapMode x: x y: y width: width height: height texture: texture
@@ -1598,7 +1598,7 @@ gdipCreateTexture2I: image wrapMode: wrapMode x: x y: y width: width height: hei
 			[in]int height,
 			[out, retval]PGpTexture* texture);"
 
-	<stdcall: errno GdipCreateTexture2I handle sdword sdword sdword sdword sdword handle*>
+	<stdcall: errno GdipCreateTexture2I handle int32 int32 int32 int32 int32 handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateTextureIA: image imageAttributes: imageAttributes x: x y: y width: width height: height texture: texture
@@ -1628,7 +1628,7 @@ gdipCreateTextureIAI: image imageAttributes: imageAttributes x: x y: y width: wi
 			[in]int height,
 			[out, retval]PGpTexture* texture);"
 
-	<stdcall: errno GdipCreateTextureIAI handle handle sdword sdword sdword sdword handle*>
+	<stdcall: errno GdipCreateTextureIAI handle handle int32 int32 int32 int32 handle*>
 	^self invalidCall: _failureCode!
 
 gdipDeleteBrush: brush
@@ -1637,7 +1637,7 @@ gdipDeleteBrush: brush
 		GpStatus_NoThrow __stdcall GdipDeleteBrush(
 			PGpBrush brush);"
 
-	<stdcall: sdword GdipDeleteBrush handle>
+	<stdcall: int32 GdipDeleteBrush handle>
 	^self invalidCall: _failureCode!
 
 gdipDeleteCachedBitmap: cachedBitmap
@@ -1646,7 +1646,7 @@ gdipDeleteCachedBitmap: cachedBitmap
 		GpStatus_NoThrow __stdcall GdipDeleteCachedBitmap(
 			PGpCachedBitmap cachedBitmap);"
 
-	<stdcall: sdword GdipDeleteCachedBitmap handle>
+	<stdcall: int32 GdipDeleteCachedBitmap handle>
 	^self invalidCall: _failureCode!
 
 gdipDeleteCustomLineCap: customCap
@@ -1655,7 +1655,7 @@ gdipDeleteCustomLineCap: customCap
 		GpStatus_NoThrow __stdcall GdipDeleteCustomLineCap(
 			PGpCustomLineCap customCap);"
 
-	<stdcall: sdword GdipDeleteCustomLineCap handle>
+	<stdcall: int32 GdipDeleteCustomLineCap handle>
 	^self invalidCall: _failureCode!
 
 gdipDeleteFont: font
@@ -1664,7 +1664,7 @@ gdipDeleteFont: font
 		GpStatus_NoThrow __stdcall GdipDeleteFont(
 			PGpFont font);"
 
-	<stdcall: sdword GdipDeleteFont handle>
+	<stdcall: int32 GdipDeleteFont handle>
 	^self invalidCall: _failureCode!
 
 gdipDeleteFontFamily: fontFamily
@@ -1673,7 +1673,7 @@ gdipDeleteFontFamily: fontFamily
 		GpStatus_NoThrow __stdcall GdipDeleteFontFamily(
 			PGpFontFamily FontFamily);"
 
-	<stdcall: sdword GdipDeleteFontFamily handle>
+	<stdcall: int32 GdipDeleteFontFamily handle>
 	^self invalidCall: _failureCode!
 
 gdipDeleteGraphics: graphics
@@ -1682,7 +1682,7 @@ gdipDeleteGraphics: graphics
 		GpStatus_NoThrow __stdcall GdipDeleteGraphics(
 			PGpGraphics graphics);"
 
-	<stdcall: sdword GdipDeleteGraphics handle>
+	<stdcall: int32 GdipDeleteGraphics handle>
 	^self invalidCall: _failureCode!
 
 gdipDeleteMatrix: matrix
@@ -1691,7 +1691,7 @@ gdipDeleteMatrix: matrix
 		GpStatus_NoThrow __stdcall GdipDeleteMatrix(
 			PGpMatrix matrix);"
 
-	<stdcall: sdword GdipDeleteMatrix handle>
+	<stdcall: int32 GdipDeleteMatrix handle>
 	^self invalidCall: _failureCode!
 
 gdipDeletePath: path
@@ -1700,7 +1700,7 @@ gdipDeletePath: path
 		GpStatus_NoThrow __stdcall GdipDeletePath(
 			PGpPath path);"
 
-	<stdcall: sdword GdipDeletePath handle>
+	<stdcall: int32 GdipDeletePath handle>
 	^self invalidCall: _failureCode!
 
 gdipDeletePathIter: iterator
@@ -1709,7 +1709,7 @@ gdipDeletePathIter: iterator
 		GpStatus_NoThrow __stdcall GdipDeletePathIter(
 			[in]PGpPathIterator iterator);"
 
-	<stdcall: sdword GdipDeletePathIter handle>
+	<stdcall: int32 GdipDeletePathIter handle>
 	^self invalidCall: _failureCode!
 
 gdipDeletePen: pen
@@ -1718,7 +1718,7 @@ gdipDeletePen: pen
 		GpStatus_NoThrow __stdcall GdipDeletePen(
 			PGpPen pen);"
 
-	<stdcall: sdword GdipDeletePen handle>
+	<stdcall: int32 GdipDeletePen handle>
 	^self invalidCall: _failureCode!
 
 gdipDeletePrivateFontCollection: fontCollection
@@ -1727,7 +1727,7 @@ gdipDeletePrivateFontCollection: fontCollection
 		GpStatus_NoThrow __stdcall GdipDeletePrivateFontCollection(
 			[out, retval]PGpFontCollection* fontCollection);"
 
-	<stdcall: sdword GdipDeletePrivateFontCollection handle*>
+	<stdcall: int32 GdipDeletePrivateFontCollection handle*>
 	^self invalidCall: _failureCode!
 
 gdipDeleteRegion: region
@@ -1736,7 +1736,7 @@ gdipDeleteRegion: region
 		GpStatus_NoThrow __stdcall GdipDeleteRegion(
 			PGpRegion region);"
 
-	<stdcall: sdword GdipDeleteRegion handle>
+	<stdcall: int32 GdipDeleteRegion handle>
 	^self invalidCall: _failureCode!
 
 gdipDeleteStringFormat: format
@@ -1745,7 +1745,7 @@ gdipDeleteStringFormat: format
 		GpStatus_NoThrow __stdcall GdipDeleteStringFormat(
 			PGpStringFormat format);"
 
-	<stdcall: sdword GdipDeleteStringFormat handle>
+	<stdcall: int32 GdipDeleteStringFormat handle>
 	^self invalidCall: _failureCode!
 
 gdipDisposeImage: image
@@ -1754,7 +1754,7 @@ gdipDisposeImage: image
 		GpStatus_NoThrow __stdcall GdipDisposeImage(
 			[in]PGpImage image);"
 
-	<stdcall: sdword GdipDisposeImage handle>
+	<stdcall: int32 GdipDisposeImage handle>
 	^self invalidCall: _failureCode!
 
 gdipDisposeImageAttributes: imageattr
@@ -1763,7 +1763,7 @@ gdipDisposeImageAttributes: imageattr
 		GpStatus_NoThrow __stdcall GdipDisposeImageAttributes(
 			PGpImageAttributes imageattr);"
 
-	<stdcall: sdword GdipDisposeImageAttributes handle>
+	<stdcall: int32 GdipDisposeImageAttributes handle>
 	^self invalidCall: _failureCode!
 
 gdipDrawArc: graphics pen: pen x: x y: y width: width height: height startAngle: startAngle sweepAngle: sweepAngle
@@ -1795,7 +1795,7 @@ gdipDrawArcI: graphics pen: pen x: x y: y width: width height: height startAngle
 			REAL startAngle,
 			REAL sweepAngle);"
 
-	<stdcall: errno GdipDrawArcI handle handle sdword sdword sdword sdword float float>
+	<stdcall: errno GdipDrawArcI handle handle int32 int32 int32 int32 float float>
 	^self invalidCall: _failureCode!
 
 gdipDrawBezier: graphics pen: pen x1: x1 y1: y1 x2: x2 y2: y2 x3: x3 y3: y3 x4: x4 y4: y4
@@ -1831,7 +1831,7 @@ gdipDrawBezierI: graphics pen: pen x1: x1 y1: y1 x2: x2 y2: y2 x3: x3 y3: y3 x4:
 			int x4,
 			int y4);"
 
-	<stdcall: errno GdipDrawBezierI handle handle sdword sdword sdword sdword sdword sdword sdword sdword>
+	<stdcall: errno GdipDrawBezierI handle handle int32 int32 int32 int32 int32 int32 int32 int32>
 	^self invalidCall: _failureCode!
 
 gdipDrawBeziers: graphics pen: pen points: points count: count
@@ -1843,7 +1843,7 @@ gdipDrawBeziers: graphics pen: pen points: points count: count
 			[in]POINTF* Points,
 			int Count);"
 
-	<stdcall: errno GdipDrawBeziers handle handle POINTF* sdword>
+	<stdcall: errno GdipDrawBeziers handle handle POINTF* int32>
 	^self invalidCall: _failureCode!
 
 gdipDrawBeziersI: graphics pen: pen points: points count: count
@@ -1855,7 +1855,7 @@ gdipDrawBeziersI: graphics pen: pen points: points count: count
 			[in]POINTL* Points,
 			int Count);"
 
-	<stdcall: errno GdipDrawBeziersI handle handle POINTL* sdword>
+	<stdcall: errno GdipDrawBeziersI handle handle POINTL* int32>
 	^self invalidCall: _failureCode!
 
 gdipDrawCachedBitmap: graphics cachedBitmap: cachedBitmap x: x y: y
@@ -1867,7 +1867,7 @@ gdipDrawCachedBitmap: graphics cachedBitmap: cachedBitmap x: x y: y
 			int x,
 			int y);"
 
-	<stdcall: errno GdipDrawCachedBitmap handle handle sdword sdword>
+	<stdcall: errno GdipDrawCachedBitmap handle handle int32 int32>
 	^self invalidCall: _failureCode!
 
 gdipDrawClosedCurve: graphics pen: pen points: points count: count
@@ -1879,7 +1879,7 @@ gdipDrawClosedCurve: graphics pen: pen points: points count: count
 			[in]POINTF* Points,
 			int Count);"
 
-	<stdcall: errno GdipDrawClosedCurve handle handle POINTF* sdword>
+	<stdcall: errno GdipDrawClosedCurve handle handle POINTF* int32>
 	^self invalidCall: _failureCode!
 
 gdipDrawClosedCurve2: graphics pen: pen points: points count: count tension: tension
@@ -1892,7 +1892,7 @@ gdipDrawClosedCurve2: graphics pen: pen points: points count: count tension: ten
 			int Count,
 			REAL tension);"
 
-	<stdcall: errno GdipDrawClosedCurve2 handle handle POINTF* sdword float>
+	<stdcall: errno GdipDrawClosedCurve2 handle handle POINTF* int32 float>
 	^self invalidCall: _failureCode!
 
 gdipDrawClosedCurve2I: graphics pen: pen points: points count: count tension: tension
@@ -1905,7 +1905,7 @@ gdipDrawClosedCurve2I: graphics pen: pen points: points count: count tension: te
 			int Count,
 			REAL tension);"
 
-	<stdcall: errno GdipDrawClosedCurve2I handle handle POINTL* sdword float>
+	<stdcall: errno GdipDrawClosedCurve2I handle handle POINTL* int32 float>
 	^self invalidCall: _failureCode!
 
 gdipDrawClosedCurveI: graphics pen: pen points: points count: count
@@ -1917,7 +1917,7 @@ gdipDrawClosedCurveI: graphics pen: pen points: points count: count
 			[in]POINTL* Points,
 			int Count);"
 
-	<stdcall: errno GdipDrawClosedCurveI handle handle POINTL* sdword>
+	<stdcall: errno GdipDrawClosedCurveI handle handle POINTL* int32>
 	^self invalidCall: _failureCode!
 
 gdipDrawCurve: graphics pen: pen points: points count: count
@@ -1929,7 +1929,7 @@ gdipDrawCurve: graphics pen: pen points: points count: count
 			[in]POINTF* Points,
 			int Count);"
 
-	<stdcall: errno GdipDrawCurve handle handle POINTF* sdword>
+	<stdcall: errno GdipDrawCurve handle handle POINTF* int32>
 	^self invalidCall: _failureCode!
 
 gdipDrawCurve2: graphics pen: pen points: points count: count tension: tension
@@ -1942,7 +1942,7 @@ gdipDrawCurve2: graphics pen: pen points: points count: count tension: tension
 			int Count,
 			REAL tension);"
 
-	<stdcall: errno GdipDrawCurve2 handle handle POINTF* sdword float>
+	<stdcall: errno GdipDrawCurve2 handle handle POINTF* int32 float>
 	^self invalidCall: _failureCode!
 
 gdipDrawCurve2I: graphics pen: pen points: points count: count tension: tension
@@ -1955,7 +1955,7 @@ gdipDrawCurve2I: graphics pen: pen points: points count: count tension: tension
 			int Count,
 			REAL tension);"
 
-	<stdcall: errno GdipDrawCurve2I handle handle POINTL* sdword float>
+	<stdcall: errno GdipDrawCurve2I handle handle POINTL* int32 float>
 	^self invalidCall: _failureCode!
 
 gdipDrawCurve3: graphics pen: pen points: points count: count offset: offset numberOfSegments: numberOfSegments tension: tension
@@ -1970,7 +1970,7 @@ gdipDrawCurve3: graphics pen: pen points: points count: count offset: offset num
 			int numberOfSegments,
 			REAL tension);"
 
-	<stdcall: errno GdipDrawCurve3 handle handle POINTF* sdword sdword sdword float>
+	<stdcall: errno GdipDrawCurve3 handle handle POINTF* int32 int32 int32 float>
 	^self invalidCall: _failureCode!
 
 gdipDrawCurve3I: graphics pen: pen points: points count: count offset: offset numberOfSegments: numberOfSegments tension: tension
@@ -1985,7 +1985,7 @@ gdipDrawCurve3I: graphics pen: pen points: points count: count offset: offset nu
 			int numberOfSegments,
 			REAL tension);"
 
-	<stdcall: errno GdipDrawCurve3I handle handle POINTL* sdword sdword sdword float>
+	<stdcall: errno GdipDrawCurve3I handle handle POINTL* int32 int32 int32 float>
 	^self invalidCall: _failureCode!
 
 gdipDrawCurveI: graphics pen: pen points: points count: count
@@ -1997,7 +1997,7 @@ gdipDrawCurveI: graphics pen: pen points: points count: count
 			[in]POINTL* Points,
 			int Count);"
 
-	<stdcall: errno GdipDrawCurveI handle handle POINTL* sdword>
+	<stdcall: errno GdipDrawCurveI handle handle POINTL* int32>
 	^self invalidCall: _failureCode!
 
 gdipDrawDriverString: graphics text: text length: length font: font brush: brush positions: positions flags: flags matrix: matrix
@@ -2013,7 +2013,7 @@ gdipDrawDriverString: graphics text: text length: length font: font brush: brush
 			int Flags,
 			[in]PGpMatrix matrix);"
 
-	<stdcall: errno GdipDrawDriverString handle word* sdword handle handle POINTF* sdword handle>
+	<stdcall: errno GdipDrawDriverString handle uint16* int32 handle handle POINTF* int32 handle>
 	^self invalidCall: _failureCode!
 
 gdipDrawEllipse: graphics pen: pen x: x y: y width: width height: height
@@ -2041,7 +2041,7 @@ gdipDrawEllipseI: graphics pen: pen x: x y: y width: width height: height
 			int width,
 			int height);"
 
-	<stdcall: errno GdipDrawEllipseI handle handle sdword sdword sdword sdword>
+	<stdcall: errno GdipDrawEllipseI handle handle int32 int32 int32 int32>
 	^self invalidCall: _failureCode!
 
 gdipDrawImage: graphics image: image x: x y: y
@@ -2068,7 +2068,7 @@ gdipDrawImageFX: graphics image: image source: source xForm: xForm effect: effec
 			PGpImageAttributes imageAttributes,
 			GpUnit srcUnit);"
 
-	<stdcall: errno GdipDrawImageFX handle handle RectF* handle handle handle sdword>
+	<stdcall: errno GdipDrawImageFX handle handle RectF* handle handle handle int32>
 	^self invalidCall: _failureCode!
 
 gdipDrawImageI: graphics image: image x: x y: y
@@ -2080,7 +2080,7 @@ gdipDrawImageI: graphics image: image x: x y: y
 			int x,
 			int y);"
 
-	<stdcall: errno GdipDrawImageI handle handle sdword sdword>
+	<stdcall: errno GdipDrawImageI handle handle int32 int32>
 	^self invalidCall: _failureCode!
 
 gdipDrawImagePointRect: graphics image: image x: x y: y srcx: srcx srcy: srcy srcwidth: srcwidth srcheight: srcheight srcUnit: srcUnit
@@ -2097,7 +2097,7 @@ gdipDrawImagePointRect: graphics image: image x: x y: y srcx: srcx srcy: srcy sr
 			REAL srcheight,
 			GpUnit srcUnit);"
 
-	<stdcall: errno GdipDrawImagePointRect handle handle float float float float float float sdword>
+	<stdcall: errno GdipDrawImagePointRect handle handle float float float float float float int32>
 	^self invalidCall: _failureCode!
 
 gdipDrawImagePointRectI: graphics image: image x: x y: y srcx: srcx srcy: srcy srcwidth: srcwidth srcheight: srcheight srcUnit: srcUnit
@@ -2114,7 +2114,7 @@ gdipDrawImagePointRectI: graphics image: image x: x y: y srcx: srcx srcy: srcy s
 			int srcheight,
 			GpUnit srcUnit);"
 
-	<stdcall: errno GdipDrawImagePointRectI handle handle sdword sdword sdword sdword sdword sdword sdword>
+	<stdcall: errno GdipDrawImagePointRectI handle handle int32 int32 int32 int32 int32 int32 int32>
 	^self invalidCall: _failureCode!
 
 gdipDrawImagePoints: graphics image: image dstpoints: dstpoints count: count
@@ -2126,7 +2126,7 @@ gdipDrawImagePoints: graphics image: image dstpoints: dstpoints count: count
 			[in]POINTF* dstpoints,
 			int Count);"
 
-	<stdcall: errno GdipDrawImagePoints handle handle POINTF* sdword>
+	<stdcall: errno GdipDrawImagePoints handle handle POINTF* int32>
 	^self invalidCall: _failureCode!
 
 gdipDrawImagePointsI: graphics image: image dstpoints: dstpoints count: count
@@ -2138,7 +2138,7 @@ gdipDrawImagePointsI: graphics image: image dstpoints: dstpoints count: count
 			[in]POINTL* dstpoints,
 			int Count);"
 
-	<stdcall: errno GdipDrawImagePointsI handle handle POINTL* sdword>
+	<stdcall: errno GdipDrawImagePointsI handle handle POINTL* int32>
 	^self invalidCall: _failureCode!
 
 gdipDrawImagePointsRect: graphics image: image points: points count: count srcx: srcx srcy: srcy srcwidth: srcwidth srcheight: srcheight srcUnit: srcUnit imageAttributes: imageAttributes callback: callback callbackData: callbackData
@@ -2158,7 +2158,7 @@ gdipDrawImagePointsRect: graphics image: image points: points count: count srcx:
 			DrawImageAbort CALLBACK,
 			void* callbackData);"
 
-	<stdcall: errno GdipDrawImagePointsRect handle handle POINTF* sdword float float float float sdword handle void* void*>
+	<stdcall: errno GdipDrawImagePointsRect handle handle POINTF* int32 float float float float int32 handle void* void*>
 	^self invalidCall: _failureCode!
 
 gdipDrawImagePointsRectI: graphics image: image points: points count: count srcx: srcx srcy: srcy srcwidth: srcwidth srcheight: srcheight srcUnit: srcUnit imageAttributes: imageAttributes callback: callback callbackData: callbackData
@@ -2178,7 +2178,7 @@ gdipDrawImagePointsRectI: graphics image: image points: points count: count srcx
 			DrawImageAbort CALLBACK,
 			void* callbackData);"
 
-	<stdcall: errno GdipDrawImagePointsRectI handle handle POINTL* sdword sdword sdword sdword sdword sdword handle void* void*>
+	<stdcall: errno GdipDrawImagePointsRectI handle handle POINTL* int32 int32 int32 int32 int32 int32 handle void* void*>
 	^self invalidCall: _failureCode!
 
 gdipDrawImageRect: graphics image: image x: x y: y width: width height: height
@@ -2206,7 +2206,7 @@ gdipDrawImageRectI: graphics image: image x: x y: y width: width height: height
 			int width,
 			int height);"
 
-	<stdcall: errno GdipDrawImageRectI handle handle sdword sdword sdword sdword>
+	<stdcall: errno GdipDrawImageRectI handle handle int32 int32 int32 int32>
 	^self invalidCall: _failureCode!
 
 gdipDrawImageRectRect: graphics image: image dstx: dstx dsty: dsty dstwidth: dstwidth dstheight: dstheight srcx: srcx srcy: srcy srcwidth: srcwidth srcheight: srcheight srcUnit: srcUnit imageAttributes: imageAttributes callback: callback callbackData: callbackData
@@ -2228,7 +2228,7 @@ gdipDrawImageRectRect: graphics image: image dstx: dstx dsty: dsty dstwidth: dst
 			DrawImageAbort CALLBACK,
 			void* callbackData);"
 
-	<stdcall: errno GdipDrawImageRectRect handle handle float float float float float float float float sdword handle void* void*>
+	<stdcall: errno GdipDrawImageRectRect handle handle float float float float float float float float int32 handle void* void*>
 	^self invalidCall: _failureCode!
 
 gdipDrawImageRectRectI: graphics image: image dstx: dstx dsty: dsty dstwidth: dstwidth dstheight: dstheight srcx: srcx srcy: srcy srcwidth: srcwidth srcheight: srcheight srcUnit: srcUnit imageAttributes: imageAttributes callback: callback callbackData: callbackData
@@ -2250,7 +2250,7 @@ gdipDrawImageRectRectI: graphics image: image dstx: dstx dsty: dsty dstwidth: ds
 			DrawImageAbort CALLBACK,
 			void* callbackData);"
 
-	<stdcall: errno GdipDrawImageRectRectI handle handle sdword sdword sdword sdword sdword sdword sdword sdword sdword handle void* void*>
+	<stdcall: errno GdipDrawImageRectRectI handle handle int32 int32 int32 int32 int32 int32 int32 int32 int32 handle void* void*>
 	^self invalidCall: _failureCode!
 
 gdipDrawLine: graphics pen: pen x1: x1 y1: y1 x2: x2 y2: y2
@@ -2278,7 +2278,7 @@ gdipDrawLineI: graphics pen: pen x1: x1 y1: y1 x2: x2 y2: y2
 			int x2,
 			int y2);"
 
-	<stdcall: errno GdipDrawLineI handle handle sdword sdword sdword sdword>
+	<stdcall: errno GdipDrawLineI handle handle int32 int32 int32 int32>
 	^self invalidCall: _failureCode!
 
 gdipDrawLines: graphics pen: pen points: points count: count
@@ -2290,7 +2290,7 @@ gdipDrawLines: graphics pen: pen points: points count: count
 			[in]POINTF* Points,
 			int Count);"
 
-	<stdcall: errno GdipDrawLines handle handle POINTF* sdword>
+	<stdcall: errno GdipDrawLines handle handle POINTF* int32>
 	^self invalidCall: _failureCode!
 
 gdipDrawLinesI: graphics pen: pen points: points count: count
@@ -2302,7 +2302,7 @@ gdipDrawLinesI: graphics pen: pen points: points count: count
 			[in]POINTL* Points,
 			int Count);"
 
-	<stdcall: errno GdipDrawLinesI handle handle POINTL* sdword>
+	<stdcall: errno GdipDrawLinesI handle handle POINTL* int32>
 	^self invalidCall: _failureCode!
 
 gdipDrawPath: graphics pen: pen path: path
@@ -2345,7 +2345,7 @@ gdipDrawPieI: graphics pen: pen x: x y: y width: width height: height startAngle
 			REAL startAngle,
 			REAL sweepAngle);"
 
-	<stdcall: errno GdipDrawPieI handle handle sdword sdword sdword sdword float float>
+	<stdcall: errno GdipDrawPieI handle handle int32 int32 int32 int32 float float>
 	^self invalidCall: _failureCode!
 
 gdipDrawPolygon: graphics pen: pen points: points count: count
@@ -2357,7 +2357,7 @@ gdipDrawPolygon: graphics pen: pen points: points count: count
 			[in]POINTF* Points,
 			int Count);"
 
-	<stdcall: errno GdipDrawPolygon handle handle POINTF* sdword>
+	<stdcall: errno GdipDrawPolygon handle handle POINTF* int32>
 	^self invalidCall: _failureCode!
 
 gdipDrawPolygonI: graphics pen: pen points: points count: count
@@ -2369,7 +2369,7 @@ gdipDrawPolygonI: graphics pen: pen points: points count: count
 			[in]POINTL* Points,
 			int Count);"
 
-	<stdcall: errno GdipDrawPolygonI handle handle POINTL* sdword>
+	<stdcall: errno GdipDrawPolygonI handle handle POINTL* int32>
 	^self invalidCall: _failureCode!
 
 gdipDrawRectangle: graphics pen: pen x: x y: y width: width height: height
@@ -2397,7 +2397,7 @@ gdipDrawRectangleI: graphics pen: pen x: x y: y width: width height: height
 			int width,
 			int height);"
 
-	<stdcall: errno GdipDrawRectangleI handle handle sdword sdword sdword sdword>
+	<stdcall: errno GdipDrawRectangleI handle handle int32 int32 int32 int32>
 	^self invalidCall: _failureCode!
 
 gdipDrawRectangles: graphics pen: pen rects: rects count: count
@@ -2409,7 +2409,7 @@ gdipDrawRectangles: graphics pen: pen rects: rects count: count
 			[in]RectF* rects,
 			int Count);"
 
-	<stdcall: errno GdipDrawRectangles handle handle RectF* sdword>
+	<stdcall: errno GdipDrawRectangles handle handle RectF* int32>
 	^self invalidCall: _failureCode!
 
 gdipDrawRectanglesI: graphics pen: pen rects: rects count: count
@@ -2421,7 +2421,7 @@ gdipDrawRectanglesI: graphics pen: pen rects: rects count: count
 			[in]Rect* rects,
 			int Count);"
 
-	<stdcall: errno GdipDrawRectanglesI handle handle Rect* sdword>
+	<stdcall: errno GdipDrawRectanglesI handle handle Rect* int32>
 	^self invalidCall: _failureCode!
 
 gdipDrawString: graphics str: str length: length font: font layoutRect: layoutRect stringFormat: stringFormat brush: brush
@@ -2436,7 +2436,7 @@ gdipDrawString: graphics str: str length: length font: font layoutRect: layoutRe
 			[in]PGpStringFormat stringFormat,
 			[in]PGpBrush brush);"
 
-	<stdcall: errno GdipDrawString handle lpwstr sdword handle RectF* handle handle>
+	<stdcall: errno GdipDrawString handle lpwstr int32 handle RectF* handle handle>
 	^self invalidCall: _failureCode!
 
 gdipEmfToWmfBits: hEmf cbData16: cbData16 pData16: pData16 iMapMode: iMapMode eFlags: eFlags
@@ -2449,7 +2449,7 @@ gdipEmfToWmfBits: hEmf cbData16: cbData16 pData16: pData16 iMapMode: iMapMode eF
 			int iMapMode,
 			int eFlags);"
 
-	<stdcall: dword GdipEmfToWmfBits handle dword byte* sdword sdword>
+	<stdcall: uint32 GdipEmfToWmfBits handle uint32 uint8* int32 int32>
 	^self invalidCall: _failureCode!
 
 gdipEndContainer: graphics state: state
@@ -2459,7 +2459,7 @@ gdipEndContainer: graphics state: state
 			PGpGraphics graphics,
 			GraphicsContainer state);"
 
-	<stdcall: errno GdipEndContainer handle dword>
+	<stdcall: errno GdipEndContainer handle uint32>
 	^self invalidCall: _failureCode!
 
 gdipEnumerateMetafileDestPoint: graphics metafile: metafile destPoint: destPoint fnCallback: fnCallback callbackData: callbackData imageAttributes: imageAttributes
@@ -2502,7 +2502,7 @@ gdipEnumerateMetafileDestPoints: graphics metafile: metafile destPoints: destPoi
 			void* callbackData,
 			[in]PGpImageAttributes imageAttributes);"
 
-	<stdcall: errno GdipEnumerateMetafileDestPoints handle handle POINTF* sdword void* void* handle>
+	<stdcall: errno GdipEnumerateMetafileDestPoints handle handle POINTF* int32 void* void* handle>
 	^self invalidCall: _failureCode!
 
 gdipEnumerateMetafileDestPointsI: graphics metafile: metafile destPoints: destPoints count: count fnCallback: fnCallback callbackData: callbackData imageAttributes: imageAttributes
@@ -2517,7 +2517,7 @@ gdipEnumerateMetafileDestPointsI: graphics metafile: metafile destPoints: destPo
 			void* callbackData,
 			[in]PGpImageAttributes imageAttributes);"
 
-	<stdcall: errno GdipEnumerateMetafileDestPointsI handle handle POINTL* sdword void* void* handle>
+	<stdcall: errno GdipEnumerateMetafileDestPointsI handle handle POINTL* int32 void* void* handle>
 	^self invalidCall: _failureCode!
 
 gdipEnumerateMetafileDestRect: graphics metafile: metafile destRect: destRect fnCallback: fnCallback callbackData: callbackData imageAttributes: imageAttributes
@@ -2561,7 +2561,7 @@ gdipEnumerateMetafileSrcRectDestPoint: graphics metafile: metafile destPoint: de
 			void* callbackData,
 			[in]PGpImageAttributes imageAttributes);"
 
-	<stdcall: errno GdipEnumerateMetafileSrcRectDestPoint handle handle POINTF* RectF* sdword void* void* handle>
+	<stdcall: errno GdipEnumerateMetafileSrcRectDestPoint handle handle POINTF* RectF* int32 void* void* handle>
 	^self invalidCall: _failureCode!
 
 gdipEnumerateMetafileSrcRectDestPointI: graphics metafile: metafile destPoint: destPoint srcRect: srcRect srcUnit: srcUnit fnCallback: fnCallback callbackData: callbackData imageAttributes: imageAttributes
@@ -2577,7 +2577,7 @@ gdipEnumerateMetafileSrcRectDestPointI: graphics metafile: metafile destPoint: d
 			void* callbackData,
 			[in]PGpImageAttributes imageAttributes);"
 
-	<stdcall: errno GdipEnumerateMetafileSrcRectDestPointI handle handle POINTL* Rect* sdword void* void* handle>
+	<stdcall: errno GdipEnumerateMetafileSrcRectDestPointI handle handle POINTL* Rect* int32 void* void* handle>
 	^self invalidCall: _failureCode!
 
 gdipEnumerateMetafileSrcRectDestPoints: graphics metafile: metafile destPoints: destPoints count: count srcRect: srcRect srcUnit: srcUnit fnCallback: fnCallback callbackData: callbackData imageAttributes: imageAttributes
@@ -2594,7 +2594,7 @@ gdipEnumerateMetafileSrcRectDestPoints: graphics metafile: metafile destPoints: 
 			void* callbackData,
 			[in]PGpImageAttributes imageAttributes);"
 
-	<stdcall: errno GdipEnumerateMetafileSrcRectDestPoints handle handle POINTF* sdword RectF* sdword void* void* handle>
+	<stdcall: errno GdipEnumerateMetafileSrcRectDestPoints handle handle POINTF* int32 RectF* int32 void* void* handle>
 	^self invalidCall: _failureCode!
 
 gdipEnumerateMetafileSrcRectDestPointsI: graphics metafile: metafile destPoints: destPoints count: count srcRect: srcRect srcUnit: srcUnit fnCallback: fnCallback callbackData: callbackData imageAttributes: imageAttributes
@@ -2611,7 +2611,7 @@ gdipEnumerateMetafileSrcRectDestPointsI: graphics metafile: metafile destPoints:
 			void* callbackData,
 			[in]PGpImageAttributes imageAttributes);"
 
-	<stdcall: errno GdipEnumerateMetafileSrcRectDestPointsI handle handle POINTL* sdword Rect* sdword void* void* handle>
+	<stdcall: errno GdipEnumerateMetafileSrcRectDestPointsI handle handle POINTL* int32 Rect* int32 void* void* handle>
 	^self invalidCall: _failureCode!
 
 gdipEnumerateMetafileSrcRectDestRect: graphics metafile: metafile destRect: destRect srcRect: srcRect srcUnit: srcUnit fnCallback: fnCallback callbackData: callbackData imageAttributes: imageAttributes
@@ -2627,7 +2627,7 @@ gdipEnumerateMetafileSrcRectDestRect: graphics metafile: metafile destRect: dest
 			void* callbackData,
 			[in]PGpImageAttributes imageAttributes);"
 
-	<stdcall: errno GdipEnumerateMetafileSrcRectDestRect handle handle RectF* RectF* sdword void* void* handle>
+	<stdcall: errno GdipEnumerateMetafileSrcRectDestRect handle handle RectF* RectF* int32 void* void* handle>
 	^self invalidCall: _failureCode!
 
 gdipEnumerateMetafileSrcRectDestRectI: graphics metafile: metafile destRect: destRect srcRect: srcRect srcUnit: srcUnit fnCallback: fnCallback callbackData: callbackData imageAttributes: imageAttributes
@@ -2643,7 +2643,7 @@ gdipEnumerateMetafileSrcRectDestRectI: graphics metafile: metafile destRect: des
 			void* callbackData,
 			[in]PGpImageAttributes imageAttributes);"
 
-	<stdcall: errno GdipEnumerateMetafileSrcRectDestRectI handle handle Rect* Rect* sdword void* void* handle>
+	<stdcall: errno GdipEnumerateMetafileSrcRectDestRectI handle handle Rect* Rect* int32 void* void* handle>
 	^self invalidCall: _failureCode!
 
 gdipFillClosedCurve: graphics brush: brush points: points count: count
@@ -2655,7 +2655,7 @@ gdipFillClosedCurve: graphics brush: brush points: points count: count
 			[in]POINTF* Points,
 			int Count);"
 
-	<stdcall: errno GdipFillClosedCurve handle handle POINTF* sdword>
+	<stdcall: errno GdipFillClosedCurve handle handle POINTF* int32>
 	^self invalidCall: _failureCode!
 
 gdipFillClosedCurve2: graphics brush: brush points: points count: count tension: tension fillMode: fillMode
@@ -2669,7 +2669,7 @@ gdipFillClosedCurve2: graphics brush: brush points: points count: count tension:
 			REAL tension,
 			GpFillMode FillMode);"
 
-	<stdcall: errno GdipFillClosedCurve2 handle handle POINTF* sdword float sdword>
+	<stdcall: errno GdipFillClosedCurve2 handle handle POINTF* int32 float int32>
 	^self invalidCall: _failureCode!
 
 gdipFillClosedCurve2I: graphics brush: brush points: points count: count tension: tension fillMode: fillMode
@@ -2683,7 +2683,7 @@ gdipFillClosedCurve2I: graphics brush: brush points: points count: count tension
 			REAL tension,
 			GpFillMode FillMode);"
 
-	<stdcall: errno GdipFillClosedCurve2I handle handle POINTL* sdword float sdword>
+	<stdcall: errno GdipFillClosedCurve2I handle handle POINTL* int32 float int32>
 	^self invalidCall: _failureCode!
 
 gdipFillClosedCurveI: graphics brush: brush points: points count: count
@@ -2695,7 +2695,7 @@ gdipFillClosedCurveI: graphics brush: brush points: points count: count
 			[in]POINTL* Points,
 			int Count);"
 
-	<stdcall: errno GdipFillClosedCurveI handle handle POINTL* sdword>
+	<stdcall: errno GdipFillClosedCurveI handle handle POINTL* int32>
 	^self invalidCall: _failureCode!
 
 gdipFillEllipse: graphics brush: brush x: x y: y width: width height: height
@@ -2723,7 +2723,7 @@ gdipFillEllipseI: graphics brush: brush x: x y: y width: width height: height
 			int width,
 			int height);"
 
-	<stdcall: errno GdipFillEllipseI handle handle sdword sdword sdword sdword>
+	<stdcall: errno GdipFillEllipseI handle handle int32 int32 int32 int32>
 	^self invalidCall: _failureCode!
 
 gdipFillPath: graphics brush: brush path: path
@@ -2766,7 +2766,7 @@ gdipFillPieI: graphics brush: brush x: x y: y width: width height: height startA
 			REAL startAngle,
 			REAL sweepAngle);"
 
-	<stdcall: errno GdipFillPieI handle handle sdword sdword sdword sdword float float>
+	<stdcall: errno GdipFillPieI handle handle int32 int32 int32 int32 float float>
 	^self invalidCall: _failureCode!
 
 gdipFillPolygon: graphics brush: brush points: points count: count fillMode: fillMode
@@ -2779,7 +2779,7 @@ gdipFillPolygon: graphics brush: brush points: points count: count fillMode: fil
 			int Count,
 			GpFillMode FillMode);"
 
-	<stdcall: errno GdipFillPolygon handle handle POINTF* sdword sdword>
+	<stdcall: errno GdipFillPolygon handle handle POINTF* int32 int32>
 	^self invalidCall: _failureCode!
 
 gdipFillPolygon2: graphics brush: brush points: points count: count
@@ -2791,7 +2791,7 @@ gdipFillPolygon2: graphics brush: brush points: points count: count
 			[in]POINTF* Points,
 			int Count);"
 
-	<stdcall: errno GdipFillPolygon2 handle handle POINTF* sdword>
+	<stdcall: errno GdipFillPolygon2 handle handle POINTF* int32>
 	^self invalidCall: _failureCode!
 
 gdipFillPolygon2I: graphics brush: brush points: points count: count
@@ -2803,7 +2803,7 @@ gdipFillPolygon2I: graphics brush: brush points: points count: count
 			[in]POINTL* Points,
 			int Count);"
 
-	<stdcall: errno GdipFillPolygon2I handle handle POINTL* sdword>
+	<stdcall: errno GdipFillPolygon2I handle handle POINTL* int32>
 	^self invalidCall: _failureCode!
 
 gdipFillPolygonI: graphics brush: brush points: points count: count fillMode: fillMode
@@ -2816,7 +2816,7 @@ gdipFillPolygonI: graphics brush: brush points: points count: count fillMode: fi
 			int Count,
 			GpFillMode FillMode);"
 
-	<stdcall: errno GdipFillPolygonI handle handle POINTL* sdword sdword>
+	<stdcall: errno GdipFillPolygonI handle handle POINTL* int32 int32>
 	^self invalidCall: _failureCode!
 
 gdipFillRectangle: graphics brush: brush x: x y: y width: width height: height
@@ -2844,7 +2844,7 @@ gdipFillRectangleI: graphics brush: brush x: x y: y width: width height: height
 			int width,
 			int height);"
 
-	<stdcall: errno GdipFillRectangleI handle handle sdword sdword sdword sdword>
+	<stdcall: errno GdipFillRectangleI handle handle int32 int32 int32 int32>
 	^self invalidCall: _failureCode!
 
 gdipFillRectangles: graphics brush: brush rects: rects count: count
@@ -2856,7 +2856,7 @@ gdipFillRectangles: graphics brush: brush rects: rects count: count
 			[in]RectF* rects,
 			int Count);"
 
-	<stdcall: errno GdipFillRectangles handle handle RectF* sdword>
+	<stdcall: errno GdipFillRectangles handle handle RectF* int32>
 	^self invalidCall: _failureCode!
 
 gdipFillRectanglesI: graphics brush: brush rects: rects count: count
@@ -2868,7 +2868,7 @@ gdipFillRectanglesI: graphics brush: brush rects: rects count: count
 			[in]Rect* rects,
 			int Count);"
 
-	<stdcall: errno GdipFillRectanglesI handle handle Rect* sdword>
+	<stdcall: errno GdipFillRectanglesI handle handle Rect* int32>
 	^self invalidCall: _failureCode!
 
 gdipFillRegion: graphics brush: brush region: region
@@ -2920,7 +2920,7 @@ gdipFlush: graphics intention: intention
 			PGpGraphics graphics,
 			GpFlushIntention intention);"
 
-	<stdcall: errno GdipFlush handle sdword>
+	<stdcall: errno GdipFlush handle int32>
 	^self invalidCall: _failureCode!
 
 gdipFontCollectionEnumerable: fontCollection graphics: graphics numFound: numFound
@@ -2931,7 +2931,7 @@ gdipFontCollectionEnumerable: fontCollection graphics: graphics numFound: numFou
 			PGpGraphics graphics,
 			[out]int* numFound);"
 
-	<stdcall: errno GdipFontCollectionEnumerable handle handle sdword*>
+	<stdcall: errno GdipFontCollectionEnumerable handle handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipFontCollectionEnumerate: fontCollection numSought: numSought gpfamilies: gpfamilies numFound: numFound graphics: graphics
@@ -2944,7 +2944,7 @@ gdipFontCollectionEnumerate: fontCollection numSought: numSought gpfamilies: gpf
 			[out]int* numFound,
 			PGpGraphics graphics);"
 
-	<stdcall: errno GdipFontCollectionEnumerate handle sdword handle* sdword* handle>
+	<stdcall: errno GdipFontCollectionEnumerate handle int32 handle* int32* handle>
 	^self invalidCall: _failureCode!
 
 gdipGetAdjustableArrowCapFillState: cap fillState: fillState
@@ -2996,7 +2996,7 @@ gdipGetAllPropertyItems: image totalBufferSize: totalBufferSize numProperties: n
 			[in]unsigned int numProperties,
 			PropertyItem* allItems);"
 
-	<stdcall: errno GdipGetAllPropertyItems handle dword dword PropertyItem*>
+	<stdcall: errno GdipGetAllPropertyItems handle uint32 uint32 PropertyItem*>
 	^self invalidCall: _failureCode!
 
 gdipGetBrushType: brush type: type
@@ -3006,7 +3006,7 @@ gdipGetBrushType: brush type: type
 			PGpBrush brush,
 			GpBrushType* Type);"
 
-	<stdcall: errno GdipGetBrushType handle sdword*>
+	<stdcall: errno GdipGetBrushType handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetCellAscent: family style: style cellAscent: cellAscent
@@ -3017,7 +3017,7 @@ gdipGetCellAscent: family style: style cellAscent: cellAscent
 			int style,
 			[out, retval]UINT16* CellAscent);"
 
-	<stdcall: errno GdipGetCellAscent handle sdword word*>
+	<stdcall: errno GdipGetCellAscent handle int32 uint16*>
 	^self invalidCall: _failureCode!
 
 gdipGetCellDescent: family style: style cellDescent: cellDescent
@@ -3028,7 +3028,7 @@ gdipGetCellDescent: family style: style cellDescent: cellDescent
 			int style,
 			[out, retval]UINT16* CellDescent);"
 
-	<stdcall: errno GdipGetCellDescent handle sdword word*>
+	<stdcall: errno GdipGetCellDescent handle int32 uint16*>
 	^self invalidCall: _failureCode!
 
 gdipGetClip: graphics region: region
@@ -3068,7 +3068,7 @@ gdipGetCompositingMode: graphics compositingMode: compositingMode
 			PGpGraphics graphics,
 			CompositingMode* CompositingMode);"
 
-	<stdcall: errno GdipGetCompositingMode handle sdword*>
+	<stdcall: errno GdipGetCompositingMode handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetCompositingQuality: graphics compositingQuality: compositingQuality
@@ -3078,7 +3078,7 @@ gdipGetCompositingQuality: graphics compositingQuality: compositingQuality
 			PGpGraphics graphics,
 			CompositingQuality* CompositingQuality);"
 
-	<stdcall: errno GdipGetCompositingQuality handle sdword*>
+	<stdcall: errno GdipGetCompositingQuality handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetCustomLineCapBaseCap: customCap baseCap: baseCap
@@ -3088,7 +3088,7 @@ gdipGetCustomLineCapBaseCap: customCap baseCap: baseCap
 			PGpCustomLineCap customCap,
 			GpLineCap* baseCap);"
 
-	<stdcall: errno GdipGetCustomLineCapBaseCap handle sdword*>
+	<stdcall: errno GdipGetCustomLineCapBaseCap handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetCustomLineCapBaseInset: customCap inset: inset
@@ -3109,7 +3109,7 @@ gdipGetCustomLineCapStrokeCaps: customCap startCap: startCap endCap: endCap
 			GpLineCap* startCap,
 			GpLineCap* endCap);"
 
-	<stdcall: errno GdipGetCustomLineCapStrokeCaps handle sdword* sdword*>
+	<stdcall: errno GdipGetCustomLineCapStrokeCaps handle int32* int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetCustomLineCapStrokeJoin: customCap lineJoin: lineJoin
@@ -3119,7 +3119,7 @@ gdipGetCustomLineCapStrokeJoin: customCap lineJoin: lineJoin
 			PGpCustomLineCap customCap,
 			GpLineJoin* LineJoin);"
 
-	<stdcall: errno GdipGetCustomLineCapStrokeJoin handle sdword*>
+	<stdcall: errno GdipGetCustomLineCapStrokeJoin handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetCustomLineCapType: customCap capType: capType
@@ -3129,7 +3129,7 @@ gdipGetCustomLineCapType: customCap capType: capType
 			PGpCustomLineCap customCap,
 			CustomLineCapType* capType);"
 
-	<stdcall: errno GdipGetCustomLineCapType handle sdword*>
+	<stdcall: errno GdipGetCustomLineCapType handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetCustomLineCapWidthScale: customCap widthScale: widthScale
@@ -3180,7 +3180,7 @@ gdipGetEmHeight: family style: style emHeight: emHeight
 			int style,
 			[out, retval]UINT16* EmHeight);"
 
-	<stdcall: errno GdipGetEmHeight handle sdword word*>
+	<stdcall: errno GdipGetEmHeight handle int32 uint16*>
 	^self invalidCall: _failureCode!
 
 gdipGetEncoderParameterList: image clsidEncoder: clsidEncoder size: size buffer: buffer
@@ -3192,7 +3192,7 @@ gdipGetEncoderParameterList: image clsidEncoder: clsidEncoder size: size buffer:
 			[in]unsigned int Size,
 			[out, retval]EncoderParameters* buffer);"
 
-	<stdcall: errno GdipGetEncoderParameterList handle guid* dword EncoderParameters*>
+	<stdcall: errno GdipGetEncoderParameterList handle guid* uint32 EncoderParameters*>
 	^self invalidCall: _failureCode!
 
 gdipGetEncoderParameterListSize: image clsidEncoder: clsidEncoder size: size
@@ -3203,7 +3203,7 @@ gdipGetEncoderParameterListSize: image clsidEncoder: clsidEncoder size: size
 			[in]GUID* clsidEncoder,
 			[out, retval]unsigned int* Size);"
 
-	<stdcall: errno GdipGetEncoderParameterListSize handle guid* dword*>
+	<stdcall: errno GdipGetEncoderParameterListSize handle guid* uint32*>
 	^self invalidCall: _failureCode!
 
 gdipGetFamily: font family: family
@@ -3224,7 +3224,7 @@ gdipGetFamilyName: family name: name language: language
 			[out, string]WCHAR name[32],
 			[in]LANGID language);"
 
-	<stdcall: errno GdipGetFamilyName handle lpwstr word>
+	<stdcall: errno GdipGetFamilyName handle lpwstr uint16>
 	^self invalidCall: _failureCode!
 
 gdipGetFontCollectionFamilyCount: fontCollection numFound: numFound
@@ -3234,7 +3234,7 @@ gdipGetFontCollectionFamilyCount: fontCollection numFound: numFound
 			PGpFontCollection fontCollection,
 			int* numFound);"
 
-	<stdcall: errno GdipGetFontCollectionFamilyCount handle sdword*>
+	<stdcall: errno GdipGetFontCollectionFamilyCount handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetFontCollectionFamilyList: fontCollection numSought: numSought gpfamilies: gpfamilies numFound: numFound
@@ -3246,7 +3246,7 @@ gdipGetFontCollectionFamilyList: fontCollection numSought: numSought gpfamilies:
 			PGpFontFamily* gpfamilies,
 			int* numFound);"
 
-	<stdcall: errno GdipGetFontCollectionFamilyList handle sdword handle* sdword*>
+	<stdcall: errno GdipGetFontCollectionFamilyList handle int32 handle* int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetFontHeight: font graphics: graphics height: height
@@ -3288,7 +3288,7 @@ gdipGetFontStyle: font style: style
 			PGpFont font,
 			FontStyle* style);"
 
-	<stdcall: errno GdipGetFontStyle handle sdword*>
+	<stdcall: errno GdipGetFontStyle handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetFontUnit: font unit: unit
@@ -3298,7 +3298,7 @@ gdipGetFontUnit: font unit: unit
 			PGpFont font,
 			Unit* Unit);"
 
-	<stdcall: errno GdipGetFontUnit handle sdword*>
+	<stdcall: errno GdipGetFontUnit handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetGenericFontFamilyMonospace: nativeFamily
@@ -3335,7 +3335,7 @@ gdipGetHatchBackgroundColor: brush backcol: backcol
 			PGpHatch brush,
 			ARGB* backcol);"
 
-	<stdcall: errno GdipGetHatchBackgroundColor handle dword*>
+	<stdcall: errno GdipGetHatchBackgroundColor handle uint32*>
 	^self invalidCall: _failureCode!
 
 gdipGetHatchForegroundColor: brush forecol: forecol
@@ -3345,7 +3345,7 @@ gdipGetHatchForegroundColor: brush forecol: forecol
 			PGpHatch brush,
 			ARGB* forecol);"
 
-	<stdcall: errno GdipGetHatchForegroundColor handle dword*>
+	<stdcall: errno GdipGetHatchForegroundColor handle uint32*>
 	^self invalidCall: _failureCode!
 
 gdipGetHatchStyle: brush hatchStyle: hatchStyle
@@ -3355,7 +3355,7 @@ gdipGetHatchStyle: brush hatchStyle: hatchStyle
 			PGpHatch brush,
 			GpHatchStyle* HatchStyle);"
 
-	<stdcall: errno GdipGetHatchStyle handle sdword*>
+	<stdcall: errno GdipGetHatchStyle handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetHemfFromMetafile: metafile hEmf: hEmf
@@ -3376,7 +3376,7 @@ gdipGetImageAttributesAdjustedPalette: imageattr colorPalette: colorPalette colo
 			ColorPalette* ColorPalette,
 			ColorAdjustType ColorAdjustType);"
 
-	<stdcall: errno GdipGetImageAttributesAdjustedPalette handle ColorPalette* sdword>
+	<stdcall: errno GdipGetImageAttributesAdjustedPalette handle ColorPalette* int32>
 	^self invalidCall: _failureCode!
 
 gdipGetImageBounds: image srcRect: srcRect srcUnit: srcUnit
@@ -3387,7 +3387,7 @@ gdipGetImageBounds: image srcRect: srcRect srcUnit: srcUnit
 			RectF* srcRect,
 			GpUnit* srcUnit);"
 
-	<stdcall: errno GdipGetImageBounds handle RectF* sdword*>
+	<stdcall: errno GdipGetImageBounds handle RectF* int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetImageDecoders: numDecoders size: size decoders: decoders
@@ -3398,7 +3398,7 @@ gdipGetImageDecoders: numDecoders size: size decoders: decoders
 			unsigned int Size,
 			ImageCodecInfo* decoders);"
 
-	<stdcall: errno GdipGetImageDecoders dword dword ImageCodecInfo*>
+	<stdcall: errno GdipGetImageDecoders uint32 uint32 ImageCodecInfo*>
 	^self invalidCall: _failureCode!
 
 gdipGetImageDecodersSize: numDecoders size: size
@@ -3408,7 +3408,7 @@ gdipGetImageDecodersSize: numDecoders size: size
 			unsigned int* numDecoders,
 			unsigned int* Size);"
 
-	<stdcall: errno GdipGetImageDecodersSize dword* dword*>
+	<stdcall: errno GdipGetImageDecodersSize uint32* uint32*>
 	^self invalidCall: _failureCode!
 
 gdipGetImageDimension: image width: width height: height
@@ -3430,7 +3430,7 @@ gdipGetImageEncoders: numEncoders size: size encoders: encoders
 			[in]unsigned int Size,
 			[in, out]ImageCodecInfo* encoders);"
 
-	<stdcall: errno GdipGetImageEncoders dword dword ImageCodecInfo*>
+	<stdcall: errno GdipGetImageEncoders uint32 uint32 ImageCodecInfo*>
 	^self invalidCall: _failureCode!
 
 gdipGetImageEncodersSize: numEncoders size: size
@@ -3440,7 +3440,7 @@ gdipGetImageEncodersSize: numEncoders size: size
 			[out]unsigned int* numEncoders,
 			[out]unsigned int* Size);"
 
-	<stdcall: errno GdipGetImageEncodersSize dword* dword*>
+	<stdcall: errno GdipGetImageEncodersSize uint32* uint32*>
 	^self invalidCall: _failureCode!
 
 gdipGetImageFlags: image flags: flags
@@ -3450,7 +3450,7 @@ gdipGetImageFlags: image flags: flags
 			[in]PGpImage image,
 			[out, retval]unsigned int* Flags);"
 
-	<stdcall: errno GdipGetImageFlags handle dword*>
+	<stdcall: errno GdipGetImageFlags handle uint32*>
 	^self invalidCall: _failureCode!
 
 gdipGetImageGraphicsContext: image graphics: graphics
@@ -3470,7 +3470,7 @@ gdipGetImageHeight: image height: height
 			[in]PGpImage image,
 			[out, retval]unsigned int* height);"
 
-	<stdcall: errno GdipGetImageHeight handle dword*>
+	<stdcall: errno GdipGetImageHeight handle uint32*>
 	^self invalidCall: _failureCode!
 
 gdipGetImageHorizontalResolution: image resolution: resolution
@@ -3501,7 +3501,7 @@ gdipGetImagePalette: image palette: palette size: size
 			ColorPalette* palette,
 			int Size);"
 
-	<stdcall: errno GdipGetImagePalette handle ColorPalette* sdword>
+	<stdcall: errno GdipGetImagePalette handle ColorPalette* int32>
 	^self invalidCall: _failureCode!
 
 gdipGetImagePaletteSize: image size: size
@@ -3511,7 +3511,7 @@ gdipGetImagePaletteSize: image size: size
 			[in]PGpImage image,
 			[out, retval]int* Size);"
 
-	<stdcall: errno GdipGetImagePaletteSize handle sdword*>
+	<stdcall: errno GdipGetImagePaletteSize handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetImagePixelFormat: image format: format
@@ -3521,7 +3521,7 @@ gdipGetImagePixelFormat: image format: format
 			[in]PGpImage image,
 			[out, retval]PixelFormat* format);"
 
-	<stdcall: errno GdipGetImagePixelFormat handle sdword*>
+	<stdcall: errno GdipGetImagePixelFormat handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetImageRawFormat: image format: format
@@ -3545,7 +3545,7 @@ gdipGetImageThumbnail: image thumbWidth: thumbWidth thumbHeight: thumbHeight thu
 			[in]GetThumbnailImageAbort pfnCallback,
 			[in]void* callbackData);"
 
-	<stdcall: errno GdipGetImageThumbnail handle dword dword handle* void* void*>
+	<stdcall: errno GdipGetImageThumbnail handle uint32 uint32 handle* void* void*>
 	^self invalidCall: _failureCode!
 
 gdipGetImageType: image type: type
@@ -3555,7 +3555,7 @@ gdipGetImageType: image type: type
 			[in]PGpImage image,
 			[out, retval]ImageType* Type);"
 
-	<stdcall: errno GdipGetImageType handle sdword*>
+	<stdcall: errno GdipGetImageType handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetImageVerticalResolution: image resolution: resolution
@@ -3575,7 +3575,7 @@ gdipGetImageWidth: image width: width
 			[in]PGpImage image,
 			[out, retval]unsigned int* width);"
 
-	<stdcall: errno GdipGetImageWidth handle dword*>
+	<stdcall: errno GdipGetImageWidth handle uint32*>
 	^self invalidCall: _failureCode!
 
 gdipGetInterpolationMode: graphics interpolationMode: interpolationMode
@@ -3585,7 +3585,7 @@ gdipGetInterpolationMode: graphics interpolationMode: interpolationMode
 			PGpGraphics graphics,
 			InterpolationMode* InterpolationMode);"
 
-	<stdcall: errno GdipGetInterpolationMode handle sdword*>
+	<stdcall: errno GdipGetInterpolationMode handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetLineBlend: brush blend: blend positions: positions count: count
@@ -3597,7 +3597,7 @@ gdipGetLineBlend: brush blend: blend positions: positions count: count
 			REAL* positions,
 			int Count);"
 
-	<stdcall: errno GdipGetLineBlend handle float* float* sdword>
+	<stdcall: errno GdipGetLineBlend handle float* float* int32>
 	^self invalidCall: _failureCode!
 
 gdipGetLineBlendCount: brush count: count
@@ -3607,7 +3607,7 @@ gdipGetLineBlendCount: brush count: count
 			PGpLineGradient brush,
 			int* Count);"
 
-	<stdcall: errno GdipGetLineBlendCount handle sdword*>
+	<stdcall: errno GdipGetLineBlendCount handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetLineColors: brush colors: colors
@@ -3617,7 +3617,7 @@ gdipGetLineColors: brush colors: colors
 			PGpLineGradient brush,
 			ARGB* colors);"
 
-	<stdcall: errno GdipGetLineColors handle dword*>
+	<stdcall: errno GdipGetLineColors handle uint32*>
 	^self invalidCall: _failureCode!
 
 gdipGetLineGammaCorrection: brush useGammaCorrection: useGammaCorrection
@@ -3639,7 +3639,7 @@ gdipGetLinePresetBlend: brush blend: blend positions: positions count: count
 			REAL* positions,
 			int Count);"
 
-	<stdcall: errno GdipGetLinePresetBlend handle dword* float* sdword>
+	<stdcall: errno GdipGetLinePresetBlend handle uint32* float* int32>
 	^self invalidCall: _failureCode!
 
 gdipGetLinePresetBlendCount: brush count: count
@@ -3649,7 +3649,7 @@ gdipGetLinePresetBlendCount: brush count: count
 			PGpLineGradient brush,
 			int* Count);"
 
-	<stdcall: errno GdipGetLinePresetBlendCount handle sdword*>
+	<stdcall: errno GdipGetLinePresetBlendCount handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetLineRect: brush rect: rect
@@ -3680,7 +3680,7 @@ gdipGetLineSpacing: family style: style lineSpacing: lineSpacing
 			int style,
 			[out, retval]UINT16* LineSpacing);"
 
-	<stdcall: errno GdipGetLineSpacing handle sdword word*>
+	<stdcall: errno GdipGetLineSpacing handle int32 uint16*>
 	^self invalidCall: _failureCode!
 
 gdipGetLineTransform: brush matrix: matrix
@@ -3700,7 +3700,7 @@ gdipGetLineWrapMode: brush wrapMode: wrapMode
 			PGpLineGradient brush,
 			GpWrapMode* WrapMode);"
 
-	<stdcall: errno GdipGetLineWrapMode handle sdword*>
+	<stdcall: errno GdipGetLineWrapMode handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetLogFontA: font graphics: graphics logfonta: logfonta
@@ -3742,7 +3742,7 @@ gdipGetMetafileDownLevelRasterizationLimit: metafile metafileRasterizationLimitD
 			[in]PGpMetafile metafile,
 			unsigned int* metafileRasterizationLimitDpi);"
 
-	<stdcall: errno GdipGetMetafileDownLevelRasterizationLimit handle dword*>
+	<stdcall: errno GdipGetMetafileDownLevelRasterizationLimit handle uint32*>
 	^self invalidCall: _failureCode!
 
 gdipGetMetafileHeaderFromEmf: hEmf header: header
@@ -3803,7 +3803,7 @@ gdipGetNearestColor: graphics argb: argb
 			PGpGraphics graphics,
 			ARGB* ARGB);"
 
-	<stdcall: errno GdipGetNearestColor handle dword*>
+	<stdcall: errno GdipGetNearestColor handle uint32*>
 	^self invalidCall: _failureCode!
 
 gdipGetPageScale: graphics scale: scale
@@ -3823,7 +3823,7 @@ gdipGetPageUnit: graphics unit: unit
 			PGpGraphics graphics,
 			GpUnit* Unit);"
 
-	<stdcall: errno GdipGetPageUnit handle sdword*>
+	<stdcall: errno GdipGetPageUnit handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetPathData: path pathData: pathData
@@ -3843,7 +3843,7 @@ gdipGetPathFillMode: path fillMode: fillMode
 			PGpPath path,
 			GpFillMode* FillMode);"
 
-	<stdcall: errno GdipGetPathFillMode handle sdword*>
+	<stdcall: errno GdipGetPathFillMode handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetPathGradientBlend: brush blend: blend positions: positions count: count
@@ -3855,7 +3855,7 @@ gdipGetPathGradientBlend: brush blend: blend positions: positions count: count
 			REAL* positions,
 			int Count);"
 
-	<stdcall: errno GdipGetPathGradientBlend handle float* float* sdword>
+	<stdcall: errno GdipGetPathGradientBlend handle float* float* int32>
 	^self invalidCall: _failureCode!
 
 gdipGetPathGradientBlendCount: brush count: count
@@ -3865,7 +3865,7 @@ gdipGetPathGradientBlendCount: brush count: count
 			PGpPathGradient brush,
 			int* Count);"
 
-	<stdcall: errno GdipGetPathGradientBlendCount handle sdword*>
+	<stdcall: errno GdipGetPathGradientBlendCount handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetPathGradientCenterColor: brush colors: colors
@@ -3875,7 +3875,7 @@ gdipGetPathGradientCenterColor: brush colors: colors
 			PGpPathGradient brush,
 			ARGB* colors);"
 
-	<stdcall: errno GdipGetPathGradientCenterColor handle dword*>
+	<stdcall: errno GdipGetPathGradientCenterColor handle uint32*>
 	^self invalidCall: _failureCode!
 
 gdipGetPathGradientCenterPoint: brush points: points
@@ -3936,7 +3936,7 @@ gdipGetPathGradientPointCount: brush count: count
 			PGpPathGradient brush,
 			int* Count);"
 
-	<stdcall: errno GdipGetPathGradientPointCount handle sdword*>
+	<stdcall: errno GdipGetPathGradientPointCount handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetPathGradientPresetBlend: brush blend: blend positions: positions count: count
@@ -3948,7 +3948,7 @@ gdipGetPathGradientPresetBlend: brush blend: blend positions: positions count: c
 			REAL* positions,
 			int Count);"
 
-	<stdcall: errno GdipGetPathGradientPresetBlend handle dword* float* sdword>
+	<stdcall: errno GdipGetPathGradientPresetBlend handle uint32* float* int32>
 	^self invalidCall: _failureCode!
 
 gdipGetPathGradientPresetBlendCount: brush count: count
@@ -3958,7 +3958,7 @@ gdipGetPathGradientPresetBlendCount: brush count: count
 			PGpPathGradient brush,
 			int* Count);"
 
-	<stdcall: errno GdipGetPathGradientPresetBlendCount handle sdword*>
+	<stdcall: errno GdipGetPathGradientPresetBlendCount handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetPathGradientRect: brush rect: rect
@@ -3988,7 +3988,7 @@ gdipGetPathGradientSurroundColorCount: brush count: count
 			PGpPathGradient brush,
 			int* Count);"
 
-	<stdcall: errno GdipGetPathGradientSurroundColorCount handle sdword*>
+	<stdcall: errno GdipGetPathGradientSurroundColorCount handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetPathGradientSurroundColorsWithCount: brush color: color count: count
@@ -3999,7 +3999,7 @@ gdipGetPathGradientSurroundColorsWithCount: brush color: color count: count
 			ARGB* Color,
 			int* Count);"
 
-	<stdcall: errno GdipGetPathGradientSurroundColorsWithCount handle dword* sdword*>
+	<stdcall: errno GdipGetPathGradientSurroundColorsWithCount handle uint32* int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetPathGradientTransform: brush matrix: matrix
@@ -4019,7 +4019,7 @@ gdipGetPathGradientWrapMode: brush wrapMode: wrapMode
 			PGpPathGradient brush,
 			GpWrapMode* WrapMode);"
 
-	<stdcall: errno GdipGetPathGradientWrapMode handle sdword*>
+	<stdcall: errno GdipGetPathGradientWrapMode handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetPathLastPoint: path lastPoint: lastPoint
@@ -4040,7 +4040,7 @@ gdipGetPathPoints: path points: points count: count
 			POINTF* Points,
 			int Count);"
 
-	<stdcall: errno GdipGetPathPoints handle POINTF* sdword>
+	<stdcall: errno GdipGetPathPoints handle POINTF* int32>
 	^self invalidCall: _failureCode!
 
 gdipGetPathPointsI: path points: points count: count
@@ -4051,7 +4051,7 @@ gdipGetPathPointsI: path points: points count: count
 			POINTL* Points,
 			int Count);"
 
-	<stdcall: errno GdipGetPathPointsI handle POINTL* sdword>
+	<stdcall: errno GdipGetPathPointsI handle POINTL* int32>
 	^self invalidCall: _failureCode!
 
 gdipGetPathTypes: path types: types count: count
@@ -4062,7 +4062,7 @@ gdipGetPathTypes: path types: types count: count
 			BYTE* Types,
 			int Count);"
 
-	<stdcall: errno GdipGetPathTypes handle byte* sdword>
+	<stdcall: errno GdipGetPathTypes handle uint8* int32>
 	^self invalidCall: _failureCode!
 
 gdipGetPathWorldBounds: path bounds: bounds matrix: matrix pen: pen
@@ -4106,7 +4106,7 @@ gdipGetPenColor: pen argb: argb
 			PGpPen pen,
 			ARGB* ARGB);"
 
-	<stdcall: errno GdipGetPenColor handle dword*>
+	<stdcall: errno GdipGetPenColor handle uint32*>
 	^self invalidCall: _failureCode!
 
 gdipGetPenCompoundArray: pen dash: dash count: count
@@ -4117,7 +4117,7 @@ gdipGetPenCompoundArray: pen dash: dash count: count
 			REAL* dash,
 			int Count);"
 
-	<stdcall: errno GdipGetPenCompoundArray handle float* sdword>
+	<stdcall: errno GdipGetPenCompoundArray handle float* int32>
 	^self invalidCall: _failureCode!
 
 gdipGetPenCompoundCount: pen count: count
@@ -4127,7 +4127,7 @@ gdipGetPenCompoundCount: pen count: count
 			PGpPen pen,
 			int* Count);"
 
-	<stdcall: errno GdipGetPenCompoundCount handle sdword*>
+	<stdcall: errno GdipGetPenCompoundCount handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetPenCustomEndCap: pen customCap: customCap
@@ -4158,7 +4158,7 @@ gdipGetPenDashArray: pen dash: dash count: count
 			REAL* dash,
 			int Count);"
 
-	<stdcall: errno GdipGetPenDashArray handle float* sdword>
+	<stdcall: errno GdipGetPenDashArray handle float* int32>
 	^self invalidCall: _failureCode!
 
 gdipGetPenDashCap197819: pen dashCap: dashCap
@@ -4168,7 +4168,7 @@ gdipGetPenDashCap197819: pen dashCap: dashCap
 			PGpPen pen,
 			GpDashCap* DashCap);"
 
-	<stdcall: errno GdipGetPenDashCap197819 handle sdword*>
+	<stdcall: errno GdipGetPenDashCap197819 handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetPenDashCount: pen count: count
@@ -4178,7 +4178,7 @@ gdipGetPenDashCount: pen count: count
 			PGpPen pen,
 			int* Count);"
 
-	<stdcall: errno GdipGetPenDashCount handle sdword*>
+	<stdcall: errno GdipGetPenDashCount handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetPenDashOffset: pen offset: offset
@@ -4198,7 +4198,7 @@ gdipGetPenDashStyle: pen dashStyle: dashStyle
 			PGpPen pen,
 			GpDashStyle* DashStyle);"
 
-	<stdcall: errno GdipGetPenDashStyle handle sdword*>
+	<stdcall: errno GdipGetPenDashStyle handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetPenEndCap: pen endCap: endCap
@@ -4208,7 +4208,7 @@ gdipGetPenEndCap: pen endCap: endCap
 			PGpPen pen,
 			GpLineCap* endCap);"
 
-	<stdcall: errno GdipGetPenEndCap handle sdword*>
+	<stdcall: errno GdipGetPenEndCap handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetPenFillType: pen type: type
@@ -4218,7 +4218,7 @@ gdipGetPenFillType: pen type: type
 			PGpPen pen,
 			GpPenType* Type);"
 
-	<stdcall: errno GdipGetPenFillType handle sdword*>
+	<stdcall: errno GdipGetPenFillType handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetPenLineJoin: pen lineJoin: lineJoin
@@ -4228,7 +4228,7 @@ gdipGetPenLineJoin: pen lineJoin: lineJoin
 			PGpPen pen,
 			GpLineJoin* LineJoin);"
 
-	<stdcall: errno GdipGetPenLineJoin handle sdword*>
+	<stdcall: errno GdipGetPenLineJoin handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetPenMiterLimit: pen miterLimit: miterLimit
@@ -4248,7 +4248,7 @@ gdipGetPenMode: pen penMode: penMode
 			PGpPen pen,
 			GpPenAlignment* penMode);"
 
-	<stdcall: errno GdipGetPenMode handle sdword*>
+	<stdcall: errno GdipGetPenMode handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetPenStartCap: pen startCap: startCap
@@ -4258,7 +4258,7 @@ gdipGetPenStartCap: pen startCap: startCap
 			PGpPen pen,
 			GpLineCap* startCap);"
 
-	<stdcall: errno GdipGetPenStartCap handle sdword*>
+	<stdcall: errno GdipGetPenStartCap handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetPenTransform: pen matrix: matrix
@@ -4278,7 +4278,7 @@ gdipGetPenUnit: pen unit: unit
 			PGpPen pen,
 			GpUnit* Unit);"
 
-	<stdcall: errno GdipGetPenUnit handle sdword*>
+	<stdcall: errno GdipGetPenUnit handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetPenWidth: pen width: width
@@ -4298,7 +4298,7 @@ gdipGetPixelOffsetMode: graphics pixelOffsetMode: pixelOffsetMode
 			PGpGraphics graphics,
 			PixelOffsetMode* PixelOffsetMode);"
 
-	<stdcall: errno GdipGetPixelOffsetMode handle sdword*>
+	<stdcall: errno GdipGetPixelOffsetMode handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetPointCount: path count: count
@@ -4308,7 +4308,7 @@ gdipGetPointCount: path count: count
 			PGpPath path,
 			int* Count);"
 
-	<stdcall: errno GdipGetPointCount handle sdword*>
+	<stdcall: errno GdipGetPointCount handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetPropertyCount: image numOfProperty: numOfProperty
@@ -4318,7 +4318,7 @@ gdipGetPropertyCount: image numOfProperty: numOfProperty
 			[in]PGpImage image,
 			[out, retval]unsigned int* numOfProperty);"
 
-	<stdcall: errno GdipGetPropertyCount handle dword*>
+	<stdcall: errno GdipGetPropertyCount handle uint32*>
 	^self invalidCall: _failureCode!
 
 gdipGetPropertyIdList: image numOfProperty: numOfProperty list: list
@@ -4329,7 +4329,7 @@ gdipGetPropertyIdList: image numOfProperty: numOfProperty list: list
 			[in]unsigned int numOfProperty,
 			unsigned long* list);"
 
-	<stdcall: errno GdipGetPropertyIdList handle dword dword*>
+	<stdcall: errno GdipGetPropertyIdList handle uint32 uint32*>
 	^self invalidCall: _failureCode!
 
 gdipGetPropertyItem: image propId: propId propSize: propSize buffer: buffer
@@ -4341,7 +4341,7 @@ gdipGetPropertyItem: image propId: propId propSize: propSize buffer: buffer
 			[in]unsigned int propSize,
 			PropertyItem* buffer);"
 
-	<stdcall: errno GdipGetPropertyItem handle dword dword PropertyItem*>
+	<stdcall: errno GdipGetPropertyItem handle uint32 uint32 PropertyItem*>
 	^self invalidCall: _failureCode!
 
 gdipGetPropertyItemSize: image propId: propId size: size
@@ -4352,7 +4352,7 @@ gdipGetPropertyItemSize: image propId: propId size: size
 			[in]unsigned long propId,
 			unsigned int* Size);"
 
-	<stdcall: errno GdipGetPropertyItemSize handle dword dword*>
+	<stdcall: errno GdipGetPropertyItemSize handle uint32 uint32*>
 	^self invalidCall: _failureCode!
 
 gdipGetPropertySize: image totalBufferSize: totalBufferSize numProperties: numProperties
@@ -4363,7 +4363,7 @@ gdipGetPropertySize: image totalBufferSize: totalBufferSize numProperties: numPr
 			unsigned int* totalBufferSize,
 			unsigned int* numProperties);"
 
-	<stdcall: errno GdipGetPropertySize handle dword* dword*>
+	<stdcall: errno GdipGetPropertySize handle uint32* uint32*>
 	^self invalidCall: _failureCode!
 
 gdipGetRegionBounds: region graphics: graphics rect: rect
@@ -4397,7 +4397,7 @@ gdipGetRegionData: region buffer: buffer bufferSize: bufferSize sizeFilled: size
 			unsigned int bufferSize,
 			unsigned int* sizeFilled);"
 
-	<stdcall: errno GdipGetRegionData handle byte* dword dword*>
+	<stdcall: errno GdipGetRegionData handle uint8* uint32 uint32*>
 	^self invalidCall: _failureCode!
 
 gdipGetRegionDataSize: region bufferSize: bufferSize
@@ -4407,7 +4407,7 @@ gdipGetRegionDataSize: region bufferSize: bufferSize
 			PGpRegion region,
 			unsigned int* bufferSize);"
 
-	<stdcall: errno GdipGetRegionDataSize handle dword*>
+	<stdcall: errno GdipGetRegionDataSize handle uint32*>
 	^self invalidCall: _failureCode!
 
 gdipGetRegionHRgn: region graphics: graphics hRgn: hRgn
@@ -4430,7 +4430,7 @@ gdipGetRegionScans: region rects: rects count: count matrix: matrix
 			int* Count,
 			PGpMatrix matrix);"
 
-	<stdcall: errno GdipGetRegionScans handle RectF* sdword* handle>
+	<stdcall: errno GdipGetRegionScans handle RectF* int32* handle>
 	^self invalidCall: _failureCode!
 
 gdipGetRegionScansCount: region count: count matrix: matrix
@@ -4441,7 +4441,7 @@ gdipGetRegionScansCount: region count: count matrix: matrix
 			unsigned int* Count,
 			PGpMatrix matrix);"
 
-	<stdcall: errno GdipGetRegionScansCount handle dword* handle>
+	<stdcall: errno GdipGetRegionScansCount handle uint32* handle>
 	^self invalidCall: _failureCode!
 
 gdipGetRegionScansI: region rects: rects count: count matrix: matrix
@@ -4453,7 +4453,7 @@ gdipGetRegionScansI: region rects: rects count: count matrix: matrix
 			int* Count,
 			PGpMatrix matrix);"
 
-	<stdcall: errno GdipGetRegionScansI handle Rect* sdword* handle>
+	<stdcall: errno GdipGetRegionScansI handle Rect* int32* handle>
 	^self invalidCall: _failureCode!
 
 gdipGetRenderingOrigin: graphics x: x y: y
@@ -4464,7 +4464,7 @@ gdipGetRenderingOrigin: graphics x: x y: y
 			int* x,
 			int* y);"
 
-	<stdcall: errno GdipGetRenderingOrigin handle sdword* sdword*>
+	<stdcall: errno GdipGetRenderingOrigin handle int32* int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetSmoothingMode: graphics smoothingMode: smoothingMode
@@ -4474,7 +4474,7 @@ gdipGetSmoothingMode: graphics smoothingMode: smoothingMode
 			PGpGraphics graphics,
 			SmoothingMode* SmoothingMode);"
 
-	<stdcall: errno GdipGetSmoothingMode handle sdword*>
+	<stdcall: errno GdipGetSmoothingMode handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetSolidFillColor: brush color: color
@@ -4484,7 +4484,7 @@ gdipGetSolidFillColor: brush color: color
 			[in]PGpSolidFill brush,
 			[out, retval]ARGB* Color);"
 
-	<stdcall: errno GdipGetSolidFillColor handle dword*>
+	<stdcall: errno GdipGetSolidFillColor handle uint32*>
 	^self invalidCall: _failureCode!
 
 gdipGetStringFormatAlign: format align: align
@@ -4494,7 +4494,7 @@ gdipGetStringFormatAlign: format align: align
 			[in]PGpStringFormat format,
 			StringAlignment* align);"
 
-	<stdcall: errno GdipGetStringFormatAlign handle sdword*>
+	<stdcall: errno GdipGetStringFormatAlign handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetStringFormatDigitSubstitution: format language: language substitute: substitute
@@ -4505,7 +4505,7 @@ gdipGetStringFormatDigitSubstitution: format language: language substitute: subs
 			LANGID* language,
 			StringDigitSubstitute* substitute);"
 
-	<stdcall: errno GdipGetStringFormatDigitSubstitution handle word* sdword*>
+	<stdcall: errno GdipGetStringFormatDigitSubstitution handle uint16* int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetStringFormatFlags: format flags: flags
@@ -4515,7 +4515,7 @@ gdipGetStringFormatFlags: format flags: flags
 			[in]PGpStringFormat format,
 			int* Flags);"
 
-	<stdcall: errno GdipGetStringFormatFlags handle sdword*>
+	<stdcall: errno GdipGetStringFormatFlags handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetStringFormatHotkeyPrefix: format hotkeyPrefix: hotkeyPrefix
@@ -4525,7 +4525,7 @@ gdipGetStringFormatHotkeyPrefix: format hotkeyPrefix: hotkeyPrefix
 			[in]PGpStringFormat format,
 			int* HotkeyPrefix);"
 
-	<stdcall: errno GdipGetStringFormatHotkeyPrefix handle sdword*>
+	<stdcall: errno GdipGetStringFormatHotkeyPrefix handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetStringFormatLineAlign: format align: align
@@ -4535,7 +4535,7 @@ gdipGetStringFormatLineAlign: format align: align
 			[in]PGpStringFormat format,
 			StringAlignment* align);"
 
-	<stdcall: errno GdipGetStringFormatLineAlign handle sdword*>
+	<stdcall: errno GdipGetStringFormatLineAlign handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetStringFormatMeasurableCharacterRangeCount: format count: count
@@ -4545,7 +4545,7 @@ gdipGetStringFormatMeasurableCharacterRangeCount: format count: count
 			[in]PGpStringFormat format,
 			int* Count);"
 
-	<stdcall: errno GdipGetStringFormatMeasurableCharacterRangeCount handle sdword*>
+	<stdcall: errno GdipGetStringFormatMeasurableCharacterRangeCount handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetStringFormatTabStopCount: format count: count
@@ -4555,7 +4555,7 @@ gdipGetStringFormatTabStopCount: format count: count
 			[in]PGpStringFormat format,
 			int* Count);"
 
-	<stdcall: errno GdipGetStringFormatTabStopCount handle sdword*>
+	<stdcall: errno GdipGetStringFormatTabStopCount handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetStringFormatTabStops: format count: count firstTabOffset: firstTabOffset tabStops: tabStops
@@ -4567,7 +4567,7 @@ gdipGetStringFormatTabStops: format count: count firstTabOffset: firstTabOffset 
 			REAL* firstTabOffset,
 			REAL* tabStops);"
 
-	<stdcall: errno GdipGetStringFormatTabStops handle sdword float* float*>
+	<stdcall: errno GdipGetStringFormatTabStops handle int32 float* float*>
 	^self invalidCall: _failureCode!
 
 gdipGetStringFormatTrimming: format trimming: trimming
@@ -4577,7 +4577,7 @@ gdipGetStringFormatTrimming: format trimming: trimming
 			[in]PGpStringFormat format,
 			StringTrimming* trimming);"
 
-	<stdcall: errno GdipGetStringFormatTrimming handle sdword*>
+	<stdcall: errno GdipGetStringFormatTrimming handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetTextContrast: graphics contrast: contrast
@@ -4587,7 +4587,7 @@ gdipGetTextContrast: graphics contrast: contrast
 			PGpGraphics graphics,
 			unsigned int* contrast);"
 
-	<stdcall: errno GdipGetTextContrast handle dword*>
+	<stdcall: errno GdipGetTextContrast handle uint32*>
 	^self invalidCall: _failureCode!
 
 gdipGetTextRenderingHint: graphics mode: mode
@@ -4597,7 +4597,7 @@ gdipGetTextRenderingHint: graphics mode: mode
 			PGpGraphics graphics,
 			TextRenderingHint* mode);"
 
-	<stdcall: errno GdipGetTextRenderingHint handle sdword*>
+	<stdcall: errno GdipGetTextRenderingHint handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetTextureImage: brush image: image
@@ -4627,7 +4627,7 @@ gdipGetTextureWrapMode: brush wrapMode: wrapMode
 			[in]PGpTexture brush,
 			[out, retval]GpWrapMode* WrapMode);"
 
-	<stdcall: errno GdipGetTextureWrapMode handle sdword*>
+	<stdcall: errno GdipGetTextureWrapMode handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipGetVisibleClipBounds: graphics rect: rect
@@ -4667,7 +4667,7 @@ gdipGraphicsClear: graphics color: color
 			PGpGraphics graphics,
 			ARGB Color);"
 
-	<stdcall: errno GdipGraphicsClear handle dword>
+	<stdcall: errno GdipGraphicsClear handle uint32>
 	^self invalidCall: _failureCode!
 
 gdipGraphicsSetAbort: pGraphics pIAbort: pIAbort
@@ -4697,7 +4697,7 @@ gdipImageGetFrameCount: image dimensionID: dimensionID count: count
 			[in]GUID* dimensionID,
 			unsigned int* Count);"
 
-	<stdcall: errno GdipImageGetFrameCount handle guid* dword*>
+	<stdcall: errno GdipImageGetFrameCount handle guid* uint32*>
 	^self invalidCall: _failureCode!
 
 gdipImageGetFrameDimensionsCount: image count: count
@@ -4707,7 +4707,7 @@ gdipImageGetFrameDimensionsCount: image count: count
 			[in]PGpImage image,
 			[out, retval]unsigned int* Count);"
 
-	<stdcall: errno GdipImageGetFrameDimensionsCount handle dword*>
+	<stdcall: errno GdipImageGetFrameDimensionsCount handle uint32*>
 	^self invalidCall: _failureCode!
 
 gdipImageGetFrameDimensionsList: image dimensionIDs: dimensionIDs count: count
@@ -4718,7 +4718,7 @@ gdipImageGetFrameDimensionsList: image dimensionIDs: dimensionIDs count: count
 			GUID* dimensionIDs,
 			unsigned int Count);"
 
-	<stdcall: errno GdipImageGetFrameDimensionsList handle guid* dword>
+	<stdcall: errno GdipImageGetFrameDimensionsList handle guid* uint32>
 	^self invalidCall: _failureCode!
 
 gdipImageRotateFlip: image rfType: rfType
@@ -4728,7 +4728,7 @@ gdipImageRotateFlip: image rfType: rfType
 			[in]PGpImage image,
 			[in]RotateFlipType rfType);"
 
-	<stdcall: errno GdipImageRotateFlip handle sdword>
+	<stdcall: errno GdipImageRotateFlip handle int32>
 	^self invalidCall: _failureCode!
 
 gdipImageSelectActiveFrame: image dimensionID: dimensionID frameIndex: frameIndex
@@ -4739,7 +4739,7 @@ gdipImageSelectActiveFrame: image dimensionID: dimensionID frameIndex: frameInde
 			[in]GUID* dimensionID,
 			[in]unsigned int frameIndex);"
 
-	<stdcall: errno GdipImageSelectActiveFrame handle guid* dword>
+	<stdcall: errno GdipImageSelectActiveFrame handle guid* uint32>
 	^self invalidCall: _failureCode!
 
 gdipImageSetAbort: pImage pIAbort: pIAbort
@@ -4762,7 +4762,7 @@ gdipInitializePalette: palette paletteType: paletteType optimalColors: optimalCo
 			BOOL useTransparentColor,
 			PGpBitmap bitmap);"
 
-	<stdcall: errno GdipInitializePalette ColorPalette* sdword sdword bool handle>
+	<stdcall: errno GdipInitializePalette ColorPalette* int32 int32 bool handle>
 	^self invalidCall: _failureCode!
 
 gdipInvertMatrix: matrix
@@ -4874,7 +4874,7 @@ gdipIsOutlineVisiblePathPointI: path x: x y: y pen: pen graphics: graphics resul
 			PGpGraphics graphics,
 			BOOL* result);"
 
-	<stdcall: errno GdipIsOutlineVisiblePathPointI handle sdword sdword handle handle bool*>
+	<stdcall: errno GdipIsOutlineVisiblePathPointI handle int32 int32 handle handle bool*>
 	^self invalidCall: _failureCode!
 
 gdipIsStyleAvailable: family style: style isStyleAvailable: isStyleAvailable
@@ -4885,7 +4885,7 @@ gdipIsStyleAvailable: family style: style isStyleAvailable: isStyleAvailable
 			int style,
 			[out, retval]BOOL* IsStyleAvailable);"
 
-	<stdcall: errno GdipIsStyleAvailable handle sdword bool*>
+	<stdcall: errno GdipIsStyleAvailable handle int32 bool*>
 	^self invalidCall: _failureCode!
 
 gdipIsVisibleClipEmpty: graphics result: result
@@ -4921,7 +4921,7 @@ gdipIsVisiblePathPointI: path x: x y: y graphics: graphics result: result
 			PGpGraphics graphics,
 			BOOL* result);"
 
-	<stdcall: errno GdipIsVisiblePathPointI handle sdword sdword handle bool*>
+	<stdcall: errno GdipIsVisiblePathPointI handle int32 int32 handle bool*>
 	^self invalidCall: _failureCode!
 
 gdipIsVisiblePoint: graphics x: x y: y result: result
@@ -4945,7 +4945,7 @@ gdipIsVisiblePointI: graphics x: x y: y result: result
 			int y,
 			BOOL* result);"
 
-	<stdcall: errno GdipIsVisiblePointI handle sdword sdword bool*>
+	<stdcall: errno GdipIsVisiblePointI handle int32 int32 bool*>
 	^self invalidCall: _failureCode!
 
 gdipIsVisibleRect: graphics x: x y: y width: width height: height result: result
@@ -4973,7 +4973,7 @@ gdipIsVisibleRectI: graphics x: x y: y width: width height: height result: resul
 			int height,
 			BOOL* result);"
 
-	<stdcall: errno GdipIsVisibleRectI handle sdword sdword sdword sdword bool*>
+	<stdcall: errno GdipIsVisibleRectI handle int32 int32 int32 int32 bool*>
 	^self invalidCall: _failureCode!
 
 gdipIsVisibleRegionPoint: region x: x y: y graphics: graphics result: result
@@ -4999,7 +4999,7 @@ gdipIsVisibleRegionPointI: region x: x y: y graphics: graphics result: result
 			PGpGraphics graphics,
 			BOOL* result);"
 
-	<stdcall: errno GdipIsVisibleRegionPointI handle sdword sdword handle bool*>
+	<stdcall: errno GdipIsVisibleRegionPointI handle int32 int32 handle bool*>
 	^self invalidCall: _failureCode!
 
 gdipIsVisibleRegionRect: region x: x y: y width: width height: height graphics: graphics result: result
@@ -5029,7 +5029,7 @@ gdipIsVisibleRegionRectI: region x: x y: y width: width height: height graphics:
 			PGpGraphics graphics,
 			BOOL* result);"
 
-	<stdcall: errno GdipIsVisibleRegionRectI handle sdword sdword sdword sdword handle bool*>
+	<stdcall: errno GdipIsVisibleRegionRectI handle int32 int32 int32 int32 handle bool*>
 	^self invalidCall: _failureCode!
 
 gdipLoadImageFromFile: filename image: image
@@ -5078,7 +5078,7 @@ gdiplusNotificationHook: token1
 		GpStatus __stdcall GdiplusNotificationHook(
 			unsigned long* token);"
 
-	<stdcall: errno GdiplusNotificationHook dword*>
+	<stdcall: errno GdiplusNotificationHook uint32*>
 	^self invalidCall: _failureCode!
 
 gdiplusNotificationUnhook: token1
@@ -5087,7 +5087,7 @@ gdiplusNotificationUnhook: token1
 		void __stdcall GdiplusNotificationUnhook(
 			unsigned long token);"
 
-	<stdcall: void GdiplusNotificationUnhook dword>
+	<stdcall: void GdiplusNotificationUnhook uint32>
 	^self invalidCall: _failureCode!
 
 gdiplusShutdown: token1
@@ -5096,7 +5096,7 @@ gdiplusShutdown: token1
 		void __stdcall GdiplusShutdown(
 			[in]unsigned long token);"
 
-	<stdcall: void GdiplusStartup dword>
+	<stdcall: void GdiplusStartup uint32>
 	^self invalidCall: _failureCode!
 
 gdiplusStartup: token1 input: input output: output
@@ -5107,7 +5107,7 @@ gdiplusStartup: token1 input: input output: output
 			[in]GdiplusStartupInput* input,
 			[out]GdiplusStartupOutput* output);"
 
-	<stdcall: errno GdiplusStartup dword* GdiplusStartupInput* GdiplusStartupOutput*>
+	<stdcall: errno GdiplusStartup uint32* GdiplusStartupInput* GdiplusStartupOutput*>
 	^self invalidCall: _failureCode!
 
 gdipMeasureCharacterRanges: graphics str: str length: length font: font layoutRect: layoutRect stringFormat: stringFormat regionCount: regionCount regions: regions
@@ -5123,7 +5123,7 @@ gdipMeasureCharacterRanges: graphics str: str length: length font: font layoutRe
 			int regionCount,
 			[out, retval]PGpRegion* regions);"
 
-	<stdcall: errno GdipMeasureCharacterRanges handle lpwstr sdword handle RectF* handle sdword handle*>
+	<stdcall: errno GdipMeasureCharacterRanges handle lpwstr int32 handle RectF* handle int32 handle*>
 	^self invalidCall: _failureCode!
 
 gdipMeasureDriverString: graphics text: text length: length font: font positions: positions flags: flags matrix: matrix boundingBox: boundingBox
@@ -5139,7 +5139,7 @@ gdipMeasureDriverString: graphics text: text length: length font: font positions
 			[in]PGpMatrix matrix,
 			RectF* BoundingBox);"
 
-	<stdcall: errno GdipMeasureDriverString handle word* sdword handle POINTF* sdword handle RectF*>
+	<stdcall: errno GdipMeasureDriverString handle uint16* int32 handle POINTF* int32 handle RectF*>
 	^self invalidCall: _failureCode!
 
 gdipMeasureString: graphics str: str length: length font: font layoutRect: layoutRect stringFormat: stringFormat boundingBox: boundingBox codepointsFitted: codepointsFitted linesFilled: linesFilled
@@ -5156,7 +5156,7 @@ gdipMeasureString: graphics str: str length: length font: font layoutRect: layou
 			int* codepointsFitted,
 			int* linesFilled);"
 
-	<stdcall: errno GdipMeasureString handle lpwstr sdword handle RectF* handle RectF* sdword* sdword*>
+	<stdcall: errno GdipMeasureString handle lpwstr int32 handle RectF* handle RectF* int32* int32*>
 	^self invalidCall: _failureCode!
 
 gdipMultiplyLineTransform: brush matrix: matrix order: order
@@ -5167,7 +5167,7 @@ gdipMultiplyLineTransform: brush matrix: matrix order: order
 			[in]PGpMatrix matrix,
 			GpMatrixOrder order);"
 
-	<stdcall: errno GdipMultiplyLineTransform handle handle sdword>
+	<stdcall: errno GdipMultiplyLineTransform handle handle int32>
 	^self invalidCall: _failureCode!
 
 gdipMultiplyMatrix: matrix matrix2: matrix2 order: order
@@ -5178,7 +5178,7 @@ gdipMultiplyMatrix: matrix matrix2: matrix2 order: order
 			PGpMatrix matrix2,
 			GpMatrixOrder order);"
 
-	<stdcall: errno GdipMultiplyMatrix handle handle sdword>
+	<stdcall: errno GdipMultiplyMatrix handle handle int32>
 	^self invalidCall: _failureCode!
 
 gdipMultiplyPathGradientTransform: brush matrix: matrix order: order
@@ -5189,7 +5189,7 @@ gdipMultiplyPathGradientTransform: brush matrix: matrix order: order
 			[in]PGpMatrix matrix,
 			GpMatrixOrder order);"
 
-	<stdcall: errno GdipMultiplyPathGradientTransform handle handle sdword>
+	<stdcall: errno GdipMultiplyPathGradientTransform handle handle int32>
 	^self invalidCall: _failureCode!
 
 gdipMultiplyPenTransform: pen matrix: matrix order: order
@@ -5200,7 +5200,7 @@ gdipMultiplyPenTransform: pen matrix: matrix order: order
 			[in]PGpMatrix matrix,
 			GpMatrixOrder order);"
 
-	<stdcall: errno GdipMultiplyPenTransform handle handle sdword>
+	<stdcall: errno GdipMultiplyPenTransform handle handle int32>
 	^self invalidCall: _failureCode!
 
 gdipMultiplyTextureTransform: brush matrix: matrix order: order
@@ -5211,7 +5211,7 @@ gdipMultiplyTextureTransform: brush matrix: matrix order: order
 			[in]PGpMatrix matrix,
 			[in]GpMatrixOrder order);"
 
-	<stdcall: errno GdipMultiplyTextureTransform handle handle sdword>
+	<stdcall: errno GdipMultiplyTextureTransform handle handle int32>
 	^self invalidCall: _failureCode!
 
 gdipMultiplyWorldTransform: graphics matrix: matrix order: order
@@ -5222,7 +5222,7 @@ gdipMultiplyWorldTransform: graphics matrix: matrix order: order
 			[in]PGpMatrix matrix,
 			GpMatrixOrder order);"
 
-	<stdcall: errno GdipMultiplyWorldTransform handle handle sdword>
+	<stdcall: errno GdipMultiplyWorldTransform handle handle int32>
 	^self invalidCall: _failureCode!
 
 gdipNewInstalledFontCollection: fontCollection
@@ -5254,7 +5254,7 @@ gdipPathIterCopyData: iterator resultCount: resultCount points: points types: ty
 			int startIndex,
 			int endIndex);"
 
-	<stdcall: errno GdipPathIterCopyData handle sdword* POINTF* byte* sdword sdword>
+	<stdcall: errno GdipPathIterCopyData handle int32* POINTF* uint8* int32 int32>
 	^self invalidCall: _failureCode!
 
 gdipPathIterEnumerate: iterator resultCount: resultCount points: points types: types count: count
@@ -5267,7 +5267,7 @@ gdipPathIterEnumerate: iterator resultCount: resultCount points: points types: t
 			BYTE* Types,
 			int Count);"
 
-	<stdcall: errno GdipPathIterEnumerate handle sdword* POINTF* byte* sdword>
+	<stdcall: errno GdipPathIterEnumerate handle int32* POINTF* uint8* int32>
 	^self invalidCall: _failureCode!
 
 gdipPathIterGetCount: iterator count: count
@@ -5277,7 +5277,7 @@ gdipPathIterGetCount: iterator count: count
 			PGpPathIterator iterator,
 			int* Count);"
 
-	<stdcall: errno GdipPathIterGetCount handle sdword*>
+	<stdcall: errno GdipPathIterGetCount handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipPathIterGetSubpathCount: iterator count: count
@@ -5287,7 +5287,7 @@ gdipPathIterGetSubpathCount: iterator count: count
 			PGpPathIterator iterator,
 			int* Count);"
 
-	<stdcall: errno GdipPathIterGetSubpathCount handle sdword*>
+	<stdcall: errno GdipPathIterGetSubpathCount handle int32*>
 	^self invalidCall: _failureCode!
 
 gdipPathIterHasCurve: iterator hasCurve: hasCurve
@@ -5319,7 +5319,7 @@ gdipPathIterNextMarker: iterator resultCount: resultCount startIndex: startIndex
 			int* startIndex,
 			int* endIndex);"
 
-	<stdcall: errno GdipPathIterNextMarker handle sdword* sdword* sdword*>
+	<stdcall: errno GdipPathIterNextMarker handle int32* int32* int32*>
 	^self invalidCall: _failureCode!
 
 gdipPathIterNextMarkerPath: iterator resultCount: resultCount path: path
@@ -5330,7 +5330,7 @@ gdipPathIterNextMarkerPath: iterator resultCount: resultCount path: path
 			int* resultCount,
 			PGpPath path);"
 
-	<stdcall: errno GdipPathIterNextMarkerPath handle sdword* handle>
+	<stdcall: errno GdipPathIterNextMarkerPath handle int32* handle>
 	^self invalidCall: _failureCode!
 
 gdipPathIterNextPathType: iterator resultCount: resultCount pathType: pathType startIndex: startIndex endIndex: endIndex
@@ -5343,7 +5343,7 @@ gdipPathIterNextPathType: iterator resultCount: resultCount pathType: pathType s
 			int* startIndex,
 			int* endIndex);"
 
-	<stdcall: errno GdipPathIterNextPathType handle sdword* byte* sdword* sdword*>
+	<stdcall: errno GdipPathIterNextPathType handle int32* uint8* int32* int32*>
 	^self invalidCall: _failureCode!
 
 gdipPathIterNextSubpath: iterator resultCount: resultCount startIndex: startIndex endIndex: endIndex isClosed: isClosed
@@ -5356,7 +5356,7 @@ gdipPathIterNextSubpath: iterator resultCount: resultCount startIndex: startInde
 			int* endIndex,
 			BOOL* isClosed);"
 
-	<stdcall: errno GdipPathIterNextSubpath handle sdword* sdword* sdword* bool*>
+	<stdcall: errno GdipPathIterNextSubpath handle int32* int32* int32* bool*>
 	^self invalidCall: _failureCode!
 
 gdipPathIterNextSubpathPath: iterator resultCount: resultCount path: path isClosed: isClosed
@@ -5368,7 +5368,7 @@ gdipPathIterNextSubpathPath: iterator resultCount: resultCount path: path isClos
 			PGpPath path,
 			BOOL* isClosed);"
 
-	<stdcall: errno GdipPathIterNextSubpathPath handle sdword* handle bool*>
+	<stdcall: errno GdipPathIterNextSubpathPath handle int32* handle bool*>
 	^self invalidCall: _failureCode!
 
 gdipPathIterRewind: iterator
@@ -5390,7 +5390,7 @@ gdipPlayMetafileRecord: metafile recordType: recordType flags: flags dataSize: d
 			unsigned int DataSize,
 			[in]BYTE* Data);"
 
-	<stdcall: errno GdipPlayMetafileRecord handle sdword dword dword byte*>
+	<stdcall: errno GdipPlayMetafileRecord handle int32 uint32 uint32 uint8*>
 	^self invalidCall: _failureCode!
 
 gdipPrivateAddFontFile: fontCollection filename: filename
@@ -5411,7 +5411,7 @@ gdipPrivateAddMemoryFont: fontCollection memory: memory length: length
 			[in]void* memory,
 			int length);"
 
-	<stdcall: errno GdipPrivateAddMemoryFont handle void* sdword>
+	<stdcall: errno GdipPrivateAddMemoryFont handle void* int32>
 	^self invalidCall: _failureCode!
 
 gdipRecordMetafile: referenceHdc type: type frameRect: frameRect frameUnit: frameUnit description: description metafile: metafile
@@ -5425,7 +5425,7 @@ gdipRecordMetafile: referenceHdc type: type frameRect: frameRect frameUnit: fram
 			[in]LPWSTR description,
 			[out, retval]PGpMetafile* metafile);"
 
-	<stdcall: errno GdipRecordMetafile handle sdword RectF* sdword lpwstr handle*>
+	<stdcall: errno GdipRecordMetafile handle int32 RectF* int32 lpwstr handle*>
 	^self invalidCall: _failureCode!
 
 gdipRecordMetafileFileName: filename referenceHdc: referenceHdc type: type frameRect: frameRect frameUnit: frameUnit description: description metafile: metafile
@@ -5440,7 +5440,7 @@ gdipRecordMetafileFileName: filename referenceHdc: referenceHdc type: type frame
 			[in]LPWSTR description,
 			[out, retval]PGpMetafile* metafile);"
 
-	<stdcall: errno GdipRecordMetafileFileName lpwstr handle sdword RectF* sdword lpwstr handle*>
+	<stdcall: errno GdipRecordMetafileFileName lpwstr handle int32 RectF* int32 lpwstr handle*>
 	^self invalidCall: _failureCode!
 
 gdipRecordMetafileFileNameI: filename referenceHdc: referenceHdc type: type frameRect: frameRect frameUnit: frameUnit description: description metafile: metafile
@@ -5455,7 +5455,7 @@ gdipRecordMetafileFileNameI: filename referenceHdc: referenceHdc type: type fram
 			[in]LPWSTR description,
 			[out, retval]PGpMetafile* metafile);"
 
-	<stdcall: errno GdipRecordMetafileFileNameI lpwstr handle sdword Rect* sdword lpwstr handle*>
+	<stdcall: errno GdipRecordMetafileFileNameI lpwstr handle int32 Rect* int32 lpwstr handle*>
 	^self invalidCall: _failureCode!
 
 gdipRecordMetafileI: referenceHdc type: type frameRect: frameRect frameUnit: frameUnit description: description metafile: metafile
@@ -5469,7 +5469,7 @@ gdipRecordMetafileI: referenceHdc type: type frameRect: frameRect frameUnit: fra
 			[in]LPWSTR description,
 			[out, retval]PGpMetafile* metafile);"
 
-	<stdcall: errno GdipRecordMetafileI handle sdword Rect* sdword lpwstr handle*>
+	<stdcall: errno GdipRecordMetafileI handle int32 Rect* int32 lpwstr handle*>
 	^self invalidCall: _failureCode!
 
 gdipRecordMetafileStream: stream referenceHdc: referenceHdc type: type frameRect: frameRect frameUnit: frameUnit description: description metafile: metafile
@@ -5484,7 +5484,7 @@ gdipRecordMetafileStream: stream referenceHdc: referenceHdc type: type frameRect
 			[in]LPWSTR description,
 			[out, retval]PGpMetafile* metafile);"
 
-	<stdcall: errno GdipRecordMetafileStream OS.COM.IStream* handle sdword RectF* sdword lpwstr handle*>
+	<stdcall: errno GdipRecordMetafileStream OS.COM.IStream* handle int32 RectF* int32 lpwstr handle*>
 	^self invalidCall: _failureCode!
 
 gdipRecordMetafileStreamI: stream referenceHdc: referenceHdc type: type frameRect: frameRect frameUnit: frameUnit description: description metafile: metafile
@@ -5499,7 +5499,7 @@ gdipRecordMetafileStreamI: stream referenceHdc: referenceHdc type: type frameRec
 			[in]LPWSTR description,
 			[out, retval]PGpMetafile* metafile);"
 
-	<stdcall: errno GdipRecordMetafileStreamI OS.COM.IStream* handle sdword Rect* sdword lpwstr handle*>
+	<stdcall: errno GdipRecordMetafileStreamI OS.COM.IStream* handle int32 Rect* int32 lpwstr handle*>
 	^self invalidCall: _failureCode!
 
 gdipReleaseDC: graphics hdc: hdc
@@ -5519,7 +5519,7 @@ gdipRemovePropertyItem: image propId: propId
 			[in]PGpImage image,
 			[in]unsigned long propId);"
 
-	<stdcall: errno GdipRemovePropertyItem handle dword>
+	<stdcall: errno GdipRemovePropertyItem handle uint32>
 	^self invalidCall: _failureCode!
 
 gdipResetClip: graphics
@@ -5538,7 +5538,7 @@ gdipResetImageAttributes: imageattr type: type
 			PGpImageAttributes imageattr,
 			ColorAdjustType Type);"
 
-	<stdcall: errno GdipResetImageAttributes handle sdword>
+	<stdcall: errno GdipResetImageAttributes handle int32>
 	^self invalidCall: _failureCode!
 
 gdipResetLineTransform: brush
@@ -5611,7 +5611,7 @@ gdipRestoreGraphics: graphics state: state
 			PGpGraphics graphics,
 			GraphicsState state);"
 
-	<stdcall: errno GdipRestoreGraphics handle dword>
+	<stdcall: errno GdipRestoreGraphics handle uint32>
 	^self invalidCall: _failureCode!
 
 gdipReversePath: path
@@ -5631,7 +5631,7 @@ gdipRotateLineTransform: brush angle: angle order: order
 			REAL angle,
 			GpMatrixOrder order);"
 
-	<stdcall: errno GdipRotateLineTransform handle float sdword>
+	<stdcall: errno GdipRotateLineTransform handle float int32>
 	^self invalidCall: _failureCode!
 
 gdipRotateMatrix: matrix angle: angle order: order
@@ -5642,7 +5642,7 @@ gdipRotateMatrix: matrix angle: angle order: order
 			REAL angle,
 			GpMatrixOrder order);"
 
-	<stdcall: errno GdipRotateMatrix handle float sdword>
+	<stdcall: errno GdipRotateMatrix handle float int32>
 	^self invalidCall: _failureCode!
 
 gdipRotatePathGradientTransform: brush angle: angle order: order
@@ -5653,7 +5653,7 @@ gdipRotatePathGradientTransform: brush angle: angle order: order
 			REAL angle,
 			GpMatrixOrder order);"
 
-	<stdcall: errno GdipRotatePathGradientTransform handle float sdword>
+	<stdcall: errno GdipRotatePathGradientTransform handle float int32>
 	^self invalidCall: _failureCode!
 
 gdipRotatePenTransform: pen angle: angle order: order
@@ -5664,7 +5664,7 @@ gdipRotatePenTransform: pen angle: angle order: order
 			REAL angle,
 			GpMatrixOrder order);"
 
-	<stdcall: errno GdipRotatePenTransform handle float sdword>
+	<stdcall: errno GdipRotatePenTransform handle float int32>
 	^self invalidCall: _failureCode!
 
 gdipRotateTextureTransform: brush angle: angle order: order
@@ -5675,7 +5675,7 @@ gdipRotateTextureTransform: brush angle: angle order: order
 			[in]REAL angle,
 			[in]GpMatrixOrder order);"
 
-	<stdcall: errno GdipRotateTextureTransform handle float sdword>
+	<stdcall: errno GdipRotateTextureTransform handle float int32>
 	^self invalidCall: _failureCode!
 
 gdipRotateWorldTransform: graphics angle: angle order: order
@@ -5686,7 +5686,7 @@ gdipRotateWorldTransform: graphics angle: angle order: order
 			REAL angle,
 			GpMatrixOrder order);"
 
-	<stdcall: errno GdipRotateWorldTransform handle float sdword>
+	<stdcall: errno GdipRotateWorldTransform handle float int32>
 	^self invalidCall: _failureCode!
 
 gdipSaveAdd: image encoderParams: encoderParams
@@ -5717,7 +5717,7 @@ gdipSaveGraphics: graphics state: state
 			PGpGraphics graphics,
 			GraphicsState* state);"
 
-	<stdcall: errno GdipSaveGraphics handle dword*>
+	<stdcall: errno GdipSaveGraphics handle uint32*>
 	^self invalidCall: _failureCode!
 
 gdipSaveImageToFile: image filename: filename clsidEncoder: clsidEncoder encoderParams: encoderParams
@@ -5753,7 +5753,7 @@ gdipScaleLineTransform: brush sx: sx sy: sy order: order
 			REAL sy,
 			GpMatrixOrder order);"
 
-	<stdcall: errno GdipScaleLineTransform handle float float sdword>
+	<stdcall: errno GdipScaleLineTransform handle float float int32>
 	^self invalidCall: _failureCode!
 
 gdipScaleMatrix: matrix scaleX: scaleX scaleY: scaleY order: order
@@ -5765,7 +5765,7 @@ gdipScaleMatrix: matrix scaleX: scaleX scaleY: scaleY order: order
 			REAL scaleY,
 			GpMatrixOrder order);"
 
-	<stdcall: errno GdipScaleMatrix handle float float sdword>
+	<stdcall: errno GdipScaleMatrix handle float float int32>
 	^self invalidCall: _failureCode!
 
 gdipScalePathGradientTransform: brush sx: sx sy: sy order: order
@@ -5777,7 +5777,7 @@ gdipScalePathGradientTransform: brush sx: sx sy: sy order: order
 			REAL sy,
 			GpMatrixOrder order);"
 
-	<stdcall: errno GdipScalePathGradientTransform handle float float sdword>
+	<stdcall: errno GdipScalePathGradientTransform handle float float int32>
 	^self invalidCall: _failureCode!
 
 gdipScalePenTransform: pen sx: sx sy: sy order: order
@@ -5789,7 +5789,7 @@ gdipScalePenTransform: pen sx: sx sy: sy order: order
 			REAL sy,
 			GpMatrixOrder order);"
 
-	<stdcall: errno GdipScalePenTransform handle float float sdword>
+	<stdcall: errno GdipScalePenTransform handle float float int32>
 	^self invalidCall: _failureCode!
 
 gdipScaleTextureTransform: brush sx: sx sy: sy order: order
@@ -5801,7 +5801,7 @@ gdipScaleTextureTransform: brush sx: sx sy: sy order: order
 			[in]REAL sy,
 			[in]GpMatrixOrder order);"
 
-	<stdcall: errno GdipScaleTextureTransform handle float float sdword>
+	<stdcall: errno GdipScaleTextureTransform handle float float int32>
 	^self invalidCall: _failureCode!
 
 gdipScaleWorldTransform: graphics sx: sx sy: sy order: order
@@ -5813,7 +5813,7 @@ gdipScaleWorldTransform: graphics sx: sx sy: sy order: order
 			REAL sy,
 			GpMatrixOrder order);"
 
-	<stdcall: errno GdipScaleWorldTransform handle float float sdword>
+	<stdcall: errno GdipScaleWorldTransform handle float float int32>
 	^self invalidCall: _failureCode!
 
 gdipSetAdjustableArrowCapFillState: cap fillState: fillState
@@ -5864,7 +5864,7 @@ gdipSetClipGraphics: graphics srcgraphics: srcgraphics combineMode: combineMode
 			PGpGraphics srcgraphics,
 			CombineMode CombineMode);"
 
-	<stdcall: errno GdipSetClipGraphics handle handle sdword>
+	<stdcall: errno GdipSetClipGraphics handle handle int32>
 	^self invalidCall: _failureCode!
 
 gdipSetClipHrgn: graphics hRgn: hRgn combineMode: combineMode
@@ -5875,7 +5875,7 @@ gdipSetClipHrgn: graphics hRgn: hRgn combineMode: combineMode
 			wireHRGN hRgn,
 			CombineMode CombineMode);"
 
-	<stdcall: errno GdipSetClipHrgn handle handle sdword>
+	<stdcall: errno GdipSetClipHrgn handle handle int32>
 	^self invalidCall: _failureCode!
 
 gdipSetClipPath: graphics path: path combineMode: combineMode
@@ -5886,7 +5886,7 @@ gdipSetClipPath: graphics path: path combineMode: combineMode
 			PGpPath path,
 			CombineMode CombineMode);"
 
-	<stdcall: errno GdipSetClipPath handle handle sdword>
+	<stdcall: errno GdipSetClipPath handle handle int32>
 	^self invalidCall: _failureCode!
 
 gdipSetClipRect: graphics x: x y: y width: width height: height combineMode: combineMode
@@ -5900,7 +5900,7 @@ gdipSetClipRect: graphics x: x y: y width: width height: height combineMode: com
 			REAL height,
 			CombineMode CombineMode);"
 
-	<stdcall: errno GdipSetClipRect handle float float float float sdword>
+	<stdcall: errno GdipSetClipRect handle float float float float int32>
 	^self invalidCall: _failureCode!
 
 gdipSetClipRectI: graphics x: x y: y width: width height: height combineMode: combineMode
@@ -5914,7 +5914,7 @@ gdipSetClipRectI: graphics x: x y: y width: width height: height combineMode: co
 			int height,
 			CombineMode CombineMode);"
 
-	<stdcall: errno GdipSetClipRectI handle sdword sdword sdword sdword sdword>
+	<stdcall: errno GdipSetClipRectI handle int32 int32 int32 int32 int32>
 	^self invalidCall: _failureCode!
 
 gdipSetClipRegion: graphics region: region combineMode: combineMode
@@ -5925,7 +5925,7 @@ gdipSetClipRegion: graphics region: region combineMode: combineMode
 			PGpRegion region,
 			CombineMode CombineMode);"
 
-	<stdcall: errno GdipSetClipRegion handle handle sdword>
+	<stdcall: errno GdipSetClipRegion handle handle int32>
 	^self invalidCall: _failureCode!
 
 gdipSetCompositingMode: graphics compositingMode: compositingMode
@@ -5935,7 +5935,7 @@ gdipSetCompositingMode: graphics compositingMode: compositingMode
 			PGpGraphics graphics,
 			CompositingMode CompositingMode);"
 
-	<stdcall: errno GdipSetCompositingMode handle sdword>
+	<stdcall: errno GdipSetCompositingMode handle int32>
 	^self invalidCall: _failureCode!
 
 gdipSetCompositingQuality: graphics compositingQuality: compositingQuality
@@ -5945,7 +5945,7 @@ gdipSetCompositingQuality: graphics compositingQuality: compositingQuality
 			PGpGraphics graphics,
 			CompositingQuality CompositingQuality);"
 
-	<stdcall: errno GdipSetCompositingQuality handle sdword>
+	<stdcall: errno GdipSetCompositingQuality handle int32>
 	^self invalidCall: _failureCode!
 
 gdipSetCustomLineCapBaseCap: customCap baseCap: baseCap
@@ -5955,7 +5955,7 @@ gdipSetCustomLineCapBaseCap: customCap baseCap: baseCap
 			PGpCustomLineCap customCap,
 			GpLineCap baseCap);"
 
-	<stdcall: errno GdipSetCustomLineCapBaseCap handle sdword>
+	<stdcall: errno GdipSetCustomLineCapBaseCap handle int32>
 	^self invalidCall: _failureCode!
 
 gdipSetCustomLineCapBaseInset: customCap inset: inset
@@ -5976,7 +5976,7 @@ gdipSetCustomLineCapStrokeCaps: customCap startCap: startCap endCap: endCap
 			GpLineCap startCap,
 			GpLineCap endCap);"
 
-	<stdcall: errno GdipSetCustomLineCapStrokeCaps handle sdword sdword>
+	<stdcall: errno GdipSetCustomLineCapStrokeCaps handle int32 int32>
 	^self invalidCall: _failureCode!
 
 gdipSetCustomLineCapStrokeJoin: customCap lineJoin: lineJoin
@@ -5986,7 +5986,7 @@ gdipSetCustomLineCapStrokeJoin: customCap lineJoin: lineJoin
 			PGpCustomLineCap customCap,
 			GpLineJoin LineJoin);"
 
-	<stdcall: errno GdipSetCustomLineCapStrokeJoin handle sdword>
+	<stdcall: errno GdipSetCustomLineCapStrokeJoin handle int32>
 	^self invalidCall: _failureCode!
 
 gdipSetCustomLineCapWidthScale: customCap widthScale: widthScale
@@ -6028,7 +6028,7 @@ gdipSetImageAttributesColorKeys: imageattr type: type enableFlag: enableFlag col
 			ARGB colorLow,
 			ARGB colorHigh);"
 
-	<stdcall: errno GdipSetImageAttributesColorKeys handle sdword bool dword dword>
+	<stdcall: errno GdipSetImageAttributesColorKeys handle int32 bool uint32 uint32>
 	^self invalidCall: _failureCode!
 
 gdipSetImageAttributesColorMatrix: imageattr type: type enableFlag: enableFlag colorMatrix: colorMatrix grayMatrix: grayMatrix flags: flags
@@ -6042,7 +6042,7 @@ gdipSetImageAttributesColorMatrix: imageattr type: type enableFlag: enableFlag c
 			[in]ColorMatrix* grayMatrix,
 			ColorMatrixFlags Flags);"
 
-	<stdcall: errno GdipSetImageAttributesColorMatrix handle sdword bool ColorMatrix* ColorMatrix* sdword>
+	<stdcall: errno GdipSetImageAttributesColorMatrix handle int32 bool ColorMatrix* ColorMatrix* int32>
 	^self invalidCall: _failureCode!
 
 gdipSetImageAttributesGamma: imageattr type: type enableFlag: enableFlag gamma: gamma
@@ -6054,7 +6054,7 @@ gdipSetImageAttributesGamma: imageattr type: type enableFlag: enableFlag gamma: 
 			BOOL enableFlag,
 			REAL gamma);"
 
-	<stdcall: errno GdipSetImageAttributesGamma handle sdword bool float>
+	<stdcall: errno GdipSetImageAttributesGamma handle int32 bool float>
 	^self invalidCall: _failureCode!
 
 gdipSetImageAttributesICMMode: imageattr on: on
@@ -6075,7 +6075,7 @@ gdipSetImageAttributesNoOp: imageattr type: type enableFlag: enableFlag
 			ColorAdjustType Type,
 			BOOL enableFlag);"
 
-	<stdcall: errno GdipSetImageAttributesNoOp handle sdword bool>
+	<stdcall: errno GdipSetImageAttributesNoOp handle int32 bool>
 	^self invalidCall: _failureCode!
 
 gdipSetImageAttributesOutputChannel: imageattr type: type enableFlag: enableFlag channelFlags: channelFlags
@@ -6087,7 +6087,7 @@ gdipSetImageAttributesOutputChannel: imageattr type: type enableFlag: enableFlag
 			BOOL enableFlag,
 			ColorChannelFlags channelFlags);"
 
-	<stdcall: errno GdipSetImageAttributesOutputChannel handle sdword bool sdword>
+	<stdcall: errno GdipSetImageAttributesOutputChannel handle int32 bool int32>
 	^self invalidCall: _failureCode!
 
 gdipSetImageAttributesOutputChannelColorProfile: imageattr type: type enableFlag: enableFlag colorProfileFilename: colorProfileFilename
@@ -6099,7 +6099,7 @@ gdipSetImageAttributesOutputChannelColorProfile: imageattr type: type enableFlag
 			BOOL enableFlag,
 			[in]LPWSTR colorProfileFilename);"
 
-	<stdcall: errno GdipSetImageAttributesOutputChannelColorProfile handle sdword bool lpwstr>
+	<stdcall: errno GdipSetImageAttributesOutputChannelColorProfile handle int32 bool lpwstr>
 	^self invalidCall: _failureCode!
 
 gdipSetImageAttributesRemapTable: imageattr type: type enableFlag: enableFlag mapSize: mapSize map: map
@@ -6112,7 +6112,7 @@ gdipSetImageAttributesRemapTable: imageattr type: type enableFlag: enableFlag ma
 			unsigned int mapSize,
 			[in]ColorMap* map);"
 
-	<stdcall: errno GdipSetImageAttributesRemapTable handle sdword bool dword ColorMap*>
+	<stdcall: errno GdipSetImageAttributesRemapTable handle int32 bool uint32 ColorMap*>
 	^self invalidCall: _failureCode!
 
 gdipSetImageAttributesThreshold: imageattr type: type enableFlag: enableFlag threshold: threshold
@@ -6124,7 +6124,7 @@ gdipSetImageAttributesThreshold: imageattr type: type enableFlag: enableFlag thr
 			BOOL enableFlag,
 			REAL threshold);"
 
-	<stdcall: errno GdipSetImageAttributesThreshold handle sdword bool float>
+	<stdcall: errno GdipSetImageAttributesThreshold handle int32 bool float>
 	^self invalidCall: _failureCode!
 
 gdipSetImageAttributesToIdentity: imageattr type: type
@@ -6134,7 +6134,7 @@ gdipSetImageAttributesToIdentity: imageattr type: type
 			PGpImageAttributes imageattr,
 			ColorAdjustType Type);"
 
-	<stdcall: errno GdipSetImageAttributesToIdentity handle sdword>
+	<stdcall: errno GdipSetImageAttributesToIdentity handle int32>
 	^self invalidCall: _failureCode!
 
 gdipSetImageAttributesWrapMode: imageattr wrap: wrap argb: argb clamp: clamp
@@ -6146,7 +6146,7 @@ gdipSetImageAttributesWrapMode: imageattr wrap: wrap argb: argb clamp: clamp
 			ARGB ARGB,
 			BOOL clamp);"
 
-	<stdcall: errno GdipSetImageAttributesWrapMode handle sdword dword bool>
+	<stdcall: errno GdipSetImageAttributesWrapMode handle int32 uint32 bool>
 	^self invalidCall: _failureCode!
 
 gdipSetImagePalette: image palette: palette
@@ -6175,7 +6175,7 @@ gdipSetInterpolationMode: graphics interpolationMode: interpolationMode
 			PGpGraphics graphics,
 			InterpolationMode InterpolationMode);"
 
-	<stdcall: errno GdipSetInterpolationMode handle sdword>
+	<stdcall: errno GdipSetInterpolationMode handle int32>
 	^self invalidCall: _failureCode!
 
 gdipSetLineBlend: brush blend: blend positions: positions count: count
@@ -6187,7 +6187,7 @@ gdipSetLineBlend: brush blend: blend positions: positions count: count
 			[in]REAL* positions,
 			int Count);"
 
-	<stdcall: errno GdipSetLineBlend handle float* float* sdword>
+	<stdcall: errno GdipSetLineBlend handle float* float* int32>
 	^self invalidCall: _failureCode!
 
 gdipSetLineColors: brush color1: color1 color2: color2
@@ -6198,7 +6198,7 @@ gdipSetLineColors: brush color1: color1 color2: color2
 			ARGB color1,
 			ARGB color2);"
 
-	<stdcall: errno GdipSetLineColors handle dword dword>
+	<stdcall: errno GdipSetLineColors handle uint32 uint32>
 	^self invalidCall: _failureCode!
 
 gdipSetLineGammaCorrection: brush useGammaCorrection: useGammaCorrection
@@ -6231,7 +6231,7 @@ gdipSetLinePresetBlend: brush blend: blend positions: positions count: count
 			[in]REAL* positions,
 			int Count);"
 
-	<stdcall: errno GdipSetLinePresetBlend handle dword* float* sdword>
+	<stdcall: errno GdipSetLinePresetBlend handle uint32* float* int32>
 	^self invalidCall: _failureCode!
 
 gdipSetLineSigmaBlend: brush focus: focus scale: scale
@@ -6262,7 +6262,7 @@ gdipSetLineWrapMode: brush wrapMode: wrapMode
 			PGpLineGradient brush,
 			GpWrapMode WrapMode);"
 
-	<stdcall: errno GdipSetLineWrapMode handle sdword>
+	<stdcall: errno GdipSetLineWrapMode handle int32>
 	^self invalidCall: _failureCode!
 
 gdipSetMatrixElements: matrix m11: m11 m12: m12 m21: m21 m22: m22 dx: dx dy: dy
@@ -6287,7 +6287,7 @@ gdipSetMetafileDownLevelRasterizationLimit: metafile metafileRasterizationLimitD
 			PGpMetafile metafile,
 			unsigned int metafileRasterizationLimitDpi);"
 
-	<stdcall: errno GdipSetMetafileDownLevelRasterizationLimit handle dword>
+	<stdcall: errno GdipSetMetafileDownLevelRasterizationLimit handle uint32>
 	^self invalidCall: _failureCode!
 
 gdipSetPageScale: graphics scale: scale
@@ -6307,7 +6307,7 @@ gdipSetPageUnit: graphics unit: unit
 			PGpGraphics graphics,
 			GpUnit Unit);"
 
-	<stdcall: errno GdipSetPageUnit handle sdword>
+	<stdcall: errno GdipSetPageUnit handle int32>
 	^self invalidCall: _failureCode!
 
 gdipSetPathFillMode: path fillMode: fillMode
@@ -6317,7 +6317,7 @@ gdipSetPathFillMode: path fillMode: fillMode
 			PGpPath path,
 			GpFillMode FillMode);"
 
-	<stdcall: errno GdipSetPathFillMode handle sdword>
+	<stdcall: errno GdipSetPathFillMode handle int32>
 	^self invalidCall: _failureCode!
 
 gdipSetPathGradientBlend: brush blend: blend positions: positions count: count
@@ -6329,7 +6329,7 @@ gdipSetPathGradientBlend: brush blend: blend positions: positions count: count
 			[in]REAL* positions,
 			int Count);"
 
-	<stdcall: errno GdipSetPathGradientBlend handle float* float* sdword>
+	<stdcall: errno GdipSetPathGradientBlend handle float* float* int32>
 	^self invalidCall: _failureCode!
 
 gdipSetPathGradientCenterColor: brush colors: colors
@@ -6339,7 +6339,7 @@ gdipSetPathGradientCenterColor: brush colors: colors
 			PGpPathGradient brush,
 			ARGB colors);"
 
-	<stdcall: errno GdipSetPathGradientCenterColor handle dword>
+	<stdcall: errno GdipSetPathGradientCenterColor handle uint32>
 	^self invalidCall: _failureCode!
 
 gdipSetPathGradientCenterPoint: brush points: points
@@ -6413,7 +6413,7 @@ gdipSetPathGradientPresetBlend: brush blend: blend positions: positions count: c
 			[in]REAL* positions,
 			int Count);"
 
-	<stdcall: errno GdipSetPathGradientPresetBlend handle dword* float* sdword>
+	<stdcall: errno GdipSetPathGradientPresetBlend handle uint32* float* int32>
 	^self invalidCall: _failureCode!
 
 gdipSetPathGradientSigmaBlend: brush focus: focus scale: scale
@@ -6435,7 +6435,7 @@ gdipSetPathGradientSurroundColorsWithCount: brush color: color count: count
 			[in]ARGB* Color,
 			int* Count);"
 
-	<stdcall: errno GdipSetPathGradientSurroundColorsWithCount handle dword* sdword*>
+	<stdcall: errno GdipSetPathGradientSurroundColorsWithCount handle uint32* int32*>
 	^self invalidCall: _failureCode!
 
 gdipSetPathGradientTransform: brush matrix: matrix
@@ -6455,7 +6455,7 @@ gdipSetPathGradientWrapMode: brush wrapMode: wrapMode
 			PGpPathGradient brush,
 			GpWrapMode WrapMode);"
 
-	<stdcall: errno GdipSetPathGradientWrapMode handle sdword>
+	<stdcall: errno GdipSetPathGradientWrapMode handle int32>
 	^self invalidCall: _failureCode!
 
 gdipSetPathMarker: path
@@ -6484,7 +6484,7 @@ gdipSetPenColor: pen argb: argb
 			PGpPen pen,
 			ARGB ARGB);"
 
-	<stdcall: errno GdipSetPenColor handle dword>
+	<stdcall: errno GdipSetPenColor handle uint32>
 	^self invalidCall: _failureCode!
 
 gdipSetPenCompoundArray: pen dash: dash count: count
@@ -6495,7 +6495,7 @@ gdipSetPenCompoundArray: pen dash: dash count: count
 			[in]REAL* dash,
 			int Count);"
 
-	<stdcall: errno GdipSetPenCompoundArray handle float* sdword>
+	<stdcall: errno GdipSetPenCompoundArray handle float* int32>
 	^self invalidCall: _failureCode!
 
 gdipSetPenCustomEndCap: pen customCap: customCap
@@ -6526,7 +6526,7 @@ gdipSetPenDashArray: pen dash: dash count: count
 			[in]REAL* dash,
 			int Count);"
 
-	<stdcall: errno GdipSetPenDashArray handle float* sdword>
+	<stdcall: errno GdipSetPenDashArray handle float* int32>
 	^self invalidCall: _failureCode!
 
 gdipSetPenDashArray: aHandle dashes: aCollectionOfNumbers
@@ -6542,7 +6542,7 @@ gdipSetPenDashCap197819: pen dashCap: dashCap
 			PGpPen pen,
 			GpDashCap DashCap);"
 
-	<stdcall: errno GdipSetPenDashCap197819 handle sdword>
+	<stdcall: errno GdipSetPenDashCap197819 handle int32>
 	^self invalidCall: _failureCode!
 
 gdipSetPenDashOffset: pen offset: offset
@@ -6562,7 +6562,7 @@ gdipSetPenDashStyle: pen dashStyle: dashStyle
 			PGpPen pen,
 			GpDashStyle DashStyle);"
 
-	<stdcall: errno GdipSetPenDashStyle handle sdword>
+	<stdcall: errno GdipSetPenDashStyle handle int32>
 	^self invalidCall: _failureCode!
 
 gdipSetPenEndCap: pen endCap: endCap
@@ -6572,7 +6572,7 @@ gdipSetPenEndCap: pen endCap: endCap
 			PGpPen pen,
 			GpLineCap endCap);"
 
-	<stdcall: errno GdipSetPenEndCap handle sdword>
+	<stdcall: errno GdipSetPenEndCap handle int32>
 	^self invalidCall: _failureCode!
 
 gdipSetPenLineCap197819: pen startCap: startCap endCap: endCap dashCap: dashCap
@@ -6584,7 +6584,7 @@ gdipSetPenLineCap197819: pen startCap: startCap endCap: endCap dashCap: dashCap
 			GpLineCap endCap,
 			GpDashCap DashCap);"
 
-	<stdcall: errno GdipSetPenLineCap197819 handle sdword sdword sdword>
+	<stdcall: errno GdipSetPenLineCap197819 handle int32 int32 int32>
 	^self invalidCall: _failureCode!
 
 gdipSetPenLineJoin: pen lineJoin: lineJoin
@@ -6594,7 +6594,7 @@ gdipSetPenLineJoin: pen lineJoin: lineJoin
 			PGpPen pen,
 			GpLineJoin LineJoin);"
 
-	<stdcall: errno GdipSetPenLineJoin handle sdword>
+	<stdcall: errno GdipSetPenLineJoin handle int32>
 	^self invalidCall: _failureCode!
 
 gdipSetPenMiterLimit: pen miterLimit: miterLimit
@@ -6614,7 +6614,7 @@ gdipSetPenMode: pen penMode: penMode
 			PGpPen pen,
 			GpPenAlignment penMode);"
 
-	<stdcall: errno GdipSetPenMode handle sdword>
+	<stdcall: errno GdipSetPenMode handle int32>
 	^self invalidCall: _failureCode!
 
 gdipSetPenStartCap: pen startCap: startCap
@@ -6624,7 +6624,7 @@ gdipSetPenStartCap: pen startCap: startCap
 			PGpPen pen,
 			GpLineCap startCap);"
 
-	<stdcall: errno GdipSetPenStartCap handle sdword>
+	<stdcall: errno GdipSetPenStartCap handle int32>
 	^self invalidCall: _failureCode!
 
 gdipSetPenTransform: pen matrix: matrix
@@ -6644,7 +6644,7 @@ gdipSetPenUnit: pen unit: unit
 			PGpPen pen,
 			GpUnit Unit);"
 
-	<stdcall: errno GdipSetPenUnit handle sdword>
+	<stdcall: errno GdipSetPenUnit handle int32>
 	^self invalidCall: _failureCode!
 
 gdipSetPenWidth: pen width: width
@@ -6664,7 +6664,7 @@ gdipSetPixelOffsetMode: graphics pixelOffsetMode: pixelOffsetMode
 			PGpGraphics graphics,
 			PixelOffsetMode PixelOffsetMode);"
 
-	<stdcall: errno GdipSetPixelOffsetMode handle sdword>
+	<stdcall: errno GdipSetPixelOffsetMode handle int32>
 	^self invalidCall: _failureCode!
 
 gdipSetPropertyItem: image item: item
@@ -6685,7 +6685,7 @@ gdipSetRenderingOrigin: graphics x: x y: y
 			int x,
 			int y);"
 
-	<stdcall: errno GdipSetRenderingOrigin handle sdword sdword>
+	<stdcall: errno GdipSetRenderingOrigin handle int32 int32>
 	^self invalidCall: _failureCode!
 
 gdipSetSmoothingMode: graphics smoothingMode: smoothingMode
@@ -6695,7 +6695,7 @@ gdipSetSmoothingMode: graphics smoothingMode: smoothingMode
 			PGpGraphics graphics,
 			SmoothingMode SmoothingMode);"
 
-	<stdcall: errno GdipSetSmoothingMode handle sdword>
+	<stdcall: errno GdipSetSmoothingMode handle int32>
 	^self invalidCall: _failureCode!
 
 gdipSetSolidFillColor: brush color: color
@@ -6705,7 +6705,7 @@ gdipSetSolidFillColor: brush color: color
 			[in]PGpSolidFill brush,
 			[in]ARGB Color);"
 
-	<stdcall: errno GdipSetSolidFillColor handle dword>
+	<stdcall: errno GdipSetSolidFillColor handle uint32>
 	^self invalidCall: _failureCode!
 
 gdipSetStringFormatAlign: format align: align
@@ -6715,7 +6715,7 @@ gdipSetStringFormatAlign: format align: align
 			PGpStringFormat format,
 			StringAlignment align);"
 
-	<stdcall: errno GdipSetStringFormatAlign handle sdword>
+	<stdcall: errno GdipSetStringFormatAlign handle int32>
 	^self invalidCall: _failureCode!
 
 gdipSetStringFormatDigitSubstitution: format language: language substitute: substitute
@@ -6726,7 +6726,7 @@ gdipSetStringFormatDigitSubstitution: format language: language substitute: subs
 			LANGID language,
 			StringDigitSubstitute substitute);"
 
-	<stdcall: errno GdipSetStringFormatDigitSubstitution handle word sdword>
+	<stdcall: errno GdipSetStringFormatDigitSubstitution handle uint16 int32>
 	^self invalidCall: _failureCode!
 
 gdipSetStringFormatFlags: format flags: flags
@@ -6736,7 +6736,7 @@ gdipSetStringFormatFlags: format flags: flags
 			PGpStringFormat format,
 			int Flags);"
 
-	<stdcall: errno GdipSetStringFormatFlags handle sdword>
+	<stdcall: errno GdipSetStringFormatFlags handle int32>
 	^self invalidCall: _failureCode!
 
 gdipSetStringFormatHotkeyPrefix: format hotkeyPrefix: hotkeyPrefix
@@ -6746,7 +6746,7 @@ gdipSetStringFormatHotkeyPrefix: format hotkeyPrefix: hotkeyPrefix
 			PGpStringFormat format,
 			int HotkeyPrefix);"
 
-	<stdcall: errno GdipSetStringFormatHotkeyPrefix handle sdword>
+	<stdcall: errno GdipSetStringFormatHotkeyPrefix handle int32>
 	^self invalidCall: _failureCode!
 
 gdipSetStringFormatLineAlign: format align: align
@@ -6756,7 +6756,7 @@ gdipSetStringFormatLineAlign: format align: align
 			PGpStringFormat format,
 			StringAlignment align);"
 
-	<stdcall: errno GdipSetStringFormatLineAlign handle sdword>
+	<stdcall: errno GdipSetStringFormatLineAlign handle int32>
 	^self invalidCall: _failureCode!
 
 gdipSetStringFormatMeasurableCharacterRanges: format rangeCount: rangeCount ranges: ranges
@@ -6767,7 +6767,7 @@ gdipSetStringFormatMeasurableCharacterRanges: format rangeCount: rangeCount rang
 			int rangeCount,
 			[in]CharacterRange* ranges);"
 
-	<stdcall: errno GdipSetStringFormatMeasurableCharacterRanges handle sdword CharacterRange*>
+	<stdcall: errno GdipSetStringFormatMeasurableCharacterRanges handle int32 CharacterRange*>
 	^self invalidCall: _failureCode!
 
 gdipSetStringFormatTabStops: format firstTabOffset: firstTabOffset count: count tabStops: tabStops
@@ -6779,7 +6779,7 @@ gdipSetStringFormatTabStops: format firstTabOffset: firstTabOffset count: count 
 			int Count,
 			[in]REAL* tabStops);"
 
-	<stdcall: errno GdipSetStringFormatTabStops handle float sdword float*>
+	<stdcall: errno GdipSetStringFormatTabStops handle float int32 float*>
 	^self invalidCall: _failureCode!
 
 gdipSetStringFormatTrimming: format trimming: trimming
@@ -6789,7 +6789,7 @@ gdipSetStringFormatTrimming: format trimming: trimming
 			PGpStringFormat format,
 			StringTrimming trimming);"
 
-	<stdcall: errno GdipSetStringFormatTrimming handle sdword>
+	<stdcall: errno GdipSetStringFormatTrimming handle int32>
 	^self invalidCall: _failureCode!
 
 gdipSetTextContrast: graphics contrast: contrast
@@ -6799,7 +6799,7 @@ gdipSetTextContrast: graphics contrast: contrast
 			PGpGraphics graphics,
 			unsigned int contrast);"
 
-	<stdcall: errno GdipSetTextContrast handle dword>
+	<stdcall: errno GdipSetTextContrast handle uint32>
 	^self invalidCall: _failureCode!
 
 gdipSetTextRenderingHint: graphics mode: mode
@@ -6809,7 +6809,7 @@ gdipSetTextRenderingHint: graphics mode: mode
 			PGpGraphics graphics,
 			TextRenderingHint mode);"
 
-	<stdcall: errno GdipSetTextRenderingHint handle sdword>
+	<stdcall: errno GdipSetTextRenderingHint handle int32>
 	^self invalidCall: _failureCode!
 
 gdipSetTextureTransform: brush matrix: matrix
@@ -6829,7 +6829,7 @@ gdipSetTextureWrapMode: brush wrapMode: wrapMode
 			[in]PGpTexture brush,
 			[in]GpWrapMode WrapMode);"
 
-	<stdcall: errno GdipSetTextureWrapMode handle sdword>
+	<stdcall: errno GdipSetTextureWrapMode handle int32>
 	^self invalidCall: _failureCode!
 
 gdipSetWorldTransform: graphics matrix: matrix
@@ -6851,7 +6851,7 @@ gdipShearMatrix: matrix shearX: shearX shearY: shearY order: order
 			REAL shearY,
 			GpMatrixOrder order);"
 
-	<stdcall: errno GdipShearMatrix handle float float sdword>
+	<stdcall: errno GdipShearMatrix handle float float int32>
 	^self invalidCall: _failureCode!
 
 gdipStartPathFigure: path
@@ -6888,7 +6888,7 @@ gdipTestControl: cntrl param: param
 			GpTestControlEnum cntrl,
 			void* param);"
 
-	<stdcall: errno GdipTestControl sdword void*>
+	<stdcall: errno GdipTestControl int32 void*>
 	^self invalidCall: _failureCode!
 
 gdipTransformMatrixPoints: matrix pts: pts count: count
@@ -6899,7 +6899,7 @@ gdipTransformMatrixPoints: matrix pts: pts count: count
 			POINTF* pts,
 			int Count);"
 
-	<stdcall: errno GdipTransformMatrixPoints handle POINTF* sdword>
+	<stdcall: errno GdipTransformMatrixPoints handle POINTF* int32>
 	^self invalidCall: _failureCode!
 
 gdipTransformMatrixPointsI: matrix pts: pts count: count
@@ -6910,7 +6910,7 @@ gdipTransformMatrixPointsI: matrix pts: pts count: count
 			POINTL* pts,
 			int Count);"
 
-	<stdcall: errno GdipTransformMatrixPointsI handle POINTL* sdword>
+	<stdcall: errno GdipTransformMatrixPointsI handle POINTL* int32>
 	^self invalidCall: _failureCode!
 
 gdipTransformPath: path matrix: matrix
@@ -6933,7 +6933,7 @@ gdipTransformPoints: graphics destSpace: destSpace srcSpace: srcSpace points: po
 			POINTF* Points,
 			int Count);"
 
-	<stdcall: errno GdipTransformPoints handle sdword sdword POINTF* sdword>
+	<stdcall: errno GdipTransformPoints handle int32 int32 POINTF* int32>
 	^self invalidCall: _failureCode!
 
 gdipTransformPointsI: graphics destSpace: destSpace srcSpace: srcSpace points: points count: count
@@ -6946,7 +6946,7 @@ gdipTransformPointsI: graphics destSpace: destSpace srcSpace: srcSpace points: p
 			POINTL* Points,
 			int Count);"
 
-	<stdcall: errno GdipTransformPointsI handle sdword sdword POINTL* sdword>
+	<stdcall: errno GdipTransformPointsI handle int32 int32 POINTL* int32>
 	^self invalidCall: _failureCode!
 
 gdipTransformRegion: region matrix: matrix
@@ -6978,7 +6978,7 @@ gdipTranslateClipI: graphics dx: dx dy: dy
 			int dx,
 			int dy);"
 
-	<stdcall: errno GdipTranslateClipI handle sdword sdword>
+	<stdcall: errno GdipTranslateClipI handle int32 int32>
 	^self invalidCall: _failureCode!
 
 gdipTranslateLineTransform: brush dx: dx dy: dy order: order
@@ -6990,7 +6990,7 @@ gdipTranslateLineTransform: brush dx: dx dy: dy order: order
 			REAL dy,
 			GpMatrixOrder order);"
 
-	<stdcall: errno GdipTranslateLineTransform handle float float sdword>
+	<stdcall: errno GdipTranslateLineTransform handle float float int32>
 	^self invalidCall: _failureCode!
 
 gdipTranslateMatrix: matrix offsetX: offsetX offsetY: offsetY order: order
@@ -7002,7 +7002,7 @@ gdipTranslateMatrix: matrix offsetX: offsetX offsetY: offsetY order: order
 			REAL offsetY,
 			GpMatrixOrder order);"
 
-	<stdcall: errno GdipTranslateMatrix handle float float sdword>
+	<stdcall: errno GdipTranslateMatrix handle float float int32>
 	^self invalidCall: _failureCode!
 
 gdipTranslatePathGradientTransform: brush dx: dx dy: dy order: order
@@ -7014,7 +7014,7 @@ gdipTranslatePathGradientTransform: brush dx: dx dy: dy order: order
 			REAL dy,
 			GpMatrixOrder order);"
 
-	<stdcall: errno GdipTranslatePathGradientTransform handle float float sdword>
+	<stdcall: errno GdipTranslatePathGradientTransform handle float float int32>
 	^self invalidCall: _failureCode!
 
 gdipTranslatePenTransform: pen dx: dx dy: dy order: order
@@ -7026,7 +7026,7 @@ gdipTranslatePenTransform: pen dx: dx dy: dy order: order
 			REAL dy,
 			GpMatrixOrder order);"
 
-	<stdcall: errno GdipTranslatePenTransform handle float float sdword>
+	<stdcall: errno GdipTranslatePenTransform handle float float int32>
 	^self invalidCall: _failureCode!
 
 gdipTranslateRegion: region dx: dx dy: dy
@@ -7048,7 +7048,7 @@ gdipTranslateRegionI: region dx: dx dy: dy
 			int dx,
 			int dy);"
 
-	<stdcall: errno GdipTranslateRegionI handle sdword sdword>
+	<stdcall: errno GdipTranslateRegionI handle int32 int32>
 	^self invalidCall: _failureCode!
 
 gdipTranslateTextureTransform: brush dx: dx dy: dy order: order
@@ -7060,7 +7060,7 @@ gdipTranslateTextureTransform: brush dx: dx dy: dy order: order
 			[in]REAL dy,
 			[in]GpMatrixOrder order);"
 
-	<stdcall: errno GdipTranslateTextureTransform handle float float sdword>
+	<stdcall: errno GdipTranslateTextureTransform handle float float int32>
 	^self invalidCall: _failureCode!
 
 gdipTranslateWorldTransform: graphics dx: dx dy: dy order: order
@@ -7072,7 +7072,7 @@ gdipTranslateWorldTransform: graphics dx: dx dy: dy order: order
 			REAL dy,
 			GpMatrixOrder order);"
 
-	<stdcall: errno GdipTranslateWorldTransform handle float float sdword>
+	<stdcall: errno GdipTranslateWorldTransform handle float float int32>
 	^self invalidCall: _failureCode!
 
 gdipVectorTransformMatrixPoints: matrix pts: pts count: count
@@ -7083,7 +7083,7 @@ gdipVectorTransformMatrixPoints: matrix pts: pts count: count
 			POINTF* pts,
 			int Count);"
 
-	<stdcall: errno GdipVectorTransformMatrixPoints handle POINTF* sdword>
+	<stdcall: errno GdipVectorTransformMatrixPoints handle POINTF* int32>
 	^self invalidCall: _failureCode!
 
 gdipVectorTransformMatrixPointsI: matrix pts: pts count: count
@@ -7094,7 +7094,7 @@ gdipVectorTransformMatrixPointsI: matrix pts: pts count: count
 			POINTL* pts,
 			int Count);"
 
-	<stdcall: errno GdipVectorTransformMatrixPointsI handle POINTL* sdword>
+	<stdcall: errno GdipVectorTransformMatrixPointsI handle POINTL* int32>
 	^self invalidCall: _failureCode!
 
 gdipWarpPath: path matrix: matrix points: points count: count srcx: srcx srcy: srcy srcwidth: srcwidth srcheight: srcheight warpMode: warpMode flatness: flatness
@@ -7112,7 +7112,7 @@ gdipWarpPath: path matrix: matrix points: points count: count srcx: srcx srcy: s
 			WarpMode WarpMode,
 			REAL flatness);"
 
-	<stdcall: errno GdipWarpPath handle handle POINTF* sdword float float float float sdword float>
+	<stdcall: errno GdipWarpPath handle handle POINTF* int32 float float float float int32 float>
 	^self invalidCall: _failureCode!
 
 gdipWidenPath: nativePath pen: pen matrix: matrix flatness: flatness

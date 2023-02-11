@@ -117,7 +117,7 @@ GetDeclaredPrefix: nIndex pwchPrefix: pwchPrefix pcchPrefix: pcchPrefix
 			[in, out]unsigned short* pwchPrefix,
 			[in, out]int* pcchPrefix);"
 
-	<virtual stdcall: hresult 11 sdword word* sdword*>
+	<virtual stdcall: hresult 11 int32 uint16* int32*>
 	^self invalidCall: _failureCode!
 
 getPrefix: pwszNamespaceURI nIndex: nIndex pwchPrefix: pwchPrefix pcchPrefix: pcchPrefix
@@ -146,7 +146,7 @@ GetPrefix: pwszNamespaceURI nIndex: nIndex pwchPrefix: pwchPrefix pcchPrefix: pc
 			[in, out]unsigned short* pwchPrefix,
 			[in, out]int* pcchPrefix);"
 
-	<virtual stdcall: hresult 12 lpwstr sdword word* sdword*>
+	<virtual stdcall: hresult 12 lpwstr int32 uint16* int32*>
 	^self invalidCall: _failureCode!
 
 getURI: pwchPrefix pContextNode: pContextNode pwchUri: pwchUri pcchUri: pcchUri
@@ -175,7 +175,7 @@ GetURI: pwchPrefix pContextNode: pContextNode pwchUri: pwchUri pcchUri: pcchUri
 			[in, out]unsigned short* pwchUri,
 			[in, out]int* pcchUri);"
 
-	<virtual stdcall: hresult 13 lpwstr IXMLDOMNode* word* sdword*>
+	<virtual stdcall: hresult 13 lpwstr IXMLDOMNode* uint16* int32*>
 	^self invalidCall: _failureCode!
 
 PopContext

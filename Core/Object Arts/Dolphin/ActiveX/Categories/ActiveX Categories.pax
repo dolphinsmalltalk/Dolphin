@@ -84,7 +84,7 @@ oleRegGetUserType: clsid dwFormOfType: dwFormOfType pszUserType: pszUserType
 		);
 	"
 
-	<stdcall: sdword OleRegGetUserType guid* dword lpwstr*>
+	<stdcall: int32 OleRegGetUserType guid* uint32 lpwstr*>
 	^self invalidCall: _failureCode! !
 !OS.COM.OLELibrary categoriesForMethods!
 oleRegGetUserType:dwFormOfType:pszUserType:!OLE Functions-OLE!public! !

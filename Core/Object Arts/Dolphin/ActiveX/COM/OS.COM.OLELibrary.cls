@@ -50,7 +50,7 @@ coCreateInstance: rclsid pUnkOuter: pUnkOuter dwClsContext: dwClsContext riid: r
 			[in]GUID* riid,
 			[out, retval]IUnknown** ppv);"
 
-	<stdcall: hresult CoCreateInstance guid* void* sdword guid* IUnknown**>
+	<stdcall: hresult CoCreateInstance guid* void* int32 guid* IUnknown**>
 	^self invalidCall: _failureCode!
 
 coCreateInstanceEx: clsid pUnkOuter: pUnkOuter dwClsContext: dwClsContext pServerInfo: pServerInfo cmq: cmq rgmqResults: rgmqResults
@@ -67,7 +67,7 @@ coCreateInstanceEx: clsid pUnkOuter: pUnkOuter dwClsContext: dwClsContext pServe
 			MULTI_QI rgmqResults 			// Array of MULTI_QI structures 
 		); "
 
-	<stdcall: hresult CoCreateInstanceEx guid* IUnknown* dword COSERVERINFO* dword MULTI_QI*>
+	<stdcall: hresult CoCreateInstanceEx guid* IUnknown* uint32 COSERVERINFO* uint32 MULTI_QI*>
 	^self invalidCall: _failureCode!
 
 coDisconnectObject: pUnk dwReserved: zero
@@ -82,7 +82,7 @@ coDisconnectObject: pUnk dwReserved: zero
 			DWORD dwReserved	//Reserved for future use
 		);"
 
-	<stdcall: sdword CoDisconnectObject IUnknown* dword>
+	<stdcall: int32 CoDisconnectObject IUnknown* uint32>
 	^self invalidCall: _failureCode!
 
 coFileTimeNow: struct
@@ -102,7 +102,7 @@ coGetClassObject: rclsid dwClsContext: dwClsContext pServerInfo: pServerInfo rii
 			[in]GUID* riid,
 			[out, retval]LPVOID* ppv);"
 
-	<stdcall: hresult CoGetClassObject guid* dword COSERVERINFO* guid* void**>
+	<stdcall: hresult CoGetClassObject guid* uint32 COSERVERINFO* guid* void**>
 	^self invalidCall: _failureCode!
 
 coGetMalloc: dwMemContext ppMalloc: ppMalloc
@@ -113,7 +113,7 @@ coGetMalloc: dwMemContext ppMalloc: ppMalloc
 			[in]unsigned long dwMemContext,
 			[out, retval]IMalloc** ppMalloc);"
 
-	<stdcall: hresult CoGetMalloc dword IMalloc**>
+	<stdcall: hresult CoGetMalloc uint32 IMalloc**>
 	^self invalidCall: _failureCode!
 
 coGetObject: aUtf16String pBindOptions: aBIND_OPTS riid: anIID ppv: aCOMInterface
@@ -143,7 +143,7 @@ coInitializeEx: pvReserved dwCoInit: dwCoInit
 			[in]LPVOID pvReserved,
 			[in]unsigned long dwCoInit);"
 
-	<stdcall: hresult CoInitializeEx void* dword>
+	<stdcall: hresult CoInitializeEx void* uint32>
 	^self invalidCall: _failureCode!
 
 comOnly
@@ -168,7 +168,7 @@ coRegisterClassObject: rclsid pUnk: pUnk dwClsContext: dwClsContext flags: flags
 		LPDWORD* lpdwRegister		// [out]
 		);"
 
-	<stdcall: hresult CoRegisterClassObject guid* IUnknown* dword dword dword*>
+	<stdcall: hresult CoRegisterClassObject guid* IUnknown* uint32 uint32 uint32*>
 	^self invalidCall: _failureCode!
 
 coRevokeClassObject: anInteger
@@ -176,7 +176,7 @@ coRevokeClassObject: anInteger
 
 		HRESULT CoRevokeClassObject(unsigned long dwRegister);"
 
-	<stdcall: sdword CoRevokeClassObject dword>
+	<stdcall: int32 CoRevokeClassObject uint32>
 	^self invalidCall: _failureCode!
 
 coTaskMemAlloc: cb
@@ -186,7 +186,7 @@ coTaskMemAlloc: cb
 		LPVOID __stdcall CoTaskMemAlloc(
 			unsigned long cb);"
 
-	<stdcall: void* CoTaskMemAlloc dword>
+	<stdcall: void* CoTaskMemAlloc uint32>
 	^self invalidCall: _failureCode!
 
 coTaskMemFree: pv
@@ -207,7 +207,7 @@ coTaskMemRealloc: pv cb: cb
 			LPVOID pv,
 			unsigned long cb);"
 
-	<stdcall: void* CoTaskMemRealloc void* dword>
+	<stdcall: void* CoTaskMemRealloc void* uint32>
 	^self invalidCall: _failureCode!
 
 coUninitialize

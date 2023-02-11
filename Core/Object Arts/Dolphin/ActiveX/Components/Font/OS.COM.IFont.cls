@@ -177,7 +177,7 @@ get_Charset: pcharset
 		HRESULT __stdcall Charset(
 			[out, retval]short* pcharset);"
 
-	<virtual stdcall: hresult 18 sword*>
+	<virtual stdcall: hresult 18 int16*>
 	^self invalidCall: _failureCode!
 
 get_hFont: phfont
@@ -240,7 +240,7 @@ get_Weight: pweight
 		HRESULT __stdcall Weight(
 			[out, retval]short* pweight);"
 
-	<virtual stdcall: hresult 16 sword*>
+	<virtual stdcall: hresult 16 int16*>
 	^self invalidCall: _failureCode!
 
 hFont
@@ -309,7 +309,7 @@ put_Charset: pcharset
 		HRESULT __stdcall Charset(
 			[in]short pcharset);"
 
-	<virtual stdcall: hresult 19 sword>
+	<virtual stdcall: hresult 19 int16>
 	^self invalidCall: _failureCode!
 
 put_Italic: pitalic
@@ -369,7 +369,7 @@ put_Weight: pweight
 		HRESULT __stdcall Weight(
 			[in]short pweight);"
 
-	<virtual stdcall: hresult 17 sword>
+	<virtual stdcall: hresult 17 int16>
 	^self invalidCall: _failureCode!
 
 releaseHfont: aFont 
@@ -400,7 +400,7 @@ SetRatio: cyLogical cyHimetric: cyHimetric
 			[in]long cyLogical,
 			[in]long cyHimetric);"
 
-	<virtual stdcall: hresult 23 sdword sdword>
+	<virtual stdcall: hresult 23 int32 int32>
 	^self invalidCall: _failureCode!
 
 size

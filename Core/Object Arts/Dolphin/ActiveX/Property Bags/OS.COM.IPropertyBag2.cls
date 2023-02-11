@@ -68,7 +68,7 @@ CountProperties: pcProperties
 		HRESULT __stdcall CountProperties(
 			[out]ULONG* pcProperties);"
 
-	<virtual stdcall: hresult 6 dword*>
+	<virtual stdcall: hresult 6 uint32*>
 	^self invalidCall: _failureCode!
 
 getPropertyInfo: iProperty cProperties: cProperties
@@ -92,7 +92,7 @@ GetPropertyInfo: iProperty cProperties: cProperties pPropBag: pPropBag pcPropert
 			[out]PROPBAG2* pPropBag,
 			[out]ULONG* pcProperties);"
 
-	<virtual stdcall: hresult 7 dword dword PROPBAG2* dword*>
+	<virtual stdcall: hresult 7 uint32 uint32 PROPBAG2* uint32*>
 	^self invalidCall: _failureCode!
 
 loadObject: pstrName dwHint: dwHint punkObject: punkObject pErrLog: pErrLog
@@ -113,7 +113,7 @@ LoadObject: pstrName dwHint: dwHint punkObject: punkObject pErrLog: pErrLog
 			[in]IUnknown* punkObject,
 			[in]IErrorLog* pErrLog);"
 
-	<virtual stdcall: hresult 8 lpwstr dword IUnknown* IErrorLog*>
+	<virtual stdcall: hresult 8 lpwstr uint32 IUnknown* IErrorLog*>
 	^self invalidCall: _failureCode!
 
 read: cProperties pPropBag: pPropBag pErrLog: pErrLog phrError: phrError
@@ -142,7 +142,7 @@ Read: cProperties pPropBag: pPropBag pErrLog: pErrLog pvarValue: pvarValue phrEr
 			[out]VARIANT* pvarValue,
 			[in, out]HRESULT* phrError);"
 
-	<virtual stdcall: hresult 4 dword PROPBAG2* IErrorLog* variant* hresult*>
+	<virtual stdcall: hresult 4 uint32 PROPBAG2* IErrorLog* variant* hresult*>
 	^self invalidCall: _failureCode!
 
 write: cProperties pPropBag: pPropBag pvarValue: pvarValue
@@ -161,7 +161,7 @@ Write: cProperties pPropBag: pPropBag pvarValue: pvarValue
 			[in]PROPBAG2* pPropBag,
 			[in]VARIANT* pvarValue);"
 
-	<virtual stdcall: hresult 5 dword PROPBAG2* variant*>
+	<virtual stdcall: hresult 5 uint32 PROPBAG2* variant*>
 	^self invalidCall: _failureCode! !
 !OS.COM.IPropertyBag2 categoriesForMethods!
 countProperties!**auto generated**!methods!public! !

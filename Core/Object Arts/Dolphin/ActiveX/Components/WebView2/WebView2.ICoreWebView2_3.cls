@@ -58,7 +58,7 @@ get_IsSuspended: isSuspended
 		HRESULT __stdcall IsSuspended(
 			[out, retval]long* IsSuspended);"
 
-	<virtual stdcall: hresult 71 sdword*>
+	<virtual stdcall: hresult 71 int32*>
 	^self invalidCall: _failureCode!
 
 Resume
@@ -77,7 +77,7 @@ SetVirtualHostNameToFolderMapping: hostName folderPath: folderPath accessKind: a
 			[in]LPWSTR folderPath,
 			[in]COREWEBVIEW2_HOST_RESOURCE_ACCESS_KIND accessKind);"
 
-	<virtual stdcall: hresult 72 lpwstr lpwstr sdword>
+	<virtual stdcall: hresult 72 lpwstr lpwstr int32>
 	^self invalidCall: _failureCode!
 
 TrySuspend: handler

@@ -298,7 +298,7 @@ get_BackColor: pclrBackground
 		HRESULT __stdcall BackColor(
 			[out, retval] OLE_COLOR* pclrBackground);"
 
-	<virtual stdcall: hresult 11 dword*>
+	<virtual stdcall: hresult 11 uint32*>
 	^self invalidCall: _failureCode!
 
 get_DisplayAsDefault: pbDisplayAsDefault
@@ -316,7 +316,7 @@ get_DocHostDoubleClickFlags: pdwDocHostDoubleClickFlags
 		HRESULT __stdcall DocHostDoubleClickFlags(
 			[out, retval] unsigned long* pdwDocHostDoubleClickFlags);"
 
-	<virtual stdcall: hresult 29 dword*>
+	<virtual stdcall: hresult 29 uint32*>
 	^self invalidCall: _failureCode!
 
 get_DocHostFlags: pdwDocHostFlags
@@ -325,7 +325,7 @@ get_DocHostFlags: pdwDocHostFlags
 		HRESULT __stdcall DocHostFlags(
 			[out, retval] unsigned long* pdwDocHostFlags);"
 
-	<virtual stdcall: hresult 27 dword*>
+	<virtual stdcall: hresult 27 uint32*>
 	^self invalidCall: _failureCode!
 
 get_Font: pFont
@@ -343,7 +343,7 @@ get_ForeColor: pclrForeground
 		HRESULT __stdcall ForeColor(
 			[out, retval] OLE_COLOR* pclrForeground);"
 
-	<virtual stdcall: hresult 13 dword*>
+	<virtual stdcall: hresult 13 uint32*>
 	^self invalidCall: _failureCode!
 
 get_LocaleID: plcidLocaleID
@@ -352,7 +352,7 @@ get_LocaleID: plcidLocaleID
 		HRESULT __stdcall LocaleID(
 			[out, retval] unsigned long* plcidLocaleID);"
 
-	<virtual stdcall: hresult 15 dword*>
+	<virtual stdcall: hresult 15 uint32*>
 	^self invalidCall: _failureCode!
 
 get_MessageReflect: pbMsgReflect
@@ -486,7 +486,7 @@ put_BackColor: pclrBackground
 		HRESULT __stdcall BackColor(
 			[in] OLE_COLOR pclrBackground);"
 
-	<virtual stdcall: hresult 10 dword>
+	<virtual stdcall: hresult 10 uint32>
 	^self invalidCall: _failureCode!
 
 put_DisplayAsDefault: pbDisplayAsDefault
@@ -506,7 +506,7 @@ put_DocHostDoubleClickFlags: pdwDocHostDoubleClickFlags
 		HRESULT __stdcall DocHostDoubleClickFlags(
 			[in] unsigned long pdwDocHostDoubleClickFlags);"
 
-	<virtual stdcall: hresult 28 dword>
+	<virtual stdcall: hresult 28 uint32>
 	^self invalidCall: _failureCode!
 
 put_DocHostFlags: pdwDocHostFlags
@@ -516,7 +516,7 @@ put_DocHostFlags: pdwDocHostFlags
 		HRESULT __stdcall DocHostFlags(
 			[in] unsigned long pdwDocHostFlags);"
 
-	<virtual stdcall: hresult 26 dword>
+	<virtual stdcall: hresult 26 uint32>
 	^self invalidCall: _failureCode!
 
 put_Font: pFont
@@ -536,7 +536,7 @@ put_ForeColor: pclrForeground
 		HRESULT __stdcall ForeColor(
 			[in] OLE_COLOR pclrForeground);"
 
-	<virtual stdcall: hresult 12 dword>
+	<virtual stdcall: hresult 12 uint32>
 	^self invalidCall: _failureCode!
 
 put_LocaleID: plcidLocaleID
@@ -546,7 +546,7 @@ put_LocaleID: plcidLocaleID
 		HRESULT __stdcall LocaleID(
 			[in] unsigned long plcidLocaleID);"
 
-	<virtual stdcall: hresult 14 dword>
+	<virtual stdcall: hresult 14 uint32>
 	^self invalidCall: _failureCode!
 
 put_MessageReflect: pbMsgReflect

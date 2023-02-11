@@ -121,7 +121,7 @@ Open: sourceURL ActiveConnection: activeConnection Mode: mode CreateOptions: cre
 			[in, optional]BSTR UserName,
 			[in, optional]BSTR Password);"
 
-	<virtual stdcall: hresult 17 bstr IDispatch* sdword sdword sdword bstr bstr>
+	<virtual stdcall: hresult 17 bstr IDispatch* int32 int32 int32 bstr bstr>
 	^self invalidCall: _failureCode!
 
 OpenObject: source InterfaceName: interfaceName
@@ -180,7 +180,7 @@ SaveTo: sourceURL ActiveConnection: activeConnection Mode: mode CreateOptions: c
 			[in, optional]BSTR UserName,
 			[in, optional]BSTR Password);"
 
-	<virtual stdcall: hresult 16 bstr IDispatch* sdword sdword sdword bstr bstr>
+	<virtual stdcall: hresult 16 bstr IDispatch* int32 int32 int32 bstr bstr>
 	^self invalidCall: _failureCode!
 
 saveToContainer: containerURL
@@ -209,7 +209,7 @@ SaveToContainer: containerURL ActiveConnection: activeConnection Mode: mode Crea
 			[in, optional]BSTR UserName,
 			[in, optional]BSTR Password);"
 
-	<virtual stdcall: hresult 19 bstr IDispatch* sdword sdword sdword bstr bstr>
+	<virtual stdcall: hresult 19 bstr IDispatch* int32 int32 int32 bstr bstr>
 	^self invalidCall: _failureCode!
 
 SaveToObject: source InterfaceName: interfaceName

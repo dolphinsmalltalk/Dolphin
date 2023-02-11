@@ -74,7 +74,7 @@ get_HelpContext: pl
 		HRESULT __stdcall HelpContext(
 			[out, retval]long* pl);"
 
-	<virtual stdcall: hresult 12 sdword*>
+	<virtual stdcall: hresult 12 int32*>
 	^self invalidCall: _failureCode!
 
 get_HelpFile: pbstr
@@ -92,7 +92,7 @@ get_NativeError: pl
 		HRESULT __stdcall NativeError(
 			[out, retval]long* pl);"
 
-	<virtual stdcall: hresult 14 sdword*>
+	<virtual stdcall: hresult 14 int32*>
 	^self invalidCall: _failureCode!
 
 get_Number: pl
@@ -101,7 +101,7 @@ get_Number: pl
 		HRESULT __stdcall Number(
 			[out, retval]long* pl);"
 
-	<virtual stdcall: hresult 8 sdword*>
+	<virtual stdcall: hresult 8 int32*>
 	^self invalidCall: _failureCode!
 
 get_Source: pbstr

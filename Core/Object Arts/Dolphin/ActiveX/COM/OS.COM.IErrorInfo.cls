@@ -68,7 +68,7 @@ GetHelpContext: pdwHelpContext
 
 	"
 
-	<virtual stdcall: hresult 8 dword*>
+	<virtual stdcall: hresult 8 uint32*>
 	^self invalidCall: _failureCode!
 
 GetHelpFile: pBstrHelpFile

@@ -68,7 +68,7 @@ Commit: grfCommitFlags
 			[in] unsigned long grfCommitFlags);
 	"
 
-	<virtual stdcall: hresult 9 dword>
+	<virtual stdcall: hresult 9 uint32>
 	^self invalidCall: _failureCode!
 
 contents
@@ -101,7 +101,7 @@ CopyTo: pstm cb: cb pcbRead: pcbRead pcbWritten: pcbWritten
 			[out] ULARGE_INTEGER* pcbWritten);
 	"
 
-	<virtual stdcall: hresult 8 IStream* qword qword* qword*>
+	<virtual stdcall: hresult 8 IStream* uint64 uint64* uint64*>
 	^self invalidCall: _failureCode!
 
 copyTo: anIStream count: size 
@@ -204,7 +204,7 @@ LockRegion: libOffset cb: cb dwLockType: dwLockType
 
 	"
 
-	<virtual stdcall: hresult 11 qword qword dword>
+	<virtual stdcall: hresult 11 uint64 uint64 uint32>
 	^self invalidCall: _failureCode!
 
 mode
@@ -332,7 +332,7 @@ Seek: dlibMove dwOrigin: dwOrigin plibNewPosition: plibNewPosition
 			[out] ULARGE_INTEGER* plibNewPosition);
 	"
 
-	<virtual stdcall: hresult 6 sqword dword qword*>
+	<virtual stdcall: hresult 6 int64 uint32 uint64*>
 	^self invalidCall: _failureCode!
 
 SetSize: libNewSize
@@ -342,7 +342,7 @@ SetSize: libNewSize
 			[in] ULARGE_INTEGER libNewSize);
 	"
 
-	<virtual stdcall: hresult 7 qword>
+	<virtual stdcall: hresult 7 uint64>
 	^self invalidCall: _failureCode!
 
 setToEnd
@@ -394,7 +394,7 @@ Stat: pstatstg grfStatFlag: grfStatFlag
 			[in] unsigned long grfStatFlag);
 	"
 
-	<virtual stdcall: hresult 13 STATSTG* dword>
+	<virtual stdcall: hresult 13 STATSTG* uint32>
 	^self invalidCall: _failureCode!
 
 tab
@@ -429,7 +429,7 @@ UnlockRegion: libOffset cb: cb dwLockType: dwLockType
 			[in] unsigned long dwLockType);
 	"
 
-	<virtual stdcall: hresult 12 qword qword dword>
+	<virtual stdcall: hresult 12 uint64 uint64 uint32>
 	^self invalidCall: _failureCode! !
 !OS.COM.IStream categoriesForMethods!
 at:!accessing!public! !

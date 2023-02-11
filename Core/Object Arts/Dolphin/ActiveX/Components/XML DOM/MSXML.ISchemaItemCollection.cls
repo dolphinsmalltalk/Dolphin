@@ -73,7 +73,7 @@ get_item: index item: item
 			[in]long index,
 			[out, retval]ISchemaItem** item);"
 
-	<virtual stdcall: hresult 8 sdword ISchemaItem**>
+	<virtual stdcall: hresult 8 int32 ISchemaItem**>
 	^self invalidCall: _failureCode!
 
 get_length: length
@@ -82,7 +82,7 @@ get_length: length
 		HRESULT __stdcall length(
 			[out, retval]long* length);"
 
-	<virtual stdcall: hresult 11 sdword*>
+	<virtual stdcall: hresult 11 int32*>
 	^self invalidCall: _failureCode!
 
 isExtensible

@@ -180,7 +180,7 @@ GetHostInfo: pdwFlags pdwDoubleClick: pdwDoubleClick
 			[in, out] unsigned long* pdwFlags,
 			[in, out] unsigned long* pdwDoubleClick);"
 
-	<virtual stdcall: hresult 9 dword* dword*>
+	<virtual stdcall: hresult 9 uint32* uint32*>
 	^self invalidCall: _failureCode!
 
 getOptionKeyPath: dw
@@ -198,7 +198,7 @@ GetOptionKeyPath: pbstrKey dw: dw
 			[out] BSTR* pbstrKey,
 			[in] unsigned long dw);"
 
-	<virtual stdcall: hresult 18 bstr* dword>
+	<virtual stdcall: hresult 18 bstr* uint32>
 	^self invalidCall: _failureCode!
 
 HideUI
@@ -238,7 +238,7 @@ ResizeBorder: left top: top right: right bottom: bottom pUIWindow: pUIWindow fFr
 			[in] IUnknown* pUIWindow,
 			[in] VARIANT_BOOL fFrameWindow);"
 
-	<virtual stdcall: hresult 16 sdword sdword sdword sdword IUnknown* varbool>
+	<virtual stdcall: hresult 16 int32 int32 int32 int32 IUnknown* varbool>
 	^self invalidCall: _failureCode!
 
 showContextMenu: dwID x: x y: y pcmdtReserved: pcmdtReserved pdispReserved: pdispReserved
@@ -267,7 +267,7 @@ ShowContextMenu: dwID x: x y: y pcmdtReserved: pcmdtReserved pdispReserved: pdis
 			[in] IDispatch* pdispReserved,
 			[out, retval] HRESULT* dwRetVal);"
 
-	<virtual stdcall: hresult 8 dword dword dword IUnknown* IDispatch* hresult*>
+	<virtual stdcall: hresult 8 uint32 uint32 uint32 IUnknown* IDispatch* hresult*>
 	^self invalidCall: _failureCode!
 
 showUI: dwID pActiveObject: pActiveObject pCommandTarget: pCommandTarget pFrame: pFrame pDoc: pDoc
@@ -296,7 +296,7 @@ ShowUI: dwID pActiveObject: pActiveObject pCommandTarget: pCommandTarget pFrame:
 			[in] IUnknown* pDoc,
 			[out, retval] HRESULT* dwRetVal);"
 
-	<virtual stdcall: hresult 10 dword IUnknown* IUnknown* IUnknown* IUnknown* hresult*>
+	<virtual stdcall: hresult 10 uint32 IUnknown* IUnknown* IUnknown* IUnknown* hresult*>
 	^self invalidCall: _failureCode!
 
 translateAccelerator: hWnd nMessage: nMessage wParam: wParam lParam: lParam bstrGuidCmdGroup: bstrGuidCmdGroup nCmdID: nCmdID
@@ -327,7 +327,7 @@ TranslateAccelerator: hWnd nMessage: nMessage wParam: wParam lParam: lParam bstr
 			[in] unsigned long nCmdID,
 			[out, retval] HRESULT* dwRetVal);"
 
-	<virtual stdcall: hresult 17 uintptr dword uintptr uintptr bstr dword hresult*>
+	<virtual stdcall: hresult 17 uintptr uint32 uintptr uintptr bstr uint32 hresult*>
 	^self invalidCall: _failureCode!
 
 translateUrl: dwTranslate bstrURLIn: bstrURLIn
@@ -349,7 +349,7 @@ TranslateUrl: dwTranslate bstrURLIn: bstrURLIn pbstrURLOut: pbstrURLOut
 			[in] BSTR bstrURLIn,
 			[out] BSTR* pbstrURLOut);"
 
-	<virtual stdcall: hresult 21 dword bstr bstr*>
+	<virtual stdcall: hresult 21 uint32 bstr bstr*>
 	^self invalidCall: _failureCode!
 
 UpdateUI

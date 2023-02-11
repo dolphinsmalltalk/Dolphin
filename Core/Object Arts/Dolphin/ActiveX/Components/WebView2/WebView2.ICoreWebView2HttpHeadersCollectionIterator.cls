@@ -46,7 +46,7 @@ get_HasCurrentHeader: hasCurrent
 		HRESULT __stdcall HasCurrentHeader(
 			[out, retval]long* hasCurrent);"
 
-	<virtual stdcall: hresult 5 sdword*>
+	<virtual stdcall: hresult 5 int32*>
 	^self invalidCall: _failureCode!
 
 GetCurrentHeader: name value: value
@@ -96,7 +96,7 @@ MoveNext: hasNext
 		HRESULT __stdcall MoveNext(
 			[out, retval]long* hasNext);"
 
-	<virtual stdcall: hresult 6 sdword*>
+	<virtual stdcall: hresult 6 int32*>
 	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2HttpHeadersCollectionIterator categoriesForMethods!
 do:!enumerating!public! !

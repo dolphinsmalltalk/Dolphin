@@ -23,7 +23,7 @@ addFontResource: fontFile
 		LPCWSTR lpszFilename   // font file name
 	);"
 
-	<stdcall: sdword AddFontResourceW lpwstr>
+	<stdcall: int32 AddFontResourceW lpwstr>
 	^self invalidCall: _failureCode!
 
 beginPath: hdc
@@ -51,7 +51,7 @@ bitBlt: hdcDest nXDest: nXDest nYDest: nYDest nWidth: nWidth nHeight: nHeight hd
 			int nYSrc,
 			DWORD dwRop);"
 
-	<stdcall: bool BitBlt handle sdword sdword sdword sdword handle sdword sdword dword>
+	<stdcall: bool BitBlt handle int32 int32 int32 int32 handle int32 int32 uint32>
 	^self invalidCall: _failureCode!
 
 closeFigure: hdc
@@ -74,7 +74,7 @@ combineRgn: hrgnDst hrgnSrc1: hrgnSrc1 hrgnSrc2: hrgnSrc2 fnCombineMode: fnCombi
 			HRGN hrgnSrc2,
 			int fnCombineMode);"
 
-	<stdcall: sdword CombineRgn handle handle handle sdword>
+	<stdcall: int32 CombineRgn handle handle handle int32>
 	^self invalidCall: _failureCode!
 
 createBitmap: width nHeight: height cPlanes: planes cBitsPerPel: bps lpvBits: bits
@@ -89,7 +89,7 @@ createBitmap: width nHeight: height cPlanes: planes cBitsPerPel: bps lpvBits: bi
 		CONST VOID *lpvBits	// pointer to array containing color data 
 	);"
 
-	<stdcall: handle CreateBitmap sdword sdword dword dword lpvoid>
+	<stdcall: handle CreateBitmap int32 int32 uint32 uint32 lpvoid>
 	^self invalidCall: _failureCode!
 
 createBrushIndirect: lplb
@@ -111,7 +111,7 @@ createCompatibleBitmap: hdc nWidth: nWidth nHeight: nHeight
 			int nWidth,
 			int nHeight);"
 
-	<stdcall: handle CreateCompatibleBitmap handle sdword sdword>
+	<stdcall: handle CreateCompatibleBitmap handle int32 int32>
 	^self invalidCall: _failureCode!
 
 createCompatibleDC: hdc
@@ -149,7 +149,7 @@ createDIBSection: hdc pbmi: pbmi iUsage: iUsage ppvBits: ppvBits hSection: hSect
 			HANDLE hSection,
 			DWORD dwOffset);"
 
-	<stdcall: handle CreateDIBSection handle void* dword void** handle dword>
+	<stdcall: handle CreateDIBSection handle void* uint32 void** handle uint32>
 	^self invalidCall: _failureCode!
 
 createEllipticRgnIndirect: lprc
@@ -183,7 +183,7 @@ createFontIndirectW: lplf
 	^self invalidCall: _failureCode!
 
 createHatchBrush: anInteger color: aCOLORREF
-	<stdcall: handle CreateHatchBrush sdword dword>
+	<stdcall: handle CreateHatchBrush int32 uint32>
 	^self invalidCall: _failureCode!
 
 createIC: lpszDriver lpszDevice: lpszDevice lpszOutput: lpszOutput lpdvminit: lpdvminit
@@ -218,7 +218,7 @@ createPen: fnPenStyle nWidth: nWidth crColor: crColor
 			int nWidth,
 			COLORREF crColor);"
 
-	<stdcall: handle CreatePen sdword sdword dword>
+	<stdcall: handle CreatePen int32 int32 uint32>
 	^self invalidCall: _failureCode!
 
 createPenIndirect: lplgpn
@@ -273,7 +273,7 @@ ellipse: hdc nLeftRect: l nTopRect: t nRightRect: r nBottomRect: b
 			int nBottomRect 	// y-coord. bounding rectangle's f lower-right corner  
 		);"
 
-	<stdcall: bool Ellipse handle sdword sdword sdword sdword>
+	<stdcall: bool Ellipse handle int32 int32 int32 int32>
 	^self invalidCall: _failureCode!
 
 endDoc: hdc
@@ -283,7 +283,7 @@ endDoc: hdc
 		int __stdcall EndDoc(
 			HDC HDC);"
 
-	<stdcall: sdword EndDoc handle>
+	<stdcall: int32 EndDoc handle>
 	^self invalidCall: _failureCode!
 
 endPage: hdc
@@ -293,7 +293,7 @@ endPage: hdc
 		int __stdcall EndPage(
 			HDC HDC);"
 
-	<stdcall: sdword EndPage handle>
+	<stdcall: int32 EndPage handle>
 	^self invalidCall: _failureCode!
 
 endPath: hdc
@@ -316,7 +316,7 @@ enumFontFamilies: aHandle lpszFamily: aString lpEnumFontFamProc: anExternalCallb
 			LPARAM lParam 	// address of application-supplied data  
 		);"
 
-	<stdcall: sdword EnumFontFamiliesW handle lpwstr lpvoid uintptr>
+	<stdcall: int32 EnumFontFamiliesW handle lpwstr lpvoid uintptr>
 	^self invalidCall: _failureCode!
 
 excludeClipRect: hdc nLeftRect: nLeftRect nTopRect: nTopRect nRightRect: nRightRect nBottomRect: nBottomRect
@@ -330,7 +330,7 @@ excludeClipRect: hdc nLeftRect: nLeftRect nTopRect: nTopRect nRightRect: nRightR
 			int nRightRect,
 			int nBottomRect);"
 
-	<stdcall: sdword ExcludeClipRect handle sdword sdword sdword sdword>
+	<stdcall: int32 ExcludeClipRect handle int32 int32 int32 int32>
 	^self invalidCall: _failureCode!
 
 extTextOut: hdc x: x y: y fuOptions: fuOptions lprc: lprc lpString: lpString cbCount: cbCount lpDx: lpDx
@@ -347,7 +347,7 @@ extTextOut: hdc x: x y: y fuOptions: fuOptions lprc: lprc lpString: lpString cbC
 			UINT cbCount,
 			int* lpDx);"
 
-	<stdcall: bool ExtTextOutW handle sdword sdword dword RECTL* lpwstr dword sdword*>
+	<stdcall: bool ExtTextOutW handle int32 int32 uint32 RECTL* lpwstr uint32 int32*>
 	^self invalidCall: _failureCode!
 
 fillRgn: hdc hRgn: hRgn hBr: hBr
@@ -371,7 +371,7 @@ frameRgn: hdc hRgn: hRgn hBr: hBr nWidth: nWidth nHeight: nHeight
 			int  nHeight 	// height of region frame 
 			);"
 
-	<stdcall: bool FrameRgn handle handle handle dword dword>
+	<stdcall: bool FrameRgn handle handle handle uint32 uint32>
 	^self invalidCall: _failureCode!
 
 gdiAlphaBlend: hdcDest xoriginDest: nXOriginDest yoriginDest: nYOriginDest wDest: nWidthDest hDest: nHeightDest hdcSrc: hdcSrc xoriginSrc: nXOriginSrc yoriginSrc: nYOriginSrc wSrc: nWidthSrc hSrc: nHeightSrc ftn: blend
@@ -391,7 +391,7 @@ gdiAlphaBlend: hdcDest xoriginDest: nXOriginDest yoriginDest: nYOriginDest wDest
 			[in]int hSrc,
 			[in]BLENDFUNCTION ftn);"
 
-	<stdcall: bool GdiAlphaBlend handle sdword sdword sdword sdword handle sdword sdword sdword sdword BLENDFUNCTION>
+	<stdcall: bool GdiAlphaBlend handle int32 int32 int32 int32 handle int32 int32 int32 int32 BLENDFUNCTION>
 	^self invalidCall: _failureCode!
 
 gdiGradientFill: hdc pVertex: pVertex nVertex: dwNumVertex pMesh: pMesh nCount: dwNumMesh ulMode: dwMode
@@ -406,7 +406,7 @@ gdiGradientFill: hdc pVertex: pVertex nVertex: dwNumVertex pMesh: pMesh nCount: 
 			[in]ULONG nCount,
 			[in]ULONG ulMode);"
 
-	<stdcall: bool GdiGradientFill handle TRIVERTEX* dword void* dword dword>
+	<stdcall: bool GdiGradientFill handle TRIVERTEX* uint32 void* uint32 uint32>
 	^self invalidCall: _failureCode!
 
 gdiTransparentBlt: hdcDest xoriginDest: nXOriginDest yoriginDest: nYOriginDest wDest: nWidthDest hDest: nHeightDest hdcSrc: hdcSrc xoriginSrc: nXOriginSrc yoriginSrc: nYOriginSrc wSrc: nWidthSrc hSrc: nHeightSrc crTransparent: crTransparent
@@ -426,7 +426,7 @@ gdiTransparentBlt: hdcDest xoriginDest: nXOriginDest yoriginDest: nYOriginDest w
 			[in]int hSrc,
 			[in]UINT crTransparent);"
 
-	<stdcall: bool GdiTransparentBlt handle sdword sdword sdword sdword handle sdword sdword sdword sdword dword>
+	<stdcall: bool GdiTransparentBlt handle int32 int32 int32 int32 handle int32 int32 int32 int32 uint32>
 	^self invalidCall: _failureCode!
 
 getBkColor: hdc
@@ -436,7 +436,7 @@ getBkColor: hdc
 		COLORREF __stdcall GetBkColor(
 			HDC HDC);"
 
-	<stdcall: dword GetBkColor handle>
+	<stdcall: uint32 GetBkColor handle>
 	^self invalidCall: _failureCode!
 
 getBkMode: hdc
@@ -446,7 +446,7 @@ getBkMode: hdc
 		int __stdcall GetBkMode(
 			HDC HDC);"
 
-	<stdcall: sdword GetBkMode handle>
+	<stdcall: int32 GetBkMode handle>
 	^self invalidCall: _failureCode!
 
 getClipBox: hdc lprc: lprc
@@ -457,7 +457,7 @@ getClipBox: hdc lprc: lprc
 			HDC HDC,
 			RECTL* lprc);"
 
-	<stdcall: sdword GetClipBox handle RECTL*>
+	<stdcall: int32 GetClipBox handle RECTL*>
 	^self invalidCall: _failureCode!
 
 getCurrentObject: hdc uObjectType: uObjectType
@@ -468,15 +468,15 @@ getCurrentObject: hdc uObjectType: uObjectType
 			HDC HDC,
 			UINT uObjectType);"
 
-	<stdcall: handle GetCurrentObject handle dword>
+	<stdcall: handle GetCurrentObject handle uint32>
 	^self invalidCall: _failureCode!
 
 getDCBrushColor: hdc
-	<stdcall: dword GetDCBrushColor handle>
+	<stdcall: uint32 GetDCBrushColor handle>
 	^self invalidCall: _failureCode!
 
 getDCPenColor: hdc
-	<stdcall: dword GetDCPenColor handle>
+	<stdcall: uint32 GetDCPenColor handle>
 	^self invalidCall: _failureCode!
 
 getDeviceCaps: hdc nIndex: nIndex
@@ -487,7 +487,7 @@ getDeviceCaps: hdc nIndex: nIndex
 			HDC HDC,
 			int nIndex);"
 
-	<stdcall: sdword GetDeviceCaps handle sdword>
+	<stdcall: int32 GetDeviceCaps handle int32>
 	^self invalidCall: _failureCode!
 
 getDIBColorTable: hdc uStartIndex: uStartIndex cEntries: cEntries pColors: pColors
@@ -500,7 +500,7 @@ getDIBColorTable: hdc uStartIndex: uStartIndex cEntries: cEntries pColors: pColo
 			UINT cEntries,
 			RGBQUAD* pColors);"
 
-	<stdcall: dword GetDIBColorTable handle dword dword RGBQUAD*>
+	<stdcall: uint32 GetDIBColorTable handle uint32 uint32 RGBQUAD*>
 	^self invalidCall: _failureCode!
 
 getDIBits: hdc hbm: hbm uStartScan: uStartScan cScanLines: cScanLines lpvBits: lpvBits lpbi: lpbi uUsage: uUsage
@@ -516,7 +516,7 @@ getDIBits: hdc hbm: hbm uStartScan: uStartScan cScanLines: cScanLines lpvBits: l
 			BITMAPINFO* lpbi,
 			UINT uUsage);"
 
-	<stdcall: sdword GetDIBits handle handle dword dword void* BITMAPINFO* dword>
+	<stdcall: int32 GetDIBits handle handle uint32 uint32 void* BITMAPINFO* uint32>
 	^self invalidCall: _failureCode!
 
 getMapMode: hdc
@@ -526,7 +526,7 @@ getMapMode: hdc
 		int __stdcall GetMapMode(
 			HDC HDC);"
 
-	<stdcall: sdword GetMapMode handle>
+	<stdcall: int32 GetMapMode handle>
 	^self invalidCall: _failureCode!
 
 getNearestPaletteIndex: hpal crColor: crColor
@@ -537,7 +537,7 @@ getNearestPaletteIndex: hpal crColor: crColor
 			HPALETTE hpal,
 			COLORREF crColor);"
 
-	<stdcall: dword GetNearestPaletteIndex handle dword>
+	<stdcall: uint32 GetNearestPaletteIndex handle uint32>
 	^self invalidCall: _failureCode!
 
 getObject: objectHandle cbBuffer: count lpvObject: buffer
@@ -551,7 +551,7 @@ getObject: objectHandle cbBuffer: count lpvObject: buffer
 			LPVOID lpvObject 	// pointer to buffer for object information  
 		);"
 
-	<stdcall: sdword GetObjectA handle sdword lpvoid>
+	<stdcall: int32 GetObjectA handle int32 lpvoid>
 	^self invalidCall: _failureCode!
 
 getObjectW: objectHandle cbBuffer: count lpvObject: buffer
@@ -565,11 +565,11 @@ getObjectW: objectHandle cbBuffer: count lpvObject: buffer
 			LPVOID lpvObject 	// pointer to buffer for object information  
 		);"
 
-	<stdcall: sdword GetObjectW handle sdword lpvoid>
+	<stdcall: int32 GetObjectW handle int32 lpvoid>
 	^self invalidCall: _failureCode!
 
 getOutlineTextMetrics: anExternalHandle cbData: anInteger lpotm: anOUTLINETEXTMETRIC
-	<stdcall: dword GetOutlineTextMetricsW handle dword OUTLINETEXTMETRICW*>
+	<stdcall: uint32 GetOutlineTextMetricsW handle uint32 OUTLINETEXTMETRICW*>
 	^self invalidCall: _failureCode!
 
 getPaletteEntries: hpal iStartIndex: iStartIndex nEntries: nEntries lppe: lppe
@@ -582,7 +582,7 @@ getPaletteEntries: hpal iStartIndex: iStartIndex nEntries: nEntries lppe: lppe
 			UINT nEntries,
 			PALETTEENTRY* lppe);"
 
-	<stdcall: dword GetPaletteEntries handle dword dword lpvoid>
+	<stdcall: uint32 GetPaletteEntries handle uint32 uint32 lpvoid>
 	^self invalidCall: _failureCode!
 
 getPixel: aHandle xPos: xPos yPos: yPos
@@ -594,7 +594,7 @@ getPixel: aHandle xPos: xPos yPos: yPos
 			int nYPos 	// y-coordinate of pixel 
 		);"
 
-	<stdcall: dword GetPixel handle sdword sdword>
+	<stdcall: uint32 GetPixel handle int32 int32>
 	^self invalidCall: _failureCode!
 
 getROP2: hdc
@@ -604,7 +604,7 @@ getROP2: hdc
 		int __stdcall GetROP2(
 			HDC HDC);"
 
-	<stdcall: sdword GetROP2 handle>
+	<stdcall: int32 GetROP2 handle>
 	^self invalidCall: _failureCode!
 
 getStockObject: fnObject
@@ -614,7 +614,7 @@ getStockObject: fnObject
 		HGDIOBJ __stdcall GetStockObject(
 			int fnObject);"
 
-	<stdcall: handle GetStockObject sdword>
+	<stdcall: handle GetStockObject int32>
 	^self invalidCall: _failureCode!
 
 getTextColor: hdc
@@ -624,7 +624,7 @@ getTextColor: hdc
 		HDC hdc			// handle of device context  
 	);"
 
-	<stdcall: dword GetTextColor handle>
+	<stdcall: uint32 GetTextColor handle>
 	^self invalidCall: _failureCode!
 
 getTextExtentPoint32: hdc lpString: lpString c: cbString lpSize: lpSize
@@ -637,7 +637,7 @@ getTextExtentPoint32: hdc lpString: lpString c: cbString lpSize: lpSize
 			int c,
 			SIZEL* lpSize);"
 
-	<stdcall: bool GetTextExtentPoint32W handle lpwstr sdword lpvoid>
+	<stdcall: bool GetTextExtentPoint32W handle lpwstr int32 lpvoid>
 	^self invalidCall: _failureCode!
 
 getTextMetrics: hdc lptm: lptm
@@ -703,7 +703,7 @@ intersectClipRect: hdc nLeftRect: left nTopRect: top nRightRect: right nBottomRe
 		int nBottomRect	// y-coordinate of lower-right corner of rectangle  
 	);"
 
-	<stdcall: sdword IntersectClipRect handle sdword sdword sdword sdword>
+	<stdcall: int32 IntersectClipRect handle int32 int32 int32 int32>
 	^self invalidCall: _failureCode!
 
 invertRgn: hdc hRgn: hRgn
@@ -726,7 +726,7 @@ lineTo: hdc nXEnd: newX nYEnd: newY
 			int nYEnd 	// y-coordinate of line's ending point  
 		);"
 
-	<stdcall: bool LineTo handle sdword sdword>
+	<stdcall: bool LineTo handle int32 int32>
 	^self invalidCall: _failureCode!
 
 moveToEx: hdc x: x y: y lpPoint: lpPoint
@@ -739,11 +739,11 @@ moveToEx: hdc x: x y: y lpPoint: lpPoint
 			int y,
 			[defaultvalue(0)]POINTL* lpPoint);"
 
-	<stdcall: bool MoveToEx handle sdword sdword POINTL*>
+	<stdcall: bool MoveToEx handle int32 int32 POINTL*>
 	^self invalidCall: _failureCode!
 
 offsetWindowOrgEx: hdc nXOrg: x nYOrg: y lppt: aPOINT
-	<stdcall: bool OffsetWindowOrgEx handle sdword sdword POINTL*>
+	<stdcall: bool OffsetWindowOrgEx handle int32 int32 POINTL*>
 	^self invalidCall: _failureCode!
 
 paintRgn: hdc hRgn: hRgn
@@ -767,7 +767,7 @@ patBlt: hdc nXLeft: x nYLeft: y nWidth: width nHeight: height dwRop: rop
 		DWORD dwRop	// raster operation code 
 	);"
 
-	<stdcall: bool PatBlt handle sdword sdword sdword sdword dword>
+	<stdcall: bool PatBlt handle int32 int32 int32 int32 uint32>
 	^self invalidCall: _failureCode!
 
 plgBlt: hdcDest lpPoint: lpPoint hdcSrc: hdcSrc nXSrc: nXSrc nYSrc: nYSrc nWidth: nWidth nHeight: nHeight hbmMask: hbmMask sMask: sMask yMask: yMask
@@ -786,7 +786,7 @@ plgBlt: hdcDest lpPoint: lpPoint hdcSrc: hdcSrc nXSrc: nXSrc nYSrc: nYSrc nWidth
 			int sMask,
 			int yMask);"
 
-	<stdcall: bool PlgBlt handle word* handle sdword sdword sdword sdword handle sdword sdword>
+	<stdcall: bool PlgBlt handle uint16* handle int32 int32 int32 int32 handle int32 int32>
 	^self invalidCall: _failureCode!
 
 polygon: hdc lpPoints: points nCount: count
@@ -798,7 +798,7 @@ polygon: hdc lpPoints: points nCount: count
 		int nCount			// count of polygon's vertices 
 	);"
 
-	<stdcall: bool Polygon handle POINTL* sdword>
+	<stdcall: bool Polygon handle POINTL* int32>
 	^self invalidCall: _failureCode!
 
 ptInRegion: hdc x: x y: y
@@ -809,7 +809,7 @@ ptInRegion: hdc x: x y: y
 			int  Y 	// y-coordinate of point  
 			);"
 
-	<stdcall: bool PtInRegion handle sdword sdword>
+	<stdcall: bool PtInRegion handle int32 int32>
 	^self invalidCall: _failureCode!
 
 realizePalette: hdc
@@ -819,7 +819,7 @@ realizePalette: hdc
 		UINT __stdcall RealizePalette(
 			HDC HDC);"
 
-	<stdcall: dword RealizePalette handle>
+	<stdcall: uint32 RealizePalette handle>
 	^self invalidCall: _failureCode!
 
 rectangle: hdc nLeftRect: l nTopRect: t nRightRect: r nBottomRect: b
@@ -833,7 +833,7 @@ rectangle: hdc nLeftRect: l nTopRect: t nRightRect: r nBottomRect: b
 			int nBottomRect 	// y-coord. of bounding rectangle's lower-right corner  
 		);"
 
-	<stdcall: bool Rectangle handle sdword sdword sdword sdword>
+	<stdcall: bool Rectangle handle int32 int32 int32 int32>
 	^self invalidCall: _failureCode!
 
 rectVisible: hdc lprc: aRECT
@@ -869,7 +869,7 @@ restoreDC: hDC nSavedDC: nSavedDC
 			int nSavedDC 	// specifies state to be restored  
 		);"
 
-	<stdcall: bool RestoreDC handle sdword>
+	<stdcall: bool RestoreDC handle int32>
 	^self invalidCall: _failureCode!
 
 roundRect: hdc nLeftRect: l nTopRect: t nRightRect: r nBottomRect: b nWidth: rx nHeight: ry
@@ -885,7 +885,7 @@ roundRect: hdc nLeftRect: l nTopRect: t nRightRect: r nBottomRect: b nWidth: rx 
 			int nHeight 		// height of ellipse used to draw rounded corners  
 		);"
 
-	<stdcall: bool RoundRect handle sdword sdword sdword sdword sdword sdword>
+	<stdcall: bool RoundRect handle int32 int32 int32 int32 int32 int32>
 	^self invalidCall: _failureCode!
 
 saveDC: hDC
@@ -896,7 +896,7 @@ saveDC: hDC
   			HDC hdc 	// handle of device context 
 		);"
 
-	<stdcall: sdword SaveDC handle>
+	<stdcall: int32 SaveDC handle>
 	^self invalidCall: _failureCode!
 
 selectClipPath: hdc iMode: iMode
@@ -907,7 +907,7 @@ selectClipPath: hdc iMode: iMode
 			HDC HDC,
 			int iMode);"
 
-	<stdcall: bool SelectClipPath handle sdword>
+	<stdcall: bool SelectClipPath handle int32>
 	^self invalidCall: _failureCode!
 
 selectClipRgn: hdc hrgn: hRegion
@@ -919,7 +919,7 @@ selectClipRgn: hdc hrgn: hRegion
 		HRGN hrgn		// handle of region to be selected  
 	);"
 
-	<stdcall: sdword SelectClipRgn handle handle>
+	<stdcall: int32 SelectClipRgn handle handle>
 	^self invalidCall: _failureCode!
 
 selectObject: hdc hgdiobj: hgdiobj
@@ -962,7 +962,7 @@ setBkColor: hdc crColor: color
 		COLORREF  crColor // background color value
 		);"
 
-	<stdcall: dword SetBkColor handle dword>
+	<stdcall: uint32 SetBkColor handle uint32>
 	^self invalidCall: _failureCode!
 
 setBkMode: hdc iBkMode: mode
@@ -974,7 +974,7 @@ setBkMode: hdc iBkMode: mode
 			int iBkMode 	// flag specifying background mode
 		);"
 
-	<stdcall: sdword SetBkMode handle sdword>
+	<stdcall: int32 SetBkMode handle int32>
 	^self invalidCall: _failureCode!
 
 setBrushOrgEx: hdc nXOrg: x nYOrg: y lppt: aPOINT
@@ -985,7 +985,7 @@ setBrushOrgEx: hdc nXOrg: x nYOrg: y lppt: aPOINT
 			int  nYOrg,	// y-coordinate of new origin 
 			LPPOINT  lppt 	// points to previous brush origin );"
 
-	<stdcall: bool SetBrushOrgEx handle sdword sdword POINTL*>
+	<stdcall: bool SetBrushOrgEx handle int32 int32 POINTL*>
 	^self invalidCall: _failureCode!
 
 setDIBColorTable: hdc uStartIndex: uStartIndex cEntries: cEntries pColors: pColors
@@ -998,7 +998,7 @@ setDIBColorTable: hdc uStartIndex: uStartIndex cEntries: cEntries pColors: pColo
 			UINT cEntries,
 			RGBQUAD* pColors);"
 
-	<stdcall: dword SetDIBColorTable handle dword dword RGBQUAD*>
+	<stdcall: uint32 SetDIBColorTable handle uint32 uint32 RGBQUAD*>
 	^self invalidCall: _failureCode!
 
 setDIBits: hdc hbmp: hbmp uStartScan: uStartScan cScanLines: cScanLines lpvBits: lpvBits lpbmi: lpbmi fuColorUse: fuColorUse
@@ -1014,7 +1014,7 @@ setDIBits: hdc hbmp: hbmp uStartScan: uStartScan cScanLines: cScanLines lpvBits:
 			LPVOID lpbmi,
 			UINT fuColorUse);"
 
-	<stdcall: sdword SetDIBits handle handle dword dword void* void* dword>
+	<stdcall: int32 SetDIBits handle handle uint32 uint32 void* void* uint32>
 	^self invalidCall: _failureCode!
 
 setMapMode: hdc fnMapMode: fnMapMode
@@ -1025,7 +1025,7 @@ setMapMode: hdc fnMapMode: fnMapMode
 			HDC HDC,
 			int fnMapMode);"
 
-	<stdcall: sdword SetMapMode handle sdword>
+	<stdcall: int32 SetMapMode handle int32>
 	^self invalidCall: _failureCode!
 
 setPixelV: hdc x: x y: y crColor: pixelColor
@@ -1040,7 +1040,7 @@ setPixelV: hdc x: x y: y crColor: pixelColor
 		COLORREF crColor	// new pixel color 
 	);"
 
-	<stdcall: bool SetPixelV handle sdword sdword dword>
+	<stdcall: bool SetPixelV handle int32 int32 uint32>
 	^self invalidCall: _failureCode!
 
 setROP2: hdc fnDrawMode: fnDrawMode
@@ -1051,7 +1051,7 @@ setROP2: hdc fnDrawMode: fnDrawMode
 			HDC HDC,
 			int fnDrawMode);"
 
-	<stdcall: sdword SetROP2 handle sdword>
+	<stdcall: int32 SetROP2 handle int32>
 	^self invalidCall: _failureCode!
 
 setTextAlign: hdc fMode: mode
@@ -1061,7 +1061,7 @@ setTextAlign: hdc fMode: mode
 		UINT fMode 	// text-alignment flag 
 	);"
 
-	<stdcall: dword SetTextAlign handle dword>
+	<stdcall: uint32 SetTextAlign handle uint32>
 	^self invalidCall: _failureCode!
 
 setTextColor: hdc crColor: colour
@@ -1073,7 +1073,7 @@ setTextColor: hdc crColor: colour
 		COLORREF crColor	// text color 
 	);"
 
-	<stdcall: dword SetTextColor handle dword>
+	<stdcall: uint32 SetTextColor handle uint32>
 	^self invalidCall: _failureCode!
 
 setViewportExtEx: hdc nXExtent: nXExtent nYExtent: nYExtent lpSize: lpSize
@@ -1086,7 +1086,7 @@ setViewportExtEx: hdc nXExtent: nXExtent nYExtent: nYExtent lpSize: lpSize
 			int  Y,	// y-coordinate of new origin 
 			LPPOINT  lpPoint 	// points to previous origin );"
 
-	<stdcall: bool SetViewportExtEx handle sdword sdword POINTL*>
+	<stdcall: bool SetViewportExtEx handle int32 int32 POINTL*>
 	^self invalidCall: _failureCode!
 
 setViewportOrgEx: hdc nXOrg: x nYOrg: y lppt: aPOINT
@@ -1098,7 +1098,7 @@ setViewportOrgEx: hdc nXOrg: x nYOrg: y lppt: aPOINT
 			int  Y,	// y-coordinate of new origin 
 			LPPOINT  lpPoint 	// points to previous origin );"
 
-	<stdcall: bool SetViewportOrgEx handle sdword sdword POINTL*>
+	<stdcall: bool SetViewportOrgEx handle int32 int32 POINTL*>
 	^self invalidCall: _failureCode!
 
 setWindowExtEx: hdc nXExtent: nXExtent nYExtent: nYExtent lpSize: lpSize
@@ -1111,7 +1111,7 @@ setWindowExtEx: hdc nXExtent: nXExtent nYExtent: nYExtent lpSize: lpSize
 			int nYExtent,
 			SIZEL* lpSize);"
 
-	<stdcall: bool SetWindowExtEx handle sdword sdword SIZEL*>
+	<stdcall: bool SetWindowExtEx handle int32 int32 SIZEL*>
 	^self invalidCall: _failureCode!
 
 setWindowOrgEx: hdc nXOrg: x nYOrg: y lppt: aPOINT
@@ -1123,7 +1123,7 @@ setWindowOrgEx: hdc nXOrg: x nYOrg: y lppt: aPOINT
 			int  Y,	// y-coordinate of new origin 
 			LPPOINT  lpPoint 	// points to previous origin );"
 
-	<stdcall: bool SetWindowOrgEx handle sdword sdword POINTL*>
+	<stdcall: bool SetWindowOrgEx handle int32 int32 POINTL*>
 	^self invalidCall: _failureCode!
 
 startDoc: hdc lpdi: info
@@ -1133,7 +1133,7 @@ startDoc: hdc lpdi: info
 			CONST DOCINFOW *lpdi 	// address of structure with file names  
 		);"
 
-	<stdcall: sdword StartDocW handle DOCINFOW*>
+	<stdcall: int32 StartDocW handle DOCINFOW*>
 	^self invalidCall: _failureCode!
 
 startPage: hdc
@@ -1143,7 +1143,7 @@ startPage: hdc
 		int __stdcall StartPage(
 			HDC HDC);"
 
-	<stdcall: sdword StartPage handle>
+	<stdcall: int32 StartPage handle>
 	^self invalidCall: _failureCode!
 
 stretchBlt: hdc nXOriginDest: x nYOriginDest: y nWidthDest: w nHeightDest: h hdcSrc: hdcSrc nXOriginSrc: sx nYOriginSrc: sy nWidthSrc: sw nHeightSrc: sh dwRop: dwRop
@@ -1165,7 +1165,7 @@ stretchBlt: hdc nXOriginDest: x nYOriginDest: y nWidthDest: w nHeightDest: h hdc
 			DWORD dwRop 	// raster operation code 
 		);"
 
-	<stdcall: bool StretchBlt handle sdword sdword sdword sdword handle sdword sdword sdword sdword dword>
+	<stdcall: bool StretchBlt handle int32 int32 int32 int32 handle int32 int32 int32 int32 uint32>
 	^self invalidCall: _failureCode!
 
 stretchDIBits: hdc xDest: xDest yDest: yDest nDestWidth: nDestWidth nDestHeight: nDestHeight xSrc: xSrc ySrc: ySrc nSrcWidth: nSrcWidth nSrcHeight: nSrcHeight lpBits: lpBits lpBitsInfo: lpBitsInfo iUsage: iUsage dwRop: dwRop
@@ -1187,7 +1187,7 @@ stretchDIBits: hdc xDest: xDest yDest: yDest nDestWidth: nDestWidth nDestHeight:
 			UINT iUsage,
 			DWORD dwRop);"
 
-	<stdcall: sdword StretchDIBits handle sdword sdword sdword sdword sdword sdword sdword sdword void* void* dword dword>
+	<stdcall: int32 StretchDIBits handle int32 int32 int32 int32 int32 int32 int32 int32 void* void* uint32 uint32>
 	^self invalidCall: _failureCode!
 
 textOut: hdc nXStart: nXStart nYStart: nYStart lpString: lpString cbString: cbString
@@ -1201,7 +1201,7 @@ textOut: hdc nXStart: nXStart nYStart: nYStart lpString: lpString cbString: cbSt
 			LPCWSTR lpString,
 			int cbString);"
 
-	<stdcall: bool TextOutW handle sdword sdword lpwstr sdword>
+	<stdcall: bool TextOutW handle int32 int32 lpwstr int32>
 	^self invalidCall: _failureCode! !
 !OS.GDILibrary categoriesForMethods!
 addFontResource:!public!win32 functions-font and text! !

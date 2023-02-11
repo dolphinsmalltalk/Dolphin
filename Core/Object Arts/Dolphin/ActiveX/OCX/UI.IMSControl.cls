@@ -134,7 +134,7 @@ get_BackColor: pclrBackColor
 		HRESULT __stdcall BackColor(
 			[out, retval] OLE_COLOR* pclrBackColor);"
 
-	<virtual stdcall: hresult 10 dword*>
+	<virtual stdcall: hresult 10 uint32*>
 	^self invalidCall: _failureCode!
 
 get_BorderStyle: psBorderStyle

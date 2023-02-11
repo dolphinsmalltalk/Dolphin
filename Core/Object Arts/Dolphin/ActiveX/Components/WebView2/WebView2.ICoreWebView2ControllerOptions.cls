@@ -45,7 +45,7 @@ get_IsInPrivateModeEnabled: value
 		HRESULT __stdcall IsInPrivateModeEnabled(
 			[out, retval]long* value);"
 
-	<virtual stdcall: hresult 6 sdword*>
+	<virtual stdcall: hresult 6 int32*>
 	^self invalidCall: _failureCode!
 
 get_ProfileName: value
@@ -97,7 +97,7 @@ put_IsInPrivateModeEnabled: value
 		HRESULT __stdcall IsInPrivateModeEnabled(
 			[in]long value);"
 
-	<virtual stdcall: hresult 7 sdword>
+	<virtual stdcall: hresult 7 int32>
 	^self invalidCall: _failureCode!
 
 put_ProfileName: value

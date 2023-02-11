@@ -42,7 +42,7 @@ RegisterCategories: cCategories rgCategoryInfo: rgCategoryInfo
 			[in] CATEGORYINFO* rgCategoryInfo);
 	"
 
-	<virtual stdcall: hresult 4 dword CATEGORYINFO*>
+	<virtual stdcall: hresult 4 uint32 CATEGORYINFO*>
 	^self invalidCall: _failureCode!
 
 registerCategory: catid description: desc
@@ -72,7 +72,7 @@ RegisterClassImplCategories: rclsid cCategories: cCategories rgcatid: rgcatid
 			[in] GUID* rgcatid);
 	"
 
-	<virtual stdcall: hresult 6 guid* dword guid*>
+	<virtual stdcall: hresult 6 guid* uint32 guid*>
 	^self invalidCall: _failureCode!
 
 RegisterClassReqCategories: rclsid cCategories: cCategories rgcatid: rgcatid
@@ -84,7 +84,7 @@ RegisterClassReqCategories: rclsid cCategories: cCategories rgcatid: rgcatid
 			[in] GUID* rgcatid);
 	"
 
-	<virtual stdcall: hresult 8 guid* dword guid*>
+	<virtual stdcall: hresult 8 guid* uint32 guid*>
 	^self invalidCall: _failureCode!
 
 registerCoClass: rclsid categories: catids
@@ -183,7 +183,7 @@ UnRegisterCategories: cCategories rgcatid: rgcatid
 			[in] GUID* rgcatid);
 	"
 
-	<virtual stdcall: hresult 5 dword guid*>
+	<virtual stdcall: hresult 5 uint32 guid*>
 	^self invalidCall: _failureCode!
 
 UnRegisterClassImplCategories: rclsid cCategories: cCategories rgcatid: rgcatid
@@ -195,7 +195,7 @@ UnRegisterClassImplCategories: rclsid cCategories: cCategories rgcatid: rgcatid
 			[in] GUID* rgcatid);
 	"
 
-	<virtual stdcall: hresult 7 guid* dword guid*>
+	<virtual stdcall: hresult 7 guid* uint32 guid*>
 	^self invalidCall: _failureCode!
 
 UnRegisterClassReqCategories: rclsid cCategories: cCategories rgcatid: rgcatid
@@ -207,7 +207,7 @@ UnRegisterClassReqCategories: rclsid cCategories: cCategories rgcatid: rgcatid
 			[in] GUID* rgcatid);
 	"
 
-	<virtual stdcall: hresult 9 guid* dword guid*>
+	<virtual stdcall: hresult 9 guid* uint32 guid*>
 	^self invalidCall: _failureCode! !
 !OS.COM.ICatRegister categoriesForMethods!
 buildCatIdArray:!helpers!private! !

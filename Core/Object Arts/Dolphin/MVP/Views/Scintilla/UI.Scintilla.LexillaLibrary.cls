@@ -23,11 +23,11 @@ createLexer: aString
 	^self invalidCall: _failureCode!
 
 getLexerCount
-	<stdcall: sdword GetLexerCount>
+	<stdcall: int32 GetLexerCount>
 	^self invalidCall: _failureCode!
 
 getLexerName: indexInteger name: aString buflength: lengthInteger
-	<stdcall: sdword GetLexerName sdword lpstr sdword>
+	<stdcall: int32 GetLexerName int32 lpstr int32>
 	^self invalidCall: _failureCode!
 
 getLexerNames

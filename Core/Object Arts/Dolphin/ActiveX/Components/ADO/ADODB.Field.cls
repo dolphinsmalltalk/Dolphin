@@ -40,7 +40,7 @@ get_Status: pFStatus
 		HRESULT __stdcall Status(
 			[out, retval]long* pFStatus);"
 
-	<virtual stdcall: hresult 29 sdword*>
+	<virtual stdcall: hresult 29 int32*>
 	^self invalidCall: _failureCode!
 
 status

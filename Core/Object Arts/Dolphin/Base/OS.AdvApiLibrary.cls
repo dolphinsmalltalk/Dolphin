@@ -26,7 +26,7 @@ getUserName: buffer nSize: pBufSize
 			LPDWORD nSize 		// address of size of name buffer 
 		);"
 
-	<stdcall: bool GetUserNameW lpwstr dword*>
+	<stdcall: bool GetUserNameW lpwstr uint32*>
 	^self invalidCall: _failureCode!
 
 invalidCall: anInteger
@@ -45,7 +45,7 @@ isTextUnicode: lpv iSize: iSize lpiResult: lpiResult
 	);
 	"
 
-	<stdcall: bool IsTextUnicode lpvoid sdword sdword*>
+	<stdcall: bool IsTextUnicode lpvoid int32 int32*>
 	^self invalidCall: _failureCode!
 
 regGetValue: hKey lpSubKey: lpSubKey lpValue: lpValue dwFlags: dwFlags pdwType: pdwType pvData: pvData pcbData: pcbData
@@ -61,7 +61,7 @@ regGetValue: hKey lpSubKey: lpSubKey lpValue: lpValue dwFlags: dwFlags pdwType: 
 			void* pvData,
 			unsigned long* pcbData);"
 
-	<stdcall: sdword RegGetValueW handle lpwstr lpwstr dword dword* void* dword*>
+	<stdcall: int32 RegGetValueW handle lpwstr lpwstr uint32 uint32* void* uint32*>
 	^self invalidCall: _failureCode!
 
 regSetKeyValue: hKey lpSubKey: lpSubKey lpValueName: lpValue dwType: dwType lpData: lpData cbData: cbData
@@ -76,7 +76,7 @@ regSetKeyValue: hKey lpSubKey: lpSubKey lpValueName: lpValue dwType: dwType lpDa
 			void* pvData,
 			DWORD pcbData);"
 
-	<stdcall: errno RegSetKeyValueW handle lpwstr lpwstr dword void* dword>
+	<stdcall: errno RegSetKeyValueW handle lpwstr lpwstr uint32 void* uint32>
 	^self invalidCall: _failureCode!
 
 reportEvent: hEventLog wType: wType wCategory: wCategory dwEventId: dwEventId lpUserSid: lpUserSid wNumStrings: wNumStrings dwDataSize: dwDataSize lpStrings: lpStrings lpRawData: lpRawData
@@ -93,7 +93,7 @@ reportEvent: hEventLog wType: wType wCategory: wCategory dwEventId: dwEventId lp
 			LPVOID lpRawData 	// address of binary data 
 		);"
 
-	<stdcall: bool ReportEventW handle word word dword lpvoid word dword lpvoid lpvoid>
+	<stdcall: bool ReportEventW handle uint16 uint16 uint32 lpvoid uint16 uint32 lpvoid lpvoid>
 	^self invalidCall: _failureCode! !
 !OS.AdvApiLibrary categoriesForMethods!
 deregisterEventSource:!public!win32 functions-events! !

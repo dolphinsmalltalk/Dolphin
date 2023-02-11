@@ -55,7 +55,7 @@ GetColumnNumber: pnColumn
 		HRESULT __stdcall getColumnNumber(
 			[out, retval]int* pnColumn);"
 
-	<virtual stdcall: hresult 4 sdword*>
+	<virtual stdcall: hresult 4 int32*>
 	^self invalidCall: _failureCode!
 
 getLineNumber
@@ -72,7 +72,7 @@ GetLineNumber: pnLine
 		HRESULT __stdcall getLineNumber(
 			[out, retval]int* pnLine);"
 
-	<virtual stdcall: hresult 5 sdword*>
+	<virtual stdcall: hresult 5 int32*>
 	^self invalidCall: _failureCode!
 
 getPublicId
@@ -89,7 +89,7 @@ GetPublicId: ppwchPublicId
 		HRESULT __stdcall getPublicId(
 			[out, retval]unsigned short** ppwchPublicId);"
 
-	<virtual stdcall: hresult 6 word**>
+	<virtual stdcall: hresult 6 uint16**>
 	^self invalidCall: _failureCode!
 
 getSystemId
@@ -106,7 +106,7 @@ GetSystemId: ppwchSystemId
 		HRESULT __stdcall getSystemId(
 			[out, retval]unsigned short** ppwchSystemId);"
 
-	<virtual stdcall: hresult 7 word**>
+	<virtual stdcall: hresult 7 uint16**>
 	^self invalidCall: _failureCode! !
 !MSXML.ISAXLocator categoriesForMethods!
 getColumnNumber!**auto generated**!methods!public! !

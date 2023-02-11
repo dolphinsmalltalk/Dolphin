@@ -38,7 +38,7 @@ getFileVersionInfo: lpstrFilename dwHandle: dwHandle dwLen: dwLen lpData: lpData
 			LPVOID lpData 	// pointer to buffer to receive file-version info.	
 		);"
 
-	<stdcall: bool GetFileVersionInfoW lpwstr dword dword lpvoid>
+	<stdcall: bool GetFileVersionInfoW lpwstr uint32 uint32 lpvoid>
 	^self invalidCall: _failureCode!
 
 getFileVersionInfoSize: lpstrFilename lpdwHandle: aDWORD
@@ -49,7 +49,7 @@ getFileVersionInfoSize: lpstrFilename lpdwHandle: aDWORD
 			LPDWORD lpdwHandle 	// pointer to variable to receive zero	
 		);"
 
-	<stdcall: dword GetFileVersionInfoSizeW lpwstr dword*>
+	<stdcall: uint32 GetFileVersionInfoSizeW lpwstr uint32*>
 	^self invalidCall: _failureCode!
 
 verQueryValue: pBlock lpSubBlock: lpstrSubBlock lplpBuffer: lplpBuffer puLen: puLen
@@ -61,7 +61,7 @@ verQueryValue: pBlock lpSubBlock: lpstrSubBlock lplpBuffer: lplpBuffer puLen: pu
 			PUINT puLen 	// address of length buffer	
 		);"
 
-	<stdcall: bool VerQueryValueW lpvoid lpwstr lppvoid dword*>
+	<stdcall: bool VerQueryValueW lpvoid lpwstr lppvoid uint32*>
 	^self invalidCall: _failureCode! !
 !OS.VersionLibrary categoriesForMethods!
 getFileVersionInfo:!helpers!private! !

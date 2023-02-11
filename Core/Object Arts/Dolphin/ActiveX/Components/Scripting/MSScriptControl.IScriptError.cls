@@ -54,7 +54,7 @@ get_Column: plColumn
 		HRESULT __stdcall Column(
 			[out, retval]long* plColumn);"
 
-	<virtual stdcall: hresult 15 sdword*>
+	<virtual stdcall: hresult 15 int32*>
 	^self invalidCall: _failureCode!
 
 get_Description: pbstrDescription
@@ -72,7 +72,7 @@ get_HelpContext: plHelpContext
 		HRESULT __stdcall HelpContext(
 			[out, retval]long* plHelpContext);"
 
-	<virtual stdcall: hresult 12 sdword*>
+	<virtual stdcall: hresult 12 int32*>
 	^self invalidCall: _failureCode!
 
 get_HelpFile: pbstrHelpFile
@@ -90,7 +90,7 @@ get_Line: plLine
 		HRESULT __stdcall Line(
 			[out, retval]long* plLine);"
 
-	<virtual stdcall: hresult 14 sdword*>
+	<virtual stdcall: hresult 14 int32*>
 	^self invalidCall: _failureCode!
 
 get_Number: plNumber
@@ -99,7 +99,7 @@ get_Number: plNumber
 		HRESULT __stdcall Number(
 			[out, retval]long* plNumber);"
 
-	<virtual stdcall: hresult 8 sdword*>
+	<virtual stdcall: hresult 8 int32*>
 	^self invalidCall: _failureCode!
 
 get_Source: pbstrSource

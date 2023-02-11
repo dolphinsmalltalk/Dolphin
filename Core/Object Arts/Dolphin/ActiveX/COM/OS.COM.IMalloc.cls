@@ -22,7 +22,7 @@ Alloc: cb
 			[in] unsigned long cb);
 	"
 
-	<virtual stdcall: void* 4 dword>
+	<virtual stdcall: void* 4 uint32>
 	^self invalidCall: _failureCode!
 
 DidAlloc: pv
@@ -33,7 +33,7 @@ DidAlloc: pv
 
 	"
 
-	<virtual stdcall: sdword 8 void*>
+	<virtual stdcall: int32 8 void*>
 	^self invalidCall: _failureCode!
 
 Free: pv
@@ -55,7 +55,7 @@ GetSize: pv
 
 	"
 
-	<virtual stdcall: dword 7 void*>
+	<virtual stdcall: uint32 7 void*>
 	^self invalidCall: _failureCode!
 
 HeapMinimize
@@ -77,7 +77,7 @@ Realloc: pv cb: cb
 
 	"
 
-	<virtual stdcall: void* 5 void* dword>
+	<virtual stdcall: void* 5 void* uint32>
 	^self invalidCall: _failureCode! !
 !OS.COM.IMalloc categoriesForMethods!
 Alloc:!**auto generated**!COM Interfaces-OBJIDL.IMalloc!public! !

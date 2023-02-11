@@ -67,7 +67,7 @@ DragEnter: dataObject keyState: keyState point: point effect: effect
 			[in]POINT point,
 			[out, retval]unsigned long* effect);"
 
-	<virtual stdcall: hresult 13 IDataObject* dword POINTL dword*>
+	<virtual stdcall: hresult 13 IDataObject* uint32 POINTL uint32*>
 	^self invalidCall: _failureCode!
 
 dragLeave
@@ -102,7 +102,7 @@ DragOver: keyState point: point effect: effect
 			[in]POINT point,
 			[out, retval]unsigned long* effect);"
 
-	<virtual stdcall: hresult 15 dword POINTL dword*>
+	<virtual stdcall: hresult 15 uint32 POINTL uint32*>
 	^self invalidCall: _failureCode!
 
 drop: dataObject keyState: keyState point: point
@@ -126,7 +126,7 @@ Drop: dataObject keyState: keyState point: point effect: effect
 			[in]POINT point,
 			[out, retval]unsigned long* effect);"
 
-	<virtual stdcall: hresult 16 IDataObject* dword POINTL dword*>
+	<virtual stdcall: hresult 16 IDataObject* uint32 POINTL uint32*>
 	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2CompositionController3 categoriesForMethods!
 dragEnter:keyState:point:!**auto generated**!methods!public! !

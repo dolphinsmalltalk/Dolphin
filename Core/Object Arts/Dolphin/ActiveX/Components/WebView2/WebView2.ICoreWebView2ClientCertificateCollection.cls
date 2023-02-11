@@ -44,7 +44,7 @@ GetValueAtIndex: index value: certificate
 			[in]unsigned int index,
 			[out, retval]ICoreWebView2ClientCertificate** certificate);"
 
-	<virtual stdcall: hresult 5 dword ICoreWebView2ClientCertificate**>
+	<virtual stdcall: hresult 5 uint32 ICoreWebView2ClientCertificate**>
 	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2ClientCertificateCollection categoriesForMethods!
 elementClass!constants!private! !

@@ -100,7 +100,7 @@ BeginTransComplete: beginTransComplete pError: pError adStatus: adStatus pConnec
 	N.B. This method has been automatically generated from 
 	the vtable defined in ConnectionEventsVt>>defineFunctions. DO NOT MODIFY!!"
 
-	<virtual stdcall: hresult 5 sdword Error* Int32* _Connection*>
+	<virtual stdcall: hresult 5 int32 Error* int32* _Connection*>
 	^self invalidCall: _failureCode!
 
 commitTransComplete: pError adStatus: adStatus pConnection: pConnection
@@ -118,7 +118,7 @@ CommitTransComplete: commitTransComplete adStatus: adStatus pConnection: pConnec
 	N.B. This method has been automatically generated from 
 	the vtable defined in ConnectionEventsVt>>defineFunctions. DO NOT MODIFY!!"
 
-	<virtual stdcall: hresult 6 Error* Int32* _Connection*>
+	<virtual stdcall: hresult 6 Error* int32* _Connection*>
 	^self invalidCall: _failureCode!
 
 connectComplete: pError adStatus: adStatus pConnection: pConnection
@@ -136,7 +136,7 @@ ConnectComplete: connectComplete adStatus: adStatus pConnection: pConnection
 	N.B. This method has been automatically generated from 
 	the vtable defined in ConnectionEventsVt>>defineFunctions. DO NOT MODIFY!!"
 
-	<virtual stdcall: hresult 11 Error* Int32* _Connection*>
+	<virtual stdcall: hresult 11 Error* int32* _Connection*>
 	^self invalidCall: _failureCode!
 
 disconnect: adStatus pConnection: pConnection
@@ -152,7 +152,7 @@ Disconnect: disconnect pConnection: pConnection
 	N.B. This method has been automatically generated from 
 	the vtable defined in ConnectionEventsVt>>defineFunctions. DO NOT MODIFY!!"
 
-	<virtual stdcall: hresult 12 Int32* _Connection*>
+	<virtual stdcall: hresult 12 int32* _Connection*>
 	^self invalidCall: _failureCode!
 
 executeComplete: recordsAffected pError: pError adStatus: adStatus pCommand: pCommand pRecordset: pRecordset pConnection: pConnection
@@ -173,7 +173,7 @@ ExecuteComplete: executeComplete pError: pError adStatus: adStatus pCommand: pCo
 	N.B. This method has been automatically generated from 
 	the vtable defined in ConnectionEventsVt>>defineFunctions. DO NOT MODIFY!!"
 
-	<virtual stdcall: hresult 9 sdword Error* Int32* _Command* _Recordset* _Connection*>
+	<virtual stdcall: hresult 9 int32 Error* int32* _Command* _Recordset* _Connection*>
 	^self invalidCall: _failureCode!
 
 infoMessage: pError adStatus: adStatus pConnection: pConnection
@@ -191,7 +191,7 @@ InfoMessage: infoMessage adStatus: adStatus pConnection: pConnection
 	N.B. This method has been automatically generated from 
 	the vtable defined in ConnectionEventsVt>>defineFunctions. DO NOT MODIFY!!"
 
-	<virtual stdcall: hresult 4 Error* Int32* _Connection*>
+	<virtual stdcall: hresult 4 Error* int32* _Connection*>
 	^self invalidCall: _failureCode!
 
 rollbackTransComplete: pError adStatus: adStatus pConnection: pConnection
@@ -209,7 +209,7 @@ RollbackTransComplete: rollbackTransComplete adStatus: adStatus pConnection: pCo
 	N.B. This method has been automatically generated from 
 	the vtable defined in ConnectionEventsVt>>defineFunctions. DO NOT MODIFY!!"
 
-	<virtual stdcall: hresult 7 Error* Int32* _Connection*>
+	<virtual stdcall: hresult 7 Error* int32* _Connection*>
 	^self invalidCall: _failureCode!
 
 willConnect: connectionString userID: userID password: password options: options adStatus: adStatus pConnection: pConnection
@@ -239,7 +239,7 @@ WillConnect: willConnect UserID: userID Password: password Options: options adSt
 	N.B. This method has been automatically generated from 
 	the vtable defined in ConnectionEventsVt>>defineFunctions. DO NOT MODIFY!!"
 
-	<virtual stdcall: hresult 10 lppvoid lppvoid lppvoid Int32* Int32* _Connection*>
+	<virtual stdcall: hresult 10 lppvoid lppvoid lppvoid int32* int32* _Connection*>
 	^self invalidCall: _failureCode!
 
 willExecute: source cursorType: cursorType lockType: lockType options: options adStatus: adStatus pCommand: pCommand pRecordset: pRecordset pConnection: pConnection
@@ -275,7 +275,7 @@ WillExecute: willExecute CursorType: cursorType LockType: lockType Options: opti
 	N.B. This method has been automatically generated from 
 	the vtable defined in ConnectionEventsVt>>defineFunctions. DO NOT MODIFY!!"
 
-	<virtual stdcall: hresult 8 lppvoid Int32* Int32* Int32* Int32* _Command* _Recordset* _Connection*>
+	<virtual stdcall: hresult 8 lppvoid int32* int32* int32* int32* _Command* _Recordset* _Connection*>
 	^self invalidCall: _failureCode! !
 !ADODB.ConnectionEventsVt categoriesForMethods!
 beginTransComplete:pError:adStatus:pConnection:!**auto generated**!methods!public! !

@@ -55,7 +55,7 @@ get_BrowserProcessExitKind: browserProcessExitKind
 		HRESULT __stdcall BrowserProcessExitKind(
 			[out, retval]COREWEBVIEW2_BROWSER_PROCESS_EXIT_KIND* BrowserProcessExitKind);"
 
-	<virtual stdcall: hresult 4 sdword*>
+	<virtual stdcall: hresult 4 int32*>
 	^self invalidCall: _failureCode!
 
 get_BrowserProcessId: value
@@ -64,7 +64,7 @@ get_BrowserProcessId: value
 		HRESULT __stdcall BrowserProcessId(
 			[out, retval]unsigned int* value);"
 
-	<virtual stdcall: hresult 5 dword*>
+	<virtual stdcall: hresult 5 uint32*>
 	^self invalidCall: _failureCode!
 
 isNormalExit

@@ -82,7 +82,7 @@ get_Count: pCount
 		HRESULT __stdcall Count(
 			[out, retval]long* pCount);"
 
-	<virtual stdcall: hresult 9 sdword*>
+	<virtual stdcall: hresult 9 int32*>
 	^self invalidCall: _failureCode!
 
 get_Item: index pSubMatch: pSubMatch
@@ -92,7 +92,7 @@ get_Item: index pSubMatch: pSubMatch
 			[in]long index,
 			[out, retval]VARIANT* pSubMatch);"
 
-	<virtual stdcall: hresult 8 sdword variant*>
+	<virtual stdcall: hresult 8 int32 variant*>
 	^self invalidCall: _failureCode!
 
 isExtensible

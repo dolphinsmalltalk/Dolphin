@@ -42,7 +42,7 @@ CreateContextMenuItem: label iconStream: iconStream kind: kind item: item
 			[in]COREWEBVIEW2_CONTEXT_MENU_ITEM_KIND Kind,
 			[out, retval]ICoreWebView2ContextMenuItem** item);"
 
-	<virtual stdcall: hresult 20 lpwstr IStream* sdword ICoreWebView2ContextMenuItem**>
+	<virtual stdcall: hresult 20 lpwstr IStream* int32 ICoreWebView2ContextMenuItem**>
 	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2Environment9 categoriesForMethods!
 CreateContextMenuItem:iconStream:kind:item:!**auto generated**!COM Interfaces-ICoreWebView2Environment9!private! !

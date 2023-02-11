@@ -53,7 +53,7 @@ get_hasCurrent: hasCurrent
 		HRESULT __stdcall hasCurrent(
 			[out, retval]long* hasCurrent);"
 
-	<virtual stdcall: hresult 4 sdword*>
+	<virtual stdcall: hresult 4 int32*>
 	^self invalidCall: _failureCode!
 
 getCurrent
@@ -87,7 +87,7 @@ MoveNext: hasNext
 		HRESULT __stdcall MoveNext(
 			[out, retval]long* hasNext);"
 
-	<virtual stdcall: hresult 6 sdword*>
+	<virtual stdcall: hresult 6 int32*>
 	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2FrameInfoCollectionIterator categoriesForMethods!
 do:!enumerating!public! !

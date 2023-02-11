@@ -72,7 +72,7 @@ Add_Destroyed: eventHandler token: token
 			[in]ICoreWebView2FrameDestroyedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 9 ICoreWebView2FrameDestroyedEventHandler* sqword*>
+	<virtual stdcall: hresult 9 ICoreWebView2FrameDestroyedEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 Add_DOMContentLoaded: eventHandler token: token
@@ -91,7 +91,7 @@ Add_NameChanged: eventHandler token: token
 			[in]ICoreWebView2FrameNameChangedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 5 ICoreWebView2FrameNameChangedEventHandler* sqword*>
+	<virtual stdcall: hresult 5 ICoreWebView2FrameNameChangedEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 Add_NavigationCompleted: eventHandler token: token
@@ -148,7 +148,7 @@ AddHostObjectToScriptWithOrigins: name object: object originsCount: originsCount
 			[in]unsigned int originsCount,
 			[in]LPWSTR* origins);"
 
-	<virtual stdcall: hresult 7 lpwstr variant* dword lpwstr*>
+	<virtual stdcall: hresult 7 lpwstr variant* uint32 lpwstr*>
 	^self invalidCall: _failureCode!
 
 downCast
@@ -203,7 +203,7 @@ IsDestroyed: destroyed
 		HRESULT __stdcall IsDestroyed(
 			[out, retval]long* destroyed);"
 
-	<virtual stdcall: hresult 11 sdword*>
+	<virtual stdcall: hresult 11 int32*>
 	^self invalidCall: _failureCode!
 
 name
@@ -259,7 +259,7 @@ Remove_Destroyed: token
 		HRESULT __stdcall remove_Destroyed(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 10 sqword>
+	<virtual stdcall: hresult 10 int64>
 	^self invalidCall: _failureCode!
 
 Remove_DOMContentLoaded: token
@@ -276,7 +276,7 @@ Remove_NameChanged: token
 		HRESULT __stdcall remove_NameChanged(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 6 sqword>
+	<virtual stdcall: hresult 6 int64>
 	^self invalidCall: _failureCode!
 
 Remove_NavigationCompleted: token

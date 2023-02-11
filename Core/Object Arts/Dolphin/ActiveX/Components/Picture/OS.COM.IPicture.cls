@@ -126,7 +126,7 @@ get_Attributes: pdwAttr
 		HRESULT __stdcall Attributes(
 			[out, retval]long* pdwAttr);"
 
-	<virtual stdcall: hresult 17 sdword*>
+	<virtual stdcall: hresult 17 int32*>
 	^self invalidCall: _failureCode!
 
 get_CurDC: phdcOut
@@ -155,7 +155,7 @@ get_Height: pheight
 		HRESULT __stdcall Height(
 			[out, retval]OLE_YSIZE_HIMETRIC* pheight);"
 
-	<virtual stdcall: hresult 8 sdword*>
+	<virtual stdcall: hresult 8 int32*>
 	^self invalidCall: _failureCode!
 
 get_hPal: phpal
@@ -164,7 +164,7 @@ get_hPal: phpal
 		HRESULT __stdcall hPal(
 			[out, retval] OLE_HANDLE* phpal);	"
 
-	<virtual stdcall: sdword 5 handle*>
+	<virtual stdcall: int32 5 handle*>
 	^self invalidCall: _failureCode!
 
 get_KeepOriginalFormat: pfkeep
@@ -183,7 +183,7 @@ get_Type: ptype
 		HRESULT __stdcall Type(
 			[out, retval]short* ptype);"
 
-	<virtual stdcall: hresult 6 sword*>
+	<virtual stdcall: hresult 6 int16*>
 	^self invalidCall: _failureCode!
 
 get_Width: pwidth
@@ -192,7 +192,7 @@ get_Width: pwidth
 		HRESULT __stdcall Width(
 			[out, retval]OLE_XSIZE_HIMETRIC* pwidth);"
 
-	<virtual stdcall: hresult 7 sdword*>
+	<virtual stdcall: hresult 7 int32*>
 	^self invalidCall: _failureCode!
 
 handle
@@ -307,7 +307,7 @@ Render: hdc x: x y: y cx: cx cy: cy xSrc: xSrc ySrc: ySrc cxSrc: cxSrc cySrc: cy
 			[in] RECTL* prcWBounds);
 	"
 
-	<virtual stdcall: hresult 9 handle sdword sdword sdword sdword sdword sdword sdword sdword RECTL*>
+	<virtual stdcall: hresult 9 handle int32 int32 int32 int32 int32 int32 int32 int32 RECTL*>
 	^self invalidCall: _failureCode!
 
 saveAsFile: pstm fSaveMemCopy: fSaveMemCopy
@@ -332,7 +332,7 @@ SaveAsFile: pstm fSaveMemCopy: fSaveMemCopy pcbSize: pcbSize
 
 	"Declare stream parameter as IUnknown* to avoid creating dependency on structured storage package"
 
-	<virtual stdcall: hresult 16 IUnknown* bool sdword*>
+	<virtual stdcall: hresult 16 IUnknown* bool int32*>
 	^self invalidCall: _failureCode!
 
 selectPicture: hdcIn
@@ -354,7 +354,7 @@ SelectPicture: hdcIn phdcOut: phdcOut phbmpOut: phbmpOut
 			[out]int* phdcOut,
 			[out]OLE_HANDLE* phbmpOut);"
 
-	<virtual stdcall: hresult 12 sdword sdword* sdword*>
+	<virtual stdcall: hresult 12 int32 int32* int32*>
 	^self invalidCall: _failureCode!
 
 setHdc: aCanvas 

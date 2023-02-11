@@ -251,7 +251,7 @@ _xResync: affectRecords
 		HRESULT __stdcall _xResync(
 			[in, defaultvalue(3)]AffectEnum AffectRecords);"
 
-	<virtual stdcall: hresult 43 sdword>
+	<virtual stdcall: hresult 43 int32>
 	^self invalidCall: _failureCode!
 
 absolutePage
@@ -360,7 +360,7 @@ CancelBatch: affectRecords
 		HRESULT __stdcall CancelBatch(
 			[in, defaultvalue(3)]AffectEnum AffectRecords);"
 
-	<virtual stdcall: hresult 59 sdword>
+	<virtual stdcall: hresult 59 int32>
 	^self invalidCall: _failureCode!
 
 CancelUpdate
@@ -435,7 +435,7 @@ Delete: affectRecords
 		HRESULT __stdcall Delete(
 			[in, defaultvalue(1)]AffectEnum AffectRecords);"
 
-	<virtual stdcall: hresult 34 sdword>
+	<virtual stdcall: hresult 34 int32>
 	^self invalidCall: _failureCode!
 
 do: operation
@@ -517,7 +517,7 @@ Find: criteria SkipRecords: skipRecords SearchDirection: searchDirection Start: 
 			[in, defaultvalue(1)]SearchDirectionEnum SearchDirection,
 			[in, optional]VARIANT Start);"
 
-	<virtual stdcall: hresult 68 bstr sdword sdword variant>
+	<virtual stdcall: hresult 68 bstr int32 int32 variant>
 	^self invalidCall: _failureCode!
 
 get_AbsolutePage: pl
@@ -526,7 +526,7 @@ get_AbsolutePage: pl
 		HRESULT __stdcall AbsolutePage(
 			[out, retval]PositionEnum* pl);"
 
-	<virtual stdcall: hresult 45 sdword*>
+	<virtual stdcall: hresult 45 int32*>
 	^self invalidCall: _failureCode!
 
 get_AbsolutePosition: pl
@@ -535,7 +535,7 @@ get_AbsolutePosition: pl
 		HRESULT __stdcall AbsolutePosition(
 			[out, retval]PositionEnum* pl);"
 
-	<virtual stdcall: hresult 9 sdword*>
+	<virtual stdcall: hresult 9 int32*>
 	^self invalidCall: _failureCode!
 
 get_ActiveConnection: pvar
@@ -571,7 +571,7 @@ get_CacheSize: pl
 		HRESULT __stdcall CacheSize(
 			[out, retval]long* pl);"
 
-	<virtual stdcall: hresult 17 sdword*>
+	<virtual stdcall: hresult 17 int32*>
 	^self invalidCall: _failureCode!
 
 get_Collect: index pvar: pvar
@@ -590,7 +590,7 @@ get_CursorLocation: plCursorLoc
 		HRESULT __stdcall CursorLocation(
 			[out, retval]CursorLocationEnum* plCursorLoc);"
 
-	<virtual stdcall: hresult 60 sdword*>
+	<virtual stdcall: hresult 60 int32*>
 	^self invalidCall: _failureCode!
 
 get_CursorType: plCursorType
@@ -599,7 +599,7 @@ get_CursorType: plCursorType
 		HRESULT __stdcall CursorType(
 			[out, retval]CursorTypeEnum* plCursorType);"
 
-	<virtual stdcall: hresult 19 sdword*>
+	<virtual stdcall: hresult 19 int32*>
 	^self invalidCall: _failureCode!
 
 get_EditMode: pl
@@ -608,7 +608,7 @@ get_EditMode: pl
 		HRESULT __stdcall EditMode(
 			[out, retval]EditModeEnum* pl);"
 
-	<virtual stdcall: hresult 47 sdword*>
+	<virtual stdcall: hresult 47 int32*>
 	^self invalidCall: _failureCode!
 
 get_EOF: pb
@@ -644,7 +644,7 @@ get_LockType: plLockType
 		HRESULT __stdcall LockType(
 			[out, retval]LockTypeEnum* plLockType);"
 
-	<virtual stdcall: hresult 23 sdword*>
+	<virtual stdcall: hresult 23 int32*>
 	^self invalidCall: _failureCode!
 
 get_MarshalOptions: peMarshal
@@ -653,7 +653,7 @@ get_MarshalOptions: peMarshal
 		HRESULT __stdcall MarshalOptions(
 			[out, retval]MarshalOptionsEnum* peMarshal);"
 
-	<virtual stdcall: hresult 66 sdword*>
+	<virtual stdcall: hresult 66 int32*>
 	^self invalidCall: _failureCode!
 
 get_MaxRecords: plMaxRecords
@@ -662,7 +662,7 @@ get_MaxRecords: plMaxRecords
 		HRESULT __stdcall MaxRecords(
 			[out, retval]long* plMaxRecords);"
 
-	<virtual stdcall: hresult 25 sdword*>
+	<virtual stdcall: hresult 25 int32*>
 	^self invalidCall: _failureCode!
 
 get_PageCount: pl
@@ -671,7 +671,7 @@ get_PageCount: pl
 		HRESULT __stdcall PageCount(
 			[out, retval]long* pl);"
 
-	<virtual stdcall: hresult 50 sdword*>
+	<virtual stdcall: hresult 50 int32*>
 	^self invalidCall: _failureCode!
 
 get_PageSize: pl
@@ -680,7 +680,7 @@ get_PageSize: pl
 		HRESULT __stdcall PageSize(
 			[out, retval]long* pl);"
 
-	<virtual stdcall: hresult 51 sdword*>
+	<virtual stdcall: hresult 51 int32*>
 	^self invalidCall: _failureCode!
 
 get_RecordCount: pl
@@ -689,7 +689,7 @@ get_RecordCount: pl
 		HRESULT __stdcall RecordCount(
 			[out, retval]long* pl);"
 
-	<virtual stdcall: hresult 27 sdword*>
+	<virtual stdcall: hresult 27 int32*>
 	^self invalidCall: _failureCode!
 
 get_Sort: criteria
@@ -716,7 +716,7 @@ get_State: plObjState
 		HRESULT __stdcall State(
 			[out, retval]long* plObjState);"
 
-	<virtual stdcall: hresult 56 sdword*>
+	<virtual stdcall: hresult 56 int32*>
 	^self invalidCall: _failureCode!
 
 get_Status: pl
@@ -725,7 +725,7 @@ get_Status: pl
 		HRESULT __stdcall Status(
 			[out, retval]long* pl);"
 
-	<virtual stdcall: hresult 55 sdword*>
+	<virtual stdcall: hresult 55 int32*>
 	^self invalidCall: _failureCode!
 
 getRows
@@ -758,7 +758,7 @@ GetRows: rows Start: start Fields: fields pvar: pvar
 			[in, optional]VARIANT Fields,
 			[out, retval]VARIANT* pvar);"
 
-	<virtual stdcall: hresult 35 sdword variant variant variant*>
+	<virtual stdcall: hresult 35 int32 variant variant variant*>
 	^self invalidCall: _failureCode!
 
 isEmpty
@@ -823,7 +823,7 @@ Move: numRecords Start: start
 			[in]long NumRecords,
 			[in, optional]VARIANT Start);"
 
-	<virtual stdcall: hresult 36 sdword variant>
+	<virtual stdcall: hresult 36 int32 variant>
 	^self invalidCall: _failureCode!
 
 MoveFirst
@@ -919,7 +919,7 @@ Open: source ActiveConnection: activeConnection CursorType: cursorType LockType:
 			[in, defaultvalue(-1)]LockTypeEnum LockType,
 			[in, defaultvalue(-1)]long Options);"
 
-	<virtual stdcall: hresult 41 variant variant sdword sdword sdword>
+	<virtual stdcall: hresult 41 variant variant int32 int32 int32>
 	^self invalidCall: _failureCode!
 
 pageCount
@@ -950,7 +950,7 @@ put_AbsolutePage: pl
 		HRESULT __stdcall AbsolutePage(
 			[in]PositionEnum pl);"
 
-	<virtual stdcall: hresult 46 sdword>
+	<virtual stdcall: hresult 46 int32>
 	^self invalidCall: _failureCode!
 
 put_AbsolutePosition: pl
@@ -960,7 +960,7 @@ put_AbsolutePosition: pl
 		HRESULT __stdcall AbsolutePosition(
 			[in]PositionEnum pl);"
 
-	<virtual stdcall: hresult 10 sdword>
+	<virtual stdcall: hresult 10 int32>
 	^self invalidCall: _failureCode!
 
 put_ActiveConnection: pvar
@@ -990,7 +990,7 @@ put_CacheSize: pl
 		HRESULT __stdcall CacheSize(
 			[in]long pl);"
 
-	<virtual stdcall: hresult 18 sdword>
+	<virtual stdcall: hresult 18 int32>
 	^self invalidCall: _failureCode!
 
 put_Collect: index pvar: pvar
@@ -1011,7 +1011,7 @@ put_CursorLocation: plCursorLoc
 		HRESULT __stdcall CursorLocation(
 			[in]CursorLocationEnum plCursorLoc);"
 
-	<virtual stdcall: hresult 61 sdword>
+	<virtual stdcall: hresult 61 int32>
 	^self invalidCall: _failureCode!
 
 put_CursorType: plCursorType
@@ -1021,7 +1021,7 @@ put_CursorType: plCursorType
 		HRESULT __stdcall CursorType(
 			[in]CursorTypeEnum plCursorType);"
 
-	<virtual stdcall: hresult 20 sdword>
+	<virtual stdcall: hresult 20 int32>
 	^self invalidCall: _failureCode!
 
 put_Filter: criteria
@@ -1041,7 +1041,7 @@ put_LockType: plLockType
 		HRESULT __stdcall LockType(
 			[in]LockTypeEnum plLockType);"
 
-	<virtual stdcall: hresult 24 sdword>
+	<virtual stdcall: hresult 24 int32>
 	^self invalidCall: _failureCode!
 
 put_MarshalOptions: peMarshal
@@ -1051,7 +1051,7 @@ put_MarshalOptions: peMarshal
 		HRESULT __stdcall MarshalOptions(
 			[in]MarshalOptionsEnum peMarshal);"
 
-	<virtual stdcall: hresult 67 sdword>
+	<virtual stdcall: hresult 67 int32>
 	^self invalidCall: _failureCode!
 
 put_MaxRecords: plMaxRecords
@@ -1061,7 +1061,7 @@ put_MaxRecords: plMaxRecords
 		HRESULT __stdcall MaxRecords(
 			[in]long plMaxRecords);"
 
-	<virtual stdcall: hresult 26 sdword>
+	<virtual stdcall: hresult 26 int32>
 	^self invalidCall: _failureCode!
 
 put_PageSize: pl
@@ -1071,7 +1071,7 @@ put_PageSize: pl
 		HRESULT __stdcall PageSize(
 			[in]long pl);"
 
-	<virtual stdcall: hresult 52 sdword>
+	<virtual stdcall: hresult 52 int32>
 	^self invalidCall: _failureCode!
 
 put_Sort: criteria
@@ -1134,7 +1134,7 @@ Requery: options
 		HRESULT __stdcall Requery(
 			[in, defaultvalue(-1)]long Options);"
 
-	<virtual stdcall: hresult 42 sdword>
+	<virtual stdcall: hresult 42 int32>
 	^self invalidCall: _failureCode!
 
 setActiveConnection: pvar
@@ -1209,7 +1209,7 @@ Supports: cursorOptions pb: pb
 			[in]CursorOptionEnum CursorOptions,
 			[out, retval]VARIANT_BOOL* pb);"
 
-	<virtual stdcall: hresult 63 sdword varbool*>
+	<virtual stdcall: hresult 63 int32 varbool*>
 	^self invalidCall: _failureCode!
 
 update
@@ -1245,7 +1245,7 @@ UpdateBatch: affectRecords
 		HRESULT __stdcall UpdateBatch(
 			[in, defaultvalue(3)]AffectEnum AffectRecords);"
 
-	<virtual stdcall: hresult 58 sdword>
+	<virtual stdcall: hresult 58 int32>
 	^self invalidCall: _failureCode!
 
 value

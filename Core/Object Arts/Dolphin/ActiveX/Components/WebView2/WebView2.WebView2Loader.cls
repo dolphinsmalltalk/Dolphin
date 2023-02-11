@@ -12,7 +12,7 @@ WebView2.WebView2Loader comment: ''!
 !WebView2.WebView2Loader methodsFor!
 
 compareBrowserVersions: version1 version2: version2 result: result
-	<stdcall: hresult CompareBrowserVersions lpwstr lpwstr sdword*>
+	<stdcall: hresult CompareBrowserVersions lpwstr lpwstr int32*>
 	^self invalidCall: _failureCode!
 
 createCoreWebView2Environment: environmentCreatedHandler

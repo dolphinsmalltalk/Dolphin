@@ -41,7 +41,7 @@ Add_ClientCertificateRequested: eventHandler token: token
 			[in]ICoreWebView2ClientCertificateRequestedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 78 ICoreWebView2ClientCertificateRequestedEventHandler* sqword*>
+	<virtual stdcall: hresult 78 ICoreWebView2ClientCertificateRequestedEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 Remove_ClientCertificateRequested: token
@@ -50,7 +50,7 @@ Remove_ClientCertificateRequested: token
 		HRESULT __stdcall remove_ClientCertificateRequested(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 79 sqword>
+	<virtual stdcall: hresult 79 int64>
 	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2_5 categoriesForMethods!
 Add_ClientCertificateRequested:token:!**auto generated**!COM Interfaces-ICoreWebView2_5!private! !

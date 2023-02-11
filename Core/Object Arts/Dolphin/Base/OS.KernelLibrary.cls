@@ -27,7 +27,7 @@ addAtom: aString
 			LPCWSTR  lpString 	// address of string to add 
 		);"
 
-	<stdcall: word AddAtomW lpwstr>
+	<stdcall: uint16 AddAtomW lpwstr>
 	^self invalidCall: _failureCode!
 
 allocConsole
@@ -46,7 +46,7 @@ attachConsole: dwProcessId
 		BOOL __stdcall AttachConsole(
 			[in]DWORD dwProcessId);"
 
-	<stdcall: bool AttachConsole dword>
+	<stdcall: bool AttachConsole uint32>
 	^self invalidCall: _failureCode!
 
 beep: anInteger dwDuration: dwDuration
@@ -64,7 +64,7 @@ beep: anInteger dwDuration: dwDuration
 	interrupt, handled by starting a new idle process). Of course you can always
 	add a new overlapped entry point if you wish."
 
-	<stdcall: bool Beep dword dword>
+	<stdcall: bool Beep uint32 uint32>
 	^self invalidCall: _failureCode!
 
 beginUpdateResource: fileNameString bDeleteExistingResources: aBoolean
@@ -97,7 +97,7 @@ closeHandle: aHandle
 	^self invalidCall: _failureCode!
 
 compareString: locale dwCmpFlags: dwCmpFlags lpString1: lpString1 cchCount1: cchCount1 lpString2: lpString2 cchCount2: cchCount2
-	<stdcall: sdword CompareStringW dword dword lpwstr sdword lpwstr sdword>
+	<stdcall: int32 CompareStringW uint32 uint32 lpwstr int32 lpwstr int32>
 	^self invalidCall: _failureCode!
 
 compareString: localeInteger dwCmpFlags: flagsInteger string1: aString1 string2: aString2
@@ -113,7 +113,7 @@ compareString: localeInteger dwCmpFlags: flagsInteger string1: aString1 string2:
 		cchCount2: utf2 size!
 
 compareStringOrdinal: lpString1 cchCount1: cchCount1 lpString2: lpString2 cchCount2: cchCount2 bIgnoreCase: bIgnoreCase
-	<stdcall: sdword CompareStringOrdinal lpwstr sdword lpwstr sdword bool>
+	<stdcall: int32 CompareStringOrdinal lpwstr int32 lpwstr int32 bool>
 	^self invalidCall: _failureCode!
 
 copyFile: fromString lpNewFileName: toString bfailIfExists: fail
@@ -200,7 +200,7 @@ createFile: aStringFileName dwDesiredAccess: anIntegerAccessMode dwSharedMode: a
 	);
 	Please see Win32 SDK help for more information."
 
-	<stdcall: handle CreateFileW lpwstr dword dword lpvoid dword dword handle>
+	<stdcall: handle CreateFileW lpwstr uint32 uint32 lpvoid uint32 uint32 handle>
 	^self invalidCall: _failureCode!
 
 createMutex: lpMutexAttributes bInitialOwner: bInitialOwner lpName: lpName
@@ -250,7 +250,7 @@ deviceIoControl: hDevice dwIoControlCode: dwIoControlCode lpInBuffer: lpInBuffer
 			[out]unsigned long* lpBytesReturned,
 			[in, out]LPOVERLAPPED LPOVERLAPPED);"
 
-	<stdcall: bool DeviceIoControl handle dword void* dword void* dword dword* void*>
+	<stdcall: bool DeviceIoControl handle uint32 void* uint32 void* uint32 uint32* void*>
 	^self invalidCall: _failureCode!
 
 duplicateHandle: sourceProcHandle hSourceHandle: sourceHandle hTargetProcessHandle: targetProcHandle lpTargetHandle: targetHandle dwDesiredAccess: accessFlagsInteger bInheritHandle: inheritBool dwOptions: optionsFlagInteger
@@ -269,7 +269,7 @@ duplicateHandle: sourceProcHandle hSourceHandle: sourceHandle hTargetProcessHand
 			DWORD  dwOptions 	// optional actions 
 		);"
 
-	<stdcall: bool DuplicateHandle handle handle handle lpvoid dword bool dword>
+	<stdcall: bool DuplicateHandle handle handle handle lpvoid uint32 bool uint32>
 	^self invalidCall: _failureCode!
 
 endUpdateResource: hUpdate fDiscard: aBoolean
@@ -311,7 +311,7 @@ enumDateFormats: aCallbackThunk locale: locale dwFlags: dwFlags
 			DWORD dwFlags 						// date formats to enumerate
 		);"
 
-	<stdcall: bool EnumDateFormatsW lpvoid dword dword>
+	<stdcall: bool EnumDateFormatsW lpvoid uint32 uint32>
 	^self invalidCall: _failureCode!
 
 enumSystemCodePages: flagsInteger
@@ -327,7 +327,7 @@ enumSystemCodePages: flagsInteger
 	^codePages contents!
 
 enumSystemCodePages: aCallbackThunk dwFlags: dwFlags
-	<stdcall: bool EnumSystemCodePagesW lpvoid dword>
+	<stdcall: bool EnumSystemCodePagesW lpvoid uint32>
 	^self invalidCall: _failureCode!
 
 enumSystemLocales: flagsInteger
@@ -352,7 +352,7 @@ enumSystemLocales: aCallbackThunk dwFlags: dwFlags
 			DWORD dwFlags 	// indicates which locales to enumerate
 		);"
 
-	<stdcall: bool EnumSystemLocalesW lpvoid dword>
+	<stdcall: bool EnumSystemLocalesW lpvoid uint32>
 	^self invalidCall: _failureCode!
 
 enumTimeFormats: localeInteger dwFlags: flagsInteger
@@ -381,7 +381,7 @@ enumTimeFormats: aCallbackThunk locale: locale dwFlags: dwFlags
 			DWORD dwFlags 						// unused
 		);"
 
-	<stdcall: bool EnumTimeFormatsW lpvoid dword dword>
+	<stdcall: bool EnumTimeFormatsW lpvoid uint32 uint32>
 	^self invalidCall: _failureCode!
 
 enumUILanguages: flagsInteger
@@ -400,7 +400,7 @@ enumUILanguages: flagsInteger
 	^languages contents!
 
 enumUILanguages: aCallbackThunk dwFlags: dwFlags lParam: lParam
-	<stdcall: bool EnumUILanguagesW lpvoid dword uintptr>
+	<stdcall: bool EnumUILanguagesW lpvoid uint32 uintptr>
 	^self invalidCall: _failureCode!
 
 expandEnvironmentStrings: aString
@@ -432,7 +432,7 @@ expandEnvironmentStrings: lpSrc lpDst: lpDst nSize: bufSize
 			LPTSTR lpDst,
 			DWORD nSize);"
 
-	<stdcall: dword ExpandEnvironmentStringsW lpwstr lpwstr dword>
+	<stdcall: uint32 ExpandEnvironmentStringsW lpwstr lpwstr uint32>
 	^self invalidCall: _failureCode!
 
 fileTimeToLocalTime: lpFileTime lpLocalFileTime: lpLocalFileTime
@@ -542,7 +542,7 @@ formatMessage: dwFlags lpSource: aStringOrHandleOrNil dwMessageId: dwMessageId d
 			va_list *Arguments 	// address of array of message inserts 
 		);"
 
-	<stdcall: dword FormatMessageW dword lpvoid dword dword lpvoid dword lpvoid>
+	<stdcall: uint32 FormatMessageW uint32 lpvoid uint32 uint32 lpvoid uint32 lpvoid>
 	^self invalidCall: _failureCode!
 
 formatMessage: messageId source: aHandleOrString flags: dwFlag withArguments: arguments
@@ -608,7 +608,7 @@ getACP
 
 		UINT __stdcall GetACP();"
 
-	<stdcall: dword GetACP>
+	<stdcall: uint32 GetACP>
 	^self invalidCall: _failureCode!
 
 getAtomName: anInteger
@@ -634,7 +634,7 @@ getAtomName: id lpBuffer: aString nSize: anInteger
 	If the function succeeds, the return value is the length of the string copied to the buffer, in characters, not including the terminating null character.
 	If the function fails, the return value is zero. To get extended error information, call GetLastError."
 
-	<stdcall: dword GetAtomNameW word lpwstr sdword>
+	<stdcall: uint32 GetAtomNameW uint16 lpwstr int32>
 	^self invalidCall: _failureCode!
 
 getCalendarInfo: locale calendar: calendar calType: calType lpCalData: lpCalData cchData: cchData lpValue: lpValue
@@ -649,7 +649,7 @@ getCalendarInfo: locale calendar: calendar calType: calType lpCalData: lpCalData
 			[in]int cchData,
 			[out]unsigned long* lpValue);"
 
-	<stdcall: sdword GetCalendarInfoW dword dword dword lpwstr sdword dword*>
+	<stdcall: int32 GetCalendarInfoW uint32 uint32 uint32 lpwstr int32 uint32*>
 	^self invalidCall: _failureCode!
 
 getCalendarInfoString: locale calendar: calendar calType: calType
@@ -699,7 +699,7 @@ getComputerName: buffer nSize: pBufSize
 			LPDWORD nSize 		// address of size of lpBuffer
 		);"
 
-	<stdcall: bool GetComputerNameW lpwstr dword*>
+	<stdcall: bool GetComputerNameW lpwstr uint32*>
 	^self invalidCall: _failureCode!
 
 getCPInfoExW: codepage dwFlags: dwFlags lpCPInfoEx: lpCPInfoEx
@@ -711,7 +711,7 @@ getCPInfoExW: codepage dwFlags: dwFlags lpCPInfoEx: lpCPInfoEx
 			[in]DWORD dwFlags,
 			[out]CPINFOEXW* lpCPInfoEx);"
 
-	<stdcall: bool GetCPInfoExW dword dword CPINFOEXW*>
+	<stdcall: bool GetCPInfoExW uint32 uint32 CPINFOEXW*>
 	^self invalidCall: _failureCode!
 
 getCurrentDirectory
@@ -724,7 +724,7 @@ getCurrentDirectory
 	^buf!
 
 getCurrentDirectory: nBufferLength lpBuffer: lpBuffer
-	<stdcall: dword GetCurrentDirectoryW dword lpwstr>
+	<stdcall: uint32 GetCurrentDirectoryW uint32 lpwstr>
 	^self invalidCall: _failureCode!
 
 getCurrentProcess
@@ -748,7 +748,7 @@ getCurrentThreadId
 
 		DWORD GetCurrentThreadId(VOID)"
 
-	<stdcall: dword GetCurrentThreadId>
+	<stdcall: uint32 GetCurrentThreadId>
 	^self invalidCall: _failureCode!
 
 getDiskFreeSpace: lpRootPathName lpSectorsPerCluster: lpSectorsPerCluster lpBytesPerSector: lpBytesPerSector lpNumberOfFreeClusters: lpNumberOfFreeClusters lpTotalNumberOfClusters: lpTotalNumberOfClusters
@@ -762,7 +762,7 @@ getDiskFreeSpace: lpRootPathName lpSectorsPerCluster: lpSectorsPerCluster lpByte
 		);
 	"
 
-	<stdcall: bool GetDiskFreeSpaceW lpwstr dword* dword* dword* dword*>
+	<stdcall: bool GetDiskFreeSpaceW lpwstr uint32* uint32* uint32* uint32*>
 	^self invalidCall: _failureCode!
 
 getDiskFreeSpaceEx: lpDirectoryName lpFreeBytesAvailable: lpFreeBytesAvailable lpTotalNumberOfBytes: lpTotalNumberOfBytes lpTotalNumberOfFreeBytes: lpTotalNumberOfFreeBytes
@@ -775,7 +775,7 @@ getDiskFreeSpaceEx: lpDirectoryName lpFreeBytesAvailable: lpFreeBytesAvailable l
 		);
 	"
 
-	<stdcall: bool GetDiskFreeSpaceExW lpwstr qword* qword* qword*>
+	<stdcall: bool GetDiskFreeSpaceExW lpwstr uint64* uint64* uint64*>
 	^self invalidCall: _failureCode!
 
 getEnvironmentVariable: aString
@@ -803,7 +803,7 @@ getEnvironmentVariable: nameString lpBuffer: bufString nSize: bufSize
 			DWORD nSize 	// size of buffer, in characters 
 		);"
 
-	<stdcall: dword GetEnvironmentVariableW lpwstr lpwstr dword>
+	<stdcall: uint32 GetEnvironmentVariableW lpwstr lpwstr uint32>
 	^self invalidCall: _failureCode!
 
 getFileAttributes: aFileName
@@ -812,7 +812,7 @@ getFileAttributes: aFileName
 			LPCWSTR  lpFileName 	// address of the name of a file or directory  
 		);"
 
-	<stdcall: sdword GetFileAttributesW lpwstr>
+	<stdcall: int32 GetFileAttributesW lpwstr>
 	^self invalidCall: _failureCode!
 
 getFileAttributesEx: lpFileName fInfoLevelId: fInfoLevelId lpFileInformation: lpFileInformation
@@ -824,7 +824,7 @@ getFileAttributesEx: lpFileName fInfoLevelId: fInfoLevelId lpFileInformation: lp
 			GET_FILEEX_INFO_LEVELS fInfoLevelId,
 			LPVOID lpFileInformation);"
 
-	<stdcall: bool GetFileAttributesExW lpwstr sdword void*>
+	<stdcall: bool GetFileAttributesExW lpwstr int32 void*>
 	^self invalidCall: _failureCode!
 
 getFileSizeEx: hfile lpFileSize: lpFileSize
@@ -835,7 +835,7 @@ getFileSizeEx: hfile lpFileSize: lpFileSize
 			[in]HANDLE HFILE,
 			[out]LARGE_INTEGER* lpFileSize);"
 
-	<stdcall: bool GetFileSizeEx handle sqword*>
+	<stdcall: bool GetFileSizeEx handle int64*>
 	^self invalidCall: _failureCode!
 
 getFileTime: hFile lpCreationTime: lpCreationTime lpLastAccessTime: lpLastAccessTime lpLastWriteTime: lpLastWriteTime
@@ -851,7 +851,7 @@ getFileTime: hFile lpCreationTime: lpCreationTime lpLastAccessTime: lpLastAccess
 	^self invalidCall: _failureCode!
 
 getFileType: anExternalHandle
-	<stdcall: dword GetFileType handle>
+	<stdcall: uint32 GetFileType handle>
 	^self invalidCall: _failureCode!
 
 getFinalPathNameByHandle: hFile
@@ -881,7 +881,7 @@ getFinalPathNameByHandle: hFile lpszFilePath: lpszFilePath cchFilePath: cchFileP
 		DWORD  dwFlags
 	);"
 
-	<stdcall: dword GetFinalPathNameByHandleW handle lpwstr dword dword>
+	<stdcall: uint32 GetFinalPathNameByHandleW handle lpwstr uint32 uint32>
 	^self invalidCall: _failureCode!
 
 getFullPathName: aPathnameString
@@ -915,14 +915,14 @@ getFullPathName: fname nBufferLength: anInteger lpBuffer: path lpFilePart: aDWOR
 			LPWSTR  *lpFilePart 	// address of filename in path 
 		);"
 
-	<stdcall: dword GetFullPathNameW lpwstr dword lpwstr lpvoid>
+	<stdcall: uint32 GetFullPathNameW lpwstr uint32 lpwstr lpvoid>
 	^self invalidCall: _failureCode!
 
 getLastError
 	"Answer the last Win32 error code which occurred.
 		DWORD GetLastError(VOID)"
 
-	<stdcall: dword GetLastError>
+	<stdcall: uint32 GetLastError>
 	^self invalidCall: _failureCode!
 
 getLocaleInfo: lcid integer: lcType
@@ -946,7 +946,7 @@ getLocaleInfo: locale lCType: lcType lpLCData: outputStringOutput cchData: anInt
 			int  cchData 		// size of buffer 
 		);"
 
-	<stdcall: sdword GetLocaleInfoW dword dword lpvoid sdword>
+	<stdcall: int32 GetLocaleInfoW uint32 uint32 lpvoid int32>
 	^self invalidCall: _failureCode!
 
 getLocaleInfo: lcid string: lcType
@@ -974,7 +974,7 @@ getLocaleInfoEx: lpLocalName lCType: lcType lpLCData: outputStringOutput cchData
 			int  cchData
 		);"
 
-	<stdcall: sdword GetLocaleInfoExW lpwstr dword lpvoid sdword>
+	<stdcall: int32 GetLocaleInfoExW lpwstr uint32 lpvoid int32>
 	^self invalidCall: _failureCode!
 
 getLocalTime: aWinSYSTEMTIME
@@ -1009,7 +1009,7 @@ getModuleFileName: aHandle lpFilename: aString nSize: anInteger
 			DWORD  nSize 			// size of buffer, in characters 
 		);"
 
-	<stdcall: dword GetModuleFileNameW handle lpwstr dword>
+	<stdcall: uint32 GetModuleFileNameW handle lpwstr uint32>
 	^self invalidCall: _failureCode!
 
 getModuleHandle: aString
@@ -1027,7 +1027,7 @@ getNumberFormat: locale dwFlags: dwFlags lpValue: lpValue lpFormat: lpFormat lpN
 			LPWSTR lpNumberStr,
 			int cchNumber);"
 
-	<stdcall: sdword GetNumberFormatW dword dword lpwstr void* lpwstr sdword>
+	<stdcall: int32 GetNumberFormatW uint32 uint32 lpwstr void* lpwstr int32>
 	^self invalidCall: _failureCode!
 
 getProcAddress: aHandle lpProcName: aStringOrOrdinal
@@ -1073,7 +1073,7 @@ getShortPathName: aString
 getShortPathName: lpszLongPath lpszShortPath: lpszShortPath cchBuffer: cchBuffer
 	"Answers the short pathname form of lpszLongPath in lpszShortPath"
 
-	<stdcall: dword GetShortPathNameW lpwstr lpwstr dword>
+	<stdcall: uint32 GetShortPathNameW lpwstr lpwstr uint32>
 	^self invalidCall: _failureCode!
 
 getStdHandle: nStdHandle
@@ -1082,11 +1082,11 @@ getStdHandle: nStdHandle
   			DWORD nStdHandle,	// input, output, or error device 
 		);"
 
-	<stdcall: handle GetStdHandle dword>
+	<stdcall: handle GetStdHandle uint32>
 	^self invalidCall: _failureCode!
 
 getStringType: dwInfoType lpSrcStr: lpSrcStr cchSrc: cchSrc lpCharType: lpCharType
-	<stdcall: bool GetStringTypeW dword lpwstr sdword word*>
+	<stdcall: bool GetStringTypeW uint32 lpwstr int32 uint16*>
 	^self invalidCall: _failureCode!
 
 getSystemDefaultLCID
@@ -1094,7 +1094,7 @@ getSystemDefaultLCID
 
 			LCID GetSystemDefaultLCID(VOID)"
 
-	<stdcall: dword GetSystemDefaultLCID>
+	<stdcall: uint32 GetSystemDefaultLCID>
 	^self invalidCall: _failureCode!
 
 getSystemDirectory
@@ -1111,7 +1111,7 @@ getSystemDirectory: lpBuffer uSize: uSize
 			LPTSTR lpBuffer, 
 			UINT uSize);"
 
-	<stdcall: dword GetSystemDirectoryW lpwstr dword>
+	<stdcall: uint32 GetSystemDirectoryW lpwstr uint32>
 	^self invalidCall: _failureCode!
 
 getSystemTime: lpSystemTime
@@ -1141,8 +1141,9 @@ getSystemTimePreciseAsFileTime: lpSystemTimeAsFileTime
 		void __stdcall GetSystemTimeAsFileTime(
 			FILETIME* lpSystemTimeAsFileTime);"
 
-	<stdcall: void GetSystemTimePreciseAsFileTime FILETIME*>
 	"Introduced in Windows 8. Windows 7 support will end in January 2020, but until then fall back on GetSystemTimeAsFileTime"
+
+	<stdcall: void GetSystemTimePreciseAsFileTime FILETIME*>
 	^self getSystemTimeAsFileTime: lpSystemTimeAsFileTime!
 
 getSystemWindowsDirectory
@@ -1158,7 +1159,7 @@ getSystemWindowsDirectory: lpBuffer uSize: uSize
 			LPTSTR lpBuffer, 
 			UINT uSize); "
 
-	<stdcall: dword GetSystemWindowsDirectoryW lpwstr dword>
+	<stdcall: uint32 GetSystemWindowsDirectoryW lpwstr uint32>
 	^self invalidCall: _failureCode!
 
 getTempFileName: dirString lpPrefixString: prefixString
@@ -1185,7 +1186,7 @@ getTempFileName: pathString lpPrefixString: prefixString uUnique: anInteger lpTe
 			LPWSTR  lpTempFileName 	// address of buffer that receives the new filename 
 		);"
 
-	<stdcall: dword GetTempFileNameW lpwstr lpwstr dword lpwstr>
+	<stdcall: uint32 GetTempFileNameW lpwstr lpwstr uint32 lpwstr>
 	^self invalidCall: _failureCode!
 
 getTempPath
@@ -1199,7 +1200,7 @@ getTempPath: nBufferLength lpBuffer: lpBuffer
 	"Populate the <String> buffer, lpBuffer, with the system directory designated for temporary files.
 	Answers the number of characters written to the buffer."
 
-	<stdcall: dword GetTempPathW dword lpwstr>
+	<stdcall: uint32 GetTempPathW uint32 lpwstr>
 	^self invalidCall: _failureCode!
 
 getThreadTimes: hThread lpCreationTime: creationFILETIME lpExitTime: exitFILETIME lpKernelTime: kernelFILETIME lpUserTime: userFILETIME
@@ -1215,11 +1216,11 @@ getThreadTimes: hThread lpCreationTime: creationFILETIME lpExitTime: exitFILETIM
 	<stdcall: bool GetThreadTimes handle FILETIME* FILETIME* FILETIME* FILETIME*>
 	^self invalidCall: _failureCode!
 
-getThreadUILanguage 
+getThreadUILanguage
 	"Returns the language identifier of the first user interface language for the current thread.
 		LANGID GetThreadUILanguage();"
 
-	<stdcall: word GetThreadUILanguage>
+	<stdcall: uint16 GetThreadUILanguage>
 	^self invalidCall: _failureCode!
 
 getTickCount
@@ -1243,7 +1244,7 @@ To obtain the time the system has spent in the working state since it was starte
 
 https://msdn.microsoft.com/en-us/library/windows/desktop/ms724408(v=vs.85).aspx"
 
-	<stdcall: dword GetTickCount>
+	<stdcall: uint32 GetTickCount>
 	^self invalidCall: _failureCode!
 
 getTimeZoneInformation: lpTimeZoneInformation
@@ -1260,7 +1261,7 @@ getTimeZoneInformation: lpTimeZoneInformation
 	within SmallInteger range we declare a signed integer return type so that the
 	error return is instead -1."
 
-	<stdcall: sdword GetTimeZoneInformation TIME_ZONE_INFORMATION*>
+	<stdcall: int32 GetTimeZoneInformation TIME_ZONE_INFORMATION*>
 	^self invalidCall: _failureCode!
 
 getUserDefaultLCID
@@ -1268,7 +1269,7 @@ getUserDefaultLCID
 
 		LCID GetUserDefaultLCID(VOID)"
 
-	<stdcall: dword GetUserDefaultLCID>
+	<stdcall: uint32 GetUserDefaultLCID>
 	^self invalidCall: _failureCode!
 
 getVolumeInformation: lpRootPathName lpVolumeNameBuffer: lpVolumeNameBuffer nVolumeNameSize: nVolumeNameSize lpVolumeSerialNumber: lpVolumeSerialNumber lpMaximumComponentLength: lpMaximumComponentLength lpFileSystemFlags: lpFileSystemFlags lpFileSystemNameBuffer: lpFileSystemNameBuffer nFileSystemNameSize: nFileSystemNameSize
@@ -1285,7 +1286,7 @@ getVolumeInformation: lpRootPathName lpVolumeNameBuffer: lpVolumeNameBuffer nVol
 			LPSTR lpFileSystemNameBuffer,
 			DWORD nFileSystemNameSize);"
 
-	<stdcall: bool GetVolumeInformationW lpwstr lpwstr dword dword* dword* dword* lpwstr dword>
+	<stdcall: bool GetVolumeInformationW lpwstr lpwstr uint32 uint32* uint32* uint32* lpwstr uint32>
 	^self invalidCall: _failureCode!
 
 globalAlloc: uFlags dwBytes: dwBytes
@@ -1296,7 +1297,7 @@ globalAlloc: uFlags dwBytes: dwBytes
 			DWORD dwBytes  	// number of bytes to allocate 
 		);"
 
-	<stdcall: handle GlobalAlloc dword dword>
+	<stdcall: handle GlobalAlloc uint32 uint32>
 	^self invalidCall: _failureCode!
 
 globalFree: hGlobal
@@ -1326,7 +1327,7 @@ heapAlloc: aHandle dwFlags: flagsInteger dwBytes: byteSizeInteger
 			DWORD dwBytes 	// number of bytes to allocate 
 		);"
 
-	<stdcall: lpvoid HeapAlloc handle dword dword>
+	<stdcall: lpvoid HeapAlloc handle uint32 uint32>
 	^self invalidCall: _failureCode!
 
 heapCompact: aHandle dwFlags: anInteger
@@ -1337,7 +1338,7 @@ heapCompact: aHandle dwFlags: anInteger
 			DWORD dwFlags 	// control flags
 		);"
 
-	<stdcall: dword HeapCompact handle dword>
+	<stdcall: uint32 HeapCompact handle uint32>
 	^self invalidCall: _failureCode!
 
 heapFree: aHandle dwFlags: flagsInteger lpMem: byteSizeInteger
@@ -1354,7 +1355,7 @@ heapFree: aHandle dwFlags: flagsInteger lpMem: byteSizeInteger
 			LPVOID lpMem 	// pointer to the memory to free
 		);"
 
-	<stdcall: bool HeapFree handle dword lpvoid>
+	<stdcall: bool HeapFree handle uint32 lpvoid>
 	^self invalidCall: _failureCode!
 
 heapReAlloc: aHandle dwFlags: flagsInteger lpMem: anAddress dwBytes: byteSizeInteger
@@ -1367,7 +1368,7 @@ heapReAlloc: aHandle dwFlags: flagsInteger lpMem: anAddress dwBytes: byteSizeInt
 			DWORD dwBytes 	// number of bytes to reallocate 
 		);"
 
-	<stdcall: lpvoid HeapReAlloc handle dword lpvoid dword>
+	<stdcall: lpvoid HeapReAlloc handle uint32 lpvoid uint32>
 	^self invalidCall: _failureCode!
 
 heapSize: aHandle dwFlags: flagsInteger lpMem: anAddress
@@ -1379,7 +1380,7 @@ heapSize: aHandle dwFlags: flagsInteger lpMem: anAddress
 			LPCVOID lpMem,	// pointer to the memory block of interest
 		);"
 
-	<stdcall: dword HeapSize handle dword lpvoid>
+	<stdcall: uint32 HeapSize handle uint32 lpvoid>
 	^self invalidCall: _failureCode!
 
 heapValidate: aHandle dwFlags: anInteger lpMem: anAddress
@@ -1391,7 +1392,7 @@ heapValidate: aHandle dwFlags: anInteger lpMem: anAddress
 			LPCVOID lpMem 	// optional pointer to individual memory block to validate
 		);"
 
-	<stdcall: bool HeapValidate handle dword lpvoid>
+	<stdcall: bool HeapValidate handle uint32 lpvoid>
 	^self invalidCall: _failureCode!
 
 inputQueueMask
@@ -1408,7 +1409,7 @@ inputQueueMask
 	^qs_Input | ##(QS_POSTMESSAGE | QS_TIMER | QS_PAINT | QS_HOTKEY | QS_SENDMESSAGE)!
 
 isValidLocale: locale dwFlags: dwFlags
-	<stdcall: bool IsValidLocale dword dword>
+	<stdcall: bool IsValidLocale uint32 uint32>
 	^self invalidCall: _failureCode!
 
 isWindows10OrGreater
@@ -1524,7 +1525,7 @@ isWow64Process: hProcess wow64Process: wow64Process
 	^self invalidCall: _failureCode!
 
 lcMapString: locale dwMapFlags: dwMapFlags lpScrStr: lpSrcStr cchSrc: cchSrc lpDestStr: lpDestStr cchDest: cchDest
-	<stdcall: sdword LCMapStringW sdword dword lpwstr sdword lpvoid sdword>
+	<stdcall: int32 LCMapStringW int32 uint32 lpwstr int32 lpvoid int32>
 	^self invalidCall: _failureCode!
 
 loadLibraryEx: aString hFile: reserved dwFlags: anInteger
@@ -1540,7 +1541,7 @@ loadLibraryEx: aString hFile: reserved dwFlags: anInteger
 	The library is loaded from either the directory from which Dolphin was loaded, the current directory, 
 	the Windows system directory, the Windows directory, or a directory on the path (in that order)."
 
-	<stdcall: handle LoadLibraryExW lpwstr handle dword>
+	<stdcall: handle LoadLibraryExW lpwstr handle uint32>
 	^self invalidCall: _failureCode!
 
 loadResource: anInstanceHandle hResInfo: aResourceHandle
@@ -1561,7 +1562,7 @@ localeNameToLCID: lpName dwFlags: dwFlags
 		DWORD   dwFlags
 	)"
 
-	<stdcall: dword LocaleNameToLCID lpwstr dword>
+	<stdcall: uint32 LocaleNameToLCID lpwstr uint32>
 	^self invalidCall: _failureCode!
 
 localFileTimeToFileTime: lpLocalFileTime lpFileTime: lpFileTime
@@ -1589,7 +1590,7 @@ lockResource: anExternalHandle
   			HGLOBAL hResData 	// handle to resource to lock 
 		);"
 
-	<stdcall: dword LockResource handle>
+	<stdcall: uint32 LockResource handle>
 	^self invalidCall: _failureCode!
 
 moveFile: aStringOldFileName lpNewFileName: aStringnewFileName
@@ -1618,7 +1619,7 @@ moveFileEx: aStringOldFileName lpNewFileName: aStringnewFileName dwFlags: flags
 		DWORD dwFlags <> // move options 
 		);"
 
-	<stdcall: bool MoveFileExW lpwstr lpwstr dword>
+	<stdcall: bool MoveFileExW lpwstr lpwstr uint32>
 	^self invalidCall: _failureCode!
 
 multiByteToWideChar: intCP dwFlags: intFlags lpMultiByteStr: aStringIn cchMultiByte: intLenIn lpWideCharStr: aUtf16StringOut cchWideChar: intLenOut
@@ -1634,7 +1635,7 @@ multiByteToWideChar: intCP dwFlags: intFlags lpMultiByteStr: aStringIn cchMultiB
 			int cchWideChar 	// size of buffer 
 		);"
 
-	<stdcall: sdword MultiByteToWideChar dword dword lpvoid sdword lpvoid sdword>
+	<stdcall: int32 MultiByteToWideChar uint32 uint32 lpvoid int32 lpvoid int32>
 	^self invalidCall: _failureCode!
 
 openProcess: dwDesiredAccess bInheritHandle: bInheritHandle dwProcessId: dwProcessId
@@ -1646,7 +1647,7 @@ openProcess: dwDesiredAccess bInheritHandle: bInheritHandle dwProcessId: dwProce
 			long bInheritHandle,
 			unsigned long dwProcessId);"
 
-	<stdcall: sdword OpenProcess sdword sdword dword>
+	<stdcall: int32 OpenProcess int32 int32 uint32>
 	^self invalidCall: _failureCode!
 
 outputDebugString: aString
@@ -1660,7 +1661,7 @@ outputDebugString: aString
 	^self invalidCall: _failureCode!
 
 overlappedSleepEx: anInteger bAlertable: aBoolean
-	<overlap stdcall: void SleepEx dword bool>
+	<overlap stdcall: void SleepEx uint32 bool>
 	^self invalidCall: _failureCode!
 
 pulseEvent: hEvent
@@ -1679,7 +1680,7 @@ queryPerformanceCounter: aLargeInteger
 			LARGE_INTEGER *lpPerformanceCount 	// address of current counter value
 		);"
 
-	<stdcall: bool QueryPerformanceCounter sqword*>
+	<stdcall: bool QueryPerformanceCounter int64*>
 	^self invalidCall: _failureCode!
 
 queryPerformanceFrequency: aLargeInteger
@@ -1688,7 +1689,7 @@ queryPerformanceFrequency: aLargeInteger
   			LARGE_INTEGER *lpFrequency 	// address of current frequency
 		);"
 
-	<stdcall: bool QueryPerformanceFrequency sqword*>
+	<stdcall: bool QueryPerformanceFrequency int64*>
 	^self invalidCall: _failureCode!
 
 raiseException: dwExceptionCode dwExceptionFlags: dwExceptionFlags nNumberOfArguments: nNumberOfArguments lpArguments: lpArguments
@@ -1701,7 +1702,7 @@ raiseException: dwExceptionCode dwExceptionFlags: dwExceptionFlags nNumberOfArgu
 			[in]unsigned long nNumberOfArguments,
 			[in]ULONG_PTR* lpArguments);"
 
-	<stdcall: void RaiseException dword dword dword lpvoid>
+	<stdcall: void RaiseException uint32 uint32 uint32 lpvoid>
 	^self invalidCall: _failureCode!
 
 readFile: aHandle lpBuffer: anAddress nNumberOfBytesToRead: anIntegerBytesToRead lpNumberOfBytesRead: anAddressBytesRead lpOverlapped: anOVERLAPPED
@@ -1721,7 +1722,7 @@ readFile: aHandle lpBuffer: anAddress nNumberOfBytesToRead: anIntegerBytesToRead
 	Answer a boolean indicating whether the function succeeds. If successful and bytesRead is left set to zero,
 	the file pointer was beyond the current end of the file at the time of the read operation."
 
-	<stdcall: bool ReadFile handle lpvoid dword lpvoid lpvoid>
+	<stdcall: bool ReadFile handle lpvoid uint32 lpvoid lpvoid>
 	^self invalidCall: _failureCode!
 
 releaseMutex: hMutex
@@ -1755,7 +1756,7 @@ setConsoleCP: wCodePageID
 		BOOL __stdcall SetConsoleCP(
 			[in]unsigned int wCodePageID);"
 
-	<stdcall: bool SetConsoleCP dword>
+	<stdcall: bool SetConsoleCP uint32>
 	^self invalidCall: _failureCode!
 
 setConsoleCtrlHandler: pHandlerRoutine add: aBoolean
@@ -1771,7 +1772,7 @@ setConsoleOutputCP: wCodePageID
 		BOOL __stdcall SetConsoleOutputCP(
 			[in]unsigned int wCodePageID);"
 
-	<stdcall: bool SetConsoleOutputCP dword>
+	<stdcall: bool SetConsoleOutputCP uint32>
 	^self invalidCall: _failureCode!
 
 setConsoleTitle: lpConsoleTitle
@@ -1819,7 +1820,7 @@ setFileAttributes: aFileName value: attributes
 			LPCWSTR lpFileName,		// file name
 			DWORD dwFileAttributes		// attributes );"
 
-	<stdcall: bool SetFileAttributesW lpwstr dword>
+	<stdcall: bool SetFileAttributesW lpwstr uint32>
 	^self invalidCall: _failureCode!
 
 setFilePointerEx: hfile liDistanceToMove: liDistanceToMove lpNewFilePointer: lpNewFilePointer dwMoveMethod: dwMoveMethod
@@ -1832,14 +1833,14 @@ setFilePointerEx: hfile liDistanceToMove: liDistanceToMove lpNewFilePointer: lpN
 			[out]LARGE_INTEGER* lpNewFilePointer,
 			[in]DWORD dwMoveMethod);"
 
-	<stdcall: bool SetFilePointerEx handle sqword sqword* dword>
+	<stdcall: bool SetFilePointerEx handle int64 int64* uint32>
 	^self invalidCall: _failureCode!
 
 setLastError: anInteger
 	"Set the last Win32 error code which occurred.
 		VOID SetLastError(DWORD dwErrCode)"
 
-	<stdcall: void SetLastError dword>
+	<stdcall: void SetLastError uint32>
 	^self invalidCall: _failureCode!
 
 setStdHandle: nStdHandle hHandle: aHandle
@@ -1849,7 +1850,7 @@ setStdHandle: nStdHandle hHandle: aHandle
 			HANDLE hHandle 	// handle to be a standard handle  
 		);"
 
-	<stdcall: bool SetStdHandle dword handle>
+	<stdcall: bool SetStdHandle uint32 handle>
 	^self invalidCall: _failureCode!
 
 setVolumeLabel: lpRootPathName lpVolumeName: lpVolumeName
@@ -1869,7 +1870,7 @@ sizeOfResource: anExternalHandleInstance hResInfo: anExternalHandleResource
 			HRSRC hResInfo 	// resource handle 
 		);"
 
-	<stdcall: dword SizeofResource handle handle>
+	<stdcall: uint32 SizeofResource handle handle>
 	^self invalidCall: _failureCode!
 
 sleep: anInteger
@@ -1882,11 +1883,11 @@ sleep: anInteger
 	thread. Only the calling Process will be delayed.!!
 	"
 
-	<overlap stdcall: void Sleep dword>
+	<overlap stdcall: void Sleep uint32>
 	^self invalidCall: _failureCode!
 
 sleepEx: anInteger bAlertable: aBoolean
-	<stdcall: void SleepEx dword bool>
+	<stdcall: void SleepEx uint32 bool>
 	^self invalidCall: _failureCode!
 
 systemTimeToFileTime: lpSystemTime lpFileTime: lpFileTime
@@ -1916,7 +1917,7 @@ terminateProcess: aProcessHandle exitCode: anUnsignedInteger
 						retrieve the process's exit value. Use the GetExitCodeThread
 						function to retrieve a thread's exit value."
 
-	<stdcall: bool TerminateProcess handle dword>
+	<stdcall: bool TerminateProcess handle uint32>
 	^self invalidCall: _failureCode!
 
 terminateProcessId: anInteger 
@@ -1933,14 +1934,14 @@ threadGetLastError
 	"Answer the last Win32 error code which last occurred in the overlapped call thread
 	associated with the current <Process>."
 
-	<overlap stdcall: dword GetLastError>
+	<overlap stdcall: uint32 GetLastError>
 	^self invalidCall: _failureCode!
 
 threadSetLastError: anInteger
 	"Set the last Win32 error code which occurred for the overlapped call thread associated with
 	the calling <Process>"
 
-	<overlap stdcall: void SetLastError dword>
+	<overlap stdcall: void SetLastError uint32>
 	^self invalidCall: _failureCode!
 
 updateResource: hUpdate lpType: resTypeString lpName: resName wLanguage: langId lpData: pData cbData: dataSize
@@ -1955,7 +1956,7 @@ updateResource: hUpdate lpType: resTypeString lpName: resName wLanguage: langId 
 		DWORD cbData <>    // length of resource data
 		);"
 
-	<stdcall: bool UpdateResourceW handle lpvoid lpvoid word lpvoid dword>
+	<stdcall: bool UpdateResourceW handle lpvoid lpvoid uint16 lpvoid uint32>
 	^self invalidCall: _failureCode!
 
 updateResourcesOf: aString do: aMonadicValuable 
@@ -1973,7 +1974,7 @@ verifyVersionInfo: lpVersionInformation dwTypeMask: dwTypeMask dwlConditionMask:
 			[in]DWORD dwTypeMask,
 			[in]unsigned __int64 dwlConditionMask);"
 
-	<stdcall: bool VerifyVersionInfoW OSVERSIONINFOEXW* dword qword>
+	<stdcall: bool VerifyVersionInfoW OSVERSIONINFOEXW* uint32 uint64>
 	^self invalidCall: _failureCode!
 
 verSetConditionMask: conditionMask typeMask: typeMask condition: condition
@@ -1985,7 +1986,7 @@ verSetConditionMask: conditionMask typeMask: typeMask condition: condition
 			[in]DWORD TypeMask,
 			[in]BYTE Condition);"
 
-	<stdcall: qword VerSetConditionMask qword dword byte>
+	<stdcall: uint64 VerSetConditionMask uint64 uint32 uint8>
 	^self invalidCall: _failureCode!
 
 virtualAlloc: lpAddress dwSize: dwSize flAllocationType: flAllocationType flProtect: flProtect
@@ -1998,7 +1999,7 @@ virtualAlloc: lpAddress dwSize: dwSize flAllocationType: flAllocationType flProt
 			DWORD flAllocationType,
 			DWORD flProtect);"
 
-	<stdcall: void* VirtualAlloc void* dword dword dword>
+	<stdcall: void* VirtualAlloc void* uint32 uint32 uint32>
 	^self invalidCall: _failureCode!
 
 virtualFree: lpAddress dwSize: dwSize dwFreeType: dwFreeType
@@ -2010,7 +2011,7 @@ virtualFree: lpAddress dwSize: dwSize dwFreeType: dwFreeType
 			DWORD dwSize,
 			DWORD dwFreeType);"
 
-	<stdcall: bool VirtualFree void* dword dword>
+	<stdcall: bool VirtualFree void* uint32 uint32>
 	^self invalidCall: _failureCode!
 
 virtualProtect: lpAddress dwSize: dwSize flNewProtect: flNewProtect lpflOldProtect: lpflOldProtect
@@ -2023,7 +2024,7 @@ virtualProtect: lpAddress dwSize: dwSize flNewProtect: flNewProtect lpflOldProte
 			DWORD flNewProtect,
 			DWORD* lpflOldProtect);"
 
-	<stdcall: bool VirtualProtect void* dword dword dword*>
+	<stdcall: bool VirtualProtect void* uint32 uint32 uint32*>
 	^self invalidCall: _failureCode!
 
 virtualQuery: lpAddress lpBuffer: lpBuffer dwLength: dwLength
@@ -2035,7 +2036,7 @@ virtualQuery: lpAddress lpBuffer: lpBuffer dwLength: dwLength
 			MEMORY_BASIC_INFORMATION* lpBuffer,
 			DWORD dwLength);"
 
-	<stdcall: dword VirtualQuery void* lpvoid dword>
+	<stdcall: uint32 VirtualQuery void* lpvoid uint32>
 	^self invalidCall: _failureCode!
 
 waitForSingleObject: hHandle dwMilliseconds: dwMilliseconds
@@ -2046,7 +2047,7 @@ waitForSingleObject: hHandle dwMilliseconds: dwMilliseconds
 			HANDLE hHandle,
 			unsigned long dwMilliseconds);"
 
-	<overlap stdcall: dword WaitForSingleObject handle dword>
+	<overlap stdcall: uint32 WaitForSingleObject handle uint32>
 	^self invalidCall: _failureCode!
 
 wideCharToMultiByte: codePage dwFlags: dwFlags lpWideCharStr: lpWideCharStr cchWideChar: cchWideChar lpMultiByteStr: lpMultiByteStr cchMultiByte: cchMultiByte lpDefaultChar: lpDefaultChar lpUsedDefaultChar: lpUsedDefaultChar
@@ -2064,7 +2065,7 @@ wideCharToMultiByte: codePage dwFlags: dwFlags lpWideCharStr: lpWideCharStr cchW
 			LPBOOL lpUsedDefaultChar// address of flag set when default char. used 
 		);"
 
-	<stdcall: sdword WideCharToMultiByte dword dword lpvoid sdword lpvoid sdword lpstr lpvoid>
+	<stdcall: int32 WideCharToMultiByte uint32 uint32 lpvoid int32 lpvoid int32 lpstr lpvoid>
 	^self invalidCall: _failureCode!
 
 writeFile: aHandle lpBuffer: anAddress nNumberOfBytesToWrite: anIntegerBytesToWrite lpNumberOfBytesWritten: anAddressBytesWritten lpOverlapped: anOVERLAPPED
@@ -2084,11 +2085,11 @@ writeFile: aHandle lpBuffer: anAddress nNumberOfBytesToWrite: anIntegerBytesToWr
 
 	Answer a boolean indicating whether the function succeeds."
 
-	<stdcall: bool WriteFile handle lpvoid dword lpvoid lpvoid>
+	<stdcall: bool WriteFile handle lpvoid uint32 lpvoid lpvoid>
 	^self invalidCall: _failureCode!
 
 zeroMemory: pvDest length: cBytes
-	<stdcall: void RtlZeroMemory void* dword>
+	<stdcall: void RtlZeroMemory void* uint32>
 	^self invalidCall: _failureCode! !
 !OS.KernelLibrary categoriesForMethods!
 addAtom:!public!win32 functions-atom! !

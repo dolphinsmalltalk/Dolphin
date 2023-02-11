@@ -16,7 +16,7 @@ mciGetErrorString: code lpszErrorText: returnString cchErrorText: retsize
 	Answer whether the conversion succeeded.
   		BOOL mciGetErrorString(DWORD fdwError, LPTSTR lpszErrorText, UINT cchErrorText);"
 
-	<stdcall: bool mciGetErrorStringW dword lpwstr dword>
+	<stdcall: bool mciGetErrorStringW uint32 lpwstr uint32>
 	^self invalidCall: _failureCode!
 
 mciSendString: commandString
@@ -32,7 +32,7 @@ mciSendString: commandString lpszReturnString: returnString cchReturn: retsize h
 	MCIERROR mciSendString(LPCWSTR lpszCommand, LPWSTR lpszReturnString,
 		UINT cchReturn, HANDLE hwndCallback);"
 
-	<stdcall: dword mciSendStringW lpwstr lpwstr dword handle>
+	<stdcall: uint32 mciSendStringW lpwstr lpwstr uint32 handle>
 	^self invalidCall: _failureCode!
 
 playSound: aString hmod: anExternalHandle fdwSound: anInteger
@@ -42,7 +42,7 @@ playSound: aString hmod: anExternalHandle fdwSound: anInteger
 			
 		BOOL PlaySound(LPCWSTR pszSound, HMODULE hmod, DWORD fdwSound);"
 
-	<stdcall: bool PlaySoundW lpvoid handle dword>
+	<stdcall: bool PlaySoundW lpvoid handle uint32>
 	^self invalidCall: _failureCode! !
 !OS.WinMMLibrary categoriesForMethods!
 mciGetErrorString:lpszErrorText:cchErrorText:!public!win32 functions-MCI! !

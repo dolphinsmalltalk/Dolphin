@@ -91,7 +91,7 @@ Seek: keyValues SeekOption: seekOption
 			[in]VARIANT KeyValues,
 			[in, defaultvalue(1)]SeekEnum SeekOption);"
 
-	<virtual stdcall: hresult 82 variant sdword>
+	<virtual stdcall: hresult 82 variant int32>
 	^self invalidCall: _failureCode! !
 !ADODB.Recordset21 categoriesForMethods!
 get_Index:!**auto generated**!COM Interfaces-Recordset21!private! !

@@ -94,7 +94,7 @@ get_AllowSingleSignOnUsingOSPrimaryAccount: allow
 		HRESULT __stdcall AllowSingleSignOnUsingOSPrimaryAccount(
 			[out, retval]long* allow);"
 
-	<virtual stdcall: hresult 10 sdword*>
+	<virtual stdcall: hresult 10 int32*>
 	^self invalidCall: _failureCode!
 
 get_Language: value
@@ -147,7 +147,7 @@ put_AllowSingleSignOnUsingOSPrimaryAccount: allow
 		HRESULT __stdcall AllowSingleSignOnUsingOSPrimaryAccount(
 			[in]long allow);"
 
-	<virtual stdcall: hresult 11 sdword>
+	<virtual stdcall: hresult 11 int32>
 	^self invalidCall: _failureCode!
 
 put_Language: value

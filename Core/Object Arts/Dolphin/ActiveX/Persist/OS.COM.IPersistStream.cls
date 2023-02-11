@@ -23,7 +23,7 @@ GetSizeMax: pcbSize
 
 	"
 
-	<virtual stdcall: hresult 8 qword*>
+	<virtual stdcall: hresult 8 uint64*>
 	^self invalidCall: _failureCode!
 
 IsDirty

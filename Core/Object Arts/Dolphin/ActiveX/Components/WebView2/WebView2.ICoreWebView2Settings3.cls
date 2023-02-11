@@ -39,7 +39,7 @@ get_AreBrowserAcceleratorKeysEnabled: areBrowserAcceleratorKeysEnabled
 		HRESULT __stdcall AreBrowserAcceleratorKeysEnabled(
 			[out, retval]long* AreBrowserAcceleratorKeysEnabled);"
 
-	<virtual stdcall: hresult 24 sdword*>
+	<virtual stdcall: hresult 24 int32*>
 	^self invalidCall: _failureCode!
 
 put_AreBrowserAcceleratorKeysEnabled: areBrowserAcceleratorKeysEnabled
@@ -49,7 +49,7 @@ put_AreBrowserAcceleratorKeysEnabled: areBrowserAcceleratorKeysEnabled
 		HRESULT __stdcall AreBrowserAcceleratorKeysEnabled(
 			[in]long AreBrowserAcceleratorKeysEnabled);"
 
-	<virtual stdcall: hresult 25 sdword>
+	<virtual stdcall: hresult 25 int32>
 	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2Settings3 categoriesForMethods!
 get_AreBrowserAcceleratorKeysEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings3!private! !

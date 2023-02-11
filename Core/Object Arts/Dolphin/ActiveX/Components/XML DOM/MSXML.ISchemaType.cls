@@ -137,7 +137,7 @@ get_derivedBy: derivedBy
 		HRESULT __stdcall derivedBy(
 			[out, retval]SCHEMADERIVATIONMETHOD* derivedBy);"
 
-	<virtual stdcall: hresult 18 sdword*>
+	<virtual stdcall: hresult 18 int32*>
 	^self invalidCall: _failureCode!
 
 get_enumeration: enumeration
@@ -155,7 +155,7 @@ get_final: final
 		HRESULT __stdcall final(
 			[out, retval]SCHEMADERIVATIONMETHOD* final);"
 
-	<virtual stdcall: hresult 16 sdword*>
+	<virtual stdcall: hresult 16 int32*>
 	^self invalidCall: _failureCode!
 
 get_fractionDigits: fractionDigits
@@ -254,7 +254,7 @@ get_variety: variety
 		HRESULT __stdcall variety(
 			[out, retval]SCHEMATYPEVARIETY* variety);"
 
-	<virtual stdcall: hresult 17 sdword*>
+	<virtual stdcall: hresult 17 int32*>
 	^self invalidCall: _failureCode!
 
 get_whitespace: whitespace
@@ -263,7 +263,7 @@ get_whitespace: whitespace
 		HRESULT __stdcall whitespace(
 			[out, retval]SCHEMAWHITESPACE* whitespace);"
 
-	<virtual stdcall: hresult 30 sdword*>
+	<virtual stdcall: hresult 30 int32*>
 	^self invalidCall: _failureCode!
 
 isValid: data

@@ -44,7 +44,7 @@ Add_StatusBarTextChanged: eventHandler token: token
 			[in]ICoreWebView2StatusBarTextChangedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 103 ICoreWebView2StatusBarTextChangedEventHandler* sqword*>
+	<virtual stdcall: hresult 103 ICoreWebView2StatusBarTextChangedEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 get_StatusBarText: value
@@ -62,7 +62,7 @@ Remove_StatusBarTextChanged: token
 		HRESULT __stdcall remove_StatusBarTextChanged(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 104 sqword>
+	<virtual stdcall: hresult 104 int64>
 	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2_12 categoriesForMethods!
 Add_StatusBarTextChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2_12!private! !

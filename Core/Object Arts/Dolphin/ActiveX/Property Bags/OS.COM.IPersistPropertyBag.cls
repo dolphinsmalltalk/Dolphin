@@ -37,7 +37,7 @@ Load: pPropBag pErrorLog: pErrorLog
 			[in] IErrorLog* pErrorLog);
 	"
 
-	<virtual stdcall: sdword 6 IPropertyBag* IErrorLog*>
+	<virtual stdcall: int32 6 IPropertyBag* IErrorLog*>
 	^self invalidCall: _failureCode!
 
 save: pPropBag fClearDirty: fClearDirty fSaveAllProperties: fSaveAllProperties 

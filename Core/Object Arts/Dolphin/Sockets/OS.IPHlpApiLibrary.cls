@@ -252,7 +252,7 @@ parseNetworkString: networkString types: types addressInfo: addressInfo portNumb
 			unsigned short* PortNumber,
 			BYTE* PrefixLength);"
 
-	<stdcall: dword ParseNetworkString lpwstr dword NET_ADDRESS_INFO* word* byte*>
+	<stdcall: uint32 ParseNetworkString lpwstr uint32 NET_ADDRESS_INFO* uint16* uint8*>
 	^self invalidCall: _failureCode! !
 !OS.IPHlpApiLibrary categoriesForMethods!
 parseNetworkString:types:addressInfo:portNumber:prefixLength:!**auto generated**!public! !

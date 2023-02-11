@@ -20,7 +20,7 @@ getErrorInfo: dwReserved pperrinfo: pperrinfo
 			IErrorInfo**		pperrinfo
 		)"
 
-	<stdcall: hresult GetErrorInfo dword lppvoid>
+	<stdcall: hresult GetErrorInfo uint32 lppvoid>
 	^self invalidCall: _failureCode!
 
 sysAllocString: aUtf16String

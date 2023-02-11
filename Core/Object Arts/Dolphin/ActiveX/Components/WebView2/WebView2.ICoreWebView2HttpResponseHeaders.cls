@@ -69,7 +69,7 @@ Contains: name contains: contains
 			[in]LPWSTR name,
 			[out, retval]long* Contains);"
 
-	<virtual stdcall: hresult 5 lpwstr sdword*>
+	<virtual stdcall: hresult 5 lpwstr int32*>
 	^self invalidCall: _failureCode!
 
 GetHeader: name value: value

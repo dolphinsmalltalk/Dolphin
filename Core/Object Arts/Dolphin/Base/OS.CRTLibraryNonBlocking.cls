@@ -16,23 +16,23 @@ _errno
 	^self invalidCall: _failureCode!
 
 fgetc: aFILE
-	<overlap cdecl: sdword fgetc handle>
+	<overlap cdecl: int32 fgetc handle>
 	^self invalidCall: _failureCode!
 
 fgets: buf n: bufsize stream: aFILE
-	<overlap cdecl: sdword fgets lpstr sdword handle>
+	<overlap cdecl: int32 fgets lpstr int32 handle>
 	^self invalidCall: _failureCode!
 
 fgetwc: aFILE
-	<overlap cdecl: sdword fgetwc handle>
+	<overlap cdecl: int32 fgetwc handle>
 	^self invalidCall: _failureCode!
 
 fgetws: buf n: bufsize stream: aFILE
-	<overlap cdecl: intptr fgetws lpwstr sdword handle>
+	<overlap cdecl: intptr fgetws lpwstr int32 handle>
 	^self invalidCall: _failureCode!
 
 fread_s: buffer bufferSize: bufsizeInteger elementSize: elemSizeInteger count: countInteger stream: aFILE
-	<overlap cdecl: sdword fread_s lpvoid intptr intptr intptr handle>
+	<overlap cdecl: int32 fread_s lpvoid intptr intptr intptr handle>
 	^self invalidCall: _failureCode! !
 !OS.CRTLibraryNonBlocking categoriesForMethods!
 _errno!CRT functions-process and environment control!public! !

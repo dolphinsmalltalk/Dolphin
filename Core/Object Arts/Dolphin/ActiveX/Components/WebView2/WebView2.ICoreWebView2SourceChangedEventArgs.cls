@@ -36,7 +36,7 @@ get_IsNewDocument: isNewDocument
 		HRESULT __stdcall IsNewDocument(
 			[out, retval]long* IsNewDocument);"
 
-	<virtual stdcall: hresult 4 sdword*>
+	<virtual stdcall: hresult 4 int32*>
 	^self invalidCall: _failureCode!
 
 isNewDocument

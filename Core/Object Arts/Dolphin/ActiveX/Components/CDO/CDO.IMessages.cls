@@ -40,7 +40,7 @@ Delete: index
 		HRESULT __stdcall Delete(
 			[in]long Index);"
 
-	<virtual stdcall: hresult 10 sdword>
+	<virtual stdcall: hresult 10 int32>
 	^self invalidCall: _failureCode!
 
 DeleteAll
@@ -76,7 +76,7 @@ get_Count: varCount
 		HRESULT __stdcall Count(
 			[out, retval]long* varCount);"
 
-	<virtual stdcall: hresult 9 sdword*>
+	<virtual stdcall: hresult 9 int32*>
 	^self invalidCall: _failureCode!
 
 get_FileName: var FileName: fileName
@@ -96,7 +96,7 @@ get_Item: index ppMessage: ppMessage
 			long Index,
 			[out, retval]IMessage** ppMessage);"
 
-	<virtual stdcall: hresult 8 sdword IMessage**>
+	<virtual stdcall: hresult 8 int32 IMessage**>
 	^self invalidCall: _failureCode!
 
 isExtensible

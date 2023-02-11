@@ -52,7 +52,7 @@ Error: pLocator pwchErrorMessage: pwchErrorMessage hrErrorCode: hrErrorCode
 			[in]unsigned short* pwchErrorMessage,
 			[in]HRESULT hrErrorCode);"
 
-	<virtual stdcall: hresult 4 ISAXLocator* word* hresult>
+	<virtual stdcall: hresult 4 ISAXLocator* uint16* hresult>
 	^self invalidCall: _failureCode!
 
 FatalError: pLocator pwchErrorMessage: pwchErrorMessage hrErrorCode: hrErrorCode
@@ -63,7 +63,7 @@ FatalError: pLocator pwchErrorMessage: pwchErrorMessage hrErrorCode: hrErrorCode
 			[in]unsigned short* pwchErrorMessage,
 			[in]HRESULT hrErrorCode);"
 
-	<virtual stdcall: hresult 5 ISAXLocator* word* hresult>
+	<virtual stdcall: hresult 5 ISAXLocator* uint16* hresult>
 	^self invalidCall: _failureCode!
 
 IgnorableWarning: pLocator pwchErrorMessage: pwchErrorMessage hrErrorCode: hrErrorCode
@@ -74,7 +74,7 @@ IgnorableWarning: pLocator pwchErrorMessage: pwchErrorMessage hrErrorCode: hrErr
 			[in]unsigned short* pwchErrorMessage,
 			[in]HRESULT hrErrorCode);"
 
-	<virtual stdcall: hresult 6 ISAXLocator* word* hresult>
+	<virtual stdcall: hresult 6 ISAXLocator* uint16* hresult>
 	^self invalidCall: _failureCode! !
 !MSXML.ISAXErrorHandler categoriesForMethods!
 Error:pwchErrorMessage:hrErrorCode:!**auto generated**!COM Interfaces-ISAXErrorHandler!public! !

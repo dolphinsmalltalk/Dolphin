@@ -53,7 +53,7 @@ ResolveEntity: pwchPublicId pwchSystemId: pwchSystemId pvarInput: pvarInput
 			[in]unsigned short* pwchSystemId,
 			[out, retval]VARIANT* pvarInput);"
 
-	<virtual stdcall: hresult 4 word* word* variant*>
+	<virtual stdcall: hresult 4 uint16* uint16* variant*>
 	^self invalidCall: _failureCode! !
 !MSXML.ISAXEntityResolver categoriesForMethods!
 resolveEntity:pwchSystemId:!**auto generated**!methods!public! !

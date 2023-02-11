@@ -76,7 +76,7 @@ LockRegion: libOffset cb: cb dwLockType: dwLockType
 
 	"
 
-	<virtual stdcall: hresult 8 qword qword dword>
+	<virtual stdcall: hresult 8 uint64 uint64 uint32>
 	^self invalidCall: _failureCode!
 
 readAt: offset bytes: data count: count
@@ -116,7 +116,7 @@ ReadAt: ulOffset pv: pv cb: cb pcbRead: pcbRead
 
 	"
 
-	<virtual stdcall: hresult 4 qword sbyte* dword dword*>
+	<virtual stdcall: hresult 4 uint64 int8* uint32 uint32*>
 	^self invalidCall: _failureCode!
 
 replaceFrom: start to: stop with: replacementBytes startingAt: startAt 
@@ -146,7 +146,7 @@ SetSize: cb
 
 	"
 
-	<virtual stdcall: hresult 7 qword>
+	<virtual stdcall: hresult 7 uint64>
 	^self invalidCall: _failureCode!
 
 stat
@@ -166,7 +166,7 @@ Stat: pstatstg grfStatFlag: grfStatFlag
 
 	"
 
-	<virtual stdcall: hresult 10 STATSTG* dword>
+	<virtual stdcall: hresult 10 STATSTG* uint32>
 	^self invalidCall: _failureCode!
 
 UnlockRegion: libOffset cb: cb dwLockType: dwLockType
@@ -179,7 +179,7 @@ UnlockRegion: libOffset cb: cb dwLockType: dwLockType
 
 	"
 
-	<virtual stdcall: hresult 9 qword qword dword>
+	<virtual stdcall: hresult 9 uint64 uint64 uint32>
 	^self invalidCall: _failureCode!
 
 writeAt: offset bytes: data count: count
@@ -206,7 +206,7 @@ WriteAt: ulOffset pv: pv cb: cb pcbWritten: pcbWritten
 
 	"
 
-	<virtual stdcall: hresult 5 qword sbyte* dword dword*>
+	<virtual stdcall: hresult 5 uint64 int8* uint32 uint32*>
 	^self invalidCall: _failureCode! !
 !OS.COM.ILockBytes categoriesForMethods!
 at:!accessing!public! !

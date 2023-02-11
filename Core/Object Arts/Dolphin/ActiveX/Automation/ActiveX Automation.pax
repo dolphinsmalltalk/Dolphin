@@ -2640,7 +2640,7 @@ getRecordInfoFromTypeInfo: pTypeInfo ppRecInfo: ppRecInfo
 	"Implementation Note: Answer an integer HRESULT code rather than raising an exception
 	as it is most unusual for this call to succeed it would seem!!"
 
-	<stdcall: sdword GetRecordInfoFromTypeInfo ITypeInfo* IRecordInfo**>
+	<stdcall: int32 GetRecordInfoFromTypeInfo ITypeInfo* IRecordInfo**>
 	^self invalidCall: _failureCode!
 
 lHashValOfNameSys: syskind lcid: lcid szName: szNem
@@ -2652,7 +2652,7 @@ lHashValOfNameSys: syskind lcid: lcid szName: szNem
 		const OLECHAR FAR* szName <> ); 
 		)"
 
-	<stdcall: dword LHashValOfNameSys sdword sdword lpwstr>
+	<stdcall: uint32 LHashValOfNameSys int32 int32 lpwstr>
 	^self invalidCall: _failureCode!
 
 loadRegTypeLib: rguid wVerMajor: wVerMajor wVerMinor: wVerMinor lcid: lcid pptlib: pptlib
@@ -2666,7 +2666,7 @@ loadRegTypeLib: rguid wVerMajor: wVerMajor wVerMinor: wVerMinor lcid: lcid pptli
 			ITypeLib FAR* FAR* pptlib 
 		); "
 
-	<stdcall: hresult LoadRegTypeLib guid* word word dword lppvoid>
+	<stdcall: hresult LoadRegTypeLib guid* uint16 uint16 uint32 lppvoid>
 	^self invalidCall: _failureCode!
 
 loadTypeLib: szFileName pptlib: lplptlib
@@ -2682,7 +2682,7 @@ loadTypeLibEx: szFileName regkind: regkind pptlib: lplptlib
 			ITypeLib FAR* FAR*	pptlib
 		)"
 
-	<stdcall: hresult LoadTypeLibEx lpwstr sdword lppvoid>
+	<stdcall: hresult LoadTypeLibEx lpwstr int32 lppvoid>
 	^self invalidCall: _failureCode!
 
 oleCreateFontIndirect: pFontDesc riid: riid ppvObj: ppvObj
@@ -2711,7 +2711,7 @@ queryPathOfRegTypeLib: rguid wVerMajor: wVerMajor wVerMinor: wVerMinor lcid: lci
 		LCID lcid,
 		LPBSTR lpbstrPathName);"
 
-	<stdcall: sdword QueryPathOfRegTypeLib guid* word word dword bstr*>
+	<stdcall: int32 QueryPathOfRegTypeLib guid* uint16 uint16 uint32 bstr*>
 	^self invalidCall: _failureCode!
 
 registerTypeLib: ptlib wszFullPath: wszFullPath wszHelpDir: wszHelpDir
@@ -2723,7 +2723,7 @@ registerTypeLib: ptlib wszFullPath: wszFullPath wszHelpDir: wszHelpDir
 			LPWSTR wszFullPath,
 			LPWSTR wszHelpDir);"
 
-	<stdcall: sdword RegisterTypeLib ITypeLib* lpwstr lpwstr>
+	<stdcall: int32 RegisterTypeLib ITypeLib* lpwstr lpwstr>
 	^self invalidCall: _failureCode!
 
 registerTypeLibForUser: ptlib szFullPath: szFullPath szHelpDir: szHelpDir
@@ -2763,7 +2763,7 @@ safeArrayCopy: psa ppsaout: ppsaout
 	^self invalidCall: _failureCode!
 
 safeArrayCreateEx: vt cDims: cDims rgsabound: rgsabound pvExtra: anExternalAddressOfNil
-	<stdcall: SAFEARRAY* SafeArrayCreateEx word sdword SAFEARRAYBOUND* lpvoid>
+	<stdcall: SAFEARRAY* SafeArrayCreateEx uint16 int32 SAFEARRAYBOUND* lpvoid>
 	^self invalidCall: _failureCode!
 
 safeArrayCreateVectorEx: vt lLbound: lLbound cElements: cElements pvExtra: pvExtra
@@ -2776,7 +2776,7 @@ safeArrayCreateVectorEx: vt lLbound: lLbound cElements: cElements pvExtra: pvExt
 			LPVOID pvExtra
 		);"
 
-	<stdcall: SAFEARRAY* SafeArrayCreateVectorEx sword sdword dword lpvoid>
+	<stdcall: SAFEARRAY* SafeArrayCreateVectorEx int16 int32 uint32 lpvoid>
 	^self invalidCall: _failureCode!
 
 safeArrayDestroy: psa
@@ -2785,7 +2785,7 @@ safeArrayDestroy: psa
 		HRESULT SafeArrayDestroy(SAFEARRAY FAR*  psa);
 	"
 
-	<stdcall: sdword SafeArrayDestroy SAFEARRAY*>
+	<stdcall: int32 SafeArrayDestroy SAFEARRAY*>
 	^self invalidCall: _failureCode!
 
 safeArrayGetDim: psa
@@ -2794,7 +2794,7 @@ safeArrayGetDim: psa
 		UINT SafeArrayGetDim(SAFEARRAY FAR*  psa);
 	"
 
-	<stdcall: dword SafeArrayGetDim SAFEARRAY*>
+	<stdcall: uint32 SafeArrayGetDim SAFEARRAY*>
 	^self invalidCall: _failureCode!
 
 safeArrayGetElement: psa rgIndices: rgIndices pv: pv
@@ -2807,7 +2807,7 @@ safeArrayGetElement: psa rgIndices: rgIndices pv: pv
 			void FAR*  pv         
 		);"
 
-	<stdcall: hresult SafeArrayGetElement SAFEARRAY* sdword* lppvoid>
+	<stdcall: hresult SafeArrayGetElement SAFEARRAY* int32* lppvoid>
 	^self invalidCall: _failureCode!
 
 safeArrayGetIID: psa pguid: pguid
@@ -2832,7 +2832,7 @@ safeArrayGetLBound: psa nDim: nDim plLbound: plLbound
 			long FAR* plLbound
 		);"
 
-	<stdcall: hresult SafeArrayGetLBound SAFEARRAY* dword sdword*>
+	<stdcall: hresult SafeArrayGetLBound SAFEARRAY* uint32 int32*>
 	^self invalidCall: _failureCode!
 
 safeArrayGetRecordInfo: aSAFEARRAY prinfo: anIRecordInfo
@@ -2849,7 +2849,7 @@ safeArrayGetUBound: psa nDim: nDim plUbound: plUbound
 			long FAR* plUbound
 		);"
 
-	<stdcall: hresult SafeArrayGetUBound SAFEARRAY* dword sdword*>
+	<stdcall: hresult SafeArrayGetUBound SAFEARRAY* uint32 int32*>
 	^self invalidCall: _failureCode!
 
 safeArrayGetVartype: psa pvt: pvt
@@ -2860,11 +2860,11 @@ safeArrayGetVartype: psa pvt: pvt
 			VARTYPE* vt
 		);"
 
-	<stdcall: hresult SafeArrayGetVartype SAFEARRAY* word*>
+	<stdcall: hresult SafeArrayGetVartype SAFEARRAY* uint16*>
 	^self invalidCall: _failureCode!
 
 safeArrayPtrOfIndex: aSAFEARRAY rgIndices: anInt32Array ppvData: anExternalAddress
-	<stdcall: hresult SafeArrayPtrOfIndex SAFEARRAY* sdword* lppvoid>
+	<stdcall: hresult SafeArrayPtrOfIndex SAFEARRAY* int32* lppvoid>
 	^self invalidCall: _failureCode!
 
 safeArrayPutElement: psa rgIndices: rgIndices pv: pv
@@ -2878,7 +2878,7 @@ safeArrayPutElement: psa rgIndices: rgIndices pv: pv
 			void FAR*  pv         
 		);"
 
-	<stdcall: hresult SafeArrayPutElement SAFEARRAY* sdword* lpvoid>
+	<stdcall: hresult SafeArrayPutElement SAFEARRAY* int32* lpvoid>
 	^self invalidCall: _failureCode!
 
 safeArrayRedim: psa psaboundNew: psaboundNew
@@ -2926,7 +2926,7 @@ setErrorInfo: dwReserved perrinfo: perrinfo
 			IErrorInfo*		perrinfo
 		)"
 
-	<stdcall: hresult GetErrorInfo dword IErrorInfo*>
+	<stdcall: hresult GetErrorInfo uint32 IErrorInfo*>
 	^self invalidCall: _failureCode!
 
 systemTimeToVariantTime: lpSystemTime pvtime: pvtime
@@ -2952,7 +2952,7 @@ unRegisterTypeLib: rguid wVerMajor: wVerMajor wVerMinor: wVerMinor lcid: lcid sy
 			unsigned long lcid,
 			SYSKIND syskind);"
 
-	<stdcall: hresult UnRegisterTypeLib guid* word word dword sdword>
+	<stdcall: hresult UnRegisterTypeLib guid* uint16 uint16 uint32 int32>
 	^self invalidCall: _failureCode!
 
 varBstrFromBool: boolIn lcid: lcid dwFlags: dwFlags pbstrOut: pbstrOut
@@ -2964,15 +2964,15 @@ varBstrFromBool: boolIn lcid: lcid dwFlags: dwFlags pbstrOut: pbstrOut
 		);
 	"
 
-	<stdcall: hresult VarBstrFromBool sword dword dword bstr*>
+	<stdcall: hresult VarBstrFromBool int16 uint32 uint32 bstr*>
 	^self invalidCall: _failureCode!
 
 varBstrFromCy: pcyIn lcid: lcid dwFlags: dwFlags pbstrOut: pbstrOut
-	<stdcall: hresult VarBstrFromCy CURRENCY dword dword bstr*>
+	<stdcall: hresult VarBstrFromCy CURRENCY uint32 uint32 bstr*>
 	^self invalidCall: _failureCode!
 
 varBstrFromDec: pdecIn lcid: lcid dwFlags: dwFlags pbstrOut: pbstrOut
-	<stdcall: hresult VarBstrFromDec DECIMAL* dword dword bstr*>
+	<stdcall: hresult VarBstrFromDec DECIMAL* uint32 uint32 bstr*>
 	^self invalidCall: _failureCode!
 
 varCmp: pvarLeft pvarRight: pvarRight lcid: lcid dwFlags: dwFlags
@@ -2981,7 +2981,7 @@ varCmp: pvarLeft pvarRight: pvarRight lcid: lcid dwFlags: dwFlags
 		HRESULT VarCmp(LPVARIANT pvarLeft, LPVARIANT pvarRight, LCID lcid, ULONG dwFlags);
 	"
 
-	<stdcall: hresult VarCmp variant* variant* dword dword>
+	<stdcall: hresult VarCmp variant* variant* uint32 uint32>
 	^self invalidCall: _failureCode!
 
 varDateFromStr: strIn lcid: lcid dwFlags: dwFlags pdateOut: aFloat
@@ -2990,7 +2990,7 @@ varDateFromStr: strIn lcid: lcid dwFlags: dwFlags pdateOut: aFloat
 
 		HRESULT VarDateFromStr(OLECHAR* strIn, LCID lcid, DWORD dwFlags, DATE* pdateOut);"
 
-	<stdcall: hresult VarDateFromStr lpwstr dword dword lpvoid>
+	<stdcall: hresult VarDateFromStr lpwstr uint32 uint32 lpvoid>
 	^self invalidCall: _failureCode!
 
 variantChangeType: pvargDest pvarSrc: pvarSrc wFlags: wFlags vt: vt
@@ -3003,7 +3003,7 @@ variantChangeType: pvargDest pvarSrc: pvarSrc wFlags: wFlags vt: vt
 			VARTYPE vt 
 		);"
 
-	<stdcall: hresult VariantChangeType variant* variant* word sword>
+	<stdcall: hresult VariantChangeType variant* variant* uint16 int16>
 	^self invalidCall: _failureCode!
 
 variantChangeTypeEx: pvargDest pvarSrc: pvarSrc lcid: lcid wFlags: wFlags vt: vt
@@ -3017,7 +3017,7 @@ variantChangeTypeEx: pvargDest pvarSrc: pvarSrc lcid: lcid wFlags: wFlags vt: vt
 			VARTYPE          	vt
 		);"
 
-	<stdcall: hresult VariantChangeTypeEx variant* variant* dword word sword>
+	<stdcall: hresult VariantChangeTypeEx variant* variant* uint32 uint16 int16>
 	^self invalidCall: _failureCode!
 
 variantClear: pvarg
@@ -3029,7 +3029,7 @@ variantClear: pvarg
 
 		HRESULT VariantClear(VARIANTARG FAR* pvarg)"
 
-	<stdcall: sdword VariantClear variant*>
+	<stdcall: int32 VariantClear variant*>
 	^self invalidCall: _failureCode!
 
 variantCopy: pvargDesc pvargSrc: pvargSrc

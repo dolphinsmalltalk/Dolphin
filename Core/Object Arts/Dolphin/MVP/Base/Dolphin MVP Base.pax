@@ -2323,7 +2323,7 @@ adjustWindowRectEx: rect dwStyle: styleFlags bMenu: menuPresent dwExStyle: exSty
 		DWORD dwExStyle 	// extended style
 		);"
 
-	<stdcall: bool AdjustWindowRectEx RECTL* dword bool dword>
+	<stdcall: bool AdjustWindowRectEx RECTL* uint32 bool uint32>
 	^self invalidCall: _failureCode!
 
 animateWindow: hwnd dwTime: dwTime dwFlags: dwFlags
@@ -2335,7 +2335,7 @@ animateWindow: hwnd dwTime: dwTime dwFlags: dwFlags
 			[in]DWORD dwTime,
 			[in]DWORD dwFlags);"
 
-	<stdcall: bool AnimateWindow handle dword dword>
+	<stdcall: bool AnimateWindow handle uint32 uint32>
 	^self invalidCall: _failureCode!
 
 attachThreadInput: idAttach idAttachTo: idAttachTo fAttach: aBoolean
@@ -2347,7 +2347,7 @@ attachThreadInput: idAttach idAttachTo: idAttachTo fAttach: aBoolean
 		BOOL fAttach <>       // attach or detach
 		);"
 
-	<stdcall: bool AttachThreadInput dword dword bool>
+	<stdcall: bool AttachThreadInput uint32 uint32 bool>
 	^self invalidCall: _failureCode!
 
 beginDeferWindowPos: nNumWindows
@@ -2357,7 +2357,7 @@ beginDeferWindowPos: nNumWindows
 		HDWP __stdcall BeginDeferWindowPos(
 			int nNumWindows);"
 
-	<stdcall: handle BeginDeferWindowPos sdword>
+	<stdcall: handle BeginDeferWindowPos int32>
 	^self invalidCall: _failureCode!
 
 beginPaint: hWindow lpPaint: aPAINTSTRUCT
@@ -2394,7 +2394,7 @@ callWindowProc: lpPrevWndFunc hWnd: hWnd msg: msg wParam: wParam lParam: lParam
 	the WNDPROC's address to the function, we specify the first parameter
 	as being a DWORD as this allows us to pass a wider range of types."
 
-	<stdcall: uintptr CallWindowProcW dword handle dword uintptr uintptr>
+	<stdcall: uintptr CallWindowProcW uint32 handle uint32 uintptr uintptr>
 	^self invalidCall: _failureCode!
 
 childWindowFromPointEx: hwnd pt: aPOINTL uFlags: flags
@@ -2405,7 +2405,7 @@ childWindowFromPointEx: hwnd pt: aPOINTL uFlags: flags
 			UINT uFlags	// skipping flags
 		);"
 
-	<stdcall: handle ChildWindowFromPointEx handle POINTL dword>
+	<stdcall: handle ChildWindowFromPointEx handle POINTL uint32>
 	^self invalidCall: _failureCode!
 
 clientToScreen: aWindowHandle lpPoint: aPOINT
@@ -2430,7 +2430,7 @@ countClipboardFormats
 	"Answer the number of registered clipboard formats.
 		int CountClipboardFormats(VOID)"
 
-	<stdcall: sdword CountClipboardFormats>
+	<stdcall: int32 CountClipboardFormats>
 	^self invalidCall: _failureCode!
 
 createAcceleratorTable: pTable cEntries: tableSize
@@ -2440,7 +2440,7 @@ createAcceleratorTable: pTable cEntries: tableSize
 			int cEntries 		// number of structures in the array
 		);"
 
-	<stdcall: handle CreateAcceleratorTableW ACCEL* sdword>
+	<stdcall: handle CreateAcceleratorTableW ACCEL* int32>
 	^self invalidCall: _failureCode!
 
 createMenu
@@ -2478,7 +2478,7 @@ createWindowEx: exstyle lpClassName: classname lpWindowName: windowname dwStyle:
 			LPVOID lpParam 		// pointer to window-creation data
 		);"
 
-	<stdcall: handle CreateWindowExW dword lpvoid lpwstr dword sdword sdword sdword sdword handle handle handle lpvoid>
+	<stdcall: handle CreateWindowExW uint32 lpvoid lpwstr uint32 int32 int32 int32 int32 handle handle handle lpvoid>
 	^self invalidCall: _failureCode!
 
 deferWindowPos: hWinPosInfo hwnd: hwnd hwndInsertAfter: hwndInsertAfter x: x y: y cx: cx cy: cy uFlags: uFlags
@@ -2495,7 +2495,7 @@ deferWindowPos: hWinPosInfo hwnd: hwnd hwndInsertAfter: hwndInsertAfter x: x y: 
 			int cy,
 			UINT uFlags);"
 
-	<stdcall: handle DeferWindowPos handle handle handle sdword sdword sdword sdword dword>
+	<stdcall: handle DeferWindowPos handle handle handle int32 int32 int32 int32 uint32>
 	^self invalidCall: _failureCode!
 
 deleteMenu: hMenu uPosition: uPosition uFlags: uFlags
@@ -2506,7 +2506,7 @@ deleteMenu: hMenu uPosition: uPosition uFlags: uFlags
 			UINT uPosition,
 			UINT uFlags);"
 
-	<stdcall: bool DeleteMenu handle dword dword>
+	<stdcall: bool DeleteMenu handle uint32 uint32>
 	^self invalidCall: _failureCode!
 
 destroyAcceleratorTable: hAcceleratorTable
@@ -2547,7 +2547,7 @@ drawFrameControl: hdc lprc: lprc uType: uType uState: uState
 			[in]UINT uType,
 			[in]UINT uState);"
 
-	<stdcall: bool DrawFrameControl handle RECTL* dword dword>
+	<stdcall: bool DrawFrameControl handle RECTL* uint32 uint32>
 	^self invalidCall: _failureCode!
 
 drawMenuBar: aWindowHandle
@@ -2609,7 +2609,7 @@ enumClipboardFormats: knownFormat
 			UINT format 	// specifies a known available clipboard format 
 		);"
 
-	<stdcall: dword EnumClipboardFormats dword>
+	<stdcall: uint32 EnumClipboardFormats uint32>
 	^self invalidCall: _failureCode!
 
 enumDisplayDevices: lpDevice iDevNum: iDevNum lpDisplayDevice: lpDisplayDevice dwFlags: dwFlags
@@ -2622,7 +2622,7 @@ enumDisplayDevices: lpDevice iDevNum: iDevNum lpDisplayDevice: lpDisplayDevice d
 			[in, out]DISPLAY_DEVICEW* lpDisplayDevice,
 			[in]DWORD dwFlags);"
 
-	<stdcall: bool EnumDisplayDevicesW lpwstr dword DISPLAY_DEVICEW* dword>
+	<stdcall: bool EnumDisplayDevicesW lpwstr uint32 DISPLAY_DEVICEW* uint32>
 	^self invalidCall: _failureCode!
 
 enumDisplayMonitors: hDC lprcClip: lprcClip lpfnEnum: lpfnEnum dwData: dwData
@@ -2639,7 +2639,7 @@ enumDisplayMonitors: hDC lprcClip: lprcClip lpfnEnum: lpfnEnum dwData: dwData
 	^self invalidCall: _failureCode!
 
 enumThreadWindows: dwThreadId lpfn: aCallbackThunk lParam: lParam
-	<stdcall: bool EnumThreadWindows dword lpvoid uintptr>
+	<stdcall: bool EnumThreadWindows uint32 lpvoid uintptr>
 	^self invalidCall: _failureCode!
 
 enumWindows: lpEnumFunction lParam: lParam
@@ -2673,7 +2673,7 @@ getAncestor: hwnd gaFlags: gaFlags
 			[in]HWND HWND,
 			[in]UINT gaFlags);"
 
-	<stdcall: handle GetAncestor handle dword>
+	<stdcall: handle GetAncestor handle uint32>
 	^self invalidCall: _failureCode!
 
 getCapture
@@ -2684,7 +2684,7 @@ getCapture
 	^self invalidCall: _failureCode!
 
 getClassLongPtr: hWnd nIndex: nIndex
-	<stdcall: uintptr GetClassLongW handle sdword>
+	<stdcall: uintptr GetClassLongW handle int32>
 	^self invalidCall: _failureCode!
 
 getClassName: aWindowHandle lpClassName: aByteBuffer nMaxCount: anInteger
@@ -2695,7 +2695,7 @@ getClassName: aWindowHandle lpClassName: aByteBuffer nMaxCount: anInteger
 			int nMaxCount 			// size of buffer, in characters
 		);"
 
-	<stdcall: sdword GetClassNameW handle lpvoid sdword>
+	<stdcall: int32 GetClassNameW handle lpvoid int32>
 	^self invalidCall: _failureCode!
 
 getClientRect: aWindowHandle lpRect: aRECT
@@ -2716,7 +2716,7 @@ getClipboardData: format
 	
 		HANDLE GetClipboardData(UINT format);"
 
-	<stdcall: handle GetClipboardData dword>
+	<stdcall: handle GetClipboardData uint32>
 	^self invalidCall: _failureCode!
 
 getClipboardFormatName: format lpszFormatName: lpszFormatName cchMaxCount: cchMaxCount
@@ -2729,11 +2729,11 @@ getClipboardFormatName: format lpszFormatName: lpszFormatName cchMaxCount: cchMa
 			int cchMaxCount  			// length of name string in characters 
 		);"
 
-	<stdcall: sdword GetClipboardFormatNameW dword lpwstr sdword>
+	<stdcall: int32 GetClipboardFormatNameW uint32 lpwstr int32>
 	^self invalidCall: _failureCode!
 
 getDlgCtrlID: hWnd
-	<stdcall: sdword GetDlgCtrlID handle>
+	<stdcall: int32 GetDlgCtrlID handle>
 	^self invalidCall: _failureCode!
 
 getFocus
@@ -2829,7 +2829,7 @@ getScrollInfo: aWindowHandle fnBar: flag lpsi: struct
 			LPSCROLLINFO lpsi	// pointer to structure for scroll parameters
 		);"
 
-	<stdcall: bool GetScrollInfo handle sdword SCROLLINFO*>
+	<stdcall: bool GetScrollInfo handle int32 SCROLLINFO*>
 	^self invalidCall: _failureCode!
 
 getSystemMenu: anExternalHandle bRevert: aBoolean
@@ -2867,7 +2867,7 @@ getWindow: hWnd uCmd: flags
 			UINT uCmd 	// relationship flag
 		);"
 
-	<stdcall: handle GetWindow handle dword>
+	<stdcall: handle GetWindow handle uint32>
 	^self invalidCall: _failureCode!
 
 getWindowDC: aWindowHandle
@@ -2898,7 +2898,7 @@ getWindowLong: aWindowHandle nIndex: zeroBasedIntegerOffset
 
 	Answers 0 if the function fails."
 
-	<stdcall: sdword GetWindowLongW handle sdword>
+	<stdcall: int32 GetWindowLongW handle int32>
 	^self invalidCall: _failureCode!
 
 getWindowLongPtr: aWindowHandle nIndex: zeroBasedIntegerOffset
@@ -2929,7 +2929,7 @@ getWindowLongPtr: aWindowHandle nIndex: zeroBasedIntegerOffset
 
 	Answers 0 if the function fails."
 
-	<stdcall: intptr GetWindowLongPtrW handle sdword>
+	<stdcall: intptr GetWindowLongPtrW handle int32>
 	^self invalidCall: _failureCode!
 
 getWindowPlacement: hWnd lpwndpl: lpwndpl
@@ -2964,7 +2964,7 @@ getWindowText: aWindow lpString: aBuffer nMaxCount: len
 			int nMaxCount 		// maximum number of characters to copy
 		);"
 
-	<stdcall: sdword GetWindowTextW handle lpvoid sdword>
+	<stdcall: int32 GetWindowTextW handle lpvoid int32>
 	^self invalidCall: _failureCode!
 
 getWindowTextLength: hWnd
@@ -2973,7 +2973,7 @@ getWindowTextLength: hWnd
 			HWND hWnd 	// handle of window or control with text
 		);"
 
-	<stdcall: sdword GetWindowTextLengthW handle>
+	<stdcall: int32 GetWindowTextLengthW handle>
 	^self invalidCall: _failureCode!
 
 getWindowThreadProcessId: hwnd lpdwProcessId: lpdwProcessId
@@ -2984,14 +2984,14 @@ getWindowThreadProcessId: hwnd lpdwProcessId: lpdwProcessId
 			wireHWND hwnd,
 			DWORD* lpdwProcessId);"
 
-	<stdcall: dword GetWindowThreadProcessId handle dword*>
+	<stdcall: uint32 GetWindowThreadProcessId handle uint32*>
 	^self invalidCall: _failureCode!
 
 getWindowULong: aWindowHandle nIndex: zeroBasedIntegerOffset
 	"Answer various unsigned 32-bit integer values retrieved from the window with handle,
 	aWindowHandle. See #getWindowLongPtr:offset: for more details"
 
-	<stdcall: dword GetWindowLongW handle sdword>
+	<stdcall: uint32 GetWindowLongW handle int32>
 	^self invalidCall: _failureCode!
 
 getWindowULongPtr: aWindowHandle nIndex: zeroBasedIntegerOffset
@@ -3000,7 +3000,7 @@ getWindowULongPtr: aWindowHandle nIndex: zeroBasedIntegerOffset
 
 	"Note: This function only exists on Win64. It is not present on Win32."
 
-	<stdcall: uintptr GetWindowLongPtrW handle sdword>
+	<stdcall: uintptr GetWindowLongPtrW handle int32>
 	^self invalidCall: _failureCode!
 
 insertMenuItem: hMenu uItem: anInteger fByPosition: aBoolean lpmii: aMENUITEMINFOW
@@ -3013,7 +3013,7 @@ insertMenuItem: hMenu uItem: anInteger fByPosition: aBoolean lpmii: aMENUITEMINF
 			LPCMENUITEMINFO lpmii
 		);"
 
-	<stdcall: bool InsertMenuItemW handle dword bool MENUITEMINFOW*>
+	<stdcall: bool InsertMenuItemW handle uint32 bool MENUITEMINFOW*>
 	^self invalidCall: _failureCode!
 
 invalidate: hWnd lpRect: aRECT bErase: aBoolean
@@ -3054,7 +3054,7 @@ isClipboardFormatAvailable: format
 	
 		BOOL IsClipboardFormatAvailable(UINT format);"
 
-	<stdcall: bool IsClipboardFormatAvailable dword>
+	<stdcall: bool IsClipboardFormatAvailable uint32>
 	^self invalidCall: _failureCode!
 
 isDialogMessage: aHandle lpMsg: aMSG
@@ -3142,7 +3142,7 @@ mapWindowPoints: fromHwnd hWndTo: toHwnd lpPoints: points cPoints: count
 			UINT cPoints 		// number of structures in array 
 	   );"
 
-	<stdcall: sdword MapWindowPoints handle handle lpvoid dword>
+	<stdcall: int32 MapWindowPoints handle handle lpvoid uint32>
 	^self invalidCall: _failureCode!
 
 modifyMenu: hMenuDrop uPosition: position uFlags: styleFlags uIDNewItem: menuId lpNewItem: menuText
@@ -3157,7 +3157,7 @@ modifyMenu: hMenuDrop uPosition: position uFlags: styleFlags uIDNewItem: menuId 
 			LPCWSTR lpNewItem	// menu item content
 		);"
 
-	<stdcall: bool ModifyMenuW handle dword dword dword lpwstr>
+	<stdcall: bool ModifyMenuW handle uint32 uint32 uint32 lpwstr>
 	^self invalidCall: _failureCode!
 
 monitorFromPoint: pt dwFlags: dwFlags
@@ -3168,7 +3168,7 @@ monitorFromPoint: pt dwFlags: dwFlags
 			[in]POINTL pt,
 			[in]DWORD dwFlags);"
 
-	<stdcall: handle MonitorFromPoint POINTL dword>
+	<stdcall: handle MonitorFromPoint POINTL uint32>
 	^self invalidCall: _failureCode!
 
 monitorFromRect: lprc dwFlags: dwFlags
@@ -3179,7 +3179,7 @@ monitorFromRect: lprc dwFlags: dwFlags
 			[in]RECT* lprc,
 			[in]DWORD dwFlags);"
 
-	<stdcall: handle MonitorFromRect RECTL* dword>
+	<stdcall: handle MonitorFromRect RECTL* uint32>
 	^self invalidCall: _failureCode!
 
 monitorFromWindow: hwnd dwFlags: dwFlags
@@ -3190,7 +3190,7 @@ monitorFromWindow: hwnd dwFlags: dwFlags
 			[in]wireHWND hwnd,
 			[in]DWORD dwFlags);"
 
-	<stdcall: handle MonitorFromWindow handle dword>
+	<stdcall: handle MonitorFromWindow handle uint32>
 	^self invalidCall: _failureCode!
 
 openClipboard: hWnd
@@ -3203,7 +3203,7 @@ openClipboard: hWnd
 	^self invalidCall: _failureCode!
 
 printWindow: hwnd hdcBlt: hDC nFlags: anInteger
-	<stdcall: bool PrintWindow handle handle dword>
+	<stdcall: bool PrintWindow handle handle uint32>
 	^self invalidCall: _failureCode!
 
 redrawWindow: hWnd lprcUpdate: lprcUpdate hrgnUpdate: hrgnUpdate flags: flags
@@ -3216,7 +3216,7 @@ redrawWindow: hWnd lprcUpdate: lprcUpdate hrgnUpdate: hrgnUpdate flags: flags
 		);
 	"
 
-	<stdcall: bool RedrawWindow handle RECTL* handle dword>
+	<stdcall: bool RedrawWindow handle RECTL* handle uint32>
 	^self invalidCall: _failureCode!
 
 registerClass: aWNDCLASS
@@ -3226,7 +3226,7 @@ registerClass: aWNDCLASS
 			CONST WNDCLASS  *lpwc 	// address of structure with class data
 		);"
 
-	<stdcall: word RegisterClassW WNDCLASS*>
+	<stdcall: uint16 RegisterClassW WNDCLASS*>
 	^self invalidCall: _failureCode!
 
 registerClipboardFormat: formatName
@@ -3236,7 +3236,7 @@ registerClipboardFormat: formatName
 			LPCTSTR lpszFormat  // address of name string 
 		);"
 
-	<stdcall: dword RegisterClipboardFormatW lpwstr>
+	<stdcall: uint32 RegisterClipboardFormatW lpwstr>
 	^self invalidCall: _failureCode!
 
 registerHotKey: aWindowHandle id: anIntegerId fsModifiers: anIntegerFlags vk: anIntegerVk
@@ -3248,7 +3248,7 @@ registerHotKey: aWindowHandle id: anIntegerId fsModifiers: anIntegerFlags vk: an
 			UINT  vk 			// virtual-key code
 		);"
 
-	<stdcall: bool RegisterHotKey handle sdword dword dword>
+	<stdcall: bool RegisterHotKey handle int32 uint32 uint32>
 	^self invalidCall: _failureCode!
 
 registerWindowMessage: aString
@@ -3258,7 +3258,7 @@ registerWindowMessage: aString
 			LPCWSTR  lpString 	// address of message string
 		);"
 
-	<stdcall: dword RegisterWindowMessageW lpwstr>
+	<stdcall: uint32 RegisterWindowMessageW lpwstr>
 	^self invalidCall: _failureCode!
 
 releaseCapture
@@ -3278,7 +3278,7 @@ removeMenu: aMenu uPosition: idOrPos uFlags: flags
 			UINT uFlags	// menu item flag
 		);"
 
-	<stdcall: bool RemoveMenu handle dword dword>
+	<stdcall: bool RemoveMenu handle uint32 uint32>
 	^self invalidCall: _failureCode!
 
 removeProp: aWindowHandle lpString: name
@@ -3317,33 +3317,33 @@ scrollWindowEx: aWindowHandle dx: horizontalScrolling dy: verticalScrolling prcS
 		UINT flags			// scrolling flags
 	);"
 
-	<stdcall: sdword ScrollWindowEx handle sdword sdword RECTL* RECTL* handle lpvoid dword>
+	<stdcall: int32 ScrollWindowEx handle int32 int32 RECTL* RECTL* handle lpvoid uint32>
 	^self invalidCall: _failureCode!
 
 sendMessage: aWindowHandle msg: msg wParam: wParam lpParam: lParam
 	"As sendMessage:msg:wParam:lParam, but implicit conversion of lParam
 	to pointer."
 
-	<stdcall: intptr SendMessageW handle dword uintptr lpvoid>
+	<stdcall: intptr SendMessageW handle uint32 uintptr lpvoid>
 	^self invalidCall: _failureCode!
 
 sendMessage: aWindowHandle msg: msg wpParam: wParam lpParam: lParam
 	"As sendMessage:msg:wParam:lParam, but implicit conversion of lParam
 	and wParam to pointers."
 
-	<stdcall: intptr SendMessageW handle dword lpvoid lpvoid>
+	<stdcall: intptr SendMessageW handle uint32 lpvoid lpvoid>
 	^self invalidCall: _failureCode!
 
 sendMessageU: aWindowHandle msg: msg wParam: wParam lParam: lParam
 	"As sendMessage:msg:wParam:lParam:, but returns an unsigned integer."
 
-	<stdcall: uintptr SendMessageW handle dword uintptr uintptr>
+	<stdcall: uintptr SendMessageW handle uint32 uintptr uintptr>
 	^self invalidCall: _failureCode!
 
 sendMessageU: aWindowHandle msg: msg wParam: wParam lpParam: lParam
 	"As sendMessage:msg:wParam:lpParam, but returns an unsigned integer."
 
-	<stdcall: uintptr SendMessageW handle dword uintptr lpvoid>
+	<stdcall: uintptr SendMessageW handle uint32 uintptr lpvoid>
 	^self invalidCall: _failureCode!
 
 setCapture: aWindowHandle
@@ -3368,7 +3368,7 @@ setClassLong: aWindowHandle nIndex: offset dwNewLong: value
 			LONG dwNewLong 	// new value
 		);"
 
-	<stdcall: dword SetClassLongW handle sdword sdword>
+	<stdcall: uint32 SetClassLongW handle int32 int32>
 	^self invalidCall: _failureCode!
 
 setClipboardData: uFormat hMem: hMem
@@ -3381,7 +3381,7 @@ setClipboardData: uFormat hMem: hMem
 			HANDLE hMem	// data handle 
 		);"
 
-	<stdcall: handle SetClipboardData dword handle>
+	<stdcall: handle SetClipboardData uint32 handle>
 	^self invalidCall: _failureCode!
 
 setFocus: aWindowHandle
@@ -3414,7 +3414,7 @@ setLayeredWindowAttributes: aWindowHandle lcrKey: crKey bAlpha: bAlpha dwFlags: 
 			);
 	"
 
-	<stdcall: bool SetLayeredWindowAttributes handle dword byte dword>
+	<stdcall: bool SetLayeredWindowAttributes handle uint32 uint8 uint32>
 	^self invalidCall: _failureCode!
 
 setMenu: windowHandle hMenu: menuHandle
@@ -3436,7 +3436,7 @@ setMenuDefaultItem: hMenu uItem: uItem fByPos: fByPos
 			UINT fByPos
 		);"
 
-	<stdcall: dword SetMenuDefaultItem handle dword dword>
+	<stdcall: uint32 SetMenuDefaultItem handle uint32 uint32>
 	^self invalidCall: _failureCode!
 
 setMenuInfo: hMenu lpcmi: aMenuItemInfo
@@ -3458,7 +3458,7 @@ setMenuItemInfo: hMenu uItem: anInteger fByPosition: aBoolean lpmii: aMenuItemIn
 			LPMENUITEMINFO lpmii
 		);"
 
-	<stdcall: bool SetMenuItemInfoW handle dword bool MENUITEMINFOW*>
+	<stdcall: bool SetMenuItemInfoW handle uint32 bool MENUITEMINFOW*>
 	^self invalidCall: _failureCode!
 
 setParent: hWndChild hWndNewParent: hWndParent
@@ -3469,7 +3469,7 @@ setParent: hWndChild hWndNewParent: hWndParent
 			HWND hWndNewParent 	// handle of new parent window
 		);"
 
-	<stdcall: dword SetParent handle handle>
+	<stdcall: uint32 SetParent handle handle>
 	^self invalidCall: _failureCode!
 
 setProp: aWindowHandle lpString: name hData: anObject
@@ -3500,7 +3500,7 @@ setScrollInfo: aWindowHandle fnBar: flag lpsi: struct fRedraw: redraw
 			BOOL fRedraw		// redraw flag
 		);"
 
-	<stdcall: sdword SetScrollInfo handle sdword SCROLLINFO* bool>
+	<stdcall: int32 SetScrollInfo handle int32 SCROLLINFO* bool>
 	^self invalidCall: _failureCode!
 
 setWindowLong: hWnd nIndex: nIndex dwNewLong: dwNewLong
@@ -3513,13 +3513,13 @@ setWindowLong: hWnd nIndex: nIndex dwNewLong: dwNewLong
 			LONG dwNewLong 	// new value
 		);"
 
-	<stdcall: sdword SetWindowLongW handle sdword sdword>
+	<stdcall: int32 SetWindowLongW handle int32 int32>
 	^self invalidCall: _failureCode!
 
 setWindowLongPtr: hWnd nIndex: nIndex dwNewLong: dwNewLong
 	"N.B. This is not equivalent to SetWindowLong, even on 32-bit Windows. The documentation is misleading in this regard - 32/64-bit compatibility using SetWindowLongPtr in C is achieved by defining a macro."
 
-	<stdcall: intptr SetWindowLongPtrW handle sdword intptr>
+	<stdcall: intptr SetWindowLongPtrW handle int32 intptr>
 	^self invalidCall: _failureCode!
 
 setWindowPlacement: aWindowHandle lpwndpl: aWinWINDOWPLACEMENT
@@ -3547,17 +3547,17 @@ setWindowPos: aWindowHandle hWndInsertAfter: hwndInsertAfter x: x y: y cx: cx cy
 			UINT uFlags 			// window-positioning flags
 		);"
 
-	<stdcall: bool SetWindowPos handle dword sdword sdword sdword sdword dword>
+	<stdcall: bool SetWindowPos handle uint32 int32 int32 int32 int32 uint32>
 	^self invalidCall: _failureCode!
 
 setWindowULong: hWnd nIndex: nIndex dwNewLong: dwNewLong
-	<stdcall: dword SetWindowLongW handle sdword dword>
+	<stdcall: uint32 SetWindowLongW handle int32 uint32>
 	^self invalidCall: _failureCode!
 
 setWindowULongPtr: hWnd nIndex: nIndex dwNewLong: dwNewLong
 	"N.B. This is not equivalent to SetWindowLong, even on 32-bit Windows. The documentation is misleading in this regard - 32/64-bit compatibility using SetWindowLongPtr in C is achieved by defining a macro."
 
-	<stdcall: uintptr SetWindowLongPtrW handle sdword uintptr>
+	<stdcall: uintptr SetWindowLongPtrW handle int32 uintptr>
 	^self invalidCall: _failureCode!
 
 systemParametersInfo: uiAction uiParam: param1 pvParam: param2 fWinIni: update
@@ -3569,7 +3569,7 @@ systemParametersInfo: uiAction uiParam: param1 pvParam: param2 fWinIni: update
 		UINT fWinIni 	// user profile update flag
 	);"
 
-	<stdcall: bool SystemParametersInfoW dword dword lpvoid dword>
+	<stdcall: bool SystemParametersInfoW uint32 uint32 lpvoid uint32>
 	^self invalidCall: _failureCode!
 
 trackMouseEvent: lpEventTrack
@@ -3595,7 +3595,7 @@ trackPopupMenu: hMenu uFlags: uFlags x: x y: y nReserved: reserved hWnd: hWnd pr
 			CONST RECTL *prcRect	// points to RECT that specifies no-dismissal area
 		);"
 
-	<stdcall: bool TrackPopupMenu handle dword sdword sdword sdword handle RECTL*>
+	<stdcall: bool TrackPopupMenu handle uint32 int32 int32 int32 handle RECTL*>
 	^self invalidCall: _failureCode!
 
 translateAccelerator: handleWindow haccl: handleAccelerators lpmsg: aMSG
@@ -3628,7 +3628,7 @@ unregisterClass: classAtomOrStringName hInstance: instanceHandle
 	^self invalidCall: _failureCode!
 
 unregisterHotKey: aWindowHandle id: anIntegerId
-	<stdcall: bool UnregisterHotKey handle sdword>
+	<stdcall: bool UnregisterHotKey handle int32>
 	^self invalidCall: _failureCode!
 
 validate: hWnd lpRect: aRECT

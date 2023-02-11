@@ -44,7 +44,7 @@ GetValueAtIndex: index value: cookie
 			[in]unsigned int index,
 			[out, retval]ICoreWebView2Cookie** cookie);"
 
-	<virtual stdcall: hresult 5 dword ICoreWebView2Cookie**>
+	<virtual stdcall: hresult 5 uint32 ICoreWebView2Cookie**>
 	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2CookieList categoriesForMethods!
 elementClass!constants!private! !

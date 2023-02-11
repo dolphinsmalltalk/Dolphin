@@ -149,7 +149,7 @@ get_readyState: pReadyState
 		HRESULT __stdcall readyState(
 			[out, retval]long* pReadyState);"
 
-	<virtual stdcall: hresult 18 sdword*>
+	<virtual stdcall: hresult 18 int32*>
 	^self invalidCall: _failureCode!
 
 get_startMode: mode

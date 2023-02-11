@@ -109,7 +109,7 @@ next: anInteger
 Next: next rgelt: rgelt pceltFetched: pceltFetched
 	"Private - Invoke the IEnumXXXX::Next() interface function."
 
-	<virtual stdcall: hresult 4 dword lpvoid dword*>
+	<virtual stdcall: hresult 4 uint32 lpvoid uint32*>
 	^self invalidCall: _failureCode!
 
 nextAvailable
@@ -190,7 +190,7 @@ skip: anInteger
 Skip: skip
 	"Private - Invoke the IEnumXXXX::Skip() interface function."
 
-	<virtual stdcall: hresult 5 dword>
+	<virtual stdcall: hresult 5 uint32>
 	^self invalidCall: _failureCode!
 
 upToEnd

@@ -52,7 +52,7 @@ get_FirstIndex: pFirstIndex
 		HRESULT __stdcall FirstIndex(
 			[out, retval]long* pFirstIndex);"
 
-	<virtual stdcall: hresult 9 sdword*>
+	<virtual stdcall: hresult 9 int32*>
 	^self invalidCall: _failureCode!
 
 get_Length: pLength
@@ -61,7 +61,7 @@ get_Length: pLength
 		HRESULT __stdcall Length(
 			[out, retval]long* pLength);"
 
-	<virtual stdcall: hresult 10 sdword*>
+	<virtual stdcall: hresult 10 int32*>
 	^self invalidCall: _failureCode!
 
 get_Value: pValue

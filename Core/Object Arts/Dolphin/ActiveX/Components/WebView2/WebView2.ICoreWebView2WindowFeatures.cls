@@ -66,7 +66,7 @@ get_HasPosition: value
 		HRESULT __stdcall HasPosition(
 			[out, retval]long* value);"
 
-	<virtual stdcall: hresult 4 sdword*>
+	<virtual stdcall: hresult 4 int32*>
 	^self invalidCall: _failureCode!
 
 get_HasSize: value
@@ -75,7 +75,7 @@ get_HasSize: value
 		HRESULT __stdcall HasSize(
 			[out, retval]long* value);"
 
-	<virtual stdcall: hresult 5 sdword*>
+	<virtual stdcall: hresult 5 int32*>
 	^self invalidCall: _failureCode!
 
 get_Height: value
@@ -84,7 +84,7 @@ get_Height: value
 		HRESULT __stdcall Height(
 			[out, retval]unsigned int* value);"
 
-	<virtual stdcall: hresult 8 dword*>
+	<virtual stdcall: hresult 8 uint32*>
 	^self invalidCall: _failureCode!
 
 get_left: value
@@ -93,7 +93,7 @@ get_left: value
 		HRESULT __stdcall left(
 			[out, retval]unsigned int* value);"
 
-	<virtual stdcall: hresult 6 dword*>
+	<virtual stdcall: hresult 6 uint32*>
 	^self invalidCall: _failureCode!
 
 get_ShouldDisplayMenuBar: value
@@ -102,7 +102,7 @@ get_ShouldDisplayMenuBar: value
 		HRESULT __stdcall ShouldDisplayMenuBar(
 			[out, retval]long* value);"
 
-	<virtual stdcall: hresult 10 sdword*>
+	<virtual stdcall: hresult 10 int32*>
 	^self invalidCall: _failureCode!
 
 get_ShouldDisplayScrollBars: value
@@ -111,7 +111,7 @@ get_ShouldDisplayScrollBars: value
 		HRESULT __stdcall ShouldDisplayScrollBars(
 			[out, retval]long* value);"
 
-	<virtual stdcall: hresult 13 sdword*>
+	<virtual stdcall: hresult 13 int32*>
 	^self invalidCall: _failureCode!
 
 get_ShouldDisplayStatus: value
@@ -120,7 +120,7 @@ get_ShouldDisplayStatus: value
 		HRESULT __stdcall ShouldDisplayStatus(
 			[out, retval]long* value);"
 
-	<virtual stdcall: hresult 11 sdword*>
+	<virtual stdcall: hresult 11 int32*>
 	^self invalidCall: _failureCode!
 
 get_ShouldDisplayToolbar: value
@@ -129,7 +129,7 @@ get_ShouldDisplayToolbar: value
 		HRESULT __stdcall ShouldDisplayToolbar(
 			[out, retval]long* value);"
 
-	<virtual stdcall: hresult 12 sdword*>
+	<virtual stdcall: hresult 12 int32*>
 	^self invalidCall: _failureCode!
 
 get_top: value
@@ -138,7 +138,7 @@ get_top: value
 		HRESULT __stdcall top(
 			[out, retval]unsigned int* value);"
 
-	<virtual stdcall: hresult 7 dword*>
+	<virtual stdcall: hresult 7 uint32*>
 	^self invalidCall: _failureCode!
 
 get_Width: value
@@ -147,7 +147,7 @@ get_Width: value
 		HRESULT __stdcall Width(
 			[out, retval]unsigned int* value);"
 
-	<virtual stdcall: hresult 9 dword*>
+	<virtual stdcall: hresult 9 uint32*>
 	^self invalidCall: _failureCode!
 
 hasPosition

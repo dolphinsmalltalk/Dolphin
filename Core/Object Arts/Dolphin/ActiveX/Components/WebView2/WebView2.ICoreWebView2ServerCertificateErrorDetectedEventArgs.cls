@@ -72,7 +72,7 @@ get_Action: value
 		HRESULT __stdcall Action(
 			[out, retval]COREWEBVIEW2_SERVER_CERTIFICATE_ERROR_ACTION* value);"
 
-	<virtual stdcall: hresult 7 sdword*>
+	<virtual stdcall: hresult 7 int32*>
 	^self invalidCall: _failureCode!
 
 get_ErrorStatus: value
@@ -81,7 +81,7 @@ get_ErrorStatus: value
 		HRESULT __stdcall ErrorStatus(
 			[out, retval]COREWEBVIEW2_WEB_ERROR_STATUS* value);"
 
-	<virtual stdcall: hresult 4 sdword*>
+	<virtual stdcall: hresult 4 int32*>
 	^self invalidCall: _failureCode!
 
 get_RequestUri: value
@@ -129,7 +129,7 @@ put_Action: value
 		HRESULT __stdcall Action(
 			[in]COREWEBVIEW2_SERVER_CERTIFICATE_ERROR_ACTION value);"
 
-	<virtual stdcall: hresult 8 sdword>
+	<virtual stdcall: hresult 8 int32>
 	^self invalidCall: _failureCode!
 
 requestUri

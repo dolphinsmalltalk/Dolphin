@@ -34,7 +34,7 @@ OnPost: msg EventStatus: eventStatus
 			[in]IMessage* Msg,
 			[in, out]CdoEventStatus* EventStatus);"
 
-	<virtual stdcall: hresult 8 IMessage* sdword*>
+	<virtual stdcall: hresult 8 IMessage* int32*>
 	^self invalidCall: _failureCode! !
 !CDO.INNTPOnPost categoriesForMethods!
 isExtensible!**auto generated**!public!testing! !

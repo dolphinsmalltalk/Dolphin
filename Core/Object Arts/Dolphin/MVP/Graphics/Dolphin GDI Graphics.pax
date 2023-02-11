@@ -965,7 +965,7 @@ imageList_AddMasked: himl hbmImage: hbmImage crMask: crMask
 			HBITMAP hbmImage,
 			COLORREF crMask);"
 
-	<stdcall: sdword ImageList_AddMasked handle handle dword>
+	<stdcall: int32 ImageList_AddMasked handle handle uint32>
 	^self invalidCall: _failureCode!
 
 imageList_BeginDrag: himlTrack iTrack: iTrack dxHotspot: dxHotspot dyHotspot: dyHotspot
@@ -978,7 +978,7 @@ imageList_BeginDrag: himlTrack iTrack: iTrack dxHotspot: dxHotspot dyHotspot: dy
 			int dxHotspot,
 			int dyHotspot);"
 
-	<stdcall: bool ImageList_BeginDrag handle sdword sdword sdword>
+	<stdcall: bool ImageList_BeginDrag handle int32 int32 int32>
 	^self invalidCall: _failureCode!
 
 imageList_Create: cx cy: cy flags: flags cInitial: cInitial cGrow: cGrow
@@ -992,7 +992,7 @@ imageList_Create: cx cy: cy flags: flags cInitial: cInitial cGrow: cGrow
 			int cInitial,
 			int cGrow);"
 
-	<stdcall: handle ImageList_Create sdword sdword dword sdword sdword>
+	<stdcall: handle ImageList_Create int32 int32 uint32 int32 int32>
 	^self invalidCall: _failureCode!
 
 imageList_Destroy: himl
@@ -1014,7 +1014,7 @@ imageList_DragEnter: hwndLock x: x y: y
 			int x,
 			int y);"
 
-	<stdcall: bool ImageList_DragEnter handle sdword sdword>
+	<stdcall: bool ImageList_DragEnter handle int32 int32>
 	^self invalidCall: _failureCode!
 
 imageList_DragLeave: hwndLock
@@ -1035,7 +1035,7 @@ imageList_DragMove: x y: y
 			int x,
 			int y);"
 
-	<stdcall: bool ImageList_DragMove sdword sdword>
+	<stdcall: bool ImageList_DragMove int32 int32>
 	^self invalidCall: _failureCode!
 
 imageList_DragShowNolock: fShow
@@ -1060,7 +1060,7 @@ imageList_Draw: hImageList i: index hdcDst: hdc x: x y: y fStyle: style
 		int y, 	
 		UINT fStyle);	"
 
-	<stdcall: bool ImageList_Draw handle sdword handle sdword sdword dword>
+	<stdcall: bool ImageList_Draw handle int32 handle int32 int32 uint32>
 	^self invalidCall: _failureCode!
 
 imageList_DrawEx: himl i: i hdcDst: hdcDst x: x y: y dx: dx dy: dy rgbBk: rgbBk rgbFg: rgbFg fStyle: fStyle
@@ -1079,7 +1079,7 @@ imageList_DrawEx: himl i: i hdcDst: hdcDst x: x y: y dx: dx dy: dy rgbBk: rgbBk 
 			unsigned long rgbFg,
 			unsigned int fStyle);"
 
-	<stdcall: bool ImageList_DrawEx handle sdword handle sdword sdword sdword sdword dword dword dword>
+	<stdcall: bool ImageList_DrawEx handle int32 handle int32 int32 int32 int32 uint32 uint32 uint32>
 	^self invalidCall: _failureCode!
 
 imageList_Duplicate: himl
@@ -1108,7 +1108,7 @@ imageList_GetBkColor: himl
 		COLORREF __stdcall ImageList_GetBkColor(
 			HIMAGELIST himl);"
 
-	<stdcall: dword ImageList_GetBkColor handle>
+	<stdcall: uint32 ImageList_GetBkColor handle>
 	^self invalidCall: _failureCode!
 
 imageList_GetIcon: himl i: i flags: flags
@@ -1120,7 +1120,7 @@ imageList_GetIcon: himl i: i flags: flags
 			int i,
 			UINT flags);"
 
-	<stdcall: handle ImageList_GetIcon handle sdword dword>
+	<stdcall: handle ImageList_GetIcon handle int32 uint32>
 	^self invalidCall: _failureCode!
 
 imageList_GetIconSize: himl cx: cx cy: cy
@@ -1132,7 +1132,7 @@ imageList_GetIconSize: himl cx: cx cy: cy
 			int* cx,
 			int* cy);"
 
-	<stdcall: bool ImageList_GetIconSize handle sdword sdword>
+	<stdcall: bool ImageList_GetIconSize handle int32 int32>
 	^self invalidCall: _failureCode!
 
 imageList_GetImageCount: himl
@@ -1142,7 +1142,7 @@ imageList_GetImageCount: himl
 		int __stdcall ImageList_GetImageCount(
 			HIMAGELIST himl);"
 
-	<stdcall: sdword ImageList_GetImageCount handle>
+	<stdcall: int32 ImageList_GetImageCount handle>
 	^self invalidCall: _failureCode!
 
 imageList_LoadImage: hi lpbmp: lpbmp cx: cx cGrow: cGrow crMask: crMask uType: uType uFlags: uFlags
@@ -1158,7 +1158,7 @@ imageList_LoadImage: hi lpbmp: lpbmp cx: cx cGrow: cGrow crMask: crMask uType: u
 			UINT uType,
 			UINT uFlags);"
 
-	<stdcall: handle ImageList_LoadImageW handle lpwstr sdword sdword dword dword dword>
+	<stdcall: handle ImageList_LoadImageW handle lpwstr int32 int32 uint32 uint32 uint32>
 	^self invalidCall: _failureCode!
 
 imageList_ReplaceIcon: himl i: i hicon: hicon
@@ -1170,7 +1170,7 @@ imageList_ReplaceIcon: himl i: i hicon: hicon
 			int i,
 			HICON HICON);"
 
-	<stdcall: sdword ImageList_ReplaceIcon handle sdword handle>
+	<stdcall: int32 ImageList_ReplaceIcon handle int32 handle>
 	^self invalidCall: _failureCode!
 
 imageList_SetBkColor: himl clrBk: clrBk
@@ -1181,7 +1181,7 @@ imageList_SetBkColor: himl clrBk: clrBk
 			HIMAGELIST himl,
 			COLORREF clrBk);"
 
-	<stdcall: dword ImageList_SetBkColor handle dword>
+	<stdcall: uint32 ImageList_SetBkColor handle uint32>
 	^self invalidCall: _failureCode!
 
 imageList_SetDragCursorImage: himlDrag iDrag: iDrag dxHotspot: dxHotspot dyHotspot: dyHotspot
@@ -1194,7 +1194,7 @@ imageList_SetDragCursorImage: himlDrag iDrag: iDrag dxHotspot: dxHotspot dyHotsp
 			int dxHotspot,
 			int dyHotspot);"
 
-	<stdcall: bool ImageList_SetDragCursorImage handle sdword sdword sdword>
+	<stdcall: bool ImageList_SetDragCursorImage handle int32 int32 int32>
 	^self invalidCall: _failureCode!
 
 imageList_SetIconSize: himl cx: cx cy: cy
@@ -1206,7 +1206,7 @@ imageList_SetIconSize: himl cx: cx cy: cy
 			int cx,
 			int cy);"
 
-	<stdcall: bool ImageList_SetIconSize handle sdword sdword>
+	<stdcall: bool ImageList_SetIconSize handle int32 int32>
 	^self invalidCall: _failureCode!
 
 loadIconWithScaleDown: hInst pszName: pszName cx: cx cy: cy phico: phico
@@ -1220,7 +1220,7 @@ loadIconWithScaleDown: hInst pszName: pszName cx: cx cy: cy phico: phico
 			int cy,
 			[out, retval]HICON* phico);"
 
-	<stdcall: sdword LoadIconWithScaleDown handle lpvoid sdword sdword handle*>
+	<stdcall: int32 LoadIconWithScaleDown handle lpvoid int32 int32 handle*>
 	^self invalidCall: _failureCode! !
 !OS.CommCtrlLibrary categoriesForMethods!
 imageList_AddMasked:hbmImage:crMask:!**auto generated**!public!win32 functions-image list! !
@@ -1262,7 +1262,7 @@ copyImage: hImage uType: uType cxDesired: cxDesired cyDesired: cyDesired fuFlags
 		UINT fuFlags
 		);"
 
-	<stdcall: handle CopyImage handle dword sdword sdword dword>
+	<stdcall: handle CopyImage handle uint32 int32 int32 uint32>
 	^self invalidCall: _failureCode!
 
 destroyCursor: hCursor
@@ -1293,7 +1293,7 @@ drawEdge: hdc qrc: qrc edge: edge grfFlags: grfFlags
 			[in]UINT edge,
 			[in]UINT grfFlags);"
 
-	<stdcall: bool DrawEdge handle RECTL* dword dword>
+	<stdcall: bool DrawEdge handle RECTL* uint32 uint32>
 	^self invalidCall: _failureCode!
 
 drawIconEx: hDC xLeft: x yTop: y hIcon: hIcon cxWidth: w cyHeight: h istepIfAniCur: anInteger hbrFlickerFreeDraw: brush diFlags: flags
@@ -1312,7 +1312,7 @@ drawIconEx: hDC xLeft: x yTop: y hIcon: hIcon cxWidth: w cyHeight: h istepIfAniC
 			UINT diFlags				// icon-drawing flags
 		);"
 
-	<stdcall: bool DrawIconEx handle sdword sdword handle sdword sdword dword handle dword>
+	<stdcall: bool DrawIconEx handle int32 int32 handle int32 int32 uint32 handle uint32>
 	^self invalidCall: _failureCode!
 
 drawState: hdc hbr: hbr lpOutputFunc: lpOutputFunc lData: lData wData: wData x: x y: y cx: cx cy: cy fuFlags: fuFlags
@@ -1331,7 +1331,7 @@ drawState: hdc hbr: hbr lpOutputFunc: lpOutputFunc lData: lData wData: wData x: 
 			[in]int cy,
 			[in]unsigned int fuFlags);"
 
-	<stdcall: bool DrawStateW handle handle void* intptr uintptr sdword sdword sdword sdword dword>
+	<stdcall: bool DrawStateW handle handle void* intptr uintptr int32 int32 int32 int32 uint32>
 	^self invalidCall: _failureCode!
 
 drawTextEx: hdc lpchText: lpchText cchText: cchText lprc: lprc dwDTFormat: dwDTFormat lpDTParams: lpdtParams
@@ -1347,7 +1347,7 @@ drawTextEx: hdc lpchText: lpchText cchText: cchText lprc: lprc dwDTFormat: dwDTF
 		);
 	"
 
-	<stdcall: sdword DrawTextExW handle lpwstr sdword RECTL* dword lpvoid>
+	<stdcall: int32 DrawTextExW handle lpwstr int32 RECTL* uint32 lpvoid>
 	^self invalidCall: _failureCode!
 
 fillRect: hdc lprc: aRECT hbr: hBrush
@@ -1457,7 +1457,7 @@ loadImage: hInst lpszName: filename uType: type cxDesired: w cyDesired: h fuLoad
 			UINT fuLoad		// load flags
 		);"
 
-	<stdcall: handle LoadImageW handle lpvoid dword sdword sdword dword>
+	<stdcall: handle LoadImageW handle lpvoid uint32 int32 int32 uint32>
 	^self invalidCall: _failureCode!
 
 releaseDC: hDC
@@ -1478,7 +1478,7 @@ releaseDC: hWnd hDC: hDC
 			HDC hDC 		// handle of device context  
 		);"
 
-	<stdcall: sdword ReleaseDC handle handle>
+	<stdcall: int32 ReleaseDC handle handle>
 	^self invalidCall: _failureCode!
 
 setCursorPosX: x y: y
@@ -1490,7 +1490,7 @@ setCursorPosX: x y: y
 			int  Y 	// vertical position
 		);"
 
-	<stdcall: bool SetCursorPos sdword sdword>
+	<stdcall: bool SetCursorPos int32 int32>
 	^self invalidCall: _failureCode!
 
 showCursor: aBoolean
@@ -1501,7 +1501,7 @@ showCursor: aBoolean
   			BOOL  bShow 	// cursor visibility flag  
 		);"
 
-	<stdcall: sdword ShowCursor bool>
+	<stdcall: int32 ShowCursor bool>
 	^self invalidCall: _failureCode! !
 !OS.UserLibrary categoriesForMethods!
 copyImage:uType:cxDesired:cyDesired:fuFlags:!public!win32 functions-resources! !

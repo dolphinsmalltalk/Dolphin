@@ -517,7 +517,7 @@ readFmtUserTypeStg: pStg pcf: pcf lplpszUserType: lplpszUserType
 			CLIPFORMAT* pcf,
 			LPWSTR* lplpszUserType);"
 
-	<stdcall: hresult ReadFmtUserTypeStg IStorage* word* lpwstr*>
+	<stdcall: hresult ReadFmtUserTypeStg IStorage* uint16* lpwstr*>
 	^self invalidCall: _failureCode!
 
 setConvertStg: pStg fConvert: aBoolean
@@ -542,7 +542,7 @@ stgCreateDocfile: pwcsName grfMode: grfMode reserved: reserved ppstgOpen: ppstgO
 			[in]unsigned long Reserved,
 			[out, retval]IStorage** ppstgOpen);"
 
-	<stdcall: hresult StgCreateDocfile lpwstr sdword dword IStorage**>
+	<stdcall: hresult StgCreateDocfile lpwstr int32 uint32 IStorage**>
 	^self invalidCall: _failureCode!
 
 stgCreateDocfileOnILockBytes: plkbyt grfMode: grfMode reserved: reserved ppstgOpen: ppstgOpen
@@ -555,7 +555,7 @@ stgCreateDocfileOnILockBytes: plkbyt grfMode: grfMode reserved: reserved ppstgOp
 			[in]unsigned long Reserved,
 			[out, retval]IStorage** ppstgOpen);"
 
-	<stdcall: hresult StgCreateDocfileOnILockBytes ILockBytes* dword dword IStorage**>
+	<stdcall: hresult StgCreateDocfileOnILockBytes ILockBytes* uint32 uint32 IStorage**>
 	^self invalidCall: _failureCode!
 
 stgIsStorageFile: pwcsName
@@ -590,7 +590,7 @@ stgOpenStorage: pwcsName pstgPriority: pstgPriority grfMode: grfMode snbExclude:
 			[in]unsigned long Reserved,
 			[out, retval]IStorage** ppstgOpen);"
 
-	<stdcall: hresult StgOpenStorage lpwstr IStorage* sdword lpwstr* dword IStorage**>
+	<stdcall: hresult StgOpenStorage lpwstr IStorage* int32 lpwstr* uint32 IStorage**>
 	^self invalidCall: _failureCode!
 
 stgOpenStorageOnILockBytes: plkbyt pstgPriority: pstgPriority grfMode: grfMode snbExclude: snbExclude reserved: reserved ppstgOpen: ppstgOpen
@@ -605,7 +605,7 @@ stgOpenStorageOnILockBytes: plkbyt pstgPriority: pstgPriority grfMode: grfMode s
 			[in]unsigned long Reserved,
 			[out, retval]IStorage** ppstgOpen);"
 
-	<stdcall: hresult StgOpenStorageOnILockBytes ILockBytes* IStorage* dword lpwstr* dword IStorage**>
+	<stdcall: hresult StgOpenStorageOnILockBytes ILockBytes* IStorage* uint32 lpwstr* uint32 IStorage**>
 	^self invalidCall: _failureCode!
 
 stgSetTimes: lpszName pctime: pctime patime: patime pmtime: pmtime
@@ -652,7 +652,7 @@ writeFmtUserTypeStg: pStg cf: cf lpszUserType: lpszUserType
 			CLIPFORMAT cf,
 			LPWSTR lpszUserType);"
 
-	<stdcall: hresult WriteFmtUserTypeStg IStorage* word lpwstr>
+	<stdcall: hresult WriteFmtUserTypeStg IStorage* uint16 lpwstr>
 	^self invalidCall: _failureCode! !
 !OS.COM.OLELibrary categoriesForMethods!
 createILockBytesOnHGlobal:fDeleteOnRelease:pplkbyt:!**auto generated**!OLE Functions-Structured Storage!public! !
@@ -687,7 +687,7 @@ shCreateMemStream: pInit cbInit: cbInit
 			[in]BYTE* pInit,
 			[in]unsigned int cbInit);"
 
-	<stdcall: COM.IStream* 12 byte* dword>
+	<stdcall: COM.IStream* 12 uint8* uint32>
 	^self invalidCall: _failureCode! !
 !OS.ShlwapiLibrary categoriesForMethods!
 shCreateMemStream:cbInit:!**auto generated**!public! !

@@ -39,7 +39,7 @@ get_IsPinchZoomEnabled: enabled
 		HRESULT __stdcall IsPinchZoomEnabled(
 			[out, retval]long* enabled);"
 
-	<virtual stdcall: hresult 30 sdword*>
+	<virtual stdcall: hresult 30 int32*>
 	^self invalidCall: _failureCode!
 
 put_IsPinchZoomEnabled: enabled
@@ -49,7 +49,7 @@ put_IsPinchZoomEnabled: enabled
 		HRESULT __stdcall IsPinchZoomEnabled(
 			[in]long enabled);"
 
-	<virtual stdcall: hresult 31 sdword>
+	<virtual stdcall: hresult 31 int32>
 	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2Settings5 categoriesForMethods!
 get_IsPinchZoomEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings5!private! !

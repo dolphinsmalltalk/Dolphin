@@ -32,7 +32,7 @@ InitNew
 	N.B. This method has been automatically generated from 
 	the vtable defined in IPersistStreamInit>>defineFunctions. DO NOT MODIFY!!"
 
-	<virtual stdcall: sdword 9>
+	<virtual stdcall: int32 9>
 	^self invalidCall: _failureCode! !
 !OS.COM.IPersistStreamInit categoriesForMethods!
 initNew!initializing!public! !

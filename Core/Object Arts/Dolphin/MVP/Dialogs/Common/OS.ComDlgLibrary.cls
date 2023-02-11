@@ -40,7 +40,7 @@ commDlgExtendedError
 	This code indicates the most recent error to occur during the execution of one of 
 	the common dialog box functions."
 
-	<stdcall: dword CommDlgExtendedError>
+	<stdcall: uint32 CommDlgExtendedError>
 	^self invalidCall: _failureCode!
 
 findText: aWinFINDREPLACE
@@ -62,7 +62,7 @@ getFileTitle: lpszFile lpszTitle: lpszTitle cbBuf: cbBuf
 			WORD cbBuf 	// length of buffer 	
 		);"
 
-	<stdcall: sword GetFileTitleW lpwstr lpwstr word>
+	<stdcall: int16 GetFileTitleW lpwstr lpwstr uint16>
 	^self invalidCall: _failureCode!
 
 getOpenFileName: aWinOPENFILENAME

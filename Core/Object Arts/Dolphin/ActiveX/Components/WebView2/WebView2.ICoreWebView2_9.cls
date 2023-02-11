@@ -60,7 +60,7 @@ Add_IsDefaultDownloadDialogOpenChanged: handler token: token
 			[in]ICoreWebView2IsDefaultDownloadDialogOpenChangedEventHandler* handler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 89 ICoreWebView2IsDefaultDownloadDialogOpenChangedEventHandler* sqword*>
+	<virtual stdcall: hresult 89 ICoreWebView2IsDefaultDownloadDialogOpenChangedEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 CloseDefaultDownloadDialog
@@ -77,7 +77,7 @@ get_DefaultDownloadDialogCornerAlignment: value
 		HRESULT __stdcall DefaultDownloadDialogCornerAlignment(
 			[out, retval]COREWEBVIEW2_DEFAULT_DOWNLOAD_DIALOG_CORNER_ALIGNMENT* value);"
 
-	<virtual stdcall: hresult 94 sdword*>
+	<virtual stdcall: hresult 94 int32*>
 	^self invalidCall: _failureCode!
 
 get_DefaultDownloadDialogMargin: value
@@ -95,7 +95,7 @@ get_IsDefaultDownloadDialogOpen: value
 		HRESULT __stdcall IsDefaultDownloadDialogOpen(
 			[out, retval]long* value);"
 
-	<virtual stdcall: hresult 91 sdword*>
+	<virtual stdcall: hresult 91 int32*>
 	^self invalidCall: _failureCode!
 
 OpenDefaultDownloadDialog
@@ -113,7 +113,7 @@ put_DefaultDownloadDialogCornerAlignment: value
 		HRESULT __stdcall DefaultDownloadDialogCornerAlignment(
 			[in]COREWEBVIEW2_DEFAULT_DOWNLOAD_DIALOG_CORNER_ALIGNMENT value);"
 
-	<virtual stdcall: hresult 95 sdword>
+	<virtual stdcall: hresult 95 int32>
 	^self invalidCall: _failureCode!
 
 put_DefaultDownloadDialogMargin: value
@@ -132,7 +132,7 @@ Remove_IsDefaultDownloadDialogOpenChanged: token
 		HRESULT __stdcall remove_IsDefaultDownloadDialogOpenChanged(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 90 sqword>
+	<virtual stdcall: hresult 90 int64>
 	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2_9 categoriesForMethods!
 Add_IsDefaultDownloadDialogOpenChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2_9!private! !

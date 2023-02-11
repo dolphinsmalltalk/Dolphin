@@ -22,7 +22,7 @@ get_LowerBound: pVal
 		HRESULT __stdcall LowerBound(
 			[out, retval] long* pVal);"
 
-	<virtual stdcall: hresult 11 sdword*>
+	<virtual stdcall: hresult 11 int32*>
 	^self invalidCall: _failureCode!
 
 get_Seed: pVal
@@ -31,7 +31,7 @@ get_Seed: pVal
 		HRESULT __stdcall Seed(
 			[out, retval] long* pVal);"
 
-	<virtual stdcall: hresult 9 sdword*>
+	<virtual stdcall: hresult 9 int32*>
 	^self invalidCall: _failureCode!
 
 get_UpperBound: pVal
@@ -40,7 +40,7 @@ get_UpperBound: pVal
 		HRESULT __stdcall UpperBound(
 			[out, retval] long* pVal);"
 
-	<virtual stdcall: hresult 13 sdword*>
+	<virtual stdcall: hresult 13 int32*>
 	^self invalidCall: _failureCode!
 
 isExtensible
@@ -87,7 +87,7 @@ Next: plNext
 		HRESULT __stdcall Next(
 			[out, retval] long* plNext);"
 
-	<virtual stdcall: hresult 8 sdword*>
+	<virtual stdcall: hresult 8 int32*>
 	^self invalidCall: _failureCode!
 
 put_LowerBound: pVal
@@ -97,7 +97,7 @@ put_LowerBound: pVal
 		HRESULT __stdcall LowerBound(
 			[in] long pVal);"
 
-	<virtual stdcall: hresult 12 sdword>
+	<virtual stdcall: hresult 12 int32>
 	^self invalidCall: _failureCode!
 
 put_Seed: pVal
@@ -107,7 +107,7 @@ put_Seed: pVal
 		HRESULT __stdcall Seed(
 			[in] long pVal);"
 
-	<virtual stdcall: hresult 10 sdword>
+	<virtual stdcall: hresult 10 int32>
 	^self invalidCall: _failureCode!
 
 put_UpperBound: pVal
@@ -117,7 +117,7 @@ put_UpperBound: pVal
 		HRESULT __stdcall UpperBound(
 			[in] long pVal);"
 
-	<virtual stdcall: hresult 14 sdword>
+	<virtual stdcall: hresult 14 int32>
 	^self invalidCall: _failureCode!
 
 seed

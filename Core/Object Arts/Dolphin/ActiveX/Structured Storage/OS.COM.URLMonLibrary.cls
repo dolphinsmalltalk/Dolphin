@@ -23,7 +23,7 @@ overlappedURLDownloadToCacheFile: pCaller szURL: szURL szFilename: szFilename dw
 		IBindStatusCallback *pBSC
 		);"
 
-	<overlap stdcall: hresult URLDownloadToCacheFileW IUnknown* lpwstr lpwstr dword dword lpvoid>
+	<overlap stdcall: hresult URLDownloadToCacheFileW IUnknown* lpwstr lpwstr uint32 uint32 lpvoid>
 	^self invalidCall: _failureCode!
 
 overlappedURLDownloadToFile: pCaller szURL: szURL szFilename: szFilename dwReserved: dwReserved pBSC: pBsc
@@ -36,7 +36,7 @@ overlappedURLDownloadToFile: pCaller szURL: szURL szFilename: szFilename dwReser
 			LPBINDSTATUSCALLBACK lpfnCB
 	);"
 
-	<overlap stdcall: hresult URLDownloadToFileW IUnknown* lpwstr lpwstr dword lpvoid>
+	<overlap stdcall: hresult URLDownloadToFileW IUnknown* lpwstr lpwstr uint32 lpvoid>
 	^self invalidCall: _failureCode!
 
 urlDownload: url toFile: aStringFilename 
@@ -89,7 +89,7 @@ urlDownloadToCacheFile: pCaller szURL: szURL szFilename: szFilename dwBufLength:
 		IBindStatusCallback *pBSC
 		);"
 
-	<stdcall: hresult URLDownloadToCacheFileW IUnknown* lpwstr lpwstr dword dword lpvoid>
+	<stdcall: hresult URLDownloadToCacheFileW IUnknown* lpwstr lpwstr uint32 uint32 lpvoid>
 	^self invalidCall: _failureCode!
 
 urlDownloadToFile: pCaller szURL: szURL szFilename: szFilename dwReserved: dwReserved pBSC: pBsc
@@ -102,7 +102,7 @@ urlDownloadToFile: pCaller szURL: szURL szFilename: szFilename dwReserved: dwRes
 			LPBINDSTATUSCALLBACK lpfnCB
 		);"
 
-	<stdcall: hresult URLDownloadToFileW IUnknown* lpwstr lpwstr dword lpvoid>
+	<stdcall: hresult URLDownloadToFileW IUnknown* lpwstr lpwstr uint32 lpvoid>
 	^self invalidCall: _failureCode!
 
 urlOpenBlockingStream: pCaller szURL: szURL ppStream: ppStream dwReserved: dwReserved lpfnCB: lpfnCB
@@ -123,7 +123,7 @@ urlOpenBlockingStream: pCaller szURL: szURL ppStream: ppStream dwReserved: dwRes
 			LPBINDSTATUSCALLBACK lpfnCB 
 		);"
 
-	<stdcall: hresult URLOpenBlockingStreamW IUnknown* lpwstr IStream** dword lpvoid>
+	<stdcall: hresult URLOpenBlockingStreamW IUnknown* lpwstr IStream** uint32 lpvoid>
 	^self invalidCall: _failureCode!
 
 urlOpenPullStream: pCaller szURL: szURL ppStream: ppStream dwReserved: dwReserved lpfnCB: lpfnCB
@@ -136,7 +136,7 @@ urlOpenPullStream: pCaller szURL: szURL ppStream: ppStream dwReserved: dwReserve
 			DWORD dwReserved, 
 			LPBINDSTATUSCALLBACK lpfnCB );"
 
-	<stdcall: hresult URLOpenPullStreamW IUnknown* lpwstr IStream** dword lpvoid>
+	<stdcall: hresult URLOpenPullStreamW IUnknown* lpwstr IStream** uint32 lpvoid>
 	^self invalidCall: _failureCode! !
 !OS.COM.URLMonLibrary categoriesForMethods!
 overlappedURLDownloadToCacheFile:szURL:szFilename:dwBufLength:dwReserved:pBSC:!public!win32 functions-internet! !

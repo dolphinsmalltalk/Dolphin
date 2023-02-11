@@ -269,7 +269,7 @@ GetIDsOfNames: riid rgszNames: rgszNames cNames: cNames lcid: lcid rgdispid: rgd
 	rather than auto-raised HRESULT exception.
 	"
 
-	<virtual stdcall: sdword 6 guid* char** dword dword sdword*>
+	<virtual stdcall: int32 6 guid* char** uint32 uint32 int32*>
 	^self invalidCall: _failureCode!
 
 getProperty: aString
@@ -356,7 +356,7 @@ GetTypeInfo: itinfo lcid: lcid pptinfo: pptinfo
 			[out] void** pptinfo);
 	"
 
-	<virtual stdcall: sdword 5 dword dword void**>
+	<virtual stdcall: int32 5 uint32 uint32 void**>
 	^self invalidCall: _failureCode!
 
 getTypeInfoCount
@@ -373,7 +373,7 @@ GetTypeInfoCount: pctinfo
 		HRESULT __stdcall GetTypeInfoCount(
 			[out]unsigned int* pctinfo);"
 
-	<virtual stdcall: hresult 4 dword*>
+	<virtual stdcall: hresult 4 uint32*>
 	^self invalidCall: _failureCode!
 
 has_NewEnum
@@ -448,7 +448,7 @@ Invoke: dispidMember riid: riid lcid: lcid wFlags: wFlags pdispparams: pdisppara
 	Implementation Note: Explicitly handle integer return codes rather than use auto-raised HRESULT exception.
 	"
 
-	<virtual stdcall: sdword 7 sdword guid* dword word DISPPARAMS* variant* EXCEPINFO* dword*>
+	<virtual stdcall: int32 7 int32 guid* uint32 uint16 DISPPARAMS* variant* EXCEPINFO* uint32*>
 	^self invalidCall: _failureCode!
 
 invoke: methodName with: arg1

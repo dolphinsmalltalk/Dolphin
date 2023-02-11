@@ -86,7 +86,7 @@ get_length: nLength
 		HRESULT __stdcall length(
 			[out, retval]int* nLength);"
 
-	<virtual stdcall: hresult 8 sdword*>
+	<virtual stdcall: hresult 8 int32*>
 	^self invalidCall: _failureCode!
 
 getIndexFromName: strURI strLocalName: strLocalName
@@ -110,7 +110,7 @@ GetIndexFromName: strURI strLocalName: strLocalName nIndex: nIndex
 			[in]BSTR strLocalName,
 			[out, retval]int* nIndex);"
 
-	<virtual stdcall: hresult 12 bstr bstr sdword*>
+	<virtual stdcall: hresult 12 bstr bstr int32*>
 	^self invalidCall: _failureCode!
 
 getIndexFromQName: strQName
@@ -130,7 +130,7 @@ GetIndexFromQName: strQName nIndex: nIndex
 			[in]BSTR strQName,
 			[out, retval]int* nIndex);"
 
-	<virtual stdcall: hresult 13 bstr sdword*>
+	<virtual stdcall: hresult 13 bstr int32*>
 	^self invalidCall: _failureCode!
 
 getLocalName: nIndex
@@ -150,7 +150,7 @@ GetLocalName: nIndex strLocalName: strLocalName
 			[in]int nIndex,
 			[out, retval]BSTR* strLocalName);"
 
-	<virtual stdcall: hresult 10 sdword bstr*>
+	<virtual stdcall: hresult 10 int32 bstr*>
 	^self invalidCall: _failureCode!
 
 getQName: nIndex
@@ -170,7 +170,7 @@ GetQName: nIndex strQName: strQName
 			[in]int nIndex,
 			[out, retval]BSTR* strQName);"
 
-	<virtual stdcall: hresult 11 sdword bstr*>
+	<virtual stdcall: hresult 11 int32 bstr*>
 	^self invalidCall: _failureCode!
 
 getType: nIndex
@@ -190,7 +190,7 @@ GetType: nIndex strType: strType
 			[in]int nIndex,
 			[out, retval]BSTR* strType);"
 
-	<virtual stdcall: hresult 14 sdword bstr*>
+	<virtual stdcall: hresult 14 int32 bstr*>
 	^self invalidCall: _failureCode!
 
 getTypeFromName: strURI strLocalName: strLocalName
@@ -254,7 +254,7 @@ GetURI: nIndex strURI: strURI
 			[in]int nIndex,
 			[out, retval]BSTR* strURI);"
 
-	<virtual stdcall: hresult 9 sdword bstr*>
+	<virtual stdcall: hresult 9 int32 bstr*>
 	^self invalidCall: _failureCode!
 
 getValue: nIndex
@@ -274,7 +274,7 @@ GetValue: nIndex strValue: strValue
 			[in]int nIndex,
 			[out, retval]BSTR* strValue);"
 
-	<virtual stdcall: hresult 17 sdword bstr*>
+	<virtual stdcall: hresult 17 int32 bstr*>
 	^self invalidCall: _failureCode!
 
 getValueFromName: strURI strLocalName: strLocalName

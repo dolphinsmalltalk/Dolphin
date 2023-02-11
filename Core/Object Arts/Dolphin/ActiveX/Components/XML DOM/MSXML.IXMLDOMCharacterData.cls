@@ -63,7 +63,7 @@ DeleteData: offset count: count
 			[in]long offset,
 			[in]long count);"
 
-	<virtual stdcall: hresult 50 sdword sdword>
+	<virtual stdcall: hresult 50 int32 int32>
 	^self invalidCall: _failureCode!
 
 get_data: data
@@ -81,7 +81,7 @@ get_length: dataLength
 		HRESULT __stdcall length(
 			[out, retval]long* dataLength);"
 
-	<virtual stdcall: hresult 46 sdword*>
+	<virtual stdcall: hresult 46 int32*>
 	^self invalidCall: _failureCode!
 
 InsertData: offset data: data
@@ -92,7 +92,7 @@ InsertData: offset data: data
 			[in]long offset,
 			[in]BSTR data);"
 
-	<virtual stdcall: hresult 49 sdword bstr>
+	<virtual stdcall: hresult 49 int32 bstr>
 	^self invalidCall: _failureCode!
 
 isText
@@ -128,7 +128,7 @@ ReplaceData: offset count: count data: data
 			[in]long count,
 			[in]BSTR data);"
 
-	<virtual stdcall: hresult 51 sdword sdword bstr>
+	<virtual stdcall: hresult 51 int32 int32 bstr>
 	^self invalidCall: _failureCode!
 
 substringData: offset count: count
@@ -152,7 +152,7 @@ SubstringData: offset count: count data: data
 			[in]long count,
 			[out, retval]BSTR* data);"
 
-	<virtual stdcall: hresult 47 sdword sdword bstr*>
+	<virtual stdcall: hresult 47 int32 int32 bstr*>
 	^self invalidCall: _failureCode! !
 !MSXML.IXMLDOMCharacterData categoriesForMethods!
 =!comparing!public! !

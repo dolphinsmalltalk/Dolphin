@@ -54,7 +54,7 @@ GetValueAtIndex: index value: value
 			[in]unsigned int index,
 			[out, retval]LPWSTR* value);"
 
-	<virtual stdcall: hresult 5 dword lpwstr*>
+	<virtual stdcall: hresult 5 uint32 lpwstr*>
 	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2StringCollection categoriesForMethods!
 at:!methods!public! !

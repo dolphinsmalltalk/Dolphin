@@ -202,7 +202,7 @@ get_SitehWnd: phwnd
 		HRESULT __stdcall SitehWnd(
 			[out, retval]long* phwnd);"
 
-	<virtual stdcall: hresult 13 sdword*>
+	<virtual stdcall: hresult 13 int32*>
 	^self invalidCall: _failureCode!
 
 get_State: pssState
@@ -211,7 +211,7 @@ get_State: pssState
 		HRESULT __stdcall State(
 			[out, retval]ScriptControlStates* pssState);"
 
-	<virtual stdcall: hresult 10 sdword*>
+	<virtual stdcall: hresult 10 int32*>
 	^self invalidCall: _failureCode!
 
 get_Timeout: plMilleseconds
@@ -220,7 +220,7 @@ get_Timeout: plMilleseconds
 		HRESULT __stdcall Timeout(
 			[out, retval]long* plMilleseconds);"
 
-	<virtual stdcall: hresult 14 sdword*>
+	<virtual stdcall: hresult 14 int32*>
 	^self invalidCall: _failureCode!
 
 get_UseSafeSubset: pfUseSafeSubset
@@ -302,7 +302,7 @@ put_SitehWnd: phwnd
 		HRESULT __stdcall SitehWnd(
 			[in]long phwnd);"
 
-	<virtual stdcall: hresult 12 sdword>
+	<virtual stdcall: hresult 12 int32>
 	^self invalidCall: _failureCode!
 
 put_State: pssState
@@ -312,7 +312,7 @@ put_State: pssState
 		HRESULT __stdcall State(
 			[in]ScriptControlStates pssState);"
 
-	<virtual stdcall: hresult 11 sdword>
+	<virtual stdcall: hresult 11 int32>
 	^self invalidCall: _failureCode!
 
 put_Timeout: plMilleseconds
@@ -322,7 +322,7 @@ put_Timeout: plMilleseconds
 		HRESULT __stdcall Timeout(
 			[in]long plMilleseconds);"
 
-	<virtual stdcall: hresult 15 sdword>
+	<virtual stdcall: hresult 15 int32>
 	^self invalidCall: _failureCode!
 
 put_UseSafeSubset: pfUseSafeSubset

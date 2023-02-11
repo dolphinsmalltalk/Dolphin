@@ -62,7 +62,7 @@ Comment: pwchChars cchChars: cchChars
 			[in]unsigned short* pwchChars,
 			[in]int cchChars);"
 
-	<virtual stdcall: hresult 10 word* sdword>
+	<virtual stdcall: hresult 10 uint16* int32>
 	^self invalidCall: _failureCode!
 
 EndCDATA
@@ -88,7 +88,7 @@ EndEntity: pwchName cchName: cchName
 			[in]unsigned short* pwchName,
 			[in]int cchName);"
 
-	<virtual stdcall: hresult 7 word* sdword>
+	<virtual stdcall: hresult 7 uint16* int32>
 	^self invalidCall: _failureCode!
 
 StartCDATA
@@ -110,7 +110,7 @@ StartDTD: pwchName cchName: cchName pwchPublicId: pwchPublicId cchPublicId: cchP
 			[in]unsigned short* pwchSystemId,
 			[in]int cchSystemId);"
 
-	<virtual stdcall: hresult 4 word* sdword word* sdword word* sdword>
+	<virtual stdcall: hresult 4 uint16* int32 uint16* int32 uint16* int32>
 	^self invalidCall: _failureCode!
 
 StartEntity: pwchName cchName: cchName
@@ -120,7 +120,7 @@ StartEntity: pwchName cchName: cchName
 			[in]unsigned short* pwchName,
 			[in]int cchName);"
 
-	<virtual stdcall: hresult 6 word* sdword>
+	<virtual stdcall: hresult 6 uint16* int32>
 	^self invalidCall: _failureCode! !
 !MSXML.ISAXLexicalHandler categoriesForMethods!
 Comment:cchChars:!**auto generated**!COM Interfaces-ISAXLexicalHandler!public! !

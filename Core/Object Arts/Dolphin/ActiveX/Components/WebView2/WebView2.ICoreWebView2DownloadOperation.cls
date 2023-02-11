@@ -91,7 +91,7 @@ Add_BytesReceivedChanged: eventHandler token: token
 			[in]ICoreWebView2BytesReceivedChangedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 4 ICoreWebView2BytesReceivedChangedEventHandler* sqword*>
+	<virtual stdcall: hresult 4 ICoreWebView2BytesReceivedChangedEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 Add_EstimatedEndTimeChanged: eventHandler token: token
@@ -101,7 +101,7 @@ Add_EstimatedEndTimeChanged: eventHandler token: token
 			[in]ICoreWebView2EstimatedEndTimeChangedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 6 ICoreWebView2EstimatedEndTimeChangedEventHandler* sqword*>
+	<virtual stdcall: hresult 6 ICoreWebView2EstimatedEndTimeChangedEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 Add_StateChanged: eventHandler token: token
@@ -111,7 +111,7 @@ Add_StateChanged: eventHandler token: token
 			[in]ICoreWebView2StateChangedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 8 ICoreWebView2StateChangedEventHandler* sqword*>
+	<virtual stdcall: hresult 8 ICoreWebView2StateChangedEventHandler* int64*>
 	^self invalidCall: _failureCode!
 
 bytesReceived
@@ -169,7 +169,7 @@ get_BytesReceived: bytesReceived
 		HRESULT __stdcall BytesReceived(
 			[out, retval]__int64* BytesReceived);"
 
-	<virtual stdcall: hresult 14 sqword*>
+	<virtual stdcall: hresult 14 int64*>
 	^self invalidCall: _failureCode!
 
 get_CanResume: canResume
@@ -178,7 +178,7 @@ get_CanResume: canResume
 		HRESULT __stdcall CanResume(
 			[out, retval]long* CanResume);"
 
-	<virtual stdcall: hresult 22 sdword*>
+	<virtual stdcall: hresult 22 int32*>
 	^self invalidCall: _failureCode!
 
 get_ContentDisposition: contentDisposition
@@ -205,7 +205,7 @@ get_InterruptReason: interruptReason
 		HRESULT __stdcall InterruptReason(
 			[out, retval]COREWEBVIEW2_DOWNLOAD_INTERRUPT_REASON* InterruptReason);"
 
-	<virtual stdcall: hresult 18 sdword*>
+	<virtual stdcall: hresult 18 int32*>
 	^self invalidCall: _failureCode!
 
 get_MimeType: mimeType
@@ -232,7 +232,7 @@ get_State: downloadState
 		HRESULT __stdcall State(
 			[out, retval]COREWEBVIEW2_DOWNLOAD_STATE* downloadState);"
 
-	<virtual stdcall: hresult 17 sdword*>
+	<virtual stdcall: hresult 17 int32*>
 	^self invalidCall: _failureCode!
 
 get_TotalBytesToReceive: totalBytesToReceive
@@ -241,7 +241,7 @@ get_TotalBytesToReceive: totalBytesToReceive
 		HRESULT __stdcall TotalBytesToReceive(
 			[out, retval]__int64* TotalBytesToReceive);"
 
-	<virtual stdcall: hresult 13 sqword*>
+	<virtual stdcall: hresult 13 int64*>
 	^self invalidCall: _failureCode!
 
 get_uri: uri
@@ -290,7 +290,7 @@ Remove_BytesReceivedChanged: token
 		HRESULT __stdcall remove_BytesReceivedChanged(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 5 sqword>
+	<virtual stdcall: hresult 5 int64>
 	^self invalidCall: _failureCode!
 
 Remove_EstimatedEndTimeChanged: token
@@ -299,7 +299,7 @@ Remove_EstimatedEndTimeChanged: token
 		HRESULT __stdcall remove_EstimatedEndTimeChanged(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 7 sqword>
+	<virtual stdcall: hresult 7 int64>
 	^self invalidCall: _failureCode!
 
 Remove_StateChanged: token
@@ -308,7 +308,7 @@ Remove_StateChanged: token
 		HRESULT __stdcall remove_StateChanged(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 9 sqword>
+	<virtual stdcall: hresult 9 int64>
 	^self invalidCall: _failureCode!
 
 resultFilePath

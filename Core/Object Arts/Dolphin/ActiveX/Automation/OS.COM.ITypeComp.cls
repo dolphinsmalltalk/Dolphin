@@ -16,7 +16,7 @@ Bind: bind lHashVal: lHashVal wFlags: wFlags ppTInfo: ppTInfo pDescKind: pDescKi
 	N.B. This method has been automatically generated from 
 	the vtable defined in ITypeComp>>defineFunctions. DO NOT MODIFY!!"
 
-	<virtual stdcall: hresult 4 lpwstr dword word lppvoid sdword* lppvoid>
+	<virtual stdcall: hresult 4 lpwstr uint32 uint16 lppvoid int32* lppvoid>
 	^self invalidCall: _failureCode!
 
 BindType: bindType lHashVal: lHashVal ppTInfo: ppTInfo ppTComp: ppTComp
@@ -24,7 +24,7 @@ BindType: bindType lHashVal: lHashVal ppTInfo: ppTInfo ppTComp: ppTComp
 	N.B. This method has been automatically generated from 
 	the vtable defined in ITypeComp>>defineFunctions. DO NOT MODIFY!!"
 
-	<virtual stdcall: hresult 5 lpwstr dword lppvoid lppvoid>
+	<virtual stdcall: hresult 5 lpwstr uint32 lppvoid lppvoid>
 	^self invalidCall: _failureCode! !
 !OS.COM.ITypeComp categoriesForMethods!
 Bind:lHashVal:wFlags:ppTInfo:pDescKind:pBindPtr:!COM Interfaces-ITypeComp!primitives!public! !

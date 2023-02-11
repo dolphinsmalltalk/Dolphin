@@ -42,7 +42,7 @@ ClearBrowsingData: dataKinds handler: handler
 			[in]COREWEBVIEW2_BROWSING_DATA_KINDS dataKinds,
 			[in]ICoreWebView2ClearBrowsingDataCompletedHandler* handler);"
 
-	<virtual stdcall: hresult 11 sdword ICoreWebView2ClearBrowsingDataCompletedHandler*>
+	<virtual stdcall: hresult 11 int32 ICoreWebView2ClearBrowsingDataCompletedHandler*>
 	^self invalidCall: _failureCode!
 
 ClearBrowsingDataAll: handler
@@ -63,7 +63,7 @@ ClearBrowsingDataInTimeRange: dataKinds startTime: startTime endTime: endTime ha
 			[in]double endTime,
 			[in]ICoreWebView2ClearBrowsingDataCompletedHandler* handler);"
 
-	<virtual stdcall: hresult 12 sdword double double ICoreWebView2ClearBrowsingDataCompletedHandler*>
+	<virtual stdcall: hresult 12 int32 double double ICoreWebView2ClearBrowsingDataCompletedHandler*>
 	^self invalidCall: _failureCode!
 
 get_Kind: kind
@@ -72,7 +72,7 @@ get_Kind: kind
 		HRESULT __stdcall Kind(
 			[out, retval]COREWEBVIEW2_PROCESS_KIND* Kind);"
 
-	<virtual stdcall: hresult 5 sdword*>
+	<virtual stdcall: hresult 5 int32*>
 	^self invalidCall: _failureCode!
 
 get_ProcessId: value
@@ -81,7 +81,7 @@ get_ProcessId: value
 		HRESULT __stdcall ProcessId(
 			[out, retval]int* value);"
 
-	<virtual stdcall: hresult 4 sdword*>
+	<virtual stdcall: hresult 4 int32*>
 	^self invalidCall: _failureCode!
 
 kind

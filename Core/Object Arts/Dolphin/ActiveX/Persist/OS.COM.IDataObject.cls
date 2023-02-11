@@ -82,7 +82,7 @@ DAdvise: pformatetc advf: advf pAdvSink: pAdvSink pdwConnection: pdwConnection
 			[in]IAdviseSink* pAdvSink,
 			[out]unsigned long* pdwConnection);"
 
-	<virtual stdcall: hresult 10 FORMATETC* dword IAdviseSink* dword*>
+	<virtual stdcall: hresult 10 FORMATETC* uint32 IAdviseSink* uint32*>
 	^self invalidCall: _failureCode!
 
 DUnadvise: dwConnection
@@ -91,7 +91,7 @@ DUnadvise: dwConnection
 		HRESULT __stdcall DUnadvise(
 			[in]unsigned long dwConnection);"
 
-	<virtual stdcall: hresult 11 dword>
+	<virtual stdcall: hresult 11 uint32>
 	^self invalidCall: _failureCode!
 
 enumDAdvise
@@ -126,7 +126,7 @@ EnumFormatEtc: dwDirection ppenumFormatEtc: ppenumFormatEtc
 			[in]unsigned long dwDirection,
 			[out]IEnumFORMATETC** ppenumFormatEtc);"
 
-	<virtual stdcall: hresult 9 dword Smalltalk.IUnknown**>
+	<virtual stdcall: hresult 9 uint32 Smalltalk.IUnknown**>
 	^self invalidCall: _failureCode!
 
 getCanonicalFormatEtc: pformatectIn
@@ -207,7 +207,7 @@ SetData: pformatetc pmedium: pmedium fRelease: fRelease
 			[in]STGMEDIUM* pmedium,
 			[in]long fRelease);"
 
-	<virtual stdcall: hresult 8 FORMATETC* STGMEDIUM* sdword>
+	<virtual stdcall: hresult 8 FORMATETC* STGMEDIUM* int32>
 	^self invalidCall: _failureCode! !
 !OS.COM.IDataObject categoriesForMethods!
 dAdvise:advf:pAdvSink:!**auto generated**!methods!public! !

@@ -63,7 +63,7 @@ get_StatusCode: statusCode
 		HRESULT __stdcall StatusCode(
 			[out, retval]int* StatusCode);"
 
-	<virtual stdcall: hresult 5 sdword*>
+	<virtual stdcall: hresult 5 int32*>
 	^self invalidCall: _failureCode!
 
 getContent: aDyadicValuable

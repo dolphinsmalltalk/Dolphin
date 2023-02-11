@@ -36,7 +36,7 @@ get_HttpStatusCode: http_status_code
 		HRESULT __stdcall HttpStatusCode(
 			[out, retval]int* http_status_code);"
 
-	<virtual stdcall: hresult 7 sdword*>
+	<virtual stdcall: hresult 7 int32*>
 	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2NavigationCompletedEventArgs2 categoriesForMethods!
 get_HttpStatusCode:!**auto generated**!COM Interfaces-ICoreWebView2NavigationCompletedEventArgs2!private! !

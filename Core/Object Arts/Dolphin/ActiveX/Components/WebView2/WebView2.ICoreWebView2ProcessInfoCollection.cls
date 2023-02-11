@@ -44,7 +44,7 @@ GetValueAtIndex: index value: processInfo
 			[in]unsigned int index,
 			[out, retval]ICoreWebView2ProcessInfo** processInfo);"
 
-	<virtual stdcall: hresult 5 dword ICoreWebView2ProcessInfo**>
+	<virtual stdcall: hresult 5 uint32 ICoreWebView2ProcessInfo**>
 	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2ProcessInfoCollection categoriesForMethods!
 elementClass!constants!public! !
