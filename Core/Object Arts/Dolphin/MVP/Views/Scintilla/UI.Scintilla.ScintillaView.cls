@@ -9147,17 +9147,9 @@ showAutoCompletionList: aCollection prefixLength: anInteger
 		withIcons: false!
 
 showAutoCompletionList: aCollection prefixLength: anInteger withIcons: aBoolean
-	"Display a auto-completion list built from the displayStrings of the elements of the
-	<collection> argument, optionally with icons if <boolean> argument is true. The <Integer>
-	parameter indicates how many characters before the caret should be used to provide context."
+	"Display a auto-completion list built from the displayStrings of the elements of the <collection> argument, optionally with icons if <boolean> argument is true. The <Integer> parameter indicates how many characters before the caret should be used to provide context."
 
-	"N.B. It is important for correct operation of incremental search in the auto-completion
-	list that the collection of items be appropriately sorted. In particular if Scintilla is
-	configured to perform case-sensitive auto-completion then the list must be sorted in the
-	same order as would result from using strcmp() to compare the items. This is because
-	Scintilla uses a binary chop to perform an incremental search of the list as characters
-	are entered, and so it may fail to find items if the sort order is not based on the same
-	comparison order that it uses."
+	"N.B. It is important for correct operation of incremental search in the auto-completion list that the collection of items be appropriately sorted. In particular if Scintilla is configured to perform case-sensitive auto-completion then the list must be sorted in the same order as would result from using strncmp() to compare the items. This is because Scintilla uses a binary chop to perform an incremental search of the list as characters are entered, and so it may fail to find items if the sort order is not based on the same comparison order that it uses. For case-insensitive matching Scintilla does a really cheesy upper-casing of the comparison strings (ASCII uppercasing, character-by-character) and then uses strncmp. This is likely to give the wrong results for languages other than English. In the IDE we use Scintilla for editing Smalltalk code, which has only ASCII characters in the lexicon for code element names, so this is not an issue."
 
 	aCollection isEmpty
 		ifTrue: [self cancelAutoCompletion]

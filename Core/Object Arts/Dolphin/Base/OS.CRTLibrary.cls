@@ -113,12 +113,16 @@ _statusfp
 	<cdecl: uint32 _statusfp>
 	^self invalidCall: _failureCode!
 
-_stricmp: string1 string2: string2
+_wcserror_s: buffer sizeInWords: sizeInWords errnum: errnum
+	<cdecl: errno _wcserror_s lpwstr uintptr int32>
+	^_failureCode!
+
+_wcsicmp: string1 string2: string2
 	"Answer the result of a case insensitive string comparison between string1 and string2,
 	answer <0, 0, or >0 according to whether string1 is lexicographically less than, 
 	equal to, or greater than string2."
 
-	<cdecl: int32 _stricmp lpstr lpstr>
+	<cdecl: int32 _wcsicmp lpwstr lpwstr>
 	^self invalidCall: _failureCode!
 
 _wfopen_s: pFile filename: nameString mode: modeString
@@ -237,10 +241,6 @@ setlocale: category locale: localeString
 	<cdecl: lpstr setlocale int32 lpstr>
 	^self invalidCall: _failureCode!
 
-strcat_s: destString bufferSize: anInteger strSource: sourceString
-	<cdecl: errno strcat_s lpstr intptr lpstr>
-	^self invalidCall: _failureCode!
-
 strcmp: string1 string2: string2
 	"Answer the order between the <String> arguments, string1 and string2.
 
@@ -253,10 +253,6 @@ strcmp: string1 string2: string2
 strcspn: string strCharSet: strCharSet
 	<cdecl: uint32 strcspn lpvoid char*>
 	^self invalidCall: _failureCode!
-
-strerror_s: aString bufferSize: sizeInteger errnum: errnoInteger
-	<cdecl: errno strerror_s lpstr intptr int32>
-	^_failureCode!
 
 strlen: aString
 	<cdecl: int32 strlen lpvoid>
@@ -313,7 +309,8 @@ _open_osfhandle:flags:!CRT functions-file handling!public! !
 _setmode:mode:!CRT functions-file handling!public! !
 _splitpath_s:drive:driveLen:dir:dirLen:fname:fnameLen:ext:extLen:!CRT functions-file handling!public! !
 _statusfp!CRT functions-floating point support!public! !
-_stricmp:string2:!CRT functions-string manipulation!public! !
+_wcserror_s:sizeInWords:errnum:!CRT functions-string manipulation!public! !
+_wcsicmp:string2:!CRT functions-string manipulation!public! !
 _wfopen_s:filename:mode:!CRT functions-stream I/O!public! !
 atoi:!CRT functions-data conversion!public! !
 close!public!realizing/unrealizing! !
@@ -337,10 +334,8 @@ invalidCall:!exceptions!private! !
 memcmp:buf2:count:!CRT functions-buffer manipulation!public! !
 memcpy_s:destSize:src:count:!public! !
 setlocale:locale:!CRT functions-localization!public! !
-strcat_s:bufferSize:strSource:!CRT functions-string manipulation!public! !
 strcmp:string2:!CRT functions-string manipulation!public! !
 strcspn:strCharSet:!CRT functions-string manipulation!public! !
-strerror_s:bufferSize:errnum:!CRT functions-string manipulation!public! !
 strlen:!CRT functions-string manipulation!public! !
 strncpy_s:bufferSize:strSource:count:!CRT functions-string manipulation!public! !
 synchronizeLocale!CRT functions-localization!private! !

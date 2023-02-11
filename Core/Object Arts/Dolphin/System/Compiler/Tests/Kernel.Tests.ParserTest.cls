@@ -238,7 +238,7 @@ testExternalCallEquality
 				do: [:j | self deny: ((self parseMethod: (strings at: i)) = (self parseMethod: (strings at: j)) xor: i = j)]]!
 
 testExternalCalls
-	| ffiCall tree src types |
+	| ffiCall tree src types reformatted |
 	self assert: (KernelLibrary parseTreeFor: #loadLibraryEx:hFile:dwFlags:) isPrimitive.
 	"Zero args"
 	tree := self parseMethod: 'blah <stdcall: void blah>'.
@@ -263,7 +263,7 @@ testExternalCalls
 	self assertIsNil: ffiCall returnType structClass.
 	self assert: ffiCall argumentTypes size equals: 1.
 	self assert: ffiCall selector identicalTo: #cdecl:.
-	ffiCall argumentTypes with: {ExtCallArgInt32}
+	ffiCall argumentTypes with: { ExtCallArgInt32 }
 		do: 
 			[:eachArg :eachType |
 			self assert: eachArg typeOrdinal equals: eachType.
@@ -283,7 +283,7 @@ testExternalCalls
 
 	"Many simple args"
 	src := String writeStream.
-	types := #('lpvoid' 'char' 'uint8' 'int8' 'uint16' 'int16' 'uint32' 'int32' 'bool' 'handle' 'double' 'lpstr' 'oop' 'float' 'lppvoid' 'hresult' 'lpwstr' 'uint64' 'int64' 'ote' 'bstr' 'variant' 'date' 'varbool' 'guid').
+	types := #('lpvoid' 'char' 'uint8' 'int8' 'uint16' 'int16' 'uint32' 'int32' 'bool' 'handle' 'double' 'lpstr' 'oop' 'float' 'lppvoid' 'hresult' 'lpwstr' 'uint64' 'int64' 'ote' 'bstr' 'variant' 'date' 'varbool' 'guid' 'uintptr' 'intptr' 'ntstatus' 'errno' 'bool8' 'char32' 'char16' 'char8' 'lpstr8').
 	types do: 
 			[:each |
 			src
@@ -302,7 +302,8 @@ testExternalCalls
 	src nextPut: $>.
 	src := src contents.
 	tree := self parseMethod: src.
-	self assert: tree formattedCode trimBlanks equals: src.
+	reformatted := tree formattedCode trimBlanks.
+	self assert: reformatted equals: src.
 	ffiCall := tree tags first.
 	self assert: ffiCall argumentTypes size equals: types size.
 	ffiCall argumentTypes with: (1 to: types size)

@@ -91,7 +91,7 @@ namespace ST
 			return stringPointer;
 		}
 
-		static POTE __fastcall New(PCSZ value, size_t cch)
+		static POTE __fastcall New(PCSZ __restrict value, size_t cch)
 		{
 			OTE* stringPointer = reinterpret_cast<OTE*>(ObjectMemory::newUninitializedNullTermObject<MyType>(cch));
 			MyType* __restrict string = stringPointer->m_location;
@@ -101,7 +101,7 @@ namespace ST
 			return stringPointer;
 		}
 
-		static POTE __fastcall New(PCSZ sz)
+		static POTE __fastcall New(PCSZ __restrict sz)
 		{
 			size_t cch = strlen((LPCSTR)sz);
 			OTE* stringPointer = reinterpret_cast<OTE*>(ObjectMemory::newUninitializedNullTermObject<MyType>(cch));
@@ -113,7 +113,7 @@ namespace ST
 		}
 
 		// Allocate a new String from a Unicode string
-		static POTE __fastcall New(LPCWSTR wsz)
+		static POTE __fastcall New(LPCWSTR __restrict wsz)
 		{
 			int cch = ::WideCharToMultiByte(CodePage(), 0, wsz, -1, nullptr, 0, nullptr, nullptr);
 			// Length includes null terminator since input is null terminated
@@ -149,7 +149,8 @@ namespace ST
 	class Utf8String : public ByteStringT<CP_UTF8, ClassUtf8String, Utf8StringOTE, char8_t>
 	{
 	public:
-		static POTE __fastcall NewFromAnsi(const char* pChars, size_t len);
+		static Utf8StringOTE* __fastcall NewFromAnsi(const char* pChars, size_t len);
+		static Utf8StringOTE* __fastcall NewFromString(OTE* oteNonUtf8String);
 
 		static POTE __fastcall NewFromBSTR(BSTR bs)
 		{
@@ -160,7 +161,8 @@ namespace ST
 	class AnsiString : public ByteStringT<CP_ACP, ClassByteString, AnsiStringOTE, char>
 	{
 	public:
-		static POTE __fastcall NewFromUtf8(const Utf8String::CU* pChars, size_t len);
+		static AnsiStringOTE* __fastcall NewFromUtf8(const Utf8String::CU* pChars, size_t len);
+		static AnsiStringOTE* __fastcall NewFromString(OTE* oteNonAnsiString);
 	};
 
 	class Symbol : public ArrayedCollection	// Really a subclass of Utf8String

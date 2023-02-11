@@ -687,7 +687,7 @@ int32_t Lexer::DecodeUtf8()
 
 int32_t Lexer::DecodeUtf8(char8_t ch)
 {
-	if (__isascii(ch))
+	if (ch <= 0x7f)
 	{
 		return ch;
 	}

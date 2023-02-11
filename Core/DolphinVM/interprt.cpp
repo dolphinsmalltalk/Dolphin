@@ -274,7 +274,7 @@ HRESULT Interpreter::initializeCharMaps()
 	for (; i <= 0xffff; i++)
 		wideChars[i] = static_cast<WCHAR>(i);
 	
-	VERIFY(::WideCharToMultiByte(m_ansiCodePage, WC_NO_BEST_FIT_CHARS, wideChars, 65536, m_unicodeToAnsiCharMap, 65536, "\0", nullptr) == 65536);
+	VERIFY(::WideCharToMultiByte(m_ansiCodePage, WC_NO_BEST_FIT_CHARS, wideChars, 65536, reinterpret_cast<LPSTR>(m_unicodeToAnsiCharMap), 65536, "\0", nullptr) == 65536);
 	_freea(wideChars);
 
 	return S_OK;

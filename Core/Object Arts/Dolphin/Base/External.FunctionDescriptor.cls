@@ -9,23 +9,27 @@ Core.Object
 	classConstants: {
 			'CallingConventions' -> #(#stdcall: #cdecl: #fastcall: #thiscall:).
 			'ReferenceTypes'
-				-> #(16r1 16rF 16rC 16r1 16r1 #UInt16 #Int16 #UInt32 #Int32 #UInt32 #UInt32 #DOUBLE 16rF 16rF #FLOAT nil #HRESULT 16rF #UInt64 #Int64 16rF 16rF #'OS.COM.VARIANT' #'OS.COM.DATE' #'OS.COM.VARIANT_BOOL' #REFGUID #UIntPtr #IntPtr #Int32 #Int32 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 16r35 16r35 16r35 nil nil nil nil nil nil nil nil nil nil nil).
+				-> #(16r1 16rF 16rC 16r1 16r1 #UInt16 #Int16 #UInt32 #Int32 #UInt32 #UInt32 #DOUBLE 16rF 16rF #FLOAT nil #HRESULT 16rF #UInt64 #Int64 16rF 16rF #'OS.COM.VARIANT' #'OS.COM.DATE' #'OS.COM.VARIANT_BOOL' #REFGUID #UIntPtr #IntPtr #Int32 #Int32 16r1 16r1 16r11 16r22 16rF nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 16r35 16r35 16r35 nil nil 16rF nil nil nil nil nil nil nil nil).
 			'RetClassIndex' -> 16r4.
 			'RetTypeMask' -> 16r3F.
 			'TypeNames'
-				-> #('void' 'lpvoid' 'char' 'uint8' 'int8' 'uint16' 'int16' 'uint32' 'int32' 'bool' 'handle' 'double' 'lpstr' 'oop' 'float' 'lppvoid' 'hresult' 'lpwstr' 'uint64' 'int64' 'ote' 'bstr' 'variant' 'date' 'varbool' 'guid' 'uintptr' 'intptr' 'ntstatus' 'errno' nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil).
+				-> #('void' 'lpvoid' 'char' 'uint8' 'int8' 'uint16' 'int16' 'uint32' 'int32' 'bool' 'handle' 'double' 'lpstr' 'oop' 'float' 'lppvoid' 'hresult' 'lpwstr' 'uint64' 'int64' 'ote' 'bstr' 'variant' 'date' 'varbool' 'guid' 'uintptr' 'intptr' 'ntstatus' 'errno' 'bool8' 'char32' 'char16' 'char8' 'lpstr8' nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil).
 			'TypeSizes'
-				-> #[0 4 4 4 4 4 4 4 4 4 4 8 4 4 4 4 4 4 8 8 4 4 16 8 4 16 4 4 4 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 8 4 4 4 0 0 0 0 0 0 0 0].
+				-> #[0 4 0 4 4 4 4 4 4 4 4 8 4 4 4 4 4 4 8 8 4 4 16 8 4 16 4 4 4 4 4 4 4 4 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 8 4 4 4 0 0 0 0 0 0 0 0].
 			'ValueTypes'
 				-> (LookupTable withAll: {
 								'Address' -> 16r1.
 								'bool' -> 16r9.
 								'BOOL' -> 16r9.
+								'bool8' -> 16r1E.
 								'bstr' -> 16r15.
 								'BSTR' -> 16r15.
 								'byte' -> 16r3.
 								'BYTE' -> 16r3.
 								'char' -> 16r2.
+								'char16' -> 16r20.
+								'char32' -> 16r1F.
+								'char8' -> 16r21.
 								'CLSID' -> 16r19.
 								'date' -> 16r17.
 								'DATE' -> 16r17.
@@ -57,6 +61,7 @@ Core.Object
 								'LARGE_INTEGER' -> 16r13.
 								'lppvoid' -> 16rF.
 								'lpstr' -> 16rC.
+								'lpstr8' -> 16r22.
 								'lpvoid' -> 16r1.
 								'LPVOID' -> 16r1.
 								'lpwstr' -> 16r11.
@@ -376,7 +381,7 @@ initializeExternalRefTypes
 	referenceTypes
 		at: ExtCallArgVOID + 1 put: ExtCallArgLPVOID;
 		at: ExtCallArgLPPVOID + 1 put: nil;
-		at: ExtCallArgCHAR + 1 put: ExtCallArgLPSTR;
+		at: ExtCallArgChar + 1 put: ExtCallArgLPSTR;
 		at: ExtCallArgUInt8 + 1 put: ExtCallArgLPVOID;
 		at: ExtCallArgInt8 + 1 put: ExtCallArgLPVOID;
 		at: ExtCallArgUInt16 + 1 put: #UInt16;
@@ -406,7 +411,14 @@ initializeExternalRefTypes
 		at: ExtCallArgSTRUCT4 + 1 put: ExtCallArgLP;
 		at: ExtCallArgSTRUCT8 + 1 put: ExtCallArgLP;
 		at: ExtCallArgNTSTATUS + 1 put: #Int32;
-		at: ExtCallArgErrno + 1 put: #Int32.
+		at: ExtCallArgErrno + 1 put: #Int32;
+		at: ExtCallArgBool8 + 1 put: ExtCallArgLPVOID;
+		at: ExtCallArgChar32 + 1 put: ExtCallArgLPVOID;
+		at: ExtCallArgChar16 + 1 put: ExtCallArgLPWSTR;
+		at: ExtCallArgChar8 + 1 put: ExtCallArgLPSTR8;
+		at: ExtCallArgLPSTR8 + 1 put: ExtCallArgLPPVOID;
+		at: ExtCallArgCOMPTR + 1 put: ExtCallArgLPPVOID.
+		
 	referenceTypes isImmutable: true.
 	self addClassConstant: 'ReferenceTypes' value: referenceTypes!
 
@@ -426,7 +438,7 @@ initializeExternalTypes
 		at: 'double' put: ExtCallArgDOUBLE;
 		at: 'float' put: ExtCallArgFLOAT;
 		at: 'hresult' put: ExtCallArgHRESULT;
-		at: 'char' put: ExtCallArgCHAR;
+		at: 'char' put: ExtCallArgChar;
 		at: 'uint8' put: ExtCallArgUInt8;
 		at: 'int8' put: ExtCallArgInt8;
 		at: 'uint16' put: ExtCallArgUInt16;
@@ -442,7 +454,13 @@ initializeExternalTypes
 		at: 'guid' put: ExtCallArgGUID;
 		at: 'date' put: ExtCallArgDATE;
 		at: 'ntstatus' put: ExtCallArgNTSTATUS;
-		at: 'errno' put: ExtCallArgErrno.
+		at: 'errno' put: ExtCallArgErrno;
+		at: 'bool8' put: ExtCallArgBool8;
+		at: 'char32' put: ExtCallArgChar32;
+		at: 'char16' put: ExtCallArgChar16;
+		at: 'char8' put: ExtCallArgChar8;
+		at: 'lpstr8' put: ExtCallArgLPSTR8.
+
 	"void is only valid as a return type, not an argument type."
 	valueTypes at: 'void' put: ExtCallArgVOID.
 
@@ -513,11 +531,48 @@ initializeExternalTypes
 initializeTypeSizes
 	| typeSizes |
 	"Remember that bytes and words are still pushed as 32-bit values"
-	typeSizes := #[0 4 4 4 4 4 4 4 4 4 4 8 4 4 4 4 4 4 8 8 4 4 16 8 4 16 0 0 4 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 8 4 4 4 0 0 0 0 0 0 0 0]
-				copy.
+	typeSizes := ByteArray new: 64.
 	typeSizes
+		at: ExtCallArgVOID + 1 put: 0;
+		at: ExtCallArgLPVOID + 1 put: VMConstants.IntPtrSize;
+		at: ExtCallArgUInt8 + 1 put: 4;
+		at: ExtCallArgInt8 + 1 put: 4;
+		at: ExtCallArgUInt16 + 1 put: 4;
+		at: ExtCallArgInt16 + 1 put: 4;
+		at: ExtCallArgUInt32 + 1 put: 4;
+		at: ExtCallArgInt32 + 1 put: 4;
+		at: ExtCallArgBOOL + 1 put: 4;
+		at: ExtCallArgHANDLE + 1 put: VMConstants.IntPtrSize;
+		at: ExtCallArgDOUBLE + 1 put: 8;
+		at: ExtCallArgLPSTR + 1 put: VMConstants.IntPtrSize;
+		at: ExtCallArgOOP + 1 put: VMConstants.IntPtrSize;
+		at: ExtCallArgFLOAT + 1 put: 4;
+		at: ExtCallArgLPPVOID + 1 put: VMConstants.IntPtrSize;
+		at: ExtCallArgHRESULT + 1 put: 4;
+		at: ExtCallArgLPWSTR + 1 put: VMConstants.IntPtrSize;
+		at: ExtCallArgUInt64 + 1 put: 8;
+		at: ExtCallArgInt64 + 1 put: 8;
+		at: ExtCallArgOTE + 1 put: VMConstants.IntPtrSize;
+		at: ExtCallArgBSTR + 1 put: VMConstants.IntPtrSize;
+		at: ExtCallArgVARIANT + 1 put: 16;
+		at: ExtCallArgDATE + 1 put: 8;
+		at: ExtCallArgVARBOOL + 1 put: 4;
+		at: ExtCallArgGUID + 1 put: 16;
+		at: ExtCallArgUIntPtr + 1 put: VMConstants.IntPtrSize;
 		at: ExtCallArgIntPtr + 1 put: VMConstants.IntPtrSize;
-		at: ExtCallArgUIntPtr + 1 put: VMConstants.IntPtrSize.
+		at: ExtCallArgNTSTATUS + 1 put: 4;
+		at: ExtCallArgErrno + 1 put: 4;
+		at: ExtCallArgBool8 + 1 put: 4;
+		at: ExtCallArgChar32 + 1 put: 4;
+		at: ExtCallArgChar16 + 1 put: 4;
+		at: ExtCallArgChar8 + 1 put: 4;
+		at: ExtCallArgLPSTR8 + 1 put: VMConstants.IntPtrSize;
+		at: ExtCallArgSTRUCT + 1 put: 0;
+		at: ExtCallArgSTRUCT4 + 1 put: 4;
+		at: ExtCallArgSTRUCT8 + 1 put: 8;
+		at: ExtCallArgLP + 1 put: VMConstants.IntPtrSize;
+		at: ExtCallArgLPP + 1 put: VMConstants.IntPtrSize;
+		at: ExtCallArgCOMPTR + 1 put: VMConstants.IntPtrSize.
 	self assert: [ValueTypes asSortedArray last < typeSizes size].
 	self addClassConstant: 'TypeSizes' value: typeSizes!
 

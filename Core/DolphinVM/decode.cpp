@@ -336,7 +336,7 @@ wostream& operator<<(wostream& st, const CharOTE* ote)
 	st << L'$';
 	SmallInteger code = ObjectMemoryIntegerValueOf(ch->m_code);
 	char32_t codeUnit = code & 0xffffff;
-	if (__isascii(codeUnit))
+	if (codeUnit <= 0x7f)
 	{
 		if (isgraph(codeUnit))
 		{

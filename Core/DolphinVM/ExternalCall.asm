@@ -26,8 +26,16 @@ extern NewExternalStructure:near32
 NewAnsiApiString EQU ?NewAnsiApiString@Interpreter@@SIPAV?$TOTE@VObject@ST@@@@PBD@Z
 extern NewAnsiApiString:near32
 
+NewAnsiApiStringFromString EQU ?NewAnsiApiStringFromString@Interpreter@@SIPAV?$TOTE@VObject@ST@@@@PAV2@@Z
+extern NewAnsiApiStringFromString:near32
+
 NewAnsiApiStringFromUtf16 EQU ?NewAnsiApiStringFromUtf16@Interpreter@@SIPAV?$TOTE@VObject@ST@@@@PB_W@Z
 extern NewAnsiApiStringFromUtf16:near32
+
+NewUtf8String EQU ?New@?$ByteStringT@$0PNOJ@$0GI@VUtf8StringOTE@@_Q@ST@@SIPAVUtf8StringOTE@@PIB_Q@Z
+extern NewUtf8String:near32
+NewUtf8StringFromString EQU ?NewFromString@Utf8String@ST@@SIPAVUtf8StringOTE@@PAV?$TOTE@VObject@ST@@@@@Z
+extern NewUtf8StringFromString:near32
 
 NewUtf16String EQU ?New@Utf16String@ST@@SIPAVUtf16StringOTE@@PB_W@Z
 extern NewUtf16String:near32
@@ -50,6 +58,16 @@ extern REQUESTCOMPLETION:near32
 
 CharacterGetCodePoint EQU ?getCodePoint@Character@ST@@QBE_UXZ
 extern CharacterGetCodePoint:near32
+
+NewAnsiChar EQU ?NewAnsi@Character@ST@@SIPAV?$TOTE@VCharacter@ST@@@@E@Z
+extern NewAnsiChar:near32
+
+NewUtf32Char EQU ?NewUtf32@Character@ST@@SIPAV?$TOTE@VCharacter@ST@@@@_U@Z
+extern NewUtf32Char:near32
+
+; TODO: Not correct
+NewUtf16Char EQU ?NewUtf16@Character@ST@@SIPAV?$TOTE@VCharacter@ST@@@@_S@Z
+extern NewUtf16Char:near32
 
 ; We need to test the structure type specially
 ArgSTRUCT	EQU		50
@@ -101,6 +119,18 @@ TEMP2	EQU		edx
 DESCRIPTOR EQU	ebx
 ;; And the _IP register as the loop counter
 INDEX	EQU		edi
+
+MAX_UCSCHAR EQU 010ffffh
+
+ExtCallArg MACRO type
+ALIGN 16
+ExtCallArg&type&:
+ENDM
+
+ExtCallRet MACRO type
+ALIGN 16
+ExtCallRet&type&:
+ENDM
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -548,7 +578,7 @@ unwindExit:
 ;; Could access the class from the literal frame and compare it. We could then
 ;; implement a less complex coercion as we could be more strict about the allowable
 ;; argument types.
-ExtCallArgCOMPTR:
+ExtCallArg COMPTR
 ExtCallArgLP:
 	dec		INDEX								; Ignore the argument type (could validate here)
 	; Deliberately drop through
@@ -562,7 +592,7 @@ ExtCallArgLP:
 ;;		Pointer objects whose first instance variable is a SmallInteger
 ;;		or byte object
 ;;
-ExtCallArgLPVOID:
+ExtCallArg LPVOID
 	ASSUME	ARG:Oop
 
 	sar		ARG, 1									; Commonly pass SmallIntegers, so try to convert
@@ -621,20 +651,53 @@ pushLPVOIDLoopNext:
 	PushLoopNext <ARG>								; else push pointer out of object
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Simple. Permit only Characters
+;; Permit only ANSI Characters or SmallIntegers 0..255
 
-extCallArgCHAR:
+ExtCallArg Char
+ExtCallArgChar8:
 	ASSUME	ARG:Oop										; ARG is input Oop from dispatch loop
 
 	test	ARG, 1										; Is it a SmallInteger?
-	jnz		preCallFail									; Yes, not valid (only Characters)
+	jnz		@F											; Yes
 	ASSUME	ARG:PTR OTE									; No, its an object of unknown type
 
 	mov		TEMP2, [ARG].m_oteClass
 	ASSUME	TEMP:PTR OTE
 	
 	mov		TEMP, [ARG].m_location
-	cmp		TEMP2, [Pointers.ClassCharacter]				; Is it a Character?
+	cmp		TEMP2, [Pointers.ClassCharacter]			; Is it a Character?
+
+	jne		preCallFail									; No? Fail it
+	ASSUME	ARG:PTR Character							; Yes
+
+	call	CharacterGetCodePoint
+	cmp		eax, 0ffh
+	ja		preCallFail
+
+	ASSUME	ARG:DWORD
+	PushLoopNext <ARG>
+
+@@:
+	sar		ARG, 1
+	cmp		ARG, 0ffh
+	ja		preCallFail									; -ve or > 255, not a valid ANSI code unit
+	PushLoopNext <ARG>
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Permit only Characters or SmallIntegers in Unicode range
+
+ExtCallArg Char32
+	ASSUME	ARG:Oop										; ARG is input Oop from dispatch loop
+
+	test	ARG, 1										; Is it a SmallInteger?
+	jnz		@F											; Yes
+	ASSUME	ARG:PTR OTE									; No, its an object of unknown type
+
+	mov		TEMP2, [ARG].m_oteClass
+	ASSUME	TEMP:PTR OTE
+	
+	mov		TEMP, [ARG].m_location
+	cmp		TEMP2, [Pointers.ClassCharacter]			; Is it a Character?
 
 	jne		preCallFail									; No? Fail it
 	ASSUME	ARG:PTR Character							; Yes
@@ -644,10 +707,45 @@ extCallArgCHAR:
 	ASSUME	ARG:DWORD
 	PushLoopNext <ARG>
 
+@@:
+	sar		ARG, 1
+	cmp		ARG, MAX_UCSCHAR
+	ja		preCallFail									; -ve or > MAX_UCSCHAR, not a valid code point
+	PushLoopNext <ARG>
+
+ExtCallArg Char16
+	ASSUME	ARG:Oop										; ARG is input Oop from dispatch loop
+
+	test	ARG, 1										; Is it a SmallInteger?
+	jnz		@F											; Yes
+	ASSUME	ARG:PTR OTE									; No, its an object of unknown type
+
+	mov		TEMP2, [ARG].m_oteClass
+	ASSUME	TEMP:PTR OTE
+	
+	mov		TEMP, [ARG].m_location
+	cmp		TEMP2, [Pointers.ClassCharacter]			; Is it a Character?
+
+	jne		preCallFail									; No? Fail it
+	ASSUME	ARG:PTR Character							; Yes
+
+	call	CharacterGetCodePoint						; This is not correct - we need to get Utf16 code unit, and fail if not representable as such
+	cmp		eax, 0ffffh
+	ja		preCallFail
+
+	ASSUME	ARG:DWORD
+	PushLoopNext <ARG>
+
+@@:
+	sar		ARG, 1
+	cmp		ARG, 0ffffh
+	ja		preCallFail									; Out of range
+	PushLoopNext <ARG>
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Simple permit only SmallIntegers in the range 0..255
 
-extCallArgBYTE:
+ExtCallArg UInt8
 	ASSUME	ARG:Oop										; ARG is input Oop from dispatch loop
 
 	sar		ARG, 1										; Is is a SmallInteger?
@@ -661,7 +759,7 @@ extCallArgBYTE:
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Simple - permit only SmallIntegers in the range -128..127
-extCallArgSBYTE:
+ExtCallArg Int8
 	ASSUME	ARG:Oop										; ARG is input Oop from dispatch loop
 
 	sar		ARG, 1										; Is it a SmallInteger
@@ -678,7 +776,7 @@ extCallArgSBYTE:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; #word - permit only SmallIntegers in the range 0..65535, and two byte objects
 
-extCallArgWORD:
+ExtCallArg UInt16
 	ASSUME	ARG:Oop										; ARG is input Oop from dispatch loop
 
 	sar		ARG, 1										; Is it a SmallInteger
@@ -713,7 +811,7 @@ extCallArgWORD:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; #sword - permit SmallIntegers in the range 0..65535, and two byte objects
 
-extCallArgSWORD:
+ExtCallArg Int16
 	ASSUME	ARG:Oop										; ARG is input Oop from dispatch loop
 
 	sar		ARG, 1										; Is it a SmallInteger
@@ -751,11 +849,11 @@ extCallArgSWORD:
 ; Assume that most commonly SmallInteger will be passed, so shift in anticipation
 ; of that.
 
-extCallArgINTPTR:
-extCallArgSDWORD:
-extCallArgHRESULT:
-extCallArgNTSTATUS:
-extCallArgErrno:
+ExtCallArg IntPtr
+ExtCallArgInt32:
+ExtCallArgHRESULT:
+ExtCallArgNTSTATUS:
+ExtCallArgErrno:
 	ASSUME	ARG:Oop											; ARG is input Oop from dispatch loop
 	
 	sar		ARG, 1											; Is it a SmallInteger?
@@ -793,8 +891,8 @@ extCallArgErrno:
 ; N.B. This should be similar to the above, except that it permits a wider
 ; range of positive large integers.
 ;
-extCallArgUINTPTR:
-extCallArgDWORD:
+ExtCallArg UIntPtr
+ExtCallArgUInt32:
 	ASSUME	ARG:Oop										; ARG is input Oop from dispatch loop
 	
 	sar		ARG, 1										; Is it a SmallInteger?
@@ -834,7 +932,7 @@ extCallArgDWORD:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Push any 32-bit value as if it is some unsigned handle
 ;
-extCallArgHANDLE:
+ExtCallArg Handle
 	ASSUME	ARG:Oop										; ARG is input Oop from dispatch loop
 	
 	sar		ARG, 1										; Is it a SmallInteger?
@@ -871,8 +969,8 @@ pushHANDLELoopNext:
 	PushLoopNext	<ARG>
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-extCallArgBOOL:
+ExtCallArg Bool8
+ExtCallArgBool:
 	ASSUME	ARG:Oop											; ARG is input Oop from dispatch loop
 
 	sar		ARG, 1											; SmallInteger?
@@ -896,8 +994,8 @@ pushBoolLoopNext:
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-extCallArgDATE:
-extCallArgDOUBLE:
+ExtCallArg DATE
+ExtCallArgDouble:
 	ASSUME	ARG:Oop										; ARG is input Oop from dispatch loop
 
 	sar		ARG, 1										; Often pass SmallInteger?
@@ -983,7 +1081,7 @@ extCallArgDOUBLE:
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-extCallArgBSTR:
+ExtCallArg BSTR
 	ASSUME	ARG:Oop										; ARG is input Oop from dispatch loop
 
 	test	ARG, 1										; SmallInteger?
@@ -1029,7 +1127,7 @@ pushBSTRAddressLoopNext:
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-ExtCallArgLPWSTR:
+ExtCallArg LPWSTR
 	ASSUME	ARG:Oop										; ARG is input Oop from dispatch loop
 
 	test	ARG, 1										; SmallInteger?
@@ -1069,7 +1167,9 @@ ExtCallArgLPWSTR:
 	ASSUME	ARG:PTR ByteArray
 	PushLoopNext<ARG>
 
-ExtCallArgLPSTR:
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+ExtCallArg LPSTR
 	ASSUME	ARG:Oop										; ARG is input Oop from dispatch loop
 
 	test	ARG, 1										; SmallInteger?
@@ -1085,17 +1185,58 @@ ExtCallArgLPSTR:
 	test	[ARG].m_flags, MASK m_weakOrZ				; It is a null terminated object?
 	jz		preCallFail									; No, only null terminated objects can be passed as #lpstr
 
+	mov		TEMP, [TEMP].m_location
+	ASSUME TEMP:PTR Behavior
+	mov		cl, BYTE PTR[TEMP].m_instanceSpec.m_extraSpec
+	and		cl, 3
+	cmp		cl, 1										; Is it a byte-encoded String?
+	jg		@F											; No (UTF-16 = 2 or UTF-32 = 3)
+
 	mov		ARG, [ARG].m_location
 	ASSUME	ARG:PTR String
-
-	cmp		TEMP, [Pointers.ClassUtf16String]			; If its a wide string it will need conversion.
-	je		@F
-
-	PushLoopNext <ARG>									; ByteString of some sort, just push that pointer. Note we assume encoding is as expected
+	PushLoopNext <ARG>									; Byte string of some sort, just push that pointer. Note we assume encoding is correct. Conversion has to be done at the Smalltalk level if needed.
 
 @@:
 	mov		ecx, ARG
-	call	NewAnsiApiStringFromUtf16						; Convert to a byte string of an encoding appropriate for an Windows 'A' API. This can be UTF-8 no Windows post May 2019 update if system code page is CP_UTF8
+	call	NewAnsiApiStringFromString					; Convert to a byte string for a Windows 'A' API call. This can be UTF-8 no Windows post May 2019 update if system code page is CP_UTF8
+	ASSUME	ARG:PTR OTE
+
+	mov		[_SP+OOPSIZE], eax
+	AddToZctNoSP <a>
+
+	mov		eax, [_SP+OOPSIZE]
+	mov		ARG, [eax].m_location
+	ASSUME	ARG:PTR String
+	PushLoopNext<ARG>
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+ExtCallArg LPSTR8
+	ASSUME	ARG:Oop										; ARG is input Oop from dispatch loop
+
+	test	ARG, 1										; SmallInteger?
+	jnz		preCallFail									; Yes, invalid
+	ASSUME	ARG:PTR OTE									; No, its an object
+
+	test	[ARG].m_flags, MASK m_pointer				; Pointer object?
+	jnz		tryNil										; Yes, nil passes as null, but other Pointer objects invalid
+
+	mov		TEMP, [ARG].m_oteClass						; Get class of ARG into TEMP
+	ASSUME	TEMP:PTR OTE
+
+	test	[ARG].m_flags, MASK m_weakOrZ				; It is a null terminated object?
+	jz		preCallFail									; No, only null terminated objects can be passed as #lpstr
+
+	cmp		TEMP, [Pointers.ClassUtf8String]			; If its not a Utf8String it will need conversion.
+	jne		@F
+
+	mov		ARG, [ARG].m_location
+	ASSUME	ARG:PTR String
+	PushLoopNext <ARG>									; 
+
+@@:
+	mov		ecx, ARG
+	call	NewUtf8StringFromString						; 
 	ASSUME	ARG:PTR OTE
 
 	mov		[_SP+OOPSIZE], eax
@@ -1121,12 +1262,12 @@ pushNil:
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-extCallArgOTE:
+ExtCallArg OTE
 	test	ARG,1										; SmallInteger?
 	jnz		preCallFail									; Yes, not valid
 	; Deliberately drop through
 
-extCallArgOOP:
+ExtCallArgOOP:
 	ASSUME	ARG:Oop										; ARG is input Oop from dispatch loop
 
 	PushLoopNext <ARG>
@@ -1134,7 +1275,7 @@ extCallArgOOP:
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-extCallArgFLOAT:
+ExtCallArg Float
 	ASSUME	ARG:Oop										; ARG is input Oop from dispatch loop
 
 	sar		ARG, 1										; Often pass SmallInteger
@@ -1175,7 +1316,7 @@ extCallArgFLOAT:
 ;; implement a less complex coercion as we could be more strict about the allowable
 ;; argument types.
 
-ExtCallArgLPP:
+ExtCallArg LPP
 	dec		INDEX								; Ignore the argument type (could validate here)
 	; Deliberately drop through
 
@@ -1244,7 +1385,7 @@ ExtCallArgLPPVOID:
 ;;	- Byte structures must have >=4 and <=8 bytes of data (they are sign extended if necessary)
 ;;	- nil is a synonym for 0
 
-extCallArgSQWORD:
+ExtCallArg Int64
 	ASSUME	ARG:Oop
 	ASSERTEQU	%ARG, <eax>								; We use CDQ expecting to sign extend EAX into EDX
 
@@ -1306,7 +1447,7 @@ tryNilQWORD:
 ;; N.B. THIS IS AN EXACT COPY OF THE ABOVE, EXCEPT THAT WE ZERO, RATHER THAN SIGN,
 ;; EXTEND
 
-extCallArgQWORD:
+ExtCallArg UInt64
 	ASSUME	ARG:Oop
 	ASSERTEQU	%ARG, <eax>								; We use CDQ expecting to sign extend EAX into EDX
 
@@ -1364,8 +1505,8 @@ extCallArgQWORD:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 
-extCallArgGUID:
-extCallArgVARIANT:
+ExtCallArg GUID
+ExtCallArgVARIANT:
 	ASSUME	ARG:Oop
 	
 	test	ARG, 1										; SmallInteger?
@@ -1428,7 +1569,7 @@ extCallArgVARIANT:
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-extCallArgVARBOOL:
+ExtCallArg VARBOOL
 	ASSUME	ARG:Oop										; ARG is input Oop from dispatch loop
 
 	sar		ARG, 1										; SmallInteger?
@@ -1454,9 +1595,9 @@ pushVarBoolLoopNext:
 ;;	Pass a structure by value. Works for byte objects and ExternalStructures
 ;;	containing byte objects
 
-ExtCallArgSTRUCT4:
-ExtCallArgSTRUCT8:
-ExtCallArgSTRUCT:
+ExtCallArg Struct4
+ExtCallArgStruct8:
+ExtCallArgStruct:
 	ASSUME	ARG:Oop
 	
 	test	ARG, 1											; SmallInteger?
@@ -1625,8 +1766,8 @@ ExtCallArgSTRUCT:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Invalid argument type or coercion failure
 
-extCallArgReserved:
-extCallArgVOID:									; Not valid argument types
+ExtCallArg Reserved
+ExtCallArgVOID:									; Not valid argument types
 preCallFail:
 	; NOTE IF SAVING STUFF ON THE STACK BEFORE PUSHING ARGUMENTS MAY NEED TO SAVE/
 	; RESTORE STACK POINTER DEPENDING ON THE CALLING CONVENTION, AT MOMENT WE 
@@ -1658,16 +1799,15 @@ preCallFail:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;;	Return value instantiators
-
-extCallRetOop:
+ExtCallRet Oop
 	AnswerOopResult
 
-extCallRetOTE:
+ExtCallRet OTE:
 	AnswerObjectResult
 	
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-extCallRetLPVOID:
+ExtCallRet LPVOID
 	ASSERTNEQU	%RESULT, <edx>
 	mov		edx, [Pointers.ClassExternalAddress]
 	mov		ecx, RESULT
@@ -1676,21 +1816,39 @@ extCallRetLPVOID:
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-extCallRetCHAR:
-	and		RESULT, 0ffh
-	mov		TEMP, [OBJECTTABLE]
-
-	; Fast mult by 16 (the size of an OT entry)
-	shl		RESULT, 4
-	add		TEMP, FIRSTCHAROFFSET
-	add		RESULT, TEMP
-
+ExtCallRet Char8
+	mov		ecx, RESULT
+	call	NewAnsiChar
 	AnswerResult
 
+AnswerCharResult MACRO
+	ASSUME	eax:PTR OTE
+
+	_AnswerResult
+	ASSUME	RESULT:PTR OTE
+	cmp [RESULT].m_count, 0
+	je @F
+	mov	eax, _SP
+	ret
+@@:
+	AddToZct <a>
+	mov	eax, _SP								; primitiveSuccess(0)
+	ret	
+ENDM
+
+ExtCallRet Char32
+	mov		ecx, RESULT
+	call	NewUtf32Char
+	AnswerCharResult
+
+ExtCallRet Char16
+	mov		ecx, RESULT
+	call	NewUtf16Char
+	AnswerCharResult
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-extCallRetBYTE:
+ExtCallRet UInt8
 	and		RESULT, 0ffh
 	lea		RESULT, [RESULT*2+1]
 	AnswerResult
@@ -1698,7 +1856,7 @@ extCallRetBYTE:
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-extCallRetSBYTE:
+ExtCallRet Int8
 	movsx	TEMP, RESULTB
 	lea		RESULT, [TEMP*2+1]
 	AnswerResult
@@ -1706,24 +1864,24 @@ extCallRetSBYTE:
 	
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-extCallRetWORD:
+ExtCallRet UInt16
 	and		RESULT, 0ffffh
 	lea		RESULT, [RESULT*2+1]
 	AnswerResult
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-extCallRetSWORD:
+ExtCallRet Int16
 	movsx	TEMP, RESULTW
 	lea		RESULT, [TEMP*2+1]
 	AnswerResult
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-extCallRetHRESULT:
-extCallRetNTSTATUS:
+ExtCallRet HRESULT
+ExtCallRetNTSTATUS:
 	test	RESULT, RESULT
-	jge		extCallRetDWORD					; If successful return code, return as DWORD
+	jge		ExtCallRetUInt32					; If successful return code, return as DWORD
 
 	; FAILED(HRESULT)
 	ASSERTNEQU %RESULT, <ecx>
@@ -1746,7 +1904,7 @@ extCallRetNTSTATUS:
 
 	ret
 
-extCallRetErrno:
+ExtCallRet Errno
 	test	RESULT, RESULT
 	jnz		@F
 	mov		RESULT, SMALLINTZERO
@@ -1766,8 +1924,8 @@ extCallRetErrno:
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-extCallRetUINTPTR:
-extCallRetDWORD:
+ExtCallRet UIntPtr:
+ExtCallRetUInt32:
 	ASSUME RESULT:DWORD
 
 	mov		ecx, RESULT
@@ -1783,8 +1941,8 @@ dwordOverflow:
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-extCallRetINTPTR:
-extCallRetSDWORD:
+ExtCallRet IntPtr
+ExtCallRetInt32:
 	ASSUME RESULT:SDWORD
 
 	mov		ecx, RESULT
@@ -1799,19 +1957,23 @@ sdwordOverflow:
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-extCallRetBOOL:
-	ASSUME	RESULT:BOOL
-
+ExtCallRet Bool:
+	mov		ecx, [oteTrue]
 	test	RESULT, RESULT
-	mov		RESULT, [oteTrue]
-	jnz		answerResult
-	add		RESULT, SIZEOF OTE
-answerResult:
+	mov		RESULT, [oteFalse]
+	cmovne	RESULT, ecx
+	AnswerResult
+
+ExtCallRet Bool8
+	mov		ecx, [oteTrue]
+	test	RESULTB, RESULTB
+	mov		RESULT, [oteFalse]
+	cmovne	RESULT, ecx
 	AnswerResult
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-extCallRetHANDLE:
+ExtCallRet Handle
 	ASSUME RESULT:HANDLE
 
 	test	RESULT, RESULT
@@ -1830,8 +1992,8 @@ returnNil:
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-extCallRetFLOAT:
-extCallRetDOUBLE:
+ExtCallRet Double
+ExtCallRetFloat:
 	;; Result is on FP stack
 	call	NEWFLOATOBJ
 	ASSUME	eax:PTR OTE
@@ -1844,14 +2006,14 @@ extCallRetDOUBLE:
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-extCallRetBSTR:
+ExtCallRet BSTR
 	ASSERTNEQU	%RESULT, <edx>
 	mov		edx, [Pointers.ClassBSTR]
 	mov		ecx, RESULT
 	call	NEWDWORD
 	AnswerObjectResult
 
-extCallRetLPWSTR:
+ExtCallRet LPWSTR
 	test	RESULT, RESULT
 	jz		returnNil
 
@@ -1859,7 +2021,7 @@ extCallRetLPWSTR:
 	call	NewUtf16String
 	AnswerObjectResult
 
-extCallRetLPSTR:
+ExtCallRet LPSTR
 	test	RESULT, RESULT
 	jz		returnNil
 
@@ -1867,7 +2029,15 @@ extCallRetLPSTR:
 	call	NewAnsiApiString					; if GetACP() == CP_UTF8, result will be Utf8String, otherwise AnsiString
 	AnswerObjectResult
 
-extCallRetLPPVOID:
+ExtCallRet LPSTR8
+	test	RESULT, RESULT
+	jz		returnNil
+
+	mov		ecx, RESULT							; Pass RESULT in ECX
+	call	NewUtf8String
+	AnswerObjectResult
+
+ExtCallRet LPPVOID
 	mov		edx, RESULT							; Load return value for use as pointer parm
 	mov		ecx, [Pointers.ClassLPVOID]			; Create an LPVOID instance ...
 	call	NewExternalStructurePointer			; ... containing a pointer (i.e. void**)
@@ -1876,8 +2046,8 @@ extCallRetLPPVOID:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 
-extCallRetReserved:
-extCallRetVOID:									; Returning void just leaves receiver on stack
+ExtCallRet VOID									; Returning void just leaves receiver on stack
+ExtCallRetReserved:
 	mov		ecx, callContext
 	ASSUME	ecx:PTR InterpRegisters
 
@@ -1897,25 +2067,25 @@ extCallRetVOID:									; Returning void just leaves receiver on stack
 ; Returning a QWORD uses the 8-byte structure return convention (i.e. in
 ; the EDX:EAX register pair
 
-extCallRetQWORD:
+ExtCallRet UInt64
 	push	edx
 	push	eax
 	call	NewUnsigned64
 	AnswerOopResult
 
-extCallRetSQWORD:
+ExtCallRet Int64
 	push	edx
 	push	eax
 	call	NewSigned64
 	AnswerOopResult
 
-extCallRetVARIANT:
+ExtCallRet VARIANT
 	mov		edx, RESULT							; Load return value for use as pointer parm
 	mov		ecx, [Pointers.ClassVARIANT]
 	call	NewExternalStructure
 	AnswerObjectResult
 
-extCallRetDATE:
+ExtCallRet DATE
 	;; Result is on FP stack, so temporarily copy off onto main stack
 	fstp	QWORD PTR[esp-8]					; Store double to stack
 	sub		esp, 8								; Make the space
@@ -1925,18 +2095,16 @@ extCallRetDATE:
 	add		esp, 8								; Pop
 	AnswerObjectResult
 
-extCallRetVARBOOL:
+ExtCallRet VARBOOL
 	ASSUME	RESULT:DWORD
-
+	mov		ecx, [oteTrue]
 	;; Mask out any extraneous bits
 	and		RESULT, 0FFFFh
-	mov		RESULT, [oteTrue]
-	jnz		@F
-	add		RESULT, SIZEOF OTE
-@@:
+	mov		RESULT, [oteFalse]
+	cmovne	RESULT, ecx
 	AnswerResult
 
-extCallRetGUID:
+ExtCallRet GUID
 	mov		ecx, RESULT							; Load return value for use as pointer parm
 	call	NewGUID
 	AnswerObjectResult
@@ -1946,9 +2114,9 @@ extCallRetGUID:
 ; N.B. WE ASSUME THAT TEMP WAS USED FOR RETURN TYPE JUMP TABLE AND THAT THE TOP THREE BYTES
 ; ARE THEREFORE CLEAR
 ;
-extCallRetCOMPTR:		; N.B. Should really handle separately and AddRef this one
-extCallRetLPP:
-extCallRetLP:
+ExtCallRet LP
+ExtCallRetCOMPTR:		; N.B. Should really handle separately and AddRef this one
+ExtCallRetLPP:
 	mov		TEMPB, [DESCRIPTOR].m_returnParm	; Get return parm literal frame index into ECX
 	mov		edx, RESULT							; Load return value for use as pointer parm
 	mov		eax, [method]						; Load the method (NOT Interpreter::m_pMethod)
@@ -1957,7 +2125,7 @@ extCallRetLP:
 	call	NewExternalStructurePointer
 	AnswerObjectResult
 
-extCallRetSTRUCT4:
+ExtCallRet Struct4
 	push	RESULT								; Push result on stack, so can pass address to NewExternalStructure
 	mov		TEMPB, [DESCRIPTOR].m_returnParm	; Get return parm literal frame index into ECX
 	mov		eax, [method]						; Load the method (NOT Interpreter::m_pMethod)
@@ -1968,7 +2136,7 @@ extCallRetSTRUCT4:
 	pop		edx									; Fix the stack
 	AnswerObjectResult
 
-extCallRetSTRUCT8:
+ExtCallRet Struct8
 	push	edx									; Push result on stack, so can pass address to NewExternalStructure
 	push	eax
 	mov		TEMPB, [DESCRIPTOR].m_returnParm	; Get return parm literal frame index into ECX
@@ -1980,7 +2148,7 @@ extCallRetSTRUCT8:
 	add		esp, 8								; Pop temp result from stack
 	AnswerObjectResult
 
-extCallRetSTRUCT:
+ExtCallRet Struct
 	mov		TEMPB, [DESCRIPTOR].m_returnParm	; Get return parm literal frame index into ECX
 	mov		edx, RESULT							; Load return value for use as pointer parm
 												; This should be the same value as 'returnStructure'
@@ -1993,135 +2161,135 @@ extCallRetSTRUCT:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 .data
-pushOopTable	DD	OFFSET FLAT:extCallArgVOID			; 0
+pushOopTable	DD	OFFSET FLAT:ExtCallArgVOID			; 0
 	DD	OFFSET FLAT:ExtCallArgLPVOID		; 1
-	DD	OFFSET FLAT:extCallArgCHAR			; 2
-	DD	OFFSET FLAT:extCallArgBYTE			; 3
-	DD	OFFSET FLAT:extCallArgSBYTE			; 4
-	DD	OFFSET FLAT:extCallArgWORD			; 5
-	DD	OFFSET FLAT:extCallArgSWORD			; 6
-	DD	OFFSET FLAT:extCallArgDWORD			; 7
-	DD	OFFSET FLAT:extCallArgSDWORD		; 8
-	DD	OFFSET FLAT:extCallArgBOOL			; 9
-	DD	OFFSET FLAT:extCallArgHANDLE		; 10
-	DD	OFFSET FLAT:extCallArgDOUBLE		; 11
+	DD	OFFSET FLAT:ExtCallArgChar			; 2
+	DD	OFFSET FLAT:ExtCallArgUInt8			; 3
+	DD	OFFSET FLAT:ExtCallArgInt8			; 4
+	DD	OFFSET FLAT:ExtCallArgUInt16		; 5
+	DD	OFFSET FLAT:ExtCallArgInt16			; 6
+	DD	OFFSET FLAT:ExtCallArgUInt32		; 7
+	DD	OFFSET FLAT:ExtCallArgInt32			; 8
+	DD	OFFSET FLAT:ExtCallArgBool			; 9
+	DD	OFFSET FLAT:ExtCallArgHandle		; 10
+	DD	OFFSET FLAT:ExtCallArgDouble		; 11
 	DD	OFFSET FLAT:ExtCallArgLPSTR			; 12
-	DD	OFFSET FLAT:extCallArgOOP			; 13
-	DD	OFFSET FLAT:extCallArgFLOAT			; 14
+	DD	OFFSET FLAT:ExtCallArgOOP			; 13
+	DD	OFFSET FLAT:ExtCallArgFloat			; 14
 	DD	OFFSET FLAT:ExtCallArgLPPVOID		; 15
-	DD	OFFSET FLAT:extCallArgHRESULT		; 16
+	DD	OFFSET FLAT:ExtCallArgHRESULT		; 16
 	DD	OFFSET FLAT:ExtCallArgLPWSTR		; 17
-	DD	OFFSET FLAT:extCallArgQWORD			; 18
-	DD	OFFSET FLAT:extCallArgSQWORD		; 19
-	DD	OFFSET FLAT:extCallArgOTE			; 20
-	DD	OFFSET FLAT:extCallArgBSTR			; 21
-	DD	OFFSET FLAT:extCallArgVARIANT		; 22
-	DD	OFFSET FLAT:extCallArgDATE			; 23
-	DD	OFFSET FLAT:extCallArgVARBOOL		; 24
-	DD	OFFSET FLAT:extCallArgGUID			; 25
-	DD	OFFSET FLAT:extCallArgUINTPTR		; 26
-	DD	OFFSET FLAT:extCallArgINTPTR		; 27
-	DD	OFFSET FLAT:extCallArgNTSTATUS		; 28
-	DD	OFFSET FLAT:extCallArgErrno			; 29
-	DD	OFFSET FLAT:extCallArgReserved		; 30
-	DD	OFFSET FLAT:extCallArgReserved		; 31
-	DD	OFFSET FLAT:extCallArgReserved		; 32
-	DD	OFFSET FLAT:extCallArgReserved		; 33
-	DD	OFFSET FLAT:extCallArgReserved		; 34
-	DD	OFFSET FLAT:extCallArgReserved		; 35
-	DD	OFFSET FLAT:extCallArgReserved		; 36
-	DD	OFFSET FLAT:extCallArgReserved		; 37
-	DD	OFFSET FLAT:extCallArgReserved		; 38
-	DD	OFFSET FLAT:extCallArgReserved		; 39
-	DD	OFFSET FLAT:ExtCallArgSTRUCT		; 40
-	DD	OFFSET FLAT:ExtCallArgSTRUCT4		; 41
-	DD	OFFSET FLAT:ExtCallArgSTRUCT8		; 42
+	DD	OFFSET FLAT:ExtCallArgUInt64		; 18
+	DD	OFFSET FLAT:ExtCallArgInt64			; 19
+	DD	OFFSET FLAT:ExtCallArgOTE			; 20
+	DD	OFFSET FLAT:ExtCallArgBSTR			; 21
+	DD	OFFSET FLAT:ExtCallArgVARIANT		; 22
+	DD	OFFSET FLAT:ExtCallArgDATE			; 23
+	DD	OFFSET FLAT:ExtCallArgVARBOOL		; 24
+	DD	OFFSET FLAT:ExtCallArgGUID			; 25
+	DD	OFFSET FLAT:ExtCallArgUIntPtr		; 26
+	DD	OFFSET FLAT:ExtCallArgIntPtr		; 27
+	DD	OFFSET FLAT:ExtCallArgNTSTATUS		; 28
+	DD	OFFSET FLAT:ExtCallArgErrno			; 29
+	DD	OFFSET FLAT:ExtCallArgBool8			; 30
+	DD	OFFSET FLAT:ExtCallArgChar32		; 31
+	DD	OFFSET FLAT:ExtCallArgChar16		; 32
+	DD	OFFSET FLAT:ExtCallArgChar8			; 33
+	DD	OFFSET FLAT:ExtCallArgLPSTR8		; 34
+	DD	OFFSET FLAT:ExtCallArgReserved		; 35
+	DD	OFFSET FLAT:ExtCallArgReserved		; 36
+	DD	OFFSET FLAT:ExtCallArgReserved		; 37
+	DD	OFFSET FLAT:ExtCallArgReserved		; 38
+	DD	OFFSET FLAT:ExtCallArgReserved		; 39
+	DD	OFFSET FLAT:ExtCallArgStruct		; 40
+	DD	OFFSET FLAT:ExtCallArgStruct4		; 41
+	DD	OFFSET FLAT:ExtCallArgStruct8		; 42
 	DD	OFFSET FLAT:ExtCallArgLP			; 43
 	DD	OFFSET FLAT:ExtCallArgLPP			; 44
 	DD	OFFSET FLAT:ExtCallArgCOMPTR		; 45
-	DD	OFFSET FLAT:extCallArgReserved	    ; 46
-	DD	OFFSET FLAT:extCallArgReserved	    ; 47
-	DD	OFFSET FLAT:extCallArgReserved	    ; 48
-	DD	OFFSET FLAT:extCallArgReserved	    ; 49
-	DD	OFFSET FLAT:ExtCallArgSTRUCT		; 50
-	DD	OFFSET FLAT:ExtCallArgSTRUCT4		; 51
-	DD	OFFSET FLAT:ExtCallArgSTRUCT8		; 52
+	DD	OFFSET FLAT:ExtCallArgReserved	    ; 46
+	DD	OFFSET FLAT:ExtCallArgReserved	    ; 47
+	DD	OFFSET FLAT:ExtCallArgReserved	    ; 48
+	DD	OFFSET FLAT:ExtCallArgReserved	    ; 49
+	DD	OFFSET FLAT:ExtCallArgStruct		; 50
+	DD	OFFSET FLAT:ExtCallArgStruct4		; 51
+	DD	OFFSET FLAT:ExtCallArgStruct8		; 52
 	DD	OFFSET FLAT:ExtCallArgLP			; 53
 	DD	OFFSET FLAT:ExtCallArgLPP			; 54
 	DD	OFFSET FLAT:ExtCallArgCOMPTR		; 55
-	DD	OFFSET FLAT:extCallArgReserved	    ; 56
-	DD	OFFSET FLAT:extCallArgReserved	    ; 57
-	DD	OFFSET FLAT:extCallArgReserved	    ; 58
-	DD	OFFSET FLAT:extCallArgReserved	    ; 59
-	DD	OFFSET FLAT:extCallArgReserved	    ; 60
-	DD	OFFSET FLAT:extCallArgReserved	    ; 61
-	DD	OFFSET FLAT:extCallArgReserved	    ; 62
-	DD	OFFSET FLAT:extCallArgReserved	    ; 63
+	DD	OFFSET FLAT:ExtCallArgReserved	    ; 56
+	DD	OFFSET FLAT:ExtCallArgReserved	    ; 57
+	DD	OFFSET FLAT:ExtCallArgReserved	    ; 58
+	DD	OFFSET FLAT:ExtCallArgReserved	    ; 59
+	DD	OFFSET FLAT:ExtCallArgReserved	    ; 60
+	DD	OFFSET FLAT:ExtCallArgReserved	    ; 61
+	DD	OFFSET FLAT:ExtCallArgReserved	    ; 62
+	DD	OFFSET FLAT:ExtCallArgReserved	    ; 63
 	
-returnOopTable	DD	OFFSET FLAT:extCallRetVOID			; 0
-	DD	OFFSET FLAT:extCallRetLPVOID		; 1
-	DD	OFFSET FLAT:extCallRetCHAR			; 2
-	DD	OFFSET FLAT:extCallRetBYTE			; 3
-	DD	OFFSET FLAT:extCallRetSBYTE			; 4
-	DD	OFFSET FLAT:extCallRetWORD			; 5
-	DD	OFFSET FLAT:extCallRetSWORD			; 6
-	DD	OFFSET FLAT:extCallRetDWORD			; 7
-	DD	OFFSET FLAT:extCallRetSDWORD		; 8
-	DD	OFFSET FLAT:extCallRetBOOL			; 9
-	DD	OFFSET FLAT:extCallRetHANDLE		; 10
-	DD	OFFSET FLAT:extCallRetDOUBLE		; 11
-	DD	OFFSET FLAT:extCallRetLPSTR			; 12
-	DD	OFFSET FLAT:extCallRetOop			; 13
-	DD	OFFSET FLAT:extCallRetFLOAT			; 14
-	DD	OFFSET FLAT:extCallRetLPPVOID		; 15
-	DD	OFFSET FLAT:extCallRetHRESULT		; 16
-	DD	OFFSET FLAT:extCallRetLPWSTR		; 17
-	DD	OFFSET FLAT:extCallRetQWORD			; 18
-	DD	OFFSET FLAT:extCallRetSQWORD		; 19
-	DD	OFFSET FLAT:extCallRetOTE			; 20
-	DD	OFFSET FLAT:extCallRetBSTR			; 21
-	DD	OFFSET FLAT:extCallRetVARIANT		; 22
-	DD	OFFSET FLAT:extCallRetDATE			; 23
-	DD	OFFSET FLAT:extCallRetVARBOOL		; 24
-	DD	OFFSET FLAT:extCallRetGUID			; 25
-	DD	OFFSET FLAT:extCallRetUINTPTR		; 26
-	DD	OFFSET FLAT:extCallRetINTPTR		; 27
-	DD	OFFSET FLAT:extCallRetNTSTATUS		; 28
-	DD	OFFSET FLAT:extCallRetErrno			; 29
-	DD	OFFSET FLAT:extCallRetReserved		; 30
-	DD	OFFSET FLAT:extCallRetReserved		; 31
-	DD	OFFSET FLAT:extCallRetReserved	    ; 32
-	DD	OFFSET FLAT:extCallRetReserved	    ; 33
-	DD	OFFSET FLAT:extCallRetReserved	    ; 34
-	DD	OFFSET FLAT:extCallRetReserved	    ; 35
-	DD	OFFSET FLAT:extCallRetReserved	    ; 36
-	DD	OFFSET FLAT:extCallRetReserved	    ; 37
-	DD	OFFSET FLAT:extCallRetReserved	    ; 38
-	DD	OFFSET FLAT:extCallRetReserved	    ; 39
-	DD	OFFSET FLAT:extCallRetSTRUCT		; 40
-	DD	OFFSET FLAT:extCallRetSTRUCT4		; 41
-	DD	OFFSET FLAT:extCallRetSTRUCT8		; 42
-	DD	OFFSET FLAT:extCallRetLP			; 43
-	DD	OFFSET FLAT:extCallRetLPP			; 44
-	DD	OFFSET FLAT:extCallRetCOMPTR		; 45
-	DD	OFFSET FLAT:extCallRetReserved	    ; 46
-	DD	OFFSET FLAT:extCallRetReserved	    ; 47
-	DD	OFFSET FLAT:extCallRetReserved	    ; 48
-	DD	OFFSET FLAT:extCallRetReserved	    ; 49
-	DD	OFFSET FLAT:extCallRetSTRUCT		; 50
-	DD	OFFSET FLAT:extCallRetSTRUCT4		; 51
-	DD	OFFSET FLAT:extCallRetSTRUCT8		; 52
-	DD	OFFSET FLAT:extCallRetLP			; 53
-	DD	OFFSET FLAT:extCallRetLPP			; 54
-	DD	OFFSET FLAT:extCallRetCOMPTR		; 55
-	DD	OFFSET FLAT:extCallRetReserved	    ; 56
-	DD	OFFSET FLAT:extCallRetReserved	    ; 57
-	DD	OFFSET FLAT:extCallRetReserved	    ; 58
-	DD	OFFSET FLAT:extCallRetReserved	    ; 59
-	DD	OFFSET FLAT:extCallRetReserved	    ; 60
-	DD	OFFSET FLAT:extCallRetReserved	    ; 61
-	DD	OFFSET FLAT:extCallRetReserved	    ; 62
-	DD	OFFSET FLAT:extCallRetReserved	    ; 63
+returnOopTable	DD	OFFSET FLAT:ExtCallRetVOID			; 0
+	DD	OFFSET FLAT:ExtCallRetLPVOID		; 1
+	DD	OFFSET FLAT:ExtCallRetChar8			; 2
+	DD	OFFSET FLAT:ExtCallRetUInt8			; 3
+	DD	OFFSET FLAT:ExtCallRetInt8			; 4
+	DD	OFFSET FLAT:ExtCallRetUInt16		; 5
+	DD	OFFSET FLAT:ExtCallRetInt16			; 6
+	DD	OFFSET FLAT:ExtCallRetUInt32		; 7
+	DD	OFFSET FLAT:ExtCallRetInt32			; 8
+	DD	OFFSET FLAT:ExtCallRetBool			; 9
+	DD	OFFSET FLAT:ExtCallRetHandle		; 10
+	DD	OFFSET FLAT:ExtCallRetDouble		; 11
+	DD	OFFSET FLAT:ExtCallRetLPSTR			; 12
+	DD	OFFSET FLAT:ExtCallRetOop			; 13
+	DD	OFFSET FLAT:ExtCallRetFloat			; 14
+	DD	OFFSET FLAT:ExtCallRetLPPVOID		; 15
+	DD	OFFSET FLAT:ExtCallRetHRESULT		; 16
+	DD	OFFSET FLAT:ExtCallRetLPWSTR		; 17
+	DD	OFFSET FLAT:ExtCallRetUInt64		; 18
+	DD	OFFSET FLAT:ExtCallRetInt64			; 19
+	DD	OFFSET FLAT:ExtCallRetOTE			; 20
+	DD	OFFSET FLAT:ExtCallRetBSTR			; 21
+	DD	OFFSET FLAT:ExtCallRetVARIANT		; 22
+	DD	OFFSET FLAT:ExtCallRetDATE			; 23
+	DD	OFFSET FLAT:ExtCallRetVARBOOL		; 24
+	DD	OFFSET FLAT:ExtCallRetGUID			; 25
+	DD	OFFSET FLAT:ExtCallRetUIntPtr		; 26
+	DD	OFFSET FLAT:ExtCallRetIntPtr		; 27
+	DD	OFFSET FLAT:ExtCallRetNTSTATUS		; 28
+	DD	OFFSET FLAT:ExtCallRetErrno			; 29
+	DD	OFFSET FLAT:ExtCallRetBool8			; 30
+	DD	OFFSET FLAT:ExtCallRetChar32		; 31
+	DD	OFFSET FLAT:ExtCallRetChar16	    ; 32
+	DD	OFFSET FLAT:ExtCallRetChar8		    ; 33
+	DD	OFFSET FLAT:ExtCallRetLPSTR8	    ; 34
+	DD	OFFSET FLAT:ExtCallRetReserved	    ; 35
+	DD	OFFSET FLAT:ExtCallRetReserved	    ; 36
+	DD	OFFSET FLAT:ExtCallRetReserved	    ; 37
+	DD	OFFSET FLAT:ExtCallRetReserved	    ; 38
+	DD	OFFSET FLAT:ExtCallRetReserved	    ; 39
+	DD	OFFSET FLAT:ExtCallRetStruct		; 40
+	DD	OFFSET FLAT:ExtCallRetStruct4		; 41
+	DD	OFFSET FLAT:ExtCallRetStruct8		; 42
+	DD	OFFSET FLAT:ExtCallRetLP			; 43
+	DD	OFFSET FLAT:ExtCallRetLPP			; 44
+	DD	OFFSET FLAT:ExtCallRetCOMPTR		; 45
+	DD	OFFSET FLAT:ExtCallRetReserved	    ; 46
+	DD	OFFSET FLAT:ExtCallRetReserved	    ; 47
+	DD	OFFSET FLAT:ExtCallRetReserved	    ; 48
+	DD	OFFSET FLAT:ExtCallRetReserved	    ; 49
+	DD	OFFSET FLAT:ExtCallRetStruct		; 50
+	DD	OFFSET FLAT:ExtCallRetStruct4		; 51
+	DD	OFFSET FLAT:ExtCallRetStruct8		; 52
+	DD	OFFSET FLAT:ExtCallRetLP			; 53
+	DD	OFFSET FLAT:ExtCallRetLPP			; 54
+	DD	OFFSET FLAT:ExtCallRetCOMPTR		; 55
+	DD	OFFSET FLAT:ExtCallRetReserved	    ; 56
+	DD	OFFSET FLAT:ExtCallRetReserved	    ; 57
+	DD	OFFSET FLAT:ExtCallRetReserved	    ; 58
+	DD	OFFSET FLAT:ExtCallRetReserved	    ; 59
+	DD	OFFSET FLAT:ExtCallRetReserved	    ; 60
+	DD	OFFSET FLAT:ExtCallRetReserved	    ; 61
+	DD	OFFSET FLAT:ExtCallRetReserved	    ; 62
+	DD	OFFSET FLAT:ExtCallRetReserved	    ; 63
 .CODE FFI_SEG
 
 callExternalFunction ENDP

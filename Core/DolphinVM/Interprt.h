@@ -134,6 +134,7 @@ public:
 	static SymbolOTE* __stdcall NewSymbol(const char8_t* name, size_t length);
 	static OTE* __fastcall NewAnsiApiString(const char* psz);
 	static OTE* __fastcall NewAnsiApiStringFromUtf16(const wchar_t* psz);
+	static OTE* __fastcall NewAnsiApiStringFromString(OTE* oteString);
 
 	// Private helpers
 	
@@ -202,11 +203,14 @@ public:
 	static void pushInt32(int32_t value);
 	static void pushUintPtr(uintptr_t value);
 	static void pushIntPtr(intptr_t value);
-	static void push(LPCSTR psz);					// Push ANSI string
-	static void push(LPCWSTR pwsz);					// Push Wide string
+	static void push(LPCSTR psz);					// Push AnsiString
+	static void push(LPCWSTR pwsz);					// Push Utf16String
+	static void push(const char8_t* psz8);			// Push Utf8String
 	static void pushNil();
 	static void pushHandle(HANDLE h);
 	static void push(double d);
+	static void push(char32_t);
+	static void push(char16_t);
 
 	// To be used when pushing a known non-SmallInteger (skips the SmallInteger check)
 	static void pushObject(OTE* object)
@@ -607,7 +611,7 @@ public:
 	// Get address of contents of a byte object
 	static Oop* PRIMCALL primitiveAddressOf(Oop* const sp, primargcount_t argCount);
 
-	static void PushCharacter(Oop* const sp, char32_t codePoint);
+	static void StoreCharacterToStack(Oop* const sp, char32_t codePoint);
 
 	static Oop* PRIMCALL primitiveNewCharacter(Oop * const sp, primargcount_t);
 	static Oop* PRIMCALL primitiveCharacterClassify(Oop* const sp, primargcount_t);
@@ -886,7 +890,7 @@ public:
 	static WCHAR		m_unicodeReplacementChar;
 	static char			m_ansiReplacementChar;
 	static WCHAR		m_ansiToUnicodeCharMap[256];
-	static CHAR			m_unicodeToAnsiCharMap[65536];
+	static unsigned char m_unicodeToAnsiCharMap[65536];
 
 
 public:

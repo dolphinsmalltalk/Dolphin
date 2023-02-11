@@ -28,7 +28,7 @@ codepage_t Interpreter::m_ansiCodePage;
 WCHAR Interpreter::m_unicodeReplacementChar;
 char Interpreter::m_ansiReplacementChar;
 WCHAR Interpreter::m_ansiToUnicodeCharMap[256];
-CHAR Interpreter::m_unicodeToAnsiCharMap[65536];
+unsigned char Interpreter::m_unicodeToAnsiCharMap[65536];
 
 #pragma comment(lib, "icuuc.lib")
 
@@ -37,12 +37,10 @@ static constexpr uint32_t Fnv1aHashSeed = 2166136261U;
 #undef toupper
 // Fast ToUpper for ascii
 #define toupper(ch) (((ch) >= 'a' && (ch) <= 'z') ? ((ch) - 'a' + 'A') : ch)
-#undef isascii
-#define isascii(ch) ((unsigned)(ch) < 0x80)
 
-CharOTE* Character::NewUnicode(char32_t value)
+CharOTE* Character::NewUtf32(char32_t value)
 {
-	if (__isascii(value))
+	if (value <= 0x7f)
 	{
 		return NewAnsi(static_cast<unsigned char>(value));
 	}
@@ -72,6 +70,24 @@ CharOTE* Character::NewAnsi(unsigned char value)
 	return character;
 }
 
+CharOTE* Character::NewUtf8(char8_t codeUnit)
+{
+	// If not a surrogate, must be Ascii
+	if (U8_IS_SINGLE(codeUnit))
+	{
+		return NewAnsi(static_cast<unsigned char>(codeUnit));
+	}
+
+	// Return a UTF-8 Character for surrogates so it is possible to detect surrogates in the image
+	SmallInteger code = (static_cast<SmallInteger>(StringEncoding::Utf8) << 24) | codeUnit;
+
+	CharOTE* character = reinterpret_cast<CharOTE*>(ObjectMemory::newPointerObject(Pointers.ClassCharacter));
+	character->m_location->m_code = ObjectMemoryIntegerObjectOf(code);
+	character->beImmutable();
+
+	return character;
+}
+
 char32_t Character::getCodePoint() const
 {
 	// For UTF surrogates, this won't actually be a valid code point
@@ -79,6 +95,35 @@ char32_t Character::getCodePoint() const
 	return Encoding == StringEncoding::Ansi
 		? Interpreter::m_ansiToUnicodeCharMap[CodeUnit & 0xff]
 		: CodeUnit;
+}
+
+CharOTE* Character::NewUtf16(char16_t codeUnit)
+{
+	SmallInteger code;
+
+	// If not a surrogate, may have an ANSI character that can represent the code point
+	if (!U_IS_SURROGATE(codeUnit))
+	{
+		AnsiString::CU ansiCodeUnit = 0;
+		if (codeUnit == 0 || (ansiCodeUnit = Interpreter::m_unicodeToAnsiCharMap[codeUnit]) != 0)
+		{
+			return NewAnsi(static_cast<unsigned char>(ansiCodeUnit));
+		}
+
+		// Non-ansi, non-surrogate, so return a full UTF-32 Character
+		code = (static_cast<SmallInteger>(StringEncoding::Utf32) << 24) | codeUnit;
+	}
+	else
+	{
+		// Return a UTF-16 Character for surrogates so it is possible to detect surrogates in the image
+		code = (static_cast<SmallInteger>(StringEncoding::Utf16) << 24) | codeUnit;
+	}
+
+	CharOTE* character = reinterpret_cast<CharOTE*>(ObjectMemory::newPointerObject(Pointers.ClassCharacter));
+	character->m_location->m_code = ObjectMemoryIntegerObjectOf(code);
+	character->beImmutable();
+
+	return character;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -355,7 +400,7 @@ Oop* PRIMCALL Interpreter::primitiveStringNextIndexOfFromTo(Oop* const sp, prima
 						{
 							// Search is in bounds, lets do it
 
-							if (__isascii(charObj->CodeUnit) || charObj->IsUtf8Surrogate)
+							if (charObj->CodeUnit <= 0x7f || charObj->IsUtf8Surrogate)
 							{
 								// Can perform a fast byte search
 
@@ -613,26 +658,7 @@ Oop* PRIMCALL Interpreter::primitiveStringAt(Oop* const sp, const primargcount_t
 			if (static_cast<size_t>(index) < (oteReceiver->bytesSize() / sizeof(Utf32String::CU)))
 			{
 				Utf32String::CU codePoint = reinterpret_cast<Utf32String*>(oteReceiver->m_location)->m_characters[index];
-
-				// Push one of the fixed ANSI Characters if possible
-				if (U_IS_BMP(codePoint))
-				{
-					AnsiString::CU ansiCodeUnit = 0;
-					if (codePoint == 0 || (ansiCodeUnit = m_unicodeToAnsiCharMap[codePoint]) != 0)
-					{
-						CharOTE* oteResult = ST::Character::NewAnsi(static_cast<AnsiString::CU>(ansiCodeUnit));
-						*newSp = reinterpret_cast<Oop>(oteResult);
-						return newSp;
-					}
-				}
-
-				// Otherwise return a full UTF-32 Character
-				CharOTE* character = reinterpret_cast<CharOTE*>(ObjectMemory::newPointerObject(Pointers.ClassCharacter));
-				SmallInteger code = (static_cast<SmallInteger>(StringEncoding::Utf32) << 24) | codePoint;
-				character->m_location->m_code = ObjectMemoryIntegerObjectOf(code);
-				character->beImmutable();
-				*newSp = reinterpret_cast<Oop>(character);
-				ObjectMemory::AddToZct((OTE*)character);
+				StoreCharacterToStack(newSp, codePoint);
 				return newSp;
 			}
 			break;
@@ -678,7 +704,7 @@ Oop* PRIMCALL Interpreter::primitiveStringAtPut(Oop* const sp, primargcount_t)
 						AnsiString::CU* const __restrict psz = reinterpret_cast<AnsiStringOTE*>(oteReceiver)->m_location->m_characters;
 
 						// Ascii characters are the same in all encodings
-						if (__isascii(codeUnit))
+						if (codeUnit <= 0x7f)
 						{
 							psz[index] = static_cast<AnsiString::CU>(codeUnit);
 							*newSp = oopValue;
@@ -736,7 +762,7 @@ Oop* PRIMCALL Interpreter::primitiveStringAtPut(Oop* const sp, primargcount_t)
 					{
 						Utf8String::CU* psz = reinterpret_cast<Utf8StringOTE*>(oteReceiver)->m_location->m_characters;
 
-						if (__isascii(codeUnit) || static_cast<StringEncoding>(code >> 24) == StringEncoding::Utf8)
+						if (codeUnit <= 0x7f || static_cast<StringEncoding>(code >> 24) == StringEncoding::Utf8)
 						{
 							psz[index] = static_cast<Utf8String::CU>(codeUnit);
 							*newSp = oopValue;
@@ -752,7 +778,7 @@ Oop* PRIMCALL Interpreter::primitiveStringAtPut(Oop* const sp, primargcount_t)
 					{
 						Utf16String::CU* psz = reinterpret_cast<Utf16StringOTE*>(oteReceiver)->m_location->m_characters;
 
-						if (__isascii(codeUnit))
+						if (codeUnit <= 0x7f)
 						{
 							psz[index] = static_cast<Utf16String::CU>(codeUnit);
 							*newSp = oopValue;
@@ -806,7 +832,7 @@ Oop* PRIMCALL Interpreter::primitiveStringAtPut(Oop* const sp, primargcount_t)
 					{
 						Utf32String::CU* const __restrict psz = reinterpret_cast<Utf32StringOTE*>(oteReceiver)->m_location->m_characters;
 
-						if (__isascii(codeUnit))
+						if (codeUnit <= 0x7f)
 						{
 							psz[index] = static_cast<Utf32String::CU>(codeUnit);
 							*newSp = oopValue;
@@ -876,12 +902,12 @@ Oop* PRIMCALL Interpreter::primitiveStringAtPut(Oop* const sp, primargcount_t)
 	}
 }
 
-void Interpreter::PushCharacter(Oop* const sp, char32_t codePoint)
+void Interpreter::StoreCharacterToStack(Oop* const sp, char32_t codePoint)
 {
 	ASSERT(U_IS_UNICODE_CHAR(codePoint));
 
 	// Try to use one of the fixed set of ANSI chars if we can
-	if (__isascii(codePoint))
+	if (codePoint <= 0x7f)
 	{
 		CharOTE* oteResult = ST::Character::NewAnsi(static_cast<AnsiString::CU>(codePoint));
 		*sp = reinterpret_cast<Oop>(oteResult);
@@ -918,7 +944,7 @@ Oop* PRIMCALL Interpreter::primitiveNewCharacter(Oop* const sp, primargcount_t)
 
 		if (U_IS_UNICODE_CHAR(codePoint))
 		{
-			PushCharacter(newSp, codePoint);
+			StoreCharacterToStack(newSp, codePoint);
 		}
 
 		// Not a valid code point
@@ -928,7 +954,6 @@ Oop* PRIMCALL Interpreter::primitiveNewCharacter(Oop* const sp, primargcount_t)
 	// Not a SmallInteger
 	return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
 }
-
 
 Oop* PRIMCALL Interpreter::primitiveCharacterClassify(Oop* const sp, primargcount_t)
 {
@@ -954,7 +979,7 @@ Oop* PRIMCALL Interpreter::primitiveCharacterClassify(Oop* const sp, primargcoun
 
 		case StringEncoding::Utf8:
 			// UTF-8 encoded char, can only write these if not surrogates
-			if (__isascii(codeUnit))
+			if (codeUnit <= 0x7f)
 			{
 				str[0] = static_cast<Utf16String::CU>(codeUnit);
 			}
@@ -1128,8 +1153,8 @@ struct NextAnsi
 {
 	__forceinline char32_t operator() (const AnsiString::CU* pch, size_t& i) const
 	{
-		char ch = pch[i++];
-		return isascii(ch) ? ch : Interpreter::m_ansiToUnicodeCharMap[ch & 0xFF];
+		unsigned char ch = static_cast<unsigned char>(pch[i++]);
+		return ch <= 0x7f ? ch : Interpreter::m_ansiToUnicodeCharMap[ch];
 	}
 };
 
@@ -1173,7 +1198,7 @@ template <class CH, class Next=NextChar<CH>> uint32_t hashString(const CH* pch, 
 	while (i < cch)
 	{
 		char32_t ch = Next()(pch, i);
-		if (isascii(ch))
+		if (ch <= 0x7f)
 		{
 			hash = hashCombine(hash, static_cast<uint8_t>(ch));
 		}
@@ -1209,7 +1234,7 @@ template <class T, class Next=NextChar<T>> struct NextUpper
 	__forceinline char32_t operator() (const T* pch, size_t& i) const
 	{
 		char32_t ch = Next()(pch, i);
-		return isascii(ch) ? toupper(ch) : ToUpper(ch);
+		return ch <= 0x7f ? toupper(ch) : ToUpper(ch);
 	}
 };
 
@@ -1782,6 +1807,9 @@ Oop* PRIMCALL Interpreter::primitiveBeginsWith(Oop* const sp, primargcount_t)
 Oop* PRIMCALL Interpreter::primitiveStringAsUtf16String(Oop* const sp, primargcount_t)
 {
 	const OTE* receiver = reinterpret_cast<const OTE*>(*sp);
+	if (receiver->m_oteClass->m_location->m_instanceSpec.m_encoding >= StringEncoding::Utf16)
+		return sp;
+
 	switch (receiver->m_oteClass->m_location->m_instanceSpec.m_encoding)
 	{
 	case StringEncoding::Ansi:

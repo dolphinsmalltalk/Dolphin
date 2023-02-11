@@ -44,10 +44,10 @@ strerror
 	"Answer a <readableString> description of the receiver's error number."
 
 	| buf |
-	buf := String newFixed: 80.
+	buf := Utf16String newFixed: 80.
 	^(Ucrt
-		strerror_s: buf
-		bufferSize: buf size + 1
+		_wcserror_s: buf
+		sizeInWords: buf size + 1
 		errnum: self errno) == 0
 		ifTrue: [buf trimNulls]
 		ifFalse: [self errno printString]! !

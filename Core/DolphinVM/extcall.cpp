@@ -35,10 +35,6 @@ using namespace DolphinX;
 #include "STContext.h"
 #include "STBlockClosure.h"
 
-static AnsiStringOTE* (__fastcall *ForceNonInlineNewByteStringFromUtf16)(LPCWSTR) = &AnsiString::New;
-static AnsiStringOTE* (__fastcall *ForceNonInlineNewAnsiStringWithLen)(const char * __restrict, size_t) = &AnsiString::New;
-static AnsiStringOTE* (__fastcall* ForceNonInlineNewAnsiString)(const char* __restrict) = &AnsiString::New;
-
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 // Helpers for creating new structures and structure pointers.
@@ -186,12 +182,78 @@ Utf16StringOTE* __fastcall ST::Utf16String::New(OTE* oteString)
 
 	{
 	case StringEncoding::Ansi:
-		return Utf16String::New<CP_ACP>(reinterpret_cast<const AnsiStringOTE*>(oteString)->m_location->m_characters, oteString->getSize());
+	{
+		auto oteAnsi = reinterpret_cast<AnsiStringOTE*>(oteString);
+		return Utf16String::New<CP_ACP>(oteAnsi->m_location->m_characters, oteAnsi->sizeForRead());
+	}
 	case StringEncoding::Utf8:
-		return Utf16String::New<CP_UTF8>(reinterpret_cast<const Utf8StringOTE*>(oteString)->m_location->m_characters, oteString->getSize());
+	{
+		auto oteUtf8 = reinterpret_cast<Utf8StringOTE*>(oteString);
+		return Utf16String::New<CP_UTF8>(oteUtf8->m_location->m_characters, oteUtf8->sizeForRead());
+	}
 	case StringEncoding::Utf16:
 		ASSERT(FALSE);
 		return reinterpret_cast<Utf16StringOTE*>(oteString);
+	case StringEncoding::Utf32:
+		// TODO: Implement conversion for UTF-32
+		return nullptr;
+	default:
+		__assume(false);
+		break;
+	}
+	return nullptr;
+}
+
+Utf8StringOTE* __fastcall ST::Utf8String::NewFromString(OTE* oteString)
+{
+	ASSERT(oteString->isNullTerminated());
+
+	switch (oteString->m_oteClass->m_location->m_instanceSpec.m_encoding)
+
+	{
+	case StringEncoding::Ansi:
+	{
+		auto oteAnsi = reinterpret_cast<AnsiStringOTE*>(oteString);
+		return Utf8String::NewFromAnsi(oteAnsi->m_location->m_characters, oteAnsi->sizeForRead());
+	}
+	case StringEncoding::Utf16:
+	{
+		auto oteUtf16 = reinterpret_cast<Utf16StringOTE*>(oteString);
+		return Utf8String::New(oteUtf16->m_location->m_characters, oteUtf16->sizeForRead());
+	}
+	case StringEncoding::Utf8:
+		ASSERT(FALSE);
+		return reinterpret_cast<Utf8StringOTE*>(oteString);
+	case StringEncoding::Utf32:
+		// TODO: Implement conversion for UTF-32
+		return nullptr;
+	default:
+		__assume(false);
+		break;
+	}
+	return nullptr;
+}
+
+AnsiStringOTE* __fastcall ST::AnsiString::NewFromString(OTE* oteString)
+{
+	ASSERT(oteString->isNullTerminated());
+
+	switch (oteString->m_oteClass->m_location->m_instanceSpec.m_encoding)
+
+	{
+	case StringEncoding::Ansi:
+		ASSERT(FALSE);
+		return reinterpret_cast<AnsiStringOTE*>(oteString);
+	case StringEncoding::Utf16:
+	{
+		auto oteUtf16 = reinterpret_cast<Utf16StringOTE*>(oteString);
+		return AnsiString::New(oteUtf16->m_location->m_characters, oteUtf16->sizeForRead());
+	}
+	case StringEncoding::Utf8:
+	{
+		auto oteUtf8 = reinterpret_cast<Utf8StringOTE*>(oteString);
+		return AnsiString::NewFromUtf8(oteUtf8->m_location->m_characters, oteUtf8->sizeForRead());
+	}
 	case StringEncoding::Utf32:
 		// TODO: Implement conversion for UTF-32
 		return nullptr;
@@ -216,6 +278,13 @@ POTE __fastcall Interpreter::NewAnsiApiString(const char* psz)
 		: reinterpret_cast<POTE>(AnsiString::New(psz));
 }
 
+POTE __fastcall Interpreter::NewAnsiApiStringFromString(OTE* oteString)
+{
+	return m_ansiApiCodePage == CP_UTF8
+		? reinterpret_cast<POTE>(Utf8String::NewFromString(oteString))
+		: reinterpret_cast<POTE>(AnsiString::NewFromString(oteString));
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
@@ -223,6 +292,16 @@ inline void Interpreter::push(LPCSTR pStr)
 {
 	if (pStr)
 		pushNewObject(NewAnsiApiString(pStr));
+	else
+		pushNil();
+}
+
+inline void Interpreter::push(const char8_t* pStr)
+{
+	if (pStr)
+	{
+		pushNewObject((OTE*)ST::Utf8String::New(pStr));
+	}
 	else
 		pushNil();
 }
@@ -260,6 +339,46 @@ FARPROC PRIMCALL Interpreter::GetDllCallProcAddress(DolphinX::ExternalMethodDesc
 
 ///////////////////////////////////////////////////////////////////////////////
 //
+void Interpreter::push(char16_t utf16CodeUnit)
+{
+	SmallInteger code;
+
+	if (utf16CodeUnit <= 0x7f)
+	{
+		pushObject((OTE*)Character::NewAnsi(static_cast<unsigned char>(utf16CodeUnit)));
+		return;
+	} 
+
+	// If not a surrogate, may have an ANSI character that can represent the code point
+	if (!U_IS_SURROGATE(utf16CodeUnit))
+	{
+		auto ansiCodeUnit = Interpreter::m_unicodeToAnsiCharMap[utf16CodeUnit];
+		if (ansiCodeUnit != 0)
+		{
+			pushObject(reinterpret_cast<OTE*>(Character::NewAnsi(ansiCodeUnit)));
+			return;
+		}
+
+		// Non-ansi, non-surrogate, so return a full UTF-32 Character
+		code = (static_cast<SmallInteger>(StringEncoding::Utf32) << 24) | utf16CodeUnit;
+	}
+	else
+	{
+		// Return a UTF-16 Character for surrogates so it is possible to detect surrogates in the image
+		code = (static_cast<SmallInteger>(StringEncoding::Utf16) << 24) | utf16CodeUnit;
+	}
+
+	CharOTE* character = reinterpret_cast<CharOTE*>(ObjectMemory::newPointerObject(Pointers.ClassCharacter));
+	character->m_location->m_code = ObjectMemoryIntegerObjectOf(code);
+	character->beImmutable();
+	pushNewObject(reinterpret_cast<OTE*>(character));
+}
+
+void Interpreter::push(char32_t codePoint)
+{
+	StoreCharacterToStack(++m_registers.m_stackPointer, codePoint);
+}
+
 argcount_t Interpreter::pushArgsAt(const ExternalDescriptor* descriptor, uint8_t* lpParms)
 {
 	DescriptorOTE* oteTypes = descriptor->m_descriptor;
@@ -284,7 +403,22 @@ argcount_t Interpreter::pushArgsAt(const ExternalDescriptor* descriptor, uint8_t
 				break;
 
 			case ExtCallArgType::Char:
-				pushObject((OTE*)Character::NewUnicode(*reinterpret_cast<char32_t*>(lpParms)));
+				push((Oop)Character::NewAnsi(*reinterpret_cast<unsigned char*>(lpParms)));
+				lpParms += sizeof(uintptr_t);
+				break;
+
+			case ExtCallArgType::Char8:
+				push((Oop)Character::NewUtf8(*reinterpret_cast<char8_t*>(lpParms)));
+				lpParms += sizeof(uintptr_t);
+				break;
+
+			case ExtCallArgType::Char16:
+				push(*reinterpret_cast<char16_t*>(lpParms));
+				lpParms += sizeof(uintptr_t);
+				break;
+
+			case ExtCallArgType::Char32:
+				push( *reinterpret_cast<char32_t*>(lpParms));
 				lpParms += sizeof(uintptr_t);
 				break;
 
@@ -294,7 +428,7 @@ argcount_t Interpreter::pushArgsAt(const ExternalDescriptor* descriptor, uint8_t
 				break;
 
 			case ExtCallArgType::Int8:
-				pushSmallInteger(*reinterpret_cast<char*>(lpParms));
+				pushSmallInteger(*reinterpret_cast<int8_t*>(lpParms));
 				lpParms += sizeof(uintptr_t);
 				break;
 			
@@ -325,6 +459,11 @@ argcount_t Interpreter::pushArgsAt(const ExternalDescriptor* descriptor, uint8_t
 				lpParms += sizeof(uintptr_t);
 				break;
 
+			case ExtCallArgType::Bool8:
+				pushBool(*lpParms);
+				lpParms += sizeof(uintptr_t);
+				break;
+
 			case ExtCallArgType::Handle:
 				pushHandle(*reinterpret_cast<HANDLE*>(lpParms));
 				lpParms += sizeof(uintptr_t);
@@ -338,6 +477,11 @@ argcount_t Interpreter::pushArgsAt(const ExternalDescriptor* descriptor, uint8_t
 
 			case ExtCallArgType::LPStr:
 				push(*reinterpret_cast<LPCSTR*>(lpParms));
+				lpParms += sizeof(uintptr_t);
+				break;
+
+			case ExtCallArgType::LPStr8:
+				push(*reinterpret_cast<const char8_t**>(lpParms));
 				lpParms += sizeof(uintptr_t);
 				break;
 
@@ -860,6 +1004,7 @@ void doBlah()
 					// Compiler should not generate this
 					goto preCallFail;
 
+				case ExtCallArgLPSTR8:
 				case ExtCallArgLPSTR:
 					_asm 
 					{
@@ -922,6 +1067,7 @@ void doBlah()
 					}
 					break;
 
+				case ExtCallArgCHAR8:
 				case ExtCallArgCHAR:
 					_asm
 					{
@@ -1219,7 +1365,22 @@ void doBlah()
 
 				case ExtCallArgCHAR:
 					pop(argCount);
-					replaceStackTopObjectNoRefCnt(NewChar(static_cast<char>(retValue)));
+					replaceStackTopObjectNoRefCnt(NewChar(static_cast<chart>(retValue)));
+					break;
+
+				case ExtCallArgCHAR8:
+					pop(argCount);
+					replaceStackTopObjectNoRefCnt(NewChar(static_cast<char8_t>(retValue)));
+					break;
+
+				case ExtCallArgCHAR16:
+					pop(argCount);
+					replaceStackTopObjectNoRefCnt(NewChar(static_cast<char16_t>(retValue)));
+					break;
+
+				case ExtCallArgCHAR32:
+					pop(argCount);
+					replaceStackTopObjectNoRefCnt(NewChar(static_cast<char32_t>(retValue)));
 					break;
 
 				case ExtCallArgBYTE:
@@ -1297,6 +1458,14 @@ void doBlah()
 						replaceStackTopObjectNoRefCnt(Pointers.Nil);
 					else
 						replaceStackTopObjectWithNewObject(NewString((const char*)retValue));
+					break;
+
+				case ExtCallArgLPSTR8:
+					pop(argCount);
+					if (!dwValue)
+						replaceStackTopObjectNoRefCnt(Pointers.Nil);
+					else
+						replaceStackTopObjectWithNewObject(NewUtf8String((const char8_t*)retValue));
 					break;
 
 				// For future use with User Primitive Kit

@@ -241,8 +241,12 @@ Kernel.SharedPool
 	classInstanceVariableNames: ''
 	classConstants: {
 			'ExtCallArgBOOL' -> 16r9.
+			'ExtCallArgBool8' -> 16r1E.
 			'ExtCallArgBSTR' -> 16r15.
-			'ExtCallArgCHAR' -> 16r2.
+			'ExtCallArgChar' -> 16r2.
+			'ExtCallArgChar16' -> 16r20.
+			'ExtCallArgChar32' -> 16r1F.
+			'ExtCallArgChar8' -> 16r21.
 			'ExtCallArgCOMPTR' -> 16r37.
 			'ExtCallArgDATE' -> 16r17.
 			'ExtCallArgDOUBLE' -> 16rB.
@@ -260,6 +264,7 @@ Kernel.SharedPool
 			'ExtCallArgLPP' -> 16r36.
 			'ExtCallArgLPPVOID' -> 16rF.
 			'ExtCallArgLPSTR' -> 16rC.
+			'ExtCallArgLPSTR8' -> 16r22.
 			'ExtCallArgLPVOID' -> 16r1.
 			'ExtCallArgLPWSTR' -> 16r11.
 			'ExtCallArgMax' -> 16r3F.
@@ -2460,23 +2465,27 @@ Core.Object
 	classConstants: {
 			'CallingConventions' -> #(#stdcall: #cdecl: #fastcall: #thiscall:).
 			'ReferenceTypes'
-				-> #(16r1 16rF 16rC 16r1 16r1 #UInt16 #Int16 #UInt32 #Int32 #UInt32 #UInt32 #DOUBLE 16rF 16rF #FLOAT nil #HRESULT 16rF #UInt64 #Int64 16rF 16rF #'OS.COM.VARIANT' #'OS.COM.DATE' #'OS.COM.VARIANT_BOOL' #REFGUID #UIntPtr #IntPtr #Int32 #Int32 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 16r35 16r35 16r35 nil nil nil nil nil nil nil nil nil nil nil).
+				-> #(16r1 16rF 16rC 16r1 16r1 #UInt16 #Int16 #UInt32 #Int32 #UInt32 #UInt32 #DOUBLE 16rF 16rF #FLOAT nil #HRESULT 16rF #UInt64 #Int64 16rF 16rF #'OS.COM.VARIANT' #'OS.COM.DATE' #'OS.COM.VARIANT_BOOL' #REFGUID #UIntPtr #IntPtr #Int32 #Int32 16r1 16r1 16r11 16r22 16rF nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 16r35 16r35 16r35 nil nil 16rF nil nil nil nil nil nil nil nil).
 			'RetClassIndex' -> 16r4.
 			'RetTypeMask' -> 16r3F.
 			'TypeNames'
-				-> #('void' 'lpvoid' 'char' 'uint8' 'int8' 'uint16' 'int16' 'uint32' 'int32' 'bool' 'handle' 'double' 'lpstr' 'oop' 'float' 'lppvoid' 'hresult' 'lpwstr' 'uint64' 'int64' 'ote' 'bstr' 'variant' 'date' 'varbool' 'guid' 'uintptr' 'intptr' 'ntstatus' 'errno' nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil).
+				-> #('void' 'lpvoid' 'char' 'uint8' 'int8' 'uint16' 'int16' 'uint32' 'int32' 'bool' 'handle' 'double' 'lpstr' 'oop' 'float' 'lppvoid' 'hresult' 'lpwstr' 'uint64' 'int64' 'ote' 'bstr' 'variant' 'date' 'varbool' 'guid' 'uintptr' 'intptr' 'ntstatus' 'errno' 'bool8' 'char32' 'char16' 'char8' 'lpstr8' nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil).
 			'TypeSizes'
-				-> #[0 4 4 4 4 4 4 4 4 4 4 8 4 4 4 4 4 4 8 8 4 4 16 8 4 16 4 4 4 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 8 4 4 4 0 0 0 0 0 0 0 0].
+				-> #[0 4 0 4 4 4 4 4 4 4 4 8 4 4 4 4 4 4 8 8 4 4 16 8 4 16 4 4 4 4 4 4 4 4 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 8 4 4 4 0 0 0 0 0 0 0 0].
 			'ValueTypes'
 				-> (LookupTable withAll: {
 								'Address' -> 16r1.
 								'bool' -> 16r9.
 								'BOOL' -> 16r9.
+								'bool8' -> 16r1E.
 								'bstr' -> 16r15.
 								'BSTR' -> 16r15.
 								'byte' -> 16r3.
 								'BYTE' -> 16r3.
 								'char' -> 16r2.
+								'char16' -> 16r20.
+								'char32' -> 16r1F.
+								'char8' -> 16r21.
 								'CLSID' -> 16r19.
 								'date' -> 16r17.
 								'DATE' -> 16r17.
@@ -2508,6 +2517,7 @@ Core.Object
 								'LARGE_INTEGER' -> 16r13.
 								'lppvoid' -> 16rF.
 								'lpstr' -> 16rC.
+								'lpstr8' -> 16r22.
 								'lpvoid' -> 16r1.
 								'LPVOID' -> 16r1.
 								'lpwstr' -> 16r11.

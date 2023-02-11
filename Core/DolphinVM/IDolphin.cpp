@@ -194,7 +194,7 @@ STDMETHODIMP_(Oop) CDolphinSmalltalk::NewUnsignedInteger(
 STDMETHODIMP_(POTE) CDolphinSmalltalk::NewCharacter( 
         /* [in] */ DWORD codePoint)
 {
-	return (POTE)Character::NewUnicode(static_cast<char32_t>(codePoint));
+	return (POTE)Character::NewUtf32(static_cast<char32_t>(codePoint));
 }
     
 STDMETHODIMP_(POTE) CDolphinSmalltalk::NewArray( 

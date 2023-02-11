@@ -479,8 +479,13 @@ testExtCallArgLppvoid
 
 	self verifyExtCallArgLppvoid: false!
 
+testExtCallArgLpstr
+	self verifyExtCallArgLpstr: false!
+
+testExtCallArgLpstr8
+	self verifyExtCallArgLpstr8: false!
+
 testExtCallArgLpwstr
-	self skipIfVMDoesNotSupportArgumentConversionsThatAllocateMemoryInOverlappedCalls.
 	self verifyExtCallArgLpwstr: false!
 
 testExtCallCrtFault
@@ -501,6 +506,14 @@ testExtCallIntDivZero
 
 testExtCallOverlappedArgLppvoid
 	self verifyExtCallArgLppvoid: true!
+
+testExtCallOverlappedArgLpstr
+	self skipIfVMDoesNotSupportArgumentConversionsThatAllocateMemoryInOverlappedCalls.
+	self verifyExtCallArgLpstr: true!
+
+testExtCallOverlappedArgLpstr8
+	self skipIfVMDoesNotSupportArgumentConversionsThatAllocateMemoryInOverlappedCalls.
+	self verifyExtCallArgLpstr8: true!
 
 testExtCallOverlappedArgLpwstr
 	self skipIfVMDoesNotSupportArgumentConversionsThatAllocateMemoryInOverlappedCalls.
@@ -557,6 +570,12 @@ testExtCallOverlappedRetHRESULT
 
 	self verifyExtCallRetHRESULT: true!
 
+testExtCallOverlappedRetLpstr
+	self verifyExtCallRetLpstr: true!
+
+testExtCallOverlappedRetLpstr8
+	self verifyExtCallRetLpstr: true!
+
 testExtCallOverlappedRetLpwstr
 	self verifyExtCallRetLpwstr: true!
 
@@ -583,6 +602,9 @@ testExtCallRetHRESULT
 	"Test that HRESULT return codes are translated into exceptions correctly."
 
 	self verifyExtCallRetHRESULT: false!
+
+testExtCallRetLpstr
+	self verifyExtCallRetLpstr: false!
 
 testExtCallRetLpwstr
 	self verifyExtCallRetLpwstr: false!
@@ -3073,6 +3095,7 @@ testPrimitiveYourAddress
 testQuiesceWhenUIBlocked
 	"#969: Dolphin burns 100% CPU when main UI process blocked on Semaphore"
 
+	<knownSlowTest>
 	| totalCPUBefore cpuWhileSleeping sleepTime wait |
 	self skipIfCiBuild.
 	totalCPUBefore := self getCPUTime.
@@ -3342,6 +3365,68 @@ verifyExtCallArgLppvoid: aBoolean
 	result := method value: VM withArguments: {address}.
 	self assert: result equals: string yourAddress!
 
+verifyExtCallArgLpstr: aBoolean
+	| method actual argAnsi arg16 argUtf8 |
+	method := Compiler
+				compile: ('x: aString
+	%<<1?overlap :>stdcall: lpstr AnswerIntPtr lpstr>
+	^_failureCode'
+						expandMacrosWith: aBoolean)
+				in: VMLibrary.
+	self assert: method argumentTypes asArray equals: #('lpstr').
+	self assert: method returnType equals: 'lpstr'.
+	argAnsi := AnsiString fromByteArray: #[97 32 163 32 111 114 32 116 119 111].
+	actual := method value: VM withArguments: {argAnsi}.
+	self assert: actual equals: argAnsi.
+	self deny: actual == argAnsi.
+	self assert: actual isKindOf: AnsiString.
+	arg16 := Utf16String fromByteArray: #[97 0 32 0 61 216 44 220 32 0 111 0 114 0 32 0 116 0 119 0 111 0].
+	actual := method value: VM withArguments: {arg16}.
+	self assert: actual equals: 'a ?? or two'.
+	self assert: actual isKindOf: AnsiString.
+	argUtf8 := Utf8String fromByteArray: #[97 32 240 159 144 172 32 111 114 32 116 119 111].
+	actual := method value: VM withArguments: {argUtf8}.
+	"Note, we get mojibakes because the Utf8String is not converted - the lpstr arg type is assumed to be any byte string, and it is up to the caller to ensure that the encoding of the string passed to the API call is correct."
+	self assert: actual equals: (AnsiString fromByteArray: argUtf8 asByteArray).
+	self assert: actual isKindOf: AnsiString.
+	{AnsiString empty. Utf8String empty. Utf16String empty} do: 
+			[:each |
+			actual := method value: VM withArguments: {each}.
+			self assert: actual isKindOf: AnsiString.
+			self assert: actual size equals: 0.
+			self assert: actual equals: AnsiString empty]!
+
+verifyExtCallArgLpstr8: aBoolean
+	| method actual argAnsi arg16 argUtf8 |
+	method := Compiler
+				compile: ('x: aString
+	%<<1?overlap :>stdcall: lpstr8 AnswerIntPtr lpstr8>
+	^_failureCode'
+						expandMacrosWith: aBoolean)
+				in: VMLibrary.
+	self assert: method argumentTypes asArray equals: #('lpstr8').
+	self assert: method returnType equals: 'lpstr8'.
+	argUtf8 := Utf8String fromByteArray: #[97 32 240 159 144 172 32 111 114 32 116 119 111].
+	actual := method value: VM withArguments: {argUtf8}.
+	self assert: actual equals: argUtf8.
+	self deny: actual identicalTo: argUtf8.
+	self assert: actual isKindOf: Utf8String.
+	arg16 := Utf16String fromByteArray: #[97 0 32 0 61 216 44 220 32 0 111 0 114 0 32 0 116 0 119 0 111 0].
+	actual := method value: VM withArguments: {arg16}.
+	self assert: actual equals: argUtf8.
+	self assert: actual isKindOf: Utf8String.
+	argAnsi := AnsiString fromByteArray: #[97 32 163 32 111 114 32 116 119 111].
+	actual := method value: VM withArguments: {argAnsi}.
+	"We do not expect mojibakes because, unlike lpstr, the AnsiString is converted."
+	self assert: actual equals: argAnsi.
+	self assert: actual isKindOf: Utf8String.
+	{AnsiString empty. Utf8String empty. Utf16String empty} do: 
+			[:each |
+			actual := method value: VM withArguments: {each}.
+			self assert: actual isKindOf: Utf8String.
+			self assert: actual size equals: 0.
+			self assert: actual equals: Utf8String empty]!
+
 verifyExtCallArgLpwstr: aBoolean
 	| method expected actual |
 	method := Compiler
@@ -3357,10 +3442,11 @@ verifyExtCallArgLpwstr: aBoolean
 	self assert: actual equals: expected.
 	self deny: actual == expected.
 	self assert: actual isKindOf: Utf16String.
-	actual := method value: VM withArguments: #('a £ or two').
+	actual := method value: VM withArguments: {'a £ or two' asAnsiString}.
 	self assert: actual equals: expected.
 	self assert: actual isKindOf: Utf16String.
-	actual := method value: VM withArguments: {'a £ or two' asUtf8String}.
+	expected := Utf16String fromByteArray: #[97 0 32 0 61 216 44 220 32 0 111 0 114 0 32 0 116 0 119 0 111 0].
+	actual := method value: VM withArguments: {'a 🐬 or two' asUtf8String}.
 	self assert: actual equals: expected.
 	self assert: actual isKindOf: Utf16String.
 	{String empty. Utf8String empty} do: 
@@ -3459,6 +3545,46 @@ verifyExtCallRetHRESULT: aBoolean
 				should: [method value: VM withArguments: {each}]
 				raise: HRESULTError
 				matching: [:ex | ex hresult = (HRESULT fromUnsignedInteger: (each bitAnd: 16r8000000 bitInvert))]]!
+
+verifyExtCallRetLpstr: aBoolean
+	| method arg actual |
+	method := Compiler
+				compile: ('w: anInteger
+	%<<1?overlap :>stdcall: lpstr AnswerIntPtr lpvoid>
+	^self _failureCode'
+						expandMacrosWith: aBoolean)
+				in: VMLibrary.
+	arg := 'oña' asAnsiString.
+	actual := method value: VM withArguments: { arg yourAddress }.
+	self assert: actual isKindOf: AnsiString.
+	self deny: actual identicalTo: arg.
+	self assert: actual equals: arg.
+	"A return type of lpstr is telling the VM that the function returns an ANSI string. If it doesn't, then the string may contain mojibakes."
+	arg :=arg asUtf8String.
+	actual := method value: VM withArguments: { arg yourAddress }.
+	self assert: actual isKindOf: AnsiString.
+	self assert: actual equals: (AnsiString fromByteArray: arg asByteArray).
+	!
+
+verifyExtCallRetLpstr8: aBoolean
+	| method arg actual |
+	method := Compiler
+				compile: ('w: anInteger
+	%<<1?overlap :>stdcall: lpstr8 AnswerIntPtr lpvoid>
+	^self _failureCode'
+						expandMacrosWith: aBoolean)
+				in: VMLibrary.
+	arg := 'oña' asUtf8String.
+	actual := method value: VM withArguments: { arg yourAddress }.
+	self assert: actual isKindOf: Utf8String.
+	self deny: actual identicalTo: arg.
+	self assert: actual equals: arg.
+	"A return type of lpstr8 is telling the VM that the function returns a UTF-8 string. If it doesn't, then the string may contain mojibakes."
+	arg :=arg asAnsiString.
+	actual := method value: VM withArguments: { arg yourAddress }.
+	self assert: actual isKindOf: Utf8String.
+	self assert: actual equals: (Utf8String fromByteArray: arg asByteArray).
+	!
 
 verifyExtCallRetLpwstr: aBoolean
 	| method expected actual |
@@ -3839,12 +3965,16 @@ testBSTRArg!public!unit tests! !
 testCRTFault!public!unit tests! !
 testEvaluationOrder!public!unit tests! !
 testExtCallArgLppvoid!public!unit tests! !
+testExtCallArgLpstr!public!unit tests! !
+testExtCallArgLpstr8!public!unit tests! !
 testExtCallArgLpwstr!public!unit tests! !
 testExtCallCrtFault!public! !
 testExtCallFpFault!public! !
 testExtCallGpf!public! !
 testExtCallIntDivZero!public! !
 testExtCallOverlappedArgLppvoid!public!unit tests! !
+testExtCallOverlappedArgLpstr!public!unit tests! !
+testExtCallOverlappedArgLpstr8!public!unit tests! !
 testExtCallOverlappedArgLpwstr!public!unit tests! !
 testExtCallOverlappedCrtFault!public! !
 testExtCallOverlappedFpFault!public! !
@@ -3853,12 +3983,15 @@ testExtCallOverlappedGpf!public! !
 testExtCallOverlappedIntDivZero!public! !
 testExtCallOverlappedRetErrno!public! !
 testExtCallOverlappedRetHRESULT!public!unit tests! !
+testExtCallOverlappedRetLpstr!public!unit tests! !
+testExtCallOverlappedRetLpstr8!public!unit tests! !
 testExtCallOverlappedRetLpwstr!public!unit tests! !
 testExtCallOverlappedRetNtStatus!public!unit tests! !
 testExtCallOverlappedSuspendAndTerminate!public!unit tests! !
 testExtCallOverlappedTermination!public!unit tests! !
 testExtCallRetErrno!public! !
 testExtCallRetHRESULT!public!unit tests! !
+testExtCallRetLpstr!public!unit tests! !
 testExtCallRetLpwstr!public!unit tests! !
 testExtCallRetNtStatus!public!unit tests! !
 testExtendedCharsInCrashDump!public!unit tests! !
@@ -3956,6 +4089,8 @@ testVMPointersImmutable!public!unit tests! !
 testWeakMournerNotifications!public!unit tests! !
 verifyBinaryPrimitive:forCases:!helpers!private! !
 verifyExtCallArgLppvoid:!helpers!private! !
+verifyExtCallArgLpstr:!helpers!private! !
+verifyExtCallArgLpstr8:!helpers!private! !
 verifyExtCallArgLpwstr:!helpers!private! !
 verifyExtCallCrtFault:!helpers!private! !
 verifyExtCallFpFault:!helpers!private! !
@@ -3963,6 +4098,8 @@ verifyExtCallGpf:!helpers!private! !
 verifyExtCallIntDivZero:!helpers!private! !
 verifyExtCallRetErrno:!helpers!private! !
 verifyExtCallRetHRESULT:!helpers!private! !
+verifyExtCallRetLpstr:!helpers!private! !
+verifyExtCallRetLpstr8:!helpers!private! !
 verifyExtCallRetLpwstr:!helpers!private! !
 verifyExtCallRetNtStatus:!helpers!private! !
 verifyPrimitiveAt:performBlock:!helpers!private! !

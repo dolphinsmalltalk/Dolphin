@@ -1873,7 +1873,7 @@ void Compiler::ParseTerm(textpos_t textPosition)
 	case TokenType::CharConst:
 		{
 			int32_t codePoint = ThisTokenInteger;
-			if (__isascii(codePoint))
+			if (codePoint <= 0x7f)
 			{
 				// We only generate the PushChar instruction for ASCII code points
 				GenInstructionExtended(OpCode::PushChar, static_cast<uint8_t>(codePoint));
@@ -2935,6 +2935,7 @@ void Compiler::ParseExtCallArgument(TypeDescriptor& answer)
 				{ u8"handle", DolphinX::ExtCallArgType::Handle, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
 				{ u8"lppvoid", DolphinX::ExtCallArgType::LPPVoid, nullptr },
 				{ u8"lpstr", DolphinX::ExtCallArgType::LPStr, (LPUTF8)DolphinX::ExtCallArgType::LPPVoid},
+				{ u8"lpstr8", DolphinX::ExtCallArgType::LPStr8, (LPUTF8)DolphinX::ExtCallArgType::LPPVoid},
 				{ u8"bool", DolphinX::ExtCallArgType::Bool, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
 				{ u8"void", DolphinX::ExtCallArgType::Void, (LPUTF8)DolphinX::ExtCallArgType::LPVoid},
 				{ u8"double", DolphinX::ExtCallArgType::Double, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
@@ -2942,7 +2943,7 @@ void Compiler::ParseExtCallArgument(TypeDescriptor& answer)
 				{ u8"hresult", DolphinX::ExtCallArgType::HResult, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
 				{ u8"ntstatus", DolphinX::ExtCallArgType::NTStatus, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
 				{ u8"errno", DolphinX::ExtCallArgType::Errno, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
-				{ u8"char", DolphinX::ExtCallArgType::Char, (LPUTF8)DolphinX::ExtCallArgType::LPStr},
+				{ u8"char8", DolphinX::ExtCallArgType::Char8, (LPUTF8)DolphinX::ExtCallArgType::LPStr8},
 				{ u8"uint8", DolphinX::ExtCallArgType::UInt8, (LPUTF8)DolphinX::ExtCallArgType::LPVoid},
 				{ u8"int8", DolphinX::ExtCallArgType::Int8, (LPUTF8)DolphinX::ExtCallArgType::LPVoid},
 				{ u8"uint16", DolphinX::ExtCallArgType::UInt16, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
@@ -2957,6 +2958,9 @@ void Compiler::ParseExtCallArgument(TypeDescriptor& answer)
 				{ u8"varbool", DolphinX::ExtCallArgType::VarBool, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
 				{ u8"guid", DolphinX::ExtCallArgType::Guid, u8"External.REFGUID" },
 				{ u8"date", DolphinX::ExtCallArgType::Date, u8"DATE" },
+				{ u8"bool8", DolphinX::ExtCallArgType::Bool8, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ u8"char32", DolphinX::ExtCallArgType::Char32, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ u8"char16", DolphinX::ExtCallArgType::Char16, (LPUTF8)DolphinX::ExtCallArgType::LPWStr },
 				// Convert a few class types to the special types to save space and time
 				{ u8"ExternalAddress", DolphinX::ExtCallArgType::LPVoid, (LPUTF8)DolphinX::ExtCallArgType::LPPVoid},
 				{ u8"ExternalHandle", DolphinX::ExtCallArgType::Handle, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
@@ -2989,6 +2993,7 @@ void Compiler::ParseExtCallArgument(TypeDescriptor& answer)
 				{ u8"sword", DolphinX::ExtCallArgType::Int16, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
 				{ u8"qword", DolphinX::ExtCallArgType::UInt64, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
 				{ u8"sqword", DolphinX::ExtCallArgType::Int64, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ u8"char", DolphinX::ExtCallArgType::Char, (LPUTF8)DolphinX::ExtCallArgType::LPStr},
 				{ u8"SDWORD", DolphinX::ExtCallArgType::Int32, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
 				{ u8"DWORD", DolphinX::ExtCallArgType::UInt32, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
 				{ u8"BYTE", DolphinX::ExtCallArgType::UInt8, (LPUTF8)DolphinX::ExtCallArgType::LPVoid},

@@ -417,7 +417,7 @@ completeWordAt: anInteger with: aString
 
 completionListSortBlock
 	^self isAutoCompletionCaseInsensitive
-		ifTrue: [[:a :b | (OS.Ucrt _stricmp: a displayString string2: b displayString) <= 0]]
+		ifTrue: [[:a :b | (OS.Ucrt _wcsicmp: a displayString string2: b displayString) <= 0]]
 		ifFalse: [[:a :b | (OS.Ucrt strcmp: a displayString string2: b displayString) <= 0]]!
 
 completionStringFor: aString at: anInteger

@@ -62,7 +62,7 @@ Oop* PRIMCALL Interpreter::primitiveNext(Oop* const sp, primargcount_t)
 					if (static_cast<size_t>(index) < oteBuf->bytesSize())
 					{
 						auto ansiCodeUnit = static_cast<char8_t>(reinterpret_cast<AnsiStringOTE*>(oteBuf)->m_location->m_characters[index]);
-						PushCharacter(sp, static_cast<char32_t>(m_ansiToUnicodeCharMap[ansiCodeUnit]));
+						StoreCharacterToStack(sp, static_cast<char32_t>(m_ansiToUnicodeCharMap[ansiCodeUnit]));
 						// When incrementing the index we must allow for it overflowing a SmallInteger, even though
 						// this is extremely unlikely in practice
 						readStream->m_index = Integer::NewSigned32WithRef(index + 1);
@@ -84,7 +84,7 @@ Oop* PRIMCALL Interpreter::primitiveNext(Oop* const sp, primargcount_t)
 
 						if (U_IS_UNICODE_CHAR(codePoint))
 						{
-							PushCharacter(sp, codePoint);
+							StoreCharacterToStack(sp, codePoint);
 							readStream->m_index = Integer::NewSigned32WithRef(index);
 							return sp;
 						}
@@ -111,7 +111,7 @@ Oop* PRIMCALL Interpreter::primitiveNext(Oop* const sp, primargcount_t)
 
 						if (U_IS_UNICODE_CHAR(codePoint) && !U16_IS_SURROGATE(codePoint))
 						{
-							PushCharacter(sp, codePoint);
+							StoreCharacterToStack(sp, codePoint);
 							readStream->m_index = Integer::NewSigned32WithRef(index);
 							return sp;
 						}
@@ -134,7 +134,7 @@ Oop* PRIMCALL Interpreter::primitiveNext(Oop* const sp, primargcount_t)
 
 						if (U_IS_UNICODE_CHAR(codePoint))
 						{
-							PushCharacter(sp, codePoint);
+							StoreCharacterToStack(sp, codePoint);
 							readStream->m_index = Integer::NewSigned32WithRef(index + 1);
 							return sp;
 						}
@@ -236,7 +236,7 @@ Oop* PRIMCALL Interpreter::primitiveNextPut(Oop* const sp, primargcount_t)
 									return newSp;
 
 								case StringEncoding::Utf8:
-									if (__isascii(codeUnit))
+									if (codeUnit <= 0x7f)
 									{
 										codePoint = codeUnit;
 									}
@@ -310,7 +310,7 @@ Oop* PRIMCALL Interpreter::primitiveNextPut(Oop* const sp, primargcount_t)
 							}
 
 							// Now we have a code point, we can encode it in UTF-8 (if not a surrogate)
-							if (__isascii(codePoint))
+							if (codePoint <= 0x7f)
 							{
 								// Single byte encoding
 
@@ -396,7 +396,7 @@ Oop* PRIMCALL Interpreter::primitiveNextPut(Oop* const sp, primargcount_t)
 
 							case StringEncoding::Utf8:
 								// UTF-8 encoded char, can only write these if not surrogates
-								if (__isascii(codeUnit))
+								if (codeUnit <= 0x7f)
 								{
 									codePoint = codeUnit;
 								}
@@ -489,7 +489,7 @@ Oop* PRIMCALL Interpreter::primitiveNextPut(Oop* const sp, primargcount_t)
 									break;
 
 								case StringEncoding::Utf8:
-									if (__isascii(codeUnit))
+									if (codeUnit <= 0x7f)
 									{
 										codePoint = codeUnit;
 									}

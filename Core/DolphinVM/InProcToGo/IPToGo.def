@@ -55,7 +55,8 @@ uncompress
 	_setmode
 	_splitpath_s
 	_statusfp
-	_stricmp
+	_wcserror_s
+	_wcsicmp
 	_wfopen_s
 	atoi
 	fclose
@@ -80,7 +81,6 @@ uncompress
 	strcat_s
 	strcmp
 	strcspn
-	strerror_s
 	strlen
 	strncmp
 	strncpy_s

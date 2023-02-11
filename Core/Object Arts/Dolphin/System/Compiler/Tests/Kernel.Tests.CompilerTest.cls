@@ -1384,6 +1384,7 @@ testTextMapsExhaustive
 	"Check that the release and debug text maps match for every method in the system .... with a
 	couple of exceptions... ahem"
 
+	<knownSlowTest>
 	"Take 20+ seconds to run, which add another 30% to the test runtime"
 	self skipIfCiBuild.
 	self knownTextMapIssues not methodsDo: [:each | self verifyTextMapsOf: each]!

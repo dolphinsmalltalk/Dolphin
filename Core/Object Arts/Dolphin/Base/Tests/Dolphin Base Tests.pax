@@ -162,6 +162,7 @@ package setClassNames: #(
 	#{Kernel.Tests.VariableBindingTest}
 	#{Kernel.Tests.VMTest}
 	#{OS.Tests}
+	#{OS.Tests.CRTErrorTest}
 	#{OS.Tests.CRTLibraryTest}
 	#{OS.Tests.DiskVolumeInformationTest}
 	#{OS.Tests.FILETIMETest}
@@ -176,6 +177,7 @@ package setClassNames: #(
 package setMethodNames: #(
 	#(#{Kernel.STBFiler class} #correspondingTestCase)
 	#(#{OS.CRTLibrary} #_chmod:pmode:)
+	#(#{OS.CRTLibrary} #strcat_s:bufferSize:strSource:)
 	#(#{OS.CRTLibraryNonBlocking} #_chmod:pmode:)
 	#(#{Tools.SmalltalkSystem} #regressionTestsLogFilename)
 	#(#{Tools.SmalltalkSystem} #regressionTestSuite)
@@ -383,6 +385,13 @@ Core.Tests.DolphinTest
 	classConstants: {}!
 Core.Tests.DolphinTest
 	subclass: #'Kernel.Tests.CompiledMethodTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest
+	subclass: #'OS.Tests.CRTErrorTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1403,9 +1412,16 @@ correspondingTestCase!public! !
 _chmod: aFilenameString pmode: aModeInteger
 	<cdecl: sdword _chmod lpstr sdword>
 	#deprecated. "Kept only for testing"
+	^self invalidCall: _failureCode!
+
+strcat_s: destString bufferSize: anInteger strSource: sourceString
+	"Only for testing"
+
+	<cdecl: errno strcat_s lpstr intptr lpstr>
 	^self invalidCall: _failureCode! !
 !OS.CRTLibrary categoriesForMethods!
 _chmod:pmode:!CRT functions-file handling!public! !
+strcat_s:bufferSize:strSource:!CRT functions-string manipulation!public! !
 !
 
 !OS.CRTLibraryNonBlocking methodsFor!

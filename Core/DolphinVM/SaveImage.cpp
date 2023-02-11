@@ -87,8 +87,8 @@ _PrimitiveFailureCode __stdcall ObjectMemory::SaveImageFile(const wchar_t* szFil
 	int err = ::_wsopen_s(&fd, (const wchar_t*)saveName, _O_WRONLY|_O_BINARY|_O_CREAT|_O_TRUNC|_O_SEQUENTIAL, _SH_DENYRW, _S_IWRITE|_S_IREAD);
 	if (err != 0)
 	{
-		char buf[256];
-		strerror_s(buf, errno);
+		wchar_t buf[256];
+		_wcserror_s(buf, errno);
 		TRACE(L"Failed to open image file for save %d:'%s'\n", errno, buf);
 		return _PrimitiveFailureCode::Failed;
 	}

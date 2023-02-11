@@ -8,8 +8,12 @@ Kernel.SharedPool
 	classInstanceVariableNames: ''
 	classConstants: {
 			'ExtCallArgBOOL' -> 16r9.
+			'ExtCallArgBool8' -> 16r1E.
 			'ExtCallArgBSTR' -> 16r15.
-			'ExtCallArgCHAR' -> 16r2.
+			'ExtCallArgChar' -> 16r2.
+			'ExtCallArgChar16' -> 16r20.
+			'ExtCallArgChar32' -> 16r1F.
+			'ExtCallArgChar8' -> 16r21.
 			'ExtCallArgCOMPTR' -> 16r37.
 			'ExtCallArgDATE' -> 16r17.
 			'ExtCallArgDOUBLE' -> 16rB.
@@ -27,6 +31,7 @@ Kernel.SharedPool
 			'ExtCallArgLPP' -> 16r36.
 			'ExtCallArgLPPVOID' -> 16rF.
 			'ExtCallArgLPSTR' -> 16rC.
+			'ExtCallArgLPSTR8' -> 16r22.
 			'ExtCallArgLPVOID' -> 16r1.
 			'ExtCallArgLPWSTR' -> 16r11.
 			'ExtCallArgMax' -> 16r3F.
