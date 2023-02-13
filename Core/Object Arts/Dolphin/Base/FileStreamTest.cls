@@ -84,6 +84,99 @@ testNextAvailableColonWithPaging
 		raise: self streamClass endOfStreamSignal.
 	self assert: writeStream contents equals: bytes!
 
+testNextPutAll
+	| string written actual offset |
+	filestream := self tempWriteStream: #utf8.
+	written := ''.
+	offset := Utf8String.Bom size.
+	"Fill the first page up to the penultimate byte"
+	string := String new: FileStream.PageSize - offset - 1 withAll: $X.
+	filestream nextPutAll: string.
+	written := written , string.
+	self assert: filestream pagePosition equals: FileStream.PageSize - 1.
+	self assert: filestream absolutePosition equals: FileStream.PageSize - 1.
+	self assert: filestream isBufferDirty.
+	filestream flush.
+	"Fill the last byte - page full, but not written yet"
+	string := 'Z'.
+	filestream nextPutAll: string.
+	written := written , string.
+	self assert: filestream pagePosition equals: FileStream.PageSize.
+	self assert: filestream absolutePosition equals: FileStream.PageSize.
+	self assert: filestream isBufferDirty.
+	"Write another byte to overflow into next page"
+	string := 'A'.
+	filestream nextPutAll: string.
+	written := written , string.
+	self assert: filestream pagePosition equals: 1.
+	self assert: filestream absolutePosition equals: FileStream.PageSize + 1.
+	self assert: filestream isBufferDirty.
+	"Fill the 2nd page up to the last byte"
+	string := String new: FileStream.PageSize - 2 withAll: $X.
+	filestream nextPutAll: string.
+	written := written , string.
+	self assert: filestream pagePosition equals: FileStream.PageSize - 1.
+	self assert: filestream absolutePosition equals: FileStream.PageSize * 2 - 1.
+	self assert: filestream isBufferDirty.
+	filestream flush.
+	"Write a two byte char causing overflow to next page"
+	string := '£'.
+	filestream nextPutAll: string.
+	written := written , string.
+	self assert: filestream pagePosition equals: 1.
+	self assert: filestream absolutePosition equals: FileStream.PageSize * 2 + 1.
+	self assert: filestream isBufferDirty.
+	"Fill the 3nd page up to the 2nd to last byte"
+	string := String new: FileStream.PageSize - 3 withAll: $X.
+	filestream nextPutAll: string.
+	written := written , string.
+	self assert: filestream pagePosition equals: FileStream.PageSize - 2.
+	self assert: filestream absolutePosition equals: FileStream.PageSize * 3 - 2.
+	self assert: filestream isBufferDirty.
+	filestream flush.
+	"Write a three byte char causing 1-byte overflow to next page"
+	string := '€'.
+	filestream nextPutAll: string.
+	written := written , string.
+	self assert: filestream pagePosition equals: 1.
+	self assert: filestream absolutePosition equals: FileStream.PageSize * 3 + 1.
+	self assert: filestream isBufferDirty.
+	"Fill the 4th page up to the 2nd to last byte"
+	string := String new: FileStream.PageSize - 3 withAll: $X.
+	filestream nextPutAll: string.
+	written := written , string.
+	self assert: filestream pagePosition equals: FileStream.PageSize - 2.
+	self assert: filestream absolutePosition equals: FileStream.PageSize * 4 - 2.
+	self assert: filestream isBufferDirty.
+	filestream flush.
+	"Write a four byte char causing 2-byte overflow to next page"
+	string := '𐀀'.
+	filestream nextPutAll: string.
+	written := written , string.
+	self assert: filestream pagePosition equals: 2.
+	self assert: filestream absolutePosition equals: FileStream.PageSize * 4 + 2.
+	self assert: filestream isBufferDirty.
+	"Fill the 5th page up to allow enough space for a 4-byte char"
+	string := String new: FileStream.PageSize - 6 withAll: $X.
+	filestream nextPutAll: string.
+	written := written , string.
+	self assert: filestream pagePosition equals: FileStream.PageSize - 4.
+	self assert: filestream absolutePosition equals: FileStream.PageSize * 5 - 4.
+	self assert: filestream isBufferDirty.
+	filestream flush.
+	"Write a four byte char to just fill the page"
+	string := '🐬'.
+	filestream nextPutAll: string.
+	written := written , string.
+	self assert: filestream pagePosition equals: FileStream.PageSize.
+	self assert: filestream absolutePosition equals: FileStream.PageSize * 5.
+	self assert: filestream isBufferDirty.
+
+	"Final sanity check that we actually wrote what we expected"
+	filestream close.
+	actual := File readAllText: tempFileName.
+	self assert: actual equals: written!
+
 testOwnsFile
 	| subject file |
 	subject := FileStream read: self class fileOutName.
@@ -194,6 +287,7 @@ streamOnFile:type:!helpers!private! !
 tearDownTempStream!helpers!private! !
 testFileTimes!public!unit tests! !
 testNextAvailableColonWithPaging!public!unit tests! !
+testNextPutAll!public!unit tests! !
 testOwnsFile!public! !
 testSingleByteOverflow!public!unit tests! !
 testVeryLargeSparseFile!public!unit tests! !
