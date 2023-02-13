@@ -146,8 +146,7 @@ free
 	"Private - Close the file if it is not already closed.
 	Signal a FileException if the operation fails."
 
-	handle notNull
-		ifTrue: [self basicFree]!
+	handle isNull ifFalse: [self basicFree]!
 
 getTimes: ctime atime: atime mtime: mtime
 	"Private - Get the receiver's time of creation, last access, and last modification, 

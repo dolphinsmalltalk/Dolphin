@@ -276,11 +276,12 @@ flush
 	(flags anyMask: DirtyBufferMask) ifTrue: [self writePage]!
 
 free
-	(file notNil and: [file handle notNull])
-		ifTrue: 
+	file isNil ifTrue: [^self].
+	file handle isNull
+		ifFalse: 
 			[self flush.
-			self ownsFile ifTrue: [file close].
-			file := nil]!
+			self ownsFile ifTrue: [file close]].
+	file := nil!
 
 fullFlush
 	"Flush any buffered modifications to the file and
@@ -441,7 +442,10 @@ nextPutAll: aCollection
 	"Store the elements in the argument, aCollection, as the next elements accessible by the receiver. 
 	Answer aCollection"
 
-	^aCollection appendToStream: self!
+	self primitiveNextPutAll: aCollection.
+	flags := flags bitOr: BufferUpdatedMask.
+	^aCollection
+!
 
 on: aCollection file: aFile
 	super on: aCollection.
@@ -455,6 +459,11 @@ ownsFile
 
 ownsFile: aBoolean
 	flags := flags mask: OwnsFileMask set: aBoolean!
+
+pagePosition
+	"Private - Answer the current <integer> position in the buffer."
+
+	^position!
 
 position
 	"Answer the zero-based position of the stream pointer. Note that position zero is after an
@@ -488,6 +497,10 @@ primitiveNextPut: anIntegerOrCharacter
 	<primitive: 66>
 	self position: self position.
 	^collection encodeOn: self put: anIntegerOrCharacter!
+
+primitiveNextPutAll: aCollection
+	<primitive: 173>
+	^aCollection appendToStream: self!
 
 readPageFor: anInteger
 	"Private - Read the page containing position anInteger and record the pageBase
@@ -589,10 +602,12 @@ nextPutAll:!accessing!public! !
 on:file:!initializing!private! !
 ownsFile!accessing!public! !
 ownsFile:!accessing!public! !
+pagePosition!accessing!private! !
 position!accessing!public! !
 position:!accessing!positioning!public! !
 primitiveBasicNextPut:!accessing!private! !
 primitiveNextPut:!accessing!private! !
+primitiveNextPutAll:!accessing!private! !
 readPageFor:!buffer!private! !
 reset!positioning!public! !
 reverseContents!accessing!public! !
