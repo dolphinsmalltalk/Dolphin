@@ -23,9 +23,8 @@ acceptChanges
 		ifTrue: [self acceptAllChanges]
 		ifFalse: [self acceptChanges: changes]!
 
-acceptChanges: aCollection 
-	RefactoryChangeManager instance performChange: (compositeChange
-				copy;
+acceptChanges: aCollection
+	RefactoryChangeManager instance performChange: (compositeChange copy
 				changes: aCollection;
 				yourself).
 	self removeChanges: aCollection!
@@ -172,6 +171,7 @@ removeChanges
 
 removeChanges: aCollection 
 	changesPresenter model removeAll: aCollection.
+	aCollection do: [:each | compositeChange removeChange: each].
 
 	"The browser is more useful if it automatically selects another item when some are deleted"
 	self deferredSelectCaret!

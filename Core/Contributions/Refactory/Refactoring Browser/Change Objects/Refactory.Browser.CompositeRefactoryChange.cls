@@ -78,7 +78,7 @@ changes
 	^changes!
 
 changes: aCollection 
-	changes := aCollection!
+	changes := aCollection asOrderedCollection!
 
 changesDo: aMonadicValuable
 	changes do: [:each | each changesDo: aMonadicValuable]!
