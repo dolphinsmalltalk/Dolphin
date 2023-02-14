@@ -25,18 +25,40 @@ testAsVariant
 				self assert: variant value value equals: each]!
 
 testDisplayString
-	| subject |
+	| subject stream actual |
 	subject := DECIMAL new value: DECIMAL.MaxValue.
-	self assert: subject displayString equals: (DECIMAL.MaxValue asScaledDecimal: 0) displayString.
+	stream := String writeStream
+				locale: (Locale named: 'fr-FR');
+				yourself.
+	actual := stream
+				display: subject;
+				contents.
+	self assert: actual equals: DECIMAL.MaxValue printString.
 	subject := DECIMAL new value: 0.
-	self assert: subject displayString equals: '0'.
+	actual := stream
+				reset;
+				display: subject;
+				contents.
+	self assert: actual equals: '0'.
 	subject scale: DECIMAL.MaxScale.
-	self assert: subject displayString equals: (0 asScaledDecimal: DECIMAL.MaxScale) displayString.
+	actual := stream
+				reset;
+				display: subject;
+				contents.
+	self assert: actual equals: '0'.
 	subject := DECIMAL new value: DECIMAL.SmallestValue.
-	self assert: subject displayString equals: DECIMAL.SmallestValue displayString.
+	actual := stream
+				reset;
+				display: subject;
+				contents.
+	self assert: actual equals: '0,' , (String new: DECIMAL.MaxScale - 1 withAll: $0) , '1'.
 	subject := DECIMAL new value: 123.456s4.
 	self assert: subject value equals: 123.456.
-	self assert: subject displayString equals: '123.456'!
+	actual := stream
+				reset;
+				display: subject;
+				contents.
+	self assert: actual equals: '123,456'!
 
 testMaxValue
 	| subject |

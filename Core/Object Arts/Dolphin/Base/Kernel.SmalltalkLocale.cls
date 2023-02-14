@@ -214,6 +214,11 @@ displayOn: aPuttableStream
 
 	aPuttableStream nextPutAll: self displayName!
 
+displayScaledDecimal: aScaledDecimal on: aPuttableStream
+	"Append to the <puttableStream> 2nd argument, a String whose characters are a representation of the <ScaledDecimal> first argument that a user in this <Locale> might expect to see."
+
+	aScaledDecimal basicDisplayOn: aPuttableStream!
+
 durationFormat
 	"Answer the format <String> used in this Locale (by default) for printing a <Duration>.
 	See superclass method for a description of the available format characters."
@@ -502,6 +507,7 @@ displayFloat:on:!displaying!public! !
 displayInteger:on:!displaying!public! !
 displayName!displaying!public! !
 displayOn:!displaying!public! !
+displayScaledDecimal:on:!displaying!public! !
 durationFormat!constants!public! !
 englishDisplayName!constants!public! !
 englishLanguageName!constants!public! !

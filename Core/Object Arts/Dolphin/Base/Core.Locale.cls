@@ -254,6 +254,11 @@ displayName
 
 	^self subclassResponsibility!
 
+displayScaledDecimal: aScaledDecimal on: aWriteStream
+	"Append to the <puttableStream> argument, aWriteStream, a String whose characters are a representation of the <ScaledDecimal>, aScaled, that a user in this <Locale> might expect to see."
+
+	^self subclassResponsibility!
+
 displayTime: aTime on: aWriteStream
 	"Append to the <puttableStream> argument, aWriteStream, a <String> whose characters are a representation of the <Time>, aTime, that a user in this <Locale> might expect to see."
 
@@ -404,6 +409,26 @@ localizedDisplayName
 	"Answer the <String> name of the Locale in the current UI language of the host system."
 
 	^self subclassResponsibility!
+
+localizeDecimal: aString format: aNUMBERFMT
+	| lcid localized size |
+	size := OS.Kernel32
+				getNumberFormat: (lcid := self lcid)
+				dwFlags: 0
+				lpValue: aString
+				lpFormat: aNUMBERFMT
+				lpNumberStr: nil
+				cchNumber: 0.
+	size == 0 ifTrue: [^OS.Kernel32 systemError].
+	localized := Utf16String new: size - 1.
+	OS.Kernel32
+		getNumberFormat: lcid
+		dwFlags: 0
+		lpValue: aString
+		lpFormat: aNUMBERFMT
+		lpNumberStr: localized
+		cchNumber: size.
+	^localized!
 
 longDateFormat
 	"Answer the long date format for the receiver locale. See #dateFormat for a description of the available format tokens."
@@ -623,24 +648,15 @@ printDuration: aDuration on: aWriteStream format: aString
 printFloat: aFloat
 	"Answer a <String> representation of the <Float> argument in the format defined for this locale."
 
-	^self
-		printFloat: aFloat
-		format: self numberFormat
-		lcid: self lcid!
+	^self printFloat: aFloat format: self numberFormat!
 
 printFloat: aFloat format: aNUMBERFMT
-	^self
-		printFloat: aFloat
-		format: aNUMBERFMT
-		lcid: self lcid!
-
-printFloat: aFloat format: aNUMBERFMT lcid: lcidInteger
 	"Answer a <String> representation of the <Float> first argument in the format defined by the <NUMBERFMTW> 2nd argument. 
 	If the number is negative, then the negative sign used is that associated with the locale identified by the <integer> LCID 3rd argument."
 
 	"Implementation Note: I tried adding a primitive for this with code similar to that below, although failing for NaNs and Infinities, using the CRT _gcvt function to perform the initial conversion of the Float to an invariant String before the locale specific formatting is applied. Interestingly it actually runs more slowly!! This suggests that _gcvt is not very efficient."
 
-	| localized classification size invariant |
+	| classification |
 	classification := aFloat fpClass.
 	(classification anyMask: Float.FpClassFinite)
 		ifFalse: 
@@ -651,8 +667,7 @@ printFloat: aFloat format: aNUMBERFMT lcid: lcidInteger
 					(classification anyMask: Float.FpClassNegative)
 						ifTrue: [self negativeInfinity]
 						ifFalse: [self infinity]]].
-	"The Windows API takes a string as input in a canonical form"
-	invariant := (classification anyMask: Float.FpClassZero)
+	^self localizeDecimal: ((classification anyMask: Float.FpClassZero)
 				ifTrue: 
 					[(classification anyMask: Float.FpClassNegative)
 						ifTrue: [##('-0.0' asUtf16String)]
@@ -669,32 +684,15 @@ printFloat: aFloat format: aNUMBERFMT lcid: lcidInteger
 							base: 10
 							digitCount: 17
 							decimalExponents: ##(VMConstants.SmallIntegerMin to: VMConstants.SmallIntegerMax).
-					stream grabContents].
-	size := OS.Kernel32
-				getNumberFormat: lcidInteger
-				dwFlags: 0
-				lpValue: invariant
-				lpFormat: aNUMBERFMT
-				lpNumberStr: nil
-				cchNumber: 0.
-	size == 0 ifTrue: [^OS.Kernel32 systemError].
-	localized := Utf16String new: size - 1.
-	OS.Kernel32
-		getNumberFormat: lcidInteger
-		dwFlags: 0
-		lpValue: invariant
-		lpFormat: aNUMBERFMT
-		lpNumberStr: localized
-		cchNumber: size.
-	^localized!
+					stream grabContents])
+		format: aNUMBERFMT!
 
 printFloat: aFloat on: aStream format: aNUMBERFMT
 	"Append, to aStream, a String whose characters are a representation of the <Float> argument, aFloat, in <integer> base, baseInteger, using the formatting instructions specified by the <NUMBERFMT>, aNUMBERFMT."
 
 	aStream nextPutAll: (self
 				printFloat: aFloat
-				format: aNUMBERFMT
-				lcid: self lcid)!
+				format: aNUMBERFMT)!
 
 printFractionalPart: aFraction on: aStream places: anInteger
 	| fractionPart |
@@ -832,6 +830,7 @@ displayDuration:on:!displaying!public! !
 displayFloat:on:!displaying!public! !
 displayInteger:on:!displaying!public! !
 displayName!displaying!public! !
+displayScaledDecimal:on:!displaying!public! !
 displayTime:on:!displaying!public! !
 durationFormat!constants!public! !
 englishDisplayName!constants!public! !
@@ -854,6 +853,7 @@ lastTwoDigitYear!constants!public! !
 lcid!accessing!public! !
 listSeparator!constants!public! !
 localizedDisplayName!constants!public! !
+localizeDecimal:format:!printing!private! !
 longDateFormat!constants!public! !
 longTimeFormat!constants!public! !
 lowercaseString:!converting!public! !
@@ -884,7 +884,6 @@ printDateTime:on:format:!printing!public! !
 printDuration:on:format:!printing!public! !
 printFloat:!printing!public! !
 printFloat:format:!printing!public! !
-printFloat:format:lcid:!printing!public! !
 printFloat:on:format:!printing!public! !
 printFractionalPart:on:places:!printing!private! !
 printTime:on:format:!printing!public! !
@@ -976,8 +975,8 @@ named: aString withOverrides: aBoolean
 	"Private - Answer a sub-instance of the receiver to represent the Locale with the specified name."
 
 	| lcid |
-	(aString equalsIgnoreCase: 'smalltalk') ifTrue: [^self smalltalk].
-	(aString equalsIgnoreCase: 'invariant') ifTrue: [^self invariant].
+	(aString compareOrdinals: 'smalltalk' ignoringCase: true) == 0 ifTrue: [^self smalltalk].
+	(aString compareOrdinals: 'invariant' ignoringCase: true) == 0 ifTrue: [^self invariant].
 	lcid := OS.Kernel32 localeNameToLCID: aString dwFlags: 0.
 	lcid == 0 ifTrue: [OS.Kernel32 systemError].
 	^OS.WindowsLocale lcid: lcid withOverrides: aBoolean!

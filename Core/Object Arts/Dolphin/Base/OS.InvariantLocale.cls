@@ -17,6 +17,11 @@ basicLcid
 
 	^##(LOCALE_INVARIANT bitOr: NoUserOverrideMask)!
 
+displayScaledDecimal: aScaledDecimal on: aPuttableStream
+	"Append to the <puttableStream> 2nd argument, a String whose characters are a representation of the <ScaledDecimal> first argument that a user in this <Locale> might expect to see."
+
+	aScaledDecimal basicDisplayOn: aPuttableStream!
+
 isInstalled
 	"Answer whether the receiver is a recognised (valid) Locale that is installed on the host OS."
 
@@ -49,6 +54,7 @@ stbSaveOn: anSTBOutFiler
 	anSTBOutFiler nextPut: #invariant! !
 !OS.InvariantLocale categoriesForMethods!
 basicLcid!constants!private! !
+displayScaledDecimal:on:!displaying!public! !
 isInstalled!public!testing! !
 name!accessing!public! !
 primary!printing!public! !

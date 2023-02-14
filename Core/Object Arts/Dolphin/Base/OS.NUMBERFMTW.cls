@@ -121,7 +121,9 @@ lpThousandSep: anUtf16String
 negativeNumberMode 
 	^self NegativeOrder!
 
-negativeNumberMode: anInteger 
+negativeNumberMode: anInteger
+	(anInteger between: 0 and: 4)
+		ifFalse: [self error: 'Invalid negative number mode ' , anInteger printString].
 	self NegativeOrder: anInteger!
 
 NegativeOrder

@@ -91,16 +91,15 @@ testCollectionConversions
 			self assert: var value asArray equals: array]!
 
 testCY
-	{0s. 1234.456s. 1234.4567s. CURRENCY.MaxValue. CURRENCY.MinValue} do: 
+	{ 0s. 1234.456s. 1234.4567s. CURRENCY.MaxValue. CURRENCY.MinValue } do: 
 			[:each |
-			| var |
+			| var stream |
 			var := VARIANT new.
 			var cy: each.
 			self assert: var vt identicalTo: VT_CY.
 			self assert: var value equals: each.
 			self assert: var printString
-				equals: 'a VARIANT(cy: <1p>)' << (ScaledDecimal newFromNumber: each scale: 4).
-			self assert: var displayString equals: each displayString]!
+				equals: 'a VARIANT(cy: <1p>)' << (ScaledDecimal newFromNumber: each scale: 4)]!
 
 testCYREF
 	| var cy |
@@ -141,7 +140,7 @@ testDECIMAL
 	value := var value.
 	self assert: value equals: DECIMAL.SmallestValue.
 	self assert: value scale equals: DECIMAL.MaxScale.
-	self assert: var displayString equals: DECIMAL.SmallestValue displayString.
+	self assert: var displayString equals: (DECIMAL new value: DECIMAL.SmallestValue) displayString.
 	self assert: var printString equals: 'a VARIANT(decimal: <1p>)' << DECIMAL.SmallestValue.
 	var decimal: (ScaledDecimal newFromNumber: 0 scale: DECIMAL.MaxScale).
 	value := var value.

@@ -15,6 +15,12 @@ Core.Tests.LocaleTest comment: ''!
 defaultSubject
 	^self subclassResponsibility!
 
+displayScaledDecimal: aScaledDecimal in: aLocale 
+	| stream |
+	stream := String writeStream.
+	aLocale displayScaledDecimal: aScaledDecimal on: stream.
+	^stream contents!
+
 setUp
 	super setUp.
 	savedLocale := Locale userDefault.
@@ -244,6 +250,7 @@ verifyPrintFloatSeparators
 	self assert: (subject printFloat: 1234567890.123 format: format) equals: '123^456^7890@123'! !
 !Core.Tests.LocaleTest categoriesForMethods!
 defaultSubject!helpers!private! !
+displayScaledDecimal:in:!helpers!private! !
 setUp!private!running! !
 tearDown!private!running! !
 testDisplayFloatOn!public!unit tests! !

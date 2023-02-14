@@ -169,6 +169,53 @@ testDisplayName
 	self assert: (Locale standard: 'mn-MN') displayName equals: 'монгол (Монгол)'.
 	self assert: (Locale standard: 'dz-BT') displayName equals: 'རྫོང་ཁ (འབྲུག)'!
 
+testDisplayScaledDecimainOn
+	| subject large |
+	"Mode 1"
+	subject := Locale standard: 'en-US'.
+	self assert: subject negativeNumberMode equals: 1.
+	self assert: (self displayScaledDecimal: 0.0s2 in: subject) equals: '0.00'.
+	self assert: (self displayScaledDecimal: -1.25s in: subject) equals: '-1.25'.
+	self assert: (self displayScaledDecimal: -0.0001s in: subject) equals: '-0.0001'.
+	large := -1234567891234567891234567890.012345678987654321s.
+	self assert: (self displayScaledDecimal: large in: subject)
+		equals: '-1,234,567,891,234,567,891,234,567,890.012345679'.
+
+	"Different negative number mode (2)"
+	subject := Locale standard: 'hr-HR'.
+	self assert: subject negativeNumberMode equals: 2.
+	self assert: (self displayScaledDecimal: 0.0s2 in: subject) equals: '0,00'.
+	self assert: (self displayScaledDecimal: -1.25s in: subject) equals: '- 1,25'.
+	self assert: (self displayScaledDecimal: -0.0001s in: subject) equals: '- 0,0001'.
+	self assert: (self displayScaledDecimal: large in: subject)
+		equals: '- 1.234.567.891.234.567.891.234.567.890,012345679'.
+
+	"Different negative number mode (3)"
+	subject := Locale standard: 'fa-IR'.
+	self assert: subject negativeNumberMode equals: 3.
+	self assert: (self displayScaledDecimal: 0.0s2 in: subject) equals: '0/00'.
+	self assert: (self displayScaledDecimal: -1.25s in: subject) equals: '1/25-'.
+	self assert: (self displayScaledDecimal: -0.0001s in: subject) equals: '0/0001-'.
+	self assert: (self displayScaledDecimal: large in: subject)
+		equals: '1,234,567,891,234,567,891,234,567,890/012345679-'.
+
+	"Fake up the other modes - zero is bracketed"
+	subject := Locale standard: 'en-US'.
+	subject negativeNumberMode: 0.
+	self assert: (self displayScaledDecimal: 0.00s in: subject) equals: '0.00'.
+	self assert: (self displayScaledDecimal: -1.25s in: subject) equals: '(1.25)'.
+	self assert: (self displayScaledDecimal: -0.0001s in: subject) equals: '(0.0001)'.
+	self assert: (self displayScaledDecimal: large in: subject)
+		equals: '(1,234,567,891,234,567,891,234,567,890.012345679)'.
+
+	"Mode 4 is trailing minus after space"
+	subject negativeNumberMode: 4.
+	self assert: (self displayScaledDecimal: 0.0s2 in: subject) equals: '0.00'.
+	self assert: (self displayScaledDecimal: -1.25s in: subject) equals: '1.25 -'.
+	self assert: (self displayScaledDecimal: -0.0001s in: subject) equals: '0.0001 -'.
+	self assert: (self displayScaledDecimal: large in: subject)
+		equals: '1,234,567,891,234,567,891,234,567,890.012345679 -'!
+
 testEnglishName
 	#('smalltalk' 'English' 'en-US' 'English' 'en-GB' 'English' 'es-ES_tradnl' 'Spanish' 'cy-GB' 'Welsh' 'es-AR' 'Spanish' 'ja-JP' 'Japanese' 'dz-BT' 'Dzongkha')
 		pairsDo: [:lcid :language | self assert: (Locale named: lcid) englishLanguageName equals: language]!
@@ -382,6 +429,7 @@ testDisplayCharacterOn!public!unit tests! !
 testDisplayFloatOn!public!unit tests! !
 testDisplayFloatOnNegativeModes!public!unit tests! !
 testDisplayName!public!unit tests! !
+testDisplayScaledDecimainOn!public!unit tests! !
 testEnglishName!public!unit tests! !
 testFirstDayOfWeek!public!unit tests! !
 testGetCalendarInfoString!public!unit tests! !

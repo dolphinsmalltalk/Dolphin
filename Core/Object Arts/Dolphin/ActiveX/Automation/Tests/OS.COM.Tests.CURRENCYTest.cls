@@ -21,18 +21,30 @@ testAsVariant
 			self assert: variant value value equals: (each asScaledDecimal: 4)]!
 
 testDisplayString
-	| subject |
+	| subject stream actual |
 	subject := CURRENCY new value: CURRENCY.MaxValue.
-	self assert: subject displayString equals: CURRENCY.MaxValue displayString.
+	stream := String writeStream
+				locale: (Locale named: 'fr-FR');
+				yourself.
+	actual := stream
+				display: subject;
+				contents.
+	self assert: actual equals: '922337203685477,5807'.
 	subject := CURRENCY new value: 0s2.
 	"Note that unlike DECIMAL, the minimum scale is used so the number prints like FP"
 	self assert: subject displayString equals: '0'.
 	subject := CURRENCY new value: CURRENCY.MinValue.
-	self assert: subject displayString equals: CURRENCY.MinValue displayString.
+	actual := stream
+				reset;
+				display: subject;
+				contents.
+	self assert: actual equals: '-922337203685477,5808'.
 	subject := CURRENCY new value: 123.456s4.
-	self assert: subject displayString equals: '123.456'
-
-!
+	actual := stream
+				reset;
+				display: subject;
+				contents.
+	self assert: actual equals: '123,456'!
 
 testMaxValue
 	| subject |

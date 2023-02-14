@@ -95,19 +95,8 @@ asScaledDecimal: newScale
 		newFromNumber: fraction
 		scale: newScale!
 
-coerce: coercee
-	"Private - Coerce the <arithmeticValue> argument (which is assumed to be of a lower generality than the receiver) to a <ScaledDecimal>."
-
-	^coercee asScaledDecimal: scale!
-
-denominator
-	"Answer the <integer> denominator of the receiver."
-
-	^fraction denominator
-!
-
-displayOn: aPuttableStream
-	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
+basicDisplayOn: aPuttableStream
+	"Private - Append to the <puttableStream> argument a String whose characters are a representation of the receiver in a Smalltalk decimal number format."
 
 	| scaler quo num denom scaled |
 	scaler := scale exp10.
@@ -130,6 +119,22 @@ displayOn: aPuttableStream
 					quo := rem quo: scaler.
 					aPuttableStream nextPut: (Character digitValue: quo)]]!
 
+coerce: coercee
+	"Private - Coerce the <arithmeticValue> argument (which is assumed to be of a lower generality than the receiver) to a <ScaledDecimal>."
+
+	^coercee asScaledDecimal: scale!
+
+denominator
+	"Answer the <integer> denominator of the receiver."
+
+	^fraction denominator
+!
+
+displayOn: aPuttableStream
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
+
+	aPuttableStream locale displayScaledDecimal: self on: aPuttableStream!
+
 divideIntoScaledDecimal: aScaledDecimal
 	"Private - Answer the <ScaledDecimal> result of dividing the known <ScaledDecimal> argument by the receiver."
 
@@ -146,6 +151,9 @@ equalToScaledDecimal: aScaledDecimal
 	"Private - Answer whether the receiver is equal to the known <ScaledDecimal>, aScaledDecimal."
 
 	^aScaledDecimal asFraction = fraction!
+
+fraction: anObject
+	fraction := anObject!
 
 fractionPart
 	"Answer a <number> of the same type as the receiver, representing the 
@@ -232,13 +240,11 @@ numerator
 	^fraction numerator
 !
 
-printOn: target
-	"Append, to the <puttableStream>, target, a string whose characters are a 
-	the same as those which would result from sending a #printString
-	message to the receiver."
+printOn: aPuttableStream
+	"Append the Smalltalk literal representation of the receiver to the <puttableStream> argument."
 
-	self displayOn: target.
-	target nextPut: $s!
+	self basicDisplayOn: aPuttableStream.
+	aPuttableStream nextPut: $s!
 
 raisedToInteger: operand
 	"Answer the receiver raised to the <integer> power, operand."
@@ -264,6 +270,9 @@ scale
 
 	^scale
 !
+
+scale: anObject
+	scale := anObject!
 
 setFraction: f scale: s 
 	"Private - Initialize the receiver's identity variables."
@@ -315,12 +324,14 @@ addToScaledDecimal:!double dispatch!private! !
 asFloat!converting!public! !
 asFraction!converting!public! !
 asScaledDecimal:!converting!public! !
+basicDisplayOn:!printing!private! !
 coerce:!coercing!private! !
 denominator!accessing!public! !
 displayOn:!printing!public! !
 divideIntoScaledDecimal:!double dispatch!private! !
 equalToInteger:!double dispatch!private! !
 equalToScaledDecimal:!double dispatch!private! !
+fraction:!accessing!private! !
 fractionPart!accessing!public! !
 generality!coercing!private! !
 greaterOrEqualToFloat:!double dispatch!private! !
@@ -338,6 +349,7 @@ printOn:!printing!public! !
 raisedToInteger:!mathematical!public! !
 reciprocal!arithmetic!public! !
 scale!accessing!public! !
+scale:!accessing!private! !
 setFraction:scale:!initializing!private! !
 storeOn:!public!storing! !
 subtractFromInteger:!double dispatch!private! !

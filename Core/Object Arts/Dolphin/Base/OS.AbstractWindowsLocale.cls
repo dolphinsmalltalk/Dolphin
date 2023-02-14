@@ -118,6 +118,17 @@ displayOn: aPuttableStream
 				ifTrue: [aPuttableStream nextPutAll: self localizedDisplayName]
 				ifFalse: [aPuttableStream nextPutAll: self englishDisplayName]]!
 
+displayScaledDecimal: aScaledDecimal on: aPuttableStream
+	"Append to the <puttableStream> 2nd argument, a String whose characters are a representation of the <ScaledDecimal> first argument that a user in this <Locale> might expect to see."
+
+	| invariant format |
+	invariant := String writeStream: 8.
+	aScaledDecimal basicDisplayOn: invariant.
+	format := self numberFormat copy.
+	"Although ScaledDecimals support arbitrary precision and have a specific scale (number of decimal places). Given the explicit scale, we use that rather than the default number of places for the locale. However, the maximum number of decimal places we will display is 9, partly because that is the limit of the GetNumberFormat API, and partly because that should be enough for most user display purposes."
+	format decimalPlaces: (aScaledDecimal scale min: 9).
+	aPuttableStream nextPutAll: (self localizeDecimal: invariant contents format: format)!
+
 durationFormat
 	"Answer the format <String> used in this Locale (by default) for displaying a <Duration>.
 	See Locale>>#durationFormat for details of the available formats characters."
@@ -321,9 +332,21 @@ negativeInfinity
 	^self getStringInfo: LOCALE_SNEGINFINITY!
 
 negativeNumberMode
-	"Answer an <Integer> describing the way in which negative numbers should be displayed in this locale."
+	"Answer an <Integer> describing the way in which negative numbers should be displayed in this locale.
+		0	Left parenthesis, number, right parenthesis; for example, (1.1)
+		1	Negative sign, number; for example, -1.1
+		2	Negative sign, space, number; for example, - 1.1
+		3	Number, negative sign; for example, 1.1-
+		4	Number, space, negative sign; for example, 1.1 -
+	"
 
 	^self getIntegerInfo: LOCALE_INEGNUMBER!
+
+negativeNumberMode: anInteger
+	"Set the way negative numbers should be displayed in this locale (see #negativeNumberMode)."
+
+	self numberFormat isImmutable ifTrue: [numberFormat := numberFormat copy].
+	numberFormat negativeNumberMode: anInteger!
 
 negativeSign
 	^self getStringInfo: LOCALE_SNEGATIVESIGN!
@@ -437,6 +460,7 @@ decimalPlaces!constants!public! !
 decimalSeparator!constants!public! !
 displayName!displaying!public! !
 displayOn:!displaying!public! !
+displayScaledDecimal:on:!displaying!public! !
 durationFormat!constants!public! !
 englishDisplayName!displaying!public! !
 englishLanguageName!constants!public! !
@@ -473,6 +497,7 @@ nan!constants!public! !
 nativeDigits!constants!public! !
 negativeInfinity!constants!public! !
 negativeNumberMode!constants!public! !
+negativeNumberMode:!constants!public! !
 negativeSign!constants!public! !
 numberGrouping!constants!public! !
 parentName!constants!public! !
