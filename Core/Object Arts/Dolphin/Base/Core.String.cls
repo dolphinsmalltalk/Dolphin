@@ -728,10 +728,10 @@ hash
 		bitXor: (hash bitAnd: VMConstants.SmallIntegerMax)!
 
 hashOrdinalsIgnoringCase
-	"Answer the case-insensitive <integer> hash value for the receiver, i.e. the hash is the same for two strings regardless of case. This is complementary to #compareOrdinals:ignoringCase:, and is based on an ordinal (non-linguistic) comparison, however see Locale>>#hashString:."
+	"Answer the case-insensitive <integer> hash value for the receiver, i.e. the hash is the same for two strings regardless of case. This is complementary to #compareOrdinals:ignoringCase:, and is based on an ordinal (non-linguistic) hash of the UTF-8 encodings of the individually case-folded characters, however see Locale>>#hashString:."
 
 	<primitive: 227>
-	^(SmalltalkLocale.Current uppercaseString: self) hash!
+	^(self asUtf8String collect: [:each | each asFoldcase]) hash!
 
 indexOfAnyOf: aCollectionOfCharacters startingAt: anInteger 
 	"Answer the one-based integer index of the first encountered element of the receiver which

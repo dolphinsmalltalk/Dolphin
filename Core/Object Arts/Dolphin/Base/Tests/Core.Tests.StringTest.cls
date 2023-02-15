@@ -705,11 +705,9 @@ testOrdinalCaseInsensitiveComparison
 			upper := self assimilateString: each last.
 			self assert: subject hashOrdinalsIgnoringCase equals: upper hashOrdinalsIgnoringCase.
 			"The hash value should be equivalent to the hash of the UTF-8 encoded bytes of the uppercased characters of the string"
-			self assert: (subject collect: [:ch | ch asUppercase]) asUtf8String asByteArray hash
+			self assert: (subject collect: [:ch | ch asFoldcase]) asUtf8String asByteArray hash
 				equals: subject hashOrdinalsIgnoringCase.
-			self assert: subject <=> upper equals: 0.
 			self assert: (subject compareOrdinals: upper ignoringCase: true) equals: 0.
-			self assert: upper <=> subject equals: 0.
 			self assert: (upper compareOrdinals: subject ignoringCase: true) equals: 0]!
 
 testOrdinalCaseInsensitiveEquality
@@ -733,7 +731,7 @@ testOrdinalCaseInsensitiveEquality
 			self assert: subject <=> lower equals: 0.
 			self assert: upper hashOrdinalsIgnoringCase equals: subject hashOrdinalsIgnoringCase.
 			self assert: lower hashOrdinalsIgnoringCase equals: subject hashOrdinalsIgnoringCase.
-			self assert: (subject collect: [:ch | ch asUppercase]) hash equals: subject hashOrdinalsIgnoringCase.
+			self assert: (subject collect: [:ch | ch asLowercase]) hash equals: subject hashOrdinalsIgnoringCase.
 			utf8 := subject asUtf8String.
 			self assert: (subject compareOrdinals: utf8 ignoringCase: true) equals: 0.
 			self assert: subject <=> utf8 equals: 0.

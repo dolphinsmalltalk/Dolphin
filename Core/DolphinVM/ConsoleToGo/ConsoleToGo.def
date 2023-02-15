@@ -93,3 +93,4 @@ uncompress
 	u_ispunct
 	u_tolower
 	u_toupper
+	u_foldCase

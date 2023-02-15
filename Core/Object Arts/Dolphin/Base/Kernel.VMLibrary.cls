@@ -435,6 +435,32 @@ u_charType: aCharacter
 	<cdecl: int8 u_charType char32>
 	^self invalidCall: _failureCode!
 
+u_foldCase: aCharacter options: anInteger
+"/**
+ * The given character is mapped to its case folding equivalent according to
+ * UnicodeData.txt and CaseFolding.txt;
+ * if the character has no case folding equivalent, the character
+ * itself is returned.
+ *
+ * This function only returns the simple, single-code point case mapping.
+ * Full case mappings should be used whenever possible because they produce
+ * better results by working on whole strings.
+ * They take into account the string context and the language and can map
+ * to a result string with a different length as appropriate.
+ * Full case mappings are applied by the string case mapping functions,
+ * see ustring.h and the UnicodeString class.
+ * See also the User Guide chapter on C/POSIX migration:
+ * http://icu-project.org/userguide/posix.html#case_mappings
+ *
+ * @param c the code point to be mapped
+ * @param options Either U_FOLD_CASE_DEFAULT or U_FOLD_CASE_EXCLUDE_SPECIAL_I
+ * @return the Simple_Case_Folding of the code point, if any;
+ *         otherwise the code point itself.
+ * @stable ICU 2.0
+ */"
+	<cdecl: char32 u_foldCase char32 uint32>
+	^self invalidCall: _failureCode!
+
 u_hasBinaryProperty: aCharacter which: anIntege
 "/**
  * Check a binary Unicode property for a code point.
@@ -684,6 +710,7 @@ stderr!accessing-handles!private! !
 stdin!accessing-handles!private! !
 stdout!accessing-handles!private! !
 u_charType:!icu functions!public! !
+u_foldCase:options:!icu functions!public! !
 u_hasBinaryProperty:which:!icu functions!public! !
 u_isalpha:!icu functions!public! !
 u_iscntrl:!icu functions!public! !

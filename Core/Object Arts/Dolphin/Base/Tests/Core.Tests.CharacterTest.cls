@@ -42,6 +42,7 @@ testAsLowercase
 	self assert: $a asLowercase identicalTo: $a.
 	self assert: $A asLowercase identicalTo: $a.
 	self assert: $\0 asLowercase identicalTo: $\0.
+	self assert: $I asLowercase identicalTo: $i.
 	"Euro symbol - still a unique ANSI encoded char"
 	self assert: $€ asLowercase identicalTo: $€.
 	self assert: $\x80 asLowercase equals: $\x80.
@@ -78,6 +79,7 @@ testAsUppercase
 	self assert: $A asUppercase identicalTo: $A.
 	self assert: $a asUppercase identicalTo: $A.
 	self assert: $\0 asUppercase identicalTo: $\0.
+	self assert: $i asUppercase identicalTo: $I.
 	"Euro symbol - still a unique ANSI encoded char"
 	self assert: $€ asUppercase identicalTo: $€.
 	self assert: $\x80 asUppercase equals: $\x80.
@@ -89,7 +91,7 @@ testAsUppercase
 	self assert: $ѐ asUppercase equals: $Ѐ.
 	"Greek delta"
 	self assert: $δ asUppercase equals: $Δ.
-	"U+00DF Latin Small Letter Sharp S (eszett) - there has been an official capitalized version for some time (U+1E9E Latin Capital Letter Sharp S), but not converted by ICU at this time."
+	"U+00DF Latin Small Letter Sharp S (eszett) - there has been an official capitalized version for some time (U+1E9E Latin Capital Letter Sharp S), but not converted by ICU at this time. For a string conversion it would convert eszett to SS, but as this is a single character conversion it can't do that."
 	self assert: $ß asUppercase equals: $ß.
 	"Thai 7 - not a letter"
 	self assert: $๗ asUppercase equals: $๗.
@@ -230,6 +232,43 @@ testEquals
 	self deny: $\x200E equals: 16r200E.
 	self deny: (Character utf8Value: 240) equals: $ð.
 	self deny: (Character utf8Value: 16r80) equals: $\x80!
+
+testFoldcase
+	"Unicode case folding is similar to lower-casing."
+
+	self assert: $a asFoldcase identicalTo: $a.
+	self assert: $A asFoldcase identicalTo: $a.
+	self assert: $\0 asFoldcase identicalTo: $\0.
+	"Euro symbol - still a unique ANSI encoded char"
+	self assert: $€ asFoldcase identicalTo: $€.
+	self assert: $\x80 asFoldcase equals: $\x80.
+	"Turkish, but 8-bit"
+	self assert: $Ç asFoldcase equals: $ç.
+	"Turkish dotted İ"
+	self assert: $İ asFoldcase equals: $İ.
+	"Cyrillic, 16-bit"
+	self assert: $Ѐ asFoldcase equals: $ѐ.
+	"Greek delta"
+	self assert: $Δ asFoldcase equals: $δ.
+	"U+1E9E Latin Capital Letter Sharp S  -> (U+00DF Latin Small Letter Sharp S)."
+	self assert: $ẞ asFoldcase equals: $ß.
+	self assert: $ß asFoldcase equals: $ß.
+	"Thai 7 - not a letter"
+	self assert: $๗ asFoldcase equals: $๗.
+	"U+01C5 Latin Capital Letter D with Small Letter Z with Caron -> U+01C6 Latin Small Letter Dz with Caron"
+	self assert: $ǅ asFoldcase equals: $ǆ.
+	"U+037F Greek Capital Letter Yot -> U+03F3 Greek Letter Yot"
+	self assert: $Ϳ asFoldcase equals: $ϳ.
+	"U+052A Cyrillic Capital Letter Dzzhe -> U+052B Cyrillic Small Letter Dzzhe"
+	self assert: $Ԫ asFoldcase equals: $ԫ.
+	"Outside BMP"
+	"Emoji"
+	self assert: $🐬 asFoldcase equals: $🐬.
+	"Supplementary multi-lingual plane"
+	"U+16E5A Medefaidrin Capital Letter Oe -> U+16E7A Medefaidrin Small Letter Oe"
+	self assert: $𖹚 asFoldcase equals: $𖹺.
+	"U+1E921 Adlam Capital Letter Sha -> U+1E943 Adlam Small Letter Sha"
+	self assert: $𞤡 asFoldcase equals: $𞥃!
 
 testIdentity
 	self assert: (Character codePoint: 97) identicalTo: $a.
@@ -813,6 +852,7 @@ testCodePointString!public!unit tests! !
 testComparing!public!unit tests! !
 testDigitValue!public!unit tests! !
 testEquals!public!unit tests! !
+testFoldcase!public!unit tests! !
 testIdentity!public!unit tests! !
 testIsAlphaNumeric!public!unit tests! !
 testIsControl!public!unit tests! !

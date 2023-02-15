@@ -1108,12 +1108,12 @@ template <class CH, class Next=NextChar<CH>> uint32_t hashString(const CH* pch, 
 	return foldHash(hash);
 }
 
-template <class T, class Next=NextChar<T>> struct NextUpper
+template <class T, class Next=NextChar<T>> struct NextFolded
 {
 	__forceinline char32_t operator() (const T* pch, size_t& i) const
 	{
 		char32_t ch = Next()(pch, i);
-		return ch >= 'a' && ch <= 'z' ? _toupper(ch) : u_toupper(ch);
+		return ch >= 'A' && ch <= 'Z' ? _tolower(ch) : u_foldCase(ch, U_FOLD_CASE_DEFAULT);
 	}
 };
 
@@ -1200,7 +1200,7 @@ Oop* PRIMCALL Interpreter::primitiveOrdinalHashIgnoreCase(Oop* const sp, primarg
 	case StringEncoding::Ansi:
 	{
 		auto ansiString = reinterpret_cast<ST::AnsiString*>(receiver->m_location);
-		SmallInteger hash = hashString<AnsiString::CU, NextUpper<AnsiString::CU, NextAnsi>>(ansiString->m_characters, receiver->bytesSize());
+		SmallInteger hash = hashString<AnsiString::CU, NextFolded<AnsiString::CU, NextAnsi>>(ansiString->m_characters, receiver->bytesSize());
 		*sp = ObjectMemoryIntegerObjectOf(hash);
 		return sp;
 	}
@@ -1208,7 +1208,7 @@ Oop* PRIMCALL Interpreter::primitiveOrdinalHashIgnoreCase(Oop* const sp, primarg
 	case StringEncoding::Utf8:
 	{
 		auto utf8 = reinterpret_cast<ST::Utf8String*>(receiver->m_location);
-		SmallInteger hash = hashString<Utf8String::CU, NextUpper<Utf8String::CU, NextUtf8>>(utf8->m_characters, receiver->bytesSize());
+		SmallInteger hash = hashString<Utf8String::CU, NextFolded<Utf8String::CU, NextUtf8>>(utf8->m_characters, receiver->bytesSize());
 		*sp = ObjectMemoryIntegerObjectOf(hash);
 		return sp;
 	}
@@ -1216,7 +1216,7 @@ Oop* PRIMCALL Interpreter::primitiveOrdinalHashIgnoreCase(Oop* const sp, primarg
 	case StringEncoding::Utf16:
 	{
 		auto utf16 = reinterpret_cast<ST::Utf16String*>(receiver->m_location);
-		SmallInteger hash = hashString<Utf16String::CU, NextUpper<Utf16String::CU, NextUtf16>>(utf16->m_characters, receiver->bytesSize());
+		SmallInteger hash = hashString<Utf16String::CU, NextFolded<Utf16String::CU, NextUtf16>>(utf16->m_characters, receiver->bytesSize());
 		*sp = ObjectMemoryIntegerObjectOf(hash);
 		return sp;
 	}
@@ -1224,7 +1224,7 @@ Oop* PRIMCALL Interpreter::primitiveOrdinalHashIgnoreCase(Oop* const sp, primarg
 	case StringEncoding::Utf32:
 	{
 		auto utf32 = reinterpret_cast<ST::Utf32String*>(receiver->m_location);
-		SmallInteger hash = hashString<char32_t, NextUpper<char32_t>>(utf32->m_characters, receiver->bytesSize());
+		SmallInteger hash = hashString<char32_t, NextFolded<char32_t>>(utf32->m_characters, receiver->bytesSize());
 		*sp = ObjectMemoryIntegerObjectOf(hash);
 		return sp;
 	}
