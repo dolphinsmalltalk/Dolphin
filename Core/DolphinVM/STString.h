@@ -66,7 +66,7 @@ namespace ST
 	public:
 	};
 
-	template <codepage_t ACP, size_t I, class OTE, class TChar> class ByteStringT : public ArrayedCollection
+	template <codepage_t ACP, size_t I, typename OTE_t, class TChar> class ByteStringT : public ArrayedCollection
 	{
 	public:
 		typedef TChar CU;
@@ -76,8 +76,9 @@ namespace ST
 
 		CU m_characters[1];		// Variable length array of data
 
-		typedef ByteStringT<CP, PointersIndex, OTE, TChar> MyType;
-		typedef OTE* POTE;
+		typedef OTE_t MyOTE;
+		typedef ByteStringT<CP, PointersIndex, MyOTE, TChar> MyType;
+		typedef MyOTE* POTE;
 
 		static constexpr codepage_t CodePage()
 		{
@@ -86,14 +87,14 @@ namespace ST
 
 		static POTE __fastcall New(size_t cch)
 		{
-			OTE* stringPointer = reinterpret_cast<OTE*>(ObjectMemory::newUninitializedNullTermObject<MyType>(cch));
+			MyOTE* stringPointer = ObjectMemory::newUninitializedNullTermObject<MyType>(cch);
 			ASSERT(stringPointer->isNullTerminated());
 			return stringPointer;
 		}
 
 		static POTE __fastcall New(PCSZ __restrict value, size_t cch)
 		{
-			OTE* stringPointer = reinterpret_cast<OTE*>(ObjectMemory::newUninitializedNullTermObject<MyType>(cch));
+			MyOTE* stringPointer = ObjectMemory::newUninitializedNullTermObject<MyType>(cch);
 			MyType* __restrict string = stringPointer->m_location;
 			string->m_characters[cch] = '\0';
 			memcpy(string->m_characters, value, cch);
@@ -104,38 +105,10 @@ namespace ST
 		static POTE __fastcall New(PCSZ __restrict sz)
 		{
 			size_t cch = strlen((LPCSTR)sz);
-			OTE* stringPointer = reinterpret_cast<OTE*>(ObjectMemory::newUninitializedNullTermObject<MyType>(cch));
+			MyOTE* stringPointer = ObjectMemory::newUninitializedNullTermObject<MyType>(cch);
 			MyType* __restrict string = stringPointer->m_location;
 			// Copy the string and null terminator
 			memcpy(string->m_characters, sz, cch + sizeof(CU));
-			ASSERT(stringPointer->isNullTerminated());
-			return stringPointer;
-		}
-
-		// Allocate a new String from a Unicode string
-		static POTE __fastcall New(LPCWSTR __restrict wsz)
-		{
-			int cch = ::WideCharToMultiByte(CodePage(), 0, wsz, -1, nullptr, 0, nullptr, nullptr);
-			// Length includes null terminator since input is null terminated
-			OTE* stringPointer = reinterpret_cast<OTE*>(ObjectMemory::newUninitializedNullTermObject<MyType>((cch - 1)*sizeof(CU)));
-			CU* psz = stringPointer->m_location->m_characters;
-			int cch2 = ::WideCharToMultiByte(CodePage(), 0, wsz, -1, reinterpret_cast<LPSTR>(psz), cch, nullptr, nullptr);
-			UNREFERENCED_PARAMETER(cch2);
-			ASSERT(cch2 == cch);
-			ASSERT(stringPointer->isNullTerminated());
-			return stringPointer;
-		}
-
-		static POTE __fastcall New(const char16_t* pwch, size_t cwch)
-		{
-			int cch = ::WideCharToMultiByte(CodePage(), 0, (LPCWCH)pwch, cwch, nullptr, 0, nullptr, nullptr);
-			// Length does not include null terminator
-			OTE* stringPointer = reinterpret_cast<OTE*>(ObjectMemory::newUninitializedNullTermObject<MyType>(cch*sizeof(CU)));
-			CU* psz = stringPointer->m_location->m_characters;
-			psz[cch] = '\0';
-			int cch2 = ::WideCharToMultiByte(CodePage(), 0, (LPCWCH)pwch, cwch, reinterpret_cast<LPSTR>(psz), cch, nullptr, nullptr);
-			UNREFERENCED_PARAMETER(cch2);
-			ASSERT(cch2 == cch);
 			ASSERT(stringPointer->isNullTerminated());
 			return stringPointer;
 		}
@@ -151,10 +124,16 @@ namespace ST
 	public:
 		static Utf8StringOTE* __fastcall NewFromAnsi(const char* pChars, size_t len);
 		static Utf8StringOTE* __fastcall NewFromString(OTE* oteNonUtf8String);
+		static Utf8StringOTE* __fastcall NewFromUtf16(const char16_t* pwch, size_t cwch);
+
+		static POTE __fastcall NewFromUtf16(LPCWSTR pwsz)
+		{
+			return NewFromUtf16(reinterpret_cast<const char16_t*>(pwsz), wcslen(pwsz));
+		}
 
 		static POTE __fastcall NewFromBSTR(BSTR bs)
 		{
-			return bs == nullptr ? New(u8"", 0) : New(reinterpret_cast<LPCWSTR>(bs));
+			return bs == nullptr ? MyType::New(u8"", 0) : NewFromUtf16(reinterpret_cast<LPCWSTR>(bs));
 		}
 	};
 
@@ -163,6 +142,12 @@ namespace ST
 	public:
 		static AnsiStringOTE* __fastcall NewFromUtf8(const Utf8String::CU* pChars, size_t len);
 		static AnsiStringOTE* __fastcall NewFromString(OTE* oteNonAnsiString);
+		static AnsiStringOTE* __fastcall NewFromUtf16(const char16_t* pwch, size_t cwch);
+
+		static AnsiStringOTE* __fastcall NewFromUtf16(LPCWSTR pwsz)
+		{
+			return NewFromUtf16(reinterpret_cast<const char16_t*>(pwsz), wcslen(pwsz));
+		}
 	};
 
 	class Symbol : public ArrayedCollection	// Really a subclass of Utf8String
@@ -176,6 +161,7 @@ namespace ST
 	public:
 		typedef char16_t CU;
 		static const size_t PointersIndex = ClassUtf16String;
+		typedef Utf16StringOTE MyOTE;
 
 		CU m_characters[];
 
@@ -203,3 +189,5 @@ std::wostream& operator<<(std::wostream& st, const AnsiStringOTE*);
 std::wostream& operator<<(std::wostream& st, const SymbolOTE*);
 #define ENCODINGPAIR(e1, e2) (static_cast<int>(e1) <<2 | static_cast<int>(e2))
 
+char8_t* Utf16ToUtf8_unsafe(const char16_t* pSrc, size_t utf16Length, char8_t* pDest, size_t utf8Length);
+size_t Utf8LengthOfUtf16(const char16_t* pSrc, int32_t utf16Length);

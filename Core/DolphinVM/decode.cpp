@@ -334,52 +334,24 @@ wostream& operator<<(wostream& st, const CharOTE* ote)
 		return st << L"***Bad Character: " << ch;
 
 	st << L'$';
-	SmallInteger code = ObjectMemoryIntegerValueOf(ch->m_code);
-	char32_t codeUnit = code & 0xffffff;
-	if (codeUnit <= 0x7f)
+	char32_t codePoint = ch->CodePoint;
+	if (!ch->IsUtf8Surrogate)
 	{
-		if (isgraph(codeUnit))
+		if (u_isgraph(codePoint))
 		{
-			return st << static_cast<char>(codeUnit);
-		}
-	}
-	else
-	{
-		switch (ch->Encoding)
-		{
-		case StringEncoding::Ansi:
-		{
-			wchar_t codePoint = Interpreter::m_ansiToUnicodeCharMap[codeUnit & 0xff];
-			if (iswgraph(codePoint))
+			if (U_IS_BMP(codePoint))
 			{
-				return st << codePoint;
+				return st << static_cast<char>(codePoint);
 			}
-			break;
-		}
-		case StringEncoding::Utf16:
-			if (iswgraph(static_cast<wchar_t>(codeUnit)))
+			else
 			{
-				return st << static_cast<wchar_t>(codeUnit);
+				// Emit as surrogate pair
+				return st << static_cast<wchar_t>(codePoint >> 10 + 0xd7c0) << static_cast<wchar_t>(codePoint & 0x3ff | 0xdc00);
 			}
-			break;
-
-		case StringEncoding::Utf8:
-			break;
-
-		case StringEncoding::Utf32:
-			if (U_IS_BMP(codeUnit) && iswgraph(static_cast<wchar_t>(codeUnit)))
-			{
-				return st << static_cast<wchar_t>(codeUnit);
-			}
-			break;
-
-		default:
-			ASSERT(false);
-			__assume(false);
 		}
 	}
 
-	return st << L"\\x" << std::hex << static_cast<uint32_t>(codeUnit);
+	return st << L"\\x" << std::hex << static_cast<uint32_t>(codePoint);
 }
 
 wostream& operator<<(wostream& st, const FloatOTE* ote)

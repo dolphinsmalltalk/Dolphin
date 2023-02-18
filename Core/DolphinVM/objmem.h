@@ -105,7 +105,7 @@ public:
 	static PointersOTE* __fastcall newPointerObject(BehaviorOTE* classPointer, size_t instanceSize);
 	static PointersOTE* __fastcall newUninitializedPointerObject(BehaviorOTE* classPointer, size_t instanceSize);
 	template <bool MaybeZ, bool Initialize> static BytesOTE* newByteObject(BehaviorOTE* classPointer, size_t instanceByteSize);
-	template <class T> static TOTE<T>* __fastcall newUninitializedNullTermObject(size_t instanceByteSize);
+	template <typename T> static typename T::MyOTE* __fastcall newUninitializedNullTermObject(size_t instanceByteSize);
 	static BytesOTE* __fastcall newByteObject(BehaviorOTE* classPointer, size_t instanceByteSize, const void* pBytes);
 	static OTE* CopyElements(OTE* oteObj, size_t startingAt, size_t countfrom);
 
@@ -1057,14 +1057,14 @@ inline PointersOTE* ObjectMemory::OTEPool::newPointerObject(BehaviorOTE* classPo
 	return ote;
 }
 
-template <class T> TOTE<T>* __fastcall ObjectMemory::newUninitializedNullTermObject(size_t byteSize)
+template <typename T> typename T::MyOTE* __fastcall ObjectMemory::newUninitializedNullTermObject(size_t byteSize)
 {
 	OTE* ote;
 	allocObject(byteSize + NULLTERMSIZE + SizeOfPointers(0), ote);
 	ote->m_oteClass = reinterpret_cast<BehaviorOTE*>(Pointers.pointers[T::PointersIndex - 1]);
 	ASSERT((OTE*)(ote->m_oteClass) != Pointers.Nil);
 	ote->beNullTerminated();
-	return reinterpret_cast<TOTE<T>*>(ote);
+	return reinterpret_cast<T::MyOTE*>(ote);
 }
 
 inline BytesOTE* __fastcall ObjectMemory::newByteObject(BehaviorOTE* classPointer, size_t cBytes, const void* pBytes)

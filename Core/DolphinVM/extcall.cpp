@@ -219,7 +219,7 @@ Utf8StringOTE* __fastcall ST::Utf8String::NewFromString(OTE* oteString)
 	case StringEncoding::Utf16:
 	{
 		auto oteUtf16 = reinterpret_cast<Utf16StringOTE*>(oteString);
-		return Utf8String::New(oteUtf16->m_location->m_characters, oteUtf16->sizeForRead());
+		return Utf8String::NewFromUtf16(oteUtf16->m_location->m_characters, oteUtf16->sizeForRead());
 	}
 	case StringEncoding::Utf8:
 		ASSERT(FALSE);
@@ -247,7 +247,7 @@ AnsiStringOTE* __fastcall ST::AnsiString::NewFromString(OTE* oteString)
 	case StringEncoding::Utf16:
 	{
 		auto oteUtf16 = reinterpret_cast<Utf16StringOTE*>(oteString);
-		return AnsiString::New(oteUtf16->m_location->m_characters, oteUtf16->sizeForRead());
+		return AnsiString::NewFromUtf16(oteUtf16->m_location->m_characters, oteUtf16->sizeForRead());
 	}
 	case StringEncoding::Utf8:
 	{
@@ -267,8 +267,8 @@ AnsiStringOTE* __fastcall ST::AnsiString::NewFromString(OTE* oteString)
 POTE __fastcall Interpreter::NewAnsiApiStringFromUtf16(const wchar_t* psz)
 {
 	return m_ansiApiCodePage == CP_UTF8
-		? reinterpret_cast<POTE>(Utf8String::New(psz))
-		: reinterpret_cast<POTE>(AnsiString::New(psz));
+		? reinterpret_cast<POTE>(Utf8String::NewFromUtf16(psz))
+		: reinterpret_cast<POTE>(AnsiString::NewFromUtf16(psz));
 }
 
 POTE __fastcall Interpreter::NewAnsiApiString(const char* psz)

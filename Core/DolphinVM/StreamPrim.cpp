@@ -885,14 +885,10 @@ Oop* PRIMCALL Interpreter::primitiveNextPutAll(Oop* const sp, primargcount_t)
 
 					case ENCODINGPAIR(StringEncoding::Utf8, StringEncoding::Utf16):
 					{
-						// Since both encodings can represent any string, we return a result that is the same class as the receiver, i.e.
-						// UTF-8, Utf16 => UTF-8
 						auto oteStringBuf = reinterpret_cast<Utf8StringOTE*>(oteBuf);
 						const Utf16String::CU* pArgChars = reinterpret_cast<const Utf16StringOTE*>(oteStringArg)->m_location->m_characters;
 						size_t cwchArg = oteStringArg->getSize() / sizeof(Utf16String::CU);
-						int cbArg = ::WideCharToMultiByte(CP_UTF8, 0, (LPCWCH)pArgChars, cwchArg, nullptr, 0, nullptr, nullptr);
-						ASSERT(cbArg >= 0);
-						size_t valueSize = cbArg;
+						size_t valueSize = Utf8LengthOfUtf16(pArgChars, cwchArg);
 
 						newIndex = static_cast<size_t>(index) + valueSize;
 
@@ -903,7 +899,7 @@ Oop* PRIMCALL Interpreter::primitiveNextPutAll(Oop* const sp, primargcount_t)
 							return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);	// Attempt to write off end of buffer (or immutable)
 
 						auto pchDest = oteStringBuf->m_location->m_characters;
-						::WideCharToMultiByte(CP_UTF8, 0, (LPCWCH)pArgChars, cwchArg, reinterpret_cast<LPSTR>(pchDest + index), cbArg, nullptr, nullptr);
+						Utf16ToUtf8_unsafe(pArgChars, cwchArg, pchDest + index, valueSize);
 					}
 					break;
 

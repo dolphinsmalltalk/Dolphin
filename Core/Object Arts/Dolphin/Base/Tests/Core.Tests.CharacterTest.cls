@@ -121,7 +121,7 @@ testAsUtf16String
 			self assert: actual equals: expected]!
 
 testAsUtf8String
-	#(#($A #[65]) #($\x7F #[16r7F]) #($\xA3 #[16rC2 16rA3]) #($\x7FF #[16rDF 16rBF]) #($\x800 #[16rE0 16rA0 16r80]) #($\x10000 #[16rF0 16r90 16r80 16r80]) #($\x1F42C #[16rF0 16r9F 16r90 16rAC]))
+	#(#($A #[65]) #($\x7F #[16r7F]) #($£ #[16rC2 16rA3]) #($߿ #[16rDF 16rBF]) #($ࠀ #[16rE0 16rA0 16r80]) #($𐀀 #[16rF0 16r90 16r80 16r80]) #($🐬 #[16rF0 16r9F 16r90 16rAC]))
 		do: 
 			[:each |
 			| actual subject expected |

@@ -4357,7 +4357,7 @@ Core.Magnitude
 Core.Magnitude
 	subclass: #'Core.Character'
 	instanceVariableNames: 'code'
-	classVariableNames: 'AnsiCharacters AnsiCodePage AnsiCodePoints CharacterSet Utf8Default'
+	classVariableNames: 'AnsiCharacters AnsiCodePage AnsiCodePoints CharacterSet'
 	imports: #(#{OS.NlsConstants private} #{OS.ICUConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
@@ -4368,6 +4368,7 @@ Core.Magnitude
 			'Utf16SurrogateMask' -> 16rFC00.
 			'Utf16TrailMask' -> 16rDC00.
 			'Utf32Mask' -> 16r3000000.
+			'Utf8Default' -> $�.
 			'Utf8Mask' -> 16r1000000.
 			'Utf8SurrogateMask' -> 16rC0
 		}!

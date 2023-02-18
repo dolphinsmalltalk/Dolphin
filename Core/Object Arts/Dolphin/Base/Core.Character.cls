@@ -3,7 +3,7 @@
 Core.Magnitude
 	subclass: #'Core.Character'
 	instanceVariableNames: 'code'
-	classVariableNames: 'AnsiCharacters AnsiCodePage AnsiCodePoints CharacterSet Utf8Default'
+	classVariableNames: 'AnsiCharacters AnsiCodePage AnsiCodePoints CharacterSet'
 	imports: #(#{OS.NlsConstants private} #{OS.ICUConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
@@ -14,6 +14,7 @@ Core.Magnitude
 			'Utf16SurrogateMask' -> 16rFC00.
 			'Utf16TrailMask' -> 16rDC00.
 			'Utf32Mask' -> 16r3000000.
+			'Utf8Default' -> $�.
 			'Utf8Mask' -> 16r1000000.
 			'Utf8SurrogateMask' -> 16rC0
 		}!
@@ -790,10 +791,7 @@ onStartup
 	ansiCharacters := IdentityDictionary new: 513.
 	self byteCharacterSet do: [:each | ansiCharacters at: each codePoint put: each].
 	ansiCharacters isImmutable: true.
-	AnsiCharacters := ansiCharacters.
-	"In practice the replacement character is always $\xFFFD, but we fetch it from the VM (which in turn has retrieved it from Windows) just in case"
-	Utf8Default := self
-				codePoint: ((VM getProcAddress: 'UnicodeDefaultChar' ifAbsent: [#[16rFD 16rFF]]) uint16AtOffset: 0)!
+	AnsiCharacters := ansiCharacters!
 
 replacement
 	"Answer the Unicode replacement <Character>, used to substitute for invalid code points and encodings."

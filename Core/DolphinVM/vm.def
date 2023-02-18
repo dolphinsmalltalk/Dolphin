@@ -25,7 +25,6 @@ StdErr
 _snprintf_s
 IsUserBreakRequested
 AnsiCodePage=?m_ansiCodePage@Interpreter@@2IA
-UnicodeDefaultChar=?m_unicodeReplacementChar@Interpreter@@2_WA
 
 CompileForClass=_PrimCompileForClass@28
 CompileForEval=_PrimCompileForEval@32

@@ -99,14 +99,28 @@ testUtf8StringConversion
 		ifTrue: 
 			[| string2 |
 			"Compiler bug #154: Have to use brace array here because a literal array with wide chars does not compile correctly."
-			self assert: wideString asArray equals: #($\x4E00 $\x9EDE $\x6E2C $\x8A66).
+			self assert: wideString asArray equals: #($一 $點 $測 $試).
 			self assert: wideString asUtf8String equals: byteString.
 			string2 := Utf8String fromUtf16String: wideString.
 			self assert: string2 equals: byteString].
 	bstr := byteString asBSTR.
 	self assert: bstr asArray equals: wideString asArray.
 	self assert: bstr asUtf16String equals: wideString.
-	self assert: bstr asUtf8String equals: byteString! !
+	self assert: bstr asUtf8String equals: byteString.
+	"Invalid UTF-16 containing unmatched surrogates"
+	self
+		assert: (Utf16String
+				with: $a
+				with: (Character utf16Value: 16rDC00)
+				with: $b
+				with: (Character utf16Value: 16rD800)
+				with: $c) asUtf8String
+		equals: (Utf8String
+				with: $a
+				with: $�
+				with: $b
+				with: $�
+				with: $c)! !
 !Core.Tests.Utf16StringTest categoriesForMethods!
 assimilate:!helpers!private! !
 assimilateString:!helpers!private! !

@@ -252,9 +252,6 @@ HRESULT Interpreter::initializeCharMaps()
 	m_ansiCodePage = cpInfo.CodePage;
 	m_ansiReplacementChar = cpInfo.DefaultChar[0];
 
-	::GetCPInfoExW(CP_UTF8, 0, &cpInfo);
-	m_unicodeReplacementChar = cpInfo.UnicodeDefaultChar;
-
 	// Map the ansi code units to unicode code points using the current code page. 
 	::MultiByteToWideChar(m_ansiCodePage, MB_PRECOMPOSED, byteCharSet, 256, m_ansiToUnicodeCharMap, 256);
 
