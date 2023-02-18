@@ -43,9 +43,19 @@ testAsLowercase
 	self assert: $A asLowercase identicalTo: $a.
 	self assert: $\0 asLowercase identicalTo: $\0.
 	self assert: $I asLowercase identicalTo: $i.
-	"Euro symbol - still a unique ANSI encoded char"
-	self assert: $€ asLowercase identicalTo: $€.
+	"Boundary case - largest Ascii value"
+	self assert: $\x7F asLowercase identicalTo: $\x7F.
+	"U+0080 doesn't appear in 1252 (for example)"
 	self assert: $\x80 asLowercase equals: $\x80.
+	self assert: $ÿ asLowercase equals: $ÿ.
+	self assert: $Ÿ asLowercase equals: $ÿ.
+	"Boundary case - BMP - largest value 16-bit char is U+FFFD, the replacement char"
+	self assert: $� asLowercase equals: $�.
+	"U+10000 Linear B Syllable B008 A"
+	self assert: $𐀀 asLowercase equals: $𐀀.
+
+	"U+20AC Euro symbol - still a unique ANSI encoded char"
+	self assert: $€ asLowercase equals: $€.
 	"Turkish, but 8-bit"
 	self assert: $Ç asLowercase equals: $ç.
 	"Turkish dotted İ"
@@ -80,9 +90,18 @@ testAsUppercase
 	self assert: $a asUppercase identicalTo: $A.
 	self assert: $\0 asUppercase identicalTo: $\0.
 	self assert: $i asUppercase identicalTo: $I.
-	"Euro symbol - still a unique ANSI encoded char"
-	self assert: $€ asUppercase identicalTo: $€.
+	"Euro symbol - still a unique ANSI encoded char on typical code page, but might not be running with one"
+	self assert: $€ asUppercase equals: $€.
+	"Boundary case - largest Ascii value"
+	self assert: $\x7F asUppercase identicalTo: $\x7F.
+	"U+0080 doesn't appear in 1252 (for example)"
 	self assert: $\x80 asUppercase equals: $\x80.
+	self assert: $ÿ asUppercase equals: $Ÿ.
+	"Boundary case - BMP - largest value 16-bit char is U+FFFD, the replacement char"
+	self assert: $� asUppercase equals: $�.
+	"U+10000 Linear B Syllable B008 A"
+	self assert: $𐀀 asUppercase equals: $𐀀.
+
 	"Turkish, but 8-bit"
 	self assert: $ç asUppercase equals: $Ç.
 	"Turkish dottless-i"

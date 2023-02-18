@@ -33,6 +33,11 @@ asInteger
 
 	^self basicUIntPtrAtOffset: 0!
 
+asUtf16String
+	"Answer a <Utf16String> containing the same characters as the null-terminated UTF16-encoded string pointed at by the receiver. If the receiver doesn't point at a string, you'll get garbage and possibly an access violation, so use with care."
+
+	^Utf16String fromAddress: self!
+
 at: anInteger
 	"Answer the byte at index, anInteger, based from the address stored as 
 	the contents of the receiver."
@@ -331,6 +336,7 @@ yourAddress
 approxSize!accessing!private! !
 asExternalAddress!converting!public! !
 asInteger!accessing!public! !
+asUtf16String!converting!public! !
 at:!accessing!public! !
 at:put:!accessing!public! !
 byteAtOffset:put:!accessing!primitives!public! !

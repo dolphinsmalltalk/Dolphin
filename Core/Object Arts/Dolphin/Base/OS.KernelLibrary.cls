@@ -2045,24 +2045,6 @@ waitForSingleObject: hHandle dwMilliseconds: dwMilliseconds
 	<overlap stdcall: uint32 WaitForSingleObject handle uint32>
 	^self invalidCall: _failureCode!
 
-wideCharToMultiByte: codePage dwFlags: dwFlags lpWideCharStr: lpWideCharStr cchWideChar: cchWideChar lpMultiByteStr: lpMultiByteStr cchMultiByte: cchMultiByte lpDefaultChar: lpDefaultChar lpUsedDefaultChar: lpUsedDefaultChar
-	"Maps a Unicode string to a multi-byte character string. 
-	Despite the name, aStringOut, need not contain MBCS characters.
-
-		int WideCharToMultiByte(
-			UINT CodePage,			// code page 
-			DWORD dwFlags,			// performance and mapping flags 
-			LPCWSTR lpWideCharStr,	// address of wide-character string 
-			int cchWideChar,		// number of characters in string 
-			LPSTR lpMultiByteStr,	// address of buffer for new string 
-			int cchMultiByte,		// size of buffer 
-			LPCSTR lpDefaultChar,	// address of default for unmappable characters  
-			LPBOOL lpUsedDefaultChar// address of flag set when default char. used 
-		);"
-
-	<stdcall: int32 WideCharToMultiByte uint32 uint32 lpvoid int32 lpvoid int32 lpstr lpvoid>
-	^self invalidCall: _failureCode!
-
 writeFile: aHandle lpBuffer: anAddress nNumberOfBytesToWrite: anIntegerBytesToWrite lpNumberOfBytesWritten: anAddressBytesWritten lpOverlapped: anOVERLAPPED
 	"The WriteFile function writes data to a file and is designed for both synchronous and asynchronous operation.
 	The function starts writing data to the file at the position indicated by the file pointer. After the write
@@ -2270,7 +2252,6 @@ virtualFree:dwSize:dwFreeType:!**auto generated**!public!win32 functions-memory 
 virtualProtect:dwSize:flNewProtect:lpflOldProtect:!**auto generated**!public!win32 functions-memory management! !
 virtualQuery:lpBuffer:dwLength:!**auto generated**!public!win32 functions-memory management! !
 waitForSingleObject:dwMilliseconds:!**auto generated**!public!win32 functions-synchronization! !
-wideCharToMultiByte:dwFlags:lpWideCharStr:cchWideChar:lpMultiByteStr:cchMultiByte:lpDefaultChar:lpUsedDefaultChar:!public!win32 functions-string manipulation! !
 writeFile:lpBuffer:nNumberOfBytesToWrite:lpNumberOfBytesWritten:lpOverlapped:!public!win32 functions-file management! !
 zeroMemory:length:!public!win32 functions-memory management! !
 !

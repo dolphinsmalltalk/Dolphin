@@ -35,25 +35,6 @@ _beginsString: aString
 				buf2: self
 				count: size * 2) == 0]!
 
-asByteString: aClass
-	"Private - Answer a byte-string encoded <String> of the specified class containing the same characters as the receiver."
-
-	| bytes buf size |
-	(size := self size) == 0 ifTrue: [^aClass empty].	"Avoid 'The Parameter is Incorrect' error"
-	buf := aClass new: size * 4.
-	bytes := OS.Kernel32
-				wideCharToMultiByte: aClass codePage
-				dwFlags: 0
-				lpWideCharStr: self
-				cchWideChar: size
-				lpMultiByteStr: buf
-				cchMultiByte: buf size
-				lpDefaultChar: nil
-				lpUsedDefaultChar: nil.
-	bytes == 0 ifTrue: [^OS.Kernel32 systemError].
-	buf resize: bytes.
-	^buf!
-
 asUtf16String
 	"Answer a UTF16-encoded equivalent of the receiver."
 
@@ -64,6 +45,18 @@ asUtf16StringCopy
 
 	<primitive: 155>
 	^self shallowCopy!
+
+asUtf8String
+	"Answer a <Utf8String> containing the same characters as the receiver."
+
+	"In practice the primitive doesn't fail."
+
+	<primitive: 216>
+	| utf8 utf16 ch |
+	utf8 := Utf8String writeStream: self size.
+	utf16 := self readStream.
+	[(ch := utf16 nextAvailable) isNil] whileFalse: [utf8 nextPut: ch].
+	^utf8 grabContents!
 
 at: anInteger
 	"Answer the character at index, anInteger, in the receiver."
@@ -355,9 +348,9 @@ uint16AtOffset: anInteger put: anObject
 	^self primitiveFailed: _failureCode! !
 !Core.Utf16String categoriesForMethods!
 _beginsString:!comparing!double dispatch!private! !
-asByteString:!converting!private! !
 asUtf16String!converting!public! !
 asUtf16StringCopy!converting!public! !
+asUtf8String!converting!public! !
 at:!accessing!public! !
 before:ifAbsent:!public!searching! !
 bom!constants!encode/decode!private! !

@@ -601,6 +601,7 @@ testHash
 	| abc |
 	"Might fail if the hash algorithm is changed."
 	self assert: (self assimilateString: '€') hash equals: 697271083.
+	self assert: (self assimilateString: (String with: $\x7F)) hash equals: 973884365.
 	self equalityTestCases do: 
 			[:each |
 			| subject |

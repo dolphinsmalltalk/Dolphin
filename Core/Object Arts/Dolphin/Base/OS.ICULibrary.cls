@@ -309,12 +309,12 @@ u_isalpha:!character properties!public! !
 u_iscntrl:!character properties!public! !
 u_isgraph:!character properties!public! !
 u_ispunct:!character properties!public! !
-u_strFoldCase:destCapacity:src:srcLength:options:pErrorCode:!converting!public! !
-u_strToLower:destCapacity:src:srcLength:locale:pErrorCode:!converting!public! !
-u_strToTitle:destCapacity:src:srcLength:titleIter:locale:pErrorCode:!converting!public! !
-u_strToUpper:destCapacity:src:srcLength:locale:pErrorCode:!converting!public! !
-u_tolower:!converting!public! !
-u_toupper:!converting!public! !
+u_strFoldCase:destCapacity:src:srcLength:options:pErrorCode:!case conversions!public! !
+u_strToLower:destCapacity:src:srcLength:locale:pErrorCode:!case conversions!public! !
+u_strToTitle:destCapacity:src:srcLength:titleIter:locale:pErrorCode:!case conversions!public! !
+u_strToUpper:destCapacity:src:srcLength:locale:pErrorCode:!case conversions!public! !
+u_tolower:!case conversions!public! !
+u_toupper:!case conversions!public! !
 !
 
 !OS.ICULibrary class methodsFor!

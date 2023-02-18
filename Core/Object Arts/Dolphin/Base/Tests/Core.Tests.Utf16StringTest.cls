@@ -86,7 +86,7 @@ testMixedConcatenation
 	^self!
 
 testUtf8StringConversion
-	| utf8Bytes byteString wideString bstr |
+	| utf8Bytes byteString wideString bstr string2 |
 	utf8Bytes := #[228 184 128 233 187 158 230 184 172 232 169 166].
 	byteString := Utf8String fromByteArray: utf8Bytes.
 	"Ansi strings don't correctly represent the multi-byte encoding of the test UTF8 string"
@@ -94,15 +94,10 @@ testUtf8StringConversion
 	self assert: byteString equals: '一點測試'.
 	wideString := byteString asUtf16String.
 	self assert: wideString size equals: 4.
-	"On VMs before 7.0.54, Utf16Strings may not be properly terminated (#155)"
-	(self isAtLeastVmVersion: #(2016 7 0 54))
-		ifTrue: 
-			[| string2 |
-			"Compiler bug #154: Have to use brace array here because a literal array with wide chars does not compile correctly."
-			self assert: wideString asArray equals: #($一 $點 $測 $試).
-			self assert: wideString asUtf8String equals: byteString.
-			string2 := Utf8String fromUtf16String: wideString.
-			self assert: string2 equals: byteString].
+	self assert: wideString asArray equals: #($一 $點 $測 $試).
+	self assert: wideString asUtf8String equals: byteString.
+	string2 := Utf8String fromUtf16String: wideString.
+	self assert: string2 equals: byteString.
 	bstr := byteString asBSTR.
 	self assert: bstr asArray equals: wideString asArray.
 	self assert: bstr asUtf16String equals: wideString.
@@ -120,7 +115,11 @@ testUtf8StringConversion
 				with: $�
 				with: $b
 				with: $�
-				with: $c)! !
+				with: $c).
+	self assert: (Utf16String withAll: #($£ $🐬 $€ $𐀀 $€)) asUtf8String
+		equals: '£🐬€𐀀€'.
+	"U+10FFFD is the largest valid character"
+	self assert: (Utf16String with: $\x10FFFD) asUtf8String equals: (Utf8String with: $\x10FFFD)! !
 !Core.Tests.Utf16StringTest categoriesForMethods!
 assimilate:!helpers!private! !
 assimilateString:!helpers!private! !

@@ -27,31 +27,12 @@ BSTRs use finalization to safely manage the sys. alloc''d string, but they may b
 asAnsiString
 	"Answer an ANSI-encoded string representation of the receiver. If any of the elements of the receiver cannot be represented as ANSI code points, then these will be translated to the default replacement character ($?)."
 
-	^self asByteString: AnsiString!
+	^self asUtf16String asAnsiString!
 
 asBSTR
 	"Answer the receiver converted to an AX Automation string."
 
 	^self!
-
-asByteString: aClass
-	"Private - Answer a byte-string encoding of the receiver using the specified code page for translation."
-
-	| bytes buf size |
-	(size := self size) == 0 ifTrue: [^aClass empty].
-	buf := aClass new: size * 4.
-	bytes := Kernel32
-				wideCharToMultiByte: aClass codePage
-				dwFlags: 0
-				lpWideCharStr: self
-				cchWideChar: size
-				lpMultiByteStr: buf
-				cchMultiByte: buf size
-				lpDefaultChar: nil
-				lpUsedDefaultChar: nil.
-	bytes == 0 ifTrue: [^Kernel32 systemError].
-	buf resize: bytes.
-	^buf!
 
 asString
 	"Answer a <String> representation of the receiver."
@@ -66,7 +47,7 @@ asUtf16String
 asUtf8String
 	"Answer a UTF-8 encoded <readableString> representation of the receiver."
 
-	^self asByteString: Utf8String!
+	^self asUtf16String asUtf8String!
 
 at: anInteger
 	"Answer the character at index, anInteger, in the receiver."
@@ -179,7 +160,6 @@ value: newValue
 !OS.COM.BSTR categoriesForMethods!
 asAnsiString!converting!public! !
 asBSTR!converting!public! !
-asByteString:!converting!private! !
 asString!converting!public! !
 asUtf16String!converting!public! !
 asUtf8String!converting!public! !

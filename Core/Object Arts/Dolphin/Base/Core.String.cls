@@ -166,7 +166,7 @@ asAnsiString
 	"Answer an ANSI encoded string representation of the receiver."
 
 	<primitive: 217>
-	^self asUtf16String asByteString: AnsiString!
+	^self asUtf16String asAnsiString!
 
 asByteArray
 	"Answer a <ByteArray> containing the encoded representations of the characters of the
@@ -294,13 +294,13 @@ asUtf8String
 	"Answer a UTF-8 encoded string representation of the receiver."
 
 	<primitive: 216>
-	^self asUtf16String asByteString: Utf8String!
+	^self asUtf16String asUtf8String!
 
 asUtf8StringCopy
 	"Answer a UTF-8 encoded string representation of the receiver."
 
 	<primitive: 216>
-	^self asUtf16String asByteString: Utf8String!
+	^self asUtf16String asUtf8String!
 
 at: index
 	"Answer the <Character> with the code unit at the <integer> index, in the receiver."
@@ -1558,28 +1558,7 @@ fromUtf16String: anAddressOrUtf16String
 	"Answer a byte-encoded String representation of the UTF16 string at the specified
 	address."
 
-	| answer size |
-	(size := OS.Kernel32
-				wideCharToMultiByte: CP_UTF8
-				dwFlags: 0
-				lpWideCharStr: anAddressOrUtf16String
-				cchWideChar: -1
-				lpMultiByteStr: nil
-				cchMultiByte: 0
-				lpDefaultChar: nil
-				lpUsedDefaultChar: nil) == 0
-		ifTrue: [OS.Kernel32 systemError].
-	answer := self new: size - 1.
-	OS.Kernel32
-		wideCharToMultiByte: CP_UTF8
-		dwFlags: 0
-		lpWideCharStr: anAddressOrUtf16String
-		cchWideChar: -1
-		lpMultiByteStr: answer
-		cchMultiByte: answer basicSize
-		lpDefaultChar: nil
-		lpUsedDefaultChar: nil.
-	^answer!
+	^anAddressOrUtf16String asUtf16String asUtf8String!
 
 initialize
 	empty := ''!
