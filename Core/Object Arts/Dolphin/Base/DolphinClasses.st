@@ -3760,6 +3760,13 @@ External.DynamicLinkLibrary
 	classInstanceVariableNames: ''
 	classConstants: {}!
 External.DynamicLinkLibrary
+	subclass: #'OS.ICULibrary'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+External.DynamicLinkLibrary
 	subclass: #'OS.PathCchLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -4358,7 +4365,7 @@ Core.Magnitude
 	subclass: #'Core.Character'
 	instanceVariableNames: 'code'
 	classVariableNames: 'AnsiCharacters AnsiCodePage AnsiCodePoints CharacterSet'
-	imports: #(#{OS.NlsConstants private} #{OS.ICUConstants})
+	imports: #(#{OS.NlsConstants private} #{OS.ICUConstants private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'EncodingMask' -> 16r3F000000.

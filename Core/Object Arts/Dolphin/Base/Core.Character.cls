@@ -4,7 +4,7 @@ Core.Magnitude
 	subclass: #'Core.Character'
 	instanceVariableNames: 'code'
 	classVariableNames: 'AnsiCharacters AnsiCodePage AnsiCodePoints CharacterSet'
-	imports: #(#{OS.NlsConstants private} #{OS.ICUConstants})
+	imports: #(#{OS.NlsConstants private} #{OS.ICUConstants private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'EncodingMask' -> 16r3F000000.
@@ -139,7 +139,7 @@ asLowercase
 
 	"Implementation Note: Unicode standard mappings as implemented by ICU, and as such supports letters outside the BMP (unlike the Windows API). Does not depend on host OS locale (e.g. Turkish dotted-I mapping will always take place)."
 
-	^VM u_tolower: self!
+	^OS.ICU u_tolower: self!
 
 asString
 	"Answer a new <String> whose sole element is the receiver."
@@ -156,7 +156,7 @@ asUppercase
 
 	"Implementation Note: Unicode standard mappings as implemented by ICU, and as such supports letters outside the BMP (unlike the Windows API). Does not depend on host OS locale."
 
-	^VM u_toupper: self!
+	^OS.ICU u_toupper: self!
 
 asUtf16String
 	"Answer a new UTF-16 encoded <String> whose sole element is the receiver."
@@ -184,13 +184,13 @@ caseFolded
 
 	"Implementation Note: ICU case folding. This is basically a Unicode standard mapping as implemented by ICU, and as such supports letters outside the BMP (unlike the Windows API). Performs default mappings independent of locale - i.e. $İ is not mapped to $i, and $I maps to $i, not $ı, but see also #asFoldcase:"
 
-	^VM u_foldCase: self options: U_FOLD_CASE_DEFAULT!
+	^OS.ICU u_foldCase: self options: U_FOLD_CASE_DEFAULT!
 
 caseFolded: aLocale
 	"Answer a <Character> which is the case-folded equivalent of the receiver. The folding uses default mappings, unless the <Locale> argument is turkic.
 	Note that this is single code point mapping, so does not properly take account of composite characters. Case-conversions for a string should ideally be performed directly, and not character-by-character."
 
-	^VM u_foldCase: self options: aLocale icuCaseFoldingOptions!
+	^OS.ICU u_foldCase: self options: aLocale icuCaseFoldingOptions!
 
 code
 	^code!
@@ -292,7 +292,7 @@ isControl
 	^false
 		ifTrue: 
 			["Doesn't include formatting marks, or even BOM"
-			(VM u_charType: self) == U_CONTROL_CHAR]
+			(OS.ICU u_charType: self) == U_CONTROL_CHAR]
 		ifFalse: 
 			["One of the following:
 				- ISO 8-bit control character (U+0000..U+001f and U+007f..U+009f)
@@ -300,7 +300,7 @@ isControl
 				- U_FORMAT_CHAR (Cf)
 				- U_LINE_SEPARATOR (Zl)
 				- U_PARAGRAPH_SEPARATOR (Zp)"
-			VM u_iscntrl: self]!
+			OS.ICU u_iscntrl: self]!
 
 isDigit
 	"Answer whether the receiver is one of the ASCII representations of a decimal-digit character (i.e. it is one of $0 $1 $2 $3 $4 $5 $6 $7 $8 $9). This is as defined in ANSI NCITS 319-1998. Unlike #isLetter, the implementation cannot define additional characters for which #isDigit is true, so this does not correspond to the Unicode Decimal Number general category, and will not include any decimal digits except the ASCII decimals."
@@ -317,7 +317,7 @@ isEnglishLetter
 isGraph
 	"Answer whether the receiver is a printable character, other than blanks. See also #isPrintable"
 
-	^(VM u_isgraph: self)
+	^(OS.ICU u_isgraph: self)
 !
 
 isHexDigit
@@ -332,8 +332,8 @@ isLetter
 
 	#todo.	"Decide between alternates."
 	^false
-		ifTrue: [VM u_hasBinaryProperty: self which: UCHAR_ALPHABETIC	"u_isUAlphabetic is directly equivalent"]
-		ifFalse: [VM u_isalpha: self]!
+		ifTrue: [OS.ICU u_hasBinaryProperty: self which: UCHAR_ALPHABETIC	"u_isUAlphabetic is directly equivalent"]
+		ifFalse: [OS.ICU u_isalpha: self]!
 
 isLinefeed
 	"Answer whether the receiver is the line-feed character."
@@ -353,7 +353,7 @@ isLowercase
 
 	"Implementation Note: The ANSI NCITS 319-1998 specifies that this at least includes the lowercase letters of the English alphabet, but that implementations may consider other Characters to be lowercase letters. In Dolphin it is intended that this answer true for all Characters with Unicode codepoints in one of the Lowercase Letter (Ll) general category. To escape the inadequacies of the underlying Windows API (which cannot handle any letters defined outside the Unicode BMP, and which seems to have some incorrect classifications even within the BMP), we now use ICU."
 
-	^(VM u_charType: self) == U_LOWERCASE_LETTER!
+	^(OS.ICU u_charType: self) == U_LOWERCASE_LETTER!
 
 isLowerCase
 	"Answer whether the receiver is a lowercase letter."
@@ -370,7 +370,7 @@ isPunctuation
 
 	"Implementation Note: It is intended that this answer true for all Characters with Unicode codepoints in one of general Punctuation (P) categories.  To escape the inadequacies of the underlying Windows API (which cannot handle any letters defined outside the Unicode BMP, and which seems to have some incorrect classifications even within the BMP), we now use ICU."
 
-	^(VM u_ispunct: self)!
+	^(OS.ICU u_ispunct: self)!
 
 isSeparator
 	"Answer whether the receiver is an ASCII separator character (i.e. whitespace)."
@@ -387,7 +387,7 @@ isUppercase
 
 	"Implementation Note: The ANSI NCITS 319-1998 specifies that this at least includes the uppercase letters of the English alphabet, but that implementations may consider other Characters to be uppercase letters. In Dolphin it is intended that this answer true for all Characters with Unicode codepoints in one of the Uppercase Letter (Lu) general category. To escape the inadequacies of the underlying Windows API (which cannot handle any letters defined outside the Unicode BMP, and which seems to have some incorrect classifications even within the BMP), we now use ICU."
 
-	^(VM u_charType: self) == OS.ICUConstants.U_UPPERCASE_LETTER!
+	^(OS.ICU u_charType: self) == OS.ICUConstants.U_UPPERCASE_LETTER!
 
 isUpperCase
 	"Answer whether the receiver is an uppercase letter."
@@ -451,7 +451,7 @@ isWhitespace
 	u_isUWhitespace (or the exactly equivalent binary property query as here) seems best for our purposes.
 	"
 
-	^VM u_hasBinaryProperty: self which: UCHAR_WHITE_SPACE!
+	^OS.ICU u_hasBinaryProperty: self which: UCHAR_WHITE_SPACE!
 
 join: aCollection
 	"Answer a new <String> composed from the displayStrings of elements of the <collection> argument, separated by the instances of the receiver."

@@ -36,19 +36,3 @@ AtlAxWinInit=AxWinInit
 ; ZLib
 compress2
 uncompress
-
-; ICU
-u_charType
-u_hasBinaryProperty
-u_isalpha
-u_iscntrl
-u_isgraph
-u_isprint
-u_ispunct
-u_tolower
-u_toupper
-u_foldCase
-u_strFoldCase
-u_strToLower
-u_strToUpper
-u_strToTitle

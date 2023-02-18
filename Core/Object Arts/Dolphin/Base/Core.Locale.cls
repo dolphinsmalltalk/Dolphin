@@ -307,7 +307,7 @@ foldcaseString: aString
 	| utf16 errorCode destLength srcLength |
 	"Attempt conversion in place for mainstream case"
 	utf16 := aString asUtf16StringCopy.
-	destLength := VM
+	destLength := OS.ICU
 				u_strFoldCase: utf16
 				destCapacity: (srcLength := utf16 size) + 1
 				src: utf16
@@ -316,7 +316,7 @@ foldcaseString: aString
 				pErrorCode: (errorCode := ByteArray newFixed: 4).
 	destLength == srcLength ifTrue: [^utf16].
 	errorCode int32AtOffset: 0 put: 0.
-	VM
+	OS.ICU
 		u_strFoldCase: (utf16 := Utf16String new: destLength)
 		destCapacity: destLength + 1
 		src: aString
@@ -473,7 +473,7 @@ lowercaseString: aString
 	"Answer a <readableString> which is a copy of the argument, but with the contents converted to lowercase following the linguisitic case conventions of the receiver."
 
 	| srcLength errorCode destLength utf16 |
-	destLength := VM
+	destLength := OS.ICU
 				u_strToLower: (utf16 := aString asUtf16StringCopy)
 				destCapacity: (srcLength := utf16 size) + 1
 				src: utf16
@@ -484,7 +484,7 @@ lowercaseString: aString
 	destLength == srcLength ifTrue: [^utf16].
 	utf16 := Utf16String new: destLength.
 	errorCode int32AtOffset: 0 put: 0.
-	VM
+	OS.ICU
 		u_strToLower: utf16
 		destCapacity: destLength + 1
 		src: aString
@@ -810,7 +810,7 @@ titlecaseString: aString
 	"Answer a <readableString> which is a copy of the argument but with the first letter of each major word capitalized following the linguisitc conventions of this locale."
 
 	| srcLength errorCode destLength utf16 |
-	destLength := VM
+	destLength := OS.ICU
 				u_strToTitle: (utf16 := aString asUtf16StringCopy)
 				destCapacity: (srcLength := utf16 size) + 1
 				src: utf16
@@ -821,7 +821,7 @@ titlecaseString: aString
 	destLength == srcLength ifTrue: [^utf16].
 	utf16 := Utf16String new: destLength.
 	errorCode int32AtOffset: 0 put: 0.
-	VM
+	OS.ICU
 		u_strToTitle: utf16
 		destCapacity: destLength + 1
 		src: aString
@@ -837,7 +837,7 @@ uppercaseString: aString
 	"Answer a <readableString> which is a copy of the argument, but with the contents converted to uppercase following the linguisitic conventions of the receiver."
 
 	| srcLength errorCode destLength utf16 |
-	destLength := VM
+	destLength := OS.ICU
 				u_strToUpper: (utf16 := aString asUtf16StringCopy)
 				destCapacity: (srcLength := utf16 size) + 1
 				src: utf16
@@ -848,7 +848,7 @@ uppercaseString: aString
 	"The above in-place conversion may fail (e.g. ß -> SS), in which (rare) case we need to allocate a large buffer and try again."
 	utf16 := Utf16String new: destLength.
 	errorCode int32AtOffset: 0 put: 0.
-	VM
+	OS.ICU
 		u_strToUpper: utf16
 		destCapacity: destLength + 1
 		src: aString
