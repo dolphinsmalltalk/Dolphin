@@ -365,6 +365,12 @@ isPrintable
 
 	^self isControl not or: [self isWhitespace]!
 
+isPrivateUse
+	"Answer whether the receiver has a codepoint in one of the private use areas."
+
+	^(OS.ICU u_charType: self) == U_PRIVATE_USE_CHAR
+!
+
 isPunctuation
 	"Answer whether the receiver is a punctuation character."
 
@@ -478,7 +484,7 @@ printEscapedOn: aStream
 printOn: aStream
 	"Append the literal representation of the receiver to the <puttableStream> argument."
 
-	self isGraph
+	(self isGraph and: [self isPrivateUse not])
 		ifTrue: 
 			[aStream
 				nextPut: $$;
@@ -599,6 +605,7 @@ isLiteral!public!testing! !
 isLowercase!public!testing! !
 isLowerCase!public!testing! !
 isPrintable!public!testing! !
+isPrivateUse!public!testing! !
 isPunctuation!public!testing! !
 isSeparator!public!testing! !
 isSurrogate!public!testing! !
