@@ -42,6 +42,28 @@ testAssociations
 	self assert: subject associations
 		equals: {1 -> $a. 2 -> $£. 3 -> $\x6587. 4 -> $\x1F42C. 6 -> $1. 7 -> $\x1F37A}!
 
+testConcatenateInvalidUtf16
+	"No conversions, invalid chars copied verbatim to result"
+
+	| actual invalid invalidBytes |
+	invalidBytes := #[98 0 163 0 172 32 0 220 61 216].
+	invalid := Utf16String fromByteArray: invalidBytes.
+	actual := invalid , invalid.
+	self assert: actual isKindOf: Utf16String.
+	self assert: actual equals: (Utf16String fromByteArray: invalidBytes , invalidBytes)!
+
+testConcatenateInvalidUtf8
+	"Invalid UTF-8 will be converted to UTF-16, so replacement characters will appear instead of the incomplete/invalid characters.
+	The UTF-16 prefix is assumed to be well-formed, so any invalid characters in it are copied verbatim to the result."
+
+	| actual |
+	actual := (Utf16String fromByteArray: #[44 220 65 0])
+				, (Utf8String fromByteArray: #[98 194 226 130 172 144 128 128 240 159 172]).
+	self assert: actual isKindOf: Utf16String.
+	self assert: actual
+		equals: (Utf16String
+				fromByteArray: #[44 220 65 0 98 0 253 255 172 32 253 255 253 255 253 255 253 255])!
+
 testCopyWithAtIndex
 	| string |
 	string := self assimilateString: 'a£🍺文1'.
@@ -129,6 +151,8 @@ decodeIncompleteContinuations!constants!private! !
 decodeInvalidContinuations!constants!private! !
 decodeTestCases!constants!private! !
 testAssociations!public!unit tests! !
+testConcatenateInvalidUtf16!public!unit tests! !
+testConcatenateInvalidUtf8!public!unit tests! !
 testCopyWithAtIndex!public!unit tests! !
 testKeys!public!unit tests! !
 testLastCodeUnit!public!unit tests! !

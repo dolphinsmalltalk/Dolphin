@@ -119,12 +119,14 @@ namespace ST
 	const size_t ClassUtf8String = 104;
 	const size_t ClassUtf16String = 93;
 
+	class AnsiString;
+
 	class Utf8String : public ByteStringT<CP_UTF8, ClassUtf8String, Utf8StringOTE, char8_t>
 	{
 	public:
-		static Utf8StringOTE* __fastcall NewFromAnsi(const char* pChars, size_t len);
+		static Utf8StringOTE* __fastcall NewFromAnsi(const char* __restrict psz, size_t cch);
 		static Utf8StringOTE* __fastcall NewFromString(OTE* oteNonUtf8String);
-		static Utf8StringOTE* __fastcall NewFromUtf16(const char16_t* pwch, size_t cwch);
+		static Utf8StringOTE* __fastcall NewFromUtf16(const char16_t* __restrict pwch, size_t cwch);
 
 		static POTE __fastcall NewFromUtf16(LPCWSTR pwsz)
 		{
@@ -135,14 +137,19 @@ namespace ST
 		{
 			return bs == nullptr ? MyType::New(u8"", 0) : NewFromUtf16(reinterpret_cast<LPCWSTR>(bs));
 		}
+
+		static size_t LengthOfUtf16(const char16_t* __restrict pwsz, size_t cwch);
+		static char8_t* ConvertUtf16_unsafe(const char16_t* __restrict pwszSrc, size_t cwchSrc, char8_t* __restrict psz8Dest, size_t cch8Dest);
+		static size_t LengthOfAnsi(const char* __restrict psz, size_t cch);
+		static char8_t* ConvertAnsi_unsafe(const char* __restrict pszSrc, size_t cchSrc, char8_t* __restrict pszDest, size_t cch8Dest);
 	};
 
 	class AnsiString : public ByteStringT<CP_ACP, ClassByteString, AnsiStringOTE, char>
 	{
 	public:
-		static AnsiStringOTE* __fastcall NewFromUtf8(const Utf8String::CU* pChars, size_t len);
+		static AnsiStringOTE* __fastcall NewFromUtf8(const char8_t* __restrict pChars, size_t len);
 		static AnsiStringOTE* __fastcall NewFromString(OTE* oteNonAnsiString);
-		static AnsiStringOTE* __fastcall NewFromUtf16(const char16_t* pwch, size_t cwch);
+		static AnsiStringOTE* __fastcall NewFromUtf16(const char16_t* __restrict pwch, size_t cwch);
 
 		static AnsiStringOTE* __fastcall NewFromUtf16(LPCWSTR pwsz)
 		{
@@ -165,15 +172,20 @@ namespace ST
 
 		CU m_characters[];
 
-		static Utf16StringOTE* __fastcall New(LPCWSTR wsz);
-		static Utf16StringOTE* __fastcall New(const WCHAR* pChars, size_t len);
+		static Utf16StringOTE* __fastcall New(LPCWSTR pwsz);
+		static Utf16StringOTE* __fastcall New(const WCHAR* pwsz, size_t cwch);
 		template <codepage_t CP, class T> static Utf16StringOTE* __fastcall New(const T* pChars, size_t len);
+		static Utf16StringOTE* __fastcall New(const char8_t* __restrict psz8, size_t cch8);
 		static Utf16StringOTE* __fastcall New(OTE* oteByteString);
 		static Utf16StringOTE* __fastcall New(size_t cwch);
 		static Utf16StringOTE * NewFromBSTR(BSTR bs)
 		{
 			return New(bs, ::SysStringLen(bs));
 		}
+
+		static size_t LengthOfUtf8(const char8_t* __restrict psz8, size_t cch8);
+		static CU* ConvertUtf8_unsafe(const char8_t* __restrict psz8Src, size_t cch8Src, char16_t* __restrict pwszDest, size_t cwchDest);
+
 	};
 
 	class Utf32String : public ArrayedCollection	// Actually a string subclass
@@ -188,6 +200,3 @@ namespace ST
 std::wostream& operator<<(std::wostream& st, const AnsiStringOTE*);
 std::wostream& operator<<(std::wostream& st, const SymbolOTE*);
 #define ENCODINGPAIR(e1, e2) (static_cast<int>(e1) <<2 | static_cast<int>(e2))
-
-char8_t* Utf16ToUtf8_unsafe(const char16_t* pSrc, size_t utf16Length, char8_t* pDest, size_t utf8Length);
-size_t Utf8LengthOfUtf16(const char16_t* pSrc, int32_t utf16Length);

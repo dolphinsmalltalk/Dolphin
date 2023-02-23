@@ -213,6 +213,20 @@ testCompareEszett
 	self assert: upper <=> lower equals: 0.
 !
 
+testConcatenation
+	| actual triples |
+	triples := #(#('' '' '') #('' '€' '€') #('€' '' '€') #('' '€£' '€£') #('€£' '' '€£') #('a' '£' 'a£') #('a' '€' 'a€') #('' '🐬' '🐬') #('£' 'a' '£a') #('€' 'a' '€a') #('£' '€~🐬' '£€~🐬') #('a£~€' 'b£€�𐀀🐬' 'a£~€b£€�𐀀🐬')).
+	triples do: 
+			[:each |
+			| prefix |
+			prefix := self assimilateString: each first.
+			actual := prefix , each second asUtf8String.
+			self assert: actual isKindOf: self copyClass.
+			self assert: actual equals: each third.
+			actual := prefix , each second asUtf16String.
+			self assert: actual isKindOf: self copyClass.
+			self assert: actual equals: each third]!
+
 testCopyReplaceAllWith
 	| subject actual |
 	super testCopyReplaceAllWith.
@@ -780,6 +794,7 @@ testBeginsWithExtended!public!unit tests! !
 testBeginsWithIgnoreCase!public!unit tests! !
 testCollect!public!unit tests! !
 testCompareEszett!public! !
+testConcatenation!public!unit tests! !
 testCopyReplaceAllWith!public!unit tests! !
 testCopyReplacingWithObject!public!unit tests! !
 testCopyWithout!public!unit tests! !

@@ -29,7 +29,7 @@ STDMETHODIMP CDolphinSmalltalk::Initialise(HINSTANCE hInstance,
 		return Initialise(hInstance, (LPCWSTR)nullptr, imageData, imageSize, dwFlags);
 	else
 	{
-		Utf16StringBuf buf(0, fileName, strlen(fileName));
+		Utf16StringBuf buf(CP_ACP, fileName, strlen(fileName));
 		return Initialise(hInstance, (LPCWSTR)buf, imageData, imageSize, dwFlags);
 	}
 }

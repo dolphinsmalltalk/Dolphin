@@ -195,7 +195,7 @@ Oop* PRIMCALL Interpreter::primitiveReplaceBytes(Oop* const sp, primargcount_t)
 		else
 		{
 			// We can test that we're not going to write off the end of the argument
-			auto length = argPointer->bytesSizeForUpdate();
+			ptrdiff_t length = argPointer->bytesSizeForUpdate();
 
 			// We can only be in here if stop>=start, so => stop-start >= 0
 			// therefore if startAt >= 1 then => stopAt >= 1, for similar
@@ -696,12 +696,12 @@ Oop* PRIMCALL Interpreter::primitiveStringAtPut(Oop* const sp, primargcount_t)
 				case StringEncoding::Ansi:
 					if (index < receiverSize)
 					{
-						AnsiString::CU* const __restrict psz = reinterpret_cast<AnsiStringOTE*>(oteReceiver)->m_location->m_characters;
+						AnsiString::CU* const __restrict pwszAnswer = reinterpret_cast<AnsiStringOTE*>(oteReceiver)->m_location->m_characters;
 
 						// Ascii characters are the same in all encodings
 						if (codeUnit <= 0x7f)
 						{
-							psz[index] = static_cast<AnsiString::CU>(codeUnit);
+							pwszAnswer[index] = static_cast<AnsiString::CU>(codeUnit);
 							*newSp = oopValue;
 							return newSp;
 						}
@@ -710,7 +710,7 @@ Oop* PRIMCALL Interpreter::primitiveStringAtPut(Oop* const sp, primargcount_t)
 							switch (static_cast<StringEncoding>(code >> 24))
 							{
 							case StringEncoding::Ansi: // Ansi char into Ansi string
-								psz[index] = static_cast<AnsiString::CU>(codeUnit);
+								pwszAnswer[index] = static_cast<AnsiString::CU>(codeUnit);
 								*newSp = oopValue;
 								return newSp;
 
@@ -726,13 +726,13 @@ Oop* PRIMCALL Interpreter::primitiveStringAtPut(Oop* const sp, primargcount_t)
 									if (ansi != 0)
 									{
 										ASSERT(codeUnit > 0 && !U_IS_SURROGATE(codeUnit));
-										psz[index] = ansi;
+										pwszAnswer[index] = ansi;
 										*newSp = oopValue;
 										return newSp;
 									}
 									else if (codeUnit == UnicodeReplacementChar)
 									{
-										psz[index] = m_ansiReplacementChar;
+										pwszAnswer[index] = m_ansiReplacementChar;
 										*newSp = oopValue;
 										return newSp;
 									}
@@ -755,11 +755,11 @@ Oop* PRIMCALL Interpreter::primitiveStringAtPut(Oop* const sp, primargcount_t)
 				case StringEncoding::Utf8:
 					if (index < receiverSize / static_cast<ptrdiff_t>(sizeof(Utf8String::CU)))
 					{
-						Utf8String::CU* psz = reinterpret_cast<Utf8StringOTE*>(oteReceiver)->m_location->m_characters;
+						Utf8String::CU* pwszAnswer = reinterpret_cast<Utf8StringOTE*>(oteReceiver)->m_location->m_characters;
 
 						if (codeUnit <= 0x7f || static_cast<StringEncoding>(code >> 24) == StringEncoding::Utf8)
 						{
-							psz[index] = static_cast<Utf8String::CU>(codeUnit);
+							pwszAnswer[index] = static_cast<Utf8String::CU>(codeUnit);
 							*newSp = oopValue;
 							return newSp;
 						}
@@ -771,11 +771,11 @@ Oop* PRIMCALL Interpreter::primitiveStringAtPut(Oop* const sp, primargcount_t)
 				case StringEncoding::Utf16:
 					if (index < receiverSize / static_cast<ptrdiff_t>(sizeof(Utf16String::CU)))
 					{
-						Utf16String::CU* psz = reinterpret_cast<Utf16StringOTE*>(oteReceiver)->m_location->m_characters;
+						Utf16String::CU* pwszAnswer = reinterpret_cast<Utf16StringOTE*>(oteReceiver)->m_location->m_characters;
 
 						if (codeUnit <= 0x7f)
 						{
-							psz[index] = static_cast<Utf16String::CU>(codeUnit);
+							pwszAnswer[index] = static_cast<Utf16String::CU>(codeUnit);
 							*newSp = oopValue;
 							return newSp;
 						}
@@ -785,7 +785,7 @@ Oop* PRIMCALL Interpreter::primitiveStringAtPut(Oop* const sp, primargcount_t)
 							{
 							case StringEncoding::Ansi:
 								// Non-ascii Ansi char into Utf16 string. Will always go.
-								psz[index] = m_ansiToUnicodeCharMap[codeUnit & 0xFF];
+								pwszAnswer[index] = m_ansiToUnicodeCharMap[codeUnit & 0xFF];
 								*newSp = oopValue;
 								return newSp;
 
@@ -795,7 +795,7 @@ Oop* PRIMCALL Interpreter::primitiveStringAtPut(Oop* const sp, primargcount_t)
 
 							case StringEncoding::Utf16:
 								// UTF-16 char into Utf16 string - always goes
-								psz[index] = static_cast<Utf16String::CU>(codeUnit);
+								pwszAnswer[index] = static_cast<Utf16String::CU>(codeUnit);
 								*newSp = oopValue;
 								return newSp;
 
@@ -803,7 +803,7 @@ Oop* PRIMCALL Interpreter::primitiveStringAtPut(Oop* const sp, primargcount_t)
 								// UTF-32 char into Utf16 string - will usually go
 								if (U_IS_BMP(codeUnit))
 								{
-									psz[index] = static_cast<Utf16String::CU>(codeUnit);
+									pwszAnswer[index] = static_cast<Utf16String::CU>(codeUnit);
 									*newSp = oopValue;
 									return newSp;
 								}
@@ -825,11 +825,11 @@ Oop* PRIMCALL Interpreter::primitiveStringAtPut(Oop* const sp, primargcount_t)
 				case StringEncoding::Utf32:
 					if (index < receiverSize / static_cast<ptrdiff_t>(sizeof(Utf32String::CU)))
 					{
-						Utf32String::CU* const __restrict psz = reinterpret_cast<Utf32StringOTE*>(oteReceiver)->m_location->m_characters;
+						Utf32String::CU* const __restrict pwszAnswer = reinterpret_cast<Utf32StringOTE*>(oteReceiver)->m_location->m_characters;
 
 						if (codeUnit <= 0x7f)
 						{
-							psz[index] = static_cast<Utf32String::CU>(codeUnit);
+							pwszAnswer[index] = static_cast<Utf32String::CU>(codeUnit);
 							*newSp = oopValue;
 							return newSp;
 						}
@@ -839,7 +839,7 @@ Oop* PRIMCALL Interpreter::primitiveStringAtPut(Oop* const sp, primargcount_t)
 							{
 							case StringEncoding::Ansi:
 								// Non-ascii Ansi char into Utf16 string. Will always go.
-								psz[index] = m_ansiToUnicodeCharMap[codeUnit & 0xff];
+								pwszAnswer[index] = m_ansiToUnicodeCharMap[codeUnit & 0xff];
 								*newSp = oopValue;
 								return newSp;
 
@@ -852,7 +852,7 @@ Oop* PRIMCALL Interpreter::primitiveStringAtPut(Oop* const sp, primargcount_t)
 								// UTF-32 char into Utf16 string - will always go unless the character is invalid
 								if (U_IS_UNICODE_CHAR(codeUnit))
 								{
-									psz[index] = static_cast<Utf32String::CU>(codeUnit);
+									pwszAnswer[index] = static_cast<Utf32String::CU>(codeUnit);
 									*newSp = oopValue;
 									return newSp;
 								}
@@ -1546,18 +1546,19 @@ Oop* PRIMCALL Interpreter::primitiveBeginsWith(Oop* const sp, primargcount_t)
 			case ENCODINGPAIR(StringEncoding::Ansi, StringEncoding::Utf8):
 			{
 				// Ansi, UTF-8 => Convert receiver to UTF-8 via UTF16
-				Utf16StringBuf utf16(m_ansiCodePage, (LPCCH)oteReceiver->m_location->m_characters, oteReceiver->getSize());
-				size_t cbReceiver = utf16.ToUtf8();
-				size_t cbArg = oteArg->getSize();
-				if (cbArg <= cbReceiver)
+				auto pszReceiver = reinterpret_cast<const AnsiStringOTE*>(oteReceiver)->m_location->m_characters;
+				size_t cchReceiver = oteReceiver->getSize();
+				size_t cch8Receiver = Utf8String::LengthOfAnsi(pszReceiver, cchReceiver);
+				size_t cch8Arg = oteArg->getSize();
+				if (cch8Arg <= cch8Receiver)
 				{
-					char8_t* utf8 = (char8_t*)_malloca(cbReceiver);
-					utf16.ToUtf8(utf8, cbReceiver);
-					OTE* oteAnswer = memcmp(utf8,
+					auto psz8Receiver = reinterpret_cast<Utf8String::CU*>(_malloca(cch8Receiver));
+					Utf8String::ConvertAnsi_unsafe(pszReceiver, cchReceiver, psz8Receiver, cch8Receiver);
+					OTE* oteAnswer = memcmp(psz8Receiver,
 											reinterpret_cast<const Utf8StringOTE*>(oteArg)->m_location->m_characters,
-											cbArg) == 0 ? Pointers.True : Pointers.False;
+											cch8Arg) == 0 ? Pointers.True : Pointers.False;
 					*(sp - 1) = reinterpret_cast<Oop>(oteAnswer);
-					_freea(utf8);
+					_freea(psz8Receiver);
 					return sp - 1;
 				}
 				else
@@ -1585,17 +1586,18 @@ Oop* PRIMCALL Interpreter::primitiveBeginsWith(Oop* const sp, primargcount_t)
 
 			case ENCODINGPAIR(StringEncoding::Utf8, StringEncoding::Ansi):
 			{
-				// UTF-8, Ansi: translate arg to UTF-8 via UTF16
-				size_t cbReceiver = oteReceiver->getSize();
-				Utf16StringBuf utf16(m_ansiCodePage, reinterpret_cast<const AnsiStringOTE*>(oteArg)->m_location->m_characters, oteArg->getSize());
-				size_t cbArg = utf16.ToUtf8();
-				if (cbArg <= cbReceiver)
+				// UTF-8, Ansi: translate arg to UTF-8
+				size_t cch8Receiver = oteReceiver->getSize();
+				auto pszArg = reinterpret_cast<const AnsiStringOTE*>(oteArg)->m_location->m_characters;
+				size_t cchArg = oteArg->getSize();
+				size_t cch8Arg = Utf8String::LengthOfAnsi(pszArg, cchArg);
+				if (cch8Arg <= cch8Receiver)
 				{
-					char8_t* utf8 = (char8_t*)_malloca(cbArg);
-					utf16.ToUtf8(utf8, cbArg);
-					OTE* oteAnswer = memcmp(oteReceiver->m_location->m_characters, utf8, cbArg) == 0 ? Pointers.True : Pointers.False;
+					auto psz8Arg = reinterpret_cast<char8_t*>(_malloca(cch8Arg));
+					Utf8String::ConvertAnsi_unsafe(pszArg, cchArg, psz8Arg, cch8Arg);
+					OTE* oteAnswer = memcmp(oteReceiver->m_location->m_characters, psz8Arg, cch8Arg) == 0 ? Pointers.True : Pointers.False;
 					*(sp - 1) = reinterpret_cast<Oop>(oteAnswer);
-					_freea(utf8);
+					_freea(psz8Arg);
 					return sp - 1;
 				}
 				else
@@ -1699,7 +1701,7 @@ Oop* PRIMCALL Interpreter::primitiveStringAsUtf16String(Oop* const sp, primargco
 	}
 	case StringEncoding::Utf8:
 	{
-		Utf16StringOTE* answer = Utf16String::New<CP_UTF8>(
+		Utf16StringOTE* answer = Utf16String::New(
 			reinterpret_cast<const Utf8StringOTE*>(receiver)->m_location->m_characters, receiver->getSize());
 		*sp = reinterpret_cast<Oop>(answer);
 		ObjectMemory::AddToZct((OTE*)answer);
@@ -1722,31 +1724,29 @@ Oop* PRIMCALL Interpreter::primitiveStringAsUtf16String(Oop* const sp, primargco
 
 Utf16StringOTE * ST::Utf16String::New(size_t cwch)
 {
-	return ObjectMemory::newUninitializedNullTermObject<Utf16String>(cwch * sizeof(Utf16String::CU));
+	return ObjectMemory::newUninitializedNullTermObject<Utf16String>(cwch * sizeof(CU));
 }
 
-Utf8StringOTE* __fastcall Utf8String::NewFromUtf16(const char16_t* pSrc, size_t srcLength)
+Utf8StringOTE* __fastcall Utf8String::NewFromUtf16(const char16_t* __restrict pwsz, size_t cwch)
 {
 	// Conversion from utf16 to utf8 is derived from ICU's u_strtoUTF8WithSub. We don't use the actual function
 	// because it appears to be about 30% slower than WideCharToMultibyte for UTF-16 to UTF-8 conversion. Our
 	// requirements are not so general purpose, so we can simplify it down and eliminate a lot of the overhead
 	// of a general function. The end result is slightly faster than using WideCharToMultibyte
 
-	size_t destLength = Utf8LengthOfUtf16(pSrc, srcLength);
-	MyOTE* oteUtf8 = ObjectMemory::newUninitializedNullTermObject<MyType>(destLength);
-	char8_t* pDest = reinterpret_cast<char8_t*>(oteUtf8->m_location->m_characters);
-	pDest = Utf16ToUtf8_unsafe(pSrc, srcLength, pDest, destLength);
-	*pDest = '\0';
+	size_t cch8Dest = LengthOfUtf16(pwsz, cwch);
+	auto oteUtf8 = ObjectMemory::newUninitializedNullTermObject<MyType>(cch8Dest);
+	*(ConvertUtf16_unsafe(pwsz, cwch, oteUtf8->m_location->m_characters, cch8Dest)) = '\0';
 	return oteUtf8;
 }
 
-size_t Utf8LengthOfUtf16(const char16_t* __restrict pSrc, int32_t utf16Length)
+size_t Utf8String::LengthOfUtf16(const char16_t* __restrict pwsz, size_t cwch)
 {
 	size_t reqLength = 0;
-	const char16_t* pSrcLimit = pSrc + utf16Length;
+	auto pSrcLimit = pwsz + cwch;
 	
-	while (pSrc < pSrcLimit) {
-		auto ch = *pSrc++;
+	while (pwsz < pSrcLimit) {
+		auto ch = *pwsz++;
 		if (ch <= 0x7f) {
 			reqLength += 1;
 		}
@@ -1756,8 +1756,8 @@ size_t Utf8LengthOfUtf16(const char16_t* __restrict pSrc, int32_t utf16Length)
 		else if (!U16_IS_SURROGATE(ch)) {
 			reqLength += 3;
 		}
-		else if (U16_IS_SURROGATE_LEAD(ch) && pSrc < pSrcLimit && U16_IS_TRAIL(*pSrc)) {
-			++pSrc;
+		else if (U16_IS_SURROGATE_LEAD(ch) && pwsz < pSrcLimit && U16_IS_TRAIL(*pwsz)) {
+			++pwsz;
 			reqLength += 4;
 		}
 		else {
@@ -1773,56 +1773,56 @@ size_t Utf8LengthOfUtf16(const char16_t* __restrict pSrc, int32_t utf16Length)
 // size that will be required for the UTF-8 encoded representation of the UTF-16 source, as calculated by
 // a call to Utf8LengthOfUtf16. This function does not check that it does not write beyond utf8Length in 
 // the general case. 
-inline char8_t* Utf16ToUtf8_unsafe(const char16_t* __restrict pUtf16Src, size_t utf16Length, char8_t* __restrict pUtf8Dest, size_t utf8Length)
+char8_t* Utf8String::ConvertUtf16_unsafe(const char16_t* __restrict pwszSrc, size_t cwchSrc, char8_t* __restrict psz8Dest, size_t cch8Dest)
 {
-	if (utf8Length == utf16Length) {
+	if (cch8Dest == cwchSrc) {
 		// Only possible for the UTF-8 code unit count to be the same as the that for UTF-16
 		// if the UTF-16 code units are all ASCII, in which case a straight copy, words to bytes, 
 		// will do
-		while (utf16Length--) {
-			*pUtf8Dest++ = static_cast<char8_t>(*pUtf16Src++);
+		while (cwchSrc--) {
+			*psz8Dest++ = static_cast<char8_t>(*pwszSrc++);
 		}
 	}
 	else {
-		const char16_t* pSrcLimit = pUtf16Src + utf16Length;
-		while (pUtf16Src < pSrcLimit) {
-			char32_t ch = *pUtf16Src++;
+		auto pSrcLimit = pwszSrc + cwchSrc;
+		while (pwszSrc < pSrcLimit) {
+			char32_t ch = *pwszSrc++;
 			if (ch <= 0x7f) {
-				*pUtf8Dest++ = (char8_t)ch;
+				*psz8Dest++ = (char8_t)ch;
 			}
 			else if (ch <= 0x7ff) {
-				*pUtf8Dest++ = (char8_t)((ch >> 6) | 0xc0);
-				*pUtf8Dest++ = (char8_t)((ch & 0x3f) | 0x80);
+				*psz8Dest++ = (char8_t)((ch >> 6) | 0xc0);
+				*psz8Dest++ = (char8_t)((ch & 0x3f) | 0x80);
 			}
 			else if (ch <= 0xd7ff || ch >= 0xe000) {
-				*pUtf8Dest++ = (char8_t)((ch >> 12) | 0xe0);
-				*pUtf8Dest++ = (char8_t)(((ch >> 6) & 0x3f) | 0x80);
-				*pUtf8Dest++ = (char8_t)((ch & 0x3f) | 0x80);
+				*psz8Dest++ = (char8_t)((ch >> 12) | 0xe0);
+				*psz8Dest++ = (char8_t)(((ch >> 6) & 0x3f) | 0x80);
+				*psz8Dest++ = (char8_t)((ch & 0x3f) | 0x80);
 			}
 			else /* ch is a surrogate */ {
 				char32_t ch2;
 
-				if (U16_IS_SURROGATE_LEAD(ch) && pUtf16Src < pSrcLimit && U16_IS_TRAIL(ch2 = *pUtf16Src)) {
-					++pUtf16Src;
+				if (U16_IS_SURROGATE_LEAD(ch) && pwszSrc < pSrcLimit && U16_IS_TRAIL(ch2 = *pwszSrc)) {
+					++pwszSrc;
 					ch = U16_GET_SUPPLEMENTARY(ch, ch2);
 
 					ASSERT(ch >= 0x10000);
-					*pUtf8Dest++ = (char8_t)((ch >> 18) | 0xf0);
-					*pUtf8Dest++ = (char8_t)(((ch >> 12) & 0x3f) | 0x80);
-					*pUtf8Dest++ = (char8_t)(((ch >> 6) & 0x3f) | 0x80);
-					*pUtf8Dest++ = (char8_t)((ch & 0x3f) | 0x80);
+					*psz8Dest++ = (char8_t)((ch >> 18) | 0xf0);
+					*psz8Dest++ = (char8_t)(((ch >> 12) & 0x3f) | 0x80);
+					*psz8Dest++ = (char8_t)(((ch >> 6) & 0x3f) | 0x80);
+					*psz8Dest++ = (char8_t)((ch & 0x3f) | 0x80);
 				}
 				else {
 					// Assume recommended unicode replacement char, 0xFFFD
 					ASSERT(Interpreter::UnicodeReplacementChar == 0xFFFD);
-					*pUtf8Dest++ = 0xef;
-					*pUtf8Dest++ = 0xbf;
-					*pUtf8Dest++ = 0xbd;
+					*psz8Dest++ = 0xef;
+					*psz8Dest++ = 0xbf;
+					*psz8Dest++ = 0xbd;
 				}
 			}
 		}
 	}
-	return pUtf8Dest;
+	return psz8Dest;
 }
 
 
@@ -1904,14 +1904,14 @@ Oop* PRIMCALL Interpreter::primitiveStringAsByteString(Oop* const sp, primargcou
 	}
 }
 
-AnsiStringOTE* __fastcall AnsiString::NewFromUtf16(const char16_t* pwch, size_t cwch)
+AnsiStringOTE* __fastcall AnsiString::NewFromUtf16(const char16_t* __restrict  pwch, size_t cwch)
 {
 	int cch = ::WideCharToMultiByte(CodePage(), 0, (LPCWCH)pwch, cwch, nullptr, 0, nullptr, nullptr);
 	// Length does not include null terminator
 	MyOTE* stringPointer = ObjectMemory::newUninitializedNullTermObject<MyType>((size_t)cch * sizeof(CU));
-	CU* psz = stringPointer->m_location->m_characters;
-	psz[cch] = '\0';
-	int cch2 = ::WideCharToMultiByte(CodePage(), 0, (LPCWCH)pwch, cwch, reinterpret_cast<LPSTR>(psz), cch, nullptr, nullptr);
+	CU* pwszAnswer = stringPointer->m_location->m_characters;
+	pwszAnswer[cch] = '\0';
+	int cch2 = ::WideCharToMultiByte(CodePage(), 0, (LPCWCH)pwch, cwch, reinterpret_cast<LPSTR>(pwszAnswer), cch, nullptr, nullptr);
 	UNREFERENCED_PARAMETER(cch2);
 	ASSERT(cch2 == cch);
 	ASSERT(stringPointer->isNullTerminated());
@@ -1920,11 +1920,7 @@ AnsiStringOTE* __fastcall AnsiString::NewFromUtf16(const char16_t* pwch, size_t 
 
 Utf16StringOTE* Utf16String::New(LPCWSTR value)
 {
-	size_t cwch = wcslen(value);
-	Utf16StringOTE* stringPointer = New(cwch);
-	Utf16String* __restrict string = stringPointer->m_location;
-	memcpy(string->m_characters, value, (cwch + 1) * sizeof(WCHAR));
-	return stringPointer;
+	return New(value, wcslen(value));
 }
 
 Utf16StringOTE* __fastcall Utf16String::New(const WCHAR* value, size_t cwch)
@@ -1948,28 +1944,202 @@ Utf16StringOTE* __fastcall Utf16String::New(const WCHAR* value, size_t cwch)
 //	return stringPointer;
 //}
 
-template <UINT CP, class T> Utf16StringOTE * ST::Utf16String::New(const T* psz, size_t cch)
+template <UINT CP, class T> Utf16StringOTE * ST::Utf16String::New(const T* __restrict psz, size_t cch)
 {
 	// A UTF16 encoded string can never require more code units than a byte encoding (though it will usually require more bytes)
 	const UINT cp = CP == CP_ACP ? Interpreter::m_ansiCodePage : CP;
 	int cwch = ::MultiByteToWideChar(cp, 0, reinterpret_cast<LPCCH>(psz), cch, nullptr, 0);
 	Utf16StringOTE* stringPointer = New(cwch);
-	Utf16String::CU* pwsz = stringPointer->m_location->m_characters;
+	auto pwsz = stringPointer->m_location->m_characters;
 	int cwch2 = ::MultiByteToWideChar(cp, 0, reinterpret_cast<LPCCH>(psz), cch, (LPWSTR)pwsz, cwch);
 	pwsz[cwch] = L'\0';
 	return stringPointer;
 }
 
-Utf8StringOTE* ST::Utf8String::NewFromAnsi(const char* pChars, size_t len)
+Utf16StringOTE* ST::Utf16String::New(const char8_t* __restrict psz8Src, size_t cch8Src)
 {
-	// There is no Windows API for direct conversion from ANSI<->UTF8, so we need to convert to UTF16 first
-	Utf16StringBuf utf16(Interpreter::m_ansiCodePage, pChars, len);
-	return Utf8String::NewFromUtf16(utf16, utf16.Count);
+#ifdef NLSConversions
+	return New<CP_UTF8, char8_t>(psz8Src, cch8Src);
+#else
+	// A UTF16 encoded string can never require more code units than a byte encoding (though it will usually require more bytes)
+	size_t cwchDest = LengthOfUtf8(psz8Src, cch8Src);
+	Utf16StringOTE* stringPointer = New(cwchDest);
+	auto pwszDest = stringPointer->m_location->m_characters;
+	*(ConvertUtf8_unsafe(psz8Src, cch8Src, pwszDest, cwchDest)) = L'\0';
+	return stringPointer;
+#endif
 }
 
-AnsiStringOTE* ST::AnsiString::NewFromUtf8(const Utf8String::CU* pChars, size_t len)
+size_t Utf16String::LengthOfUtf8(const char8_t* __restrict psz8, size_t cch8)
 {
-	Utf16StringBuf utf16(CP_UTF8, (LPCCH)pChars, len);
+	size_t cwch = 0;
+	size_t i = 0;
+	while (i < cch8) 
+	{
+		// modified copy of U8_NEXT()
+		auto ch8 = psz8[i++];
+		if (U8_IS_SINGLE(ch8)) 
+		{
+			++cwch;
+		}
+		else 
+		{
+			if ( /* handle U+0800..U+FFFF inline */
+					(0xe0 <= ch8 && ch8 < 0xf0) &&
+					(i+1) < cch8 &&
+					U8_IS_VALID_LEAD3_AND_T1(ch8, psz8[i]) &&
+					(psz8[i+1] - 0x80) <= 0x3f) 
+			{
+				++cwch;
+				i += 2;
+			}
+			else if ( /* handle U+0080..U+07FF inline */
+					(ch8 < 0xe0 && ch8 >= 0xc2) &&
+					(i != cch8) &&
+					(psz8[i] - 0x80) <= 0x3f) 
+			{
+				++cwch;
+				++i;
+			}
+			else 
+			{
+				/* function call for "complicated" and error cases */
+				UChar32 cp = utf8_nextCharSafeBody((const uint8_t*)psz8, reinterpret_cast<int32_t*>(&i), cch8, ch8, -1);
+				cwch += cp < 0 ? U16_LENGTH(Interpreter::UnicodeReplacementChar) : U16_LENGTH(cp);
+			}
+		}
+	}
+	return cwch;
+}
+
+char16_t* Utf16String::ConvertUtf8_unsafe(const char8_t* __restrict psz8Src, size_t cch8Src, char16_t* __restrict pwszDest, size_t cwchDest)
+{
+	const char8_t* psz8 = psz8Src;
+	char16_t* pwch = pwszDest;
+
+	if (cwchDest == cch8Src) {
+		// Only possible for the UTF-8 code unit count to be the same as the that for UTF-16 if 
+		// the code units are all ASCII, in which case a straight copy, bytes to words, will do
+		while (cch8Src--) {
+			*pwch++ = *psz8++;
+		}
+	}
+	else {
+		size_t i = 0;
+		while (i < cch8Src) {
+			// modified copy of U8_NEXT()
+			auto ch8 = psz8[i++];
+			if (U8_IS_SINGLE(ch8)) {
+				*pwch++ = static_cast<char16_t>(ch8);
+			}
+			else {
+				uint8_t __t1, __t2;
+				if ( /* handle U+0800..U+FFFF inline */
+					(0xe0 <= ch8 && ch8 < 0xf0) &&
+					(i+1) < cch8Src &&
+					U8_IS_VALID_LEAD3_AND_T1(ch8, psz8[i]) &&
+					(__t2 = psz8[(i)+1] - 0x80) <= 0x3f) {
+					*pwch++ = ((ch8 & 0xf) << 12) | ((psz8[i] & 0x3f) << 6) | __t2;
+					i += 2;
+				}
+				else if ( /* handle U+0080..U+07FF inline */
+					(ch8 < 0xe0 && ch8 >= 0xc2) &&
+					(i != cch8Src) &&
+					(__t1 = psz8[i] - 0x80) <= 0x3f) {
+					*pwch++ = ((ch8 & 0x1f) << 6) | __t1;
+					++i;
+				}
+				else {
+					/* function call for "complicated" and error cases */
+					UChar32 cp = utf8_nextCharSafeBody((const uint8_t*)psz8, reinterpret_cast<int32_t*>(&i), cch8Src, ch8, -1);
+					if (cp < 0) {
+						*pwch++ = Interpreter::UnicodeReplacementChar;
+					}
+					else if (cp <= 0xFFFF) {
+						// I don't think we should ever get here as this should have been handled above as a simple case
+						*pwch++ = static_cast<char16_t>(cp);
+					}
+					else {
+						*pwch++ = U16_LEAD(cp);
+						*pwch++ = U16_TRAIL(cp);
+					}
+				}
+			}
+		}
+	}
+	ASSERT(pwch == pwszDest + cwchDest);
+	return pwch;
+}
+
+Utf8StringOTE* __fastcall ST::Utf8String::NewFromAnsi(const char* __restrict psz, size_t cch)
+{
+	size_t cch8 = LengthOfAnsi(psz, cch);
+	Utf8StringOTE* oteUtf8 = ObjectMemory::newUninitializedNullTermObject<MyType>(cch8);
+	*(ConvertAnsi_unsafe(psz, cch, oteUtf8->m_location->m_characters, cch8)) = '\0';
+	return oteUtf8;
+}
+
+size_t Utf8String::LengthOfAnsi(const char* __restrict psz, size_t cch)
+{
+	size_t cch8 = 0;
+	auto pSrcLimit = psz + cch;
+
+	while (psz < pSrcLimit) {
+		unsigned char ch = *psz++;
+		if (ch <= 0x7f) {
+			cch8 += 1;
+		}
+		else {
+			char16_t codePoint = Interpreter::m_ansiToUnicodeCharMap[ch];
+
+			// We know that the ANSI code page will not contain any chars outside the BMP, nor any surrogates, so max UTF-8 length is 3
+			cch8 += codePoint <= 0x7f ? 1 : codePoint <= 0x7ff ? 2 : 3;
+		}
+	}
+
+	return cch8;
+}
+
+// The buffer pointed at by pUtf8Dest is assumed to be of size utf8Length, and that utf8Length is exactly the
+// size that will be required for the UTF-8 encoded representation of the UTF-16 source, as calculated by
+// a call to Utf8LengthOfUtf16. This function does not check that it does not write beyond utf8Length in 
+// the general case. 
+Utf8String::CU* Utf8String::ConvertAnsi_unsafe(const char* __restrict pszSrc, size_t cchSrc, char8_t* __restrict psz8Dest, size_t cch8Dest)
+{
+	if (cch8Dest == cchSrc) {
+		// Only possible for the UTF-8 code unit count to be the same as the that for ANSI
+		// if the ANSI code units are all ASCII, in which case a straight copy
+		memcpy(psz8Dest, pszSrc, cchSrc);
+		return psz8Dest + cchSrc;
+	}
+	else {
+		auto pSrcLimit = pszSrc + cchSrc;
+		while (pszSrc < pSrcLimit) {
+			unsigned char ch = *pszSrc++;
+			if (ch <= 0x7f) {
+				*psz8Dest++ = static_cast<char8_t>(ch);
+			}
+			else {
+				char16_t codePoint = Interpreter::m_ansiToUnicodeCharMap[ch];
+
+				if (codePoint <= 0x7ff) {
+					*psz8Dest++ = static_cast<char8_t>((codePoint >> 6) | 0xc0);
+					*psz8Dest++ = static_cast<char8_t>((codePoint & 0x3f) | 0x80);
+				}
+				else {
+					*psz8Dest++ = static_cast<char8_t>((codePoint >> 12) | 0xe0);
+					*psz8Dest++ = static_cast<char8_t>(((codePoint >> 6) & 0x3f) | 0x80);
+					*psz8Dest++ = static_cast<char8_t>((codePoint & 0x3f) | 0x80);
+				}
+			}
+		}
+	}
+	return psz8Dest;
+}
+
+AnsiStringOTE* ST::AnsiString::NewFromUtf8(const char8_t* __restrict psz8, size_t cch8)
+{
+	Utf16StringBuf utf16(CP_UTF8, (LPCCH)psz8, cch8);
 	return AnsiString::NewFromUtf16(utf16, utf16.Count);
 }
 
@@ -1988,12 +2158,12 @@ Oop* Interpreter::primitiveStringConcatenate(Oop* const sp, primargcount_t)
 			{
 			case ENCODINGPAIR(StringEncoding::Ansi, StringEncoding::Ansi):
 			{
-				size_t cbPrefix = oteReceiver->getSize();
-				size_t cbSuffix = oteArg->getSize();
-				auto oteAnswer = AnsiString::New(cbPrefix + cbSuffix);
-				LPSTR psz = reinterpret_cast<AnsiStringOTE*>(oteAnswer)->m_location->m_characters;
-				memcpy(psz, reinterpret_cast<const AnsiStringOTE*>(oteReceiver)->m_location->m_characters, cbPrefix);
-				memcpy(psz + cbPrefix, reinterpret_cast<const AnsiStringOTE*>(oteArg)->m_location->m_characters, cbSuffix + sizeof(char));
+				size_t cchPrefix = oteReceiver->getSize();
+				size_t cchSuffix = oteArg->getSize();
+				AnsiStringOTE* oteAnswer = AnsiString::New(cchPrefix + cchSuffix);
+				auto psz = oteAnswer->m_location->m_characters;
+				memcpy(psz, reinterpret_cast<const AnsiStringOTE*>(oteReceiver)->m_location->m_characters, cchPrefix);
+				memcpy(psz + cchPrefix, reinterpret_cast<const AnsiStringOTE*>(oteArg)->m_location->m_characters, cchSuffix + sizeof(AnsiString::CU));
 				*(sp - 1) = reinterpret_cast<Oop>(oteAnswer);
 				ObjectMemory::AddToZct(reinterpret_cast<OTE*>(oteAnswer));
 			}
@@ -2001,12 +2171,12 @@ Oop* Interpreter::primitiveStringConcatenate(Oop* const sp, primargcount_t)
 
 			case ENCODINGPAIR(StringEncoding::Utf8, StringEncoding::Utf8):
 			{
-				size_t cbPrefix = oteReceiver->getSize();
-				size_t cbSuffix = oteArg->getSize();
-				auto oteAnswer = Utf8String::New(cbPrefix + cbSuffix);
+				size_t cch8Prefix = oteReceiver->getSize();
+				size_t cch8Suffix = oteArg->getSize();
+				Utf8StringOTE* oteAnswer = Utf8String::New(cch8Prefix + cch8Suffix);
 				auto psz = oteAnswer->m_location->m_characters;
-				memcpy(psz, reinterpret_cast<const Utf8StringOTE*>(oteReceiver)->m_location->m_characters, cbPrefix);
-				memcpy(psz + cbPrefix, reinterpret_cast<const Utf8StringOTE*>(oteArg)->m_location->m_characters, cbSuffix + sizeof(char));
+				memcpy(psz, reinterpret_cast<const Utf8StringOTE*>(oteReceiver)->m_location->m_characters, cch8Prefix);
+				memcpy(psz + cch8Prefix, reinterpret_cast<const Utf8StringOTE*>(oteArg)->m_location->m_characters, cch8Suffix + sizeof(Utf8String::CU));
 				*(sp - 1) = reinterpret_cast<Oop>(oteAnswer);
 				ObjectMemory::AddToZct(reinterpret_cast<OTE*>(oteAnswer));
 			}
@@ -2014,14 +2184,16 @@ Oop* Interpreter::primitiveStringConcatenate(Oop* const sp, primargcount_t)
 
 			case ENCODINGPAIR(StringEncoding::Ansi, StringEncoding::Utf8):
 			{
-				// Ansi, UTF-8 => UTF-8; but we have to translate to translate via UTF16
-				Utf16StringBuf utf16(m_ansiCodePage, reinterpret_cast<const AnsiStringOTE*>(oteReceiver)->m_location->m_characters, oteReceiver->getSize());
-				size_t cbPrefix = utf16.ToUtf8();
-				size_t cbSuffix = oteArg->getSize();
-				auto oteAnswer = Utf8String::New(cbPrefix + cbSuffix);
-				auto psz = oteAnswer->m_location->m_characters;
-				utf16.ToUtf8(psz, cbPrefix);
-				memcpy(psz + cbPrefix, reinterpret_cast<const Utf8StringOTE*>(oteArg)->m_location->m_characters, cbSuffix + sizeof(char));
+				// Ansi, UTF-8 => UTF-8
+				auto pszPrefix = reinterpret_cast<const AnsiStringOTE*>(oteReceiver)->m_location->m_characters;
+				size_t cchPrefix = oteReceiver->getSize();
+				size_t cch8Prefix = Utf8String::LengthOfAnsi(pszPrefix, cchPrefix);
+				size_t cch8Suffix = oteArg->getSize();
+				Utf8StringOTE* oteAnswer = Utf8String::New(cch8Prefix + cch8Suffix);
+				auto pszAnswer = oteAnswer->m_location->m_characters;
+				Utf8String::ConvertAnsi_unsafe(pszPrefix, cchPrefix, pszAnswer, cch8Prefix);
+				// Append suffix including null terminator
+				memcpy(pszAnswer + cch8Prefix, reinterpret_cast<const Utf8StringOTE*>(oteArg)->m_location->m_characters, cch8Suffix + sizeof(Utf8String::CU));
 				*(sp - 1) = reinterpret_cast<Oop>(oteAnswer);
 				ObjectMemory::AddToZct(reinterpret_cast<OTE*>(oteAnswer));
 			}
@@ -2030,14 +2202,14 @@ Oop* Interpreter::primitiveStringConcatenate(Oop* const sp, primargcount_t)
 			case ENCODINGPAIR(StringEncoding::Ansi, StringEncoding::Utf16):
 			{
 				// Ansi, UTF-16 => UTF-16
-				LPCSTR pszReceiver = reinterpret_cast<const AnsiStringOTE*>(oteReceiver)->m_location->m_characters;
-				size_t cchReceiver = oteReceiver->getSize();
-				int cwchPrefix = ::MultiByteToWideChar(m_ansiCodePage, 0, pszReceiver, cchReceiver, nullptr, 0);
+				auto pszPrefix = reinterpret_cast<const AnsiStringOTE*>(oteReceiver)->m_location->m_characters;
+				size_t cchPrefix = oteReceiver->getSize();
+				int cwchPrefix = ::MultiByteToWideChar(m_ansiCodePage, 0, pszPrefix, cchPrefix, nullptr, 0);
 				size_t cbSuffix = oteArg->getSize();
 				size_t cwchSuffix = cbSuffix / sizeof(Utf16String::CU);
-				auto oteAnswer = Utf16String::New(cwchPrefix + cwchSuffix);
-				Utf16String::CU* pwszAnswer = oteAnswer->m_location->m_characters;
-				::MultiByteToWideChar(m_ansiCodePage, 0, pszReceiver, cchReceiver, (LPWSTR)pwszAnswer, cwchPrefix);
+				Utf16StringOTE* oteAnswer = Utf16String::New(cwchPrefix + cwchSuffix);
+				auto pwszAnswer = oteAnswer->m_location->m_characters;
+				::MultiByteToWideChar(m_ansiCodePage, 0, pszPrefix, cchPrefix, (LPWSTR)pwszAnswer, cwchPrefix);
 				memcpy(pwszAnswer + cwchPrefix, reinterpret_cast<const Utf16StringOTE*>(oteArg)->m_location->m_characters, cbSuffix + sizeof(Utf16String::CU));
 				*(sp - 1) = reinterpret_cast<Oop>(oteAnswer);
 				ObjectMemory::AddToZct(reinterpret_cast<OTE*>(oteAnswer));
@@ -2046,18 +2218,15 @@ Oop* Interpreter::primitiveStringConcatenate(Oop* const sp, primargcount_t)
 
 			case ENCODINGPAIR(StringEncoding::Utf8, StringEncoding::Ansi):
 			{
-				// UTF-8, Ansi => UTF-8; but we have to translate to translate via UTF16
-				// TODO: Implement a direct ANSI to UTF-8 translation
-
-				Utf16StringBuf utf16(m_ansiCodePage, reinterpret_cast<const AnsiStringOTE*>(oteArg)->m_location->m_characters, oteArg->getSize());
-				size_t cbSuffix = utf16.ToUtf8();
-				size_t cbPrefix = oteReceiver->getSize();
-				size_t cbAnswer = cbPrefix + cbSuffix;
-				auto oteAnswer = Utf8String::New(cbAnswer);
-				Utf8String::CU* psz = oteAnswer->m_location->m_characters;
-				memcpy(psz, reinterpret_cast<const Utf8StringOTE*>(oteReceiver)->m_location->m_characters, cbPrefix);
-				utf16.ToUtf8(psz + cbPrefix, cbSuffix);
-				psz[cbAnswer] = '\0';
+				// UTF-8, Ansi => UTF-8
+				auto pszSuffix = reinterpret_cast<const AnsiStringOTE*>(oteArg)->m_location->m_characters;
+				size_t cchSuffix = oteArg->getSize();
+				size_t cch8Suffix = Utf8String::LengthOfAnsi(pszSuffix, cchSuffix);
+				size_t cch8Prefix = oteReceiver->getSize();
+				Utf8StringOTE* oteAnswer = Utf8String::New(cch8Prefix + cch8Suffix);
+				auto psz8Answer = oteAnswer->m_location->m_characters;
+				memcpy(psz8Answer, reinterpret_cast<const Utf8StringOTE*>(oteReceiver)->m_location->m_characters, cch8Prefix);
+				*(Utf8String::ConvertAnsi_unsafe(pszSuffix, cchSuffix, psz8Answer + cch8Prefix, cch8Suffix)) = '\0';
 				*(sp - 1) = reinterpret_cast<Oop>(oteAnswer);
 				ObjectMemory::AddToZct(reinterpret_cast<OTE*>(oteAnswer));
 			}
@@ -2067,17 +2236,15 @@ Oop* Interpreter::primitiveStringConcatenate(Oop* const sp, primargcount_t)
 			{
 				// Since both encodings can represent any string, we return a result that is the same class as the receiver, i.e.
 				// UTF-8, Utf16 => UTF-8
-				const Utf16String::CU* pArgChars = reinterpret_cast<const Utf16StringOTE*>(oteArg)->m_location->m_characters;
+				auto pwszSuffix = reinterpret_cast<const Utf16StringOTE*>(oteArg)->m_location->m_characters;
 				size_t cwchSuffix = oteArg->getSize() / sizeof(Utf16String::CU);
-				size_t cbSuffix = Utf8LengthOfUtf16(pArgChars, cwchSuffix);
-				ASSERT(cbSuffix >= 0);
-				size_t cbPrefix = oteReceiver->getSize();
-				size_t utf8Length = cbPrefix + cbSuffix;
-				auto oteAnswer = Utf8String::New(utf8Length);
-				Utf8String::CU* psz = oteAnswer->m_location->m_characters;
-				memcpy(psz, reinterpret_cast<const Utf8StringOTE*>(oteReceiver)->m_location->m_characters, cbPrefix);
-				psz = Utf16ToUtf8_unsafe(pArgChars, cwchSuffix, psz + cbPrefix, utf8Length);
-				*psz = '\0';
+				size_t cch8Suffix = Utf8String::LengthOfUtf16(pwszSuffix, cwchSuffix);
+				size_t cch8Prefix = oteReceiver->getSize();
+				size_t cch8Answer = cch8Prefix + cch8Suffix;
+				Utf8StringOTE* oteAnswer = Utf8String::New(cch8Answer);
+				auto psz8Answer = oteAnswer->m_location->m_characters;
+				memcpy(psz8Answer, reinterpret_cast<const Utf8StringOTE*>(oteReceiver)->m_location->m_characters, cch8Prefix);
+				*(Utf8String::ConvertUtf16_unsafe(pwszSuffix, cwchSuffix, psz8Answer + cch8Prefix, cch8Suffix)) = '\0';
 				*(sp - 1) = reinterpret_cast<Oop>(oteAnswer);
 				ObjectMemory::AddToZct(reinterpret_cast<OTE*>(oteAnswer));
 			}
@@ -2086,16 +2253,16 @@ Oop* Interpreter::primitiveStringConcatenate(Oop* const sp, primargcount_t)
 			case ENCODINGPAIR(StringEncoding::Utf16, StringEncoding::Ansi):
 			{
 				// Ansi, UTF-16 => UTF-16
-				LPCSTR pszArg = reinterpret_cast<const AnsiStringOTE*>(oteArg)->m_location->m_characters;
-				size_t cchArg = oteArg->getSize();
-				int cwchSuffix = ::MultiByteToWideChar(m_ansiCodePage, 0, pszArg, cchArg, nullptr, 0);
+				auto pszSuffix = reinterpret_cast<const AnsiStringOTE*>(oteArg)->m_location->m_characters;
+				size_t cchSuffix = oteArg->getSize();
+				size_t cwchSuffix = ::MultiByteToWideChar(m_ansiCodePage, 0, pszSuffix, cchSuffix, nullptr, 0);
 				ASSERT(cwchSuffix >= 0);
 				size_t cbPrefix = oteReceiver->getSize();
 				size_t cwchPrefix = cbPrefix / sizeof(Utf16String::CU);
-				auto oteAnswer = Utf16String::New(cwchPrefix + cwchSuffix);
-				Utf16String::CU* pwsz = oteAnswer->m_location->m_characters;
-				memcpy(pwsz, reinterpret_cast<const Utf16StringOTE*>(oteReceiver)->m_location->m_characters, cbPrefix);
-				::MultiByteToWideChar(m_ansiCodePage, 0, pszArg, cchArg + 1, (LPWSTR)pwsz + cwchPrefix, cwchSuffix + 1);
+				Utf16StringOTE* oteAnswer = Utf16String::New(cwchPrefix + cwchSuffix);
+				auto pwszAnswer = oteAnswer->m_location->m_characters;
+				memcpy(pwszAnswer, reinterpret_cast<const Utf16StringOTE*>(oteReceiver)->m_location->m_characters, cbPrefix);
+				::MultiByteToWideChar(m_ansiCodePage, 0, pszSuffix, cchSuffix + 1, (LPWSTR)pwszAnswer + cwchPrefix, cwchSuffix + 1);
 				*(sp - 1) = reinterpret_cast<Oop>(oteAnswer);
 				ObjectMemory::AddToZct(reinterpret_cast<OTE*>(oteAnswer));
 			}
@@ -2105,16 +2272,16 @@ Oop* Interpreter::primitiveStringConcatenate(Oop* const sp, primargcount_t)
 			{
 				// Since both encodings can represent any string, we return a result that is the same class as the receiver, i.e.
 				// UTF-16, Utf8 => UTF-16
-				auto pszArg = reinterpret_cast<const Utf8StringOTE*>(oteArg)->m_location->m_characters;
-				size_t cbArg = oteArg->getSize();
-				int cwchSuffix = ::MultiByteToWideChar(CP_UTF8, 0, reinterpret_cast<LPCCH>(pszArg), cbArg, nullptr, 0);
+				auto psz8Suffix = reinterpret_cast<const Utf8StringOTE*>(oteArg)->m_location->m_characters;
+				size_t cch8Arg = oteArg->getSize();
+				size_t cwchSuffix = Utf16String::LengthOfUtf8(psz8Suffix, cch8Arg);
 				size_t cbPrefix = oteReceiver->getSize();
 				size_t cwchPrefix = cbPrefix / sizeof(Utf16String::CU);
-				auto oteAnswer = Utf16String::New(cwchPrefix + cwchSuffix);
-				Utf16String::CU* pwszAnswer = oteAnswer->m_location->m_characters;
-				const Utf16String::CU* pwszReceiver = reinterpret_cast<const Utf16StringOTE*>(oteReceiver)->m_location->m_characters;
+				Utf16StringOTE* oteAnswer = Utf16String::New(cwchPrefix + cwchSuffix);
+				auto pwszAnswer = oteAnswer->m_location->m_characters;
+				auto pwszReceiver = reinterpret_cast<const Utf16StringOTE*>(oteReceiver)->m_location->m_characters;
 				memcpy(pwszAnswer, pwszReceiver, cbPrefix);
-				::MultiByteToWideChar(CP_UTF8, 0, reinterpret_cast<LPCCH>(pszArg), cbArg + 1, (LPWSTR)pwszAnswer + cwchPrefix, cwchSuffix + 1);
+				*(Utf16String::ConvertUtf8_unsafe(psz8Suffix, cch8Arg, pwszAnswer + cwchPrefix, cwchSuffix)) = L'\0';
 				*(sp - 1) = reinterpret_cast<Oop>(oteAnswer);
 				ObjectMemory::AddToZct(reinterpret_cast<OTE*>(oteAnswer));
 			}
@@ -2125,7 +2292,7 @@ Oop* Interpreter::primitiveStringConcatenate(Oop* const sp, primargcount_t)
 				// UTF-16, UTF-16 => UTF-16
 				size_t cbPrefix = oteReceiver->getSize();
 				size_t cbSuffix = oteArg->getSize();
-				Utf16StringOTE* oteAnswer = reinterpret_cast<Utf16StringOTE*>(ObjectMemory::newUninitializedNullTermObject<Utf16String>(cbPrefix + cbSuffix));
+				auto oteAnswer = reinterpret_cast<Utf16StringOTE*>(ObjectMemory::newUninitializedNullTermObject<Utf16String>(cbPrefix + cbSuffix));
 				auto pbAnswer = reinterpret_cast<uint8_t*>(oteAnswer->m_location->m_characters);
 				memcpy(pbAnswer, reinterpret_cast<const Utf16StringOTE*>(oteReceiver)->m_location->m_characters, cbPrefix);
 				memcpy(pbAnswer+cbPrefix, reinterpret_cast<const Utf16StringOTE*>(oteArg)->m_location->m_characters, cbSuffix + sizeof(Utf16String::CU));

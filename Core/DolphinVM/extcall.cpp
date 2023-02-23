@@ -189,7 +189,7 @@ Utf16StringOTE* __fastcall ST::Utf16String::New(OTE* oteString)
 	case StringEncoding::Utf8:
 	{
 		auto oteUtf8 = reinterpret_cast<Utf8StringOTE*>(oteString);
-		return Utf16String::New<CP_UTF8>(oteUtf8->m_location->m_characters, oteUtf8->sizeForRead());
+		return Utf16String::New(oteUtf8->m_location->m_characters, oteUtf8->sizeForRead());
 	}
 	case StringEncoding::Utf16:
 		ASSERT(FALSE);

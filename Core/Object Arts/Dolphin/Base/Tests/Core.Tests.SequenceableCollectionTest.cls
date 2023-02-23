@@ -691,14 +691,18 @@ testMixedConcatenation
 
 	| subjects |
 	subjects := #(#() #(100) #(101 102)) collect: [:each | self newCollection: each].
-	{{String empty.
+	{
+		{
+			AnsiString empty.
 			Utf8String empty.
 			Utf16String empty.
 			ByteArray new.
 			OrderedCollection new.
-			1 to: 0}.
-		{'c'. 'c' asUtf8String. 'c' asUtf16String. OrderedCollection with: ${}.
-		{'cd'. 'cd' asUtf8String. 'cd' asUtf16String. OrderedCollection with: $£ with: $x}} do: 
+			1 to: 0
+		}.
+		{ 'c' asAnsiString. 'c' asUtf8String. 'c' asUtf16String. OrderedCollection with: ${ }.
+		{ 'cd' asAnsiString. 'cd' asUtf8String. 'cd' asUtf16String. OrderedCollection with: $£ with: $x }
+	} do: 
 				[:args |
 				args do: 
 						[:eachCase |

@@ -20,11 +20,14 @@ assimilateString: aString
 collectionClass
 	^Symbol!
 
+copyClass
+	^Utf8String!
+
 newCollection: aCollection
 	^(self newCopy: aCollection) asSymbol!
 
 newCopy: aCollection
-	^String withAll: (self assimilateElements: aCollection)!
+	^self copyClass withAll: (self assimilateElements: aCollection)!
 
 newEmptyCollection: anInteger
 	^Symbol intern: (String new: anInteger)!
@@ -149,10 +152,11 @@ testSymbolTable
 	Symbol.Table do: [:each | self assert: (each isNil or: [each isWeak])]! !
 !Core.Tests.SymbolTest categoriesForMethods!
 assimilateString:!helpers!private! !
-collectionClass!helpers!private! !
+collectionClass!constants!private! !
+copyClass!constants!private! !
 newCollection:!helpers!private! !
 newCopy:!helpers!private! !
-newEmptyCollection:!public! !
+newEmptyCollection:!helpers!private! !
 testArgumentCount!public!unit tests! !
 testAsString!helpers!public! !
 testAtPut!public!unit tests! !

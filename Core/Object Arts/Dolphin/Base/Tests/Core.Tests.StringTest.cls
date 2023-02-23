@@ -27,6 +27,9 @@ beforeTestCases
 caseConversionCases
 	^self ordinalCaseConversionCases!
 
+copyClass
+	^self collectionClass!
+
 equalityTestCases
 	^#(#('' '') #('a' 'A') #('abc' 'ABC') #('tükörfúrógép' 'TÜKÖRFÚRÓGÉP') #('a £=1.2€' 'A £=1.2€'))!
 
@@ -1293,6 +1296,7 @@ assimilate:!helpers!private! !
 assimilateString:!helpers!private! !
 beforeTestCases!constants!private! !
 caseConversionCases!constants!private! !
+copyClass!constants!private! !
 equalityTestCases!constants!private! !
 findActualIndicesOf:in:!helpers!private! !
 indexOfTestCases!constants!private! !

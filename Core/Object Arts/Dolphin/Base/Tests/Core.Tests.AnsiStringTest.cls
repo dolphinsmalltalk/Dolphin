@@ -62,6 +62,69 @@ testClassWith
 	self assert: (AnsiString with: Character replacement)
 		equals: (AnsiString with: (Character value: 63))!
 
+testConcatenateInvalidUtf16
+	"The result will preserve any invalid chars in the suffix as is because it is assumed to be well-formed UTF-16 already"
+
+	| actual invalid invalidBytes |
+	invalidBytes := #[98 0 163 0 172 32 0 220 61 216].
+	invalid := Utf16String fromByteArray: invalidBytes.
+	actual :=  '£' asAnsiString , invalid.
+	self assert: actual isKindOf: Utf16String.
+	self assert: actual equals: (Utf16String fromByteArray: #[163 0] , invalidBytes)!
+
+testConcatenateInvalidUtf8
+	"The result will preserve any invalid chars in the suffix as is because it is assumed to be well-formed UTF-8 already"
+
+	| actual |
+	actual := '£' asAnsiString
+				, (Utf8String fromByteArray: #[98 194 226 130 172 144 128 128 240 159 172]).
+	self assert: actual isKindOf: Utf8String.
+	self assert: actual
+		equals: (Utf8String fromByteArray: #[194 163 98 194 226 130 172 144 128 128 240 159 172])!
+
+testConcatenation
+	| actual triples |
+	actual := AnsiString empty , AnsiString empty.
+	self assert: actual isKindOf: AnsiString.
+	self assert: actual equals: ''.
+	self deny: actual identicalTo: AnsiString empty.
+	triples := #(#('' '€' '€') #('' '€£' '€£') #('£' '€' '£€') #('£' '€~' '£€~') #('€~' '£' '€~£')).
+	triples do: 
+			[:each |
+			actual := each first asAnsiString , each second asAnsiString.
+			self assert: actual isKindOf: AnsiString.
+			self assert: actual equals: each third.
+			actual := each second asAnsiString , each first asAnsiString.
+			self assert: actual isKindOf: AnsiString.
+			self assert: actual
+				equals: (AnsiString writeStream
+						nextPutAll: each second;
+						nextPutAll: each first;
+						contents)].
+	actual := (AnsiString with: $\0 with: $£) , '€~' asAnsiString.
+	self assert: actual isKindOf: AnsiString.
+	self assert: actual
+		equals: (AnsiString
+				with: $\0
+				with: $£
+				with: $€
+				with: $~).
+	actual := AnsiString empty , Utf8String empty.
+	self assert: actual isKindOf: Utf8String.
+	self assert: actual equals: ''.
+	self deny: actual identicalTo: Utf8String empty.
+	triples := #(#('' '€' '€') #('€' '' '€') #('' '€£' '€£') #('€£' '' '€£') #('a' '£' 'a£') #('a' '€' 'a€') #('' '🐬' '🐬') #('£' 'a' '£a') #('€' 'a' '€a') #('£' '€~🐬' '£€~🐬') #('a£~€' 'b£€�𐀀🐬' 'a£~€b£€�𐀀🐬')).
+	triples do: 
+			[:each |
+			actual := each first asAnsiString , each second asUtf8String.
+			self assert: actual isKindOf: Utf8String.
+			self assert: actual equals: each third].
+	triples do: 
+			[:each |
+			actual := each first asAnsiString , each second asUtf16String.
+			self assert: actual isKindOf: Utf16String.
+			self assert: actual equals: each third]!
+
 testCopyReplaceAllWith
 	| subject actual |
 	super testCopyReplaceAllWith.
@@ -91,6 +154,9 @@ collectionClass!helpers!private! !
 testAsPhrase!public!unit tests! !
 testBeginsWithIgnoreCase!public!unit tests! !
 testClassWith!public! !
+testConcatenateInvalidUtf16!public!unit tests! !
+testConcatenateInvalidUtf8!public!unit tests! !
+testConcatenation!public!unit tests! !
 testCopyReplaceAllWith!public!unit tests! !
 testIndexOfSubCollectionStartingAtGPF!public!unit tests! !
 !

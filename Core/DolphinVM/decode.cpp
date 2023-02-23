@@ -346,7 +346,7 @@ wostream& operator<<(wostream& st, const CharOTE* ote)
 			else
 			{
 				// Emit as surrogate pair
-				return st << static_cast<wchar_t>(codePoint >> 10 + 0xd7c0) << static_cast<wchar_t>(codePoint & 0x3ff | 0xdc00);
+				return st << static_cast<wchar_t>((codePoint >> 10) + 0xd7c0) << static_cast<wchar_t>(codePoint & 0x3ff | 0xdc00);
 			}
 		}
 	}

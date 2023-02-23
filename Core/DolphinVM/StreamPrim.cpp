@@ -868,8 +868,9 @@ Oop* PRIMCALL Interpreter::primitiveNextPutAll(Oop* const sp, primargcount_t)
 						// UTF-8, Ansi => Can write after translation, but we have to go indirectly via UTF16
 						// TODO: Implement a direct ANSI to UTF-8 translation
 						auto oteStringBuf = reinterpret_cast<Utf8StringOTE*>(oteBuf);
-						Utf16StringBuf utf16(m_ansiCodePage, reinterpret_cast<const AnsiStringOTE*>(oteStringArg)->m_location->m_characters, oteStringArg->getSize());
-						size_t valueSize = utf16.ToUtf8();
+						const AnsiString::CU* pArgChars = reinterpret_cast<const AnsiStringOTE*>(oteStringArg)->m_location->m_characters;
+						size_t cchArg = oteStringArg->getSize();
+						size_t valueSize = Utf8String::LengthOfAnsi(pArgChars, cchArg);
 
 						newIndex = static_cast<size_t>(index) + valueSize;
 
@@ -879,7 +880,7 @@ Oop* PRIMCALL Interpreter::primitiveNextPutAll(Oop* const sp, primargcount_t)
 						if (static_cast<ptrdiff_t>(newIndex) > oteStringBuf->sizeForUpdate())
 							return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);	// Attempt to write off end of buffer
 
-						utf16.ToUtf8(oteStringBuf->m_location->m_characters + index, valueSize);
+						Utf8String::ConvertAnsi_unsafe(pArgChars, cchArg, oteStringBuf->m_location->m_characters + index, valueSize);
 					}
 					break;
 
@@ -888,7 +889,7 @@ Oop* PRIMCALL Interpreter::primitiveNextPutAll(Oop* const sp, primargcount_t)
 						auto oteStringBuf = reinterpret_cast<Utf8StringOTE*>(oteBuf);
 						const Utf16String::CU* pArgChars = reinterpret_cast<const Utf16StringOTE*>(oteStringArg)->m_location->m_characters;
 						size_t cwchArg = oteStringArg->getSize() / sizeof(Utf16String::CU);
-						size_t valueSize = Utf8LengthOfUtf16(pArgChars, cwchArg);
+						size_t valueSize = Utf8String::LengthOfUtf16(pArgChars, cwchArg);
 
 						newIndex = static_cast<size_t>(index) + valueSize;
 
@@ -899,7 +900,7 @@ Oop* PRIMCALL Interpreter::primitiveNextPutAll(Oop* const sp, primargcount_t)
 							return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);	// Attempt to write off end of buffer (or immutable)
 
 						auto pchDest = oteStringBuf->m_location->m_characters;
-						Utf16ToUtf8_unsafe(pArgChars, cwchArg, pchDest + index, valueSize);
+						Utf8String::ConvertUtf16_unsafe(pArgChars, cwchArg, pchDest + index, valueSize);
 					}
 					break;
 
