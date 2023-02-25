@@ -182,10 +182,6 @@ namespace ST
 		{
 			return New(bs, ::SysStringLen(bs));
 		}
-
-		static size_t LengthOfUtf8(const char8_t* __restrict psz8, size_t cch8);
-		static CU* ConvertUtf8_unsafe(const char8_t* __restrict psz8Src, size_t cch8Src, char16_t* __restrict pwszDest, size_t cwchDest);
-
 	};
 
 	class Utf32String : public ArrayedCollection	// Actually a string subclass

@@ -62,8 +62,8 @@ struct CmpOrdinalIA
 		// It might be possible to use _memicmp_l here to compare without conversion, but there may be subtle differences depending on the _locale_t we pass.
 		// As we want this comparison to be true to the OS ordinal comparison, it is safest just to convert and call the correct API
 
-		Utf16StringBuf string1(Interpreter::m_ansiCodePage, psz1, cch1);
-		Utf16StringBuf string2(Interpreter::m_ansiCodePage, psz2, cch2);
+		Utf16StringBuf string1(psz1, cch1, Interpreter::m_ansiCodePage);
+		Utf16StringBuf string2(psz2, cch2, Interpreter::m_ansiCodePage);
 		return ::CompareStringOrdinal(string1, string1.Count, string2, string2.Count, TRUE) - 2;
 	}
 };

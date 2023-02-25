@@ -50,11 +50,11 @@ Oop* PRIMCALL Interpreter::primitiveSnapshot(Oop* const sp, primargcount_t)
 	switch (encoding)
 	{
 	case StringEncoding::Ansi:
-		buf.FromBytes(Interpreter::m_ansiCodePage, reinterpret_cast<AnsiStringOTE*>(oteArg)->m_location->m_characters, oteArg->getSize());
+		buf.FromAnsi(reinterpret_cast<AnsiStringOTE*>(oteArg)->m_location->m_characters, oteArg->getSize(), Interpreter::m_ansiCodePage);
 		szFileName = buf;
 		break;
 	case StringEncoding::Utf8:
-		buf.FromBytes(CP_UTF8, (LPCCH)reinterpret_cast<Utf8StringOTE*>(oteArg)->m_location->m_characters, oteArg->getSize());
+		buf.FromUtf8(reinterpret_cast<Utf8StringOTE*>(oteArg)->m_location->m_characters, oteArg->getSize());
 		szFileName = buf;
 		break;
 	case StringEncoding::Utf16:

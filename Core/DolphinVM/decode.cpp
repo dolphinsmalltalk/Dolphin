@@ -66,7 +66,7 @@ static void printChars(wostream& stream, const char16_t* pwsz, size_t len)
 
 std::wostream& __stdcall operator<<(std::wostream& stream, const std::string& str)
 {
-	Utf16StringBuf buf(CP_UTF8, str.c_str(), str.size());
+	Utf16StringBuf buf(reinterpret_cast<const char8_t*>(str.c_str()), str.size());
 	printChars(stream, buf, buf.Count);
 	return stream;
 }
@@ -89,13 +89,13 @@ wostream& operator<<(wostream& stream, const StringOTE* oteChars)
 		{
 		case StringEncoding::Ansi:
 		{
-			Utf16StringBuf buf(Interpreter::m_ansiCodePage, reinterpret_cast<const AnsiStringOTE*>(oteChars)->m_location->m_characters, oteChars->bytesSize());
+			Utf16StringBuf buf(reinterpret_cast<const AnsiStringOTE*>(oteChars)->m_location->m_characters, oteChars->bytesSize(), Interpreter::m_ansiCodePage);
 			printChars(stream, buf, buf.Count);
 			break;
 		}
 		case StringEncoding::Utf8:
 		{
-			Utf16StringBuf buf(CP_UTF8, (LPCCH)reinterpret_cast<const Utf8StringOTE*>(oteChars)->m_location->m_characters, oteChars->bytesSize());
+			Utf16StringBuf buf(reinterpret_cast<const Utf8StringOTE*>(oteChars)->m_location->m_characters, oteChars->bytesSize());
 			printChars(stream, buf, buf.Count);
 			break;
 		}
@@ -147,7 +147,7 @@ wostream& operator<<(wostream& st, const AnsiStringOTE* ote)
 	else
 	{
 		st << L"'";
-		Utf16StringBuf buf(Interpreter::m_ansiCodePage, ote->m_location->m_characters, ote->bytesSize());
+		Utf16StringBuf buf(ote->m_location->m_characters, ote->bytesSize(), Interpreter::m_ansiCodePage);
 		printChars(st, buf, buf.Count);
 		st << L"'";
 
@@ -166,7 +166,7 @@ wostream& operator<<(wostream& st, const Utf8StringOTE* ote)
 	else
 	{
 		st << L"8'";
-		Utf16StringBuf buf(CP_UTF8, (LPCCH)ote->m_location->m_characters, ote->bytesSize());
+		Utf16StringBuf buf(ote->m_location->m_characters, ote->bytesSize());
 		printChars(st, buf, buf.Count);
 		st << L"'";
 

@@ -687,7 +687,7 @@ int32_t Lexer::DecodeUtf8()
 
 int32_t Lexer::DecodeUtf8(char8_t ch)
 {
-	if (ch <= 0x7f)
+	if (U8_IS_SINGLE(ch))
 	{
 		return ch;
 	}
