@@ -619,18 +619,26 @@ Oop* PRIMCALL Interpreter::primitiveDiv(Oop* const sp, primargcount_t)
 	{
 		SmallInteger r = ObjectMemoryIntegerValueOf(receiver);
 		SmallInteger a = ObjectMemoryIntegerValueOf(arg);
-		// It seems that the VC++ compiler is finally (as of VS2017) able to recognise this sequence as requiring only a single division instruction
-		SmallInteger quo = r / a;
-		SmallInteger rem = r % a;
-
-		if (quo > 0 || rem == 0 || !((a ^ rem) < 0))
+		if (a != 1)
 		{
-			StoreSigned32()(sp - 1, quo);
-			return sp - 1;
+			// It seems that the VC++ compiler is finally (as of VS2017) able to recognise this sequence as requiring only a single division instruction
+			SmallInteger quo = r / a;
+			SmallInteger rem = r % a;
+
+			if (quo > 0 || rem == 0 || !((a ^ rem) < 0))
+			{
+				StoreSigned32()(sp - 1, quo);
+				return sp - 1;
+			}
+			else
+			{
+				StoreSigned32()(sp - 1, quo - 1);
+				return sp - 1;
+			}
 		}
 		else
 		{
-			StoreSigned32()(sp - 1, quo - 1);
+			// Division by 1 is a no-op, and worth avoiding as the integer division instruction is expensive
 			return sp - 1;
 		}
 	}

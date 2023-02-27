@@ -137,11 +137,6 @@ namespace ST
 		{
 			return bs == nullptr ? MyType::New(u8"", 0) : NewFromUtf16(reinterpret_cast<LPCWSTR>(bs));
 		}
-
-		static size_t LengthOfUtf16(const char16_t* __restrict pwsz, size_t cwch);
-		static char8_t* ConvertUtf16_unsafe(const char16_t* __restrict pwszSrc, size_t cwchSrc, char8_t* __restrict psz8Dest, size_t cch8Dest);
-		static size_t LengthOfAnsi(const char* __restrict psz, size_t cch);
-		static char8_t* ConvertAnsi_unsafe(const char* __restrict pszSrc, size_t cchSrc, char8_t* __restrict pszDest, size_t cch8Dest);
 	};
 
 	class AnsiString : public ByteStringT<CP_ACP, ClassByteString, AnsiStringOTE, char>

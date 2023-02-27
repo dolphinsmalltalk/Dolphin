@@ -3,11 +3,10 @@
 class Utf16StringBuf
 {
 public:
+	#pragma warning (suppress: 26495)	// False positive - the variables are initialized
 	Utf16StringBuf() {}
 	Utf16StringBuf(const Utf16StringBuf&) = delete;
 	Utf16StringBuf(const Utf16StringBuf&&) = delete;
-
-	//#pragma warning (suppress: 26495)	// False positive - the variables are initialized
 
 	Utf16StringBuf(const char8_t* psz8, size_t cch8)
 	{
@@ -23,7 +22,9 @@ public:
 			// If malloc returns nullptr, then will fail below with benign AV
 		}
 
-		*(ConvertUtf8_unsafe(psz8, cch8, m_pBuf, m_cwch)) = L'\0';
+		char16_t* pEnd = ConvertUtf8_unsafe(psz8, cch8, m_pBuf);
+		ASSERT(pEnd == m_pBuf + m_cwch);
+		*pEnd = L'\0';
 	}
 
 	Utf16StringBuf(const char* psz, size_t cch, UINT codePage)
@@ -55,7 +56,7 @@ public:
 	size_t getCount() const { return m_cwch; }
 
 	static size_t LengthOfUtf8(const char8_t* __restrict psz8, size_t cch8);
-	static char16_t* ConvertUtf8_unsafe(const char8_t* __restrict psz8Src, size_t cch8Src, char16_t* __restrict pwszDest, size_t cwchDest);
+	static char16_t* ConvertUtf8_unsafe(const char8_t* __restrict psz8Src, size_t cch8Src, char16_t* __restrict pwszDest);
 
 private:
 	char16_t* m_pBuf = m_wcsBuf;

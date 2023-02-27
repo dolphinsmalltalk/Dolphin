@@ -1617,6 +1617,28 @@ moveFileEx: aStringOldFileName lpNewFileName: aStringnewFileName dwFlags: flags
 	<stdcall: bool MoveFileExW lpwstr lpwstr uint32>
 	^self invalidCall: _failureCode!
 
+multiByteToWideChar: aByteArray codePage: anInteger
+	| answer cb cch |
+	cb := aByteArray size.
+	cb = 0 ifTrue: [^Utf16String empty].
+	cch := self
+				multiByteToWideChar: anInteger
+				dwFlags: 0
+				lpMultiByteStr: aByteArray
+				cchMultiByte: cb
+				lpWideCharStr: nil
+				cchWideChar: 0.
+	cch <= 0 ifTrue: [^Kernel32 systemError].
+	answer := Utf16String new: cch.
+	self
+		multiByteToWideChar: anInteger
+		dwFlags: 0
+		lpMultiByteStr: aByteArray
+		cchMultiByte: cb
+		lpWideCharStr: answer
+		cchWideChar: cch.
+	^answer!
+
 multiByteToWideChar: intCP dwFlags: intFlags lpMultiByteStr: aStringIn cchMultiByte: intLenIn lpWideCharStr: aUtf16StringOut cchWideChar: intLenOut
 	"Maps a string to a wide-character (UTF16) string. 
 	Despite the name, aStringIn, need not contain MBCS characters.
@@ -2210,6 +2232,7 @@ localFree:!**auto generated**!public!win32 functions-memory management! !
 lockResource:!public!win32 functions-resource! !
 moveFile:lpNewFileName:!public!win32 functions-file management! !
 moveFileEx:lpNewFileName:dwFlags:!public!win32 functions-file management! !
+multiByteToWideChar:codePage:!instance creation!public! !
 multiByteToWideChar:dwFlags:lpMultiByteStr:cchMultiByte:lpWideCharStr:cchWideChar:!public!win32 functions-string manipulation! !
 openProcess:bInheritHandle:dwProcessId:!public!win32 functions-process and thread! !
 outputDebugString:!public!win32 functions-debugging! !

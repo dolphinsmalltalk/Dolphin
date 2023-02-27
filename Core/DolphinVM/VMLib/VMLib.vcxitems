@@ -77,14 +77,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\wingui.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\zct.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ExternalBuf.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)utf_impl.c">
-      <CompileAs>CompileAsCpp</CompileAs>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PrecompiledHeaderFile>
-      </PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile>
-      </PrecompiledHeaderOutputFile>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\axhost.h" />
@@ -103,6 +95,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\IntPrim.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ist.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\LargeIntPrim.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Utf16StringBuf.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Utf8StringBuf.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\VirtualMemoryStats.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\objmem.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\oopq.h" />
@@ -145,7 +139,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\VMPointers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\zbinstream.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\zfbinstream.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ExternalBuf.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)..\Interprt.inl">

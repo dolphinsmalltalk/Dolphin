@@ -121,7 +121,7 @@ codePointsDo: operation
 	"Evaluate the <monadicValuable> argument, operation, for each of the full code point <Character> elements of the receiver. Answers the receiver. The elements are evaluated in sequence."
 
 	| stream ch |
-	stream := self readStream.
+	stream := ReadStream on: self.
 	[(ch := stream nextAvailable) isNil] whileFalse: [operation value: ch]!
 
 codeUnitsDo: operation

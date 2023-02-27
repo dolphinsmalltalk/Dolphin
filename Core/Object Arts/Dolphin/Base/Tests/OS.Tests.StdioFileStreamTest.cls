@@ -133,6 +133,20 @@ testFromHandleOnPipe
 			self deny: each isDevice.
 			each close]!
 
+testMarkusKuhnUtf8
+	"The CRT streams use a different decoding algorithm to ICU for UTF-8 (basically it calls WideCharToMultibyte), so the results of reading the test file and converting it into UTF-16 (which happens in the CRT because the Unicode mode streams expect and return Utf16 encoded strings/characters through the APIs, even though the underlying file representation may be UTF-8). The NLS function has different handling of invalid sequences and there will be different numbers of replacement chars in many of the results."
+
+	| stream testFilePath |
+	#todo.	"Investigate whether it is possible to use the byte char APIs over CRT streams with CP_UTF8 in Windows 10/11"
+	testFilePath := FileLocator imageRelative
+				localFileSpecFor: 'Core\Object Arts\Dolphin\Tests\UTF8-test.txt'.
+	stream := self streamOnFile: testFilePath type: #utf8.
+	"Should be able to read every character, even if invalid"
+	[stream atEnd] whileFalse: [stream next].
+	stream reset.
+	stream upToEnd.
+	self closeTempStream: stream!
+
 testNextLineCrOnly
 	"Test PositionableStream>>nextLine for text streams with <CR> between lines"
 
@@ -171,6 +185,7 @@ testFileNotFound!public!unit tests! !
 testFromHandleOnDevice!public!unit tests! !
 testFromHandleOnFile!public!unit tests! !
 testFromHandleOnPipe!public!unit tests! !
+testMarkusKuhnUtf8!gettableStream only!public! !
 testNextLineCrOnly!public!unit tests! !
 testNextLineUpToEof!public!unit tests! !
 !

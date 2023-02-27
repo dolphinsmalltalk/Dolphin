@@ -166,22 +166,20 @@ testEncoding
 			self closeTempStream: subject]!
 
 testMarkusKuhnUtf8
-	"A kick-the-tyres test that various read operations will not fail on UTF-8 with many
-	encoding edge cases and errors. The nature of the data is such that there is not much we can
-	assert, although it contains many informally expressed test cases that can be mined to create
-	better unit tests."
+	"Tests the decoding of UTF-8 while streaming over test data that contains most possible error and boundary cases"
 
-	| stream testFilePath bytes text |
+	| stream testFilePath bytes utf16 utf8 |
 	testFilePath := FileLocator imageRelative
 				localFileSpecFor: 'Core\Object Arts\Dolphin\Tests\UTF8-test.txt'.
 	stream := self streamOnFile: testFilePath type: #utf8.
 	"Should be able to read every character, even if invalid"
 	[stream atEnd] whileFalse: [stream next].
 	bytes := File readAllBytes: testFilePath.
-	text := Utf16String fromBytes: bytes codePage: OS.NlsConstants.CP_UTF8.
-	self assert: stream contents equals: text.
+	utf8 := Utf8String fromByteArray: bytes.
+	utf16 := Utf16String fromBytes: bytes codePage: OS.NlsConstants.CP_UTF8.
+	self assert: stream contents equals: utf8.
 	stream reset.
-	self assert: stream upToEnd equals: text.
+	self assert: stream upToEnd equals: utf16.
 	self closeTempStream: stream!
 
 testNew
@@ -422,13 +420,13 @@ testNextLongUtf8Encodings
 						, #[16rFC 16r84 16r80 16r80 16r80] , $\x20AC asUtf8String asByteArray
 						, #[16rFD 16rBF 16rBF 16rBF 16rBF 16rBF] , $\x4F60 asUtf8String asByteArray
 				type: #utf8.
-	self assert: subject next equals: Character replacement.
+	5 timesRepeat: [self assert: subject next equals: Character replacement].
 	self assert: subject next equals: Character dolphin.
-	self assert: subject next equals: Character replacement.
+	5 timesRepeat: [self assert: subject next equals: Character replacement].
 	self assert: subject next equals: $£.
-	self assert: subject next equals: Character replacement.
+	5 timesRepeat: [self assert: subject next equals: Character replacement].
 	self assert: subject next equals: $\x20AC.
-	self assert: subject next equals: Character replacement.
+	6 timesRepeat: [self assert: subject next equals: Character replacement].
 	self assert: subject next equals: $\x4F60.
 	self closeTempStream: subject!
 
@@ -458,8 +456,10 @@ testNextOverlongUtf8
 	subject := self
 				streamOnBytes: #[16rC0 16rAF 95 16rE0 16r80 16rAF 95 16rF0 16r80 16r80 16rAF 95 16rF8 16r80 16r80 16r80 16rAF 95 16rFC 16r80 16r80 16r80 16r80 16rAF 95]
 				type: #utf8.
-	5 timesRepeat: 
-			[self assert: subject next equals: Character replacement.
+	2 to: 6
+		do: 
+			[:i |
+			i timesRepeat: [self assert: subject next equals: Character replacement].
 			self assert: subject next equals: $_].
 	self assert: subject atEnd.
 	self closeTempStream: subject.
@@ -468,16 +468,20 @@ testNextOverlongUtf8
 	subject := self
 				streamOnBytes: #[16rC1 16rBF 10 16rE0 16r9F 16rBF 10 16rF0 16r8F 16rBF 16rBF 10 16rF8 16r87 16rBF 16rBF 16rBF 10 16rFC 16r83 16rBF 16rBF 16rBF 16rBF 10]
 				type: #utf8.
-	5 timesRepeat: 
-			[self assert: subject next equals: Character replacement.
+	2 to: 6
+		do: 
+			[:i |
+			i timesRepeat: [self assert: subject next equals: Character replacement].
 			self assert: subject next equals: Character lf].
 	self closeTempStream: subject.
 	"4.3 Overlong representations of NUL"
 	subject := self
 				streamOnBytes: #[16rC0 16r80 10 16rE0 16r80 16r80 10 16rF0 16r80 16r80 16r80 10 16rF8 16r80 16r80 16r80 16r80 10 16rFC 16r80 16r80 16r80 16r80 16r80 10]
 				type: #utf8.
-	5 timesRepeat: 
-			[self assert: subject next equals: Character replacement.
+	2 to: 6
+		do: 
+			[:i |
+			i timesRepeat: [self assert: subject next equals: Character replacement].
 			self assert: subject next equals: Character lf].
 	self closeTempStream: subject!
 

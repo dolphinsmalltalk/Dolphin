@@ -31,7 +31,7 @@ decodeIncompleteContinuations
 	^#(#(16rD800))!
 
 decodeInvalidContinuations
-	^#(#(#(16rD800 16rD83D 16rDC2C) $\x1F42C) #(#(16rD800 16rA1) ##(Character value: 16rA1)) #(#(16rD800 16rD800) $\xFFFD))!
+	^#(#(#(16rD800 16rD83D 16rDC2C) 1 $\x1F42C) #(#(16rD800 16rA1) 1 ##(Character value: 16rA1)) #(#(16rD800 16rD800) 1 $\xFFFD))!
 
 decodeTestCases
 	^#($\0 $\x7F $\x80 $\x7FF $\x800 $\xFFFD $\x10000 $\x1F42C $\x1FFFD)!

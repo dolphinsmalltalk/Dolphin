@@ -139,7 +139,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\wingui.cpp">
       <Filter>App Support</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)utf_impl.c" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\PrimitivesTable.cpp">
       <Filter>Primitives</Filter>
     </ClCompile>
@@ -313,11 +312,16 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\StrgPrim.h">
       <Filter>Primitives</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ExternalBuf.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ExternalBuf.h">
       <Filter>FFI</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\VirtualMemoryStats.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Utf16StringBuf.h">
+      <Filter>Interpreter</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Utf8StringBuf.h">
+      <Filter>Interpreter</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)..\Interprt.inl">

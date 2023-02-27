@@ -198,9 +198,64 @@ u_strFoldCase: destString destCapacity: capacityInteger src: srcString srcLength
 	<cdecl: int32 u_strFoldCase char16* int32 char16* int32 uint32 int32*>
 	^self invalidCall: _failureCode!
 
+u_strFromUTF8WithSub: utf8Bytes
+	| dest buf destLength |
+	buf := ByteArray newFixed: 8.
+	self
+		u_strFromUTF8WithSub: nil
+		destCapacity: 0
+		pDestLength: buf
+		src: utf8Bytes
+		srcLength: utf8Bytes size
+		subchar: 16rFFFD
+		pNumSubstitutions: nil
+		pErrorCode: buf yourAddress + 4.
+	destLength := buf int32AtOffset: 0.
+	buf int32AtOffset: 4 put: 0.
+	self
+		u_strFromUTF8WithSub: (dest := Utf16String newFixed: destLength)
+		destCapacity: destLength + 1
+		pDestLength: buf
+		src: utf8Bytes
+		srcLength: utf8Bytes size
+		subchar: 16rFFFD
+		pNumSubstitutions: nil
+		pErrorCode: buf yourAddress + 4.
+	(buf int32AtOffset: 4) == 0 ifFalse: [self error: 'Error <p> in u_strFromUTF8WithSub' << (buf int32AtOffset: 4)].
+	^dest!
+
+u_strFromUTF8WithSub: dest destCapacity: destInteger pDestLength: anInt32 src: aUtf8String srcLength: srcInteger subchar: aCharacter pNumSubstitutions: substInst32 pErrorCode: errInt32
+	<cdecl: intptr u_strFromUTF8WithSub char16* int32 int32* lpvoid int32 char32 int32* uint32*>
+	^self invalidCall: _failureCode
+!
+
 u_strToLower: destString destCapacity: capacityInteger src: srcString srcLength: lenInteger locale: localeString pErrorCode: anInt32
 	<cdecl: int32 u_strToLower char16* int32 char16* int32 char8* int32*>
 	^self invalidCall: _failureCode!
+
+u_strToLower: aString locale: isoString
+	| srcLength errorCode destLength utf16 |
+	destLength := self
+				u_strToLower: (utf16 := aString asUtf16StringCopy)
+				destCapacity: (srcLength := utf16 size) + 1
+				src: utf16
+				srcLength: srcLength
+				locale: isoString
+				pErrorCode: (errorCode := ByteArray newFixed: 4).
+	"The above in-place conversion may fail, in which (rare) case we need to allocate a large buffer and try again."
+	destLength == srcLength ifTrue: [^utf16].
+	utf16 := Utf16String new: destLength.
+	errorCode int32AtOffset: 0 put: 0.
+	self
+		u_strToLower: utf16
+		destCapacity: destLength + 1
+		src: aString
+		srcLength: srcLength
+		locale: isoString
+		pErrorCode: errorCode.
+	^(errorCode int32AtOffset: 0) == 0
+		ifTrue: [utf16]
+		ifFalse: [aString error: 'ICU error <p> in u_strToLower' << (errorCode int32AtOffset: 0)]!
 
 u_strToTitle: destString destCapacity: capacityInteger src: srcString srcLength: lenInteger titleIter: aCallback locale: localeString pErrorCode: anInt32
 	"/**
@@ -310,7 +365,10 @@ u_iscntrl:!character properties!public! !
 u_isgraph:!character properties!public! !
 u_ispunct:!character properties!public! !
 u_strFoldCase:destCapacity:src:srcLength:options:pErrorCode:!case conversions!public! !
+u_strFromUTF8WithSub:!encoding conversions!public! !
+u_strFromUTF8WithSub:destCapacity:pDestLength:src:srcLength:subchar:pNumSubstitutions:pErrorCode:!encoding conversions!public! !
 u_strToLower:destCapacity:src:srcLength:locale:pErrorCode:!case conversions!public! !
+u_strToLower:locale:!case conversions!public! !
 u_strToTitle:destCapacity:src:srcLength:titleIter:locale:pErrorCode:!case conversions!public! !
 u_strToUpper:destCapacity:src:srcLength:locale:pErrorCode:!case conversions!public! !
 u_tolower:!case conversions!public! !

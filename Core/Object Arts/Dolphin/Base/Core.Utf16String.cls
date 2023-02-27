@@ -425,26 +425,9 @@ fromAddress: anAddress length: anInteger
 fromBytes: aByteArray codePage: anInteger
 	"Answer an instance of the receiver constructed from the specified byte-string assumed to be encoded per the specified code page."
 
-	| cch cb answer |
-	cb := aByteArray size.
-	cb = 0 ifTrue: [^self empty].
-	cch := OS.Kernel32
-				multiByteToWideChar: anInteger
-				dwFlags: 0
-				lpMultiByteStr: aByteArray
-				cchMultiByte: cb
-				lpWideCharStr: nil
-				cchWideChar: 0.
-	cch <= 0 ifTrue: [^OS.Kernel32 systemError].
-	answer := self new: cch.
-	OS.Kernel32
-		multiByteToWideChar: anInteger
-		dwFlags: 0
-		lpMultiByteStr: aByteArray
-		cchMultiByte: cb
-		lpWideCharStr: answer
-		cchWideChar: cch.
-	^answer!
+	^anInteger == CP_UTF8
+		ifTrue: [OS.ICU u_strFromUTF8WithSub: aByteArray]
+		ifFalse: [OS.Kernel32 multiByteToWideChar: aByteArray codePage: anInteger]!
 
 fromUtf16String: anAddressOrUtf16String
 	"Answer a new instance of the receiver that is a copy of the UTF-16 string pointed at by the argument."

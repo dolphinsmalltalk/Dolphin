@@ -28,8 +28,14 @@ caseConversionCases
 decodeIncompleteContinuations
 	^self subclassResponsibility!
 
+decodeInvalidCharacters
+	^#()!
+
 decodeInvalidContinuations
 	^self subclassResponsibility!
+
+decodeNonCharacters
+	^#($\x3FFFF $\x10FFFF)!
 
 decodeTestCases
 	^self subclassResponsibility!
@@ -296,17 +302,35 @@ testDecodeNextFrom
 			[:each |
 			| stream actual |
 			stream := each first readStream.
-			actual := subject decodeNextFrom: stream.
-			self assert: actual equals: Character replacement.
+			each second timesRepeat: 
+					[actual := subject decodeNextFrom: stream.
+					self assert: actual equals: Character replacement].
 			actual := subject decodeNextFrom: stream.
 			self assert: actual equals: each last.
 			self assert: stream atEnd].
 	self decodeIncompleteContinuations do: 
 			[:each |
-			| stream actual |
+			| stream |
 			stream := each readStream.
+			each size timesRepeat: 
+					[| actual |
+					actual := subject decodeNextFrom: stream.
+					self assert: actual equals: Character replacement].
+			self assert: stream atEnd].
+	self decodeNonCharacters do: 
+			[:each |
+			| stream actual |
+			stream := (self assimilateString: each) readStream.
 			actual := subject decodeNextFrom: stream.
 			self assert: actual equals: Character replacement.
+			self assert: stream atEnd].
+	self decodeInvalidCharacters do: 
+			[:each |
+			| stream actual |
+			stream := each first readStream.
+			each second timesRepeat: 
+					[actual := subject decodeNextFrom: stream.
+					self assert: actual equals: Character replacement].
 			self assert: stream atEnd]!
 
 testDetectIfNoneExtended
@@ -772,7 +796,9 @@ afterTestCases!constants!private! !
 beforeTestCases!constants!private! !
 caseConversionCases!constants!private! !
 decodeIncompleteContinuations!constants!private! !
+decodeInvalidCharacters!constants!private! !
 decodeInvalidContinuations!constants!private! !
+decodeNonCharacters!constants!private! !
 decodeTestCases!constants!private! !
 equalityTestCases!constants!private! !
 indexOfTestCases!constants!private! !

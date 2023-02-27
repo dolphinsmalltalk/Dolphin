@@ -24,6 +24,7 @@
 #include "STCharacter.h"
 
 #include "Utf16StringBuf.h"
+#include "Utf8StringBuf.h"
 
 // ICU macro U8_NEXT triggers runtime check #1, and 
 #pragma runtime_checks( "c", off ) 
@@ -870,7 +871,7 @@ Oop* PRIMCALL Interpreter::primitiveNextPutAll(Oop* const sp, primargcount_t)
 						auto oteStringBuf = reinterpret_cast<Utf8StringOTE*>(oteBuf);
 						const AnsiString::CU* pArgChars = reinterpret_cast<const AnsiStringOTE*>(oteStringArg)->m_location->m_characters;
 						size_t cchArg = oteStringArg->getSize();
-						size_t valueSize = Utf8String::LengthOfAnsi(pArgChars, cchArg);
+						size_t valueSize = Utf8StringBuf::LengthOfAnsi(pArgChars, cchArg);
 
 						newIndex = static_cast<size_t>(index) + valueSize;
 
@@ -880,7 +881,7 @@ Oop* PRIMCALL Interpreter::primitiveNextPutAll(Oop* const sp, primargcount_t)
 						if (static_cast<ptrdiff_t>(newIndex) > oteStringBuf->sizeForUpdate())
 							return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);	// Attempt to write off end of buffer
 
-						Utf8String::ConvertAnsi_unsafe(pArgChars, cchArg, oteStringBuf->m_location->m_characters + index, valueSize);
+						Utf8StringBuf::ConvertAnsi_unsafe(pArgChars, cchArg, oteStringBuf->m_location->m_characters + index, valueSize);
 					}
 					break;
 
@@ -889,7 +890,7 @@ Oop* PRIMCALL Interpreter::primitiveNextPutAll(Oop* const sp, primargcount_t)
 						auto oteStringBuf = reinterpret_cast<Utf8StringOTE*>(oteBuf);
 						const Utf16String::CU* pArgChars = reinterpret_cast<const Utf16StringOTE*>(oteStringArg)->m_location->m_characters;
 						size_t cwchArg = oteStringArg->getSize() / sizeof(Utf16String::CU);
-						size_t valueSize = Utf8String::LengthOfUtf16(pArgChars, cwchArg);
+						size_t valueSize = Utf8StringBuf::LengthOfUtf16(pArgChars, cwchArg);
 
 						newIndex = static_cast<size_t>(index) + valueSize;
 
@@ -900,7 +901,7 @@ Oop* PRIMCALL Interpreter::primitiveNextPutAll(Oop* const sp, primargcount_t)
 							return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);	// Attempt to write off end of buffer (or immutable)
 
 						auto pchDest = oteStringBuf->m_location->m_characters;
-						Utf8String::ConvertUtf16_unsafe(pArgChars, cwchArg, pchDest + index, valueSize);
+						Utf8StringBuf::ConvertUtf16_unsafe(pArgChars, cwchArg, pchDest + index, valueSize);
 					}
 					break;
 
@@ -930,7 +931,7 @@ Oop* PRIMCALL Interpreter::primitiveNextPutAll(Oop* const sp, primargcount_t)
 						auto oteStringBuf = reinterpret_cast<Utf16StringOTE*>(oteBuf);
 						auto pszArg = reinterpret_cast<const Utf8StringOTE*>(oteStringArg)->m_location->m_characters;
 						size_t cchArg = oteStringArg->getSize();
-						int cwchArg = ::MultiByteToWideChar(CP_UTF8, 0, (LPCCH)pszArg, cchArg, nullptr, 0);
+						int cwchArg = Utf16StringBuf::LengthOfUtf8(pszArg, cchArg);
 						ASSERT(cwchArg >= 0);
 						size_t valueSize = cwchArg;
 						newIndex = static_cast<size_t>(index) + valueSize;
@@ -942,7 +943,8 @@ Oop* PRIMCALL Interpreter::primitiveNextPutAll(Oop* const sp, primargcount_t)
 							return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);	// Attempt to write off end of buffer (or immutable)
 
 						auto pwsz = oteStringBuf->m_location->m_characters;
-						::MultiByteToWideChar(CP_UTF8, 0, (LPCCH)pszArg, cchArg, reinterpret_cast<LPWSTR>(pwsz + index), cwchArg);
+						char16_t* pEnd = Utf16StringBuf::ConvertUtf8_unsafe(pszArg, cchArg, pwsz + index);
+						ASSERT(pEnd == pwsz + newIndex);
 					}
 					break;
 

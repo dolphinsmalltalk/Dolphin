@@ -472,28 +472,7 @@ longTimeFormat
 lowercaseString: aString
 	"Answer a <readableString> which is a copy of the argument, but with the contents converted to lowercase following the linguisitic case conventions of the receiver."
 
-	| srcLength errorCode destLength utf16 |
-	destLength := OS.ICU
-				u_strToLower: (utf16 := aString asUtf16StringCopy)
-				destCapacity: (srcLength := utf16 size) + 1
-				src: utf16
-				srcLength: srcLength
-				locale: self tag
-				pErrorCode: (errorCode := ByteArray newFixed: 4).
-	"The above in-place conversion may fail, in which (rare) case we need to allocate a large buffer and try again."
-	destLength == srcLength ifTrue: [^utf16].
-	utf16 := Utf16String new: destLength.
-	errorCode int32AtOffset: 0 put: 0.
-	OS.ICU
-		u_strToLower: utf16
-		destCapacity: destLength + 1
-		src: aString
-		srcLength: srcLength
-		locale: self tag
-		pErrorCode: errorCode.
-	^(errorCode int32AtOffset: 0) == 0
-		ifTrue: [utf16]
-		ifFalse: [aString error: 'ICU error <p> in u_strToLower' << (errorCode int32AtOffset: 0)]!
+	^OS.ICU u_strToLower: aString locale: self tag!
 
 monthAbbreviation: anInteger
 	"Answer a <String> that is the localised short name of the month whose index is the argument, anInteger, where January is 1 and December is 12."
