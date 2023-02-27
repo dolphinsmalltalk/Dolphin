@@ -406,6 +406,8 @@ Kernel.SharedPool
 			'UCHAR_LOWERCASE_MAPPING' -> 16r4004.
 			'UCHAR_MASK_START' -> 16r2000.
 			'UCHAR_MATH' -> 16r17.
+			'UCHAR_MAX_VALUE' -> 16r10FFFF.
+			'UCHAR_MIN_VALUE' -> 16r0.
 			'UCHAR_NAME' -> 16r4005.
 			'UCHAR_NFC_INERT' -> 16r27.
 			'UCHAR_NFC_QUICK_CHECK' -> 16r100E.
@@ -896,6 +898,7 @@ Kernel.SharedPool
 			'CWarnLast' -> 16r3F9.
 			'CWarnMsgUnimplemented' -> 16r3EC.
 			'CWarnMutableIgnored' -> 16r3FA.
+			'CWarnNonCharCodePoint' -> 16r3FB.
 			'CWarnReadBeforeWritten' -> 16r3F1.
 			'CWarnReadNotWritten' -> 16r3F0.
 			'CWarnRedefiningArg' -> 16r3E8.
@@ -4140,6 +4143,7 @@ Core.Notification
 								16r3F8 -> 'subclass <4p> does not implement <3p>'.
 								16r3F9 -> 'references boolean class <1p> rather than its instance <2p>'.
 								16r3FA -> '%<mutable> attribute ignored in non-mutator method'.
+								16r3FB -> 'non-character code point <1s>'.
 								16r7D0 -> 'unreferenced argument <1p>'.
 								16r7D1 -> 'supersends other message <2p>'.
 								16r7D2 -> 'contains hardcoded breakpoint'
@@ -4370,12 +4374,12 @@ Core.Magnitude
 	classConstants: {
 			'EncodingMask' -> 16r3F000000.
 			'EscapeChars' -> #($0 nil nil nil nil nil nil $a $b $t $n $v $f $r).
+			'Replacement' -> $�.
 			'Utf16LeadMask' -> 16rD800.
 			'Utf16Mask' -> 16r2000000.
 			'Utf16SurrogateMask' -> 16rFC00.
 			'Utf16TrailMask' -> 16rDC00.
 			'Utf32Mask' -> 16r3000000.
-			'Utf8Default' -> $�.
 			'Utf8Mask' -> 16r1000000.
 			'Utf8SurrogateMask' -> 16rC0
 		}!

@@ -4149,35 +4149,6 @@ void Compiler::_CompileErrorV(int code, const TEXTRANGE& range, va_list extras)
 	}
 }
 
-void Compiler::Warning(int code, Oop extra)
-{
-	WarningV(ThisTokenRange, code, extra, 0);
-}
-
-void Compiler::Warning(const TEXTRANGE& range, int code, Oop extra)
-{
-	WarningV(range, code, extra, 0);
-}
-
-void Compiler::WarningV(const TEXTRANGE& range, int code, ...)
-{
-	if (!WantSyntaxCheckOnly)	
-	{
-		if (!(m_flags & CompilerFlags::Boot))
-		{
-			_ASSERTE(m_compilerObject);
-			va_list extras;
-			va_start(extras, code);
-			Notification(code, range, extras);
-			va_end(extras);
-		}
-		else
-		{
-			fprintf_s(stdout, "WARNING %s>>%s line %d: %d\n", (LPCSTR)GetClassName().c_str(), (LPCSTR)Selector.c_str(), LineNo, code);
-		}
-	}
-}
-
 void Compiler::InternalError(const char* szFile, int Line, const TEXTRANGE& range, const char* szFormat, ...)
 {
 	va_list args;
@@ -4193,6 +4164,22 @@ void Compiler::InternalError(const char* szFile, int Line, const TEXTRANGE& rang
 	fputc('\n', stderr);
 	
 	CompileError(range, CErrInternal);
+}
+
+void Compiler::_CompileWarningV(int code, const TEXTRANGE& range, va_list extras)
+{
+	if (!WantSyntaxCheckOnly)
+	{
+		if (!(m_flags & CompilerFlags::Boot))
+		{
+			_ASSERTE(m_compilerObject && m_notifier);
+			Notification(code, range, extras);
+		}
+		else
+		{
+			fprintf_s(stdout, "WARNING %s>>%s line %d: %d\n", (LPCSTR)GetClassName().c_str(), (LPCSTR)Selector.c_str(), LineNo, code);
+		}
+	}
 }
 
 /******************************************************************************

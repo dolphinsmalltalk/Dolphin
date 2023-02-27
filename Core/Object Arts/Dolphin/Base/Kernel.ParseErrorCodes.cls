@@ -78,6 +78,7 @@ Kernel.SharedPool
 			'CWarnLast' -> 16r3F9.
 			'CWarnMsgUnimplemented' -> 16r3EC.
 			'CWarnMutableIgnored' -> 16r3FA.
+			'CWarnNonCharCodePoint' -> 16r3FB.
 			'CWarnReadBeforeWritten' -> 16r3F1.
 			'CWarnReadNotWritten' -> 16r3F0.
 			'CWarnRedefiningArg' -> 16r3E8.

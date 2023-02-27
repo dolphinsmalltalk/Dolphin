@@ -9,12 +9,12 @@ Core.Magnitude
 	classConstants: {
 			'EncodingMask' -> 16r3F000000.
 			'EscapeChars' -> #($0 nil nil nil nil nil nil $a $b $t $n $v $f $r).
+			'Replacement' -> $�.
 			'Utf16LeadMask' -> 16rD800.
 			'Utf16Mask' -> 16r2000000.
 			'Utf16SurrogateMask' -> 16rFC00.
 			'Utf16TrailMask' -> 16rDC00.
 			'Utf32Mask' -> 16r3000000.
-			'Utf8Default' -> $�.
 			'Utf8Mask' -> 16r1000000.
 			'Utf8SurrogateMask' -> 16rC0
 		}!
@@ -259,6 +259,9 @@ hash
 
 	^self codePoint!
 
+icuType
+	^OS.ICU u_charType: self!
+
 isAlphaNumeric
 	"Answer whether the receiver is a letter or a digit."
 
@@ -269,7 +272,7 @@ isAlphaNumeric
 isAscii
 	"Answer whether the receiver is an ascii character"
 
-	^code < 16r80!
+	^code <= 16r7F!
 
 isAtomic
 	"Answer whether or not the receiver is the single unique instance of its class that
@@ -368,8 +371,7 @@ isPrintable
 isPrivateUse
 	"Answer whether the receiver has a codepoint in one of the private use areas."
 
-	^(OS.ICU u_charType: self) == U_PRIVATE_USE_CHAR
-!
+	^self icuType == U_PRIVATE_USE_CHAR!
 
 isPunctuation
 	"Answer whether the receiver is a punctuation character."
@@ -557,7 +559,7 @@ split: aReadableString do: aMonadicValuable
 to: aCharacter
 	"Answer a <sequencedReadableCollection> of <Character>s for each of the Unicode code points between the receiver's code point and that of the <Character> argument, aCharacter."
 
-	^(self codePoint to: aCharacter codePoint) collect: [:each | Character codePoint: each]! !
+	^(self codePoint to: aCharacter codePoint) collect: [:each | Character basicCodePoint: each]! !
 !Core.Character categoriesForMethods!
 _beginsString:!comparing!double dispatch!private! !
 _separateSubStringsIn:!private!tokenizing! !
@@ -590,6 +592,7 @@ displayOn:!printing!public! !
 encoding!accessing!public! !
 greaterOrEqualToInteger:!public! !
 hash!comparing!public! !
+icuType!public!testing! !
 isAlphaNumeric!public!testing! !
 isAscii!public!testing! !
 isAtomic!public!testing! !
@@ -649,6 +652,24 @@ backspace
 	^$\b
 !
 
+basicCodePoint: anInteger
+	"Private - Answer a <Character> representing the specified <integer> Unicode code point.
+	Raise an error if the argument is not a valid Unicode code point."
+
+	^anInteger <= 16r7F
+		ifTrue: [CharacterSet at: anInteger + 1]
+		ifFalse: 
+			[(AnsiCharacters lookup: anInteger)
+				ifNil: 
+					[(self newCode: (Utf32Mask bitOr: anInteger))
+						isImmutable: true;
+						yourself]]!
+
+basicUtf32Value: anInteger
+	^(self newCode: (Utf32Mask bitOr: anInteger))
+		isImmutable: true;
+		yourself!
+
 byteCharacterSet
 	"Answer the ANSI character set, i.e. the complete set of Characters that can be encoded in an <AnsiString>."
 
@@ -666,16 +687,13 @@ codePoint: anInteger
 codePoint: anInteger ifInvalid: exceptionHandler
 	"Answer a <Character> representing the specified <integer> Unicode code point, or the result of evaluating the <niladicValuable>, exceptionHandler, if the code point is not the code point of a valid Unicode character."
 
-	^anInteger < 16r80
+	^anInteger <= 16r7F
 		ifTrue: [CharacterSet at: anInteger + 1]
 		ifFalse: 
 			[(AnsiCharacters lookup: anInteger)
 				ifNil: 
 					[(self isValidCodePoint: anInteger)
-						ifTrue: 
-							[(self newCode: (Utf32Mask bitOr: anInteger))
-								isImmutable: true;
-								yourself]
+						ifTrue: [self basicUtf32Value: anInteger]
 						ifFalse: [exceptionHandler value]]]!
 
 cr
@@ -736,13 +754,19 @@ initialize
 	self addClassConstant: 'Utf32Mask' value: String.EncodingUtf32 << 24.
 	self addClassConstant: 'EncodingMask' value: 2r111111 << 24!
 
+isNonCharCodePoint: anInteger
+	"Answer whether the <integer> argument represents a non-character Unicode code point"
+
+	^anInteger >= 16rFDD0
+		and: [anInteger <= 16rFDEF or: [(anInteger allMask: 16rFFFE) and: [anInteger <= UCHAR_MAX_VALUE]]]!
+
 isValidCodePoint: anInteger
 	"Answer whether the <integer> argument represents a valid Unicode code point AND is not a code point reserved for surrogate code units AND is not a 'non-character' (i.e. non-characters are valid code points, but 'reserved for internal use')."
 
 	^anInteger >= 0 and: 
 			[anInteger < Character.Utf16LeadMask or: 
 					[anInteger > 16rDFFF and: 
-							[anInteger <= OS.Win32Constants.MAX_UCSCHAR and: 
+							[anInteger <= OS.ICUConstants.UCHAR_MAX_VALUE and: 
 									[(anInteger >= 16rFDD0 and: [anInteger <= 16rFDEF or: [(anInteger bitAnd: 16rFFFE) == 16rFFFE]]) not]]]]!
 
 isValidUtf16CodeUnit: anInteger
@@ -751,9 +775,8 @@ isValidUtf16CodeUnit: anInteger
 	^anInteger >= 0 and: 
 			[anInteger < Character.Utf16LeadMask or: 
 					[(anInteger bitAnd: 16rF800) == Character.Utf16LeadMask or: 
-							[anInteger < 16rFDD0 or: 
-									[anInteger > 16rFDEF
-										and: [anInteger <= OS.Win32Constants.MAX_UCSCHAR and: [(anInteger allMask: 16rFFFE) not]]]]]]!
+							[anInteger < 16rFDD0
+								or: [anInteger > 16rFDEF and: [anInteger <= UCHAR_MAX_VALUE and: [(anInteger allMask: 16rFFFE) not]]]]]]!
 
 lf
 	"Answer the linefeed control <Character>."
@@ -803,7 +826,7 @@ onStartup
 replacement
 	"Answer the Unicode replacement <Character>, used to substitute for invalid code points and encodings."
 
-	^Utf8Default!
+	^Replacement!
 
 space
 	"Answer the space <Character>."
@@ -871,6 +894,8 @@ value: anInteger
 ansiValue:!instance creation!public! !
 asciiValue:!instance creation!public! !
 backspace!constants!public! !
+basicCodePoint:!instance creation!private! !
+basicUtf32Value:!instance creation!private! !
 byteCharacterSet!constants!public! !
 codePoint:!instance creation!public! !
 codePoint:ifInvalid:!instance creation!public! !
@@ -881,6 +906,7 @@ eof!constants!public! !
 esc!constants!public! !
 euro!constants!public! !
 initialize!development!initializing!public! !
+isNonCharCodePoint:!enquiries!public! !
 isValidCodePoint:!enquiries!public! !
 isValidUtf16CodeUnit:!enquiries!public! !
 lf!constants!public! !

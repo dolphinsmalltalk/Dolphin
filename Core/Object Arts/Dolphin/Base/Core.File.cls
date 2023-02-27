@@ -477,7 +477,7 @@ sniffEncoding
 					self reset.
 					"Do a minimal evaluation of the unknown encoding. If the first 1k reads as UTF-8 (allowing for that fact that we may have truncated the final character) then assume it is UTF-8, otherwise some ANSI code page."
 					utf8Stream := (Utf8String fromByteArray: buf) readStream.
-					((utf8Stream skipTo: Character.Utf8Default) not or: [utf8Stream atEnd])
+					((utf8Stream skipTo: Character.Replacement) not or: [utf8Stream atEnd])
 						ifTrue: [String.EncodingUtf8]
 						ifFalse: [String.EncodingAnsi]]]!
 

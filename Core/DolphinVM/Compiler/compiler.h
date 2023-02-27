@@ -110,10 +110,6 @@ public:
 	__declspec(property(get = get_LiteralCount)) size_t LiteralCount;
 	size_t get_LiteralCount() const { return m_literals.size(); }
 
-	void Warning(int code, Oop extra=0);
-	void Warning(const TEXTRANGE& range, int code, Oop extra=0);
-	void WarningV(const TEXTRANGE& range, int code, ...);
-
 	__declspec(property(get = get_IsInteractive)) bool IsInteractive;
 	bool get_IsInteractive() const { return (!!(m_flags & CompilerFlags::Interactive)) && !WantSyntaxCheckOnly; }
 
@@ -156,6 +152,7 @@ private:
 	void SetFlagsAndText(CompilerFlags flags, const u8string& text, textpos_t offset);
 	void PrepareToCompile(CompilerFlags flags, const u8string& text, textpos_t offset, POTE classPointer, POTE aNamespace, Oop compiler, Oop notifier, POTE workspacePools, boolean isCompilingExpression, Oop context=0);
 	virtual void _CompileErrorV(int code, const TEXTRANGE& range, va_list extras);
+	virtual void _CompileWarningV(int code, const TEXTRANGE& range, va_list extras);
 	Oop Notification(int errorCode, const TEXTRANGE& range, va_list extras);
 	void InternalError(const char* szFile, int line, const TEXTRANGE&, const char* szMsg, ...);
 	

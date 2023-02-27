@@ -62,7 +62,7 @@ at: anInteger
 	"Answer the character at index, anInteger, in the receiver."
 
 	<primitive: 63>
-	^Character utf16Value: (self basicAt: anInteger) ifInvalid: [Character.Utf8Default]!
+	^Character utf16Value: (self basicAt: anInteger) ifInvalid: [Character.Replacement]!
 
 before: aCharacter ifAbsent: aNiladicValuable
 	"Answer the <Character> representing the code point before the <Character> argument, or if not present the result of evaluating the <niladicValuable> argument."
@@ -118,14 +118,14 @@ decodeAt: anInteger
 				ifTrue: 
 					["Valid surrogate pair"
 					Character codePoint: (leading bitShift: 10) + trailing - SurrogateOffset
-						ifInvalid: [Character.Utf8Default]]
+						ifInvalid: [Character.Replacement]]
 				ifFalse: 
 					["No trailing surrogate, answer the replacement character"
-					Character.Utf8Default]]
+					Character.Replacement]]
 		ifFalse: 
 			[surrogateBits == Character.Utf16TrailMask
 				ifTrue: [self errorIntraCharacterIndex: anInteger]
-				ifFalse: [Character utf16Value: leading ifInvalid: [Character.Utf8Default]]]!
+				ifFalse: [Character utf16Value: leading ifInvalid: [Character.Replacement]]]!
 
 decodeNextFrom: aReadStream
 	"Private - Read the next <Character> in the receiver's encoding from the <ReadStream> argument, which
@@ -140,18 +140,18 @@ decodeNextFrom: aReadStream
 					aReadStream basicNextAvailable
 						ifNil: 
 							["Lead surrogate but no trailing surrogate, answer the replacement character"
-							Character.Utf8Default]
+							Character.Replacement]
 						ifNotNil: 
 							[:c2 |
 							(c2 bitAnd: Character.Utf16SurrogateMask) == Character.Utf16TrailMask
 								ifTrue: 
 									["Valid surrogate pair"
-									Character codePoint: (c bitShift: 10) + c2 - SurrogateOffset ifInvalid: [Character.Utf8Default]]
+									Character codePoint: (c bitShift: 10) + c2 - SurrogateOffset ifInvalid: [Character.Replacement]]
 								ifFalse: 
 									["No trailing surrogate, answer the replacement character"
 									aReadStream pop.
-									Character.Utf8Default]]]
-				ifFalse: [Character utf16Value: c ifInvalid: [Character.Utf8Default]]]!
+									Character.Replacement]]]
+				ifFalse: [Character utf16Value: c ifInvalid: [Character.Replacement]]]!
 
 encodedAt: anInteger put: aCharacter
 	"Private - Encode the specified <Character> beginning at the specified position in the receiver.

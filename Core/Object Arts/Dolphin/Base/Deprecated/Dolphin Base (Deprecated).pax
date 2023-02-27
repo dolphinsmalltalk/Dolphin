@@ -329,7 +329,7 @@ categoryIcon!constants!public! !
 
 safeCodePoint: anInteger
 	Notification deprecated.
-	^self codePoint: anInteger ifInvalid: [Utf8Default]! !
+	^self codePoint: anInteger ifInvalid: [Replacement]! !
 !Character class categoriesForMethods!
 safeCodePoint:!instance creation!public! !
 !

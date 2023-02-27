@@ -435,8 +435,11 @@ scanLiteralCharacter
 													[:codePoint |
 													stop := self previousStepPosition.
 													"Maximum Unicode code point is U+10FFFF, but last valid char is U+10FFFD"
-													(Character isValidCodePoint: codePoint)
-														ifTrue: [Character value: codePoint]
+													(codePoint >= ICUConstants.UCHAR_MIN_VALUE and: [codePoint <= ICUConstants.UCHAR_MAX_VALUE])
+														ifTrue: 
+															[(Character isNonCharCodePoint: codePoint)
+																ifTrue: [self lexicalError: CWarnNonCharCodePoint range: (tokenStart to: stop)].
+															Character basicCodePoint: codePoint]
 														ifFalse: 
 															["Code point out of range"
 															self lexicalError: LErrBadCodePoint range: (tokenStart to: stop).
@@ -448,7 +451,7 @@ scanLiteralCharacter
 							stop := stream position.
 							self step]]
 				ifFalse: 
-					[value == Character.Utf8Default
+					[value == Character.Replacement
 						ifTrue: [self lexicalError: LErrBadCodePoint range: (tokenStart to: stop)]]].
 	^self literalCharacterTokenClass
 		start: tokenStart

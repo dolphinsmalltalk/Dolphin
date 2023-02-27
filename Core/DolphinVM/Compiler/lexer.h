@@ -116,14 +116,19 @@ public:
 		return m_tokenType >= TokenType::SmallIntegerConst && m_tokenType <= TokenType::ScaledDecimalConst;
 	}
 
+	void Warning(int code, Oop extra = 0);
+	void Warning(const TEXTRANGE& range, int code, Oop extra = 0);
+	void WarningV(const TEXTRANGE& range, int code, ...);
+
 	void CompileError(const TEXTRANGE& range, int code, Oop extra=0);
 	void CompileError(int code, Oop extra=0);	
 	void CompileErrorV(const TEXTRANGE& range, int code, ...);
 
 protected:
-	static constexpr char32_t MaxCodePoint = MAX_UCSCHAR;
+	static constexpr char32_t MaxCodePoint = UCHAR_MAX_VALUE;
 
-	virtual void _CompileErrorV(int code, const TEXTRANGE& range, va_list)=0;
+	virtual void _CompileErrorV(int code, const TEXTRANGE& range, va_list) = 0;
+	virtual void _CompileWarningV(int code, const TEXTRANGE& range, va_list) = 0;
 	
 	int PeekAtChar(size_t lookAhead=0) const;
 	bool IsASingleBinaryChar(int ch) const;

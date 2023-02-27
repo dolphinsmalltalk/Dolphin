@@ -49,6 +49,24 @@ Lexer::~Lexer()
 	delete[] m_token;
 }
 
+void Lexer::Warning(int code, Oop extra)
+{
+	WarningV(ThisTokenRange, code, extra, 0);
+}
+
+void Lexer::Warning(const TEXTRANGE& range, int code, Oop extra)
+{
+	WarningV(range, code, extra, 0);
+}
+
+void Lexer::WarningV(const TEXTRANGE& range, int code, ...)
+{
+	va_list extras;
+	va_start(extras, code);
+	_CompileWarningV(code, range, extras);
+	va_end(extras);
+}
+
 void Lexer::CompileError(int code, Oop extra)
 {
 	CompileErrorV(ThisTokenRange, code, extra, 0);
@@ -800,14 +818,20 @@ void Lexer::ScanLiteralCharacter()
 		}
 	}
 
-	if (static_cast<char32_t>(codePoint) > MaxCodePoint || U_IS_UNICODE_NONCHAR(codePoint))
+	textpos_t pos = CharPosition;
+	m_thisTokenRange.m_stop = pos;
+
+	if (static_cast<char32_t>(codePoint) > MaxCodePoint)
 	{
-		textpos_t pos = CharPosition;
-		m_thisTokenRange.m_stop = pos;
 		CompileError(LErrBadCodePoint);
 	}
 	else
 	{
+		if (U_IS_UNICODE_NONCHAR(codePoint))
+		{
+			Warning(CWarnNonCharCodePoint);
+		}
+
 		m_integer = codePoint;
 	}
 }

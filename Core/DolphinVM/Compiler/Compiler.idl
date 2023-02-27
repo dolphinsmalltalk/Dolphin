@@ -131,6 +131,7 @@ library CompilerLib
 		CWarnUnimplementedAbstractMethod,
 		CWarnUsesBooleanClass,
 		CWarnMutableIgnored,
+		CWarnNonCharCodePoint,
 	} ParseWarnings;
 
 	typedef enum ParseInformation {

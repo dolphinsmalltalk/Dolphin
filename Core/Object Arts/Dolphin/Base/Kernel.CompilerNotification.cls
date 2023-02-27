@@ -94,6 +94,7 @@ Core.Notification
 								16r3F8 -> 'subclass <4p> does not implement <3p>'.
 								16r3F9 -> 'references boolean class <1p> rather than its instance <2p>'.
 								16r3FA -> '%<mutable> attribute ignored in non-mutator method'.
+								16r3FB -> 'non-character code point <1s>'.
 								16r7D0 -> 'unreferenced argument <1p>'.
 								16r7D1 -> 'supersends other message <2p>'.
 								16r7D2 -> 'contains hardcoded breakpoint'
@@ -388,6 +389,7 @@ initialize
 		at: CWarnUnimplementedAbstractMethod put: 'subclass <4p> does not implement <3p>';
 		at: CWarnUsesBooleanClass put: 'references boolean class <1p> rather than its instance <2p>';
 		at: CWarnMutableIgnored put: '%<mutable> attribute ignored in non-mutator method';
+		at: CWarnNonCharCodePoint put: 'non-character code point <1s>';
 		yourself.
 	formats
 		at: CInfoUnreferencedArg put: 'unreferenced argument <1p>';
