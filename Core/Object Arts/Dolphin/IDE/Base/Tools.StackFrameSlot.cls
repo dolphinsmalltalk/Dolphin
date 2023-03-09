@@ -19,7 +19,7 @@ index: aString
 	index := aString!
 
 readFrom: anObject
-	^anObject at: index!
+	^[anObject at: index] on: Error do: [:ex | ex]!
 
 writeInto: subjectObject value: valueObject
 	"Private - Set the attribute of subjectObject described by the receiver 
