@@ -2337,3 +2337,62 @@ Oop* PRIMCALL Interpreter::primitiveStringAsUtf32String(Oop* const sp, primargco
 		return primitiveFailure(_PrimitiveFailureCode::AssertionFailure);
 	}
 }
+
+Oop* PRIMCALL Interpreter::primitiveUtf8StringDecodeAt(Oop* const sp, primargcount_t)
+{
+	Oop oopArg = *sp;
+	const Utf8StringOTE* oteReceiver = reinterpret_cast<const Utf8StringOTE*>(*(sp - 1));
+	if (ObjectMemoryIsIntegerObject(oopArg))
+	{
+		SmallUinteger i = ObjectMemoryIntegerValueOf(oopArg) - 1;
+		size_t length = oteReceiver->getSize();
+		if (i < length)
+		{
+			char32_t c;
+			char8_t* utf8 = oteReceiver->m_location->m_characters;
+			U8_NEXT_OR_FFFD(utf8, i, static_cast<SmallInteger>(length), c);
+			StoreCharacterToStack(sp - 1, U_IS_UNICODE_NONCHAR(c) ? Interpreter::UnicodeReplacementChar : c);
+			return sp - 1;
+		}
+		else
+		{
+			// Arg not a SmallInteger
+			return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);
+		}
+	}
+	else
+	{
+		// Arg not a SmallInteger
+		return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
+	}
+}
+
+Oop* PRIMCALL Interpreter::primitiveUtf8StringEncodedSizeAt(Oop* const sp, primargcount_t)
+{
+	Oop oopArg = *sp;
+	const Utf8StringOTE* oteReceiver = reinterpret_cast<const Utf8StringOTE*>(*(sp - 1));
+	if (ObjectMemoryIsIntegerObject(oopArg))
+	{
+		SmallUinteger i = ObjectMemoryIntegerValueOf(oopArg) - 1;
+		size_t length = oteReceiver->getSize();
+		if (i < length)
+		{
+			char32_t c;
+			SmallInteger j = i;
+			char8_t* utf8 = oteReceiver->m_location->m_characters;
+			U8_NEXT_OR_FFFD(utf8, j, static_cast<SmallInteger>(length), c);
+			*(sp - 1) = ObjectMemoryIntegerObjectOf(j - i);
+			return sp - 1;
+		}
+		else
+		{
+			// Arg not a SmallInteger
+			return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);
+		}
+	}
+	else
+	{
+		// Arg not a SmallInteger
+		return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
+	}
+}

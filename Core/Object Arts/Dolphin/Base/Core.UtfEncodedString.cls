@@ -95,11 +95,12 @@ anySatisfy: aMonadicValuable
 
 asArray
 	"Answer an <Array> whose elements are <Character>s representing the code point sequence of the receiver.
-	Note that this may not be of the same `size` as the receiver as any Characters of the receiver represented by multiple code-unit elements of the receiver will be decoded."
+	Note that this may not be of the same `size` as the receiver as any Characters of the receiver represented by multiple code-unit elements of the receiver will be decoded, including replacing invalid sequences with one or more replacement characters."
 
-	| chars |
+	| ch stream chars |
 	chars := Array writeStream: self size.
-	self codePointsDo: [:each | chars nextPut: each].
+	stream := ReadStream on: self.
+	[(ch := stream nextAvailable) isNil] whileFalse: [chars nextPut: ch].
 	^chars grabContents!
 
 before: aCharacter ifAbsent: aNiladicValuable
@@ -120,9 +121,12 @@ codePointAt: anInteger
 codePointsDo: operation
 	"Evaluate the <monadicValuable> argument, operation, for each of the full code point <Character> elements of the receiver. Answers the receiver. The elements are evaluated in sequence."
 
-	| stream ch |
-	stream := ReadStream on: self.
-	[(ch := stream nextAvailable) isNil] whileFalse: [operation value: ch]!
+	| i last |
+	i := 1.
+	last := self size.
+	[i > last] whileFalse: 
+			[operation value: (self decodeAt: i).
+			i := i + (self encodedSizeAt: i)]!
 
 codeUnitsDo: operation
 	"Evaluate the <monadicValuable> argument, operation, for each of the code unit <Character> elements of the receiver - note that these may be partial/surrogate characters. Answers the receiver. The elements are evaluated in sequence."
@@ -148,7 +152,8 @@ copyWith: anObject atIndex: anInteger
 	| size extra |
 	extra := self encodedSizeOf: anObject.
 	"Verify that the specified index is not in the middle of a Character"
-	self encodedSizeAt: anInteger.
+	(self isLeadCodeUnit: (self basicAt: anInteger))
+		ifFalse: [self errorIntraCharacterIndex: anInteger].
 	size := self size + extra.
 	^(self copyLikeOfSize: size)
 		replaceFrom: 1
@@ -166,6 +171,8 @@ copyWithoutIndex: anInteger
 	"Answer a <String> which is a copy of the receiver but without the element with the specified index."
 
 	| size len |
+	(self isTrailSurrogate: (self basicAt: anInteger))
+		ifTrue: [self errorIntraCharacterIndex: anInteger].
 	len := self encodedSizeAt: anInteger.
 	size := self size - len.
 	^(self copyLikeOfSize: size)
@@ -343,6 +350,9 @@ isLeadCodeUnit: anInteger
 
 	^self subclassResponsibility!
 
+isTrailSurrogate: anInteger 
+	^self subclassResponsibility!
+
 keys
 	"Answer a <collection> containing the receiver's keys. These are the starting indices for each of the <Character>s in the receiver."
 
@@ -419,6 +429,13 @@ select: aMonadicValuable
 	self codePointsDo: [:each | (aMonadicValuable value: each) ifTrue: [stream nextPut: each]].
 	^stream grabContents!
 
+single
+	"Answer the <Character> which is the only element of the receiver. 
+	Raise an exception if the receiver does not contain exactly one character."
+
+	(self encodedSizeAt: 1) == self size ifFalse: [self error: 'String is not of a single Character'].
+	^self decodeAt: 1!
+
 sixth
 	"Answer a <Character> representing the sixth code point of the receiver. Raise an exception if there are fewer than six code points in the receiver."
 
@@ -450,8 +467,7 @@ third
 
 uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: aDyadicValuable
 	"Private - Evaluate the <dyadicValuable> argument for each code point element of the receiver in the specified inclusive range, with the element and its index as respectively the second and first arguments. 
-	Note that the indices are code unit positions, but the valuable will be evaluated only for the code points (and the index of their first code point as the key) between the specified code units.
-	It is an error to specify a start position that is not the position of the lead code unit of a code point."
+	Note that the indices are code unit positions, but the valuable will be evaluated only for the code points (and the index of their first code point as the key) between the specified code units. Specifying an intra-character position will result in one or more replacement characters being enumerated, which is probably not what you want. Generally speaking it is safer (and more efficient in most cases) to stream over UtfEncodedStrings, because the code-point elements are not of fixed length (except for Utf32String), and the indices are expressed as code-unit positions (i.e. the bytes of a Utf8 string, or words of a Utf16String)"
 
 	| i |
 	i := startInteger.
@@ -481,7 +497,7 @@ asArray!converting!public! !
 before:ifAbsent:!public!searching! !
 bom!constants!encode/decode!private! !
 codePointAt:!debugger-step through!enumerating!public! !
-codePointsDo:!debugger-step through!enumerating!public! !
+codePointsDo:!enumerating!public! !
 codeUnitsDo:!debugger-step through!enumerating!public! !
 collect:!enumerating!public! !
 copyWith:!copying!public! !
@@ -507,6 +523,7 @@ indexOfLast:!accessing!encode/decode!private! !
 indexOfNth:!accessing!encode/decode!private! !
 inject:into:!enumerating!public! !
 isLeadCodeUnit:!encode/decode!public!testing! !
+isTrailSurrogate:!public! !
 keys!accessing!public! !
 keysAndValuesDo:!debugger-step through!enumerating!public! !
 last!accessing!public! !
@@ -519,6 +536,7 @@ pairsDo:!enumerating!public! !
 reverseDo:!enumerating!public! !
 second!accessing!public! !
 select:!enumerating!public! !
+single!accessing!public! !
 sixth!accessing!public! !
 skipEncodingMarkerFrom:!encode/decode!private! !
 third!accessing!public! !

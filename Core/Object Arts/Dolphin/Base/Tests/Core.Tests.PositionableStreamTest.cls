@@ -430,6 +430,26 @@ testNextLongUtf8Encodings
 	self assert: subject next equals: $\x4F60.
 	self closeTempStream: subject!
 
+testNextOtherNonCharactersUtf16
+	"Other 'noncharacters' from Kuhn"
+
+	| count |
+	"5.3.1  U+FFFE = ef bf be
+	5.3.2  U+FFFF = ef bf bf"
+
+	"stdio streams will just consume the U+FFFF, so we might get either 2 or 3 chars read here."
+	count := self streamClass == OS.StdioFileStream ifTrue: [2] ifFalse: [3].
+	self assert: (self verifyNonChars: #('efbefe' 'efbfbf')) equals: count.
+
+	"5.3.3  U+FDD0 .. U+FDEF"
+	self assert: (self
+				verifyNonChars: #('efb790' 'efb791' 'efb792' 'efb793' 'efb794' 'efb795' 'efb796' 'efb797' 'efb798' 'efb799' 'efb79a' 'efb79b' 'efb79c' 'efb79d' 'efb79e' 'efb79f' 'efb7a0' 'efb7a1' 'efb7a2' 'efb7a3' 'efb7a4' 'efb7a5' 'efb7a6' 'efb7a7' 'efb7a8' 'efb7a9' 'efb7aa' 'efb7ab' 'efb7ac' 'efb7ad' 'efb7ae' 'efb7af'))
+		equals: 32 + 1.
+	"5.3.4  U+nFFFE U+nFFFF (for n = 1..10)"
+	self assert: (self
+				verifyNonChars: #('f09fbfbe' 'f09fbfbf' 'f0afbfbe' 'f0afbfbf' 'f0bfbfbe' 'f0bfbfbf' 'f18fbfbe' 'f18fbfbf' 'f19fbfbe' 'f19fbfbf' 'f1afbfbe' 'f1afbfbf' 'f1bfbfbe' 'f1bfbfbf' 'f28fbfbe' 'f28fbfbf' 'f29fbfbe' 'f29fbfbf' 'f2afbfbe' 'f2afbfbf' 'f2bfbfbe' 'f2bfbfbf' 'f38fbfbe' 'f38fbfbf' 'f39fbfbe' 'f39fbfbf' 'f3afbfbe' 'f3afbfbf' 'f3bfbfbe' 'f3bfbfbf' 'f48fbfbe' 'f48fbfbf'))
+		equals: 2 * 16 + 1!
+
 testNextOtherNonCharactersUtf8
 	"Other 'noncharacters' from Kuhn"
 
@@ -943,6 +963,7 @@ testNextInto!public!unit tests! !
 testNextLine!gettableStream only!public!unit tests! !
 testNextLineCrOnly!gettableStream only!public!unit tests! !
 testNextLongUtf8Encodings!gettableStream only!public!strict utf8!unit tests! !
+testNextOtherNonCharactersUtf16!gettableStream only!public!unit tests! !
 testNextOtherNonCharactersUtf8!gettableStream only!public!unit tests! !
 testNextOverlongUtf8!gettableStream only!public!strict utf8!unit tests! !
 testNextPut!public!unit tests! !

@@ -477,7 +477,7 @@ decodeNextAvailable: anInteger from: aReadStream
 	^newStream grabContents!
 
 decodeNextFrom: aReadStream
-	"Private - Answer the next <Character> in the receiver's encoding from the <ReadStream> argument ."
+	"Private - Answer the next <Character> in the receiver's encoding from the <ReadStream> argument, or the replacement character if the next sequence is invalid."
 
 	^self subclassResponsibility!
 
@@ -496,7 +496,7 @@ displayString
 	^self!
 
 encodedSizeAt: anInteger
-	"Private - Answer the <integer> number of code units occupied by the <Character> whose first code unit is at the specified index in the receiver. Throw an error if the code unit at anInteger is not either an ASCII code point or a UTF-8 lead surrogate"
+	"Private - Answer the <integer> number of code units occupied by the <Character> whose first code unit is at the specified index in the receiver."
 
 	^self subclassResponsibility!
 

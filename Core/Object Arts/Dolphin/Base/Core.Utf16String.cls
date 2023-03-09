@@ -124,7 +124,7 @@ decodeAt: anInteger
 					Character.Replacement]]
 		ifFalse: 
 			[surrogateBits == Character.Utf16TrailMask
-				ifTrue: [self errorIntraCharacterIndex: anInteger]
+				ifTrue: [Character.Replacement]
 				ifFalse: [Character utf16Value: leading ifInvalid: [Character.Replacement]]]!
 
 decodeNextFrom: aReadStream
@@ -174,16 +174,17 @@ encodedAt: anInteger put: aCharacter
 				ifFalse: [self class errorInvalidCodePoint: codePoint]]!
 
 encodedSizeAt: anInteger
-	"Private - Answer the <integer> number of code units occupied by the <Character> whose first code unit is at the specified index in the receiver. Throw an error if the code unit at anInteger is not either an ASCII code point or a UTF-8 lead surrogate"
+	"Private - Answer the <integer> number of code units occupied by the <Character> whose first code unit is at the specified index in the receiver."
 
-	| surrogateBits |
-	surrogateBits := (self basicAt: anInteger) bitAnd: Character.Utf16SurrogateMask.
-	^surrogateBits == Character.Utf16LeadMask
-		ifTrue: [2]
+	^(((self basicAt: anInteger) bitAnd: Character.Utf16SurrogateMask) == Character.Utf16LeadMask and: 
+			[anInteger < self size
+				and: [((self basicAt: anInteger + 1) bitAnd: Character.Utf16SurrogateMask) == Character.Utf16TrailMask]])
+		ifTrue: 
+			["Valid surrogate pair"
+			2]
 		ifFalse: 
-			[surrogateBits == Character.Utf16TrailMask
-				ifTrue: [self errorIntraCharacterIndex: anInteger]
-				ifFalse: [1]]!
+			["All other cases - single character, or invalid surrogate"
+			1]!
 
 encodedSizeOf: aCharacter
 	"Private - Answer the number of basic slots occupied by the argument when encoded in the UTF-16 encoding."
@@ -226,6 +227,9 @@ indexOfSubCollection: targetSequence startingAt: start
 
 isLeadCodeUnit: anInteger
 	^(anInteger bitAnd: Character.Utf16SurrogateMask) ~~ Character.Utf16TrailMask!
+
+isTrailSurrogate: anInteger
+	^(anInteger bitAnd: Character.Utf16SurrogateMask) == Character.Utf16TrailMask!
 
 maxEncoding
 	^2!
@@ -366,6 +370,7 @@ encodeOn:put:!encode/decode!private! !
 findString:startingAt:!public!searching! !
 indexOfSubCollection:startingAt:!public!searching! !
 isLeadCodeUnit:!encode/decode!private!testing! !
+isTrailSurrogate:!public! !
 maxEncoding!constants!private! !
 nextIndexOfCharacter:from:to:!private!searching! !
 replaceFrom:to:with:startingAt:!public!replacing! !

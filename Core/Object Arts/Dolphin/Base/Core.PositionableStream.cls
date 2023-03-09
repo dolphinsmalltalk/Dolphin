@@ -111,7 +111,7 @@ lastPosition
 	^readLimit!
 
 locale
-	"Answer the <Locale> to be used when emitting or reaading localisable data to/from this stream."
+	"Answer the <Locale> to be used when emitting or reading localisable data to/from this stream."
 
 	^locale!
 

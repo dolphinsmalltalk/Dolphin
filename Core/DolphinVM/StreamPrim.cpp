@@ -80,20 +80,12 @@ Oop* PRIMCALL Interpreter::primitiveNext(Oop* const sp, primargcount_t)
 						const Utf8String::CU* psz = reinterpret_cast<Utf8StringOTE*>(oteBuf)->m_location->m_characters;
 
 						SmallInteger codePoint;
-						// The macro (from icucommon.h) advances the index as well as calculating the code point
-						U8_NEXT(psz, index, static_cast<SmallInteger>(size), codePoint);
-
-						if (U_IS_UNICODE_CHAR(codePoint))
-						{
-							StoreCharacterToStack(sp, codePoint);
-							readStream->m_index = Integer::NewSigned32WithRef(index);
-							return sp;
-						}
-
-						return primitiveFailure(_PrimitiveFailureCode::IllegalCharacter);	// Malformed UTF-8, or at end of buffer over larger string, or at bad offset
+						// The macro (from icu.h) advances the index as well as calculating the code point
+						U8_NEXT_OR_FFFD(psz, index, static_cast<SmallInteger>(size), codePoint);
+						StoreCharacterToStack(sp, U_IS_UNICODE_NONCHAR(codePoint) ? Interpreter::UnicodeReplacementChar : codePoint);
+						readStream->m_index = Integer::NewSigned32WithRef(index);
+						return sp;
 					}
-
-					// Out of bounds
 					return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);
 				}
 				break;
@@ -107,19 +99,12 @@ Oop* PRIMCALL Interpreter::primitiveNext(Oop* const sp, primargcount_t)
 					{
 						const Utf16String::CU* pwsz = oteString->m_location->m_characters;
 						SmallInteger codePoint;
-						// The macro (from icucommon.h) advances the index as well as calculating the code point
-						U16_NEXT(pwsz, index, size, codePoint);
-
-						if (U_IS_UNICODE_CHAR(codePoint) && !U16_IS_SURROGATE(codePoint))
-						{
-							StoreCharacterToStack(sp, codePoint);
-							readStream->m_index = Integer::NewSigned32WithRef(index);
-							return sp;
-						}
-
-						return primitiveFailure(_PrimitiveFailureCode::IllegalCharacter);	// Malformed UTF-16, or reading starting at an invalid offset
+						// The macro (from icu.h) advances the index as well as calculating the code point
+						U16_NEXT_OR_FFFD(pwsz, index, size, codePoint);
+						StoreCharacterToStack(sp, U_IS_UNICODE_NONCHAR(codePoint) ? Interpreter::UnicodeReplacementChar : codePoint);
+						readStream->m_index = Integer::NewSigned32WithRef(index);
+						return sp;
 					}
-
 					return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);
 				}
 				break;
@@ -133,16 +118,10 @@ Oop* PRIMCALL Interpreter::primitiveNext(Oop* const sp, primargcount_t)
 					{
 						Utf32String::CU codePoint = oteString->m_location->m_characters[index];
 
-						if (U_IS_UNICODE_CHAR(codePoint))
-						{
-							StoreCharacterToStack(sp, codePoint);
-							readStream->m_index = Integer::NewSigned32WithRef(index + 1);
-							return sp;
-						}
-
-						return primitiveFailure(_PrimitiveFailureCode::IllegalCharacter);	// Invalid code point
+						StoreCharacterToStack(sp, U_IS_UNICODE_CHAR(codePoint) ? codePoint : Interpreter::UnicodeReplacementChar);
+						readStream->m_index = Integer::NewSigned32WithRef(index + 1);
+						return sp;
 					}
-
 					return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);
 				}
 				break;

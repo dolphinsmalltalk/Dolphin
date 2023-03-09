@@ -59,7 +59,7 @@ before: aCharacter ifAbsent: aNiladicValuable
 	index == 1 ifTrue: [^self errorFirstObject: aCharacter].
 	
 	[index := index - 1.
-	((self basicAt: index) bitAnd: Character.Utf8SurrogateMask) == 16r80]
+	((self basicAt: index) bitAnd: Character.Utf8SurrogateMask) == TrailByteMask]
 			whileTrue.
 	^self decodeAt: index!
 
@@ -67,74 +67,146 @@ bom
 	^Bom!
 
 countElements
-	| length |
-	length := 0.
-	"Count the code-units that are not trailing bytes"
-	1 to: self size
-		do: [:i | ((self basicAt: i) bitAnd: Character.Utf8SurrogateMask) == 16r80 ifFalse: [length := length + 1]].
-	^length!
+	| i count last |
+	count := 0.
+	i := 1.
+	last := self size.
+	[i > last] whileFalse: 
+			[count := count + 1.
+			i := i + (self encodedSizeAt: i)].
+	^count!
 
 decodeAt: anInteger
-	"Private - Read the <Character> with code point in the receiver's encoding starting with the code unit at the specified index. Raise an error if the indexed code unit is not the first in a character. If the character encoding is invalid or incomplete, return the replacement character. Intolerance of indexing errors is intended to help detect logic errors in algorithms working with multi-byte strings, although this may also occur in incorrectly encoded data which is otherwise tolerated by returning the replacement character."
+	"Private - Read the <Character> with code point in the receiver's encoding starting with the code unit at the specified index. If the index does not identify the start of a character, or the encoding is invalid or incomplete, return the replacement character."
 
-	| c c2 size codePoint min |
+	"The decoding algorithm is essentially the same as #decodeNextFrom:, where it is explained in more detail."
+
+	<primitive: 225>
+	| len c c2 |
 	c := self basicAt: anInteger.
-	c < 16r80
+	c <= 16r7F
 		ifTrue: 
 			["Ascii char"
 			^Character.CharacterSet at: c + 1].
-
-	"Lead byte?"
-	c < 16rC0
-		ifTrue: 
-			["On a continution byte so in the middle of a character, which is invalid"
-			^self errorIntraCharacterIndex: anInteger].
-	"At least 2 byte character"
-	size := self size.
-	anInteger < size ifFalse: [^Character.Replacement].
-	c2 := self basicAt: anInteger + 1.
-	(c2 bitAnd: 16rC0) == 16r80
-		ifTrue: 
-			[codePoint := ((c bitAnd: 16r1F) bitShift: 6) bitOr: (c2 bitAnd: 16r3F).
-			min := 16r80]
+	len := self size.
+	len > anInteger
 		ifFalse: 
-			["Invalid1st continuation"
+			["Truncated multi-byte sequence"
 			^Character.Replacement].
-	c >= 16rE0
+	c2 := self basicAt: anInteger + 1.
+	"Multi-byte encoding, requires at least one continuation byte, C2..F4"
+	c < LeadByteMask3
 		ifTrue: 
-			[| c3 |
-			"At least a 3-byte character"
-			anInteger + 2 > size ifTrue: [^Character.Replacement].
-			c3 := self basicAt: anInteger + 2.
-			(c3 bitAnd: 16rC0) == 16r80
+			["2-byte encoding: C2..DF 80..BF"
+			^(c >= 16rC2 and: [(c2 bitAnd: Character.Utf8SurrogateMask) == TrailByteMask])
 				ifTrue: 
-					[codePoint := ((codePoint bitAnd: 16r3FF) bitShift: 6) bitOr: (c3 bitAnd: 16r3F).
-					min := 16r800]
+					[(Character.AnsiCharacters lookup: (c := ((c bitAnd: 16r1F) bitShift: 6) bitOr: (c2 bitAnd: 16r3F)))
+						ifNil: [Character basicUtf32Value: c]]
 				ifFalse: 
-					["Invalid 2nd continuation"
-					^Character.Replacement].
-			c >= 16rF0
-				ifTrue: 
-					[| c4 |
-					"4-byte character"
-					anInteger + 3 > size ifTrue: [^Character.Replacement].
-					c4 := self basicAt: anInteger + 3.
-					(c4 bitAnd: 16rC0) == 16r80
-						ifTrue: 
-							[codePoint := ((codePoint bitAnd: 16r7FFF) bitShift: 6) bitOr: (c4 bitAnd: 16r3F).
-							min := 16r10000]
-						ifFalse: 
-							["Invalid 3rd continuation"
-							^Character.Replacement].
-					c >= 16rF8
-						ifTrue: 
-							["5 or 6-byte character (not currently possible - only 4 bytes required for max Unicode char"
-							^Character.Replacement]]].
-	codePoint < min
+					["Invalid continuation"
+					Character.Replacement]].
+	c < LeadByteMask4
 		ifTrue: 
-			["Overlong encoding"
+			["3 byte encoding:
+				E0 A0..BF 80..BF
+				E1..EC 80..BF 80..BF
+				ED 80..9F 80..BF
+				EE..EF 80..BF 80..BF"
+			c == LeadByteMask3
+				ifTrue: 
+					[(c2 < 16rA0 or: [c2 > 16rBF])
+						ifTrue: 
+							["Invalid first continuation"
+							^Character.Replacement]]
+				ifFalse: 
+					[c == 16rED
+						ifTrue: 
+							[(c2 <= 16r7F or: [c2 > 16r9F])
+								ifTrue: 
+									["Invalid first continuation"
+									^Character.Replacement]]
+						ifFalse: 
+							[(c2 bitAnd: Character.Utf8SurrogateMask) == TrailByteMask
+								ifFalse: 
+									["Invalid first continuation"
+									^Character.Replacement]]].
+			anInteger + 1 < len
+				ifFalse: 
+					["Initially valid 3-byte sequence, truncated sequence after 2-bytes at end of string"
+					^Character.Replacement].
+			c := ((c bitAnd: 16rF) bitShift: 12) bitOr: ((c2 bitAnd: 16r3F) bitShift: 6).
+			c2 := self basicAt: anInteger + 2.
+			(c2 bitAnd: Character.Utf8SurrogateMask) == TrailByteMask
+				ifFalse: 
+					["Initially valid 3-byte sequence, truncated sequence after 2-bytes, mid-string"
+					^Character.Replacement].
+			c := c bitOr: (c2 bitAnd: 16r3F).
+			(c bitAnd: 16rF800) == Character.Utf16LeadMask
+				ifTrue: 
+					["UTF-16 Surrogate, so whole sequence is invalid"
+					^Character.Replacement].
+			^(Character.AnsiCharacters lookup: c)
+				ifNil: 
+					[(c >= 16rFDD0 and: [c <= 16rFDEF or: [c allMask: 16rFFFE]])
+						ifTrue: 
+							["Non-characters - valid sequence, but character needs replacing"
+							Character.Replacement]
+						ifFalse: [Character basicUtf32Value: c]]].
+	"4-Byte encodings
+		F0 90..BF 80..BF 80..BF
+		F1..F3 80..BF 80..BF 80..BF
+		F4 80..8F 80..BF 80..BF"
+	c == LeadByteMask4
+		ifTrue: 
+			[(c2 < 16r90 or: [c2 > 16rBF])
+				ifTrue: 
+					["Invalid first continuation"
+					^Character.Replacement]]
+		ifFalse: 
+			[c == 16rF4
+				ifTrue: 
+					[(c2 <= 16r7F or: [c2 > 16r8F])
+						ifTrue: 
+							["Invalid first continuation"
+							^Character.Replacement]]
+				ifFalse: 
+					[c > 16rF4
+						ifTrue: 
+							["Invalid encoding - 5&6 byte encodings are not supported"
+							^Character.Replacement].
+					(c2 bitAnd: Character.Utf8SurrogateMask) == TrailByteMask
+						ifFalse: 
+							["Invalid first continuation"
+							^Character.Replacement]]].
+	anInteger + 1 < len
+		ifFalse: 
+			["Initially valid 4-byte sequence, truncated after 2-bytes at end of string"
 			^Character.Replacement].
-	^Character codePoint: codePoint ifInvalid: [Character.Replacement]!
+	c := ((c bitAnd: 7) bitShift: 18) bitOr: ((c2 bitAnd: 16r3F) bitShift: 12).
+	c2 := self basicAt: anInteger + 2.
+	(c2 bitAnd: Character.Utf8SurrogateMask) == TrailByteMask
+		ifFalse: 
+			["Initially valid 4-byte sequence, truncated after 2-bytes, mid string"
+			^Character.Replacement].
+	anInteger + 2 < len
+		ifFalse: 
+			["Initially valid 4-byte sequence, truncated after 3-bytes at end of string"
+			^Character.Replacement].
+	c := c bitOr: ((c2 bitAnd: 16r3F) bitShift: 6).
+	c2 := self basicAt: anInteger + 3.
+	(c2 bitAnd: Character.Utf8SurrogateMask) == TrailByteMask
+		ifFalse: 
+			["Initially valid 4-byte sequence, truncated after 3-bytes, mid string"
+			^Character.Replacement].
+	c := c bitOr: (c2 bitAnd: 16r3F).
+	"Minimum 4-byte char is F0 90 80 80, which is U+10000. Will never appear in ANSI code page."
+	^(Character.AnsiCharacters lookup: c)
+		ifNil: 
+			[(c allMask: 16rFFFE)
+				ifTrue: 
+					["Non-characters - valid sequence, but character needs replacing"
+					Character.Replacement]
+				ifFalse: [Character basicUtf32Value: c]]!
 
 decodeNextFrom: aReadStream
 	"Private - Read the next <Character> in the receiver's encoding from the <ReadStream> argument ."
@@ -145,102 +217,146 @@ decodeNextFrom: aReadStream
 	11110xxx	0xF0..0xF4	Lead byte of a 4-byte character encoding
 	10xxxxxx	0x80..0xBF	Continuation bytes (x1, x2, or x3)"
 
-	| c c2 codePoint |
+	"Invalid sequences are now generally handled by the replacement of each element of the sequence with the replacement character. This differs from the D7 implementation, where invalid sequences are replaced by a single replacement character. Multi-character replacement has become the dominant approach, and is implemented in ICU as well as other commonly encountered decoders such as the chromium UTF-8 decoder. The Unicode standard does not require this interpretation (in fact it says 'An ill-formed subsequence consisting of more than one code unit could be treated as a single error or as multiple errors'). However, it does go on to suggest that the W3C encoding standard be used as a best (but not required) practice in the section 'U+FFFD Substitution of Maximal Subparts'. This section shows a number of examples of different replacements, which in most cases results in a replacement per byte of the invalid sequence, the exception being truncated sequences that would form a valid sequence if any of the valid continuation byte(s) were present to complete the sequence.
+
+	Although the UTF-8 encoding has 5 & 6 character forms, these cannot represent a valid Unicode character (at least not in minimal form). These are also translated to the equivalent number of replacement characters.
+
+	Valid encodings that result in 'non-characters' (i.e. assigned code points that are specifically designated as non-characters) are replaced with a single replacement character. This complies with the Unicode 15.0 standard: 'If a noncharacter that does not have a specific internal use is unexpectedly encountered in processing, an implementation may signal an error or replace the noncharacter with U+FFFD replacement character.'
+
+	Private-use code points are returned as these are considered to be valid assigned characters, at least at this level. Their later interpretation may vary."
+
+	| c c2 |
 	((c := aReadStream basicNextAvailable) ifNil: [^nil]) <= 16r7F
 		ifTrue: 
 			["Ascii char"
 			^Character.CharacterSet at: c + 1].
 
-	"Multi-byte encoding"
-	c < 16rC2
-		ifTrue: 
-			["Either not a leading character or overlong 2-byte encoding (C0, C1) both of which are invalid"
-			^Character.Replacement].
+	"Multi-byte encoding, requires at least one continuation byte, C2..F4"
 	(c2 := aReadStream basicNextAvailable)
 		ifNil: 
-			["Missing 1st continuation"
+			["Truncated multi-byte sequence"
 			^Character.Replacement].
-	(c2 bitAnd: 16rC0) == 16r80
-		ifFalse: 
-			["Invalid 1st continuation - invalid sequence, at least 2 replacement chars"
-			aReadStream pop.
-			^Character.Replacement].
-	c < 16rE0
+	c < LeadByteMask3
 		ifTrue: 
-			["2-byte encoding"
-			codePoint := ((c bitAnd: 16r1F) bitShift: 6) bitOr: (c2 bitAnd: 16r3F).
-			^(Character.AnsiCharacters lookup: codePoint) ifNil: [Character basicUtf32Value: codePoint]].
-	c < 16rF0
-		ifTrue: 
-			["3-byte encoding"
-			codePoint := ((c bitAnd: 16rF) bitShift: 12) bitOr: ((c2 bitAnd: 16r3F) bitShift: 6).
-			codePoint <= 16r7FF
+			["2-byte encoding: C2..DF 80..BF"
+			^(c >= 16rC2 and: [(c2 bitAnd: Character.Utf8SurrogateMask) == TrailByteMask])
 				ifTrue: 
-					["Overlong encoding"
-					aReadStream pop.
-					^Character.Replacement].
-			(c := aReadStream basicNextAvailable)
-				ifNil: 
-					["Missing 2nd continuation"
-					^Character.Replacement].
-			(c bitAnd: 16rC0) == 16r80
+					[(Character.AnsiCharacters lookup: (c := ((c bitAnd: 16r1F) bitShift: 6) bitOr: (c2 bitAnd: 16r3F)))
+						ifNil: [Character basicUtf32Value: c]]
 				ifFalse: 
-					["Invalid 2nd continuation. Initial sequence may be valid, but sequence up to there was valid so consume it"
+					["Invalid continuation"
+					aReadStream pop.
+					Character.Replacement]].
+	c < LeadByteMask4
+		ifTrue: 
+			["3 byte encoding:
+				E0 A0..BF 80..BF
+				E1..EC 80..BF 80..BF
+				ED 80..9F 80..BF
+				EE..EF 80..BF 80..BF"
+			c == LeadByteMask3
+				ifTrue: 
+					[(c2 < 16rA0 or: [c2 > 16rBF])
+						ifTrue: 
+							["Invalid first continuation"
+							aReadStream pop.
+							^Character.Replacement]]
+				ifFalse: 
+					[c == 16rED
+						ifTrue: 
+							[(c2 <= 16r7F or: [c2 > 16r9F])
+								ifTrue: 
+									["Invalid first continuation"
+									aReadStream pop.
+									^Character.Replacement]]
+						ifFalse: 
+							[(c2 bitAnd: Character.Utf8SurrogateMask) == TrailByteMask
+								ifFalse: 
+									["Invalid cfirst ontinuation"
+									aReadStream pop.
+									^Character.Replacement]]].
+			c := ((c bitAnd: 16rF) bitShift: 12) bitOr: ((c2 bitAnd: 16r3F) bitShift: 6).
+			(c2 := aReadStream basicNextAvailable)
+				ifNil: 
+					["Initially valid 3-byte sequence, truncated sequence after 2-bytes at end of stream"
+					^Character.Replacement].
+			(c2 bitAnd: Character.Utf8SurrogateMask) == TrailByteMask
+				ifFalse: 
+					["Initially valid 3-byte sequence, truncated sequence after 2-bytes, mid-stream"
 					aReadStream pop.
 					^Character.Replacement].
-			codePoint := codePoint bitOr: (c bitAnd: 16r3F).
-			(codePoint >= 16rD800 and: [codePoint <= 16rDFFF])
+			c := c bitOr: (c2 bitAnd: 16r3F).
+			(c bitAnd: 16rF800) == Character.Utf16LeadMask
 				ifTrue: 
-					["Overlong encoding, or a surrogate, so invalid sequences"
+					["UTF-16 Surrogate, so whole sequence is invalid"
 					aReadStream skip: -2.
 					^Character.Replacement].
-			^(Character.AnsiCharacters lookup: codePoint)
+			^(Character.AnsiCharacters lookup: c)
 				ifNil: 
-					[(codePoint >= 16rFDD0 and: [codePoint <= 16rFDEF or: [(codePoint bitAnd: 16rFFFE) == 16rFFFE]])
+					[(c >= 16rFDD0 and: [c <= 16rFDEF or: [c allMask: 16rFFFE]])
 						ifTrue: 
 							["Non-characters - valid sequence, but character needs replacing"
 							Character.Replacement]
-						ifFalse: [Character basicUtf32Value: codePoint]]].
-	c > 16rF7
+						ifFalse: [Character basicUtf32Value: c]]].
+	"4-Byte encodings
+		F0 90..BF 80..BF 80..BF
+		F1..F3 80..BF 80..BF 80..BF
+		F4 80..8F 80..BF 80..BF"
+	c == LeadByteMask4
 		ifTrue: 
-			["5 & 6 byte sequences are treated as invalid"
-			aReadStream pop.
-			^Character.Replacement].
-	"4-byte encoding"
-	codePoint := ((c bitAnd: 16r7) bitShift: 18) bitOr: ((c2 bitAnd: 16r3F) bitShift: 12).
-	codePoint <= 16rFFFF
-		ifTrue: 
-			["Overlong encoding"
-			aReadStream pop.
-			^Character.Replacement].
-	(c := aReadStream basicNextAvailable)
-		ifNil: 
-			["Missing 3rd-byte/2nd continuation - but initial sequence was valid so consume it"
-			^Character.Replacement].
-	(c bitAnd: 16rC0) == 16r80
+			[(c2 < 16r90 or: [c2 > 16rBF])
+				ifTrue: 
+					["Invalid first continuation"
+					aReadStream pop.
+					^Character.Replacement]]
 		ifFalse: 
-			["Invalid 3rd-byte/2nd continuation, but initial sequence was valid"
-			aReadStream pop.
-			^Character.Replacement].
+			[c == 16rF4
+				ifTrue: 
+					[(c2 <= 16r7F or: [c2 > 16r8F])
+						ifTrue: 
+							["Invalid first continuation"
+							aReadStream pop.
+							^Character.Replacement]]
+				ifFalse: 
+					[c > 16rF4
+						ifTrue: 
+							["Invalid encoding - 5&6 byte encodings are not supported"
+							aReadStream pop.
+							^Character.Replacement].
+					(c2 bitAnd: Character.Utf8SurrogateMask) == TrailByteMask
+						ifFalse: 
+							["Invalid first continuation"
+							aReadStream pop.
+							^Character.Replacement]]].
+	c := ((c bitAnd: 7) bitShift: 18) bitOr: ((c2 bitAnd: 16r3F) bitShift: 12).
 	(c2 := aReadStream basicNextAvailable)
 		ifNil: 
-			["Missing 4th-byte/2nd continuation"
-			aReadStream skip: -2.
+			["Initially valid 4-byte sequence, but truncated after 2nd byte at end of stream"
 			^Character.Replacement].
-	(c2 bitAnd: 16rC0) == 16r80
+	(c2 bitAnd: Character.Utf8SurrogateMask) == TrailByteMask
 		ifFalse: 
-			["Invalid 4th-byte/3rd continuation"
-			aReadStream skip: -3.
+			["Initially valid 4-byte sequence, but truncated after 2nd byte, mid-stream"
+			aReadStream pop.
 			^Character.Replacement].
-	codePoint := codePoint bitOr: (((c bitAnd: 16r3F) bitShift: 6) bitOr: (c2 bitAnd: 16r3F)).
-	codePoint > OS.ICUConstants.UCHAR_MAX_VALUE
-		ifTrue: 
-			["Outside Unicode range; treated as an invalid sequence (even though valid encoding)"
-			aReadStream skip: -3.
+	c := c bitOr: ((c2 bitAnd: 16r3F) bitShift: 6).
+	(c2 := aReadStream basicNextAvailable)
+		ifNil: 
+			["Initially valid 4-byte sequence, but truncated after 3rd byte at end of stream"
 			^Character.Replacement].
-	^(codePoint bitAnd: 16rFFFE) == 16rFFFE
-		ifTrue: [Character.Replacement]
-		ifFalse: [Character basicUtf32Value: codePoint]!
+	(c2 bitAnd: 16rC0) == TrailByteMask
+		ifFalse: 
+			["Initially valid 4-byte sequence, but truncated after 3rd byte, mid-stream"
+			aReadStream pop.
+			^Character.Replacement].
+	c := c bitOr: (c2 bitAnd: 16r3F).
+	"Minimum 4-byte char is F0 90 80 80, which is U+10000. Will never appear in ANSI code page."
+	^(Character.AnsiCharacters lookup: c)
+		ifNil: 
+			[(c allMask: 16rFFFE)
+				ifTrue: 
+					["Non-characters - valid sequence, but character needs replacing"
+					Character.Replacement]
+				ifFalse: [Character basicUtf32Value: c]]!
 
 encodedAt: anInteger put: aCharacter
 	"Private - Encode the specified <Character> beginning at the specified position in the receiver.
@@ -248,12 +364,12 @@ encodedAt: anInteger put: aCharacter
 
 	| codePoint |
 	codePoint := aCharacter codePoint.
-	^codePoint < 16r80
+	^codePoint <= 16r7F
 		ifTrue: 
 			[self basicAt: anInteger put: codePoint.
 			anInteger]
 		ifFalse: 
-			[codePoint < 16r800
+			[codePoint <= 16r7FF
 				ifTrue: 
 					["2-byte encoding"
 					self
@@ -271,7 +387,7 @@ encodedAt: anInteger put: aCharacter
 							anInteger + 2]
 						ifFalse: 
 							["4-byte encoding"
-							codePoint <= OS.Win32Constants.MAX_UCSCHAR
+							codePoint <= OS.ICUConstants.UCHAR_MAX_VALUE
 								ifTrue: 
 									[self
 										basicAt: anInteger put: (LeadByteMask4 bitOr: (codePoint bitShift: -18));
@@ -282,59 +398,135 @@ encodedAt: anInteger put: aCharacter
 								ifFalse: [self class errorInvalidCodePoint: codePoint]]]]!
 
 encodedSizeAt: anInteger
-	"Private - Answer the <integer> number of code units occupied by the <Character> whose first code unit is at the specified index in the receiver. Throw an error if the code unit at anInteger is not either an ASCII code point or a UTF-8 lead surrogate"
+	"Private - Answer the <integer> number of code units occupied by the <Character> whose first code unit is at the specified index in the receiver."
 
-	| c |
+	"If we could assume that the UTF-8 was well-formed, we could calculate the length from at most the first two bytes, as a UTF-8 encoded code point is either single-byte ASCII, or the first continuation encodes the length. Unfortunately we cannot assume it is well-formed, and it is a potential security issue to do so, depending on the use case. This is, therefore, little different from actually decoding the characters We employ basically the same decoding as #decodeNextFrom:, which unfortunately is quite complicated and (potentially) slow due to the nature of UTF-8. The primitive uses the ICU U8_NEXT_OR_FFFD macro, but yields the same result as the Smalltalk code here."
+
+	<primitive: 226>
+	| len c c2 |
 	c := self basicAt: anInteger.
-	^c >= 16rC0
-		ifTrue: [c >= 16rE0 ifTrue: [c >= 16rF0 ifTrue: [4] ifFalse: [3]] ifFalse: [2]]
+	c <= 16r7F
+		ifTrue: 
+			["Ascii char"
+			^1].
+	len := self size.
+	len > anInteger
 		ifFalse: 
-			[c < 16r80
-				ifTrue: 
-					["Ascii char"
-					1]
-				ifFalse: 
-					["On a continution byte so in the middle of a character, which is invalid"
-					self errorIntraCharacterIndex: anInteger]]!
-
-encodedSizeOf: aCharacter
-	"Private - Answer the number of basic slots occupied by the argument when encoded in the UTF-8 encoding."
-
-	^aCharacter isUtf8
-		ifTrue: [1]
-		ifFalse: 
-			[| codePoint |
-			codePoint := aCharacter codePoint.
-			codePoint <= 16r7FF
+			["Truncated multi-byte sequence"
+			^1].
+	c2 := self basicAt: anInteger + 1.
+	"Multi-byte encoding, requires at least one continuation byte, C2..F4"
+	c < LeadByteMask3
+		ifTrue: 
+			["2-byte encoding: C2..DF 80..BF"
+			^(c >= 16rC2 and: [(c2 bitAnd: Character.Utf8SurrogateMask) == TrailByteMask])
 				ifTrue: [2]
 				ifFalse: 
-					[codePoint <= 16rFFFF
-						ifTrue: [3]
+					["Invalid"
+					1]].
+	c < LeadByteMask4
+		ifTrue: 
+			["3 byte encoding:
+				E0 A0..BF 80..BF
+				E1..EC 80..BF 80..BF
+				ED 80..9F 80..BF
+				EE..EF 80..BF 80..BF"
+			c == LeadByteMask3
+				ifTrue: 
+					[(c2 < 16rA0 or: [c2 > 16rBF])
+						ifTrue: 
+							["Invalid continuation"
+							^1]]
+				ifFalse: 
+					[c == 16rED
+						ifTrue: 
+							[(c2 <= 16r7F or: [c2 > 16r9F])
+								ifTrue: 
+									["Invalid continuation"
+									^1]]
 						ifFalse: 
-							[codePoint <= 16r1FFFFF
-								ifTrue: [4]
+							[(c2 bitAnd: Character.Utf8SurrogateMask) == TrailByteMask
 								ifFalse: 
-									["Theoretically this is not possible, as the current max Unicode char is 16r10FFFF, but UTF-8 allows for up to 6 bytes of encoding"
-									codePoint <= 16r3FFFFFF ifTrue: [5] ifFalse: [6]]]]]!
+									["Invalid continuation"
+									^1]]].
+			anInteger + 1 < len
+				ifFalse: 
+					["Valid but truncated sequence"
+					^2].
+			c := ((c bitAnd: 16rF) bitShift: 12) bitOr: ((c2 bitAnd: 16r3F) bitShift: 6).
+			c2 := self basicAt: anInteger + 2.
+			(c2 bitAnd: Character.Utf8SurrogateMask) == TrailByteMask
+				ifFalse: 
+					["Valid but truncated sequence, mid-stream"
+					^2].
+			((c bitOr: (c2 bitAnd: 16r3F)) bitAnd: 16rF800) == Character.Utf16LeadMask
+				ifTrue: 
+					["Surrogate, so whole sequence is invalid"
+					^1].
+			^3].
+	"4-Byte encodings
+		F0 90..BF 80..BF 80..BF
+		F1..F3 80..BF 80..BF 80..BF
+		F4 80..8F 80..BF 80..BF"
+	c == LeadByteMask4
+		ifTrue: 
+			[(c2 < 16r90 or: [c2 > 16rBF])
+				ifTrue: 
+					["Invalid continuation"
+					^1]]
+		ifFalse: 
+			[c == 16rF4
+				ifTrue: 
+					[(c2 <= 16r7F or: [c2 > 16r8F])
+						ifTrue: 
+							["Invalid continuation"
+							^1]]
+				ifFalse: 
+					[c > 16rF4
+						ifTrue: 
+							["Invalid encoding - 5&6 byte encodings are not supported"
+							^1].
+					(c2 bitAnd: Character.Utf8SurrogateMask) == TrailByteMask
+						ifFalse: 
+							["Invalid continuation"
+							^1]]].
+	(anInteger + 1 < len
+		and: [((self basicAt: anInteger + 2) bitAnd: Character.Utf8SurrogateMask) == TrailByteMask])
+			ifFalse: 
+				["Initially valid 4-byte sequence, truncated after 2-bytes"
+				^2].
+	(anInteger + 2 < len
+		and: [((self basicAt: anInteger + 3) bitAnd: Character.Utf8SurrogateMask) == TrailByteMask])
+			ifFalse: 
+				["Initially valid 4-byte sequence, truncated after 3-bytes"
+				^3].
+	^4!
+
+encodedSizeOf: aCharacter
+	"Private - Answer the number of basic slots (code units) occupied by the argument when encoded in the UTF-8 encoding."
+
+	| codePoint |
+	aCharacter isUtf8 ifTrue: [^1].
+	codePoint := aCharacter codePoint.
+	codePoint <= 16r7FF ifTrue: [^2].
+	codePoint <= 16rFFFF ifTrue: [^3].
+	codePoint <= OS.ICUConstants.UCHAR_MAX_VALUE ifTrue: [^4].
+	self error: 'Invalid code point U+' , (codePoint printStringBase: 16)!
 
 encodeOn: aPuttableStream put: aCharacter
-	"Private - Encode the <Character> argument onto the <WriteStream> argument using the UTF-8 encoding.
-	This requires between one and four byte code units to be written to the stream, depending on
-	the magnitude of the code point. An error is raised if the <Character> has an invalid code
-	point, or is a UTF-16 surrogate. If the <Character> is a UTF-8 surrogate, the surrogate code
-	point emitted directly."
+	"Private - Encode the <Character> argument onto the <WriteStream> argument using the UTF-8 encoding. This requires between one and four byte code units to be written to the stream, depending on the magnitude of the code point. An error is raised if the <Character> has an invalid code point, or is a UTF-16 surrogate. If the <Character> is a UTF-8 surrogate, the surrogate code point is emitted directly."
 
 	^aCharacter isUtf8
 		ifTrue: [aPuttableStream basicNextPut: aCharacter codeUnit]
 		ifFalse: 
 			[| codePoint |
 			codePoint := aCharacter codePoint.
-			codePoint < 16r800
+			codePoint <= 16r7FF
 				ifTrue: 
 					["2-byte encoding"
 					aPuttableStream
-						basicNextPut: (16rC0 bitOr: (codePoint bitShift: -6));
-						basicNextPut: (16r80 bitOr: (codePoint bitAnd: 16r3F))]
+						basicNextPut: (LeadByteMask2 bitOr: (codePoint bitShift: -6));
+						basicNextPut: (TrailByteMask bitOr: (codePoint bitAnd: 16r3F))]
 				ifFalse: 
 					[codePoint < 16rFFFF
 						ifTrue: 
@@ -343,22 +535,25 @@ encodeOn: aPuttableStream put: aCharacter
 								ifTrue: [self error: 'Cannot encode UTF-16 surrogate into UTF-8']
 								ifFalse: 
 									[aPuttableStream
-										basicNextPut: (16rE0 bitOr: (codePoint bitShift: -12));
-										basicNextPut: (16r80 bitOr: ((codePoint bitShift: -6) bitAnd: 16r3F));
-										basicNextPut: (16r80 bitOr: (codePoint bitAnd: 16r3F))]]
+										basicNextPut: (LeadByteMask3 bitOr: (codePoint bitShift: -12));
+										basicNextPut: (TrailByteMask bitOr: ((codePoint bitShift: -6) bitAnd: 16r3F));
+										basicNextPut: (TrailByteMask bitOr: (codePoint bitAnd: 16r3F))]]
 						ifFalse: 
 							["4-byte encoding"
-							codePoint <= OS.Win32Constants.MAX_UCSCHAR
+							codePoint <= OS.ICUConstants.UCHAR_MAX_VALUE
 								ifTrue: 
 									[aPuttableStream
-										basicNextPut: (16rF0 bitOr: (codePoint bitShift: -18));
-										basicNextPut: (16r80 bitOr: ((codePoint bitShift: -12) bitAnd: 16r3F));
-										basicNextPut: (16r80 bitOr: ((codePoint bitShift: -6) bitAnd: 16r3F));
-										basicNextPut: (16r80 bitOr: (codePoint bitAnd: 16r3F))]
+										basicNextPut: (LeadByteMask4 bitOr: (codePoint bitShift: -18));
+										basicNextPut: (TrailByteMask bitOr: ((codePoint bitShift: -12) bitAnd: 16r3F));
+										basicNextPut: (TrailByteMask bitOr: ((codePoint bitShift: -6) bitAnd: 16r3F));
+										basicNextPut: (TrailByteMask bitOr: (codePoint bitAnd: 16r3F))]
 								ifFalse: [self class errorInvalidCodePoint: codePoint]]]]!
 
 isLeadCodeUnit: anInteger
-	^anInteger < 16r80 or: [anInteger >= 16rC0]!
+	^anInteger <= 16r7F or: [anInteger >= LeadByteMask2]!
+
+isTrailSurrogate: anInteger 
+	^(anInteger bitAnd: 16rC0) == TrailByteMask!
 
 matchPatternFrom: patternStart in: aUtf8String from: sourceStart
 	"Private - Answer whether the receiver matches aString (starting at patternStart in the receiver and sourceStart in source).
@@ -427,22 +622,18 @@ maxEncoding
 	^4!
 
 nextIndexOfCharacter: aCharacter from: startInteger to: stopInteger
-	| codePoint stream i |
-	stopInteger > self size ifTrue: [self errorSubscriptBounds: stopInteger].
+	| codePoint i |
 	codePoint := aCharacter codePoint.
-	(codePoint < 16r80 or: [aCharacter isUtf8Surrogate])
+	(codePoint <= 16r7F or: [aCharacter isUtf8Surrogate])
 		ifTrue: 
 			[^self
 				basicIdentityIndexOf: codePoint
 				from: startInteger
 				to: stopInteger].
-	stream := self readStream.
-	i := startInteger - 1.
-	stream position: i.
-	
-	[stream next = aCharacter ifTrue: [^i + 1].
-	i := stream position.
-	i >= stopInteger] whileFalse.
+	i := startInteger.
+	[i > stopInteger] whileFalse: 
+			[(self decodeAt: i) = aCharacter ifTrue: [^i].
+			i := i + (self encodedSizeAt: i)].
 	^0!
 
 reversedFrom: startInteger to: stopInteger
@@ -527,6 +718,7 @@ encodedSizeAt:!encode/decode!private! !
 encodedSizeOf:!encode/decode!private! !
 encodeOn:put:!encode/decode!private! !
 isLeadCodeUnit:!encode/decode!public!testing! !
+isTrailSurrogate:!public! !
 matchPatternFrom:in:from:!private!searching! !
 maxEncoding!constants!private! !
 nextIndexOfCharacter:from:to:!private!searching! !

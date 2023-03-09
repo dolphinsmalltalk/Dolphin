@@ -620,6 +620,10 @@ public:
 	// String Class Primitives
 	static Oop* PRIMCALL primitiveStringAt(Oop* const sp, primargcount_t argCount);
 	static Oop* PRIMCALL primitiveStringAtPut(Oop* const sp, primargcount_t argCount);
+	
+	// UTF-8 decoding
+	static Oop* PRIMCALL primitiveUtf8StringDecodeAt(Oop* const sp, primargcount_t);
+	static Oop* PRIMCALL primitiveUtf8StringEncodedSizeAt(Oop* const sp, primargcount_t);
 
 	// Helper for memory moves
 	static void memmove(uint8_t* dst, const uint8_t* src, size_t count);

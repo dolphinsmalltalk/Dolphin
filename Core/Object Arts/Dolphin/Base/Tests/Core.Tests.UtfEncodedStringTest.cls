@@ -35,7 +35,8 @@ decodeInvalidContinuations
 	^self subclassResponsibility!
 
 decodeNonCharacters
-	^#($\x3FFFF $\x10FFFF)!
+	"Just one replacement char expected for these"
+	^#($\x3FFFF $\xFFFF $\x10FFFF)!
 
 decodeTestCases
 	^self subclassResponsibility!
@@ -268,75 +269,134 @@ testCopyWithoutIndex
 	self should: [subject copyWithoutIndex: index + 1] raise: Error!
 
 testDecodeAt
-	self decodeTestCases do: 
-			[:each |
+	self decodeTestCases pairsDo: 
+			[:codes :char |
 			| subject actual |
-			subject := self assimilateString: each.
+			subject := self makeStringFromCodeUnits: codes.
 			actual := subject decodeAt: 1.
-			self assert: actual equals: each.
-			"Starting in the middle of a character should always be an error"
-			2 to: subject size do: [:i | self should: [subject decodeAt: i] raise: Error]].
+			self assert: actual equals: char.
+			"Starting in the middle of a character should always return the replacement character"
+			2 to: subject size
+				do: 
+					[:i |
+					self assert: (subject decodeAt: i) equals: Character replacement.
+					self assert: (subject encodedSizeAt: i) equals: 1]].
 	self decodeInvalidContinuations do: 
 			[:each |
 			| subject actual |
 			subject := self makeStringFromCodeUnits: each first.
 			actual := subject decodeAt: 1.
-			self assert: actual equals: Character replacement].
+			self assert: actual equals: Character replacement.
+			self assert: (subject encodedSizeAt: 1)
+				equals: (subject readStream
+						next;
+						position)].
 	self decodeIncompleteContinuations do: 
 			[:each |
 			| subject actual |
 			subject := self makeStringFromCodeUnits: each.
 			actual := subject decodeAt: 1.
-			self assert: actual equals: Character replacement]!
+			self assert: actual equals: Character replacement.
+			self assert: (subject encodedSizeAt: 1)
+				equals: (subject readStream
+						next;
+						position)].
+	self decodeNonCharacters do: 
+			[:each |
+			| subject actual |
+			subject := self collectionClass with: each.
+			actual := subject decodeAt: 1.
+			self assert: actual equals: Character replacement.
+			self assert: (subject encodedSizeAt: 1) equals: (subject encodedSizeOf: each)].
+	self decodeInvalidCharacters pairsDo: 
+			[:codes :replacements |
+			| subject actual |
+			subject := self makeStringFromCodeUnits: codes.
+			actual := subject decodeAt: 1.
+			self assert: actual equals: Character replacement.
+			self assert: (subject encodedSizeAt: 1) equals: 1]!
 
 testDecodeNextFrom
+	"Test that the UTF decoding in the String #decodeNextFrom: methods, and in the VM's primitiveNext, correctly handles decoding of valid and invalid encoding sequences.
+	"
+
 	| subject |
 	subject := self collectionClass empty.
-	self decodeTestCases do: 
-			[:each |
-			| stream actual |
-			stream := (self assimilateString: each) readStream.
+	self decodeTestCases pairsDo: 
+			[:codes :char |
+			| stream actual string |
+			stream := codes readStream.
 			actual := subject decodeNextFrom: stream.
-			self assert: actual equals: each].
+			self assert: actual equals: char.
+			self assert: stream atEnd.
+			"Test primitiveNext"
+			string := self makeStringFromCodeUnits: codes.
+			stream := string readStream.
+			actual := stream next.
+			self assert: actual equals: char.
+			self assert: stream atEnd.
+			stream reset.
+			self assert: stream upToEnd equals: string].
 	self decodeInvalidContinuations do: 
 			[:each |
-			| stream actual |
+			| stream actual string |
 			stream := each first readStream.
 			each second timesRepeat: 
 					[actual := subject decodeNextFrom: stream.
 					self assert: actual equals: Character replacement].
 			actual := subject decodeNextFrom: stream.
 			self assert: actual equals: each last.
+			self assert: stream atEnd.
+			"Test primitiveNext"
+			string := self makeStringFromCodeUnits: each first.
+			stream := string readStream.
+			each second timesRepeat: [self assert: stream next equals: Character replacement].
+			self assert: stream next equals: each last.
 			self assert: stream atEnd].
 	self decodeIncompleteContinuations do: 
-			[:each |
-			| stream |
-			stream := each readStream.
-			each size timesRepeat: 
+			[:codes |
+			| stream string |
+			stream := codes readStream.
+			codes size timesRepeat: 
 					[| actual |
 					actual := subject decodeNextFrom: stream.
 					self assert: actual equals: Character replacement].
-			self assert: stream atEnd].
+			self assert: stream atEnd.
+			"Test primitiveNext"
+			string := self makeStringFromCodeUnits: codes.
+			stream := string readStream.
+			codes size timesRepeat: [self assert: stream next equals: Character replacement]].
 	self decodeNonCharacters do: 
 			[:each |
 			| stream actual |
-			stream := (self assimilateString: each) readStream.
+			stream := (self collectionClass with: each) readStream.
 			actual := subject decodeNextFrom: stream.
 			self assert: actual equals: Character replacement.
+			self assert: stream atEnd.
+			"Test primitiveNext"
+			stream reset.
+			self assert: stream next equals: Character replacement.
 			self assert: stream atEnd].
-	self decodeInvalidCharacters do: 
-			[:each |
-			| stream actual |
-			stream := each first readStream.
-			each second timesRepeat: 
+	self decodeInvalidCharacters pairsDo: 
+			[:codes :replacements |
+			| stream actual string |
+			stream := codes readStream.
+			replacements timesRepeat: 
 					[actual := subject decodeNextFrom: stream.
 					self assert: actual equals: Character replacement].
+			self assert: stream atEnd.
+			"Test primitiveNext"
+			string := self makeStringFromCodeUnits: codes.
+			stream := string readStream.
+			replacements timesRepeat: [self assert: stream next equals: Character replacement].
 			self assert: stream atEnd]!
 
 testDetectIfNoneExtended
 	| absent chars subject |
 	absent := Object new.
-	chars := self decodeTestCases.
+	chars := Array writeStream.
+	self decodeTestCases pairsDo: [:bytes :char | chars nextPut: char].
+	chars := chars contents.
 	subject := self newCollection: chars.
 	chars keysAndValuesDo: 
 			[:key :ch |
@@ -349,7 +409,7 @@ testDetectIfNoneExtended
 						ifNone: [absent])
 				equals: ch.
 			self assert: enumerated asArray equals: (chars copyFrom: 1 to: key).
-			self assert: (subject detect: [:each | each = $\x1F37B] ifNone: [absent]) identicalTo: absent]!
+			self assert: (subject detect: [:each | each = $🍻] ifNone: [absent]) identicalTo: absent]!
 
 testEncodeOnPut
 	{Character dolphin.

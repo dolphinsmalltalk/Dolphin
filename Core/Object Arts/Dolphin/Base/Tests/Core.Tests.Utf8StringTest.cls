@@ -35,105 +35,21 @@ collectionClass
 	^Utf8String!
 
 decodeIncompleteContinuations
-	^#(#[16rC0] #[16rE0 16r80] #[16rF0 16r80 16r80])!
+	^#(#[16rC0] #[16rE0] #[16rE0 16r80] #[16rF0 16r80 16r80])!
 
 decodeInvalidCharacters
-	^#(#(#[16rED 16rA0 16r80] 3) #(#[16rED 16rA3 16rBF] 3) #(#[16rF4 16r90 16r80 16r80] 4))!
+	"Includes UTF-16 surrogates"
+
+	^#(#[16rED 16rA0 16r80] 3 #[16rED 16rA3 16rBF] 3 #[16rED 16rBF 16rBF] 3 #[16rF4 16r90 16r80 16r80] 4 #[16rF5 16r80 16r80 16r80] 4)!
 
 decodeInvalidContinuations
-	^#(#(#[16rC0 16r41] 1 $A) #(#[16rE0 16r80 16r41] 2 $A) #(#[16rF0 16r80 16r80 16r41] 3 $A))!
+	^#(#(#[16rC0 16r00] 1 $\0) #(#[16rC2 16r41] 1 $A) #(#[16rC2 16rC0 16r00] 2 $\0) #(#[16rDF 16r00] 1 $\0) #(#[16rE0 16r80 16r41] 2 $A) #(#[16rE0 16rC0 16r41] 2 $A) #(#[16rE0 16rA0 16rC0 16r41] 2 $A) #(#[16rF0 16r80 16r80 16r41] 3 $A))!
 
 decodeTestCases
-	^#($\0 $\x7F $\x80 $\x8F $¿ $ߏ $߾ $߿ $ࠀ $\xE000 $� $𐀀 $🐬 $\x1FFFD $\x40000 $\x10FFFD)!
+	^#(#[16r0] $\0 #[16r7F] $\x7F #[16rC2 16r80] $\x80 #[16rC2 16r8F] $\x8F #[16rC2 16rBF] $\xBF #[16rDF 16r8F] $\x7CF #[16rDF 16rBE] $\x7FE #[16rDF 16rBF] $\x7FF #[16rE0 16rA0 16r80] $\x800 #[16rE1 16r80 16r80] $\x1000 #[16rEE 16r80 16r80] $\xE000 #[16rEF 16rBF 16rBD] $\xFFFD #[16rF0 16r90 16r80 16r80] $\x10000 #[16rF0 16r9F 16r90 16rAC] $🐬 #[16rF0 16r9F 16rBF 16rBD] $\x1FFFD #[16rF1 16r80 16r80 16r80] $\x40000 #[16rF4 16r8F 16rBF 16rBD] $\x10FFFD)!
 
-testAsArray
-	"Mainly to test some decoding boundary cases"
-
-	"First valid char with a single continuation is $\x80, encoded as 0xC2 0x80"
-
-	self assert: (Utf8String fromByteArray: #[16rC2 16r80]) asArray equals: #($\x80).
-	self assert: (Utf8String fromByteArray: #[16rC2 16rBF]) asArray equals: #($¿).
-
-	"Some valid single continuations"
-	self assert: (Utf8String fromByteArray: #[16rC2 16r8F 16rDF 16r8F 16rDF 16rBE]) asArray
-		equals: #($\x8F $ߏ $߾).
-
-	"Overlong encodings of \0, ?, @, DEL"
-	self assert: (Utf8String fromByteArray: #[16rC0 16r80]) asArray equals: #($� $�).
-	self assert: (Utf8String fromByteArray: #[16rC0 16rBF]) asArray equals: #($� $�).
-	self assert: (Utf8String fromByteArray: #[16rC1 16r80]) asArray equals: #($� $�).
-	self assert: (Utf8String fromByteArray: #[16rC1 16rBF]) asArray equals: #($� $�).
-
-	"Missing 1st continuation"
-	self assert: (Utf8String fromByteArray: #[16rC0]) asArray equals: #($�).
-	self assert: (Utf8String fromByteArray: #[16rC0 16r00]) asArray equals: #($� $\0).
-	self assert: (Utf8String fromByteArray: #[16rC2]) asArray equals: #($�).
-	self assert: (Utf8String fromByteArray: #[16rC2 16r00]) asArray equals: #($� $\0).
-	self assert: (Utf8String fromByteArray: #[16rDF]) asArray equals: #($�).
-	self assert: (Utf8String fromByteArray: #[16rDF 16r00]) asArray equals: #($� $\0).
-
-	"Invalid first continuation"
-	self assert: (Utf8String fromByteArray: #[16rC2 16rC0]) asArray equals: #($� $�).
-
-	"Last valid char with a single continuation is $\x7FF, encoded 0xDF 0xBF"
-	self assert: (Utf8String fromByteArray: #[16rDF 16rBF]) asArray equals: #($߿).
-	self assert: (Utf8String fromByteArray: #[16rDF 16rBF 16r00]) asArray equals: #($߿ $\0).
-
-	"First valid char with two continuations is $\x800, encoded 0xE0 0xA0 0x80"
-	self assert: (Utf8String fromByteArray: #[16rE0 16rA0 16r80]) asArray equals: #($ࠀ).
-	"U+1000"
-	self assert: (Utf8String fromByteArray: #[16rE1 16r80 16r80]) asArray equals: #($က).
-
-	"Overlong 3 byte encodings of  \0, ?, @, DEL, U+03C0, U+03FF, U+0400, U+043F, U+07C0, U+07FF"
-	self assert: (Utf8String fromByteArray: #[16rE0 16r80 16r80]) asArray equals: #($� $� $�).
-	self assert: (Utf8String fromByteArray: #[16rE0 16r80 16rBF]) asArray equals: #($� $� $�).
-	self assert: (Utf8String fromByteArray: #[16rE0 16r81 16r80]) asArray equals: #($� $� $�).
-	self assert: (Utf8String fromByteArray: #[16rE0 16r8F 16r80]) asArray equals: #($� $� $�).
-	self assert: (Utf8String fromByteArray: #[16rE0 16r8F 16rBF]) asArray equals: #($� $� $�).
-	self assert: (Utf8String fromByteArray: #[16rE0 16r90 16r80]) asArray equals: #($� $� $�).
-	self assert: (Utf8String fromByteArray: #[16rE0 16r90 16rBF]) asArray equals: #($� $� $�).
-	self assert: (Utf8String fromByteArray: #[16rE0 16r9F 16r80]) asArray equals: #($� $� $�).
-	self assert: (Utf8String fromByteArray: #[16rE0 16r9F 16rBF]) asArray equals: #($� $� $�).
-
-	"Missing continuations"
-	self assert: (Utf8String fromByteArray: #[16rE0]) asArray equals: #($�).
-	self assert: (Utf8String fromByteArray: #[16rE0 16r80]) asArray equals: #($� $�).
-
-	"Invalid continuations"
-	self assert: (Utf8String fromByteArray: #[16rE0 16rC0 16r41]) asArray equals: #($� $� $A).
-	self assert: (Utf8String fromByteArray: #[16rE0 16rA0 16rC0 16r41]) asArray equals: #($� $� $A).
-
-	"UTF-16 surrogates"
-	self assert: (Utf8String fromByteArray: #[16rED 16rA0 16r80 16rED 16rBF 16rBF]) asArray
-		equals: #($� $� $� $� $� $�).
-
-	"First non-surrogate"
-	self assert: (Utf8String fromByteArray: #[16rEE 16r80 16r80]) asArray equals: #($\xE000).
-
-	"Last 3-byte encoding, U+FFFF. Valid encoding, but a non-char, so whole sequence translated to one replacement"
-	self assert: (Utf8String fromByteArray: #[16rEF 16rBF 16rBF]) asArray equals: #($�).
-
-	"Overlong 4 byte encodings"
-	self assert: (Utf8String fromByteArray: #[16rE0 16r80 16r80 16r80]) asArray
-		equals: #($� $� $� $�).
-	self assert: (Utf8String fromByteArray: #[16rE0 16r80 16r80 16r80]) asArray
-		equals: #($� $� $� $�).
-	self assert: (Utf8String fromByteArray: #[16rF0 16r8F 16rBF 16rBF 16r00]) asArray
-		equals: #($� $� $� $� $\0).
-
-	"First valid 4-byte encoding, U+10000"
-	self assert: (Utf8String fromByteArray: #[16rF0 16r90 16r80 16r80]) asArray equals: #($𐀀).
-	"U+3FFFF - non-character "
-	self assert: (Utf8String fromByteArray: #[16rF0 16rBF 16rBF 16rBF]) asArray equals: #($�).
-	"U+40000"
-	self assert: (Utf8String fromByteArray: #[16rF1 16r80 16r80 16r80]) asArray equals: #($\x40000).
-
-	"Last valid 4-byte encoding, U+10FFFF, but non-char so just one replacement"
-	self assert: (Utf8String fromByteArray: #[16rF4 16r8F 16rBF 16rBF 16r41]) asArray equals: #($� $A).
-
-	"Out of range 4-byte encoding, U+110000"
-	self assert: (Utf8String fromByteArray: #[16rF5 16r80 16r80 16r80 16r41]) asArray
-		equals: #($� $� $� $� $A)!
+makeStringFromCodeUnits: aByteArray
+	^Utf8String fromByteArray: aByteArray!
 
 testAssociations
 	| subject |
@@ -202,7 +118,7 @@ testAsUtf16StringMarkusKuhnBoundaryCases
 	self assertAsUtf16String: (Utf8String with: $\xE000) equals: (Utf16String with: $\xE000).
 
 	"2.3.3  U-0000FFFD"
-	self assertAsUtf16String: (Utf8String with: $�) equals: (Utf16String with: $�).
+	self assertAsUtf16String: (Utf8String with: $\xFFFD) equals: (Utf16String with: $\xFFFD).
 
 	"2.3.4  U-0010FFFF"
 	"16r10FFFF is non-char, but is a valid code point so we don't translate it to the replacement character"
@@ -268,10 +184,11 @@ testAsUtf16StringMarkusKuhnImpossibleBytes
 	"3.5  Impossible bytes"
 
 	"The following two bytes cannot appear in a correct UTF-8 string"
+
 	"3.5.1  fe"
-	self assertAsUtf16String: (Utf8String fromByteArray: #[16rFE]) equals: (Utf16String with: $�).
+	self assertAsUtf16String: (Utf8String fromByteArray: #[16rFE]) equals: (Utf16String with: $\xFFFD).
 	"3.5.2  ff"
-	self assertAsUtf16String: (Utf8String fromByteArray: #[16rFF]) equals: (Utf16String with: $�).
+	self assertAsUtf16String: (Utf8String fromByteArray: #[16rFF]) equals: (Utf16String with: $\xFFFD).
 	"3.5.3  fe fe ff ff"
 	self assertInvalidSequence: (Utf8String fromByteArray: #[16rFE 16rFE 16rFF 16rFF]) length: 4!
 
@@ -327,10 +244,12 @@ testAsUtf16StringMarkusKuhnLonelyStarts
 									strm
 										nextPut: ch;
 										nextPut: 32]]))
-		equals: (Utf16String withAll: (Array
-						streamContents: [:strm | 32 timesRepeat: 
+		equals: (Utf16String
+				withAll: (Array streamContents: 
+							[:strm |
+							32 timesRepeat: 
 									[strm
-										nextPut: $�;
+										nextPut: $\xFFFD;
 										nextPut: $\x20]])).
 	"3.2.2  All 16 first bytes of 3-byte sequences (0xe0-0xef), each followed by a space character:"
 	self assertAsUtf16String: (Utf8String
@@ -342,10 +261,12 @@ testAsUtf16StringMarkusKuhnLonelyStarts
 									strm
 										nextPut: ch;
 										nextPut: 32]]))
-		equals: (Utf16String withAll: (Array
-						streamContents: [:strm | 16 timesRepeat: 
+		equals: (Utf16String
+				withAll: (Array streamContents: 
+							[:strm |
+							16 timesRepeat: 
 									[strm
-										nextPut: $�;
+										nextPut: $\xFFFD;
 										nextPut: $\x20]])).
 	"3.2.3  All 8 first bytes of 4-byte sequences (0xf0-0xf7), each followed by a space character: "
 	self assertAsUtf16String: (Utf8String
@@ -357,10 +278,12 @@ testAsUtf16StringMarkusKuhnLonelyStarts
 									strm
 										nextPut: ch;
 										nextPut: 32]]))
-		equals: (Utf16String withAll: (Array
-						streamContents: [:strm | 8 timesRepeat: 
+		equals: (Utf16String
+				withAll: (Array streamContents: 
+							[:strm |
+							8 timesRepeat: 
 									[strm
-										nextPut: $�;
+										nextPut: $\xFFFD;
 										nextPut: $\x20]])).
 	"3.2.4  All 4 first bytes of 5-byte sequences (0xf8-0xfb), each followed by a space character: "
 	self assertAsUtf16String: (Utf8String
@@ -372,10 +295,12 @@ testAsUtf16StringMarkusKuhnLonelyStarts
 									strm
 										nextPut: ch;
 										nextPut: 32]]))
-		equals: (Utf16String withAll: (Array
-						streamContents: [:strm | 4 timesRepeat: 
+		equals: (Utf16String
+				withAll: (Array streamContents: 
+							[:strm |
+							4 timesRepeat: 
 									[strm
-										nextPut: $�;
+										nextPut: $\xFFFD;
 										nextPut: $\x20]])).
 	"3.2.5  All 2 first bytes of 6-byte sequences (0xfc-0xfd),  each followed by a space character: "
 	self assertAsUtf16String: (Utf8String
@@ -387,10 +312,12 @@ testAsUtf16StringMarkusKuhnLonelyStarts
 									strm
 										nextPut: ch;
 										nextPut: 32]]))
-		equals: (Utf16String withAll: (Array
-						streamContents: [:strm | 2 timesRepeat: 
+		equals: (Utf16String
+				withAll: (Array streamContents: 
+							[:strm |
+							2 timesRepeat: 
 									[strm
-										nextPut: $�;
+										nextPut: $\xFFFD;
 										nextPut: $\x20]]))!
 
 testAsUtf16StringMarkusKuhnNonCharacters
@@ -499,12 +426,12 @@ testAsUtf16StringMarkusKuhnUnexpectedContinuations
 
 	"3.1.1  First continuation byte 0x80: "
 
-	self assertAsUtf16String: (Utf8String fromByteArray: #[16r80]) equals: (Utf16String with: $�).
+	self assertAsUtf16String: (Utf8String fromByteArray: #[16r80]) equals: (Utf16String with: $\xFFFD).
 	"3.1.2  Last continuation byte 0xbf: "
-	self assertAsUtf16String: (Utf8String fromByteArray: #[16rBF]) equals: (Utf16String with: $�).
+	self assertAsUtf16String: (Utf8String fromByteArray: #[16rBF]) equals: (Utf16String with: $\xFFFD).
 	"3.1.3  2 continuation bytes: "
 	self assertAsUtf16String: (Utf8String fromByteArray: #[16r80 16rBF])
-		equals: (Utf16String with: $� with: $�).
+		equals: (Utf16String with: $\xFFFD with: $\xFFFD).
 	"3.1.4  3 continuation bytes: "
 	self assertInvalidSequence: (Utf8String fromByteArray: #[16r80 16rBF 16r80]) length: 3.
 	"3.1.5  4 continuation bytes: "
@@ -552,15 +479,20 @@ testConcatenateInvalidUtf8
 		equals: (Utf8String fromByteArray: #[194 98 194 226 130 172 144 128 128 240 159 172])!
 
 testCopyWith
-	| string |
-	string := self assimilateString: 'a£文1🍺'.
-	self assert: (string copyWith: Character dolphin) equals: 'a£文1🍺🐬'!
+	| subject actual |
+	subject := self assimilateString: 'a£文1🍺'.
+	self assert: subject length equals: 5.
+	actual := subject copyWith: Character dolphin.
+	self assert: actual equals: 'a£文1🍺🐬'.
+	self assert: actual length equals: 6!
 
 testCopyWithAtIndex
-	| string |
-	string := self assimilateString: 'a£文1🍺'.
-	self assert: (string copyWith: Character dolphin atIndex: 4) equals: 'a£🐬文1🍺'.
-	self should: [string copyWith: Character dolphin atIndex: 5] raise: Error!
+	| subject actual |
+	subject := self assimilateString: 'a£文1🍺'.
+	actual := subject copyWith: Character dolphin atIndex: 4.
+	self assert: actual equals: 'a£🐬文1🍺'.
+	self assert: actual length equals: subject length + 1.
+	self should: [subject copyWith: Character dolphin atIndex: 5] raise: Error!
 
 testDecodeNextFrom5and6Byte
 	| subject bytes |
@@ -583,47 +515,50 @@ testDecodeNextFrom5and6Byte
 	self assert: bytes atEnd!
 
 testDecodeNextFromOverlong
-	| subject bytes |
-	subject := self collectionClass empty.
-	"4.1 Overlong ASCII character encodings"
-	bytes := #[16rC0 16rAF 95 16rE0 16r80 16rAF 95 16rF0 16r80 16r80 16rAF 95 16rF8 16r80 16r80 16r80 16rAF 95 16rFC 16r80 16r80 16r80 16r80 16rAF 95]
-				readStream.
-	1 to: 5
-		do: 
-			[:i |
-			1 + i timesRepeat: [self assert: (subject decodeNextFrom: bytes) equals: Character replacement].
-			self assert: (subject decodeNextFrom: bytes) equals: $_].
-	"4.2 Maximum overlong sequences"
-	bytes := #[16rC1 16rBF 10 16rE0 16r9F 16rBF 10 16rF0 16r8F 16rBF 16rBF 10 16rF8 16r87 16rBF 16rBF 16rBF 10 16rFC 16r83 16rBF 16rBF 16rBF 16rBF 10]
-				readStream.
-	1 to: 5
-		do: 
-			[:i |
-			1 + i timesRepeat: [self assert: (subject decodeNextFrom: bytes) equals: Character replacement].
-			self assert: (subject decodeNextFrom: bytes) equals: Character lf].
-	"4.3 Overlong representations of NUL"
-	bytes := #[16rC0 16r80 10 16rE0 16r80 16r80 10 16rF0 16r80 16r80 16r80 10 16rF8 16r80 16r80 16r80 16r80 10 16rFC 16r80 16r80 16r80 16r80 16r80 10]
-				readStream.
-	1 to: 5
-		do: 
-			[:i |
-			1 + i timesRepeat: [self assert: (subject decodeNextFrom: bytes) equals: Character replacement].
-			self assert: (subject decodeNextFrom: bytes) equals: Character lf].!
+	"Overlong character encodings"
+
+	| subject stream bytes i byteStream |
+	bytes := #[16rC0 16r80 95 16rC0 16rAF 95 16rC0 16rBF 95 16rC1 16r80 95 16rC1 16rBF 95 16rE0 16r80 16r80 95 16rE0 16r80 16rBF 95 16rE0 16r9F 16rBF 95 16rE0 16r80 16rAF 95 16rE0 16r81 16r80 95 16rE0 16r8F 16r80 95 16rE0 16r8F 16rBF 95 16rE0 16r90 16r80 95 16rE0 16r90 16rBF 95 16rE0 16r9F 16r80 95 16rE0 16r9F 16rBF 95 16rE0 16r80 16r80 16r80 95 16rF0 16r80 16r80 16r80 95 16rF0 16r80 16r80 16rAF 95 16rF0 16r8F 16rBF 16rBF 95 16rF0 16r8F 16rBF 16rBF 16r80 95 16rF8 16r80 16r80 16r80 16r80 95 16rF8 16r80 16r80 16r80 16rAF 95 16rF8 16r87 16rBF 16rBF 16rBF 95 16rFC 16r80 16r80 16r80 16r80 16r80 95 16rFC 16r80 16r80 16r80 16r80 16rAF 95 16rFC 16r83 16rBF 16rBF 16rBF 16rBF 95].
+	subject := self collectionClass fromByteArray: bytes.
+	self assert: subject length equals: bytes size.
+	byteStream := bytes readStream.
+	stream := subject readStream.
+	i := 1.
+	[i > bytes size] whileFalse: 
+			[| end |
+			end := bytes
+						nextIndexOf: 16r5F
+						from: i
+						to: bytes size.
+			i to: end - 1
+				do: 
+					[:j |
+					| n |
+					n := subject encodedSizeAt: j.
+					self assert: (subject decodeNextFrom: byteStream) equals: Character replacement.
+					self assert: byteStream position equals: j + n - 1.
+					self assert: (subject decodeAt: j) equals: Character replacement].
+			self assert: byteStream position equals: end - 1.
+			self assert: (subject decodeNextFrom: byteStream) equals: $_.
+			self assert: byteStream position equals: end.
+			self assert: (subject encodedSizeAt: end) equals: 1.
+			self assert: (subject decodeAt: end) equals: $_.
+			end - i timesRepeat: [self assert: stream next equals: Character replacement].
+			self assert: stream next equals: $_.
+			self assert: stream position equals: end.
+			i := end + 1].
+	self assert: byteStream atEnd.
+	self assert: stream atEnd!
 
 testEncodedSizeOf
-	| subject max |
+	| subject |
 	subject := self collectionClass empty.
-	"Larger encoded values are possible, but we can't represent them as characters because I allowed only 24 bits for the code point (more than adequate for Unicode, which requires a maximum of 4 bytes in UTF-8)."
-	#(16r0 1 16r7F 1 16r80 2 16r7FF 2 16r800 3 16rFFFF 3 16r10000 4 16r1FFFFF 4 16r200000 5 16rFFFFFF 5)
-		pairsDo: 
-			[:cp :bytes |
-			| ch |
-			"Some of these chars are invalid, so use basic constructor"
-			ch := Character codePoint: cp ifInvalid: [Character newCode: Character.Utf32Mask | cp].
-			self assert: (subject encodedSizeOf: ch) equals: bytes].
-	"The maximum Unicode code point is a non-character."
-	max := Character newCode: Character.Utf32Mask | OS.Win32Constants.MAX_UCSCHAR.
-	self assert: (subject encodedSizeOf: max) equals: 4!
+	#($\0 1 $\x7F 1 $\x80 2 $\x7FF 2 $\x800 3 $\xFFFF 3 $\x10000 4 $\x10FFFF 4)
+		pairsDo: [:ch :bytes | self assert: (subject encodedSizeOf: ch) equals: bytes].
+	self
+		should: [subject encodedSizeOf: (Character newCode: Character.Utf32Mask | 16r110000)]
+		raise: Error
+		matching: [:ex | ex messageText = 'Invalid code point U+110000']!
 
 testFromByteArray
 	"Examples are from RFC3629"
@@ -631,21 +566,25 @@ testFromByteArray
 	| theKoreanLanguage theJapaneseLanguage stumpOfTreeWithBom |
 	theKoreanLanguage := Utf8String
 				fromByteArray: #[16rED 16r95 16r9C 16rEA 16rB5 16rAD 16rEC 16r96 16rB4].
+	self assert: theKoreanLanguage length equals: 3.
 	self assert: (theKoreanLanguage asArray collect: [:each | each codePoint])
 		equals: #(16rD55C 16rAD6D 16rC5B4).
 	self assert: theKoreanLanguage equals: '한국어'.
 	theJapaneseLanguage := Utf8String
 				fromByteArray: #[16rE6 16r97 16rA5 16rE6 16r9C 16rAC 16rE8 16rAA 16r9E].
+	self assert: theJapaneseLanguage length equals: 3.
 	self assert: (theJapaneseLanguage asArray collect: [:each | each codePoint])
 		equals: #(16r65E5 16r672C 16r8A9E).
 	self assert: theJapaneseLanguage equals: '日本語'.
 	stumpOfTreeWithBom := Utf8String fromByteArray: #[16rEF 16rBB 16rBF 16rF0 16rA3 16r8E 16rB4].
+	self assert: stumpOfTreeWithBom length equals: 2.
 	self assert: (stumpOfTreeWithBom asArray collect: [:each | each codePoint])
 		equals: #(16rFEFF 16r233B4)!
 
 testKeys
 	| subject |
 	subject := self assimilateString: 'a£文🐬1🍺'.
+	self assert: subject length equals: 6.
 	self assert: subject keys equals: #(1 2 4 7 11 12)!
 
 testLastCodeUnit
@@ -655,7 +594,185 @@ testLastCodeUnit
 	self assert: (subject basicAt: subject size) equals: 16rBA.
 	last := subject lastCodeUnit.
 	self assert: last isUtf8Trail.
-	self assert: last equals: (Character utf8Value: 16rBA)! !
+	self assert: last equals: (Character utf8Value: 16rBA)!
+
+testUnicodeBestPracticeDecodingExamplesIllFormedSurrogates
+	| utf8 stream |
+	"Table 3-9. U+FFFD for Ill-Formed Sequences for Surrogates"
+	utf8 := Utf8String fromByteArray: #[16rED 16rA0 16r80 16rED 16rBF 16rBF 16rED 16rAF 16r41].
+	self assert: utf8 length equals: 9.
+	stream := utf8 readStream.
+	8 timesRepeat: [self assert: (utf8 decodeNextFrom: stream) equals: $\xFFFD].
+	self assert: (utf8 decodeNextFrom: stream) equals: $A.
+	self assert: stream atEnd.
+	stream reset.
+	8 timesRepeat: [self assert: stream next equals: $\xFFFD].
+	self assert: stream next equals: $A.
+	self assert: stream atEnd.
+	self assert: utf8 associations
+		equals: (((1 to: 8) collect: [:i | i -> Character replacement]) copyWith: 9 -> $A).
+	"Conversion to UTF-16 should follow the same decoding algorithm"
+	self assert: utf8 asUtf16String asByteArray
+		equals: #[16rFD 16rFF 16rFD 16rFF 16rFD 16rFF 16rFD 16rFF 16rFD 16rFF 16rFD 16rFF 16rFD 16rFF 16rFD 16rFF 16r41 16r0]!
+
+testUnicodeBestPracticeDecodingExamplesOtherIllFormed
+	| utf8 stream |
+	"Table 3-10. U+FFFD for Other Ill-Formed Sequences"
+	utf8 := Utf8String fromByteArray: #[16rF4 16r91 16r92 16r93 16rFF 16r41 16r80 16rBF 16r42].
+	self assert: utf8 length equals: 9.
+	stream := utf8 readStream.
+	5 timesRepeat: [self assert: (utf8 decodeNextFrom: stream) equals: $\xFFFD].
+	self assert: (utf8 decodeNextFrom: stream) equals: $A.
+	2 timesRepeat: [self assert: (utf8 decodeNextFrom: stream) equals: $\xFFFD].
+	self assert: (utf8 decodeNextFrom: stream) equals: $B.
+	self assert: stream atEnd.
+	stream reset.
+	5 timesRepeat: [self assert: stream next equals: $\xFFFD].
+	self assert: stream next equals: $A.
+	2 timesRepeat: [self assert: stream next equals: $\xFFFD].
+	self assert: stream next equals: $B.
+	self assert: stream atEnd.
+	self assert: utf8 associations
+		equals: {
+				1 -> $\xFFFD.
+				2 -> $\xFFFD.
+				3 -> $\xFFFD.
+				4 -> $\xFFFD.
+				5 -> $\xFFFD.
+				6 -> $A.
+				7 -> $\xFFFD.
+				8 -> $\xFFFD.
+				9 -> $B
+			}.
+
+	"Conversion to UTF-16 should follow the same decoding algorithm"
+	self assert: utf8 asUtf16String asByteArray
+		equals: #[16rFD 16rFF 16rFD 16rFF 16rFD 16rFF 16rFD 16rFF 16rFD 16rFF 16r41 16r0 16rFD 16rFF 16rFD 16rFF 16r42 16r0]!
+
+testUnicodeBestPracticeDecodingExamplesOverlong
+	| utf8 stream |
+	"Table 3-8: Non-Shortest Form Sequences"
+	utf8 := Utf8String fromByteArray: #[16rC0 16rAF 16rE0 16r80 16rBF 16rF0 16r81 16r82 16r41].
+	self assert: utf8 length equals: 9.
+	stream := utf8 readStream.
+	8 timesRepeat: [self assert: (utf8 decodeNextFrom: stream) equals: $\xFFFD].
+	self assert: (utf8 decodeNextFrom: stream) equals: $A.
+	self assert: stream atEnd.
+	stream reset.
+	8 timesRepeat: [self assert: stream next equals: $\xFFFD].
+	self assert: stream next equals: $A.
+	self assert: stream atEnd.
+	"Conversion to UTF-16 should follow the same decoding algorithm"
+	self assert: utf8 asUtf16String asByteArray
+		equals: #[16rFD 16rFF 16rFD 16rFF 16rFD 16rFF 16rFD 16rFF 16rFD 16rFF 16rFD 16rFF 16rFD 16rFF 16rFD 16rFF 16r41 16r0].
+
+	"Other (non-stream) decoding"
+	self assert: utf8 associations
+		equals: (((1 to: 8) collect: [:i | i -> Character replacement]) copyWith: 9 -> $A).
+	#(#[16rC0 16rAF] #[16rE0 16r80 16rBF] #[16rF0 16r81 16r82 16rBF]) do: 
+			[:each |
+			utf8 := Utf8String fromByteArray: each.
+			self assert: utf8 length equals: utf8 size.
+			self assert: utf8 first equals: Character replacement.
+			self
+				should: [utf8 single]
+				raise: Error
+				matching: [:ex | ex messageText = 'String is not of a single Character'].
+			1 to: each size
+				do: 
+					[:i |
+					self assert: (utf8 encodedSizeAt: i) equals: 1.
+					self assert: (utf8 codePointAt: i) equals: Character replacement].
+			self assert: utf8 keys equals: (1 to: each size)]!
+
+testUnicodeBestPracticeDecodingExamplesTruncated
+	| utf8 stream |
+	"Table 3-11. U+FFFD for Truncated Sequences"
+	utf8 := Utf8String fromByteArray: #[16rE1 16r80 16rE2 16rF0 16r91 16r92 16rF1 16rBF 16r41].
+	self assert: utf8 length equals: 5.
+	stream := utf8 readStream.
+	self assert: (utf8 decodeNextFrom: stream) equals: $\xFFFD.
+	self assert: stream basicNext equals: 16rE2.
+	stream pop.
+	self assert: (utf8 decodeNextFrom: stream) equals: $\xFFFD.
+	self assert: stream basicNext equals: 16rF0.
+	stream pop.
+	self assert: (utf8 decodeNextFrom: stream) equals: $\xFFFD.
+	self assert: stream basicNext equals: 16rF1.
+	stream pop.
+	self assert: (utf8 decodeNextFrom: stream) equals: $\xFFFD.
+	self assert: (utf8 decodeNextFrom: stream) equals: $A.
+	self assert: stream atEnd.
+	stream reset.
+	4 timesRepeat: [self assert: stream next equals: $\xFFFD].
+	self assert: stream next equals: $A.
+	self assert: stream atEnd.
+	"Conversion to UTF-16 should follow the same decoding algorithm"
+	self assert: utf8 asUtf16String asByteArray
+		equals: #[16rFD 16rFF 16rFD 16rFF 16rFD 16rFF 16rFD 16rFF 16r41 16r0].
+	"Enumerations should use the same decoding as streams and also enumerate multiple replacement characters for invalid sequences"
+	self assert: utf8 associations
+		equals: { 1 -> $\xFFFD. 3 -> $\xFFFD. 4 -> $\xFFFD. 7 -> $\xFFFD. 9 -> $A }.
+	self assert: utf8 keys equals: #(1 3 4 7 9).
+	self assert: (utf8 codePointAt: 1) equals: Character replacement.
+	self assert: (utf8 codePointAt: 2) equals: Character replacement.
+	self assert: (utf8 codePointAt: 3) equals: Character replacement.
+	self assert: (utf8 codePointAt: 4) equals: Character replacement.
+	self assert: (utf8 codePointAt: 5) equals: $A.
+
+	"Check them some truncation variations individually"
+	#(#[16rE0 16rA0] #[16rE1 16r80] #[16rE1 16rBF] #[16rEC 16r80] #[16rEC 16rBF] #[16rED 16r80] #[16rED 16r9F] #[16rEE 16r80] #[16rEE 16rBF] #[16rEF 16r80] #[16rEF 16rBF] #[16rE0] #[16rE1] #[16rEC] #[16rED] #[16rEE] #[16rEF] #[16rF0] #[16rF1] #[16rF2] #[16rF3] #[16rF4] #[16rF0 16r90] #[16rF0 16rBF] #[16rF0 16r90 16r80] #[16rF0 16rBF 16rBF] #[16rF1 16r80] #[16rF1 16rBF] #[16rF1 16r80 16r80] #[16rF1 16rBF 16rBF] #[16rF3 16r80] #[16rF3 16rBF] #[16rF3 16r80 16r80] #[16rF3 16rBF 16rBF] #[16rF4 16r80] #[16rF4 16r8F] #[16rF4 16r80 16r80] #[16rF4 16r8F 16rBF])
+		do: 
+			[:each |
+			utf8 := Utf8String fromByteArray: each.
+			self assert: utf8 length equals: 1.
+			stream := utf8 readStream.
+			self assert: (utf8 decodeNextFrom: stream) equals: $\xFFFD.
+			self assert: stream atEnd.
+			stream reset.
+			self assert: stream next equals: $\xFFFD.
+			self assert: stream atEnd.
+			"Non-stream"
+			self assert: (utf8 decodeAt: 1) equals: $\xFFFD.
+			self assert: (utf8 encodedSizeAt: 1) equals: each size.
+			self assert: utf8 single equals: $\xFFFD.
+
+			"Truncated mid-stream"
+			utf8 := Utf8String fromByteArray: (each copyWith: 16r41).
+			self assert: utf8 length equals: 2.
+			stream := utf8 readStream.
+			self assert: (utf8 decodeNextFrom: stream) equals: $\xFFFD.
+			self assert: (utf8 decodeNextFrom: stream) equals: $A.
+			self assert: stream atEnd.
+			stream reset.
+			self assert: stream next equals: $\xFFFD.
+			self assert: stream next equals: $A.
+			self assert: stream atEnd.
+			self assert: utf8 associations equals: { 1 -> $\xFFFD. each size + 1 -> $A }.
+
+			"Conversion to UTF-16 should follow the same decoding algorithm"
+			self assert: utf8 asUtf16String asByteArray equals: #[16rFD 16rFF 16r41 16r0]]!
+
+testUnicodeBestPracticeDecodingExamplesWellFormed
+	| utf8 stream |
+	"Table 3-7. Well formed - note these include some non-characters that are replaced with a single replacement char"
+	#(#[0] $\0 #[16r7F] $\x7F #[16rC2 16r80] $\x80 #[16rDF 16rBF] $\x7FF #[16rE0 16rA0 16r80] $\x800 #[16rE0 16rBF 16rBF] $\xFFF #[16rE1 16r80 16r80] $\x1000 #[16rEC 16rBF 16rBF] $\xCFFF #[16rED 16r80 16r80] $\xD000 #[16rED 16r9F 16rBF] $\xD7FF #[16rEE 16r80 16r80] $\xE000 #[16rEF 16rBF 16rBF] $\xFFFD #[16rF0 16r90 16r80 16r80] $\x10000 #[16rF0 16rBF 16rBF 16rBF] $\xFFFD #[16rF1 16r80 16r80 16r80] $\x40000 #[16rF3 16rBF 16rBF 16rBF] $\xFFFD #[16rF4 16r80 16r80 16r80] $\x100000 #[16rF4 16r8F 16rBF 16rBF] $\xFFFD)
+		pairsDo: 
+			[:each :char |
+			utf8 := Utf8String fromByteArray: each.
+			self assert: utf8 length equals: 1.
+			stream := utf8 readStream.
+			self assert: (utf8 decodeNextFrom: stream) equals: char.
+			self assert: stream atEnd.
+			stream reset.
+			self assert: stream next equals: char.
+			self assert: stream atEnd.
+			"Non-stream"
+			self assert: (utf8 decodeAt: 1) equals: char.
+			self assert: (utf8 encodedSizeAt: 1) equals: utf8 size.
+			self assert: utf8 single equals: char.
+			"Conversion to UTF-16 should follow the same decoding algorithm, although non-chars will be converted as these are valid encodings. These will be replaced with U+FFFDs when streamed out of the Utf16String though."
+			self assert: utf8 asUtf16String single equals: char]! !
 !Core.Tests.Utf8StringTest categoriesForMethods!
 assertAsUtf16String:equals:!helpers!private! !
 assertInvalidSequence:length:!helpers!private! !
@@ -665,7 +782,7 @@ decodeIncompleteContinuations!constants!private! !
 decodeInvalidCharacters!constants!private! !
 decodeInvalidContinuations!constants!private! !
 decodeTestCases!constants!private! !
-testAsArray!public! !
+makeStringFromCodeUnits:!helpers!private! !
 testAssociations!public!unit tests! !
 testAsUtf16StringMarkusKuhnBoundaryCases!public!unit tests! !
 testAsUtf16StringMarkusKuhnIllegalCodePositions!public!unit tests! !
@@ -686,5 +803,10 @@ testEncodedSizeOf!public!unit tests! !
 testFromByteArray!public!unit tests! !
 testKeys!public!unit tests! !
 testLastCodeUnit!public!unit tests! !
+testUnicodeBestPracticeDecodingExamplesIllFormedSurrogates!public! !
+testUnicodeBestPracticeDecodingExamplesOtherIllFormed!public! !
+testUnicodeBestPracticeDecodingExamplesOverlong!public! !
+testUnicodeBestPracticeDecodingExamplesTruncated!public! !
+testUnicodeBestPracticeDecodingExamplesWellFormed!public! !
 !
 

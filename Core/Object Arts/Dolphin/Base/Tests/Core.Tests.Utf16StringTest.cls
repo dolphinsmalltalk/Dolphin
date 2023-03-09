@@ -34,7 +34,7 @@ decodeInvalidContinuations
 	^#(#(#(16rD800 16rD83D 16rDC2C) 1 $\x1F42C) #(#(16rD800 16rA1) 1 ##(Character value: 16rA1)) #(#(16rD800 16rD800) 1 $\xFFFD))!
 
 decodeTestCases
-	^#($\0 $\x7F $\x80 $\x7FF $\x800 $\xFFFD $\x10000 $\x1F42C $\x1FFFD)!
+	^#(#(0) $\0 #(16r7F) $\x7F #(16r80) $\x80 #(16r7FF) $\x7FF #(16r800) $\x800 #(16r7FFF) $\x7FFF #(16r8000) $\x8000 #(16rE000) $\xE000 #(16rFFFD) $\xFFFD #(16rD800 16rDC00) $\x10000 #(16rD83D 16rDC2C) $🐬 #(16rD83F 16rDFFD) $\x1FFFD #(16rD8C0 16rDC00) $\x40000 #(16rDBFF 16rDFFD) $\x10FFFD #(16rDBFE 16rDFFF) $\x10FBFF)!
 
 testAssociations
 	| subject |
@@ -134,11 +134,11 @@ testUtf8StringConversion
 				with: $c) asUtf8String
 		equals: (Utf8String
 				with: $a
-				with: $�
+				with: $\xFFFD
 				with: $b
-				with: $�
+				with: $\xFFFD
 				with: $c).
-	self assert: (Utf16String withAll: #($£ $🐬 $€ $𐀀 $€)) asUtf8String
+	self assert: (Utf16String withAll: #($£ $🐬 $€ $\x10000 $€)) asUtf8String
 		equals: '£🐬€𐀀€'.
 	"U+10FFFD is the largest valid character"
 	self assert: (Utf16String with: $\x10FFFD) asUtf8String equals: (Utf8String with: $\x10FFFD)! !

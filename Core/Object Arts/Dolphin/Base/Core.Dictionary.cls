@@ -458,9 +458,7 @@ printSelfEvaluatingOn: aStream
 				print: self associations single;
 				nextPut: $)]
 		ifFalse: 
-			[| assocs |
-			assocs := self associations.
-			aStream
+			[aStream
 				nextPutAll: #withAll:;
 				space;
 				print: (self sortSelfEvaluatingElements: self associations locale: aStream locale);
