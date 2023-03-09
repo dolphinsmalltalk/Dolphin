@@ -11,6 +11,7 @@ Core.UtfEncodedString
 			'LeadByteMask2' -> 16rC0.
 			'LeadByteMask3' -> 16rE0.
 			'LeadByteMask4' -> 16rF0.
+			'SurrogateMask' -> 16rC0.
 			'TrailByteMask' -> 16r80
 		}!
 Core.Utf8String guid: (Core.GUID fromString: '{c5ab1b05-241f-4955-8b44-0c80b93bafbb}')!
@@ -59,8 +60,7 @@ before: aCharacter ifAbsent: aNiladicValuable
 	index == 1 ifTrue: [^self errorFirstObject: aCharacter].
 	
 	[index := index - 1.
-	((self basicAt: index) bitAnd: Character.Utf8SurrogateMask) == TrailByteMask]
-			whileTrue.
+	((self basicAt: index) bitAnd: SurrogateMask) == TrailByteMask] whileTrue.
 	^self decodeAt: index!
 
 bom 
@@ -98,7 +98,7 @@ decodeAt: anInteger
 	c < LeadByteMask3
 		ifTrue: 
 			["2-byte encoding: C2..DF 80..BF"
-			^(c >= 16rC2 and: [(c2 bitAnd: Character.Utf8SurrogateMask) == TrailByteMask])
+			^(c >= 16rC2 and: [(c2 bitAnd: SurrogateMask) == TrailByteMask])
 				ifTrue: 
 					[(Character.AnsiCharacters lookup: (c := ((c bitAnd: 16r1F) bitShift: 6) bitOr: (c2 bitAnd: 16r3F)))
 						ifNil: [Character basicUtf32Value: c]]
@@ -126,7 +126,7 @@ decodeAt: anInteger
 									["Invalid first continuation"
 									^Character.Replacement]]
 						ifFalse: 
-							[(c2 bitAnd: Character.Utf8SurrogateMask) == TrailByteMask
+							[(c2 bitAnd: SurrogateMask) == TrailByteMask
 								ifFalse: 
 									["Invalid first continuation"
 									^Character.Replacement]]].
@@ -136,12 +136,12 @@ decodeAt: anInteger
 					^Character.Replacement].
 			c := ((c bitAnd: 16rF) bitShift: 12) bitOr: ((c2 bitAnd: 16r3F) bitShift: 6).
 			c2 := self basicAt: anInteger + 2.
-			(c2 bitAnd: Character.Utf8SurrogateMask) == TrailByteMask
+			(c2 bitAnd: SurrogateMask) == TrailByteMask
 				ifFalse: 
 					["Initially valid 3-byte sequence, truncated sequence after 2-bytes, mid-string"
 					^Character.Replacement].
 			c := c bitOr: (c2 bitAnd: 16r3F).
-			(c bitAnd: 16rF800) == Character.Utf16LeadMask
+			(c bitAnd: 16rF800) == Utf16String.LeadSurrogateMask
 				ifTrue: 
 					["UTF-16 Surrogate, so whole sequence is invalid"
 					^Character.Replacement].
@@ -174,7 +174,7 @@ decodeAt: anInteger
 						ifTrue: 
 							["Invalid encoding - 5&6 byte encodings are not supported"
 							^Character.Replacement].
-					(c2 bitAnd: Character.Utf8SurrogateMask) == TrailByteMask
+					(c2 bitAnd: SurrogateMask) == TrailByteMask
 						ifFalse: 
 							["Invalid first continuation"
 							^Character.Replacement]]].
@@ -184,7 +184,7 @@ decodeAt: anInteger
 			^Character.Replacement].
 	c := ((c bitAnd: 7) bitShift: 18) bitOr: ((c2 bitAnd: 16r3F) bitShift: 12).
 	c2 := self basicAt: anInteger + 2.
-	(c2 bitAnd: Character.Utf8SurrogateMask) == TrailByteMask
+	(c2 bitAnd: SurrogateMask) == TrailByteMask
 		ifFalse: 
 			["Initially valid 4-byte sequence, truncated after 2-bytes, mid string"
 			^Character.Replacement].
@@ -194,7 +194,7 @@ decodeAt: anInteger
 			^Character.Replacement].
 	c := c bitOr: ((c2 bitAnd: 16r3F) bitShift: 6).
 	c2 := self basicAt: anInteger + 3.
-	(c2 bitAnd: Character.Utf8SurrogateMask) == TrailByteMask
+	(c2 bitAnd: SurrogateMask) == TrailByteMask
 		ifFalse: 
 			["Initially valid 4-byte sequence, truncated after 3-bytes, mid string"
 			^Character.Replacement].
@@ -239,7 +239,7 @@ decodeNextFrom: aReadStream
 	c < LeadByteMask3
 		ifTrue: 
 			["2-byte encoding: C2..DF 80..BF"
-			^(c >= 16rC2 and: [(c2 bitAnd: Character.Utf8SurrogateMask) == TrailByteMask])
+			^(c >= 16rC2 and: [(c2 bitAnd: SurrogateMask) == TrailByteMask])
 				ifTrue: 
 					[(Character.AnsiCharacters lookup: (c := ((c bitAnd: 16r1F) bitShift: 6) bitOr: (c2 bitAnd: 16r3F)))
 						ifNil: [Character basicUtf32Value: c]]
@@ -270,7 +270,7 @@ decodeNextFrom: aReadStream
 									aReadStream pop.
 									^Character.Replacement]]
 						ifFalse: 
-							[(c2 bitAnd: Character.Utf8SurrogateMask) == TrailByteMask
+							[(c2 bitAnd: SurrogateMask) == TrailByteMask
 								ifFalse: 
 									["Invalid cfirst ontinuation"
 									aReadStream pop.
@@ -280,13 +280,13 @@ decodeNextFrom: aReadStream
 				ifNil: 
 					["Initially valid 3-byte sequence, truncated sequence after 2-bytes at end of stream"
 					^Character.Replacement].
-			(c2 bitAnd: Character.Utf8SurrogateMask) == TrailByteMask
+			(c2 bitAnd: SurrogateMask) == TrailByteMask
 				ifFalse: 
 					["Initially valid 3-byte sequence, truncated sequence after 2-bytes, mid-stream"
 					aReadStream pop.
 					^Character.Replacement].
 			c := c bitOr: (c2 bitAnd: 16r3F).
-			(c bitAnd: 16rF800) == Character.Utf16LeadMask
+			(c bitAnd: 16rF800) == Utf16String.LeadSurrogateMask
 				ifTrue: 
 					["UTF-16 Surrogate, so whole sequence is invalid"
 					aReadStream skip: -2.
@@ -323,7 +323,7 @@ decodeNextFrom: aReadStream
 							["Invalid encoding - 5&6 byte encodings are not supported"
 							aReadStream pop.
 							^Character.Replacement].
-					(c2 bitAnd: Character.Utf8SurrogateMask) == TrailByteMask
+					(c2 bitAnd: SurrogateMask) == TrailByteMask
 						ifFalse: 
 							["Invalid first continuation"
 							aReadStream pop.
@@ -333,7 +333,7 @@ decodeNextFrom: aReadStream
 		ifNil: 
 			["Initially valid 4-byte sequence, but truncated after 2nd byte at end of stream"
 			^Character.Replacement].
-	(c2 bitAnd: Character.Utf8SurrogateMask) == TrailByteMask
+	(c2 bitAnd: SurrogateMask) == TrailByteMask
 		ifFalse: 
 			["Initially valid 4-byte sequence, but truncated after 2nd byte, mid-stream"
 			aReadStream pop.
@@ -387,7 +387,7 @@ encodedAt: anInteger put: aCharacter
 							anInteger + 2]
 						ifFalse: 
 							["4-byte encoding"
-							codePoint <= OS.ICUConstants.UCHAR_MAX_VALUE
+							codePoint <= UCHAR_MAX_VALUE
 								ifTrue: 
 									[self
 										basicAt: anInteger put: (LeadByteMask4 bitOr: (codePoint bitShift: -18));
@@ -419,7 +419,7 @@ encodedSizeAt: anInteger
 	c < LeadByteMask3
 		ifTrue: 
 			["2-byte encoding: C2..DF 80..BF"
-			^(c >= 16rC2 and: [(c2 bitAnd: Character.Utf8SurrogateMask) == TrailByteMask])
+			^(c >= 16rC2 and: [(c2 bitAnd: SurrogateMask) == TrailByteMask])
 				ifTrue: [2]
 				ifFalse: 
 					["Invalid"
@@ -445,7 +445,7 @@ encodedSizeAt: anInteger
 									["Invalid continuation"
 									^1]]
 						ifFalse: 
-							[(c2 bitAnd: Character.Utf8SurrogateMask) == TrailByteMask
+							[(c2 bitAnd: SurrogateMask) == TrailByteMask
 								ifFalse: 
 									["Invalid continuation"
 									^1]]].
@@ -455,11 +455,11 @@ encodedSizeAt: anInteger
 					^2].
 			c := ((c bitAnd: 16rF) bitShift: 12) bitOr: ((c2 bitAnd: 16r3F) bitShift: 6).
 			c2 := self basicAt: anInteger + 2.
-			(c2 bitAnd: Character.Utf8SurrogateMask) == TrailByteMask
+			(c2 bitAnd: SurrogateMask) == TrailByteMask
 				ifFalse: 
 					["Valid but truncated sequence, mid-stream"
 					^2].
-			((c bitOr: (c2 bitAnd: 16r3F)) bitAnd: 16rF800) == Character.Utf16LeadMask
+			((c bitOr: (c2 bitAnd: 16r3F)) bitAnd: 16rF800) == Utf16String.LeadSurrogateMask
 				ifTrue: 
 					["Surrogate, so whole sequence is invalid"
 					^1].
@@ -486,20 +486,18 @@ encodedSizeAt: anInteger
 						ifTrue: 
 							["Invalid encoding - 5&6 byte encodings are not supported"
 							^1].
-					(c2 bitAnd: Character.Utf8SurrogateMask) == TrailByteMask
+					(c2 bitAnd: SurrogateMask) == TrailByteMask
 						ifFalse: 
 							["Invalid continuation"
 							^1]]].
-	(anInteger + 1 < len
-		and: [((self basicAt: anInteger + 2) bitAnd: Character.Utf8SurrogateMask) == TrailByteMask])
-			ifFalse: 
-				["Initially valid 4-byte sequence, truncated after 2-bytes"
-				^2].
-	(anInteger + 2 < len
-		and: [((self basicAt: anInteger + 3) bitAnd: Character.Utf8SurrogateMask) == TrailByteMask])
-			ifFalse: 
-				["Initially valid 4-byte sequence, truncated after 3-bytes"
-				^3].
+	(anInteger + 1 < len and: [((self basicAt: anInteger + 2) bitAnd: SurrogateMask) == TrailByteMask])
+		ifFalse: 
+			["Initially valid 4-byte sequence, truncated after 2-bytes"
+			^2].
+	(anInteger + 2 < len and: [((self basicAt: anInteger + 3) bitAnd: SurrogateMask) == TrailByteMask])
+		ifFalse: 
+			["Initially valid 4-byte sequence, truncated after 3-bytes"
+			^3].
 	^4!
 
 encodedSizeOf: aCharacter
@@ -510,7 +508,7 @@ encodedSizeOf: aCharacter
 	codePoint := aCharacter codePoint.
 	codePoint <= 16r7FF ifTrue: [^2].
 	codePoint <= 16rFFFF ifTrue: [^3].
-	codePoint <= OS.ICUConstants.UCHAR_MAX_VALUE ifTrue: [^4].
+	codePoint <= UCHAR_MAX_VALUE ifTrue: [^4].
 	self error: 'Invalid code point U+' , (codePoint printStringBase: 16)!
 
 encodeOn: aPuttableStream put: aCharacter
@@ -540,7 +538,7 @@ encodeOn: aPuttableStream put: aCharacter
 										basicNextPut: (TrailByteMask bitOr: (codePoint bitAnd: 16r3F))]]
 						ifFalse: 
 							["4-byte encoding"
-							codePoint <= OS.ICUConstants.UCHAR_MAX_VALUE
+							codePoint <= UCHAR_MAX_VALUE
 								ifTrue: 
 									[aPuttableStream
 										basicNextPut: (LeadByteMask4 bitOr: (codePoint bitShift: -18));

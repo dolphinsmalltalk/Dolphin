@@ -24,8 +24,8 @@ basicLcid
 
 icuCaseFoldingOptions
 	^self isTurkic
-		ifTrue: [OS.ICUConstants.U_FOLD_CASE_EXCLUDE_SPECIAL_I]
-		ifFalse: [OS.ICUConstants.U_FOLD_CASE_DEFAULT]!
+		ifTrue: [U_FOLD_CASE_EXCLUDE_SPECIAL_I]
+		ifFalse: [U_FOLD_CASE_DEFAULT]!
 
 isTurkic
 	"Answer whether the receiver is a turkic locale (tr or az language)."

@@ -6,7 +6,14 @@ Core.UtfEncodedString
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: { 'Bom' -> #[255 254]. 'LeadOffset' -> 16rD7C0. 'SurrogateOffset' -> 16r35FDC00 }!
+	classConstants: {
+			'Bom' -> #[255 254].
+			'LeadOffset' -> 16rD7C0.
+			'LeadSurrogateMask' -> 16rD800.
+			'SurrogateMask' -> 16rFC00.
+			'SurrogateOffset' -> 16r35FDC00.
+			'TrailSurrogateMask' -> 16rDC00
+		}!
 Core.Utf16String guid: (Core.GUID fromString: '{87b4c51e-026e-11d3-9fd7-00a0cc3e4a32}')!
 Core.Utf16String isNullTerminated: true!
 Core.Utf16String comment: 'Utf16String is the class of <Strings>s that use a the two or four byte UTF-16 LE encoding. UTF-16 is the standard encoding used for strings in the Windows APIs. Most of the time it is not necessary to worry about converting to UTF-16, however, since the class library and VM will normally be able to provide automatic conversions when required. However, it is recommended that Utf8String be used internally for all strings, and that conversion to/from UTF-16 be performed at interface boundaries where necessary.
@@ -96,10 +103,7 @@ countElements
 	length := 0.
 	"Count the code-units that are not trailing surrogates"
 	1 to: self size
-		do: 
-			[:i |
-			((self basicAt: i) bitAnd: Character.Utf16SurrogateMask) == Character.Utf16TrailMask
-				ifFalse: [length := length + 1]].
+		do: [:i | ((self basicAt: i) bitAnd: SurrogateMask) == TrailSurrogateMask ifFalse: [length := length + 1]].
 	^length!
 
 decodeAt: anInteger
@@ -107,14 +111,14 @@ decodeAt: anInteger
 
 	| leading surrogateBits |
 	leading := self basicAt: anInteger.
-	surrogateBits := leading bitAnd: Character.Utf16SurrogateMask.
-	^surrogateBits == Character.Utf16LeadMask
+	surrogateBits := leading bitAnd: SurrogateMask.
+	^surrogateBits == LeadSurrogateMask
 		ifTrue: 
 			[| trailing |
 			"Lead surrogate encountered"
 			(anInteger < self size and: 
 					[trailing := self basicAt: anInteger + 1.
-					(trailing bitAnd: Character.Utf16SurrogateMask) == Character.Utf16TrailMask])
+					(trailing bitAnd: SurrogateMask) == TrailSurrogateMask])
 				ifTrue: 
 					["Valid surrogate pair"
 					Character codePoint: (leading bitShift: 10) + trailing - SurrogateOffset
@@ -123,7 +127,7 @@ decodeAt: anInteger
 					["No trailing surrogate, answer the replacement character"
 					Character.Replacement]]
 		ifFalse: 
-			[surrogateBits == Character.Utf16TrailMask
+			[surrogateBits == TrailSurrogateMask
 				ifTrue: [Character.Replacement]
 				ifFalse: [Character utf16Value: leading ifInvalid: [Character.Replacement]]]!
 
@@ -134,7 +138,7 @@ decodeNextFrom: aReadStream
 	^aReadStream basicNextAvailable
 		ifNotNil: 
 			[:c |
-			(c bitAnd: Character.Utf16SurrogateMask) == Character.Utf16LeadMask
+			(c bitAnd: SurrogateMask) == LeadSurrogateMask
 				ifTrue: 
 					["Lead surrogate encountered"
 					aReadStream basicNextAvailable
@@ -143,7 +147,7 @@ decodeNextFrom: aReadStream
 							Character.Replacement]
 						ifNotNil: 
 							[:c2 |
-							(c2 bitAnd: Character.Utf16SurrogateMask) == Character.Utf16TrailMask
+							(c2 bitAnd: SurrogateMask) == TrailSurrogateMask
 								ifTrue: 
 									["Valid surrogate pair"
 									Character codePoint: (c bitShift: 10) + c2 - SurrogateOffset ifInvalid: [Character.Replacement]]
@@ -168,17 +172,17 @@ encodedAt: anInteger put: aCharacter
 				ifTrue: 
 					[codePoint := codePoint - 16r10000.
 					self
-						basicAt: anInteger put: (codePoint bitShift: -10) + Character.Utf16LeadMask ;
-						basicAt: anInteger + 1 put: (codePoint bitAnd: 16r3FF) + Character.Utf16TrailMask.
+						basicAt: anInteger put: (codePoint bitShift: -10) + LeadSurrogateMask;
+						basicAt: anInteger + 1 put: (codePoint bitAnd: 16r3FF) + TrailSurrogateMask.
 					anInteger + 1]
 				ifFalse: [self class errorInvalidCodePoint: codePoint]]!
 
 encodedSizeAt: anInteger
 	"Private - Answer the <integer> number of code units occupied by the <Character> whose first code unit is at the specified index in the receiver."
 
-	^(((self basicAt: anInteger) bitAnd: Character.Utf16SurrogateMask) == Character.Utf16LeadMask and: 
+	^(((self basicAt: anInteger) bitAnd: SurrogateMask) == LeadSurrogateMask and: 
 			[anInteger < self size
-				and: [((self basicAt: anInteger + 1) bitAnd: Character.Utf16SurrogateMask) == Character.Utf16TrailMask]])
+				and: [((self basicAt: anInteger + 1) bitAnd: SurrogateMask) == TrailSurrogateMask]])
 		ifTrue: 
 			["Valid surrogate pair"
 			2]
@@ -207,8 +211,8 @@ encodeOn: aPuttableStream put: aCharacter
 					[#todo.	"http://www.unicode.org/faq/utf_bom.html suggests there might be a simpler (more efficient) calculation, but it looks incorrect to me"
 					codePoint := codePoint - 16r10000.
 					aPuttableStream
-						basicNextPut: (codePoint bitShift: -10) + Character.Utf16LeadMask;
-						basicNextPut: (codePoint bitAnd: 16r3FF) + Character.Utf16TrailMask]
+						basicNextPut: (codePoint bitShift: -10) + LeadSurrogateMask;
+						basicNextPut: (codePoint bitAnd: 16r3FF) + TrailSurrogateMask]
 				ifFalse: [self class errorInvalidCodePoint: codePoint]]!
 
 findString: aString startingAt: anInteger
@@ -226,10 +230,10 @@ indexOfSubCollection: targetSequence startingAt: start
 	^self findString: targetSequence startingAt: start!
 
 isLeadCodeUnit: anInteger
-	^(anInteger bitAnd: Character.Utf16SurrogateMask) ~~ Character.Utf16TrailMask!
+	^(anInteger bitAnd: SurrogateMask) ~~ TrailSurrogateMask!
 
 isTrailSurrogate: anInteger
-	^(anInteger bitAnd: Character.Utf16SurrogateMask) == Character.Utf16TrailMask!
+	^(anInteger bitAnd: SurrogateMask) == TrailSurrogateMask!
 
 maxEncoding
 	^2!
@@ -245,8 +249,8 @@ nextIndexOfCharacter: aCharacter from: startInteger to: stopInteger
 		ifFalse: 
 			[| lead trail current |
 			codePoint := codePoint - 16r10000.
-			lead := Character utf16Value: (codePoint bitShift: -10) + Character.Utf16LeadMask.
-			trail := Character utf16Value: (codePoint bitAnd: 16r3FF) + Character.Utf16TrailMask.
+			lead := Character utf16Value: (codePoint bitShift: -10) + LeadSurrogateMask.
+			trail := Character utf16Value: (codePoint bitAnd: 16r3FF) + TrailSurrogateMask.
 			current := self
 						nextIndexOf: lead
 						from: startInteger
@@ -445,9 +449,9 @@ initialize
 				yourself.
 	VM registryAt: #Utf16String put: self.
 	self extraInstanceSpec: EncodingUtf16.
-	self addClassConstant: 'LeadOffset' value: Character.Utf16LeadMask - (16r10000 >> 10).
+	self addClassConstant: 'LeadOffset' value: LeadSurrogateMask - (16r10000 >> 10).
 	self addClassConstant: 'SurrogateOffset'
-		value: (Character.Utf16LeadMask bitShift: 10) + Character.Utf16TrailMask - 16r10000!
+		value: (LeadSurrogateMask bitShift: 10) + TrailSurrogateMask - 16r10000!
 
 stbConvertFrom: aSTBClassConversion
 	"version 0 would have been a UnicodeString instance, which will translate directly to a Utf16String."

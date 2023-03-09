@@ -2750,7 +2750,7 @@ Core.Object
 	subclass: #'Core.Locale'
 	instanceVariableNames: 'numberFormat'
 	classVariableNames: 'InstalledUILanguages Invariant SystemDefault TimeZoneInfo UserDefault'
-	imports: #(#{OS.NlsConstants})
+	imports: #(#{OS.NlsConstants} #{OS.ICUConstants})
 	classInstanceVariableNames: ''
 	classConstants: { 'NoUserOverrideMask' -> 16r1000000 }!
 Core.Object
@@ -3529,7 +3529,7 @@ Core.String
 	variableByteSubclass: #'Core.UtfEncodedString'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.ICUConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.UtfEncodedString
@@ -3538,7 +3538,14 @@ Core.UtfEncodedString
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: { 'Bom' -> #[255 254]. 'LeadOffset' -> 16rD7C0. 'SurrogateOffset' -> 16r35FDC00 }!
+	classConstants: {
+			'Bom' -> #[255 254].
+			'LeadOffset' -> 16rD7C0.
+			'LeadSurrogateMask' -> 16rD800.
+			'SurrogateMask' -> 16rFC00.
+			'SurrogateOffset' -> 16r35FDC00.
+			'TrailSurrogateMask' -> 16rDC00
+		}!
 Core.UtfEncodedString
 	variableByteSubclass: #'Core.Utf8String'
 	instanceVariableNames: ''
@@ -3550,6 +3557,7 @@ Core.UtfEncodedString
 			'LeadByteMask2' -> 16rC0.
 			'LeadByteMask3' -> 16rE0.
 			'LeadByteMask4' -> 16rF0.
+			'SurrogateMask' -> 16rC0.
 			'TrailByteMask' -> 16r80
 		}!
 Core.Utf8String
@@ -4378,13 +4386,9 @@ Core.Magnitude
 			'EncodingMask' -> 16r3F000000.
 			'EscapeChars' -> #($0 nil nil nil nil nil nil $a $b $t $n $v $f $r).
 			'Replacement' -> $\xFFFD.
-			'Utf16LeadMask' -> 16rD800.
 			'Utf16Mask' -> 16r2000000.
-			'Utf16SurrogateMask' -> 16rFC00.
-			'Utf16TrailMask' -> 16rDC00.
 			'Utf32Mask' -> 16r3000000.
-			'Utf8Mask' -> 16r1000000.
-			'Utf8SurrogateMask' -> 16rC0
+			'Utf8Mask' -> 16r1000000
 		}!
 Core.Magnitude
 	subclass: #'Core.DateAndTime'

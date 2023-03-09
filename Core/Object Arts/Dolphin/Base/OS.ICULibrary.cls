@@ -490,7 +490,7 @@ u_toupper: aCharacter
 u_charName:nameChoice:!character properties!public! !
 u_charName:nameChoice:buffer:bufferLength:pErrorCode:!character properties!private! !
 u_charType:!character properties!public! !
-u_foldCase:options:!character properties!public! !
+u_foldCase:options:!case conversions!public! !
 u_hasBinaryProperty:which:!character properties!public! !
 u_isalpha:!character properties!public! !
 u_iscntrl:!character properties!public! !

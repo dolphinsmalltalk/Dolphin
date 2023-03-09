@@ -4,7 +4,7 @@ Core.Object
 	subclass: #'Core.Locale'
 	instanceVariableNames: 'numberFormat'
 	classVariableNames: 'InstalledUILanguages Invariant SystemDefault TimeZoneInfo UserDefault'
-	imports: #(#{OS.NlsConstants})
+	imports: #(#{OS.NlsConstants} #{OS.ICUConstants})
 	classInstanceVariableNames: ''
 	classConstants: { 'NoUserOverrideMask' -> 16r1000000 }!
 Core.Locale guid: (Core.GUID fromString: '{87b4c49a-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -355,7 +355,7 @@ hasLeadingZero
 	^self subclassResponsibility!
 
 icuCaseFoldingOptions
-	^OS.ICUConstants.U_FOLD_CASE_DEFAULT!
+	^U_FOLD_CASE_DEFAULT!
 
 indexOfMonth: aString
 	"Answer the 1-based <integer> index in a year (i.e. 1..12) of the month named by the <String> argument, asString, which is expected to be the full locale specific name of a month, or its abbreviated form, in upper or lower case."

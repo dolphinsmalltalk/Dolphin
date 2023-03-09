@@ -10,13 +10,9 @@ Core.Magnitude
 			'EncodingMask' -> 16r3F000000.
 			'EscapeChars' -> #($0 nil nil nil nil nil nil $a $b $t $n $v $f $r).
 			'Replacement' -> $\xFFFD.
-			'Utf16LeadMask' -> 16rD800.
 			'Utf16Mask' -> 16r2000000.
-			'Utf16SurrogateMask' -> 16rFC00.
-			'Utf16TrailMask' -> 16rDC00.
 			'Utf32Mask' -> 16r3000000.
-			'Utf8Mask' -> 16r1000000.
-			'Utf8SurrogateMask' -> 16rC0
+			'Utf8Mask' -> 16r1000000
 		}!
 Core.Character guid: (Core.GUID fromString: '{87b4c651-026e-11d3-9fd7-00a0cc3e4a32}')!
 Core.Character comment: '`Character` is the class of objects which serve as the elemental values of Smalltalk `Strings`.
@@ -259,9 +255,6 @@ hash
 
 	^self codePoint!
 
-icuType
-	^OS.ICU u_charType: self!
-
 isAlphaNumeric
 	"Answer whether the receiver is a letter or a digit."
 
@@ -331,11 +324,12 @@ isHexDigit
 isLetter
 	"Answer whether the receiver is an alphabetic character."
 
-	"Implementation Note: The ANSI NCITS 319-1998 specifies that this at least includes the letters of the English alphabet (upper and lowercase), but that implementations may consider other Characters to be letters. In Dolphin 8 it is intended that this answer true for all Characters with Unicode codepoints in one of the letter (L) general categories. To escape the inadequacies of the underlying Windows API (which cannot handle any letters defined outside the Unicode BMP, and which seems to have some incorrect classifications even with in the BMP, e.g. it classifies the Thai Maitaikhu non-spacing mark as a letter, but does not classify ꟹ as one), we now use ICU."
+	"Implementation Note: The ANSI NCITS 319-1998 specifies that this at least includes the letters of the English alphabet (upper and lowercase), but that implementations may consider other Characters to be letters. In Dolphin 8 it is intended that this answer true for all Characters with Unicode codepoints in one of the letter (L) general categories. To escape the inadequacies of the underlying Windows API (which cannot handle any letters defined outside the Unicode BMP, and which seems to have some incorrect classifications even with in the BMP, e.g. it classifies the Thai Maitaikhu non-spacing mark as a letter, but does not classify U+A7F9, MODIFIER LETTER SMALL LIGATURE OE, as one), we now use ICU."
 
 	#todo.	"Decide between alternates."
 	^false
-		ifTrue: [OS.ICU u_hasBinaryProperty: self which: UCHAR_ALPHABETIC	"u_isUAlphabetic is directly equivalent"]
+		ifTrue: 
+			[OS.ICU u_hasBinaryProperty: self which: UCHAR_ALPHABETIC	"u_isUAlphabetic is directly equivalent"]
 		ifFalse: [OS.ICU u_isalpha: self]!
 
 isLinefeed
@@ -371,7 +365,7 @@ isPrintable
 isPrivateUse
 	"Answer whether the receiver has a codepoint in one of the private use areas."
 
-	^self icuType == U_PRIVATE_USE_CHAR!
+	^(OS.ICU u_charType: self) == U_PRIVATE_USE_CHAR!
 
 isPunctuation
 	"Answer whether the receiver is a punctuation character."
@@ -400,7 +394,7 @@ isUppercase
 
 	"Implementation Note: The ANSI NCITS 319-1998 specifies that this at least includes the uppercase letters of the English alphabet, but that implementations may consider other Characters to be uppercase letters. In Dolphin it is intended that this answer true for all Characters with Unicode codepoints in one of the Uppercase Letter (Lu) general category. To escape the inadequacies of the underlying Windows API (which cannot handle any letters defined outside the Unicode BMP, and which seems to have some incorrect classifications even within the BMP), we now use ICU."
 
-	^(OS.ICU u_charType: self) == OS.ICUConstants.U_UPPERCASE_LETTER!
+	^(OS.ICU u_charType: self) == U_UPPERCASE_LETTER!
 
 isUpperCase
 	"Answer whether the receiver is an uppercase letter."
@@ -411,17 +405,18 @@ isUpperCase
 isUtf16Lead
 	"Answer whether the receiver is a UTF-16 lead surrogate (leading code unit of two part character)."
 
-	^(code bitAnd: ##(EncodingMask | Utf16SurrogateMask)) == ##(Utf16Mask | Utf16LeadMask)!
+	^(code bitAnd: ##(EncodingMask | Utf16String.SurrogateMask)) == ##(Utf16Mask | Utf16String.LeadSurrogateMask)!
 
 isUtf16Surrogate
 	"Answer whether the receiver is a UTF-16 surrogate (partial character)."
 
-	^(code bitAnd: ##(EncodingMask | 16rF800)) == ##(Utf16Mask | Utf16LeadMask)!
+	^(code bitAnd: ##(EncodingMask | 16rF800)) == ##(Utf16Mask | Utf16String.LeadSurrogateMask)!
 
 isUtf16Trail
 	"Answer whether the receiver is a UTF-16 trail surrogate (trailing code-unit of two-part code point)."
 
-	^(code bitAnd: ##(EncodingMask | Utf16SurrogateMask)) == ##(Utf16Mask | Utf16TrailMask)!
+	^(code bitAnd: ##(EncodingMask | Utf16String.SurrogateMask))
+		== ##(Utf16Mask | Utf16String.TrailSurrogateMask)!
 
 isUtf8
 	"Answer whether the receiver is a valid UTF-8 code unit. This is true for any ASCII character, or any UTF-8 surrogate."
@@ -431,17 +426,18 @@ isUtf8
 isUtf8Lead
 	"Answer whether the receiver represents a UTF-8 leading byte."
 
-	^(code bitAnd: ##(EncodingMask | Utf8SurrogateMask)) == ##(Utf8Mask | 16rC0)!
+	^(code bitAnd: ##(EncodingMask | Utf8String.SurrogateMask)) == ##(Utf8Mask | Utf8String.LeadByteMask2)!
 
 isUtf8Surrogate
 	"Answer whether the receiver represents a UTF-8 surrogate (partial character)."
 
-	^(code bitAnd: ##(EncodingMask | 16r80)) == ##(Utf8Mask | 16r80)!
+	^(code bitAnd: ##(EncodingMask | Utf8String.TrailByteMask))
+		== ##(Utf8Mask | Utf8String.TrailByteMask)!
 
 isUtf8Trail
 	"Answer whether the receiver represents a UTF-8 trailing byte."
 
-	^(code bitAnd: ##(EncodingMask | Utf8SurrogateMask)) == ##(Utf8Mask | 16r80)!
+	^(code bitAnd: ##(EncodingMask | Utf8String.SurrogateMask)) == ##(Utf8Mask | Utf8String.TrailByteMask)!
 
 isVowel
 	"Answer whether the receiver is an English vowel (a, e, i, o, or u), upper or lowercase."
@@ -598,9 +594,8 @@ deepCopy!copying!public! !
 digitValue!accessing!public! !
 displayOn:!printing!public! !
 encoding!accessing!public! !
-greaterOrEqualToInteger:!public! !
+greaterOrEqualToInteger:!comparing!public! !
 hash!comparing!public! !
-icuType!public!testing! !
 isAlphaNumeric!public!testing! !
 isAscii!public!testing! !
 isAtomic!public!testing! !
@@ -640,7 +635,7 @@ shallowCopy!copying!public! !
 split:!public!tokenizing! !
 split:do:!public!tokenizing! !
 to:!converting!public! !
-unicodeName:!public! !
+unicodeName:!printing!public! !
 !
 
 Core.Character methodProtocol: #Character attributes: #(#ansi #readOnly) selectors: #(#asLowercase #asString #asUppercase #codePoint #isAlphaNumeric #isDigit #isLetter #isLowercase #isUppercase)!
@@ -774,17 +769,17 @@ isValidCodePoint: anInteger
 	"Answer whether the <integer> argument represents a valid Unicode code point AND is not a code point reserved for surrogate code units AND is not a 'non-character' (i.e. non-characters are valid code points, but 'reserved for internal use')."
 
 	^anInteger >= 0 and: 
-			[anInteger < Character.Utf16LeadMask or: 
+			[anInteger < Utf16String.LeadSurrogateMask or: 
 					[anInteger > 16rDFFF and: 
-							[anInteger <= OS.ICUConstants.UCHAR_MAX_VALUE and: 
+							[anInteger <= UCHAR_MAX_VALUE and: 
 									[(anInteger >= 16rFDD0 and: [anInteger <= 16rFDEF or: [(anInteger bitAnd: 16rFFFE) == 16rFFFE]]) not]]]]!
 
 isValidUtf16CodeUnit: anInteger
 	"Answer whether the <integer> argument is a valid as a code unit in the UTF-16 encoding."
 
 	^anInteger >= 0 and: 
-			[anInteger < Character.Utf16LeadMask or: 
-					[(anInteger bitAnd: 16rF800) == Character.Utf16LeadMask or: 
+			[anInteger < Utf16String.LeadSurrogateMask or: 
+					[(anInteger bitAnd: 16rF800) == Utf16String.LeadSurrogateMask or: 
 							[anInteger < 16rFDD0
 								or: [anInteger > 16rFDEF and: [anInteger <= UCHAR_MAX_VALUE and: [(anInteger allMask: 16rFFFE) not]]]]]]!
 
@@ -865,7 +860,7 @@ utf16Value: anInteger ifInvalid: exceptionHandler
 		ifFalse: 
 			[(AnsiCharacters lookup: anInteger)
 				ifNil: 
-					[(anInteger bitAnd: 16rF800) == Character.Utf16LeadMask
+					[(anInteger bitAnd: 16rF800) == Utf16String.LeadSurrogateMask
 						ifTrue: 
 							["Surrogate"
 							self newCode: (Utf16Mask bitOr: anInteger)]

@@ -4,7 +4,7 @@ Core.String
 	variableByteSubclass: #'Core.UtfEncodedString'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.ICUConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.UtfEncodedString guid: (Core.GUID fromString: '{f19f0843-d636-4c39-8815-afe452d16cb0}')!
@@ -447,18 +447,16 @@ skipEncodingMarkerFrom: aPositionableStream
 
 	"For UTF-8, we advance over the BOM, if present"
 
-	| anInteger bom |
+	| len bom preamble |
 	bom := self bom.
-	anInteger := bom size.
-	aPositionableStream size >= bom size
-		ifTrue: 
-			[| preamble |
-			preamble := bom class new: anInteger.
-			aPositionableStream
-				basicNext: anInteger
-				into: preamble
-				startingAt: 1.
-			preamble = bom ifFalse: [aPositionableStream position: 0]]!
+	len := bom size.
+	aPositionableStream size >= len ifFalse: [^self].
+	preamble := bom class new: len.
+	aPositionableStream
+		basicNext: len
+		into: preamble
+		startingAt: 1.
+	preamble = bom ifFalse: [aPositionableStream position: 0]!
 
 third
 	"Answer a <Character> representing the third code point of the receiver. Raise an exception if there are fewer than three code points in the receiver."

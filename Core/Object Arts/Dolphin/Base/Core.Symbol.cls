@@ -163,11 +163,6 @@ mutableCopy
 numArgs
 	^self argumentCount!
 
-printArgumentTypeOn: aStream
-	"Private - Append a compilable argument type name, which is the receiver, to aStream."
-
-	self displayOn: aStream!
-
 printOn: aStream
 	"Append a textual description of the receiver to aStream. If the receiver includes
 	embedded spaces, then quote it. This may need to be extended to include other
@@ -229,7 +224,6 @@ isSymbol!public!RefactoringBrowser! !
 keywords!accessing!public! !
 mutableCopy!copying!public! !
 numArgs!accessing!public! !
-printArgumentTypeOn:!printing!private! !
 printOn:!printing!public! !
 refersTo:asLiteralOf:!private!testing! !
 replaceFrom:to:with:startingAt:!public!replacing! !
