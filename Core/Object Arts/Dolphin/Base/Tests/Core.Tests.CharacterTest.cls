@@ -47,12 +47,12 @@ testAsLowercase
 	self assert: $\x7F asLowercase identicalTo: $\x7F.
 	"U+0080 doesn't appear in 1252 (for example)"
 	self assert: $\x80 asLowercase equals: $\x80.
-	self assert: $ÿ asLowercase equals: $ÿ.
-	self assert: $Ÿ asLowercase equals: $ÿ.
+	self assert: $\xFF asLowercase equals: $\xFF.
+	self assert: $\x178 asLowercase equals: $\xFF.
 	"Boundary case - BMP - largest value 16-bit char is U+FFFD, the replacement char"
-	self assert: $� asLowercase equals: $�.
+	self assert: $\xFFFD asLowercase equals: $\xFFFD.
 	"U+10000 Linear B Syllable B008 A"
-	self assert: $𐀀 asLowercase equals: $𐀀.
+	self assert: $\x10000 asLowercase equals: $\x10000.
 
 	"U+20AC Euro symbol - still a unique ANSI encoded char"
 	self assert: $€ asLowercase equals: $€.
@@ -96,12 +96,13 @@ testAsUppercase
 	self assert: $\x7F asUppercase identicalTo: $\x7F.
 	"U+0080 doesn't appear in 1252 (for example)"
 	self assert: $\x80 asUppercase equals: $\x80.
-	self assert: $ÿ asUppercase equals: $Ÿ.
+	self assert: $\xFF asUppercase equals: $\x178.
 	"Boundary case - BMP - largest value 16-bit char is U+FFFD, the replacement char"
-	self assert: $� asUppercase equals: $�.
+	self assert: $\xFFFD asUppercase equals: $\xFFFD.
 	"U+10000 Linear B Syllable B008 A"
-	self assert: $𐀀 asUppercase equals: $𐀀.
-
+	self assert: $\x10000 asUppercase equals: $\x10000.
+	"U+1000 Myanmar Letter Ka"
+	self assert: $\x1000 asUppercase equals: $\x1000.
 	"Turkish, but 8-bit"
 	self assert: $ç asUppercase equals: $Ç.
 	"Turkish dottless-i"

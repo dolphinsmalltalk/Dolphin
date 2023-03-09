@@ -304,28 +304,7 @@ firstDayOfWeek
 foldcaseString: aString
 	"Answer a <readableString> which is a copy of the argument, but with the contents case-folded following the Unicode folding rules appropriate for this locale."
 
-	| utf16 errorCode destLength srcLength |
-	"Attempt conversion in place for mainstream case"
-	utf16 := aString asUtf16StringCopy.
-	destLength := OS.ICU
-				u_strFoldCase: utf16
-				destCapacity: (srcLength := utf16 size) + 1
-				src: utf16
-				srcLength: srcLength
-				options: self icuCaseFoldingOptions
-				pErrorCode: (errorCode := ByteArray newFixed: 4).
-	destLength == srcLength ifTrue: [^utf16].
-	errorCode int32AtOffset: 0 put: 0.
-	OS.ICU
-		u_strFoldCase: (utf16 := Utf16String new: destLength)
-		destCapacity: destLength + 1
-		src: aString
-		srcLength: srcLength
-		options: self icuCaseFoldingOptions
-		pErrorCode: errorCode.
-	^(errorCode int32AtOffset: 0) == 0
-		ifTrue: [utf16]
-		ifFalse: [self error: 'ICU error <p> in u_strFoldCase']!
+	^OS.ICU u_strFoldCase: aString options: self icuCaseFoldingOptions!
 
 getNumberFormat
 	^OS.NUMBERFMTW new
@@ -788,55 +767,12 @@ timeFormat
 titlecaseString: aString
 	"Answer a <readableString> which is a copy of the argument but with the first letter of each major word capitalized following the linguisitc conventions of this locale."
 
-	| srcLength errorCode destLength utf16 |
-	destLength := OS.ICU
-				u_strToTitle: (utf16 := aString asUtf16StringCopy)
-				destCapacity: (srcLength := utf16 size) + 1
-				src: utf16
-				srcLength: srcLength
-				titleIter: nil
-				locale: self tag
-				pErrorCode: (errorCode := ByteArray newFixed: 4).
-	destLength == srcLength ifTrue: [^utf16].
-	utf16 := Utf16String new: destLength.
-	errorCode int32AtOffset: 0 put: 0.
-	OS.ICU
-		u_strToTitle: utf16
-		destCapacity: destLength + 1
-		src: aString
-		srcLength: srcLength
-		titleIter: nil
-		locale: self tag
-		pErrorCode: errorCode.
-	^(errorCode int32AtOffset: 0) == 0
-		ifTrue: [utf16]
-		ifFalse: [aString error: 'ICU error <p> in u_ustToTitle' << (errorCode int32AtOffset: 0)]!
+	^OS.ICU u_strToTitle: aString locale: self tag!
 
 uppercaseString: aString
 	"Answer a <readableString> which is a copy of the argument, but with the contents converted to uppercase following the linguisitic conventions of the receiver."
 
-	| srcLength errorCode destLength utf16 |
-	destLength := OS.ICU
-				u_strToUpper: (utf16 := aString asUtf16StringCopy)
-				destCapacity: (srcLength := utf16 size) + 1
-				src: utf16
-				srcLength: srcLength
-				locale: self tag
-				pErrorCode: (errorCode := ByteArray newFixed: 4).
-	destLength == srcLength ifTrue: [^utf16].
-	"The above in-place conversion may fail (e.g. ß -> SS), in which (rare) case we need to allocate a large buffer and try again."
-	utf16 := Utf16String new: destLength.
-	errorCode int32AtOffset: 0 put: 0.
-	OS.ICU
-		u_strToUpper: utf16
-		destCapacity: destLength + 1
-		src: aString
-		srcLength: srcLength
-		locale: self tag
-		pErrorCode: errorCode.
-	^(errorCode int32AtOffset: 0) == 0
-		ifTrue: [utf16]
-		ifFalse: [aString error: 'ICU error <p> in u_strToUpper' << (errorCode int32AtOffset: 0)]!
+	^OS.ICU u_strToUpper: aString locale: self tag!
 
 yearMonthFormat
 	"Answer the year/month date format for the receiver locale."

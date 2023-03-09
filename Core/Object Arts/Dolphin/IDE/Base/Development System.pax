@@ -479,6 +479,7 @@ package setMethodNames: #(
 	#(#{Kernel.StInstanceVariable} #valueInFrame:)
 	#(#{Kernel.StLiteralArrayNode} #displayOn:)
 	#(#{Kernel.StLiteralByteArrayNode} #displayOn:)
+	#(#{Kernel.StLiteralSymbolToken} #textStyle)
 	#(#{Kernel.StLiteralToken} #textStyle)
 	#(#{Kernel.StLiteralValueNode} #displayOn:)
 	#(#{Kernel.StLocalVariable} #category)
@@ -5549,6 +5550,14 @@ displayOn: aPuttableStream
 displayOn:!printing!public! !
 !
 
+!Kernel.StLiteralSymbolToken methodsFor!
+
+textStyle
+	^#literalSymbol! !
+!Kernel.StLiteralSymbolToken categoriesForMethods!
+textStyle!public! !
+!
+
 !Kernel.StLiteralToken methodsFor!
 
 textStyle
@@ -5960,7 +5969,9 @@ infoTip
 
 	| stream |
 	stream := LimitedWriteStream
-				over: (String smalltalkWriteStream: 32)
+				over: ((WriteStream on: (String new: 32))
+						locale: SmalltalkLocale.Hex;
+						yourself)
 				limit: 120
 				limitBlock: [:s | ^s contents , ' … etc …'].
 	self printInfoTipOn: stream.
@@ -5971,7 +5982,9 @@ infoTip: aStackFrame
 
 	| stream |
 	stream := LimitedWriteStream
-				over: (String smalltalkWriteStream: 32)
+				over: ((WriteStream on: (String new: 32))
+						locale: SmalltalkLocale.Hex;
+						yourself)
 				limit: 120
 				limitBlock: [:s | ^s contents , ' … etc …'].
 	self printInfoTipOn: stream frame: aStackFrame.

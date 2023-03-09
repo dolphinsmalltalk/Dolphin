@@ -1060,7 +1060,7 @@ patchLiteralArrayToken
 					[self parserError: CErrBadTokenInArray.
 					"Error ignored, attempt to recover..."
 					source copyFrom: currentToken start to: currentToken stop].
-	currentToken := StLiteralToken
+	currentToken := StLiteralSymbolToken
 				start: currentToken start
 				comments: nil
 				value: value asSymbol

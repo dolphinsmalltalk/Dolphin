@@ -35,7 +35,7 @@ testInstanceCreation
 	self assert: token value equals: self exampleValue.
 	self assert: token source equals: self exampleSource.
 	"Now test that the Smalltalk backup code works without primitive: 157"
-	originalMethod := self subjectClass class compiledMethodAt: #start:comments:value:stop:source:.
+	originalMethod := self subjectClass class lookupMethod: #start:comments:value:stop:source:.
 	testMethod := originalMethod copy.
 	"Sanity check"
 	self deny: testMethod == originalMethod.

@@ -159,7 +159,8 @@ visitLiteralByteArrayNode: aLiteralByteArrayNode
 visitMethodNode: aMethodNode
 	self enterMethodNode: aMethodNode.
 	super visitMethodNode: aMethodNode.
-	self exitMethodNode: aMethodNode!
+	self exitMethodNode: aMethodNode.
+	^aMethodNode!
 
 visitNode: aNode 
 	aNode scope: currentScope.

@@ -9664,6 +9664,11 @@ tokenStartAt: anInteger
 	[start > 1 and: [(self styleIdAt: start - 1) == tokenId]] whileTrue: [start := start - 1].
 	^start!
 
+tokenTextAt: anInteger
+	"Answer a string containing the plain text of the token that overlaps the specified position."
+
+	^self plainTextFrom: (self tokenStartAt: anInteger) to: (self tokenEndAt: anInteger)!
+
 twiddleLines
 	"Switch the current line with the previous."
 
@@ -9935,11 +9940,11 @@ wordChars: aStringOrNil
 wordEndAt: posInteger onlyWordCharacters: onlyWordCharactersBoolean
 	"Get position of end of word."
 
-	^(library
+	^library
 		directFunction: this
 		msg: SCI_WORDENDPOSITION
 		wParam: posInteger - 1
-		lParam: onlyWordCharactersBoolean asParameter) + 1!
+		lParam: onlyWordCharactersBoolean asParameter!
 
 wordStartAt: posInteger onlyWordCharacters: onlyWordCharactersBoolean
 	"Get position of start of word."
@@ -9949,6 +9954,10 @@ wordStartAt: posInteger onlyWordCharacters: onlyWordCharactersBoolean
 		msg: SCI_WORDSTARTPOSITION
 		wParam: posInteger - 1
 		lParam: onlyWordCharactersBoolean asParameter) + 1!
+
+wordTextAt: posInteger
+	^self plainTextFrom: (self wordStartAt: posInteger onlyWordCharacters: true)
+		to: (self wordEndAt: posInteger onlyWordCharacters: true)!
 
 wordWrap
 	"Answer whether the receiver is in word-wrap mode."
@@ -11084,6 +11093,7 @@ tokenEndAt:!enquiries!public! !
 tokenRangeAt:!enquiries!public! !
 tokensFrom:to:!public!text retrieval & modification! !
 tokenStartAt:!enquiries!public! !
+tokenTextAt:!enquiries!public! !
 twiddleLines!**auto generated**!commands!public!scintilla interface! !
 undo!commands!public!scintilla interface!undo & redo! !
 unfoldAll!commands!folding!public! !
@@ -11115,8 +11125,9 @@ wmKeyDown:wParam:lParam:!event handling-win32!private! !
 wmTimer:wParam:lParam:!event handling-win32!private!timers! !
 wordChars!character classes!other settings!public! !
 wordChars:!character classes!other settings!public! !
-wordEndAt:onlyWordCharacters:!**auto generated**!public!scintilla interface!words! !
+wordEndAt:onlyWordCharacters:!public!scintilla interface!words! !
 wordStartAt:onlyWordCharacters:!**auto generated**!public!scintilla interface!words! !
+wordTextAt:!**auto generated**!public!scintilla interface!words! !
 wordWrap!line wrapping!public! !
 wordWrap:!line wrapping!public! !
 wrapCount:!**auto generated**!public!scintilla interface! !

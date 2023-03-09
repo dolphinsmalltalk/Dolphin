@@ -9,7 +9,7 @@ Core.Magnitude
 	classConstants: {
 			'EncodingMask' -> 16r3F000000.
 			'EscapeChars' -> #($0 nil nil nil nil nil nil $a $b $t $n $v $f $r).
-			'Replacement' -> $�.
+			'Replacement' -> $\xFFFD.
 			'Utf16LeadMask' -> 16rD800.
 			'Utf16Mask' -> 16r2000000.
 			'Utf16SurrogateMask' -> 16rFC00.
@@ -390,6 +390,11 @@ isSurrogate
 
 	^self isUtf16Surrogate or: [self isUtf8Surrogate]!
 
+isTrailSurrogate
+	"Answer whether the receiver is a trail surrogate (trailing code-unit of multi-unit code point)."
+
+	^self isUtf8Trail or: [self isUtf16Trail]!
+
 isUppercase
 	"Answer whether the receiver is an uppercase letter."
 
@@ -421,7 +426,7 @@ isUtf16Trail
 isUtf8
 	"Answer whether the receiver is a valid UTF-8 code unit. This is true for any ASCII character, or any UTF-8 surrogate."
 
-	^code < 16r80 or: [(code bitAnd: EncodingMask) == Utf8Mask]!
+	^code <= 16r7F or: [(code bitAnd: EncodingMask) == Utf8Mask]!
 
 isUtf8Lead
 	"Answer whether the receiver represents a UTF-8 leading byte."
@@ -486,7 +491,7 @@ printEscapedOn: aStream
 printOn: aStream
 	"Append the literal representation of the receiver to the <puttableStream> argument."
 
-	(self isGraph and: [self isPrivateUse not])
+	(self isGraph and: [self isPrivateUse not and: [code ~~ ##(Replacement code)]])
 		ifTrue: 
 			[aStream
 				nextPut: $$;
@@ -559,7 +564,10 @@ split: aReadableString do: aMonadicValuable
 to: aCharacter
 	"Answer a <sequencedReadableCollection> of <Character>s for each of the Unicode code points between the receiver's code point and that of the <Character> argument, aCharacter."
 
-	^(self codePoint to: aCharacter codePoint) collect: [:each | Character basicCodePoint: each]! !
+	^(self codePoint to: aCharacter codePoint) collect: [:each | Character basicCodePoint: each]!
+
+unicodeName: anInteger
+	^OS.ICU u_charName: self nameChoice: anInteger! !
 !Core.Character categoriesForMethods!
 _beginsString:!comparing!double dispatch!private! !
 _separateSubStringsIn:!private!tokenizing! !
@@ -612,6 +620,7 @@ isPrivateUse!public!testing! !
 isPunctuation!public!testing! !
 isSeparator!public!testing! !
 isSurrogate!public!testing! !
+isTrailSurrogate!public!testing! !
 isUppercase!public!testing! !
 isUpperCase!public!testing! !
 isUtf16Lead!public!testing! !
@@ -631,6 +640,7 @@ shallowCopy!copying!public! !
 split:!public!tokenizing! !
 split:do:!public!tokenizing! !
 to:!converting!public! !
+unicodeName:!public! !
 !
 
 Core.Character methodProtocol: #Character attributes: #(#ansi #readOnly) selectors: #(#asLowercase #asString #asUppercase #codePoint #isAlphaNumeric #isDigit #isLetter #isLowercase #isUppercase)!
@@ -688,7 +698,7 @@ codePoint: anInteger ifInvalid: exceptionHandler
 	"Answer a <Character> representing the specified <integer> Unicode code point, or the result of evaluating the <niladicValuable>, exceptionHandler, if the code point is not the code point of a valid Unicode character."
 
 	^anInteger <= 16r7F
-		ifTrue: [CharacterSet at: anInteger + 1]
+		ifTrue: [CharacterSet at: anInteger + 1 ifAbsent: exceptionHandler]
 		ifFalse: 
 			[(AnsiCharacters lookup: anInteger)
 				ifNil: 
@@ -848,13 +858,10 @@ utf16Value: anInteger
 utf16Value: anInteger ifInvalid: exceptionHandler
 	"Answer a <Character> (which may be a surrogate) representing the <integer> UTF-16 code unit, anInteger, or the result of evaluating the <monadicBlock>, exceptionHandler, if the code unit is not valid."
 
-	^anInteger < 16r80
+	^anInteger <= 16r7F
 		ifTrue: 
-			[anInteger < 0
-				ifTrue: [exceptionHandler value]
-				ifFalse: 
-					["Ascii"
-					CharacterSet at: anInteger + 1]]
+			["Ascii"
+			CharacterSet at: anInteger + 1 ifAbsent: exceptionHandler]
 		ifFalse: 
 			[(AnsiCharacters lookup: anInteger)
 				ifNil: 
@@ -863,7 +870,7 @@ utf16Value: anInteger ifInvalid: exceptionHandler
 							["Surrogate"
 							self newCode: (Utf16Mask bitOr: anInteger)]
 						ifFalse: 
-							[(anInteger <= OS.Win32Constants.MAX_UCSCHAR
+							[(anInteger <= UCHAR_MAX_VALUE
 								and: [anInteger < 16rFDD0 or: [anInteger > 16rFDEF and: [(anInteger allMask: 16rFFFE) not]]])
 									ifTrue: 
 										["Valid non-ascii/non-ansi code point"
@@ -874,7 +881,7 @@ utf8Value: anInteger
 	"Answer a <Character> representing the <integer> UTF-8 code unit, anInteger.
 	Note that the resulting Character may not represent a valid Unicode code point."
 
-	^anInteger < 16r80
+	^anInteger <= 16r7F
 		ifTrue: 
 			["Ascii"
 			CharacterSet at: anInteger + 1]

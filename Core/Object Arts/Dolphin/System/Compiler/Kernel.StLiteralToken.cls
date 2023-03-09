@@ -16,13 +16,6 @@ acceptVisitor: aTokenVisitor
 	^aTokenVisitor visitLiteralToken: self!
 
 formatOn: aStream source: aString
-	(value isKindOf: Symbol)
-		ifTrue: 
-			[aStream nextPut: $#.
-			((Scanner isSelector: value) and: [value ~~ #'||'])
-				ifTrue: [aStream nextPutAll: value]
-				ifFalse: [value asString printOn: aStream].
-			^self].
 	value storeOn: aStream!
 
 formattedFrom: aString

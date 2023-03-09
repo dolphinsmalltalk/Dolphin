@@ -129,9 +129,6 @@ line
 
 	^line!
 
-literalCharacterTokenClass
-	^StLiteralToken!
-
 literalErrorToken: anObject stop: anInteger
 	^StLiteralToken
 		start: tokenStart
@@ -257,8 +254,10 @@ reportError: anInteger at: posInteger line: lineInteger range: anInterval extras
 		extras: anArray) signal!
 
 scanAnySymbol
+	"Private - Not part of the normal scanner. This is used for optimised scanning of symbols to identify if they are selectors."
+
 	characterType == #alphabetic ifTrue: [^self scanSymbol].
-	characterType == #binary ifTrue: [^self scanBinary: StLiteralToken].
+	characterType == #binary ifTrue: [^self scanBinary: StLiteralSymbolToken].
 	^StEofToken new!
 
 scanBinary: aClass
@@ -301,7 +300,7 @@ scanExtendedLiterals
 				ifTrue: [self scanSymbol]
 				ifFalse: 
 					[characterType == #binary
-						ifTrue: [(self scanBinary: StLiteralToken) stop: self previousStepPosition]
+						ifTrue: [(self scanBinary: StLiteralSymbolToken) stop: self previousStepPosition]
 						ifFalse: 
 							[currentCharacter == $'
 								ifTrue: [self scanStringSymbol]
@@ -379,7 +378,7 @@ scanKeyword
 scanLiteral
 	self step == #alphabetic ifTrue: [^self scanSymbol].
 	characterType == #binary
-		ifTrue: [^(self scanBinary: StLiteralToken) stop: self previousStepPosition].
+		ifTrue: [^(self scanBinary: StLiteralSymbolToken) stop: self previousStepPosition].
 	currentCharacter == $' ifTrue: [^self scanStringSymbol].
 	currentCharacter == $( ifTrue: [^self scanLiteralArrayToken].
 	currentCharacter == $[ ifTrue: [^self scanLiteralByteArrayToken].
@@ -408,13 +407,14 @@ scanLiteralByteArrayToken
 scanLiteralCharacter
 	| value stop |
 	self step.	"$"
+	buffer nextPut: $$.
 	stop := stream position.
 	currentCharacter
 		ifNil: 
 			[value := $\0.
 			self lexicalError: LErrExpectChar]
 		ifNotNil: 
-			[value := currentCharacter.
+			[buffer nextPut: (value := currentCharacter).
 			self step.	"char"
 			"Extended syntax for special characters?"
 			value == $\
@@ -424,6 +424,7 @@ scanLiteralCharacter
 							[currentCharacter == $x
 								ifTrue: 
 									["Explicit hex code point, e.g. $\x20"
+									buffer nextPut: currentCharacter.
 									self step.
 									value := (self readIntegerOfRadix: 16)
 												ifNil: 
@@ -438,7 +439,9 @@ scanLiteralCharacter
 													(codePoint >= ICUConstants.UCHAR_MIN_VALUE and: [codePoint <= ICUConstants.UCHAR_MAX_VALUE])
 														ifTrue: 
 															[(Character isNonCharCodePoint: codePoint)
-																ifTrue: [self lexicalError: CWarnNonCharCodePoint range: (tokenStart to: stop)].
+																ifTrue: 
+																	["We only warn about non-character code points, as it is still useful to be able to express these in code, e.g. for testing"
+																	self lexicalError: CWarnNonCharCodePoint range: (tokenStart to: stop)].
 															Character basicCodePoint: codePoint]
 														ifFalse: 
 															["Code point out of range"
@@ -447,17 +450,19 @@ scanLiteralCharacter
 						ifNotNil: 
 							[:char |
 							"One of the special chars such as $\t for tab"
+							buffer nextPut: currentCharacter.
 							value := char.
 							stop := stream position.
 							self step]]
 				ifFalse: 
-					[value == Character.Replacement
+					[value = Character.Replacement
 						ifTrue: [self lexicalError: LErrBadCodePoint range: (tokenStart to: stop)]]].
-	^self literalCharacterTokenClass
+	^StLiteralCharacterToken
 		start: tokenStart
 		comments: nil
 		value: value
-		stop: stop!
+		stop: stop
+		source: buffer contents!
 
 scanLiteralString
 	self step.
@@ -657,8 +662,10 @@ scanSpecialCharacter
 scanStringSymbol
 	| literalToken |
 	literalToken := self scanLiteralString.
-	literalToken value: literalToken value asSymbol.
-	^literalToken!
+	^literalToken
+		becomeA: StLiteralSymbolToken;
+		value: literalToken value asSymbol;
+		yourself!
 
 scanSymbol
 	| lastColon value startPosition |
@@ -676,7 +683,7 @@ scanSymbol
 			[stream position: lastColon.
 			self step.
 			value := value first: lastColon - startPosition + 1].
-	^StLiteralToken
+	^StLiteralSymbolToken
 		start: tokenStart
 		comments: nil
 		value: value asSymbol
@@ -757,7 +764,6 @@ illegalNumber!error handling!private! !
 lexicalError:!error handling!private! !
 lexicalError:range:!error handling!private! !
 line!accessing!public! !
-literalCharacterTokenClass!public!scanning! !
 literalErrorToken:stop:!error handling!private! !
 metaVariableExpected!error handling!private! !
 newFloatToken:precision:exponent:!helpers!private! !

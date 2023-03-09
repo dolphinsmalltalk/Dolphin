@@ -43,8 +43,11 @@ package setClassNames: #(
 	#{Kernel.StLiteralArrayToken}
 	#{Kernel.StLiteralByteArrayNode}
 	#{Kernel.StLiteralByteArrayToken}
+	#{Kernel.StLiteralCharacterToken}
 	#{Kernel.StLiteralNode}
+	#{Kernel.StLiteralSymbolToken}
 	#{Kernel.StLiteralToken}
+	#{Kernel.StLiteralTokenWithSource}
 	#{Kernel.StLiteralValueNode}
 	#{Kernel.StMessageNode}
 	#{Kernel.StMethodNode}
@@ -438,15 +441,36 @@ Kernel.StValueToken
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Kernel.StLiteralToken
-	subclass: #'Kernel.StMultiKeywordLiteralToken'
+	subclass: #'Kernel.StLiteralSymbolToken'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Kernel.StLiteralToken
-	subclass: #'Kernel.StNumberLiteralToken'
+	subclass: #'Kernel.StLiteralTokenWithSource'
 	instanceVariableNames: 'source'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.StLiteralToken
+	subclass: #'Kernel.StMultiKeywordLiteralToken'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.StLiteralTokenWithSource
+	subclass: #'Kernel.StLiteralCharacterToken'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.StLiteralTokenWithSource
+	subclass: #'Kernel.StNumberLiteralToken'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

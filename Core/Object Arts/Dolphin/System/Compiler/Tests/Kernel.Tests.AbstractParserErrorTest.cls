@@ -68,6 +68,9 @@ checkCompileError: ex range: anInterval code: anInteger line: lineInteger source
 compilationErrorClass
 	^self parserClass errorClass!
 
+compilationNotificationClass
+	^self parserClass notificationClass!
+
 compilationWarningClass
 	^self parserClass warningClass!
 
@@ -135,7 +138,7 @@ parseExprError: aString range: anInterval line: lineInteger code: anInteger
 	| ast |
 	"The parser errors/warnings are caught and suppressed here to avoid dumping loads of stuff to the transcript while the test runs."
 	ast := [self parseExpression: aString in: self class]
-				on: self compilationWarningClass , self compilationErrorClass
+				on: self compilationNotificationClass
 				do: [:ex | ex resume].
 	self
 		assert: (errors anySatisfy: 
@@ -2050,6 +2053,7 @@ writtenNotReadRange: aString
 buildNestedBlocks:!helpers!private! !
 checkCompileError:range:code:line:source:!helpers!private! !
 compilationErrorClass!constants!private! !
+compilationNotificationClass!private! !
 compilationWarningClass!constants!private! !
 compileMethod:in:!helpers!private! !
 errorFormats!constants!private! !

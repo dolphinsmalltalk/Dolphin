@@ -8,6 +8,7 @@ Kernel.SharedPool
 	classInstanceVariableNames: ''
 	classConstants: {
 			'U_CHAR_CATEGORY_COUNT' -> 16r1E.
+			'U_CHAR_NAME_ALIAS' -> 16r3.
 			'U_COMBINING_SPACING_MARK' -> 16r8.
 			'U_CONNECTOR_PUNCTUATION' -> 16r16.
 			'U_CONTROL_CHAR' -> 16rF.
@@ -16,6 +17,7 @@ Kernel.SharedPool
 			'U_DECIMAL_DIGIT_NUMBER' -> 16r9.
 			'U_ENCLOSING_MARK' -> 16r7.
 			'U_END_PUNCTUATION' -> 16r15.
+			'U_EXTENDED_CHAR_NAME' -> 16r2.
 			'U_FINAL_PUNCTUATION' -> 16r1D.
 			'U_FOLD_CASE_DEFAULT' -> 16r0.
 			'U_FOLD_CASE_EXCLUDE_SPECIAL_I' -> 16r1.
@@ -40,6 +42,7 @@ Kernel.SharedPool
 			'U_SURROGATE' -> 16r12.
 			'U_TITLECASE_LETTER' -> 16r3.
 			'U_UNASSIGNED' -> 16r0.
+			'U_UNICODE_CHAR_NAME' -> 16r0.
 			'U_UPPERCASE_LETTER' -> 16r1.
 			'UCHAR_AGE' -> 16r4000.
 			'UCHAR_ALPHABETIC' -> 16r0.

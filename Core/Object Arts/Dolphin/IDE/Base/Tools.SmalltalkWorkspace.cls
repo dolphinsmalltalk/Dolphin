@@ -1012,11 +1012,18 @@ onHoverStart: aPoint
 	index <= 0 ifTrue: [^self].
 	style := (view styleAt: index) name.
 	range := view tokenRangeAt: index.
-
-	"Can be useful to see a tip for Characters expressed in $\xNN[NN] form"
+	"Can be useful to see a tip for Characters, especially those expressed in $\xNN[NN] form. The tip now includes the Unicode character name."
 	style == #literalCharacter
 		ifTrue: 
-			[self showTipForCharacter: range.
+			[self showTipForCharacterAt: index.
+			^self].
+	style == #literalNumber
+		ifTrue: 
+			[self showTipForNumberAt: index.
+			^self].
+	style == #literalBytes
+		ifTrue: 
+			[self showTipForByteArrayAt: index.
 			^self].
 	(#(#identifier #tempDecl #argDecl #blockArgDecl) identityIncludes: style)
 		ifTrue: 
@@ -1524,20 +1531,38 @@ showSymbolCompletionListAt: posInteger maxItems: maxInteger
 	quoted ifTrue: [symbols := symbols collect: [:each | each displayString printString]].
 	self showCompletionList: symbols prefixLength: prefixLength!
 
-showTipForCharacter: anInterval
-	| representation ch tokenText tip |
-	tokenText := view plainTextRange: anInterval.
+showTipForByteArrayAt: anInteger
+	| elementText byte |
+	elementText := view wordTextAt: anInteger.
+	byte := Integer fromString: elementText.
+	byte > 9 ifFalse: [^self].
+	self view showCallTip: ((elementText includes: $r) ifTrue: [byte printString] ifFalse: [byte hex])
+		at: anInteger!
+
+showTipForCharacterAt: anInteger
+	| representation ch tokenText tip charName |
+	tokenText := view tokenTextAt: anInteger.
 	ch := (Scanner on: tokenText readStream) next value.
-	tip := (ch isGraph
-				ifTrue: 
-					[representation := ch asUtf8String.
-					representation = (tokenText copyFrom: 2)]
-				ifFalse: 
-					[representation := ch printString.
-					representation = tokenText])
-					ifTrue: ['Codepoint: ' , ch codePointString]
-					ifFalse: ['Character: ' , representation].
-	self view showCallTip: tip at: anInterval stop!
+	tip := String writeStream.
+	(ch isGraph
+		ifTrue: 
+			[representation := ch asUtf8String.
+			representation = (tokenText copyFrom: 2)]
+		ifFalse: 
+			[representation := ch printString.
+			representation = tokenText])
+			ifTrue: [tip nextPutAll: 'Codepoint: ']
+			ifFalse: 
+				[tip
+					nextPutAll: 'Character: ';
+					nextPutAll: representation;
+					nextPutAll: ', '].
+	tip
+		nextPutAll: ch codePointString;
+		space.
+	charName := ch unicodeName: 2.
+	tip nextPutAll: (charName isEmpty ifTrue: ['<unnamed>'] ifFalse: [charName]).
+	self view showCallTip: tip contents at: anInteger!
 
 showTipForIdentifier: aStIdentifierToken
 	(self resolveVariable: aStIdentifierToken)
@@ -1567,6 +1592,21 @@ showTipForIndicators: aCollectionOfScintillaIndicators
 			last := last max: each range stop + 2]
 		separatedBy: [tip nextPut: $\n].
 	self view showCallTip: tip contents at: last!
+
+showTipForNumberAt: anInteger
+	| tokenText token number standard |
+	tokenText := view tokenTextAt: anInteger.
+	token := (Scanner on: tokenText readStream) next.
+	number := token value.
+	standard := number printString.
+	standard = tokenText
+		ifTrue: 
+			["Show the hex value for integers where that might be useful"
+			(number isInteger and: [number > 9])
+				ifTrue: [self view showCallTip: (number printStringRadix: 16) at: anInteger]]
+		ifFalse: 
+			["Show the standard Smalltalk literal form for the number where the source format is different"
+			self view showCallTip: standard at: anInteger]!
 
 startAutocompleteTimer
 	self view setTimer: SCI_AUTOCSHOW interval: self class autoCompleteDwell!
@@ -1817,9 +1857,11 @@ showMessageCompletionListAt:maxItems:!autocompletion!helpers!private! !
 showResult:at:!helpers!private! !
 showSelectorCompletionListAt:maxItems:!autocompletion!helpers!private! !
 showSymbolCompletionListAt:maxItems:!autocompletion!helpers!private! !
-showTipForCharacter:!event handling!private! !
+showTipForByteArrayAt:!public! !
+showTipForCharacterAt:!event handling!private! !
 showTipForIdentifier:!helpers!private! !
 showTipForIndicators:!helpers!private! !
+showTipForNumberAt:!private! !
 startAutocompleteTimer!autocompletion!helpers!private! !
 stylerClass:!accessing!public! !
 suggestClassForVariable:!autocompletion!helpers!public! !

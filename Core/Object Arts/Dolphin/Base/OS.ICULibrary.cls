@@ -11,6 +11,63 @@ OS.ICULibrary guid: (Core.GUID fromString: '{cf17a85e-24da-4549-a6bf-03591cd9385
 OS.ICULibrary comment: ''!
 !OS.ICULibrary methodsFor!
 
+u_charName: aCharacter nameChoice: anInteger
+	| len error name |
+	error := ByteArray new: 4.
+	len := self
+				u_charName: aCharacter
+				nameChoice: anInteger
+				buffer: nil
+				bufferLength: 0
+				pErrorCode: error.
+	name := AnsiString new: len.
+	error int32AtOffset: 0 put: 0.
+	self
+		u_charName: aCharacter
+		nameChoice: anInteger
+		buffer: name
+		bufferLength: len + 1
+		pErrorCode: error.
+	(error int32AtOffset: 0) > 0
+		ifTrue: [self error: 'ICU error <p> in u_charName' << (error int32AtOffset: 0)].
+	^name!
+
+u_charName: aCharacter nameChoice: choiceInteger buffer: anAnsiString bufferLength: lengthInteger pErrorCode: aUInt32
+"Private - /**
+ * Retrieve the name of a Unicode character.
+ * Depending on <code>nameChoice</code>, the character name written
+ * into the buffer is the 'modern' name or the name that was defined
+ * in Unicode version 1.0.
+ * The name contains only 'invariant' characters
+ * like A-Z, 0-9, space, and '-'.
+ * Unicode 1.0 names are only retrieved if they are different from the modern
+ * names and if the data file contains the data for them. gennames may or may
+ * not be called with a command line option to include 1.0 names in unames.dat.
+ *
+ * @param code The character (code point) for which to get the name.
+ *             It must be <code>0<=code<=0x10ffff</code>.
+ * @param nameChoice Selector for which name to get.
+ * @param buffer Destination address for copying the name.
+ *               The name will always be zero-terminated.
+ *               If there is no name, then the buffer will be set to the empty string.
+ * @param bufferLength <code>==sizeof(buffer)</code>
+ * @param pErrorCode Pointer to a UErrorCode variable;
+ *        check for <code>U_SUCCESS()</code> after <code>u_charName()</code>
+ *        returns.
+ * @return The length of the name, or 0 if there is no name for this character.
+ *         If the bufferLength is less than or equal to the length, then the buffer
+ *         contains the truncated name and the returned length indicates the full
+ *         length of the name.
+ *         The length does not include the zero-termination.
+ *
+ * @see UCharNameChoice
+ * @see u_charFromName
+ * @see u_enumCharNames
+ * @stable ICU 2.0
+ */"
+	<cdecl: int32 u_charName char32 int32 lpstr int32 uint32*>
+	^self invalidCall: _failureCode!
+
 u_charType: aCharacter
 "/**
  * Returns the general category value for the code point.
@@ -170,7 +227,7 @@ u_ispunct: aCharacter
 	^self invalidCall: _failureCode!
 
 u_strFoldCase: destString destCapacity: capacityInteger src: srcString srcLength: lenInteger options: optionsInteger pErrorCode: anInt32
-	"/**
+	"Private - /**
  * Case-folds the characters in a string.
  *
  * Case-folding is locale-independent and not context-sensitive,
@@ -198,15 +255,39 @@ u_strFoldCase: destString destCapacity: capacityInteger src: srcString srcLength
 	<cdecl: int32 u_strFoldCase char16* int32 char16* int32 uint32 int32*>
 	^self invalidCall: _failureCode!
 
-u_strFromUTF8WithSub: utf8Bytes
+u_strFoldCase: aString options: anInteger
+	| errorCode destLength dest srcLength |
+	"Attempt conversion in place for mainstream case"
+	destLength := self
+				u_strFoldCase: (dest := aString asUtf16StringCopy)
+				destCapacity: (srcLength := dest size) + 1
+				src: dest
+				srcLength: srcLength
+				options: anInteger
+				pErrorCode: (errorCode := ByteArray newFixed: 4).
+	destLength == srcLength ifTrue: [^dest].
+	"The above in-place conversion may fail, in which (rare) case we need to allocate a large buffer and try again."
+	errorCode int32AtOffset: 0 put: 0.
+	self
+		u_strFoldCase: (dest := Utf16String new: destLength)
+		destCapacity: destLength + 1
+		src: aString
+		srcLength: srcLength
+		options: anInteger
+		pErrorCode: errorCode.
+	(errorCode int32AtOffset: 0) > 0
+		ifTrue: [self error: 'ICU error <p> in u_strFoldCase' << (errorCode int32AtOffset: 0)].
+	^dest!
+
+u_strFromUTF8WithSub: aUtf8String
 	| dest buf destLength |
 	buf := ByteArray newFixed: 8.
 	self
 		u_strFromUTF8WithSub: nil
 		destCapacity: 0
 		pDestLength: buf
-		src: utf8Bytes
-		srcLength: utf8Bytes size
+		src: aUtf8String
+		srcLength: aUtf8String size
 		subchar: 16rFFFD
 		pNumSubstitutions: nil
 		pErrorCode: buf yourAddress + 4.
@@ -216,12 +297,12 @@ u_strFromUTF8WithSub: utf8Bytes
 		u_strFromUTF8WithSub: (dest := Utf16String newFixed: destLength)
 		destCapacity: destLength + 1
 		pDestLength: buf
-		src: utf8Bytes
-		srcLength: utf8Bytes size
+		src: aUtf8String
+		srcLength: aUtf8String size
 		subchar: 16rFFFD
 		pNumSubstitutions: nil
 		pErrorCode: buf yourAddress + 4.
-	(buf int32AtOffset: 4) == 0 ifFalse: [self error: 'Error <p> in u_strFromUTF8WithSub' << (buf int32AtOffset: 4)].
+	(buf int32AtOffset: 4) > 0 ifTrue: [self error: 'Error <p> in u_strFromUTF8WithSub' << (buf int32AtOffset: 4)].
 	^dest!
 
 u_strFromUTF8WithSub: dest destCapacity: destInteger pDestLength: anInt32 src: aUtf8String srcLength: srcInteger subchar: aCharacter pNumSubstitutions: substInst32 pErrorCode: errInt32
@@ -234,31 +315,31 @@ u_strToLower: destString destCapacity: capacityInteger src: srcString srcLength:
 	^self invalidCall: _failureCode!
 
 u_strToLower: aString locale: isoString
-	| srcLength errorCode destLength utf16 |
+	| srcLength errorCode destLength dest |
 	destLength := self
-				u_strToLower: (utf16 := aString asUtf16StringCopy)
-				destCapacity: (srcLength := utf16 size) + 1
-				src: utf16
+				u_strToLower: (dest := aString asUtf16StringCopy)
+				destCapacity: (srcLength := dest size) + 1
+				src: dest
 				srcLength: srcLength
 				locale: isoString
 				pErrorCode: (errorCode := ByteArray newFixed: 4).
+	destLength == srcLength ifTrue: [^dest].
 	"The above in-place conversion may fail, in which (rare) case we need to allocate a large buffer and try again."
-	destLength == srcLength ifTrue: [^utf16].
-	utf16 := Utf16String new: destLength.
+	dest := Utf16String new: destLength.
 	errorCode int32AtOffset: 0 put: 0.
 	self
-		u_strToLower: utf16
+		u_strToLower: dest
 		destCapacity: destLength + 1
 		src: aString
 		srcLength: srcLength
 		locale: isoString
 		pErrorCode: errorCode.
-	^(errorCode int32AtOffset: 0) == 0
-		ifTrue: [utf16]
-		ifFalse: [aString error: 'ICU error <p> in u_strToLower' << (errorCode int32AtOffset: 0)]!
+	(errorCode int32AtOffset: 0) > 0
+		ifTrue: [self error: 'ICU error <p> in u_strToLower' << (errorCode int32AtOffset: 0)].
+	^dest!
 
 u_strToTitle: destString destCapacity: capacityInteger src: srcString srcLength: lenInteger titleIter: aCallback locale: localeString pErrorCode: anInt32
-	"/**
+	"Private - /**
  * Titlecase a string.
  * Casing is locale-dependent and context-sensitive.
  * Titlecasing uses a break iterator to find the first characters of words
@@ -300,9 +381,58 @@ u_strToTitle: destString destCapacity: capacityInteger src: srcString srcLength:
 	<cdecl: int32 u_strToTitle char16* int32 char16* int32 void* char8* int32*>
 	^self invalidCall: _failureCode!
 
+u_strToTitle: aString locale: isoString
+	| errorCode destLength dest srcLength |
+	destLength := self
+				u_strToTitle: (dest := aString asUtf16StringCopy)
+				destCapacity: (srcLength := dest size) + 1
+				src: dest
+				srcLength: srcLength
+				titleIter: nil
+				locale: isoString
+				pErrorCode: (errorCode := ByteArray newFixed: 4).
+	destLength == srcLength ifTrue: [^dest].
+	dest := Utf16String new: destLength.
+	errorCode int32AtOffset: 0 put: 0.
+	self
+		u_strToTitle: dest
+		destCapacity: destLength + 1
+		src: aString
+		srcLength: srcLength
+		titleIter: nil
+		locale: isoString
+		pErrorCode: errorCode.
+	(errorCode int32AtOffset: 0) > 0
+		ifTrue: [self error: 'ICU error <p> in u_ustToTitle' << (errorCode int32AtOffset: 0)].
+	^dest!
+
 u_strToUpper: destString destCapacity: capacityInteger src: srcString srcLength: lenInteger locale: localeString pErrorCode: anInt32
 	<cdecl: int32 u_strToUpper char16* int32 char16* int32 char8* int32*>
 	^self invalidCall: _failureCode!
+
+u_strToUpper: aString locale: isoString
+	| srcLength errorCode destLength dest |
+	destLength := self
+				u_strToUpper: (dest := aString asUtf16StringCopy)
+				destCapacity: (srcLength := dest size) + 1
+				src: dest
+				srcLength: srcLength
+				locale: isoString
+				pErrorCode: (errorCode := ByteArray newFixed: 4).
+	destLength == srcLength ifTrue: [^dest].
+	"The above in-place conversion may fail (e.g. ß -> SS), in which (rare) case we need to allocate a large buffer and try again."
+	dest := Utf16String new: destLength.
+	errorCode int32AtOffset: 0 put: 0.
+	self
+		u_strToUpper: dest
+		destCapacity: destLength + 1
+		src: aString
+		srcLength: srcLength
+		locale: isoString
+		pErrorCode: errorCode.
+	(errorCode int32AtOffset: 0) > 0
+		ifTrue: [self error: 'ICU error <p> in u_strToUpper' << (errorCode int32AtOffset: 0)].
+	^dest!
 
 u_tolower: aCharacter
 "/**
@@ -357,6 +487,8 @@ u_toupper: aCharacter
 	<cdecl: char32 u_toupper char32>
 	^self invalidCall: _failureCode! !
 !OS.ICULibrary categoriesForMethods!
+u_charName:nameChoice:!character properties!public! !
+u_charName:nameChoice:buffer:bufferLength:pErrorCode:!character properties!private! !
 u_charType:!character properties!public! !
 u_foldCase:options:!character properties!public! !
 u_hasBinaryProperty:which:!character properties!public! !
@@ -364,13 +496,16 @@ u_isalpha:!character properties!public! !
 u_iscntrl:!character properties!public! !
 u_isgraph:!character properties!public! !
 u_ispunct:!character properties!public! !
-u_strFoldCase:destCapacity:src:srcLength:options:pErrorCode:!case conversions!public! !
+u_strFoldCase:destCapacity:src:srcLength:options:pErrorCode:!case conversions!private! !
+u_strFoldCase:options:!case conversions!public! !
 u_strFromUTF8WithSub:!encoding conversions!public! !
-u_strFromUTF8WithSub:destCapacity:pDestLength:src:srcLength:subchar:pNumSubstitutions:pErrorCode:!encoding conversions!public! !
-u_strToLower:destCapacity:src:srcLength:locale:pErrorCode:!case conversions!public! !
+u_strFromUTF8WithSub:destCapacity:pDestLength:src:srcLength:subchar:pNumSubstitutions:pErrorCode:!encoding conversions!private! !
+u_strToLower:destCapacity:src:srcLength:locale:pErrorCode:!case conversions!private! !
 u_strToLower:locale:!case conversions!public! !
-u_strToTitle:destCapacity:src:srcLength:titleIter:locale:pErrorCode:!case conversions!public! !
-u_strToUpper:destCapacity:src:srcLength:locale:pErrorCode:!case conversions!public! !
+u_strToTitle:destCapacity:src:srcLength:titleIter:locale:pErrorCode:!case conversions!private! !
+u_strToTitle:locale:!case conversions!public! !
+u_strToUpper:destCapacity:src:srcLength:locale:pErrorCode:!case conversions!private! !
+u_strToUpper:locale:!case conversions!public! !
 u_tolower:!case conversions!public! !
 u_toupper:!case conversions!public! !
 !
