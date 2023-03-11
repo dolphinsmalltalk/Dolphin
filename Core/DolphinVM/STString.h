@@ -169,7 +169,10 @@ namespace ST
 
 		static Utf16StringOTE* __fastcall New(LPCWSTR pwsz);
 		static Utf16StringOTE* __fastcall New(const WCHAR* pwsz, size_t cwch);
+#ifdef NLSConversions
 		template <codepage_t CP, class T> static Utf16StringOTE* __fastcall New(const T* pChars, size_t len);
+#endif
+		static Utf16StringOTE* __fastcall New(const char* __restrict psz, size_t cch);
 		static Utf16StringOTE* __fastcall New(const char8_t* __restrict psz8, size_t cch8);
 		static Utf16StringOTE* __fastcall New(OTE* oteByteString);
 		static Utf16StringOTE* __fastcall New(size_t cwch);

@@ -3382,7 +3382,7 @@ verifyExtCallArgLpstr: aBoolean
 	self assert: actual isKindOf: AnsiString.
 	arg16 := Utf16String fromByteArray: #[97 0 32 0 61 216 44 220 32 0 111 0 114 0 32 0 116 0 119 0 111 0].
 	actual := method value: VM withArguments: {arg16}.
-	self assert: actual equals: 'a ?? or two'.
+	self assert: actual equals: 'a ? or two'.
 	self assert: actual isKindOf: AnsiString.
 	argUtf8 := Utf8String fromByteArray: #[97 32 240 159 144 172 32 111 114 32 116 119 111].
 	actual := method value: VM withArguments: {argUtf8}.

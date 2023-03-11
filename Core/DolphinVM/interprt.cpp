@@ -257,6 +257,7 @@ HRESULT Interpreter::initializeCharMaps()
 
 	// Create the reverse map - it will be very sparse, but as it only consumes 64Kb it isn't worth using a hash table
 	memset(m_unicodeToAnsiCharMap, 0, sizeof(m_unicodeToAnsiCharMap));
+	memset(m_unicodeToBestFitAnsiCharMap, 0, sizeof(m_unicodeToBestFitAnsiCharMap));
 	WCHAR* wideChars = reinterpret_cast<WCHAR*>(_malloca(65536*sizeof(WCHAR)));
 	if (wideChars == nullptr)
 	{
@@ -272,6 +273,7 @@ HRESULT Interpreter::initializeCharMaps()
 		wideChars[i] = static_cast<WCHAR>(i);
 	
 	VERIFY(::WideCharToMultiByte(m_ansiCodePage, WC_NO_BEST_FIT_CHARS, wideChars, 65536, reinterpret_cast<LPSTR>(m_unicodeToAnsiCharMap), 65536, "\0", nullptr) == 65536);
+	VERIFY(::WideCharToMultiByte(m_ansiCodePage, 0, wideChars, 65536, reinterpret_cast<LPSTR>(m_unicodeToBestFitAnsiCharMap), 65536, "\0", nullptr) == 65536);
 	_freea(wideChars);
 
 	return S_OK;

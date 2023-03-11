@@ -116,14 +116,22 @@ testConcatenation
 	triples := #(#('' '€' '€') #('€' '' '€') #('' '€£' '€£') #('€£' '' '€£') #('a' '£' 'a£') #('a' '€' 'a€') #('' '🐬' '🐬') #('£' 'a' '£a') #('€' 'a' '€a') #('£' '€~🐬' '£€~🐬') #('a£~€' 'b£€�𐀀🐬' 'a£~€b£€�𐀀🐬')).
 	triples do: 
 			[:each |
-			actual := each first asAnsiString , each second asUtf8String.
+			| utf8 ansi |
+			ansi := each first asAnsiString.
+			utf8 := each second asUtf8String.
+			actual := ansi , utf8.
 			self assert: actual isKindOf: Utf8String.
-			self assert: actual equals: each third].
+			self assert: actual equals: each third.
+			self assert: utf8 , ansi equals: utf8 , ansi asUtf8String].
 	triples do: 
 			[:each |
-			actual := each first asAnsiString , each second asUtf16String.
+			| ansi utf16 |
+			ansi := each first asAnsiString.
+			utf16 := each second asUtf16String.
+			actual := ansi , utf16.
 			self assert: actual isKindOf: Utf16String.
-			self assert: actual equals: each third]!
+			self assert: actual equals: each third.
+			self assert: utf16 , ansi equals: utf16 , ansi asUtf16String]!
 
 testCopyReplaceAllWith
 	| subject actual |

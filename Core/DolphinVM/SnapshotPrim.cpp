@@ -50,7 +50,7 @@ Oop* PRIMCALL Interpreter::primitiveSnapshot(Oop* const sp, primargcount_t)
 	switch (encoding)
 	{
 	case StringEncoding::Ansi:
-		buf.FromAnsi(reinterpret_cast<AnsiStringOTE*>(oteArg)->m_location->m_characters, oteArg->getSize(), Interpreter::m_ansiCodePage);
+		buf.FromAnsi(reinterpret_cast<AnsiStringOTE*>(oteArg)->m_location->m_characters, oteArg->getSize());
 		szFileName = buf;
 		break;
 	case StringEncoding::Utf8:

@@ -8,12 +8,7 @@ public:
 	Utf8StringBuf(const Utf8StringBuf&) = delete;
 	Utf8StringBuf(const Utf8StringBuf&&) = delete;
 
-	Utf8StringBuf(const char16_t* pwch, size_t cwch)
-	{
-		FromUtf16(pwch, cwch);
-	}
-
-	void FromUtf16(const char16_t* pwch, const size_t& cwch)
+	Utf8StringBuf(const char16_t* __restrict pwch, size_t cwch)
 	{
 		m_cch8 = LengthOfUtf16(pwch, cwch);
 		if (m_cch8 >= _countof(m_ch8Buf))
@@ -25,12 +20,7 @@ public:
 		*(ConvertUtf16_unsafe(pwch, cwch, m_pBuf, m_cch8)) = '\0';
 	}
 
-	Utf8StringBuf(const char* psz, size_t cch, UINT codePage)
-	{
-		FromAnsi(psz, cch, codePage);
-	}
-
-	void FromAnsi(const char* psz, const size_t& cch, UINT codePage)
+	Utf8StringBuf(const char* __restrict psz, size_t cch)
 	{
 		m_cch8 = LengthOfAnsi(psz, cch);
 		if (m_cch8 >= _countof(m_ch8Buf))

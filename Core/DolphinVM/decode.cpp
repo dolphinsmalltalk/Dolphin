@@ -89,7 +89,7 @@ wostream& operator<<(wostream& stream, const StringOTE* oteChars)
 		{
 		case StringEncoding::Ansi:
 		{
-			Utf16StringBuf buf(reinterpret_cast<const AnsiStringOTE*>(oteChars)->m_location->m_characters, oteChars->bytesSize(), Interpreter::m_ansiCodePage);
+			Utf16StringBuf buf(reinterpret_cast<const AnsiStringOTE*>(oteChars)->m_location->m_characters, oteChars->bytesSize());
 			printChars(stream, buf, buf.Count);
 			break;
 		}
@@ -147,7 +147,7 @@ wostream& operator<<(wostream& st, const AnsiStringOTE* ote)
 	else
 	{
 		st << L"'";
-		Utf16StringBuf buf(ote->m_location->m_characters, ote->bytesSize(), Interpreter::m_ansiCodePage);
+		Utf16StringBuf buf(ote->m_location->m_characters, ote->bytesSize());
 		printChars(st, buf, buf.Count);
 		st << L"'";
 

@@ -35,6 +35,8 @@ using namespace DolphinX;
 #include "STContext.h"
 #include "STBlockClosure.h"
 
+#include "Utf16StringBuf.h"
+
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 // Helpers for creating new structures and structure pointers.
@@ -132,18 +134,6 @@ AddressOTE* __fastcall NewBSTR(const char16_t* pChars, size_t len)
 	return resultPointer;
 }
 
-// Answer a new BSTR converted from the a byte string with the specified encoding
-template <codepage_t CP, class TChar> static AddressOTE* __fastcall NewBSTR(const TChar* psz, size_t cch)
-{
-	const UINT cp = CP == CP_ACP ? Interpreter::m_ansiCodePage : CP;
-	int cwch = cch * 2;
-	char16_t* buf = reinterpret_cast<char16_t*>(_malloca(cwch * 2));
-	cwch = ::MultiByteToWideChar(cp, 0, reinterpret_cast<LPCCH>(psz), cch, reinterpret_cast<LPWSTR>(buf), cwch);
-	AddressOTE* bstr = NewBSTR(buf, cwch);
-	_freea(buf);
-	return bstr;
-}
-
 AddressOTE* __fastcall NewBSTR(OTE* ote)
 {
 	if (ote->isNullTerminated())
@@ -152,9 +142,15 @@ AddressOTE* __fastcall NewBSTR(OTE* ote)
 		switch (strClass->Encoding)
 		{
 		case StringEncoding::Ansi:
-			return NewBSTR<AnsiString::CP, AnsiString::CU>(reinterpret_cast<AnsiStringOTE*>(ote)->m_location->m_characters, ote->getSize());
+		{
+			Utf16StringBuf buf(reinterpret_cast<AnsiStringOTE*>(ote)->m_location->m_characters, ote->getSize());
+			return NewBSTR(buf, buf.Count);
+		}
 		case StringEncoding::Utf8:
-			return NewBSTR<Utf8String::CP, Utf8String::CU>(reinterpret_cast<Utf8StringOTE*>(ote)->m_location->m_characters, ote->getSize());
+		{
+			Utf16StringBuf buf(reinterpret_cast<Utf8StringOTE*>(ote)->m_location->m_characters, ote->getSize());
+			return NewBSTR(buf, buf.Count);
+		}
 		case StringEncoding::Utf16:
 			return NewBSTR(reinterpret_cast<Utf16StringOTE*>(ote)->m_location->m_characters, ote->getSize() / sizeof(Utf16String::CU));
 		case StringEncoding::Utf32:
@@ -184,7 +180,7 @@ Utf16StringOTE* __fastcall ST::Utf16String::New(OTE* oteString)
 	case StringEncoding::Ansi:
 	{
 		auto oteAnsi = reinterpret_cast<AnsiStringOTE*>(oteString);
-		return Utf16String::New<CP_ACP>(oteAnsi->m_location->m_characters, oteAnsi->sizeForRead());
+		return Utf16String::New(oteAnsi->m_location->m_characters, oteAnsi->sizeForRead());
 	}
 	case StringEncoding::Utf8:
 	{

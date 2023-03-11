@@ -109,10 +109,28 @@ testAnsiStringRoundTrip
 	self assert: ansi size equals: 256.
 	self assert: ansi equals: ansiAll.
 
-	"Note that turkish dotless-i's do not normally roundtrip, unless using a turkish code page."
-	utf := self assimilateString: 'ınteresting'.
-	ansi := utf asAnsiString.
-	self assert: ansi equals: 'interesting' asAnsiString!
+	"A few common non-ASCII examples"
+	#($€ $£) do: 
+			[:each |
+			| utf ansi |
+			utf := self collectionClass with: each.
+			ansi := utf asAnsiString.
+			self assert: ansi single equals: each.
+			self assert: (self assimilateString: ansi) equals: utf].
+
+	"A few common non-tround-tripping examples - e.g. turkish dotless-i's do not normally roundtrip, unless using a turkic code page."
+	#('ınteresting' 'interesting' '∞' '8' '・' '·') pairsDo: 
+			[:each :expected |
+			| utf ansi |
+			utf := self assimilateString: each.
+			ansi := utf asAnsiString.
+			self assert: ansi equals: expected asAnsiString.
+			"Doesn't round-trip"
+			self deny: (self assimilateString: ansi) equals: utf.
+			self assert: (self assimilateString: ansi) equals: ansi].
+
+	"Chars outside the BMP should translate to a single replacement char, not two"
+	self assert: (self collectionClass with: Character dolphin) asAnsiString equals: '?'!
 
 testAnyone
 	| subject |

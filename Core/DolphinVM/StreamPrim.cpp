@@ -237,7 +237,7 @@ Oop* PRIMCALL Interpreter::primitiveNextPut(Oop* const sp, primargcount_t)
 								}
 
 								AnsiString::CU ch = 0;
-								if (codePoint == 0 || (U_IS_BMP(codePoint) && (ch = m_unicodeToAnsiCharMap[codePoint]) != 0))
+								if (codePoint == 0 || (U_IS_BMP(codePoint) && (ch = m_unicodeToBestFitAnsiCharMap[codePoint]) != 0))
 								{
 									oteStringBuf->m_location->m_characters[index] = ch;
 									writeStream->m_index = Integer::NewSigned32WithRef(index + 1);		// Increment the stream index
@@ -889,7 +889,7 @@ Oop* PRIMCALL Interpreter::primitiveNextPutAll(Oop* const sp, primargcount_t)
 						auto oteStringBuf = reinterpret_cast<Utf16StringOTE*>(oteBuf);
 						auto pszArg = reinterpret_cast<const AnsiStringOTE*>(oteStringArg)->m_location->m_characters;
 						size_t cchArg = oteStringArg->getSize();
-						int cwchArg = ::MultiByteToWideChar(m_ansiCodePage, 0, pszArg, cchArg, nullptr, 0);
+						int cwchArg = Utf16StringBuf::LengthOfAnsi(pszArg, cchArg);
 						ASSERT(cwchArg >= 0);
 						size_t valueSize = cwchArg;
 						newIndex = static_cast<size_t>(index) + valueSize;
@@ -901,7 +901,8 @@ Oop* PRIMCALL Interpreter::primitiveNextPutAll(Oop* const sp, primargcount_t)
 							return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);	// Attempt to write off end of buffer (or immutable)
 
 						auto pwsz = oteStringBuf->m_location->m_characters;
-						::MultiByteToWideChar(m_ansiCodePage, 0, pszArg, cchArg, (LPWSTR)pwsz + index, cwchArg);
+						char16_t* pEnd = Utf16StringBuf::ConvertAnsi_unsafe(pszArg, cchArg, pwsz + index);
+						ASSERT(pEnd == pwsz + newIndex);
 					}
 					break;
 
@@ -1015,9 +1016,7 @@ Oop* PRIMCALL Interpreter::primitiveNextPutAll(Oop* const sp, primargcount_t)
 
 			writeStream->m_index = Integer::NewUnsigned32WithRef(newIndex);		// Increment the stream index
 
-			// As we no longer pop stack here, the receiver is still under the argument
 			*(sp - 1) = value;
-
 			return sp - 1;
 		}
 

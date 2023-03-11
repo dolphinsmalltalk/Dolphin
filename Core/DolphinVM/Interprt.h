@@ -894,6 +894,7 @@ public:
 	static char			m_ansiReplacementChar;
 	static WCHAR		m_ansiToUnicodeCharMap[256];
 	static unsigned char m_unicodeToAnsiCharMap[65536];
+	static unsigned char m_unicodeToBestFitAnsiCharMap[65536];
 
 public:
 	#if defined(_DEBUG)
