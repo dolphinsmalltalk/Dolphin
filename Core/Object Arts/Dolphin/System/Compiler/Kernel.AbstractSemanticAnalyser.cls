@@ -13,6 +13,13 @@ Kernel.AbstractSemanticAnalyser comment: ''!
 !Kernel.AbstractSemanticAnalyser categoriesForClass!Refactory-ParseTree Matching! !
 !Kernel.AbstractSemanticAnalyser methodsFor!
 
+analyseParseTree: aStMethodNode pools: anArray onError: aMonadicValuableOrNil
+	^self
+		setMethodNode: aStMethodNode
+			pools: anArray
+			errorBlock: aMonadicValuableOrNil;
+		visitNode: aStMethodNode!
+
 bindVariable: aStVariableNode
 	"Private - Find the correct variable definition for the identifier of aVariableNode, and associate the StVariable describing that definition with the node.
 	Answer the variable definition found, or nil if not found."
@@ -197,6 +204,7 @@ visitTempDeclNode: aStTempDeclNode
 visitVariableNode: aVariableNode
 	^self subclassResponsibility! !
 !Kernel.AbstractSemanticAnalyser categoriesForMethods!
+analyseParseTree:pools:onError:!operations!public! !
 bindVariable:!helpers!private! !
 compilationErrorClass!constants!private! !
 currentScope!accessing!private! !
@@ -235,13 +243,11 @@ analyseParseTree: aStMethodNode
 	^self analyseParseTree: aStMethodNode pools: #() onError: nil!
 
 analyseParseTree: aParseTree pools: anArray onError: aMonadicValuableOrNil
-	| methodNode |
-	methodNode := aParseTree methodNode.
 	^self new
-		setMethodNode: methodNode
+		analyseParseTree: aParseTree methodNode
 			pools: anArray
-			errorBlock: aMonadicValuableOrNil;
-		visitNode: methodNode! !
+			onError: aMonadicValuableOrNil;
+		yourself! !
 !Kernel.AbstractSemanticAnalyser class categoriesForMethods!
 analyseParseTree:!operations!public! !
 analyseParseTree:pools:onError:!operations!public! !
