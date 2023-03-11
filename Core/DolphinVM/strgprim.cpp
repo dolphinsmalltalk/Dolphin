@@ -1753,7 +1753,8 @@ char8_t* Utf8StringBuf::ConvertUtf16_unsafe(const char16_t* __restrict pwszSrc, 
 	if (cch8Dest == cwchSrc) {
 		// Only possible for the UTF-8 code unit count to be the same as the that for UTF-16
 		// if the UTF-16 code units are all ASCII, in which case a straight copy, words to bytes, 
-		// will do
+		// will do. In all other circumstances UTF-8 requires more code units (not necessarily bytes)
+		// to represent the same string.
 		while (cwchSrc--) {
 			*psz8Dest++ = static_cast<char8_t>(*pwszSrc++);
 		}
@@ -1953,92 +1954,31 @@ size_t Utf16StringBuf::LengthOfUtf8(const char8_t* __restrict psz8, size_t cch8)
 	size_t i = 0;
 	while (i < cch8) 
 	{
-		// modified copy of U8_NEXT()
-		auto ch8 = psz8[i++];
-		if (U8_IS_SINGLE(ch8)) 
-		{
-			++cwch;
-		}
-		else 
-		{
-			if ( /* handle U+0800..U+FFFF inline */
-					(0xe0 <= ch8 && ch8 < 0xf0) &&
-					(i+1) < cch8 &&
-					U8_IS_VALID_LEAD3_AND_T1(ch8, psz8[i]) &&
-					(static_cast<uint8_t>(psz8[i+1] - 0x80) <= 0x3f)) 
-			{
-				++cwch;
-				i += 2;
-			}
-			else if ( /* handle U+0080..U+07FF inline */
-					(ch8 < 0xe0 && ch8 >= 0xc2) &&
-					(i != cch8) &&
-					(static_cast<uint8_t>(psz8[i] - 0x80) <= 0x3f)) 
-			{
-				++cwch;
-				++i;
-			}
-			else 
-			{
-				/* function call for "complicated" and error cases */
-				UChar32 cp = utf8_nextCharSafeBody((const uint8_t*)psz8, reinterpret_cast<int32_t*>(&i), cch8, ch8, -1);
-				cwch += cp < 0 ? U16_LENGTH(Interpreter::UnicodeReplacementChar) : U16_LENGTH(cp);
-			}
-		}
+		char32_t c;
+		U8_NEXT_OR_FFFD(psz8, i, cch8, c);
+		cwch += U16_LENGTH(c);
 	}
 	return cwch;
 }
 
 char16_t* Utf16StringBuf::ConvertUtf8_unsafe(const char8_t* __restrict psz8Src, size_t cch8Src, char16_t* __restrict pwszDest)
 {
-	const char8_t* psz8 = psz8Src;
-	char16_t* pwch = pwszDest;
-	
-	// Even if the UTF-16 code unit count is the same as the UTF-8, we can't perform a straight 
-	// copy as we may need to convert invalid code units to the replacement char
-
 	size_t i = 0;
-	while (i < cch8Src) {
-		// modified copy of U8_NEXT()
-		auto ch8 = psz8[i++];
-		if (U8_IS_SINGLE(ch8)) {
-			*pwch++ = static_cast<char16_t>(ch8);
+	while (i < cch8Src)
+	{
+		char32_t c;
+		U8_NEXT_OR_FFFD(psz8Src, i, cch8Src, c);
+		if (c <= 0xFFFF) 
+		{
+			*pwszDest++ = static_cast<char16_t>(c);
 		}
-		else {
-			uint8_t __t1, __t2;
-			if ( /* handle U+0800..U+FFFF inline */
-				(0xe0 <= ch8 && ch8 < 0xf0) &&
-				(i+1) < cch8Src &&
-				U8_IS_VALID_LEAD3_AND_T1(ch8, psz8[i]) &&
-				(__t2 = psz8[(i)+1] - 0x80) <= 0x3f) {
-				*pwch++ = ((ch8 & 0xf) << 12) | ((psz8[i] & 0x3f) << 6) | __t2;
-				i += 2;
-			}
-			else if ( /* handle U+0080..U+07FF inline */
-				(ch8 < 0xe0 && ch8 >= 0xc2) &&
-				(i != cch8Src) &&
-				(__t1 = psz8[i] - 0x80) <= 0x3f) {
-				*pwch++ = ((ch8 & 0x1f) << 6) | __t1;
-				++i;
-			}
-			else {
-				/* function call for "complicated" and error cases */
-				UChar32 cp = utf8_nextCharSafeBody((const uint8_t*)psz8, reinterpret_cast<int32_t*>(&i), cch8Src, ch8, -1);
-				if (cp < 0) {
-					*pwch++ = Interpreter::UnicodeReplacementChar;
-				}
-				else if (cp <= 0xFFFF) {
-					// I don't think we should ever get here as this should have been handled above as a simple case
-					*pwch++ = static_cast<char16_t>(cp);
-				}
-				else {
-					*pwch++ = U16_LEAD(cp);
-					*pwch++ = U16_TRAIL(cp);
-				}
-			}
+		else 
+		{
+			*pwszDest++ = U16_LEAD(c);
+			*pwszDest++ = U16_TRAIL(c);
 		}
 	}
-	return pwch;
+	return pwszDest;
 }
 
 Utf8StringOTE* __fastcall ST::Utf8String::NewFromAnsi(const char* __restrict psz, size_t cch)
