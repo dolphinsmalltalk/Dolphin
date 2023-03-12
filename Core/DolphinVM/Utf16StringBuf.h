@@ -84,3 +84,36 @@ private:
 	size_t m_cwch = 0;
 	char16_t m_wcsBuf[256-sizeof(char16_t*)-sizeof(size_t)];
 };
+
+inline size_t Utf16StringBuf::LengthOfUtf8(const char8_t* __restrict psz8, size_t cch8)
+{
+	size_t cwch = 0;
+	size_t i = 0;
+	while (i < cch8)
+	{
+		char32_t c;
+		U8_NEXT_OR_FFFD(psz8, i, cch8, c);
+		cwch += U16_LENGTH(c);
+	}
+	return cwch;
+}
+
+inline char16_t* Utf16StringBuf::ConvertUtf8_unsafe(const char8_t* __restrict psz8Src, size_t cch8Src, char16_t* __restrict pwszDest)
+{
+	size_t i = 0;
+	while (i < cch8Src)
+	{
+		char32_t c;
+		U8_NEXT_OR_FFFD(psz8Src, i, cch8Src, c);
+		if (U_IS_BMP(c))
+		{
+			*pwszDest++ = static_cast<char16_t>(c);
+		}
+		else
+		{
+			*pwszDest++ = U16_LEAD(c);
+			*pwszDest++ = U16_TRAIL(c);
+		}
+	}
+	return pwszDest;
+}

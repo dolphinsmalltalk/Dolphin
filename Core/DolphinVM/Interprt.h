@@ -639,7 +639,7 @@ public:
 
 	// String comparisons - mostly templated
 	template<class OpA, class OpW> static Oop * __fastcall primitiveStringComparison(Oop * const sp, primargcount_t);
-	template<class OpA, class OpW, bool> static Oop* PRIMCALL primitiveStringEqual(Oop* const sp, primargcount_t);
+	static Oop* PRIMCALL primitiveStringOrdinalEqual(Oop* const sp, primargcount_t);
 	static Oop* PRIMCALL primitiveStringCompareOrdinal(Oop* const sp, primargcount_t argCount);
 	static Oop* PRIMCALL primitiveStringLessOrEqual(Oop* sp, primargcount_t);
 	static Oop* PRIMCALL primitiveOrdinalHashIgnoreCase(Oop* const sp, primargcount_t argCount);

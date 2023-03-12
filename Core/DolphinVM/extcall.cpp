@@ -143,16 +143,21 @@ AddressOTE* __fastcall NewBSTR(OTE* ote)
 		{
 		case StringEncoding::Ansi:
 		{
-			Utf16StringBuf buf(reinterpret_cast<AnsiStringOTE*>(ote)->m_location->m_characters, ote->getSize());
+			auto oteAnsi = reinterpret_cast<AnsiStringOTE*>(ote);
+			Utf16StringBuf buf(oteAnsi->m_location->m_characters, oteAnsi->Count);
 			return NewBSTR(buf, buf.Count);
 		}
 		case StringEncoding::Utf8:
 		{
-			Utf16StringBuf buf(reinterpret_cast<Utf8StringOTE*>(ote)->m_location->m_characters, ote->getSize());
+			auto oteUtf8 = reinterpret_cast<Utf8StringOTE*>(ote);
+			Utf16StringBuf buf(oteUtf8->m_location->m_characters, oteUtf8->Count);
 			return NewBSTR(buf, buf.Count);
 		}
 		case StringEncoding::Utf16:
-			return NewBSTR(reinterpret_cast<Utf16StringOTE*>(ote)->m_location->m_characters, ote->getSize() / sizeof(Utf16String::CU));
+		{
+			auto oteUtf16 = reinterpret_cast<Utf16StringOTE*>(ote);
+			return NewBSTR(oteUtf16->m_location->m_characters, oteUtf16->Count);
+		}
 		case StringEncoding::Utf32:
 			return nullptr;
 
@@ -180,12 +185,12 @@ Utf16StringOTE* __fastcall ST::Utf16String::New(OTE* oteString)
 	case StringEncoding::Ansi:
 	{
 		auto oteAnsi = reinterpret_cast<AnsiStringOTE*>(oteString);
-		return Utf16String::New(oteAnsi->m_location->m_characters, oteAnsi->sizeForRead());
+		return Utf16String::New(oteAnsi->m_location->m_characters, oteAnsi->Count);
 	}
 	case StringEncoding::Utf8:
 	{
 		auto oteUtf8 = reinterpret_cast<Utf8StringOTE*>(oteString);
-		return Utf16String::New(oteUtf8->m_location->m_characters, oteUtf8->sizeForRead());
+		return Utf16String::New(oteUtf8->m_location->m_characters, oteUtf8->Count);
 	}
 	case StringEncoding::Utf16:
 		ASSERT(FALSE);
@@ -210,12 +215,12 @@ Utf8StringOTE* __fastcall ST::Utf8String::NewFromString(OTE* oteString)
 	case StringEncoding::Ansi:
 	{
 		auto oteAnsi = reinterpret_cast<AnsiStringOTE*>(oteString);
-		return Utf8String::NewFromAnsi(oteAnsi->m_location->m_characters, oteAnsi->sizeForRead());
+		return Utf8String::NewFromAnsi(oteAnsi->m_location->m_characters, oteAnsi->Count);
 	}
 	case StringEncoding::Utf16:
 	{
 		auto oteUtf16 = reinterpret_cast<Utf16StringOTE*>(oteString);
-		return Utf8String::NewFromUtf16(oteUtf16->m_location->m_characters, oteUtf16->sizeForRead());
+		return Utf8String::NewFromUtf16(oteUtf16->m_location->m_characters, oteUtf16->Count);
 	}
 	case StringEncoding::Utf8:
 		ASSERT(FALSE);
@@ -243,12 +248,12 @@ AnsiStringOTE* __fastcall ST::AnsiString::NewFromString(OTE* oteString)
 	case StringEncoding::Utf16:
 	{
 		auto oteUtf16 = reinterpret_cast<Utf16StringOTE*>(oteString);
-		return AnsiString::NewFromUtf16(oteUtf16->m_location->m_characters, oteUtf16->sizeForRead());
+		return AnsiString::NewFromUtf16(oteUtf16->m_location->m_characters, oteUtf16->Count);
 	}
 	case StringEncoding::Utf8:
 	{
 		auto oteUtf8 = reinterpret_cast<Utf8StringOTE*>(oteString);
-		return AnsiString::NewFromUtf8(oteUtf8->m_location->m_characters, oteUtf8->sizeForRead());
+		return AnsiString::NewFromUtf8(oteUtf8->m_location->m_characters, oteUtf8->Count);
 	}
 	case StringEncoding::Utf32:
 		// TODO: Implement conversion for UTF-32

@@ -229,7 +229,7 @@ extern "C" PRIMTABLEDECL Interpreter::PrimitiveFp primitivesTable[256] = {
 	Interpreter::primitiveStringAsUtf8String									, // case 216: String>>#asUtf8String
 	Interpreter::primitiveStringAsByteString									, // case 217: String>>#asAnsiString
 	Interpreter::primitiveStringConcatenate										, // case 218: String>>#,
-	Interpreter::primitiveStringEqual<EqualA, EqualW, true>						, // case 219: String>>#=
+	Interpreter::primitiveStringOrdinalEqual									, // case 219: String>>#=
 	Interpreter::primitiveStringCompareOrdinal									, // case 220: String>>#compareOrdinals:ignoringCase:
 	Interpreter::primitiveBasicNext												, // case 221: ReadStream|FileStream|ReadWriteStream>>#basicNext, ReadStream>>#basicNextAvailable
 	Interpreter::primitiveBasicNextPut											, // case 222: WriteStream>>#basicNextPut:, FileStream|WriteStream>>#primitiveBasicNextPut:

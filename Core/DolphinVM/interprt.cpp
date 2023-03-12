@@ -258,7 +258,7 @@ HRESULT Interpreter::initializeCharMaps()
 	// Create the reverse map - it will be very sparse, but as it only consumes 64Kb it isn't worth using a hash table
 	memset(m_unicodeToAnsiCharMap, 0, sizeof(m_unicodeToAnsiCharMap));
 	memset(m_unicodeToBestFitAnsiCharMap, 0, sizeof(m_unicodeToBestFitAnsiCharMap));
-	WCHAR* wideChars = reinterpret_cast<WCHAR*>(_malloca(65536*sizeof(WCHAR)));
+	WCHAR* wideChars = malloca(WCHAR, 65536);
 	if (wideChars == nullptr)
 	{
 		return E_OUTOFMEMORY;

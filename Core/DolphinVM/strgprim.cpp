@@ -350,7 +350,7 @@ Oop* PRIMCALL Interpreter::primitiveStringNextIndexOfFromTo(Oop* const sp, prima
 					case StringEncoding::Ansi:
 					{
 						AnsiStringOTE* oteAnsi = reinterpret_cast<AnsiStringOTE*>(oteReceiver);
-						const auto length = oteAnsi->sizeForRead();
+						const auto length = oteAnsi->Count;
 						// We can only be in here if to>=from, so if to>=1, then => from >= 1
 						// furthermore if to <= length then => from <= length
 						if (from >= 1 && static_cast<size_t>(to) <= length)
@@ -388,7 +388,7 @@ Oop* PRIMCALL Interpreter::primitiveStringNextIndexOfFromTo(Oop* const sp, prima
 					case StringEncoding::Utf8:
 					{
 						auto oteUtf = reinterpret_cast<Utf8StringOTE*>(oteReceiver);
-						const auto length = oteUtf->sizeForRead();
+						const auto length = oteUtf->Count;
 						// We can only be in here if to>=from, so if to>=1, then => from >= 1
 						// furthermore if to <= length then => from <= length
 						// It is OK for from to point to a trail surrogate
@@ -511,7 +511,7 @@ Oop* PRIMCALL Interpreter::primitiveStringNextIndexOfFromTo(Oop* const sp, prima
 					case StringEncoding::Utf32:
 					{
 						auto oteUtf = reinterpret_cast<Utf32StringOTE*>(oteReceiver);
-						const auto length = oteUtf->sizeForRead();
+						const auto length = oteUtf->Count;
 						// We can only be in here if to>=from, so if to>=1, then => from >= 1
 						// furthermore if to <= length then => from <= length
 						if (from >= 1 && static_cast<size_t>(to) <= length)
@@ -1307,8 +1307,20 @@ template <typename T, class OpA, class OpW, bool Utf8_OpA> static T __stdcall An
 
 	case ENCODINGPAIR(StringEncoding::Utf16, StringEncoding::Utf8):
 	{
-		Utf16StringBuf argW(reinterpret_cast<const Utf8StringOTE*>(oteArg)->m_location->m_characters, oteArg->getSize());
-		return OpW()(reinterpret_cast<const Utf16StringOTE*>(oteReceiver)->m_location->m_characters, oteReceiver->getSize() / sizeof(Utf16String::CU), argW, argW.Count);
+		if (Utf8_OpA)
+		{
+			Utf8StringBuf rcvr8(reinterpret_cast<const Utf16StringOTE*>(oteReceiver)->m_location->m_characters, oteReceiver->getSize() / sizeof(Utf16String::CU));
+			return OpA()(
+				reinterpret_cast<LPCSTR>(static_cast<const char8_t*>(rcvr8)),
+				rcvr8.Count,
+				reinterpret_cast<LPCSTR>(reinterpret_cast<const Utf8StringOTE*>(oteArg)->m_location->m_characters),
+				oteArg->getSize());
+		}
+		else
+		{
+			Utf16StringBuf argW(reinterpret_cast<const Utf8StringOTE*>(oteArg)->m_location->m_characters, oteArg->getSize());
+			return OpW()(reinterpret_cast<const Utf16StringOTE*>(oteReceiver)->m_location->m_characters, oteReceiver->getSize() / sizeof(Utf16String::CU), argW, argW.Count);
+		}
 	}
 
 	case ENCODINGPAIR(StringEncoding::Utf16, StringEncoding::Utf16):
@@ -1479,10 +1491,75 @@ Oop* PRIMCALL Interpreter::primitiveStringLessOrEqual(Oop* sp, primargcount_t)
 	}
 }
 
-template <class OpA, class OpW, bool Utf8_OpA> static Oop* PRIMCALL Interpreter::primitiveStringEqual(Oop* sp, primargcount_t argc)
+inline static bool StringOrdinalEquals(const Utf16StringOTE* __restrict oteUtf16a, const Utf16StringOTE* __restrict oteUtf16b)
+{
+	return ::CompareStringOrdinal((LPCWCH)oteUtf16a->m_location->m_characters, oteUtf16a->Count,
+		(LPCWCH)oteUtf16b->m_location->m_characters, oteUtf16b->Count, FALSE) == CSTR_EQUAL;
+}
+
+static bool StringOrdinalEquals(const Utf16StringOTE* __restrict oteUtf16, const AnsiStringOTE* __restrict oteAnsi)
+{
+	size_t cchAnsi = oteAnsi->Count;
+	const char* pszAnsi = oteAnsi->m_location->m_characters;
+	size_t cwch = Utf16StringBuf::LengthOfAnsi(pszAnsi, cchAnsi);
+	size_t cch1 = oteUtf16->Count;
+	if (cch1 != cwch) return false;
+
+	auto pwsz = malloca(char16_t, cwch);
+	Utf16StringBuf::ConvertAnsi_unsafe(pszAnsi, cchAnsi, pwsz);
+	bool equal = ::CompareStringOrdinal((LPCWCH)oteUtf16->m_location->m_characters, cch1, (LPCWCH)pwsz, cwch, FALSE) == CSTR_EQUAL;
+	_freea(pwsz);
+	return equal;
+}
+
+static bool StringOrdinalEquals(const Utf8StringOTE* __restrict oteUtf8, const AnsiStringOTE* __restrict oteAnsi)
+{
+	size_t cchAnsi = oteAnsi->Count;
+	const char* pszAnsi = oteAnsi->m_location->m_characters;
+	size_t cch2 = Utf8StringBuf::LengthOfAnsi(pszAnsi, cchAnsi);
+	size_t cch1 = oteUtf8->Count;
+	int cmp = cch1 - cch2;
+	if (cch1 != cch2) return false;
+
+	auto psz8 = malloca(char8_t, cch2);
+	char8_t* pEnd = Utf8StringBuf::ConvertAnsi_unsafe(pszAnsi, cchAnsi, psz8, cch2);
+	ASSERT(pEnd == psz8 + cch2);
+	bool equal = memcmp(oteUtf8->m_location->m_characters, psz8, cch2) == 0;
+	_freea(psz8);
+
+	return equal;
+}
+
+static bool StringOrdinalEquals(const Utf8StringOTE* __restrict oteUtf8, const Utf16StringOTE* __restrict oteUtf16)
+{
+	// Could also convert to UTF-8 and do a memcmp, but some tests of decoding invalid sequences assume that the comparison
+	// involves decoding UTF-8 into UTF-16. 
+
+	size_t cch = oteUtf8->Count;
+	const char8_t* psz = oteUtf8->m_location->m_characters;
+	size_t cwch1 = Utf16StringBuf::LengthOfUtf8(psz, cch);
+	size_t cwch2 = oteUtf16->Count;
+	if (cwch1 != cwch2) return false;
+	char16_t* pwsz = malloca(char16_t, cwch1);
+	char16_t* pEnd = Utf16StringBuf::ConvertUtf8_unsafe(psz, cch, pwsz);
+	ASSERT(pEnd == pwsz + cwch1);
+	bool equal = ::CompareStringOrdinal((LPCWCH)pwsz, cwch1, (LPCWCH)oteUtf16->m_location->m_characters, cwch2, FALSE) == CSTR_EQUAL;
+	_freea(pwsz);
+	return equal;
+}
+
+inline static bool StringOrdinalEquals(const Utf8StringOTE* __restrict oteUtf8a, const Utf8StringOTE* __restrict oteUtf8b)
+{
+	size_t cch1 = oteUtf8a->Count;
+	size_t cch2 = oteUtf8b->Count;
+	return cch1 == cch2 && memcmp(oteUtf8a->m_location->m_characters, oteUtf8b->m_location->m_characters, cch2) == 0;
+}
+
+Oop* PRIMCALL Interpreter::primitiveStringOrdinalEqual(Oop* const sp, primargcount_t argc)
 {
 	Oop oopArg = *sp;
-	const OTE* oteReceiver = reinterpret_cast<const OTE*>(*(sp - 1));
+	const OTE** __restrict tos = (const OTE**)(sp - 1);
+	const OTE* oteReceiver = *tos;
 	if (!ObjectMemoryIsIntegerObject(oopArg))
 	{
 		const OTE* oteArg = reinterpret_cast<const OTE*>(oopArg);
@@ -1490,9 +1567,69 @@ template <class OpA, class OpW, bool Utf8_OpA> static Oop* PRIMCALL Interpreter:
 		{
 			if (oteArg->isNullTerminated())
 			{
-				bool equal = AnyStringCompare<bool, OpA, OpW, Utf8_OpA>(oteReceiver, oteArg);
-				*(sp - 1) = reinterpret_cast<Oop>(equal ? Pointers.True : Pointers.False);
-				return sp - 1;
+				switch (ENCODINGPAIR(oteReceiver->m_oteClass->m_location->m_instanceSpec.m_encoding, oteArg->m_oteClass->m_location->m_instanceSpec.m_encoding))
+				{
+				case ENCODINGPAIR(StringEncoding::Ansi, StringEncoding::Ansi):
+				case ENCODINGPAIR(StringEncoding::Utf8, StringEncoding::Utf8):
+				{
+					*tos = StringOrdinalEquals(reinterpret_cast<const Utf8StringOTE*>(oteArg), reinterpret_cast<const Utf8StringOTE*>(oteReceiver)) ? Pointers.True : Pointers.False;
+					return (Oop*)tos;
+				}
+
+				case ENCODINGPAIR(StringEncoding::Utf8, StringEncoding::Ansi):
+				{
+					*tos = StringOrdinalEquals(reinterpret_cast<const Utf8StringOTE*>(oteReceiver), reinterpret_cast<const AnsiStringOTE*>(oteArg))  ? Pointers.True : Pointers.False;
+					return (Oop*)tos;
+				}
+
+				case ENCODINGPAIR(StringEncoding::Ansi, StringEncoding::Utf8):
+				{
+					*tos = StringOrdinalEquals(reinterpret_cast<const Utf8StringOTE*>(oteArg), reinterpret_cast<const AnsiStringOTE*>(oteReceiver))  ? Pointers.True : Pointers.False;
+					return (Oop*)tos;
+				}
+
+				case ENCODINGPAIR(StringEncoding::Utf16, StringEncoding::Ansi):
+				{
+					*tos = StringOrdinalEquals(reinterpret_cast<const Utf16StringOTE*>(oteReceiver), reinterpret_cast<const AnsiStringOTE*>(oteArg))  ? Pointers.True : Pointers.False;
+					return (Oop*)tos;
+				}
+
+				case ENCODINGPAIR(StringEncoding::Ansi, StringEncoding::Utf16):
+				{
+					*tos = StringOrdinalEquals(reinterpret_cast<const Utf16StringOTE*>(oteArg), reinterpret_cast<const AnsiStringOTE*>(oteReceiver))  ? Pointers.True : Pointers.False;
+					return (Oop*)tos;
+				}
+
+				case ENCODINGPAIR(StringEncoding::Utf8, StringEncoding::Utf16):
+				{
+					*tos = StringOrdinalEquals(reinterpret_cast<const Utf8StringOTE*>(oteReceiver), reinterpret_cast<const Utf16StringOTE*>(oteArg)) ? Pointers.True : Pointers.False;
+					return (Oop*)tos;
+				}
+
+				case ENCODINGPAIR(StringEncoding::Utf16, StringEncoding::Utf8):
+				{
+					*tos = StringOrdinalEquals(reinterpret_cast<const Utf8StringOTE*>(oteArg), reinterpret_cast<const Utf16StringOTE*>(oteReceiver)) ? Pointers.True : Pointers.False;
+					return (Oop*)tos;
+				}
+
+				case ENCODINGPAIR(StringEncoding::Utf16, StringEncoding::Utf16):
+				{
+					*tos = StringOrdinalEquals(reinterpret_cast<const Utf16StringOTE*>(oteReceiver), reinterpret_cast<const Utf16StringOTE*>(oteArg)) ? Pointers.True : Pointers.False;
+					return (Oop*)tos;
+				}
+
+				// Utf32 isn't supported currently
+				case ENCODINGPAIR(StringEncoding::Ansi, StringEncoding::Utf32):
+				case ENCODINGPAIR(StringEncoding::Utf8, StringEncoding::Utf32):
+				case ENCODINGPAIR(StringEncoding::Utf16, StringEncoding::Utf32):
+				case ENCODINGPAIR(StringEncoding::Utf32, StringEncoding::Utf32):
+				case ENCODINGPAIR(StringEncoding::Utf32, StringEncoding::Ansi):
+				case ENCODINGPAIR(StringEncoding::Utf32, StringEncoding::Utf8):
+				case ENCODINGPAIR(StringEncoding::Utf32, StringEncoding::Utf16):
+					return Interpreter::primitiveFailure(_PrimitiveFailureCode::NotImplemented);
+				default:
+					__assume(false);
+				}
 			}
 			else
 			{
@@ -1503,8 +1640,8 @@ template <class OpA, class OpW, bool Utf8_OpA> static Oop* PRIMCALL Interpreter:
 		else
 		{
 			// Identical, therefore equal
-			*(sp - 1) = reinterpret_cast<Oop>(Pointers.True);
-			return sp - 1;
+			*tos = Pointers.True;
+			return (Oop*)tos;
 		}
 	}
 	else
@@ -1513,8 +1650,6 @@ template <class OpA, class OpW, bool Utf8_OpA> static Oop* PRIMCALL Interpreter:
 		return Interpreter::primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
 	}
 }
-
-template Oop* Interpreter::primitiveStringEqual<EqualA, EqualW, true>(Oop* const, primargcount_t);
 
 Oop* PRIMCALL Interpreter::primitiveBeginsWith(Oop* const sp, primargcount_t)
 {
@@ -1979,39 +2114,6 @@ Utf16StringOTE* ST::Utf16String::New(const char8_t* __restrict psz8Src, size_t c
 	*pEnd = L'\0';
 	return stringPointer;
 #endif
-}
-
-size_t Utf16StringBuf::LengthOfUtf8(const char8_t* __restrict psz8, size_t cch8)
-{
-	size_t cwch = 0;
-	size_t i = 0;
-	while (i < cch8) 
-	{
-		char32_t c;
-		U8_NEXT_OR_FFFD(psz8, i, cch8, c);
-		cwch += U16_LENGTH(c);
-	}
-	return cwch;
-}
-
-char16_t* Utf16StringBuf::ConvertUtf8_unsafe(const char8_t* __restrict psz8Src, size_t cch8Src, char16_t* __restrict pwszDest)
-{
-	size_t i = 0;
-	while (i < cch8Src)
-	{
-		char32_t c;
-		U8_NEXT_OR_FFFD(psz8Src, i, cch8Src, c);
-		if (U_IS_BMP(c)) 
-		{
-			*pwszDest++ = static_cast<char16_t>(c);
-		}
-		else 
-		{
-			*pwszDest++ = U16_LEAD(c);
-			*pwszDest++ = U16_TRAIL(c);
-		}
-	}
-	return pwszDest;
 }
 
 Utf16StringOTE* ST::Utf16String::New(const char* __restrict pszSrc, size_t cchSrc)

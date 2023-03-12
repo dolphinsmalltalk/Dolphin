@@ -40,22 +40,6 @@ struct CmpW
 	}
 };
 
-struct EqualA
-{
-	__forceinline bool operator() (LPCSTR psz1, size_t cch1, LPCSTR psz2, size_t cch2) const
-	{
-		return cch1 == cch2 && memcmp(psz1, psz2, cch1) == 0;
-	}
-};
-struct EqualW
-{
-	__forceinline bool operator() (const Utf16String::CU* psz1, size_t cch1, const Utf16String::CU* psz2, size_t cch2) const
-	{
-		return cch1 == cch2 && ::CompareStringOrdinal((LPCWCH)psz1, cch1, (LPCWCH)psz2, cch2, FALSE) == CSTR_EQUAL;
-	}
-};
-
-
 struct CmpOrdinalIA
 {
 	__forceinline int operator() (LPCSTR psz1, size_t cch1, LPCSTR psz2, size_t cch2) const

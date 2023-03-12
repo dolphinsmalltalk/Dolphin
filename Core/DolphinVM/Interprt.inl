@@ -19,6 +19,10 @@
 
 #define primitiveSuccess(argCount) (Interpreter::m_registers.m_stackPointer - argCount)
 
+// Note, we can't template this as obviously we need the stack adjusted within
+// the frame, not in a called frame.
+#define malloca(T, count) (reinterpret_cast<T*>(_malloca((count)*sizeof(T))))
+
 inline void Interpreter::GrabAsyncProtect()
 {
 	::EnterCriticalSection(&m_csAsyncProtect);
