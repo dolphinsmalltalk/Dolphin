@@ -70,6 +70,20 @@ testCopyWithAtIndex
 	self assert: (string copyWith: Character dolphin atIndex: 5) equals: 'a£🍺🐬文1'.
 	self should: [string copyWith: Character dolphin atIndex: 4] raise: Error!
 
+testIndexOfStartingAtSurrogates
+	| subject full trail lead |
+	subject := 'a£a文a🍺a👨🏻‍🍳a' asUtf16String.
+	"Sanity check - search for full 32-bit code point"
+	full := subject decodeAt: 6.
+	self deny: full isUtf16Surrogate.
+	self assert: (subject indexOf: full) equals: 6.
+	trail := subject at: 7.
+	self assert: trail isUtf16Trail.
+	self assert: (subject indexOf: trail) equals: 7.
+	lead := subject at: 6.
+	self assert: lead isUtf16Lead.
+	self assert: (subject indexOf: lead) equals: 6!
+
 testKeys
 	| subject |
 	subject := self assimilateString: 'a£文🐬1🍺'.
@@ -154,6 +168,7 @@ testAssociations!public!unit tests! !
 testConcatenateInvalidUtf16!public!unit tests! !
 testConcatenateInvalidUtf8!public!unit tests! !
 testCopyWithAtIndex!public!unit tests! !
+testIndexOfStartingAtSurrogates!public!unit tests! !
 testKeys!public!unit tests! !
 testLastCodeUnit!public!unit tests! !
 testMixedConcatenation!public! !

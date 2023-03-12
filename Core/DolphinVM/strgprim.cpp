@@ -448,7 +448,7 @@ Oop* PRIMCALL Interpreter::primitiveStringNextIndexOfFromTo(Oop* const sp, prima
 					case StringEncoding::Utf16:
 					{
 						auto oteUtf = reinterpret_cast<Utf16StringOTE*>(oteReceiver);
-						const auto length = oteUtf->sizeForRead();
+						const size_t length = oteUtf->Count;
 						// We can only be in here if to>=from, so if to>=1, then => from >= 1
 						// furthermore if to <= length then => from <= length
 						// It is OK for from to point to a trail surrogate
@@ -458,20 +458,15 @@ Oop* PRIMCALL Interpreter::primitiveStringNextIndexOfFromTo(Oop* const sp, prima
 
 							if (!charObj->IsUtfSurrogate)
 							{
-								auto codePoint = charObj->CodePoint;
+								char32_t codePoint = charObj->CodePoint;
 								auto s = oteUtf->m_location->m_characters;
-								auto i = from - 1;
-								while (i < to)
+								auto offset = from - 1;
+								char16_t* match = u_memchr32(s + offset, codePoint, to - offset);
+								if (match != nullptr)
 								{
-									char32_t c;
-									size_t next = i;
-									U16_NEXT_UNSAFE(s, next, c);
-									if (c == codePoint)
-									{
-										*(sp - 3) = ObjectMemoryIntegerObjectOf(i + 1);
-										return sp - 3;
-									}
-									i = next;
+									auto i = match - s;
+									*(sp - 3) = ObjectMemoryIntegerObjectOf(i + 1);
+									return sp - 3;
 								}
 
 								// Not found. Drop through and return zero
