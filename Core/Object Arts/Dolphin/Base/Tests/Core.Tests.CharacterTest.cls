@@ -874,7 +874,27 @@ testStb
 	| bytes rehydrated |
 	bytes := Character dolphin binaryStoreBytes.
 	rehydrated := Object fromBinaryStoreBytes: bytes.
-	self assert: rehydrated equals: Character dolphin! !
+	self assert: rehydrated equals: Character dolphin!
+
+testUnicodeName
+	"Ascii"
+
+	self assert: $\0 unicodeName equals: '<control-0000>'.
+	self assert: $$ unicodeName equals: 'DOLLAR SIGN'.
+
+	"Non-Ascii"
+	self assert: $£ unicodeName equals: 'POUND SIGN'.
+	self assert: $€ unicodeName equals: 'EURO SIGN'.
+	self assert: $\x66D unicodeName equals: 'ARABIC FIVE POINTED STAR'.
+	self assert: $\xD800 unicodeName equals: '<lead surrogate-D800>'.
+
+	"Outside BMP"
+	self assert: $\x10000 unicodeName equals: 'LINEAR B SYLLABLE B008 A'.
+	self assert: Character dolphin unicodeName equals: 'DOLPHIN'.
+	"U+16E5A Medefaidrin Capital Letter Oe -> U+16E7A Medefaidrin Small Letter Oe (Unicode 11+)"
+	OS.ICU u_getUnicodeVersion first >= 11
+		ifTrue: [self assert: $𖹚 unicodeName equals: 'MEDEFAIDRIN CAPITAL LETTER OE'].
+	self assert: $\x10FFFF unicodeName equals: '<noncharacter-10FFFF>'! !
 !Core.Tests.CharacterTest categoriesForMethods!
 nonCharacters!constants!private! !
 testAnsiValue!public!unit tests! !
@@ -914,5 +934,6 @@ testSize!public!unit tests! !
 testSpaceships!public!unit tests! !
 testSplit!public!unit tests! !
 testStb!public!unit tests! !
+testUnicodeName!public!unit tests! !
 !
 

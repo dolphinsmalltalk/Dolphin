@@ -1560,7 +1560,7 @@ showTipForCharacterAt: anInteger
 	tip
 		nextPutAll: ch codePointString;
 		space.
-	charName := ch unicodeName: 2.
+	charName := ch unicodeName.
 	tip nextPutAll: (charName isEmpty ifTrue: ['<unnamed>'] ifFalse: [charName]).
 	self view showCallTip: tip contents at: anInteger!
 

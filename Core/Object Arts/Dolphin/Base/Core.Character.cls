@@ -562,6 +562,9 @@ to: aCharacter
 
 	^(self codePoint to: aCharacter codePoint) collect: [:each | Character basicCodePoint: each]!
 
+unicodeName
+	^self unicodeName: U_EXTENDED_CHAR_NAME!
+
 unicodeName: anInteger
 	^OS.ICU u_charName: self nameChoice: anInteger! !
 !Core.Character categoriesForMethods!
@@ -635,6 +638,7 @@ shallowCopy!copying!public! !
 split:!public!tokenizing! !
 split:do:!public!tokenizing! !
 to:!converting!public! !
+unicodeName!printing!public! !
 unicodeName:!printing!public! !
 !
 
