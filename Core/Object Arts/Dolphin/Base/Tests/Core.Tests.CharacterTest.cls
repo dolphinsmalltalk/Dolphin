@@ -78,8 +78,8 @@ testAsLowercase
 	"Emoji"
 	self assert: $🐬 asLowercase equals: $🐬.
 	"Supplementary multi-lingual plane"
-	"U+16E5A Medefaidrin Capital Letter Oe -> U+16E7A Medefaidrin Small Letter Oe"
-	self assert: $𖹚 asLowercase equals: $𖹺.
+	"U+16E5A Medefaidrin Capital Letter Oe -> U+16E7A Medefaidrin Small Letter Oe (Unicode 11+)"
+	OS.ICU u_getUnicodeVersion first >= 11 ifTrue: [self assert: $𖹚 asLowercase equals: $𖹺].
 	"U+1E921 Adlam Capital Letter Sha -> U+1E943 Adlam Small Letter Sha"
 	self assert: $𞤡 asLowercase equals: $𞥃!
 
@@ -125,8 +125,8 @@ testAsUppercase
 	"Emoji"
 	self assert: $🐬 asUppercase equals: $🐬.
 	"Supplementary multi-lingual plane"
-	"U+16E7A Medefaidrin Small Letter Oe -> U+16E5A Medefaidrin Capital Letter Oe"
-	self assert: $𖹺 asUppercase equals: $𖹚.
+	"U+16E7A Medefaidrin Small Letter Oe -> U+16E5A Medefaidrin Capital Letter Oe (Unicode 11+)"
+	OS.ICU u_getUnicodeVersion first >= 11 ifTrue: [self assert: $𖹺 asUppercase equals: $𖹚].
 	" U+1E943 Adlam Small Letter Sha -> U+1E921 Adlam Capital Letter Sha"
 	self assert: $𞥃 asUppercase equals: $𞤡!
 
@@ -285,8 +285,8 @@ testFoldcase
 	"Emoji"
 	self assert: $🐬 caseFolded equals: $🐬.
 	"Supplementary multi-lingual plane"
-	"U+16E5A Medefaidrin Capital Letter Oe -> U+16E7A Medefaidrin Small Letter Oe"
-	self assert: $𖹚 caseFolded equals: $𖹺.
+	"U+16E5A Medefaidrin Capital Letter Oe -> U+16E7A Medefaidrin Small Letter Oe (Unicode 11+)"
+	OS.ICU u_getUnicodeVersion first >= 11 ifTrue: [self assert: $𖹚 caseFolded equals: $𖹺].
 	"U+1E921 Adlam Capital Letter Sha -> U+1E943 Adlam Small Letter Sha"
 	self assert: $𞤡 caseFolded equals: $𞥃!
 
@@ -491,9 +491,9 @@ testIsLowercase
 	"Thai 7"
 	self deny: $๗ isLowercase.
 	"Cyrillic Small Letter Rounded Ve"
-	self assert: $ᲀ isLowercase.
+	self assert: $\x1C80 isLowercase.
 	"U+00AA: Feminine Ordinal Indicator (other letter, not in lowercase category)"
-	self deny: $ª isLowercase.
+	self deny: $\xAA isLowercase.
 	"Outside BMP"
 	self deny: $🐬 isLowercase.
 	self deny: $𪝿 isLowercase.

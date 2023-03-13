@@ -4,12 +4,39 @@ External.DynamicLinkLibrary
 	subclass: #'OS.ICULibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.ICUConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OS.ICULibrary guid: (Core.GUID fromString: '{cf17a85e-24da-4549-a6bf-03591cd93858}')!
 OS.ICULibrary comment: ''!
 !OS.ICULibrary methodsFor!
+
+u_charAge: aCharacter
+	| buf |
+	buf := ByteArray newFixed: U_MAX_VERSION_LENGTH.
+	self u_charAge: aCharacter versionArray: buf.
+	^buf!
+
+u_charAge: aCharacter versionArray: versionArray
+"/**
+ * Get the 'age' of the code point.
+ * The 'age' is the Unicode version when the code point was first
+ * designated (as a non-character or for Private Use)
+ * or assigned a character.
+ * This can be useful to avoid emitting code points to receiving
+ * processes that do not accept newer characters.
+ * The data is from the UCD file DerivedAge.txt.
+ *
+ * @param c The code point.
+ * @param versionArray The Unicode version number array, to be filled in.
+ *
+ * @stable ICU 2.1
+ */
+U_CAPI void U_EXPORT2
+u_charAge(UChar32 c, UVersionInfo versionArray);"
+
+	<cdecl: void u_charAge char32 uint32*>
+	^self invalidCall: _failureCode!
 
 u_charName: aCharacter nameChoice: anInteger
 	| len error name |
@@ -108,6 +135,75 @@ u_foldCase: aCharacter options: anInteger
  * @stable ICU 2.0
  */"
 	<cdecl: char32 u_foldCase char32 uint32>
+	^self invalidCall: _failureCode!
+
+u_getDataVersion
+	| buf |
+	buf := ByteArray newFixed: ##(U_MAX_VERSION_LENGTH + 4).
+	self u_getDataVersion: buf status: buf yourAddress + U_MAX_VERSION_LENGTH.
+	(buf int32AtOffset: U_MAX_VERSION_LENGTH) > 0
+		ifTrue: 
+			[self error: 'ICU error <p> from u_getDataVersion' << (buf int32AtOffset: U_MAX_VERSION_LENGTH)].
+	^buf!
+
+u_getDataVersion: dataVersionFillin status: status
+"/**
+ * Retrieves the data version from icuver and stores it in dataVersionFillin.
+ * 
+ * @param dataVersionFillin icuver data version information to be filled in if not-null
+ * @param status stores the error code from the calls to resource bundle
+ * 
+ * @stable ICU 49
+ */
+U_CAPI void U_EXPORT2 u_getDataVersion(UVersionInfo dataVersionFillin, UErrorCode *status);
+"
+
+	<cdecl: void u_getDataVersion uint32* int32*>
+	^self invalidCall: _failureCode!
+
+u_getUnicodeVersion
+	| buf |
+	buf := ByteArray newFixed: U_MAX_VERSION_LENGTH.
+	self u_getUnicodeVersion: buf.
+	^buf!
+
+u_getUnicodeVersion: versionArray
+"Private - /**
+ * Gets the Unicode version information.
+ * The version array is filled in with the version information
+ * for the Unicode standard that is currently used by ICU.
+ * For example, Unicode version 3.1.1 is represented as an array with
+ * the values { 3, 1, 1, 0 }.
+ *
+ * @param versionArray an output array that will be filled in with
+ *                     the Unicode version number
+ * @stable ICU 2.0
+ */
+U_CAPI void U_EXPORT2
+u_getUnicodeVersion(UVersionInfo versionArray);"
+
+	<cdecl: void u_getUnicodeVersion uint32*>
+	^self invalidCall: _failureCode!
+
+u_getVersion
+	| buf |
+	buf := ByteArray new: U_MAX_VERSION_LENGTH.
+	self u_getVersion: buf.
+	^buf!
+
+u_getVersion: versionArray
+	"Private - /**
+ * Gets the ICU release version.  The version array stores the version information
+ * for ICU.  For example, release ""1.3.31.2"" is then represented as 0x01031F02.
+ * Definition of this function lives in putil.c
+ *
+ * @param versionArray the version # information, the result will be filled in
+ * @stable ICU 2.0
+ */
+U_CAPI void U_EXPORT2
+u_getVersion(UVersionInfo versionArray);"
+
+	<cdecl: void u_getVersion uint32*>
 	^self invalidCall: _failureCode!
 
 u_hasBinaryProperty: aCharacter which: anIntege
@@ -485,12 +581,39 @@ u_toupper: aCharacter
  */"
 
 	<cdecl: char32 u_toupper char32>
+	^self invalidCall: _failureCode!
+
+u_versionToString: versionArray versionString: versionString
+	"/**
+ * Write a string with dotted-decimal version information according
+ * to the input UVersionInfo.
+ * Definition of this function lives in putil.c
+ *
+ * @param versionArray The version information to be written as a string.
+ * @param versionString A string buffer that will be filled in with
+ *                      a string corresponding to the numeric version
+ *                      information in versionArray.
+ *                      The buffer size must be at least U_MAX_VERSION_STRING_LENGTH.
+ * @stable ICU 2.4
+ */
+U_CAPI void U_EXPORT2
+u_versionToString(const UVersionInfo versionArray, char *versionString);"
+
+	<cdecl: void u_versionToString uint32* char8*>
 	^self invalidCall: _failureCode! !
 !OS.ICULibrary categoriesForMethods!
+u_charAge:!character properties!public!version information! !
+u_charAge:versionArray:!character properties!public!version information! !
 u_charName:nameChoice:!character properties!public! !
 u_charName:nameChoice:buffer:bufferLength:pErrorCode:!character properties!private! !
 u_charType:!character properties!public! !
 u_foldCase:options:!case conversions!public! !
+u_getDataVersion!public!version information! !
+u_getDataVersion:status:!private!version information! !
+u_getUnicodeVersion!public!version information! !
+u_getUnicodeVersion:!private!version information! !
+u_getVersion!public!version information! !
+u_getVersion:!private!version information! !
 u_hasBinaryProperty:which:!character properties!public! !
 u_isalpha:!character properties!public! !
 u_iscntrl:!character properties!public! !
@@ -508,6 +631,7 @@ u_strToUpper:destCapacity:src:srcLength:locale:pErrorCode:!case conversions!priv
 u_strToUpper:locale:!case conversions!public! !
 u_tolower:!case conversions!public! !
 u_toupper:!case conversions!public! !
+u_versionToString:versionString:!public!version information! !
 !
 
 !OS.ICULibrary class methodsFor!
