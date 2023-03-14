@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Tests.PresenterTest subclass: #'WebView2.Tests.WebView2ViewTest'
-	instanceVariableNames: 'domContentLoaded navigationCompleted processFailed webViewReady'
+	instanceVariableNames: 'domContentLoaded navigationCompleted processFailed webViewReady webViewClosed'
 	classVariableNames: ''
 	imports: #(#{UI})
 	classInstanceVariableNames: ''
@@ -29,32 +29,40 @@ initializePresenter
 			to: self;
 		when: #webviewAvailable
 			send: #onWebViewAvailable
+			to: self;
+		when: #webviewClosed
+			send: #onWebViewClosed
 			to: self.
 	webViewReady := false.
 	presenter createView: URLPresenter defaultView.
-	self waitFor: [webViewReady] timeout: 30 seconds.
-	self assert: webViewReady!
+	self assert: (self waitAtMost: 20 seconds while: [webViewReady not])!
 
 onDomContentLoaded: anICoreWebView2DOMContentLoadedEventArgs
-	domContentLoaded := anICoreWebView2DOMContentLoadedEventArgs!
+	domContentLoaded := anICoreWebView2DOMContentLoadedEventArgs navigationId!
 
 onNavigationCompleted: anICoreWebView2NavigationCompletedEventArgs2
 	navigationCompleted := anICoreWebView2NavigationCompletedEventArgs2!
 
 onProcessFailed: anICoreWebView2ProcessFailedEventArgs2 
-	processFailed := anICoreWebView2ProcessFailedEventArgs2
+	processFailed := anICoreWebView2ProcessFailedEventArgs2 processFailedKind
 !
 
 onWebViewAvailable
 	webViewReady := true!
 
+onWebViewClosed
+	webViewClosed := true!
+
 tearDown
-	domContentLoaded ifNotNil: [domContentLoaded free. domContentLoaded  := nil].
-	navigationCompleted ifNotNil: [navigationCompleted free. navigationCompleted  := nil].
-	processFailed ifNotNil: [processFailed free. processFailed  := nil].
-	presenter removeEventsTriggeredFor: self.
-	super tearDown!
-	
+	navigationCompleted
+		ifNotNil: 
+			[navigationCompleted free.
+			navigationCompleted := nil].
+	webViewClosed := presenter isNil or: [presenter view isOpen not].
+	super tearDown.
+	self waitAtMost: 2 seconds while: [webViewClosed not].
+	presenter removeAllEventsTriggered!
+
 testNavigateToString
 	"Bit of a kick-the-tyres test, but it does execute a lot of the integration, e.g. creating the WebView2 environment, controller and view, and setting up event handlers and handling of events."
 
@@ -63,12 +71,12 @@ testNavigateToString
 	webview canNavigateToStrings: true.
 	navigationCompleted := domContentLoaded := nil.
 	presenter model value: '<html><title>Greetings</title><body>Hello World!!</body></html>'.
-	self waitForNavigationCompleted.
+	self assert: self waitForNavigationCompleted.
 	self assert: navigationCompleted isKindOf: ICoreWebView2NavigationCompletedEventArgs2.
 	self assert: navigationCompleted isSuccess.
 	self assert: webview displayValue equals: 'about:blank'.
 	self assert: webview documentTitle equals: 'Greetings'.
-	self assert: navigationCompleted navigationId equals: domContentLoaded navigationId!
+	self assert: navigationCompleted navigationId equals: domContentLoaded!
 
 testProperties
 	"Test the default properties and setting properties for all the core interfaces. We do this in one test because of the high startup cost for a WebView2 instance."
@@ -78,7 +86,7 @@ testProperties
 	self verifyWebViewControllerProperties.
 	self verifyWebViewSettings!
 
-testBrowserCrashRecovery
+testWebBrowserCrashRecovery
 	"Test browser recovery after a crash of the browser process that causes it to exit"
 
 	| webview |
@@ -86,14 +94,14 @@ testBrowserCrashRecovery
 	webview canNavigateToStrings: true.
 	processFailed := navigationCompleted := domContentLoaded := nil.
 	presenter model value: 'edge://inducebrowsercrashforrealz/'.
-	self waitForNavigationCompleted.
-	self assert: processFailed isKindOf: ICoreWebView2ProcessFailedEventArgs2.
-	self assert: processFailed isBrowserProcessExit.
+	self assert: self waitForNavigationCompleted.
+	self assert: processFailed
+		equals: COREWEBVIEW2_PROCESS_FAILED_KIND_BROWSER_PROCESS_EXITED.
 	"Unless suppressed by the #processFailed: handler, the webview will be recreated and navigated to the crashes page"
 	self assert: navigationCompleted isKindOf: ICoreWebView2NavigationCompletedEventArgs2.
 	self assert: navigationCompleted isSuccess.
 	self assert: webview displayValue equals: 'edge://crashes/'.
-	self assert: navigationCompleted navigationId equals: domContentLoaded navigationId!
+	self assert: navigationCompleted navigationId equals: domContentLoaded!
 
 verifyWebViewControllerProperties
 	| controller baseController |
@@ -313,25 +321,24 @@ verifyWebViewSettings
 	self assert: settings hiddenPdfToolbarItems equals: hidden.
 	self assert: baseSettings hiddenPdfToolbarItems equals: WebView2.COREWEBVIEW2_PDF_TOOLBAR_ITEMS_NONE!
 
-waitFor: aNiladicValuable timeout: aDuration
+waitAtMost: aDuration while: aNiladicValuable
 	| start |
 	start := DateAndTime now.
-	SessionManager inputState loopWhile: 
-			[aNiladicValuable value not
-				and: [DateAndTime now - start < aDuration "and: 
-							[100 milliseconds wait.
-							true]"]]!
+	SessionManager inputState
+		loopWhile: [aNiladicValuable value and: [DateAndTime now - start < aDuration]].
+	^aNiladicValuable value not!
 
 waitForNavigationCompleted
-	self waitFor: [navigationCompleted notNil] timeout: 2 minutes! !
+	^self waitAtMost: 60 seconds while: [navigationCompleted isNil]! !
 !WebView2.Tests.WebView2ViewTest categoriesForMethods!
-classToTest!helpers!private! !
+classToTest!constants!private! !
 initializePresenter!public!Running! !
 onDomContentLoaded:!event handling!private! !
 onNavigationCompleted:!event handling!private! !
 onProcessFailed:!event handling!private! !
 onWebViewAvailable!event handling!private! !
-tearDown!public!running! !
+onWebViewClosed!event handling!private! !
+tearDown!public!Running! !
 testNavigateToString!public!unit tests! !
 testProperties!public!unit tests! !
 testWebBrowserCrashRecovery!public!unit tests! !
@@ -339,7 +346,7 @@ verifyWebViewControllerProperties!helpers!private! !
 verifyWebViewEnvironmentProperties!helpers!private! !
 verifyWebViewProperties!helpers!private! !
 verifyWebViewSettings!helpers!private! !
-waitFor:timeout:!helpers!private! !
+waitAtMost:while:!helpers!private! !
 waitForNavigationCompleted!helpers!private! !
 !
 

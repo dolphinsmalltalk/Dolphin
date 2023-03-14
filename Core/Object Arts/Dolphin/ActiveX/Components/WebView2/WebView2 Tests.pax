@@ -37,7 +37,7 @@ Core.Tests.DolphinTest subclass: #'WebView2.Tests.WebView2EnvironmentOptionsTest
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.Tests.PresenterTest subclass: #'WebView2.Tests.WebView2ViewTest'
-	instanceVariableNames: 'domContentLoaded navigationCompleted processFailed webViewReady'
+	instanceVariableNames: 'domContentLoaded navigationCompleted processFailed webViewReady webViewClosed'
 	classVariableNames: ''
 	imports: #(#{UI})
 	classInstanceVariableNames: ''

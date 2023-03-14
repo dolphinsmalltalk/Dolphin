@@ -669,7 +669,9 @@ WebView2.ICoreWebView2Interface subclass: #'WebView2.ICoreWebView2ProcessInfo'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'KindNames' -> #('BROWSER' 'RENDERER' 'UTILITY' 'SANDBOX_HELPER' 'GPU' 'PPAPI_PLUGIN' 'PPAPI_BROKER')
+	}!
 WebView2.ICoreWebView2Interface subclass: #'WebView2.ICoreWebView2Profile'
 	instanceVariableNames: ''
 	classVariableNames: ''
