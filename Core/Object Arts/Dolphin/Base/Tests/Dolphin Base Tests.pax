@@ -1233,7 +1233,7 @@ _chmod:pmode:!CRT functions-file handling!public! !
 baselinedSlowTests
 	| laggards |
 	laggards := Set new.
-	#(#(#{Refactory.Browser.Tests.ReferenceFinderTest} #(#testAllPaths #testAllPathsToInstance #testNotFound)) #(#{Refactory.Browser.Tests.BrowserEnvironmentTest} #(#testOrEnvironment)) #(#{Tools.Tests.IdeaSpaceShellTest} #(#testSaveRestore)) #(#{Refactory.Browser.Tests.RenameClassRefactoringTest} #(#testModelRenameClass)) #(#{WebView2.Tests.WebView2ViewTest} #(#testBrowserCrashRecovery #testNavigateToString)))
+	#(#(#{Refactory.Browser.Tests.ReferenceFinderTest} #(#testAllPaths #testAllPathsToInstance #testNotFound)) #(#{Refactory.Browser.Tests.BrowserEnvironmentTest} #(#testOrEnvironment)) #(#{Tools.Tests.IdeaSpaceShellTest} #(#testSaveRestore)) #(#{Refactory.Browser.Tests.RenameClassRefactoringTest} #(#testModelRenameClass)) #(#{WebView2.Tests.WebView2ViewTest} #(#testWebBrowserCrashRecovery #testNavigateToString)))
 		do: 
 			[:each |
 			each first

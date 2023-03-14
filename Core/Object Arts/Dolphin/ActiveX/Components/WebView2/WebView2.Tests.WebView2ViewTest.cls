@@ -48,23 +48,13 @@ onProcessFailed: anICoreWebView2ProcessFailedEventArgs2
 onWebViewAvailable
 	webViewReady := true!
 
-testBrowserCrashRecovery
-	"Test browser recovery after a crash of the browser process that causes it to exit"
-
-	| webview |
-	webview := presenter view.
-	webview canNavigateToStrings: true.
-	processFailed := navigationCompleted := domContentLoaded := nil.
-	presenter model value: 'edge://inducebrowsercrashforrealz/'.
-	self waitForNavigationCompleted.
-	self assert: processFailed isKindOf: ICoreWebView2ProcessFailedEventArgs2.
-	self assert: processFailed isBrowserProcessExit.
-	"Unless suppressed by the #processFailed: handler, the webview will be recreated and navigated to the crashes page"
-	self assert: navigationCompleted isKindOf: ICoreWebView2NavigationCompletedEventArgs2.
-	self assert: navigationCompleted isSuccess.
-	self assert: webview displayValue equals: 'edge://crashes/'.
-	self assert: navigationCompleted navigationId equals: domContentLoaded navigationId!
-
+tearDown
+	domContentLoaded ifNotNil: [domContentLoaded free. domContentLoaded  := nil].
+	navigationCompleted ifNotNil: [navigationCompleted free. navigationCompleted  := nil].
+	processFailed ifNotNil: [processFailed free. processFailed  := nil].
+	presenter removeEventsTriggeredFor: self.
+	super tearDown!
+	
 testNavigateToString
 	"Bit of a kick-the-tyres test, but it does execute a lot of the integration, e.g. creating the WebView2 environment, controller and view, and setting up event handlers and handling of events."
 
@@ -87,6 +77,23 @@ testProperties
 	self verifyWebViewEnvironmentProperties.
 	self verifyWebViewControllerProperties.
 	self verifyWebViewSettings!
+
+testBrowserCrashRecovery
+	"Test browser recovery after a crash of the browser process that causes it to exit"
+
+	| webview |
+	webview := presenter view.
+	webview canNavigateToStrings: true.
+	processFailed := navigationCompleted := domContentLoaded := nil.
+	presenter model value: 'edge://inducebrowsercrashforrealz/'.
+	self waitForNavigationCompleted.
+	self assert: processFailed isKindOf: ICoreWebView2ProcessFailedEventArgs2.
+	self assert: processFailed isBrowserProcessExit.
+	"Unless suppressed by the #processFailed: handler, the webview will be recreated and navigated to the crashes page"
+	self assert: navigationCompleted isKindOf: ICoreWebView2NavigationCompletedEventArgs2.
+	self assert: navigationCompleted isSuccess.
+	self assert: webview displayValue equals: 'edge://crashes/'.
+	self assert: navigationCompleted navigationId equals: domContentLoaded navigationId!
 
 verifyWebViewControllerProperties
 	| controller baseController |
@@ -324,9 +331,10 @@ onDomContentLoaded:!event handling!private! !
 onNavigationCompleted:!event handling!private! !
 onProcessFailed:!event handling!private! !
 onWebViewAvailable!event handling!private! !
-testBrowserCrashRecovery!public!unit tests! !
+tearDown!public!running! !
 testNavigateToString!public!unit tests! !
 testProperties!public!unit tests! !
+testWebBrowserCrashRecovery!public!unit tests! !
 verifyWebViewControllerProperties!helpers!private! !
 verifyWebViewEnvironmentProperties!helpers!private! !
 verifyWebViewProperties!helpers!private! !
