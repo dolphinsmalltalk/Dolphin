@@ -1877,25 +1877,26 @@ testPrimitiveExtraInstanceSpec
 testPrimitiveFindString
 	"Test string search primitive"
 
-	| method foundCases failureCases notFoundCases unlikely comment large expectedForStartingAtOffEnd |
+	| method foundCases failureCases notFoundCases unlikely comment large |
 	method := self createPrimitiveMethodLike: String >> #findString:startingAt:.
-	failureCases := #(#('abc' 'a' 'b' 'InvalidParameter2') #('abc' 'a' 0 'OutOfBounds') #('abc' 'a' -1 'OutOfBounds') #('abc' #a 1 'InvalidParameter1')).
+	failureCases := #(#('abc' 'a' 'b' 'InvalidParameter2') #('abc' 'a' 0 'OutOfBounds') #('abc' 'a' -1 'OutOfBounds') #('abc' #($a) 1 'InvalidParameter1')).
 	foundCases := #(#('abc' 'a' 1 1) #('abc' 'b' 1 2) #('abc' 'c' 1 3) #('abc' 'ab' 1 1) #('abc' 'b' 2 2) #('abc' 'bc' 2 2) #('abc' 'c' 3 3))
 				asOrderedCollection.
 	unlikely := '!!@#^%'.
-	comment := Object comment asAnsiString.
+	comment := Object comment.
 	large := comment , unlikely.
-	foundCases addLast: {large. unlikely. 1. comment size + 1}.
-	foundCases addLast: {large , comment. unlikely. large size // 2. comment size + 1}.
+	"Search with non-BMP character"
+	foundCases addLast: { large. 'the 🐬 implementation' asUtf16String. 5. (large indexOf: $🐬) - 4 }.
+	foundCases addLast: { large. unlikely. 1. comment size + 1 }.
+	"Start in the middle of a code-point"
+	foundCases addLast: { large , comment. unlikely.  (large indexOf: $🐬) + 1. comment size + 1 }.
 	foundCases
-		addLast: {large , large. unlikely. large size - unlikely size + 2. large size + comment size + 1}.
+		addLast: { large , large. unlikely. large size - unlikely size + 2. large size + comment size + 1 }.
 	notFoundCases := #(#('abc' '' 1 0) #('abc' '' 3 0) #('abc' 'd' 1 0) #('abc' 'ad' 1 0) #('abc' 'abd' 1 0) #('abc' 'a' 2 0) #('abc' 'ab' 2 0) #('abc' 'a' 3 0) #('abc' 'cd' 3 0))
 				asOrderedCollection.
-	"Older VM failed the primitive if the startingAt argument was too large."
-	expectedForStartingAtOffEnd := 0.
-	notFoundCases addAll: (#(#('abc' '' 4) #('abc' 'c' 4) #('abc' 'ab' 4))
-				collect: [:each | each copyWith: expectedForStartingAtOffEnd]).
-	notFoundCases addLast: {large. unlikely reverse. 1. 0}.
+	"Older VM failed the primitive if the startingAt argument was too large, but not anymore."
+	notFoundCases addAll: #(#('abc' '' 4 0) #('abc' 'c' 4 0) #('abc' 'ab' 4 0)).
+	notFoundCases addLast: { large. unlikely reverse. 1. 0 }.
 	foundCases , notFoundCases , failureCases do: 
 			[:each |
 			| subject actual match expected startingAt |
@@ -1903,7 +1904,7 @@ testPrimitiveFindString
 			match := each second.
 			startingAt := each third.
 			expected := each fourth.
-			actual := method value: subject withArguments: {match. startingAt}.
+			actual := method value: subject withArguments: { match. startingAt }.
 			self assert: actual equals: expected]!
 
 testPrimitiveGreaterOrEqual

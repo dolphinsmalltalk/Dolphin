@@ -18,6 +18,9 @@
 // Smalltalk classes
 #include "STBehavior.h"
 
+#include "Utf16StringBuf.h"
+#include "Utf8StringBuf.h"
+
 // Uses object identity to locate the next occurrence of the argument in the receiver from
 // the specified index to the specified index
 Oop* PRIMCALL Interpreter::primitiveNextIndexOfFromTo(Oop* const sp, primargcount_t)
@@ -166,9 +169,6 @@ template<typename T> int __stdcall stringSearch(const T* a, const int N, const T
 		: bruteSearch(a, N, p, M, startAt);
 }
 
-
-// Uses object identity to locate the next occurrence of the argument in the receiver from
-// the specified index to the specified index
 Oop* PRIMCALL Interpreter::primitiveStringSearch(Oop* const sp, primargcount_t)
 {
 	Oop integerPointer = *sp;
@@ -177,39 +177,192 @@ Oop* PRIMCALL Interpreter::primitiveStringSearch(Oop* const sp, primargcount_t)
 		const SmallInteger startingAt = ObjectMemoryIntegerValueOf(integerPointer);
 
 		Oop oopSubString = *(sp - 1);
-		BytesOTE* oteReceiver = reinterpret_cast<BytesOTE*>(*(sp - 2));
+		OTE* oteReceiver = reinterpret_cast<OTE*>(*(sp - 2));
 
-		if (ObjectMemory::fetchClassOf(oopSubString) == oteReceiver->m_oteClass)
+		if (!ObjectMemoryIsIntegerObject(oopSubString))
 		{
-			// We know it can't be a SmallInteger because it has the same class as the receiver
-			BytesOTE* oteSubString = reinterpret_cast<BytesOTE*>(oopSubString);
-
-			VariantByteObject* bytesPattern = oteSubString->m_location;
-			VariantByteObject* bytesReceiver = oteReceiver->m_location;
-			const int M = oteSubString->bytesSize();
-			const int N = oteReceiver->bytesSize();
-
-			// Check 'startingAt' is in range
-			if (startingAt > 0)
+			const OTE* oteArg = reinterpret_cast<const OTE*>(oopSubString);
+			if (oteArg->isNullTerminated())
 			{
-				SmallInteger nOffset = M == 0 || ((startingAt + M) - 1 > N)
-					? -1
-					: stringSearch(bytesReceiver->m_fields, N, bytesPattern->m_fields, M, startingAt - 1);
+				if (startingAt > 0)
+				{
+					switch (ENCODINGPAIR(oteReceiver->m_oteClass->m_location->m_instanceSpec.m_encoding, oteArg->m_oteClass->m_location->m_instanceSpec.m_encoding))
+					{
+					case ENCODINGPAIR(StringEncoding::Ansi, StringEncoding::Ansi):
+					case ENCODINGPAIR(StringEncoding::Utf8, StringEncoding::Utf8):
+					{
+						auto oteString = reinterpret_cast<Utf8StringOTE*>(oteReceiver);
+						auto oteSubString = reinterpret_cast<Utf8StringOTE*>(oopSubString);
 
-				*(sp - 2) = ObjectMemoryIntegerObjectOf(nOffset + 1);
-				return sp - 2;
-			}
-			else
-			{
-				return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);	// out of bounds
+						const size_t M = oteSubString->Count;
+						if (M != 0)
+						{
+							const size_t N = oteString->Count;
+							if ((startingAt + M) - 1 <= N)
+							{
+								SmallInteger index = stringSearch(oteString->m_location->m_characters, N, oteSubString->m_location->m_characters, M, startingAt - 1) + 1;
+								*(sp - 2) = ObjectMemoryIntegerObjectOf(index);
+								return sp - 2;
+							}
+						}
+						*(sp - 2) = ZeroPointer;
+						return sp - 2;
+					}
+
+					case ENCODINGPAIR(StringEncoding::Ansi, StringEncoding::Utf8):
+					{
+						return primitiveFailure(_PrimitiveFailureCode::DataTypeMismatch);
+					}
+
+					case ENCODINGPAIR(StringEncoding::Utf8, StringEncoding::Ansi):	// Ansi sequence can match same Ansi sequence in UTF-8
+					{
+						auto oteString = reinterpret_cast<Utf8StringOTE*>(oteReceiver);
+						auto oteSubString = reinterpret_cast<AnsiStringOTE*>(oopSubString);
+
+						const size_t M = oteSubString->Count;
+						if (M != 0)
+						{
+							Utf8StringBuf buf(oteSubString->m_location->m_characters, M);
+							const size_t N = oteString->Count;
+							if ((startingAt + buf.Count) - 1 <= N)
+							{
+								SmallInteger index = stringSearch(oteString->m_location->m_characters, N, (const char8_t*)buf, buf.Count, startingAt - 1) + 1;
+								*(sp - 2) = ObjectMemoryIntegerObjectOf(index);
+								return sp - 2;
+							}
+						}
+						*(sp - 2) = ZeroPointer;
+						return sp - 2;
+					}
+
+					case ENCODINGPAIR(StringEncoding::Utf16, StringEncoding::Ansi):
+					{
+						auto oteString = reinterpret_cast<Utf16StringOTE*>(oteReceiver);
+						auto oteSubString = reinterpret_cast<Utf8StringOTE*>(oopSubString);
+
+						const size_t M = oteSubString->Count;
+						if (M != 0)
+						{
+							Utf16StringBuf buf(oteSubString->m_location->m_characters, M);
+							const size_t N = oteString->Count;
+							if ((startingAt + buf.Count) - 1 <= N)
+							{
+								auto wsz = oteString->m_location->m_characters;
+								UChar* found = u_strFindFirst(wsz + startingAt, N - startingAt + 1, buf, buf.Count);
+								if (found != nullptr)
+								{
+									SmallInteger nOffset = (found - wsz) + startingAt;
+									*(sp - 2) = ObjectMemoryIntegerObjectOf(nOffset);
+									return sp - 2;
+								}
+							}
+						}
+
+						*(sp - 2) = ZeroPointer;
+						return sp - 2;
+					}
+
+					case ENCODINGPAIR(StringEncoding::Ansi, StringEncoding::Utf16):
+					{
+						return primitiveFailure(_PrimitiveFailureCode::DataTypeMismatch);
+					}
+
+					case ENCODINGPAIR(StringEncoding::Utf8, StringEncoding::Utf16):
+					{
+						auto oteString = reinterpret_cast<Utf8StringOTE*>(oteReceiver);
+						auto oteSubString = reinterpret_cast<Utf16StringOTE*>(oopSubString);
+
+						const size_t M = oteSubString->Count;
+						if (M != 0)
+						{
+							Utf8StringBuf buf(oteSubString->m_location->m_characters, M);
+							const size_t N = oteString->Count;
+							if ((startingAt + buf.Count) - 1 <= N)
+							{
+								SmallInteger index = stringSearch(oteString->m_location->m_characters, N, (const char8_t*)buf, buf.Count, startingAt - 1) + 1;
+								*(sp - 2) = ObjectMemoryIntegerObjectOf(index);
+								return sp - 2;
+							}
+						}
+						*(sp - 2) = ZeroPointer;
+						return sp - 2;
+					}
+
+					case ENCODINGPAIR(StringEncoding::Utf16, StringEncoding::Utf8):
+					{
+						Utf16StringOTE* oteString = reinterpret_cast<Utf16StringOTE*>(oteReceiver);
+						Utf8StringOTE* oteSubString = reinterpret_cast<Utf8StringOTE*>(oopSubString);
+
+						const size_t M = oteSubString->Count;
+						if (M != 0)
+						{
+							Utf16StringBuf buf(oteSubString->m_location->m_characters, M);
+							const size_t N = oteString->Count;
+							if ((startingAt + buf.Count) - 1 <= N)
+							{
+								auto wsz = oteString->m_location->m_characters;
+								UChar* found = u_strFindFirst(wsz + startingAt - 1, N - startingAt + 1, buf, buf.Count);
+								if (found != nullptr)
+								{
+									SmallInteger nOffset = (found - wsz) + 1;
+									*(sp - 2) = ObjectMemoryIntegerObjectOf(nOffset);
+									return sp - 2;
+								}
+							}
+						}
+
+						*(sp - 2) = ZeroPointer;
+						return sp - 2;
+					}
+
+					case ENCODINGPAIR(StringEncoding::Utf16, StringEncoding::Utf16):
+					{
+						auto oteString = reinterpret_cast<Utf16StringOTE*>(oteReceiver);
+						auto oteSubString = reinterpret_cast<Utf16StringOTE*>(oopSubString);
+
+						const size_t M = oteSubString->Count;
+						if (M != 0)
+						{
+							const size_t N = oteString->Count;
+							if ((startingAt + M) - 1 <= N)
+							{
+								auto wsz = oteString->m_location->m_characters;
+								UChar* found = u_strFindFirst(wsz + startingAt - 1, N - startingAt + 1, oteSubString->m_location->m_characters, M);
+								if (found != nullptr)
+								{
+									SmallInteger nOffset = (found - wsz) + 1;
+									*(sp - 2) = ObjectMemoryIntegerObjectOf(nOffset);
+									return sp - 2;
+								}
+							}
+						}
+
+						*(sp - 2) = ZeroPointer;
+						return sp - 2;
+					}
+
+					// Utf32 isn't supported currently
+					case ENCODINGPAIR(StringEncoding::Ansi, StringEncoding::Utf32):
+					case ENCODINGPAIR(StringEncoding::Utf8, StringEncoding::Utf32):
+					case ENCODINGPAIR(StringEncoding::Utf16, StringEncoding::Utf32):
+					case ENCODINGPAIR(StringEncoding::Utf32, StringEncoding::Utf32):
+					case ENCODINGPAIR(StringEncoding::Utf32, StringEncoding::Ansi):
+					case ENCODINGPAIR(StringEncoding::Utf32, StringEncoding::Utf8):
+					case ENCODINGPAIR(StringEncoding::Utf32, StringEncoding::Utf16):
+						return Interpreter::primitiveFailure(_PrimitiveFailureCode::NotImplemented);
+					default:
+						__assume(false);
+					}
+				}
+				else
+				{
+					return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);	// out of bounds - startingAt <= 0
+				}
 			}
 		}
-		else
-		{
-			// Receiver and substring are of different classes (e.g. String and UnicodeString) - fall back on Smalltalk code
-			// TODO: Consider double-dispatching to this prim
-			return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
-		}
+
+		// target not a String
+		return Interpreter::primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
 	}
 	else
 	{

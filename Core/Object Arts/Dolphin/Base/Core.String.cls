@@ -651,12 +651,18 @@ findString: aString startingAt: anInteger
 	Primitive Failure Reasons:
 		InvalidParameter2	- anInteger is not a SmallInteger
 		OutOfBounds		- anInteger is out of bounds (not in the range 1..receiver's indexable size) 
-		InvalidParameter1	- aString is not of the same class as the receiver.
-
-	Implementation Note: The string search primitive is implemented using the Boyer-Moore algorithm unless the receiver is less than 512 bytes long, in which case it isn't worth initializing the skip array in most cases, so a simple brute force search (much like that of the superclass) is used."
+		InvalidParameter1	- aString is not of a <String>
+		DataTypeMismatch - aString is not a compatible encoding to the receiver, i.e. `AnsiString` receiver and `UtfEncodedString` argument.
+	"
 
 	<primitive: 149>
-	^self basicIndexOfSubCollection: (self class coerceString: aString) startingAt: anInteger!
+	| compatible |
+	compatible := self class coerceString: aString.
+	compatible = aString
+		ifFalse: 
+			["Receiver encoding can't represent some chars in the match string"
+			^0].
+	^self basicIndexOfSubCollection: compatible startingAt: anInteger!
 
 findString: aString startingAt: anInteger ignoreCase: aBoolean
 	"Answer the index of the <String> argument within the receiver, ignoring case differences, starting at the <integer>

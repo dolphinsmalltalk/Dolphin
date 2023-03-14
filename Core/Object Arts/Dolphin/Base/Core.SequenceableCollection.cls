@@ -227,26 +227,26 @@ basicBeginsWith: aCollection
 			i := i + 1].
 	^true!
 
-basicIndexOfSubCollection: targetSequence startingAt: start
+basicIndexOfSubCollection: aSequenceableCollection startingAt: anInteger
 	| firstElement subSize size |
-	subSize := targetSequence size.
+	subSize := aSequenceableCollection size.
 	subSize == 0 ifTrue: [^0].
-	firstElement := targetSequence at: 1.
+	firstElement := aSequenceableCollection at: 1.
 	size := self size.
 	subSize == 1
 		ifTrue: 
 			[^self
 				nextIndexOf: firstElement
-				from: start
+				from: anInteger
 				to: size].
-	start to: size - subSize + 1
+	anInteger to: size - subSize + 1
 		do: 
 			[:i |
 			(self at: i) = firstElement
 				ifTrue: 
 					[| j |
 					j := 2.
-					[(self at: i + j - 1) = (targetSequence at: j)] whileTrue: 
+					[(self at: i + j - 1) = (aSequenceableCollection at: j)] whileTrue: 
 							[j = subSize ifTrue: [^i].
 							j := j + 1]]].
 	^0!

@@ -144,6 +144,37 @@ testCopyReplaceAllWith
 	actual := subject copyReplaceAll: 'a£' asArray with: 'a€' asArray.
 	self assert: actual equals: 'a€aa€'!
 
+testFindUtfStringStartingAt
+	"Test searching for a UtfEncodedString in an AnsiString. More complex cases are non-ascii and outside BMP (non-Ansi representable) characters."
+
+	| searchee |
+	searchee := self assimilateString: 'a£cd€ga£cd€g'.
+	{ 'a£c' asUtf8String. 'a£c' asUtf16String } do: 
+			[:abc |
+			self assert: (searchee findString: abc startingAt: 1) equals: 1.
+			self assert: (searchee findString: abc startingAt: 2) equals: (searchee lastIndexOf: $£) - 1.
+			self assert: (searchee findString: abc startingAt: searchee size) equals: 0.
+			self assert: (searchee findString: abc startingAt: 11) equals: 0.
+			self assert: (searchee findString: abc startingAt: 1) equals: 1].
+	{ '€g' asUtf8String. '€g' asUtf16String } do: 
+			[:each |
+			self assert: (searchee findString: each startingAt: 1) equals: 5.
+			self assert: (searchee findString: each startingAt: 2) equals: 5.
+			self assert: (searchee findString: each startingAt: searchee size) equals: 0.
+			self assert: (searchee findString: each startingAt: 5) equals: 5.
+			self assert: (searchee findString: each startingAt: 6) equals: 11].
+	"If the search string contains any chars that cannot be represented in an AnsiString, then the result must always be 0 (not found). Shouldn't match against Ansi replacement character"
+	searchee := self assimilateString: 'a?£'.
+	{ '🐬£' asUtf8String. '🐬£' asUtf16String }
+		do: [:each | self assert: (searchee findString: each startingAt: 1) equals: 0].
+
+	"Also test invalid UTF-8 sequence - e.g. overlong U+002F"
+	searchee := self assimilateString: 'a/b'.
+	self assert: (searchee findString: '/' startingAt: 1) equals: 2.
+	self assert: (searchee findString: (Utf8String fromByteArray: #[16rE0 16r80 16rAF]) startingAt: 1)
+		equals: 0.
+	self assert: ('a??b' findString: (Utf8String fromByteArray: #[16rC0 16rAF]) startingAt: 1) equals: 0!
+
 testIndexOfSubCollectionStartingAtGPF
 	| strings search current |
 	#'1553'.
@@ -166,6 +197,7 @@ testConcatenateInvalidUtf16!public!unit tests! !
 testConcatenateInvalidUtf8!public!unit tests! !
 testConcatenation!public!unit tests! !
 testCopyReplaceAllWith!public!unit tests! !
+testFindUtfStringStartingAt!public!unit tests! !
 testIndexOfSubCollectionStartingAtGPF!public!unit tests! !
 !
 

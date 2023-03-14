@@ -210,20 +210,6 @@ encodeOn: aPuttableStream put: aCharacter
 						basicNextPut: (codePoint bitAnd: 16r3FF) + TrailSurrogateMask]
 				ifFalse: [self class errorInvalidCodePoint: codePoint]]!
 
-findString: aString startingAt: anInteger
-	"Answer the index of the <String> argument within the receiver, starting at the <integer>
-	argument. If the receiver does not contain aString, answer 0."
-
-	^self basicIndexOfSubCollection: aString asUtf16String startingAt: anInteger!
-
-indexOfSubCollection: targetSequence startingAt: start
-	"Answer the <integer> index of the next occurrence within the 
-	receiver of the <sequencedReadableCollection> targetSequence,
-	starting at the <integer> index start. If there are no such occurrences
-	(or the search sequence is empty), answer 0."
-
-	^self findString: targetSequence startingAt: start!
-
 isLeadCodeUnit: anInteger
 	^(anInteger bitAnd: SurrogateMask) ~~ TrailSurrogateMask!
 
@@ -366,8 +352,6 @@ encodedAt:put:!accessing!encode/decode!private! !
 encodedSizeAt:!encode/decode!private! !
 encodedSizeOf:!encode/decode!private! !
 encodeOn:put:!encode/decode!private! !
-findString:startingAt:!public!searching! !
-indexOfSubCollection:startingAt:!public!searching! !
 isLeadCodeUnit:!encode/decode!private!testing! !
 isTrailSurrogate:!public! !
 maxEncoding!constants!private! !
