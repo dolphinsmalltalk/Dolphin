@@ -99,12 +99,7 @@ copyToBuffer: anAddress ofSize: anInteger
 		count: OS.CRTConstants._TRUNCATE) == 0!
 
 countElements
-	| length |
-	length := 0.
-	"Count the code-units that are not trailing surrogates"
-	1 to: self size
-		do: [:i | ((self basicAt: i) bitAnd: SurrogateMask) == TrailSurrogateMask ifFalse: [length := length + 1]].
-	^length!
+	^OS.ICU u_countChar32: self length: self size!
 
 decodeAt: anInteger
 	"Private - Answer the encoded object beginning at the specified position in the receiver."

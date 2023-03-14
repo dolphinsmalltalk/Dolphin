@@ -111,6 +111,25 @@ u_charType: aCharacter
 	<cdecl: int8 u_charType char32>
 	^self invalidCall: _failureCode!
 
+u_countChar32: s length: length
+"/**
+ * Count Unicode code points in the length UChar code units of the string.
+ * A code point may occupy either one or two UChar code units.
+ * Counting code points involves reading all code units.
+ *
+ * This functions is basically the inverse of the U16_FWD_N() macro (see utf.h).
+ *
+ * @param s The input string.
+ * @param length The number of UChar code units to be checked, or -1 to count all
+ *               code points before the first NUL (U+0000).
+ * @return The number of code points in the specified code units.
+ * @stable ICU 2.0
+ */
+U_CAPI int32_t U_EXPORT2
+u_countChar32(const UChar *s, int32_t length);"
+	<cdecl: int32 u_countChar32 char16* int32>
+	^self invalidCall: _failureCode!
+
 u_foldCase: aCharacter options: anInteger
 "/**
  * The given character is mapped to its case folding equivalent according to
@@ -607,6 +626,7 @@ u_charAge:versionArray:!character properties!public!version information! !
 u_charName:nameChoice:!character properties!public! !
 u_charName:nameChoice:buffer:bufferLength:pErrorCode:!character properties!private! !
 u_charType:!character properties!public! !
+u_countChar32:length:!public!string handling! !
 u_foldCase:options:!case conversions!public! !
 u_getDataVersion!public!version information! !
 u_getDataVersion:status:!private!version information! !

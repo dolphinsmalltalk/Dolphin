@@ -286,6 +286,33 @@ testCopyWithoutIndex
 	self assert: (subject copyWithoutIndex: index) equals: 'a£文1'.
 	self should: [subject copyWithoutIndex: index + 1] raise: Error!
 
+testCountElements
+	self decodeTestCases pairsDo: 
+			[:codes :char |
+			| subject |
+			subject := self makeStringFromCodeUnits: codes.
+			self assert: subject countElements equals: 1].
+	self decodeInvalidContinuations do: 
+			[:each |
+			| subject |
+			subject := self makeStringFromCodeUnits: each first.
+			self assert: subject countElements equals: each second + 1].
+	self decodeIncompleteContinuations do: 
+			[:each |
+			| subject |
+			subject := self makeStringFromCodeUnits: each.
+			self assert: subject countElements equals: each size].
+	self decodeNonCharacters do: 
+			[:each |
+			| subject |
+			subject := self collectionClass with: each.
+			self assert: subject countElements equals: 1].
+	self decodeInvalidCharacters pairsDo: 
+			[:codes :replacements |
+			| subject |
+			subject := self makeStringFromCodeUnits: codes.
+			self assert: subject countElements equals: replacements]!
+
 testDecodeAt
 	self decodeTestCases pairsDo: 
 			[:codes :char |
@@ -903,6 +930,7 @@ testCopyReplaceAllWith!public!unit tests! !
 testCopyReplacingWithObject!public!unit tests! !
 testCopyWithout!public!unit tests! !
 testCopyWithoutIndex!public!unit tests! !
+testCountElements!public!unit tests! !
 testDecodeAt!public!unit tests! !
 testDecodeNextFrom!constants!public! !
 testDetectIfNoneExtended!public!unit tests! !
