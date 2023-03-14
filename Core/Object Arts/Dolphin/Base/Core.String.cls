@@ -119,7 +119,7 @@ _sameAsString: aString
 <=> aString
 	"Answer the receiver's <integer> collation order with respect to the <readableString> argument. Colloquially known as the spaceship operator.
 	The answer is < 0 if the receiver is lexically before the argument, 0 if lexically equivalent, or	> 0 if lexically after the argument. 
-	The comparision is CASE INSENSITIVE and respects the currently configured default locale of the host operating system.
+	The comparison is CASE INSENSITIVE and respects the currently configured default locale of the host operating system.
 	Note that this can be a relatively complex comparison and may be substantially slower than a simple ordinal comparison."
 
 	<primitive: 56>
@@ -670,7 +670,7 @@ findString: aString startingAt: anInteger ignoreCase: aBoolean
 
 	#todo.	"More efficient implementation needed."
 	aBoolean ifFalse: [^self findString: aString startingAt: anInteger].
-	^self asUppercase findString: aString asUppercase startingAt: anInteger!
+	^self caseFolded findString: aString caseFolded startingAt: anInteger!
 
 formatWith: anObject
 	"Answer a <readableString> which is a message formatted from the receiver (assumed to be a
@@ -830,9 +830,9 @@ match: aString ignoreCase: aBoolean
 
 	^aBoolean
 		ifTrue: 
-			[self asUppercase asUtf8String
+			[self caseFolded asUtf8String
 				matchPatternFrom: 1
-				in: aString asUppercase asUtf8String
+				in: aString caseFolded asUtf8String
 				from: 1]
 		ifFalse: 
 			[self asUtf8String

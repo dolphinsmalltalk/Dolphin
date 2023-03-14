@@ -33,8 +33,8 @@ simpleReferenceFilter
 				ifTrue: [[:each | each findString: what]]
 				ifFalse: 
 					[| cmp |
-					cmp := what asUppercase.
-					[:text | text asUppercase findString: cmp]].
+					cmp := what caseFolded.
+					[:text | text caseFolded findString: cmp]].
 	^findDetails isWholeWord
 		ifTrue: 
 			[

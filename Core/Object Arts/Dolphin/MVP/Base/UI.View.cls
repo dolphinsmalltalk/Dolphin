@@ -1299,8 +1299,8 @@ findMatch: aFindDetails inRange: anInterval
 			stop := textLen - anInterval start + 1].
 	aFindDetails isCaseSensitive
 		ifFalse: 
-			[text := text asLowercase.
-			matchString := matchString asLowercase].
+			[text := text caseFolded.
+			matchString := matchString caseFolded].
 	matchLen := matchString size.
 	start to: stop - matchLen + 1
 		do: 

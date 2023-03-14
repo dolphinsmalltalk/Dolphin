@@ -888,10 +888,12 @@ encoderClsidForExtension: aString
 		self encoderClsidForExtension: 'jpg'
 	"
 
-	^(self encoders detect: 
-			[:e | 
-			(e FilenameExtension asLowercase indexOfSubCollection: aString asLowercase) > 0]) 
-		Clsid!
+	^(self encoders
+		detect: [:e | (e FilenameExtension
+				findString: aString
+				startingAt: 1
+				ignoreCase: true) > 0])
+			Clsid!
 
 encoderFileExtensions
 	"Answer a list of strings that represent the supported encoder file extensions."
@@ -911,10 +913,12 @@ encoderMimeTypeForExtension: aString
 	 	self encoderMimeTypeForExtension: 'jpg'
 	"
 
-	^(self encoders detect: 
-			[:e | 
-			(e FilenameExtension asLowercase indexOfSubCollection: aString asLowercase) > 0]) 
-		MimeType!
+	^(self encoders
+		detect: [:e | (e FilenameExtension
+				findString: aString
+				startingAt: 1
+				ignoreCase: true) > 0])
+			MimeType!
 
 encoderMimeTypes
 	"Answer a list of strings that represent the supported image encoder mime types."
@@ -1019,7 +1023,10 @@ mimeTypeForExtension: aString
 	"
 
 	^(self encoders
-		detect: [:e | (e FilenameExtension asLowercase indexOfSubCollection: aString asLowercase) > 0]
+		detect: [:e | (e FilenameExtension
+				findString: aString
+				startingAt: 1
+				ignoreCase: true) > 0]
 		ifNone: nil) ifNotNil: [:encoder | encoder MimeType]!
 
 nameOfImageFlag: anInteger

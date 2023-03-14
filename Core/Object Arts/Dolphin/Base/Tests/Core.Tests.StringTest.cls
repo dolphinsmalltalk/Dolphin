@@ -27,6 +27,12 @@ beforeTestCases
 caseConversionCases
 	^self ordinalCaseConversionCases!
 
+caseInsensitiveEqualCases
+	^#(#('' '') #('i' 'i') #('I' 'i') #('£' '£') #('a£' 'A£') #('straße' 'STRASSE'))!
+
+caseInsensitiveLessThanCases
+	^#(#('' 'i') #('i' 'j') #('i' 'J') #('i' 'ij') #('ij' 'j') #('I' 'j') #('i$' 'i£') #('I$' 'i£') #('i$' 'I£') #('I$' 'I£') #('£' '€'))!
+
 copyClass
 	^self collectionClass!
 
@@ -681,6 +687,38 @@ testLength
 			subject := self assimilateString: each first.
 			self assert: subject length equals: each last]!
 
+testLessOrEqual
+	self caseInsensitiveEqualCases do: 
+			[:each |
+			| a b subject ansi |
+			a := each first.
+			b := each second.
+			subject := self assimilateString: a.
+			ansi := b asAnsiString.
+			(ansi includes: $?) ifFalse: [self assert: subject <= ansi].
+			self assert: subject <= b asUtf8String.
+			self assert: subject <= b asUtf16String.
+			subject := self assimilateString: b.
+			ansi := a asAnsiString.
+			(ansi includes: $?) ifFalse: [self assert: subject <= ansi].
+			self assert: subject <= a asUtf8String.
+			self assert: subject <= a asUtf16String].
+	self caseInsensitiveLessThanCases do: 
+			[:each |
+			| a b subject ansi |
+			a := each first.
+			b := each second.
+			subject := self assimilateString: a.
+			ansi := b asAnsiString.
+			(ansi includes: $?) ifFalse: [self assert: subject <= ansi].
+			self assert: subject <= b asUtf8String.
+			self assert: subject <= b asUtf16String.
+			subject := self assimilateString: b.
+			ansi := a asAnsiString.
+			(ansi includes: $?) ifFalse: [self deny: subject <= ansi].
+			self deny: subject <= a asUtf8String.
+			self deny: subject <= a asUtf16String]!
+
 testLines
 	| subject crlf actual empty |
 	crlf := String lineDelimiter.
@@ -1296,6 +1334,8 @@ assimilate:!helpers!private! !
 assimilateString:!helpers!private! !
 beforeTestCases!constants!private! !
 caseConversionCases!constants!private! !
+caseInsensitiveEqualCases!constants!private! !
+caseInsensitiveLessThanCases!constants!private! !
 copyClass!constants!private! !
 equalityTestCases!constants!private! !
 findActualIndicesOf:in:!helpers!private! !

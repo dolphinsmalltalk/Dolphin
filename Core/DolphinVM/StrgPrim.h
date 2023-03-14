@@ -17,7 +17,7 @@ struct CmpIW
 {
 	__forceinline int operator() (const Utf16String::CU* psz1, size_t cch1, const Utf16String::CU* psz2, size_t cch2) const
 	{
-		return ::CompareStringW(LOCALE_USER_DEFAULT, NORM_IGNORECASE, (PCNZWCH)psz1, cch1, (PCNZWCH)psz2, cch2) - 2;
+		return ::CompareStringW(LOCALE_USER_DEFAULT, NORM_IGNORECASE | NORM_LINGUISTIC_CASING, (PCNZWCH)psz1, cch1, (PCNZWCH)psz2, cch2) - 2;
 	}
 };
 

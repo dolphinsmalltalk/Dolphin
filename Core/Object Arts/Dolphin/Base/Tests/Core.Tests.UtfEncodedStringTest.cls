@@ -25,6 +25,13 @@ caseConversionCases
 
 	^self ordinalCaseConversionCases , #(#('straße' 'STRASSE'))!
 
+caseInsensitiveEqualCases
+	^super caseInsensitiveEqualCases , #(#('🐬' '🐬'))!
+
+caseInsensitiveLessThanCases
+	^super caseInsensitiveLessThanCases
+		, #(#('' '🐬') #('🐬' '🐬a') #('a🐬' 'b🐬') #('a' '🐬') #('A' '🐬'))!
+
 decodeIncompleteContinuations
 	^self subclassResponsibility!
 
@@ -197,12 +204,12 @@ testAsUppercase
 
 testBeginsWithExtended
 	| subject comparand |
-	subject := self newCollection: {Character dolphin. $a. $£. $b. $c}.
+	subject := self newCollection: { Character dolphin. $a. $£. $b. $c }.
 	self assert: (subject beginsWith: Character dolphin).
-	self deny: (subject beginsWith: (String with: (Character value: 16rF0))).
-	self deny: (subject beginsWith: (Character value: 16rF0)).
-	self deny: (subject beginsWith: (String with: (Character value: 16r3D))).
-	self deny: (subject beginsWith: (Character value: 16r3D)).
+	self deny: (subject beginsWith: (String with: $\xF0)).
+	self deny: (subject beginsWith: $\xF0).
+	self deny: (subject beginsWith: (String with: $\x3D)).
+	self deny: (subject beginsWith: $\x3D).
 	comparand := Character dolphin asUtf8String , 'a£'.
 	self assert: (subject beginsWith: comparand).
 	comparand := Character dolphin asUtf16String , 'a£'.
@@ -210,15 +217,17 @@ testBeginsWithExtended
 
 testBeginsWithIgnoreCase
 	| subject comparand |
-	subject := self newCollection: {Character dolphin. $a. $\0. $£. $b. $c}.
+	subject := self newCollection: { Character dolphin. $a. $\0. $£. $b. $c }.
 	self assert: (subject beginsWith: subject ignoreCase: true).
 	self assert: (subject beginsWith: subject ignoreCase: false).
-	comparand := self newCollection: {Character dolphin. $A. $\0. $£}.
+	comparand := self newCollection: { Character dolphin. $A. $\0. $£ }.
 	self assert: (subject beginsWith: comparand ignoreCase: true).
 	self deny: (subject beginsWith: comparand ignoreCase: false).
 	comparand := comparand asUtf16String.
 	self assert: (subject beginsWith: comparand ignoreCase: true).
-	self deny: (subject beginsWith: comparand ignoreCase: false)!
+	self deny: (subject beginsWith: comparand ignoreCase: false).
+	"Note that this is an ordinal comparison, so linguistic case folding is not used."
+	self deny: ('straße' beginsWith: 'STRASS' ignoreCase: false)!
 
 testCollect
 	| subject actual |
@@ -234,9 +243,12 @@ testCompareEszett
 	| lower upper |
 	lower := 'straße'.
 	upper := 'STRASSE'.
+	self assert: lower <= upper.
+	self assert: upper <= lower.
+	self assert: lower >= upper.
+	self assert: upper >= lower.
 	self assert: lower <=> upper equals: 0.
-	self assert: upper <=> lower equals: 0.
-!
+	self assert: upper <=> lower equals: 0!
 
 testConcatenation
 	| actual triples |
@@ -550,13 +562,13 @@ testFoldCaseICU
 	| mixed foldedDefault foldedExcludeSpecialI subject tr de |
 	mixed := Utf16String
 				withAll: (#(16r61 16r42 16r130 16r49 16r131 16r3D0 16rDF 16rFB03 16rD93F 16rDFFF)
-						collect: [:each | Character utf16Value: each]).
+						collect: [:each | Character utf16Value: each]).	"'aBİIıϐßﬃ�'"
 	foldedDefault := Utf16String
 				withAll: (#(16r61 16r62 16r69 16r307 16r69 16r131 16r3B2 16r73 16r73 16r66 16r66 16r69 16rD93F 16rDFFF)
-						collect: [:each | Character utf16Value: each]).
+						collect: [:each | Character utf16Value: each]). "'abi̇iıβssffi�'"
 	foldedExcludeSpecialI := Utf16String
 				withAll: (#(16r61 16r62 16r69 16r131 16r131 16r3B2 16r73 16r73 16r66 16r66 16r69 16rD93F 16rDFFF)
-						collect: [:each | Character utf16Value: each]).
+						collect: [:each | Character utf16Value: each]).	"'abiııβssffi�'"
 	tr := Locale named: 'tr-TR'.
 	de := Locale named: 'de-DE'.
 	subject := self assimilateString: mixed.
@@ -900,6 +912,8 @@ withAllTestCases
 afterTestCases!constants!private! !
 beforeTestCases!constants!private! !
 caseConversionCases!constants!private! !
+caseInsensitiveEqualCases!constants!private! !
+caseInsensitiveLessThanCases!constants!private! !
 decodeIncompleteContinuations!constants!private! !
 decodeInvalidCharacters!constants!private! !
 decodeInvalidContinuations!constants!private! !

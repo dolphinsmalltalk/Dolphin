@@ -94,7 +94,7 @@ _separateSubStringsIn: tokens
 <=> aCharacter
 	"Answer the receiver's case-insensitive <integer> collation order with respect to the <Character> argument. "
 
-	^self asUppercase <==> aCharacter asUppercase!
+	^self caseFolded <==> aCharacter caseFolded!
 
 = anObject
 	"Answer whether the receiver is equal to the argument. There is a unique Character instance for each codepoint < 256, but instances for higher code points are not unique."

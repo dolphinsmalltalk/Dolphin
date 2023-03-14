@@ -15,8 +15,8 @@ Core.Object comment: '`Core.Object` is the abstract root of the standard Smallta
 
 ## Class Variables:
   `_AssertionFailureSignal`	`Signal` raised when assertion failures occur (see #assert:)
-  `_DependentsRegister`		`WeakIdentityDictionary` containing DependentsCollections for instances
-  `_EventsRegister` 			`WeakIdentityDictionary`	 containing EventsCollections for instances
+  `_DependentsRegister`		`WeakIdentityDictionary` containing `WeakArray`s of dependents of sub-instances
+  `_EventsRegister` 			`WeakIdentityDictionary`	 containing `EventsCollection`s for instances
   `_PropertyRegister` 		`PropertyManager`. Register of instance specific information not stored in instance variables
 
 Note: All class variables beginning with $_ are considered private to the 🐬 implementation. This convention is adopted to avoid potential name clashes with user defined classes, and is a requirement for ANSI compliance.

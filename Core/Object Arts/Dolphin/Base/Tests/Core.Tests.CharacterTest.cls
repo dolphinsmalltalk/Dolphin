@@ -270,9 +270,10 @@ testFoldcase
 	self assert: $Ѐ caseFolded equals: $ѐ.
 	"Greek delta"
 	self assert: $Δ caseFolded equals: $δ.
+	"(U+00DF Latin Small Letter Sharp S). In a string this would fold to 'ss', but can't as a single Character"
+	self assert: $ß caseFolded equals: $ß.
 	"U+1E9E Latin Capital Letter Sharp S  -> (U+00DF Latin Small Letter Sharp S)."
 	self assert: $ẞ caseFolded equals: $ß.
-	self assert: $ß caseFolded equals: $ß.
 	"Thai 7 - not a letter"
 	self assert: $๗ caseFolded equals: $๗.
 	"U+01C5 Latin Capital Letter D with Small Letter Z with Caron -> U+01C6 Latin Small Letter Dz with Caron"
