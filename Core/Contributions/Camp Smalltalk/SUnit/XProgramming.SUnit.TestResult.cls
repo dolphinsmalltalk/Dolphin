@@ -11,12 +11,20 @@ XProgramming.SUnit.TestResult comment: ''!
 !XProgramming.SUnit.TestResult categoriesForClass!SUnit! !
 !XProgramming.SUnit.TestResult methodsFor!
 
-addError: aTestCase signal: anException
-	results at: aTestCase put: (TestCaseResult case: aTestCase error: anException).
+addError: aTestCase signal: anException after: aDuration
+	results at: aTestCase
+		put: (TestCaseResult
+				case: aTestCase
+				error: anException
+				after: aDuration).
 	errors add: aTestCase!
 
-addFailure: aTestCase signal: anException
-	results at: aTestCase put: (TestCaseResult case: aTestCase failure: anException).
+addFailure: aTestCase signal: anException after: aDuration
+	results at: aTestCase
+		put: (TestCaseResult
+				case: aTestCase
+				failure: anException
+				after: aDuration).
 	failures add: aTestCase!
 
 addPass: aTestCase duration: anInteger
@@ -141,21 +149,26 @@ results
 	^results!
 
 runCase: aTestCase
-	
-	[| start stop |
+	| start |
 	start := Delay microsecondClockValue.
-	aTestCase runCase.
-	stop := Delay microsecondClockValue.
-	self addPass: aTestCase duration: (stop - start) microseconds]
+	
+	[aTestCase runCase.
+	self addPass: aTestCase duration: (Delay microsecondClockValue - start) microseconds]
 			on: self class failure
 			do: 
 				[:signal |
-				self addFailure: aTestCase signal: signal.
+				self
+					addFailure: aTestCase
+					signal: signal
+					after: (Delay microsecondClockValue - start) microseconds.
 				signal sunitExitWith: false]
 			on: self class error
 			do: 
 				[:signal |
-				self addError: aTestCase signal: signal.
+				self
+					addError: aTestCase
+					signal: signal
+					after: (Delay microsecondClockValue - start) microseconds.
 				signal sunitExitWith: false]
 			on: self class skip
 			do: 
@@ -179,8 +192,8 @@ tests
 		addAll: self defects;
 		yourself! !
 !XProgramming.SUnit.TestResult categoriesForMethods!
-addError:signal:!adding!private! !
-addFailure:signal:!adding!private! !
+addError:signal:after:!adding!private! !
+addFailure:signal:after:!adding!private! !
 addPass:duration:!adding!private! !
 addSkip:signal:!adding!private! !
 correctCount!accessing!public! !

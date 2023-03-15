@@ -376,21 +376,26 @@ debugWithResult:!Instance Creation!public! !
 debugCase: aTestCase
 	"Same as runCase:, but must pass out an errors so caught by the debugger"
 
-	
-	[| start stop |
+	| start |
 	start := Delay microsecondClockValue.
-	aTestCase runCase.
-	stop := Delay microsecondClockValue.
-	self addPass: aTestCase duration: stop - start]
+	
+	[aTestCase runCase.
+	self addPass: aTestCase duration: (Delay microsecondClockValue - start) microseconds]
 			on: self class failure
 			do: 
 				[:signal |
-				self addFailure: aTestCase signal: signal.
+				self
+					addFailure: aTestCase
+					signal: signal
+					after: (Delay microsecondClockValue - start) microseconds.
 				signal pass]
 			on: self class error
 			do: 
 				[:signal |
-				self addError: aTestCase signal: signal.
+				self
+					addError: aTestCase
+					signal: signal
+					after: (Delay microsecondClockValue - start) microseconds.
 				signal pass]
 			on: self class skip
 			do: 

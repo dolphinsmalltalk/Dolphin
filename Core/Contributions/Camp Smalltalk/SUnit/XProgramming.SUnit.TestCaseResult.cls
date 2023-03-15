@@ -98,11 +98,11 @@ setCase: aTestCase duration: aDuration
 	outcome := #passed.
 	duration := aDuration!
 
-setCase: aTestCase outcome: aSymbol signal: anException
+setCase: aTestCase outcome: aSymbol signal: anException after: aDuration
 	case := aTestCase.
 	outcome := aSymbol.
 	signal := anException.
-	duration := 0 seconds.
+	duration := aDuration.
 	self captureDiagnostics: anException!
 
 signal
@@ -124,7 +124,7 @@ duration!accessing!public! !
 outcome!accessing!public! !
 printSourceOn:!printing!private! !
 setCase:duration:!initializing!private! !
-setCase:outcome:signal:!initializing!private! !
+setCase:outcome:signal:after:!initializing!private! !
 signal!accessing!public! !
 stacktrace!accessing!public! !
 !
@@ -134,27 +134,30 @@ stacktrace!accessing!public! !
 case: aTestCase duration: anInteger
 	^self new setCase: aTestCase duration: anInteger!
 
-case: aTestCase error: anException
+case: aTestCase error: anException after: aDuration
 	^self new
 		setCase: aTestCase
 		outcome: #error
-		signal: anException!
+		signal: anException
+		after: aDuration!
 
-case: aTestCase failure: aTestFailure
+case: aTestCase failure: aTestFailure after: aDuration
 	^self new
 		setCase: aTestCase
 		outcome: #failed
-		signal: aTestFailure!
+		signal: aTestFailure
+		after: aDuration!
 
 case: aTestCase skipped: aTestSkip
 	^self new
 		setCase: aTestCase
 		outcome: #skipped
-		signal: aTestSkip! !
+		signal: aTestSkip
+		after: 0 seconds! !
 !XProgramming.SUnit.TestCaseResult class categoriesForMethods!
 case:duration:!instance creation!public! !
-case:error:!instance creation!public! !
-case:failure:!instance creation!public! !
+case:error:after:!instance creation!public! !
+case:failure:after:!instance creation!public! !
 case:skipped:!instance creation!public! !
 !
 
