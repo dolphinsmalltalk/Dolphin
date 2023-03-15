@@ -607,14 +607,14 @@ printFractionalPart: aFraction on: aStream places: anInteger
 printTime: aTime on: aWriteStream format: aString
 	"Append to the <puttableStream>, aWriteStream, a <String> whose characters are a representation of the <Time> argument, aTime, formatted according to the format characters listed in the <String>, aString.
 	For example:
-		String streamContents: [:s | Locale default printTime: Time now on: s format: 'H:mm:ss.fff']
+		String streamContents: [:s | Locale default printTime: Time now on: s format: 'H:mm:ssFFF']
 	"
 
 	self
 		print: aTime
 		on: aWriteStream
 		format: (aString ifNil: [self timeFormat])
-		alphabet: 'hHmstf'
+		alphabet: 'hHmstfF'
 		formatters: self dateAndTimeFormatters!
 
 shortAmDesignator
