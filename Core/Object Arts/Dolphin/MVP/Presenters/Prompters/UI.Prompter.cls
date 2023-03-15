@@ -123,7 +123,7 @@ queryCommand: aCommandQuery
 		ifTrue: 
 			["Ensure the reply has been flushed from the view to the model - the standard views have update-per-char set on the text edit views so will already have done this, but a custom view might not."
 			replyPresenter value.
-			aCommandQuery validationResult: self model validate.
+			aCommandQuery validationResult: self validateModel.
 			^true].
 	^super queryCommand: aCommandQuery!
 

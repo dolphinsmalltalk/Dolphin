@@ -90,7 +90,7 @@ initialize
 	newPrompt := 'New name:'.
 	newCaption := 'New…'.
 	newPrompterBlock := [:newModel | Prompter
-				createOn: newModel
+				createOn: newModel asValue
 				prompt: self newPrompt
 				caption: self newCaption].!
 
