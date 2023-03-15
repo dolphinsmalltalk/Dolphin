@@ -240,45 +240,46 @@ Kernel.SharedPool
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'ExtCallArgBOOL' -> 16r9.
-		'ExtCallArgBSTR' -> 16r15.
-		'ExtCallArgCHAR' -> 16r2.
-		'ExtCallArgCOMPTR' -> 16r37.
-		'ExtCallArgDATE' -> 16r17.
-		'ExtCallArgDOUBLE' -> 16rB.
-		'ExtCallArgErrno' -> 16r1D.
-		'ExtCallArgFLOAT' -> 16rE.
-		'ExtCallArgGUID' -> 16r19.
-		'ExtCallArgHANDLE' -> 16rA.
-		'ExtCallArgHRESULT' -> 16r10.
-		'ExtCallArgInt16' -> 16r6.
-		'ExtCallArgInt32' -> 16r8.
-		'ExtCallArgInt64' -> 16r13.
-		'ExtCallArgInt8' -> 16r4.
-		'ExtCallArgIntPtr' -> 16r1B.
-		'ExtCallArgLP' -> 16r35.
-		'ExtCallArgLPP' -> 16r36.
-		'ExtCallArgLPPVOID' -> 16rF.
-		'ExtCallArgLPSTR' -> 16rC.
-		'ExtCallArgLPVOID' -> 16r1.
-		'ExtCallArgLPWSTR' -> 16r11.
-		'ExtCallArgMax' -> 16r3F.
-		'ExtCallArgNTSTATUS' -> 16r1C.
-		'ExtCallArgOOP' -> 16rD.
-		'ExtCallArgOTE' -> 16r14.
-		'ExtCallArgSTRUCT' -> 16r32.
-		'ExtCallArgSTRUCT4' -> 16r33.
-		'ExtCallArgSTRUCT8' -> 16r34.
-		'ExtCallArgUInt16' -> 16r5.
-		'ExtCallArgUInt32' -> 16r7.
-		'ExtCallArgUInt64' -> 16r12.
-		'ExtCallArgUInt8' -> 16r3.
-		'ExtCallArgUIntPtr' -> 16r1A.
-		'ExtCallArgVARBOOL' -> 16r18.
-		'ExtCallArgVARIANT' -> 16r16.
-		'ExtCallArgVOID' -> 16r0
-	}!
-Kernel.SharedPool subclass: #'OS.FacilityCodes'
+			'ExtCallArgBOOL' -> 16r9.
+			'ExtCallArgBSTR' -> 16r15.
+			'ExtCallArgCHAR' -> 16r2.
+			'ExtCallArgCOMPTR' -> 16r37.
+			'ExtCallArgDATE' -> 16r17.
+			'ExtCallArgDOUBLE' -> 16rB.
+			'ExtCallArgErrno' -> 16r1D.
+			'ExtCallArgFLOAT' -> 16rE.
+			'ExtCallArgGUID' -> 16r19.
+			'ExtCallArgHANDLE' -> 16rA.
+			'ExtCallArgHRESULT' -> 16r10.
+			'ExtCallArgInt16' -> 16r6.
+			'ExtCallArgInt32' -> 16r8.
+			'ExtCallArgInt64' -> 16r13.
+			'ExtCallArgInt8' -> 16r4.
+			'ExtCallArgIntPtr' -> 16r1B.
+			'ExtCallArgLP' -> 16r35.
+			'ExtCallArgLPP' -> 16r36.
+			'ExtCallArgLPPVOID' -> 16rF.
+			'ExtCallArgLPSTR' -> 16rC.
+			'ExtCallArgLPVOID' -> 16r1.
+			'ExtCallArgLPWSTR' -> 16r11.
+			'ExtCallArgMax' -> 16r3F.
+			'ExtCallArgNTSTATUS' -> 16r1C.
+			'ExtCallArgOOP' -> 16rD.
+			'ExtCallArgOTE' -> 16r14.
+			'ExtCallArgSTRUCT' -> 16r32.
+			'ExtCallArgSTRUCT4' -> 16r33.
+			'ExtCallArgSTRUCT8' -> 16r34.
+			'ExtCallArgUInt16' -> 16r5.
+			'ExtCallArgUInt32' -> 16r7.
+			'ExtCallArgUInt64' -> 16r12.
+			'ExtCallArgUInt8' -> 16r3.
+			'ExtCallArgUIntPtr' -> 16r1A.
+			'ExtCallArgVARBOOL' -> 16r18.
+			'ExtCallArgVARIANT' -> 16r16.
+			'ExtCallArgVOID' -> 16r0
+		}!
+Kernel.SharedPool
+	subclass: #'OS.FacilityCodes'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -2453,19 +2454,100 @@ Core.Object
 Core.Object
 	variableSubclass: #'External.FunctionDescriptor'
 	instanceVariableNames: 'descriptor'
-	classVariableNames: 'ValueTypes'
+	classVariableNames: ''
 	imports: #(#{External.ExtCallArgTypes})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'CallingConventions' -> #(#stdcall: #cdecl: #fastcall: #thiscall:).
 			'ReferenceTypes'
-				-> #(16r1 16rF 16rC 16r1 16r1 #UInt16 #Int16 #UInt32 #Int32 #UInt32 #UInt32 #DOUBLE 16rF 16rF #FLOAT nil #HRESULT 16rF #UInt64 #Int64 16rF 16rF #'OS.COM.VARIANT' #'OS.COM.DATE' #'OS.COM.VARIANT_BOOL' #REFGUID #UIntPtr #IntPtr #Int32 #Int32 16r1 16r1 16r11 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 16r35 16r35 16r35 nil nil nil nil nil nil nil nil nil nil nil).
+				-> #(16r1 16rF 16rC 16r1 16r1 #UInt16 #Int16 #UInt32 #Int32 #UInt32 #UInt32 #DOUBLE 16rF 16rF #FLOAT nil #HRESULT 16rF #UInt64 #Int64 16rF 16rF #'OS.COM.VARIANT' #'OS.COM.DATE' #'OS.COM.VARIANT_BOOL' #REFGUID #UIntPtr #IntPtr #Int32 #Int32 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 16r35 16r35 16r35 nil nil nil nil nil nil nil nil nil nil nil).
 			'RetClassIndex' -> 16r4.
 			'RetTypeMask' -> 16r3F.
 			'TypeNames'
-				-> #('void' 'lpvoid' 'char8' 'uint8' 'int8' 'uint16' 'int16' 'uint32' 'int32' 'bool' 'handle' 'double' 'lpstr' 'oop' 'float' 'lppvoid' 'hresult' 'lpwstr' 'uint64' 'int64' 'ote' 'bstr' 'variant' 'date' 'varbool' 'guid' 'uintptr' 'intptr' 'ntstatus' 'errno' 'bool8' 'char32' 'char16' nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil).
+				-> #('void' 'lpvoid' 'char' 'uint8' 'int8' 'uint16' 'int16' 'uint32' 'int32' 'bool' 'handle' 'double' 'lpstr' 'oop' 'float' 'lppvoid' 'hresult' 'lpwstr' 'uint64' 'int64' 'ote' 'bstr' 'variant' 'date' 'varbool' 'guid' 'uintptr' 'intptr' 'ntstatus' 'errno' nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil).
 			'TypeSizes'
-				-> #[0 4 4 4 4 4 4 4 4 4 4 8 4 4 4 4 4 4 8 8 4 4 16 8 4 16 4 4 4 4 4 4 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 8 4 4 4 0 0 0 0 0 0 0 0]
+				-> #[0 4 4 4 4 4 4 4 4 4 4 8 4 4 4 4 4 4 8 8 4 4 16 8 4 16 4 4 4 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 8 4 4 4 0 0 0 0 0 0 0 0].
+			'ValueTypes'
+				-> (LookupTable withAll: {
+								'Address' -> 16r1.
+								'bool' -> 16r9.
+								'BOOL' -> 16r9.
+								'bstr' -> 16r15.
+								'BSTR' -> 16r15.
+								'byte' -> 16r3.
+								'BYTE' -> 16r3.
+								'char' -> 16r2.
+								'CLSID' -> 16r19.
+								'date' -> 16r17.
+								'DATE' -> 16r17.
+								'double' -> 16rB.
+								'DOUBLE' -> 16rB.
+								'dword' -> 16r7.
+								'DWORD' -> 16r7.
+								'errno' -> 16r1D.
+								'float' -> 16rE.
+								'FLOAT' -> 16rE.
+								'guid' -> 16r19.
+								'GUID' -> 16r19.
+								'handle' -> 16rA.
+								'Handle' -> 16rA.
+								'hresult' -> 16r10.
+								'HRESULT' -> 16r10.
+								'IID' -> 16r19.
+								'INT_PTR' -> 16r1B.
+								'int16' -> 16r6.
+								'Int16' -> 16r6.
+								'int32' -> 16r8.
+								'Int32' -> 16r8.
+								'int64' -> 16r13.
+								'Int64' -> 16r13.
+								'int8' -> 16r4.
+								'Int8' -> 16r4.
+								'intptr' -> 16r1B.
+								'IntPtr' -> 16r1B.
+								'LARGE_INTEGER' -> 16r13.
+								'lppvoid' -> 16rF.
+								'lpstr' -> 16rC.
+								'lpvoid' -> 16r1.
+								'LPVOID' -> 16r1.
+								'lpwstr' -> 16r11.
+								'LPWSTR' -> 16r11.
+								'ntstatus' -> 16r1C.
+								'oop' -> 16rD.
+								'ote' -> 16r14.
+								'qword' -> 16r12.
+								'QWORD' -> 16r12.
+								'sbyte' -> 16r4.
+								'SBYTE' -> 16r4.
+								'sdword' -> 16r8.
+								'SDWORD' -> 16r8.
+								'sqword' -> 16r13.
+								'SQWORD' -> 16r13.
+								'sword' -> 16r6.
+								'SWORD' -> 16r6.
+								'UINT_PTR' -> 16r1A.
+								'uint16' -> 16r5.
+								'UInt16' -> 16r5.
+								'uint32' -> 16r7.
+								'UInt32' -> 16r7.
+								'UInt32Bytes' -> 16r7.
+								'uint64' -> 16r12.
+								'UInt64' -> 16r12.
+								'UInt64Bytes' -> 16r12.
+								'uint8' -> 16r3.
+								'UInt8' -> 16r3.
+								'uintptr' -> 16r1A.
+								'UIntPtr' -> 16r1A.
+								'UIntPtrBytes' -> 16r1A.
+								'ULARGE_INTEGER' -> 16r12.
+								'varbool' -> 16r18.
+								'variant' -> 16r16.
+								'VARIANT' -> 16r16.
+								'VARIANT_BOOL' -> 16r18.
+								'void' -> 16r0.
+								'word' -> 16r5.
+								'WORD' -> 16r5
+							})
 		}!
 Core.Object
 	variableByteSubclass: #'Core.GUID'

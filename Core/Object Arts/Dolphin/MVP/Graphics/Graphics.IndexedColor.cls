@@ -1,11 +1,32 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Color subclass: #'Graphics.IndexedColor'
+Graphics.Color
+	subclass: #'Graphics.IndexedColor'
 	instanceVariableNames: 'index'
-	classVariableNames: 'InstancesByIndex InstancesByName Names'
+	classVariableNames: 'InstancesByIndex InstancesByName'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'Names'
+				-> (IdentityDictionary withAll: {
+								16r1000000 -> #black.
+								16r1000001 -> #darkRed.
+								16r1000002 -> #darkGreen.
+								16r1000003 -> #brown.
+								16r1000004 -> #darkBlue.
+								16r1000005 -> #darkMagenta.
+								16r1000006 -> #darkCyan.
+								16r1000007 -> #gray.
+								16r100000C -> #darkGray.
+								16r100000D -> #red.
+								16r100000E -> #green.
+								16r100000F -> #yellow.
+								16r1000010 -> #blue.
+								16r1000011 -> #magenta.
+								16r1000012 -> #cyan.
+								16r1000013 -> #white
+							})
+		}!
 Graphics.IndexedColor guid: (Core.GUID fromString: '{87b4c53a-026e-11d3-9fd7-00a0cc3e4a32}')!
 Graphics.IndexedColor comment: '`IndexedColor` instances represent the 16 standard colours that have been defined in Windows since its inception and that are always available in the standard system palette. There are actually 20 indexed colours, but 4 of these do not necessarily map to a fixed colour name.
 
@@ -174,8 +195,8 @@ initialize
 			byIndex at: i put: color.
 			byName at: s put: color.
 			names at: i put: s].
-	self addClassConstant: 'InstancesByName' value: byName.
-	self addClassConstant: 'InstancesByIndex' value: byIndex.
+	self addClassVariable: 'InstancesByName' value: byName.
+	self addClassVariable: 'InstancesByIndex' value: byIndex.
 	self addClassConstant: 'Names' value: names!
 
 named: aString

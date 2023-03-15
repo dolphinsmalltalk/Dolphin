@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTest subclass: #'External.Tests.FunctionDescriptorTest'
+Core.Tests.DolphinTest
+	subclass: #'External.Tests.FunctionDescriptorTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{External.ExtCallArgTypes})
@@ -129,12 +130,12 @@ testStruct4
 	self assert: UInt32 basicByteSize equals: 4.
 	valueTypes := self externalTypes.
 	
-	[FunctionDescriptor.ValueTypes := LookupTable with: 'void' -> 0.
+	[#{FunctionDescriptor.ValueTypes} binding setValue: (LookupTable with: 'void' -> 0).
 	self
 		parseStructArg: UInt32
 		valueType: ExtCallArgSTRUCT4
 		refType: ExtCallArgLP]
-			ensure: [FunctionDescriptor.ValueTypes := valueTypes]!
+			ensure: [#{FunctionDescriptor.ValueTypes} binding setValue: valueTypes]!
 
 testStruct8
 	self assert: FILETIME byteSize equals: 8.
