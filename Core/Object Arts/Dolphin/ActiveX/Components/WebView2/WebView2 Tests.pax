@@ -13,8 +13,12 @@ package setClassNames: #(
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
 	'..\..\..\Base\Tests\Dolphin Base Tests'
+	'..\..\..\MVP\Base\Dolphin Basic Geometry'
 	'..\..\..\MVP\Graphics\Dolphin GDI Graphics'
+	'..\..\..\MVP\Base\Dolphin MVP Base'
 	'..\..\..\MVP\Dolphin MVP Tests'
+	'..\..\..\MVP\Type Converters\Dolphin Type Converters'
+	'..\..\..\MVP\Models\Value\Dolphin Value Models'
 	'..\..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
 	'..\..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitPreload'
 	'WebView2'

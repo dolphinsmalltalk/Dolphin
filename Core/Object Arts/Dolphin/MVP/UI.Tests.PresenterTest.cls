@@ -126,7 +126,6 @@ verifyStlUpgrade: anArray
 verifyUpgradedView: anInteger
 	| view |
 	view := self view.
-Transcript print: anInteger; nextPutAll: ': '; print: presenter; cr.
 	self assert: view isKindOf: self viewClass.
 	self assert: view isOpen!
 

@@ -60,7 +60,7 @@ tearDown
 			navigationCompleted := nil].
 	webViewClosed := presenter isNil or: [presenter view isOpen not].
 	super tearDown.
-	self waitAtMost: 2 seconds while: [webViewClosed not].
+	self waitAtMost: 20 seconds while: [webViewClosed not].
 	presenter removeAllEventsTriggered!
 
 testNavigateToString
@@ -321,11 +321,21 @@ verifyWebViewSettings
 	self assert: settings hiddenPdfToolbarItems equals: hidden.
 	self assert: baseSettings hiddenPdfToolbarItems equals: WebView2.COREWEBVIEW2_PDF_TOOLBAR_ITEMS_NONE!
 
+viewClass
+	^UI.WebView2View!
+
 waitAtMost: aDuration while: aNiladicValuable
 	| start |
+	aNiladicValuable value ifFalse: [^true].
 	start := DateAndTime now.
 	SessionManager inputState
 		loopWhile: [aNiladicValuable value and: [DateAndTime now - start < aDuration]].
+	"Transcript
+		nextPutAll: 'Waited ';
+		display: DateAndTime now - start;
+		nextPutAll: ' for ';
+		print: aNiladicValuable;
+		cr."
 	^aNiladicValuable value not!
 
 waitForNavigationCompleted
@@ -346,7 +356,23 @@ verifyWebViewControllerProperties!helpers!private! !
 verifyWebViewEnvironmentProperties!helpers!private! !
 verifyWebViewProperties!helpers!private! !
 verifyWebViewSettings!helpers!private! !
+viewClass!constants!private! !
 waitAtMost:while:!helpers!private! !
 waitForNavigationCompleted!helpers!private! !
+!
+
+!WebView2.Tests.WebView2ViewTest class methodsFor!
+
+resource_URLPresenter_WebView2_D7
+	"Answer the literal data from which the 'WebView2' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_WebView2)
+	"
+
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.WebView2View) 34 21 nil nil 34 2 8 1140916224 1 416 721990 2 ##(Smalltalk.ValueHolder) nil false 1310726 ##(Smalltalk.EqualitySearchPolicy) nil nil nil 7 nil nil nil 416 nil nil 852486 ##(Smalltalk.NullConverter) nil nil 1 nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 12287 21 690 1179 289 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 76 26 0 0 154 0 0 0] 8 #() 690 193 193 nil 27 )! !
+!WebView2.Tests.WebView2ViewTest class categoriesForMethods!
+resource_URLPresenter_WebView2_D7!public!resources-views! !
 !
 

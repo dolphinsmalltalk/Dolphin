@@ -131,6 +131,5 @@ defineFunctions
 ! !
 !WebView2.ICoreWebView2ProcessInfo class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
-initialize!initializing!public! !
 !
 
