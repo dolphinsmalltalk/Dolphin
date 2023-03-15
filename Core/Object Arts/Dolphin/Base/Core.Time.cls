@@ -186,6 +186,8 @@ storeOn:!printing!public! !
 subtractTime:!arithmetic!public! !
 !
 
+Core.Time methodProtocol: #time attributes: #(#readOnly) selectors: #(#asSeconds #hour12 #hour24 #minute #second)!
+
 !Core.Time class methodsFor!
 
 amMarker

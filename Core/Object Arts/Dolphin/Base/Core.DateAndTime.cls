@@ -463,7 +463,9 @@ timeZoneName!accessing!public! !
 year!accessing!public! !
 !
 
+Core.DateAndTime methodProtocol: #date attributes: #(#readOnly) selectors: #(#asSeconds #dayOfMonth #dayOfWeek #dayOfYear #month #year)!
 Core.DateAndTime methodProtocol: #DateAndTime attributes: #(#ansi #readOnly) selectors: #(#- #~~ #~= #+ #< #<= #= #== #> #>= #asLocal #asUTC #between:and: #class #copy #dayOfMonth #dayOfWeek #dayOfWeekAbbreviation #dayOfWeekName #dayOfYear #doesNotUnderstand: #error: #hash #hour #hour12 #hour24 #identityHash #isKindOf: #isLeapYear #isMemberOf: #isNil #max: #meridianAbbreviation #min: #minute #month #monthAbbreviation #monthName #notNil #offset #offset: #perform: #perform:with: #perform:with:with: #perform:with:with:with: #perform:withArguments: #printOn: #printString #respondsTo: #second #timeZoneAbbreviation #timeZoneName #year #yourself)!
+Core.DateAndTime methodProtocol: #time attributes: #(#readOnly) selectors: #(#asSeconds #hour12 #hour24 #minute #second)!
 
 !Core.DateAndTime class methodsFor!
 

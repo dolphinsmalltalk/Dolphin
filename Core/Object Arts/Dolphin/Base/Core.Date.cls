@@ -390,6 +390,8 @@ yearsSince:!arithmetic!public! !
 yyyymmdd!accessing!public! !
 !
 
+Core.Date methodProtocol: #date attributes: #(#readOnly) selectors: #(#asSeconds #dayOfMonth #dayOfWeek #dayOfYear #month #year)!
+
 !Core.Date class methodsFor!
 
 dateOrderFromFormat: aFormatString

@@ -39,7 +39,9 @@ finishedRun: aTestResult knownSlowTests: aCollection
 	stream flush!
 
 startingCase: aTestCase
+	stream locale printTime: DateAndTime now on: stream format: 'H:mm:ssFFF'.
 	stream
+		space;
 		print: aTestCase;
 		nextPutAll: ' ... ';
 		flush!
