@@ -18,10 +18,12 @@ UI.ValueConvertingControlView subclass: #'UI.WebView2View'
 		'DisablePasswordAutosaveMask' -> 16r800.
 		'DisablePinchZoomMask' -> 16r1000.
 		'DisableScriptMask' -> 16r40.
+		'DisableSSOMask' -> 16r10000.
 		'DisableStatusBarMask' -> 16r80.
 		'DisableSwipeNavigationMask' -> 16r8000.
 		'DisableWebmessageMask' -> 16r100.
-		'DisableZoomControlMask' -> 16r200
+		'DisableZoomControlMask' -> 16r200.
+		'EnableCustomErrorReportingMask' -> 16r20000
 	}!
 UI.WebView2View guid: (Core.GUID fromString: '{3a9f720c-51f6-49f2-8267-f2b3b878129c}')!
 UI.WebView2View comment: '`WebView2View` is a `<valueView>` that wraps the Microsoft Edge WebView2 embeddable browser to display content downloaded from a URL, or provided as a string.'!
@@ -41,7 +43,7 @@ allowContextMenu: aBoolean
 	self webviewSettings ifNotNil: [:settings | settings areDefaultContextMenusEnabled: aBoolean]!
 
 allowExternalDrop
-	"Answer whether exterbally sourced drag & drops should be received."
+	"Answer whether externally sourced drag & drops should be received."
 
 	^settingsFlags noMask: DisableExternalDropsMask!
 
@@ -50,6 +52,15 @@ allowExternalDrop: aBoolean
 
 	settingsFlags := settingsFlags mask: DisableExternalDropsMask set: aBoolean not.
 	self webviewController ifNotNil: [:controller | controller allowExternalDrop: aBoolean]!
+
+allowSSO
+	^settingsFlags noMask: DisableSSOMask!
+
+allowSSO: aBoolean
+	"Set whether single sign-on should be enabled (the default)."
+
+	self allowSSO = aBoolean ifTrue: [^self].
+	self recreateAround: [settingsFlags := settingsFlags mask: DisableSSOMask set: aBoolean not]!
 
 areBrowserAcceleratorKeysEnabled
 	"Answer whether the Edge default accelerator keys should be enabled."
@@ -124,17 +135,21 @@ createWebView
 		thenDo: [:hr :controller | hr < 0 ifFalse: [self onControllerCreated: controller]]	"We could create a composition controller here, but there is no point as we don't have any integration with Direct Composition"!
 
 createWebViewEnvironment
-	| completed userDataFolder |
+	| completed userDataFolder options |
 	completed := (WebView2CompletionHandler
 				completionBlock: [:hr :env | hr < 0 ifFalse: [self onEnvironmentCreated: env]])
 					queryInterface: ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler.
 	userDataFolder := File composePath: (SessionManager current getenv: 'LocalAppData')
 				subPath: (File splitFilenameFrom: (DynamicLinkLibrary moduleFileName: nil)) , '.WebView2'.
+	options := WebView2EnvironmentOptions new.
+	options
+		allowSSO: self allowSSO;
+		isCustomCrashReportingEnabled: self isCustomCrashReportingEnabled.
 	
 	[WebView2Loader default
 		createCoreWebView2EnvironmentWithOptions: nil
 		userDataFolder: userDataFolder
-		environmentOptions: nil
+		environmentOptions: (options queryInterface: ICoreWebView2EnvironmentOptions)
 		environmentCreatedHandler: completed]
 			on: Win32Error
 			do: [:ex | self createUnavailableLink].
@@ -224,6 +239,16 @@ isBuiltInErrorPageEnabled
 isBuiltInErrorPageEnabled: aBoolean
 	settingsFlags := settingsFlags mask: DisableBuiltInErrorPageMask set: aBoolean not.
 	self webviewSettings ifNotNil: [:settings | settings isBuiltInErrorPageEnabled: aBoolean]!
+
+isCustomCrashReportingEnabled
+	^settingsFlags allMask: EnableCustomErrorReportingMask!
+
+isCustomCrashReportingEnabled: aBoolean
+	"Set whether custom error reporting should be enabled (suppressing the default behaviour of uploading crashes to Microsoft)."
+
+	self isCustomCrashReportingEnabled = aBoolean ifTrue: [^self].
+	self
+		recreateAround: [settingsFlags := settingsFlags mask: EnableCustomErrorReportingMask set: aBoolean]!
 
 isGeneralAutofillEnabled
 	^settingsFlags noMask: DisableGeneralAutofillMask!
@@ -557,6 +582,8 @@ allowContextMenu!public!settings! !
 allowContextMenu:!public!settings! !
 allowExternalDrop!public!settings! !
 allowExternalDrop:!public!settings! !
+allowSSO!public!settings! !
+allowSSO:!public!settings! !
 areBrowserAcceleratorKeysEnabled!public!settings! !
 areBrowserAcceleratorKeysEnabled:!public!settings! !
 areDefaultScriptDialogsEnabled!public!settings! !
@@ -586,6 +613,8 @@ initialize!initializing!private! !
 initializeControl!private!realizing/unrealizing! !
 isBuiltInErrorPageEnabled!public!settings! !
 isBuiltInErrorPageEnabled:!public!settings! !
+isCustomCrashReportingEnabled!public!settings! !
+isCustomCrashReportingEnabled:!public!settings! !
 isGeneralAutofillEnabled!public!settings! !
 isGeneralAutofillEnabled:!public!settings! !
 isPasswordAutosaveEnabled!public!settings! !

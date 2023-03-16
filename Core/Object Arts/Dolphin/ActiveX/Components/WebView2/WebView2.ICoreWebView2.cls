@@ -706,7 +706,7 @@ documentTitle
 
 downCast
 	| interfaceClass |
-	interfaceClass := ICoreWebView2_15.
+	interfaceClass := ICoreWebView2_16.
 	
 	[(self queryInterface: interfaceClass ifNone: []) ifNotNil: [:interface | ^interface].
 	(interfaceClass := interfaceClass superclass) == self class]
@@ -1122,6 +1122,23 @@ PostWebMessageAsString: webMessageAsString
 	<virtual stdcall: hresult 34 lpwstr>
 	^self invalidCall: _failureCode!
 
+Print: printSettings handler: handler
+	"Invoke the Print() method of the COM object.
+
+		HRESULT __stdcall Print(
+			[in]ICoreWebView2PrintSettings* printSettings,
+			[in]ICoreWebView2PrintCompletedHandler* handler);"
+
+	^E_NOTIMPL!
+
+print: anICoreWebView2PrintSettings thenDo: aDyadicValuable
+	"Request asynchronous print with the specified settings. On completion invoke the <dyadicValuable> argument passing an HRESULT code as the 1st argument, and an integer from the COREWEBVIEW2_PRINT_STATUS enumeration as the 2nd argument."
+	| handler |
+	handler := (WebView2CompletionHandler completionBlock: aDyadicValuable)
+				queryInterface: ICoreWebView2PrintCompletedHandler.
+	self Print: anICoreWebView2PrintSettings handler: handler.
+	handler free!
+
 printableProperties
 	^#(#source)!
 
@@ -1146,6 +1163,24 @@ printToPdf: resultFilePath settings: printSettings thenDo: aDyadicValuable
 		PrintToPdf: resultFilePath asUtf16String
 		printSettings: printSettings
 		handler: handler.
+	handler free!
+
+PrintToPdfStream: printSettings handler: handler
+	"Invoke the PrintToPdfStream() method of the COM object.
+
+		HRESULT __stdcall PrintToPdfStream(
+			[in]ICoreWebView2PrintSettings* printSettings,
+			[in]ICoreWebView2PrintToPdfStreamCompletedHandler* handler);"
+
+	^E_NOTIMPL!
+
+printToPdfStream: anICoreWebView2PrintSettings thenDo: aDyadicValuable
+	"Request asynchronous print of PDF to a stream with the specified settings. On completion invoke the <dyadicValuable> argument passing an HRESULT code as the 1st argument, and an IStream of the PDF as the 2nd argument."
+
+	| handler |
+	handler := (WebView2CompletionHandler completionBlock: aDyadicValuable)
+				queryInterface: ICoreWebView2PrintToPdfStreamCompletedHandler.
+	self PrintToPdfStream: anICoreWebView2PrintSettings handler: handler.
 	handler free!
 
 profile
@@ -1492,6 +1527,20 @@ SetVirtualHostNameToFolderMapping: hostName folderPath: folderPath accessKind: a
 	"Not implemented by this version of WebView2"
 	^E_NOTIMPL!
 
+showBrowserPrintDialog
+	self ShowPrintUI: COREWEBVIEW2_PRINT_DIALOG_KIND_BROWSER!
+
+ShowPrintUI: printDialogKind
+	"Invoke the ShowPrintUI() method of the COM object.
+
+		HRESULT __stdcall ShowPrintUI(
+			[in]COREWEBVIEW2_PRINT_DIALOG_KIND printDialogKind);"
+
+	^E_NOTIMPL!
+
+showSystemPrintDialog
+	self ShowPrintUI: COREWEBVIEW2_PRINT_DIALOG_KIND_SYSTEM!
+
 source
 	"Answer the <readableString> 'Source' uri."
 
@@ -1654,9 +1703,13 @@ postWebMessageAsJson:!**auto generated**!methods!public! !
 PostWebMessageAsJson:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 postWebMessageAsString:!**auto generated**!methods!public! !
 PostWebMessageAsString:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
+Print:handler:!COM Interfaces-ICoreWebView2_16!public! !
+print:thenDo:!async requests!public! !
 printableProperties!printing!private! !
 PrintToPdf:printSettings:handler:!COM Interfaces-ICoreWebView2_7!private! !
 printToPdf:settings:thenDo:!methods!public! !
+PrintToPdfStream:handler:!COM Interfaces-ICoreWebView2_16!public! !
+printToPdfStream:thenDo:!async requests!public! !
 profile!properties!public! !
 put_DefaultDownloadDialogCornerAlignment:!COM Interfaces-ICoreWebView2_9!private! !
 put_DefaultDownloadDialogMargin:!COM Interfaces-ICoreWebView2_9!private! !
@@ -1703,6 +1756,9 @@ Resume!COM Interfaces-ICoreWebView2_3!private! !
 settings!properties!public! !
 setVirtualHostNameToFolderMapping:folderPath:accessKind:!methods!public! !
 SetVirtualHostNameToFolderMapping:folderPath:accessKind:!COM Interfaces-ICoreWebView2_3!private! !
+showBrowserPrintDialog!methods!public! !
+ShowPrintUI:!COM Interfaces-ICoreWebView2_16!public! !
+showSystemPrintDialog!methods!public! !
 source!properties!public! !
 statusBarText!properties!public! !
 stop!**auto generated**!methods!public! !

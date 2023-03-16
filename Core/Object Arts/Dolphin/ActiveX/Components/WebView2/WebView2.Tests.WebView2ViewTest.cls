@@ -35,7 +35,8 @@ initializePresenter
 			to: self.
 	webViewReady := false.
 	presenter createView: URLPresenter defaultView.
-	self assert: (self waitAtMost: 20 seconds while: [webViewReady not])!
+	self waitAtMost: 20 seconds while: [webViewReady not].
+	self assert: presenter view webview notNull!
 
 onDomContentLoaded: anICoreWebView2DOMContentLoadedEventArgs
 	domContentLoaded := anICoreWebView2DOMContentLoadedEventArgs navigationId!
@@ -95,8 +96,7 @@ testWebBrowserCrashRecovery
 	processFailed := navigationCompleted := domContentLoaded := nil.
 	presenter model value: 'edge://inducebrowsercrashforrealz/'.
 	self assert: self waitForNavigationCompleted.
-	self assert: processFailed
-		equals: COREWEBVIEW2_PROCESS_FAILED_KIND_BROWSER_PROCESS_EXITED.
+	self assert: processFailed equals: COREWEBVIEW2_PROCESS_FAILED_KIND_BROWSER_PROCESS_EXITED.
 	"Unless suppressed by the #processFailed: handler, the webview will be recreated and navigated to the crashes page"
 	self assert: navigationCompleted isKindOf: ICoreWebView2NavigationCompletedEventArgs2.
 	self assert: navigationCompleted isSuccess.
@@ -110,7 +110,7 @@ verifyWebViewControllerProperties
 	baseController := controller queryInterface: ICoreWebView2Controller.
 	"ICoreWebView2Controller: bounds, coreWebView2, isVisible, parentWindow, zoomFactor"
 	self assert: baseController bounds equals: presenter view rectangle.
-	self assert: baseController coreWebView2 isKindOf: ICoreWebView2_15.
+	self assert: baseController coreWebView2 isKindOf: ICoreWebView2_16.
 	self assert: baseController coreWebView2 equals: presenter view webview.
 	self assert: baseController isVisible.
 	baseController isVisible: false.
@@ -177,7 +177,7 @@ verifyWebViewEnvironmentProperties
 verifyWebViewProperties
 	| defaultMargin webview2 baseInterface |
 	webview2 := presenter view webview.
-	self assert: webview2 isKindOf: ICoreWebView2_15.
+	self assert: webview2 isKindOf: ICoreWebView2_16.
 	baseInterface := webview2 queryInterface: ICoreWebView2.
 	"ICoreWebView2: browserProcessId, canGoBack, canGoForward, containsFullScreenElement, documentTitle, settings, source"
 	self assert: baseInterface browserProcessId equals: webview2 browserProcessId.
@@ -196,7 +196,7 @@ verifyWebViewProperties
 	"ICoreWebView2_2: cookieManager, environment"
 	self assert: webview2 cookieManager isKindOf: ICoreWebView2CookieManager.
 	self assertIsNil: baseInterface cookieManager.
-	self assert: webview2 environment isKindOf: ICoreWebView2Environment10.
+	self assert: webview2 environment isKindOf: ICoreWebView2Environment11.
 	self assertIsNil: baseInterface environment.
 	"ICoreWebView2_3: isSuspended"
 	self deny: baseInterface isSuspended.

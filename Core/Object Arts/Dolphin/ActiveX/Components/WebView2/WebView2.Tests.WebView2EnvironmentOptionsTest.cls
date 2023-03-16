@@ -42,6 +42,16 @@ testExclusiveDataFolderAccess
 	self assert: subject exclusiveUserDataFolderAccess.
 !
 
+testIsCustomCrashReportingEnabled
+	| subject interface |
+	subject := WebView2EnvironmentOptions new.
+	interface := subject queryInterface: ICoreWebView2EnvironmentOptions3.
+	self deny: subject isCustomCrashReportingEnabled.
+	self deny: interface isCustomCrashReportingEnabled.
+	interface isCustomCrashReportingEnabled: true.
+	self assert: subject isCustomCrashReportingEnabled.
+	self assert: interface isCustomCrashReportingEnabled!
+
 testLanguage
 	| subject interface |
 	subject := WebView2EnvironmentOptions new.
@@ -58,8 +68,8 @@ testTargetCompatibleBrowserVersion
 	| subject interface version |
 	subject := WebView2EnvironmentOptions new.
 	interface := subject queryInterface: ICoreWebView2EnvironmentOptions.
-	self assertIsNil: subject browserVersion.
-	self assertIsNil: interface targetCompatibleBrowserVersion.
+	self assert: subject browserVersion equals: CORE_WEBVIEW_TARGET_PRODUCT_VERSION.
+	self assert: interface targetCompatibleBrowserVersion equals: CORE_WEBVIEW_TARGET_PRODUCT_VERSION.
 	version := '100.0.1185'.
 	interface targetCompatibleBrowserVersion: version.
 	self assert: subject browserVersion equals: version.
@@ -70,6 +80,7 @@ testTargetCompatibleBrowserVersion
 testAdditionalBrowserArguments!public! !
 testAllowSSO!public! !
 testExclusiveDataFolderAccess!public! !
+testIsCustomCrashReportingEnabled!public! !
 testLanguage!public! !
 testTargetCompatibleBrowserVersion!public! !
 !

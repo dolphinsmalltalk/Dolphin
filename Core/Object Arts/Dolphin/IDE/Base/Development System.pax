@@ -746,6 +746,7 @@ package setMethodNames: #(
 	#(#{UI.View class} #makeResource:inClass:)
 	#(#{UI.View class} #publishedAspectsOfInstances)
 	#(#{UI.View class} #publishedEventsOfInstances)
+	#(#{UI.WebView2View class} #publishedAspectsOfInstances)
 	#(#{UI.WebView2View class} #publishedEventsOfInstances)
 ).
 
@@ -8998,6 +8999,15 @@ publishedEventsOfInstances!events!public! !
 
 !UI.WebView2View class methodsFor!
 
+publishedAspectsOfInstances
+	"Answer a Set of the aspects published by  instances of the receiver"
+
+	| aspects |
+	aspects := super publishedAspectsOfInstances.
+	#(#allowSSO #isCustomCrashReportingEnabled #canNavigateToStrings #isStatusBarEnabled #isScriptEnabled #areBrowserAcceleratorKeysEnabled #allowExternalDrop #allowContextMenu #areDefaultScriptDialogsEnabled #areDevToolsEnabled #areHostObjectsAllowed #isBuiltInErrorPageEnabled #isGeneralAutofillEnabled #isPasswordAutosaveEnabled #isPinchZoomEnabled #isSwipeNavigationEnabled #isWebMessageEnabled #isZoomControlEnabled)
+		do: [:each | aspects add: (Aspect boolean: each)].
+	^aspects!
+
 publishedEventsOfInstances
 	"Answer a Set of Symbols that describe the published events triggered
     	by instances of the receiver."
@@ -9006,6 +9016,7 @@ publishedEventsOfInstances
 		addAll: self webview2Events;
 		yourself! !
 !UI.WebView2View class categoriesForMethods!
+publishedAspectsOfInstances!constants!public! !
 publishedEventsOfInstances!events!public! !
 !
 

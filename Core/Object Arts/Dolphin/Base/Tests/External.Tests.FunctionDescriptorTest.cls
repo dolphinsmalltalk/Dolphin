@@ -56,9 +56,8 @@ testBuiltins
 			source := 'cdecl: void ' , eachKey.
 			desc := self subjectClass fromString: source environment: External.
 			argTypes := desc argumentTypes.
-			self assert: argTypes size equals: 1.
 			self assert: eachValue isInteger.
-			self assert: argTypes first equals: (typeNames at: eachValue + 1).
+			self assert: argTypes single equals: (typeNames at: eachValue + 1).
 			source := source , '*'.
 			eachKey = 'lppvoid'
 				ifTrue: [self should: [self subjectClass fromString: source environment: External] raise: Error]
@@ -67,54 +66,50 @@ testBuiltins
 					"Single indirection"
 					desc := self subjectClass fromString: source environment: Smalltalk.
 					argTypes := desc argumentTypes.
-					self assert: argTypes size equals: 1.
 					refType := self subjectClass referenceTypeFor: eachValue.
 					refType isInteger
-						ifTrue: [self assert: argTypes first equals: (typeNames at: refType + 1)]
-						ifFalse: [argTypes first beginsWith: refType].
+						ifTrue: [self assert: argTypes single equals: (typeNames at: refType + 1)]
+						ifFalse: [argTypes single beginsWith: refType].
 					"Double indirection"
 					source := source , '*'.
-					refType == ExtCallArgLPPVOID
-						ifTrue: [self should: [self subjectClass fromString: source environment: External] raise: Error]
-						ifFalse: 
-							[desc := self subjectClass fromString: source environment: External.
-							argTypes := desc argumentTypes.
-							self assert: argTypes size equals: 1.
-							self assert: argTypes first equals: 'lppvoid']]]!
+					desc := self subjectClass fromString: source environment: External.
+					argTypes := desc argumentTypes.
+					self assert: argTypes single equals: 'lppvoid']]!
 
 testIndirections
 	"Some double indirections"
 
-	| source desc |
 	#('lppvoid' 'lpvoid*' 'void**' 'LPVOID*' 'DWORD**' 'POINTL**' 'IUnknown**' 'BSTR*') do: 
 			[:each |
-			| argTypes |
-			source := 'cdecl: void ' , each.
-			desc := self subjectClass fromString: source environment: Smalltalk.
-			argTypes := desc argumentTypes.
-			self assert: argTypes size equals: 1.
-			self assert: argTypes first equals: 'lppvoid'].
+			| desc |
+			desc := self subjectClass fromString: 'cdecl: void ' , each environment: Smalltalk.
+			self assert: desc argumentTypes single equals: 'lppvoid'].
 
 	"but some cannot be indirected more than once"
 	#('lpvoid' 'LPVOID' 'BSTR') do: 
 			[:each |
-			source := 'cdecl: void ' , each , '**'.
-			self should: [self subjectClass fromString: source environment: Smalltalk] raise: Error].
+			| desc notification |
+			desc := [self subjectClass fromString: 'cdecl: void ' , each , '**' environment: Smalltalk]
+						on: Notification
+						do: 
+							[:ex |
+							notification := ex.
+							ex resume].
+			self assert: desc argumentTypes single equals: 'lppvoid'].
 
 	"lppvoid cannot be further indirected"
-	source := 'cdecl: lppvoid*'.
-	self should: [self subjectClass fromString: source environment: Smalltalk] raise: Error.
+	self should: [self subjectClass fromString: 'cdecl: lppvoid*' environment: Smalltalk] raise: Error.
 
 	"Test all classes with an implied level of indirection correctly parsed as lppvoid for <class>*"
 	(Smalltalk allClasses select: [:each | each isIndirection]) do: 
 			[:each |
-			| argTypes |
+			| source desc |
 			source := 'cdecl: void ' , each name , '*'.
-			argTypes := desc argumentTypes.
-			self assert: argTypes size equals: 1.
-			self assert: argTypes first equals: 'lppvoid'.
+			desc := self subjectClass fromString: source environment: each environment.
+			self assert: desc argumentTypes single equals: 'lppvoid'.
 			source := source , '*'.
-			self should: [self subjectClass fromString: source environment: Smalltalk] raise: Error]!
+			self should: [desc := self subjectClass fromString: source environment: each environment]
+				raise: Notification]!
 
 testSmokeTest
 	"Verify that the compiler is parsing the descriptors in the same way as FunctionDescriptor by

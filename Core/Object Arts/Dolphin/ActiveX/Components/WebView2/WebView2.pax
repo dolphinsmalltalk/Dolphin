@@ -44,6 +44,7 @@ package setClassNames: #(
 	#{WebView2.ICoreWebView2_13}
 	#{WebView2.ICoreWebView2_14}
 	#{WebView2.ICoreWebView2_15}
+	#{WebView2.ICoreWebView2_16}
 	#{WebView2.ICoreWebView2_2}
 	#{WebView2.ICoreWebView2_3}
 	#{WebView2.ICoreWebView2_4}
@@ -96,6 +97,7 @@ package setClassNames: #(
 	#{WebView2.ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler}
 	#{WebView2.ICoreWebView2CursorChangedEventHandler}
 	#{WebView2.ICoreWebView2CustomItemSelectedEventHandler}
+	#{WebView2.ICoreWebView2CustomSchemeRegistration}
 	#{WebView2.ICoreWebView2Deferral}
 	#{WebView2.ICoreWebView2DevToolsProtocolEventReceivedEventArgs}
 	#{WebView2.ICoreWebView2DevToolsProtocolEventReceivedEventArgs2}
@@ -109,6 +111,7 @@ package setClassNames: #(
 	#{WebView2.ICoreWebView2DownloadStartingEventHandler}
 	#{WebView2.ICoreWebView2Environment}
 	#{WebView2.ICoreWebView2Environment10}
+	#{WebView2.ICoreWebView2Environment11}
 	#{WebView2.ICoreWebView2Environment2}
 	#{WebView2.ICoreWebView2Environment3}
 	#{WebView2.ICoreWebView2Environment4}
@@ -119,6 +122,8 @@ package setClassNames: #(
 	#{WebView2.ICoreWebView2Environment9}
 	#{WebView2.ICoreWebView2EnvironmentOptions}
 	#{WebView2.ICoreWebView2EnvironmentOptions2}
+	#{WebView2.ICoreWebView2EnvironmentOptions3}
+	#{WebView2.ICoreWebView2EnvironmentOptions4}
 	#{WebView2.ICoreWebView2EstimatedEndTimeChangedEventHandler}
 	#{WebView2.ICoreWebView2EventArgs}
 	#{WebView2.ICoreWebView2EventHandler}
@@ -171,8 +176,11 @@ package setClassNames: #(
 	#{WebView2.ICoreWebView2PermissionRequestedEventArgs2}
 	#{WebView2.ICoreWebView2PermissionRequestedEventHandler}
 	#{WebView2.ICoreWebView2PointerInfo}
+	#{WebView2.ICoreWebView2PrintCompletedHandler}
 	#{WebView2.ICoreWebView2PrintSettings}
+	#{WebView2.ICoreWebView2PrintSettings2}
 	#{WebView2.ICoreWebView2PrintToPdfCompletedHandler}
+	#{WebView2.ICoreWebView2PrintToPdfStreamCompletedHandler}
 	#{WebView2.ICoreWebView2ProcessFailedEventArgs}
 	#{WebView2.ICoreWebView2ProcessFailedEventArgs2}
 	#{WebView2.ICoreWebView2ProcessFailedEventHandler}
@@ -245,6 +253,7 @@ Kernel.Namespace subclass: #WebView2
 	imports: #(#{OS.COM} #{OS})
 	classInstanceVariableNames: ''
 	classConstants: {
+		'CORE_WEBVIEW_TARGET_PRODUCT_VERSION' -> '110.0.1549.0'.
 		'COREWEBVIEW2_BOUNDS_MODE_USE_RASTERIZATION_SCALE' -> 16r1.
 		'COREWEBVIEW2_BOUNDS_MODE_USE_RAW_PIXELS' -> 16r0.
 		'COREWEBVIEW2_BROWSER_PROCESS_EXIT_KIND_FAILED' -> 16r1.
@@ -369,10 +378,14 @@ Kernel.Namespace subclass: #WebView2
 		'COREWEBVIEW2_PDF_TOOLBAR_ITEMS_SEARCH' -> 16r400.
 		'COREWEBVIEW2_PDF_TOOLBAR_ITEMS_ZOOM_IN' -> 16r8.
 		'COREWEBVIEW2_PDF_TOOLBAR_ITEMS_ZOOM_OUT' -> 16r10.
+		'COREWEBVIEW2_PERMISSION_KIND_AUTOPLAY' -> 16r9.
 		'COREWEBVIEW2_PERMISSION_KIND_CAMERA' -> 16r2.
 		'COREWEBVIEW2_PERMISSION_KIND_CLIPBOARD_READ' -> 16r6.
+		'COREWEBVIEW2_PERMISSION_KIND_FILE_READ_WRITE' -> 16r8.
 		'COREWEBVIEW2_PERMISSION_KIND_GEOLOCATION' -> 16r3.
+		'COREWEBVIEW2_PERMISSION_KIND_LOCAL_FONTS' -> 16rA.
 		'COREWEBVIEW2_PERMISSION_KIND_MICROPHONE' -> 16r1.
+		'COREWEBVIEW2_PERMISSION_KIND_MULTIPLE_AUTOMATIC_DOWNLOADS' -> 16r7.
 		'COREWEBVIEW2_PERMISSION_KIND_NOTIFICATIONS' -> 16r4.
 		'COREWEBVIEW2_PERMISSION_KIND_OTHER_SENSORS' -> 16r5.
 		'COREWEBVIEW2_PERMISSION_KIND_UNKNOWN_PERMISSION' -> 16r0.
@@ -388,8 +401,25 @@ Kernel.Namespace subclass: #WebView2
 		'COREWEBVIEW2_PREFERRED_COLOR_SCHEME_AUTO' -> 16r0.
 		'COREWEBVIEW2_PREFERRED_COLOR_SCHEME_DARK' -> 16r2.
 		'COREWEBVIEW2_PREFERRED_COLOR_SCHEME_LIGHT' -> 16r1.
+		'COREWEBVIEW2_PRINT_COLLATION_COLLATED' -> 16r1.
+		'COREWEBVIEW2_PRINT_COLLATION_DEFAULT' -> 16r0.
+		'COREWEBVIEW2_PRINT_COLLATION_UNCOLLATED' -> 16r2.
+		'COREWEBVIEW2_PRINT_COLOR_MODE_COLOR' -> 16r1.
+		'COREWEBVIEW2_PRINT_COLOR_MODE_DEFAULT' -> 16r0.
+		'COREWEBVIEW2_PRINT_COLOR_MODE_GRAYSCALE' -> 16r2.
+		'COREWEBVIEW2_PRINT_DIALOG_KIND_BROWSER' -> 16r0.
+		'COREWEBVIEW2_PRINT_DIALOG_KIND_SYSTEM' -> 16r1.
+		'COREWEBVIEW2_PRINT_DUPLEX_DEFAULT' -> 16r0.
+		'COREWEBVIEW2_PRINT_DUPLEX_ONE_SIDED' -> 16r1.
+		'COREWEBVIEW2_PRINT_DUPLEX_TWO_SIDED_LONG_EDGE' -> 16r2.
+		'COREWEBVIEW2_PRINT_DUPLEX_TWO_SIDED_SHORT_EDGE' -> 16r3.
+		'COREWEBVIEW2_PRINT_MEDIA_SIZE_CUSTOM' -> 16r1.
+		'COREWEBVIEW2_PRINT_MEDIA_SIZE_DEFAULT' -> 16r0.
 		'COREWEBVIEW2_PRINT_ORIENTATION_LANDSCAPE' -> 16r1.
 		'COREWEBVIEW2_PRINT_ORIENTATION_PORTRAIT' -> 16r0.
+		'COREWEBVIEW2_PRINT_STATUS_OTHER_ERROR' -> 16r2.
+		'COREWEBVIEW2_PRINT_STATUS_PRINTER_UNAVAILABLE' -> 16r1.
+		'COREWEBVIEW2_PRINT_STATUS_SUCCEEDED' -> 16r0.
 		'COREWEBVIEW2_PROCESS_FAILED_KIND_BROWSER_PROCESS_EXITED' -> 16r0.
 		'COREWEBVIEW2_PROCESS_FAILED_KIND_FRAME_RENDER_PROCESS_EXITED' -> 16r3.
 		'COREWEBVIEW2_PROCESS_FAILED_KIND_GPU_PROCESS_EXITED' -> 16r6.
@@ -471,11 +501,15 @@ OS.COM.InterfaceImplementation subclass: #'WebView2.WebView2CompletionHandler'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OS.COM.InterfaceImplementation subclass: #'WebView2.WebView2EnvironmentOptions'
-	instanceVariableNames: 'additionalBrowserArguments allowSSO locale browserVersion exclusiveUserDataFolderAccess'
+	instanceVariableNames: 'additionalBrowserArguments flags locale browserVersion'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'AllowSSOMask' -> 16r1.
+		'CustomCrashReportingMask' -> 16r4.
+		'ExclusiveUserDataFolderAccessMask' -> 16r2
+	}!
 OS.COM.InterfaceImplementation subclass: #'WebView2.WebView2EventSink'
 	instanceVariableNames: 'source interfaceClass interface handler'
 	classVariableNames: ''
@@ -580,6 +614,12 @@ WebView2.ICoreWebView2Interface subclass: #'WebView2.ICoreWebView2CookieManager'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+WebView2.ICoreWebView2Interface subclass: #'WebView2.ICoreWebView2CustomSchemeRegistration'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 WebView2.ICoreWebView2Interface subclass: #'WebView2.ICoreWebView2Deferral'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -611,6 +651,18 @@ WebView2.ICoreWebView2Interface subclass: #'WebView2.ICoreWebView2EnvironmentOpt
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2Interface subclass: #'WebView2.ICoreWebView2EnvironmentOptions2'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2Interface subclass: #'WebView2.ICoreWebView2EnvironmentOptions3'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2Interface subclass: #'WebView2.ICoreWebView2EnvironmentOptions4'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -792,6 +844,12 @@ WebView2.ICoreWebView2_14 subclass: #'WebView2.ICoreWebView2_15'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+WebView2.ICoreWebView2_15 subclass: #'WebView2.ICoreWebView2_16'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 WebView2.ICoreWebView2Certificate subclass: #'WebView2.ICoreWebView2ClientCertificate'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -930,7 +988,19 @@ WebView2.ICoreWebView2CompletedHandler subclass: #'WebView2.ICoreWebView2GetFavi
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+WebView2.ICoreWebView2CompletedHandler subclass: #'WebView2.ICoreWebView2PrintCompletedHandler'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 WebView2.ICoreWebView2CompletedHandler subclass: #'WebView2.ICoreWebView2PrintToPdfCompletedHandler'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2CompletedHandler subclass: #'WebView2.ICoreWebView2PrintToPdfStreamCompletedHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1027,6 +1097,12 @@ WebView2.ICoreWebView2Environment8 subclass: #'WebView2.ICoreWebView2Environment
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2Environment9 subclass: #'WebView2.ICoreWebView2Environment10'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2Environment10 subclass: #'WebView2.ICoreWebView2Environment11'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1518,6 +1594,12 @@ WebView2.ICoreWebView2Frame2 subclass: #'WebView2.ICoreWebView2Frame3'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+WebView2.ICoreWebView2PrintSettings subclass: #'WebView2.ICoreWebView2PrintSettings2'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 WebView2.ICoreWebView2Profile subclass: #'WebView2.ICoreWebView2Profile2'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -1578,10 +1660,12 @@ UI.ValueConvertingControlView subclass: #'UI.WebView2View'
 		'DisablePasswordAutosaveMask' -> 16r800.
 		'DisablePinchZoomMask' -> 16r1000.
 		'DisableScriptMask' -> 16r40.
+		'DisableSSOMask' -> 16r10000.
 		'DisableStatusBarMask' -> 16r80.
 		'DisableSwipeNavigationMask' -> 16r8000.
 		'DisableWebmessageMask' -> 16r100.
-		'DisableZoomControlMask' -> 16r200
+		'DisableZoomControlMask' -> 16r200.
+		'EnableCustomErrorReportingMask' -> 16r20000
 	}!
 
 "End of package definition"!
