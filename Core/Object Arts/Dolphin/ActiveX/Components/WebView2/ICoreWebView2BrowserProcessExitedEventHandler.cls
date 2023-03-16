@@ -57,7 +57,7 @@ defineFunctions
 eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
-	^#browseProcessExited:! !
+	^#processExited:! !
 !ICoreWebView2BrowserProcessExitedEventHandler class categoriesForMethods!
 argsClass!constants!public! !
 defineFunctions!**auto generated**!initializing!public! !

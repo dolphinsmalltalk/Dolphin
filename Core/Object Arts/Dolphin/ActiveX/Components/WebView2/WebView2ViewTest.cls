@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 PresenterTest subclass: #WebView2ViewTest
-	instanceVariableNames: 'domContentLoaded navigationCompleted processFailed webViewReady webViewClosed'
+	instanceVariableNames: 'domContentLoaded navigationCompleted processFailed webViewReady processExitedSink webviewEnvironment processExited'
 	classVariableNames: ''
 	poolDictionaries: 'WebView2Constants'
 	classInstanceVariableNames: ''!
@@ -27,14 +27,20 @@ initializePresenter
 			to: self;
 		when: #webviewAvailable
 			send: #onWebViewAvailable
-			to: self;
-		when: #webviewClosed
-			send: #onWebViewClosed
 			to: self.
 	webViewReady := false.
 	presenter createView: URLPresenter defaultView.
+	"We need to wait until the web view is ready before we commence any testing"
 	self waitAtMost: 20 seconds while: [webViewReady not].
-	self assert: presenter view webview notNull!
+	self assert: presenter view webview notNull.
+	webviewEnvironment := presenter view webviewEnvironment.
+	self assert: webviewEnvironment notNull.
+	"Set up our own event sink to be notified of the browser process shutting down. There is no point observing the presenter for normal process exit, because the events are torn down before that happens, so we have to register our own event sink. This is only necessary so that we can ensure the browser is truly shut down at the end of one test case before we fire it up again for the next."
+	processExitedSink := WebView2EventSink
+				source: presenter view webviewEnvironment
+				interfaceClass: ICoreWebView2BrowserProcessExitedEventHandler
+				handler: [:source :args | args isNormalExit ifTrue: [processExited := args browserProcessId]].
+	processExitedSink register!
 
 onDomContentLoaded: anICoreWebView2DOMContentLoadedEventArgs
 	domContentLoaded := anICoreWebView2DOMContentLoadedEventArgs navigationId!
@@ -49,17 +55,22 @@ onProcessFailed: anICoreWebView2ProcessFailedEventArgs2
 onWebViewAvailable
 	webViewReady := true!
 
-onWebViewClosed
-	webViewClosed := true!
-
 tearDown
+	presenter isNil ifTrue: [^self].
 	navigationCompleted
 		ifNotNil: 
 			[navigationCompleted free.
 			navigationCompleted := nil].
-	webViewClosed := presenter notNil and: [presenter view isOpen].
-	super tearDown.
-	self waitAtMost: 2 seconds while: [webViewClosed not].
+	self destroyPresenter.
+	processExitedSink
+		ifNotNil: 
+			[self waitAtMost: 20 seconds while: [processExited isNil].
+			processExitedSink free.
+			processExitedSink := nil].
+	webviewEnvironment notNull
+		ifTrue: 
+			[webviewEnvironment free.
+			webviewEnvironment := nil].
 	presenter removeAllEventsTriggered!
 
 testNavigateToString
@@ -335,7 +346,6 @@ onDomContentLoaded:!event handling!private! !
 onNavigationCompleted:!event handling!private! !
 onProcessFailed:!event handling!private! !
 onWebViewAvailable!event handling!private! !
-onWebViewClosed!event handling!private! !
 tearDown!public!Running! !
 testNavigateToString!public!unit tests! !
 testProperties!public!unit tests! !

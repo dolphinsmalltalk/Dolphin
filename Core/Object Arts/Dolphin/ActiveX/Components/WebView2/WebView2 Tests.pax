@@ -9,6 +9,10 @@ package classNames
 	add: #WebView2ViewTest;
 	yourself.
 
+package methodNames
+	add: 'WebView2View class' -> #correspondingTestCase;
+	yourself.
+
 package binaryGlobalNames: (Set new
 	yourself).
 
@@ -32,15 +36,22 @@ DolphinTest subclass: #WebView2EnvironmentOptionsTest
 	poolDictionaries: 'WebView2Constants'
 	classInstanceVariableNames: ''!
 PresenterTest subclass: #WebView2ViewTest
-	instanceVariableNames: 'domContentLoaded navigationCompleted processFailed webViewReady webViewClosed'
+	instanceVariableNames: 'domContentLoaded navigationCompleted processFailed webViewReady processExitedSink webviewEnvironment processExited'
 	classVariableNames: ''
 	poolDictionaries: 'WebView2Constants'
 	classInstanceVariableNames: ''!
 
 "Global Aliases"!
 
-
 "Loose Methods"!
+
+!WebView2View class methodsFor!
+
+correspondingTestCase
+	^WebView2ViewTest! !
+!WebView2View class categoriesForMethods!
+correspondingTestCase!public! !
+!
 
 "End of package definition"!
 

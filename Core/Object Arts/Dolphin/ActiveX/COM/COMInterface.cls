@@ -248,9 +248,9 @@ queryInterface: anInterfaceClass ifNone: exceptionHandler
 	| pUnk hresult |
 	pUnk := anInterfaceClass newPointer.
 	hresult := self QueryInterface: anInterfaceClass iid ppvObject: pUnk.
-	^hresult < 0 
-		ifTrue: [
-			(hresult = E_NOINTERFACE or: [hresult = -2147023179])
+	^hresult < 0
+		ifTrue: 
+			[(hresult = E_NOINTERFACE or: [hresult = ##((HRESULT win32Error: 1717) asInteger)])
 				ifTrue: [exceptionHandler value]
 				ifFalse: [self hresultError: hresult]]
 		ifFalse: [pUnk]!
