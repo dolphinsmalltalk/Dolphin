@@ -282,15 +282,25 @@ displayOn: aWriteStream
 		ifFalse: [aWriteStream nextPutAll: self browserVersionString]!
 
 downCast
-	"Private - Answer the most recent environment interface available on the underlying COM object. There are already 10 versions of the ICoreWebView2Environment; answer the latest available. A little more forethought in the design so as to not have to define 10 versions of a public interface in a year or two might be nice!!"
+	"Private - Answer the most recent environment interface available on the underlying COM object. There are already 10 versions of the ICoreWebView2Environment; answer the latest available. A little more forethought in the design so as to not have to define >10 versions of a public interface in a year or two might be nice!!"
 
 	| interfaceClass |
-	interfaceClass := ICoreWebView2Environment10.
+	interfaceClass := ICoreWebView2Environment11.
 	
 	[(self queryInterface: interfaceClass ifNone: []) ifNotNil: [:interface | ^interface].
 	(interfaceClass := interfaceClass superclass) == self class]
 			whileFalse.
 	^self!
+
+failureReportFolderPath
+	"Answer the <lpwstr> value of the 'FailureReportFolderPath' property of the receiver."
+
+	| ptr answer |
+	ptr := TaskMemory new.
+	self get_FailureReportFolderPath: ptr.
+	answer := Utf16String fromAddress: ptr.
+	ptr free.
+	^answer!
 
 get_BrowserVersionString: versionInfo
 	"Private - Get the value of the 'BrowserVersionString' property of the receiver.
@@ -300,6 +310,14 @@ get_BrowserVersionString: versionInfo
 
 	<virtual stdcall: hresult 6 lpwstr*>
 	^self invalidCall: _failureCode!
+
+get_FailureReportFolderPath: value
+	"Private - Get the value of the 'FailureReportFolderPath' property of the receiver.
+
+		HRESULT __stdcall FailureReportFolderPath(
+			[out, retval]LPWSTR* value);"
+
+	^E_NOTIMPL!
 
 get_UserDataFolder: value
 	"Private - Get the value of the 'UserDataFolder' property of the receiver.
@@ -343,7 +361,7 @@ printSettings
 	| answer |
 	answer := ICoreWebView2PrintSettings newPointer.
 	self CreatePrintSettings: answer.
-	^answer asObject!
+	^answer downCast!
 
 processInfos
 	"Answer the <ICoreWebView2ProcessInfoCollection> result of invoking the GetProcessInfos() method of the COM object."
@@ -407,7 +425,9 @@ createWebResourceResponse:statusCode:reasonPhrase:headers:!**auto generated**!me
 CreateWebResourceResponse:statusCode:reasonPhrase:headers:response:!**auto generated**!COM Interfaces-ICoreWebView2Environment!private! !
 displayOn:!displaying!public! !
 downCast!properties!public! !
+failureReportFolderPath!properties!public! !
 get_BrowserVersionString:!**auto generated**!COM Interfaces-ICoreWebView2Environment!private! !
+get_FailureReportFolderPath:!**auto generated**!COM Interfaces-ICoreWebView2Environment11!private! !
 get_UserDataFolder:!COM Interfaces-ICoreWebView2Environment7!private!properties! !
 GetProcessInfos:!COM Interfaces-ICoreWebView2Environment8!methods!private! !
 getProviderForHwnd:!methods!public! !

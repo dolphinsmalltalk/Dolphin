@@ -146,7 +146,16 @@ testFold
 		do: 
 			[:i |
 			result := (1 to: i) fold: [:product :each | product * each].
-			self assert: result equals: i factorial]! !
+			self assert: result equals: i factorial]!
+
+testSingle
+	| subject |
+	subject := self newCollection: #().
+	self should: [subject single] raise: Error.
+	subject := self newCollection: #($a).
+	self assert: subject single equals: (self assimilate: $a).
+	subject := self newCollection: #($a $b).
+	self should: [subject single] raise: Error! !
 !DolphinCollectionTest categoriesForMethods!
 assimilate:!private!unit tests! !
 assimilateElements:!helpers!private! !
@@ -159,5 +168,6 @@ testAnySatisfy!public!unit tests! !
 testCount!public!unit tests! !
 testDistinct!public!unit tests! !
 testFold!public!unit tests! !
+testSingle!public!unit tests! !
 !
 

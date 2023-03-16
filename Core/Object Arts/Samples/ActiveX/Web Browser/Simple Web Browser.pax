@@ -72,7 +72,7 @@ package!
 Shell subclass: #WebBrowserShell
 	instanceVariableNames: 'address browser statusModel zoomModel flags'
 	classVariableNames: 'ImagesBlockedMask LogEventsMask'
-	poolDictionaries: ''
+	poolDictionaries: 'WebView2Constants'
 	classInstanceVariableNames: ''!
 RuntimeSessionManager subclass: #WebBrowserSessionManager
 	instanceVariableNames: ''

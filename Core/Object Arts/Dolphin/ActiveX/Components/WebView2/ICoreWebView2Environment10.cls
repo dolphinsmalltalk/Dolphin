@@ -3,7 +3,7 @@
 ICoreWebView2Environment9 subclass: #ICoreWebView2Environment10
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2Environment10 guid: (IID fromString: '{ee0eb9df-6f12-46ce-b53f-3f47b9c928e0}')!
 ICoreWebView2Environment10 comment: '`ICoreWebView2Environment10` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Environment10'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.

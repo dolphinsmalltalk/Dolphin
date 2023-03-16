@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 DolphinTest subclass: #ExternalDescriptorTest
-	instanceVariableNames: ''
+	instanceVariableNames: 'savedShared'
 	classVariableNames: ''
 	poolDictionaries: 'ExtCallArgTypes'
 	classInstanceVariableNames: ''!
@@ -48,19 +48,28 @@ parseStructArg: structClass valueType: typeCodeOrName refType: ptrCodeOrName
 			self assert: eachType identicalTo: type.
 			self assert: eachClass identicalTo: structClass]!
 
+setUp
+	savedShared := ExternalDescriptor.Shared.
+	ExternalDescriptor.Shared := nil!
+
+subjectClass
+	^ExternalDescriptor!
+
+tearDown
+	ExternalDescriptor.Shared := savedShared!
+
 testBuiltins
 	| typeTable typeNames |
 	typeTable := self externalTypes.
-	typeNames := ExternalDescriptor classPool at: 'TypeNames'.
-	(typeTable reject: [:each | ExternalDescriptor typeHasArgument: each]) keysAndValuesDo: 
+	typeNames := ExternalDescriptor.TypeNames.
+	(typeTable reject: [:each | self subjectClass typeHasArgument: each]) keysAndValuesDo: 
 			[:eachKey :eachValue |
 			| argTypes source desc |
 			source := 'cdecl: void ' , eachKey.
 			desc := self newDescriptor: source.
 			argTypes := desc argumentTypes.
-			self assert: argTypes size equals: 1.
 			self assert: eachValue isInteger.
-			self assert: argTypes first equals: (typeNames at: eachValue + 1).
+			self assert: argTypes single equals: (typeNames at: eachValue + 1).
 			source := source , '*'.
 			eachKey = 'lppvoid'
 				ifTrue: [self should: [self newDescriptor: source] raise: Error]
@@ -69,58 +78,49 @@ testBuiltins
 					"Single indirection"
 					desc := self newDescriptor: source.
 					argTypes := desc argumentTypes.
-					self assert: argTypes size equals: 1.
-					refType := ExternalDescriptor referenceTypeFor: eachValue.
+					refType := self subjectClass referenceTypeFor: eachValue.
 					refType isInteger
-						ifTrue: [self assert: argTypes first equals: (typeNames at: refType + 1)]
-						ifFalse: [argTypes first beginsWith: refType].
+						ifTrue: [self assert: argTypes single equals: (typeNames at: refType + 1)]
+						ifFalse: [argTypes single beginsWith: refType].
 					"Double indirection"
 					source := source , '*'.
-					refType == ExtCallArgLPPVOID
-						ifTrue: [self should: [self newDescriptor: source] raise: Error]
-						ifFalse: 
-							[desc := self newDescriptor: source.
-							argTypes := desc argumentTypes.
-							self assert: argTypes size equals: 1.
-							self assert: argTypes first equals: 'lppvoid']]]!
+					desc := self subjectClass fromString: source.
+					argTypes := desc argumentTypes.
+					self assert: argTypes single equals: 'lppvoid']]!
 
 testIndirections
 	"Some double indirections"
 
-	| source desc |
 	#('lppvoid' 'lpvoid*' 'void**' 'LPVOID*' 'DWORD**' 'POINTL**' 'IUnknown**' 'BSTR*') do: 
 			[:each |
-			| argTypes |
-			source := 'cdecl: void ' , each.
-			desc := self newDescriptor: source.
-			argTypes := desc argumentTypes.
-			self assert: argTypes size equals: 1.
-			self assert: argTypes first equals: 'lppvoid'].
+			| desc |
+			desc := self subjectClass fromString: 'cdecl: void ' , each.
+			self assert: desc argumentTypes single equals: 'lppvoid'].
 
 	"but some cannot be indirected more than once"
 	#('lpvoid' 'LPVOID' 'BSTR') do: 
 			[:each |
-			source := 'cdecl: void ' , each , '**'.
-			self should: [self newDescriptor: source] raise: Error].
+			| desc |
+			desc := [self subjectClass fromString: 'cdecl: void ' , each , '**'] on: Notification
+						do: [:ex | ex resume].
+			self assert: desc argumentTypes single equals: 'lppvoid'].
 
 	"lppvoid cannot be further indirected"
-	source := 'cdecl: lppvoid*'.
-	self should: [self newDescriptor: source] raise: Error.
+	self should: [self subjectClass fromString: 'cdecl: lppvoid*'] raise: Error.
 
 	"Test all classes with an implied level of indirection correctly parsed as lppvoid for <class>*"
 	(Smalltalk allClasses select: [:each | each isIndirection]) do: 
 			[:each |
-			| argTypes |
+			| source desc |
 			source := 'cdecl: void ' , each name , '*'.
-			argTypes := desc argumentTypes.
-			self assert: argTypes size equals: 1.
-			self assert: argTypes first equals: 'lppvoid'.
+			desc := self subjectClass fromString: source.
+			self assert: desc argumentTypes single equals: 'lppvoid'.
 			source := source , '*'.
-			self should: [self newDescriptor: source] raise: Error]!
+			self should: [desc := self subjectClass fromString: source] raise: Notification]!
 
 testSharedRegister
-	self deny: ExternalDescriptor.Shared hasWeakKeys.
-	self assert: ExternalDescriptor.Shared hasWeakValues!
+	self deny: savedShared hasWeakKeys.
+	self assert: savedShared hasWeakValues!
 
 testSmokeTest
 	"Verify that the compiler is parsing the descriptors in the same way as ExternalDescriptor by
@@ -162,6 +162,9 @@ testStructs
 externalTypes!accessing!private! !
 newDescriptor:!private!unit tests! !
 parseStructArg:valueType:refType:!private!unit tests! !
+setUp!public! !
+subjectClass!public!unit tests! !
+tearDown!public! !
 testBuiltins!public!unit tests! !
 testIndirections!public!unit tests! !
 testSharedRegister!public!unit tests! !

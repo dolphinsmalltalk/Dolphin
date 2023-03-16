@@ -532,6 +532,13 @@ select: discriminator thenCollect: transformer
 
 	^(self select: discriminator) collect: transformer!
 
+single
+	"Answer the <Object> which is the only element of the receiver. 
+	Raise an exception if the receiver does not contain exactly one element."
+
+	self size == 1 ifFalse: [self error: 'Collection is not of a single element'].
+	^self anyOne!
+
 size
 	"Answer the <integer> number of elements in the receiver.
 	Implementation Note: This implementation is rather inefficient, 
@@ -655,6 +662,7 @@ removeAll:!public!removing! !
 removeAllSuchThat:!public!removing! !
 select:!enumerating!public! !
 select:thenCollect:!enumerating!public! !
+single!accessing!public! !
 size!accessing!public! !
 split:!public!tokenizing! !
 storeOn:!printing!public! !

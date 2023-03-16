@@ -207,7 +207,7 @@ get_HiddenPdfToolbarItems: hidden_pdf_toolbar_items
 		HRESULT __stdcall HiddenPdfToolbarItems(
 			[out, retval]COREWEBVIEW2_PDF_TOOLBAR_ITEMS* hidden_pdf_toolbar_items);"
 
-	hidden_pdf_toolbar_items value: WebView2Constants.COREWEBVIEW2_PDF_TOOLBAR_ITEMS_NONE.
+	hidden_pdf_toolbar_items value: COREWEBVIEW2_PDF_TOOLBAR_ITEMS_NONE.
 	^S_OK!
 
 get_IsBuiltInErrorPageEnabled: enabled

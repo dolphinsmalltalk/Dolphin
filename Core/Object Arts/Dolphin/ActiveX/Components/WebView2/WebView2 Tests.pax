@@ -29,12 +29,12 @@ package!
 DolphinTest subclass: #WebView2EnvironmentOptionsTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	poolDictionaries: 'WebView2Constants'
 	classInstanceVariableNames: ''!
 PresenterTest subclass: #WebView2ViewTest
 	instanceVariableNames: 'domContentLoaded navigationCompleted processFailed webViewReady webViewClosed'
 	classVariableNames: ''
-	poolDictionaries: ''
+	poolDictionaries: 'WebView2Constants'
 	classInstanceVariableNames: ''!
 
 "Global Aliases"!

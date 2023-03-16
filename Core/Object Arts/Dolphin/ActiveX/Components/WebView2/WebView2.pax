@@ -41,6 +41,7 @@ package classNames
 	add: #ICoreWebView2_13;
 	add: #ICoreWebView2_14;
 	add: #ICoreWebView2_15;
+	add: #ICoreWebView2_16;
 	add: #ICoreWebView2_2;
 	add: #ICoreWebView2_3;
 	add: #ICoreWebView2_4;
@@ -93,6 +94,7 @@ package classNames
 	add: #ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler;
 	add: #ICoreWebView2CursorChangedEventHandler;
 	add: #ICoreWebView2CustomItemSelectedEventHandler;
+	add: #ICoreWebView2CustomSchemeRegistration;
 	add: #ICoreWebView2Deferral;
 	add: #ICoreWebView2DevToolsProtocolEventReceivedEventArgs;
 	add: #ICoreWebView2DevToolsProtocolEventReceivedEventArgs2;
@@ -106,6 +108,7 @@ package classNames
 	add: #ICoreWebView2DownloadStartingEventHandler;
 	add: #ICoreWebView2Environment;
 	add: #ICoreWebView2Environment10;
+	add: #ICoreWebView2Environment11;
 	add: #ICoreWebView2Environment2;
 	add: #ICoreWebView2Environment3;
 	add: #ICoreWebView2Environment4;
@@ -116,6 +119,8 @@ package classNames
 	add: #ICoreWebView2Environment9;
 	add: #ICoreWebView2EnvironmentOptions;
 	add: #ICoreWebView2EnvironmentOptions2;
+	add: #ICoreWebView2EnvironmentOptions3;
+	add: #ICoreWebView2EnvironmentOptions4;
 	add: #ICoreWebView2EstimatedEndTimeChangedEventHandler;
 	add: #ICoreWebView2EventArgs;
 	add: #ICoreWebView2EventHandler;
@@ -168,8 +173,11 @@ package classNames
 	add: #ICoreWebView2PermissionRequestedEventArgs2;
 	add: #ICoreWebView2PermissionRequestedEventHandler;
 	add: #ICoreWebView2PointerInfo;
+	add: #ICoreWebView2PrintCompletedHandler;
 	add: #ICoreWebView2PrintSettings;
+	add: #ICoreWebView2PrintSettings2;
 	add: #ICoreWebView2PrintToPdfCompletedHandler;
+	add: #ICoreWebView2PrintToPdfStreamCompletedHandler;
 	add: #ICoreWebView2ProcessFailedEventArgs;
 	add: #ICoreWebView2ProcessFailedEventArgs2;
 	add: #ICoreWebView2ProcessFailedEventHandler;
@@ -252,9 +260,9 @@ COMInterfaceImp subclass: #WebView2CompletionHandler
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 COMInterfaceImp subclass: #WebView2EnvironmentOptions
-	instanceVariableNames: 'additionalBrowserArguments allowSSO locale browserVersion exclusiveUserDataFolderAccess'
-	classVariableNames: ''
-	poolDictionaries: ''
+	instanceVariableNames: 'additionalBrowserArguments flags locale browserVersion'
+	classVariableNames: 'AllowSSOMask CustomCrashReportingMask ExclusiveUserDataFolderAccessMask'
+	poolDictionaries: 'WebView2Constants'
 	classInstanceVariableNames: ''!
 COMInterfaceImp subclass: #WebView2EventSink
 	instanceVariableNames: 'source interfaceClass interface handler'
@@ -274,12 +282,12 @@ ExternalStructure subclass: #COREWEBVIEW2_PHYSICAL_KEY_STATUS
 IUnknown subclass: #ICoreWebView2Interface
 	instanceVariableNames: ''
 	classVariableNames: 'ResourceLib'
-	poolDictionaries: ''
+	poolDictionaries: 'WebView2Constants'
 	classInstanceVariableNames: ''!
 ICoreWebView2Interface subclass: #ICoreWebView2
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	poolDictionaries: 'WebView2Constants'
 	classInstanceVariableNames: ''!
 ICoreWebView2Interface subclass: #ICoreWebView2BasicAuthenticationResponse
 	instanceVariableNames: ''
@@ -336,6 +344,11 @@ ICoreWebView2Interface subclass: #ICoreWebView2CookieManager
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+ICoreWebView2Interface subclass: #ICoreWebView2CustomSchemeRegistration
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 ICoreWebView2Interface subclass: #ICoreWebView2Deferral
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -362,6 +375,16 @@ ICoreWebView2Interface subclass: #ICoreWebView2EnvironmentOptions
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2Interface subclass: #ICoreWebView2EnvironmentOptions2
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2Interface subclass: #ICoreWebView2EnvironmentOptions3
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2Interface subclass: #ICoreWebView2EnvironmentOptions4
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -414,7 +437,7 @@ ICoreWebView2Interface subclass: #ICoreWebView2ProcessInfo
 ICoreWebView2Interface subclass: #ICoreWebView2Profile
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2Interface subclass: #ICoreWebView2Settings
 	instanceVariableNames: ''
@@ -444,72 +467,77 @@ ICoreWebView2Interface subclass: #ICoreWebView2WindowFeatures
 ICoreWebView2 subclass: #ICoreWebView2_2
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2_2 subclass: #ICoreWebView2_3
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2_3 subclass: #ICoreWebView2_4
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2_4 subclass: #ICoreWebView2_5
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2_5 subclass: #ICoreWebView2_6
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2_6 subclass: #ICoreWebView2_7
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2_7 subclass: #ICoreWebView2_8
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2_8 subclass: #ICoreWebView2_9
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2_9 subclass: #ICoreWebView2_10
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2_10 subclass: #ICoreWebView2_11
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2_11 subclass: #ICoreWebView2_12
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2_12 subclass: #ICoreWebView2_13
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2_13 subclass: #ICoreWebView2_14
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2_14 subclass: #ICoreWebView2_15
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2_15 subclass: #ICoreWebView2_16
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2Certificate subclass: #ICoreWebView2ClientCertificate
 	instanceVariableNames: ''
@@ -626,7 +654,17 @@ ICoreWebView2CompletedHandler subclass: #ICoreWebView2GetFaviconCompletedHandler
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+ICoreWebView2CompletedHandler subclass: #ICoreWebView2PrintCompletedHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 ICoreWebView2CompletedHandler subclass: #ICoreWebView2PrintToPdfCompletedHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2CompletedHandler subclass: #ICoreWebView2PrintToPdfStreamCompletedHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -644,72 +682,77 @@ ICoreWebView2CompletedHandler subclass: #ICoreWebView2WebResourceResponseViewGet
 ICoreWebView2CompositionController subclass: #ICoreWebView2CompositionController2
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2CompositionController2 subclass: #ICoreWebView2CompositionController3
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2Controller subclass: #ICoreWebView2Controller2
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2Controller2 subclass: #ICoreWebView2Controller3
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2Controller3 subclass: #ICoreWebView2Controller4
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2Environment subclass: #ICoreWebView2Environment2
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2Environment2 subclass: #ICoreWebView2Environment3
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2Environment3 subclass: #ICoreWebView2Environment4
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2Environment4 subclass: #ICoreWebView2Environment5
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2Environment5 subclass: #ICoreWebView2Environment6
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2Environment6 subclass: #ICoreWebView2Environment7
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2Environment7 subclass: #ICoreWebView2Environment8
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2Environment8 subclass: #ICoreWebView2Environment9
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2Environment9 subclass: #ICoreWebView2Environment10
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2Environment10 subclass: #ICoreWebView2Environment11
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2EventArgs subclass: #ICoreWebView2AcceleratorKeyPressedEventArgs
 	instanceVariableNames: ''
@@ -824,27 +867,27 @@ ICoreWebView2EventArgs subclass: #ICoreWebView2WebResourceResponseReceivedEventA
 ICoreWebView2DevToolsProtocolEventReceivedEventArgs subclass: #ICoreWebView2DevToolsProtocolEventReceivedEventArgs2
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2NavigationCompletedEventArgs subclass: #ICoreWebView2NavigationCompletedEventArgs2
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2NavigationStartingEventArgs subclass: #ICoreWebView2NavigationStartingEventArgs2
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2NewWindowRequestedEventArgs subclass: #ICoreWebView2NewWindowRequestedEventArgs2
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2PermissionRequestedEventArgs subclass: #ICoreWebView2PermissionRequestedEventArgs2
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2ProcessFailedEventArgs subclass: #ICoreWebView2ProcessFailedEventArgs2
 	instanceVariableNames: ''
@@ -854,7 +897,7 @@ ICoreWebView2ProcessFailedEventArgs subclass: #ICoreWebView2ProcessFailedEventAr
 ICoreWebView2EventHandler subclass: #ICoreWebView2AcceleratorKeyPressedEventHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2EventHandler subclass: #ICoreWebView2BasicAuthenticationRequestedEventHandler
 	instanceVariableNames: ''
@@ -944,7 +987,7 @@ ICoreWebView2EventHandler subclass: #ICoreWebView2FrameContentLoadingEventHandle
 ICoreWebView2EventHandler subclass: #ICoreWebView2FrameCreatedEventHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2EventHandler subclass: #ICoreWebView2FrameDestroyedEventHandler
 	instanceVariableNames: ''
@@ -964,12 +1007,12 @@ ICoreWebView2EventHandler subclass: #ICoreWebView2FrameNameChangedEventHandler
 ICoreWebView2EventHandler subclass: #ICoreWebView2FrameNavigationCompletedEventHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2EventHandler subclass: #ICoreWebView2FrameNavigationStartingEventHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2EventHandler subclass: #ICoreWebView2FramePermissionRequestedEventHandler
 	instanceVariableNames: ''
@@ -1009,12 +1052,12 @@ ICoreWebView2EventHandler subclass: #ICoreWebView2MoveFocusRequestedEventHandler
 ICoreWebView2EventHandler subclass: #ICoreWebView2NavigationCompletedEventHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2EventHandler subclass: #ICoreWebView2NavigationStartingEventHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2EventHandler subclass: #ICoreWebView2NewBrowserVersionAvailableEventHandler
 	instanceVariableNames: ''
@@ -1069,7 +1112,7 @@ ICoreWebView2EventHandler subclass: #ICoreWebView2StateChangedEventHandler
 ICoreWebView2EventHandler subclass: #ICoreWebView2StatusBarTextChangedEventHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2EventHandler subclass: #ICoreWebView2WebMessageReceivedEventHandler
 	instanceVariableNames: ''
@@ -1109,47 +1152,52 @@ ICoreWebView2FocusChangedEventHandler subclass: #ICoreWebView2FocusLostEventHand
 ICoreWebView2Frame subclass: #ICoreWebView2Frame2
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2Frame2 subclass: #ICoreWebView2Frame3
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2PrintSettings subclass: #ICoreWebView2PrintSettings2
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2Profile subclass: #ICoreWebView2Profile2
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2Settings subclass: #ICoreWebView2Settings2
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2Settings2 subclass: #ICoreWebView2Settings3
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2Settings3 subclass: #ICoreWebView2Settings4
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2Settings4 subclass: #ICoreWebView2Settings5
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2Settings5 subclass: #ICoreWebView2Settings6
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2Settings6 subclass: #ICoreWebView2Settings7
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ValuePresenter subclass: #URLPresenter
 	instanceVariableNames: ''
@@ -1158,7 +1206,7 @@ ValuePresenter subclass: #URLPresenter
 	classInstanceVariableNames: ''!
 ValueConvertingControlView subclass: #WebView2View
 	instanceVariableNames: 'settingsFlags unavailableLink webviewEnvironment webviewController webview eventHandlers'
-	classVariableNames: 'CanNavigateToStrings DisableBrowserAcceleratorKeysMask DisableBuiltInErrorPageMask DisableDefaultContextMenuMask DisableDefaultScriptDialogsMask DisableDevToolsMask DisableExternalDropsMask DisableGeneralAutofillMask DisableHostObjectsMask DisablePasswordAutosaveMask DisablePinchZoomMask DisableScriptMask DisableStatusBarMask DisableSwipeNavigationMask DisableWebmessageMask DisableZoomControlMask'
+	classVariableNames: 'CanNavigateToStrings DisableBrowserAcceleratorKeysMask DisableBuiltInErrorPageMask DisableDefaultContextMenuMask DisableDefaultScriptDialogsMask DisableDevToolsMask DisableExternalDropsMask DisableGeneralAutofillMask DisableHostObjectsMask DisablePasswordAutosaveMask DisablePinchZoomMask DisableScriptMask DisableSSOMask DisableStatusBarMask DisableSwipeNavigationMask DisableWebmessageMask DisableZoomControlMask EnableCustomErrorReportingMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 

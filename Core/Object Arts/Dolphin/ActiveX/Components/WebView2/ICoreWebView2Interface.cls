@@ -3,7 +3,7 @@
 IUnknown subclass: #ICoreWebView2Interface
 	instanceVariableNames: ''
 	classVariableNames: 'ResourceLib'
-	poolDictionaries: ''
+	poolDictionaries: 'WebView2Constants'
 	classInstanceVariableNames: ''!
 ICoreWebView2Interface guid: (IID fromString: '{9732fb2d-8abb-46fb-8acd-65e3cadfeecf}')!
 ICoreWebView2Interface isAbstract: true!

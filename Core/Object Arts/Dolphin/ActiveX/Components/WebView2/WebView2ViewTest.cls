@@ -3,7 +3,7 @@
 PresenterTest subclass: #WebView2ViewTest
 	instanceVariableNames: 'domContentLoaded navigationCompleted processFailed webViewReady webViewClosed'
 	classVariableNames: ''
-	poolDictionaries: ''
+	poolDictionaries: 'WebView2Constants'
 	classInstanceVariableNames: ''!
 WebView2ViewTest guid: (GUID fromString: '{3cee0357-fcb9-4dd8-8e6f-9962dbca8e5c}')!
 WebView2ViewTest comment: ''!
@@ -33,8 +33,8 @@ initializePresenter
 			to: self.
 	webViewReady := false.
 	presenter createView: URLPresenter defaultView.
-	"We need to wait until the web view is ready before we commence any testing"
-	self assert: (self waitAtMost: 20 seconds while: [webViewReady not])!
+	self waitAtMost: 20 seconds while: [webViewReady not].
+	self assert: presenter view webview notNull!
 
 onDomContentLoaded: anICoreWebView2DOMContentLoadedEventArgs
 	domContentLoaded := anICoreWebView2DOMContentLoadedEventArgs navigationId!
@@ -95,7 +95,7 @@ testWebBrowserCrashRecovery
 	presenter model value: 'edge://inducebrowsercrashforrealz/'.
 	self assert: self waitForNavigationCompleted.
 	self assert: processFailed
-		equals: WebView2Constants.COREWEBVIEW2_PROCESS_FAILED_KIND_BROWSER_PROCESS_EXITED.
+		equals: COREWEBVIEW2_PROCESS_FAILED_KIND_BROWSER_PROCESS_EXITED.
 	"Unless suppressed by the #processFailed: handler, the webview will be recreated and navigated to the crashes page"
 	self assert: navigationCompleted isKindOf: ICoreWebView2NavigationCompletedEventArgs2.
 	self assert: navigationCompleted isSuccess.
@@ -109,7 +109,7 @@ verifyWebViewControllerProperties
 	baseController := controller queryInterface: ICoreWebView2Controller.
 	"ICoreWebView2Controller: bounds, coreWebView2, isVisible, parentWindow, zoomFactor"
 	self assert: baseController bounds equals: presenter view rectangle.
-	self assert: baseController coreWebView2 isKindOf: ICoreWebView2_15.
+	self assert: baseController coreWebView2 isKindOf: ICoreWebView2_16.
 	self assert: baseController coreWebView2 equals: presenter view webview.
 	self assert: baseController isVisible.
 	baseController isVisible: false.
@@ -127,11 +127,11 @@ verifyWebViewControllerProperties
 	self assert: baseController defaultBackgroundColor equals: Color white.
 	self assert: controller defaultBackgroundColor equals: Color magenta.
 	"ICoreWebView2Controller3: boundsMode, rasterizationScale, shouldDetectMonitorScaleChanges"
-	self assert: baseController boundsMode equals: WebView2Constants.COREWEBVIEW2_BOUNDS_MODE_USE_RAW_PIXELS.
-	self assert: controller boundsMode equals: WebView2Constants.COREWEBVIEW2_BOUNDS_MODE_USE_RAW_PIXELS.
-	controller boundsMode: WebView2Constants.COREWEBVIEW2_BOUNDS_MODE_USE_RASTERIZATION_SCALE.
-	self assert: baseController boundsMode equals: WebView2Constants.COREWEBVIEW2_BOUNDS_MODE_USE_RAW_PIXELS.
-	self assert: controller boundsMode equals: WebView2Constants.COREWEBVIEW2_BOUNDS_MODE_USE_RASTERIZATION_SCALE.
+	self assert: baseController boundsMode equals: COREWEBVIEW2_BOUNDS_MODE_USE_RAW_PIXELS.
+	self assert: controller boundsMode equals: COREWEBVIEW2_BOUNDS_MODE_USE_RAW_PIXELS.
+	controller boundsMode: COREWEBVIEW2_BOUNDS_MODE_USE_RASTERIZATION_SCALE.
+	self assert: baseController boundsMode equals: COREWEBVIEW2_BOUNDS_MODE_USE_RAW_PIXELS.
+	self assert: controller boundsMode equals: COREWEBVIEW2_BOUNDS_MODE_USE_RASTERIZATION_SCALE.
 	self assert: baseController rasterizationScale equals: 1.0.
 	self assert: controller rasterizationScale equals: 1.0.
 	controller rasterizationScale: 1.25.
@@ -176,7 +176,7 @@ verifyWebViewEnvironmentProperties
 verifyWebViewProperties
 	| defaultMargin webview2 baseInterface |
 	webview2 := presenter view webview.
-	self assert: webview2 isKindOf: ICoreWebView2_15.
+	self assert: webview2 isKindOf: ICoreWebView2_16.
 	baseInterface := webview2 queryInterface: ICoreWebView2.
 	"ICoreWebView2: browserProcessId, canGoBack, canGoForward, containsFullScreenElement, documentTitle, settings, source"
 	self assert: baseInterface browserProcessId equals: webview2 browserProcessId.
@@ -195,7 +195,7 @@ verifyWebViewProperties
 	"ICoreWebView2_2: cookieManager, environment"
 	self assert: webview2 cookieManager isKindOf: ICoreWebView2CookieManager.
 	self assertIsNil: baseInterface cookieManager.
-	self assert: webview2 environment isKindOf: ICoreWebView2Environment10.
+	self assert: webview2 environment isKindOf: ICoreWebView2Environment11.
 	self assertIsNil: baseInterface environment.
 	"ICoreWebView2_3: isSuspended"
 	self deny: baseInterface isSuspended.
@@ -312,13 +312,12 @@ verifyWebViewSettings
 	self deny: settings isSwipeNavigationEnabled.
 	self assert: baseSettings isSwipeNavigationEnabled.
 	"ICoreWebView2Settings6: hiddenPdfToolbarItems"
-	self assert: settings hiddenPdfToolbarItems equals: WebView2Constants.COREWEBVIEW2_PDF_TOOLBAR_ITEMS_NONE.
-	self assert: baseSettings hiddenPdfToolbarItems equals: WebView2Constants.COREWEBVIEW2_PDF_TOOLBAR_ITEMS_NONE.
-	hidden := WebView2Constants.COREWEBVIEW2_PDF_TOOLBAR_ITEMS_PRINT
-				| WebView2Constants.COREWEBVIEW2_PDF_TOOLBAR_ITEMS_SAVE_AS.
+	self assert: settings hiddenPdfToolbarItems equals: COREWEBVIEW2_PDF_TOOLBAR_ITEMS_NONE.
+	self assert: baseSettings hiddenPdfToolbarItems equals: COREWEBVIEW2_PDF_TOOLBAR_ITEMS_NONE.
+	hidden := COREWEBVIEW2_PDF_TOOLBAR_ITEMS_PRINT | COREWEBVIEW2_PDF_TOOLBAR_ITEMS_SAVE_AS.
 	settings hiddenPdfToolbarItems: hidden.
 	self assert: settings hiddenPdfToolbarItems equals: hidden.
-	self assert: baseSettings hiddenPdfToolbarItems equals: WebView2Constants.COREWEBVIEW2_PDF_TOOLBAR_ITEMS_NONE!
+	self assert: baseSettings hiddenPdfToolbarItems equals: COREWEBVIEW2_PDF_TOOLBAR_ITEMS_NONE!
 
 waitAtMost: aDuration while: aNiladicValuable
 	| start |

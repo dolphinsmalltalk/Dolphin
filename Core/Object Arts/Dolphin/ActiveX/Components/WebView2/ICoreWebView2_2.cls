@@ -3,7 +3,7 @@
 ICoreWebView2 subclass: #ICoreWebView2_2
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2_2 guid: (IID fromString: '{9e8f0cf8-e670-4b5e-b2bc-73e061e3184c}')!
 ICoreWebView2_2 comment: '`ICoreWebView2_2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2_2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.

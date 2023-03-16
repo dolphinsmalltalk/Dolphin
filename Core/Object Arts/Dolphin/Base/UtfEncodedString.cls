@@ -389,6 +389,13 @@ select: aMonadicValuable
 	self codePointsDo: [:each | (aMonadicValuable value: each) ifTrue: [stream nextPut: each]].
 	^stream grabContents!
 
+single
+	"Answer the <Character> which is the only element of the receiver. 
+	Raise an exception if the receiver does not contain exactly one character."
+
+	(self encodedSizeAt: 1) == self size ifFalse: [self error: 'String is not of a single Character'].
+	^self decodeAt: 1!
+
 sixth
 	"Answer a <Character> representing the sixth code point of the receiver. Raise an exception if there are fewer than six code points in the receiver."
 
@@ -487,6 +494,7 @@ pairsDo:!enumerating!public! !
 reverseDo:!enumerating!public! !
 second!accessing!public! !
 select:!enumerating!public! !
+single!accessing!public! !
 sixth!accessing!public! !
 skipEncodingMarkerFrom:!encode/decode!private! !
 third!accessing!public! !

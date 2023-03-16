@@ -3,7 +3,7 @@
 ICoreWebView2Frame2 subclass: #ICoreWebView2Frame3
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2Frame3 guid: (IID fromString: '{b50d82cc-cc28-481d-9614-cb048895e6a0}')!
 ICoreWebView2Frame3 comment: '`ICoreWebView2Frame3` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Frame3'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.

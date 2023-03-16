@@ -73,7 +73,7 @@ handled: anObject
 	handled := anObject!
 
 isBrowserProcessExit
-	^self processFailedKind = WebView2Constants.COREWEBVIEW2_PROCESS_FAILED_KIND_BROWSER_PROCESS_EXITED!
+	^self processFailedKind = COREWEBVIEW2_PROCESS_FAILED_KIND_BROWSER_PROCESS_EXITED!
 
 printableProperties
 	| propertyNames failureKind desc |
@@ -82,9 +82,9 @@ printableProperties
 	desc := self processDescription.
 	(desc notNil and: [desc notEmpty]) ifTrue: [propertyNames add: #processDescription].
 	failureKind := self processFailedKind.
-	failureKind = WebView2Constants.COREWEBVIEW2_PROCESS_FAILED_KIND_BROWSER_PROCESS_EXITED
+	failureKind = COREWEBVIEW2_PROCESS_FAILED_KIND_BROWSER_PROCESS_EXITED
 		ifFalse: [propertyNames add: #reason].
-	failureKind = WebView2Constants.COREWEBVIEW2_PROCESS_FAILED_KIND_FRAME_RENDER_PROCESS_EXITED
+	failureKind = COREWEBVIEW2_PROCESS_FAILED_KIND_FRAME_RENDER_PROCESS_EXITED
 		ifTrue: [propertyNames addLast: #frameInfosForFailedProcess].
 	^propertyNames!
 
