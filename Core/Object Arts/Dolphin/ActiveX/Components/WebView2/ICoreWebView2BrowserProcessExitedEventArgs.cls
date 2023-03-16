@@ -66,6 +66,9 @@ get_BrowserProcessId: value
 	<virtual stdcall: hresult 5 dword*>
 	^self invalidCall: _failureCode!
 
+isNormalExit
+	^self browserProcessExitKind == COREWEBVIEW2_BROWSER_PROCESS_EXIT_KIND_NORMAL!
+
 printableProperties
 	^#(#browserProcessExitKind #browserProcessId)! !
 !ICoreWebView2BrowserProcessExitedEventArgs categoriesForMethods!
@@ -73,6 +76,7 @@ browserProcessExitKind!**auto generated**!properties!public! !
 browserProcessId!**auto generated**!properties!public! !
 get_BrowserProcessExitKind:!**auto generated**!COM Interfaces-ICoreWebView2BrowserProcessExitedEventArgs!private! !
 get_BrowserProcessId:!**auto generated**!COM Interfaces-ICoreWebView2BrowserProcessExitedEventArgs!private! !
+isNormalExit!properties!public! !
 printableProperties!printing!private! !
 !
 

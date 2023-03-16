@@ -107,7 +107,7 @@ GetCustomSchemeRegistrations: count schemeRegistrations: schemeRegistrations
 
 initialize
 	super initialize.
-	flags := AllowSSOMask.
+	flags := AllowSSOMask | ExclusiveUserDataFolderAccessMask.
 	browserVersion := CORE_WEBVIEW_TARGET_PRODUCT_VERSION!
 
 isCustomCrashReportingEnabled

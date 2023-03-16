@@ -14,6 +14,14 @@ PresenterTest comment: ''!
 classToTest
 	^self subclassResponsibility!
 
+destroyPresenter
+	presenter isNil
+		ifFalse: 
+			[| shell |
+			shell := presenter topShell.
+			shell = View desktop ifTrue: [presenter destroy] ifFalse: [shell close].
+			presenter := nil]!
+
 initializePresenter
 	presenter := self classToTest show!
 
@@ -49,8 +57,7 @@ setUp
 	self initializePresenter!
 
 tearDown
-	presenter topShell close.
-	presenter := nil!
+	self destroyPresenter!
 
 view
 	^presenter view!
@@ -59,6 +66,7 @@ waitForInputIdle
 	SessionManager inputState pumpMessages! !
 !PresenterTest categoriesForMethods!
 classToTest!helpers!private! !
+destroyPresenter!public!Running! !
 initializePresenter!public!Running! !
 leftClickAt:!private!unit tests! !
 nonProportionalFont!constants!private! !
