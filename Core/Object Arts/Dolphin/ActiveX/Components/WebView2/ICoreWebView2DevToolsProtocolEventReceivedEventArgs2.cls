@@ -3,7 +3,7 @@
 ICoreWebView2DevToolsProtocolEventReceivedEventArgs subclass: #ICoreWebView2DevToolsProtocolEventReceivedEventArgs2
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2DevToolsProtocolEventReceivedEventArgs2 guid: (IID fromString: '{2dc4959d-1494-4393-95ba-bea4cb9ebd1b}')!
 ICoreWebView2DevToolsProtocolEventReceivedEventArgs2 comment: '`ICoreWebView2DevToolsProtocolEventReceivedEventArgs2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2DevToolsProtocolEventReceivedEventArgs2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.

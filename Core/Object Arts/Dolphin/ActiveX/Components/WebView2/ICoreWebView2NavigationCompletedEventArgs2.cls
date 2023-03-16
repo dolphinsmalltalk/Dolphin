@@ -3,7 +3,7 @@
 ICoreWebView2NavigationCompletedEventArgs subclass: #ICoreWebView2NavigationCompletedEventArgs2
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2NavigationCompletedEventArgs2 guid: (IID fromString: '{fdf8b738-ee1e-4db2-a329-8d7d7b74d792}')!
 ICoreWebView2NavigationCompletedEventArgs2 comment: '`ICoreWebView2NavigationCompletedEventArgs2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2NavigationCompletedEventArgs2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.

@@ -250,7 +250,7 @@ get_BoundsMode: boundsMode
 			[out, retval]COREWEBVIEW2_BOUNDS_MODE* BoundsMode);"
 
 	"Not really supported by this version"
-	boundsMode value: WebView2Constants.COREWEBVIEW2_BOUNDS_MODE_USE_RAW_PIXELS.
+	boundsMode value: COREWEBVIEW2_BOUNDS_MODE_USE_RAW_PIXELS.
 	^S_FALSE!
 
 get_CoreWebView2: coreWebView2

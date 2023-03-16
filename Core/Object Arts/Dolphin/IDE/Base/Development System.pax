@@ -653,6 +653,7 @@ package methodNames
 	add: 'View class' -> #publishedEventsOfInstances;
 	add: 'VS_FIXEDFILEINFO class' -> #publishedAspectsOfInstances;
 	add: 'WeakSet class' -> #publishedEventsOfInstances;
+	add: 'WebView2View class' -> #publishedAspectsOfInstances;
 	add: 'WebView2View class' -> #publishedEventsOfInstances;
 	add: 'WinImageList class' -> #newInstanceAspect:class:;
 	yourself.
@@ -7905,6 +7906,15 @@ publishedEventsOfInstances!events!public! !
 
 !WebView2View class methodsFor!
 
+publishedAspectsOfInstances
+	"Answer a Set of the aspects published by  instances of the receiver"
+
+	| aspects |
+	aspects := super publishedAspectsOfInstances.
+	#(#allowSSO #isCustomCrashReportingEnabled #canNavigateToStrings #isStatusBarEnabled #isScriptEnabled #areBrowserAcceleratorKeysEnabled #allowExternalDrop #allowContextMenu #areDefaultScriptDialogsEnabled #areDevToolsEnabled #areHostObjectsAllowed #isBuiltInErrorPageEnabled #isGeneralAutofillEnabled #isPasswordAutosaveEnabled #isPinchZoomEnabled #isSwipeNavigationEnabled #isWebMessageEnabled #isZoomControlEnabled)
+		do: [:each | aspects add: (Aspect boolean: each)].
+	^aspects!
+
 publishedEventsOfInstances
 	"Answer a Set of Symbols that describe the published events triggered
     	by instances of the receiver."
@@ -7913,6 +7923,7 @@ publishedEventsOfInstances
 		addAll: self webview2Events;
 		yourself! !
 !WebView2View class categoriesForMethods!
+publishedAspectsOfInstances!constants!public! !
 publishedEventsOfInstances!events!public! !
 !
 

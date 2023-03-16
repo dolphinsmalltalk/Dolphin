@@ -72,10 +72,8 @@ nextWord
 	| wordStream element |
 	self skipSeparators ifFalse: [^nil].
 	wordStream := self contentsSpecies writeStream: 32.
-	[self atEnd] whileFalse: 
-			[element := self next.
-			element isSeparator ifTrue: [^wordStream contents].
-			wordStream nextPut: element].
+	[(element := self nextAvailable) isNil or: [element isSeparator]]
+		whileFalse: [wordStream nextPut: element].
 	^wordStream contents!
 
 notEmpty

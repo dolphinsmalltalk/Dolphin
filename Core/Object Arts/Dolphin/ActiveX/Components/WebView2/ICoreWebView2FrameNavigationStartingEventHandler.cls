@@ -3,7 +3,7 @@
 ICoreWebView2EventHandler subclass: #ICoreWebView2FrameNavigationStartingEventHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2FrameNavigationStartingEventHandler guid: (IID fromString: '{e79908bf-2d5d-4968-83db-263fea2c1da3}')!
 ICoreWebView2FrameNavigationStartingEventHandler comment: '`ICoreWebView2FrameNavigationStartingEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2FrameNavigationStartingEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.

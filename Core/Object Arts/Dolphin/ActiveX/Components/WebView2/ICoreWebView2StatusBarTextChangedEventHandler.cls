@@ -3,7 +3,7 @@
 ICoreWebView2EventHandler subclass: #ICoreWebView2StatusBarTextChangedEventHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2StatusBarTextChangedEventHandler guid: (IID fromString: '{a5e3b0d0-10df-4156-bfad-3b43867acac6}')!
 ICoreWebView2StatusBarTextChangedEventHandler comment: '`ICoreWebView2StatusBarTextChangedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2StatusBarTextChangedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
