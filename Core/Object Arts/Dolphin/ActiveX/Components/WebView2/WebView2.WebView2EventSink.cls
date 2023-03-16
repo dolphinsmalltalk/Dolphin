@@ -16,10 +16,15 @@ destroy
 
 	interface ifNil: [^self].
 	interface free.
-	interface := nil!
+	interface := source := nil!
 
 free
-	self unregister!
+	source ifNil: [^self].
+	self unregister.
+	source := nil!
+
+interfaceClass
+	^interfaceClass!
 
 Invoke: sender args: args
 	"Private - Invoke the Invoke() method of the COM object.
@@ -30,6 +35,13 @@ Invoke: sender args: args
 
 	handler value: sender value: (args isNull ifFalse: [args]).
 	^S_OK!
+
+printOn: aPuttableStream
+	self basicPrintOn: aPuttableStream.
+	aPuttableStream
+		nextPut: $(;
+		print: interfaceClass eventName;
+		nextPut: $)!
 
 queryInterface: anInterfaceClass ifNone: exceptionHandler
 	"Answer a new interface pointer which supports the specified interface protocol
@@ -61,12 +73,16 @@ supportedInterfaces
 
 unregister
 	interface ifNil: [^self].
-	interface unregister.
+	interface
+		unregister;
+		free.
 	interface := nil! !
 !WebView2.WebView2EventSink categoriesForMethods!
 destroy!private!realizing/unrealizing! !
 free!public!realizing/unrealizing! !
+interfaceClass!accessing!public! !
 Invoke:args:!COM Interfaces-ICoreWebView2EventHandler!private! !
+printOn:!printing!public! !
 queryInterface:ifNone:!accessing!accessing-interfaces!public! !
 register!initializing!public! !
 source!accessing!private! !

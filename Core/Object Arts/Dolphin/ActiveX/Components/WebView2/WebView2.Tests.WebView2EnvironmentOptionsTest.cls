@@ -34,12 +34,12 @@ testAllowSSO
 testExclusiveDataFolderAccess
 	| subject interface |
 	subject := WebView2EnvironmentOptions new.
-	self deny: subject exclusiveUserDataFolderAccess.
-	interface := subject queryInterface: ICoreWebView2EnvironmentOptions2.
-	self deny: interface exclusiveUserDataFolderAccess.
-	subject exclusiveUserDataFolderAccess: true.
-	self assert: interface exclusiveUserDataFolderAccess.
 	self assert: subject exclusiveUserDataFolderAccess.
+	interface := subject queryInterface: ICoreWebView2EnvironmentOptions2.
+	self assert: interface exclusiveUserDataFolderAccess.
+	subject exclusiveUserDataFolderAccess: false.
+	self deny: interface exclusiveUserDataFolderAccess.
+	self deny: subject exclusiveUserDataFolderAccess.
 !
 
 testIsCustomCrashReportingEnabled

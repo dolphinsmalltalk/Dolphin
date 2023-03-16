@@ -37,17 +37,17 @@ browserProcessExitKind
 	"Answer the <sdword> value of the 'BrowserProcessExitKind' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := UInt32Bytes new.
 	self get_BrowserProcessExitKind: answer.
-	^answer asObject!
+	^answer asSignedInteger!
 
 browserProcessId
 	"Answer the <dword> value of the 'BrowserProcessId' property of the receiver."
 
 	| answer |
-	answer := DWORD new.
+	answer := UInt32Bytes new.
 	self get_BrowserProcessId: answer.
-	^answer asObject!
+	^answer asInteger!
 
 get_BrowserProcessExitKind: browserProcessExitKind
 	"Private - Get the value of the 'BrowserProcessExitKind' property of the receiver.
@@ -67,13 +67,17 @@ get_BrowserProcessId: value
 	<virtual stdcall: hresult 5 dword*>
 	^self invalidCall: _failureCode!
 
+isNormalExit
+	^self browserProcessExitKind == COREWEBVIEW2_BROWSER_PROCESS_EXIT_KIND_NORMAL!
+
 printableProperties
 	^#(#browserProcessExitKind #browserProcessId)! !
 !WebView2.ICoreWebView2BrowserProcessExitedEventArgs categoriesForMethods!
-browserProcessExitKind!**auto generated**!properties!public! !
-browserProcessId!**auto generated**!properties!public! !
+browserProcessExitKind!properties!public! !
+browserProcessId!properties!public! !
 get_BrowserProcessExitKind:!**auto generated**!COM Interfaces-ICoreWebView2BrowserProcessExitedEventArgs!private! !
 get_BrowserProcessId:!**auto generated**!COM Interfaces-ICoreWebView2BrowserProcessExitedEventArgs!private! !
+isNormalExit!properties!public! !
 printableProperties!printing!private! !
 !
 

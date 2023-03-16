@@ -177,6 +177,7 @@ destroyDeadWebView
 				select: [:each | each source == webviewEnvironment or: 
 							[each destroy.
 							false]].
+	webviewController close.
 	self releaseWebView!
 
 displayValue
@@ -404,10 +405,8 @@ onDestroyed
 	self unregisterEvents.
 	self content close.
 	self releaseWebView.
-	webviewEnvironment
-		ifNotNil: 
-			[webviewEnvironment free.
-			webviewEnvironment := nil].
+	"We don't free the webview environment, but rather let it be finalised. This allows an external observer to watch for the browser process exiting."
+	webviewEnvironment := nil.
 	^super onDestroyed!
 
 onEnvironmentCreated: anICoreWebView2Environment
@@ -427,7 +426,7 @@ onPositionChanged: aPositionEvent
 onProcessFailed: anICoreWebView2ProcessFailedEventArgs
 	"Private - There has been some kind of browser process crash, with varying degress of severity. In most cases Edge will recover or indicate failure in place (for crashed frames). If, however, the browser process has completely failed and exited, we need to clean up before passing on the event. In the case of browser process exit, the existing browser view is unrecoverable, and must be completely recreated."
 
-	| failedArgs isDead |
+	| failedArgs isDead wasHandled |
 	failedArgs := anICoreWebView2ProcessFailedEventArgs
 				queryInterface: ICoreWebView2ProcessFailedEventArgs2
 				ifNone: [anICoreWebView2ProcessFailedEventArgs].
@@ -436,7 +435,9 @@ onProcessFailed: anICoreWebView2ProcessFailedEventArgs
 	isDead ifTrue: [self destroyDeadWebView].
 	"Give observers a chance to handle the failure and recover appropriately. If an observer does attempt recovery, it should set the If the `handled` flag in the event args to suppress default recover. If the flag is not set, then the default recovery is to proceed and create a new browser view and navigate to the crash page (to avoid going into a death spiral by reopening the page that caused the crash)."
 	self presenter trigger: #processFailed: with: failedArgs.
-	(isDead and: [failedArgs handled not])
+	wasHandled := failedArgs handled.
+	failedArgs free.
+	(isDead and: [wasHandled not])
 		ifTrue: 
 			[self model value: 'edge://crashes'.
 			self createWebView]!
@@ -699,7 +700,7 @@ initialize
 webview2Events
 	"This is the full set of events. Not all are actually published currently; for example the frame and download events are not."
 
-	^#(#acceleratorKeyPressed: #basicAuthenticationRequested: #browseProcessExited: #bytesReceivedChanged #clientCertificateRequested: #containsFullScreenElementChanged #contentLoading: #contextMenuRequested: #cursorChanged #devToolsProtocolEvent: #documentTitleChanged #domContentLoaded: #downloadStarting: #dowloadStateChanged #favIconChanged #focusGained #focusLost #frameContentLoading: #frameCreated: #frameDestroyed #frameDomContentLoaded: #frameNameChanged #frameNavigationCompleted: #frameNavigationStarting: #framePermissionRequested: #frameWebMessageReceived: #historyChanged #isDefaultDownloadDialogOpenChanged #isDocumentPlayingAudioChanged #isMutedChanged #moveFocusRequested: #navigationCompleted: #navigationStarting: #newBrowserVersionAvailable #newWindowRequested: #permissionRequested: #processFailed: #processInfosChanged #rasterizationScaleChanged #scriptDialogOpening: #serverCertificateErrorDetected: #sourceChanged: #statusBarTextChanged #webMessageReceived: #webResourceRequested: #webResourceResponseReceived: #webviewAvailable #windowCloseRequested #zoomFactorChanged)!
+	^#(#acceleratorKeyPressed: #basicAuthenticationRequested: #bytesReceivedChanged #clientCertificateRequested: #containsFullScreenElementChanged #contentLoading: #contextMenuRequested: #cursorChanged #devToolsProtocolEvent: #documentTitleChanged #domContentLoaded: #dowloadStateChanged #downloadStarting: #favIconChanged #focusGained #focusLost #frameContentLoading: #frameCreated: #frameDestroyed #frameDomContentLoaded: #frameNameChanged #frameNavigationCompleted: #frameNavigationStarting: #framePermissionRequested: #frameWebMessageReceived: #historyChanged #isDefaultDownloadDialogOpenChanged #isDocumentPlayingAudioChanged #isMutedChanged #moveFocusRequested: #navigationCompleted: #navigationStarting: #newBrowserVersionAvailable #newWindowRequested: #permissionRequested: #processExited: #processFailed: #processInfosChanged #rasterizationScaleChanged #scriptDialogOpening: #serverCertificateErrorDetected: #sourceChanged: #statusBarTextChanged #webMessageReceived: #webResourceRequested: #webResourceResponseReceived: #webviewAvailable #windowCloseRequested #zoomFactorChanged)!
 
 winClassName
 	"Private - Answer the Windows class name, or atom, to be used when creating Windows attached
