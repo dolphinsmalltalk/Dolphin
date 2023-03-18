@@ -235,6 +235,7 @@ testRemoveCard
 testSaveRestore
 	"Test Save and Restore of various Ideaspace tools"
 
+	<knownSlowTest>
 	| sb cb ws saveString newSb newCb newEb newWs newVc newRb sbPackages rid wsDocData wsPools wsFilename |
 	"This test is pretty slow, but we can speed it up by ~30% by disabling redraw while populating the test subject"
 	ideaShell view

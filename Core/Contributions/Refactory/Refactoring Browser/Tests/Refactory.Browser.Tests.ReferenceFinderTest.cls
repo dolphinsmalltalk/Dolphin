@@ -12,6 +12,7 @@ Refactory.Browser.Tests.ReferenceFinderTest comment: ''!
 !Refactory.Browser.Tests.ReferenceFinderTest methodsFor!
 
 testAllPaths
+	<knownSlowTest>
 	| paths |
 	paths := ReferenceFinder findAllPathsTo: RefactoringManager instance.
 	self deny: paths isEmpty.
@@ -21,6 +22,7 @@ testAllPaths
 			self assert: each first identicalTo: Smalltalk]!
 
 testAllPathsToInstance
+	<knownSlowTest>
 	| paths |
 	paths := ReferenceFinder findAllPathsToInstanceOf: RefactoringManager.
 	self deny: paths isEmpty.
@@ -39,6 +41,7 @@ testFound
 	self assert: path first identicalTo: Smalltalk!
 
 testNotFound
+	<knownSlowTest>
 	| path |
 	path := ReferenceFinder findPathTo: Object new.
 	self assertIsNil: path!

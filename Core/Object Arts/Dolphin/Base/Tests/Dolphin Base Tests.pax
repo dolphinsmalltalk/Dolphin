@@ -173,7 +173,6 @@ package setMethodNames: #(
 	#(#{Kernel.STBFiler class} #correspondingTestCase)
 	#(#{OS.CRTLibrary} #_chmod:pmode:)
 	#(#{OS.CRTLibraryNonBlocking} #_chmod:pmode:)
-	#(#{Tools.SmalltalkSystem} #baselinedSlowTests)
 	#(#{Tools.SmalltalkSystem} #regressionTestsLogFilename)
 	#(#{Tools.SmalltalkSystem} #regressionTestSuite)
 	#(#{Tools.SmalltalkSystem} #runRegressionTests)
@@ -1230,16 +1229,6 @@ _chmod:pmode:!CRT functions-file handling!public! !
 
 !Tools.SmalltalkSystem methodsFor!
 
-baselinedSlowTests
-	| laggards |
-	laggards := Set new.
-	#(#(#{Refactory.Browser.Tests.ReferenceFinderTest} #(#testAllPaths #testAllPathsToInstance #testNotFound)) #(#{Refactory.Browser.Tests.BrowserEnvironmentTest} #(#testOrEnvironment)) #(#{Tools.Tests.IdeaSpaceShellTest} #(#testSaveRestore)) #(#{Refactory.Browser.Tests.RenameClassRefactoringTest} #(#testModelRenameClass)) #(#{WebView2.Tests.WebView2ViewTest} #(#testWebBrowserCrashRecovery #testNavigateToString)))
-		do: 
-			[:each |
-			each first
-				ifDefined: [:test | each second do: [:selector | laggards add: (test selector: selector)]]].
-	^laggards!
-
 regressionTestsLogFilename
 	"Answer the name of the file in which to log test results, or nil to have the output sent to stdout"
 
@@ -1277,7 +1266,7 @@ runRegressionTests: aTestSuite logTo: logStream verbose: aBoolean
 	result := CommandLineTestRunner new
 				addLogger: (TestRunConsoleLogger on: logStream);
 				verbose: aBoolean;
-				runSuite: aTestSuite knownSlowTests: self baselinedSlowTests.
+				runSuite: aTestSuite.
 	self writeJunitTestLog: aTestSuite result: result.
 	^result!
 
@@ -1403,7 +1392,6 @@ writeJunitTestLog: aTestSuite result: aTestResult
 				extension: 'xml').
 	doc free! !
 !Tools.SmalltalkSystem categoriesForMethods!
-baselinedSlowTests!accessing!public! !
 regressionTestsLogFilename!public!tests! !
 regressionTestSuite!private!tests! !
 runRegressionTests!public!tests! !

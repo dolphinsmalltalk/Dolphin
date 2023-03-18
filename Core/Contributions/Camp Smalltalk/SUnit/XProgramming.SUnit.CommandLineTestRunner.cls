@@ -14,10 +14,10 @@ XProgramming.SUnit.CommandLineTestRunner comment: ''!
 addLogger: aTestRunLogger
 	loggers addLast: aTestRunLogger!
 
-finishRun: aTestSuite knownSlowTests: aCollection
+finishRun: aTestSuite
 	aTestSuite removeDependentFromHierachy: self.
 	aTestSuite resources do: [:each | each reset].
-	loggers do: [:each | each finishedRun: results knownSlowTests: aCollection]!
+	loggers do: [:each | each finishedRun: results]!
 
 initialize
 	verbose := false.
@@ -44,9 +44,6 @@ resultFor: aTestCase
 	^results resultFor: aTestCase!
 
 runSuite: aTestSuite
-	self runSuite: aTestSuite knownSlowTests: #()!
-
-runSuite: aTestSuite knownSlowTests: aCollection
 	self startRun: aTestSuite.
 	
 	[lastCase := nil.
@@ -55,7 +52,7 @@ runSuite: aTestSuite knownSlowTests: aCollection
 		update: nil
 		with: nil
 		from: aTestSuite]
-			ensure: [self finishRun: aTestSuite knownSlowTests: aCollection].
+			ensure: [self finishRun: aTestSuite].
 	^results!
 
 startRun: aTestSuite
@@ -80,7 +77,7 @@ verbose: aBoolean
 	verbose := aBoolean! !
 !XProgramming.SUnit.CommandLineTestRunner categoriesForMethods!
 addLogger:!initializing!private! !
-finishRun:knownSlowTests:!operations!private! !
+finishRun:!operations!private! !
 initialize!initializing!private! !
 logFinishedCase:!private!updating! !
 logStartingCase:!logging!private! !
@@ -89,7 +86,6 @@ newStdOutLogger!logging!private! !
 result!accessing!public! !
 resultFor:!helpers!private! !
 runSuite:!operations!public! !
-runSuite:knownSlowTests:!operations!public! !
 startRun:!operations!private! !
 update:with:from:!private!updating! !
 verbose:!accessing!public! !

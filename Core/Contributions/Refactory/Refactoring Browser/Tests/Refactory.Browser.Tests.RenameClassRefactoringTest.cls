@@ -97,6 +97,7 @@ testMetaClassFailure
 		withMessage: '<1s> class is not an existing class' << self class fullName!
 
 testModelRenameClass
+	<knownSlowTest>
 	| refactoring fooClass change |
 	model
 		defineClass: 'Core.Object subclass: #''Core.Foo'' instanceVariableNames: ''a'' classVariableNames: '''' poolDictionaries: ''Core.Object'''.

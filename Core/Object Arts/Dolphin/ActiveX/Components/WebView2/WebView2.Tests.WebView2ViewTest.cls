@@ -76,6 +76,7 @@ tearDown
 testNavigateToString
 	"Bit of a kick-the-tyres test, but it does execute a lot of the integration, e.g. creating the WebView2 environment, controller and view, and setting up event handlers and handling of events."
 
+	<knownSlowTest>
 	| webview |
 	webview := presenter view.
 	webview canNavigateToStrings: true.
@@ -91,6 +92,7 @@ testNavigateToString
 testProperties
 	"Test the default properties and setting properties for all the core interfaces. We do this in one test because of the high startup cost for a WebView2 instance."
 
+	<knownSlowTest>
 	self verifyWebViewProperties.
 	self verifyWebViewEnvironmentProperties.
 	self verifyWebViewControllerProperties.
@@ -99,10 +101,8 @@ testProperties
 testWebBrowserCrashRecovery
 	"Test browser recovery after a crash of the browser process that causes it to exit"
 
-	<nocreate>
+	<knownSlowTest>
 	| webview |
-	"self skipIfCiBuild."
-	self initializePresenter.
 	webview := presenter view.
 	webview canNavigateToStrings: true.
 	processFailed := navigationCompleted := domContentLoaded := nil.

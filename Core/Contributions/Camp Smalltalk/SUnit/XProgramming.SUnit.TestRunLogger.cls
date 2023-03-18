@@ -15,7 +15,7 @@ XProgramming.SUnit.TestRunLogger comment: ''!
 finishedCase: aSymbol
 	^self subclassResponsibility!
 
-finishedRun: aTestResult knownSlowTests: aCollection
+finishedRun: aTestResult
 	self subclassResponsibility!
 
 slowTestThreshold
@@ -30,7 +30,7 @@ startingRun: aTestSuite
 ! !
 !XProgramming.SUnit.TestRunLogger categoriesForMethods!
 finishedCase:!logging!public! !
-finishedRun:knownSlowTests:!helpers!logging!public! !
+finishedRun:!helpers!logging!public! !
 slowTestThreshold!helpers!private! !
 startingCase:!logging!public! !
 startingRun:!logging!public! !

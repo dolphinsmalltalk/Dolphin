@@ -239,6 +239,7 @@ testNotEnvironment
 	self assert: (notPrintStringEnvironment not includesSelector: #testNotEnvironment in: self class)!
 
 testOrEnvironment
+	<knownSlowTest>
 	| env1 env2 orEnvironment |
 	env2 := universalEnvironment forClass: Object selectors: #(#fullPrintString).
 	env1 := universalEnvironment forClass: Object selectors: #(#printOn:).

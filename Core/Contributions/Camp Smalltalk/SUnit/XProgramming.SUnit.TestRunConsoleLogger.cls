@@ -18,7 +18,7 @@ finishedCase: aTestCaseResult
 		display: aTestCaseResult duration;
 		cr!
 
-finishedRun: aTestResult knownSlowTests: aCollection
+finishedRun: aTestResult
 	| passed |
 	passed := aTestResult hasPassed.
 	stream
@@ -30,11 +30,7 @@ finishedRun: aTestResult knownSlowTests: aCollection
 		display: aTestResult;
 		cr.
 	passed
-		ifTrue: 
-			[self
-				summarizeTimings: aTestResult
-				baseline: aCollection
-				threshold: self slowTestThreshold]
+		ifTrue: [self summarizeTimings: aTestResult threshold: self slowTestThreshold]
 		ifFalse: [self summarizeFailures: aTestResult].
 	stream flush!
 
@@ -85,19 +81,19 @@ summarizeFailures: aTestResult
 						print: each;
 						cr]]!
 
-summarizeTimings: aTestResult baseline: aCollection threshold: aDuration
+summarizeTimings: aTestResult threshold: aDuration
 	| laggards newLaggards |
 	laggards := (aTestResult results select: [:each | each duration >= aDuration])
 				asSortedCollectionUsing: (SortAlgorithm mergeSort: [:a :b | a duration > b duration]).
-	newLaggards := laggards reject: [:each | aCollection includes: each case].
-	newLaggards size > 0 ifFalse: [^self].
+	newLaggards := laggards reject: [:each | each isKnownSlowTest].
+	newLaggards isEmpty ifTrue: [^self].
 	stream
 		print: newLaggards size;
 		nextPutAll: ' test(s) took '.
 	aDuration displayOn: stream.
 	stream
 		nextPutAll: ' or more to run, not including ';
-		print: aCollection size;
+		print: laggards size - newLaggards size;
 		nextPutAll: ' known laggards:';
 		cr.
 	newLaggards do: 
@@ -110,12 +106,12 @@ summarizeTimings: aTestResult baseline: aCollection threshold: aDuration
 				cr]! !
 !XProgramming.SUnit.TestRunConsoleLogger categoriesForMethods!
 finishedCase:!logging!public! !
-finishedRun:knownSlowTests:!logging!public! !
+finishedRun:!logging!public! !
 startingCase:!logging!public! !
 startingRun:!logging!public! !
 stream:!accessing!private! !
 summarizeFailures:!helpers!private! !
-summarizeTimings:baseline:threshold:!helpers!private! !
+summarizeTimings:threshold:!helpers!private! !
 !
 
 !XProgramming.SUnit.TestRunConsoleLogger class methodsFor!

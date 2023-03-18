@@ -31,6 +31,7 @@ package setMethodNames: #(
 	#(#{XProgramming.SUnit.TestCase} #denyIsNil:)
 	#(#{XProgramming.SUnit.TestCase} #hash)
 	#(#{XProgramming.SUnit.TestCase} #isCiBuild)
+	#(#{XProgramming.SUnit.TestCase} #isKnownSlowTest)
 	#(#{XProgramming.SUnit.TestCase} #should:raise:matching:)
 	#(#{XProgramming.SUnit.TestCase} #should:trigger:against:)
 	#(#{XProgramming.SUnit.TestCase} #should:trigger:butNot:against:)
@@ -46,6 +47,7 @@ package setMethodNames: #(
 	#(#{XProgramming.SUnit.TestCase} #thisTestMethod)
 	#(#{XProgramming.SUnit.TestCase class} #buildSuiteFromConcreteMethods:)
 	#(#{XProgramming.SUnit.TestCase class} #debugWithResult:)
+	#(#{XProgramming.SUnit.TestCaseResult} #isKnownSlowTest)
 	#(#{XProgramming.SUnit.TestResult} #debugCase:)
 ).
 
@@ -178,6 +180,9 @@ hash
 
 isCiBuild
 	^(SessionManager current getenv: 'APPVEYOR') notNil!
+
+isKnownSlowTest
+	^self thisTestMethod hasAnnotation: #knownSlowTest!
 
 should: aBlock raise: anException matching: discriminator
 	"Example usage:
@@ -332,6 +337,7 @@ deny:sameAs:!public! !
 denyIsNil:!asserting!public! !
 hash!comparing!public! !
 isCiBuild!helpers!public! !
+isKnownSlowTest!accessing!public! !
 should:raise:matching:!asserting!public! !
 should:trigger:against:!asserting!public! !
 should:trigger:butNot:against:!asserting!public! !
@@ -369,6 +375,14 @@ debugWithResult: aSymbol
 !XProgramming.SUnit.TestCase class categoriesForMethods!
 buildSuiteFromConcreteMethods:!Instance Creation!public! !
 debugWithResult:!Instance Creation!public! !
+!
+
+!XProgramming.SUnit.TestCaseResult methodsFor!
+
+isKnownSlowTest
+	^case isKnownSlowTest! !
+!XProgramming.SUnit.TestCaseResult categoriesForMethods!
+isKnownSlowTest!accessing!public! !
 !
 
 !XProgramming.SUnit.TestResult methodsFor!
