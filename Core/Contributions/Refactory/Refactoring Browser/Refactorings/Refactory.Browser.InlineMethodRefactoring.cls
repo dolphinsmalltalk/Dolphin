@@ -90,6 +90,9 @@ inlineClass
 						ifFalse: [class]) whoDefinesMethod: self inlineSelector]
 		ifFalse: [inlineClass]!
 
+inlineClass: anObject
+	^inlineClass := anObject!
+
 inlineSelector
 	sourceMessage isNil ifTrue: [self findSelectedMessage].
 	^sourceMessage selector!
@@ -377,6 +380,7 @@ findSelectedMessageCommon!private!transforming! !
 hasMultipleReturns!public!testing! !
 inline:inMethod:forClass:!initialize/release!private! !
 inlineClass!public!transforming! !
+inlineClass:!accessing!public! !
 inlineSelector!public!transforming! !
 inlineSourceReplacing:!public!transforming! !
 insertInlinedMethod!public!transforming! !

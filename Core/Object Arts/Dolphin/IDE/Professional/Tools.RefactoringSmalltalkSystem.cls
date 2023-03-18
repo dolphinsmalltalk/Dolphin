@@ -573,16 +573,28 @@ inlineMessage: aStMessageNode inMethod: aSelector of: aBehavior
 	Implements the 'Inline Message' refactoring: 'Inlines a message send. If there are multiple implementors 
 	of the message, it will prompt for the implementation that should be inlined.'"
 
-	self performRefactoring: 
-			[(((aStMessageNode isMessage and: 
-					[| receiver |
-					receiver := aStMessageNode receiver.
-					receiver isSelfVariable or: [receiver isSuperVariable]])
-				ifTrue: [InlineMethodRefactoring]
-				ifFalse: [InlineMethodFromComponentRefactoring])
-					inline: aStMessageNode sourceInterval
-					inMethod: aSelector
-					forClass: aBehavior) execute]!
+	| refactoring |
+	(aStMessageNode isMessage and: 
+			[| receiver |
+			receiver := aStMessageNode receiver.
+			receiver isSelfVariable or: [receiver isSuperVariable]])
+		ifTrue: 
+			[refactoring := InlineMethodRefactoring
+						inline: aStMessageNode sourceInterval
+						inMethod: aSelector
+						forClass: aBehavior]
+		ifFalse: 
+			[refactoring := InlineMethodFromComponentRefactoring
+						inline: aStMessageNode sourceInterval
+						inMethod: aSelector
+						forClass: aBehavior.
+			(aStMessageNode isMessage and: [aStMessageNode receiver isStaticVariable])
+				ifTrue: 
+					[| binding |
+					binding := aStMessageNode receiver binding.
+					(binding isClassBinding and: [binding value respondsTo: aStMessageNode selector])
+						ifTrue: [refactoring inlineClass: (binding value classInModel: refactoring model) metaclass]]].
+	self performRefactoring: [refactoring execute]!
 
 inlineParameter: aString from: aSelector in: aClass
 	"Implements the 'Inline Parameter' code refactoring: Remove a parameter from the method, and adds 
