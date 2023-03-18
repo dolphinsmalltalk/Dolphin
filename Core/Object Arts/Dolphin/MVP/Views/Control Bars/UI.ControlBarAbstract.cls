@@ -308,7 +308,7 @@ wmNotify: message wParam: wParam lParam: lParam
 
 	| pnmhdr |
 	pnmhdr := lParam asExternalAddress.
-	(pnmhdr sdwordAtOffset: 8) == TTN_GETDISPINFOW ifTrue: [^self nmNotify: pnmhdr].
+	(pnmhdr int32AtOffset: 8) == TTN_GETDISPINFOW ifTrue: [^self nmNotify: pnmhdr].
 	^super
 		wmNotify: message
 		wParam: wParam

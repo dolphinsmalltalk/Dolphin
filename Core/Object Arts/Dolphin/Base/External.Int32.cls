@@ -1,23 +1,23 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.DWORD subclass: #'External.SDWORD'
+External.UInt32 subclass: #'External.Int32'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_SDWORD_Size' -> 16r4
+		'_Int32_Size' -> 16r4
 	}!
-External.SDWORD guid: (Core.GUID fromString: '{87b4c5ab-026e-11d3-9fd7-00a0cc3e4a32}')!
-External.SDWORD comment: '<SDWORD> is an <ExternalStructure> class to wrap the Win32 type of the same name.
+External.Int32 guid: (Core.GUID fromString: '{87b4c5ab-026e-11d3-9fd7-00a0cc3e4a32}')!
+External.Int32 comment: '<SDWORD> is an <ExternalStructure> class to wrap the Win32 type of the same name.
 
 SDWORD is used to represent signed 32-bit integers in conjunction with Win32 APIs. 
 
 The range of integer values that can be represented by instances of this class is defined by the interval:
 	(-2**31) to: (2**31)-1
 '!
-!External.SDWORD categoriesForClass!External-Data-Structured! !
-!External.SDWORD methodsFor!
+!External.Int32 categoriesForClass!External-Data-Structured! !
+!External.Int32 methodsFor!
 
 isSigned
 	"Answer whether the receiver holds a signed 2's complement binary value, as opposed to an unsigned binary value."
@@ -28,36 +28,36 @@ unsignedValue: anUnsigned
 	"Set the receiver's value field to the value of the unsigned positive
 	integer, anUnsigned."
 
-	bytes dwordAtOffset: 0 put: anUnsigned!
+	bytes uint32AtOffset: 0 put: anUnsigned!
 
 value
 	"Answer the <Integer> value of the receiver's 'value' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_value!
+	^bytes int32AtOffset: _OffsetOf_value!
 
 value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_value put: anInteger! !
-!External.SDWORD categoriesForMethods!
+	bytes int32AtOffset: _OffsetOf_value put: anInteger! !
+!External.Int32 categoriesForMethods!
 isSigned!public!testing! !
 unsignedValue:!accessing!public! !
 value!**compiled accessors**!public! !
 value:!**compiled accessors**!public! !
 !
 
-!External.SDWORD class methodsFor!
+!External.Int32 class methodsFor!
 
 byteSize
-	^_SDWORD_Size!
+	^_Int32_Size!
 
 defineFields
-	"Define the fields of the SDWORD external type.
-		SDWORD compileDefinition
+	"Define the fields of the Int32 external type.
+		Int32 compileDefinition
 	"
 
 	self defineField: #value
-		type: (SDWORDField new
+		type: (Int32Field new
 				beOverride;
 				yourself)!
 
@@ -77,7 +77,7 @@ uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	VM registryAt: self name put: nil! !
-!External.SDWORD class categoriesForMethods!
+!External.Int32 class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 fromUnsignedInteger:!instance creation!public! !

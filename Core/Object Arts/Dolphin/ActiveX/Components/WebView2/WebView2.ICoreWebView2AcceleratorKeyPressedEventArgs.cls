@@ -107,7 +107,7 @@ keyEventKind
 	"Answer the <sdword> value of the 'KeyEventKind' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_KeyEventKind: answer.
 	^answer asObject!
 
@@ -115,7 +115,7 @@ keyEventLParam
 	"Answer the <sdword> value of the 'KeyEventLParam' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_KeyEventLParam: answer.
 	^answer asObject!
 
@@ -152,7 +152,7 @@ virtualKey
 	"Answer the <dword> value of the 'VirtualKey' property of the receiver."
 
 	| answer |
-	answer := DWORD new.
+	answer := UInt32 new.
 	self get_VirtualKey: answer.
 	^answer asObject!
 

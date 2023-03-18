@@ -7,7 +7,7 @@ External.ExternalArray subclass: #'External.FLOATArray'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 External.FLOATArray guid: (Core.GUID fromString: '{87b4c5a3-026e-11d3-9fd7-00a0cc3e4a32}')!
-External.FLOATArray comment: 'Specialized <ExternalArray> to represent contiguous single-dimensioned arrays of single-precision (32-bit) floating point numbers.'!
+External.FLOATArray comment: 'Specialized `ExternalArray` to represent contiguous single-dimensioned arrays of single-precision (32-bit) floating point numbers.'!
 !External.FLOATArray categoriesForClass!External-Data-Structured! !
 !External.FLOATArray methodsFor!
 

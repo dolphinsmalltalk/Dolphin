@@ -42,62 +42,62 @@ struct tagHTTP_TIMEOUT_LIMIT_INFO {
 DrainEntityBody
 	"Answer the <Integer> value of the receiver's 'DrainEntityBody' field."
 
-	^bytes wordAtOffset: _OffsetOf_DrainEntityBody!
+	^bytes uint16AtOffset: _OffsetOf_DrainEntityBody!
 
 DrainEntityBody: anInteger
 	"Set the receiver's 'DrainEntityBody' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_DrainEntityBody put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_DrainEntityBody put: anInteger!
 
 EntityBody
 	"Answer the <Integer> value of the receiver's 'EntityBody' field."
 
-	^bytes wordAtOffset: _OffsetOf_EntityBody!
+	^bytes uint16AtOffset: _OffsetOf_EntityBody!
 
 EntityBody: anInteger
 	"Set the receiver's 'EntityBody' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_EntityBody put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_EntityBody put: anInteger!
 
 HeaderWait
 	"Answer the <Integer> value of the receiver's 'HeaderWait' field."
 
-	^bytes wordAtOffset: _OffsetOf_HeaderWait!
+	^bytes uint16AtOffset: _OffsetOf_HeaderWait!
 
 HeaderWait: anInteger
 	"Set the receiver's 'HeaderWait' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_HeaderWait put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_HeaderWait put: anInteger!
 
 IdleConnection
 	"Answer the <Integer> value of the receiver's 'IdleConnection' field."
 
-	^bytes wordAtOffset: _OffsetOf_IdleConnection!
+	^bytes uint16AtOffset: _OffsetOf_IdleConnection!
 
 IdleConnection: anInteger
 	"Set the receiver's 'IdleConnection' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_IdleConnection put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_IdleConnection put: anInteger!
 
 MinSendRate
 	"Answer the <Integer> value of the receiver's 'MinSendRate' field."
 
-	^bytes dwordAtOffset: _OffsetOf_MinSendRate!
+	^bytes uint32AtOffset: _OffsetOf_MinSendRate!
 
 MinSendRate: anInteger
 	"Set the receiver's 'MinSendRate' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_MinSendRate put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_MinSendRate put: anInteger!
 
 RequestQueue
 	"Answer the <Integer> value of the receiver's 'RequestQueue' field."
 
-	^bytes wordAtOffset: _OffsetOf_RequestQueue!
+	^bytes uint16AtOffset: _OffsetOf_RequestQueue!
 
 RequestQueue: anInteger
 	"Set the receiver's 'RequestQueue' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_RequestQueue put: anInteger! !
+	bytes uint16AtOffset: _OffsetOf_RequestQueue put: anInteger! !
 !WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO categoriesForMethods!
 DrainEntityBody!**compiled accessors**!public! !
 DrainEntityBody:!**compiled accessors**!public! !
@@ -137,12 +137,12 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #EntityBody type: WORDField new offset: 4;
-		defineField: #DrainEntityBody type: WORDField new offset: 6;
-		defineField: #RequestQueue type: WORDField new offset: 8;
-		defineField: #IdleConnection type: WORDField new offset: 10;
-		defineField: #HeaderWait type: WORDField new offset: 12;
-		defineField: #MinSendRate type: DWORDField new offset: 16.
+		defineField: #EntityBody type: UInt16Field new offset: 4;
+		defineField: #DrainEntityBody type: UInt16Field new offset: 6;
+		defineField: #RequestQueue type: UInt16Field new offset: 8;
+		defineField: #IdleConnection type: UInt16Field new offset: 10;
+		defineField: #HeaderWait type: UInt16Field new offset: 12;
+		defineField: #MinSendRate type: UInt32Field new offset: 16.
 	self byteSize: 20!
 
 getFieldNames

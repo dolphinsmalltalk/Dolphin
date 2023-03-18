@@ -35,37 +35,37 @@ struct tagBP_ANIMATIONPARAMS {
 dwDuration
 	"Answer the <Integer> value of the receiver's 'dwDuration' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwDuration!
+	^bytes uint32AtOffset: _OffsetOf_dwDuration!
 
 dwDuration: anInteger
 	"Set the receiver's 'dwDuration' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwDuration put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwDuration put: anInteger!
 
 dwFlags
 	"Answer the <Integer> value of the receiver's 'dwFlags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwFlags!
+	^bytes uint32AtOffset: _OffsetOf_dwFlags!
 
 dwFlags: anInteger
 	"Set the receiver's 'dwFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwFlags put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwFlags put: anInteger!
 
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 style
 	"Answer the <Integer> value of the receiver's 'style' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_style!
+	^bytes int32AtOffset: _OffsetOf_style!
 
 style: anInteger
 	"Set the receiver's 'style' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_style put: anInteger! !
+	bytes int32AtOffset: _OffsetOf_style put: anInteger! !
 !OS.BP_ANIMATIONPARAMS categoriesForMethods!
 dwDuration!**compiled accessors**!public! !
 dwDuration:!**compiled accessors**!public! !
@@ -96,10 +96,10 @@ defineFields
 "
 
 	self
-		defineField: #dwSize type: DWORDField writeOnly beOverride;
-		defineField: #dwFlags type: DWORDField new;
-		defineField: #style type: SDWORDField new;
-		defineField: #dwDuration type: DWORDField new!
+		defineField: #dwSize type: UInt32Field writeOnly beOverride;
+		defineField: #dwFlags type: UInt32Field new;
+		defineField: #style type: Int32Field new;
+		defineField: #dwDuration type: UInt32Field new!
 
 getFieldNames
 	^#(#dwSize #dwFlags #style #dwDuration)! !

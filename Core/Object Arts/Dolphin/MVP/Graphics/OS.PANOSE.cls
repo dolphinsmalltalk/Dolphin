@@ -25,52 +25,52 @@ OS.PANOSE comment: ''!
 bArmStyle
 	"Answer the <Integer> value of the receiver's 'bArmStyle' field."
 
-	^bytes byteAtOffset: _OffsetOf_bArmStyle!
+	^bytes uint8AtOffset: _OffsetOf_bArmStyle!
 
 bContrast
 	"Answer the <Integer> value of the receiver's 'bContrast' field."
 
-	^bytes byteAtOffset: _OffsetOf_bContrast!
+	^bytes uint8AtOffset: _OffsetOf_bContrast!
 
 bFamilyType
 	"Answer the <Integer> value of the receiver's 'bFamilyType' field."
 
-	^bytes byteAtOffset: _OffsetOf_bFamilyType!
+	^bytes uint8AtOffset: _OffsetOf_bFamilyType!
 
 bLetterform
 	"Answer the <Integer> value of the receiver's 'bLetterform' field."
 
-	^bytes byteAtOffset: _OffsetOf_bLetterform!
+	^bytes uint8AtOffset: _OffsetOf_bLetterform!
 
 bMidline
 	"Answer the <Integer> value of the receiver's 'bMidline' field."
 
-	^bytes byteAtOffset: _OffsetOf_bMidline!
+	^bytes uint8AtOffset: _OffsetOf_bMidline!
 
 bProportion
 	"Answer the <Integer> value of the receiver's 'bProportion' field."
 
-	^bytes byteAtOffset: _OffsetOf_bProportion!
+	^bytes uint8AtOffset: _OffsetOf_bProportion!
 
 bSerifStyle
 	"Answer the <Integer> value of the receiver's 'bSerifStyle' field."
 
-	^bytes byteAtOffset: _OffsetOf_bSerifStyle!
+	^bytes uint8AtOffset: _OffsetOf_bSerifStyle!
 
 bStrokeVariation
 	"Answer the <Integer> value of the receiver's 'bStrokeVariation' field."
 
-	^bytes byteAtOffset: _OffsetOf_bStrokeVariation!
+	^bytes uint8AtOffset: _OffsetOf_bStrokeVariation!
 
 bWeight
 	"Answer the <Integer> value of the receiver's 'bWeight' field."
 
-	^bytes byteAtOffset: _OffsetOf_bWeight!
+	^bytes uint8AtOffset: _OffsetOf_bWeight!
 
 bXHeight
 	"Answer the <Integer> value of the receiver's 'bXHeight' field."
 
-	^bytes byteAtOffset: _OffsetOf_bXHeight! !
+	^bytes uint8AtOffset: _OffsetOf_bXHeight! !
 !OS.PANOSE categoriesForMethods!
 bArmStyle!**compiled accessors**!public! !
 bContrast!**compiled accessors**!public! !
@@ -109,16 +109,16 @@ defineFields
 "
 
 	self
-		defineField: #bFamilyType type: BYTEField readOnly;
-		defineField: #bSerifStyle type: BYTEField readOnly;
-		defineField: #bWeight type: BYTEField readOnly;
-		defineField: #bProportion type: BYTEField readOnly;
-		defineField: #bContrast type: BYTEField readOnly;
-		defineField: #bStrokeVariation type: BYTEField readOnly;
-		defineField: #bArmStyle type: BYTEField readOnly;
-		defineField: #bLetterform type: BYTEField readOnly;
-		defineField: #bMidline type: BYTEField readOnly;
-		defineField: #bXHeight type: BYTEField readOnly!
+		defineField: #bFamilyType type: UInt8Field readOnly;
+		defineField: #bSerifStyle type: UInt8Field readOnly;
+		defineField: #bWeight type: UInt8Field readOnly;
+		defineField: #bProportion type: UInt8Field readOnly;
+		defineField: #bContrast type: UInt8Field readOnly;
+		defineField: #bStrokeVariation type: UInt8Field readOnly;
+		defineField: #bArmStyle type: UInt8Field readOnly;
+		defineField: #bLetterform type: UInt8Field readOnly;
+		defineField: #bMidline type: UInt8Field readOnly;
+		defineField: #bXHeight type: UInt8Field readOnly!
 
 getFieldNames
 	^#(#bFamilyType #bSerifStyle #bWeight #bProportion #bContrast #bStrokeVariation #bArmStyle #bLetterform #bMidline #bXHeight)! !

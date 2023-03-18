@@ -144,7 +144,7 @@ writeToRegistry: aRegistryWriter name: aString
 
 	"In the current 32-bit world, all SmallIntegers can be stored as DWORD values, but not so for a 64-bit future"
 
-	(VMConstants.IsWin64 and: [self isSDWORD not])
+	(VMConstants.IsWin64 and: [self isInt32 not])
 		ifTrue: [aRegistryWriter qwordAt: aString put: self]
 		ifFalse: [aRegistryWriter dwordAt: aString put: self]! !
 !Core.SmallInteger categoriesForMethods!

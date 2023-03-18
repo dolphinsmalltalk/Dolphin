@@ -94,7 +94,7 @@ derivedBy
 	"Answer the <sdword> value of the 'derivedBy' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_derivedBy: answer.
 	^answer asObject!
 
@@ -110,7 +110,7 @@ final
 	"Answer the <sdword> value of the 'final' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_final: answer.
 	^answer asObject!
 
@@ -360,7 +360,7 @@ variety
 	"Answer the <sdword> value of the 'variety' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_variety: answer.
 	^answer asObject!
 
@@ -368,7 +368,7 @@ whitespace
 	"Answer the <sdword> value of the 'whitespace' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_whitespace: answer.
 	^answer asObject! !
 !MSXML.ISchemaType categoriesForMethods!

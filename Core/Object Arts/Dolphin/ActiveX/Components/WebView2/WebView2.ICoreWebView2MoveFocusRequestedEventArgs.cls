@@ -81,7 +81,7 @@ reason
 	"Answer the <sdword> value of the 'reason' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_reason: answer.
 	^answer asObject! !
 !WebView2.ICoreWebView2MoveFocusRequestedEventArgs categoriesForMethods!

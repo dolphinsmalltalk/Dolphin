@@ -164,8 +164,8 @@ getHostInfo: pdwFlags pdwDoubleClick: pdwDoubleClick
 
 	| answer |
 	answer := (Array new: 2)
-				basicAt: 1 put: (DWORD new value: pdwFlags; yourself);
-				basicAt: 2 put: (DWORD new value: pdwDoubleClick; yourself);
+				basicAt: 1 put: (UInt32 new value: pdwFlags; yourself);
+				basicAt: 2 put: (UInt32 new value: pdwDoubleClick; yourself);
 				yourself.
 	self
 		GetHostInfo: (answer basicAt: 1)

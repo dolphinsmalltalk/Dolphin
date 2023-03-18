@@ -27,11 +27,11 @@ testAsByteArray
 	bytes := subject asByteArray.
 	parts := $- split: subject idlString.
 	"See https://docs.microsoft.com/en-us/windows/win32/api/guiddef/ns-guiddef-guid"
-	self assert: ((bytes dwordAtOffset: 0) printStringBase: 16 nDigits: 8) asLowercase
+	self assert: ((bytes uint32AtOffset: 0) printStringBase: 16 nDigits: 8) asLowercase
 		equals: parts first.
-	self assert: ((bytes wordAtOffset: 4) printStringBase: 16 nDigits: 4) asLowercase
+	self assert: ((bytes uint16AtOffset: 4) printStringBase: 16 nDigits: 4) asLowercase
 		equals: parts second.
-	self assert: ((bytes wordAtOffset: 6) printStringBase: 16 nDigits: 4) asLowercase
+	self assert: ((bytes uint16AtOffset: 6) printStringBase: 16 nDigits: 4) asLowercase
 		equals: parts third.
 	self assert: (bytes copyFrom: 9 to: 10) hex equals: parts fourth.
 	self assert: (bytes copyFrom: 11 to: 16) hex equals: parts fifth.

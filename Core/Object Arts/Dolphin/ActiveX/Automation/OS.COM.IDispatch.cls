@@ -82,7 +82,7 @@ basicFree
 
 basicInvokeId: id flags: wFlags parms: parms retVal: varRes
 	| err ex hr |
-	err := DWORD new.
+	err := UInt32 new.
 	ex := EXCEPINFO new.
 	hr := self
 				Invoke: id
@@ -240,9 +240,9 @@ getIDsOfNames: names
 	| rgszNames uNames cNames rgDispId hr |
 	uNames := names collect: [:p | p asUtf16String].
 	cNames := names size.
-	rgszNames := DWORDArray new: cNames.
+	rgszNames := UInt32Array new: cNames.
 	uNames keysAndValuesDo: [:i :n | rgszNames at: i put: n yourAddress].
-	rgDispId := SDWORDArray new: cNames.
+	rgDispId := Int32Array new: cNames.
 	hr := self
 				GetIDsOfNames: IID null
 				rgszNames: rgszNames
@@ -360,10 +360,10 @@ GetTypeInfo: itinfo lcid: lcid pptinfo: pptinfo
 	^self invalidCall: _failureCode!
 
 getTypeInfoCount
-	"Answer the <DWORD> result of invoking the GetTypeInfoCount() method of the COM object."
+	"Answer the <UInt32> result of invoking the GetTypeInfoCount() method of the COM object."
 
 	| answer |
-	answer := DWORD new.
+	answer := UInt32 new.
 	self GetTypeInfoCount: answer.
 	^answer asObject!
 
@@ -401,10 +401,10 @@ idOfName: name ifAbsent: exceptionHandler
 
 	| uName dispId hr |
 	uName := name asUtf16String.
-	dispId := SDWORD new.
+	dispId := Int32 new.
 	hr := self
 				GetIDsOfNames: IID null
-				rgszNames: (DWORD fromInteger: uName yourAddress)
+				rgszNames: (UInt32 fromInteger: uName yourAddress)
 				cNames: 1
 				lcid: NlsConstants.LOCALE_USER_DEFAULT
 				rgdispid: dispId.

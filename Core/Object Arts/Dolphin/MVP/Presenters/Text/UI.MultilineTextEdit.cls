@@ -253,7 +253,7 @@ setTabStops: anInteger
 	"Private - Set the width of the receiver's tab stops to anInteger."
 
 	| width |
-	width := DWORD fromInteger: anInteger.
+	width := UInt32 fromInteger: anInteger.
 	self
 		sendMessage: EM_SETTABSTOPS
 		wParam: 1

@@ -20,7 +20,7 @@ accept
 
 	| address length newDescriptor |
 	address := SOCKADDR_IN new.
-	length := DWORD new.
+	length := UInt32 new.
 	length value: address byteSize.
 	newDescriptor := Ws2_32
 				accept: self asParameter
@@ -57,7 +57,7 @@ createOnPort: anInteger
 	self
 		port: anInteger;
 		create.
-	dw := DWORD fromInteger: 1.
+	dw := UInt32 fromInteger: 1.
 	"Set the re-use address option so can re-use server port without having to wait for timeout."
 	Ws2_32
 		setsockopt: self asParameter

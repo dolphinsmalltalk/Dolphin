@@ -31,7 +31,7 @@ struct tagMIB_UDPEXROW {
 dwProcessId
 	"Answer the <Integer> value of the receiver's 'dwProcessId' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwProcessId! !
+	^bytes uint32AtOffset: _OffsetOf_dwProcessId! !
 !OS.MIB_UDPEXROW categoriesForMethods!
 dwProcessId!**compiled accessors**!public! !
 !
@@ -56,7 +56,7 @@ defineFields
 	super defineFields.
 	self 
 		defineField: #dwProcessId
-		type: DWORDField readOnly
+		type: UInt32Field readOnly
 		offset: 8.
 	self byteSize: 12!
 

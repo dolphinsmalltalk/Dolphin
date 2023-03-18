@@ -33,7 +33,7 @@ asInteger
 	"Answer a 64-bit integer specifying the number of 100 nanosecond intervals since the
 	FILETIME epoch (01:00:00, 01 January 1601 UTC)."
 
-	^bytes qwordAtOffset: 0!
+	^bytes uint64AtOffset: 0!
 
 asLocalTime
 	"Answer the receiver converted to a local time (from UTC).
@@ -79,7 +79,7 @@ integerValue: anInteger
 	"Set the number of 100-nanosecond intervals the receiver represents since the
 	FILETIME epoch."
 
-	bytes qwordAtOffset: 0 put: anInteger! !
+	bytes uint64AtOffset: 0 put: anInteger! !
 !OS.FILETIME categoriesForMethods!
 asDateAndTime!converting!public! !
 asFILETIME!converting!public! !
@@ -109,8 +109,8 @@ defineFields
 	"
 
 	self
-		defineField: #dwLowDateTime type: DWORDField filler;
-		defineField: #dwHighDateTime type: DWORDField filler!
+		defineField: #dwLowDateTime type: UInt32Field filler;
+		defineField: #dwHighDateTime type: UInt32Field filler!
 
 fromDateAndTime: aDateAndTime
 	"Answer a <FILETIME> equivalent to the specified <DateAndTime>"

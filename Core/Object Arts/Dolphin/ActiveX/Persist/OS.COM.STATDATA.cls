@@ -24,22 +24,22 @@ WARNING: This comment was automatically generated from the struct''s type inform
 advf
 	"Answer the <Integer> value of the receiver's 'advf' field."
 
-	^bytes dwordAtOffset: _OffsetOf_advf!
+	^bytes uint32AtOffset: _OffsetOf_advf!
 
 advf: anInteger
 	"Set the receiver's 'advf' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_advf put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_advf put: anInteger!
 
 dwConnection
 	"Answer the <Integer> value of the receiver's 'dwConnection' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwConnection!
+	^bytes uint32AtOffset: _OffsetOf_dwConnection!
 
 dwConnection: anInteger
 	"Set the receiver's 'dwConnection' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwConnection put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwConnection put: anInteger!
 
 formatetc
 	"Answer the <FORMATETC> value of the receiver's 'formatetc' field."
@@ -92,9 +92,9 @@ defineFields
 
 	self
 		defineField: #formatetc type: (StructureField type: FORMATETC);
-		defineField: #advf type: DWORDField new;
+		defineField: #advf type: UInt32Field new;
 		defineField: #pAdvSink type: (PointerField type: IAdviseSink);
-		defineField: #dwConnection type: DWORDField new!
+		defineField: #dwConnection type: UInt32Field new!
 
 getFieldNames
 	^#(#formatetc #advf #pAdvSink #dwConnection)! !

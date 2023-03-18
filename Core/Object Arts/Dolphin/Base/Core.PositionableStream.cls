@@ -136,14 +136,6 @@ nextDOUBLE
 
 	^(self basicNext: 8) doubleAtOffset: 0!
 
-nextDWORD
-	"Answer a 32-bit unsigned integer constructed from the host system representation contained
-	in the next 4 bytes on the receiver."
-
-	"N.B. This will fail if the receiver is not a byte stream."
-
-	^(self basicNext: 4) dwordAtOffset: 0!
-
 nextFLOAT
 	"Answer a <Float> constructed from the next 4 bytes on the receiver, which are assumed to
 	represent an IEEE single precision floating point number."
@@ -152,7 +144,15 @@ nextFLOAT
 
 	^(self basicNext: VMConstants.FloatSize) floatAtOffset: 0!
 
-nextSDWORD
+nextInt16
+	"Answer a 16-bit signed integer constructed from the host system representation contained in
+	the next 2 bytes on the receiver."
+
+	"N.B. This will fail if the receiver is not a byte stream."
+
+	^(self basicNext: 2) int16AtOffset: 0!
+
+nextInt32
 	"Answer a 32-bit signed integer constructed from the host system representation contained in
 	the next 4 bytes on the receiver."
 
@@ -166,23 +166,23 @@ nextSDWORD
 		4 - 	The receiver's new position would overflow the SmallInteger range."
 
 	<primitive: 144>
-	^(self basicNext: 4) sdwordAtOffset: 0!
+	^(self basicNext: 4) int32AtOffset: 0!
 
-nextSWORD
-	"Answer a 16-bit signed integer constructed from the host system representation contained in
-	the next 2 bytes on the receiver."
-
-	"N.B. This will fail if the receiver is not a byte stream."
-
-	^(self basicNext: 2) swordAtOffset: 0!
-
-nextWORD
+nextUInt16
 	"Answer a 16-bit unsigned integer constructed from the host system representation contained
 	in the next 2 bytes on the receiver."
 
 	"N.B. This will fail if the receiver is not a byte stream."
 
-	^(self basicNext: 2) wordAtOffset: 0!
+	^(self basicNext: 2) uint16AtOffset: 0!
+
+nextUInt32
+	"Answer a 32-bit unsigned integer constructed from the host system representation contained
+	in the next 4 bytes on the receiver."
+
+	"N.B. This will fail if the receiver is not a byte stream."
+
+	^(self basicNext: 4) uint32AtOffset: 0!
 
 on: aCollection
 	"Private - Set the <collection> over which the receiver will stream and initialize the receiver."
@@ -276,11 +276,11 @@ locale!accessing!public! !
 locale:!accessing!public! !
 nextAvailable:!accessing!public! !
 nextDOUBLE!binary filing!public! !
-nextDWORD!binary filing!public! !
 nextFLOAT!binary filing!public! !
-nextSDWORD!binary filing!public! !
-nextSWORD!binary filing!public! !
-nextWORD!binary filing!public! !
+nextInt16!binary filing!public! !
+nextInt32!binary filing!public! !
+nextUInt16!binary filing!public! !
+nextUInt32!binary filing!public! !
 on:!initializing!private! !
 originalContents!accessing!public! !
 position!positioning!public! !

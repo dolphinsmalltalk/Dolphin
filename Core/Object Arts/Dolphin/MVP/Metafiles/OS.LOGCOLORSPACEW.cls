@@ -47,12 +47,12 @@ struct tagLOGCOLORSPACEW {
 lcsCSType
 	"Answer the <Integer> value of the receiver's 'lcsCSType' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_lcsCSType!
+	^bytes int32AtOffset: _OffsetOf_lcsCSType!
 
 lcsCSType: anInteger
 	"Set the receiver's 'lcsCSType' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_lcsCSType put: anInteger!
+	bytes int32AtOffset: _OffsetOf_lcsCSType put: anInteger!
 
 lcsEndpoints
 	"Answer the <CIEXYZTRIPLE> value of the receiver's 'lcsEndpoints' field."
@@ -87,72 +87,72 @@ lcsFilename: aByteArray
 lcsGammaBlue
 	"Answer the <Integer> value of the receiver's 'lcsGammaBlue' field."
 
-	^bytes dwordAtOffset: _OffsetOf_lcsGammaBlue!
+	^bytes uint32AtOffset: _OffsetOf_lcsGammaBlue!
 
 lcsGammaBlue: anInteger
 	"Set the receiver's 'lcsGammaBlue' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_lcsGammaBlue put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_lcsGammaBlue put: anInteger!
 
 lcsGammaGreen
 	"Answer the <Integer> value of the receiver's 'lcsGammaGreen' field."
 
-	^bytes dwordAtOffset: _OffsetOf_lcsGammaGreen!
+	^bytes uint32AtOffset: _OffsetOf_lcsGammaGreen!
 
 lcsGammaGreen: anInteger
 	"Set the receiver's 'lcsGammaGreen' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_lcsGammaGreen put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_lcsGammaGreen put: anInteger!
 
 lcsGammaRed
 	"Answer the <Integer> value of the receiver's 'lcsGammaRed' field."
 
-	^bytes dwordAtOffset: _OffsetOf_lcsGammaRed!
+	^bytes uint32AtOffset: _OffsetOf_lcsGammaRed!
 
 lcsGammaRed: anInteger
 	"Set the receiver's 'lcsGammaRed' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_lcsGammaRed put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_lcsGammaRed put: anInteger!
 
 lcsIntent
 	"Answer the <Integer> value of the receiver's 'lcsIntent' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_lcsIntent!
+	^bytes int32AtOffset: _OffsetOf_lcsIntent!
 
 lcsIntent: anInteger
 	"Set the receiver's 'lcsIntent' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_lcsIntent put: anInteger!
+	bytes int32AtOffset: _OffsetOf_lcsIntent put: anInteger!
 
 lcsSignature
 	"Answer the <Integer> value of the receiver's 'lcsSignature' field."
 
-	^bytes dwordAtOffset: _OffsetOf_lcsSignature!
+	^bytes uint32AtOffset: _OffsetOf_lcsSignature!
 
 lcsSignature: anInteger
 	"Set the receiver's 'lcsSignature' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_lcsSignature put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_lcsSignature put: anInteger!
 
 lcsSize
 	"Answer the <Integer> value of the receiver's 'lcsSize' field."
 
-	^bytes dwordAtOffset: _OffsetOf_lcsSize!
+	^bytes uint32AtOffset: _OffsetOf_lcsSize!
 
 lcsSize: anInteger
 	"Set the receiver's 'lcsSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_lcsSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_lcsSize put: anInteger!
 
 lcsVersion
 	"Answer the <Integer> value of the receiver's 'lcsVersion' field."
 
-	^bytes dwordAtOffset: _OffsetOf_lcsVersion!
+	^bytes uint32AtOffset: _OffsetOf_lcsVersion!
 
 lcsVersion: anInteger
 	"Set the receiver's 'lcsVersion' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_lcsVersion put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_lcsVersion put: anInteger! !
 !OS.LOGCOLORSPACEW categoriesForMethods!
 lcsCSType!**compiled accessors**!public! !
 lcsCSType:!**compiled accessors**!public! !
@@ -203,31 +203,31 @@ defineFields
 
 	self
 		defineField: #lcsSignature
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 0;
 		defineField: #lcsVersion
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 4;
 		defineField: #lcsSize
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 8;
 		defineField: #lcsCSType
-			type: SDWORDField new
+			type: Int32Field new
 			offset: 12;
 		defineField: #lcsIntent
-			type: SDWORDField new
+			type: Int32Field new
 			offset: 16;
 		defineField: #lcsEndpoints
 			type: (StructureField type: CIEXYZTRIPLE)
 			offset: 20;
 		defineField: #lcsGammaRed
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 56;
 		defineField: #lcsGammaGreen
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 60;
 		defineField: #lcsGammaBlue
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 64;
 		defineField: #lcsFilename
 			type: (ArrayField type: ByteArray length: 260)

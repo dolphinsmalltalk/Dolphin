@@ -249,7 +249,7 @@ lineSeparator
 	"Answer the <sdword> value of the 'LineSeparator' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_LineSeparator: answer.
 	^answer asObject!
 
@@ -271,7 +271,7 @@ mode
 	"Answer the <sdword> value of the 'Mode' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_Mode: answer.
 	^answer asObject!
 
@@ -318,7 +318,7 @@ position
 	"Answer the <sdword> value of the 'Position' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_Position: answer.
 	^answer asObject!
 
@@ -453,7 +453,7 @@ size
 	"Answer the <sdword> value of the 'Size' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_Size: answer.
 	^answer asObject!
 
@@ -469,7 +469,7 @@ state
 	"Answer the <sdword> value of the 'State' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_State: answer.
 	^answer asObject!
 
@@ -477,7 +477,7 @@ type
 	"Answer the <sdword> value of the 'Type' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_Type: answer.
 	^answer asObject!
 

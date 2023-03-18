@@ -77,7 +77,7 @@ getRefType
 hreftype
 	"Answer the <Integer> value of the receiver's 'hreftype' field."
 
-	^bytes dwordAtOffset: _OffsetOf_hreftype!
+	^bytes uint32AtOffset: _OffsetOf_hreftype!
 
 isAnonymous
 	"Answer whether the type described by the receiver is an anonymous (i.e. unnamed)
@@ -197,7 +197,7 @@ vartype
 vt
 	"Answer the <Integer> value of the receiver's 'vt' field."
 
-	^bytes wordAtOffset: _OffsetOf_vt!
+	^bytes uint16AtOffset: _OffsetOf_vt!
 
 vtName
 	"Private - Answer the Dolphin external type name for the receiver's variant type."
@@ -253,7 +253,7 @@ defineFields
 
 	self
 		defineField: #lptdesc type: (PointerField type: TYPEDESC) beReadOnly;
-		defineField: #vt type: WORDField readOnly.
+		defineField: #vt type: UInt16Field readOnly.
 
 	"Other fields of the union"
 	self
@@ -261,7 +261,7 @@ defineFields
 			type: (PointerField type: ARRAYDESC) beReadOnly
 			offset: 0;
 		defineField: #hreftype
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 0!
 
 getFieldNames

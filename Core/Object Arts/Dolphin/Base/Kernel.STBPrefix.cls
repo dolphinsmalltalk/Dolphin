@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Kernel.STBPrefix'
-	instanceVariableNames: 'dword'
+	instanceVariableNames: 'uint32'
 	classVariableNames: 'DataPrefix ProxyPrefix'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -96,27 +96,14 @@ When testing an instance of this class the tests should be performed in the foll
 character
 	"Answer the Character represented by the receiver."
 
-	^Character value: (dword bitShift: IndexShift)!
-
-dword
-	"Answer the receiver as a 4 byte DWORD."
-
-	^dword
-!
-
-dword: anInteger
-	"Set the receiver's dword inst var to anInteger.
-	Answer the receiver."
-
-	dword := anInteger.
-	^self!
+	^Character value: (uint32 bitShift: IndexShift)!
 
 encodeClass: aClass locator: aString
 	"Answer a 32-bit <integer> STB prefix code for an object of a hitherto unencountered class
 	aClass, with locator, aString."
 
 	| code |
-	code := dword
+	code := uint32
 				bitOr: (ClassPrefixMask bitOr: ((aString size bitShift: 16) bitOr: (aClass instSize bitShift: 8))).
 	aClass isVariable
 		ifTrue: 
@@ -129,54 +116,54 @@ encodeClassRef: anInteger
 	has already been output with reference index, anInteger. As we encode the class reference
 	within the prefix code the object data immediately follows it."
 
-	^dword bitOr: (anInteger bitShift: 4)!
+	^uint32 bitOr: (anInteger bitShift: 4)!
 
 instSize
 	"Answer the receiver's instSize field."
 
-	^(dword bitShift: InstSizeShift) bitAnd: InstSizeMask!
+	^(uint32 bitShift: InstSizeShift) bitAnd: InstSizeMask!
 
 isBytes
 	"Answer the Boolean value of the isBytes bit flag."
 
-	^dword allMask: BytesMask!
+	^uint32 allMask: BytesMask!
 
 isCharacter
 	"Answer whether the receiver represents a Character."
 
-	^dword anyMask: CharacterMask!
+	^uint32 anyMask: CharacterMask!
 
 isClassPrefix
 	"Answer the Boolean value of the isClassPrefix bit flag."
 
-	^dword anyMask: ClassPrefixMask!
+	^uint32 anyMask: ClassPrefixMask!
 
 isDataPrefix
 	"Answer the Boolean value of the isDataPrefix bit flag."
 
-	^dword anyMask: DataPrefixMask!
+	^uint32 anyMask: DataPrefixMask!
 
 isNonZeroVersion
 	"Answer the Boolean value of the isNonZeroVersion bit flag."
 
-	^dword anyMask: NonZeroVersionMask!
+	^uint32 anyMask: NonZeroVersionMask!
 
 isProxy
 	"Answer the Boolean value of the isProxy bit flag.
 	If true, the object that the receiver prefixes is
 	a proxy for the object rather than the object itself."
 
-	^dword anyMask: ProxyMask!
+	^uint32 anyMask: ProxyMask!
 
 isSmallInteger
 	"Answer the Boolean value of the isSmallInteger bit flag."
 
-	^dword anyMask: 1!
+	^uint32 anyMask: 1!
 
 isVariable
 	"Answer the Boolean value of the isVariable bit flag."
 
-	^dword allMask: VariableMask!
+	^uint32 allMask: VariableMask!
 
 printOn: aStream
 	"Append a debugging description of the receiver to aStream."
@@ -184,7 +171,7 @@ printOn: aStream
 	aStream
 		basicPrint: self;
 		nextPut: $(.
-	dword printOn: aStream base: 16 showRadix: true.
+	uint32 printOn: aStream base: 16 showRadix: true.
 	aStream nextPutAll: ': '.
 	self isSmallInteger ifTrue: [
 		aStream print: self smallInteger]
@@ -202,16 +189,27 @@ printOn: aStream
 refIndex
 	"Answer the receiver's object or class reference index."
 
-	^dword bitShift: IndexShift!
+	^uint32 bitShift: IndexShift!
 
 smallInteger
 	"Answer the receiver decoded into a SmallInteger."
 
-	^dword bitShift: -1! !
+	^uint32 bitShift: -1!
+
+uint32
+	"Answer the receiver encoded as a 32-bit unsigned integer."
+
+	^uint32
+!
+
+uint32: anInteger
+	"Set the receiver's dword inst var to anInteger.
+	Answer the receiver."
+
+	uint32 := anInteger.
+	^self! !
 !Kernel.STBPrefix categoriesForMethods!
 character!accessing!public! !
-dword!accessing!public! !
-dword:!accessing!public! !
 encodeClass:locator:!accessing!public! !
 encodeClassRef:!accessing!public! !
 instSize!accessing!public! !
@@ -226,6 +224,8 @@ isVariable!public!testing! !
 printOn:!development!printing!public! !
 refIndex!accessing!public! !
 smallInteger!accessing!public! !
+uint32!accessing!public! !
+uint32:!accessing!public! !
 !
 
 !Kernel.STBPrefix class methodsFor!
@@ -253,7 +253,7 @@ fromInteger: anInteger
 	"Answer a new instance initialised from the 32-bit <integer> STB prefix code, anInteger."
 
 	^self new
-		dword: anInteger!
+		uint32: anInteger!
 
 initialize
 	DataPrefix := (self fromInteger: DataPrefixMask)

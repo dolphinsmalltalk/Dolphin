@@ -99,7 +99,7 @@ endOfRecordset: fMoreData adStatus: adStatus pRecordset: pRecordset
 	outputs := {VARIANT_BOOL new
 					value: fMoreData;
 					yourself.
-				SDWORD new
+				Int32 new
 					value: adStatus;
 					yourself}.
 	self
@@ -124,7 +124,7 @@ fetchComplete: pError adStatus: adStatus pRecordset: pRecordset
 
 	^self
 		FetchComplete: pError
-		adStatus: (SDWORD new
+		adStatus: (Int32 new
 				value: adStatus;
 				yourself)
 		pRecordset: pRecordset!
@@ -146,7 +146,7 @@ fetchProgress: progress maxProgress: maxProgress adStatus: adStatus pRecordset: 
 	^self
 		FetchProgress: progress
 		MaxProgress: maxProgress
-		adStatus: (SDWORD new
+		adStatus: (Int32 new
 				value: adStatus;
 				yourself)
 		pRecordset: pRecordset!
@@ -170,7 +170,7 @@ fieldChangeComplete: cFields fields: fields pError: pError adStatus: adStatus pR
 		FieldChangeComplete: cFields
 		Fields: fields asVariant
 		pError: pError
-		adStatus: (SDWORD new
+		adStatus: (Int32 new
 				value: adStatus;
 				yourself)
 		pRecordset: pRecordset!
@@ -194,7 +194,7 @@ moveComplete: adReason pError: pError adStatus: adStatus pRecordset: pRecordset
 	^self
 		MoveComplete: adReason
 		pError: pError
-		adStatus: (SDWORD new
+		adStatus: (Int32 new
 				value: adStatus;
 				yourself)
 		pRecordset: pRecordset!
@@ -218,7 +218,7 @@ recordChangeComplete: adReason cRecords: cRecords pError: pError adStatus: adSta
 		RecordChangeComplete: adReason
 		cRecords: cRecords
 		pError: pError
-		adStatus: (SDWORD new
+		adStatus: (Int32 new
 				value: adStatus;
 				yourself)
 		pRecordset: pRecordset!
@@ -242,7 +242,7 @@ recordsetChangeComplete: adReason pError: pError adStatus: adStatus pRecordset: 
 	^self
 		RecordsetChangeComplete: adReason
 		pError: pError
-		adStatus: (SDWORD new
+		adStatus: (Int32 new
 				value: adStatus;
 				yourself)
 		pRecordset: pRecordset!
@@ -265,7 +265,7 @@ willChangeField: cFields fields: fields adStatus: adStatus pRecordset: pRecordse
 	^self
 		WillChangeField: cFields
 		Fields: fields asVariant
-		adStatus: (SDWORD new
+		adStatus: (Int32 new
 				value: adStatus;
 				yourself)
 		pRecordset: pRecordset!
@@ -288,7 +288,7 @@ willChangeRecord: adReason cRecords: cRecords adStatus: adStatus pRecordset: pRe
 	^self
 		WillChangeRecord: adReason
 		cRecords: cRecords
-		adStatus: (SDWORD new
+		adStatus: (Int32 new
 				value: adStatus;
 				yourself)
 		pRecordset: pRecordset!
@@ -310,7 +310,7 @@ willChangeRecordset: adReason adStatus: adStatus pRecordset: pRecordset
 
 	^self
 		WillChangeRecordset: adReason
-		adStatus: (SDWORD new
+		adStatus: (Int32 new
 				value: adStatus;
 				yourself)
 		pRecordset: pRecordset!
@@ -331,7 +331,7 @@ willMove: adReason adStatus: adStatus pRecordset: pRecordset
 
 	^self
 		WillMove: adReason
-		adStatus: (SDWORD new
+		adStatus: (Int32 new
 				value: adStatus;
 				yourself)
 		pRecordset: pRecordset!

@@ -24,19 +24,19 @@ typedef struct tagfd_set {
 !OS.FD_SET methodsFor!
 
 fd_array
-	"Answer the <UINT_PTRArray> value of the receiver's 'fd_array' field."
+	"Answer the <UIntPtrArray> value of the receiver's 'fd_array' field."
 
-	^UINT_PTRArray fromAddress: bytes yourAddress + _OffsetOf_fd_array length: 64!
+	^UIntPtrArray fromAddress: bytes yourAddress + _OffsetOf_fd_array length: 64!
 
 fd_count
 	"Answer the <Integer> value of the receiver's 'fd_count' field."
 
-	^bytes dwordAtOffset: _OffsetOf_fd_count!
+	^bytes uint32AtOffset: _OffsetOf_fd_count!
 
 fd_count: anInteger
 	"Set the receiver's 'fd_count' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_fd_count put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_fd_count put: anInteger! !
 !OS.FD_SET categoriesForMethods!
 fd_array!**compiled accessors**!public! !
 fd_count!**compiled accessors**!public! !
@@ -61,8 +61,8 @@ defineFields
 "
 
 	self
-		defineField: #fd_count type: DWORDField new offset: 0;
-		defineField: #fd_array type: (ArrayField type: UINT_PTRArray length: 64) beReadOnly offset: 4.
+		defineField: #fd_count type: UInt32Field new offset: 0;
+		defineField: #fd_array type: (ArrayField type: UIntPtrArray length: 64) beReadOnly offset: 4.
 	self byteSize: 260!
 
 getFieldNames

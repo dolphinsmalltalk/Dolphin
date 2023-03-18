@@ -43,52 +43,52 @@ tdData: anObject
 tdDeviceNameOffset
 	"Answer the <Integer> value of the receiver's 'tdDeviceNameOffset' field."
 
-	^bytes wordAtOffset: _OffsetOf_tdDeviceNameOffset!
+	^bytes uint16AtOffset: _OffsetOf_tdDeviceNameOffset!
 
 tdDeviceNameOffset: anInteger
 	"Set the receiver's 'tdDeviceNameOffset' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_tdDeviceNameOffset put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_tdDeviceNameOffset put: anInteger!
 
 tdDriverNameOffset
 	"Answer the <Integer> value of the receiver's 'tdDriverNameOffset' field."
 
-	^bytes wordAtOffset: _OffsetOf_tdDriverNameOffset!
+	^bytes uint16AtOffset: _OffsetOf_tdDriverNameOffset!
 
 tdDriverNameOffset: anInteger
 	"Set the receiver's 'tdDriverNameOffset' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_tdDriverNameOffset put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_tdDriverNameOffset put: anInteger!
 
 tdExtDevmodeOffset
 	"Answer the <Integer> value of the receiver's 'tdExtDevmodeOffset' field."
 
-	^bytes wordAtOffset: _OffsetOf_tdExtDevmodeOffset!
+	^bytes uint16AtOffset: _OffsetOf_tdExtDevmodeOffset!
 
 tdExtDevmodeOffset: anInteger
 	"Set the receiver's 'tdExtDevmodeOffset' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_tdExtDevmodeOffset put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_tdExtDevmodeOffset put: anInteger!
 
 tdPortNameOffset
 	"Answer the <Integer> value of the receiver's 'tdPortNameOffset' field."
 
-	^bytes wordAtOffset: _OffsetOf_tdPortNameOffset!
+	^bytes uint16AtOffset: _OffsetOf_tdPortNameOffset!
 
 tdPortNameOffset: anInteger
 	"Set the receiver's 'tdPortNameOffset' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_tdPortNameOffset put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_tdPortNameOffset put: anInteger!
 
 tdSize
 	"Answer the <Integer> value of the receiver's 'tdSize' field."
 
-	^bytes dwordAtOffset: _OffsetOf_tdSize!
+	^bytes uint32AtOffset: _OffsetOf_tdSize!
 
 tdSize: anInteger
 	"Set the receiver's 'tdSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_tdSize put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_tdSize put: anInteger! !
 !OS.COM.DVTARGETDEVICE categoriesForMethods!
 tdData!accessing!public! !
 tdData:!accessing!public! !
@@ -128,11 +128,11 @@ defineFields
 	"
 
 	self
-		defineField: #tdSize type: DWORDField new;
-		defineField: #tdDriverNameOffset type: WORDField new;
-		defineField: #tdDeviceNameOffset type: WORDField new;
-		defineField: #tdPortNameOffset type: WORDField new;
-		defineField: #tdExtDevmodeOffset type: WORDField new
+		defineField: #tdSize type: UInt32Field new;
+		defineField: #tdDriverNameOffset type: UInt16Field new;
+		defineField: #tdDeviceNameOffset type: UInt16Field new;
+		defineField: #tdPortNameOffset type: UInt16Field new;
+		defineField: #tdExtDevmodeOffset type: UInt16Field new
 	"Hand modified - implement tdData manually"
 	"defineField: #tdData type: ... offset: 12"
 

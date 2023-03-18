@@ -593,7 +593,7 @@ readyState
 	Helpstring: get the state of the XML document"
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_readyState: answer.
 	^answer asObject!
 

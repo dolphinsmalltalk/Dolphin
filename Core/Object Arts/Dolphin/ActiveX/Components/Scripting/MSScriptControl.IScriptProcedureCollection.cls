@@ -28,7 +28,7 @@ count
 	Helpstring: Number of procedures"
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_Count: answer.
 	^answer asObject!
 

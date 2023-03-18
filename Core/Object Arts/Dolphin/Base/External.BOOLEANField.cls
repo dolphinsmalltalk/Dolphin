@@ -14,19 +14,19 @@ External.BOOLEANField comment: '<BOOLField> is a <ScalarField> class to represen
 accessorMessage
 	"Private - Answer the receiver's 'accessorStem'."
 
-	^#byteAtOffset:put:!
+	^#uint8AtOffset:put:!
 
 readFrom: anExternalStructure
 	"Private - Answer a <Boolean> of equivalent value to the 8-bit integer field at the
 	receiver's offset in the <ExternalStructure> argument, i.e. false if zero, true for 1..255."
 
-	^(anExternalStructure bytes byteAtOffset: offset) asBoolean!
+	^(anExternalStructure bytes uint8AtOffset: offset) asBoolean!
 
 writeInto: anExternalStructure value: aBoolean
 	"Private - Write the <Boolean> value into anExternal at the receiver's offset, as the
 	integer byte value 1 for true, or 0 for false."
 
-	anExternalStructure bytes byteAtOffset: offset put: aBoolean asParameter! !
+	anExternalStructure bytes uint8AtOffset: offset put: aBoolean asParameter! !
 !External.BOOLEANField categoriesForMethods!
 accessorMessage!automatic generation!private! !
 readFrom:!indirect accessing!private! !

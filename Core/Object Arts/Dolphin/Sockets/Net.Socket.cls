@@ -76,7 +76,7 @@ peerAddress
 
 	| winSockAddr winSockAddrLen |
 	winSockAddr := SOCKADDR_IN new.
-	winSockAddrLen := SDWORD new.
+	winSockAddrLen := Int32 new.
 	winSockAddrLen value: winSockAddr byteSize.
 	(Ws2_32
 		getpeername: self asParameter

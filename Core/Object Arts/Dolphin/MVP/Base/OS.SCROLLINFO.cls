@@ -23,17 +23,17 @@ OS.SCROLLINFO comment: ''!
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 fMask
 	"Answer the <Integer> value of the receiver's 'fMask' field."
 
-	^bytes dwordAtOffset: _OffsetOf_fMask!
+	^bytes uint32AtOffset: _OffsetOf_fMask!
 
 fMask: anInteger
 	"Set the receiver's 'fMask' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_fMask put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_fMask put: anInteger!
 
 maskIn: anInteger
 	"OR in to receiver's 'fMask' field the bit flags represented by anInteger.
@@ -44,47 +44,47 @@ maskIn: anInteger
 nMax
 	"Answer the <Integer> value of the receiver's 'nMax' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_nMax!
+	^bytes int32AtOffset: _OffsetOf_nMax!
 
 nMax: anInteger
 	"Set the receiver's 'nMax' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_nMax put: anInteger!
+	bytes int32AtOffset: _OffsetOf_nMax put: anInteger!
 
 nMin
 	"Answer the <Integer> value of the receiver's 'nMin' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_nMin!
+	^bytes int32AtOffset: _OffsetOf_nMin!
 
 nMin: anInteger
 	"Set the receiver's 'nMin' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_nMin put: anInteger!
+	bytes int32AtOffset: _OffsetOf_nMin put: anInteger!
 
 nPage
 	"Answer the <Integer> value of the receiver's 'nPage' field."
 
-	^bytes dwordAtOffset: _OffsetOf_nPage!
+	^bytes uint32AtOffset: _OffsetOf_nPage!
 
 nPage: anInteger
 	"Set the receiver's 'nPage' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_nPage put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_nPage put: anInteger!
 
 nPos
 	"Answer the <Integer> value of the receiver's 'nPos' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_nPos!
+	^bytes int32AtOffset: _OffsetOf_nPos!
 
 nPos: anInteger
 	"Set the receiver's 'nPos' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_nPos put: anInteger!
+	bytes int32AtOffset: _OffsetOf_nPos put: anInteger!
 
 nTrackPos
 	"Answer the <Integer> value of the receiver's 'nTrackPos' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_nTrackPos!
+	^bytes int32AtOffset: _OffsetOf_nTrackPos!
 
 page
 	"Answer the page size of a proportional scroll bar."
@@ -166,13 +166,13 @@ defineFields
 	typedef SCROLLINFO FAR *LPSCROLLINFO;"
 
 	self
-		defineField: #dwSize type: DWORDField writeOnly beOverride;
-		defineField: #fMask type: DWORDField new;
-		defineField: #nMin type: SDWORDField new;
-		defineField: #nMax type: SDWORDField new;
-		defineField: #nPage type: DWORDField new;
-		defineField: #nPos type: SDWORDField new;
-		defineField: #nTrackPos type: SDWORDField readOnly	"cannot be set"!
+		defineField: #dwSize type: UInt32Field writeOnly beOverride;
+		defineField: #fMask type: UInt32Field new;
+		defineField: #nMin type: Int32Field new;
+		defineField: #nMax type: Int32Field new;
+		defineField: #nPage type: UInt32Field new;
+		defineField: #nPos type: Int32Field new;
+		defineField: #nTrackPos type: Int32Field readOnly	"cannot be set"!
 
 getFieldNames
 	^#(#dwSize #fMask #nMin #nMax #nPage #nPos #nTrackPos)! !

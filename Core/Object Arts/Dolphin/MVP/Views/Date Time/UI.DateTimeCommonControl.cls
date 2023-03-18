@@ -80,7 +80,7 @@ nmFirst
 nmNotify: pNMHDR
 	"Private - Handler for a redirected MonthCal WM_NOTIFY message."
 
-	^(self dtNotificationMap lookup: self nmFirst - (pNMHDR sdwordAtOffset: 8))
+	^(self dtNotificationMap lookup: self nmFirst - (pNMHDR int32AtOffset: 8))
 		ifNil: [super nmNotify: pNMHDR]
 		ifNotNil: [:action | self perform: action with: pNMHDR]!
 

@@ -140,7 +140,7 @@ close
 errno
 	"Answer the <integer> value of the last recorded CRT error."
 
-	^self _errno sdwordAtOffset: 0!
+	^self _errno int32AtOffset: 0!
 
 fclose: anAddress
 	"Closes the specified stream. Answers 0 if successful.

@@ -12,7 +12,7 @@ External.UInt32Bytes comment: ''!
 !External.UInt32Bytes methodsFor!
 
 asBoolean
-	^(self sdwordAtOffset: 0) ~~ 0!
+	^(self int32AtOffset: 0) ~~ 0!
 
 asDword
 	"Answer the receiver in a form suitable for passing/returning as 
@@ -23,17 +23,17 @@ asDword
 asInteger
 	"Answer the 32-bit unsigned <integer> value of the receiver."
 
-	^self dwordAtOffset: 0!
+	^self uint32AtOffset: 0!
 
 asSignedInteger
 	"Answer the 32-bit, 2's complement, signed <integer> value of the receiver."
 
-	^self sdwordAtOffset: 0!
+	^self int32AtOffset: 0!
 
 value: anObject
 	"Set the 32-bit unsigned <integer> value stored in the receiver."
 
-	self dwordAtOffset: 0 put: anObject! !
+	self uint32AtOffset: 0 put: anObject! !
 !External.UInt32Bytes categoriesForMethods!
 asBoolean!converting!public! !
 asDword!converting!public! !
@@ -51,7 +51,7 @@ elementSize
 !
 
 valueAtAddress: anAddress 
-	^anAddress asExternalAddress dwordAtOffset: 0! !
+	^anAddress asExternalAddress uint32AtOffset: 0! !
 !External.UInt32Bytes class categoriesForMethods!
 elementSize!constants!private! !
 valueAtAddress:!helpers!private! !

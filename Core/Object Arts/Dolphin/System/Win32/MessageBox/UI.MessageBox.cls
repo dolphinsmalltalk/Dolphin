@@ -401,7 +401,7 @@ footerText: aString
 getDefaultButton
 	| status buf |
 	buf := ByteArray newFixed: 8.
-	buf dwordAtOffset: 4 put: 4.
+	buf uint32AtOffset: 4 put: 4.
 	status := AdvApi32
 				regGetValue: HKEY_CURRENT_USER
 				lpSubKey: self defaultablesKeyName
@@ -410,7 +410,7 @@ getDefaultButton
 				pdwType: nil
 				pvData: buf
 				pcbData: buf yourAddress + 4.
-	^status == ERROR_SUCCESS ifTrue: [buf dwordAtOffset: 0]!
+	^status == ERROR_SUCCESS ifTrue: [buf uint32AtOffset: 0]!
 
 getEvents
 	"Private - Answer the EventsCollection belonging to the receiver, or nil if the receiver has no events registered for it"
@@ -632,7 +632,7 @@ isSuppressed
 	| sizeBuf status buf |
 	buf := Utf16String newFixed: 2.	"Note that the value must be 'NO'. Anything else appears to be ignored."
 	sizeBuf := ByteArray newFixed: 4.
-	sizeBuf dwordAtOffset: 0 put: buf byteSize.
+	sizeBuf uint32AtOffset: 0 put: buf byteSize.
 	status := AdvApi32
 				regGetValue: HKEY_CURRENT_USER
 				lpSubKey: self suppressionsKeyName
@@ -709,7 +709,7 @@ notificationCallback
 							with: wParam
 							with: lParam]]
 		descriptor: (FunctionDescriptor returnType: 'hresult'
-				argumentTypes: 'handle dword uintptr  intptr intptr')!
+				argumentTypes: 'handle uint32 uintptr intptr intptr')!
 
 open
 	"Display a Windows Task Dialog for the receiver, and answer a portable symbolic constant for the button pressed by the user."
@@ -785,7 +785,7 @@ saveDefaultButton: anInteger
 
 	| value |
 	value := ByteArray new: 4.
-	value dwordAtOffset: 0 put: anInteger.
+	value uint32AtOffset: 0 put: anInteger.
 	"Use the registry API directly to reduce dependencies."
 	AdvApi32
 		regSetKeyValue: HKEY_CURRENT_USER
@@ -933,9 +933,9 @@ showIndirect: aTASKDIALOGCONFIG
 				pnRadioButton: buf yourAddress + 4
 				pfVerificationFlagChecked: buf yourAddress + 8]
 					ensure: [enabled do: [:each | each isEnabled: true]]].
-	buttonId := buf sdwordAtOffset: 0.
-	radioButtonId := buf sdwordAtOffset: 4.
-	verified := (buf dwordAtOffset: 8) ~~ 0.
+	buttonId := buf int32AtOffset: 0.
+	radioButtonId := buf int32AtOffset: 4.
+	verified := (buf uint32AtOffset: 8) ~~ 0.
 	(verified and: [self isSuppressible]) ifTrue: [self saveSuppressedDefault: buttonId].
 	^buttonId!
 

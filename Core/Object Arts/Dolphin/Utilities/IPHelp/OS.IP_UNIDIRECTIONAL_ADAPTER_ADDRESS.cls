@@ -29,16 +29,16 @@ struct tagIP_UNIDIRECTIONAL_ADAPTER_ADDRESS {
 !OS.IP_UNIDIRECTIONAL_ADAPTER_ADDRESS methodsFor!
 
 Address
-	"Answer the <DWORDArray> value of the receiver's 'Address' field."
+	"Answer the <UInt32Array> value of the receiver's 'Address' field."
 
-	^DWORDArray fromAddress: bytes yourAddress + _OffsetOf_Address length: 1!
+	^UInt32Array fromAddress: bytes yourAddress + _OffsetOf_Address length: 1!
 
-Address: aDWORDArray
-	"Set the receiver's 'Address' field to the value of the argument, aDWORDArray"
+Address: aUInt32Array
+	"Set the receiver's 'Address' field to the value of the argument, aUInt32Array"
 
 	| size |
-	size := aDWORDArray byteSize min: ##(1 * DWORDArray elementSize).
-	aDWORDArray
+	size := aUInt32Array byteSize min: ##(1 * UInt32Array elementSize).
+	aUInt32Array
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_Address + 1)
 		to: _OffsetOf_Address + size
@@ -47,7 +47,7 @@ Address: aDWORDArray
 NumAdapters
 	"Answer the <Integer> value of the receiver's 'NumAdapters' field."
 
-	^bytes dwordAtOffset: _OffsetOf_NumAdapters! !
+	^bytes uint32AtOffset: _OffsetOf_NumAdapters! !
 !OS.IP_UNIDIRECTIONAL_ADAPTER_ADDRESS categoriesForMethods!
 Address!**compiled accessors**!public! !
 Address:!**compiled accessors**!public! !
@@ -71,8 +71,8 @@ defineFields
 "
 
 	self
-		defineField: #NumAdapters type: DWORDField readOnly offset: 0;
-		defineField: #Address type: (ArrayField type: DWORDArray length: 1) offset: 4.
+		defineField: #NumAdapters type: UInt32Field readOnly offset: 0;
+		defineField: #Address type: (ArrayField type: UInt32Array length: 1) offset: 4.
 	self byteSize: 8!
 
 getFieldNames

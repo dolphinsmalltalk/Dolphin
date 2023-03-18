@@ -358,7 +358,7 @@ loadVersion4: aFileStream filer: binaryFiler
 	"Private - File in the objects owned by the receiver. The binaryFiler is positioned to
 	a number of stored objects, organized into file version 4."
 
-	self vmVersionCheck: binaryFiler stream nextDWORD.
+	self vmVersionCheck: binaryFiler stream nextUInt32.
 	self basicLoadVersion4: aFileStream filer: binaryFiler!
 
 loadVersion5: aFileStream filer: binaryFiler

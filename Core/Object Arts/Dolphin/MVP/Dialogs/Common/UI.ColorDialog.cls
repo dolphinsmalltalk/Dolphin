@@ -107,7 +107,7 @@ customColors
 	CustomColors isNil
 		ifTrue: 
 			[| white |
-			CustomColors := DWORDArray new: 16.
+			CustomColors := UInt32Array new: 16.
 			white := Color white asCOLORREF.
 			1 to: 15 do: [:index | CustomColors at: index put: white]].
 	^CustomColors!

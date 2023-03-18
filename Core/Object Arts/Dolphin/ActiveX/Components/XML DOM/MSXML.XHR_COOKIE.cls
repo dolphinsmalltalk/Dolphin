@@ -40,12 +40,12 @@ struct tagXHR_COOKIE {
 dwFlags
 	"Answer the <Integer> value of the receiver's 'dwFlags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwFlags!
+	^bytes uint32AtOffset: _OffsetOf_dwFlags!
 
 dwFlags: anInteger
 	"Set the receiver's 'dwFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwFlags put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwFlags put: anInteger!
 
 ftExpires
 	"Answer the <FILETIME> value of the receiver's 'ftExpires' field."
@@ -142,7 +142,7 @@ defineFields
 		defineField: #pwszValue type: (PointerField type: Utf16String) offset: 8;
 		defineField: #pwszP3PPolicy type: (PointerField type: Utf16String) offset: 12;
 		defineField: #ftExpires type: (StructureField type: FILETIME) offset: 16;
-		defineField: #dwFlags type: DWORDField new offset: 24.
+		defineField: #dwFlags type: UInt32Field new offset: 24.
 	self byteSize: 28!
 
 getFieldNames

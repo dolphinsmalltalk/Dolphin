@@ -34,27 +34,27 @@ struct tagTRACKMOUSEEVENT {
 dwFlags
 	"Answer the <Integer> value of the receiver's 'dwFlags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwFlags!
+	^bytes uint32AtOffset: _OffsetOf_dwFlags!
 
 dwFlags: anInteger
 	"Set the receiver's 'dwFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwFlags put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwFlags put: anInteger!
 
 dwHoverTime
 	"Answer the <Integer> value of the receiver's 'dwHoverTime' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwHoverTime!
+	^bytes uint32AtOffset: _OffsetOf_dwHoverTime!
 
 dwHoverTime: anInteger
 	"Set the receiver's 'dwHoverTime' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwHoverTime put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwHoverTime put: anInteger!
 
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 hwndTrack
 	"Answer the <ExternalHandle> value of the receiver's 'hwndTrack' field."
@@ -94,10 +94,10 @@ defineFields
 "
 
 	self
-		defineField: #dwSize type: DWORDField writeOnly beOverride;
-		defineField: #dwFlags type: DWORDField new;
+		defineField: #dwSize type: UInt32Field writeOnly beOverride;
+		defineField: #dwFlags type: UInt32Field new;
 		defineField: #hwndTrack type: HANDLEField new;
-		defineField: #dwHoverTime type: DWORDField new!
+		defineField: #dwHoverTime type: UInt32Field new!
 
 getFieldNames
 	^#(#dwSize #dwFlags #hwndTrack #dwHoverTime)! !

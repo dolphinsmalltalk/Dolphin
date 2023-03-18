@@ -34,12 +34,12 @@ struct tagHTTP_SERVICE_CONFIG_SSL_CCS_QUERY {
 dwToken
 	"Answer the <Integer> value of the receiver's 'dwToken' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwToken!
+	^bytes uint32AtOffset: _OffsetOf_dwToken!
 
 dwToken: anInteger
 	"Set the receiver's 'dwToken' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwToken put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwToken put: anInteger!
 
 KeyDesc
 	"Answer the <SOCKADDR_STORAGE> value of the receiver's 'KeyDesc' field."
@@ -82,7 +82,7 @@ defineFields
 	super defineFields.
 	self
 		defineField: #KeyDesc type: (StructureField type: SOCKADDR_STORAGE) offset: 8;
-		defineField: #dwToken type: DWORDField new offset: 136.
+		defineField: #dwToken type: UInt32Field new offset: 136.
 	self byteSize: 144!
 
 getFieldNames

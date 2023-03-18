@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.SDWORD subclass: #'External.BOOL'
+External.Int32 subclass: #'External.BOOL'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -20,12 +20,12 @@ Possible values are:
 value
 	"Answer the <Boolean> value of the receiver's 'value' field."
 
-	^(bytes dwordAtOffset: _OffsetOf_value) asBoolean!
+	^(bytes uint32AtOffset: _OffsetOf_value) asBoolean!
 
 value: aBoolean
 	"Set the receiver's 'value' field to the value of the argument, aBoolean"
 
-	bytes dwordAtOffset: _OffsetOf_value put: aBoolean asParameter! !
+	bytes uint32AtOffset: _OffsetOf_value put: aBoolean asParameter! !
 !External.BOOL categoriesForMethods!
 value!**compiled accessors**!public! !
 value:!**compiled accessors**!public! !

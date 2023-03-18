@@ -75,7 +75,7 @@ numArgs
 	Helpstring: Number of arguments that are expected"
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_NumArgs: answer.
 	^answer asObject!
 

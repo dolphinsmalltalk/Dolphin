@@ -76,7 +76,7 @@ contentType
 	"Answer the <sdword> value of the 'contentType' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_contentType: answer.
 	^answer asObject!
 
@@ -146,7 +146,7 @@ prohibitedSubstitutions
 	"Answer the <sdword> value of the 'prohibitedSubstitutions' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_prohibitedSubstitutions: answer.
 	^answer asObject! !
 !MSXML.ISchemaComplexType categoriesForMethods!

@@ -118,7 +118,7 @@ buildArguments
 callconv
 	"Answer the <Integer> value of the receiver's 'callconv' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_callconv!
+	^bytes int32AtOffset: _OffsetOf_callconv!
 
 callingConvention
 	"Answer the Dolphin external calling convention for the receiver."
@@ -135,17 +135,17 @@ clearMethodName
 cParams
 	"Private - Answer the <Integer> value of the receiver's 'cParams' field."
 
-	^bytes swordAtOffset: _OffsetOf_cParams!
+	^bytes int16AtOffset: _OffsetOf_cParams!
 
 cParamsOpt
 	"Answer the <Integer> value of the receiver's 'cParamsOpt' field."
 
-	^bytes swordAtOffset: _OffsetOf_cParamsOpt!
+	^bytes int16AtOffset: _OffsetOf_cParamsOpt!
 
 cScodes
 	"Private - Answer the <Integer> value of the receiver's 'cScodes' field."
 
-	^bytes swordAtOffset: _OffsetOf_cScodes!
+	^bytes int16AtOffset: _OffsetOf_cScodes!
 
 elemDesc
 	"Answer an <ELEMDESC> describing the receiver's actual return or property type (as opposed to the normal
@@ -169,7 +169,7 @@ flags
 funckind
 	"Answer the <Integer> value of the receiver's 'funckind' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_funckind!
+	^bytes int32AtOffset: _OffsetOf_funckind!
 
 getAllCustData
 	^analyzer tlbInterface getAllFuncCustData: index!
@@ -191,7 +191,7 @@ idlCallingConvention
 invkind
 	"Answer the <Integer> value of the receiver's 'invkind' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_invkind!
+	^bytes int32AtOffset: _OffsetOf_invkind!
 
 isDispatchable
 	"Answer whether the receiver is only invokable via IDispatch"
@@ -270,7 +270,7 @@ lprgscode
 memid
 	"Answer the <Integer> value of the receiver's 'memid' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_memid!
+	^bytes int32AtOffset: _OffsetOf_memid!
 
 name
 	"Answer the name of the function described by the receiver."
@@ -307,7 +307,7 @@ outputIndices
 oVft
 	"Answer the <Integer> value of the receiver's 'oVft' field."
 
-	^bytes swordAtOffset: _OffsetOf_oVft!
+	^bytes int16AtOffset: _OffsetOf_oVft!
 
 retvalIndex
 	"Private - Answer the index of the retval argument of the receiver.
@@ -377,7 +377,7 @@ vfnIndex
 wFuncFlags
 	"Answer the <Integer> value of the receiver's 'wFuncFlags' field."
 
-	^bytes wordAtOffset: _OffsetOf_wFuncFlags! !
+	^bytes uint16AtOffset: _OffsetOf_wFuncFlags! !
 !OS.COM.FUNCDESC categoriesForMethods!
 argumentNameFor:!helpers!private! !
 argumentNames!accessing!public! !
@@ -453,22 +453,22 @@ defineFields
 	"
 
 	self
-		defineField: #memid type: SDWORDField readOnly;
+		defineField: #memid type: Int32Field readOnly;
 		defineField: #lprgscode
 			type: (StructureArrayPointerField type: HRESULT
 					arrayLength: (ConformantArrayFieldLength lengthField: #cScodes)) beReadOnly;
 		defineField: #lprgelemdescParam
 			type: (StructureArrayPointerField type: ELEMDESC
 					arrayLength: (ConformantArrayFieldLength lengthField: #cParams)) beReadOnly;
-		defineField: #funckind type: SDWORDField readOnly;
-		defineField: #invkind type: SDWORDField readOnly;
-		defineField: #callconv type: SDWORDField readOnly;
-		defineField: #cParams type: SWORDField readOnly beNonBrowsable;
-		defineField: #cParamsOpt type: SWORDField readOnly;
-		defineField: #oVft type: SWORDField readOnly;
-		defineField: #cScodes type: SWORDField readOnly beNonBrowsable;
+		defineField: #funckind type: Int32Field readOnly;
+		defineField: #invkind type: Int32Field readOnly;
+		defineField: #callconv type: Int32Field readOnly;
+		defineField: #cParams type: Int16Field readOnly beNonBrowsable;
+		defineField: #cParamsOpt type: Int16Field readOnly;
+		defineField: #oVft type: Int16Field readOnly;
+		defineField: #cScodes type: Int16Field readOnly beNonBrowsable;
 		defineField: #elemdescFunc type: (StructureField type: ELEMDESC) beReadOnly;
-		defineField: #wFuncFlags type: WORDField readOnly!
+		defineField: #wFuncFlags type: UInt16Field readOnly!
 
 getFieldNames
 	^#(#memid #lprgscode #lprgelemdescParam #funckind #invkind #callconv #cParams #cParamsOpt #oVft #cScodes #elemdescFunc #wFuncFlags)!

@@ -86,8 +86,8 @@ getLibStatistics
 	hash tables, etc."
 
 	| pcchUniqueNames pcUniqueNames |
-	pcchUniqueNames := DWORD new.
-	pcUniqueNames := DWORD new.
+	pcchUniqueNames := UInt32 new.
+	pcUniqueNames := UInt32 new.
 	self GetLibStatistics: pcUniqueNames pcchUniqueNames: pcchUniqueNames.
 	^{pcUniqueNames asInteger. pcchUniqueNames asInteger}!
 

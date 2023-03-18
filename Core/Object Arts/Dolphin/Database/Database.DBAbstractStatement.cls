@@ -75,7 +75,7 @@ columnLength: anInteger
 				stringLengthPtr: nil
 				numericAttributePtr: len.	"Note using ODBC 2.x definition of column length"
 	self dbCheckException: ret.
-	^len dwordAtOffset: 0!
+	^len uint32AtOffset: 0!
 
 cursorType
 	"Answer the symbolic cursor type name (one of #dynamic, #forwardOnly, #keysetDriven or #static)."
@@ -121,11 +121,11 @@ describeCols: columnNumbers
 	nameBufSize := self parent maxColumnNameLength + 1.
 	name := Utf16String newFixed: nameBufSize.
 	"Similarly, re-usable buffers for all the other output parameters"
-	colNameLen := External.SWORD new.
-	dataType := External.SWORD new.
+	colNameLen := External.Int16 new.
+	dataType := External.Int16 new.
 	columnSize := External.UInt32Bytes new.
-	decimalDigits := External.SWORD new.
-	nullable := External.SWORD new.
+	decimalDigits := External.Int16 new.
+	nullable := External.Int16 new.
 	colLen := External.UInt32Bytes new.
 	hStmt := self executedHandle.
 	answer := Array new: columnNumbers size.
@@ -271,7 +271,7 @@ numColumns
 	ccol := ByteArray newFixed: 2.
 	ret := OS.Odbc32 sqlNumResultCols: self executedHandle pccol: ccol.
 	self dbCheckException: ret.
-	^ccol swordAtOffset: 0!
+	^ccol int16AtOffset: 0!
 
 numRows
 	"Answer the number of rows affected by an UPDATE, DELETE or INSERT command exec'd on
@@ -282,7 +282,7 @@ numRows
 	rowCount := ByteArray newFixed: 4.
 	ret := OS.Odbc32 sqlRowCount: self executedHandle rowCountPtr: rowCount.
 	self dbCheckException: ret.
-	^rowCount sdwordAtOffset: 0!
+	^rowCount int32AtOffset: 0!
 
 parent
 	"Answer the statement's parent <DBConnection> object."

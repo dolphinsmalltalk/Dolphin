@@ -507,7 +507,7 @@ nodeType
 	Helpstring: the node's type"
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_nodeType: answer.
 	^answer asObject!
 

@@ -85,8 +85,8 @@ displayValue: anInteger
 
 getRange
 	| min max |
-	min := SDWORD new.
-	max := SDWORD new.
+	min := Int32 new.
+	max := Int32 new.
 	self
 		sendMessage: UDM_GETRANGE32
 		wParam: min yourAddress
@@ -187,7 +187,7 @@ nmNotify: pNMHDR
 
 	^(##((Array new: UDN_FIRST - UDN_DELTAPOS + 1 withAll: #nmDummy:)
 		at: UDN_FIRST - UDN_DELTAPOS + 1 put: #udnDeltaPos:;
-		yourself) lookup: ##(UDN_FIRST + 1) - (pNMHDR sdwordAtOffset: 8))
+		yourself) lookup: ##(UDN_FIRST + 1) - (pNMHDR int32AtOffset: 8))
 		ifNil: [super nmNotify: pNMHDR]
 		ifNotNil: [:action | self perform: action with: pNMHDR]!
 

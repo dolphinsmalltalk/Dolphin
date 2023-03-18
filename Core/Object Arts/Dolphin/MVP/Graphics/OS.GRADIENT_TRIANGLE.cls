@@ -34,32 +34,32 @@ struct tagGRADIENT_TRIANGLE {
 Vertex1
 	"Answer the <Integer> value of the receiver's 'Vertex1' field."
 
-	^bytes dwordAtOffset: _OffsetOf_Vertex1!
+	^bytes uint32AtOffset: _OffsetOf_Vertex1!
 
 Vertex1: anInteger
 	"Set the receiver's 'Vertex1' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_Vertex1 put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_Vertex1 put: anInteger!
 
 Vertex2
 	"Answer the <Integer> value of the receiver's 'Vertex2' field."
 
-	^bytes dwordAtOffset: _OffsetOf_Vertex2!
+	^bytes uint32AtOffset: _OffsetOf_Vertex2!
 
 Vertex2: anInteger
 	"Set the receiver's 'Vertex2' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_Vertex2 put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_Vertex2 put: anInteger!
 
 Vertex3
 	"Answer the <Integer> value of the receiver's 'Vertex3' field."
 
-	^bytes dwordAtOffset: _OffsetOf_Vertex3!
+	^bytes uint32AtOffset: _OffsetOf_Vertex3!
 
 Vertex3: anInteger
 	"Set the receiver's 'Vertex3' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_Vertex3 put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_Vertex3 put: anInteger! !
 !OS.GRADIENT_TRIANGLE categoriesForMethods!
 Vertex1!**compiled accessors**!public! !
 Vertex1:!**compiled accessors**!public! !
@@ -88,9 +88,9 @@ defineFields
 "
 
 	self
-		defineField: #Vertex1 type: DWORDField new;
-		defineField: #Vertex2 type: DWORDField new;
-		defineField: #Vertex3 type: DWORDField new!
+		defineField: #Vertex1 type: UInt32Field new;
+		defineField: #Vertex2 type: UInt32Field new;
+		defineField: #Vertex3 type: UInt32Field new!
 
 getFieldNames
 	^#(#Vertex1 #Vertex2 #Vertex3)! !

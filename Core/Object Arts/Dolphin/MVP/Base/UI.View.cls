@@ -3328,7 +3328,7 @@ setWindowExStyle: anInteger
 	self setWindowLong: GWL_EXSTYLE to: anInteger !
 
 setWindowLong: anIntegerOffset to: anIntegerValue
-	"Private - Set the receiver's Window DWORD at the specified offset to the specified integer value."
+	"Private - Set the receiver's Window UInt32 at the specified offset to the specified integer value."
 
 	^User32
 		setWindowLong: handle
@@ -3348,13 +3348,13 @@ setWindowPosAfter: aWindow x: xInteger y: yInteger width: widthInteger height: h
 		cy: heightInteger
 		uFlags: flagsInteger!
 
-setWindowStyle: aDWORD
-	"Private - Set the receiver's window style bits to aDWORD."
+setWindowStyle: anInt32
+	"Private - Set the receiver's window style bits to anInt32."
 
 	User32
-		setWindowDWORD: handle
+		setWindowULong: handle
 		nIndex: GWL_STYLE
-		dwNewDWORD: aDWORD!
+		dwNewLong: anInt32!
 
 setWindowText: aString
 	"Private - Sets the text of the receiver"
@@ -4281,7 +4281,7 @@ wmNotify: message wParam: wParam lParam: lParam
 
 	| pNMHdr |
 	^(SessionManager.Current inputState
-		lookupWindow: ((pNMHdr := lParam asExternalAddress) dwordAtOffset: 0))
+		lookupWindow: ((pNMHdr := lParam asExternalAddress) uint32AtOffset: 0))
 			ifNotNil: [:control | control nmNotify: pNMHdr]!
 
 wmPaint: message wParam: wParam lParam: lParam

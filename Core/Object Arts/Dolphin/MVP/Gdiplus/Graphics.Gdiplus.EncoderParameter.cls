@@ -48,22 +48,22 @@ Guid: aGUID
 NumberOfValues
 	"Answer the <Integer> value of the receiver's 'NumberOfValues' field."
 
-	^bytes dwordAtOffset: _OffsetOf_NumberOfValues!
+	^bytes uint32AtOffset: _OffsetOf_NumberOfValues!
 
 NumberOfValues: anInteger
 	"Set the receiver's 'NumberOfValues' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_NumberOfValues put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_NumberOfValues put: anInteger!
 
 Type
 	"Answer the <Integer> value of the receiver's 'Type' field."
 
-	^bytes dwordAtOffset: _OffsetOf_Type!
+	^bytes uint32AtOffset: _OffsetOf_Type!
 
 Type: anInteger
 	"Set the receiver's 'Type' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_Type put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_Type put: anInteger!
 
 Value
 	"Answer the <Address> value of the receiver's 'Value' field."
@@ -108,10 +108,10 @@ defineFields
 			type: (StructureField type: GUID)
 			offset: 0;
 		defineField: #NumberOfValues
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 16;
 		defineField: #Type
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 20;
 		defineField: #Value
 			type: LPVOIDField new

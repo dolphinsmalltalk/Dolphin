@@ -34,7 +34,7 @@ exitCode
 	"Answer the <sdword> value of the 'ExitCode' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_ExitCode: answer.
 	^answer asObject!
 
@@ -103,7 +103,7 @@ processFailedKind
 	"Answer the <sdword> value of the 'ProcessFailedKind' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_ProcessFailedKind: answer.
 	^answer asObject!
 
@@ -111,7 +111,7 @@ reason
 	"Answer the <sdword> value of the 'reason' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_reason: answer.
 	^answer asObject! !
 !WebView2.ICoreWebView2ProcessFailedEventArgs categoriesForMethods!

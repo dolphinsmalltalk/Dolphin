@@ -200,12 +200,12 @@ pUnkForRelease: anIUnknown
 tymed
 	"Answer the <Integer> value of the receiver's 'tymed' field."
 
-	^bytes dwordAtOffset: _OffsetOf_tymed!
+	^bytes uint32AtOffset: _OffsetOf_tymed!
 
 tymed: anInteger
 	"Set the receiver's 'tymed' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_tymed put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_tymed put: anInteger!
 
 value
 	"Answer the 'value' currently contained in the receiver (which is a tag discriminated union)."
@@ -276,7 +276,7 @@ defineFields
 	"Anonymous union at handle field"
 
 	self
-		defineField: #tymed type: DWORDField new;
+		defineField: #tymed type: UInt32Field new;
 		defineField: #handle type: HANDLEField new;
 		defineField: #pUnkForRelease type: (PointerField type: IUnknown).
 

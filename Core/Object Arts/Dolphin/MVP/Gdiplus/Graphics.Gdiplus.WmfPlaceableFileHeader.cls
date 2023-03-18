@@ -52,52 +52,52 @@ BoundingBox: aGpWMFRect16
 Checksum
 	"Answer the <Integer> value of the receiver's 'Checksum' field."
 
-	^bytes swordAtOffset: _OffsetOf_Checksum!
+	^bytes int16AtOffset: _OffsetOf_Checksum!
 
 Checksum: anInteger
 	"Set the receiver's 'Checksum' field to the value of the argument, anInteger"
 
-	bytes swordAtOffset: _OffsetOf_Checksum put: anInteger!
+	bytes int16AtOffset: _OffsetOf_Checksum put: anInteger!
 
 Hmf
 	"Answer the <Integer> value of the receiver's 'Hmf' field."
 
-	^bytes swordAtOffset: _OffsetOf_Hmf!
+	^bytes int16AtOffset: _OffsetOf_Hmf!
 
 Hmf: anInteger
 	"Set the receiver's 'Hmf' field to the value of the argument, anInteger"
 
-	bytes swordAtOffset: _OffsetOf_Hmf put: anInteger!
+	bytes int16AtOffset: _OffsetOf_Hmf put: anInteger!
 
 Inch
 	"Answer the <Integer> value of the receiver's 'Inch' field."
 
-	^bytes swordAtOffset: _OffsetOf_Inch!
+	^bytes int16AtOffset: _OffsetOf_Inch!
 
 Inch: anInteger
 	"Set the receiver's 'Inch' field to the value of the argument, anInteger"
 
-	bytes swordAtOffset: _OffsetOf_Inch put: anInteger!
+	bytes int16AtOffset: _OffsetOf_Inch put: anInteger!
 
 Key
 	"Answer the <Integer> value of the receiver's 'Key' field."
 
-	^bytes dwordAtOffset: _OffsetOf_Key!
+	^bytes uint32AtOffset: _OffsetOf_Key!
 
 Key: anInteger
 	"Set the receiver's 'Key' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_Key put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_Key put: anInteger!
 
 Reserved
 	"Answer the <Integer> value of the receiver's 'Reserved' field."
 
-	^bytes dwordAtOffset: _OffsetOf_Reserved!
+	^bytes uint32AtOffset: _OffsetOf_Reserved!
 
 Reserved: anInteger
 	"Set the receiver's 'Reserved' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_Reserved put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_Reserved put: anInteger! !
 !Graphics.Gdiplus.WmfPlaceableFileHeader categoriesForMethods!
 BoundingBox!**compiled accessors**!public! !
 BoundingBox:!**compiled accessors**!public! !
@@ -135,22 +135,22 @@ defineFields
 
 	self
 		defineField: #Key
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 0;
 		defineField: #Hmf
-			type: SWORDField new
+			type: Int16Field new
 			offset: 4;
 		defineField: #BoundingBox
 			type: (StructureField type: WMFRect16)
 			offset: 6;
 		defineField: #Inch
-			type: SWORDField new
+			type: Int16Field new
 			offset: 14;
 		defineField: #Reserved
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 16;
 		defineField: #Checksum
-			type: SWORDField new
+			type: Int16Field new
 			offset: 20.
 	self byteSize: 24!
 

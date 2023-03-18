@@ -32,7 +32,7 @@ Instance Variables:
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 hinst
 	"Answer the <Handle> value of the receiver's 'hinst' field."
@@ -116,12 +116,12 @@ textCallback
 uFlags
 	"Answer the <Integer> value of the receiver's 'uFlags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_uFlags!
+	^bytes uint32AtOffset: _OffsetOf_uFlags!
 
 uFlags: anInteger
 	"Set the receiver's 'uFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_uFlags put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_uFlags put: anInteger!
 
 uId
 	"Answer the <Integer> value of the receiver's 'uId' field."
@@ -173,14 +173,14 @@ defineFields
 "
 
 	self
-		defineField: #dwSize type: DWORDField writeOnly beOverride;
-		defineField: #uFlags type: DWORDField new;
+		defineField: #dwSize type: UInt32Field writeOnly beOverride;
+		defineField: #uFlags type: UInt32Field new;
 		defineField: #hwnd type: HANDLEField new;
-		defineField: #uId type: UINT_PTRField new;
+		defineField: #uId type: UIntPtrField new;
 		defineField: #rect type: (StructureField type: RECTL);
 		defineField: #hinst type: HANDLEField readOnly;
 		defineField: #lpszText type: (PointerField type: Utf16String) beWriteOnly;
-		defineField: #lParam type: INT_PTRField readOnly;
+		defineField: #lParam type: IntPtrField readOnly;
 		defineField: #lpReserved type: LPVOIDField filler!
 
 getFieldNames

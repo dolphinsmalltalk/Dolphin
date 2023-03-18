@@ -67,102 +67,102 @@ struct tagTEXTMETRIC {
 tmAscent
 	"Answer the <Integer> value of the receiver's 'tmAscent' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_tmAscent!
+	^bytes int32AtOffset: _OffsetOf_tmAscent!
 
 tmAveCharWidth
 	"Answer the <Integer> value of the receiver's 'tmAveCharWidth' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_tmAveCharWidth!
+	^bytes int32AtOffset: _OffsetOf_tmAveCharWidth!
 
 tmBreakChar
 	"Answer the <Character> value of the receiver's 'tmBreakChar' field."
 
-	^Character utf16Value: (bytes wordAtOffset: _OffsetOf_tmBreakChar)!
+	^Character utf16Value: (bytes uint16AtOffset: _OffsetOf_tmBreakChar)!
 
 tmCharSet
 	"Answer the <Integer> value of the receiver's 'tmCharSet' field."
 
-	^bytes byteAtOffset: _OffsetOf_tmCharSet!
+	^bytes uint8AtOffset: _OffsetOf_tmCharSet!
 
 tmDefaultChar
 	"Answer the <Character> value of the receiver's 'tmDefaultChar' field."
 
-	^Character utf16Value: (bytes wordAtOffset: _OffsetOf_tmDefaultChar)!
+	^Character utf16Value: (bytes uint16AtOffset: _OffsetOf_tmDefaultChar)!
 
 tmDescent
 	"Answer the <Integer> value of the receiver's 'tmDescent' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_tmDescent!
+	^bytes int32AtOffset: _OffsetOf_tmDescent!
 
 tmDigitizedAspectX
 	"Answer the <Integer> value of the receiver's 'tmDigitizedAspectX' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_tmDigitizedAspectX!
+	^bytes int32AtOffset: _OffsetOf_tmDigitizedAspectX!
 
 tmDigitizedAspectY
 	"Answer the <Integer> value of the receiver's 'tmDigitizedAspectY' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_tmDigitizedAspectY!
+	^bytes int32AtOffset: _OffsetOf_tmDigitizedAspectY!
 
 tmExternalLeading
 	"Answer the <Integer> value of the receiver's 'tmExternalLeading' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_tmExternalLeading!
+	^bytes int32AtOffset: _OffsetOf_tmExternalLeading!
 
 tmFirstChar
 	"Answer the <Character> value of the receiver's 'tmFirstChar' field."
 
-	^Character utf16Value: (bytes wordAtOffset: _OffsetOf_tmFirstChar)!
+	^Character utf16Value: (bytes uint16AtOffset: _OffsetOf_tmFirstChar)!
 
 tmHeight
 	"Answer the <Integer> value of the receiver's 'tmHeight' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_tmHeight!
+	^bytes int32AtOffset: _OffsetOf_tmHeight!
 
 tmInternalLeading
 	"Answer the <Integer> value of the receiver's 'tmInternalLeading' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_tmInternalLeading!
+	^bytes int32AtOffset: _OffsetOf_tmInternalLeading!
 
 tmItalic
 	"Answer the <Integer> value of the receiver's 'tmItalic' field."
 
-	^bytes byteAtOffset: _OffsetOf_tmItalic!
+	^bytes uint8AtOffset: _OffsetOf_tmItalic!
 
 tmLastChar
 	"Answer the <Character> value of the receiver's 'tmLastChar' field."
 
-	^Character utf16Value: (bytes wordAtOffset: _OffsetOf_tmLastChar)!
+	^Character utf16Value: (bytes uint16AtOffset: _OffsetOf_tmLastChar)!
 
 tmMaxCharWidth
 	"Answer the <Integer> value of the receiver's 'tmMaxCharWidth' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_tmMaxCharWidth!
+	^bytes int32AtOffset: _OffsetOf_tmMaxCharWidth!
 
 tmOverhang
 	"Answer the <Integer> value of the receiver's 'tmOverhang' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_tmOverhang!
+	^bytes int32AtOffset: _OffsetOf_tmOverhang!
 
 tmPitchAndFamily
 	"Answer the <Integer> value of the receiver's 'tmPitchAndFamily' field."
 
-	^bytes byteAtOffset: _OffsetOf_tmPitchAndFamily!
+	^bytes uint8AtOffset: _OffsetOf_tmPitchAndFamily!
 
 tmStruckOut
 	"Answer the <Integer> value of the receiver's 'tmStruckOut' field."
 
-	^bytes byteAtOffset: _OffsetOf_tmStruckOut!
+	^bytes uint8AtOffset: _OffsetOf_tmStruckOut!
 
 tmUnderlined
 	"Answer the <Integer> value of the receiver's 'tmUnderlined' field."
 
-	^bytes byteAtOffset: _OffsetOf_tmUnderlined!
+	^bytes uint8AtOffset: _OffsetOf_tmUnderlined!
 
 tmWeight
 	"Answer the <Integer> value of the receiver's 'tmWeight' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_tmWeight! !
+	^bytes int32AtOffset: _OffsetOf_tmWeight! !
 !OS.TEXTMETRICW categoriesForMethods!
 tmAscent!**compiled accessors**!public! !
 tmAveCharWidth!**compiled accessors**!public! !
@@ -221,26 +221,26 @@ defineFields
 "
 
 	self
-		defineField: #tmHeight type: SDWORDField readOnly;
-		defineField: #tmAscent type: SDWORDField readOnly;
-		defineField: #tmDescent type: SDWORDField readOnly;
-		defineField: #tmInternalLeading type: SDWORDField readOnly;
-		defineField: #tmExternalLeading type: SDWORDField readOnly;
-		defineField: #tmAveCharWidth type: SDWORDField readOnly;
-		defineField: #tmMaxCharWidth type: SDWORDField readOnly;
-		defineField: #tmWeight type: SDWORDField readOnly;
-		defineField: #tmOverhang type: SDWORDField readOnly;
-		defineField: #tmDigitizedAspectX type: SDWORDField readOnly;
-		defineField: #tmDigitizedAspectY type: SDWORDField readOnly;
+		defineField: #tmHeight type: Int32Field readOnly;
+		defineField: #tmAscent type: Int32Field readOnly;
+		defineField: #tmDescent type: Int32Field readOnly;
+		defineField: #tmInternalLeading type: Int32Field readOnly;
+		defineField: #tmExternalLeading type: Int32Field readOnly;
+		defineField: #tmAveCharWidth type: Int32Field readOnly;
+		defineField: #tmMaxCharWidth type: Int32Field readOnly;
+		defineField: #tmWeight type: Int32Field readOnly;
+		defineField: #tmOverhang type: Int32Field readOnly;
+		defineField: #tmDigitizedAspectX type: Int32Field readOnly;
+		defineField: #tmDigitizedAspectY type: Int32Field readOnly;
 		defineField: #tmFirstChar type: WCHARField readOnly;
 		defineField: #tmLastChar type: WCHARField readOnly;
 		defineField: #tmDefaultChar type: WCHARField readOnly;
 		defineField: #tmBreakChar type: WCHARField readOnly;
-		defineField: #tmItalic type: BYTEField readOnly;
-		defineField: #tmUnderlined type: BYTEField readOnly;
-		defineField: #tmStruckOut type: BYTEField readOnly;
-		defineField: #tmPitchAndFamily type: BYTEField readOnly;
-		defineField: #tmCharSet type: BYTEField readOnly!
+		defineField: #tmItalic type: UInt8Field readOnly;
+		defineField: #tmUnderlined type: UInt8Field readOnly;
+		defineField: #tmStruckOut type: UInt8Field readOnly;
+		defineField: #tmPitchAndFamily type: UInt8Field readOnly;
+		defineField: #tmCharSet type: UInt8Field readOnly!
 
 getFieldNames
 	^#(#tmHeight #tmAscent #tmDescent #tmInternalLeading #tmExternalLeading #tmAveCharWidth #tmMaxCharWidth #tmWeight #tmOverhang #tmDigitizedAspectX #tmDigitizedAspectY #tmFirstChar #tmLastChar #tmDefaultChar #tmBreakChar #tmItalic #tmUnderlined #tmStruckOut #tmPitchAndFamily #tmCharSet)!

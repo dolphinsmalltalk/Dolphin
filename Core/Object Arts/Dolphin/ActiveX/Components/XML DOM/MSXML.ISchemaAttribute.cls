@@ -146,7 +146,7 @@ use
 	"Answer the <sdword> value of the 'use' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_use: answer.
 	^answer asObject! !
 !MSXML.ISchemaAttribute categoriesForMethods!

@@ -64,12 +64,12 @@ data: aByteObject
 DataChunkType
 	"Answer the <Integer> value of the receiver's 'DataChunkType' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_DataChunkType!
+	^bytes int32AtOffset: _OffsetOf_DataChunkType!
 
 DataChunkType: anInteger
 	"Set the receiver's 'DataChunkType' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_DataChunkType put: anInteger!
+	bytes int32AtOffset: _OffsetOf_DataChunkType put: anInteger!
 
 FromFileHandle_ByteRange
 	"Answer the <HTTP_BYTE_RANGE> value of the receiver's 'FromFileHandle_ByteRange' field."
@@ -98,12 +98,12 @@ FromFileHandle_FileHandle: aHandle
 FromFragmentCache_FragmentNameLength
 	"Answer the <Integer> value of the receiver's 'FromFragmentCache_FragmentNameLength' field."
 
-	^bytes wordAtOffset: _OffsetOf_FromFragmentCache_FragmentNameLength!
+	^bytes uint16AtOffset: _OffsetOf_FromFragmentCache_FragmentNameLength!
 
 FromFragmentCache_FragmentNameLength: anInteger
 	"Set the receiver's 'FromFragmentCache_FragmentNameLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_FromFragmentCache_FragmentNameLength put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_FromFragmentCache_FragmentNameLength put: anInteger!
 
 FromFragmentCache_pFragmentName
 	"Answer the <Utf16String> value of the receiver's 'FromFragmentCache_pFragmentName' field."
@@ -142,12 +142,12 @@ FromFragmentCacheEx_pFragmentName: anUtf16String
 FromMemory_BufferLength
 	"Answer the <Integer> value of the receiver's 'FromMemory_BufferLength' field."
 
-	^bytes dwordAtOffset: _OffsetOf_FromMemory_BufferLength!
+	^bytes uint32AtOffset: _OffsetOf_FromMemory_BufferLength!
 
 FromMemory_BufferLength: anInteger
 	"Set the receiver's 'FromMemory_BufferLength' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_FromMemory_BufferLength put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_FromMemory_BufferLength put: anInteger!
 
 FromMemory_pBuffer
 	"Answer the <Address> value of the receiver's 'FromMemory_pBuffer' field."
@@ -225,12 +225,12 @@ defineFields
 "
 
 	self
-		defineField: #DataChunkType type: SDWORDField new offset: 0;
+		defineField: #DataChunkType type: Int32Field new offset: 0;
 		defineField: #FromMemory_pBuffer type: LPVOIDField new offset: 8;
-		defineField: #FromMemory_BufferLength type: DWORDField new offset: 12;
+		defineField: #FromMemory_BufferLength type: UInt32Field new offset: 12;
 		defineField: #FromFileHandle_ByteRange type: (StructureField type: HTTP_BYTE_RANGE) offset: 8;
 		defineField: #FromFileHandle_FileHandle type: HANDLEField new offset: 24;
-		defineField: #FromFragmentCache_FragmentNameLength type: WORDField new offset: 8;
+		defineField: #FromFragmentCache_FragmentNameLength type: UInt16Field new offset: 8;
 		defineField: #FromFragmentCache_pFragmentName type: (PointerField type: Utf16String) offset: 12;
 		defineField: #FromFragmentCacheEx_ByteRange type: (StructureField type: HTTP_BYTE_RANGE) offset: 8;
 		defineField: #FromFragmentCacheEx_pFragmentName type: (PointerField type: Utf16String) offset: 24.

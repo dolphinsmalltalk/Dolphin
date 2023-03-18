@@ -17,12 +17,12 @@ OS.HRESULT comment: ''!
 asSignedInteger
 	"Answer the signed 32-bit <Integer> value of the receiver."
 
-	^bytes sdwordAtOffset: 0!
+	^bytes int32AtOffset: 0!
 
 asUnsignedInteger
 	"Answer the unsigned 32-bit <Integer> value of the receiver."
 
-	^bytes dwordAtOffset: 0!
+	^bytes uint32AtOffset: 0!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
@@ -81,7 +81,7 @@ facilityCode
 
 		#define HRESULT_FACILITY(hr)  (((hr) >> 16) & 0x1fff)"
 
-	^(bytes wordAtOffset: 2) bitAnd: 16r1FFF!
+	^(bytes uint16AtOffset: 2) bitAnd: 16r1FFF!
 
 failed
 	"Answer whether the receiver represents the result of a failed operation
@@ -129,7 +129,7 @@ statusCode
 
 		#define HRESULT_CODE(hr)	((hr) & 0xFFFF)"
 
-	^bytes wordAtOffset: 0!
+	^bytes uint16AtOffset: 0!
 
 succeeded
 	"Answer whether the receiver represents the result of a successful operation
@@ -141,17 +141,17 @@ unsignedValue: anUnsigned
 	"Set the receiver's value field to the value of the unsigned positive
 	integer, anUnsigned."
 
-	bytes dwordAtOffset: 0 put: anUnsigned!
+	bytes uint32AtOffset: 0 put: anUnsigned!
 
 value
 	"Answer the <Integer> value of the receiver's 'value' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_value!
+	^bytes int32AtOffset: _OffsetOf_value!
 
 value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_value put: anInteger! !
+	bytes int32AtOffset: _OffsetOf_value put: anInteger! !
 !OS.HRESULT categoriesForMethods!
 asSignedInteger!converting!public! !
 asUnsignedInteger!converting!public! !
@@ -187,7 +187,7 @@ defineFields
 	"Define the fields of the ExternalInteger 'structure'. ExternalInteger subclasses
 	have a single value."
 
-	self defineField: #value type: SDWORDField new beOverride!
+	self defineField: #value type: Int32Field new beOverride!
 
 fail
 	"Answer the generic failure HRESULT."

@@ -3517,6 +3517,8 @@ setWindowLong: hWnd nIndex: nIndex dwNewLong: dwNewLong
 	^self invalidCall: _failureCode!
 
 setWindowLongPtr: hWnd nIndex: nIndex dwNewLong: dwNewLong
+	"N.B. This is not equivalent to SetWindowLong, even on 32-bit Windows. The documentation is misleading in this regard - 32/64-bit compatibility using SetWindowLongPtr in C is achieved by defining a macro."
+
 	<stdcall: intptr SetWindowLongPtrW handle sdword intptr>
 	^self invalidCall: _failureCode!
 
@@ -3553,6 +3555,8 @@ setWindowULong: hWnd nIndex: nIndex dwNewLong: dwNewLong
 	^self invalidCall: _failureCode!
 
 setWindowULongPtr: hWnd nIndex: nIndex dwNewLong: dwNewLong
+	"N.B. This is not equivalent to SetWindowLong, even on 32-bit Windows. The documentation is misleading in this regard - 32/64-bit compatibility using SetWindowLongPtr in C is achieved by defining a macro."
+
 	<stdcall: uintptr SetWindowLongPtrW handle sdword uintptr>
 	^self invalidCall: _failureCode!
 

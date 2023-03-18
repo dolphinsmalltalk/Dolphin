@@ -31,12 +31,12 @@ struct tagMIB_UDPROW {
 dwLocalAddr
 	"Answer the <Integer> value of the receiver's 'dwLocalAddr' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwLocalAddr!
+	^bytes uint32AtOffset: _OffsetOf_dwLocalAddr!
 
 dwLocalPort
 	"Answer the <Integer> value of the receiver's 'dwLocalPort' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwLocalPort! !
+	^bytes uint32AtOffset: _OffsetOf_dwLocalPort! !
 !OS.MIB_UDPROW categoriesForMethods!
 dwLocalAddr!**compiled accessors**!public! !
 dwLocalPort!**compiled accessors**!public! !
@@ -60,10 +60,10 @@ defineFields
 
 	self
 		defineField: #dwLocalAddr
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 0;
 		defineField: #dwLocalPort
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 4.
 	self byteSize: 8!
 

@@ -73,12 +73,12 @@ Address
 AddressLength
 	"Answer the <Integer> value of the receiver's 'AddressLength' field."
 
-	^bytes dwordAtOffset: _OffsetOf_AddressLength!
+	^bytes uint32AtOffset: _OffsetOf_AddressLength!
 
 ComboIndex
 	"Answer the <Integer> value of the receiver's 'ComboIndex' field."
 
-	^bytes dwordAtOffset: _OffsetOf_ComboIndex!
+	^bytes uint32AtOffset: _OffsetOf_ComboIndex!
 
 CurrentIpAddress
 	"Answer the <IP_ADDR_STRING> value of the receiver's 'CurrentIpAddress' field."
@@ -93,7 +93,7 @@ Description
 DhcpEnabled
 	"Answer the <Integer> value of the receiver's 'DhcpEnabled' field."
 
-	^bytes dwordAtOffset: _OffsetOf_DhcpEnabled!
+	^bytes uint32AtOffset: _OffsetOf_DhcpEnabled!
 
 DhcpServer
 	"Answer the <IP_ADDR_STRING> value of the receiver's 'DhcpServer' field."
@@ -108,12 +108,12 @@ GatewayList
 HaveWins
 	"Answer the <Integer> value of the receiver's 'HaveWins' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_HaveWins!
+	^bytes int32AtOffset: _OffsetOf_HaveWins!
 
 index
 	"Answer the <Integer> value of the receiver's 'index' field."
 
-	^bytes dwordAtOffset: _OffsetOf_index!
+	^bytes uint32AtOffset: _OffsetOf_index!
 
 IpAddressList
 	"Answer the <IP_ADDR_STRING> value of the receiver's 'IpAddressList' field."
@@ -123,12 +123,12 @@ IpAddressList
 LeaseExpires
 	"Answer the <Integer> value of the receiver's 'LeaseExpires' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_LeaseExpires!
+	^bytes int32AtOffset: _OffsetOf_LeaseExpires!
 
 LeaseObtained
 	"Answer the <Integer> value of the receiver's 'LeaseObtained' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_LeaseObtained!
+	^bytes int32AtOffset: _OffsetOf_LeaseObtained!
 
 Next
 	"Answer the <IP_ADAPTER_INFO> value of the receiver's 'Next' field."
@@ -148,7 +148,7 @@ SecondaryWinsServer
 type
 	"Answer the <Integer> value of the receiver's 'type' field."
 
-	^bytes dwordAtOffset: _OffsetOf_type! !
+	^bytes uint32AtOffset: _OffsetOf_type! !
 !OS.IP_ADAPTER_INFO categoriesForMethods!
 AdapterName!**compiled accessors**!public! !
 Address!**compiled accessors**!public! !
@@ -209,7 +209,7 @@ defineFields
 					yourself)
 			offset: 0;
 		defineField: #ComboIndex
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 4;
 		defineField: #AdapterName
 			type: ((StringField length: 260)
@@ -222,7 +222,7 @@ defineFields
 					yourself)
 			offset: 268;
 		defineField: #AddressLength
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 400;
 		defineField: #Address
 			type: ((ArrayField type: ByteArray length: 8)
@@ -230,13 +230,13 @@ defineFields
 					yourself)
 			offset: 404;
 		defineField: #index
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 412;
 		defineField: #type
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 416;
 		defineField: #DhcpEnabled
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 420;
 		defineField: #CurrentIpAddress
 			type: ((PointerField type: IP_ADDR_STRING)
@@ -259,7 +259,7 @@ defineFields
 					yourself)
 			offset: 508;
 		defineField: #HaveWins
-			type: SDWORDField readOnly
+			type: Int32Field readOnly
 			offset: 548;
 		defineField: #PrimaryWinsServer
 			type: ((StructureField type: IP_ADDR_STRING)
@@ -272,10 +272,10 @@ defineFields
 					yourself)
 			offset: 592;
 		defineField: #LeaseObtained
-			type: SDWORDField readOnly
+			type: Int32Field readOnly
 			offset: 632;
 		defineField: #LeaseExpires
-			type: SDWORDField readOnly
+			type: Int32Field readOnly
 			offset: 636.
 	self byteSize: 640!
 

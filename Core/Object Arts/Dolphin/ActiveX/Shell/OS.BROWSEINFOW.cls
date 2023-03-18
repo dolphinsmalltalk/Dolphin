@@ -31,17 +31,17 @@ displayName
 flags
 	"Answer the <Integer> value of the receiver's 'flags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_flags!
+	^bytes uint32AtOffset: _OffsetOf_flags!
 
 flags: anInteger
 	"Set the receiver's 'flags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_flags put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_flags put: anInteger!
 
 hwndOwner: anInteger
 	"Set the receiver's 'hwndOwner' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_hwndOwner put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_hwndOwner put: anInteger!
 
 initialize: anInteger
 	"Private - Initialize the state of the receiver."
@@ -71,12 +71,12 @@ ownerView: aView
 pidlRoot
 	"Answer the <Integer> value of the receiver's 'pidlRoot' field."
 
-	^bytes dwordAtOffset: _OffsetOf_pidlRoot!
+	^bytes uint32AtOffset: _OffsetOf_pidlRoot!
 
 pidlRoot: anInteger
 	"Set the receiver's 'pidlRoot' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_pidlRoot put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_pidlRoot put: anInteger!
 
 pszDisplayName: anUtf16String
 	"Set the receiver's 'pszDisplayName' field to the value of the argument, anUtf16String"
@@ -125,14 +125,14 @@ defineFields
 		} BROWSEINFOW;"
 
 	self
-		defineField: #hwndOwner type: DWORDField writeOnly;
-		defineField: #pidlRoot type: DWORDField new;
+		defineField: #hwndOwner type: UInt32Field writeOnly;
+		defineField: #pidlRoot type: UInt32Field new;
 		defineField: #pszDisplayName type: (PointerField type: Utf16String) beWriteOnly;
 		defineField: #lpszTitle type: (PointerField type: Utf16String) beWriteOnly;
-		defineField: #flags type: DWORDField new beOverride;
+		defineField: #flags type: UInt32Field new beOverride;
 		defineField: #lpfnHook type: LPVOIDField writeOnly beOverride;
-		defineField: #lParam type: INT_PTRField filler;
-		defineField: #iImage type: DWORDField filler!
+		defineField: #lParam type: IntPtrField filler;
+		defineField: #iImage type: UInt32Field filler!
 
 getFieldNames
 	^#(#hwndOwner #pidlRoot #pszDisplayName #lpszTitle #flags #lpfnHook)! !

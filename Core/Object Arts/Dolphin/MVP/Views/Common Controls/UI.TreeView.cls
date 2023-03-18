@@ -597,7 +597,7 @@ nmDeleteItem: pNMHDR
 	handleObjectMap isEmpty
 		ifFalse: 
 			[(handleObjectMap
-				removeKey: (pNMHDR dwordAtOffset: ##(NMTREEVIEWW._OffsetOf_itemOld + TVITEMW._OffsetOf_hItem))
+				removeKey: (pNMHDR uint32AtOffset: ##(NMTREEVIEWW._OffsetOf_itemOld + TVITEMW._OffsetOf_hItem))
 				ifAbsent: nil) ifNotNil: [:object | objectHandleMap removeKey: object]].
 	^nil!
 
@@ -621,7 +621,7 @@ nmNotify: pNMHDR
 		at: TVN_FIRST - TVN_ITEMCHANGEDW + 1 put: #tvnItemChanged:;
 		at: TVN_FIRST - TVN_BEGINLABELEDITW + 1 put: #nmBeginLabelEdit:;
 		at: TVN_FIRST - TVN_ENDLABELEDITW + 1 put: #nmEndLabelEdit:;
-		yourself) lookup: ##(TVN_FIRST + 1) - (pNMHDR sdwordAtOffset: 8))
+		yourself) lookup: ##(TVN_FIRST + 1) - (pNMHDR int32AtOffset: 8))
 		ifNil: [super nmNotify: pNMHDR]
 		ifNotNil: [:action | self perform: action with: pNMHDR]!
 
@@ -1066,7 +1066,7 @@ tvmGetItemRect: aHandle textOnly: aBoolean
 
 	| rect |
 	rect := RECTL newBuffer.
-	rect bytes dwordAtOffset: 0 put: aHandle asInteger.
+	rect bytes uint32AtOffset: 0 put: aHandle asInteger.
 	self
 		sendMessage: TVM_GETITEMRECT
 		wParam: aBoolean asParameter
@@ -1135,7 +1135,7 @@ tvnItemExpanding: pNMHDR
 	"Private - Default handler for the TVN_ITEMEXPANDINGW notification message."
 
 	| tviParent hParent |
-	(pNMHDR dwordAtOffset: NMTREEVIEWW._OffsetOf_action) == TVE_EXPAND ifFalse: [^nil].
+	(pNMHDR uint32AtOffset: NMTREEVIEWW._OffsetOf_action) == TVE_EXPAND ifFalse: [^nil].
 	tviParent := TVITEMW fromAddress: pNMHDR asInteger + NMTREEVIEWW._OffsetOf_itemNew.
 	"See if we have been expanded before"
 	tviParent isStateExpandedOnce ifTrue: [^nil].

@@ -62,10 +62,10 @@ interface IDataObject : IUnknown
 !OS.COM.IDataObject methodsFor!
 
 dAdvise: pformatetc advf: advf pAdvSink: pAdvSink
-	"Answer the <DWORD> result of invoking the DAdvise() method of the COM object."
+	"Answer the <UInt32> result of invoking the DAdvise() method of the COM object."
 
 	| answer |
-	answer := DWORD new.
+	answer := UInt32 new.
 	self
 		DAdvise: pformatetc
 		advf: advf

@@ -33,32 +33,32 @@ struct tagCIEXYZ {
 ciexyzX
 	"Answer the <Integer> value of the receiver's 'ciexyzX' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_ciexyzX!
+	^bytes int32AtOffset: _OffsetOf_ciexyzX!
 
 ciexyzX: anInteger
 	"Set the receiver's 'ciexyzX' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_ciexyzX put: anInteger!
+	bytes int32AtOffset: _OffsetOf_ciexyzX put: anInteger!
 
 ciexyzY
 	"Answer the <Integer> value of the receiver's 'ciexyzY' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_ciexyzY!
+	^bytes int32AtOffset: _OffsetOf_ciexyzY!
 
 ciexyzY: anInteger
 	"Set the receiver's 'ciexyzY' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_ciexyzY put: anInteger!
+	bytes int32AtOffset: _OffsetOf_ciexyzY put: anInteger!
 
 ciexyzZ
 	"Answer the <Integer> value of the receiver's 'ciexyzZ' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_ciexyzZ!
+	^bytes int32AtOffset: _OffsetOf_ciexyzZ!
 
 ciexyzZ: anInteger
 	"Set the receiver's 'ciexyzZ' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_ciexyzZ put: anInteger! !
+	bytes int32AtOffset: _OffsetOf_ciexyzZ put: anInteger! !
 !OS.CIEXYZ categoriesForMethods!
 ciexyzX!**compiled accessors**!public! !
 ciexyzX:!**compiled accessors**!public! !
@@ -88,13 +88,13 @@ defineFields
 
 	self
 		defineField: #ciexyzX
-			type: SDWORDField new
+			type: Int32Field new
 			offset: 0;
 		defineField: #ciexyzY
-			type: SDWORDField new
+			type: Int32Field new
 			offset: 4;
 		defineField: #ciexyzZ
-			type: SDWORDField new
+			type: Int32Field new
 			offset: 8.
 	self byteSize: 12!
 

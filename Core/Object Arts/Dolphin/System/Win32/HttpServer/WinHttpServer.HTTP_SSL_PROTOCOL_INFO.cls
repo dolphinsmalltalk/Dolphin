@@ -43,37 +43,37 @@ struct tagHTTP_SSL_PROTOCOL_INFO {
 CipherStrength
 	"Answer the <Integer> value of the receiver's 'CipherStrength' field."
 
-	^bytes dwordAtOffset: _OffsetOf_CipherStrength!
+	^bytes uint32AtOffset: _OffsetOf_CipherStrength!
 
 CipherType
 	"Answer the <Integer> value of the receiver's 'CipherType' field."
 
-	^bytes dwordAtOffset: _OffsetOf_CipherType!
+	^bytes uint32AtOffset: _OffsetOf_CipherType!
 
 HashStrength
 	"Answer the <Integer> value of the receiver's 'HashStrength' field."
 
-	^bytes dwordAtOffset: _OffsetOf_HashStrength!
+	^bytes uint32AtOffset: _OffsetOf_HashStrength!
 
 HashType
 	"Answer the <Integer> value of the receiver's 'HashType' field."
 
-	^bytes dwordAtOffset: _OffsetOf_HashType!
+	^bytes uint32AtOffset: _OffsetOf_HashType!
 
 KeyExchangeStrength
 	"Answer the <Integer> value of the receiver's 'KeyExchangeStrength' field."
 
-	^bytes dwordAtOffset: _OffsetOf_KeyExchangeStrength!
+	^bytes uint32AtOffset: _OffsetOf_KeyExchangeStrength!
 
 KeyExchangeType
 	"Answer the <Integer> value of the receiver's 'KeyExchangeType' field."
 
-	^bytes dwordAtOffset: _OffsetOf_KeyExchangeType!
+	^bytes uint32AtOffset: _OffsetOf_KeyExchangeType!
 
 Protocol
 	"Answer the <Integer> value of the receiver's 'Protocol' field."
 
-	^bytes dwordAtOffset: _OffsetOf_Protocol! !
+	^bytes uint32AtOffset: _OffsetOf_Protocol! !
 !WinHttpServer.HTTP_SSL_PROTOCOL_INFO categoriesForMethods!
 CipherStrength!**compiled accessors**!public! !
 CipherType!**compiled accessors**!public! !
@@ -107,13 +107,13 @@ defineFields
 "
 
 	self
-		defineField: #Protocol type: DWORDField new beReadOnly offset: 0;
-		defineField: #CipherType type: DWORDField new beReadOnly offset: 4;
-		defineField: #CipherStrength type: DWORDField new beReadOnly offset: 8;
-		defineField: #HashType type: DWORDField new beReadOnly offset: 12;
-		defineField: #HashStrength type: DWORDField new beReadOnly offset: 16;
-		defineField: #KeyExchangeType type: DWORDField new beReadOnly offset: 20;
-		defineField: #KeyExchangeStrength type: DWORDField new beReadOnly offset: 24.
+		defineField: #Protocol type: UInt32Field new beReadOnly offset: 0;
+		defineField: #CipherType type: UInt32Field new beReadOnly offset: 4;
+		defineField: #CipherStrength type: UInt32Field new beReadOnly offset: 8;
+		defineField: #HashType type: UInt32Field new beReadOnly offset: 12;
+		defineField: #HashStrength type: UInt32Field new beReadOnly offset: 16;
+		defineField: #KeyExchangeType type: UInt32Field new beReadOnly offset: 20;
+		defineField: #KeyExchangeStrength type: UInt32Field new beReadOnly offset: 24.
 	self byteSize: 28!
 
 getFieldNames

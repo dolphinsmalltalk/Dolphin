@@ -57,7 +57,7 @@ state
 	"Answer the <sdword> value of the 'State' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_State: answer.
 	^answer asObject! !
 !ADODB.Command25 categoriesForMethods!

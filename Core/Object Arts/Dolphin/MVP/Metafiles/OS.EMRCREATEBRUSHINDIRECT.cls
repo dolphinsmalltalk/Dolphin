@@ -32,12 +32,12 @@ struct tagEMRCREATEBRUSHINDIRECT {
 ihBrush
 	"Answer the <Integer> value of the receiver's 'ihBrush' field."
 
-	^bytes dwordAtOffset: _OffsetOf_ihBrush!
+	^bytes uint32AtOffset: _OffsetOf_ihBrush!
 
 ihBrush: anInteger
 	"Set the receiver's 'ihBrush' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_ihBrush put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_ihBrush put: anInteger!
 
 lb
 	"Answer the <LOGBRUSH> value of the receiver's 'lb' field."
@@ -80,7 +80,7 @@ defineFields
 	super defineFields.
 	self
 		defineField: #ihBrush
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 8;
 		defineField: #lb
 			type: (StructureField type: LOGBRUSH)

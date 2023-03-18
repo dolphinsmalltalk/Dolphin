@@ -124,7 +124,7 @@ attributes
 	"Answer the <sdword> value of the 'Attributes' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_Attributes: answer.
 	^answer asObject!
 
@@ -137,7 +137,7 @@ beginTrans
 	"Answer the <sdword> result of invoking the BeginTrans() method of the COM object."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self BeginTrans: answer.
 	^answer asObject!
 
@@ -162,7 +162,7 @@ commandTimeout
 	"Answer the <sdword> value of the 'CommandTimeout' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_CommandTimeout: answer.
 	^answer asObject!
 
@@ -196,7 +196,7 @@ connectionTimeout
 	"Answer the <sdword> value of the 'ConnectionTimeout' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_ConnectionTimeout: answer.
 	^answer asObject!
 
@@ -209,7 +209,7 @@ cursorLocation
 	"Answer the <sdword> value of the 'CursorLocation' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_CursorLocation: answer.
 	^answer asObject!
 
@@ -386,7 +386,7 @@ isolationLevel
 	"Answer the <sdword> value of the 'IsolationLevel' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_IsolationLevel: answer.
 	^answer asObject!
 
@@ -405,7 +405,7 @@ mode
 	"Answer the <sdword> value of the 'Mode' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_Mode: answer.
 	^answer asObject!
 
@@ -599,7 +599,7 @@ state
 	"Answer the <sdword> value of the 'State' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_State: answer.
 	^answer asObject!
 

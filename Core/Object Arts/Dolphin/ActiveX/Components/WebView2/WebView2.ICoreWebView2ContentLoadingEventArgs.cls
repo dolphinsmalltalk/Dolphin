@@ -63,7 +63,7 @@ navigationId
 	"Answer the <qword> value of the 'NavigationId' property of the receiver."
 
 	| answer |
-	answer := ULARGE_INTEGER new.
+	answer := UInt64 new.
 	self get_NavigationId: answer.
 	^answer asObject!
 

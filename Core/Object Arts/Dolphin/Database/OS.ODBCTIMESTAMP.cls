@@ -44,32 +44,32 @@ dateAndTime: aDateAndTime
 day
 	"Answer the <Integer> value of the receiver's 'day' field."
 
-	^bytes wordAtOffset: _OffsetOf_day!
+	^bytes uint16AtOffset: _OffsetOf_day!
 
 day: anInteger
 	"Set the receiver's 'day' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_day put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_day put: anInteger!
 
 fraction
 	"Answer the <Integer> value of the receiver's 'fraction' field."
 
-	^bytes dwordAtOffset: _OffsetOf_fraction!
+	^bytes uint32AtOffset: _OffsetOf_fraction!
 
 fraction: anInteger
 	"Set the receiver's 'fraction' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_fraction put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_fraction put: anInteger!
 
 hour
 	"Answer the <Integer> value of the receiver's 'hour' field."
 
-	^bytes wordAtOffset: _OffsetOf_hour!
+	^bytes uint16AtOffset: _OffsetOf_hour!
 
 hour: anInteger
 	"Set the receiver's 'hour' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_hour put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_hour put: anInteger!
 
 milliseconds
 	"Answer the number of whole milliseconds in the fraction part of
@@ -80,42 +80,42 @@ milliseconds
 minute
 	"Answer the <Integer> value of the receiver's 'minute' field."
 
-	^bytes wordAtOffset: _OffsetOf_minute!
+	^bytes uint16AtOffset: _OffsetOf_minute!
 
 minute: anInteger
 	"Set the receiver's 'minute' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_minute put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_minute put: anInteger!
 
 month
 	"Answer the <Integer> value of the receiver's 'month' field."
 
-	^bytes wordAtOffset: _OffsetOf_month!
+	^bytes uint16AtOffset: _OffsetOf_month!
 
 month: anInteger
 	"Set the receiver's 'month' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_month put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_month put: anInteger!
 
 second
 	"Answer the <Integer> value of the receiver's 'second' field."
 
-	^bytes wordAtOffset: _OffsetOf_second!
+	^bytes uint16AtOffset: _OffsetOf_second!
 
 second: anInteger
 	"Set the receiver's 'second' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_second put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_second put: anInteger!
 
 year
 	"Answer the <Integer> value of the receiver's 'year' field."
 
-	^bytes swordAtOffset: _OffsetOf_year!
+	^bytes int16AtOffset: _OffsetOf_year!
 
 year: anInteger
 	"Set the receiver's 'year' field to the value of the argument, anInteger"
 
-	bytes swordAtOffset: _OffsetOf_year put: anInteger! !
+	bytes int16AtOffset: _OffsetOf_year put: anInteger! !
 !OS.ODBCTIMESTAMP categoriesForMethods!
 asDateAndTime!converting!public! !
 dateAndTime:!accessing!public! !
@@ -157,13 +157,13 @@ defineFields
 	} TIMESTAMP_STRUCT;"
 
 	self
-		defineField: #year type: SWORDField new;
-		defineField: #month type: WORDField new;
-		defineField: #day type: WORDField new;
-		defineField: #hour type: WORDField new;
-		defineField: #minute type: WORDField new;
-		defineField: #second type: WORDField new;
-		defineField: #fraction type: DWORDField new!
+		defineField: #year type: Int16Field new;
+		defineField: #month type: UInt16Field new;
+		defineField: #day type: UInt16Field new;
+		defineField: #hour type: UInt16Field new;
+		defineField: #minute type: UInt16Field new;
+		defineField: #second type: UInt16Field new;
+		defineField: #fraction type: UInt32Field new!
 
 fromDateAndTime: aDateAndTime
 	"Answer an instance of the receiver representing the same local time as the <DateAndTime> argument."

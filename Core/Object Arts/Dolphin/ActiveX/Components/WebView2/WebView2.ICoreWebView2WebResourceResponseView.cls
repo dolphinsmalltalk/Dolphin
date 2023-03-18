@@ -109,7 +109,7 @@ statusCode
 	"Answer the <sdword> value of the 'StatusCode' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_StatusCode: answer.
 	^answer asObject! !
 !WebView2.ICoreWebView2WebResourceResponseView categoriesForMethods!

@@ -41,79 +41,79 @@ struct tagEXTLOGPEN {
 elpBrushStyle
 	"Answer the <Integer> value of the receiver's 'elpBrushStyle' field."
 
-	^bytes dwordAtOffset: _OffsetOf_elpBrushStyle!
+	^bytes uint32AtOffset: _OffsetOf_elpBrushStyle!
 
 elpBrushStyle: anInteger
 	"Set the receiver's 'elpBrushStyle' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_elpBrushStyle put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_elpBrushStyle put: anInteger!
 
 elpColor
 	"Answer the <Integer> value of the receiver's 'elpColor' field."
 
-	^bytes dwordAtOffset: _OffsetOf_elpColor!
+	^bytes uint32AtOffset: _OffsetOf_elpColor!
 
 elpColor: anInteger
 	"Set the receiver's 'elpColor' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_elpColor put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_elpColor put: anInteger!
 
 elpHatch
 	"Answer the <Integer> value of the receiver's 'elpHatch' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_elpHatch!
+	^bytes int32AtOffset: _OffsetOf_elpHatch!
 
 elpHatch: anInteger
 	"Set the receiver's 'elpHatch' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_elpHatch put: anInteger!
+	bytes int32AtOffset: _OffsetOf_elpHatch put: anInteger!
 
 elpNumEntries
 	"Answer the <Integer> value of the receiver's 'elpNumEntries' field."
 
-	^bytes dwordAtOffset: _OffsetOf_elpNumEntries!
+	^bytes uint32AtOffset: _OffsetOf_elpNumEntries!
 
 elpNumEntries: anInteger
 	"Set the receiver's 'elpNumEntries' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_elpNumEntries put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_elpNumEntries put: anInteger!
 
 elpPenStyle
 	"Answer the <Integer> value of the receiver's 'elpPenStyle' field."
 
-	^bytes dwordAtOffset: _OffsetOf_elpPenStyle!
+	^bytes uint32AtOffset: _OffsetOf_elpPenStyle!
 
 elpPenStyle: anInteger
 	"Set the receiver's 'elpPenStyle' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_elpPenStyle put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_elpPenStyle put: anInteger!
 
 elpStyleEntry
-	"Answer the <DWORDArray> value of the receiver's 'elpStyleEntry' field."
+	"Answer the <UInt32Array> value of the receiver's 'elpStyleEntry' field."
 
-	^DWORDArray fromAddress: bytes yourAddress + _OffsetOf_elpStyleEntry length: self elpNumEntries!
+	^UInt32Array fromAddress: bytes yourAddress + _OffsetOf_elpStyleEntry length: self elpNumEntries!
 
-elpStyleEntry: aDWORDArray
-	"Set the receiver's 'elpStyleEntry' field to the value of the argument, aDWORDArray"
+elpStyleEntry: aUInt32Array
+	"Set the receiver's 'elpStyleEntry' field to the value of the argument, aUInt32Array"
 
 	| size |
-	size := aDWORDArray byteSize.
-	aDWORDArray
+	size := aUInt32Array byteSize.
+	aUInt32Array
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_elpStyleEntry + 1)
 		to: _OffsetOf_elpStyleEntry + size
 		startingAt: 1.
-	self elpNumEntries: aDWORDArray size!
+	self elpNumEntries: aUInt32Array size!
 
 elpWidth
 	"Answer the <Integer> value of the receiver's 'elpWidth' field."
 
-	^bytes dwordAtOffset: _OffsetOf_elpWidth!
+	^bytes uint32AtOffset: _OffsetOf_elpWidth!
 
 elpWidth: anInteger
 	"Set the receiver's 'elpWidth' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_elpWidth put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_elpWidth put: anInteger! !
 !OS.EXTLOGPEN categoriesForMethods!
 elpBrushStyle!**compiled accessors**!public! !
 elpBrushStyle:!**compiled accessors**!public! !
@@ -155,25 +155,25 @@ defineFields
 
 	self
 		defineField: #elpPenStyle
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 0;
 		defineField: #elpWidth
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 4;
 		defineField: #elpBrushStyle
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 8;
 		defineField: #elpColor
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 12;
 		defineField: #elpHatch
-			type: SDWORDField new
+			type: Int32Field new
 			offset: 16;
 		defineField: #elpNumEntries
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 20;
 		defineField: #elpStyleEntry
-			type: (ArrayField type: DWORDArray
+			type: (ArrayField type: UInt32Array
 					arrayLength: (ConformantArrayFieldLength lengthField: #elpNumEntries))
 			offset: 24!
 

@@ -22,22 +22,22 @@ OS.NMLVGETINFOTIPW comment: ''!
 cchTextMax
 	"Answer the <Integer> value of the receiver's 'cchTextMax' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_cchTextMax!
+	^bytes int32AtOffset: _OffsetOf_cchTextMax!
 
 dwFlags
 	"Answer the <Integer> value of the receiver's 'dwFlags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwFlags!
+	^bytes uint32AtOffset: _OffsetOf_dwFlags!
 
 iItem
 	"Answer the <Integer> value of the receiver's 'iItem' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_iItem!
+	^bytes int32AtOffset: _OffsetOf_iItem!
 
 iSubItem
 	"Answer the <Integer> value of the receiver's 'iSubItem' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_iSubItem!
+	^bytes int32AtOffset: _OffsetOf_iSubItem!
 
 itemHandle
 	"Answer the 'handle' of the receiver's item."
@@ -83,12 +83,12 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #dwFlags type: DWORDField readOnly;
+		defineField: #dwFlags type: UInt32Field readOnly;
 		defineField: #pszText type: LPVOIDField readOnly;
-		defineField: #cchTextMax type: SDWORDField readOnly;
-		defineField: #iItem type: SDWORDField readOnly;
-		defineField: #iSubItem type: SDWORDField readOnly;
-		defineField: #lParam type: INT_PTRField filler!
+		defineField: #cchTextMax type: Int32Field readOnly;
+		defineField: #iItem type: Int32Field readOnly;
+		defineField: #iSubItem type: Int32Field readOnly;
+		defineField: #lParam type: IntPtrField filler!
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #dwFlags #pszText #cchTextMax #iItem #iSubItem)! !

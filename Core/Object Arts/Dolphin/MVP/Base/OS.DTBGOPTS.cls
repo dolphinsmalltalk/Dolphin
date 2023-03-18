@@ -34,22 +34,22 @@ struct tagDTBGOPTS {
 dwFlags
 	"Answer the <Integer> value of the receiver's 'dwFlags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwFlags!
+	^bytes uint32AtOffset: _OffsetOf_dwFlags!
 
 dwFlags: anInteger
 	"Set the receiver's 'dwFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwFlags put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwFlags put: anInteger!
 
 dwSize
 	"Answer the <Integer> value of the receiver's 'dwSize' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwSize!
+	^bytes uint32AtOffset: _OffsetOf_dwSize!
 
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 rcClip
 	"Answer the <RECTL> value of the receiver's 'rcClip' field."
@@ -91,8 +91,8 @@ defineFields
 "
 
 	self
-		defineField: #dwSize type: DWORDField new;
-		defineField: #dwFlags type: DWORDField new;
+		defineField: #dwSize type: UInt32Field new;
+		defineField: #dwFlags type: UInt32Field new;
 		defineField: #rcClip type: (StructureField type: RECTL)!
 
 getFieldNames

@@ -322,7 +322,7 @@ wmNotify: msgInteger wParam: wParamInteger lParam: lParamInteger
 		at: CDN_FIRST - CDN_FILEOK + 1 put: #cdnFileOk:;
 		at: CDN_FIRST - CDN_TYPECHANGE + 1 put: #cdnTypeChange:;
 		at: CDN_FIRST - CDN_INCLUDEITEM + 1 put: #cdnIncludeItem:;
-		yourself) lookup: ##(CDN_FIRST + 1) - (ptr sdwordAtOffset: 8))
+		yourself) lookup: ##(CDN_FIRST + 1) - (ptr int32AtOffset: 8))
 		ifNil: [0]
 		ifNotNil: [:action | self perform: action with: ptr]! !
 !UI.FileDialog categoriesForMethods!

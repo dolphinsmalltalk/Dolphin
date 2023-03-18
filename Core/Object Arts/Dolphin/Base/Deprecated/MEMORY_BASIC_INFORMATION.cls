@@ -63,11 +63,11 @@ defineFields
 		defineField: #BaseAddress type: LPVOIDField readOnly;
 		defineField: #AllocationBase type: LPVOIDField readOnly;
 		beUncompiled;
-		defineField: #AllocationProtect type: DWORDField readOnly;
-		defineField: #RegionSize type: DWORDField readOnly;
-		defineField: #State type: DWORDField readOnly;
-		defineField: #Protect type: DWORDField readOnly;
-		defineField: #Type type: DWORDField readOnly!
+		defineField: #AllocationProtect type: UInt32Field readOnly;
+		defineField: #RegionSize type: UInt32Field readOnly;
+		defineField: #State type: UInt32Field readOnly;
+		defineField: #Protect type: UInt32Field readOnly;
+		defineField: #Type type: UInt32Field readOnly!
 
 forAddress: anAddress
 	"Answer a new instance of the receiver describing the memory region

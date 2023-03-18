@@ -798,7 +798,7 @@ icon
 initialize
 	View registerMessageMappings: self menuMessageMappings.
 	DrawStateCallbackDescriptor := External.FunctionDescriptor returnType: 'bool'
-				argumentTypes: 'handle intptr uintptr sdword sdword'!
+				argumentTypes: 'handle intptr uintptr int32 int32'!
 
 menuMessageMappings
 	^{WM_CONTEXTMENU -> #wmContextMenu:wParam:lParam:.

@@ -47,7 +47,7 @@ ReadAt: offset pv: pBuf cb: cb pcbRead: pcbRead
 	"Private - Implement the ILockBytes::ReadAt() interface function.
 	We do not give an error if the request attempts to read out of bounds
 	but instead read as much as we can, answering the number of bytes
-	actually read through the sizeOut parameter (a DWORD*)."
+	actually read through the sizeOut parameter (a UInt32*)."
 
 	| max |
 	max := self size.

@@ -24,37 +24,37 @@ OS.COM.BINDINFO comment: '<BINDINFO> is an <ExternalStructure> class to wrap the
 cbstgmedData
 	"Answer the <Integer> value of the receiver's 'cbstgmedData' field."
 
-	^bytes dwordAtOffset: _OffsetOf_cbstgmedData!
+	^bytes uint32AtOffset: _OffsetOf_cbstgmedData!
 
 cbstgmedData: anInteger
 	"Set the receiver's 'cbstgmedData' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_cbstgmedData put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_cbstgmedData put: anInteger!
 
 dwBindVerb
 	"Answer the <Integer> value of the receiver's 'dwBindVerb' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwBindVerb!
+	^bytes uint32AtOffset: _OffsetOf_dwBindVerb!
 
 dwBindVerb: anInteger
 	"Set the receiver's 'dwBindVerb' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwBindVerb put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwBindVerb put: anInteger!
 
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 grfBindInfoF
 	"Answer the <Integer> value of the receiver's 'grfBindInfoF' field."
 
-	^bytes dwordAtOffset: _OffsetOf_grfBindInfoF!
+	^bytes uint32AtOffset: _OffsetOf_grfBindInfoF!
 
 grfBindInfoF: anInteger
 	"Set the receiver's 'grfBindInfoF' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_grfBindInfoF put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_grfBindInfoF put: anInteger!
 
 stgmedData
 	"Answer the <STGMEDIUM> value of the receiver's 'stgmedData' field."
@@ -124,13 +124,13 @@ defineFields
 	"
 
 	self
-		defineField: #dwSize type: DWORDField writeOnly;
+		defineField: #dwSize type: UInt32Field writeOnly;
 		defineField: #szExtraInfo type: (PointerField type: Utf16String);
 		defineField: #stgmedData type: (StructureField type: STGMEDIUM);
-		defineField: #grfBindInfoF type: DWORDField new;
-		defineField: #dwBindVerb type: DWORDField new;
+		defineField: #grfBindInfoF type: UInt32Field new;
+		defineField: #dwBindVerb type: UInt32Field new;
 		defineField: #szCustomVerb type: (PointerField type: Utf16String);
-		defineField: #cbstgmedData type: DWORDField new!
+		defineField: #cbstgmedData type: UInt32Field new!
 
 getFieldNames
 	^#(#dwSize #szExtraInfo #stgmedData #grfBindInfoF #dwBindVerb #szCustomVerb #cbstgmedData)! !

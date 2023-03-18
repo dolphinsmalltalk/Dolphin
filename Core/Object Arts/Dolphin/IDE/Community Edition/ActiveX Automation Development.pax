@@ -51,9 +51,7 @@ package setMethodNames: #(
 	#(#{External.ArrayPointerField class} #printVariable:type:indirections:on:)
 	#(#{External.BOOL class} #fieldType)
 	#(#{External.BOOLEAN class} #fieldType)
-	#(#{External.BYTE class} #fieldType)
 	#(#{External.DOUBLE class} #fieldType)
-	#(#{External.DWORD class} #fieldType)
 	#(#{External.DynamicLinkLibrary} #DllRegisterServer)
 	#(#{External.ExternalArray class} #fieldType)
 	#(#{External.ExternalArray class} #fieldType:indirections:)
@@ -69,16 +67,17 @@ package setMethodNames: #(
 	#(#{External.FLOAT class} #printDefaultValue:on:)
 	#(#{External.Handle class} #fieldType)
 	#(#{External.Handle class} #printMethodArgument:elemdesc:indirections:on:for:)
-	#(#{External.INT_PTR class} #fieldType)
+	#(#{External.Int16 class} #fieldType)
+	#(#{External.Int32 class} #fieldType)
+	#(#{External.Int64 class} #fieldType)
+	#(#{External.Int8 class} #fieldType)
 	#(#{External.IntegerBytes class} #fieldType)
+	#(#{External.IntPtr class} #fieldType)
 	#(#{External.POINT} #printOn:)
 	#(#{External.PointerArray class} #fieldType)
 	#(#{External.PointerArray class} #pointerFieldType)
 	#(#{External.PointerArrayField class} #printVariable:type:indirections:on:)
 	#(#{External.PointerField class} #printVariable:type:indirections:on:)
-	#(#{External.QWORD class} #fieldType)
-	#(#{External.SBYTE class} #fieldType)
-	#(#{External.SDWORD class} #fieldType)
 	#(#{External.Structure class} #elementType:)
 	#(#{External.Structure class} #fieldType)
 	#(#{External.Structure class} #fieldType:indirections:)
@@ -94,14 +93,16 @@ package setMethodNames: #(
 	#(#{External.StructureArrayField class} #printVariable:type:indirections:on:)
 	#(#{External.StructureArrayPointerField class} #printVariable:type:indirections:on:)
 	#(#{External.StructureField class} #printVariable:type:indirections:on:)
-	#(#{External.SWORD class} #fieldType)
-	#(#{External.UINT_PTR class} #fieldType)
+	#(#{External.UInt16 class} #fieldType)
+	#(#{External.UInt32 class} #fieldType)
 	#(#{External.UInt32Bytes class} #fieldType)
+	#(#{External.UInt64 class} #fieldType)
 	#(#{External.UInt64Bytes class} #fieldType)
+	#(#{External.UInt8 class} #fieldType)
+	#(#{External.UIntPtr class} #fieldType)
 	#(#{External.UIntPtrBytes class} #fieldType)
 	#(#{External.VOID class} #fieldType)
 	#(#{External.VOID class} #pointerFieldType)
-	#(#{External.WORD class} #fieldType)
 	#(#{OS.COM class} #icon)
 	#(#{OS.COM.AbstractDispatchImplementation class} #icon)
 	#(#{OS.COM.AbstractELEMDESC} #printFieldsOn:)
@@ -542,7 +543,6 @@ package setMethodNames: #(
 	#(#{OS.COM.VARIANT_BOOL} #printOn:)
 	#(#{OS.COM.VARIANT_BOOL class} #newInstanceAspect:class:)
 	#(#{OS.HRESULT class} #fieldType)
-	#(#{OS.LARGE_INTEGER class} #fieldType)
 ).
 
 package setPrerequisites: #(
@@ -921,17 +921,6 @@ fieldType
 fieldType!constants!private! !
 !
 
-!External.BYTE class methodsFor!
-
-fieldType
-	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in other
-	structures."
-
-	^BYTEField! !
-!External.BYTE class categoriesForMethods!
-fieldType!constants!private! !
-!
-
 !External.DOUBLE class methodsFor!
 
 fieldType
@@ -940,17 +929,6 @@ fieldType
 
 	^DOUBLEField! !
 !External.DOUBLE class categoriesForMethods!
-fieldType!constants!private! !
-!
-
-!External.DWORD class methodsFor!
-
-fieldType
-	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
-	other structures."
-
-	^DWORDField! !
-!External.DWORD class categoriesForMethods!
 fieldType!constants!private! !
 !
 
@@ -1128,14 +1106,47 @@ fieldType!constants!development!private! !
 printMethodArgument:elemdesc:indirections:on:for:!private! !
 !
 
-!External.INT_PTR class methodsFor!
+!External.Int16 class methodsFor!
 
 fieldType
 	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
 	other structures."
 
-	^INT_PTRField! !
-!External.INT_PTR class categoriesForMethods!
+	^Int16Field! !
+!External.Int16 class categoriesForMethods!
+fieldType!constants!private! !
+!
+
+!External.Int32 class methodsFor!
+
+fieldType
+	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
+	other structures."
+
+	^Int32Field! !
+!External.Int32 class categoriesForMethods!
+fieldType!constants!private! !
+!
+
+!External.Int64 class methodsFor!
+
+fieldType
+	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
+	other structures."
+
+	^Int64Field! !
+!External.Int64 class categoriesForMethods!
+fieldType!constants!private! !
+!
+
+!External.Int8 class methodsFor!
+
+fieldType
+	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
+	other structures."
+
+	^Int8Field! !
+!External.Int8 class categoriesForMethods!
 fieldType!constants!private! !
 !
 
@@ -1145,6 +1156,17 @@ fieldType
 	^self subclassResponsibility! !
 !External.IntegerBytes class categoriesForMethods!
 fieldType!constants!development!private! !
+!
+
+!External.IntPtr class methodsFor!
+
+fieldType
+	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
+	other structures."
+
+	^IntPtrField! !
+!External.IntPtr class categoriesForMethods!
+fieldType!constants!private! !
 !
 
 !External.POINT methodsFor!
@@ -1209,39 +1231,6 @@ printVariable: aVARDESC type: aClass indirections: anInteger on: aCodeGeneration
 	self printTypedField: aClass on: aCodeGenerationContext! !
 !External.PointerField class categoriesForMethods!
 printVariable:type:indirections:on:!private! !
-!
-
-!External.QWORD class methodsFor!
-
-fieldType
-	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
-	other structures."
-
-	^QWORDField! !
-!External.QWORD class categoriesForMethods!
-fieldType!constants!private! !
-!
-
-!External.SBYTE class methodsFor!
-
-fieldType
-	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
-	other structures."
-
-	^SBYTEField! !
-!External.SBYTE class categoriesForMethods!
-fieldType!constants!private! !
-!
-
-!External.SDWORD class methodsFor!
-
-fieldType
-	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
-	other structures."
-
-	^SDWORDField! !
-!External.SDWORD class categoriesForMethods!
-fieldType!constants!private! !
 !
 
 !External.Structure class methodsFor!
@@ -1442,25 +1431,25 @@ printVariable: aVARDESC type: aClass indirections: anInteger on: aCodeGeneration
 printVariable:type:indirections:on:!private! !
 !
 
-!External.SWORD class methodsFor!
+!External.UInt16 class methodsFor!
 
 fieldType
 	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
 	other structures."
 
-	^SWORDField! !
-!External.SWORD class categoriesForMethods!
+	^UInt16Field! !
+!External.UInt16 class categoriesForMethods!
 fieldType!constants!private! !
 !
 
-!External.UINT_PTR class methodsFor!
+!External.UInt32 class methodsFor!
 
 fieldType
 	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
 	other structures."
 
-	^UINT_PTRField! !
-!External.UINT_PTR class categoriesForMethods!
+	^UInt32Field! !
+!External.UInt32 class categoriesForMethods!
 fieldType!constants!private! !
 !
 
@@ -1470,9 +1459,20 @@ fieldType
 	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
 	other structures."
 
-	^DWORDField! !
+	^UInt32Field! !
 !External.UInt32Bytes class categoriesForMethods!
 fieldType!constants!development!private! !
+!
+
+!External.UInt64 class methodsFor!
+
+fieldType
+	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
+	other structures."
+
+	^UInt64Field! !
+!External.UInt64 class categoriesForMethods!
+fieldType!constants!private! !
 !
 
 !External.UInt64Bytes class methodsFor!
@@ -1481,9 +1481,31 @@ fieldType
 	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
 	other structures."
 
-	^QWORDField! !
+	^UInt64Field! !
 !External.UInt64Bytes class categoriesForMethods!
 fieldType!constants!development!private! !
+!
+
+!External.UInt8 class methodsFor!
+
+fieldType
+	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in other
+	structures."
+
+	^UInt8Field! !
+!External.UInt8 class categoriesForMethods!
+fieldType!constants!private! !
+!
+
+!External.UIntPtr class methodsFor!
+
+fieldType
+	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
+	other structures."
+
+	^UIntPtrField! !
+!External.UIntPtr class categoriesForMethods!
+fieldType!constants!private! !
 !
 
 !External.UIntPtrBytes class methodsFor!
@@ -1492,7 +1514,7 @@ fieldType
 	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
 	other structures."
 
-	^UINT_PTRField! !
+	^UIntPtrField! !
 !External.UIntPtrBytes class categoriesForMethods!
 fieldType!constants!development!private! !
 !
@@ -1513,17 +1535,6 @@ pointerFieldType
 !External.VOID class categoriesForMethods!
 fieldType!constants!private! !
 pointerFieldType!constants!private! !
-!
-
-!External.WORD class methodsFor!
-
-fieldType
-	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
-	other structures."
-
-	^WORDField! !
-!External.WORD class categoriesForMethods!
-fieldType!constants!private! !
 !
 
 !OS.COM class methodsFor!
@@ -1986,9 +1997,9 @@ printOn: aStream
 
 	aStream
 		basicPrint: self;
-		nextPut: $(;
-		display: (self isNull ifTrue: ['NULL'] ifFalse: [self value]);
-		nextPut: $)! !
+		nextPut: $(.
+	self isNull ifTrue: [aStream nextPutAll: 'NULL'] ifFalse: [aStream print: self value].
+	aStream nextPut: $)! !
 !OS.COM.CURRENCY categoriesForMethods!
 printOn:!printing!public! !
 !
@@ -2071,7 +2082,7 @@ newInstanceAspect: aSymbol class: aspectClass
 
 printDefaultValue: aVARIANT on: aPuttableStream
 	self assert: [aVARIANT vt == VT_DATE or: [aVARIANT vt == VT_R8]].
-	aVARIANT dblVal displayOn: aPuttableStream! !
+	aVARIANT double displayOn: aPuttableStream! !
 !OS.COM.DATE class categoriesForMethods!
 newInstanceAspect:class:!adapters!private! !
 printDefaultValue:on:!helpers!private! !
@@ -2084,9 +2095,9 @@ printOn: aStream
 
 	aStream
 		basicPrint: self;
-		nextPut: $(;
-		display: (self isNull ifTrue: ['NULL'] ifFalse: [self value]);
-		nextPut: $)! !
+		nextPut: $(.
+	self isNull ifTrue: [aStream nextPutAll: 'NULL'] ifFalse: [aStream print: self value].
+	aStream nextPut: $)! !
 !OS.COM.DECIMAL categoriesForMethods!
 printOn:!printing!public! !
 !
@@ -7303,18 +7314,16 @@ printOn:!printing!public! !
 debugPrintOn: aStream
 	"For VARIANTs we want to be careful not to have any side effects when displayed in the debugger."
 
-	self isArray
-		ifTrue: 
-			[aStream
-				basicPrint: self;
-				nextPut: $(.
-			self isNull
-				ifTrue: [aStream nextPutAll: 'NULL']
-				ifFalse: 
-					[aStream nextPutAll: self typeName; nextPutAll: '[]'.
-					self isByRef ifTrue: [aStream nextPut: $*]].
-			aStream nextPut: $)]
-		ifFalse: [super debugPrintOn: aStream]!
+	aStream
+		basicPrint: self;
+		nextPut: $(.
+	self isNull
+		ifTrue: [aStream nextPutAll: 'NULL']
+		ifFalse: 
+			[aStream nextPutAll: self typeName.
+			self isArray ifTrue: [aStream nextPutAll: '[]'].
+			self isByRef ifTrue: [aStream nextPut: $*]].
+	aStream nextPut: $)!
 
 printIDLOn: aPuttableStream
 	"Append, to the <puttableStream>, target, a string whose characters are a 
@@ -7369,7 +7378,7 @@ example1
 	var := VARIANT new.
 	bstr := 'Wibble' asBSTR.
 	"Must use #basicYourAddress, because BSTRs are indirection objects"
-	var dword: bstr basicYourAddress.
+	var uint32: bstr basicYourAddress.
 	var vt: VT_BSTR | VT_BYREF.
 
 	"Extract the by-ref value."
@@ -7460,19 +7469,8 @@ fieldType
 	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
 	other structures."
 
-	^SDWORDField! !
+	^Int32Field! !
 !OS.HRESULT class categoriesForMethods!
-fieldType!constants!private! !
-!
-
-!OS.LARGE_INTEGER class methodsFor!
-
-fieldType
-	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
-	other structures."
-
-	^SQWORDField! !
-!OS.LARGE_INTEGER class categoriesForMethods!
 fieldType!constants!private! !
 !
 

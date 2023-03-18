@@ -20,22 +20,22 @@ OS.TVITEMEXW comment: ''!
 iExpandedImage
 	"Answer the <Integer> value of the receiver's 'iExpandedImage' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_iExpandedImage!
+	^bytes int32AtOffset: _OffsetOf_iExpandedImage!
 
 iExpandedImage: anInteger
 	"Set the receiver's 'iExpandedImage' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_iExpandedImage put: anInteger!
+	bytes int32AtOffset: _OffsetOf_iExpandedImage put: anInteger!
 
 uStateEx
 	"Answer the <Integer> value of the receiver's 'uStateEx' field."
 
-	^bytes dwordAtOffset: _OffsetOf_uStateEx!
+	^bytes uint32AtOffset: _OffsetOf_uStateEx!
 
 uStateEx: anInteger
 	"Set the receiver's 'uStateEx' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_uStateEx put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_uStateEx put: anInteger! !
 !OS.TVITEMEXW categoriesForMethods!
 iExpandedImage!**compiled accessors**!public! !
 iExpandedImage:!**compiled accessors**!public! !
@@ -57,16 +57,16 @@ defineFields
 	super defineFields.
 	self
 		defineField: #iIntegral
-			type: SDWORDField uncompiled
+			type: Int32Field uncompiled
 			offset: 40;
 		defineField: #uStateEx
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 44;
 		defineField: #hwnd
 			type: HANDLEField uncompiled
 			offset: 48;
 		defineField: #iExpandedImage
-			type: SDWORDField new
+			type: Int32Field new
 			offset: 52!
 
 getFieldNames

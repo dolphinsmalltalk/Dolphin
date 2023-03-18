@@ -167,18 +167,18 @@ Refactory.Browser.Tests.BrowserEnvironmentTest subclass: #'Tools.Tests.PackageEn
 
 testPrintOnNull
 	| subject |
-	subject := DWORD new.
-	self assert: subject printString equals: 'a DWORD(0)'!
+	subject := UInt32 new.
+	self assert: subject printString equals: 'an UInt32(0)'!
 
 testPrintOnSigned
 	| subject |
-	subject := SDWORD fromInteger: 123.
-	self assert: subject printString equals: 'a SDWORD(123)'!
+	subject := Int32 fromInteger: 123.
+	self assert: subject printString equals: 'an Int32(123)'!
 
 testPrintOnUnsigned
 	| subject |
-	subject := DWORD fromInteger: 123.
-	self assert: subject printString equals: 'a DWORD(16r7B)'! !
+	subject := UInt32 fromInteger: 123.
+	self assert: subject printString equals: 'an UInt32(16r7B)'! !
 !External.Tests.INTEGERTest categoriesForMethods!
 testPrintOnNull!public!unit tests! !
 testPrintOnSigned!public!unit tests! !

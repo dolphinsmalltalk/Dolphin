@@ -37,12 +37,12 @@ struct tagHTTP_UNKNOWN_HEADER {
 NameLength
 	"Private - Answer the <Integer> value of the receiver's 'NameLength' field."
 
-	^bytes wordAtOffset: _OffsetOf_NameLength!
+	^bytes uint16AtOffset: _OffsetOf_NameLength!
 
 NameLength: anInteger
 	"Set the receiver's 'NameLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_NameLength put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_NameLength put: anInteger!
 
 pName
 	"Answer the <AnsiString> value of the receiver's 'pName' field."
@@ -69,12 +69,12 @@ pRawValue: anAnsiString
 RawValueLength
 	"Private - Answer the <Integer> value of the receiver's 'RawValueLength' field."
 
-	^bytes wordAtOffset: _OffsetOf_RawValueLength!
+	^bytes uint16AtOffset: _OffsetOf_RawValueLength!
 
 RawValueLength: anInteger
 	"Set the receiver's 'RawValueLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_RawValueLength put: anInteger! !
+	bytes uint16AtOffset: _OffsetOf_RawValueLength put: anInteger! !
 !WinHttpServer.HTTP_UNKNOWN_HEADER categoriesForMethods!
 NameLength!**compiled accessors**!private! !
 NameLength:!**compiled accessors**!private! !
@@ -106,8 +106,8 @@ defineFields
 "
 
 	self
-		defineField: #NameLength type: WORDField new beNonBrowsable offset: 0;
-		defineField: #RawValueLength type: WORDField new beNonBrowsable offset: 2;
+		defineField: #NameLength type: UInt16Field new beNonBrowsable offset: 0;
+		defineField: #RawValueLength type: UInt16Field new beNonBrowsable offset: 2;
 		defineField: #pName type: (ArrayPointerField type: AnsiString lengthField: #NameLength) offset: 4;
 		defineField: #pRawValue type: (ArrayPointerField type: AnsiString lengthField: #RawValueLength) offset: 8.
 	self byteSize: 12!

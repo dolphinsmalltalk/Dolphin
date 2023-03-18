@@ -388,7 +388,7 @@ nmNotify: pNMHDR
 	^(##((Array new: EN_DRAGDROPDONE - EN_MSGFILTER + 1 withAll: #nmDummy:)
 		at: EN_SELCHANGE - EN_MSGFILTER + 1 put: #enSelChange:;
 		at: EN_LINK - EN_MSGFILTER + 1 put: #enLink:;
-		yourself) lookup: (pNMHDR sdwordAtOffset: 8) - ##(EN_MSGFILTER - 1))
+		yourself) lookup: (pNMHDR int32AtOffset: 8) - ##(EN_MSGFILTER - 1))
 		ifNil: [super nmNotify: pNMHDR]
 		ifNotNil: [:action | self perform: action with: pNMHDR]!
 
@@ -671,8 +671,8 @@ selectionPlainText: aString
 	| stex |
 	stex := ByteArray newFixed: 8.
 	stex
-		dwordAtOffset: 0 put: ST_SELECTION | ST_UNICODE;
-		dwordAtOffset: 4 put: aString codePage.
+		uint32AtOffset: 0 put: ST_SELECTION | ST_UNICODE;
+		uint32AtOffset: 4 put: aString codePage.
 	self
 		sendMessage: EM_SETTEXTEX
 		wParam: stex yourAddress
@@ -757,7 +757,7 @@ setWindowText: aString
 
 	| stex |
 	stex := ByteArray newFixed: 8.
-	stex dwordAtOffset: 4 put: aString codePage.
+	stex uint32AtOffset: 4 put: aString codePage.
 	self
 		sendMessage: EM_SETTEXTEX
 		wParam: stex yourAddress
@@ -846,8 +846,8 @@ textLength
 	| gtlex |
 	gtlex := ByteArray newFixed: 8.
 	gtlex
-		dwordAtOffset: 0 put: ##(GTL_USECRLF | GTL_PRECISE | GTL_NUMCHARS);
-		dwordAtOffset: 4 put: NlsConstants.CP_UNICODE.
+		uint32AtOffset: 0 put: ##(GTL_USECRLF | GTL_PRECISE | GTL_NUMCHARS);
+		uint32AtOffset: 4 put: NlsConstants.CP_UNICODE.
 	^self sendMessage: EM_GETTEXTLENGTHEX wParam: gtlex yourAddress!
 
 textLimit: anInteger
@@ -1012,7 +1012,7 @@ initialize
 	self addClassConstant: 'StreamInIndex' value: (self indexOfInstVar: 'streamIn').
 
 	"Descriptor for stream out callback"
-	StreamingDescriptor := External.FunctionDescriptor argumentTypes: 'dword lpvoid sdword DWORD*'.
+	StreamingDescriptor := External.FunctionDescriptor argumentTypes: 'uint32 lpvoid int32 UInt32*'.
 	ParagraphAlignmentMap := IdentityDictionary new
 				at: #left put: PFA_LEFT;
 				at: #right put: PFA_RIGHT;

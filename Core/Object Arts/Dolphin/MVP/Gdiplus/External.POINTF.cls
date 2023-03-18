@@ -36,7 +36,7 @@ floor
 isZero
 	"Answer whether the receiver is equal to Point zero."
 
-	^(bytes qwordAtOffset: 0) == 0!
+	^(bytes uint64AtOffset: 0) == 0!
 
 rounded
 	"Answer a new Point with the x and y values of the receiver rounded."

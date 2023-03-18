@@ -49,7 +49,7 @@ defineFields
 	"
 
 	self
-		defineField: #cBytes type: DWORDField filler;
+		defineField: #cBytes type: UInt32Field filler;
 		defineField: #varDefaultValue type: (StructureField type: VARIANT) beReadOnly!
 
 getFieldNames

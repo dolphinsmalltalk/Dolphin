@@ -64,22 +64,22 @@ InternalHigh
 Offset
 	"Answer the <Integer> value of the receiver's 'Offset' field."
 
-	^bytes dwordAtOffset: _OffsetOf_Offset!
+	^bytes uint32AtOffset: _OffsetOf_Offset!
 
 Offset: anInteger
 	"Set the receiver's 'Offset' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_Offset put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_Offset put: anInteger!
 
 OffsetHigh
 	"Answer the <Integer> value of the receiver's 'OffsetHigh' field."
 
-	^bytes dwordAtOffset: _OffsetOf_OffsetHigh!
+	^bytes uint32AtOffset: _OffsetOf_OffsetHigh!
 
 OffsetHigh: anInteger
 	"Set the receiver's 'OffsetHigh' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_OffsetHigh put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_OffsetHigh put: anInteger! !
 !OS.OVERLAPPED categoriesForMethods!
 hEvent!**compiled accessors**!public! !
 hEvent:!**compiled accessors**!public! !
@@ -118,16 +118,16 @@ defineFields
 
 	self
 		defineField: #Internal
-			type: UINT_PTRField new beReadOnly
+			type: UIntPtrField new beReadOnly
 			offset: 0;
 		defineField: #InternalHigh
-			type: UINT_PTRField new beReadOnly
+			type: UIntPtrField new beReadOnly
 			offset: 4;
 		defineField: #Offset
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 8;
 		defineField: #OffsetHigh
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 12;
 		defineField: #Pointer
 			type: LPVOIDField new beFiller

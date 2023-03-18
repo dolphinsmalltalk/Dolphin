@@ -46,9 +46,9 @@ KeyType: anUtf16String
 	bytes uintPtrAtOffset: _OffsetOf_KeyType put: anUtf16String yourAddress!
 
 TlsUnique
-	"Answer the <BYTE> value of the receiver's 'TlsUnique' field."
+	"Answer the <UInt8> value of the receiver's 'TlsUnique' field."
 
-	^BYTE fromAddress: (bytes intPtrAtOffset: _OffsetOf_TlsUnique)!
+	^UInt8 fromAddress: (bytes intPtrAtOffset: _OffsetOf_TlsUnique)!
 
 TlsUnique: aBYTE
 	"Set the receiver's 'TlsUnique' field to the value of the argument, aBYTE"
@@ -58,17 +58,17 @@ TlsUnique: aBYTE
 TlsUniqueSize
 	"Answer the <Integer> value of the receiver's 'TlsUniqueSize' field."
 
-	^bytes dwordAtOffset: _OffsetOf_TlsUniqueSize!
+	^bytes uint32AtOffset: _OffsetOf_TlsUniqueSize!
 
 TlsUniqueSize: anInteger
 	"Set the receiver's 'TlsUniqueSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_TlsUniqueSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_TlsUniqueSize put: anInteger!
 
 TokenBinding
-	"Answer the <BYTE> value of the receiver's 'TokenBinding' field."
+	"Answer the <UInt8> value of the receiver's 'TokenBinding' field."
 
-	^BYTE fromAddress: (bytes intPtrAtOffset: _OffsetOf_TokenBinding)!
+	^UInt8 fromAddress: (bytes intPtrAtOffset: _OffsetOf_TokenBinding)!
 
 TokenBinding: aBYTE
 	"Set the receiver's 'TokenBinding' field to the value of the argument, aBYTE"
@@ -78,12 +78,12 @@ TokenBinding: aBYTE
 TokenBindingSize
 	"Answer the <Integer> value of the receiver's 'TokenBindingSize' field."
 
-	^bytes dwordAtOffset: _OffsetOf_TokenBindingSize!
+	^bytes uint32AtOffset: _OffsetOf_TokenBindingSize!
 
 TokenBindingSize: anInteger
 	"Set the receiver's 'TokenBindingSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_TokenBindingSize put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_TokenBindingSize put: anInteger! !
 !WinHttpServer.HTTP_REQUEST_TOKEN_BINDING_INFO categoriesForMethods!
 KeyType!**compiled accessors**!public! !
 KeyType:!**compiled accessors**!public! !
@@ -118,10 +118,10 @@ defineFields
 "
 
 	self
-		defineField: #TokenBinding type: (PointerField type: BYTE) offset: 0;
-		defineField: #TokenBindingSize type: DWORDField new offset: 4;
-		defineField: #TlsUnique type: (PointerField type: BYTE) offset: 8;
-		defineField: #TlsUniqueSize type: DWORDField new offset: 12;
+		defineField: #TokenBinding type: (PointerField type: UInt8) offset: 0;
+		defineField: #TokenBindingSize type: UInt32Field new offset: 4;
+		defineField: #TlsUnique type: (PointerField type: UInt8) offset: 8;
+		defineField: #TlsUniqueSize type: UInt32Field new offset: 12;
 		defineField: #KeyType type: (PointerField type: Utf16String) offset: 16.
 	self byteSize: 20!
 

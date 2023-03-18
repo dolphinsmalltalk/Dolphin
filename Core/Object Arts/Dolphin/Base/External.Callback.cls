@@ -85,7 +85,7 @@ makeProcInstance
 	memory."
 
 	thunk := (ThunkBase asInteger + ((cookie - 1) * ThunkSize)) asExternalAddress.
-	descriptor calleeCleans ifTrue: [thunk wordAtOffset: ArgSizeOffset put: self argumentsSize]!
+	descriptor calleeCleans ifTrue: [thunk uint16AtOffset: ArgSizeOffset put: self argumentsSize]!
 
 thunk
 	"Private - Answer the receiver's assembler thunk."
@@ -140,24 +140,24 @@ allocateThunks
 			| offset |
 			offset := ThunkSize * (i - 1) - 1.
 			"push esp - value of esp saved is that before push"
-			ThunkBase byteAtOffset: (offset := offset + 1) put: 16r54.
+			ThunkBase uint8AtOffset: (offset := offset + 1) put: 16r54.
 			"push <callback id>"
 			ThunkBase
-				byteAtOffset: (offset := offset + 1) put: 16r68;
-				dwordAtOffset: (offset := offset + 1) put: i.
+				uint8AtOffset: (offset := offset + 1) put: 16r68;
+				uint32AtOffset: (offset := offset + 1) put: i.
 			"Calls normally have a relative displacement (unless far) so call through a
 			register with 'mov eax GenericCallback; call eax' sequence"
 			ThunkBase
-				byteAtOffset: (offset := offset + 4) put: 16rB8;
-				dwordAtOffset: (offset := offset + 1) put: procAddress.
+				uint8AtOffset: (offset := offset + 4) put: 16rB8;
+				uint32AtOffset: (offset := offset + 1) put: procAddress.
 			ThunkBase
-				byteAtOffset: (offset := offset + 4) put: 16rFF;
-				byteAtOffset: (offset := offset + 1) put: 16rD0.
+				uint8AtOffset: (offset := offset + 4) put: 16rFF;
+				uint8AtOffset: (offset := offset + 1) put: 16rD0.
 			"ret <argsSize>; argument size will be substituted when thunk allocated to
 			particular callback"
 			ThunkBase
-				byteAtOffset: (offset := offset + 1) put: 16rC2;
-				wordAtOffset: (offset := offset + 1) put: 0]!
+				uint8AtOffset: (offset := offset + 1) put: 16rC2;
+				uint16AtOffset: (offset := offset + 1) put: 0]!
 
 block: aBlockClosure argumentTypes: aString
 	"Answer a new subinstance of the receiver appropriate for dispatching callbacks

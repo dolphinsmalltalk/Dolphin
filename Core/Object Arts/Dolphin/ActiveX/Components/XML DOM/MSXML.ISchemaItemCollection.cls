@@ -147,7 +147,7 @@ length
 	"Answer the <sdword> value of the 'length' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_length: answer.
 	^answer asObject! !
 !MSXML.ISchemaItemCollection categoriesForMethods!

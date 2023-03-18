@@ -255,14 +255,14 @@ testExternalCalls
 	"One simple arg"
 	tree := self parseMethod: 'blah: x <cdecl: dword blah sdword>'.
 	self assert: tree formattedCode trimBlanks equals: 'blah: x
-	<cdecl: dword blah sdword>'.
+	<cdecl: uint32 blah int32>'.
 	ffiCall := tree tags first.
-	self assert: ffiCall returnType typeOrdinal equals: ExtCallArgDWORD.
+	self assert: ffiCall returnType typeOrdinal equals: ExtCallArgUInt32.
 	self assert: ffiCall returnType indirections equals: 0.
 	self assertIsNil: ffiCall returnType structClass.
 	self assert: ffiCall argumentTypes size equals: 1.
 	self assert: ffiCall selector identicalTo: #cdecl:.
-	ffiCall argumentTypes with: {ExtCallArgSDWORD}
+	ffiCall argumentTypes with: {ExtCallArgInt32}
 		do: 
 			[:eachArg :eachType |
 			self assert: eachArg typeOrdinal equals: eachType.
@@ -282,7 +282,7 @@ testExternalCalls
 
 	"Many simple args"
 	src := String writeStream.
-	types := #('lpvoid' 'char' 'byte' 'sbyte' 'word' 'sword' 'dword' 'sdword' 'bool' 'handle' 'double' 'lpstr' 'oop' 'float' 'lppvoid' 'hresult' 'lpwstr' 'qword' 'sqword' 'ote' 'bstr' 'variant' 'date' 'varbool' 'guid').
+	types := #('lpvoid' 'char' 'uint8' 'int8' 'uint16' 'int16' 'uint32' 'int32' 'bool' 'handle' 'double' 'lpstr' 'oop' 'float' 'lppvoid' 'hresult' 'lpwstr' 'uint64' 'int64' 'ote' 'bstr' 'variant' 'date' 'varbool' 'guid').
 	types do: 
 			[:each |
 			src
@@ -453,7 +453,7 @@ methodWithAllNodeTypes
 	^'method: arg1 
 	<namespace: Core> 
 	<primitive: 123 error: ec>
-	<stdcall: UIntPtr blah POINTL* > 
+	<stdcall: SIZE blah POINTL* > 
 	| temps | 
 	super method: arg1. 
 	thisContext. 

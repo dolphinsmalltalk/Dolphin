@@ -37,27 +37,27 @@ struct tagMIB_UDPSTATS {
 dwInDatagrams
 	"Answer the <Integer> value of the receiver's 'dwInDatagrams' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwInDatagrams!
+	^bytes uint32AtOffset: _OffsetOf_dwInDatagrams!
 
 dwInErrors
 	"Answer the <Integer> value of the receiver's 'dwInErrors' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwInErrors!
+	^bytes uint32AtOffset: _OffsetOf_dwInErrors!
 
 dwNoPorts
 	"Answer the <Integer> value of the receiver's 'dwNoPorts' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwNoPorts!
+	^bytes uint32AtOffset: _OffsetOf_dwNoPorts!
 
 dwNumAddrs
 	"Answer the <Integer> value of the receiver's 'dwNumAddrs' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwNumAddrs!
+	^bytes uint32AtOffset: _OffsetOf_dwNumAddrs!
 
 dwOutDatagrams
 	"Answer the <Integer> value of the receiver's 'dwOutDatagrams' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwOutDatagrams! !
+	^bytes uint32AtOffset: _OffsetOf_dwOutDatagrams! !
 !OS.MIB_UDPSTATS categoriesForMethods!
 dwInDatagrams!**compiled accessors**!public! !
 dwInErrors!**compiled accessors**!public! !
@@ -86,11 +86,11 @@ defineFields
 "
 
 	self
-		defineField: #dwInDatagrams type: DWORDField readOnly offset: 0;
-		defineField: #dwNoPorts type: DWORDField readOnly offset: 4;
-		defineField: #dwInErrors type: DWORDField readOnly offset: 8;
-		defineField: #dwOutDatagrams type: DWORDField readOnly offset: 12;
-		defineField: #dwNumAddrs type: DWORDField readOnly offset: 16.
+		defineField: #dwInDatagrams type: UInt32Field readOnly offset: 0;
+		defineField: #dwNoPorts type: UInt32Field readOnly offset: 4;
+		defineField: #dwInErrors type: UInt32Field readOnly offset: 8;
+		defineField: #dwOutDatagrams type: UInt32Field readOnly offset: 12;
+		defineField: #dwNumAddrs type: UInt32Field readOnly offset: 16.
 	self byteSize: 20!
 
 getFieldNames

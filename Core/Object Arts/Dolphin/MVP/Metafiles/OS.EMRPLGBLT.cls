@@ -87,132 +87,132 @@ aptlDest: aStructureArrayOfPOINTL
 cbBitsMask
 	"Answer the <Integer> value of the receiver's 'cbBitsMask' field."
 
-	^bytes dwordAtOffset: _OffsetOf_cbBitsMask!
+	^bytes uint32AtOffset: _OffsetOf_cbBitsMask!
 
 cbBitsMask: anInteger
 	"Set the receiver's 'cbBitsMask' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_cbBitsMask put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_cbBitsMask put: anInteger!
 
 cbBitsSrc
 	"Answer the <Integer> value of the receiver's 'cbBitsSrc' field."
 
-	^bytes dwordAtOffset: _OffsetOf_cbBitsSrc!
+	^bytes uint32AtOffset: _OffsetOf_cbBitsSrc!
 
 cbBitsSrc: anInteger
 	"Set the receiver's 'cbBitsSrc' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_cbBitsSrc put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_cbBitsSrc put: anInteger!
 
 cbBmiMask
 	"Answer the <Integer> value of the receiver's 'cbBmiMask' field."
 
-	^bytes dwordAtOffset: _OffsetOf_cbBmiMask!
+	^bytes uint32AtOffset: _OffsetOf_cbBmiMask!
 
 cbBmiMask: anInteger
 	"Set the receiver's 'cbBmiMask' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_cbBmiMask put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_cbBmiMask put: anInteger!
 
 cbBmiSrc
 	"Answer the <Integer> value of the receiver's 'cbBmiSrc' field."
 
-	^bytes dwordAtOffset: _OffsetOf_cbBmiSrc!
+	^bytes uint32AtOffset: _OffsetOf_cbBmiSrc!
 
 cbBmiSrc: anInteger
 	"Set the receiver's 'cbBmiSrc' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_cbBmiSrc put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_cbBmiSrc put: anInteger!
 
 crBkColorSrc
 	"Answer the <Integer> value of the receiver's 'crBkColorSrc' field."
 
-	^bytes dwordAtOffset: _OffsetOf_crBkColorSrc!
+	^bytes uint32AtOffset: _OffsetOf_crBkColorSrc!
 
 crBkColorSrc: anInteger
 	"Set the receiver's 'crBkColorSrc' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_crBkColorSrc put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_crBkColorSrc put: anInteger!
 
 cxSrc
 	"Answer the <Integer> value of the receiver's 'cxSrc' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_cxSrc!
+	^bytes int32AtOffset: _OffsetOf_cxSrc!
 
 cxSrc: anInteger
 	"Set the receiver's 'cxSrc' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_cxSrc put: anInteger!
+	bytes int32AtOffset: _OffsetOf_cxSrc put: anInteger!
 
 cySrc
 	"Answer the <Integer> value of the receiver's 'cySrc' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_cySrc!
+	^bytes int32AtOffset: _OffsetOf_cySrc!
 
 cySrc: anInteger
 	"Set the receiver's 'cySrc' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_cySrc put: anInteger!
+	bytes int32AtOffset: _OffsetOf_cySrc put: anInteger!
 
 iUsageMask
 	"Answer the <Integer> value of the receiver's 'iUsageMask' field."
 
-	^bytes dwordAtOffset: _OffsetOf_iUsageMask!
+	^bytes uint32AtOffset: _OffsetOf_iUsageMask!
 
 iUsageMask: anInteger
 	"Set the receiver's 'iUsageMask' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_iUsageMask put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_iUsageMask put: anInteger!
 
 iUsageSrc
 	"Answer the <Integer> value of the receiver's 'iUsageSrc' field."
 
-	^bytes dwordAtOffset: _OffsetOf_iUsageSrc!
+	^bytes uint32AtOffset: _OffsetOf_iUsageSrc!
 
 iUsageSrc: anInteger
 	"Set the receiver's 'iUsageSrc' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_iUsageSrc put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_iUsageSrc put: anInteger!
 
 offBitsMask
 	"Answer the <Integer> value of the receiver's 'offBitsMask' field."
 
-	^bytes dwordAtOffset: _OffsetOf_offBitsMask!
+	^bytes uint32AtOffset: _OffsetOf_offBitsMask!
 
 offBitsMask: anInteger
 	"Set the receiver's 'offBitsMask' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_offBitsMask put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_offBitsMask put: anInteger!
 
 offBitsSrc
 	"Answer the <Integer> value of the receiver's 'offBitsSrc' field."
 
-	^bytes dwordAtOffset: _OffsetOf_offBitsSrc!
+	^bytes uint32AtOffset: _OffsetOf_offBitsSrc!
 
 offBitsSrc: anInteger
 	"Set the receiver's 'offBitsSrc' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_offBitsSrc put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_offBitsSrc put: anInteger!
 
 offBmiMask
 	"Answer the <Integer> value of the receiver's 'offBmiMask' field."
 
-	^bytes dwordAtOffset: _OffsetOf_offBmiMask!
+	^bytes uint32AtOffset: _OffsetOf_offBmiMask!
 
 offBmiMask: anInteger
 	"Set the receiver's 'offBmiMask' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_offBmiMask put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_offBmiMask put: anInteger!
 
 offBmiSrc
 	"Answer the <Integer> value of the receiver's 'offBmiSrc' field."
 
-	^bytes dwordAtOffset: _OffsetOf_offBmiSrc!
+	^bytes uint32AtOffset: _OffsetOf_offBmiSrc!
 
 offBmiSrc: anInteger
 	"Set the receiver's 'offBmiSrc' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_offBmiSrc put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_offBmiSrc put: anInteger!
 
 rclBounds
 	"Answer the <RECTL> value of the receiver's 'rclBounds' field."
@@ -245,42 +245,42 @@ xformSrc: aXFORM
 xMask
 	"Answer the <Integer> value of the receiver's 'xMask' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_xMask!
+	^bytes int32AtOffset: _OffsetOf_xMask!
 
 xMask: anInteger
 	"Set the receiver's 'xMask' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_xMask put: anInteger!
+	bytes int32AtOffset: _OffsetOf_xMask put: anInteger!
 
 xSrc
 	"Answer the <Integer> value of the receiver's 'xSrc' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_xSrc!
+	^bytes int32AtOffset: _OffsetOf_xSrc!
 
 xSrc: anInteger
 	"Set the receiver's 'xSrc' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_xSrc put: anInteger!
+	bytes int32AtOffset: _OffsetOf_xSrc put: anInteger!
 
 yMask
 	"Answer the <Integer> value of the receiver's 'yMask' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_yMask!
+	^bytes int32AtOffset: _OffsetOf_yMask!
 
 yMask: anInteger
 	"Set the receiver's 'yMask' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_yMask put: anInteger!
+	bytes int32AtOffset: _OffsetOf_yMask put: anInteger!
 
 ySrc
 	"Answer the <Integer> value of the receiver's 'ySrc' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_ySrc!
+	^bytes int32AtOffset: _OffsetOf_ySrc!
 
 ySrc: anInteger
 	"Set the receiver's 'ySrc' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_ySrc put: anInteger! !
+	bytes int32AtOffset: _OffsetOf_ySrc put: anInteger! !
 !OS.EMRPLGBLT categoriesForMethods!
 aptlDest!**compiled accessors**!public! !
 aptlDest:!**compiled accessors**!public! !
@@ -369,58 +369,58 @@ defineFields
 			type: (StructureArrayField type: POINTL length: 3)
 			offset: 24;
 		defineField: #xSrc
-			type: SDWORDField new
+			type: Int32Field new
 			offset: 48;
 		defineField: #ySrc
-			type: SDWORDField new
+			type: Int32Field new
 			offset: 52;
 		defineField: #cxSrc
-			type: SDWORDField new
+			type: Int32Field new
 			offset: 56;
 		defineField: #cySrc
-			type: SDWORDField new
+			type: Int32Field new
 			offset: 60;
 		defineField: #xformSrc
 			type: (StructureField type: XFORM)
 			offset: 64;
 		defineField: #crBkColorSrc
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 88;
 		defineField: #iUsageSrc
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 92;
 		defineField: #offBmiSrc
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 96;
 		defineField: #cbBmiSrc
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 100;
 		defineField: #offBitsSrc
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 104;
 		defineField: #cbBitsSrc
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 108;
 		defineField: #xMask
-			type: SDWORDField new
+			type: Int32Field new
 			offset: 112;
 		defineField: #yMask
-			type: SDWORDField new
+			type: Int32Field new
 			offset: 116;
 		defineField: #iUsageMask
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 120;
 		defineField: #offBmiMask
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 124;
 		defineField: #cbBmiMask
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 128;
 		defineField: #offBitsMask
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 132;
 		defineField: #cbBitsMask
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 136.
 	self byteSize: 140!
 

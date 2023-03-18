@@ -29,102 +29,102 @@ The BITMAPINFOHEADER structure is used for header information describing device-
 biBitCount
 	"Answer the <Integer> value of the receiver's 'biBitCount' field."
 
-	^bytes wordAtOffset: _OffsetOf_biBitCount!
+	^bytes uint16AtOffset: _OffsetOf_biBitCount!
 
 biBitCount: anInteger
 	"Set the receiver's 'biBitCount' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_biBitCount put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_biBitCount put: anInteger!
 
 biClrImportant
 	"Answer the <Integer> value of the receiver's 'biClrImportant' field."
 
-	^bytes dwordAtOffset: _OffsetOf_biClrImportant!
+	^bytes uint32AtOffset: _OffsetOf_biClrImportant!
 
 biClrImportant: anInteger
 	"Set the receiver's 'biClrImportant' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_biClrImportant put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_biClrImportant put: anInteger!
 
 biClrUsed
 	"Answer the <Integer> value of the receiver's 'biClrUsed' field."
 
-	^bytes dwordAtOffset: _OffsetOf_biClrUsed!
+	^bytes uint32AtOffset: _OffsetOf_biClrUsed!
 
 biClrUsed: anInteger
 	"Set the receiver's 'biClrUsed' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_biClrUsed put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_biClrUsed put: anInteger!
 
 biCompression
 	"Answer the <Integer> value of the receiver's 'biCompression' field."
 
-	^bytes dwordAtOffset: _OffsetOf_biCompression!
+	^bytes uint32AtOffset: _OffsetOf_biCompression!
 
 biCompression: anInteger
 	"Set the receiver's 'biCompression' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_biCompression put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_biCompression put: anInteger!
 
 biHeight
 	"Answer the <Integer> value of the receiver's 'biHeight' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_biHeight!
+	^bytes int32AtOffset: _OffsetOf_biHeight!
 
 biHeight: anInteger
 	"Set the receiver's 'biHeight' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_biHeight put: anInteger!
+	bytes int32AtOffset: _OffsetOf_biHeight put: anInteger!
 
 biPlanes
 	"Answer the <Integer> value of the receiver's 'biPlanes' field."
 
-	^bytes wordAtOffset: _OffsetOf_biPlanes!
+	^bytes uint16AtOffset: _OffsetOf_biPlanes!
 
 biPlanes: anInteger
 	"Set the receiver's 'biPlanes' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_biPlanes put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_biPlanes put: anInteger!
 
 biSizeImage
 	"Answer the <Integer> value of the receiver's 'biSizeImage' field."
 
-	^bytes dwordAtOffset: _OffsetOf_biSizeImage!
+	^bytes uint32AtOffset: _OffsetOf_biSizeImage!
 
 biSizeImage: anInteger
 	"Set the receiver's 'biSizeImage' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_biSizeImage put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_biSizeImage put: anInteger!
 
 biWidth
 	"Answer the <Integer> value of the receiver's 'biWidth' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_biWidth!
+	^bytes int32AtOffset: _OffsetOf_biWidth!
 
 biWidth: anInteger
 	"Set the receiver's 'biWidth' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_biWidth put: anInteger!
+	bytes int32AtOffset: _OffsetOf_biWidth put: anInteger!
 
 biXPelsPerMeter
 	"Answer the <Integer> value of the receiver's 'biXPelsPerMeter' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_biXPelsPerMeter!
+	^bytes int32AtOffset: _OffsetOf_biXPelsPerMeter!
 
 biXPelsPerMeter: anInteger
 	"Set the receiver's 'biXPelsPerMeter' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_biXPelsPerMeter put: anInteger!
+	bytes int32AtOffset: _OffsetOf_biXPelsPerMeter put: anInteger!
 
 biYPelsPerMeter
 	"Answer the <Integer> value of the receiver's 'biYPelsPerMeter' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_biYPelsPerMeter!
+	^bytes int32AtOffset: _OffsetOf_biYPelsPerMeter!
 
 biYPelsPerMeter: anInteger
 	"Set the receiver's 'biYPelsPerMeter' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_biYPelsPerMeter put: anInteger!
+	bytes int32AtOffset: _OffsetOf_biYPelsPerMeter put: anInteger!
 
 depth
 	"Answer the colour depth of the bitmap described by the receiver."
@@ -134,7 +134,7 @@ depth
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 extent
 	"Answer the width and height (in pels) of the bitmap described by the receiver."
@@ -194,17 +194,17 @@ defineFields
 	"
 
 	self
-		defineField: #dwSize type: DWORDField writeOnly beOverride;
-		defineField: #biWidth type: SDWORDField new;
-		defineField: #biHeight type: SDWORDField new;
-		defineField: #biPlanes type: WORDField new;
-		defineField: #biBitCount type: WORDField new;
-		defineField: #biCompression type: DWORDField new;
-		defineField: #biSizeImage type: DWORDField new;
-		defineField: #biXPelsPerMeter type: SDWORDField new;
-		defineField: #biYPelsPerMeter type: SDWORDField new;
-		defineField: #biClrUsed type: DWORDField new;
-		defineField: #biClrImportant type: DWORDField new!
+		defineField: #dwSize type: UInt32Field writeOnly beOverride;
+		defineField: #biWidth type: Int32Field new;
+		defineField: #biHeight type: Int32Field new;
+		defineField: #biPlanes type: UInt16Field new;
+		defineField: #biBitCount type: UInt16Field new;
+		defineField: #biCompression type: UInt32Field new;
+		defineField: #biSizeImage type: UInt32Field new;
+		defineField: #biXPelsPerMeter type: Int32Field new;
+		defineField: #biYPelsPerMeter type: Int32Field new;
+		defineField: #biClrUsed type: UInt32Field new;
+		defineField: #biClrImportant type: UInt32Field new!
 
 getFieldNames
 	^#(#dwSize #biWidth #biHeight #biPlanes #biBitCount #biCompression #biSizeImage #biXPelsPerMeter #biYPelsPerMeter #biClrUsed #biClrImportant)! !

@@ -34,6 +34,8 @@ package methodNames
 	add: #Behavior -> #instVarNames;
 	add: #Behavior -> #makeIndirect;
 	add: #Behavior -> #makeNullTerminated;
+	add: #ByteArray -> #byteAtOffset:;
+	add: #ByteArray -> #byteAtOffset:put:;
 	add: #ByteCodeDispatcher -> #byteCodeSegments;
 	add: #Class -> #addSharedPool:;
 	add: #Class -> #allSharedPoolNames;
@@ -48,6 +50,7 @@ package methodNames
 	add: #CompilerNotification -> #extra;
 	add: #CRTLibrary -> #_spawnvp:cmdname:argv:;
 	add: #Dictionary -> #at:ifAbsentPutValue:;
+	add: #ExternalAddress -> #byteAtOffset:;
 	add: #ExternalLibrary -> #invalidCall;
 	add: #ExternalStructure -> #do:;
 	add: #ExternalStructure -> #do:separatedBy:;
@@ -238,6 +241,16 @@ dateOrder!constants!public! !
 dateSeparator!constants!public! !
 !
 
+!ExternalAddress methodsFor!
+
+byteAtOffset: anInteger
+	"Soft deprecated. Retain in applications that still refer to the old FFI class names, e.g. BYTE."
+
+	^self uint8AtOffset: anInteger! !
+!ExternalAddress categoriesForMethods!
+byteAtOffset:!accessing!primitives!public! !
+!
+
 !ArithmeticValue methodsFor!
 
 quoAndRem: aNumber
@@ -275,6 +288,22 @@ allInstVarNames!instance variables!public! !
 instVarNames!instance variables!public! !
 makeIndirect!instance specification-accessing!private! !
 makeNullTerminated!instance specification-accessing!private! !
+!
+
+!ByteArray methodsFor!
+
+byteAtOffset: anInteger
+	"Soft deprecated. Retain in applications that still refer to the old FFI class names, e.g. BYTE."
+
+	^self uint8AtOffset: anInteger!
+
+byteAtOffset: anInteger put: aByte
+	"Soft deprecated. Retain in applications that still refer to the old FFI class names, e.g. BYTE."
+
+	^self uint8AtOffset: anInteger put: aByte! !
+!ByteArray categoriesForMethods!
+byteAtOffset:!accessing!public! !
+byteAtOffset:put:!accessing!public! !
 !
 
 !ByteCodeDispatcher methodsFor!
@@ -771,7 +800,7 @@ for:!instance creation!public! !
 
 isLiteralPrefix
 	#deprecated.
-	^dword anyMask: LiteralPrefixMask! !
+	^uint32 anyMask: LiteralPrefixMask! !
 !STBPrefix categoriesForMethods!
 isLiteralPrefix!public!testing! !
 !

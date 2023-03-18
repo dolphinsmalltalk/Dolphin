@@ -35,12 +35,12 @@ byteSize
 Count
 	"Answer the <Integer> value of the receiver's 'Count' field."
 
-	^bytes dwordAtOffset: _OffsetOf_Count!
+	^bytes uint32AtOffset: _OffsetOf_Count!
 
 Count: anInteger
 	"Set the receiver's 'Count' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_Count put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_Count put: anInteger!
 
 Parameter
 	"Answer the <StructureArray> value of the receiver's 'Parameter' field."
@@ -91,7 +91,7 @@ defineFields
 
 	self
 		defineField: #Count
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 0;
 		defineField: #Parameter
 			type: (StructureArrayField type: EncoderParameter

@@ -36,10 +36,10 @@ testCompileDefinition
 	subject class
 		compile: 'defineFields
 	self
-		defineField: #a type: UINT_PTRField readOnly;
-		defineField: #b type: DWORDField writeOnly;
-		defineField: #c type: WORDField new;
-		defineField: #d type: BYTEField filler'.
+		defineField: #a type: UIntPtrField readOnly;
+		defineField: #b type: UInt32Field writeOnly;
+		defineField: #c type: UInt16Field new;
+		defineField: #d type: UInt8Field filler'.
 	subject compileDefinition.
 	self assert: subject selectors asSortedArray equals: #(#a #b: #c #c:).
 	self assert: subject byteSize equals: 12!
@@ -49,10 +49,10 @@ testDynamicSelectors
 	subject := Structure newAnonymousSubclass.
 	subject initializeTemplate.
 	subject
-		defineField: #writeOnly type: DWORDField writeOnly;
-		defineField: #readOnly type: DWORDField readOnly;
-		defineField: #readWrite type: DWORDField new;
-		defineField: #fillter type: INT_PTRField filler.
+		defineField: #writeOnly type: UInt32Field writeOnly;
+		defineField: #readOnly type: UInt32Field readOnly;
+		defineField: #readWrite type: UInt32Field new;
+		defineField: #fillter type: IntPtrField filler.
 	expected := #(#readOnly #readWrite #readWrite: #writeOnly:).
 	self assert: subject dynamicSelectors asSortedArray equals: expected!
 

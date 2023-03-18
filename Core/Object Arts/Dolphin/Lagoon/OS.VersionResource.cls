@@ -25,7 +25,7 @@ decodeVersionString: versionString
 	characters, e.g. 1.2.3.4"
 
 	| words stream i |
-	words := WORDArray new: 4.
+	words := UInt16Array new: 4.
 	stream := versionString readStream.
 	i := 0.
 	[i < words size and: [stream skipWhile: [:c | c isDigit not]]] whileTrue: 
@@ -192,7 +192,7 @@ unpackStringTable: aZVersionBlockHeader
 unpackVar: aVS_INFO_HEADER 
 	| varPairs |
 	self assert: [aVS_INFO_HEADER key = 'Translation'].
-	varPairs := aVS_INFO_HEADER valueDWORDs.
+	varPairs := aVS_INFO_HEADER valueUInt32s.
 	self translations add: varPairs copy!
 
 unpackVarFileInfo: aZVersionBlockHeader
@@ -248,7 +248,7 @@ writeBlockSizeTo: target at: blockStart
 	blockSize := target position - blockStart.
 	target
 		position: blockStart; 
-		nextPutAll: (WORD fromInteger: blockSize) bytes; 
+		nextPutAll: (UInt16 fromInteger: blockSize) bytes; 
 		setToEnd
 !
 
@@ -264,7 +264,7 @@ writeHeaderTo: aWriteStream type: wType key: keyString value: valueBytes length:
 	szKey := keyString asUtf16String.
 	keySize := szKey byteSize.
 	wLength := (6 + keySize roundUpTo: 4) + valueBytes size.
-	word := WORD new.
+	word := UInt16 new.
 	aWriteStream
 		nextPutAll: (word value: wLength) bytes;
 		nextPutAll: (word value: wValueLength) bytes;

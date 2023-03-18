@@ -490,7 +490,7 @@ nmCustomDraw: pNMHDR
 	draw speed too much as this message can be sent several times per sub-item."
 
 	| drawStage context item |
-	(drawStage := pNMHDR dwordAtOffset: 12) == CDDS_PREPAINT
+	(drawStage := pNMHDR uint32AtOffset: 12) == CDDS_PREPAINT
 		ifTrue: 
 			["Before any painting"
 			^(self wantCustomDrawItemNotifications: pNMHDR)

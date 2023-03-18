@@ -56,102 +56,102 @@ struct tagENHMETAHEADER3 {
 dSignature
 	"Answer the <Integer> value of the receiver's 'dSignature' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dSignature!
+	^bytes uint32AtOffset: _OffsetOf_dSignature!
 
 dSignature: anInteger
 	"Set the receiver's 'dSignature' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dSignature put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dSignature put: anInteger!
 
 iType
 	"Answer the <Integer> value of the receiver's 'iType' field."
 
-	^bytes dwordAtOffset: _OffsetOf_iType!
+	^bytes uint32AtOffset: _OffsetOf_iType!
 
 iType: anInteger
 	"Set the receiver's 'iType' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_iType put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_iType put: anInteger!
 
 nBytes
 	"Answer the <Integer> value of the receiver's 'nBytes' field."
 
-	^bytes dwordAtOffset: _OffsetOf_nBytes!
+	^bytes uint32AtOffset: _OffsetOf_nBytes!
 
 nBytes: anInteger
 	"Set the receiver's 'nBytes' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_nBytes put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_nBytes put: anInteger!
 
 nDescription
 	"Answer the <Integer> value of the receiver's 'nDescription' field."
 
-	^bytes dwordAtOffset: _OffsetOf_nDescription!
+	^bytes uint32AtOffset: _OffsetOf_nDescription!
 
 nDescription: anInteger
 	"Set the receiver's 'nDescription' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_nDescription put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_nDescription put: anInteger!
 
 nHandles
 	"Answer the <Integer> value of the receiver's 'nHandles' field."
 
-	^bytes wordAtOffset: _OffsetOf_nHandles!
+	^bytes uint16AtOffset: _OffsetOf_nHandles!
 
 nHandles: anInteger
 	"Set the receiver's 'nHandles' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_nHandles put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_nHandles put: anInteger!
 
 nPalEntries
 	"Answer the <Integer> value of the receiver's 'nPalEntries' field."
 
-	^bytes dwordAtOffset: _OffsetOf_nPalEntries!
+	^bytes uint32AtOffset: _OffsetOf_nPalEntries!
 
 nPalEntries: anInteger
 	"Set the receiver's 'nPalEntries' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_nPalEntries put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_nPalEntries put: anInteger!
 
 nRecords
 	"Answer the <Integer> value of the receiver's 'nRecords' field."
 
-	^bytes dwordAtOffset: _OffsetOf_nRecords!
+	^bytes uint32AtOffset: _OffsetOf_nRecords!
 
 nRecords: anInteger
 	"Set the receiver's 'nRecords' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_nRecords put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_nRecords put: anInteger!
 
 nSize
 	"Answer the <Integer> value of the receiver's 'nSize' field."
 
-	^bytes dwordAtOffset: _OffsetOf_nSize!
+	^bytes uint32AtOffset: _OffsetOf_nSize!
 
 nSize: anInteger
 	"Set the receiver's 'nSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_nSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_nSize put: anInteger!
 
 nVersion
 	"Answer the <Integer> value of the receiver's 'nVersion' field."
 
-	^bytes dwordAtOffset: _OffsetOf_nVersion!
+	^bytes uint32AtOffset: _OffsetOf_nVersion!
 
 nVersion: anInteger
 	"Set the receiver's 'nVersion' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_nVersion put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_nVersion put: anInteger!
 
 offDescription
 	"Answer the <Integer> value of the receiver's 'offDescription' field."
 
-	^bytes dwordAtOffset: _OffsetOf_offDescription!
+	^bytes uint32AtOffset: _OffsetOf_offDescription!
 
 offDescription: anInteger
 	"Set the receiver's 'offDescription' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_offDescription put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_offDescription put: anInteger!
 
 rclBounds
 	"Answer the <RECTL> value of the receiver's 'rclBounds' field."
@@ -184,12 +184,12 @@ rclFrame: aRECTL
 sReserved
 	"Answer the <Integer> value of the receiver's 'sReserved' field."
 
-	^bytes wordAtOffset: _OffsetOf_sReserved!
+	^bytes uint16AtOffset: _OffsetOf_sReserved!
 
 sReserved: anInteger
 	"Set the receiver's 'sReserved' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_sReserved put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_sReserved put: anInteger!
 
 szlDevice
 	"Answer the <SIZEL> value of the receiver's 'szlDevice' field."
@@ -282,10 +282,10 @@ defineFields
 
 	self
 		defineField: #iType
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 0;
 		defineField: #nSize
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 4;
 		defineField: #rclBounds
 			type: (StructureField type: RECTL)
@@ -294,31 +294,31 @@ defineFields
 			type: (StructureField type: RECTL)
 			offset: 24;
 		defineField: #dSignature
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 40;
 		defineField: #nVersion
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 44;
 		defineField: #nBytes
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 48;
 		defineField: #nRecords
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 52;
 		defineField: #nHandles
-			type: WORDField new
+			type: UInt16Field new
 			offset: 56;
 		defineField: #sReserved
-			type: WORDField new
+			type: UInt16Field new
 			offset: 58;
 		defineField: #nDescription
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 60;
 		defineField: #offDescription
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 64;
 		defineField: #nPalEntries
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 68;
 		defineField: #szlDevice
 			type: (StructureField type: SIZEL)

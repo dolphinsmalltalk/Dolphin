@@ -48,7 +48,7 @@ OS.OUTLINETEXTMETRICW comment: '<OUTLINETEXTMETRIC> is an <ExternalStructure> cl
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 faceName
 	"Answer the receiver's <readableString> font face name."
@@ -68,52 +68,52 @@ fullName
 otmAscent
 	"Answer the <Integer> value of the receiver's 'otmAscent' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_otmAscent!
+	^bytes int32AtOffset: _OffsetOf_otmAscent!
 
 otmDescent
 	"Answer the <Integer> value of the receiver's 'otmDescent' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_otmDescent!
+	^bytes int32AtOffset: _OffsetOf_otmDescent!
 
 otmEMSquare
 	"Answer the <Integer> value of the receiver's 'otmEMSquare' field."
 
-	^bytes dwordAtOffset: _OffsetOf_otmEMSquare!
+	^bytes uint32AtOffset: _OffsetOf_otmEMSquare!
 
 otmfsSelection
 	"Answer the <Integer> value of the receiver's 'otmfsSelection' field."
 
-	^bytes dwordAtOffset: _OffsetOf_otmfsSelection!
+	^bytes uint32AtOffset: _OffsetOf_otmfsSelection!
 
 otmfsType
 	"Answer the <Integer> value of the receiver's 'otmfsType' field."
 
-	^bytes dwordAtOffset: _OffsetOf_otmfsType!
+	^bytes uint32AtOffset: _OffsetOf_otmfsType!
 
 otmItalicAngle
 	"Answer the <Integer> value of the receiver's 'otmItalicAngle' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_otmItalicAngle!
+	^bytes int32AtOffset: _OffsetOf_otmItalicAngle!
 
 otmLineGap
 	"Answer the <Integer> value of the receiver's 'otmLineGap' field."
 
-	^bytes dwordAtOffset: _OffsetOf_otmLineGap!
+	^bytes uint32AtOffset: _OffsetOf_otmLineGap!
 
 otmMacAscent
 	"Answer the <Integer> value of the receiver's 'otmMacAscent' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_otmMacAscent!
+	^bytes int32AtOffset: _OffsetOf_otmMacAscent!
 
 otmMacDescent
 	"Answer the <Integer> value of the receiver's 'otmMacDescent' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_otmMacDescent!
+	^bytes int32AtOffset: _OffsetOf_otmMacDescent!
 
 otmMacLineGap
 	"Answer the <Integer> value of the receiver's 'otmMacLineGap' field."
 
-	^bytes dwordAtOffset: _OffsetOf_otmMacLineGap!
+	^bytes uint32AtOffset: _OffsetOf_otmMacLineGap!
 
 otmPanoseNumber
 	"Answer the <PANOSE> value of the receiver's 'otmPanoseNumber' field."
@@ -123,22 +123,22 @@ otmPanoseNumber
 otmpFaceName
 	"Answer the <Integer> value of the receiver's 'otmpFaceName' field."
 
-	^bytes dwordAtOffset: _OffsetOf_otmpFaceName!
+	^bytes uint32AtOffset: _OffsetOf_otmpFaceName!
 
 otmpFamilyName
 	"Answer the <Integer> value of the receiver's 'otmpFamilyName' field."
 
-	^bytes dwordAtOffset: _OffsetOf_otmpFamilyName!
+	^bytes uint32AtOffset: _OffsetOf_otmpFamilyName!
 
 otmpFullName
 	"Answer the <Integer> value of the receiver's 'otmpFullName' field."
 
-	^bytes dwordAtOffset: _OffsetOf_otmpFullName!
+	^bytes uint32AtOffset: _OffsetOf_otmpFullName!
 
 otmpStyleName
 	"Answer the <Integer> value of the receiver's 'otmpStyleName' field."
 
-	^bytes dwordAtOffset: _OffsetOf_otmpStyleName!
+	^bytes uint32AtOffset: _OffsetOf_otmpStyleName!
 
 otmptSubscriptOffset
 	"Answer the <POINTL> value of the receiver's 'otmptSubscriptOffset' field."
@@ -168,42 +168,42 @@ otmrcFontBox
 otmsCapEmHeight
 	"Answer the <Integer> value of the receiver's 'otmsCapEmHeight' field."
 
-	^bytes dwordAtOffset: _OffsetOf_otmsCapEmHeight!
+	^bytes uint32AtOffset: _OffsetOf_otmsCapEmHeight!
 
 otmsCharSlopeRise
 	"Answer the <Integer> value of the receiver's 'otmsCharSlopeRise' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_otmsCharSlopeRise!
+	^bytes int32AtOffset: _OffsetOf_otmsCharSlopeRise!
 
 otmsCharSlopeRun
 	"Answer the <Integer> value of the receiver's 'otmsCharSlopeRun' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_otmsCharSlopeRun!
+	^bytes int32AtOffset: _OffsetOf_otmsCharSlopeRun!
 
 otmsStrikeoutPosition
 	"Answer the <Integer> value of the receiver's 'otmsStrikeoutPosition' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_otmsStrikeoutPosition!
+	^bytes int32AtOffset: _OffsetOf_otmsStrikeoutPosition!
 
 otmsStrikeoutSize
 	"Answer the <Integer> value of the receiver's 'otmsStrikeoutSize' field."
 
-	^bytes dwordAtOffset: _OffsetOf_otmsStrikeoutSize!
+	^bytes uint32AtOffset: _OffsetOf_otmsStrikeoutSize!
 
 otmsUnderscorePosition
 	"Answer the <Integer> value of the receiver's 'otmsUnderscorePosition' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_otmsUnderscorePosition!
+	^bytes int32AtOffset: _OffsetOf_otmsUnderscorePosition!
 
 otmsUnderscoreSize
 	"Answer the <Integer> value of the receiver's 'otmsUnderscoreSize' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_otmsUnderscoreSize!
+	^bytes int32AtOffset: _OffsetOf_otmsUnderscoreSize!
 
 otmsXHeight
 	"Answer the <Integer> value of the receiver's 'otmsXHeight' field."
 
-	^bytes dwordAtOffset: _OffsetOf_otmsXHeight!
+	^bytes uint32AtOffset: _OffsetOf_otmsXHeight!
 
 otmTextMetrics
 	"Answer the <TEXTMETRICW> value of the receiver's 'otmTextMetrics' field."
@@ -213,7 +213,7 @@ otmTextMetrics
 otmusMinimumPPEM
 	"Answer the <Integer> value of the receiver's 'otmusMinimumPPEM' field."
 
-	^bytes dwordAtOffset: _OffsetOf_otmusMinimumPPEM!
+	^bytes uint32AtOffset: _OffsetOf_otmusMinimumPPEM!
 
 styleName
 	"Answer the receiver's <readableString> style name.
@@ -306,38 +306,38 @@ defineFields
 "
 
 	self
-		defineField: #dwSize type: DWORDField writeOnly beOverride;
+		defineField: #dwSize type: UInt32Field writeOnly beOverride;
 		defineField: #otmTextMetrics type: (StructureField type: TEXTMETRICW) beReadOnly;
-		defineField: #otmFiller type: BYTEField filler;
+		defineField: #otmFiller type: UInt8Field filler;
 		defineField: #otmPanoseNumber type: (StructureField type: PANOSE) beReadOnly;
-		defineField: #otmfsSelection type: DWORDField readOnly;
-		defineField: #otmfsType type: DWORDField readOnly;
-		defineField: #otmsCharSlopeRise type: SDWORDField readOnly;
-		defineField: #otmsCharSlopeRun type: SDWORDField readOnly;
-		defineField: #otmItalicAngle type: SDWORDField readOnly;
-		defineField: #otmEMSquare type: DWORDField readOnly;
-		defineField: #otmAscent type: SDWORDField readOnly;
-		defineField: #otmDescent type: SDWORDField readOnly;
-		defineField: #otmLineGap type: DWORDField readOnly;
-		defineField: #otmsCapEmHeight type: DWORDField readOnly;
-		defineField: #otmsXHeight type: DWORDField readOnly;
+		defineField: #otmfsSelection type: UInt32Field readOnly;
+		defineField: #otmfsType type: UInt32Field readOnly;
+		defineField: #otmsCharSlopeRise type: Int32Field readOnly;
+		defineField: #otmsCharSlopeRun type: Int32Field readOnly;
+		defineField: #otmItalicAngle type: Int32Field readOnly;
+		defineField: #otmEMSquare type: UInt32Field readOnly;
+		defineField: #otmAscent type: Int32Field readOnly;
+		defineField: #otmDescent type: Int32Field readOnly;
+		defineField: #otmLineGap type: UInt32Field readOnly;
+		defineField: #otmsCapEmHeight type: UInt32Field readOnly;
+		defineField: #otmsXHeight type: UInt32Field readOnly;
 		defineField: #otmrcFontBox type: (StructureField type: RECTL) beReadOnly;
-		defineField: #otmMacAscent type: SDWORDField readOnly;
-		defineField: #otmMacDescent type: SDWORDField readOnly;
-		defineField: #otmMacLineGap type: DWORDField readOnly;
-		defineField: #otmusMinimumPPEM type: DWORDField readOnly;
+		defineField: #otmMacAscent type: Int32Field readOnly;
+		defineField: #otmMacDescent type: Int32Field readOnly;
+		defineField: #otmMacLineGap type: UInt32Field readOnly;
+		defineField: #otmusMinimumPPEM type: UInt32Field readOnly;
 		defineField: #otmptSubscriptSize type: (StructureField type: POINTL) beReadOnly;
 		defineField: #otmptSubscriptOffset type: (StructureField type: POINTL) beReadOnly;
 		defineField: #otmptSuperscriptSize type: (StructureField type: POINTL) beReadOnly;
 		defineField: #otmptSuperscriptOffset type: (StructureField type: POINTL) beReadOnly;
-		defineField: #otmsStrikeoutSize type: DWORDField readOnly;
-		defineField: #otmsStrikeoutPosition type: SDWORDField readOnly;
-		defineField: #otmsUnderscoreSize type: SDWORDField readOnly;
-		defineField: #otmsUnderscorePosition type: SDWORDField readOnly;
-		defineField: #otmpFamilyName type: DWORDField readOnly;
-		defineField: #otmpFaceName type: DWORDField readOnly;
-		defineField: #otmpStyleName type: DWORDField readOnly;
-		defineField: #otmpFullName type: DWORDField readOnly
+		defineField: #otmsStrikeoutSize type: UInt32Field readOnly;
+		defineField: #otmsStrikeoutPosition type: Int32Field readOnly;
+		defineField: #otmsUnderscoreSize type: Int32Field readOnly;
+		defineField: #otmsUnderscorePosition type: Int32Field readOnly;
+		defineField: #otmpFamilyName type: UInt32Field readOnly;
+		defineField: #otmpFaceName type: UInt32Field readOnly;
+		defineField: #otmpStyleName type: UInt32Field readOnly;
+		defineField: #otmpFullName type: UInt32Field readOnly
 	"See MSDN article KB84132 - the otmp strings will be allocated after the above fields"!
 
 getFieldNames

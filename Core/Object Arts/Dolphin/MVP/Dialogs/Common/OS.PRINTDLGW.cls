@@ -35,27 +35,27 @@ OS.PRINTDLGW comment: ''!
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 flags
 	"Answer the <Integer> value of the receiver's 'flags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_flags!
+	^bytes uint32AtOffset: _OffsetOf_flags!
 
 flags: anInteger
 	"Set the receiver's 'flags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_flags put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_flags put: anInteger!
 
 hDC
 	"Answer the <Integer> value of the receiver's 'hDC' field."
 
-	^bytes dwordAtOffset: _OffsetOf_hDC!
+	^bytes uint32AtOffset: _OffsetOf_hDC!
 
 hDC: anInteger
 	"Set the receiver's 'hDC' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_hDC put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_hDC put: anInteger!
 
 hookFlag
 	^PD_ENABLEPRINTHOOK!
@@ -63,7 +63,7 @@ hookFlag
 hwndOwner: anInteger
 	"Set the receiver's 'hwndOwner' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_hwndOwner put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_hwndOwner put: anInteger!
 
 lpfnHook: anExternalAddress
 	"Set the receiver's 'lpfnHook' field to the value of the argument, anExternalAddress"
@@ -73,42 +73,42 @@ lpfnHook: anExternalAddress
 nCopies
 	"Answer the <Integer> value of the receiver's 'nCopies' field."
 
-	^bytes wordAtOffset: _OffsetOf_nCopies!
+	^bytes uint16AtOffset: _OffsetOf_nCopies!
 
 nCopies: anInteger
 	"Set the receiver's 'nCopies' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_nCopies put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_nCopies put: anInteger!
 
 nFromPage
 	"Answer the <Integer> value of the receiver's 'nFromPage' field."
 
-	^bytes wordAtOffset: _OffsetOf_nFromPage!
+	^bytes uint16AtOffset: _OffsetOf_nFromPage!
 
 nFromPage: anInteger
 	"Set the receiver's 'nFromPage' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_nFromPage put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_nFromPage put: anInteger!
 
 nMaxPage: anInteger
 	"Set the receiver's 'nMaxPage' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_nMaxPage put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_nMaxPage put: anInteger!
 
 nMinPage: anInteger
 	"Set the receiver's 'nMinPage' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_nMinPage put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_nMinPage put: anInteger!
 
 nToPage
 	"Answer the <Integer> value of the receiver's 'nToPage' field."
 
-	^bytes wordAtOffset: _OffsetOf_nToPage!
+	^bytes uint16AtOffset: _OffsetOf_nToPage!
 
 nToPage: anInteger
 	"Set the receiver's 'nToPage' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_nToPage put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_nToPage put: anInteger!
 
 ownerView: aView
 	"Set the parent window for the dialog to aView."
@@ -169,25 +169,25 @@ defineFields
 	} PRINTDLGW;"
 
 	self
-		defineField: #dwSize type: DWORDField writeOnly beOverride;
-		defineField: #hwndOwner type: DWORDField writeOnly;
-		defineField: #hDevMode type: DWORDField new beUncompiled;
-		defineField: #hDevNames type: DWORDField new beUncompiled;
-		defineField: #hDC type: DWORDField new;
-		defineField: #flags type: DWORDField new beOverride;
-		defineField: #nFromPage type: WORDField new;
-		defineField: #nToPage type: WORDField new;
-		defineField: #nMinPage type: WORDField writeOnly;
-		defineField: #nMaxPage type: WORDField writeOnly;
-		defineField: #nCopies type: WORDField new;
-		defineField: #hInstance type: DWORDField filler;
-		defineField: #lCustData type: DWORDField filler;
+		defineField: #dwSize type: UInt32Field writeOnly beOverride;
+		defineField: #hwndOwner type: UInt32Field writeOnly;
+		defineField: #hDevMode type: UInt32Field new beUncompiled;
+		defineField: #hDevNames type: UInt32Field new beUncompiled;
+		defineField: #hDC type: UInt32Field new;
+		defineField: #flags type: UInt32Field new beOverride;
+		defineField: #nFromPage type: UInt16Field new;
+		defineField: #nToPage type: UInt16Field new;
+		defineField: #nMinPage type: UInt16Field writeOnly;
+		defineField: #nMaxPage type: UInt16Field writeOnly;
+		defineField: #nCopies type: UInt16Field new;
+		defineField: #hInstance type: UInt32Field filler;
+		defineField: #lCustData type: UInt32Field filler;
 		defineField: #lpfnHook type: LPVOIDField writeOnly beOverride;
-		defineField: #lpfnSetupHook type: (PointerField type: External.Address) beFiller;
+		defineField: #lpfnSetupHook type: (PointerField type: Address) beFiller;
 		defineField: #lpPrintTemplateName type: (PointerField type: Utf16String) beFiller;
 		defineField: #lpSetupTemplateName type: (PointerField type: Utf16String) beFiller;
-		defineField: #hPrintTemplate type: DWORDField filler;
-		defineField: #hSetupTemplate type: DWORDField filler!
+		defineField: #hPrintTemplate type: UInt32Field filler;
+		defineField: #hSetupTemplate type: UInt32Field filler!
 
 getFieldNames
 	^#(#dwSize #hwndOwner #hDevMode #hDevNames #hDC #flags #nFromPage #nToPage #nMinPage #nMaxPage #nCopies #lpfnHook)!

@@ -351,7 +351,7 @@ ticks
 	ticks nextPut: range start.
 	pdw := self sendMessage: TBM_GETPTICS.
 	pdw isNull
-		ifFalse: [ticks nextPutAll: (DWORDArray fromAddress: pdw asExternalAddress length: count - 2) asArray].
+		ifFalse: [ticks nextPutAll: (UInt32Array fromAddress: pdw asExternalAddress length: count - 2) asArray].
 	ticks nextPut: range stop.
 	^ticks contents!
 

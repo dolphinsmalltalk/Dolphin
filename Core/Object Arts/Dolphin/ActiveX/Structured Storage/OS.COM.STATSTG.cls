@@ -58,12 +58,12 @@ atime: aFILETIME
 cbSize
 	"Answer the <Integer> value of the receiver's 'cbSize' field."
 
-	^bytes qwordAtOffset: _OffsetOf_cbSize!
+	^bytes uint64AtOffset: _OffsetOf_cbSize!
 
 cbSize: anInteger
 	"Set the receiver's 'cbSize' field to the value of the argument, anInteger"
 
-	bytes qwordAtOffset: _OffsetOf_cbSize put: anInteger!
+	bytes uint64AtOffset: _OffsetOf_cbSize put: anInteger!
 
 clsid
 	"Answer the <CLSID> value of the receiver's 'clsid' field."
@@ -78,27 +78,27 @@ ctime
 dwStgFmt
 	"Answer the <Integer> value of the receiver's 'dwStgFmt' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwStgFmt!
+	^bytes uint32AtOffset: _OffsetOf_dwStgFmt!
 
 grfLocksSupported
 	"Answer the <Integer> value of the receiver's 'grfLocksSupported' field."
 
-	^bytes dwordAtOffset: _OffsetOf_grfLocksSupported!
+	^bytes uint32AtOffset: _OffsetOf_grfLocksSupported!
 
 grfLocksSupported: anInteger
 	"Set the receiver's 'grfLocksSupported' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_grfLocksSupported put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_grfLocksSupported put: anInteger!
 
 grfMode
 	"Answer the <Integer> value of the receiver's 'grfMode' field."
 
-	^bytes dwordAtOffset: _OffsetOf_grfMode!
+	^bytes uint32AtOffset: _OffsetOf_grfMode!
 
 grfStateBits
 	"Answer the <Integer> value of the receiver's 'grfStateBits' field."
 
-	^bytes dwordAtOffset: _OffsetOf_grfStateBits!
+	^bytes uint32AtOffset: _OffsetOf_grfStateBits!
 
 isOLEStorage
 	"Answer whether the receiver contains status information for a Storage element
@@ -146,12 +146,12 @@ pwcsName: anUtf16String
 type
 	"Answer the <Integer> value of the receiver's 'type' field."
 
-	^bytes dwordAtOffset: _OffsetOf_type!
+	^bytes uint32AtOffset: _OffsetOf_type!
 
 type: anInteger
 	"Set the receiver's 'type' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_type put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_type put: anInteger! !
 !OS.COM.STATSTG categoriesForMethods!
 atime!**compiled accessors**!public! !
 atime:!**compiled accessors**!public! !
@@ -187,7 +187,7 @@ clear: addressOrBytes
 	even after a successful call with STATFLAG_NONAME specified."
 
 	| addr |
-	addr := addressOrBytes dwordAtOffset: 0.
+	addr := addressOrBytes uint32AtOffset: 0.
 	addr isNull ifFalse: [TaskMemory free: addr]!
 
 defineFields
@@ -212,16 +212,16 @@ defineFields
 
 	self
 		defineField: #pwcsName type: (PointerField type: Utf16String);
-		defineField: #type type: DWORDField new;
-		defineField: #cbSize type: QWORDField new;
+		defineField: #type type: UInt32Field new;
+		defineField: #cbSize type: UInt64Field new;
 		defineField: #mtime type: (StructureField type: FILETIME) beReadOnly;
 		defineField: #ctime type: (StructureField type: FILETIME) beReadOnly;
 		defineField: #atime type: (StructureField type: FILETIME);
-		defineField: #grfMode type: DWORDField readOnly;
-		defineField: #grfLocksSupported type: DWORDField new;
+		defineField: #grfMode type: UInt32Field readOnly;
+		defineField: #grfLocksSupported type: UInt32Field new;
 		defineField: #clsid type: (StructureField type: CLSID) beReadOnly;
-		defineField: #grfStateBits type: DWORDField readOnly;
-		defineField: #dwStgFmt type: DWORDField readOnly!
+		defineField: #grfStateBits type: UInt32Field readOnly;
+		defineField: #dwStgFmt type: UInt32Field readOnly!
 
 getFieldNames
 	^#(#pwcsName #type #cbSize #mtime #ctime #atime #grfMode #grfLocksSupported #clsid #grfStateBits #dwStgFmt)! !

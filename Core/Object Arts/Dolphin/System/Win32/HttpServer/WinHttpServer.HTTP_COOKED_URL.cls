@@ -45,17 +45,17 @@ struct tagHTTP_COOKED_URL {
 AbsPathLength
 	"Private - Answer the <Integer> value of the receiver's 'AbsPathLength' field."
 
-	^bytes wordAtOffset: _OffsetOf_AbsPathLength!
+	^bytes uint16AtOffset: _OffsetOf_AbsPathLength!
 
 FullUrlLength
 	"Private - Answer the <Integer> value of the receiver's 'FullUrlLength' field."
 
-	^bytes wordAtOffset: _OffsetOf_FullUrlLength!
+	^bytes uint16AtOffset: _OffsetOf_FullUrlLength!
 
 HostLength
 	"Private - Answer the <Integer> value of the receiver's 'HostLength' field."
 
-	^bytes wordAtOffset: _OffsetOf_HostLength!
+	^bytes uint16AtOffset: _OffsetOf_HostLength!
 
 pAbsPath
 	"Answer the <Utf16String> value of the receiver's 'pAbsPath' field."
@@ -81,7 +81,7 @@ pQueryString
 QueryStringLength
 	"Private - Answer the <Integer> value of the receiver's 'QueryStringLength' field."
 
-	^bytes wordAtOffset: _OffsetOf_QueryStringLength! !
+	^bytes uint16AtOffset: _OffsetOf_QueryStringLength! !
 !WinHttpServer.HTTP_COOKED_URL categoriesForMethods!
 AbsPathLength!**compiled accessors**!private! !
 FullUrlLength!**compiled accessors**!private! !
@@ -117,10 +117,10 @@ defineFields
 "
 
 	self
-		defineField: #FullUrlLength type: WORDField new beReadOnly beNonBrowsable offset: 0;
-		defineField: #HostLength type: WORDField new beReadOnly beNonBrowsable offset: 2;
-		defineField: #AbsPathLength type: WORDField new beReadOnly beNonBrowsable offset: 4;
-		defineField: #QueryStringLength type: WORDField new beReadOnly beNonBrowsable offset: 6;
+		defineField: #FullUrlLength type: UInt16Field new beReadOnly beNonBrowsable offset: 0;
+		defineField: #HostLength type: UInt16Field new beReadOnly beNonBrowsable offset: 2;
+		defineField: #AbsPathLength type: UInt16Field new beReadOnly beNonBrowsable offset: 4;
+		defineField: #QueryStringLength type: UInt16Field new beReadOnly beNonBrowsable offset: 6;
 		defineField: #pFullUrl type: (ArrayPointerField type: Utf16String arrayLength: (SizeIsArrayFieldLength sizeIs: 'FullUrlLength / 2')) beReadOnly offset: 8;
 		defineField: #pHost type: (ArrayPointerField type: Utf16String arrayLength: (SizeIsArrayFieldLength sizeIs: 'HostLength >> 1')) beReadOnly offset: 12;
 		defineField: #pAbsPath type: (ArrayPointerField type: Utf16String arrayLength: (SizeIsArrayFieldLength sizeIs: 'AbsPathLength >> 1')) beReadOnly offset: 16;

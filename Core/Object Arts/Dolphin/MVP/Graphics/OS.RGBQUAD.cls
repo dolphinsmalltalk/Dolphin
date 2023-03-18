@@ -35,37 +35,37 @@ struct tagRGBQUAD {
 asColor
 	"Answer the <Color> equivalent of the receiver."
 
-	^Graphics.Color fromRgbCode: (bytes dwordAtOffset: 0)!
+	^Graphics.Color fromRgbCode: (bytes uint32AtOffset: 0)!
 
 rgbBlue
 	"Answer the <Integer> value of the receiver's 'rgbBlue' field."
 
-	^bytes byteAtOffset: _OffsetOf_rgbBlue!
+	^bytes uint8AtOffset: _OffsetOf_rgbBlue!
 
 rgbBlue: anInteger
 	"Set the receiver's 'rgbBlue' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_rgbBlue put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_rgbBlue put: anInteger!
 
 rgbGreen
 	"Answer the <Integer> value of the receiver's 'rgbGreen' field."
 
-	^bytes byteAtOffset: _OffsetOf_rgbGreen!
+	^bytes uint8AtOffset: _OffsetOf_rgbGreen!
 
 rgbGreen: anInteger
 	"Set the receiver's 'rgbGreen' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_rgbGreen put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_rgbGreen put: anInteger!
 
 rgbRed
 	"Answer the <Integer> value of the receiver's 'rgbRed' field."
 
-	^bytes byteAtOffset: _OffsetOf_rgbRed!
+	^bytes uint8AtOffset: _OffsetOf_rgbRed!
 
 rgbRed: anInteger
 	"Set the receiver's 'rgbRed' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_rgbRed put: anInteger! !
+	bytes uint8AtOffset: _OffsetOf_rgbRed put: anInteger! !
 !OS.RGBQUAD categoriesForMethods!
 asColor!converting!public! !
 rgbBlue!**compiled accessors**!public! !
@@ -95,16 +95,16 @@ defineFields
 "
 
 	self
-		defineField: #rgbBlue type: BYTEField new;
-		defineField: #rgbGreen type: BYTEField new;
-		defineField: #rgbRed type: BYTEField new;
-		defineField: #rgbReserved type: BYTEField filler!
+		defineField: #rgbBlue type: UInt8Field new;
+		defineField: #rgbGreen type: UInt8Field new;
+		defineField: #rgbRed type: UInt8Field new;
+		defineField: #rgbReserved type: UInt8Field filler!
 
 fromColor: aColor
 	"Answer a new instance of the receiver equivalent to the <Color> argument."
 
 	^self new bytes
-		dwordAtOffset: 0 put: aColor rgbCode;
+		uint32AtOffset: 0 put: aColor rgbCode;
 		yourself!
 
 getFieldNames

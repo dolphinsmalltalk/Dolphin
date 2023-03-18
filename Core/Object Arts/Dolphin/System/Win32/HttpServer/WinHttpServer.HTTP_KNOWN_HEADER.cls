@@ -44,12 +44,12 @@ pRawValue: anAnsiString
 RawValueLength
 	"Private - Answer the <Integer> value of the receiver's 'RawValueLength' field."
 
-	^bytes wordAtOffset: _OffsetOf_RawValueLength!
+	^bytes uint16AtOffset: _OffsetOf_RawValueLength!
 
 RawValueLength: anInteger
 	"Set the receiver's 'RawValueLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_RawValueLength put: anInteger! !
+	bytes uint16AtOffset: _OffsetOf_RawValueLength put: anInteger! !
 !WinHttpServer.HTTP_KNOWN_HEADER categoriesForMethods!
 pRawValue!**compiled accessors**!public! !
 pRawValue:!**compiled accessors**!public! !
@@ -75,7 +75,7 @@ defineFields
 "
 
 	self
-		defineField: #RawValueLength type: WORDField new beNonBrowsable offset: 0;
+		defineField: #RawValueLength type: UInt16Field new beNonBrowsable offset: 0;
 		defineField: #pRawValue type: (ArrayPointerField type: AnsiString lengthField: #RawValueLength) offset: 4.
 	self byteSize: 8!
 

@@ -38,57 +38,57 @@ alignment: alignmentSymbol
 cchTextMax: anInteger
 	"Set the receiver's 'cchTextMax' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_cchTextMax put: anInteger!
+	bytes int32AtOffset: _OffsetOf_cchTextMax put: anInteger!
 
 cx
 	"Answer the <Integer> value of the receiver's 'cx' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_cx!
+	^bytes int32AtOffset: _OffsetOf_cx!
 
 cx: anInteger
 	"Set the receiver's 'cx' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_cx put: anInteger!
+	bytes int32AtOffset: _OffsetOf_cx put: anInteger!
 
 cxDefault
 	"Answer the <Integer> value of the receiver's 'cxDefault' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_cxDefault!
+	^bytes int32AtOffset: _OffsetOf_cxDefault!
 
 cxDefault: anInteger
 	"Set the receiver's 'cxDefault' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_cxDefault put: anInteger!
+	bytes int32AtOffset: _OffsetOf_cxDefault put: anInteger!
 
 cxIdeal
 	"Answer the <Integer> value of the receiver's 'cxIdeal' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_cxIdeal!
+	^bytes int32AtOffset: _OffsetOf_cxIdeal!
 
 cxIdeal: anInteger
 	"Set the receiver's 'cxIdeal' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_cxIdeal put: anInteger!
+	bytes int32AtOffset: _OffsetOf_cxIdeal put: anInteger!
 
 cxMin
 	"Answer the <Integer> value of the receiver's 'cxMin' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_cxMin!
+	^bytes int32AtOffset: _OffsetOf_cxMin!
 
 cxMin: anInteger
 	"Set the receiver's 'cxMin' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_cxMin put: anInteger!
+	bytes int32AtOffset: _OffsetOf_cxMin put: anInteger!
 
 fmt
 	"Answer the <Integer> value of the receiver's 'fmt' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_fmt!
+	^bytes int32AtOffset: _OffsetOf_fmt!
 
 fmt: anInteger
 	"Set the receiver's 'fmt' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_fmt put: anInteger!
+	bytes int32AtOffset: _OffsetOf_fmt put: anInteger!
 
 format: anInteger
 	self fmt: anInteger; maskIn: LVCF_FMT!
@@ -96,12 +96,12 @@ format: anInteger
 iImage
 	"Answer the <Integer> value of the receiver's 'iImage' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_iImage!
+	^bytes int32AtOffset: _OffsetOf_iImage!
 
 iImage: anInteger
 	"Set the receiver's 'iImage' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_iImage put: anInteger!
+	bytes int32AtOffset: _OffsetOf_iImage put: anInteger!
 
 image: anIntegerIndex
 	"Set the image of the column to be that with anIntegerIndex in the list view's
@@ -112,37 +112,37 @@ image: anIntegerIndex
 iOrder
 	"Answer the <Integer> value of the receiver's 'iOrder' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_iOrder!
+	^bytes int32AtOffset: _OffsetOf_iOrder!
 
 iOrder: anInteger
 	"Set the receiver's 'iOrder' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_iOrder put: anInteger!
+	bytes int32AtOffset: _OffsetOf_iOrder put: anInteger!
 
 iSubItem
 	"Answer the <Integer> value of the receiver's 'iSubItem' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_iSubItem!
+	^bytes int32AtOffset: _OffsetOf_iSubItem!
 
 iSubItem: anInteger
 	"Set the receiver's 'iSubItem' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_iSubItem put: anInteger!
+	bytes int32AtOffset: _OffsetOf_iSubItem put: anInteger!
 
 mask
 	"Answer the <Integer> value of the receiver's 'mask' field."
 
-	^bytes dwordAtOffset: _OffsetOf_mask!
+	^bytes uint32AtOffset: _OffsetOf_mask!
 
 mask: anInteger
 	"Set the receiver's 'mask' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_mask put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_mask put: anInteger!
 
 maskIn: anInteger
 	"OR in to receiver's mask field the bit flags represented by anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_mask put: ((bytes dwordAtOffset: _OffsetOf_mask) bitOr: anInteger)!
+	bytes uint32AtOffset: _OffsetOf_mask put: ((bytes uint32AtOffset: _OffsetOf_mask) bitOr: anInteger)!
 
 newTextBuffer: anInteger
 	"Allocate a new text buffer for the receiver of the specified size."
@@ -244,37 +244,37 @@ defineFields
 
 	self
 		defineField: #mask
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 0;
 		defineField: #fmt
-			type: SDWORDField new
+			type: Int32Field new
 			offset: 4;
 		defineField: #cx
-			type: SDWORDField new
+			type: Int32Field new
 			offset: 8;
 		defineField: #pszText
 			type: (PointerField type: Utf16String)
 			offset: 12;
 		defineField: #cchTextMax
-			type: SDWORDField writeOnly
+			type: Int32Field writeOnly
 			offset: 16;
 		defineField: #iSubItem
-			type: SDWORDField new
+			type: Int32Field new
 			offset: 20;
 		defineField: #iImage
-			type: SDWORDField new
+			type: Int32Field new
 			offset: 24;
 		defineField: #iOrder
-			type: SDWORDField new
+			type: Int32Field new
 			offset: 28;
 		defineField: #cxMin
-			type: SDWORDField new
+			type: Int32Field new
 			offset: 32;
 		defineField: #cxDefault
-			type: SDWORDField new
+			type: Int32Field new
 			offset: 36;
 		defineField: #cxIdeal
-			type: SDWORDField new
+			type: Int32Field new
 			offset: 40!
 
 fromColumn: aListViewColumn

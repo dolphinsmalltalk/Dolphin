@@ -31,22 +31,22 @@ struct tagGpCharacterRange {
 First
 	"Answer the <Integer> value of the receiver's 'First' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_First!
+	^bytes int32AtOffset: _OffsetOf_First!
 
 First: anInteger
 	"Set the receiver's 'First' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_First put: anInteger!
+	bytes int32AtOffset: _OffsetOf_First put: anInteger!
 
 length
 	"Answer the <Integer> value of the receiver's 'length' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_length!
+	^bytes int32AtOffset: _OffsetOf_length!
 
 length: anInteger
 	"Set the receiver's 'length' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_length put: anInteger! !
+	bytes int32AtOffset: _OffsetOf_length put: anInteger! !
 !Graphics.Gdiplus.CharacterRange categoriesForMethods!
 First!**compiled accessors**!public! !
 First:!**compiled accessors**!public! !
@@ -72,8 +72,8 @@ defineFields
 "
 
 	self
-		defineField: #First type: SDWORDField new offset: 0;
-		defineField: #length type: SDWORDField new offset: 4.
+		defineField: #First type: Int32Field new offset: 0;
+		defineField: #length type: Int32Field new offset: 4.
 	self byteSize: 8!
 
 getFieldNames

@@ -221,7 +221,7 @@ rightEdgesForWidth: anInteger
 	numParts < 1
 		ifTrue: 
 			["Control can't actually contain no parts, so we put a dummy one in."
-			^SDWORDArray with: -1].
+			^Int32Array with: -1].
 	numResizable := 0.
 	fixedWidth := 0.
 	borders := self sbGetBorders.
@@ -240,7 +240,7 @@ rightEdgesForWidth: anInteger
 				ifFalse: 
 					[(anInteger - right - fixedWidth - self sizeGripWidth - ((numParts - 1) * horizontalGap))
 						/ numResizable].
-	edges := SDWORDArray new: numParts.
+	edges := Int32Array new: numParts.
 	1 to: numParts
 		do: 
 			[:i |
@@ -259,7 +259,7 @@ sbGetBorders
 	 3	gap between parts (i.e. width of gap between item rectangles)"
 
 	| answer |
-	answer := SDWORDArray new: 3.
+	answer := Int32Array new: 3.
 	self
 		sendMessage: SB_GETBORDERS
 		wParam: 0

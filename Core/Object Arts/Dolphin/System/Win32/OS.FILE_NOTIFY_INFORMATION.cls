@@ -36,7 +36,7 @@ struct tagFILE_NOTIFY_INFORMATION {
 Action
 	"Answer the <Integer> value of the receiver's 'Action' field."
 
-	^bytes dwordAtOffset: _OffsetOf_Action!
+	^bytes uint32AtOffset: _OffsetOf_Action!
 
 FileName
 	"Answer the <Utf16String> value of the receiver's 'FileName' field."
@@ -46,12 +46,12 @@ FileName
 FileNameLength
 	"Answer the <Integer> value of the receiver's 'FileNameLength' field."
 
-	^bytes dwordAtOffset: _OffsetOf_FileNameLength!
+	^bytes uint32AtOffset: _OffsetOf_FileNameLength!
 
 NextEntryOffset
 	"Answer the <Integer> value of the receiver's 'NextEntryOffset' field."
 
-	^bytes dwordAtOffset: _OffsetOf_NextEntryOffset! !
+	^bytes uint32AtOffset: _OffsetOf_NextEntryOffset! !
 !OS.FILE_NOTIFY_INFORMATION categoriesForMethods!
 Action!**compiled accessors**!public! !
 FileName!**compiled accessors**!public! !
@@ -80,13 +80,13 @@ defineFields
 
 	self
 		defineField: #NextEntryOffset
-			type: DWORDField new beReadOnly
+			type: UInt32Field new beReadOnly
 			offset: 0;
 		defineField: #Action
-			type: DWORDField new beReadOnly
+			type: UInt32Field new beReadOnly
 			offset: 4;
 		defineField: #FileNameLength
-			type: DWORDField new beReadOnly
+			type: UInt32Field new beReadOnly
 			offset: 8;
 		defineField: #FileName
 			type: (StringField type: Utf16String

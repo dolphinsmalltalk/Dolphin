@@ -30,12 +30,12 @@ struct tagEMRSETCOLORSPACE {
 ihCS
 	"Answer the <Integer> value of the receiver's 'ihCS' field."
 
-	^bytes dwordAtOffset: _OffsetOf_ihCS!
+	^bytes uint32AtOffset: _OffsetOf_ihCS!
 
 ihCS: anInteger
 	"Set the receiver's 'ihCS' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_ihCS put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_ihCS put: anInteger! !
 !OS.EMRSETCOLORSPACE categoriesForMethods!
 ihCS!**compiled accessors**!public! !
 ihCS:!**compiled accessors**!public! !
@@ -61,7 +61,7 @@ defineFields
 	super defineFields.
 	self
 		defineField: #ihCS
-		type: DWORDField new
+		type: UInt32Field new
 		offset: 8.
 	self byteSize: 12!
 

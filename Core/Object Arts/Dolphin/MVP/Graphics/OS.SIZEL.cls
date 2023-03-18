@@ -18,34 +18,34 @@ OS.SIZEL comment: '`SIZE` is an `ExternalStructure` class to wrap the standard W
 cx
 	"Answer the <Integer> value of the receiver's 'cx' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_cx!
+	^bytes int32AtOffset: _OffsetOf_cx!
 
 cx: anInteger
 	"Set the receiver's 'cx' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_cx put: anInteger!
+	bytes int32AtOffset: _OffsetOf_cx put: anInteger!
 
 cy
 	"Answer the <Integer> value of the receiver's 'cy' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_cy!
+	^bytes int32AtOffset: _OffsetOf_cy!
 
 cy: anInteger
 	"Set the receiver's 'cy' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_cy put: anInteger!
+	bytes int32AtOffset: _OffsetOf_cy put: anInteger!
 
 height
-	^bytes sdwordAtOffset: _OffsetOf_cy!
+	^bytes int32AtOffset: _OffsetOf_cy!
 
 height: anObject
-	bytes sdwordAtOffset: _OffsetOf_cy put: anObject!
+	bytes int32AtOffset: _OffsetOf_cy put: anObject!
 
 width
-	^bytes sdwordAtOffset: _OffsetOf_cx!
+	^bytes int32AtOffset: _OffsetOf_cx!
 
 width: anObject
-	bytes sdwordAtOffset: _OffsetOf_cx put: anObject! !
+	bytes int32AtOffset: _OffsetOf_cx put: anObject! !
 !OS.SIZEL categoriesForMethods!
 cx!**compiled accessors**!public! !
 cx:!**compiled accessors**!public! !
@@ -74,8 +74,8 @@ defineFields
 	"
 
 	self
-		defineField: #cx type: SDWORDField new;
-		defineField: #cy type: SDWORDField new!
+		defineField: #cx type: Int32Field new;
+		defineField: #cy type: Int32Field new!
 
 getFieldNames
 	^#(#cx #cy)!
@@ -88,8 +88,8 @@ width: cx height: cy
 	framework methods."
 
 	^self basicNew bytes: ((ByteArray newFixed: _SIZEL_Size)
-				sdwordAtOffset: _OffsetOf_cx put: cx;
-				sdwordAtOffset: _OffsetOf_cy put: cy;
+				int32AtOffset: _OffsetOf_cx put: cx;
+				int32AtOffset: _OffsetOf_cy put: cy;
 				yourself)! !
 !OS.SIZEL class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !

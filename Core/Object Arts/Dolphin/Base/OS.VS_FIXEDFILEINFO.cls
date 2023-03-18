@@ -33,22 +33,22 @@ See also the VersionInfo and VersionLibrary classes.'!
 dwFileVersionLS
 	"Answer the <Integer> value of the receiver's 'dwFileVersionLS' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwFileVersionLS!
+	^bytes uint32AtOffset: _OffsetOf_dwFileVersionLS!
 
 dwFileVersionMS
 	"Answer the <Integer> value of the receiver's 'dwFileVersionMS' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwFileVersionMS!
+	^bytes uint32AtOffset: _OffsetOf_dwFileVersionMS!
 
 dwProductVersionLS
 	"Answer the <Integer> value of the receiver's 'dwProductVersionLS' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwProductVersionLS!
+	^bytes uint32AtOffset: _OffsetOf_dwProductVersionLS!
 
 dwProductVersionMS
 	"Answer the <Integer> value of the receiver's 'dwProductVersionMS' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwProductVersionMS!
+	^bytes uint32AtOffset: _OffsetOf_dwProductVersionMS!
 
 fileVersion
 	"Answer the 64-bit <integer> file version."
@@ -93,8 +93,8 @@ versionAtOffset: anInteger put: anArray
 			| offset |
 			offset := anInteger + ((i - 1) * 2).
 			(self bytes)
-				wordAtOffset: offset put: (anArray at: i + 1);
-				wordAtOffset: offset + 2 put: (anArray at: i)]! !
+				uint16AtOffset: offset put: (anArray at: i + 1);
+				uint16AtOffset: offset + 2 put: (anArray at: i)]! !
 !OS.VS_FIXEDFILEINFO categoriesForMethods!
 dwFileVersionLS!**compiled accessors**!public! !
 dwFileVersionMS!**compiled accessors**!public! !
@@ -136,20 +136,20 @@ defineFields
 	} VS_FIXEDFILEINFO;"
 
 	self
-		defineField: #dwSignature type: DWORDField filler;
-		defineField: #dwStrucVersion type: DWORDField readOnly beUncompiled;
-		defineField: #dwFileVersionMS type: DWORDField readOnly;
-		defineField: #dwFileVersionLS type: DWORDField readOnly;
-		defineField: #dwProductVersionMS type: DWORDField readOnly;
-		defineField: #dwProductVersionLS type: DWORDField readOnly;
+		defineField: #dwSignature type: UInt32Field filler;
+		defineField: #dwStrucVersion type: UInt32Field readOnly beUncompiled;
+		defineField: #dwFileVersionMS type: UInt32Field readOnly;
+		defineField: #dwFileVersionLS type: UInt32Field readOnly;
+		defineField: #dwProductVersionMS type: UInt32Field readOnly;
+		defineField: #dwProductVersionLS type: UInt32Field readOnly;
 		beUncompiled;
-		defineField: #dwFileFlagsMask type: DWORDField readOnly;
-		defineField: #dwFileFlags type: DWORDField readOnly;
-		defineField: #dwFileOS type: DWORDField readOnly;
-		defineField: #dwFileType type: DWORDField readOnly;
-		defineField: #dwFileSubtype type: DWORDField readOnly;
-		defineField: #dwFileDateMS type: DWORDField readOnly;
-		defineField: #dwFileDateLS type: DWORDField readOnly!
+		defineField: #dwFileFlagsMask type: UInt32Field readOnly;
+		defineField: #dwFileFlags type: UInt32Field readOnly;
+		defineField: #dwFileOS type: UInt32Field readOnly;
+		defineField: #dwFileType type: UInt32Field readOnly;
+		defineField: #dwFileSubtype type: UInt32Field readOnly;
+		defineField: #dwFileDateMS type: UInt32Field readOnly;
+		defineField: #dwFileDateLS type: UInt32Field readOnly!
 
 getFieldNames
 	^#(#dwStrucVersion #dwFileVersionMS #dwFileVersionLS #dwProductVersionMS #dwProductVersionLS #dwFileFlagsMask #dwFileFlags #dwFileOS #dwFileType #dwFileSubtype #dwFileDateMS #dwFileDateLS)! !

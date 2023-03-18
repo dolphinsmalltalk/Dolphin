@@ -55,7 +55,7 @@ defineFields
 
 	self
 		defineField: #dwNumEntries
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 0;
 		defineField: #table
 			type: ((StructureArrayField type: MIB_TCPEXROW lengthField: #dwNumEntries)

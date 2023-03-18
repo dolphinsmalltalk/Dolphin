@@ -12,13 +12,13 @@ External.CHARField comment: '`CHARField` is a `ScalarField` class to describe `E
 !External.CHARField methodsFor!
 
 basicWriteInto: anExternalStructure value: anInteger
-	^anExternalStructure bytes byteAtOffset: offset put: anInteger!
+	^anExternalStructure bytes uint8AtOffset: offset put: anInteger!
 
 readFrom: anExternalStructure
 	"Private - Answer a <Character> for the 8-bit code unit at the receiver's offset in the
 	<ExternalStructure> argument."
 
-	^Character ansiValue: (anExternalStructure bytes byteAtOffset: offset)! !
+	^Character ansiValue: (anExternalStructure bytes uint8AtOffset: offset)! !
 !External.CHARField categoriesForMethods!
 basicWriteInto:value:!accessing!private! !
 readFrom:!indirect accessing!private! !

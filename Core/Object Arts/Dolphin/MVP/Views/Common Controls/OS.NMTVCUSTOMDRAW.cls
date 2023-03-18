@@ -33,22 +33,22 @@ backcolor: aColor
 clrText
 	"Answer the <Integer> value of the receiver's 'clrText' field."
 
-	^bytes dwordAtOffset: _OffsetOf_clrText!
+	^bytes uint32AtOffset: _OffsetOf_clrText!
 
 clrText: anInteger
 	"Set the receiver's 'clrText' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_clrText put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_clrText put: anInteger!
 
 clrTextBk
 	"Answer the <Integer> value of the receiver's 'clrTextBk' field."
 
-	^bytes dwordAtOffset: _OffsetOf_clrTextBk!
+	^bytes uint32AtOffset: _OffsetOf_clrTextBk!
 
 clrTextBk: anInteger
 	"Set the receiver's 'clrTextBk' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_clrTextBk put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_clrTextBk put: anInteger!
 
 forecolor
 	"Answer the foreground text colour."
@@ -65,7 +65,7 @@ forecolor: aColor
 iLevel
 	"Answer the <Integer> value of the receiver's 'iLevel' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_iLevel! !
+	^bytes int32AtOffset: _OffsetOf_iLevel! !
 !OS.NMTVCUSTOMDRAW categoriesForMethods!
 backcolor!accessing!public! !
 backcolor:!accessing!public! !
@@ -90,9 +90,9 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #clrText type: DWORDField new;
-		defineField: #clrTextBk type: DWORDField new;
-		defineField: #iLevel type: SDWORDField readOnly!
+		defineField: #clrText type: UInt32Field new;
+		defineField: #clrTextBk type: UInt32Field new;
+		defineField: #iLevel type: Int32Field readOnly!
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #dwDrawStage #hdc #rc #dwItemSpec #uItemState #lParam #clrText #clrTextBk #iLevel)! !

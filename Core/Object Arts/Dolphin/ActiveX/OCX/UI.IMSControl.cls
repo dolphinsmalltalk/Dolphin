@@ -31,7 +31,7 @@ appearance
 	Helpstring: 'Sets whether the control has a flat or sunken 3d appearance'"
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_Appearance: answer.
 	^answer asObject!
 
@@ -46,7 +46,7 @@ backColor
 	Helpstring: 'Returns/sets the background color used to display text and graphics in an object.'"
 
 	| answer |
-	answer := DWORD new.
+	answer := UInt32 new.
 	self get_BackColor: answer.
 	^Color fromCOLORREF: answer value!
 
@@ -61,7 +61,7 @@ borderStyle
 	Helpstring: 'Returns/sets the border style for an object.'"
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_BorderStyle: answer.
 	^answer asObject!
 
@@ -112,7 +112,7 @@ foreColor
 	Helpstring: 'Returns/sets the foreground color used to display text and graphics in an object.'"
 
 	| answer |
-	answer := DWORD new.
+	answer := UInt32 new.
 	self get_ForeColor: answer.
 	^Color fromCOLORREF: answer value!
 
@@ -173,7 +173,7 @@ hWnd
 	Helpstring: 'Returns a handle to a form or control.'"
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_hWnd: answer.
 	^answer asObject!
 
@@ -198,7 +198,7 @@ oleDropMode
 	Helpstring: 'Returns/Sets whether this control can act as an OLE drop target.'"
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_OLEDropMode: answer.
 	^answer asObject!
 

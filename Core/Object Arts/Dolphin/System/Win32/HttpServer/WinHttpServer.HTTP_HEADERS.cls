@@ -88,12 +88,12 @@ pUnknownHeaders: aStructureArray
 UnknownHeaderCount
 	"Private - Answer the <Integer> value of the receiver's 'UnknownHeaderCount' field."
 
-	^bytes wordAtOffset: _OffsetOf_UnknownHeaderCount!
+	^bytes uint16AtOffset: _OffsetOf_UnknownHeaderCount!
 
 UnknownHeaderCount: anInteger
 	"Set the receiver's 'UnknownHeaderCount' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_UnknownHeaderCount put: anInteger! !
+	bytes uint16AtOffset: _OffsetOf_UnknownHeaderCount put: anInteger! !
 !WinHttpServer.HTTP_HEADERS categoriesForMethods!
 knownHeaderIndex:!constants!public! !
 knownHeaderName:!constants!public! !
@@ -125,9 +125,9 @@ defineFields
 "
 
 	self
-		defineField: #UnknownHeaderCount type: WORDField new beNonBrowsable offset: 0;
+		defineField: #UnknownHeaderCount type: UInt16Field new beNonBrowsable offset: 0;
 		defineField: #pUnknownHeaders type: (StructureArrayPointerField type: HTTP_UNKNOWN_HEADER lengthField: #UnknownHeaderCount) offset: 4;
-		defineField: #TrailerCount type: WORDField new beNonBrowsable beFiller offset: 8;
+		defineField: #TrailerCount type: UInt16Field new beNonBrowsable beFiller offset: 8;
 		defineField: #pTrailers type: (StructureArrayPointerField type: HTTP_UNKNOWN_HEADER lengthField: #TrailerCount) beFiller offset: 12.
 	self byteSize: 16!
 

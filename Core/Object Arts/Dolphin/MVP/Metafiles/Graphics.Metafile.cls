@@ -116,7 +116,7 @@ play: operation on: aCanvas at: originPoint extent: sizePoint
 						value: emfr
 						value: handles]
 				descriptor: (External.FunctionDescriptor returnType: 'int'
-						argumentTypes: 'handle lpvoid lpvoid sdword lpvoid').
+						argumentTypes: 'handle lpvoid lpvoid int32 lpvoid').
 	lpRect := RECTL origin: originPoint extent: sizePoint.
 	answer := Gdi32
 				enumEnhMetaFile: aCanvas asParameter

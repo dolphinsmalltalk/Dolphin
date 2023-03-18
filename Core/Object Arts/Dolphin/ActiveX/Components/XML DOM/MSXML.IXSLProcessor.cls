@@ -253,7 +253,7 @@ readyState
 	Helpstring: current state of the processor"
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_readyState: answer.
 	^answer asObject!
 

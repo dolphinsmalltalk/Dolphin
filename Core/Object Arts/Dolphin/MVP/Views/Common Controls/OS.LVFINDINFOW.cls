@@ -26,7 +26,7 @@ Instance Variables:
 flags
 	"Answer the <Integer> value of the receiver's 'flags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_flags!
+	^bytes uint32AtOffset: _OffsetOf_flags!
 
 lParam
 	"Answer the <Integer> value of the receiver's 'lParam' field."
@@ -46,7 +46,7 @@ pt
 vkDirection
 	"Answer the <Integer> value of the receiver's 'vkDirection' field."
 
-	^bytes dwordAtOffset: _OffsetOf_vkDirection! !
+	^bytes uint32AtOffset: _OffsetOf_vkDirection! !
 !OS.LVFINDINFOW categoriesForMethods!
 flags!**compiled accessors**!public! !
 lParam!**compiled accessors**!public! !
@@ -66,11 +66,11 @@ defineFields
 	"
 
 	self
-		defineField: #flags type: DWORDField readOnly;
+		defineField: #flags type: UInt32Field readOnly;
 		defineField: #psz type: (PointerField type: Utf16String) beReadOnly;
-		defineField: #lParam type: UINT_PTRField readOnly;
+		defineField: #lParam type: UIntPtrField readOnly;
 		defineField: #pt type: (StructureField type: POINTL) beReadOnly;
-		defineField: #vkDirection type: DWORDField readOnly!
+		defineField: #vkDirection type: UInt32Field readOnly!
 
 getFieldNames
 	^#(#flags #psz #lParam #pt #vkDirection)! !

@@ -43,12 +43,12 @@ struct tagHTTP_SERVER_AUTHENTICATION_INFO {
 AuthSchemes
 	"Answer the <Integer> value of the receiver's 'AuthSchemes' field."
 
-	^bytes dwordAtOffset: _OffsetOf_AuthSchemes!
+	^bytes uint32AtOffset: _OffsetOf_AuthSchemes!
 
 AuthSchemes: anInteger
 	"Set the receiver's 'AuthSchemes' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_AuthSchemes put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_AuthSchemes put: anInteger!
 
 BasicParams
 	"Answer the <HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS> value of the receiver's 'BasicParams' field."
@@ -83,42 +83,42 @@ DigestParams: aHTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS
 DisableNTLMCredentialCaching
 	"Answer the <Boolean> value of the receiver's 'DisableNTLMCredentialCaching' field."
 
-	^(bytes byteAtOffset: _OffsetOf_DisableNTLMCredentialCaching) asBoolean!
+	^(bytes uint8AtOffset: _OffsetOf_DisableNTLMCredentialCaching) asBoolean!
 
 DisableNTLMCredentialCaching: aBoolean
 	"Set the receiver's 'DisableNTLMCredentialCaching' field to the value of the argument, aBoolean"
 
-	bytes byteAtOffset: _OffsetOf_DisableNTLMCredentialCaching put: aBoolean asParameter!
+	bytes uint8AtOffset: _OffsetOf_DisableNTLMCredentialCaching put: aBoolean asParameter!
 
 ExFlags
 	"Answer the <Integer> value of the receiver's 'ExFlags' field."
 
-	^bytes byteAtOffset: _OffsetOf_ExFlags!
+	^bytes uint8AtOffset: _OffsetOf_ExFlags!
 
 ExFlags: anInteger
 	"Set the receiver's 'ExFlags' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_ExFlags put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_ExFlags put: anInteger!
 
 ReceiveContextHandle
 	"Answer the <Boolean> value of the receiver's 'ReceiveContextHandle' field."
 
-	^(bytes byteAtOffset: _OffsetOf_ReceiveContextHandle) asBoolean!
+	^(bytes uint8AtOffset: _OffsetOf_ReceiveContextHandle) asBoolean!
 
 ReceiveContextHandle: aBoolean
 	"Set the receiver's 'ReceiveContextHandle' field to the value of the argument, aBoolean"
 
-	bytes byteAtOffset: _OffsetOf_ReceiveContextHandle put: aBoolean asParameter!
+	bytes uint8AtOffset: _OffsetOf_ReceiveContextHandle put: aBoolean asParameter!
 
 ReceiveMutualAuth
 	"Answer the <Boolean> value of the receiver's 'ReceiveMutualAuth' field."
 
-	^(bytes byteAtOffset: _OffsetOf_ReceiveMutualAuth) asBoolean!
+	^(bytes uint8AtOffset: _OffsetOf_ReceiveMutualAuth) asBoolean!
 
 ReceiveMutualAuth: aBoolean
 	"Set the receiver's 'ReceiveMutualAuth' field to the value of the argument, aBoolean"
 
-	bytes byteAtOffset: _OffsetOf_ReceiveMutualAuth put: aBoolean asParameter! !
+	bytes uint8AtOffset: _OffsetOf_ReceiveMutualAuth put: aBoolean asParameter! !
 !WinHttpServer.HTTP_SERVER_AUTHENTICATION_INFO categoriesForMethods!
 AuthSchemes!**compiled accessors**!public! !
 AuthSchemes:!**compiled accessors**!public! !
@@ -161,11 +161,11 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #AuthSchemes type: DWORDField new offset: 4;
+		defineField: #AuthSchemes type: UInt32Field new offset: 4;
 		defineField: #ReceiveMutualAuth type: BOOLEANField new offset: 8;
 		defineField: #ReceiveContextHandle type: BOOLEANField new offset: 9;
 		defineField: #DisableNTLMCredentialCaching type: BOOLEANField new offset: 10;
-		defineField: #ExFlags type: BYTEField new offset: 11;
+		defineField: #ExFlags type: UInt8Field new offset: 11;
 		defineField: #DigestParams type: (StructureField type: HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS) offset: 12;
 		defineField: #BasicParams type: (StructureField type: HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS) offset: 28.
 	self byteSize: 36!

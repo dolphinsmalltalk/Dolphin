@@ -37,12 +37,12 @@ struct tagMONITORINFO {
 dwFlags
 	"Answer the <Integer> value of the receiver's 'dwFlags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwFlags!
+	^bytes uint32AtOffset: _OffsetOf_dwFlags!
 
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 isPrimary
 	"Answer whether the receiver represents the primary/main monitor."
@@ -86,10 +86,10 @@ defineFields
 "
 
 	self
-		defineField: #dwSize type: DWORDField new beWriteOnly offset: 0;
+		defineField: #dwSize type: UInt32Field new beWriteOnly offset: 0;
 		defineField: #rcMonitor type: (StructureField type: RECTL) beReadOnly offset: 4;
 		defineField: #rcWork type: (StructureField type: RECTL) beReadOnly offset: 20;
-		defineField: #dwFlags type: DWORDField new beReadOnly offset: 36.
+		defineField: #dwFlags type: UInt32Field new beReadOnly offset: 36.
 	self byteSize: 40!
 
 getFieldNames

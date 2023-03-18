@@ -231,31 +231,6 @@ digitLength
 	[(abs basicAt: size) == 0 and: [size > 0]] whileTrue: [size := size - 1].
 	^size!
 
-dwordAtOffset: anInteger
-	"Private - Answer the unsigned 4-byte integer at offset (i.e. zero relative) anInteger in the receiver."
-
-	"Primitive failure reasons:
-		InvalidParameter1	- anInteger is not a SmallInteger
-		OutOfBounds	 	- anInteger is out of bounds (not in the range 0..receiver's size - (4+1))."
-
-	<primitive: 120>
-	^self primitiveFailed: _failureCode!
-
-dwordAtOffset: anInteger put: anObject
-	"Private - Store an unsigned 4 byte value at byte offset anInteger within the receiver. Note
-	that this will fail unless the LargeInteger has first been marked as mutable."
-
-	<primitive: 121>
-	_failureCode == _PrimitiveFailureCode.InvalidParameter2
-		ifTrue: [^self dwordAtOffset: anInteger put: anObject asInteger].
-	_failureCode == _PrimitiveFailureCode.OutOfBounds
-		ifTrue: 
-			[^self isImmutable
-				ifTrue: [Processor constWriteSignal signalWith: self]
-				ifFalse: [self errorSubscriptBounds: anInteger]].
-	_failureCode == _PrimitiveFailureCode.InvalidParameter1 ifTrue: [^Error nonIntegerIndex: anInteger].
-	^self primitiveFailed: _failureCode!
-
 gcd: anInteger
 	"Answer the greatest common divisor of the receiver and the <integer>, anInteger, computed using Lehmer's adapatation of the Euclid's method. See Knuth vol. II"
 
@@ -327,6 +302,16 @@ highBit
 
 	<primitive: 53>
 	^super highBit!
+
+int32AtOffset: anInteger
+	"Private - Answers the signed 4-byte integer at byte offset anInteger in the receiver."
+
+	"Primitive failure reasons:
+		InvalidParameter1	- anInteger is not a SmallInteger
+		OutOfBounds	 	- anInteger is out of bounds (not in the range 0..receiver's size - (sizeof(Int32)+1))."
+
+	<primitive: 122>
+	^self primitiveFailed: _failureCode!
 
 intPtrAtOffset: anInteger put: anObject
 	"Private - Store anObject as a signed machine-word sized integer at anInteger offset in the receiver. anInteger must be representable in a machine word. Uses the intPtrAtOffset:put: primitive. This is intended only as a way to initialize a new LargeInteger with a SmallInteger value."
@@ -475,16 +460,6 @@ replaceBytesOf: aByteObject from: start to: stop startingAt: fromStart
 	<primitive: 142>
 	^self primitiveFailed: _failureCode!
 
-sdwordAtOffset: anInteger
-	"Private - Answers the signed 4-byte integer at byte offset anInteger in the receiver."
-
-	"Primitive failure reasons:
-		InvalidParameter1	- anInteger is not a SmallInteger
-		OutOfBounds	 	- anInteger is out of bounds (not in the range 0..receiver's size - (sizeof(SDWORD)+1))."
-
-	<primitive: 122>
-	^self primitiveFailed: _failureCode!
-
 signBit
 	"Private - Answer the receiver's sign bit. This will be 0 for positive integers
 	and 1 for negative integers."
@@ -497,7 +472,32 @@ subtractFromInteger: anInteger
 	N.B. The negated receiver may not be large if the receiver is VMConstants.SmallIntegerMax+1
 	and therefore it is better to send #+ that #addToInteger:."
 
-	^self negated + anInteger! !
+	^self negated + anInteger!
+
+uint32AtOffset: anInteger
+	"Private - Answer the unsigned 4-byte integer at offset (i.e. zero relative) anInteger in the receiver."
+
+	"Primitive failure reasons:
+		InvalidParameter1	- anInteger is not a SmallInteger
+		OutOfBounds	 	- anInteger is out of bounds (not in the range 0..receiver's size - (4+1))."
+
+	<primitive: 120>
+	^self primitiveFailed: _failureCode!
+
+uint32AtOffset: anInteger put: anObject
+	"Private - Store an unsigned 4 byte value at byte offset anInteger within the receiver. Note
+	that this will fail unless the LargeInteger has first been marked as mutable."
+
+	<primitive: 121>
+	_failureCode == _PrimitiveFailureCode.InvalidParameter2
+		ifTrue: [^self uint32AtOffset: anInteger put: anObject asInteger].
+	_failureCode == _PrimitiveFailureCode.OutOfBounds
+		ifTrue: 
+			[^self isImmutable
+				ifTrue: [Processor constWriteSignal signalWith: self]
+				ifFalse: [self errorSubscriptBounds: anInteger]].
+	_failureCode == _PrimitiveFailureCode.InvalidParameter1 ifTrue: [^Error nonIntegerIndex: anInteger].
+	^self primitiveFailed: _failureCode! !
 !Core.LargeInteger categoriesForMethods!
 -!arithmetic!public! !
 *!arithmetic!public! !
@@ -522,13 +522,12 @@ byteAt:!accessing!private! !
 byteSize!accessing!private! !
 digitAt:!accessing!public! !
 digitLength!accessing!public! !
-dwordAtOffset:!accessing!primitives!private! !
-dwordAtOffset:put:!accessing!primitives!private! !
 gcd:!factorization!public! !
 generality!coercing!private! !
 greaterThanInteger:!double dispatch!private! !
 hash!comparing!public! !
 highBit!bit manipulation!public! !
+int32AtOffset:!accessing!private! !
 intPtrAtOffset:put:!initializing!primitives!private! !
 isZero!public!testing! !
 limbSize!accessing!private! !
@@ -542,9 +541,10 @@ quo:!arithmetic!public! !
 quotientFromInteger:!double dispatch!private! !
 reciprocal!arithmetic!public! !
 replaceBytesOf:from:to:startingAt:!double dispatch!primitives!private! !
-sdwordAtOffset:!accessing!private! !
 signBit!private!testing! !
 subtractFromInteger:!double dispatch!private! !
+uint32AtOffset:!accessing!primitives!private! !
+uint32AtOffset:put:!accessing!primitives!private! !
 !
 
 !Core.LargeInteger class methodsFor!

@@ -110,7 +110,7 @@ getIndexFromName: pwchUri cchUri: cchUri pwchLocalName: pwchLocalName cchLocalNa
 	"Answer the <sdword> result of invoking the getIndexFromName() method of the COM object."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self
 		GetIndexFromName: pwchUri
 		cchUri: cchUri
@@ -136,7 +136,7 @@ getIndexFromQName: pwchQName cchQName: cchQName
 	"Answer the <sdword> result of invoking the getIndexFromQName() method of the COM object."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self
 		GetIndexFromQName: pwchQName
 		cchQName: cchQName
@@ -158,7 +158,7 @@ getLength
 	"Answer the <sdword> result of invoking the getLength() method of the COM object."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self GetLength: answer.
 	^answer asObject!
 
@@ -175,7 +175,7 @@ getLocalName: nIndex
 	"Invoke the getLocalName() method of the COM object."
 
 	| outputs |
-	outputs := {WORD newBufferClass: TaskMemory. SDWORD new}.
+	outputs := {UInt16 newBufferClass: TaskMemory. Int32 new}.
 	self
 		GetLocalName: nIndex
 		ppwchLocalName: (outputs basicAt: 1)
@@ -197,12 +197,12 @@ getName: nIndex
 	"Invoke the getName() method of the COM object."
 
 	| outputs |
-	outputs := {WORD newBufferClass: TaskMemory.
-				SDWORD new.
-				WORD newBufferClass: TaskMemory.
-				SDWORD new.
-				WORD newBufferClass: TaskMemory.
-				SDWORD new}.
+	outputs := {UInt16 newBufferClass: TaskMemory.
+				Int32 new.
+				UInt16 newBufferClass: TaskMemory.
+				Int32 new.
+				UInt16 newBufferClass: TaskMemory.
+				Int32 new}.
 	self
 		GetName: nIndex
 		ppwchUri: (outputs basicAt: 1)
@@ -232,7 +232,7 @@ getQName: nIndex
 	"Invoke the getQName() method of the COM object."
 
 	| outputs |
-	outputs := {WORD newBufferClass: TaskMemory. SDWORD new}.
+	outputs := {UInt16 newBufferClass: TaskMemory. Int32 new}.
 	self
 		GetQName: nIndex
 		ppwchQName: (outputs basicAt: 1)
@@ -254,7 +254,7 @@ getType: nIndex
 	"Invoke the getType() method of the COM object."
 
 	| outputs |
-	outputs := {WORD newBufferClass: TaskMemory. SDWORD new}.
+	outputs := {UInt16 newBufferClass: TaskMemory. Int32 new}.
 	self
 		GetType: nIndex
 		ppwchType: (outputs basicAt: 1)
@@ -276,7 +276,7 @@ getTypeFromName: pwchUri cchUri: cchUri pwchLocalName: pwchLocalName cchLocalNam
 	"Invoke the getTypeFromName() method of the COM object."
 
 	| outputs |
-	outputs := {WORD newBufferClass: TaskMemory. SDWORD new}.
+	outputs := {UInt16 newBufferClass: TaskMemory. Int32 new}.
 	self
 		GetTypeFromName: pwchUri
 		cchUri: cchUri
@@ -304,7 +304,7 @@ getTypeFromQName: pwchQName cchQName: cchQName
 	"Invoke the getTypeFromQName() method of the COM object."
 
 	| outputs |
-	outputs := {WORD newBufferClass: TaskMemory. SDWORD new}.
+	outputs := {UInt16 newBufferClass: TaskMemory. Int32 new}.
 	self
 		GetTypeFromQName: pwchQName
 		cchQName: cchQName
@@ -328,7 +328,7 @@ getURI: nIndex
 	"Invoke the getURI() method of the COM object."
 
 	| outputs |
-	outputs := {WORD newBufferClass: TaskMemory. SDWORD new}.
+	outputs := {UInt16 newBufferClass: TaskMemory. Int32 new}.
 	self
 		GetURI: nIndex
 		ppwchUri: (outputs basicAt: 1)
@@ -350,7 +350,7 @@ getValue: nIndex
 	"Invoke the getValue() method of the COM object."
 
 	| outputs |
-	outputs := {WORD newBufferClass: TaskMemory. SDWORD new}.
+	outputs := {UInt16 newBufferClass: TaskMemory. Int32 new}.
 	self
 		GetValue: nIndex
 		ppwchValue: (outputs basicAt: 1)
@@ -372,7 +372,7 @@ getValueFromName: pwchUri cchUri: cchUri pwchLocalName: pwchLocalName cchLocalNa
 	"Invoke the getValueFromName() method of the COM object."
 
 	| outputs |
-	outputs := {WORD newBufferClass: TaskMemory. SDWORD new}.
+	outputs := {UInt16 newBufferClass: TaskMemory. Int32 new}.
 	self
 		GetValueFromName: pwchUri
 		cchUri: cchUri
@@ -400,7 +400,7 @@ getValueFromQName: pwchQName cchQName: cchQName
 	"Invoke the getValueFromQName() method of the COM object."
 
 	| outputs |
-	outputs := {WORD newBufferClass: TaskMemory. SDWORD new}.
+	outputs := {UInt16 newBufferClass: TaskMemory. Int32 new}.
 	self
 		GetValueFromQName: pwchQName
 		cchQName: cchQName

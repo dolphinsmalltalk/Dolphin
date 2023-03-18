@@ -35,7 +35,7 @@ struct tagIP_ADDR_STRING {
 Context
 	"Answer the <Integer> value of the receiver's 'Context' field."
 
-	^bytes dwordAtOffset: _OffsetOf_Context!
+	^bytes uint32AtOffset: _OffsetOf_Context!
 
 IpAddress
 	"Answer the <AnsiString> value of the receiver's 'IpAddress' field."
@@ -93,7 +93,7 @@ defineFields
 					yourself)
 			offset: 20;
 		defineField: #Context
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 36.
 	self byteSize: 40!
 

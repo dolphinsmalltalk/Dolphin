@@ -17,7 +17,7 @@ OS.IpHlpApiTableStruct comment: ''!
 dwNumEntries
 	"Answer the <Integer> value of the receiver's 'dwNumEntries' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwNumEntries!
+	^bytes uint32AtOffset: _OffsetOf_dwNumEntries!
 
 table
 	^self subclassResponsibility! !
@@ -36,7 +36,7 @@ defineFields
 	self compileDefinition
 	"
 
-	self defineField: #dwNumEntries type: DWORDField readOnly!
+	self defineField: #dwNumEntries type: UInt32Field readOnly!
 
 getFieldNames
 	^#(#dwNumEntries)! !

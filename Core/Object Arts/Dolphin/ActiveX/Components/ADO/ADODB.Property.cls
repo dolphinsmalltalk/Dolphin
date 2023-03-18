@@ -52,7 +52,7 @@ attributes
 	"Answer the <sdword> value of the 'Attributes' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_Attributes: answer.
 	^answer asObject!
 
@@ -145,7 +145,7 @@ type
 	"Answer the <sdword> value of the 'Type' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_Type: answer.
 	^answer asObject!
 

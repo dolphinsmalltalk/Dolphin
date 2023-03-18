@@ -189,7 +189,7 @@ classify: anInteger
 		lpSrcStr: str
 		cchSrc: 1
 		lpCharType: charType) ifFalse: [OS.Kernel32 systemError].
-	^charType wordAtOffset: 0!
+	^charType uint16AtOffset: 0!
 
 code
 	^code!
@@ -751,9 +751,9 @@ null
 
 onStartup
 	| utf ansiCharacters |
-	AnsiCodePage := (VM getProcAddress: 'AnsiCodePage' ifAbsent: [#[0 0 0 0]]) dwordAtOffset: 0.
+	AnsiCodePage := (VM getProcAddress: 'AnsiCodePage' ifAbsent: [#[0 0 0 0]]) uint32AtOffset: 0.
 	utf := self byteCharacterSet asUtf16String.
-	AnsiCodePoints := ((0 to: utf size * 2 - 1 by: 2) collect: [:each | utf wordAtOffset: each])
+	AnsiCodePoints := ((0 to: utf size * 2 - 1 by: 2) collect: [:each | utf uint16AtOffset: each])
 				isImmutable: true;
 				yourself.
 	#todo.	"Integers from 0 to 255 with a few gaps substituted by large values do not make for good hash distribution, so make the table larger than normal until #766 is fixed."
@@ -763,7 +763,7 @@ onStartup
 	AnsiCharacters := ansiCharacters.
 	"In practice the replacement character is always $\xFFFD, but we fetch it from the VM (which in turn has retrieved it from Windows) just in case"
 	Utf8Default := self
-				codePoint: ((VM getProcAddress: 'UnicodeDefaultChar' ifAbsent: [#[16rFD 16rFF]]) wordAtOffset: 0)!
+				codePoint: ((VM getProcAddress: 'UnicodeDefaultChar' ifAbsent: [#[16rFD 16rFF]]) uint16AtOffset: 0)!
 
 replacement
 	"Answer the Unicode replacement <Character>, used to substitute for invalid code points and encodings."

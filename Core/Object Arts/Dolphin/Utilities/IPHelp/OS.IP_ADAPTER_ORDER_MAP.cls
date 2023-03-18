@@ -33,7 +33,7 @@ table
 	^StructureArray
 		fromAddress: bytes yourAddress + _OffsetOf_table
 		length: self dwNumEntries
-		elementClass: DWORD! !
+		elementClass: UInt32! !
 !OS.IP_ADAPTER_ORDER_MAP categoriesForMethods!
 table!**compiled accessors**!public! !
 !
@@ -57,7 +57,7 @@ defineFields
 	super defineFields.
 	self 
 		defineField: #table
-		type: ((StructureArrayField type: DWORD lengthField: #dwNumEntries)
+		type: ((StructureArrayField type: UInt32 lengthField: #dwNumEntries)
 				beReadOnly;
 				yourself)
 		offset: 4.

@@ -20,7 +20,7 @@ OS.NMTVGETINFOTIPW comment: ''!
 cchTextMax
 	"Answer the <Integer> value of the receiver's 'cchTextMax' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_cchTextMax!
+	^bytes int32AtOffset: _OffsetOf_cchTextMax!
 
 hItem
 	"Answer the <Integer> value of the receiver's 'hItem' field."
@@ -62,9 +62,9 @@ defineFields
 	super defineFields.
 	self
 		defineField: #pszText type: LPVOIDField readOnly;
-		defineField: #cchTextMax type: SDWORDField readOnly;
-		defineField: #hItem type: UINT_PTRField readOnly;
-		defineField: #lParam type: UINT_PTRField readOnly!
+		defineField: #cchTextMax type: Int32Field readOnly;
+		defineField: #hItem type: UIntPtrField readOnly;
+		defineField: #lParam type: UIntPtrField readOnly!
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #pszText #cchTextMax #hItem #lParam)! !

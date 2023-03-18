@@ -33,17 +33,17 @@ struct tagMIBICMPSTATS_EX {
 dwErrors
 	"Answer the <Integer> value of the receiver's 'dwErrors' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwErrors!
+	^bytes uint32AtOffset: _OffsetOf_dwErrors!
 
 dwMsgs
 	"Answer the <Integer> value of the receiver's 'dwMsgs' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwMsgs!
+	^bytes uint32AtOffset: _OffsetOf_dwMsgs!
 
 rgdwTypeCount
-	"Answer the <DWORDArray> value of the receiver's 'rgdwTypeCount' field."
+	"Answer the <UInt32Array> value of the receiver's 'rgdwTypeCount' field."
 
-	^DWORDArray fromAddress: bytes yourAddress + _OffsetOf_rgdwTypeCount length: 256! !
+	^UInt32Array fromAddress: bytes yourAddress + _OffsetOf_rgdwTypeCount length: 256! !
 !OS.MIBICMPSTATS_EX categoriesForMethods!
 dwErrors!**compiled accessors**!public! !
 dwMsgs!**compiled accessors**!public! !
@@ -69,13 +69,13 @@ defineFields
 
 	self
 		defineField: #dwMsgs
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 0;
 		defineField: #dwErrors
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 4;
 		defineField: #rgdwTypeCount
-			type: ((ArrayField type: DWORDArray length: 256)
+			type: ((ArrayField type: UInt32Array length: 256)
 					beReadOnly;
 					yourself)
 			offset: 8.

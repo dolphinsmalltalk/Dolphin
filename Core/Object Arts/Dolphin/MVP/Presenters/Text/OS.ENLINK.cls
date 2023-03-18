@@ -46,7 +46,7 @@ lParam
 msg
 	"Answer the <Integer> value of the receiver's 'msg' field."
 
-	^bytes dwordAtOffset: _OffsetOf_msg!
+	^bytes uint32AtOffset: _OffsetOf_msg!
 
 wParam
 	"Answer the <Integer> value of the receiver's 'wParam' field."
@@ -81,9 +81,9 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #msg type: DWORDField readOnly;
-		defineField: #wParam type: UINT_PTRField readOnly;
-		defineField: #lParam type: INT_PTRField readOnly;
+		defineField: #msg type: UInt32Field readOnly;
+		defineField: #wParam type: UIntPtrField readOnly;
+		defineField: #lParam type: IntPtrField readOnly;
 		defineField: #chrg type: (StructureField type: CHARRANGE) beReadOnly!
 
 getFieldNames

@@ -37,57 +37,57 @@ alignment: anInteger
 cTabCount
 	"Answer the <Integer> value of the receiver's 'cTabCount' field."
 
-	^bytes swordAtOffset: _OffsetOf_cTabCount!
+	^bytes int16AtOffset: _OffsetOf_cTabCount!
 
 cTabCount: anInteger
 	"Set the receiver's 'cTabCount' field to the value of the argument, anInteger"
 
-	bytes swordAtOffset: _OffsetOf_cTabCount put: anInteger!
+	bytes int16AtOffset: _OffsetOf_cTabCount put: anInteger!
 
 dwMask
 	"Answer the <Integer> value of the receiver's 'dwMask' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwMask!
+	^bytes uint32AtOffset: _OffsetOf_dwMask!
 
 dwMask: anInteger
 	"Set the receiver's 'dwMask' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwMask put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwMask put: anInteger!
 
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 dxOffset
 	"Answer the <Integer> value of the receiver's 'dxOffset' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_dxOffset!
+	^bytes int32AtOffset: _OffsetOf_dxOffset!
 
 dxOffset: anInteger
 	"Set the receiver's 'dxOffset' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_dxOffset put: anInteger!
+	bytes int32AtOffset: _OffsetOf_dxOffset put: anInteger!
 
 dxRightIndent
 	"Answer the <Integer> value of the receiver's 'dxRightIndent' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_dxRightIndent!
+	^bytes int32AtOffset: _OffsetOf_dxRightIndent!
 
 dxRightIndent: anInteger
 	"Set the receiver's 'dxRightIndent' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_dxRightIndent put: anInteger!
+	bytes int32AtOffset: _OffsetOf_dxRightIndent put: anInteger!
 
 dxStartIndent
 	"Answer the <Integer> value of the receiver's 'dxStartIndent' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_dxStartIndent!
+	^bytes int32AtOffset: _OffsetOf_dxStartIndent!
 
 dxStartIndent: anInteger
 	"Set the receiver's 'dxStartIndent' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_dxStartIndent put: anInteger!
+	bytes int32AtOffset: _OffsetOf_dxStartIndent put: anInteger!
 
 maskIn: anInteger
 	"Private - OR in to receiver's mask field the bit flags represented by anInteger.
@@ -107,16 +107,16 @@ offset: anInteger
 	self dxOffset: anInteger!
 
 rgxTabs
-	"Answer the <DWORDArray> value of the receiver's 'rgxTabs' field."
+	"Answer the <UInt32Array> value of the receiver's 'rgxTabs' field."
 
-	^DWORDArray fromAddress: bytes yourAddress + _OffsetOf_rgxTabs length: 32!
+	^UInt32Array fromAddress: bytes yourAddress + _OffsetOf_rgxTabs length: 32!
 
-rgxTabs: aDWORDArray
-	"Set the receiver's 'rgxTabs' field to the value of the argument, aDWORDArray"
+rgxTabs: aUInt32Array
+	"Set the receiver's 'rgxTabs' field to the value of the argument, aUInt32Array"
 
 	| size |
-	size := aDWORDArray byteSize min: ##(32 * DWORDArray elementSize).
-	aDWORDArray
+	size := aUInt32Array byteSize min: ##(32 * UInt32Array elementSize).
+	aUInt32Array
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rgxTabs + 1)
 		to: _OffsetOf_rgxTabs + size
@@ -136,32 +136,32 @@ startIndent: anInteger
 wAlignment
 	"Answer the <Integer> value of the receiver's 'wAlignment' field."
 
-	^bytes wordAtOffset: _OffsetOf_wAlignment!
+	^bytes uint16AtOffset: _OffsetOf_wAlignment!
 
 wAlignment: anInteger
 	"Set the receiver's 'wAlignment' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_wAlignment put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_wAlignment put: anInteger!
 
 wEffects
 	"Answer the <Integer> value of the receiver's 'wEffects' field."
 
-	^bytes wordAtOffset: _OffsetOf_wEffects!
+	^bytes uint16AtOffset: _OffsetOf_wEffects!
 
 wEffects: anInteger
 	"Set the receiver's 'wEffects' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_wEffects put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_wEffects put: anInteger!
 
 wNumbering
 	"Answer the <Integer> value of the receiver's 'wNumbering' field."
 
-	^bytes wordAtOffset: _OffsetOf_wNumbering!
+	^bytes uint16AtOffset: _OffsetOf_wNumbering!
 
 wNumbering: anInteger
 	"Set the receiver's 'wNumbering' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_wNumbering put: anInteger! !
+	bytes uint16AtOffset: _OffsetOf_wNumbering put: anInteger! !
 !OS.PARAFORMAT categoriesForMethods!
 alignment!accessing!public! !
 alignment:!accessing!public! !
@@ -204,16 +204,16 @@ defineFields
 	"
 
 	self
-		defineField: #dwSize type: DWORDField writeOnly beOverride;
-		defineField: #dwMask type: DWORDField new;
-		defineField: #wNumbering type: WORDField new;
-		defineField: #wEffects type: WORDField new;
-		defineField: #dxStartIndent type: SDWORDField new;
-		defineField: #dxRightIndent type: SDWORDField new;
-		defineField: #dxOffset type: SDWORDField new;
-		defineField: #wAlignment type: WORDField new;
-		defineField: #cTabCount type: SWORDField new;
-		defineField: #rgxTabs type: (ArrayField type: DWORDArray length: 32)!
+		defineField: #dwSize type: UInt32Field writeOnly beOverride;
+		defineField: #dwMask type: UInt32Field new;
+		defineField: #wNumbering type: UInt16Field new;
+		defineField: #wEffects type: UInt16Field new;
+		defineField: #dxStartIndent type: Int32Field new;
+		defineField: #dxRightIndent type: Int32Field new;
+		defineField: #dxOffset type: Int32Field new;
+		defineField: #wAlignment type: UInt16Field new;
+		defineField: #cTabCount type: Int16Field new;
+		defineField: #rgxTabs type: (ArrayField type: UInt32Array length: 32)!
 
 getFieldNames
 	^#(#dwSize #dwMask #wNumbering #wEffects #dxStartIndent #dxRightIndent #dxOffset #wAlignment #cTabCount #rgxTabs)!

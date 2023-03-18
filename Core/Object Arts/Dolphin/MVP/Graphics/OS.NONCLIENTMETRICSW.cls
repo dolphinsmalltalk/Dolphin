@@ -34,37 +34,37 @@ From MSDN: "The NONCLIENTMETRICS structure contains the scalable metrics associa
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 iCaptionHeight
 	"Answer the <Integer> value of the receiver's 'iCaptionHeight' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_iCaptionHeight!
+	^bytes int32AtOffset: _OffsetOf_iCaptionHeight!
 
 iMenuHeight
 	"Answer the <Integer> value of the receiver's 'iMenuHeight' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_iMenuHeight!
+	^bytes int32AtOffset: _OffsetOf_iMenuHeight!
 
 iMenuWidth
 	"Answer the <Integer> value of the receiver's 'iMenuWidth' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_iMenuWidth!
+	^bytes int32AtOffset: _OffsetOf_iMenuWidth!
 
 iPaddedBorderWidth
 	"Answer the <Integer> value of the receiver's 'iPaddedBorderWidth' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_iPaddedBorderWidth!
+	^bytes int32AtOffset: _OffsetOf_iPaddedBorderWidth!
 
 iScrollHeight
 	"Answer the <Integer> value of the receiver's 'iScrollHeight' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_iScrollHeight!
+	^bytes int32AtOffset: _OffsetOf_iScrollHeight!
 
 iScrollWidth
 	"Answer the <Integer> value of the receiver's 'iScrollWidth' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_iScrollWidth!
+	^bytes int32AtOffset: _OffsetOf_iScrollWidth!
 
 lfMenuFont
 	"Answer the <LOGFONTW> value of the receiver's 'lfMenuFont' field."
@@ -111,22 +111,22 @@ defineFields
 	 NONCLIENTMETRICSW, FAR* LPNONCLIENTMETRICS; "
 
 	self
-		defineField: #dwSize type: DWORDField writeOnly beOverride;
-		defineField: #iBorderWidth type: SDWORDField uncompiled;
-		defineField: #iScrollWidth type: SDWORDField readOnly;
-		defineField: #iScrollHeight type: SDWORDField readOnly;
-		defineField: #iCaptionWidth type: SDWORDField uncompiled;
-		defineField: #iCaptionHeight type: SDWORDField readOnly;
+		defineField: #dwSize type: UInt32Field writeOnly beOverride;
+		defineField: #iBorderWidth type: Int32Field uncompiled;
+		defineField: #iScrollWidth type: Int32Field readOnly;
+		defineField: #iScrollHeight type: Int32Field readOnly;
+		defineField: #iCaptionWidth type: Int32Field uncompiled;
+		defineField: #iCaptionHeight type: Int32Field readOnly;
 		defineField: #lfCationFont type: (StructureField type: LOGFONTW) beUncompiled;
-		defineField: #iSmCaptionWidth type: SDWORDField uncompiled;
-		defineField: #iSmCaptionHeight type: SDWORDField uncompiled;
+		defineField: #iSmCaptionWidth type: Int32Field uncompiled;
+		defineField: #iSmCaptionHeight type: Int32Field uncompiled;
 		defineField: #lfSmCaptionFont type: (StructureField type: LOGFONTW) beUncompiled;
-		defineField: #iMenuWidth type: SDWORDField readOnly;
-		defineField: #iMenuHeight type: SDWORDField readOnly;
+		defineField: #iMenuWidth type: Int32Field readOnly;
+		defineField: #iMenuHeight type: Int32Field readOnly;
 		defineField: #lfMenuFont type: (StructureField type: LOGFONTW) beReadOnly;
 		defineField: #lfStatusFont type: (StructureField type: LOGFONTW) beUncompiled;
 		defineField: #lfMessageFont type: (StructureField type: LOGFONTW) beUncompiled;
-		defineField: #iPaddedBorderWidth type: SDWORDField readOnly!
+		defineField: #iPaddedBorderWidth type: Int32Field readOnly!
 
 getFieldNames
 	^#(#dwSize #iBorderWidth #iScrollWidth #iScrollHeight #iCaptionWidth #iCaptionHeight #lfCationFont #iSmCaptionWidth #iSmCaptionHeight #lfSmCaptionFont #iMenuWidth #iMenuHeight #lfMenuFont #lfStatusFont #lfMessageFont #iPaddedBorderWidth)! !

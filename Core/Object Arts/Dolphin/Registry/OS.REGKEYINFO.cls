@@ -29,42 +29,42 @@ ftLastWriteTime
 maxClassLen
 	"Answer the <Integer> value of the receiver's 'maxClassLen' field."
 
-	^bytes dwordAtOffset: _OffsetOf_maxClassLen!
+	^bytes uint32AtOffset: _OffsetOf_maxClassLen!
 
 maxSubKeyLen
 	"Answer the <Integer> value of the receiver's 'maxSubKeyLen' field."
 
-	^bytes dwordAtOffset: _OffsetOf_maxSubKeyLen!
+	^bytes uint32AtOffset: _OffsetOf_maxSubKeyLen!
 
 maxValueLen
 	"Answer the <Integer> value of the receiver's 'maxValueLen' field."
 
-	^bytes dwordAtOffset: _OffsetOf_maxValueLen!
+	^bytes uint32AtOffset: _OffsetOf_maxValueLen!
 
 maxValueLen: anInteger
 	"Set the receiver's 'maxValueLen' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_maxValueLen put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_maxValueLen put: anInteger!
 
 maxValueNameLen
 	"Answer the <Integer> value of the receiver's 'maxValueNameLen' field."
 
-	^bytes dwordAtOffset: _OffsetOf_maxValueNameLen!
+	^bytes uint32AtOffset: _OffsetOf_maxValueNameLen!
 
 securityDescriptorLen
 	"Answer the <Integer> value of the receiver's 'securityDescriptorLen' field."
 
-	^bytes dwordAtOffset: _OffsetOf_securityDescriptorLen!
+	^bytes uint32AtOffset: _OffsetOf_securityDescriptorLen!
 
 subKeyCount
 	"Answer the <Integer> value of the receiver's 'subKeyCount' field."
 
-	^bytes dwordAtOffset: _OffsetOf_subKeyCount!
+	^bytes uint32AtOffset: _OffsetOf_subKeyCount!
 
 valueCount
 	"Answer the <Integer> value of the receiver's 'valueCount' field."
 
-	^bytes dwordAtOffset: _OffsetOf_valueCount! !
+	^bytes uint32AtOffset: _OffsetOf_valueCount! !
 !OS.REGKEYINFO categoriesForMethods!
 ftLastWriteTime!**compiled accessors**!public! !
 maxClassLen!**compiled accessors**!public! !
@@ -88,13 +88,13 @@ defineFields
 	"
 
 	self
-		defineField: #subKeyCount type: DWORDField readOnly;
-		defineField: #maxSubKeyLen type: DWORDField readOnly;
-		defineField: #maxClassLen type: DWORDField readOnly;
-		defineField: #valueCount type: DWORDField readOnly;
-		defineField: #maxValueNameLen type: DWORDField readOnly;
-		defineField: #maxValueLen type: DWORDField new;
-		defineField: #securityDescriptorLen type: DWORDField readOnly;
+		defineField: #subKeyCount type: UInt32Field readOnly;
+		defineField: #maxSubKeyLen type: UInt32Field readOnly;
+		defineField: #maxClassLen type: UInt32Field readOnly;
+		defineField: #valueCount type: UInt32Field readOnly;
+		defineField: #maxValueNameLen type: UInt32Field readOnly;
+		defineField: #maxValueLen type: UInt32Field new;
+		defineField: #securityDescriptorLen type: UInt32Field readOnly;
 		defineField: #ftLastWriteTime type: (StructureField type: FILETIME) beReadOnly!
 
 getFieldNames

@@ -31,7 +31,7 @@ colorsGet: aHandle
 	| colors |
 	colors := ByteArray new: 8.
 	Gdip gdipGetLineColors: aHandle colors: colors.
-	^{Color fromArgbCode: (colors dwordAtOffset: 0). Color fromArgbCode: (colors dwordAtOffset: 4)}!
+	^{Color fromArgbCode: (colors uint32AtOffset: 0). Color fromArgbCode: (colors uint32AtOffset: 4)}!
 
 colorsSet: aHandle start: endColor end: startColor
 	Gdip

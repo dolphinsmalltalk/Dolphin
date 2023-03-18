@@ -541,6 +541,11 @@ isBitSet: index
 
 	^self anyMask: (1 bitShift: index-1)!
 
+isInt32
+	"Answer whether the receiver can be represented as a 32-bit two's complement signed integer."
+
+	^self >= ##(-2 raisedToInteger: 31) and: [self < ##(2 raisedToInteger: 31)]!
+
 isInteger
 	"Answer whether the receiver is an <integer>."
 
@@ -568,12 +573,6 @@ isPrime
 			i := i + 6].
 	^true!
 
-isSDWORD
-	"Answer whether the receiver can be represented as a 32-bit two's complement signed integer
-	(i.e. as an SDWORD)."
-
-	^self >= ##(-2 raisedToInteger: 31) and: [self < ##(2 raisedToInteger: 31)]!
-
 lcm: anInteger 
 	"Answer the least common multiple of the receiver and the <integer> argument."
 
@@ -594,7 +593,7 @@ lowBit
 	^0!
 
 lowPart
-	"Answers the low order unsigned word of the receiver (assumes the receiver is a machine word sized Integer, i.e. an INT_PTR)."
+	"Answers the low order unsigned word of the receiver (assumes the receiver is a machine word sized Integer, i.e. an IntPtr)."
 
 	^self bitAnd: VMConstants.HalfPtrMask!
 
@@ -768,6 +767,11 @@ roundUpToPowerOfTwo
 
 !
 
+scale
+	"Answer an <integer> which represents the total number of digits used to represent the fraction part of the receiver, including trailing zeroes."
+
+	^0!
+
 setBit: index
 	"Answer the Integer which results from setting the index'th bit of the receiver,
 	where the least significant bit is considered to have index 1."
@@ -888,11 +892,11 @@ highPartSigned!bit manipulation!public! !
 highWord!bit manipulation!public! !
 integerPart!accessing!public! !
 isBitSet:!bit manipulation!public!testing! !
+isInt32!public!testing! !
 isInteger!public!testing! !
 isNull!public!testing! !
 isPowerOfTwo!public!testing! !
 isPrime!public!testing! !
-isSDWORD!public!testing! !
 lcm:!factorization!public! !
 lowBit!bit manipulation!public! !
 lowPart!bit manipulation!public! !
@@ -918,6 +922,7 @@ printStringBase:nDigits:!printing!public! !
 printStringRadix:!printing!public! !
 rounded!public!truncation and round off! !
 roundUpToPowerOfTwo!public!truncation and round off! !
+scale!accessing!public! !
 setBit:!bit manipulation!public! !
 size!accessing!public! !
 subtractFromFloat:!double dispatch!private! !

@@ -94,7 +94,7 @@ getIndexFromName: strURI strLocalName: strLocalName
 	Helpstring: Look up the index of an attribute by Namespace name."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self
 		GetIndexFromName: strURI
 		strLocalName: strLocalName
@@ -118,7 +118,7 @@ getIndexFromQName: strQName
 	Helpstring: Look up the index of an attribute by XML 1.0 qualified name."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self GetIndexFromQName: strQName nIndex: answer.
 	^answer asObject!
 
@@ -336,7 +336,7 @@ length
 	Helpstring: Get the number of attributes in the list."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_length: answer.
 	^answer asObject! !
 !MSXML.IVBSAXAttributes categoriesForMethods!

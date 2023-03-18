@@ -812,7 +812,7 @@ packByteCodes: anArray
 	| bytes codes |
 	bytes := anArray asByteArray.
 	codes := (bytes size == 4
-				ifTrue: [bytes sdwordAtOffset: 0]
+				ifTrue: [bytes int32AtOffset: 0]
 				ifFalse: 
 					[| packed |
 					packed := 0.

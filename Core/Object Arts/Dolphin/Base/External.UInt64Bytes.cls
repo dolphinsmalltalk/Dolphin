@@ -14,17 +14,17 @@ External.UInt64Bytes comment: ''!
 asInteger
 	"Answer the 32-bit unsigned <integer> value of the receiver."
 
-	^self qwordAtOffset: 0!
+	^self uint64AtOffset: 0!
 
 asSignedInteger
 	"Answer the 32-bit, 2's complement, signed <integer> value of the receiver."
 
-	^self sqwordAtOffset: 0!
+	^self int64AtOffset: 0!
 
 value: anObject
 	"Set the 64-bit unsigned <integer> value stored in the receiver."
 
-	self qwordAtOffset: 0 put: anObject! !
+	self uint64AtOffset: 0 put: anObject! !
 !External.UInt64Bytes categoriesForMethods!
 asInteger!converting!public! !
 asSignedInteger!converting!public! !
@@ -40,7 +40,7 @@ elementSize
 !
 
 valueAtAddress: anAddress 
-	^anAddress asExternalAddress qwordAtOffset: 0! !
+	^anAddress asExternalAddress uint64AtOffset: 0! !
 !External.UInt64Bytes class categoriesForMethods!
 elementSize!constants!private! !
 valueAtAddress:!helpers!private! !

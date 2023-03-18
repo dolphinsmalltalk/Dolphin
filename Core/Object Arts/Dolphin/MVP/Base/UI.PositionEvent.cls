@@ -30,7 +30,7 @@ flags
 
 	"Implementation Note: For most PositionEvents we only need to access the flags, so optimise for this case, avoiding creation of a WINDOWPOS structure."
 
-	^flags ifNil: [flags := lParam asExternalAddress dwordAtOffset: WINDOWPOS._OffsetOf_flags]!
+	^flags ifNil: [flags := lParam asExternalAddress uint32AtOffset: WINDOWPOS._OffsetOf_flags]!
 
 flags: anInteger
 	"Private - For testing purposes"

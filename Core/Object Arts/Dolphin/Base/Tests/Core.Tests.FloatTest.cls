@@ -504,18 +504,18 @@ testFloatCharacterization
 
 	"IEEE 754 64-bit double precision invariants"
 	"Maximum normalized value has an exponent of 16r7FE>>1 (1023), and mantissa of (1<<52)-1"
-	self assert: (Float fmax qwordAtOffset: 0) equals: 16r7FEFFFFFFFFFFFFF.
+	self assert: (Float fmax uint64AtOffset: 0) equals: 16r7FEFFFFFFFFFFFFF.
 	"Min denormalized value has just lsb of mantissa set"
-	Float denormalized ifTrue: [self assert: (Float fminDenormalized qwordAtOffset: 0) equals: 1].
-	self assert: (Float fminNormalized qwordAtOffset: 0) equals: 16r0010000000000000.
+	Float denormalized ifTrue: [self assert: (Float fminDenormalized uint64AtOffset: 0) equals: 1].
+	self assert: (Float fminNormalized uint64AtOffset: 0) equals: 16r0010000000000000.
 	"0 is, unsurprisingly, all zeroes."
-	self assert: (0.0 qwordAtOffset: 0) equals: 0.
+	self assert: (0.0 uint64AtOffset: 0) equals: 0.
 	"-0.0, same as 0.0 with sign bit set"
-	self assert: (Float negativeZero qwordAtOffset: 0) equals: 16r8000000000000000.
-	self assert: (Float one qwordAtOffset: 0) equals: 16r3FF0000000000000.
-	self assert: (Float infinity qwordAtOffset: 0) equals: 16r7FF0000000000000.
+	self assert: (Float negativeZero uint64AtOffset: 0) equals: 16r8000000000000000.
+	self assert: (Float one uint64AtOffset: 0) equals: 16r3FF0000000000000.
+	self assert: (Float infinity uint64AtOffset: 0) equals: 16r7FF0000000000000.
 	"-Infinity is the same as Infinity, but with the sign bit set."
-	self assert: (Float negativeInfinity qwordAtOffset: 0) equals: 16rFFF0000000000000!
+	self assert: (Float negativeInfinity uint64AtOffset: 0) equals: 16rFFF0000000000000!
 
 testFloor
 	self assert: 1.0 floor equals: 1.
@@ -1158,13 +1158,13 @@ testPrintStringAndReadBack
 	r seed: 1234567.
 	100 timesRepeat: 
 			[| f str |
-			b basicDwordAtOffset: 4 put: (r
+			b basicUInt32AtOffset: 4 put: (r
 						next;
 						seed) - 1.
-			b basicDwordAtOffset: 0 put: (r
+			b basicUInt32AtOffset: 0 put: (r
 						next;
 						seed) - 1.
-			((b basicDwordAtOffset: 4) bitAnd: 16r7FF00000) = 16r7FF00000
+			((b basicUInt32AtOffset: 4) bitAnd: 16r7FF00000) = 16r7FF00000
 				ifFalse: 
 					["avoid nan and infinity"
 					f := b doubleAtOffset: 0.
@@ -1174,10 +1174,10 @@ testPrintStringAndReadBack
 	"test big num near infinity"
 	10 timesRepeat: 
 			[| f str |
-			b basicDwordAtOffset: 4 put: 16r7FE00000 + ((r
+			b basicUInt32AtOffset: 4 put: 16r7FE00000 + ((r
 								next;
 								seed) // 16r1000 - 1).
-			b basicDwordAtOffset: 0 put: (r
+			b basicUInt32AtOffset: 0 put: (r
 						next;
 						seed) - 1.
 			f := b doubleAtOffset: 0.
@@ -1187,10 +1187,10 @@ testPrintStringAndReadBack
 	"test infinitesimal (gradual underflow)"
 	10 timesRepeat: 
 			[| f str |
-			b basicDwordAtOffset: 4 put: 0 + ((r
+			b basicUInt32AtOffset: 4 put: 0 + ((r
 								next;
 								seed) // 16r1000 - 1).
-			b basicDwordAtOffset: 0 put: (r
+			b basicUInt32AtOffset: 0 put: (r
 						next;
 						seed) - 1.
 			f := b doubleAtOffset: 0.
@@ -1348,7 +1348,7 @@ testSignificandAsInteger
 	denormals , exceptionals do: 
 			[:aDenormalOrExceptionalFloat |
 			"For every other Float, zero, denormal or exceptional, no implied leading one"
-			self assert: ((aDenormalOrExceptionalFloat qwordAtOffset: 0) bitAnd: Float.MantissaMask)
+			self assert: ((aDenormalOrExceptionalFloat uint64AtOffset: 0) bitAnd: Float.MantissaMask)
 				equals: aDenormalOrExceptionalFloat significandAsInteger].
 	normalPowersOfTwo do: 
 			[:aNormalPowerOfTwoFloat |

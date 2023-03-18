@@ -36,32 +36,32 @@ struct tagHTTP_FLOWRATE_INFO {
 BurstSize
 	"Answer the <Integer> value of the receiver's 'BurstSize' field."
 
-	^bytes dwordAtOffset: _OffsetOf_BurstSize!
+	^bytes uint32AtOffset: _OffsetOf_BurstSize!
 
 BurstSize: anInteger
 	"Set the receiver's 'BurstSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_BurstSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_BurstSize put: anInteger!
 
 MaxBandwidth
 	"Answer the <Integer> value of the receiver's 'MaxBandwidth' field."
 
-	^bytes dwordAtOffset: _OffsetOf_MaxBandwidth!
+	^bytes uint32AtOffset: _OffsetOf_MaxBandwidth!
 
 MaxBandwidth: anInteger
 	"Set the receiver's 'MaxBandwidth' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_MaxBandwidth put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_MaxBandwidth put: anInteger!
 
 MaxPeakBandwidth
 	"Answer the <Integer> value of the receiver's 'MaxPeakBandwidth' field."
 
-	^bytes dwordAtOffset: _OffsetOf_MaxPeakBandwidth!
+	^bytes uint32AtOffset: _OffsetOf_MaxPeakBandwidth!
 
 MaxPeakBandwidth: anInteger
 	"Set the receiver's 'MaxPeakBandwidth' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_MaxPeakBandwidth put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_MaxPeakBandwidth put: anInteger! !
 !WinHttpServer.HTTP_FLOWRATE_INFO categoriesForMethods!
 BurstSize!**compiled accessors**!public! !
 BurstSize:!**compiled accessors**!public! !
@@ -92,9 +92,9 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #MaxBandwidth type: DWORDField new offset: 4;
-		defineField: #MaxPeakBandwidth type: DWORDField new offset: 8;
-		defineField: #BurstSize type: DWORDField new offset: 12.
+		defineField: #MaxBandwidth type: UInt32Field new offset: 4;
+		defineField: #MaxPeakBandwidth type: UInt32Field new offset: 8;
+		defineField: #BurstSize type: UInt32Field new offset: 12.
 	self byteSize: 16!
 
 getFieldNames

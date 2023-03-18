@@ -58,12 +58,12 @@ address: anInternetAddress
 s_addr
 	"Answer the <Integer> value of the receiver's 's_addr' field."
 
-	^bytes dwordAtOffset: _OffsetOf_s_addr!
+	^bytes uint32AtOffset: _OffsetOf_s_addr!
 
 s_addr: anInteger
 	"Set the receiver's 's_addr' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_s_addr put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_s_addr put: anInteger! !
 !OS.IN_ADDR categoriesForMethods!
 address!accessing!public! !
 address:!accessing!public! !
@@ -108,13 +108,13 @@ defineFields
 "
 
 	self
-		defineField: #s_b1 type: BYTEField new beFiller offset: 0;
-		defineField: #s_b2 type: BYTEField new beFiller offset: 1;
-		defineField: #s_b3 type: BYTEField new beFiller offset: 2;
-		defineField: #s_b4 type: BYTEField new beFiller offset: 3;
-		defineField: #s_w1 type: WORDField new beFiller offset: 0;
-		defineField: #s_w2 type: WORDField new beFiller offset: 2;
-		defineField: #s_addr type: DWORDField new offset: 0.
+		defineField: #s_b1 type: UInt8Field new beFiller offset: 0;
+		defineField: #s_b2 type: UInt8Field new beFiller offset: 1;
+		defineField: #s_b3 type: UInt8Field new beFiller offset: 2;
+		defineField: #s_b4 type: UInt8Field new beFiller offset: 3;
+		defineField: #s_w1 type: UInt16Field new beFiller offset: 0;
+		defineField: #s_w2 type: UInt16Field new beFiller offset: 2;
+		defineField: #s_addr type: UInt32Field new offset: 0.
 	self byteSize: 4!
 
 getFieldNames

@@ -1464,7 +1464,7 @@ getAdaptersInfo
 	"
 
 	| dwSize struct |
-	dwSize := DWORD new.
+	dwSize := UInt32 new.
 	self GetAdaptersInfo: nil pOutBufLen: dwSize.
 	struct := IP_ADAPTER_INFO new: dwSize value.
 	self GetAdaptersInfo: struct pOutBufLen: dwSize.
@@ -1555,7 +1555,7 @@ getIfTable
 	"
 
 	| struct err dwSize |
-	dwSize := DWORD new.
+	dwSize := UInt32 new.
 	self
 		GetIfTable: nil
 		pdwSize: dwSize
@@ -1585,7 +1585,7 @@ getInterfaceInfo
 	"
 
 	| dwSize struct |
-	dwSize := DWORD new.
+	dwSize := UInt32 new.
 	self GetInterfaceInfo: nil dwOutBufLen: dwSize.
 	struct := IP_INTERFACE_INFO new: dwSize value.
 	self GetInterfaceInfo: struct dwOutBufLen: dwSize.
@@ -1607,7 +1607,7 @@ getIpAddrTable
 	"
 
 	| struct err dwSize |
-	dwSize := DWORD new.
+	dwSize := UInt32 new.
 	self
 		GetIpAddrTable: nil
 		pdwSize: dwSize
@@ -1648,7 +1648,7 @@ getIpForwardTable
 	"
 
 	| struct err dwSize |
-	dwSize := DWORD new.
+	dwSize := UInt32 new.
 	self
 		GetIpForwardTable: nil
 		pdwSize: dwSize
@@ -1678,7 +1678,7 @@ getIpNetTable
 	"
 
 	| struct err dwSize |
-	dwSize := DWORD new.
+	dwSize := UInt32 new.
 	self
 		GetIpNetTable: nil
 		pdwSize: dwSize
@@ -1758,7 +1758,7 @@ getPerAdapterInfo: ifIndex
 
 	| struct dwSize error |
 	struct := IP_PER_ADAPTER_INFO new.
-	dwSize := DWORD fromInteger: struct byteSize.
+	dwSize := UInt32 fromInteger: struct byteSize.
 	error := self
 				GetPerAdapterInfo: ifIndex
 				pPerAdapterInfo: struct
@@ -1837,7 +1837,7 @@ getTcpTable
 	"
 
 	| dwSize error tcpTable |
-	dwSize := DWORD new.
+	dwSize := UInt32 new.
 	error := self
 				GetTcpTable: nil
 				pdwSize: dwSize
@@ -1899,7 +1899,7 @@ getUdpTable
 	"
 
 	| dwSize error struct |
-	dwSize := DWORD new.
+	dwSize := UInt32 new.
 	error := self
 				GetUdpTable: nil
 				pdwSize: dwSize
@@ -1930,7 +1930,7 @@ getUniDirectionalAdapterInfo
 
 	| dwSize struct error |
 	struct := IP_UNIDIRECTIONAL_ADAPTER_ADDRESS new.
-	dwSize := DWORD fromInteger: struct size.
+	dwSize := UInt32 fromInteger: struct size.
 	error := self GetUniDirectionalAdapterInfo: struct dwOutBufLen: dwSize.
 	error == 0 ifFalse: [Win32Error signalWith: error].
 	^struct!

@@ -18,22 +18,22 @@ OS.UDACCEL comment: '<UDACCEL> is an <ExternalStructure> class to wrap the struc
 nInc
 	"Answer the <Integer> value of the receiver's 'nInc' field."
 
-	^bytes dwordAtOffset: _OffsetOf_nInc!
+	^bytes uint32AtOffset: _OffsetOf_nInc!
 
 nInc: anInteger
 	"Set the receiver's 'nInc' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_nInc put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_nInc put: anInteger!
 
 nSec
 	"Answer the <Integer> value of the receiver's 'nSec' field."
 
-	^bytes dwordAtOffset: _OffsetOf_nSec!
+	^bytes uint32AtOffset: _OffsetOf_nSec!
 
 nSec: anInteger
 	"Set the receiver's 'nSec' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_nSec put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_nSec put: anInteger! !
 !OS.UDACCEL categoriesForMethods!
 nInc!**compiled accessors**!public! !
 nInc:!**compiled accessors**!public! !
@@ -57,8 +57,8 @@ defineFields
 "
 
 	self
-		defineField: #nSec type: DWORDField new;
-		defineField: #nInc type: DWORDField new!
+		defineField: #nSec type: UInt32Field new;
+		defineField: #nInc type: UInt32Field new!
 
 getFieldNames
 	^#(#nSec #nInc)! !

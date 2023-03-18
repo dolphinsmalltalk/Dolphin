@@ -19,7 +19,7 @@ testGenerateAccessorsForSizedArray
 			type: (StructureArrayPointerField type: POINTL lengthField: #Size)
 			offset: 0;
 		defineField: #Size
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 4'.
 	structClass recompileDefinition.
 	actual := (structClass compiledMethodAt: #Test:) parseTree.

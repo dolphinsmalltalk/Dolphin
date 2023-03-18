@@ -47,10 +47,10 @@ interface ICoreWebView2CompositionController3 : ICoreWebView2CompositionControll
 !WebView2.ICoreWebView2CompositionController3 methodsFor!
 
 dragEnter: dataObject keyState: keyState point: point
-	"Answer the <DWORD> result of invoking the DragEnter() method of the COM object."
+	"Answer the <UInt32> result of invoking the DragEnter() method of the COM object."
 
 	| answer |
-	answer := DWORD new.
+	answer := UInt32 new.
 	self
 		DragEnter: dataObject
 		keyState: keyState
@@ -84,10 +84,10 @@ DragLeave
 	^self invalidCall: _failureCode!
 
 dragOver: keyState point: point
-	"Answer the <DWORD> result of invoking the DragOver() method of the COM object."
+	"Answer the <UInt32> result of invoking the DragOver() method of the COM object."
 
 	| answer |
-	answer := DWORD new.
+	answer := UInt32 new.
 	self
 		DragOver: keyState
 		point: point
@@ -106,10 +106,10 @@ DragOver: keyState point: point effect: effect
 	^self invalidCall: _failureCode!
 
 drop: dataObject keyState: keyState point: point
-	"Answer the <DWORD> result of invoking the Drop() method of the COM object."
+	"Answer the <UInt32> result of invoking the Drop() method of the COM object."
 
 	| answer |
-	answer := DWORD new.
+	answer := UInt32 new.
 	self
 		Drop: dataObject
 		keyState: keyState

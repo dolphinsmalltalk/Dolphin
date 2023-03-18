@@ -24,7 +24,7 @@ register
 	token ifNotNil: [^self].
 	token := ByteArray new: 8.
 	self basicRegister: token.
-	token := token sqwordAtOffset: 0!
+	token := token int64AtOffset: 0!
 
 source: anICoreWebView2EventSource
 	source := anICoreWebView2EventSource!

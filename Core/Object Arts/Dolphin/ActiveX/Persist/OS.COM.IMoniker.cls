@@ -309,7 +309,7 @@ parseDisplayName: pbc pmkToLeft: pmkToLeft pszDisplayName: pszDisplayName
 	"Invoke the ParseDisplayName() method of the COM object."
 
 	| outputs |
-	outputs := {DWORD new. IMoniker newPointer}.
+	outputs := {UInt32 new. IMoniker newPointer}.
 	self
 		ParseDisplayName: pbc
 		pmkToLeft: pmkToLeft

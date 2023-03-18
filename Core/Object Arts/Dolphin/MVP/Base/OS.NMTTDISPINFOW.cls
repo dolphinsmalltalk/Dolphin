@@ -51,7 +51,7 @@ text: aString
 uFlags
 	"Answer the <Integer> value of the receiver's 'uFlags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_uFlags! !
+	^bytes uint32AtOffset: _OffsetOf_uFlags! !
 !OS.NMTTDISPINFOW categoriesForMethods!
 idIsHandle!private!testing! !
 lpszText!**compiled accessors**!public! !
@@ -85,8 +85,8 @@ defineFields
 		defineField: #lpszText type: (PointerField type: Utf16String);
 		defineField: #szText type: (ArrayField type: Utf16String length: 80) beFiller;
 		defineField: #hinst type: HANDLEField filler;
-		defineField: #uFlags type: DWORDField readOnly;
-		defineField: #lParam type: INT_PTRField filler!
+		defineField: #uFlags type: UInt32Field readOnly;
+		defineField: #lParam type: IntPtrField filler!
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #lpszText #uFlags)! !

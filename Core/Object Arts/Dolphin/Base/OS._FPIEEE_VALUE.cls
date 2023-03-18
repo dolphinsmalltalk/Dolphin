@@ -19,7 +19,7 @@ OS._FPIEEE_VALUE comment: '_FPIEEE_VALUE is an <ExternalStructure> class to repr
 flags
 	"Answer the <Integer> value of the receiver's 'flags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_flags!
+	^bytes uint32AtOffset: _OffsetOf_flags!
 
 format
 	"Answer an <integer> which identifies the type of value stored in the receiver."
@@ -45,16 +45,16 @@ value
 			floatAtOffset: 
 			doubleAtOffset:
 			longDoubleAtOffset:	"80-bit float"
-			dwordAtOffset:		"128-bit float - not supported on Intel h/w"
-			swordAtOffset:
-			sdwordAtOffset:
-			sqwordAtOffset:
-			wordAtOffset:
-			dwordAtOffset:
-			qwordAtOffset:
-			dwordAtOffset: "BCD"
-			dwordAtOffset: "compare?"
-			dwordAtOffset: "string?")
+			#uint32AtOffset:		"128-bit float - not supported on Intel h/w"
+			#int16AtOffset:
+			#int32AtOffset:
+			#int64AtOffset:
+			#uint16AtOffset:
+			#uint32AtOffset:
+			#uint64AtOffset:
+			#uint32AtOffset: "BCD"
+			#uint32AtOffset: "compare?"
+			#uint32AtOffset: "string?")
 				at: (self format + 1))
 		with: 0]! !
 !OS._FPIEEE_VALUE categoriesForMethods!
@@ -78,8 +78,8 @@ defineFields
 
 	self
 		defineField: #value type: (FillerField byteSize: 16);
-		defineField: #flags type: DWORDField readOnly;
-		defineField: #filler type: DWORDField filler!
+		defineField: #flags type: UInt32Field readOnly;
+		defineField: #filler type: UInt32Field filler!
 
 formatCodes
 	^#(#Fp32 #Fp64 #Fp80 #Fp128 #I16 #I32 #I64 #U16 #U32 #U64 #Bcd80 #Compare #String #Fp82)!

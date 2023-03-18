@@ -86,12 +86,12 @@ initialize
 xHotspot
 	"Answer the <Integer> value of the receiver's 'xHotspot' field."
 
-	^bytes dwordAtOffset: _OffsetOf_xHotspot!
+	^bytes uint32AtOffset: _OffsetOf_xHotspot!
 
 yHotspot
 	"Answer the <Integer> value of the receiver's 'yHotspot' field."
 
-	^bytes dwordAtOffset: _OffsetOf_yHotspot! !
+	^bytes uint32AtOffset: _OffsetOf_yHotspot! !
 !OS.ICONINFO categoriesForMethods!
 extent!accessing!public! !
 free!public!realizing/unrealizing! !
@@ -124,8 +124,8 @@ defineFields
 
 	self
 		defineField: #fIcon type: BOOLField readOnly beUncompiled;
-		defineField: #xHotspot type: DWORDField readOnly;
-		defineField: #yHotspot type: DWORDField readOnly;
+		defineField: #xHotspot type: UInt32Field readOnly;
+		defineField: #yHotspot type: UInt32Field readOnly;
 		defineField: #hbmMask type: HANDLEField new;
 		defineField: #hbmColor type: HANDLEField new!
 

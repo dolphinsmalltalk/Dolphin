@@ -61,7 +61,7 @@ defaultExtension: aString
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 fileName
 	"Answer the file name buffer."
@@ -85,22 +85,22 @@ fileTypes: aString
 flags
 	"Answer the <Integer> value of the receiver's 'flags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_flags!
+	^bytes uint32AtOffset: _OffsetOf_flags!
 
 flags: anInteger
 	"Set the receiver's 'flags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_flags put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_flags put: anInteger!
 
 flagsEx
 	"Answer the <Integer> value of the receiver's 'flagsEx' field."
 
-	^bytes dwordAtOffset: _OffsetOf_flagsEx!
+	^bytes uint32AtOffset: _OffsetOf_flagsEx!
 
 flagsEx: anInteger
 	"Set the receiver's 'flagsEx' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_flagsEx put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_flagsEx put: anInteger!
 
 hookFlag
 	^OFN_ENABLEHOOK!
@@ -165,22 +165,22 @@ lpstrTitle: anUtf16String
 nFilterIndex
 	"Answer the <Integer> value of the receiver's 'nFilterIndex' field."
 
-	^bytes dwordAtOffset: _OffsetOf_nFilterIndex!
+	^bytes uint32AtOffset: _OffsetOf_nFilterIndex!
 
 nFilterIndex: anInteger
 	"Set the receiver's 'nFilterIndex' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_nFilterIndex put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_nFilterIndex put: anInteger!
 
 nMaxFile: anInteger
 	"Set the receiver's 'nMaxFile' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_nMaxFile put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_nMaxFile put: anInteger!
 
 nMaxFileTitle: anInteger
 	"Set the receiver's 'nMaxFileTitle' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_nMaxFileTitle put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_nMaxFileTitle put: anInteger!
 
 ownerView: aView
 	"Set the parent window for the dialog to aView."
@@ -267,29 +267,29 @@ defineFields
 "
 
 	self
-		defineField: #dwSize type: DWORDField writeOnly beOverride;
+		defineField: #dwSize type: UInt32Field writeOnly beOverride;
 		defineField: #hwndOwner type: HANDLEField writeOnly;
 		defineField: #hInstance type: HANDLEField filler;
 		defineField: #lpstrFilter type: (PointerField type: Utf16String) beWriteOnly;
 		defineField: #lpstrCustomFilter type: (PointerField type: Utf16String) beFiller;
-		defineField: #nMaxCustFilter type: DWORDField filler;
-		defineField: #nFilterIndex type: DWORDField new;
+		defineField: #nMaxCustFilter type: UInt32Field filler;
+		defineField: #nFilterIndex type: UInt32Field new;
 		defineField: #lpstrFile type: (PointerField type: Utf16String);
-		defineField: #nMaxFile type: DWORDField writeOnly;
+		defineField: #nMaxFile type: UInt32Field writeOnly;
 		defineField: #lpstrFileTitle type: (PointerField type: Utf16String);
-		defineField: #nMaxFileTitle type: DWORDField writeOnly;
+		defineField: #nMaxFileTitle type: UInt32Field writeOnly;
 		defineField: #lpstrInitialDir type: (PointerField type: Utf16String) beWriteOnly;
 		defineField: #lpstrTitle type: (PointerField type: Utf16String) beWriteOnly;
-		defineField: #flags type: DWORDField new beOverride;
-		defineField: #nFileOffset type: WORDField new beUncompiled;
-		defineField: #nFileExtension type: WORDField new beUncompiled;
+		defineField: #flags type: UInt32Field new beOverride;
+		defineField: #nFileOffset type: UInt16Field new beUncompiled;
+		defineField: #nFileExtension type: UInt16Field new beUncompiled;
 		defineField: #lpstrDefExt type: (PointerField type: Utf16String) beWriteOnly;
-		defineField: #lCustData type: DWORDField filler;
+		defineField: #lCustData type: UInt32Field filler;
 		defineField: #lpfnHook type: LPVOIDField writeOnly beOverride;
 		defineField: #lpTemplateName type: (PointerField type: Utf16String) beFiller;
 		defineField: #pvReserved type: LPVOIDField filler;
-		defineField: #dwReserved type: DWORDField filler;
-		defineField: #flagsEx type: DWORDField new!
+		defineField: #dwReserved type: UInt32Field filler;
+		defineField: #flagsEx type: UInt32Field new!
 
 getFieldNames
 	^#(#dwSize #hwndOwner #lpstrFilter #nFilterIndex #lpstrFile #nMaxFile #lpstrFileTitle #nMaxFileTitle #lpstrInitialDir #lpstrTitle #flags #nFileOffset #nFileExtension #lpstrDefExt #lpfnHook #flagsEx)! !

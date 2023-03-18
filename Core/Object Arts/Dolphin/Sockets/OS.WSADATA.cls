@@ -41,12 +41,12 @@ struct tagWSADATA {
 iMaxSockets
 	"Answer the <Integer> value of the receiver's 'iMaxSockets' field."
 
-	^bytes wordAtOffset: _OffsetOf_iMaxSockets!
+	^bytes uint16AtOffset: _OffsetOf_iMaxSockets!
 
 iMaxUdpDg
 	"Answer the <Integer> value of the receiver's 'iMaxUdpDg' field."
 
-	^bytes wordAtOffset: _OffsetOf_iMaxUdpDg!
+	^bytes uint16AtOffset: _OffsetOf_iMaxUdpDg!
 
 lpVendorInfo
 	"Answer the <Address> value of the receiver's 'lpVendorInfo' field."
@@ -66,12 +66,12 @@ szSystemStatus
 wHighVersion
 	"Answer the <Integer> value of the receiver's 'wHighVersion' field."
 
-	^bytes wordAtOffset: _OffsetOf_wHighVersion!
+	^bytes uint16AtOffset: _OffsetOf_wHighVersion!
 
 wVersion
 	"Answer the <Integer> value of the receiver's 'wVersion' field."
 
-	^bytes wordAtOffset: _OffsetOf_wVersion! !
+	^bytes uint16AtOffset: _OffsetOf_wVersion! !
 !OS.WSADATA categoriesForMethods!
 iMaxSockets!**compiled accessors**!public! !
 iMaxUdpDg!**compiled accessors**!public! !
@@ -105,12 +105,12 @@ defineFields
 "
 
 	self
-		defineField: #wVersion type: WORDField new beReadOnly offset: 0;
-		defineField: #wHighVersion type: WORDField new beReadOnly offset: 2;
+		defineField: #wVersion type: UInt16Field new beReadOnly offset: 0;
+		defineField: #wHighVersion type: UInt16Field new beReadOnly offset: 2;
 		defineField: #szDescription type: (StringField type: AnsiString length: 257) beReadOnly offset: 4;
 		defineField: #szSystemStatus type: (StringField type: AnsiString length: 129) beReadOnly offset: 261;
-		defineField: #iMaxSockets type: WORDField new beReadOnly offset: 390;
-		defineField: #iMaxUdpDg type: WORDField new beReadOnly offset: 392;
+		defineField: #iMaxSockets type: UInt16Field new beReadOnly offset: 390;
+		defineField: #iMaxUdpDg type: UInt16Field new beReadOnly offset: 392;
 		defineField: #lpVendorInfo type: LPVOIDField new beReadOnly offset: 396.
 	self byteSize: 400!
 

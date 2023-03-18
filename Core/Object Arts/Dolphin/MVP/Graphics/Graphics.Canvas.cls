@@ -322,8 +322,8 @@ fontFamilies: aString do: aValuable
 	callback := aValuable argumentCount == 1
 				ifTrue: 
 					[Callback block: [:lplf :lpntm :dwType :lpData | aValuable value: lplf]
-						descriptor: (FunctionDescriptor returnType: 'sdword'
-								argumentTypes: ##('<1p>* lpvoid dword uintptr' << ENUMLOGFONTW))]
+						descriptor: (FunctionDescriptor returnType: 'int32'
+								argumentTypes: ##('<1p>* lpvoid uint32 uintptr' << ENUMLOGFONTW))]
 				ifFalse: 
 					[Callback block: 
 							[:lplf :lpntm :dwType :lpData |
@@ -331,8 +331,8 @@ fontFamilies: aString do: aValuable
 								cull: lplf
 								cull: lpntm
 								cull: dwType]
-						descriptor: (FunctionDescriptor returnType: 'sdword'
-								argumentTypes: ##('<1p>* <2p>* dword uintptr' << {ENUMLOGFONTW. NEWTEXTMETRICW}))].
+						descriptor: (FunctionDescriptor returnType: 'int32'
+								argumentTypes: ##('<1p>* <2p>* uint32 uintptr' << {ENUMLOGFONTW. NEWTEXTMETRICW}))].
 	answer := Gdi32
 				enumFontFamilies: self asParameter
 				lpszFamily: aString
@@ -648,12 +648,12 @@ plgBlt: aCanvas rectangle: aRectangle topLeft: topLeftPoint topRight: topRightPo
 	| points |
 	points := ByteArray newFixed: 24.
 	points
-		sdwordAtOffset: 0 put: topLeftPoint x;
-		sdwordAtOffset: 4 put: topLeftPoint y;
-		sdwordAtOffset: 8 put: topRightPoint x;
-		sdwordAtOffset: 12 put: topRightPoint y;
-		sdwordAtOffset: 16 put: bottomLeftPoint x;
-		sdwordAtOffset: 20 put: bottomLeftPoint y.
+		int32AtOffset: 0 put: topLeftPoint x;
+		int32AtOffset: 4 put: topLeftPoint y;
+		int32AtOffset: 8 put: topRightPoint x;
+		int32AtOffset: 12 put: topRightPoint y;
+		int32AtOffset: 16 put: bottomLeftPoint x;
+		int32AtOffset: 20 put: bottomLeftPoint y.
 	^Gdi32
 		plgBlt: self asParameter
 		lpPoint: points

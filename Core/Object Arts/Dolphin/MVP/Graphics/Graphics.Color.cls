@@ -702,7 +702,7 @@ forestGreen
 fromAddress: anAddress
 	"Answer a new Colour, based on the 32-bit integer value at anAddress."
 
-	^self fromCOLORREF: (anAddress asExternalAddress sdwordAtOffset: 0)!
+	^self fromCOLORREF: (anAddress asExternalAddress int32AtOffset: 0)!
 
 fromArgbCode: anInteger
 	"Answer a <Color> representing the specified encoded value. Note that the encoding of the argument is assumed to be 8-bit RGB, as used by ARGB, not the BGR encoding used by ColorRef's.

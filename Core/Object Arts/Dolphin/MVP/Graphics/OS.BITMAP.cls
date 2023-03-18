@@ -30,43 +30,43 @@ bmBits
 bmBitsPixel
 	"Answer the <Integer> value of the receiver's 'bmBitsPixel' field."
 
-	^bytes wordAtOffset: _OffsetOf_bmBitsPixel!
+	^bytes uint16AtOffset: _OffsetOf_bmBitsPixel!
 
 bmHeight
 	"Answer the <Integer> value of the receiver's 'bmHeight' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_bmHeight!
+	^bytes int32AtOffset: _OffsetOf_bmHeight!
 
 bmPlanes
 	"Answer the <Integer> value of the receiver's 'bmPlanes' field."
 
-	^bytes wordAtOffset: _OffsetOf_bmPlanes!
+	^bytes uint16AtOffset: _OffsetOf_bmPlanes!
 
 bmType
 	"Answer the <Integer> value of the receiver's 'bmType' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_bmType!
+	^bytes int32AtOffset: _OffsetOf_bmType!
 
 bmWidth
 	"Answer the <Integer> value of the receiver's 'bmWidth' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_bmWidth!
+	^bytes int32AtOffset: _OffsetOf_bmWidth!
 
 bmWidthBytes
 	"Answer the <Integer> value of the receiver's 'bmWidthBytes' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_bmWidthBytes!
+	^bytes int32AtOffset: _OffsetOf_bmWidthBytes!
 
 depth
 	"Answer the colour depth of the bitmap described by the receiver."
 
-	^bytes wordAtOffset: _OffsetOf_bmBitsPixel!
+	^bytes uint16AtOffset: _OffsetOf_bmBitsPixel!
 
 extent
 	"Answer the width and height (in pels) of the bitmap described by the receiver."
 
-	^Graphics.Point x: (bytes sdwordAtOffset: _OffsetOf_bmWidth)
-		y: (bytes sdwordAtOffset: _OffsetOf_bmHeight)! !
+	^Graphics.Point x: (bytes int32AtOffset: _OffsetOf_bmWidth)
+		y: (bytes int32AtOffset: _OffsetOf_bmHeight)! !
 !OS.BITMAP categoriesForMethods!
 bmBits!**compiled accessors**!public! !
 bmBitsPixel!**compiled accessors**!public! !
@@ -99,12 +99,12 @@ defineFields
 		} BITMAP;"
 
 	self
-		defineField: #bmType type: SDWORDField readOnly;
-		defineField: #bmWidth type: SDWORDField readOnly;
-		defineField: #bmHeight type: SDWORDField readOnly;
-		defineField: #bmWidthBytes type: SDWORDField readOnly;
-		defineField: #bmPlanes type: WORDField readOnly;
-		defineField: #bmBitsPixel type: WORDField readOnly;
+		defineField: #bmType type: Int32Field readOnly;
+		defineField: #bmWidth type: Int32Field readOnly;
+		defineField: #bmHeight type: Int32Field readOnly;
+		defineField: #bmWidthBytes type: Int32Field readOnly;
+		defineField: #bmPlanes type: UInt16Field readOnly;
+		defineField: #bmBitsPixel type: UInt16Field readOnly;
 		defineField: #bmBits type: LPVOIDField readOnly!
 
 getFieldNames

@@ -15,17 +15,17 @@ External.GenericExternalArray subclass: #'OS.COM.SAFEARRAY'
 		'_SAFEARRAY_Size' -> 16r18
 	}!
 OS.COM.SAFEARRAY guid: (Core.GUID fromString: '{c06f3b6a-0868-11d3-93af-00a024ca708a}')!
-OS.COM.SAFEARRAY comment: 'SAFEARRAY is an <ExternalArray> class to represent the OLE Automation arrays.
+OS.COM.SAFEARRAY comment: '`SAFEARRAY` is an `ExternalArray` class to represent the COM Automation arrays.
 
-SAFEARRAYs are a flexible representation of potentially multiple dimensioned arrays of almost any of the Variant (Visual Basic) types.
+`SAFEARRAY`s are a flexible representation of potentially multiple dimensioned arrays of almost any of the Variant (Visual Basic) types.
 
-SAFEARRAY has similar behaviour to <StructureArray> in providing a means to map externally implemented arrays of values to appropriate Smalltalk objects (mostly from the <ExternalStructure> hierarchy), and thus (as of Dolphin 6) these share implementation via a common abstract superclass.
+`SAFEARRAY` has similar behaviour to `StructureArray` in providing a means to map externally implemented arrays of values to appropriate Smalltalk objects (mostly from the `External.Structure` hierarchy), and thus these share implementation via a common abstract superclass.
 
-Note that the reported length of a SAFEARRAY is actually the length of the rightmost (least significant) dimension.
+Note that the reported length of a `SAFEARRAY` is actually the length of the rightmost (least significant) dimension.
 
-Instance Variables:
-	data		<ExternalAddress>. Pointer to data of array, when locked.
-	start		<integer>. Lower bound of rightmost (least significant) dimension.
+## Instance Variables:
+  `data`		`ExternalAddress`. Pointer to data of array, when locked.
+  `start`		`integer`. Lower bound of rightmost (least significant) dimension.
 '!
 !OS.COM.SAFEARRAY categoriesForClass!External-Data-Structured! !
 !OS.COM.SAFEARRAY methodsFor!
@@ -56,7 +56,7 @@ asObject
 	"Answer the <Object> value represented by the receiver
 	(an <Array> of <Objects>)."
 
-	^self elementClass == BYTE 
+	^self elementClass == UInt8 
 		ifTrue: [ByteArray fromAddress: self base length: self length]
 		ifFalse: [self asArray]!
 
@@ -79,17 +79,17 @@ base
 cbElements
 	"Answer the <Integer> value of the receiver's 'cbElements' field."
 
-	^bytes dwordAtOffset: _OffsetOf_cbElements!
+	^bytes uint32AtOffset: _OffsetOf_cbElements!
 
 cDims
 	"Private - Answer the <Integer> value of the receiver's 'cDims' field."
 
-	^bytes wordAtOffset: _OffsetOf_cDims!
+	^bytes uint16AtOffset: _OffsetOf_cDims!
 
 cLocks
 	"Answer the <Integer> value of the receiver's 'cLocks' field."
 
-	^bytes dwordAtOffset: _OffsetOf_cLocks!
+	^bytes uint32AtOffset: _OffsetOf_cLocks!
 
 copy
 	"Answer a suitable copy of the receiver, which does not share the same 
@@ -161,7 +161,7 @@ elementAt: aSequencedReadableCollectionOfInteger
 	| buf rgIndices sz |
 	buf := self elementClass newBuffer.	"We get ownership"
 	sz := aSequencedReadableCollectionOfInteger size.
-	rgIndices := SDWORDArray new: sz.
+	rgIndices := Int32Array new: sz.
 	1 to: sz do: [:i | rgIndices uncheckedAt: i put: (aSequencedReadableCollectionOfInteger at: i)].
 	OleAut32
 		safeArrayGetElement: self
@@ -174,7 +174,7 @@ elementAt: aSequencedReadableCollectionOfInteger put: anExternalObject
 
 	| rgIndices sz |
 	sz := aSequencedReadableCollectionOfInteger size.
-	rgIndices := SDWORDArray new: sz.
+	rgIndices := Int32Array new: sz.
 	1 to: sz do: [:i | rgIndices uncheckedAt: i put: (aSequencedReadableCollectionOfInteger at: i)].
 	OleAut32
 		safeArrayPutElement: self
@@ -203,7 +203,7 @@ elementSize
 fFeatures
 	"Answer the <Integer> value of the receiver's 'fFeatures' field."
 
-	^bytes wordAtOffset: _OffsetOf_fFeatures!
+	^bytes uint16AtOffset: _OffsetOf_fFeatures!
 
 free
 	"Free external resources owned by the receiver."
@@ -386,7 +386,7 @@ vartype
 	| vt |
 	vt := ByteArray new: 2.
 	OleAut32 safeArrayGetVartype: self pvt: vt.
-	^vt wordAtOffset: 0!
+	^vt uint16AtOffset: 0!
 
 vt
 	"Answer the receiver's variant type. This will depend on the element type, but always includes the array modifier."
@@ -470,7 +470,7 @@ clear: addressOrBytes
 	hr = DISP_E_ARRAYISLOCKED
 		ifTrue: 
 			["Set cLocks to 1, and then call unlock"
-			addressOrBytes dwordAtOffset: 8 put: 1.
+			addressOrBytes uint32AtOffset: 8 put: 1.
 			hr := OleAut32
 						safeArrayUnlock: addressOrBytes;
 						safeArrayDestroy: addressOrBytes].
@@ -512,10 +512,10 @@ defineFields
 		}; "
 
 	self
-		defineField: #cDims type: WORDField readOnly beNonBrowsable;
-		defineField: #fFeatures type: WORDField readOnly;
-		defineField: #cbElements type: DWORDField readOnly;
-		defineField: #cLocks type: DWORDField readOnly;
+		defineField: #cDims type: UInt16Field readOnly beNonBrowsable;
+		defineField: #fFeatures type: UInt16Field readOnly;
+		defineField: #cbElements type: UInt32Field readOnly;
+		defineField: #cLocks type: UInt32Field readOnly;
 		defineField: #pvData type: LPVOIDField readOnly;
 		defineField: #rgsabound
 			type: (StructureArrayField type: SAFEARRAYBOUND

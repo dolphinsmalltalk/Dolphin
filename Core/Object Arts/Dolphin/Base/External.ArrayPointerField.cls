@@ -26,7 +26,7 @@ arrayLength: sizeObject
 readFrom: anExternalStructure
 	"Private - Answer an <External.Array> of the receiver's pointer class that is a reference to the data pointed at by the corresponding pointer field of the <External.Structure> argument at the receiver's offset, and which is of the length described by the receiver."
 
-	^self pointerClass fromAddress: (anExternalStructure bytes sdwordAtOffset: offset)
+	^self pointerClass fromAddress: (anExternalStructure bytes int32AtOffset: offset)
 		length: (arrayLength getElementCountOf: self in: anExternalStructure)!
 
 writeInto: anExternalStructure value: anObject

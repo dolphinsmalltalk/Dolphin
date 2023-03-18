@@ -70,7 +70,7 @@ httpStatusCode
 	"Answer the <sdword> value of the 'HttpStatusCode' property of the receiver."
 
 	| answer |
-	answer := SDWORD newBuffer.
+	answer := Int32 newBuffer.
 	self get_HttpStatusCode: answer.
 	^answer value!
 
@@ -86,7 +86,7 @@ navigationId
 	"Answer the <qword> value of the 'NavigationId' property of the receiver."
 
 	| answer |
-	answer := ULARGE_INTEGER new.
+	answer := UInt64 new.
 	self get_NavigationId: answer.
 	^answer asObject!
 
@@ -97,7 +97,7 @@ webErrorStatus
 	"Answer the <sdword> value of the 'WebErrorStatus' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_WebErrorStatus: answer.
 	^answer asObject! !
 !WebView2.ICoreWebView2NavigationCompletedEventArgs categoriesForMethods!

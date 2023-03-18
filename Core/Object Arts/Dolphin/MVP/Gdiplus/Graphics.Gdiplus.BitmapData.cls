@@ -39,22 +39,22 @@ struct tagGpBitmapData {
 Height
 	"Answer the <Integer> value of the receiver's 'Height' field."
 
-	^bytes dwordAtOffset: _OffsetOf_Height!
+	^bytes uint32AtOffset: _OffsetOf_Height!
 
 Height: anInteger
 	"Set the receiver's 'Height' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_Height put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_Height put: anInteger!
 
 PixelFormat
 	"Answer the <Integer> value of the receiver's 'PixelFormat' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_PixelFormat!
+	^bytes int32AtOffset: _OffsetOf_PixelFormat!
 
 PixelFormat: anInteger
 	"Set the receiver's 'PixelFormat' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_PixelFormat put: anInteger!
+	bytes int32AtOffset: _OffsetOf_PixelFormat put: anInteger!
 
 Scan0
 	"Answer the <Address> value of the receiver's 'Scan0' field."
@@ -69,22 +69,22 @@ Scan0: anAddress
 Stride
 	"Answer the <Integer> value of the receiver's 'Stride' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_Stride!
+	^bytes int32AtOffset: _OffsetOf_Stride!
 
 Stride: anInteger
 	"Set the receiver's 'Stride' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_Stride put: anInteger!
+	bytes int32AtOffset: _OffsetOf_Stride put: anInteger!
 
 Width
 	"Answer the <Integer> value of the receiver's 'Width' field."
 
-	^bytes dwordAtOffset: _OffsetOf_Width!
+	^bytes uint32AtOffset: _OffsetOf_Width!
 
 Width: anInteger
 	"Set the receiver's 'Width' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_Width put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_Width put: anInteger! !
 !Graphics.Gdiplus.BitmapData categoriesForMethods!
 Height!**compiled accessors**!public! !
 Height:!**compiled accessors**!public! !
@@ -120,22 +120,22 @@ defineFields
 
 	self
 		defineField: #Width
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 0;
 		defineField: #Height
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 4;
 		defineField: #Stride
-			type: SDWORDField new
+			type: Int32Field new
 			offset: 8;
 		defineField: #PixelFormat
-			type: SDWORDField new
+			type: Int32Field new
 			offset: 12;
 		defineField: #Scan0
 			type: LPVOIDField new
 			offset: 16;
 		defineField: #Reserved
-			type: DWORDField filler
+			type: UInt32Field filler
 			offset: 20.
 	self byteSize: 24!
 

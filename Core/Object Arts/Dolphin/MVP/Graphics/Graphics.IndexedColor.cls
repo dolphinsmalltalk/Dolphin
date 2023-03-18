@@ -98,7 +98,7 @@ rgbCodeFromPalette: aPalette
 		nEntries: 1
 		lppe: paletteEntry) == 0
 		ifTrue: [Gdi32 systemError]
-		ifFalse: [(paletteEntry dwordAtOffset: 0) bitAnd: 16rFFFFFF]!
+		ifFalse: [(paletteEntry uint32AtOffset: 0) bitAnd: 16rFFFFFF]!
 
 rgbCodeFromStdPalette
 	"Answer the COLORREF encoded RGB value that the receiver represents in a standard palette."

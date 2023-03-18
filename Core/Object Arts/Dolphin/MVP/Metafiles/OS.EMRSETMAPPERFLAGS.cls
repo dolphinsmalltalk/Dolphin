@@ -30,12 +30,12 @@ struct tagEMRSETMAPPERFLAGS {
 dwFlags
 	"Answer the <Integer> value of the receiver's 'dwFlags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwFlags!
+	^bytes uint32AtOffset: _OffsetOf_dwFlags!
 
 dwFlags: anInteger
 	"Set the receiver's 'dwFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwFlags put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_dwFlags put: anInteger! !
 !OS.EMRSETMAPPERFLAGS categoriesForMethods!
 dwFlags!**compiled accessors**!public! !
 dwFlags:!**compiled accessors**!public! !
@@ -61,7 +61,7 @@ defineFields
 	super defineFields.
 	self
 		defineField: #dwFlags
-		type: DWORDField new
+		type: UInt32Field new
 		offset: 8.
 	self byteSize: 12!
 

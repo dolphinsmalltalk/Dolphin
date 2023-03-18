@@ -40,72 +40,72 @@ struct tagMETAHEADER {
 mtHeaderSize
 	"Answer the <Integer> value of the receiver's 'mtHeaderSize' field."
 
-	^bytes wordAtOffset: _OffsetOf_mtHeaderSize!
+	^bytes uint16AtOffset: _OffsetOf_mtHeaderSize!
 
 mtHeaderSize: anInteger
 	"Set the receiver's 'mtHeaderSize' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_mtHeaderSize put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_mtHeaderSize put: anInteger!
 
 mtMaxRecord
 	"Answer the <Integer> value of the receiver's 'mtMaxRecord' field."
 
-	^bytes dwordAtOffset: _OffsetOf_mtMaxRecord!
+	^bytes uint32AtOffset: _OffsetOf_mtMaxRecord!
 
 mtMaxRecord: anInteger
 	"Set the receiver's 'mtMaxRecord' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_mtMaxRecord put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_mtMaxRecord put: anInteger!
 
 mtNoObjects
 	"Answer the <Integer> value of the receiver's 'mtNoObjects' field."
 
-	^bytes wordAtOffset: _OffsetOf_mtNoObjects!
+	^bytes uint16AtOffset: _OffsetOf_mtNoObjects!
 
 mtNoObjects: anInteger
 	"Set the receiver's 'mtNoObjects' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_mtNoObjects put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_mtNoObjects put: anInteger!
 
 mtNoParameters
 	"Answer the <Integer> value of the receiver's 'mtNoParameters' field."
 
-	^bytes wordAtOffset: _OffsetOf_mtNoParameters!
+	^bytes uint16AtOffset: _OffsetOf_mtNoParameters!
 
 mtNoParameters: anInteger
 	"Set the receiver's 'mtNoParameters' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_mtNoParameters put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_mtNoParameters put: anInteger!
 
 mtSize
 	"Answer the <Integer> value of the receiver's 'mtSize' field."
 
-	^bytes dwordAtOffset: _OffsetOf_mtSize!
+	^bytes uint32AtOffset: _OffsetOf_mtSize!
 
 mtSize: anInteger
 	"Set the receiver's 'mtSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_mtSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_mtSize put: anInteger!
 
 mtType
 	"Answer the <Integer> value of the receiver's 'mtType' field."
 
-	^bytes wordAtOffset: _OffsetOf_mtType!
+	^bytes uint16AtOffset: _OffsetOf_mtType!
 
 mtType: anInteger
 	"Set the receiver's 'mtType' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_mtType put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_mtType put: anInteger!
 
 mtVersion
 	"Answer the <Integer> value of the receiver's 'mtVersion' field."
 
-	^bytes wordAtOffset: _OffsetOf_mtVersion!
+	^bytes uint16AtOffset: _OffsetOf_mtVersion!
 
 mtVersion: anInteger
 	"Set the receiver's 'mtVersion' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_mtVersion put: anInteger! !
+	bytes uint16AtOffset: _OffsetOf_mtVersion put: anInteger! !
 !Graphics.Gdiplus.METAHEADER categoriesForMethods!
 mtHeaderSize!**compiled accessors**!public! !
 mtHeaderSize:!**compiled accessors**!public! !
@@ -146,25 +146,25 @@ defineFields
 
 	self
 		defineField: #mtType
-			type: WORDField new
+			type: UInt16Field new
 			offset: 0;
 		defineField: #mtHeaderSize
-			type: WORDField new
+			type: UInt16Field new
 			offset: 2;
 		defineField: #mtVersion
-			type: WORDField new
+			type: UInt16Field new
 			offset: 4;
 		defineField: #mtSize
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 8;
 		defineField: #mtNoObjects
-			type: WORDField new
+			type: UInt16Field new
 			offset: 12;
 		defineField: #mtMaxRecord
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 16;
 		defineField: #mtNoParameters
-			type: WORDField new
+			type: UInt16Field new
 			offset: 20.
 	self byteSize: 24!
 

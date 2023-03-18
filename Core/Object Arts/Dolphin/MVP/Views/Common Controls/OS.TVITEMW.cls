@@ -41,9 +41,9 @@ allCallbacks
 	"Set up the receiver to specify that callbacks are required for image, children count, and label text."
 
 	bytes
-		sdwordAtOffset: _OffsetOf_iImage put: I_IMAGECALLBACK;
-		sdwordAtOffset: _OffsetOf_cChildren put: I_CHILDRENCALLBACK;
-		dwordAtOffset: _OffsetOf_pszText put: LPSTR_TEXTCALLBACK.
+		int32AtOffset: _OffsetOf_iImage put: I_IMAGECALLBACK;
+		int32AtOffset: _OffsetOf_cChildren put: I_CHILDRENCALLBACK;
+		uint32AtOffset: _OffsetOf_pszText put: LPSTR_TEXTCALLBACK.
 	self maskIn: ##(TVIF_TEXT | TVIF_CHILDREN | TVIF_IMAGE)!
 
 beStateExpandedOnce
@@ -54,22 +54,22 @@ beStateExpandedOnce
 cChildren
 	"Answer the <Integer> value of the receiver's 'cChildren' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_cChildren!
+	^bytes int32AtOffset: _OffsetOf_cChildren!
 
 cChildren: anInteger
 	"Set the receiver's 'cChildren' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_cChildren put: anInteger!
+	bytes int32AtOffset: _OffsetOf_cChildren put: anInteger!
 
 cchTextMax
 	"Answer the <Integer> value of the receiver's 'cchTextMax' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_cchTextMax!
+	^bytes int32AtOffset: _OffsetOf_cchTextMax!
 
 cchTextMax: anInteger
 	"Set the receiver's 'cchTextMax' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_cchTextMax put: anInteger!
+	bytes int32AtOffset: _OffsetOf_cchTextMax put: anInteger!
 
 cchTextMaxOffset
 	^_OffsetOf_cchTextMax!
@@ -78,8 +78,8 @@ children: anInteger
 	"Set receiver's child count to anInteger."
 
 	bytes
-		sdwordAtOffset: _OffsetOf_cChildren put: anInteger;
-		dwordAtOffset: _OffsetOf_mask put: ((bytes dwordAtOffset: _OffsetOf_mask) bitOr: TVIF_CHILDREN)!
+		int32AtOffset: _OffsetOf_cChildren put: anInteger;
+		uint32AtOffset: _OffsetOf_mask put: ((bytes uint32AtOffset: _OffsetOf_mask) bitOr: TVIF_CHILDREN)!
 
 childrenCallback
 	"Sets the receiver into children callback mode."
@@ -89,12 +89,12 @@ childrenCallback
 dwState
 	"Answer the <Integer> value of the receiver's 'dwState' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwState!
+	^bytes uint32AtOffset: _OffsetOf_dwState!
 
 dwState: anInteger
 	"Set the receiver's 'dwState' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwState put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwState put: anInteger!
 
 getValidFields
 	"Private - Answer a <sequencedReadableCollection> of the fields defined 
@@ -120,46 +120,46 @@ handle
 hItem
 	"Answer the <Integer> value of the receiver's 'hItem' field."
 
-	^bytes dwordAtOffset: _OffsetOf_hItem!
+	^bytes uint32AtOffset: _OffsetOf_hItem!
 
 hItem: anInteger
 	"Set the receiver's 'hItem' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_hItem put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_hItem put: anInteger!
 
 iImage
 	"Answer the <Integer> value of the receiver's 'iImage' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_iImage!
+	^bytes int32AtOffset: _OffsetOf_iImage!
 
 iImage: anInteger
 	"Set the receiver's 'iImage' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_iImage put: anInteger!
+	bytes int32AtOffset: _OffsetOf_iImage put: anInteger!
 
 images: anInteger
 	"Set the receiver's images (including that if selected) to that in the image list with the specified index."
 
 	bytes
-		sdwordAtOffset: _OffsetOf_iImage put: anInteger;
-		sdwordAtOffset: _OffsetOf_iSelectedImage put: anInteger;
-		dwordAtOffset: _OffsetOf_mask
-			put: ((bytes dwordAtOffset: _OffsetOf_mask) bitOr: ##(TVIF_IMAGE | TVIF_SELECTEDIMAGE))!
+		int32AtOffset: _OffsetOf_iImage put: anInteger;
+		int32AtOffset: _OffsetOf_iSelectedImage put: anInteger;
+		uint32AtOffset: _OffsetOf_mask
+			put: ((bytes uint32AtOffset: _OffsetOf_mask) bitOr: ##(TVIF_IMAGE | TVIF_SELECTEDIMAGE))!
 
 iSelectedImage
 	"Answer the <Integer> value of the receiver's 'iSelectedImage' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_iSelectedImage!
+	^bytes int32AtOffset: _OffsetOf_iSelectedImage!
 
 iSelectedImage: anInteger
 	"Set the receiver's 'iSelectedImage' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_iSelectedImage put: anInteger!
+	bytes int32AtOffset: _OffsetOf_iSelectedImage put: anInteger!
 
 isStateExpandedOnce
 	"Answer whether the receiver describes a node that has already been expanded"
 
-	^(bytes dwordAtOffset: _OffsetOf_dwState) allMask: TVIS_EXPANDEDONCE!
+	^(bytes uint32AtOffset: _OffsetOf_dwState) allMask: TVIS_EXPANDEDONCE!
 
 lParam
 	"Answer the <Integer> value of the receiver's 'lParam' field."
@@ -184,18 +184,18 @@ pszText: anUtf16String
 selectedImage: anInteger
 	"Set content's iSelectedImage member to anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_iSelectedImage put: anInteger.
+	bytes int32AtOffset: _OffsetOf_iSelectedImage put: anInteger.
 	self maskIn: TVIF_SELECTEDIMAGE!
 
 stateMask
 	"Answer the <Integer> value of the receiver's 'stateMask' field."
 
-	^bytes dwordAtOffset: _OffsetOf_stateMask!
+	^bytes uint32AtOffset: _OffsetOf_stateMask!
 
 stateMask: anInteger
 	"Set the receiver's 'stateMask' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_stateMask put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_stateMask put: anInteger!
 
 textPointerOffset
 	"Private - Answer the offset of the text pointer in the receiver. "
@@ -247,31 +247,31 @@ defineFields
 	super defineFields.
 	self
 		defineField: #hItem
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 4;
 		defineField: #dwState
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 8;
 		defineField: #stateMask
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 12;
 		defineField: #pszText
 			type: (PointerField type: Utf16String)
 			offset: 16;
 		defineField: #cchTextMax
-			type: SDWORDField new
+			type: Int32Field new
 			offset: 20;
 		defineField: #iImage
-			type: SDWORDField new
+			type: Int32Field new
 			offset: 24;
 		defineField: #iSelectedImage
-			type: SDWORDField new
+			type: Int32Field new
 			offset: 28;
 		defineField: #cChildren
-			type: SDWORDField new
+			type: Int32Field new
 			offset: 32;
 		defineField: #lParam
-			type: UINT_PTRField new
+			type: UIntPtrField new
 			offset: 36.
 	self assert: [self basicByteSize = 40]!
 

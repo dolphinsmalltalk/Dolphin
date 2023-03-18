@@ -84,7 +84,7 @@ species
 
 	^Array!
 
-uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: aDyadicValuable 
+uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: aDyadicValuable
 	"Private - Evaluate the <dyadicValuable> argument for each element of the receiver in the
 	specified inclusive range, with the element and its index as respectively the second and
 	first arguments. No bounds checks need be performed since the caller has established that
@@ -97,8 +97,8 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: aDyadicValuable
 	subscript := 0 asVariant.
 	startInteger to: stopInteger
 		do: 
-			[:i | 
-			subscript sdword: i - 1.
+			[:i |
+			subscript int32: i - 1.
 			aDyadicValuable value: i value: (interface item: subscript)]! !
 !ADODB.ADOCollection categoriesForMethods!
 add:!adding!public! !

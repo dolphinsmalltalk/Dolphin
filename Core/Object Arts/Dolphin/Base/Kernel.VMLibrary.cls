@@ -195,7 +195,7 @@ getGenericCallback
 
 	genericCallback isNil
 		ifTrue: 
-			[genericCallback := Kernel32 getProcAddressDWORD: self asParameter lpProcName: 'GenericCallback'].
+			[genericCallback := Kernel32 getProcAddressUIntPtr: self asParameter lpProcName: 'GenericCallback'].
 	^genericCallback!
 
 getVTable
@@ -214,7 +214,7 @@ getWndProc
 	"There is not point throwing an error here if it fails, because that will be terminal anyway."
 
 	wndProc isNil
-		ifTrue: [wndProc := Kernel32 getProcAddressDWORD: self asParameter lpProcName: 'WndProc'].
+		ifTrue: [wndProc := Kernel32 getProcAddressUIntPtr: self asParameter lpProcName: 'WndProc'].
 	^wndProc!
 
 handleFromInteger: anInteger
@@ -582,20 +582,20 @@ initialize
 				at: #interruptHotKey put: 131;
 				at: #CRTHandle put: 132;
 				at: #memoryManager put: 133;
-				at: #BYTE put: 134;
-				at: #SBYTE put: 135;
-				at: #WORD put: 136;
-				at: #SWORD put: 137;
-				at: #DWORD put: 138;
-				at: #SDWORD put: 139;
+				at: #UInt8 put: 134;
+				at: #Int8 put: 135;
+				at: #UInt16 put: 136;
+				at: #Int16 put: 137;
+				at: #UInt32 put: 138;
+				at: #Int32 put: 139;
 				at: #FLOAT put: 140;
 				at: #DOUBLE put: 141;
 				at: #VARIANT_BOOL put: 142;
 				at: #CURRENCY put: 143;
 				at: #DECIMAL put: 144;
 				at: #LPBSTR put: 145;
-				at: #ULARGE_INTEGER put: 146;
-				at: #LARGE_INTEGER put: 147;
+				at: #UInt64 put: 146;
+				at: #Int64 put: 147;
 				at: #TimingSemaphore put: 150;
 				at: #MethodAnnotations put: 151;
 				isImmutable: true;

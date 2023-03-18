@@ -118,7 +118,7 @@ bytesReceived
 	"Answer the <sqword> value of the 'BytesReceived' property of the receiver."
 
 	| answer |
-	answer := LARGE_INTEGER new.
+	answer := Int64 new.
 	self get_BytesReceived: answer.
 	^answer asObject!
 
@@ -257,7 +257,7 @@ interruptReason
 	"Answer the <sdword> value of the 'InterruptReason' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_InterruptReason: answer.
 	^answer asObject!
 
@@ -338,7 +338,7 @@ state
 	"Answer the <sdword> value of the 'State' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_State: answer.
 	^answer asObject!
 
@@ -346,7 +346,7 @@ totalBytesToReceive
 	"Answer the <sqword> value of the 'TotalBytesToReceive' property of the receiver."
 
 	| answer |
-	answer := LARGE_INTEGER new.
+	answer := Int64 new.
 	self get_TotalBytesToReceive: answer.
 	^answer asObject!
 

@@ -76,12 +76,12 @@ aptl: aStructureArrayOfPOINTL
 cptl
 	"Answer the <Integer> value of the receiver's 'cptl' field."
 
-	^bytes dwordAtOffset: _OffsetOf_cptl!
+	^bytes uint32AtOffset: _OffsetOf_cptl!
 
 cptl: anInteger
 	"Set the receiver's 'cptl' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_cptl put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_cptl put: anInteger!
 
 rclBounds
 	"Answer the <RECTL> value of the receiver's 'rclBounds' field."
@@ -134,7 +134,7 @@ defineFields
 			type: (StructureField type: RECTL)
 			offset: 8;
 		defineField: #cptl
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 24;
 		defineField: #aptl
 			type: (StructureArrayField type: POINTL lengthField: #cptl)

@@ -58,7 +58,7 @@ lowerBound
 	Helpstring: 'Lower bound of range of random numbers generated'"
 
 	| answer |
-	answer := (SDWORD new).
+	answer := (Int32 new).
 	self get_LowerBound: answer.
 	^answer asObject
 !
@@ -71,11 +71,11 @@ lowerBound: pVal
 !
 
 next
-	"Answer the <SDWORD> result of invoking the Next() method of the COM object.
+	"Answer the <Int32> result of invoking the Next() method of the COM object.
 	Helpstring: 'Answer the next random number in the stream'"
 
 	| answer |
-	answer := (SDWORD new).
+	answer := (Int32 new).
 	self Next: answer.
 	^answer asObject
 !
@@ -125,7 +125,7 @@ seed
 	Helpstring: 'Current random seed'"
 
 	| answer |
-	answer := (SDWORD new).
+	answer := (Int32 new).
 	self get_Seed: answer.
 	^answer asObject
 !
@@ -142,7 +142,7 @@ upperBound
 	Helpstring: 'Upper bound of range of random numbers generated'"
 
 	| answer |
-	answer := (SDWORD new).
+	answer := (Int32 new).
 	self get_UpperBound: answer.
 	^answer asObject
 !

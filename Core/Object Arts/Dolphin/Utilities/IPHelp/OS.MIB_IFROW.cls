@@ -85,107 +85,107 @@ bPhysAddr
 dwAdminStatus
 	"Answer the <Integer> value of the receiver's 'dwAdminStatus' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwAdminStatus!
+	^bytes uint32AtOffset: _OffsetOf_dwAdminStatus!
 
 dwDescrLen
 	"Answer the <Integer> value of the receiver's 'dwDescrLen' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwDescrLen!
+	^bytes uint32AtOffset: _OffsetOf_dwDescrLen!
 
 dwIndex
 	"Answer the <Integer> value of the receiver's 'dwIndex' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwIndex!
+	^bytes uint32AtOffset: _OffsetOf_dwIndex!
 
 dwInDiscards
 	"Answer the <Integer> value of the receiver's 'dwInDiscards' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwInDiscards!
+	^bytes uint32AtOffset: _OffsetOf_dwInDiscards!
 
 dwInErrors
 	"Answer the <Integer> value of the receiver's 'dwInErrors' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwInErrors!
+	^bytes uint32AtOffset: _OffsetOf_dwInErrors!
 
 dwInNUcastPkts
 	"Answer the <Integer> value of the receiver's 'dwInNUcastPkts' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwInNUcastPkts!
+	^bytes uint32AtOffset: _OffsetOf_dwInNUcastPkts!
 
 dwInOctets
 	"Answer the <Integer> value of the receiver's 'dwInOctets' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwInOctets!
+	^bytes uint32AtOffset: _OffsetOf_dwInOctets!
 
 dwInUcastPkts
 	"Answer the <Integer> value of the receiver's 'dwInUcastPkts' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwInUcastPkts!
+	^bytes uint32AtOffset: _OffsetOf_dwInUcastPkts!
 
 dwInUnknownProtos
 	"Answer the <Integer> value of the receiver's 'dwInUnknownProtos' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwInUnknownProtos!
+	^bytes uint32AtOffset: _OffsetOf_dwInUnknownProtos!
 
 dwLastChange
 	"Answer the <Integer> value of the receiver's 'dwLastChange' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwLastChange!
+	^bytes uint32AtOffset: _OffsetOf_dwLastChange!
 
 dwMtu
 	"Answer the <Integer> value of the receiver's 'dwMtu' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwMtu!
+	^bytes uint32AtOffset: _OffsetOf_dwMtu!
 
 dwOperStatus
 	"Answer the <Integer> value of the receiver's 'dwOperStatus' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwOperStatus!
+	^bytes uint32AtOffset: _OffsetOf_dwOperStatus!
 
 dwOutDiscards
 	"Answer the <Integer> value of the receiver's 'dwOutDiscards' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwOutDiscards!
+	^bytes uint32AtOffset: _OffsetOf_dwOutDiscards!
 
 dwOutErrors
 	"Answer the <Integer> value of the receiver's 'dwOutErrors' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwOutErrors!
+	^bytes uint32AtOffset: _OffsetOf_dwOutErrors!
 
 dwOutNUcastPkts
 	"Answer the <Integer> value of the receiver's 'dwOutNUcastPkts' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwOutNUcastPkts!
+	^bytes uint32AtOffset: _OffsetOf_dwOutNUcastPkts!
 
 dwOutOctets
 	"Answer the <Integer> value of the receiver's 'dwOutOctets' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwOutOctets!
+	^bytes uint32AtOffset: _OffsetOf_dwOutOctets!
 
 dwOutQLen
 	"Answer the <Integer> value of the receiver's 'dwOutQLen' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwOutQLen!
+	^bytes uint32AtOffset: _OffsetOf_dwOutQLen!
 
 dwOutUcastPkts
 	"Answer the <Integer> value of the receiver's 'dwOutUcastPkts' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwOutUcastPkts!
+	^bytes uint32AtOffset: _OffsetOf_dwOutUcastPkts!
 
 dwPhysAddrLen
 	"Answer the <Integer> value of the receiver's 'dwPhysAddrLen' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwPhysAddrLen!
+	^bytes uint32AtOffset: _OffsetOf_dwPhysAddrLen!
 
 dwSpeed
 	"Answer the <Integer> value of the receiver's 'dwSpeed' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwSpeed!
+	^bytes uint32AtOffset: _OffsetOf_dwSpeed!
 
 dwType
 	"Answer the <Integer> value of the receiver's 'dwType' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwType!
+	^bytes uint32AtOffset: _OffsetOf_dwType!
 
 wszName
 	"Answer the <Utf16String> value of the receiver's 'wszName' field."
@@ -263,19 +263,19 @@ defineFields
 					yourself)
 			offset: 0;
 		defineField: #dwIndex
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 512;
 		defineField: #dwType
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 516;
 		defineField: #dwMtu
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 520;
 		defineField: #dwSpeed
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 524;
 		defineField: #dwPhysAddrLen
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 528;
 		defineField: #bPhysAddr
 			type: ((ArrayField type: ByteArray length: 8)
@@ -283,52 +283,52 @@ defineFields
 					yourself)
 			offset: 532;
 		defineField: #dwAdminStatus
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 540;
 		defineField: #dwOperStatus
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 544;
 		defineField: #dwLastChange
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 548;
 		defineField: #dwInOctets
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 552;
 		defineField: #dwInUcastPkts
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 556;
 		defineField: #dwInNUcastPkts
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 560;
 		defineField: #dwInDiscards
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 564;
 		defineField: #dwInErrors
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 568;
 		defineField: #dwInUnknownProtos
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 572;
 		defineField: #dwOutOctets
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 576;
 		defineField: #dwOutUcastPkts
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 580;
 		defineField: #dwOutNUcastPkts
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 584;
 		defineField: #dwOutDiscards
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 588;
 		defineField: #dwOutErrors
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 592;
 		defineField: #dwOutQLen
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 596;
 		defineField: #dwDescrLen
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 600;
 		defineField: #bDescr
 			type: ((ArrayField type: ByteArray length: 256)

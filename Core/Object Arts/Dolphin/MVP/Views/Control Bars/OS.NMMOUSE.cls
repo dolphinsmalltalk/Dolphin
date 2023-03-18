@@ -23,23 +23,23 @@ NMMOUSE accompanies certain notifications that are sent by a control bars (e.g. 
 dwHitInfo
 	"Answer the <Integer> value of the receiver's 'dwHitInfo' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwHitInfo!
+	^bytes uint32AtOffset: _OffsetOf_dwHitInfo!
 
 dwItemData
 	"Answer the <Integer> value of the receiver's 'dwItemData' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwItemData!
+	^bytes uint32AtOffset: _OffsetOf_dwItemData!
 
 dwItemSpec
 	"Answer the <Integer> value of the receiver's 'dwItemSpec' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwItemSpec!
+	^bytes uint32AtOffset: _OffsetOf_dwItemSpec!
 
 iItem
 	"Answer the item index (appropriate when originating from a control whose items
 	are externally identified by integer keys)."
 
-	^bytes sdwordAtOffset: 12!
+	^bytes int32AtOffset: 12!
 
 position
 	^self pt asPoint!
@@ -69,10 +69,10 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #dwItemSpec type: DWORDField readOnly;
-		defineField: #dwItemData type: DWORDField readOnly;
+		defineField: #dwItemSpec type: UInt32Field readOnly;
+		defineField: #dwItemData type: UInt32Field readOnly;
 		defineField: #pt type: (StructureField type: POINTL) beReadOnly;
-		defineField: #dwHitInfo type: DWORDField readOnly!
+		defineField: #dwHitInfo type: UInt32Field readOnly!
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #dwItemSpec #dwItemData #pt #dwHitInfo)! !

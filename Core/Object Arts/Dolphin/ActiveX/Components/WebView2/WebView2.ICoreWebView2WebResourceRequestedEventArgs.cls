@@ -114,7 +114,7 @@ resourceContext
 	"Answer the <sdword> value of the 'ResourceContext' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_ResourceContext: answer.
 	^answer asObject!
 

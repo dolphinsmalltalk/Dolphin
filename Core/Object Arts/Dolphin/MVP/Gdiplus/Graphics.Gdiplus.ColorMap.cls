@@ -31,22 +31,22 @@ struct tagGpColorMap {
 newColor
 	"Answer the <Integer> value of the receiver's 'newColor' field."
 
-	^bytes dwordAtOffset: _OffsetOf_newColor!
+	^bytes uint32AtOffset: _OffsetOf_newColor!
 
 newColor: anInteger
 	"Set the receiver's 'newColor' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_newColor put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_newColor put: anInteger!
 
 oldColor
 	"Answer the <Integer> value of the receiver's 'oldColor' field."
 
-	^bytes dwordAtOffset: _OffsetOf_oldColor!
+	^bytes uint32AtOffset: _OffsetOf_oldColor!
 
 oldColor: anInteger
 	"Set the receiver's 'oldColor' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_oldColor put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_oldColor put: anInteger! !
 !Graphics.Gdiplus.ColorMap categoriesForMethods!
 newColor!**compiled accessors**!public! !
 newColor:!**compiled accessors**!public! !
@@ -72,8 +72,8 @@ defineFields
 "
 
 	self
-		defineField: #oldColor type: DWORDField new offset: 0;
-		defineField: #newColor type: DWORDField new offset: 4.
+		defineField: #oldColor type: UInt32Field new offset: 0;
+		defineField: #newColor type: UInt32Field new offset: 4.
 	self byteSize: 8!
 
 getFieldNames

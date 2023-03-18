@@ -26,22 +26,22 @@ Instance Variables:
 dwFlags
 	"Answer the <Integer> value of the receiver's 'dwFlags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwFlags!
+	^bytes uint32AtOffset: _OffsetOf_dwFlags!
 
 dwFlags: anInteger
 	"Set the receiver's 'dwFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwFlags put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwFlags put: anInteger!
 
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 dwTimeout: anInteger
 	"Set the receiver's 'dwTimeout' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwTimeout put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwTimeout put: anInteger!
 
 hwnd: anExternalHandle
 	"Set the receiver's 'hwnd' field to the value of the argument, anExternalHandle"
@@ -51,7 +51,7 @@ hwnd: anExternalHandle
 uCount: anInteger
 	"Set the receiver's 'uCount' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_uCount put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_uCount put: anInteger! !
 !OS.FLASHWINFO categoriesForMethods!
 dwFlags!**compiled accessors**!public! !
 dwFlags:!**compiled accessors**!public! !
@@ -81,11 +81,11 @@ defineFields
 	"
 
 	self
-		defineField: #dwSize type: DWORDField writeOnly beOverride;
+		defineField: #dwSize type: UInt32Field writeOnly beOverride;
 		defineField: #hwnd type: HANDLEField writeOnly;
-		defineField: #dwFlags type: DWORDField new;
-		defineField: #uCount type: DWORDField writeOnly;
-		defineField: #dwTimeout type: DWORDField writeOnly!
+		defineField: #dwFlags type: UInt32Field new;
+		defineField: #uCount type: UInt32Field writeOnly;
+		defineField: #dwTimeout type: UInt32Field writeOnly!
 
 getFieldNames
 	^#(#dwSize #hwnd #dwFlags #uCount #dwTimeout)! !

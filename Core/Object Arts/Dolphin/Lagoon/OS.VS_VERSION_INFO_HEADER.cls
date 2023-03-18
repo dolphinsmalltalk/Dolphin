@@ -41,11 +41,6 @@ valueBytes
 		fromAddress: self yourAddress asInteger + self valueOffset 
 		length: self wValueLength!
 
-valueDWORDs
-	"Answer a <DWORDArray> containing the values of the receiver (assumes this is a Var block)."
-
-	^DWORDArray fromAddress: self yourAddress asInteger + self valueOffset length: self wValueLength//4!
-
 valueOffset
 	"Answer the offset into the resource block pointed at by the receiver at which the value
 	starts."
@@ -65,28 +60,34 @@ valueString
 		ifTrue: [Utf16String new]
 		ifFalse: [Utf16String fromAddress: self yourAddress asInteger + self valueOffset length: words - 1]!
 
+valueUInt32s
+	"Answer a <UInt32Array> containing the values of the receiver (assumes this is a Var block)."
+
+	^UInt32Array fromAddress: self yourAddress asInteger + self valueOffset
+		length: self wValueLength // 4!
+
 wLength
 	"Answer the <Integer> value of the receiver's 'wLength' field."
 
-	^bytes wordAtOffset: _OffsetOf_wLength!
+	^bytes uint16AtOffset: _OffsetOf_wLength!
 
 wType
 	"Answer the <Integer> value of the receiver's 'wType' field."
 
-	^bytes wordAtOffset: _OffsetOf_wType!
+	^bytes uint16AtOffset: _OffsetOf_wType!
 
 wValueLength
 	"Answer the <Integer> value of the receiver's 'wValueLength' field."
 
-	^bytes wordAtOffset: _OffsetOf_wValueLength! !
+	^bytes uint16AtOffset: _OffsetOf_wValueLength! !
 !OS.VS_VERSION_INFO_HEADER categoriesForMethods!
 childrenOffset!accessing!public! !
 key!accessing!public! !
 szKey!accessing!private! !
 valueBytes!accessing!public! !
-valueDWORDs!accessing!public! !
 valueOffset!accessing!public! !
 valueString!accessing!public! !
+valueUInt32s!accessing!public! !
 wLength!**compiled accessors**!public! !
 wType!**compiled accessors**!public! !
 wValueLength!**compiled accessors**!public! !
@@ -104,9 +105,9 @@ defineFields
 	"
  
 	self
-		defineField: #wLength type: WORDField readOnly;
-		defineField: #wValueLength type: WORDField readOnly;
-		defineField: #wType type: WORDField readOnly
+		defineField: #wLength type: UInt16Field readOnly;
+		defineField: #wValueLength type: UInt16Field readOnly;
+		defineField: #wType type: UInt16Field readOnly
 		"All other fields are of variable length"!
 
 getFieldNames

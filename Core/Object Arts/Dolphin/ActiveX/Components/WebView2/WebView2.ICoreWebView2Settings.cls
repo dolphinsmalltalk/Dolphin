@@ -305,7 +305,7 @@ hiddenPdfToolbarItems
 	"Answer the <sdword> value of the 'HiddenPdfToolbarItems' property of the receiver. These are flag values from the COREWEBVIEW2_PDF_TOOLBAR_ITEMS enumeration."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_HiddenPdfToolbarItems: answer.
 	^answer asObject!
 

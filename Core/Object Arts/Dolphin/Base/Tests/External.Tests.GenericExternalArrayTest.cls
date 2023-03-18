@@ -15,7 +15,7 @@ arrayValueString: eachValue
 	^eachValue displayString!
 
 elementClassNames
-	^#(#SWORD #SDWORD #FLOAT #DOUBLE #'COM.CURRENCY' #'COM.BSTR' #HRESULT #'COM.VARIANT_BOOL' #'COM.VARIANT' #'COM.DECIMAL' #SBYTE #BYTE)!
+	^#(#Int16 #Int32 #FLOAT #DOUBLE #'COM.CURRENCY' #'COM.BSTR' #HRESULT #'COM.VARIANT_BOOL' #'COM.VARIANT' #'COM.DECIMAL' #Int8 #UInt8)!
 
 elementFromValue: anObject 
 	^self numericElementClass fromObject: anObject!
@@ -24,7 +24,7 @@ elementToValue: element
 	^element value!
 
 numericElementClass
-	^SDWORD!
+	^Int32!
 
 testComparing
 	"GenericExternalArrays do not compare equal to Arrays of equivalent values (or indeed ExternalArrays of the same value type) because the elements as enumerated are structures."
@@ -49,7 +49,7 @@ testElementSize
 testInvalidLength
 	"#1051."
 
-	self should: [self arrayClass length: -1 elementClass: DWORD] raise: Error!
+	self should: [self arrayClass length: -1 elementClass: UInt32] raise: Error!
 
 testSelfEvaluating
 	| subject |
@@ -62,7 +62,7 @@ testWithDo
 	validationBlock := 
 			[:a :b |
 			self assert: b equals: count.
-			self assert: a isKindOf: SDWORD.
+			self assert: a isKindOf: Int32.
 			self assert: a value equals: b.
 			count := count + 1.
 			a value: count].

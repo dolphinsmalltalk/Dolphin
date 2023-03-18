@@ -167,7 +167,7 @@ backColor
 	"Implementation Note: Modify auto-generated method to answer a <Color> rather than an <integer>."
 
 	| answer |
-	answer := DWORD new.
+	answer := UInt32 new.
 	self get_BackColor: answer.
 	^Color fromCOLORREF: answer value!
 
@@ -200,7 +200,7 @@ docHostDoubleClickFlags
 	Helpstring: Set the DOCHOSTUIDBLCLK flags"
 
 	| answer |
-	answer := (DWORD new).
+	answer := (UInt32 new).
 	self get_DocHostDoubleClickFlags: answer.
 	^answer asObject
 !
@@ -217,7 +217,7 @@ docHostFlags
 	Helpstring: Set the DOCHOSTUIFLAG flags"
 
 	| answer |
-	answer := (DWORD new).
+	answer := (UInt32 new).
 	self get_DocHostFlags: answer.
 	^answer asObject
 !
@@ -253,7 +253,7 @@ foreColor
 	"Implementation Note: Modify auto-generated method to answer a <Color> rather than an <integer>."
 
 	| answer |
-	answer := DWORD new.
+	answer := UInt32 new.
 	self get_ForeColor: answer.
 	^Color fromCOLORREF: answer value!
 
@@ -405,7 +405,7 @@ localeID
 	Helpstring: Set the ambient locale"
 
 	| answer |
-	answer := (DWORD new).
+	answer := (UInt32 new).
 	self get_LocaleID: answer.
 	^answer asObject
 !

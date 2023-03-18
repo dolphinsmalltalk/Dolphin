@@ -16,7 +16,7 @@ arrayBufferAt: buf length: count
 	"Private - Answer a suitable <ExternalArray> wrapping the buffer at <ExternalAddress>,
 	buf, of <integer> length, count."
 
-	^DWORDArray fromAddress: buf length: count
+	^UInt32Array fromAddress: buf length: count
 !
 
 nextElement

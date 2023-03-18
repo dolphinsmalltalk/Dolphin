@@ -87,7 +87,7 @@ initialize
 	);"
 
 	FileIOCompletionRoutineDescriptor := External.FunctionDescriptor
-				argumentTypes: 'DWORD DWORD OVERLAPPED*'! !
+				argumentTypes: 'uint32 uint32 OVERLAPPED*'! !
 !OS.FileSystemWatcher class categoriesForMethods!
 initialize!initializing!public! !
 !

@@ -32,22 +32,22 @@ struct tagGRADIENT_RECT {
 lowerRight
 	"Answer the <Integer> value of the receiver's 'lowerRight' field."
 
-	^bytes dwordAtOffset: _OffsetOf_lowerRight!
+	^bytes uint32AtOffset: _OffsetOf_lowerRight!
 
 lowerRight: anInteger
 	"Set the receiver's 'lowerRight' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_lowerRight put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_lowerRight put: anInteger!
 
 upperLeft
 	"Answer the <Integer> value of the receiver's 'upperLeft' field."
 
-	^bytes dwordAtOffset: _OffsetOf_upperLeft!
+	^bytes uint32AtOffset: _OffsetOf_upperLeft!
 
 upperLeft: anInteger
 	"Set the receiver's 'upperLeft' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_upperLeft put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_upperLeft put: anInteger! !
 !OS.GRADIENT_RECT categoriesForMethods!
 lowerRight!**compiled accessors**!public! !
 lowerRight:!**compiled accessors**!public! !
@@ -73,8 +73,8 @@ defineFields
 "
 
 	self
-		defineField: #upperLeft type: DWORDField new;
-		defineField: #lowerRight type: DWORDField new!
+		defineField: #upperLeft type: UInt32Field new;
+		defineField: #lowerRight type: UInt32Field new!
 
 getFieldNames
 	^#(#upperLeft #lowerRight)! !

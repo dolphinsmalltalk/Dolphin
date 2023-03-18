@@ -35,7 +35,7 @@ column
 	Helpstring: Source code column position where the error occurred"
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_Column: answer.
 	^answer asObject!
 
@@ -125,7 +125,7 @@ helpContext
 	Helpstring: Context ID for the topic with information on the error"
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_HelpContext: answer.
 	^answer asObject!
 
@@ -153,7 +153,7 @@ line
 	Helpstring: Source code line number where the error occurred"
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_Line: answer.
 	^answer asObject!
 
@@ -162,7 +162,7 @@ number
 	Helpstring: Error number"
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_Number: answer.
 	^answer asObject!
 

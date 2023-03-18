@@ -88,10 +88,10 @@ NoteChangeTime: dwRegister pfiletime: pfiletime
 	^self invalidCall: _failureCode!
 
 register: grfFlags punkObject: punkObject pmkObjectName: pmkObjectName
-	"Answer the <DWORD> result of invoking the Register() method of the COM object."
+	"Answer the <UInt32> result of invoking the Register() method of the COM object."
 
 	| answer |
-	answer := DWORD new.
+	answer := UInt32 new.
 	self
 		Register: grfFlags
 		punkObject: punkObject

@@ -141,32 +141,34 @@ testConvertFromIntegerWithScale
 testEqualityComparisons
 	"Test equality comparisons between ScaledDecimals of various scales, and various classes of numbers (including other ScaledDecimals)"
 
-	0 to: 15 do: 
-		[ :scale |
-		self numericTestValues do: 
-			[ :each || scaledDecimal scaledDecimalPlusOne scaledDecimalMinusFraction |
-			scaledDecimal := each asScaledDecimal: scale.
-			scaledDecimalPlusOne := scaledDecimal + 1.
-			scaledDecimalMinusFraction := scaledDecimal - 0.005s.
+	0 to: 15
+		do: 
+			[:scale |
+			self numericTestValues do: 
+					[:each |
+					| scaledDecimal scaledDecimalPlusOne scaledDecimalMinusFraction |
+					scaledDecimal := each asScaledDecimal: scale.
+					scaledDecimalPlusOne := scaledDecimal + 1.
+					scaledDecimalMinusFraction := scaledDecimal - 0.005s.
+					self
+						assert: scaledDecimal equals: scaledDecimal;
+						assert: scaledDecimal equals: each;
+						assert: each equals: scaledDecimal.
+					self
+						deny: scaledDecimal equals: scaledDecimalPlusOne;
+						deny: scaledDecimalPlusOne equals: scaledDecimal;
+						deny: scaledDecimalPlusOne equals: each;
+						deny: each equals: scaledDecimalPlusOne.
+					self
+						deny: scaledDecimal equals: scaledDecimalMinusFraction;
+						deny: scaledDecimalMinusFraction equals: scaledDecimal;
+						deny: scaledDecimalMinusFraction equals: scaledDecimalPlusOne;
+						deny: scaledDecimalPlusOne equals: scaledDecimalMinusFraction;
+						deny: scaledDecimalMinusFraction equals: each;
+						deny: each equals: scaledDecimalMinusFraction]].
 
-			self 
-				assert: scaledDecimal equals: scaledDecimal;
-				assert: scaledDecimal equals: each;
-				assert: each equals: scaledDecimal.
-
-			self 
-				deny: scaledDecimal equals: scaledDecimalPlusOne;
-				deny: scaledDecimalPlusOne equals: scaledDecimal;
-				deny: scaledDecimalPlusOne equals: each;
-				deny: each equals: scaledDecimalPlusOne.
-
-			self 
-				deny: scaledDecimal equals: scaledDecimalMinusFraction;
-				deny: scaledDecimalMinusFraction equals: scaledDecimal;
-				deny: scaledDecimalMinusFraction equals: scaledDecimalPlusOne;
-				deny: scaledDecimalPlusOne equals: scaledDecimalMinusFraction;
-				deny: scaledDecimalMinusFraction equals: each;
-				deny: each equals: scaledDecimalMinusFraction]]!
+	"This doesn't seem right to me (should be equal), although Pharo and Squeak have the same 'bug', so maybe it isn't"
+	self deny: (1 / 3 asScaledDecimal: 4) equals: 0.3333s!
 
 testExactNthRoot
 	| eight thousandth tenth two |
@@ -609,17 +611,30 @@ testOneRaisedToInteger
 	self assert: (1.0s1 raisedToInteger: 2) scale equals: 1.
 	self assert: (1.0s1 raisedToInteger: 2) equals: 1!
 
+testPrinting
+	| subject |
+	subject := 100000000000 / 3 asScaledDecimal: 4.
+	self assert: subject printString equals: '33333333333.3333s'.
+	subject := 13 / 11 asScaledDecimal: 6.
+	self assert: subject printString equals: '1.181818s'.
+	subject := 13 / 11 asScaledDecimal: 5.
+	self assert: subject printString equals: '1.18182s'!
+
 testPrintString
+	| subject stream |
+	subject := 100000000000 / 3 asScaledDecimal: 4.
+	"We don't want the integer part to print in hex."
+	stream := String writeStream
+				locale: SmalltalkLocale.Hex;
+				yourself.
+	subject printOn: stream.
+	self assert: stream contents equals: '33333333333.3333s'.
 	"The printed representation of a ScaledDecimal is rounded.
 	Note that old implementation was truncated."
-
-	| sd |
-	sd := 13 / 11 asScaledDecimal: 6.
-	self assert: sd printString equals: '1.181818s'.
-	sd := 13 / 11 asScaledDecimal: 5.
-	self assert: sd printString equals: '1.18182s'.
-	sd := 13 / 11 asScaledDecimal: 5.
-	self deny: '1.18181s' equals: sd printString!
+	subject := 13 / 11 asScaledDecimal: 6.
+	self assert: subject printString equals: '1.181818s'.
+	subject := 13 / 11 asScaledDecimal: 5.
+	self assert: subject printString equals: '1.18182s'!
 
 testRaisedToInteger
 	"Raising to integer should preserve class and scale"
@@ -750,6 +765,7 @@ testLessThanFraction!public!unit tests! !
 testLessThanInteger!public!unit tests! !
 testLiteral!public!unit tests! !
 testOneRaisedToInteger!public!unit tests! !
+testPrinting!public! !
 testPrintString!public!unit tests! !
 testRaisedToInteger!public!unit tests! !
 testReadFrom!public!unit tests! !

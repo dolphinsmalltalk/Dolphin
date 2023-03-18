@@ -32,12 +32,12 @@ struct tagTASKDIALOG_BUTTON {
 nButtonID
 	"Answer the <Integer> value of the receiver's 'nButtonID' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_nButtonID!
+	^bytes int32AtOffset: _OffsetOf_nButtonID!
 
 nButtonID: anInteger
 	"Set the receiver's 'nButtonID' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_nButtonID put: anInteger!
+	bytes int32AtOffset: _OffsetOf_nButtonID put: anInteger!
 
 pszButtonText
 	"Answer the <Utf16String> value of the receiver's 'pszButtonText' field."
@@ -73,7 +73,7 @@ defineFields
 "
 
 	self
-		defineField: #nButtonID type: SDWORDField new offset: 0;
+		defineField: #nButtonID type: Int32Field new offset: 0;
 		defineField: #pszButtonText type: (PointerField type: Utf16String) offset: 4.
 	self byteSize: 8!
 

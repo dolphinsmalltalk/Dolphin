@@ -170,7 +170,7 @@ height
 	"Answer the <dword> value of the 'Height' property of the receiver."
 
 	| answer |
-	answer := DWORD new.
+	answer := UInt32 new.
 	self get_Height: answer.
 	^answer asObject!
 
@@ -178,7 +178,7 @@ left
 	"Answer the <dword> value of the 'left' property of the receiver."
 
 	| answer |
-	answer := DWORD new.
+	answer := UInt32 new.
 	self get_left: answer.
 	^answer asObject!
 
@@ -230,7 +230,7 @@ top
 	"Answer the <dword> value of the 'top' property of the receiver."
 
 	| answer |
-	answer := DWORD new.
+	answer := UInt32 new.
 	self get_top: answer.
 	^answer asObject!
 
@@ -238,7 +238,7 @@ width
 	"Answer the <dword> value of the 'Width' property of the receiver."
 
 	| answer |
-	answer := DWORD new.
+	answer := UInt32 new.
 	self get_Width: answer.
 	^answer asObject! !
 !WebView2.ICoreWebView2WindowFeatures categoriesForMethods!

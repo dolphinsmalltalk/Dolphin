@@ -36,42 +36,42 @@ struct tagCOLORCORRECTPALETTE {
 ihPalette
 	"Answer the <Integer> value of the receiver's 'ihPalette' field."
 
-	^bytes dwordAtOffset: _OffsetOf_ihPalette!
+	^bytes uint32AtOffset: _OffsetOf_ihPalette!
 
 ihPalette: anInteger
 	"Set the receiver's 'ihPalette' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_ihPalette put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_ihPalette put: anInteger!
 
 nFirstEntry
 	"Answer the <Integer> value of the receiver's 'nFirstEntry' field."
 
-	^bytes dwordAtOffset: _OffsetOf_nFirstEntry!
+	^bytes uint32AtOffset: _OffsetOf_nFirstEntry!
 
 nFirstEntry: anInteger
 	"Set the receiver's 'nFirstEntry' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_nFirstEntry put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_nFirstEntry put: anInteger!
 
 nPalEntries
 	"Answer the <Integer> value of the receiver's 'nPalEntries' field."
 
-	^bytes dwordAtOffset: _OffsetOf_nPalEntries!
+	^bytes uint32AtOffset: _OffsetOf_nPalEntries!
 
 nPalEntries: anInteger
 	"Set the receiver's 'nPalEntries' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_nPalEntries put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_nPalEntries put: anInteger!
 
 nReserved
 	"Answer the <Integer> value of the receiver's 'nReserved' field."
 
-	^bytes dwordAtOffset: _OffsetOf_nReserved!
+	^bytes uint32AtOffset: _OffsetOf_nReserved!
 
 nReserved: anInteger
 	"Set the receiver's 'nReserved' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_nReserved put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_nReserved put: anInteger! !
 !OS.EMRCOLORCORRECTPALETTE categoriesForMethods!
 ihPalette!**compiled accessors**!public! !
 ihPalette:!**compiled accessors**!public! !
@@ -106,16 +106,16 @@ defineFields
 	super defineFields.
 	self
 		defineField: #ihPalette
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 8;
 		defineField: #nFirstEntry
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 12;
 		defineField: #nPalEntries
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 16;
 		defineField: #nReserved
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 20.
 	self byteSize: 24!
 

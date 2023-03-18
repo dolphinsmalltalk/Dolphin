@@ -32,7 +32,7 @@ asDword
 	"Answer the receiver in a form suitable for passing or returning 
 	as a 32-bit value (i.e. a 32-bit integer)."
 
-	^bytes dwordAtOffset: 0!
+	^bytes uint32AtOffset: 0!
 
 asUIntPtr
 	"Answer the receiver in a form suitable for passing or returning 
@@ -40,7 +40,7 @@ asUIntPtr
 
 	"Implementation Note: The compiler will optimise out the condition because it is constant."
 
-	^VMConstants.IsWin64 ifTrue: [self asPoint asUIntPtr] ifFalse: [bytes dwordAtOffset: 0]!
+	^VMConstants.IsWin64 ifTrue: [self asPoint asUIntPtr] ifFalse: [bytes uint32AtOffset: 0]!
 
 isZero
 	"Answer whether the receiver is equal to Point zero."
@@ -50,22 +50,22 @@ isZero
 x
 	"Answer the <Integer> value of the receiver's 'x' field."
 
-	^bytes swordAtOffset: _OffsetOf_x!
+	^bytes int16AtOffset: _OffsetOf_x!
 
 x: anInteger
 	"Set the receiver's 'x' field to the value of the argument, anInteger"
 
-	bytes swordAtOffset: _OffsetOf_x put: anInteger!
+	bytes int16AtOffset: _OffsetOf_x put: anInteger!
 
 y
 	"Answer the <Integer> value of the receiver's 'y' field."
 
-	^bytes swordAtOffset: _OffsetOf_y!
+	^bytes int16AtOffset: _OffsetOf_y!
 
 y: anInteger
 	"Set the receiver's 'y' field to the value of the argument, anInteger"
 
-	bytes swordAtOffset: _OffsetOf_y put: anInteger! !
+	bytes int16AtOffset: _OffsetOf_y put: anInteger! !
 !OS.POINTS categoriesForMethods!
 asDword!converting!public! !
 asUIntPtr!converting!public! !
@@ -94,13 +94,13 @@ defineFields
 "
 
 	self
-		defineField: #x type: SWORDField new beOverride;
-		defineField: #y type: SWORDField new beOverride!
+		defineField: #x type: Int16Field new beOverride;
+		defineField: #y type: Int16Field new beOverride!
 
 x: x y: y
 	^self basicNew bytes: ((ByteArray newFixed: _POINTS_Size)
-				swordAtOffset: _OffsetOf_x put: x;
-				swordAtOffset: _OffsetOf_y put: y;
+				int16AtOffset: _OffsetOf_x put: x;
+				int16AtOffset: _OffsetOf_y put: y;
 				yourself)! !
 !OS.POINTS class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !

@@ -417,7 +417,7 @@ msgWaitForMultipleObjectsEx: countInteger pHandles: handles dwMilliseconds: mill
 			by the argument, countInteger, and whether to wait for a single object
 			or all of the objects being specified by the argument, waitBoolean), 
 			the objects whose handles are specified by the argument, handles 
-			(which may be a single handle, or a DWORDArray) are 
+			(which may be a single handle, or a UInt32Array) are 
 			in the signaled state; or
 		·	A Win32 message of a type which matches the type mask specified by
 			the argument, maskInteger, becomes available in the message queue (
@@ -593,14 +593,6 @@ setTimer: aWindowHandle nIDEvent: anIntegerId uElapse: anInteger lpTimerFunc: ca
 	<stdcall: dword SetTimer handle dword dword lpvoid>
 	^self invalidCall: _failureCode!
 
-setWindowDWORD: aWindowHandle nIndex: offset dwNewDWORD: value
-	"See #setWindowLong:nIndex:dwNewLong: value, but note this expects an unsigned 32-bit
-	integer as its last argument, and always returns a positive integer constructed by treating
-	the return value as unsigned."
-
-	<stdcall: dword SetWindowLongW handle sdword dword>
-	^self invalidCall: _failureCode!
-
 setWindowText: aWindowHandle lpString: aString
 	"Set the 'text' of the specified window.
 		BOOL SetWindowText(
@@ -703,7 +695,6 @@ setCursor:!public!win32 functions-cursor! !
 setDlgItemText:nIDDlgItem:lpString:!public!win32 functions-dialog box! !
 setKeyboardState:!public!win32 functions-keyboard input! !
 setTimer:nIDEvent:uElapse:lpTimerFunc:!public!win32 functions-timer! !
-setWindowDWORD:nIndex:dwNewDWORD:!public!win32 functions-window class! !
 setWindowText:lpString:!public!win32 functions-window! !
 showWindow:nCmdShow:!public!win32 functions-window! !
 translateMessage:!public!win32 functions-message and message queue! !

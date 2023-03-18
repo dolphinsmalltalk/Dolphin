@@ -40,17 +40,17 @@ color: aColor
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 flags
 	"Answer the <Integer> value of the receiver's 'flags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_flags!
+	^bytes uint32AtOffset: _OffsetOf_flags!
 
 flags: anInteger
 	"Set the receiver's 'flags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_flags put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_flags put: anInteger!
 
 hDC: anExternalHandle
 	"Set the receiver's 'hDC' field to the value of the argument, anExternalHandle"
@@ -68,7 +68,7 @@ hwndOwner: anExternalHandle
 iPointSize
 	"Answer the <Integer> value of the receiver's 'iPointSize' field."
 
-	^bytes dwordAtOffset: _OffsetOf_iPointSize!
+	^bytes uint32AtOffset: _OffsetOf_iPointSize!
 
 logFont
 	^logFont!
@@ -102,12 +102,12 @@ ownerView: aView
 rgbColors
 	"Answer the <Integer> value of the receiver's 'rgbColors' field."
 
-	^bytes dwordAtOffset: _OffsetOf_rgbColors!
+	^bytes uint32AtOffset: _OffsetOf_rgbColors!
 
 rgbColors: anInteger
 	"Set the receiver's 'rgbColors' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_rgbColors put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_rgbColors put: anInteger! !
 !OS.CHOOSEFONTW categoriesForMethods!
 color!public! !
 color:!public! !
@@ -157,21 +157,21 @@ defineFields
 	} CHOOSEFONT;"
 
 	self
-		defineField: #dwSize type: DWORDField writeOnly beOverride;
+		defineField: #dwSize type: UInt32Field writeOnly beOverride;
 		defineField: #hwndOwner type: HANDLEField writeOnly;
 		defineField: #hDC type: HANDLEField writeOnly;
 		defineField: #lpLogFont type: (PointerField type: LOGFONTW);
-		defineField: #iPointSize type: DWORDField readOnly;
-		defineField: #flags type: DWORDField new beOverride;
-		defineField: #rgbColors type: DWORDField new;
-		defineField: #lCustData type: INT_PTRField filler;
+		defineField: #iPointSize type: UInt32Field readOnly;
+		defineField: #flags type: UInt32Field new beOverride;
+		defineField: #rgbColors type: UInt32Field new;
+		defineField: #lCustData type: IntPtrField filler;
 		defineField: #lpfnHook type: LPVOIDField writeOnly beOverride;
 		defineField: #lpTemplateName type: (PointerField type: Utf16String) beFiller;
 		defineField: #hInstance type: HANDLEField filler;
 		defineField: #lpszStyle type: (PointerField type: Utf16String) beUncompiled;
-		defineField: #nFontType type: WORDField readOnly beUncompiled;
-		defineField: #nSizeMin type: DWORDField writeOnly beUncompiled;
-		defineField: #nSizeMax type: DWORDField writeOnly beUncompiled!
+		defineField: #nFontType type: UInt16Field readOnly beUncompiled;
+		defineField: #nSizeMin type: UInt32Field writeOnly beUncompiled;
+		defineField: #nSizeMax type: UInt32Field writeOnly beUncompiled!
 
 getFieldNames
 	^#(#dwSize #hwndOwner #hDC #lpLogFont #iPointSize #flags #rgbColors #lpfnHook #lpszStyle #nFontType #nSizeMin #nSizeMax)! !

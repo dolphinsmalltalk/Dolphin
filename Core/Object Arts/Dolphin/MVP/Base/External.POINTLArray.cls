@@ -16,7 +16,7 @@ uncheckedAt: anInteger
 
 	| offset |
 	offset := anInteger - 1 bitShift: 3.
-	^(bytes sdwordAtOffset: offset) @ (bytes sdwordAtOffset: offset + 4)!
+	^(bytes int32AtOffset: offset) @ (bytes int32AtOffset: offset + 4)!
 
 uncheckedAt: anInteger put: aPoint
 	"Private - Replace the <POINTL> value at the specified index in the receiver with the x and y co-ordindates of the <Point> argument.
@@ -24,7 +24,7 @@ uncheckedAt: anInteger put: aPoint
 
 	| offset |
 	offset := anInteger - 1 bitShift: 3.
-	^(bytes sdwordAtOffset: offset put: aPoint x) @ (bytes sdwordAtOffset: offset + 4 put: aPoint y)! !
+	^(bytes int32AtOffset: offset put: aPoint x) @ (bytes int32AtOffset: offset + 4 put: aPoint y)! !
 !External.POINTLArray categoriesForMethods!
 uncheckedAt:!accessing!private! !
 uncheckedAt:put:!accessing!private! !

@@ -31,7 +31,7 @@ struct tagIP_ADAPTER_INDEX_MAP {
 index
 	"Answer the <Integer> value of the receiver's 'index' field."
 
-	^bytes dwordAtOffset: _OffsetOf_index!
+	^bytes uint32AtOffset: _OffsetOf_index!
 
 Name
 	"Answer the <Utf16String> value of the receiver's 'Name' field."
@@ -60,7 +60,7 @@ defineFields
 
 	self
 		defineField: #index
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 0;
 		defineField: #Name
 			type: ((StringField type: Utf16String length: 128)

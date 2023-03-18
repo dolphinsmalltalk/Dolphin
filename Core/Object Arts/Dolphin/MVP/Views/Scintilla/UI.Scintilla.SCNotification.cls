@@ -45,7 +45,7 @@ annotationLinesAdded
 ch
 	"Answer the <Integer> value of the receiver's 'ch' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_ch!
+	^bytes int32AtOffset: _OffsetOf_ch!
 
 character
 	"Answer the receiver's <Character> who's codePoint is stored in the 'ch' field."
@@ -55,17 +55,17 @@ character
 characterSource
 	"Answer the <Integer> value of the receiver's 'characterSource' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_characterSource!
+	^bytes int32AtOffset: _OffsetOf_characterSource!
 
 foldLevelNow
 	"Answer the <Integer> value of the receiver's 'foldLevelNow' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_foldLevelNow!
+	^bytes int32AtOffset: _OffsetOf_foldLevelNow!
 
 foldLevelPrev
 	"Answer the <Integer> value of the receiver's 'foldLevelPrev' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_foldLevelPrev!
+	^bytes int32AtOffset: _OffsetOf_foldLevelPrev!
 
 getValidFields
 	"Private - Answer a <sequencedReadableCollection> of the fields defined 
@@ -189,12 +189,12 @@ linesAdded
 listCompletionMethod
 	"Answer the <Integer> value of the receiver's 'listCompletionMethod' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_listCompletionMethod!
+	^bytes int32AtOffset: _OffsetOf_listCompletionMethod!
 
 listType
 	"Answer the <Integer> value of the receiver's 'listType' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_listType!
+	^bytes int32AtOffset: _OffsetOf_listType!
 
 lParam
 	"Answer the <Integer> value of the receiver's 'lParam' field."
@@ -204,22 +204,22 @@ lParam
 margin
 	"Answer the <Integer> value of the receiver's 'margin' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_margin!
+	^bytes int32AtOffset: _OffsetOf_margin!
 
 message
 	"Answer the <Integer> value of the receiver's 'message' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_message!
+	^bytes int32AtOffset: _OffsetOf_message!
 
 modificationType
 	"Answer the <Integer> value of the receiver's 'modificationType' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_modificationType!
+	^bytes int32AtOffset: _OffsetOf_modificationType!
 
 modifiers
 	"Answer the <Integer> value of the receiver's 'modifiers' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_modifiers!
+	^bytes int32AtOffset: _OffsetOf_modifiers!
 
 point
 	^self x @ self y!
@@ -250,12 +250,12 @@ textString
 token
 	"Answer the <Integer> value of the receiver's 'token' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_token!
+	^bytes int32AtOffset: _OffsetOf_token!
 
 updated
 	"Answer the <Integer> value of the receiver's 'updated' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_updated!
+	^bytes int32AtOffset: _OffsetOf_updated!
 
 view: aScintillaView
 	view := aScintillaView!
@@ -268,12 +268,12 @@ wParam
 x
 	"Answer the <Integer> value of the receiver's 'x' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_x!
+	^bytes int32AtOffset: _OffsetOf_x!
 
 y
 	"Answer the <Integer> value of the receiver's 'y' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_y! !
+	^bytes int32AtOffset: _OffsetOf_y! !
 !UI.Scintilla.SCNotification categoriesForMethods!
 annotationLinesAdded!**compiled accessors**!public! !
 ch!**compiled accessors**!public! !
@@ -321,28 +321,28 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #scPosition type: INT_PTRField readOnly;
-		defineField: #ch type: SDWORDField readOnly;
-		defineField: #modifiers type: SDWORDField readOnly;
-		defineField: #modificationType type: SDWORDField readOnly;
-		defineField: #text type: UINT_PTRField readOnly;
-		defineField: #length type: INT_PTRField readOnly;
-		defineField: #linesAdded type: INT_PTRField readOnly;
-		defineField: #message type: SDWORDField readOnly;
-		defineField: #wParam type: UINT_PTRField readOnly;
-		defineField: #lParam type: INT_PTRField readOnly;
-		defineField: #scLine type: INT_PTRField readOnly;
-		defineField: #foldLevelNow type: SDWORDField readOnly;
-		defineField: #foldLevelPrev type: SDWORDField readOnly;
-		defineField: #margin type: SDWORDField readOnly;
-		defineField: #listType type: SDWORDField readOnly;
-		defineField: #x type: SDWORDField readOnly;
-		defineField: #y type: SDWORDField readOnly;
-		defineField: #token type: SDWORDField readOnly;
-		defineField: #annotationLinesAdded type: INT_PTRField readOnly;
-		defineField: #updated type: SDWORDField readOnly;
-		defineField: #listCompletionMethod type: SDWORDField readOnly;
-		defineField: #characterSource type: SDWORDField readOnly!
+		defineField: #scPosition type: IntPtrField readOnly;
+		defineField: #ch type: Int32Field readOnly;
+		defineField: #modifiers type: Int32Field readOnly;
+		defineField: #modificationType type: Int32Field readOnly;
+		defineField: #text type: UIntPtrField readOnly;
+		defineField: #length type: IntPtrField readOnly;
+		defineField: #linesAdded type: IntPtrField readOnly;
+		defineField: #message type: Int32Field readOnly;
+		defineField: #wParam type: UIntPtrField readOnly;
+		defineField: #lParam type: IntPtrField readOnly;
+		defineField: #scLine type: IntPtrField readOnly;
+		defineField: #foldLevelNow type: Int32Field readOnly;
+		defineField: #foldLevelPrev type: Int32Field readOnly;
+		defineField: #margin type: Int32Field readOnly;
+		defineField: #listType type: Int32Field readOnly;
+		defineField: #x type: Int32Field readOnly;
+		defineField: #y type: Int32Field readOnly;
+		defineField: #token type: Int32Field readOnly;
+		defineField: #annotationLinesAdded type: IntPtrField readOnly;
+		defineField: #updated type: Int32Field readOnly;
+		defineField: #listCompletionMethod type: Int32Field readOnly;
+		defineField: #characterSource type: Int32Field readOnly!
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #scPosition #ch #modifiers #modificationType #text #length #linesAdded #message #wParam #lParam #scLine #foldLevelNow #foldLevelPrev #margin #listType #x #y #token #annotationLinesAdded #updated #listCompletionMethod #characterSource)! !

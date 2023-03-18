@@ -73,7 +73,7 @@ asParameter
 	"Answer the receiver in a form suitable for passing
 	to an ExternalLibrary call. Although ExternalStructures can be passed to 
 	#lpvoid parameter types directly, it is more useful if we answer the contents
-	as this allows, for example, DWORDs to be passed as #dword parameters."
+	as this allows, for example, UInt32 to be passed as #uint32 parameters."
 
 	^bytes!
 

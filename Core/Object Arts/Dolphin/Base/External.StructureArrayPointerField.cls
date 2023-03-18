@@ -27,7 +27,7 @@ readFrom: aStructure
 	"Private - Answer a <StructureArray> of the receiver's element class that is a reference to the data pointed at by the corresponding pointer field of the <External.Structure> argument at the receiver's offset, and which is of the length described by the receiver."
 
 	^self pointerClass
-		fromAddress: (aStructure bytes sdwordAtOffset: offset)
+		fromAddress: (aStructure bytes int32AtOffset: offset)
 		length: (arrayLength getElementCountOf: self in: aStructure)
 		elementClass: self elementClass! !
 !External.StructureArrayPointerField categoriesForMethods!

@@ -51,7 +51,7 @@ chapter
 	"Answer the <sdword> value of the 'Chapter' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_Chapter: answer.
 	^answer asObject!
 

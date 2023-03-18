@@ -133,7 +133,7 @@ fromInteger: anInteger
 
 initialize
 	"Private - Initialize the receiver's class variables.
-		DWORDBytes initialize
+		IntegerBytes initialize
 	"
 
 	self withAllSubclassesDo: [:e | e extraInstanceSpec: self elementSize]!

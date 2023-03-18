@@ -21,7 +21,7 @@ advise: client
 	disconnected with #unadvise."
 
 	| cookie |
-	cookie := DWORD new.
+	cookie := UInt32 new.
 	self Advise: client pdwCookie: cookie.
 	^cookie asInteger!
 

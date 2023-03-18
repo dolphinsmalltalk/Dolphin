@@ -76,12 +76,12 @@ apts: aStructureArrayOfPOINTS
 cpts
 	"Answer the <Integer> value of the receiver's 'cpts' field."
 
-	^bytes dwordAtOffset: _OffsetOf_cpts!
+	^bytes uint32AtOffset: _OffsetOf_cpts!
 
 cpts: anInteger
 	"Set the receiver's 'cpts' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_cpts put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_cpts put: anInteger!
 
 rclBounds
 	"Answer the <RECTL> value of the receiver's 'rclBounds' field."
@@ -134,7 +134,7 @@ defineFields
 			type: (StructureField type: RECTL)
 			offset: 8;
 		defineField: #cpts
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 24;
 		defineField: #apts
 			type: (StructureArrayField type: POINTS lengthField: #cpts)

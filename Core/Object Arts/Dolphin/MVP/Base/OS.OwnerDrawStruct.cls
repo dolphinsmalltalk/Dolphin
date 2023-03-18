@@ -20,17 +20,17 @@ OS.OwnerDrawStruct comment: ''!
 CtlID
 	"Answer the <Integer> value of the receiver's 'CtlID' field."
 
-	^bytes dwordAtOffset: _OffsetOf_CtlID!
+	^bytes uint32AtOffset: _OffsetOf_CtlID!
 
 CtlType
 	"Answer the <Integer> value of the receiver's 'CtlType' field."
 
-	^bytes dwordAtOffset: _OffsetOf_CtlType!
+	^bytes uint32AtOffset: _OffsetOf_CtlType!
 
 itemID
 	"Answer the <Integer> value of the receiver's 'itemID' field."
 
-	^bytes dwordAtOffset: _OffsetOf_itemID! !
+	^bytes uint32AtOffset: _OffsetOf_itemID! !
 !OS.OwnerDrawStruct categoriesForMethods!
 CtlID!**compiled accessors**!public! !
 CtlType!**compiled accessors**!public! !
@@ -48,9 +48,9 @@ defineFields
 	"
 
 	self
-		defineField: #CtlType type: DWORDField readOnly;
-		defineField: #CtlID type: DWORDField readOnly;
-		defineField: #itemID type: DWORDField readOnly!
+		defineField: #CtlType type: UInt32Field readOnly;
+		defineField: #CtlID type: UInt32Field readOnly;
+		defineField: #itemID type: UInt32Field readOnly!
 
 getFieldNames
 	^#(#CtlType #CtlID #itemID)! !

@@ -20,7 +20,7 @@ OS.NMTREEVIEWW comment: ''!
 action
 	"Answer the <Integer> value of the receiver's 'action' field."
 
-	^bytes dwordAtOffset: _OffsetOf_action!
+	^bytes uint32AtOffset: _OffsetOf_action!
 
 itemHandle
 	"Answer the 'handle' of the receiver's item."
@@ -62,7 +62,7 @@ defineFields
 	super defineFields.
 	self
 		defineField: #action
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 12;
 		defineField: #itemOld
 			type: (StructureField type: TVITEMW) beReadOnly

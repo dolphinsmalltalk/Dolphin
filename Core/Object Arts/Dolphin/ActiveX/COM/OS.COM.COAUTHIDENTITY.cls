@@ -35,22 +35,22 @@ Domain: anUtf16String
 DomainLength
 	"Answer the <Integer> value of the receiver's 'DomainLength' field."
 
-	^bytes dwordAtOffset: _OffsetOf_DomainLength!
+	^bytes uint32AtOffset: _OffsetOf_DomainLength!
 
 DomainLength: anInteger
 	"Set the receiver's 'DomainLength' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_DomainLength put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_DomainLength put: anInteger!
 
 Flags
 	"Answer the <Integer> value of the receiver's 'Flags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_Flags!
+	^bytes uint32AtOffset: _OffsetOf_Flags!
 
 Flags: anInteger
 	"Set the receiver's 'Flags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_Flags put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_Flags put: anInteger!
 
 Password
 	"Answer the <Utf16String> value of the receiver's 'Password' field."
@@ -65,12 +65,12 @@ Password: anUtf16String
 PasswordLength
 	"Answer the <Integer> value of the receiver's 'PasswordLength' field."
 
-	^bytes dwordAtOffset: _OffsetOf_PasswordLength!
+	^bytes uint32AtOffset: _OffsetOf_PasswordLength!
 
 PasswordLength: anInteger
 	"Set the receiver's 'PasswordLength' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_PasswordLength put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_PasswordLength put: anInteger!
 
 User
 	"Answer the <Utf16String> value of the receiver's 'User' field."
@@ -85,12 +85,12 @@ User: anUtf16String
 UserLength
 	"Answer the <Integer> value of the receiver's 'UserLength' field."
 
-	^bytes dwordAtOffset: _OffsetOf_UserLength!
+	^bytes uint32AtOffset: _OffsetOf_UserLength!
 
 UserLength: anInteger
 	"Set the receiver's 'UserLength' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_UserLength put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_UserLength put: anInteger! !
 !OS.COM.COAUTHIDENTITY categoriesForMethods!
 Domain!**compiled accessors**!public! !
 Domain:!**compiled accessors**!public! !
@@ -131,12 +131,12 @@ defineFields
 
 	self
 		defineField: #User type: (PointerField type: Utf16String);
-		defineField: #UserLength type: DWORDField new;
+		defineField: #UserLength type: UInt32Field new;
 		defineField: #Domain type: (PointerField type: Utf16String);
-		defineField: #DomainLength type: DWORDField new;
+		defineField: #DomainLength type: UInt32Field new;
 		defineField: #Password type: (PointerField type: Utf16String);
-		defineField: #PasswordLength type: DWORDField new;
-		defineField: #Flags type: DWORDField new!
+		defineField: #PasswordLength type: UInt32Field new;
+		defineField: #Flags type: UInt32Field new!
 
 getFieldNames
 	^#(#User #UserLength #Domain #DomainLength #Password #PasswordLength #Flags)! !

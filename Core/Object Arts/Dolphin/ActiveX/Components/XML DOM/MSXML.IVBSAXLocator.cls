@@ -47,7 +47,7 @@ columnNumber
 	Helpstring: Get the column number where the current document event ends."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_columnNumber: answer.
 	^answer asObject!
 
@@ -102,7 +102,7 @@ lineNumber
 	Helpstring: Get the line number where the current document event ends."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_lineNumber: answer.
 	^answer asObject!
 

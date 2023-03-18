@@ -42,8 +42,8 @@ defineFields
 	super defineFields.
 	"Expand CharacterRangeFull inline"
 	self
-		defineField: #cpMin type: INT_PTRField writeOnly;
-		defineField: #cpMax type: INT_PTRField writeOnly!
+		defineField: #cpMin type: IntPtrField writeOnly;
+		defineField: #cpMax type: IntPtrField writeOnly!
 
 getFieldNames
 	^#(#hdc #hdcTarget #rc #rcPage #cpMin #cpMax)! !

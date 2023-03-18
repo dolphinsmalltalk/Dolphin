@@ -47,7 +47,7 @@ status
 	"Answer the <sdword> value of the 'Status' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_Status: answer.
 	^answer asObject! !
 !ADODB.Field categoriesForMethods!

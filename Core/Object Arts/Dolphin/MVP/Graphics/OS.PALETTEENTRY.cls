@@ -41,45 +41,45 @@ asColor
 peBlue
 	"Answer the <Integer> value of the receiver's 'peBlue' field."
 
-	^bytes byteAtOffset: _OffsetOf_peBlue!
+	^bytes uint8AtOffset: _OffsetOf_peBlue!
 
 peBlue: anInteger
 	"Set the receiver's 'peBlue' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_peBlue put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_peBlue put: anInteger!
 
 peFlags
 	"Answer the <Integer> value of the receiver's 'peFlags' field."
 
-	^bytes byteAtOffset: _OffsetOf_peFlags!
+	^bytes uint8AtOffset: _OffsetOf_peFlags!
 
 peFlags: anInteger
 	"Set the receiver's 'peFlags' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_peFlags put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_peFlags put: anInteger!
 
 peGreen
 	"Answer the <Integer> value of the receiver's 'peGreen' field."
 
-	^bytes byteAtOffset: _OffsetOf_peGreen!
+	^bytes uint8AtOffset: _OffsetOf_peGreen!
 
 peGreen: anInteger
 	"Set the receiver's 'peGreen' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_peGreen put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_peGreen put: anInteger!
 
 peRed
 	"Answer the <Integer> value of the receiver's 'peRed' field."
 
-	^bytes byteAtOffset: _OffsetOf_peRed!
+	^bytes uint8AtOffset: _OffsetOf_peRed!
 
 peRed: anInteger
 	"Set the receiver's 'peRed' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_peRed put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_peRed put: anInteger!
 
 rgbCode
-	^(bytes dwordAtOffset: 0) bitAnd: 16rFFFFFF! !
+	^(bytes uint32AtOffset: 0) bitAnd: 16rFFFFFF! !
 !OS.PALETTEENTRY categoriesForMethods!
 asColor!converting!public! !
 peBlue!**compiled accessors**!public! !
@@ -114,16 +114,16 @@ defineFields
 
 	self
 		defineField: #peRed
-			type: BYTEField new
+			type: UInt8Field new
 			offset: 0;
 		defineField: #peGreen
-			type: BYTEField new
+			type: UInt8Field new
 			offset: 1;
 		defineField: #peBlue
-			type: BYTEField new
+			type: UInt8Field new
 			offset: 2;
 		defineField: #peFlags
-			type: BYTEField new
+			type: UInt8Field new
 			offset: 3.
 	self byteSize: 4!
 

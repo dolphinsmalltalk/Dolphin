@@ -34,22 +34,22 @@ struct tagEMREXTSELECTCLIPRGN {
 cbRgnData
 	"Answer the <Integer> value of the receiver's 'cbRgnData' field."
 
-	^bytes dwordAtOffset: _OffsetOf_cbRgnData!
+	^bytes uint32AtOffset: _OffsetOf_cbRgnData!
 
 cbRgnData: anInteger
 	"Set the receiver's 'cbRgnData' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_cbRgnData put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_cbRgnData put: anInteger!
 
 iMode
 	"Answer the <Integer> value of the receiver's 'iMode' field."
 
-	^bytes dwordAtOffset: _OffsetOf_iMode!
+	^bytes uint32AtOffset: _OffsetOf_iMode!
 
 iMode: anInteger
 	"Set the receiver's 'iMode' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_iMode put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_iMode put: anInteger!
 
 RGNDATA
 	"Answer the <ExternalArray> value of the receiver's 'RGNDATA' field."
@@ -98,10 +98,10 @@ defineFields
 	super defineFields.
 	self
 		defineField: #cbRgnData
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 8;
 		defineField: #iMode
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 12;
 		defineField: #RGNDATA
 			type: (ArrayField type: ExternalArray lengthField: #cbRgnData)

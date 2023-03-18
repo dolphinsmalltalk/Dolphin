@@ -172,7 +172,7 @@ hookHandlers
 	^hookHandlers!
 
 initialize
-	HookCallbackDescriptor := External.FunctionDescriptor argumentTypes: 'handle dword uintptr uintptr'!
+	HookCallbackDescriptor := External.FunctionDescriptor argumentTypes: 'handle uint32 uintptr uintptr'!
 
 initializeDefaultHooks
 	hookHandlers := IdentityDictionary new.

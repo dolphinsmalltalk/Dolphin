@@ -91,7 +91,7 @@ getBaseURL
 	"Answer the <word> result of invoking the getBaseURL() method of the COM object."
 
 	| answer |
-	answer := WORD newBufferClass: TaskMemory.
+	answer := UInt16 newBufferClass: TaskMemory.
 	self GetBaseURL: answer.
 	^answer asObject!
 
@@ -212,7 +212,7 @@ getSecureBaseURL
 	"Answer the <word> result of invoking the getSecureBaseURL() method of the COM object."
 
 	| answer |
-	answer := WORD newBufferClass: TaskMemory.
+	answer := UInt16 newBufferClass: TaskMemory.
 	self GetSecureBaseURL: answer.
 	^answer asObject!
 

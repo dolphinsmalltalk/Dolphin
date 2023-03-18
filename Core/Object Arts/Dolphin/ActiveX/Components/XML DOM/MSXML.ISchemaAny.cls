@@ -66,7 +66,7 @@ processContents
 	"Answer the <sdword> value of the 'processContents' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_processContents: answer.
 	^answer asObject! !
 !MSXML.ISchemaAny categoriesForMethods!

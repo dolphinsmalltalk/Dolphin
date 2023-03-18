@@ -73,7 +73,7 @@ actualSize
 	"Answer the <sdword> value of the 'ActualSize' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_ActualSize: answer.
 	^answer asObject!
 
@@ -95,7 +95,7 @@ attributes
 	"Answer the <sdword> value of the 'Attributes' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_Attributes: answer.
 	^answer asObject!
 
@@ -103,7 +103,7 @@ definedSize
 	"Answer the <sdword> value of the 'DefinedSize' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_DefinedSize: answer.
 	^answer asObject!
 
@@ -227,7 +227,7 @@ numericScale
 	"Answer the <byte> value of the 'NumericScale' property of the receiver."
 
 	| answer |
-	answer := BYTE new.
+	answer := UInt8 new.
 	self get_NumericScale: answer.
 	^answer asObject!
 
@@ -243,7 +243,7 @@ precision
 	"Answer the <byte> value of the 'Precision' property of the receiver."
 
 	| answer |
-	answer := BYTE new.
+	answer := UInt8 new.
 	self get_Precision: answer.
 	^answer asObject!
 
@@ -261,7 +261,7 @@ type
 	"Answer the <sdword> value of the 'Type' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_Type: answer.
 	^answer asObject!
 

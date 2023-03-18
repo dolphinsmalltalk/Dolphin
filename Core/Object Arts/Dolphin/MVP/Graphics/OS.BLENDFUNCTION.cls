@@ -31,12 +31,12 @@ struct tagBLENDFUNCTION {
 AlphaFormat
 	"Answer the <Integer> value of the receiver's 'AlphaFormat' field."
 
-	^bytes byteAtOffset: _OffsetOf_AlphaFormat!
+	^bytes uint8AtOffset: _OffsetOf_AlphaFormat!
 
 AlphaFormat: anInteger
 	"Set the receiver's 'AlphaFormat' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_AlphaFormat put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_AlphaFormat put: anInteger!
 
 blend: aNumber 
 	"Sets the fractional blend of the receiver to <Number> argument, which must be in the range 0..1"
@@ -46,22 +46,22 @@ blend: aNumber
 BlendFlags
 	"Answer the <Integer> value of the receiver's 'BlendFlags' field."
 
-	^bytes byteAtOffset: _OffsetOf_BlendFlags!
+	^bytes uint8AtOffset: _OffsetOf_BlendFlags!
 
 BlendFlags: anInteger
 	"Set the receiver's 'BlendFlags' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_BlendFlags put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_BlendFlags put: anInteger!
 
 BlendOp
 	"Answer the <Integer> value of the receiver's 'BlendOp' field."
 
-	^bytes byteAtOffset: _OffsetOf_BlendOp!
+	^bytes uint8AtOffset: _OffsetOf_BlendOp!
 
 BlendOp: anInteger
 	"Set the receiver's 'BlendOp' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_BlendOp put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_BlendOp put: anInteger!
 
 blendPercentage: aNumber 
 	"Sets the percentage blend of the receiver to <Number> argument, which must be in the range 0..100"
@@ -76,12 +76,12 @@ initialize
 SourceConstantAlpha
 	"Answer the <Integer> value of the receiver's 'SourceConstantAlpha' field."
 
-	^bytes byteAtOffset: _OffsetOf_SourceConstantAlpha!
+	^bytes uint8AtOffset: _OffsetOf_SourceConstantAlpha!
 
 SourceConstantAlpha: anInteger
 	"Set the receiver's 'SourceConstantAlpha' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_SourceConstantAlpha put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_SourceConstantAlpha put: anInteger!
 
 usePerPixelAlpha: aBoolean 
 	"Determines whether the source bitmaps alpha channel should be used when performing the
@@ -131,10 +131,10 @@ defineFields
 "
 
 	self
-		defineField: #BlendOp type: BYTEField new;
-		defineField: #BlendFlags type: BYTEField new;
-		defineField: #SourceConstantAlpha type: BYTEField new;
-		defineField: #AlphaFormat type: BYTEField new!
+		defineField: #BlendOp type: UInt8Field new;
+		defineField: #BlendFlags type: UInt8Field new;
+		defineField: #SourceConstantAlpha type: UInt8Field new;
+		defineField: #AlphaFormat type: UInt8Field new!
 
 getFieldNames
 	^#(#BlendOp #BlendFlags #SourceConstantAlpha #AlphaFormat)! !

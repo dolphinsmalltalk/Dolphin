@@ -126,7 +126,7 @@ helpContext
 	"Answer the <sdword> value of the 'HelpContext' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_HelpContext: answer.
 	^answer asObject!
 
@@ -152,7 +152,7 @@ nativeError
 	"Answer the <sdword> value of the 'NativeError' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_NativeError: answer.
 	^answer asObject!
 
@@ -160,7 +160,7 @@ number
 	"Answer the <sdword> value of the 'Number' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_Number: answer.
 	^answer asObject!
 

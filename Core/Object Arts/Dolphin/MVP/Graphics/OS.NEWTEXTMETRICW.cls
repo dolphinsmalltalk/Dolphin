@@ -32,22 +32,22 @@ struct tagNEWTEXTMETRIC {
 ntmAvgWidth
 	"Answer the <Integer> value of the receiver's 'ntmAvgWidth' field."
 
-	^bytes dwordAtOffset: _OffsetOf_ntmAvgWidth!
+	^bytes uint32AtOffset: _OffsetOf_ntmAvgWidth!
 
 ntmCellHeight
 	"Answer the <Integer> value of the receiver's 'ntmCellHeight' field."
 
-	^bytes dwordAtOffset: _OffsetOf_ntmCellHeight!
+	^bytes uint32AtOffset: _OffsetOf_ntmCellHeight!
 
 ntmFlags
 	"Answer the <Integer> value of the receiver's 'ntmFlags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_ntmFlags!
+	^bytes uint32AtOffset: _OffsetOf_ntmFlags!
 
 ntmSizeEM
 	"Answer the <Integer> value of the receiver's 'ntmSizeEM' field."
 
-	^bytes dwordAtOffset: _OffsetOf_ntmSizeEM! !
+	^bytes uint32AtOffset: _OffsetOf_ntmSizeEM! !
 !OS.NEWTEXTMETRICW categoriesForMethods!
 ntmAvgWidth!**compiled accessors**!public! !
 ntmCellHeight!**compiled accessors**!public! !
@@ -76,10 +76,10 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #ntmFlags type: DWORDField readOnly;
-		defineField: #ntmSizeEM type: DWORDField readOnly;
-		defineField: #ntmCellHeight type: DWORDField readOnly;
-		defineField: #ntmAvgWidth type: DWORDField readOnly!
+		defineField: #ntmFlags type: UInt32Field readOnly;
+		defineField: #ntmSizeEM type: UInt32Field readOnly;
+		defineField: #ntmCellHeight type: UInt32Field readOnly;
+		defineField: #ntmAvgWidth type: UInt32Field readOnly!
 
 getFieldNames
 	^#(#tmHeight #tmAscent #tmDescent #tmInternalLeading #tmExternalLeading #tmAveCharWidth #tmMaxCharWidth #tmWeight #tmOverhang #tmDigitizedAspectX #tmDigitizedAspectY #tmFirstChar #tmLastChar #tmDefaultChar #tmBreakChar #tmItalic #tmUnderlined #tmStruckOut #tmPitchAndFamily #tmCharSet #ntmFlags #ntmSizeEM #ntmCellHeight #ntmAvgWidth)! !

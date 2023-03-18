@@ -56,12 +56,12 @@ eyScale: aFloat
 iGraphicsMode
 	"Answer the <Integer> value of the receiver's 'iGraphicsMode' field."
 
-	^bytes dwordAtOffset: _OffsetOf_iGraphicsMode!
+	^bytes uint32AtOffset: _OffsetOf_iGraphicsMode!
 
 iGraphicsMode: anInteger
 	"Set the receiver's 'iGraphicsMode' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_iGraphicsMode put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_iGraphicsMode put: anInteger!
 
 rclBounds
 	"Answer the <RECTL> value of the receiver's 'rclBounds' field."
@@ -116,7 +116,7 @@ defineFields
 			type: (StructureField type: RECTL)
 			offset: 8;
 		defineField: #iGraphicsMode
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 24;
 		defineField: #exScale
 			type: FLOATField new

@@ -504,7 +504,7 @@ browserProcessId
 	"Answer the <dword> value of the 'BrowserProcessId' property of the receiver."
 
 	| answer |
-	answer := DWORD new.
+	answer := UInt32 new.
 	self get_BrowserProcessId: answer.
 	^answer asObject!
 
@@ -667,7 +667,7 @@ defaultDownloadDialogCornerAlignment
 	"Answer the <sdword> value of the 'DefaultDownloadDialogCornerAlignment' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_DefaultDownloadDialogCornerAlignment: answer.
 	^answer asObject!
 

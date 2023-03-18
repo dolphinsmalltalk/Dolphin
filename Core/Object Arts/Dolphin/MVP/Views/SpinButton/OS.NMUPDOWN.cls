@@ -39,12 +39,12 @@ allow: aBoolean
 iDelta
 	"Answer the <Integer> value of the receiver's 'iDelta' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_iDelta!
+	^bytes int32AtOffset: _OffsetOf_iDelta!
 
 iPos
 	"Answer the <Integer> value of the receiver's 'iPos' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_iPos!
+	^bytes int32AtOffset: _OffsetOf_iPos!
 
 newPosition
 	"Answer the position at which the <SpinButton> will end up should the nudge described by the
@@ -77,8 +77,8 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #iPos type: SDWORDField readOnly;
-		defineField: #iDelta type: SDWORDField readOnly!
+		defineField: #iPos type: Int32Field readOnly;
+		defineField: #iDelta type: Int32Field readOnly!
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #iPos #iDelta)! !

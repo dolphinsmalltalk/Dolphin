@@ -22,7 +22,7 @@ cellAscent: aFontStyleConstant
 		gdipGetCellAscent: self handle
 		style: aFontStyleConstant
 		cellAscent: cellAscent.
-	^cellAscent wordAtOffset: 0!
+	^cellAscent uint16AtOffset: 0!
 
 cellDescent
 	^self cellDescent: FontStyleRegular!
@@ -34,7 +34,7 @@ cellDescent: aFontStyleConstant
 		gdipGetCellDescent: self handle
 		style: aFontStyleConstant
 		cellDescent: cellAscent.
-	^cellAscent wordAtOffset: 0!
+	^cellAscent uint16AtOffset: 0!
 
 clone
 	"Answer a copy of the receiver."
@@ -53,7 +53,7 @@ emHeight: aFontStyleConstant
 		gdipGetEmHeight: self handle
 		style: aFontStyleConstant
 		emHeight: emHeight.
-	^emHeight wordAtOffset: 0!
+	^emHeight uint16AtOffset: 0!
 
 fontCollection
 	^self initializer fontCollection!
@@ -95,7 +95,7 @@ lineSpacing: aFontStyleConstant
 		gdipGetLineSpacing: self asParameter
 		style: aFontStyleConstant
 		lineSpacing: lineSpacing.
-	^lineSpacing wordAtOffset: 0!
+	^lineSpacing uint16AtOffset: 0!
 
 name
 	"Answer the String name of the receiver (e.g., 'Arial')."

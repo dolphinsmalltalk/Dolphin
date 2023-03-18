@@ -34,17 +34,17 @@ struct tagSECURITY_ATTRIBUTES {
 bInheritHandle
 	"Answer the <Boolean> value of the receiver's 'bInheritHandle' field."
 
-	^(bytes dwordAtOffset: _OffsetOf_bInheritHandle) asBoolean!
+	^(bytes uint32AtOffset: _OffsetOf_bInheritHandle) asBoolean!
 
 bInheritHandle: aBoolean
 	"Set the receiver's 'bInheritHandle' field to the value of the argument, aBoolean"
 
-	bytes dwordAtOffset: _OffsetOf_bInheritHandle put: aBoolean asParameter!
+	bytes uint32AtOffset: _OffsetOf_bInheritHandle put: aBoolean asParameter!
 
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 lpSecurityDescriptor
 	"Answer the <ExternalAddress> value of the receiver's 'lpSecurityDescriptor' field."
@@ -82,7 +82,7 @@ defineFields
 "
 
 	self
-		defineField: #dwSize type: DWORDField new beWriteOnly;
+		defineField: #dwSize type: UInt32Field new beWriteOnly;
 		defineField: #lpSecurityDescriptor type: LPVOIDField new;
 		defineField: #bInheritHandle type: BOOLField new!
 

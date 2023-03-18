@@ -36,21 +36,21 @@ struct tagEMRPOLYPOLYLINE {
 !OS.EMRPOLYPOLYLINE methodsFor!
 
 aPolyCounts
-	"Answer the <DWORDArray> value of the receiver's 'aPolyCounts' field."
+	"Answer the <aUInt32Array> value of the receiver's 'aPolyCounts' field."
 
-	^DWORDArray fromAddress: bytes yourAddress + _OffsetOf_aPolyCounts length: self nPolys!
+	^UInt32Array fromAddress: bytes yourAddress + _OffsetOf_aPolyCounts length: self nPolys!
 
-aPolyCounts: aDWORDArray
-	"Set the receiver's 'aPolyCounts' field to the value of the argument, aDWORDArray"
+aPolyCounts: aUInt32Array
+	"Set the receiver's 'aPolyCounts' field to the value of the argument, aUInt32Array"
 
 	| size |
-	size := aDWORDArray byteSize.
-	aDWORDArray
+	size := aUInt32Array byteSize.
+	aUInt32Array
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_aPolyCounts + 1)
 		to: _OffsetOf_aPolyCounts + size
 		startingAt: 1.
-	self nPolys: aDWORDArray size!
+	self nPolys: aUInt32Array size!
 
 aptl
 	"Answer the receiver's aptl field as a Smalltalk object."
@@ -82,22 +82,22 @@ aptlOffset
 cptl
 	"Answer the <Integer> value of the receiver's 'cptl' field."
 
-	^bytes dwordAtOffset: _OffsetOf_cptl!
+	^bytes uint32AtOffset: _OffsetOf_cptl!
 
 cptl: anInteger
 	"Set the receiver's 'cptl' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_cptl put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_cptl put: anInteger!
 
 nPolys
 	"Answer the <Integer> value of the receiver's 'nPolys' field."
 
-	^bytes dwordAtOffset: _OffsetOf_nPolys!
+	^bytes uint32AtOffset: _OffsetOf_nPolys!
 
 nPolys: anInteger
 	"Set the receiver's 'nPolys' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_nPolys put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_nPolys put: anInteger!
 
 rclBounds
 	"Answer the <RECTL> value of the receiver's 'rclBounds' field."
@@ -153,13 +153,13 @@ defineFields
 			type: (StructureField type: RECTL)
 			offset: 8;
 		defineField: #nPolys
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 24;
 		defineField: #cptl
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 28;
 		defineField: #aPolyCounts
-			type: (ArrayField type: DWORDArray lengthField: #nPolys)
+			type: (ArrayField type: UInt32Array lengthField: #nPolys)
 			offset: 32;
 		defineField: #aptl type: (StructureArrayField type: POINTL lengthField: #cptl).
 	self byteSize: 40!

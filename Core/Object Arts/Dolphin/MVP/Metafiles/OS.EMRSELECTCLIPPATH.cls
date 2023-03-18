@@ -30,12 +30,12 @@ struct tagEMRSELECTCLIPPATH {
 iMode
 	"Answer the <Integer> value of the receiver's 'iMode' field."
 
-	^bytes dwordAtOffset: _OffsetOf_iMode!
+	^bytes uint32AtOffset: _OffsetOf_iMode!
 
 iMode: anInteger
 	"Set the receiver's 'iMode' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_iMode put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_iMode put: anInteger! !
 !OS.EMRSELECTCLIPPATH categoriesForMethods!
 iMode!**compiled accessors**!public! !
 iMode:!**compiled accessors**!public! !
@@ -61,7 +61,7 @@ defineFields
 	super defineFields.
 	self
 		defineField: #iMode
-		type: DWORDField new
+		type: UInt32Field new
 		offset: 8.
 	self byteSize: 12!
 

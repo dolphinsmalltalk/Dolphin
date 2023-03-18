@@ -29,7 +29,7 @@ text: anObject
 		from: ##(_OffsetOf_text + 1)
 		to: _OffsetOf_text + size
 		startingAt: 1.
-	bytes wordAtOffset: _OffsetOf_text + size put: 0! !
+	bytes uint16AtOffset: _OffsetOf_text + size put: 0! !
 !OS.EMREXTTEXTOUTW categoriesForMethods!
 text!public! !
 text:!public! !

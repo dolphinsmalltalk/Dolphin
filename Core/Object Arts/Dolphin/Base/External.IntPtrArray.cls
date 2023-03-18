@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.ExternalArray subclass: #'External.INT_PTRArray'
+External.ExternalArray subclass: #'External.IntPtrArray'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.INT_PTRArray guid: (Core.GUID fromString: '{23b3bfa9-80d2-4211-a5cc-5e739d62812b}')!
-External.INT_PTRArray comment: 'Specialized <ExternalArray> to represent contiguous single-dimensioned arrays of machine word sized signed integers.'!
-!External.INT_PTRArray categoriesForClass!External-Data-Structured! !
-!External.INT_PTRArray methodsFor!
+External.IntPtrArray guid: (Core.GUID fromString: '{23b3bfa9-80d2-4211-a5cc-5e739d62812b}')!
+External.IntPtrArray comment: 'Specialized `ExternalArray` to represent contiguous single-dimensioned arrays of pointer-sized signed integers.'!
+!External.IntPtrArray categoriesForClass!External-Data-Structured! !
+!External.IntPtrArray methodsFor!
 
 uncheckedAt: anInteger 
 	"Private - Answer an 32-bit unsigned <integer> representing the element of the 
@@ -19,18 +19,18 @@ uncheckedAt: anInteger
 
 uncheckedAt: indexInteger put: valueInteger 
 	^bytes intPtrAtOffset: (indexInteger - 1) * VMConstants.IntPtrSize put: valueInteger! !
-!External.INT_PTRArray categoriesForMethods!
+!External.IntPtrArray categoriesForMethods!
 uncheckedAt:!accessing!private! !
 uncheckedAt:put:!accessing!private! !
 !
 
-!External.INT_PTRArray class methodsFor!
+!External.IntPtrArray class methodsFor!
 
 elementClass
-	"Answer the class of <ExternalStructure> used to represent elements of the receiver."
+	"Answer the class of <External.Structure> used to represent elements of the receiver."
 
-	^INT_PTR! !
-!External.INT_PTRArray class categoriesForMethods!
+	^IntPtr! !
+!External.IntPtrArray class categoriesForMethods!
 elementClass!constants!public! !
 !
 

@@ -258,7 +258,7 @@ absolutePage
 	"Answer the <sdword> value of the 'AbsolutePage' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_AbsolutePage: answer.
 	^answer asObject!
 
@@ -271,7 +271,7 @@ absolutePosition
 	"Answer the <sdword> value of the 'AbsolutePosition' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_AbsolutePosition: answer.
 	^answer asObject!
 
@@ -339,7 +339,7 @@ cacheSize
 	"Answer the <sdword> value of the 'CacheSize' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_CacheSize: answer.
 	^answer asObject!
 
@@ -401,7 +401,7 @@ cursorLocation
 	"Answer the <sdword> value of the 'CursorLocation' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_CursorLocation: answer.
 	^answer asObject!
 
@@ -414,7 +414,7 @@ cursorType
 	"Answer the <sdword> value of the 'CursorType' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_CursorType: answer.
 	^answer asObject!
 
@@ -453,7 +453,7 @@ editMode
 	"Answer the <sdword> value of the 'EditMode' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_EditMode: answer.
 	^answer asObject!
 
@@ -770,7 +770,7 @@ lockType
 	"Answer the <sdword> value of the 'LockType' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_LockType: answer.
 	^answer asObject!
 
@@ -783,7 +783,7 @@ marshalOptions
 	"Answer the <sdword> value of the 'MarshalOptions' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_MarshalOptions: answer.
 	^answer asObject!
 
@@ -796,7 +796,7 @@ maxRecords
 	"Answer the <sdword> value of the 'MaxRecords' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_MaxRecords: answer.
 	^answer asObject!
 
@@ -926,7 +926,7 @@ pageCount
 	"Answer the <sdword> value of the 'PageCount' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_PageCount: answer.
 	^answer asObject!
 
@@ -934,7 +934,7 @@ pageSize
 	"Answer the <sdword> value of the 'PageSize' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_PageSize: answer.
 	^answer asObject!
 
@@ -1118,7 +1118,7 @@ recordCount
 	"Answer the <sdword> value of the 'RecordCount' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_RecordCount: answer.
 	^answer asObject!
 
@@ -1182,7 +1182,7 @@ state
 	"Answer the <sdword> value of the 'State' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_State: answer.
 	^answer asObject!
 
@@ -1190,7 +1190,7 @@ status
 	"Answer the <sdword> value of the 'Status' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_Status: answer.
 	^answer asObject!
 

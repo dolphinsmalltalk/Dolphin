@@ -18,22 +18,22 @@ OS.TVINSERTSTRUCTW comment: ''!
 
 allCallbacks
 	bytes
-		sdwordAtOffset: ##(_OffsetOf_item + TVITEMW._OffsetOf_iImage) put: I_IMAGECALLBACK;
-		sdwordAtOffset: ##(_OffsetOf_item + TVITEMW._OffsetOf_cChildren)
+		int32AtOffset: ##(_OffsetOf_item + TVITEMW._OffsetOf_iImage) put: I_IMAGECALLBACK;
+		int32AtOffset: ##(_OffsetOf_item + TVITEMW._OffsetOf_cChildren)
 			put: OS.TreeViewConstants.I_CHILDRENCALLBACK;
-		dwordAtOffset: ##(_OffsetOf_item + TVITEMW._OffsetOf_pszText) put: LPSTR_TEXTCALLBACK;
-		dwordAtOffset: ##(_OffsetOf_item + TVITEMW._OffsetOf_mask)
-			put: ((bytes dwordAtOffset: ##(_OffsetOf_item + TVITEMW._OffsetOf_mask)) bitOr: ##(TVIF_TEXT | TVIF_CHILDREN | TVIF_IMAGE))!
+		uint32AtOffset: ##(_OffsetOf_item + TVITEMW._OffsetOf_pszText) put: LPSTR_TEXTCALLBACK;
+		uint32AtOffset: ##(_OffsetOf_item + TVITEMW._OffsetOf_mask)
+			put: ((bytes uint32AtOffset: ##(_OffsetOf_item + TVITEMW._OffsetOf_mask)) bitOr: ##(TVIF_TEXT | TVIF_CHILDREN | TVIF_IMAGE))!
 
 hInsertAfter: anInteger
 	"Set the receiver's 'hInsertAfter' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_hInsertAfter put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_hInsertAfter put: anInteger!
 
 hParent: anInteger
 	"Set the receiver's 'hParent' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_hParent put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_hParent put: anInteger!
 
 item
 	"Answer the <TVITEMEXW> value of the receiver's 'item' field."
@@ -68,10 +68,10 @@ defineFields
 
 	self
 		defineField: #hParent
-			type: DWORDField writeOnly
+			type: UInt32Field writeOnly
 			offset: 0;
 		defineField: #hInsertAfter
-			type: DWORDField writeOnly
+			type: UInt32Field writeOnly
 			offset: 4;
 		defineField: #item
 			type: (StructureField type: TVITEMEXW)

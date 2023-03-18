@@ -20,22 +20,22 @@ OS.NMLVODSTATECHANGE comment: ''!
 iFrom
 	"Answer the <Integer> value of the receiver's 'iFrom' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_iFrom!
+	^bytes int32AtOffset: _OffsetOf_iFrom!
 
 iTo
 	"Answer the <Integer> value of the receiver's 'iTo' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_iTo!
+	^bytes int32AtOffset: _OffsetOf_iTo!
 
 uNewState
 	"Answer the <Integer> value of the receiver's 'uNewState' field."
 
-	^bytes dwordAtOffset: _OffsetOf_uNewState!
+	^bytes uint32AtOffset: _OffsetOf_uNewState!
 
 uOldState
 	"Answer the <Integer> value of the receiver's 'uOldState' field."
 
-	^bytes dwordAtOffset: _OffsetOf_uOldState! !
+	^bytes uint32AtOffset: _OffsetOf_uOldState! !
 !OS.NMLVODSTATECHANGE categoriesForMethods!
 iFrom!**compiled accessors**!public! !
 iTo!**compiled accessors**!public! !
@@ -55,10 +55,10 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #iFrom type: SDWORDField readOnly;
-		defineField: #iTo type: SDWORDField readOnly;
-		defineField: #uNewState type: DWORDField readOnly;
-		defineField: #uOldState type: DWORDField readOnly!
+		defineField: #iFrom type: Int32Field readOnly;
+		defineField: #iTo type: Int32Field readOnly;
+		defineField: #uNewState type: UInt32Field readOnly;
+		defineField: #uOldState type: UInt32Field readOnly!
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #iFrom #iTo #uNewState #uOldState)! !

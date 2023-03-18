@@ -53,7 +53,7 @@ p_name
 p_proto
 	"Answer the <Integer> value of the receiver's 'p_proto' field."
 
-	^bytes swordAtOffset: _OffsetOf_p_proto!
+	^bytes int16AtOffset: _OffsetOf_p_proto!
 
 printFieldsOn: aStream
 	super printFieldsOn: aStream.
@@ -96,7 +96,7 @@ defineFields
 	self
 		defineField: #p_name type: (PointerField type: AnsiString) beReadOnly offset: 0;
 		defineField: #p_aliases type: (PointerField type: AnsiString) beReadOnly beFiller offset: 4;
-		defineField: #p_proto type: SWORDField new beReadOnly offset: 8.
+		defineField: #p_proto type: Int16Field new beReadOnly offset: 8.
 	self byteSize: 12!
 
 fromInteger: anInteger

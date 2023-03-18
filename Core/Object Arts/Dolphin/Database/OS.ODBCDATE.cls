@@ -37,32 +37,32 @@ date: aDate
 day
 	"Answer the <Integer> value of the receiver's 'day' field."
 
-	^bytes wordAtOffset: _OffsetOf_day!
+	^bytes uint16AtOffset: _OffsetOf_day!
 
 day: anInteger
 	"Set the receiver's 'day' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_day put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_day put: anInteger!
 
 month
 	"Answer the <Integer> value of the receiver's 'month' field."
 
-	^bytes wordAtOffset: _OffsetOf_month!
+	^bytes uint16AtOffset: _OffsetOf_month!
 
 month: anInteger
 	"Set the receiver's 'month' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_month put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_month put: anInteger!
 
 year
 	"Answer the <Integer> value of the receiver's 'year' field."
 
-	^bytes swordAtOffset: _OffsetOf_year!
+	^bytes int16AtOffset: _OffsetOf_year!
 
 year: anInteger
 	"Set the receiver's 'year' field to the value of the argument, anInteger"
 
-	bytes swordAtOffset: _OffsetOf_year put: anInteger! !
+	bytes int16AtOffset: _OffsetOf_year put: anInteger! !
 !OS.ODBCDATE categoriesForMethods!
 asDate!converting!public! !
 date:!accessing!public! !
@@ -88,9 +88,9 @@ defineFields
 	} DATE_STRUCT;"
 
 	self
-		defineField: #year type: SWORDField new;
-		defineField: #month type: WORDField new;
-		defineField: #day type: WORDField new
+		defineField: #year type: Int16Field new;
+		defineField: #month type: UInt16Field new;
+		defineField: #day type: UInt16Field new
 !
 
 fromDate: aDate

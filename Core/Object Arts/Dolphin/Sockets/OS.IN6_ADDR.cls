@@ -74,7 +74,7 @@ defineFields
 
 	self
 		defineField: #Bytes type: (ArrayField type: ExternalArray length: 16) offset: 0;
-		defineField: #Words type: (ArrayField type: WORDArray length: 8) beFiller offset: 0.
+		defineField: #Words type: (ArrayField type: UInt16Array length: 8) beFiller offset: 0.
 	self byteSize: 16!
 
 getFieldNames

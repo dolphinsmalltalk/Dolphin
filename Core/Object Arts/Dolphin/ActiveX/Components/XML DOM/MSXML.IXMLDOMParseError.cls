@@ -33,7 +33,7 @@ errorCode
 	Helpstring: the error code"
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_errorCode: answer.
 	^answer asObject!
 
@@ -42,7 +42,7 @@ filepos
 	Helpstring: the absolute file position in the XML document containing the error"
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_filepos: answer.
 	^answer asObject!
 
@@ -124,7 +124,7 @@ line
 	Helpstring: the line number in the XML document where the error occurred"
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_line: answer.
 	^answer asObject!
 
@@ -133,7 +133,7 @@ linepos
 	Helpstring: the character position in the line containing the error"
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_linepos: answer.
 	^answer asObject!
 

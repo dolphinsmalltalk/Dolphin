@@ -24,32 +24,32 @@ asTime
 hour
 	"Answer the <Integer> value of the receiver's 'hour' field."
 
-	^bytes wordAtOffset: _OffsetOf_hour!
+	^bytes uint16AtOffset: _OffsetOf_hour!
 
 hour: anInteger
 	"Set the receiver's 'hour' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_hour put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_hour put: anInteger!
 
 minute
 	"Answer the <Integer> value of the receiver's 'minute' field."
 
-	^bytes wordAtOffset: _OffsetOf_minute!
+	^bytes uint16AtOffset: _OffsetOf_minute!
 
 minute: anInteger
 	"Set the receiver's 'minute' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_minute put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_minute put: anInteger!
 
 second
 	"Answer the <Integer> value of the receiver's 'second' field."
 
-	^bytes wordAtOffset: _OffsetOf_second!
+	^bytes uint16AtOffset: _OffsetOf_second!
 
 second: anInteger
 	"Set the receiver's 'second' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_second put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_second put: anInteger!
 
 time: aTime
 	"Set the receiver's fields from the <Time> argument."
@@ -83,9 +83,9 @@ defineFields
 	} TIME_STRUCT;"
 
 	self
-		defineField: #hour type: WORDField new;
-		defineField: #minute type: WORDField new;
-		defineField: #second type: WORDField new
+		defineField: #hour type: UInt16Field new;
+		defineField: #minute type: UInt16Field new;
+		defineField: #second type: UInt16Field new
 !
 
 fromTime: aTime

@@ -81,10 +81,10 @@ defineFields
 	"
 
 	self
-		defineField: #dwReserved1 type: DWORDField filler;
+		defineField: #dwReserved1 type: UInt32Field filler;
 		defineField: #pwszName type: (PointerField type: Utf16String);
 		defineField: #pAuthInfo type: (PointerField type: COAUTHINFO);
-		defineField: #dwReserved2 type: DWORDField filler!
+		defineField: #dwReserved2 type: UInt32Field filler!
 
 getFieldNames
 	^#(#pwszName #pAuthInfo)! !

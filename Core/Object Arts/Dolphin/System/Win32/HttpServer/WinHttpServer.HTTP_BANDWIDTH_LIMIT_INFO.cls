@@ -32,12 +32,12 @@ struct tagHTTP_BANDWIDTH_LIMIT_INFO {
 MaxBandwidth
 	"Answer the <Integer> value of the receiver's 'MaxBandwidth' field."
 
-	^bytes dwordAtOffset: _OffsetOf_MaxBandwidth!
+	^bytes uint32AtOffset: _OffsetOf_MaxBandwidth!
 
 MaxBandwidth: anInteger
 	"Set the receiver's 'MaxBandwidth' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_MaxBandwidth put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_MaxBandwidth put: anInteger!
 
 value
 	^self Present ifTrue: [self MaxBandwidth]!
@@ -78,7 +78,7 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #MaxBandwidth type: DWORDField new offset: 4.
+		defineField: #MaxBandwidth type: UInt32Field new offset: 4.
 	self byteSize: 8!
 
 getFieldNames

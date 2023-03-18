@@ -64,7 +64,7 @@ vt!accessing!constants!public! !
 !OS.COM.TKindAliasAnalyzer class methodsFor!
 
 basicTypes
-	^{UINT_PTR. INT_PTR. LARGE_INTEGER. ULARGE_INTEGER. BOOLEAN. GUID}!
+	^{UIntPtr. IntPtr. Int64. UInt64. BOOLEAN. GUID}!
 
 initialize
 	"
@@ -75,8 +75,8 @@ initialize
 	self basicTypes do: [:each | BaseTypes at: each name put: each].
 	BaseTypes
 		at: 'guid' put: GUID;
-		at: 'ULONG_PTR' put: UINT_PTR;
-		at: 'LONG_PTR' put: INT_PTR.
+		at: 'ULONG_PTR' put: UIntPtr;
+		at: 'LONG_PTR' put: IntPtr.
 	self wireHandleNames do: [:each | BaseTypes at: 'wire' , each put: Handle].
 	BaseTypes
 		shrink;

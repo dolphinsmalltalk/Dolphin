@@ -30,12 +30,12 @@ struct tagEMRSELECTOBJECT {
 ihObject
 	"Answer the <Integer> value of the receiver's 'ihObject' field."
 
-	^bytes dwordAtOffset: _OffsetOf_ihObject!
+	^bytes uint32AtOffset: _OffsetOf_ihObject!
 
 ihObject: anInteger
 	"Set the receiver's 'ihObject' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_ihObject put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_ihObject put: anInteger! !
 !OS.EMRSELECTOBJECT categoriesForMethods!
 ihObject!**compiled accessors**!public! !
 ihObject:!**compiled accessors**!public! !
@@ -61,7 +61,7 @@ defineFields
 	super defineFields.
 	self
 		defineField: #ihObject
-		type: DWORDField new
+		type: UInt32Field new
 		offset: 8.
 	self byteSize: 12!
 

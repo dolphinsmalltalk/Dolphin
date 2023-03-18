@@ -84,22 +84,22 @@ Address: aStructureArrayOfSOCKADDR
 BytesReceived
 	"Answer the <Integer> value of the receiver's 'BytesReceived' field."
 
-	^bytes qwordAtOffset: _OffsetOf_BytesReceived!
+	^bytes uint64AtOffset: _OffsetOf_BytesReceived!
 
 BytesReceived: anInteger
 	"Set the receiver's 'BytesReceived' field to the value of the argument, anInteger"
 
-	bytes qwordAtOffset: _OffsetOf_BytesReceived put: anInteger!
+	bytes uint64AtOffset: _OffsetOf_BytesReceived put: anInteger!
 
 ConnectionId
 	"Answer the <Integer> value of the receiver's 'ConnectionId' field."
 
-	^bytes qwordAtOffset: _OffsetOf_ConnectionId!
+	^bytes uint64AtOffset: _OffsetOf_ConnectionId!
 
 ConnectionId: anInteger
 	"Set the receiver's 'ConnectionId' field to the value of the argument, anInteger"
 
-	bytes qwordAtOffset: _OffsetOf_ConnectionId put: anInteger!
+	bytes uint64AtOffset: _OffsetOf_ConnectionId put: anInteger!
 
 CookedUrl
 	"Answer the <HTTP_COOKED_URL> value of the receiver's 'CookedUrl' field."
@@ -118,22 +118,22 @@ CookedUrl: aHTTP_COOKED_URL
 EntityChunkCount
 	"Private - Answer the <Integer> value of the receiver's 'EntityChunkCount' field."
 
-	^bytes wordAtOffset: _OffsetOf_EntityChunkCount!
+	^bytes uint16AtOffset: _OffsetOf_EntityChunkCount!
 
 EntityChunkCount: anInteger
 	"Set the receiver's 'EntityChunkCount' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_EntityChunkCount put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_EntityChunkCount put: anInteger!
 
 Flags
 	"Answer the <Integer> value of the receiver's 'Flags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_Flags!
+	^bytes uint32AtOffset: _OffsetOf_Flags!
 
 Flags: anInteger
 	"Set the receiver's 'Flags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_Flags put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_Flags put: anInteger!
 
 Headers
 	"Answer the <HTTP_REQUEST_HEADERS> value of the receiver's 'Headers' field."
@@ -241,52 +241,52 @@ pUnknownVerb: anAnsiString
 RawConnectionId
 	"Answer the <Integer> value of the receiver's 'RawConnectionId' field."
 
-	^bytes qwordAtOffset: _OffsetOf_RawConnectionId!
+	^bytes uint64AtOffset: _OffsetOf_RawConnectionId!
 
 RawConnectionId: anInteger
 	"Set the receiver's 'RawConnectionId' field to the value of the argument, anInteger"
 
-	bytes qwordAtOffset: _OffsetOf_RawConnectionId put: anInteger!
+	bytes uint64AtOffset: _OffsetOf_RawConnectionId put: anInteger!
 
 RawUrlLength
 	"Private - Answer the <Integer> value of the receiver's 'RawUrlLength' field."
 
-	^bytes wordAtOffset: _OffsetOf_RawUrlLength!
+	^bytes uint16AtOffset: _OffsetOf_RawUrlLength!
 
 RawUrlLength: anInteger
 	"Set the receiver's 'RawUrlLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_RawUrlLength put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_RawUrlLength put: anInteger!
 
 RequestId
 	"Answer the <Integer> value of the receiver's 'RequestId' field."
 
-	^bytes qwordAtOffset: _OffsetOf_RequestId!
+	^bytes uint64AtOffset: _OffsetOf_RequestId!
 
 RequestId: anInteger
 	"Set the receiver's 'RequestId' field to the value of the argument, anInteger"
 
-	bytes qwordAtOffset: _OffsetOf_RequestId put: anInteger!
+	bytes uint64AtOffset: _OffsetOf_RequestId put: anInteger!
 
 UnknownVerbLength
 	"Private - Answer the <Integer> value of the receiver's 'UnknownVerbLength' field."
 
-	^bytes wordAtOffset: _OffsetOf_UnknownVerbLength!
+	^bytes uint16AtOffset: _OffsetOf_UnknownVerbLength!
 
 UnknownVerbLength: anInteger
 	"Set the receiver's 'UnknownVerbLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_UnknownVerbLength put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_UnknownVerbLength put: anInteger!
 
 UrlContext
 	"Answer the <Integer> value of the receiver's 'UrlContext' field."
 
-	^bytes qwordAtOffset: _OffsetOf_UrlContext!
+	^bytes uint64AtOffset: _OffsetOf_UrlContext!
 
 UrlContext: anInteger
 	"Set the receiver's 'UrlContext' field to the value of the argument, anInteger"
 
-	bytes qwordAtOffset: _OffsetOf_UrlContext put: anInteger!
+	bytes uint64AtOffset: _OffsetOf_UrlContext put: anInteger!
 
 verb
 	| verb |
@@ -296,12 +296,12 @@ verb
 Verb
 	"Answer the <Integer> value of the receiver's 'Verb' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_Verb!
+	^bytes int32AtOffset: _OffsetOf_Verb!
 
 Verb: anInteger
 	"Set the receiver's 'Verb' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_Verb put: anInteger!
+	bytes int32AtOffset: _OffsetOf_Verb put: anInteger!
 
 Version
 	"Answer the <HTTP_VERSION> value of the receiver's 'Version' field."
@@ -394,23 +394,23 @@ defineFields
 "
 
 	self
-		defineField: #Flags type: DWORDField new offset: 0;
-		defineField: #ConnectionId type: QWORDField new offset: 8;
-		defineField: #RequestId type: QWORDField new offset: 16;
-		defineField: #UrlContext type: QWORDField new offset: 24;
+		defineField: #Flags type: UInt32Field new offset: 0;
+		defineField: #ConnectionId type: UInt64Field new offset: 8;
+		defineField: #RequestId type: UInt64Field new offset: 16;
+		defineField: #UrlContext type: UInt64Field new offset: 24;
 		defineField: #Version type: (StructureField type: HTTP_VERSION) offset: 32;
-		defineField: #Verb type: SDWORDField new offset: 36;
-		defineField: #UnknownVerbLength type: WORDField new beNonBrowsable offset: 40;
-		defineField: #RawUrlLength type: WORDField new beNonBrowsable offset: 42;
+		defineField: #Verb type: Int32Field new offset: 36;
+		defineField: #UnknownVerbLength type: UInt16Field new beNonBrowsable offset: 40;
+		defineField: #RawUrlLength type: UInt16Field new beNonBrowsable offset: 42;
 		defineField: #pUnknownVerb type: (ArrayPointerField type: AnsiString lengthField: #UnknownVerbLength) offset: 44;
 		defineField: #pRawUrl type: (ArrayPointerField type: AnsiString lengthField: #RawUrlLength) beNonBrowsable offset: 48;
 		defineField: #CookedUrl type: (StructureField type: HTTP_COOKED_URL) offset: 52;
 		defineField: #Address type: (PointerArrayField type: SOCKADDR length: 2) offset: 76;
 		defineField: #Headers type: (StructureField type: HTTP_REQUEST_HEADERS) offset: 84;
-		defineField: #BytesReceived type: QWORDField new offset: 432;
-		defineField: #EntityChunkCount type: WORDField new beNonBrowsable offset: 440;
+		defineField: #BytesReceived type: UInt64Field new offset: 432;
+		defineField: #EntityChunkCount type: UInt16Field new beNonBrowsable offset: 440;
 		defineField: #pEntityChunks type: (StructureArrayPointerField type: HTTP_DATA_CHUNK lengthField: #EntityChunkCount) offset: 444;
-		defineField: #RawConnectionId type: QWORDField new offset: 448;
+		defineField: #RawConnectionId type: UInt64Field new offset: 448;
 		defineField: #pSslInfo type: (PointerField type: HTTP_SSL_INFO) offset: 456.
 	self byteSize: 464!
 

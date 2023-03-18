@@ -112,7 +112,7 @@ asFloatArray
 	^External.FLOATArray withAll: self!
 
 asIntegerArray
-	^External.SDWORDArray withAll: self!
+	^External.Int32Array withAll: self!
 
 atRandom
 	^self at: self size atRandom!

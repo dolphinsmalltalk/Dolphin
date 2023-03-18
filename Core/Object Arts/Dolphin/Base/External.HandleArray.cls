@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.UINT_PTRArray subclass: #'External.HandleArray'
+External.UIntPtrArray subclass: #'External.HandleArray'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 External.HandleArray guid: (Core.GUID fromString: '{1452d19c-be37-42aa-838e-ff2156d8ed64}')!
-External.HandleArray comment: 'Specialized <ExternalArray> to represent contiguous single-dimensioned arrays of handles. Note that these could be 32 or 64-bit, depending on the host OS.'!
+External.HandleArray comment: 'Specialized `ExternalArray` to represent contiguous single-dimensioned arrays of handles. Note that these could be 32 or 64-bit, depending on the host OS.'!
 !External.HandleArray categoriesForClass!External-Data-Structured! !
 !External.HandleArray methodsFor!
 

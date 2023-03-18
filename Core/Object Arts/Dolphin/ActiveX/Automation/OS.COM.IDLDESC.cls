@@ -41,7 +41,7 @@ isRetVal
 wIDLFlags
 	"Answer the <Integer> value of the receiver's 'wIDLFlags' field."
 
-	^bytes wordAtOffset: _OffsetOf_wIDLFlags! !
+	^bytes uint16AtOffset: _OffsetOf_wIDLFlags! !
 !OS.COM.IDLDESC categoriesForMethods!
 isIn!public!testing! !
 isOut!public!testing! !
@@ -67,8 +67,8 @@ defineFields
 	"
 
 	self
-		defineField: #dwReserved		type: DWORDField filler;
-		defineField: #wIDLFlags		type: WORDField readOnly
+		defineField: #dwReserved		type: UInt32Field filler;
+		defineField: #wIDLFlags		type: UInt16Field readOnly
 !
 
 getFieldNames

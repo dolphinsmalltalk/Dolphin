@@ -30,22 +30,22 @@ typedef struct tagtimeval {
 tv_sec
 	"Answer the <Integer> value of the receiver's 'tv_sec' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_tv_sec!
+	^bytes int32AtOffset: _OffsetOf_tv_sec!
 
 tv_sec: anInteger
 	"Set the receiver's 'tv_sec' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_tv_sec put: anInteger!
+	bytes int32AtOffset: _OffsetOf_tv_sec put: anInteger!
 
 tv_usec
 	"Answer the <Integer> value of the receiver's 'tv_usec' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_tv_usec!
+	^bytes int32AtOffset: _OffsetOf_tv_usec!
 
 tv_usec: anInteger
 	"Set the receiver's 'tv_usec' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_tv_usec put: anInteger! !
+	bytes int32AtOffset: _OffsetOf_tv_usec put: anInteger! !
 !OS.TIMEVAL categoriesForMethods!
 tv_sec!**compiled accessors**!public! !
 tv_sec:!**compiled accessors**!public! !
@@ -71,8 +71,8 @@ defineFields
 "
 
 	self
-		defineField: #tv_sec type: SDWORDField new offset: 0;
-		defineField: #tv_usec type: SDWORDField new offset: 4.
+		defineField: #tv_sec type: Int32Field new offset: 0;
+		defineField: #tv_usec type: Int32Field new offset: 4.
 	self byteSize: 8!
 
 getFieldNames

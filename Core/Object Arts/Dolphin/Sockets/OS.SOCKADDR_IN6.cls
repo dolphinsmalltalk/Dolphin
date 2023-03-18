@@ -76,42 +76,42 @@ sin6_addr: anIN6_ADDR
 sin6_family
 	"Answer the <Integer> value of the receiver's 'sin6_family' field."
 
-	^bytes wordAtOffset: _OffsetOf_sin6_family!
+	^bytes uint16AtOffset: _OffsetOf_sin6_family!
 
 sin6_family: anInteger
 	"Set the receiver's 'sin6_family' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_sin6_family put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_sin6_family put: anInteger!
 
 sin6_flowinfo
 	"Answer the <Integer> value of the receiver's 'sin6_flowinfo' field."
 
-	^bytes dwordAtOffset: _OffsetOf_sin6_flowinfo!
+	^bytes uint32AtOffset: _OffsetOf_sin6_flowinfo!
 
 sin6_flowinfo: anInteger
 	"Set the receiver's 'sin6_flowinfo' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_sin6_flowinfo put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_sin6_flowinfo put: anInteger!
 
 sin6_port
 	"Answer the <Integer> value of the receiver's 'sin6_port' field."
 
-	^bytes wordAtOffset: _OffsetOf_sin6_port!
+	^bytes uint16AtOffset: _OffsetOf_sin6_port!
 
 sin6_port: anInteger
 	"Set the receiver's 'sin6_port' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_sin6_port put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_sin6_port put: anInteger!
 
 sin6_scope_id
 	"Answer the <Integer> value of the receiver's 'sin6_scope_id' field."
 
-	^bytes dwordAtOffset: _OffsetOf_sin6_scope_id!
+	^bytes uint32AtOffset: _OffsetOf_sin6_scope_id!
 
 sin6_scope_id: anInteger
 	"Set the receiver's 'sin6_scope_id' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_sin6_scope_id put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_sin6_scope_id put: anInteger! !
 !OS.SOCKADDR_IN6 categoriesForMethods!
 flowInfo!accessing!public! !
 flowInfo:!accessing!public! !
@@ -156,12 +156,12 @@ defineFields
 "
 
 	self
-		defineField: #sin6_family type: WORDField new offset: 0;
-		defineField: #sin6_port type: WORDField new offset: 2;
-		defineField: #sin6_flowinfo type: DWORDField new offset: 4;
+		defineField: #sin6_family type: UInt16Field new offset: 0;
+		defineField: #sin6_port type: UInt16Field new offset: 2;
+		defineField: #sin6_flowinfo type: UInt32Field new offset: 4;
 		defineField: #sin6_addr type: (StructureField type: IN6_ADDR) offset: 8;
-		defineField: #sin6_scope_id type: DWORDField new offset: 24;
-		defineField: #sin6_scope_struct type: DWORDField new beFiller offset: 24.
+		defineField: #sin6_scope_id type: UInt32Field new offset: 24;
+		defineField: #sin6_scope_struct type: UInt32Field new beFiller offset: 24.
 	self byteSize: 28!
 
 getFieldNames

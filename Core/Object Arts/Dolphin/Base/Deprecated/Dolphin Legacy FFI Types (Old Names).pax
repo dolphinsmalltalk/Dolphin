@@ -1,0 +1,367 @@
+﻿| package |
+package := Package name: 'Dolphin Legacy FFI Types (Old Names)'.
+package paxVersion: 2.1;
+	basicComment: ''.
+
+
+package setMethodNames: #(
+	#(#{Core.ByteArray} #basicDwordAtOffset:)
+	#(#{Core.ByteArray} #basicDwordAtOffset:put:)
+	#(#{Core.ByteArray} #dwordAtOffset:)
+	#(#{Core.ByteArray} #dwordAtOffset:put:)
+	#(#{Core.ByteArray} #qwordAtOffset:)
+	#(#{Core.ByteArray} #qwordAtOffset:put:)
+	#(#{Core.ByteArray} #sbyteAtOffset:)
+	#(#{Core.ByteArray} #sbyteAtOffset:put:)
+	#(#{Core.ByteArray} #sdwordAtOffset:)
+	#(#{Core.ByteArray} #sdwordAtOffset:put:)
+	#(#{Core.ByteArray} #sqwordAtOffset:)
+	#(#{Core.ByteArray} #sqwordAtOffset:put:)
+	#(#{Core.ByteArray} #swordAtOffset:)
+	#(#{Core.ByteArray} #swordAtOffset:put:)
+	#(#{Core.ByteArray} #wordAtOffset:)
+	#(#{Core.ByteArray} #wordAtOffset:put:)
+	#(#{Core.Integer} #isSDWORD)
+	#(#{Core.PositionableStream} #nextDWORD)
+	#(#{Core.PositionableStream} #nextSDWORD)
+	#(#{Core.PositionableStream} #nextSWORD)
+	#(#{Core.PositionableStream} #nextWORD)
+	#(#{Core.Stream} #nextDWORDPut:)
+	#(#{Core.Stream} #nextSDWORDPut:)
+	#(#{External.Address} #dwordAtOffset:)
+	#(#{External.Address} #dwordAtOffset:put:)
+	#(#{External.Address} #sdwordAtOffset:)
+	#(#{External.Address} #sdwordAtOffset:put:)
+	#(#{External.Address} #swordAtOffset:)
+	#(#{External.Address} #swordAtOffset:put:)
+	#(#{External.Address} #wordAtOffset:)
+	#(#{External.Address} #wordAtOffset:put:)
+).
+
+package setVariableNames: #(
+	#{Smalltalk.BYTE}
+	#{Smalltalk.BYTEField}
+	#{Smalltalk.DWORD}
+	#{Smalltalk.DWORDArray}
+	#{Smalltalk.DWORDBytes}
+	#{Smalltalk.DWORDField}
+	#{Smalltalk.INT_PTR}
+	#{Smalltalk.INT_PTRArray}
+	#{Smalltalk.INT_PTRField}
+	#{Smalltalk.LARGE_INTEGER}
+	#{Smalltalk.QWORDField}
+	#{Smalltalk.SBYTE}
+	#{Smalltalk.SBYTEArray}
+	#{Smalltalk.SBYTEField}
+	#{Smalltalk.SDWORD}
+	#{Smalltalk.SDWORDArray}
+	#{Smalltalk.SDWORDField}
+	#{Smalltalk.SQWORDField}
+	#{Smalltalk.SWORD}
+	#{Smalltalk.SWORDField}
+	#{Smalltalk.UINT_PTR}
+	#{Smalltalk.UINT_PTRArray}
+	#{Smalltalk.UINT_PTRField}
+	#{Smalltalk.ULARGE_INTEGER}
+	#{Smalltalk.WORD}
+	#{Smalltalk.WORDArray}
+	#{Smalltalk.WORDField}
+).
+
+package setAliasVariableNames: #(
+	#{Smalltalk.BYTE}
+	#{Smalltalk.BYTEField}
+	#{Smalltalk.DWORD}
+	#{Smalltalk.DWORDArray}
+	#{Smalltalk.DWORDBytes}
+	#{Smalltalk.DWORDField}
+	#{Smalltalk.INT_PTR}
+	#{Smalltalk.INT_PTRArray}
+	#{Smalltalk.INT_PTRField}
+	#{Smalltalk.LARGE_INTEGER}
+	#{Smalltalk.QWORDField}
+	#{Smalltalk.SBYTE}
+	#{Smalltalk.SBYTEArray}
+	#{Smalltalk.SBYTEField}
+	#{Smalltalk.SDWORD}
+	#{Smalltalk.SDWORDArray}
+	#{Smalltalk.SDWORDField}
+	#{Smalltalk.SQWORDField}
+	#{Smalltalk.SWORD}
+	#{Smalltalk.SWORDField}
+	#{Smalltalk.UINT_PTR}
+	#{Smalltalk.UINT_PTRArray}
+	#{Smalltalk.UINT_PTRField}
+	#{Smalltalk.ULARGE_INTEGER}
+	#{Smalltalk.WORD}
+	#{Smalltalk.WORDArray}
+	#{Smalltalk.WORDField}
+).
+
+package setPrerequisites: #(
+	'..\Dolphin'
+).
+
+package!
+
+"Variable Aliases"!
+
+Smalltalk.BYTE := External.UInt8!
+
+Smalltalk.BYTEField := External.UInt8Field!
+
+Smalltalk.DWORD := External.UInt32!
+
+Smalltalk.DWORDArray := External.UInt32Array!
+
+Smalltalk.DWORDBytes := External.UInt32Bytes!
+
+Smalltalk.DWORDField := External.UInt32Field!
+
+Smalltalk.INT_PTR := External.IntPtr!
+
+Smalltalk.INT_PTRArray := External.IntPtrArray!
+
+Smalltalk.INT_PTRField := External.IntPtrField!
+
+Smalltalk.LARGE_INTEGER := External.Int64!
+
+Smalltalk.QWORDField := External.UInt64Field!
+
+Smalltalk.SBYTE := External.Int8!
+
+Smalltalk.SBYTEArray := External.Int8Array!
+
+Smalltalk.SBYTEField := External.Int8Field!
+
+Smalltalk.SDWORD := External.Int32!
+
+Smalltalk.SDWORDArray := External.Int32Array!
+
+Smalltalk.SDWORDField := External.Int32Field!
+
+Smalltalk.SQWORDField := External.Int64Field!
+
+Smalltalk.SWORD := External.Int16!
+
+Smalltalk.SWORDField := External.Int16Field!
+
+Smalltalk.UINT_PTR := External.UIntPtr!
+
+Smalltalk.UINT_PTRArray := External.UIntPtrArray!
+
+Smalltalk.UINT_PTRField := External.UIntPtrField!
+
+Smalltalk.ULARGE_INTEGER := External.UInt64!
+
+Smalltalk.WORD := External.UInt16!
+
+Smalltalk.WORDArray := External.UInt16Array!
+
+Smalltalk.WORDField := External.UInt16Field!
+
+
+"Loose Methods"!
+
+!Core.ByteArray methodsFor!
+
+basicDwordAtOffset: anInteger
+	"Soft deprecated. Retained in applications that still refer to the old FFI class names, e.g. DWORD."
+
+	^self basicUInt32AtOffset: anInteger!
+
+basicDwordAtOffset: anInteger put: anObject
+	"Soft deprecated. Retained in applications that still refer to the old FFI class names, e.g. DWORD."
+
+	^self basicUInt32AtOffset: anInteger put: anObject!
+
+dwordAtOffset: anInteger
+	"Soft deprecated. Retained in applications that still refer to the old FFI class names, e.g. DWORD."
+
+	^self uint32AtOffset: anInteger!
+
+dwordAtOffset: anInteger put: anObject
+	"Soft deprecated. Retained in applications that still refer to the old FFI class names, e.g. DWORD."
+
+	^self uint32AtOffset: anInteger put: anObject!
+
+qwordAtOffset: anInteger
+	"Soft deprecated. Retain in applications that still refer to the old FFI class names, e.g. QWORD, ULARGE_INTEGER"
+
+	^self uint64AtOffset: anInteger!
+
+qwordAtOffset: anInteger put: anObject
+	"Soft deprecated. Retain in applications that still refer to the old FFI class names, e.g. QWORD, ULARGE_INTEGER"
+
+	^self uint64AtOffset: anInteger put: anObject!
+
+sbyteAtOffset: anInteger
+	"Soft deprecated. Retain in applications that still refer to the old FFI class names, e.g. SBYTE."
+
+	^self int8AtOffset: anInteger!
+
+sbyteAtOffset: anInteger put: aByte
+	"Soft deprecated. Retain in applications that still refer to the old FFI class names, e.g. SBYTE."
+
+	^self int8AtOffset: anInteger put: aByte!
+
+sdwordAtOffset: anInteger
+	"Soft deprecated. Retained in applications that still refer to the old FFI class names, e.g. SDWORD."
+
+	^self int32AtOffset: anInteger!
+
+sdwordAtOffset: anInteger put: anObject
+	"Soft deprecated. Retain in applications that still refer to the old FFI class names, e.g. SDWORD."
+
+	^self int32AtOffset: anInteger put: anObject!
+
+sqwordAtOffset: anInteger
+	"Soft deprecated. Retain in applications that still refer to the old FFI class names, e.g. LARGE_INTEGER."
+
+	^self int64AtOffset: anInteger!
+
+sqwordAtOffset: anInteger put: anObject
+	"Soft deprecated. Retain in applications that still refer to the old FFI class names, e.g. LARGE_INTEGER."
+
+	^self int64AtOffset: anInteger put: anObject!
+
+swordAtOffset: anInteger
+	"Soft deprecated. Retain in applications that still refer to the old FFI class names, e.g. SWORD."
+
+	^self int16AtOffset: anInteger!
+
+swordAtOffset: anInteger put: anObject
+	"Soft deprecated. Retain in applications that still refer to the old FFI class names, e.g. SWORD."
+
+	^self int16AtOffset: anInteger put: anObject!
+
+wordAtOffset: anInteger
+	"Soft deprecated. Retain in applications that still refer to the old FFI class names, e.g. WORD."
+
+	^self uint16AtOffset: anInteger!
+
+wordAtOffset: anInteger put: anObject
+	"Soft deprecated. Retain in applications that still refer to the old FFI class names, e.g. WORD."
+
+	^self uint16AtOffset: anInteger put: anObject! !
+!Core.ByteArray categoriesForMethods!
+basicDwordAtOffset:!accessing!public! !
+basicDwordAtOffset:put:!accessing!public! !
+dwordAtOffset:!accessing!public! !
+dwordAtOffset:put:!accessing!public! !
+qwordAtOffset:!accessing!public! !
+qwordAtOffset:put:!accessing!public! !
+sbyteAtOffset:!accessing!public! !
+sbyteAtOffset:put:!accessing!public! !
+sdwordAtOffset:!accessing!public! !
+sdwordAtOffset:put:!accessing!public! !
+sqwordAtOffset:!accessing!public! !
+sqwordAtOffset:put:!accessing!public! !
+swordAtOffset:!accessing!public! !
+swordAtOffset:put:!accessing!public! !
+wordAtOffset:!accessing!public! !
+wordAtOffset:put:!accessing!public! !
+!
+
+!Core.Integer methodsFor!
+
+isSDWORD
+	"Soft deprecated - retained in applications that still reference the old external integer type names"
+
+	^self isInt32! !
+!Core.Integer categoriesForMethods!
+isSDWORD!public!testing! !
+!
+
+!Core.PositionableStream methodsFor!
+
+nextDWORD
+	#deprecated.
+	^self nextUInt32!
+
+nextSDWORD
+	#deprecated.
+	^self nextInt32!
+
+nextSWORD
+	#deprecated.
+	^self nextInt16!
+
+nextWORD
+	#deprecated.
+	^self nextUInt16! !
+!Core.PositionableStream categoriesForMethods!
+nextDWORD!binary filing!public! !
+nextSDWORD!binary filing!public! !
+nextSWORD!binary filing!public! !
+nextWORD!binary filing!public! !
+!
+
+!Core.Stream methodsFor!
+
+nextDWORDPut: anInteger
+	#deprecated.
+	self nextUInt32Put: anInteger!
+
+nextSDWORDPut: anInteger
+	#deprecated.
+	self nextInt32Put: anInteger! !
+!Core.Stream categoriesForMethods!
+nextDWORDPut:!binary filing!public! !
+nextSDWORDPut:!binary filing!public! !
+!
+
+!External.Address methodsFor!
+
+dwordAtOffset: anInteger
+	"Soft deprecated. Retained in applications that still refer to the old FFI class names, e.g. DWORD."
+
+	^self uint32AtOffset: anInteger!
+
+dwordAtOffset: anInteger put: anObject
+	"Soft deprecated. Retained in applications that still refer to the old FFI class names, e.g. DWORD."
+
+	^self uint32AtOffset: anInteger put: anObject!
+
+sdwordAtOffset: anInteger
+	"Soft deprecated. Retained in applications that still refer to the old FFI class names, e.g. SDWORD."
+
+	^self int32AtOffset: anInteger!
+
+sdwordAtOffset: anInteger put: anObject
+	"Soft deprecated. Retained in applications that still refer to the old FFI class names, e.g. SDWORD."
+
+	^self int32AtOffset: anInteger put: anObject!
+
+swordAtOffset: anInteger
+	"Soft deprecated. Retain in applications that still refer to the old FFI class names, e.g. SWORD."
+
+	^self int16AtOffset: anInteger!
+
+swordAtOffset: anInteger put: anObject
+	"Soft deprecated. Retain in applications that still refer to the old FFI class names, e.g. SWORD."
+
+	^self int16AtOffset: anInteger put: anObject!
+
+wordAtOffset: anInteger
+	"Soft deprecated. Retain in applications that still refer to the old FFI class names, e.g. WORD."
+
+	^self uint16AtOffset: anInteger!
+
+wordAtOffset: anInteger put: anObject
+	"Soft deprecated. Retain in applications that still refer to the old FFI class names, e.g. WORD."
+
+	^self uint16AtOffset: anInteger put: anObject! !
+!External.Address categoriesForMethods!
+dwordAtOffset:!accessing!primitives!public! !
+dwordAtOffset:put:!accessing!primitives!public! !
+sdwordAtOffset:!accessing!primitives!public! !
+sdwordAtOffset:put:!accessing!primitives!public! !
+swordAtOffset:!accessing!primitives!public! !
+swordAtOffset:put:!accessing!primitives!public! !
+wordAtOffset:!accessing!primitives!public! !
+wordAtOffset:put:!accessing!primitives!public! !
+!
+
+"End of package definition"!
+

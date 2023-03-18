@@ -90,7 +90,6 @@ package setClassNames: #(
 	#{External.Tests.ArrayFieldTest}
 	#{External.Tests.ArrayPointerFieldTest}
 	#{External.Tests.DOUBLEArrayTest}
-	#{External.Tests.DWORDArrayTest}
 	#{External.Tests.DynamicLinkLibraryTest}
 	#{External.Tests.ExternalArrayTest}
 	#{External.Tests.ExternalFieldTest}
@@ -98,17 +97,18 @@ package setClassNames: #(
 	#{External.Tests.FunctionDescriptorTest}
 	#{External.Tests.GenericExternalArrayTest}
 	#{External.Tests.GUIDTest}
+	#{External.Tests.Int16ArrayTest}
+	#{External.Tests.Int32ArrayTest}
+	#{External.Tests.Int8ArrayTest}
 	#{External.Tests.INTEGERTest}
 	#{External.Tests.ResourceLibraryTest}
-	#{External.Tests.SBYTEArrayTest}
-	#{External.Tests.SDWORDArrayTest}
 	#{External.Tests.StructureArrayFieldTest}
 	#{External.Tests.StructureArrayPointerFieldTest}
 	#{External.Tests.StructureArrayTest}
 	#{External.Tests.StructureTest}
-	#{External.Tests.SWORDArrayTest}
+	#{External.Tests.UInt16ArrayTest}
+	#{External.Tests.UInt32ArrayTest}
 	#{External.Tests.WCHARFieldTest}
-	#{External.Tests.WORDArrayTest}
 	#{Graphics.Tests}
 	#{Kernel.Tests}
 	#{Kernel.Tests.AbstractNamespaceTest}
@@ -915,12 +915,6 @@ External.Tests.ExternalArrayTest subclass: #'External.Tests.DOUBLEArrayTest'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.Tests.ExternalArrayTest subclass: #'External.Tests.DWORDArrayTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 External.Tests.ExternalArrayTest subclass: #'External.Tests.FLOATArrayTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -933,25 +927,31 @@ External.Tests.ExternalArrayTest subclass: #'External.Tests.GenericExternalArray
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.Tests.ExternalArrayTest subclass: #'External.Tests.SBYTEArrayTest'
+External.Tests.ExternalArrayTest subclass: #'External.Tests.Int16ArrayTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.Tests.ExternalArrayTest subclass: #'External.Tests.SDWORDArrayTest'
+External.Tests.ExternalArrayTest subclass: #'External.Tests.Int32ArrayTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.Tests.ExternalArrayTest subclass: #'External.Tests.SWORDArrayTest'
+External.Tests.ExternalArrayTest subclass: #'External.Tests.Int8ArrayTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.Tests.ExternalArrayTest subclass: #'External.Tests.WORDArrayTest'
+External.Tests.ExternalArrayTest subclass: #'External.Tests.UInt16ArrayTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+External.Tests.ExternalArrayTest subclass: #'External.Tests.UInt32ArrayTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

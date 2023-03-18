@@ -168,7 +168,7 @@ test: aString
 	| buf |
 	buf := ByteArray newFixed: 2.
 	self Test: aString pMatch: buf.
-	^(buf swordAtOffset: 0) ~~ 0!
+	^(buf int16AtOffset: 0) ~~ 0!
 
 Test: sourceString pMatch: pMatch
 	^self subclassResponsibility! !

@@ -63,42 +63,42 @@ AppId: aGUID
 DefaultCertCheckMode
 	"Answer the <Integer> value of the receiver's 'DefaultCertCheckMode' field."
 
-	^bytes dwordAtOffset: _OffsetOf_DefaultCertCheckMode!
+	^bytes uint32AtOffset: _OffsetOf_DefaultCertCheckMode!
 
 DefaultCertCheckMode: anInteger
 	"Set the receiver's 'DefaultCertCheckMode' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_DefaultCertCheckMode put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_DefaultCertCheckMode put: anInteger!
 
 DefaultFlags
 	"Answer the <Integer> value of the receiver's 'DefaultFlags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_DefaultFlags!
+	^bytes uint32AtOffset: _OffsetOf_DefaultFlags!
 
 DefaultFlags: anInteger
 	"Set the receiver's 'DefaultFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_DefaultFlags put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_DefaultFlags put: anInteger!
 
 DefaultRevocationFreshnessTime
 	"Answer the <Integer> value of the receiver's 'DefaultRevocationFreshnessTime' field."
 
-	^bytes dwordAtOffset: _OffsetOf_DefaultRevocationFreshnessTime!
+	^bytes uint32AtOffset: _OffsetOf_DefaultRevocationFreshnessTime!
 
 DefaultRevocationFreshnessTime: anInteger
 	"Set the receiver's 'DefaultRevocationFreshnessTime' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_DefaultRevocationFreshnessTime put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_DefaultRevocationFreshnessTime put: anInteger!
 
 DefaultRevocationUrlRetrievalTimeout
 	"Answer the <Integer> value of the receiver's 'DefaultRevocationUrlRetrievalTimeout' field."
 
-	^bytes dwordAtOffset: _OffsetOf_DefaultRevocationUrlRetrievalTimeout!
+	^bytes uint32AtOffset: _OffsetOf_DefaultRevocationUrlRetrievalTimeout!
 
 DefaultRevocationUrlRetrievalTimeout: anInteger
 	"Set the receiver's 'DefaultRevocationUrlRetrievalTimeout' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_DefaultRevocationUrlRetrievalTimeout put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_DefaultRevocationUrlRetrievalTimeout put: anInteger!
 
 pDefaultSslCtlIdentifier
 	"Answer the <Utf16String> value of the receiver's 'pDefaultSslCtlIdentifier' field."
@@ -144,12 +144,12 @@ pSslHash: anExternalArray
 SslHashLength
 	"Private - Answer the <Integer> value of the receiver's 'SslHashLength' field."
 
-	^bytes dwordAtOffset: _OffsetOf_SslHashLength!
+	^bytes uint32AtOffset: _OffsetOf_SslHashLength!
 
 SslHashLength: anInteger
 	"Set the receiver's 'SslHashLength' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_SslHashLength put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_SslHashLength put: anInteger! !
 !WinHttpServer.HTTP_SERVICE_CONFIG_SSL_PARAM categoriesForMethods!
 AppId!**compiled accessors**!public! !
 AppId:!**compiled accessors**!public! !
@@ -199,16 +199,16 @@ defineFields
 "
 
 	self
-		defineField: #SslHashLength type: DWORDField new beNonBrowsable offset: 0;
+		defineField: #SslHashLength type: UInt32Field new beNonBrowsable offset: 0;
 		defineField: #pSslHash type: (ArrayPointerField type: ExternalArray lengthField: #SslHashLength) offset: 4;
 		defineField: #AppId type: (StructureField type: GUID) offset: 8;
 		defineField: #pSslCertStoreName type: (PointerField type: Utf16String) offset: 24;
-		defineField: #DefaultCertCheckMode type: DWORDField new offset: 28;
-		defineField: #DefaultRevocationFreshnessTime type: DWORDField new offset: 32;
-		defineField: #DefaultRevocationUrlRetrievalTimeout type: DWORDField new offset: 36;
+		defineField: #DefaultCertCheckMode type: UInt32Field new offset: 28;
+		defineField: #DefaultRevocationFreshnessTime type: UInt32Field new offset: 32;
+		defineField: #DefaultRevocationUrlRetrievalTimeout type: UInt32Field new offset: 36;
 		defineField: #pDefaultSslCtlIdentifier type: (PointerField type: Utf16String) offset: 40;
 		defineField: #pDefaultSslCtlStoreName type: (PointerField type: Utf16String) offset: 44;
-		defineField: #DefaultFlags type: DWORDField new offset: 48.
+		defineField: #DefaultFlags type: UInt32Field new offset: 48.
 	self byteSize: 52!
 
 getFieldNames

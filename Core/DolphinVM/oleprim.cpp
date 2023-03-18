@@ -86,23 +86,23 @@ Oop* PRIMCALL Interpreter::primitiveVariantValue(Oop* const sp, primargcount_t)
 		switch(vt & ~VT_BYREF)
 		{
 		case VT_I1:
-			oteStructClass = Pointers.ClassSBYTE;
+			oteStructClass = Pointers.ClassInt8;
 			pRef = V_I1REF(pVar);
 			break;
 
 		case VT_I2:
-			oteStructClass = Pointers.ClassSWORD;
+			oteStructClass = Pointers.ClassInt16;
 			pRef = V_I2REF(pVar);
 			break;
 
 		case VT_INT:
 		case VT_I4:
-			oteStructClass = Pointers.ClassSDWORD;
+			oteStructClass = Pointers.ClassInt32;
 			pRef = V_I4REF(pVar);
 			break;
 
 		case VT_I8:
-			oteStructClass = Pointers.ClassSQWORD;
+			oteStructClass = Pointers.ClassInt64;
 			pRef = V_I8REF(pVar);
 			break;
 
@@ -142,23 +142,23 @@ Oop* PRIMCALL Interpreter::primitiveVariantValue(Oop* const sp, primargcount_t)
 			break;
 
 		case VT_UI1:
-			oteStructClass = Pointers.ClassBYTE;
+			oteStructClass = Pointers.ClassUInt8;
 			pRef = V_UI1REF(pVar);
 			break;
 		
 		case VT_UI2:
-			oteStructClass = Pointers.ClassWORD;
+			oteStructClass = Pointers.ClassUInt16;
 			pRef = V_UI2REF(pVar);
 			break;
 
 		case VT_UINT:
 		case VT_UI4:
-			oteStructClass = Pointers.ClassDWORD;
+			oteStructClass = Pointers.ClassUInt32;
 			pRef = V_UI4REF(pVar);
 			break;
 
 		case VT_UI8:
-			oteStructClass = Pointers.ClassQWORD;
+			oteStructClass = Pointers.ClassUInt64;
 			pRef = V_UI8REF(pVar);
 			break;
 

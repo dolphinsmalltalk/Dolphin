@@ -74,7 +74,7 @@ lfFaceName: anUtf16String
 		from: ##(_OffsetOf_lfFaceName + 1)
 		to: _OffsetOf_lfFaceName + size
 		startingAt: 1.
-	bytes wordAtOffset: _OffsetOf_lfFaceName + size put: 0! !
+	bytes uint16AtOffset: _OffsetOf_lfFaceName + size put: 0! !
 !OS.LOGFONTW categoriesForMethods!
 createFont!private!realizing/unrealizing! !
 faceName!accessing!public! !

@@ -34,7 +34,7 @@ initializeFromHandle: aHandle
 	| buf |
 	buf := ByteArray new: 4.
 	Gdip gdipGetCustomLineCapStrokeJoin: aHandle lineJoin: buf.
-	strokeJoin := buf sdwordAtOffset: 0.
+	strokeJoin := buf int32AtOffset: 0.
 	Gdip gdipGetCustomLineCapWidthScale: aHandle widthScale: buf.
 	widthScale := buf floatAtOffset: 0!
 

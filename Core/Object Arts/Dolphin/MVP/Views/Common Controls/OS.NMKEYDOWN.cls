@@ -19,12 +19,12 @@ OS.NMKEYDOWN comment: 'NMKEYDOWN is an ExternalStructure class to represent the 
 flags
 	"Answer the <Integer> value of the receiver's 'flags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_flags!
+	^bytes uint32AtOffset: _OffsetOf_flags!
 
 wVKey
 	"Answer the <Integer> value of the receiver's 'wVKey' field."
 
-	^bytes wordAtOffset: _OffsetOf_wVKey! !
+	^bytes uint16AtOffset: _OffsetOf_wVKey! !
 !OS.NMKEYDOWN categoriesForMethods!
 flags!**compiled accessors**!public! !
 wVKey!**compiled accessors**!public! !
@@ -42,8 +42,8 @@ defineFields
 
 	super defineFields.	"NMHDR fields"
 	self
-		defineField: #wVKey type: WORDField readOnly;
-		defineField: #flags type: DWORDField readOnly!
+		defineField: #wVKey type: UInt16Field readOnly;
+		defineField: #flags type: UInt32Field readOnly!
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #wVKey #flags)! !

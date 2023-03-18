@@ -12,18 +12,18 @@ External.Tests.ArrayFieldTest comment: ''!
 
 testReadFrom
 	| struct actual subject |
-	struct := DWORDArray withAll: #(1 16r7FFFFFFF 16rFFFFFFFF 4).
-	subject := ArrayField type: DWORDArray length: 2.
+	struct := UInt32Array withAll: #(1 16r7FFFFFFF 16rFFFFFFFF 4).
+	subject := ArrayField type: UInt32Array length: 2.
 	subject offset: 4.
 	actual := subject readFrom: struct.
 	self assert: actual asArray equals: #(16r7FFFFFFF 16rFFFFFFFF)!
 
 testWriteInto
 	| struct subject |
-	struct := DWORDArray withAll: #(1 2 3 4).
-	subject := ArrayField type: DWORDArray length: 2.
+	struct := UInt32Array withAll: #(1 2 3 4).
+	subject := ArrayField type: UInt32Array length: 2.
 	subject offset: 4.
-	subject writeInto: struct value: (DWORDArray withAll: #(16r7FFFFFFF 16rFFFFFFFF)) bytes.
+	subject writeInto: struct value: (UInt32Array withAll: #(16r7FFFFFFF 16rFFFFFFFF)) bytes.
 	self assert: struct asArray equals: #(1 16r7FFFFFFF 16rFFFFFFFF 4)! !
 !External.Tests.ArrayFieldTest categoriesForMethods!
 testReadFrom!public! !

@@ -36,22 +36,22 @@ struct tagEMRSETICMPROFILE {
 cbData
 	"Answer the <Integer> value of the receiver's 'cbData' field."
 
-	^bytes dwordAtOffset: _OffsetOf_cbData!
+	^bytes uint32AtOffset: _OffsetOf_cbData!
 
 cbData: anInteger
 	"Set the receiver's 'cbData' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_cbData put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_cbData put: anInteger!
 
 cbName
 	"Answer the <Integer> value of the receiver's 'cbName' field."
 
-	^bytes dwordAtOffset: _OffsetOf_cbName!
+	^bytes uint32AtOffset: _OffsetOf_cbName!
 
 cbName: anInteger
 	"Set the receiver's 'cbName' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_cbName put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_cbName put: anInteger!
 
 Data
 	"Answer the <ExternalArray> value of the receiver's 'Data' field."
@@ -75,12 +75,12 @@ dataLength
 dwFlags
 	"Answer the <Integer> value of the receiver's 'dwFlags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwFlags!
+	^bytes uint32AtOffset: _OffsetOf_dwFlags!
 
 dwFlags: anInteger
 	"Set the receiver's 'dwFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwFlags put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_dwFlags put: anInteger! !
 !OS.EMRSETICMPROFILE categoriesForMethods!
 cbData!**compiled accessors**!public! !
 cbData:!**compiled accessors**!public! !
@@ -116,13 +116,13 @@ defineFields
 	super defineFields.
 	self
 		defineField: #dwFlags
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 8;
 		defineField: #cbName
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 12;
 		defineField: #cbData
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 16;
 		defineField: #Data
 			type: (ArrayField type: ExternalArray lengthField: #dataLength)

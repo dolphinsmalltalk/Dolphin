@@ -122,17 +122,17 @@ getGuid
 getInt64
 	"Private - Answer an <integer> read from the 64-bit signed integer in the receiver's buffer."
 
-	^buffer sqwordAtOffset: 0!
+	^buffer int64AtOffset: 0!
 
 getLong
 	"Private - Answer an <integer> read from the 32-bit signed integer in the receiver's buffer."
 
-	^buffer sdwordAtOffset: 0!
+	^buffer int32AtOffset: 0!
 
 getShort
 	"Private - Answer an <integer> read from the signed 16-bit value in the receiver's buffer."
 
-	^buffer swordAtOffset: 0!
+	^buffer int16AtOffset: 0!
 
 getTime
 	"Private - Answer an instance of <Time> representing the buffer of the receiver.
@@ -161,7 +161,7 @@ initializeForColumn: aDBColAttr
 	the database column described by the <DBColAttr> argument.
 	Answer the receiver."
 
-	lengthBuf := External.SDWORD fromInteger: SQL_NULL_DATA.
+	lengthBuf := External.Int32 fromInteger: SQL_NULL_DATA.
 	column := aDBColAttr.
 	buffer := ByteArray newFixed: (##(2 raisedTo: 16) min: aDBColAttr lengthC).
 	^self!
@@ -318,7 +318,7 @@ setInt64: aNumber
 
 	(self shouldTranslate: aNumber class: Number)
 		ifTrue: 
-			[buffer sqwordAtOffset: 0 put: aNumber asInteger.
+			[buffer int64AtOffset: 0 put: aNumber asInteger.
 			lengthBuf value: 8]!
 
 setLong: aNumber
@@ -326,7 +326,7 @@ setLong: aNumber
 
 	(self shouldTranslate: aNumber class: Number)
 		ifTrue: 
-			[buffer sdwordAtOffset: 0 put: aNumber asInteger.
+			[buffer int32AtOffset: 0 put: aNumber asInteger.
 			lengthBuf value: 4]!
 
 setShort: aNumber
@@ -334,7 +334,7 @@ setShort: aNumber
 
 	(self shouldTranslate: aNumber class: Number)
 		ifTrue: 
-			[buffer swordAtOffset: 0 put: aNumber asInteger.
+			[buffer int16AtOffset: 0 put: aNumber asInteger.
 			lengthBuf value: 2]!
 
 setTime: aTime

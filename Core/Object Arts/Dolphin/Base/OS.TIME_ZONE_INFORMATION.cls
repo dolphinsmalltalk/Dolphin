@@ -44,7 +44,7 @@ struct tagTIME_ZONE_INFORMATION {
 bias
 	"Answer the <Integer> value of the receiver's 'bias' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_bias!
+	^bytes int32AtOffset: _OffsetOf_bias!
 
 currentBias
 	"Answer the <Integer> bias current for the time zone when the information was queried from Windows. This accounts for daylight saving, etc."
@@ -62,7 +62,7 @@ currentName
 daylightBias
 	"Answer the <Integer> value of the receiver's 'daylightBias' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_daylightBias!
+	^bytes int32AtOffset: _OffsetOf_daylightBias!
 
 daylightDate
 	"Answer the <SYSTEMTIME> value of the receiver's 'daylightDate' field."
@@ -86,7 +86,7 @@ printableFields
 standardBias
 	"Answer the <Integer> value of the receiver's 'standardBias' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_standardBias!
+	^bytes int32AtOffset: _OffsetOf_standardBias!
 
 standardDate
 	"Answer the <SYSTEMTIME> value of the receiver's 'standardDate' field."
@@ -146,7 +146,7 @@ defineFields
 
 	self
 		defineField: #bias
-			type: SDWORDField new beReadOnly
+			type: Int32Field new beReadOnly
 			offset: 0;
 		defineField: #standardName
 			type: (StringField type: Utf16String length: 32) beReadOnly
@@ -155,7 +155,7 @@ defineFields
 			type: (StructureField type: SYSTEMTIME) beReadOnly
 			offset: 68;
 		defineField: #standardBias
-			type: SDWORDField new beReadOnly
+			type: Int32Field new beReadOnly
 			offset: 84;
 		defineField: #daylightName
 			type: (StringField type: Utf16String length: 32) beReadOnly
@@ -164,7 +164,7 @@ defineFields
 			type: (StructureField type: SYSTEMTIME) beReadOnly
 			offset: 152;
 		defineField: #daylightBias
-			type: SDWORDField new beReadOnly
+			type: Int32Field new beReadOnly
 			offset: 168.
 	self byteSize: 172!
 

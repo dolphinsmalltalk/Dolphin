@@ -87,7 +87,7 @@ asDword
 	"Answer the receiver in a form suitable for returning as the result of a window
 	procedure (or passing to a function expecting a 32-bit value)."
 
-	^(External.DWORD fromPoint: self) value!
+	^(UInt32 fromPoint: self) value!
 
 asGenericPoint
 	"Answer the receiver"

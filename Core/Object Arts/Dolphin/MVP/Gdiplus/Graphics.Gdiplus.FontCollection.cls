@@ -19,7 +19,7 @@ families
 families: anInteger
 	| numFound families clonedHandle gpHandles |
 	numFound := UInt32Bytes new.
-	gpHandles := UINT_PTRArray new: anInteger.
+	gpHandles := UIntPtrArray new: anInteger.
 	Gdip
 		gdipGetFontCollectionFamilyList: self asParameter
 		numSought: anInteger

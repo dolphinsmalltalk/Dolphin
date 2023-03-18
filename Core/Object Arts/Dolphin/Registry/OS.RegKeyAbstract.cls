@@ -144,7 +144,7 @@ dwordAt: aString put: anInteger
 
 	| value |
 	value := (ByteArray newFixed: 4)
-				dwordAtOffset: 0 put: anInteger;
+				uint32AtOffset: 0 put: anInteger;
 				yourself.
 	self
 		basicValueAt: aString
@@ -303,7 +303,7 @@ objectFromValue: aByteArray type: typeInteger size: sizeInteger
 			"REG_BINARY: 3"
 			[:bytes :size| bytes copyFrom: 1 to: size].
 			"REG_DWORD: 4"
-			[:bytes :size | bytes sdwordAtOffset: 0].
+			[:bytes :size | bytes int32AtOffset: 0].
 			"REG_DWORD_BIG_ENDIAN: 5"
 			notImplemented.
 			"REG_LINK: 6"
@@ -317,7 +317,7 @@ objectFromValue: aByteArray type: typeInteger size: sizeInteger
 			"REG_RESOURCE_REQUIREMENTS_LIST: 10"
 			notImplemented.
 			"REG_QWORD: 11"
-			[:bytes :size | bytes sqwordAtOffset: 0]})
+			[:bytes :size | bytes int64AtOffset: 0]})
 		at: typeInteger + 1) cull: aByteArray cull: sizeInteger!
 
 parentKey
@@ -392,7 +392,7 @@ qwordAt: aString put: anInteger
 	"Write a REG_QWORD value to the receiver's registry key with the <readableString> name, aString, and <integer> value, anInteger."
 
 	| value |
-	value := External.UInt64Bytes fromInteger: anInteger.
+	value := UInt64Bytes fromInteger: anInteger.
 	self
 		basicValueAt: aString
 		put: value
@@ -571,7 +571,7 @@ subKeyNamesDo: aMonadicValuable
 			
 			[| dwErr |
 			
-			[cbName dwordAtOffset: 0 put: maxSize.
+			[cbName uint32AtOffset: 0 put: maxSize.
 			(dwErr := AdvApi32
 						regEnumKeyEx: handle
 						dwIndex: i
@@ -582,7 +582,7 @@ subKeyNamesDo: aMonadicValuable
 						lpcbClass: nil
 						lpftLastWriteTime: nil) == ERROR_SUCCESS]
 					whileTrue: 
-						[aMonadicValuable value: (keyName copyFrom: 1 to: (cbName dwordAtOffset: 0)).
+						[aMonadicValuable value: (keyName copyFrom: 1 to: (cbName uint32AtOffset: 0)).
 						i := i + 1].
 			"The reported max sub-key length is a snapshot at a point in time, so may not remain accurate. If we find a longer key name appears, we loop doubling the buffer 'til we get it all. We can cut the cost of this check by making it the outer loop."
 			dwErr == ERROR_MORE_DATA]
@@ -633,8 +633,8 @@ subValueNamesAndValuesDo: aDyadicValuable
 	
 	["cbValueName must include Null terminator"
 	metadata
-		dwordAtOffset: 0 put: maxNameSize + 1;
-		dwordAtOffset: 4 put: maxDataSize.
+		uint32AtOffset: 0 put: maxNameSize + 1;
+		uint32AtOffset: 4 put: maxDataSize.
 	(dwErr := AdvApi32
 				regEnumValue: handle
 				dwIndex: i
@@ -645,11 +645,11 @@ subValueNamesAndValuesDo: aDyadicValuable
 				lpData: data
 				lpcbData: base + 4) == ERROR_SUCCESS]
 			whileTrue: 
-				[aDyadicValuable value: (valueName copyFrom: 1 to: (metadata dwordAtOffset: 0))
+				[aDyadicValuable value: (valueName copyFrom: 1 to: (metadata uint32AtOffset: 0))
 					value: (self
 							objectFromValue: data
-							type: (metadata dwordAtOffset: 8)
-							size: (metadata dwordAtOffset: 4)).
+							type: (metadata uint32AtOffset: 8)
+							size: (metadata uint32AtOffset: 4)).
 				i := i + 1].
 	dwErr == ERROR_MORE_DATA]
 			whileTrue: 
@@ -677,7 +677,7 @@ subValueNamesDo: aMonadicValuable
 			
 			[| dwErr |
 			
-			[cbValueName dwordAtOffset: 0 put: maxSize.
+			[cbValueName uint32AtOffset: 0 put: maxSize.
 			(dwErr := AdvApi32
 						regEnumValue: handle
 						dwIndex: i
@@ -688,7 +688,7 @@ subValueNamesDo: aMonadicValuable
 						lpData: nil
 						lpcbData: nil) == ERROR_SUCCESS]
 					whileTrue: 
-						[aMonadicValuable value: (valueName copyFrom: 1 to: (cbValueName dwordAtOffset: 0)).
+						[aMonadicValuable value: (valueName copyFrom: 1 to: (cbValueName uint32AtOffset: 0)).
 						i := i + 1].
 			"The reported max value name length is a snapshot at a point in time, so may not remain accurate. If we find a longer name appears we double the buffer and try again 'til we get it all. We can cut the cost of this by making it the outer loop."
 			dwErr == ERROR_MORE_DATA]
@@ -730,7 +730,7 @@ valueAt: aString ifAbsent: aNiladicValuable
 		lpData: nil
 		lpcbData: metadata) == ERROR_SUCCESS
 		ifFalse: [^aNiladicValuable value].
-	size := metadata dwordAtOffset: 0.
+	size := metadata uint32AtOffset: 0.
 	valueBuf := ByteArray newFixed: size.
 	AdvApi32
 		regQueryValueEx: handle
@@ -742,7 +742,7 @@ valueAt: aString ifAbsent: aNiladicValuable
 	needsFree ifTrue: [self free].
 	^self
 		objectFromValue: valueBuf
-		type: (metadata dwordAtOffset: 4)
+		type: (metadata uint32AtOffset: 4)
 		size: size!
 
 valueAt: aString put: anObject
@@ -967,6 +967,7 @@ initialize
 						#execute -> KEY_EXECUTE})
 				isImmutable: true;
 				yourself).
+	"We retain the DWORD/QWORD terminology here, because these are the registry types"
 	ValueTypes := ##((IdentityDictionary withAll: {#string -> REG_SZ.
 						#dword -> REG_DWORD.
 						#stringArray -> REG_MULTI_SZ.
@@ -1065,7 +1066,7 @@ valueUnmarshallers
 		"REG_BINARY: 3"
 		[:bytes :size| bytes copyFrom: 1 to: size].
 		"REG_DWORD: 4"
-		[:bytes :size | bytes sdwordAtOffset: 0].
+		[:bytes :size | bytes int32AtOffset: 0].
 		"REG_DWORD_BIG_ENDIAN: 5"
 		notImplemented.
 		"REG_LINK: 6"
@@ -1079,7 +1080,7 @@ valueUnmarshallers
 		"REG_RESOURCE_REQUIREMENTS_LIST: 10"
 		notImplemented.
 		"REG_QWORD: 11"
-		[:bytes :size | bytes sqwordAtOffset: 0]}	
+		[:bytes :size | bytes int64AtOffset: 0]}	
 
 ! !
 !OS.RegKeyAbstract class categoriesForMethods!

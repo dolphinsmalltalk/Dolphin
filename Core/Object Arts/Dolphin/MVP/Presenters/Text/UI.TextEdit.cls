@@ -84,8 +84,8 @@ basicSelectionRange
 	means that the range should NEVER be empty."
 
 	| dwStart dwEnd |
-	dwStart := DWORD new.
-	dwEnd := DWORD new.
+	dwStart := UInt32 new.
+	dwEnd := UInt32 new.
 	self
 		sendMessage: EM_GETSEL
 		wParam: dwStart yourAddress
@@ -1064,7 +1064,7 @@ setAlignment: anInteger
 setMarginWidths: anArray
 	| margins |
 	SystemMetrics current hasTextBoxMargins ifFalse: [^self].
-	margins := DWORD new
+	margins := UInt32 new
 				highWord: anArray first;
 				lowWord: anArray last.
 	self

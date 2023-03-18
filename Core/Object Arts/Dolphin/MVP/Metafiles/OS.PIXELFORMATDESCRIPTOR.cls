@@ -79,262 +79,262 @@ struct tagPIXELFORMATDESCRIPTOR {
 bReserved
 	"Answer the <Integer> value of the receiver's 'bReserved' field."
 
-	^bytes byteAtOffset: _OffsetOf_bReserved!
+	^bytes uint8AtOffset: _OffsetOf_bReserved!
 
 bReserved: anInteger
 	"Set the receiver's 'bReserved' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_bReserved put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_bReserved put: anInteger!
 
 cAccumAlphaBits
 	"Answer the <Integer> value of the receiver's 'cAccumAlphaBits' field."
 
-	^bytes byteAtOffset: _OffsetOf_cAccumAlphaBits!
+	^bytes uint8AtOffset: _OffsetOf_cAccumAlphaBits!
 
 cAccumAlphaBits: anInteger
 	"Set the receiver's 'cAccumAlphaBits' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_cAccumAlphaBits put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_cAccumAlphaBits put: anInteger!
 
 cAccumBits
 	"Answer the <Integer> value of the receiver's 'cAccumBits' field."
 
-	^bytes byteAtOffset: _OffsetOf_cAccumBits!
+	^bytes uint8AtOffset: _OffsetOf_cAccumBits!
 
 cAccumBits: anInteger
 	"Set the receiver's 'cAccumBits' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_cAccumBits put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_cAccumBits put: anInteger!
 
 cAccumBlueBits
 	"Answer the <Integer> value of the receiver's 'cAccumBlueBits' field."
 
-	^bytes byteAtOffset: _OffsetOf_cAccumBlueBits!
+	^bytes uint8AtOffset: _OffsetOf_cAccumBlueBits!
 
 cAccumBlueBits: anInteger
 	"Set the receiver's 'cAccumBlueBits' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_cAccumBlueBits put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_cAccumBlueBits put: anInteger!
 
 cAccumGreenBits
 	"Answer the <Integer> value of the receiver's 'cAccumGreenBits' field."
 
-	^bytes byteAtOffset: _OffsetOf_cAccumGreenBits!
+	^bytes uint8AtOffset: _OffsetOf_cAccumGreenBits!
 
 cAccumGreenBits: anInteger
 	"Set the receiver's 'cAccumGreenBits' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_cAccumGreenBits put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_cAccumGreenBits put: anInteger!
 
 cAccumRedBits
 	"Answer the <Integer> value of the receiver's 'cAccumRedBits' field."
 
-	^bytes byteAtOffset: _OffsetOf_cAccumRedBits!
+	^bytes uint8AtOffset: _OffsetOf_cAccumRedBits!
 
 cAccumRedBits: anInteger
 	"Set the receiver's 'cAccumRedBits' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_cAccumRedBits put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_cAccumRedBits put: anInteger!
 
 cAlphaBits
 	"Answer the <Integer> value of the receiver's 'cAlphaBits' field."
 
-	^bytes byteAtOffset: _OffsetOf_cAlphaBits!
+	^bytes uint8AtOffset: _OffsetOf_cAlphaBits!
 
 cAlphaBits: anInteger
 	"Set the receiver's 'cAlphaBits' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_cAlphaBits put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_cAlphaBits put: anInteger!
 
 cAlphaShift
 	"Answer the <Integer> value of the receiver's 'cAlphaShift' field."
 
-	^bytes byteAtOffset: _OffsetOf_cAlphaShift!
+	^bytes uint8AtOffset: _OffsetOf_cAlphaShift!
 
 cAlphaShift: anInteger
 	"Set the receiver's 'cAlphaShift' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_cAlphaShift put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_cAlphaShift put: anInteger!
 
 cAuxBuffers
 	"Answer the <Integer> value of the receiver's 'cAuxBuffers' field."
 
-	^bytes byteAtOffset: _OffsetOf_cAuxBuffers!
+	^bytes uint8AtOffset: _OffsetOf_cAuxBuffers!
 
 cAuxBuffers: anInteger
 	"Set the receiver's 'cAuxBuffers' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_cAuxBuffers put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_cAuxBuffers put: anInteger!
 
 cBlueBits
 	"Answer the <Integer> value of the receiver's 'cBlueBits' field."
 
-	^bytes byteAtOffset: _OffsetOf_cBlueBits!
+	^bytes uint8AtOffset: _OffsetOf_cBlueBits!
 
 cBlueBits: anInteger
 	"Set the receiver's 'cBlueBits' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_cBlueBits put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_cBlueBits put: anInteger!
 
 cBlueShift
 	"Answer the <Integer> value of the receiver's 'cBlueShift' field."
 
-	^bytes byteAtOffset: _OffsetOf_cBlueShift!
+	^bytes uint8AtOffset: _OffsetOf_cBlueShift!
 
 cBlueShift: anInteger
 	"Set the receiver's 'cBlueShift' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_cBlueShift put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_cBlueShift put: anInteger!
 
 cColorBits
 	"Answer the <Integer> value of the receiver's 'cColorBits' field."
 
-	^bytes byteAtOffset: _OffsetOf_cColorBits!
+	^bytes uint8AtOffset: _OffsetOf_cColorBits!
 
 cColorBits: anInteger
 	"Set the receiver's 'cColorBits' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_cColorBits put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_cColorBits put: anInteger!
 
 cDepthBits
 	"Answer the <Integer> value of the receiver's 'cDepthBits' field."
 
-	^bytes byteAtOffset: _OffsetOf_cDepthBits!
+	^bytes uint8AtOffset: _OffsetOf_cDepthBits!
 
 cDepthBits: anInteger
 	"Set the receiver's 'cDepthBits' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_cDepthBits put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_cDepthBits put: anInteger!
 
 cGreenBits
 	"Answer the <Integer> value of the receiver's 'cGreenBits' field."
 
-	^bytes byteAtOffset: _OffsetOf_cGreenBits!
+	^bytes uint8AtOffset: _OffsetOf_cGreenBits!
 
 cGreenBits: anInteger
 	"Set the receiver's 'cGreenBits' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_cGreenBits put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_cGreenBits put: anInteger!
 
 cGreenShift
 	"Answer the <Integer> value of the receiver's 'cGreenShift' field."
 
-	^bytes byteAtOffset: _OffsetOf_cGreenShift!
+	^bytes uint8AtOffset: _OffsetOf_cGreenShift!
 
 cGreenShift: anInteger
 	"Set the receiver's 'cGreenShift' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_cGreenShift put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_cGreenShift put: anInteger!
 
 cRedBits
 	"Answer the <Integer> value of the receiver's 'cRedBits' field."
 
-	^bytes byteAtOffset: _OffsetOf_cRedBits!
+	^bytes uint8AtOffset: _OffsetOf_cRedBits!
 
 cRedBits: anInteger
 	"Set the receiver's 'cRedBits' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_cRedBits put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_cRedBits put: anInteger!
 
 cRedShift
 	"Answer the <Integer> value of the receiver's 'cRedShift' field."
 
-	^bytes byteAtOffset: _OffsetOf_cRedShift!
+	^bytes uint8AtOffset: _OffsetOf_cRedShift!
 
 cRedShift: anInteger
 	"Set the receiver's 'cRedShift' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_cRedShift put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_cRedShift put: anInteger!
 
 cStencilBits
 	"Answer the <Integer> value of the receiver's 'cStencilBits' field."
 
-	^bytes byteAtOffset: _OffsetOf_cStencilBits!
+	^bytes uint8AtOffset: _OffsetOf_cStencilBits!
 
 cStencilBits: anInteger
 	"Set the receiver's 'cStencilBits' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_cStencilBits put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_cStencilBits put: anInteger!
 
 dwDamageMask
 	"Answer the <Integer> value of the receiver's 'dwDamageMask' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwDamageMask!
+	^bytes uint32AtOffset: _OffsetOf_dwDamageMask!
 
 dwDamageMask: anInteger
 	"Set the receiver's 'dwDamageMask' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwDamageMask put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwDamageMask put: anInteger!
 
 dwFlags
 	"Answer the <Integer> value of the receiver's 'dwFlags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwFlags!
+	^bytes uint32AtOffset: _OffsetOf_dwFlags!
 
 dwFlags: anInteger
 	"Set the receiver's 'dwFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwFlags put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwFlags put: anInteger!
 
 dwLayerMask
 	"Answer the <Integer> value of the receiver's 'dwLayerMask' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwLayerMask!
+	^bytes uint32AtOffset: _OffsetOf_dwLayerMask!
 
 dwLayerMask: anInteger
 	"Set the receiver's 'dwLayerMask' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwLayerMask put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwLayerMask put: anInteger!
 
 dwVisibleMask
 	"Answer the <Integer> value of the receiver's 'dwVisibleMask' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwVisibleMask!
+	^bytes uint32AtOffset: _OffsetOf_dwVisibleMask!
 
 dwVisibleMask: anInteger
 	"Set the receiver's 'dwVisibleMask' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwVisibleMask put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwVisibleMask put: anInteger!
 
 iLayerType
 	"Answer the <Integer> value of the receiver's 'iLayerType' field."
 
-	^bytes byteAtOffset: _OffsetOf_iLayerType!
+	^bytes uint8AtOffset: _OffsetOf_iLayerType!
 
 iLayerType: anInteger
 	"Set the receiver's 'iLayerType' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_iLayerType put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_iLayerType put: anInteger!
 
 iPixelType
 	"Answer the <Integer> value of the receiver's 'iPixelType' field."
 
-	^bytes byteAtOffset: _OffsetOf_iPixelType!
+	^bytes uint8AtOffset: _OffsetOf_iPixelType!
 
 iPixelType: anInteger
 	"Set the receiver's 'iPixelType' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_iPixelType put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_iPixelType put: anInteger!
 
 nSize
 	"Answer the <Integer> value of the receiver's 'nSize' field."
 
-	^bytes wordAtOffset: _OffsetOf_nSize!
+	^bytes uint16AtOffset: _OffsetOf_nSize!
 
 nSize: anInteger
 	"Set the receiver's 'nSize' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_nSize put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_nSize put: anInteger!
 
 nVersion
 	"Answer the <Integer> value of the receiver's 'nVersion' field."
 
-	^bytes wordAtOffset: _OffsetOf_nVersion!
+	^bytes uint16AtOffset: _OffsetOf_nVersion!
 
 nVersion: anInteger
 	"Set the receiver's 'nVersion' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_nVersion put: anInteger! !
+	bytes uint16AtOffset: _OffsetOf_nVersion put: anInteger! !
 !OS.PIXELFORMATDESCRIPTOR categoriesForMethods!
 bReserved!**compiled accessors**!public! !
 bReserved:!**compiled accessors**!public! !
@@ -433,82 +433,82 @@ defineFields
 
 	self
 		defineField: #nSize
-			type: WORDField new
+			type: UInt16Field new
 			offset: 0;
 		defineField: #nVersion
-			type: WORDField new
+			type: UInt16Field new
 			offset: 2;
 		defineField: #dwFlags
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 4;
 		defineField: #iPixelType
-			type: BYTEField new
+			type: UInt8Field new
 			offset: 8;
 		defineField: #cColorBits
-			type: BYTEField new
+			type: UInt8Field new
 			offset: 9;
 		defineField: #cRedBits
-			type: BYTEField new
+			type: UInt8Field new
 			offset: 10;
 		defineField: #cRedShift
-			type: BYTEField new
+			type: UInt8Field new
 			offset: 11;
 		defineField: #cGreenBits
-			type: BYTEField new
+			type: UInt8Field new
 			offset: 12;
 		defineField: #cGreenShift
-			type: BYTEField new
+			type: UInt8Field new
 			offset: 13;
 		defineField: #cBlueBits
-			type: BYTEField new
+			type: UInt8Field new
 			offset: 14;
 		defineField: #cBlueShift
-			type: BYTEField new
+			type: UInt8Field new
 			offset: 15;
 		defineField: #cAlphaBits
-			type: BYTEField new
+			type: UInt8Field new
 			offset: 16;
 		defineField: #cAlphaShift
-			type: BYTEField new
+			type: UInt8Field new
 			offset: 17;
 		defineField: #cAccumBits
-			type: BYTEField new
+			type: UInt8Field new
 			offset: 18;
 		defineField: #cAccumRedBits
-			type: BYTEField new
+			type: UInt8Field new
 			offset: 19;
 		defineField: #cAccumGreenBits
-			type: BYTEField new
+			type: UInt8Field new
 			offset: 20;
 		defineField: #cAccumBlueBits
-			type: BYTEField new
+			type: UInt8Field new
 			offset: 21;
 		defineField: #cAccumAlphaBits
-			type: BYTEField new
+			type: UInt8Field new
 			offset: 22;
 		defineField: #cDepthBits
-			type: BYTEField new
+			type: UInt8Field new
 			offset: 23;
 		defineField: #cStencilBits
-			type: BYTEField new
+			type: UInt8Field new
 			offset: 24;
 		defineField: #cAuxBuffers
-			type: BYTEField new
+			type: UInt8Field new
 			offset: 25;
 		defineField: #iLayerType
-			type: BYTEField new
+			type: UInt8Field new
 			offset: 26;
 		defineField: #bReserved
-			type: BYTEField new
+			type: UInt8Field new
 			offset: 27;
 		defineField: #dwLayerMask
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 28;
 		defineField: #dwVisibleMask
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 32;
 		defineField: #dwDamageMask
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 36.
 	self byteSize: 40!
 

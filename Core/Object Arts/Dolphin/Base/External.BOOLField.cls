@@ -14,14 +14,14 @@ External.BOOLField comment: '<BOOLField> is a <ScalarField> class to represent <
 accessorMessage
 	"Private - Answer the receiver's 'accessorStem'."
 
-	^#dwordAtOffset:put:!
+	^#uint32AtOffset:put:!
 
 readFrom: anExternalStructure
 	"Private - Answer a <Boolean> of equivalent value to the 32-bit integer field at the
 	receiver's offset in the <ExternalStructure> argument, i.e. false if zero, true for any
 	other value."
 
-	^(anExternalStructure bytes dwordAtOffset: offset) asBoolean!
+	^(anExternalStructure bytes uint32AtOffset: offset) asBoolean!
 
 valueType
 	^Boolean!
@@ -31,7 +31,7 @@ writeInto: anExternalStructure value: anObject
 	anExternalStructure, at the receiver's offset, depending on the value of the <integer> or
 	<Boolean> argument, anObject."
 
-	anExternalStructure bytes dwordAtOffset: offset put: anObject asParameter! !
+	anExternalStructure bytes uint32AtOffset: offset put: anObject asParameter! !
 !External.BOOLField categoriesForMethods!
 accessorMessage!automatic generation!private! !
 readFrom:!indirect accessing!private! !

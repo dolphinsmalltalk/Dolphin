@@ -321,7 +321,7 @@ read: anAddress count: bytesToReadInteger
 		lpBuffer: anAddress
 		nNumberOfBytesToRead: bytesToReadInteger
 		lpNumberOfBytesRead: intBuffer
-		lpOverlapped: nil) ifTrue: [intBuffer dwordAtOffset: 0] ifFalse: [self signalOsError: false]!
+		lpOverlapped: nil) ifTrue: [intBuffer uint32AtOffset: 0] ifFalse: [self signalOsError: false]!
 
 read: aStringOrByteArray startingAt: startIndex count: bytesToReadInteger
 	"Read a maximum of bytesToReadInteger bytes from the file starting with aStringOrByteArray at: startIndex.
@@ -386,7 +386,7 @@ seek: offsetInteger sense: senseFlag
 				["Although the theoretical NTFS file size limit is 2**64 - 1024, this API is
 			limited to 2**63-1. Note that the lpNewFilePointer parameter is actually
 			signed, although it should never be negative."
-				intBuffer sqwordAtOffset: 0]
+				intBuffer int64AtOffset: 0]
 			ifFalse: [self signalOsError: false]!
 
 setHandle: anExternalHandle flags: anInteger
@@ -420,7 +420,7 @@ size
 	"Answer the size of the file in bytes or signal a <FileException> if the operation fails."
 
 	^(Kernel32 getFileSizeEx: handle lpFileSize: intBuffer)
-		ifTrue: [intBuffer qwordAtOffset: 0]
+		ifTrue: [intBuffer uint64AtOffset: 0]
 		ifFalse: [self signalOsError: false]!
 
 size: anInteger
@@ -435,12 +435,12 @@ sniffEncoding
 	buf := ByteArray newFixed: SniffSize + 4.
 	self reset.
 	count := self read: buf count: SniffSize.
-	buf sdwordAtOffset: SniffSize put: -1.
+	buf int32AtOffset: SniffSize put: -1.
 	^((AdvApi32
 		isTextUnicode: buf
 		iSize: count
 		lpiResult: buf yourAddress + SniffSize) and: 
-				[ituResult := buf dwordAtOffset: SniffSize.
+				[ituResult := buf uint32AtOffset: SniffSize.
 				(ituResult anyMask: IS_TEXT_UNICODE_REVERSE_MASK)
 					ifTrue: [self error: 'Unsupported unicode text encoding #utf16be'].
 				"If the match is only statistical, then ignore it if there are less than 128 bytes as there are too many false positives for short ASCII sequences"
@@ -488,7 +488,7 @@ write: aStringOrByteArrayOrAddress count: bytesToWriteInteger
 		lpBuffer: aStringOrByteArrayOrAddress
 		nNumberOfBytesToWrite: bytesToWriteInteger
 		lpNumberOfBytesWritten: intBuffer
-		lpOverlapped: nil) ifTrue: [intBuffer dwordAtOffset: 0] ifFalse: [self signalOsError: false]!
+		lpOverlapped: nil) ifTrue: [intBuffer uint32AtOffset: 0] ifFalse: [self signalOsError: false]!
 
 write: aStringOrByteArray startingAt: startIndex count: bytesToWriteInteger
 	"Write bytesToWriteInteger bytes to the file starting with aStringOrByteArray at: startIndex.

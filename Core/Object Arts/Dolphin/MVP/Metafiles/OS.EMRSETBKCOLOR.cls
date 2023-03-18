@@ -30,12 +30,12 @@ struct tagEMRSETBKCOLOR {
 crColor
 	"Answer the <Integer> value of the receiver's 'crColor' field."
 
-	^bytes dwordAtOffset: _OffsetOf_crColor!
+	^bytes uint32AtOffset: _OffsetOf_crColor!
 
 crColor: anInteger
 	"Set the receiver's 'crColor' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_crColor put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_crColor put: anInteger! !
 !OS.EMRSETBKCOLOR categoriesForMethods!
 crColor!**compiled accessors**!public! !
 crColor:!**compiled accessors**!public! !
@@ -61,7 +61,7 @@ defineFields
 	super defineFields.
 	self
 		defineField: #crColor
-		type: DWORDField new
+		type: UInt32Field new
 		offset: 8.
 	self byteSize: 12!
 

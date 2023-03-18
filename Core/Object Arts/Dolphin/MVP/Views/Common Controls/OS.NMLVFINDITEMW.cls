@@ -18,7 +18,7 @@ OS.NMLVFINDITEMW comment: ''!
 iStart
 	"Answer the <Integer> value of the receiver's 'iStart' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_iStart!
+	^bytes int32AtOffset: _OffsetOf_iStart!
 
 lvfi
 	"Answer the <LVFINDINFOW> value of the receiver's 'lvfi' field."
@@ -41,7 +41,7 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #iStart type: SDWORDField readOnly;
+		defineField: #iStart type: Int32Field readOnly;
 		defineField: #lvfi type: (StructureField type: LVFINDINFOW) beReadOnly!
 
 getFieldNames

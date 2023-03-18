@@ -32,12 +32,12 @@ struct tagEMRGDICOMMENT {
 cbData
 	"Answer the <Integer> value of the receiver's 'cbData' field."
 
-	^bytes dwordAtOffset: _OffsetOf_cbData!
+	^bytes uint32AtOffset: _OffsetOf_cbData!
 
 cbData: anInteger
 	"Set the receiver's 'cbData' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_cbData put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_cbData put: anInteger!
 
 Data
 	"Answer the <ExternalArray> value of the receiver's 'Data' field."
@@ -83,7 +83,7 @@ defineFields
 	super defineFields.
 	self
 		defineField: #cbData
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 8;
 		defineField: #Data
 			type: (ArrayField type: ExternalArray lengthField: #cbData)

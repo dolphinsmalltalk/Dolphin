@@ -32,12 +32,12 @@ struct tagEMRSETPIXELV {
 crColor
 	"Answer the <Integer> value of the receiver's 'crColor' field."
 
-	^bytes dwordAtOffset: _OffsetOf_crColor!
+	^bytes uint32AtOffset: _OffsetOf_crColor!
 
 crColor: anInteger
 	"Set the receiver's 'crColor' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_crColor put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_crColor put: anInteger!
 
 ptlPixel
 	"Answer the <POINTL> value of the receiver's 'ptlPixel' field."
@@ -83,7 +83,7 @@ defineFields
 			type: (StructureField type: POINTL)
 			offset: 8;
 		defineField: #crColor
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 16.
 	self byteSize: 20!
 

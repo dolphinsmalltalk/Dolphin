@@ -100,7 +100,7 @@ attributes
 	"Answer the <sdword> value of the 'Attributes' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_Attributes: answer.
 	^answer asObject!
 
@@ -113,7 +113,7 @@ direction
 	"Answer the <sdword> value of the 'Direction' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_Direction: answer.
 	^answer asObject!
 
@@ -211,7 +211,7 @@ numericScale
 	"Answer the <byte> value of the 'NumericScale' property of the receiver."
 
 	| answer |
-	answer := BYTE new.
+	answer := UInt8 new.
 	self get_NumericScale: answer.
 	^answer asObject!
 
@@ -224,7 +224,7 @@ precision
 	"Answer the <byte> value of the 'Precision' property of the receiver."
 
 	| answer |
-	answer := BYTE new.
+	answer := UInt8 new.
 	self get_Precision: answer.
 	^answer asObject!
 
@@ -317,7 +317,7 @@ size
 	"Answer the <sdword> value of the 'Size' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_Size: answer.
 	^answer asObject!
 
@@ -330,7 +330,7 @@ type
 	"Answer the <sdword> value of the 'Type' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_Type: answer.
 	^answer asObject!
 

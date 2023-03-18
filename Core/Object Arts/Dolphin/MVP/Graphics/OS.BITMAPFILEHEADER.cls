@@ -38,32 +38,32 @@ struct tagBITMAPFILEHEADER {
 bfOffBits
 	"Answer the <Integer> value of the receiver's 'bfOffBits' field."
 
-	^bytes dwordAtOffset: _OffsetOf_bfOffBits!
+	^bytes uint32AtOffset: _OffsetOf_bfOffBits!
 
 bfOffBits: anInteger
 	"Set the receiver's 'bfOffBits' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_bfOffBits put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_bfOffBits put: anInteger!
 
 bfSize
 	"Answer the <Integer> value of the receiver's 'bfSize' field."
 
-	^bytes dwordAtOffset: _OffsetOf_bfSize!
+	^bytes uint32AtOffset: _OffsetOf_bfSize!
 
 bfSize: anInteger
 	"Set the receiver's 'bfSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_bfSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_bfSize put: anInteger!
 
 bfType
 	"Answer the <Integer> value of the receiver's 'bfType' field."
 
-	^bytes wordAtOffset: _OffsetOf_bfType!
+	^bytes uint16AtOffset: _OffsetOf_bfType!
 
 bfType: anInteger
 	"Set the receiver's 'bfType' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_bfType put: anInteger! !
+	bytes uint16AtOffset: _OffsetOf_bfType put: anInteger! !
 !OS.BITMAPFILEHEADER categoriesForMethods!
 bfOffBits!**compiled accessors**!public! !
 bfOffBits:!**compiled accessors**!public! !
@@ -94,11 +94,11 @@ defineFields
 "
 
 	self
-		defineField: #bfType type: WORDField new offset: 0;
-		defineField: #bfSize type: DWORDField new offset: 2;
-		defineField: #bfReserved1 type: WORDField new beFiller offset: 6;
-		defineField: #bfReserved2 type: WORDField new beFiller offset: 8;
-		defineField: #bfOffBits type: DWORDField new offset: 10.
+		defineField: #bfType type: UInt16Field new offset: 0;
+		defineField: #bfSize type: UInt32Field new offset: 2;
+		defineField: #bfReserved1 type: UInt16Field new beFiller offset: 6;
+		defineField: #bfReserved2 type: UInt16Field new beFiller offset: 8;
+		defineField: #bfOffBits type: UInt32Field new offset: 10.
 	self byteSize: 14!
 
 getFieldNames

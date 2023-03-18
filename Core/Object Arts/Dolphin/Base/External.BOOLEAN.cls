@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.BYTE subclass: #'External.BOOLEAN'
+External.UInt8 subclass: #'External.BOOLEAN'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -16,12 +16,12 @@ External.BOOLEAN comment: ''!
 value
 	"Answer the <Boolean> value of the receiver's 'value' field."
 
-	^(bytes byteAtOffset: _OffsetOf_value) asBoolean!
+	^(bytes uint8AtOffset: _OffsetOf_value) asBoolean!
 
 value: aBoolean
 	"Set the receiver's 'value' field to the value of the argument, aBoolean"
 
-	bytes byteAtOffset: _OffsetOf_value put: aBoolean asParameter! !
+	bytes uint8AtOffset: _OffsetOf_value put: aBoolean asParameter! !
 !External.BOOLEAN categoriesForMethods!
 value!**compiled accessors**!public! !
 value:!**compiled accessors**!public! !

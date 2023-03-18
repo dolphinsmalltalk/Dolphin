@@ -561,7 +561,7 @@ registerServer
 	method := (lib class compiledMethodAt: #DllRegisterServer) copy.
 	method literalAt: 1
 		put: ((method literalAt: 1) copy
-				dwordAtOffset: 0 put: proc;
+				uint32AtOffset: 0 put: proc;
 				yourself).
 	method value: lib withArguments: #()]
 			ensure: [lib close].

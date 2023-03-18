@@ -460,7 +460,7 @@ status
 	Helpstring: Get HTTP status code"
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_Status: answer.
 	^answer asObject!
 

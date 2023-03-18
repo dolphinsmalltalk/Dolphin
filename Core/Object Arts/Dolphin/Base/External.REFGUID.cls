@@ -27,7 +27,7 @@ REFGUID fromAddress: Object guid yourAddress'!
 				uuidCompare: self
 				uuid2: aGUID
 				status: status.
-	status := status dwordAtOffset: 0.
+	status := status uint32AtOffset: 0.
 	status == 0 ifFalse: [RPCError signalWith: status].
 	^answer!
 
@@ -96,7 +96,7 @@ fromInteger: anInteger
 	"Answer a new instance of the receiver with contents copied from anInteger"
 
 	^self new 
-		basicDwordAtOffset: 0 put: anInteger;
+		basicUInt32AtOffset: 0 put: anInteger;
 		yourself! !
 !External.REFGUID class categoriesForMethods!
 fromInteger:!instance creation!public! !

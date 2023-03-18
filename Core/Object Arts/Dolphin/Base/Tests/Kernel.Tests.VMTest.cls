@@ -466,50 +466,6 @@ testCRTFault
 				raisedIn: CRTLibrary >> #_close:
 				receiver: Ucrt]!
 
-testDwordAtOffsetPut
-	| bytes dword max |
-	bytes := ByteArray new: 4.
-	{'s'. SmallInteger maximum + 1. Object new} do: 
-			[:each |
-			self
-				should: [bytes dwordAtOffset: each put: 1]
-				raise: Error
-				matching: [:ex | ex messageText = ('Index: <1p> is not an integer' expandMacrosWith: each)]].
-	max := 12.
-	4 to: max
-		by: 4
-		do: 
-			[:each |
-			bytes := ByteArray new: each - 1.
-			self should: [bytes dwordAtOffset: each - 4 put: 1] raise: BoundsError.
-			bytes := ByteArray new: each.
-			"This large integer will be 4-bytes long"
-			dword := (2 raisedToInteger: 31) - 1.
-			self assert: dword isImmutable.
-			bytes dwordAtOffset: each - 4 put: dword.
-			self assert: (bytes dwordAtOffset: each - 4) equals: dword.
-			"This large integer will be 8-bytes long"
-			dword := dword + 1.
-			self assert: dword isImmutable.
-			bytes dwordAtOffset: each - 4 put: dword.
-			self assert: (bytes dwordAtOffset: each - 4) equals: dword.
-			dword := 16rFFFFFFFF.
-			self assert: dword isImmutable.
-			bytes dwordAtOffset: each - 4 put: dword.
-			self assert: bytes equals: (ByteArray new: each - 4) , #[16rFF 16rFF 16rFF 16rFF].
-			bytes dwordAtOffset: each - 4 put: #[16rAA 16rBB 16rCC 16rDD].
-			self assert: (bytes dwordAtOffset: each - 4) equals: 16rDDCCBBAA.
-			dword := External.DWORD fromInteger: 16r11223344.
-			bytes dwordAtOffset: each - 4 put: dword.
-			self assert: (bytes dwordAtOffset: each - 4) equals: 16r11223344.
-			dword isImmutable: true.
-			bytes := ByteArray new: each.
-			bytes dwordAtOffset: each - 4 put: dword.
-			self assert: (bytes dwordAtOffset: each - 4) equals: 16r11223344.
-			bytes := ByteArray new: each.
-			bytes isImmutable: true.
-			self should: [bytes dwordAtOffset: each - 4 put: 1] raise: Processor constWriteSignal]!
-
 testEvaluationOrder
 	| i |
 	i := 2.
@@ -711,7 +667,7 @@ testGPFTrap
 	self
 		should: 
 			[Processor enableAsyncEvents: false.
-			nullPointer dwordAtOffset: 0]
+			nullPointer uint32AtOffset: 0]
 		raise: GPFault
 		matching: 
 			[:gpf |
@@ -721,10 +677,10 @@ testGPFTrap
 				address: 0) and: 
 						[self
 							isFault: gpf
-							raisedIn: External.Address >> #dwordAtOffset:
+							raisedIn: External.Address >> #uint32AtOffset:
 							receiver: nullPointer]].
 	self
-		should: [nullPointer dwordAtOffset: 0 put: 1]
+		should: [nullPointer uint32AtOffset: 0 put: 1]
 		raise: GPFault
 		matching: 
 			[:gpf |
@@ -734,7 +690,7 @@ testGPFTrap
 				address: 0) and: 
 						[self
 							isFault: gpf
-							raisedIn: External.Address >> #dwordAtOffset:put:
+							raisedIn: External.Address >> #uint32AtOffset:put:
 							receiver: nullPointer]]!
 
 testImmutableAtPut
@@ -766,14 +722,14 @@ testImmutableBasicAtPut
 testImmutableBufferAtPuts
 	| b |
 	b := #[0 0 0 0 0 0 0 0 0 0 0 0].
-	self should: [b byteAtOffset: 0 put: 1] raise: Processor constWriteSignal.
-	self should: [b sbyteAtOffset: 0 put: 1] raise: Processor constWriteSignal.
-	self should: [b wordAtOffset: 0 put: 1] raise: Processor constWriteSignal.
-	self should: [b swordAtOffset: 0 put: 1] raise: Processor constWriteSignal.
-	self should: [b dwordAtOffset: 0 put: 1] raise: Processor constWriteSignal.
-	self should: [b sdwordAtOffset: 0 put: 1] raise: Processor constWriteSignal.
-	self should: [b qwordAtOffset: 0 put: 1] raise: Processor constWriteSignal.
-	self should: [b sqwordAtOffset: 0 put: 1] raise: Processor constWriteSignal.
+	self should: [b uint8AtOffset: 0 put: 1] raise: Processor constWriteSignal.
+	self should: [b int8AtOffset: 0 put: 1] raise: Processor constWriteSignal.
+	self should: [b uint16AtOffset: 0 put: 1] raise: Processor constWriteSignal.
+	self should: [b int16AtOffset: 0 put: 1] raise: Processor constWriteSignal.
+	self should: [b uint32AtOffset: 0 put: 1] raise: Processor constWriteSignal.
+	self should: [b int32AtOffset: 0 put: 1] raise: Processor constWriteSignal.
+	self should: [b uint64AtOffset: 0 put: 1] raise: Processor constWriteSignal.
+	self should: [b int64AtOffset: 0 put: 1] raise: Processor constWriteSignal.
 	self should: [b floatAtOffset: 0 put: 1.23] raise: Processor constWriteSignal.
 	self should: [b doubleAtOffset: 0 put: 1.23] raise: Processor constWriteSignal!
 
@@ -872,20 +828,25 @@ testImmutableWriteAccessors
 	"The values should not have been changed"
 	vars keysAndValuesDo: [:i :each | self assert: (inst instVarAt: i) equals: i]!
 
-testIndirectByteAtOffsetPrimitives
+testIndirectInt16AtOffsetPrimitives
 	| nullPointer b p |
-	b := ByteArray newFixed: 3.
+	b := ByteArray newFixed: 6.
 	p := b yourAddress asExternalAddress.
-	#(0 1 127 128 255) do: 
+	#(0 -1 1 16r7FFF -16r8000) do: 
 			[:each |
 			"Should be able to write any 32-bit integer value, and read it back"
-			self assert: (p byteAtOffset: 1 put: each) equals: each.
-			self assert: (b byteAtOffset: 1) equals: each.
-			self assert: (b byteAtOffset: 0) equals: 0.
-			self assert: (b byteAtOffset: 2) equals: 0].
+			self assert: (p int16AtOffset: 2 put: each) equals: each.
+			self assert: (b int16AtOffset: 2) equals: each.
+			self assert: (b int16AtOffset: 0) equals: 0.
+			self assert: (b int16AtOffset: 4) equals: 0].
 
-	"Arg must be in range 0..255"
-	#(-1 256) do: [:each | self should: [p byteAtOffset: 1 put: each] raise: Error].
+	"Error if arg requires more that 16-bits to represent as 2's complement signed int"
+	#(16r10000 -16r8001) do: 
+			[:each |
+			self
+				should: [p int16AtOffset: 0 put: each]
+				raise: HRESULTError
+				matching: [:ex | ex hresult = ##(HRESULT fromPrimitiveFailureCode: _PrimitiveFailureCode.IntegerOutOfRange)]].
 
 	"This class of primitives had a bug whereby if the pointed at memory was inaccessible at the time of the read/write, then the primitive would corrupt the Smalltalk stack."
 	nullPointer := 0 asExternalAddress.
@@ -893,7 +854,7 @@ testIndirectByteAtOffsetPrimitives
 		should: 
 			["Test with async events off to verify the fault interrupt is sent synchronously to the faulting frame"
 			Processor enableAsyncEvents: false.
-			nullPointer byteAtOffset: 0 put: 1]
+			nullPointer int16AtOffset: 0 put: 1]
 		raise: GPFault
 		matching: 
 			[:ex |
@@ -903,12 +864,12 @@ testIndirectByteAtOffsetPrimitives
 				address: 0) and: 
 						[self
 							isFault: ex
-							raisedIn: External.Address >> #byteAtOffset:put:
+							raisedIn: External.Address >> #int16AtOffset:put:
 							receiver: nullPointer]].
 	self
 		should: 
 			[Processor enableAsyncEvents: false.
-			nullPointer byteAtOffset: 0]
+			nullPointer int16AtOffset: 0]
 		raise: GPFault
 		matching: 
 			[:gpf |
@@ -918,63 +879,10 @@ testIndirectByteAtOffsetPrimitives
 				address: 0) and: 
 						[self
 							isFault: gpf
-							raisedIn: External.Address >> #byteAtOffset:
+							raisedIn: External.Address >> #int16AtOffset:
 							receiver: nullPointer]]!
 
-testIndirectDwordAtOffsetPrimitives
-	| nullPointer b p |
-	b := ByteArray newFixed: 12.
-	p := b yourAddress asExternalAddress.
-	#(0 1 -1 ##(SmallInteger minimum) ##(SmallInteger maximum) ##(SmallInteger maximum + 1) ##(SmallInteger
-		minimum - 1) 16rFFFFFFFF -16r80000000)
-		do: 
-			[:each |
-			"Should be able to write any 32-bit integer value, and read it back"
-			self assert: (p dwordAtOffset: 4 put: each) equals: each.
-			self assert: (b dwordAtOffset: 4) equals: each asDword.
-			self assert: (b dwordAtOffset: 0) equals: 0.
-			self assert: (b dwordAtOffset: 8) equals: 0].
-
-	"Error if arg requires more that 32-bits to represent as an unsigned int"
-	#(16r100000000 -16r80000001) do: [:each | self should: [p sdwordAtOffset: 0 put: each] raise: Error].
-
-	"This class of primitives had a bug whereby if the pointed at memory was inaccessible at the time of the read/write, then the primitive would corrupt the Smalltalk stack."
-	nullPointer := 0 asExternalAddress.
-	#(1 16r7FFFFFFF 16rFFFFFFFF) do: 
-			[:each |
-			self
-				should: 
-					["Test with async events off to verify the fault interrupt is sent synchronously to the faulting frame"
-					Processor enableAsyncEvents: false.
-					nullPointer dwordAtOffset: 0 put: each]
-				raise: GPFault
-				matching: 
-					[:ex |
-					(self
-						isGPF: ex
-						reading: false
-						address: 0) and: 
-								[self
-									isFault: ex
-									raisedIn: External.Address >> #dwordAtOffset:put:
-									receiver: nullPointer]]].
-	self
-		should: 
-			[Processor enableAsyncEvents: false.
-			nullPointer dwordAtOffset: 0]
-		raise: GPFault
-		matching: 
-			[:gpf |
-			(self
-				isGPF: gpf
-				reading: true
-				address: 0) and: 
-						[self
-							isFault: gpf
-							raisedIn: External.Address >> #dwordAtOffset:
-							receiver: nullPointer]]!
-
-testIndirectSdwordAtOffsetPrimitives
+testIndirectInt32AtOffsetPrimitives
 	| nullPointer b p |
 	b := ByteArray newFixed: 12.
 	p := b yourAddress asExternalAddress.
@@ -983,13 +891,13 @@ testIndirectSdwordAtOffsetPrimitives
 		do: 
 			[:each |
 			"Should be able to write any 32-bit integer value, and read it back"
-			self assert: (p sdwordAtOffset: 4 put: each) equals: each.
-			self assert: (b sdwordAtOffset: 4) equals: each.
-			self assert: (b sdwordAtOffset: 0) equals: 0.
-			self assert: (b sdwordAtOffset: 8) equals: 0].
+			self assert: (p int32AtOffset: 4 put: each) equals: each.
+			self assert: (b int32AtOffset: 4) equals: each.
+			self assert: (b int32AtOffset: 0) equals: 0.
+			self assert: (b int32AtOffset: 8) equals: 0].
 
 	"If arg requires more than 32-bits to represent in 2's complement, then should be an error"
-	#(16r80000000 -16r80000001) do: [:each | self should: [p sdwordAtOffset: 0 put: each] raise: Error].
+	#(16r80000000 -16r80000001) do: [:each | self should: [p int32AtOffset: 0 put: each] raise: Error].
 
 	"This class of primitives had a bug whereby if the pointed at memory was inaccessible at the time of the read/write, then the primitive would corrupt the Smalltalk stack."
 	nullPointer := 0 asExternalAddress.
@@ -1000,7 +908,7 @@ testIndirectSdwordAtOffsetPrimitives
 				should: 
 					["Test with async events off to verify the fault interrupt is sent synchronously to the faulting frame"
 					Processor enableAsyncEvents: false.
-					nullPointer sdwordAtOffset: 0 put: each]
+					nullPointer int32AtOffset: 0 put: each]
 				raise: GPFault
 				matching: 
 					[:ex |
@@ -1010,12 +918,12 @@ testIndirectSdwordAtOffsetPrimitives
 						address: 0) and: 
 								[self
 									isFault: ex
-									raisedIn: External.Address >> #sdwordAtOffset:put:
+									raisedIn: External.Address >> #int32AtOffset:put:
 									receiver: nullPointer]]].
 	self
 		should: 
 			[Processor enableAsyncEvents: false.
-			nullPointer sdwordAtOffset: 0]
+			nullPointer int32AtOffset: 0]
 		raise: GPFault
 		matching: 
 			[:gpf |
@@ -1025,80 +933,26 @@ testIndirectSdwordAtOffsetPrimitives
 				address: 0) and: 
 						[self
 							isFault: gpf
-							raisedIn: External.Address >> #sdwordAtOffset:
+							raisedIn: External.Address >> #int32AtOffset:
 							receiver: nullPointer]]!
 
-testIndirectSwordAtOffsetPrimitives
-	| nullPointer b p |
-	b := ByteArray newFixed: 6.
-	p := b yourAddress asExternalAddress.
-	#(0 -1 1 16r7FFF -16r8000) do: 
-			[:each |
-			"Should be able to write any 32-bit integer value, and read it back"
-			self assert: (p swordAtOffset: 2 put: each) equals: each.
-			self assert: (b swordAtOffset: 2) equals: each.
-			self assert: (b swordAtOffset: 0) equals: 0.
-			self assert: (b swordAtOffset: 4) equals: 0].
-
-	"Error if arg requires more that 16-bits to represent as 2's complement signed int"
-	#(16r10000 -16r8001) do: 
-			[:each |
-			self
-				should: [p swordAtOffset: 0 put: each]
-				raise: HRESULTError
-				matching: [:ex | ex hresult = ##(HRESULT fromPrimitiveFailureCode: _PrimitiveFailureCode.IntegerOutOfRange)]].
-
-	"This class of primitives had a bug whereby if the pointed at memory was inaccessible at the time of the read/write, then the primitive would corrupt the Smalltalk stack."
-	nullPointer := 0 asExternalAddress.
-	self
-		should: 
-			["Test with async events off to verify the fault interrupt is sent synchronously to the faulting frame"
-			Processor enableAsyncEvents: false.
-			nullPointer swordAtOffset: 0 put: 1]
-		raise: GPFault
-		matching: 
-			[:ex |
-			(self
-				isGPF: ex
-				reading: false
-				address: 0) and: 
-						[self
-							isFault: ex
-							raisedIn: External.Address >> #swordAtOffset:put:
-							receiver: nullPointer]].
-	self
-		should: 
-			[Processor enableAsyncEvents: false.
-			nullPointer swordAtOffset: 0]
-		raise: GPFault
-		matching: 
-			[:gpf |
-			(self
-				isGPF: gpf
-				reading: true
-				address: 0) and: 
-						[self
-							isFault: gpf
-							raisedIn: External.Address >> #swordAtOffset:
-							receiver: nullPointer]]!
-
-testIndirectWordAtOffsetPrimitives
+testIndirectUInt16AtOffsetPrimitives
 	| nullPointer b p |
 	b := ByteArray newFixed: 6.
 	p := b yourAddress asExternalAddress.
 	#(0 1 16r7FFF 16r8000 16rFFFF) do: 
 			[:each |
 			"Should be able to write any 32-bit integer value, and read it back"
-			self assert: (p wordAtOffset: 2 put: each) equals: each.
-			self assert: (b wordAtOffset: 2) equals: each.
-			self assert: (b wordAtOffset: 0) equals: 0.
-			self assert: (b wordAtOffset: 4) equals: 0].
+			self assert: (p uint16AtOffset: 2 put: each) equals: each.
+			self assert: (b uint16AtOffset: 2) equals: each.
+			self assert: (b uint16AtOffset: 0) equals: 0.
+			self assert: (b uint16AtOffset: 4) equals: 0].
 
 	"Error if arg is negative or requires more that 16-bits to represent as an unsigned int"
 	#(-1 16r10000 -16r8001) do: 
 			[:each |
 			self
-				should: [p wordAtOffset: 0 put: each]
+				should: [p uint16AtOffset: 0 put: each]
 				raise: HRESULTError
 				matching: [:ex | ex hresult = ##(HRESULT fromPrimitiveFailureCode: _PrimitiveFailureCode.IntegerOutOfRange)]].
 
@@ -1108,7 +962,7 @@ testIndirectWordAtOffsetPrimitives
 		should: 
 			["Test with async events off to verify the fault interrupt is sent synchronously to the faulting frame"
 			Processor enableAsyncEvents: false.
-			nullPointer wordAtOffset: 0 put: 1]
+			nullPointer uint16AtOffset: 0 put: 1]
 		raise: GPFault
 		matching: 
 			[:ex |
@@ -1118,12 +972,12 @@ testIndirectWordAtOffsetPrimitives
 				address: 0) and: 
 						[self
 							isFault: ex
-							raisedIn: External.Address >> #wordAtOffset:put:
+							raisedIn: External.Address >> #uint16AtOffset:put:
 							receiver: nullPointer]].
 	self
 		should: 
 			[Processor enableAsyncEvents: false.
-			nullPointer wordAtOffset: 0]
+			nullPointer uint16AtOffset: 0]
 		raise: GPFault
 		matching: 
 			[:gpf |
@@ -1133,8 +987,168 @@ testIndirectWordAtOffsetPrimitives
 				address: 0) and: 
 						[self
 							isFault: gpf
-							raisedIn: External.Address >> #wordAtOffset:
+							raisedIn: External.Address >> #uint16AtOffset:
 							receiver: nullPointer]]!
+
+testIndirectUInt32AtOffsetPrimitives
+	| nullPointer b p |
+	b := ByteArray newFixed: 12.
+	p := b yourAddress asExternalAddress.
+	#(0 1 -1 ##(SmallInteger minimum) ##(SmallInteger maximum) ##(SmallInteger maximum + 1) ##(SmallInteger
+		minimum - 1) 16rFFFFFFFF -16r80000000)
+		do: 
+			[:each |
+			"Should be able to write any 32-bit integer value, and read it back"
+			self assert: (p uint32AtOffset: 4 put: each) equals: each.
+			self assert: (b uint32AtOffset: 4) equals: each asDword.
+			self assert: (b uint32AtOffset: 0) equals: 0.
+			self assert: (b uint32AtOffset: 8) equals: 0].
+
+	"Error if arg requires more that 32-bits to represent as an unsigned int"
+	#(16r100000000 -16r80000001) do: [:each | self should: [p int32AtOffset: 0 put: each] raise: Error].
+
+	"This class of primitives had a bug whereby if the pointed at memory was inaccessible at the time of the read/write, then the primitive would corrupt the Smalltalk stack."
+	nullPointer := 0 asExternalAddress.
+	#(1 16r7FFFFFFF 16rFFFFFFFF) do: 
+			[:each |
+			self
+				should: 
+					["Test with async events off to verify the fault interrupt is sent synchronously to the faulting frame"
+					Processor enableAsyncEvents: false.
+					nullPointer uint32AtOffset: 0 put: each]
+				raise: GPFault
+				matching: 
+					[:ex |
+					(self
+						isGPF: ex
+						reading: false
+						address: 0) and: 
+								[self
+									isFault: ex
+									raisedIn: External.Address >> #uint32AtOffset:put:
+									receiver: nullPointer]]].
+	self
+		should: 
+			[Processor enableAsyncEvents: false.
+			nullPointer uint32AtOffset: 0]
+		raise: GPFault
+		matching: 
+			[:gpf |
+			(self
+				isGPF: gpf
+				reading: true
+				address: 0) and: 
+						[self
+							isFault: gpf
+							raisedIn: External.Address >> #uint32AtOffset:
+							receiver: nullPointer]]!
+
+testIndirectUint8AtOffsetPrimitives
+	| nullPointer b p |
+	b := ByteArray newFixed: 3.
+	p := b yourAddress asExternalAddress.
+	#(0 1 127 128 255) do: 
+			[:each |
+			"Should be able to write any 32-bit integer value, and read it back"
+			self assert: (p uint8AtOffset: 1 put: each) equals: each.
+			self assert: (b uint8AtOffset: 1) equals: each.
+			self assert: (b uint8AtOffset: 0) equals: 0.
+			self assert: (b uint8AtOffset: 2) equals: 0].
+
+	"Arg must be in range 0..255"
+	#(-1 256) do: [:each | self should: [p uint8AtOffset: 1 put: each] raise: Error].
+
+	"This class of primitives had a bug whereby if the pointed at memory was inaccessible at the time of the read/write, then the primitive would corrupt the Smalltalk stack."
+	nullPointer := 0 asExternalAddress.
+	self
+		should: 
+			["Test with async events off to verify the fault interrupt is sent synchronously to the faulting frame"
+			Processor enableAsyncEvents: false.
+			nullPointer uint8AtOffset: 0 put: 1]
+		raise: GPFault
+		matching: 
+			[:ex |
+			(self
+				isGPF: ex
+				reading: false
+				address: 0) and: 
+						[self
+							isFault: ex
+							raisedIn: External.Address >> #uint8AtOffset:put:
+							receiver: nullPointer]].
+	self
+		should: 
+			[Processor enableAsyncEvents: false.
+			nullPointer uint8AtOffset: 0]
+		raise: GPFault
+		matching: 
+			[:gpf |
+			(self
+				isGPF: gpf
+				reading: true
+				address: 0) and: 
+						[self
+							isFault: gpf
+							raisedIn: External.Address >> #uint8AtOffset:
+							receiver: nullPointer]]!
+
+testInt64AtOffset
+	"Note that this test assumes running on a little-endian machine with 32-bit SmallIntegers."
+
+	| bytes actual |
+	bytes := #[].
+	self should: [bytes int64AtOffset: 0] raise: BoundsError.
+	bytes := #[1 2 3 4 5 6 7].
+	self should: [bytes int64AtOffset: 0] raise: BoundsError.
+	bytes := #[1 2 3 4 5 6 7 8].
+	self should: [bytes int64AtOffset: -1] raise: BoundsError.
+	self should: [bytes int64AtOffset: 1] raise: BoundsError.
+	self should: [bytes int64AtOffset: nil] raise: Error.
+	self assert: (bytes int64AtOffset: 0) equals: 16r0807060504030201.
+	"Misaligned"
+	bytes := bytes copyWith: 16rAB.
+	self assert: (bytes int64AtOffset: 1) equals: -16r54F7F8F9FAFBFCFE.
+	"SmallIntegers"
+	bytes := ByteArray fromHexString: 'FFFFFFFF0000000000000000'.
+	self assert: (bytes int64AtOffset: 4) equals: 0.
+	self assert: SmallInteger maximum byteSize equals: 4.	"Inconclusive if this is not so"
+	bytes := ByteArray fromHexString: 'FFFFFF3F00000000'.
+	self assert: (bytes int64AtOffset: 0) identicalTo: 16r3FFFFFFF.
+	bytes := ByteArray fromHexString: '000000C0FFFFFFFF'.
+	self assert: (bytes int64AtOffset: 0) identicalTo: -16r40000000.
+	"Overflows SmallInteger (any value in lower 32-bits is treated as positive)"
+	bytes := ByteArray fromHexString: '0000004000000000'.
+	actual := bytes int64AtOffset: 0.
+	self assert: actual isKindOf: LargeInteger.
+	self assert: actual equals: 16r40000000.
+	"Largest 4-byte large integer"
+	bytes := ByteArray fromHexString: 'FFFFFF7F00000000'.
+	actual := bytes int64AtOffset: 0.
+	self assert: actual isKindOf: LargeInteger.
+	self assert: actual byteSize equals: 4.
+	self assert: actual equals: 16r7FFFFFFF.
+	"Smallest 8-byte large integer"
+	bytes := ByteArray fromHexString: '0000008000000000'.
+	actual := bytes int64AtOffset: 0.
+	self assert: actual isKindOf: LargeInteger.
+	self assert: actual byteSize equals: 8.
+	self assert: actual equals: 16r80000000.
+	"Largest 8-byte large positive integer"
+	bytes := ByteArray fromHexString: 'FFFFFFFFFFFFFF7F'.
+	actual := bytes int64AtOffset: 0.
+	self assert: actual isKindOf: LargeInteger.
+	self assert: actual byteSize equals: 8.
+	self assert: actual equals: 16r7FFFFFFFFFFFFFFF.
+	"Largest 8-byte large negative integer"
+	bytes := ByteArray fromHexString: '0000000000000080'.
+	actual := bytes int64AtOffset: 0.
+	self assert: actual isKindOf: LargeInteger.
+	self assert: actual byteSize equals: 8.
+	self assert: actual equals: -16r8000000000000000.
+	"Largest value, smallest negative (-1)"
+	bytes := ByteArray fromHexString: 'FFFFFFFFFFFFFFFF'.
+	actual := bytes int64AtOffset: 0.
+	self assert: actual identicalTo: -1!
 
 testIntDivideByZero
 	#(#/ #// #\\ #quo:) do: 
@@ -1255,19 +1269,19 @@ testMakeLargeUnsigned
 	bytes := ByteArray new: 8.
 	self assert: (VM makeLargeUnsigned: bytes) identicalTo: 0.
 	bytes := ByteArray new: 8.
-	bytes qwordAtOffset: 0 put: 1.
+	bytes uint64AtOffset: 0 put: 1.
 	self assert: (VM makeLargeUnsigned: bytes) identicalTo: 1.
 	bytes := ByteArray new: 8.
-	bytes qwordAtOffset: 0 put: SmallInteger maximum.
+	bytes uint64AtOffset: 0 put: SmallInteger maximum.
 	self assert: (VM makeLargeUnsigned: bytes) identicalTo: SmallInteger maximum.
 	bytes := ByteArray new: 8.
-	bytes qwordAtOffset: 0 put: SmallInteger minimum.
+	bytes uint64AtOffset: 0 put: SmallInteger minimum.
 	self assert: (VM makeLargeUnsigned: bytes) equals: (2 raisedToInteger: 64) + SmallInteger minimum.
 	bytes := ByteArray new: 8.
-	bytes qwordAtOffset: 0 put: (2 raisedToInteger: 31).
+	bytes uint64AtOffset: 0 put: (2 raisedToInteger: 31).
 	self assert: (VM makeLargeUnsigned: bytes) equals: (2 raisedToInteger: 31).
 	self assert: (VM makeLargeUnsigned: Float fmax)
-		equals: (#[255 255 255 255 255 255 239 127] qwordAtOffset: 0).
+		equals: (#[255 255 255 255 255 255 239 127] uint64AtOffset: 0).
 	self assert: (VM makeLargeUnsigned: Float fminNormalized)
 		equals: (Float fminNormalized shallowCopy becomeA: LargeInteger).
 	"#1130"
@@ -3004,8 +3018,8 @@ testPrimitiveStringNextIndexOfFromTo
 
 testPrimitiveStructIsNull
 	| method subject |
-	method := self createPrimitiveMethodLike: External.Structure >> #isNull.
-	subject := External.DWORD new.
+	method := self createPrimitiveMethodLike: Structure >> #isNull.
+	subject := UInt32 new.
 	self deny: (method value: subject withArguments: #()).
 	subject bytes isImmutable: true.
 	self deny: (method value: subject withArguments: #()).
@@ -3013,13 +3027,13 @@ testPrimitiveStructIsNull
 	self assert: (method value: subject withArguments: #()).
 	subject bytes: Object new.
 	self assert: (method value: subject withArguments: #()) equals: 'ObjectTypeMismatch'.
-	subject bytes: External.Handle new.
+	subject bytes: Handle new.
 	self deny: (method value: subject withArguments: #()).
-	subject bytes: External.Address new.
+	subject bytes: Address new.
 	self assert: (method value: subject withArguments: #()).
-	subject := External.DWORD fromInteger: 1.
+	subject := UInt32 fromInteger: 1.
 	self deny: (method value: subject withArguments: #()).
-	subject := External.DWORD fromAddress: 1.
+	subject := UInt32 fromAddress: 1.
 	self deny: (method value: subject withArguments: #())!
 
 testPrimitiveSubtract
@@ -3075,55 +3089,55 @@ testQwordAtOffset
 
 	| bytes actual |
 	bytes := #[].
-	self should: [bytes qwordAtOffset: 0] raise: BoundsError.
+	self should: [bytes uint64AtOffset: 0] raise: BoundsError.
 	bytes := #[1 2 3 4 5 6 7].
-	self should: [bytes qwordAtOffset: 0] raise: BoundsError.
+	self should: [bytes uint64AtOffset: 0] raise: BoundsError.
 	bytes := #[1 2 3 4 5 6 7 8].
-	self should: [bytes qwordAtOffset: -1] raise: BoundsError.
-	self should: [bytes qwordAtOffset: 1] raise: BoundsError.
-	self should: [bytes qwordAtOffset: nil] raise: Error.
-	self assert: (bytes qwordAtOffset: 0) equals: 16r807060504030201.
+	self should: [bytes uint64AtOffset: -1] raise: BoundsError.
+	self should: [bytes uint64AtOffset: 1] raise: BoundsError.
+	self should: [bytes uint64AtOffset: nil] raise: Error.
+	self assert: (bytes uint64AtOffset: 0) equals: 16r807060504030201.
 	"Misaligned"
 	bytes := bytes copyWith: 16rAB.
-	self assert: (bytes qwordAtOffset: 1) equals: 16rAB08070605040302.
+	self assert: (bytes uint64AtOffset: 1) equals: 16rAB08070605040302.
 	"SmallIntegers"
 	bytes := ByteArray fromHexString: 'FFFFFFFF0000000000000000'.
-	self assert: (bytes qwordAtOffset: 4) equals: 0.
+	self assert: (bytes uint64AtOffset: 4) equals: 0.
 	self assert: SmallInteger maximum byteSize equals: 4.	"Inconclusive if this is not so"
 	bytes := ByteArray fromHexString: 'FFFFFF3F00000000'.
-	self assert: (bytes qwordAtOffset: 0) identicalTo: 16r3FFFFFFF.
+	self assert: (bytes uint64AtOffset: 0) identicalTo: 16r3FFFFFFF.
 	"Overflows SmallInteger"
 	bytes := ByteArray fromHexString: '0000004000000000'.
-	actual := bytes qwordAtOffset: 0.
+	actual := bytes uint64AtOffset: 0.
 	self assert: actual isKindOf: LargeInteger.
 	self assert: actual equals: 16r40000000.
 	"Largest 4-byte large integer"
 	bytes := ByteArray fromHexString: 'FFFFFF7F00000000'.
-	actual := bytes qwordAtOffset: 0.
+	actual := bytes uint64AtOffset: 0.
 	self assert: actual isKindOf: LargeInteger.
 	self assert: actual byteSize equals: 4.
 	self assert: actual equals: 16r7FFFFFFF.
 	"Smallest 8-byte large integer"
 	bytes := ByteArray fromHexString: '0000008000000000'.
-	actual := bytes qwordAtOffset: 0.
+	actual := bytes uint64AtOffset: 0.
 	self assert: actual isKindOf: LargeInteger.
 	self assert: actual byteSize equals: 8.
 	self assert: actual equals: 16r80000000.
 	"Largest 8-byte large integer"
 	bytes := ByteArray fromHexString: 'FFFFFFFFFFFFFF7F'.
-	actual := bytes qwordAtOffset: 0.
+	actual := bytes uint64AtOffset: 0.
 	self assert: actual isKindOf: LargeInteger.
 	self assert: actual byteSize equals: 8.
 	self assert: actual equals: 16r7FFFFFFFFFFFFFFF.
 	"Smallest 12-byte large integer"
 	bytes := ByteArray fromHexString: '0000000000000080'.
-	actual := bytes qwordAtOffset: 0.
+	actual := bytes uint64AtOffset: 0.
 	self assert: actual isKindOf: LargeInteger.
 	self assert: actual byteSize equals: 12.
 	self assert: actual equals: 16r8000000000000000.
 	"Largest value"
 	bytes := ByteArray fromHexString: 'FFFFFFFFFFFFFFFF'.
-	actual := bytes qwordAtOffset: 0.
+	actual := bytes uint64AtOffset: 0.
 	self assert: actual isKindOf: LargeInteger.
 	self assert: actual byteSize equals: 12.
 	self assert: actual equals: 16rFFFFFFFFFFFFFFFF!
@@ -3189,75 +3203,61 @@ testSignedFromUnsigned
 	self should: [VM signedFromUnsigned: 16r100000000] raise: Error.
 	self should: [VM signedFromUnsigned: (2 raisedToInteger: 32) + 1] raise: Error!
 
-testSqwordAtOffset
-	"Note that this test assumes running on a little-endian machine with 32-bit SmallIntegers."
-
-	| bytes actual |
-	bytes := #[].
-	self should: [bytes sqwordAtOffset: 0] raise: BoundsError.
-	bytes := #[1 2 3 4 5 6 7].
-	self should: [bytes sqwordAtOffset: 0] raise: BoundsError.
-	bytes := #[1 2 3 4 5 6 7 8].
-	self should: [bytes sqwordAtOffset: -1] raise: BoundsError.
-	self should: [bytes sqwordAtOffset: 1] raise: BoundsError.
-	self should: [bytes sqwordAtOffset: nil] raise: Error.
-	self assert: (bytes sqwordAtOffset: 0) equals: 16r0807060504030201.
-	"Misaligned"
-	bytes := bytes copyWith: 16rAB.
-	self assert: (bytes sqwordAtOffset: 1) equals: -16r54F7F8F9FAFBFCFE.
-	"SmallIntegers"
-	bytes := ByteArray fromHexString: 'FFFFFFFF0000000000000000'.
-	self assert: (bytes sqwordAtOffset: 4) equals: 0.
-	self assert: SmallInteger maximum byteSize equals: 4.	"Inconclusive if this is not so"
-	bytes := ByteArray fromHexString: 'FFFFFF3F00000000'.
-	self assert: (bytes sqwordAtOffset: 0) identicalTo: 16r3FFFFFFF.
-	bytes := ByteArray fromHexString: '000000C0FFFFFFFF'.
-	self assert: (bytes sqwordAtOffset: 0) identicalTo: -16r40000000.
-	"Overflows SmallInteger (any value in lower 32-bits is treated as positive)"
-	bytes := ByteArray fromHexString: '0000004000000000'.
-	actual := bytes sqwordAtOffset: 0.
-	self assert: actual isKindOf: LargeInteger.
-	self assert: actual equals: 16r40000000.
-	"Largest 4-byte large integer"
-	bytes := ByteArray fromHexString: 'FFFFFF7F00000000'.
-	actual := bytes sqwordAtOffset: 0.
-	self assert: actual isKindOf: LargeInteger.
-	self assert: actual byteSize equals: 4.
-	self assert: actual equals: 16r7FFFFFFF.
-	"Smallest 8-byte large integer"
-	bytes := ByteArray fromHexString: '0000008000000000'.
-	actual := bytes sqwordAtOffset: 0.
-	self assert: actual isKindOf: LargeInteger.
-	self assert: actual byteSize equals: 8.
-	self assert: actual equals: 16r80000000.
-	"Largest 8-byte large positive integer"
-	bytes := ByteArray fromHexString: 'FFFFFFFFFFFFFF7F'.
-	actual := bytes sqwordAtOffset: 0.
-	self assert: actual isKindOf: LargeInteger.
-	self assert: actual byteSize equals: 8.
-	self assert: actual equals: 16r7FFFFFFFFFFFFFFF.
-	"Largest 8-byte large negative integer"
-	bytes := ByteArray fromHexString: '0000000000000080'.
-	actual := bytes sqwordAtOffset: 0.
-	self assert: actual isKindOf: LargeInteger.
-	self assert: actual byteSize equals: 8.
-	self assert: actual equals: -16r8000000000000000.
-	"Largest value, smallest negative (-1)"
-	bytes := ByteArray fromHexString: 'FFFFFFFFFFFFFFFF'.
-	actual := bytes sqwordAtOffset: 0.
-	self assert: actual identicalTo: -1!
+testUInt32AtOffsetPut
+	| bytes dword max |
+	bytes := ByteArray new: 4.
+	{'s'. SmallInteger maximum + 1. Object new} do: 
+			[:each |
+			self
+				should: [bytes uint32AtOffset: each put: 1]
+				raise: Error
+				matching: [:ex | ex messageText = ('Index: <1p> is not an integer' expandMacrosWith: each)]].
+	max := 12.
+	4 to: max
+		by: 4
+		do: 
+			[:each |
+			bytes := ByteArray new: each - 1.
+			self should: [bytes uint32AtOffset: each - 4 put: 1] raise: BoundsError.
+			bytes := ByteArray new: each.
+			"This large integer will be 4-bytes long"
+			dword := (2 raisedToInteger: 31) - 1.
+			self assert: dword isImmutable.
+			bytes uint32AtOffset: each - 4 put: dword.
+			self assert: (bytes uint32AtOffset: each - 4) equals: dword.
+			"This large integer will be 8-bytes long"
+			dword := dword + 1.
+			self assert: dword isImmutable.
+			bytes uint32AtOffset: each - 4 put: dword.
+			self assert: (bytes uint32AtOffset: each - 4) equals: dword.
+			dword := 16rFFFFFFFF.
+			self assert: dword isImmutable.
+			bytes uint32AtOffset: each - 4 put: dword.
+			self assert: bytes equals: (ByteArray new: each - 4) , #[16rFF 16rFF 16rFF 16rFF].
+			bytes uint32AtOffset: each - 4 put: #[16rAA 16rBB 16rCC 16rDD].
+			self assert: (bytes uint32AtOffset: each - 4) equals: 16rDDCCBBAA.
+			dword := UInt32 fromInteger: 16r11223344.
+			bytes uint32AtOffset: each - 4 put: dword.
+			self assert: (bytes uint32AtOffset: each - 4) equals: 16r11223344.
+			dword isImmutable: true.
+			bytes := ByteArray new: each.
+			bytes uint32AtOffset: each - 4 put: dword.
+			self assert: (bytes uint32AtOffset: each - 4) equals: 16r11223344.
+			bytes := ByteArray new: each.
+			bytes isImmutable: true.
+			self should: [bytes uint32AtOffset: each - 4 put: 1] raise: Processor constWriteSignal]!
 
 testVMPointersImmutable
 	| vmPointers |
 	vmPointers := VM registry yourAddress asExternalAddress.
 	self
-		should: [vmPointers dwordAtOffset: 0 put: 1]
+		should: [vmPointers uint32AtOffset: 0 put: 1]
 		raise: Processor constWriteSignal
 		matching: 
 			[:ex |
 			self
 				isFault: ex
-				raisedIn: External.Address >> #dwordAtOffset:put:
+				raisedIn: External.Address >> #uint32AtOffset:put:
 				receiver: vmPointers]!
 
 testWeakMournerNotifications
@@ -3836,7 +3836,6 @@ testAllReferences!public!unit tests! !
 testAllReferencesWeak!public! !
 testBSTRArg!public!unit tests! !
 testCRTFault!public!unit tests! !
-testDwordAtOffsetPut!public!unit tests! !
 testEvaluationOrder!public!unit tests! !
 testExtCallArgLppvoid!public!unit tests! !
 testExtCallArgLpwstr!public!unit tests! !
@@ -3875,11 +3874,12 @@ testImmutableReplacePrimitives!public!unit tests! !
 testImmutableResize!public!unit tests! !
 testImmutableStringCompare!public!unit tests! !
 testImmutableWriteAccessors!public!unit tests! !
-testIndirectByteAtOffsetPrimitives!public!unit tests! !
-testIndirectDwordAtOffsetPrimitives!public!unit tests! !
-testIndirectSdwordAtOffsetPrimitives!public!unit tests! !
-testIndirectSwordAtOffsetPrimitives!public!unit tests! !
-testIndirectWordAtOffsetPrimitives!public!unit tests! !
+testIndirectInt16AtOffsetPrimitives!public!unit tests! !
+testIndirectInt32AtOffsetPrimitives!public!unit tests! !
+testIndirectUInt16AtOffsetPrimitives!public!unit tests! !
+testIndirectUInt32AtOffsetPrimitives!public!unit tests! !
+testIndirectUint8AtOffsetPrimitives!public!unit tests! !
+testInt64AtOffset!public!unit tests! !
 testIntDivideByZero!public!unit tests! !
 testInterruptPendingOverlappedCall!public!unit tests! !
 testLoopsInterruptible!public!unit tests! !
@@ -3950,7 +3950,7 @@ testQuiesceWhenUIBlocked!public!unit tests! !
 testQwordAtOffset!public!unit tests! !
 testRegistry!public! !
 testSignedFromUnsigned!public!unit tests! !
-testSqwordAtOffset!public!unit tests! !
+testUInt32AtOffsetPut!public!unit tests! !
 testVMPointersImmutable!public!unit tests! !
 testWeakMournerNotifications!public!unit tests! !
 verifyBinaryPrimitive:forCases:!helpers!private! !

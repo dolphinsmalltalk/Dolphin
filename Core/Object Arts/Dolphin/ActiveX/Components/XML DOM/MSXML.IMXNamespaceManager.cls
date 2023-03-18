@@ -97,10 +97,10 @@ getDeclaredPrefix: nIndex pwchPrefix: pwchPrefix pcchPrefix: pcchPrefix
 	"Invoke the getDeclaredPrefix() method of the COM object."
 
 	| outputs |
-	outputs := {WORD new
+	outputs := {UInt16 new
 					value: pwchPrefix;
 					yourself.
-				SDWORD new
+				Int32 new
 					value: pcchPrefix;
 					yourself}.
 	self
@@ -124,10 +124,10 @@ getPrefix: pwszNamespaceURI nIndex: nIndex pwchPrefix: pwchPrefix pcchPrefix: pc
 	"Invoke the getPrefix() method of the COM object."
 
 	| outputs |
-	outputs := {WORD new
+	outputs := {UInt16 new
 					value: pwchPrefix;
 					yourself.
-				SDWORD new
+				Int32 new
 					value: pcchPrefix;
 					yourself}.
 	self
@@ -153,10 +153,10 @@ getURI: pwchPrefix pContextNode: pContextNode pwchUri: pwchUri pcchUri: pcchUri
 	"Invoke the getURI() method of the COM object."
 
 	| outputs |
-	outputs := {WORD new
+	outputs := {UInt16 new
 					value: pwchUri;
 					yourself.
-				SDWORD new
+				Int32 new
 					value: pcchUri;
 					yourself}.
 	self

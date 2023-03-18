@@ -108,7 +108,7 @@ free
 	We can rely on the reference count of internally implemented interfaces being correct,
 	but not those we access via pointers."
 
-	(bytes notNil and: [(bytes basicDwordAtOffset: 0) ~~ 0])
+	(bytes notNil and: [(bytes basicUInt32AtOffset: 0) ~~ 0])
 		ifTrue: [self basicFree].
 	self beUnfinalizable		
 
@@ -188,7 +188,7 @@ initializeAtAddress: anAddress
 interfaceCookie: anInteger
 	"Set the receiver's 'interfaceCookie' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_interfaceCookie put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_interfaceCookie put: anInteger!
 
 isSameCOMObject: aCOMInterface
 	"Answer true if aCOMInterface has the same underlying COMObject as the receiver."
@@ -198,7 +198,7 @@ isSameCOMObject: aCOMInterface
 objectCookie: anInteger
 	"Set the receiver's 'objectCookie' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_objectCookie put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_objectCookie put: anInteger!
 
 onExit
 	"Clean up the external interface pointer on image exit to free external resources"
@@ -369,7 +369,7 @@ addFunction: functionClass selector: aSymbol descriptor: aFunctionDescriptor
 					descriptor: aFunctionDescriptor)!
 
 argSizes
-	"Private - Answer the DWORD array of arg sizes."
+	"Private - Answer the UInt32 array of arg sizes."
 
 	^argSizes!
 
@@ -382,7 +382,7 @@ atAddress: anAddress
 	contains an interface pointer, so the address is dereferenced to get
 	the actual address."
 
-	^self fromAddress: (anAddress asExternalAddress dwordAtOffset: 0)!
+	^self fromAddress: (anAddress asExternalAddress uint32AtOffset: 0)!
 
 attach: interfaceAddress
 	"Attach the a new pointer instance of the receiver to the interface at 
@@ -413,7 +413,7 @@ calcArgSizes
 	count := functions size.
 	(argSizes isNil or: [argSizes size < (count*4)]) ifTrue: [argSizes := ByteArray newFixed: count*4].
 	1 to: count do: [ :i |
-		argSizes dwordAtOffset: (i-1*4) put: (sizes at: i) ].!
+		argSizes uint32AtOffset: (i-1*4) put: (sizes at: i) ].!
 
 classForIID: aGUID
 	"Answer the COM interface class (a subclass of the receiver) which
@@ -441,7 +441,7 @@ clear: addressOrBytes
 
 	"In this case we are given the address of a slot holding an COM interface pointer, i.e. an IUnknown**, so we have to dereference the address to get the interface pointer, i.e. this is like #atAddress:, except that we don't want to add a further reference."
 
-	(IUnknown attach: (addressOrBytes dwordAtOffset: 0)) free!
+	(IUnknown attach: (addressOrBytes uint32AtOffset: 0)) free!
 
 clsid
 	"Answer the component id for the receiver's COM class."
@@ -594,8 +594,8 @@ defineFields
 	self
 		defineField: #vtbl type: LPVOIDField writeOnly;
 		defineField: #argSizes type: LPVOIDField writeOnly;
-		defineField: #objectCookie type: DWORDField writeOnly;
-		defineField: #interfaceCookie type: DWORDField writeOnly!
+		defineField: #objectCookie type: UInt32Field writeOnly;
+		defineField: #interfaceCookie type: UInt32Field writeOnly!
 
 defineFunction: aSymbol
 	"Declare a virtual function supported by the receiver and implemented in the object

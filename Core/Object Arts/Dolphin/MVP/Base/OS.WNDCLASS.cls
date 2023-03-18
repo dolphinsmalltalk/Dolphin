@@ -35,27 +35,27 @@ className: aString
 hbrBackground: anInteger
 	"Set the receiver's 'hbrBackground' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_hbrBackground put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_hbrBackground put: anInteger!
 
 hCursor: anInteger
 	"Set the receiver's 'hCursor' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_hCursor put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_hCursor put: anInteger!
 
 hIcon: anInteger
 	"Set the receiver's 'hIcon' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_hIcon put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_hIcon put: anInteger!
 
 hInstance: anInteger
 	"Set the receiver's 'hInstance' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_hInstance put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_hInstance put: anInteger!
 
 lpfnWndProc: anInteger
 	"Set the receiver's 'lpfnWndProc' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_lpfnWndProc put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_lpfnWndProc put: anInteger!
 
 lpszClassName
 	"Answer the <Utf16String> value of the receiver's 'lpszClassName' field."
@@ -88,7 +88,7 @@ menuName: aString
 style: anInteger
 	"Set the receiver's 'style' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_style put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_style put: anInteger! !
 !OS.WNDCLASS categoriesForMethods!
 className:!accessing!public! !
 hbrBackground:!**compiled accessors**!public! !
@@ -131,14 +131,14 @@ defineFields
 		} WNDCLASS; "
 
 	self
-		defineField: #style type: DWORDField writeOnly;
-		defineField: #lpfnWndProc type: DWORDField writeOnly;
-		defineField: #cbClsExtra type: SDWORDField filler;
-		defineField: #cbWndExtra type: SDWORDField filler;
-		defineField: #hInstance type: DWORDField writeOnly;
-		defineField: #hIcon type: DWORDField writeOnly;
-		defineField: #hCursor type: DWORDField writeOnly;
-		defineField: #hbrBackground type: DWORDField writeOnly;
+		defineField: #style type: UInt32Field writeOnly;
+		defineField: #lpfnWndProc type: UInt32Field writeOnly;
+		defineField: #cbClsExtra type: Int32Field filler;
+		defineField: #cbWndExtra type: Int32Field filler;
+		defineField: #hInstance type: UInt32Field writeOnly;
+		defineField: #hIcon type: UInt32Field writeOnly;
+		defineField: #hCursor type: UInt32Field writeOnly;
+		defineField: #hbrBackground type: UInt32Field writeOnly;
 		defineField: #lpszMenuName type: (PointerField type: Utf16String);
 		defineField: #lpszClassName type: (PointerField type: Utf16String)!
 

@@ -23,7 +23,7 @@ OS.NOTIFYICONDATAW comment: ''!
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 hIcon: anExternalHandle
 	"Set the receiver's 'hIcon' field to the value of the argument, anExternalHandle"
@@ -63,7 +63,7 @@ szTip: anUtf16String
 		from: ##(_OffsetOf_szTip + 1)
 		to: _OffsetOf_szTip + size
 		startingAt: 1.
-	bytes wordAtOffset: _OffsetOf_szTip + size put: 0!
+	bytes uint16AtOffset: _OffsetOf_szTip + size put: 0!
 
 tipText: aString
 	"Set the receiver's szTip (tip text) field."
@@ -74,22 +74,22 @@ tipText: aString
 uCallbackMessage: anInteger
 	"Set the receiver's 'uCallbackMessage' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_uCallbackMessage put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_uCallbackMessage put: anInteger!
 
 uFlags
 	"Answer the <Integer> value of the receiver's 'uFlags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_uFlags!
+	^bytes uint32AtOffset: _OffsetOf_uFlags!
 
 uFlags: anInteger
 	"Set the receiver's 'uFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_uFlags put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_uFlags put: anInteger!
 
 uID: anInteger
 	"Set the receiver's 'uID' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_uID put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_uID put: anInteger! !
 !OS.NOTIFYICONDATAW categoriesForMethods!
 dwSize:!**compiled accessors**!public! !
 hIcon:!**compiled accessors**!public! !
@@ -126,11 +126,11 @@ defineFields
 	"
 
 	self
-		defineField: #dwSize type: DWORDField writeOnly beOverride;
+		defineField: #dwSize type: UInt32Field writeOnly beOverride;
 		defineField: #hWnd type: HANDLEField writeOnly;
-		defineField: #uID type: DWORDField writeOnly;
-		defineField: #uFlags type: DWORDField new;
-		defineField: #uCallbackMessage type: DWORDField writeOnly;
+		defineField: #uID type: UInt32Field writeOnly;
+		defineField: #uFlags type: UInt32Field new;
+		defineField: #uCallbackMessage type: UInt32Field writeOnly;
 		defineField: #hIcon type: HANDLEField writeOnly;
 		defineField: #szTip type: (StringField type: Utf16String length: 64)!
 

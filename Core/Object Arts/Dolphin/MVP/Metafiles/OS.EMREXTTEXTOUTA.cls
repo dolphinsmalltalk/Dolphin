@@ -46,7 +46,7 @@ text: anObject
 		from: ##(_OffsetOf_text + 1)
 		to: _OffsetOf_text + size
 		startingAt: 1.
-	bytes byteAtOffset: _OffsetOf_text + size put: 0! !
+	bytes uint8AtOffset: _OffsetOf_text + size put: 0! !
 !OS.EMREXTTEXTOUTA categoriesForMethods!
 text!accessing!public! !
 text:!accessing!public! !

@@ -56,12 +56,12 @@ eSweepAngle: aFloat
 nRadius
 	"Answer the <Integer> value of the receiver's 'nRadius' field."
 
-	^bytes dwordAtOffset: _OffsetOf_nRadius!
+	^bytes uint32AtOffset: _OffsetOf_nRadius!
 
 nRadius: anInteger
 	"Set the receiver's 'nRadius' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_nRadius put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_nRadius put: anInteger!
 
 ptlCenter
 	"Answer the <POINTL> value of the receiver's 'ptlCenter' field."
@@ -113,7 +113,7 @@ defineFields
 			type: (StructureField type: POINTL)
 			offset: 8;
 		defineField: #nRadius
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 16;
 		defineField: #eStartAngle
 			type: FLOATField new

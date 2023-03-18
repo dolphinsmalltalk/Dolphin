@@ -25,8 +25,8 @@ initialize
 	| struct |
 	struct := ByteArray new: 8.
 	struct
-		dwordAtOffset: 0 put: 8;
-		dwordAtOffset: 4 put: self class initFlags.
+		uint32AtOffset: 0 put: 8;
+		uint32AtOffset: 4 put: self class initFlags.
 	self initCommonControlsEx: struct! !
 !OS.CommCtrlLibrary categoriesForMethods!
 initCommonControlsEx:!initializing!primitives!public! !

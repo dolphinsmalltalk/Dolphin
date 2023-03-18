@@ -232,8 +232,8 @@ extent
 	^extent
 		ifNil: 
 			[| cx cy |
-			cx := SDWORD new.
-			cy := SDWORD new.
+			cx := Int32 new.
+			cy := Int32 new.
 			ComCtl32
 				imageList_GetIconSize: self handle
 				cx: cx

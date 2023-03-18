@@ -23,22 +23,22 @@ OS.WINDOWPOS comment: ''!
 cx
 	"Answer the <Integer> value of the receiver's 'cx' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_cx!
+	^bytes int32AtOffset: _OffsetOf_cx!
 
 cx: anInteger
 	"Set the receiver's 'cx' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_cx put: anInteger!
+	bytes int32AtOffset: _OffsetOf_cx put: anInteger!
 
 cy
 	"Answer the <Integer> value of the receiver's 'cy' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_cy!
+	^bytes int32AtOffset: _OffsetOf_cy!
 
 cy: anInteger
 	"Set the receiver's 'cy' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_cy put: anInteger!
+	bytes int32AtOffset: _OffsetOf_cy put: anInteger!
 
 extent
 	^self cx @ self cy!
@@ -46,12 +46,12 @@ extent
 flags
 	"Answer the <Integer> value of the receiver's 'flags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_flags!
+	^bytes uint32AtOffset: _OffsetOf_flags!
 
 hwndInsertAfter
 	"Answer the <Integer> value of the receiver's 'hwndInsertAfter' field."
 
-	^bytes dwordAtOffset: _OffsetOf_hwndInsertAfter!
+	^bytes uint32AtOffset: _OffsetOf_hwndInsertAfter!
 
 isRectangleChanged
 	^(self flags allMask: ##(SWP_NOMOVE | SWP_NOSIZE)) not!
@@ -65,12 +65,12 @@ rectangle
 x
 	"Answer the <Integer> value of the receiver's 'x' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_x!
+	^bytes int32AtOffset: _OffsetOf_x!
 
 y
 	"Answer the <Integer> value of the receiver's 'y' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_y! !
+	^bytes int32AtOffset: _OffsetOf_y! !
 !OS.WINDOWPOS categoriesForMethods!
 cx!**compiled accessors**!public! !
 cx:!**compiled accessors**!public! !
@@ -107,13 +107,13 @@ defineFields
 	"
 
 	self
-		defineField: #hwnd type: DWORDField filler;
-		defineField: #hwndInsertAfter type: DWORDField readOnly;
-		defineField: #x type: SDWORDField readOnly;
-		defineField: #y type: SDWORDField readOnly;
-		defineField: #cx type: SDWORDField new;
-		defineField: #cy type: SDWORDField new;
-		defineField: #flags type: DWORDField readOnly!
+		defineField: #hwnd type: UInt32Field filler;
+		defineField: #hwndInsertAfter type: UInt32Field readOnly;
+		defineField: #x type: Int32Field readOnly;
+		defineField: #y type: Int32Field readOnly;
+		defineField: #cx type: Int32Field new;
+		defineField: #cy type: Int32Field new;
+		defineField: #flags type: UInt32Field readOnly!
 
 getFieldNames
 	^#(#hwndInsertAfter #x #y #cx #cy #flags)! !

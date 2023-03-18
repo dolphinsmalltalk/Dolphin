@@ -55,72 +55,72 @@ struct tagMIB_IPFORWARDROW {
 dwForwardAge
 	"Answer the <Integer> value of the receiver's 'dwForwardAge' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwForwardAge!
+	^bytes uint32AtOffset: _OffsetOf_dwForwardAge!
 
 dwForwardDest
 	"Answer the <Integer> value of the receiver's 'dwForwardDest' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwForwardDest!
+	^bytes uint32AtOffset: _OffsetOf_dwForwardDest!
 
 dwForwardIfIndex
 	"Answer the <Integer> value of the receiver's 'dwForwardIfIndex' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwForwardIfIndex!
+	^bytes uint32AtOffset: _OffsetOf_dwForwardIfIndex!
 
 dwForwardMask
 	"Answer the <Integer> value of the receiver's 'dwForwardMask' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwForwardMask!
+	^bytes uint32AtOffset: _OffsetOf_dwForwardMask!
 
 dwForwardMetric1
 	"Answer the <Integer> value of the receiver's 'dwForwardMetric1' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwForwardMetric1!
+	^bytes uint32AtOffset: _OffsetOf_dwForwardMetric1!
 
 dwForwardMetric2
 	"Answer the <Integer> value of the receiver's 'dwForwardMetric2' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwForwardMetric2!
+	^bytes uint32AtOffset: _OffsetOf_dwForwardMetric2!
 
 dwForwardMetric3
 	"Answer the <Integer> value of the receiver's 'dwForwardMetric3' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwForwardMetric3!
+	^bytes uint32AtOffset: _OffsetOf_dwForwardMetric3!
 
 dwForwardMetric4
 	"Answer the <Integer> value of the receiver's 'dwForwardMetric4' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwForwardMetric4!
+	^bytes uint32AtOffset: _OffsetOf_dwForwardMetric4!
 
 dwForwardMetric5
 	"Answer the <Integer> value of the receiver's 'dwForwardMetric5' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwForwardMetric5!
+	^bytes uint32AtOffset: _OffsetOf_dwForwardMetric5!
 
 dwForwardNextHop
 	"Answer the <Integer> value of the receiver's 'dwForwardNextHop' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwForwardNextHop!
+	^bytes uint32AtOffset: _OffsetOf_dwForwardNextHop!
 
 dwForwardNextHopAS
 	"Answer the <Integer> value of the receiver's 'dwForwardNextHopAS' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwForwardNextHopAS!
+	^bytes uint32AtOffset: _OffsetOf_dwForwardNextHopAS!
 
 dwForwardPolicy
 	"Answer the <Integer> value of the receiver's 'dwForwardPolicy' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwForwardPolicy!
+	^bytes uint32AtOffset: _OffsetOf_dwForwardPolicy!
 
 dwForwardProto
 	"Answer the <Integer> value of the receiver's 'dwForwardProto' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwForwardProto!
+	^bytes uint32AtOffset: _OffsetOf_dwForwardProto!
 
 dwForwardType
 	"Answer the <Integer> value of the receiver's 'dwForwardType' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwForwardType! !
+	^bytes uint32AtOffset: _OffsetOf_dwForwardType! !
 !OS.MIB_IPFORWARDROW categoriesForMethods!
 dwForwardAge!**compiled accessors**!public! !
 dwForwardDest!**compiled accessors**!public! !
@@ -168,46 +168,46 @@ defineFields
 
 	self
 		defineField: #dwForwardDest
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 0;
 		defineField: #dwForwardMask
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 4;
 		defineField: #dwForwardPolicy
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 8;
 		defineField: #dwForwardNextHop
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 12;
 		defineField: #dwForwardIfIndex
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 16;
 		defineField: #dwForwardType
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 20;
 		defineField: #dwForwardProto
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 24;
 		defineField: #dwForwardAge
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 28;
 		defineField: #dwForwardNextHopAS
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 32;
 		defineField: #dwForwardMetric1
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 36;
 		defineField: #dwForwardMetric2
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 40;
 		defineField: #dwForwardMetric3
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 44;
 		defineField: #dwForwardMetric4
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 48;
 		defineField: #dwForwardMetric5
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 52.
 	self byteSize: 56!
 

@@ -65,62 +65,62 @@ AccessToken: aHandle
 AuthStatus
 	"Answer the <Integer> value of the receiver's 'AuthStatus' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_AuthStatus!
+	^bytes int32AtOffset: _OffsetOf_AuthStatus!
 
 AuthStatus: anInteger
 	"Set the receiver's 'AuthStatus' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_AuthStatus put: anInteger!
+	bytes int32AtOffset: _OffsetOf_AuthStatus put: anInteger!
 
 AuthType
 	"Answer the <Integer> value of the receiver's 'AuthType' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_AuthType!
+	^bytes int32AtOffset: _OffsetOf_AuthType!
 
 AuthType: anInteger
 	"Set the receiver's 'AuthType' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_AuthType put: anInteger!
+	bytes int32AtOffset: _OffsetOf_AuthType put: anInteger!
 
 ContextAttributes
 	"Answer the <Integer> value of the receiver's 'ContextAttributes' field."
 
-	^bytes dwordAtOffset: _OffsetOf_ContextAttributes!
+	^bytes uint32AtOffset: _OffsetOf_ContextAttributes!
 
 ContextAttributes: anInteger
 	"Set the receiver's 'ContextAttributes' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_ContextAttributes put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_ContextAttributes put: anInteger!
 
 Flags
 	"Answer the <Integer> value of the receiver's 'Flags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_Flags!
+	^bytes uint32AtOffset: _OffsetOf_Flags!
 
 Flags: anInteger
 	"Set the receiver's 'Flags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_Flags put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_Flags put: anInteger!
 
 MutualAuthDataLength
 	"Private - Answer the <Integer> value of the receiver's 'MutualAuthDataLength' field."
 
-	^bytes dwordAtOffset: _OffsetOf_MutualAuthDataLength!
+	^bytes uint32AtOffset: _OffsetOf_MutualAuthDataLength!
 
 MutualAuthDataLength: anInteger
 	"Set the receiver's 'MutualAuthDataLength' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_MutualAuthDataLength put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_MutualAuthDataLength put: anInteger!
 
 PackageNameLength
 	"Private - Answer the <Integer> value of the receiver's 'PackageNameLength' field."
 
-	^bytes wordAtOffset: _OffsetOf_PackageNameLength!
+	^bytes uint16AtOffset: _OffsetOf_PackageNameLength!
 
 PackageNameLength: anInteger
 	"Set the receiver's 'PackageNameLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_PackageNameLength put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_PackageNameLength put: anInteger!
 
 PackedContext
 	"Answer the <ExternalArray> value of the receiver's 'PackedContext' field."
@@ -137,22 +137,22 @@ PackedContext: anExternalArray
 PackedContextLength
 	"Private - Answer the <Integer> value of the receiver's 'PackedContextLength' field."
 
-	^bytes dwordAtOffset: _OffsetOf_PackedContextLength!
+	^bytes uint32AtOffset: _OffsetOf_PackedContextLength!
 
 PackedContextLength: anInteger
 	"Set the receiver's 'PackedContextLength' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_PackedContextLength put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_PackedContextLength put: anInteger!
 
 PackedContextType
 	"Answer the <Integer> value of the receiver's 'PackedContextType' field."
 
-	^bytes dwordAtOffset: _OffsetOf_PackedContextType!
+	^bytes uint32AtOffset: _OffsetOf_PackedContextType!
 
 PackedContextType: anInteger
 	"Set the receiver's 'PackedContextType' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_PackedContextType put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_PackedContextType put: anInteger!
 
 pMutualAuthData
 	"Answer the <AnsiString> value of the receiver's 'pMutualAuthData' field."
@@ -181,12 +181,12 @@ pPackageName: anUtf16String
 SecStatus
 	"Answer the <Integer> value of the receiver's 'SecStatus' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_SecStatus!
+	^bytes int32AtOffset: _OffsetOf_SecStatus!
 
 SecStatus: anInteger
 	"Set the receiver's 'SecStatus' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_SecStatus put: anInteger! !
+	bytes int32AtOffset: _OffsetOf_SecStatus put: anInteger! !
 !WinHttpServer.HTTP_REQUEST_AUTH_INFO categoriesForMethods!
 AccessToken!**compiled accessors**!public! !
 AccessToken:!**compiled accessors**!public! !
@@ -245,18 +245,18 @@ defineFields
 "
 
 	self
-		defineField: #AuthStatus type: SDWORDField new offset: 0;
-		defineField: #SecStatus type: SDWORDField new offset: 4;
-		defineField: #Flags type: DWORDField new offset: 8;
-		defineField: #AuthType type: SDWORDField new offset: 12;
+		defineField: #AuthStatus type: Int32Field new offset: 0;
+		defineField: #SecStatus type: Int32Field new offset: 4;
+		defineField: #Flags type: UInt32Field new offset: 8;
+		defineField: #AuthType type: Int32Field new offset: 12;
 		defineField: #AccessToken type: HANDLEField new offset: 16;
-		defineField: #ContextAttributes type: DWORDField new offset: 20;
-		defineField: #PackedContextLength type: DWORDField new beNonBrowsable offset: 24;
-		defineField: #PackedContextType type: DWORDField new offset: 28;
+		defineField: #ContextAttributes type: UInt32Field new offset: 20;
+		defineField: #PackedContextLength type: UInt32Field new beNonBrowsable offset: 24;
+		defineField: #PackedContextType type: UInt32Field new offset: 28;
 		defineField: #PackedContext type: (ArrayPointerField type: ExternalArray lengthField: #PackedContextLength) offset: 32;
-		defineField: #MutualAuthDataLength type: DWORDField new beNonBrowsable offset: 36;
+		defineField: #MutualAuthDataLength type: UInt32Field new beNonBrowsable offset: 36;
 		defineField: #pMutualAuthData type: (ArrayPointerField type: AnsiString lengthField: #MutualAuthDataLength) offset: 40;
-		defineField: #PackageNameLength type: WORDField new beNonBrowsable offset: 44;
+		defineField: #PackageNameLength type: UInt16Field new beNonBrowsable offset: 44;
 		defineField: #pPackageName type: (ArrayPointerField type: Utf16String arrayLength: (SizeIsArrayFieldLength sizeIs: 'PackageNameLength >> 1')) offset: 48.
 	self byteSize: 52!
 

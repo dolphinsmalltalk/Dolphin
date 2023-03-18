@@ -51,17 +51,17 @@ color
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 flags
 	"Answer the <Integer> value of the receiver's 'flags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_flags!
+	^bytes uint32AtOffset: _OffsetOf_flags!
 
 flags: anInteger
 	"Set the receiver's 'flags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_flags put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_flags put: anInteger!
 
 hInstance: anExternalHandle
 	"Set the receiver's 'hInstance' field to the value of the argument, anExternalHandle"
@@ -77,14 +77,14 @@ hwndOwner: anExternalHandle
 	bytes uintPtrAtOffset: _OffsetOf_hwndOwner put: anExternalHandle!
 
 lpCustColors
-	"Answer the <DWORDArray> value of the receiver's 'lpCustColors' field."
+	"Answer the <UInt32Array> value of the receiver's 'lpCustColors' field."
 
-	^DWORDArray fromAddress: (bytes intPtrAtOffset: _OffsetOf_lpCustColors) length: 16!
+	^UInt32Array fromAddress: (bytes intPtrAtOffset: _OffsetOf_lpCustColors) length: 16!
 
-lpCustColors: aDWORDArray
-	"Set the receiver's 'lpCustColors' field to the value of the argument, aDWORDArray"
+lpCustColors: aUInt32Array
+	"Set the receiver's 'lpCustColors' field to the value of the argument, aUInt32Array"
 
-	bytes uintPtrAtOffset: _OffsetOf_lpCustColors put: aDWORDArray yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_lpCustColors put: aUInt32Array yourAddress!
 
 lpfnHook: anExternalAddress
 	"Set the receiver's 'lpfnHook' field to the value of the argument, anExternalAddress"
@@ -101,12 +101,12 @@ ownerView: aView
 rgbResult
 	"Answer the <Integer> value of the receiver's 'rgbResult' field."
 
-	^bytes dwordAtOffset: _OffsetOf_rgbResult!
+	^bytes uint32AtOffset: _OffsetOf_rgbResult!
 
 rgbResult: anInteger
 	"Set the receiver's 'rgbResult' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_rgbResult put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_rgbResult put: anInteger! !
 !OS.CHOOSECOLORW categoriesForMethods!
 color!accessing!public! !
 dwSize:!**compiled accessors**!public! !
@@ -149,7 +149,7 @@ defineFields
 
 	self
 		defineField: #dwSize
-			type: DWORDField new beWriteOnly
+			type: UInt32Field new beWriteOnly
 			offset: 0;
 		defineField: #hwndOwner
 			type: HANDLEField new beWriteOnly
@@ -158,16 +158,16 @@ defineFields
 			type: HANDLEField new beWriteOnly
 			offset: 8;
 		defineField: #rgbResult
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 12;
 		defineField: #lpCustColors
-			type: (ArrayPointerField type: DWORDArray length: 16)
+			type: (ArrayPointerField type: UInt32Array length: 16)
 			offset: 16;
 		defineField: #flags
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 20;
 		defineField: #lCustData
-			type: INT_PTRField new beFiller
+			type: IntPtrField new beFiller
 			offset: 24;
 		defineField: #lpfnHook
 			type: LPVOIDField new beWriteOnly

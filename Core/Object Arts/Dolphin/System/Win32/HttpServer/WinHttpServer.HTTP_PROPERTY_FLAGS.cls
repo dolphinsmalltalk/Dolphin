@@ -32,19 +32,19 @@ struct tagHTTP_PROPERTY_FLAGS {
 Present
 	"Private - Answer the <Boolean> value of the receiver's 'Present' field."
 
-	^(bytes dwordAtOffset: _OffsetOf_Present) asBoolean!
+	^(bytes uint32AtOffset: _OffsetOf_Present) asBoolean!
 
 Present: aBoolean
 	"Set the receiver's 'Present' field to the value of the argument, aBoolean"
 
-	bytes dwordAtOffset: _OffsetOf_Present put: aBoolean asParameter!
+	bytes uint32AtOffset: _OffsetOf_Present put: aBoolean asParameter!
 
 printFields: aCollection on: aStream
 	| sep template getField |
 	sep := [sep := [aStream space]].
 	template := self template.
 	aStream nextPutAll: 'Present='.
-	(bytes dwordAtOffset: 0) printOn: aStream base: 2.
+	(bytes uint32AtOffset: 0) printOn: aStream base: 2.
 	aStream nextPutAll: ': '.
 	getField := self Present ifTrue: [[:field | self getField: field]] ifFalse: [[:field | ]].
 	aCollection do: 

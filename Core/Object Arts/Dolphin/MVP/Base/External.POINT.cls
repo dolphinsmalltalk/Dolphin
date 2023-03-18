@@ -144,7 +144,7 @@ asDword
 	"Answer the receiver in a form suitable for passing or returning 
 	as a 32-bit value (i.e. a 32-bit integer)."
 
-	^(DWORD fromPoint: self) value!
+	^(UInt32 fromPoint: self) value!
 
 asGenericPoint
 	"Answer a Point created that matches the receiver"

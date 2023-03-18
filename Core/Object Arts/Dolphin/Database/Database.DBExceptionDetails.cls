@@ -46,8 +46,8 @@ buildErrorInfoFrom: anExternalHandle type: anIntegerHandleType
 	| szSqlState fNativeError szErrorMsg cbErrorMsg recNumber |
 	szSqlState := Utf16String newFixed: SQL_SQLSTATE_SIZE.
 	szErrorMsg := Utf16String new: 128.
-	cbErrorMsg := External.SWORD new.
-	fNativeError := External.SDWORD new.
+	cbErrorMsg := External.Int16 new.
+	fNativeError := External.Int32 new.
 	recNumber := 1.
 	
 	[| ret |

@@ -102,7 +102,7 @@ getCookie: pwszUrl pwszName: pwszName dwFlags: dwFlags
 	"Invoke the GetCookie() method of the COM object."
 
 	| outputs |
-	outputs := {DWORD new. XHR_COOKIE newBufferClass: TaskMemory}.
+	outputs := {UInt32 new. XHR_COOKIE newBufferClass: TaskMemory}.
 	self
 		GetCookie: pwszUrl asUtf16String
 		pwszName: pwszName asUtf16String
@@ -171,7 +171,7 @@ setCookie: pCookie
 	"Answer the <dword> result of invoking the SetCookie() method of the COM object."
 
 	| answer |
-	answer := DWORD new.
+	answer := UInt32 new.
 	self SetCookie: pCookie pdwCookieState: answer.
 	^answer asObject!
 

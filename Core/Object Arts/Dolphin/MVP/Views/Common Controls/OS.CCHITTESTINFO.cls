@@ -19,7 +19,7 @@ OS.CCHITTESTINFO comment: 'CCHITTESTINFO is an ExternalStructure class which imp
 flags
 	"Answer the <Integer> value of the receiver's 'flags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_flags!
+	^bytes uint32AtOffset: _OffsetOf_flags!
 
 handle
 	"Private - Answer the item 'handle' associated with the receiver."
@@ -59,7 +59,7 @@ defineFields
 
 	self
 		defineField: #pt type: (StructureField type: POINTL) beWriteOnly;
-		defineField: #flags type: DWORDField readOnly!
+		defineField: #flags type: UInt32Field readOnly!
 
 getFieldNames
 	^#(#pt #flags)! !

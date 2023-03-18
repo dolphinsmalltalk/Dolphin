@@ -206,7 +206,7 @@ convertFunctions
 	"Answers an array of the conversion functions available"
 
 	| mask |
-	mask := self getDWordInfo: SQL_CONVERT_FUNCTIONS.
+	mask := self getUInt32Info: SQL_CONVERT_FUNCTIONS.
 	^#('SQL_FN_CVT_CONVERT') 
 		select: [:maskName | (mask bitAnd: (OS.ODBCConstants at: maskName)) ~= 0]!
 
@@ -279,7 +279,7 @@ defaultFlags
 defaultTransactionIsolation
 	"Answer the default transaction isolation."
 
-	^TxnIsolationLevels at: (self getDWordInfo: SQL_DEFAULT_TXN_ISOLATION)!
+	^TxnIsolationLevels at: (self getUInt32Info: SQL_DEFAULT_TXN_ISOLATION)!
 
 disconnect
 	"Private - disconnect without freeing handle. All oustanding
@@ -402,20 +402,7 @@ getDWordAttribute: anInteger
 				bufferLength: SQL_IS_UINTEGER
 				stringLengthPtr: nil.
 	self dbCheckException: ret.
-	^buffer dwordAtOffset: 0!
-
-getDWordInfo: anInteger
-	"Private - Answer an Integer containing the value of the receiver's DWORD info attribute described by anInteger."
-
-	| value |
-	value := ByteArray newFixed: 4.
-	self dbCheckException: (OS.Odbc32
-				sqlGetInfo: self asParameter
-				infoType: anInteger
-				infoValuePtr: value
-				bufferLength: 4
-				stringLengthPtr: nil).
-	^value dwordAtOffset: 0!
+	^buffer uint32AtOffset: 0!
 
 getHandle
 	"Private - Answer the handle instance variable.
@@ -465,7 +452,20 @@ getStringInfo: anInteger
 				infoValuePtr: value
 				bufferLength: ##((SQL_MAX_MESSAGE_LENGTH + 1) * 2)
 				stringLengthPtr: len).
-	^value resize: ((len swordAtOffset: 0) bitShift: -1)!
+	^value resize: ((len int16AtOffset: 0) bitShift: -1)!
+
+getUInt32Info: anInteger
+	"Private - Answer an Integer containing the value of the receiver's UInt32 info attribute described by anInteger."
+
+	| value |
+	value := ByteArray newFixed: 4.
+	self dbCheckException: (OS.Odbc32
+				sqlGetInfo: self asParameter
+				infoType: anInteger
+				infoValuePtr: value
+				bufferLength: 4
+				stringLengthPtr: nil).
+	^value uint32AtOffset: 0!
 
 getWordInfo: anInteger
 	"Private - Answer an Integer containing the value of the receiver's WORD info attribute described by infoCode."
@@ -478,7 +478,7 @@ getWordInfo: anInteger
 				infoValuePtr: value
 				bufferLength: 2
 				stringLengthPtr: nil).
-	^value wordAtOffset: 0!
+	^value uint16AtOffset: 0!
 
 hasAccessibleTables
 	"Answers whetherthe receiver is connected to a DB which has tables that can be accessed."
@@ -634,7 +634,7 @@ numericFunctions
 	"Answers an array of the numeric functions available"
 
 	| mask |
-	mask := self getDWordInfo: SQL_NUMERIC_FUNCTIONS.
+	mask := self getUInt32Info: SQL_NUMERIC_FUNCTIONS.
 	^#('SQL_FN_NUM_ABS' 'SQL_FN_NUM_ACOS' 'SQL_FN_NUM_ASIN' 'SQL_FN_NUM_ATAN' 'SQL_FN_NUM_ATAN2' 'SQL_FN_NUM_CEILING' 'SQL_FN_NUM_COS' 'SQL_FN_NUM_COT' 'SQL_FN_NUM_EXP' 'SQL_FN_NUM_FLOOR' 'SQL_FN_NUM_LOG' 'SQL_FN_NUM_MOD' 'SQL_FN_NUM_SIGN' 'SQL_FN_NUM_SIN' 'SQL_FN_NUM_SQRT' 'SQL_FN_NUM_TAN' 'SQL_FN_NUM_PI' 'SQL_FN_NUM_RAND') 
 		select: [:maskName | (mask bitAnd: (OS.ODBCConstants at: maskName)) ~= 0]!
 
@@ -671,7 +671,7 @@ open
 	[| ret |
 	"#1306: From MSDN, 'Applications should allocate at least 1,024 characters for [the connection string] buffer'"
 	connSz := Utf16String newFixed: 2048.
-	lenConnSz := External.SWORD new.
+	lenConnSz := External.Int16 new.
 	ret := OS.Odbc32
 				sqlDriverConnect: self getHandle
 				windowHandle: OS.User32 getActiveWindow
@@ -907,7 +907,7 @@ stringFunctions
 	"Answer an array of string functions supported"
 
 	| mask |
-	mask := self getDWordInfo: SQL_STRING_FUNCTIONS.
+	mask := self getUInt32Info: SQL_STRING_FUNCTIONS.
 	^#('SQL_FN_STR_ASCII' 'SQL_FN_STR_CHAR' 'SQL_FN_STR_CONCAT' 'SQL_FN_STR_INSERT' 'SQL_FN_STR_LCASE' 'SQL_FN_STR_LEFT' 'SQL_FN_STR_LENGTH' 'SQL_FN_STR_LOCATE' 'SQL_FN_STR_LTRIM' 'SQL_FN_STR_REPEAT' 'SQL_FN_STR_REPLACE' 'SQL_FN_STR_RIGHT' 'SQL_FN_STR_RTRIM' 'SQL_FN_STR_SUBSTRING' 'SQL_FN_STR_UCASE') 
 		select: [:maskName | (mask bitAnd: (OS.ODBCConstants at: maskName)) ~= 0]!
 
@@ -916,7 +916,7 @@ supportedCursorTypes
 	which the receiver is connected."
 
 	| mask |
-	mask := self getDWordInfo: SQL_SCROLL_OPTIONS.
+	mask := self getUInt32Info: SQL_SCROLL_OPTIONS.
 	^self decodeBitMask: mask map: ScrollTypes!
 
 supportedTransactionIsolationLevels
@@ -924,7 +924,7 @@ supportedTransactionIsolationLevels
 	supported by this connection."
 
 	| mask answer |
-	mask := self getDWordInfo: SQL_TXN_ISOLATION_OPTION.
+	mask := self getUInt32Info: SQL_TXN_ISOLATION_OPTION.
 	answer := OrderedCollection new.
 	TxnIsolationLevels 
 		keysAndValuesDo: [:eachKey :eachValue | (mask allMask: eachKey) ifTrue: [answer addLast: eachValue]].
@@ -959,7 +959,7 @@ systemFunctions
 	"Answer an array of system functions supported"
 
 	| mask |
-	mask := self getDWordInfo: SQL_SYSTEM_FUNCTIONS.
+	mask := self getUInt32Info: SQL_SYSTEM_FUNCTIONS.
 	^#('SQL_FN_SYS_DBNAME' 'SQL_FN_SYS_IFNULL' 'SQL_FN_SYS_USERNAME') 
 		select: [:maskName | (mask bitAnd: (OS.ODBCConstants at: maskName)) ~= 0]!
 
@@ -992,7 +992,7 @@ timeDateFunctions
 	"Answer an array of available date and time functions"
 
 	| mask |
-	mask := self getDWordInfo: SQL_TIMEDATE_FUNCTIONS.
+	mask := self getUInt32Info: SQL_TIMEDATE_FUNCTIONS.
 	^#('SQL_FN_TD_NOW' 'SQL_FN_TD_CURDATE' 'SQL_FN_TD_DAYOFMONTH' 'SQL_FN_TD_DAYOFWEEK' 'SQL_FN_TD_DAYOFYEAR' 'SQL_FN_TD_MONTH' 'SQL_FN_TD_QUARTER' 'SQL_FN_TD_WEEK' 'SQL_FN_TD_YEAR' 'SQL_FN_TD_CURTIME' 'SQL_FN_TD_HOUR' 'SQL_FN_TD_MINUTE' 'SQL_FN_TD_SECOND') 
 		select: [:maskName | (mask bitAnd: (OS.ODBCConstants at: maskName)) ~= 0]!
 
@@ -1161,11 +1161,11 @@ freeNoFail!private!realizing/unrealizing! !
 freeStmtHandle:!helpers!private! !
 getBoolInfo:!enquiries!private! !
 getDWordAttribute:!accessing!private! !
-getDWordInfo:!enquiries!private! !
 getHandle!accessing!private! !
 getHandle:!helpers!private! !
 getStringAttribute:!accessing!private! !
 getStringInfo:!enquiries!private! !
+getUInt32Info:!enquiries!private! !
 getWordInfo:!enquiries!private! !
 hasAccessibleTables!enquiries!public!testing! !
 hasIntegrityEnhancementFacility!enquiries!public!testing! !
@@ -1317,8 +1317,8 @@ enumerateDataSources
 	| dsn description dsnLength descriptionLength hEnv ret sources |
 	dsn := Utf16String newFixed: SQL_MAX_DSN_LENGTH.
 	description := Utf16String newFixed: 4.
-	dsnLength := External.SWORD new.
-	descriptionLength := External.SWORD new.
+	dsnLength := External.Int16 new.
+	descriptionLength := External.Int16 new.
 	hEnv := self environmentHandle.
 	
 	[ret := OS.Odbc32
@@ -1456,7 +1456,7 @@ odbcVersion
 				infoValuePtr: version
 				bufferLength: nil
 				stringLengthPtr: nil).
-	^version swordAtOffset: 0!
+	^version int16AtOffset: 0!
 
 setDefaultEnvAttrs
 	| ret |

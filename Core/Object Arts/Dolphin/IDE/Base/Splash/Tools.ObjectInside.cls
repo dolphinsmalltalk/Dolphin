@@ -101,7 +101,7 @@ findEdgePoints
 						x: (x min: width - 1)
 						y: ym
 						color: argb.
-					(argb dwordAtOffset: 0) == 0 == found
+					(argb uint32AtOffset: 0) == 0 == found
 						ifTrue: 
 							[pts addLast: x @ y.
 							found := found not]]].
@@ -170,7 +170,7 @@ testCollisionIn: aGdiplusBitmap
 				x: each x
 				y: each y
 				color: color1) == Ok
-				and: [(color1 sdwordAtOffset: 0) ~= ##(Color white argbCode asSDword)]]!
+				and: [(color1 int32AtOffset: 0) ~= ##(Color white argbCode asSDword)]]!
 
 x
 	^self position x!

@@ -21,22 +21,22 @@ From MSDN: "The MEASUREITEMSTRUCT structure informs the system of the dimensions
 itemHeight
 	"Answer the <Integer> value of the receiver's 'itemHeight' field."
 
-	^bytes dwordAtOffset: _OffsetOf_itemHeight!
+	^bytes uint32AtOffset: _OffsetOf_itemHeight!
 
 itemHeight: anInteger
 	"Set the receiver's 'itemHeight' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_itemHeight put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_itemHeight put: anInteger!
 
 itemWidth
 	"Answer the <Integer> value of the receiver's 'itemWidth' field."
 
-	^bytes dwordAtOffset: _OffsetOf_itemWidth!
+	^bytes uint32AtOffset: _OffsetOf_itemWidth!
 
 itemWidth: anInteger
 	"Set the receiver's 'itemWidth' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_itemWidth put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_itemWidth put: anInteger! !
 !OS.MEASUREITEMSTRUCT categoriesForMethods!
 itemHeight!**compiled accessors**!public! !
 itemHeight:!**compiled accessors**!public! !
@@ -66,9 +66,9 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #itemWidth type: DWORDField new;
-		defineField: #itemHeight type: DWORDField new;
-		defineField: #itemData type: UINT_PTRField filler!
+		defineField: #itemWidth type: UInt32Field new;
+		defineField: #itemHeight type: UInt32Field new;
+		defineField: #itemData type: UIntPtrField filler!
 
 getFieldNames
 	^#(#CtlType #CtlID #itemID #itemWidth #itemHeight)! !

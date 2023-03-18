@@ -32,12 +32,12 @@ struct tagEMRMODIFYWORLDTRANSFORM {
 iMode
 	"Answer the <Integer> value of the receiver's 'iMode' field."
 
-	^bytes dwordAtOffset: _OffsetOf_iMode!
+	^bytes uint32AtOffset: _OffsetOf_iMode!
 
 iMode: anInteger
 	"Set the receiver's 'iMode' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_iMode put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_iMode put: anInteger!
 
 XFORM
 	"Answer the <XFORM> value of the receiver's 'XFORM' field."
@@ -83,7 +83,7 @@ defineFields
 			type: (StructureField type: XFORM)
 			offset: 8;
 		defineField: #iMode
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 32.
 	self byteSize: 36!
 

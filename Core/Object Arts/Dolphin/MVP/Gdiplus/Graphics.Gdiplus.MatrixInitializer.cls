@@ -50,7 +50,7 @@ initializeFromHandle: aHandle
 	aHandle ifNil: [^self].
 	bool := UInt32Bytes new.
 	Gdip gdipIsMatrixIdentity: aHandle result: bool.
-	(bool sdwordAtOffset: 0) == 0 ifFalse: [^self].
+	(bool int32AtOffset: 0) == 0 ifFalse: [^self].
 	elements := FLOATArray new: 6.
 	Gdip gdipGetMatrixElements: aHandle matrixOut: elements!
 

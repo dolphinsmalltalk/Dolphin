@@ -14,7 +14,7 @@ testIsRectangleChanged
 	| subject windowPos |
 	windowPos := WINDOWPOS newBuffer.
 	"Both SWP_NOMOVE and SWP_NOSIZE must be set to indicate that there is no layout change"
-	windowPos bytes dwordAtOffset: WINDOWPOS._OffsetOf_flags put: SWP_NOSIZE | SWP_NOMOVE.
+	windowPos bytes uint32AtOffset: WINDOWPOS._OffsetOf_flags put: SWP_NOSIZE | SWP_NOMOVE.
 	subject := PositionEvent
 				window: Transcript
 				message: WM_WINDOWPOSCHANGED

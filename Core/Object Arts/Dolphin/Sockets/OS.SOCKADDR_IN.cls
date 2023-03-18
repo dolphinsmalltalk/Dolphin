@@ -60,22 +60,22 @@ sin_addr: anIN_ADDR
 sin_family
 	"Answer the <Integer> value of the receiver's 'sin_family' field."
 
-	^bytes wordAtOffset: _OffsetOf_sin_family!
+	^bytes uint16AtOffset: _OffsetOf_sin_family!
 
 sin_family: anInteger
 	"Set the receiver's 'sin_family' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_sin_family put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_sin_family put: anInteger!
 
 sin_port
 	"Answer the <Integer> value of the receiver's 'sin_port' field."
 
-	^bytes wordAtOffset: _OffsetOf_sin_port!
+	^bytes uint16AtOffset: _OffsetOf_sin_port!
 
 sin_port: anInteger
 	"Set the receiver's 'sin_port' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_sin_port put: anInteger! !
+	bytes uint16AtOffset: _OffsetOf_sin_port put: anInteger! !
 !OS.SOCKADDR_IN categoriesForMethods!
 port!accessing!public! !
 port:!accessing!public! !
@@ -107,8 +107,8 @@ defineFields
 "
 
 	self
-		defineField: #sin_family type: WORDField new offset: 0;
-		defineField: #sin_port type: WORDField new offset: 2;
+		defineField: #sin_family type: UInt16Field new offset: 0;
+		defineField: #sin_port type: UInt16Field new offset: 2;
 		defineField: #sin_addr type: (StructureField type: IN_ADDR) offset: 4;
 		defineField: #sin_zero type: (ArrayField type: ExternalArray length: 8) beFiller offset: 8.
 	self byteSize: 16!

@@ -16,10 +16,10 @@ Warning: This comment was automatically generated from the interface''s type inf
 !OS.COM.IPersistMemory methodsFor!
 
 getSizeMax
-	"Answer the <DWORD> result of invoking the COM Object's GetSizeMax() method."
+	"Answer the <UInt32> result of invoking the COM Object's GetSizeMax() method."
 
 	| answer |
-	answer := (DWORD new).
+	answer := (UInt32 new).
 	self
 		GetSizeMax: answer.
 	^answer asObject

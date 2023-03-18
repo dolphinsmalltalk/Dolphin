@@ -36,12 +36,12 @@ struct tagDIBSECTION {
 biSizeImage
 	"Answer the <Integer> value of the receiver's 'BITMAPINFOHEADER.biSizeImage' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dsBmih + BITMAPINFOHEADER._OffsetOf_biSizeImage!
+	^bytes uint32AtOffset: _OffsetOf_dsBmih + BITMAPINFOHEADER._OffsetOf_biSizeImage!
 
 dsBitfields
-	"Answer the <DWORDArray> value of the receiver's 'dsBitfields' field."
+	"Answer the <UInt32Array> value of the receiver's 'dsBitfields' field."
 
-	^DWORDArray fromAddress: bytes yourAddress + _OffsetOf_dsBitfields length: 3!
+	^UInt32Array fromAddress: bytes yourAddress + _OffsetOf_dsBitfields length: 3!
 
 dsBmih
 	"Answer the <BITMAPINFOHEADER> value of the receiver's 'dsBmih' field."
@@ -70,12 +70,12 @@ dshSection: aHandle
 dsOffset
 	"Answer the <Integer> value of the receiver's 'dsOffset' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dsOffset!
+	^bytes uint32AtOffset: _OffsetOf_dsOffset!
 
 dsOffset: anInteger
 	"Set the receiver's 'dsOffset' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dsOffset put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_dsOffset put: anInteger! !
 !OS.DIBSECTION categoriesForMethods!
 biSizeImage!accessing!public! !
 dsBitfields!**compiled accessors**!public! !
@@ -109,9 +109,9 @@ defineFields
 	super defineFields.
 	self
 		defineField: #dsBmih type: (StructureField type: BITMAPINFOHEADER);
-		defineField: #dsBitfields type: (ArrayField type: DWORDArray length: 3) beReadOnly;
+		defineField: #dsBitfields type: (ArrayField type: UInt32Array length: 3) beReadOnly;
 		defineField: #dshSection type: HANDLEField new;
-		defineField: #dsOffset type: DWORDField new!
+		defineField: #dsOffset type: UInt32Field new!
 
 getFieldNames
 	^#(#bmType #bmWidth #bmHeight #bmWidthBytes #bmPlanes #bmBitsPixel #bmBits #dsBmih #dsBitfields #dshSection #dsOffset)! !

@@ -150,10 +150,10 @@ GetExtent: dwDrawAspect psizel: psizel
 	^self invalidCall: _failureCode!
 
 getMiscStatus: dwAspect 
-	"Answer the <DWORD> result of invoking the COM Object's GetMiscStatus() method."
+	"Answer the <UInt32> result of invoking the COM Object's GetMiscStatus() method."
 
 	| answer |
-	answer := (DWORD new).
+	answer := (UInt32 new).
 	self
 		GetMiscStatus: dwAspect
 		pdwStatus: answer.
@@ -412,7 +412,7 @@ defineFunctions
 	"Declare the virtual function table for the COM interface 'OLEIDL.IOleObject'
 		IOleObject defineTemplate
 
-	A number of methods returning HRESULTs are defined as returing SDWORDs
+	A number of methods returning HRESULTs are defined as returing Int32s
 	in order to suppress the auto-exception raising.
 	"
 

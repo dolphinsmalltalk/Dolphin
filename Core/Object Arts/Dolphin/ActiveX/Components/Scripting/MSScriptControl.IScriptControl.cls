@@ -379,7 +379,7 @@ sitehWnd
 	Helpstring: hWnd used as a parent for displaying UI"
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_SitehWnd: answer.
 	^answer asObject!
 
@@ -394,7 +394,7 @@ state
 	Helpstring: State of the control"
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_State: answer.
 	^answer asObject!
 
@@ -409,7 +409,7 @@ timeout
 	Helpstring: Length of time in milliseconds that a script can execute before being considered hung"
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_Timeout: answer.
 	^answer asObject!
 

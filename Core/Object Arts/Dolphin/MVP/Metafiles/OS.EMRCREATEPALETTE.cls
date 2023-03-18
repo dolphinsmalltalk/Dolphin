@@ -32,12 +32,12 @@ struct tagEMRCREATEPALETTE {
 ihPal
 	"Answer the <Integer> value of the receiver's 'ihPal' field."
 
-	^bytes dwordAtOffset: _OffsetOf_ihPal!
+	^bytes uint32AtOffset: _OffsetOf_ihPal!
 
 ihPal: anInteger
 	"Set the receiver's 'ihPal' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_ihPal put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_ihPal put: anInteger!
 
 lgpl
 	"Answer the <LOGPALETTE> value of the receiver's 'lgpl' field."
@@ -80,7 +80,7 @@ defineFields
 	super defineFields.
 	self
 		defineField: #ihPal
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 8;
 		defineField: #lgpl
 			type: (StructureField type: LOGPALETTE)

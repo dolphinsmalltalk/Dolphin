@@ -18,6 +18,22 @@ package methodNames
 	add: #MemberDesc -> #argumentTypeNames;
 	add: #TimeStamp -> #asFloat;
 	add: #TimeStamp -> #asVariant;
+	add: #VARIANT -> #byte;
+	add: #VARIANT -> #byte:;
+	add: #VARIANT -> #dword;
+	add: #VARIANT -> #dword:;
+	add: #VARIANT -> #qword;
+	add: #VARIANT -> #qword:;
+	add: #VARIANT -> #sbyte;
+	add: #VARIANT -> #sbyte:;
+	add: #VARIANT -> #sdword;
+	add: #VARIANT -> #sdword:;
+	add: #VARIANT -> #sqword;
+	add: #VARIANT -> #sqword:;
+	add: #VARIANT -> #sword;
+	add: #VARIANT -> #sword:;
+	add: #VARIANT -> #word;
+	add: #VARIANT -> #word:;
 	add: 'DATE class' -> #max;
 	add: 'DATE class' -> #min;
 	add: 'TimeStamp class' -> #fromDATE:;
@@ -134,6 +150,90 @@ fromDATE: date
 	^self fromSYSTEMTIME: systime! !
 !TimeStamp class categoriesForMethods!
 fromDATE:!instance creation!private! !
+!
+
+!VARIANT methodsFor!
+
+byte
+	#deprecated.
+	^self uint8!
+
+byte: newValue
+	#deprecated.
+	self uint8: newValue!
+
+dword
+	#deprecated.
+	^self uint32!
+
+dword: newValue
+	#deprecated.
+	self uint32: newValue!
+
+qword
+	#deprecated.
+	^self uint64!
+
+qword: aLargeInteger
+	#deprecated.
+	self uint64: aLargeInteger!
+
+sbyte
+	#deprecated.
+	^self int8!
+
+sbyte: newValue
+	#deprecated.
+	self int8: newValue!
+
+sdword
+	#deprecated.
+	^self int32!
+
+sdword: newValue
+	#deprecated.
+	self int32: newValue!
+
+sqword
+	#deprecated.
+	^self int64!
+
+sqword: aLargeInteger
+	#deprecated.
+	self int64: aLargeInteger!
+
+sword
+	#deprecated.
+	^self int16!
+
+sword: newValue
+	#deprecated.
+	self int16: newValue!
+
+word
+	#deprecated.
+	^self uint16!
+
+word: newValue
+	#deprecated.
+	self uint16: newValue! !
+!VARIANT categoriesForMethods!
+byte!accessing!public! !
+byte:!accessing!public! !
+dword!accessing!public! !
+dword:!accessing!public! !
+qword!accessing!public! !
+qword:!accessing!public! !
+sbyte!accessing!public! !
+sbyte:!accessing!public! !
+sdword!accessing!public! !
+sdword:!accessing!public! !
+sqword!accessing!public! !
+sqword:!accessing!public! !
+sword!accessing!public! !
+sword:!accessing!public! !
+word!accessing!public! !
+word:!accessing!public! !
 !
 
 "End of package definition"!

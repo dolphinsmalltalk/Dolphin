@@ -278,7 +278,7 @@ size
 	"Answer the <dword> value of the 'Count' property of the receiver."
 
 	| answer |
-	answer := DWORD new.
+	answer := UInt32 new.
 	self get_Count: answer.
 	^answer asObject!
 

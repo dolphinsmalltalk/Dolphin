@@ -45,22 +45,22 @@ info
 InfoLength
 	"Private - Answer the <Integer> value of the receiver's 'InfoLength' field."
 
-	^bytes dwordAtOffset: _OffsetOf_InfoLength!
+	^bytes uint32AtOffset: _OffsetOf_InfoLength!
 
 InfoLength: anInteger
 	"Set the receiver's 'InfoLength' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_InfoLength put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_InfoLength put: anInteger!
 
 InfoType
 	"Private - Answer the <Integer> value of the receiver's 'InfoType' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_InfoType!
+	^bytes int32AtOffset: _OffsetOf_InfoType!
 
 InfoType: anInteger
 	"Set the receiver's 'InfoType' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_InfoType put: anInteger!
+	bytes int32AtOffset: _OffsetOf_InfoType put: anInteger!
 
 pInfo
 	"Private - Answer the <ExternalArray> value of the receiver's 'pInfo' field."
@@ -105,8 +105,8 @@ defineFields
 "
 
 	self
-		defineField: #InfoType type: SDWORDField new beNonBrowsable offset: 0;
-		defineField: #InfoLength type: DWORDField new beNonBrowsable offset: 4;
+		defineField: #InfoType type: Int32Field new beNonBrowsable offset: 0;
+		defineField: #InfoLength type: UInt32Field new beNonBrowsable offset: 4;
 		defineField: #pInfo type: (ArrayPointerField type: ExternalArray lengthField: #InfoLength) beNonBrowsable offset: 8.
 	self byteSize: 12!
 

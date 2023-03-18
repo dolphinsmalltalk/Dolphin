@@ -100,12 +100,12 @@ ClientIp: anAnsiString
 ClientIpLength
 	"Answer the <Integer> value of the receiver's 'ClientIpLength' field."
 
-	^bytes wordAtOffset: _OffsetOf_ClientIpLength!
+	^bytes uint16AtOffset: _OffsetOf_ClientIpLength!
 
 ClientIpLength: anInteger
 	"Set the receiver's 'ClientIpLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_ClientIpLength put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_ClientIpLength put: anInteger!
 
 Cookie
 	"Answer the <AnsiString> value of the receiver's 'Cookie' field."
@@ -121,12 +121,12 @@ Cookie: anAnsiString
 CookieLength
 	"Answer the <Integer> value of the receiver's 'CookieLength' field."
 
-	^bytes wordAtOffset: _OffsetOf_CookieLength!
+	^bytes uint16AtOffset: _OffsetOf_CookieLength!
 
 CookieLength: anInteger
 	"Set the receiver's 'CookieLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_CookieLength put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_CookieLength put: anInteger!
 
 Host
 	"Answer the <AnsiString> value of the receiver's 'Host' field."
@@ -142,12 +142,12 @@ Host: anAnsiString
 HostLength
 	"Answer the <Integer> value of the receiver's 'HostLength' field."
 
-	^bytes wordAtOffset: _OffsetOf_HostLength!
+	^bytes uint16AtOffset: _OffsetOf_HostLength!
 
 HostLength: anInteger
 	"Set the receiver's 'HostLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_HostLength put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_HostLength put: anInteger!
 
 Method
 	"Answer the <AnsiString> value of the receiver's 'Method' field."
@@ -163,32 +163,32 @@ Method: anAnsiString
 MethodLength
 	"Answer the <Integer> value of the receiver's 'MethodLength' field."
 
-	^bytes wordAtOffset: _OffsetOf_MethodLength!
+	^bytes uint16AtOffset: _OffsetOf_MethodLength!
 
 MethodLength: anInteger
 	"Set the receiver's 'MethodLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_MethodLength put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_MethodLength put: anInteger!
 
 MethodNum
 	"Answer the <Integer> value of the receiver's 'MethodNum' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_MethodNum!
+	^bytes int32AtOffset: _OffsetOf_MethodNum!
 
 MethodNum: anInteger
 	"Set the receiver's 'MethodNum' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_MethodNum put: anInteger!
+	bytes int32AtOffset: _OffsetOf_MethodNum put: anInteger!
 
 ProtocolStatus
 	"Answer the <Integer> value of the receiver's 'ProtocolStatus' field."
 
-	^bytes wordAtOffset: _OffsetOf_ProtocolStatus!
+	^bytes uint16AtOffset: _OffsetOf_ProtocolStatus!
 
 ProtocolStatus: anInteger
 	"Set the receiver's 'ProtocolStatus' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_ProtocolStatus put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_ProtocolStatus put: anInteger!
 
 Referrer
 	"Answer the <AnsiString> value of the receiver's 'Referrer' field."
@@ -204,12 +204,12 @@ Referrer: anAnsiString
 ReferrerLength
 	"Answer the <Integer> value of the receiver's 'ReferrerLength' field."
 
-	^bytes wordAtOffset: _OffsetOf_ReferrerLength!
+	^bytes uint16AtOffset: _OffsetOf_ReferrerLength!
 
 ReferrerLength: anInteger
 	"Set the receiver's 'ReferrerLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_ReferrerLength put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_ReferrerLength put: anInteger!
 
 ServerIp
 	"Answer the <AnsiString> value of the receiver's 'ServerIp' field."
@@ -225,12 +225,12 @@ ServerIp: anAnsiString
 ServerIpLength
 	"Answer the <Integer> value of the receiver's 'ServerIpLength' field."
 
-	^bytes wordAtOffset: _OffsetOf_ServerIpLength!
+	^bytes uint16AtOffset: _OffsetOf_ServerIpLength!
 
 ServerIpLength: anInteger
 	"Set the receiver's 'ServerIpLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_ServerIpLength put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_ServerIpLength put: anInteger!
 
 ServerName
 	"Answer the <AnsiString> value of the receiver's 'ServerName' field."
@@ -246,22 +246,22 @@ ServerName: anAnsiString
 ServerNameLength
 	"Answer the <Integer> value of the receiver's 'ServerNameLength' field."
 
-	^bytes wordAtOffset: _OffsetOf_ServerNameLength!
+	^bytes uint16AtOffset: _OffsetOf_ServerNameLength!
 
 ServerNameLength: anInteger
 	"Set the receiver's 'ServerNameLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_ServerNameLength put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_ServerNameLength put: anInteger!
 
 ServerPort
 	"Answer the <Integer> value of the receiver's 'ServerPort' field."
 
-	^bytes wordAtOffset: _OffsetOf_ServerPort!
+	^bytes uint16AtOffset: _OffsetOf_ServerPort!
 
 ServerPort: anInteger
 	"Set the receiver's 'ServerPort' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_ServerPort put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_ServerPort put: anInteger!
 
 ServiceName
 	"Answer the <AnsiString> value of the receiver's 'ServiceName' field."
@@ -278,32 +278,32 @@ ServiceName: anAnsiString
 ServiceNameLength
 	"Answer the <Integer> value of the receiver's 'ServiceNameLength' field."
 
-	^bytes wordAtOffset: _OffsetOf_ServiceNameLength!
+	^bytes uint16AtOffset: _OffsetOf_ServiceNameLength!
 
 ServiceNameLength: anInteger
 	"Set the receiver's 'ServiceNameLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_ServiceNameLength put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_ServiceNameLength put: anInteger!
 
 SubStatus
 	"Answer the <Integer> value of the receiver's 'SubStatus' field."
 
-	^bytes wordAtOffset: _OffsetOf_SubStatus!
+	^bytes uint16AtOffset: _OffsetOf_SubStatus!
 
 SubStatus: anInteger
 	"Set the receiver's 'SubStatus' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_SubStatus put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_SubStatus put: anInteger!
 
 Type
 	"Answer the <Integer> value of the receiver's 'Type' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_Type!
+	^bytes int32AtOffset: _OffsetOf_Type!
 
 Type: anInteger
 	"Set the receiver's 'Type' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_Type put: anInteger!
+	bytes int32AtOffset: _OffsetOf_Type put: anInteger!
 
 UriQuery
 	"Answer the <AnsiString> value of the receiver's 'UriQuery' field."
@@ -319,12 +319,12 @@ UriQuery: anAnsiString
 UriQueryLength
 	"Answer the <Integer> value of the receiver's 'UriQueryLength' field."
 
-	^bytes wordAtOffset: _OffsetOf_UriQueryLength!
+	^bytes uint16AtOffset: _OffsetOf_UriQueryLength!
 
 UriQueryLength: anInteger
 	"Set the receiver's 'UriQueryLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_UriQueryLength put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_UriQueryLength put: anInteger!
 
 UriStem
 	"Answer the <Utf16String> value of the receiver's 'UriStem' field."
@@ -340,12 +340,12 @@ UriStem: anUtf16String
 UriStemLength
 	"Answer the <Integer> value of the receiver's 'UriStemLength' field."
 
-	^bytes wordAtOffset: _OffsetOf_UriStemLength!
+	^bytes uint16AtOffset: _OffsetOf_UriStemLength!
 
 UriStemLength: anInteger
 	"Set the receiver's 'UriStemLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_UriStemLength put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_UriStemLength put: anInteger!
 
 UserAgent
 	"Answer the <AnsiString> value of the receiver's 'UserAgent' field."
@@ -361,12 +361,12 @@ UserAgent: anAnsiString
 UserAgentLength
 	"Answer the <Integer> value of the receiver's 'UserAgentLength' field."
 
-	^bytes wordAtOffset: _OffsetOf_UserAgentLength!
+	^bytes uint16AtOffset: _OffsetOf_UserAgentLength!
 
 UserAgentLength: anInteger
 	"Set the receiver's 'UserAgentLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_UserAgentLength put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_UserAgentLength put: anInteger!
 
 UserName
 	"Answer the <Utf16String> value of the receiver's 'UserName' field."
@@ -382,22 +382,22 @@ UserName: anUtf16String
 UserNameLength
 	"Answer the <Integer> value of the receiver's 'UserNameLength' field."
 
-	^bytes wordAtOffset: _OffsetOf_UserNameLength!
+	^bytes uint16AtOffset: _OffsetOf_UserNameLength!
 
 UserNameLength: anInteger
 	"Set the receiver's 'UserNameLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_UserNameLength put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_UserNameLength put: anInteger!
 
 Win32Status
 	"Answer the <Integer> value of the receiver's 'Win32Status' field."
 
-	^bytes dwordAtOffset: _OffsetOf_Win32Status!
+	^bytes uint32AtOffset: _OffsetOf_Win32Status!
 
 Win32Status: anInteger
 	"Set the receiver's 'Win32Status' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_Win32Status put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_Win32Status put: anInteger! !
 !WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesForMethods!
 ClientIp!**compiled accessors**!public! !
 ClientIp:!**compiled accessors**!public! !
@@ -507,19 +507,19 @@ defineFields
 "
 
 	self
-		defineField: #Type type: SDWORDField new offset: 0;
-		defineField: #UserNameLength type: WORDField new offset: 4;
-		defineField: #UriStemLength type: WORDField new offset: 6;
-		defineField: #ClientIpLength type: WORDField new offset: 8;
-		defineField: #ServerNameLength type: WORDField new offset: 10;
-		defineField: #ServiceNameLength type: WORDField new offset: 12;
-		defineField: #ServerIpLength type: WORDField new offset: 14;
-		defineField: #MethodLength type: WORDField new offset: 16;
-		defineField: #UriQueryLength type: WORDField new offset: 18;
-		defineField: #HostLength type: WORDField new offset: 20;
-		defineField: #UserAgentLength type: WORDField new offset: 22;
-		defineField: #CookieLength type: WORDField new offset: 24;
-		defineField: #ReferrerLength type: WORDField new offset: 26;
+		defineField: #Type type: Int32Field new offset: 0;
+		defineField: #UserNameLength type: UInt16Field new offset: 4;
+		defineField: #UriStemLength type: UInt16Field new offset: 6;
+		defineField: #ClientIpLength type: UInt16Field new offset: 8;
+		defineField: #ServerNameLength type: UInt16Field new offset: 10;
+		defineField: #ServiceNameLength type: UInt16Field new offset: 12;
+		defineField: #ServerIpLength type: UInt16Field new offset: 14;
+		defineField: #MethodLength type: UInt16Field new offset: 16;
+		defineField: #UriQueryLength type: UInt16Field new offset: 18;
+		defineField: #HostLength type: UInt16Field new offset: 20;
+		defineField: #UserAgentLength type: UInt16Field new offset: 22;
+		defineField: #CookieLength type: UInt16Field new offset: 24;
+		defineField: #ReferrerLength type: UInt16Field new offset: 26;
 		defineField: #UserName type: (ArrayPointerField type: Utf16String lengthField: #UserNameLength) offset: 28;
 		defineField: #UriStem type: (ArrayPointerField type: Utf16String lengthField: #UriStemLength) offset: 32;
 		defineField: #ClientIp type: (ArrayPointerField type: AnsiString lengthField: #ClientIpLength) offset: 36;
@@ -532,11 +532,11 @@ defineFields
 		defineField: #UserAgent type: (ArrayPointerField type: AnsiString lengthField: #UserAgentLength) offset: 64;
 		defineField: #Cookie type: (ArrayPointerField type: AnsiString lengthField: #CookieLength) offset: 68;
 		defineField: #Referrer type: (ArrayPointerField type: AnsiString lengthField: #ReferrerLength) offset: 72;
-		defineField: #ServerPort type: WORDField new offset: 76;
-		defineField: #ProtocolStatus type: WORDField new offset: 78;
-		defineField: #Win32Status type: DWORDField new offset: 80;
-		defineField: #MethodNum type: SDWORDField new offset: 84;
-		defineField: #SubStatus type: WORDField new offset: 88.
+		defineField: #ServerPort type: UInt16Field new offset: 76;
+		defineField: #ProtocolStatus type: UInt16Field new offset: 78;
+		defineField: #Win32Status type: UInt32Field new offset: 80;
+		defineField: #MethodNum type: Int32Field new offset: 84;
+		defineField: #SubStatus type: UInt16Field new offset: 88.
 	self byteSize: 92!
 
 getFieldNames

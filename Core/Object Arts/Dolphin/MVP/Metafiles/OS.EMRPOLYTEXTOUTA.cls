@@ -60,12 +60,12 @@ aemrtext: aStructureArrayOfEMRTEXT
 cStrings
 	"Answer the <Integer> value of the receiver's 'cStrings' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_cStrings!
+	^bytes int32AtOffset: _OffsetOf_cStrings!
 
 cStrings: anInteger
 	"Set the receiver's 'cStrings' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_cStrings put: anInteger!
+	bytes int32AtOffset: _OffsetOf_cStrings put: anInteger!
 
 exScale
 	"Answer the <Float> value of the receiver's 'exScale' field."
@@ -90,12 +90,12 @@ eyScale: aFloat
 iGraphicsMode
 	"Answer the <Integer> value of the receiver's 'iGraphicsMode' field."
 
-	^bytes dwordAtOffset: _OffsetOf_iGraphicsMode!
+	^bytes uint32AtOffset: _OffsetOf_iGraphicsMode!
 
 iGraphicsMode: anInteger
 	"Set the receiver's 'iGraphicsMode' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_iGraphicsMode put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_iGraphicsMode put: anInteger!
 
 rclBounds
 	"Answer the <RECTL> value of the receiver's 'rclBounds' field."
@@ -153,7 +153,7 @@ defineFields
 			type: (StructureField type: RECTL)
 			offset: 8;
 		defineField: #iGraphicsMode
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 24;
 		defineField: #exScale
 			type: FLOATField new
@@ -162,7 +162,7 @@ defineFields
 			type: FLOATField new
 			offset: 32;
 		defineField: #cStrings
-			type: SDWORDField new
+			type: Int32Field new
 			offset: 36;
 		defineField: #aemrtext
 			type: (StructureArrayField type: EMRTEXT lengthField: #cStrings)

@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.UINT_PTRField subclass: #'External.HANDLEField'
+External.UIntPtrField subclass: #'External.HANDLEField'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

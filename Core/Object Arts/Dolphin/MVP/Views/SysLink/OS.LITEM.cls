@@ -53,12 +53,12 @@ id: aString
 iLink
 	"Answer the <Integer> value of the receiver's 'iLink' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_iLink!
+	^bytes int32AtOffset: _OffsetOf_iLink!
 
 iLink: anInteger
 	"Set the receiver's 'iLink' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_iLink put: anInteger!
+	bytes int32AtOffset: _OffsetOf_iLink put: anInteger!
 
 isEnabled
 	^self state allMask: LIS_ENABLED!
@@ -87,12 +87,12 @@ itemIndex: anInteger
 mask
 	"Answer the <Integer> value of the receiver's 'mask' field."
 
-	^bytes dwordAtOffset: _OffsetOf_mask!
+	^bytes uint32AtOffset: _OffsetOf_mask!
 
 mask: anInteger
 	"Set the receiver's 'mask' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_mask put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_mask put: anInteger!
 
 maskIn: anInteger
 	"OR in to receiver's mask field the bit flags represented by anInteger"
@@ -102,22 +102,22 @@ maskIn: anInteger
 state
 	"Answer the <Integer> value of the receiver's 'state' field."
 
-	^bytes dwordAtOffset: _OffsetOf_state!
+	^bytes uint32AtOffset: _OffsetOf_state!
 
 state: anInteger
 	"Set the receiver's 'state' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_state put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_state put: anInteger!
 
 stateMask
 	"Answer the <Integer> value of the receiver's 'stateMask' field."
 
-	^bytes dwordAtOffset: _OffsetOf_stateMask!
+	^bytes uint32AtOffset: _OffsetOf_stateMask!
 
 stateMask: anInteger
 	"Set the receiver's 'stateMask' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_stateMask put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_stateMask put: anInteger!
 
 szID
 	"Answer the <Utf16String> value of the receiver's 'szID' field."
@@ -134,7 +134,7 @@ szID: anUtf16String
 		from: ##(_OffsetOf_szID + 1)
 		to: _OffsetOf_szID + size
 		startingAt: 1.
-	bytes wordAtOffset: _OffsetOf_szID + size put: 0!
+	bytes uint16AtOffset: _OffsetOf_szID + size put: 0!
 
 szURL
 	"Answer the <Utf16String> value of the receiver's 'szURL' field."
@@ -151,7 +151,7 @@ szURL: anUtf16String
 		from: ##(_OffsetOf_szURL + 1)
 		to: _OffsetOf_szURL + size
 		startingAt: 1.
-	bytes wordAtOffset: _OffsetOf_szURL + size put: 0!
+	bytes uint16AtOffset: _OffsetOf_szURL + size put: 0!
 
 url
 	"Answer the <readableString> URL held in the receiver."
@@ -205,10 +205,10 @@ defineFields
 	"
 
 	self
-		defineField: #mask type: DWORDField new;
-		defineField: #iLink type: SDWORDField new;
-		defineField: #state type: DWORDField new;
-		defineField: #stateMask type: DWORDField new;
+		defineField: #mask type: UInt32Field new;
+		defineField: #iLink type: Int32Field new;
+		defineField: #state type: UInt32Field new;
+		defineField: #stateMask type: UInt32Field new;
 		defineField: #szID type: (StringField type: Utf16String length: MAX_LINKID_TEXT);
 		defineField: #szURL type: (StringField type: Utf16String length: L_MAX_URL_LENGTH)!
 

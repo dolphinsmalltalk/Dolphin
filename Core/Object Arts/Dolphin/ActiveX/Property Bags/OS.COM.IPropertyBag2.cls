@@ -55,10 +55,10 @@ interface IPropertyBag2 : IUnknown
 !OS.COM.IPropertyBag2 methodsFor!
 
 countProperties
-	"Answer the <DWORD> result of invoking the CountProperties() method of the COM object."
+	"Answer the <UInt32> result of invoking the CountProperties() method of the COM object."
 
 	| answer |
-	answer := DWORD new.
+	answer := UInt32 new.
 	self CountProperties: answer.
 	^answer asObject!
 
@@ -75,7 +75,7 @@ getPropertyInfo: iProperty cProperties: cProperties
 	"Invoke the GetPropertyInfo() method of the COM object."
 
 	| outputs |
-	outputs := {PROPBAG2 new. DWORD new}.
+	outputs := {PROPBAG2 new. UInt32 new}.
 	self
 		GetPropertyInfo: iProperty
 		cProperties: cProperties

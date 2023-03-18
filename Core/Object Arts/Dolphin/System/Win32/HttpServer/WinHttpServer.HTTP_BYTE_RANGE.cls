@@ -33,22 +33,22 @@ struct tagHTTP_BYTE_RANGE {
 Length
 	"Answer the <Integer> value of the receiver's 'Length' field."
 
-	^bytes qwordAtOffset: _OffsetOf_Length!
+	^bytes uint64AtOffset: _OffsetOf_Length!
 
 Length: anInteger
 	"Set the receiver's 'Length' field to the value of the argument, anInteger"
 
-	bytes qwordAtOffset: _OffsetOf_Length put: anInteger!
+	bytes uint64AtOffset: _OffsetOf_Length put: anInteger!
 
 StartingOffset
 	"Answer the <Integer> value of the receiver's 'StartingOffset' field."
 
-	^bytes qwordAtOffset: _OffsetOf_StartingOffset!
+	^bytes uint64AtOffset: _OffsetOf_StartingOffset!
 
 StartingOffset: anInteger
 	"Set the receiver's 'StartingOffset' field to the value of the argument, anInteger"
 
-	bytes qwordAtOffset: _OffsetOf_StartingOffset put: anInteger! !
+	bytes uint64AtOffset: _OffsetOf_StartingOffset put: anInteger! !
 !WinHttpServer.HTTP_BYTE_RANGE categoriesForMethods!
 Length!**compiled accessors**!public! !
 Length:!**compiled accessors**!public! !
@@ -74,8 +74,8 @@ defineFields
 "
 
 	self
-		defineField: #StartingOffset type: QWORDField new offset: 0;
-		defineField: #Length type: QWORDField new offset: 8.
+		defineField: #StartingOffset type: UInt64Field new offset: 0;
+		defineField: #Length type: UInt64Field new offset: 8.
 	self byteSize: 16!
 
 getFieldNames

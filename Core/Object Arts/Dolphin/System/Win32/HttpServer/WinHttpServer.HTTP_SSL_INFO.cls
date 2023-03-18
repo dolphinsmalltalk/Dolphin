@@ -45,12 +45,12 @@ struct tagHTTP_SSL_INFO {
 ConnectionKeySize
 	"Answer the <Integer> value of the receiver's 'ConnectionKeySize' field."
 
-	^bytes wordAtOffset: _OffsetOf_ConnectionKeySize!
+	^bytes uint16AtOffset: _OffsetOf_ConnectionKeySize!
 
 ConnectionKeySize: anInteger
 	"Set the receiver's 'ConnectionKeySize' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_ConnectionKeySize put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_ConnectionKeySize put: anInteger!
 
 pClientCertInfo
 	"Answer the <HTTP_SSL_CLIENT_CERT_INFO> value of the receiver's 'pClientCertInfo' field."
@@ -89,42 +89,42 @@ pServerCertSubject: anAnsiString
 ServerCertIssuerSize
 	"Private - Answer the <Integer> value of the receiver's 'ServerCertIssuerSize' field."
 
-	^bytes dwordAtOffset: _OffsetOf_ServerCertIssuerSize!
+	^bytes uint32AtOffset: _OffsetOf_ServerCertIssuerSize!
 
 ServerCertIssuerSize: anInteger
 	"Set the receiver's 'ServerCertIssuerSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_ServerCertIssuerSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_ServerCertIssuerSize put: anInteger!
 
 ServerCertKeySize
 	"Answer the <Integer> value of the receiver's 'ServerCertKeySize' field."
 
-	^bytes wordAtOffset: _OffsetOf_ServerCertKeySize!
+	^bytes uint16AtOffset: _OffsetOf_ServerCertKeySize!
 
 ServerCertKeySize: anInteger
 	"Set the receiver's 'ServerCertKeySize' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_ServerCertKeySize put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_ServerCertKeySize put: anInteger!
 
 ServerCertSubjectSize
 	"Private - Answer the <Integer> value of the receiver's 'ServerCertSubjectSize' field."
 
-	^bytes dwordAtOffset: _OffsetOf_ServerCertSubjectSize!
+	^bytes uint32AtOffset: _OffsetOf_ServerCertSubjectSize!
 
 ServerCertSubjectSize: anInteger
 	"Set the receiver's 'ServerCertSubjectSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_ServerCertSubjectSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_ServerCertSubjectSize put: anInteger!
 
 SslClientCertNegotiated
 	"Answer the <Integer> value of the receiver's 'SslClientCertNegotiated' field."
 
-	^bytes dwordAtOffset: _OffsetOf_SslClientCertNegotiated!
+	^bytes uint32AtOffset: _OffsetOf_SslClientCertNegotiated!
 
 SslClientCertNegotiated: anInteger
 	"Set the receiver's 'SslClientCertNegotiated' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_SslClientCertNegotiated put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_SslClientCertNegotiated put: anInteger! !
 !WinHttpServer.HTTP_SSL_INFO categoriesForMethods!
 ConnectionKeySize!**compiled accessors**!public! !
 ConnectionKeySize:!**compiled accessors**!public! !
@@ -168,14 +168,14 @@ defineFields
 "
 
 	self
-		defineField: #ServerCertKeySize type: WORDField new offset: 0;
-		defineField: #ConnectionKeySize type: WORDField new offset: 2;
-		defineField: #ServerCertIssuerSize type: DWORDField new beNonBrowsable offset: 4;
-		defineField: #ServerCertSubjectSize type: DWORDField new beNonBrowsable offset: 8;
+		defineField: #ServerCertKeySize type: UInt16Field new offset: 0;
+		defineField: #ConnectionKeySize type: UInt16Field new offset: 2;
+		defineField: #ServerCertIssuerSize type: UInt32Field new beNonBrowsable offset: 4;
+		defineField: #ServerCertSubjectSize type: UInt32Field new beNonBrowsable offset: 8;
 		defineField: #pServerCertIssuer type: (ArrayPointerField type: AnsiString lengthField: #ServerCertIssuerSize) offset: 12;
 		defineField: #pServerCertSubject type: (ArrayPointerField type: AnsiString lengthField: #ServerCertSubjectSize) offset: 16;
 		defineField: #pClientCertInfo type: (PointerField type: HTTP_SSL_CLIENT_CERT_INFO) offset: 20;
-		defineField: #SslClientCertNegotiated type: DWORDField new offset: 24.
+		defineField: #SslClientCertNegotiated type: UInt32Field new offset: 24.
 	self byteSize: 28!
 
 getFieldNames

@@ -64,9 +64,9 @@ initializeFromHandle: aGpFontHandle
 	Gdip gdipGetFontSize: aGpFontHandle size: buf.
 	emSize := buf floatAtOffset: 0.
 	Gdip gdipGetFontStyle: aGpFontHandle style: buf.
-	style := buf sdwordAtOffset: 0.
+	style := buf int32AtOffset: 0.
 	Gdip gdipGetFontUnit: aGpFontHandle unit: buf.
-	unit := buf sdwordAtOffset: 0!
+	unit := buf int32AtOffset: 0!
 
 isSelfEvaluating
 	^true!

@@ -331,7 +331,7 @@ hashString: aString flags: anInteger
 		lpDestStr: hashBuf
 		cchDest: 4) == 0
 		ifTrue: [OS.Win32Error signal].
-	hash := hashBuf dwordAtOffset: 0.
+	hash := hashBuf uint32AtOffset: 0.
 	"Fold to 30 bits so is always a positive SmallInteger"
 	^(hash bitShift: ##(VMConstants.SmallIntegerMax highBit negated))
 		bitXor: (hash bitAnd: VMConstants.SmallIntegerMax)!

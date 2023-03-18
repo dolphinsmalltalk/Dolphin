@@ -89,92 +89,92 @@ EmfHeader: anENHMETAHEADER3
 EmfPlusFlags
 	"Answer the <Integer> value of the receiver's 'EmfPlusFlags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_EmfPlusFlags!
+	^bytes uint32AtOffset: _OffsetOf_EmfPlusFlags!
 
 EmfPlusFlags: anInteger
 	"Set the receiver's 'EmfPlusFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_EmfPlusFlags put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_EmfPlusFlags put: anInteger!
 
 EmfPlusHeaderSize
 	"Answer the <Integer> value of the receiver's 'EmfPlusHeaderSize' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_EmfPlusHeaderSize!
+	^bytes int32AtOffset: _OffsetOf_EmfPlusHeaderSize!
 
 EmfPlusHeaderSize: anInteger
 	"Set the receiver's 'EmfPlusHeaderSize' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_EmfPlusHeaderSize put: anInteger!
+	bytes int32AtOffset: _OffsetOf_EmfPlusHeaderSize put: anInteger!
 
 height
 	"Answer the <Integer> value of the receiver's 'height' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_height!
+	^bytes int32AtOffset: _OffsetOf_height!
 
 height: anInteger
 	"Set the receiver's 'height' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_height put: anInteger!
+	bytes int32AtOffset: _OffsetOf_height put: anInteger!
 
 LogicalDpiX
 	"Answer the <Integer> value of the receiver's 'LogicalDpiX' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_LogicalDpiX!
+	^bytes int32AtOffset: _OffsetOf_LogicalDpiX!
 
 LogicalDpiX: anInteger
 	"Set the receiver's 'LogicalDpiX' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_LogicalDpiX put: anInteger!
+	bytes int32AtOffset: _OffsetOf_LogicalDpiX put: anInteger!
 
 LogicalDpiY
 	"Answer the <Integer> value of the receiver's 'LogicalDpiY' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_LogicalDpiY!
+	^bytes int32AtOffset: _OffsetOf_LogicalDpiY!
 
 LogicalDpiY: anInteger
 	"Set the receiver's 'LogicalDpiY' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_LogicalDpiY put: anInteger!
+	bytes int32AtOffset: _OffsetOf_LogicalDpiY put: anInteger!
 
 size
 	"Answer the <Integer> value of the receiver's 'size' field."
 
-	^bytes dwordAtOffset: _OffsetOf_size!
+	^bytes uint32AtOffset: _OffsetOf_size!
 
 size: anInteger
 	"Set the receiver's 'size' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_size put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_size put: anInteger!
 
 type
 	"Answer the <Integer> value of the receiver's 'type' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_type!
+	^bytes int32AtOffset: _OffsetOf_type!
 
 type: anInteger
 	"Set the receiver's 'type' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_type put: anInteger!
+	bytes int32AtOffset: _OffsetOf_type put: anInteger!
 
 Version
 	"Answer the <Integer> value of the receiver's 'Version' field."
 
-	^bytes dwordAtOffset: _OffsetOf_Version!
+	^bytes uint32AtOffset: _OffsetOf_Version!
 
 Version: anInteger
 	"Set the receiver's 'Version' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_Version put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_Version put: anInteger!
 
 width
 	"Answer the <Integer> value of the receiver's 'width' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_width!
+	^bytes int32AtOffset: _OffsetOf_width!
 
 width: anInteger
 	"Set the receiver's 'width' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_width put: anInteger!
+	bytes int32AtOffset: _OffsetOf_width put: anInteger!
 
 WmfHeader
 	"Answer the <METAHEADER> value of the receiver's 'WmfHeader' field."
@@ -193,22 +193,22 @@ WmfHeader: aMETAHEADER
 x
 	"Answer the <Integer> value of the receiver's 'x' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_x!
+	^bytes int32AtOffset: _OffsetOf_x!
 
 x: anInteger
 	"Set the receiver's 'x' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_x put: anInteger!
+	bytes int32AtOffset: _OffsetOf_x put: anInteger!
 
 y
 	"Answer the <Integer> value of the receiver's 'y' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_y!
+	^bytes int32AtOffset: _OffsetOf_y!
 
 y: anInteger
 	"Set the receiver's 'y' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_y put: anInteger! !
+	bytes int32AtOffset: _OffsetOf_y put: anInteger! !
 !Graphics.Gdiplus.MetafileHeader categoriesForMethods!
 DpiX!**compiled accessors**!public! !
 DpiX:!**compiled accessors**!public! !
@@ -275,16 +275,16 @@ defineFields
 
 	self
 		defineField: #type
-			type: SDWORDField new
+			type: Int32Field new
 			offset: 0;
 		defineField: #size
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 4;
 		defineField: #Version
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 8;
 		defineField: #EmfPlusFlags
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 12;
 		defineField: #DpiX
 			type: FLOATField new
@@ -293,16 +293,16 @@ defineFields
 			type: FLOATField new
 			offset: 20;
 		defineField: #x
-			type: SDWORDField new
+			type: Int32Field new
 			offset: 24;
 		defineField: #y
-			type: SDWORDField new
+			type: Int32Field new
 			offset: 28;
 		defineField: #width
-			type: SDWORDField new
+			type: Int32Field new
 			offset: 32;
 		defineField: #height
-			type: SDWORDField new
+			type: Int32Field new
 			offset: 36;
 		defineField: #WmfHeader
 			type: (StructureField type: METAHEADER)
@@ -311,13 +311,13 @@ defineFields
 			type: (StructureField type: ENHMETAHEADER3)
 			offset: 40;
 		defineField: #EmfPlusHeaderSize
-			type: SDWORDField new
+			type: Int32Field new
 			offset: 128;
 		defineField: #LogicalDpiX
-			type: SDWORDField new
+			type: Int32Field new
 			offset: 132;
 		defineField: #LogicalDpiY
-			type: SDWORDField new
+			type: Int32Field new
 			offset: 136.
 	self byteSize: 140!
 

@@ -48,12 +48,12 @@ pResponseInfo: aStructureArray
 ResponseInfoCount
 	"Private - Answer the <Integer> value of the receiver's 'ResponseInfoCount' field."
 
-	^bytes wordAtOffset: _OffsetOf_ResponseInfoCount!
+	^bytes uint16AtOffset: _OffsetOf_ResponseInfoCount!
 
 ResponseInfoCount: anInteger
 	"Set the receiver's 'ResponseInfoCount' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_ResponseInfoCount put: anInteger! !
+	bytes uint16AtOffset: _OffsetOf_ResponseInfoCount put: anInteger! !
 !WinHttpServer.HTTP_RESPONSE_V2 categoriesForMethods!
 pResponseInfo!**compiled accessors**!public! !
 pResponseInfo:!**compiled accessors**!public! !
@@ -81,7 +81,7 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #ResponseInfoCount type: WORDField new beNonBrowsable offset: 280;
+		defineField: #ResponseInfoCount type: UInt16Field new beNonBrowsable offset: 280;
 		defineField: #pResponseInfo type: (StructureArrayPointerField type: HTTP_RESPONSE_INFO lengthField: #ResponseInfoCount) offset: 284.
 	self byteSize: 288!
 

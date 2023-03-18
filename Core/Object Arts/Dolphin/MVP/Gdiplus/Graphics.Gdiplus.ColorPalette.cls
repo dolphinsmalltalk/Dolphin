@@ -40,12 +40,12 @@ byteSize
 Count
 	"Answer the <Integer> value of the receiver's 'Count' field."
 
-	^bytes dwordAtOffset: _OffsetOf_Count!
+	^bytes uint32AtOffset: _OffsetOf_Count!
 
 Count: anInteger
 	"Set the receiver's 'Count' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_Count put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_Count put: anInteger!
 
 Entries
 	"Answer the <ARGBArray> value of the receiver's 'Entries' field."
@@ -67,12 +67,12 @@ Entries: anARGBArray
 Flags
 	"Answer the <Integer> value of the receiver's 'Flags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_Flags!
+	^bytes uint32AtOffset: _OffsetOf_Flags!
 
 Flags: anInteger
 	"Set the receiver's 'Flags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_Flags put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_Flags put: anInteger! !
 !Graphics.Gdiplus.ColorPalette categoriesForMethods!
 asArray!converting!public! !
 byteSize!accessing!public! !
@@ -103,8 +103,8 @@ defineFields
 "
 
 	self
-		defineField: #Flags type: DWORDField new offset: 0;
-		defineField: #Count type: DWORDField new offset: 4;
+		defineField: #Flags type: UInt32Field new offset: 0;
+		defineField: #Count type: UInt32Field new offset: 4;
 		defineField: #Entries type: (ArrayField type: ARGBArray lengthField: #Count) offset: 8.
 	self byteSize: 12!
 

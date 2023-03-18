@@ -145,12 +145,12 @@ lpvarValue
 memid
 	"Answer the <Integer> value of the receiver's 'memid' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_memid!
+	^bytes int32AtOffset: _OffsetOf_memid!
 
 oInst
 	"Answer the <Integer> value of the receiver's 'oInst' field."
 
-	^bytes dwordAtOffset: _OffsetOf_oInst!
+	^bytes uint32AtOffset: _OffsetOf_oInst!
 
 value
 	^self lpvarValue value!
@@ -158,12 +158,12 @@ value
 varkind
 	"Answer the <Integer> value of the receiver's 'varkind' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_varkind!
+	^bytes int32AtOffset: _OffsetOf_varkind!
 
 wVarFlags
 	"Answer the <Integer> value of the receiver's 'wVarFlags' field."
 
-	^bytes wordAtOffset: _OffsetOf_wVarFlags! !
+	^bytes uint16AtOffset: _OffsetOf_wVarFlags! !
 !OS.COM.VARDESC categoriesForMethods!
 arguments!accessing!public! !
 basicFree!private!realizing/unrealizing! !
@@ -220,17 +220,17 @@ defineFields
 	"
 
 	self
-		defineField: #memid type: SDWORDField readOnly;
+		defineField: #memid type: Int32Field readOnly;
 		defineField: #lpstrSchema type: (PointerField type: Utf16String) beFiller;
 		defineField: #lpvarValue type: (PointerField type: VARIANT) beReadOnly;
 		defineField: #elemdesc type: (StructureField type: ELEMDESC) beReadOnly;
-		defineField: #wVarFlags type: WORDField readOnly;
-		defineField: #varkind type: SDWORDField readOnly.
+		defineField: #wVarFlags type: UInt16Field readOnly;
+		defineField: #varkind type: Int32Field readOnly.
 
 	"Note union here"
 	self
 		defineField: #oInst
-		type: DWORDField readOnly
+		type: UInt32Field readOnly
 		offset: (self offsetOf: #lpvarValue)!
 
 getFieldNames

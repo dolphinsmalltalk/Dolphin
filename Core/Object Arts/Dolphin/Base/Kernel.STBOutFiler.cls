@@ -39,7 +39,7 @@ writeClass: anObject withLocator: locatorString
 writeInteger: anInteger
 	"Private - Write anInteger to the stream."
 
-	stream nextSDWORDPut: anInteger!
+	stream nextInt32Put: anInteger!
 
 writeNil
 	self writeInteger: 0! !

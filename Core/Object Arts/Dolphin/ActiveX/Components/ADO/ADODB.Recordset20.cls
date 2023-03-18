@@ -139,7 +139,7 @@ compareBookmarks: bookmark1 bookmark2: bookmark2
 	"Answer the <sdword> result of invoking the CompareBookmarks() method of the COM object."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self
 		CompareBookmarks: bookmark1 asVariant
 		Bookmark2: bookmark2 asVariant

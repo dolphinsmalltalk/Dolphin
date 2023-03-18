@@ -35,12 +35,12 @@ struct tagIP_PER_ADAPTER_INFO {
 AutoconfigActive
 	"Answer the <Integer> value of the receiver's 'AutoconfigActive' field."
 
-	^bytes dwordAtOffset: _OffsetOf_AutoconfigActive!
+	^bytes uint32AtOffset: _OffsetOf_AutoconfigActive!
 
 AutoconfigEnabled
 	"Answer the <Integer> value of the receiver's 'AutoconfigEnabled' field."
 
-	^bytes dwordAtOffset: _OffsetOf_AutoconfigEnabled!
+	^bytes uint32AtOffset: _OffsetOf_AutoconfigEnabled!
 
 CurrentDnsServer
 	"Answer the <IP_ADDR_STRING> value of the receiver's 'CurrentDnsServer' field."
@@ -78,10 +78,10 @@ defineFields
 
 	self
 		defineField: #AutoconfigEnabled
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 0;
 		defineField: #AutoconfigActive
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 4;
 		defineField: #CurrentDnsServer
 			type: ((PointerField type: IP_ADDR_STRING)

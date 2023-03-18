@@ -935,7 +935,7 @@ getLocaleInfo: lcid integer: lcType
 		lpLCData: buf
 		cchData: 2) == 0
 		ifTrue: [self systemError].
-	^buf dwordAtOffset: 0!
+	^buf uint32AtOffset: 0!
 
 getLocaleInfo: locale lCType: lcType lpLCData: outputStringOutput cchData: anInteger
 	"Answer information about a locale. 
@@ -1043,11 +1043,10 @@ getProcAddress: aHandle lpProcName: aStringOrOrdinal
 	<stdcall: lpvoid GetProcAddress handle lpvoid>
 	^self invalidCall: _failureCode!
 
-getProcAddressDWORD: aHandle lpProcName: aString
-	"Private - As #getProcAddress:name:, but answers the result as a Windows DWORD (unsigned
-	double word). This is useful in conjunction with SetWindowLong() etc."
+getProcAddressUIntPtr: aHandle lpProcName: aString
+	"Private - As #getProcAddress:name:, but answers the result as a Windows UIntPtr (pointer-sized unsigned integer). This is useful in conjunction with SetWindowLongPtr() etc."
 
-	<stdcall: dword GetProcAddress handle lpvoid>
+	<stdcall: uintptr GetProcAddress handle lpvoid>
 	^self invalidCall: _failureCode!
 
 getProcessHeap
@@ -2176,7 +2175,7 @@ getModuleFileName:lpFilename:nSize:!public!win32 functions-dynamic link library!
 getModuleHandle:!public!win32 functions-dynamic link library! !
 getNumberFormat:dwFlags:lpValue:lpFormat:lpNumberStr:cchNumber:!**auto generated**!public!win32 functions-national language support! !
 getProcAddress:lpProcName:!public!win32 functions-dynamic link library! !
-getProcAddressDWORD:lpProcName:!private!win32 functions-dynamic link library! !
+getProcAddressUIntPtr:lpProcName:!public!win32 functions-dynamic link library! !
 getProcessHeap!public!win32 functions-memory management! !
 getShortPathName:!public!win32 functions-file management! !
 getShortPathName:lpszShortPath:cchBuffer:!public!win32 functions-file management! !

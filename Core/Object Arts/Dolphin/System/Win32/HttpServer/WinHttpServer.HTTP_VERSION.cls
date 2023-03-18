@@ -33,12 +33,12 @@ struct tagHTTP_VERSION {
 MajorVersion
 	"Answer the <Integer> value of the receiver's 'MajorVersion' field."
 
-	^bytes wordAtOffset: _OffsetOf_MajorVersion!
+	^bytes uint16AtOffset: _OffsetOf_MajorVersion!
 
 MinorVersion
 	"Answer the <Integer> value of the receiver's 'MinorVersion' field."
 
-	^bytes wordAtOffset: _OffsetOf_MinorVersion!
+	^bytes uint16AtOffset: _OffsetOf_MinorVersion!
 
 printFields: aCollection on: aStream
 	aStream
@@ -69,8 +69,8 @@ defineFields
 "
 
 	self
-		defineField: #MajorVersion type: WORDField new beReadOnly offset: 0;
-		defineField: #MinorVersion type: WORDField new beReadOnly offset: 2.
+		defineField: #MajorVersion type: UInt16Field new beReadOnly offset: 0;
+		defineField: #MinorVersion type: UInt16Field new beReadOnly offset: 2.
 	self byteSize: 4!
 
 getFieldNames

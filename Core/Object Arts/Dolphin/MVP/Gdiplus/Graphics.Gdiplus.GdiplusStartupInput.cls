@@ -34,7 +34,7 @@ struct tagGdiplusStartupInput {
 GdiplusVersion: anInteger
 	"Set the receiver's 'GdiplusVersion' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_GdiplusVersion put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_GdiplusVersion put: anInteger! !
 !Graphics.Gdiplus.GdiplusStartupInput categoriesForMethods!
 GdiplusVersion:!**compiled accessors**!public! !
 !
@@ -59,7 +59,7 @@ defineFields
 
 	self
 		defineField: #GdiplusVersion
-			type: DWORDField writeOnly
+			type: UInt32Field writeOnly
 			offset: 0;
 		defineField: #DebugEventCallback
 			type: LPVOIDField filler

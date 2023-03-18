@@ -45,27 +45,27 @@ displayOn: aPuttableStream
 dwLocalAddr
 	"Answer the <Integer> value of the receiver's 'dwLocalAddr' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwLocalAddr!
+	^bytes uint32AtOffset: _OffsetOf_dwLocalAddr!
 
 dwLocalPort
 	"Answer the <Integer> value of the receiver's 'dwLocalPort' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwLocalPort!
+	^bytes uint32AtOffset: _OffsetOf_dwLocalPort!
 
 dwRemoteAddr
 	"Answer the <Integer> value of the receiver's 'dwRemoteAddr' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwRemoteAddr!
+	^bytes uint32AtOffset: _OffsetOf_dwRemoteAddr!
 
 dwRemotePort
 	"Answer the <Integer> value of the receiver's 'dwRemotePort' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwRemotePort!
+	^bytes uint32AtOffset: _OffsetOf_dwRemotePort!
 
 dwState
 	"Answer the <Integer> value of the receiver's 'dwState' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwState!
+	^bytes uint32AtOffset: _OffsetOf_dwState!
 
 port
 	^Ws2_32 htons: self dwLocalPort lowWord!
@@ -106,19 +106,19 @@ defineFields
 
 	self
 		defineField: #dwState
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 0;
 		defineField: #dwLocalAddr
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 4;
 		defineField: #dwLocalPort
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 8;
 		defineField: #dwRemoteAddr
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 12;
 		defineField: #dwRemotePort
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 16.
 	self byteSize: 20!
 

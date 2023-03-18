@@ -19,7 +19,7 @@ byteSize
 	"Answer the <integer> size in bytes of the structure described by the receiver."
 
 	| answer |
-	answer := DWORD new.
+	answer := UInt32 new.
 	self GetSize: answer.
 	^answer asObject!
 
@@ -59,7 +59,7 @@ getFieldNames
 	"Answer a <collection> of the names of the receiver's fields."
 
 	| cNames size pNames array |
-	cNames := DWORD new.
+	cNames := UInt32 new.
 	self GetFieldNames: cNames rgBstrNames: nil.
 	size := cNames asInteger.
 	pNames := BSTRArray new: size.

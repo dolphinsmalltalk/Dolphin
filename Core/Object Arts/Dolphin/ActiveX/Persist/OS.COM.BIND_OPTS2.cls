@@ -22,37 +22,37 @@ BIND_OPTS2 is a DCOM extentsion of BIND_OPTS which adds a COSERVERINFO field to 
 dwClassContext
 	"Answer the <Integer> value of the receiver's 'dwClassContext' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwClassContext!
+	^bytes uint32AtOffset: _OffsetOf_dwClassContext!
 
 dwClassContext: anInteger
 	"Set the receiver's 'dwClassContext' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwClassContext put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwClassContext put: anInteger!
 
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 dwTrackFlags
 	"Answer the <Integer> value of the receiver's 'dwTrackFlags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwTrackFlags!
+	^bytes uint32AtOffset: _OffsetOf_dwTrackFlags!
 
 dwTrackFlags: anInteger
 	"Set the receiver's 'dwTrackFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwTrackFlags put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwTrackFlags put: anInteger!
 
 locale
 	"Answer the <Integer> value of the receiver's 'locale' field."
 
-	^bytes dwordAtOffset: _OffsetOf_locale!
+	^bytes uint32AtOffset: _OffsetOf_locale!
 
 locale: anInteger
 	"Set the receiver's 'locale' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_locale put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_locale put: anInteger!
 
 pServerInfo
 	"Answer the <COSERVERINFO> value of the receiver's 'pServerInfo' field."
@@ -97,9 +97,9 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #dwTrackFlags type: DWORDField new;
-		defineField: #dwClassContext type: DWORDField new;
-		defineField: #locale type: DWORDField new;
+		defineField: #dwTrackFlags type: UInt32Field new;
+		defineField: #dwClassContext type: UInt32Field new;
+		defineField: #locale type: UInt32Field new;
 		defineField: #pServerInfo type: (PointerField type: COSERVERINFO)!
 
 getFieldNames

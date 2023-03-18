@@ -426,9 +426,9 @@ queryOsTimerResolution
 		maximum: buf yourAddress + 4
 		actual: buf yourAddress + 8) == 0
 		ifTrue: 
-			[LowestResolution := self clampResolution: (buf dwordAtOffset: 0) // 10.
-			HighestResolution := self clampResolution: (buf dwordAtOffset: 4) // 10.
-			Resolution := self clampResolution: (buf dwordAtOffset: 8) // 10]
+			[LowestResolution := self clampResolution: (buf uint32AtOffset: 0) // 10.
+			HighestResolution := self clampResolution: (buf uint32AtOffset: 4) // 10.
+			Resolution := self clampResolution: (buf uint32AtOffset: 8) // 10]
 		ifFalse: [LowestResolution := HighestResolution := Resolution := DefaultResolution]!
 
 reschedule
@@ -484,7 +484,7 @@ timerResolution: aDuration set: aBoolean
 		setTimerResolution: aDuration asNanoseconds // 100
 		set: aBoolean
 		actualResolution: actualResolution.
-	Resolution := (actualResolution dwordAtOffset: 0) // 10.
+	Resolution := (actualResolution uint32AtOffset: 0) // 10.
 	^Resolution microseconds!
 
 timingProcess

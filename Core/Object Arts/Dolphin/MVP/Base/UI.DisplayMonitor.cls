@@ -193,7 +193,7 @@ forCanvas: aCanvas intersecting: aRectangle do: aMonadicValuable
 					aMonadicValuable value: (DisplayMonitor fromHandle: hMonitor).
 					true]
 				descriptor: (External.FunctionDescriptor returnType: 'bool'
-						argumentTypes: ##('handle handle <1p>* dword' << RECTL)).
+						argumentTypes: ##('handle handle <1p>* uint32' << RECTL)).
 	answer := user32
 				enumDisplayMonitors: aCanvas asParameter
 				lprcClip: aRectangle asParameter

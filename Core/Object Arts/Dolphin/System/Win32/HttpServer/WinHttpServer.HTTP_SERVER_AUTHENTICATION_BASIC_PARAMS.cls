@@ -42,12 +42,12 @@ Realm: anUtf16String
 RealmLength
 	"Answer the <Integer> value of the receiver's 'RealmLength' field."
 
-	^bytes wordAtOffset: _OffsetOf_RealmLength!
+	^bytes uint16AtOffset: _OffsetOf_RealmLength!
 
 RealmLength: anInteger
 	"Set the receiver's 'RealmLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_RealmLength put: anInteger! !
+	bytes uint16AtOffset: _OffsetOf_RealmLength put: anInteger! !
 !WinHttpServer.HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS categoriesForMethods!
 Realm!**compiled accessors**!public! !
 Realm:!**compiled accessors**!public! !
@@ -73,7 +73,7 @@ defineFields
 "
 
 	self
-		defineField: #RealmLength type: WORDField new offset: 0;
+		defineField: #RealmLength type: UInt16Field new offset: 0;
 		defineField: #Realm type: (PointerField type: Utf16String) offset: 4.
 	self byteSize: 8!
 

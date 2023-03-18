@@ -34,7 +34,7 @@ Class Variables:
 				uuidCompare: self
 				uuid2: aGUID
 				status: status.
-	status := status dwordAtOffset: 0.
+	status := status uint32AtOffset: 0.
 	status == 0 ifFalse: [OS.RPCError signalWith: status].
 	^answer!
 

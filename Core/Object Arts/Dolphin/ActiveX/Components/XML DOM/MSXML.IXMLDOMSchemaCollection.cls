@@ -152,7 +152,7 @@ length
 	Helpstring: number of schemas in collection"
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_length: answer.
 	^answer asObject!
 

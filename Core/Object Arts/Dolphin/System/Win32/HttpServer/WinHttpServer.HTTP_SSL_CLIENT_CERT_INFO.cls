@@ -39,22 +39,22 @@ struct tagHTTP_SSL_CLIENT_CERT_INFO {
 CertEncodedSize
 	"Private - Answer the <Integer> value of the receiver's 'CertEncodedSize' field."
 
-	^bytes dwordAtOffset: _OffsetOf_CertEncodedSize!
+	^bytes uint32AtOffset: _OffsetOf_CertEncodedSize!
 
 CertEncodedSize: anInteger
 	"Set the receiver's 'CertEncodedSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_CertEncodedSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_CertEncodedSize put: anInteger!
 
 CertFlags
 	"Answer the <Integer> value of the receiver's 'CertFlags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_CertFlags!
+	^bytes uint32AtOffset: _OffsetOf_CertFlags!
 
 CertFlags: anInteger
 	"Set the receiver's 'CertFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_CertFlags put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_CertFlags put: anInteger!
 
 pCertEncoded
 	"Answer the <ExternalArray> value of the receiver's 'pCertEncoded' field."
@@ -109,8 +109,8 @@ defineFields
 "
 
 	self
-		defineField: #CertFlags type: DWORDField new offset: 0;
-		defineField: #CertEncodedSize type: DWORDField new beNonBrowsable offset: 4;
+		defineField: #CertFlags type: UInt32Field new offset: 0;
+		defineField: #CertEncodedSize type: UInt32Field new beNonBrowsable offset: 4;
 		defineField: #pCertEncoded type: (ArrayPointerField type: ExternalArray lengthField: #CertEncodedSize) offset: 8;
 		defineField: #Token type: HANDLEField new offset: 12;
 		defineField: #CertDeniedByMapper type: BOOLEANField new beFiller offset: 16.

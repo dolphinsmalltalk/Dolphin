@@ -46,12 +46,12 @@ description: desc
 lcid
 	"Answer the <Integer> value of the receiver's 'lcid' field."
 
-	^bytes dwordAtOffset: _OffsetOf_lcid!
+	^bytes uint32AtOffset: _OffsetOf_lcid!
 
 lcid: anInteger
 	"Set the receiver's 'lcid' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_lcid put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_lcid put: anInteger!
 
 locale: locale
 	"Set the receiver's lcid field to <integer> LCID of the <Locale>
@@ -74,7 +74,7 @@ szDescription: anUtf16String
 		from: ##(_OffsetOf_szDescription + 1)
 		to: _OffsetOf_szDescription + size
 		startingAt: 1.
-	bytes wordAtOffset: _OffsetOf_szDescription + size put: 0! !
+	bytes uint16AtOffset: _OffsetOf_szDescription + size put: 0! !
 !OS.COM.CATEGORYINFO categoriesForMethods!
 catid!**compiled accessors**!public! !
 catid:!**compiled accessors**!public! !
@@ -109,7 +109,7 @@ defineFields
 
 	self
 		defineField: #catid type: (StructureField type: GUID);
-		defineField: #lcid type: DWORDField new;
+		defineField: #lcid type: UInt32Field new;
 		defineField: #szDescription type: (StringField type: Utf16String length: 128)!
 
 getFieldNames

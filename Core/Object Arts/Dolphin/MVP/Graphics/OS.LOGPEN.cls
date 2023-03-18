@@ -42,32 +42,32 @@ color: aColor
 lopnColor
 	"Answer the <Integer> value of the receiver's 'lopnColor' field."
 
-	^bytes dwordAtOffset: _OffsetOf_lopnColor!
+	^bytes uint32AtOffset: _OffsetOf_lopnColor!
 
 lopnColor: anInteger
 	"Set the receiver's 'lopnColor' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_lopnColor put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_lopnColor put: anInteger!
 
 lopnStyle
 	"Answer the <Integer> value of the receiver's 'lopnStyle' field."
 
-	^bytes dwordAtOffset: _OffsetOf_lopnStyle!
+	^bytes uint32AtOffset: _OffsetOf_lopnStyle!
 
 lopnStyle: anInteger
 	"Set the receiver's 'lopnStyle' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_lopnStyle put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_lopnStyle put: anInteger!
 
 width
 	"Answer <integer> width of the pen described by the receiver."
 
-	^bytes sdwordAtOffset: 4!
+	^bytes int32AtOffset: 4!
 
 width: anInteger 
 	"Set the <integer> width of the pen described by the receiver."
 
-	bytes sdwordAtOffset: 4 put: anInteger! !
+	bytes int32AtOffset: 4 put: anInteger! !
 !OS.LOGPEN categoriesForMethods!
 color!accessing!public! !
 color:!accessing!public! !
@@ -97,9 +97,9 @@ defineFields
 "
 
 	self
-		defineField: #lopnStyle type: DWORDField new;
+		defineField: #lopnStyle type: UInt32Field new;
 		defineField: #lopnWidth type: (StructureField type: POINTL) beFiller;
-		defineField: #lopnColor type: DWORDField new!
+		defineField: #lopnColor type: UInt32Field new!
 
 getFieldNames
 	^#(#lopnStyle #lopnColor)! !

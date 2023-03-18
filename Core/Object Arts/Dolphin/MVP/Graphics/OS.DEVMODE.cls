@@ -136,37 +136,37 @@ defineFields
 	self
 		beUncompiled;
 		defineField: #dmDeviceName type: (ArrayField type: ByteArray length: 32);
-		defineField: #dmSpecVersion type: WORDField new;
-		defineField: #dmDriverVersion type: WORDField new;
-		defineField: #dmSize type: WORDField new;
-		defineField: #dmDriverExtra type: WORDField new;
-		defineField: #dmFields type: DWORDField new;
-		defineField: #dmOrientation type: SWORDField new;
-		defineField: #dmPaperSize type: SWORDField new;
-		defineField: #dmPaperLength type: SWORDField new;
-		defineField: #dmPaperWidth type: SWORDField new;
-		defineField: #dmScale type: SWORDField new;
-		defineField: #dmCopies type: SWORDField new;
-		defineField: #dmDefaultSource type: SWORDField new;
-		defineField: #dmPrintQuality type: SWORDField new;
-		defineField: #dmColor type: SWORDField new;
-		defineField: #dmDuplex type: SWORDField new;
-		defineField: #dmYResolution type: SWORDField new;
-		defineField: #dmTTOption type: SWORDField new;
-		defineField: #dmCollate type: SWORDField new;
+		defineField: #dmSpecVersion type: UInt16Field new;
+		defineField: #dmDriverVersion type: UInt16Field new;
+		defineField: #dmSize type: UInt16Field new;
+		defineField: #dmDriverExtra type: UInt16Field new;
+		defineField: #dmFields type: UInt32Field new;
+		defineField: #dmOrientation type: Int16Field new;
+		defineField: #dmPaperSize type: Int16Field new;
+		defineField: #dmPaperLength type: Int16Field new;
+		defineField: #dmPaperWidth type: Int16Field new;
+		defineField: #dmScale type: Int16Field new;
+		defineField: #dmCopies type: Int16Field new;
+		defineField: #dmDefaultSource type: Int16Field new;
+		defineField: #dmPrintQuality type: Int16Field new;
+		defineField: #dmColor type: Int16Field new;
+		defineField: #dmDuplex type: Int16Field new;
+		defineField: #dmYResolution type: Int16Field new;
+		defineField: #dmTTOption type: Int16Field new;
+		defineField: #dmCollate type: Int16Field new;
 		defineField: #dmFormName type: (ArrayField type: ByteArray length: 32);
-		defineField: #dmLogPixels type: WORDField new;
-		defineField: #dmBitsPerPel type: DWORDField new;
-		defineField: #dmPelsWidth type: DWORDField new;
-		defineField: #dmPelsHeight type: DWORDField new;
-		defineField: #dmDisplayFlags type: DWORDField new;
-		defineField: #dmDisplayFrequency type: DWORDField new;
-		defineField: #dmICMMethod type: DWORDField new;
-		defineField: #dmICMIntent type: DWORDField new;
-		defineField: #dmMediaType type: DWORDField new;
-		defineField: #dmDitherType type: DWORDField new;
-		defineField: #dmReserved1 type: DWORDField filler;
-		defineField: #dmReserved2 type: DWORDField filler!
+		defineField: #dmLogPixels type: UInt16Field new;
+		defineField: #dmBitsPerPel type: UInt32Field new;
+		defineField: #dmPelsWidth type: UInt32Field new;
+		defineField: #dmPelsHeight type: UInt32Field new;
+		defineField: #dmDisplayFlags type: UInt32Field new;
+		defineField: #dmDisplayFrequency type: UInt32Field new;
+		defineField: #dmICMMethod type: UInt32Field new;
+		defineField: #dmICMIntent type: UInt32Field new;
+		defineField: #dmMediaType type: UInt32Field new;
+		defineField: #dmDitherType type: UInt32Field new;
+		defineField: #dmReserved1 type: UInt32Field filler;
+		defineField: #dmReserved2 type: UInt32Field filler!
 
 getFieldNames
 	^#(#dmDeviceName #dmSpecVersion #dmDriverVersion #dmSize #dmDriverExtra #dmFields #dmOrientation #dmPaperSize #dmPaperLength #dmPaperWidth #dmScale #dmCopies #dmDefaultSource #dmPrintQuality #dmColor #dmDuplex #dmYResolution #dmTTOption #dmCollate #dmFormName #dmLogPixels #dmBitsPerPel #dmPelsWidth #dmPelsHeight #dmDisplayFlags #dmDisplayFrequency #dmICMMethod #dmICMIntent #dmMediaType #dmDitherType)! !

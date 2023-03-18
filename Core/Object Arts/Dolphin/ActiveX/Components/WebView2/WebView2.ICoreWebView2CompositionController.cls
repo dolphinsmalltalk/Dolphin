@@ -181,7 +181,7 @@ systemCursorId
 	"Answer the <dword> value of the 'SystemCursorId' property of the receiver."
 
 	| answer |
-	answer := DWORD new.
+	answer := UInt32 new.
 	self get_SystemCursorId: answer.
 	^answer asObject!
 

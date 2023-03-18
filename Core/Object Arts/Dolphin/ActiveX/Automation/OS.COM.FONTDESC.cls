@@ -26,17 +26,17 @@ FONTDESC is similar to a LOGFONT in that it represents a logical description of 
 cySize
 	"Answer the <Integer> value of the receiver's 'cySize' field."
 
-	^bytes sqwordAtOffset: _OffsetOf_cySize!
+	^bytes int64AtOffset: _OffsetOf_cySize!
 
 cySize: anInteger
 	"Set the receiver's 'cySize' field to the value of the argument, anInteger"
 
-	bytes sqwordAtOffset: _OffsetOf_cySize put: anInteger!
+	bytes int64AtOffset: _OffsetOf_cySize put: anInteger!
 
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 faceName
 	"Answer the font name."
@@ -52,32 +52,32 @@ faceName: fontName
 fItalic
 	"Answer the <Boolean> value of the receiver's 'fItalic' field."
 
-	^(bytes dwordAtOffset: _OffsetOf_fItalic) asBoolean!
+	^(bytes uint32AtOffset: _OffsetOf_fItalic) asBoolean!
 
 fItalic: aBoolean
 	"Set the receiver's 'fItalic' field to the value of the argument, aBoolean"
 
-	bytes dwordAtOffset: _OffsetOf_fItalic put: aBoolean asParameter!
+	bytes uint32AtOffset: _OffsetOf_fItalic put: aBoolean asParameter!
 
 fStrikethrough
 	"Answer the <Boolean> value of the receiver's 'fStrikethrough' field."
 
-	^(bytes dwordAtOffset: _OffsetOf_fStrikethrough) asBoolean!
+	^(bytes uint32AtOffset: _OffsetOf_fStrikethrough) asBoolean!
 
 fStrikethrough: aBoolean
 	"Set the receiver's 'fStrikethrough' field to the value of the argument, aBoolean"
 
-	bytes dwordAtOffset: _OffsetOf_fStrikethrough put: aBoolean asParameter!
+	bytes uint32AtOffset: _OffsetOf_fStrikethrough put: aBoolean asParameter!
 
 fUnderline
 	"Answer the <Boolean> value of the receiver's 'fUnderline' field."
 
-	^(bytes dwordAtOffset: _OffsetOf_fUnderline) asBoolean!
+	^(bytes uint32AtOffset: _OffsetOf_fUnderline) asBoolean!
 
 fUnderline: aBoolean
 	"Set the receiver's 'fUnderline' field to the value of the argument, aBoolean"
 
-	bytes dwordAtOffset: _OffsetOf_fUnderline put: aBoolean asParameter!
+	bytes uint32AtOffset: _OffsetOf_fUnderline put: aBoolean asParameter!
 
 lpstrName
 	"Answer the <Utf16String> value of the receiver's 'lpstrName' field."
@@ -102,22 +102,22 @@ pointSize: points
 sCharset
 	"Answer the <Integer> value of the receiver's 'sCharset' field."
 
-	^bytes swordAtOffset: _OffsetOf_sCharset!
+	^bytes int16AtOffset: _OffsetOf_sCharset!
 
 sCharset: anInteger
 	"Set the receiver's 'sCharset' field to the value of the argument, anInteger"
 
-	bytes swordAtOffset: _OffsetOf_sCharset put: anInteger!
+	bytes int16AtOffset: _OffsetOf_sCharset put: anInteger!
 
 sWeight
 	"Answer the <Integer> value of the receiver's 'sWeight' field."
 
-	^bytes swordAtOffset: _OffsetOf_sWeight!
+	^bytes int16AtOffset: _OffsetOf_sWeight!
 
 sWeight: anInteger
 	"Set the receiver's 'sWeight' field to the value of the argument, anInteger"
 
-	bytes swordAtOffset: _OffsetOf_sWeight put: anInteger! !
+	bytes int16AtOffset: _OffsetOf_sWeight put: anInteger! !
 !OS.COM.FONTDESC categoriesForMethods!
 cySize!**compiled accessors**!public! !
 cySize:!**compiled accessors**!public! !
@@ -164,11 +164,11 @@ defineFields
 	"
 
 	self
-		defineField: #dwSize type: DWORDField writeOnly;	"Renamed from cbSizeOfStruct"
+		defineField: #dwSize type: UInt32Field writeOnly;	"Renamed from cbSizeOfStruct"
 		defineField: #lpstrName type: (PointerField type: Utf16String);
-		defineField: #cySize type:  SQWORDField new;
-		defineField: #sWeight type: SWORDField new;
-		defineField: #sCharset type: SWORDField new;
+		defineField: #cySize type:  Int64Field new;
+		defineField: #sWeight type: Int16Field new;
+		defineField: #sCharset type: Int16Field new;
 		defineField: #fItalic type: BOOLField new;
 		defineField: #fUnderline type: BOOLField new;
 		defineField: #fStrikethrough type: BOOLField new

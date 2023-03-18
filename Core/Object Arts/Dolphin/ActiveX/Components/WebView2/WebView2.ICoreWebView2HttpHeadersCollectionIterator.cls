@@ -80,7 +80,7 @@ keysAndValuesDo: aDyadicValuable
 				yourself.
 	notAtEnd := ByteArray new: 4.
 	self get_HasCurrentHeader: notAtEnd.
-	[(notAtEnd sdwordAtOffset: 0) == 0] whileFalse: 
+	[(notAtEnd int32AtOffset: 0) == 0] whileFalse: 
 			[| name value |
 			self GetCurrentHeader: namePtr value: valuePtr.
 			name := Utf16String fromAddress: namePtr.

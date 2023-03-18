@@ -42,7 +42,7 @@ firstIndex
 	"Answer the <sdword> value of the 'FirstIndex' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_FirstIndex: answer.
 	^answer asObject!
 
@@ -87,7 +87,7 @@ length
 	"Answer the <sdword> value of the 'Length' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_Length: answer.
 	^answer asObject!
 

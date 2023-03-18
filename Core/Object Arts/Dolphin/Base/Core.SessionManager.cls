@@ -101,7 +101,7 @@ argv
 							[:i |
 							| offset |
 							offset := (i - 1) * VMConstants.IntPtrSize.
-							argv at: i put: (Utf16String fromAddress: (lppstr dwordAtOffset: offset))]]].
+							argv at: i put: (Utf16String fromAddress: (lppstr uint32AtOffset: offset))]]].
 	^argv!
 
 argvLegacyOptionsRemoved
@@ -524,7 +524,7 @@ logEvent: message type: typeCode
 				ifTrue: 
 					["Event log not available"
 					^self]].
-	inserts := External.UINT_PTRArray new: 2.
+	inserts := UIntPtrArray new: 2.
 	app := self applicationName asUtf16String.
 	msg := message asUtf16String.
 	inserts at: 1 put: app yourAddress.
@@ -864,7 +864,7 @@ registerConsoleCtrlHandler
 			[consoleHandler := External.MessageCallback
 						receiver: self
 						selector: #onConsoleCtrl:
-						descriptor: (External.FunctionDescriptor fromString: 'stdcall: bool dword' environment: Smalltalk).
+						descriptor: (External.FunctionDescriptor fromString: 'stdcall: bool uint32' environment: Smalltalk).
 			Kernel32 setConsoleCtrlHandler: consoleHandler asParameter add: true]!
 
 registerRunning

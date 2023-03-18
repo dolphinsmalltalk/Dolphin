@@ -192,7 +192,7 @@ getCLIPFORMATAndUserType
 	set into the receiver with WriteFmtUserTypeStg()."
 
 	| cf pszUserType answer |
-	cf := WORD new.
+	cf := UInt16 new.
 	pszUserType := TaskMemory new.
 	Ole32
 		readFmtUserTypeStg: self

@@ -296,7 +296,7 @@ mode
 	"Answer the <sdword> value of the 'Mode' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_Mode: answer.
 	^answer asObject!
 
@@ -449,7 +449,7 @@ recordType
 	"Answer the <sdword> value of the 'RecordType' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_RecordType: answer.
 	^answer asObject!
 
@@ -480,7 +480,7 @@ state
 	"Answer the <sdword> value of the 'State' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_State: answer.
 	^answer asObject!
 

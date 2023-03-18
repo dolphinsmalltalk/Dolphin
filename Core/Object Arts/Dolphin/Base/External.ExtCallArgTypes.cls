@@ -8,18 +8,20 @@ Kernel.SharedPool subclass: #'External.ExtCallArgTypes'
 	classConstants: {
 		'ExtCallArgBOOL' -> 16r9.
 		'ExtCallArgBSTR' -> 16r15.
-		'ExtCallArgBYTE' -> 16r3.
 		'ExtCallArgCHAR' -> 16r2.
 		'ExtCallArgCOMPTR' -> 16r37.
 		'ExtCallArgDATE' -> 16r17.
 		'ExtCallArgDOUBLE' -> 16rB.
-		'ExtCallArgDWORD' -> 16r7.
 		'ExtCallArgErrno' -> 16r1D.
 		'ExtCallArgFLOAT' -> 16rE.
 		'ExtCallArgGUID' -> 16r19.
 		'ExtCallArgHANDLE' -> 16rA.
 		'ExtCallArgHRESULT' -> 16r10.
-		'ExtCallArgINTPTR' -> 16r1B.
+		'ExtCallArgInt16' -> 16r6.
+		'ExtCallArgInt32' -> 16r8.
+		'ExtCallArgInt64' -> 16r13.
+		'ExtCallArgInt8' -> 16r4.
+		'ExtCallArgIntPtr' -> 16r1B.
 		'ExtCallArgLP' -> 16r35.
 		'ExtCallArgLPP' -> 16r36.
 		'ExtCallArgLPPVOID' -> 16rF.
@@ -30,19 +32,17 @@ Kernel.SharedPool subclass: #'External.ExtCallArgTypes'
 		'ExtCallArgNTSTATUS' -> 16r1C.
 		'ExtCallArgOOP' -> 16rD.
 		'ExtCallArgOTE' -> 16r14.
-		'ExtCallArgQWORD' -> 16r12.
-		'ExtCallArgSBYTE' -> 16r4.
-		'ExtCallArgSDWORD' -> 16r8.
-		'ExtCallArgSQWORD' -> 16r13.
 		'ExtCallArgSTRUCT' -> 16r32.
 		'ExtCallArgSTRUCT4' -> 16r33.
 		'ExtCallArgSTRUCT8' -> 16r34.
-		'ExtCallArgSWORD' -> 16r6.
-		'ExtCallArgUINTPTR' -> 16r1A.
+		'ExtCallArgUInt16' -> 16r5.
+		'ExtCallArgUInt32' -> 16r7.
+		'ExtCallArgUInt64' -> 16r12.
+		'ExtCallArgUInt8' -> 16r3.
+		'ExtCallArgUIntPtr' -> 16r1A.
 		'ExtCallArgVARBOOL' -> 16r18.
 		'ExtCallArgVARIANT' -> 16r16.
-		'ExtCallArgVOID' -> 16r0.
-		'ExtCallArgWORD' -> 16r5
+		'ExtCallArgVOID' -> 16r0
 	}!
 External.ExtCallArgTypes guid: (Core.GUID fromString: '{653fdbfe-ab01-4733-82d1-8791949ad833}')!
 External.ExtCallArgTypes isNonInstantiable: true!

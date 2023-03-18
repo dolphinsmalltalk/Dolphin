@@ -36,12 +36,12 @@ TCITEM is used to communicate information about the items (tabs) in a Tab Contro
 cchTextMax
 	"Answer the <Integer> value of the receiver's 'cchTextMax' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_cchTextMax!
+	^bytes int32AtOffset: _OffsetOf_cchTextMax!
 
 cchTextMax: anInteger
 	"Set the receiver's 'cchTextMax' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_cchTextMax put: anInteger!
+	bytes int32AtOffset: _OffsetOf_cchTextMax put: anInteger!
 
 cchTextMaxOffset
 	^_OffsetOf_cchTextMax!
@@ -49,12 +49,12 @@ cchTextMaxOffset
 dwState
 	"Answer the <Integer> value of the receiver's 'dwState' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwState!
+	^bytes uint32AtOffset: _OffsetOf_dwState!
 
 dwState: anInteger
 	"Set the receiver's 'dwState' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwState put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwState put: anInteger!
 
 handle
 	"Answer the 'handle' of the item described by the receiver."
@@ -64,12 +64,12 @@ handle
 iImage
 	"Answer the <Integer> value of the receiver's 'iImage' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_iImage!
+	^bytes int32AtOffset: _OffsetOf_iImage!
 
 iImage: anInteger
 	"Set the receiver's 'iImage' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_iImage put: anInteger!
+	bytes int32AtOffset: _OffsetOf_iImage put: anInteger!
 
 lParam
 	"Answer the <Integer> value of the receiver's 'lParam' field."
@@ -100,12 +100,12 @@ pszText: anUtf16String
 stateMask
 	"Answer the <Integer> value of the receiver's 'stateMask' field."
 
-	^bytes dwordAtOffset: _OffsetOf_stateMask!
+	^bytes uint32AtOffset: _OffsetOf_stateMask!
 
 stateMask: anInteger
 	"Set the receiver's 'stateMask' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_stateMask put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_stateMask put: anInteger!
 
 stateValidMask
 	"Private - Answer the bit mask the receiver uses to denote that the dwState
@@ -167,22 +167,22 @@ defineFields
 	super defineFields.
 	self
 		defineField: #dwState
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 4;
 		defineField: #stateMask
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 8;
 		defineField: #pszText
 			type: (PointerField type: Utf16String)
 			offset: 12;
 		defineField: #cchTextMax
-			type: SDWORDField new
+			type: Int32Field new
 			offset: 16;
 		defineField: #iImage
-			type: SDWORDField new
+			type: Int32Field new
 			offset: 20;
 		defineField: #lParam
-			type: UINT_PTRField new
+			type: UIntPtrField new
 			offset: 24!
 
 getFieldNames

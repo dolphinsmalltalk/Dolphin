@@ -22,7 +22,7 @@ bind: aDBStatement
 	| hStmt |
 	hStmt := aDBStatement executedHandle.
 	#todo "Will need an array of status values if to fetch a block of rows at a time".
-	status := External.WORD new.
+	status := External.UInt16 new.
 	aDBStatement statusArray: status.
 	^hStmt!
 

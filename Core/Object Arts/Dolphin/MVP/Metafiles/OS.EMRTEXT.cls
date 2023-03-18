@@ -39,42 +39,42 @@ struct tagEMRTEXT {
 fOptions
 	"Answer the <Integer> value of the receiver's 'fOptions' field."
 
-	^bytes dwordAtOffset: _OffsetOf_fOptions!
+	^bytes uint32AtOffset: _OffsetOf_fOptions!
 
 fOptions: anInteger
 	"Set the receiver's 'fOptions' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_fOptions put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_fOptions put: anInteger!
 
 nChars
 	"Answer the <Integer> value of the receiver's 'nChars' field."
 
-	^bytes dwordAtOffset: _OffsetOf_nChars!
+	^bytes uint32AtOffset: _OffsetOf_nChars!
 
 nChars: anInteger
 	"Set the receiver's 'nChars' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_nChars put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_nChars put: anInteger!
 
 offDx
 	"Answer the <Integer> value of the receiver's 'offDx' field."
 
-	^bytes dwordAtOffset: _OffsetOf_offDx!
+	^bytes uint32AtOffset: _OffsetOf_offDx!
 
 offDx: anInteger
 	"Set the receiver's 'offDx' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_offDx put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_offDx put: anInteger!
 
 offString
 	"Answer the <Integer> value of the receiver's 'offString' field."
 
-	^bytes dwordAtOffset: _OffsetOf_offString!
+	^bytes uint32AtOffset: _OffsetOf_offString!
 
 offString: anInteger
 	"Set the receiver's 'offString' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_offString put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_offString put: anInteger!
 
 ptlReference
 	"Answer the <POINTL> value of the receiver's 'ptlReference' field."
@@ -144,19 +144,19 @@ defineFields
 			type: (StructureField type: POINTL)
 			offset: 0;
 		defineField: #nChars
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 8;
 		defineField: #offString
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 12;
 		defineField: #fOptions
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 16;
 		defineField: #rcl
 			type: (StructureField type: RECTL)
 			offset: 20;
 		defineField: #offDx
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 36.
 	self byteSize: 40!
 

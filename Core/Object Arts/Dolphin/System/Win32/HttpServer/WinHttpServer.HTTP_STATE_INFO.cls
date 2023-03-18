@@ -44,12 +44,12 @@ printFields: aCollection on: aStream
 State
 	"Answer the <Integer> value of the receiver's 'State' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_State!
+	^bytes int32AtOffset: _OffsetOf_State!
 
 State: anInteger
 	"Set the receiver's 'State' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_State put: anInteger!
+	bytes int32AtOffset: _OffsetOf_State put: anInteger!
 
 value
 	^self Present ifTrue: [self State]!
@@ -98,7 +98,7 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #State type: SDWORDField new offset: 4.
+		defineField: #State type: Int32Field new offset: 4.
 	self byteSize: 8!
 
 getFieldNames

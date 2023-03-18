@@ -34,7 +34,7 @@ struct tagMIB_TCPEXROW {
 dwProcessId
 	"Answer the <Integer> value of the receiver's 'dwProcessId' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwProcessId! !
+	^bytes uint32AtOffset: _OffsetOf_dwProcessId! !
 !OS.MIB_TCPEXROW categoriesForMethods!
 dwProcessId!**compiled accessors**!public! !
 !
@@ -62,7 +62,7 @@ defineFields
 	super defineFields.
 	self 
 		defineField: #dwProcessId
-		type: DWORDField readOnly
+		type: UInt32Field readOnly
 		offset: 20.
 	self byteSize: 24!
 

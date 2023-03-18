@@ -254,8 +254,8 @@ find: memberName count: numToFind
 	specified name in the receiver."
 
 	| rgMemId ppTInfo pcFound infos |
-	rgMemId := SDWORDArray new: numToFind.
-	ppTInfo := DWORDArray new: numToFind.
+	rgMemId := Int32Array new: numToFind.
+	ppTInfo := UInt32Array new: numToFind.
 	pcFound := UInt32Bytes fromInteger: numToFind.
 	self tlbInterface
 		FindName: memberName
@@ -688,7 +688,7 @@ allTypeLibs
 
 initialize
 	"Private - Initialise the receiver's class variables.
-		AXTypeLibraryAnalyzer initialize
+		TypeLibraryAnalyzer initialize
 	"
 
 	SessionManager current
@@ -697,13 +697,16 @@ initialize
 		to: self.
 	TypeLibs isNil ifTrue: [TypeLibs := WeakLookupTable new].
 	StandardAliases := LookupTable new.
-	#(#{Core.GUID} #{OS.COM.VARIANT} #{OS.FILETIME} #{OS.LARGE_INTEGER} #{OS.ULARGE_INTEGER} #{OS.SECURITY_ATTRIBUTES} #{OS.LARGE_INTEGER} #{OS.COM.STATSTG})
+	#(#{Core.GUID} #{OS.COM.VARIANT} #{OS.FILETIME} #{OS.SECURITY_ATTRIBUTES} #{OS.COM.STATSTG})
 		do: [:each | StandardAliases at: each unqualifiedName put: each].
 	StandardAliases
 		at: 'PROPVARIANT' put: #{OS.COM.VARIANT};
 		at: 'RemotableHandle' put: #{External.Handle};
 		at: 'RECT' put: #{OS.RECTL};
-		at: 'POINT' put: #{OS.POINTL}!
+		at: 'POINT' put: #{OS.POINTL};
+		at: 'LARGE_INTEGER' put: #{External.Int64};
+		at: 'ULARGE_INTEGER' put: #{External.UInt64};
+		at: 'QWORD' put: #{External.UInt64}!
 
 load: libid major: verMajor minor: verMinor locale: locale
 	"Answer a new instance of the receiver on the registered type library

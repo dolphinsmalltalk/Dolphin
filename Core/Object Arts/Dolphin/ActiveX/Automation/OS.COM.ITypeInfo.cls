@@ -171,9 +171,9 @@ getIDsOfNames: names
 	| rgszNames uNames cNames pMemId hr |
 	uNames := names collect: [:p | p asUtf16String].
 	cNames := names size.
-	rgszNames := DWORDArray new: cNames.
+	rgszNames := UInt32Array new: cNames.
 	uNames keysAndValuesDo: [:i :n | rgszNames at: i put: n yourAddress].
-	pMemId := SDWORDArray new: cNames.
+	pMemId := Int32Array new: cNames.
 	hr := self
 				GetIDsOfNames: rgszNames
 				cNames: cNames
@@ -194,10 +194,10 @@ GetIDsOfNames: getIDsOfNames cNames: cNames pMemId: pMemId
 	^self invalidCall: _failureCode!
 
 getImplTypeFlags: index 
-	"Answer the <SDWORD> result of invoking the COM Object's GetImplTypeFlags() method."
+	"Answer the <Int32> result of invoking the COM Object's GetImplTypeFlags() method."
 
 	| pImplTypeFlags |
-	pImplTypeFlags := SDWORD new.
+	pImplTypeFlags := Int32 new.
 	self GetImplTypeFlags: index pImplTypeFlags: pImplTypeFlags.
 	^pImplTypeFlags value
 !
@@ -290,11 +290,11 @@ GetRefTypeInfo: hreftype ppTInfo: ppTInfo
 	^self invalidCall: _failureCode!
 
 getRefTypeOfImplType: index 
-	"Private - Answer the <DWORD> result of invoking the COM Object's GetRefTypeOfImplType() method.
+	"Private - Answer the <UInt32> result of invoking the COM Object's GetRefTypeOfImplType() method.
 	Note that the index is zero based."
 
 	| pRefType |
-	pRefType := DWORD new.
+	pRefType := UInt32 new.
 	self GetRefTypeOfImplType: index pRefType: pRefType.
 	^pRefType value
 !
@@ -388,7 +388,7 @@ idOfName: name ifAbsent: exceptionHandler
 	is much faster for the common case of looking up a single name."
 
 	| dispId uName hr |
-	dispId := SDWORD new.
+	dispId := Int32 new.
 	uName := name asUtf16String.
 	hr := self
 				GetIDsOfNames: (UInt32Bytes fromInteger: uName yourAddress)

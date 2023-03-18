@@ -1,36 +1,36 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.ExternalArray subclass: #'External.SDWORDArray'
+External.ExternalArray subclass: #'External.Int32Array'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.SDWORDArray guid: (Core.GUID fromString: '{87b4c5a7-026e-11d3-9fd7-00a0cc3e4a32}')!
-External.SDWORDArray comment: 'Specialized <ExternalArray> to represent contiguous single-dimensioned arrays of 32-bit signed integers.'!
-!External.SDWORDArray categoriesForClass!External-Data-Structured! !
-!External.SDWORDArray methodsFor!
+External.Int32Array guid: (Core.GUID fromString: '{87b4c5a7-026e-11d3-9fd7-00a0cc3e4a32}')!
+External.Int32Array comment: 'Specialized `ExternalArray` to represent contiguous single-dimensioned arrays of 32-bit signed integers.'!
+!External.Int32Array categoriesForClass!External-Data-Structured! !
+!External.Int32Array methodsFor!
 
 uncheckedAt: anInteger 
 	"Private - Answer an 32-bit signed <integer> representing the element of the 
 	receiver at the specified <integer> index. No bounds checks are performed on the subscript."
 
-	^bytes sdwordAtOffset: (anInteger - 1) * 4!
+	^bytes int32AtOffset: (anInteger - 1) * 4!
 
 uncheckedAt: indexInteger put: valueInteger 
-	^bytes sdwordAtOffset: (indexInteger - 1) * 4 put: valueInteger! !
-!External.SDWORDArray categoriesForMethods!
+	^bytes int32AtOffset: (indexInteger - 1) * 4 put: valueInteger! !
+!External.Int32Array categoriesForMethods!
 uncheckedAt:!accessing!private! !
 uncheckedAt:put:!accessing!private! !
 !
 
-!External.SDWORDArray class methodsFor!
+!External.Int32Array class methodsFor!
 
 elementClass
 	"Answer the class of <ExternalStructure> used to represent elements of the receiver."
 
-	^SDWORD! !
-!External.SDWORDArray class categoriesForMethods!
+	^Int32! !
+!External.Int32Array class categoriesForMethods!
 elementClass!constants!public! !
 !
 

@@ -50,7 +50,7 @@ htmlHelpCloseAll
 htmlHelpInitialize
 	"Private - Initialize the HTML help system - must be the first command."
 
-	cookie := DWORD new.
+	cookie := UInt32 new.
 	self
 		htmlHelp: 0
 		pszFile: nil

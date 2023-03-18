@@ -102,12 +102,12 @@ buttons: aSequenceOfPairs
 cButtons
 	"Answer the <Integer> value of the receiver's 'cButtons' field."
 
-	^bytes dwordAtOffset: _OffsetOf_cButtons!
+	^bytes uint32AtOffset: _OffsetOf_cButtons!
 
 cButtons: anInteger
 	"Set the receiver's 'cButtons' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_cButtons put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_cButtons put: anInteger!
 
 collapsedControlText: aString
 	self pszCollapsedControlText: (collapsedControlText := aString ifNotNil: [aString asUtf16String])!
@@ -118,47 +118,47 @@ content: aString
 cRadioButtons
 	"Answer the <Integer> value of the receiver's 'cRadioButtons' field."
 
-	^bytes dwordAtOffset: _OffsetOf_cRadioButtons!
+	^bytes uint32AtOffset: _OffsetOf_cRadioButtons!
 
 cRadioButtons: anInteger
 	"Set the receiver's 'cRadioButtons' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_cRadioButtons put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_cRadioButtons put: anInteger!
 
 cxWidth
 	"Answer the <Integer> value of the receiver's 'cxWidth' field."
 
-	^bytes dwordAtOffset: _OffsetOf_cxWidth!
+	^bytes uint32AtOffset: _OffsetOf_cxWidth!
 
 cxWidth: anInteger
 	"Set the receiver's 'cxWidth' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_cxWidth put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_cxWidth put: anInteger!
 
 dwCommonButtons
 	"Answer the <Integer> value of the receiver's 'dwCommonButtons' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_dwCommonButtons!
+	^bytes int32AtOffset: _OffsetOf_dwCommonButtons!
 
 dwCommonButtons: anInteger
 	"Set the receiver's 'dwCommonButtons' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_dwCommonButtons put: anInteger!
+	bytes int32AtOffset: _OffsetOf_dwCommonButtons put: anInteger!
 
 dwFlags
 	"Answer the <Integer> value of the receiver's 'dwFlags' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_dwFlags!
+	^bytes int32AtOffset: _OffsetOf_dwFlags!
 
 dwFlags: anInteger
 	"Set the receiver's 'dwFlags' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_dwFlags put: anInteger!
+	bytes int32AtOffset: _OffsetOf_dwFlags put: anInteger!
 
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 expandedControlText: aString
 	self pszExpandedControlText: (expandedControlText := aString ifNotNil: [aString asUtf16String])!
@@ -215,22 +215,22 @@ mainInstruction: aString
 nDefaultButton
 	"Answer the <Integer> value of the receiver's 'nDefaultButton' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_nDefaultButton!
+	^bytes int32AtOffset: _OffsetOf_nDefaultButton!
 
 nDefaultButton: anInteger
 	"Set the receiver's 'nDefaultButton' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_nDefaultButton put: anInteger!
+	bytes int32AtOffset: _OffsetOf_nDefaultButton put: anInteger!
 
 nDefaultRadioButton
 	"Answer the <Integer> value of the receiver's 'nDefaultRadioButton' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_nDefaultRadioButton!
+	^bytes int32AtOffset: _OffsetOf_nDefaultRadioButton!
 
 nDefaultRadioButton: anInteger
 	"Set the receiver's 'nDefaultRadioButton' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_nDefaultRadioButton put: anInteger!
+	bytes int32AtOffset: _OffsetOf_nDefaultRadioButton put: anInteger!
 
 pButtons
 	"Answer the <StructureArray> value of the receiver's 'pButtons' field."
@@ -472,7 +472,7 @@ defineFields
 
 	self
 		defineField: #dwSize
-			type: DWORDField new beWriteOnly
+			type: UInt32Field new beWriteOnly
 			offset: 0;
 		defineField: #hwndParent
 			type: HANDLEField new
@@ -481,10 +481,10 @@ defineFields
 			type: HANDLEField new
 			offset: 8;
 		defineField: #dwFlags
-			type: SDWORDField new
+			type: Int32Field new
 			offset: 12;
 		defineField: #dwCommonButtons
-			type: SDWORDField new
+			type: Int32Field new
 			offset: 16;
 		defineField: #pszWindowTitle
 			type: (PointerField type: Utf16String)
@@ -502,22 +502,22 @@ defineFields
 			type: (PointerField type: Utf16String)
 			offset: 32;
 		defineField: #cButtons
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 36;
 		defineField: #pButtons
 			type: (StructureArrayPointerField type: TASKDIALOG_BUTTON lengthField: #cButtons)
 			offset: 40;
 		defineField: #nDefaultButton
-			type: SDWORDField new
+			type: Int32Field new
 			offset: 44;
 		defineField: #cRadioButtons
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 48;
 		defineField: #pRadioButtons
 			type: (StructureArrayPointerField type: TASKDIALOG_BUTTON lengthField: #cRadioButtons)
 			offset: 52;
 		defineField: #nDefaultRadioButton
-			type: SDWORDField new
+			type: Int32Field new
 			offset: 56;
 		defineField: #pszVerificationText
 			type: (PointerField type: Utf16String)
@@ -544,10 +544,10 @@ defineFields
 			type: LPVOIDField new beWriteOnly
 			offset: 84;
 		defineField: #lpCallbackData
-			type: INT_PTRField new beFiller
+			type: IntPtrField new beFiller
 			offset: 88;
 		defineField: #cxWidth
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 92.
 	self byteSize: 96!
 

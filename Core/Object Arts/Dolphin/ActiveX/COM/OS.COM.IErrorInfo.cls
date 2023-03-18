@@ -103,7 +103,7 @@ helpContext
 	"Answer the <integer> help context associated with the receiver."
 
 	| answer |
-	answer := DWORD new.
+	answer := UInt32 new.
 	self GetHelpContext: answer.
 	^answer!
 

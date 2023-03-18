@@ -117,7 +117,7 @@ commandTimeout
 	"Answer the <sdword> value of the 'CommandTimeout' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_CommandTimeout: answer.
 	^answer asObject!
 
@@ -130,7 +130,7 @@ commandType
 	"Answer the <sdword> value of the 'CommandType' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_CommandType: answer.
 	^answer asObject!
 

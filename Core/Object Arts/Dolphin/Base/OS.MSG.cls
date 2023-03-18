@@ -61,7 +61,7 @@ lParam
 message
 	"Answer the <Integer> value of the receiver's 'message' field."
 
-	^bytes dwordAtOffset: _OffsetOf_message!
+	^bytes uint32AtOffset: _OffsetOf_message!
 
 swParam
 	"Answer the <integer> value of the receiver's wParam field, treating
@@ -72,7 +72,7 @@ swParam
 time
 	"Answer the <Integer> value of the receiver's 'time' field."
 
-	^bytes dwordAtOffset: _OffsetOf_time!
+	^bytes uint32AtOffset: _OffsetOf_time!
 
 wParam
 	"Answer the <Integer> value of the receiver's 'wParam' field."
@@ -82,12 +82,12 @@ wParam
 x
 	"Answer the <Integer> value of the receiver's 'x' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_x!
+	^bytes int32AtOffset: _OffsetOf_x!
 
 y
 	"Answer the <Integer> value of the receiver's 'y' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_y! !
+	^bytes int32AtOffset: _OffsetOf_y! !
 !OS.MSG categoriesForMethods!
 hwnd!**compiled accessors**!public! !
 isInput!public!testing! !
@@ -124,13 +124,13 @@ defineFields
 	"
 
 	self
-		defineField: #hwnd type: UINT_PTRField readOnly;
-		defineField: #message type: DWORDField readOnly;
-		defineField: #wParam type: UINT_PTRField readOnly;
-		defineField: #lParam type: UINT_PTRField readOnly;
-		defineField: #time type: DWORDField readOnly;
-		defineField: #x type: SDWORDField readOnly;
-		defineField: #y type: SDWORDField readOnly
+		defineField: #hwnd type: UIntPtrField readOnly;
+		defineField: #message type: UInt32Field readOnly;
+		defineField: #wParam type: UIntPtrField readOnly;
+		defineField: #lParam type: UIntPtrField readOnly;
+		defineField: #time type: UInt32Field readOnly;
+		defineField: #x type: Int32Field readOnly;
+		defineField: #y type: Int32Field readOnly
 	"The real structure has a POINT here instead of x and y, but that is not part of the base Dolphin package any more so we 'inline' it"!
 
 getFieldNames

@@ -57,7 +57,7 @@ count
 	| buf |
 	buf := ByteArray newFixed: 4.
 	self get_Count: buf.
-	^buf sdwordAtOffset: 0!
+	^buf int32AtOffset: 0!
 
 get__NewEnum: ppEnum
 	"Private - Get the value of the '_NewEnum' property of the receiver.

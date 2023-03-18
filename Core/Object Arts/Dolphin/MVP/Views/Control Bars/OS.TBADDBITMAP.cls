@@ -18,7 +18,7 @@ OS.TBADDBITMAP comment: ''!
 hInst: anInteger
 	"Set the receiver's 'hInst' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_hInst put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_hInst put: anInteger!
 
 nID: anInteger
 	"Set the receiver's 'nID' field to the value of the argument, anInteger"
@@ -45,8 +45,8 @@ defineFields
 	} TBADDBITMAP, *LPTBADDBITMAP"
 
 	self
-		defineField: #hInst type: DWORDField writeOnly;
-		defineField: #nID type: UINT_PTRField writeOnly!
+		defineField: #hInst type: UInt32Field writeOnly;
+		defineField: #nID type: UIntPtrField writeOnly!
 
 getFieldNames
 	^#(#hInst #nID)! !

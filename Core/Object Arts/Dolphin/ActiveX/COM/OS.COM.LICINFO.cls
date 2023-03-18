@@ -28,17 +28,17 @@ Member variables:
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 fLicVerified
 	"Answer the <Boolean> value of the receiver's 'fLicVerified' field."
 
-	^(bytes dwordAtOffset: _OffsetOf_fLicVerified) asBoolean!
+	^(bytes uint32AtOffset: _OffsetOf_fLicVerified) asBoolean!
 
 fRuntimeKeyAvail
 	"Answer the <Boolean> value of the receiver's 'fRuntimeKeyAvail' field."
 
-	^(bytes dwordAtOffset: _OffsetOf_fRuntimeKeyAvail) asBoolean! !
+	^(bytes uint32AtOffset: _OffsetOf_fRuntimeKeyAvail) asBoolean! !
 !OS.COM.LICINFO categoriesForMethods!
 dwSize:!**compiled accessors**!public! !
 fLicVerified!**compiled accessors**!public! !
@@ -63,7 +63,7 @@ defineFields
 		};"
 
 	self
-		defineField: #dwSize		type: DWORDField writeOnly beOverride;
+		defineField: #dwSize		type: UInt32Field writeOnly beOverride;
 		defineField: #fRuntimeKeyAvail	type: BOOLField readOnly;
 		defineField: #fLicVerified		type: BOOLField readOnly!
 

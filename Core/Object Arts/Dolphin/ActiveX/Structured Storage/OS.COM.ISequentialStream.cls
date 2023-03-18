@@ -75,6 +75,19 @@ nextAvailable: anInteger
 	read := self read: buf count: anInteger.
 	^buf resize: read!
 
+nextInt32
+	"Answer a 32-bit signed integer constructed from the host system
+	representation contained in the next 4 bytes on the receiver."
+
+	^(self next: 4) int32AtOffset: 0!
+
+nextInt32Put: anInteger
+	"Append a 32-bit signed integer in 2's complement representation 
+	as the next 4 bytes on the receiver."
+
+	self nextPutAll: (Int32 fromInteger: anInteger).
+	^anInteger!
+
 nextMatchFor: anObject 
 	"Access the next object and answer whether it is equal to the argument, anObject.
 	Raise an EndOfStream exception (via #next) if there are no more elements in the receiver."
@@ -97,19 +110,6 @@ nextPutAll: aByteObject
 		cb: aByteObject size
 		pcbWritten: nil.
 	^aByteObject!
-
-nextSDWORD
-	"Answer a 32-bit signed integer constructed from the host system
-	representation contained in the next 4 bytes on the receiver."
-
-	^(self next: 4) sdwordAtOffset: 0!
-
-nextSDWORDPut: anInteger 
-	"Append a 32-bit signed integer in 2's complement representation 
-	as the next 4 bytes on the receiver."
-
-	self nextPutAll: (SDWORD fromInteger: anInteger).
-	^anInteger!
 
 Read: pv cb: cb pcbRead: pcbRead
 	"Invoke the Read() method of the object wrapped by the receiver.
@@ -199,11 +199,11 @@ next!accessing!public! !
 next:!accessing!public! !
 next:putAll:startingAt:!accessing!public! !
 nextAvailable:!accessing!public! !
+nextInt32!binary filing!public! !
+nextInt32Put:!binary filing!public! !
 nextMatchFor:!accessing!public! !
 nextPut:!accessing!public! !
 nextPutAll:!accessing!public! !
-nextSDWORD!binary filing!public! !
-nextSDWORDPut:!binary filing!public! !
 Read:cb:pcbRead:!**auto generated**!primitives!public! !
 read:count:!accessing!public! !
 skipTo:!positioning!public! !

@@ -27,12 +27,12 @@ docName: aString
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 fwType: anInteger
 	"Set the receiver's 'fwType' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_fwType put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_fwType put: anInteger!
 
 lpszDatatype: anUtf16String
 	"Set the receiver's 'lpszDatatype' field to the value of the argument, anUtf16String"
@@ -76,11 +76,11 @@ defineFields
 		} DOCINFO;"
 
 	self
-		defineField: #dwSize type: DWORDField writeOnly beOverride;
+		defineField: #dwSize type: UInt32Field writeOnly beOverride;
 		defineField: #lpszDocName type: (PointerField type: Utf16String) beWriteOnly;
 		defineField: #lpszOutput type: (PointerField type: Utf16String) beWriteOnly;
 		defineField: #lpszDatatype type: (PointerField type: Utf16String) beWriteOnly;
-		defineField: #fwType type: DWORDField writeOnly!
+		defineField: #fwType type: UInt32Field writeOnly!
 
 getFieldNames
 	^#(#dwSize #lpszDocName #lpszOutput #lpszDatatype #fwType)! !

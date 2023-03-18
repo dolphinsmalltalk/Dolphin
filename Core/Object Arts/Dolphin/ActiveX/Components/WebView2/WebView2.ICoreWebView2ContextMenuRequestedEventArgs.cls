@@ -177,7 +177,7 @@ selectedCommandId
 	"Answer the <sdword> value of the 'SelectedCommandId' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_SelectedCommandId: answer.
 	^answer asObject!
 

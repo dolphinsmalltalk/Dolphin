@@ -92,12 +92,12 @@ description: errorDescription
 dwHelpContext
 	"Answer the <Integer> value of the receiver's 'dwHelpContext' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwHelpContext!
+	^bytes uint32AtOffset: _OffsetOf_dwHelpContext!
 
 dwHelpContext: anInteger
 	"Set the receiver's 'dwHelpContext' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwHelpContext put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwHelpContext put: anInteger!
 
 helpFile
 	"Answer the receiver's bstrHelpFile field as a <readableString> Smalltalk object."
@@ -162,12 +162,12 @@ pwszSource: anInteger
 scode
 	"Answer the <Integer> value of the receiver's 'scode' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_scode!
+	^bytes int32AtOffset: _OffsetOf_scode!
 
 scode: anInteger
 	"Set the receiver's 'scode' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_scode put: anInteger!
+	bytes int32AtOffset: _OffsetOf_scode put: anInteger!
 
 source
 	"Answer a <readableString> description of the source of the error.
@@ -188,12 +188,12 @@ source: errorSourceString
 wCode
 	"Answer the <Integer> value of the receiver's 'wCode' field."
 
-	^bytes wordAtOffset: _OffsetOf_wCode!
+	^bytes uint16AtOffset: _OffsetOf_wCode!
 
 wCode: anInteger
 	"Set the receiver's 'wCode' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_wCode put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_wCode put: anInteger!
 
 wstrDescription
 	"Answer the receiver's bstrDescription field as a <Utf16String>."
@@ -254,7 +254,7 @@ clear: addressOrBytes
 
 	4 to: 12
 		by: 4
-		do: [:offset | OleAut32 sysFreeString: (addressOrBytes sdwordAtOffset: offset)]!
+		do: [:offset | OleAut32 sysFreeString: (addressOrBytes int32AtOffset: offset)]!
 
 defineFields
 	"Define the fields of the EXCEPINFO structure.
@@ -276,15 +276,15 @@ defineFields
 	"
 
 	self
-		defineField: #wCode type: WORDField new;
-		defineField: #wReserved type: WORDField filler;
-		defineField: #pwszSource type: UINT_PTRField new;
-		defineField: #pwszDescription type: UINT_PTRField new;
-		defineField: #pwszHelpFile type: UINT_PTRField new;
-		defineField: #dwHelpContext type: DWORDField new;
+		defineField: #wCode type: UInt16Field new;
+		defineField: #wReserved type: UInt16Field filler;
+		defineField: #pwszSource type: UIntPtrField new;
+		defineField: #pwszDescription type: UIntPtrField new;
+		defineField: #pwszHelpFile type: UIntPtrField new;
+		defineField: #dwHelpContext type: UInt32Field new;
 		defineField: #pvReserved type: LPVOIDField filler;
 		defineField: #pfnDeferredFillIn type: LPVOIDField readOnly;
-		defineField: #scode type: SDWORDField new!
+		defineField: #scode type: Int32Field new!
 
 getFieldNames
 	^#(#wCode #pwszSource #pwszDescription #pwszHelpFile #dwHelpContext #pfnDeferredFillIn #scode)! !

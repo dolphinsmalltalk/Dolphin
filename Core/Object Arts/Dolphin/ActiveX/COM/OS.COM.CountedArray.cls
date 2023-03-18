@@ -28,12 +28,12 @@ basicLength: anInteger
 cElems
 	"Answer the <Integer> value of the receiver's 'cElems' field."
 
-	^bytes dwordAtOffset: _OffsetOf_cElems!
+	^bytes uint32AtOffset: _OffsetOf_cElems!
 
 cElems: anInteger
 	"Set the receiver's 'cElems' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_cElems put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_cElems put: anInteger!
 
 elements
 	"Private - Answer the receiver's <ExternalArray> of elements."
@@ -136,7 +136,7 @@ defineFields
 	<ConformantStructureArrayPointerField> here, but hand code accessors for best performance."
 
 	self
-		defineField: #cElems type: DWORDField new;
+		defineField: #cElems type: UInt32Field new;
 		defineField: #pElems type: LPVOIDField new!
 
 initialize

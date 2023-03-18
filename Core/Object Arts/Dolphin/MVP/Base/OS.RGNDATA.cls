@@ -21,37 +21,37 @@ OS.RGNDATA comment: ''!
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 iType
 	"Answer the <Integer> value of the receiver's 'iType' field."
 
-	^bytes dwordAtOffset: _OffsetOf_iType!
+	^bytes uint32AtOffset: _OffsetOf_iType!
 
 iType: anInteger
 	"Set the receiver's 'iType' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_iType put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_iType put: anInteger!
 
 nCount
 	"Answer the <Integer> value of the receiver's 'nCount' field."
 
-	^bytes dwordAtOffset: _OffsetOf_nCount!
+	^bytes uint32AtOffset: _OffsetOf_nCount!
 
 nCount: anInteger
 	"Set the receiver's 'nCount' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_nCount put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_nCount put: anInteger!
 
 nRgnSize
 	"Answer the <Integer> value of the receiver's 'nRgnSize' field."
 
-	^bytes dwordAtOffset: _OffsetOf_nRgnSize!
+	^bytes uint32AtOffset: _OffsetOf_nRgnSize!
 
 nRgnSize: anInteger
 	"Set the receiver's 'nRgnSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_nRgnSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_nRgnSize put: anInteger!
 
 rcBound
 	"Answer the <RECTL> value of the receiver's 'rcBound' field."
@@ -107,10 +107,10 @@ defineFields
 	"
 
 	self
-		defineField: #dwSize type: DWORDField writeOnly beOverride;
-		defineField: #iType type: DWORDField new;
-		defineField: #nCount type: DWORDField new;
-		defineField: #nRgnSize type: DWORDField new;
+		defineField: #dwSize type: UInt32Field writeOnly beOverride;
+		defineField: #iType type: UInt32Field new;
+		defineField: #nCount type: UInt32Field new;
+		defineField: #nRgnSize type: UInt32Field new;
 		defineField: #rcBound type: (StructureField type: RECTL)!
 
 getFieldNames

@@ -52,12 +52,12 @@ cb
 	"Answer the receiver's mkid.cb field as a Smalltalk object.
 	This avoids creating the SHITEMID structure and directly accesses the mkid.cb field "
 
-	^bytes swordAtOffset: 0!
+	^bytes int16AtOffset: 0!
 
 cb: anObject
 	"Set the receiver's mkid.cb field to the value of anObject."
 
-	bytes swordAtOffset: 0 put: anObject!
+	bytes int16AtOffset: 0 put: anObject!
 
 getSize
 	"Answer the number of bytes that the receiver uses.  Calculate the size by walking the id list

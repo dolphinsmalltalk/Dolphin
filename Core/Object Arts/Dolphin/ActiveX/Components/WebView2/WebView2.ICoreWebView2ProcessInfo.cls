@@ -88,7 +88,7 @@ kind
 	"Answer the <sdword> value of the 'Kind' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_Kind: answer.
 	^answer asObject!
 
@@ -102,7 +102,7 @@ processId
 	"Answer the <sdword> value of the 'ProcessId' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_ProcessId: answer.
 	^answer asObject! !
 !WebView2.ICoreWebView2ProcessInfo categoriesForMethods!

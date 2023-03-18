@@ -57,12 +57,12 @@ printFieldsOn: aStream
 sa_family
 	"Answer the <Integer> value of the receiver's 'sa_family' field."
 
-	^bytes wordAtOffset: _OffsetOf_sa_family!
+	^bytes uint16AtOffset: _OffsetOf_sa_family!
 
 sa_family: anInteger
 	"Set the receiver's 'sa_family' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_sa_family put: anInteger! !
+	bytes uint16AtOffset: _OffsetOf_sa_family put: anInteger! !
 !OS.SOCKADDR categoriesForMethods!
 displayOn:!displaying!public! !
 initialize!initializing!private! !
@@ -92,7 +92,7 @@ defineFields
 "
 
 	self
-		defineField: #sa_family type: WORDField new offset: 0;
+		defineField: #sa_family type: UInt16Field new offset: 0;
 		defineField: #sa_data type: (ArrayField type: ExternalArray length: 14) beFiller offset: 2.
 	self byteSize: 16!
 
@@ -103,7 +103,7 @@ fromAddress: anAddress
 	| family ptr |
 	anAddress isNull ifTrue: [^nil].
 	ptr := anAddress asExternalAddress.
-	family := ptr wordAtOffset: 0.
+	family := ptr uint16AtOffset: 0.
 	^(family == AF_INET
 		ifTrue: [SOCKADDR_IN]
 		ifFalse: [family == AF_INET6 ifTrue: [SOCKADDR_IN6] ifFalse: [SOCKADDR]]) basicNew

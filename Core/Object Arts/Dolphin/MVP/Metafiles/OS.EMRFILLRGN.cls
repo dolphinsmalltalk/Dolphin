@@ -36,22 +36,22 @@ struct tagEMRFILLRGN {
 cbRgnData
 	"Answer the <Integer> value of the receiver's 'cbRgnData' field."
 
-	^bytes dwordAtOffset: _OffsetOf_cbRgnData!
+	^bytes uint32AtOffset: _OffsetOf_cbRgnData!
 
 cbRgnData: anInteger
 	"Set the receiver's 'cbRgnData' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_cbRgnData put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_cbRgnData put: anInteger!
 
 ihBrush
 	"Answer the <Integer> value of the receiver's 'ihBrush' field."
 
-	^bytes dwordAtOffset: _OffsetOf_ihBrush!
+	^bytes uint32AtOffset: _OffsetOf_ihBrush!
 
 ihBrush: anInteger
 	"Set the receiver's 'ihBrush' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_ihBrush put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_ihBrush put: anInteger!
 
 rclBounds
 	"Answer the <RECTL> value of the receiver's 'rclBounds' field."
@@ -120,10 +120,10 @@ defineFields
 			type: (StructureField type: RECTL)
 			offset: 8;
 		defineField: #cbRgnData
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 24;
 		defineField: #ihBrush
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 28;
 		defineField: #RGNDATA
 			type: (ArrayField type: ExternalArray lengthField: #cbRgnData)

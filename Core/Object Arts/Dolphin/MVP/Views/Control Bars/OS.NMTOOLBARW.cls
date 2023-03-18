@@ -23,12 +23,12 @@ NMTOOLBARW accompanies certain notifications that are sent by a Toolbar control 
 cchText
 	"Answer the <Integer> value of the receiver's 'cchText' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_cchText!
+	^bytes int32AtOffset: _OffsetOf_cchText!
 
 iItem
 	"Answer the <Integer> value of the receiver's 'iItem' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_iItem!
+	^bytes int32AtOffset: _OffsetOf_iItem!
 
 pszText
 	"Answer the <Utf16String> value of the receiver's 'pszText' field."
@@ -66,9 +66,9 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #iItem type: SDWORDField readOnly;
+		defineField: #iItem type: Int32Field readOnly;
 		defineField: #tbButton type: (StructureField type: TBBUTTON) beReadOnly;
-		defineField: #cchText type: SDWORDField new beReadOnly;
+		defineField: #cchText type: Int32Field new beReadOnly;
 		defineField: #pszText type: (PointerField type: Utf16String) beReadOnly!
 
 getFieldNames

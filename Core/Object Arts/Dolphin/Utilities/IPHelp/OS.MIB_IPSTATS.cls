@@ -73,117 +73,117 @@ struct tagMIB_IPSTATS {
 dwDefaultTTL
 	"Answer the <Integer> value of the receiver's 'dwDefaultTTL' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwDefaultTTL!
+	^bytes uint32AtOffset: _OffsetOf_dwDefaultTTL!
 
 dwForwarding
 	"Answer the <Integer> value of the receiver's 'dwForwarding' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwForwarding!
+	^bytes uint32AtOffset: _OffsetOf_dwForwarding!
 
 dwForwDatagrams
 	"Answer the <Integer> value of the receiver's 'dwForwDatagrams' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwForwDatagrams!
+	^bytes uint32AtOffset: _OffsetOf_dwForwDatagrams!
 
 dwFragCreates
 	"Answer the <Integer> value of the receiver's 'dwFragCreates' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwFragCreates!
+	^bytes uint32AtOffset: _OffsetOf_dwFragCreates!
 
 dwFragFails
 	"Answer the <Integer> value of the receiver's 'dwFragFails' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwFragFails!
+	^bytes uint32AtOffset: _OffsetOf_dwFragFails!
 
 dwFragOks
 	"Answer the <Integer> value of the receiver's 'dwFragOks' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwFragOks!
+	^bytes uint32AtOffset: _OffsetOf_dwFragOks!
 
 dwInAddrErrors
 	"Answer the <Integer> value of the receiver's 'dwInAddrErrors' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwInAddrErrors!
+	^bytes uint32AtOffset: _OffsetOf_dwInAddrErrors!
 
 dwInDelivers
 	"Answer the <Integer> value of the receiver's 'dwInDelivers' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwInDelivers!
+	^bytes uint32AtOffset: _OffsetOf_dwInDelivers!
 
 dwInDiscards
 	"Answer the <Integer> value of the receiver's 'dwInDiscards' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwInDiscards!
+	^bytes uint32AtOffset: _OffsetOf_dwInDiscards!
 
 dwInHdrErrors
 	"Answer the <Integer> value of the receiver's 'dwInHdrErrors' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwInHdrErrors!
+	^bytes uint32AtOffset: _OffsetOf_dwInHdrErrors!
 
 dwInReceives
 	"Answer the <Integer> value of the receiver's 'dwInReceives' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwInReceives!
+	^bytes uint32AtOffset: _OffsetOf_dwInReceives!
 
 dwInUnknownProtos
 	"Answer the <Integer> value of the receiver's 'dwInUnknownProtos' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwInUnknownProtos!
+	^bytes uint32AtOffset: _OffsetOf_dwInUnknownProtos!
 
 dwNumAddr
 	"Answer the <Integer> value of the receiver's 'dwNumAddr' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwNumAddr!
+	^bytes uint32AtOffset: _OffsetOf_dwNumAddr!
 
 dwNumIf
 	"Answer the <Integer> value of the receiver's 'dwNumIf' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwNumIf!
+	^bytes uint32AtOffset: _OffsetOf_dwNumIf!
 
 dwNumRoutes
 	"Answer the <Integer> value of the receiver's 'dwNumRoutes' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwNumRoutes!
+	^bytes uint32AtOffset: _OffsetOf_dwNumRoutes!
 
 dwOutDiscards
 	"Answer the <Integer> value of the receiver's 'dwOutDiscards' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwOutDiscards!
+	^bytes uint32AtOffset: _OffsetOf_dwOutDiscards!
 
 dwOutNoRoutes
 	"Answer the <Integer> value of the receiver's 'dwOutNoRoutes' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwOutNoRoutes!
+	^bytes uint32AtOffset: _OffsetOf_dwOutNoRoutes!
 
 dwOutRequests
 	"Answer the <Integer> value of the receiver's 'dwOutRequests' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwOutRequests!
+	^bytes uint32AtOffset: _OffsetOf_dwOutRequests!
 
 dwReasmFails
 	"Answer the <Integer> value of the receiver's 'dwReasmFails' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwReasmFails!
+	^bytes uint32AtOffset: _OffsetOf_dwReasmFails!
 
 dwReasmOks
 	"Answer the <Integer> value of the receiver's 'dwReasmOks' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwReasmOks!
+	^bytes uint32AtOffset: _OffsetOf_dwReasmOks!
 
 dwReasmReqds
 	"Answer the <Integer> value of the receiver's 'dwReasmReqds' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwReasmReqds!
+	^bytes uint32AtOffset: _OffsetOf_dwReasmReqds!
 
 dwReasmTimeout
 	"Answer the <Integer> value of the receiver's 'dwReasmTimeout' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwReasmTimeout!
+	^bytes uint32AtOffset: _OffsetOf_dwReasmTimeout!
 
 dwRoutingDiscards
 	"Answer the <Integer> value of the receiver's 'dwRoutingDiscards' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwRoutingDiscards! !
+	^bytes uint32AtOffset: _OffsetOf_dwRoutingDiscards! !
 !OS.MIB_IPSTATS categoriesForMethods!
 dwDefaultTTL!**compiled accessors**!public! !
 dwForwarding!**compiled accessors**!public! !
@@ -248,29 +248,29 @@ defineFields
 "
 
 	self
-		defineField: #dwForwarding type: DWORDField readOnly offset: 0;
-		defineField: #dwDefaultTTL type: DWORDField readOnly offset: 4;
-		defineField: #dwInReceives type: DWORDField readOnly offset: 8;
-		defineField: #dwInHdrErrors type: DWORDField readOnly offset: 12;
-		defineField: #dwInAddrErrors type: DWORDField readOnly offset: 16;
-		defineField: #dwForwDatagrams type: DWORDField readOnly offset: 20;
-		defineField: #dwInUnknownProtos type: DWORDField readOnly offset: 24;
-		defineField: #dwInDiscards type: DWORDField readOnly offset: 28;
-		defineField: #dwInDelivers type: DWORDField readOnly offset: 32;
-		defineField: #dwOutRequests type: DWORDField readOnly offset: 36;
-		defineField: #dwRoutingDiscards type: DWORDField readOnly offset: 40;
-		defineField: #dwOutDiscards type: DWORDField readOnly offset: 44;
-		defineField: #dwOutNoRoutes type: DWORDField readOnly offset: 48;
-		defineField: #dwReasmTimeout type: DWORDField readOnly offset: 52;
-		defineField: #dwReasmReqds type: DWORDField readOnly offset: 56;
-		defineField: #dwReasmOks type: DWORDField readOnly offset: 60;
-		defineField: #dwReasmFails type: DWORDField readOnly offset: 64;
-		defineField: #dwFragOks type: DWORDField readOnly offset: 68;
-		defineField: #dwFragFails type: DWORDField readOnly offset: 72;
-		defineField: #dwFragCreates type: DWORDField readOnly offset: 76;
-		defineField: #dwNumIf type: DWORDField readOnly offset: 80;
-		defineField: #dwNumAddr type: DWORDField readOnly offset: 84;
-		defineField: #dwNumRoutes type: DWORDField readOnly offset: 88.
+		defineField: #dwForwarding type: UInt32Field readOnly offset: 0;
+		defineField: #dwDefaultTTL type: UInt32Field readOnly offset: 4;
+		defineField: #dwInReceives type: UInt32Field readOnly offset: 8;
+		defineField: #dwInHdrErrors type: UInt32Field readOnly offset: 12;
+		defineField: #dwInAddrErrors type: UInt32Field readOnly offset: 16;
+		defineField: #dwForwDatagrams type: UInt32Field readOnly offset: 20;
+		defineField: #dwInUnknownProtos type: UInt32Field readOnly offset: 24;
+		defineField: #dwInDiscards type: UInt32Field readOnly offset: 28;
+		defineField: #dwInDelivers type: UInt32Field readOnly offset: 32;
+		defineField: #dwOutRequests type: UInt32Field readOnly offset: 36;
+		defineField: #dwRoutingDiscards type: UInt32Field readOnly offset: 40;
+		defineField: #dwOutDiscards type: UInt32Field readOnly offset: 44;
+		defineField: #dwOutNoRoutes type: UInt32Field readOnly offset: 48;
+		defineField: #dwReasmTimeout type: UInt32Field readOnly offset: 52;
+		defineField: #dwReasmReqds type: UInt32Field readOnly offset: 56;
+		defineField: #dwReasmOks type: UInt32Field readOnly offset: 60;
+		defineField: #dwReasmFails type: UInt32Field readOnly offset: 64;
+		defineField: #dwFragOks type: UInt32Field readOnly offset: 68;
+		defineField: #dwFragFails type: UInt32Field readOnly offset: 72;
+		defineField: #dwFragCreates type: UInt32Field readOnly offset: 76;
+		defineField: #dwNumIf type: UInt32Field readOnly offset: 80;
+		defineField: #dwNumAddr type: UInt32Field readOnly offset: 84;
+		defineField: #dwNumRoutes type: UInt32Field readOnly offset: 88.
 	self byteSize: 92!
 
 getFieldNames

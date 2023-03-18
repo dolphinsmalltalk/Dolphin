@@ -184,7 +184,7 @@ readyState
 	Helpstring: Get ready state"
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_readyState: answer.
 	^answer asObject!
 
@@ -264,7 +264,7 @@ status
 	Helpstring: Get HTTP status code"
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_status: answer.
 	^answer asObject!
 

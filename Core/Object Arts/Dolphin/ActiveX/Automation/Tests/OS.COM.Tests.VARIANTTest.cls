@@ -43,7 +43,7 @@ testARRAYREF
 	self assert: var value asArray equals: #(1).
 	array at: 1 put: 2.
 	self assert: var value asArray equals: #(2).
-	array := (DWORDArray withAll: #(1 2 3 4)) asSAFEARRAY.
+	array := (UInt32Array withAll: #(1 2 3 4)) asSAFEARRAY.
 	var := VARIANT new
 				arrayRef: array;
 				yourself.
@@ -58,7 +58,7 @@ testBSTR
 	var bstr: 'abc'.
 	self assert: var vt identicalTo: VT_BSTR.
 	self assert: var value equals: 'abc'.
-	var ulVal: 0.
+	var bytes uintPtrAtOffset: VARIANT._OffsetOf_pbstrVal put: 0.
 	self isValidNullString: var value.
 	var bstr: ''.
 	self isValidNullString: var value.
@@ -80,7 +80,7 @@ testCollectionConversions
 	self assert: var vt equals: VT_ARRAY | VT_UI1.
 	self assert: var value asArray asByteArray equals: bytes.
 	"External array types"
-	#(#{DOUBLEArray} #{FLOATArray} #{DWORDArray} #{SDWORDArray} #{WORDArray} #{SWORDArray}) do: 
+	#(#{DOUBLEArray} #{FLOATArray} #{UInt32Array} #{Int32Array} #{UInt16Array} #{Int16Array}) do: 
 			[:each |
 			| class |
 			class := each value.
@@ -90,17 +90,16 @@ testCollectionConversions
 			self assert: var value asArray equals: array]!
 
 testCY
-	| var |
-	var := VARIANT new.
-	var cy: 0.0.
-	self assert: var vt identicalTo: VT_CY.
-	self assert: var value equals: 0.
-	var cy: 1234.1234s.
-	self assert: var value equals: 1234.1234s.
-	var cy: CURRENCY maximum.
-	self assert: var value equals: CURRENCY maximum.
-	var cy: CURRENCY minimum.
-	self assert: var value equals: CURRENCY minimum!
+	{0s. 1234.456s. 1234.4567s. CURRENCY.MaxValue. CURRENCY.MinValue} do: 
+			[:each |
+			| var |
+			var := VARIANT new.
+			var cy: each.
+			self assert: var vt identicalTo: VT_CY.
+			self assert: var value equals: each.
+			self assert: var printString
+				equals: 'a VARIANT(cy: <1p>)' << (ScaledDecimal newFromNumber: each scale: 4).
+			self assert: var displayString equals: each displayString]!
 
 testCYREF
 	| var cy |
@@ -124,6 +123,38 @@ testDATE
 	self assert: var value equals: DATE maximum.
 	var date: DATE minimum.
 	self assert: var value equals: DATE minimum!
+
+testDECIMAL
+	| var value |
+	var := VARIANT new.
+	var decimal: DECIMAL.MaxValue.
+	self assert: var vt identicalTo: VT_DECIMAL.
+	value := var value.
+	self assert: value equals: DECIMAL.MaxValue.
+	self assert: value isKindOf: ScaledDecimal.
+	self assert: value scale equals: 0.
+	self assert: var displayString equals: DECIMAL.MaxValue displayString.
+	self assert: var printString equals: 'a VARIANT(decimal: <1p>s)' << DECIMAL.MaxValue.
+	var decimal: DECIMAL.SmallestValue.
+	self assert: var vt identicalTo: VT_DECIMAL.
+	value := var value.
+	self assert: value equals: DECIMAL.SmallestValue.
+	self assert: value scale equals: DECIMAL.MaxScale.
+	self assert: var displayString equals: DECIMAL.SmallestValue displayString.
+	self assert: var printString equals: 'a VARIANT(decimal: <1p>)' << DECIMAL.SmallestValue.
+	var decimal: (ScaledDecimal newFromNumber: 0 scale: DECIMAL.MaxScale).
+	value := var value.
+	self assert: value equals: 0.
+	self assert: value scale equals: DECIMAL.MaxScale.
+	self assert: var printString
+		equals: 'a VARIANT(decimal: 0.<1s>s)' << (String new: DECIMAL.MaxScale withAll: $0).
+	var decimal: 123.456s4.
+	self assert: var vt identicalTo: VT_DECIMAL.
+	value := var value.
+	self assert: value equals: 123.456.
+	self assert: value scale equals: 4.
+	self assert: var displayString equals: '123.456'.
+	self assert: var printString equals: 'a VARIANT(decimal: 123.4560s)'!
 
 testDISPATCH
 	| var obj val |
@@ -215,19 +246,19 @@ testFromInteger
 testI1
 	| var |
 	var := VARIANT new.
-	var sbyte: 0.
+	var int8: 0.
 	self assert: var vt identicalTo: VT_I1.
 	self assert: var value identicalTo: 0.
-	var sbyte: 127.
+	var int8: 127.
 	self assert: var value identicalTo: 127.
-	self should: [var sbyte: 128] raise: Error.
-	var sbyte: -128.
+	self should: [var int8: 128] raise: Error.
+	var int8: -128.
 	self assert: var value identicalTo: -128.
-	self should: [var sbyte: 129] raise: Error!
+	self should: [var int8: 129] raise: Error!
 
 testI1REF
 	| var byte |
-	byte := SBYTE new value: 127.
+	byte := Int8 new value: 127.
 	var := byte asVariant.
 	self assert: var vt identicalTo: VT_I1 | VT_BYREF.
 	self assert: var value equals: byte.
@@ -238,19 +269,19 @@ testI1REF
 testI2
 	| var |
 	var := VARIANT new.
-	var sword: 0.
+	var int16: 0.
 	self assert: var vt identicalTo: VT_I2.
 	self assert: var value identicalTo: 0.
-	var sword: 32767.
+	var int16: 32767.
 	self assert: var value identicalTo: 32767.
-	self should: [var sword: 32768] raise: Error.
-	var sword: -32768.
+	self should: [var int16: 32768] raise: Error.
+	var int16: -32768.
 	self assert: var value identicalTo: -32768.
-	self should: [var sword: -32769] raise: Error!
+	self should: [var int16: -32769] raise: Error!
 
 testI2REF
 	| var sword |
-	sword := SWORD new value: 32767.
+	sword := Int16 new value: 32767.
 	var := sword asVariant.
 	self assert: var vt identicalTo: VT_I2 | VT_BYREF.
 	self assert: var value equals: sword.
@@ -261,19 +292,19 @@ testI2REF
 testI4
 	| var |
 	var := VARIANT new.
-	var sdword: 0.
+	var int32: 0.
 	self assert: var vt identicalTo: VT_I4.
 	self assert: var value identicalTo: 0.
-	var sdword: 2147483647.
+	var int32: 2147483647.
 	self assert: var value equals: 2147483647.
-	self should: [var sdword: 2147483648] raise: Error.
-	var sdword: -2147483648.
+	self should: [var int32: 2147483648] raise: Error.
+	var int32: -2147483648.
 	self assert: var value equals: -2147483648.
-	self should: [var sdword: -2147483649] raise: Error!
+	self should: [var int32: -2147483649] raise: Error!
 
 testI4REF
 	| var sdword |
-	sdword := SDWORD new value: 2147483647.
+	sdword := Int32 new value: 2147483647.
 	var := sdword asVariant.
 	self assert: var vt identicalTo: VT_I4 | VT_BYREF.
 	self assert: var value equals: sdword.
@@ -284,15 +315,15 @@ testI4REF
 testI8
 	| var copy |
 	var := VARIANT new.
-	var sqword: 0.
+	var int64: 0.
 	self assert: var vt identicalTo: VT_I8.
 	self assert: var value identicalTo: 0.
-	var sqword: 2 ** 63 - 1.
+	var int64: 2 ** 63 - 1.
 	self assert: var value equals: 2 ** 63 - 1.
-	self should: [var sqword: 2 ** 63] raise: Error.
-	var sqword: -2 ** 63.
+	self should: [var int64: 2 ** 63] raise: Error.
+	var int64: -2 ** 63.
 	self assert: var value equals: -2 ** 63.
-	self should: [var sqword: -2 ** 63 - 1] raise: Error.
+	self should: [var int64: -2 ** 63 - 1] raise: Error.
 	copy := var copy.
 	self assert: copy vt equals: VT_I8.
 	self assert: copy value equals: var value!
@@ -300,15 +331,16 @@ testI8
 testINT
 	| var |
 	var := VARIANT new.
-	var sdword: 0.
-	var vt: VT_INT.
+	var
+		int32: 0;
+		vt: VT_INT.
 	self assert: var value identicalTo: 0.
 	var
-		sdword: 2147483647;
+		int32: 2147483647;
 		vt: VT_INT.
 	self assert: var value equals: 2147483647.
 	var
-		sdword: -2147483648;
+		int32: -2147483648;
 		vt: VT_INT.
 	self assert: var value equals: -2147483648!
 
@@ -376,17 +408,17 @@ testR8REF
 testUI1
 	| var |
 	var := VARIANT new.
-	var byte: 0.
+	var uint8: 0.
 	self assert: var vt identicalTo: VT_UI1.
 	self assert: var value identicalTo: 0.
-	var byte: 255.
+	var uint8: 255.
 	self assert: var value identicalTo: 255.
-	self should: [var byte: 256] raise: Error.
-	self should: [var byte: -1] raise: Error!
+	self should: [var uint8: 256] raise: Error.
+	self should: [var uint8: -1] raise: Error!
 
 testUI1REF
 	| var byte |
-	byte := BYTE new value: 255.
+	byte := UInt8 new value: 255.
 	var := byte asVariant.
 	self assert: var vt identicalTo: VT_UI1 | VT_BYREF.
 	self assert: var value equals: byte.
@@ -397,17 +429,17 @@ testUI1REF
 testUI2
 	| var |
 	var := VARIANT new.
-	var word: 0.
+	var uint16: 0.
 	self assert: var vt identicalTo: VT_UI2.
 	self assert: var value identicalTo: 0.
-	var word: 65535.
+	var uint16: 65535.
 	self assert: var value identicalTo: 65535.
-	self should: [var word: 65536] raise: Error.
-	self should: [var word: -1] raise: Error!
+	self should: [var uint16: 65536] raise: Error.
+	self should: [var uint16: -1] raise: Error!
 
 testUI2REF
 	| var word |
-	word := WORD new value: 65535.
+	word := UInt16 new value: 65535.
 	var := word asVariant.
 	self assert: var vt identicalTo: VT_UI2 | VT_BYREF.
 	self assert: var value equals: word.
@@ -418,22 +450,22 @@ testUI2REF
 testUI4
 	| var |
 	var := VARIANT new.
-	var dword: 0.
+	var uint32: 0.
 	self assert: var vt identicalTo: VT_UI4.
 	self assert: var value identicalTo: 0.
-	var dword: 0.0.
+	var uint32: 0.0.
 	self assert: var vt identicalTo: VT_UI4.
 	self assert: var value identicalTo: 0.
-	var dword: 4294967295.
+	var uint32: 4294967295.
 	self assert: var value equals: 4294967295.
-	self should: [var dword: 4294967296] raise: Error.
+	self should: [var uint32: 4294967296] raise: Error.
 	"dwordAtOffset:put: is unusual in accepting negative values"
-	var dword: -1.
+	var uint32: -1.
 	self assert: var value equals: 4294967295!
 
 testUI4REF
 	| var dword |
-	dword := DWORD new value: 4294967295.
+	dword := UInt32 new value: 4294967295.
 	var := dword asVariant.
 	self assert: var vt identicalTo: VT_UI4 | VT_BYREF.
 	self assert: var value equals: dword.
@@ -444,19 +476,19 @@ testUI4REF
 testUI8
 	| var |
 	var := VARIANT new.
-	var qword: 0.
+	var uint64: 0.
 	self assert: var vt identicalTo: VT_UI8.
 	self assert: var value identicalTo: 0.
-	var qword: 0.0.
+	var uint64: 0.0.
 	self assert: var vt identicalTo: VT_UI8.
 	self assert: var value identicalTo: 0.
-	var qword: 2 ** 63.
+	var uint64: 2 ** 63.
 	self assert: var value equals: 2 ** 63.
-	var qword: 2 ** 64 - 1.
+	var uint64: 2 ** 64 - 1.
 	self assert: var value equals: 2 ** 64 - 1.
-	self should: [var qword: 2 ** 64] raise: Error.
+	self should: [var uint64: 2 ** 64] raise: Error.
 	"dwordAtOffset:put: is unusual in accepting negative values"
-	var qword: -1.
+	var uint64: -1.
 	self assert: var value equals: 2 ** 64 - 1! !
 !OS.COM.Tests.VARIANTTest categoriesForMethods!
 isValidNullString:!private!testing! !
@@ -467,6 +499,7 @@ testCollectionConversions!public!unit tests! !
 testCY!public!unit tests! !
 testCYREF!public!unit tests! !
 testDATE!public!unit tests! !
+testDECIMAL!public!unit tests! !
 testDISPATCH!public!unit tests! !
 testDISPATCHREF!public!unit tests! !
 testDisplayString!public!unit tests! !
@@ -493,13 +526,5 @@ testUI2REF!public!unit tests! !
 testUI4!public!unit tests! !
 testUI4REF!public!unit tests! !
 testUI8!public!unit tests! !
-!
-
-!OS.COM.Tests.VARIANTTest class methodsFor!
-
-supportsI8
-	^true! !
-!OS.COM.Tests.VARIANTTest class categoriesForMethods!
-supportsI8!private!testing! !
 !
 

@@ -27,17 +27,17 @@ blendFunction: aBLENDFUNCTION
 dwFlags
 	"Answer the <Integer> value of the receiver's 'dwFlags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwFlags!
+	^bytes uint32AtOffset: _OffsetOf_dwFlags!
 
 dwFlags: anInteger
 	"Set the receiver's 'dwFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwFlags put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwFlags put: anInteger!
 
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 pBlendFunction
 	"Answer the <BLENDFUNCTION> value of the receiver's 'pBlendFunction' field."
@@ -90,8 +90,8 @@ defineFields
 "
 
 	self
-		defineField: #dwSize type: DWORDField writeOnly;
-		defineField: #dwFlags type: DWORDField new;
+		defineField: #dwSize type: UInt32Field writeOnly;
+		defineField: #dwFlags type: UInt32Field new;
 		defineField: #prcExclude type: (PointerField type: RECTL);
 		defineField: #pBlendFunction type: (PointerField type: BLENDFUNCTION)!
 

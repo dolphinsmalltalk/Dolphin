@@ -44,12 +44,12 @@ struct tagNET_ADDRESS_INFO {
 Format
 	"Answer the <Integer> value of the receiver's 'Format' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_Format!
+	^bytes int32AtOffset: _OffsetOf_Format!
 
 Format: anInteger
 	"Set the receiver's 'Format' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_Format put: anInteger!
+	bytes int32AtOffset: _OffsetOf_Format put: anInteger!
 
 getValidFields
 	^#(#(#IpAddress) #(#NamedAddress_Address #NamedAddress_Port) #(#Ipv4Address) #(#Ipv6Address))
@@ -100,13 +100,13 @@ Ipv6Address: aSOCKADDR_IN6
 NamedAddress_Address
 	"Answer the <WORDArray> value of the receiver's 'NamedAddress_Address' field."
 
-	^WORDArray fromAddress: bytes yourAddress + _OffsetOf_NamedAddress_Address length: 256!
+	^UInt16Array fromAddress: bytes yourAddress + _OffsetOf_NamedAddress_Address length: 256!
 
 NamedAddress_Address: aWORDArray
 	"Set the receiver's 'NamedAddress_Address' field to the value of the argument, aWORDArray"
 
 	| size |
-	size := aWORDArray byteSize min: ##(256 * WORDArray elementSize).
+	size := aWORDArray byteSize min: ##(256 * UInt16Array elementSize).
 	aWORDArray
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_NamedAddress_Address + 1)
@@ -116,13 +116,13 @@ NamedAddress_Address: aWORDArray
 NamedAddress_Port
 	"Answer the <WORDArray> value of the receiver's 'NamedAddress_Port' field."
 
-	^WORDArray fromAddress: bytes yourAddress + _OffsetOf_NamedAddress_Port length: 6!
+	^UInt16Array fromAddress: bytes yourAddress + _OffsetOf_NamedAddress_Port length: 6!
 
 NamedAddress_Port: aWORDArray
 	"Set the receiver's 'NamedAddress_Port' field to the value of the argument, aWORDArray"
 
 	| size |
-	size := aWORDArray byteSize min: ##(6 * WORDArray elementSize).
+	size := aWORDArray byteSize min: ##(6 * UInt16Array elementSize).
 	aWORDArray
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_NamedAddress_Port + 1)
@@ -170,9 +170,9 @@ defineFields
 "
 
 	self
-		defineField: #Format type: SDWORDField new offset: 0;
-		defineField: #NamedAddress_Address type: (ArrayField type: WORDArray length: 256) offset: 4;
-		defineField: #NamedAddress_Port type: (ArrayField type: WORDArray length: 6) offset: 516;
+		defineField: #Format type: Int32Field new offset: 0;
+		defineField: #NamedAddress_Address type: (ArrayField type: UInt16Array length: 256) offset: 4;
+		defineField: #NamedAddress_Port type: (ArrayField type: UInt16Array length: 6) offset: 516;
 		defineField: #Ipv4Address type: (StructureField type: SOCKADDR_IN) offset: 4;
 		defineField: #Ipv6Address type: (StructureField type: SOCKADDR_IN6) offset: 4;
 		defineField: #IpAddress type: (StructureField type: SOCKADDR) offset: 4.

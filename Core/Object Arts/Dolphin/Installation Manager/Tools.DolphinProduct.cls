@@ -71,6 +71,7 @@ contents
 	answer
 		add: #('Core\Object Arts\Dolphin\Base\Dolphin.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Base\Deprecated\Dolphin Base (Old Names).pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\Base\Deprecated\Dolphin Legacy FFI Types (Old Names).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\Win32\CommCtrl\Common Controls Library.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\Win32\MessageBox\Dolphin Message Box.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Base\Dolphin Source Fileout.pax' #plain #imageBased);

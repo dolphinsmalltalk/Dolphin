@@ -58,7 +58,7 @@ allAliases
 h_addr
 	"Answer the FIRST entry in the receiver's h_addr_list field"
 
-	^self h_addr_list dwordAtOffset: 0!
+	^self h_addr_list uint32AtOffset: 0!
 
 h_addr_list
 	"Answer the <Address> value of the receiver's 'h_addr_list' field."
@@ -68,7 +68,7 @@ h_addr_list
 h_addrtype
 	"Answer the <Integer> value of the receiver's 'h_addrtype' field."
 
-	^bytes swordAtOffset: _OffsetOf_h_addrtype!
+	^bytes int16AtOffset: _OffsetOf_h_addrtype!
 
 h_aliases
 	"Answer the <Address> value of the receiver's 'h_aliases' field."
@@ -78,7 +78,7 @@ h_aliases
 h_length
 	"Answer the <Integer> value of the receiver's 'h_length' field."
 
-	^bytes swordAtOffset: _OffsetOf_h_length!
+	^bytes int16AtOffset: _OffsetOf_h_length!
 
 h_name
 	"Answer the <AnsiString> value of the receiver's 'h_name' field."
@@ -139,8 +139,8 @@ defineFields
 	self
 		defineField: #h_name type: (PointerField type: AnsiString) beReadOnly offset: 0;
 		defineField: #h_aliases type: LPVOIDField new beReadOnly offset: 4;
-		defineField: #h_addrtype type: SWORDField new beReadOnly offset: 8;
-		defineField: #h_length type: SWORDField new beReadOnly offset: 10;
+		defineField: #h_addrtype type: Int16Field new beReadOnly offset: 8;
+		defineField: #h_length type: Int16Field new beReadOnly offset: 10;
 		defineField: #h_addr_list type: LPVOIDField new beReadOnly offset: 12.
 	self byteSize: 16!
 

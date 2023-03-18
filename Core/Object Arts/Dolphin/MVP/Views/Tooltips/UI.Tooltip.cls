@@ -111,7 +111,7 @@ nmNotify: pNMHDR
 		at: TTN_FIRST - TTN_SHOW + 1 put: #ttnShow:;
 		at: TTN_FIRST - TTN_POP + 1 put: #ttnPop:;
 		at: TTN_FIRST - TTN_LINKCLICK + 1 put: #ttnLinkClick:;
-		yourself) lookup: ##(TTN_FIRST + 1) - (pNMHDR sdwordAtOffset: 8))
+		yourself) lookup: ##(TTN_FIRST + 1) - (pNMHDR int32AtOffset: 8))
 		ifNil: [super nmNotify: pNMHDR]
 		ifNotNil: [:action | self perform: action with: pNMHDR]!
 

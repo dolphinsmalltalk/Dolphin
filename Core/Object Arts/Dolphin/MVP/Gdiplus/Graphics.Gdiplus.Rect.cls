@@ -31,42 +31,42 @@ struct tagRectF {
 height
 	"Answer the <Integer> value of the receiver's 'height' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_height!
+	^bytes int32AtOffset: _OffsetOf_height!
 
 height: anInteger
 	"Set the receiver's 'height' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_height put: anInteger!
+	bytes int32AtOffset: _OffsetOf_height put: anInteger!
 
 width
 	"Answer the <Integer> value of the receiver's 'width' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_width!
+	^bytes int32AtOffset: _OffsetOf_width!
 
 width: anInteger
 	"Set the receiver's 'width' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_width put: anInteger!
+	bytes int32AtOffset: _OffsetOf_width put: anInteger!
 
 x
 	"Answer the <Integer> value of the receiver's 'x' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_x!
+	^bytes int32AtOffset: _OffsetOf_x!
 
 x: anInteger
 	"Set the receiver's 'x' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_x put: anInteger!
+	bytes int32AtOffset: _OffsetOf_x put: anInteger!
 
 y
 	"Answer the <Integer> value of the receiver's 'y' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_y!
+	^bytes int32AtOffset: _OffsetOf_y!
 
 y: anInteger
 	"Set the receiver's 'y' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_y put: anInteger! !
+	bytes int32AtOffset: _OffsetOf_y put: anInteger! !
 !Graphics.Gdiplus.Rect categoriesForMethods!
 height!**compiled accessors**!public! !
 height:!**compiled accessors**!public! !
@@ -89,19 +89,19 @@ defineFields
 	"
 
 	self
-		defineField: #x type: SDWORDField new;
-		defineField: #y type: SDWORDField new;
-		defineField: #width type: SDWORDField new;
-		defineField: #height type: SDWORDField new!
+		defineField: #x type: Int32Field new;
+		defineField: #y type: Int32Field new;
+		defineField: #width type: Int32Field new;
+		defineField: #height type: Int32Field new!
 
 left: left top: top width: width height: height
 	"Answer a new instance of the receiver with the specified origin and extent."
 
 	^self basicNew bytes: ((ByteArray newFixed: _Rect_Size)
-				sdwordAtOffset: _OffsetOf_x put: left;
-				sdwordAtOffset: _OffsetOf_y put: top;
-				sdwordAtOffset: _OffsetOf_width put: width;
-				sdwordAtOffset: _OffsetOf_height put: height;
+				int32AtOffset: _OffsetOf_x put: left;
+				int32AtOffset: _OffsetOf_y put: top;
+				int32AtOffset: _OffsetOf_width put: width;
+				int32AtOffset: _OffsetOf_height put: height;
 				yourself)! !
 !Graphics.Gdiplus.Rect class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !

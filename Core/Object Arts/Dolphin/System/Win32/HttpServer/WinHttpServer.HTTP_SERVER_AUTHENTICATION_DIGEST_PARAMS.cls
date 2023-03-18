@@ -46,12 +46,12 @@ DomainName: anUtf16String
 DomainNameLength
 	"Answer the <Integer> value of the receiver's 'DomainNameLength' field."
 
-	^bytes wordAtOffset: _OffsetOf_DomainNameLength!
+	^bytes uint16AtOffset: _OffsetOf_DomainNameLength!
 
 DomainNameLength: anInteger
 	"Set the receiver's 'DomainNameLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_DomainNameLength put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_DomainNameLength put: anInteger!
 
 Realm
 	"Answer the <Utf16String> value of the receiver's 'Realm' field."
@@ -66,12 +66,12 @@ Realm: anUtf16String
 RealmLength
 	"Answer the <Integer> value of the receiver's 'RealmLength' field."
 
-	^bytes wordAtOffset: _OffsetOf_RealmLength!
+	^bytes uint16AtOffset: _OffsetOf_RealmLength!
 
 RealmLength: anInteger
 	"Set the receiver's 'RealmLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_RealmLength put: anInteger! !
+	bytes uint16AtOffset: _OffsetOf_RealmLength put: anInteger! !
 !WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS categoriesForMethods!
 DomainName!**compiled accessors**!public! !
 DomainName:!**compiled accessors**!public! !
@@ -103,9 +103,9 @@ defineFields
 "
 
 	self
-		defineField: #DomainNameLength type: WORDField new offset: 0;
+		defineField: #DomainNameLength type: UInt16Field new offset: 0;
 		defineField: #DomainName type: (PointerField type: Utf16String) offset: 4;
-		defineField: #RealmLength type: WORDField new offset: 8;
+		defineField: #RealmLength type: UInt16Field new offset: 8;
 		defineField: #Realm type: (PointerField type: Utf16String) offset: 12.
 	self byteSize: 16!
 

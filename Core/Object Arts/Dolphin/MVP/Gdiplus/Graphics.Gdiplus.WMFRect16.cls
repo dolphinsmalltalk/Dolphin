@@ -34,42 +34,42 @@ struct tagGpWMFRect16 {
 bottom
 	"Answer the <Integer> value of the receiver's 'bottom' field."
 
-	^bytes swordAtOffset: _OffsetOf_bottom!
+	^bytes int16AtOffset: _OffsetOf_bottom!
 
 bottom: anInteger
 	"Set the receiver's 'bottom' field to the value of the argument, anInteger"
 
-	bytes swordAtOffset: _OffsetOf_bottom put: anInteger!
+	bytes int16AtOffset: _OffsetOf_bottom put: anInteger!
 
 left
 	"Answer the <Integer> value of the receiver's 'left' field."
 
-	^bytes swordAtOffset: _OffsetOf_left!
+	^bytes int16AtOffset: _OffsetOf_left!
 
 left: anInteger
 	"Set the receiver's 'left' field to the value of the argument, anInteger"
 
-	bytes swordAtOffset: _OffsetOf_left put: anInteger!
+	bytes int16AtOffset: _OffsetOf_left put: anInteger!
 
 right
 	"Answer the <Integer> value of the receiver's 'right' field."
 
-	^bytes swordAtOffset: _OffsetOf_right!
+	^bytes int16AtOffset: _OffsetOf_right!
 
 right: anInteger
 	"Set the receiver's 'right' field to the value of the argument, anInteger"
 
-	bytes swordAtOffset: _OffsetOf_right put: anInteger!
+	bytes int16AtOffset: _OffsetOf_right put: anInteger!
 
 top
 	"Answer the <Integer> value of the receiver's 'top' field."
 
-	^bytes swordAtOffset: _OffsetOf_top!
+	^bytes int16AtOffset: _OffsetOf_top!
 
 top: anInteger
 	"Set the receiver's 'top' field to the value of the argument, anInteger"
 
-	bytes swordAtOffset: _OffsetOf_top put: anInteger! !
+	bytes int16AtOffset: _OffsetOf_top put: anInteger! !
 !Graphics.Gdiplus.WMFRect16 categoriesForMethods!
 bottom!**compiled accessors**!public! !
 bottom:!**compiled accessors**!public! !
@@ -101,16 +101,16 @@ defineFields
 
 	self
 		defineField: #left
-			type: SWORDField new
+			type: Int16Field new
 			offset: 0;
 		defineField: #top
-			type: SWORDField new
+			type: Int16Field new
 			offset: 2;
 		defineField: #right
-			type: SWORDField new
+			type: Int16Field new
 			offset: 4;
 		defineField: #bottom
-			type: SWORDField new
+			type: Int16Field new
 			offset: 6.
 	self byteSize: 8!
 

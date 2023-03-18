@@ -24,12 +24,12 @@ OS.NMITEMACTIVATE comment: ''!
 iItem
 	"Answer the <Integer> value of the receiver's 'iItem' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_iItem!
+	^bytes int32AtOffset: _OffsetOf_iItem!
 
 iSubItem
 	"Answer the <Integer> value of the receiver's 'iSubItem' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_iSubItem!
+	^bytes int32AtOffset: _OffsetOf_iSubItem!
 
 position
 	^self ptAction asPoint!
@@ -42,22 +42,22 @@ ptAction
 uChanged
 	"Answer the <Integer> value of the receiver's 'uChanged' field."
 
-	^bytes dwordAtOffset: _OffsetOf_uChanged!
+	^bytes uint32AtOffset: _OffsetOf_uChanged!
 
 uKeyFlags
 	"Answer the <Integer> value of the receiver's 'uKeyFlags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_uKeyFlags!
+	^bytes uint32AtOffset: _OffsetOf_uKeyFlags!
 
 uNewState
 	"Answer the <Integer> value of the receiver's 'uNewState' field."
 
-	^bytes dwordAtOffset: _OffsetOf_uNewState!
+	^bytes uint32AtOffset: _OffsetOf_uNewState!
 
 uOldState
 	"Answer the <Integer> value of the receiver's 'uOldState' field."
 
-	^bytes dwordAtOffset: _OffsetOf_uOldState! !
+	^bytes uint32AtOffset: _OffsetOf_uOldState! !
 !OS.NMITEMACTIVATE categoriesForMethods!
 iItem!**compiled accessors**!public! !
 iSubItem!**compiled accessors**!public! !
@@ -92,14 +92,14 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #iItem type: SDWORDField readOnly;
-		defineField: #iSubItem type: SDWORDField readOnly;
-		defineField: #uNewState type: DWORDField readOnly;
-		defineField: #uOldState type: DWORDField readOnly;
-		defineField: #uChanged type: DWORDField readOnly;
+		defineField: #iItem type: Int32Field readOnly;
+		defineField: #iSubItem type: Int32Field readOnly;
+		defineField: #uNewState type: UInt32Field readOnly;
+		defineField: #uOldState type: UInt32Field readOnly;
+		defineField: #uChanged type: UInt32Field readOnly;
 		defineField: #ptAction type: (StructureField type: POINTL) beReadOnly;
-		defineField: #lParam type: INT_PTRField filler;
-		defineField: #uKeyFlags type: DWORDField readOnly!
+		defineField: #lParam type: IntPtrField filler;
+		defineField: #uKeyFlags type: UInt32Field readOnly!
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #iItem #iSubItem #uNewState #uOldState #uChanged #ptAction #uKeyFlags)! !

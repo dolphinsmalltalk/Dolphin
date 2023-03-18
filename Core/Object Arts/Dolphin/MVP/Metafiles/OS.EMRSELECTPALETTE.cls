@@ -30,12 +30,12 @@ struct tagEMRSELECTPALETTE {
 ihPal
 	"Answer the <Integer> value of the receiver's 'ihPal' field."
 
-	^bytes dwordAtOffset: _OffsetOf_ihPal!
+	^bytes uint32AtOffset: _OffsetOf_ihPal!
 
 ihPal: anInteger
 	"Set the receiver's 'ihPal' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_ihPal put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_ihPal put: anInteger! !
 !OS.EMRSELECTPALETTE categoriesForMethods!
 ihPal!**compiled accessors**!public! !
 ihPal:!**compiled accessors**!public! !
@@ -61,7 +61,7 @@ defineFields
 	super defineFields.
 	self
 		defineField: #ihPal
-		type: DWORDField new
+		type: UInt32Field new
 		offset: 8.
 	self byteSize: 12!
 

@@ -30,12 +30,12 @@ struct tagEMRRESTOREDC {
 iRelative
 	"Answer the <Integer> value of the receiver's 'iRelative' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_iRelative!
+	^bytes int32AtOffset: _OffsetOf_iRelative!
 
 iRelative: anInteger
 	"Set the receiver's 'iRelative' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_iRelative put: anInteger! !
+	bytes int32AtOffset: _OffsetOf_iRelative put: anInteger! !
 !OS.EMRRESTOREDC categoriesForMethods!
 iRelative!**compiled accessors**!public! !
 iRelative:!**compiled accessors**!public! !
@@ -61,7 +61,7 @@ defineFields
 	super defineFields.
 	self
 		defineField: #iRelative
-		type: SDWORDField new
+		type: Int32Field new
 		offset: 8.
 	self byteSize: 12!
 

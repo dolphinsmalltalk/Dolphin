@@ -36,12 +36,12 @@ policy
 Policy
 	"Answer the <Integer> value of the receiver's 'Policy' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_Policy!
+	^bytes int32AtOffset: _OffsetOf_Policy!
 
 Policy: anInteger
 	"Set the receiver's 'Policy' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_Policy put: anInteger!
+	bytes int32AtOffset: _OffsetOf_Policy put: anInteger!
 
 printFields: aCollection on: aStream
 	| policy |
@@ -56,12 +56,12 @@ printFields: aCollection on: aStream
 SecondsToLive
 	"Answer the <Integer> value of the receiver's 'SecondsToLive' field."
 
-	^bytes dwordAtOffset: _OffsetOf_SecondsToLive!
+	^bytes uint32AtOffset: _OffsetOf_SecondsToLive!
 
 SecondsToLive: anInteger
 	"Set the receiver's 'SecondsToLive' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_SecondsToLive put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_SecondsToLive put: anInteger! !
 !WinHttpServer.HTTP_CACHE_POLICY categoriesForMethods!
 policy!accessing!public! !
 Policy!**compiled accessors**!public! !
@@ -89,8 +89,8 @@ defineFields
 "
 
 	self
-		defineField: #Policy type: SDWORDField new offset: 0;
-		defineField: #SecondsToLive type: DWORDField new offset: 4.
+		defineField: #Policy type: Int32Field new offset: 0;
+		defineField: #SecondsToLive type: UInt32Field new offset: 4.
 	self byteSize: 8!
 
 getFieldNames

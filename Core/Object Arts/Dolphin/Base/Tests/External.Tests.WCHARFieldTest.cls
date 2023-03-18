@@ -12,11 +12,11 @@ External.Tests.WCHARFieldTest comment: ''!
 
 testReadFrom
 	| struct dolphinString char subject |
-	struct := DWORD new.
+	struct := UInt32 new.
 	dolphinString := Character dolphin asUtf16String.
 	struct bytes
-		wordAtOffset: 0 put: (dolphinString at: 1) codeUnit;
-		wordAtOffset: 2 put: (dolphinString at: 2) codeUnit.
+		uint16AtOffset: 0 put: (dolphinString at: 1) codeUnit;
+		uint16AtOffset: 2 put: (dolphinString at: 2) codeUnit.
 	subject := WCHARField new
 				offset: 0;
 				yourself.
@@ -30,7 +30,7 @@ testReadFrom
 
 testWriteInto
 	| struct dolphinString subject actual |
-	struct := DWORD new.
+	struct := UInt32 new.
 	dolphinString := Character dolphin asUtf16String.
 	subject := WCHARField new
 				offset: 0;

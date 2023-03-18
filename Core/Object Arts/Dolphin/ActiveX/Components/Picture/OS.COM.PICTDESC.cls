@@ -20,47 +20,47 @@ OS.COM.PICTDESC comment: ''!
 dw1
 	"Answer the <Integer> value of the receiver's 'dw1' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dw1!
+	^bytes uint32AtOffset: _OffsetOf_dw1!
 
 dw1: anInteger
 	"Set the receiver's 'dw1' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dw1 put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dw1 put: anInteger!
 
 dw2
 	"Answer the <Integer> value of the receiver's 'dw2' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dw2!
+	^bytes uint32AtOffset: _OffsetOf_dw2!
 
 dw2: anInteger
 	"Set the receiver's 'dw2' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dw2 put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dw2 put: anInteger!
 
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 handle
 	"Answer the <Integer> value of the receiver's 'handle' field."
 
-	^bytes dwordAtOffset: _OffsetOf_handle!
+	^bytes uint32AtOffset: _OffsetOf_handle!
 
 handle: anInteger
 	"Set the receiver's 'handle' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_handle put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_handle put: anInteger!
 
 picType
 	"Answer the <Integer> value of the receiver's 'picType' field."
 
-	^bytes dwordAtOffset: _OffsetOf_picType!
+	^bytes uint32AtOffset: _OffsetOf_picType!
 
 picType: anInteger
 	"Set the receiver's 'picType' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_picType put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_picType put: anInteger! !
 !OS.COM.PICTDESC categoriesForMethods!
 dw1!**compiled accessors**!public! !
 dw1:!**compiled accessors**!public! !
@@ -115,13 +115,13 @@ defineFields
 	"
 
 	self
-		defineField: #dwSize type: DWORDField writeOnly;	"Renamed from cbSizeOfStruct"
-		defineField: #picType type: DWORDField new;
+		defineField: #dwSize type: UInt32Field writeOnly;	"Renamed from cbSizeOfStruct"
+		defineField: #picType type: UInt32Field new;
 
 		"Next version of Dolphin can handle unions, in mean time..."
-		defineField: #handle type: DWORDField new;
-		defineField: #dw1 type: DWORDField new;
-		defineField: #dw2 type: DWORDField new
+		defineField: #handle type: UInt32Field new;
+		defineField: #dw1 type: UInt32Field new;
+		defineField: #dw2 type: UInt32Field new
 
 		"Definition for next version"
 "		defineField: #hbitmap type: HANDLEField new offset: 8;

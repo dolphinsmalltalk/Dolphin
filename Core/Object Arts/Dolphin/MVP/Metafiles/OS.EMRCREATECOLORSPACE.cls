@@ -32,12 +32,12 @@ struct tagEMRCREATECOLORSPACE {
 ihCS
 	"Answer the <Integer> value of the receiver's 'ihCS' field."
 
-	^bytes dwordAtOffset: _OffsetOf_ihCS!
+	^bytes uint32AtOffset: _OffsetOf_ihCS!
 
 ihCS: anInteger
 	"Set the receiver's 'ihCS' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_ihCS put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_ihCS put: anInteger!
 
 lcs
 	"Answer the <LOGCOLORSPACE> value of the receiver's 'lcs' field."
@@ -80,7 +80,7 @@ defineFields
 	super defineFields.
 	self
 		defineField: #ihCS
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 8;
 		defineField: #lcs
 			type: (StructureField type: LOGCOLORSPACE)

@@ -427,13 +427,13 @@ uncheckedAt: anInteger
 	"Private - Answer an 8-bit unsigned <SmallInteger> representing the element of the 
 	receiver at the specified <integer> index. No bounds checks are performed on the subscript."
 
-	^bytes byteAtOffset: anInteger - 1!
+	^bytes uint8AtOffset: anInteger - 1!
 
 uncheckedAt: indexInteger put: valueInteger 
 	"Private - Replace the 8-bit unsigned integer value at the specified index in the receiver
 	with the <integer> argument. No bounds checks are performed on the subscript."
 
-	^bytes byteAtOffset: indexInteger - 1 put: valueInteger!
+	^bytes uint8AtOffset: indexInteger - 1 put: valueInteger!
 
 uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: operation 
 	"Private - Evaluate the <dyadicValuable>, operation, for each element of the receiver
@@ -520,7 +520,7 @@ alignment
 elementClass
 	"Answer the class of <ExternalStructure> used to represent elements of the receiver."
 
-	^BYTE!
+	^UInt8!
 
 elementSize
 	"Private - Answer the size of the receiver's instances' constituent 

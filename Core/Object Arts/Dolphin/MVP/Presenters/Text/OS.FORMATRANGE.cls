@@ -19,12 +19,12 @@ FORMATRANGE is used in conjunction with the Rich Edit control''s EM_FORMATRANGE 
 cpMax: anInteger
 	"Set the receiver's 'cpMax' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_cpMax put: anInteger!
+	bytes int32AtOffset: _OffsetOf_cpMax put: anInteger!
 
 cpMin: anInteger
 	"Set the receiver's 'cpMin' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_cpMin put: anInteger! !
+	bytes int32AtOffset: _OffsetOf_cpMin put: anInteger! !
 !OS.FORMATRANGE categoriesForMethods!
 cpMax:!**compiled accessors**!public! !
 cpMin:!**compiled accessors**!public! !
@@ -44,8 +44,8 @@ defineFields
 	super defineFields.
 	"Expand CHARRANGE inline"
 	self
-		defineField: #cpMin type: SDWORDField writeOnly;
-		defineField: #cpMax type: SDWORDField writeOnly!
+		defineField: #cpMin type: Int32Field writeOnly;
+		defineField: #cpMax type: Int32Field writeOnly!
 
 getFieldNames
 	^#(#hdc #hdcTarget #rc #rcPage #cpMin #cpMax)! !

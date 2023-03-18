@@ -113,23 +113,23 @@ initializeFromHandle: aGpStringFormatHandle
 	| buf tabCount |
 	buf := ByteArray newFixed: 8.
 	Gdip gdipGetStringFormatFlags: aGpStringFormatHandle flags: buf.
-	flags := buf dwordAtOffset: 0.
+	flags := buf uint32AtOffset: 0.
 	Gdip gdipGetStringFormatAlign: aGpStringFormatHandle align: buf.
-	alignment := buf sdwordAtOffset: 0.
+	alignment := buf int32AtOffset: 0.
 	Gdip gdipGetStringFormatLineAlign: aGpStringFormatHandle align: buf.
-	lineAlignment := buf sdwordAtOffset: 0.
+	lineAlignment := buf int32AtOffset: 0.
 	Gdip gdipGetStringFormatTrimming: aGpStringFormatHandle trimming: buf.
-	trimming := buf sdwordAtOffset: 0.
+	trimming := buf int32AtOffset: 0.
 	Gdip
 		gdipGetStringFormatDigitSubstitution: aGpStringFormatHandle
 		language: buf
 		substitute: buf yourAddress + 4.
-	language := buf wordAtOffset: 0.
-	digitSubstitution := buf sdwordAtOffset: 4.
+	language := buf uint16AtOffset: 0.
+	digitSubstitution := buf int32AtOffset: 4.
 	Gdip gdipGetStringFormatHotkeyPrefix: aGpStringFormatHandle hotkeyPrefix: buf.
-	hotkeyPrefix := buf sdwordAtOffset: 0.
+	hotkeyPrefix := buf int32AtOffset: 0.
 	Gdip gdipGetStringFormatTabStopCount: aGpStringFormatHandle count: buf.
-	tabCount := buf sdwordAtOffset: 0.
+	tabCount := buf int32AtOffset: 0.
 	tabCount == 0
 		ifTrue: [tabOffsets := #()]
 		ifFalse: 
@@ -262,8 +262,8 @@ setMeasurableCharacterRanges: aGpStringFormat
 			| each |
 			each := characterRanges at: j.
 			charRanges
-				sdwordAtOffset: (j - 1) * 8 put: each start - 1;
-				sdwordAtOffset: j * 8 - 4 put: each size].
+				int32AtOffset: (j - 1) * 8 put: each start - 1;
+				int32AtOffset: j * 8 - 4 put: each size].
 	Gdip
 		gdipSetStringFormatMeasurableCharacterRanges: aGpStringFormat asParameter
 		rangeCount: characterRanges size

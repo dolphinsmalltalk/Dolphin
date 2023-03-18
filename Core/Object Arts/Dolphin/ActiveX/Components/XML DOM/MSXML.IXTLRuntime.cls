@@ -78,7 +78,7 @@ absoluteChildNumber: pNode
 	"Answer the <sdword> result of invoking the absoluteChildNumber() method of the COM object."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self AbsoluteChildNumber: pNode pNumber: answer.
 	^answer asObject!
 
@@ -96,7 +96,7 @@ ancestorChildNumber: bstrNodeName pNode: pNode
 	"Answer the <sdword> result of invoking the ancestorChildNumber() method of the COM object."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self
 		AncestorChildNumber: bstrNodeName
 		pNode: pNode
@@ -118,7 +118,7 @@ childNumber: pNode
 	"Answer the <sdword> result of invoking the childNumber() method of the COM object."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self ChildNumber: pNode pNumber: answer.
 	^answer asObject!
 
@@ -136,7 +136,7 @@ depth: pNode
 	"Answer the <sdword> result of invoking the depth() method of the COM object."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self Depth: pNode pDepth: answer.
 	^answer asObject!
 
@@ -264,7 +264,7 @@ uniqueID: pNode
 	"Answer the <sdword> result of invoking the uniqueID() method of the COM object."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self UniqueID: pNode pID: answer.
 	^answer asObject!
 

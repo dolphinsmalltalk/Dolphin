@@ -13,10 +13,10 @@ Graphics.Gdiplus.ARGBArray comment: ''!
 uncheckedAt: anInteger
 	"Private - Answer a <Color> representing the 32-bit ARGB value at the specified <integer> index in the receiver. No bounds checks are performed on the subscript."
 
-	^Color fromArgbCode: (bytes dwordAtOffset: (anInteger - 1) * 4)!
+	^Color fromArgbCode: (bytes uint32AtOffset: (anInteger - 1) * 4)!
 
 uncheckedAt: indexInteger put: aColor
-	bytes dwordAtOffset: (indexInteger - 1) * 4 put: aColor argbCode.
+	bytes uint32AtOffset: (indexInteger - 1) * 4 put: aColor argbCode.
 	^aColor! !
 !Graphics.Gdiplus.ARGBArray categoriesForMethods!
 uncheckedAt:!accessing!private! !

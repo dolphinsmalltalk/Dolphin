@@ -80,17 +80,17 @@ lParam: anObject
 mask
 	"Answer the <Integer> value of the receiver's 'mask' field."
 
-	^bytes dwordAtOffset: _OffsetOf_mask!
+	^bytes uint32AtOffset: _OffsetOf_mask!
 
 mask: anInteger
 	"Set the receiver's 'mask' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_mask put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_mask put: anInteger!
 
 maskIn: anInteger
 	"OR in to receiver's mask field the bit flags represented by anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_mask put: ((bytes dwordAtOffset: _OffsetOf_mask) bitOr: anInteger)!
+	bytes uint32AtOffset: _OffsetOf_mask put: ((bytes uint32AtOffset: _OffsetOf_mask) bitOr: anInteger)!
 
 newTextBuffer: anInteger
 	"Allocate a new text buffer for the receiver of the specified size."
@@ -178,7 +178,7 @@ text: aString
 textCallback
 	"Sets the receiver into text callback mode"
 
-	bytes dwordAtOffset: self textPointerOffset put: LPSTR_TEXTCALLBACK.
+	bytes uint32AtOffset: self textPointerOffset put: LPSTR_TEXTCALLBACK.
 	self maskIn: self textValidMask!
 
 textInBuffer: aString
@@ -194,7 +194,7 @@ textInBuffer: aString
 			"Ensure we don't truncate in the middle of a character"
 			(utf16 at: last) isUtf16Lead ifTrue: [last := last - 1].
 			utf16 := (utf16 copyFrom: 1 to: last) , '…'].
-	utf16 copyToBuffer: (bytes sdwordAtOffset: self textPointerOffset) ofSize: max!
+	utf16 copyToBuffer: (bytes int32AtOffset: self textPointerOffset) ofSize: max!
 
 textPointerOffset
 	"Private - Answer the offset of the text pointer in the receiver. "
@@ -255,7 +255,7 @@ defineFields
 
 	self
 		defineField: #mask
-		type: DWORDField new
+		type: UInt32Field new
 		offset: 0! !
 !OS.CCITEM class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !

@@ -32,12 +32,12 @@ struct tagHTTP_CONNECTION_LIMIT_INFO {
 MaxConnections
 	"Answer the <Integer> value of the receiver's 'MaxConnections' field."
 
-	^bytes dwordAtOffset: _OffsetOf_MaxConnections!
+	^bytes uint32AtOffset: _OffsetOf_MaxConnections!
 
 MaxConnections: anInteger
 	"Set the receiver's 'MaxConnections' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_MaxConnections put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_MaxConnections put: anInteger!
 
 value
 	^self Present ifTrue: [self MaxConnections]!
@@ -78,7 +78,7 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #MaxConnections type: DWORDField new offset: 4.
+		defineField: #MaxConnections type: UInt32Field new offset: 4.
 	self byteSize: 8!
 
 getFieldNames

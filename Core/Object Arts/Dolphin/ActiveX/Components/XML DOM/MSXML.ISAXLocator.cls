@@ -45,7 +45,7 @@ getColumnNumber
 	"Answer the <sdword> result of invoking the getColumnNumber() method of the COM object."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self GetColumnNumber: answer.
 	^answer asObject!
 
@@ -62,7 +62,7 @@ getLineNumber
 	"Answer the <sdword> result of invoking the getLineNumber() method of the COM object."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self GetLineNumber: answer.
 	^answer asObject!
 
@@ -79,7 +79,7 @@ getPublicId
 	"Answer the <word> result of invoking the getPublicId() method of the COM object."
 
 	| answer |
-	answer := WORD newBufferClass: TaskMemory.
+	answer := UInt16 newBufferClass: TaskMemory.
 	self GetPublicId: answer.
 	^answer asObject!
 
@@ -96,7 +96,7 @@ getSystemId
 	"Answer the <word> result of invoking the getSystemId() method of the COM object."
 
 	| answer |
-	answer := WORD newBufferClass: TaskMemory.
+	answer := UInt16 newBufferClass: TaskMemory.
 	self GetSystemId: answer.
 	^answer asObject!
 

@@ -12,12 +12,12 @@ External.WCHARField comment: '`WCHARField` is a `ScalarField` class to describe 
 !External.WCHARField methodsFor!
 
 basicWriteInto: anExternalStructure value: anInteger
-	^anExternalStructure bytes wordAtOffset: offset put: anInteger!
+	^anExternalStructure bytes uint16AtOffset: offset put: anInteger!
 
 readFrom: anExternalStructure
 	"Private - Answer a <Character> representing the UTF-16 character at the receiver's offset in the <ExternalStructure> argument."
 
-	^Character utf16Value: (anExternalStructure bytes wordAtOffset: offset)! !
+	^Character utf16Value: (anExternalStructure bytes uint16AtOffset: offset)! !
 !External.WCHARField categoriesForMethods!
 basicWriteInto:value:!accessing!private! !
 readFrom:!indirect accessing!private! !

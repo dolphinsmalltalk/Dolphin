@@ -363,6 +363,11 @@ isImmediate
 	^true
 !
 
+isInt32
+	"Answer whether the receiver can be represented as a 32-bit two's complement signed integer."
+
+	^VMConstants.IsWin64 not or: [super isInt32]!
+
 isZero
 	"Answer whether the receiver is zero. SmallIntegers can be zero, and there is a
 	very fast check."
@@ -574,6 +579,7 @@ instVarAt:!accessing!private! !
 instVarAt:put:!accessing!private! !
 isAtomic!public!testing! !
 isImmediate!public!testing! !
+isInt32!public!testing! !
 isZero!public!testing! !
 lowBit!bit manipulation!public! !
 multiplyByInteger:!double dispatch!private! !

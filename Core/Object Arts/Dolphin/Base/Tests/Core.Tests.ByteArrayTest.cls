@@ -16,41 +16,23 @@ assimilate: anObject
 collectionClass
 	^ByteArray!
 
-dwordValues
-	^#(16r0 16r1 16r7F 16r80 16r7FFF 16r8000 16r7FFFFFFF 16r80000000 16rFFFFFFFE 16rFFFFFFFF)!
-
-sdwordValues
+int32Values
 	^#(-16r7FFFFFFF -16r8000 -16r7FFF -16r80 -16r7F -16r1 16r0 16r1 16r7F 16r80 16r7FFF 16r8000 16r7FFFFFFF)!
 
-testBasicDwordAtOffsetPut
+testBasicUInt32AtOffsetPut
 	"#1457"
 
 	| array |
 	array := ByteArray new: 4.
-	self assert: (array dwordAtOffset: 0) equals: 0.
-	self dwordValues do: 
+	self assert: (array uint32AtOffset: 0) equals: 0.
+	self uint32Values do: 
 			[:each |
-			array basicDwordAtOffset: 0 put: each.
-			self assert: (array dwordAtOffset: 0) equals: each.
-			array basicDwordAtOffset: 0 put: (External.DWORD fromInteger: each).
-			self assert: (array dwordAtOffset: 0) equals: each].
-	self should: [array basicDwordAtOffset: 0 put: -16r80000001] raise: Error.
-	self should: [array basicDwordAtOffset: 0 put: 16rFFFFFFFF + 1] raise: Error!
-
-testDwordAtOffsetPut
-	"#1457"
-
-	| array |
-	array := ByteArray new: 4.
-	self assert: (array dwordAtOffset: 0) equals: 0.
-	self dwordValues do: 
-			[:each |
-			array dwordAtOffset: 0 put: each.
-			self assert: (array dwordAtOffset: 0) equals: each.
-			array dwordAtOffset: 0 put: (External.DWORD fromInteger: each).
-			self assert: (array dwordAtOffset: 0) equals: each].
-	self should: [array dwordAtOffset: 0 put: -16r80000001] raise: Error.
-	self should: [array dwordAtOffset: 0 put: 16rFFFFFFFF + 1] raise: Error!
+			array basicUInt32AtOffset: 0 put: each.
+			self assert: (array uint32AtOffset: 0) equals: each.
+			array basicUInt32AtOffset: 0 put: (External.UInt32 fromInteger: each).
+			self assert: (array uint32AtOffset: 0) equals: each].
+	self should: [array basicUInt32AtOffset: 0 put: -16r80000001] raise: Error.
+	self should: [array basicUInt32AtOffset: 0 put: 16rFFFFFFFF + 1] raise: Error!
 
 testFromHexString
 	| hex expected |
@@ -72,6 +54,39 @@ testFromHexString
 	"We allow lower case chars too."
 	self assert: (ByteArray fromHexString: 'fe') equals: #[254].
 	#(' 0' '1 ' 'GH' '1') do: [:each | self should: [ByteArray fromHexString: each] raise: Error]!
+
+testInt32AtOffsetPut
+	| array |
+	array := ByteArray new: 4.
+	self assert: (array int32AtOffset: 0) equals: 0.
+	self int32Values do: 
+			[:each |
+			array int32AtOffset: 0 put: each.
+			self assert: (array int32AtOffset: 0) equals: each.
+			array int32AtOffset: 0 put: (External.Int32 fromInteger: each).
+			self assert: (array int32AtOffset: 0) equals: each].
+	self should: [array int32AtOffset: 0 put: -16r80000001] raise: Error.
+	self should: [array int32AtOffset: 0 put: 16r80000000] raise: Error!
+
+testInt8AtOffset
+	0 to: 127 do: [:each | self assert: ((ByteArray with: each) int8AtOffset: 0) equals: each].
+	128 to: 255 do: [:each | self assert: ((ByteArray with: each) int8AtOffset: 0) equals: each - 256]!
+
+testInt8AtOffsetPut
+	| array |
+	array := ByteArray new: 1.
+	self assert: (array at: 1) equals: 0.
+	127 to: 0
+		by: -1
+		do: 
+			[:each |
+			array int8AtOffset: 0 put: each.
+			self assert: (array at: 1) equals: each].
+	-128 to: -1
+		do: 
+			[:each |
+			array int8AtOffset: 0 put: each.
+			self assert: (array at: 1) equals: (each bitAnd: 255)]!
 
 testMixedConcatenation
 	"Test concatenating other types of sequenceable collection onto an array"
@@ -105,73 +120,58 @@ testMixedConcatenation
 	self should: [#[] , Character dolphin asUtf8String] raise: Error.
 	self should: [#[] , Character dolphin asUtf16String] raise: Error!
 
-testSbyteAtOffset
-	0 to: 127 do: [:each | self assert: ((ByteArray with: each) sbyteAtOffset: 0) equals: each].
-	128 to: 255 do: [:each | self assert: ((ByteArray with: each) sbyteAtOffset: 0) equals: each - 256]!
-
-testSbyteAtOffsetPut
-	| array |
-	array := ByteArray new: 1.
-	self assert: (array at: 1) equals: 0.
-	127 to: 0
-		by: -1
-		do: 
-			[:each |
-			array sbyteAtOffset: 0 put: each.
-			self assert: (array at: 1) equals: each].
-	-128 to: -1
-		do: 
-			[:each |
-			array sbyteAtOffset: 0 put: each.
-			self assert: (array at: 1) equals: (each bitAnd: 255)]!
-
-testSDwordAtOffsetPut
-	| array |
-	array := ByteArray new: 4.
-	self assert: (array sdwordAtOffset: 0) equals: 0.
-	self sdwordValues do: 
-			[:each |
-			array sdwordAtOffset: 0 put: each.
-			self assert: (array sdwordAtOffset: 0) equals: each.
-			array sdwordAtOffset: 0 put: (External.SDWORD fromInteger: each).
-			self assert: (array sdwordAtOffset: 0) equals: each].
-	self should: [array sdwordAtOffset: 0 put: -16r80000001] raise: Error.
-	self should: [array sdwordAtOffset: 0 put: 16r80000000] raise: Error!
-
-testWordAtOffsetPut
+testUInt16AtOffsetPut
 	"#1457"
 
 	| array |
 	array := ByteArray new: 4.
-	self assert: (array wordAtOffset: 0) equals: 0.
-	self wordValues do: 
+	self assert: (array uint16AtOffset: 0) equals: 0.
+	self uint16Values do: 
 			[:each |
-			array wordAtOffset: 0 put: each.
-			self assert: (array wordAtOffset: 0) equals: each.
-			array wordAtOffset: 0 put: (External.WORD fromInteger: each).
-			self assert: (array wordAtOffset: 0) equals: each].
+			array uint16AtOffset: 0 put: each.
+			self assert: (array uint16AtOffset: 0) equals: each.
+			array uint16AtOffset: 0 put: (External.UInt16 fromInteger: each).
+			self assert: (array uint16AtOffset: 0) equals: each].
 	{-16r8001. 16rFFFF + 1} do: 
 			[:each |
 			self
-				should: [array wordAtOffset: 0 put: each]
+				should: [array uint16AtOffset: 0 put: each]
 				raise: OS.HRESULTError
 				matching: [:ex | ex hresult = (OS.HRESULT fromPrimitiveFailureCode: _PrimitiveFailureCode.IntegerOutOfRange)]]!
 
-wordValues
-	^#(16r0 16r1 16r7F 16r80 16r7FFF 16r8000 16rFFFE 16rFFFF)! !
+testUInt32AtOffsetPut
+	"#1457"
+
+	| array |
+	array := ByteArray new: 4.
+	self assert: (array uint32AtOffset: 0) equals: 0.
+	self uint32Values do: 
+			[:each |
+			array uint32AtOffset: 0 put: each.
+			self assert: (array uint32AtOffset: 0) equals: each.
+			array uint32AtOffset: 0 put: (External.UInt32 fromInteger: each).
+			self assert: (array uint32AtOffset: 0) equals: each].
+	self should: [array uint32AtOffset: 0 put: -16r80000001] raise: Error.
+	self should: [array uint32AtOffset: 0 put: 16rFFFFFFFF + 1] raise: Error!
+
+uint16Values
+	^#(16r0 16r1 16r7F 16r80 16r7FFF 16r8000 16rFFFE 16rFFFF)!
+
+uint32Values
+	^#(16r0 16r1 16r7F 16r80 16r7FFF 16r8000 16r7FFFFFFF 16r80000000 16rFFFFFFFE 16rFFFFFFFF)! !
 !Core.Tests.ByteArrayTest categoriesForMethods!
 assimilate:!public!unit tests! !
 collectionClass!helpers!private! !
-dwordValues!constants!private! !
-sdwordValues!constants!private! !
-testBasicDwordAtOffsetPut!public!unit tests! !
-testDwordAtOffsetPut!public!unit tests! !
+int32Values!constants!private! !
+testBasicUInt32AtOffsetPut!public!unit tests! !
 testFromHexString!public! !
+testInt32AtOffsetPut!public!unit tests! !
+testInt8AtOffset!public!unit tests! !
+testInt8AtOffsetPut!public!unit tests! !
 testMixedConcatenation!public! !
-testSbyteAtOffset!public!unit tests! !
-testSbyteAtOffsetPut!public!unit tests! !
-testSDwordAtOffsetPut!public!unit tests! !
-testWordAtOffsetPut!public!unit tests! !
-wordValues!constants!private! !
+testUInt16AtOffsetPut!public!unit tests! !
+testUInt32AtOffsetPut!public!unit tests! !
+uint16Values!constants!private! !
+uint32Values!constants!private! !
 !
 

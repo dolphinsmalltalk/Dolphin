@@ -32,12 +32,12 @@ struct tagHTTP_PROTECTION_LEVEL_INFO {
 Level
 	"Answer the <Integer> value of the receiver's 'Level' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_Level!
+	^bytes int32AtOffset: _OffsetOf_Level!
 
 Level: anInteger
 	"Set the receiver's 'Level' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_Level put: anInteger! !
+	bytes int32AtOffset: _OffsetOf_Level put: anInteger! !
 !WinHttpServer.HTTP_PROTECTION_LEVEL_INFO categoriesForMethods!
 Level!**compiled accessors**!public! !
 Level:!**compiled accessors**!public! !
@@ -62,7 +62,7 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #Level type: SDWORDField new offset: 4.
+		defineField: #Level type: Int32Field new offset: 4.
 	self byteSize: 8!
 
 getFieldNames

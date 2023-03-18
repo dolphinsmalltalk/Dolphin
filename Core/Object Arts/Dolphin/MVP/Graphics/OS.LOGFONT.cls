@@ -50,7 +50,7 @@ lfFaceName: anAnsiString
 		from: ##(_OffsetOf_lfFaceName + 1)
 		to: _OffsetOf_lfFaceName + size
 		startingAt: 1.
-	bytes byteAtOffset: _OffsetOf_lfFaceName + size put: 0! !
+	bytes uint8AtOffset: _OffsetOf_lfFaceName + size put: 0! !
 !OS.LOGFONT categoriesForMethods!
 createFont!private!realizing/unrealizing! !
 faceName!accessing!public! !

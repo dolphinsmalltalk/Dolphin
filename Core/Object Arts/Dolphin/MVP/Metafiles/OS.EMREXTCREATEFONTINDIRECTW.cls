@@ -46,12 +46,12 @@ elfw: anEXTLOGFONTW
 ihFont
 	"Answer the <Integer> value of the receiver's 'ihFont' field."
 
-	^bytes dwordAtOffset: _OffsetOf_ihFont!
+	^bytes uint32AtOffset: _OffsetOf_ihFont!
 
 ihFont: anInteger
 	"Set the receiver's 'ihFont' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_ihFont put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_ihFont put: anInteger! !
 !OS.EMREXTCREATEFONTINDIRECTW categoriesForMethods!
 elfw!**compiled accessors**!public! !
 elfw:!**compiled accessors**!public! !
@@ -80,7 +80,7 @@ defineFields
 	super defineFields.
 	self
 		defineField: #ihFont
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 8;
 		defineField: #elfw
 			type: (StructureField type: EXTLOGFONTW)

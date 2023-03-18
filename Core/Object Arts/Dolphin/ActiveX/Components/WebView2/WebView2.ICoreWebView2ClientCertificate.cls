@@ -67,7 +67,7 @@ kind
 	"Answer the <sdword> value of the 'Kind' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_Kind: answer.
 	^answer asObject! !
 !WebView2.ICoreWebView2ClientCertificate categoriesForMethods!

@@ -27,17 +27,17 @@ https://msdn.microsoft.com/en-us/library/windows/desktop/ms646272(v=vs.85).aspx'
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 dwTime
 	"Answer the <Integer> value of the receiver's 'dwTime' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwTime!
+	^bytes uint32AtOffset: _OffsetOf_dwTime!
 
 dwTime: anInteger
 	"Set the receiver's 'dwTime' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwTime put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_dwTime put: anInteger! !
 !OS.LASTINPUTINFO categoriesForMethods!
 dwSize:!**compiled accessors**!public! !
 dwTime!**compiled accessors**!public! !
@@ -60,8 +60,8 @@ defineFields
 	"
 
 	self
-		defineField: #dwSize type: DWORDField writeOnly;
-		defineField: #dwTime type: DWORDField new;
+		defineField: #dwSize type: UInt32Field writeOnly;
+		defineField: #dwTime type: UInt32Field new;
 		yourself!
 
 getFieldNames

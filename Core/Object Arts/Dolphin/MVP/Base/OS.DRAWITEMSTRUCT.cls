@@ -25,12 +25,12 @@ From MSDN: "The DRAWITEMSTRUCT structure provides information the owner window m
 hDC
 	"Answer the <Integer> value of the receiver's 'hDC' field."
 
-	^bytes dwordAtOffset: _OffsetOf_hDC!
+	^bytes uint32AtOffset: _OffsetOf_hDC!
 
 hwndItem
 	"Answer the <Integer> value of the receiver's 'hwndItem' field."
 
-	^bytes dwordAtOffset: _OffsetOf_hwndItem!
+	^bytes uint32AtOffset: _OffsetOf_hwndItem!
 
 isGrayed
 	"Answer whether the drawn menu item should be grayed. Only applicable when drawing menus."
@@ -45,12 +45,12 @@ isSelected
 itemAction
 	"Answer the <Integer> value of the receiver's 'itemAction' field."
 
-	^bytes dwordAtOffset: _OffsetOf_itemAction!
+	^bytes uint32AtOffset: _OffsetOf_itemAction!
 
 itemState
 	"Answer the <Integer> value of the receiver's 'itemState' field."
 
-	^bytes dwordAtOffset: _OffsetOf_itemState!
+	^bytes uint32AtOffset: _OffsetOf_itemState!
 
 rcItem
 	"Answer the <RECTL> value of the receiver's 'rcItem' field."
@@ -91,12 +91,12 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #itemAction type: DWORDField readOnly;
-		defineField: #itemState type: DWORDField readOnly;
-		defineField: #hwndItem type: DWORDField readOnly;
-		defineField: #hDC type: DWORDField readOnly;
+		defineField: #itemAction type: UInt32Field readOnly;
+		defineField: #itemState type: UInt32Field readOnly;
+		defineField: #hwndItem type: UInt32Field readOnly;
+		defineField: #hDC type: UInt32Field readOnly;
 		defineField: #rcItem type: (StructureField type: RECTL) beReadOnly;
-		defineField: #itemData type: UINT_PTRField filler!
+		defineField: #itemData type: UIntPtrField filler!
 
 getFieldNames
 	^#(#CtlType #CtlID #itemID #itemAction #itemState #hwndItem #hDC #rcItem)! !

@@ -25,32 +25,32 @@ WARNING: This comment was automatically generated from the struct''s type inform
 cfFormat
 	"Answer the <Integer> value of the receiver's 'cfFormat' field."
 
-	^bytes wordAtOffset: _OffsetOf_cfFormat!
+	^bytes uint16AtOffset: _OffsetOf_cfFormat!
 
 cfFormat: anInteger
 	"Set the receiver's 'cfFormat' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_cfFormat put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_cfFormat put: anInteger!
 
 dwAspect
 	"Answer the <Integer> value of the receiver's 'dwAspect' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwAspect!
+	^bytes uint32AtOffset: _OffsetOf_dwAspect!
 
 dwAspect: anInteger
 	"Set the receiver's 'dwAspect' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwAspect put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwAspect put: anInteger!
 
 lindex
 	"Answer the <Integer> value of the receiver's 'lindex' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_lindex!
+	^bytes int32AtOffset: _OffsetOf_lindex!
 
 lindex: anInteger
 	"Set the receiver's 'lindex' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_lindex put: anInteger!
+	bytes int32AtOffset: _OffsetOf_lindex put: anInteger!
 
 ptd
 	"Answer the <DVTARGETDEVICE> value of the receiver's 'ptd' field."
@@ -65,12 +65,12 @@ ptd: aDVTARGETDEVICE
 tymed
 	"Answer the <Integer> value of the receiver's 'tymed' field."
 
-	^bytes dwordAtOffset: _OffsetOf_tymed!
+	^bytes uint32AtOffset: _OffsetOf_tymed!
 
 tymed: anInteger
 	"Set the receiver's 'tymed' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_tymed put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_tymed put: anInteger! !
 !OS.COM.FORMATETC categoriesForMethods!
 cfFormat!**compiled accessors**!public! !
 cfFormat:!**compiled accessors**!public! !
@@ -103,11 +103,11 @@ defineFields
 	"
 
 	self
-		defineField: #cfFormat type: WORDField new;
+		defineField: #cfFormat type: UInt16Field new;
 		defineField: #ptd type: (PointerField type: DVTARGETDEVICE);
-		defineField: #dwAspect type: DWORDField new;
-		defineField: #lindex type: SDWORDField new;
-		defineField: #tymed type: DWORDField new!
+		defineField: #dwAspect type: UInt32Field new;
+		defineField: #lindex type: Int32Field new;
+		defineField: #tymed type: UInt32Field new!
 
 getFieldNames
 	^#(#cfFormat #ptd #dwAspect #lindex #tymed)! !

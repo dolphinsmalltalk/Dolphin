@@ -49,22 +49,22 @@ isFixedWidth
 lfCharSet
 	"Answer the <Integer> value of the receiver's 'lfCharSet' field."
 
-	^bytes byteAtOffset: _OffsetOf_lfCharSet!
+	^bytes uint8AtOffset: _OffsetOf_lfCharSet!
 
 lfCharSet: anInteger
 	"Set the receiver's 'lfCharSet' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_lfCharSet put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_lfCharSet put: anInteger!
 
 lfEscapement
 	"Answer the <Integer> value of the receiver's 'lfEscapement' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_lfEscapement!
+	^bytes int32AtOffset: _OffsetOf_lfEscapement!
 
 lfEscapement: anInteger
 	"Set the receiver's 'lfEscapement' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_lfEscapement put: anInteger!
+	bytes int32AtOffset: _OffsetOf_lfEscapement put: anInteger!
 
 lfFaceName
 	"Answer the receiver's lfFaceName field as a Smalltalk object."
@@ -79,82 +79,82 @@ lfFaceName: anObject
 lfHeight
 	"Answer the <Integer> value of the receiver's 'lfHeight' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_lfHeight!
+	^bytes int32AtOffset: _OffsetOf_lfHeight!
 
 lfHeight: anInteger
 	"Set the receiver's 'lfHeight' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_lfHeight put: anInteger!
+	bytes int32AtOffset: _OffsetOf_lfHeight put: anInteger!
 
 lfItalic
 	"Answer the <Integer> value of the receiver's 'lfItalic' field."
 
-	^bytes byteAtOffset: _OffsetOf_lfItalic!
+	^bytes uint8AtOffset: _OffsetOf_lfItalic!
 
 lfItalic: anInteger
 	"Set the receiver's 'lfItalic' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_lfItalic put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_lfItalic put: anInteger!
 
 lfPitchAndFamily
 	"Answer the <Integer> value of the receiver's 'lfPitchAndFamily' field."
 
-	^bytes byteAtOffset: _OffsetOf_lfPitchAndFamily!
+	^bytes uint8AtOffset: _OffsetOf_lfPitchAndFamily!
 
 lfPitchAndFamily: anInteger
 	"Set the receiver's 'lfPitchAndFamily' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_lfPitchAndFamily put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_lfPitchAndFamily put: anInteger!
 
 lfQuality
 	"Answer the <Integer> value of the receiver's 'lfQuality' field."
 
-	^bytes byteAtOffset: _OffsetOf_lfQuality!
+	^bytes uint8AtOffset: _OffsetOf_lfQuality!
 
 lfQuality: anInteger
 	"Set the receiver's 'lfQuality' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_lfQuality put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_lfQuality put: anInteger!
 
 lfStrikeOut
 	"Answer the <Integer> value of the receiver's 'lfStrikeOut' field."
 
-	^bytes byteAtOffset: _OffsetOf_lfStrikeOut!
+	^bytes uint8AtOffset: _OffsetOf_lfStrikeOut!
 
 lfStrikeOut: anInteger
 	"Set the receiver's 'lfStrikeOut' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_lfStrikeOut put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_lfStrikeOut put: anInteger!
 
 lfUnderline
 	"Answer the <Integer> value of the receiver's 'lfUnderline' field."
 
-	^bytes byteAtOffset: _OffsetOf_lfUnderline!
+	^bytes uint8AtOffset: _OffsetOf_lfUnderline!
 
 lfUnderline: anInteger
 	"Set the receiver's 'lfUnderline' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_lfUnderline put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_lfUnderline put: anInteger!
 
 lfWeight
 	"Answer the <Integer> value of the receiver's 'lfWeight' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_lfWeight!
+	^bytes int32AtOffset: _OffsetOf_lfWeight!
 
 lfWeight: anInteger
 	"Set the receiver's 'lfWeight' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_lfWeight put: anInteger!
+	bytes int32AtOffset: _OffsetOf_lfWeight put: anInteger!
 
 lfWidth
 	"Answer the <Integer> value of the receiver's 'lfWidth' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_lfWidth!
+	^bytes int32AtOffset: _OffsetOf_lfWidth!
 
 lfWidth: anInteger
 	"Set the receiver's 'lfWidth' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_lfWidth put: anInteger! !
+	bytes int32AtOffset: _OffsetOf_lfWidth put: anInteger! !
 !OS.AbstractLOGFONT categoriesForMethods!
 createFont!private!realizing/unrealizing! !
 faceName!accessing!public! !
@@ -196,19 +196,19 @@ defineFields
 	"
 
 	self
-		defineField: #lfHeight type: SDWORDField new;
-		defineField: #lfWidth type: SDWORDField new;
-		defineField: #lfEscapement type: SDWORDField new;
-		defineField: #lfOrientation type: SDWORDField new beUncompiled;
-		defineField: #lfWeight type: SDWORDField new;
-		defineField: #lfItalic type: BYTEField new;
-		defineField: #lfUnderline type: BYTEField new;
-		defineField: #lfStrikeOut type: BYTEField new;
-		defineField: #lfCharSet type: BYTEField new;
-		defineField: #lfOutPrecision type: BYTEField new beUncompiled;
-		defineField: #lfClipPrecision type: BYTEField new beUncompiled;
-		defineField: #lfQuality type: BYTEField new;
-		defineField: #lfPitchAndFamily type: BYTEField new!
+		defineField: #lfHeight type: Int32Field new;
+		defineField: #lfWidth type: Int32Field new;
+		defineField: #lfEscapement type: Int32Field new;
+		defineField: #lfOrientation type: Int32Field new beUncompiled;
+		defineField: #lfWeight type: Int32Field new;
+		defineField: #lfItalic type: UInt8Field new;
+		defineField: #lfUnderline type: UInt8Field new;
+		defineField: #lfStrikeOut type: UInt8Field new;
+		defineField: #lfCharSet type: UInt8Field new;
+		defineField: #lfOutPrecision type: UInt8Field new beUncompiled;
+		defineField: #lfClipPrecision type: UInt8Field new beUncompiled;
+		defineField: #lfQuality type: UInt8Field new;
+		defineField: #lfPitchAndFamily type: UInt8Field new!
 
 getFieldNames
 	^#(#lfHeight #lfWidth #lfEscapement #lfOrientation #lfWeight #lfItalic #lfUnderline #lfStrikeOut #lfCharSet #lfOutPrecision #lfClipPrecision #lfQuality #lfPitchAndFamily #lfFaceName)! !

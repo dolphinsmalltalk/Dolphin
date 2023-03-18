@@ -45,12 +45,12 @@ ExceptionAddress
 ExceptionCode
 	"Answer the <Integer> value of the receiver's 'ExceptionCode' field."
 
-	^bytes dwordAtOffset: _OffsetOf_ExceptionCode!
+	^bytes uint32AtOffset: _OffsetOf_ExceptionCode!
 
 ExceptionFlags
 	"Answer the <Integer> value of the receiver's 'ExceptionFlags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_ExceptionFlags!
+	^bytes uint32AtOffset: _OffsetOf_ExceptionFlags!
 
 ExceptionRecord
 	"Answer the <EXCEPTION_RECORD> value of the receiver's 'ExceptionRecord' field."
@@ -63,7 +63,7 @@ information
 	^info
 		ifNil: 
 			[| count |
-			"Open coded to avoid a base system dependency on UINT_PTR and associated array type"
+			"Open coded to avoid a base system dependency on UIntPtr and associated array type"
 			count := self NumberParameters.
 			info := Array new: count.
 			1 to: count
@@ -89,7 +89,7 @@ moduleFileName
 NumberParameters
 	"Answer the <Integer> value of the receiver's 'NumberParameters' field."
 
-	^bytes dwordAtOffset: _OffsetOf_NumberParameters! !
+	^bytes uint32AtOffset: _OffsetOf_NumberParameters! !
 !OS.EXCEPTION_RECORD categoriesForMethods!
 ExceptionAddress!**compiled accessors**!public! !
 ExceptionCode!**compiled accessors**!public! !
@@ -123,10 +123,10 @@ defineFields
 
 	self
 		defineField: #ExceptionCode
-			type: DWORDField new beReadOnly
+			type: UInt32Field new beReadOnly
 			offset: 0;
 		defineField: #ExceptionFlags
-			type: DWORDField new beReadOnly
+			type: UInt32Field new beReadOnly
 			offset: 4;
 		defineField: #ExceptionRecord
 			type: (PointerField type: EXCEPTION_RECORD) beReadOnly
@@ -135,10 +135,10 @@ defineFields
 			type: LPVOIDField new beReadOnly
 			offset: 12;
 		defineField: #NumberParameters
-			type: DWORDField new beReadOnly
+			type: UInt32Field new beReadOnly
 			offset: 16;
 		defineField: #ExceptionInformation
-			type: (ArrayField type: UINT_PTRArray length: 15) beReadOnly beFiller
+			type: (ArrayField type: UIntPtrArray length: 15) beReadOnly beFiller
 			offset: 20.
 	self byteSize: 80!
 

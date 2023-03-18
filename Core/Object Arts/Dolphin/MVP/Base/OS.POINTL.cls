@@ -27,33 +27,33 @@ asUIntPtr
 isZero
 	"Answer whether the receiver is equal to Point zero."
 
-	^(bytes qwordAtOffset: 0) == 0!
+	^(bytes uint64AtOffset: 0) == 0!
 
 x
 	"Answer the <Integer> value of the receiver's 'x' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_x!
+	^bytes int32AtOffset: _OffsetOf_x!
 
 x: anInteger
 	"Set the receiver's 'x' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_x put: anInteger!
+	bytes int32AtOffset: _OffsetOf_x put: anInteger!
 
 x: xInteger y: yInteger
 
 	bytes
-		sdwordAtOffset: _OffsetOf_x put: xInteger;
-		sdwordAtOffset: _OffsetOf_y put: yInteger!
+		int32AtOffset: _OffsetOf_x put: xInteger;
+		int32AtOffset: _OffsetOf_y put: yInteger!
 
 y
 	"Answer the <Integer> value of the receiver's 'y' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_y!
+	^bytes int32AtOffset: _OffsetOf_y!
 
 y: anInteger
 	"Set the receiver's 'y' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_y put: anInteger! !
+	bytes int32AtOffset: _OffsetOf_y put: anInteger! !
 !OS.POINTL categoriesForMethods!
 asUIntPtr!converting!public! !
 isZero!public!testing! !
@@ -80,8 +80,8 @@ defineFields
 "
 
 	self
-		defineField: #x type: SDWORDField new;
-		defineField: #y type: SDWORDField new!
+		defineField: #x type: Int32Field new;
+		defineField: #y type: Int32Field new!
 
 x: x y: y
 	"Answer a new instance of the receiver representing the Point whose 
@@ -90,8 +90,8 @@ x: x y: y
 	all the <ExternalStructure> framework methods."
 
 	^self basicNew bytes: ((ByteArray newFixed: _POINTL_Size)
-				sdwordAtOffset: _OffsetOf_x put: x;
-				sdwordAtOffset: _OffsetOf_y put: y;
+				int32AtOffset: _OffsetOf_x put: x;
+				int32AtOffset: _OffsetOf_y put: y;
 				yourself)! !
 !OS.POINTL class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !

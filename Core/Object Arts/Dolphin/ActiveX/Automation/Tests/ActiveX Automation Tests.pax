@@ -8,6 +8,8 @@ package paxVersion: 2.1;
 package setClassNames: #(
 	#{OS.COM.Tests.BSTRArrayTest}
 	#{OS.COM.Tests.BSTRTest}
+	#{OS.COM.Tests.CURRENCYTest}
+	#{OS.COM.Tests.DECIMALTest}
 	#{OS.COM.Tests.IDispatchTest}
 	#{OS.COM.Tests.SAFEARRAYTest}
 	#{OS.COM.Tests.TestTypelib}
@@ -42,6 +44,18 @@ Core.Tests.DolphinTest subclass: #'OS.COM.Tests.BSTRTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'OS.COM.Tests.CURRENCYTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.COM.AutomationConstants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'OS.COM.Tests.DECIMALTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'OS.COM.Tests.IDispatchTest'

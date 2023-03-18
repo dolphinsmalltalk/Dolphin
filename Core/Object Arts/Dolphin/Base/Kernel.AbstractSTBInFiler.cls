@@ -133,7 +133,7 @@ readClassLocator: anIntegerFlags
 readInteger
 	"Private - Answer the next 32-bit integer in the stream."
 
-	^stream nextSDWORD!
+	^stream nextInt32!
 
 readMap
 	"Private - Answer the value of the receiver's readMap. This is an OrderedCollection of all
@@ -194,8 +194,8 @@ readObjectWithPrefix: anInteger
 
 readSizeBlock
 	^version < 3
-		ifTrue: [[:class | stream nextSDWORD]]
-		ifFalse: [[:class | class isVariable ifTrue: [stream nextSDWORD] ifFalse: [0]]]!
+		ifTrue: [[:class | stream nextInt32]]
+		ifFalse: [[:class | class isVariable ifTrue: [stream nextInt32] ifFalse: [0]]]!
 
 readSizeOf: aClass
 	^readSize value: aClass!

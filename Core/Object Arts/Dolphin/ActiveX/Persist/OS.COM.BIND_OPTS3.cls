@@ -17,7 +17,7 @@ OS.COM.BIND_OPTS3 comment: 'BIND_OPTS3 is an <ExternalStructure> class to repres
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 hwnd
 	"Answer the <ExternalHandle> value of the receiver's 'hwnd' field."

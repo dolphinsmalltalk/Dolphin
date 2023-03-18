@@ -65,12 +65,12 @@ canvas
 dwDrawStage
 	"Answer the <Integer> value of the receiver's 'dwDrawStage' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwDrawStage!
+	^bytes uint32AtOffset: _OffsetOf_dwDrawStage!
 
 dwItemSpec
 	"Answer the <Integer> value of the receiver's 'dwItemSpec' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwItemSpec!
+	^bytes uint32AtOffset: _OffsetOf_dwItemSpec!
 
 evaluateDrawBlock: customDrawBlock
 	"Private - Evaluate the <monadicValuable>, customDrawBlock, and answer the appropriate instruction
@@ -233,19 +233,19 @@ rc
 
 stateMask: anInteger set: aBoolean
 	| itemState |
-	itemState := bytes dwordAtOffset: _OffsetOf_uItemState.
-	bytes dwordAtOffset: _OffsetOf_uItemState
+	itemState := bytes uint32AtOffset: _OffsetOf_uItemState.
+	bytes uint32AtOffset: _OffsetOf_uItemState
 		put: (aBoolean ifTrue: [itemState bitOr: anInteger] ifFalse: [itemState bitAnd: anInteger bitInvert])!
 
 uItemState
 	"Answer the <Integer> value of the receiver's 'uItemState' field."
 
-	^bytes dwordAtOffset: _OffsetOf_uItemState!
+	^bytes uint32AtOffset: _OffsetOf_uItemState!
 
 uItemState: anInteger
 	"Set the receiver's 'uItemState' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_uItemState put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_uItemState put: anInteger!
 
 view
 	"Answer the sub-instance of <IconListAbstract> for which this is a <customDrawContext>."
@@ -313,12 +313,12 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #dwDrawStage type: DWORDField readOnly;
+		defineField: #dwDrawStage type: UInt32Field readOnly;
 		defineField: #hdc type: HANDLEField readOnly;
 		defineField: #rc type: (StructureField type: RECTL) beReadOnly;
-		defineField: #dwItemSpec type: DWORDField readOnly;
-		defineField: #uItemState type: DWORDField new;
-		defineField: #lParam type: UINT_PTRField readOnly!
+		defineField: #dwItemSpec type: UInt32Field readOnly;
+		defineField: #uItemState type: UInt32Field new;
+		defineField: #lParam type: UIntPtrField readOnly!
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #dwDrawStage #hdc #rc #dwItemSpec #uItemState #lParam)! !

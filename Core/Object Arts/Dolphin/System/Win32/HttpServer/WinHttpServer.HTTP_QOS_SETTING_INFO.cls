@@ -49,12 +49,12 @@ QosSetting: anAddress
 QosType
 	"Answer the <Integer> value of the receiver's 'QosType' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_QosType!
+	^bytes int32AtOffset: _OffsetOf_QosType!
 
 QosType: anInteger
 	"Set the receiver's 'QosType' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_QosType put: anInteger!
+	bytes int32AtOffset: _OffsetOf_QosType put: anInteger!
 
 value
 	^setting
@@ -96,7 +96,7 @@ defineFields
 "
 
 	self
-		defineField: #QosType type: SDWORDField new offset: 0;
+		defineField: #QosType type: Int32Field new offset: 0;
 		defineField: #QosSetting type: LPVOIDField new offset: 4.
 	self byteSize: 8!
 

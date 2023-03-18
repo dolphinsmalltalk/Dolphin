@@ -96,12 +96,12 @@ FilenameExtension: anUtf16String
 Flags
 	"Answer the <Integer> value of the receiver's 'Flags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_Flags!
+	^bytes uint32AtOffset: _OffsetOf_Flags!
 
 Flags: anInteger
 	"Set the receiver's 'Flags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_Flags put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_Flags put: anInteger!
 
 FormatDescription
 	"Answer the <Utf16String> value of the receiver's 'FormatDescription' field."
@@ -140,17 +140,17 @@ MimeType: anUtf16String
 SigCount
 	"Answer the <Integer> value of the receiver's 'SigCount' field."
 
-	^bytes dwordAtOffset: _OffsetOf_SigCount!
+	^bytes uint32AtOffset: _OffsetOf_SigCount!
 
 SigCount: anInteger
 	"Set the receiver's 'SigCount' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_SigCount put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_SigCount put: anInteger!
 
 SigMask
-	"Answer the <BYTE> value of the receiver's 'SigMask' field."
+	"Answer the <UInt8> value of the receiver's 'SigMask' field."
 
-	^BYTE fromAddress: (bytes intPtrAtOffset: _OffsetOf_SigMask)!
+	^UInt8 fromAddress: (bytes intPtrAtOffset: _OffsetOf_SigMask)!
 
 SigMask: aBYTE
 	"Set the receiver's 'SigMask' field to the value of the argument, aBYTE"
@@ -158,9 +158,9 @@ SigMask: aBYTE
 	bytes uintPtrAtOffset: _OffsetOf_SigMask put: aBYTE yourAddress!
 
 SigPattern
-	"Answer the <BYTE> value of the receiver's 'SigPattern' field."
+	"Answer the <UInt8> value of the receiver's 'SigPattern' field."
 
-	^BYTE fromAddress: (bytes intPtrAtOffset: _OffsetOf_SigPattern)!
+	^UInt8 fromAddress: (bytes intPtrAtOffset: _OffsetOf_SigPattern)!
 
 SigPattern: aBYTE
 	"Set the receiver's 'SigPattern' field to the value of the argument, aBYTE"
@@ -170,22 +170,22 @@ SigPattern: aBYTE
 SigSize
 	"Answer the <Integer> value of the receiver's 'SigSize' field."
 
-	^bytes dwordAtOffset: _OffsetOf_SigSize!
+	^bytes uint32AtOffset: _OffsetOf_SigSize!
 
 SigSize: anInteger
 	"Set the receiver's 'SigSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_SigSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_SigSize put: anInteger!
 
 Version
 	"Answer the <Integer> value of the receiver's 'Version' field."
 
-	^bytes dwordAtOffset: _OffsetOf_Version!
+	^bytes uint32AtOffset: _OffsetOf_Version!
 
 Version: anInteger
 	"Set the receiver's 'Version' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_Version put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_Version put: anInteger! !
 !Graphics.Gdiplus.ImageCodecInfo categoriesForMethods!
 Clsid!**compiled accessors**!public! !
 Clsid:!**compiled accessors**!public! !
@@ -265,22 +265,22 @@ defineFields
 			type: (PointerField type: Utf16String)
 			offset: 48;
 		defineField: #Flags
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 52;
 		defineField: #Version
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 56;
 		defineField: #SigCount
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 60;
 		defineField: #SigSize
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 64;
 		defineField: #SigPattern
-			type: (PointerField type: BYTE)
+			type: (PointerField type: UInt8)
 			offset: 68;
 		defineField: #SigMask
-			type: (PointerField type: BYTE)
+			type: (PointerField type: UInt8)
 			offset: 72.
 	self byteSize: 76!
 

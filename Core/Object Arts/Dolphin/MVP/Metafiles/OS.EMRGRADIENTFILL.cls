@@ -38,22 +38,22 @@ struct tagEMRGRADIENTFILL {
 nTri
 	"Answer the <Integer> value of the receiver's 'nTri' field."
 
-	^bytes dwordAtOffset: _OffsetOf_nTri!
+	^bytes uint32AtOffset: _OffsetOf_nTri!
 
 nTri: anInteger
 	"Set the receiver's 'nTri' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_nTri put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_nTri put: anInteger!
 
 nVer
 	"Answer the <Integer> value of the receiver's 'nVer' field."
 
-	^bytes dwordAtOffset: _OffsetOf_nVer!
+	^bytes uint32AtOffset: _OffsetOf_nVer!
 
 nVer: anInteger
 	"Set the receiver's 'nVer' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_nVer put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_nVer put: anInteger!
 
 rclBounds
 	"Answer the <RECTL> value of the receiver's 'rclBounds' field."
@@ -72,12 +72,12 @@ rclBounds: aRECTL
 ulMode
 	"Answer the <Integer> value of the receiver's 'ulMode' field."
 
-	^bytes dwordAtOffset: _OffsetOf_ulMode!
+	^bytes uint32AtOffset: _OffsetOf_ulMode!
 
 ulMode: anInteger
 	"Set the receiver's 'ulMode' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_ulMode put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_ulMode put: anInteger!
 
 Ver
 	"Answer the <StructureArray> value of the receiver's 'Ver' field."
@@ -138,13 +138,13 @@ defineFields
 			type: (StructureField type: RECTL)
 			offset: 8;
 		defineField: #nVer
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 24;
 		defineField: #nTri
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 28;
 		defineField: #ulMode
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 32;
 		defineField: #Ver
 			type: (StructureArrayField type: TRIVERTEX lengthField: #nVer)

@@ -59,7 +59,7 @@ elfFullName: anUtf16String
 		from: ##(_OffsetOf_elfFullName + 1)
 		to: _OffsetOf_elfFullName + size
 		startingAt: 1.
-	bytes wordAtOffset: _OffsetOf_elfFullName + size put: 0!
+	bytes uint16AtOffset: _OffsetOf_elfFullName + size put: 0!
 
 elfLogFont
 	"Answer the <LOGFONTW> value of the receiver's 'elfLogFont' field."
@@ -78,12 +78,12 @@ elfLogFont: aLOGFONTW
 elfMatch
 	"Answer the <Integer> value of the receiver's 'elfMatch' field."
 
-	^bytes dwordAtOffset: _OffsetOf_elfMatch!
+	^bytes uint32AtOffset: _OffsetOf_elfMatch!
 
 elfMatch: anInteger
 	"Set the receiver's 'elfMatch' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_elfMatch put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_elfMatch put: anInteger!
 
 elfPanose
 	"Answer the <PANOSE> value of the receiver's 'elfPanose' field."
@@ -114,17 +114,17 @@ elfStyle: anUtf16String
 		from: ##(_OffsetOf_elfStyle + 1)
 		to: _OffsetOf_elfStyle + size
 		startingAt: 1.
-	bytes wordAtOffset: _OffsetOf_elfStyle + size put: 0!
+	bytes uint16AtOffset: _OffsetOf_elfStyle + size put: 0!
 
 elfStyleSize
 	"Answer the <Integer> value of the receiver's 'elfStyleSize' field."
 
-	^bytes dwordAtOffset: _OffsetOf_elfStyleSize!
+	^bytes uint32AtOffset: _OffsetOf_elfStyleSize!
 
 elfStyleSize: anInteger
 	"Set the receiver's 'elfStyleSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_elfStyleSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_elfStyleSize put: anInteger!
 
 elfVendorId
 	"Answer the <ExternalArray> value of the receiver's 'elfVendorId' field."
@@ -194,22 +194,22 @@ defineFields
 			type: (StringField type: Utf16String length: 32)
 			offset: 220;
 		defineField: #elfVersion
-			type: DWORDField new beFiller
+			type: UInt32Field new beFiller
 			offset: 284;
 		defineField: #elfStyleSize
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 288;
 		defineField: #elfMatch
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 292;
 		defineField: #elfReserved
-			type: DWORDField new beFiller
+			type: UInt32Field new beFiller
 			offset: 296;
 		defineField: #elfVendorId
 			type: (ArrayField type: ExternalArray length: 4)
 			offset: 300;
 		defineField: #elfCulture
-			type: DWORDField new beFiller
+			type: UInt32Field new beFiller
 			offset: 304;
 		defineField: #elfPanose
 			type: (StructureField type: PANOSE)

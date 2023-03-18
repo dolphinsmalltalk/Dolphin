@@ -48,14 +48,14 @@ static const u8string VarThisContext = u8"thisContext"s;
 
 LPUTF8 s_restrictedSelectors[] =
 {
-	u8"==", u8"??",		// Cannot be overridded or redefined at all
+	u8"==", u8"??",		// Cannot be overridden or redefined at all (not actually sent by the VM)
 	u8"and:", u8"or:",	// Compiler assumes receiver is a boolean, so can't be overridden/redefined
 	u8"ifTrue:", u8"ifFalse:", u8"ifTrue:ifFalse:", u8"ifFalse:ifTrue:",	// "ditto"
 	u8"ifNil:", u8"ifNotNil:", u8"ifNil:ifNotNil:", u8"ifNotNil:ifNil:",
 	u8"to:do:", u8"to:by:do:",	// Compiler assumes that the receiver is a number, implementation is effectively fixed
 	u8"timesRepeat:",			// ditto
 	u8"basicAt:", u8"basicAt:put:", u8"basicSize", u8"basicClass", u8"basicNew:",	// Can't be redefined/overridden
-	u8"yourself",
+	u8"yourself",	// Not actually sent by the VM
 
 	// Although these are inlined, this is done only conditionally depending on whether the receiver
 	// is a zero-arg literal block, therefore they can in fact be implemented in other objects than block
@@ -2927,8 +2927,8 @@ void Compiler::ParseExtCallArgument(TypeDescriptor& answer)
 			};
 			
 			static ArgTypeDefn argTypes[] =	{
-				{ u8"sdword", DolphinX::ExtCallArgType::Int32, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
-				{ u8"dword", DolphinX::ExtCallArgType::UInt32, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ u8"int32", DolphinX::ExtCallArgType::Int32, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ u8"uint32", DolphinX::ExtCallArgType::UInt32, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
 				{ u8"intptr", DolphinX::ExtCallArgType::IntPtr, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
 				{ u8"uintptr", DolphinX::ExtCallArgType::UIntPtr, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
 				{ u8"lpvoid", DolphinX::ExtCallArgType::LPVoid, (LPUTF8)DolphinX::ExtCallArgType::LPPVoid},
@@ -2943,15 +2943,15 @@ void Compiler::ParseExtCallArgument(TypeDescriptor& answer)
 				{ u8"ntstatus", DolphinX::ExtCallArgType::NTStatus, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
 				{ u8"errno", DolphinX::ExtCallArgType::Errno, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
 				{ u8"char", DolphinX::ExtCallArgType::Char, (LPUTF8)DolphinX::ExtCallArgType::LPStr},
-				{ u8"byte", DolphinX::ExtCallArgType::UInt8, (LPUTF8)DolphinX::ExtCallArgType::LPVoid},
-				{ u8"sbyte", DolphinX::ExtCallArgType::Int8, (LPUTF8)DolphinX::ExtCallArgType::LPVoid},
-				{ u8"word", DolphinX::ExtCallArgType::UInt16, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
-				{ u8"sword", DolphinX::ExtCallArgType::Int16, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ u8"uint8", DolphinX::ExtCallArgType::UInt8, (LPUTF8)DolphinX::ExtCallArgType::LPVoid},
+				{ u8"int8", DolphinX::ExtCallArgType::Int8, (LPUTF8)DolphinX::ExtCallArgType::LPVoid},
+				{ u8"uint16", DolphinX::ExtCallArgType::UInt16, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ u8"int16", DolphinX::ExtCallArgType::Int16, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
 				{ u8"oop", DolphinX::ExtCallArgType::Oop, (LPUTF8)DolphinX::ExtCallArgType::LPPVoid},
 				{ u8"lpwstr", DolphinX::ExtCallArgType::LPWStr, (LPUTF8)DolphinX::ExtCallArgType::LPPVoid},
 				{ u8"bstr", DolphinX::ExtCallArgType::Bstr, (LPUTF8)DolphinX::ExtCallArgType::LPPVoid },
-				{ u8"qword", DolphinX::ExtCallArgType::UInt64, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
-				{ u8"sqword", DolphinX::ExtCallArgType::Int64, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ u8"uint64", DolphinX::ExtCallArgType::UInt64, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ u8"int64", DolphinX::ExtCallArgType::Int64, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
 				{ u8"ote", DolphinX::ExtCallArgType::Ote, (LPUTF8)DolphinX::ExtCallArgType::LPPVoid},
 				{ u8"variant", DolphinX::ExtCallArgType::Variant, u8"VARIANT" },
 				{ u8"varbool", DolphinX::ExtCallArgType::VarBool, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
@@ -2962,26 +2962,43 @@ void Compiler::ParseExtCallArgument(TypeDescriptor& answer)
 				{ u8"ExternalHandle", DolphinX::ExtCallArgType::Handle, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
 				{ u8"BSTR", DolphinX::ExtCallArgType::Bstr, (LPUTF8)DolphinX::ExtCallArgType::LPPVoid},
 				{ u8"VARIANT", DolphinX::ExtCallArgType::Variant, u8"VARIANT" },
-				{ u8"SDWORD", DolphinX::ExtCallArgType::Int32, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
-				{ u8"DWORD", DolphinX::ExtCallArgType::UInt32, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ u8"Int32", DolphinX::ExtCallArgType::Int32, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ u8"UInt32", DolphinX::ExtCallArgType::UInt32, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
 				{ u8"LPVOID", DolphinX::ExtCallArgType::LPVoid, (LPUTF8)DolphinX::ExtCallArgType::LPPVoid},
 				{ u8"DOUBLE", DolphinX::ExtCallArgType::Double, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
 				{ u8"FLOAT", DolphinX::ExtCallArgType::Float, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
 				{ u8"HRESULT", DolphinX::ExtCallArgType::HResult, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
 				{ u8"NTSTATUS", DolphinX::ExtCallArgType::NTStatus, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
-				{ u8"BYTE", DolphinX::ExtCallArgType::UInt8, (LPUTF8)DolphinX::ExtCallArgType::LPVoid},
-				{ u8"SBYTE", DolphinX::ExtCallArgType::Int8, (LPUTF8)DolphinX::ExtCallArgType::LPVoid},
-				{ u8"WORD", DolphinX::ExtCallArgType::UInt16, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
-				{ u8"SWORD", DolphinX::ExtCallArgType::Int16, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ u8"UInt8", DolphinX::ExtCallArgType::UInt8, (LPUTF8)DolphinX::ExtCallArgType::LPVoid},
+				{ u8"Int8", DolphinX::ExtCallArgType::Int8, (LPUTF8)DolphinX::ExtCallArgType::LPVoid},
+				{ u8"UInt16", DolphinX::ExtCallArgType::UInt16, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ u8"Int16", DolphinX::ExtCallArgType::Int16, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
 				{ u8"LPWSTR", DolphinX::ExtCallArgType::LPWStr, (LPUTF8)DolphinX::ExtCallArgType::LPPVoid},
-				{ u8"QWORD", DolphinX::ExtCallArgType::UInt64, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
-				{ u8"ULARGE_INTEGER", DolphinX::ExtCallArgType::UInt64, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
-				{ u8"SQWORD", DolphinX::ExtCallArgType::Int64, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
-				{ u8"LARGE_INTEGER", DolphinX::ExtCallArgType::Int64, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ u8"UInt64", DolphinX::ExtCallArgType::UInt64, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ u8"Int64", DolphinX::ExtCallArgType::Int64, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
 				{ u8"GUID", DolphinX::ExtCallArgType::Guid, u8"External.REFGUID" },
 				{ u8"IID", DolphinX::ExtCallArgType::Guid, u8"External.REFGUID" },
 				{ u8"CLSID", DolphinX::ExtCallArgType::Guid, u8"External.REFGUID" },
 				{ u8"VARIANT_BOOL", DolphinX::ExtCallArgType::VarBool, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				// Old-style sized integers
+				{ u8"sdword", DolphinX::ExtCallArgType::Int32, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ u8"dword", DolphinX::ExtCallArgType::UInt32, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ u8"byte", DolphinX::ExtCallArgType::UInt8, (LPUTF8)DolphinX::ExtCallArgType::LPVoid},
+				{ u8"sbyte", DolphinX::ExtCallArgType::Int8, (LPUTF8)DolphinX::ExtCallArgType::LPVoid},
+				{ u8"word", DolphinX::ExtCallArgType::UInt16, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ u8"sword", DolphinX::ExtCallArgType::Int16, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ u8"qword", DolphinX::ExtCallArgType::UInt64, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ u8"sqword", DolphinX::ExtCallArgType::Int64, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ u8"SDWORD", DolphinX::ExtCallArgType::Int32, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ u8"DWORD", DolphinX::ExtCallArgType::UInt32, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ u8"BYTE", DolphinX::ExtCallArgType::UInt8, (LPUTF8)DolphinX::ExtCallArgType::LPVoid},
+				{ u8"SBYTE", DolphinX::ExtCallArgType::Int8, (LPUTF8)DolphinX::ExtCallArgType::LPVoid},
+				{ u8"WORD", DolphinX::ExtCallArgType::UInt16, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ u8"SWORD", DolphinX::ExtCallArgType::Int16, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ u8"QWORD", DolphinX::ExtCallArgType::UInt64, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ u8"ULARGE_INTEGER", DolphinX::ExtCallArgType::UInt64, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ u8"SQWORD", DolphinX::ExtCallArgType::Int64, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ u8"LARGE_INTEGER", DolphinX::ExtCallArgType::Int64, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
 			};
 
 			answer.range = ThisTokenRange;

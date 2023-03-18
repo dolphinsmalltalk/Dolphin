@@ -94,8 +94,8 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #dwReserved0 type: DWORDField filler;
-		defineField: #dwReserved1 type: DWORDField filler;
+		defineField: #dwReserved0 type: UInt32Field filler;
+		defineField: #dwReserved1 type: UInt32Field filler;
 		defineField: #cFileName type: (StringField type: Utf16String length: MAX_PATH) beReadOnly;
 		defineField: #cAlternateFileName type: (StringField type: Utf16String length: 14) beReadOnly!
 

@@ -57,7 +57,7 @@ defineFunctions
 
 	self
 		defineFunction: #Bind:lHashVal:wFlags:ppTInfo:pDescKind:pBindPtr:
-			 argumentTypes: 'lpwstr dword word ITypeInfo** SDWORD* lppvoid'; "'DESCKIND* BINDPTR*';"
+			 argumentTypes: 'lpwstr dword word ITypeInfo** Int32* lppvoid'; "'DESCKIND* BINDPTR*';"
 		defineFunction: #BindType:lHashVal:ppTInfo:ppTComp:        
 			 argumentTypes: 'lpwstr dword ITypeInfo** ITypeComp**'! !
 !OS.COM.ITypeComp class categoriesForMethods!

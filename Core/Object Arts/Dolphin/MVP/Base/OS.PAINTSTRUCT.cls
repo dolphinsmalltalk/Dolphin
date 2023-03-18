@@ -22,7 +22,7 @@ OS.PAINTSTRUCT comment: ''!
 fErase
 	"Answer the <Boolean> value of the receiver's 'fErase' field."
 
-	^(bytes dwordAtOffset: _OffsetOf_fErase) asBoolean!
+	^(bytes uint32AtOffset: _OffsetOf_fErase) asBoolean!
 
 rcPaint
 	"Answer the <RECTL> value of the receiver's 'rcPaint' field."
@@ -44,7 +44,7 @@ defineFields
 	"
 
 	self
-		defineField: #hdc type: DWORDField readOnly beUncompiled;
+		defineField: #hdc type: UInt32Field readOnly beUncompiled;
 		defineField: #fErase type: BOOLField readOnly;
 		defineField: #rcPaint type: (StructureField type: RECTL) beReadOnly;
 		defineField: #fRestore type: BOOLField filler;

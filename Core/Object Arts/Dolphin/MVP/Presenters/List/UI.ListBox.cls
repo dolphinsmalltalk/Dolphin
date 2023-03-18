@@ -202,7 +202,7 @@ getMultipleSelections
 	| count buffer |
 	count := self getSelectedCount.
 	count <= 0 ifTrue: [^#()].
-	buffer := DWORDArray new: count.
+	buffer := UInt32Array new: count.
 	(self
 		sendMessage: LB_GETSELITEMS
 		wParam: count

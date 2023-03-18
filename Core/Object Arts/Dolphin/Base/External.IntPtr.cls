@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.UINT_PTR subclass: #'External.INT_PTR'
+External.UIntPtr subclass: #'External.IntPtr'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_INT_PTR_Size' -> 16r4
+		'_IntPtr_Size' -> 16r4
 	}!
-External.INT_PTR guid: (Core.GUID fromString: '{7454f675-5169-482b-9a37-5fe37154d567}')!
-External.INT_PTR comment: ''!
-!External.INT_PTR categoriesForClass!External-Data-Structured! !
-!External.INT_PTR methodsFor!
+External.IntPtr guid: (Core.GUID fromString: '{7454f675-5169-482b-9a37-5fe37154d567}')!
+External.IntPtr comment: ''!
+!External.IntPtr categoriesForClass!External-Data-Structured! !
+!External.IntPtr methodsFor!
 
 isSigned
 	"Answer whether the receiver holds a signed 2's complement binary value, as opposed to an unsigned binary value."
@@ -33,24 +33,24 @@ value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
 	bytes intPtrAtOffset: _OffsetOf_value put: anInteger! !
-!External.INT_PTR categoriesForMethods!
+!External.IntPtr categoriesForMethods!
 isSigned!public!testing! !
 unsignedValue:!accessing!public! !
 value!**compiled accessors**!public! !
 value:!**compiled accessors**!public! !
 !
 
-!External.INT_PTR class methodsFor!
+!External.IntPtr class methodsFor!
 
 byteSize
-	^_INT_PTR_Size!
+	^_IntPtr_Size!
 
 defineFields
 	"Define the fields of the ExternalInteger 'structure'. ExternalInteger subclasses
 	have a single value."
 
-	self defineField: #value type: INT_PTRField new beOverride! !
-!External.INT_PTR class categoriesForMethods!
+	self defineField: #value type: IntPtrField new beOverride! !
+!External.IntPtr class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 !

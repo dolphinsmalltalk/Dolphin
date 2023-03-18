@@ -25,52 +25,52 @@ The COAUTHINFO structure specifies the authentication settings used while making
 dwAuthnLevel
 	"Answer the <Integer> value of the receiver's 'dwAuthnLevel' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwAuthnLevel!
+	^bytes uint32AtOffset: _OffsetOf_dwAuthnLevel!
 
 dwAuthnLevel: anInteger
 	"Set the receiver's 'dwAuthnLevel' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwAuthnLevel put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwAuthnLevel put: anInteger!
 
 dwAuthnSvc
 	"Answer the <Integer> value of the receiver's 'dwAuthnSvc' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwAuthnSvc!
+	^bytes uint32AtOffset: _OffsetOf_dwAuthnSvc!
 
 dwAuthnSvc: anInteger
 	"Set the receiver's 'dwAuthnSvc' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwAuthnSvc put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwAuthnSvc put: anInteger!
 
 dwAuthzSvc
 	"Answer the <Integer> value of the receiver's 'dwAuthzSvc' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwAuthzSvc!
+	^bytes uint32AtOffset: _OffsetOf_dwAuthzSvc!
 
 dwAuthzSvc: anInteger
 	"Set the receiver's 'dwAuthzSvc' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwAuthzSvc put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwAuthzSvc put: anInteger!
 
 dwCapabilities
 	"Answer the <Integer> value of the receiver's 'dwCapabilities' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwCapabilities!
+	^bytes uint32AtOffset: _OffsetOf_dwCapabilities!
 
 dwCapabilities: anInteger
 	"Set the receiver's 'dwCapabilities' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwCapabilities put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwCapabilities put: anInteger!
 
 dwImpersonationLevel
 	"Answer the <Integer> value of the receiver's 'dwImpersonationLevel' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwImpersonationLevel!
+	^bytes uint32AtOffset: _OffsetOf_dwImpersonationLevel!
 
 dwImpersonationLevel: anInteger
 	"Set the receiver's 'dwImpersonationLevel' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwImpersonationLevel put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwImpersonationLevel put: anInteger!
 
 pAuthIdentityData
 	"Answer the <COAUTHIDENTITY> value of the receiver's 'pAuthIdentityData' field."
@@ -130,13 +130,13 @@ defineFields
 	"
 
 	self
-		defineField: #dwAuthnSvc type: DWORDField new;
-		defineField: #dwAuthzSvc type: DWORDField new;
+		defineField: #dwAuthnSvc type: UInt32Field new;
+		defineField: #dwAuthzSvc type: UInt32Field new;
 		defineField: #pwszServerPrincName type: (PointerField type: Utf16String);
-		defineField: #dwAuthnLevel type: DWORDField new;
-		defineField: #dwImpersonationLevel type: DWORDField new;
+		defineField: #dwAuthnLevel type: UInt32Field new;
+		defineField: #dwImpersonationLevel type: UInt32Field new;
 		defineField: #pAuthIdentityData type: (PointerField type: COAUTHIDENTITY);
-		defineField: #dwCapabilities type: DWORDField new!
+		defineField: #dwCapabilities type: UInt32Field new!
 
 getFieldNames
 	^#(#dwAuthnSvc #dwAuthzSvc #pwszServerPrincName #dwAuthnLevel #dwImpersonationLevel #pAuthIdentityData #dwCapabilities)! !

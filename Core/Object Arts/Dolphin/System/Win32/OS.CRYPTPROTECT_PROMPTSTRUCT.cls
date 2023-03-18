@@ -31,17 +31,17 @@ struct tagCRYPTPROTECT_PROMPTSTRUCT {
 dwPromptFlags
 	"Answer the <Integer> value of the receiver's 'dwPromptFlags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwPromptFlags!
+	^bytes uint32AtOffset: _OffsetOf_dwPromptFlags!
 
 dwPromptFlags: anInteger
 	"Set the receiver's 'dwPromptFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwPromptFlags put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwPromptFlags put: anInteger!
 
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 hwndApp
 	"Answer the <ExternalHandle> value of the receiver's 'hwndApp' field."
@@ -93,10 +93,10 @@ defineFields
 
 	self
 		defineField: #dwSize
-			type: DWORDField new beWriteOnly
+			type: UInt32Field new beWriteOnly
 			offset: 0;
 		defineField: #dwPromptFlags
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 4;
 		defineField: #hwndApp
 			type: HANDLEField new

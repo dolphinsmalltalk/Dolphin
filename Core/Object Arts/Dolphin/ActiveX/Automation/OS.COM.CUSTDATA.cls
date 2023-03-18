@@ -39,7 +39,7 @@ at: aSymbolOrGuid ifAbsent: aNiladicValuable
 cCustData
 	"Private - Answer the <Integer> value of the receiver's 'cCustData' field."
 
-	^bytes dwordAtOffset: _OffsetOf_cCustData!
+	^bytes uint32AtOffset: _OffsetOf_cCustData!
 
 includesKey: aSymbolOrGuid
 	"Answer whether the receiver has at least one attribute with the specified identifier."
@@ -106,7 +106,7 @@ defineFields
 	"
 
 	self
-		defineField: #cCustData type: DWORDField readOnly beNonBrowsable;
+		defineField: #cCustData type: UInt32Field readOnly beNonBrowsable;
 		defineField: #prgCustData
 			type: (StructureArrayPointerField type: CUSTDATAITEM
 					arrayLength: (ConformantArrayFieldLength lengthField: #cCustData)) beReadOnly!

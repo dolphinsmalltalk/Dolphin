@@ -70,7 +70,7 @@ pparamdescex
 wParamFlags
 	"Answer the <Integer> value of the receiver's 'wParamFlags' field."
 
-	^bytes wordAtOffset: _OffsetOf_wParamFlags! !
+	^bytes uint16AtOffset: _OffsetOf_wParamFlags! !
 !OS.COM.PARAMDESC categoriesForMethods!
 defaultValue!accessing!public! !
 directionFlags!public!testing! !
@@ -102,7 +102,7 @@ defineFields
 
 	self
 		defineField: #pparamdescex type: (PointerField type: PARAMDESCEX) beReadOnly;
-		defineField: #wParamFlags type: WORDField readOnly!
+		defineField: #wParamFlags type: UInt16Field readOnly!
 
 getFieldNames
 	^#(#pparamdescex #wParamFlags)! !

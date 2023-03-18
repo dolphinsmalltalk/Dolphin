@@ -51,9 +51,9 @@ defineFields
 "
 
 	self
-		defineField: #ss_family type: WORDField new beFiller offset: 0;
+		defineField: #ss_family type: UInt16Field new beFiller offset: 0;
 		defineField: #__ss_pad1 type: (ArrayField type: ExternalArray length: 6) beFiller offset: 2;
-		defineField: #__ss_align type: SQWORDField new beFiller offset: 8;
+		defineField: #__ss_align type: Int64Field new beFiller offset: 8;
 		defineField: #__ss_pad2 type: (ArrayField type: ExternalArray length: 112) beFiller offset: 16.
 	self byteSize: 128!
 

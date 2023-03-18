@@ -465,7 +465,7 @@ asTrueFraction
 	| shifty sign expPart exp fraction fractionPart |
 	(self fpClass anyMask: FpClassFinite)
 		ifFalse: [ArithmeticError signal: ('Cannot represent <1p> as a fraction' expandMacrosWith: self)].
-	shifty := self qwordAtOffset: 0.
+	shifty := self uint64AtOffset: 0.
 	" Extract the sign and the biased exponent "
 	sign := (shifty bitShift: -63) == 0 ifTrue: [1] ifFalse: [-1].
 	expPart := (shifty bitShift: -52) bitAnd: 16r7FF.
@@ -499,7 +499,7 @@ bitRepresentation
 	IEEE 754 64-bit double precision, with a sign bit, 11 exponent bits, and a 52-bit mantissa
 	with implied leading bit."
 
-	^self qwordAtOffset: 0!
+	^self uint64AtOffset: 0!
 
 byteSize
 	"Floating point objects in Dolphin are always doubles."
@@ -903,10 +903,6 @@ printOn: aStream significantFigures: anInteger
 		significantFigures: anInteger
 		decimalExponents: DefaultDecimalExponents!
 
-qwordAtOffset: anInteger
-	<primitive: 191>
-	^self primitiveFailed: _failureCode!
-
 raisedTo: aNumber
 	"Answer a <Float> which is the receiver raised to the power of the <number> argument.
 	Note: ANSI standard says that it is an error for the receiver to be negative, but I think that is bogus (unless the operand is non-integral). This implementation will, however, raise an error (a ZeroDivide in fact, but ANSI doesn't specify the precise exception) if the receiver is zero and the argument not strictly positive)."
@@ -948,7 +944,7 @@ significandAsInteger
 	For exceptional values, infinity and NaN, just answer the mantissa bits."
 
 	| mantissaBits |
-	mantissaBits := (self qwordAtOffset: 0) bitAnd: MantissaMask.
+	mantissaBits := (self uint64AtOffset: 0) bitAnd: MantissaMask.
 	^(self fpClass anyMask: FpClassNormal)
 		ifTrue: 
 			["Add in the implied leading 1"
@@ -1016,7 +1012,11 @@ truncated
 	<primitive: 166>
 	"Implementation Note: Rather than calculate the integer approximation by a series of divisions (as in versions of Dolphin prior to 3.02), a process which was both very slow for large Floats and also prone to error, we use precise #asTrueFraction."
 	^self asTrueFraction truncated
-! !
+!
+
+uint64AtOffset: anInteger
+	<primitive: 191>
+	^self primitiveFailed: _failureCode! !
 !Core.Float categoriesForMethods!
 -!arithmetic!public! !
 *!arithmetic!public! !
@@ -1091,7 +1091,6 @@ printOn:base:significantFigures:!printing!public! !
 printOn:base:significantFigures:decimalExponents:!printing!public! !
 printOn:decimalPlaces:!printing!public! !
 printOn:significantFigures:!printing!public! !
-qwordAtOffset:!accessing!private! !
 raisedTo:!mathematical!public! !
 reciprocalLogBase2!mathematical!public! !
 rounded!public!truncation and round off! !
@@ -1105,6 +1104,7 @@ subtractFromInteger:!double dispatch!private! !
 tan!mathematical!public! !
 timesTwoPower:!mathematical!public! !
 truncated!public!truncation and round off! !
+uint64AtOffset:!accessing!private! !
 !
 
 !Core.Float class methodsFor!

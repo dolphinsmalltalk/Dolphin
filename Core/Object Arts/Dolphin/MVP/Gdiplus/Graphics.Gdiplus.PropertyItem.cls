@@ -34,22 +34,22 @@ struct tagGpPropertyItem {
 id
 	"Answer the <Integer> value of the receiver's 'id' field."
 
-	^bytes dwordAtOffset: _OffsetOf_id!
+	^bytes uint32AtOffset: _OffsetOf_id!
 
 id: anInteger
 	"Set the receiver's 'id' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_id put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_id put: anInteger!
 
 length
 	"Answer the <Integer> value of the receiver's 'length' field."
 
-	^bytes dwordAtOffset: _OffsetOf_length!
+	^bytes uint32AtOffset: _OffsetOf_length!
 
 length: anInteger
 	"Set the receiver's 'length' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_length put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_length put: anInteger!
 
 name
 	"Answer the receiver's id (property tag) as a string.  If unknown, answer the receiver's id as a hex string."
@@ -63,12 +63,12 @@ name
 Type
 	"Answer the <Integer> value of the receiver's 'Type' field."
 
-	^bytes wordAtOffset: _OffsetOf_Type!
+	^bytes uint16AtOffset: _OffsetOf_Type!
 
 Type: anInteger
 	"Set the receiver's 'Type' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_Type put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_Type put: anInteger!
 
 typeName
 	"Answer the receiver's type (property tag type) as a string."
@@ -95,15 +95,15 @@ valueArray
 	type := self Type.
 	type == PropertyTagTypeByte ifTrue: [^ByteArray fromAddress: address length: self length].
 	type == PropertyTagTypeASCII ifTrue: [^(AnsiString fromAddress: address length: self length - 1) trimNulls].
-	type == PropertyTagTypeShort ifTrue: [^WORDArray fromAddress: address length: (self length bitShift: -1)].
-	type == PropertyTagTypeLong ifTrue: [^DWORDArray fromAddress: address length: (self length bitShift: -2)].
+	type == PropertyTagTypeShort ifTrue: [^UInt16Array fromAddress: address length: (self length bitShift: -1)].
+	type == PropertyTagTypeLong ifTrue: [^UInt32Array fromAddress: address length: (self length bitShift: -2)].
 	"Next line won't work with an array value, i.e., if length > 8."
-	type == PropertyTagTypeRational ifTrue: [^(address dwordAtOffset: 0) / (address dwordAtOffset: 4)].
+	type == PropertyTagTypeRational ifTrue: [^(address uint32AtOffset: 0) / (address uint32AtOffset: 4)].
 	"7 is 'Undefined' so just return the bytes."
 	type == PropertyTagTypeUndefined ifTrue: [^ByteArray fromAddress: address length: self length].
-	type == PropertyTagTypeSLONG ifTrue: [^SDWORDArray fromAddress: address length: (self length bitShift: -2)].
+	type == PropertyTagTypeSLONG ifTrue: [^Int32Array fromAddress: address length: (self length bitShift: -2)].
 	"Next line won't work with an array value, i.e., if length > 8."
-	type == PropertyTagTypeSRational ifTrue: [^(address sdwordAtOffset: 0) / (address sdwordAtOffset: 4)].
+	type == PropertyTagTypeSRational ifTrue: [^(address int32AtOffset: 0) / (address int32AtOffset: 4)].
 	self error: 'unrecognised type'! !
 !Graphics.Gdiplus.PropertyItem categoriesForMethods!
 id!**compiled accessors**!public! !
@@ -139,13 +139,13 @@ defineFields
 
 	self
 		defineField: #id
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 0;
 		defineField: #length
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 4;
 		defineField: #Type
-			type: WORDField new
+			type: UInt16Field new
 			offset: 8;
 		defineField: #Value
 			type: LPVOIDField new

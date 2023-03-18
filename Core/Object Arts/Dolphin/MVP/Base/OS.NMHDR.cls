@@ -19,12 +19,12 @@ OS.NMHDR comment: 'NMHDR is a <Win32Structure> representing the NMHDR external W
 code
 	"Answer the <Integer> value of the receiver's 'code' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_code!
+	^bytes int32AtOffset: _OffsetOf_code!
 
 hwndFrom
 	"Answer the <Integer> value of the receiver's 'hwndFrom' field."
 
-	^bytes dwordAtOffset: _OffsetOf_hwndFrom!
+	^bytes uint32AtOffset: _OffsetOf_hwndFrom!
 
 idFrom
 	"Answer the <Integer> value of the receiver's 'idFrom' field."
@@ -52,9 +52,9 @@ defineFields
 	"
 
 	self
-		defineField: #hwndFrom type: DWORDField readOnly;
-		defineField: #idFrom type: UINT_PTRField readOnly;
-		defineField: #code type: SDWORDField readOnly!
+		defineField: #hwndFrom type: UInt32Field readOnly;
+		defineField: #idFrom type: UIntPtrField readOnly;
+		defineField: #code type: Int32Field readOnly!
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code)!

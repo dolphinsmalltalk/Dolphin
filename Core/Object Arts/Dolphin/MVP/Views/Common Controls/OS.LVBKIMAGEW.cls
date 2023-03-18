@@ -31,7 +31,7 @@ bitmap: aBitmapOrNil
 cchImageMax: anInteger
 	"Set the receiver's 'cchImageMax' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_cchImageMax put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_cchImageMax put: anInteger!
 
 hbm
 	"Answer the <ExternalHandle> value of the receiver's 'hbm' field."
@@ -106,32 +106,32 @@ pszImage: anUtf16String
 ulFlags
 	"Answer the <Integer> value of the receiver's 'ulFlags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_ulFlags!
+	^bytes uint32AtOffset: _OffsetOf_ulFlags!
 
 ulFlags: anInteger
 	"Set the receiver's 'ulFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_ulFlags put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_ulFlags put: anInteger!
 
 xOffsetPercent
 	"Answer the <Integer> value of the receiver's 'xOffsetPercent' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_xOffsetPercent!
+	^bytes int32AtOffset: _OffsetOf_xOffsetPercent!
 
 xOffsetPercent: anInteger
 	"Set the receiver's 'xOffsetPercent' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_xOffsetPercent put: anInteger!
+	bytes int32AtOffset: _OffsetOf_xOffsetPercent put: anInteger!
 
 yOffsetPercent
 	"Answer the <Integer> value of the receiver's 'yOffsetPercent' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_yOffsetPercent!
+	^bytes int32AtOffset: _OffsetOf_yOffsetPercent!
 
 yOffsetPercent: anInteger
 	"Set the receiver's 'yOffsetPercent' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_yOffsetPercent put: anInteger! !
+	bytes int32AtOffset: _OffsetOf_yOffsetPercent put: anInteger! !
 !OS.LVBKIMAGEW categoriesForMethods!
 bitmap:!accessing!public! !
 cchImageMax:!**compiled accessors**!public! !
@@ -167,12 +167,12 @@ defineFields
 	"
 
 	self
-		defineField: #ulFlags type: DWORDField new;
+		defineField: #ulFlags type: UInt32Field new;
 		defineField: #hbm type: HANDLEField new;
 		defineField: #pszImage type: (PointerField type: Utf16String);
-		defineField: #cchImageMax type: DWORDField writeOnly;
-		defineField: #xOffsetPercent type: SDWORDField new;
-		defineField: #yOffsetPercent type: SDWORDField new!
+		defineField: #cchImageMax type: UInt32Field writeOnly;
+		defineField: #xOffsetPercent type: Int32Field new;
+		defineField: #yOffsetPercent type: Int32Field new!
 
 getFieldNames
 	^#(#ulFlags #hbm #pszImage #cchImageMax #xOffsetPercent #yOffsetPercent)! !

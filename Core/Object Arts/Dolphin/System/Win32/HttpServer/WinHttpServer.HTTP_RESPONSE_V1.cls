@@ -54,22 +54,22 @@ contentType: aString
 EntityChunkCount
 	"Private - Answer the <Integer> value of the receiver's 'EntityChunkCount' field."
 
-	^bytes wordAtOffset: _OffsetOf_EntityChunkCount!
+	^bytes uint16AtOffset: _OffsetOf_EntityChunkCount!
 
 EntityChunkCount: anInteger
 	"Set the receiver's 'EntityChunkCount' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_EntityChunkCount put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_EntityChunkCount put: anInteger!
 
 Flags
 	"Answer the <Integer> value of the receiver's 'Flags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_Flags!
+	^bytes uint32AtOffset: _OffsetOf_Flags!
 
 Flags: anInteger
 	"Set the receiver's 'Flags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_Flags put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_Flags put: anInteger!
 
 Headers
 	"Answer the <HTTP_RESPONSE_HEADERS> value of the receiver's 'Headers' field."
@@ -86,7 +86,7 @@ Headers: aHTTP_RESPONSE_HEADERS
 		startingAt: 1!
 
 initialize
-	bytes dwordAtOffset: _OffsetOf_Version put: 16r10001!
+	bytes uint32AtOffset: _OffsetOf_Version put: 16r10001!
 
 pEntityChunks
 	"Answer the <StructureArray> value of the receiver's 'pEntityChunks' field."
@@ -116,22 +116,22 @@ pReason: anAnsiString
 ReasonLength
 	"Private - Answer the <Integer> value of the receiver's 'ReasonLength' field."
 
-	^bytes wordAtOffset: _OffsetOf_ReasonLength!
+	^bytes uint16AtOffset: _OffsetOf_ReasonLength!
 
 ReasonLength: anInteger
 	"Set the receiver's 'ReasonLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_ReasonLength put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_ReasonLength put: anInteger!
 
 StatusCode
 	"Answer the <Integer> value of the receiver's 'StatusCode' field."
 
-	^bytes wordAtOffset: _OffsetOf_StatusCode!
+	^bytes uint16AtOffset: _OffsetOf_StatusCode!
 
 StatusCode: anInteger
 	"Set the receiver's 'StatusCode' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_StatusCode put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_StatusCode put: anInteger!
 
 Version
 	"Answer the <HTTP_VERSION> value of the receiver's 'Version' field."
@@ -192,13 +192,13 @@ defineFields
 "
 
 	self
-		defineField: #Flags type: DWORDField new offset: 0;
+		defineField: #Flags type: UInt32Field new offset: 0;
 		defineField: #Version type: (StructureField type: HTTP_VERSION) offset: 4;
-		defineField: #StatusCode type: WORDField new offset: 8;
-		defineField: #ReasonLength type: WORDField new beNonBrowsable offset: 10;
+		defineField: #StatusCode type: UInt16Field new offset: 8;
+		defineField: #ReasonLength type: UInt16Field new beNonBrowsable offset: 10;
 		defineField: #pReason type: (ArrayPointerField type: AnsiString lengthField: #ReasonLength) offset: 12;
 		defineField: #Headers type: (StructureField type: HTTP_RESPONSE_HEADERS) offset: 16;
-		defineField: #EntityChunkCount type: WORDField new beNonBrowsable offset: 272;
+		defineField: #EntityChunkCount type: UInt16Field new beNonBrowsable offset: 272;
 		defineField: #pEntityChunks type: (StructureArrayPointerField type: HTTP_DATA_CHUNK lengthField: #EntityChunkCount) offset: 276.
 	self byteSize: 280!
 

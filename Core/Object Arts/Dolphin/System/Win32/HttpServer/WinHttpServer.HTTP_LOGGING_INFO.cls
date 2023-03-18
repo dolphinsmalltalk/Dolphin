@@ -68,42 +68,42 @@ DirectoryName: anUtf16String
 DirectoryNameLength
 	"Answer the <Integer> value of the receiver's 'DirectoryNameLength' field."
 
-	^bytes wordAtOffset: _OffsetOf_DirectoryNameLength!
+	^bytes uint16AtOffset: _OffsetOf_DirectoryNameLength!
 
 DirectoryNameLength: anInteger
 	"Set the receiver's 'DirectoryNameLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_DirectoryNameLength put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_DirectoryNameLength put: anInteger!
 
 Fields
 	"Answer the <Integer> value of the receiver's 'Fields' field."
 
-	^bytes dwordAtOffset: _OffsetOf_Fields!
+	^bytes uint32AtOffset: _OffsetOf_Fields!
 
 Fields: anInteger
 	"Set the receiver's 'Fields' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_Fields put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_Fields put: anInteger!
 
 Format
 	"Answer the <Integer> value of the receiver's 'Format' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_Format!
+	^bytes int32AtOffset: _OffsetOf_Format!
 
 Format: anInteger
 	"Set the receiver's 'Format' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_Format put: anInteger!
+	bytes int32AtOffset: _OffsetOf_Format put: anInteger!
 
 LoggingFlags
 	"Answer the <Integer> value of the receiver's 'LoggingFlags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_LoggingFlags!
+	^bytes uint32AtOffset: _OffsetOf_LoggingFlags!
 
 LoggingFlags: anInteger
 	"Set the receiver's 'LoggingFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_LoggingFlags put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_LoggingFlags put: anInteger!
 
 pSecurityDescriptor
 	"Answer the <Address> value of the receiver's 'pSecurityDescriptor' field."
@@ -118,22 +118,22 @@ pSecurityDescriptor: anAddress
 RolloverSize
 	"Answer the <Integer> value of the receiver's 'RolloverSize' field."
 
-	^bytes dwordAtOffset: _OffsetOf_RolloverSize!
+	^bytes uint32AtOffset: _OffsetOf_RolloverSize!
 
 RolloverSize: anInteger
 	"Set the receiver's 'RolloverSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_RolloverSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_RolloverSize put: anInteger!
 
 RolloverType
 	"Answer the <Integer> value of the receiver's 'RolloverType' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_RolloverType!
+	^bytes int32AtOffset: _OffsetOf_RolloverType!
 
 RolloverType: anInteger
 	"Set the receiver's 'RolloverType' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_RolloverType put: anInteger!
+	bytes int32AtOffset: _OffsetOf_RolloverType put: anInteger!
 
 SoftwareName
 	"Answer the <Utf16String> value of the receiver's 'SoftwareName' field."
@@ -150,12 +150,12 @@ SoftwareName: anUtf16String
 SoftwareNameLength
 	"Answer the <Integer> value of the receiver's 'SoftwareNameLength' field."
 
-	^bytes wordAtOffset: _OffsetOf_SoftwareNameLength!
+	^bytes uint16AtOffset: _OffsetOf_SoftwareNameLength!
 
 SoftwareNameLength: anInteger
 	"Set the receiver's 'SoftwareNameLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_SoftwareNameLength put: anInteger! !
+	bytes uint16AtOffset: _OffsetOf_SoftwareNameLength put: anInteger! !
 !WinHttpServer.HTTP_LOGGING_INFO categoriesForMethods!
 DirectoryName!**compiled accessors**!public! !
 DirectoryName:!**compiled accessors**!public! !
@@ -210,18 +210,18 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #LoggingFlags type: DWORDField new offset: 4;
+		defineField: #LoggingFlags type: UInt32Field new offset: 4;
 		defineField: #SoftwareName type: (ArrayPointerField type: Utf16String arrayLength: (SizeIsArrayFieldLength sizeIs: 'SoftwareNameLength >> 1')) offset: 8;
-		defineField: #SoftwareNameLength type: WORDField new offset: 12;
-		defineField: #DirectoryNameLength type: WORDField new offset: 14;
+		defineField: #SoftwareNameLength type: UInt16Field new offset: 12;
+		defineField: #DirectoryNameLength type: UInt16Field new offset: 14;
 		defineField: #DirectoryName type: (ArrayPointerField type: Utf16String arrayLength: (SizeIsArrayFieldLength sizeIs: 'DirectoryNameLength >> 1')) offset: 16;
-		defineField: #Format type: SDWORDField new offset: 20;
-		defineField: #Fields type: DWORDField new offset: 24;
+		defineField: #Format type: Int32Field new offset: 20;
+		defineField: #Fields type: UInt32Field new offset: 24;
 		defineField: #pExtFields type: LPVOIDField new beFiller offset: 28;
-		defineField: #NumOfExtFields type: WORDField new beFiller offset: 32;
-		defineField: #MaxRecordSize type: WORDField new beFiller offset: 34;
-		defineField: #RolloverType type: SDWORDField new offset: 36;
-		defineField: #RolloverSize type: DWORDField new offset: 40;
+		defineField: #NumOfExtFields type: UInt16Field new beFiller offset: 32;
+		defineField: #MaxRecordSize type: UInt16Field new beFiller offset: 34;
+		defineField: #RolloverType type: Int32Field new offset: 36;
+		defineField: #RolloverSize type: UInt32Field new offset: 40;
 		defineField: #pSecurityDescriptor type: LPVOIDField new offset: 44.
 	self byteSize: 48!
 

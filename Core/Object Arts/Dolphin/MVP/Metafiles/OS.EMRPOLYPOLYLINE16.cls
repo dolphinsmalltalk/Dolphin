@@ -40,19 +40,19 @@ struct tagEMRPOLYPOLYLINE16 {
 aPolyCounts
 	"Answer the receiver's aPolyCounts field as a Smalltalk object."
 
-	^DWORDArray fromAddress: bytes yourAddress + 32 length: self nPolys!
+	^UInt32Array fromAddress: bytes yourAddress + 32 length: self nPolys!
 
-aPolyCounts: aDWORDArray
-	"Set the receiver's 'aPolyCounts' field to the value of the argument, aDWORDArray"
+aPolyCounts: aUInt32Array
+	"Set the receiver's 'aPolyCounts' field to the value of the argument, aUInt32Array"
 
 	| size |
-	size := aDWORDArray byteSize.
-	aDWORDArray
+	size := aUInt32Array byteSize.
+	aUInt32Array
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_aPolyCounts + 1)
 		to: _OffsetOf_aPolyCounts + size
 		startingAt: 1.
-	self nPolys: aDWORDArray size!
+	self nPolys: aUInt32Array size!
 
 apts
 	"Answer the receiver's apts field as a Smalltalk object."
@@ -84,22 +84,22 @@ aptsOffset
 cpts
 	"Answer the <Integer> value of the receiver's 'cpts' field."
 
-	^bytes dwordAtOffset: _OffsetOf_cpts!
+	^bytes uint32AtOffset: _OffsetOf_cpts!
 
 cpts: anInteger
 	"Set the receiver's 'cpts' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_cpts put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_cpts put: anInteger!
 
 nPolys
 	"Answer the <Integer> value of the receiver's 'nPolys' field."
 
-	^bytes dwordAtOffset: _OffsetOf_nPolys!
+	^bytes uint32AtOffset: _OffsetOf_nPolys!
 
 nPolys: anInteger
 	"Set the receiver's 'nPolys' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_nPolys put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_nPolys put: anInteger!
 
 rclBounds
 	"Answer the <RECTL> value of the receiver's 'rclBounds' field."
@@ -155,13 +155,13 @@ defineFields
 			type: (StructureField type: RECTL)
 			offset: 8;
 		defineField: #nPolys
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 24;
 		defineField: #cpts
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 28;
 		defineField: #aPolyCounts
-			type: (ArrayField type: DWORDArray lengthField: #nPolys)
+			type: (ArrayField type: UInt32Array lengthField: #nPolys)
 			offset: 32;
 		defineField: #apts type: (StructureArrayField type: POINTS lengthField: #cpts)!
 

@@ -30,12 +30,12 @@ struct tagEMRSETARCDIRECTION {
 iArcDirection
 	"Answer the <Integer> value of the receiver's 'iArcDirection' field."
 
-	^bytes dwordAtOffset: _OffsetOf_iArcDirection!
+	^bytes uint32AtOffset: _OffsetOf_iArcDirection!
 
 iArcDirection: anInteger
 	"Set the receiver's 'iArcDirection' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_iArcDirection put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_iArcDirection put: anInteger! !
 !OS.EMRSETARCDIRECTION categoriesForMethods!
 iArcDirection!**compiled accessors**!public! !
 iArcDirection:!**compiled accessors**!public! !
@@ -61,7 +61,7 @@ defineFields
 	super defineFields.
 	self
 		defineField: #iArcDirection
-		type: DWORDField new
+		type: UInt32Field new
 		offset: 8.
 	self byteSize: 12!
 

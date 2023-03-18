@@ -41,32 +41,32 @@ struct tagMIB_IPADDRROW {
 dwAddr
 	"Answer the <Integer> value of the receiver's 'dwAddr' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwAddr!
+	^bytes uint32AtOffset: _OffsetOf_dwAddr!
 
 dwBCastAddr
 	"Answer the <Integer> value of the receiver's 'dwBCastAddr' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwBCastAddr!
+	^bytes uint32AtOffset: _OffsetOf_dwBCastAddr!
 
 dwIndex
 	"Answer the <Integer> value of the receiver's 'dwIndex' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwIndex!
+	^bytes uint32AtOffset: _OffsetOf_dwIndex!
 
 dwMask
 	"Answer the <Integer> value of the receiver's 'dwMask' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwMask!
+	^bytes uint32AtOffset: _OffsetOf_dwMask!
 
 dwReasmSize
 	"Answer the <Integer> value of the receiver's 'dwReasmSize' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwReasmSize!
+	^bytes uint32AtOffset: _OffsetOf_dwReasmSize!
 
 wType
 	"Answer the <Integer> value of the receiver's 'wType' field."
 
-	^bytes wordAtOffset: _OffsetOf_wType! !
+	^bytes uint16AtOffset: _OffsetOf_wType! !
 !OS.MIB_IPADDRROW categoriesForMethods!
 dwAddr!**compiled accessors**!public! !
 dwBCastAddr!**compiled accessors**!public! !
@@ -99,25 +99,25 @@ defineFields
 
 	self
 		defineField: #dwAddr
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 0;
 		defineField: #dwIndex
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 4;
 		defineField: #dwMask
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 8;
 		defineField: #dwBCastAddr
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 12;
 		defineField: #dwReasmSize
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 16;
 		defineField: #Unused1
-			type: WORDField filler
+			type: UInt16Field filler
 			offset: 20;
 		defineField: #wType
-			type: WORDField readOnly
+			type: UInt16Field readOnly
 			offset: 22.
 	self byteSize: 24!
 

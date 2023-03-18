@@ -28,12 +28,12 @@ handle
 iItem
 	"Answer the <Integer> value of the receiver's 'iItem' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_iItem!
+	^bytes int32AtOffset: _OffsetOf_iItem!
 
 iSubItem
 	"Answer the <Integer> value of the receiver's 'iSubItem' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_iSubItem! !
+	^bytes int32AtOffset: _OffsetOf_iSubItem! !
 !OS.LVHITTESTINFO categoriesForMethods!
 handle!accessing!private! !
 iItem!**compiled accessors**!public! !
@@ -59,8 +59,8 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #iItem type: SDWORDField readOnly;
-		defineField: #iSubItem type: SDWORDField readOnly!
+		defineField: #iItem type: Int32Field readOnly;
+		defineField: #iSubItem type: Int32Field readOnly!
 
 getFieldNames
 	^#(#pt #flags #iItem #iSubItem)! !

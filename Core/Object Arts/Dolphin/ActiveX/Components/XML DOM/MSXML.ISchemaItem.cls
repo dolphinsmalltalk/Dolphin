@@ -128,7 +128,7 @@ itemType
 	"Answer the <sdword> value of the 'itemType' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_itemType: answer.
 	^answer asObject!
 

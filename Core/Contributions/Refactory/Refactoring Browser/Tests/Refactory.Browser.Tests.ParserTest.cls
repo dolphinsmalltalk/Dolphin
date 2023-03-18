@@ -659,7 +659,7 @@ treeWithAllNodeTypes
 		parseMethod: 'method: arg1 
 	<namespace: Core> 
 	<primitive: 123 error: ec>
-	<stdcall: UIntPtr blah POINTL* > 
+	<stdcall: SIZE blah POINTL* > 
 	| temps | 
 	super method: arg1. 
 	thisContext. 

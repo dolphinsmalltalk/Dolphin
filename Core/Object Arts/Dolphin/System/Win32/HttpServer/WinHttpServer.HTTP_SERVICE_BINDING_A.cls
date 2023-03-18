@@ -45,12 +45,12 @@ Buffer: anAnsiString
 BufferSize
 	"Private - Answer the <Integer> value of the receiver's 'BufferSize' field."
 
-	^bytes dwordAtOffset: _OffsetOf_BufferSize!
+	^bytes uint32AtOffset: _OffsetOf_BufferSize!
 
 BufferSize: anInteger
 	"Set the receiver's 'BufferSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_BufferSize put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_BufferSize put: anInteger! !
 !WinHttpServer.HTTP_SERVICE_BINDING_A categoriesForMethods!
 Buffer!**compiled accessors**!public! !
 Buffer:!**compiled accessors**!public! !
@@ -79,7 +79,7 @@ defineFields
 	super defineFields.
 	self
 		defineField: #Buffer type: (ArrayPointerField type: AnsiString lengthField: #BufferSize) offset: 4;
-		defineField: #BufferSize type: DWORDField new beNonBrowsable offset: 8.
+		defineField: #BufferSize type: UInt32Field new beNonBrowsable offset: 8.
 	self byteSize: 12!
 
 getFieldNames

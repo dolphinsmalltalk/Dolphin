@@ -14,22 +14,22 @@ OS.AbstractTEXTRANGE comment: ''!
 cpMax
 	"Answer the receiver's cpMax field as a Smalltalk object."
 
-	^(bytes sdwordAtOffset: 4)!
+	^(bytes int32AtOffset: 4)!
 
 cpMax: anObject
 	"Set the receiver's cpMax field to the value of anObject."
 
-	bytes sdwordAtOffset: 4 put: anObject!
+	bytes int32AtOffset: 4 put: anObject!
 
 cpMin
 	"Answer the receiver's cpMin field as a Smalltalk object."
 
-	^(bytes sdwordAtOffset: 0)!
+	^(bytes int32AtOffset: 0)!
 
 cpMin: anObject
 	"Set the receiver's cpMin field to the value of anObject."
 
-	bytes sdwordAtOffset: 0 put: anObject!
+	bytes int32AtOffset: 0 put: anObject!
 
 lpstrText: aString
 	"Set the receiver's 'lpstrText' field to the value of the argument, aString"

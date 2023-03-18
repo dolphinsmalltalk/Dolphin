@@ -44,12 +44,12 @@ info
 Length
 	"Private - Answer the <Integer> value of the receiver's 'Length' field."
 
-	^bytes dwordAtOffset: _OffsetOf_Length!
+	^bytes uint32AtOffset: _OffsetOf_Length!
 
 Length: anInteger
 	"Set the receiver's 'Length' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_Length put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_Length put: anInteger!
 
 pInfo
 	"Private - Answer the <ExternalArray> value of the receiver's 'pInfo' field."
@@ -68,12 +68,12 @@ printFields: aCollection on: aStream
 Type
 	"Private - Answer the <Integer> value of the receiver's 'Type' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_Type!
+	^bytes int32AtOffset: _OffsetOf_Type!
 
 Type: anInteger
 	"Set the receiver's 'Type' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_Type put: anInteger! !
+	bytes int32AtOffset: _OffsetOf_Type put: anInteger! !
 !WinHttpServer.HTTP_RESPONSE_INFO categoriesForMethods!
 info!accessing!public! !
 Length!**compiled accessors**!private! !
@@ -104,8 +104,8 @@ defineFields
 "
 
 	self
-		defineField: #Type type: SDWORDField new beNonBrowsable offset: 0;
-		defineField: #Length type: DWORDField new beNonBrowsable offset: 4;
+		defineField: #Type type: Int32Field new beNonBrowsable offset: 0;
+		defineField: #Length type: UInt32Field new beNonBrowsable offset: 4;
 		defineField: #pInfo type: (ArrayPointerField type: ExternalArray lengthField: #Length) beNonBrowsable offset: 8.
 	self byteSize: 12!
 

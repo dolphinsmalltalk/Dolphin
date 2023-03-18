@@ -33,12 +33,12 @@ struct tagHTTP_SERVICE_CONFIG_IP_LISTEN_QUERY {
 AddrCount
 	"Private - Answer the <Integer> value of the receiver's 'AddrCount' field."
 
-	^bytes dwordAtOffset: _OffsetOf_AddrCount!
+	^bytes uint32AtOffset: _OffsetOf_AddrCount!
 
 AddrCount: anInteger
 	"Set the receiver's 'AddrCount' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_AddrCount put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_AddrCount put: anInteger!
 
 AddrList
 	"Answer the <StructureArray> value of the receiver's 'AddrList' field."
@@ -84,7 +84,7 @@ defineFields
 "
 
 	self
-		defineField: #AddrCount type: DWORDField new beNonBrowsable offset: 0;
+		defineField: #AddrCount type: UInt32Field new beNonBrowsable offset: 0;
 		defineField: #AddrList type: (StructureArrayField type: SOCKADDR_STORAGE lengthField: #AddrCount) offset: 8.
 	self byteSize: 136!
 

@@ -34,12 +34,12 @@ struct tagHTTP_SERVICE_CONFIG_SSL_QUERY {
 dwToken
 	"Answer the <Integer> value of the receiver's 'dwToken' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwToken!
+	^bytes uint32AtOffset: _OffsetOf_dwToken!
 
 dwToken: anInteger
 	"Set the receiver's 'dwToken' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwToken put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwToken put: anInteger!
 
 KeyDesc
 	"Answer the <SOCKADDR> value of the receiver's 'KeyDesc' field."
@@ -78,7 +78,7 @@ defineFields
 	super defineFields.
 	self
 		defineField: #KeyDesc type: (PointerField type: SOCKADDR) offset: 4;
-		defineField: #dwToken type: DWORDField new offset: 8.
+		defineField: #dwToken type: UInt32Field new offset: 8.
 	self byteSize: 12!
 
 getFieldNames

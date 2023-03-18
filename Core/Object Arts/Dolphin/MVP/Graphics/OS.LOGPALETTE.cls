@@ -34,12 +34,12 @@ struct tagLOGPALETTE {
 palNumEntries
 	"Answer the <Integer> value of the receiver's 'palNumEntries' field."
 
-	^bytes wordAtOffset: _OffsetOf_palNumEntries!
+	^bytes uint16AtOffset: _OffsetOf_palNumEntries!
 
 palNumEntries: anInteger
 	"Set the receiver's 'palNumEntries' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_palNumEntries put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_palNumEntries put: anInteger!
 
 palPalEntry
 	"Answer the <StructureArray> value of the receiver's 'palPalEntry' field."
@@ -52,12 +52,12 @@ palPalEntry
 palVersion
 	"Answer the <Integer> value of the receiver's 'palVersion' field."
 
-	^bytes wordAtOffset: _OffsetOf_palVersion!
+	^bytes uint16AtOffset: _OffsetOf_palVersion!
 
 palVersion: anInteger
 	"Set the receiver's 'palVersion' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_palVersion put: anInteger! !
+	bytes uint16AtOffset: _OffsetOf_palVersion put: anInteger! !
 !OS.LOGPALETTE categoriesForMethods!
 palNumEntries!**compiled accessors**!public! !
 palNumEntries:!**compiled accessors**!public! !
@@ -86,10 +86,10 @@ defineFields
 
 	self
 		defineField: #palVersion
-			type: WORDField new
+			type: UInt16Field new
 			offset: 0;
 		defineField: #palNumEntries
-			type: WORDField new
+			type: UInt16Field new
 			offset: 2;
 		defineField: #palPalEntry
 			type: (StructureArrayField type: PALETTEENTRY

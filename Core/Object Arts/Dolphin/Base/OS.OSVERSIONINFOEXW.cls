@@ -49,47 +49,47 @@ struct tagOSVERSIONINFOEXW {
 dwBuildNumber
 	"Answer the <Integer> value of the receiver's 'dwBuildNumber' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwBuildNumber!
+	^bytes uint32AtOffset: _OffsetOf_dwBuildNumber!
 
 dwBuildNumber: anInteger
 	"Set the receiver's 'dwBuildNumber' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwBuildNumber put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwBuildNumber put: anInteger!
 
 dwMajorVersion
 	"Answer the <Integer> value of the receiver's 'dwMajorVersion' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwMajorVersion!
+	^bytes uint32AtOffset: _OffsetOf_dwMajorVersion!
 
 dwMajorVersion: anInteger
 	"Set the receiver's 'dwMajorVersion' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwMajorVersion put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwMajorVersion put: anInteger!
 
 dwMinorVersion
 	"Answer the <Integer> value of the receiver's 'dwMinorVersion' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwMinorVersion!
+	^bytes uint32AtOffset: _OffsetOf_dwMinorVersion!
 
 dwMinorVersion: anInteger
 	"Set the receiver's 'dwMinorVersion' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwMinorVersion put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwMinorVersion put: anInteger!
 
 dwPlatformId
 	"Answer the <Integer> value of the receiver's 'dwPlatformId' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwPlatformId!
+	^bytes uint32AtOffset: _OffsetOf_dwPlatformId!
 
 dwPlatformId: anInteger
 	"Set the receiver's 'dwPlatformId' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwPlatformId put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwPlatformId put: anInteger!
 
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 szCSDVersion
 	"Answer the <Utf16String> value of the receiver's 'szCSDVersion' field."
@@ -99,42 +99,42 @@ szCSDVersion
 wProductType
 	"Answer the <Integer> value of the receiver's 'wProductType' field."
 
-	^bytes byteAtOffset: _OffsetOf_wProductType!
+	^bytes uint8AtOffset: _OffsetOf_wProductType!
 
 wProductType: anInteger
 	"Set the receiver's 'wProductType' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_wProductType put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_wProductType put: anInteger!
 
 wServicePackMajor
 	"Answer the <Integer> value of the receiver's 'wServicePackMajor' field."
 
-	^bytes wordAtOffset: _OffsetOf_wServicePackMajor!
+	^bytes uint16AtOffset: _OffsetOf_wServicePackMajor!
 
 wServicePackMajor: anInteger
 	"Set the receiver's 'wServicePackMajor' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_wServicePackMajor put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_wServicePackMajor put: anInteger!
 
 wServicePackMinor
 	"Answer the <Integer> value of the receiver's 'wServicePackMinor' field."
 
-	^bytes wordAtOffset: _OffsetOf_wServicePackMinor!
+	^bytes uint16AtOffset: _OffsetOf_wServicePackMinor!
 
 wServicePackMinor: anInteger
 	"Set the receiver's 'wServicePackMinor' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_wServicePackMinor put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_wServicePackMinor put: anInteger!
 
 wSuiteMask
 	"Answer the <Integer> value of the receiver's 'wSuiteMask' field."
 
-	^bytes wordAtOffset: _OffsetOf_wSuiteMask!
+	^bytes uint16AtOffset: _OffsetOf_wSuiteMask!
 
 wSuiteMask: anInteger
 	"Set the receiver's 'wSuiteMask' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_wSuiteMask put: anInteger! !
+	bytes uint16AtOffset: _OffsetOf_wSuiteMask put: anInteger! !
 !OS.OSVERSIONINFOEXW categoriesForMethods!
 dwBuildNumber!**compiled accessors**!public! !
 dwBuildNumber:!**compiled accessors**!public! !
@@ -184,37 +184,37 @@ defineFields
 
 	self
 		defineField: #dwSize
-			type: DWORDField new beWriteOnly
+			type: UInt32Field new beWriteOnly
 			offset: 0;
 		defineField: #dwMajorVersion
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 4;
 		defineField: #dwMinorVersion
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 8;
 		defineField: #dwBuildNumber
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 12;
 		defineField: #dwPlatformId
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 16;
 		defineField: #szCSDVersion
 			type: (StringField type: Utf16String length: 128) beReadOnly
 			offset: 20;
 		defineField: #wServicePackMajor
-			type: WORDField new
+			type: UInt16Field new
 			offset: 276;
 		defineField: #wServicePackMinor
-			type: WORDField new
+			type: UInt16Field new
 			offset: 278;
 		defineField: #wSuiteMask
-			type: WORDField new
+			type: UInt16Field new
 			offset: 280;
 		defineField: #wProductType
-			type: BYTEField new
+			type: UInt8Field new
 			offset: 282;
 		defineField: #wReserved
-			type: BYTEField new beFiller
+			type: UInt8Field new beFiller
 			offset: 283.
 	self byteSize: 284!
 

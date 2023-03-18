@@ -54,12 +54,12 @@ printableFields
 RequestInfoCount
 	"Private - Answer the <Integer> value of the receiver's 'RequestInfoCount' field."
 
-	^bytes wordAtOffset: _OffsetOf_RequestInfoCount!
+	^bytes uint16AtOffset: _OffsetOf_RequestInfoCount!
 
 RequestInfoCount: anInteger
 	"Set the receiver's 'RequestInfoCount' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_RequestInfoCount put: anInteger! !
+	bytes uint16AtOffset: _OffsetOf_RequestInfoCount put: anInteger! !
 !WinHttpServer.HTTP_REQUEST_V2 categoriesForMethods!
 pRequestInfo!**compiled accessors**!public! !
 pRequestInfo:!**compiled accessors**!public! !
@@ -88,7 +88,7 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #RequestInfoCount type: WORDField new beNonBrowsable offset: 464;
+		defineField: #RequestInfoCount type: UInt16Field new beNonBrowsable offset: 464;
 		defineField: #pRequestInfo type: (StructureArrayPointerField type: HTTP_REQUEST_INFO lengthField: #RequestInfoCount) offset: 468.
 	self byteSize: 472!
 

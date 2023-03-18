@@ -118,7 +118,7 @@ displayOn: aPuttableStream
 			[aPuttableStream nextPut: $-.
 			scaled := scaled negated].
 	quo := scaled quo: scaler.
-	quo printOn: aPuttableStream.
+	quo printOn: aPuttableStream base: 10.
 	scale > 0
 		ifTrue: 
 			[| rem |
@@ -259,8 +259,7 @@ reciprocal
 !
 
 scale
-	"Answer an <integer> which represents the total number of digits used to 
-	represent the fraction part of the receiver, including trailing zeroes."
+	"Answer an <integer> which represents the total number of digits used to represent the fraction part of the receiver, including trailing zeroes."
 
 	^scale
 !

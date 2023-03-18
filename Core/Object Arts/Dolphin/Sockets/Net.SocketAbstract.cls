@@ -87,7 +87,7 @@ queryPort
 	name := SOCKADDR_IN new
 				sin_family: AF_INET;
 				yourself.
-	nameLength := SDWORD new
+	nameLength := Int32 new
 				value: name size;
 				yourself.
 	Ws2_32

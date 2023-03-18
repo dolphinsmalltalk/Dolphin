@@ -69,7 +69,7 @@ isRestricted
 lcid
 	"Answer the <Integer> value of the receiver's 'lcid' field."
 
-	^bytes dwordAtOffset: _OffsetOf_lcid!
+	^bytes uint32AtOffset: _OffsetOf_lcid!
 
 version
 	"Answer an N.N version string for the receiver."
@@ -79,17 +79,17 @@ version
 wLibFlags
 	"Answer the <Integer> value of the receiver's 'wLibFlags' field."
 
-	^bytes wordAtOffset: _OffsetOf_wLibFlags!
+	^bytes uint16AtOffset: _OffsetOf_wLibFlags!
 
 wMajorVerNum
 	"Answer the <Integer> value of the receiver's 'wMajorVerNum' field."
 
-	^bytes wordAtOffset: _OffsetOf_wMajorVerNum!
+	^bytes uint16AtOffset: _OffsetOf_wMajorVerNum!
 
 wMinorVerNum
 	"Answer the <Integer> value of the receiver's 'wMinorVerNum' field."
 
-	^bytes wordAtOffset: _OffsetOf_wMinorVerNum! !
+	^bytes uint16AtOffset: _OffsetOf_wMinorVerNum! !
 !OS.COM.TLIBATTR categoriesForMethods!
 comparisonSize!accessing!private! !
 guid!**compiled accessors**!public! !
@@ -141,11 +141,11 @@ defineFields
 
 	self
 		defineField: #guid			type: (StructureField type: GUID) beReadOnly;
-		defineField: #lcid				type: DWORDField readOnly;
-		defineField: #syskind			type: SDWORDField filler;		"Always Win32"
-		defineField: #wMajorVerNum	type: WORDField readOnly;
-		defineField: #wMinorVerNum	type: WORDField readOnly;
-		defineField: #wLibFlags		type: WORDField readOnly!
+		defineField: #lcid				type: UInt32Field readOnly;
+		defineField: #syskind			type: Int32Field filler;		"Always Win32"
+		defineField: #wMajorVerNum	type: UInt16Field readOnly;
+		defineField: #wMinorVerNum	type: UInt16Field readOnly;
+		defineField: #wLibFlags		type: UInt16Field readOnly!
 
 getFieldNames
 	^#(#guid #lcid #wMajorVerNum #wMinorVerNum #wLibFlags)! !

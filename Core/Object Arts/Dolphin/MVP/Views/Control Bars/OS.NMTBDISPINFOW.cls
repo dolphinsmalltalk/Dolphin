@@ -40,42 +40,42 @@ struct tagNMTBDISPINFOW {
 cchText
 	"Answer the <Integer> value of the receiver's 'cchText' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_cchText!
+	^bytes int32AtOffset: _OffsetOf_cchText!
 
 cchText: anInteger
 	"Set the receiver's 'cchText' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_cchText put: anInteger!
+	bytes int32AtOffset: _OffsetOf_cchText put: anInteger!
 
 dwMask
 	"Answer the <Integer> value of the receiver's 'dwMask' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwMask!
+	^bytes uint32AtOffset: _OffsetOf_dwMask!
 
 dwMask: anInteger
 	"Set the receiver's 'dwMask' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwMask put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwMask put: anInteger!
 
 idCommand
 	"Answer the <Integer> value of the receiver's 'idCommand' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_idCommand!
+	^bytes int32AtOffset: _OffsetOf_idCommand!
 
 idCommand: anInteger
 	"Set the receiver's 'idCommand' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_idCommand put: anInteger!
+	bytes int32AtOffset: _OffsetOf_idCommand put: anInteger!
 
 iImage
 	"Answer the <Integer> value of the receiver's 'iImage' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_iImage!
+	^bytes int32AtOffset: _OffsetOf_iImage!
 
 iImage: anInteger
 	"Set the receiver's 'iImage' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_iImage put: anInteger!
+	bytes int32AtOffset: _OffsetOf_iImage put: anInteger!
 
 lParam
 	"Answer the <Integer> value of the receiver's 'lParam' field."
@@ -151,12 +151,12 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #dwMask type: DWORDField new offset: 12;
-		defineField: #idCommand type: SDWORDField new offset: 16;
-		defineField: #lParam type: UINT_PTRField new offset: 20;
-		defineField: #iImage type: SDWORDField new offset: 24;
+		defineField: #dwMask type: UInt32Field new offset: 12;
+		defineField: #idCommand type: Int32Field new offset: 16;
+		defineField: #lParam type: UIntPtrField new offset: 20;
+		defineField: #iImage type: Int32Field new offset: 24;
 		defineField: #pszText type: (PointerField type: Utf16String) offset: 28;
-		defineField: #cchText type: SDWORDField new offset: 32.
+		defineField: #cchText type: Int32Field new offset: 32.
 	self byteSize: 36!
 
 getFieldNames

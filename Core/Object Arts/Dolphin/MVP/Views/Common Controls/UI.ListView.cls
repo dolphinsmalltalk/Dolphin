@@ -451,7 +451,7 @@ columnOrder: positions
 	| iArray iCount |
 	self columnOrder = positions ifTrue: [^self	"Order not changed"].
 	iCount := positions size.
-	iArray := DWORDArray new: iCount.
+	iArray := UInt32Array new: iCount.
 	1 to: positions size do: [:i | iArray at: i put: (positions at: i) - 1].
 	self lvmSetColumnOrderArray: iArray.
 	"The control does not repaint, so we must force it"
@@ -1177,12 +1177,12 @@ lvmGetCallbackMask
 		lParam: 0!
 
 lvmGetColumnOrderArray
-	"Private - Answer an <SDWORDArray> containing the current left-to-right order 
+	"Private - Answer a <UInt32Array> containing the current left-to-right order 
 	of columns in the receiver specified as zero-based positions. "
 
 	| iCount iArray |
 	iCount := self columnCount.
-	iArray := DWORDArray new: iCount.
+	iArray := UInt32Array new: iCount.
 	(User32
 		sendMessage: handle
 		msg: LVM_GETCOLUMNORDERARRAY
@@ -1418,7 +1418,7 @@ lvmSetColumn: anLvColumn at: columnIndex
 
 lvmSetColumnOrderArray: iArray
 	"Private - Sets the left-to-right order of columns in the receiver to the zero-based positions
-	specified in the <SDWORDArray> argument, iArray."
+	specified in the <Int32Array> argument, iArray."
 
 	User32
 		sendMessage: handle
@@ -1729,7 +1729,7 @@ nmNotify: pNMHDR
 		at: LVN_FIRST - LVN_ENDSCROLL + 1 put: #lvnEndScroll:;
 		at: LVN_FIRST - LVN_LINKCLICK + 1 put: #lvnLinkClick:;
 		at: LVN_FIRST - LVN_GETEMPTYMARKUP + 1 put: #lvnGetEmptyMarkup:;
-		yourself) lookup: ##(LVN_FIRST + 1) - (pNMHDR sdwordAtOffset: 8))
+		yourself) lookup: ##(LVN_FIRST + 1) - (pNMHDR int32AtOffset: 8))
 		ifNil: [super nmNotify: pNMHDR]
 		ifNotNil: [:action | self perform: action with: pNMHDR]!
 

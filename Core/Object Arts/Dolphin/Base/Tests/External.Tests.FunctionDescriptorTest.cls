@@ -79,7 +79,7 @@ testBuiltins
 testIndirections
 	"Some double indirections"
 
-	#('lppvoid' 'lpvoid*' 'void**' 'LPVOID*' 'DWORD**' 'POINTL**' 'IUnknown**' 'BSTR*') do: 
+	#('lppvoid' 'lpvoid*' 'void**' 'LPVOID*' 'UInt32**' 'POINTL**' 'IUnknown**' 'BSTR*') do: 
 			[:each |
 			| desc |
 			desc := self subjectClass fromString: 'cdecl: void ' , each environment: Smalltalk.
@@ -125,13 +125,13 @@ testSmokeTest
 
 testStruct4
 	| valueTypes |
-	self assert: DWORD byteSize equals: 4.
-	self assert: DWORD basicByteSize equals: 4.
+	self assert: UInt32 byteSize equals: 4.
+	self assert: UInt32 basicByteSize equals: 4.
 	valueTypes := self externalTypes.
 	
 	[FunctionDescriptor.ValueTypes := LookupTable with: 'void' -> 0.
 	self
-		parseStructArg: DWORD
+		parseStructArg: UInt32
 		valueType: ExtCallArgSTRUCT4
 		refType: ExtCallArgLP]
 			ensure: [FunctionDescriptor.ValueTypes := valueTypes]!

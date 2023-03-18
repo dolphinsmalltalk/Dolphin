@@ -183,7 +183,7 @@ boundsMode
 	"Answer the <sdword> value of the 'BoundsMode' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_BoundsMode: answer.
 	^answer asObject!
 
@@ -217,7 +217,7 @@ defaultBackgroundColor
 	"Answer the <Color> value of the 'DefaultBackgroundColor' property of the receiver."
 
 	| answer |
-	answer := QWORD newBuffer.
+	answer := UInt64 newBuffer.
 	self get_DefaultBackgroundColor: answer.
 	^Graphics.Color fromArgbCode: answer value!
 

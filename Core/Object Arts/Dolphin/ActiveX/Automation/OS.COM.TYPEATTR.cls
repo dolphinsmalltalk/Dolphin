@@ -64,27 +64,27 @@ basicFree
 cbAlignment
 	"Answer the <Integer> value of the receiver's 'cbAlignment' field."
 
-	^bytes wordAtOffset: _OffsetOf_cbAlignment!
+	^bytes uint16AtOffset: _OffsetOf_cbAlignment!
 
 cbSizeInstance
 	"Answer the <Integer> value of the receiver's 'cbSizeInstance' field."
 
-	^bytes dwordAtOffset: _OffsetOf_cbSizeInstance!
+	^bytes uint32AtOffset: _OffsetOf_cbSizeInstance!
 
 cbSizeVft
 	"Answer the <Integer> value of the receiver's 'cbSizeVft' field."
 
-	^bytes wordAtOffset: _OffsetOf_cbSizeVft!
+	^bytes uint16AtOffset: _OffsetOf_cbSizeVft!
 
 cFuncs
 	"Answer the <Integer> value of the receiver's 'cFuncs' field."
 
-	^bytes wordAtOffset: _OffsetOf_cFuncs!
+	^bytes uint16AtOffset: _OffsetOf_cFuncs!
 
 cImplTypes
 	"Answer the <Integer> value of the receiver's 'cImplTypes' field."
 
-	^bytes wordAtOffset: _OffsetOf_cImplTypes!
+	^bytes uint16AtOffset: _OffsetOf_cImplTypes!
 
 classDesc
 	"Private - Answer an <Association> between a Dolphin class suitable for representing
@@ -96,7 +96,7 @@ classDesc
 cVars
 	"Answer the <Integer> value of the receiver's 'cVars' field."
 
-	^bytes wordAtOffset: _OffsetOf_cVars!
+	^bytes uint16AtOffset: _OffsetOf_cVars!
 
 guid
 	"Answer the <GUID> value of the receiver's 'guid' field."
@@ -168,17 +168,17 @@ isRestricted
 lcid
 	"Answer the <Integer> value of the receiver's 'lcid' field."
 
-	^bytes dwordAtOffset: _OffsetOf_lcid!
+	^bytes uint32AtOffset: _OffsetOf_lcid!
 
 memidConstructor
 	"Answer the <Integer> value of the receiver's 'memidConstructor' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_memidConstructor!
+	^bytes int32AtOffset: _OffsetOf_memidConstructor!
 
 memidDestructor
 	"Answer the <Integer> value of the receiver's 'memidDestructor' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_memidDestructor!
+	^bytes int32AtOffset: _OffsetOf_memidDestructor!
 
 name
 	"Answer the name of the variable described by the receiver."
@@ -202,22 +202,22 @@ tdescAlias
 typekind
 	"Answer the <Integer> value of the receiver's 'typekind' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_typekind!
+	^bytes int32AtOffset: _OffsetOf_typekind!
 
 wMajorVerNum
 	"Answer the <Integer> value of the receiver's 'wMajorVerNum' field."
 
-	^bytes wordAtOffset: _OffsetOf_wMajorVerNum!
+	^bytes uint16AtOffset: _OffsetOf_wMajorVerNum!
 
 wMinorVerNum
 	"Answer the <Integer> value of the receiver's 'wMinorVerNum' field."
 
-	^bytes wordAtOffset: _OffsetOf_wMinorVerNum!
+	^bytes uint16AtOffset: _OffsetOf_wMinorVerNum!
 
 wTypeFlags
 	"Answer the <Integer> value of the receiver's 'wTypeFlags' field."
 
-	^bytes wordAtOffset: _OffsetOf_wTypeFlags! !
+	^bytes uint16AtOffset: _OffsetOf_wTypeFlags! !
 !OS.COM.TYPEATTR categoriesForMethods!
 basicFree!private!realizing/unrealizing! !
 cbAlignment!**compiled accessors**!public! !
@@ -286,21 +286,21 @@ defineFields
 
 	self
 		defineField: #guid type: (StructureField type: GUID) beReadOnly;
-		defineField: #lcid type: DWORDField readOnly;
-		defineField: #dwReserved type: DWORDField filler;
-		defineField: #memidConstructor type: SDWORDField readOnly;
-		defineField: #memidDestructor type: SDWORDField readOnly;
+		defineField: #lcid type: UInt32Field readOnly;
+		defineField: #dwReserved type: UInt32Field filler;
+		defineField: #memidConstructor type: Int32Field readOnly;
+		defineField: #memidDestructor type: Int32Field readOnly;
 		defineField: #lpstrSchema type: (PointerField type: Utf16String) beFiller;
-		defineField: #cbSizeInstance type: DWORDField readOnly;
-		defineField: #typekind type: SDWORDField readOnly;
-		defineField: #cFuncs type: WORDField readOnly;
-		defineField: #cVars type: WORDField readOnly;
-		defineField: #cImplTypes type: WORDField readOnly;
-		defineField: #cbSizeVft type: WORDField readOnly;
-		defineField: #cbAlignment type: WORDField readOnly;
-		defineField: #wTypeFlags type: WORDField readOnly;
-		defineField: #wMajorVerNum type: WORDField readOnly;
-		defineField: #wMinorVerNum type: WORDField readOnly;
+		defineField: #cbSizeInstance type: UInt32Field readOnly;
+		defineField: #typekind type: Int32Field readOnly;
+		defineField: #cFuncs type: UInt16Field readOnly;
+		defineField: #cVars type: UInt16Field readOnly;
+		defineField: #cImplTypes type: UInt16Field readOnly;
+		defineField: #cbSizeVft type: UInt16Field readOnly;
+		defineField: #cbAlignment type: UInt16Field readOnly;
+		defineField: #wTypeFlags type: UInt16Field readOnly;
+		defineField: #wMajorVerNum type: UInt16Field readOnly;
+		defineField: #wMinorVerNum type: UInt16Field readOnly;
 		defineField: #tdescAlias type: (StructureField type: TYPEDESC) beReadOnly;
 		defineField: #idldescType type: (StructureField type: IDLDESC) beReadOnly	"MEMBERID = DISPID = LONG"	"MEMBERID"	"enumerated type TYPEKIND"!
 

@@ -269,11 +269,12 @@ nextAvailable: anInteger
 			count := count - 1].
 	^newStream contents!
 
-nextDWORDPut: anInteger
-	"Append a 32-bit unsigned integer representation as the next 4 bytes on the receiver."
+nextInt32Put: anInteger
+	"Append a 32-bit signed integer in 2's complement representation 
+	as the next 4 bytes on the receiver."
 
 	self nextPutAll: ((ByteArray new: 4)
-				dwordAtOffset: 0 put: anInteger;
+				int32AtOffset: 0 put: anInteger;
 				yourself).
 	^anInteger!
 
@@ -301,12 +302,11 @@ nextPutAll: aCollection
 	aCollection do: [:each | self nextPut: each].
 	^aCollection!
 
-nextSDWORDPut: anInteger
-	"Append a 32-bit signed integer in 2's complement representation 
-	as the next 4 bytes on the receiver."
+nextUInt32Put: anInteger
+	"Append a 32-bit unsigned integer representation as the next 4 bytes on the receiver."
 
 	self nextPutAll: ((ByteArray new: 4)
-				sdwordAtOffset: 0 put: anInteger;
+				uint32AtOffset: 0 put: anInteger;
 				yourself).
 	^anInteger!
 
@@ -420,12 +420,12 @@ next:put:!accessing!public! !
 next:putAll:startingAt:!accessing!public! !
 nextAvailable!accessing!public! !
 nextAvailable:!accessing!public! !
-nextDWORDPut:!binary filing!public! !
+nextInt32Put:!binary filing!public! !
 nextInto:!accessing!public! !
 nextMatchFor:!accessing!public! !
 nextPut:!accessing!public! !
 nextPutAll:!accessing!public! !
-nextSDWORDPut:!binary filing!public! !
+nextUInt32Put:!binary filing!public! !
 print:!printing!public! !
 skip:!positioning!public! !
 skipThrough:!positioning!public! !

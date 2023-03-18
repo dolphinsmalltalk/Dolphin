@@ -25,7 +25,7 @@ Member variables:
 cDims
 	"Private - Answer the <Integer> value of the receiver's 'cDims' field."
 
-	^bytes wordAtOffset: _OffsetOf_cDims!
+	^bytes uint16AtOffset: _OffsetOf_cDims!
 
 elementCount
 	"Private - Answer the total number of elements in all dimensions of the array
@@ -68,7 +68,7 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #cDims type: WORDField readOnly beNonBrowsable;
+		defineField: #cDims type: UInt16Field readOnly beNonBrowsable;
 		defineField: #rgbounds
 			type: (StructureArrayField type: SAFEARRAYBOUND
 					arrayLength: (ConformantArrayFieldLength lengthField: #cDims)) beReadOnly!

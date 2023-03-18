@@ -26,67 +26,67 @@ OS.TBBUTTONINFOW comment: ''!
 cx
 	"Answer the <Integer> value of the receiver's 'cx' field."
 
-	^bytes wordAtOffset: _OffsetOf_cx!
+	^bytes uint16AtOffset: _OffsetOf_cx!
 
 cx: anInteger
 	"Set the receiver's 'cx' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_cx put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_cx put: anInteger!
 
 dwMask
 	"Answer the <Integer> value of the receiver's 'dwMask' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwMask!
+	^bytes uint32AtOffset: _OffsetOf_dwMask!
 
 dwMask: anInteger
 	"Set the receiver's 'dwMask' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwMask put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwMask put: anInteger!
 
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_dwSize put: anInteger!
+	bytes int32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 fsState
 	"Answer the <Integer> value of the receiver's 'fsState' field."
 
-	^bytes byteAtOffset: _OffsetOf_fsState!
+	^bytes uint8AtOffset: _OffsetOf_fsState!
 
 fsState: anInteger
 	"Set the receiver's 'fsState' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_fsState put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_fsState put: anInteger!
 
 fsStyle
 	"Answer the <Integer> value of the receiver's 'fsStyle' field."
 
-	^bytes byteAtOffset: _OffsetOf_fsStyle!
+	^bytes uint8AtOffset: _OffsetOf_fsStyle!
 
 fsStyle: anInteger
 	"Set the receiver's 'fsStyle' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_fsStyle put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_fsStyle put: anInteger!
 
 idCommand
 	"Answer the <Integer> value of the receiver's 'idCommand' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_idCommand!
+	^bytes int32AtOffset: _OffsetOf_idCommand!
 
 idCommand: anInteger
 	"Set the receiver's 'idCommand' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_idCommand put: anInteger!
+	bytes int32AtOffset: _OffsetOf_idCommand put: anInteger!
 
 iImage
 	"Answer the <Integer> value of the receiver's 'iImage' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_iImage!
+	^bytes int32AtOffset: _OffsetOf_iImage!
 
 iImage: anInteger
 	"Set the receiver's 'iImage' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_iImage put: anInteger! !
+	bytes int32AtOffset: _OffsetOf_iImage put: anInteger! !
 !OS.TBBUTTONINFOW categoriesForMethods!
 cx!**compiled accessors**!public! !
 cx:!**compiled accessors**!public! !
@@ -126,16 +126,16 @@ defineFields
 			int cchText; } TBBUTTONINFOW, *LPTBBUTTONINFOW;"
 
 	self
-		defineField: #dwSize type: SDWORDField writeOnly beOverride;
-		defineField: #dwMask type: DWORDField new;
-		defineField: #idCommand type: SDWORDField new;
-		defineField: #iImage type: SDWORDField new;
-		defineField: #fsState type: BYTEField new;
-		defineField: #fsStyle type: BYTEField new;
-		defineField: #cx type: WORDField new;
-		defineField: #lParam type: UINT_PTRField filler;
+		defineField: #dwSize type: Int32Field writeOnly beOverride;
+		defineField: #dwMask type: UInt32Field new;
+		defineField: #idCommand type: Int32Field new;
+		defineField: #iImage type: Int32Field new;
+		defineField: #fsState type: UInt8Field new;
+		defineField: #fsStyle type: UInt8Field new;
+		defineField: #cx type: UInt16Field new;
+		defineField: #lParam type: UIntPtrField filler;
 		defineField: #pszText type: (PointerField type: Utf16String) beFiller;
-		defineField: #cchText type: SDWORDField filler!
+		defineField: #cchText type: Int32Field filler!
 
 getFieldNames
 	^#(#dwSize #dwMask #idCommand #iImage #fsState #fsStyle #cx)! !

@@ -90,7 +90,7 @@ beginTransComplete: transactionLevel pError: pError adStatus: adStatus pConnecti
 	^self
 		BeginTransComplete: transactionLevel
 		pError: pError
-		adStatus: (SDWORD new
+		adStatus: (Int32 new
 				value: adStatus;
 				yourself)
 		pConnection: pConnection!
@@ -100,7 +100,7 @@ BeginTransComplete: beginTransComplete pError: pError adStatus: adStatus pConnec
 	N.B. This method has been automatically generated from 
 	the vtable defined in ConnectionEventsVt>>defineFunctions. DO NOT MODIFY!!"
 
-	<virtual stdcall: hresult 5 sdword ADODB.Error* External.SDWORD* ADODB._Connection*>
+	<virtual stdcall: hresult 5 sdword Error* Int32* _Connection*>
 	^self invalidCall: _failureCode!
 
 commitTransComplete: pError adStatus: adStatus pConnection: pConnection
@@ -108,7 +108,7 @@ commitTransComplete: pError adStatus: adStatus pConnection: pConnection
 
 	^self
 		CommitTransComplete: pError
-		adStatus: (SDWORD new
+		adStatus: (Int32 new
 				value: adStatus;
 				yourself)
 		pConnection: pConnection!
@@ -118,7 +118,7 @@ CommitTransComplete: commitTransComplete adStatus: adStatus pConnection: pConnec
 	N.B. This method has been automatically generated from 
 	the vtable defined in ConnectionEventsVt>>defineFunctions. DO NOT MODIFY!!"
 
-	<virtual stdcall: hresult 6 ADODB.Error* External.SDWORD* ADODB._Connection*>
+	<virtual stdcall: hresult 6 Error* Int32* _Connection*>
 	^self invalidCall: _failureCode!
 
 connectComplete: pError adStatus: adStatus pConnection: pConnection
@@ -126,7 +126,7 @@ connectComplete: pError adStatus: adStatus pConnection: pConnection
 
 	^self
 		ConnectComplete: pError
-		adStatus: (SDWORD new
+		adStatus: (Int32 new
 				value: adStatus;
 				yourself)
 		pConnection: pConnection!
@@ -136,13 +136,13 @@ ConnectComplete: connectComplete adStatus: adStatus pConnection: pConnection
 	N.B. This method has been automatically generated from 
 	the vtable defined in ConnectionEventsVt>>defineFunctions. DO NOT MODIFY!!"
 
-	<virtual stdcall: hresult 11 ADODB.Error* External.SDWORD* ADODB._Connection*>
+	<virtual stdcall: hresult 11 Error* Int32* _Connection*>
 	^self invalidCall: _failureCode!
 
 disconnect: adStatus pConnection: pConnection
 	"Invoke the Disconnect() method of the COM object."
 
-	^self Disconnect: (SDWORD new
+	^self Disconnect: (Int32 new
 				value: adStatus;
 				yourself)
 		pConnection: pConnection!
@@ -152,7 +152,7 @@ Disconnect: disconnect pConnection: pConnection
 	N.B. This method has been automatically generated from 
 	the vtable defined in ConnectionEventsVt>>defineFunctions. DO NOT MODIFY!!"
 
-	<virtual stdcall: hresult 12 External.SDWORD* ADODB._Connection*>
+	<virtual stdcall: hresult 12 Int32* _Connection*>
 	^self invalidCall: _failureCode!
 
 executeComplete: recordsAffected pError: pError adStatus: adStatus pCommand: pCommand pRecordset: pRecordset pConnection: pConnection
@@ -161,7 +161,7 @@ executeComplete: recordsAffected pError: pError adStatus: adStatus pCommand: pCo
 	^self
 		ExecuteComplete: recordsAffected
 		pError: pError
-		adStatus: (SDWORD new
+		adStatus: (Int32 new
 				value: adStatus;
 				yourself)
 		pCommand: pCommand
@@ -173,7 +173,7 @@ ExecuteComplete: executeComplete pError: pError adStatus: adStatus pCommand: pCo
 	N.B. This method has been automatically generated from 
 	the vtable defined in ConnectionEventsVt>>defineFunctions. DO NOT MODIFY!!"
 
-	<virtual stdcall: hresult 9 sdword ADODB.Error* External.SDWORD* ADODB._Command* ADODB._Recordset* ADODB._Connection*>
+	<virtual stdcall: hresult 9 sdword Error* Int32* _Command* _Recordset* _Connection*>
 	^self invalidCall: _failureCode!
 
 infoMessage: pError adStatus: adStatus pConnection: pConnection
@@ -181,7 +181,7 @@ infoMessage: pError adStatus: adStatus pConnection: pConnection
 
 	^self
 		InfoMessage: pError
-		adStatus: (SDWORD new
+		adStatus: (Int32 new
 				value: adStatus;
 				yourself)
 		pConnection: pConnection!
@@ -191,7 +191,7 @@ InfoMessage: infoMessage adStatus: adStatus pConnection: pConnection
 	N.B. This method has been automatically generated from 
 	the vtable defined in ConnectionEventsVt>>defineFunctions. DO NOT MODIFY!!"
 
-	<virtual stdcall: hresult 4 ADODB.Error* External.SDWORD* ADODB._Connection*>
+	<virtual stdcall: hresult 4 Error* Int32* _Connection*>
 	^self invalidCall: _failureCode!
 
 rollbackTransComplete: pError adStatus: adStatus pConnection: pConnection
@@ -199,7 +199,7 @@ rollbackTransComplete: pError adStatus: adStatus pConnection: pConnection
 
 	^self
 		RollbackTransComplete: pError
-		adStatus: (SDWORD new
+		adStatus: (Int32 new
 				value: adStatus;
 				yourself)
 		pConnection: pConnection!
@@ -209,7 +209,7 @@ RollbackTransComplete: rollbackTransComplete adStatus: adStatus pConnection: pCo
 	N.B. This method has been automatically generated from 
 	the vtable defined in ConnectionEventsVt>>defineFunctions. DO NOT MODIFY!!"
 
-	<virtual stdcall: hresult 7 ADODB.Error* External.SDWORD* ADODB._Connection*>
+	<virtual stdcall: hresult 7 Error* Int32* _Connection*>
 	^self invalidCall: _failureCode!
 
 willConnect: connectionString userID: userID password: password options: options adStatus: adStatus pConnection: pConnection
@@ -219,10 +219,10 @@ willConnect: connectionString userID: userID password: password options: options
 	outputs := {connectionString asBSTR.
 				userID asBSTR.
 				password asBSTR.
-				SDWORD new
+				Int32 new
 					value: options;
 					yourself.
-				SDWORD new
+				Int32 new
 					value: adStatus;
 					yourself}.
 	self
@@ -239,7 +239,7 @@ WillConnect: willConnect UserID: userID Password: password Options: options adSt
 	N.B. This method has been automatically generated from 
 	the vtable defined in ConnectionEventsVt>>defineFunctions. DO NOT MODIFY!!"
 
-	<virtual stdcall: hresult 10 lppvoid lppvoid lppvoid External.SDWORD* External.SDWORD* ADODB._Connection*>
+	<virtual stdcall: hresult 10 lppvoid lppvoid lppvoid Int32* Int32* _Connection*>
 	^self invalidCall: _failureCode!
 
 willExecute: source cursorType: cursorType lockType: lockType options: options adStatus: adStatus pCommand: pCommand pRecordset: pRecordset pConnection: pConnection
@@ -247,16 +247,16 @@ willExecute: source cursorType: cursorType lockType: lockType options: options a
 
 	| outputs |
 	outputs := {source asBSTR.
-				SDWORD new
+				Int32 new
 					value: cursorType;
 					yourself.
-				SDWORD new
+				Int32 new
 					value: lockType;
 					yourself.
-				SDWORD new
+				Int32 new
 					value: options;
 					yourself.
-				SDWORD new
+				Int32 new
 					value: adStatus;
 					yourself}.
 	self
@@ -275,7 +275,7 @@ WillExecute: willExecute CursorType: cursorType LockType: lockType Options: opti
 	N.B. This method has been automatically generated from 
 	the vtable defined in ConnectionEventsVt>>defineFunctions. DO NOT MODIFY!!"
 
-	<virtual stdcall: hresult 8 lppvoid External.SDWORD* External.SDWORD* External.SDWORD* External.SDWORD* ADODB._Command* ADODB._Recordset* ADODB._Connection*>
+	<virtual stdcall: hresult 8 lppvoid Int32* Int32* Int32* Int32* _Command* _Recordset* _Connection*>
 	^self invalidCall: _failureCode! !
 !ADODB.ConnectionEventsVt categoriesForMethods!
 beginTransComplete:pError:adStatus:pConnection:!**auto generated**!methods!public! !

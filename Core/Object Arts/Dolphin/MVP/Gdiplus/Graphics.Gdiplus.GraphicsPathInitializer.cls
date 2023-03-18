@@ -55,9 +55,9 @@ initializeFromHandle: aHandle
 	aHandle isNil ifTrue: [^self].
 	buf := ByteArray newFixed: 4.
 	Gdip gdipGetPathFillMode: aHandle fillMode: buf.
-	fillMode := buf dwordAtOffset: 0.
+	fillMode := buf uint32AtOffset: 0.
 	Gdip gdipGetPointCount: aHandle count: buf.
-	count := buf sdwordAtOffset: 0.
+	count := buf int32AtOffset: 0.
 	count <= 0
 		ifTrue: 
 			[pathPoints := #().

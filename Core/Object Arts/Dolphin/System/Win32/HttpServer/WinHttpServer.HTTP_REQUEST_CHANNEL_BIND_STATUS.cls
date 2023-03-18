@@ -48,12 +48,12 @@ ChannelToken: anExternalArray
 ChannelTokenSize
 	"Private - Answer the <Integer> value of the receiver's 'ChannelTokenSize' field."
 
-	^bytes dwordAtOffset: _OffsetOf_ChannelTokenSize!
+	^bytes uint32AtOffset: _OffsetOf_ChannelTokenSize!
 
 ChannelTokenSize: anInteger
 	"Set the receiver's 'ChannelTokenSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_ChannelTokenSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_ChannelTokenSize put: anInteger!
 
 ServiceName
 	"Answer the <HTTP_SERVICE_BINDING_BASE> value of the receiver's 'ServiceName' field."
@@ -95,8 +95,8 @@ defineFields
 	self
 		defineField: #ServiceName type: (PointerField type: HTTP_SERVICE_BINDING_BASE) offset: 0;
 		defineField: #ChannelToken type: (ArrayPointerField type: ExternalArray lengthField: #ChannelTokenSize) offset: 4;
-		defineField: #ChannelTokenSize type: DWORDField new beNonBrowsable offset: 8;
-		defineField: #Flags type: DWORDField new beFiller offset: 12.
+		defineField: #ChannelTokenSize type: UInt32Field new beNonBrowsable offset: 8;
+		defineField: #Flags type: UInt32Field new beFiller offset: 12.
 	self byteSize: 16!
 
 getFieldNames

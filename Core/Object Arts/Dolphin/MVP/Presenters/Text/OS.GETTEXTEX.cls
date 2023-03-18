@@ -21,22 +21,22 @@ OS.GETTEXTEX comment: ''!
 cb
 	"Answer the <Integer> value of the receiver's 'cb' field."
 
-	^bytes dwordAtOffset: _OffsetOf_cb!
+	^bytes uint32AtOffset: _OffsetOf_cb!
 
 cb: anInteger
 	"Set the receiver's 'cb' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_cb put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_cb put: anInteger!
 
 codepage: anInteger
 	"Set the receiver's 'codepage' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_codepage put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_codepage put: anInteger!
 
 flags: anInteger
 	"Set the receiver's 'flags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_flags put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_flags put: anInteger! !
 !OS.GETTEXTEX categoriesForMethods!
 cb!**compiled accessors**!public! !
 cb:!**compiled accessors**!public! !
@@ -55,9 +55,9 @@ defineFields
 	"
 
 	self
-		defineField: #cb type: DWORDField new;
-		defineField: #flags type: DWORDField writeOnly;
-		defineField: #codepage type: DWORDField writeOnly;
+		defineField: #cb type: UInt32Field new;
+		defineField: #flags type: UInt32Field writeOnly;
+		defineField: #codepage type: UInt32Field writeOnly;
 		defineField: #lpDefaultChar type: (PointerField type: String) beFiller;
 		defineField: #lpUsedDefChar type: (PointerField type: BOOL) beFiller!
 

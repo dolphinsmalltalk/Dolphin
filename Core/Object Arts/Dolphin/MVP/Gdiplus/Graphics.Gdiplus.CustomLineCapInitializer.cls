@@ -142,7 +142,7 @@ strokeCapsOf: aCustomLineCap
 		gdipGetCustomLineCapStrokeCaps: aCustomLineCap asParameter
 		startCap: buf
 		endCap: buf yourAddress + 4.
-	^{buf sdwordAtOffset: 0. buf sdwordAtOffset: 4}!
+	^{buf int32AtOffset: 0. buf int32AtOffset: 4}!
 
 strokeCapsOf: aCustomLineCap setStart: startLineCapConstant end: endLineCapConstant
 	strokeCaps := {startLineCapConstant. endLineCapConstant}.

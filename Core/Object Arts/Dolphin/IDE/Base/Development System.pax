@@ -323,7 +323,6 @@ package setMethodNames: #(
 	#(#{External.POINTArray} #printEvaluationOn:)
 	#(#{External.PointerField} #printAccessorExpression:on:)
 	#(#{External.PointerField} #printMutatorBody:on:)
-	#(#{External.QWORD} #printOn:)
 	#(#{External.RECT} #printOn:)
 	#(#{External.SCALAR class} #shouldOverrideGetFieldNames)
 	#(#{External.ScalarField} #newAspect:class:)
@@ -365,6 +364,7 @@ package setMethodNames: #(
 	#(#{External.StructureArrayPointerField} #printAccessorExpressionSuffixOn:)
 	#(#{External.StructureField} #printMutatorBody:on:)
 	#(#{External.StructurePointer} #printOn:)
+	#(#{External.UInt64} #printOn:)
 	#(#{External.WCHARField} #accessorMessage)
 	#(#{External.WCHARField} #characterCreationMessage)
 	#(#{Graphics.Bitmap class} #newInstanceAspect:class:)
@@ -3114,7 +3114,7 @@ icon!public! !
 accessorMessage
 	"Private - Answer the receiver's 'accessorStem'."
 
-	^#byteAtOffset:put:!
+	^#uint8AtOffset:put:!
 
 characterCreationMessage
 	^#ansiValue:! !
@@ -3604,19 +3604,6 @@ printAccessorExpression:on:!automatic generation!private! !
 printMutatorBody:on:!automatic generation!private! !
 !
 
-!External.QWORD methodsFor!
-
-printOn: aStream
-	"Append a debug text representation of the receiver to aStream."
-
-	aStream
-		basicPrint: self;
-		nextPut: $(; display: self; nextPut: $)
-! !
-!External.QWORD categoriesForMethods!
-printOn:!printing!public! !
-!
-
 !External.RECT methodsFor!
 
 printOn: aStream
@@ -3734,7 +3721,7 @@ printMutatorBody: aSymbol on: aCodeGenerationContext
 	super printMutatorBody: aSymbol on: aCodeGenerationContext.
 	stream := aCodeGenerationContext writeStream.
 	stream nextPutAll: 'bytes '.
-	keywords := (self elementSize == 2 ifTrue: [#wordAtOffset:put:] ifFalse: [#byteAtOffset:put:])
+	keywords := (self elementSize == 2 ifTrue: [#uint16AtOffset:put:] ifFalse: [#uint8AtOffset:put:])
 				keywords.
 	stream
 		display: keywords first;
@@ -4093,12 +4080,25 @@ printOn: aStream
 printOn:!printing!public! !
 !
 
+!External.UInt64 methodsFor!
+
+printOn: aStream
+	"Append a debug text representation of the receiver to aStream."
+
+	aStream
+		basicPrint: self;
+		nextPut: $(; display: self; nextPut: $)
+! !
+!External.UInt64 categoriesForMethods!
+printOn:!printing!public! !
+!
+
 !External.WCHARField methodsFor!
 
 accessorMessage
 	"Private - Answer the receiver's 'accessorStem'."
 
-	^#wordAtOffset:put:!
+	^#uint16AtOffset:put:!
 
 characterCreationMessage
 	^#utf16Value:! !
@@ -4330,8 +4330,8 @@ newInstanceAspect:class:!adapters!private! !
 cpuCyclesToRun
 	| sem start stop hThread |
 	hThread := OS.Kernel32 getCurrentThread.
-	start := External.QWORD new.
-	stop := External.QWORD new.
+	start := External.UInt64 new.
+	stop := External.UInt64 new.
 	sem := Semaphore new.
 	
 	[

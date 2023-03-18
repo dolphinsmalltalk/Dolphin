@@ -29,7 +29,7 @@ rpcStringFree: lppstr
 
 uuidCompare: uuid1 uuid2: uuid2 status: status
 	"Answer an <integer> order between the  <GUID>, uuid1, is equal to the <GUID>, uuid2,
-	with error status reported through the <DWORD> argument, status.
+	with error status reported through the <UInt32> argument, status.
 		int UuidCompare(
 			UUID * Uuid1,
 			UUID * Uuid2,

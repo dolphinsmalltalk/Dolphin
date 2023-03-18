@@ -42,22 +42,22 @@ bPhysAddr
 dwAddr
 	"Answer the <Integer> value of the receiver's 'dwAddr' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwAddr!
+	^bytes uint32AtOffset: _OffsetOf_dwAddr!
 
 dwIndex
 	"Answer the <Integer> value of the receiver's 'dwIndex' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwIndex!
+	^bytes uint32AtOffset: _OffsetOf_dwIndex!
 
 dwPhysAddrLen
 	"Answer the <Integer> value of the receiver's 'dwPhysAddrLen' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwPhysAddrLen!
+	^bytes uint32AtOffset: _OffsetOf_dwPhysAddrLen!
 
 dwType
 	"Answer the <Integer> value of the receiver's 'dwType' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwType! !
+	^bytes uint32AtOffset: _OffsetOf_dwType! !
 !OS.MIB_IPNETROW categoriesForMethods!
 bPhysAddr!**compiled accessors**!public! !
 dwAddr!**compiled accessors**!public! !
@@ -87,10 +87,10 @@ defineFields
 
 	self
 		defineField: #dwIndex
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 0;
 		defineField: #dwPhysAddrLen
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 4;
 		defineField: #bPhysAddr
 			type: ((ArrayField type: ByteArray length: 8)
@@ -98,10 +98,10 @@ defineFields
 					yourself)
 			offset: 8;
 		defineField: #dwAddr
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 16;
 		defineField: #dwType
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 20.
 	self byteSize: 24!
 

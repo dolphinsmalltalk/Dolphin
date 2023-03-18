@@ -41,7 +41,7 @@ struct tagWIN32_FILE_ATTRIBUTE_DATA {
 dwFileAttributes
 	"Answer the <Integer> value of the receiver's 'dwFileAttributes' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwFileAttributes!
+	^bytes uint32AtOffset: _OffsetOf_dwFileAttributes!
 
 fileSize
 	"Answer the <integer> size of the file."
@@ -78,12 +78,12 @@ isReadOnly
 nFileSizeHigh
 	"Answer the <Integer> value of the receiver's 'nFileSizeHigh' field."
 
-	^bytes dwordAtOffset: _OffsetOf_nFileSizeHigh!
+	^bytes uint32AtOffset: _OffsetOf_nFileSizeHigh!
 
 nFileSizeLow
 	"Answer the <Integer> value of the receiver's 'nFileSizeLow' field."
 
-	^bytes dwordAtOffset: _OffsetOf_nFileSizeLow! !
+	^bytes uint32AtOffset: _OffsetOf_nFileSizeLow! !
 !OS.WIN32_FILE_ATTRIBUTE_DATA categoriesForMethods!
 dwFileAttributes!**compiled accessors**!public! !
 fileSize!accessing!public! !
@@ -115,12 +115,12 @@ defineFields
 "
 
 	self
-		defineField: #dwFileAttributes type: DWORDField new beReadOnly offset: 0;
+		defineField: #dwFileAttributes type: UInt32Field new beReadOnly offset: 0;
 		defineField: #ftCreationTime type: (StructureField type: FILETIME) beReadOnly offset: 4;
 		defineField: #ftLastAccessTime type: (StructureField type: FILETIME) beReadOnly offset: 12;
 		defineField: #ftLastWriteTime type: (StructureField type: FILETIME) beReadOnly offset: 20;
-		defineField: #nFileSizeHigh type: DWORDField new beReadOnly offset: 28;
-		defineField: #nFileSizeLow type: DWORDField new beReadOnly offset: 32.
+		defineField: #nFileSizeHigh type: UInt32Field new beReadOnly offset: 28;
+		defineField: #nFileSizeLow type: UInt32Field new beReadOnly offset: 32.
 	self byteSize: 36!
 
 getFieldNames

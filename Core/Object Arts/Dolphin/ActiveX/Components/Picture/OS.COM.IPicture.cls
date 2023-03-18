@@ -98,7 +98,7 @@ attributes
 	"Answer the <sdword> value of the 'Attributes' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_Attributes: answer.
 	^answer asObject!
 
@@ -114,7 +114,7 @@ extent
 	"Answer the hi-metric extent of the receiver."
 
 	| buf x |
-	buf := SDWORD new.
+	buf := Int32 new.
 	self get_Width: buf.
 	x := buf asInteger.
 	self get_Height: buf.
@@ -208,7 +208,7 @@ height
 	"Answer the <sdword> value of the 'Height' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_Height: answer.
 	^answer asObject!
 
@@ -231,7 +231,7 @@ keepOriginalFormat
 	"Answer the <bool> value of the 'KeepOriginalFormat' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_KeepOriginalFormat: answer.
 	^answer asInteger asBoolean
 !
@@ -311,10 +311,10 @@ Render: hdc x: x y: y cx: cx cy: cy xSrc: xSrc ySrc: ySrc cxSrc: cxSrc cySrc: cy
 	^self invalidCall: _failureCode!
 
 saveAsFile: pstm fSaveMemCopy: fSaveMemCopy
-	"Answer the <SDWORD> result of invoking the SaveAsFile() method of the COM object."
+	"Answer the <Int32> result of invoking the SaveAsFile() method of the COM object."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self
 		SaveAsFile: pstm
 		fSaveMemCopy: fSaveMemCopy
@@ -339,7 +339,7 @@ selectPicture: hdcIn
 	"Invoke the SelectPicture() method of the COM object."
 
 	| outputs |
-	outputs := {SDWORD new. SDWORD new}.
+	outputs := {Int32 new. Int32 new}.
 	self
 		SelectPicture: hdcIn
 		phdcOut: (outputs basicAt: 1)
@@ -375,7 +375,7 @@ type
 	"Answer the <sword> value of the 'Type' property of the receiver."
 
 	| answer |
-	answer := SWORD new.
+	answer := Int16 new.
 	self get_Type: answer.
 	^answer asObject!
 
@@ -383,7 +383,7 @@ width
 	"Answer the <sdword> value of the 'Width' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_Width: answer.
 	^answer asObject! !
 !OS.COM.IPicture categoriesForMethods!

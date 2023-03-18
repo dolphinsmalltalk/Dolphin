@@ -23,7 +23,7 @@ OS._FPIEEE_RECORD comment: '_FPIEEE_RECORD is an <ExternalStructure> class to re
 cause
 	"Answer the <Integer> value of the receiver's 'cause' field."
 
-	^bytes dwordAtOffset: _OffsetOf_cause!
+	^bytes uint32AtOffset: _OffsetOf_cause!
 
 causeDescription
 	"Answer the symbolic names of the type of floating point exception the receiver represents."
@@ -44,12 +44,12 @@ causeNames
 enable
 	"Answer the <Integer> value of the receiver's 'enable' field."
 
-	^bytes dwordAtOffset: _OffsetOf_enable!
+	^bytes uint32AtOffset: _OffsetOf_enable!
 
 flags
 	"Answer the <Integer> value of the receiver's 'flags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_flags!
+	^bytes uint32AtOffset: _OffsetOf_flags!
 
 isDivide
 	"Answer whether a division operation was being attemped when the exception occurred."
@@ -154,10 +154,10 @@ defineFields
 	"
 
 	self
-		defineField: #flags type: DWORDField readOnly;
-		defineField: #cause type: DWORDField readOnly;
-		defineField: #enable type: DWORDField readOnly;
-		defineField: #status type: DWORDField readOnly beUncompiled;
+		defineField: #flags type: UInt32Field readOnly;
+		defineField: #cause type: UInt32Field readOnly;
+		defineField: #enable type: UInt32Field readOnly;
+		defineField: #status type: UInt32Field readOnly beUncompiled;
 		defineField: #operand1 type: (StructureField type: _FPIEEE_VALUE) beReadOnly;
 		defineField: #operand2 type: (StructureField type: _FPIEEE_VALUE) beReadOnly;
 		defineField: #result type: (StructureField type: _FPIEEE_VALUE) beFiller!

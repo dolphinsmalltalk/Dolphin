@@ -31,12 +31,12 @@ struct tagHTTP_SERVICE_BINDING_BASE {
 Type
 	"Answer the <Integer> value of the receiver's 'Type' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_Type!
+	^bytes int32AtOffset: _OffsetOf_Type!
 
 Type: anInteger
 	"Set the receiver's 'Type' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_Type put: anInteger! !
+	bytes int32AtOffset: _OffsetOf_Type put: anInteger! !
 !WinHttpServer.HTTP_SERVICE_BINDING_BASE categoriesForMethods!
 Type!**compiled accessors**!public! !
 Type:!**compiled accessors**!public! !
@@ -59,14 +59,14 @@ defineFields
 "
 
 	self
-		defineField: #Type type: SDWORDField new offset: 0.
+		defineField: #Type type: Int32Field new offset: 0.
 	self byteSize: 4!
 
 fromAddress: anAddress
 	| ptr |
 	anAddress isNull ifTrue: [^nil].
 	ptr := anAddress asExternalAddress.
-	(##({self. HTTP_SERVICE_BINDING_W. HTTP_SERVICE_BINDING_A}) at: (ptr sdwordAtOffset: 0) + 1)
+	(##({self. HTTP_SERVICE_BINDING_W. HTTP_SERVICE_BINDING_A}) at: (ptr int32AtOffset: 0) + 1)
 		basicNew initializeAtAddress: ptr!
 
 getFieldNames

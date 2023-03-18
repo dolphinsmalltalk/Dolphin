@@ -1129,7 +1129,7 @@ fromAddress: anAddress
 	record at the specified address."
 
 	| iType recordClass |
-	iType := anAddress dwordAtOffset: 0.
+	iType := anAddress uint32AtOffset: 0.
 	recordClass := (RecordTypes lookup: iType) ?? ENHMETARECORD.
 	^anAddress isNull ifFalse: [recordClass basicNew initializeAtAddress: anAddress]! !
 !OS.ENHMETARECORD class categoriesForMethods!

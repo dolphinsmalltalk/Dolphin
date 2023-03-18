@@ -510,13 +510,13 @@ testEmptyIfInLoop
 testExtCallStructLiterals
 	| method result |
 	result := self
-				compileMethod: 'x: a1 _: a2 _: a3 _: a4 <stdcall: FILETIME blah _FPIEEE_VALUE** MSG* DWORD* QWORD**>'
+				compileMethod: 'x: a1 _: a2 _: a3 _: a4 <stdcall: FILETIME blah _FPIEEE_VALUE** MSG* UInt32* UInt64**>'
 				in: KernelLibrary.
 	method := result method.
 	self assertNotNil: method.
 	{FILETIME. _FPIEEE_VALUE. MSG} do: [:each | self assert: (method literals includes: each)].
 	"Some classes have special type codes so are not added to the frame"
-	{DWORD. QWORD} do: [:each | self deny: (method literals includes: each)]!
+	{UInt32. UInt64} do: [:each | self deny: (method literals includes: each)]!
 
 testFarReturnFromBlock
 	| method block |

@@ -479,7 +479,7 @@ propertiesSizeAndCount
 		gdipGetPropertySize: self asParameter
 		totalBufferSize: buf
 		numProperties: buf yourAddress + 4.
-	^{buf sdwordAtOffset: 0. buf sdwordAtOffset: 4}!
+	^{buf int32AtOffset: 0. buf int32AtOffset: 4}!
 
 property: aGpPropertyItem
 	"Set aGpPropertyItem to be one of the receiver's property items."
@@ -505,7 +505,7 @@ propertyIdList
 	| list count |
 	count := self propertiesCount.
 	count = 0 ifTrue: [^#()].
-	list := DWORDArray new: count.
+	list := UInt32Array new: count.
 	Gdip
 		gdipGetPropertyIdList: self asParameter
 		numOfProperty: self propertiesCount
@@ -986,8 +986,8 @@ getImageCodecs: aBoolean
 	aBoolean
 		ifTrue: [Gdip gdipGetImageEncodersSize: buf size: buf yourAddress + 4]
 		ifFalse: [Gdip gdipGetImageDecodersSize: buf size: buf yourAddress + 4].
-	numCodecs := buf dwordAtOffset: 0.
-	byteSize := buf dwordAtOffset: 4.
+	numCodecs := buf uint32AtOffset: 0.
+	byteSize := buf uint32AtOffset: 4.
 	buf := Memory new: byteSize.
 	aBoolean
 		ifTrue: 

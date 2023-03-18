@@ -89,7 +89,7 @@ commandId
 	"Answer the <sdword> value of the 'CommandId' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_CommandId: answer.
 	^answer asObject!
 
@@ -218,7 +218,7 @@ kind
 	"
 
 	| answer |
-	answer := SDWORD newBuffer.
+	answer := Int32 newBuffer.
 	self get_Kind: answer.
 	^#(#command #checkBox #radioButton #separator #subMenu) at: answer value + 1!
 

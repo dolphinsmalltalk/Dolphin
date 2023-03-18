@@ -16,7 +16,7 @@ Graphics.Gdiplus.GdiplusStartupInputEx comment: ''!
 StartupParameters: anInteger
 	"Set the receiver's 'StartupParameters' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_StartupParameters put: anInteger! !
+	bytes int32AtOffset: _OffsetOf_StartupParameters put: anInteger! !
 !Graphics.Gdiplus.GdiplusStartupInputEx categoriesForMethods!
 StartupParameters:!**compiled accessors**!public! !
 !
@@ -32,7 +32,7 @@ defineFields
 	"
 
 	super defineFields.
-	self defineField: #StartupParameters type: SDWORDField writeOnly!
+	self defineField: #StartupParameters type: Int32Field writeOnly!
 
 getFieldNames
 	^#(#GdiplusVersion #StartupParameters)! !

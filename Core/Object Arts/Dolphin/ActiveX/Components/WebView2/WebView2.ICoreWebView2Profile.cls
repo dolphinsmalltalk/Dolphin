@@ -134,7 +134,7 @@ preferredColorScheme
 	"Answer the <sdword> value of the 'PreferredColorScheme' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_PreferredColorScheme: answer.
 	^answer asObject!
 

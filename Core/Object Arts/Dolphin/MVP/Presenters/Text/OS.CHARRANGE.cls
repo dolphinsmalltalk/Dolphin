@@ -31,22 +31,22 @@ struct tagCHARRANGE {
 cpMax
 	"Answer the <Integer> value of the receiver's 'cpMax' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_cpMax!
+	^bytes int32AtOffset: _OffsetOf_cpMax!
 
 cpMax: anInteger
 	"Set the receiver's 'cpMax' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_cpMax put: anInteger!
+	bytes int32AtOffset: _OffsetOf_cpMax put: anInteger!
 
 cpMin
 	"Answer the <Integer> value of the receiver's 'cpMin' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_cpMin!
+	^bytes int32AtOffset: _OffsetOf_cpMin!
 
 cpMin: anInteger
 	"Set the receiver's 'cpMin' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_cpMin put: anInteger! !
+	bytes int32AtOffset: _OffsetOf_cpMin put: anInteger! !
 !OS.CHARRANGE categoriesForMethods!
 cpMax!**compiled accessors**!public! !
 cpMax:!**compiled accessors**!public! !
@@ -71,8 +71,8 @@ defineFields
 "
 
 	self
-		defineField: #cpMin type: SDWORDField new;
-		defineField: #cpMax type: SDWORDField new! !
+		defineField: #cpMin type: Int32Field new;
+		defineField: #cpMax type: Int32Field new! !
 !OS.CHARRANGE class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

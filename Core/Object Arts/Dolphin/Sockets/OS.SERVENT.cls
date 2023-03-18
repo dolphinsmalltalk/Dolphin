@@ -66,7 +66,7 @@ s_name
 s_port
 	"Answer the <Integer> value of the receiver's 's_port' field."
 
-	^bytes swordAtOffset: _OffsetOf_s_port!
+	^bytes int16AtOffset: _OffsetOf_s_port!
 
 s_proto
 	"Answer the <AnsiString> value of the receiver's 's_proto' field."
@@ -103,7 +103,7 @@ defineFields
 	self
 		defineField: #s_name type: (PointerField type: AnsiString) beReadOnly offset: 0;
 		defineField: #s_aliases type: (PointerField type: LPSTR) beReadOnly beFiller offset: 4;
-		defineField: #s_port type: SWORDField new beReadOnly offset: 8;
+		defineField: #s_port type: Int16Field new beReadOnly offset: 8;
 		defineField: #s_proto type: (PointerField type: AnsiString) beReadOnly offset: 12.
 	self byteSize: 16!
 

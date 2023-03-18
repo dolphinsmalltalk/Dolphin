@@ -31,22 +31,22 @@ struct tagPRINTPAGERANGE {
 nFromPage
 	"Answer the <Integer> value of the receiver's 'nFromPage' field."
 
-	^bytes dwordAtOffset: _OffsetOf_nFromPage!
+	^bytes uint32AtOffset: _OffsetOf_nFromPage!
 
 nFromPage: anInteger
 	"Set the receiver's 'nFromPage' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_nFromPage put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_nFromPage put: anInteger!
 
 nToPage
 	"Answer the <Integer> value of the receiver's 'nToPage' field."
 
-	^bytes dwordAtOffset: _OffsetOf_nToPage!
+	^bytes uint32AtOffset: _OffsetOf_nToPage!
 
 nToPage: anInteger
 	"Set the receiver's 'nToPage' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_nToPage put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_nToPage put: anInteger! !
 !OS.PRINTPAGERANGE categoriesForMethods!
 nFromPage!**compiled accessors**!public! !
 nFromPage:!**compiled accessors**!public! !
@@ -72,8 +72,8 @@ defineFields
 "
 
 	self
-		defineField: #nFromPage type: DWORDField new;
-		defineField: #nToPage type: DWORDField new!
+		defineField: #nFromPage type: UInt32Field new;
+		defineField: #nToPage type: UInt32Field new!
 
 getFieldNames
 	^#(#nFromPage #nToPage)! !

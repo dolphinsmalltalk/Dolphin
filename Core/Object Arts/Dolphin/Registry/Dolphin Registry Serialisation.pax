@@ -666,7 +666,7 @@ objectAt: aString put: anObject
 readValueAt: aString into: aByteObject
 	| metadata needsFree |
 	metadata := ByteArray newFixed: 8.
-	metadata dwordAtOffset: 4 put: aByteObject basicSize.
+	metadata uint32AtOffset: 4 put: aByteObject basicSize.
 	needsFree := self realize.
 	AdvApi32
 		regQueryValueEx: handle

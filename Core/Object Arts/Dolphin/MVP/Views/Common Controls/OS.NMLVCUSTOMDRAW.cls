@@ -41,22 +41,22 @@ backcolor: aColor
 clrText
 	"Answer the <Integer> value of the receiver's 'clrText' field."
 
-	^bytes dwordAtOffset: _OffsetOf_clrText!
+	^bytes uint32AtOffset: _OffsetOf_clrText!
 
 clrText: anInteger
 	"Set the receiver's 'clrText' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_clrText put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_clrText put: anInteger!
 
 clrTextBk
 	"Answer the <Integer> value of the receiver's 'clrTextBk' field."
 
-	^bytes dwordAtOffset: _OffsetOf_clrTextBk!
+	^bytes uint32AtOffset: _OffsetOf_clrTextBk!
 
 clrTextBk: anInteger
 	"Set the receiver's 'clrTextBk' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_clrTextBk put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_clrTextBk put: anInteger!
 
 column
 	"Answer the <ListViewColumn> associated with the sub-item if this is a sub-item
@@ -89,7 +89,7 @@ forecolor: aColor
 iSubItem
 	"Answer the <Integer> value of the receiver's 'iSubItem' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_iSubItem!
+	^bytes int32AtOffset: _OffsetOf_iSubItem!
 
 itemHandle
 	"Answer the 'handle' of the receiver's item."
@@ -137,9 +137,9 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #clrText type: DWORDField new;
-		defineField: #clrTextBk type: DWORDField new;
-		defineField: #iSubItem type: SDWORDField readOnly!
+		defineField: #clrText type: UInt32Field new;
+		defineField: #clrTextBk type: UInt32Field new;
+		defineField: #iSubItem type: Int32Field readOnly!
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #dwDrawStage #hdc #rc #dwItemSpec #uItemState #lParam #clrText #clrTextBk #iSubItem)! !

@@ -1056,7 +1056,7 @@ receiveRequestEntityBody: anExternalHandle requestId: requestId
 
 sendResponse: response queue: queue id: request
 	| bytesSent |
-	bytesSent := DWORD new.
+	bytesSent := UInt32 new.
 	self checkReturnCode: (self
 		asyncSendHttpResponse: queue
 		requestId: request
@@ -1164,7 +1164,7 @@ apiVersion
 			unsigned short HttpApiMinorVersion;
 		} HTTPAPI_VERSION;"
 
-	^##((WORDArray withAll: #(2 0)) bytes dwordAtOffset: 0)!
+	^##((UInt16Array withAll: #(2 0)) bytes uint32AtOffset: 0)!
 
 example1
 	"

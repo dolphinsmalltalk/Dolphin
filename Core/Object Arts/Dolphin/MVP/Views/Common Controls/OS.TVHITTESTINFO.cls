@@ -27,7 +27,7 @@ handle
 hItem
 	"Answer the <Integer> value of the receiver's 'hItem' field."
 
-	^bytes dwordAtOffset: _OffsetOf_hItem!
+	^bytes uint32AtOffset: _OffsetOf_hItem!
 
 item
 	"Answer the 'item' which has been hit (in this case the handle of node)."
@@ -57,7 +57,7 @@ defineFields
 	"
 
 	super defineFields.
-	self defineField: #hItem type: DWORDField readOnly!
+	self defineField: #hItem type: UInt32Field readOnly!
 
 getFieldNames
 	^#(#pt #flags #hItem)! !

@@ -210,7 +210,7 @@ nmKillFocus: pNMHDR
 nmNotify: pNMHDR
 	"Private - Handler for a redirected generic WM_NOTIFY message."
 
-	^(self commonNotificationMap lookup: (pNMHDR sdwordAtOffset: 8))
+	^(self commonNotificationMap lookup: (pNMHDR int32AtOffset: 8))
 		ifNotNil: [:action | self perform: action with: pNMHDR]!
 
 nmOutOfMemory: pNMHDR

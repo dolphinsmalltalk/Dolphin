@@ -327,7 +327,7 @@ strlen
 
 	^OS.Ucrt wcslen: self!
 
-wordAtOffset: anInteger
+uint16AtOffset: anInteger
 	"Private - Answer the unsigned 2 byte integer at offset (i.e. zero relative) anInteger in the receiver. 
 	On iX86 the high and low order bytes are reversed; i.e. the bytes are ordered least significant first."
 
@@ -343,7 +343,7 @@ wordAtOffset: anInteger
 		do: [:i | answer := (answer bitShift: 8) + (self basicAt: anInteger + i)].
 	^answer!
 
-wordAtOffset: anInteger put: anObject
+uint16AtOffset: anInteger put: anObject
 	"Private - Store an unsigned 16-bit value at byte offset anInteger within the receiver.
 	If anObject is not representable as a 16-bit unsigned (Small)Integer, then 
 	raise a 'cannot hold' error.
@@ -385,8 +385,8 @@ skipEncodingMarkerFrom:!encode/decode!private! !
 stbSaveOn:!binary filing!public! !
 strcspn:start:!private!searching! !
 strlen!accessing!private! !
-wordAtOffset:!accessing!primitives!private! !
-wordAtOffset:put:!accessing!primitives!private! !
+uint16AtOffset:!accessing!primitives!private! !
+uint16AtOffset:put:!accessing!primitives!private! !
 !
 
 !Core.Utf16String class methodsFor!

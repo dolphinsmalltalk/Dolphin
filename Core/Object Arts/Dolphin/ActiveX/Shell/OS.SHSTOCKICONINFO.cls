@@ -43,7 +43,7 @@ struct tagSHSTOCKICONINFO {
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 hIcon
 	"Answer the <Handle> value of the receiver's 'hIcon' field."
@@ -53,12 +53,12 @@ hIcon
 iIcon
 	"Answer the <Integer> value of the receiver's 'iIcon' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_iIcon!
+	^bytes int32AtOffset: _OffsetOf_iIcon!
 
 iSysImageIndex
 	"Answer the <Integer> value of the receiver's 'iSysImageIndex' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_iSysImageIndex!
+	^bytes int32AtOffset: _OffsetOf_iSysImageIndex!
 
 szPath
 	"Answer the <Utf16String> value of the receiver's 'szPath' field."
@@ -93,10 +93,10 @@ defineFields
 "
 
 	self
-		defineField: #dwSize type: DWORDField new beWriteOnly offset: 0;
+		defineField: #dwSize type: UInt32Field new beWriteOnly offset: 0;
 		defineField: #hIcon type: HANDLEField new beReadOnly offset: 4;
-		defineField: #iSysImageIndex type: SDWORDField new beReadOnly offset: 8;
-		defineField: #iIcon type: SDWORDField new beReadOnly offset: 12;
+		defineField: #iSysImageIndex type: Int32Field new beReadOnly offset: 8;
+		defineField: #iIcon type: Int32Field new beReadOnly offset: 12;
 		defineField: #szPath type: (StringField type: Utf16String length: 260) beReadOnly offset: 16.
 	self byteSize: 536!
 

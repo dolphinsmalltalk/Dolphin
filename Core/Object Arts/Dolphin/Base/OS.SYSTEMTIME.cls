@@ -68,82 +68,82 @@ second
 wDay
 	"Answer the <Integer> value of the receiver's 'wDay' field."
 
-	^bytes wordAtOffset: _OffsetOf_wDay!
+	^bytes uint16AtOffset: _OffsetOf_wDay!
 
 wDay: anInteger
 	"Set the receiver's 'wDay' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_wDay put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_wDay put: anInteger!
 
 wDayOfWeek
 	"Answer the <Integer> value of the receiver's 'wDayOfWeek' field."
 
-	^bytes wordAtOffset: _OffsetOf_wDayOfWeek!
+	^bytes uint16AtOffset: _OffsetOf_wDayOfWeek!
 
 wDayOfWeek: anInteger
 	"Set the receiver's 'wDayOfWeek' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_wDayOfWeek put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_wDayOfWeek put: anInteger!
 
 wHour
 	"Answer the <Integer> value of the receiver's 'wHour' field."
 
-	^bytes wordAtOffset: _OffsetOf_wHour!
+	^bytes uint16AtOffset: _OffsetOf_wHour!
 
 wHour: anInteger
 	"Set the receiver's 'wHour' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_wHour put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_wHour put: anInteger!
 
 wMilliseconds
 	"Answer the <Integer> value of the receiver's 'wMilliseconds' field."
 
-	^bytes wordAtOffset: _OffsetOf_wMilliseconds!
+	^bytes uint16AtOffset: _OffsetOf_wMilliseconds!
 
 wMilliseconds: anInteger
 	"Set the receiver's 'wMilliseconds' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_wMilliseconds put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_wMilliseconds put: anInteger!
 
 wMinute
 	"Answer the <Integer> value of the receiver's 'wMinute' field."
 
-	^bytes wordAtOffset: _OffsetOf_wMinute!
+	^bytes uint16AtOffset: _OffsetOf_wMinute!
 
 wMinute: anInteger
 	"Set the receiver's 'wMinute' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_wMinute put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_wMinute put: anInteger!
 
 wMonth
 	"Answer the <Integer> value of the receiver's 'wMonth' field."
 
-	^bytes wordAtOffset: _OffsetOf_wMonth!
+	^bytes uint16AtOffset: _OffsetOf_wMonth!
 
 wMonth: anInteger
 	"Set the receiver's 'wMonth' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_wMonth put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_wMonth put: anInteger!
 
 wSecond
 	"Answer the <Integer> value of the receiver's 'wSecond' field."
 
-	^bytes wordAtOffset: _OffsetOf_wSecond!
+	^bytes uint16AtOffset: _OffsetOf_wSecond!
 
 wSecond: anInteger
 	"Set the receiver's 'wSecond' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_wSecond put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_wSecond put: anInteger!
 
 wYear
 	"Answer the <Integer> value of the receiver's 'wYear' field."
 
-	^bytes wordAtOffset: _OffsetOf_wYear!
+	^bytes uint16AtOffset: _OffsetOf_wYear!
 
 wYear: anInteger
 	"Set the receiver's 'wYear' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_wYear put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_wYear put: anInteger!
 
 year
 	^self wYear! !
@@ -196,14 +196,14 @@ defineFields
 	"
 
 	self
-		defineField: #wYear type: WORDField new;
-		defineField: #wMonth type: WORDField new;
-		defineField: #wDayOfWeek type: WORDField new;
-		defineField: #wDay type: WORDField new;
-		defineField: #wHour type: WORDField new;
-		defineField: #wMinute type: WORDField new;
-		defineField: #wSecond type: WORDField new;
-		defineField: #wMilliseconds type: WORDField new!
+		defineField: #wYear type: UInt16Field new;
+		defineField: #wMonth type: UInt16Field new;
+		defineField: #wDayOfWeek type: UInt16Field new;
+		defineField: #wDay type: UInt16Field new;
+		defineField: #wHour type: UInt16Field new;
+		defineField: #wMinute type: UInt16Field new;
+		defineField: #wSecond type: UInt16Field new;
+		defineField: #wMilliseconds type: UInt16Field new!
 
 fromFILETIME: aFILETIME
 	"Answer a new instance of the receiver instantiated from aFILETIME (which may be

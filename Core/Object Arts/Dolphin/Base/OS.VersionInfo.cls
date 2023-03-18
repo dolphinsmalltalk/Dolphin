@@ -93,7 +93,7 @@ getTranslationInfo
 	lpvi := External.Address new.
 	len := self queryValue: '\VarFileInfo\Translation' into: lpvi.
 	self assert: [len >= 4].
-	^'%04x%04x' sprintfWith: (lpvi wordAtOffset: 0) with: (lpvi wordAtOffset: 2)!
+	^'%04x%04x' sprintfWith: (lpvi uint16AtOffset: 0) with: (lpvi uint16AtOffset: 2)!
 
 legalCopyright
 	"Answer the <readableString> copyright notice from the receiver."

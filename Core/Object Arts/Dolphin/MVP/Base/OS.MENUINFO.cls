@@ -23,53 +23,53 @@ OS.MENUINFO comment: 'MENUINFO is an <ExternalStructure> class to represent the 
 cyMax
 	"Answer the <Integer> value of the receiver's 'cyMax' field."
 
-	^bytes dwordAtOffset: _OffsetOf_cyMax!
+	^bytes uint32AtOffset: _OffsetOf_cyMax!
 
 cyMax: anInteger
 	"Set the receiver's 'cyMax' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_cyMax put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_cyMax put: anInteger!
 
 dwContextHelpID
 	"Answer the <Integer> value of the receiver's 'dwContextHelpID' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwContextHelpID!
+	^bytes uint32AtOffset: _OffsetOf_dwContextHelpID!
 
 dwContextHelpID: anInteger
 	"Set the receiver's 'dwContextHelpID' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwContextHelpID put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwContextHelpID put: anInteger!
 
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 dwStyle
 	"Answer the <Integer> value of the receiver's 'dwStyle' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwStyle!
+	^bytes uint32AtOffset: _OffsetOf_dwStyle!
 
 dwStyle: anInteger
 	"Set the receiver's 'dwStyle' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwStyle put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwStyle put: anInteger!
 
 fMask
 	"Answer the <Integer> value of the receiver's 'fMask' field."
 
-	^bytes dwordAtOffset: _OffsetOf_fMask!
+	^bytes uint32AtOffset: _OffsetOf_fMask!
 
 fMask: anInteger
 	"Set the receiver's 'fMask' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_fMask put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_fMask put: anInteger!
 
 maskIn: anInteger
-	bytes dwordAtOffset: _OffsetOf_fMask put: ((bytes dwordAtOffset: _OffsetOf_fMask) bitOr: anInteger)!
+	bytes uint32AtOffset: _OffsetOf_fMask put: ((bytes uint32AtOffset: _OffsetOf_fMask) bitOr: anInteger)!
 
 style: anInteger
-	bytes dwordAtOffset: _OffsetOf_dwStyle put: anInteger.
+	bytes uint32AtOffset: _OffsetOf_dwStyle put: anInteger.
 	self maskIn: MIM_STYLE! !
 !OS.MENUINFO categoriesForMethods!
 cyMax!**compiled accessors**!public! !
@@ -108,13 +108,13 @@ defineFields
 	"Implementation Note: cbSize is renamed to dwSize to override superclass accessor"
 
 	self
-		defineField: #dwSize type: DWORDField writeOnly;
-		defineField: #fMask type: DWORDField new;
-		defineField: #dwStyle type: DWORDField new;
-		defineField: #cyMax type: DWORDField new;
+		defineField: #dwSize type: UInt32Field writeOnly;
+		defineField: #fMask type: UInt32Field new;
+		defineField: #dwStyle type: UInt32Field new;
+		defineField: #cyMax type: UInt32Field new;
 		defineField: #hbrBack type: HANDLEField filler;
-		defineField: #dwContextHelpID type: DWORDField new;
-		defineField: #dwMenuData type: UINT_PTRField filler!
+		defineField: #dwContextHelpID type: UInt32Field new;
+		defineField: #dwMenuData type: UIntPtrField filler!
 
 getFieldNames
 	^#(#dwSize #fMask #dwStyle #cyMax #dwContextHelpID)! !

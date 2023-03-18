@@ -21,7 +21,7 @@ testGenerateAccessorsForSizedString
 		defineField: #Size
 			type: <3d> new
 			offset: 4'
-				<< {ArrayPointerField. String. DWORDField}.
+				<< {ArrayPointerField. String. UInt32Field}.
 	structClass recompileDefinition.
 	actual := (structClass compiledMethodAt: #Test:) parseTree.
 	expected := Parser
@@ -55,7 +55,7 @@ testGenerateAccessorsForSizeIsExpression
 		defineField: #Size
 			type: <4d> new
 			offset: 0'
-				<< {ArrayPointerField. SizeIsArrayFieldLength. Utf16String. DWORDField}.
+				<< {ArrayPointerField. SizeIsArrayFieldLength. Utf16String. UInt32Field}.
 	structClass recompileDefinition.
 	actual := (structClass compiledMethodAt: #Test:) parseTree.
 	expected := Parser

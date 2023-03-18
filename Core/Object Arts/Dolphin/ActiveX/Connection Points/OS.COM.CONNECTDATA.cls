@@ -22,12 +22,12 @@ Warning: This comment was automatically generated from the struct''s type inform
 dwCookie
 	"Answer the <Integer> value of the receiver's 'dwCookie' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwCookie!
+	^bytes uint32AtOffset: _OffsetOf_dwCookie!
 
 dwCookie: anInteger
 	"Set the receiver's 'dwCookie' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwCookie put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwCookie put: anInteger!
 
 punk
 	"Answer the <IUnknown> value of the receiver's 'punk' field."
@@ -63,7 +63,7 @@ defineFields
 
 	self
 		defineField: #punk type: (PointerField type: IUnknown);
-		defineField: #dwCookie type: DWORDField new!
+		defineField: #dwCookie type: UInt32Field new!
 
 getFieldNames
 	^#(#punk #dwCookie)! !

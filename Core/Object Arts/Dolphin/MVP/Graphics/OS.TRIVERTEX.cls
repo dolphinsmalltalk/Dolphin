@@ -40,22 +40,22 @@ struct tagTRIVERTEX {
 alpha
 	"Answer the <Integer> value of the receiver's 'alpha' field."
 
-	^bytes wordAtOffset: _OffsetOf_alpha!
+	^bytes uint16AtOffset: _OffsetOf_alpha!
 
 alpha: anInteger
 	"Set the receiver's 'alpha' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_alpha put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_alpha put: anInteger!
 
 blue
 	"Answer the <Integer> value of the receiver's 'blue' field."
 
-	^bytes wordAtOffset: _OffsetOf_blue!
+	^bytes uint16AtOffset: _OffsetOf_blue!
 
 blue: anInteger
 	"Set the receiver's 'blue' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_blue put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_blue put: anInteger!
 
 color: aColor 
 	self
@@ -67,12 +67,12 @@ color: aColor
 green
 	"Answer the <Integer> value of the receiver's 'green' field."
 
-	^bytes wordAtOffset: _OffsetOf_green!
+	^bytes uint16AtOffset: _OffsetOf_green!
 
 green: anInteger
 	"Set the receiver's 'green' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_green put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_green put: anInteger!
 
 position: aPoint 
 	self
@@ -82,32 +82,32 @@ position: aPoint
 red
 	"Answer the <Integer> value of the receiver's 'red' field."
 
-	^bytes wordAtOffset: _OffsetOf_red!
+	^bytes uint16AtOffset: _OffsetOf_red!
 
 red: anInteger
 	"Set the receiver's 'red' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_red put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_red put: anInteger!
 
 x
 	"Answer the <Integer> value of the receiver's 'x' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_x!
+	^bytes int32AtOffset: _OffsetOf_x!
 
 x: anInteger
 	"Set the receiver's 'x' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_x put: anInteger!
+	bytes int32AtOffset: _OffsetOf_x put: anInteger!
 
 y
 	"Answer the <Integer> value of the receiver's 'y' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_y!
+	^bytes int32AtOffset: _OffsetOf_y!
 
 y: anInteger
 	"Set the receiver's 'y' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_y put: anInteger! !
+	bytes int32AtOffset: _OffsetOf_y put: anInteger! !
 !OS.TRIVERTEX categoriesForMethods!
 alpha!**compiled accessors**!public! !
 alpha:!**compiled accessors**!public! !
@@ -147,12 +147,12 @@ defineFields
 "
 
 	self
-		defineField: #x type: SDWORDField new;
-		defineField: #y type: SDWORDField new;
-		defineField: #red type: WORDField new;
-		defineField: #green type: WORDField new;
-		defineField: #blue type: WORDField new;
-		defineField: #alpha type: WORDField new!
+		defineField: #x type: Int32Field new;
+		defineField: #y type: Int32Field new;
+		defineField: #red type: UInt16Field new;
+		defineField: #green type: UInt16Field new;
+		defineField: #blue type: UInt16Field new;
+		defineField: #alpha type: UInt16Field new!
 
 getFieldNames
 	^#(#x #y #red #green #blue #alpha)! !

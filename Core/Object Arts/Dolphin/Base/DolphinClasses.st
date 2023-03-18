@@ -228,18 +228,20 @@ Kernel.SharedPool subclass: #'External.ExtCallArgTypes'
 	classConstants: {
 		'ExtCallArgBOOL' -> 16r9.
 		'ExtCallArgBSTR' -> 16r15.
-		'ExtCallArgBYTE' -> 16r3.
 		'ExtCallArgCHAR' -> 16r2.
 		'ExtCallArgCOMPTR' -> 16r37.
 		'ExtCallArgDATE' -> 16r17.
 		'ExtCallArgDOUBLE' -> 16rB.
-		'ExtCallArgDWORD' -> 16r7.
 		'ExtCallArgErrno' -> 16r1D.
 		'ExtCallArgFLOAT' -> 16rE.
 		'ExtCallArgGUID' -> 16r19.
 		'ExtCallArgHANDLE' -> 16rA.
 		'ExtCallArgHRESULT' -> 16r10.
-		'ExtCallArgINTPTR' -> 16r1B.
+		'ExtCallArgInt16' -> 16r6.
+		'ExtCallArgInt32' -> 16r8.
+		'ExtCallArgInt64' -> 16r13.
+		'ExtCallArgInt8' -> 16r4.
+		'ExtCallArgIntPtr' -> 16r1B.
 		'ExtCallArgLP' -> 16r35.
 		'ExtCallArgLPP' -> 16r36.
 		'ExtCallArgLPPVOID' -> 16rF.
@@ -250,19 +252,17 @@ Kernel.SharedPool subclass: #'External.ExtCallArgTypes'
 		'ExtCallArgNTSTATUS' -> 16r1C.
 		'ExtCallArgOOP' -> 16rD.
 		'ExtCallArgOTE' -> 16r14.
-		'ExtCallArgQWORD' -> 16r12.
-		'ExtCallArgSBYTE' -> 16r4.
-		'ExtCallArgSDWORD' -> 16r8.
-		'ExtCallArgSQWORD' -> 16r13.
 		'ExtCallArgSTRUCT' -> 16r32.
 		'ExtCallArgSTRUCT4' -> 16r33.
 		'ExtCallArgSTRUCT8' -> 16r34.
-		'ExtCallArgSWORD' -> 16r6.
-		'ExtCallArgUINTPTR' -> 16r1A.
+		'ExtCallArgUInt16' -> 16r5.
+		'ExtCallArgUInt32' -> 16r7.
+		'ExtCallArgUInt64' -> 16r12.
+		'ExtCallArgUInt8' -> 16r3.
+		'ExtCallArgUIntPtr' -> 16r1A.
 		'ExtCallArgVARBOOL' -> 16r18.
 		'ExtCallArgVARIANT' -> 16r16.
-		'ExtCallArgVOID' -> 16r0.
-		'ExtCallArgWORD' -> 16r5
+		'ExtCallArgVOID' -> 16r0
 	}!
 Kernel.SharedPool subclass: #'OS.FacilityCodes'
 	instanceVariableNames: ''
@@ -2358,10 +2358,10 @@ Core.Object variableSubclass: #'External.FunctionDescriptor'
 	classInstanceVariableNames: ''
 	classConstants: {
 		'CallingConventions' -> #(#stdcall: #cdecl: #fastcall: #thiscall:).
-		'ReferenceTypes' -> #(16r1 16rF 16rC 16r1 16r1 #WORD #SWORD #DWORD #SDWORD #DWORD #DWORD #DOUBLE 16rF 16rF #FLOAT nil #HRESULT 16rF #ULARGE_INTEGER #LARGE_INTEGER 16rF 16rF #'OS.COM.VARIANT' #'OS.COM.DATE' #'OS.COM.VARIANT_BOOL' #REFGUID #UINT_PTR #INT_PTR #SDWORD #SDWORD nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 16r35 16r35 16r35 nil nil nil nil nil nil nil nil nil nil nil).
+		'ReferenceTypes' -> #(16r1 16rF 16rC 16r1 16r1 #UInt16 #Int16 #UInt32 #Int32 #UInt32 #UInt32 #DOUBLE 16rF 16rF #FLOAT nil #HRESULT 16rF #UInt64 #Int64 16rF 16rF #'OS.COM.VARIANT' #'OS.COM.DATE' #'OS.COM.VARIANT_BOOL' #REFGUID #UIntPtr #IntPtr #Int32 #Int32 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 16r35 16r35 16r35 nil nil nil nil nil nil nil nil nil nil nil).
 		'RetClassIndex' -> 16r4.
 		'RetTypeMask' -> 16r3F.
-		'TypeNames' -> #('void' 'lpvoid' 'char' 'byte' 'sbyte' 'word' 'sword' 'dword' 'sdword' 'bool' 'handle' 'double' 'lpstr' 'oop' 'float' 'lppvoid' 'hresult' 'lpwstr' 'qword' 'sqword' 'ote' 'bstr' 'variant' 'date' 'varbool' 'guid' 'uintptr' 'intptr' 'ntstatus' 'errno' nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil).
+		'TypeNames' -> #('void' 'lpvoid' 'char' 'uint8' 'int8' 'uint16' 'int16' 'uint32' 'int32' 'bool' 'handle' 'double' 'lpstr' 'oop' 'float' 'lppvoid' 'hresult' 'lpwstr' 'uint64' 'int64' 'ote' 'bstr' 'variant' 'date' 'varbool' 'guid' 'uintptr' 'intptr' 'ntstatus' 'errno' nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil).
 		'TypeSizes' -> #[0 4 4 4 4 4 4 4 4 4 4 8 4 4 4 4 4 4 8 8 4 4 16 8 4 16 4 4 4 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 8 4 4 4 0 0 0 0 0 0 0 0]
 	}!
 Core.Object variableByteSubclass: #'Core.GUID'
@@ -2596,7 +2596,7 @@ Core.Object subclass: #'Kernel.STBFiler'
 		'STLFilerVersion' -> 16r5
 	}!
 Core.Object subclass: #'Kernel.STBPrefix'
-	instanceVariableNames: 'dword'
+	instanceVariableNames: 'uint32'
 	classVariableNames: 'DataPrefix ProxyPrefix'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -2750,19 +2750,7 @@ External.ScalarField subclass: #'External.BOOLField'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.ScalarField subclass: #'External.BYTEField'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 External.ScalarField subclass: #'External.DOUBLEField'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-External.ScalarField subclass: #'External.DWORDField'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -2774,49 +2762,61 @@ External.ScalarField subclass: #'External.FLOATField'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.ScalarField subclass: #'External.INT_PTRField'
+External.ScalarField subclass: #'External.Int16Field'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.ScalarField subclass: #'External.QWORDField'
+External.ScalarField subclass: #'External.Int32Field'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.ScalarField subclass: #'External.SBYTEField'
+External.ScalarField subclass: #'External.Int64Field'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.ScalarField subclass: #'External.SDWORDField'
+External.ScalarField subclass: #'External.Int8Field'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.ScalarField subclass: #'External.SQWORDField'
+External.ScalarField subclass: #'External.IntPtrField'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.ScalarField subclass: #'External.SWORDField'
+External.ScalarField subclass: #'External.UInt16Field'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.ScalarField subclass: #'External.UINT_PTRField'
+External.ScalarField subclass: #'External.UInt32Field'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.ScalarField subclass: #'External.WORDField'
+External.ScalarField subclass: #'External.UInt64Field'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+External.ScalarField subclass: #'External.UInt8Field'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+External.ScalarField subclass: #'External.UIntPtrField'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -2840,13 +2840,13 @@ External.BOOLField subclass: #'External.BOOLEANField'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.UINT_PTRField subclass: #'External.HANDLEField'
+External.UIntPtrField subclass: #'External.HANDLEField'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.UINT_PTRField subclass: #'External.LPVOIDField'
+External.UIntPtrField subclass: #'External.LPVOIDField'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -4195,12 +4195,6 @@ External.ExternalArray subclass: #'External.DOUBLEArray'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.ExternalArray subclass: #'External.DWORDArray'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 External.ExternalArray subclass: #'External.FLOATArray'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -4213,37 +4207,43 @@ External.ExternalArray subclass: #'External.GenericExternalArray'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.ExternalArray subclass: #'External.INT_PTRArray'
+External.ExternalArray subclass: #'External.Int16Array'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.ExternalArray subclass: #'External.SBYTEArray'
+External.ExternalArray subclass: #'External.Int32Array'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.ExternalArray subclass: #'External.SDWORDArray'
+External.ExternalArray subclass: #'External.Int8Array'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.ExternalArray subclass: #'External.SWORDArray'
+External.ExternalArray subclass: #'External.IntPtrArray'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.ExternalArray subclass: #'External.UINT_PTRArray'
+External.ExternalArray subclass: #'External.UInt16Array'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.ExternalArray subclass: #'External.WORDArray'
+External.ExternalArray subclass: #'External.UInt32Array'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+External.ExternalArray subclass: #'External.UIntPtrArray'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -4255,13 +4255,13 @@ External.GenericExternalArray subclass: #'External.StructureArray'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.UINT_PTRArray subclass: #'External.HandleArray'
+External.UIntPtrArray subclass: #'External.HandleArray'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.UINT_PTRArray subclass: #'External.PointerArray'
+External.UIntPtrArray subclass: #'External.PointerArray'
 	instanceVariableNames: 'elementClass'
 	classVariableNames: ''
 	imports: #()
@@ -4297,22 +4297,6 @@ External.SCALAR subclass: #'External.LPVOID'
 	classConstants: {
 		'_LPVOID_Size' -> 16r4
 	}!
-External.INTEGER subclass: #'External.BYTE'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'_BYTE_Size' -> 16r1
-	}!
-External.INTEGER subclass: #'External.DWORD'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'_DWORD_Size' -> 16r4
-	}!
 External.INTEGER subclass: #'OS.HRESULT'
 	instanceVariableNames: ''
 	classVariableNames: 'Facilities Fail'
@@ -4322,7 +4306,23 @@ External.INTEGER subclass: #'OS.HRESULT'
 		'_HRESULT_Size' -> 16r4.
 		'FACILITY_NT_BIT' -> 16r10000000
 	}!
-External.INTEGER subclass: #'External.QWORD'
+External.INTEGER subclass: #'External.UInt16'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_UInt16_Size' -> 16r2
+	}!
+External.INTEGER subclass: #'External.UInt32'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_UInt32_Size' -> 16r4
+	}!
+External.INTEGER subclass: #'External.UInt64'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -4330,49 +4330,41 @@ External.INTEGER subclass: #'External.QWORD'
 	classConstants: {
 		'_OffsetOf_highPart' -> 16r4.
 		'_OffsetOf_lowPart' -> 16r0.
-		'_QWORD_Size' -> 16r8
+		'_UInt64_Size' -> 16r8
 	}!
-External.INTEGER subclass: #'External.UINT_PTR'
+External.INTEGER subclass: #'External.UInt8'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_UINT_PTR_Size' -> 16r4
+		'_UInt8_Size' -> 16r1
 	}!
-External.INTEGER subclass: #'External.WORD'
+External.INTEGER subclass: #'External.UIntPtr'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_WORD_Size' -> 16r2
+		'_UIntPtr_Size' -> 16r4
 	}!
-External.BYTE subclass: #'External.BOOLEAN'
+External.UInt16 subclass: #'External.Int16'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_BOOLEAN_Size' -> 16r1
+		'_Int16_Size' -> 16r2
 	}!
-External.BYTE subclass: #'External.SBYTE'
+External.UInt32 subclass: #'External.Int32'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_SBYTE_Size' -> 16r1
+		'_Int32_Size' -> 16r4
 	}!
-External.DWORD subclass: #'External.SDWORD'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'_SDWORD_Size' -> 16r4
-	}!
-External.SDWORD subclass: #'External.BOOL'
+External.Int32 subclass: #'External.BOOL'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -4380,35 +4372,37 @@ External.SDWORD subclass: #'External.BOOL'
 	classConstants: {
 		'_BOOL_Size' -> 16r4
 	}!
-External.QWORD subclass: #'OS.LARGE_INTEGER'
+External.UInt64 subclass: #'External.Int64'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_LARGE_INTEGER_Size' -> 16r8
+		'_Int64_Size' -> 16r8
 	}!
-External.QWORD subclass: #'OS.ULARGE_INTEGER'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-External.UINT_PTR subclass: #'External.INT_PTR'
+External.UInt8 subclass: #'External.BOOLEAN'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_INT_PTR_Size' -> 16r4
+		'_BOOLEAN_Size' -> 16r1
 	}!
-External.WORD subclass: #'External.SWORD'
+External.UInt8 subclass: #'External.Int8'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_SWORD_Size' -> 16r2
+		'_Int8_Size' -> 16r1
+	}!
+External.UIntPtr subclass: #'External.IntPtr'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_IntPtr_Size' -> 16r4
 	}!
 External.LPVOID subclass: #'External.LPSTR'
 	instanceVariableNames: ''

@@ -64,7 +64,7 @@ basicNext
 	traceStream nextPut: $[.
 	prefix isClassPrefix
 		ifTrue: 
-			[class := self readClassData: prefix dword.
+			[class := self readClassData: prefix uint32.
 			traceStream print: class name displayString]
 		ifFalse: 
 			[class := self objectAt: prefix refIndex.

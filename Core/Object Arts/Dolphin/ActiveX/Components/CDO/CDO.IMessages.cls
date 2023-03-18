@@ -29,7 +29,7 @@ count
 	Helpstring: The number of message objects in the collection."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_Count: answer.
 	^answer asObject!
 

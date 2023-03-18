@@ -72,7 +72,7 @@ initializeFromHandle: aGpAdjustableArrowCap
 	Gdip gdipGetAdjustableArrowCapWidth: aGpAdjustableArrowCap width: buf.
 	width := buf floatAtOffset: 0.
 	Gdip gdipGetAdjustableArrowCapFillState: aGpAdjustableArrowCap fillState: buf.
-	isFilled := (buf dwordAtOffset: 0) ~~ 0.
+	isFilled := (buf uint32AtOffset: 0) ~~ 0.
 	"Extra attributes - can be set after creation, and should be persisted if set. The first two are inherited; strokeJoin and widthScale."
 	super initializeFromHandle: aGpAdjustableArrowCap.
 	Gdip gdipGetAdjustableArrowCapMiddleInset: aGpAdjustableArrowCap middleInset: buf.

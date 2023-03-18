@@ -43,7 +43,7 @@ do: aMonadicValuable
 	| notAtEnd |
 	notAtEnd := ByteArray new: 4.
 	self get_hasCurrent: notAtEnd.
-	[(notAtEnd sdwordAtOffset: 0) == 0] whileFalse: 
+	[(notAtEnd int32AtOffset: 0) == 0] whileFalse: 
 			[aMonadicValuable value: self getCurrent.
 			self MoveNext: notAtEnd]!
 

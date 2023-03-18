@@ -17,7 +17,7 @@ elementClassNames
 	^super elementClassNames , #(#IUnknown #IDispatch)!
 
 newArrayOfIntegers: anArray
-	^SAFEARRAY withAll: anArray elementClass: SDWORD!
+	^SAFEARRAY withAll: anArray elementClass: Int32!
 
 testAXRecords
 	"Create a dummy class that is unregistered and which will therefore be represented by an AXRecord"
@@ -65,7 +65,7 @@ testBoolDisplayString
 
 testBounds
 	| subject |
-	subject := SAFEARRAY length: 3 elementClass: SDWORD.
+	subject := SAFEARRAY length: 3 elementClass: Int32.
 	self assert: (subject lowerBound: 1) equals: 0.
 	self assert: (subject upperBound: 1) equals: 2!
 
@@ -75,17 +75,17 @@ testElementAt
 	| subject subjectRef invalidIndex |
 	invalidIndex := HRESULT fromUnsignedInteger: 16r8002000B.
 	subject := self newArrayOfIntegers: #(-123 123).
-	self assert: (subject elementAt: {0}) equals: (SDWORD fromInteger: -123).
-	self assert: (subject elementAt: {1}) equals: (SDWORD fromInteger: 123).
+	self assert: (subject elementAt: {0}) equals: (Int32 fromInteger: -123).
+	self assert: (subject elementAt: {1}) equals: (Int32 fromInteger: 123).
 	self
 		should: [subject elementAt: {2}]
 		raise: HRESULTError
 		matching: [:ex | ex tag = invalidIndex].
 	subjectRef := SAFEARRAY fromAddress: subject yourAddress owner: subject.
 	"Should be able to deduce the correct element class"
-	self assert: subjectRef elementClass identicalTo: SDWORD.
-	self assert: (subjectRef elementAt: {0}) equals: (SDWORD fromInteger: -123).
-	self assert: (subjectRef elementAt: {1}) equals: (SDWORD fromInteger: 123).
+	self assert: subjectRef elementClass identicalTo: Int32.
+	self assert: (subjectRef elementAt: {0}) equals: (Int32 fromInteger: -123).
+	self assert: (subjectRef elementAt: {1}) equals: (Int32 fromInteger: 123).
 	self
 		should: [subjectRef elementAt: {2}]
 		raise: HRESULTError
@@ -93,8 +93,8 @@ testElementAt
 
 testElementClasses
 	| array random irand triplets |
-	triplets := #(#(#{SWORD} -32768 32767) #(#{SDWORD} -2147483648 2147483647) #(#{FLOAT} -1.25 1.25) #(#{DOUBLE} -1.23456789 1.23456789) #(#{BSTR} '' 'abc') #(#{HRESULT} ##(S_OK) ##(E_NOTIMPL)) #(#{VARIANT_BOOL} false true) #(#{CURRENCY} 99.99s2) #(#{SBYTE} -128 127) #(#{BYTE} 0 255) #(#{WORD} 0 65535) #(#{DWORD} 0 4294967295) #(#{VARIANT} 1 1.0 'abc' nil true 1.2s2 ##(DATE
-				now) 0.6) #(#{DECIMAL} 12345.12345s) #(#{LARGE_INTEGER} -9223372036854775808 9223372036854775807)).
+	triplets := #(#(#{Int16} -32768 32767) #(#{Int32} -2147483648 2147483647) #(#{FLOAT} -1.25 1.25) #(#{DOUBLE} -1.23456789 1.23456789) #(#{BSTR} '' 'abc') #(#{HRESULT} ##(S_OK) ##(E_NOTIMPL)) #(#{VARIANT_BOOL} false true) #(#{CURRENCY} 99.99s2) #(#{Int8} -128 127) #(#{UInt8} 0 255) #(#{UInt16} 0 65535) #(#{UInt32} 0 4294967295) #(#{VARIANT} 1 1.0 'abc' nil true 1.2s2 ##(DATE
+				now) 0.6) #(#{DECIMAL} 12345.12345s) #(#{Int64} -9223372036854775808 9223372036854775807)).
 	triplets do: 
 			[:each |
 			| sa2 |

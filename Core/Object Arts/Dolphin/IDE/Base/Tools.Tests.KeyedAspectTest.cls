@@ -62,22 +62,22 @@ testArrayPublishedKeyedAspects
 testDictionaryPublishedKeyedAspects
 	self dictionaryKeyedAspectsTest: Dictionary!
 
-testDWORDArrayPublishedKeyedAspects
-	self sequenceableCollectionKeyedAspectsTest: External.DWORDArray!
-
 testLookupTablePublishedKeyedAspects
 	self dictionaryKeyedAspectsTest: LookupTable!
 
 testOrderedCollectionPublishedKeyedAspects
-	self sequenceableCollectionKeyedAspectsTest: OrderedCollection! !
+	self sequenceableCollectionKeyedAspectsTest: OrderedCollection!
+
+testUInt32ArrayPublishedKeyedAspects
+	self sequenceableCollectionKeyedAspectsTest: External.UInt32Array! !
 !Tools.Tests.KeyedAspectTest categoriesForMethods!
 collectionKeyedAspectsTest:!helpers!private! !
 dictionaryKeyedAspectsTest:!helpers!private! !
 sequenceableCollectionKeyedAspectsTest:!helpers!private! !
 testArrayPublishedKeyedAspects!public!unit tests! !
 testDictionaryPublishedKeyedAspects!public!unit tests! !
-testDWORDArrayPublishedKeyedAspects!public!unit tests! !
 testLookupTablePublishedKeyedAspects!public!unit tests! !
 testOrderedCollectionPublishedKeyedAspects!public!unit tests! !
+testUInt32ArrayPublishedKeyedAspects!public!unit tests! !
 !
 

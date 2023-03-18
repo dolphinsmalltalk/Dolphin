@@ -22,7 +22,7 @@ OS.WINDOWPLACEMENT comment: ''!
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 rcNormalPosition
 	"Answer the <RECTL> value of the receiver's 'rcNormalPosition' field."
@@ -41,12 +41,12 @@ rcNormalPosition: aRECTL
 showCmd
 	"Answer the <Integer> value of the receiver's 'showCmd' field."
 
-	^bytes dwordAtOffset: _OffsetOf_showCmd!
+	^bytes uint32AtOffset: _OffsetOf_showCmd!
 
 showCmd: anInteger
 	"Set the receiver's 'showCmd' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_showCmd put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_showCmd put: anInteger! !
 !OS.WINDOWPLACEMENT categoriesForMethods!
 dwSize:!**compiled accessors**!public! !
 rcNormalPosition!**compiled accessors**!public! !
@@ -77,9 +77,9 @@ defineFields
 		} WINDOWPLACEMENT;"
 
 	self
-		defineField: #dwSize type: DWORDField writeOnly beOverride;
-		defineField: #flags type: DWORDField filler;
-		defineField: #showCmd type: DWORDField new;
+		defineField: #dwSize type: UInt32Field writeOnly beOverride;
+		defineField: #flags type: UInt32Field filler;
+		defineField: #showCmd type: UInt32Field new;
 		defineField: #ptMinPosition type: (StructureField type: POINTL) beFiller;
 		defineField: #ptMaxPosition type: (StructureField type: POINTL) beFiller;
 		defineField: #rcNormalPosition type: (StructureField type: RECTL)!

@@ -36,42 +36,42 @@ struct tagMARGINS {
 cxLeftWidth
 	"Answer the <Integer> value of the receiver's 'cxLeftWidth' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_cxLeftWidth!
+	^bytes int32AtOffset: _OffsetOf_cxLeftWidth!
 
 cxLeftWidth: anInteger
 	"Set the receiver's 'cxLeftWidth' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_cxLeftWidth put: anInteger!
+	bytes int32AtOffset: _OffsetOf_cxLeftWidth put: anInteger!
 
 cxRightWidth
 	"Answer the <Integer> value of the receiver's 'cxRightWidth' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_cxRightWidth!
+	^bytes int32AtOffset: _OffsetOf_cxRightWidth!
 
 cxRightWidth: anInteger
 	"Set the receiver's 'cxRightWidth' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_cxRightWidth put: anInteger!
+	bytes int32AtOffset: _OffsetOf_cxRightWidth put: anInteger!
 
 cyBottomHeight
 	"Answer the <Integer> value of the receiver's 'cyBottomHeight' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_cyBottomHeight!
+	^bytes int32AtOffset: _OffsetOf_cyBottomHeight!
 
 cyBottomHeight: anInteger
 	"Set the receiver's 'cyBottomHeight' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_cyBottomHeight put: anInteger!
+	bytes int32AtOffset: _OffsetOf_cyBottomHeight put: anInteger!
 
 cyTopHeight
 	"Answer the <Integer> value of the receiver's 'cyTopHeight' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_cyTopHeight!
+	^bytes int32AtOffset: _OffsetOf_cyTopHeight!
 
 cyTopHeight: anInteger
 	"Set the receiver's 'cyTopHeight' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_cyTopHeight put: anInteger! !
+	bytes int32AtOffset: _OffsetOf_cyTopHeight put: anInteger! !
 !OS.MARGINS categoriesForMethods!
 cxLeftWidth!**compiled accessors**!public! !
 cxLeftWidth:!**compiled accessors**!public! !
@@ -102,10 +102,10 @@ defineFields
 "
 
 	self
-		defineField: #cxLeftWidth type: SDWORDField new;
-		defineField: #cxRightWidth type: SDWORDField new;
-		defineField: #cyTopHeight type: SDWORDField new;
-		defineField: #cyBottomHeight type: SDWORDField new!
+		defineField: #cxLeftWidth type: Int32Field new;
+		defineField: #cxRightWidth type: Int32Field new;
+		defineField: #cyTopHeight type: Int32Field new;
+		defineField: #cyBottomHeight type: Int32Field new!
 
 getFieldNames
 	^#(#cxLeftWidth #cxRightWidth #cyTopHeight #cyBottomHeight)! !

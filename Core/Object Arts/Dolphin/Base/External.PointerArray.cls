@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.UINT_PTRArray subclass: #'External.PointerArray'
+External.UIntPtrArray subclass: #'External.PointerArray'
 	instanceVariableNames: 'elementClass'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 External.PointerArray guid: (Core.GUID fromString: '{fac953e0-dfd2-4e68-8c31-879bba4c50c4}')!
-External.PointerArray comment: 'Specialized <ExternalArray> to represent contiguous single-dimensioned arrays of pointers to arbitrary <ExternalStructure>s.
+External.PointerArray comment: 'Specialized `External.Array` to represent contiguous single-dimensioned arrays of pointers to arbitrary `External.Structure`s.	
 
-Instance Variables:
-	elementClass	<ExternalStructure>. Class to represent elements of the array.
+## Instance Variables:
+  `elementClass`	`External.Structure`. Class to represent elements of the array.
 
 '!
 !External.PointerArray categoriesForClass!External-Data-Structured! !

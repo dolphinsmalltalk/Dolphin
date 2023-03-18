@@ -191,10 +191,10 @@ GetFuncCustData: index guid: guid pVarVal: pVarVal
 	^self invalidCall: _failureCode!
 
 getFuncIndexOfMemId: memid invkind: invkind 
-	"Answer the <DWORD> result of invoking the COM Object's GetFuncIndexOfMemId() method."
+	"Answer the <UInt32> result of invoking the COM Object's GetFuncIndexOfMemId() method."
 
 	| pFuncIndex |
-	pFuncIndex := DWORD new.
+	pFuncIndex := UInt32 new.
 	self GetFuncIndexOfMemId: memid invkind: invkind pFuncIndex: pFuncIndex.
 	^pFuncIndex value
 !
@@ -303,10 +303,10 @@ GetVarCustData: index guid: guid pVarVal: pVarVal
 	^self invalidCall: _failureCode!
 
 getVarIndexOfMemId: memid 
-	"Answer the <DWORD> result of invoking the COM Object's GetVarIndexOfMemId() method."
+	"Answer the <UInt32> result of invoking the COM Object's GetVarIndexOfMemId() method."
 
 	| pVarIndex |
-	pVarIndex := DWORD new.
+	pVarIndex := UInt32 new.
 	self GetVarIndexOfMemId: memid pVarIndex: pVarIndex.
 	^pVarIndex value
 !

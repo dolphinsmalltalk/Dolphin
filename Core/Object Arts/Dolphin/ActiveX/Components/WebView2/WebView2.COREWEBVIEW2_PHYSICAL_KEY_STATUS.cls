@@ -40,62 +40,62 @@ struct tagCOREWEBVIEW2_PHYSICAL_KEY_STATUS {
 IsExtendedKey
 	"Answer the <Boolean> value of the receiver's 'IsExtendedKey' field."
 
-	^(bytes dwordAtOffset: _OffsetOf_IsExtendedKey) asBoolean!
+	^(bytes uint32AtOffset: _OffsetOf_IsExtendedKey) asBoolean!
 
 IsExtendedKey: aBoolean
 	"Set the receiver's 'IsExtendedKey' field to the value of the argument, aBoolean"
 
-	bytes dwordAtOffset: _OffsetOf_IsExtendedKey put: aBoolean asParameter!
+	bytes uint32AtOffset: _OffsetOf_IsExtendedKey put: aBoolean asParameter!
 
 IsKeyReleased
 	"Answer the <Boolean> value of the receiver's 'IsKeyReleased' field."
 
-	^(bytes dwordAtOffset: _OffsetOf_IsKeyReleased) asBoolean!
+	^(bytes uint32AtOffset: _OffsetOf_IsKeyReleased) asBoolean!
 
 IsKeyReleased: aBoolean
 	"Set the receiver's 'IsKeyReleased' field to the value of the argument, aBoolean"
 
-	bytes dwordAtOffset: _OffsetOf_IsKeyReleased put: aBoolean asParameter!
+	bytes uint32AtOffset: _OffsetOf_IsKeyReleased put: aBoolean asParameter!
 
 IsMenuKeyDown
 	"Answer the <Boolean> value of the receiver's 'IsMenuKeyDown' field."
 
-	^(bytes dwordAtOffset: _OffsetOf_IsMenuKeyDown) asBoolean!
+	^(bytes uint32AtOffset: _OffsetOf_IsMenuKeyDown) asBoolean!
 
 IsMenuKeyDown: aBoolean
 	"Set the receiver's 'IsMenuKeyDown' field to the value of the argument, aBoolean"
 
-	bytes dwordAtOffset: _OffsetOf_IsMenuKeyDown put: aBoolean asParameter!
+	bytes uint32AtOffset: _OffsetOf_IsMenuKeyDown put: aBoolean asParameter!
 
 RepeatCount
 	"Answer the <Integer> value of the receiver's 'RepeatCount' field."
 
-	^bytes dwordAtOffset: _OffsetOf_RepeatCount!
+	^bytes uint32AtOffset: _OffsetOf_RepeatCount!
 
 RepeatCount: anInteger
 	"Set the receiver's 'RepeatCount' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_RepeatCount put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_RepeatCount put: anInteger!
 
 ScanCode
 	"Answer the <Integer> value of the receiver's 'ScanCode' field."
 
-	^bytes dwordAtOffset: _OffsetOf_ScanCode!
+	^bytes uint32AtOffset: _OffsetOf_ScanCode!
 
 ScanCode: anInteger
 	"Set the receiver's 'ScanCode' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_ScanCode put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_ScanCode put: anInteger!
 
 WasKeyDown
 	"Answer the <Boolean> value of the receiver's 'WasKeyDown' field."
 
-	^(bytes dwordAtOffset: _OffsetOf_WasKeyDown) asBoolean!
+	^(bytes uint32AtOffset: _OffsetOf_WasKeyDown) asBoolean!
 
 WasKeyDown: aBoolean
 	"Set the receiver's 'WasKeyDown' field to the value of the argument, aBoolean"
 
-	bytes dwordAtOffset: _OffsetOf_WasKeyDown put: aBoolean asParameter! !
+	bytes uint32AtOffset: _OffsetOf_WasKeyDown put: aBoolean asParameter! !
 !WebView2.COREWEBVIEW2_PHYSICAL_KEY_STATUS categoriesForMethods!
 IsExtendedKey!**compiled accessors**!public! !
 IsExtendedKey:!**compiled accessors**!public! !
@@ -133,8 +133,8 @@ defineFields
 "
 
 	self
-		defineField: #RepeatCount type: DWORDField new offset: 0;
-		defineField: #ScanCode type: DWORDField new offset: 4;
+		defineField: #RepeatCount type: UInt32Field new offset: 0;
+		defineField: #ScanCode type: UInt32Field new offset: 4;
 		defineField: #IsExtendedKey type: BOOLField new offset: 8;
 		defineField: #IsMenuKeyDown type: BOOLField new offset: 12;
 		defineField: #WasKeyDown type: BOOLField new offset: 16;

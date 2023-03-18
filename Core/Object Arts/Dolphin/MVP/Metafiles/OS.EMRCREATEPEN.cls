@@ -32,12 +32,12 @@ struct tagEMRCREATEPEN {
 ihPen
 	"Answer the <Integer> value of the receiver's 'ihPen' field."
 
-	^bytes dwordAtOffset: _OffsetOf_ihPen!
+	^bytes uint32AtOffset: _OffsetOf_ihPen!
 
 ihPen: anInteger
 	"Set the receiver's 'ihPen' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_ihPen put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_ihPen put: anInteger!
 
 lopn
 	"Answer the <LOGPEN> value of the receiver's 'lopn' field."
@@ -80,7 +80,7 @@ defineFields
 	super defineFields.
 	self
 		defineField: #ihPen
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 8;
 		defineField: #lopn
 			type: (StructureField type: LOGPEN)

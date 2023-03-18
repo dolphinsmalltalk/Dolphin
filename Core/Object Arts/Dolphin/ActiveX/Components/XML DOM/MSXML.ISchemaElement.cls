@@ -75,7 +75,7 @@ disallowedSubstitutions
 	"Answer the <sdword> value of the 'disallowedSubstitutions' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_disallowedSubstitutions: answer.
 	^answer asObject!
 
@@ -238,7 +238,7 @@ substitutionGroupExclusions
 	"Answer the <sdword> value of the 'substitutionGroupExclusions' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_substitutionGroupExclusions: answer.
 	^answer asObject!
 

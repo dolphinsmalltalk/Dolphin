@@ -41,8 +41,8 @@ defineFields
 	} EDITSTREAM;"
 
 	self
-		defineField: #dwCookie type: DWORDField filler;
-		defineField: #dwError type: DWORDField filler;
+		defineField: #dwCookie type: UInt32Field filler;
+		defineField: #dwError type: UInt32Field filler;
 		defineField: #pfnCallback type: LPVOIDField writeOnly!
 
 getFieldNames

@@ -42,12 +42,12 @@ address: aSOCKADDR
 AddrLength
 	"Private - Answer the <Integer> value of the receiver's 'AddrLength' field."
 
-	^bytes wordAtOffset: _OffsetOf_AddrLength!
+	^bytes uint16AtOffset: _OffsetOf_AddrLength!
 
 AddrLength: anInteger
 	"Set the receiver's 'AddrLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_AddrLength put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_AddrLength put: anInteger!
 
 pAddress
 	"Answer the <SOCKADDR> value of the receiver's 'pAddress' field."
@@ -85,7 +85,7 @@ defineFields
 "
 
 	self
-		defineField: #AddrLength type: WORDField new beNonBrowsable offset: 0;
+		defineField: #AddrLength type: UInt16Field new beNonBrowsable offset: 0;
 		defineField: #pAddress type: (PointerField type: SOCKADDR) offset: 4.
 	self byteSize: 8!
 

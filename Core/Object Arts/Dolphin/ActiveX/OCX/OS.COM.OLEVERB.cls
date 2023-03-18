@@ -35,22 +35,22 @@ struct tagOLEVERB {
 fuFlags
 	"Answer the <Integer> value of the receiver's 'fuFlags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_fuFlags!
+	^bytes uint32AtOffset: _OffsetOf_fuFlags!
 
 fuFlags: anInteger
 	"Set the receiver's 'fuFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_fuFlags put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_fuFlags put: anInteger!
 
 grfAttribs
 	"Answer the <Integer> value of the receiver's 'grfAttribs' field."
 
-	^bytes dwordAtOffset: _OffsetOf_grfAttribs!
+	^bytes uint32AtOffset: _OffsetOf_grfAttribs!
 
 grfAttribs: anInteger
 	"Set the receiver's 'grfAttribs' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_grfAttribs put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_grfAttribs put: anInteger!
 
 lpszVerbName
 	"Answer the <Utf16String> value of the receiver's 'lpszVerbName' field."
@@ -65,12 +65,12 @@ lpszVerbName: anUtf16String
 lVerb
 	"Answer the <Integer> value of the receiver's 'lVerb' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_lVerb!
+	^bytes int32AtOffset: _OffsetOf_lVerb!
 
 lVerb: anInteger
 	"Set the receiver's 'lVerb' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_lVerb put: anInteger!
+	bytes int32AtOffset: _OffsetOf_lVerb put: anInteger!
 
 printOn: aStream 
 	"Append a textual representation of the receiver to aStream."
@@ -114,10 +114,10 @@ defineFields
 "
 
 	self
-		defineField: #lVerb type: SDWORDField new;
+		defineField: #lVerb type: Int32Field new;
 		defineField: #lpszVerbName type: (PointerField type: Utf16String);
-		defineField: #fuFlags type: DWORDField new;
-		defineField: #grfAttribs type: DWORDField new!
+		defineField: #fuFlags type: UInt32Field new;
+		defineField: #grfAttribs type: UInt32Field new!
 
 getFieldNames
 	^#(#lVerb #lpszVerbName #fuFlags #grfAttribs)! !

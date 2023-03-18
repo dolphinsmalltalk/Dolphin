@@ -497,7 +497,7 @@ nmNotify: pNMHDR
 		at: TBN_FIRST - TBN_DROPDOWN + 1 put: #tbnDropDown:;
 		at: TBN_FIRST - TBN_CLOSEUP + 1 put: #tbnCloseUp:;
 		at: TBN_FIRST - TBN_GETBUTTONINFOW + 1 put: #tbnGetButtonInfo:;
-		yourself) lookup: ##(TBN_FIRST + 1) - (pNMHDR sdwordAtOffset: 8))
+		yourself) lookup: ##(TBN_FIRST + 1) - (pNMHDR int32AtOffset: 8))
 		ifNil: [super nmNotify: pNMHDR]
 		ifNotNil: [:action | self perform: action with: pNMHDR]!
 

@@ -29,7 +29,7 @@ struct tagMIB_IFNUMBER {
 dwValue
 	"Answer the <Integer> value of the receiver's 'dwValue' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwValue! !
+	^bytes uint32AtOffset: _OffsetOf_dwValue! !
 !OS.MIB_IFNUMBER categoriesForMethods!
 dwValue!**compiled accessors**!public! !
 !
@@ -50,7 +50,7 @@ defineFields
 "
 
 	self
-		defineField: #dwValue type: DWORDField readOnly offset: 0.
+		defineField: #dwValue type: UInt32Field readOnly offset: 0.
 	self byteSize: 4!
 
 getFieldNames

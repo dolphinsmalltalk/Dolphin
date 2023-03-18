@@ -32,42 +32,42 @@ dwData: anInteger
 fsState
 	"Answer the <Integer> value of the receiver's 'fsState' field."
 
-	^bytes byteAtOffset: _OffsetOf_fsState!
+	^bytes uint8AtOffset: _OffsetOf_fsState!
 
 fsState: anInteger
 	"Set the receiver's 'fsState' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_fsState put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_fsState put: anInteger!
 
 fsStyle
 	"Answer the <Integer> value of the receiver's 'fsStyle' field."
 
-	^bytes byteAtOffset: _OffsetOf_fsStyle!
+	^bytes uint8AtOffset: _OffsetOf_fsStyle!
 
 fsStyle: anInteger
 	"Set the receiver's 'fsStyle' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_fsStyle put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_fsStyle put: anInteger!
 
 iBitmap
 	"Answer the <Integer> value of the receiver's 'iBitmap' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_iBitmap!
+	^bytes int32AtOffset: _OffsetOf_iBitmap!
 
 iBitmap: anInteger
 	"Set the receiver's 'iBitmap' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_iBitmap put: anInteger!
+	bytes int32AtOffset: _OffsetOf_iBitmap put: anInteger!
 
 idCommand
 	"Answer the <Integer> value of the receiver's 'idCommand' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_idCommand!
+	^bytes int32AtOffset: _OffsetOf_idCommand!
 
 idCommand: anInteger
 	"Set the receiver's 'idCommand' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_idCommand put: anInteger!
+	bytes int32AtOffset: _OffsetOf_idCommand put: anInteger!
 
 iString
 	"Answer the <Integer> value of the receiver's 'iString' field."
@@ -115,12 +115,12 @@ defineFields
 	typedef const TBBUTTON FAR* LPCTBBUTTON"
 
 	self
-		defineField: #iBitmap type: SDWORDField new;
-		defineField: #idCommand type: SDWORDField new;
-		defineField: #fsState type: BYTEField new;
-		defineField: #fsStyle type: BYTEField new;
-		defineField: #dwData type: UINT_PTRField new;
-		defineField: #iString type: INT_PTRField new!
+		defineField: #iBitmap type: Int32Field new;
+		defineField: #idCommand type: Int32Field new;
+		defineField: #fsState type: UInt8Field new;
+		defineField: #fsStyle type: UInt8Field new;
+		defineField: #dwData type: UIntPtrField new;
+		defineField: #iString type: IntPtrField new!
 
 getFieldNames
 	^#(#iBitmap #idCommand #fsState #fsStyle #dwData #iString)! !

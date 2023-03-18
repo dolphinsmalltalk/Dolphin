@@ -69,42 +69,42 @@ struct tagPRINTDLGEX {
 dwResultAction
 	"Answer the <Integer> value of the receiver's 'dwResultAction' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwResultAction!
+	^bytes uint32AtOffset: _OffsetOf_dwResultAction!
 
 dwResultAction: anInteger
 	"Set the receiver's 'dwResultAction' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwResultAction put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwResultAction put: anInteger!
 
 ExclusionFlags
 	"Answer the <Integer> value of the receiver's 'ExclusionFlags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_ExclusionFlags!
+	^bytes uint32AtOffset: _OffsetOf_ExclusionFlags!
 
 ExclusionFlags: anInteger
 	"Set the receiver's 'ExclusionFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_ExclusionFlags put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_ExclusionFlags put: anInteger!
 
 flags
 	"Answer the <Integer> value of the receiver's 'flags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_flags!
+	^bytes uint32AtOffset: _OffsetOf_flags!
 
 flags: anInteger
 	"Set the receiver's 'flags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_flags put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_flags put: anInteger!
 
 Flags2
 	"Answer the <Integer> value of the receiver's 'Flags2' field."
 
-	^bytes dwordAtOffset: _OffsetOf_Flags2!
+	^bytes uint32AtOffset: _OffsetOf_Flags2!
 
 Flags2: anInteger
 	"Set the receiver's 'Flags2' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_Flags2 put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_Flags2 put: anInteger!
 
 hDC
 	"Answer the <ExternalHandle> value of the receiver's 'hDC' field."
@@ -202,82 +202,82 @@ lpPrintTemplateName: anUtf16String
 lStructSize
 	"Answer the <Integer> value of the receiver's 'lStructSize' field."
 
-	^bytes dwordAtOffset: _OffsetOf_lStructSize!
+	^bytes uint32AtOffset: _OffsetOf_lStructSize!
 
 lStructSize: anInteger
 	"Set the receiver's 'lStructSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_lStructSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_lStructSize put: anInteger!
 
 nCopies
 	"Answer the <Integer> value of the receiver's 'nCopies' field."
 
-	^bytes dwordAtOffset: _OffsetOf_nCopies!
+	^bytes uint32AtOffset: _OffsetOf_nCopies!
 
 nCopies: anInteger
 	"Set the receiver's 'nCopies' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_nCopies put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_nCopies put: anInteger!
 
 nMaxPage
 	"Answer the <Integer> value of the receiver's 'nMaxPage' field."
 
-	^bytes dwordAtOffset: _OffsetOf_nMaxPage!
+	^bytes uint32AtOffset: _OffsetOf_nMaxPage!
 
 nMaxPage: anInteger
 	"Set the receiver's 'nMaxPage' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_nMaxPage put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_nMaxPage put: anInteger!
 
 nMaxPageRanges
 	"Answer the <Integer> value of the receiver's 'nMaxPageRanges' field."
 
-	^bytes dwordAtOffset: _OffsetOf_nMaxPageRanges!
+	^bytes uint32AtOffset: _OffsetOf_nMaxPageRanges!
 
 nMaxPageRanges: anInteger
 	"Set the receiver's 'nMaxPageRanges' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_nMaxPageRanges put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_nMaxPageRanges put: anInteger!
 
 nMinPage
 	"Answer the <Integer> value of the receiver's 'nMinPage' field."
 
-	^bytes dwordAtOffset: _OffsetOf_nMinPage!
+	^bytes uint32AtOffset: _OffsetOf_nMinPage!
 
 nMinPage: anInteger
 	"Set the receiver's 'nMinPage' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_nMinPage put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_nMinPage put: anInteger!
 
 nPageRanges
 	"Answer the <Integer> value of the receiver's 'nPageRanges' field."
 
-	^bytes dwordAtOffset: _OffsetOf_nPageRanges!
+	^bytes uint32AtOffset: _OffsetOf_nPageRanges!
 
 nPageRanges: anInteger
 	"Set the receiver's 'nPageRanges' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_nPageRanges put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_nPageRanges put: anInteger!
 
 nPropertyPages
 	"Answer the <Integer> value of the receiver's 'nPropertyPages' field."
 
-	^bytes dwordAtOffset: _OffsetOf_nPropertyPages!
+	^bytes uint32AtOffset: _OffsetOf_nPropertyPages!
 
 nPropertyPages: anInteger
 	"Set the receiver's 'nPropertyPages' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_nPropertyPages put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_nPropertyPages put: anInteger!
 
 nStartPage
 	"Answer the <Integer> value of the receiver's 'nStartPage' field."
 
-	^bytes dwordAtOffset: _OffsetOf_nStartPage!
+	^bytes uint32AtOffset: _OffsetOf_nStartPage!
 
 nStartPage: anInteger
 	"Set the receiver's 'nStartPage' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_nStartPage put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_nStartPage put: anInteger! !
 !OS.PRINTDLGEXW categoriesForMethods!
 dwResultAction!**compiled accessors**!public! !
 dwResultAction:!**compiled accessors**!public! !
@@ -361,27 +361,27 @@ defineFields
 "
 
 	self
-		defineField: #lStructSize type: DWORDField new;
+		defineField: #lStructSize type: UInt32Field new;
 		defineField: #hwndOwner type: HANDLEField new;
 		defineField: #hDevMode type: HANDLEField new;
 		defineField: #hDevNames type: HANDLEField new;
 		defineField: #hDC type: HANDLEField new;
-		defineField: #flags type: DWORDField new;
-		defineField: #Flags2 type: DWORDField new;
-		defineField: #ExclusionFlags type: DWORDField new;
-		defineField: #nPageRanges type: DWORDField new;
-		defineField: #nMaxPageRanges type: DWORDField new;
+		defineField: #flags type: UInt32Field new;
+		defineField: #Flags2 type: UInt32Field new;
+		defineField: #ExclusionFlags type: UInt32Field new;
+		defineField: #nPageRanges type: UInt32Field new;
+		defineField: #nMaxPageRanges type: UInt32Field new;
 		defineField: #lpPageRanges type: (PointerField type: PRINTPAGERANGE);
-		defineField: #nMinPage type: DWORDField new;
-		defineField: #nMaxPage type: DWORDField new;
-		defineField: #nCopies type: DWORDField new;
+		defineField: #nMinPage type: UInt32Field new;
+		defineField: #nMaxPage type: UInt32Field new;
+		defineField: #nCopies type: UInt32Field new;
 		defineField: #hInstance type: HANDLEField new;
 		defineField: #lpPrintTemplateName type: (PointerField type: Utf16String);
 		defineField: #lpCallback type: (PointerField type: COM.IUnknown);
-		defineField: #nPropertyPages type: DWORDField new;
+		defineField: #nPropertyPages type: UInt32Field new;
 		defineField: #lphPropertyPages type: (PointerField type: Handle);
-		defineField: #nStartPage type: DWORDField new;
-		defineField: #dwResultAction type: DWORDField new!
+		defineField: #nStartPage type: UInt32Field new;
+		defineField: #dwResultAction type: UInt32Field new!
 
 getFieldNames
 	^#(#lStructSize #hwndOwner #hDevMode #hDevNames #hDC #flags #Flags2 #ExclusionFlags #nPageRanges #nMaxPageRanges #lpPageRanges #nMinPage #nMaxPage #nCopies #hInstance #lpPrintTemplateName #lpCallback #nPropertyPages #lphPropertyPages #nStartPage #dwResultAction)! !

@@ -53,12 +53,12 @@ hatchStyleName
 lbColor
 	"Answer the <Integer> value of the receiver's 'lbColor' field."
 
-	^bytes dwordAtOffset: _OffsetOf_lbColor!
+	^bytes uint32AtOffset: _OffsetOf_lbColor!
 
 lbColor: anInteger
 	"Set the receiver's 'lbColor' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_lbColor put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_lbColor put: anInteger!
 
 lbHatch
 	"Answer the <Integer> value of the receiver's 'lbHatch' field."
@@ -73,12 +73,12 @@ lbHatch: anInteger
 lbStyle
 	"Answer the <Integer> value of the receiver's 'lbStyle' field."
 
-	^bytes dwordAtOffset: _OffsetOf_lbStyle!
+	^bytes uint32AtOffset: _OffsetOf_lbStyle!
 
 lbStyle: anInteger
 	"Set the receiver's 'lbStyle' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_lbStyle put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_lbStyle put: anInteger! !
 !OS.LOGBRUSH categoriesForMethods!
 color!accessing!public! !
 color:!accessing!public! !
@@ -112,9 +112,9 @@ defineFields
 "
 
 	self
-		defineField: #lbStyle type: DWORDField new;
-		defineField: #lbColor type: DWORDField new;
-		defineField: #lbHatch type: UINT_PTRField new!
+		defineField: #lbStyle type: UInt32Field new;
+		defineField: #lbColor type: UInt32Field new;
+		defineField: #lbHatch type: UIntPtrField new!
 
 getFieldNames
 	^#(#lbStyle #lbColor #lbHatch)!

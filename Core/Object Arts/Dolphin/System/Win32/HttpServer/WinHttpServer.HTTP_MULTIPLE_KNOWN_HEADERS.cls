@@ -37,32 +37,32 @@ struct tagHTTP_MULTIPLE_KNOWN_HEADERS {
 Flags
 	"Answer the <Integer> value of the receiver's 'Flags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_Flags!
+	^bytes uint32AtOffset: _OffsetOf_Flags!
 
 Flags: anInteger
 	"Set the receiver's 'Flags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_Flags put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_Flags put: anInteger!
 
 HeaderId
 	"Answer the <Integer> value of the receiver's 'HeaderId' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_HeaderId!
+	^bytes int32AtOffset: _OffsetOf_HeaderId!
 
 HeaderId: anInteger
 	"Set the receiver's 'HeaderId' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_HeaderId put: anInteger!
+	bytes int32AtOffset: _OffsetOf_HeaderId put: anInteger!
 
 KnownHeaderCount
 	"Answer the <Integer> value of the receiver's 'KnownHeaderCount' field."
 
-	^bytes wordAtOffset: _OffsetOf_KnownHeaderCount!
+	^bytes uint16AtOffset: _OffsetOf_KnownHeaderCount!
 
 KnownHeaderCount: anInteger
 	"Set the receiver's 'KnownHeaderCount' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_KnownHeaderCount put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_KnownHeaderCount put: anInteger!
 
 KnownHeaders
 	"Answer the <StructureArray> value of the receiver's 'KnownHeaders' field."
@@ -108,9 +108,9 @@ defineFields
 "
 
 	self
-		defineField: #HeaderId type: SDWORDField new offset: 0;
-		defineField: #Flags type: DWORDField new offset: 4;
-		defineField: #KnownHeaderCount type: WORDField new offset: 8;
+		defineField: #HeaderId type: Int32Field new offset: 0;
+		defineField: #Flags type: UInt32Field new offset: 4;
+		defineField: #KnownHeaderCount type: UInt16Field new offset: 8;
 		defineField: #KnownHeaders type: (StructureArrayPointerField type: HTTP_KNOWN_HEADER lengthField: #KnownHeaderCount) offset: 12.
 	self byteSize: 16!
 

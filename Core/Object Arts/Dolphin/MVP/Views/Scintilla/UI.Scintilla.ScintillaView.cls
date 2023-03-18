@@ -4382,7 +4382,7 @@ nmNotify: pNMHDR
 		at: SCN_AUTOCCOMPLETED - SCN_STYLENEEDED + 1 put: #scnAutoCCompleted:;
 		at: SCN_MARGINRIGHTCLICK - SCN_STYLENEEDED + 1 put: #scnMarginRightClick:;
 		at: SCN_AUTOCSELECTIONCHANGE - SCN_STYLENEEDED + 1 put: #scnAutoCSelectionChange:;
-		yourself) lookup: (pNMHDR sdwordAtOffset: 8) - ##(SCN_STYLENEEDED - 1))
+		yourself) lookup: (pNMHDR int32AtOffset: 8) - ##(SCN_STYLENEEDED - 1))
 		ifNotNil: [:action | self perform: action with: pNMHDR]!
 
 onEraseRequired: aColorEvent 
@@ -8418,7 +8418,7 @@ scnModified: pSCNotification
 	overloaded notification."
 
 	| eventMask |
-	eventMask := pSCNotification sdwordAtOffset: SCNotification._OffsetOf_modificationType.
+	eventMask := pSCNotification int32AtOffset: SCNotification._OffsetOf_modificationType.
 	(eventMask anyMask: ##(SC_MOD_INSERTTEXT | SC_MOD_DELETETEXT))
 		ifTrue: 
 			["Text changed"

@@ -57,8 +57,8 @@ defineFields
 	Sci_Position is an alias for ptrdiff_t, so a pointer-sized signed integer"
 
 	self
-		defineField: #cpMin type: INT_PTRField new;
-		defineField: #cpMax type: INT_PTRField new! !
+		defineField: #cpMin type: IntPtrField new;
+		defineField: #cpMax type: IntPtrField new! !
 !UI.Scintilla.CharacterRangeFull class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !

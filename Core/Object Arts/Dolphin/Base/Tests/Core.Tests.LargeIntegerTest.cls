@@ -800,7 +800,7 @@ testBitXorSmall
 	16rBFFFFFFF, which is 2's complement representation of -16r40000001"
 	res := a bitXor: SmallInteger minimum.
 	self assert: res equals: -16r40000001.
-	self assert: (res dwordAtOffset: 0) equals: 16rBFFFFFFF.
+	self assert: (res uint32AtOffset: 0) equals: 16rBFFFFFFF.
 	a := 16r40000000.
 	res := a bitXor: SmallInteger maximum.
 	self assert: res equals: 16r7FFFFFFF.

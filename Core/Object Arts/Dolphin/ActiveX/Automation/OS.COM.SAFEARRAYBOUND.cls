@@ -20,22 +20,22 @@ A SAFEARRAYBOUND describes one dimension of a SAFEARRAY, or C array when used to
 cElements
 	"Answer the <Integer> value of the receiver's 'cElements' field."
 
-	^bytes dwordAtOffset: _OffsetOf_cElements!
+	^bytes uint32AtOffset: _OffsetOf_cElements!
 
 cElements: anInteger
 	"Set the receiver's 'cElements' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_cElements put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_cElements put: anInteger!
 
 lLbound
 	"Answer the <Integer> value of the receiver's 'lLbound' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_lLbound!
+	^bytes int32AtOffset: _OffsetOf_lLbound!
 
 lLbound: anInteger
 	"Set the receiver's 'lLbound' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_lLbound put: anInteger! !
+	bytes int32AtOffset: _OffsetOf_lLbound put: anInteger! !
 !OS.COM.SAFEARRAYBOUND categoriesForMethods!
 cElements!**compiled accessors**!public! !
 cElements:!**compiled accessors**!public! !
@@ -60,8 +60,8 @@ defineFields
 	"
 
 	self
-		defineField: #cElements type: DWORDField new;
-		defineField: #lLbound type: SDWORDField new!
+		defineField: #cElements type: UInt32Field new;
+		defineField: #lLbound type: Int32Field new!
 
 getFieldNames
 	^#(#cElements #lLbound)! !

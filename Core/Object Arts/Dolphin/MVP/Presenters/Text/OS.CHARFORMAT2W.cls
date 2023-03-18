@@ -38,22 +38,22 @@ The CHARFORMAT2W structure contains information about character formatting in a 
 bAnimation
 	"Answer the <Integer> value of the receiver's 'bAnimation' field."
 
-	^bytes byteAtOffset: _OffsetOf_bAnimation!
+	^bytes uint8AtOffset: _OffsetOf_bAnimation!
 
 bAnimation: anInteger
 	"Set the receiver's 'bAnimation' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_bAnimation put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_bAnimation put: anInteger!
 
 bCharSet
 	"Answer the <Integer> value of the receiver's 'bCharSet' field."
 
-	^bytes byteAtOffset: _OffsetOf_bCharSet!
+	^bytes uint8AtOffset: _OffsetOf_bCharSet!
 
 bCharSet: anInteger
 	"Set the receiver's 'bCharSet' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_bCharSet put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_bCharSet put: anInteger!
 
 beBold
 	"Set the character bold effect on."
@@ -94,42 +94,42 @@ beUnderlined
 bPitchAndFamily
 	"Answer the <Integer> value of the receiver's 'bPitchAndFamily' field."
 
-	^bytes byteAtOffset: _OffsetOf_bPitchAndFamily!
+	^bytes uint8AtOffset: _OffsetOf_bPitchAndFamily!
 
 bPitchAndFamily: anInteger
 	"Set the receiver's 'bPitchAndFamily' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_bPitchAndFamily put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_bPitchAndFamily put: anInteger!
 
 bRevAuthor
 	"Answer the <Integer> value of the receiver's 'bRevAuthor' field."
 
-	^bytes byteAtOffset: _OffsetOf_bRevAuthor!
+	^bytes uint8AtOffset: _OffsetOf_bRevAuthor!
 
 bRevAuthor: anInteger
 	"Set the receiver's 'bRevAuthor' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_bRevAuthor put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_bRevAuthor put: anInteger!
 
 bUnderlineColor
 	"Answer the <Integer> value of the receiver's 'bUnderlineColor' field."
 
-	^bytes byteAtOffset: _OffsetOf_bUnderlineColor!
+	^bytes uint8AtOffset: _OffsetOf_bUnderlineColor!
 
 bUnderlineColor: anInteger
 	"Set the receiver's 'bUnderlineColor' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_bUnderlineColor put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_bUnderlineColor put: anInteger!
 
 bUnderlineType
 	"Answer the <Integer> value of the receiver's 'bUnderlineType' field."
 
-	^bytes byteAtOffset: _OffsetOf_bUnderlineType!
+	^bytes uint8AtOffset: _OffsetOf_bUnderlineType!
 
 bUnderlineType: anInteger
 	"Set the receiver's 'bUnderlineType' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_bUnderlineType put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_bUnderlineType put: anInteger!
 
 characterSet
 	^(self maskAny: CFM_CHARSET) ifTrue: [self bCharSet]!
@@ -154,47 +154,47 @@ color: aColor
 crBackColor
 	"Answer the <Integer> value of the receiver's 'crBackColor' field."
 
-	^bytes dwordAtOffset: _OffsetOf_crBackColor!
+	^bytes uint32AtOffset: _OffsetOf_crBackColor!
 
 crBackColor: anInteger
 	"Set the receiver's 'crBackColor' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_crBackColor put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_crBackColor put: anInteger!
 
 crTextColor
 	"Answer the <Integer> value of the receiver's 'crTextColor' field."
 
-	^bytes dwordAtOffset: _OffsetOf_crTextColor!
+	^bytes uint32AtOffset: _OffsetOf_crTextColor!
 
 crTextColor: anInteger
 	"Set the receiver's 'crTextColor' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_crTextColor put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_crTextColor put: anInteger!
 
 dwEffects
 	"Answer the <Integer> value of the receiver's 'dwEffects' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwEffects!
+	^bytes uint32AtOffset: _OffsetOf_dwEffects!
 
 dwEffects: anInteger
 	"Set the receiver's 'dwEffects' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwEffects put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwEffects put: anInteger!
 
 dwMask
 	"Answer the <Integer> value of the receiver's 'dwMask' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwMask!
+	^bytes uint32AtOffset: _OffsetOf_dwMask!
 
 dwMask: anInteger
 	"Set the receiver's 'dwMask' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwMask put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwMask put: anInteger!
 
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 effectsAny: anInteger
 	"Private - Answer true if the effects field contains the bit flags represented by anInteger."
@@ -282,12 +282,12 @@ isUnderlined: aBoolean
 lcid
 	"Answer the <Integer> value of the receiver's 'lcid' field."
 
-	^bytes dwordAtOffset: _OffsetOf_lcid!
+	^bytes uint32AtOffset: _OffsetOf_lcid!
 
 lcid: anInteger
 	"Set the receiver's 'lcid' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_lcid put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_lcid put: anInteger!
 
 logFont
 	"Answer a <LOGFONTW> configured with the font settings from the receiver. The display resolution is assumed in converting from the point size to font height."
@@ -388,22 +388,22 @@ size: twips
 sSpacing
 	"Answer the <Integer> value of the receiver's 'sSpacing' field."
 
-	^bytes swordAtOffset: _OffsetOf_sSpacing!
+	^bytes int16AtOffset: _OffsetOf_sSpacing!
 
 sSpacing: anInteger
 	"Set the receiver's 'sSpacing' field to the value of the argument, anInteger"
 
-	bytes swordAtOffset: _OffsetOf_sSpacing put: anInteger!
+	bytes int16AtOffset: _OffsetOf_sSpacing put: anInteger!
 
 sStyle
 	"Answer the <Integer> value of the receiver's 'sStyle' field."
 
-	^bytes swordAtOffset: _OffsetOf_sStyle!
+	^bytes int16AtOffset: _OffsetOf_sStyle!
 
 sStyle: anInteger
 	"Set the receiver's 'sStyle' field to the value of the argument, anInteger"
 
-	bytes swordAtOffset: _OffsetOf_sStyle put: anInteger!
+	bytes int16AtOffset: _OffsetOf_sStyle put: anInteger!
 
 szFaceName
 	"Answer the <Utf16String> value of the receiver's 'szFaceName' field."
@@ -420,37 +420,37 @@ szFaceName: anUtf16String
 		from: ##(_OffsetOf_szFaceName + 1)
 		to: _OffsetOf_szFaceName + size
 		startingAt: 1.
-	bytes wordAtOffset: _OffsetOf_szFaceName + size put: 0!
+	bytes uint16AtOffset: _OffsetOf_szFaceName + size put: 0!
 
 wKerning
 	"Answer the <Integer> value of the receiver's 'wKerning' field."
 
-	^bytes wordAtOffset: _OffsetOf_wKerning!
+	^bytes uint16AtOffset: _OffsetOf_wKerning!
 
 wKerning: anInteger
 	"Set the receiver's 'wKerning' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_wKerning put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_wKerning put: anInteger!
 
 wWeight
 	"Answer the <Integer> value of the receiver's 'wWeight' field."
 
-	^bytes wordAtOffset: _OffsetOf_wWeight!
+	^bytes uint16AtOffset: _OffsetOf_wWeight!
 
 wWeight: anInteger
 	"Set the receiver's 'wWeight' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_wWeight put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_wWeight put: anInteger!
 
 yHeight
 	"Answer the <Integer> value of the receiver's 'yHeight' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_yHeight!
+	^bytes int32AtOffset: _OffsetOf_yHeight!
 
 yHeight: anInteger
 	"Set the receiver's 'yHeight' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_yHeight put: anInteger! !
+	bytes int32AtOffset: _OffsetOf_yHeight put: anInteger! !
 !OS.CHARFORMAT2W categoriesForMethods!
 bAnimation!**compiled accessors**!public! !
 bAnimation:!**compiled accessors**!public! !
@@ -534,26 +534,26 @@ defineFields
 	"
 
 	self
-		defineField: #dwSize type: DWORDField writeOnly beOverride;
-		defineField: #dwMask type: DWORDField new;
-		defineField: #dwEffects type: DWORDField new;
-		defineField: #yHeight type: SDWORDField new;
-		defineField: #yOffset type: SDWORDField new beUncompiled;
-		defineField: #crTextColor type: DWORDField new;
-		defineField: #bCharSet type: BYTEField new;
-		defineField: #bPitchAndFamily type: BYTEField new;
+		defineField: #dwSize type: UInt32Field writeOnly beOverride;
+		defineField: #dwMask type: UInt32Field new;
+		defineField: #dwEffects type: UInt32Field new;
+		defineField: #yHeight type: Int32Field new;
+		defineField: #yOffset type: Int32Field new beUncompiled;
+		defineField: #crTextColor type: UInt32Field new;
+		defineField: #bCharSet type: UInt8Field new;
+		defineField: #bPitchAndFamily type: UInt8Field new;
 		defineField: #szFaceName type: (StringField type: Utf16String length: 32);
-		defineField: #wWeight type: WORDField new;
-		defineField: #sSpacing type: SWORDField new;
-		defineField: #crBackColor type: DWORDField new;
-		defineField: #lcid type: DWORDField new;
-		defineField: #dwCookie type: DWORDField filler;
-		defineField: #sStyle type: SWORDField new;
-		defineField: #wKerning type: WORDField new;
-		defineField: #bUnderlineType type: BYTEField new;
-		defineField: #bAnimation type: BYTEField new;
-		defineField: #bRevAuthor type: BYTEField new;
-		defineField: #bUnderlineColor type: BYTEField new!
+		defineField: #wWeight type: UInt16Field new;
+		defineField: #sSpacing type: Int16Field new;
+		defineField: #crBackColor type: UInt32Field new;
+		defineField: #lcid type: UInt32Field new;
+		defineField: #dwCookie type: UInt32Field filler;
+		defineField: #sStyle type: Int16Field new;
+		defineField: #wKerning type: UInt16Field new;
+		defineField: #bUnderlineType type: UInt8Field new;
+		defineField: #bAnimation type: UInt8Field new;
+		defineField: #bRevAuthor type: UInt8Field new;
+		defineField: #bUnderlineColor type: UInt8Field new!
 
 fromChooseFont: aCHOOSEFRONT 
 	^(self new)

@@ -21,12 +21,12 @@ Arrays of MULTI_QI structures can be used to query multiple interface pointers i
 hr
 	"Answer the <Integer> value of the receiver's 'hr' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_hr!
+	^bytes int32AtOffset: _OffsetOf_hr!
 
 hr: anInteger
 	"Set the receiver's 'hr' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_hr put: anInteger!
+	bytes int32AtOffset: _OffsetOf_hr put: anInteger!
 
 pIID
 	"Answer the <IID> value of the receiver's 'pIID' field."
@@ -66,7 +66,7 @@ clear: addressOrBytes
 	of the receiver's element type at the specified address."
 
 	| pi |
-	pi := addressOrBytes sdwordAtOffset: 4.
+	pi := addressOrBytes int32AtOffset: 4.
 	pi notNull ifTrue: [(IUnknown attach: pi) free]!
 
 defineFields
@@ -86,7 +86,7 @@ defineFields
 	self
 		defineField: #pIID type: (PointerField type: IID);
 		defineField: #pItf type: (PointerField type: IUnknown);
-		defineField: #hr type: SDWORDField new!
+		defineField: #hr type: Int32Field new!
 
 getFieldNames
 	^#(#pIID #pItf #hr)! !

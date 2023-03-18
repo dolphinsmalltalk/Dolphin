@@ -51,7 +51,7 @@ testMaximumSize
 	count := 64 * 1024 / 4.
 	mmf maximumSize: 4 * count.
 	view := mmf mapView.
-	array := DWORDArray fromAddress: view length: count.
+	array := UInt32Array fromAddress: view length: count.
 	1 to: count do: [:each | array at: each put: each].
 	self assert: array asArray equals: (1 to: count).
 	mmf free.
@@ -65,7 +65,7 @@ testMaximumSize
 		administerLastRites.
 	file := FileStream read: fname text: false.
 	self assert: file size equals: count * 4.
-	array := (1 to: count) collect: [:each | file nextDWORD].
+	array := (1 to: count) collect: [:each | file nextUInt32].
 	self assert: array equals: (1 to: count).
 	file close.
 	"If this fails then one or other thing is holding the file open"

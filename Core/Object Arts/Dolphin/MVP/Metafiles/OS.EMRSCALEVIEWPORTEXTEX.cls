@@ -36,42 +36,42 @@ struct tagEMRSCALEVIEWPORTEXTEX {
 xDenom
 	"Answer the <Integer> value of the receiver's 'xDenom' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_xDenom!
+	^bytes int32AtOffset: _OffsetOf_xDenom!
 
 xDenom: anInteger
 	"Set the receiver's 'xDenom' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_xDenom put: anInteger!
+	bytes int32AtOffset: _OffsetOf_xDenom put: anInteger!
 
 xNum
 	"Answer the <Integer> value of the receiver's 'xNum' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_xNum!
+	^bytes int32AtOffset: _OffsetOf_xNum!
 
 xNum: anInteger
 	"Set the receiver's 'xNum' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_xNum put: anInteger!
+	bytes int32AtOffset: _OffsetOf_xNum put: anInteger!
 
 yDenom
 	"Answer the <Integer> value of the receiver's 'yDenom' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_yDenom!
+	^bytes int32AtOffset: _OffsetOf_yDenom!
 
 yDenom: anInteger
 	"Set the receiver's 'yDenom' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_yDenom put: anInteger!
+	bytes int32AtOffset: _OffsetOf_yDenom put: anInteger!
 
 yNum
 	"Answer the <Integer> value of the receiver's 'yNum' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_yNum!
+	^bytes int32AtOffset: _OffsetOf_yNum!
 
 yNum: anInteger
 	"Set the receiver's 'yNum' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_yNum put: anInteger! !
+	bytes int32AtOffset: _OffsetOf_yNum put: anInteger! !
 !OS.EMRSCALEVIEWPORTEXTEX categoriesForMethods!
 xDenom!**compiled accessors**!public! !
 xDenom:!**compiled accessors**!public! !
@@ -106,16 +106,16 @@ defineFields
 	super defineFields.
 	self
 		defineField: #xNum
-			type: SDWORDField new
+			type: Int32Field new
 			offset: 8;
 		defineField: #xDenom
-			type: SDWORDField new
+			type: Int32Field new
 			offset: 12;
 		defineField: #yNum
-			type: SDWORDField new
+			type: Int32Field new
 			offset: 16;
 		defineField: #yDenom
-			type: SDWORDField new
+			type: Int32Field new
 			offset: 20.
 	self byteSize: 24!
 

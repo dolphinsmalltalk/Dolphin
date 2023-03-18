@@ -57,7 +57,7 @@ GetIDsOfNames: getIDsOfNames rgszNames: rgszNames cNames: cNames lcid: lcid rgdi
 				length: cNames
 				elementClass: LPWSTR) collect: [:e | e asString].
 	ids := self idsOfNames: names whenNotKnown: [:name | ^DISP_E_UNKNOWNNAME].
-	pdispids := SDWORDArray fromAddress: rgdispid yourAddress.
+	pdispids := Int32Array fromAddress: rgdispid yourAddress.
 	ids keysAndValuesDo: [:i :id | pdispids at: i put: id].
 	^S_OK!
 

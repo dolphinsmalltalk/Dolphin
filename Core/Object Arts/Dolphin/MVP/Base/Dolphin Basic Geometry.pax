@@ -38,7 +38,7 @@ package setMethodNames: #(
 	#(#{Core.Number} #divideIntoPoint:)
 	#(#{Core.Number} #multiplyByPoint:)
 	#(#{Core.Number} #subtractFromPoint:)
-	#(#{External.DWORD class} #fromPoint:)
+	#(#{External.UInt32 class} #fromPoint:)
 	#(#{OS.UserLibrary} #subtractRect:lprcSrc1:lprcSrc2:)
 ).
 
@@ -247,7 +247,7 @@ multiplyByPoint:!double dispatch!private! !
 subtractFromPoint:!double dispatch!private! !
 !
 
-!External.DWORD class methodsFor!
+!External.UInt32 class methodsFor!
 
 fromPoint: aPoint
 	"Private - Answer a new instance of the receiver with high and low
@@ -259,7 +259,7 @@ fromPoint: aPoint
 		lowSWord: aPoint x;
 		highSWord: aPoint y;
 		yourself! !
-!External.DWORD class categoriesForMethods!
+!External.UInt32 class categoriesForMethods!
 fromPoint:!instance creation!private! !
 !
 

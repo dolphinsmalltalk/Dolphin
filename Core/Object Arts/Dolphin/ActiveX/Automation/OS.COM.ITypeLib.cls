@@ -241,7 +241,7 @@ typekindAt: anInteger
 	"
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self GetTypeInfoType: anInteger-1 pTKind: answer.
 	^answer value! !
 !OS.COM.ITypeLib categoriesForMethods!
@@ -278,15 +278,15 @@ defineFunctions
 	self
 		defineFunction: #GetTypeInfoCount returnType: 'dword';
 		defineFunction: #GetTypeInfo:ppTInfo: argumentTypes: 'dword ITypeInfo**';
-		defineFunction: #GetTypeInfoType:pTKind: argumentTypes: 'dword SDWORD*';
+		defineFunction: #GetTypeInfoType:pTKind: argumentTypes: 'dword Int32*';
 		defineFunction: #GetTypeInfoOfGuid:ppTInfo: argumentTypes: 'GUID* ITypeInfo**';
 		defineFunction: #GetLibAttr: argumentTypes: 'TLIBATTR**';
 		defineFunction: #GetTypeComp: argumentTypes: 'ITypeComp**';        
 		defineFunction: #GetDocumentation:pBstrName:pBstrDocString:pdwHelpContext:pBstrHelpFile:
-			argumentTypes: 'sdword BSTR* BSTR* DWORD* BSTR*';
-		defineFunction: #IsName:lHashVal:pfName: argumentTypes: 'lpwstr dword DWORD*';		
+			argumentTypes: 'sdword BSTR* BSTR* UInt32* BSTR*';
+		defineFunction: #IsName:lHashVal:pfName: argumentTypes: 'lpwstr dword UInt32*';		
 		defineFunction: #FindName:lHashVal:ppTInfo:rgMemId:pcFound:
-			argumentTypes: 'lpwstr dword ITypeInfo** SDWORD* DWORD*';
+			argumentTypes: 'lpwstr dword ITypeInfo** Int32* UInt32*';
 		defineFunction: #ReleaseTLibAttr: returnType: 'void' argumentTypes: 'TLIBATTR*'!
 
 fromAttributes: attr

@@ -81,9 +81,9 @@ asBitmap
 
 asByteArray
 	"Answer a <ByteArray> representing the bits of the receiver in top-down 32bpp RGB form. Each
-	DWORD in the ByteArray represents the red, green and blue values for a pixel. The value for
+	32-bit integer in the ByteArray represents the red, green and blue values for a pixel. The value for
 	blue is in the least significant byte, followed by the green and red bytes, with the high order
-	byte of each DWORD being unused."
+	byte of each 32-bits being unused."
 
 	| bmi canvas ret height bits byteSize size width |
 	canvas := Canvas withOwnedDC: (Gdi32 createCompatibleDC: nil).
@@ -385,11 +385,11 @@ isShared: aBoolean
 !
 
 pixelData
-	"Answer a DWORDArray of the (A)RGB pixel data contained in the receiver. This simple but NOT FAST."
+	"Answer a UInt32Array of the (A)RGB pixel data contained in the receiver. This simple but NOT FAST."
 
 	| pixData n canvas ext |
 	ext := self extent.
-	pixData := DWORDArray new: ext x * ext y.
+	pixData := UInt32Array new: ext x * ext y.
 	n := 1.
 	canvas := self canvas.
 	0 to: ext x - 1

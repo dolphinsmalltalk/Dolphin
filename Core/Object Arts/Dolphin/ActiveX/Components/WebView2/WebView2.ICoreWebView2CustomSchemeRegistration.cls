@@ -152,8 +152,9 @@ schemeName
 setAllowedOrigins: aCollection
 	| strings allowedOrigins |
 	strings := aCollection collect: [:each | each asUtf16String].
-	allowedOrigins := UINT_PTRArray new: strings size withAll: strings.
-	self SetAllowedOrigins: strings size allowedOrigins: allowedOrigins!
+	allowedOrigins := UIntPtrArray new: strings size withAll: strings.
+	self SetAllowedOrigins: strings size allowedOrigins: allowedOrigins
+!
 
 SetAllowedOrigins: allowedOriginsCount allowedOrigins: allowedOrigins
 	"Private - Invoke the SetAllowedOrigins() method of the COM object.

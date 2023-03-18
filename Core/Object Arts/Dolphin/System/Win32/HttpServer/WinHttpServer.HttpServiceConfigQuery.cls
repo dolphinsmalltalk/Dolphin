@@ -30,12 +30,12 @@ struct tagHttpServiceConfigQuery {
 QueryDesc
 	"Answer the <Integer> value of the receiver's 'QueryDesc' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_QueryDesc!
+	^bytes int32AtOffset: _OffsetOf_QueryDesc!
 
 QueryDesc: anInteger
 	"Set the receiver's 'QueryDesc' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_QueryDesc put: anInteger! !
+	bytes int32AtOffset: _OffsetOf_QueryDesc put: anInteger! !
 !WinHttpServer.HttpServiceConfigQuery categoriesForMethods!
 QueryDesc!**compiled accessors**!public! !
 QueryDesc:!**compiled accessors**!public! !
@@ -58,7 +58,7 @@ defineFields
 "
 
 	self
-		defineField: #QueryDesc type: SDWORDField new offset: 0.
+		defineField: #QueryDesc type: Int32Field new offset: 0.
 	self byteSize: 4!
 
 getFieldNames

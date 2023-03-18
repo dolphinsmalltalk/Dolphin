@@ -38,12 +38,12 @@ struct tagEMRCREATECOLORSPACEW {
 cbData
 	"Answer the <Integer> value of the receiver's 'cbData' field."
 
-	^bytes dwordAtOffset: _OffsetOf_cbData!
+	^bytes uint32AtOffset: _OffsetOf_cbData!
 
 cbData: anInteger
 	"Set the receiver's 'cbData' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_cbData put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_cbData put: anInteger!
 
 Data
 	"Answer the <ExternalArray> value of the receiver's 'Data' field."
@@ -65,22 +65,22 @@ Data: anExternalArray
 dwFlags
 	"Answer the <Integer> value of the receiver's 'dwFlags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwFlags!
+	^bytes uint32AtOffset: _OffsetOf_dwFlags!
 
 dwFlags: anInteger
 	"Set the receiver's 'dwFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwFlags put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwFlags put: anInteger!
 
 ihCS
 	"Answer the <Integer> value of the receiver's 'ihCS' field."
 
-	^bytes dwordAtOffset: _OffsetOf_ihCS!
+	^bytes uint32AtOffset: _OffsetOf_ihCS!
 
 ihCS: anInteger
 	"Set the receiver's 'ihCS' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_ihCS put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_ihCS put: anInteger!
 
 lcs
 	"Answer the <LOGCOLORSPACEW> value of the receiver's 'lcs' field."
@@ -132,16 +132,16 @@ defineFields
 	super defineFields.
 	self
 		defineField: #ihCS
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 8;
 		defineField: #lcs
 			type: (StructureField type: LOGCOLORSPACEW)
 			offset: 12;
 		defineField: #dwFlags
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 340;
 		defineField: #cbData
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 344;
 		defineField: #Data
 			type: (ArrayField type: ExternalArray lengthField: #cbData)

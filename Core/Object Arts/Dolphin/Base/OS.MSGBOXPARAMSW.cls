@@ -43,22 +43,22 @@ caption: aString
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 dwStyle: anInteger
 	"Set the receiver's 'dwStyle' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwStyle put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwStyle put: anInteger!
 
 hInstance: anInteger
 	"Set the receiver's 'hInstance' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_hInstance put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_hInstance put: anInteger!
 
 hwndOwner: anInteger
 	"Set the receiver's 'hwndOwner' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_hwndOwner put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_hwndOwner put: anInteger!
 
 lpszCaption: anUtf16String
 	"Set the receiver's 'lpszCaption' field to the value of the argument, anUtf16String"
@@ -68,7 +68,7 @@ lpszCaption: anUtf16String
 lpszIcon: anInteger
 	"Set the receiver's 'lpszIcon' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_lpszIcon put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_lpszIcon put: anInteger!
 
 lpszText: anUtf16String
 	"Set the receiver's 'lpszText' field to the value of the argument, anUtf16String"
@@ -120,17 +120,17 @@ defineFields
 	"
 
 	self
-		defineField: #dwSize type: DWORDField writeOnly beOverride;
-		defineField: #hwndOwner type: DWORDField writeOnly;
-		defineField: #hInstance type: DWORDField writeOnly;
+		defineField: #dwSize type: UInt32Field writeOnly beOverride;
+		defineField: #hwndOwner type: UInt32Field writeOnly;
+		defineField: #hInstance type: UInt32Field writeOnly;
 		defineField: #lpszText type: (PointerField type: Utf16String) beWriteOnly;
 		defineField: #lpszCaption type: (PointerField type: Utf16String) beWriteOnly;
-		defineField: #dwStyle type: DWORDField writeOnly;
-		defineField: #lpszIcon type: DWORDField writeOnly;
+		defineField: #dwStyle type: UInt32Field writeOnly;
+		defineField: #lpszIcon type: UInt32Field writeOnly;
 		beUncompiled;
-		defineField: #dwContextHelpId type: DWORDField filler;
-		defineField: #lpfnMsgBoxCallback type: DWORDField filler;
-		defineField: #dwLanguageId type: DWORDField writeOnly
+		defineField: #dwContextHelpId type: UInt32Field filler;
+		defineField: #lpfnMsgBoxCallback type: UInt32Field filler;
+		defineField: #dwLanguageId type: UInt32Field writeOnly
 	"This field can hold a string, or an integer resource id"!
 
 getFieldNames

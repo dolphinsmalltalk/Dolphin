@@ -199,7 +199,7 @@ buttonChangeKind
 	"Answer the <sdword> value of the 'ButtonChangeKind' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_ButtonChangeKind: answer.
 	^answer asObject!
 
@@ -225,7 +225,7 @@ frameId
 	"Answer the <dword> value of the 'FrameId' property of the receiver."
 
 	| answer |
-	answer := DWORD new.
+	answer := UInt32 new.
 	self get_FrameId: answer.
 	^answer asObject!
 
@@ -516,7 +516,7 @@ historyCount
 	"Answer the <dword> value of the 'HistoryCount' property of the receiver."
 
 	| answer |
-	answer := DWORD new.
+	answer := UInt32 new.
 	self get_HistoryCount: answer.
 	^answer asObject!
 
@@ -529,7 +529,7 @@ inputData
 	"Answer the <sdword> value of the 'InputData' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_InputData: answer.
 	^answer asObject!
 
@@ -542,7 +542,7 @@ keyStates
 	"Answer the <dword> value of the 'KeyStates' property of the receiver."
 
 	| answer |
-	answer := DWORD new.
+	answer := UInt32 new.
 	self get_KeyStates: answer.
 	^answer asObject!
 
@@ -555,7 +555,7 @@ penFlags
 	"Answer the <dword> value of the 'PenFlags' property of the receiver."
 
 	| answer |
-	answer := DWORD new.
+	answer := UInt32 new.
 	self get_PenFlags: answer.
 	^answer asObject!
 
@@ -568,7 +568,7 @@ penMask
 	"Answer the <dword> value of the 'PenMask' property of the receiver."
 
 	| answer |
-	answer := DWORD new.
+	answer := UInt32 new.
 	self get_PenMask: answer.
 	^answer asObject!
 
@@ -581,7 +581,7 @@ penPressure
 	"Answer the <dword> value of the 'PenPressure' property of the receiver."
 
 	| answer |
-	answer := DWORD new.
+	answer := UInt32 new.
 	self get_PenPressure: answer.
 	^answer asObject!
 
@@ -594,7 +594,7 @@ penRotation
 	"Answer the <dword> value of the 'PenRotation' property of the receiver."
 
 	| answer |
-	answer := DWORD new.
+	answer := UInt32 new.
 	self get_PenRotation: answer.
 	^answer asObject!
 
@@ -610,7 +610,7 @@ penTiltX
 	"Answer the <sdword> value of the 'PenTiltX' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_PenTiltX: answer.
 	^answer asObject!
 
@@ -623,7 +623,7 @@ penTiltY
 	"Answer the <sdword> value of the 'PenTiltY' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_PenTiltY: answer.
 	^answer asObject!
 
@@ -636,7 +636,7 @@ performanceCount
 	"Answer the <qword> value of the 'PerformanceCount' property of the receiver."
 
 	| answer |
-	answer := ULARGE_INTEGER new.
+	answer := UInt64 new.
 	self get_PerformanceCount: answer.
 	^answer asObject!
 
@@ -688,7 +688,7 @@ pointerFlags
 	"Answer the <dword> value of the 'PointerFlags' property of the receiver."
 
 	| answer |
-	answer := DWORD new.
+	answer := UInt32 new.
 	self get_PointerFlags: answer.
 	^answer asObject!
 
@@ -701,7 +701,7 @@ pointerId
 	"Answer the <dword> value of the 'PointerId' property of the receiver."
 
 	| answer |
-	answer := DWORD new.
+	answer := UInt32 new.
 	self get_PointerId: answer.
 	^answer asObject!
 
@@ -714,7 +714,7 @@ pointerKind
 	"Answer the <dword> value of the 'PointerKind' property of the receiver."
 
 	| answer |
-	answer := DWORD new.
+	answer := UInt32 new.
 	self get_PointerKind: answer.
 	^answer asObject!
 
@@ -1010,7 +1010,7 @@ time
 	"Answer the <dword> value of the 'Time' property of the receiver."
 
 	| answer |
-	answer := DWORD new.
+	answer := UInt32 new.
 	self get_Time: answer.
 	^answer asObject!
 
@@ -1049,7 +1049,7 @@ touchFlags
 	"Answer the <dword> value of the 'TouchFlags' property of the receiver."
 
 	| answer |
-	answer := DWORD new.
+	answer := UInt32 new.
 	self get_TouchFlags: answer.
 	^answer asObject!
 
@@ -1062,7 +1062,7 @@ touchMask
 	"Answer the <dword> value of the 'TouchMask' property of the receiver."
 
 	| answer |
-	answer := DWORD new.
+	answer := UInt32 new.
 	self get_TouchMask: answer.
 	^answer asObject!
 
@@ -1075,7 +1075,7 @@ touchOrientation
 	"Answer the <dword> value of the 'TouchOrientation' property of the receiver."
 
 	| answer |
-	answer := DWORD new.
+	answer := UInt32 new.
 	self get_TouchOrientation: answer.
 	^answer asObject!
 
@@ -1088,7 +1088,7 @@ touchPressure
 	"Answer the <dword> value of the 'TouchPressure' property of the receiver."
 
 	| answer |
-	answer := DWORD new.
+	answer := UInt32 new.
 	self get_TouchPressure: answer.
 	^answer asObject!
 

@@ -53,67 +53,67 @@ struct tagMIBICMPSTATS {
 dwAddrMaskReps
 	"Answer the <Integer> value of the receiver's 'dwAddrMaskReps' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwAddrMaskReps!
+	^bytes uint32AtOffset: _OffsetOf_dwAddrMaskReps!
 
 dwAddrMasks
 	"Answer the <Integer> value of the receiver's 'dwAddrMasks' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwAddrMasks!
+	^bytes uint32AtOffset: _OffsetOf_dwAddrMasks!
 
 dwDestUnreachs
 	"Answer the <Integer> value of the receiver's 'dwDestUnreachs' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwDestUnreachs!
+	^bytes uint32AtOffset: _OffsetOf_dwDestUnreachs!
 
 dwEchoReps
 	"Answer the <Integer> value of the receiver's 'dwEchoReps' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwEchoReps!
+	^bytes uint32AtOffset: _OffsetOf_dwEchoReps!
 
 dwEchos
 	"Answer the <Integer> value of the receiver's 'dwEchos' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwEchos!
+	^bytes uint32AtOffset: _OffsetOf_dwEchos!
 
 dwErrors
 	"Answer the <Integer> value of the receiver's 'dwErrors' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwErrors!
+	^bytes uint32AtOffset: _OffsetOf_dwErrors!
 
 dwMsgs
 	"Answer the <Integer> value of the receiver's 'dwMsgs' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwMsgs!
+	^bytes uint32AtOffset: _OffsetOf_dwMsgs!
 
 dwParmProbs
 	"Answer the <Integer> value of the receiver's 'dwParmProbs' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwParmProbs!
+	^bytes uint32AtOffset: _OffsetOf_dwParmProbs!
 
 dwRedirects
 	"Answer the <Integer> value of the receiver's 'dwRedirects' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwRedirects!
+	^bytes uint32AtOffset: _OffsetOf_dwRedirects!
 
 dwSrcQuenchs
 	"Answer the <Integer> value of the receiver's 'dwSrcQuenchs' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwSrcQuenchs!
+	^bytes uint32AtOffset: _OffsetOf_dwSrcQuenchs!
 
 dwTimeExcds
 	"Answer the <Integer> value of the receiver's 'dwTimeExcds' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwTimeExcds!
+	^bytes uint32AtOffset: _OffsetOf_dwTimeExcds!
 
 dwTimestampReps
 	"Answer the <Integer> value of the receiver's 'dwTimestampReps' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwTimestampReps!
+	^bytes uint32AtOffset: _OffsetOf_dwTimestampReps!
 
 dwTimestamps
 	"Answer the <Integer> value of the receiver's 'dwTimestamps' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwTimestamps! !
+	^bytes uint32AtOffset: _OffsetOf_dwTimestamps! !
 !OS.MIBICMPSTATS categoriesForMethods!
 dwAddrMaskReps!**compiled accessors**!public! !
 dwAddrMasks!**compiled accessors**!public! !
@@ -159,43 +159,43 @@ defineFields
 
 	self
 		defineField: #dwMsgs
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 0;
 		defineField: #dwErrors
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 4;
 		defineField: #dwDestUnreachs
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 8;
 		defineField: #dwTimeExcds
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 12;
 		defineField: #dwParmProbs
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 16;
 		defineField: #dwSrcQuenchs
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 20;
 		defineField: #dwRedirects
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 24;
 		defineField: #dwEchos
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 28;
 		defineField: #dwEchoReps
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 32;
 		defineField: #dwTimestamps
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 36;
 		defineField: #dwTimestampReps
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 40;
 		defineField: #dwAddrMasks
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 44;
 		defineField: #dwAddrMaskReps
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 48.
 	self byteSize: 52!
 

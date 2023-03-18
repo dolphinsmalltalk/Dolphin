@@ -33,12 +33,12 @@ struct tagGpPathData {
 Count
 	"Answer the <Integer> value of the receiver's 'Count' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_Count!
+	^bytes int32AtOffset: _OffsetOf_Count!
 
 Count: anInteger
 	"Set the receiver's 'Count' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_Count put: anInteger!
+	bytes int32AtOffset: _OffsetOf_Count put: anInteger!
 
 Points
 	"Answer the <POINTFArray> value of the receiver's 'Points' field."
@@ -89,7 +89,7 @@ defineFields
 "
 
 	self
-		defineField: #Count type: SDWORDField new offset: 0;
+		defineField: #Count type: Int32Field new offset: 0;
 		defineField: #Points type: (ArrayPointerField type: POINTFArray lengthField: #Count) offset: 4;
 		defineField: #Types type: (ArrayPointerField type: ExternalArray lengthField: #Count) offset: 8.
 	self byteSize: 12!

@@ -40,62 +40,62 @@ struct tagEMRCREATEDIBPATTERNBRUSHPT {
 cbBits
 	"Answer the <Integer> value of the receiver's 'cbBits' field."
 
-	^bytes dwordAtOffset: _OffsetOf_cbBits!
+	^bytes uint32AtOffset: _OffsetOf_cbBits!
 
 cbBits: anInteger
 	"Set the receiver's 'cbBits' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_cbBits put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_cbBits put: anInteger!
 
 cbBmi
 	"Answer the <Integer> value of the receiver's 'cbBmi' field."
 
-	^bytes dwordAtOffset: _OffsetOf_cbBmi!
+	^bytes uint32AtOffset: _OffsetOf_cbBmi!
 
 cbBmi: anInteger
 	"Set the receiver's 'cbBmi' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_cbBmi put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_cbBmi put: anInteger!
 
 ihBrush
 	"Answer the <Integer> value of the receiver's 'ihBrush' field."
 
-	^bytes dwordAtOffset: _OffsetOf_ihBrush!
+	^bytes uint32AtOffset: _OffsetOf_ihBrush!
 
 ihBrush: anInteger
 	"Set the receiver's 'ihBrush' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_ihBrush put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_ihBrush put: anInteger!
 
 iUsage
 	"Answer the <Integer> value of the receiver's 'iUsage' field."
 
-	^bytes dwordAtOffset: _OffsetOf_iUsage!
+	^bytes uint32AtOffset: _OffsetOf_iUsage!
 
 iUsage: anInteger
 	"Set the receiver's 'iUsage' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_iUsage put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_iUsage put: anInteger!
 
 offBits
 	"Answer the <Integer> value of the receiver's 'offBits' field."
 
-	^bytes dwordAtOffset: _OffsetOf_offBits!
+	^bytes uint32AtOffset: _OffsetOf_offBits!
 
 offBits: anInteger
 	"Set the receiver's 'offBits' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_offBits put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_offBits put: anInteger!
 
 offBmi
 	"Answer the <Integer> value of the receiver's 'offBmi' field."
 
-	^bytes dwordAtOffset: _OffsetOf_offBmi!
+	^bytes uint32AtOffset: _OffsetOf_offBmi!
 
 offBmi: anInteger
 	"Set the receiver's 'offBmi' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_offBmi put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_offBmi put: anInteger! !
 !OS.EMRCREATEDIBPATTERNBRUSHPT categoriesForMethods!
 cbBits!**compiled accessors**!public! !
 cbBits:!**compiled accessors**!public! !
@@ -136,22 +136,22 @@ defineFields
 	super defineFields.
 	self
 		defineField: #ihBrush
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 8;
 		defineField: #iUsage
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 12;
 		defineField: #offBmi
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 16;
 		defineField: #cbBmi
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 20;
 		defineField: #offBits
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 24;
 		defineField: #cbBits
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 28.
 	self byteSize: 32!
 

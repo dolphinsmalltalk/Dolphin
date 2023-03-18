@@ -136,7 +136,7 @@ charset
 	"Answer the <sword> value of the 'Charset' property of the receiver."
 
 	| answer |
-	answer := SWORD new.
+	answer := Int16 new.
 	self get_Charset: answer.
 	^answer asObject!
 
@@ -446,7 +446,7 @@ weight
 	"Answer the <sword> value of the 'Weight' property of the receiver."
 
 	| answer |
-	answer := SWORD new.
+	answer := Int16 new.
 	self get_Weight: answer.
 	^answer asObject!
 

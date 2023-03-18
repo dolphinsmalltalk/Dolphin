@@ -25,61 +25,61 @@ asRectangle
 	"Implementation Note: This is used so much during layout, that it is worth providing an inlined implementation as an optimization."
 
 	^Graphics.Rectangle
-		origin: (bytes sdwordAtOffset: _OffsetOf_left) @ (bytes sdwordAtOffset: _OffsetOf_top)
-		corner: (bytes sdwordAtOffset: _OffsetOf_right) @ (bytes sdwordAtOffset: _OffsetOf_bottom)!
+		origin: (bytes int32AtOffset: _OffsetOf_left) @ (bytes int32AtOffset: _OffsetOf_top)
+		corner: (bytes int32AtOffset: _OffsetOf_right) @ (bytes int32AtOffset: _OffsetOf_bottom)!
 
 bottom
 	"Answer the <Integer> value of the receiver's 'bottom' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_bottom!
+	^bytes int32AtOffset: _OffsetOf_bottom!
 
 bottom: anInteger
 	"Set the receiver's 'bottom' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_bottom put: anInteger!
+	bytes int32AtOffset: _OffsetOf_bottom put: anInteger!
 
 bottomRight
 	"Answer a Point representing the bottom right position of the receiver."
 
-	^(bytes sdwordAtOffset: _OffsetOf_right) @ (bytes sdwordAtOffset: _OffsetOf_bottom)!
+	^(bytes int32AtOffset: _OffsetOf_right) @ (bytes int32AtOffset: _OffsetOf_bottom)!
 
 extent
 	"Answer a Point representing the extent of the receiver. The x coordinate is the width and the y coordinate is the height."
 
 	"Override as an optimisation"
 
-	^((bytes sdwordAtOffset: _OffsetOf_right) - (bytes sdwordAtOffset: _OffsetOf_left))
-		@ ((bytes sdwordAtOffset: _OffsetOf_bottom) - (bytes sdwordAtOffset: _OffsetOf_top))!
+	^((bytes int32AtOffset: _OffsetOf_right) - (bytes int32AtOffset: _OffsetOf_left))
+		@ ((bytes int32AtOffset: _OffsetOf_bottom) - (bytes int32AtOffset: _OffsetOf_top))!
 
 left
 	"Answer the <Integer> value of the receiver's 'left' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_left!
+	^bytes int32AtOffset: _OffsetOf_left!
 
 left: anInteger
 	"Set the receiver's 'left' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_left put: anInteger!
+	bytes int32AtOffset: _OffsetOf_left put: anInteger!
 
 right
 	"Answer the <Integer> value of the receiver's 'right' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_right!
+	^bytes int32AtOffset: _OffsetOf_right!
 
 right: anInteger
 	"Set the receiver's 'right' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_right put: anInteger!
+	bytes int32AtOffset: _OffsetOf_right put: anInteger!
 
 top
 	"Answer the <Integer> value of the receiver's 'top' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_top!
+	^bytes int32AtOffset: _OffsetOf_top!
 
 top: anInteger
 	"Set the receiver's 'top' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_top put: anInteger! !
+	bytes int32AtOffset: _OffsetOf_top put: anInteger! !
 !OS.RECTL categoriesForMethods!
 asRectangle!converting!public! !
 bottom!**compiled accessors**!public! !
@@ -113,17 +113,17 @@ defineFields
 	"
 
 	self
-		defineField: #left type: SDWORDField new;
-		defineField: #top type: SDWORDField new;
-		defineField: #right type: SDWORDField new;
-		defineField: #bottom type: SDWORDField new!
+		defineField: #left type: Int32Field new;
+		defineField: #top type: Int32Field new;
+		defineField: #right type: Int32Field new;
+		defineField: #bottom type: Int32Field new!
 
 extent: newExtent
 	"Answer a new instance of the receiver with zero origin and the specified extent."
 
 	^self basicNew bytes: ((ByteArray newFixed: _RECTL_Size)
-				sdwordAtOffset: _OffsetOf_right put: newExtent x;
-				sdwordAtOffset: _OffsetOf_bottom put: newExtent y;
+				int32AtOffset: _OffsetOf_right put: newExtent x;
+				int32AtOffset: _OffsetOf_bottom put: newExtent y;
 				yourself)!
 
 getFieldNames
@@ -137,25 +137,25 @@ left: leftInteger top: topInteger right: rightInteger bottom: bottomInteger
 	inline code."
 
 	^self basicNew bytes: ((ByteArray newFixed: _RECTL_Size)
-				sdwordAtOffset: _OffsetOf_left put: leftInteger;
-				sdwordAtOffset: _OffsetOf_top put: topInteger;
-				sdwordAtOffset: _OffsetOf_right put: rightInteger;
-				sdwordAtOffset: _OffsetOf_bottom put: bottomInteger;
+				int32AtOffset: _OffsetOf_left put: leftInteger;
+				int32AtOffset: _OffsetOf_top put: topInteger;
+				int32AtOffset: _OffsetOf_right put: rightInteger;
+				int32AtOffset: _OffsetOf_bottom put: bottomInteger;
 				yourself)!
 
 width: widthInteger
 	"Answer a new instance of the receiver with zero origin and height, and the specified width."
 
 	^self basicNew bytes: ((ByteArray newFixed: _RECTL_Size)
-				sdwordAtOffset: _OffsetOf_right put: widthInteger;
+				int32AtOffset: _OffsetOf_right put: widthInteger;
 				yourself)!
 
 width: widthInteger height: heightInteger
 	"Answer a new instance of the receiver with zero origin and the specified width and height."
 
 	^self basicNew bytes: ((ByteArray newFixed: _RECTL_Size)
-				sdwordAtOffset: _OffsetOf_right put: widthInteger;
-				sdwordAtOffset: _OffsetOf_bottom put: heightInteger;
+				int32AtOffset: _OffsetOf_right put: widthInteger;
+				int32AtOffset: _OffsetOf_bottom put: heightInteger;
 				yourself)! !
 !OS.RECTL class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !

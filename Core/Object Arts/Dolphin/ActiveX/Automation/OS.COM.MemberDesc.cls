@@ -199,7 +199,7 @@ isValueProperty
 memid
 	"Answer the receiver's memid field as a Smalltalk object."
 
-	^bytes sdwordAtOffset: 0!
+	^bytes int32AtOffset: 0!
 
 name
 	"Answer the name of the variable described by the receiver."

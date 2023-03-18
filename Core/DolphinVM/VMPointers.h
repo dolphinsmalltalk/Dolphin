@@ -199,22 +199,22 @@ struct VMPointers //: public Object
 			HandleOTE* CRTHandle;								// 132 - Handle of CRT library linked with the VM.
 			MemManOTE* MemoryManager;							// 133 - Current memory manager object
 
-			BehaviorOTE* ClassBYTE;								// 134
-			BehaviorOTE* ClassSBYTE;							// 135
-			BehaviorOTE* ClassWORD;								// 136
-			BehaviorOTE* ClassSWORD;							// 137
-			BehaviorOTE* ClassDWORD;							// 138
-			BehaviorOTE* ClassSDWORD;							// 139
+			BehaviorOTE* ClassUInt8;							// 134
+			BehaviorOTE* ClassInt8;								// 135
+			BehaviorOTE* ClassUInt16;							// 136
+			BehaviorOTE* ClassInt16;							// 137
+			BehaviorOTE* ClassUInt32;							// 138
+			BehaviorOTE* ClassInt32;							// 139
 			BehaviorOTE* ClassFLOAT;							// 140
 			BehaviorOTE* ClassDOUBLE;							// 141
 			BehaviorOTE* ClassVARBOOL;							// 142
 			BehaviorOTE* ClassCURRENCY;							// 143
 			BehaviorOTE* ClassDECIMAL;							// 144
 			BehaviorOTE* ClassLPBSTR;							// 145
-			BehaviorOTE* ClassQWORD;							// 146	Actually ULARGE_INTEGER
-			BehaviorOTE* ClassSQWORD;							// 147	Actually LARGE_INTEGER
-			BehaviorOTE* _unused148;							// 148	Reserved for UINT_PTR
-			BehaviorOTE* _unused149;							// 149  Reserved for INT_PTR
+			BehaviorOTE* ClassUInt64;							// 146
+			BehaviorOTE* ClassInt64;							// 147
+			BehaviorOTE* ClassUIntPtr;							// 148
+			BehaviorOTE* ClassIntPtr;							// 149
 
 			SemaphoreOTE* TimingSemaphore;						// 150
 

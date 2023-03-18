@@ -1607,7 +1607,7 @@ exampleGdipIEncoderParameters
 	encoderParameters := image encoderParameterList: encoderClsid.
 	encoder := encoderParameters Parameter at: 2.
 	encoderParameterName := (image class guidsEncoder detect: [:e | e value = encoder Guid]) key.
-	valueType := ULARGE_INTEGER atAddress: encoder Value.
+	valueType := UInt64 atAddress: encoder Value.
 	^String writeStream
 		display: 'Parameters supported by mime type <s><n><n>' << mimeType;
 		display: 'The parameter list requires <d> bytes.<n>' << listSize;
@@ -1615,7 +1615,7 @@ exampleGdipIEncoderParameters
 		display: 'Parameter 2: <s><n>' << encoderParameterName;
 		display: 'The GUID is <d><n>' << encoder Guid;
 		display: 'The value type is ';
-		display: (Gdiplus.EncoderParameterValueTypeNames at: encoder Type + 1);
+		display: (EncoderParameterValueTypeNames at: encoder Type + 1);
 		nextPutAll: ' (';
 		display: encoder Type;
 		nextPut: $);
@@ -1670,8 +1670,8 @@ exampleGdipIEncoderValues
 			| encoderParameterName valueType valueTypeName |
 			encoderParameterName := (image class guidsEncoder detect: [:e | e value = encoder Guid]
 						ifNone: ['Unknown' -> encoder Guid]) key.
-			valueType := DWORDArray fromAddress: encoder Value yourAddress length: encoder NumberOfValues.
-			valueTypeName := Gdiplus.EncoderParameterValueTypeNames at: encoder Type + 1.
+			valueType := UInt32Array fromAddress: encoder Value yourAddress length: encoder NumberOfValues.
+			valueTypeName := EncoderParameterValueTypeNames at: encoder Type + 1.
 			strm
 				display: '<n>Parameter <d>: <s><n>' << {i. encoderParameterName};
 				display: 'The GUID is <d>.<n>' << encoder Guid;
@@ -1688,7 +1688,7 @@ exampleGdipIEncoderValues
 								tab;
 								display: e asInteger;
 								nextPutAll: ' (';
-								nextPutAll: (Gdiplus.EncoderParameterValueTypeNames at: encoder Type + 1);
+								nextPutAll: (EncoderParameterValueTypeNames at: encoder Type + 1);
 								nextPut: $);
 								cr]]].
 	^strm contents!
@@ -1838,7 +1838,7 @@ exampleGdipILosslessRotation
 	image := Image fromFile: self fileResource pafEyeJpg.
 	"self assert: [image extent / 16 truncated * 16 = image extent]."
 	encoderParameters := EncoderParameters new Count: 1.
-	encValue := DWORD fromInteger: EncoderValueTransformRotate90.
+	encValue := UInt32 fromInteger: EncoderValueTransformRotate90.
 	encoderParameters Parameter first
 		Guid: EncoderTransformation;
 		Type: EncoderParameterValueTypeLong;

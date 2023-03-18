@@ -32,12 +32,12 @@ struct tagHTTP_LISTEN_ENDPOINT_INFO {
 EnableSharing
 	"Answer the <Boolean> value of the receiver's 'EnableSharing' field."
 
-	^(bytes byteAtOffset: _OffsetOf_EnableSharing) asBoolean!
+	^(bytes uint8AtOffset: _OffsetOf_EnableSharing) asBoolean!
 
 EnableSharing: aBoolean
 	"Set the receiver's 'EnableSharing' field to the value of the argument, aBoolean"
 
-	bytes byteAtOffset: _OffsetOf_EnableSharing put: aBoolean asParameter! !
+	bytes uint8AtOffset: _OffsetOf_EnableSharing put: aBoolean asParameter! !
 !WinHttpServer.HTTP_LISTEN_ENDPOINT_INFO categoriesForMethods!
 EnableSharing!**compiled accessors**!public! !
 EnableSharing:!**compiled accessors**!public! !

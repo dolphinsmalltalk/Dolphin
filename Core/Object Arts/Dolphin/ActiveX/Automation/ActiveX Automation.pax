@@ -99,6 +99,8 @@ package setMethodNames: #(
 	#(#{Core.GUID class} #typeName)
 	#(#{Core.Integer} #asVariant)
 	#(#{Core.LargeInteger} #asVariant)
+	#(#{Core.Locale} #displayCURRENCY:on:)
+	#(#{Core.Locale} #displayDECIMAL:on:)
 	#(#{Core.Locale} #variantBool:)
 	#(#{Core.Number} #asVariant)
 	#(#{Core.ScaledDecimal} #asVariant)
@@ -119,15 +121,9 @@ package setMethodNames: #(
 	#(#{External.Address class} #vt)
 	#(#{External.BOOL class} #typeName)
 	#(#{External.BOOLEAN class} #typeName)
-	#(#{External.BYTE class} #arrayType)
-	#(#{External.BYTE class} #typeName)
-	#(#{External.BYTE class} #vt)
 	#(#{External.DOUBLE class} #arrayType)
 	#(#{External.DOUBLE class} #typeName)
 	#(#{External.DOUBLE class} #vt)
-	#(#{External.DWORD class} #arrayType)
-	#(#{External.DWORD class} #typeName)
-	#(#{External.DWORD class} #vt)
 	#(#{External.ExternalArray} #asSAFEARRAY)
 	#(#{External.ExternalArray} #asVariant)
 	#(#{External.ExternalArray class} #arrayType)
@@ -137,21 +133,25 @@ package setMethodNames: #(
 	#(#{External.FLOAT class} #vt)
 	#(#{External.Handle class} #arrayType:)
 	#(#{External.Handle class} #typeName)
-	#(#{External.INT_PTR class} #arrayType)
-	#(#{External.INT_PTR class} #typeName)
-	#(#{External.INT_PTR class} #vt)
+	#(#{External.Int16 class} #arrayType)
+	#(#{External.Int16 class} #typeName)
+	#(#{External.Int16 class} #vt)
+	#(#{External.Int32 class} #arrayType)
+	#(#{External.Int32 class} #typeName)
+	#(#{External.Int32 class} #vt)
+	#(#{External.Int64 class} #typeName)
+	#(#{External.Int64 class} #vt)
+	#(#{External.Int8 class} #arrayType)
+	#(#{External.Int8 class} #typeName)
+	#(#{External.Int8 class} #vt)
 	#(#{External.INTEGER class} #typeName)
 	#(#{External.INTEGER class} #vt)
+	#(#{External.IntPtr class} #arrayType)
+	#(#{External.IntPtr class} #typeName)
+	#(#{External.IntPtr class} #vt)
 	#(#{External.LPVOID class} #typeName)
 	#(#{External.LPVOID class} #vt)
-	#(#{External.QWORD class} #vt)
-	#(#{External.SBYTE class} #arrayType)
-	#(#{External.SBYTE class} #typeName)
-	#(#{External.SBYTE class} #vt)
 	#(#{External.SCALAR} #asVariant)
-	#(#{External.SDWORD class} #arrayType)
-	#(#{External.SDWORD class} #typeName)
-	#(#{External.SDWORD class} #vt)
 	#(#{External.Structure} #asVariant)
 	#(#{External.Structure} #recordInfo)
 	#(#{External.Structure} #vt)
@@ -191,20 +191,29 @@ package setMethodNames: #(
 	#(#{External.Structure class} #typeLib)
 	#(#{External.Structure class} #typeName)
 	#(#{External.Structure class} #vt)
-	#(#{External.SWORD class} #arrayType)
-	#(#{External.SWORD class} #typeName)
-	#(#{External.SWORD class} #vt)
-	#(#{External.UINT_PTR class} #arrayType)
-	#(#{External.UINT_PTR class} #typeName)
-	#(#{External.UINT_PTR class} #vt)
+	#(#{External.UInt16 class} #arrayType)
+	#(#{External.UInt16 class} #typeName)
+	#(#{External.UInt16 class} #vt)
+	#(#{External.UInt32 class} #arrayType)
+	#(#{External.UInt32 class} #typeName)
+	#(#{External.UInt32 class} #vt)
+	#(#{External.UInt64 class} #typeName)
+	#(#{External.UInt64 class} #vt)
+	#(#{External.UInt8 class} #arrayType)
+	#(#{External.UInt8 class} #typeName)
+	#(#{External.UInt8 class} #vt)
+	#(#{External.UIntPtr class} #arrayType)
+	#(#{External.UIntPtr class} #typeName)
+	#(#{External.UIntPtr class} #vt)
 	#(#{External.VOID class} #arrayType)
 	#(#{External.VOID class} #typeName)
 	#(#{External.VOID class} #vt)
-	#(#{External.WORD class} #arrayType)
-	#(#{External.WORD class} #typeName)
-	#(#{External.WORD class} #vt)
+	#(#{Kernel.SmalltalkLocale} #displayCURRENCY:on:)
+	#(#{Kernel.SmalltalkLocale} #displayDECIMAL:on:)
 	#(#{Kernel.SmalltalkLocale} #variantBool:)
 	#(#{OS.AbstractWindowsLocale} #boolFormat)
+	#(#{OS.AbstractWindowsLocale} #displayCURRENCY:on:)
+	#(#{OS.AbstractWindowsLocale} #displayDECIMAL:on:)
 	#(#{OS.AbstractWindowsLocale} #getVariantBoolString:)
 	#(#{OS.AbstractWindowsLocale} #variantBool:)
 	#(#{OS.COM.BSTR} #asSAFEARRAY)
@@ -264,6 +273,8 @@ package setMethodNames: #(
 	#(#{OS.COM.OLEAutLibrary} #systemTimeToVariantTime:pvtime:)
 	#(#{OS.COM.OLEAutLibrary} #unRegisterTypeLib:wVerMajor:wVerMinor:lcid:syskind:)
 	#(#{OS.COM.OLEAutLibrary} #varBstrFromBool:lcid:dwFlags:pbstrOut:)
+	#(#{OS.COM.OLEAutLibrary} #varBstrFromCy:lcid:dwFlags:pbstrOut:)
+	#(#{OS.COM.OLEAutLibrary} #varBstrFromDec:lcid:dwFlags:pbstrOut:)
 	#(#{OS.COM.OLEAutLibrary} #varCmp:pvarRight:lcid:dwFlags:)
 	#(#{OS.COM.OLEAutLibrary} #varDateFromStr:lcid:dwFlags:pdateOut:)
 	#(#{OS.COM.OLEAutLibrary} #variantChangeType:pvarSrc:wFlags:vt:)
@@ -276,12 +287,9 @@ package setMethodNames: #(
 	#(#{OS.FILETIME class} #vt)
 	#(#{OS.HRESULT class} #typeName)
 	#(#{OS.HRESULT class} #vt)
-	#(#{OS.LARGE_INTEGER class} #typeName)
-	#(#{OS.LARGE_INTEGER class} #vt)
 	#(#{OS.SYSTEMTIME} #asFloat)
 	#(#{OS.SYSTEMTIME} #asVariant)
 	#(#{OS.SYSTEMTIME class} #fromDATE:)
-	#(#{OS.ULARGE_INTEGER class} #typeName)
 ).
 
 package setPrerequisites: #(
@@ -683,7 +691,9 @@ OS.COM.OLEStructure subclass: #'OS.COM.CURRENCY'
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_CURRENCY_Size' -> 16r8.
-		'_OffsetOf_cy' -> 16r0
+		'_OffsetOf_cy' -> 16r0.
+		'MaxValue' -> 922337203685477.5807s.
+		'MinValue' -> -922337203685477.5808s
 	}!
 OS.COM.OLEStructure subclass: #'OS.COM.CUSTDATAITEM'
 	instanceVariableNames: 'key value'
@@ -706,7 +716,10 @@ OS.COM.OLEStructure subclass: #'OS.COM.DECIMAL'
 		'_OffsetOf_lo64' -> 16r8.
 		'_OffsetOf_scale' -> 16r2.
 		'_OffsetOf_sign' -> 16r3.
-		'_OffsetOf_wReserved' -> 16r0
+		'_OffsetOf_wReserved' -> 16r0.
+		'MaxScale' -> 16r1C.
+		'MaxValue' -> 16rFFFFFFFFFFFFFFFFFFFFFFFF.
+		'SmallestValue' -> 0.0000000000000000000000000001s
 	}!
 OS.COM.OLEStructure subclass: #'OS.COM.DISPPARAMS'
 	instanceVariableNames: 'args vargs dispids'
@@ -850,14 +863,59 @@ OS.COM.FinalizableStructure subclass: #'OS.COM.VARIANT'
 	imports: #(#{OS.Win32Constants} #{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_OffsetOf_boolVal' -> 16r8.
+		'_OffsetOf_bstrVal' -> 16r8.
+		'_OffsetOf_bVal' -> 16r8.
+		'_OffsetOf_byref' -> 16r8.
+		'_OffsetOf_cVal' -> 16r8.
+		'_OffsetOf_cyVal' -> 16r8.
+		'_OffsetOf_date' -> 16r8.
 		'_OffsetOf_dblVal' -> 16r8.
+		'_OffsetOf_decVal' -> 16r0.
+		'_OffsetOf_fltVal' -> 16r8.
+		'_OffsetOf_intVal' -> 16r8.
+		'_OffsetOf_iVal' -> 16r8.
+		'_OffsetOf_llVal' -> 16r8.
+		'_OffsetOf_lVal' -> 16r8.
+		'_OffsetOf_parray' -> 16r8.
+		'_OffsetOf_pboolVal' -> 16r8.
+		'_OffsetOf_pbstrVal' -> 16r8.
+		'_OffsetOf_pbVal' -> 16r8.
+		'_OffsetOf_pcVal' -> 16r8.
+		'_OffsetOf_pcyVal' -> 16r8.
+		'_OffsetOf_pdate' -> 16r8.
+		'_OffsetOf_pdblVal' -> 16r8.
+		'_OffsetOf_pdecVal' -> 16r8.
+		'_OffsetOf_pdispVal' -> 16r8.
+		'_OffsetOf_pfltVal' -> 16r8.
+		'_OffsetOf_pintVal' -> 16r8.
+		'_OffsetOf_piVal' -> 16r8.
+		'_OffsetOf_pllVal' -> 16r8.
+		'_OffsetOf_plVal' -> 16r8.
+		'_OffsetOf_pparray' -> 16r8.
+		'_OffsetOf_ppdispVal' -> 16r8.
+		'_OffsetOf_ppunkVal' -> 16r8.
+		'_OffsetOf_pRecInfo' -> 16rC.
+		'_OffsetOf_pscode' -> 16r8.
+		'_OffsetOf_puintVal' -> 16r8.
+		'_OffsetOf_puiVal' -> 16r8.
+		'_OffsetOf_pullVal' -> 16r8.
+		'_OffsetOf_pulVal' -> 16r8.
+		'_OffsetOf_punkVal' -> 16r8.
+		'_OffsetOf_pvarVal' -> 16r8.
+		'_OffsetOf_pvRecord' -> 16r8.
+		'_OffsetOf_scode' -> 16r8.
+		'_OffsetOf_uintVal' -> 16r8.
+		'_OffsetOf_uiVal' -> 16r8.
+		'_OffsetOf_ullVal' -> 16r8.
+		'_OffsetOf_ulVal' -> 16r8.
 		'_OffsetOf_vt' -> 16r0.
 		'_OffsetOf_wReserved1' -> 16r2.
 		'_OffsetOf_wReserved2' -> 16r4.
 		'_OffsetOf_wReserved3' -> 16r6.
 		'_VARIANT_Size' -> 16r10.
-		'VTClasses' -> #(#{Core.UndefinedObject} #{Core.UndefinedObject} #{External.SWORD} #{External.SDWORD} #{External.FLOAT} #{External.DOUBLE} #{OS.COM.CURRENCY} #{OS.COM.DATE} #{OS.COM.BSTR} #{OS.COM.IDispatch} #{OS.HRESULT} #{OS.COM.VARIANT_BOOL} #{OS.COM.VARIANT} #{OS.COM.IUnknown} #{OS.COM.DECIMAL} nil #{External.SBYTE} #{External.BYTE} #{External.WORD} #{External.DWORD} #{OS.LARGE_INTEGER} #{OS.ULARGE_INTEGER} #{External.SDWORD} #{External.DWORD} #{External.VOID} #{OS.HRESULT} #{External.Address} #{OS.COM.SAFEARRAY} #{External.Array} #{OS.COM.Record} #{Core.AnsiString} #{Core.Utf16String} nil nil nil nil #{External.Structure} #{External.INT_PTR} #{External.UINT_PTR} nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #{OS.FILETIME} #{Core.ByteArray} #{OS.COM.IStream} #{OS.COM.IStorage} #{OS.COM.IStream} #{OS.COM.IStorage} #{Core.ByteArray} #{External.DWORD} #{OS.COM.CLSID}).
-		'VTNames' -> #(#nil #null #sword #sdword #float #double #cy #date #bstr #dispatch #hresult #varbool #variant #unknown #decimal #badVarType #sbyte #byte #word #dword #sqword #qword #sdword #dword #void #hresult #lpvoid #safearray #carray #typedef #lpstr #lpwstr #badVarType #badVarType #badVarType #badVarType #struct #intptr #uintptr #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #filetime #blob #stream #storage #streamed_object #stored_object #blob_object #cf #clsid)
+		'VTClasses' -> #(#{Core.UndefinedObject} #{Core.UndefinedObject} #{External.Int16} #{External.Int32} #{External.FLOAT} #{External.DOUBLE} #{OS.COM.CURRENCY} #{OS.COM.DATE} #{OS.COM.BSTR} #{OS.COM.IDispatch} #{OS.HRESULT} #{OS.COM.VARIANT_BOOL} #{OS.COM.VARIANT} #{OS.COM.IUnknown} #{OS.COM.DECIMAL} nil #{External.Int8} #{External.UInt8} #{External.UInt16} #{External.UInt32} #{External.Int64} #{External.UInt64} #{External.Int32} #{External.UInt32} #{External.VOID} #{OS.HRESULT} #{External.Address} #{OS.COM.SAFEARRAY} #{External.Array} #{OS.COM.Record} #{Core.AnsiString} #{Core.Utf16String} nil nil nil nil #{External.Structure} #{External.IntPtr} #{External.UIntPtr} nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #{OS.FILETIME} #{Core.ByteArray} #{OS.COM.IStream} #{OS.COM.IStorage} #{OS.COM.IStream} #{OS.COM.IStorage} #{Core.ByteArray} #{External.UInt32} #{OS.COM.CLSID}).
+		'VTNames' -> #(#nil #null #int16 #int32 #float #double #cy #date #bstr #dispatch #hresult #varbool #variant #unknown #decimal #badVarType #int8 #uint8 #uint16 #uint32 #int64 #uint64 #int32 #uint32 #void #hresult #lpvoid #safearray #carray #typedef #lpstr #lpwstr #badVarType #badVarType #badVarType #badVarType #struct #intptr #uintptr #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #filetime #blob #stream #storage #streamed_object #stored_object #blob_object #cf #clsid)
 	}!
 OS.COM.TypeInfoStructure subclass: #'OS.COM.MemberDesc'
 	instanceVariableNames: 'index custData documentation'
@@ -932,7 +990,7 @@ External.DOUBLE subclass: #'OS.COM.DATE'
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.SWORD subclass: #'OS.COM.VARIANT_BOOL'
+External.Int16 subclass: #'OS.COM.VARIANT_BOOL'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1044,7 +1102,7 @@ asSAFEARRAY
 	N.B. The result will be a single-dimensioed array of the variant representations
 	of the receiver's elements, assuming that such a representation is possible."
 
-	^OS.COM.SAFEARRAY withAll: self elementClass: External.BYTE! !
+	^OS.COM.SAFEARRAY withAll: self elementClass: External.UInt8! !
 !Core.ByteArray categoriesForMethods!
 asSAFEARRAY!converting!public! !
 !
@@ -1065,7 +1123,7 @@ asVariant
 	"Answer the VARIANT representation of the receiver (a VT_I2). This will fail for code points not in the BMP."
 
 	^OS.COM.VARIANT new
-		sword: self codePoint;
+		int16: self codePoint;
 		yourself! !
 !Core.Character categoriesForMethods!
 asVariant!converting!public! !
@@ -1166,9 +1224,21 @@ asVariant!converting!public! !
 
 !Core.Locale methodsFor!
 
+displayCURRENCY: aCURRENCY on: aWriteStream
+	"Append to the <puttableStream> argument, aWriteStream, a <String> whose characters are a representation of the <CURRENCY> argument that a user in this <Locale> might expect to see."
+
+	self subclassResponsibility!
+
+displayDECIMAL: aDECIMAL on: aWriteStream
+	"Append to the <puttableStream> argument, aWriteStream, a <String> whose characters are a representation of the <DECIMAL>, aDecimal, that a user in this <Locale> might expect to see."
+
+	self subclassResponsibility!
+
 variantBool: aBoolean
 	^self subclassResponsibility! !
 !Core.Locale categoriesForMethods!
+displayCURRENCY:on:!printing!public! !
+displayDECIMAL:on:!printing!public! !
 variantBool:!constants!public! !
 !
 
@@ -1352,31 +1422,6 @@ typeName
 typeName!constants!private! !
 !
 
-!External.BYTE class methodsFor!
-
-arrayType
-	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
-	represent arrays of the receiver's field type in other structures."
-
-	^ExternalArray!
-
-typeName
-	"Private - Answer the Dolphin external type name for the receiver.
-	There is an appropriate built-in type which we can substitute."
-
-	^#byte!
-
-vt
-	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
-	type when represented in a <VARIANT>."
-
-	^COM.AutomationConstants.VT_UI1! !
-!External.BYTE class categoriesForMethods!
-arrayType!constants!private! !
-typeName!constants!private! !
-vt!constants!public! !
-!
-
 !External.DOUBLE class methodsFor!
 
 arrayType
@@ -1397,31 +1442,6 @@ vt
 
 	^COM.AutomationConstants.VT_R8! !
 !External.DOUBLE class categoriesForMethods!
-arrayType!constants!private! !
-typeName!constants!private! !
-vt!constants!public! !
-!
-
-!External.DWORD class methodsFor!
-
-arrayType
-	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
-	represent arrays of the receiver's field type in other structures."
-
-	^DWORDArray!
-
-typeName
-	"Private - Answer the Dolphin external type name for the receiver.
-	There is an appropriate built-in type which we can substitute."
-
-	^#dword!
-
-vt
-	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
-	type when represented in a <VARIANT>."
-
-	^COM.AutomationConstants.VT_UI4! !
-!External.DWORD class categoriesForMethods!
 arrayType!constants!private! !
 typeName!constants!private! !
 vt!constants!public! !
@@ -1501,28 +1521,94 @@ arrayType:!constants!private! !
 typeName!constants!private! !
 !
 
-!External.INT_PTR class methodsFor!
+!External.Int16 class methodsFor!
 
 arrayType
 	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
 	represent arrays of the receiver's field type in other structures."
 
-	^INT_PTRArray!
+	^Int16Array!
 
 typeName
 	"Private - Answer the Dolphin external type name for the receiver.
 	There is an appropriate built-in type which we can substitute."
 
-	^#intptr!
+	^#int16!
 
 vt
 	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
 	type when represented in a <VARIANT>."
 
-	"Note: The compiler will optimise out the conditional because it is constant."
+	^COM.AutomationConstants.VT_I2! !
+!External.Int16 class categoriesForMethods!
+arrayType!constants!private! !
+typeName!constants!private! !
+vt!constants!public! !
+!
 
-	^VMConstants.IsWin64 ifTrue: [COM.AutomationConstants.VT_I8] ifFalse: [COM.AutomationConstants.VT_I4]! !
-!External.INT_PTR class categoriesForMethods!
+!External.Int32 class methodsFor!
+
+arrayType
+	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
+	represent arrays of the receiver's field type in other structures."
+
+	^Int32Array!
+
+typeName
+	"Private - Answer the Dolphin external type name for the receiver.
+	There is an appropriate built-in type which we can substitute."
+
+	^#int32!
+
+vt
+	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
+	type when represented in a <VARIANT>."
+
+	^COM.AutomationConstants.VT_I4! !
+!External.Int32 class categoriesForMethods!
+arrayType!constants!private! !
+typeName!constants!private! !
+vt!constants!public! !
+!
+
+!External.Int64 class methodsFor!
+
+typeName
+	"Private - Answer the Dolphin external type name for the receiver.
+	There is an appropriate built-in type which we can substitute."
+
+	^#int64!
+
+vt
+	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
+	type when represented in a <VARIANT>."
+
+	^COM.AutomationConstants.VT_I8! !
+!External.Int64 class categoriesForMethods!
+typeName!constants!private! !
+vt!constants!public! !
+!
+
+!External.Int8 class methodsFor!
+
+arrayType
+	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
+	represent arrays of the receiver's field type in other structures."
+
+	^Int8Array!
+
+typeName
+	"Private - Answer the Dolphin external type name for the receiver.
+	There is an appropriate built-in type which we can substitute."
+
+	^#int8!
+
+vt
+	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
+	type when represented in a <VARIANT>."
+
+	^COM.AutomationConstants.VT_I1! !
+!External.Int8 class categoriesForMethods!
 arrayType!constants!private! !
 typeName!constants!private! !
 vt!constants!public! !
@@ -1545,6 +1631,33 @@ typeName!constants!private! !
 vt!constants!private! !
 !
 
+!External.IntPtr class methodsFor!
+
+arrayType
+	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
+	represent arrays of the receiver's field type in other structures."
+
+	^IntPtrArray!
+
+typeName
+	"Private - Answer the Dolphin external type name for the receiver.
+	There is an appropriate built-in type which we can substitute."
+
+	^#intptr!
+
+vt
+	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
+	type when represented in a <VARIANT>."
+
+	"Note: The compiler will optimise out the conditional because it is constant."
+
+	^VMConstants.IsWin64 ifTrue: [COM.AutomationConstants.VT_I8] ifFalse: [COM.AutomationConstants.VT_I4]! !
+!External.IntPtr class categoriesForMethods!
+arrayType!constants!private! !
+typeName!constants!private! !
+vt!constants!public! !
+!
+
 !External.LPVOID class methodsFor!
 
 typeName
@@ -1565,42 +1678,6 @@ typeName!constants!private! !
 vt!constants!public! !
 !
 
-!External.QWORD class methodsFor!
-
-vt
-	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
-	type when represented in a <VARIANT>."
-
-	^COM.AutomationConstants.VT_UI8! !
-!External.QWORD class categoriesForMethods!
-vt!constants!public! !
-!
-
-!External.SBYTE class methodsFor!
-
-arrayType
-	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
-	represent arrays of the receiver's field type in other structures."
-
-	^SBYTEArray!
-
-typeName
-	"Private - Answer the Dolphin external type name for the receiver.
-	There is an appropriate built-in type which we can substitute."
-
-	^#sbyte!
-
-vt
-	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
-	type when represented in a <VARIANT>."
-
-	^COM.AutomationConstants.VT_I1! !
-!External.SBYTE class categoriesForMethods!
-arrayType!constants!private! !
-typeName!constants!private! !
-vt!constants!public! !
-!
-
 !External.SCALAR methodsFor!
 
 asVariant
@@ -1611,31 +1688,6 @@ asVariant
 		reference: self! !
 !External.SCALAR categoriesForMethods!
 asVariant!converting!public! !
-!
-
-!External.SDWORD class methodsFor!
-
-arrayType
-	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
-	represent arrays of the receiver's field type in other structures."
-
-	^SDWORDArray!
-
-typeName
-	"Private - Answer the Dolphin external type name for the receiver.
-	There is an appropriate built-in type which we can substitute."
-
-	^#sdword!
-
-vt
-	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
-	type when represented in a <VARIANT>."
-
-	^COM.AutomationConstants.VT_I4! !
-!External.SDWORD class categoriesForMethods!
-arrayType!constants!private! !
-typeName!constants!private! !
-vt!constants!public! !
 !
 
 !External.Structure methodsFor!
@@ -2113,38 +2165,106 @@ typeName!constants!private! !
 vt!constants!public! !
 !
 
-!External.SWORD class methodsFor!
+!External.UInt16 class methodsFor!
 
 arrayType
 	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
 	represent arrays of the receiver's field type in other structures."
 
-	^SWORDArray!
+	^UInt16Array!
 
 typeName
 	"Private - Answer the Dolphin external type name for the receiver.
 	There is an appropriate built-in type which we can substitute."
 
-	^#sword!
+	^#uint16!
 
 vt
 	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
 	type when represented in a <VARIANT>."
 
-	^COM.AutomationConstants.VT_I2! !
-!External.SWORD class categoriesForMethods!
+	^COM.AutomationConstants.VT_UI2! !
+!External.UInt16 class categoriesForMethods!
 arrayType!constants!private! !
 typeName!constants!private! !
 vt!constants!public! !
 !
 
-!External.UINT_PTR class methodsFor!
+!External.UInt32 class methodsFor!
 
 arrayType
 	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
 	represent arrays of the receiver's field type in other structures."
 
-	^UINT_PTRArray!
+	^UInt32Array!
+
+typeName
+	"Private - Answer the Dolphin external type name for the receiver.
+	There is an appropriate built-in type which we can substitute."
+
+	^#uint32!
+
+vt
+	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
+	type when represented in a <VARIANT>."
+
+	^COM.AutomationConstants.VT_UI4! !
+!External.UInt32 class categoriesForMethods!
+arrayType!constants!private! !
+typeName!constants!private! !
+vt!constants!public! !
+!
+
+!External.UInt64 class methodsFor!
+
+typeName
+	"Private - Answer the Dolphin external type name for the receiver.
+	There is an appropriate built-in type which we can substitute."
+
+	^#uint64!
+
+vt
+	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
+	type when represented in a <VARIANT>."
+
+	^COM.AutomationConstants.VT_UI8! !
+!External.UInt64 class categoriesForMethods!
+typeName!constants!private! !
+vt!constants!public! !
+!
+
+!External.UInt8 class methodsFor!
+
+arrayType
+	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
+	represent arrays of the receiver's field type in other structures."
+
+	^ExternalArray!
+
+typeName
+	"Private - Answer the Dolphin external type name for the receiver.
+	There is an appropriate built-in type which we can substitute."
+
+	^#uint8!
+
+vt
+	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
+	type when represented in a <VARIANT>."
+
+	^COM.AutomationConstants.VT_UI1! !
+!External.UInt8 class categoriesForMethods!
+arrayType!constants!private! !
+typeName!constants!private! !
+vt!constants!public! !
+!
+
+!External.UIntPtr class methodsFor!
+
+arrayType
+	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
+	represent arrays of the receiver's field type in other structures."
+
+	^UIntPtrArray!
 
 typeName
 	"Private - Answer the Dolphin external type name for the receiver.
@@ -2159,7 +2279,7 @@ vt
 	"Note: The compiler will optimise out the conditional because it is constant."
 
 	^VMConstants.IsWin64 ifTrue: [COM.AutomationConstants.VT_UI8] ifFalse: [COM.AutomationConstants.VT_UI4]! !
-!External.UINT_PTR class categoriesForMethods!
+!External.UIntPtr class categoriesForMethods!
 arrayType!constants!private! !
 typeName!constants!private! !
 vt!constants!public! !
@@ -2193,36 +2313,23 @@ typeName!constants!private! !
 vt!constants!public! !
 !
 
-!External.WORD class methodsFor!
-
-arrayType
-	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
-	represent arrays of the receiver's field type in other structures."
-
-	^WORDArray!
-
-typeName
-	"Private - Answer the Dolphin external type name for the receiver.
-	There is an appropriate built-in type which we can substitute."
-
-	^#word!
-
-vt
-	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
-	type when represented in a <VARIANT>."
-
-	^COM.AutomationConstants.VT_UI2! !
-!External.WORD class categoriesForMethods!
-arrayType!constants!private! !
-typeName!constants!private! !
-vt!constants!public! !
-!
-
 !Kernel.SmalltalkLocale methodsFor!
+
+displayCURRENCY: aCURRENCY on: aWriteStream
+	"Append to the <puttableStream> argument, aWriteStream, a <String> whose characters are a representation of the <CURRENCY> argument that a user in this <Locale> might expect to see."
+
+	aCURRENCY value displayOn: aWriteStream!
+
+displayDECIMAL: aDECIMAL on: aWriteStream
+	"Append to the <puttableStream> argument, aWriteStream, a <String> whose characters are a representation of the <DECIMAL>, aDecimal, that a user in this <Locale> might expect to see."
+
+	aDECIMAL value displayOn: aWriteStream!
 
 variantBool: aBoolean
 	^aBoolean class name! !
 !Kernel.SmalltalkLocale categoriesForMethods!
+displayCURRENCY:on:!printing!public! !
+displayDECIMAL:on:!printing!public! !
 variantBool:!constants!public! !
 !
 
@@ -2232,6 +2339,34 @@ boolFormat
 	"Answer an <Array> of two <String>s, being the representations for false and true in this Locale."
 
 	^{self variantBool: false. self variantBool: true}!
+
+displayCURRENCY: aCURRENCY on: aWriteStream
+	"Append to the <puttableStream> argument, aWriteStream, a <String> whose characters are a representation of the <CURRENCY> argument that a user in this <Locale> might expect to see."
+
+	| bstr |
+	bstr := COM.BSTR new.
+	COM.OleAut32
+		varBstrFromCy: aCURRENCY
+		lcid: self lcid
+		dwFlags: 0
+		pbstrOut: bstr.
+	bstr
+		displayOn: aWriteStream;
+		free!
+
+displayDECIMAL: aDECIMAL on: aWriteStream
+	"Append to the <puttableStream> argument, aWriteStream, a <String> whose characters are a representation of the <DECIMAL>, aDecimal, that a user in this <Locale> might expect to see."
+
+	| bstr |
+	bstr := COM.BSTR new.
+	COM.OleAut32
+		varBstrFromDec: aDECIMAL
+		lcid: self lcid
+		dwFlags: 0
+		pbstrOut: bstr.
+	bstr
+		displayOn: aWriteStream;
+		free!
 
 getVariantBoolString: anInteger
 	| bstr str |
@@ -2253,6 +2388,8 @@ variantBool: aBoolean
 						ifFalse: [COM.AutomationConstants.VARIANT_FALSE])]! !
 !OS.AbstractWindowsLocale categoriesForMethods!
 boolFormat!constants!public! !
+displayCURRENCY:on:!printing!public! !
+displayDECIMAL:on:!printing!public! !
 getVariantBoolString:!constants!public! !
 variantBool:!constants!public! !
 !
@@ -2264,7 +2401,7 @@ asSAFEARRAY
 	N.B. The result will be a single-dimensioed array of the variant representations
 	of the receiver's elements, assuming that such a representation is possible."
 
-	^SAFEARRAY withAll: self elementClass: SWORD!
+	^SAFEARRAY withAll: self elementClass: Int16!
 
 asVariant
 	"Answer the VARIANT representation of the receiver (a VT_BSTR).
@@ -2687,7 +2824,7 @@ safeArrayGetIID: psa pguid: pguid
 
 safeArrayGetLBound: psa nDim: nDim plLbound: plLbound
 	"Answer the lower bound of the specified dimension of the <SAFEARRAY>,
-	psa, through the <SDWORD> parameter, plLbound..
+	psa, through the <Int32> parameter, plLbound..
 
 		HRESULT SafeArrayGetLBound(
 			SAFEARRAY FAR* psa,
@@ -2704,7 +2841,7 @@ safeArrayGetRecordInfo: aSAFEARRAY prinfo: anIRecordInfo
 
 safeArrayGetUBound: psa nDim: nDim plUbound: plUbound
 	"Answer the upper bound of the specified dimension of the <SAFEARRAY>,
-	psa, through the <SDWORD> parameter, plUbound..
+	psa, through the <Int32> parameter, plUbound..
 
 		HRESULT SafeArrayGetUBound(
 			SAFEARRAY FAR* psa,
@@ -2726,7 +2863,7 @@ safeArrayGetVartype: psa pvt: pvt
 	<stdcall: hresult SafeArrayGetVartype SAFEARRAY* word*>
 	^self invalidCall: _failureCode!
 
-safeArrayPtrOfIndex: aSAFEARRAY rgIndices: aSDWORDArray ppvData: anExternalAddress
+safeArrayPtrOfIndex: aSAFEARRAY rgIndices: anInt32Array ppvData: anExternalAddress
 	<stdcall: hresult SafeArrayPtrOfIndex SAFEARRAY* sdword* lppvoid>
 	^self invalidCall: _failureCode!
 
@@ -2828,6 +2965,14 @@ varBstrFromBool: boolIn lcid: lcid dwFlags: dwFlags pbstrOut: pbstrOut
 	"
 
 	<stdcall: hresult VarBstrFromBool sword dword dword bstr*>
+	^self invalidCall: _failureCode!
+
+varBstrFromCy: pcyIn lcid: lcid dwFlags: dwFlags pbstrOut: pbstrOut
+	<stdcall: hresult VarBstrFromCy CURRENCY dword dword bstr*>
+	^self invalidCall: _failureCode!
+
+varBstrFromDec: pdecIn lcid: lcid dwFlags: dwFlags pbstrOut: pbstrOut
+	<stdcall: hresult VarBstrFromDec DECIMAL* dword dword bstr*>
 	^self invalidCall: _failureCode!
 
 varCmp: pvarLeft pvarRight: pvarRight lcid: lcid dwFlags: dwFlags
@@ -2964,6 +3109,8 @@ setErrorInfo:perrinfo:!Automation Functions-Error Handling API!public! !
 systemTimeToVariantTime:pvtime:!Automation Functions-Variant Manipulation!public! !
 unRegisterTypeLib:wVerMajor:wVerMinor:lcid:syskind:!**auto generated**!Automation Functions-Type Compilation And Library!public! !
 varBstrFromBool:lcid:dwFlags:pbstrOut:!Automation Functions-Variant Manipulation!public! !
+varBstrFromCy:lcid:dwFlags:pbstrOut:!Automation Functions-Variant Manipulation!public! !
+varBstrFromDec:lcid:dwFlags:pbstrOut:!Automation Functions-Variant Manipulation!public! !
 varCmp:pvarRight:lcid:dwFlags:!Automation Functions-Variant Manipulation!public! !
 varDateFromStr:lcid:dwFlags:pdateOut:!Automation Functions-Variant Manipulation!public! !
 variantChangeType:pvarSrc:wFlags:vt:!Automation Functions-Variant Manipulation!public! !
@@ -3003,24 +3150,6 @@ typeName!constants!private! !
 vt!constants!private! !
 !
 
-!OS.LARGE_INTEGER class methodsFor!
-
-typeName
-	"Private - Answer the Dolphin external type name for the receiver.
-	There is an appropriate built-in type which we can substitute."
-
-	^#sqword!
-
-vt
-	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
-	type when represented in a <VARIANT>."
-
-	^COM.AutomationConstants.VT_I8! !
-!OS.LARGE_INTEGER class categoriesForMethods!
-typeName!constants!private! !
-vt!constants!public! !
-!
-
 !OS.SYSTEMTIME methodsFor!
 
 asFloat
@@ -3049,17 +3178,6 @@ fromDATE: aFloat
 	^systime! !
 !OS.SYSTEMTIME class categoriesForMethods!
 fromDATE:!public! !
-!
-
-!OS.ULARGE_INTEGER class methodsFor!
-
-typeName
-	"Private - Answer the Dolphin external type name for the receiver.
-	There is an appropriate built-in type which we can substitute."
-
-	^#qword! !
-!OS.ULARGE_INTEGER class categoriesForMethods!
-typeName!constants!private! !
 !
 
 "End of package definition"!

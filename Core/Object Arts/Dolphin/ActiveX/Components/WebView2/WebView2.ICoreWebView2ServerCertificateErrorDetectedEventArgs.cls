@@ -49,7 +49,7 @@ action
 	"Answer the <sdword> value of the 'Action' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_Action: answer.
 	^answer asObject!
 
@@ -62,7 +62,7 @@ errorStatus
 	"Answer the <sdword> value of the 'ErrorStatus' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_ErrorStatus: answer.
 	^answer asObject!
 

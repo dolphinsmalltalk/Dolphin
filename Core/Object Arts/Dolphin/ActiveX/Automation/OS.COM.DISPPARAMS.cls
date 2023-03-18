@@ -58,22 +58,22 @@ args: arguments
 cArgs
 	"Private - Answer the <Integer> value of the receiver's 'cArgs' field."
 
-	^bytes dwordAtOffset: _OffsetOf_cArgs!
+	^bytes uint32AtOffset: _OffsetOf_cArgs!
 
 cArgs: anInteger
 	"Set the receiver's 'cArgs' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_cArgs put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_cArgs put: anInteger!
 
 cNamedArgs
 	"Private - Answer the <Integer> value of the receiver's 'cNamedArgs' field."
 
-	^bytes dwordAtOffset: _OffsetOf_cNamedArgs!
+	^bytes uint32AtOffset: _OffsetOf_cNamedArgs!
 
 cNamedArgs: anInteger
 	"Set the receiver's 'cNamedArgs' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_cNamedArgs put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_cNamedArgs put: anInteger!
 
 names: names named: namedArgs args: unnamedArgs
 	"Set the receiver's arguments to be the <sequencedReadableCollection> of named arguments,
@@ -83,7 +83,7 @@ names: names named: namedArgs args: unnamedArgs
 
 	| argc cNamed cUnnamed |
 	cNamed := namedArgs size.
-	dispids := SDWORDArray new: cNamed.
+	dispids := Int32Array new: cNamed.
 	cUnnamed := unnamedArgs size.
 	argc := cNamed + cUnnamed.
 	args := Array new: argc.
@@ -118,7 +118,7 @@ propertyPut: item value: argument
 	always be 'named'. As the argument count includes the named arguments it is set to two."
 
 	self args: {item. argument}.
-	dispids := SDWORD fromInteger: DISPID_PROPERTYPUT.
+	dispids := Int32 fromInteger: DISPID_PROPERTYPUT.
 	self rgdispidNamedArgs: dispids.
 	self cNamedArgs: 1!
 
@@ -130,21 +130,21 @@ propertyPutValue: argument
 	should be one."
 
 	self arg: argument.
-	dispids := SDWORD fromInteger: DISPID_PROPERTYPUT.
+	dispids := Int32 fromInteger: DISPID_PROPERTYPUT.
 	self rgdispidNamedArgs: dispids.
 	self cNamedArgs: 1!
 
 rgdispidNamedArgs
-	"Answer the <SDWORDArray> value of the receiver's 'rgdispidNamedArgs' field."
+	"Answer the <Int32Array> value of the receiver's 'rgdispidNamedArgs' field."
 
-	^SDWORDArray fromAddress: (bytes intPtrAtOffset: _OffsetOf_rgdispidNamedArgs)
+	^Int32Array fromAddress: (bytes intPtrAtOffset: _OffsetOf_rgdispidNamedArgs)
 		length: self cNamedArgs!
 
-rgdispidNamedArgs: aSDWORDArray
-	"Set the receiver's 'rgdispidNamedArgs' field to the value of the argument, aSDWORDArray"
+rgdispidNamedArgs: anInt32Array
+	"Set the receiver's 'rgdispidNamedArgs' field to the value of the argument, anInt32Array"
 
-	bytes uintPtrAtOffset: _OffsetOf_rgdispidNamedArgs put: aSDWORDArray yourAddress.
-	self cNamedArgs: aSDWORDArray size!
+	bytes uintPtrAtOffset: _OffsetOf_rgdispidNamedArgs put: anInt32Array yourAddress.
+	self cNamedArgs: anInt32Array size!
 
 rgvarg
 	"Answer the <StructureArray> value of the receiver's 'rgvarg' field."
@@ -205,10 +205,10 @@ defineFields
 			type: (StructureArrayPointerField type: VARIANT
 					arrayLength: (ConformantArrayFieldLength lengthField: #cArgs));
 		defineField: #rgdispidNamedArgs
-			type: (ArrayPointerField type: SDWORDArray
+			type: (ArrayPointerField type: Int32Array
 					arrayLength: (ConformantArrayFieldLength lengthField: #cNamedArgs));
-		defineField: #cArgs type: DWORDField new beNonBrowsable;
-		defineField: #cNamedArgs type: DWORDField new beNonBrowsable!
+		defineField: #cArgs type: UInt32Field new beNonBrowsable;
+		defineField: #cNamedArgs type: UInt32Field new beNonBrowsable!
 
 getFieldNames
 	^#(#rgvarg #rgdispidNamedArgs #cArgs #cNamedArgs)!

@@ -57,77 +57,77 @@ struct tagMIB_TCPSTATS {
 dwActiveOpens
 	"Answer the <Integer> value of the receiver's 'dwActiveOpens' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwActiveOpens!
+	^bytes uint32AtOffset: _OffsetOf_dwActiveOpens!
 
 dwAttemptFails
 	"Answer the <Integer> value of the receiver's 'dwAttemptFails' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwAttemptFails!
+	^bytes uint32AtOffset: _OffsetOf_dwAttemptFails!
 
 dwCurrEstab
 	"Answer the <Integer> value of the receiver's 'dwCurrEstab' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwCurrEstab!
+	^bytes uint32AtOffset: _OffsetOf_dwCurrEstab!
 
 dwEstabResets
 	"Answer the <Integer> value of the receiver's 'dwEstabResets' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwEstabResets!
+	^bytes uint32AtOffset: _OffsetOf_dwEstabResets!
 
 dwInErrs
 	"Answer the <Integer> value of the receiver's 'dwInErrs' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwInErrs!
+	^bytes uint32AtOffset: _OffsetOf_dwInErrs!
 
 dwInSegs
 	"Answer the <Integer> value of the receiver's 'dwInSegs' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwInSegs!
+	^bytes uint32AtOffset: _OffsetOf_dwInSegs!
 
 dwMaxConn
 	"Answer the <Integer> value of the receiver's 'dwMaxConn' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwMaxConn!
+	^bytes uint32AtOffset: _OffsetOf_dwMaxConn!
 
 dwNumConns
 	"Answer the <Integer> value of the receiver's 'dwNumConns' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwNumConns!
+	^bytes uint32AtOffset: _OffsetOf_dwNumConns!
 
 dwOutRsts
 	"Answer the <Integer> value of the receiver's 'dwOutRsts' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwOutRsts!
+	^bytes uint32AtOffset: _OffsetOf_dwOutRsts!
 
 dwOutSegs
 	"Answer the <Integer> value of the receiver's 'dwOutSegs' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwOutSegs!
+	^bytes uint32AtOffset: _OffsetOf_dwOutSegs!
 
 dwPassiveOpens
 	"Answer the <Integer> value of the receiver's 'dwPassiveOpens' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwPassiveOpens!
+	^bytes uint32AtOffset: _OffsetOf_dwPassiveOpens!
 
 dwRetransSegs
 	"Answer the <Integer> value of the receiver's 'dwRetransSegs' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwRetransSegs!
+	^bytes uint32AtOffset: _OffsetOf_dwRetransSegs!
 
 dwRtoAlgorithm
 	"Answer the <Integer> value of the receiver's 'dwRtoAlgorithm' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwRtoAlgorithm!
+	^bytes uint32AtOffset: _OffsetOf_dwRtoAlgorithm!
 
 dwRtoMax
 	"Answer the <Integer> value of the receiver's 'dwRtoMax' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwRtoMax!
+	^bytes uint32AtOffset: _OffsetOf_dwRtoMax!
 
 dwRtoMin
 	"Answer the <Integer> value of the receiver's 'dwRtoMin' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwRtoMin! !
+	^bytes uint32AtOffset: _OffsetOf_dwRtoMin! !
 !OS.MIB_TCPSTATS categoriesForMethods!
 dwActiveOpens!**compiled accessors**!public! !
 dwAttemptFails!**compiled accessors**!public! !
@@ -177,49 +177,49 @@ defineFields
 
 	self
 		defineField: #dwRtoAlgorithm
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 0;
 		defineField: #dwRtoMin
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 4;
 		defineField: #dwRtoMax
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 8;
 		defineField: #dwMaxConn
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 12;
 		defineField: #dwActiveOpens
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 16;
 		defineField: #dwPassiveOpens
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 20;
 		defineField: #dwAttemptFails
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 24;
 		defineField: #dwEstabResets
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 28;
 		defineField: #dwCurrEstab
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 32;
 		defineField: #dwInSegs
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 36;
 		defineField: #dwOutSegs
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 40;
 		defineField: #dwRetransSegs
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 44;
 		defineField: #dwInErrs
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 48;
 		defineField: #dwOutRsts
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 52;
 		defineField: #dwNumConns
-			type: DWORDField readOnly
+			type: UInt32Field readOnly
 			offset: 56.
 	self byteSize: 60!
 

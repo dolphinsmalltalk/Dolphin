@@ -60,7 +60,7 @@ DeviceString
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 isAttachedToDesktop
 	^self StateFlags allMask: DISPLAY_DEVICE_ATTACHED_TO_DESKTOP!
@@ -73,7 +73,7 @@ isPrimaryAdaptor
 StateFlags
 	"Answer the <Integer> value of the receiver's 'StateFlags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_StateFlags! !
+	^bytes uint32AtOffset: _OffsetOf_StateFlags! !
 !OS.DISPLAY_DEVICEW categoriesForMethods!
 DeviceID!**compiled accessors**!public! !
 DeviceName!**compiled accessors**!public! !
@@ -106,12 +106,12 @@ defineFields
 "
 
 	self
-		defineField: #dwSize type: DWORDField new beWriteOnly offset: 0;
+		defineField: #dwSize type: UInt32Field new beWriteOnly offset: 0;
 		defineField: #DeviceName type: (StringField type: Utf16String length: 32) beReadOnly offset: 4;
 		defineField: #DeviceString type: (StringField type: Utf16String length: 128) beReadOnly offset: 68;
-		defineField: #StateFlags type: DWORDField new beReadOnly offset: 324;
+		defineField: #StateFlags type: UInt32Field new beReadOnly offset: 324;
 		defineField: #DeviceID type: (StringField type: Utf16String length: 128) beReadOnly offset: 328;
-		defineField: #DeviceKey type: (ArrayField type: WORDArray length: 128) beFiller offset: 584.
+		defineField: #DeviceKey type: (ArrayField type: UInt16Array length: 128) beFiller offset: 584.
 	self byteSize: 840!
 
 getFieldNames

@@ -83,7 +83,7 @@ dbmsVer
 defaultTxnIsolation
 	#deprecated.	"Use #defaultTransactionIsolation"
 	^self class 
-		interpretTxnIsolationMask: (self getDWordInfo: SQL_DEFAULT_TXN_ISOLATION)!
+		interpretTxnIsolationMask: (self getUInt32Info: SQL_DEFAULT_TXN_ISOLATION)!
 
 driverVer
 	#deprecated.
@@ -196,7 +196,7 @@ scrollConcurrency
 
 	| mask |
 	#deprecated.	"Deprecated in ODBC 3.0 - see ODBC help for further information"
-	mask := self getDWordInfo: SQL_SCROLL_CONCURRENCY.
+	mask := self getUInt32Info: SQL_SCROLL_CONCURRENCY.
 	^#('SQL_SCCO_READ_ONLY' 'SQL_SCCO_LOCK' 'SQL_SCCO_OPT_TIMESTAMP' 'SQL_SCCO_OPT_VALUES') 
 		select: [:maskName | (mask bitAnd: (OS.ODBCConstants at: maskName)) ~= 0]!
 
@@ -205,7 +205,7 @@ scrollOptions
 
 	| mask |
 	#deprecated.	"Use #supportedCursorTypes"
-	mask := self getDWordInfo: SQL_SCROLL_OPTIONS.
+	mask := self getUInt32Info: SQL_SCROLL_OPTIONS.
 	^#('SQL_SO_FORWARD_ONLY' 'SQL_SO_KEYSET_DRIVEN' 'SQL_SO_DYNAMIC' 'SQL_SO_MIXED') 
 		select: [:maskName | (mask bitAnd: (OS.ODBCConstants at: maskName)) ~= 0]!
 
@@ -228,7 +228,7 @@ txnCapable
 txnIsolationOptions
 	#deprecated.	"Use #supportedTransactionIsolationLevels"
 	^self class 
-		interpretTxnIsolationMask: (self getDWordInfo: SQL_TXN_ISOLATION_OPTION)!
+		interpretTxnIsolationMask: (self getUInt32Info: SQL_TXN_ISOLATION_OPTION)!
 
 uniqueIndexOf: aString 
 	#deprecated.

@@ -40,12 +40,12 @@ basicPbData
 cbData
 	"Private - Answer the <Integer> value of the receiver's 'cbData' field."
 
-	^bytes dwordAtOffset: _OffsetOf_cbData!
+	^bytes uint32AtOffset: _OffsetOf_cbData!
 
 cbData: anInteger
 	"Set the receiver's 'cbData' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_cbData put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_cbData put: anInteger!
 
 data
 	^localData ifNil: [
@@ -114,7 +114,7 @@ defineFields
 
 	self
 		defineField: #cbData
-			type: DWORDField new beNonBrowsable
+			type: UInt32Field new beNonBrowsable
 			offset: 0;
 		defineField: #pbData
 			type: (ArrayPointerField type: ExternalArray

@@ -16,7 +16,7 @@ CADWORD is a counted array of 32-bit unsigned integers. For an example usage see
 !OS.COM.CADWORD methodsFor!
 
 getElements
-	^DWORDArray fromAddress: self pElems length: self cElems! !
+	^UInt32Array fromAddress: self pElems length: self cElems! !
 !OS.COM.CADWORD categoriesForMethods!
 getElements!accessing!private! !
 !
@@ -45,7 +45,7 @@ defineFields
 elementClass
 	"Answer the class of <ExternalStructure> used to represent elements of the receiver."
 
-	^DWORD
+	^UInt32
 ! !
 !OS.COM.CADWORD class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !

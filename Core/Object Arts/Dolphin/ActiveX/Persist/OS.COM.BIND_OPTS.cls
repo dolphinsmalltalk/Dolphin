@@ -24,37 +24,37 @@ BIND_OPTS has been superceded by BIND_OPTS2 with the advent of DCOM.'!
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 dwTickCountDeadline
 	"Answer the <Integer> value of the receiver's 'dwTickCountDeadline' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwTickCountDeadline!
+	^bytes uint32AtOffset: _OffsetOf_dwTickCountDeadline!
 
 dwTickCountDeadline: anInteger
 	"Set the receiver's 'dwTickCountDeadline' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwTickCountDeadline put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwTickCountDeadline put: anInteger!
 
 grfFlags
 	"Answer the <Integer> value of the receiver's 'grfFlags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_grfFlags!
+	^bytes uint32AtOffset: _OffsetOf_grfFlags!
 
 grfFlags: anInteger
 	"Set the receiver's 'grfFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_grfFlags put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_grfFlags put: anInteger!
 
 grfMode
 	"Answer the <Integer> value of the receiver's 'grfMode' field."
 
-	^bytes dwordAtOffset: _OffsetOf_grfMode!
+	^bytes uint32AtOffset: _OffsetOf_grfMode!
 
 grfMode: anInteger
 	"Set the receiver's 'grfMode' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_grfMode put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_grfMode put: anInteger! !
 !OS.COM.BIND_OPTS categoriesForMethods!
 dwSize:!**compiled accessors**!public! !
 dwTickCountDeadline!**compiled accessors**!public! !
@@ -83,10 +83,10 @@ defineFields
 
 	self
 		"Use standard name for structure size member"
-		defineField: #dwSize				type: DWORDField writeOnly beOverride;
-		defineField: #grfFlags				type: DWORDField new;
-		defineField: #grfMode				type: DWORDField new;
-		defineField: #dwTickCountDeadline	type: DWORDField new!
+		defineField: #dwSize				type: UInt32Field writeOnly beOverride;
+		defineField: #grfFlags				type: UInt32Field new;
+		defineField: #grfMode				type: UInt32Field new;
+		defineField: #dwTickCountDeadline	type: UInt32Field new!
 
 getFieldNames
 	^#(#dwSize #grfFlags #grfMode #dwTickCountDeadline)! !

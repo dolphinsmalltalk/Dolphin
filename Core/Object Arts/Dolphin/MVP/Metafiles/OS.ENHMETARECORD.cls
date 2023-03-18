@@ -28,22 +28,22 @@ getField: fieldNameString
 iType
 	"Answer the <Integer> value of the receiver's 'iType' field."
 
-	^bytes dwordAtOffset: _OffsetOf_iType!
+	^bytes uint32AtOffset: _OffsetOf_iType!
 
 iType: anInteger
 	"Set the receiver's 'iType' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_iType put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_iType put: anInteger!
 
 nSize
 	"Answer the <Integer> value of the receiver's 'nSize' field."
 
-	^bytes dwordAtOffset: _OffsetOf_nSize!
+	^bytes uint32AtOffset: _OffsetOf_nSize!
 
 nSize: anInteger
 	"Set the receiver's 'nSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_nSize put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_nSize put: anInteger! !
 !OS.ENHMETARECORD categoriesForMethods!
 getField:!accessing!private! !
 iType!**compiled accessors**!public! !
@@ -71,10 +71,10 @@ defineFields
 
 	self
 		defineField: #iType
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 0;
 		defineField: #nSize
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 4.
 	self byteSize: 8!
 

@@ -40,7 +40,7 @@ struct tagCPINFOEXW {
 codepage
 	"Answer the <Integer> value of the receiver's 'codepage' field."
 
-	^bytes dwordAtOffset: _OffsetOf_codepage!
+	^bytes uint32AtOffset: _OffsetOf_codepage!
 
 CodePageName
 	"Answer the <Utf16String> value of the receiver's 'CodePageName' field."
@@ -75,7 +75,7 @@ LeadByte
 MaxCharSize
 	"Answer the <Integer> value of the receiver's 'MaxCharSize' field."
 
-	^bytes dwordAtOffset: _OffsetOf_MaxCharSize!
+	^bytes uint32AtOffset: _OffsetOf_MaxCharSize!
 
 unicodeDefaultChar
 	"Answer the default Unicode character for the described code page."
@@ -85,7 +85,7 @@ unicodeDefaultChar
 UnicodeDefaultChar
 	"Answer the <Integer> value of the receiver's 'UnicodeDefaultChar' field."
 
-	^bytes wordAtOffset: _OffsetOf_UnicodeDefaultChar! !
+	^bytes uint16AtOffset: _OffsetOf_UnicodeDefaultChar! !
 !OS.CPINFOEXW categoriesForMethods!
 codepage!**compiled accessors**!public! !
 CodePageName!**compiled accessors**!public! !
@@ -129,7 +129,7 @@ defineFields
 
 	self
 		defineField: #MaxCharSize
-			type: DWORDField new beReadOnly
+			type: UInt32Field new beReadOnly
 			offset: 0;
 		defineField: #DefaultChar
 			type: (ArrayField type: ExternalArray length: 2) beReadOnly
@@ -138,10 +138,10 @@ defineFields
 			type: (ArrayField type: ExternalArray length: 12) beReadOnly
 			offset: 6;
 		defineField: #UnicodeDefaultChar
-			type: WORDField new beReadOnly
+			type: UInt16Field new beReadOnly
 			offset: 18;
 		defineField: #codepage
-			type: DWORDField new beReadOnly
+			type: UInt32Field new beReadOnly
 			offset: 20;
 		defineField: #CodePageName
 			type: (StringField type: Utf16String length: 260) beReadOnly

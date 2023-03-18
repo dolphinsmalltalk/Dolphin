@@ -63,112 +63,112 @@ IDL definition follows:
 bOpenGL
 	"Answer the <Integer> value of the receiver's 'bOpenGL' field."
 
-	^bytes dwordAtOffset: _OffsetOf_bOpenGL!
+	^bytes uint32AtOffset: _OffsetOf_bOpenGL!
 
 bOpenGL: anInteger
 	"Set the receiver's 'bOpenGL' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_bOpenGL put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_bOpenGL put: anInteger!
 
 cbPixelFormat
 	"Answer the <Integer> value of the receiver's 'cbPixelFormat' field."
 
-	^bytes dwordAtOffset: _OffsetOf_cbPixelFormat!
+	^bytes uint32AtOffset: _OffsetOf_cbPixelFormat!
 
 cbPixelFormat: anInteger
 	"Set the receiver's 'cbPixelFormat' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_cbPixelFormat put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_cbPixelFormat put: anInteger!
 
 dSignature
 	"Answer the <Integer> value of the receiver's 'dSignature' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dSignature!
+	^bytes uint32AtOffset: _OffsetOf_dSignature!
 
 dSignature: anInteger
 	"Set the receiver's 'dSignature' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dSignature put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dSignature put: anInteger!
 
 nBytes
 	"Answer the <Integer> value of the receiver's 'nBytes' field."
 
-	^bytes dwordAtOffset: _OffsetOf_nBytes!
+	^bytes uint32AtOffset: _OffsetOf_nBytes!
 
 nBytes: anInteger
 	"Set the receiver's 'nBytes' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_nBytes put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_nBytes put: anInteger!
 
 nDescription
 	"Answer the <Integer> value of the receiver's 'nDescription' field."
 
-	^bytes dwordAtOffset: _OffsetOf_nDescription!
+	^bytes uint32AtOffset: _OffsetOf_nDescription!
 
 nDescription: anInteger
 	"Set the receiver's 'nDescription' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_nDescription put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_nDescription put: anInteger!
 
 nHandles
 	"Answer the <Integer> value of the receiver's 'nHandles' field."
 
-	^bytes wordAtOffset: _OffsetOf_nHandles!
+	^bytes uint16AtOffset: _OffsetOf_nHandles!
 
 nHandles: anInteger
 	"Set the receiver's 'nHandles' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_nHandles put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_nHandles put: anInteger!
 
 nPalEntries
 	"Answer the <Integer> value of the receiver's 'nPalEntries' field."
 
-	^bytes dwordAtOffset: _OffsetOf_nPalEntries!
+	^bytes uint32AtOffset: _OffsetOf_nPalEntries!
 
 nPalEntries: anInteger
 	"Set the receiver's 'nPalEntries' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_nPalEntries put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_nPalEntries put: anInteger!
 
 nRecords
 	"Answer the <Integer> value of the receiver's 'nRecords' field."
 
-	^bytes dwordAtOffset: _OffsetOf_nRecords!
+	^bytes uint32AtOffset: _OffsetOf_nRecords!
 
 nRecords: anInteger
 	"Set the receiver's 'nRecords' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_nRecords put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_nRecords put: anInteger!
 
 nVersion
 	"Answer the <Integer> value of the receiver's 'nVersion' field."
 
-	^bytes dwordAtOffset: _OffsetOf_nVersion!
+	^bytes uint32AtOffset: _OffsetOf_nVersion!
 
 nVersion: anInteger
 	"Set the receiver's 'nVersion' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_nVersion put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_nVersion put: anInteger!
 
 offDescription
 	"Answer the <Integer> value of the receiver's 'offDescription' field."
 
-	^bytes dwordAtOffset: _OffsetOf_offDescription!
+	^bytes uint32AtOffset: _OffsetOf_offDescription!
 
 offDescription: anInteger
 	"Set the receiver's 'offDescription' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_offDescription put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_offDescription put: anInteger!
 
 offPixelFormat
 	"Answer the <Integer> value of the receiver's 'offPixelFormat' field."
 
-	^bytes dwordAtOffset: _OffsetOf_offPixelFormat!
+	^bytes uint32AtOffset: _OffsetOf_offPixelFormat!
 
 offPixelFormat: anInteger
 	"Set the receiver's 'offPixelFormat' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_offPixelFormat put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_offPixelFormat put: anInteger!
 
 rclBounds
 	"Answer the <RECTL> value of the receiver's 'rclBounds' field."
@@ -317,31 +317,31 @@ defineFields
 			type: (StructureField type: RECTL)
 			offset: 24;
 		defineField: #dSignature
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 40;
 		defineField: #nVersion
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 44;
 		defineField: #nBytes
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 48;
 		defineField: #nRecords
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 52;
 		defineField: #nHandles
-			type: WORDField new
+			type: UInt16Field new
 			offset: 56;
 		defineField: #sReserved
-			type: WORDField filler
+			type: UInt16Field filler
 			offset: 58;
 		defineField: #nDescription
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 60;
 		defineField: #offDescription
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 64;
 		defineField: #nPalEntries
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 68;
 		defineField: #szlDevice
 			type: (StructureField type: SIZEL)
@@ -350,13 +350,13 @@ defineFields
 			type: (StructureField type: SIZEL)
 			offset: 80;
 		defineField: #cbPixelFormat
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 88;
 		defineField: #offPixelFormat
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 92;
 		defineField: #bOpenGL
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 96;
 		defineField: #szlMicrometers
 			type: (StructureField type: SIZEL)

@@ -34,32 +34,32 @@ struct tagEMREOF {
 nPalEntries
 	"Answer the <Integer> value of the receiver's 'nPalEntries' field."
 
-	^bytes dwordAtOffset: _OffsetOf_nPalEntries!
+	^bytes uint32AtOffset: _OffsetOf_nPalEntries!
 
 nPalEntries: anInteger
 	"Set the receiver's 'nPalEntries' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_nPalEntries put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_nPalEntries put: anInteger!
 
 nSizeLast
 	"Answer the <Integer> value of the receiver's 'nSizeLast' field."
 
-	^bytes dwordAtOffset: _OffsetOf_nSizeLast!
+	^bytes uint32AtOffset: _OffsetOf_nSizeLast!
 
 nSizeLast: anInteger
 	"Set the receiver's 'nSizeLast' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_nSizeLast put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_nSizeLast put: anInteger!
 
 offPalEntries
 	"Answer the <Integer> value of the receiver's 'offPalEntries' field."
 
-	^bytes dwordAtOffset: _OffsetOf_offPalEntries!
+	^bytes uint32AtOffset: _OffsetOf_offPalEntries!
 
 offPalEntries: anInteger
 	"Set the receiver's 'offPalEntries' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_offPalEntries put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_offPalEntries put: anInteger! !
 !OS.EMREOF categoriesForMethods!
 nPalEntries!**compiled accessors**!public! !
 nPalEntries:!**compiled accessors**!public! !
@@ -91,13 +91,13 @@ defineFields
 	super defineFields.
 	self
 		defineField: #nPalEntries
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 8;
 		defineField: #offPalEntries
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 12;
 		defineField: #nSizeLast
-			type: DWORDField new
+			type: UInt32Field new
 			offset: 16.
 	self byteSize: 20!
 

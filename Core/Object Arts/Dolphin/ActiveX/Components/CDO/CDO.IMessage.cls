@@ -207,7 +207,7 @@ dsnOptions
 	Helpstring: The delivery status notification (DSN) options for the message."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_DSNOptions: answer.
 	^answer asObject!
 

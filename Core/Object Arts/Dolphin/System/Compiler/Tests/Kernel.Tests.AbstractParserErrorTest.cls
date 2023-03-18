@@ -771,7 +771,7 @@ testErrorsExtArgCountMismatch
 		range: (mark to: (source lastIndexOf: $>) - 1)!
 
 testErrorsExtTypeIndirections
-	#(#('blah %<cdecl: <1s> blah%>' 'lppvoid*') #('blah %<cdecl: <1s> blah%>' 'lppvoid**') #('blah %<cdecl: <1s> blah%>' 'lpvoid**') #('blah %<cdecl: sdword blah <1s>%>' 'LPVOID**') #('blah %<cdecl: sdword blah DWORD** Address* <1s>%>' 'Address**') #('blah %<cdecl: sdword blah BSTR* <1s>%>' 'BSTR**') #('blah: a _: b _: c _d: d %<cdecl: sdword blah GUID** REFGUID* GUID* <1s>%>' 'REFGUID**'))
+	#(#('blah %<cdecl: <1s> blah%>' 'lppvoid*') #('blah %<cdecl: <1s> blah%>' 'lppvoid**') #('blah %<cdecl: <1s> blah%>' 'lpvoid**') #('blah %<cdecl: sdword blah <1s>%>' 'LPVOID**') #('blah %<cdecl: sdword blah UInt32** Address* <1s>%>' 'Address**') #('blah %<cdecl: sdword blah BSTR* <1s>%>' 'BSTR**') #('blah: a _: b _: c _d: d %<cdecl: sdword blah GUID** REFGUID* GUID* <1s>%>' 'REFGUID**'))
 		do: 
 			[:each |
 			| mark source |
@@ -781,7 +781,7 @@ testErrorsExtTypeIndirections
 				parseMethodError: source
 				code: CErrNotIndirectable
 				range: (mark to: mark + each second size - 1)].
-	#(#('blah %<cdecl: dword<1s> blah%>' '***') #('blah %<cdecl: DWORD<1s> blah%>' '***')) do: 
+	#(#('blah %<cdecl: dword<1s> blah%>' '***') #('blah %<cdecl: UInt32<1s> blah%>' '***')) do: 
 			[:each |
 			| mark source |
 			source := each first expandMacrosWith: each second.
@@ -803,12 +803,12 @@ testErrorsExtTypes
 		code: CErrUndeclared
 		range: (mark to: mark + 4).
 	"Non-global (mispelling)"
-	source := 'blah <cdecl: SDWRD blah>'.
-	mark := source indexOf: $S.
+	source := 'blah <cdecl: Uint32 blah>'.
+	mark := source indexOf: $U.
 	self
 		parseMethodError: source
 		code: CErrUndeclared
-		range: (mark to: mark + 4).
+		range: (mark to: mark + 5).
 	"Fixed pointer class with zero inst. vars (must be at least one)"
 	source := 'blah <cdecl: Object blah>'.
 	mark := source indexOf: $O.
@@ -850,13 +850,13 @@ testErrorsExtTypes
 		parseMethodError: source
 		code: CErrExpectExtType
 		range: (mark to: mark).
-	source := 'blah: x _: y <cdecl: DWORD func * handle>'.
+	source := 'blah: x _: y <cdecl: UInt32 func * handle>'.
 	mark := source indexOf: $*.
 	self
 		parseMethodError: source
 		code: CErrExpectExtType
 		range: (mark to: mark).
-	source := 'blah: x _: y <cdecl: DWORD func 1 handle>'.
+	source := 'blah: x _: y <cdecl: UInt32 func 1 handle>'.
 	mark := source indexOf: $1.
 	self
 		parseMethodError: source
@@ -864,19 +864,19 @@ testErrorsExtTypes
 		range: (mark to: mark).
 
 	"parser will only read binary selectors of up to two characters, and therefore '***' is treated as two tokens"
-	source := 'blah: x _: y <cdecl: DWORD blah dword*** handle>'.
+	source := 'blah: x _: y <cdecl: UInt32 blah dword*** handle>'.
 	mark := source indexOf: $*.
 	self
 		parseMethodError: source
 		code: CErrBadExtTypeQualifier
 		range: (mark to: mark + 2).
-	source := 'blah: x _: y <cdecl: DWORD& blah dword* handle>'.
+	source := 'blah: x _: y <cdecl: UInt32& blah dword* handle>'.
 	mark := source indexOf: $&.
 	self
 		parseMethodError: source
 		code: CErrBadExtTypeQualifier
 		range: (mark to: mark).
-	source := 'blah: x _: y <cdecl: DWORD blah dword& handle>'.
+	source := 'blah: x _: y <cdecl: UInt32 blah dword& handle>'.
 	mark := source indexOf: $&.
 	self
 		parseMethodError: source

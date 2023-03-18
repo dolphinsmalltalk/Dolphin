@@ -30,36 +30,36 @@ asUIntPtr
 highPart
 	"Note: The compiler will optimise out the conditional because it is constant."
 
-	^VMConstants.IsWin64 ifTrue: [self dwordAtOffset: 4] ifFalse: [self wordAtOffset: 2]!
+	^VMConstants.IsWin64 ifTrue: [self uint32AtOffset: 4] ifFalse: [self uint16AtOffset: 2]!
 
 highPart: anObject 
 	"Note: The compiler will optimise out the conditional because it is constant."
 
 	VMConstants.IsWin64 
-		ifTrue: [self dwordAtOffset: 4 put: anObject]
-		ifFalse: [self wordAtOffset: 2 put: anObject]!
+		ifTrue: [self uint32AtOffset: 4 put: anObject]
+		ifFalse: [self uint16AtOffset: 2 put: anObject]!
 
 highPartSigned
 	"Note: The compiler will optimise out the conditional because it is constant."
 
-	^VMConstants.IsWin64 ifTrue: [self sdwordAtOffset: 4] ifFalse: [self swordAtOffset: 2]!
+	^VMConstants.IsWin64 ifTrue: [self int32AtOffset: 4] ifFalse: [self int16AtOffset: 2]!
 
 lowPart
 	"Note: The compiler will optimise out the conditional because it is constant."
 
-	^VMConstants.IsWin64 ifTrue: [self dwordAtOffset: 0] ifFalse: [self wordAtOffset: 0]!
+	^VMConstants.IsWin64 ifTrue: [self uint32AtOffset: 0] ifFalse: [self uint16AtOffset: 0]!
 
 lowPart: anObject 
 	"Note: The compiler will optimise out the conditional because it is constant."
 
 	VMConstants.IsWin64 
-		ifTrue: [self dwordAtOffset: 0 put: anObject]
-		ifFalse: [self wordAtOffset: 0 put: anObject]!
+		ifTrue: [self uint32AtOffset: 0 put: anObject]
+		ifFalse: [self uint16AtOffset: 0 put: anObject]!
 
 lowPartSigned
 	"Note: The compiler will optimise out the conditional because it is constant."
 
-	^VMConstants.IsWin64 ifTrue: [self sdwordAtOffset: 0] ifFalse: [self swordAtOffset: 0]!
+	^VMConstants.IsWin64 ifTrue: [self int32AtOffset: 0] ifFalse: [self int16AtOffset: 0]!
 
 value: anObject 
 	"Set the unsigned <integer> value stored in the receiver."

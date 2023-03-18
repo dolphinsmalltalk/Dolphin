@@ -35,7 +35,7 @@ abID
 cb
 	"Private - Answer the <Integer> value of the receiver's 'cb' field."
 
-	^bytes wordAtOffset: _OffsetOf_cb! !
+	^bytes uint16AtOffset: _OffsetOf_cb! !
 !OS.SHITEMID categoriesForMethods!
 abID!**compiled accessors**!public! !
 cb!**compiled accessors**!private! !
@@ -60,7 +60,7 @@ defineFields
 
 	self
 		defineField: #cb
-			type: WORDField new beReadOnly beNonBrowsable
+			type: UInt16Field new beReadOnly beNonBrowsable
 			offset: 0;
 		defineField: #abID
 			type: (ArrayField type: ExternalArray arrayLength: (ConformantArrayFieldLength lengthField: #cb))

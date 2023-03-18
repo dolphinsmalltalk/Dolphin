@@ -28,7 +28,7 @@ OS.FINDREPLACEW comment: 'FINDREPLACE is a <Win32lStructure> which represents th
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 findDetails
 	^UI.FindDetails new
@@ -50,12 +50,12 @@ findWhat
 flags
 	"Answer the <Integer> value of the receiver's 'flags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_flags!
+	^bytes uint32AtOffset: _OffsetOf_flags!
 
 flags: anInteger
 	"Set the receiver's 'flags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_flags put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_flags put: anInteger!
 
 hookFlag
 	^FR_ENABLEHOOK!
@@ -137,12 +137,12 @@ replaceWith
 wFindWhatLen: anInteger
 	"Set the receiver's 'wFindWhatLen' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_wFindWhatLen put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_wFindWhatLen put: anInteger!
 
 wReplaceWithLen: anInteger
 	"Set the receiver's 'wReplaceWithLen' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_wReplaceWithLen put: anInteger! !
+	bytes uint16AtOffset: _OffsetOf_wReplaceWithLen put: anInteger! !
 !OS.FINDREPLACEW categoriesForMethods!
 dwSize:!**compiled accessors**!public! !
 findDetails!event handling!public! !
@@ -193,15 +193,15 @@ defineFields
 		} FINDREPLACE;"
 
 	self
-		defineField: #dwSize type: DWORDField writeOnly beOverride;
+		defineField: #dwSize type: UInt32Field writeOnly beOverride;
 		defineField: #hwndOwner type: HANDLEField writeOnly;
 		defineField: #hInstance type: HANDLEField filler;
-		defineField: #flags type: DWORDField new beOverride;
+		defineField: #flags type: UInt32Field new beOverride;
 		defineField: #lpstrFindWhat type: (PointerField type: Utf16String);
 		defineField: #lpstrReplaceWith type: (PointerField type: Utf16String);
-		defineField: #wFindWhatLen type: WORDField writeOnly;
-		defineField: #wReplaceWithLen type: WORDField writeOnly;
-		defineField: #lCustData type: INT_PTRField filler;
+		defineField: #wFindWhatLen type: UInt16Field writeOnly;
+		defineField: #wReplaceWithLen type: UInt16Field writeOnly;
+		defineField: #lCustData type: IntPtrField filler;
 		defineField: #lpfnHook type: LPVOIDField writeOnly beOverride;
 		defineField: #lpTemplateName type: (PointerField type: Utf16String) beFiller!
 

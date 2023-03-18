@@ -33,22 +33,22 @@ struct tagHTTP_SERVICE_CONFIG_TIMEOUT_SET {
 KeyDesc
 	"Answer the <Integer> value of the receiver's 'KeyDesc' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_KeyDesc!
+	^bytes int32AtOffset: _OffsetOf_KeyDesc!
 
 KeyDesc: anInteger
 	"Set the receiver's 'KeyDesc' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_KeyDesc put: anInteger!
+	bytes int32AtOffset: _OffsetOf_KeyDesc put: anInteger!
 
 ParamDesc
 	"Answer the <Integer> value of the receiver's 'ParamDesc' field."
 
-	^bytes wordAtOffset: _OffsetOf_ParamDesc!
+	^bytes uint16AtOffset: _OffsetOf_ParamDesc!
 
 ParamDesc: anInteger
 	"Set the receiver's 'ParamDesc' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_ParamDesc put: anInteger! !
+	bytes uint16AtOffset: _OffsetOf_ParamDesc put: anInteger! !
 !WinHttpServer.HTTP_SERVICE_CONFIG_TIMEOUT_SET categoriesForMethods!
 KeyDesc!**compiled accessors**!public! !
 KeyDesc:!**compiled accessors**!public! !
@@ -74,8 +74,8 @@ defineFields
 "
 
 	self
-		defineField: #KeyDesc type: SDWORDField new offset: 0;
-		defineField: #ParamDesc type: WORDField new offset: 4.
+		defineField: #KeyDesc type: Int32Field new offset: 0;
+		defineField: #ParamDesc type: UInt16Field new offset: 4.
 	self byteSize: 8!
 
 getFieldNames

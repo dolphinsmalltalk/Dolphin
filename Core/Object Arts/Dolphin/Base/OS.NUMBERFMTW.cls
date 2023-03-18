@@ -56,7 +56,7 @@ grouping
 Grouping
 	"Private - Answer the <Integer> value of the receiver's 'Grouping' field."
 
-	^bytes dwordAtOffset: _OffsetOf_Grouping!
+	^bytes uint32AtOffset: _OffsetOf_Grouping!
 
 grouping: anInteger
 	"Set the number of digits in each group of numbers to the left of the decimal separator.
@@ -72,7 +72,7 @@ grouping: anInteger
 Grouping: anInteger
 	"Private - Set the receiver's 'Grouping' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_Grouping put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_Grouping put: anInteger!
 
 groupSeparator
 	^groupSeparator ifNil: [groupSeparator := self lpThousandSep]!
@@ -90,12 +90,12 @@ hasLeadingZero: aBoolean
 LeadingZero
 	"Private - Answer the <Integer> value of the receiver's 'LeadingZero' field."
 
-	^bytes dwordAtOffset: _OffsetOf_LeadingZero!
+	^bytes uint32AtOffset: _OffsetOf_LeadingZero!
 
 LeadingZero: anInteger
 	"Private - Set the receiver's 'LeadingZero' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_LeadingZero put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_LeadingZero put: anInteger!
 
 lpDecimalSep
 	"Private - Answer the <Utf16String> value of the receiver's 'lpDecimalSep' field."
@@ -126,12 +126,12 @@ negativeNumberMode: anInteger
 NegativeOrder
 	"Private - Answer the <Integer> value of the receiver's 'NegativeOrder' field."
 
-	^bytes dwordAtOffset: _OffsetOf_NegativeOrder!
+	^bytes uint32AtOffset: _OffsetOf_NegativeOrder!
 
 NegativeOrder: anInteger
 	"Private - Set the receiver's 'NegativeOrder' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_NegativeOrder put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_NegativeOrder put: anInteger!
 
 numberGrouping
 	^numberGrouping
@@ -158,12 +158,12 @@ numberGrouping: aString
 NumDigits
 	"Private - Answer the <Integer> value of the receiver's 'NumDigits' field."
 
-	^bytes dwordAtOffset: _OffsetOf_NumDigits!
+	^bytes uint32AtOffset: _OffsetOf_NumDigits!
 
 NumDigits: anInteger
 	"Private - Set the receiver's 'NumDigits' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_NumDigits put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_NumDigits put: anInteger! !
 !OS.NUMBERFMTW categoriesForMethods!
 decimalPlaces!accessing!public! !
 decimalPlaces:!accessing!public! !
@@ -215,12 +215,12 @@ defineFields
 "
 
 	self
-		defineField: #NumDigits type: DWORDField new offset: 0;
-		defineField: #LeadingZero type: DWORDField new offset: 4;
-		defineField: #Grouping type: DWORDField new offset: 8;
+		defineField: #NumDigits type: UInt32Field new offset: 0;
+		defineField: #LeadingZero type: UInt32Field new offset: 4;
+		defineField: #Grouping type: UInt32Field new offset: 8;
 		defineField: #lpDecimalSep type: (PointerField type: Utf16String) offset: 12;
 		defineField: #lpThousandSep type: (PointerField type: Utf16String) offset: 16;
-		defineField: #NegativeOrder type: DWORDField new offset: 20.
+		defineField: #NegativeOrder type: UInt32Field new offset: 20.
 	self byteSize: 24!
 
 getFieldNames

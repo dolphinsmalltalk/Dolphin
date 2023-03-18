@@ -314,7 +314,7 @@ orientation
 	"Answer the <sdword> value of the 'Orientation' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_Orientation: answer.
 	^answer asObject!
 

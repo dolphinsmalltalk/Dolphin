@@ -21,17 +21,17 @@ ACCEL is used to associate accelerator key entries with a Window.'!
 cmd: anInteger
 	"Set the receiver's 'cmd' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_cmd put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_cmd put: anInteger!
 
 fVirt: anInteger
 	"Set the receiver's 'fVirt' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_fVirt put: anInteger!
+	bytes uint8AtOffset: _OffsetOf_fVirt put: anInteger!
 
 key: anInteger
 	"Set the receiver's 'key' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_key put: anInteger! !
+	bytes uint16AtOffset: _OffsetOf_key put: anInteger! !
 !OS.ACCEL categoriesForMethods!
 cmd:!**compiled accessors**!public! !
 fVirt:!**compiled accessors**!public! !
@@ -57,9 +57,9 @@ defineFields
 	"
 
 	self
-		defineField: #fVirt type: BYTEField new beWriteOnly;
-		defineField: #key type: WORDField new beWriteOnly;
-		defineField: #cmd type: WORDField new beWriteOnly!
+		defineField: #fVirt type: UInt8Field new beWriteOnly;
+		defineField: #key type: UInt16Field new beWriteOnly;
+		defineField: #cmd type: UInt16Field new beWriteOnly!
 
 getFieldNames
 	^#(#fVirt #key #cmd)! !

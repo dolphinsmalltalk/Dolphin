@@ -216,7 +216,7 @@ port
 	"Answer the <sdword> value of the 'Port' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_Port: answer.
 	^answer asObject!
 

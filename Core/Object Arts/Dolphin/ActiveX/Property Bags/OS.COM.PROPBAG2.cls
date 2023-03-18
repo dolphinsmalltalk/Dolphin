@@ -23,12 +23,12 @@ OS.COM.PROPBAG2 comment: '`OS.COM.PROPBAG2` is an `External.Structure` class to 
 cfType
 	"Answer the <Integer> value of the receiver's 'cfType' field."
 
-	^bytes wordAtOffset: _OffsetOf_cfType!
+	^bytes uint16AtOffset: _OffsetOf_cfType!
 
 cfType: anInteger
 	"Set the receiver's 'cfType' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_cfType put: anInteger!
+	bytes uint16AtOffset: _OffsetOf_cfType put: anInteger!
 
 clsid
 	"Answer the <GUID> value of the receiver's 'clsid' field."
@@ -47,22 +47,22 @@ clsid: aGUID
 dwHint
 	"Answer the <Integer> value of the receiver's 'dwHint' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwHint!
+	^bytes uint32AtOffset: _OffsetOf_dwHint!
 
 dwHint: anInteger
 	"Set the receiver's 'dwHint' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwHint put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwHint put: anInteger!
 
 dwType
 	"Answer the <Integer> value of the receiver's 'dwType' field."
 
-	^bytes dwordAtOffset: _OffsetOf_dwType!
+	^bytes uint32AtOffset: _OffsetOf_dwType!
 
 dwType: anInteger
 	"Set the receiver's 'dwType' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwType put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwType put: anInteger!
 
 pstrName
 	"Answer the <Utf16String> value of the receiver's 'pstrName' field."
@@ -77,12 +77,12 @@ pstrName: anUtf16String
 vt
 	"Answer the <Integer> value of the receiver's 'vt' field."
 
-	^bytes wordAtOffset: _OffsetOf_vt!
+	^bytes uint16AtOffset: _OffsetOf_vt!
 
 vt: anInteger
 	"Set the receiver's 'vt' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_vt put: anInteger! !
+	bytes uint16AtOffset: _OffsetOf_vt put: anInteger! !
 !OS.COM.PROPBAG2 categoriesForMethods!
 cfType!**compiled accessors**!public! !
 cfType:!**compiled accessors**!public! !
@@ -119,10 +119,10 @@ defineFields
 	"
 
 	self
-		defineField: #dwType type: DWORDField new;
-		defineField: #vt type: WORDField new;
-		defineField: #cfType type: WORDField new;
-		defineField: #dwHint type: DWORDField new;
+		defineField: #dwType type: UInt32Field new;
+		defineField: #vt type: UInt16Field new;
+		defineField: #cfType type: UInt16Field new;
+		defineField: #dwHint type: UInt32Field new;
 		defineField: #pstrName type: (PointerField type: Utf16String);
 		defineField: #clsid type: (StructureField type: GUID)!
 

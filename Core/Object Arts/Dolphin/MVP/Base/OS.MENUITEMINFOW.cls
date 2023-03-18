@@ -47,7 +47,7 @@ bitmap: anImage
 cch: anInteger
 	"Set the receiver's 'cch' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_cch put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_cch put: anInteger!
 
 dwItemData: anInteger
 	"Set the receiver's 'dwItemData' field to the value of the argument, anInteger"
@@ -57,7 +57,7 @@ dwItemData: anInteger
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 dwTypeData
 	"Answer the <Utf16String> value of the receiver's 'dwTypeData' field."
@@ -72,32 +72,32 @@ dwTypeData: anUtf16String
 fMask
 	"Answer the <Integer> value of the receiver's 'fMask' field."
 
-	^bytes dwordAtOffset: _OffsetOf_fMask!
+	^bytes uint32AtOffset: _OffsetOf_fMask!
 
 fMask: anInteger
 	"Set the receiver's 'fMask' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_fMask put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_fMask put: anInteger!
 
 fState
 	"Answer the <Integer> value of the receiver's 'fState' field."
 
-	^bytes dwordAtOffset: _OffsetOf_fState!
+	^bytes uint32AtOffset: _OffsetOf_fState!
 
 fState: anInteger
 	"Set the receiver's 'fState' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_fState put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_fState put: anInteger!
 
 fType
 	"Answer the <Integer> value of the receiver's 'fType' field."
 
-	^bytes dwordAtOffset: _OffsetOf_fType!
+	^bytes uint32AtOffset: _OffsetOf_fType!
 
 fType: anInteger
 	"Set the receiver's 'fType' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_fType put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_fType put: anInteger!
 
 hbmpChecked: anExternalHandle
 	"Set the receiver's 'hbmpChecked' field to the value of the argument, anExternalHandle"
@@ -143,18 +143,18 @@ type: anInteger
 	"Private - Set the fType field only. Used when creating menu items."
 
 	bytes
-		dwordAtOffset: _OffsetOf_fType put: anInteger;
-		dwordAtOffset: _OffsetOf_fMask put: MIIM_FTYPE!
+		uint32AtOffset: _OffsetOf_fType put: anInteger;
+		uint32AtOffset: _OffsetOf_fMask put: MIIM_FTYPE!
 
 wID
 	"Answer the <Integer> value of the receiver's 'wID' field."
 
-	^bytes dwordAtOffset: _OffsetOf_wID!
+	^bytes uint32AtOffset: _OffsetOf_wID!
 
 wID: anInteger
 	"Set the receiver's 'wID' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_wID put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_wID put: anInteger! !
 !OS.MENUITEMINFOW categoriesForMethods!
 basicText:!accessing!private! !
 bitmap:!helpers!public! !
@@ -204,17 +204,17 @@ defineFields
 	"
 
 	self
-		defineField: #dwSize type: DWORDField writeOnly;
-		defineField: #fMask type: DWORDField new;
-		defineField: #fType type: DWORDField new;
-		defineField: #fState type: DWORDField new;
-		defineField: #wID type: DWORDField new;
+		defineField: #dwSize type: UInt32Field writeOnly;
+		defineField: #fMask type: UInt32Field new;
+		defineField: #fType type: UInt32Field new;
+		defineField: #fState type: UInt32Field new;
+		defineField: #wID type: UInt32Field new;
 		defineField: #hSubMenu type: HANDLEField writeOnly;
 		defineField: #hbmpChecked type: HANDLEField writeOnly;
 		defineField: #hbmpUnchecked type: HANDLEField writeOnly;
-		defineField: #dwItemData type: UINT_PTRField writeOnly;
+		defineField: #dwItemData type: UIntPtrField writeOnly;
 		defineField: #dwTypeData type: (PointerField type: Utf16String);
-		defineField: #cch type: DWORDField writeOnly;
+		defineField: #cch type: UInt32Field writeOnly;
 		defineField: #hbmpItem type: HANDLEField writeOnly!
 
 getFieldNames

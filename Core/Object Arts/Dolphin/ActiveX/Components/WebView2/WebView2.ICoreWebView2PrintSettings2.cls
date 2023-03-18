@@ -79,7 +79,7 @@ collation
 	"Answer the <sdword> value of the 'Collation' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_Collation: answer.
 	^answer asObject!
 
@@ -92,7 +92,7 @@ colorMode
 	"Answer the <sdword> value of the 'ColorMode' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_ColorMode: answer.
 	^answer asObject!
 
@@ -105,7 +105,7 @@ copies
 	"Answer the <sdword> value of the 'Copies' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_Copies: answer.
 	^answer asObject!
 
@@ -118,7 +118,7 @@ duplex
 	"Answer the <sdword> value of the 'Duplex' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_Duplex: answer.
 	^answer asObject!
 
@@ -203,7 +203,7 @@ mediaSize
 	"Answer the <sdword> value of the 'MediaSize' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_MediaSize: answer.
 	^answer asObject!
 
@@ -231,7 +231,7 @@ pagesPerSide
 	"Answer the <sdword> value of the 'PagesPerSide' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := Int32 new.
 	self get_PagesPerSide: answer.
 	^answer asObject!
 

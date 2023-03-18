@@ -37,32 +37,32 @@ struct tagHTTP_CHANNEL_BIND_INFO {
 Flags
 	"Answer the <Integer> value of the receiver's 'Flags' field."
 
-	^bytes dwordAtOffset: _OffsetOf_Flags!
+	^bytes uint32AtOffset: _OffsetOf_Flags!
 
 Flags: anInteger
 	"Set the receiver's 'Flags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_Flags put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_Flags put: anInteger!
 
 Hardening
 	"Answer the <Integer> value of the receiver's 'Hardening' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_Hardening!
+	^bytes int32AtOffset: _OffsetOf_Hardening!
 
 Hardening: anInteger
 	"Set the receiver's 'Hardening' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_Hardening put: anInteger!
+	bytes int32AtOffset: _OffsetOf_Hardening put: anInteger!
 
 NumberOfServiceNames
 	"Private - Answer the <Integer> value of the receiver's 'NumberOfServiceNames' field."
 
-	^bytes dwordAtOffset: _OffsetOf_NumberOfServiceNames!
+	^bytes uint32AtOffset: _OffsetOf_NumberOfServiceNames!
 
 NumberOfServiceNames: anInteger
 	"Set the receiver's 'NumberOfServiceNames' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_NumberOfServiceNames put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_NumberOfServiceNames put: anInteger!
 
 ServiceNames
 	"Answer the <StructureArray> value of the receiver's 'ServiceNames' field."
@@ -108,10 +108,10 @@ defineFields
 "
 
 	self
-		defineField: #Hardening type: SDWORDField new offset: 0;
-		defineField: #Flags type: DWORDField new offset: 4;
+		defineField: #Hardening type: Int32Field new offset: 0;
+		defineField: #Flags type: UInt32Field new offset: 4;
 		defineField: #ServiceNames type: (StructureArrayPointerField type: HTTP_SERVICE_BINDING_BASE lengthField: #NumberOfServiceNames) offset: 8;
-		defineField: #NumberOfServiceNames type: DWORDField new beNonBrowsable offset: 12.
+		defineField: #NumberOfServiceNames type: UInt32Field new beNonBrowsable offset: 12.
 	self byteSize: 16!
 
 getFieldNames
