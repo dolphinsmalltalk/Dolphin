@@ -1,19 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.GpStructure subclass: #'Graphics.Gdiplus.BitmapData'
+Graphics.Gdiplus.GpStructure
+	subclass: #'Graphics.Gdiplus.BitmapData'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_BitmapData_Size' -> 16r18.
-		'_OffsetOf_Height' -> 16r4.
-		'_OffsetOf_PixelFormat' -> 16rC.
-		'_OffsetOf_Reserved' -> 16r14.
-		'_OffsetOf_Scan0' -> 16r10.
-		'_OffsetOf_Stride' -> 16r8.
-		'_OffsetOf_Width' -> 16r0
-	}!
+			'_BitmapData_Size' -> 16r18.
+			'_OffsetOf_Height' -> 16r4.
+			'_OffsetOf_PixelFormat' -> 16rC.
+			'_OffsetOf_Reserved' -> 16r14.
+			'_OffsetOf_Scan0' -> 16r10.
+			'_OffsetOf_Stride' -> 16r8.
+			'_OffsetOf_Width' -> 16r0
+		}!
 Graphics.Gdiplus.BitmapData guid: (Core.GUID fromString: '{8b358d63-cec7-4ae5-87c2-72d86f11e109}')!
 Graphics.Gdiplus.BitmapData comment: '<GpBitmapData> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpBitmapData'' from type information in the ''GDI+ Library 1.0'' library.
 

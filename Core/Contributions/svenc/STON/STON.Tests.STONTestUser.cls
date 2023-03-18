@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'STON.Tests.STONTestUser'
+Core.Object
+	subclass: #'STON.Tests.STONTestUser'
 	instanceVariableNames: 'username password enabled'
 	classVariableNames: ''
 	imports: #()

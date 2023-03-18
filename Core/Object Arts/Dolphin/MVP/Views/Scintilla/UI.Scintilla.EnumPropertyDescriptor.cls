@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Scintilla.PropertyDescriptor subclass: #'UI.Scintilla.EnumPropertyDescriptor'
+UI.Scintilla.PropertyDescriptor
+	subclass: #'UI.Scintilla.EnumPropertyDescriptor'
 	instanceVariableNames: 'values nilChoice type'
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.CheckButton subclass: #'UI.RadioButton'
+UI.CheckButton
+	subclass: #'UI.RadioButton'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

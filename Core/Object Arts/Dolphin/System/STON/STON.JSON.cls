@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'STON.JSON'
+Core.Object
+	subclass: #'STON.JSON'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

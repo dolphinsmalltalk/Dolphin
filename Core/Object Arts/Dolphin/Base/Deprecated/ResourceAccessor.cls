@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #ResourceAccessor
+Core.Object
+	subclass: #ResourceAccessor
 	instanceVariableNames: 'flags'
 	classVariableNames: 'ChangedMask'
 	imports: #()

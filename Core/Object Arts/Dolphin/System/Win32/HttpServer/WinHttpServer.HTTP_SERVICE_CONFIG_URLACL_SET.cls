@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_URLACL_SET'
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_URLACL_SET'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_SERVICE_CONFIG_URLACL_SET_Size' -> 16r8.
-		'_OffsetOf_KeyDesc' -> 16r0.
-		'_OffsetOf_ParamDesc' -> 16r4
-	}!
+			'_HTTP_SERVICE_CONFIG_URLACL_SET_Size' -> 16r8.
+			'_OffsetOf_KeyDesc' -> 16r0.
+			'_OffsetOf_ParamDesc' -> 16r4
+		}!
 WinHttpServer.HTTP_SERVICE_CONFIG_URLACL_SET guid: (Core.GUID fromString: '{8144c4ca-dfd3-4ed0-a83b-ad096bd611a4}')!
 WinHttpServer.HTTP_SERVICE_CONFIG_URLACL_SET comment: '`HTTP_SERVICE_CONFIG_URLACL_SET` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_URLACL_SET'' from type information in the ''Windows Http Server API'' library.
 

@@ -1,22 +1,23 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_DATA_CHUNK'
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_DATA_CHUNK'
 	instanceVariableNames: 'data'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_DATA_CHUNK_Size' -> 16r20.
-		'_OffsetOf_DataChunkType' -> 16r0.
-		'_OffsetOf_FromFileHandle_ByteRange' -> 16r8.
-		'_OffsetOf_FromFileHandle_FileHandle' -> 16r18.
-		'_OffsetOf_FromFragmentCache_FragmentNameLength' -> 16r8.
-		'_OffsetOf_FromFragmentCache_pFragmentName' -> 16rC.
-		'_OffsetOf_FromFragmentCacheEx_ByteRange' -> 16r8.
-		'_OffsetOf_FromFragmentCacheEx_pFragmentName' -> 16r18.
-		'_OffsetOf_FromMemory_BufferLength' -> 16rC.
-		'_OffsetOf_FromMemory_pBuffer' -> 16r8
-	}!
+			'_HTTP_DATA_CHUNK_Size' -> 16r20.
+			'_OffsetOf_DataChunkType' -> 16r0.
+			'_OffsetOf_FromFileHandle_ByteRange' -> 16r8.
+			'_OffsetOf_FromFileHandle_FileHandle' -> 16r18.
+			'_OffsetOf_FromFragmentCache_FragmentNameLength' -> 16r8.
+			'_OffsetOf_FromFragmentCache_pFragmentName' -> 16rC.
+			'_OffsetOf_FromFragmentCacheEx_ByteRange' -> 16r8.
+			'_OffsetOf_FromFragmentCacheEx_pFragmentName' -> 16r18.
+			'_OffsetOf_FromMemory_BufferLength' -> 16rC.
+			'_OffsetOf_FromMemory_pBuffer' -> 16r8
+		}!
 WinHttpServer.HTTP_DATA_CHUNK guid: (Core.GUID fromString: '{831e8135-6bb5-45e2-b278-10b1c489883a}')!
 WinHttpServer.HTTP_DATA_CHUNK comment: '`HTTP_DATA_CHUNK` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_DATA_CHUNK'' from type information in the ''Windows Http Server API'' library.
 

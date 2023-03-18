@@ -1,18 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.AbstractFORMATRANGE'
+OS.Win32Structure
+	subclass: #'OS.AbstractFORMATRANGE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_AbstractFORMATRANGE_Size' -> 16r28.
-		'_FORMATRANGE_Size' -> 16r30.
-		'_OffsetOf_hdc' -> 16r0.
-		'_OffsetOf_hdcTarget' -> 16r4.
-		'_OffsetOf_rc' -> 16r8.
-		'_OffsetOf_rcPage' -> 16r18
-	}!
+			'_AbstractFORMATRANGE_Size' -> 16r28.
+			'_FORMATRANGE_Size' -> 16r30.
+			'_OffsetOf_hdc' -> 16r0.
+			'_OffsetOf_hdcTarget' -> 16r4.
+			'_OffsetOf_rc' -> 16r8.
+			'_OffsetOf_rcPage' -> 16r18
+		}!
 OS.AbstractFORMATRANGE guid: (Core.GUID fromString: '{d3259bb1-8876-4dde-b997-5e49c79e4368}')!
 OS.AbstractFORMATRANGE isNonInstantiable: true!
 OS.AbstractFORMATRANGE comment: ''!

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Dialog subclass: #'Tools.CreateSubclassDialog'
+UI.Dialog
+	subclass: #'Tools.CreateSubclassDialog'
 	instanceVariableNames: 'packagesPresenter subclassesPresenter namePresenter namespacePresenter usePackagePresenter package superclassPresenter hintBubble isNonInstantiablePresenter isVariablePresenter isBytesPresenter attributesPresenter'
 	classVariableNames: ''
 	imports: #()

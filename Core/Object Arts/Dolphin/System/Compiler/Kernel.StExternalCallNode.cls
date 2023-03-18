@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.StTagNode subclass: #'Kernel.StExternalCallNode'
+Kernel.StTagNode
+	subclass: #'Kernel.StExternalCallNode'
 	instanceVariableNames: 'nameOrOrdinal returnType argumentTypes flags callingConvention'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'OverlappedMask' -> 16r1.
-		'VirtualMask' -> 16r2
-	}!
+	classConstants: { 'OverlappedMask' -> 16r1. 'VirtualMask' -> 16r2 }!
 Kernel.StExternalCallNode guid: (Core.GUID fromString: '{66add179-2714-4fbb-b856-33dee83e11f4}')!
 Kernel.StExternalCallNode comment: ''!
 !Kernel.StExternalCallNode categoriesForClass!System-Compiler! !

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.NumberToText subclass: #'UI.IntegerToText'
+UI.NumberToText
+	subclass: #'UI.IntegerToText'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

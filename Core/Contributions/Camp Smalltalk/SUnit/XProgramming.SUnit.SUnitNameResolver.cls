@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'XProgramming.SUnit.SUnitNameResolver'
+Core.Object
+	subclass: #'XProgramming.SUnit.SUnitNameResolver'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

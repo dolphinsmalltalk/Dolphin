@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.DOUBLE subclass: #'OS.COM.DATE'
+External.DOUBLE
+	subclass: #'OS.COM.DATE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})

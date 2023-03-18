@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ADODB.Fields20 subclass: #'ADODB.Fields'
+ADODB.Fields20
+	subclass: #'ADODB.Fields'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Canvas subclass: #'Graphics.PrinterCanvas'
+Graphics.Canvas
+	subclass: #'Graphics.PrinterCanvas'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

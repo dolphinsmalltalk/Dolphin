@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Address variableByteSubclass: #'External.Memory'
+External.Address
+	variableByteSubclass: #'External.Memory'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})

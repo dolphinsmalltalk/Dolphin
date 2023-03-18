@@ -27,7 +27,8 @@ package!
 
 "Class Definitions"!
 
-UI.StaticText subclass: #'UI.StaticPath'
+UI.StaticText
+	subclass: #'UI.StaticPath'
 	instanceVariableNames: 'text'
 	classVariableNames: ''
 	imports: #()

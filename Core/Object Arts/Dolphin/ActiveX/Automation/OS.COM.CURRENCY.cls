@@ -1,16 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.OLEStructure subclass: #'OS.COM.CURRENCY'
+OS.COM.OLEStructure
+	subclass: #'OS.COM.CURRENCY'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_CURRENCY_Size' -> 16r8.
-		'_OffsetOf_cy' -> 16r0.
-		'MaxValue' -> 922337203685477.5807s.
-		'MinValue' -> -922337203685477.5808s
-	}!
+			'_CURRENCY_Size' -> 16r8.
+			'_OffsetOf_cy' -> 16r0.
+			'MaxValue' -> 922337203685477.5807s.
+			'MinValue' -> -922337203685477.5808s
+		}!
 OS.COM.CURRENCY guid: (Core.GUID fromString: '{bbe7e662-de98-4ae2-b820-bae3e3c6127a}')!
 OS.COM.CURRENCY comment: '`CURRENCY` is an `External.Structure` class to represent the Automation structure of the same name.
 

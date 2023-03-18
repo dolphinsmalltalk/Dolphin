@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.DynamicLinkLibrary subclass: #'WebView2.WebView2Loader'
+External.DynamicLinkLibrary
+	subclass: #'WebView2.WebView2Loader'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

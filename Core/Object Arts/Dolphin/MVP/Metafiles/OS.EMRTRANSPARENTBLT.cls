@@ -1,30 +1,31 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMRTRANSPARENTBLT'
+OS.ENHMETARECORD
+	subclass: #'OS.EMRTRANSPARENTBLT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_EMRTRANSPARENTBLT_Size' -> 16r6C.
-		'_OffsetOf_cbBitsSrc' -> 16r60.
-		'_OffsetOf_cbBmiSrc' -> 16r58.
-		'_OffsetOf_crBkColorSrc' -> 16r4C.
-		'_OffsetOf_cxDest' -> 16r20.
-		'_OffsetOf_cxSrc' -> 16r64.
-		'_OffsetOf_cyDest' -> 16r24.
-		'_OffsetOf_cySrc' -> 16r68.
-		'_OffsetOf_dwRop' -> 16r28.
-		'_OffsetOf_iUsageSrc' -> 16r50.
-		'_OffsetOf_offBitsSrc' -> 16r5C.
-		'_OffsetOf_offBmiSrc' -> 16r54.
-		'_OffsetOf_rclBounds' -> 16r8.
-		'_OffsetOf_xDest' -> 16r18.
-		'_OffsetOf_xformSrc' -> 16r34.
-		'_OffsetOf_xSrc' -> 16r2C.
-		'_OffsetOf_yDest' -> 16r1C.
-		'_OffsetOf_ySrc' -> 16r30
-	}!
+			'_EMRTRANSPARENTBLT_Size' -> 16r6C.
+			'_OffsetOf_cbBitsSrc' -> 16r60.
+			'_OffsetOf_cbBmiSrc' -> 16r58.
+			'_OffsetOf_crBkColorSrc' -> 16r4C.
+			'_OffsetOf_cxDest' -> 16r20.
+			'_OffsetOf_cxSrc' -> 16r64.
+			'_OffsetOf_cyDest' -> 16r24.
+			'_OffsetOf_cySrc' -> 16r68.
+			'_OffsetOf_dwRop' -> 16r28.
+			'_OffsetOf_iUsageSrc' -> 16r50.
+			'_OffsetOf_offBitsSrc' -> 16r5C.
+			'_OffsetOf_offBmiSrc' -> 16r54.
+			'_OffsetOf_rclBounds' -> 16r8.
+			'_OffsetOf_xDest' -> 16r18.
+			'_OffsetOf_xformSrc' -> 16r34.
+			'_OffsetOf_xSrc' -> 16r2C.
+			'_OffsetOf_yDest' -> 16r1C.
+			'_OffsetOf_ySrc' -> 16r30
+		}!
 OS.EMRTRANSPARENTBLT guid: (Core.GUID fromString: '{e45acb58-6465-4c29-84da-a3b8e0b9b384}')!
 OS.EMRTRANSPARENTBLT comment: '<EMRTRANSPARENTBLT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRTRANSPARENTBLT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

@@ -34,19 +34,22 @@ package!
 
 "Class Definitions"!
 
-Core.Object subclass: #'UI.Examples.Ball'
+Core.Object
+	subclass: #'UI.Examples.Ball'
 	instanceVariableNames: 'position velocity icon'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.RuntimeSessionManager subclass: #'UI.Examples.BouncingBallSessionManager'
+UI.RuntimeSessionManager
+	subclass: #'UI.Examples.BouncingBallSessionManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.DoubleBufferedView subclass: #'UI.Examples.BouncingBallView'
+UI.DoubleBufferedView
+	subclass: #'UI.Examples.BouncingBallView'
 	instanceVariableNames: 'balls stepProcess'
 	classVariableNames: ''
 	imports: #()

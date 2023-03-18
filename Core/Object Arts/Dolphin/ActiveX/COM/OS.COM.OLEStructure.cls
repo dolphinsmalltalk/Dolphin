@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'OS.COM.OLEStructure'
+External.Structure
+	subclass: #'OS.COM.OLEStructure'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.COM.OLEConstants})

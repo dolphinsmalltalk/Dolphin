@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ContainerView subclass: #'Tools.MenuComposerArena'
+UI.ContainerView
+	subclass: #'Tools.MenuComposerArena'
 	instanceVariableNames: 'dragImageList dragPoint dragMenuIndex dragSource _unused'
 	classVariableNames: ''
 	imports: #(#{OS.CommCtrlConstants})

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.ArrayField subclass: #'External.StringField'
+External.ArrayField
+	subclass: #'External.StringField'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -35,109 +35,114 @@ package!
 
 "Class Definitions"!
 
-Kernel.SharedPool subclass: #'OS.PrintDialogConstants'
+Kernel.SharedPool
+	subclass: #'OS.PrintDialogConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'PD_ALLPAGES' -> 16r0.
-		'PD_COLLATE' -> 16r10.
-		'PD_DISABLEPRINTTOFILE' -> 16r80000.
-		'PD_ENABLEPRINTHOOK' -> 16r1000.
-		'PD_ENABLEPRINTTEMPLATE' -> 16r4000.
-		'PD_ENABLEPRINTTEMPLATEHANDLE' -> 16r10000.
-		'PD_ENABLESETUPHOOK' -> 16r2000.
-		'PD_ENABLESETUPTEMPLATE' -> 16r8000.
-		'PD_ENABLESETUPTEMPLATEHANDLE' -> 16r20000.
-		'PD_HIDEPRINTTOFILE' -> 16r100000.
-		'PD_NONETWORKBUTTON' -> 16r200000.
-		'PD_NOPAGENUMS' -> 16r8.
-		'PD_NOSELECTION' -> 16r4.
-		'PD_NOWARNING' -> 16r80.
-		'PD_PAGENUMS' -> 16r2.
-		'PD_PRINTSETUP' -> 16r40.
-		'PD_PRINTTOFILE' -> 16r20.
-		'PD_RETURNDC' -> 16r100.
-		'PD_RETURNDEFAULT' -> 16r400.
-		'PD_RETURNIC' -> 16r200.
-		'PD_SELECTION' -> 16r1.
-		'PD_SHOWHELP' -> 16r800.
-		'PD_USEDEVMODECOPIES' -> 16r40000.
-		'PD_USEDEVMODECOPIESANDCOLLATE' -> 16r40000
-	}!
-UI.CommonDialog subclass: #'UI.PrintDialog'
+			'PD_ALLPAGES' -> 16r0.
+			'PD_COLLATE' -> 16r10.
+			'PD_DISABLEPRINTTOFILE' -> 16r80000.
+			'PD_ENABLEPRINTHOOK' -> 16r1000.
+			'PD_ENABLEPRINTTEMPLATE' -> 16r4000.
+			'PD_ENABLEPRINTTEMPLATEHANDLE' -> 16r10000.
+			'PD_ENABLESETUPHOOK' -> 16r2000.
+			'PD_ENABLESETUPTEMPLATE' -> 16r8000.
+			'PD_ENABLESETUPTEMPLATEHANDLE' -> 16r20000.
+			'PD_HIDEPRINTTOFILE' -> 16r100000.
+			'PD_NONETWORKBUTTON' -> 16r200000.
+			'PD_NOPAGENUMS' -> 16r8.
+			'PD_NOSELECTION' -> 16r4.
+			'PD_NOWARNING' -> 16r80.
+			'PD_PAGENUMS' -> 16r2.
+			'PD_PRINTSETUP' -> 16r40.
+			'PD_PRINTTOFILE' -> 16r20.
+			'PD_RETURNDC' -> 16r100.
+			'PD_RETURNDEFAULT' -> 16r400.
+			'PD_RETURNIC' -> 16r200.
+			'PD_SELECTION' -> 16r1.
+			'PD_SHOWHELP' -> 16r800.
+			'PD_USEDEVMODECOPIES' -> 16r40000.
+			'PD_USEDEVMODECOPIESANDCOLLATE' -> 16r40000
+		}!
+UI.CommonDialog
+	subclass: #'UI.PrintDialog'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.PrintDialogConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.Win32Structure subclass: #'OS.PRINTPAGERANGE'
+OS.Win32Structure
+	subclass: #'OS.PRINTPAGERANGE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_nFromPage' -> 16r0.
-		'_OffsetOf_nToPage' -> 16r4.
-		'_PRINTPAGERANGE_Size' -> 16r8
-	}!
-OS.CommonDialogStructure subclass: #'OS.PRINTDLGEXW'
+			'_OffsetOf_nFromPage' -> 16r0.
+			'_OffsetOf_nToPage' -> 16r4.
+			'_PRINTPAGERANGE_Size' -> 16r8
+		}!
+OS.CommonDialogStructure
+	subclass: #'OS.PRINTDLGEXW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_dwResultAction' -> 16r50.
-		'_OffsetOf_ExclusionFlags' -> 16r1C.
-		'_OffsetOf_flags' -> 16r14.
-		'_OffsetOf_Flags2' -> 16r18.
-		'_OffsetOf_hDC' -> 16r10.
-		'_OffsetOf_hDevMode' -> 16r8.
-		'_OffsetOf_hDevNames' -> 16rC.
-		'_OffsetOf_hInstance' -> 16r38.
-		'_OffsetOf_hwndOwner' -> 16r4.
-		'_OffsetOf_lpCallback' -> 16r40.
-		'_OffsetOf_lphPropertyPages' -> 16r48.
-		'_OffsetOf_lpPageRanges' -> 16r28.
-		'_OffsetOf_lpPrintTemplateName' -> 16r3C.
-		'_OffsetOf_lStructSize' -> 16r0.
-		'_OffsetOf_nCopies' -> 16r34.
-		'_OffsetOf_nMaxPage' -> 16r30.
-		'_OffsetOf_nMaxPageRanges' -> 16r24.
-		'_OffsetOf_nMinPage' -> 16r2C.
-		'_OffsetOf_nPageRanges' -> 16r20.
-		'_OffsetOf_nPropertyPages' -> 16r44.
-		'_OffsetOf_nStartPage' -> 16r4C.
-		'_PRINTDLGEXW_Size' -> 16r54
-	}!
-OS.CommonDialogStructure subclass: #'OS.PRINTDLGW'
+			'_OffsetOf_dwResultAction' -> 16r50.
+			'_OffsetOf_ExclusionFlags' -> 16r1C.
+			'_OffsetOf_flags' -> 16r14.
+			'_OffsetOf_Flags2' -> 16r18.
+			'_OffsetOf_hDC' -> 16r10.
+			'_OffsetOf_hDevMode' -> 16r8.
+			'_OffsetOf_hDevNames' -> 16rC.
+			'_OffsetOf_hInstance' -> 16r38.
+			'_OffsetOf_hwndOwner' -> 16r4.
+			'_OffsetOf_lpCallback' -> 16r40.
+			'_OffsetOf_lphPropertyPages' -> 16r48.
+			'_OffsetOf_lpPageRanges' -> 16r28.
+			'_OffsetOf_lpPrintTemplateName' -> 16r3C.
+			'_OffsetOf_lStructSize' -> 16r0.
+			'_OffsetOf_nCopies' -> 16r34.
+			'_OffsetOf_nMaxPage' -> 16r30.
+			'_OffsetOf_nMaxPageRanges' -> 16r24.
+			'_OffsetOf_nMinPage' -> 16r2C.
+			'_OffsetOf_nPageRanges' -> 16r20.
+			'_OffsetOf_nPropertyPages' -> 16r44.
+			'_OffsetOf_nStartPage' -> 16r4C.
+			'_PRINTDLGEXW_Size' -> 16r54
+		}!
+OS.CommonDialogStructure
+	subclass: #'OS.PRINTDLGW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.PrintDialogConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_flags' -> 16r14.
-		'_OffsetOf_hDC' -> 16r10.
-		'_OffsetOf_hDevMode' -> 16r8.
-		'_OffsetOf_hDevNames' -> 16rC.
-		'_OffsetOf_hInstance' -> 16r22.
-		'_OffsetOf_hPrintTemplate' -> 16r3A.
-		'_OffsetOf_hSetupTemplate' -> 16r3E.
-		'_OffsetOf_hwndOwner' -> 16r4.
-		'_OffsetOf_lCustData' -> 16r26.
-		'_OffsetOf_lpfnHook' -> 16r2A.
-		'_OffsetOf_lpfnSetupHook' -> 16r2E.
-		'_OffsetOf_lpPrintTemplateName' -> 16r32.
-		'_OffsetOf_lpSetupTemplateName' -> 16r36.
-		'_OffsetOf_nCopies' -> 16r20.
-		'_OffsetOf_nFromPage' -> 16r18.
-		'_OffsetOf_nMaxPage' -> 16r1E.
-		'_OffsetOf_nMinPage' -> 16r1C.
-		'_OffsetOf_nToPage' -> 16r1A.
-		'_PRINTDLGW_Size' -> 16r42
-	}!
+			'_OffsetOf_dwSize' -> 16r0.
+			'_OffsetOf_flags' -> 16r14.
+			'_OffsetOf_hDC' -> 16r10.
+			'_OffsetOf_hDevMode' -> 16r8.
+			'_OffsetOf_hDevNames' -> 16rC.
+			'_OffsetOf_hInstance' -> 16r22.
+			'_OffsetOf_hPrintTemplate' -> 16r3A.
+			'_OffsetOf_hSetupTemplate' -> 16r3E.
+			'_OffsetOf_hwndOwner' -> 16r4.
+			'_OffsetOf_lCustData' -> 16r26.
+			'_OffsetOf_lpfnHook' -> 16r2A.
+			'_OffsetOf_lpfnSetupHook' -> 16r2E.
+			'_OffsetOf_lpPrintTemplateName' -> 16r32.
+			'_OffsetOf_lpSetupTemplateName' -> 16r36.
+			'_OffsetOf_nCopies' -> 16r20.
+			'_OffsetOf_nFromPage' -> 16r18.
+			'_OffsetOf_nMaxPage' -> 16r1E.
+			'_OffsetOf_nMinPage' -> 16r1C.
+			'_OffsetOf_nToPage' -> 16r1A.
+			'_PRINTDLGW_Size' -> 16r42
+		}!
 
 "Loose Methods"!
 

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-VBScript.IRegExpAbstract subclass: #'VBScript.IRegExp2'
+VBScript.IRegExpAbstract
+	subclass: #'VBScript.IRegExp2'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

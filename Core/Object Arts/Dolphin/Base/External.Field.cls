@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.AttributeDescriptor subclass: #'External.Field'
+Kernel.AttributeDescriptor
+	subclass: #'External.Field'
 	instanceVariableNames: 'offset structClass'
 	classVariableNames: ''
 	imports: #()

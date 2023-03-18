@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ValueDialog subclass: #'UI.CommonDialog'
+UI.ValueDialog
+	subclass: #'UI.CommonDialog'
 	instanceVariableNames: 'winStruct hook'
 	classVariableNames: 'HookCallbackDescriptor'
 	imports: #(#{OS.CommonDialogConstants})

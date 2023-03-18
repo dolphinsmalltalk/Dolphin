@@ -44,69 +44,67 @@ package!
 
 "Class Definitions"!
 
-Kernel.SharedPool subclass: #'OS.UpDownControlConstants'
+Kernel.SharedPool
+	subclass: #'OS.UpDownControlConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'UD_MAXVAL' -> 16r7FFF.
-		'UD_MINVAL' -> -16r7FFF.
-		'UDM_GETACCEL' -> 16r46C.
-		'UDM_GETBASE' -> 16r46E.
-		'UDM_GETBUDDY' -> 16r46A.
-		'UDM_GETPOS' -> 16r468.
-		'UDM_GETPOS32' -> 16r472.
-		'UDM_GETRANGE' -> 16r466.
-		'UDM_GETRANGE32' -> 16r470.
-		'UDM_SETACCEL' -> 16r46B.
-		'UDM_SETBASE' -> 16r46D.
-		'UDM_SETBUDDY' -> 16r469.
-		'UDM_SETPOS' -> 16r467.
-		'UDM_SETPOS32' -> 16r471.
-		'UDM_SETRANGE' -> 16r465.
-		'UDM_SETRANGE32' -> 16r46F.
-		'UDN_DELTAPOS' -> -16r2D2.
-		'UDN_FIRST' -> -16r2D1.
-		'UDN_LAST' -> -16r2E4.
-		'UDS_ALIGNLEFT' -> 16r8.
-		'UDS_ALIGNRIGHT' -> 16r4.
-		'UDS_ARROWKEYS' -> 16r20.
-		'UDS_AUTOBUDDY' -> 16r10.
-		'UDS_HORZ' -> 16r40.
-		'UDS_HOTTRACK' -> 16r100.
-		'UDS_NOTHOUSANDS' -> 16r80.
-		'UDS_SETBUDDYINT' -> 16r2.
-		'UDS_WRAP' -> 16r1
-	}!
-OS.Win32Structure subclass: #'OS.UDACCEL'
+			'UD_MAXVAL' -> 16r7FFF.
+			'UD_MINVAL' -> -16r7FFF.
+			'UDM_GETACCEL' -> 16r46C.
+			'UDM_GETBASE' -> 16r46E.
+			'UDM_GETBUDDY' -> 16r46A.
+			'UDM_GETPOS' -> 16r468.
+			'UDM_GETPOS32' -> 16r472.
+			'UDM_GETRANGE' -> 16r466.
+			'UDM_GETRANGE32' -> 16r470.
+			'UDM_SETACCEL' -> 16r46B.
+			'UDM_SETBASE' -> 16r46D.
+			'UDM_SETBUDDY' -> 16r469.
+			'UDM_SETPOS' -> 16r467.
+			'UDM_SETPOS32' -> 16r471.
+			'UDM_SETRANGE' -> 16r465.
+			'UDM_SETRANGE32' -> 16r46F.
+			'UDN_DELTAPOS' -> -16r2D2.
+			'UDN_FIRST' -> -16r2D1.
+			'UDN_LAST' -> -16r2E4.
+			'UDS_ALIGNLEFT' -> 16r8.
+			'UDS_ALIGNRIGHT' -> 16r4.
+			'UDS_ARROWKEYS' -> 16r20.
+			'UDS_AUTOBUDDY' -> 16r10.
+			'UDS_HORZ' -> 16r40.
+			'UDS_HOTTRACK' -> 16r100.
+			'UDS_NOTHOUSANDS' -> 16r80.
+			'UDS_SETBUDDYINT' -> 16r2.
+			'UDS_WRAP' -> 16r1
+		}!
+OS.Win32Structure
+	subclass: #'OS.UDACCEL'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_OffsetOf_nInc' -> 16r4.
-		'_OffsetOf_nSec' -> 16r0.
-		'_UDACCEL_Size' -> 16r8
-	}!
-OS.NMHDR subclass: #'OS.NMUPDOWN'
+	classConstants: { '_OffsetOf_nInc' -> 16r4. '_OffsetOf_nSec' -> 16r0. '_UDACCEL_Size' -> 16r8 }!
+OS.NMHDR
+	subclass: #'OS.NMUPDOWN'
 	instanceVariableNames: 'allow'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_NMUPDOWN_Size' -> 16r14.
-		'_OffsetOf_iDelta' -> 16r10.
-		'_OffsetOf_iPos' -> 16rC
-	}!
-UI.ValueConvertingControlView subclass: #'UI.SpinButton'
+	classConstants: { '_NMUPDOWN_Size' -> 16r14. '_OffsetOf_iDelta' -> 16r10. '_OffsetOf_iPos' -> 16rC }!
+UI.ValueConvertingControlView
+	subclass: #'UI.SpinButton'
 	instanceVariableNames: ''
-	classVariableNames: 'AlignmentMap'
+	classVariableNames: ''
 	imports: #(#{OS.UpDownControlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'AlignmentMask' -> 16rC
-	}!
+			'AlignmentMap'
+				-> (IdentityDictionary withAll: { #left -> 16r8. #right -> 16r4. #unattached -> 16r0 }).
+			'AlignmentMask' -> 16rC
+		}!
 
 "Loose Methods"!
 

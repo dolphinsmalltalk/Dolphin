@@ -1,13 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Graphics.Gdiplus.Initializer'
+Core.Object
+	subclass: #'Graphics.Gdiplus.Initializer'
 	instanceVariableNames: ''
 	classVariableNames: 'UncachedAttributeValue'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'AnchorCapNames' -> #('LineCapNoAnchor' 'LineCapSquareAnchor' 'LineCapRoundAnchor' 'LineCapDiamondAnchor' 'LineCapArrowAnchor')
-	}!
+			'AnchorCapNames'
+				-> #('LineCapNoAnchor' 'LineCapSquareAnchor' 'LineCapRoundAnchor' 'LineCapDiamondAnchor' 'LineCapArrowAnchor')
+		}!
 Graphics.Gdiplus.Initializer guid: (Core.GUID fromString: '{4687fd64-6607-4be7-b45b-f533ef511bc5}')!
 Graphics.Gdiplus.Initializer isNonInstantiable: true!
 Graphics.Gdiplus.Initializer comment: 'An instance of GdiplusInitializer serves as a proxy for a GdiplusBase factory.  Instances of subclasses contain enough information to create and recreate a corresponding GdiplusBase subclass instance. '!

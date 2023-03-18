@@ -37,67 +37,78 @@ package!
 
 "Class Definitions"!
 
-Core.Object subclass: #'UI.ValidationResult'
+Core.Object
+	subclass: #'UI.ValidationResult'
 	instanceVariableNames: 'value caption hint presenter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Model subclass: #'UI.AspectBuffer'
+Core.Model
+	subclass: #'UI.AspectBuffer'
 	instanceVariableNames: 'subject subjectCopy aspects gate validater'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Model subclass: #'UI.ValueModel'
+Core.Model
+	subclass: #'UI.ValueModel'
 	instanceVariableNames: 'settingValue comparisonPolicy'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.ValueModel subclass: #'UI.ValueAdaptor'
+UI.ValueModel
+	subclass: #'UI.ValueAdaptor'
 	instanceVariableNames: 'subject'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.ValueModel subclass: #'UI.ValueConverter'
+UI.ValueModel
+	subclass: #'UI.ValueConverter'
 	instanceVariableNames: 'subject typeConverter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.ValueModel subclass: #'UI.ValueHolder'
+UI.ValueModel
+	subclass: #'UI.ValueHolder'
 	instanceVariableNames: 'value'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.ValueAdaptor subclass: #'UI.CompositeValueAdaptor'
+UI.ValueAdaptor
+	subclass: #'UI.CompositeValueAdaptor'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.ValueAdaptor subclass: #'UI.ValueAspectAdaptor'
+UI.ValueAdaptor
+	subclass: #'UI.ValueAspectAdaptor'
 	instanceVariableNames: 'aspect putSelector getSelector'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.ValueAdaptor subclass: #'UI.ValueKeyedAdaptor'
+UI.ValueAdaptor
+	subclass: #'UI.ValueKeyedAdaptor'
 	instanceVariableNames: 'key putSelector getSelector'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.ValueAspectAdaptor subclass: #'UI.ValueModelAspectAdaptor'
+UI.ValueAspectAdaptor
+	subclass: #'UI.ValueModelAspectAdaptor'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.ValueHolder subclass: #'UI.ValueBuffer'
+UI.ValueHolder
+	subclass: #'UI.ValueBuffer'
 	instanceVariableNames: 'subject modified gate validater'
 	classVariableNames: ''
 	imports: #()

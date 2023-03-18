@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'UI.RichText'
+Core.Object
+	subclass: #'UI.RichText'
 	instanceVariableNames: 'rtf'
 	classVariableNames: 'Converter ConverterMutex'
 	imports: #()

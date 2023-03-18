@@ -23,7 +23,8 @@ package!
 
 "Class Definitions"!
 
-Kernel.ClassBuilder subclass: #'Kernel.AnonymousClassBuilder'
+Kernel.ClassBuilder
+	subclass: #'Kernel.AnonymousClassBuilder'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

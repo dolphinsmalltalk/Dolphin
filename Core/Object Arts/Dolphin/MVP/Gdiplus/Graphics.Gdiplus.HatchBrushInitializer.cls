@@ -1,13 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.BrushInitializer subclass: #'Graphics.Gdiplus.HatchBrushInitializer'
+Graphics.Gdiplus.BrushInitializer
+	subclass: #'Graphics.Gdiplus.HatchBrushInitializer'
 	instanceVariableNames: 'hatchStyle forecolor backcolor'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'HatchStyleNames' -> #('HatchStyleHorizontal' 'HatchStyleVertical' 'HatchStyleForwardDiagonal' 'HatchStyleBackwardDiagonal' 'HatchStyleCross' 'HatchStyleDiagonalCross' 'HatchStyle05Percent' 'HatchStyle10Percent' 'HatchStyle20Percent' 'HatchStyle25Percent' 'HatchStyle30Percent' 'HatchStyle40Percent' 'HatchStyle50Percent' 'HatchStyle60Percent' 'HatchStyle70Percent' 'HatchStyle75Percent' 'HatchStyle80Percent' 'HatchStyle90Percent' 'HatchStyleLightDownwardDiagonal' 'HatchStyleLightUpwardDiagonal' 'HatchStyleDarkDownwardDiagonal' 'HatchStyleDarkUpwardDiagonal' 'HatchStyleWideDownwardDiagonal' 'HatchStyleWideUpwardDiagonal' 'HatchStyleLightVertical' 'HatchStyleLightHorizontal' 'HatchStyleNarrowVertical' 'HatchStyleNarrowHorizontal' 'HatchStyleDarkVertical' 'HatchStyleDarkHorizontal' 'HatchStyleDashedDownwardDiagonal' 'HatchStyleDashedUpwardDiagonal' 'HatchStyleDashedHorizontal' 'HatchStyleDashedVertical' 'HatchStyleSmallConfetti' 'HatchStyleLargeConfetti' 'HatchStyleZigZag' 'HatchStyleWave' 'HatchStyleDiagonalBrick' 'HatchStyleHorizontalBrick' 'HatchStyleWeave' 'HatchStylePlaid' 'HatchStyleDivot' 'HatchStyleDottedGrid' 'HatchStyleDottedDiamond' 'HatchStyleShingle' 'HatchStyleTrellis' 'HatchStyleSphere' 'HatchStyleSmallGrid' 'HatchStyleSmallCheckerBoard' 'HatchStyleLargeCheckerBoard' 'HatchStyleOutlinedDiamond' 'HatchStyleSolidDiamond')
-	}!
+			'HatchStyleNames'
+				-> #('HatchStyleHorizontal' 'HatchStyleVertical' 'HatchStyleForwardDiagonal' 'HatchStyleBackwardDiagonal' 'HatchStyleCross' 'HatchStyleDiagonalCross' 'HatchStyle05Percent' 'HatchStyle10Percent' 'HatchStyle20Percent' 'HatchStyle25Percent' 'HatchStyle30Percent' 'HatchStyle40Percent' 'HatchStyle50Percent' 'HatchStyle60Percent' 'HatchStyle70Percent' 'HatchStyle75Percent' 'HatchStyle80Percent' 'HatchStyle90Percent' 'HatchStyleLightDownwardDiagonal' 'HatchStyleLightUpwardDiagonal' 'HatchStyleDarkDownwardDiagonal' 'HatchStyleDarkUpwardDiagonal' 'HatchStyleWideDownwardDiagonal' 'HatchStyleWideUpwardDiagonal' 'HatchStyleLightVertical' 'HatchStyleLightHorizontal' 'HatchStyleNarrowVertical' 'HatchStyleNarrowHorizontal' 'HatchStyleDarkVertical' 'HatchStyleDarkHorizontal' 'HatchStyleDashedDownwardDiagonal' 'HatchStyleDashedUpwardDiagonal' 'HatchStyleDashedHorizontal' 'HatchStyleDashedVertical' 'HatchStyleSmallConfetti' 'HatchStyleLargeConfetti' 'HatchStyleZigZag' 'HatchStyleWave' 'HatchStyleDiagonalBrick' 'HatchStyleHorizontalBrick' 'HatchStyleWeave' 'HatchStylePlaid' 'HatchStyleDivot' 'HatchStyleDottedGrid' 'HatchStyleDottedDiamond' 'HatchStyleShingle' 'HatchStyleTrellis' 'HatchStyleSphere' 'HatchStyleSmallGrid' 'HatchStyleSmallCheckerBoard' 'HatchStyleLargeCheckerBoard' 'HatchStyleOutlinedDiamond' 'HatchStyleSolidDiamond')
+		}!
 Graphics.Gdiplus.HatchBrushInitializer guid: (Core.GUID fromString: '{1a1a5ea5-6151-11d7-b609-00e0987e8081}')!
 Graphics.Gdiplus.HatchBrushInitializer comment: ''!
 !Graphics.Gdiplus.HatchBrushInitializer methodsFor!

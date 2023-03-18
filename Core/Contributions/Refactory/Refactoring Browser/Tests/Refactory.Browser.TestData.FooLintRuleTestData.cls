@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.TestData.LintRuleTestData subclass: #'Refactory.Browser.TestData.FooLintRuleTestData'
+Refactory.Browser.TestData.LintRuleTestData
+	subclass: #'Refactory.Browser.TestData.FooLintRuleTestData'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

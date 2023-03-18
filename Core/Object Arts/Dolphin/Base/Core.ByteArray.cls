@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.ArrayedCollection variableByteSubclass: #'Core.ByteArray'
+Core.ArrayedCollection
+	variableByteSubclass: #'Core.ByteArray'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

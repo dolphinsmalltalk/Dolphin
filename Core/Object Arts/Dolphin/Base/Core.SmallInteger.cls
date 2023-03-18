@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Integer subclass: #'Core.SmallInteger'
+Core.Integer
+	subclass: #'Core.SmallInteger'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

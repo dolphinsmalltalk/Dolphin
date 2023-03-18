@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.FindDialog subclass: #'UI.FindReplaceDialog'
+UI.FindDialog
+	subclass: #'UI.FindReplaceDialog'
 	instanceVariableNames: 'replaceWith'
 	classVariableNames: ''
 	imports: #()

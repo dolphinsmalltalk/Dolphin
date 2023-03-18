@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IUnknown subclass: #'MSXML.ISAXDeclHandler'
+OS.COM.IUnknown
+	subclass: #'MSXML.ISAXDeclHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

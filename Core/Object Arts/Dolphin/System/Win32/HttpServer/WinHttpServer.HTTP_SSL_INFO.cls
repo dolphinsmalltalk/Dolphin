@@ -1,21 +1,22 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SSL_INFO'
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_SSL_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_SSL_INFO_Size' -> 16r1C.
-		'_OffsetOf_ConnectionKeySize' -> 16r2.
-		'_OffsetOf_pClientCertInfo' -> 16r14.
-		'_OffsetOf_pServerCertIssuer' -> 16rC.
-		'_OffsetOf_pServerCertSubject' -> 16r10.
-		'_OffsetOf_ServerCertIssuerSize' -> 16r4.
-		'_OffsetOf_ServerCertKeySize' -> 16r0.
-		'_OffsetOf_ServerCertSubjectSize' -> 16r8.
-		'_OffsetOf_SslClientCertNegotiated' -> 16r18
-	}!
+			'_HTTP_SSL_INFO_Size' -> 16r1C.
+			'_OffsetOf_ConnectionKeySize' -> 16r2.
+			'_OffsetOf_pClientCertInfo' -> 16r14.
+			'_OffsetOf_pServerCertIssuer' -> 16rC.
+			'_OffsetOf_pServerCertSubject' -> 16r10.
+			'_OffsetOf_ServerCertIssuerSize' -> 16r4.
+			'_OffsetOf_ServerCertKeySize' -> 16r0.
+			'_OffsetOf_ServerCertSubjectSize' -> 16r8.
+			'_OffsetOf_SslClientCertNegotiated' -> 16r18
+		}!
 WinHttpServer.HTTP_SSL_INFO guid: (Core.GUID fromString: '{fd0d6f69-8afe-4748-a88b-9fb70593dfc8}')!
 WinHttpServer.HTTP_SSL_INFO comment: '`HTTP_SSL_INFO` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_SSL_INFO'' from type information in the ''Windows Http Server API'' library.
 

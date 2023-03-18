@@ -1,20 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'OS.ODBCTIMESTAMP'
+External.Structure
+	subclass: #'OS.ODBCTIMESTAMP'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_ODBCTIMESTAMP_Size' -> 16r10.
-		'_OffsetOf_day' -> 16r4.
-		'_OffsetOf_fraction' -> 16rC.
-		'_OffsetOf_hour' -> 16r6.
-		'_OffsetOf_minute' -> 16r8.
-		'_OffsetOf_month' -> 16r2.
-		'_OffsetOf_second' -> 16rA.
-		'_OffsetOf_year' -> 16r0
-	}!
+			'_ODBCTIMESTAMP_Size' -> 16r10.
+			'_OffsetOf_day' -> 16r4.
+			'_OffsetOf_fraction' -> 16rC.
+			'_OffsetOf_hour' -> 16r6.
+			'_OffsetOf_minute' -> 16r8.
+			'_OffsetOf_month' -> 16r2.
+			'_OffsetOf_second' -> 16rA.
+			'_OffsetOf_year' -> 16r0
+		}!
 OS.ODBCTIMESTAMP guid: (Core.GUID fromString: '{87b4c599-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.ODBCTIMESTAMP comment: 'ODBCTIMESTAMP is a representation of the same named Win32 ODBC structure.
 

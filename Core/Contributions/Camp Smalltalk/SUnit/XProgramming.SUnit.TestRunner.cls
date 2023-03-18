@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Shell subclass: #'XProgramming.SUnit.TestRunner'
+UI.Shell
+	subclass: #'XProgramming.SUnit.TestRunner'
 	instanceVariableNames: 'result lastPass'
 	classVariableNames: ''
 	imports: #()

@@ -1,27 +1,28 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMRSETDIBITSTODEVICE'
+OS.ENHMETARECORD
+	subclass: #'OS.EMRSETDIBITSTODEVICE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_EMRSETDIBITSTODEVICE_Size' -> 16r4C.
-		'_OffsetOf_cbBitsSrc' -> 16r3C.
-		'_OffsetOf_cbBmiSrc' -> 16r34.
-		'_OffsetOf_cScans' -> 16r48.
-		'_OffsetOf_cxSrc' -> 16r28.
-		'_OffsetOf_cySrc' -> 16r2C.
-		'_OffsetOf_iStartScan' -> 16r44.
-		'_OffsetOf_iUsageSrc' -> 16r40.
-		'_OffsetOf_offBitsSrc' -> 16r38.
-		'_OffsetOf_offBmiSrc' -> 16r30.
-		'_OffsetOf_rclBounds' -> 16r8.
-		'_OffsetOf_xDest' -> 16r18.
-		'_OffsetOf_xSrc' -> 16r20.
-		'_OffsetOf_yDest' -> 16r1C.
-		'_OffsetOf_ySrc' -> 16r24
-	}!
+			'_EMRSETDIBITSTODEVICE_Size' -> 16r4C.
+			'_OffsetOf_cbBitsSrc' -> 16r3C.
+			'_OffsetOf_cbBmiSrc' -> 16r34.
+			'_OffsetOf_cScans' -> 16r48.
+			'_OffsetOf_cxSrc' -> 16r28.
+			'_OffsetOf_cySrc' -> 16r2C.
+			'_OffsetOf_iStartScan' -> 16r44.
+			'_OffsetOf_iUsageSrc' -> 16r40.
+			'_OffsetOf_offBitsSrc' -> 16r38.
+			'_OffsetOf_offBmiSrc' -> 16r30.
+			'_OffsetOf_rclBounds' -> 16r8.
+			'_OffsetOf_xDest' -> 16r18.
+			'_OffsetOf_xSrc' -> 16r20.
+			'_OffsetOf_yDest' -> 16r1C.
+			'_OffsetOf_ySrc' -> 16r24
+		}!
 OS.EMRSETDIBITSTODEVICE guid: (Core.GUID fromString: '{3929212b-c9b8-4281-b17e-91160985d892}')!
 OS.EMRSETDIBITSTODEVICE comment: '<EMRSETDIBITSTODEVICE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETDIBITSTODEVICE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WinHttpServer.HTTP_PROPERTY_FLAGS subclass: #'WinHttpServer.HTTP_STATE_INFO'
+WinHttpServer.HTTP_PROPERTY_FLAGS
+	subclass: #'WinHttpServer.HTTP_STATE_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_HTTP_STATE_INFO_Size' -> 16r8.
-		'_OffsetOf_State' -> 16r4
-	}!
+	classConstants: { '_HTTP_STATE_INFO_Size' -> 16r8. '_OffsetOf_State' -> 16r4 }!
 WinHttpServer.HTTP_STATE_INFO guid: (Core.GUID fromString: '{5dc84435-3eb8-42fe-94bf-25f253e612fd}')!
 WinHttpServer.HTTP_STATE_INFO comment: '`HTTP_STATE_INFO` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_STATE_INFO'' from type information in the ''Windows Http Server API'' library.
 

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.MatrixInitializer'
+Graphics.Gdiplus.Initializer
+	subclass: #'Graphics.Gdiplus.MatrixInitializer'
 	instanceVariableNames: 'elements'
 	classVariableNames: ''
 	imports: #()

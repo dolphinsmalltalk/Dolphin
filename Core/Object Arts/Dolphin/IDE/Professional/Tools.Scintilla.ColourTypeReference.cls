@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.Scintilla.TypeReference subclass: #'Tools.Scintilla.ColourTypeReference'
+Tools.Scintilla.TypeReference
+	subclass: #'Tools.Scintilla.ColourTypeReference'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

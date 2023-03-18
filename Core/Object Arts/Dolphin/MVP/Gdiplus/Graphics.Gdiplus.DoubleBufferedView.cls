@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.View subclass: #'Graphics.Gdiplus.DoubleBufferedView'
+UI.View
+	subclass: #'Graphics.Gdiplus.DoubleBufferedView'
 	instanceVariableNames: 'backSurface requiresRender graphics'
 	classVariableNames: ''
 	imports: #()

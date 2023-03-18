@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.TransformableBrushInitializer subclass: #'Graphics.Gdiplus.TextureBrushInitializer'
+Graphics.Gdiplus.TransformableBrushInitializer
+	subclass: #'Graphics.Gdiplus.TextureBrushInitializer'
 	instanceVariableNames: 'image rectangle'
 	classVariableNames: ''
 	imports: #()

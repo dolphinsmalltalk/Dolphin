@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #Resource
+Core.Object
+	subclass: #Resource
 	instanceVariableNames: 'accessor icon'
 	classVariableNames: ''
 	imports: #()

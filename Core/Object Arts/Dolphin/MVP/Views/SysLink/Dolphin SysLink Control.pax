@@ -45,70 +45,69 @@ package!
 
 "Class Definitions"!
 
-Kernel.SharedPool subclass: #'OS.SysLinkConstants'
+Kernel.SharedPool
+	subclass: #'OS.SysLinkConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'ICC_LINK_CLASS' -> 16r8000.
-		'INVALID_LINK_INDEX' -> -16r1.
-		'L_MAX_URL_LENGTH' -> 16r824.
-		'LIF_ITEMID' -> 16r4.
-		'LIF_ITEMINDEX' -> 16r1.
-		'LIF_STATE' -> 16r2.
-		'LIF_URL' -> 16r8.
-		'LIS_ENABLED' -> 16r2.
-		'LIS_FOCUSED' -> 16r1.
-		'LIS_VISITED' -> 16r4.
-		'LM_GETIDEALHEIGHT' -> 16r701.
-		'LM_GETITEM' -> 16r703.
-		'LM_HITTEST' -> 16r700.
-		'LM_SETITEM' -> 16r702.
-		'LWS_IGNORERETURN' -> 16r2.
-		'LWS_TRANSPARENT' -> 16r1.
-		'MAX_LINKID_TEXT' -> 16r30
-	}!
-OS.Win32Structure subclass: #'OS.LHITTESTINFO'
+			'ICC_LINK_CLASS' -> 16r8000.
+			'INVALID_LINK_INDEX' -> -16r1.
+			'L_MAX_URL_LENGTH' -> 16r824.
+			'LIF_ITEMID' -> 16r4.
+			'LIF_ITEMINDEX' -> 16r1.
+			'LIF_STATE' -> 16r2.
+			'LIF_URL' -> 16r8.
+			'LIS_ENABLED' -> 16r2.
+			'LIS_FOCUSED' -> 16r1.
+			'LIS_VISITED' -> 16r4.
+			'LM_GETIDEALHEIGHT' -> 16r701.
+			'LM_GETITEM' -> 16r703.
+			'LM_HITTEST' -> 16r700.
+			'LM_SETITEM' -> 16r702.
+			'LWS_IGNORERETURN' -> 16r2.
+			'LWS_TRANSPARENT' -> 16r1.
+			'MAX_LINKID_TEXT' -> 16r30
+		}!
+OS.Win32Structure
+	subclass: #'OS.LHITTESTINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_LHITTESTINFO_Size' -> 16r10C0.
-		'_OffsetOf_item' -> 16r8.
-		'_OffsetOf_pt' -> 16r0
-	}!
-OS.Win32Structure subclass: #'OS.LITEM'
+	classConstants: { '_LHITTESTINFO_Size' -> 16r10C0. '_OffsetOf_item' -> 16r8. '_OffsetOf_pt' -> 16r0 }!
+OS.Win32Structure
+	subclass: #'OS.LITEM'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.SysLinkConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_LITEM_Size' -> 16r10B8.
-		'_OffsetOf_iLink' -> 16r4.
-		'_OffsetOf_mask' -> 16r0.
-		'_OffsetOf_state' -> 16r8.
-		'_OffsetOf_stateMask' -> 16rC.
-		'_OffsetOf_szID' -> 16r10.
-		'_OffsetOf_szURL' -> 16r70
-	}!
-OS.NMHDR subclass: #'OS.NMLINK'
+			'_LITEM_Size' -> 16r10B8.
+			'_OffsetOf_iLink' -> 16r4.
+			'_OffsetOf_mask' -> 16r0.
+			'_OffsetOf_state' -> 16r8.
+			'_OffsetOf_stateMask' -> 16rC.
+			'_OffsetOf_szID' -> 16r10.
+			'_OffsetOf_szURL' -> 16r70
+		}!
+OS.NMHDR
+	subclass: #'OS.NMLINK'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_NMLINK_Size' -> 16r10C4.
-		'_OffsetOf_item' -> 16rC
-	}!
-UI.CommandButton subclass: #'UI.LinkButton'
+	classConstants: { '_NMLINK_Size' -> 16r10C4. '_OffsetOf_item' -> 16rC }!
+UI.CommandButton
+	subclass: #'UI.LinkButton'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.SysLinkConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.StaticView subclass: #'UI.SysLinkView'
+UI.StaticView
+	subclass: #'UI.SysLinkView'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.SysLinkConstants})

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Dialog subclass: #'UI.KeyValuePrompter'
+UI.Dialog
+	subclass: #'UI.KeyValuePrompter'
 	instanceVariableNames: 'promptPresenter keyPresenter valuePresenter validationBlock'
 	classVariableNames: ''
 	imports: #()

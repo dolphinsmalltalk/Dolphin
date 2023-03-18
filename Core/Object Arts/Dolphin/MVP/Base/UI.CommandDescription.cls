@@ -1,15 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'UI.CommandDescription'
+Core.Object
+	subclass: #'UI.CommandDescription'
 	instanceVariableNames: 'command description acceleratorKey flags image'
 	classVariableNames: 'CommandDescriptionRegistry CurrentId'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'DefaultMask' -> 16r1.
-		'ModalMask' -> 16r2.
-		'NotAbortableMask' -> 16r4
-	}!
+	classConstants: { 'DefaultMask' -> 16r1. 'ModalMask' -> 16r2. 'NotAbortableMask' -> 16r4 }!
 UI.CommandDescription guid: (Core.GUID fromString: '{87b4c469-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.CommandDescription comment: 'A CommandDescription acts as the fundamental source for all MVP user interface commands. An instance of this class holds the command itself, a textual description of the command''s function and, optionally, an accelerator key that may trigger the command action when used within a menu. The command can be a <Message>, <Symbol> or, indeed, any object that responds to the <commandMessage> protocol. For most commands, symbols are prevalent but messages can sometimes be more convenient, especially if the command is to carry parameters, such as in dynamically constructed menus (e.g. the browser history list).
 

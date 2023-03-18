@@ -43,7 +43,8 @@ package!
 
 "Class Definitions"!
 
-UI.RuntimeSessionManager subclass: #'UI.ProtectedProductSessionManager'
+UI.RuntimeSessionManager
+	subclass: #'UI.ProtectedProductSessionManager'
 	instanceVariableNames: 'encryptedClasses'
 	classVariableNames: ''
 	imports: #()

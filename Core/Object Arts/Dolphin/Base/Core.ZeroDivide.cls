@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.ArithmeticError subclass: #'Core.ZeroDivide'
+Core.ArithmeticError
+	subclass: #'Core.ZeroDivide'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

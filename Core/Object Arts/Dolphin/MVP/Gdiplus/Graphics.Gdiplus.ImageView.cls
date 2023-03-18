@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ImageViewAbstract subclass: #'Graphics.Gdiplus.ImageView'
+UI.ImageViewAbstract
+	subclass: #'Graphics.Gdiplus.ImageView'
 	instanceVariableNames: 'interpolationMode swun2 swun3 imageAttributes swun4 swun5 swun6'
 	classVariableNames: ''
 	imports: #()

@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMRSETICMPROFILE'
+OS.ENHMETARECORD
+	subclass: #'OS.EMRSETICMPROFILE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_EMRSETICMPROFILE_Size' -> 16r18.
-		'_OffsetOf_cbData' -> 16r10.
-		'_OffsetOf_cbName' -> 16rC.
-		'_OffsetOf_Data' -> 16r14.
-		'_OffsetOf_dwFlags' -> 16r8
-	}!
+			'_EMRSETICMPROFILE_Size' -> 16r18.
+			'_OffsetOf_cbData' -> 16r10.
+			'_OffsetOf_cbName' -> 16rC.
+			'_OffsetOf_Data' -> 16r14.
+			'_OffsetOf_dwFlags' -> 16r8
+		}!
 OS.EMRSETICMPROFILE guid: (Core.GUID fromString: '{f0dd9705-d88e-4c84-a38c-d8afd0882dc4}')!
 OS.EMRSETICMPROFILE comment: '<EMRSETICMPROFILE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETICMPROFILE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

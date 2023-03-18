@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object variableSubclass: #MethodContext
+Core.Object
+	variableSubclass: #MethodContext
 	instanceVariableNames: 'frame method receiver'
 	classVariableNames: ''
 	imports: #()

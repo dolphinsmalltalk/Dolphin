@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.FindDetails subclass: #'UI.AdvancedFindDetails'
+UI.FindDetails
+	subclass: #'UI.AdvancedFindDetails'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

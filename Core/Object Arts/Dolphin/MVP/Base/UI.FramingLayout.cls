@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.LayoutManager subclass: #'UI.FramingLayout'
+UI.LayoutManager
+	subclass: #'UI.FramingLayout'
 	instanceVariableNames: 'framings'
 	classVariableNames: ''
 	imports: #()

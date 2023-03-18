@@ -1,35 +1,36 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.NMHDR subclass: #'UI.Scintilla.SCNotification'
+OS.NMHDR
+	subclass: #'UI.Scintilla.SCNotification'
 	instanceVariableNames: 'view textString'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_annotationLinesAdded' -> 16r54.
-		'_OffsetOf_ch' -> 16r10.
-		'_OffsetOf_characterSource' -> 16r60.
-		'_OffsetOf_foldLevelNow' -> 16r38.
-		'_OffsetOf_foldLevelPrev' -> 16r3C.
-		'_OffsetOf_length' -> 16r20.
-		'_OffsetOf_linesAdded' -> 16r24.
-		'_OffsetOf_listCompletionMethod' -> 16r5C.
-		'_OffsetOf_listType' -> 16r44.
-		'_OffsetOf_lParam' -> 16r30.
-		'_OffsetOf_margin' -> 16r40.
-		'_OffsetOf_message' -> 16r28.
-		'_OffsetOf_modificationType' -> 16r18.
-		'_OffsetOf_modifiers' -> 16r14.
-		'_OffsetOf_scLine' -> 16r34.
-		'_OffsetOf_scPosition' -> 16rC.
-		'_OffsetOf_text' -> 16r1C.
-		'_OffsetOf_token' -> 16r50.
-		'_OffsetOf_updated' -> 16r58.
-		'_OffsetOf_wParam' -> 16r2C.
-		'_OffsetOf_x' -> 16r48.
-		'_OffsetOf_y' -> 16r4C.
-		'_SCNotification_Size' -> 16r64
-	}!
+			'_OffsetOf_annotationLinesAdded' -> 16r54.
+			'_OffsetOf_ch' -> 16r10.
+			'_OffsetOf_characterSource' -> 16r60.
+			'_OffsetOf_foldLevelNow' -> 16r38.
+			'_OffsetOf_foldLevelPrev' -> 16r3C.
+			'_OffsetOf_length' -> 16r20.
+			'_OffsetOf_linesAdded' -> 16r24.
+			'_OffsetOf_listCompletionMethod' -> 16r5C.
+			'_OffsetOf_listType' -> 16r44.
+			'_OffsetOf_lParam' -> 16r30.
+			'_OffsetOf_margin' -> 16r40.
+			'_OffsetOf_message' -> 16r28.
+			'_OffsetOf_modificationType' -> 16r18.
+			'_OffsetOf_modifiers' -> 16r14.
+			'_OffsetOf_scLine' -> 16r34.
+			'_OffsetOf_scPosition' -> 16rC.
+			'_OffsetOf_text' -> 16r1C.
+			'_OffsetOf_token' -> 16r50.
+			'_OffsetOf_updated' -> 16r58.
+			'_OffsetOf_wParam' -> 16r2C.
+			'_OffsetOf_x' -> 16r48.
+			'_OffsetOf_y' -> 16r4C.
+			'_SCNotification_Size' -> 16r64
+		}!
 UI.Scintilla.SCNotification guid: (Core.GUID fromString: '{b4e498b9-ad7b-4519-86f5-1e6232fbd0bd}')!
 UI.Scintilla.SCNotification comment: '<SCNotification> is an <ExternalStructure> class to wrap the struct ''ScintillaLib.SCNotification'' from type information in the ''Scintiall 1.46 Type Library'' library.
 

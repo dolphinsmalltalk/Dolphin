@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WinHttpServer.HTTP_PROPERTY_FLAGS subclass: #'WinHttpServer.HTTP_BINDING_INFO'
+WinHttpServer.HTTP_PROPERTY_FLAGS
+	subclass: #'WinHttpServer.HTTP_BINDING_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_HTTP_BINDING_INFO_Size' -> 16r8.
-		'_OffsetOf_RequestQueueHandle' -> 16r4
-	}!
+	classConstants: { '_HTTP_BINDING_INFO_Size' -> 16r8. '_OffsetOf_RequestQueueHandle' -> 16r4 }!
 WinHttpServer.HTTP_BINDING_INFO guid: (Core.GUID fromString: '{b253697c-f239-4fb6-b474-b35db2c4848f}')!
 WinHttpServer.HTTP_BINDING_INFO comment: '`HTTP_BINDING_INFO` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_BINDING_INFO'' from type information in the ''Windows Http Server API'' library.
 

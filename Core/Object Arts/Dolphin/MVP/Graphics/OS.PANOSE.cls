@@ -1,23 +1,24 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.PANOSE'
+OS.Win32Structure
+	subclass: #'OS.PANOSE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_bArmStyle' -> 16r6.
-		'_OffsetOf_bContrast' -> 16r4.
-		'_OffsetOf_bFamilyType' -> 16r0.
-		'_OffsetOf_bLetterform' -> 16r7.
-		'_OffsetOf_bMidline' -> 16r8.
-		'_OffsetOf_bProportion' -> 16r3.
-		'_OffsetOf_bSerifStyle' -> 16r1.
-		'_OffsetOf_bStrokeVariation' -> 16r5.
-		'_OffsetOf_bWeight' -> 16r2.
-		'_OffsetOf_bXHeight' -> 16r9.
-		'_PANOSE_Size' -> 16rA
-	}!
+			'_OffsetOf_bArmStyle' -> 16r6.
+			'_OffsetOf_bContrast' -> 16r4.
+			'_OffsetOf_bFamilyType' -> 16r0.
+			'_OffsetOf_bLetterform' -> 16r7.
+			'_OffsetOf_bMidline' -> 16r8.
+			'_OffsetOf_bProportion' -> 16r3.
+			'_OffsetOf_bSerifStyle' -> 16r1.
+			'_OffsetOf_bStrokeVariation' -> 16r5.
+			'_OffsetOf_bWeight' -> 16r2.
+			'_OffsetOf_bXHeight' -> 16r9.
+			'_PANOSE_Size' -> 16rA
+		}!
 OS.PANOSE guid: (Core.GUID fromString: '{fd0c19a2-34cf-4a99-a522-d4fd0cc0f003}')!
 OS.PANOSE comment: ''!
 !OS.PANOSE methodsFor!

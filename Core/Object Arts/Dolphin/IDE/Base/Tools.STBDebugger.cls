@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.STBInFiler subclass: #'Tools.STBDebugger'
+Kernel.STBInFiler
+	subclass: #'Tools.STBDebugger'
 	instanceVariableNames: 'indentLevel traceStream printOffsets'
 	classVariableNames: ''
 	imports: #()

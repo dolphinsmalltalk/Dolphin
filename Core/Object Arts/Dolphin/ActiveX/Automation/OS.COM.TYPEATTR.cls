@@ -1,31 +1,32 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.TypeInfoStructure subclass: #'OS.COM.TYPEATTR'
+OS.COM.TypeInfoStructure
+	subclass: #'OS.COM.TYPEATTR'
 	instanceVariableNames: 'piTypeInfo'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_cbAlignment' -> 16r34.
-		'_OffsetOf_cbSizeInstance' -> 16r24.
-		'_OffsetOf_cbSizeVft' -> 16r32.
-		'_OffsetOf_cFuncs' -> 16r2C.
-		'_OffsetOf_cImplTypes' -> 16r30.
-		'_OffsetOf_cVars' -> 16r2E.
-		'_OffsetOf_dwReserved' -> 16r14.
-		'_OffsetOf_guid' -> 16r0.
-		'_OffsetOf_idldescType' -> 16r44.
-		'_OffsetOf_lcid' -> 16r10.
-		'_OffsetOf_lpstrSchema' -> 16r20.
-		'_OffsetOf_memidConstructor' -> 16r18.
-		'_OffsetOf_memidDestructor' -> 16r1C.
-		'_OffsetOf_tdescAlias' -> 16r3C.
-		'_OffsetOf_typekind' -> 16r28.
-		'_OffsetOf_wMajorVerNum' -> 16r38.
-		'_OffsetOf_wMinorVerNum' -> 16r3A.
-		'_OffsetOf_wTypeFlags' -> 16r36.
-		'_TYPEATTR_Size' -> 16r4C
-	}!
+			'_OffsetOf_cbAlignment' -> 16r34.
+			'_OffsetOf_cbSizeInstance' -> 16r24.
+			'_OffsetOf_cbSizeVft' -> 16r32.
+			'_OffsetOf_cFuncs' -> 16r2C.
+			'_OffsetOf_cImplTypes' -> 16r30.
+			'_OffsetOf_cVars' -> 16r2E.
+			'_OffsetOf_dwReserved' -> 16r14.
+			'_OffsetOf_guid' -> 16r0.
+			'_OffsetOf_idldescType' -> 16r44.
+			'_OffsetOf_lcid' -> 16r10.
+			'_OffsetOf_lpstrSchema' -> 16r20.
+			'_OffsetOf_memidConstructor' -> 16r18.
+			'_OffsetOf_memidDestructor' -> 16r1C.
+			'_OffsetOf_tdescAlias' -> 16r3C.
+			'_OffsetOf_typekind' -> 16r28.
+			'_OffsetOf_wMajorVerNum' -> 16r38.
+			'_OffsetOf_wMinorVerNum' -> 16r3A.
+			'_OffsetOf_wTypeFlags' -> 16r36.
+			'_TYPEATTR_Size' -> 16r4C
+		}!
 OS.COM.TYPEATTR guid: (Core.GUID fromString: '{c06f3b69-0868-11d3-93af-00a024ca708a}')!
 OS.COM.TYPEATTR comment: 'TYPEATTR is an <ExternalStructure> class to represent the Active-X Automation TYPEATTR structure.
 

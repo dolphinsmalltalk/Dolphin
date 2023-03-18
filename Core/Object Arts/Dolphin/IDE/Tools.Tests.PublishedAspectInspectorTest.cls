@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTest subclass: #'Tools.Tests.PublishedAspectInspectorTest'
+Core.Tests.DolphinTest
+	subclass: #'Tools.Tests.PublishedAspectInspectorTest'
 	instanceVariableNames: 'inspector treePresenter displayPresenter'
 	classVariableNames: ''
 	imports: #()

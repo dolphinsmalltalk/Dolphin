@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IUnknown subclass: #'WinHttp.IWinHttpRequestEvents'
+OS.COM.IUnknown
+	subclass: #'WinHttp.IWinHttpRequestEvents'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

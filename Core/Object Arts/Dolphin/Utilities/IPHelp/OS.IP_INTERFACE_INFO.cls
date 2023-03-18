@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.IpHlpApiTableStruct subclass: #'OS.IP_INTERFACE_INFO'
+OS.IpHlpApiTableStruct
+	subclass: #'OS.IP_INTERFACE_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_IP_INTERFACE_INFO_Size' -> 16r108.
-		'_OffsetOf_table' -> 16r4
-	}!
+	classConstants: { '_IP_INTERFACE_INFO_Size' -> 16r108. '_OffsetOf_table' -> 16r4 }!
 OS.IP_INTERFACE_INFO guid: (Core.GUID fromString: '{e886246a-162e-4654-8719-d4c0477f0bf3}')!
 OS.IP_INTERFACE_INFO comment: '<IP_INTERFACE_INFO> is an <ExternalStructure> class to wrap the struct ''Win32.IP_INTERFACE_INFO'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

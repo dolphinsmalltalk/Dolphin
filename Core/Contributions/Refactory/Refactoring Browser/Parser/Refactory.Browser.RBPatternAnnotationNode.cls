@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.StAnnotationNode subclass: #'Refactory.Browser.RBPatternAnnotationNode'
+Kernel.StAnnotationNode
+	subclass: #'Refactory.Browser.RBPatternAnnotationNode'
 	instanceVariableNames: 'isList'
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.TypeConverter subclass: #'UI.MappingConverter'
+UI.TypeConverter
+	subclass: #'UI.MappingConverter'
 	instanceVariableNames: 'leftToRightMap rightToLeftMap'
 	classVariableNames: ''
 	imports: #()

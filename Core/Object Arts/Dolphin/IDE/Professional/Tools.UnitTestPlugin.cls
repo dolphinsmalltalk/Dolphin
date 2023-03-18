@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.ClassBrowserPlugin subclass: #'Tools.UnitTestPlugin'
+Tools.ClassBrowserPlugin
+	subclass: #'Tools.UnitTestPlugin'
 	instanceVariableNames: 'result icon autoSwitchProcess defectsPresenter modePresenter detailsPresenter'
 	classVariableNames: 'AutoSwitchDelay ErrorColor FailColor NoTestsColor PassColor RunningColor'
 	imports: #(#{XProgramming.SUnit private})

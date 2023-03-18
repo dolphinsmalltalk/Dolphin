@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.SequenceableCollection subclass: #'UI.DroppedFilesList'
+Core.SequenceableCollection
+	subclass: #'UI.DroppedFilesList'
 	instanceVariableNames: 'handle size'
 	classVariableNames: ''
 	imports: #()

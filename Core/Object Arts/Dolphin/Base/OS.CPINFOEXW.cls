@@ -1,19 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'OS.CPINFOEXW'
+External.Structure
+	subclass: #'OS.CPINFOEXW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_CPINFOEXW_Size' -> 16r220.
-		'_OffsetOf_codepage' -> 16r14.
-		'_OffsetOf_CodePageName' -> 16r18.
-		'_OffsetOf_DefaultChar' -> 16r4.
-		'_OffsetOf_LeadByte' -> 16r6.
-		'_OffsetOf_MaxCharSize' -> 16r0.
-		'_OffsetOf_UnicodeDefaultChar' -> 16r12
-	}!
+			'_CPINFOEXW_Size' -> 16r220.
+			'_OffsetOf_codepage' -> 16r14.
+			'_OffsetOf_CodePageName' -> 16r18.
+			'_OffsetOf_DefaultChar' -> 16r4.
+			'_OffsetOf_LeadByte' -> 16r6.
+			'_OffsetOf_MaxCharSize' -> 16r0.
+			'_OffsetOf_UnicodeDefaultChar' -> 16r12
+		}!
 OS.CPINFOEXW guid: (Core.GUID fromString: '{daee0d37-37b6-4a47-a208-c12409c7f158}')!
 OS.CPINFOEXW comment: '<CPINFOEXW> is an <ExternalStructure> class to wrap the struct ''Win32.CPINFOEXW'' from type information in the ''Win32 API'' library.
 

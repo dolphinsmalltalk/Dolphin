@@ -1,15 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'UI.Scintilla.PropertyDescriptor'
+Core.Object
+	subclass: #'UI.Scintilla.PropertyDescriptor'
 	instanceVariableNames: 'key getSelector defaultValue setMessage setSelector getMessage flags printSelector'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'AlwaysPrintMask' -> 16r1.
-		'NonBrowsableMask' -> 16r4.
-		'NullableMask' -> 16r2
-	}!
+	classConstants: { 'AlwaysPrintMask' -> 16r1. 'NonBrowsableMask' -> 16r4. 'NullableMask' -> 16r2 }!
 UI.Scintilla.PropertyDescriptor guid: (Core.GUID fromString: '{49848e62-c4d7-4cba-b9f5-71b0bf864a2a}')!
 UI.Scintilla.PropertyDescriptor isNonInstantiable: true!
 UI.Scintilla.PropertyDescriptor comment: 'Scintilla `PropertyDescriptor`s provide metadata for individually settable scalar properties of a `ScintillaView`, e.g. the background colour of a marker.

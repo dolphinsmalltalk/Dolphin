@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Image subclass: #'OS.COM.Picture'
+Graphics.Image
+	subclass: #'OS.COM.Picture'
 	instanceVariableNames: 'picture extent hmExtent'
 	classVariableNames: ''
 	imports: #(#{Graphics})

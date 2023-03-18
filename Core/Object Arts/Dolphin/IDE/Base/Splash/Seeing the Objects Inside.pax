@@ -32,21 +32,22 @@ package!
 
 "Class Definitions"!
 
-Core.Object subclass: #'Tools.ObjectInside'
+Core.Object
+	subclass: #'Tools.ObjectInside'
 	instanceVariableNames: 'image edgePoints position scale rotation alpha color baseColor matrix'
 	classVariableNames: ''
 	imports: #(#{Graphics private} #{Graphics.Gdiplus private})
 	classInstanceVariableNames: ''
-	classConstants: {
-		'EdgePointResolution' -> 16rA
-	}!
-UI.Splash subclass: #'Tools.DolphinSplash'
+	classConstants: { 'EdgePointResolution' -> 16rA }!
+UI.Splash
+	subclass: #'Tools.DolphinSplash'
 	instanceVariableNames: 'objectsInside'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.DoubleBufferedView subclass: #'Tools.SeeingTheObjectsInside'
+Graphics.Gdiplus.DoubleBufferedView
+	subclass: #'Tools.SeeingTheObjectsInside'
 	instanceVariableNames: 'background points sun stepProcess random insideObjectsScale dolphinIntensity objects dolphins dolphinInside hintBubble startTime info baseScale cachedBackground cachedOutline'
 	classVariableNames: ''
 	imports: #(#{Graphics private} #{Graphics.Gdiplus private})

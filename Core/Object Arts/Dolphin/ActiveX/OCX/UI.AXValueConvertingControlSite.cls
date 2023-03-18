@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.AXControlSite subclass: #'UI.AXValueConvertingControlSite'
+UI.AXControlSite
+	subclass: #'UI.AXValueConvertingControlSite'
 	instanceVariableNames: 'typeconverter'
 	classVariableNames: ''
 	imports: #()

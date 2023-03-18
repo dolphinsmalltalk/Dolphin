@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMROFFSETCLIPRGN'
+OS.ENHMETARECORD
+	subclass: #'OS.EMROFFSETCLIPRGN'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_EMROFFSETCLIPRGN_Size' -> 16r10.
-		'_OffsetOf_ptlOffset' -> 16r8
-	}!
+	classConstants: { '_EMROFFSETCLIPRGN_Size' -> 16r10. '_OffsetOf_ptlOffset' -> 16r8 }!
 OS.EMROFFSETCLIPRGN guid: (Core.GUID fromString: '{a0baa6e7-981f-4e05-8c52-19525eb0e92e}')!
 OS.EMROFFSETCLIPRGN comment: '<EMROFFSETCLIPRGN> is an <ExternalStructure> class to wrap the struct ''Win32.EMROFFSETCLIPRGN'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

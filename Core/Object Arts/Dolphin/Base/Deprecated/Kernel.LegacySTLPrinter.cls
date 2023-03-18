@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.LiteralPrinter subclass: #'Kernel.LegacySTLPrinter'
+Kernel.LiteralPrinter
+	subclass: #'Kernel.LegacySTLPrinter'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

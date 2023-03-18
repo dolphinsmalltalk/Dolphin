@@ -1,16 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.NMCUSTOMDRAW subclass: #'OS.NMTVCUSTOMDRAW'
+OS.NMCUSTOMDRAW
+	subclass: #'OS.NMTVCUSTOMDRAW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_NMTVCUSTOMDRAW_Size' -> 16r3C.
-		'_OffsetOf_clrText' -> 16r30.
-		'_OffsetOf_clrTextBk' -> 16r34.
-		'_OffsetOf_iLevel' -> 16r38
-	}!
+			'_NMTVCUSTOMDRAW_Size' -> 16r3C.
+			'_OffsetOf_clrText' -> 16r30.
+			'_OffsetOf_clrTextBk' -> 16r34.
+			'_OffsetOf_iLevel' -> 16r38
+		}!
 OS.NMTVCUSTOMDRAW guid: (Core.GUID fromString: '{6c514b98-57bd-498b-a2ec-9763f141a8e6}')!
 OS.NMTVCUSTOMDRAW comment: 'NMTVCUSTOMDRAW is an <ExternalStructure> class to represent the Win32 structure of the same name.
 

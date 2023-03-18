@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.StLocalVariable subclass: #'Kernel.StGeneratedTempVariable'
+Kernel.StLocalVariable
+	subclass: #'Kernel.StGeneratedTempVariable'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

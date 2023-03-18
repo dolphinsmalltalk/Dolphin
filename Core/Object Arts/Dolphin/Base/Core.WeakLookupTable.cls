@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.SharedLookupTable variableSubclass: #'Core.WeakLookupTable'
+Core.SharedLookupTable
+	variableSubclass: #'Core.WeakLookupTable'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

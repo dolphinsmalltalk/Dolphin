@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.GdiplusBase subclass: #'Graphics.Gdiplus.Matrix'
+Graphics.Gdiplus.GdiplusBase
+	subclass: #'Graphics.Gdiplus.Matrix'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools subclass: #'Tools.Scintilla'
+Tools
+	subclass: #'Tools.Scintilla'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -60,428 +60,446 @@ package!
 
 "Class Definitions"!
 
-Kernel.Namespace subclass: #Net
+Kernel.Namespace
+	subclass: #Net
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{Core} #{OS private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.SharedPool subclass: #'OS.WinSocketConstants'
+Kernel.SharedPool
+	subclass: #'OS.WinSocketConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'AF_12844' -> 16r19.
-		'AF_APPLETALK' -> 16r10.
-		'AF_ATM' -> 16r16.
-		'AF_BAN' -> 16r15.
-		'AF_CCITT' -> 16rA.
-		'AF_CHAOS' -> 16r5.
-		'AF_CLUSTER' -> 16r18.
-		'AF_DATAKIT' -> 16r9.
-		'AF_DECnet' -> 16rC.
-		'AF_DLI' -> 16rD.
-		'AF_ECMA' -> 16r8.
-		'AF_FIREFOX' -> 16r13.
-		'AF_HYLINK' -> 16rF.
-		'AF_ICLFXBM' -> 16r1F.
-		'AF_IMPLINK' -> 16r3.
-		'AF_INET' -> 16r2.
-		'AF_INET6' -> 16r17.
-		'AF_IPX' -> 16r6.
-		'AF_IRDA' -> 16r1A.
-		'AF_ISO' -> 16r7.
-		'AF_LAT' -> 16rE.
-		'AF_MAX' -> 16r20.
-		'AF_NETBIOS' -> 16r11.
-		'AF_NETDES' -> 16r1C.
-		'AF_NS' -> 16r6.
-		'AF_OSI' -> 16r7.
-		'AF_PUP' -> 16r4.
-		'AF_SNA' -> 16rB.
-		'AF_TCNMESSAGE' -> 16r1E.
-		'AF_TCNPROCESS' -> 16r1D.
-		'AF_UNIX' -> 16r1.
-		'AF_UNKNOWN1' -> 16r14.
-		'AF_UNSPEC' -> 16r0.
-		'AF_VOICEVIEW' -> 16r12.
-		'FD_ACCEPT' -> 16r8.
-		'FD_CLOSE' -> 16r20.
-		'FD_CONNECT' -> 16r10.
-		'FD_OOB' -> 16r4.
-		'FD_READ' -> 16r1.
-		'FD_WRITE' -> 16r2.
-		'GAA_FLAG_INCLUDE_PREFIX' -> 16r10.
-		'GAA_FLAG_SKIP_ANYCAST' -> 16r2.
-		'GAA_FLAG_SKIP_DNS_SERVER' -> 16r8.
-		'GAA_FLAG_SKIP_FRIENDLY_NAME' -> 16r20.
-		'GAA_FLAG_SKIP_MULTICAST' -> 16r4.
-		'GAA_FLAG_SKIP_UNICAST' -> 16r1.
-		'INADDR_ANY' -> 16r0.
-		'INADDR_BROADCAST' -> -16r1.
-		'INADDR_LOOPBACK' -> 16r7F000001.
-		'INADDR_NONE' -> -16r1.
-		'INET_ADDRSTRLEN' -> 16r16.
-		'INET6_ADDRSTRLEN' -> 16r41.
-		'INVALID_SOCKET' -> 16rFFFFFFFF.
-		'MAXGETHOSTSTRUCT' -> 16r400.
-		'NET_ADDRESS_DNS_NAME' -> 16r1.
-		'NET_ADDRESS_FORMAT_UNSPECIFIED' -> 16r0.
-		'NET_ADDRESS_IPV4' -> 16r2.
-		'NET_ADDRESS_IPV6' -> 16r3.
-		'NET_STRING_ANY_ADDRESS' -> 16r109.
-		'NET_STRING_ANY_ADDRESS_NO_SCOPE' -> 16r111.
-		'NET_STRING_ANY_SERVICE' -> 16r222.
-		'NET_STRING_ANY_SERVICE_NO_SCOPE' -> 16r242.
-		'NET_STRING_IP_ADDRESS' -> 16r9.
-		'NET_STRING_IP_ADDRESS_NO_SCOPE' -> 16r11.
-		'NET_STRING_IP_NETWORK' -> 16r84.
-		'NET_STRING_IP_SERVICE' -> 16r22.
-		'NET_STRING_IP_SERVICE_NO_SCOPE' -> 16r42.
-		'NET_STRING_IPV4_ADDRESS' -> 16r1.
-		'NET_STRING_IPV4_NETWORK' -> 16r4.
-		'NET_STRING_IPV4_SERVICE' -> 16r2.
-		'NET_STRING_IPV6_ADDRESS' -> 16r8.
-		'NET_STRING_IPV6_ADDRESS_NO_SCOPE' -> 16r10.
-		'NET_STRING_IPV6_NETWORK' -> 16r80.
-		'NET_STRING_IPV6_SERVICE' -> 16r20.
-		'NET_STRING_IPV6_SERVICE_NO_SCOPE' -> 16r40.
-		'NET_STRING_NAMED_ADDRESS' -> 16r100.
-		'NET_STRING_NAMED_SERVICE' -> 16r200.
-		'SO_ACCEPTCONN' -> 16r2.
-		'SO_BROADCAST' -> 16r20.
-		'SO_DEBUG' -> 16r1.
-		'SO_DONTLINGER' -> -16r81.
-		'SO_DONTROUTE' -> 16r10.
-		'SO_ERROR' -> 16r1007.
-		'SO_EXCLUSIVEADDRUSE' -> -16r5.
-		'SO_GROUP_ID' -> 16r2001.
-		'SO_GROUP_PRIORITY' -> 16r2002.
-		'SO_KEEPALIVE' -> 16r8.
-		'SO_LINGER' -> 16r80.
-		'SO_MAX_MSG_SIZE' -> 16r2003.
-		'SO_OOBINLINE' -> 16r100.
-		'SO_RCVBUF' -> 16r1002.
-		'SO_RCVLOWAT' -> 16r1004.
-		'SO_RCVTIMEO' -> 16r1006.
-		'SO_REUSEADDR' -> 16r4.
-		'SO_SNDBUF' -> 16r1001.
-		'SO_SNDLOWAT' -> 16r1003.
-		'SO_SNDTIMEO' -> 16r1005.
-		'SO_TYPE' -> 16r1008.
-		'SO_USELOOPBACK' -> 16r40.
-		'SOCK_DGRAM' -> 16r2.
-		'SOCK_RAW' -> 16r3.
-		'SOCK_RDM' -> 16r4.
-		'SOCK_SEQPACKET' -> 16r5.
-		'SOCK_STREAM' -> 16r1.
-		'SOCKET_ERROR' -> -16r1.
-		'SOL_SOCKET' -> 16rFFFF.
-		'WSADESCRIPTION_LEN' -> 16r100.
-		'WSASYS_STATUS_LEN' -> 16r80
-	}!
-Kernel.SharedPool subclass: #'OS.WinSocketErrors'
+			'AF_12844' -> 16r19.
+			'AF_APPLETALK' -> 16r10.
+			'AF_ATM' -> 16r16.
+			'AF_BAN' -> 16r15.
+			'AF_CCITT' -> 16rA.
+			'AF_CHAOS' -> 16r5.
+			'AF_CLUSTER' -> 16r18.
+			'AF_DATAKIT' -> 16r9.
+			'AF_DECnet' -> 16rC.
+			'AF_DLI' -> 16rD.
+			'AF_ECMA' -> 16r8.
+			'AF_FIREFOX' -> 16r13.
+			'AF_HYLINK' -> 16rF.
+			'AF_ICLFXBM' -> 16r1F.
+			'AF_IMPLINK' -> 16r3.
+			'AF_INET' -> 16r2.
+			'AF_INET6' -> 16r17.
+			'AF_IPX' -> 16r6.
+			'AF_IRDA' -> 16r1A.
+			'AF_ISO' -> 16r7.
+			'AF_LAT' -> 16rE.
+			'AF_MAX' -> 16r20.
+			'AF_NETBIOS' -> 16r11.
+			'AF_NETDES' -> 16r1C.
+			'AF_NS' -> 16r6.
+			'AF_OSI' -> 16r7.
+			'AF_PUP' -> 16r4.
+			'AF_SNA' -> 16rB.
+			'AF_TCNMESSAGE' -> 16r1E.
+			'AF_TCNPROCESS' -> 16r1D.
+			'AF_UNIX' -> 16r1.
+			'AF_UNKNOWN1' -> 16r14.
+			'AF_UNSPEC' -> 16r0.
+			'AF_VOICEVIEW' -> 16r12.
+			'FD_ACCEPT' -> 16r8.
+			'FD_CLOSE' -> 16r20.
+			'FD_CONNECT' -> 16r10.
+			'FD_OOB' -> 16r4.
+			'FD_READ' -> 16r1.
+			'FD_WRITE' -> 16r2.
+			'GAA_FLAG_INCLUDE_PREFIX' -> 16r10.
+			'GAA_FLAG_SKIP_ANYCAST' -> 16r2.
+			'GAA_FLAG_SKIP_DNS_SERVER' -> 16r8.
+			'GAA_FLAG_SKIP_FRIENDLY_NAME' -> 16r20.
+			'GAA_FLAG_SKIP_MULTICAST' -> 16r4.
+			'GAA_FLAG_SKIP_UNICAST' -> 16r1.
+			'INADDR_ANY' -> 16r0.
+			'INADDR_BROADCAST' -> -16r1.
+			'INADDR_LOOPBACK' -> 16r7F000001.
+			'INADDR_NONE' -> -16r1.
+			'INET_ADDRSTRLEN' -> 16r16.
+			'INET6_ADDRSTRLEN' -> 16r41.
+			'INVALID_SOCKET' -> 16rFFFFFFFF.
+			'MAXGETHOSTSTRUCT' -> 16r400.
+			'NET_ADDRESS_DNS_NAME' -> 16r1.
+			'NET_ADDRESS_FORMAT_UNSPECIFIED' -> 16r0.
+			'NET_ADDRESS_IPV4' -> 16r2.
+			'NET_ADDRESS_IPV6' -> 16r3.
+			'NET_STRING_ANY_ADDRESS' -> 16r109.
+			'NET_STRING_ANY_ADDRESS_NO_SCOPE' -> 16r111.
+			'NET_STRING_ANY_SERVICE' -> 16r222.
+			'NET_STRING_ANY_SERVICE_NO_SCOPE' -> 16r242.
+			'NET_STRING_IP_ADDRESS' -> 16r9.
+			'NET_STRING_IP_ADDRESS_NO_SCOPE' -> 16r11.
+			'NET_STRING_IP_NETWORK' -> 16r84.
+			'NET_STRING_IP_SERVICE' -> 16r22.
+			'NET_STRING_IP_SERVICE_NO_SCOPE' -> 16r42.
+			'NET_STRING_IPV4_ADDRESS' -> 16r1.
+			'NET_STRING_IPV4_NETWORK' -> 16r4.
+			'NET_STRING_IPV4_SERVICE' -> 16r2.
+			'NET_STRING_IPV6_ADDRESS' -> 16r8.
+			'NET_STRING_IPV6_ADDRESS_NO_SCOPE' -> 16r10.
+			'NET_STRING_IPV6_NETWORK' -> 16r80.
+			'NET_STRING_IPV6_SERVICE' -> 16r20.
+			'NET_STRING_IPV6_SERVICE_NO_SCOPE' -> 16r40.
+			'NET_STRING_NAMED_ADDRESS' -> 16r100.
+			'NET_STRING_NAMED_SERVICE' -> 16r200.
+			'SO_ACCEPTCONN' -> 16r2.
+			'SO_BROADCAST' -> 16r20.
+			'SO_DEBUG' -> 16r1.
+			'SO_DONTLINGER' -> -16r81.
+			'SO_DONTROUTE' -> 16r10.
+			'SO_ERROR' -> 16r1007.
+			'SO_EXCLUSIVEADDRUSE' -> -16r5.
+			'SO_GROUP_ID' -> 16r2001.
+			'SO_GROUP_PRIORITY' -> 16r2002.
+			'SO_KEEPALIVE' -> 16r8.
+			'SO_LINGER' -> 16r80.
+			'SO_MAX_MSG_SIZE' -> 16r2003.
+			'SO_OOBINLINE' -> 16r100.
+			'SO_RCVBUF' -> 16r1002.
+			'SO_RCVLOWAT' -> 16r1004.
+			'SO_RCVTIMEO' -> 16r1006.
+			'SO_REUSEADDR' -> 16r4.
+			'SO_SNDBUF' -> 16r1001.
+			'SO_SNDLOWAT' -> 16r1003.
+			'SO_SNDTIMEO' -> 16r1005.
+			'SO_TYPE' -> 16r1008.
+			'SO_USELOOPBACK' -> 16r40.
+			'SOCK_DGRAM' -> 16r2.
+			'SOCK_RAW' -> 16r3.
+			'SOCK_RDM' -> 16r4.
+			'SOCK_SEQPACKET' -> 16r5.
+			'SOCK_STREAM' -> 16r1.
+			'SOCKET_ERROR' -> -16r1.
+			'SOL_SOCKET' -> 16rFFFF.
+			'WSADESCRIPTION_LEN' -> 16r100.
+			'WSASYS_STATUS_LEN' -> 16r80
+		}!
+Kernel.SharedPool
+	subclass: #'OS.WinSocketErrors'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'WSA_E_CANCELLED' -> 16r277F.
-		'WSA_E_NO_MORE' -> 16r277E.
-		'WSAEACCES' -> 16r271D.
-		'WSAEADDRINUSE' -> 16r2740.
-		'WSAEADDRNOTAVAIL' -> 16r2741.
-		'WSAEAFNOSUPPORT' -> 16r273F.
-		'WSAEALREADY' -> 16r2735.
-		'WSAEBADF' -> 16r2719.
-		'WSAECANCELLED' -> 16r2777.
-		'WSAECONNABORTED' -> 16r2745.
-		'WSAECONNREFUSED' -> 16r274D.
-		'WSAECONNRESET' -> 16r2746.
-		'WSAEDESTADDRREQ' -> 16r2737.
-		'WSAEDISCON' -> 16r2775.
-		'WSAEDQUOT' -> 16r2755.
-		'WSAEFAULT' -> 16r271E.
-		'WSAEHOSTDOWN' -> 16r2750.
-		'WSAEHOSTUNREACH' -> 16r2751.
-		'WSAEINPROGRESS' -> 16r2734.
-		'WSAEINTR' -> 16r2714.
-		'WSAEINVAL' -> 16r2726.
-		'WSAEINVALIDPROCTABLE' -> 16r2778.
-		'WSAEINVALIDPROVIDER' -> 16r2779.
-		'WSAEISCONN' -> 16r2748.
-		'WSAELOOP' -> 16r274E.
-		'WSAEMFILE' -> 16r2728.
-		'WSAEMSGSIZE' -> 16r2738.
-		'WSAENAMETOOLONG' -> 16r274F.
-		'WSAENETDOWN' -> 16r2742.
-		'WSAENETRESET' -> 16r2744.
-		'WSAENETUNREACH' -> 16r2743.
-		'WSAENOBUFS' -> 16r2747.
-		'WSAENOMORE' -> 16r2776.
-		'WSAENOPROTOOPT' -> 16r273A.
-		'WSAENOTCONN' -> 16r2749.
-		'WSAENOTEMPTY' -> 16r2752.
-		'WSAENOTSOCK' -> 16r2736.
-		'WSAEOPNOTSUPP' -> 16r273D.
-		'WSAEPFNOSUPPORT' -> 16r273E.
-		'WSAEPROCLIM' -> 16r2753.
-		'WSAEPROTONOSUPPORT' -> 16r273B.
-		'WSAEPROTOTYPE' -> 16r2739.
-		'WSAEPROVIDERFAILEDINIT' -> 16r277A.
-		'WSAEREFUSED' -> 16r2780.
-		'WSAEREMOTE' -> 16r2757.
-		'WSAESHUTDOWN' -> 16r274A.
-		'WSAESOCKTNOSUPPORT' -> 16r273C.
-		'WSAESTALE' -> 16r2756.
-		'WSAETIMEDOUT' -> 16r274C.
-		'WSAETOOMANYREFS' -> 16r274B.
-		'WSAEUSERS' -> 16r2754.
-		'WSAEWOULDBLOCK' -> 16r2733.
-		'WSAHOST_NOT_FOUND' -> 16r2AF9.
-		'WSANO_DATA' -> 16r2AFC.
-		'WSANO_RECOVERY' -> 16r2AFB.
-		'WSANOTINITIALISED' -> 16r276D.
-		'WSASERVICE_NOT_FOUND' -> 16r277C.
-		'WSASYSCALLFAILURE' -> 16r277B.
-		'WSASYSNOTREADY' -> 16r276B.
-		'WSATRY_AGAIN' -> 16r2AFA.
-		'WSATYPE_NOT_FOUND' -> 16r277D.
-		'WSAVERNOTSUPPORTED' -> 16r276C
-	}!
-Core.Object subclass: #'Net.InternetAddress'
+			'WSA_E_CANCELLED' -> 16r277F.
+			'WSA_E_NO_MORE' -> 16r277E.
+			'WSAEACCES' -> 16r271D.
+			'WSAEADDRINUSE' -> 16r2740.
+			'WSAEADDRNOTAVAIL' -> 16r2741.
+			'WSAEAFNOSUPPORT' -> 16r273F.
+			'WSAEALREADY' -> 16r2735.
+			'WSAEBADF' -> 16r2719.
+			'WSAECANCELLED' -> 16r2777.
+			'WSAECONNABORTED' -> 16r2745.
+			'WSAECONNREFUSED' -> 16r274D.
+			'WSAECONNRESET' -> 16r2746.
+			'WSAEDESTADDRREQ' -> 16r2737.
+			'WSAEDISCON' -> 16r2775.
+			'WSAEDQUOT' -> 16r2755.
+			'WSAEFAULT' -> 16r271E.
+			'WSAEHOSTDOWN' -> 16r2750.
+			'WSAEHOSTUNREACH' -> 16r2751.
+			'WSAEINPROGRESS' -> 16r2734.
+			'WSAEINTR' -> 16r2714.
+			'WSAEINVAL' -> 16r2726.
+			'WSAEINVALIDPROCTABLE' -> 16r2778.
+			'WSAEINVALIDPROVIDER' -> 16r2779.
+			'WSAEISCONN' -> 16r2748.
+			'WSAELOOP' -> 16r274E.
+			'WSAEMFILE' -> 16r2728.
+			'WSAEMSGSIZE' -> 16r2738.
+			'WSAENAMETOOLONG' -> 16r274F.
+			'WSAENETDOWN' -> 16r2742.
+			'WSAENETRESET' -> 16r2744.
+			'WSAENETUNREACH' -> 16r2743.
+			'WSAENOBUFS' -> 16r2747.
+			'WSAENOMORE' -> 16r2776.
+			'WSAENOPROTOOPT' -> 16r273A.
+			'WSAENOTCONN' -> 16r2749.
+			'WSAENOTEMPTY' -> 16r2752.
+			'WSAENOTSOCK' -> 16r2736.
+			'WSAEOPNOTSUPP' -> 16r273D.
+			'WSAEPFNOSUPPORT' -> 16r273E.
+			'WSAEPROCLIM' -> 16r2753.
+			'WSAEPROTONOSUPPORT' -> 16r273B.
+			'WSAEPROTOTYPE' -> 16r2739.
+			'WSAEPROVIDERFAILEDINIT' -> 16r277A.
+			'WSAEREFUSED' -> 16r2780.
+			'WSAEREMOTE' -> 16r2757.
+			'WSAESHUTDOWN' -> 16r274A.
+			'WSAESOCKTNOSUPPORT' -> 16r273C.
+			'WSAESTALE' -> 16r2756.
+			'WSAETIMEDOUT' -> 16r274C.
+			'WSAETOOMANYREFS' -> 16r274B.
+			'WSAEUSERS' -> 16r2754.
+			'WSAEWOULDBLOCK' -> 16r2733.
+			'WSAHOST_NOT_FOUND' -> 16r2AF9.
+			'WSANO_DATA' -> 16r2AFC.
+			'WSANO_RECOVERY' -> 16r2AFB.
+			'WSANOTINITIALISED' -> 16r276D.
+			'WSASERVICE_NOT_FOUND' -> 16r277C.
+			'WSASYSCALLFAILURE' -> 16r277B.
+			'WSASYSNOTREADY' -> 16r276B.
+			'WSATRY_AGAIN' -> 16r2AFA.
+			'WSATYPE_NOT_FOUND' -> 16r277D.
+			'WSAVERNOTSUPPORTED' -> 16r276C
+		}!
+Core.Object
+	subclass: #'Net.InternetAddress'
 	instanceVariableNames: 'host ipAddress'
 	classVariableNames: ''
 	imports: #(#{OS.WinSocketConstants})
 	classInstanceVariableNames: ''
-	classConstants: {
-		'MaxHostName' -> 16r100
-	}!
-Core.Object subclass: #'Net.SocketAbstract'
+	classConstants: { 'MaxHostName' -> 16r100 }!
+Core.Object
+	subclass: #'Net.SocketAbstract'
 	instanceVariableNames: 'port descriptor'
 	classVariableNames: ''
 	imports: #(#{OS.WinSocketConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.DynamicLinkLibrary subclass: #'OS.IPHlpApiLibrary'
+External.DynamicLinkLibrary
+	subclass: #'OS.IPHlpApiLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.DynamicLinkLibrary subclass: #'OS.WS2_32Library'
+External.DynamicLinkLibrary
+	subclass: #'OS.WS2_32Library'
 	instanceVariableNames: 'wsaData'
 	classVariableNames: ''
 	imports: #(#{OS.WinSocketConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.Win32Error subclass: #'Net.SocketError'
+OS.Win32Error
+	subclass: #'Net.SocketError'
 	instanceVariableNames: ''
 	classVariableNames: 'ErrorClasses'
 	imports: #(#{OS.WinSocketConstants} #{OS.WinSocketErrors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Net.SocketError subclass: #'Net.SocketClosed'
+Net.SocketError
+	subclass: #'Net.SocketClosed'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Net.SocketError subclass: #'Net.SocketWaitCancelled'
+Net.SocketError
+	subclass: #'Net.SocketWaitCancelled'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Net.SocketAbstract subclass: #'Net.ServerSocket'
+Net.SocketAbstract
+	subclass: #'Net.ServerSocket'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Net.SocketAbstract subclass: #'Net.Socket'
+Net.SocketAbstract
+	subclass: #'Net.Socket'
 	instanceVariableNames: 'address readStream writeStream isText'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.ReadStream subclass: #'Net.SocketReadStream'
+Core.ReadStream
+	subclass: #'Net.SocketReadStream'
 	instanceVariableNames: 'socket'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.WriteStream subclass: #'Net.SocketWriteStream'
+Core.WriteStream
+	subclass: #'Net.SocketWriteStream'
 	instanceVariableNames: 'socket dirty'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.Structure subclass: #'OS.AbstractIN_ADDR'
+External.Structure
+	subclass: #'OS.AbstractIN_ADDR'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.Structure subclass: #'OS.FD_SET'
+External.Structure
+	subclass: #'OS.FD_SET'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_FD_SET_Size' -> 16r104.
-		'_OffsetOf_fd_array' -> 16r4.
-		'_OffsetOf_fd_count' -> 16r0
-	}!
-External.Structure subclass: #'OS.NET_ADDRESS_INFO'
+			'_FD_SET_Size' -> 16r104.
+			'_OffsetOf_fd_array' -> 16r4.
+			'_OffsetOf_fd_count' -> 16r0
+		}!
+External.Structure
+	subclass: #'OS.NET_ADDRESS_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_NET_ADDRESS_INFO_Size' -> 16r210.
-		'_OffsetOf_Format' -> 16r0.
-		'_OffsetOf_IpAddress' -> 16r4.
-		'_OffsetOf_Ipv4Address' -> 16r4.
-		'_OffsetOf_Ipv6Address' -> 16r4.
-		'_OffsetOf_NamedAddress_Address' -> 16r4.
-		'_OffsetOf_NamedAddress_Port' -> 16r204
-	}!
-External.Structure subclass: #'OS.SOCKADDR'
+			'_NET_ADDRESS_INFO_Size' -> 16r210.
+			'_OffsetOf_Format' -> 16r0.
+			'_OffsetOf_IpAddress' -> 16r4.
+			'_OffsetOf_Ipv4Address' -> 16r4.
+			'_OffsetOf_Ipv6Address' -> 16r4.
+			'_OffsetOf_NamedAddress_Address' -> 16r4.
+			'_OffsetOf_NamedAddress_Port' -> 16r204
+		}!
+External.Structure
+	subclass: #'OS.SOCKADDR'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.WinSocketConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_sa_data' -> 16r2.
-		'_OffsetOf_sa_family' -> 16r0.
-		'_SOCKADDR_Size' -> 16r10
-	}!
-External.Structure subclass: #'OS.TIMEVAL'
+			'_OffsetOf_sa_data' -> 16r2.
+			'_OffsetOf_sa_family' -> 16r0.
+			'_SOCKADDR_Size' -> 16r10
+		}!
+External.Structure
+	subclass: #'OS.TIMEVAL'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { '_OffsetOf_tv_sec' -> 16r0. '_OffsetOf_tv_usec' -> 16r4. '_TIMEVAL_Size' -> 16r8 }!
+OS.AbstractIN_ADDR
+	subclass: #'OS.IN_ADDR'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_tv_sec' -> 16r0.
-		'_OffsetOf_tv_usec' -> 16r4.
-		'_TIMEVAL_Size' -> 16r8
-	}!
-OS.AbstractIN_ADDR subclass: #'OS.IN_ADDR'
+			'_IN_ADDR_Size' -> 16r4.
+			'_OffsetOf_s_addr' -> 16r0.
+			'_OffsetOf_s_b1' -> 16r0.
+			'_OffsetOf_s_b2' -> 16r1.
+			'_OffsetOf_s_b3' -> 16r2.
+			'_OffsetOf_s_b4' -> 16r3.
+			'_OffsetOf_s_w1' -> 16r0.
+			'_OffsetOf_s_w2' -> 16r2
+		}!
+OS.AbstractIN_ADDR
+	subclass: #'OS.IN6_ADDR'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { '_IN6_ADDR_Size' -> 16r10. '_OffsetOf_Bytes' -> 16r0. '_OffsetOf_Words' -> 16r0 }!
+OS.SOCKADDR
+	subclass: #'OS.SOCKADDR_IN'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_IN_ADDR_Size' -> 16r4.
-		'_OffsetOf_s_addr' -> 16r0.
-		'_OffsetOf_s_b1' -> 16r0.
-		'_OffsetOf_s_b2' -> 16r1.
-		'_OffsetOf_s_b3' -> 16r2.
-		'_OffsetOf_s_b4' -> 16r3.
-		'_OffsetOf_s_w1' -> 16r0.
-		'_OffsetOf_s_w2' -> 16r2
-	}!
-OS.AbstractIN_ADDR subclass: #'OS.IN6_ADDR'
+			'_OffsetOf_sin_addr' -> 16r4.
+			'_OffsetOf_sin_family' -> 16r0.
+			'_OffsetOf_sin_port' -> 16r2.
+			'_OffsetOf_sin_zero' -> 16r8.
+			'_SOCKADDR_IN_Size' -> 16r10
+		}!
+OS.SOCKADDR
+	subclass: #'OS.SOCKADDR_IN6'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_IN6_ADDR_Size' -> 16r10.
-		'_OffsetOf_Bytes' -> 16r0.
-		'_OffsetOf_Words' -> 16r0
-	}!
-OS.SOCKADDR subclass: #'OS.SOCKADDR_IN'
+			'_OffsetOf_sin6_addr' -> 16r8.
+			'_OffsetOf_sin6_family' -> 16r0.
+			'_OffsetOf_sin6_flowinfo' -> 16r4.
+			'_OffsetOf_sin6_port' -> 16r2.
+			'_OffsetOf_sin6_scope_id' -> 16r18.
+			'_OffsetOf_sin6_scope_struct' -> 16r18.
+			'_SOCKADDR_IN6_Size' -> 16r1C
+		}!
+OS.SOCKADDR
+	subclass: #'OS.SOCKADDR_STORAGE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_sin_addr' -> 16r4.
-		'_OffsetOf_sin_family' -> 16r0.
-		'_OffsetOf_sin_port' -> 16r2.
-		'_OffsetOf_sin_zero' -> 16r8.
-		'_SOCKADDR_IN_Size' -> 16r10
-	}!
-OS.SOCKADDR subclass: #'OS.SOCKADDR_IN6'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'_OffsetOf_sin6_addr' -> 16r8.
-		'_OffsetOf_sin6_family' -> 16r0.
-		'_OffsetOf_sin6_flowinfo' -> 16r4.
-		'_OffsetOf_sin6_port' -> 16r2.
-		'_OffsetOf_sin6_scope_id' -> 16r18.
-		'_OffsetOf_sin6_scope_struct' -> 16r18.
-		'_SOCKADDR_IN6_Size' -> 16r1C
-	}!
-OS.SOCKADDR subclass: #'OS.SOCKADDR_STORAGE'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'_OffsetOf___ss_align' -> 16r8.
-		'_OffsetOf___ss_pad1' -> 16r2.
-		'_OffsetOf___ss_pad2' -> 16r10.
-		'_OffsetOf_ss_family' -> 16r0.
-		'_SOCKADDR_STORAGE_Size' -> 16r80
-	}!
-OS.Win32Structure subclass: #'OS.HOSTENT'
+			'_OffsetOf___ss_align' -> 16r8.
+			'_OffsetOf___ss_pad1' -> 16r2.
+			'_OffsetOf___ss_pad2' -> 16r10.
+			'_OffsetOf_ss_family' -> 16r0.
+			'_SOCKADDR_STORAGE_Size' -> 16r80
+		}!
+OS.Win32Structure
+	subclass: #'OS.HOSTENT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.WinSocketConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HOSTENT_Size' -> 16r10.
-		'_OffsetOf_h_addr_list' -> 16rC.
-		'_OffsetOf_h_addrtype' -> 16r8.
-		'_OffsetOf_h_aliases' -> 16r4.
-		'_OffsetOf_h_length' -> 16rA.
-		'_OffsetOf_h_name' -> 16r0
-	}!
-OS.Win32Structure subclass: #'OS.PROTOENT'
+			'_HOSTENT_Size' -> 16r10.
+			'_OffsetOf_h_addr_list' -> 16rC.
+			'_OffsetOf_h_addrtype' -> 16r8.
+			'_OffsetOf_h_aliases' -> 16r4.
+			'_OffsetOf_h_length' -> 16rA.
+			'_OffsetOf_h_name' -> 16r0
+		}!
+OS.Win32Structure
+	subclass: #'OS.PROTOENT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_p_aliases' -> 16r4.
-		'_OffsetOf_p_name' -> 16r0.
-		'_OffsetOf_p_proto' -> 16r8.
-		'_PROTOENT_Size' -> 16rC
-	}!
-OS.Win32Structure subclass: #'OS.SERVENT'
+			'_OffsetOf_p_aliases' -> 16r4.
+			'_OffsetOf_p_name' -> 16r0.
+			'_OffsetOf_p_proto' -> 16r8.
+			'_PROTOENT_Size' -> 16rC
+		}!
+OS.Win32Structure
+	subclass: #'OS.SERVENT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_s_aliases' -> 16r4.
-		'_OffsetOf_s_name' -> 16r0.
-		'_OffsetOf_s_port' -> 16r8.
-		'_OffsetOf_s_proto' -> 16rC.
-		'_SERVENT_Size' -> 16r10
-	}!
-OS.Win32Structure subclass: #'OS.WSADATA'
+			'_OffsetOf_s_aliases' -> 16r4.
+			'_OffsetOf_s_name' -> 16r0.
+			'_OffsetOf_s_port' -> 16r8.
+			'_OffsetOf_s_proto' -> 16rC.
+			'_SERVENT_Size' -> 16r10
+		}!
+OS.Win32Structure
+	subclass: #'OS.WSADATA'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_iMaxSockets' -> 16r186.
-		'_OffsetOf_iMaxUdpDg' -> 16r188.
-		'_OffsetOf_lpVendorInfo' -> 16r18C.
-		'_OffsetOf_szDescription' -> 16r4.
-		'_OffsetOf_szSystemStatus' -> 16r105.
-		'_OffsetOf_wHighVersion' -> 16r2.
-		'_OffsetOf_wVersion' -> 16r0.
-		'_WSADATA_Size' -> 16r190
-	}!
+			'_OffsetOf_iMaxSockets' -> 16r186.
+			'_OffsetOf_iMaxUdpDg' -> 16r188.
+			'_OffsetOf_lpVendorInfo' -> 16r18C.
+			'_OffsetOf_szDescription' -> 16r4.
+			'_OffsetOf_szSystemStatus' -> 16r105.
+			'_OffsetOf_wHighVersion' -> 16r2.
+			'_OffsetOf_wVersion' -> 16r0.
+			'_WSADATA_Size' -> 16r190
+		}!
 
 "End of package definition"!
 

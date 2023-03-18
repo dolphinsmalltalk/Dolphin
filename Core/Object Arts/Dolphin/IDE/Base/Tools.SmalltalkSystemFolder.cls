@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.SmalltalkSystemIcon subclass: #'Tools.SmalltalkSystemFolder'
+Tools.SmalltalkSystemIcon
+	subclass: #'Tools.SmalltalkSystemFolder'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

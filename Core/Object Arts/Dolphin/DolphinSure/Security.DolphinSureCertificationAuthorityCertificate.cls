@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Security.DolphinSureCertificate subclass: #'Security.DolphinSureCertificationAuthorityCertificate'
+Security.DolphinSureCertificate
+	subclass: #'Security.DolphinSureCertificationAuthorityCertificate'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

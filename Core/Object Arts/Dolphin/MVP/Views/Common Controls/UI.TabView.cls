@@ -1,13 +1,27 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.IconicListAbstract subclass: #'UI.TabView'
+UI.IconicListAbstract
+	subclass: #'UI.TabView'
 	instanceVariableNames: 'viewMode'
-	classVariableNames: 'TabOrientations TabViewModes'
+	classVariableNames: ''
 	imports: #(#{OS.TabViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'OrientationMask' -> 16r82
-	}!
+			'OrientationMask' -> 16r82.
+			'TabOrientations'
+				-> (IdentityDictionary withAll: { 16r0 -> #top. 16r2 -> #bottom. 16r80 -> #left. 16r82 -> #right }).
+			'TabViewModes'
+				-> (IdentityDictionary withAll: {
+								#extraLargeIcons -> (16r100 @ 16r100).
+								#largeIcons -> (16r20 @ 16r20).
+								#mediumIcons -> (16r18 @ 16r18).
+								#mediumSmallIcons -> (16r14 @ 16r14).
+								#noIcons -> (16r0 @ 16r0).
+								#smallIcons -> (16r10 @ 16r10).
+								#thumbnails -> (16r40 @ 16r40).
+								#tileIcons -> (16r30 @ 16r30)
+							})
+		}!
 UI.TabView guid: (Core.GUID fromString: '{87b4c731-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.TabView comment: 'TabView is the <listView> implementing the Windows "SysTabControl32" common control. It is for single selection use and, therefore, implements the <selectableItems> protocol. Each of the list items displayed by the view appear in separate "tabs". The list operates in one of three modes (#noIcons, #smallIcons, #largeIcons) that can be selected using the #viewMode aspect.
 

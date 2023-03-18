@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.ClassFactory subclass: #'OS.COM.SingletonClassFactory'
+OS.COM.ClassFactory
+	subclass: #'OS.COM.SingletonClassFactory'
 	instanceVariableNames: 'current'
 	classVariableNames: ''
 	imports: #()

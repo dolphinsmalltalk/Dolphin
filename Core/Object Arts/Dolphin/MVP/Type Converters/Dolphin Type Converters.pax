@@ -25,37 +25,43 @@ package!
 
 "Class Definitions"!
 
-Core.Object subclass: #'UI.TypeConverter'
+Core.Object
+	subclass: #'UI.TypeConverter'
 	instanceVariableNames: 'leftNullValue rightNullValue'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.TypeConverter subclass: #'UI.AbstractToTextConverter'
+UI.TypeConverter
+	subclass: #'UI.AbstractToTextConverter'
 	instanceVariableNames: 'locale'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.TypeConverter subclass: #'UI.InvertingConverter'
+UI.TypeConverter
+	subclass: #'UI.InvertingConverter'
 	instanceVariableNames: 'wrappedConverter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.TypeConverter subclass: #'UI.MappingConverter'
+UI.TypeConverter
+	subclass: #'UI.MappingConverter'
 	instanceVariableNames: 'leftToRightMap rightToLeftMap'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.TypeConverter subclass: #'UI.NullConverter'
+UI.TypeConverter
+	subclass: #'UI.NullConverter'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.TypeConverter subclass: #'UI.PluggableTypeConverter'
+UI.TypeConverter
+	subclass: #'UI.PluggableTypeConverter'
 	instanceVariableNames: 'leftToRightBlock rightToLeftBlock'
 	classVariableNames: ''
 	imports: #()

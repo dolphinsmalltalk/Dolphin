@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.SearchPolicy subclass: #'Kernel.PluggableSearchPolicy'
+Core.SearchPolicy
+	subclass: #'Kernel.PluggableSearchPolicy'
 	instanceVariableNames: 'compareBlock hashBlock'
 	classVariableNames: ''
 	imports: #()

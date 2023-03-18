@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.GpStructure subclass: #'Graphics.Gdiplus.PropertyItem'
+Graphics.Gdiplus.GpStructure
+	subclass: #'Graphics.Gdiplus.PropertyItem'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_id' -> 16r0.
-		'_OffsetOf_length' -> 16r4.
-		'_OffsetOf_Type' -> 16r8.
-		'_OffsetOf_Value' -> 16rC.
-		'_PropertyItem_Size' -> 16r10
-	}!
+			'_OffsetOf_id' -> 16r0.
+			'_OffsetOf_length' -> 16r4.
+			'_OffsetOf_Type' -> 16r8.
+			'_OffsetOf_Value' -> 16rC.
+			'_PropertyItem_Size' -> 16r10
+		}!
 Graphics.Gdiplus.PropertyItem guid: (Core.GUID fromString: '{dad9cd42-c61c-4040-bcd2-2f2e8d725fca}')!
 Graphics.Gdiplus.PropertyItem comment: '<GpPropertyItem> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpPropertyItem'' from type information in the ''GDI+ Library 1.0'' library.
 

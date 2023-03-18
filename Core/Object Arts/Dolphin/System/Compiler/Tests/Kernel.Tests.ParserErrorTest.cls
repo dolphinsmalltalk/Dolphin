@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.Tests.AbstractParserErrorTest subclass: #'Kernel.Tests.ParserErrorTest'
+Kernel.Tests.AbstractParserErrorTest
+	subclass: #'Kernel.Tests.ParserErrorTest'
 	instanceVariableNames: 'semanticAnalyserClass'
 	classVariableNames: ''
 	imports: #()

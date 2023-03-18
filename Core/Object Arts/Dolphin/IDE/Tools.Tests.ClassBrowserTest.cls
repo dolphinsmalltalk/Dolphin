@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.Tests.ClassBrowserAbstractTest subclass: #'Tools.Tests.ClassBrowserTest'
+Tools.Tests.ClassBrowserAbstractTest
+	subclass: #'Tools.Tests.ClassBrowserTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

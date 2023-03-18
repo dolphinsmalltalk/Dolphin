@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Tests.GUIDTest subclass: #'OS.COM.Tests.IIDTest'
+External.Tests.GUIDTest
+	subclass: #'OS.COM.Tests.IIDTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

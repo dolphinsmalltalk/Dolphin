@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ADODB._Collection subclass: #'ADODB.Errors'
+ADODB._Collection
+	subclass: #'ADODB.Errors'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

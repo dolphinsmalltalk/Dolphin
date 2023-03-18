@@ -40,7 +40,8 @@ package!
 
 "Class Definitions"!
 
-Core.Stream subclass: #'Kernel.DebugTraceStream'
+Core.Stream
+	subclass: #'Kernel.DebugTraceStream'
 	instanceVariableNames: 'buffer'
 	classVariableNames: ''
 	imports: #()

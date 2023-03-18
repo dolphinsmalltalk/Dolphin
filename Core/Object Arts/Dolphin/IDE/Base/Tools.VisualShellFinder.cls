@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Tools.VisualShellFinder'
+Core.Object
+	subclass: #'Tools.VisualShellFinder'
 	instanceVariableNames: 'mouseTracker foundObject foundCursor notFoundCursor shellClassFilter'
 	classVariableNames: ''
 	imports: #()

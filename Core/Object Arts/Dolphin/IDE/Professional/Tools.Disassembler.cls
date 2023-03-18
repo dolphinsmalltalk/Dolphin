@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.InstructionInterpreter subclass: #'Tools.Disassembler'
+Kernel.InstructionInterpreter
+	subclass: #'Tools.Disassembler'
 	instanceVariableNames: 'stream'
 	classVariableNames: ''
 	imports: #()

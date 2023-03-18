@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'OS.NCCALCSIZE_PARAMS'
+External.Structure
+	subclass: #'OS.NCCALCSIZE_PARAMS'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_NCCALCSIZE_PARAMS_Size' -> 16r34.
-		'_OffsetOf_lppos' -> 16r30.
-		'_OffsetOf_rgrc' -> 16r0
-	}!
+			'_NCCALCSIZE_PARAMS_Size' -> 16r34.
+			'_OffsetOf_lppos' -> 16r30.
+			'_OffsetOf_rgrc' -> 16r0
+		}!
 OS.NCCALCSIZE_PARAMS guid: (Core.GUID fromString: '{dbc3695f-4c20-411c-8110-539ce4be4b4a}')!
 OS.NCCALCSIZE_PARAMS comment: '<NCCALCSIZE_PARAMS> is an <ExternalStructure> class to wrap the struct ''Win32.NCCALCSIZE_PARAMS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.Tests.GdiplusObjectTest subclass: #'Graphics.Gdiplus.Tests.FontFamilyTest'
+Graphics.Gdiplus.Tests.GdiplusObjectTest
+	subclass: #'Graphics.Gdiplus.Tests.FontFamilyTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

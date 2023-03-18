@@ -27,19 +27,22 @@ package!
 
 "Class Definitions"!
 
-Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Tools.MethodProtocolEnvironment'
+Refactory.Browser.BrowserEnvironmentWrapper
+	subclass: #'Tools.MethodProtocolEnvironment'
 	instanceVariableNames: 'protocols'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Tools.PackageEnvironment'
+Refactory.Browser.BrowserEnvironmentWrapper
+	subclass: #'Tools.PackageEnvironment'
 	instanceVariableNames: 'packages'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Tools.PluggableEnvironment'
+Refactory.Browser.BrowserEnvironmentWrapper
+	subclass: #'Tools.PluggableEnvironment'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

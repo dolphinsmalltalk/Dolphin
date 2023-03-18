@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Dictionary variableSubclass: #'OS.RegKeyAbstract'
+Core.Dictionary
+	variableSubclass: #'OS.RegKeyAbstract'
 	instanceVariableNames: 'name parentPath rootKey sam handle keyInfo'
 	classVariableNames: 'AccessModes ValueTypes'
 	imports: #(#{OS.WinRegConstants} #{OS.Win32Errors})
 	classInstanceVariableNames: ''
-	classConstants: {
-		'PathSeparator' -> '\'
-	}!
+	classConstants: { 'PathSeparator' -> '\' }!
 OS.RegKeyAbstract guid: (Core.GUID fromString: '{87b4c52b-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.RegKeyAbstract isNonInstantiable: true!
 OS.RegKeyAbstract comment: '`RegKeyAbstract` is the abstract class of objects with concrete subclasses to represent keys in the Windows Registration Database. The keys may have sub-keys which are represented by instances of `RegKey`. A `RegKey` is also a dictionary of registry values represented in Dolphin by instances of `RegKeyValues`.

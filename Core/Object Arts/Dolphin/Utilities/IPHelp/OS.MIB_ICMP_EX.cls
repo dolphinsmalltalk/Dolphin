@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'OS.MIB_ICMP_EX'
+External.Structure
+	subclass: #'OS.MIB_ICMP_EX'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_MIB_ICMP_EX_Size' -> 16r810.
-		'_OffsetOf_icmpInStats' -> 16r0.
-		'_OffsetOf_icmpOutStats' -> 16r408
-	}!
+			'_MIB_ICMP_EX_Size' -> 16r810.
+			'_OffsetOf_icmpInStats' -> 16r0.
+			'_OffsetOf_icmpOutStats' -> 16r408
+		}!
 OS.MIB_ICMP_EX guid: (Core.GUID fromString: '{15e74798-3501-497b-a245-8dc4108fba87}')!
 OS.MIB_ICMP_EX comment: '<MIB_ICMP_EX> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_ICMP_EX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

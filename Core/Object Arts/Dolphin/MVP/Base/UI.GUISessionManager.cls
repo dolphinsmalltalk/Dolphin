@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.SessionManager subclass: #'UI.GUISessionManager'
+Core.SessionManager
+	subclass: #'UI.GUISessionManager'
 	instanceVariableNames: 'savedWindows'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'NoSplashMask' -> 16r2.
-		'UnattendedMask' -> 16r4
-	}!
+	classConstants: { 'NoSplashMask' -> 16r2. 'UnattendedMask' -> 16r4 }!
 UI.GUISessionManager guid: (Core.GUID fromString: '{81bc839c-bcd6-4502-a491-418ed5a109e6}')!
 UI.GUISessionManager comment: 'GUISessionManager is the class of <SessionManager>s used to manage the life-cycle of a graphical (as opposed to command line, or console) application.
 

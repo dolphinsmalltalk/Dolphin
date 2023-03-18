@@ -61,13 +61,15 @@ package!
 
 "Class Definitions"!
 
-UI.Shell subclass: #'UI.Examples.Calculator'
+UI.Shell
+	subclass: #'UI.Examples.Calculator'
 	instanceVariableNames: 'input output'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.RuntimeSessionManager subclass: #'UI.Examples.CalculatorSessionManager'
+UI.RuntimeSessionManager
+	subclass: #'UI.Examples.CalculatorSessionManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

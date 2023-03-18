@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.Tests.AbstractNamespaceTest subclass: #'Kernel.Tests.NamespaceTest'
+Kernel.Tests.AbstractNamespaceTest
+	subclass: #'Kernel.Tests.NamespaceTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{Kernel.VariableBinding})

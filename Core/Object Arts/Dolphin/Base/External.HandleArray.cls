@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.UIntPtrArray subclass: #'External.HandleArray'
+External.UIntPtrArray
+	subclass: #'External.HandleArray'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

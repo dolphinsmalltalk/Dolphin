@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Refactory.Browser.TestData.LintRuleTestData'
+Core.Object
+	subclass: #'Refactory.Browser.TestData.LintRuleTestData'
 	instanceVariableNames: 'name foo1'
 	classVariableNames: 'Foo1'
 	imports: #(#{OS.CRTConstants})

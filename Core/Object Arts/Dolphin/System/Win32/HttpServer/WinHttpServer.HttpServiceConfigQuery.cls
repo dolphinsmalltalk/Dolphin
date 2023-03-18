@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HttpServiceConfigQuery'
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HttpServiceConfigQuery'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_HttpServiceConfigQuery_Size' -> 16r4.
-		'_OffsetOf_QueryDesc' -> 16r0
-	}!
+	classConstants: { '_HttpServiceConfigQuery_Size' -> 16r4. '_OffsetOf_QueryDesc' -> 16r0 }!
 WinHttpServer.HttpServiceConfigQuery guid: (Core.GUID fromString: '{38f6548e-ee39-4262-9f31-96ce0e8c6cb7}')!
 WinHttpServer.HttpServiceConfigQuery comment: '`HttpServiceConfigQuery` is an `External.Structure` class to wrap the struct ''WinHttpServer.HttpServiceConfigQuery'' from type information in the ''Windows Http Server API'' library.
 

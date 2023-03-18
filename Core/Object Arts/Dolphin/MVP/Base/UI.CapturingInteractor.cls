@@ -1,16 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Interactor subclass: #'UI.CapturingInteractor'
+UI.Interactor
+	subclass: #'UI.CapturingInteractor'
 	instanceVariableNames: 'oldInteractor stateFlags'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'HotMask' -> 16r1.
-		'LeftDownMask' -> 16r4.
-		'MiddleDownMask' -> 16r8.
-		'RightDownMask' -> 16r10
-	}!
+			'HotMask' -> 16r1.
+			'LeftDownMask' -> 16r4.
+			'MiddleDownMask' -> 16r8.
+			'RightDownMask' -> 16r10
+		}!
 UI.CapturingInteractor guid: (Core.GUID fromString: '{d6b9eec9-b8fc-41a9-abc6-1df89013c95e}')!
 UI.CapturingInteractor isNonInstantiable: true!
 UI.CapturingInteractor comment: '`CapturingInteractor` is an abstract class of `<interactor>`s that intercept user input events and potentially absorbs them so that they do not reach the presenter. i.e. if a <CapturingInteractor> is installed into a view then it may appear to ignore all user input. Subclasses may use the input for other purposes, or selectively forward it on to the `<presenter>`.

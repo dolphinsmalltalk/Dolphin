@@ -1,21 +1,22 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.OLEStructure subclass: #'OS.COM.FONTDESC'
+OS.COM.OLEStructure
+	subclass: #'OS.COM.FONTDESC'
 	instanceVariableNames: 'name'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_FONTDESC_Size' -> 16r20.
-		'_OffsetOf_cySize' -> 16r8.
-		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_fItalic' -> 16r14.
-		'_OffsetOf_fStrikethrough' -> 16r1C.
-		'_OffsetOf_fUnderline' -> 16r18.
-		'_OffsetOf_lpstrName' -> 16r4.
-		'_OffsetOf_sCharset' -> 16r12.
-		'_OffsetOf_sWeight' -> 16r10
-	}!
+			'_FONTDESC_Size' -> 16r20.
+			'_OffsetOf_cySize' -> 16r8.
+			'_OffsetOf_dwSize' -> 16r0.
+			'_OffsetOf_fItalic' -> 16r14.
+			'_OffsetOf_fStrikethrough' -> 16r1C.
+			'_OffsetOf_fUnderline' -> 16r18.
+			'_OffsetOf_lpstrName' -> 16r4.
+			'_OffsetOf_sCharset' -> 16r12.
+			'_OffsetOf_sWeight' -> 16r10
+		}!
 OS.COM.FONTDESC guid: (Core.GUID fromString: '{73f5f101-a4da-11d3-b376-080046056106}')!
 OS.COM.FONTDESC comment: 'FONTDESC is an <ExternalStructure> class to represent the OLE structure of the same name.
 

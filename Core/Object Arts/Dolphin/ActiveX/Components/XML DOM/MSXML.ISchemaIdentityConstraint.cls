@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-MSXML.ISchemaItem subclass: #'MSXML.ISchemaIdentityConstraint'
+MSXML.ISchemaItem
+	subclass: #'MSXML.ISchemaIdentityConstraint'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

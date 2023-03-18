@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.SmalltalkSystem subclass: #'Tools.CommunityEditionSmalltalkSystem'
+Tools.SmalltalkSystem
+	subclass: #'Tools.CommunityEditionSmalltalkSystem'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

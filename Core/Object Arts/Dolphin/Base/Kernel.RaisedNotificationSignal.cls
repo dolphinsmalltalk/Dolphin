@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Notification subclass: #'Kernel.RaisedNotificationSignal'
+Core.Notification
+	subclass: #'Kernel.RaisedNotificationSignal'
 	instanceVariableNames: 'signalType'
 	classVariableNames: ''
 	imports: #()

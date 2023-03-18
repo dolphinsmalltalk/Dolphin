@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Core.Link'
+Core.Object
+	subclass: #'Core.Link'
 	instanceVariableNames: 'nextLink'
 	classVariableNames: ''
 	imports: #()

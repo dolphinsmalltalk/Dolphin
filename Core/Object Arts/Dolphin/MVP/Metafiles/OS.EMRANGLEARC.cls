@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMRANGLEARC'
+OS.ENHMETARECORD
+	subclass: #'OS.EMRANGLEARC'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_EMRANGLEARC_Size' -> 16r1C.
-		'_OffsetOf_eStartAngle' -> 16r14.
-		'_OffsetOf_eSweepAngle' -> 16r18.
-		'_OffsetOf_nRadius' -> 16r10.
-		'_OffsetOf_ptlCenter' -> 16r8
-	}!
+			'_EMRANGLEARC_Size' -> 16r1C.
+			'_OffsetOf_eStartAngle' -> 16r14.
+			'_OffsetOf_eSweepAngle' -> 16r18.
+			'_OffsetOf_nRadius' -> 16r10.
+			'_OffsetOf_ptlCenter' -> 16r8
+		}!
 OS.EMRANGLEARC guid: (Core.GUID fromString: '{76825af3-ec74-45d6-8539-0c31f3e069b9}')!
 OS.EMRANGLEARC comment: '<EMRANGLEARC> is an <ExternalStructure> class to wrap the struct ''Win32.EMRANGLEARC'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

@@ -1,16 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Kernel.SemVerParser'
+Core.Object
+	subclass: #'Kernel.SemVerParser'
 	instanceVariableNames: 'stream last next classification'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'AlphaMask' -> 16r10.
-		'ClassificationTable' -> #[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 16 0 0 1 2 3 4 5 6 7 8 9 10 0 0 0 0 0 0 0 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 0 0 0 0 0 0 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 0 0 0 0 0 0].
-		'DigitMask' -> 16rF.
-		'IdentifierMask' -> 16r1F
-	}!
+			'AlphaMask' -> 16r10.
+			'ClassificationTable'
+				-> #[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 16 0 0 1 2 3 4 5 6 7 8 9 10 0 0 0 0 0 0 0 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 0 0 0 0 0 0 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 0 0 0 0 0 0].
+			'DigitMask' -> 16rF.
+			'IdentifierMask' -> 16r1F
+		}!
 Kernel.SemVerParser guid: (Core.GUID fromString: '{10ccbfc5-65d9-401c-beac-6c8fd3ac6913}')!
 Kernel.SemVerParser comment: 'Simple parser for SemVer 2.0 specification version strings. 
 

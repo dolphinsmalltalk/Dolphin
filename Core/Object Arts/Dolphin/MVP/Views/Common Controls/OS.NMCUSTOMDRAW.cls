@@ -1,19 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.NMHDR subclass: #'OS.NMCUSTOMDRAW'
+OS.NMHDR
+	subclass: #'OS.NMCUSTOMDRAW'
 	instanceVariableNames: 'item view canvas font'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_NMCUSTOMDRAW_Size' -> 16r30.
-		'_OffsetOf_dwDrawStage' -> 16rC.
-		'_OffsetOf_dwItemSpec' -> 16r24.
-		'_OffsetOf_hdc' -> 16r10.
-		'_OffsetOf_lParam' -> 16r2C.
-		'_OffsetOf_rc' -> 16r14.
-		'_OffsetOf_uItemState' -> 16r28
-	}!
+			'_NMCUSTOMDRAW_Size' -> 16r30.
+			'_OffsetOf_dwDrawStage' -> 16rC.
+			'_OffsetOf_dwItemSpec' -> 16r24.
+			'_OffsetOf_hdc' -> 16r10.
+			'_OffsetOf_lParam' -> 16r2C.
+			'_OffsetOf_rc' -> 16r14.
+			'_OffsetOf_uItemState' -> 16r28
+		}!
 OS.NMCUSTOMDRAW guid: (Core.GUID fromString: '{1123e900-72b4-46d6-81b5-8122b9e2393f}')!
 OS.NMCUSTOMDRAW comment: '`NMCUSTOMDRAW` is an `ExternalStructure` class to represent the Win32 structure of the same name.
 

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.Namespace subclass: #VBScript
+Kernel.Namespace
+	subclass: #VBScript
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.COM private} #{OS private})

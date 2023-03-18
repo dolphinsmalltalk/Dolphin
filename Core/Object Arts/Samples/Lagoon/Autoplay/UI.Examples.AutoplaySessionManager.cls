@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.RuntimeSessionManager subclass: #'UI.Examples.AutoplaySessionManager'
+UI.RuntimeSessionManager
+	subclass: #'UI.Examples.AutoplaySessionManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

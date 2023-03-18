@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.BrushInitializer subclass: #'Graphics.Gdiplus.TransformableBrushInitializer'
+Graphics.Gdiplus.BrushInitializer
+	subclass: #'Graphics.Gdiplus.TransformableBrushInitializer'
 	instanceVariableNames: 'transform wrapMode'
 	classVariableNames: ''
 	imports: #()

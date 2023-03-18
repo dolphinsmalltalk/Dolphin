@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Kernel.Compiler'
+Core.Object
+	subclass: #'Kernel.Compiler'
 	instanceVariableNames: ''
 	classVariableNames: 'DefaultFlags DisabledWarnings'
 	imports: #(#{Kernel.CompilerFlags} #{Kernel.ParseErrorCodes})

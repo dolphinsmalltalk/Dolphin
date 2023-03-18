@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-STON subclass: #'STON.Tests'
+STON
+	subclass: #'STON.Tests'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{Graphics} #{XProgramming.SUnit})

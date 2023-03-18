@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Exception subclass: #'Kernel.StackOverflow'
+Core.Exception
+	subclass: #'Kernel.StackOverflow'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

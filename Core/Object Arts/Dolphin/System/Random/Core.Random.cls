@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Stream subclass: #'Core.Random'
+Core.Stream
+	subclass: #'Core.Random'
 	instanceVariableNames: 'seed'
 	classVariableNames: 'Default DefaultGeneratorClass'
 	imports: #()

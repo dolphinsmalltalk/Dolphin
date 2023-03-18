@@ -48,55 +48,64 @@ package!
 
 "Class Definitions"!
 
-Kernel.Namespace subclass: #VBScript
+Kernel.Namespace
+	subclass: #VBScript
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.COM private} #{OS private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.IDispatch subclass: #'VBScript.IMatch'
+OS.COM.IDispatch
+	subclass: #'VBScript.IMatch'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.IDispatch subclass: #'VBScript.IMatchCollection'
+OS.COM.IDispatch
+	subclass: #'VBScript.IMatchCollection'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.IDispatch subclass: #'VBScript.IRegExpAbstract'
+OS.COM.IDispatch
+	subclass: #'VBScript.IRegExpAbstract'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.IDispatch subclass: #'VBScript.ISubMatches'
+OS.COM.IDispatch
+	subclass: #'VBScript.ISubMatches'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-VBScript.IMatch subclass: #'VBScript.IMatch2'
+VBScript.IMatch
+	subclass: #'VBScript.IMatch2'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-VBScript.IMatchCollection subclass: #'VBScript.IMatchCollection2'
+VBScript.IMatchCollection
+	subclass: #'VBScript.IMatchCollection2'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-VBScript.IRegExpAbstract subclass: #'VBScript.IRegExp'
+VBScript.IRegExpAbstract
+	subclass: #'VBScript.IRegExp'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-VBScript.IRegExpAbstract subclass: #'VBScript.IRegExp2'
+VBScript.IRegExpAbstract
+	subclass: #'VBScript.IRegExp2'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

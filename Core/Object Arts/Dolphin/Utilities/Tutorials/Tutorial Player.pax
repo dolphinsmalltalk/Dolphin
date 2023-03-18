@@ -30,19 +30,22 @@ package!
 
 "Class Definitions"!
 
-Core.Object subclass: #'Tools.AbstractTutorial'
+Core.Object
+	subclass: #'Tools.AbstractTutorial'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'Tools.Lesson'
+Core.Object
+	subclass: #'Tools.Lesson'
 	instanceVariableNames: 'title contents'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Shell subclass: #'Tools.TutorialPlayer'
+UI.Shell
+	subclass: #'Tools.TutorialPlayer'
 	instanceVariableNames: 'tutorialPosition tutorial title workspace'
 	classVariableNames: ''
 	imports: #()

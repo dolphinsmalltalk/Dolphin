@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Kernel.BindingContext'
+Core.Object
+	subclass: #'Kernel.BindingContext'
 	instanceVariableNames: 'methodClass environment identifier visited'
 	classVariableNames: ''
 	imports: #()

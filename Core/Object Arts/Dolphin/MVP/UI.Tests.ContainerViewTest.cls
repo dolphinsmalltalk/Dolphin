@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Tests.AbstractContainerViewTest subclass: #'UI.Tests.ContainerViewTest'
+UI.Tests.AbstractContainerViewTest
+	subclass: #'UI.Tests.ContainerViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})

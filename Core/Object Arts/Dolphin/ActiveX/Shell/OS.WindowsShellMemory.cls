@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Memory variableByteSubclass: #'OS.WindowsShellMemory'
+External.Memory
+	variableByteSubclass: #'OS.WindowsShellMemory'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.VirtualTreeModel subclass: #'Tools.AbstractClassHierarchyModel'
+UI.VirtualTreeModel
+	subclass: #'Tools.AbstractClassHierarchyModel'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

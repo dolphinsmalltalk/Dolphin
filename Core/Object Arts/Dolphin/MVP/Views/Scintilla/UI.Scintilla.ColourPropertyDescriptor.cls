@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Scintilla.PropertyDescriptor subclass: #'UI.Scintilla.ColourPropertyDescriptor'
+UI.Scintilla.PropertyDescriptor
+	subclass: #'UI.Scintilla.ColourPropertyDescriptor'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

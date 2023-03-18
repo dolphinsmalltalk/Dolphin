@@ -20,7 +20,8 @@ package!
 
 "Class Definitions"!
 
-Core.SessionManager subclass: #'Kernel.ConsoleSessionManager'
+Core.SessionManager
+	subclass: #'Kernel.ConsoleSessionManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.CRTConstants})

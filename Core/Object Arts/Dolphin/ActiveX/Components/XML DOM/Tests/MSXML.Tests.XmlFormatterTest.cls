@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTest subclass: #'MSXML.Tests.XmlFormatterTest'
+Core.Tests.DolphinTest
+	subclass: #'MSXML.Tests.XmlFormatterTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

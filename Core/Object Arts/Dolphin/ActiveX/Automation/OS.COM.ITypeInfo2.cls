@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.ITypeInfo subclass: #'OS.COM.ITypeInfo2'
+OS.COM.ITypeInfo
+	subclass: #'OS.COM.ITypeInfo2'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

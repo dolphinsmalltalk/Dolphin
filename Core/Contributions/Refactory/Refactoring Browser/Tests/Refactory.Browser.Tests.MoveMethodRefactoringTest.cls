@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.MoveMethodRefactoringTest'
+Refactory.Browser.Tests.RefactoringTest
+	subclass: #'Refactory.Browser.Tests.MoveMethodRefactoringTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

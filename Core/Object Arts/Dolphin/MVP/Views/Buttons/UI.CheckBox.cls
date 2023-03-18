@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.CheckButton subclass: #'UI.CheckBox'
+UI.CheckButton
+	subclass: #'UI.CheckBox'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

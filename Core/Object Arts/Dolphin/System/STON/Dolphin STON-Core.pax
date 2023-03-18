@@ -161,78 +161,107 @@ package!
 
 "Class Definitions"!
 
-Kernel.Namespace subclass: #STON
+Kernel.Namespace
+	subclass: #STON
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{Core private} #{Kernel private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'STON.CStyleCommentsSkipStream'
+Core.Object
+	subclass: #'STON.CStyleCommentsSkipStream'
 	instanceVariableNames: 'stream peekedCharacter delimiter escape'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'STON.Reader'
+Core.Object
+	subclass: #'STON.Reader'
 	instanceVariableNames: 'readStream objects classes stringStream acceptUnknownClasses newLine convertNewLines classInstVarMaps currentCharacter objectProperties renamedClasses'
-	classVariableNames: 'EscapeChars'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'HexDigitValues' -> #(nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 16r0 16r1 16r2 16r3 16r4 16r5 16r6 16r7 16r8 16r9 nil nil nil nil nil nil nil 16rA 16rB 16rC 16rD 16rE 16rF nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 16rA 16rB 16rC 16rD 16rE 16rF)
-	}!
-Core.Object subclass: #'STON.Reference'
+			'EscapeChars'
+				-> (IdentityDictionary withAll: {
+								$" -> $".
+								$' -> $'.
+								$/ -> $/.
+								$0 -> $\0.
+								$\ -> $\.
+								$b -> $\b.
+								$f -> $\f.
+								$n -> $\n.
+								$r -> $\r.
+								$t -> $\t.
+								$v -> $\v
+							}).
+			'HexDigitValues'
+				-> #(nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 16r0 16r1 16r2 16r3 16r4 16r5 16r6 16r7 16r8 16r9 nil nil nil nil nil nil nil 16rA 16rB 16rC 16rD 16rE 16rF nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 16rA 16rB 16rC 16rD 16rE 16rF)
+		}!
+Core.Object
+	subclass: #'STON.Reference'
 	instanceVariableNames: 'index refCount'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'STON.StreamWriter'
+Core.Object
+	subclass: #'STON.StreamWriter'
 	instanceVariableNames: 'writer first'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'STON.Writer'
+Core.Object
+	subclass: #'STON.Writer'
 	instanceVariableNames: 'writeStream stonCharacters newLine asciiOnly keepNewLines referencePolicy objects classInstVarMaps'
 	classVariableNames: 'ExtendedCharacters'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'STONCharacters' -> #(nil nil nil nil nil nil nil nil '\b' '\t' '\n' nil '\f' '\r' nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #pass #pass #pass #pass #pass #pass #pass '\''' #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass '\\' #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass).
-		'STONSimpleSymbolCharacters' -> #[1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1]
-	}!
-Core.Error subclass: #'STON.ReaderError'
+			'STONCharacters'
+				-> #(nil nil nil nil nil nil nil nil '\b' '\t' '\n' nil '\f' '\r' nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #pass #pass #pass #pass #pass #pass #pass '\''' #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass '\\' #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass).
+			'STONSimpleSymbolCharacters'
+				-> #[1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1]
+		}!
+Core.Error
+	subclass: #'STON.ReaderError'
 	instanceVariableNames: 'streamPosition'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Error subclass: #'STON.WriterError'
+Core.Error
+	subclass: #'STON.WriterError'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STON.StreamWriter subclass: #'STON.ListWriter'
+STON.StreamWriter
+	subclass: #'STON.ListWriter'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STON.StreamWriter subclass: #'STON.MapWriter'
+STON.StreamWriter
+	subclass: #'STON.MapWriter'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STON.ListWriter subclass: #'STON.ShortListWriter'
+STON.ListWriter
+	subclass: #'STON.ShortListWriter'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STON.Writer subclass: #'STON.PrettyPrinter'
+STON.Writer
+	subclass: #'STON.PrettyPrinter'
 	instanceVariableNames: 'level'
 	classVariableNames: ''
 	imports: #()

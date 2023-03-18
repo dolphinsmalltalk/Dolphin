@@ -1,20 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.WINDOWPOS'
+OS.Win32Structure
+	subclass: #'OS.WINDOWPOS'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_cx' -> 16r10.
-		'_OffsetOf_cy' -> 16r14.
-		'_OffsetOf_flags' -> 16r18.
-		'_OffsetOf_hwnd' -> 16r0.
-		'_OffsetOf_hwndInsertAfter' -> 16r4.
-		'_OffsetOf_x' -> 16r8.
-		'_OffsetOf_y' -> 16rC.
-		'_WINDOWPOS_Size' -> 16r1C
-	}!
+			'_OffsetOf_cx' -> 16r10.
+			'_OffsetOf_cy' -> 16r14.
+			'_OffsetOf_flags' -> 16r18.
+			'_OffsetOf_hwnd' -> 16r0.
+			'_OffsetOf_hwndInsertAfter' -> 16r4.
+			'_OffsetOf_x' -> 16r8.
+			'_OffsetOf_y' -> 16rC.
+			'_WINDOWPOS_Size' -> 16r1C
+		}!
 OS.WINDOWPOS guid: (Core.GUID fromString: '{cd69a071-3606-11d3-93bd-00a024ca708a}')!
 OS.WINDOWPOS comment: ''!
 !OS.WINDOWPOS categoriesForClass!External-Data-Structured-Win32! !

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.PositionableStream subclass: #'Core.ReadStream'
+Core.PositionableStream
+	subclass: #'Core.ReadStream'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

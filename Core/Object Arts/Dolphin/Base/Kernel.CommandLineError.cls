@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Notification subclass: #'Kernel.CommandLineError'
+Core.Notification
+	subclass: #'Kernel.CommandLineError'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

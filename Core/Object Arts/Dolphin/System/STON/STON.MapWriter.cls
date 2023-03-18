@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-STON.StreamWriter subclass: #'STON.MapWriter'
+STON.StreamWriter
+	subclass: #'STON.MapWriter'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

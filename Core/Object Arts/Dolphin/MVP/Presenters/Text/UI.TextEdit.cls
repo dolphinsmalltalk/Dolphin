@@ -1,18 +1,23 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ValueConvertingControlView subclass: #'UI.TextEdit'
+UI.ValueConvertingControlView
+	subclass: #'UI.TextEdit'
 	instanceVariableNames: 'teFlags'
-	classVariableNames: 'AlignmentMap FindDialogMessage FormatMap'
+	classVariableNames: 'FindDialogMessage'
 	imports: #(#{OS.TextEditConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'FindDisabledMask' -> 16r20.
-		'ModifiedMask' -> 16r8.
-		'ReadOnlyMask' -> 16r1.
-		'StaticMask' -> 16r10.
-		'UpdatePerCharMask' -> 16r2.
-		'WantTabMask' -> 16r4
-	}!
+			'AlignmentMap'
+				-> (IdentityDictionary withAll: { #center -> 16r1. #left -> 16r0. #right -> 16r2 }).
+			'FindDisabledMask' -> 16r20.
+			'FormatMap' -> (IdentityDictionary
+						withAll: { #lowercase -> 16r10. #mixed -> 16r0. #numeric -> 16r2000. #uppercase -> 16r8 }).
+			'ModifiedMask' -> 16r8.
+			'ReadOnlyMask' -> 16r1.
+			'StaticMask' -> 16r10.
+			'UpdatePerCharMask' -> 16r2.
+			'WantTabMask' -> 16r4
+		}!
 UI.TextEdit guid: (Core.GUID fromString: '{87b4c73a-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.TextEdit comment: 'TextEdit is a <valueView> class that implements the Windows "EDIT" control for the displaying and editing of single line text. The <valueModel> associated with a TextEdit must always yield a <readableString> value when mapped through the installed type converter. A TextEdit will normally be used in conjunction with a <TextPresenter>. 
 

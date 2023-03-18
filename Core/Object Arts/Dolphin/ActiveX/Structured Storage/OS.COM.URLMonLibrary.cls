@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.DynamicLinkLibrary subclass: #'OS.COM.URLMonLibrary'
+External.DynamicLinkLibrary
+	subclass: #'OS.COM.URLMonLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

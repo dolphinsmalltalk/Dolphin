@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.SmalltalkToolShell subclass: #'Tools.IdeaSpaceShell'
+Tools.SmalltalkToolShell
+	subclass: #'Tools.IdeaSpaceShell'
 	instanceVariableNames: 'cardsPresenter backgroundPresenter defaultMenuBar cardHistory filename'
 	classVariableNames: 'Watermark'
 	imports: #(#{OS.Win32Constants})

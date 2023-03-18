@@ -1,21 +1,22 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_COOKED_URL'
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_COOKED_URL'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_COOKED_URL_Size' -> 16r18.
-		'_OffsetOf_AbsPathLength' -> 16r4.
-		'_OffsetOf_FullUrlLength' -> 16r0.
-		'_OffsetOf_HostLength' -> 16r2.
-		'_OffsetOf_pAbsPath' -> 16r10.
-		'_OffsetOf_pFullUrl' -> 16r8.
-		'_OffsetOf_pHost' -> 16rC.
-		'_OffsetOf_pQueryString' -> 16r14.
-		'_OffsetOf_QueryStringLength' -> 16r6
-	}!
+			'_HTTP_COOKED_URL_Size' -> 16r18.
+			'_OffsetOf_AbsPathLength' -> 16r4.
+			'_OffsetOf_FullUrlLength' -> 16r0.
+			'_OffsetOf_HostLength' -> 16r2.
+			'_OffsetOf_pAbsPath' -> 16r10.
+			'_OffsetOf_pFullUrl' -> 16r8.
+			'_OffsetOf_pHost' -> 16rC.
+			'_OffsetOf_pQueryString' -> 16r14.
+			'_OffsetOf_QueryStringLength' -> 16r6
+		}!
 WinHttpServer.HTTP_COOKED_URL guid: (Core.GUID fromString: '{24928162-1798-46a3-b2c1-3c6ee66c08be}')!
 WinHttpServer.HTTP_COOKED_URL comment: '`HTTP_COOKED_URL` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_COOKED_URL'' from type information in the ''Windows Http Server API'' library.
 

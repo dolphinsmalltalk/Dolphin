@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.SortAlgorithmTest subclass: #'Kernel.Tests.HeapsortAlgorithmTest'
+Core.Tests.SortAlgorithmTest
+	subclass: #'Kernel.Tests.HeapsortAlgorithmTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

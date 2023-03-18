@@ -56,127 +56,148 @@ package!
 
 "Class Definitions"!
 
-STON subclass: #'STON.Tests'
+STON
+	subclass: #'STON.Tests'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{Graphics} #{XProgramming.SUnit})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'STON.Tests.STONTestUser'
+Core.Object
+	subclass: #'STON.Tests.STONTestUser'
 	instanceVariableNames: 'username password enabled'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'STON.Tests.TestDomainObject'
+Core.Object
+	subclass: #'STON.Tests.TestDomainObject'
 	instanceVariableNames: 'created modified integer float description color tags bytes boolean'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'STON.Tests.TestKnownObject'
+Core.Object
+	subclass: #'STON.Tests.TestKnownObject'
 	instanceVariableNames: 'id description'
 	classVariableNames: 'KnownObjects'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Bag subclass: #'STON.Tests.IdentityBag'
+Core.Bag
+	subclass: #'STON.Tests.IdentityBag'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Dictionary variableSubclass: #'STON.Tests.TestMap'
+Core.Dictionary
+	variableSubclass: #'STON.Tests.TestMap'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.GUID variableByteSubclass: #'STON.Tests.UUID'
+Core.GUID
+	variableByteSubclass: #'STON.Tests.UUID'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Association subclass: #'STON.Tests.TestAssociation'
+Core.Association
+	subclass: #'STON.Tests.TestAssociation'
 	instanceVariableNames: 'timestamp'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STON.Tests.STONTestUser subclass: #'STON.Tests.STONTestUser2'
+STON.Tests.STONTestUser
+	subclass: #'STON.Tests.STONTestUser2'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STON.Tests.STONTestUser subclass: #'STON.Tests.STONTestUser3'
+STON.Tests.STONTestUser
+	subclass: #'STON.Tests.STONTestUser3'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-XProgramming.SUnit.TestCase subclass: #'STON.Tests.CStyleCommentsSkipStreamTest'
+XProgramming.SUnit.TestCase
+	subclass: #'STON.Tests.CStyleCommentsSkipStreamTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-XProgramming.SUnit.TestCase subclass: #'STON.Tests.STONTestCase'
+XProgramming.SUnit.TestCase
+	subclass: #'STON.Tests.STONTestCase'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STON.Tests.STONTestCase subclass: #'STON.Tests.JSONTest'
+STON.Tests.STONTestCase
+	subclass: #'STON.Tests.JSONTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STON.Tests.STONTestCase subclass: #'STON.Tests.ReaderTest'
+STON.Tests.STONTestCase
+	subclass: #'STON.Tests.ReaderTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STON.Tests.STONTestCase subclass: #'STON.Tests.STONTest'
+STON.Tests.STONTestCase
+	subclass: #'STON.Tests.STONTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STON.Tests.STONTestCase subclass: #'STON.Tests.WriteReadTest'
+STON.Tests.STONTestCase
+	subclass: #'STON.Tests.WriteReadTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STON.Tests.STONTestCase subclass: #'STON.Tests.WriterTest'
+STON.Tests.STONTestCase
+	subclass: #'STON.Tests.WriterTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STON.Tests.WriteReadTest subclass: #'STON.Tests.LargeWriteReadTest'
+STON.Tests.WriteReadTest
+	subclass: #'STON.Tests.LargeWriteReadTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STON.Tests.WriteReadTest subclass: #'STON.Tests.WriteAsciiOnlyReadTest'
+STON.Tests.WriteReadTest
+	subclass: #'STON.Tests.WriteAsciiOnlyReadTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STON.Tests.WriteReadTest subclass: #'STON.Tests.WritePrettyPrinterReadTest'
+STON.Tests.WriteReadTest
+	subclass: #'STON.Tests.WritePrettyPrinterReadTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STON.Tests.WriteReadTest subclass: #'STON.Tests.WriteReadCommentsTest'
+STON.Tests.WriteReadTest
+	subclass: #'STON.Tests.WriteReadCommentsTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

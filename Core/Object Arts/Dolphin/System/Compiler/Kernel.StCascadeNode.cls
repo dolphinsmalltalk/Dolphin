@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.StValueNode subclass: #'Kernel.StCascadeNode'
+Kernel.StValueNode
+	subclass: #'Kernel.StCascadeNode'
 	instanceVariableNames: 'messages semicolons'
 	classVariableNames: ''
 	imports: #()

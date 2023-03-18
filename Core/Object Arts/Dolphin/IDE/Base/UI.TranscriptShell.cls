@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Shell subclass: #'UI.TranscriptShell'
+UI.Shell
+	subclass: #'UI.TranscriptShell'
 	instanceVariableNames: 'outputWindow buffer bufferProtect'
 	classVariableNames: 'DefaultExtent FlashOnOutput'
 	imports: #()

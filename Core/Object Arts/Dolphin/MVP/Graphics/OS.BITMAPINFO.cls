@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.BITMAPINFO'
+OS.Win32Structure
+	subclass: #'OS.BITMAPINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_BITMAPINFO_Size' -> 16r2C.
-		'_OffsetOf_bmiColors' -> 16r28.
-		'_OffsetOf_bmiHeader' -> 16r0
-	}!
+			'_BITMAPINFO_Size' -> 16r2C.
+			'_OffsetOf_bmiColors' -> 16r28.
+			'_OffsetOf_bmiHeader' -> 16r0
+		}!
 OS.BITMAPINFO guid: (Core.GUID fromString: '{87b4c5ca-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.BITMAPINFO comment: 'BITMAPINFO is an <ExternalStructure> class to represent the Win32 structure of the same name.
 

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.SmalltalkToolShell subclass: #'Tools.UserPreferencesShell'
+Tools.SmalltalkToolShell
+	subclass: #'Tools.UserPreferencesShell'
 	instanceVariableNames: 'preferencesPresenter'
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Error subclass: #'Kernel.SourceFormatNotSupportedError'
+Core.Error
+	subclass: #'Kernel.SourceFormatNotSupportedError'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

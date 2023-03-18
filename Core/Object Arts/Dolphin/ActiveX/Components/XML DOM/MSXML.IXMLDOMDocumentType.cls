@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-MSXML.IXMLDOMNode subclass: #'MSXML.IXMLDOMDocumentType'
+MSXML.IXMLDOMNode
+	subclass: #'MSXML.IXMLDOMDocumentType'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

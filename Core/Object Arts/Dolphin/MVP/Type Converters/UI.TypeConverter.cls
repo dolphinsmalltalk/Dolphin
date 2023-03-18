@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'UI.TypeConverter'
+Core.Object
+	subclass: #'UI.TypeConverter'
 	instanceVariableNames: 'leftNullValue rightNullValue'
 	classVariableNames: ''
 	imports: #()

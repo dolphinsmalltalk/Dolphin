@@ -1,13 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ValueConvertingControlView subclass: #'UI.SpinButton'
+UI.ValueConvertingControlView
+	subclass: #'UI.SpinButton'
 	instanceVariableNames: ''
-	classVariableNames: 'AlignmentMap'
+	classVariableNames: ''
 	imports: #(#{OS.UpDownControlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'AlignmentMask' -> 16rC
-	}!
+			'AlignmentMap'
+				-> (IdentityDictionary withAll: { #left -> 16r8. #right -> 16r4. #unattached -> 16r0 }).
+			'AlignmentMask' -> 16rC
+		}!
 UI.SpinButton guid: (Core.GUID fromString: '{425d0eac-542e-11d3-998b-d5ca2c3c1d61}')!
 UI.SpinButton comment: 'SpinButton is a <valueView> wrapping the Windows Up-Down common control. The <valueModel> associated with a SpinButton must always yield an <integer> value when mapped through the installed type converter.
 

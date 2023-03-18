@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Set variableSubclass: #'Kernel.AnnouncementSet'
+Core.Set
+	variableSubclass: #'Kernel.AnnouncementSet'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

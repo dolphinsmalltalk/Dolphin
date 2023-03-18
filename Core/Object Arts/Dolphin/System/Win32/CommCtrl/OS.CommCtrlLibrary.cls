@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.DynamicLinkLibrary subclass: #'OS.CommCtrlLibrary'
+External.DynamicLinkLibrary
+	subclass: #'OS.CommCtrlLibrary'
 	instanceVariableNames: ''
 	classVariableNames: 'InitFlags'
 	imports: #()

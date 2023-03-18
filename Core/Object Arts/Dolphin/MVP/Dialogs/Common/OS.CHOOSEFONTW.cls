@@ -1,28 +1,29 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.CommonDialogStructure subclass: #'OS.CHOOSEFONTW'
+OS.CommonDialogStructure
+	subclass: #'OS.CHOOSEFONTW'
 	instanceVariableNames: 'logFont'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_CHOOSEFONTW_Size' -> 16r3C.
-		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_flags' -> 16r14.
-		'_OffsetOf_hDC' -> 16r8.
-		'_OffsetOf_hInstance' -> 16r28.
-		'_OffsetOf_hwndOwner' -> 16r4.
-		'_OffsetOf_iPointSize' -> 16r10.
-		'_OffsetOf_lCustData' -> 16r1C.
-		'_OffsetOf_lpfnHook' -> 16r20.
-		'_OffsetOf_lpLogFont' -> 16rC.
-		'_OffsetOf_lpszStyle' -> 16r2C.
-		'_OffsetOf_lpTemplateName' -> 16r24.
-		'_OffsetOf_nFontType' -> 16r30.
-		'_OffsetOf_nSizeMax' -> 16r38.
-		'_OffsetOf_nSizeMin' -> 16r34.
-		'_OffsetOf_rgbColors' -> 16r18
-	}!
+			'_CHOOSEFONTW_Size' -> 16r3C.
+			'_OffsetOf_dwSize' -> 16r0.
+			'_OffsetOf_flags' -> 16r14.
+			'_OffsetOf_hDC' -> 16r8.
+			'_OffsetOf_hInstance' -> 16r28.
+			'_OffsetOf_hwndOwner' -> 16r4.
+			'_OffsetOf_iPointSize' -> 16r10.
+			'_OffsetOf_lCustData' -> 16r1C.
+			'_OffsetOf_lpfnHook' -> 16r20.
+			'_OffsetOf_lpLogFont' -> 16rC.
+			'_OffsetOf_lpszStyle' -> 16r2C.
+			'_OffsetOf_lpTemplateName' -> 16r24.
+			'_OffsetOf_nFontType' -> 16r30.
+			'_OffsetOf_nSizeMax' -> 16r38.
+			'_OffsetOf_nSizeMin' -> 16r34.
+			'_OffsetOf_rgbColors' -> 16r18
+		}!
 OS.CHOOSEFONTW guid: (Core.GUID fromString: '{87b4c5d2-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.CHOOSEFONTW comment: 'CHOOSEFONT is the class of <ExternalStructure> which represent the Windows Common Dialog structure of the same name.
 

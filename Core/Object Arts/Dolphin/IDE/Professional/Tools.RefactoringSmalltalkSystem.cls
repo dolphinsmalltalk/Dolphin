@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.ProfessionalSmalltalkSystem subclass: #'Tools.RefactoringSmalltalkSystem'
+Tools.ProfessionalSmalltalkSystem
+	subclass: #'Tools.RefactoringSmalltalkSystem'
 	instanceVariableNames: 'isOAD'
 	classVariableNames: 'RefactoringSignal'
 	imports: #(#{Refactory.Browser})

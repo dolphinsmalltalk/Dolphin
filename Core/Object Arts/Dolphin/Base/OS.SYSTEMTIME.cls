@@ -1,21 +1,22 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.SYSTEMTIME'
+OS.Win32Structure
+	subclass: #'OS.SYSTEMTIME'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_wDay' -> 16r6.
-		'_OffsetOf_wDayOfWeek' -> 16r4.
-		'_OffsetOf_wHour' -> 16r8.
-		'_OffsetOf_wMilliseconds' -> 16rE.
-		'_OffsetOf_wMinute' -> 16rA.
-		'_OffsetOf_wMonth' -> 16r2.
-		'_OffsetOf_wSecond' -> 16rC.
-		'_OffsetOf_wYear' -> 16r0.
-		'_SYSTEMTIME_Size' -> 16r10
-	}!
+			'_OffsetOf_wDay' -> 16r6.
+			'_OffsetOf_wDayOfWeek' -> 16r4.
+			'_OffsetOf_wHour' -> 16r8.
+			'_OffsetOf_wMilliseconds' -> 16rE.
+			'_OffsetOf_wMinute' -> 16rA.
+			'_OffsetOf_wMonth' -> 16r2.
+			'_OffsetOf_wSecond' -> 16rC.
+			'_OffsetOf_wYear' -> 16r0.
+			'_SYSTEMTIME_Size' -> 16r10
+		}!
 OS.SYSTEMTIME guid: (Core.GUID fromString: '{87b4c612-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.SYSTEMTIME comment: ''!
 !OS.SYSTEMTIME categoriesForClass!Win32-Structs! !

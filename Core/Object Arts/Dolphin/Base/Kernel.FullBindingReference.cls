@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.BindingReference subclass: #'Kernel.FullBindingReference'
+Kernel.BindingReference
+	subclass: #'Kernel.FullBindingReference'
 	instanceVariableNames: 'pathString path private binding generation'
 	classVariableNames: ''
 	imports: #()

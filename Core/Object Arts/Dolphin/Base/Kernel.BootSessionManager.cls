@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.SessionManager subclass: #'Kernel.BootSessionManager'
+Core.SessionManager
+	subclass: #'Kernel.BootSessionManager'
 	instanceVariableNames: 'productDetails startTime'
 	classVariableNames: ''
 	imports: #()

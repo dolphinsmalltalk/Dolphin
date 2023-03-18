@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Callback subclass: #'External.MessageCallback'
+External.Callback
+	subclass: #'External.MessageCallback'
 	instanceVariableNames: 'receiver selector closure'
 	classVariableNames: ''
 	imports: #()

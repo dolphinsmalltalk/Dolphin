@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.String variableByteSubclass: #'Core.AnsiString'
+Core.String
+	variableByteSubclass: #'Core.AnsiString'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.LintRule subclass: #'Refactory.Browser.TransformationRule'
+Refactory.Browser.LintRule
+	subclass: #'Refactory.Browser.TransformationRule'
 	instanceVariableNames: 'rewriteRule changes class'
 	classVariableNames: 'RecursiveSelfRule'
 	imports: #()

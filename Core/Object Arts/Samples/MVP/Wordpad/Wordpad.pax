@@ -74,13 +74,15 @@ package!
 
 "Class Definitions"!
 
-UI.TextDocument subclass: #'UI.Examples.WordPad'
+UI.TextDocument
+	subclass: #'UI.Examples.WordPad'
 	instanceVariableNames: ''
 	classVariableNames: 'ResourceLib'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Dialog subclass: #'UI.Examples.WordpadParagraphDialog'
+UI.Dialog
+	subclass: #'UI.Examples.WordpadParagraphDialog'
 	instanceVariableNames: 'leftPresenter rightPresenter firstLinePresenter alignmentPresenter'
 	classVariableNames: ''
 	imports: #()

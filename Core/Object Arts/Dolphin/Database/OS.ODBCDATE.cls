@@ -1,16 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'OS.ODBCDATE'
+External.Structure
+	subclass: #'OS.ODBCDATE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_ODBCDATE_Size' -> 16r6.
-		'_OffsetOf_day' -> 16r4.
-		'_OffsetOf_month' -> 16r2.
-		'_OffsetOf_year' -> 16r0
-	}!
+			'_ODBCDATE_Size' -> 16r6.
+			'_OffsetOf_day' -> 16r4.
+			'_OffsetOf_month' -> 16r2.
+			'_OffsetOf_year' -> 16r0
+		}!
 OS.ODBCDATE guid: (Core.GUID fromString: '{87b4c597-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.ODBCDATE comment: 'ODBCDATE is a representation of the same named Win32 ODBC structure.'!
 !OS.ODBCDATE categoriesForClass!External-Data-Structured-ODBC!ODBC Interface! !

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Refactory.Browser.SmalllintChecker'
+Core.Object
+	subclass: #'Refactory.Browser.SmalllintChecker'
 	instanceVariableNames: 'rule environment context methodBlock'
 	classVariableNames: ''
 	imports: #()

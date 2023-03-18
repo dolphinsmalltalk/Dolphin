@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.StValueToken subclass: #'Refactory.Browser.PatternBlockToken'
+Kernel.StValueToken
+	subclass: #'Refactory.Browser.PatternBlockToken'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

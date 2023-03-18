@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Magnitude subclass: #'Core.DateAndTime'
+Core.Magnitude
+	subclass: #'Core.DateAndTime'
 	instanceVariableNames: 'rataDie seconds offset'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'FiletimeEpochSeconds' -> -16r234474600.
-		'JulianDateOffset' -> 16r22A11020C0.
-		'LilianDayOffset' -> -16r8D0C7.
-		'SmalltalkEpochRD' -> 16rA96C9.
-		'UnixEpochSeconds' -> 16r81C94B00
-	}!
+			'FiletimeEpochSeconds' -> -16r234474600.
+			'JulianDateOffset' -> 16r22A11020C0.
+			'LilianDayOffset' -> -16r8D0C7.
+			'SmalltalkEpochRD' -> 16rA96C9.
+			'UnixEpochSeconds' -> 16r81C94B00
+		}!
 Core.DateAndTime guid: (Core.GUID fromString: '{87b4c653-026e-11d3-9fd7-00a0cc3e4a32}')!
 Core.DateAndTime comment: '`DateAndTime` is an implementation of the ANSI Smalltalk protocols `<DateAndTime>` (instance side) and `<DateAndTime factory>` (class side).
 

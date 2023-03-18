@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ADODB.ADOConnectionConstruction15 subclass: #'ADODB.ADOConnectionConstruction'
+ADODB.ADOConnectionConstruction15
+	subclass: #'ADODB.ADOConnectionConstruction'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

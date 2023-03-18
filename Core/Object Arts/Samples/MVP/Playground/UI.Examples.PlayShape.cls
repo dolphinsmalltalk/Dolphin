@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'UI.Examples.PlayShape'
+Core.Object
+	subclass: #'UI.Examples.PlayShape'
 	instanceVariableNames: 'playground'
 	classVariableNames: ''
 	imports: #()

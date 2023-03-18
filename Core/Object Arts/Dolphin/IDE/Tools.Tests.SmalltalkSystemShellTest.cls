@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTest subclass: #'Tools.Tests.SmalltalkSystemShellTest'
+Core.Tests.DolphinTest
+	subclass: #'Tools.Tests.SmalltalkSystemShellTest'
 	instanceVariableNames: 'systemShell'
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Kernel.ExceptionHandlerAbstract'
+Core.Object
+	subclass: #'Kernel.ExceptionHandlerAbstract'
 	instanceVariableNames: 'outer protectedBlock returnContinuation'
 	classVariableNames: 'RetryCookie'
 	imports: #()

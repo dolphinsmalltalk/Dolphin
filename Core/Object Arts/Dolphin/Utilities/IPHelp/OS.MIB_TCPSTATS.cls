@@ -1,28 +1,29 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'OS.MIB_TCPSTATS'
+External.Structure
+	subclass: #'OS.MIB_TCPSTATS'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_MIB_TCPSTATS_Size' -> 16r3C.
-		'_OffsetOf_dwActiveOpens' -> 16r10.
-		'_OffsetOf_dwAttemptFails' -> 16r18.
-		'_OffsetOf_dwCurrEstab' -> 16r20.
-		'_OffsetOf_dwEstabResets' -> 16r1C.
-		'_OffsetOf_dwInErrs' -> 16r30.
-		'_OffsetOf_dwInSegs' -> 16r24.
-		'_OffsetOf_dwMaxConn' -> 16rC.
-		'_OffsetOf_dwNumConns' -> 16r38.
-		'_OffsetOf_dwOutRsts' -> 16r34.
-		'_OffsetOf_dwOutSegs' -> 16r28.
-		'_OffsetOf_dwPassiveOpens' -> 16r14.
-		'_OffsetOf_dwRetransSegs' -> 16r2C.
-		'_OffsetOf_dwRtoAlgorithm' -> 16r0.
-		'_OffsetOf_dwRtoMax' -> 16r8.
-		'_OffsetOf_dwRtoMin' -> 16r4
-	}!
+			'_MIB_TCPSTATS_Size' -> 16r3C.
+			'_OffsetOf_dwActiveOpens' -> 16r10.
+			'_OffsetOf_dwAttemptFails' -> 16r18.
+			'_OffsetOf_dwCurrEstab' -> 16r20.
+			'_OffsetOf_dwEstabResets' -> 16r1C.
+			'_OffsetOf_dwInErrs' -> 16r30.
+			'_OffsetOf_dwInSegs' -> 16r24.
+			'_OffsetOf_dwMaxConn' -> 16rC.
+			'_OffsetOf_dwNumConns' -> 16r38.
+			'_OffsetOf_dwOutRsts' -> 16r34.
+			'_OffsetOf_dwOutSegs' -> 16r28.
+			'_OffsetOf_dwPassiveOpens' -> 16r14.
+			'_OffsetOf_dwRetransSegs' -> 16r2C.
+			'_OffsetOf_dwRtoAlgorithm' -> 16r0.
+			'_OffsetOf_dwRtoMax' -> 16r8.
+			'_OffsetOf_dwRtoMin' -> 16r4
+		}!
 OS.MIB_TCPSTATS guid: (Core.GUID fromString: '{99d7d43b-06c6-4c23-813c-06ca8119f081}')!
 OS.MIB_TCPSTATS comment: '<MIB_TCPSTATS> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_TCPSTATS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

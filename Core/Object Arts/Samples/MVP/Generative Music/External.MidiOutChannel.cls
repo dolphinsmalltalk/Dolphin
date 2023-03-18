@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'External.MidiOutChannel'
+Core.Object
+	subclass: #'External.MidiOutChannel'
 	instanceVariableNames: 'midiout noteProcess octaveShift'
 	classVariableNames: ''
 	imports: #()

@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.OLEStructure subclass: #'OS.COM.IDLDESC'
+OS.COM.OLEStructure
+	subclass: #'OS.COM.IDLDESC'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_IDLDESC_Size' -> 16r8.
-		'_OffsetOf_dwReserved' -> 16r0.
-		'_OffsetOf_wIDLFlags' -> 16r4
-	}!
+			'_IDLDESC_Size' -> 16r8.
+			'_OffsetOf_dwReserved' -> 16r0.
+			'_OffsetOf_wIDLFlags' -> 16r4
+		}!
 OS.COM.IDLDESC guid: (Core.GUID fromString: '{c06f3b80-0868-11d3-93af-00a024ca708a}')!
 OS.COM.IDLDESC comment: 'IDLDESC is an <ExternalStructure> class to represent the AX Automation structure, IDLDESC.
 

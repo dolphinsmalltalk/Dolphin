@@ -1,16 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_RESPONSE_INFO'
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_RESPONSE_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_RESPONSE_INFO_Size' -> 16rC.
-		'_OffsetOf_Length' -> 16r4.
-		'_OffsetOf_pInfo' -> 16r8.
-		'_OffsetOf_Type' -> 16r0
-	}!
+			'_HTTP_RESPONSE_INFO_Size' -> 16rC.
+			'_OffsetOf_Length' -> 16r4.
+			'_OffsetOf_pInfo' -> 16r8.
+			'_OffsetOf_Type' -> 16r0
+		}!
 WinHttpServer.HTTP_RESPONSE_INFO guid: (Core.GUID fromString: '{cdf58c2c-140f-4611-b847-12837ce3155f}')!
 WinHttpServer.HTTP_RESPONSE_INFO comment: '`HTTP_RESPONSE_INFO` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_RESPONSE_INFO'' from type information in the ''Windows Http Server API'' library.
 

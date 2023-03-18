@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.RandomLinearCongruential subclass: #'Kernel.RandomParkMiller'
+Kernel.RandomLinearCongruential
+	subclass: #'Kernel.RandomParkMiller'
 	instanceVariableNames: 'quo rem'
 	classVariableNames: ''
 	imports: #()

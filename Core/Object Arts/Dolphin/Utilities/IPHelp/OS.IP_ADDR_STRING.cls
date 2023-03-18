@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'OS.IP_ADDR_STRING'
+External.Structure
+	subclass: #'OS.IP_ADDR_STRING'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_IP_ADDR_STRING_Size' -> 16r28.
-		'_OffsetOf_Context' -> 16r24.
-		'_OffsetOf_IpAddress' -> 16r4.
-		'_OffsetOf_IpMask' -> 16r14.
-		'_OffsetOf_Next' -> 16r0
-	}!
+			'_IP_ADDR_STRING_Size' -> 16r28.
+			'_OffsetOf_Context' -> 16r24.
+			'_OffsetOf_IpAddress' -> 16r4.
+			'_OffsetOf_IpMask' -> 16r14.
+			'_OffsetOf_Next' -> 16r0
+		}!
 OS.IP_ADDR_STRING guid: (Core.GUID fromString: '{ba94c426-f5a5-47e8-b2c5-43d6c2456846}')!
 OS.IP_ADDR_STRING comment: '<IP_ADDR_STRING> is an <ExternalStructure> class to wrap the struct ''Win32.IP_ADDR_STRING'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

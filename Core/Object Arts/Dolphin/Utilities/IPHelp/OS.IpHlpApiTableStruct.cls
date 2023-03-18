@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'OS.IpHlpApiTableStruct'
+External.Structure
+	subclass: #'OS.IpHlpApiTableStruct'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_IpHlpApiTableStruct_Size' -> 16r4.
-		'_OffsetOf_dwNumEntries' -> 16r0
-	}!
+	classConstants: { '_IpHlpApiTableStruct_Size' -> 16r4. '_OffsetOf_dwNumEntries' -> 16r0 }!
 OS.IpHlpApiTableStruct guid: (Core.GUID fromString: '{4571e3b9-bbac-4c7c-a961-a048818d482b}')!
 OS.IpHlpApiTableStruct comment: ''!
 !OS.IpHlpApiTableStruct categoriesForClass!External-Data-Structured! !

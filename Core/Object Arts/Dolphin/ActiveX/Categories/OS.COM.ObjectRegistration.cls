@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'OS.COM.ObjectRegistration'
+Core.Object
+	subclass: #'OS.COM.ObjectRegistration'
 	instanceVariableNames: 'clsid name toolboxImage'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})

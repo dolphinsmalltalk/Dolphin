@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.AbstractSemanticAnalyser subclass: #'Kernel.StaticVariableBinder'
+Kernel.AbstractSemanticAnalyser
+	subclass: #'Kernel.StaticVariableBinder'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.AbstractRect subclass: #'Graphics.Gdiplus.Rect'
+Graphics.Gdiplus.AbstractRect
+	subclass: #'Graphics.Gdiplus.Rect'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_height' -> 16rC.
-		'_OffsetOf_width' -> 16r8.
-		'_OffsetOf_x' -> 16r0.
-		'_OffsetOf_y' -> 16r4.
-		'_Rect_Size' -> 16r10
-	}!
+			'_OffsetOf_height' -> 16rC.
+			'_OffsetOf_width' -> 16r8.
+			'_OffsetOf_x' -> 16r0.
+			'_OffsetOf_y' -> 16r4.
+			'_Rect_Size' -> 16r10
+		}!
 Graphics.Gdiplus.Rect guid: (Core.GUID fromString: '{6971c1a9-6a91-4a18-a526-2beac92d4746}')!
 Graphics.Gdiplus.Rect comment: '`Rect` is an `External.Structure` class to wrap the struct ''Gdiplus.Rect'' from type information in the ''GDI+ Library 1.10'' library, and represents a rectangle in a 2D coordinate system (integer coordinates).
 

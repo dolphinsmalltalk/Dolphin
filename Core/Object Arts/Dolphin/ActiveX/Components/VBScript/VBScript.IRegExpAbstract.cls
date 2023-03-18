@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IDispatch subclass: #'VBScript.IRegExpAbstract'
+OS.COM.IDispatch
+	subclass: #'VBScript.IRegExpAbstract'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -25,37 +25,43 @@ package!
 
 "Class Definitions"!
 
-Core.Object subclass: #'Security.ProductProtector'
+Core.Object
+	subclass: #'Security.ProductProtector'
 	instanceVariableNames: 'key'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'Security.ProtectedProductSerialNumber'
+Core.Object
+	subclass: #'Security.ProtectedProductSerialNumber'
 	instanceVariableNames: 'value stringValue'
 	classVariableNames: 'FixedLicenceMask'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'Security.SerialNumberProtector'
+Core.Object
+	subclass: #'Security.SerialNumberProtector'
 	instanceVariableNames: 'key'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Security.ProductProtector subclass: #'Security.PC1ProductProtector'
+Security.ProductProtector
+	subclass: #'Security.PC1ProductProtector'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Security.SerialNumberProtector subclass: #'Security.ElgamalSerialNumberProtector'
+Security.SerialNumberProtector
+	subclass: #'Security.ElgamalSerialNumberProtector'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Security.SerialNumberProtector subclass: #'Security.PC1SerialNumberProtector'
+Security.SerialNumberProtector
+	subclass: #'Security.PC1SerialNumberProtector'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'UI.FramingContext'
+Core.Object
+	subclass: #'UI.FramingContext'
 	instanceVariableNames: 'layoutContext view rectangle parentRect'
 	classVariableNames: ''
 	imports: #()

@@ -53,7 +53,8 @@ package!
 
 "Class Definitions"!
 
-UI.Shell subclass: #'UI.Examples.BetterHelloWorld'
+UI.Shell
+	subclass: #'UI.Examples.BetterHelloWorld'
 	instanceVariableNames: 'textToDisplayPresenter'
 	classVariableNames: ''
 	imports: #()

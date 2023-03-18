@@ -1,16 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.IconicListAbstract subclass: #'UI.TreeView'
+UI.IconicListAbstract
+	subclass: #'UI.TreeView'
 	instanceVariableNames: 'handleObjectMap indentSeparation viewMode tvFlags objectHandleMap'
 	classVariableNames: ''
 	imports: #(#{OS.TreeViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'DisableExpandAllMask' -> 16r1.
-		'NonVirtualMask' -> 16r2.
-		'UpdateModeMask' -> 16r6.
-		'UpdateModes' -> #(#dynamic #static #lazy)
-	}!
+			'DisableExpandAllMask' -> 16r1.
+			'NonVirtualMask' -> 16r2.
+			'UpdateModeMask' -> 16r6.
+			'UpdateModes' -> #(#dynamic #static #lazy)
+		}!
 UI.TreeView guid: (Core.GUID fromString: '{87b4c732-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.TreeView comment: 'TreeView is a <treeView> wrapping the Windows "SysTreeView32" common control. It is for single selection use and, therefore, implements the <selectableItems> protocol for use with any <treeModel>. 
 

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-MSXML.ISchemaParticle subclass: #'MSXML.ISchemaModelGroup'
+MSXML.ISchemaParticle
+	subclass: #'MSXML.ISchemaModelGroup'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

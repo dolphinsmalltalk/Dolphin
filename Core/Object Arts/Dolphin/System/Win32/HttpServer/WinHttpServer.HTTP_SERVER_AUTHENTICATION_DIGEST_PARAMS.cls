@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS'
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS_Size' -> 16r10.
-		'_OffsetOf_DomainName' -> 16r4.
-		'_OffsetOf_DomainNameLength' -> 16r0.
-		'_OffsetOf_Realm' -> 16rC.
-		'_OffsetOf_RealmLength' -> 16r8
-	}!
+			'_HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS_Size' -> 16r10.
+			'_OffsetOf_DomainName' -> 16r4.
+			'_OffsetOf_DomainNameLength' -> 16r0.
+			'_OffsetOf_Realm' -> 16rC.
+			'_OffsetOf_RealmLength' -> 16r8
+		}!
 WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS guid: (Core.GUID fromString: '{eed513f2-c404-408c-9ddb-f5d39020d426}')!
 WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS comment: '`HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS'' from type information in the ''Windows Http Server API'' library.
 

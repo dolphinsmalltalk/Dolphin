@@ -30,37 +30,43 @@ package!
 
 "Class Definitions"!
 
-UI.ValuePresenter subclass: #'UI.ImagePresenter'
+UI.ValuePresenter
+	subclass: #'UI.ImagePresenter'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.StaticView subclass: #'UI.StaticImage'
+UI.StaticView
+	subclass: #'UI.StaticImage'
 	instanceVariableNames: 'image'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.ImageViewAbstract subclass: #'UI.ImageView'
+UI.ImageViewAbstract
+	subclass: #'UI.ImageView'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.StaticImage subclass: #'UI.StaticBitmap'
+UI.StaticImage
+	subclass: #'UI.StaticBitmap'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.StaticImage subclass: #'UI.StaticIcon'
+UI.StaticImage
+	subclass: #'UI.StaticIcon'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.DoubleBufferedView subclass: #'UI.AnimatedImageView'
+UI.DoubleBufferedView
+	subclass: #'UI.AnimatedImageView'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

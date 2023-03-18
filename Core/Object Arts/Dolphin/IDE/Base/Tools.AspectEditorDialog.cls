@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Dialog subclass: #'Tools.AspectEditorDialog'
+UI.Dialog
+	subclass: #'Tools.AspectEditorDialog'
 	instanceVariableNames: 'aspectPresenterInDialog hookPresenter subjectModel aspect aspectRectangle'
 	classVariableNames: ''
 	imports: #()

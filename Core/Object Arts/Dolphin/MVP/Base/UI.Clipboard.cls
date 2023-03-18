@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'UI.Clipboard'
+Core.Object
+	subclass: #'UI.Clipboard'
 	instanceVariableNames: 'isOpen registeredFormats idToName'
 	classVariableNames: 'Current'
 	imports: #(#{OS.Win32Constants})

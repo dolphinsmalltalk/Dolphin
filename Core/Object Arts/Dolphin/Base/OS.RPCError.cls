@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Error subclass: #'OS.RPCError'
+OS.Win32Error
+	subclass: #'OS.RPCError'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

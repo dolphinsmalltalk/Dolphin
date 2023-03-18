@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.View subclass: #'UI.Splitter'
+UI.View
+	subclass: #'UI.Splitter'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'FlatMask' -> 16r100000
-	}!
+	classConstants: { 'FlatMask' -> 16r100000 }!
 UI.Splitter guid: (Core.GUID fromString: '{87b4c716-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.Splitter comment: 'Splitter is a <view> used for implementing "splitter bars" for resizing adjacent views within a <compositeView>. Normally, a Splitter requires that the parent view in which it is placed is under the control of a ProprtionalLayout manager.'!
 !UI.Splitter categoriesForClass!MVP-Resources-Splitters!MVP-Views! !

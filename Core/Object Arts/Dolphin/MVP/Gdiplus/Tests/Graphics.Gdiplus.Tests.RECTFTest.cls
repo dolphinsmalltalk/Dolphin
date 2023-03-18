@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Tests.RECTTest subclass: #'Graphics.Gdiplus.Tests.RECTFTest'
+External.Tests.RECTTest
+	subclass: #'Graphics.Gdiplus.Tests.RECTFTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

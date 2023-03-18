@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-STON.Tests.STONTestCase subclass: #'STON.Tests.WriterTest'
+STON.Tests.STONTestCase
+	subclass: #'STON.Tests.WriterTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

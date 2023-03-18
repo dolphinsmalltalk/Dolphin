@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'UI.ResourceIdentifier'
+Core.Object
+	subclass: #'UI.ResourceIdentifier'
 	instanceVariableNames: 'owningClass selector'
 	classVariableNames: 'SelectorPrefix'
 	imports: #()

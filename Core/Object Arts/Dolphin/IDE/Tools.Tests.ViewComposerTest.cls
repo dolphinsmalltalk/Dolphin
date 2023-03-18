@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTest subclass: #'Tools.Tests.ViewComposerTest'
+Core.Tests.DolphinTest
+	subclass: #'Tools.Tests.ViewComposerTest'
 	instanceVariableNames: 'vc sampleClass'
 	classVariableNames: ''
 	imports: #()

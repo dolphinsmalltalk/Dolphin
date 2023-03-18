@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.LPVOID subclass: #'External.Pointer'
+External.LPVOID
+	subclass: #'External.Pointer'
 	instanceVariableNames: 'byteSize'
 	classVariableNames: ''
 	imports: #()

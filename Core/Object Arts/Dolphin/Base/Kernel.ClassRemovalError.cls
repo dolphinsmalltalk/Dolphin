@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Error subclass: #'Kernel.ClassRemovalError'
+Core.Error
+	subclass: #'Kernel.ClassRemovalError'
 	instanceVariableNames: 'originalError'
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.BasicInspector subclass: #'Tools.AXInspector'
+Tools.BasicInspector
+	subclass: #'Tools.AXInspector'
 	instanceVariableNames: 'collection'
 	classVariableNames: ''
 	imports: #()

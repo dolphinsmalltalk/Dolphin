@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.SmalltalkToolShell subclass: #'Tools.InspectorShell'
+Tools.SmalltalkToolShell
+	subclass: #'Tools.InspectorShell'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

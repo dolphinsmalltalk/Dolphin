@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.AbstractWindowsLocale subclass: #'OS.WindowsLocale'
+OS.AbstractWindowsLocale
+	subclass: #'OS.WindowsLocale'
 	instanceVariableNames: 'lcid'
 	classVariableNames: ''
 	imports: #()

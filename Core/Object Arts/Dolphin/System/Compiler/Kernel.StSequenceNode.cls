@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.StProgramNode subclass: #'Kernel.StSequenceNode'
+Kernel.StProgramNode
+	subclass: #'Kernel.StSequenceNode'
 	instanceVariableNames: 'leftBar rightBar statements periods temporaries'
 	classVariableNames: ''
 	imports: #()

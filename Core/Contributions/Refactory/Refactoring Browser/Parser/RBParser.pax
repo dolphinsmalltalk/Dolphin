@@ -184,131 +184,148 @@ package!
 
 "Class Definitions"!
 
-Core.Object subclass: #'Refactory.Browser.RBParseTreeRule'
+Core.Object
+	subclass: #'Refactory.Browser.RBParseTreeRule'
 	instanceVariableNames: 'searchTree owner'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'Refactory.Browser.RBStringReplacement'
+Core.Object
+	subclass: #'Refactory.Browser.RBStringReplacement'
 	instanceVariableNames: 'startPosition stopPosition string'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.BindingReferenceWrapper subclass: #'Refactory.Browser.RBBindingReference'
+Kernel.BindingReferenceWrapper
+	subclass: #'Refactory.Browser.RBBindingReference'
 	instanceVariableNames: 'model'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Collection subclass: #'Refactory.Browser.RBSmallDictionary'
+Core.Collection
+	subclass: #'Refactory.Browser.RBSmallDictionary'
 	instanceVariableNames: 'keys values size'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.ParseNodeVisitor subclass: #'Refactory.Browser.ParseTreeSearcher'
+Kernel.ParseNodeVisitor
+	subclass: #'Refactory.Browser.ParseTreeSearcher'
 	instanceVariableNames: 'searches answer argumentSearches context messages'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.ParseTreeSearcher subclass: #'Refactory.Browser.ParseTreeRewriter'
+Refactory.Browser.ParseTreeSearcher
+	subclass: #'Refactory.Browser.ParseTreeRewriter'
 	instanceVariableNames: 'tree'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.Parser subclass: #'Refactory.Browser.RBParser'
+Kernel.Parser
+	subclass: #'Refactory.Browser.RBParser'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.Parser subclass: #'Refactory.Browser.RBPatternParser'
+Kernel.Parser
+	subclass: #'Refactory.Browser.RBPatternParser'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.RBParseTreeRule subclass: #'Refactory.Browser.RBReplaceRule'
+Refactory.Browser.RBParseTreeRule
+	subclass: #'Refactory.Browser.RBReplaceRule'
 	instanceVariableNames: 'verificationBlock'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.RBParseTreeRule subclass: #'Refactory.Browser.RBSearchRule'
+Refactory.Browser.RBParseTreeRule
+	subclass: #'Refactory.Browser.RBSearchRule'
 	instanceVariableNames: 'answerBlock'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.RBReplaceRule subclass: #'Refactory.Browser.RBBlockReplaceRule'
+Refactory.Browser.RBReplaceRule
+	subclass: #'Refactory.Browser.RBBlockReplaceRule'
 	instanceVariableNames: 'replaceBlock'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.RBReplaceRule subclass: #'Refactory.Browser.RBStringReplaceRule'
+Refactory.Browser.RBReplaceRule
+	subclass: #'Refactory.Browser.RBStringReplaceRule'
 	instanceVariableNames: 'replaceTree'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.Scanner subclass: #'Refactory.Browser.RBPatternScanner'
+Kernel.Scanner
+	subclass: #'Refactory.Browser.RBPatternScanner'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'CascadeCharacter' -> $;.
-		'ListCharacter' -> $@.
-		'VariableCharacter' -> $`
-	}!
-Kernel.StMethodNode subclass: #'Refactory.Browser.RBPatternMethodNode'
+	classConstants: { 'CascadeCharacter' -> $;. 'ListCharacter' -> $@. 'VariableCharacter' -> $` }!
+Kernel.StMethodNode
+	subclass: #'Refactory.Browser.RBPatternMethodNode'
 	instanceVariableNames: 'isList'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.StAnnotationNode subclass: #'Refactory.Browser.RBPatternAnnotationNode'
+Kernel.StAnnotationNode
+	subclass: #'Refactory.Browser.RBPatternAnnotationNode'
 	instanceVariableNames: 'isList'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.StRealVariableNode subclass: #'Refactory.Browser.RBPatternVariableNode'
+Kernel.StRealVariableNode
+	subclass: #'Refactory.Browser.RBPatternVariableNode'
 	instanceVariableNames: 'recurseInto isList isLiteral isStatement isAnything'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.StBlockNode subclass: #'Refactory.Browser.RBPatternBlockNode'
+Kernel.StBlockNode
+	subclass: #'Refactory.Browser.RBPatternBlockNode'
 	instanceVariableNames: 'valueBlock'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.RBPatternBlockNode subclass: #'Refactory.Browser.RBPatternWrapperBlockNode'
+Refactory.Browser.RBPatternBlockNode
+	subclass: #'Refactory.Browser.RBPatternWrapperBlockNode'
 	instanceVariableNames: 'wrappedNode'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.StQualifiedReferenceNode subclass: #'Refactory.Browser.RBQualifiedReferenceNode'
+Kernel.StQualifiedReferenceNode
+	subclass: #'Refactory.Browser.RBQualifiedReferenceNode'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.StMessageNode subclass: #'Refactory.Browser.RBPatternMessageNode'
+Kernel.StMessageNode
+	subclass: #'Refactory.Browser.RBPatternMessageNode'
 	instanceVariableNames: 'isList isCascadeList'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.StValueToken subclass: #'Refactory.Browser.PatternBlockToken'
+Kernel.StValueToken
+	subclass: #'Refactory.Browser.PatternBlockToken'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

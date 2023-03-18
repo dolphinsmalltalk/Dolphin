@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.INTEGER subclass: #'External.UIntPtr'
+External.INTEGER
+	subclass: #'External.UIntPtr'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_UIntPtr_Size' -> 16r4
-	}!
+	classConstants: { '_UIntPtr_Size' -> 16r4 }!
 External.UIntPtr guid: (Core.GUID fromString: '{5b2efc4b-7560-43b0-930f-70dc94f37d05}')!
 External.UIntPtr comment: ''!
 !External.UIntPtr categoriesForClass!External-Data-Structured-Win32! !

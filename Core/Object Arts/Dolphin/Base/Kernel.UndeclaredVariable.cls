@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Kernel.UndeclaredVariable'
+Core.Object
+	subclass: #'Kernel.UndeclaredVariable'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

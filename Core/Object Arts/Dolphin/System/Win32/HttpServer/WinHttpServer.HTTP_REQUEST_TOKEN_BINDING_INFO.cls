@@ -1,18 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_REQUEST_TOKEN_BINDING_INFO'
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_REQUEST_TOKEN_BINDING_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_REQUEST_TOKEN_BINDING_INFO_Size' -> 16r14.
-		'_OffsetOf_KeyType' -> 16r10.
-		'_OffsetOf_TlsUnique' -> 16r8.
-		'_OffsetOf_TlsUniqueSize' -> 16rC.
-		'_OffsetOf_TokenBinding' -> 16r0.
-		'_OffsetOf_TokenBindingSize' -> 16r4
-	}!
+			'_HTTP_REQUEST_TOKEN_BINDING_INFO_Size' -> 16r14.
+			'_OffsetOf_KeyType' -> 16r10.
+			'_OffsetOf_TlsUnique' -> 16r8.
+			'_OffsetOf_TlsUniqueSize' -> 16rC.
+			'_OffsetOf_TokenBinding' -> 16r0.
+			'_OffsetOf_TokenBindingSize' -> 16r4
+		}!
 WinHttpServer.HTTP_REQUEST_TOKEN_BINDING_INFO guid: (Core.GUID fromString: '{9a86eb3d-22ee-4cc3-980d-f3427eecdb0c}')!
 WinHttpServer.HTTP_REQUEST_TOKEN_BINDING_INFO comment: '`HTTP_REQUEST_TOKEN_BINDING_INFO` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_REQUEST_TOKEN_BINDING_INFO'' from type information in the ''Windows Http Server API'' library.
 

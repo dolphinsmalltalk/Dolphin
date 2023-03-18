@@ -1,15 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.SHITEMID'
+OS.Win32Structure
+	subclass: #'OS.SHITEMID'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_OffsetOf_abID' -> 16r2.
-		'_OffsetOf_cb' -> 16r0.
-		'_SHITEMID_Size' -> 16r4
-	}!
+	classConstants: { '_OffsetOf_abID' -> 16r2. '_OffsetOf_cb' -> 16r0. '_SHITEMID_Size' -> 16r4 }!
 OS.SHITEMID guid: (Core.GUID fromString: '{a7de965e-05a0-4e48-a2b0-5dab55449c53}')!
 OS.SHITEMID comment: '<SHITEMID> is an <ExternalStructure> class to wrap the struct ''IShellFolderEx.SHITEMID'' from type information in the ''IShellFolder Extended Type Library v1.0'' library.
 

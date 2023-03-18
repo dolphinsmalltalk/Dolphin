@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Kernel.ProcessCopier'
+Core.Object
+	subclass: #'Kernel.ProcessCopier'
 	instanceVariableNames: 'source delta copied clone'
 	classVariableNames: ''
 	imports: #()

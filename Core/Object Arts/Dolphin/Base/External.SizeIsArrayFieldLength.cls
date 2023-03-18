@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.ArrayFieldLength subclass: #'External.SizeIsArrayFieldLength'
+External.ArrayFieldLength
+	subclass: #'External.SizeIsArrayFieldLength'
 	instanceVariableNames: 'sizeIs getLength setLength'
 	classVariableNames: ''
 	imports: #()

@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.GpStructure subclass: #'Graphics.Gdiplus.EncoderParameters'
+Graphics.Gdiplus.GpStructure
+	subclass: #'Graphics.Gdiplus.EncoderParameters'
 	instanceVariableNames: 'valueBuffer'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_EncoderParameters_Size' -> 16r20.
-		'_OffsetOf_Count' -> 16r0.
-		'_OffsetOf_Parameter' -> 16r4
-	}!
+			'_EncoderParameters_Size' -> 16r20.
+			'_OffsetOf_Count' -> 16r0.
+			'_OffsetOf_Parameter' -> 16r4
+		}!
 Graphics.Gdiplus.EncoderParameters guid: (Core.GUID fromString: '{7aa7c3a4-85d9-4298-ad05-11c85d76c885}')!
 Graphics.Gdiplus.EncoderParameters comment: '<GpEncoderParameters> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpEncoderParameters'' from type information in the ''GDI+ Library 1.0'' library.
 

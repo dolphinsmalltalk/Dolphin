@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ListPresenter subclass: #'Tools.ResourceListPresenter'
+UI.ListPresenter
+	subclass: #'Tools.ResourceListPresenter'
 	instanceVariableNames: 'filterBlock resourcesPresenter previewPresenter resourceIdModel'
 	classVariableNames: ''
 	imports: #()

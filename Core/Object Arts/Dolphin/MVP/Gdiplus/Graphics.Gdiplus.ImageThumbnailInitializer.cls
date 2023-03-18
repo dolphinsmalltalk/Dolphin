@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.ImageInitializer subclass: #'Graphics.Gdiplus.ImageThumbnailInitializer'
+Graphics.Gdiplus.ImageInitializer
+	subclass: #'Graphics.Gdiplus.ImageThumbnailInitializer'
 	instanceVariableNames: 'image extent'
 	classVariableNames: ''
 	imports: #()

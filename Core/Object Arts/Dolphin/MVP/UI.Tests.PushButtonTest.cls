@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Tests.PresenterTest subclass: #'UI.Tests.PushButtonTest'
+UI.Tests.PresenterTest
+	subclass: #'UI.Tests.PushButtonTest'
 	instanceVariableNames: 'shell shellButtonA shellButtonB dialog dialogButtonA dialogButtonB'
 	classVariableNames: ''
 	imports: #()

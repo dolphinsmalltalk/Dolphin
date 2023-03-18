@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.DualInterfaceImplementation subclass: #'OS.COM.ForwardingDualInterfaceImplementation'
+OS.COM.DualInterfaceImplementation
+	subclass: #'OS.COM.ForwardingDualInterfaceImplementation'
 	instanceVariableNames: 'interfaceClass server'
 	classVariableNames: ''
 	imports: #()

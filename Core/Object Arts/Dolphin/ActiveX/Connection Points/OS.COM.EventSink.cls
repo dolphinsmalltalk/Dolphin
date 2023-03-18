@@ -1,15 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.AbstractDispatchImplementation subclass: #'OS.COM.EventSink'
+OS.COM.AbstractDispatchImplementation
+	subclass: #'OS.COM.EventSink'
 	instanceVariableNames: 'idMap target connector cookie tiSource flags'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'GenericEventMask' -> 16r2.
-		'NoIndividualEventsMask' -> 16r4.
-		'TraceMask' -> 16r1
-	}!
+	classConstants: { 'GenericEventMask' -> 16r2. 'NoIndividualEventsMask' -> 16r4. 'TraceMask' -> 16r1 }!
 OS.COM.EventSink guid: (Core.GUID fromString: '{d578b1aa-48d3-49f7-a2d0-de3267236311}')!
 OS.COM.EventSink comment: 'AXEventSink is a generic connection point callback interface (i.e. event sink) implementation for event dispinterfaces. AXEventSink itself handles incoming events by triggering a same named Smalltalk event, the selector of which is generated from the function description in the type library. The primary keyword of the selector is the name of the event (unchanged in any way), with subsequent keywords the name of the corresponding argument from the library, or just an underscore & colon pair (_:) if the argument is unnamed. In-only arguments are converted from the variant parameter to the equivalent Smalltalk object, whereas output arguments are passed around as a <VARIANT> which can be updated with the value to pass out.
 

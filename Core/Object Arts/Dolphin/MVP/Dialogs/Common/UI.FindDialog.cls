@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.CommonDialog subclass: #'UI.FindDialog'
+UI.CommonDialog
+	subclass: #'UI.FindDialog'
 	instanceVariableNames: 'findWhatBuf findDetails'
 	classVariableNames: 'HookHandlers'
 	imports: #()

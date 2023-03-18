@@ -1,16 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.DTBGOPTS'
+OS.Win32Structure
+	subclass: #'OS.DTBGOPTS'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_DTBGOPTS_Size' -> 16r18.
-		'_OffsetOf_dwFlags' -> 16r4.
-		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_rcClip' -> 16r8
-	}!
+			'_DTBGOPTS_Size' -> 16r18.
+			'_OffsetOf_dwFlags' -> 16r4.
+			'_OffsetOf_dwSize' -> 16r0.
+			'_OffsetOf_rcClip' -> 16r8
+		}!
 OS.DTBGOPTS guid: (Core.GUID fromString: '{cdf611d8-4c3f-48a1-b3eb-fd222762e69b}')!
 OS.DTBGOPTS comment: '<DTBGOPTS> is an <ExternalStructure> class to wrap the struct ''Win32.DTBGOPTS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

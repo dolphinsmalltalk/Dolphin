@@ -1,37 +1,38 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'OS.MIB_IFROW'
+External.Structure
+	subclass: #'OS.MIB_IFROW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_MIB_IFROW_Size' -> 16r35C.
-		'_OffsetOf_bDescr' -> 16r25C.
-		'_OffsetOf_bPhysAddr' -> 16r214.
-		'_OffsetOf_dwAdminStatus' -> 16r21C.
-		'_OffsetOf_dwDescrLen' -> 16r258.
-		'_OffsetOf_dwIndex' -> 16r200.
-		'_OffsetOf_dwInDiscards' -> 16r234.
-		'_OffsetOf_dwInErrors' -> 16r238.
-		'_OffsetOf_dwInNUcastPkts' -> 16r230.
-		'_OffsetOf_dwInOctets' -> 16r228.
-		'_OffsetOf_dwInUcastPkts' -> 16r22C.
-		'_OffsetOf_dwInUnknownProtos' -> 16r23C.
-		'_OffsetOf_dwLastChange' -> 16r224.
-		'_OffsetOf_dwMtu' -> 16r208.
-		'_OffsetOf_dwOperStatus' -> 16r220.
-		'_OffsetOf_dwOutDiscards' -> 16r24C.
-		'_OffsetOf_dwOutErrors' -> 16r250.
-		'_OffsetOf_dwOutNUcastPkts' -> 16r248.
-		'_OffsetOf_dwOutOctets' -> 16r240.
-		'_OffsetOf_dwOutQLen' -> 16r254.
-		'_OffsetOf_dwOutUcastPkts' -> 16r244.
-		'_OffsetOf_dwPhysAddrLen' -> 16r210.
-		'_OffsetOf_dwSpeed' -> 16r20C.
-		'_OffsetOf_dwType' -> 16r204.
-		'_OffsetOf_wszName' -> 16r0
-	}!
+			'_MIB_IFROW_Size' -> 16r35C.
+			'_OffsetOf_bDescr' -> 16r25C.
+			'_OffsetOf_bPhysAddr' -> 16r214.
+			'_OffsetOf_dwAdminStatus' -> 16r21C.
+			'_OffsetOf_dwDescrLen' -> 16r258.
+			'_OffsetOf_dwIndex' -> 16r200.
+			'_OffsetOf_dwInDiscards' -> 16r234.
+			'_OffsetOf_dwInErrors' -> 16r238.
+			'_OffsetOf_dwInNUcastPkts' -> 16r230.
+			'_OffsetOf_dwInOctets' -> 16r228.
+			'_OffsetOf_dwInUcastPkts' -> 16r22C.
+			'_OffsetOf_dwInUnknownProtos' -> 16r23C.
+			'_OffsetOf_dwLastChange' -> 16r224.
+			'_OffsetOf_dwMtu' -> 16r208.
+			'_OffsetOf_dwOperStatus' -> 16r220.
+			'_OffsetOf_dwOutDiscards' -> 16r24C.
+			'_OffsetOf_dwOutErrors' -> 16r250.
+			'_OffsetOf_dwOutNUcastPkts' -> 16r248.
+			'_OffsetOf_dwOutOctets' -> 16r240.
+			'_OffsetOf_dwOutQLen' -> 16r254.
+			'_OffsetOf_dwOutUcastPkts' -> 16r244.
+			'_OffsetOf_dwPhysAddrLen' -> 16r210.
+			'_OffsetOf_dwSpeed' -> 16r20C.
+			'_OffsetOf_dwType' -> 16r204.
+			'_OffsetOf_wszName' -> 16r0
+		}!
 OS.MIB_IFROW guid: (Core.GUID fromString: '{6ead7710-bab6-4715-a112-b56e9b66d9ee}')!
 OS.MIB_IFROW comment: '<MIB_IFROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IFROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Security.ProtectedProductSerialNumber subclass: #'Security.Examples.AnotherCompanySerialNumber'
+Security.ProtectedProductSerialNumber
+	subclass: #'Security.Examples.AnotherCompanySerialNumber'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IUnknown subclass: #'OS.COM.IPerPropertyBrowsing'
+OS.COM.IUnknown
+	subclass: #'OS.COM.IPerPropertyBrowsing'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

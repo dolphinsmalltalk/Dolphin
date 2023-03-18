@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.DynamicLinkLibrary subclass: #'OS.COM.OLELibrary'
+External.DynamicLinkLibrary
+	subclass: #'OS.COM.OLELibrary'
 	instanceVariableNames: 'comOnly'
 	classVariableNames: 'DefaultIMalloc'
 	imports: #()

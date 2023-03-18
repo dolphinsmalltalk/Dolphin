@@ -1,16 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.OwnerDrawStruct'
+OS.Win32Structure
+	subclass: #'OS.OwnerDrawStruct'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_CtlID' -> 16r4.
-		'_OffsetOf_CtlType' -> 16r0.
-		'_OffsetOf_itemID' -> 16r8.
-		'_OwnerDrawStruct_Size' -> 16rC
-	}!
+			'_OffsetOf_CtlID' -> 16r4.
+			'_OffsetOf_CtlType' -> 16r0.
+			'_OffsetOf_itemID' -> 16r8.
+			'_OwnerDrawStruct_Size' -> 16rC
+		}!
 OS.OwnerDrawStruct guid: (Core.GUID fromString: '{7208da36-0f29-40ae-b974-07c3a81db8f5}')!
 OS.OwnerDrawStruct isNonInstantiable: true!
 OS.OwnerDrawStruct comment: ''!

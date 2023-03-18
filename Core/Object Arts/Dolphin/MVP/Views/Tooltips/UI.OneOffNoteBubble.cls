@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'UI.OneOffNoteBubble'
+Core.Object
+	subclass: #'UI.OneOffNoteBubble'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

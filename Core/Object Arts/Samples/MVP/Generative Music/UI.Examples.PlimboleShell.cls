@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Shell subclass: #'UI.Examples.PlimboleShell'
+UI.Shell
+	subclass: #'UI.Examples.PlimboleShell'
 	instanceVariableNames: 'plimbolePresenter'
 	classVariableNames: 'Palettes'
 	imports: #()

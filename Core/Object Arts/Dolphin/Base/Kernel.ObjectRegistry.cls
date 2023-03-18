@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Kernel.ObjectRegistry'
+Core.Object
+	subclass: #'Kernel.ObjectRegistry'
 	instanceVariableNames: 'registry'
 	classVariableNames: ''
 	imports: #()

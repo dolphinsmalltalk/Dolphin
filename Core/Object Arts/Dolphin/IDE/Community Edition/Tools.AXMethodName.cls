@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Tools.AXMethodName'
+Core.Object
+	subclass: #'Tools.AXMethodName'
 	instanceVariableNames: 'keywords argumentNames indices'
 	classVariableNames: ''
 	imports: #(#{OS.COM private})

@@ -1,16 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.LOGPEN'
+OS.Win32Structure
+	subclass: #'OS.LOGPEN'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_LOGPEN_Size' -> 16r10.
-		'_OffsetOf_lopnColor' -> 16rC.
-		'_OffsetOf_lopnStyle' -> 16r0.
-		'_OffsetOf_lopnWidth' -> 16r4
-	}!
+			'_LOGPEN_Size' -> 16r10.
+			'_OffsetOf_lopnColor' -> 16rC.
+			'_OffsetOf_lopnStyle' -> 16r0.
+			'_OffsetOf_lopnWidth' -> 16r4
+		}!
 OS.LOGPEN guid: (Core.GUID fromString: '{87b4c5fb-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.LOGPEN comment: '<LOGPEN> is an <ExternalStructure> class to wrap the struct ''Win32.LOGPEN'' from type information in the ''Win32 API'' library.
 

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.PositionableStreamTest subclass: #'Core.Tests.ReadStreamTest'
+Core.Tests.PositionableStreamTest
+	subclass: #'Core.Tests.ReadStreamTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

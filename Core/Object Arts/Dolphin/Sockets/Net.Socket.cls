@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Net.SocketAbstract subclass: #'Net.Socket'
+Net.SocketAbstract
+	subclass: #'Net.Socket'
 	instanceVariableNames: 'address readStream writeStream isText'
 	classVariableNames: ''
 	imports: #()

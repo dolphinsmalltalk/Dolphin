@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.AbstractLiteralArrayNode subclass: #'Kernel.StLiteralArrayNode'
+Kernel.AbstractLiteralArrayNode
+	subclass: #'Kernel.StLiteralArrayNode'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

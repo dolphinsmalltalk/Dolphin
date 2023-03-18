@@ -45,31 +45,36 @@ package!
 
 "Class Definitions"!
 
-Kernel.PluggableSortAlgorithm subclass: #'Kernel.HeapsortAlgorithm'
+Kernel.PluggableSortAlgorithm
+	subclass: #'Kernel.HeapsortAlgorithm'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.PluggableSortAlgorithm subclass: #'Kernel.InsertionSortAlgorithm'
+Kernel.PluggableSortAlgorithm
+	subclass: #'Kernel.InsertionSortAlgorithm'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.PluggableSortAlgorithm subclass: #'Kernel.MergesortAlgorithm'
+Kernel.PluggableSortAlgorithm
+	subclass: #'Kernel.MergesortAlgorithm'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.PluggableSortAlgorithm subclass: #'Kernel.QuicksortAlgorithm'
+Kernel.PluggableSortAlgorithm
+	subclass: #'Kernel.QuicksortAlgorithm'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.PluggableSortAlgorithm subclass: #'Kernel.ShellsortAlgorithm'
+Kernel.PluggableSortAlgorithm
+	subclass: #'Kernel.ShellsortAlgorithm'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -1,16 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'OS.ODBCTIME'
+External.Structure
+	subclass: #'OS.ODBCTIME'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_ODBCTIME_Size' -> 16r6.
-		'_OffsetOf_hour' -> 16r0.
-		'_OffsetOf_minute' -> 16r2.
-		'_OffsetOf_second' -> 16r4
-	}!
+			'_ODBCTIME_Size' -> 16r6.
+			'_OffsetOf_hour' -> 16r0.
+			'_OffsetOf_minute' -> 16r2.
+			'_OffsetOf_second' -> 16r4
+		}!
 OS.ODBCTIME guid: (Core.GUID fromString: '{87b4c598-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.ODBCTIME comment: 'ODBCTIME is a representation of the same named Win32 ODBC structure.'!
 !OS.ODBCTIME categoriesForClass!External-Data-Structured-ODBC!ODBC Interface! !

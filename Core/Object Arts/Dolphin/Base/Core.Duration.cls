@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Magnitude subclass: #'Core.Duration'
+Core.Magnitude
+	subclass: #'Core.Duration'
 	instanceVariableNames: 'seconds'
 	classVariableNames: 'Zero'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'SecondsPerDay' -> 16r15180.
-		'SecondsPerHour' -> 16rE10
-	}!
+	classConstants: { 'SecondsPerDay' -> 16r15180. 'SecondsPerHour' -> 16rE10 }!
 Core.Duration guid: (Core.GUID fromString: '{87b4c654-026e-11d3-9fd7-00a0cc3e4a32}')!
 Core.Duration comment: '`Duration` is an implementation of the ANSI Smalltalk protocols `<Duration>` (instance side) and `<Duration factory>` (class side).
 

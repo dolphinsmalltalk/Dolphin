@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.ReadWriteStreamTest subclass: #'Core.Tests.AbstractFileStreamTest'
+Core.Tests.ReadWriteStreamTest
+	subclass: #'Core.Tests.AbstractFileStreamTest'
 	instanceVariableNames: 'tempFileName filestream'
 	classVariableNames: 'RandomData1 RandomData2'
 	imports: #()

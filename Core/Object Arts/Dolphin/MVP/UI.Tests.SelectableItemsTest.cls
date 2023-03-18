@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Tests.PresenterTest subclass: #'UI.Tests.SelectableItemsTest'
+UI.Tests.PresenterTest
+	subclass: #'UI.Tests.SelectableItemsTest'
 	instanceVariableNames: 'events selectionChanging selectionChanged timedout'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})

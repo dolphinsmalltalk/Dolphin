@@ -1,18 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'OS.MIB_TCPROW'
+External.Structure
+	subclass: #'OS.MIB_TCPROW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_MIB_TCPROW_Size' -> 16r14.
-		'_OffsetOf_dwLocalAddr' -> 16r4.
-		'_OffsetOf_dwLocalPort' -> 16r8.
-		'_OffsetOf_dwRemoteAddr' -> 16rC.
-		'_OffsetOf_dwRemotePort' -> 16r10.
-		'_OffsetOf_dwState' -> 16r0
-	}!
+			'_MIB_TCPROW_Size' -> 16r14.
+			'_OffsetOf_dwLocalAddr' -> 16r4.
+			'_OffsetOf_dwLocalPort' -> 16r8.
+			'_OffsetOf_dwRemoteAddr' -> 16rC.
+			'_OffsetOf_dwRemotePort' -> 16r10.
+			'_OffsetOf_dwState' -> 16r0
+		}!
 OS.MIB_TCPROW guid: (Core.GUID fromString: '{f066336f-3aa1-4146-8b59-29b9f4cd065b}')!
 OS.MIB_TCPROW comment: '<MIB_TCPROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_TCPROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

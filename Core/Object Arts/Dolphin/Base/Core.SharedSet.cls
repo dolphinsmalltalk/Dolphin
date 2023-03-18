@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Set variableSubclass: #'Core.SharedSet'
+Core.Set
+	variableSubclass: #'Core.SharedSet'
 	instanceVariableNames: 'mutex'
 	classVariableNames: ''
 	imports: #()

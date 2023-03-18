@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.WindowsEvent subclass: #'UI.SettingsChangeEvent'
+UI.WindowsEvent
+	subclass: #'UI.SettingsChangeEvent'
 	instanceVariableNames: 'area'
 	classVariableNames: ''
 	imports: #()

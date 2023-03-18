@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.ChooseNamespaceDialog subclass: #'Tools.ChooseImportDialog'
+Tools.ChooseNamespaceDialog
+	subclass: #'Tools.ChooseImportDialog'
 	instanceVariableNames: 'private hintBubble namespacesOnly'
 	classVariableNames: ''
 	imports: #(#{Refactory.Browser private})

@@ -1,19 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.NUMBERFMTW'
+OS.Win32Structure
+	subclass: #'OS.NUMBERFMTW'
 	instanceVariableNames: 'decimalSeparator numberGrouping groupSeparator'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_NUMBERFMTW_Size' -> 16r18.
-		'_OffsetOf_Grouping' -> 16r8.
-		'_OffsetOf_LeadingZero' -> 16r4.
-		'_OffsetOf_lpDecimalSep' -> 16rC.
-		'_OffsetOf_lpThousandSep' -> 16r10.
-		'_OffsetOf_NegativeOrder' -> 16r14.
-		'_OffsetOf_NumDigits' -> 16r0
-	}!
+			'_NUMBERFMTW_Size' -> 16r18.
+			'_OffsetOf_Grouping' -> 16r8.
+			'_OffsetOf_LeadingZero' -> 16r4.
+			'_OffsetOf_lpDecimalSep' -> 16rC.
+			'_OffsetOf_lpThousandSep' -> 16r10.
+			'_OffsetOf_NegativeOrder' -> 16r14.
+			'_OffsetOf_NumDigits' -> 16r0
+		}!
 OS.NUMBERFMTW guid: (Core.GUID fromString: '{0a4bf3f8-997a-4704-98b0-05a904564613}')!
 OS.NUMBERFMTW comment: '`NUMBERFMTW` is an `ExternalStructure` class to wrap the struct NUMBERFMTW from type information in the ''Win32 API'' library.
 

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'UI.MessageBoxAbstract'
+Core.Object
+	subclass: #'UI.MessageBoxAbstract'
 	instanceVariableNames: 'text caption owner'
 	classVariableNames: 'IconStyles'
 	imports: #(#{OS.MessageBoxConstants})

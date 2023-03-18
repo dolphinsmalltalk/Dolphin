@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.SingletonSearchPolicy subclass: #'Kernel.CaseInsensitiveSearchPolicy'
+Kernel.SingletonSearchPolicy
+	subclass: #'Kernel.CaseInsensitiveSearchPolicy'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

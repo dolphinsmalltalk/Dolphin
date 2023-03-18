@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.StSemanticScope subclass: #'Kernel.StEvalScope'
+Kernel.StSemanticScope
+	subclass: #'Kernel.StEvalScope'
 	instanceVariableNames: 'pools outer'
 	classVariableNames: ''
 	imports: #()

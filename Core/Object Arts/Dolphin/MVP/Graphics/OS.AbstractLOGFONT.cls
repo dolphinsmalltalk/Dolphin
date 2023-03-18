@@ -1,26 +1,27 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.AbstractLOGFONT'
+OS.Win32Structure
+	subclass: #'OS.AbstractLOGFONT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_AbstractLOGFONT_Size' -> 16r1C.
-		'_OffsetOf_lfCharSet' -> 16r17.
-		'_OffsetOf_lfClipPrecision' -> 16r19.
-		'_OffsetOf_lfEscapement' -> 16r8.
-		'_OffsetOf_lfHeight' -> 16r0.
-		'_OffsetOf_lfItalic' -> 16r14.
-		'_OffsetOf_lfOrientation' -> 16rC.
-		'_OffsetOf_lfOutPrecision' -> 16r18.
-		'_OffsetOf_lfPitchAndFamily' -> 16r1B.
-		'_OffsetOf_lfQuality' -> 16r1A.
-		'_OffsetOf_lfStrikeOut' -> 16r16.
-		'_OffsetOf_lfUnderline' -> 16r15.
-		'_OffsetOf_lfWeight' -> 16r10.
-		'_OffsetOf_lfWidth' -> 16r4
-	}!
+			'_AbstractLOGFONT_Size' -> 16r1C.
+			'_OffsetOf_lfCharSet' -> 16r17.
+			'_OffsetOf_lfClipPrecision' -> 16r19.
+			'_OffsetOf_lfEscapement' -> 16r8.
+			'_OffsetOf_lfHeight' -> 16r0.
+			'_OffsetOf_lfItalic' -> 16r14.
+			'_OffsetOf_lfOrientation' -> 16rC.
+			'_OffsetOf_lfOutPrecision' -> 16r18.
+			'_OffsetOf_lfPitchAndFamily' -> 16r1B.
+			'_OffsetOf_lfQuality' -> 16r1A.
+			'_OffsetOf_lfStrikeOut' -> 16r16.
+			'_OffsetOf_lfUnderline' -> 16r15.
+			'_OffsetOf_lfWeight' -> 16r10.
+			'_OffsetOf_lfWidth' -> 16r4
+		}!
 OS.AbstractLOGFONT guid: (Core.GUID fromString: '{8f358ad9-379c-415d-a076-730db113b289}')!
 OS.AbstractLOGFONT isNonInstantiable: true!
 OS.AbstractLOGFONT comment: ''!

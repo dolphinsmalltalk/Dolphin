@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.AbstractDelegatingView subclass: #'UI.ReferenceView'
+UI.AbstractDelegatingView
+	subclass: #'UI.ReferenceView'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

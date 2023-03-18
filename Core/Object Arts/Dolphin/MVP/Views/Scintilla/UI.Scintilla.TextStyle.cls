@@ -1,19 +1,62 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Scintilla.Attribute subclass: #'UI.Scintilla.TextStyle'
+UI.Scintilla.Attribute
+	subclass: #'UI.Scintilla.TextStyle'
 	instanceVariableNames: 'forecolor backcolor flags fontName centiPointSize characterSet case name description weight invisibleRepresentation'
-	classVariableNames: 'PredefinedStyleNames'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'CheckMonospacedMask' -> 16rC000.
-		'EolFilledMask' -> 16rC0.
-		'HotspotMask' -> 16rC00.
-		'InvisibleMask' -> 16r3000.
-		'ItalicMask' -> 16rC.
-		'ReadOnlyMask' -> 16r300.
-		'UnderlinedMask' -> 16r30
-	}!
+			'CheckMonospacedMask' -> 16rC000.
+			'EolFilledMask' -> 16rC0.
+			'HotspotMask' -> 16rC00.
+			'InvisibleMask' -> 16r3000.
+			'ItalicMask' -> 16rC.
+			'PredefinedStyleNames'
+				-> (IdentityDictionary withAll: {
+								#braceHighlight -> 16r22.
+								#braceMismatch -> 16r23.
+								#callTip -> 16r26.
+								#controlChar -> 16r24.
+								#foldDisplayText -> 16r27.
+								#indentGuide -> 16r25.
+								#lineNumber -> 16r21.
+								#normal -> 16r0.
+								16r1 -> 16r1.
+								16r10 -> 16r10.
+								16r11 -> 16r11.
+								16r12 -> 16r12.
+								16r13 -> 16r13.
+								16r14 -> 16r14.
+								16r15 -> 16r15.
+								16r16 -> 16r16.
+								16r17 -> 16r17.
+								16r18 -> 16r18.
+								16r19 -> 16r19.
+								16r1A -> 16r1A.
+								16r1B -> 16r1B.
+								16r1C -> 16r1C.
+								16r1D -> 16r1D.
+								16r1E -> 16r1E.
+								16r1F -> 16r1F.
+								16r2 -> 16r2.
+								16r3 -> 16r3.
+								16r4 -> 16r4.
+								16r5 -> 16r5.
+								16r6 -> 16r6.
+								16r7 -> 16r7.
+								16r8 -> 16r8.
+								16r9 -> 16r9.
+								16rA -> 16rA.
+								16rB -> 16rB.
+								16rC -> 16rC.
+								16rD -> 16rD.
+								16rE -> 16rE.
+								16rF -> 16rF
+							}).
+			'ReadOnlyMask' -> 16r300.
+			'UnderlinedMask' -> 16r30
+		}!
 UI.Scintilla.TextStyle guid: (Core.GUID fromString: '{441d5422-db7d-4872-a16d-d6ca9d88e0b8}')!
 UI.Scintilla.TextStyle comment: '`ScintillaStyle` instances represent the visual styles that can be applied to colour text in a particular `ScintillaView`.
 

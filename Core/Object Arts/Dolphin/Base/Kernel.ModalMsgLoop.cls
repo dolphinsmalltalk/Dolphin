@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Kernel.ModalMsgLoop'
+Core.Object
+	subclass: #'Kernel.ModalMsgLoop'
 	instanceVariableNames: 'loop'
 	classVariableNames: ''
 	imports: #()

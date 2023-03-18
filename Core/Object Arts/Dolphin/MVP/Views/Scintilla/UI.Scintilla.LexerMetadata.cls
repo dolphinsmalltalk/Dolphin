@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'UI.Scintilla.LexerMetadata'
+Core.Object
+	subclass: #'UI.Scintilla.LexerMetadata'
 	instanceVariableNames: 'view id'
 	classVariableNames: ''
 	imports: #()

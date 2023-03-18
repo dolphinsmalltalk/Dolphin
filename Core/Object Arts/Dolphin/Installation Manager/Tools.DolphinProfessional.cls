@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.DolphinBaseProduct subclass: #'Tools.DolphinProfessional'
+Tools.DolphinBaseProduct
+	subclass: #'Tools.DolphinProfessional'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

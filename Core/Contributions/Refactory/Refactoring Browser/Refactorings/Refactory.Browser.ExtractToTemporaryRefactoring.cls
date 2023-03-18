@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.MethodRefactoring subclass: #'Refactory.Browser.ExtractToTemporaryRefactoring'
+Refactory.Browser.MethodRefactoring
+	subclass: #'Refactory.Browser.ExtractToTemporaryRefactoring'
 	instanceVariableNames: 'sourceInterval selector newVariableName method'
 	classVariableNames: ''
 	imports: #()

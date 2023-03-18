@@ -22,13 +22,15 @@ package!
 
 "Class Definitions"!
 
-Core.Tests.DolphinTest subclass: #'OS.Tests.IniFileTest'
+Core.Tests.DolphinTest
+	subclass: #'OS.Tests.IniFileTest'
 	instanceVariableNames: 'iniFile'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-XProgramming.SUnit.TestResource subclass: #'OS.Tests.IniFileTestResource'
+XProgramming.SUnit.TestResource
+	subclass: #'OS.Tests.IniFileTestResource'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

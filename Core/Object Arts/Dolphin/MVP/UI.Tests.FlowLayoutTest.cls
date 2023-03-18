@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Tests.LayoutManagerTest subclass: #'UI.Tests.FlowLayoutTest'
+UI.Tests.LayoutManagerTest
+	subclass: #'UI.Tests.FlowLayoutTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -18,19 +18,22 @@ package!
 
 "Class Definitions"!
 
-Kernel.Namespace subclass: #Refactory
+Kernel.Namespace
+	subclass: #Refactory
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{Core} #{Kernel private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory subclass: #'Refactory.Browser'
+Refactory
+	subclass: #'Refactory.Browser'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser subclass: #'Refactory.Browser.TestData'
+Refactory.Browser
+	subclass: #'Refactory.Browser.TestData'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

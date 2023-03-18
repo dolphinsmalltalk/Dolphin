@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ValueDialog subclass: #'Tools.MenuComposer'
+UI.ValueDialog
+	subclass: #'Tools.MenuComposer'
 	instanceVariableNames: 'arena menuViews conflictingAccelerators'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants private})

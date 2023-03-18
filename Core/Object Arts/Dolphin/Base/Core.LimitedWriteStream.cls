@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.SequencedStream subclass: #'Core.LimitedWriteStream'
+Core.SequencedStream
+	subclass: #'Core.LimitedWriteStream'
 	instanceVariableNames: 'stream limit limitBlock start visited visitedBlock'
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ValueDialog subclass: #'UI.ChoicePrompter'
+UI.ValueDialog
+	subclass: #'UI.ChoicePrompter'
 	instanceVariableNames: 'choicePresenter newBlock newCaption newPrompt validater newPrompterBlock'
 	classVariableNames: ''
 	imports: #()

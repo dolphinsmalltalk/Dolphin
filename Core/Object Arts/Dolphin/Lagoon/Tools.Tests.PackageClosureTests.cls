@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTest subclass: #'Tools.Tests.PackageClosureTests'
+Core.Tests.DolphinTest
+	subclass: #'Tools.Tests.PackageClosureTests'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{Refactory.Browser private})

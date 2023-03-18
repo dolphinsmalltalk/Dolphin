@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IDispatch subclass: #'CDO.ISMTPScriptConnector'
+OS.COM.IDispatch
+	subclass: #'CDO.ISMTPScriptConnector'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

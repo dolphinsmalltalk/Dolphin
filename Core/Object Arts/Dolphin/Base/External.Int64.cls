@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.UInt64 subclass: #'External.Int64'
+External.UInt64
+	subclass: #'External.Int64'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_Int64_Size' -> 16r8
-	}!
+	classConstants: { '_Int64_Size' -> 16r8 }!
 External.Int64 guid: (Core.GUID fromString: '{87b4c630-026e-11d3-9fd7-00a0cc3e4a32}')!
 External.Int64 comment: '`Int64` is an `External.Structure` class to represent signed 64-bit integers. 
 

@@ -1,26 +1,27 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.GpStructure subclass: #'Graphics.Gdiplus.ImageCodecInfo'
+Graphics.Gdiplus.GpStructure
+	subclass: #'Graphics.Gdiplus.ImageCodecInfo'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_ImageCodecInfo_Size' -> 16r4C.
-		'_OffsetOf_Clsid' -> 16r0.
-		'_OffsetOf_CodecName' -> 16r20.
-		'_OffsetOf_DllName' -> 16r24.
-		'_OffsetOf_FilenameExtension' -> 16r2C.
-		'_OffsetOf_Flags' -> 16r34.
-		'_OffsetOf_FormatDescription' -> 16r28.
-		'_OffsetOf_FormatID' -> 16r10.
-		'_OffsetOf_MimeType' -> 16r30.
-		'_OffsetOf_SigCount' -> 16r3C.
-		'_OffsetOf_SigMask' -> 16r48.
-		'_OffsetOf_SigPattern' -> 16r44.
-		'_OffsetOf_SigSize' -> 16r40.
-		'_OffsetOf_Version' -> 16r38
-	}!
+			'_ImageCodecInfo_Size' -> 16r4C.
+			'_OffsetOf_Clsid' -> 16r0.
+			'_OffsetOf_CodecName' -> 16r20.
+			'_OffsetOf_DllName' -> 16r24.
+			'_OffsetOf_FilenameExtension' -> 16r2C.
+			'_OffsetOf_Flags' -> 16r34.
+			'_OffsetOf_FormatDescription' -> 16r28.
+			'_OffsetOf_FormatID' -> 16r10.
+			'_OffsetOf_MimeType' -> 16r30.
+			'_OffsetOf_SigCount' -> 16r3C.
+			'_OffsetOf_SigMask' -> 16r48.
+			'_OffsetOf_SigPattern' -> 16r44.
+			'_OffsetOf_SigSize' -> 16r40.
+			'_OffsetOf_Version' -> 16r38
+		}!
 Graphics.Gdiplus.ImageCodecInfo guid: (Core.GUID fromString: '{059e6e3a-2877-4ea7-a11c-7e5c1ac62165}')!
 Graphics.Gdiplus.ImageCodecInfo comment: '<GpImageCodecInfo> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpImageCodecInfo'' from type information in the ''GDI+ Library 1.0'' library.
 

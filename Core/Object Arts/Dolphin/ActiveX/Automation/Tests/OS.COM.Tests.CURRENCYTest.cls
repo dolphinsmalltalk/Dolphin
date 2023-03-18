@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTest subclass: #'OS.COM.Tests.CURRENCYTest'
+Core.Tests.DolphinTest
+	subclass: #'OS.COM.Tests.CURRENCYTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})

@@ -1,19 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.FinalizableStructure subclass: #'OS.COM.STGMEDIUM'
+OS.COM.FinalizableStructure
+	subclass: #'OS.COM.STGMEDIUM'
 	instanceVariableNames: 'value'
 	classVariableNames: 'GetSelectors'
 	imports: #(#{OS.COM.PersistConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_handle' -> 16r4.
-		'_OffsetOf_lpszFileName' -> 16r4.
-		'_OffsetOf_pstg' -> 16r4.
-		'_OffsetOf_pstm' -> 16r4.
-		'_OffsetOf_pUnkForRelease' -> 16r8.
-		'_OffsetOf_tymed' -> 16r0.
-		'_STGMEDIUM_Size' -> 16rC
-	}!
+			'_OffsetOf_handle' -> 16r4.
+			'_OffsetOf_lpszFileName' -> 16r4.
+			'_OffsetOf_pstg' -> 16r4.
+			'_OffsetOf_pstm' -> 16r4.
+			'_OffsetOf_pUnkForRelease' -> 16r8.
+			'_OffsetOf_tymed' -> 16r0.
+			'_STGMEDIUM_Size' -> 16rC
+		}!
 OS.COM.STGMEDIUM guid: (Core.GUID fromString: '{cc17569a-49c6-475d-a47c-86eaae187d18}')!
 OS.COM.STGMEDIUM comment: 'Note: It might be preferable to apply the conditional elimination refactoring and employ different STGMEDIUM subclasses to represent the different types, but as we frequently don''t get to create the STGMEDIUM, we''d need some kind of downcast. I''m thinking about it though. At least we can use ReleaseStgMedium() to avoid the need for a switch on release.
 '!

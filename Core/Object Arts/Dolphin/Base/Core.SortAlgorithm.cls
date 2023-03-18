@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Core.SortAlgorithm'
+Core.Object
+	subclass: #'Core.SortAlgorithm'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

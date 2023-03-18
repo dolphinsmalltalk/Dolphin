@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Error subclass: #'Core.MessageNotUnderstood'
+Core.Error
+	subclass: #'Core.MessageNotUnderstood'
 	instanceVariableNames: 'receiver'
 	classVariableNames: ''
 	imports: #()

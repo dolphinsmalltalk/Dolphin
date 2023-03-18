@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMRPOLYDRAW'
+OS.ENHMETARECORD
+	subclass: #'OS.EMRPOLYDRAW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_EMRPOLYDRAW_Size' -> 16r28.
-		'_OffsetOf_abTypes' -> 16r24.
-		'_OffsetOf_aptl' -> 16r1C.
-		'_OffsetOf_cptl' -> 16r18.
-		'_OffsetOf_rclBounds' -> 16r8
-	}!
+			'_EMRPOLYDRAW_Size' -> 16r28.
+			'_OffsetOf_abTypes' -> 16r24.
+			'_OffsetOf_aptl' -> 16r1C.
+			'_OffsetOf_cptl' -> 16r18.
+			'_OffsetOf_rclBounds' -> 16r8
+		}!
 OS.EMRPOLYDRAW guid: (Core.GUID fromString: '{5be172c2-6045-4143-8550-377acd60fd3f}')!
 OS.EMRPOLYDRAW comment: '<EMRPOLYDRAW> is an <ExternalStructure> class to wrap the struct ''Win32.EMRPOLYDRAW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

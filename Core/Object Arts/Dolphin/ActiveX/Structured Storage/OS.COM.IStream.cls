@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.ISequentialStream subclass: #'OS.COM.IStream'
+OS.COM.ISequentialStream
+	subclass: #'OS.COM.IStream'
 	instanceVariableNames: 'name mode'
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-XProgramming.SUnit.TestCase subclass: #'STON.Tests.CStyleCommentsSkipStreamTest'
+XProgramming.SUnit.TestCase
+	subclass: #'STON.Tests.CStyleCommentsSkipStreamTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

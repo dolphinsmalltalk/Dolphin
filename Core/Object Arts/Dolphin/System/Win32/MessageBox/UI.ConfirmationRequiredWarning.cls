@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Warning subclass: #'UI.ConfirmationRequiredWarning'
+Core.Warning
+	subclass: #'UI.ConfirmationRequiredWarning'
 	instanceVariableNames: 'confirmBlock refuseBlock cancelBlock'
 	classVariableNames: ''
 	imports: #()

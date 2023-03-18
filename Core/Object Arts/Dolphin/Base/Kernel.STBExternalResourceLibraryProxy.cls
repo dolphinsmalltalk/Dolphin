@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.STBProxy subclass: #'Kernel.STBExternalResourceLibraryProxy'
+Kernel.STBProxy
+	subclass: #'Kernel.STBExternalResourceLibraryProxy'
 	instanceVariableNames: 'fileName _reserved1'
 	classVariableNames: ''
 	imports: #()

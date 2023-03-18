@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.TestData.FooLintRuleTestData subclass: #'Refactory.Browser.TestData.TransformationRuleTestData'
+Refactory.Browser.TestData.FooLintRuleTestData
+	subclass: #'Refactory.Browser.TestData.TransformationRuleTestData'
 	instanceVariableNames: 'rewriteRule builder class'
 	classVariableNames: 'RecursiveSelfRule'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'Bar' -> 16r7B
-	}!
+	classConstants: { 'Bar' -> 16r7B }!
 Refactory.Browser.TestData.TransformationRuleTestData guid: (Core.GUID fromString: '{f92d7547-3000-44f7-94ae-0c8b01fc5f2d}')!
 Refactory.Browser.TestData.TransformationRuleTestData comment: ''!
 !Refactory.Browser.TestData.TransformationRuleTestData categoriesForClass!Refactory-Test data! !

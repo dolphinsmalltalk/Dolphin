@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.MIB_UDPTABLE subclass: #'OS.MIB_UDPEXTABLE'
+OS.MIB_UDPTABLE
+	subclass: #'OS.MIB_UDPEXTABLE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_MIB_UDPEXTABLE_Size' -> 16r10
-	}!
+	classConstants: { '_MIB_UDPEXTABLE_Size' -> 16r10 }!
 OS.MIB_UDPEXTABLE guid: (Core.GUID fromString: '{dde2b010-360d-4715-9804-4e3d4982296f}')!
 OS.MIB_UDPEXTABLE comment: '<MIB_UDPEXTABLE> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_UDPEXTABLE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

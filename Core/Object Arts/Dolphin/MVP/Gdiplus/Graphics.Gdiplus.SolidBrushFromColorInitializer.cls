@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.BrushInitializer subclass: #'Graphics.Gdiplus.SolidBrushFromColorInitializer'
+Graphics.Gdiplus.BrushInitializer
+	subclass: #'Graphics.Gdiplus.SolidBrushFromColorInitializer'
 	instanceVariableNames: 'color'
 	classVariableNames: ''
 	imports: #()

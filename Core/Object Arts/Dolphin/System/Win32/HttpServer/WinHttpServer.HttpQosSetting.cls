@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WinHttpServer.HTTP_PROPERTY_FLAGS subclass: #'WinHttpServer.HttpQosSetting'
+WinHttpServer.HTTP_PROPERTY_FLAGS
+	subclass: #'WinHttpServer.HttpQosSetting'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.TextPresenter subclass: #'UI.RichTextPresenter'
+UI.TextPresenter
+	subclass: #'UI.RichTextPresenter'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.CommonDialogConstants} #{OS.RichEditConstants})

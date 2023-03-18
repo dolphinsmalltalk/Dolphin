@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IUnknown subclass: #'MSXML.IMXNamespaceManager'
+OS.COM.IUnknown
+	subclass: #'MSXML.IMXNamespaceManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

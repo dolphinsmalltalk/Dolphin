@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2Sequence subclass: #'WebView2.ICoreWebView2ProcessInfoCollection'
+WebView2.ICoreWebView2Sequence
+	subclass: #'WebView2.ICoreWebView2ProcessInfoCollection'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

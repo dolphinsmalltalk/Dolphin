@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.GpStructure subclass: #'Graphics.Gdiplus.CharacterRange'
+Graphics.Gdiplus.GpStructure
+	subclass: #'Graphics.Gdiplus.CharacterRange'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_CharacterRange_Size' -> 16r8.
-		'_OffsetOf_First' -> 16r0.
-		'_OffsetOf_length' -> 16r4
-	}!
+			'_CharacterRange_Size' -> 16r8.
+			'_OffsetOf_First' -> 16r0.
+			'_OffsetOf_length' -> 16r4
+		}!
 Graphics.Gdiplus.CharacterRange guid: (Core.GUID fromString: '{01079d38-5861-45b6-8de5-d2165b5de26b}')!
 Graphics.Gdiplus.CharacterRange comment: '<GpCharacterRange> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpCharacterRange'' from type information in the ''GDI+ Library 1.0'' library.
 

@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.OLEStructure subclass: #'OS.COM.DISPPARAMS'
+OS.COM.OLEStructure
+	subclass: #'OS.COM.DISPPARAMS'
 	instanceVariableNames: 'args vargs dispids'
 	classVariableNames: 'ZeroArgs'
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_DISPPARAMS_Size' -> 16r10.
-		'_OffsetOf_cArgs' -> 16r8.
-		'_OffsetOf_cNamedArgs' -> 16rC.
-		'_OffsetOf_rgdispidNamedArgs' -> 16r4.
-		'_OffsetOf_rgvarg' -> 16r0
-	}!
+			'_DISPPARAMS_Size' -> 16r10.
+			'_OffsetOf_cArgs' -> 16r8.
+			'_OffsetOf_cNamedArgs' -> 16rC.
+			'_OffsetOf_rgdispidNamedArgs' -> 16r4.
+			'_OffsetOf_rgvarg' -> 16r0
+		}!
 OS.COM.DISPPARAMS guid: (Core.GUID fromString: '{c06f3b6f-0868-11d3-93af-00a024ca708a}')!
 OS.COM.DISPPARAMS comment: 'DISPPARAMS is an <ExternalStructure> to represent the OLE Automation structure DISPPARAMS.
 

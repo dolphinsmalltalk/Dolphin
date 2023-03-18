@@ -1,18 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.MONITORINFO'
+OS.Win32Structure
+	subclass: #'OS.MONITORINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_MONITORINFO_Size' -> 16r28.
-		'_OffsetOf_dwFlags' -> 16r24.
-		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_rcMonitor' -> 16r4.
-		'_OffsetOf_rcWork' -> 16r14.
-		'MONITORINFOF_PRIMARY' -> 16r1
-	}!
+			'_MONITORINFO_Size' -> 16r28.
+			'_OffsetOf_dwFlags' -> 16r24.
+			'_OffsetOf_dwSize' -> 16r0.
+			'_OffsetOf_rcMonitor' -> 16r4.
+			'_OffsetOf_rcWork' -> 16r14.
+			'MONITORINFOF_PRIMARY' -> 16r1
+		}!
 OS.MONITORINFO guid: (Core.GUID fromString: '{58b4f5d6-cd16-4d5d-894d-9b158a5d9e76}')!
 OS.MONITORINFO comment: '`MONITORINFO` is an `External.Structure` class to wrap the struct ''Win32.MONITORINFO'' from type information in the ''Win32 API'' library.
 

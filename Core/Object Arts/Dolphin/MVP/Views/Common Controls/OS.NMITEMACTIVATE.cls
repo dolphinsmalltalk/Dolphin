@@ -1,21 +1,22 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.NMHDR subclass: #'OS.NMITEMACTIVATE'
+OS.NMHDR
+	subclass: #'OS.NMITEMACTIVATE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_NMITEMACTIVATE_Size' -> 16r30.
-		'_OffsetOf_iItem' -> 16rC.
-		'_OffsetOf_iSubItem' -> 16r10.
-		'_OffsetOf_lParam' -> 16r28.
-		'_OffsetOf_ptAction' -> 16r20.
-		'_OffsetOf_uChanged' -> 16r1C.
-		'_OffsetOf_uKeyFlags' -> 16r2C.
-		'_OffsetOf_uNewState' -> 16r14.
-		'_OffsetOf_uOldState' -> 16r18
-	}!
+			'_NMITEMACTIVATE_Size' -> 16r30.
+			'_OffsetOf_iItem' -> 16rC.
+			'_OffsetOf_iSubItem' -> 16r10.
+			'_OffsetOf_lParam' -> 16r28.
+			'_OffsetOf_ptAction' -> 16r20.
+			'_OffsetOf_uChanged' -> 16r1C.
+			'_OffsetOf_uKeyFlags' -> 16r2C.
+			'_OffsetOf_uNewState' -> 16r14.
+			'_OffsetOf_uOldState' -> 16r18
+		}!
 OS.NMITEMACTIVATE guid: (Core.GUID fromString: '{78091823-3756-4d5a-816a-a5981291ae81}')!
 OS.NMITEMACTIVATE comment: ''!
 !OS.NMITEMACTIVATE categoriesForClass!External-Data-Structured-Win32! !

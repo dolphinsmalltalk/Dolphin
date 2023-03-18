@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Examples.PlayShape subclass: #'UI.Examples.RegularPolygon'
+UI.Examples.PlayShape
+	subclass: #'UI.Examples.RegularPolygon'
 	instanceVariableNames: 'color sides position rotation radius'
 	classVariableNames: ''
 	imports: #()

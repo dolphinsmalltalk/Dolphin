@@ -137,332 +137,371 @@ package!
 
 "Class Definitions"!
 
-OS subclass: #'OS.COM'
+OS
+	subclass: #'OS.COM'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.SharedPool subclass: #'OS.COM.OLEConstants'
+Kernel.SharedPool
+	subclass: #'OS.COM.OLEConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'CLSCTX_INPROC_HANDLER' -> 16r2.
-		'CLSCTX_INPROC_SERVER' -> 16r1.
-		'CLSCTX_LOCAL_SERVER' -> 16r4.
-		'CLSCTX_REMOTE_SERVER' -> 16r10.
-		'MEMCTX_SHARED' -> 16r2.
-		'MEMCTX_TASK' -> 16r1.
-		'REGCLS_MULTI_SEPARATE' -> 16r2.
-		'REGCLS_MULTIPLEUSE' -> 16r1
-	}!
-Core.Object subclass: #'OS.COM.AbstractInterfaceFunction'
+			'CLSCTX_INPROC_HANDLER' -> 16r2.
+			'CLSCTX_INPROC_SERVER' -> 16r1.
+			'CLSCTX_LOCAL_SERVER' -> 16r4.
+			'CLSCTX_REMOTE_SERVER' -> 16r10.
+			'MEMCTX_SHARED' -> 16r2.
+			'MEMCTX_TASK' -> 16r1.
+			'REGCLS_MULTI_SEPARATE' -> 16r2.
+			'REGCLS_MULTIPLEUSE' -> 16r1
+		}!
+Core.Object
+	subclass: #'OS.COM.AbstractInterfaceFunction'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'OS.COM.InterfaceImplementation'
+Core.Object
+	subclass: #'OS.COM.InterfaceImplementation'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.Win32Errors} #{OS.COM.OLEConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'OS.COM.ObjectStub'
+Core.Object
+	subclass: #'OS.COM.ObjectStub'
 	instanceVariableNames: 'cookie object count interfaces outerUnknown'
 	classVariableNames: 'IdentityRegistry'
 	imports: #(#{OS.Win32Errors private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.AbstractInterfaceFunction subclass: #'OS.COM.AddRefFunction'
+OS.COM.AbstractInterfaceFunction
+	subclass: #'OS.COM.AddRefFunction'
 	instanceVariableNames: ''
 	classVariableNames: 'Descriptor'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.AbstractInterfaceFunction subclass: #'OS.COM.InterfaceFunction'
+OS.COM.AbstractInterfaceFunction
+	subclass: #'OS.COM.InterfaceFunction'
 	instanceVariableNames: 'selector descriptor'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.AbstractInterfaceFunction subclass: #'OS.COM.QueryInterfaceFunction'
+OS.COM.AbstractInterfaceFunction
+	subclass: #'OS.COM.QueryInterfaceFunction'
 	instanceVariableNames: ''
 	classVariableNames: 'Descriptor'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.AbstractInterfaceFunction subclass: #'OS.COM.ReleaseFunction'
+OS.COM.AbstractInterfaceFunction
+	subclass: #'OS.COM.ReleaseFunction'
 	instanceVariableNames: ''
 	classVariableNames: 'Descriptor'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.SequenceableCollection subclass: #'OS.COM.Enumerable'
+Core.SequenceableCollection
+	subclass: #'OS.COM.Enumerable'
 	instanceVariableNames: 'interface'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.Address variableByteSubclass: #'OS.COM.BSTR'
+External.Address
+	variableByteSubclass: #'OS.COM.BSTR'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.Memory variableByteSubclass: #'OS.COM.TaskMemory'
+External.Memory
+	variableByteSubclass: #'OS.COM.TaskMemory'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.DynamicLinkLibrary subclass: #'OS.COM.OLEAutLibrary'
+External.DynamicLinkLibrary
+	subclass: #'OS.COM.OLEAutLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.DynamicLinkLibrary subclass: #'OS.COM.OLELibrary'
+External.DynamicLinkLibrary
+	subclass: #'OS.COM.OLELibrary'
 	instanceVariableNames: 'comOnly'
 	classVariableNames: 'DefaultIMalloc'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.GUID variableByteSubclass: #'OS.COM.CLSID'
+Core.GUID
+	variableByteSubclass: #'OS.COM.CLSID'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.GUID variableByteSubclass: #'OS.COM.IID'
+Core.GUID
+	variableByteSubclass: #'OS.COM.IID'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.InterfaceImplementation subclass: #'OS.COM.ClassFactory'
+OS.COM.InterfaceImplementation
+	subclass: #'OS.COM.ClassFactory'
 	instanceVariableNames: 'serverClass clsid registration'
 	classVariableNames: 'Factories Instances LockCount'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.InterfaceImplementation subclass: #'OS.COM.Enumerator'
+OS.COM.InterfaceImplementation
+	subclass: #'OS.COM.Enumerator'
 	instanceVariableNames: 'enumClass contents'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.ClassFactory subclass: #'OS.COM.SingletonClassFactory'
+OS.COM.ClassFactory
+	subclass: #'OS.COM.SingletonClassFactory'
 	instanceVariableNames: 'current'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.Enumerator subclass: #'OS.COM.InterfaceEnumerator'
+OS.COM.Enumerator
+	subclass: #'OS.COM.InterfaceEnumerator'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.Structure subclass: #'OS.COM.Interface'
+External.Structure
+	subclass: #'OS.COM.Interface'
 	instanceVariableNames: 'implementor'
 	classVariableNames: 'InterfaceClasses'
 	imports: #(#{OS.Win32Constants private} #{OS.Win32Errors private} #{OS.COM.OLEConstants})
 	classInstanceVariableNames: 'argSizes functions typeLib'
 	classConstants: {
-		'_Interface_Size' -> 16r10.
-		'_OffsetOf_argSizes' -> 16r4.
-		'_OffsetOf_interfaceCookie' -> 16rC.
-		'_OffsetOf_objectCookie' -> 16r8.
-		'_OffsetOf_vtbl' -> 16r0
-	}!
-External.Structure subclass: #'OS.COM.OLEStructure'
+			'_Interface_Size' -> 16r10.
+			'_OffsetOf_argSizes' -> 16r4.
+			'_OffsetOf_interfaceCookie' -> 16rC.
+			'_OffsetOf_objectCookie' -> 16r8.
+			'_OffsetOf_vtbl' -> 16r0
+		}!
+External.Structure
+	subclass: #'OS.COM.OLEStructure'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.COM.OLEConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.ExternalArray subclass: #'OS.COM.CountedArray'
+External.ExternalArray
+	subclass: #'OS.COM.CountedArray'
 	instanceVariableNames: 'elements'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_CountedArray_Size' -> 16r8.
-		'_OffsetOf_cElems' -> 16r0.
-		'_OffsetOf_pElems' -> 16r4
-	}!
-OS.COM.CountedArray subclass: #'OS.COM.CADWORD'
+			'_CountedArray_Size' -> 16r8.
+			'_OffsetOf_cElems' -> 16r0.
+			'_OffsetOf_pElems' -> 16r4
+		}!
+OS.COM.CountedArray
+	subclass: #'OS.COM.CADWORD'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_CADWORD_Size' -> 16r8
-	}!
-OS.COM.CountedArray subclass: #'OS.COM.CALPOLESTR'
+	classConstants: { '_CADWORD_Size' -> 16r8 }!
+OS.COM.CountedArray
+	subclass: #'OS.COM.CALPOLESTR'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_CALPOLESTR_Size' -> 16r8
-	}!
-OS.COM.Interface subclass: #'OS.COM.IUnknown'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-OS.COM.IUnknown subclass: #'OS.COM.IClassFactory'
+	classConstants: { '_CALPOLESTR_Size' -> 16r8 }!
+OS.COM.Interface
+	subclass: #'OS.COM.IUnknown'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.IUnknown subclass: #'OS.COM.IEnumXXXX'
+OS.COM.IUnknown
+	subclass: #'OS.COM.IClassFactory'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.IUnknown subclass: #'OS.COM.IErrorInfo'
+OS.COM.IUnknown
+	subclass: #'OS.COM.IEnumXXXX'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.IUnknown subclass: #'OS.COM.IMalloc'
+OS.COM.IUnknown
+	subclass: #'OS.COM.IErrorInfo'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown
+	subclass: #'OS.COM.IMalloc'
 	instanceVariableNames: ''
 	classVariableNames: 'Shared Task'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.IUnknown subclass: #'OS.COM.IServiceProvider'
+OS.COM.IUnknown
+	subclass: #'OS.COM.IServiceProvider'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.IUnknown subclass: #'OS.COM.ISupportErrorInfo'
+OS.COM.IUnknown
+	subclass: #'OS.COM.ISupportErrorInfo'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.IClassFactory subclass: #'OS.COM.IClassFactory2'
+OS.COM.IClassFactory
+	subclass: #'OS.COM.IClassFactory2'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.IEnumXXXX subclass: #'OS.COM.IEnumString'
+OS.COM.IEnumXXXX
+	subclass: #'OS.COM.IEnumString'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.IEnumXXXX subclass: #'OS.COM.IEnumStruct'
+OS.COM.IEnumXXXX
+	subclass: #'OS.COM.IEnumStruct'
 	instanceVariableNames: 'elementClass'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.IEnumXXXX subclass: #'OS.COM.IEnumUnknown'
+OS.COM.IEnumXXXX
+	subclass: #'OS.COM.IEnumUnknown'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.OLEStructure subclass: #'OS.COM.COAUTHIDENTITY'
+OS.COM.OLEStructure
+	subclass: #'OS.COM.COAUTHIDENTITY'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_COAUTHIDENTITY_Size' -> 16r1C.
-		'_OffsetOf_Domain' -> 16r8.
-		'_OffsetOf_DomainLength' -> 16rC.
-		'_OffsetOf_Flags' -> 16r18.
-		'_OffsetOf_Password' -> 16r10.
-		'_OffsetOf_PasswordLength' -> 16r14.
-		'_OffsetOf_User' -> 16r0.
-		'_OffsetOf_UserLength' -> 16r4
-	}!
-OS.COM.OLEStructure subclass: #'OS.COM.COAUTHINFO'
+			'_COAUTHIDENTITY_Size' -> 16r1C.
+			'_OffsetOf_Domain' -> 16r8.
+			'_OffsetOf_DomainLength' -> 16rC.
+			'_OffsetOf_Flags' -> 16r18.
+			'_OffsetOf_Password' -> 16r10.
+			'_OffsetOf_PasswordLength' -> 16r14.
+			'_OffsetOf_User' -> 16r0.
+			'_OffsetOf_UserLength' -> 16r4
+		}!
+OS.COM.OLEStructure
+	subclass: #'OS.COM.COAUTHINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_COAUTHINFO_Size' -> 16r1C.
-		'_OffsetOf_dwAuthnLevel' -> 16rC.
-		'_OffsetOf_dwAuthnSvc' -> 16r0.
-		'_OffsetOf_dwAuthzSvc' -> 16r4.
-		'_OffsetOf_dwCapabilities' -> 16r18.
-		'_OffsetOf_dwImpersonationLevel' -> 16r10.
-		'_OffsetOf_pAuthIdentityData' -> 16r14.
-		'_OffsetOf_pwszServerPrincName' -> 16r8
-	}!
-OS.COM.OLEStructure subclass: #'OS.COM.COSERVERINFO'
+			'_COAUTHINFO_Size' -> 16r1C.
+			'_OffsetOf_dwAuthnLevel' -> 16rC.
+			'_OffsetOf_dwAuthnSvc' -> 16r0.
+			'_OffsetOf_dwAuthzSvc' -> 16r4.
+			'_OffsetOf_dwCapabilities' -> 16r18.
+			'_OffsetOf_dwImpersonationLevel' -> 16r10.
+			'_OffsetOf_pAuthIdentityData' -> 16r14.
+			'_OffsetOf_pwszServerPrincName' -> 16r8
+		}!
+OS.COM.OLEStructure
+	subclass: #'OS.COM.COSERVERINFO'
 	instanceVariableNames: 'hostName'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_COSERVERINFO_Size' -> 16r10.
-		'_OffsetOf_dwReserved1' -> 16r0.
-		'_OffsetOf_dwReserved2' -> 16rC.
-		'_OffsetOf_pAuthInfo' -> 16r8.
-		'_OffsetOf_pwszName' -> 16r4
-	}!
-OS.COM.OLEStructure subclass: #'OS.COM.FinalizableStructure'
+			'_COSERVERINFO_Size' -> 16r10.
+			'_OffsetOf_dwReserved1' -> 16r0.
+			'_OffsetOf_dwReserved2' -> 16rC.
+			'_OffsetOf_pAuthInfo' -> 16r8.
+			'_OffsetOf_pwszName' -> 16r4
+		}!
+OS.COM.OLEStructure
+	subclass: #'OS.COM.FinalizableStructure'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.OLEStructure subclass: #'OS.COM.LICINFO'
+OS.COM.OLEStructure
+	subclass: #'OS.COM.LICINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_LICINFO_Size' -> 16rC.
-		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_fLicVerified' -> 16r8.
-		'_OffsetOf_fRuntimeKeyAvail' -> 16r4
-	}!
-OS.COM.FinalizableStructure subclass: #'OS.COM.EXCEPINFO'
+			'_LICINFO_Size' -> 16rC.
+			'_OffsetOf_dwSize' -> 16r0.
+			'_OffsetOf_fLicVerified' -> 16r8.
+			'_OffsetOf_fRuntimeKeyAvail' -> 16r4
+		}!
+OS.COM.FinalizableStructure
+	subclass: #'OS.COM.EXCEPINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.Win32Errors})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_EXCEPINFO_Size' -> 16r20.
-		'_OffsetOf_dwHelpContext' -> 16r10.
-		'_OffsetOf_pfnDeferredFillIn' -> 16r18.
-		'_OffsetOf_pvReserved' -> 16r14.
-		'_OffsetOf_pwszDescription' -> 16r8.
-		'_OffsetOf_pwszHelpFile' -> 16rC.
-		'_OffsetOf_pwszSource' -> 16r4.
-		'_OffsetOf_scode' -> 16r1C.
-		'_OffsetOf_wCode' -> 16r0.
-		'_OffsetOf_wReserved' -> 16r2
-	}!
-OS.COM.FinalizableStructure subclass: #'OS.COM.MULTI_QI'
+			'_EXCEPINFO_Size' -> 16r20.
+			'_OffsetOf_dwHelpContext' -> 16r10.
+			'_OffsetOf_pfnDeferredFillIn' -> 16r18.
+			'_OffsetOf_pvReserved' -> 16r14.
+			'_OffsetOf_pwszDescription' -> 16r8.
+			'_OffsetOf_pwszHelpFile' -> 16rC.
+			'_OffsetOf_pwszSource' -> 16r4.
+			'_OffsetOf_scode' -> 16r1C.
+			'_OffsetOf_wCode' -> 16r0.
+			'_OffsetOf_wReserved' -> 16r2
+		}!
+OS.COM.FinalizableStructure
+	subclass: #'OS.COM.MULTI_QI'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_MULTI_QI_Size' -> 16rC.
-		'_OffsetOf_hr' -> 16r8.
-		'_OffsetOf_pIID' -> 16r0.
-		'_OffsetOf_pItf' -> 16r4
-	}!
+			'_MULTI_QI_Size' -> 16rC.
+			'_OffsetOf_hr' -> 16r8.
+			'_OffsetOf_pIID' -> 16r0.
+			'_OffsetOf_pItf' -> 16r4
+		}!
 
 "Loose Methods"!
 

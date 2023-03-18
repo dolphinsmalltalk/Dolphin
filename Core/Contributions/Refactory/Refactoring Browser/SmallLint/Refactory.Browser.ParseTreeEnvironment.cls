@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.SelectorEnvironment subclass: #'Refactory.Browser.ParseTreeEnvironment'
+Refactory.Browser.SelectorEnvironment
+	subclass: #'Refactory.Browser.ParseTreeEnvironment'
 	instanceVariableNames: 'matcher'
 	classVariableNames: ''
 	imports: #()

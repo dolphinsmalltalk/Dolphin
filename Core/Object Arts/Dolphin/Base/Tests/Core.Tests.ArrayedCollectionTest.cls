@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.SequenceableCollectionTest subclass: #'Core.Tests.ArrayedCollectionTest'
+Core.Tests.SequenceableCollectionTest
+	subclass: #'Core.Tests.ArrayedCollectionTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

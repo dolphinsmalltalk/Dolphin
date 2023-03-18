@@ -1,13 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.MultilineTextEdit subclass: #'UI.MultilineTextEditWithImage'
+UI.MultilineTextEdit
+	subclass: #'UI.MultilineTextEditWithImage'
 	instanceVariableNames: 'backBitmap backMode backBrush'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'BackModes' -> #(#tile #topLeft #topCenter #topRight #rightCenter #bottomRight #bottomCenter #bottomLeft #leftCenter #center #stretch)
-	}!
+			'BackModes'
+				-> #(#tile #topLeft #topCenter #topRight #rightCenter #bottomRight #bottomCenter #bottomLeft #leftCenter #center #stretch)
+		}!
 UI.MultilineTextEditWithImage guid: (Core.GUID fromString: '{eb99e6ab-3d20-4f85-852b-b521da845584}')!
 UI.MultilineTextEditWithImage comment: 'MultilineTextEditWithImage is a specialised <MultilineTextEdit> that displays text transparently over a background bitmap. A common use case might be to display a watermark under the text. The bitmap can be tiled to fill the background, centred, or "docked" to one of the eight positions positions around the edges and in the corners of the client area. These modes are as follows:
 

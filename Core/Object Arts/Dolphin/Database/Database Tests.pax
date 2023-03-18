@@ -30,49 +30,57 @@ package!
 
 "Class Definitions"!
 
-Database subclass: #'Database.Tests'
+Database
+	subclass: #'Database.Tests'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{XProgramming.SUnit})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Database.Tests.DBTest'
+Core.Tests.DolphinTest
+	subclass: #'Database.Tests.DBTest'
 	instanceVariableNames: 'connection'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Database.Tests.DBTest subclass: #'Database.Tests.DBConnectionTest'
+Database.Tests.DBTest
+	subclass: #'Database.Tests.DBConnectionTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.ODBCTypes} #{OS.ODBCConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Database.Tests.DBConnectionTest subclass: #'Database.Tests.AccessDBTest'
+Database.Tests.DBConnectionTest
+	subclass: #'Database.Tests.AccessDBTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Database.Tests.DBConnectionTest subclass: #'Database.Tests.SQLServerDBTest'
+Database.Tests.DBConnectionTest
+	subclass: #'Database.Tests.SQLServerDBTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-XProgramming.SUnit.TestResource subclass: #'Database.Tests.DBConnectionTestResource'
+XProgramming.SUnit.TestResource
+	subclass: #'Database.Tests.DBConnectionTestResource'
 	instanceVariableNames: 'connection isAvailable'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Database.Tests.DBConnectionTestResource subclass: #'Database.Tests.AccessNorthwindDB'
+Database.Tests.DBConnectionTestResource
+	subclass: #'Database.Tests.AccessNorthwindDB'
 	instanceVariableNames: 'filename'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Database.Tests.DBConnectionTestResource subclass: #'Database.Tests.SQLServerNorthwindDB'
+Database.Tests.DBConnectionTestResource
+	subclass: #'Database.Tests.SQLServerNorthwindDB'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

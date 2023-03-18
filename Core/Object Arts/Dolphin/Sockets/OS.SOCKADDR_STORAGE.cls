@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.SOCKADDR subclass: #'OS.SOCKADDR_STORAGE'
+OS.SOCKADDR
+	subclass: #'OS.SOCKADDR_STORAGE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf___ss_align' -> 16r8.
-		'_OffsetOf___ss_pad1' -> 16r2.
-		'_OffsetOf___ss_pad2' -> 16r10.
-		'_OffsetOf_ss_family' -> 16r0.
-		'_SOCKADDR_STORAGE_Size' -> 16r80
-	}!
+			'_OffsetOf___ss_align' -> 16r8.
+			'_OffsetOf___ss_pad1' -> 16r2.
+			'_OffsetOf___ss_pad2' -> 16r10.
+			'_OffsetOf_ss_family' -> 16r0.
+			'_SOCKADDR_STORAGE_Size' -> 16r80
+		}!
 OS.SOCKADDR_STORAGE guid: (Core.GUID fromString: '{ff1980c9-d114-4e61-8569-e2ed5321209b}')!
 OS.SOCKADDR_STORAGE comment: '<SOCKADDR_STORAGE> is an <ExternalStructure> class to wrap the struct ''Win32.SOCKADDR_STORAGE'' from type information in the ''Win32 API'' library.
 

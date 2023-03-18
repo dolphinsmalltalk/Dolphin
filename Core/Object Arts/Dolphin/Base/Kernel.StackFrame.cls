@@ -1,19 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Kernel.StackFrame'
+Core.Object
+	subclass: #'Kernel.StackFrame'
 	instanceVariableNames: 'process index'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'BPOffset' -> 16r5.
-		'EnvOffset' -> 16r1.
-		'FrameSize' -> 16r6.
-		'IPOffset' -> 16r3.
-		'MethodOffset' -> 16r0.
-		'ReturnOffset' -> 16r2.
-		'SPOffset' -> 16r4
-	}!
+			'BPOffset' -> 16r5.
+			'EnvOffset' -> 16r1.
+			'FrameSize' -> 16r6.
+			'IPOffset' -> 16r3.
+			'MethodOffset' -> 16r0.
+			'ReturnOffset' -> 16r2.
+			'SPOffset' -> 16r4
+		}!
 Kernel.StackFrame guid: (Core.GUID fromString: '{87b4c4be-026e-11d3-9fd7-00a0cc3e4a32}')!
 Kernel.StackFrame comment: 'StackFrame encapsulates behaviour of an activation record for use by the development tools (especially the debugger) and other reflective activities. A StackFrame is only valid as a snapshot of <Process> state (e.g. when the process is suspended, as it is when being debugged).
 

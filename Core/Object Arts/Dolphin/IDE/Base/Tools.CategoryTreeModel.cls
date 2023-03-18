@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.TreeModel subclass: #'Tools.CategoryTreeModel'
+UI.TreeModel
+	subclass: #'Tools.CategoryTreeModel'
 	instanceVariableNames: 'title'
 	classVariableNames: ''
 	imports: #()

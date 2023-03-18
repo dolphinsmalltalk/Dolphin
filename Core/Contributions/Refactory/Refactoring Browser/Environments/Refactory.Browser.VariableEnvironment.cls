@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Refactory.Browser.VariableEnvironment'
+Refactory.Browser.BrowserEnvironmentWrapper
+	subclass: #'Refactory.Browser.VariableEnvironment'
 	instanceVariableNames: 'instanceVariables instanceVariableReaders instanceVariableWriters classVariables selectorCache'
 	classVariableNames: ''
 	imports: #()

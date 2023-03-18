@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Tests.PresenterTest subclass: #'UI.Tests.SplitterTest'
+UI.Tests.PresenterTest
+	subclass: #'UI.Tests.SplitterTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ValuePresenter subclass: #'UI.RadioButtonSetPresenter'
+UI.ValuePresenter
+	subclass: #'UI.RadioButtonSetPresenter'
 	instanceVariableNames: 'ownedRadioButtons'
 	classVariableNames: ''
 	imports: #()

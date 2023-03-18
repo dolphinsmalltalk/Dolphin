@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.SingletonSearchPolicy subclass: #'Kernel.EqualitySearchPolicy'
+Kernel.SingletonSearchPolicy
+	subclass: #'Kernel.EqualitySearchPolicy'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -1,18 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.GETTEXTEX'
+OS.Win32Structure
+	subclass: #'OS.GETTEXTEX'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_GETTEXTEX_Size' -> 16r14.
-		'_OffsetOf_cb' -> 16r0.
-		'_OffsetOf_codepage' -> 16r8.
-		'_OffsetOf_flags' -> 16r4.
-		'_OffsetOf_lpDefaultChar' -> 16rC.
-		'_OffsetOf_lpUsedDefChar' -> 16r10
-	}!
+			'_GETTEXTEX_Size' -> 16r14.
+			'_OffsetOf_cb' -> 16r0.
+			'_OffsetOf_codepage' -> 16r8.
+			'_OffsetOf_flags' -> 16r4.
+			'_OffsetOf_lpDefaultChar' -> 16rC.
+			'_OffsetOf_lpUsedDefChar' -> 16r10
+		}!
 OS.GETTEXTEX guid: (Core.GUID fromString: '{1ac7d35c-befe-4c13-b0b2-0c96f50feca0}')!
 OS.GETTEXTEX comment: ''!
 !OS.GETTEXTEX categoriesForClass!External-Data-Structured-Win32! !

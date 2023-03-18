@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.DynamicLinkLibrary subclass: #'OS.ShellLibrary'
+External.DynamicLinkLibrary
+	subclass: #'OS.ShellLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.ShellConstants})

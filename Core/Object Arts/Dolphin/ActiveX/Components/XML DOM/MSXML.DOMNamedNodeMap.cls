@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Dictionary variableSubclass: #'MSXML.DOMNamedNodeMap'
+Core.Dictionary
+	variableSubclass: #'MSXML.DOMNamedNodeMap'
 	instanceVariableNames: 'interface parentNode'
 	classVariableNames: ''
 	imports: #()

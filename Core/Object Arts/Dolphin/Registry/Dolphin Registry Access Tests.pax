@@ -27,13 +27,15 @@ package!
 
 "Class Definitions"!
 
-Core.Tests.DolphinTest subclass: #'OS.Tests.RegistrySerializerTest'
+Core.Tests.DolphinTest
+	subclass: #'OS.Tests.RegistrySerializerTest'
 	instanceVariableNames: 'testKey'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'OS.Tests.RegKeyTest'
+Core.Tests.DolphinTest
+	subclass: #'OS.Tests.RegKeyTest'
 	instanceVariableNames: 'testKey'
 	classVariableNames: ''
 	imports: #(#{OS.WinRegConstants})

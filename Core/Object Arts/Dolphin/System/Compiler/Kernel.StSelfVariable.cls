@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.StSpecialVariable subclass: #'Kernel.StSelfVariable'
+Kernel.StSpecialVariable
+	subclass: #'Kernel.StSelfVariable'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

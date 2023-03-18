@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.View subclass: #'UI.DesktopView'
+UI.View
+	subclass: #'UI.DesktopView'
 	instanceVariableNames: 'resolution _unused14 _unused15 _unused16'
 	classVariableNames: 'Current'
 	imports: #()

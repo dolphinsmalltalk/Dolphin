@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.CommandButton subclass: #'UI.LinkButton'
+UI.CommandButton
+	subclass: #'UI.LinkButton'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.SysLinkConstants})

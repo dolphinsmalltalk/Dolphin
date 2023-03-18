@@ -1,19 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.ArrayedCollection variableByteSubclass: #'Core.String'
+Core.ArrayedCollection
+	variableByteSubclass: #'Core.String'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.NlsConstants private})
 	classInstanceVariableNames: 'empty'
 	classConstants: {
-		'EncodingAnsi' -> 16r0.
-		'Encodings' -> #(#ansi #utf8 #utf16le #utf32).
-		'EncodingUtf16' -> 16r2.
-		'EncodingUtf32' -> 16r3.
-		'EncodingUtf8' -> 16r1.
-		'LineDelimiter' -> '
+			'EncodingAnsi' -> 16r0.
+			'Encodings' -> #(#ansi #utf8 #utf16le #utf32).
+			'EncodingUtf16' -> 16r2.
+			'EncodingUtf32' -> 16r3.
+			'EncodingUtf8' -> 16r1.
+			'LineDelimiter' -> '
 '
-	}!
+		}!
 Core.String guid: (Core.GUID fromString: '{87b4c514-026e-11d3-9fd7-00a0cc3e4a32}')!
 Core.String isNullTerminated: true!
 Core.String isNonInstantiable: true!

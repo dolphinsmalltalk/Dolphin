@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'UI.Scintilla.Annotation'
+Core.Object
+	subclass: #'UI.Scintilla.Annotation'
 	instanceVariableNames: 'line text styles'
 	classVariableNames: ''
 	imports: #()

@@ -1,18 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.RGNDATA'
+OS.Win32Structure
+	subclass: #'OS.RGNDATA'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_iType' -> 16r4.
-		'_OffsetOf_nCount' -> 16r8.
-		'_OffsetOf_nRgnSize' -> 16rC.
-		'_OffsetOf_rcBound' -> 16r10.
-		'_RGNDATA_Size' -> 16r20
-	}!
+			'_OffsetOf_dwSize' -> 16r0.
+			'_OffsetOf_iType' -> 16r4.
+			'_OffsetOf_nCount' -> 16r8.
+			'_OffsetOf_nRgnSize' -> 16rC.
+			'_OffsetOf_rcBound' -> 16r10.
+			'_RGNDATA_Size' -> 16r20
+		}!
 OS.RGNDATA guid: (Core.GUID fromString: '{87b4c60e-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.RGNDATA comment: ''!
 !OS.RGNDATA categoriesForClass!External-Data-Structured-Win32! !

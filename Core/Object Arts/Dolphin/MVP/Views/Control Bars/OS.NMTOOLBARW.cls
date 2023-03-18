@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.NMHDR subclass: #'OS.NMTOOLBARW'
+OS.NMHDR
+	subclass: #'OS.NMTOOLBARW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_NMTOOLBARW_Size' -> 16r2C.
-		'_OffsetOf_cchText' -> 16r24.
-		'_OffsetOf_iItem' -> 16rC.
-		'_OffsetOf_pszText' -> 16r28.
-		'_OffsetOf_tbButton' -> 16r10
-	}!
+			'_NMTOOLBARW_Size' -> 16r2C.
+			'_OffsetOf_cchText' -> 16r24.
+			'_OffsetOf_iItem' -> 16rC.
+			'_OffsetOf_pszText' -> 16r28.
+			'_OffsetOf_tbButton' -> 16r10
+		}!
 OS.NMTOOLBARW guid: (Core.GUID fromString: '{87b4c629-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.NMTOOLBARW comment: 'NMTOOLBARW is the class of <ExternalStructure> which represent the Windows Common Control structure of the same name.
 

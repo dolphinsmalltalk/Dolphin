@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IEnumXXXX subclass: #'OS.COM.IEnumString'
+OS.COM.IEnumXXXX
+	subclass: #'OS.COM.IEnumString'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

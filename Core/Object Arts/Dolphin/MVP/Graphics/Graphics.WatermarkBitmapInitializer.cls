@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.ImageInitializer subclass: #'Graphics.WatermarkBitmapInitializer'
+Graphics.ImageInitializer
+	subclass: #'Graphics.WatermarkBitmapInitializer'
 	instanceVariableNames: 'image alphaPercent backcolor'
 	classVariableNames: ''
 	imports: #()

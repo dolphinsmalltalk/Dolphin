@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2CompositionController subclass: #'WebView2.ICoreWebView2CompositionController2'
+WebView2.ICoreWebView2CompositionController
+	subclass: #'WebView2.ICoreWebView2CompositionController2'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

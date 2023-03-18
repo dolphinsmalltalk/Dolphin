@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.AbstractInterfaceFunction subclass: #'OS.COM.AddRefFunction'
+OS.COM.AbstractInterfaceFunction
+	subclass: #'OS.COM.AddRefFunction'
 	instanceVariableNames: ''
 	classVariableNames: 'Descriptor'
 	imports: #()

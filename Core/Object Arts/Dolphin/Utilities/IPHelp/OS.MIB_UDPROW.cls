@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'OS.MIB_UDPROW'
+External.Structure
+	subclass: #'OS.MIB_UDPROW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_MIB_UDPROW_Size' -> 16r8.
-		'_OffsetOf_dwLocalAddr' -> 16r0.
-		'_OffsetOf_dwLocalPort' -> 16r4
-	}!
+			'_MIB_UDPROW_Size' -> 16r8.
+			'_OffsetOf_dwLocalAddr' -> 16r0.
+			'_OffsetOf_dwLocalPort' -> 16r4
+		}!
 OS.MIB_UDPROW guid: (Core.GUID fromString: '{3247a36f-48e5-4e25-ae9a-2e76f029e521}')!
 OS.MIB_UDPROW comment: '<MIB_UDPROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_UDPROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

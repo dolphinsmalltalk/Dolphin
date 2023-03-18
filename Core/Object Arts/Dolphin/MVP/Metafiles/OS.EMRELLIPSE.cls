@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMRELLIPSE'
+OS.ENHMETARECORD
+	subclass: #'OS.EMRELLIPSE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_EMRELLIPSE_Size' -> 16r18.
-		'_OffsetOf_rclBox' -> 16r8
-	}!
+	classConstants: { '_EMRELLIPSE_Size' -> 16r18. '_OffsetOf_rclBox' -> 16r8 }!
 OS.EMRELLIPSE guid: (Core.GUID fromString: '{23d57ddc-4a1e-4927-ae53-094c3485ebb1}')!
 OS.EMRELLIPSE comment: '<EMRELLIPSE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRELLIPSE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

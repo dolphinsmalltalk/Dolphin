@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-XProgramming.SUnit.TestCase subclass: #'Refactory.Browser.Tests.RewriteTestCase'
+XProgramming.SUnit.TestCase
+	subclass: #'Refactory.Browser.Tests.RewriteTestCase'
 	instanceVariableNames: 'env'
 	classVariableNames: ''
 	imports: #()

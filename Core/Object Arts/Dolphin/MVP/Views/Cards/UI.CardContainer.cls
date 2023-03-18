@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.AbstractCardContainer subclass: #'UI.CardContainer'
+UI.AbstractCardContainer
+	subclass: #'UI.CardContainer'
 	instanceVariableNames: 'tabs'
 	classVariableNames: ''
 	imports: #()

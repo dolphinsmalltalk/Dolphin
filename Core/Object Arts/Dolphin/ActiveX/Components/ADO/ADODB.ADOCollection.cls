@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.SequenceableCollection subclass: #'ADODB.ADOCollection'
+Core.SequenceableCollection
+	subclass: #'ADODB.ADOCollection'
 	instanceVariableNames: 'interface'
 	classVariableNames: ''
 	imports: #()

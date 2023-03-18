@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.StLexicalScope subclass: #'Kernel.StBlockScope'
+Kernel.StLexicalScope
+	subclass: #'Kernel.StBlockScope'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'EmptyBlockMask' -> 16r200.
-		'NeedsOuterMask' -> 16r100
-	}!
+	classConstants: { 'EmptyBlockMask' -> 16r200. 'NeedsOuterMask' -> 16r100 }!
 Kernel.StBlockScope guid: (Core.GUID fromString: '{ee914772-f4ae-4569-87aa-95cdd445d7ef}')!
 Kernel.StBlockScope comment: ''!
 !Kernel.StBlockScope categoriesForClass!Kernel-Objects! !

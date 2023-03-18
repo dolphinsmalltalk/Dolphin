@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'OS.COM.Interface'
+External.Structure
+	subclass: #'OS.COM.Interface'
 	instanceVariableNames: 'implementor'
 	classVariableNames: 'InterfaceClasses'
 	imports: #(#{OS.Win32Constants private} #{OS.Win32Errors private} #{OS.COM.OLEConstants})
 	classInstanceVariableNames: 'argSizes functions typeLib'
 	classConstants: {
-		'_Interface_Size' -> 16r10.
-		'_OffsetOf_argSizes' -> 16r4.
-		'_OffsetOf_interfaceCookie' -> 16rC.
-		'_OffsetOf_objectCookie' -> 16r8.
-		'_OffsetOf_vtbl' -> 16r0
-	}!
+			'_Interface_Size' -> 16r10.
+			'_OffsetOf_argSizes' -> 16r4.
+			'_OffsetOf_interfaceCookie' -> 16rC.
+			'_OffsetOf_objectCookie' -> 16r8.
+			'_OffsetOf_vtbl' -> 16r0
+		}!
 OS.COM.Interface guid: (OS.COM.IID fromString: '{87b4c591-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.COM.Interface isNonInstantiable: true!
 OS.COM.Interface comment: ''!

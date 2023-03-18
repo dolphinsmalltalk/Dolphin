@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.SequenceableCollection subclass: #'MSXML.DOMNodeList'
+Core.SequenceableCollection
+	subclass: #'MSXML.DOMNodeList'
 	instanceVariableNames: 'interface'
 	classVariableNames: ''
 	imports: #()

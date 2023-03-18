@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.CCITEM'
+OS.Win32Structure
+	subclass: #'OS.CCITEM'
 	instanceVariableNames: 'text'
 	classVariableNames: ''
 	imports: #(#{OS.CommCtrlConstants})
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_CCITEM_Size' -> 16r4.
-		'_OffsetOf_mask' -> 16r0
-	}!
+	classConstants: { '_CCITEM_Size' -> 16r4. '_OffsetOf_mask' -> 16r0 }!
 OS.CCITEM guid: (Core.GUID fromString: '{87b4c5ce-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.CCITEM isNonInstantiable: true!
 OS.CCITEM comment: 'CCITEM is an <ExternalStructure> class which implements shared behaviour and state for the common controls item structures, LVITEM, TCITEM and TVITEM. There is no actual Win32 common control structure of this name.'!

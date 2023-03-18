@@ -1,15 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.CCHITTESTINFO'
+OS.Win32Structure
+	subclass: #'OS.CCHITTESTINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.CommCtrlConstants})
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_CCHITTESTINFO_Size' -> 16rC.
-		'_OffsetOf_flags' -> 16r8.
-		'_OffsetOf_pt' -> 16r0
-	}!
+	classConstants: { '_CCHITTESTINFO_Size' -> 16rC. '_OffsetOf_flags' -> 16r8. '_OffsetOf_pt' -> 16r0 }!
 OS.CCHITTESTINFO guid: (Core.GUID fromString: '{87b4c5cd-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.CCHITTESTINFO isNonInstantiable: true!
 OS.CCHITTESTINFO comment: 'CCHITTESTINFO is an ExternalStructure class which implements shared behaviour and state for the common controls hit-test structures, LVHITTESTINFO, TCHITTESTINFO, and TVHITTESTINFO. There is no actual Win32 common control structure of this name.'!

@@ -22,25 +22,29 @@ package!
 
 "Class Definitions"!
 
-OS.COM subclass: #'OS.COM.Tests'
+OS.COM
+	subclass: #'OS.COM.Tests'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'OS.COM.Tests.InterfaceTest'
+Core.Tests.DolphinTest
+	subclass: #'OS.COM.Tests.InterfaceTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.Tests.GUIDTest subclass: #'OS.COM.Tests.CLSIDTest'
+External.Tests.GUIDTest
+	subclass: #'OS.COM.Tests.CLSIDTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.Tests.GUIDTest subclass: #'OS.COM.Tests.IIDTest'
+External.Tests.GUIDTest
+	subclass: #'OS.COM.Tests.IIDTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

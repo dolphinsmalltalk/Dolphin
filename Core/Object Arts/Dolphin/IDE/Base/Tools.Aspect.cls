@@ -1,16 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.AttributeDescriptor subclass: #'Tools.Aspect'
+Kernel.AttributeDescriptor
+	subclass: #'Tools.Aspect'
 	instanceVariableNames: 'name presenterBlock editBlock immediateActionBlock category getBlock putBlock type icon defaultValue'
 	classVariableNames: 'DefaultPresenterBlock'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'EditInPlaceMask' -> 16r80000.
-		'MultilineValueMask' -> 16r40000.
-		'ReadOnlyPresenterBlockMask' -> 16r10000.
-		'ValueWorkspaceEditorMask' -> 16r20000
-	}!
+			'EditInPlaceMask' -> 16r80000.
+			'MultilineValueMask' -> 16r40000.
+			'ReadOnlyPresenterBlockMask' -> 16r10000.
+			'ValueWorkspaceEditorMask' -> 16r20000
+		}!
 Tools.Aspect guid: (Core.GUID fromString: '{87b4c4d7-026e-11d3-9fd7-00a0cc3e4a32}')!
 Tools.Aspect comment: 'Part of the PublishedAspectorInspector framework.
 

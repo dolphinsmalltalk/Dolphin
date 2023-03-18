@@ -1,20 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.NOTIFYICONDATAW'
+OS.Win32Structure
+	subclass: #'OS.NOTIFYICONDATAW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_NOTIFYICONDATAW_Size' -> 16r98.
-		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_hIcon' -> 16r14.
-		'_OffsetOf_hWnd' -> 16r4.
-		'_OffsetOf_szTip' -> 16r18.
-		'_OffsetOf_uCallbackMessage' -> 16r10.
-		'_OffsetOf_uFlags' -> 16rC.
-		'_OffsetOf_uID' -> 16r8
-	}!
+			'_NOTIFYICONDATAW_Size' -> 16r98.
+			'_OffsetOf_dwSize' -> 16r0.
+			'_OffsetOf_hIcon' -> 16r14.
+			'_OffsetOf_hWnd' -> 16r4.
+			'_OffsetOf_szTip' -> 16r18.
+			'_OffsetOf_uCallbackMessage' -> 16r10.
+			'_OffsetOf_uFlags' -> 16rC.
+			'_OffsetOf_uID' -> 16r8
+		}!
 OS.NOTIFYICONDATAW guid: (Core.GUID fromString: '{70cb825f-18f0-4968-9638-a8444b0bd805}')!
 OS.NOTIFYICONDATAW comment: ''!
 !OS.NOTIFYICONDATAW categoriesForClass!No category! !

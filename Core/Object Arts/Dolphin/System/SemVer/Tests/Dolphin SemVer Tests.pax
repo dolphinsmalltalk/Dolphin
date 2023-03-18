@@ -18,7 +18,8 @@ package!
 
 "Class Definitions"!
 
-Core.Tests.DolphinTest subclass: #'Core.Tests.SemVerTest'
+Core.Tests.DolphinTest
+	subclass: #'Core.Tests.SemVerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

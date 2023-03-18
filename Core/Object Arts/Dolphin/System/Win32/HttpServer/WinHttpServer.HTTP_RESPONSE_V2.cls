@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WinHttpServer.HTTP_RESPONSE_V1 subclass: #'WinHttpServer.HTTP_RESPONSE_V2'
+WinHttpServer.HTTP_RESPONSE_V1
+	subclass: #'WinHttpServer.HTTP_RESPONSE_V2'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_RESPONSE_V2_Size' -> 16r120.
-		'_OffsetOf_pResponseInfo' -> 16r11C.
-		'_OffsetOf_ResponseInfoCount' -> 16r118
-	}!
+			'_HTTP_RESPONSE_V2_Size' -> 16r120.
+			'_OffsetOf_pResponseInfo' -> 16r11C.
+			'_OffsetOf_ResponseInfoCount' -> 16r118
+		}!
 WinHttpServer.HTTP_RESPONSE_V2 guid: (Core.GUID fromString: '{5e3a97da-7345-49a7-a5a9-1ddea2366eb2}')!
 WinHttpServer.HTTP_RESPONSE_V2 comment: '`HTTP_RESPONSE_V2` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_RESPONSE_V2'' from type information in the ''Windows Http Server API'' library.
 

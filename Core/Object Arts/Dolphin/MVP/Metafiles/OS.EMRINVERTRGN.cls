@@ -1,16 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMRINVERTRGN'
+OS.ENHMETARECORD
+	subclass: #'OS.EMRINVERTRGN'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_EMRINVERTRGN_Size' -> 16r20.
-		'_OffsetOf_cbRgnData' -> 16r18.
-		'_OffsetOf_rclBounds' -> 16r8.
-		'_OffsetOf_RGNDATA' -> 16r1C
-	}!
+			'_EMRINVERTRGN_Size' -> 16r20.
+			'_OffsetOf_cbRgnData' -> 16r18.
+			'_OffsetOf_rclBounds' -> 16r8.
+			'_OffsetOf_RGNDATA' -> 16r1C
+		}!
 OS.EMRINVERTRGN guid: (Core.GUID fromString: '{a68394ef-a64a-4b77-b81a-36b71800d05f}')!
 OS.EMRINVERTRGN comment: '<EMRINVERTRGN> is an <ExternalStructure> class to wrap the struct ''Win32.EMRINVERTRGN'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

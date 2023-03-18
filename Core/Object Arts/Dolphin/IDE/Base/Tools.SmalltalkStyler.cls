@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Scintilla.Styler subclass: #'Tools.SmalltalkStyler'
+UI.Scintilla.Styler
+	subclass: #'Tools.SmalltalkStyler'
 	instanceVariableNames: 'arrayDepth view last inTag stack'
 	classVariableNames: ''
 	imports: #(#{UI.Scintilla private})

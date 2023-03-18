@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'OS.MIBICMPINFO'
+External.Structure
+	subclass: #'OS.MIBICMPINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_MIBICMPINFO_Size' -> 16r68.
-		'_OffsetOf_icmpInStats' -> 16r0.
-		'_OffsetOf_icmpOutStats' -> 16r34
-	}!
+			'_MIBICMPINFO_Size' -> 16r68.
+			'_OffsetOf_icmpInStats' -> 16r0.
+			'_OffsetOf_icmpOutStats' -> 16r34
+		}!
 OS.MIBICMPINFO guid: (Core.GUID fromString: '{157140e6-8375-4377-ba3e-612acdb6f9f4}')!
 OS.MIBICMPINFO comment: '<MIBICMPINFO> is an <ExternalStructure> class to wrap the struct ''Win32.MIBICMPINFO'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

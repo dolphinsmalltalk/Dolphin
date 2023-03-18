@@ -55,42 +55,44 @@ package!
 
 "Class Definitions"!
 
-Core.Dictionary variableSubclass: #'OS.RegKeyAbstract'
+Core.Dictionary
+	variableSubclass: #'OS.RegKeyAbstract'
 	instanceVariableNames: 'name parentPath rootKey sam handle keyInfo'
 	classVariableNames: 'AccessModes ValueTypes'
 	imports: #(#{OS.WinRegConstants} #{OS.Win32Errors})
 	classInstanceVariableNames: ''
-	classConstants: {
-		'PathSeparator' -> '\'
-	}!
-OS.RegKeyAbstract variableSubclass: #'OS.RegKey'
+	classConstants: { 'PathSeparator' -> '\' }!
+OS.RegKeyAbstract
+	variableSubclass: #'OS.RegKey'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.RegKeyAbstract variableSubclass: #'OS.RegKeyValues'
+OS.RegKeyAbstract
+	variableSubclass: #'OS.RegKeyValues'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.Structure subclass: #'OS.REGKEYINFO'
+External.Structure
+	subclass: #'OS.REGKEYINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_ftLastWriteTime' -> 16r1C.
-		'_OffsetOf_maxClassLen' -> 16r8.
-		'_OffsetOf_maxSubKeyLen' -> 16r4.
-		'_OffsetOf_maxValueLen' -> 16r14.
-		'_OffsetOf_maxValueNameLen' -> 16r10.
-		'_OffsetOf_securityDescriptorLen' -> 16r18.
-		'_OffsetOf_subKeyCount' -> 16r0.
-		'_OffsetOf_valueCount' -> 16rC.
-		'_REGKEYINFO_Size' -> 16r24
-	}!
+			'_OffsetOf_ftLastWriteTime' -> 16r1C.
+			'_OffsetOf_maxClassLen' -> 16r8.
+			'_OffsetOf_maxSubKeyLen' -> 16r4.
+			'_OffsetOf_maxValueLen' -> 16r14.
+			'_OffsetOf_maxValueNameLen' -> 16r10.
+			'_OffsetOf_securityDescriptorLen' -> 16r18.
+			'_OffsetOf_subKeyCount' -> 16r0.
+			'_OffsetOf_valueCount' -> 16rC.
+			'_REGKEYINFO_Size' -> 16r24
+		}!
 
 "Loose Methods"!
 

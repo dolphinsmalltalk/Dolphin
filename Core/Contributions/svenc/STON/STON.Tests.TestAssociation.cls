@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Association subclass: #'STON.Tests.TestAssociation'
+Core.Association
+	subclass: #'STON.Tests.TestAssociation'
 	instanceVariableNames: 'timestamp'
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Shell subclass: #'UI.Examples.PersonalAccountShell'
+UI.Shell
+	subclass: #'UI.Examples.PersonalAccountShell'
 	instanceVariableNames: 'namePresenter accountNumberPresenter initialBalancePresenter transactionsPresenter currentBalancePresenter'
 	classVariableNames: ''
 	imports: #()

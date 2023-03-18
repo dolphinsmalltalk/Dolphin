@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.ArithmeticValue subclass: #'Graphics.Point3D'
+Core.ArithmeticValue
+	subclass: #'Graphics.Point3D'
 	instanceVariableNames: 'x y z'
 	classVariableNames: ''
 	imports: #()

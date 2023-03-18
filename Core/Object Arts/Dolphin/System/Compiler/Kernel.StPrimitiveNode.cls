@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.StTagNode subclass: #'Kernel.StPrimitiveNode'
+Kernel.StTagNode
+	subclass: #'Kernel.StPrimitiveNode'
 	instanceVariableNames: 'primitiveIndex errorTemp'
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'UI.Scintilla.Indicator'
+Core.Object
+	subclass: #'UI.Scintilla.Indicator'
 	instanceVariableNames: 'styleName range tag'
 	classVariableNames: ''
 	imports: #()

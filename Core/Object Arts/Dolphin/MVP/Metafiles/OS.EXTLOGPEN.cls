@@ -1,20 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'OS.EXTLOGPEN'
+External.Structure
+	subclass: #'OS.EXTLOGPEN'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_EXTLOGPEN_Size' -> 16r1C.
-		'_OffsetOf_elpBrushStyle' -> 16r8.
-		'_OffsetOf_elpColor' -> 16rC.
-		'_OffsetOf_elpHatch' -> 16r10.
-		'_OffsetOf_elpNumEntries' -> 16r14.
-		'_OffsetOf_elpPenStyle' -> 16r0.
-		'_OffsetOf_elpStyleEntry' -> 16r18.
-		'_OffsetOf_elpWidth' -> 16r4
-	}!
+			'_EXTLOGPEN_Size' -> 16r1C.
+			'_OffsetOf_elpBrushStyle' -> 16r8.
+			'_OffsetOf_elpColor' -> 16rC.
+			'_OffsetOf_elpHatch' -> 16r10.
+			'_OffsetOf_elpNumEntries' -> 16r14.
+			'_OffsetOf_elpPenStyle' -> 16r0.
+			'_OffsetOf_elpStyleEntry' -> 16r18.
+			'_OffsetOf_elpWidth' -> 16r4
+		}!
 OS.EXTLOGPEN guid: (Core.GUID fromString: '{bfe902f1-81d2-4e1d-a5e3-1d0c3cef97e6}')!
 OS.EXTLOGPEN comment: '<EXTLOGPEN> is an <ExternalStructure> class to wrap the struct ''Win32.EXTLOGPEN'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

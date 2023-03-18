@@ -1,15 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.UtfEncodedString variableByteSubclass: #'Core.Utf16String'
+Core.UtfEncodedString
+	variableByteSubclass: #'Core.Utf16String'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'Bom' -> #[255 254].
-		'LeadOffset' -> 16rD7C0.
-		'SurrogateOffset' -> 16r35FDC00
-	}!
+	classConstants: { 'Bom' -> #[255 254]. 'LeadOffset' -> 16rD7C0. 'SurrogateOffset' -> 16r35FDC00 }!
 Core.Utf16String guid: (Core.GUID fromString: '{87b4c51e-026e-11d3-9fd7-00a0cc3e4a32}')!
 Core.Utf16String isNullTerminated: true!
 Core.Utf16String comment: 'Utf16String is the class of <Strings>s that use a the two or four byte UTF-16 LE encoding. UTF-16 is the standard encoding used for strings in the Windows APIs. Most of the time it is not necessary to worry about converting to UTF-16, however, since the class library and VM will normally be able to provide automatic conversions when required. However, it is recommended that Utf8String be used internally for all strings, and that conversion to/from UTF-16 be performed at interface boundaries where necessary.

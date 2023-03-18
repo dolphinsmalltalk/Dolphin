@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'UI.CardLabel'
+Core.Object
+	subclass: #'UI.CardLabel'
 	instanceVariableNames: 'text iconBlock helpId'
 	classVariableNames: ''
 	imports: #()

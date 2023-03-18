@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.StValueNode subclass: #'Kernel.StMessageNode'
+Kernel.StValueNode
+	subclass: #'Kernel.StMessageNode'
 	instanceVariableNames: 'receiver selector selectorParts arguments'
 	classVariableNames: ''
 	imports: #()

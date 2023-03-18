@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.StringFormatGenericInitializer subclass: #'Graphics.Gdiplus.StringFormatGenericDefaultInitializer'
+Graphics.Gdiplus.StringFormatGenericInitializer
+	subclass: #'Graphics.Gdiplus.StringFormatGenericDefaultInitializer'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.SmalltalkToolShell subclass: #'Tools.ClassHierarchyDiagram'
+Tools.SmalltalkToolShell
+	subclass: #'Tools.ClassHierarchyDiagram'
 	instanceVariableNames: 'classesPresenter commentPresenter'
 	classVariableNames: ''
 	imports: #()

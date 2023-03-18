@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Dictionary variableSubclass: #'Core.LookupTable'
+Core.Dictionary
+	variableSubclass: #'Core.LookupTable'
 	instanceVariableNames: 'values'
 	classVariableNames: ''
 	imports: #()

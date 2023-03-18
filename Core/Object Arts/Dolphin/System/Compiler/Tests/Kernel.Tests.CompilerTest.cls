@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTest subclass: #'Kernel.Tests.CompilerTest'
+Core.Tests.DolphinTest
+	subclass: #'Kernel.Tests.CompilerTest'
 	instanceVariableNames: 'defaultCompileFlags'
 	classVariableNames: 'TempInstrs'
 	imports: #(#{Kernel.CompilerFlags} #{Kernel.OpcodePool} #{Kernel.ParseErrorCodes})

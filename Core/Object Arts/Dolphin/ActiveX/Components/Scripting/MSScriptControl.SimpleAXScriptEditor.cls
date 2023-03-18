@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Dialog subclass: #'MSScriptControl.SimpleAXScriptEditor'
+UI.Dialog
+	subclass: #'MSScriptControl.SimpleAXScriptEditor'
 	instanceVariableNames: 'scriptControl languagePresenter scriptPresenter expressionPresenter resultPresenter filename descriptionPresenter'
 	classVariableNames: ''
 	imports: #(#{UI})

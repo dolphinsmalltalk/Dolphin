@@ -1,16 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.FinalizableStructure subclass: #'OS.COM.MULTI_QI'
+OS.COM.FinalizableStructure
+	subclass: #'OS.COM.MULTI_QI'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_MULTI_QI_Size' -> 16rC.
-		'_OffsetOf_hr' -> 16r8.
-		'_OffsetOf_pIID' -> 16r0.
-		'_OffsetOf_pItf' -> 16r4
-	}!
+			'_MULTI_QI_Size' -> 16rC.
+			'_OffsetOf_hr' -> 16r8.
+			'_OffsetOf_pIID' -> 16r0.
+			'_OffsetOf_pItf' -> 16r4
+		}!
 OS.COM.MULTI_QI guid: (Core.GUID fromString: '{87b4c5c2-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.COM.MULTI_QI comment: '`OS.COM.MULTI_QI` is an `External.Structure` class to represent the Win32 COM MULTI_QI structure.
 

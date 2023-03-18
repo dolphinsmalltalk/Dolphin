@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.LookupTable variableSubclass: #'Core.PluggableLookupTable'
+Core.LookupTable
+	variableSubclass: #'Core.PluggableLookupTable'
 	instanceVariableNames: 'searchPolicy'
 	classVariableNames: ''
 	imports: #()

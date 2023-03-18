@@ -36,7 +36,8 @@ package!
 
 "Class Definitions"!
 
-Core.Object subclass: #'MSXML.XmlDomVisitor'
+Core.Object
+	subclass: #'MSXML.XmlDomVisitor'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

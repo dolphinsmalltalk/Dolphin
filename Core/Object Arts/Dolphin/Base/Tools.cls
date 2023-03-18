@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.Namespace subclass: #Tools
+Kernel.Namespace
+	subclass: #Tools
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{Core} #{UI private} #{Kernel private})

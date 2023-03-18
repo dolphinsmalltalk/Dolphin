@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.ParseTreeSearcher subclass: #'Refactory.Browser.ParseTreeRewriter'
+Refactory.Browser.ParseTreeSearcher
+	subclass: #'Refactory.Browser.ParseTreeRewriter'
 	instanceVariableNames: 'tree'
 	classVariableNames: ''
 	imports: #()

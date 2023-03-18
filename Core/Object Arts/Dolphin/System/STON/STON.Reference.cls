@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'STON.Reference'
+Core.Object
+	subclass: #'STON.Reference'
 	instanceVariableNames: 'index refCount'
 	classVariableNames: ''
 	imports: #()

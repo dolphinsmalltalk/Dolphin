@@ -1,20 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.MENUINFO'
+OS.Win32Structure
+	subclass: #'OS.MENUINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_MENUINFO_Size' -> 16r1C.
-		'_OffsetOf_cyMax' -> 16rC.
-		'_OffsetOf_dwContextHelpID' -> 16r14.
-		'_OffsetOf_dwMenuData' -> 16r18.
-		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_dwStyle' -> 16r8.
-		'_OffsetOf_fMask' -> 16r4.
-		'_OffsetOf_hbrBack' -> 16r10
-	}!
+			'_MENUINFO_Size' -> 16r1C.
+			'_OffsetOf_cyMax' -> 16rC.
+			'_OffsetOf_dwContextHelpID' -> 16r14.
+			'_OffsetOf_dwMenuData' -> 16r18.
+			'_OffsetOf_dwSize' -> 16r0.
+			'_OffsetOf_dwStyle' -> 16r8.
+			'_OffsetOf_fMask' -> 16r4.
+			'_OffsetOf_hbrBack' -> 16r10
+		}!
 OS.MENUINFO guid: (Core.GUID fromString: '{d51f8f53-401e-4f12-9712-28458e3c48ca}')!
 OS.MENUINFO comment: 'MENUINFO is an <ExternalStructure> class to represent the Win32 structure of the same name. The MENUINFO structure suprises by containing information about a menu.'!
 !OS.MENUINFO categoriesForClass!External-Data-Structured-Win32! !

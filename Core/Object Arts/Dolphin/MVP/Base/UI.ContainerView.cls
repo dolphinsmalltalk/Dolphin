@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.View subclass: #'UI.ContainerView'
+UI.View
+	subclass: #'UI.ContainerView'
 	instanceVariableNames: 'layoutManager names insets'
 	classVariableNames: ''
 	imports: #()

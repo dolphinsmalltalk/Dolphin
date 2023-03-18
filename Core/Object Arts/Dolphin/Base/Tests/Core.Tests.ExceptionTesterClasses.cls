@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTestClassResource subclass: #'Core.Tests.ExceptionTesterClasses'
+Core.Tests.DolphinTestClassResource
+	subclass: #'Core.Tests.ExceptionTesterClasses'
 	instanceVariableNames: 'testNotificationClass resumableErrorClass testErrorClass'
 	classVariableNames: ''
 	imports: #()

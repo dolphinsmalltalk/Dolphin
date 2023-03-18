@@ -1,15 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'External.Callback'
+Core.Object
+	subclass: #'External.Callback'
 	instanceVariableNames: 'thunk cookie descriptor'
 	classVariableNames: 'Registry ThunkBase'
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
-	classConstants: {
-		'ArgSizeOffset' -> 16rE.
-		'MaxThunks' -> 16r100.
-		'ThunkSize' -> 16r10
-	}!
+	classConstants: { 'ArgSizeOffset' -> 16rE. 'MaxThunks' -> 16r100. 'ThunkSize' -> 16r10 }!
 External.Callback guid: (Core.GUID fromString: '{87b4c486-026e-11d3-9fd7-00a0cc3e4a32}')!
 External.Callback isNonInstantiable: true!
 External.Callback comment: ''!

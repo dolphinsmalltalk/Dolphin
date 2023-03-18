@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Refactory.Browser.ProtocolEnvironment'
+Refactory.Browser.BrowserEnvironmentWrapper
+	subclass: #'Refactory.Browser.ProtocolEnvironment'
 	instanceVariableNames: 'class protocols'
 	classVariableNames: ''
 	imports: #()

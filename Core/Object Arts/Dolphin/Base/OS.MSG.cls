@@ -1,20 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.MSG'
+OS.Win32Structure
+	subclass: #'OS.MSG'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_MSG_Size' -> 16r1C.
-		'_OffsetOf_hwnd' -> 16r0.
-		'_OffsetOf_lParam' -> 16rC.
-		'_OffsetOf_message' -> 16r4.
-		'_OffsetOf_time' -> 16r10.
-		'_OffsetOf_wParam' -> 16r8.
-		'_OffsetOf_x' -> 16r14.
-		'_OffsetOf_y' -> 16r18
-	}!
+			'_MSG_Size' -> 16r1C.
+			'_OffsetOf_hwnd' -> 16r0.
+			'_OffsetOf_lParam' -> 16rC.
+			'_OffsetOf_message' -> 16r4.
+			'_OffsetOf_time' -> 16r10.
+			'_OffsetOf_wParam' -> 16r8.
+			'_OffsetOf_x' -> 16r14.
+			'_OffsetOf_y' -> 16r18
+		}!
 OS.MSG guid: (Core.GUID fromString: '{87b4c5ff-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.MSG comment: 'MSG is an <ExternalStructure> to wrap the Win32 structure of the same name.
 

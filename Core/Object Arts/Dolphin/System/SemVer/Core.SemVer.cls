@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Magnitude subclass: #'Core.SemVer'
+Core.Magnitude
+	subclass: #'Core.SemVer'
 	instanceVariableNames: 'major minor patch prerelease buildmetadata'
 	classVariableNames: ''
 	imports: #()

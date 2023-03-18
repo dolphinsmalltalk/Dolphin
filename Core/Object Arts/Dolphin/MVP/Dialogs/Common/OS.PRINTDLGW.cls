@@ -1,32 +1,33 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.CommonDialogStructure subclass: #'OS.PRINTDLGW'
+OS.CommonDialogStructure
+	subclass: #'OS.PRINTDLGW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.PrintDialogConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_flags' -> 16r14.
-		'_OffsetOf_hDC' -> 16r10.
-		'_OffsetOf_hDevMode' -> 16r8.
-		'_OffsetOf_hDevNames' -> 16rC.
-		'_OffsetOf_hInstance' -> 16r22.
-		'_OffsetOf_hPrintTemplate' -> 16r3A.
-		'_OffsetOf_hSetupTemplate' -> 16r3E.
-		'_OffsetOf_hwndOwner' -> 16r4.
-		'_OffsetOf_lCustData' -> 16r26.
-		'_OffsetOf_lpfnHook' -> 16r2A.
-		'_OffsetOf_lpfnSetupHook' -> 16r2E.
-		'_OffsetOf_lpPrintTemplateName' -> 16r32.
-		'_OffsetOf_lpSetupTemplateName' -> 16r36.
-		'_OffsetOf_nCopies' -> 16r20.
-		'_OffsetOf_nFromPage' -> 16r18.
-		'_OffsetOf_nMaxPage' -> 16r1E.
-		'_OffsetOf_nMinPage' -> 16r1C.
-		'_OffsetOf_nToPage' -> 16r1A.
-		'_PRINTDLGW_Size' -> 16r42
-	}!
+			'_OffsetOf_dwSize' -> 16r0.
+			'_OffsetOf_flags' -> 16r14.
+			'_OffsetOf_hDC' -> 16r10.
+			'_OffsetOf_hDevMode' -> 16r8.
+			'_OffsetOf_hDevNames' -> 16rC.
+			'_OffsetOf_hInstance' -> 16r22.
+			'_OffsetOf_hPrintTemplate' -> 16r3A.
+			'_OffsetOf_hSetupTemplate' -> 16r3E.
+			'_OffsetOf_hwndOwner' -> 16r4.
+			'_OffsetOf_lCustData' -> 16r26.
+			'_OffsetOf_lpfnHook' -> 16r2A.
+			'_OffsetOf_lpfnSetupHook' -> 16r2E.
+			'_OffsetOf_lpPrintTemplateName' -> 16r32.
+			'_OffsetOf_lpSetupTemplateName' -> 16r36.
+			'_OffsetOf_nCopies' -> 16r20.
+			'_OffsetOf_nFromPage' -> 16r18.
+			'_OffsetOf_nMaxPage' -> 16r1E.
+			'_OffsetOf_nMinPage' -> 16r1C.
+			'_OffsetOf_nToPage' -> 16r1A.
+			'_PRINTDLGW_Size' -> 16r42
+		}!
 OS.PRINTDLGW guid: (Core.GUID fromString: '{87b4c609-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.PRINTDLGW comment: ''!
 !OS.PRINTDLGW categoriesForClass!External-Data-Structured-Win32! !

@@ -1,20 +1,32 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.LayoutManager subclass: #'UI.FlowLayout'
+UI.LayoutManager
+	subclass: #'UI.FlowLayout'
 	instanceVariableNames: 'horizontalGap verticalGap flags'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'AlignBottom' -> 16r8.
-		'AlignHCenter' -> 16r1.
-		'AlignLeft' -> 16r0.
-		'AlignmentMap' -> (IdentityDictionary withAll: {#bottomCenter -> 16r9. #rightCenter -> 16r6. #leftCenter -> 16r4. #topCenter -> 16r1. #bottomLeft -> 16r8. #center -> 16r5. #bottomRight -> 16rA. #topRight -> 16r2. #topLeft -> 16r0}).
-		'AlignmentMask' -> 16rF.
-		'AlignRight' -> 16r2.
-		'AlignTop' -> 16r0.
-		'AlignVCenter' -> 16r4
-	}!
+			'AlignBottom' -> 16r8.
+			'AlignHCenter' -> 16r1.
+			'AlignLeft' -> 16r0.
+			'AlignmentMap'
+				-> (IdentityDictionary withAll: {
+								#bottomCenter -> 16r9.
+								#bottomLeft -> 16r8.
+								#bottomRight -> 16rA.
+								#center -> 16r5.
+								#leftCenter -> 16r4.
+								#rightCenter -> 16r6.
+								#topCenter -> 16r1.
+								#topLeft -> 16r0.
+								#topRight -> 16r2
+							}).
+			'AlignmentMask' -> 16rF.
+			'AlignRight' -> 16r2.
+			'AlignTop' -> 16r0.
+			'AlignVCenter' -> 16r4
+		}!
 UI.FlowLayout guid: (Core.GUID fromString: '{87b4c648-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.FlowLayout comment: 'FlowLayout implements a general purpose <layoutManager> to layout <view> objects within a <compositeView>. The views are arranged in a similar manner to words on a page; from left to right and top to bottom. The FlowLayout fits as many visible views as possible into a single row before moving onto the next row. Any invisible views are ignored, and are allocated no space in the layout. You can specify the overall alignment of the rows to be #left, #centre or #right. The separation between adjacent components can be specified with the #horizontalGap and #verticalGap aspects. 
 

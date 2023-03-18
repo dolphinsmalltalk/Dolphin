@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.TypeInfoStructure subclass: #'OS.COM.MemberDesc'
+OS.COM.TypeInfoStructure
+	subclass: #'OS.COM.MemberDesc'
 	instanceVariableNames: 'index custData documentation'
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})

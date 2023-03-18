@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.IntegerBytes variableByteSubclass: #'External.UInt64Bytes'
+External.IntegerBytes
+	variableByteSubclass: #'External.UInt64Bytes'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

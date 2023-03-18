@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ControlView subclass: #'UI.GroupBox'
+UI.ControlView
+	subclass: #'UI.GroupBox'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.ButtonConstants})

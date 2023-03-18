@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.LayoutManager subclass: #'UI.CardLayout'
+UI.LayoutManager
+	subclass: #'UI.CardLayout'
 	instanceVariableNames: 'names currentCard events _unused4 _unused5'
 	classVariableNames: ''
 	imports: #()

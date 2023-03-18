@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.VirtualMethodCategory subclass: #'Tools.PluggableVirtualMethodCategory'
+Tools.VirtualMethodCategory
+	subclass: #'Tools.PluggableVirtualMethodCategory'
 	instanceVariableNames: 'filter isSlowToEnumerate'
 	classVariableNames: ''
 	imports: #()

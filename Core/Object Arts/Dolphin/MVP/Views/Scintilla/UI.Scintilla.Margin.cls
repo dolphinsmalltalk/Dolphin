@@ -1,13 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Scintilla.QueryableAttribute subclass: #'UI.Scintilla.Margin'
+UI.Scintilla.QueryableAttribute
+	subclass: #'UI.Scintilla.Margin'
 	instanceVariableNames: 'width type isSensitive mask cursorType backcolor'
-	classVariableNames: 'BackcolorProperty CursorTypeProperty CursorTypes IsSensitiveProperty MaskProperty TypeProperty WidthProperty'
+	classVariableNames: 'BackcolorProperty CursorTypeProperty IsSensitiveProperty MaskProperty TypeProperty WidthProperty'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'MarginTypes' -> #(#symbol #lineNumber #symbolBackground #symbolForeground #text #rightJustifiedText #color)
-	}!
+			'CursorTypes' -> (IdentityDictionary
+						withAll: { -16r1 -> #normal. 16r2 -> #arrow. 16r4 -> #wait. 16r7 -> #reverseArrow }).
+			'MarginTypes'
+				-> #(#symbol #lineNumber #symbolBackground #symbolForeground #text #rightJustifiedText #color)
+		}!
 UI.Scintilla.Margin guid: (Core.GUID fromString: '{fd6f73fe-70d8-4e4a-8332-ec147e5ba899}')!
 UI.Scintilla.Margin comment: '`ScintillaMargin` instances represent the ''margin'' attributes of a `ScintillaView`.
 

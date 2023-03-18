@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.SmalltalkToolShell subclass: #'Tools.ProcessMonitor'
+Tools.SmalltalkToolShell
+	subclass: #'Tools.ProcessMonitor'
 	instanceVariableNames: 'listPresenter updateInterval'
 	classVariableNames: 'UpdateIntervals'
 	imports: #()

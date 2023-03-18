@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object variableSubclass: #'Kernel.Context'
+Core.Object
+	variableSubclass: #'Kernel.Context'
 	instanceVariableNames: 'outer block'
 	classVariableNames: ''
 	imports: #()

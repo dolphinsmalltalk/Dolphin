@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ToolbarButton subclass: #'UI.ToolbarSystemButton'
+UI.ToolbarButton
+	subclass: #'UI.ToolbarSystemButton'
 	instanceVariableNames: 'bitmapId bitmapIndex'
 	classVariableNames: 'BitmapButtons Bitmaps HistoryButtons StandardButtons ViewButtons'
 	imports: #()

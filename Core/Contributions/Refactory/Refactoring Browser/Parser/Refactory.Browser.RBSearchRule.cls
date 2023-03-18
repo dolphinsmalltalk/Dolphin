@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.RBParseTreeRule subclass: #'Refactory.Browser.RBSearchRule'
+Refactory.Browser.RBParseTreeRule
+	subclass: #'Refactory.Browser.RBSearchRule'
 	instanceVariableNames: 'answerBlock'
 	classVariableNames: ''
 	imports: #()

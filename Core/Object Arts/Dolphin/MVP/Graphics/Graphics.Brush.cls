@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.GraphicsTool subclass: #'Graphics.Brush'
+Graphics.GraphicsTool
+	subclass: #'Graphics.Brush'
 	instanceVariableNames: 'logBrush'
 	classVariableNames: ''
 	imports: #()

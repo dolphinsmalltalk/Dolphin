@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.Tests.StValueTokenTest subclass: #'Kernel.Tests.StLiteralArrayTokenTest'
+Kernel.Tests.StValueTokenTest
+	subclass: #'Kernel.Tests.StLiteralArrayTokenTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

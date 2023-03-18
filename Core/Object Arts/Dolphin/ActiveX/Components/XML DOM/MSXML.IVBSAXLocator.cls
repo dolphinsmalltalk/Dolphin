@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IDispatch subclass: #'MSXML.IVBSAXLocator'
+OS.COM.IDispatch
+	subclass: #'MSXML.IVBSAXLocator'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

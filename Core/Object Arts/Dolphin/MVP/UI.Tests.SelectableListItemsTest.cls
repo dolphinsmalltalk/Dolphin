@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Tests.SelectableItemsTest subclass: #'UI.Tests.SelectableListItemsTest'
+UI.Tests.SelectableItemsTest
+	subclass: #'UI.Tests.SelectableListItemsTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

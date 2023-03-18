@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.BrowserEnvironment subclass: #'Refactory.Browser.BrowserEnvironmentWrapper'
+Refactory.Browser.BrowserEnvironment
+	subclass: #'Refactory.Browser.BrowserEnvironmentWrapper'
 	instanceVariableNames: 'environment progressBlock'
 	classVariableNames: ''
 	imports: #()

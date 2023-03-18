@@ -1,16 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.STBProxy subclass: #'UI.STBViewProxy'
+Kernel.STBProxy
+	subclass: #'UI.STBViewProxy'
 	instanceVariableNames: 'viewClass instVars state placement subViews resolution events version'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'CreationParentIndex' -> 16r2.
-		'CreationStyleIndex' -> 16r3.
-		'EventsIndex' -> 16rB.
-		'HandleIndex' -> 16r1
-	}!
+			'CreationParentIndex' -> 16r2.
+			'CreationStyleIndex' -> 16r3.
+			'EventsIndex' -> 16rB.
+			'HandleIndex' -> 16r1
+		}!
 UI.STBViewProxy guid: (Core.GUID fromString: '{87b4c6f4-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.STBViewProxy comment: 'STBViewProxy is the class of <STBProxy> objects used to represent <View> instances in STB files.'!
 !UI.STBViewProxy categoriesForClass!System-Binary storage! !

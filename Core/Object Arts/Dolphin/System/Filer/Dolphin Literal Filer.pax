@@ -40,37 +40,43 @@ package!
 
 "Class Definitions"!
 
-Core.Object subclass: #'Kernel.LiteralPrinter'
+Core.Object
+	subclass: #'Kernel.LiteralPrinter'
 	instanceVariableNames: 'stream'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.LiteralPrinter subclass: #'Kernel.STLPrinter'
+Kernel.LiteralPrinter
+	subclass: #'Kernel.STLPrinter'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.AbstractSTBInFiler subclass: #'Kernel.STLInFiler'
+Kernel.AbstractSTBInFiler
+	subclass: #'Kernel.STLInFiler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.STLInFiler subclass: #'Kernel.STLClassCollector'
+Kernel.STLInFiler
+	subclass: #'Kernel.STLClassCollector'
 	instanceVariableNames: 'classes resourceIdentifiers'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.STLInFiler subclass: #'Kernel.STLDebugger'
+Kernel.STLInFiler
+	subclass: #'Kernel.STLDebugger'
 	instanceVariableNames: 'indentLevel traceStream printOffsets slotName'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.AbstractSTBOutFiler subclass: #'Kernel.STLOutFiler'
+Kernel.AbstractSTBOutFiler
+	subclass: #'Kernel.STLOutFiler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

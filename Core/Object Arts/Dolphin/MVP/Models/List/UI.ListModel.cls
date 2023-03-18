@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.SequencedGrowableCollection subclass: #'UI.ListModel'
+Core.SequencedGrowableCollection
+	subclass: #'UI.ListModel'
 	instanceVariableNames: 'list events searchPolicy'
 	classVariableNames: ''
 	imports: #()

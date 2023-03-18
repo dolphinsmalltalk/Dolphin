@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Error subclass: #'External.InvalidExternalCall'
+Core.Error
+	subclass: #'External.InvalidExternalCall'
 	instanceVariableNames: 'argument type'
 	classVariableNames: ''
 	imports: #()

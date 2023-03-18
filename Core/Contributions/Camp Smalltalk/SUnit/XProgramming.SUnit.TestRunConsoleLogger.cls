@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-XProgramming.SUnit.TestRunLogger subclass: #'XProgramming.SUnit.TestRunConsoleLogger'
+XProgramming.SUnit.TestRunLogger
+	subclass: #'XProgramming.SUnit.TestRunConsoleLogger'
 	instanceVariableNames: 'stream timings'
 	classVariableNames: ''
 	imports: #()

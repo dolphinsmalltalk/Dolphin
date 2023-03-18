@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.AbstractRGB subclass: #'Graphics.ColorRef'
+Graphics.AbstractRGB
+	subclass: #'Graphics.ColorRef'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

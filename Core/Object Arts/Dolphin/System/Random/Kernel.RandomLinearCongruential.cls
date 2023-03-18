@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Random subclass: #'Kernel.RandomLinearCongruential'
+Core.Random
+	subclass: #'Kernel.RandomLinearCongruential'
 	instanceVariableNames: 'multiplier increment modulus'
 	classVariableNames: ''
 	imports: #()

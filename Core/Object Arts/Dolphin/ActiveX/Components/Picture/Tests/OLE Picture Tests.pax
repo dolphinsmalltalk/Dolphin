@@ -18,7 +18,8 @@ package!
 
 "Class Definitions"!
 
-Graphics.Tests.ImageTest subclass: #'OS.COM.Tests.PictureTest'
+Graphics.Tests.ImageTest
+	subclass: #'OS.COM.Tests.PictureTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

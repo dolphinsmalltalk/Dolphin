@@ -1,13 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2Interface subclass: #'WebView2.ICoreWebView2ProcessInfo'
+WebView2.ICoreWebView2Interface
+	subclass: #'WebView2.ICoreWebView2ProcessInfo'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'KindNames' -> #('BROWSER' 'RENDERER' 'UTILITY' 'SANDBOX_HELPER' 'GPU' 'PPAPI_PLUGIN' 'PPAPI_BROKER')
-	}!
+			'KindNames'
+				-> #('BROWSER' 'RENDERER' 'UTILITY' 'SANDBOX_HELPER' 'GPU' 'PPAPI_PLUGIN' 'PPAPI_BROKER')
+		}!
 WebView2.ICoreWebView2ProcessInfo guid: (OS.COM.IID fromString: '{84fa7612-3f3d-4fbf-889d-fad000492d72}')!
 WebView2.ICoreWebView2ProcessInfo comment: '`ICoreWebView2ProcessInfo` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ProcessInfo'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 

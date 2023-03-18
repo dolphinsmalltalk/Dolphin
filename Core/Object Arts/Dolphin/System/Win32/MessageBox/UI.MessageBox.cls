@@ -1,18 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.MessageBoxAbstract subclass: #'UI.MessageBox'
+UI.MessageBoxAbstract
+	subclass: #'UI.MessageBox'
 	instanceVariableNames: 'handle events flags uniqueId modality iconStyle icon headline detailsText expandLabel collapseLabel checkboxText footerIcon footerText buttonStyle defaultButton customButtons buttonNames buttonIds radioButtons defaultRadioButton progressRange verified button radioButtonId'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants private} #{OS.TaskDialogConstants private} #{OS.Win32Errors private} #{OS.WinRegConstants private})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'CommonButtonFlags' -> #(16r1 16r8 16r0 16r10 16r0 16r2 16r4 16r20 16r0 16r0 16r0).
-		'DefaultableMask' -> 16r30000000.
-		'StandardButtonNames' -> #(#ok #cancel #abort #retry #ignore #yes #no #close #help #retry #ignore).
-		'SuppressibleMask' -> 16r10000000.
-		'TDF_Mask' -> 16r1FFFFFF.
-		'TopMostMask' -> 16r40000000
-	}!
+			'CommonButtonFlags' -> #(16r1 16r8 16r0 16r10 16r0 16r2 16r4 16r20 16r0 16r0 16r0).
+			'DefaultableMask' -> 16r30000000.
+			'StandardButtonNames'
+				-> #(#ok #cancel #abort #retry #ignore #yes #no #close #help #retry #ignore).
+			'SuppressibleMask' -> 16r10000000.
+			'TDF_Mask' -> 16r1FFFFFF.
+			'TopMostMask' -> 16r40000000
+		}!
 UI.MessageBox guid: (Core.GUID fromString: '{87b4c49f-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.MessageBox comment: '`MessageBox` provides a convenient dialog abstraction for posing short questions, and reporting notifications, warnings, or errors.
 

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.TransformableBrushInitializer subclass: #'Graphics.Gdiplus.GradientBrushInitializer'
+Graphics.Gdiplus.TransformableBrushInitializer
+	subclass: #'Graphics.Gdiplus.GradientBrushInitializer'
 	instanceVariableNames: 'isGammaCorrected blend'
 	classVariableNames: ''
 	imports: #()

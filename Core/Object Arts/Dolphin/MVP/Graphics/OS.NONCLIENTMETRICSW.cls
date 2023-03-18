@@ -1,29 +1,30 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.NONCLIENTMETRICSW'
+OS.Win32Structure
+	subclass: #'OS.NONCLIENTMETRICSW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_NONCLIENTMETRICSW_Size' -> 16r1F8.
-		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_iBorderWidth' -> 16r4.
-		'_OffsetOf_iCaptionHeight' -> 16r14.
-		'_OffsetOf_iCaptionWidth' -> 16r10.
-		'_OffsetOf_iMenuHeight' -> 16rDC.
-		'_OffsetOf_iMenuWidth' -> 16rD8.
-		'_OffsetOf_iPaddedBorderWidth' -> 16r1F4.
-		'_OffsetOf_iScrollHeight' -> 16rC.
-		'_OffsetOf_iScrollWidth' -> 16r8.
-		'_OffsetOf_iSmCaptionHeight' -> 16r78.
-		'_OffsetOf_iSmCaptionWidth' -> 16r74.
-		'_OffsetOf_lfCationFont' -> 16r18.
-		'_OffsetOf_lfMenuFont' -> 16rE0.
-		'_OffsetOf_lfMessageFont' -> 16r198.
-		'_OffsetOf_lfSmCaptionFont' -> 16r7C.
-		'_OffsetOf_lfStatusFont' -> 16r13C
-	}!
+			'_NONCLIENTMETRICSW_Size' -> 16r1F8.
+			'_OffsetOf_dwSize' -> 16r0.
+			'_OffsetOf_iBorderWidth' -> 16r4.
+			'_OffsetOf_iCaptionHeight' -> 16r14.
+			'_OffsetOf_iCaptionWidth' -> 16r10.
+			'_OffsetOf_iMenuHeight' -> 16rDC.
+			'_OffsetOf_iMenuWidth' -> 16rD8.
+			'_OffsetOf_iPaddedBorderWidth' -> 16r1F4.
+			'_OffsetOf_iScrollHeight' -> 16rC.
+			'_OffsetOf_iScrollWidth' -> 16r8.
+			'_OffsetOf_iSmCaptionHeight' -> 16r78.
+			'_OffsetOf_iSmCaptionWidth' -> 16r74.
+			'_OffsetOf_lfCationFont' -> 16r18.
+			'_OffsetOf_lfMenuFont' -> 16rE0.
+			'_OffsetOf_lfMessageFont' -> 16r198.
+			'_OffsetOf_lfSmCaptionFont' -> 16r7C.
+			'_OffsetOf_lfStatusFont' -> 16r13C
+		}!
 OS.NONCLIENTMETRICSW guid: (Core.GUID fromString: '{87b4c602-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.NONCLIENTMETRICSW comment: '<NONCLIENTMETRICSW> is an <ExternalStructure> class to wrap the Win32 structure of the same name.
 

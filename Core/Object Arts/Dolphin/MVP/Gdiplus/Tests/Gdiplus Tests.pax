@@ -96,343 +96,400 @@ package!
 
 "Class Definitions"!
 
-Graphics.Gdiplus subclass: #'Graphics.Gdiplus.Tests'
+Graphics.Gdiplus
+	subclass: #'Graphics.Gdiplus.Tests'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{XProgramming.SUnit})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.GdiplusLibrary subclass: #'Graphics.Gdiplus.Tests.MockGdiplusLibrary'
+Graphics.Gdiplus.GdiplusLibrary
+	subclass: #'Graphics.Gdiplus.Tests.MockGdiplusLibrary'
 	instanceVariableNames: 'process messages'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-XProgramming.SUnit.TestCase subclass: #'Graphics.Gdiplus.Tests.GdiplusTest'
+XProgramming.SUnit.TestCase
+	subclass: #'Graphics.Gdiplus.Tests.GdiplusTest'
 	instanceVariableNames: 'model'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.Tests.POINTTest subclass: #'External.Tests.POINTFTest'
+External.Tests.POINTTest
+	subclass: #'External.Tests.POINTFTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.Tests.RECTTest subclass: #'Graphics.Gdiplus.Tests.GpRectTest'
+External.Tests.RECTTest
+	subclass: #'Graphics.Gdiplus.Tests.GpRectTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.Tests.RECTTest subclass: #'Graphics.Gdiplus.Tests.RECTFTest'
+External.Tests.RECTTest
+	subclass: #'Graphics.Gdiplus.Tests.RECTFTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.Tests.ExternalArrayTest subclass: #'Graphics.Gdiplus.Tests.ARGBArrayTest'
+External.Tests.ExternalArrayTest
+	subclass: #'Graphics.Gdiplus.Tests.ARGBArrayTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.Tests.ExternalArrayTest subclass: #'External.Tests.POINTFArrayTest'
+External.Tests.ExternalArrayTest
+	subclass: #'External.Tests.POINTFArrayTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.GdiplusTest subclass: #'Graphics.Gdiplus.Tests.ColorMatrixTest'
+Graphics.Gdiplus.Tests.GdiplusTest
+	subclass: #'Graphics.Gdiplus.Tests.ColorMatrixTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.GdiplusTest subclass: #'Graphics.Gdiplus.Tests.ExamplesTest'
+Graphics.Gdiplus.Tests.GdiplusTest
+	subclass: #'Graphics.Gdiplus.Tests.ExamplesTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.GdiplusTest subclass: #'Graphics.Gdiplus.Tests.GdiplusObjectTest'
+Graphics.Gdiplus.Tests.GdiplusTest
+	subclass: #'Graphics.Gdiplus.Tests.GdiplusObjectTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.GdiplusTest subclass: #'Graphics.Gdiplus.Tests.GradientBlendTest'
+Graphics.Gdiplus.Tests.GdiplusTest
+	subclass: #'Graphics.Gdiplus.Tests.GradientBlendTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.GdiplusTest subclass: #'Graphics.Gdiplus.Tests.InitializerTests'
+Graphics.Gdiplus.Tests.GdiplusTest
+	subclass: #'Graphics.Gdiplus.Tests.InitializerTests'
 	instanceVariableNames: 'constructorArgs'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.GdiplusObjectTest subclass: #'Graphics.Gdiplus.Tests.AbstractCustomLineCapTest'
+Graphics.Gdiplus.Tests.GdiplusObjectTest
+	subclass: #'Graphics.Gdiplus.Tests.AbstractCustomLineCapTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.GdiplusObjectTest subclass: #'Graphics.Gdiplus.Tests.BrushTest'
+Graphics.Gdiplus.Tests.GdiplusObjectTest
+	subclass: #'Graphics.Gdiplus.Tests.BrushTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.GdiplusObjectTest subclass: #'Graphics.Gdiplus.Tests.FontCollectionTest'
+Graphics.Gdiplus.Tests.GdiplusObjectTest
+	subclass: #'Graphics.Gdiplus.Tests.FontCollectionTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.GdiplusObjectTest subclass: #'Graphics.Gdiplus.Tests.FontFamilyTest'
+Graphics.Gdiplus.Tests.GdiplusObjectTest
+	subclass: #'Graphics.Gdiplus.Tests.FontFamilyTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.GdiplusObjectTest subclass: #'Graphics.Gdiplus.Tests.FontTest'
+Graphics.Gdiplus.Tests.GdiplusObjectTest
+	subclass: #'Graphics.Gdiplus.Tests.FontTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.GdiplusObjectTest subclass: #'Graphics.Gdiplus.Tests.GdiplusGraphicsTest'
+Graphics.Gdiplus.Tests.GdiplusObjectTest
+	subclass: #'Graphics.Gdiplus.Tests.GdiplusGraphicsTest'
 	instanceVariableNames: 'bitmap'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.GdiplusObjectTest subclass: #'Graphics.Gdiplus.Tests.GraphicsPathTest'
+Graphics.Gdiplus.Tests.GdiplusObjectTest
+	subclass: #'Graphics.Gdiplus.Tests.GraphicsPathTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.GdiplusObjectTest subclass: #'Graphics.Gdiplus.Tests.ImageAttributesTest'
+Graphics.Gdiplus.Tests.GdiplusObjectTest
+	subclass: #'Graphics.Gdiplus.Tests.ImageAttributesTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.GdiplusObjectTest subclass: #'Graphics.Gdiplus.Tests.ImageTests'
+Graphics.Gdiplus.Tests.GdiplusObjectTest
+	subclass: #'Graphics.Gdiplus.Tests.ImageTests'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.GdiplusObjectTest subclass: #'Graphics.Gdiplus.Tests.MatrixTest'
+Graphics.Gdiplus.Tests.GdiplusObjectTest
+	subclass: #'Graphics.Gdiplus.Tests.MatrixTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.GdiplusObjectTest subclass: #'Graphics.Gdiplus.Tests.PenTest'
+Graphics.Gdiplus.Tests.GdiplusObjectTest
+	subclass: #'Graphics.Gdiplus.Tests.PenTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.GdiplusObjectTest subclass: #'Graphics.Gdiplus.Tests.RegionTest'
+Graphics.Gdiplus.Tests.GdiplusObjectTest
+	subclass: #'Graphics.Gdiplus.Tests.RegionTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.GdiplusObjectTest subclass: #'Graphics.Gdiplus.Tests.StringFormatTest'
+Graphics.Gdiplus.Tests.GdiplusObjectTest
+	subclass: #'Graphics.Gdiplus.Tests.StringFormatTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.AbstractCustomLineCapTest subclass: #'Graphics.Gdiplus.Tests.AdjustableArrowCapTest'
+Graphics.Gdiplus.Tests.AbstractCustomLineCapTest
+	subclass: #'Graphics.Gdiplus.Tests.AdjustableArrowCapTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.AbstractCustomLineCapTest subclass: #'Graphics.Gdiplus.Tests.CustomLineCapTest'
+Graphics.Gdiplus.Tests.AbstractCustomLineCapTest
+	subclass: #'Graphics.Gdiplus.Tests.CustomLineCapTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.BrushTest subclass: #'Graphics.Gdiplus.Tests.HatchBrushTest'
+Graphics.Gdiplus.Tests.BrushTest
+	subclass: #'Graphics.Gdiplus.Tests.HatchBrushTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.BrushTest subclass: #'Graphics.Gdiplus.Tests.SolidBrushTest'
+Graphics.Gdiplus.Tests.BrushTest
+	subclass: #'Graphics.Gdiplus.Tests.SolidBrushTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.BrushTest subclass: #'Graphics.Gdiplus.Tests.TransformableBrushTest'
+Graphics.Gdiplus.Tests.BrushTest
+	subclass: #'Graphics.Gdiplus.Tests.TransformableBrushTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.TransformableBrushTest subclass: #'Graphics.Gdiplus.Tests.GradientBrushTest'
+Graphics.Gdiplus.Tests.TransformableBrushTest
+	subclass: #'Graphics.Gdiplus.Tests.GradientBrushTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.TransformableBrushTest subclass: #'Graphics.Gdiplus.Tests.TextureBrushTest'
+Graphics.Gdiplus.Tests.TransformableBrushTest
+	subclass: #'Graphics.Gdiplus.Tests.TextureBrushTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.GradientBrushTest subclass: #'Graphics.Gdiplus.Tests.LinearGradientBrushTest'
+Graphics.Gdiplus.Tests.GradientBrushTest
+	subclass: #'Graphics.Gdiplus.Tests.LinearGradientBrushTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.GradientBrushTest subclass: #'Graphics.Gdiplus.Tests.PathGradientBrushTest'
+Graphics.Gdiplus.Tests.GradientBrushTest
+	subclass: #'Graphics.Gdiplus.Tests.PathGradientBrushTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.FontCollectionTest subclass: #'Graphics.Gdiplus.Tests.InstalledFontCollectionTest'
+Graphics.Gdiplus.Tests.FontCollectionTest
+	subclass: #'Graphics.Gdiplus.Tests.InstalledFontCollectionTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.FontCollectionTest subclass: #'Graphics.Gdiplus.Tests.PrivateFontCollectionTest'
+Graphics.Gdiplus.Tests.FontCollectionTest
+	subclass: #'Graphics.Gdiplus.Tests.PrivateFontCollectionTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.ImageTests subclass: #'Graphics.Gdiplus.Tests.BitmapTest'
+Graphics.Gdiplus.Tests.ImageTests
+	subclass: #'Graphics.Gdiplus.Tests.BitmapTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.ImageTests subclass: #'Graphics.Gdiplus.Tests.ImageTest'
+Graphics.Gdiplus.Tests.ImageTests
+	subclass: #'Graphics.Gdiplus.Tests.ImageTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.GradientBlendTest subclass: #'Graphics.Gdiplus.Tests.GradientCustomBlendTest'
+Graphics.Gdiplus.Tests.GradientBlendTest
+	subclass: #'Graphics.Gdiplus.Tests.GradientCustomBlendTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.GradientBlendTest subclass: #'Graphics.Gdiplus.Tests.GradientPresetBlendTest'
+Graphics.Gdiplus.Tests.GradientBlendTest
+	subclass: #'Graphics.Gdiplus.Tests.GradientPresetBlendTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.InitializerTests subclass: #'Graphics.Gdiplus.Tests.BitmapFromBlankInitializerTest'
+Graphics.Gdiplus.Tests.InitializerTests
+	subclass: #'Graphics.Gdiplus.Tests.BitmapFromBlankInitializerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.InitializerTests subclass: #'Graphics.Gdiplus.Tests.BitmapFromFileInitializerTest'
+Graphics.Gdiplus.Tests.InitializerTests
+	subclass: #'Graphics.Gdiplus.Tests.BitmapFromFileInitializerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.InitializerTests subclass: #'Graphics.Gdiplus.Tests.BitmapFromGdiBitmapInitializerTest'
+Graphics.Gdiplus.Tests.InitializerTests
+	subclass: #'Graphics.Gdiplus.Tests.BitmapFromGdiBitmapInitializerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.InitializerTests subclass: #'Graphics.Gdiplus.Tests.BitmapFromIconInitializerTest'
+Graphics.Gdiplus.Tests.InitializerTests
+	subclass: #'Graphics.Gdiplus.Tests.BitmapFromIconInitializerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.InitializerTests subclass: #'Graphics.Gdiplus.Tests.BitmapFromIStreamInitializerTest'
+Graphics.Gdiplus.Tests.InitializerTests
+	subclass: #'Graphics.Gdiplus.Tests.BitmapFromIStreamInitializerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.InitializerTests subclass: #'Graphics.Gdiplus.Tests.GraphicsFromHDCInitializerTest'
+Graphics.Gdiplus.Tests.InitializerTests
+	subclass: #'Graphics.Gdiplus.Tests.GraphicsFromHDCInitializerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.InitializerTests subclass: #'Graphics.Gdiplus.Tests.GraphicsFromImageInitializerTest'
+Graphics.Gdiplus.Tests.InitializerTests
+	subclass: #'Graphics.Gdiplus.Tests.GraphicsFromImageInitializerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.InitializerTests subclass: #'Graphics.Gdiplus.Tests.ImageAttributesInitializerTest'
+Graphics.Gdiplus.Tests.InitializerTests
+	subclass: #'Graphics.Gdiplus.Tests.ImageAttributesInitializerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.InitializerTests subclass: #'Graphics.Gdiplus.Tests.ImageFromFileInitializerTest'
+Graphics.Gdiplus.Tests.InitializerTests
+	subclass: #'Graphics.Gdiplus.Tests.ImageFromFileInitializerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.InitializerTests subclass: #'Graphics.Gdiplus.Tests.ImageFromIStreamInitializerTest'
+Graphics.Gdiplus.Tests.InitializerTests
+	subclass: #'Graphics.Gdiplus.Tests.ImageFromIStreamInitializerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.InitializerTests subclass: #'Graphics.Gdiplus.Tests.LinearGradientBrushFromPointsInitializerTest'
+Graphics.Gdiplus.Tests.InitializerTests
+	subclass: #'Graphics.Gdiplus.Tests.LinearGradientBrushFromPointsInitializerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.InitializerTests subclass: #'Graphics.Gdiplus.Tests.LinearGradientBrushFromRectInitializerTest'
+Graphics.Gdiplus.Tests.InitializerTests
+	subclass: #'Graphics.Gdiplus.Tests.LinearGradientBrushFromRectInitializerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.InitializerTests subclass: #'Graphics.Gdiplus.Tests.PenInitializerTest'
+Graphics.Gdiplus.Tests.InitializerTests
+	subclass: #'Graphics.Gdiplus.Tests.PenInitializerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.InitializerTests subclass: #'Graphics.Gdiplus.Tests.SolidBrushFromColorInitializerTest'
+Graphics.Gdiplus.Tests.InitializerTests
+	subclass: #'Graphics.Gdiplus.Tests.SolidBrushFromColorInitializerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Gdiplus.Tests.InitializerTests subclass: #'Graphics.Gdiplus.Tests.TextureBrushInitializerTest'
+Graphics.Gdiplus.Tests.InitializerTests
+	subclass: #'Graphics.Gdiplus.Tests.TextureBrushInitializerTest'
 	instanceVariableNames: 'image'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-XProgramming.SUnit.TestResource subclass: #'Graphics.Gdiplus.Tests.FileResource'
+XProgramming.SUnit.TestResource
+	subclass: #'Graphics.Gdiplus.Tests.FileResource'
 	instanceVariableNames: 'tempDir tempFileLocator'
 	classVariableNames: ''
 	imports: #()

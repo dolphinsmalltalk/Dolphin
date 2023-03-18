@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Error subclass: #'Kernel.SubclassResponsibilityError'
+Core.Error
+	subclass: #'Kernel.SubclassResponsibilityError'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

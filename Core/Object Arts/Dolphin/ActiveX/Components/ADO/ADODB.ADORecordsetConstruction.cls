@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IDispatch subclass: #'ADODB.ADORecordsetConstruction'
+OS.COM.IDispatch
+	subclass: #'ADODB.ADORecordsetConstruction'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

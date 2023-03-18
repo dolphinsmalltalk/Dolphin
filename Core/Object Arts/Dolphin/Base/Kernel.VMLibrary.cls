@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.PermanentLibrary subclass: #'Kernel.VMLibrary'
+External.PermanentLibrary
+	subclass: #'Kernel.VMLibrary'
 	instanceVariableNames: 'wndProc dlgProc genericCallback vtable specialSelectorStart'
 	classVariableNames: 'Registry RegistryKeys'
 	imports: #()

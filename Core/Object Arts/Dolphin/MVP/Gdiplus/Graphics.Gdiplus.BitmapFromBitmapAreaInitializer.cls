@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.BitmapInitializer subclass: #'Graphics.Gdiplus.BitmapFromBitmapAreaInitializer'
+Graphics.Gdiplus.BitmapInitializer
+	subclass: #'Graphics.Gdiplus.BitmapFromBitmapAreaInitializer'
 	instanceVariableNames: 'bitmap rectangle format'
 	classVariableNames: ''
 	imports: #()

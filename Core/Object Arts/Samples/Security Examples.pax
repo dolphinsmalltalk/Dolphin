@@ -16,7 +16,8 @@ package!
 
 "Class Definitions"!
 
-Security subclass: #'Security.Examples'
+Security
+	subclass: #'Security.Examples'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

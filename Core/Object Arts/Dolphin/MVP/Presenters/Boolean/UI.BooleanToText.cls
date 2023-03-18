@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.AbstractToTextConverter subclass: #'UI.BooleanToText'
+UI.AbstractToTextConverter
+	subclass: #'UI.BooleanToText'
 	instanceVariableNames: 'format'
 	classVariableNames: ''
 	imports: #()

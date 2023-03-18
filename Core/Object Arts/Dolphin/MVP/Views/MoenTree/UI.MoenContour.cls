@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'UI.MoenContour'
+Core.Object
+	subclass: #'UI.MoenContour'
 	instanceVariableNames: 'lowerHead lowerTail upperHead upperTail'
 	classVariableNames: ''
 	imports: #()

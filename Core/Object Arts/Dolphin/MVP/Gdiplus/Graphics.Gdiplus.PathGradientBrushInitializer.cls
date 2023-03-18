@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.GradientBrushInitializer subclass: #'Graphics.Gdiplus.PathGradientBrushInitializer'
+Graphics.Gdiplus.GradientBrushInitializer
+	subclass: #'Graphics.Gdiplus.PathGradientBrushInitializer'
 	instanceVariableNames: 'centerColor centerPoint surroundColors focusScales'
 	classVariableNames: ''
 	imports: #()

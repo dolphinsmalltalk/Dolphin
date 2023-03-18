@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.StackFrame subclass: #'Kernel.BlockFrame'
+Kernel.StackFrame
+	subclass: #'Kernel.BlockFrame'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

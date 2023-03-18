@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.MouseTracker subclass: #'UI.DraggableViewInteractor'
+UI.MouseTracker
+	subclass: #'UI.DraggableViewInteractor'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

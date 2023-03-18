@@ -1,16 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.GpStructure subclass: #'Graphics.Gdiplus.PathData'
+Graphics.Gdiplus.GpStructure
+	subclass: #'Graphics.Gdiplus.PathData'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_Count' -> 16r0.
-		'_OffsetOf_Points' -> 16r4.
-		'_OffsetOf_Types' -> 16r8.
-		'_PathData_Size' -> 16rC
-	}!
+			'_OffsetOf_Count' -> 16r0.
+			'_OffsetOf_Points' -> 16r4.
+			'_OffsetOf_Types' -> 16r8.
+			'_PathData_Size' -> 16rC
+		}!
 Graphics.Gdiplus.PathData guid: (Core.GUID fromString: '{411a9cb7-6abc-4f55-aa9a-82c7e0d44142}')!
 Graphics.Gdiplus.PathData comment: '<GpPathData> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpPathData'' from type information in the ''GDI+ Library 1.0'' library.
 

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.ScalarField subclass: #'External.UInt16Field'
+External.ScalarField
+	subclass: #'External.UInt16Field'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

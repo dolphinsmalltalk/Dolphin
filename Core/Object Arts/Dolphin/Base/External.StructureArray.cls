@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.GenericExternalArray subclass: #'External.StructureArray'
+External.GenericExternalArray
+	subclass: #'External.StructureArray'
 	instanceVariableNames: 'elementSpacing'
 	classVariableNames: ''
 	imports: #()

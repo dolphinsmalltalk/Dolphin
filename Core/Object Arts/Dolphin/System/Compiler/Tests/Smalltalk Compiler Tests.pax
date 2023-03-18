@@ -41,111 +41,127 @@ package!
 
 "Class Definitions"!
 
-Core.Object subclass: #'Kernel.Tests.DolphinCompilerTestMethods'
+Core.Object
+	subclass: #'Kernel.Tests.DolphinCompilerTestMethods'
 	instanceVariableNames: 'iv1 iv2'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'Const' -> 16r1
-	}!
-Kernel.Tests.DolphinCompilerTestMethods subclass: #'Kernel.Tests.DolphinCompilerTestMethodsSubclass'
+	classConstants: { 'Const' -> 16r1 }!
+Kernel.Tests.DolphinCompilerTestMethods
+	subclass: #'Kernel.Tests.DolphinCompilerTestMethodsSubclass'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Kernel.Tests.AbstractParserErrorTest'
+Core.Tests.DolphinTest
+	subclass: #'Kernel.Tests.AbstractParserErrorTest'
 	instanceVariableNames: 'errors'
 	classVariableNames: ''
 	imports: #(#{Kernel.ParseErrorCodes} #{External})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Kernel.Tests.CompilerTest'
+Core.Tests.DolphinTest
+	subclass: #'Kernel.Tests.CompilerTest'
 	instanceVariableNames: 'defaultCompileFlags'
 	classVariableNames: 'TempInstrs'
 	imports: #(#{Kernel.CompilerFlags} #{Kernel.OpcodePool} #{Kernel.ParseErrorCodes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Kernel.Tests.ParserTest'
+Core.Tests.DolphinTest
+	subclass: #'Kernel.Tests.ParserTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{External.ExtCallArgTypes} #{Kernel.ParseErrorCodes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Kernel.Tests.ScannerTest'
+Core.Tests.DolphinTest
+	subclass: #'Kernel.Tests.ScannerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Kernel.Tests.StLiteralValueNodeTest'
+Core.Tests.DolphinTest
+	subclass: #'Kernel.Tests.StLiteralValueNodeTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Kernel.Tests.StTokenTest'
+Core.Tests.DolphinTest
+	subclass: #'Kernel.Tests.StTokenTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.Tests.AbstractParserErrorTest subclass: #'Kernel.Tests.CompilerErrorTest'
+Kernel.Tests.AbstractParserErrorTest
+	subclass: #'Kernel.Tests.CompilerErrorTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.Tests.AbstractParserErrorTest subclass: #'Kernel.Tests.ParserErrorTest'
+Kernel.Tests.AbstractParserErrorTest
+	subclass: #'Kernel.Tests.ParserErrorTest'
 	instanceVariableNames: 'semanticAnalyserClass'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.Tests.StTokenTest subclass: #'Kernel.Tests.StOptimizedTokenTest'
+Kernel.Tests.StTokenTest
+	subclass: #'Kernel.Tests.StOptimizedTokenTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.Tests.StTokenTest subclass: #'Kernel.Tests.StValueTokenTest'
+Kernel.Tests.StTokenTest
+	subclass: #'Kernel.Tests.StValueTokenTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.Tests.StValueTokenTest subclass: #'Kernel.Tests.StIdentifierTokenTest'
+Kernel.Tests.StValueTokenTest
+	subclass: #'Kernel.Tests.StIdentifierTokenTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.Tests.StValueTokenTest subclass: #'Kernel.Tests.StLiteralArrayTokenTest'
+Kernel.Tests.StValueTokenTest
+	subclass: #'Kernel.Tests.StLiteralArrayTokenTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.Tests.StValueTokenTest subclass: #'Kernel.Tests.StLiteralTokenTest'
+Kernel.Tests.StValueTokenTest
+	subclass: #'Kernel.Tests.StLiteralTokenTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.Tests.StValueTokenTest subclass: #'Kernel.Tests.StSpecialCharacterTokenTest'
+Kernel.Tests.StValueTokenTest
+	subclass: #'Kernel.Tests.StSpecialCharacterTokenTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.Tests.StLiteralTokenTest subclass: #'Kernel.Tests.StNumberLiteralTokenTest'
+Kernel.Tests.StLiteralTokenTest
+	subclass: #'Kernel.Tests.StNumberLiteralTokenTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTestClassResource subclass: #'Kernel.Tests.CompilerTestClasses'
+Core.Tests.DolphinTestClassResource
+	subclass: #'Kernel.Tests.CompilerTestClasses'
 	instanceVariableNames: 'testClass'
 	classVariableNames: ''
 	imports: #()

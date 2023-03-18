@@ -1,18 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMRCOLORMATCHTOTARGET'
+OS.ENHMETARECORD
+	subclass: #'OS.EMRCOLORMATCHTOTARGET'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_EMRCOLORMATCHTOTARGET_Size' -> 16r1C.
-		'_OffsetOf_cbData' -> 16r14.
-		'_OffsetOf_cbName' -> 16r10.
-		'_OffsetOf_Data' -> 16r18.
-		'_OffsetOf_dwAction' -> 16r8.
-		'_OffsetOf_dwFlags' -> 16rC
-	}!
+			'_EMRCOLORMATCHTOTARGET_Size' -> 16r1C.
+			'_OffsetOf_cbData' -> 16r14.
+			'_OffsetOf_cbName' -> 16r10.
+			'_OffsetOf_Data' -> 16r18.
+			'_OffsetOf_dwAction' -> 16r8.
+			'_OffsetOf_dwFlags' -> 16rC
+		}!
 OS.EMRCOLORMATCHTOTARGET guid: (Core.GUID fromString: '{8408e62d-3e54-483c-8938-98e099d9d6a2}')!
 OS.EMRCOLORMATCHTOTARGET comment: '<COLORMATCHTOTARGET> is an <ExternalStructure> class to wrap the struct ''Win32.COLORMATCHTOTARGET'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

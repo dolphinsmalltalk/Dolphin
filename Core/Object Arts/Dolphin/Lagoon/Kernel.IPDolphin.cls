@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.InterfaceImplementation subclass: #'Kernel.IPDolphin'
+OS.COM.InterfaceImplementation
+	subclass: #'Kernel.IPDolphin'
 	instanceVariableNames: 'plugHole coclasses'
 	classVariableNames: 'Current'
 	imports: #(#{OS.COM private})

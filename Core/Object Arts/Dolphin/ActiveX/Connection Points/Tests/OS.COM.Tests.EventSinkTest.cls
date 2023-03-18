@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTest subclass: #'OS.COM.Tests.EventSinkTest'
+Core.Tests.DolphinTest
+	subclass: #'OS.COM.Tests.EventSinkTest'
 	instanceVariableNames: 'sink object received'
 	classVariableNames: ''
 	imports: #()

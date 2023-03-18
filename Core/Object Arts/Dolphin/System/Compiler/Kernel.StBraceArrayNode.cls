@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.StValueNode subclass: #'Kernel.StBraceArrayNode'
+Kernel.StValueNode
+	subclass: #'Kernel.StBraceArrayNode'
 	instanceVariableNames: 'left statements periods right'
 	classVariableNames: ''
 	imports: #()

@@ -80,15 +80,15 @@ package!
 
 "Class Definitions"!
 
-UI.TextDocument subclass: #'UI.Examples.XmlPad'
+UI.TextDocument
+	subclass: #'UI.Examples.XmlPad'
 	instanceVariableNames: 'viewOptions'
 	classVariableNames: ''
 	imports: #(#{MSXML private})
 	classInstanceVariableNames: ''
-	classConstants: {
-		'RememberPlacementMask' -> 16r1
-	}!
-UI.RuntimeSessionManager subclass: #'UI.Examples.XmlPadSessionManager'
+	classConstants: { 'RememberPlacementMask' -> 16r1 }!
+UI.RuntimeSessionManager
+	subclass: #'UI.Examples.XmlPadSessionManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

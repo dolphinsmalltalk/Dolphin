@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Error subclass: #'Net.SocketError'
+OS.Win32Error
+	subclass: #'Net.SocketError'
 	instanceVariableNames: ''
 	classVariableNames: 'ErrorClasses'
 	imports: #(#{OS.WinSocketConstants} #{OS.WinSocketErrors})

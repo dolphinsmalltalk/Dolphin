@@ -31,31 +31,36 @@ package!
 
 "Class Definitions"!
 
-XProgramming.SUnit.TestCase subclass: #'XProgramming.SUnit.ExampleSetTest'
+XProgramming.SUnit.TestCase
+	subclass: #'XProgramming.SUnit.ExampleSetTest'
 	instanceVariableNames: 'full empty'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-XProgramming.SUnit.TestCase subclass: #'XProgramming.SUnit.ResumableTestFailureTestCase'
+XProgramming.SUnit.TestCase
+	subclass: #'XProgramming.SUnit.ResumableTestFailureTestCase'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-XProgramming.SUnit.TestCase subclass: #'XProgramming.SUnit.SimpleTestResourceTestCase'
+XProgramming.SUnit.TestCase
+	subclass: #'XProgramming.SUnit.SimpleTestResourceTestCase'
 	instanceVariableNames: 'resource'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-XProgramming.SUnit.TestCase subclass: #'XProgramming.SUnit.SUnitTest'
+XProgramming.SUnit.TestCase
+	subclass: #'XProgramming.SUnit.SUnitTest'
 	instanceVariableNames: 'hasRun hasSetup hasRanOnce'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-XProgramming.SUnit.TestResource subclass: #'XProgramming.SUnit.SimpleTestResource'
+XProgramming.SUnit.TestResource
+	subclass: #'XProgramming.SUnit.SimpleTestResource'
 	instanceVariableNames: 'runningState hasRun hasSetup hasRanOnce'
 	classVariableNames: ''
 	imports: #()

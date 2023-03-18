@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.FileLocator subclass: #'Kernel.AbsoluteFileLocator'
+Core.FileLocator
+	subclass: #'Kernel.AbsoluteFileLocator'
 	instanceVariableNames: ''
 	classVariableNames: 'Current'
 	imports: #()

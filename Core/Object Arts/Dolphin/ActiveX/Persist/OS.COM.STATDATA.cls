@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.OLEStructure subclass: #'OS.COM.STATDATA'
+OS.COM.OLEStructure
+	subclass: #'OS.COM.STATDATA'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_advf' -> 16r14.
-		'_OffsetOf_dwConnection' -> 16r1C.
-		'_OffsetOf_formatetc' -> 16r0.
-		'_OffsetOf_pAdvSink' -> 16r18.
-		'_STATDATA_Size' -> 16r20
-	}!
+			'_OffsetOf_advf' -> 16r14.
+			'_OffsetOf_dwConnection' -> 16r1C.
+			'_OffsetOf_formatetc' -> 16r0.
+			'_OffsetOf_pAdvSink' -> 16r18.
+			'_STATDATA_Size' -> 16r20
+		}!
 OS.COM.STATDATA guid: (Core.GUID fromString: '{25f9c177-b0f1-4161-87a4-188c3de0b3e4}')!
 OS.COM.STATDATA comment: '<STATDATA> is an <ExternalStructure> class to wrap the struct ''OCIDL.STATDATA'' from type information in the ''OCIDL Library'' library.
 

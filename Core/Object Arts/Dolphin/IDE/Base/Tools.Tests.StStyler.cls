@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.ParseNodeVisitor subclass: #'Tools.Tests.StStyler'
+Kernel.ParseNodeVisitor
+	subclass: #'Tools.Tests.StStyler'
 	instanceVariableNames: 'view arrayDepth'
 	classVariableNames: ''
 	imports: #()

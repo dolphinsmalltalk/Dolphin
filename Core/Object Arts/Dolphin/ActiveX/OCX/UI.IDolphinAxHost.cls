@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IUnknown subclass: #'UI.IDolphinAxHost'
+OS.COM.IUnknown
+	subclass: #'UI.IDolphinAxHost'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.COM private})

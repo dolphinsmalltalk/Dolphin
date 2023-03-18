@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Presenter subclass: #'Tools.SmalltalkSearchPresenter'
+UI.Presenter
+	subclass: #'Tools.SmalltalkSearchPresenter'
 	instanceVariableNames: 'environment'
 	classVariableNames: 'AutoCompleteDwell'
 	imports: #(#{UI.Scintilla private})

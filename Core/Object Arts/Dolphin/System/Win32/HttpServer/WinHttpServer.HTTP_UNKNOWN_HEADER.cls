@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_UNKNOWN_HEADER'
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_UNKNOWN_HEADER'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_UNKNOWN_HEADER_Size' -> 16rC.
-		'_OffsetOf_NameLength' -> 16r0.
-		'_OffsetOf_pName' -> 16r4.
-		'_OffsetOf_pRawValue' -> 16r8.
-		'_OffsetOf_RawValueLength' -> 16r2
-	}!
+			'_HTTP_UNKNOWN_HEADER_Size' -> 16rC.
+			'_OffsetOf_NameLength' -> 16r0.
+			'_OffsetOf_pName' -> 16r4.
+			'_OffsetOf_pRawValue' -> 16r8.
+			'_OffsetOf_RawValueLength' -> 16r2
+		}!
 WinHttpServer.HTTP_UNKNOWN_HEADER guid: (Core.GUID fromString: '{98a27339-73e3-4d54-baf2-915b818916b1}')!
 WinHttpServer.HTTP_UNKNOWN_HEADER comment: '`HTTP_UNKNOWN_HEADER` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_UNKNOWN_HEADER'' from type information in the ''Windows Http Server API'' library.
 

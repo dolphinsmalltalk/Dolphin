@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2Controller2 subclass: #'WebView2.ICoreWebView2Controller3'
+WebView2.ICoreWebView2Controller2
+	subclass: #'WebView2.ICoreWebView2Controller3'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

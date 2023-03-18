@@ -1,15 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.StaticView subclass: #'UI.ImageViewAbstract'
+UI.StaticView
+	subclass: #'UI.ImageViewAbstract'
 	instanceVariableNames: 'image viewMode ivFlags insets imageBorder'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'DoubleBufferMask' -> 16r2.
-		'EdgeStyles' -> (IdentityDictionary withAll: {#raised -> 16r5. #sunken -> 16rA. #bump -> 16r9. #etched -> 16r6. #none -> 16r0}).
-		'EraseWholeMask' -> 16r1
-	}!
+			'DoubleBufferMask' -> 16r2.
+			'EdgeStyles' -> (IdentityDictionary
+						withAll: { #bump -> 16r9. #etched -> 16r6. #none -> 16r0. #raised -> 16r5. #sunken -> 16rA }).
+			'EraseWholeMask' -> 16r1
+		}!
 UI.ImageViewAbstract guid: (Core.GUID fromString: '{49987909-4a1f-4e2e-8b1f-2cc2f3ca2c3c}')!
 UI.ImageViewAbstract isNonInstantiable: true!
 UI.ImageViewAbstract comment: 'ImageViewAbstract is an abstract class of <valueView>s for displaying static <image>s. The <valueModel> associated with an image view must always yield an <image> value when mapped through the installed type converter. An ImageViewAbstract will normally be used in conjunction with a <ImagePresenter>. The mode in which the image is displayed can be controlled using the #viewMode aspect which can be set to one of the following: (#normal, #centered, #scale, #scaleToFit, or #scaleBestFit). 

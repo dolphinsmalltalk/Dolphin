@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ValueConvertingControlView subclass: #'UI.HotKey'
+UI.ValueConvertingControlView
+	subclass: #'UI.HotKey'
 	instanceVariableNames: 'invalidCombinationsRule defaultKeyRule'
 	classVariableNames: ''
 	imports: #(#{OS.HotKeyConstants})

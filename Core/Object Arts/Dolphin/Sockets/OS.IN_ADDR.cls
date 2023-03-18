@@ -1,20 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.AbstractIN_ADDR subclass: #'OS.IN_ADDR'
+OS.AbstractIN_ADDR
+	subclass: #'OS.IN_ADDR'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_IN_ADDR_Size' -> 16r4.
-		'_OffsetOf_s_addr' -> 16r0.
-		'_OffsetOf_s_b1' -> 16r0.
-		'_OffsetOf_s_b2' -> 16r1.
-		'_OffsetOf_s_b3' -> 16r2.
-		'_OffsetOf_s_b4' -> 16r3.
-		'_OffsetOf_s_w1' -> 16r0.
-		'_OffsetOf_s_w2' -> 16r2
-	}!
+			'_IN_ADDR_Size' -> 16r4.
+			'_OffsetOf_s_addr' -> 16r0.
+			'_OffsetOf_s_b1' -> 16r0.
+			'_OffsetOf_s_b2' -> 16r1.
+			'_OffsetOf_s_b3' -> 16r2.
+			'_OffsetOf_s_b4' -> 16r3.
+			'_OffsetOf_s_w1' -> 16r0.
+			'_OffsetOf_s_w2' -> 16r2
+		}!
 OS.IN_ADDR guid: (Core.GUID fromString: '{87b4c5f6-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.IN_ADDR comment: '`OS.IN_ADDR` is an `External.Structure` class to wrap the struct ''Win32.IN_ADDR'' from type information in the ''Win32 API'' library.
 

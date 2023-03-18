@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Presenter subclass: #'Tools.TwinLevelInspector'
+UI.Presenter
+	subclass: #'Tools.TwinLevelInspector'
 	instanceVariableNames: 'contentsPresenter inspectorPresenter'
 	classVariableNames: ''
 	imports: #()

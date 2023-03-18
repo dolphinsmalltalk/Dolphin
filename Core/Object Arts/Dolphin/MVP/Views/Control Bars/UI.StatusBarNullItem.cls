@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.StatusBarItemAbstract subclass: #'UI.StatusBarNullItem'
+UI.StatusBarItemAbstract
+	subclass: #'UI.StatusBarNullItem'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

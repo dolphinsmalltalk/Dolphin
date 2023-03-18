@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IDispatch subclass: #'MSXML.ISchemaStringCollection'
+OS.COM.IDispatch
+	subclass: #'MSXML.ISchemaStringCollection'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

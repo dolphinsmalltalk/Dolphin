@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Shell subclass: #'OS.COM.Examples.WebBrowserShell'
+UI.Shell
+	subclass: #'OS.COM.Examples.WebBrowserShell'
 	instanceVariableNames: 'address browser statusModel zoomModel flags'
 	classVariableNames: ''
 	imports: #(#{UI})
 	classInstanceVariableNames: ''
-	classConstants: {
-		'ImagesBlockedMask' -> 16r2.
-		'LogEventsMask' -> 16r1
-	}!
+	classConstants: { 'ImagesBlockedMask' -> 16r2. 'LogEventsMask' -> 16r1 }!
 OS.COM.Examples.WebBrowserShell guid: (Core.GUID fromString: '{840f8a35-998b-4346-ab86-95db62f03a47}')!
 OS.COM.Examples.WebBrowserShell comment: '`WebBrowserShell` is a simple web browser application built around the Microsoft WebView2 Web Browser control, which is using the Edge chromium-based browser.
 

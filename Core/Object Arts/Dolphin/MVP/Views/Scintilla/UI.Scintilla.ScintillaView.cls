@@ -1,19 +1,24 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.MultilineTextEdit subclass: #'UI.Scintilla.ScintillaView'
+UI.MultilineTextEdit
+	subclass: #'UI.Scintilla.ScintillaView'
 	instanceVariableNames: 'this currentTextStyles styleIdMap styler markerDefinitions markers wordChars registeredImages modificationEventMask autoCStops autoCFillups elementColors caretBlinkTime characterRepresentations library indicators callTipTabWidth punctuation callTipHighlightColor braceChars whitespaces scFlags allTextStyles foldMarginColor foldMarginHiColor foldMarkerStyle foldFlags stringClass keyBindings indicatorStyles _unused47 _unused48 annotationStyles _unused50 _unused51 edgeColor'
-	classVariableNames: 'CodePages DefaultKeyBindings DefaultTextStyles LexerKeywords'
+	classVariableNames: 'DefaultKeyBindings DefaultTextStyles'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'AnnotationStylesOffset' -> 16r200.
-		'BackgroundDwellEvents' -> 16r4.
-		'BraceHilightingMask' -> 16r1.
-		'DefaultCallTipTabWidth' -> 16r20.
-		'FoldingMask' -> 16r2.
-		'NumAnnotationStyles' -> 16r100.
-		'NumMarginStyles' -> 16r100
-	}!
+			'AnnotationStylesOffset' -> 16r200.
+			'BackgroundDwellEvents' -> 16r4.
+			'BraceHilightingMask' -> 16r1.
+			'CodePages' -> (IdentityDictionary withAll: { 16r0 -> #ansi. 16rFDE9 -> #utf8 }).
+			'DefaultCallTipTabWidth' -> 16r20.
+			'FoldingMask' -> 16r2.
+			'LexerKeywords'
+				-> (LookupTable with: #json
+								-> #('false true null' '@id @context @type @value @language @container @list @set @reverse @index @base @vocab @graph')).
+			'NumAnnotationStyles' -> 16r100.
+			'NumMarginStyles' -> 16r100
+		}!
 UI.Scintilla.ScintillaView guid: (Core.GUID fromString: '{47a3310b-b7e4-4aa9-b6e6-640ad9fe7a3a}')!
 UI.Scintilla.ScintillaView comment: '`ScintillaView` is a `<valueView>` class that wraps the ["Scintilla" programmers'' edit control](https://www.scintilla.org/index.html). 
 

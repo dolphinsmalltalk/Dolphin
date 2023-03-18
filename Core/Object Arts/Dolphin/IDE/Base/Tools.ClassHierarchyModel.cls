@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.AbstractClassHierarchyModel subclass: #'Tools.ClassHierarchyModel'
+Tools.AbstractClassHierarchyModel
+	subclass: #'Tools.ClassHierarchyModel'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

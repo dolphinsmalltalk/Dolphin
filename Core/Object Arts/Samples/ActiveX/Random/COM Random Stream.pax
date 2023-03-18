@@ -53,19 +53,22 @@ package!
 
 "Class Definitions"!
 
-OS.COM.DualInterfaceImplementation subclass: #'OS.COM.Examples.RandomStream'
+OS.COM.DualInterfaceImplementation
+	subclass: #'OS.COM.Examples.RandomStream'
 	instanceVariableNames: 'lowerBound upperBound stream'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.RuntimeSessionManager subclass: #'OS.COM.Examples.RandomStreamSessionManager'
+UI.RuntimeSessionManager
+	subclass: #'OS.COM.Examples.RandomStreamSessionManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.IDispatch subclass: #'OS.COM.Examples.IRandomStream'
+OS.COM.IDispatch
+	subclass: #'OS.COM.Examples.IRandomStream'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

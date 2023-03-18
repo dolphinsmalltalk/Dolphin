@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ValuePresenter subclass: #'UI.Scintilla.StylesCollectionPresenter'
+UI.ValuePresenter
+	subclass: #'UI.Scintilla.StylesCollectionPresenter'
 	instanceVariableNames: 'collectionPresenter detailPresenter'
 	classVariableNames: ''
 	imports: #()

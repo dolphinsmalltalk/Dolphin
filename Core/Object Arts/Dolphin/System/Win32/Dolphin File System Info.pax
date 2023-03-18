@@ -18,7 +18,8 @@ package!
 
 "Class Definitions"!
 
-Core.Object subclass: #'OS.DiskVolumeInformation'
+Core.Object
+	subclass: #'OS.DiskVolumeInformation'
 	instanceVariableNames: 'path rootPath label serialNumber maxComponentLength fileSystemFlags fileSystemName sectorsPerCluster bytesPerSector freeClusters totalClusters freeBytes totalBytes totalFreeBytes'
 	classVariableNames: ''
 	imports: #()

@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_KEY'
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_KEY'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_SERVICE_CONFIG_SSL_SNI_KEY_Size' -> 16r88.
-		'_OffsetOf_Host' -> 16r80.
-		'_OffsetOf_IpPort' -> 16r0
-	}!
+			'_HTTP_SERVICE_CONFIG_SSL_SNI_KEY_Size' -> 16r88.
+			'_OffsetOf_Host' -> 16r80.
+			'_OffsetOf_IpPort' -> 16r0
+		}!
 WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_KEY guid: (Core.GUID fromString: '{32358de8-2f95-48e9-8b5e-72900a0e6f36}')!
 WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_KEY comment: '`HTTP_SERVICE_CONFIG_SSL_SNI_KEY` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_KEY'' from type information in the ''Windows Http Server API'' library.
 

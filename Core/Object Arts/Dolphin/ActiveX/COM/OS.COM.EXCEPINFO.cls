@@ -1,22 +1,23 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.FinalizableStructure subclass: #'OS.COM.EXCEPINFO'
+OS.COM.FinalizableStructure
+	subclass: #'OS.COM.EXCEPINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.Win32Errors})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_EXCEPINFO_Size' -> 16r20.
-		'_OffsetOf_dwHelpContext' -> 16r10.
-		'_OffsetOf_pfnDeferredFillIn' -> 16r18.
-		'_OffsetOf_pvReserved' -> 16r14.
-		'_OffsetOf_pwszDescription' -> 16r8.
-		'_OffsetOf_pwszHelpFile' -> 16rC.
-		'_OffsetOf_pwszSource' -> 16r4.
-		'_OffsetOf_scode' -> 16r1C.
-		'_OffsetOf_wCode' -> 16r0.
-		'_OffsetOf_wReserved' -> 16r2
-	}!
+			'_EXCEPINFO_Size' -> 16r20.
+			'_OffsetOf_dwHelpContext' -> 16r10.
+			'_OffsetOf_pfnDeferredFillIn' -> 16r18.
+			'_OffsetOf_pvReserved' -> 16r14.
+			'_OffsetOf_pwszDescription' -> 16r8.
+			'_OffsetOf_pwszHelpFile' -> 16rC.
+			'_OffsetOf_pwszSource' -> 16r4.
+			'_OffsetOf_scode' -> 16r1C.
+			'_OffsetOf_wCode' -> 16r0.
+			'_OffsetOf_wReserved' -> 16r2
+		}!
 OS.COM.EXCEPINFO guid: (Core.GUID fromString: '{c06f3b63-0868-11d3-93af-00a024ca708a}')!
 OS.COM.EXCEPINFO comment: '`OS.COM.EXCEPINFO` is the class of `External.Structure`s representing the OLE Automation EXCEPINFO structure. 
 

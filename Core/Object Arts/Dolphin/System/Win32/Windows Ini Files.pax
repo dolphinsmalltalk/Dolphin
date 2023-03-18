@@ -33,19 +33,22 @@ package!
 
 "Class Definitions"!
 
-Core.Collection subclass: #'OS.IniFileAbstract'
+Core.Collection
+	subclass: #'OS.IniFileAbstract'
 	instanceVariableNames: 'filename'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.IniFileAbstract subclass: #'OS.IniFile'
+OS.IniFileAbstract
+	subclass: #'OS.IniFile'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.IniFileAbstract subclass: #'OS.IniFileSection'
+OS.IniFileAbstract
+	subclass: #'OS.IniFileSection'
 	instanceVariableNames: 'name'
 	classVariableNames: ''
 	imports: #()

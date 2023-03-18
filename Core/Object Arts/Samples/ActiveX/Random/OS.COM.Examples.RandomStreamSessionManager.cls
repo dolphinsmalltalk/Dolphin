@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.RuntimeSessionManager subclass: #'OS.COM.Examples.RandomStreamSessionManager'
+UI.RuntimeSessionManager
+	subclass: #'OS.COM.Examples.RandomStreamSessionManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

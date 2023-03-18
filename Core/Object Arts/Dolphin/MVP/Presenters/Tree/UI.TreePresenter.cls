@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.SelectableItemsPresenter subclass: #'UI.TreePresenter'
+UI.SelectableItemsPresenter
+	subclass: #'UI.TreePresenter'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

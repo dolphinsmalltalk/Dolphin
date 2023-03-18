@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.DateTimeCommonControl subclass: #'UI.MonthCalendarView'
+UI.DateTimeCommonControl
+	subclass: #'UI.MonthCalendarView'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

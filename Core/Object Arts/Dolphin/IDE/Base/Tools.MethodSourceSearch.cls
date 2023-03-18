@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.MethodSearch subclass: #'Tools.MethodSourceSearch'
+Tools.MethodSearch
+	subclass: #'Tools.MethodSourceSearch'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

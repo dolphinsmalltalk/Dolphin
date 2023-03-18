@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.BitmapInitializer subclass: #'Graphics.Gdiplus.BitmapFromBlankInitializer'
+Graphics.Gdiplus.BitmapInitializer
+	subclass: #'Graphics.Gdiplus.BitmapFromBlankInitializer'
 	instanceVariableNames: 'width height format'
 	classVariableNames: ''
 	imports: #()

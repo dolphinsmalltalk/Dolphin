@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.WindowsEvent subclass: #'UI.PaintEvent'
+UI.WindowsEvent
+	subclass: #'UI.PaintEvent'
 	instanceVariableNames: 'hdc paintStruct'
 	classVariableNames: ''
 	imports: #()

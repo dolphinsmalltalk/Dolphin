@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.LookupTable variableSubclass: #'Core.SharedLookupTable'
+Core.LookupTable
+	variableSubclass: #'Core.SharedLookupTable'
 	instanceVariableNames: 'mutex'
 	classVariableNames: ''
 	imports: #()

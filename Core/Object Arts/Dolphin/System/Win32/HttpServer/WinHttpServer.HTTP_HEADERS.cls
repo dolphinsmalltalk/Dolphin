@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_HEADERS'
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_HEADERS'
 	instanceVariableNames: ''
 	classVariableNames: 'HeaderToIndexMap'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_HEADERS_Size' -> 16r10.
-		'_OffsetOf_pTrailers' -> 16rC.
-		'_OffsetOf_pUnknownHeaders' -> 16r4.
-		'_OffsetOf_TrailerCount' -> 16r8.
-		'_OffsetOf_UnknownHeaderCount' -> 16r0
-	}!
+			'_HTTP_HEADERS_Size' -> 16r10.
+			'_OffsetOf_pTrailers' -> 16rC.
+			'_OffsetOf_pUnknownHeaders' -> 16r4.
+			'_OffsetOf_TrailerCount' -> 16r8.
+			'_OffsetOf_UnknownHeaderCount' -> 16r0
+		}!
 WinHttpServer.HTTP_HEADERS guid: (Core.GUID fromString: '{739d04bb-0a15-47ea-8a7d-20b4fd31cc96}')!
 WinHttpServer.HTTP_HEADERS isNonInstantiable: true!
 WinHttpServer.HTTP_HEADERS comment: '`HTTP_HEADERS` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_HEADERS'' from type information in the ''Windows Http Server API'' library.

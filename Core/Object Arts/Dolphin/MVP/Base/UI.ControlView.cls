@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.View subclass: #'UI.ControlView'
+UI.View
+	subclass: #'UI.ControlView'
 	instanceVariableNames: 'forecolor oldWndProc'
 	classVariableNames: 'CommonControlCallError'
 	imports: #(#{OS.CommCtrlConstants})

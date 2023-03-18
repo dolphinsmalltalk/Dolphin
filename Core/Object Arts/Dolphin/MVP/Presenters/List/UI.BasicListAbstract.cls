@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ListControlView subclass: #'UI.BasicListAbstract'
+UI.ListControlView
+	subclass: #'UI.BasicListAbstract'
 	instanceVariableNames: 'lastSelIndices'
 	classVariableNames: ''
 	imports: #()

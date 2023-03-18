@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Database.DBExceptionDetails'
+Core.Object
+	subclass: #'Database.DBExceptionDetails'
 	instanceVariableNames: 'errors hEnv hDBC hStmt code'
 	classVariableNames: ''
 	imports: #(#{OS.ODBCRetCodes} #{OS.ODBCConstants})

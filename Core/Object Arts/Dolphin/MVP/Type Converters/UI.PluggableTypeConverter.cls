@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.TypeConverter subclass: #'UI.PluggableTypeConverter'
+UI.TypeConverter
+	subclass: #'UI.PluggableTypeConverter'
 	instanceVariableNames: 'leftToRightBlock rightToLeftBlock'
 	classVariableNames: ''
 	imports: #()

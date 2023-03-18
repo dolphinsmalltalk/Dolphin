@@ -1,11 +1,47 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Color subclass: #'Graphics.SystemColor'
+Graphics.Color
+	subclass: #'Graphics.SystemColor'
 	instanceVariableNames: 'id'
-	classVariableNames: 'ColorsById NamesById'
+	classVariableNames: 'ColorsById'
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'NamesById'
+				-> (IdentityDictionary withAll: {
+								16r0 -> #scrollbar.
+								16r1 -> #desktop.
+								16r2 -> #caption.
+								16r3 -> #inactiveCaption.
+								16r4 -> #menu.
+								16r5 -> #window.
+								16r6 -> #windowFrame.
+								16r7 -> #menuText.
+								16r8 -> #windowText.
+								16r9 -> #captionText.
+								16rA -> #activeBorder.
+								16rB -> #inactiveBorder.
+								16rC -> #applicationWorkspace.
+								16rD -> #highlight.
+								16rE -> #highlightText.
+								16rF -> #face3d.
+								16r10 -> #shadow3d.
+								16r11 -> #grayText.
+								16r12 -> #buttonText.
+								16r13 -> #inactiveCaptionText.
+								16r14 -> #highlight3d.
+								16r15 -> #buttonHighlight.
+								16r16 -> #darkShadow3d.
+								16r17 -> #light3d.
+								16r18 -> #tooltip.
+								16r19 -> #tooltipText.
+								16r1A -> #hotlight.
+								16r1B -> #gradientActiveCaption.
+								16r1C -> #gradientInactiveCaption.
+								16r1D -> #menuHilight.
+								16r1E -> #menuBar
+							})
+		}!
 Graphics.SystemColor guid: (Core.GUID fromString: '{87b4c53c-026e-11d3-9fd7-00a0cc3e4a32}')!
 Graphics.SystemColor comment: '`SystemColor` instances represent the logical colours defined by the current Windows colour scheme, for example the colour of dialog backgrounds, window captions, etc.
 

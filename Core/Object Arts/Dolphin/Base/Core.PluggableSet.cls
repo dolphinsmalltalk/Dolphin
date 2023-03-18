@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Set variableSubclass: #'Core.PluggableSet'
+Core.Set
+	variableSubclass: #'Core.PluggableSet'
 	instanceVariableNames: 'searchPolicy'
 	classVariableNames: ''
 	imports: #()

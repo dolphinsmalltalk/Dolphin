@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ValueDialog subclass: #'Tools.ChooseClassDialog'
+UI.ValueDialog
+	subclass: #'Tools.ChooseClassDialog'
 	instanceVariableNames: 'classesPresenter allowNil nilButtonCaption validater'
 	classVariableNames: ''
 	imports: #()

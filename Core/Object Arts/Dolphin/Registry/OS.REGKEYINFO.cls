@@ -1,21 +1,22 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'OS.REGKEYINFO'
+External.Structure
+	subclass: #'OS.REGKEYINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_ftLastWriteTime' -> 16r1C.
-		'_OffsetOf_maxClassLen' -> 16r8.
-		'_OffsetOf_maxSubKeyLen' -> 16r4.
-		'_OffsetOf_maxValueLen' -> 16r14.
-		'_OffsetOf_maxValueNameLen' -> 16r10.
-		'_OffsetOf_securityDescriptorLen' -> 16r18.
-		'_OffsetOf_subKeyCount' -> 16r0.
-		'_OffsetOf_valueCount' -> 16rC.
-		'_REGKEYINFO_Size' -> 16r24
-	}!
+			'_OffsetOf_ftLastWriteTime' -> 16r1C.
+			'_OffsetOf_maxClassLen' -> 16r8.
+			'_OffsetOf_maxSubKeyLen' -> 16r4.
+			'_OffsetOf_maxValueLen' -> 16r14.
+			'_OffsetOf_maxValueNameLen' -> 16r10.
+			'_OffsetOf_securityDescriptorLen' -> 16r18.
+			'_OffsetOf_subKeyCount' -> 16r0.
+			'_OffsetOf_valueCount' -> 16rC.
+			'_REGKEYINFO_Size' -> 16r24
+		}!
 OS.REGKEYINFO guid: (Core.GUID fromString: '{15e72644-f20b-4040-964a-adfe90d8eb1e}')!
 OS.REGKEYINFO comment: 'Not a real Windows structure, but the one that should have been defined as the buffer to receiver values from the RegQueryInfoKey function, if it had been designed to return data through a single structure rather than a large number (11) of pointer parameters.'!
 !OS.REGKEYINFO categoriesForClass!External-Data-Structured! !

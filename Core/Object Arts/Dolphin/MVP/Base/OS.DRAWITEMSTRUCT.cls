@@ -1,19 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.OwnerDrawStruct subclass: #'OS.DRAWITEMSTRUCT'
+OS.OwnerDrawStruct
+	subclass: #'OS.DRAWITEMSTRUCT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_DRAWITEMSTRUCT_Size' -> 16r30.
-		'_OffsetOf_hDC' -> 16r18.
-		'_OffsetOf_hwndItem' -> 16r14.
-		'_OffsetOf_itemAction' -> 16rC.
-		'_OffsetOf_itemData' -> 16r2C.
-		'_OffsetOf_itemState' -> 16r10.
-		'_OffsetOf_rcItem' -> 16r1C
-	}!
+			'_DRAWITEMSTRUCT_Size' -> 16r30.
+			'_OffsetOf_hDC' -> 16r18.
+			'_OffsetOf_hwndItem' -> 16r14.
+			'_OffsetOf_itemAction' -> 16rC.
+			'_OffsetOf_itemData' -> 16r2C.
+			'_OffsetOf_itemState' -> 16r10.
+			'_OffsetOf_rcItem' -> 16r1C
+		}!
 OS.DRAWITEMSTRUCT guid: (Core.GUID fromString: '{87b4c5e9-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.DRAWITEMSTRUCT comment: '<DRAWITEMSTRUCT> is an <ExternalStructure> class to wrap the struct ''Win.DRAWITEMSTRUCT'' from type information in the ''Windows API (ANSI)'' library.
 

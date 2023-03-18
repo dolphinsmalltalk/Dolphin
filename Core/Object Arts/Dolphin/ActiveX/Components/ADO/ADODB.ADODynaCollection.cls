@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ADODB.ADOCollection subclass: #'ADODB.ADODynaCollection'
+ADODB.ADOCollection
+	subclass: #'ADODB.ADODynaCollection'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

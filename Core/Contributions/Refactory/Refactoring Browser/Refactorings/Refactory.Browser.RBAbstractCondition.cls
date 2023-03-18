@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Refactory.Browser.RBAbstractCondition'
+Core.Object
+	subclass: #'Refactory.Browser.RBAbstractCondition'
 	instanceVariableNames: 'errorMacro'
 	classVariableNames: ''
 	imports: #()

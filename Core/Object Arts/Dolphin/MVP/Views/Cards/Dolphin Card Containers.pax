@@ -34,31 +34,36 @@ package!
 
 "Class Definitions"!
 
-Core.Object subclass: #'UI.CardLabel'
+Core.Object
+	subclass: #'UI.CardLabel'
 	instanceVariableNames: 'text iconBlock helpId'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.LayoutManager subclass: #'UI.CardLayout'
+UI.LayoutManager
+	subclass: #'UI.CardLayout'
 	instanceVariableNames: 'names currentCard events _unused4 _unused5'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.ContainerView subclass: #'UI.AbstractCardContainer'
+UI.ContainerView
+	subclass: #'UI.AbstractCardContainer'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.AbstractCardContainer subclass: #'UI.CardContainer'
+UI.AbstractCardContainer
+	subclass: #'UI.CardContainer'
 	instanceVariableNames: 'tabs'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.AbstractCardContainer subclass: #'UI.WizardCardContainer'
+UI.AbstractCardContainer
+	subclass: #'UI.WizardCardContainer'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

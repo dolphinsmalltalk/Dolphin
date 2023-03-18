@@ -1,16 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WinHttpServer.HttpQosSetting subclass: #'WinHttpServer.HTTP_FLOWRATE_INFO'
+WinHttpServer.HttpQosSetting
+	subclass: #'WinHttpServer.HTTP_FLOWRATE_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_FLOWRATE_INFO_Size' -> 16r10.
-		'_OffsetOf_BurstSize' -> 16rC.
-		'_OffsetOf_MaxBandwidth' -> 16r4.
-		'_OffsetOf_MaxPeakBandwidth' -> 16r8
-	}!
+			'_HTTP_FLOWRATE_INFO_Size' -> 16r10.
+			'_OffsetOf_BurstSize' -> 16rC.
+			'_OffsetOf_MaxBandwidth' -> 16r4.
+			'_OffsetOf_MaxPeakBandwidth' -> 16r8
+		}!
 WinHttpServer.HTTP_FLOWRATE_INFO guid: (Core.GUID fromString: '{c2fad8f6-f179-4bbb-a5f2-073c416f6704}')!
 WinHttpServer.HTTP_FLOWRATE_INFO comment: '`HTTP_FLOWRATE_INFO` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_FLOWRATE_INFO'' from type information in the ''Windows Http Server API'' library.
 

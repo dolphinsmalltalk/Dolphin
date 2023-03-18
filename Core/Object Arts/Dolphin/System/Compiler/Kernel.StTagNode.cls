@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.StProgramNode subclass: #'Kernel.StTagNode'
+Kernel.StProgramNode
+	subclass: #'Kernel.StTagNode'
 	instanceVariableNames: 'start stop'
 	classVariableNames: ''
 	imports: #()

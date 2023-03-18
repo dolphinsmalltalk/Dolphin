@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.GUID variableByteSubclass: #'STON.Tests.UUID'
+Core.GUID
+	variableByteSubclass: #'STON.Tests.UUID'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

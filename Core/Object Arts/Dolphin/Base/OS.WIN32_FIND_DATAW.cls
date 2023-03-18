@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.WIN32_FILE_ATTRIBUTE_DATA subclass: #'OS.WIN32_FIND_DATAW'
+OS.WIN32_FILE_ATTRIBUTE_DATA
+	subclass: #'OS.WIN32_FIND_DATAW'
 	instanceVariableNames: 'directory'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_cAlternateFileName' -> 16r234.
-		'_OffsetOf_cFileName' -> 16r2C.
-		'_OffsetOf_dwReserved0' -> 16r24.
-		'_OffsetOf_dwReserved1' -> 16r28.
-		'_WIN32_FIND_DATAW_Size' -> 16r250
-	}!
+			'_OffsetOf_cAlternateFileName' -> 16r234.
+			'_OffsetOf_cFileName' -> 16r2C.
+			'_OffsetOf_dwReserved0' -> 16r24.
+			'_OffsetOf_dwReserved1' -> 16r28.
+			'_WIN32_FIND_DATAW_Size' -> 16r250
+		}!
 OS.WIN32_FIND_DATAW guid: (Core.GUID fromString: '{87b4c61a-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.WIN32_FIND_DATAW comment: 'WIN32_FIND_DATA is an <ExternalStructure> to wrap the Win32 structure of the same name. WIN32_FIND_DATA is used in conjunction with the kernel library API functions FindFirstFile() and FindNextFile().
 

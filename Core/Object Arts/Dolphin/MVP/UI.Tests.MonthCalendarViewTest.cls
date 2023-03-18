@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Tests.PresenterTest subclass: #'UI.Tests.MonthCalendarViewTest'
+UI.Tests.PresenterTest
+	subclass: #'UI.Tests.MonthCalendarViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

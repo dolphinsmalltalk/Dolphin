@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.SmalltalkToolShell subclass: #'Tools.NamespacesShell'
+Tools.SmalltalkToolShell
+	subclass: #'Tools.NamespacesShell'
 	instanceVariableNames: 'dictionariesPresenter'
 	classVariableNames: ''
 	imports: #()

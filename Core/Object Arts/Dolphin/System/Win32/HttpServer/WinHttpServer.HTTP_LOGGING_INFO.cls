@@ -1,26 +1,27 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WinHttpServer.HTTP_PROPERTY_FLAGS subclass: #'WinHttpServer.HTTP_LOGGING_INFO'
+WinHttpServer.HTTP_PROPERTY_FLAGS
+	subclass: #'WinHttpServer.HTTP_LOGGING_INFO'
 	instanceVariableNames: 'directoryName softwareName'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_LOGGING_INFO_Size' -> 16r30.
-		'_OffsetOf_DirectoryName' -> 16r10.
-		'_OffsetOf_DirectoryNameLength' -> 16rE.
-		'_OffsetOf_Fields' -> 16r18.
-		'_OffsetOf_Format' -> 16r14.
-		'_OffsetOf_LoggingFlags' -> 16r4.
-		'_OffsetOf_MaxRecordSize' -> 16r22.
-		'_OffsetOf_NumOfExtFields' -> 16r20.
-		'_OffsetOf_pExtFields' -> 16r1C.
-		'_OffsetOf_pSecurityDescriptor' -> 16r2C.
-		'_OffsetOf_RolloverSize' -> 16r28.
-		'_OffsetOf_RolloverType' -> 16r24.
-		'_OffsetOf_SoftwareName' -> 16r8.
-		'_OffsetOf_SoftwareNameLength' -> 16rC
-	}!
+			'_HTTP_LOGGING_INFO_Size' -> 16r30.
+			'_OffsetOf_DirectoryName' -> 16r10.
+			'_OffsetOf_DirectoryNameLength' -> 16rE.
+			'_OffsetOf_Fields' -> 16r18.
+			'_OffsetOf_Format' -> 16r14.
+			'_OffsetOf_LoggingFlags' -> 16r4.
+			'_OffsetOf_MaxRecordSize' -> 16r22.
+			'_OffsetOf_NumOfExtFields' -> 16r20.
+			'_OffsetOf_pExtFields' -> 16r1C.
+			'_OffsetOf_pSecurityDescriptor' -> 16r2C.
+			'_OffsetOf_RolloverSize' -> 16r28.
+			'_OffsetOf_RolloverType' -> 16r24.
+			'_OffsetOf_SoftwareName' -> 16r8.
+			'_OffsetOf_SoftwareNameLength' -> 16rC
+		}!
 WinHttpServer.HTTP_LOGGING_INFO guid: (Core.GUID fromString: '{41c67887-c529-4196-9c0f-5bb698324d32}')!
 WinHttpServer.HTTP_LOGGING_INFO comment: '`HTTP_LOGGING_INFO` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_LOGGING_INFO'' from type information in the ''Windows Http Server API'' library.
 

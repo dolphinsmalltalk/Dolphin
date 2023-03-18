@@ -1,23 +1,24 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'OS.LOGCOLORSPACE'
+External.Structure
+	subclass: #'OS.LOGCOLORSPACE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_LOGCOLORSPACE_Size' -> 16r148.
-		'_OffsetOf_lcsCSType' -> 16rC.
-		'_OffsetOf_lcsEndpoints' -> 16r14.
-		'_OffsetOf_lcsFilename' -> 16r44.
-		'_OffsetOf_lcsGammaBlue' -> 16r40.
-		'_OffsetOf_lcsGammaGreen' -> 16r3C.
-		'_OffsetOf_lcsGammaRed' -> 16r38.
-		'_OffsetOf_lcsIntent' -> 16r10.
-		'_OffsetOf_lcsSignature' -> 16r0.
-		'_OffsetOf_lcsSize' -> 16r8.
-		'_OffsetOf_lcsVersion' -> 16r4
-	}!
+			'_LOGCOLORSPACE_Size' -> 16r148.
+			'_OffsetOf_lcsCSType' -> 16rC.
+			'_OffsetOf_lcsEndpoints' -> 16r14.
+			'_OffsetOf_lcsFilename' -> 16r44.
+			'_OffsetOf_lcsGammaBlue' -> 16r40.
+			'_OffsetOf_lcsGammaGreen' -> 16r3C.
+			'_OffsetOf_lcsGammaRed' -> 16r38.
+			'_OffsetOf_lcsIntent' -> 16r10.
+			'_OffsetOf_lcsSignature' -> 16r0.
+			'_OffsetOf_lcsSize' -> 16r8.
+			'_OffsetOf_lcsVersion' -> 16r4
+		}!
 OS.LOGCOLORSPACE guid: (Core.GUID fromString: '{2b6b91b8-caef-4fdf-ac3d-f032417ca840}')!
 OS.LOGCOLORSPACE comment: '<LOGCOLORSPACE> is an <ExternalStructure> class to wrap the struct ''Win32.LOGCOLORSPACE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

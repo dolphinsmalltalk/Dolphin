@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IEnumUnknown subclass: #'OS.COM.IEnumConnectionPoints'
+OS.COM.IEnumUnknown
+	subclass: #'OS.COM.IEnumConnectionPoints'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

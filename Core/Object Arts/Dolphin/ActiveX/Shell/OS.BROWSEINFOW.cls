@@ -1,21 +1,22 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.CommonDialogStructure subclass: #'OS.BROWSEINFOW'
+OS.CommonDialogStructure
+	subclass: #'OS.BROWSEINFOW'
 	instanceVariableNames: 'title displayName'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_BROWSEINFOW_Size' -> 16r20.
-		'_OffsetOf_flags' -> 16r10.
-		'_OffsetOf_hwndOwner' -> 16r0.
-		'_OffsetOf_iImage' -> 16r1C.
-		'_OffsetOf_lParam' -> 16r18.
-		'_OffsetOf_lpfnHook' -> 16r14.
-		'_OffsetOf_lpszTitle' -> 16rC.
-		'_OffsetOf_pidlRoot' -> 16r4.
-		'_OffsetOf_pszDisplayName' -> 16r8
-	}!
+			'_BROWSEINFOW_Size' -> 16r20.
+			'_OffsetOf_flags' -> 16r10.
+			'_OffsetOf_hwndOwner' -> 16r0.
+			'_OffsetOf_iImage' -> 16r1C.
+			'_OffsetOf_lParam' -> 16r18.
+			'_OffsetOf_lpfnHook' -> 16r14.
+			'_OffsetOf_lpszTitle' -> 16rC.
+			'_OffsetOf_pidlRoot' -> 16r4.
+			'_OffsetOf_pszDisplayName' -> 16r8
+		}!
 OS.BROWSEINFOW guid: (Core.GUID fromString: '{87b4c5cc-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.BROWSEINFOW comment: 'BROWSEINFO is an <ExternalStructure> class which represents the Windows common dialog structure of the same name.
 

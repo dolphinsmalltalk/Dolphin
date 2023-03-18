@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.WriteStreamTest subclass: #'Core.Tests.LimitedWriteStreamTest'
+Core.Tests.WriteStreamTest
+	subclass: #'Core.Tests.LimitedWriteStreamTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

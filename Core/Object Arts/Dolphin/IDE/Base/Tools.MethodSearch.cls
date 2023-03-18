@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Tools.MethodSearch'
+Core.Object
+	subclass: #'Tools.MethodSearch'
 	instanceVariableNames: 'findDetails regexp literal'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'IgnoreCaseMask' -> 16r1
-	}!
+	classConstants: { 'IgnoreCaseMask' -> 16r1 }!
 Tools.MethodSearch guid: (Core.GUID fromString: '{702ae94a-b32c-4d97-b2a5-8080cf67e3b4}')!
 Tools.MethodSearch comment: 'SelectorSearch represents the information and behaviour necessary to filter the methods of the system according to whether they define or reference a message selector matching specified criteria. This can include regular expression matching when the ''VBScript Regular Expressions'' package is loaded.
 

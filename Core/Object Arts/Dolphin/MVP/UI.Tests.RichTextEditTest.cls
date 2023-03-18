@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Tests.AbstractMultilineTextEditTest subclass: #'UI.Tests.RichTextEditTest'
+UI.Tests.AbstractMultilineTextEditTest
+	subclass: #'UI.Tests.RichTextEditTest'
 	instanceVariableNames: 'savedLocale'
 	classVariableNames: ''
 	imports: #()

@@ -1,16 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMREXTFLOODFILL'
+OS.ENHMETARECORD
+	subclass: #'OS.EMREXTFLOODFILL'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_EMREXTFLOODFILL_Size' -> 16r18.
-		'_OffsetOf_crColor' -> 16r10.
-		'_OffsetOf_iMode' -> 16r14.
-		'_OffsetOf_ptlStart' -> 16r8
-	}!
+			'_EMREXTFLOODFILL_Size' -> 16r18.
+			'_OffsetOf_crColor' -> 16r10.
+			'_OffsetOf_iMode' -> 16r14.
+			'_OffsetOf_ptlStart' -> 16r8
+		}!
 OS.EMREXTFLOODFILL guid: (Core.GUID fromString: '{bd14ca2b-d9cd-4146-ad72-d15f18031a50}')!
 OS.EMREXTFLOODFILL comment: '<EMREXTFLOODFILL> is an <ExternalStructure> class to wrap the struct ''Win32.EMREXTFLOODFILL'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

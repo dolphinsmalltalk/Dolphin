@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.DynamicLinkLibrary subclass: #'OS.DwmApiLibrary'
+External.DynamicLinkLibrary
+	subclass: #'OS.DwmApiLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Graphics.Canvas'
+Core.Object
+	subclass: #'Graphics.Canvas'
 	instanceVariableNames: 'handle source owned pen brush font saved saveIds'
 	classVariableNames: 'DesktopResolution'
 	imports: #(#{OS.Win32Constants})

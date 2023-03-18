@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IDispatch subclass: #'MSXML.IVBMXNamespaceManager'
+OS.COM.IDispatch
+	subclass: #'MSXML.IVBMXNamespaceManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

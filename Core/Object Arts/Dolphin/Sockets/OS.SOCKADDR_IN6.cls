@@ -1,19 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.SOCKADDR subclass: #'OS.SOCKADDR_IN6'
+OS.SOCKADDR
+	subclass: #'OS.SOCKADDR_IN6'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_sin6_addr' -> 16r8.
-		'_OffsetOf_sin6_family' -> 16r0.
-		'_OffsetOf_sin6_flowinfo' -> 16r4.
-		'_OffsetOf_sin6_port' -> 16r2.
-		'_OffsetOf_sin6_scope_id' -> 16r18.
-		'_OffsetOf_sin6_scope_struct' -> 16r18.
-		'_SOCKADDR_IN6_Size' -> 16r1C
-	}!
+			'_OffsetOf_sin6_addr' -> 16r8.
+			'_OffsetOf_sin6_family' -> 16r0.
+			'_OffsetOf_sin6_flowinfo' -> 16r4.
+			'_OffsetOf_sin6_port' -> 16r2.
+			'_OffsetOf_sin6_scope_id' -> 16r18.
+			'_OffsetOf_sin6_scope_struct' -> 16r18.
+			'_SOCKADDR_IN6_Size' -> 16r1C
+		}!
 OS.SOCKADDR_IN6 guid: (Core.GUID fromString: '{a989cfcf-96f5-40b8-9904-cb33f7c78940}')!
 OS.SOCKADDR_IN6 comment: '<SOCKADDR_IN6> is an <ExternalStructure> class to wrap the struct ''Win32.SOCKADDR_IN6'' from type information in the ''Win32 API'' library.
 

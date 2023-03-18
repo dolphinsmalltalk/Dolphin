@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.DynamicLinkLibrary subclass: #'OS.PathCchLibrary'
+External.DynamicLinkLibrary
+	subclass: #'OS.PathCchLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'PATHCCH_MAX_CCH' -> 16r8000
-	}!
+	classConstants: { 'PATHCCH_MAX_CCH' -> 16r8000 }!
 OS.PathCchLibrary guid: (Core.GUID fromString: '{fef67ac9-c054-4034-859d-92ec9eae8407}')!
 OS.PathCchLibrary comment: 'PathCchLibrary is the `DynamicLinkLibrary` class to represent the dynamic link library, ''api-ms-win-core-path-l1-1-0.dll''. It was generated from type information in the ''Win32 API'' library. It contains methods for each of the functions defined by the corresponding module in that type library.
 

@@ -1,18 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMRFRAMERGN'
+OS.ENHMETARECORD
+	subclass: #'OS.EMRFRAMERGN'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_EMRFRAMERGN_Size' -> 16r2C.
-		'_OffsetOf_cbRgnData' -> 16r18.
-		'_OffsetOf_ihBrush' -> 16r1C.
-		'_OffsetOf_rclBounds' -> 16r8.
-		'_OffsetOf_RGNDATA' -> 16r28.
-		'_OffsetOf_szlStroke' -> 16r20
-	}!
+			'_EMRFRAMERGN_Size' -> 16r2C.
+			'_OffsetOf_cbRgnData' -> 16r18.
+			'_OffsetOf_ihBrush' -> 16r1C.
+			'_OffsetOf_rclBounds' -> 16r8.
+			'_OffsetOf_RGNDATA' -> 16r28.
+			'_OffsetOf_szlStroke' -> 16r20
+		}!
 OS.EMRFRAMERGN guid: (Core.GUID fromString: '{490fda83-42a6-4848-8a5e-d866c05155e5}')!
 OS.EMRFRAMERGN comment: '<EMRFRAMERGN> is an <ExternalStructure> class to wrap the struct ''Win32.EMRFRAMERGN'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

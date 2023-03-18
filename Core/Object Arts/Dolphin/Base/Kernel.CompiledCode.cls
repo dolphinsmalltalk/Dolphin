@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object variableSubclass: #'Kernel.CompiledCode'
+Core.Object
+	variableSubclass: #'Kernel.CompiledCode'
 	instanceVariableNames: 'header methodClass selector sourceDescriptor byteCodes'
 	classVariableNames: 'InfoCacheKeys InfoCacheValues'
 	imports: #(#{Kernel.OpcodePool})
 	classInstanceVariableNames: ''
-	classConstants: {
-		'PrivateMask' -> 16r1
-	}!
+	classConstants: { 'PrivateMask' -> 16r1 }!
 Kernel.CompiledCode guid: (Core.GUID fromString: '{87b4c46f-026e-11d3-9fd7-00a0cc3e4a32}')!
 Kernel.CompiledCode isNonInstantiable: true!
 Kernel.CompiledCode comment: 'CompiledCode is the class of executable objects containing an array of instructions (bytecodes) and an array of literals (the literal frame).

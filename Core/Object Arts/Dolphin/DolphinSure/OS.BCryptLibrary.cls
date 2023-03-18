@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.DynamicLinkLibrary subclass: #'OS.BCryptLibrary'
+External.DynamicLinkLibrary
+	subclass: #'OS.BCryptLibrary'
 	instanceVariableNames: 'shaAlgorithmHandle'
 	classVariableNames: ''
 	imports: #(#{OS.BCryptConstants})

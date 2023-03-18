@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'OS.MIB_IFNUMBER'
+External.Structure
+	subclass: #'OS.MIB_IFNUMBER'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_MIB_IFNUMBER_Size' -> 16r4.
-		'_OffsetOf_dwValue' -> 16r0
-	}!
+	classConstants: { '_MIB_IFNUMBER_Size' -> 16r4. '_OffsetOf_dwValue' -> 16r0 }!
 OS.MIB_IFNUMBER guid: (Core.GUID fromString: '{9f523fa1-99d3-4b73-83a1-fbf779a77e02}')!
 OS.MIB_IFNUMBER comment: '<MIB_IFNUMBER> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IFNUMBER'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Scintilla.PropertyDescriptor subclass: #'UI.Scintilla.ThreeStateBooleanPropertyDescriptor'
+UI.Scintilla.PropertyDescriptor
+	subclass: #'UI.Scintilla.ThreeStateBooleanPropertyDescriptor'
 	instanceVariableNames: 'flagsMask'
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IDispatch subclass: #'MSXML.IXMLHttpRequest'
+OS.COM.IDispatch
+	subclass: #'MSXML.IXMLHttpRequest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

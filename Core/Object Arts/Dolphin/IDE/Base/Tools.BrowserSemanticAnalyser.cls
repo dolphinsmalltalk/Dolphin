@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.StSemanticAnalyser subclass: #'Tools.BrowserSemanticAnalyser'
+Kernel.StSemanticAnalyser
+	subclass: #'Tools.BrowserSemanticAnalyser'
 	instanceVariableNames: 'isStub'
 	classVariableNames: ''
 	imports: #()

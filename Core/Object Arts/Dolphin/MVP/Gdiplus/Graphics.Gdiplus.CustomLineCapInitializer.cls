@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.AbstractCustomLineCapInitializer subclass: #'Graphics.Gdiplus.CustomLineCapInitializer'
+Graphics.Gdiplus.AbstractCustomLineCapInitializer
+	subclass: #'Graphics.Gdiplus.CustomLineCapInitializer'
 	instanceVariableNames: 'fillPath strokePath baseCap baseInset strokeCaps'
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'MSScriptControl.ActiveXScriptlet'
+Core.Object
+	subclass: #'MSScriptControl.ActiveXScriptlet'
 	instanceVariableNames: 'language expression procedures description globalBindings'
 	classVariableNames: ''
 	imports: #()

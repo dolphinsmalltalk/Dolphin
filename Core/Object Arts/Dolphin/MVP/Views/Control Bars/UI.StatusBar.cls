@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ControlBarAbstract subclass: #'UI.StatusBar'
+UI.ControlBarAbstract
+	subclass: #'UI.StatusBar'
 	instanceVariableNames: 'parts leftOverSeparator layoutManager'
 	classVariableNames: ''
 	imports: #(#{OS.StatusBarConstants})

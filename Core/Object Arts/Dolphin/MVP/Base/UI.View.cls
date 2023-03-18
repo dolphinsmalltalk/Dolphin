@@ -1,22 +1,23 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'UI.View'
+Core.Object
+	subclass: #'UI.View'
 	instanceVariableNames: 'handle creationParent creationStyle presenter model backcolor preferredExtent flags contextMenu font events interactor'
 	classVariableNames: 'MessageMap NextId ViewClosedError WndClassAtom'
 	imports: #(#{OS.Win32Constants} #{OS.Win32Errors})
 	classInstanceVariableNames: 'theme'
 	classConstants: {
-		'CreateCenteredMask' -> 16r40.
-		'DragSourceMask' -> 16r4.
-		'DropTargetMask' -> 16r8.
-		'LayoutValidMask' -> 16r1.
-		'ManagedMask' -> 16r2.
-		'MinimizedMask' -> 16r80.
-		'NoInheritMenuMask' -> 16r200.
-		'StateRestoringMask' -> 16r20.
-		'UIValidMask' -> 16r10.
-		'UsePreferredExtentMask' -> 16r100
-	}!
+			'CreateCenteredMask' -> 16r40.
+			'DragSourceMask' -> 16r4.
+			'DropTargetMask' -> 16r8.
+			'LayoutValidMask' -> 16r1.
+			'ManagedMask' -> 16r2.
+			'MinimizedMask' -> 16r80.
+			'NoInheritMenuMask' -> 16r200.
+			'StateRestoringMask' -> 16r20.
+			'UIValidMask' -> 16r10.
+			'UsePreferredExtentMask' -> 16r100
+		}!
 UI.View guid: (Core.GUID fromString: '{87b4c4cc-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.View comment: 'View is an abstract class which is the root of the view hierarchy of classes. Instances of view or its subclasses are used to display Model data in windows. View is part of the Model-View-Presenter or MVP framework:
 

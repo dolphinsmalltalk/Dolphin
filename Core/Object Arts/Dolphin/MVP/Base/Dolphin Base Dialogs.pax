@@ -31,28 +31,27 @@ package!
 
 "Class Definitions"!
 
-UI.Shell subclass: #'UI.Dialog'
+UI.Shell
+	subclass: #'UI.Dialog'
 	instanceVariableNames: 'confirmed ownerView'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'ValidationTimerId' -> 16r101
-	}!
-UI.Dialog subclass: #'UI.ValueDialog'
+	classConstants: { 'ValidationTimerId' -> 16r101 }!
+UI.Dialog
+	subclass: #'UI.ValueDialog'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.ShellView subclass: #'UI.DialogView'
+UI.ShellView
+	subclass: #'UI.DialogView'
 	instanceVariableNames: 'endModal isModal oldWndProc'
 	classVariableNames: ''
 	imports: #(#{OS.ThemeConstants})
 	classInstanceVariableNames: ''
-	classConstants: {
-		'InProcLoopMask' -> 16r100000
-	}!
+	classConstants: { 'InProcLoopMask' -> 16r100000 }!
 
 "Loose Methods"!
 

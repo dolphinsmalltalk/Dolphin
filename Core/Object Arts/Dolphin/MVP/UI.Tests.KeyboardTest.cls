@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Tests.AbstractKeyboardTest subclass: #'UI.Tests.KeyboardTest'
+UI.Tests.AbstractKeyboardTest
+	subclass: #'UI.Tests.KeyboardTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

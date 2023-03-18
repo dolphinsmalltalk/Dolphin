@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.PointerField subclass: #'External.ArrayPointerField'
+External.PointerField
+	subclass: #'External.ArrayPointerField'
 	instanceVariableNames: 'arrayLength'
 	classVariableNames: ''
 	imports: #()

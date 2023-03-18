@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.ClassSelector subclass: #'Tools.ClassListSelector'
+Tools.ClassSelector
+	subclass: #'Tools.ClassListSelector'
 	instanceVariableNames: 'flags classesListPresenter browserEnvironment namespacesPresenter'
 	classVariableNames: ''
 	imports: #()

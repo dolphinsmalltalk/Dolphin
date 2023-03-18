@@ -1,15 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'UI.MenuItem'
+Core.Object
+	subclass: #'UI.MenuItem'
 	instanceVariableNames: 'flags'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'Dividers' -> (LookupTable withAll: {'-' -> #separator. '||' -> #barBreak. '|' -> #break}).
-		'StringSeparator' -> $/.
-		'StylesMask' -> 16rFFFFF
-	}!
+			'Dividers'
+				-> (LookupTable withAll: { '-' -> #separator. '|' -> #break. '||' -> #barBreak }).
+			'StringSeparator' -> $/.
+			'StylesMask' -> 16rFFFFF
+		}!
 UI.MenuItem guid: (Core.GUID fromString: '{87b4c49d-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.MenuItem isNonInstantiable: true!
 UI.MenuItem comment: 'MenuItem is an abstract class whose subclasses represent the items held by a <Menu>.

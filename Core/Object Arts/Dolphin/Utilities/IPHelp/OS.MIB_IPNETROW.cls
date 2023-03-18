@@ -1,18 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'OS.MIB_IPNETROW'
+External.Structure
+	subclass: #'OS.MIB_IPNETROW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_MIB_IPNETROW_Size' -> 16r18.
-		'_OffsetOf_bPhysAddr' -> 16r8.
-		'_OffsetOf_dwAddr' -> 16r10.
-		'_OffsetOf_dwIndex' -> 16r0.
-		'_OffsetOf_dwPhysAddrLen' -> 16r4.
-		'_OffsetOf_dwType' -> 16r14
-	}!
+			'_MIB_IPNETROW_Size' -> 16r18.
+			'_OffsetOf_bPhysAddr' -> 16r8.
+			'_OffsetOf_dwAddr' -> 16r10.
+			'_OffsetOf_dwIndex' -> 16r0.
+			'_OffsetOf_dwPhysAddrLen' -> 16r4.
+			'_OffsetOf_dwType' -> 16r14
+		}!
 OS.MIB_IPNETROW guid: (Core.GUID fromString: '{5aa4fcea-d4da-49bb-a756-7ca522c111d3}')!
 OS.MIB_IPNETROW comment: '<MIB_IPNETROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IPNETROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

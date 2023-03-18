@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.StProgramNode subclass: #'Kernel.StMethodNode'
+Kernel.StProgramNode
+	subclass: #'Kernel.StMethodNode'
 	instanceVariableNames: 'selector selectorParts body source arguments tags replacements nodeReplacements methodClass environment'
 	classVariableNames: ''
 	imports: #()

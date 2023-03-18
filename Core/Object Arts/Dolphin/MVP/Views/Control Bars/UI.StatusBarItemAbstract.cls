@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'UI.StatusBarItemAbstract'
+Core.Object
+	subclass: #'UI.StatusBarItemAbstract'
 	instanceVariableNames: 'style width parentView model'
 	classVariableNames: 'BorderStyles'
 	imports: #(#{OS.StatusBarConstants})

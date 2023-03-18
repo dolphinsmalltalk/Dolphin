@@ -6,7 +6,7 @@ Core.Object
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {'SourceOnlyMask' -> 1}!
+	classConstants: { 'SourceOnlyMask' -> 16r1 }!
 Kernel.SourceFiler guid: (Core.GUID fromString: '{847f25f1-cd60-490c-817f-3f0f2cefd567}')!
 Kernel.SourceFiler isNonInstantiable: true!
 Kernel.SourceFiler comment: ''!

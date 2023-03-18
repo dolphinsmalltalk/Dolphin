@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.RECT subclass: #'OS.RECTL'
+External.RECT
+	subclass: #'OS.RECTL'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_bottom' -> 16rC.
-		'_OffsetOf_left' -> 16r0.
-		'_OffsetOf_right' -> 16r8.
-		'_OffsetOf_top' -> 16r4.
-		'_RECTL_Size' -> 16r10
-	}!
+			'_OffsetOf_bottom' -> 16rC.
+			'_OffsetOf_left' -> 16r0.
+			'_OffsetOf_right' -> 16r8.
+			'_OffsetOf_top' -> 16r4.
+			'_RECTL_Size' -> 16r10
+		}!
 OS.RECTL guid: (Core.GUID fromString: '{0a6e055d-001b-4817-b07d-fe982ca46330}')!
 OS.RECTL comment: '`RECT` is an `ExternalStructure` class to wrap the standard Win32 structure of the same name.
 

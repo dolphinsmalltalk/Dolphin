@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.StaticView subclass: #'UI.StaticImage'
+UI.StaticView
+	subclass: #'UI.StaticImage'
 	instanceVariableNames: 'image'
 	classVariableNames: ''
 	imports: #()

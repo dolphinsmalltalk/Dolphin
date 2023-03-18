@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.BasicLintRule subclass: #'Refactory.Browser.ParseTreeLintRule'
+Refactory.Browser.BasicLintRule
+	subclass: #'Refactory.Browser.ParseTreeLintRule'
 	instanceVariableNames: 'matcher'
 	classVariableNames: ''
 	imports: #()

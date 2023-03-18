@@ -1,16 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMREOF'
+OS.ENHMETARECORD
+	subclass: #'OS.EMREOF'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_EMREOF_Size' -> 16r14.
-		'_OffsetOf_nPalEntries' -> 16r8.
-		'_OffsetOf_nSizeLast' -> 16r10.
-		'_OffsetOf_offPalEntries' -> 16rC
-	}!
+			'_EMREOF_Size' -> 16r14.
+			'_OffsetOf_nPalEntries' -> 16r8.
+			'_OffsetOf_nSizeLast' -> 16r10.
+			'_OffsetOf_offPalEntries' -> 16rC
+		}!
 OS.EMREOF guid: (Core.GUID fromString: '{52606b1b-28c5-4ffa-b16d-13bcf0dd77b0}')!
 OS.EMREOF comment: '<EMREOF> is an <ExternalStructure> class to wrap the struct ''Win32.EMREOF'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

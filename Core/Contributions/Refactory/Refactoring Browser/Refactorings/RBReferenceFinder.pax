@@ -21,7 +21,8 @@ package!
 
 "Class Definitions"!
 
-Core.Object subclass: #'Refactory.Browser.ReferenceFinder'
+Core.Object
+	subclass: #'Refactory.Browser.ReferenceFinder'
 	instanceVariableNames: 'backlinks objectsLeft testBlock foundBlock'
 	classVariableNames: ''
 	imports: #()

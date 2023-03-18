@@ -1,37 +1,38 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.GraphicsTool subclass: #'Graphics.ImageList'
+Graphics.GraphicsTool
+	subclass: #'Graphics.ImageList'
 	instanceVariableNames: 'extent initialSize growBy createFlags'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'ILC_COLOR' -> 16r0.
-		'ILC_COLOR16' -> 16r10.
-		'ILC_COLOR32' -> 16r20.
-		'ILC_COLOR4' -> 16r4.
-		'ILC_COLOR8' -> 16r8.
-		'ILC_COLORDB' -> 16rFE.
-		'ILC_HIGHQUALITYSCALE' -> 16r20000.
-		'ILC_MASK' -> 16r1.
-		'ILC_ORIGINALSIZE' -> 16r10000.
-		'ILC_PALETTE' -> 16r800.
-		'ILD_ASYNC' -> 16r8000.
-		'ILD_BLEND' -> 16rF00.
-		'ILD_BLEND25' -> 16r2.
-		'ILD_BLEND50' -> 16r4.
-		'ILD_DPISCALE' -> 16r4000.
-		'ILD_FOCUS' -> 16r4.
-		'ILD_IMAGE' -> 16r20.
-		'ILD_MASK' -> 16r10.
-		'ILD_NORMAL' -> 16r0.
-		'ILD_OVERLAYMASK' -> 16rF00.
-		'ILD_PRESERVEALPHA' -> 16r1000.
-		'ILD_ROP' -> 16r40.
-		'ILD_SCALE' -> 16r2000.
-		'ILD_SELECTED' -> 16r4.
-		'ILD_TRANSPARENT' -> 16r1
-	}!
+			'ILC_COLOR' -> 16r0.
+			'ILC_COLOR16' -> 16r10.
+			'ILC_COLOR32' -> 16r20.
+			'ILC_COLOR4' -> 16r4.
+			'ILC_COLOR8' -> 16r8.
+			'ILC_COLORDB' -> 16rFE.
+			'ILC_HIGHQUALITYSCALE' -> 16r20000.
+			'ILC_MASK' -> 16r1.
+			'ILC_ORIGINALSIZE' -> 16r10000.
+			'ILC_PALETTE' -> 16r800.
+			'ILD_ASYNC' -> 16r8000.
+			'ILD_BLEND' -> 16rF00.
+			'ILD_BLEND25' -> 16r2.
+			'ILD_BLEND50' -> 16r4.
+			'ILD_DPISCALE' -> 16r4000.
+			'ILD_FOCUS' -> 16r4.
+			'ILD_IMAGE' -> 16r20.
+			'ILD_MASK' -> 16r10.
+			'ILD_NORMAL' -> 16r0.
+			'ILD_OVERLAYMASK' -> 16rF00.
+			'ILD_PRESERVEALPHA' -> 16r1000.
+			'ILD_ROP' -> 16r40.
+			'ILD_SCALE' -> 16r2000.
+			'ILD_SELECTED' -> 16r4.
+			'ILD_TRANSPARENT' -> 16r1
+		}!
 Graphics.ImageList guid: (Core.GUID fromString: '{87b4c639-026e-11d3-9fd7-00a0cc3e4a32}')!
 Graphics.ImageList comment: 'WinImageList encapsulates a Windows "image list", which itself can be characterised as a strip of images addressable by integer index.
 

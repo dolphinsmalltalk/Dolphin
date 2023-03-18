@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.GraphicsTool subclass: #'UI.AcceleratorTable'
+Graphics.GraphicsTool
+	subclass: #'UI.AcceleratorTable'
 	instanceVariableNames: 'commands'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'KeySeparator' -> $+
-	}!
+	classConstants: { 'KeySeparator' -> $+ }!
 UI.AcceleratorTable guid: (Core.GUID fromString: '{87b4c632-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.AcceleratorTable comment: '`AcceleratorTable` is the class used to represent the table of "accelerator" key sequences associated with a top-level view. These key-sequences provide keyboard shortcuts to commands on the menu or toolbar (or any other command sources).
 

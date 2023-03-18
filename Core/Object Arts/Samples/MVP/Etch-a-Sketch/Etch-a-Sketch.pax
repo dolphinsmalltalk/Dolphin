@@ -71,13 +71,15 @@ package!
 
 "Class Definitions"!
 
-UI.Presenter subclass: #'UI.Examples.EtchASketch'
+UI.Presenter
+	subclass: #'UI.Examples.EtchASketch'
 	instanceVariableNames: 'upDownKnob leftRightKnob sketchPad lastLocation'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ScribbleDocument subclass: #'UI.Examples.EtchASketchDocument'
+ScribbleDocument
+	subclass: #'UI.Examples.EtchASketchDocument'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

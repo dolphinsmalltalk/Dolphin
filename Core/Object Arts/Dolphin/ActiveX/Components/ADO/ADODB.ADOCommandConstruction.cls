@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IUnknown subclass: #'ADODB.ADOCommandConstruction'
+OS.COM.IUnknown
+	subclass: #'ADODB.ADOCommandConstruction'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

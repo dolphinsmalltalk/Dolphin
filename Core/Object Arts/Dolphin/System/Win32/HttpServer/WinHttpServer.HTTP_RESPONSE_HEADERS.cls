@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WinHttpServer.HTTP_HEADERS subclass: #'WinHttpServer.HTTP_RESPONSE_HEADERS'
+WinHttpServer.HTTP_HEADERS
+	subclass: #'WinHttpServer.HTTP_RESPONSE_HEADERS'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_HTTP_RESPONSE_HEADERS_Size' -> 16r100.
-		'_OffsetOf_KnownHeaders' -> 16r10
-	}!
+	classConstants: { '_HTTP_RESPONSE_HEADERS_Size' -> 16r100. '_OffsetOf_KnownHeaders' -> 16r10 }!
 WinHttpServer.HTTP_RESPONSE_HEADERS guid: (Core.GUID fromString: '{487fd2e3-1549-4dcf-8703-d45a2cbbcd85}')!
 WinHttpServer.HTTP_RESPONSE_HEADERS comment: '`HTTP_RESPONSE_HEADERS` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_RESPONSE_HEADERS'' from type information in the ''Windows Http Server API'' library.
 

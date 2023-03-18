@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.UserLibrary subclass: #'UI.Tests.FakeUserLibrary'
+OS.UserLibrary
+	subclass: #'UI.Tests.FakeUserLibrary'
 	instanceVariableNames: 'user32 process getForegroundWindowBlock getActiveWindowBlock getCursorPosBlock'
 	classVariableNames: ''
 	imports: #()

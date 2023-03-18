@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.SmalltalkToolShell subclass: #'Tools.RewriteChangesBrowser'
+Tools.SmalltalkToolShell
+	subclass: #'Tools.RewriteChangesBrowser'
 	instanceVariableNames: 'changesPresenter differencesPresenter compositeChange'
 	classVariableNames: ''
 	imports: #(#{Refactory.Browser private})

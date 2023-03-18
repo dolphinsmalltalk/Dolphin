@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.RegionInitializer subclass: #'Graphics.Gdiplus.RegionFromRectangleInitializer'
+Graphics.Gdiplus.RegionInitializer
+	subclass: #'Graphics.Gdiplus.RegionFromRectangleInitializer'
 	instanceVariableNames: 'rectangle'
 	classVariableNames: ''
 	imports: #()

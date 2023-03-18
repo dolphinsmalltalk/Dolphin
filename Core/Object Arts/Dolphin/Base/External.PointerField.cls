@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Field subclass: #'External.PointerField'
+External.Field
+	subclass: #'External.PointerField'
 	instanceVariableNames: 'pointerClass'
 	classVariableNames: ''
 	imports: #()

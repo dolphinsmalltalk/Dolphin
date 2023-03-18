@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.SequencedStream subclass: #'Core.PositionableStream'
+Core.SequencedStream
+	subclass: #'Core.PositionableStream'
 	instanceVariableNames: 'collection position readLimit locale'
 	classVariableNames: ''
 	imports: #()

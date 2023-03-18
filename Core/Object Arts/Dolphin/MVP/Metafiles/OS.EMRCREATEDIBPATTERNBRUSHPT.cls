@@ -1,19 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMRCREATEDIBPATTERNBRUSHPT'
+OS.ENHMETARECORD
+	subclass: #'OS.EMRCREATEDIBPATTERNBRUSHPT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_EMRCREATEDIBPATTERNBRUSHPT_Size' -> 16r20.
-		'_OffsetOf_cbBits' -> 16r1C.
-		'_OffsetOf_cbBmi' -> 16r14.
-		'_OffsetOf_ihBrush' -> 16r8.
-		'_OffsetOf_iUsage' -> 16rC.
-		'_OffsetOf_offBits' -> 16r18.
-		'_OffsetOf_offBmi' -> 16r10
-	}!
+			'_EMRCREATEDIBPATTERNBRUSHPT_Size' -> 16r20.
+			'_OffsetOf_cbBits' -> 16r1C.
+			'_OffsetOf_cbBmi' -> 16r14.
+			'_OffsetOf_ihBrush' -> 16r8.
+			'_OffsetOf_iUsage' -> 16rC.
+			'_OffsetOf_offBits' -> 16r18.
+			'_OffsetOf_offBmi' -> 16r10
+		}!
 OS.EMRCREATEDIBPATTERNBRUSHPT guid: (Core.GUID fromString: '{ae1203b9-a6b7-4cca-8fc6-408d43a80c8c}')!
 OS.EMRCREATEDIBPATTERNBRUSHPT comment: '<EMRCREATEDIBPATTERNBRUSHPT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRCREATEDIBPATTERNBRUSHPT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

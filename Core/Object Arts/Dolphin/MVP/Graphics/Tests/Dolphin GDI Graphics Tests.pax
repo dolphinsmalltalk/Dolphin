@@ -33,85 +33,99 @@ package!
 
 "Class Definitions"!
 
-Core.Tests.DolphinTest subclass: #'Graphics.Tests.ARGBTest'
+Core.Tests.DolphinTest
+	subclass: #'Graphics.Tests.ARGBTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Graphics.Tests.BrushTest'
+Core.Tests.DolphinTest
+	subclass: #'Graphics.Tests.BrushTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Graphics.Tests.CanvasTest'
+Core.Tests.DolphinTest
+	subclass: #'Graphics.Tests.CanvasTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Graphics.Tests.ColorTest'
+Core.Tests.DolphinTest
+	subclass: #'Graphics.Tests.ColorTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Graphics.Tests.ImageTest'
+Core.Tests.DolphinTest
+	subclass: #'Graphics.Tests.ImageTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Graphics.Tests.VirtualColorTest'
+Core.Tests.DolphinTest
+	subclass: #'Graphics.Tests.VirtualColorTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Tests.ImageTest subclass: #'Graphics.Tests.AbstractBitmapTest'
+Graphics.Tests.ImageTest
+	subclass: #'Graphics.Tests.AbstractBitmapTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Tests.ImageTest subclass: #'Graphics.Tests.CursorTest'
+Graphics.Tests.ImageTest
+	subclass: #'Graphics.Tests.CursorTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Tests.ImageTest subclass: #'Graphics.Tests.IconTest'
+Graphics.Tests.ImageTest
+	subclass: #'Graphics.Tests.IconTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Tests.ImageTest subclass: #'Graphics.Tests.MetafileTest'
+Graphics.Tests.ImageTest
+	subclass: #'Graphics.Tests.MetafileTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Tests.AbstractBitmapTest subclass: #'Graphics.Tests.BitmapTest'
+Graphics.Tests.AbstractBitmapTest
+	subclass: #'Graphics.Tests.BitmapTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Tests.AbstractBitmapTest subclass: #'Graphics.Tests.DIBSectionTest'
+Graphics.Tests.AbstractBitmapTest
+	subclass: #'Graphics.Tests.DIBSectionTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Tests.VirtualColorTest subclass: #'Graphics.Tests.PluggableColorTest'
+Graphics.Tests.VirtualColorTest
+	subclass: #'Graphics.Tests.PluggableColorTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Tests.VirtualColorTest subclass: #'Graphics.Tests.ThemeColorTest'
+Graphics.Tests.VirtualColorTest
+	subclass: #'Graphics.Tests.ThemeColorTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

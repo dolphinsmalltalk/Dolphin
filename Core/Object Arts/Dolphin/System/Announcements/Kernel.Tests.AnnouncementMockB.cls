@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.Announcement subclass: #'Kernel.Tests.AnnouncementMockB'
+Kernel.Announcement
+	subclass: #'Kernel.Tests.AnnouncementMockB'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

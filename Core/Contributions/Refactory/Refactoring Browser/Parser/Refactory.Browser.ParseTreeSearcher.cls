@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.ParseNodeVisitor subclass: #'Refactory.Browser.ParseTreeSearcher'
+Kernel.ParseNodeVisitor
+	subclass: #'Refactory.Browser.ParseTreeSearcher'
 	instanceVariableNames: 'searches answer argumentSearches context messages'
 	classVariableNames: ''
 	imports: #()

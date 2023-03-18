@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Stream subclass: #'Core.SequencedStream'
+Core.Stream
+	subclass: #'Core.SequencedStream'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

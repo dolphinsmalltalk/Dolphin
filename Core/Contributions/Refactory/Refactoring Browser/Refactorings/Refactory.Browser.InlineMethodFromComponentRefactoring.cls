@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.InlineMethodRefactoring subclass: #'Refactory.Browser.InlineMethodFromComponentRefactoring'
+Refactory.Browser.InlineMethodRefactoring
+	subclass: #'Refactory.Browser.InlineMethodFromComponentRefactoring'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

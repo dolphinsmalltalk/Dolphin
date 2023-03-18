@@ -1,20 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.WSADATA'
+OS.Win32Structure
+	subclass: #'OS.WSADATA'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_iMaxSockets' -> 16r186.
-		'_OffsetOf_iMaxUdpDg' -> 16r188.
-		'_OffsetOf_lpVendorInfo' -> 16r18C.
-		'_OffsetOf_szDescription' -> 16r4.
-		'_OffsetOf_szSystemStatus' -> 16r105.
-		'_OffsetOf_wHighVersion' -> 16r2.
-		'_OffsetOf_wVersion' -> 16r0.
-		'_WSADATA_Size' -> 16r190
-	}!
+			'_OffsetOf_iMaxSockets' -> 16r186.
+			'_OffsetOf_iMaxUdpDg' -> 16r188.
+			'_OffsetOf_lpVendorInfo' -> 16r18C.
+			'_OffsetOf_szDescription' -> 16r4.
+			'_OffsetOf_szSystemStatus' -> 16r105.
+			'_OffsetOf_wHighVersion' -> 16r2.
+			'_OffsetOf_wVersion' -> 16r0.
+			'_WSADATA_Size' -> 16r190
+		}!
 OS.WSADATA guid: (Core.GUID fromString: '{ef5075d3-312c-49e0-b590-98987a18d0d2}')!
 OS.WSADATA comment: '<WSADATA> is an <ExternalStructure> class to wrap the struct ''Win32.WSADATA'' from type information in the ''Win32 API'' library.
 

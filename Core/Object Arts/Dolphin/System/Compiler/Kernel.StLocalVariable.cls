@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.StVariable subclass: #'Kernel.StLocalVariable'
+Kernel.StVariable
+	subclass: #'Kernel.StLocalVariable'
 	instanceVariableNames: 'node storage reads'
 	classVariableNames: ''
 	imports: #()

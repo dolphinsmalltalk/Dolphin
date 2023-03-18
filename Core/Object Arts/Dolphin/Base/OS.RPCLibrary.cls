@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.DynamicLinkLibrary subclass: #'OS.RPCLibrary'
+External.DynamicLinkLibrary
+	subclass: #'OS.RPCLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.WindowsEvent subclass: #'UI.PositionEvent'
+UI.WindowsEvent
+	subclass: #'UI.PositionEvent'
 	instanceVariableNames: 'lpwp flags'
 	classVariableNames: ''
 	imports: #()

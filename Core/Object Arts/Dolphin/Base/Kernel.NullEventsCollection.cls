@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Kernel.NullEventsCollection'
+Core.Object
+	subclass: #'Kernel.NullEventsCollection'
 	instanceVariableNames: ''
 	classVariableNames: 'Current'
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.AbstractImageFromIStreamInitializer subclass: #'Graphics.Gdiplus.BitmapFromIStreamInitializer'
+Graphics.Gdiplus.AbstractImageFromIStreamInitializer
+	subclass: #'Graphics.Gdiplus.BitmapFromIStreamInitializer'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

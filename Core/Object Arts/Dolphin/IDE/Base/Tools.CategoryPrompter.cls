@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ValueDialog subclass: #'Tools.CategoryPrompter'
+UI.ValueDialog
+	subclass: #'Tools.CategoryPrompter'
 	instanceVariableNames: 'treePresenter flags categoryClass'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
-	classConstants: {
-		'AllowIntermediatesMask' -> 16r1.
-		'AllowReadOnlyMask' -> 16r2
-	}!
+	classConstants: { 'AllowIntermediatesMask' -> 16r1. 'AllowReadOnlyMask' -> 16r2 }!
 Tools.CategoryPrompter guid: (Core.GUID fromString: '{87b4c6a6-026e-11d3-9fd7-00a0cc3e4a32}')!
 Tools.CategoryPrompter comment: 'CategoryPrompter is a <valueDialogPresenter> that can be used to prompt for a <Category>.
 

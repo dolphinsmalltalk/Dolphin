@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.StockBrush subclass: #'Graphics.SysColorBrush'
+Graphics.StockBrush
+	subclass: #'Graphics.SysColorBrush'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

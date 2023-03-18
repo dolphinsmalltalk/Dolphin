@@ -1,16 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMREXTSELECTCLIPRGN'
+OS.ENHMETARECORD
+	subclass: #'OS.EMREXTSELECTCLIPRGN'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_EMREXTSELECTCLIPRGN_Size' -> 16r14.
-		'_OffsetOf_cbRgnData' -> 16r8.
-		'_OffsetOf_iMode' -> 16rC.
-		'_OffsetOf_RGNDATA' -> 16r10
-	}!
+			'_EMREXTSELECTCLIPRGN_Size' -> 16r14.
+			'_OffsetOf_cbRgnData' -> 16r8.
+			'_OffsetOf_iMode' -> 16rC.
+			'_OffsetOf_RGNDATA' -> 16r10
+		}!
 OS.EMREXTSELECTCLIPRGN guid: (Core.GUID fromString: '{c49e357c-2207-4eea-b22f-1b9d456c35f8}')!
 OS.EMREXTSELECTCLIPRGN comment: '<EMREXTSELECTCLIPRGN> is an <ExternalStructure> class to wrap the struct ''Win32.EMREXTSELECTCLIPRGN'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

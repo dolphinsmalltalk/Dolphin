@@ -1,26 +1,27 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_REQUEST_AUTH_INFO'
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_REQUEST_AUTH_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_REQUEST_AUTH_INFO_Size' -> 16r34.
-		'_OffsetOf_AccessToken' -> 16r10.
-		'_OffsetOf_AuthStatus' -> 16r0.
-		'_OffsetOf_AuthType' -> 16rC.
-		'_OffsetOf_ContextAttributes' -> 16r14.
-		'_OffsetOf_Flags' -> 16r8.
-		'_OffsetOf_MutualAuthDataLength' -> 16r24.
-		'_OffsetOf_PackageNameLength' -> 16r2C.
-		'_OffsetOf_PackedContext' -> 16r20.
-		'_OffsetOf_PackedContextLength' -> 16r18.
-		'_OffsetOf_PackedContextType' -> 16r1C.
-		'_OffsetOf_pMutualAuthData' -> 16r28.
-		'_OffsetOf_pPackageName' -> 16r30.
-		'_OffsetOf_SecStatus' -> 16r4
-	}!
+			'_HTTP_REQUEST_AUTH_INFO_Size' -> 16r34.
+			'_OffsetOf_AccessToken' -> 16r10.
+			'_OffsetOf_AuthStatus' -> 16r0.
+			'_OffsetOf_AuthType' -> 16rC.
+			'_OffsetOf_ContextAttributes' -> 16r14.
+			'_OffsetOf_Flags' -> 16r8.
+			'_OffsetOf_MutualAuthDataLength' -> 16r24.
+			'_OffsetOf_PackageNameLength' -> 16r2C.
+			'_OffsetOf_PackedContext' -> 16r20.
+			'_OffsetOf_PackedContextLength' -> 16r18.
+			'_OffsetOf_PackedContextType' -> 16r1C.
+			'_OffsetOf_pMutualAuthData' -> 16r28.
+			'_OffsetOf_pPackageName' -> 16r30.
+			'_OffsetOf_SecStatus' -> 16r4
+		}!
 WinHttpServer.HTTP_REQUEST_AUTH_INFO guid: (Core.GUID fromString: '{e0696c2e-1353-45e2-bdcc-a52b6142b827}')!
 WinHttpServer.HTTP_REQUEST_AUTH_INFO comment: '`HTTP_REQUEST_AUTH_INFO` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_REQUEST_AUTH_INFO'' from type information in the ''Windows Http Server API'' library.
 

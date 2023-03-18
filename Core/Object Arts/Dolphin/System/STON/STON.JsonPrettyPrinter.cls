@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-STON.JsonWriter subclass: #'STON.JsonPrettyPrinter'
+STON.JsonWriter
+	subclass: #'STON.JsonPrettyPrinter'
 	instanceVariableNames: 'level'
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Pen subclass: #'Graphics.StockPen'
+Graphics.Pen
+	subclass: #'Graphics.StockPen'
 	instanceVariableNames: 'id'
 	classVariableNames: ''
 	imports: #()

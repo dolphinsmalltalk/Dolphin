@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.GpStructure subclass: #'Graphics.Gdiplus.WMFRect16'
+Graphics.Gdiplus.GpStructure
+	subclass: #'Graphics.Gdiplus.WMFRect16'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_bottom' -> 16r6.
-		'_OffsetOf_left' -> 16r0.
-		'_OffsetOf_right' -> 16r4.
-		'_OffsetOf_top' -> 16r2.
-		'_WMFRect16_Size' -> 16r8
-	}!
+			'_OffsetOf_bottom' -> 16r6.
+			'_OffsetOf_left' -> 16r0.
+			'_OffsetOf_right' -> 16r4.
+			'_OffsetOf_top' -> 16r2.
+			'_WMFRect16_Size' -> 16r8
+		}!
 Graphics.Gdiplus.WMFRect16 guid: (Core.GUID fromString: '{1713ca90-9e3e-465b-9c3d-3c7b201f00ee}')!
 Graphics.Gdiplus.WMFRect16 comment: '<GpWMFRect16> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpWMFRect16'' from type information in the ''GDI+ Library 1.0'' library.
 

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.AbstractPublishedAspectInspector subclass: #'Tools.PropertyInspector'
+Tools.AbstractPublishedAspectInspector
+	subclass: #'Tools.PropertyInspector'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

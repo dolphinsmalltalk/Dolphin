@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.NMHDR subclass: #'OS.NMLINK'
+OS.NMHDR
+	subclass: #'OS.NMLINK'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_NMLINK_Size' -> 16r10C4.
-		'_OffsetOf_item' -> 16rC
-	}!
+	classConstants: { '_NMLINK_Size' -> 16r10C4. '_OffsetOf_item' -> 16rC }!
 OS.NMLINK guid: (Core.GUID fromString: '{7caa2dd6-a6d4-493f-bdd4-39ef71f66221}')!
 OS.NMLINK comment: 'NMLINK is the class of <ExternalStructure> which represent the Windows Common Control structure of the same name.
 

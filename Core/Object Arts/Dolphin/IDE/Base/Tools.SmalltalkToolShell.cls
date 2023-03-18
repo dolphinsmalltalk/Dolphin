@@ -1,16 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Shell subclass: #'Tools.SmalltalkToolShell'
+UI.Shell
+	subclass: #'Tools.SmalltalkToolShell'
 	instanceVariableNames: 'searchPresenter fontSizePresenter'
 	classVariableNames: 'HistoryDwellTime SearchFieldFlashes'
 	imports: #(#{Refactory.Browser private})
 	classInstanceVariableNames: 'optionFlags defaultView defaultExtent defaultSlideyPinsMap additionalKeyBindings commandQueryHandlers'
 	classConstants: {
-		'CanUseIdeaSpaceMask' -> 16r2.
-		'LoadingMask' -> 16r1.
-		'ReuseIfOpenMask' -> 16r4.
-		'ShowOptionLoadingTimes' -> false
-	}!
+			'CanUseIdeaSpaceMask' -> 16r2.
+			'LoadingMask' -> 16r1.
+			'ReuseIfOpenMask' -> 16r4.
+			'ShowOptionLoadingTimes' -> false
+		}!
 Tools.SmalltalkToolShell guid: (Core.GUID fromString: '{87b4c6a0-026e-11d3-9fd7-00a0cc3e4a32}')!
 Tools.SmalltalkToolShell isNonInstantiable: true!
 Tools.SmalltalkToolShell comment: 'SmalltalkToolShell is an abstract <topPresenter> providing umbrella functionality for most of the Dolphin development tools. 

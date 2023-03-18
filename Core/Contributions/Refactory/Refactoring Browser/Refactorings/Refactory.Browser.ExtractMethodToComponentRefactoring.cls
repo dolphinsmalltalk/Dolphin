@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.MethodRefactoring subclass: #'Refactory.Browser.ExtractMethodToComponentRefactoring'
+Refactory.Browser.MethodRefactoring
+	subclass: #'Refactory.Browser.ExtractMethodToComponentRefactoring'
 	instanceVariableNames: 'selector extractionInterval extractedMethodSelector'
 	classVariableNames: ''
 	imports: #()

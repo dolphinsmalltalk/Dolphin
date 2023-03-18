@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.ReferencesCategory subclass: #'Tools.SpecialReferencesCategory'
+Tools.ReferencesCategory
+	subclass: #'Tools.SpecialReferencesCategory'
 	instanceVariableNames: 'index'
 	classVariableNames: ''
 	imports: #()

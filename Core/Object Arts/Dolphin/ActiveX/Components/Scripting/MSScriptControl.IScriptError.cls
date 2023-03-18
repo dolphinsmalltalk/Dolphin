@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IDispatch subclass: #'MSScriptControl.IScriptError'
+OS.COM.IDispatch
+	subclass: #'MSScriptControl.IScriptError'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

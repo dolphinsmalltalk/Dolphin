@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Core.Boolean'
+Core.Object
+	subclass: #'Core.Boolean'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

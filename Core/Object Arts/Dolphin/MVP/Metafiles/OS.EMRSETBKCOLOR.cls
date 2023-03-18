@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMRSETBKCOLOR'
+OS.ENHMETARECORD
+	subclass: #'OS.EMRSETBKCOLOR'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_EMRSETBKCOLOR_Size' -> 16rC.
-		'_OffsetOf_crColor' -> 16r8
-	}!
+	classConstants: { '_EMRSETBKCOLOR_Size' -> 16rC. '_OffsetOf_crColor' -> 16r8 }!
 OS.EMRSETBKCOLOR guid: (Core.GUID fromString: '{22221f37-ae5e-4040-aa50-03d7ca9f82cb}')!
 OS.EMRSETBKCOLOR comment: '<EMRSETBKCOLOR> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETBKCOLOR'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

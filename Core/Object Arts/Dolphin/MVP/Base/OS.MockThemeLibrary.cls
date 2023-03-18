@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ThemeLibrary subclass: #'OS.MockThemeLibrary'
+OS.ThemeLibrary
+	subclass: #'OS.MockThemeLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

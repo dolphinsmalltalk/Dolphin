@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.TextDocument subclass: #'UI.Examples.Notepad'
+UI.TextDocument
+	subclass: #'UI.Examples.Notepad'
 	instanceVariableNames: ''
 	classVariableNames: 'ResourceLib'
 	imports: #()

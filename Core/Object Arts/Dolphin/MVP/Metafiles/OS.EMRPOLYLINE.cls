@@ -1,16 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMRPOLYLINE'
+OS.ENHMETARECORD
+	subclass: #'OS.EMRPOLYLINE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_EMRPOLYLINE_Size' -> 16r20.
-		'_OffsetOf_aptl' -> 16r1C.
-		'_OffsetOf_cptl' -> 16r18.
-		'_OffsetOf_rclBounds' -> 16r8
-	}!
+			'_EMRPOLYLINE_Size' -> 16r20.
+			'_OffsetOf_aptl' -> 16r1C.
+			'_OffsetOf_cptl' -> 16r18.
+			'_OffsetOf_rclBounds' -> 16r8
+		}!
 OS.EMRPOLYLINE guid: (Core.GUID fromString: '{d4e9a638-aade-4ece-a3f4-9e54a0929730}')!
 OS.EMRPOLYLINE comment: '<EMRPOLYLINE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRPOLYLINE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

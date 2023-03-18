@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTest subclass: #'WebView2.Tests.WebView2EnvironmentOptionsTest'
+Core.Tests.DolphinTest
+	subclass: #'WebView2.Tests.WebView2EnvironmentOptionsTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

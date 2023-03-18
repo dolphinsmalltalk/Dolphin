@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTest subclass: #'Security.Tests.SecureHashAlgorithmTest'
+Core.Tests.DolphinTest
+	subclass: #'Security.Tests.SecureHashAlgorithmTest'
 	instanceVariableNames: 'hash'
 	classVariableNames: ''
 	imports: #()

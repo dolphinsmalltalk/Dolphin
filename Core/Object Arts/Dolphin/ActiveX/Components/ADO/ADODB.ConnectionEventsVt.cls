@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IUnknown subclass: #'ADODB.ConnectionEventsVt'
+OS.COM.IUnknown
+	subclass: #'ADODB.ConnectionEventsVt'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

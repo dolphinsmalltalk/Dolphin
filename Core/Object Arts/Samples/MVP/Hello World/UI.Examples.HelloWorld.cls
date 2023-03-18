@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ShellView subclass: #'UI.Examples.HelloWorld'
+UI.ShellView
+	subclass: #'UI.Examples.HelloWorld'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})

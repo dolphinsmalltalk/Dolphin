@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.ParseNodeVisitor subclass: #'Kernel.AbstractSemanticAnalyser'
+Kernel.ParseNodeVisitor
+	subclass: #'Kernel.AbstractSemanticAnalyser'
 	instanceVariableNames: 'methodNode classScope currentScope evalScope errorBlock scopes inStaticExpression inTag'
 	classVariableNames: ''
 	imports: #(#{Kernel.ParseErrorCodes})

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.MenuItem subclass: #'UI.DividerMenuItem'
+UI.MenuItem
+	subclass: #'UI.DividerMenuItem'
 	instanceVariableNames: ''
 	classVariableNames: 'BarBreak Break DividerLookup Separator'
 	imports: #()

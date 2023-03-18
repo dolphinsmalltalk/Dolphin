@@ -16,7 +16,8 @@ package!
 
 "Class Definitions"!
 
-OS.COM subclass: #'OS.COM.Examples'
+OS.COM
+	subclass: #'OS.COM.Examples'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

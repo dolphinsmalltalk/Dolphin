@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.AbstractRect subclass: #'Graphics.Gdiplus.RectF'
+Graphics.Gdiplus.AbstractRect
+	subclass: #'Graphics.Gdiplus.RectF'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_height' -> 16rC.
-		'_OffsetOf_width' -> 16r8.
-		'_OffsetOf_x' -> 16r0.
-		'_OffsetOf_y' -> 16r4.
-		'_RectF_Size' -> 16r10
-	}!
+			'_OffsetOf_height' -> 16rC.
+			'_OffsetOf_width' -> 16r8.
+			'_OffsetOf_x' -> 16r0.
+			'_OffsetOf_y' -> 16r4.
+			'_RectF_Size' -> 16r10
+		}!
 Graphics.Gdiplus.RectF guid: (Core.GUID fromString: '{9a449c4a-8ae9-45d9-b94d-1e1d91fedcd5}')!
 Graphics.Gdiplus.RectF comment: '`RectF` is an `External.Structure` class to wrap the struct ''Gdiplus.RectF'' from type information in the ''GDI+ Library 1.10'' library, and represents a rectangle in a 2D coordinate system (floating-point coordinates).
 

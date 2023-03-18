@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Error subclass: #'OS.Win32Fault'
+OS.Win32Error
+	subclass: #'OS.Win32Fault'
 	instanceVariableNames: 'exceptionRecord'
 	classVariableNames: 'ExceptionNames'
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.STBInFiler subclass: #'Kernel.STBValidatingInFiler'
+Kernel.STBInFiler
+	subclass: #'Kernel.STBValidatingInFiler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

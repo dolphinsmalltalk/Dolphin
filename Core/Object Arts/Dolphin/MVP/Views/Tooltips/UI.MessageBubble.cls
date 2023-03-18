@@ -1,15 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.MessageBoxAbstract subclass: #'UI.MessageBubble'
+UI.MessageBoxAbstract
+	subclass: #'UI.MessageBubble'
 	instanceVariableNames: 'iconId tooltip position itemFlags timeout tooltipStyle timeoutProcess font forecolor backcolor margins maxWidth flags'
 	classVariableNames: ''
 	imports: #(#{OS.TooltipConstants} #{OS.Win32Constants})
 	classInstanceVariableNames: ''
-	classConstants: {
-		'IconIds' -> #[64 48 16].
-		'LargeIconMask' -> 16r1.
-		'SilentMask' -> 16r2
-	}!
+	classConstants: { 'IconIds' -> #[64 48 16]. 'LargeIconMask' -> 16r1. 'SilentMask' -> 16r2 }!
 UI.MessageBubble guid: (Core.GUID fromString: '{00e5c07e-c4fc-471c-b037-25bc55861176}')!
 UI.MessageBubble comment: '`MessageBubble` is similar to `MessageBox`, and supports a subset of its API. The principal difference is that messages are displayed using a `Tooltip` (normally a balloon tooltip), rather than in a traditional dialog. This provides a general capability for Dolphin applications to implement speech bubble style help like that which sometimes pops up for Windows tray icons. 
 

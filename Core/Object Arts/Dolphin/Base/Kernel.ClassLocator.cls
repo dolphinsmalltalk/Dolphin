@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.FileLocator subclass: #'Kernel.ClassLocator'
+Core.FileLocator
+	subclass: #'Kernel.ClassLocator'
 	instanceVariableNames: 'packageName codeBase key'
 	classVariableNames: 'Aliases DefaultFileLocator ImportedClasses ImportedClassesMutex InstallationFileLocator'
 	imports: #()

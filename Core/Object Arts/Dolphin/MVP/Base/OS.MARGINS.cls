@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.MARGINS'
+OS.Win32Structure
+	subclass: #'OS.MARGINS'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_MARGINS_Size' -> 16r10.
-		'_OffsetOf_cxLeftWidth' -> 16r0.
-		'_OffsetOf_cxRightWidth' -> 16r4.
-		'_OffsetOf_cyBottomHeight' -> 16rC.
-		'_OffsetOf_cyTopHeight' -> 16r8
-	}!
+			'_MARGINS_Size' -> 16r10.
+			'_OffsetOf_cxLeftWidth' -> 16r0.
+			'_OffsetOf_cxRightWidth' -> 16r4.
+			'_OffsetOf_cyBottomHeight' -> 16rC.
+			'_OffsetOf_cyTopHeight' -> 16r8
+		}!
 OS.MARGINS guid: (Core.GUID fromString: '{d92a9b7d-a1dc-4ef4-97e5-869e7a720a83}')!
 OS.MARGINS comment: '<MARGINS> is an <ExternalStructure> class to wrap the struct ''Win32.MARGINS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

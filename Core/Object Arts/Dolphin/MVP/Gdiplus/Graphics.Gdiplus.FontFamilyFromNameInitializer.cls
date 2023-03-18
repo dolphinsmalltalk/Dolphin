@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.FontFamilyInitializer subclass: #'Graphics.Gdiplus.FontFamilyFromNameInitializer'
+Graphics.Gdiplus.FontFamilyInitializer
+	subclass: #'Graphics.Gdiplus.FontFamilyFromNameInitializer'
 	instanceVariableNames: 'name fontCollection'
 	classVariableNames: ''
 	imports: #()

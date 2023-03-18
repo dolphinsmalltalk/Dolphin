@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2Certificate subclass: #'WebView2.ICoreWebView2ClientCertificate'
+WebView2.ICoreWebView2Certificate
+	subclass: #'WebView2.ICoreWebView2ClientCertificate'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

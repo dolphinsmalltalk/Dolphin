@@ -50,70 +50,75 @@ package!
 
 "Class Definitions"!
 
-Core.Object subclass: #'Graphics.Rectangle'
+Core.Object
+	subclass: #'Graphics.Rectangle'
 	instanceVariableNames: 'origin corner'
 	classVariableNames: 'Empty'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.ArithmeticValue subclass: #'Graphics.Point'
+Core.ArithmeticValue
+	subclass: #'Graphics.Point'
 	instanceVariableNames: 'x y'
 	classVariableNames: 'Zero'
 	imports: #(#{Kernel.VMConstants private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.ArithmeticValue subclass: #'Graphics.Point3D'
+Core.ArithmeticValue
+	subclass: #'Graphics.Point3D'
 	instanceVariableNames: 'x y z'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.Structure subclass: #'External.POINT'
+External.Structure
+	subclass: #'External.POINT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.Structure subclass: #'External.RECT'
+External.Structure
+	subclass: #'External.RECT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.ExternalArray subclass: #'External.POINTArray'
+External.ExternalArray
+	subclass: #'External.POINTArray'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.POINTArray subclass: #'External.POINTLArray'
+External.POINTArray
+	subclass: #'External.POINTLArray'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.POINT subclass: #'OS.POINTL'
+External.POINT
+	subclass: #'OS.POINTL'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { '_OffsetOf_x' -> 16r0. '_OffsetOf_y' -> 16r4. '_POINTL_Size' -> 16r8 }!
+External.RECT
+	subclass: #'OS.RECTL'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_x' -> 16r0.
-		'_OffsetOf_y' -> 16r4.
-		'_POINTL_Size' -> 16r8
-	}!
-External.RECT subclass: #'OS.RECTL'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'_OffsetOf_bottom' -> 16rC.
-		'_OffsetOf_left' -> 16r0.
-		'_OffsetOf_right' -> 16r8.
-		'_OffsetOf_top' -> 16r4.
-		'_RECTL_Size' -> 16r10
-	}!
+			'_OffsetOf_bottom' -> 16rC.
+			'_OffsetOf_left' -> 16r0.
+			'_OffsetOf_right' -> 16r8.
+			'_OffsetOf_top' -> 16r4.
+			'_RECTL_Size' -> 16r10
+		}!
 
 "Loose Methods"!
 

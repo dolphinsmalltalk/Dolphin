@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.FileSystemChangeReader subclass: #'OS.FileSystemChangeStream'
+OS.FileSystemChangeReader
+	subclass: #'OS.FileSystemChangeStream'
 	instanceVariableNames: 'queue'
 	classVariableNames: ''
 	imports: #()

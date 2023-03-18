@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Core.UndefinedObject'
+Core.Object
+	subclass: #'Core.UndefinedObject'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

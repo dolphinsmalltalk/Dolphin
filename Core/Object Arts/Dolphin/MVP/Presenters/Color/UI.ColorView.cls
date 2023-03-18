@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.StaticView subclass: #'UI.ColorView'
+UI.StaticView
+	subclass: #'UI.ColorView'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

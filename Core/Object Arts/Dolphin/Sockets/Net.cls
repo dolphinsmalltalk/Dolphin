@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.Namespace subclass: #Net
+Kernel.Namespace
+	subclass: #Net
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{Core} #{OS private})

@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMRMODIFYWORLDTRANSFORM'
+OS.ENHMETARECORD
+	subclass: #'OS.EMRMODIFYWORLDTRANSFORM'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_EMRMODIFYWORLDTRANSFORM_Size' -> 16r24.
-		'_OffsetOf_iMode' -> 16r20.
-		'_OffsetOf_XFORM' -> 16r8
-	}!
+			'_EMRMODIFYWORLDTRANSFORM_Size' -> 16r24.
+			'_OffsetOf_iMode' -> 16r20.
+			'_OffsetOf_XFORM' -> 16r8
+		}!
 OS.EMRMODIFYWORLDTRANSFORM guid: (Core.GUID fromString: '{2144962d-5610-4388-bb45-8b820efac2e7}')!
 OS.EMRMODIFYWORLDTRANSFORM comment: '<EMRMODIFYWORLDTRANSFORM> is an <ExternalStructure> class to wrap the struct ''Win32.EMRMODIFYWORLDTRANSFORM'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

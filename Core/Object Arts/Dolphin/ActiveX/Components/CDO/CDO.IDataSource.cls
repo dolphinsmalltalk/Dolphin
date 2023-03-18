@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IDispatch subclass: #'CDO.IDataSource'
+OS.COM.IDispatch
+	subclass: #'CDO.IDataSource'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

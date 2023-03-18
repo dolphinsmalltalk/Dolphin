@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.ParseNodeVisitor subclass: #'Kernel.ArithmeticExpressionVisitor'
+Kernel.ParseNodeVisitor
+	subclass: #'Kernel.ArithmeticExpressionVisitor'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

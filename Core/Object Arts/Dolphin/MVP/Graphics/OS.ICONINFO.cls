@@ -1,18 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.ICONINFO'
+OS.Win32Structure
+	subclass: #'OS.ICONINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_ICONINFO_Size' -> 16r14.
-		'_OffsetOf_fIcon' -> 16r0.
-		'_OffsetOf_hbmColor' -> 16r10.
-		'_OffsetOf_hbmMask' -> 16rC.
-		'_OffsetOf_xHotspot' -> 16r4.
-		'_OffsetOf_yHotspot' -> 16r8
-	}!
+			'_ICONINFO_Size' -> 16r14.
+			'_OffsetOf_fIcon' -> 16r0.
+			'_OffsetOf_hbmColor' -> 16r10.
+			'_OffsetOf_hbmMask' -> 16rC.
+			'_OffsetOf_xHotspot' -> 16r4.
+			'_OffsetOf_yHotspot' -> 16r8
+		}!
 OS.ICONINFO guid: (Core.GUID fromString: '{87b4c5f5-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.ICONINFO comment: ''!
 !OS.ICONINFO categoriesForClass!External-Data-Structured-Win32! !

@@ -33,74 +33,84 @@ package!
 
 "Class Definitions"!
 
-Core.Error subclass: #'OS.COM.PropertyReadError'
+Core.Error
+	subclass: #'OS.COM.PropertyReadError'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.InterfaceImplementation subclass: #'OS.COM.PropertyBag'
+OS.COM.InterfaceImplementation
+	subclass: #'OS.COM.PropertyBag'
 	instanceVariableNames: 'propertyTable clsid saveAll clearDirty'
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.InterfaceImplementation subclass: #'OS.COM.PropertyBagErrorLog'
+OS.COM.InterfaceImplementation
+	subclass: #'OS.COM.PropertyBagErrorLog'
 	instanceVariableNames: 'errors guid'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.IUnknown subclass: #'OS.COM.IErrorLog'
+OS.COM.IUnknown
+	subclass: #'OS.COM.IErrorLog'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.IUnknown subclass: #'OS.COM.IPropertyBag'
+OS.COM.IUnknown
+	subclass: #'OS.COM.IPropertyBag'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.IUnknown subclass: #'OS.COM.IPropertyBag2'
+OS.COM.IUnknown
+	subclass: #'OS.COM.IPropertyBag2'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.IEnumUnknown subclass: #'OS.COM.IEnumErrorInfo'
+OS.COM.IEnumUnknown
+	subclass: #'OS.COM.IEnumErrorInfo'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.IPersist subclass: #'OS.COM.IPersistPropertyBag'
+OS.COM.IPersist
+	subclass: #'OS.COM.IPersistPropertyBag'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.IPersistPropertyBag subclass: #'OS.COM.IPersistPropertyBag2'
+OS.COM.IPersistPropertyBag
+	subclass: #'OS.COM.IPersistPropertyBag2'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.OLEStructure subclass: #'OS.COM.PROPBAG2'
+OS.COM.OLEStructure
+	subclass: #'OS.COM.PROPBAG2'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_cfType' -> 16r6.
-		'_OffsetOf_clsid' -> 16r10.
-		'_OffsetOf_dwHint' -> 16r8.
-		'_OffsetOf_dwType' -> 16r0.
-		'_OffsetOf_pstrName' -> 16rC.
-		'_OffsetOf_vt' -> 16r4.
-		'_PROPBAG2_Size' -> 16r20
-	}!
+			'_OffsetOf_cfType' -> 16r6.
+			'_OffsetOf_clsid' -> 16r10.
+			'_OffsetOf_dwHint' -> 16r8.
+			'_OffsetOf_dwType' -> 16r0.
+			'_OffsetOf_pstrName' -> 16rC.
+			'_OffsetOf_vt' -> 16r4.
+			'_PROPBAG2_Size' -> 16r20
+		}!
 
 "End of package definition"!
 

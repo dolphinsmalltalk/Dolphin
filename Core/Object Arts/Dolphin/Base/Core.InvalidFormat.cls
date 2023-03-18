@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Error subclass: #'Core.InvalidFormat'
+Core.Error
+	subclass: #'Core.InvalidFormat'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

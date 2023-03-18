@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ControlView subclass: #'UI.ValueConvertingControlView'
+UI.ControlView
+	subclass: #'UI.ValueConvertingControlView'
 	instanceVariableNames: 'typeconverter'
 	classVariableNames: ''
 	imports: #()

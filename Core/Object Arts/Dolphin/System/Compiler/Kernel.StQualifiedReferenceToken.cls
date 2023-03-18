@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.StToken subclass: #'Kernel.StQualifiedReferenceToken'
+Kernel.StToken
+	subclass: #'Kernel.StQualifiedReferenceToken'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

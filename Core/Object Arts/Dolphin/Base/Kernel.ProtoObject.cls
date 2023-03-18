@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-nil subclass: #'Kernel.ProtoObject'
+nil
+	subclass: #'Kernel.ProtoObject'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

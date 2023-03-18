@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2EventHandler subclass: #'WebView2.ICoreWebView2FrameNavigationStartingEventHandler'
+WebView2.ICoreWebView2EventHandler
+	subclass: #'WebView2.ICoreWebView2FrameNavigationStartingEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

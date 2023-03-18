@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ImageView subclass: #'Tools.ViewComposerArena'
+UI.ImageView
+	subclass: #'Tools.ViewComposerArena'
 	instanceVariableNames: 'composer'
 	classVariableNames: ''
 	imports: #()

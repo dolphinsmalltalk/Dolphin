@@ -1,31 +1,32 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_REQUEST_V1'
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_REQUEST_V1'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_REQUEST_V1_Size' -> 16r1D0.
-		'_OffsetOf_Address' -> 16r4C.
-		'_OffsetOf_BytesReceived' -> 16r1B0.
-		'_OffsetOf_ConnectionId' -> 16r8.
-		'_OffsetOf_CookedUrl' -> 16r34.
-		'_OffsetOf_EntityChunkCount' -> 16r1B8.
-		'_OffsetOf_Flags' -> 16r0.
-		'_OffsetOf_Headers' -> 16r54.
-		'_OffsetOf_pEntityChunks' -> 16r1BC.
-		'_OffsetOf_pRawUrl' -> 16r30.
-		'_OffsetOf_pSslInfo' -> 16r1C8.
-		'_OffsetOf_pUnknownVerb' -> 16r2C.
-		'_OffsetOf_RawConnectionId' -> 16r1C0.
-		'_OffsetOf_RawUrlLength' -> 16r2A.
-		'_OffsetOf_RequestId' -> 16r10.
-		'_OffsetOf_UnknownVerbLength' -> 16r28.
-		'_OffsetOf_UrlContext' -> 16r18.
-		'_OffsetOf_Verb' -> 16r24.
-		'_OffsetOf_Version' -> 16r20
-	}!
+			'_HTTP_REQUEST_V1_Size' -> 16r1D0.
+			'_OffsetOf_Address' -> 16r4C.
+			'_OffsetOf_BytesReceived' -> 16r1B0.
+			'_OffsetOf_ConnectionId' -> 16r8.
+			'_OffsetOf_CookedUrl' -> 16r34.
+			'_OffsetOf_EntityChunkCount' -> 16r1B8.
+			'_OffsetOf_Flags' -> 16r0.
+			'_OffsetOf_Headers' -> 16r54.
+			'_OffsetOf_pEntityChunks' -> 16r1BC.
+			'_OffsetOf_pRawUrl' -> 16r30.
+			'_OffsetOf_pSslInfo' -> 16r1C8.
+			'_OffsetOf_pUnknownVerb' -> 16r2C.
+			'_OffsetOf_RawConnectionId' -> 16r1C0.
+			'_OffsetOf_RawUrlLength' -> 16r2A.
+			'_OffsetOf_RequestId' -> 16r10.
+			'_OffsetOf_UnknownVerbLength' -> 16r28.
+			'_OffsetOf_UrlContext' -> 16r18.
+			'_OffsetOf_Verb' -> 16r24.
+			'_OffsetOf_Version' -> 16r20
+		}!
 WinHttpServer.HTTP_REQUEST_V1 guid: (Core.GUID fromString: '{7927a79c-8c4e-423a-bf24-f1b36b4df5c4}')!
 WinHttpServer.HTTP_REQUEST_V1 comment: '`HTTP_REQUEST_V1` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_REQUEST_V1'' from type information in the ''Windows Http Server API'' library.
 

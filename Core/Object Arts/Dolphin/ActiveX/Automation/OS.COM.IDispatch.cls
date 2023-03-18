@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IUnknown subclass: #'OS.COM.IDispatch'
+OS.COM.IUnknown
+	subclass: #'OS.COM.IDispatch'
 	instanceVariableNames: 'typeInfo dispatchImplementor'
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})

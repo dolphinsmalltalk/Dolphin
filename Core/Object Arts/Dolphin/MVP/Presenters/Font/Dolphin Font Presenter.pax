@@ -28,13 +28,15 @@ package!
 
 "Class Definitions"!
 
-UI.ValuePresenter subclass: #'UI.FontPresenter'
+UI.ValuePresenter
+	subclass: #'UI.FontPresenter'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.StaticView subclass: #'UI.FontView'
+UI.StaticView
+	subclass: #'UI.FontView'
 	instanceVariableNames: 'previewText'
 	classVariableNames: ''
 	imports: #()

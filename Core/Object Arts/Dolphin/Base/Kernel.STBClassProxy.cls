@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.STBProxy subclass: #'Kernel.STBClassProxy'
+Kernel.STBProxy
+	subclass: #'Kernel.STBClassProxy'
 	instanceVariableNames: 'packageName locatorKey'
 	classVariableNames: ''
 	imports: #()

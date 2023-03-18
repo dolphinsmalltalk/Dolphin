@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMRGLSRECORD'
+OS.ENHMETARECORD
+	subclass: #'OS.EMRGLSRECORD'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_EMRGLSRECORD_Size' -> 16r10.
-		'_OffsetOf_cbData' -> 16r8.
-		'_OffsetOf_Data' -> 16rC
-	}!
+			'_EMRGLSRECORD_Size' -> 16r10.
+			'_OffsetOf_cbData' -> 16r8.
+			'_OffsetOf_Data' -> 16rC
+		}!
 OS.EMRGLSRECORD guid: (Core.GUID fromString: '{d78026c9-e670-487f-ac4b-de420ffcc257}')!
 OS.EMRGLSRECORD comment: '<EMRGLSRECORD> is an <ExternalStructure> class to wrap the struct ''Win32.EMRGLSRECORD'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

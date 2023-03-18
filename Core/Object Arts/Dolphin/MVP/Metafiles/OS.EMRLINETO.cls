@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMRLINETO'
+OS.ENHMETARECORD
+	subclass: #'OS.EMRLINETO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_EMRLINETO_Size' -> 16r10.
-		'_OffsetOf_ptl' -> 16r8
-	}!
+	classConstants: { '_EMRLINETO_Size' -> 16r10. '_OffsetOf_ptl' -> 16r8 }!
 OS.EMRLINETO guid: (Core.GUID fromString: '{fff03eec-0fdc-4448-ac60-d19e59624d01}')!
 OS.EMRLINETO comment: '<EMRLINETO> is an <ExternalStructure> class to wrap the struct ''Win32.EMRLINETO'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

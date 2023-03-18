@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Refactory.Browser.BrowserEnvironment'
+Core.Object
+	subclass: #'Refactory.Browser.BrowserEnvironment'
 	instanceVariableNames: 'label searchStrings search filter'
 	classVariableNames: ''
 	imports: #()

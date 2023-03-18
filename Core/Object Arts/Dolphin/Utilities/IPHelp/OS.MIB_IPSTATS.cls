@@ -1,36 +1,37 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'OS.MIB_IPSTATS'
+External.Structure
+	subclass: #'OS.MIB_IPSTATS'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_MIB_IPSTATS_Size' -> 16r5C.
-		'_OffsetOf_dwDefaultTTL' -> 16r4.
-		'_OffsetOf_dwForwarding' -> 16r0.
-		'_OffsetOf_dwForwDatagrams' -> 16r14.
-		'_OffsetOf_dwFragCreates' -> 16r4C.
-		'_OffsetOf_dwFragFails' -> 16r48.
-		'_OffsetOf_dwFragOks' -> 16r44.
-		'_OffsetOf_dwInAddrErrors' -> 16r10.
-		'_OffsetOf_dwInDelivers' -> 16r20.
-		'_OffsetOf_dwInDiscards' -> 16r1C.
-		'_OffsetOf_dwInHdrErrors' -> 16rC.
-		'_OffsetOf_dwInReceives' -> 16r8.
-		'_OffsetOf_dwInUnknownProtos' -> 16r18.
-		'_OffsetOf_dwNumAddr' -> 16r54.
-		'_OffsetOf_dwNumIf' -> 16r50.
-		'_OffsetOf_dwNumRoutes' -> 16r58.
-		'_OffsetOf_dwOutDiscards' -> 16r2C.
-		'_OffsetOf_dwOutNoRoutes' -> 16r30.
-		'_OffsetOf_dwOutRequests' -> 16r24.
-		'_OffsetOf_dwReasmFails' -> 16r40.
-		'_OffsetOf_dwReasmOks' -> 16r3C.
-		'_OffsetOf_dwReasmReqds' -> 16r38.
-		'_OffsetOf_dwReasmTimeout' -> 16r34.
-		'_OffsetOf_dwRoutingDiscards' -> 16r28
-	}!
+			'_MIB_IPSTATS_Size' -> 16r5C.
+			'_OffsetOf_dwDefaultTTL' -> 16r4.
+			'_OffsetOf_dwForwarding' -> 16r0.
+			'_OffsetOf_dwForwDatagrams' -> 16r14.
+			'_OffsetOf_dwFragCreates' -> 16r4C.
+			'_OffsetOf_dwFragFails' -> 16r48.
+			'_OffsetOf_dwFragOks' -> 16r44.
+			'_OffsetOf_dwInAddrErrors' -> 16r10.
+			'_OffsetOf_dwInDelivers' -> 16r20.
+			'_OffsetOf_dwInDiscards' -> 16r1C.
+			'_OffsetOf_dwInHdrErrors' -> 16rC.
+			'_OffsetOf_dwInReceives' -> 16r8.
+			'_OffsetOf_dwInUnknownProtos' -> 16r18.
+			'_OffsetOf_dwNumAddr' -> 16r54.
+			'_OffsetOf_dwNumIf' -> 16r50.
+			'_OffsetOf_dwNumRoutes' -> 16r58.
+			'_OffsetOf_dwOutDiscards' -> 16r2C.
+			'_OffsetOf_dwOutNoRoutes' -> 16r30.
+			'_OffsetOf_dwOutRequests' -> 16r24.
+			'_OffsetOf_dwReasmFails' -> 16r40.
+			'_OffsetOf_dwReasmOks' -> 16r3C.
+			'_OffsetOf_dwReasmReqds' -> 16r38.
+			'_OffsetOf_dwReasmTimeout' -> 16r34.
+			'_OffsetOf_dwRoutingDiscards' -> 16r28
+		}!
 OS.MIB_IPSTATS guid: (Core.GUID fromString: '{3390e082-4252-4d18-accb-16911c750fb8}')!
 OS.MIB_IPSTATS comment: '<MIB_IPSTATS> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IPSTATS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

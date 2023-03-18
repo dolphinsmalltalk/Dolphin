@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.MenuComposer subclass: #'Tools.MenuBarComposer'
+Tools.MenuComposer
+	subclass: #'Tools.MenuBarComposer'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

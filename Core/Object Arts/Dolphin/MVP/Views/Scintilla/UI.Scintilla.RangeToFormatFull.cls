@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.AbstractFORMATRANGE subclass: #'UI.Scintilla.RangeToFormatFull'
+OS.AbstractFORMATRANGE
+	subclass: #'UI.Scintilla.RangeToFormatFull'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_cpMax' -> 16r2C.
-		'_OffsetOf_cpMin' -> 16r28.
-		'_RangeToFormatFull_Size' -> 16r30
-	}!
+			'_OffsetOf_cpMax' -> 16r2C.
+			'_OffsetOf_cpMin' -> 16r28.
+			'_RangeToFormatFull_Size' -> 16r30
+		}!
 UI.Scintilla.RangeToFormatFull guid: (Core.GUID fromString: '{a15c1878-0be0-46bf-9a95-1432da170cdc}')!
 UI.Scintilla.RangeToFormatFull comment: ''!
 !UI.Scintilla.RangeToFormatFull methodsFor!

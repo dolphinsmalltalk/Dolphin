@@ -1,39 +1,40 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'OS.PIXELFORMATDESCRIPTOR'
+External.Structure
+	subclass: #'OS.PIXELFORMATDESCRIPTOR'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_bReserved' -> 16r1B.
-		'_OffsetOf_cAccumAlphaBits' -> 16r16.
-		'_OffsetOf_cAccumBits' -> 16r12.
-		'_OffsetOf_cAccumBlueBits' -> 16r15.
-		'_OffsetOf_cAccumGreenBits' -> 16r14.
-		'_OffsetOf_cAccumRedBits' -> 16r13.
-		'_OffsetOf_cAlphaBits' -> 16r10.
-		'_OffsetOf_cAlphaShift' -> 16r11.
-		'_OffsetOf_cAuxBuffers' -> 16r19.
-		'_OffsetOf_cBlueBits' -> 16rE.
-		'_OffsetOf_cBlueShift' -> 16rF.
-		'_OffsetOf_cColorBits' -> 16r9.
-		'_OffsetOf_cDepthBits' -> 16r17.
-		'_OffsetOf_cGreenBits' -> 16rC.
-		'_OffsetOf_cGreenShift' -> 16rD.
-		'_OffsetOf_cRedBits' -> 16rA.
-		'_OffsetOf_cRedShift' -> 16rB.
-		'_OffsetOf_cStencilBits' -> 16r18.
-		'_OffsetOf_dwDamageMask' -> 16r24.
-		'_OffsetOf_dwFlags' -> 16r4.
-		'_OffsetOf_dwLayerMask' -> 16r1C.
-		'_OffsetOf_dwVisibleMask' -> 16r20.
-		'_OffsetOf_iLayerType' -> 16r1A.
-		'_OffsetOf_iPixelType' -> 16r8.
-		'_OffsetOf_nSize' -> 16r0.
-		'_OffsetOf_nVersion' -> 16r2.
-		'_PIXELFORMATDESCRIPTOR_Size' -> 16r28
-	}!
+			'_OffsetOf_bReserved' -> 16r1B.
+			'_OffsetOf_cAccumAlphaBits' -> 16r16.
+			'_OffsetOf_cAccumBits' -> 16r12.
+			'_OffsetOf_cAccumBlueBits' -> 16r15.
+			'_OffsetOf_cAccumGreenBits' -> 16r14.
+			'_OffsetOf_cAccumRedBits' -> 16r13.
+			'_OffsetOf_cAlphaBits' -> 16r10.
+			'_OffsetOf_cAlphaShift' -> 16r11.
+			'_OffsetOf_cAuxBuffers' -> 16r19.
+			'_OffsetOf_cBlueBits' -> 16rE.
+			'_OffsetOf_cBlueShift' -> 16rF.
+			'_OffsetOf_cColorBits' -> 16r9.
+			'_OffsetOf_cDepthBits' -> 16r17.
+			'_OffsetOf_cGreenBits' -> 16rC.
+			'_OffsetOf_cGreenShift' -> 16rD.
+			'_OffsetOf_cRedBits' -> 16rA.
+			'_OffsetOf_cRedShift' -> 16rB.
+			'_OffsetOf_cStencilBits' -> 16r18.
+			'_OffsetOf_dwDamageMask' -> 16r24.
+			'_OffsetOf_dwFlags' -> 16r4.
+			'_OffsetOf_dwLayerMask' -> 16r1C.
+			'_OffsetOf_dwVisibleMask' -> 16r20.
+			'_OffsetOf_iLayerType' -> 16r1A.
+			'_OffsetOf_iPixelType' -> 16r8.
+			'_OffsetOf_nSize' -> 16r0.
+			'_OffsetOf_nVersion' -> 16r2.
+			'_PIXELFORMATDESCRIPTOR_Size' -> 16r28
+		}!
 OS.PIXELFORMATDESCRIPTOR guid: (Core.GUID fromString: '{9b1f091d-48dd-4f2d-98c3-6e6348abdb67}')!
 OS.PIXELFORMATDESCRIPTOR comment: '<PIXELFORMATDESCRIPTOR> is an <ExternalStructure> class to wrap the struct ''Win32.PIXELFORMATDESCRIPTOR'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2EventHandler subclass: #'WebView2.ICoreWebView2BasicAuthenticationRequestedEventHandler'
+WebView2.ICoreWebView2EventHandler
+	subclass: #'WebView2.ICoreWebView2BasicAuthenticationRequestedEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

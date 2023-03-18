@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTest subclass: #'Net.Tests.InternetAddressTest'
+Core.Tests.DolphinTest
+	subclass: #'Net.Tests.InternetAddressTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

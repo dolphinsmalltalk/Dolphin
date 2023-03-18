@@ -1,23 +1,24 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'OS.EXTLOGFONTW'
+External.Structure
+	subclass: #'OS.EXTLOGFONTW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_EXTLOGFONTW_Size' -> 16r140.
-		'_OffsetOf_elfCulture' -> 16r130.
-		'_OffsetOf_elfFullName' -> 16r5C.
-		'_OffsetOf_elfLogFont' -> 16r0.
-		'_OffsetOf_elfMatch' -> 16r124.
-		'_OffsetOf_elfPanose' -> 16r134.
-		'_OffsetOf_elfReserved' -> 16r128.
-		'_OffsetOf_elfStyle' -> 16rDC.
-		'_OffsetOf_elfStyleSize' -> 16r120.
-		'_OffsetOf_elfVendorId' -> 16r12C.
-		'_OffsetOf_elfVersion' -> 16r11C
-	}!
+			'_EXTLOGFONTW_Size' -> 16r140.
+			'_OffsetOf_elfCulture' -> 16r130.
+			'_OffsetOf_elfFullName' -> 16r5C.
+			'_OffsetOf_elfLogFont' -> 16r0.
+			'_OffsetOf_elfMatch' -> 16r124.
+			'_OffsetOf_elfPanose' -> 16r134.
+			'_OffsetOf_elfReserved' -> 16r128.
+			'_OffsetOf_elfStyle' -> 16rDC.
+			'_OffsetOf_elfStyleSize' -> 16r120.
+			'_OffsetOf_elfVendorId' -> 16r12C.
+			'_OffsetOf_elfVersion' -> 16r11C
+		}!
 OS.EXTLOGFONTW guid: (Core.GUID fromString: '{2cdcae37-591a-42a5-a44a-b92e4c362921}')!
 OS.EXTLOGFONTW comment: '<EXTLOGFONT> is an <ExternalStructure> class to wrap the struct ''Win32.EXTLOGFONT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

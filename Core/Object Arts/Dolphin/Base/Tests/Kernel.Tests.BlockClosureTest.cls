@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTest subclass: #'Kernel.Tests.BlockClosureTest'
+Core.Tests.DolphinTest
+	subclass: #'Kernel.Tests.BlockClosureTest'
 	instanceVariableNames: 'x'
 	classVariableNames: ''
 	imports: #()

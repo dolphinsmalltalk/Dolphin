@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.DragDropSession subclass: #'UI.InternalDragDropSession'
+UI.DragDropSession
+	subclass: #'UI.InternalDragDropSession'
 	instanceVariableNames: 'lastImageKey imageList oldCursor dragButton operationDescriptions'
 	classVariableNames: ''
 	imports: #()

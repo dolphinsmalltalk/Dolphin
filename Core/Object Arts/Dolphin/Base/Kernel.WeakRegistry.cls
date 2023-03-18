@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.ObjectRegistry subclass: #'Kernel.WeakRegistry'
+Kernel.ObjectRegistry
+	subclass: #'Kernel.WeakRegistry'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

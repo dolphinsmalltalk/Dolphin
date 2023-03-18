@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Core.Category'
+Core.Object
+	subclass: #'Core.Category'
 	instanceVariableNames: 'name'
 	classVariableNames: 'PermanentCategories'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'Separator' -> $-
-	}!
+	classConstants: { 'Separator' -> $- }!
 Core.Category guid: (Core.GUID fromString: '{87b4c45f-026e-11d3-9fd7-00a0cc3e4a32}')!
 Core.Category isNonInstantiable: true!
 Core.Category comment: 'The abstract Category class is used to organize <Class> and <CompiledMethod> objects into subgroupings independent of the implementation hierarchy. This structuring is for the benefit of the user navigating through thousands of classes and methods in the Dolphin Smalltalk development system, and has no run-time significance.

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Scintilla.TextStyle subclass: #'UI.Scintilla.CallTipStyle'
+UI.Scintilla.TextStyle
+	subclass: #'UI.Scintilla.CallTipStyle'
 	instanceVariableNames: ''
 	classVariableNames: 'Backcolor Forecolor'
 	imports: #()

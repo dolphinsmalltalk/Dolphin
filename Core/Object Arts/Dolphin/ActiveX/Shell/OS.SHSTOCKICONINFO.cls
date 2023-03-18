@@ -1,22 +1,23 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.SHSTOCKICONINFO'
+OS.Win32Structure
+	subclass: #'OS.SHSTOCKICONINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_hIcon' -> 16r4.
-		'_OffsetOf_iIcon' -> 16rC.
-		'_OffsetOf_iSysImageIndex' -> 16r8.
-		'_OffsetOf_szPath' -> 16r10.
-		'_SHSTOCKICONINFO_Size' -> 16r218.
-		'SHGSI_ICON' -> 16r100.
-		'SHGSI_ICONLOCATION' -> 16r0.
-		'SHGSI_LARGEICON' -> 16r0.
-		'SHGSI_SMALLICON' -> 16r1
-	}!
+			'_OffsetOf_dwSize' -> 16r0.
+			'_OffsetOf_hIcon' -> 16r4.
+			'_OffsetOf_iIcon' -> 16rC.
+			'_OffsetOf_iSysImageIndex' -> 16r8.
+			'_OffsetOf_szPath' -> 16r10.
+			'_SHSTOCKICONINFO_Size' -> 16r218.
+			'SHGSI_ICON' -> 16r100.
+			'SHGSI_ICONLOCATION' -> 16r0.
+			'SHGSI_LARGEICON' -> 16r0.
+			'SHGSI_SMALLICON' -> 16r1
+		}!
 OS.SHSTOCKICONINFO guid: (Core.GUID fromString: '{94b6ea81-773c-47d8-9e64-b42f7a2ac6dc}')!
 OS.SHSTOCKICONINFO comment: '`SHSTOCKICONINFO` is an `External.Structure` class to wrap the struct ''Win32.SHSTOCKICONINFO'' from type information in the ''Win32 API'' library.
 

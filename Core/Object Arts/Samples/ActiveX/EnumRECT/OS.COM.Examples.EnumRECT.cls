@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.InterfaceImplementation subclass: #'OS.COM.Examples.EnumRECT'
+OS.COM.InterfaceImplementation
+	subclass: #'OS.COM.Examples.EnumRECT'
 	instanceVariableNames: 'm_iCur m_rgrc'
 	classVariableNames: 'CRECTS'
 	imports: #()

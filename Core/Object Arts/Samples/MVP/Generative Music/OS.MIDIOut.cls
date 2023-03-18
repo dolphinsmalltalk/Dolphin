@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'OS.MIDIOut'
+Core.Object
+	subclass: #'OS.MIDIOut'
 	instanceVariableNames: 'handle'
 	classVariableNames: ''
 	imports: #(#{OS.MidiConstants})

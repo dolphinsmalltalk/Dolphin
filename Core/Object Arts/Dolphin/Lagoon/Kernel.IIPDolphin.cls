@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IUnknown subclass: #'Kernel.IIPDolphin'
+OS.COM.IUnknown
+	subclass: #'Kernel.IIPDolphin'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

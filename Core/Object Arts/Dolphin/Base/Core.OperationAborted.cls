@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Error subclass: #'Core.OperationAborted'
+Core.Error
+	subclass: #'Core.OperationAborted'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

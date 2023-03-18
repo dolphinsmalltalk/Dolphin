@@ -1,28 +1,29 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Core.Behavior'
+Core.Object
+	subclass: #'Core.Behavior'
 	instanceVariableNames: 'superclass methodDictionary instanceSpec'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_BasicSpecMask' -> 16r7FFF.
-		'_BytesSubMask' -> 16r4800.
-		'_FundamentalShapeMask' -> 16r30FF.
-		'_GetSpecialMask' -> 16rFF00.
-		'_IndirectMask' -> 16r800.
-		'_IsFinalizableMask' -> 16r8.
-		'_IsPointersMask' -> 16r2.
-		'_IsWeakMask' -> 16r12.
-		'_MournerMask' -> 16r400.
-		'_NonInstantiableMask' -> 16r200.
-		'_NullMethodDictionary' -> MethodDictionary new.
-		'_NullTermMask' -> 16r4000.
-		'_PointersMask' -> 16r2000.
-		'_ShapeMask' -> 16r70FF.
-		'_SizeMask' -> 16rFF.
-		'_VariableMask' -> 16r1000
-	}!
+			'_BasicSpecMask' -> 16r7FFF.
+			'_BytesSubMask' -> 16r4800.
+			'_FundamentalShapeMask' -> 16r30FF.
+			'_GetSpecialMask' -> 16rFF00.
+			'_IndirectMask' -> 16r800.
+			'_IsFinalizableMask' -> 16r8.
+			'_IsPointersMask' -> 16r2.
+			'_IsWeakMask' -> 16r12.
+			'_MournerMask' -> 16r400.
+			'_NonInstantiableMask' -> 16r200.
+			'_NullMethodDictionary' -> MethodDictionary new.
+			'_NullTermMask' -> 16r4000.
+			'_PointersMask' -> 16r2000.
+			'_ShapeMask' -> 16r70FF.
+			'_SizeMask' -> 16rFF.
+			'_VariableMask' -> 16r1000
+		}!
 Core.Behavior guid: (Core.GUID fromString: '{87b4c459-026e-11d3-9fd7-00a0cc3e4a32}')!
 Core.Behavior comment: 'Class `Behavior` is the abstract class which defines the minimum state necessary for objects that have instances, providing the basic information about those instances to the Compiler and the VM.
 

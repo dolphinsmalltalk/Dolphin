@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.RefactoringTool subclass: #'Tools.CodeRefactoringTool'
+Tools.RefactoringTool
+	subclass: #'Tools.CodeRefactoringTool'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{Kernel.ParseErrorCodes})

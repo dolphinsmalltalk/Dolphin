@@ -1,16 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.GpStructure subclass: #'Graphics.Gdiplus.ColorPalette'
+Graphics.Gdiplus.GpStructure
+	subclass: #'Graphics.Gdiplus.ColorPalette'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_ColorPalette_Size' -> 16rC.
-		'_OffsetOf_Count' -> 16r4.
-		'_OffsetOf_Entries' -> 16r8.
-		'_OffsetOf_Flags' -> 16r0
-	}!
+			'_ColorPalette_Size' -> 16rC.
+			'_OffsetOf_Count' -> 16r4.
+			'_OffsetOf_Entries' -> 16r8.
+			'_OffsetOf_Flags' -> 16r0
+		}!
 Graphics.Gdiplus.ColorPalette guid: (Core.GUID fromString: '{585419f2-d5ab-4e85-bf56-56d115cbe7b2}')!
 Graphics.Gdiplus.ColorPalette comment: '<GpColorPalette> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpColorPalette'' from type information in the ''GDI+ Library 1.0'' library.
 

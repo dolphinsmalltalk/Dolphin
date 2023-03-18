@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ValueModel subclass: #'UI.ValueConverter'
+UI.ValueModel
+	subclass: #'UI.ValueConverter'
 	instanceVariableNames: 'subject typeConverter'
 	classVariableNames: ''
 	imports: #()

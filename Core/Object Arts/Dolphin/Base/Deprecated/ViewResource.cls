@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Resource subclass: #ViewResource
+Resource
+	subclass: #ViewResource
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

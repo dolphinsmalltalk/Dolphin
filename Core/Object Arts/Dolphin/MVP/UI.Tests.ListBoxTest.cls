@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Tests.ListControlTest subclass: #'UI.Tests.ListBoxTest'
+UI.Tests.ListControlTest
+	subclass: #'UI.Tests.ListBoxTest'
 	instanceVariableNames: 'lbnSelChange'
 	classVariableNames: ''
 	imports: #()

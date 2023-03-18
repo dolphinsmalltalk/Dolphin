@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2Interface'
+OS.COM.IUnknown
+	subclass: #'WebView2.ICoreWebView2Interface'
 	instanceVariableNames: ''
 	classVariableNames: 'ResourceLib'
 	imports: #()

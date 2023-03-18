@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IDispatch subclass: #'MSXML.IXMLDOMParseErrorCollection'
+OS.COM.IDispatch
+	subclass: #'MSXML.IXMLDOMParseErrorCollection'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

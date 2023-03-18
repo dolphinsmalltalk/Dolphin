@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.CommonDialog subclass: #'UI.FontDialog'
+UI.CommonDialog
+	subclass: #'UI.FontDialog'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

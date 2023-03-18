@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Tests.AbstractTabViewTest subclass: #'UI.Tests.TabViewTest'
+UI.Tests.AbstractTabViewTest
+	subclass: #'UI.Tests.TabViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.BP_PAINTPARAMS'
+OS.Win32Structure
+	subclass: #'OS.BP_PAINTPARAMS'
 	instanceVariableNames: 'blendFunction'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_BP_PAINTPARAMS_Size' -> 16r10.
-		'_OffsetOf_dwFlags' -> 16r4.
-		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_pBlendFunction' -> 16rC.
-		'_OffsetOf_prcExclude' -> 16r8
-	}!
+			'_BP_PAINTPARAMS_Size' -> 16r10.
+			'_OffsetOf_dwFlags' -> 16r4.
+			'_OffsetOf_dwSize' -> 16r0.
+			'_OffsetOf_pBlendFunction' -> 16rC.
+			'_OffsetOf_prcExclude' -> 16r8
+		}!
 OS.BP_PAINTPARAMS guid: (Core.GUID fromString: '{caca75ff-b81a-424e-9ffe-ae0e691932d5}')!
 OS.BP_PAINTPARAMS comment: ''!
 !OS.BP_PAINTPARAMS categoriesForClass!Win32-Structs! !

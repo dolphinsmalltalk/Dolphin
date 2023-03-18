@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.GpStructure subclass: #'Graphics.Gdiplus.ColorMatrix'
+Graphics.Gdiplus.GpStructure
+	subclass: #'Graphics.Gdiplus.ColorMatrix'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_ColorMatrix_Size' -> 16r64.
-		'_OffsetOf_m' -> 16r0
-	}!
+	classConstants: { '_ColorMatrix_Size' -> 16r64. '_OffsetOf_m' -> 16r0 }!
 Graphics.Gdiplus.ColorMatrix guid: (Core.GUID fromString: '{6b5ab37e-5cc3-447e-99ef-9135f516ccc0}')!
 Graphics.Gdiplus.ColorMatrix comment: '<GpColorMatrix> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpColorMatrix'' from type information in the ''GDI+ Library 1.0'' library.
 

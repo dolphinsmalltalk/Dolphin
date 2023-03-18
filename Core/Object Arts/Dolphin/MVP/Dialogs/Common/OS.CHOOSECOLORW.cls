@@ -1,22 +1,23 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.CommonDialogStructure subclass: #'OS.CHOOSECOLORW'
+OS.CommonDialogStructure
+	subclass: #'OS.CHOOSECOLORW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_CHOOSECOLORW_Size' -> 16r24.
-		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_flags' -> 16r14.
-		'_OffsetOf_hInstance' -> 16r8.
-		'_OffsetOf_hwndOwner' -> 16r4.
-		'_OffsetOf_lCustData' -> 16r18.
-		'_OffsetOf_lpCustColors' -> 16r10.
-		'_OffsetOf_lpfnHook' -> 16r1C.
-		'_OffsetOf_lpTemplateName' -> 16r20.
-		'_OffsetOf_rgbResult' -> 16rC
-	}!
+			'_CHOOSECOLORW_Size' -> 16r24.
+			'_OffsetOf_dwSize' -> 16r0.
+			'_OffsetOf_flags' -> 16r14.
+			'_OffsetOf_hInstance' -> 16r8.
+			'_OffsetOf_hwndOwner' -> 16r4.
+			'_OffsetOf_lCustData' -> 16r18.
+			'_OffsetOf_lpCustColors' -> 16r10.
+			'_OffsetOf_lpfnHook' -> 16r1C.
+			'_OffsetOf_lpTemplateName' -> 16r20.
+			'_OffsetOf_rgbResult' -> 16rC
+		}!
 OS.CHOOSECOLORW guid: (Core.GUID fromString: '{87b4c5d1-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.CHOOSECOLORW comment: '<CHOOSECOLOR> is an <ExternalStructure> class to wrap the struct ''Win32.CHOOSECOLOR'' from type information in the ''Win32 API'' library.
 

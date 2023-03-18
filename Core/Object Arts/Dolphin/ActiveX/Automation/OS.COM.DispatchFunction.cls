@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.InterfaceFunction subclass: #'OS.COM.DispatchFunction'
+OS.COM.InterfaceFunction
+	subclass: #'OS.COM.DispatchFunction'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.Win32Errors})

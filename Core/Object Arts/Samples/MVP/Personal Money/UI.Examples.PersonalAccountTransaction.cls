@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Model subclass: #'UI.Examples.PersonalAccountTransaction'
+Core.Model
+	subclass: #'UI.Examples.PersonalAccountTransaction'
 	instanceVariableNames: 'date description amount isDebit'
 	classVariableNames: ''
 	imports: #()

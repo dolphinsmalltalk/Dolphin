@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Kernel.Tests.DolphinCompilerTestMethods'
+Core.Object
+	subclass: #'Kernel.Tests.DolphinCompilerTestMethods'
 	instanceVariableNames: 'iv1 iv2'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'Const' -> 16r1
-	}!
+	classConstants: { 'Const' -> 16r1 }!
 Kernel.Tests.DolphinCompilerTestMethods guid: (Core.GUID fromString: '{c6d8841d-910d-434f-9fec-9d821dd7a202}')!
 Kernel.Tests.DolphinCompilerTestMethods comment: ''!
 !Kernel.Tests.DolphinCompilerTestMethods categoriesForClass!Kernel-Objects! !

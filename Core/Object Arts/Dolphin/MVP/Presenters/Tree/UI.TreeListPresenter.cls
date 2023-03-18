@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.TreePresenter subclass: #'UI.TreeListPresenter'
+UI.TreePresenter
+	subclass: #'UI.TreeListPresenter'
 	instanceVariableNames: 'listModel updating visibleNodes'
 	classVariableNames: ''
 	imports: #()

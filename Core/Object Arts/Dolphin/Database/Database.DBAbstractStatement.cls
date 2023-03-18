@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Database.DBAbstractStatement'
+Core.Object
+	subclass: #'Database.DBAbstractStatement'
 	instanceVariableNames: 'handle parent executed cursorType'
 	classVariableNames: 'CursorTypes'
 	imports: #(#{OS.ODBCRetCodes} #{OS.ODBCConstants})

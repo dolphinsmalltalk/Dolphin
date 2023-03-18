@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.UInt8 subclass: #'External.Int8'
+External.UInt8
+	subclass: #'External.Int8'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_Int8_Size' -> 16r1
-	}!
+	classConstants: { '_Int8_Size' -> 16r1 }!
 External.Int8 guid: (Core.GUID fromString: '{8f5bcc94-0245-4d91-a473-acc6bdb8f294}')!
 External.Int8 comment: '<SBYTE> is an <ExternalStructure> class to wrap the Win32 type of the same name.
 

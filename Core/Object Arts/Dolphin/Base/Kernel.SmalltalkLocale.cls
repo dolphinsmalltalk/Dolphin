@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Locale subclass: #'Kernel.SmalltalkLocale'
+Core.Locale
+	subclass: #'Kernel.SmalltalkLocale'
 	instanceVariableNames: 'integerBase'
 	classVariableNames: 'Current Hex'
 	imports: #()

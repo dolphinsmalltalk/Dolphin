@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Tools.RefactoringTool'
+Core.Object
+	subclass: #'Tools.RefactoringTool'
 	instanceVariableNames: 'presenter'
 	classVariableNames: ''
 	imports: #(#{Refactory.Browser private})

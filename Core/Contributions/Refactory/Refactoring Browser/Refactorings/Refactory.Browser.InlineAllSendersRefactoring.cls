@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.MethodRefactoring subclass: #'Refactory.Browser.InlineAllSendersRefactoring'
+Refactory.Browser.MethodRefactoring
+	subclass: #'Refactory.Browser.InlineAllSendersRefactoring'
 	instanceVariableNames: 'selector numberReplaced numberNotReplaced'
 	classVariableNames: ''
 	imports: #()

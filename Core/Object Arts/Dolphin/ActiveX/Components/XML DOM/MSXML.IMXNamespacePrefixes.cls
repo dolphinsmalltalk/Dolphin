@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IDispatch subclass: #'MSXML.IMXNamespacePrefixes'
+OS.COM.IDispatch
+	subclass: #'MSXML.IMXNamespacePrefixes'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Core.Stream'
+Core.Object
+	subclass: #'Core.Stream'
 	instanceVariableNames: ''
 	classVariableNames: 'EndOfStreamSignal'
 	imports: #()

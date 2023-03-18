@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.GpStructure subclass: #'Graphics.Gdiplus.GdiplusStartupOutput'
+Graphics.Gdiplus.GpStructure
+	subclass: #'Graphics.Gdiplus.GdiplusStartupOutput'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_GdiplusStartupOutput_Size' -> 16r8.
-		'_OffsetOf_NotificationHook' -> 16r0.
-		'_OffsetOf_NotificationUnhook' -> 16r4
-	}!
+			'_GdiplusStartupOutput_Size' -> 16r8.
+			'_OffsetOf_NotificationHook' -> 16r0.
+			'_OffsetOf_NotificationUnhook' -> 16r4
+		}!
 Graphics.Gdiplus.GdiplusStartupOutput guid: (Core.GUID fromString: '{40bb7e65-cd3b-49aa-b850-f404c6d944fc}')!
 Graphics.Gdiplus.GdiplusStartupOutput comment: '<GdiplusStartupOutput> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GdiplusStartupOutput'' from type information in the ''GDI+ Library 1.0'' library.
 

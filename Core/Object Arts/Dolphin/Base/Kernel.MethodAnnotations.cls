@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.SequenceableCollection variableSubclass: #'Kernel.MethodAnnotations'
+Core.SequenceableCollection
+	variableSubclass: #'Kernel.MethodAnnotations'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

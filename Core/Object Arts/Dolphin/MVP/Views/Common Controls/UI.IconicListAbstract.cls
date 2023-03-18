@@ -1,13 +1,22 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ListControlView subclass: #'UI.IconicListAbstract'
+UI.ListControlView
+	subclass: #'UI.IconicListAbstract'
 	instanceVariableNames: 'getImageBlock imageManager stateImageManager getInfoTipBlock customDrawBlock largeIconExtent thumbnailsImageManager'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'ViewModes' -> (IdentityDictionary withAll: {#largeIcons -> (16r20@16r20). #noIcons -> (16r0@16r0). #mediumIcons -> (16r18@16r18). #extraLargeIcons -> (16r100@16r100). #smallIcons -> (16r10@16r10). #tileIcons -> (16r30@16r30)})
-	}!
+			'ViewModes'
+				-> (IdentityDictionary withAll: {
+								#extraLargeIcons -> (16r100 @ 16r100).
+								#largeIcons -> (16r20 @ 16r20).
+								#mediumIcons -> (16r18 @ 16r18).
+								#noIcons -> (16r0 @ 16r0).
+								#smallIcons -> (16r10 @ 16r10).
+								#tileIcons -> (16r30 @ 16r30)
+							})
+		}!
 UI.IconicListAbstract guid: (Core.GUID fromString: '{87b4c728-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.IconicListAbstract isNonInstantiable: true!
 UI.IconicListAbstract comment: 'IconicListAbstract is an abstract class whose subclasses implement various Windows iconic list common controls.

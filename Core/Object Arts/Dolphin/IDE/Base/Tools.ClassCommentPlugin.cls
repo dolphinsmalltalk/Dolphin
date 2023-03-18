@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.ClassAspectPlugin subclass: #'Tools.ClassCommentPlugin'
+Tools.ClassAspectPlugin
+	subclass: #'Tools.ClassCommentPlugin'
 	instanceVariableNames: ''
 	classVariableNames: 'TextStyles WordWrap'
 	imports: #()

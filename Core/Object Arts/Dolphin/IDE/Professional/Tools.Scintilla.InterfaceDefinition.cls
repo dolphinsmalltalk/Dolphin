@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Tools.Scintilla.InterfaceDefinition'
+Core.Object
+	subclass: #'Tools.Scintilla.InterfaceDefinition'
 	instanceVariableNames: 'id name isDeprecated comment selector constName'
 	classVariableNames: ''
 	imports: #()

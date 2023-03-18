@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.SCALAR subclass: #'External.DOUBLE'
+External.SCALAR
+	subclass: #'External.DOUBLE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_DOUBLE_Size' -> 16r8
-	}!
+	classConstants: { '_DOUBLE_Size' -> 16r8 }!
 External.DOUBLE guid: (Core.GUID fromString: '{87b4c592-026e-11d3-9fd7-00a0cc3e4a32}')!
 External.DOUBLE comment: 'DOUBLE is an <ExternalStructure> class to represent double precision (64-bit) floating point numbers in native format'!
 !External.DOUBLE categoriesForClass!External-Data-Structured! !

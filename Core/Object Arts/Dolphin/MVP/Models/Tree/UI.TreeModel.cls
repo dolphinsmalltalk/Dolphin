@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.TreeModelAbstract subclass: #'UI.TreeModel'
+UI.TreeModelAbstract
+	subclass: #'UI.TreeModel'
 	instanceVariableNames: 'anchorNode objectNodeMap'
 	classVariableNames: ''
 	imports: #()

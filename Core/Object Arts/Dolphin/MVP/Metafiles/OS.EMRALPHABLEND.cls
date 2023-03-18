@@ -1,30 +1,31 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMRALPHABLEND'
+OS.ENHMETARECORD
+	subclass: #'OS.EMRALPHABLEND'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_EMRALPHABLEND_Size' -> 16r6C.
-		'_OffsetOf_cbBitsSrc' -> 16r60.
-		'_OffsetOf_cbBmiSrc' -> 16r58.
-		'_OffsetOf_crBkColorSrc' -> 16r4C.
-		'_OffsetOf_cxDest' -> 16r20.
-		'_OffsetOf_cxSrc' -> 16r64.
-		'_OffsetOf_cyDest' -> 16r24.
-		'_OffsetOf_cySrc' -> 16r68.
-		'_OffsetOf_dwRop' -> 16r28.
-		'_OffsetOf_iUsageSrc' -> 16r50.
-		'_OffsetOf_offBitsSrc' -> 16r5C.
-		'_OffsetOf_offBmiSrc' -> 16r54.
-		'_OffsetOf_rclBounds' -> 16r8.
-		'_OffsetOf_xDest' -> 16r18.
-		'_OffsetOf_xformSrc' -> 16r34.
-		'_OffsetOf_xSrc' -> 16r2C.
-		'_OffsetOf_yDest' -> 16r1C.
-		'_OffsetOf_ySrc' -> 16r30
-	}!
+			'_EMRALPHABLEND_Size' -> 16r6C.
+			'_OffsetOf_cbBitsSrc' -> 16r60.
+			'_OffsetOf_cbBmiSrc' -> 16r58.
+			'_OffsetOf_crBkColorSrc' -> 16r4C.
+			'_OffsetOf_cxDest' -> 16r20.
+			'_OffsetOf_cxSrc' -> 16r64.
+			'_OffsetOf_cyDest' -> 16r24.
+			'_OffsetOf_cySrc' -> 16r68.
+			'_OffsetOf_dwRop' -> 16r28.
+			'_OffsetOf_iUsageSrc' -> 16r50.
+			'_OffsetOf_offBitsSrc' -> 16r5C.
+			'_OffsetOf_offBmiSrc' -> 16r54.
+			'_OffsetOf_rclBounds' -> 16r8.
+			'_OffsetOf_xDest' -> 16r18.
+			'_OffsetOf_xformSrc' -> 16r34.
+			'_OffsetOf_xSrc' -> 16r2C.
+			'_OffsetOf_yDest' -> 16r1C.
+			'_OffsetOf_ySrc' -> 16r30
+		}!
 OS.EMRALPHABLEND guid: (Core.GUID fromString: '{7ecd9c96-2cd7-4bbd-8fb5-91caa4c50908}')!
 OS.EMRALPHABLEND comment: '<EMRALPHABLEND> is an <ExternalStructure> class to wrap the struct ''Win32.EMRALPHABLEND'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

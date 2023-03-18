@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.PermanentLibrary subclass: #'OS.NTLibrary'
+External.PermanentLibrary
+	subclass: #'OS.NTLibrary'
 	instanceVariableNames: 'isWine'
 	classVariableNames: ''
 	imports: #()

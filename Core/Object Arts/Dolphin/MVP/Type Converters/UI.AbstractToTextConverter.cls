@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.TypeConverter subclass: #'UI.AbstractToTextConverter'
+UI.TypeConverter
+	subclass: #'UI.AbstractToTextConverter'
 	instanceVariableNames: 'locale'
 	classVariableNames: ''
 	imports: #()

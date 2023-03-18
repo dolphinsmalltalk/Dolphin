@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Bag subclass: #'STON.Tests.IdentityBag'
+Core.Bag
+	subclass: #'STON.Tests.IdentityBag'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

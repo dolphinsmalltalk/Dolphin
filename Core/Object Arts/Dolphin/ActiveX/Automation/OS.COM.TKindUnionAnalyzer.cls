@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.StructureTypeAnalyzer subclass: #'OS.COM.TKindUnionAnalyzer'
+OS.COM.StructureTypeAnalyzer
+	subclass: #'OS.COM.TKindUnionAnalyzer'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

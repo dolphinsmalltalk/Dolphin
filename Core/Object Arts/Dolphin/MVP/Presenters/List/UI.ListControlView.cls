@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ControlView subclass: #'UI.ListControlView'
+UI.ControlView
+	subclass: #'UI.ListControlView'
 	instanceVariableNames: 'getTextBlock'
 	classVariableNames: 'RevertSelMessage'
 	imports: #()

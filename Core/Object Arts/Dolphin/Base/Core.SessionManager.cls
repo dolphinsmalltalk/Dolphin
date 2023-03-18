@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Core.SessionManager'
+Core.Object
+	subclass: #'Core.SessionManager'
 	instanceVariableNames: 'inputState resourceLibrary imagePath servers argv cmdLineFlags state sentry startupArgs consoleHandler stdioStreams eventLogHandle flags sessionId hConsole settingsChanged events'
 	classVariableNames: 'Current PreStartFile'
 	imports: #(#{OS.Win32Constants private} #{OS.Win32Errors private} #{OS private})
 	classInstanceVariableNames: ''
-	classConstants: {
-		'EmbeddingMask' -> 16r1.
-		'SettingsChangeTimerId' -> 16r2
-	}!
+	classConstants: { 'EmbeddingMask' -> 16r1. 'SettingsChangeTimerId' -> 16r2 }!
 Core.SessionManager guid: (Core.GUID fromString: '{87b4c4b7-026e-11d3-9fd7-00a0cc3e4a32}')!
 Core.SessionManager isNonInstantiable: true!
 Core.SessionManager comment: 'SessionManager is the class of objects responsible for managing the lifecyle of an application, from startup to shutdown. SessionManagers are also responsible for determining the global policy for dealing with unhandled Exceptions. 

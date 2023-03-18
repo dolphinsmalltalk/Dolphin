@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.SharedLookupTable variableSubclass: #'Core.DeferredValueTable'
+Core.SharedLookupTable
+	variableSubclass: #'Core.DeferredValueTable'
 	instanceVariableNames: 'priority'
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Stream subclass: #'Kernel.DebugTraceStream'
+Core.Stream
+	subclass: #'Kernel.DebugTraceStream'
 	instanceVariableNames: 'buffer'
 	classVariableNames: ''
 	imports: #()

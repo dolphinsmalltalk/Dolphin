@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'OS.COM.AbstractInterfaceFunction'
+Core.Object
+	subclass: #'OS.COM.AbstractInterfaceFunction'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

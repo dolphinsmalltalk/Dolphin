@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTest subclass: #'Tools.Tests.IdeaSpaceShellTest'
+Core.Tests.DolphinTest
+	subclass: #'Tools.Tests.IdeaSpaceShellTest'
 	instanceVariableNames: 'ideaShell browserPlugins'
 	classVariableNames: ''
 	imports: #()

@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMRSELECTCLIPPATH'
+OS.ENHMETARECORD
+	subclass: #'OS.EMRSELECTCLIPPATH'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_EMRSELECTCLIPPATH_Size' -> 16rC.
-		'_OffsetOf_iMode' -> 16r8
-	}!
+	classConstants: { '_EMRSELECTCLIPPATH_Size' -> 16rC. '_OffsetOf_iMode' -> 16r8 }!
 OS.EMRSELECTCLIPPATH guid: (Core.GUID fromString: '{c8b98c6c-58b3-4b3c-a5c6-a65f676491c6}')!
 OS.EMRSELECTCLIPPATH comment: '<EMRSELECTCLIPPATH> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSELECTCLIPPATH'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

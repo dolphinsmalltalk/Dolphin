@@ -1,18 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SSL_CLIENT_CERT_INFO'
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_SSL_CLIENT_CERT_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_SSL_CLIENT_CERT_INFO_Size' -> 16r14.
-		'_OffsetOf_CertDeniedByMapper' -> 16r10.
-		'_OffsetOf_CertEncodedSize' -> 16r4.
-		'_OffsetOf_CertFlags' -> 16r0.
-		'_OffsetOf_pCertEncoded' -> 16r8.
-		'_OffsetOf_Token' -> 16rC
-	}!
+			'_HTTP_SSL_CLIENT_CERT_INFO_Size' -> 16r14.
+			'_OffsetOf_CertDeniedByMapper' -> 16r10.
+			'_OffsetOf_CertEncodedSize' -> 16r4.
+			'_OffsetOf_CertFlags' -> 16r0.
+			'_OffsetOf_pCertEncoded' -> 16r8.
+			'_OffsetOf_Token' -> 16rC
+		}!
 WinHttpServer.HTTP_SSL_CLIENT_CERT_INFO guid: (Core.GUID fromString: '{2ea1d77c-9411-49f7-af99-3554a22fe89e}')!
 WinHttpServer.HTTP_SSL_CLIENT_CERT_INFO comment: '`HTTP_SSL_CLIENT_CERT_INFO` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_SSL_CLIENT_CERT_INFO'' from type information in the ''Windows Http Server API'' library.
 

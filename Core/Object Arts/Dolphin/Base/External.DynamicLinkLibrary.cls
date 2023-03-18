@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'External.DynamicLinkLibrary'
+Core.Object
+	subclass: #'External.DynamicLinkLibrary'
 	instanceVariableNames: 'handle'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants private} #{OS.Win32Errors private} #{Kernel._PrimitiveFailureCode private})

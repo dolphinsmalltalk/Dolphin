@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.SmalltalkToolShell subclass: #'Tools.SourceBrowser'
+Tools.SmalltalkToolShell
+	subclass: #'Tools.SourceBrowser'
 	instanceVariableNames: 'listPresenter changedOnly refreshBlock packagesFilter statusModel'
 	classVariableNames: ''
 	imports: #()

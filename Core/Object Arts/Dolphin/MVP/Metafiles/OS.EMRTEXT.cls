@@ -1,19 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'OS.EMRTEXT'
+External.Structure
+	subclass: #'OS.EMRTEXT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_EMRTEXT_Size' -> 16r28.
-		'_OffsetOf_fOptions' -> 16r10.
-		'_OffsetOf_nChars' -> 16r8.
-		'_OffsetOf_offDx' -> 16r24.
-		'_OffsetOf_offString' -> 16rC.
-		'_OffsetOf_ptlReference' -> 16r0.
-		'_OffsetOf_rcl' -> 16r14
-	}!
+			'_EMRTEXT_Size' -> 16r28.
+			'_OffsetOf_fOptions' -> 16r10.
+			'_OffsetOf_nChars' -> 16r8.
+			'_OffsetOf_offDx' -> 16r24.
+			'_OffsetOf_offString' -> 16rC.
+			'_OffsetOf_ptlReference' -> 16r0.
+			'_OffsetOf_rcl' -> 16r14
+		}!
 OS.EMRTEXT guid: (Core.GUID fromString: '{b8857668-f891-426b-8df0-ccc12b909e4d}')!
 OS.EMRTEXT comment: '<EMRTEXT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRTEXT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

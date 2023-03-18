@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.MessageSendAbstract variableSubclass: #'Kernel.EventMessageSend'
+Core.MessageSendAbstract
+	variableSubclass: #'Kernel.EventMessageSend'
 	instanceVariableNames: 'expectedArgCount'
 	classVariableNames: ''
 	imports: #()

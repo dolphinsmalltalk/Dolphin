@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.RefactoryChange subclass: #'Refactory.Browser.CompositeRefactoryChange'
+Refactory.Browser.RefactoryChange
+	subclass: #'Refactory.Browser.CompositeRefactoryChange'
 	instanceVariableNames: 'changes'
 	classVariableNames: ''
 	imports: #()

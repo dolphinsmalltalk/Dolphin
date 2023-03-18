@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WinHttpServer.HTTP_SERVICE_BINDING_BASE subclass: #'WinHttpServer.HTTP_SERVICE_BINDING_A'
+WinHttpServer.HTTP_SERVICE_BINDING_BASE
+	subclass: #'WinHttpServer.HTTP_SERVICE_BINDING_A'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_SERVICE_BINDING_A_Size' -> 16rC.
-		'_OffsetOf_Buffer' -> 16r4.
-		'_OffsetOf_BufferSize' -> 16r8
-	}!
+			'_HTTP_SERVICE_BINDING_A_Size' -> 16rC.
+			'_OffsetOf_Buffer' -> 16r4.
+			'_OffsetOf_BufferSize' -> 16r8
+		}!
 WinHttpServer.HTTP_SERVICE_BINDING_A guid: (Core.GUID fromString: '{88ca7833-a66a-4e2f-98bc-cd2313254b15}')!
 WinHttpServer.HTTP_SERVICE_BINDING_A comment: '`HTTP_SERVICE_BINDING_A` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_SERVICE_BINDING_A'' from type information in the ''Windows Http Server API'' library.
 

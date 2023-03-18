@@ -1,16 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'OS.CIEXYZTRIPLE'
+External.Structure
+	subclass: #'OS.CIEXYZTRIPLE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_CIEXYZTRIPLE_Size' -> 16r24.
-		'_OffsetOf_ciexyzBlue' -> 16r18.
-		'_OffsetOf_ciexyzGreen' -> 16rC.
-		'_OffsetOf_ciexyzRed' -> 16r0
-	}!
+			'_CIEXYZTRIPLE_Size' -> 16r24.
+			'_OffsetOf_ciexyzBlue' -> 16r18.
+			'_OffsetOf_ciexyzGreen' -> 16rC.
+			'_OffsetOf_ciexyzRed' -> 16r0
+		}!
 OS.CIEXYZTRIPLE guid: (Core.GUID fromString: '{2fd9d553-f2b2-4bfb-9dca-4c245bbff3d2}')!
 OS.CIEXYZTRIPLE comment: '<CIEXYZTRIPLE> is an <ExternalStructure> class to wrap the struct ''Win32.CIEXYZTRIPLE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

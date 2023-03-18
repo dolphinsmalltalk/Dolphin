@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.PoolDictionary variableSubclass: #PoolConstantsDictionary
+Kernel.PoolDictionary
+	variableSubclass: #PoolConstantsDictionary
 	instanceVariableNames: 'name'
 	classVariableNames: ''
 	imports: #()

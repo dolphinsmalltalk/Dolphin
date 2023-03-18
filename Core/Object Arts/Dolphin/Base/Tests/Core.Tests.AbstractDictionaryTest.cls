@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.CollectionTest subclass: #'Core.Tests.AbstractDictionaryTest'
+Core.Tests.CollectionTest
+	subclass: #'Core.Tests.AbstractDictionaryTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

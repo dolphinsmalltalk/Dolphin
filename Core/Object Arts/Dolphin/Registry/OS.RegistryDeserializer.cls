@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'OS.RegistryDeserializer'
+Core.Object
+	subclass: #'OS.RegistryDeserializer'
 	instanceVariableNames: 'currentKey instVarMaps safeClasses objects validationBlock'
 	classVariableNames: ''
 	imports: #(#{OS private})

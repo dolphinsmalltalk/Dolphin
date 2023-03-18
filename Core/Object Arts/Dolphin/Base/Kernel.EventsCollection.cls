@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.SharedIdentityDictionary variableSubclass: #'Kernel.EventsCollection'
+Core.SharedIdentityDictionary
+	variableSubclass: #'Kernel.EventsCollection'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTest subclass: #'Kernel.Tests.EventMessageSequenceTest'
+Core.Tests.DolphinTest
+	subclass: #'Kernel.Tests.EventMessageSequenceTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

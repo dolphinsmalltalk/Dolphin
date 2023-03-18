@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.Scintilla.IntTypeReference subclass: #'Tools.Scintilla.KeyModTypeReference'
+Tools.Scintilla.IntTypeReference
+	subclass: #'Tools.Scintilla.KeyModTypeReference'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

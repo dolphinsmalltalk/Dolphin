@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IUnknown subclass: #'OS.COM.ICreateErrorInfo'
+OS.COM.IUnknown
+	subclass: #'OS.COM.ICreateErrorInfo'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

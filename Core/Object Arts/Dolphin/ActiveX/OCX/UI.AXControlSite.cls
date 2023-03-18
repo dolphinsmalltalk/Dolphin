@@ -1,23 +1,74 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ControlView subclass: #'UI.AXControlSite'
+UI.ControlView
+	subclass: #'UI.AXControlSite'
 	instanceVariableNames: 'progId dispControl host sink hostFlags propertyMap ambientDispatch unkControl licenseKey _reserved1 _reserved2'
 	classVariableNames: 'WM_ATLGETHOST'
 	imports: #(#{OS.COM.AutomationConstants private} #{OS.COM.AutomationErrors private} #{OS.COM private})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'AllowContextMenuMask' -> 16r400.
-		'AllowShowUIMask' -> 16r200.
-		'AllowWindowlessMask' -> 16r20.
-		'DisplayAsDefaultMask' -> 16r80.
-		'FireControlEventsMask' -> 16r4.
-		'FirePropertyEventsMask' -> 16r1.
-		'ReflectMask' -> 16r100.
-		'StandardPropNames' -> (LookupTable withAll: {16r0 -> #Value. -16r1F7 -> #BorderColor. -16r1FB -> #DrawMode. -16r1FF -> #FillStyle. -16r203 -> #Hwnd. -16r207 -> #BorderVisible. -16r20B -> #Picture. -16r20F -> #Selected. -16r213 -> #ListCount. -16r217 -> #Scrollbars. -16r21B -> #NumberOfColumns. -16r21F -> #Accelerator. -16r223 -> #SelStart. -16r1F6 -> #BackStyle. -16r1FE -> #FillColor. -16r202 -> #Enabled. -16r206 -> #Caption. -16r20A -> #MouseIcon. -16r20E -> #ListIndex. -16r216 -> #PasswordChar. -16r21A -> #NumberOfRows. -16r21E -> #IMEMode. -16r222 -> #SelText. -16r1F5 -> #BackColor. -16r1F9 -> #BorderWidth. -16r1FD -> #DrawWidth. -16r201 -> #ForeColor. -16r205 -> #Text. -16r209 -> #MousePointer. -16r20D -> #ReadyState. -16r211 -> #Column. -16r215 -> #MaxLength. -16r219 -> #Multiline. -16r21D -> #GroupName. -16r221 -> #TabKeyBehavior. -16r1F4 -> #Autosize. -16r1F8 -> #BorderStyle. -16r1FC -> #DrawStyle. -16r200 -> #Font. -16r204 -> #Tabstop. -16r208 -> #Appearance. -16r20C -> #Valid. -16r210 -> #List. -16r214 -> #MultiSelect. -16r218 -> #Wordwrap. -16r21C -> #DisplayStyle. -16r220 -> #EnterKeyBehavior. -16r224 -> #SelLength}).
-		'TraceEventsMask' -> 16r2.
-		'UserModeMask' -> 16r40.
-		'WM_FORWARDMSG' -> 16r37F
-	}!
+			'AllowContextMenuMask' -> 16r400.
+			'AllowShowUIMask' -> 16r200.
+			'AllowWindowlessMask' -> 16r20.
+			'DisplayAsDefaultMask' -> 16r80.
+			'FireControlEventsMask' -> 16r4.
+			'FirePropertyEventsMask' -> 16r1.
+			'ReflectMask' -> 16r100.
+			'StandardPropNames'
+				-> (LookupTable withAll: {
+								-16r224 -> #SelLength.
+								-16r223 -> #SelStart.
+								-16r222 -> #SelText.
+								-16r221 -> #TabKeyBehavior.
+								-16r220 -> #EnterKeyBehavior.
+								-16r21F -> #Accelerator.
+								-16r21E -> #IMEMode.
+								-16r21D -> #GroupName.
+								-16r21C -> #DisplayStyle.
+								-16r21B -> #NumberOfColumns.
+								-16r21A -> #NumberOfRows.
+								-16r219 -> #Multiline.
+								-16r218 -> #Wordwrap.
+								-16r217 -> #Scrollbars.
+								-16r216 -> #PasswordChar.
+								-16r215 -> #MaxLength.
+								-16r214 -> #MultiSelect.
+								-16r213 -> #ListCount.
+								-16r211 -> #Column.
+								-16r210 -> #List.
+								-16r20F -> #Selected.
+								-16r20E -> #ListIndex.
+								-16r20D -> #ReadyState.
+								-16r20C -> #Valid.
+								-16r20B -> #Picture.
+								-16r20A -> #MouseIcon.
+								-16r209 -> #MousePointer.
+								-16r208 -> #Appearance.
+								-16r207 -> #BorderVisible.
+								-16r206 -> #Caption.
+								-16r205 -> #Text.
+								-16r204 -> #Tabstop.
+								-16r203 -> #Hwnd.
+								-16r202 -> #Enabled.
+								-16r201 -> #ForeColor.
+								-16r200 -> #Font.
+								-16r1FF -> #FillStyle.
+								-16r1FE -> #FillColor.
+								-16r1FD -> #DrawWidth.
+								-16r1FC -> #DrawStyle.
+								-16r1FB -> #DrawMode.
+								-16r1F9 -> #BorderWidth.
+								-16r1F8 -> #BorderStyle.
+								-16r1F7 -> #BorderColor.
+								-16r1F6 -> #BackStyle.
+								-16r1F5 -> #BackColor.
+								-16r1F4 -> #Autosize.
+								16r0 -> #Value
+							}).
+			'TraceEventsMask' -> 16r2.
+			'UserModeMask' -> 16r40.
+			'WM_FORWARDMSG' -> 16r37F
+		}!
 UI.AXControlSite guid: (Core.GUID fromString: '{804d8c3f-38c6-4928-bd58-574c2b24a053}')!
 UI.AXControlSite comment: 'AXControlSite is a <ControlView> which is able to host almost any Active-X control - also referred to as OLE controls, or OCXs. This includes both non-visual controls that require in-place activation (see example1), or to host true visual controls (see AXControlSite class>>example2) including the Microsoft Web Browser control. Events from the control can be enabled, and are triggered off the AXControlSite''s presenter (usually itself).
 

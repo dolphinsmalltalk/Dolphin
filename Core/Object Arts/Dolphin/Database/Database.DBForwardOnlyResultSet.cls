@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Database.DBResultSet subclass: #'Database.DBForwardOnlyResultSet'
+Database.DBResultSet
+	subclass: #'Database.DBForwardOnlyResultSet'
 	instanceVariableNames: 'position'
 	classVariableNames: ''
 	imports: #()

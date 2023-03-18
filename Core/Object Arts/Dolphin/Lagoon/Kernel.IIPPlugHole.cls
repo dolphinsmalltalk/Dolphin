@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IUnknown subclass: #'Kernel.IIPPlugHole'
+OS.COM.IUnknown
+	subclass: #'Kernel.IIPPlugHole'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.COM private})

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Scintilla.Attribute subclass: #'UI.Scintilla.QueryableAttribute'
+UI.Scintilla.Attribute
+	subclass: #'UI.Scintilla.QueryableAttribute'
 	instanceVariableNames: 'view'
 	classVariableNames: ''
 	imports: #()

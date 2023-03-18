@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Tests.AbstractIN_ADDRTest subclass: #'OS.Tests.IN6_ADDRTest'
+OS.Tests.AbstractIN_ADDRTest
+	subclass: #'OS.Tests.IN6_ADDRTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

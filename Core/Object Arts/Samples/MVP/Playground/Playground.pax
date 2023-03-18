@@ -46,37 +46,43 @@ package!
 
 "Class Definitions"!
 
-Core.Object subclass: #'UI.Examples.PlayShape'
+Core.Object
+	subclass: #'UI.Examples.PlayShape'
 	instanceVariableNames: 'playground'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Examples.PlayShape subclass: #'UI.Examples.RegularPolygon'
+UI.Examples.PlayShape
+	subclass: #'UI.Examples.RegularPolygon'
 	instanceVariableNames: 'color sides position rotation radius'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Examples.RegularPolygon subclass: #'UI.Examples.Circle'
+UI.Examples.RegularPolygon
+	subclass: #'UI.Examples.Circle'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Examples.RegularPolygon subclass: #'UI.Examples.Square'
+UI.Examples.RegularPolygon
+	subclass: #'UI.Examples.Square'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Examples.RegularPolygon subclass: #'UI.Examples.Triangle'
+UI.Examples.RegularPolygon
+	subclass: #'UI.Examples.Triangle'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.ShellView subclass: #'UI.Examples.Playground'
+UI.ShellView
+	subclass: #'UI.Examples.Playground'
 	instanceVariableNames: 'shapes'
 	classVariableNames: ''
 	imports: #()

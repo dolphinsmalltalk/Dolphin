@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.ClassBrowserPlugin subclass: #'Tools.ResourceListPlugin'
+Tools.ClassBrowserPlugin
+	subclass: #'Tools.ResourceListPlugin'
 	instanceVariableNames: 'resourcesPresenter flags'
 	classVariableNames: 'ShowInheritedResourcesMask ShowSubclassResourcesMask'
 	imports: #()

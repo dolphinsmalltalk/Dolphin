@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.SmalltalkToolShell subclass: #'Tools.ViewComposer'
+Tools.SmalltalkToolShell
+	subclass: #'Tools.ViewComposer'
 	instanceVariableNames: 'toolboxPresenter status arenaPresenter inspector composingView ownsComposingView resourceIdentifier addPositionOffset grabbers selections grid viewHierarchyPresenter adornmentRegion primarySelection vcFlags modificationStatus image undoList'
 	classVariableNames: 'Clipboard DefaultGridResolution ExtentImage PositionImage'
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'AdornmentModifiedFlag' -> 16r4.
-		'ModifiedFlag' -> 16r1.
-		'MouseClickFlag' -> 16r2.
-		'RefreshFlag' -> 16r8.
-		'UndoRedoFlag' -> 16r10
-	}!
+			'AdornmentModifiedFlag' -> 16r4.
+			'ModifiedFlag' -> 16r1.
+			'MouseClickFlag' -> 16r2.
+			'RefreshFlag' -> 16r8.
+			'UndoRedoFlag' -> 16r10
+		}!
 Tools.ViewComposer guid: (Core.GUID fromString: '{045641aa-90d2-43e8-a81c-a3f76d7d35b4}')!
 Tools.ViewComposer comment: 'The View Composer is Dolphin''s GUI builder. It is used to graphically create views (the user interface components of the MVP framework). 
 

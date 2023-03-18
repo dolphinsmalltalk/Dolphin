@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.Tests.ClassSelectorTest subclass: #'Tools.Tests.ClassHierarchySelectorTest'
+Tools.Tests.ClassSelectorTest
+	subclass: #'Tools.Tests.ClassHierarchySelectorTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IDispatch subclass: #'OS.COM.IPictureDisp'
+OS.COM.IDispatch
+	subclass: #'OS.COM.IPictureDisp'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

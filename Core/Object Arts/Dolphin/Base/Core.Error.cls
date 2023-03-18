@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Exception subclass: #'Core.Error'
+Core.Exception
+	subclass: #'Core.Error'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IDispatch subclass: #'UI.IDocHostUIHandlerDispatch'
+OS.COM.IDispatch
+	subclass: #'UI.IDocHostUIHandlerDispatch'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.COM private})

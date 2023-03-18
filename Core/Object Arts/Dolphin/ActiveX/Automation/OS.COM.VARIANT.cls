@@ -1,65 +1,68 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.FinalizableStructure subclass: #'OS.COM.VARIANT'
+OS.COM.FinalizableStructure
+	subclass: #'OS.COM.VARIANT'
 	instanceVariableNames: 'data'
 	classVariableNames: 'Unspecified'
 	imports: #(#{OS.Win32Constants} #{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_boolVal' -> 16r8.
-		'_OffsetOf_bstrVal' -> 16r8.
-		'_OffsetOf_bVal' -> 16r8.
-		'_OffsetOf_byref' -> 16r8.
-		'_OffsetOf_cVal' -> 16r8.
-		'_OffsetOf_cyVal' -> 16r8.
-		'_OffsetOf_date' -> 16r8.
-		'_OffsetOf_dblVal' -> 16r8.
-		'_OffsetOf_decVal' -> 16r0.
-		'_OffsetOf_fltVal' -> 16r8.
-		'_OffsetOf_intVal' -> 16r8.
-		'_OffsetOf_iVal' -> 16r8.
-		'_OffsetOf_llVal' -> 16r8.
-		'_OffsetOf_lVal' -> 16r8.
-		'_OffsetOf_parray' -> 16r8.
-		'_OffsetOf_pboolVal' -> 16r8.
-		'_OffsetOf_pbstrVal' -> 16r8.
-		'_OffsetOf_pbVal' -> 16r8.
-		'_OffsetOf_pcVal' -> 16r8.
-		'_OffsetOf_pcyVal' -> 16r8.
-		'_OffsetOf_pdate' -> 16r8.
-		'_OffsetOf_pdblVal' -> 16r8.
-		'_OffsetOf_pdecVal' -> 16r8.
-		'_OffsetOf_pdispVal' -> 16r8.
-		'_OffsetOf_pfltVal' -> 16r8.
-		'_OffsetOf_pintVal' -> 16r8.
-		'_OffsetOf_piVal' -> 16r8.
-		'_OffsetOf_pllVal' -> 16r8.
-		'_OffsetOf_plVal' -> 16r8.
-		'_OffsetOf_pparray' -> 16r8.
-		'_OffsetOf_ppdispVal' -> 16r8.
-		'_OffsetOf_ppunkVal' -> 16r8.
-		'_OffsetOf_pRecInfo' -> 16rC.
-		'_OffsetOf_pscode' -> 16r8.
-		'_OffsetOf_puintVal' -> 16r8.
-		'_OffsetOf_puiVal' -> 16r8.
-		'_OffsetOf_pullVal' -> 16r8.
-		'_OffsetOf_pulVal' -> 16r8.
-		'_OffsetOf_punkVal' -> 16r8.
-		'_OffsetOf_pvarVal' -> 16r8.
-		'_OffsetOf_pvRecord' -> 16r8.
-		'_OffsetOf_scode' -> 16r8.
-		'_OffsetOf_uintVal' -> 16r8.
-		'_OffsetOf_uiVal' -> 16r8.
-		'_OffsetOf_ullVal' -> 16r8.
-		'_OffsetOf_ulVal' -> 16r8.
-		'_OffsetOf_vt' -> 16r0.
-		'_OffsetOf_wReserved1' -> 16r2.
-		'_OffsetOf_wReserved2' -> 16r4.
-		'_OffsetOf_wReserved3' -> 16r6.
-		'_VARIANT_Size' -> 16r10.
-		'VTClasses' -> #(#{Core.UndefinedObject} #{Core.UndefinedObject} #{External.Int16} #{External.Int32} #{External.FLOAT} #{External.DOUBLE} #{OS.COM.CURRENCY} #{OS.COM.DATE} #{OS.COM.BSTR} #{OS.COM.IDispatch} #{OS.HRESULT} #{OS.COM.VARIANT_BOOL} #{OS.COM.VARIANT} #{OS.COM.IUnknown} #{OS.COM.DECIMAL} nil #{External.Int8} #{External.UInt8} #{External.UInt16} #{External.UInt32} #{External.Int64} #{External.UInt64} #{External.Int32} #{External.UInt32} #{External.VOID} #{OS.HRESULT} #{External.Address} #{OS.COM.SAFEARRAY} #{External.Array} #{OS.COM.Record} #{Core.AnsiString} #{Core.Utf16String} nil nil nil nil #{External.Structure} #{External.IntPtr} #{External.UIntPtr} nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #{OS.FILETIME} #{Core.ByteArray} #{OS.COM.IStream} #{OS.COM.IStorage} #{OS.COM.IStream} #{OS.COM.IStorage} #{Core.ByteArray} #{External.UInt32} #{OS.COM.CLSID}).
-		'VTNames' -> #(#nil #null #int16 #int32 #float #double #cy #date #bstr #dispatch #hresult #varbool #variant #unknown #decimal #badVarType #int8 #uint8 #uint16 #uint32 #int64 #uint64 #int32 #uint32 #void #hresult #lpvoid #safearray #carray #typedef #lpstr #lpwstr #badVarType #badVarType #badVarType #badVarType #struct #intptr #uintptr #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #filetime #blob #stream #storage #streamed_object #stored_object #blob_object #cf #clsid)
-	}!
+			'_OffsetOf_boolVal' -> 16r8.
+			'_OffsetOf_bstrVal' -> 16r8.
+			'_OffsetOf_bVal' -> 16r8.
+			'_OffsetOf_byref' -> 16r8.
+			'_OffsetOf_cVal' -> 16r8.
+			'_OffsetOf_cyVal' -> 16r8.
+			'_OffsetOf_date' -> 16r8.
+			'_OffsetOf_dblVal' -> 16r8.
+			'_OffsetOf_decVal' -> 16r0.
+			'_OffsetOf_fltVal' -> 16r8.
+			'_OffsetOf_intVal' -> 16r8.
+			'_OffsetOf_iVal' -> 16r8.
+			'_OffsetOf_llVal' -> 16r8.
+			'_OffsetOf_lVal' -> 16r8.
+			'_OffsetOf_parray' -> 16r8.
+			'_OffsetOf_pboolVal' -> 16r8.
+			'_OffsetOf_pbstrVal' -> 16r8.
+			'_OffsetOf_pbVal' -> 16r8.
+			'_OffsetOf_pcVal' -> 16r8.
+			'_OffsetOf_pcyVal' -> 16r8.
+			'_OffsetOf_pdate' -> 16r8.
+			'_OffsetOf_pdblVal' -> 16r8.
+			'_OffsetOf_pdecVal' -> 16r8.
+			'_OffsetOf_pdispVal' -> 16r8.
+			'_OffsetOf_pfltVal' -> 16r8.
+			'_OffsetOf_pintVal' -> 16r8.
+			'_OffsetOf_piVal' -> 16r8.
+			'_OffsetOf_pllVal' -> 16r8.
+			'_OffsetOf_plVal' -> 16r8.
+			'_OffsetOf_pparray' -> 16r8.
+			'_OffsetOf_ppdispVal' -> 16r8.
+			'_OffsetOf_ppunkVal' -> 16r8.
+			'_OffsetOf_pRecInfo' -> 16rC.
+			'_OffsetOf_pscode' -> 16r8.
+			'_OffsetOf_puintVal' -> 16r8.
+			'_OffsetOf_puiVal' -> 16r8.
+			'_OffsetOf_pullVal' -> 16r8.
+			'_OffsetOf_pulVal' -> 16r8.
+			'_OffsetOf_punkVal' -> 16r8.
+			'_OffsetOf_pvarVal' -> 16r8.
+			'_OffsetOf_pvRecord' -> 16r8.
+			'_OffsetOf_scode' -> 16r8.
+			'_OffsetOf_uintVal' -> 16r8.
+			'_OffsetOf_uiVal' -> 16r8.
+			'_OffsetOf_ullVal' -> 16r8.
+			'_OffsetOf_ulVal' -> 16r8.
+			'_OffsetOf_vt' -> 16r0.
+			'_OffsetOf_wReserved1' -> 16r2.
+			'_OffsetOf_wReserved2' -> 16r4.
+			'_OffsetOf_wReserved3' -> 16r6.
+			'_VARIANT_Size' -> 16r10.
+			'VTClasses'
+				-> #(#{Core.UndefinedObject} #{Core.UndefinedObject} #{External.Int16} #{External.Int32} #{External.FLOAT} #{External.DOUBLE} #{OS.COM.CURRENCY} #{OS.COM.DATE} #{OS.COM.BSTR} #{OS.COM.IDispatch} #{OS.HRESULT} #{OS.COM.VARIANT_BOOL} #{OS.COM.VARIANT} #{OS.COM.IUnknown} #{OS.COM.DECIMAL} nil #{External.Int8} #{External.UInt8} #{External.UInt16} #{External.UInt32} #{External.Int64} #{External.UInt64} #{External.Int32} #{External.UInt32} #{External.VOID} #{OS.HRESULT} #{External.Address} #{OS.COM.SAFEARRAY} #{External.Array} #{OS.COM.Record} #{Core.AnsiString} #{Core.Utf16String} nil nil nil nil #{External.Structure} #{External.IntPtr} #{External.UIntPtr} nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #{OS.FILETIME} #{Core.ByteArray} #{OS.COM.IStream} #{OS.COM.IStorage} #{OS.COM.IStream} #{OS.COM.IStorage} #{Core.ByteArray} #{External.UInt32} #{OS.COM.CLSID}).
+			'VTNames'
+				-> #(#nil #null #int16 #int32 #float #double #cy #date #bstr #dispatch #hresult #varbool #variant #unknown #decimal #badVarType #int8 #uint8 #uint16 #uint32 #int64 #uint64 #int32 #uint32 #void #hresult #lpvoid #safearray #carray #typedef #lpstr #lpwstr #badVarType #badVarType #badVarType #badVarType #struct #intptr #uintptr #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #filetime #blob #stream #storage #streamed_object #stored_object #blob_object #cf #clsid)
+		}!
 OS.COM.VARIANT guid: (Core.GUID fromString: '{c06f3b65-0868-11d3-93af-00a024ca708a}')!
 OS.COM.VARIANT comment: 'VARIANT is an <ExternalStructure> to represent the OLE Automation VARIANT and VARIANTARG types.
 

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'WinHttpServer.HttpServerStructure'
+External.Structure
+	subclass: #'WinHttpServer.HttpServerStructure'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

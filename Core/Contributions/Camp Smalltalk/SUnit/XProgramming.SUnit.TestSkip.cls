@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Notification subclass: #'XProgramming.SUnit.TestSkip'
+Core.Notification
+	subclass: #'XProgramming.SUnit.TestSkip'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

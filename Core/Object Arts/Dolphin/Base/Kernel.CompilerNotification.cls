@@ -1,11 +1,104 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Notification subclass: #'Kernel.CompilerNotification'
+Core.Notification
+	subclass: #'Kernel.CompilerNotification'
 	instanceVariableNames: 'position ranges line extras methodClass source selector offset'
-	classVariableNames: 'ErrorFormats'
+	classVariableNames: ''
 	imports: #(#{Kernel.ParseErrorCodes private})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'ErrorFormats'
+				-> (LookupTable withAll: {
+								16r1 -> 'illegal character ''<2d>'''.
+								16r2 -> 'comment not closed'.
+								16r3 -> 'literal string not closed'.
+								16r4 -> 'constant expected'.
+								16r5 -> 'extended literal expected'.
+								16r6 -> 'meta variable expected'.
+								16r7 -> 'character expected'.
+								16rA -> 'illegal number'.
+								16rB -> 'hex code point expected'.
+								16rC -> 'invalid code point <1s>'.
+								16r21 -> 'temporary list not closed'.
+								16r22 -> 'invalid expression start'.
+								16r23 -> 'nonsense at end of method'.
+								16r24 -> 'nonsense at end of expression'.
+								16r25 -> 'expecting ''}'''.
+								16r26 -> 'expecting '')'''.
+								16r27 -> 'expecting message'.
+								16r28 -> 'no period at end of statement'.
+								16r29 -> 'variable name expected'.
+								16r2A -> 'block argument list not closed'.
+								16r2B -> 'expecting '']'''.
+								16r2C -> 'primitive index expected'.
+								16r2D -> 'primitive index <1s> out of range'.
+								16r2E -> 'expecting ''>'''.
+								16r2F -> 'calling convention expected'.
+								16r30 -> 'unsupported calling convention <1p>'.
+								16r31 -> 'function name or ordinal expected'.
+								16r32 -> 'external type expected'.
+								16r33 -> 'argument type can''t be void'.
+								16r34 -> 'too many indirections for type <2d>'.
+								16r36 -> 'invalid structure class type <1p>'.
+								16r37 -> 'invalid external type qualifier'.
+								16r38 -> 'insufficient argument types'.
+								16r39 -> 'too many argument types'.
+								16r3A -> 'virtual function number expected'.
+								16r3B -> 'virtual function index out of range (1..1024)'.
+								16r3C -> 'illegal text <1p> in literal array'.
+								16r3D -> 'literal array not closed'.
+								16r3E -> 'illegal value <1p> in byte array'.
+								16r3F -> 'literal byte array not closed'.
+								16r40 -> 'error evaluating static expression'.
+								16r41 -> '#ifNotNil: block must have 0 or 1 arguments'.
+								16r42 -> 'Internal Error, see debug output. Please report to Object Arts support'.
+								16r43 -> 'illegal assignment to argument <2p>'.
+								16r44 -> 'too many arguments'.
+								16r45 -> 'too many temporaries'.
+								16r46 -> 'cannot redefine pseudo variable'.
+								16r47 -> 'undeclared <1p>'.
+								16r48 -> 'illegal assignment to constant <2p>'.
+								16r49 -> 'static expression not closed'.
+								16r4A -> 'illegal message selector <1p>'.
+								16r4C -> 'invalid compilation context'.
+								16r4D -> 'incorrect number of arguments for optimized block'.
+								16r4E -> 'expecting literal block'.
+								16r4F -> 'method too large'.
+								16r50 -> 'too many literals'.
+								16r51 -> 'maximum block nesting exceeded'.
+								16r53 -> 'The workspace pools array is invalid'.
+								16r55 -> 'duplicate temporary variable name <1p>'.
+								16r56 -> 'duplicate argument name <1p>'.
+								16r57 -> 'redefining argument <1p>'.
+								16r58 -> 'condition block of <2p> cannot be empty'.
+								16r59 -> 'qualified reference not closed'.
+								16r5A -> 'invalid qualified reference modifier <1p>'.
+								16r5B -> 'literal value expected'.
+								16r5C -> 'namespace class expected'.
+								16r3E8 -> 'redefining argument <1p>'.
+								16r3E9 -> 'redefining temporary variable <1p>'.
+								16r3EA -> 'redefining instance variable <1p>'.
+								16r3EB -> 'redefining static variable <1p>'.
+								16r3EC -> 'message sent to <3s> is not understood by <4p>: <2p>'.
+								16r3ED -> 'undefined selector <2p>'.
+								16r3EE -> 'overridding or redefining an optimized selector may have no effect'.
+								16r3EF -> 'unreferenced temporary <1p>'.
+								16r3F0 -> 'temporary <1p> is read but not written'.
+								16r3F1 -> 'temporary <1p> is possibly read before written'.
+								16r3F2 -> 'temporary <1p> is assigned but never used'.
+								16r3F3 -> 'can''t optimize <2p> (requires niladic block argument)'.
+								16r3F4 -> 'can''t optimize <2p> (requires monadic block argument)'.
+								16r3F5 -> '<2p> expects niladic or monadic block argument'.
+								16r3F6 -> 'niladic block expected as receiver of <2p>'.
+								16r3F7 -> 'unreachable code'.
+								16r3F8 -> 'subclass <4p> does not implement <3p>'.
+								16r3F9 -> 'references boolean class <1p> rather than its instance <2p>'.
+								16r3FA -> '%<mutable> attribute ignored in non-mutator method'.
+								16r7D0 -> 'unreferenced argument <1p>'.
+								16r7D1 -> 'supersends other message <2p>'.
+								16r7D2 -> 'contains hardcoded breakpoint'
+							})
+		}!
 Kernel.CompilerNotification guid: (Core.GUID fromString: '{87b4c56d-026e-11d3-9fd7-00a0cc3e4a32}')!
 Kernel.CompilerNotification isNonInstantiable: true!
 Kernel.CompilerNotification comment: 'CompilerNotification is the abstract class of <Notification>s used to represent lexical, syntax, and semantic errors and warnings detected by the Dolphin <Compiler>, <SmalltalkParser>, and <StSemanticChecker>.

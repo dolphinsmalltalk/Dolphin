@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.LayoutManager subclass: #'UI.BorderLayout'
+UI.LayoutManager
+	subclass: #'UI.BorderLayout'
 	instanceVariableNames: 'horizontalGap verticalGap north south east west center'
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Error subclass: #'Kernel.STBError'
+Core.Error
+	subclass: #'Kernel.STBError'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

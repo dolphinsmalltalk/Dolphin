@@ -21,19 +21,22 @@ package!
 
 "Class Definitions"!
 
-Security subclass: #'Security.Tests'
+Security
+	subclass: #'Security.Tests'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Security.Tests.DolphinSureTrustedDataTest'
+Core.Tests.DolphinTest
+	subclass: #'Security.Tests.DolphinSureTrustedDataTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Security.Tests.SecureHashAlgorithmTest'
+Core.Tests.DolphinTest
+	subclass: #'Security.Tests.SecureHashAlgorithmTest'
 	instanceVariableNames: 'hash'
 	classVariableNames: ''
 	imports: #()

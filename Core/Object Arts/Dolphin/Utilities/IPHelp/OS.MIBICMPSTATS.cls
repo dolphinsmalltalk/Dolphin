@@ -1,26 +1,27 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'OS.MIBICMPSTATS'
+External.Structure
+	subclass: #'OS.MIBICMPSTATS'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_MIBICMPSTATS_Size' -> 16r34.
-		'_OffsetOf_dwAddrMaskReps' -> 16r30.
-		'_OffsetOf_dwAddrMasks' -> 16r2C.
-		'_OffsetOf_dwDestUnreachs' -> 16r8.
-		'_OffsetOf_dwEchoReps' -> 16r20.
-		'_OffsetOf_dwEchos' -> 16r1C.
-		'_OffsetOf_dwErrors' -> 16r4.
-		'_OffsetOf_dwMsgs' -> 16r0.
-		'_OffsetOf_dwParmProbs' -> 16r10.
-		'_OffsetOf_dwRedirects' -> 16r18.
-		'_OffsetOf_dwSrcQuenchs' -> 16r14.
-		'_OffsetOf_dwTimeExcds' -> 16rC.
-		'_OffsetOf_dwTimestampReps' -> 16r28.
-		'_OffsetOf_dwTimestamps' -> 16r24
-	}!
+			'_MIBICMPSTATS_Size' -> 16r34.
+			'_OffsetOf_dwAddrMaskReps' -> 16r30.
+			'_OffsetOf_dwAddrMasks' -> 16r2C.
+			'_OffsetOf_dwDestUnreachs' -> 16r8.
+			'_OffsetOf_dwEchoReps' -> 16r20.
+			'_OffsetOf_dwEchos' -> 16r1C.
+			'_OffsetOf_dwErrors' -> 16r4.
+			'_OffsetOf_dwMsgs' -> 16r0.
+			'_OffsetOf_dwParmProbs' -> 16r10.
+			'_OffsetOf_dwRedirects' -> 16r18.
+			'_OffsetOf_dwSrcQuenchs' -> 16r14.
+			'_OffsetOf_dwTimeExcds' -> 16rC.
+			'_OffsetOf_dwTimestampReps' -> 16r28.
+			'_OffsetOf_dwTimestamps' -> 16r24
+		}!
 OS.MIBICMPSTATS guid: (Core.GUID fromString: '{2dac7cde-bfec-4391-a2e5-1ddf10a3c471}')!
 OS.MIBICMPSTATS comment: '<MIBICMPSTATS> is an <ExternalStructure> class to wrap the struct ''Win32.MIBICMPSTATS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

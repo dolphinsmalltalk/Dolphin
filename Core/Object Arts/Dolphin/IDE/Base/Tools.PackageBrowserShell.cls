@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.SmalltalkToolShell subclass: #'Tools.PackageBrowserShell'
+Tools.SmalltalkToolShell
+	subclass: #'Tools.PackageBrowserShell'
 	instanceVariableNames: 'packagesPresenter classesPresenter methodsPresenter methodRefactoringTool variablesPresenter resourcesPresenter currentCard commentPresenter cardsPresenter updateFlags scriptTextPresenter scriptNamesPresenter prerequisitesPresenter dependentsPresenter statusModel'
 	classVariableNames: 'WordWrapComment'
 	imports: #(#{OS.Win32Constants})

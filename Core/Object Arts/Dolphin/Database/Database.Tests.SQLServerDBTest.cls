@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Database.Tests.DBConnectionTest subclass: #'Database.Tests.SQLServerDBTest'
+Database.Tests.DBConnectionTest
+	subclass: #'Database.Tests.SQLServerDBTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

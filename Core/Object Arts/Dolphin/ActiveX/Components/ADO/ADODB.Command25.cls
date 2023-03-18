@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ADODB.Command15 subclass: #'ADODB.Command25'
+ADODB.Command15
+	subclass: #'ADODB.Command25'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

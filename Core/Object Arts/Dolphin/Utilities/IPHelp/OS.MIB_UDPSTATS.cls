@@ -1,18 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'OS.MIB_UDPSTATS'
+External.Structure
+	subclass: #'OS.MIB_UDPSTATS'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_MIB_UDPSTATS_Size' -> 16r14.
-		'_OffsetOf_dwInDatagrams' -> 16r0.
-		'_OffsetOf_dwInErrors' -> 16r8.
-		'_OffsetOf_dwNoPorts' -> 16r4.
-		'_OffsetOf_dwNumAddrs' -> 16r10.
-		'_OffsetOf_dwOutDatagrams' -> 16rC
-	}!
+			'_MIB_UDPSTATS_Size' -> 16r14.
+			'_OffsetOf_dwInDatagrams' -> 16r0.
+			'_OffsetOf_dwInErrors' -> 16r8.
+			'_OffsetOf_dwNoPorts' -> 16r4.
+			'_OffsetOf_dwNumAddrs' -> 16r10.
+			'_OffsetOf_dwOutDatagrams' -> 16rC
+		}!
 OS.MIB_UDPSTATS guid: (Core.GUID fromString: '{c9d1622e-d10d-4ba8-a634-acebf006ae2e}')!
 OS.MIB_UDPSTATS comment: '<MIB_UDPSTATS> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_UDPSTATS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

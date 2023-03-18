@@ -1,19 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.OLEStructure subclass: #'OS.COM.TLIBATTR'
+OS.COM.OLEStructure
+	subclass: #'OS.COM.TLIBATTR'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_guid' -> 16r0.
-		'_OffsetOf_lcid' -> 16r10.
-		'_OffsetOf_syskind' -> 16r14.
-		'_OffsetOf_wLibFlags' -> 16r1C.
-		'_OffsetOf_wMajorVerNum' -> 16r18.
-		'_OffsetOf_wMinorVerNum' -> 16r1A.
-		'_TLIBATTR_Size' -> 16r20
-	}!
+			'_OffsetOf_guid' -> 16r0.
+			'_OffsetOf_lcid' -> 16r10.
+			'_OffsetOf_syskind' -> 16r14.
+			'_OffsetOf_wLibFlags' -> 16r1C.
+			'_OffsetOf_wMajorVerNum' -> 16r18.
+			'_OffsetOf_wMinorVerNum' -> 16r1A.
+			'_TLIBATTR_Size' -> 16r20
+		}!
 OS.COM.TLIBATTR guid: (Core.GUID fromString: '{c06f3b71-0868-11d3-93af-00a024ca708a}')!
 OS.COM.TLIBATTR comment: 'TLIBATTR is an ExternalStructure class to represent the OLE Automation TLIBATTR structure.
 

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.String variableByteSubclass: #'Core.UtfEncodedString'
+Core.String
+	variableByteSubclass: #'Core.UtfEncodedString'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

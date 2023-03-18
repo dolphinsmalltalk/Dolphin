@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.PermanentLibrary subclass: #'OS.UserLibrary'
+External.PermanentLibrary
+	subclass: #'OS.UserLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.MessageBoxConstants private})

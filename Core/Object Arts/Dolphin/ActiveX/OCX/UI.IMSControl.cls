@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IDispatch subclass: #'UI.IMSControl'
+OS.COM.IDispatch
+	subclass: #'UI.IMSControl'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.COM private})

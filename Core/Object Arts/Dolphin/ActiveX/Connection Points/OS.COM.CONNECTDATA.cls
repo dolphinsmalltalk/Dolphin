@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.OLEStructure subclass: #'OS.COM.CONNECTDATA'
+OS.COM.OLEStructure
+	subclass: #'OS.COM.CONNECTDATA'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_CONNECTDATA_Size' -> 16r8.
-		'_OffsetOf_dwCookie' -> 16r4.
-		'_OffsetOf_punk' -> 16r0
-	}!
+			'_CONNECTDATA_Size' -> 16r8.
+			'_OffsetOf_dwCookie' -> 16r4.
+			'_OffsetOf_punk' -> 16r0
+		}!
 OS.COM.CONNECTDATA guid: (Core.GUID fromString: '{3438d2e1-01d6-446c-8102-5f238099585d}')!
 OS.COM.CONNECTDATA comment: '<CONNECTDATA> is an <ExternalStructure> class to wrap the struct ''OBJIDL.CONNECTDATA'' from type information in the ''ObjIDL Library'' library.
 

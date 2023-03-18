@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMRSCALEVIEWPORTEXTEX'
+OS.ENHMETARECORD
+	subclass: #'OS.EMRSCALEVIEWPORTEXTEX'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_EMRSCALEVIEWPORTEXTEX_Size' -> 16r18.
-		'_OffsetOf_xDenom' -> 16rC.
-		'_OffsetOf_xNum' -> 16r8.
-		'_OffsetOf_yDenom' -> 16r14.
-		'_OffsetOf_yNum' -> 16r10
-	}!
+			'_EMRSCALEVIEWPORTEXTEX_Size' -> 16r18.
+			'_OffsetOf_xDenom' -> 16rC.
+			'_OffsetOf_xNum' -> 16r8.
+			'_OffsetOf_yDenom' -> 16r14.
+			'_OffsetOf_yNum' -> 16r10
+		}!
 OS.EMRSCALEVIEWPORTEXTEX guid: (Core.GUID fromString: '{cb3c696e-59b6-4d1f-9413-f0a1fd89aaeb}')!
 OS.EMRSCALEVIEWPORTEXTEX comment: '<EMRSCALEVIEWPORTEXTEX> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSCALEVIEWPORTEXTEX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

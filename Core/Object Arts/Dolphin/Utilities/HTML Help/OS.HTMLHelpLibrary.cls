@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.DynamicLinkLibrary subclass: #'OS.HTMLHelpLibrary'
+External.DynamicLinkLibrary
+	subclass: #'OS.HTMLHelpLibrary'
 	instanceVariableNames: 'cookie'
 	classVariableNames: ''
 	imports: #(#{OS.HTMLHelpConstants})

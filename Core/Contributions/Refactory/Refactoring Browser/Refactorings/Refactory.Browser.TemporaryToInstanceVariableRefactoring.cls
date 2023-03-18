@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.MethodRefactoring subclass: #'Refactory.Browser.TemporaryToInstanceVariableRefactoring'
+Refactory.Browser.MethodRefactoring
+	subclass: #'Refactory.Browser.TemporaryToInstanceVariableRefactoring'
 	instanceVariableNames: 'selector temporaryVariableName'
 	classVariableNames: ''
 	imports: #()

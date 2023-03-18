@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.CommonDialog subclass: #'UI.ColorDialog'
+UI.CommonDialog
+	subclass: #'UI.ColorDialog'
 	instanceVariableNames: 'validationBlock'
 	classVariableNames: 'CustomColors WM_COLOROK'
 	imports: #()

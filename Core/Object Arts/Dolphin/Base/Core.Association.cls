@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Magnitude subclass: #'Core.Association'
+Core.Magnitude
+	subclass: #'Core.Association'
 	instanceVariableNames: 'key value'
 	classVariableNames: ''
 	imports: #()

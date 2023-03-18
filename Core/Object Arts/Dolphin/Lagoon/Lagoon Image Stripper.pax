@@ -37,83 +37,89 @@ package!
 
 "Class Definitions"!
 
-Core.Object subclass: #BasicImageStripper
+Core.Object
+	subclass: #BasicImageStripper
 	instanceVariableNames: 'events'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #DeploymentContext
+Core.Object
+	subclass: #DeploymentContext
 	instanceVariableNames: 'logStream elementStack aspectSetters aspectGetters developmentClasses preservedMessages rootClasses supersentMethods notifier runFlags logFilename'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #ImageStripperProgress
+Core.Object
+	subclass: #ImageStripperProgress
 	instanceVariableNames: 'handle oldWndProc progressProcess progressRange progress status cursor'
 	classVariableNames: 'MessageMap'
 	imports: #(#{OS.Win32Constants private} #{OS private})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'CaptionId' -> 16r3F9.
-		'ExplanationId' -> 16r3FA.
-		'ProgressId' -> 16r3F7.
-		'StatusId' -> 16r3F8
-	}!
-Core.Object subclass: #'OS.VersionResource'
+			'CaptionId' -> 16r3F9.
+			'ExplanationId' -> 16r3FA.
+			'ProgressId' -> 16r3F7.
+			'StatusId' -> 16r3F8
+		}!
+Core.Object
+	subclass: #'OS.VersionResource'
 	instanceVariableNames: 'fixedInfo stringTables translations'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BasicImageStripper subclass: #ImageStripper
+BasicImageStripper
+	subclass: #ImageStripper
 	instanceVariableNames: 'rootPackageName executableName runtimeSessionManagerClass flags preStripScript versionResource exePath stubFilePath deploymentContext _unused11 _unused12 _unused13 snapshotType _unused15 _unused16 _unused17 _unused18 _unused19 _unused20 _unused21 _unused22'
 	classVariableNames: ''
 	imports: #(#{OS.MessageBoxConstants} #{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'AllResourcesStripped' -> 16r1.
-		'ClearGuidsMask' -> 16r1.
-		'CompileStructsMask' -> 16r100.
-		'EmptyMethodDictsMask' -> 16r800.
-		'FoldBytecodesMask' -> 16r1000.
-		'FoldMethodDictsMask' -> 16r200.
-		'FoldStringsMask' -> 16r2.
-		'IgnoreViewReferencesMask' -> 16r80000.
-		'KeepImageMask' -> 16r2000000.
-		'LogLiveClassesMask' -> 16r8000000.
-		'LogPrerequisitesMask' -> 16r40000.
-		'LogReferencesMask' -> 16r2000.
-		'NoXPManifestMask' -> 16r200000.
-		'PreserveAspectsMask' -> 16r4.
-		'PurgeStubbornClassesMask' -> 16r4000000.
-		'RemoveAbstractUnreachable' -> 16r2.
-		'RetainDevSysMask' -> 16r10000000.
-		'RetainInstVarNamesMask' -> 16r8.
-		'RetainSubclassRespMask' -> 16r800000.
-		'StripClassBuilderMask' -> 16r4000.
-		'StripClassesMask' -> 16r10.
-		'StripClassInfoMask' -> 16r20.
-		'StripDeprecatedMask' -> 16r10000.
-		'StripMethodsMask' -> 16r40.
-		'StripPackagesMask' -> 16r20000.
-		'StripResourcesMask' -> 16r80.
-		'StripShouldNotImplMask' -> 16r8000.
-		'ToGoMask' -> 16r100000.
-		'UnattendedMask' -> 16r1000000.
-		'WriteLogMask' -> 16r400
-	}!
-OS.Win32Structure subclass: #'OS.VS_VERSION_INFO_HEADER'
+			'AllResourcesStripped' -> 16r1.
+			'ClearGuidsMask' -> 16r1.
+			'CompileStructsMask' -> 16r100.
+			'EmptyMethodDictsMask' -> 16r800.
+			'FoldBytecodesMask' -> 16r1000.
+			'FoldMethodDictsMask' -> 16r200.
+			'FoldStringsMask' -> 16r2.
+			'IgnoreViewReferencesMask' -> 16r80000.
+			'KeepImageMask' -> 16r2000000.
+			'LogLiveClassesMask' -> 16r8000000.
+			'LogPrerequisitesMask' -> 16r40000.
+			'LogReferencesMask' -> 16r2000.
+			'NoXPManifestMask' -> 16r200000.
+			'PreserveAspectsMask' -> 16r4.
+			'PurgeStubbornClassesMask' -> 16r4000000.
+			'RemoveAbstractUnreachable' -> 16r2.
+			'RetainDevSysMask' -> 16r10000000.
+			'RetainInstVarNamesMask' -> 16r8.
+			'RetainSubclassRespMask' -> 16r800000.
+			'StripClassBuilderMask' -> 16r4000.
+			'StripClassesMask' -> 16r10.
+			'StripClassInfoMask' -> 16r20.
+			'StripDeprecatedMask' -> 16r10000.
+			'StripMethodsMask' -> 16r40.
+			'StripPackagesMask' -> 16r20000.
+			'StripResourcesMask' -> 16r80.
+			'StripShouldNotImplMask' -> 16r8000.
+			'ToGoMask' -> 16r100000.
+			'UnattendedMask' -> 16r1000000.
+			'WriteLogMask' -> 16r400
+		}!
+OS.Win32Structure
+	subclass: #'OS.VS_VERSION_INFO_HEADER'
 	instanceVariableNames: 'key valueOffset'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_wLength' -> 16r0.
-		'_OffsetOf_wType' -> 16r4.
-		'_OffsetOf_wValueLength' -> 16r2.
-		'_VS_VERSION_INFO_HEADER_Size' -> 16r6
-	}!
+			'_OffsetOf_wLength' -> 16r0.
+			'_OffsetOf_wType' -> 16r4.
+			'_OffsetOf_wValueLength' -> 16r2.
+			'_VS_VERSION_INFO_HEADER_Size' -> 16r6
+		}!
 
 "Loose Methods"!
 

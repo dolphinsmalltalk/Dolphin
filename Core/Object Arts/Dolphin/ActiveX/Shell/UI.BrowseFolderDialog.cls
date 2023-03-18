@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.CommonDialog subclass: #'UI.BrowseFolderDialog'
+UI.CommonDialog
+	subclass: #'UI.BrowseFolderDialog'
 	instanceVariableNames: 'style bfFlags'
 	classVariableNames: ''
 	imports: #(#{OS.ShellConstants})
 	classInstanceVariableNames: ''
-	classConstants: {
-		'InitializedMask' -> 16r1
-	}!
+	classConstants: { 'InitializedMask' -> 16r1 }!
 UI.BrowseFolderDialog guid: (Core.GUID fromString: '{87b4c6af-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.BrowseFolderDialog comment: 'BrowserFolderDialog is a <valueDialogPresenter> implementing the Windows SHBrowseForFolder common dialog. The associated <valueModel> contains a <readableString> indicating the path of the chosen folder.
 

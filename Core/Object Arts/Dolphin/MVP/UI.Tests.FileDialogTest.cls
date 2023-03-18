@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTest subclass: #'UI.Tests.FileDialogTest'
+Core.Tests.DolphinTest
+	subclass: #'UI.Tests.FileDialogTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

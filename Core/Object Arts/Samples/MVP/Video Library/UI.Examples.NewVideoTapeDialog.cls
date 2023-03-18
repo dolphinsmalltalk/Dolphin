@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ValueDialog subclass: #'UI.Examples.NewVideoTapeDialog'
+UI.ValueDialog
+	subclass: #'UI.Examples.NewVideoTapeDialog'
 	instanceVariableNames: 'namePresenter lengthPresenter'
 	classVariableNames: ''
 	imports: #()

@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.OLEStructure subclass: #'OS.COM.COSERVERINFO'
+OS.COM.OLEStructure
+	subclass: #'OS.COM.COSERVERINFO'
 	instanceVariableNames: 'hostName'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_COSERVERINFO_Size' -> 16r10.
-		'_OffsetOf_dwReserved1' -> 16r0.
-		'_OffsetOf_dwReserved2' -> 16rC.
-		'_OffsetOf_pAuthInfo' -> 16r8.
-		'_OffsetOf_pwszName' -> 16r4
-	}!
+			'_COSERVERINFO_Size' -> 16r10.
+			'_OffsetOf_dwReserved1' -> 16r0.
+			'_OffsetOf_dwReserved2' -> 16rC.
+			'_OffsetOf_pAuthInfo' -> 16r8.
+			'_OffsetOf_pwszName' -> 16r4
+		}!
 OS.COM.COSERVERINFO guid: (Core.GUID fromString: '{87b4c5b4-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.COM.COSERVERINFO comment: '`OS.COM.COSERVERINFO` is an External.Structure class to represent the DCOM COSERVERINFO structure.
 

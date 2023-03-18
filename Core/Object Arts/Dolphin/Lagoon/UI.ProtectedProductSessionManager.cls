@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.RuntimeSessionManager subclass: #'UI.ProtectedProductSessionManager'
+UI.RuntimeSessionManager
+	subclass: #'UI.ProtectedProductSessionManager'
 	instanceVariableNames: 'encryptedClasses'
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTest subclass: #'UI.Tests.RadioButtonSetPresenterTest'
+Core.Tests.DolphinTest
+	subclass: #'UI.Tests.RadioButtonSetPresenterTest'
 	instanceVariableNames: 'radioSet'
 	classVariableNames: ''
 	imports: #()

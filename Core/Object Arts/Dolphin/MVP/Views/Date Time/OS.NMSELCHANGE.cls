@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.NMHDR subclass: #'OS.NMSELCHANGE'
+OS.NMHDR
+	subclass: #'OS.NMSELCHANGE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_NMSELCHANGE_Size' -> 16r2C.
-		'_OffsetOf_stSelEnd' -> 16r1C.
-		'_OffsetOf_stSelStart' -> 16rC
-	}!
+			'_NMSELCHANGE_Size' -> 16r2C.
+			'_OffsetOf_stSelEnd' -> 16r1C.
+			'_OffsetOf_stSelStart' -> 16rC
+		}!
 OS.NMSELCHANGE guid: (Core.GUID fromString: '{7ee1558c-5390-4f86-ada9-ae1300922720}')!
 OS.NMSELCHANGE comment: ''!
 !OS.NMSELCHANGE categoriesForClass!External-Data-Structured-Win32! !

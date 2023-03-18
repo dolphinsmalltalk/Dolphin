@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.SmalltalkWorkspace subclass: #'Tools.MethodWorkspace'
+Tools.SmalltalkWorkspace
+	subclass: #'Tools.MethodWorkspace'
 	instanceVariableNames: 'parseTree refactoringTool'
 	classVariableNames: 'AutoParseDwell'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'NoAutoParseMask' -> 16r100000.
-		'NoSelectionMatching' -> 16r200000
-	}!
+	classConstants: { 'NoAutoParseMask' -> 16r100000. 'NoSelectionMatching' -> 16r200000 }!
 Tools.MethodWorkspace guid: (Core.GUID fromString: '{d7285d4c-35b2-4b52-a673-2e17fde39fec}')!
 Tools.MethodWorkspace comment: 'MethodWorkspace is a specialised <SmalltalkWorkspace> for displaying method source that expects to be contained in a <MethodBrowser>.
 

@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.UInt16 subclass: #'External.Int16'
+External.UInt16
+	subclass: #'External.Int16'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_Int16_Size' -> 16r2
-	}!
+	classConstants: { '_Int16_Size' -> 16r2 }!
 External.Int16 guid: (Core.GUID fromString: '{87b4c5ac-026e-11d3-9fd7-00a0cc3e4a32}')!
 External.Int16 comment: '<SWORD> is an <ExternalStructure> class to wrap the Win32 type of the same name.
 

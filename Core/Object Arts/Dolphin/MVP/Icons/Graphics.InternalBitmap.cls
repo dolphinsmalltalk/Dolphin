@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Graphics.InternalBitmap'
+Core.Object
+	subclass: #'Graphics.InternalBitmap'
 	instanceVariableNames: 'gdiplusBitmap'
 	classVariableNames: ''
 	imports: #()

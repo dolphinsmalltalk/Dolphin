@@ -1,18 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.DOCINFOW'
+OS.Win32Structure
+	subclass: #'OS.DOCINFOW'
 	instanceVariableNames: 'docName'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_DOCINFOW_Size' -> 16r14.
-		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_fwType' -> 16r10.
-		'_OffsetOf_lpszDatatype' -> 16rC.
-		'_OffsetOf_lpszDocName' -> 16r4.
-		'_OffsetOf_lpszOutput' -> 16r8
-	}!
+			'_DOCINFOW_Size' -> 16r14.
+			'_OffsetOf_dwSize' -> 16r0.
+			'_OffsetOf_fwType' -> 16r10.
+			'_OffsetOf_lpszDatatype' -> 16rC.
+			'_OffsetOf_lpszDocName' -> 16r4.
+			'_OffsetOf_lpszOutput' -> 16r8
+		}!
 OS.DOCINFOW guid: (Core.GUID fromString: '{87b4c5e8-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.DOCINFOW comment: 'DOCINFO is an <ExternalStructure> class which represents the Win32 DOCINFO structure of the same name.
 

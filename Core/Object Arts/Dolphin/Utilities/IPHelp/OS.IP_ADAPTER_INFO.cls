@@ -1,31 +1,32 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'OS.IP_ADAPTER_INFO'
+External.Structure
+	subclass: #'OS.IP_ADAPTER_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_IP_ADAPTER_INFO_Size' -> 16r280.
-		'_OffsetOf_AdapterName' -> 16r8.
-		'_OffsetOf_Address' -> 16r194.
-		'_OffsetOf_AddressLength' -> 16r190.
-		'_OffsetOf_ComboIndex' -> 16r4.
-		'_OffsetOf_CurrentIpAddress' -> 16r1A8.
-		'_OffsetOf_Description' -> 16r10C.
-		'_OffsetOf_DhcpEnabled' -> 16r1A4.
-		'_OffsetOf_DhcpServer' -> 16r1FC.
-		'_OffsetOf_GatewayList' -> 16r1D4.
-		'_OffsetOf_HaveWins' -> 16r224.
-		'_OffsetOf_index' -> 16r19C.
-		'_OffsetOf_IpAddressList' -> 16r1AC.
-		'_OffsetOf_LeaseExpires' -> 16r27C.
-		'_OffsetOf_LeaseObtained' -> 16r278.
-		'_OffsetOf_Next' -> 16r0.
-		'_OffsetOf_PrimaryWinsServer' -> 16r228.
-		'_OffsetOf_SecondaryWinsServer' -> 16r250.
-		'_OffsetOf_type' -> 16r1A0
-	}!
+			'_IP_ADAPTER_INFO_Size' -> 16r280.
+			'_OffsetOf_AdapterName' -> 16r8.
+			'_OffsetOf_Address' -> 16r194.
+			'_OffsetOf_AddressLength' -> 16r190.
+			'_OffsetOf_ComboIndex' -> 16r4.
+			'_OffsetOf_CurrentIpAddress' -> 16r1A8.
+			'_OffsetOf_Description' -> 16r10C.
+			'_OffsetOf_DhcpEnabled' -> 16r1A4.
+			'_OffsetOf_DhcpServer' -> 16r1FC.
+			'_OffsetOf_GatewayList' -> 16r1D4.
+			'_OffsetOf_HaveWins' -> 16r224.
+			'_OffsetOf_index' -> 16r19C.
+			'_OffsetOf_IpAddressList' -> 16r1AC.
+			'_OffsetOf_LeaseExpires' -> 16r27C.
+			'_OffsetOf_LeaseObtained' -> 16r278.
+			'_OffsetOf_Next' -> 16r0.
+			'_OffsetOf_PrimaryWinsServer' -> 16r228.
+			'_OffsetOf_SecondaryWinsServer' -> 16r250.
+			'_OffsetOf_type' -> 16r1A0
+		}!
 OS.IP_ADAPTER_INFO guid: (Core.GUID fromString: '{30f77c44-1f24-4b31-9311-dc3a730c4d4e}')!
 OS.IP_ADAPTER_INFO comment: '<IP_ADAPTER_INFO> is an <ExternalStructure> class to wrap the struct ''Win32.IP_ADAPTER_INFO'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ResourceSTBAccessor subclass: #ResourceSTBByteArrayAccessor
+ResourceSTBAccessor
+	subclass: #ResourceSTBByteArrayAccessor
 	instanceVariableNames: 'byteArray'
 	classVariableNames: ''
 	imports: #()

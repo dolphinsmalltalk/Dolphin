@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'OS.FIXED_INFO'
+External.Structure
+	subclass: #'OS.FIXED_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

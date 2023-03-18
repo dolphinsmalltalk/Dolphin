@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ValuePresenter subclass: #'UI.FontPresenter'
+UI.ValuePresenter
+	subclass: #'UI.FontPresenter'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -1,42 +1,43 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-BasicImageStripper subclass: #ImageStripper
+BasicImageStripper
+	subclass: #ImageStripper
 	instanceVariableNames: 'rootPackageName executableName runtimeSessionManagerClass flags preStripScript versionResource exePath stubFilePath deploymentContext _unused11 _unused12 _unused13 snapshotType _unused15 _unused16 _unused17 _unused18 _unused19 _unused20 _unused21 _unused22'
 	classVariableNames: ''
 	imports: #(#{OS.MessageBoxConstants} #{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'AllResourcesStripped' -> 16r1.
-		'ClearGuidsMask' -> 16r1.
-		'CompileStructsMask' -> 16r100.
-		'EmptyMethodDictsMask' -> 16r800.
-		'FoldBytecodesMask' -> 16r1000.
-		'FoldMethodDictsMask' -> 16r200.
-		'FoldStringsMask' -> 16r2.
-		'IgnoreViewReferencesMask' -> 16r80000.
-		'KeepImageMask' -> 16r2000000.
-		'LogLiveClassesMask' -> 16r8000000.
-		'LogPrerequisitesMask' -> 16r40000.
-		'LogReferencesMask' -> 16r2000.
-		'NoXPManifestMask' -> 16r200000.
-		'PreserveAspectsMask' -> 16r4.
-		'PurgeStubbornClassesMask' -> 16r4000000.
-		'RemoveAbstractUnreachable' -> 16r2.
-		'RetainDevSysMask' -> 16r10000000.
-		'RetainInstVarNamesMask' -> 16r8.
-		'RetainSubclassRespMask' -> 16r800000.
-		'StripClassBuilderMask' -> 16r4000.
-		'StripClassesMask' -> 16r10.
-		'StripClassInfoMask' -> 16r20.
-		'StripDeprecatedMask' -> 16r10000.
-		'StripMethodsMask' -> 16r40.
-		'StripPackagesMask' -> 16r20000.
-		'StripResourcesMask' -> 16r80.
-		'StripShouldNotImplMask' -> 16r8000.
-		'ToGoMask' -> 16r100000.
-		'UnattendedMask' -> 16r1000000.
-		'WriteLogMask' -> 16r400
-	}!
+			'AllResourcesStripped' -> 16r1.
+			'ClearGuidsMask' -> 16r1.
+			'CompileStructsMask' -> 16r100.
+			'EmptyMethodDictsMask' -> 16r800.
+			'FoldBytecodesMask' -> 16r1000.
+			'FoldMethodDictsMask' -> 16r200.
+			'FoldStringsMask' -> 16r2.
+			'IgnoreViewReferencesMask' -> 16r80000.
+			'KeepImageMask' -> 16r2000000.
+			'LogLiveClassesMask' -> 16r8000000.
+			'LogPrerequisitesMask' -> 16r40000.
+			'LogReferencesMask' -> 16r2000.
+			'NoXPManifestMask' -> 16r200000.
+			'PreserveAspectsMask' -> 16r4.
+			'PurgeStubbornClassesMask' -> 16r4000000.
+			'RemoveAbstractUnreachable' -> 16r2.
+			'RetainDevSysMask' -> 16r10000000.
+			'RetainInstVarNamesMask' -> 16r8.
+			'RetainSubclassRespMask' -> 16r800000.
+			'StripClassBuilderMask' -> 16r4000.
+			'StripClassesMask' -> 16r10.
+			'StripClassInfoMask' -> 16r20.
+			'StripDeprecatedMask' -> 16r10000.
+			'StripMethodsMask' -> 16r40.
+			'StripPackagesMask' -> 16r20000.
+			'StripResourcesMask' -> 16r80.
+			'StripShouldNotImplMask' -> 16r8000.
+			'ToGoMask' -> 16r100000.
+			'UnattendedMask' -> 16r1000000.
+			'WriteLogMask' -> 16r400
+		}!
 ImageStripper guid: (Core.GUID fromString: '{87b4c667-026e-11d3-9fd7-00a0cc3e4a32}')!
 ImageStripper comment: 'An ImageStripper holds deployment information that indicates how a Dolphin image should be stripped of redundant objects during deployment. ImageStripper is part of the Application Deployment Kit package.
 

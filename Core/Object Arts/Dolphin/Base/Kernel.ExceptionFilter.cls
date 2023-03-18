@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Kernel.ExceptionFilter'
+Core.Object
+	subclass: #'Kernel.ExceptionFilter'
 	instanceVariableNames: 'outer discriminator'
 	classVariableNames: ''
 	imports: #()

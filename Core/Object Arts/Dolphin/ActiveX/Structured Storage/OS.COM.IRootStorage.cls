@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IUnknown subclass: #'OS.COM.IRootStorage'
+OS.COM.IUnknown
+	subclass: #'OS.COM.IRootStorage'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

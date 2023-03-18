@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Tools.Scintilla.ScintillaViewGenerator'
+Core.Object
+	subclass: #'Tools.Scintilla.ScintillaViewGenerator'
 	instanceVariableNames: 'events commentQueue lexerConstantPrefixes previewChanges commands parsingDeprecated model constantsPool generatedSelectors aliases functions defaultReturnValues'
 	classVariableNames: ''
 	imports: #(#{UI.Scintilla})

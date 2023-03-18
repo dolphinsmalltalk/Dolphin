@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMRSETMAPPERFLAGS'
+OS.ENHMETARECORD
+	subclass: #'OS.EMRSETMAPPERFLAGS'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_EMRSETMAPPERFLAGS_Size' -> 16rC.
-		'_OffsetOf_dwFlags' -> 16r8
-	}!
+	classConstants: { '_EMRSETMAPPERFLAGS_Size' -> 16rC. '_OffsetOf_dwFlags' -> 16r8 }!
 OS.EMRSETMAPPERFLAGS guid: (Core.GUID fromString: '{161d7d16-953a-489a-a7f8-b02ce12b0021}')!
 OS.EMRSETMAPPERFLAGS comment: '<EMRSETMAPPERFLAGS> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETMAPPERFLAGS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.IpHlpApiTableStruct subclass: #'OS.IP_ADAPTER_ORDER_MAP'
+OS.IpHlpApiTableStruct
+	subclass: #'OS.IP_ADAPTER_ORDER_MAP'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_IP_ADAPTER_ORDER_MAP_Size' -> 16r8.
-		'_OffsetOf_table' -> 16r4
-	}!
+	classConstants: { '_IP_ADAPTER_ORDER_MAP_Size' -> 16r8. '_OffsetOf_table' -> 16r4 }!
 OS.IP_ADAPTER_ORDER_MAP guid: (Core.GUID fromString: '{975761ac-0340-468d-bae7-f24198e8f83a}')!
 OS.IP_ADAPTER_ORDER_MAP comment: '<IP_ADAPTER_ORDER_MAP> is an <ExternalStructure> class to wrap the struct ''Win32.IP_ADAPTER_ORDER_MAP'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

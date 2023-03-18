@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Core.Locale'
+Core.Object
+	subclass: #'Core.Locale'
 	instanceVariableNames: 'numberFormat'
 	classVariableNames: 'InstalledUILanguages Invariant SystemDefault TimeZoneInfo UserDefault'
 	imports: #(#{OS.NlsConstants})
 	classInstanceVariableNames: ''
-	classConstants: {
-		'NoUserOverrideMask' -> 16r1000000
-	}!
+	classConstants: { 'NoUserOverrideMask' -> 16r1000000 }!
 Core.Locale guid: (Core.GUID fromString: '{87b4c49a-026e-11d3-9fd7-00a0cc3e4a32}')!
 Core.Locale isNonInstantiable: true!
 Core.Locale comment: ''!

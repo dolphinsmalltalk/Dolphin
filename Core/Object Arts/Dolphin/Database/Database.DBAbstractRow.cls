@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Database.DBAbstractRow'
+Core.Object
+	subclass: #'Database.DBAbstractRow'
 	instanceVariableNames: 'columns contents selectors status'
 	classVariableNames: ''
 	imports: #(#{OS.ODBCConstants})

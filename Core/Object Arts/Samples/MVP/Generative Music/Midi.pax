@@ -26,24 +26,27 @@ package!
 
 "Class Definitions"!
 
-Kernel.SharedPool subclass: #'OS.MidiConstants'
+Kernel.SharedPool
+	subclass: #'OS.MidiConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'MidiChannelNoteOff' -> 16r8.
-		'MidiChannelNoteOn' -> 16r9.
-		'MidiControlChange' -> 16rB.
-		'MidiProgramChange' -> 16rC
-	}!
-Core.Object subclass: #'OS.MIDIOut'
+			'MidiChannelNoteOff' -> 16r8.
+			'MidiChannelNoteOn' -> 16r9.
+			'MidiControlChange' -> 16rB.
+			'MidiProgramChange' -> 16rC
+		}!
+Core.Object
+	subclass: #'OS.MIDIOut'
 	instanceVariableNames: 'handle'
 	classVariableNames: ''
 	imports: #(#{OS.MidiConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'External.MidiOutChannel'
+Core.Object
+	subclass: #'External.MidiOutChannel'
 	instanceVariableNames: 'midiout noteProcess octaveShift'
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Tools.AXTypeLibRegistration'
+Core.Object
+	subclass: #'Tools.AXTypeLibRegistration'
 	instanceVariableNames: 'description guidString versionString minor major'
 	classVariableNames: ''
 	imports: #(#{OS.COM private})

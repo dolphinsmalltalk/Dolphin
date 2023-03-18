@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Security.DolphinSureCertificateInfo'
+Core.Object
+	subclass: #'Security.DolphinSureCertificateInfo'
 	instanceVariableNames: 'serial owner details issued expiry publicKey'
 	classVariableNames: 'ValidStbClasses'
 	imports: #()

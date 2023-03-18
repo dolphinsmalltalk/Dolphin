@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.SmalllintPlugin subclass: #'Tools.CodeRewriterPlugin'
+Tools.SmalllintPlugin
+	subclass: #'Tools.CodeRewriterPlugin'
 	instanceVariableNames: 'searchTextPresenter replaceTextPresenter isMethodPresenter'
 	classVariableNames: ''
 	imports: #()

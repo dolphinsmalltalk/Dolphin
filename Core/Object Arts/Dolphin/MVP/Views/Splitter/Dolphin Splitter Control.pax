@@ -20,14 +20,13 @@ package!
 
 "Class Definitions"!
 
-UI.View subclass: #'UI.Splitter'
+UI.View
+	subclass: #'UI.Splitter'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'FlatMask' -> 16r100000
-	}!
+	classConstants: { 'FlatMask' -> 16r100000 }!
 
 "End of package definition"!
 

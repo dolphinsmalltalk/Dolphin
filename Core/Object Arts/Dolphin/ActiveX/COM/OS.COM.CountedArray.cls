@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.ExternalArray subclass: #'OS.COM.CountedArray'
+External.ExternalArray
+	subclass: #'OS.COM.CountedArray'
 	instanceVariableNames: 'elements'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_CountedArray_Size' -> 16r8.
-		'_OffsetOf_cElems' -> 16r0.
-		'_OffsetOf_pElems' -> 16r4
-	}!
+			'_CountedArray_Size' -> 16r8.
+			'_OffsetOf_cElems' -> 16r0.
+			'_OffsetOf_pElems' -> 16r4
+		}!
 OS.COM.CountedArray guid: (Core.GUID fromString: '{44a86404-b2fe-11d3-b376-080046056106}')!
 OS.COM.CountedArray isNonInstantiable: true!
 OS.COM.CountedArray comment: 'OLECountedArray is an abstract base class for counted array structures used by various OLE/COM interfaces to input/output variable length arrays, where the array storage is allocated from COM task memory.'!

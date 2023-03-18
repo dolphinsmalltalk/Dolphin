@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'UI.TreeNode'
+Core.Object
+	subclass: #'UI.TreeNode'
 	instanceVariableNames: 'parent children object'
 	classVariableNames: ''
 	imports: #()

@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMREXCLUDECLIPRECT'
+OS.ENHMETARECORD
+	subclass: #'OS.EMREXCLUDECLIPRECT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_EMREXCLUDECLIPRECT_Size' -> 16r18.
-		'_OffsetOf_rclClip' -> 16r8
-	}!
+	classConstants: { '_EMREXCLUDECLIPRECT_Size' -> 16r18. '_OffsetOf_rclClip' -> 16r8 }!
 OS.EMREXCLUDECLIPRECT guid: (Core.GUID fromString: '{8747d7ee-6f40-4b1b-a573-4097e175337d}')!
 OS.EMREXCLUDECLIPRECT comment: '<EMREXCLUDECLIPRECT> is an <ExternalStructure> class to wrap the struct ''Win32.EMREXCLUDECLIPRECT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

@@ -1,24 +1,25 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.CommonDialogStructure subclass: #'OS.FINDREPLACEW'
+OS.CommonDialogStructure
+	subclass: #'OS.FINDREPLACEW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_FINDREPLACEW_Size' -> 16r28.
-		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_flags' -> 16rC.
-		'_OffsetOf_hInstance' -> 16r8.
-		'_OffsetOf_hwndOwner' -> 16r4.
-		'_OffsetOf_lCustData' -> 16r1C.
-		'_OffsetOf_lpfnHook' -> 16r20.
-		'_OffsetOf_lpstrFindWhat' -> 16r10.
-		'_OffsetOf_lpstrReplaceWith' -> 16r14.
-		'_OffsetOf_lpTemplateName' -> 16r24.
-		'_OffsetOf_wFindWhatLen' -> 16r18.
-		'_OffsetOf_wReplaceWithLen' -> 16r1A
-	}!
+			'_FINDREPLACEW_Size' -> 16r28.
+			'_OffsetOf_dwSize' -> 16r0.
+			'_OffsetOf_flags' -> 16rC.
+			'_OffsetOf_hInstance' -> 16r8.
+			'_OffsetOf_hwndOwner' -> 16r4.
+			'_OffsetOf_lCustData' -> 16r1C.
+			'_OffsetOf_lpfnHook' -> 16r20.
+			'_OffsetOf_lpstrFindWhat' -> 16r10.
+			'_OffsetOf_lpstrReplaceWith' -> 16r14.
+			'_OffsetOf_lpTemplateName' -> 16r24.
+			'_OffsetOf_wFindWhatLen' -> 16r18.
+			'_OffsetOf_wReplaceWithLen' -> 16r1A
+		}!
 OS.FINDREPLACEW guid: (Core.GUID fromString: '{87b4c5f2-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.FINDREPLACEW comment: 'FINDREPLACE is a <Win32lStructure> which represents the Windows common dialog structure of the same name. It is used in conjunction with the FindText() and ReplaceText() APIs to to contain information about a search or replace operation.
 '!

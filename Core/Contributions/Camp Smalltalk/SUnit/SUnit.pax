@@ -23,37 +23,43 @@ package!
 
 "Class Definitions"!
 
-Core.Object subclass: #'XProgramming.SUnit.TestCase'
+Core.Object
+	subclass: #'XProgramming.SUnit.TestCase'
 	instanceVariableNames: 'testSelector'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'XProgramming.SUnit.TestCaseResult'
+Core.Object
+	subclass: #'XProgramming.SUnit.TestCaseResult'
 	instanceVariableNames: 'case outcome duration signal stacktrace ip testMethod'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'XProgramming.SUnit.TestResource'
+Core.Object
+	subclass: #'XProgramming.SUnit.TestResource'
 	instanceVariableNames: 'name description'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: 'current'
 	classConstants: {}!
-Core.Object subclass: #'XProgramming.SUnit.TestResult'
+Core.Object
+	subclass: #'XProgramming.SUnit.TestResult'
 	instanceVariableNames: 'results failures errors passed skipped duration'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'XProgramming.SUnit.TestSuite'
+Core.Object
+	subclass: #'XProgramming.SUnit.TestSuite'
 	instanceVariableNames: 'tests resources name'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Notification subclass: #'XProgramming.SUnit.TestSkip'
+Core.Notification
+	subclass: #'XProgramming.SUnit.TestSkip'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

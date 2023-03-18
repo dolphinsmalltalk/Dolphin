@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.FinalizableStructure subclass: #'OS.COM.Record'
+OS.COM.FinalizableStructure
+	subclass: #'OS.COM.Record'
 	instanceVariableNames: 'recordInfo owner'
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})

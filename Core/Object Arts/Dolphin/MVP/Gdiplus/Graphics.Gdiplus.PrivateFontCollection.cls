@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.FontCollection subclass: #'Graphics.Gdiplus.PrivateFontCollection'
+Graphics.Gdiplus.FontCollection
+	subclass: #'Graphics.Gdiplus.PrivateFontCollection'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

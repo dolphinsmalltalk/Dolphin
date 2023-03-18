@@ -32,31 +32,36 @@ package!
 
 "Class Definitions"!
 
-UI.Scintilla subclass: #'UI.Scintilla.Tests'
+UI.Scintilla
+	subclass: #'UI.Scintilla.Tests'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{XProgramming.SUnit})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'UI.Scintilla.Tests.IndicatorTest'
+Core.Tests.DolphinTest
+	subclass: #'UI.Scintilla.Tests.IndicatorTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'UI.Scintilla.Tests.ScintillaLexerMetadataTest'
+Core.Tests.DolphinTest
+	subclass: #'UI.Scintilla.Tests.ScintillaLexerMetadataTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.AbstractMultilineTextEditTest subclass: #'UI.Scintilla.Tests.ScintillaViewTest'
+UI.Tests.AbstractMultilineTextEditTest
+	subclass: #'UI.Scintilla.Tests.ScintillaViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Scintilla.Tests.ScintillaLexerMetadataTest subclass: #'UI.Scintilla.Tests.ScintillaLexerPropertyTest'
+UI.Scintilla.Tests.ScintillaLexerMetadataTest
+	subclass: #'UI.Scintilla.Tests.ScintillaLexerPropertyTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

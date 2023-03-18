@@ -1,19 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.EXCEPTION_RECORD'
+OS.Win32Structure
+	subclass: #'OS.EXCEPTION_RECORD'
 	instanceVariableNames: 'info'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_EXCEPTION_RECORD_Size' -> 16r50.
-		'_OffsetOf_ExceptionAddress' -> 16rC.
-		'_OffsetOf_ExceptionCode' -> 16r0.
-		'_OffsetOf_ExceptionFlags' -> 16r4.
-		'_OffsetOf_ExceptionInformation' -> 16r14.
-		'_OffsetOf_ExceptionRecord' -> 16r8.
-		'_OffsetOf_NumberParameters' -> 16r10
-	}!
+			'_EXCEPTION_RECORD_Size' -> 16r50.
+			'_OffsetOf_ExceptionAddress' -> 16rC.
+			'_OffsetOf_ExceptionCode' -> 16r0.
+			'_OffsetOf_ExceptionFlags' -> 16r4.
+			'_OffsetOf_ExceptionInformation' -> 16r14.
+			'_OffsetOf_ExceptionRecord' -> 16r8.
+			'_OffsetOf_NumberParameters' -> 16r10
+		}!
 OS.EXCEPTION_RECORD guid: (Core.GUID fromString: '{87b4c5f0-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.EXCEPTION_RECORD comment: '<EXCEPTION_RECORD> is an <ExternalStructure> class to wrap the struct ''Win32.EXCEPTION_RECORD'' from type information in the ''Win32 API'' library.
 

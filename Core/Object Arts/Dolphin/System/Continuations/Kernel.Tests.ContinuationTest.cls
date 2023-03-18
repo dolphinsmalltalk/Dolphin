@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-XProgramming.SUnit.TestCase subclass: #'Kernel.Tests.ContinuationTest'
+XProgramming.SUnit.TestCase
+	subclass: #'Kernel.Tests.ContinuationTest'
 	instanceVariableNames: 'tmp tmp2'
 	classVariableNames: ''
 	imports: #()

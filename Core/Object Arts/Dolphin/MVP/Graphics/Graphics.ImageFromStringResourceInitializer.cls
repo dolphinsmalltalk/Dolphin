@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.ImageFromResourceInitializer subclass: #'Graphics.ImageFromStringResourceInitializer'
+Graphics.ImageFromResourceInitializer
+	subclass: #'Graphics.ImageFromStringResourceInitializer'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

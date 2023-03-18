@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.CompiledCode variableSubclass: #'Kernel.CompiledExpression'
+Kernel.CompiledCode
+	variableSubclass: #'Kernel.CompiledExpression'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

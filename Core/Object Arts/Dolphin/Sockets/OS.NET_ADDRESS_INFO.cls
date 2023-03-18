@@ -1,19 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'OS.NET_ADDRESS_INFO'
+External.Structure
+	subclass: #'OS.NET_ADDRESS_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_NET_ADDRESS_INFO_Size' -> 16r210.
-		'_OffsetOf_Format' -> 16r0.
-		'_OffsetOf_IpAddress' -> 16r4.
-		'_OffsetOf_Ipv4Address' -> 16r4.
-		'_OffsetOf_Ipv6Address' -> 16r4.
-		'_OffsetOf_NamedAddress_Address' -> 16r4.
-		'_OffsetOf_NamedAddress_Port' -> 16r204
-	}!
+			'_NET_ADDRESS_INFO_Size' -> 16r210.
+			'_OffsetOf_Format' -> 16r0.
+			'_OffsetOf_IpAddress' -> 16r4.
+			'_OffsetOf_Ipv4Address' -> 16r4.
+			'_OffsetOf_Ipv6Address' -> 16r4.
+			'_OffsetOf_NamedAddress_Address' -> 16r4.
+			'_OffsetOf_NamedAddress_Port' -> 16r204
+		}!
 OS.NET_ADDRESS_INFO guid: (Core.GUID fromString: '{0451c625-7a0f-4b75-ad7c-ea167ec0f47c}')!
 OS.NET_ADDRESS_INFO comment: '<NET_ADDRESS_INFO> is an <ExternalStructure> class to wrap the struct ''Win32.NET_ADDRESS_INFO'' from type information in the ''Win32 API'' library.
 

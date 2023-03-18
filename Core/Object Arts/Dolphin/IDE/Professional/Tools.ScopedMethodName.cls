@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.RBMethodName subclass: #'Tools.ScopedMethodName'
+Refactory.Browser.RBMethodName
+	subclass: #'Tools.ScopedMethodName'
 	instanceVariableNames: 'methodClass originalArguments originalSelector scopeName scopes'
 	classVariableNames: ''
 	imports: #(#{Refactory.Browser})

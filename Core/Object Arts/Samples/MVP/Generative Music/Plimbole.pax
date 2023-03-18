@@ -66,31 +66,36 @@ package!
 
 "Class Definitions"!
 
-Core.Object subclass: #'UI.Examples.PlimboleCell'
+Core.Object
+	subclass: #'UI.Examples.PlimboleCell'
 	instanceVariableNames: 'location velocity plimbole palette'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Model subclass: #'UI.Examples.Plimbole'
+Core.Model
+	subclass: #'UI.Examples.Plimbole'
 	instanceVariableNames: 'cells recurse tenorVoice altoVoice tenorChannel altoChannel scaleIndex noteDuration gridExtent'
 	classVariableNames: 'MidiChannel Registry StepProcess Tempo'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Presenter subclass: #'UI.Examples.PlimbolePresenter'
+UI.Presenter
+	subclass: #'UI.Examples.PlimbolePresenter'
 	instanceVariableNames: 'palette'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Shell subclass: #'UI.Examples.PlimboleShell'
+UI.Shell
+	subclass: #'UI.Examples.PlimboleShell'
 	instanceVariableNames: 'plimbolePresenter'
 	classVariableNames: 'Palettes'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.View subclass: #'UI.Examples.PlimboleView'
+UI.View
+	subclass: #'UI.Examples.PlimboleView'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

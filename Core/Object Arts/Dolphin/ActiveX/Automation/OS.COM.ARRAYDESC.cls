@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.AbstractELEMDESC subclass: #'OS.COM.ARRAYDESC'
+OS.COM.AbstractELEMDESC
+	subclass: #'OS.COM.ARRAYDESC'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_ARRAYDESC_Size' -> 16r14.
-		'_OffsetOf_cDims' -> 16r8.
-		'_OffsetOf_rgbounds' -> 16rC
-	}!
+			'_ARRAYDESC_Size' -> 16r14.
+			'_OffsetOf_cDims' -> 16r8.
+			'_OffsetOf_rgbounds' -> 16rC
+		}!
 OS.COM.ARRAYDESC guid: (Core.GUID fromString: '{c06f3b6c-0868-11d3-93af-00a024ca708a}')!
 OS.COM.ARRAYDESC comment: '`OS.COM.ARRAYDESC` is an ExternalStructure class to represent the COM Automation ARRAYDESC structure.
 

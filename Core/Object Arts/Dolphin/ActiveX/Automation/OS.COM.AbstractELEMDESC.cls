@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.OLEStructure subclass: #'OS.COM.AbstractELEMDESC'
+OS.COM.OLEStructure
+	subclass: #'OS.COM.AbstractELEMDESC'
 	instanceVariableNames: 'owner tdesc'
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_AbstractELEMDESC_Size' -> 16r8.
-		'_OffsetOf_tdescElem' -> 16r0
-	}!
+	classConstants: { '_AbstractELEMDESC_Size' -> 16r8. '_OffsetOf_tdescElem' -> 16r0 }!
 OS.COM.AbstractELEMDESC guid: (Core.GUID fromString: '{24cbeadb-8708-4bb1-a28d-207ebd2a8c8e}')!
 OS.COM.AbstractELEMDESC isNonInstantiable: true!
 OS.COM.AbstractELEMDESC comment: ''!

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.PermanentLibrary subclass: #'OS.CRTLibrary'
+External.PermanentLibrary
+	subclass: #'OS.CRTLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

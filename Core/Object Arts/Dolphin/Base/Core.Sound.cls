@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Core.Sound'
+Core.Object
+	subclass: #'Core.Sound'
 	instanceVariableNames: 'name location type fileLocator'
 	classVariableNames: 'Registry'
 	imports: #(#{OS.Win32Constants} #{OS.MessageBoxConstants})

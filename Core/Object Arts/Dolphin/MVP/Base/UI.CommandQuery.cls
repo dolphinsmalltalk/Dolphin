@@ -1,15 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'UI.CommandQuery'
+Core.Object
+	subclass: #'UI.CommandQuery'
 	instanceVariableNames: 'commandDescription receiver source text flags image validationResult'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'CheckedMask' -> 16r2.
-		'DefaultMask' -> 16r4.
-		'EnabledMask' -> 16r1
-	}!
+	classConstants: { 'CheckedMask' -> 16r2. 'DefaultMask' -> 16r4. 'EnabledMask' -> 16r1 }!
 UI.CommandQuery guid: (Core.GUID fromString: '{87b4c46b-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.CommandQuery comment: 'A CommandQuery is used to determine whether, and how, a particular command can be performed. A command is queried in two situations. The first is to determine whether a command source should be enabled and/or checked. When a menu is pulled down it needs to determine the enable, default, and check state of each of its items. Similarly, a PushButton or ToolbarButton will need to determine its state; usually at idle time during #validateUserInterface processing. The second situation arises when a command is to be dispatched and executed. Again a CommandQuery is used to determine the target object that will actually perform it (i.e. the eventual receiver).
 

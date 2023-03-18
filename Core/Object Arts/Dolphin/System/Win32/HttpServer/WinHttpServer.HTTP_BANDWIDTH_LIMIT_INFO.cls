@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WinHttpServer.HttpQosSetting subclass: #'WinHttpServer.HTTP_BANDWIDTH_LIMIT_INFO'
+WinHttpServer.HttpQosSetting
+	subclass: #'WinHttpServer.HTTP_BANDWIDTH_LIMIT_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_HTTP_BANDWIDTH_LIMIT_INFO_Size' -> 16r8.
-		'_OffsetOf_MaxBandwidth' -> 16r4
-	}!
+	classConstants: { '_HTTP_BANDWIDTH_LIMIT_INFO_Size' -> 16r8. '_OffsetOf_MaxBandwidth' -> 16r4 }!
 WinHttpServer.HTTP_BANDWIDTH_LIMIT_INFO guid: (Core.GUID fromString: '{197b6874-68bb-4a22-b2fa-9e02210f4cd9}')!
 WinHttpServer.HTTP_BANDWIDTH_LIMIT_INFO comment: '`HTTP_BANDWIDTH_LIMIT_INFO` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_BANDWIDTH_LIMIT_INFO'' from type information in the ''Windows Http Server API'' library.
 

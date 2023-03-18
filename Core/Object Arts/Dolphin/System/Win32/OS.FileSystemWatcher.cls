@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.FileSystemChangeReader subclass: #'OS.FileSystemWatcher'
+OS.FileSystemChangeReader
+	subclass: #'OS.FileSystemWatcher'
 	instanceVariableNames: 'events'
 	classVariableNames: ''
 	imports: #()

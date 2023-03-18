@@ -1,20 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.OLEStructure subclass: #'OS.COM.COAUTHIDENTITY'
+OS.COM.OLEStructure
+	subclass: #'OS.COM.COAUTHIDENTITY'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_COAUTHIDENTITY_Size' -> 16r1C.
-		'_OffsetOf_Domain' -> 16r8.
-		'_OffsetOf_DomainLength' -> 16rC.
-		'_OffsetOf_Flags' -> 16r18.
-		'_OffsetOf_Password' -> 16r10.
-		'_OffsetOf_PasswordLength' -> 16r14.
-		'_OffsetOf_User' -> 16r0.
-		'_OffsetOf_UserLength' -> 16r4
-	}!
+			'_COAUTHIDENTITY_Size' -> 16r1C.
+			'_OffsetOf_Domain' -> 16r8.
+			'_OffsetOf_DomainLength' -> 16rC.
+			'_OffsetOf_Flags' -> 16r18.
+			'_OffsetOf_Password' -> 16r10.
+			'_OffsetOf_PasswordLength' -> 16r14.
+			'_OffsetOf_User' -> 16r0.
+			'_OffsetOf_UserLength' -> 16r4
+		}!
 OS.COM.COAUTHIDENTITY guid: (Core.GUID fromString: '{31387a96-bdf6-40b2-abee-6ef6a2384b67}')!
 OS.COM.COAUTHIDENTITY comment: '`OS.COM.COAUTHIDENTITY` is an `External.Structure` class to wrap the struct ''OBJIDL.COAUTHIDENTITY'' from type information in the ''ObjIDL Library'' library.
 

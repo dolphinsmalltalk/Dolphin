@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Examples.RegularPolygon subclass: #'UI.Examples.Circle'
+UI.Examples.RegularPolygon
+	subclass: #'UI.Examples.Circle'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

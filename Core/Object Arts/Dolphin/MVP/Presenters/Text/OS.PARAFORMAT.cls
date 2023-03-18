@@ -1,23 +1,24 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.PARAFORMAT'
+OS.Win32Structure
+	subclass: #'OS.PARAFORMAT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.RichEditConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_cTabCount' -> 16r1A.
-		'_OffsetOf_dwMask' -> 16r4.
-		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_dxOffset' -> 16r14.
-		'_OffsetOf_dxRightIndent' -> 16r10.
-		'_OffsetOf_dxStartIndent' -> 16rC.
-		'_OffsetOf_rgxTabs' -> 16r1C.
-		'_OffsetOf_wAlignment' -> 16r18.
-		'_OffsetOf_wEffects' -> 16rA.
-		'_OffsetOf_wNumbering' -> 16r8.
-		'_PARAFORMAT_Size' -> 16r9C
-	}!
+			'_OffsetOf_cTabCount' -> 16r1A.
+			'_OffsetOf_dwMask' -> 16r4.
+			'_OffsetOf_dwSize' -> 16r0.
+			'_OffsetOf_dxOffset' -> 16r14.
+			'_OffsetOf_dxRightIndent' -> 16r10.
+			'_OffsetOf_dxStartIndent' -> 16rC.
+			'_OffsetOf_rgxTabs' -> 16r1C.
+			'_OffsetOf_wAlignment' -> 16r18.
+			'_OffsetOf_wEffects' -> 16rA.
+			'_OffsetOf_wNumbering' -> 16r8.
+			'_PARAFORMAT_Size' -> 16r9C
+		}!
 OS.PARAFORMAT guid: (Core.GUID fromString: '{87b4c607-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.PARAFORMAT comment: ''!
 !OS.PARAFORMAT categoriesForClass!External-Data-Structured-Win32! !

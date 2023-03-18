@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Event subclass: #'UI.LabelEditEvent'
+UI.Event
+	subclass: #'UI.LabelEditEvent'
 	instanceVariableNames: 'cancel item object text'
 	classVariableNames: ''
 	imports: #()

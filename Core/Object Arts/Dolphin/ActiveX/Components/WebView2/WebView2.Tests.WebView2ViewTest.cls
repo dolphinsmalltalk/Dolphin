@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Tests.PresenterTest subclass: #'WebView2.Tests.WebView2ViewTest'
+UI.Tests.PresenterTest
+	subclass: #'WebView2.Tests.WebView2ViewTest'
 	instanceVariableNames: 'domContentLoaded navigationCompleted processFailed webViewReady processExitedSink webviewEnvironment processExited'
 	classVariableNames: ''
 	imports: #(#{UI})

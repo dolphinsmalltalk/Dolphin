@@ -1,15 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.AbstractIN_ADDR subclass: #'OS.IN6_ADDR'
+OS.AbstractIN_ADDR
+	subclass: #'OS.IN6_ADDR'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_IN6_ADDR_Size' -> 16r10.
-		'_OffsetOf_Bytes' -> 16r0.
-		'_OffsetOf_Words' -> 16r0
-	}!
+	classConstants: { '_IN6_ADDR_Size' -> 16r10. '_OffsetOf_Bytes' -> 16r0. '_OffsetOf_Words' -> 16r0 }!
 OS.IN6_ADDR guid: (Core.GUID fromString: '{bebf4c25-ce63-4511-b68e-2434810fa9c3}')!
 OS.IN6_ADDR comment: '`OS.IN6_ADDR` is an `External.Structure` class to wrap the struct ''Win32.IN6_ADDR'' from type information in the ''Win32 API'' library.
 

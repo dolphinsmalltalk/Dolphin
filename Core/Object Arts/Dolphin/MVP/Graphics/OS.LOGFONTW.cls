@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.AbstractLOGFONT subclass: #'OS.LOGFONTW'
+OS.AbstractLOGFONT
+	subclass: #'OS.LOGFONTW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_LOGFONTW_Size' -> 16r5C.
-		'_OffsetOf_lfFaceName' -> 16r1C
-	}!
+	classConstants: { '_LOGFONTW_Size' -> 16r5C. '_OffsetOf_lfFaceName' -> 16r1C }!
 OS.LOGFONTW guid: (Core.GUID fromString: '{37140088-772d-4f72-aac2-27311f7805d8}')!
 OS.LOGFONTW comment: '<LOGFONTW> is an <ExternalStructure> class to wrap the struct ''Win32.LOGFONTW'' from type information in the ''Win32 API'' library.
 

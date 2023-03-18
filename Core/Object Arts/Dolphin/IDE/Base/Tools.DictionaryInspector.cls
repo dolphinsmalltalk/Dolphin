@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.BasicInspector subclass: #'Tools.DictionaryInspector'
+Tools.BasicInspector
+	subclass: #'Tools.DictionaryInspector'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

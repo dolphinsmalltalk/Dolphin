@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.NMHDR subclass: #'OS.ENLINK'
+OS.NMHDR
+	subclass: #'OS.ENLINK'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_ENLINK_Size' -> 16r20.
-		'_OffsetOf_chrg' -> 16r18.
-		'_OffsetOf_lParam' -> 16r14.
-		'_OffsetOf_msg' -> 16rC.
-		'_OffsetOf_wParam' -> 16r10
-	}!
+			'_ENLINK_Size' -> 16r20.
+			'_OffsetOf_chrg' -> 16r18.
+			'_OffsetOf_lParam' -> 16r14.
+			'_OffsetOf_msg' -> 16rC.
+			'_OffsetOf_wParam' -> 16r10
+		}!
 OS.ENLINK guid: (Core.GUID fromString: '{af755b00-4b08-4d23-991b-a340afd83bc2}')!
 OS.ENLINK comment: '<ENLINK> is an <ExternalStructure> class to wrap the struct ''Win32.ENLINK'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

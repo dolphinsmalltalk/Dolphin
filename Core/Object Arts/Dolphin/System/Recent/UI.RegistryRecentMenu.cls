@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.AbstractRecentMenu subclass: #'UI.RegistryRecentMenu'
+UI.AbstractRecentMenu
+	subclass: #'UI.RegistryRecentMenu'
 	instanceVariableNames: 'productRegistryKey recentRegistryKey'
 	classVariableNames: ''
 	imports: #()

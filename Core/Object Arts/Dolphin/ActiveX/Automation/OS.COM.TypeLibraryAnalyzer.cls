@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.TypeInfoObject subclass: #'OS.COM.TypeLibraryAnalyzer'
+OS.COM.TypeInfoObject
+	subclass: #'OS.COM.TypeLibraryAnalyzer'
 	instanceVariableNames: 'attributes namespaceName packageName _unused7 constantsPoolName aliasMap typeAnalyzers'
 	classVariableNames: 'StandardAliases TypeLibs'
 	imports: #(#{OS.Win32Constants} #{OS.COM.AutomationErrors})

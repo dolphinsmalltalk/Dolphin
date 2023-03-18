@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Kernel.InstructionInterpreter'
+Core.Object
+	subclass: #'Kernel.InstructionInterpreter'
 	instanceVariableNames: 'dispatcher'
 	classVariableNames: ''
 	imports: #()

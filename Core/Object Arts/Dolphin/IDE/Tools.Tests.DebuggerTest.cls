@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTest subclass: #'Tools.Tests.DebuggerTest'
+Core.Tests.DolphinTest
+	subclass: #'Tools.Tests.DebuggerTest'
 	instanceVariableNames: 'process savedShowWalkbacks savedView'
 	classVariableNames: ''
 	imports: #(#{Kernel.OpcodePool})

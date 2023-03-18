@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Database.DBStatement subclass: #'Database.DBParameterizedStatement'
+Database.DBStatement
+	subclass: #'Database.DBParameterizedStatement'
 	instanceVariableNames: 'values parameters paramCols isPrepared'
 	classVariableNames: ''
 	imports: #(#{OS.ODBCCTypes})

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Notification subclass: #'Kernel.MethodCompileFailed'
+Core.Notification
+	subclass: #'Kernel.MethodCompileFailed'
 	instanceVariableNames: 'compilerErrorNotification environment'
 	classVariableNames: ''
 	imports: #()

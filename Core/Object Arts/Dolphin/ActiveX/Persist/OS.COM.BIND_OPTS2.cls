@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.BIND_OPTS subclass: #'OS.COM.BIND_OPTS2'
+OS.COM.BIND_OPTS
+	subclass: #'OS.COM.BIND_OPTS2'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_BIND_OPTS2_Size' -> 16r20.
-		'_OffsetOf_dwClassContext' -> 16r14.
-		'_OffsetOf_dwTrackFlags' -> 16r10.
-		'_OffsetOf_locale' -> 16r18.
-		'_OffsetOf_pServerInfo' -> 16r1C
-	}!
+			'_BIND_OPTS2_Size' -> 16r20.
+			'_OffsetOf_dwClassContext' -> 16r14.
+			'_OffsetOf_dwTrackFlags' -> 16r10.
+			'_OffsetOf_locale' -> 16r18.
+			'_OffsetOf_pServerInfo' -> 16r1C
+		}!
 OS.COM.BIND_OPTS2 guid: (Core.GUID fromString: '{87b4c5bf-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.COM.BIND_OPTS2 comment: 'BIND_OPTS2 is an <ExternalStructure> class to represent the COM structure of the same name.
 

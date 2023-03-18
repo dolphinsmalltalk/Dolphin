@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Tools.Scintilla.ParameterDefinition'
+Core.Object
+	subclass: #'Tools.Scintilla.ParameterDefinition'
 	instanceVariableNames: 'name typeName typeRef'
 	classVariableNames: ''
 	imports: #()

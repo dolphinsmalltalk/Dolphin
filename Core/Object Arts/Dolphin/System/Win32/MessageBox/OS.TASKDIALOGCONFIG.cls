@@ -1,39 +1,40 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.TASKDIALOGCONFIG'
+OS.Win32Structure
+	subclass: #'OS.TASKDIALOGCONFIG'
 	instanceVariableNames: 'windowTitle mainInstruction content footer verificationText expandedInformation collapsedControlText expandedControlText buttons buttonLabels radioButtons radioButtonLabels'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_cButtons' -> 16r24.
-		'_OffsetOf_cRadioButtons' -> 16r30.
-		'_OffsetOf_cxWidth' -> 16r5C.
-		'_OffsetOf_dwCommonButtons' -> 16r10.
-		'_OffsetOf_dwFlags' -> 16rC.
-		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_hFooterIcon' -> 16r4C.
-		'_OffsetOf_hInstance' -> 16r8.
-		'_OffsetOf_hMainIcon' -> 16r18.
-		'_OffsetOf_hwndParent' -> 16r4.
-		'_OffsetOf_lpCallbackData' -> 16r58.
-		'_OffsetOf_nDefaultButton' -> 16r2C.
-		'_OffsetOf_nDefaultRadioButton' -> 16r38.
-		'_OffsetOf_pButtons' -> 16r28.
-		'_OffsetOf_pfCallback' -> 16r54.
-		'_OffsetOf_pRadioButtons' -> 16r34.
-		'_OffsetOf_pszCollapsedControlText' -> 16r48.
-		'_OffsetOf_pszContent' -> 16r20.
-		'_OffsetOf_pszExpandedControlText' -> 16r44.
-		'_OffsetOf_pszExpandedInformation' -> 16r40.
-		'_OffsetOf_pszFooter' -> 16r50.
-		'_OffsetOf_pszFooterIcon' -> 16r4C.
-		'_OffsetOf_pszMainIcon' -> 16r18.
-		'_OffsetOf_pszMainInstruction' -> 16r1C.
-		'_OffsetOf_pszVerificationText' -> 16r3C.
-		'_OffsetOf_pszWindowTitle' -> 16r14.
-		'_TASKDIALOGCONFIG_Size' -> 16r60
-	}!
+			'_OffsetOf_cButtons' -> 16r24.
+			'_OffsetOf_cRadioButtons' -> 16r30.
+			'_OffsetOf_cxWidth' -> 16r5C.
+			'_OffsetOf_dwCommonButtons' -> 16r10.
+			'_OffsetOf_dwFlags' -> 16rC.
+			'_OffsetOf_dwSize' -> 16r0.
+			'_OffsetOf_hFooterIcon' -> 16r4C.
+			'_OffsetOf_hInstance' -> 16r8.
+			'_OffsetOf_hMainIcon' -> 16r18.
+			'_OffsetOf_hwndParent' -> 16r4.
+			'_OffsetOf_lpCallbackData' -> 16r58.
+			'_OffsetOf_nDefaultButton' -> 16r2C.
+			'_OffsetOf_nDefaultRadioButton' -> 16r38.
+			'_OffsetOf_pButtons' -> 16r28.
+			'_OffsetOf_pfCallback' -> 16r54.
+			'_OffsetOf_pRadioButtons' -> 16r34.
+			'_OffsetOf_pszCollapsedControlText' -> 16r48.
+			'_OffsetOf_pszContent' -> 16r20.
+			'_OffsetOf_pszExpandedControlText' -> 16r44.
+			'_OffsetOf_pszExpandedInformation' -> 16r40.
+			'_OffsetOf_pszFooter' -> 16r50.
+			'_OffsetOf_pszFooterIcon' -> 16r4C.
+			'_OffsetOf_pszMainIcon' -> 16r18.
+			'_OffsetOf_pszMainInstruction' -> 16r1C.
+			'_OffsetOf_pszVerificationText' -> 16r3C.
+			'_OffsetOf_pszWindowTitle' -> 16r14.
+			'_TASKDIALOGCONFIG_Size' -> 16r60
+		}!
 OS.TASKDIALOGCONFIG guid: (Core.GUID fromString: '{948de028-015b-4a2a-818e-db8b5f40aa75}')!
 OS.TASKDIALOGCONFIG comment: '`TASKDIALOGCONFIG` is an `External.Structure` class to wrap the Windows common controls [TASKDIALOGCONFIG structure](https://docs.microsoft.com/en-us/windows/win32/api/Commctrl/ns-commctrl-taskdialogconfig) structure.
 

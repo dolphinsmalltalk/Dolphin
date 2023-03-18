@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMRGDICOMMENT'
+OS.ENHMETARECORD
+	subclass: #'OS.EMRGDICOMMENT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_EMRGDICOMMENT_Size' -> 16r10.
-		'_OffsetOf_cbData' -> 16r8.
-		'_OffsetOf_Data' -> 16rC
-	}!
+			'_EMRGDICOMMENT_Size' -> 16r10.
+			'_OffsetOf_cbData' -> 16r8.
+			'_OffsetOf_Data' -> 16rC
+		}!
 OS.EMRGDICOMMENT guid: (Core.GUID fromString: '{5b2c2616-4205-49f8-86dc-fa73c7092f5b}')!
 OS.EMRGDICOMMENT comment: '<EMRGDICOMMENT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRGDICOMMENT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

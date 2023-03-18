@@ -34,13 +34,15 @@ package!
 
 "Class Definitions"!
 
-UI.ValuePresenter subclass: #'UI.RadioButtonSetPresenter'
+UI.ValuePresenter
+	subclass: #'UI.RadioButtonSetPresenter'
 	instanceVariableNames: 'ownedRadioButtons'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.CheckButton subclass: #'UI.RadioButton'
+UI.CheckButton
+	subclass: #'UI.RadioButton'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

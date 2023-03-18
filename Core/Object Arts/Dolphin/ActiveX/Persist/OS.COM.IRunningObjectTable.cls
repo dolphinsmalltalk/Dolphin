@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IUnknown subclass: #'OS.COM.IRunningObjectTable'
+OS.COM.IUnknown
+	subclass: #'OS.COM.IRunningObjectTable'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

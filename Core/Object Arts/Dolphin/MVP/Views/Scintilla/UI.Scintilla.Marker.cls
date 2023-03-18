@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'UI.Scintilla.Marker'
+Core.Object
+	subclass: #'UI.Scintilla.Marker'
 	instanceVariableNames: 'view definition line handle'
 	classVariableNames: ''
 	imports: #()

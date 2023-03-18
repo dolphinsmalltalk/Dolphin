@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Tools.ObjectInside'
+Core.Object
+	subclass: #'Tools.ObjectInside'
 	instanceVariableNames: 'image edgePoints position scale rotation alpha color baseColor matrix'
 	classVariableNames: ''
 	imports: #(#{Graphics private} #{Graphics.Gdiplus private})
 	classInstanceVariableNames: ''
-	classConstants: {
-		'EdgePointResolution' -> 16rA
-	}!
+	classConstants: { 'EdgePointResolution' -> 16rA }!
 Tools.ObjectInside guid: (Core.GUID fromString: '{c019a761-9b1c-4f55-8dd3-66b8e8b2864f}')!
 Tools.ObjectInside comment: ''!
 !Tools.ObjectInside categoriesForClass!Kernel-Objects! !

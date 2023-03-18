@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.ArithmeticError subclass: #'Core.FloatingPointException'
+Core.ArithmeticError
+	subclass: #'Core.FloatingPointException'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

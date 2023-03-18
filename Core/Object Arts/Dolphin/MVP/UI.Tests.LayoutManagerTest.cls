@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTest subclass: #'UI.Tests.LayoutManagerTest'
+Core.Tests.DolphinTest
+	subclass: #'UI.Tests.LayoutManagerTest'
 	instanceVariableNames: 'shell'
 	classVariableNames: ''
 	imports: #()

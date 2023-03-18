@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'UI.LayoutManager'
+Core.Object
+	subclass: #'UI.LayoutManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

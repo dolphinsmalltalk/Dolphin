@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS'
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS_Size' -> 16r8.
-		'_OffsetOf_Realm' -> 16r4.
-		'_OffsetOf_RealmLength' -> 16r0
-	}!
+			'_HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS_Size' -> 16r8.
+			'_OffsetOf_Realm' -> 16r4.
+			'_OffsetOf_RealmLength' -> 16r0
+		}!
 WinHttpServer.HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS guid: (Core.GUID fromString: '{813ff062-e4ed-4b4c-8eef-9d94a1fb65c4}')!
 WinHttpServer.HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS comment: '`HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS'' from type information in the ''Windows Http Server API'' library.
 

@@ -1,15 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'OS.TIMEVAL'
+External.Structure
+	subclass: #'OS.TIMEVAL'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_OffsetOf_tv_sec' -> 16r0.
-		'_OffsetOf_tv_usec' -> 16r4.
-		'_TIMEVAL_Size' -> 16r8
-	}!
+	classConstants: { '_OffsetOf_tv_sec' -> 16r0. '_OffsetOf_tv_usec' -> 16r4. '_TIMEVAL_Size' -> 16r8 }!
 OS.TIMEVAL guid: (Core.GUID fromString: '{c4066d09-c93b-488e-b9b9-585ddddb41ea}')!
 OS.TIMEVAL comment: '<Timeval> is an <ExternalStructure> class to wrap the struct ''WINSOCK2Lib.timeval'' from type information in the ''Windows Sockets 2 Type Library'' library.
 

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Scintilla.Styler subclass: #'UI.Scintilla.NullStyler'
+UI.Scintilla.Styler
+	subclass: #'UI.Scintilla.NullStyler'
 	instanceVariableNames: 'normalStyleName'
 	classVariableNames: ''
 	imports: #()

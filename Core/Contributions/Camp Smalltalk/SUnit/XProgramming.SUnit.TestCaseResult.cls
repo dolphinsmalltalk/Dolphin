@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'XProgramming.SUnit.TestCaseResult'
+Core.Object
+	subclass: #'XProgramming.SUnit.TestCaseResult'
 	instanceVariableNames: 'case outcome duration signal stacktrace ip testMethod'
 	classVariableNames: ''
 	imports: #()

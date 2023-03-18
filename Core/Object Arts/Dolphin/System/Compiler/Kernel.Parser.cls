@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Kernel.Parser'
+Core.Object
+	subclass: #'Kernel.Parser'
 	instanceVariableNames: 'scanner currentToken nextToken errorBlock methodNode st80Syntax comments methodClass source environment'
 	classVariableNames: 'AllowEmptyStatements'
 	imports: #(#{External.ExtCallArgTypes} #{Kernel.ParseErrorCodes})

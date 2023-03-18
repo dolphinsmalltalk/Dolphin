@@ -1,19 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.LITEM'
+OS.Win32Structure
+	subclass: #'OS.LITEM'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.SysLinkConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_LITEM_Size' -> 16r10B8.
-		'_OffsetOf_iLink' -> 16r4.
-		'_OffsetOf_mask' -> 16r0.
-		'_OffsetOf_state' -> 16r8.
-		'_OffsetOf_stateMask' -> 16rC.
-		'_OffsetOf_szID' -> 16r10.
-		'_OffsetOf_szURL' -> 16r70
-	}!
+			'_LITEM_Size' -> 16r10B8.
+			'_OffsetOf_iLink' -> 16r4.
+			'_OffsetOf_mask' -> 16r0.
+			'_OffsetOf_state' -> 16r8.
+			'_OffsetOf_stateMask' -> 16rC.
+			'_OffsetOf_szID' -> 16r10.
+			'_OffsetOf_szURL' -> 16r70
+		}!
 OS.LITEM guid: (Core.GUID fromString: '{13cd21fb-f5bf-4908-a96b-3801b787a40e}')!
 OS.LITEM comment: 'LITEM is the class of <ExternalStructure> which represent the Windows Common Control structure of the same name.
 

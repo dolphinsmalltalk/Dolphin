@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.EMREXTTEXTOUT subclass: #'OS.EMREXTTEXTOUTW'
+OS.EMREXTTEXTOUT
+	subclass: #'OS.EMREXTTEXTOUTW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_EMREXTTEXTOUTW_Size' -> 16r50.
-		'_OffsetOf_text' -> 16r4C
-	}!
+	classConstants: { '_EMREXTTEXTOUTW_Size' -> 16r50. '_OffsetOf_text' -> 16r4C }!
 OS.EMREXTTEXTOUTW guid: (Core.GUID fromString: '{984a2e2c-3699-4a16-9ed7-8f174e2ca081}')!
 OS.EMREXTTEXTOUTW comment: ''!
 !OS.EMREXTTEXTOUTW categoriesForClass!Win32-Structs! !

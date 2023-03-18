@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.Aspect subclass: #'Tools.KeyedAspect'
+Tools.Aspect
+	subclass: #'Tools.KeyedAspect'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

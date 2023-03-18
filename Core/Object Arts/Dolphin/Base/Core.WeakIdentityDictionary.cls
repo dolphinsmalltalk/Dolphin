@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.WeakLookupTable variableSubclass: #'Core.WeakIdentityDictionary'
+Core.WeakLookupTable
+	variableSubclass: #'Core.WeakIdentityDictionary'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

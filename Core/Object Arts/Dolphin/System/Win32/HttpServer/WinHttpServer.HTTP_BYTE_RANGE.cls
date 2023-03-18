@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_BYTE_RANGE'
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_BYTE_RANGE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_BYTE_RANGE_Size' -> 16r10.
-		'_OffsetOf_Length' -> 16r8.
-		'_OffsetOf_StartingOffset' -> 16r0
-	}!
+			'_HTTP_BYTE_RANGE_Size' -> 16r10.
+			'_OffsetOf_Length' -> 16r8.
+			'_OffsetOf_StartingOffset' -> 16r0
+		}!
 WinHttpServer.HTTP_BYTE_RANGE guid: (Core.GUID fromString: '{3426318c-022f-4dd9-9e4e-a04febf70a10}')!
 WinHttpServer.HTTP_BYTE_RANGE comment: '`HTTP_BYTE_RANGE` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_BYTE_RANGE'' from type information in the ''Windows Http Server API'' library.
 

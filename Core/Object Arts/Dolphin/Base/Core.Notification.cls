@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Exception subclass: #'Core.Notification'
+Core.Exception
+	subclass: #'Core.Notification'
 	instanceVariableNames: 'isSuppressible'
 	classVariableNames: ''
 	imports: #()

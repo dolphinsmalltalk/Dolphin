@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Kernel.STBClassConversion'
+Core.Object
+	subclass: #'Kernel.STBClassConversion'
 	instanceVariableNames: 'version instSize isBytes isVariable converterBlock filer'
 	classVariableNames: ''
 	imports: #()

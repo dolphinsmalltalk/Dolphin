@@ -1,18 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.MINMAXINFO'
+OS.Win32Structure
+	subclass: #'OS.MINMAXINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_MINMAXINFO_Size' -> 16r28.
-		'_OffsetOf_ptMaxPosition' -> 16r10.
-		'_OffsetOf_ptMaxSize' -> 16r8.
-		'_OffsetOf_ptMaxTrackSize' -> 16r20.
-		'_OffsetOf_ptMinTrackSize' -> 16r18.
-		'_OffsetOf_ptReserved' -> 16r0
-	}!
+			'_MINMAXINFO_Size' -> 16r28.
+			'_OffsetOf_ptMaxPosition' -> 16r10.
+			'_OffsetOf_ptMaxSize' -> 16r8.
+			'_OffsetOf_ptMaxTrackSize' -> 16r20.
+			'_OffsetOf_ptMinTrackSize' -> 16r18.
+			'_OffsetOf_ptReserved' -> 16r0
+		}!
 OS.MINMAXINFO guid: (Core.GUID fromString: '{76ebd637-6ab0-4d00-812c-fa6942e1318e}')!
 OS.MINMAXINFO comment: '<MINMAXINFO> is an <ExternalStructure> class to wrap the struct ''Win.MINMAXINFO'' from type information in the ''Windows API (ANSI)'' library.
 

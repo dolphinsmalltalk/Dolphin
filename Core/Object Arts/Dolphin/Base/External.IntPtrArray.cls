@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.ExternalArray subclass: #'External.IntPtrArray'
+External.ExternalArray
+	subclass: #'External.IntPtrArray'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

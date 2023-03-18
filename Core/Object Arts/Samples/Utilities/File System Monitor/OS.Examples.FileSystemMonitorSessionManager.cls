@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.RuntimeSessionManager subclass: #'OS.Examples.FileSystemMonitorSessionManager'
+UI.RuntimeSessionManager
+	subclass: #'OS.Examples.FileSystemMonitorSessionManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

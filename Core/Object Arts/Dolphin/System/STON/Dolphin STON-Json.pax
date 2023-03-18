@@ -70,19 +70,22 @@ package!
 
 "Class Definitions"!
 
-Core.Object subclass: #'STON.JSON'
+Core.Object
+	subclass: #'STON.JSON'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STON.Writer subclass: #'STON.JsonWriter'
+STON.Writer
+	subclass: #'STON.JsonWriter'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STON.JsonWriter subclass: #'STON.JsonPrettyPrinter'
+STON.JsonWriter
+	subclass: #'STON.JsonPrettyPrinter'
 	instanceVariableNames: 'level'
 	classVariableNames: ''
 	imports: #()

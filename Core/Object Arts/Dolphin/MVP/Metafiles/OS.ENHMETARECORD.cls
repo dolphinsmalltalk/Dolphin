@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'OS.ENHMETARECORD'
+External.Structure
+	subclass: #'OS.ENHMETARECORD'
 	instanceVariableNames: ''
 	classVariableNames: 'RecordTypes'
 	imports: #(#{OS.EnhancedMetafileRecordTypes})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_ENHMETARECORD_Size' -> 16r8.
-		'_OffsetOf_iType' -> 16r0.
-		'_OffsetOf_nSize' -> 16r4
-	}!
+			'_ENHMETARECORD_Size' -> 16r8.
+			'_OffsetOf_iType' -> 16r0.
+			'_OffsetOf_nSize' -> 16r4
+		}!
 OS.ENHMETARECORD guid: (Core.GUID fromString: '{5a360b92-6a3d-40d5-9d88-972ffd1416e6}')!
 OS.ENHMETARECORD comment: '<ENHMETARECORD> is an <ExternalStructure> class to wrap the base struct for all the Enhanced Metafile record structs.'!
 !OS.ENHMETARECORD categoriesForClass!Win32-Structs! !

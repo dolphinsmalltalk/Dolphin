@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'UI.CommandPolicy'
+Core.Object
+	subclass: #'UI.CommandPolicy'
 	instanceVariableNames: 'source path'
 	classVariableNames: ''
 	imports: #()

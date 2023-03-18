@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WinHttpServer.HTTP_REQUEST_V1 subclass: #'WinHttpServer.HTTP_REQUEST_V2'
+WinHttpServer.HTTP_REQUEST_V1
+	subclass: #'WinHttpServer.HTTP_REQUEST_V2'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_REQUEST_V2_Size' -> 16r1D8.
-		'_OffsetOf_pRequestInfo' -> 16r1D4.
-		'_OffsetOf_RequestInfoCount' -> 16r1D0
-	}!
+			'_HTTP_REQUEST_V2_Size' -> 16r1D8.
+			'_OffsetOf_pRequestInfo' -> 16r1D4.
+			'_OffsetOf_RequestInfoCount' -> 16r1D0
+		}!
 WinHttpServer.HTTP_REQUEST_V2 guid: (Core.GUID fromString: '{5f3f936f-b824-47af-a69e-62dc4730010c}')!
 WinHttpServer.HTTP_REQUEST_V2 comment: '`HTTP_REQUEST_V2` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_REQUEST_V2'' from type information in the ''Windows Http Server API'' library.
 

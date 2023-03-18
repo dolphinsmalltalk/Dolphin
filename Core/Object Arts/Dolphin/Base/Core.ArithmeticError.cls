@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Error subclass: #'Core.ArithmeticError'
+Core.Error
+	subclass: #'Core.ArithmeticError'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

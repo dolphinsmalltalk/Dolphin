@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.InternalBitmap subclass: #'Graphics.InternalIcon'
+Graphics.InternalBitmap
+	subclass: #'Graphics.InternalIcon'
 	instanceVariableNames: 'tileColor'
 	classVariableNames: ''
 	imports: #(#{Graphics.Gdiplus private})

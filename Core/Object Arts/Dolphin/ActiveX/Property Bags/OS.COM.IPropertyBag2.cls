@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IUnknown subclass: #'OS.COM.IPropertyBag2'
+OS.COM.IUnknown
+	subclass: #'OS.COM.IPropertyBag2'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

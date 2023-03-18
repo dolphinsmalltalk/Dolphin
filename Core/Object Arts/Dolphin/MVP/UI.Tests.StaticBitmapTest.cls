@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Tests.StaticViewTest subclass: #'UI.Tests.StaticBitmapTest'
+UI.Tests.StaticViewTest
+	subclass: #'UI.Tests.StaticBitmapTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

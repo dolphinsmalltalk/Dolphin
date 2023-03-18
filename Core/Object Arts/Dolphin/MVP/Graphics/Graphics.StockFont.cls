@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Font subclass: #'Graphics.StockFont'
+Graphics.Font
+	subclass: #'Graphics.StockFont'
 	instanceVariableNames: 'id'
 	classVariableNames: ''
 	imports: #()

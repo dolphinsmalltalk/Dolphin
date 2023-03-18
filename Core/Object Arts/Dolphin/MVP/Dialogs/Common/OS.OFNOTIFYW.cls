@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.NMHDR subclass: #'OS.OFNOTIFYW'
+OS.NMHDR
+	subclass: #'OS.OFNOTIFYW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_lpOFN' -> 16rC.
-		'_OffsetOf_pszFile' -> 16r10.
-		'_OFNOTIFYW_Size' -> 16r14
-	}!
+			'_OffsetOf_lpOFN' -> 16rC.
+			'_OffsetOf_pszFile' -> 16r10.
+			'_OFNOTIFYW_Size' -> 16r14
+		}!
 OS.OFNOTIFYW guid: (Core.GUID fromString: '{7255745f-1034-4d61-be74-66de1d5068aa}')!
 OS.OFNOTIFYW comment: '<OFNOTIFY> is an <ExternalStructure> class to wrap the struct ''Win32.OFNOTIFY'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

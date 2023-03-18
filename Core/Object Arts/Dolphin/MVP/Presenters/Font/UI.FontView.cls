@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.StaticView subclass: #'UI.FontView'
+UI.StaticView
+	subclass: #'UI.FontView'
 	instanceVariableNames: 'previewText'
 	classVariableNames: ''
 	imports: #()

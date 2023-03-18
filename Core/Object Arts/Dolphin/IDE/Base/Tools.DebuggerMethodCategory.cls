@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.MethodCategory subclass: #'Tools.DebuggerMethodCategory'
+Core.MethodCategory
+	subclass: #'Tools.DebuggerMethodCategory'
 	instanceVariableNames: 'mask'
 	classVariableNames: ''
 	imports: #()

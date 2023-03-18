@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Shell subclass: #'UI.Dialog'
+UI.Shell
+	subclass: #'UI.Dialog'
 	instanceVariableNames: 'confirmed ownerView'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'ValidationTimerId' -> 16r101
-	}!
+	classConstants: { 'ValidationTimerId' -> 16r101 }!
 UI.Dialog guid: (Core.GUID fromString: '{87b4c69a-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.Dialog isNonInstantiable: true!
 UI.Dialog comment: 'Dialog is an abstract <dialogPresenter> superclass for allowing model data to be displayed and edited within a top-level modal dialog window. The fact that a Dialog is modal means that any changes made to the displayed data are usually buffered and not written directly back to the model until they are explicitly applied. This happens, usually after clicking an OK button. Hence a user has the opportunity of cancelling out of a Dialog without any changes being made to the underlying model.

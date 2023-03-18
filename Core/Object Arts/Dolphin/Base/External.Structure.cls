@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'External.Structure'
+Core.Object
+	subclass: #'External.Structure'
 	instanceVariableNames: 'bytes'
 	classVariableNames: 'RecordClasses'
 	imports: #()
 	classInstanceVariableNames: 'template flags alignment'
-	classConstants: {
-		'CompiledMask' -> 16r1
-	}!
+	classConstants: { 'CompiledMask' -> 16r1 }!
 External.Structure guid: (Core.GUID fromString: '{87b4c489-026e-11d3-9fd7-00a0cc3e4a32}')!
 External.Structure isNonInstantiable: true!
 External.Structure comment: ''!

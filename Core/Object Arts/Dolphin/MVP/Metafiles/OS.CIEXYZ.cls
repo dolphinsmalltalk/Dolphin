@@ -1,16 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'OS.CIEXYZ'
+External.Structure
+	subclass: #'OS.CIEXYZ'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_CIEXYZ_Size' -> 16rC.
-		'_OffsetOf_ciexyzX' -> 16r0.
-		'_OffsetOf_ciexyzY' -> 16r4.
-		'_OffsetOf_ciexyzZ' -> 16r8
-	}!
+			'_CIEXYZ_Size' -> 16rC.
+			'_OffsetOf_ciexyzX' -> 16r0.
+			'_OffsetOf_ciexyzY' -> 16r4.
+			'_OffsetOf_ciexyzZ' -> 16r8
+		}!
 OS.CIEXYZ guid: (Core.GUID fromString: '{bf6d67a4-8fbc-4f17-825f-465254239f8b}')!
 OS.CIEXYZ comment: '<CIEXYZ> is an <ExternalStructure> class to wrap the struct ''Win32.CIEXYZ'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

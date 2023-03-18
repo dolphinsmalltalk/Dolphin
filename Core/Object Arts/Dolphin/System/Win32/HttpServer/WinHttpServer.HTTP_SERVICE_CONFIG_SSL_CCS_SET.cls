@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_SSL_CCS_SET'
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_SSL_CCS_SET'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_SERVICE_CONFIG_SSL_CCS_SET_Size' -> 16rB8.
-		'_OffsetOf_KeyDesc' -> 16r0.
-		'_OffsetOf_ParamDesc' -> 16r80
-	}!
+			'_HTTP_SERVICE_CONFIG_SSL_CCS_SET_Size' -> 16rB8.
+			'_OffsetOf_KeyDesc' -> 16r0.
+			'_OffsetOf_ParamDesc' -> 16r80
+		}!
 WinHttpServer.HTTP_SERVICE_CONFIG_SSL_CCS_SET guid: (Core.GUID fromString: '{078985f7-29b2-4403-8acf-074217e6e9f4}')!
 WinHttpServer.HTTP_SERVICE_CONFIG_SSL_CCS_SET comment: '`HTTP_SERVICE_CONFIG_SSL_CCS_SET` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_SSL_CCS_SET'' from type information in the ''Windows Http Server API'' library.
 

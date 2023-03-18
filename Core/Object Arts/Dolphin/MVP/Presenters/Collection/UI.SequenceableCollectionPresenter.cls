@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.CollectionPresenter subclass: #'UI.SequenceableCollectionPresenter'
+UI.CollectionPresenter
+	subclass: #'UI.SequenceableCollectionPresenter'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

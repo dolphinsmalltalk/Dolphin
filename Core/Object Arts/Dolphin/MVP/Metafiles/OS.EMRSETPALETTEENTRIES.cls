@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMRSETPALETTEENTRIES'
+OS.ENHMETARECORD
+	subclass: #'OS.EMRSETPALETTEENTRIES'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_EMRSETPALETTEENTRIES_Size' -> 16r18.
-		'_OffsetOf_aPalEntries' -> 16r14.
-		'_OffsetOf_cEntries' -> 16r10.
-		'_OffsetOf_ihPal' -> 16r8.
-		'_OffsetOf_iStart' -> 16rC
-	}!
+			'_EMRSETPALETTEENTRIES_Size' -> 16r18.
+			'_OffsetOf_aPalEntries' -> 16r14.
+			'_OffsetOf_cEntries' -> 16r10.
+			'_OffsetOf_ihPal' -> 16r8.
+			'_OffsetOf_iStart' -> 16rC
+		}!
 OS.EMRSETPALETTEENTRIES guid: (Core.GUID fromString: '{e7bfc219-37e0-4690-bf26-61e47ef6ccfb}')!
 OS.EMRSETPALETTEENTRIES comment: '<EMRSETPALETTEENTRIES> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETPALETTEENTRIES'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

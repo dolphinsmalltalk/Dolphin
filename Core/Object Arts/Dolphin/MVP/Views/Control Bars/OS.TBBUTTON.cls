@@ -1,19 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.TBBUTTON'
+OS.Win32Structure
+	subclass: #'OS.TBBUTTON'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_dwData' -> 16rC.
-		'_OffsetOf_fsState' -> 16r8.
-		'_OffsetOf_fsStyle' -> 16r9.
-		'_OffsetOf_iBitmap' -> 16r0.
-		'_OffsetOf_idCommand' -> 16r4.
-		'_OffsetOf_iString' -> 16r10.
-		'_TBBUTTON_Size' -> 16r14
-	}!
+			'_OffsetOf_dwData' -> 16rC.
+			'_OffsetOf_fsState' -> 16r8.
+			'_OffsetOf_fsStyle' -> 16r9.
+			'_OffsetOf_iBitmap' -> 16r0.
+			'_OffsetOf_idCommand' -> 16r4.
+			'_OffsetOf_iString' -> 16r10.
+			'_TBBUTTON_Size' -> 16r14
+		}!
 OS.TBBUTTON guid: (Core.GUID fromString: '{87b4c614-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.TBBUTTON comment: ''!
 !OS.TBBUTTON categoriesForClass!External-Data-Structured!External-Data-Structured-Win32! !

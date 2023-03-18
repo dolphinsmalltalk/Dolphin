@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'UI.Examples.Animal'
+Core.Object
+	subclass: #'UI.Examples.Animal'
 	instanceVariableNames: 'name'
 	classVariableNames: 'KnowledgeBase'
 	imports: #()

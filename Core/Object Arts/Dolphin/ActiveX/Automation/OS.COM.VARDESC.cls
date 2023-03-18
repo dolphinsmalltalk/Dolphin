@@ -1,20 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.MemberDesc subclass: #'OS.COM.VARDESC'
+OS.COM.MemberDesc
+	subclass: #'OS.COM.VARDESC'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_elemdesc' -> 16rC.
-		'_OffsetOf_lpstrSchema' -> 16r4.
-		'_OffsetOf_lpvarValue' -> 16r8.
-		'_OffsetOf_memid' -> 16r0.
-		'_OffsetOf_oInst' -> 16r8.
-		'_OffsetOf_varkind' -> 16r20.
-		'_OffsetOf_wVarFlags' -> 16r1C.
-		'_VARDESC_Size' -> 16r24
-	}!
+			'_OffsetOf_elemdesc' -> 16rC.
+			'_OffsetOf_lpstrSchema' -> 16r4.
+			'_OffsetOf_lpvarValue' -> 16r8.
+			'_OffsetOf_memid' -> 16r0.
+			'_OffsetOf_oInst' -> 16r8.
+			'_OffsetOf_varkind' -> 16r20.
+			'_OffsetOf_wVarFlags' -> 16r1C.
+			'_VARDESC_Size' -> 16r24
+		}!
 OS.COM.VARDESC guid: (Core.GUID fromString: '{c06f3b6b-0868-11d3-93af-00a024ca708a}')!
 OS.COM.VARDESC comment: 'VARDESC is an <ExternalStructure> class to represent the OLE Automation structure of the same name.
 

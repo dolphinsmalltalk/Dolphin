@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Collection subclass: #'Core.Bag'
+Core.Collection
+	subclass: #'Core.Bag'
 	instanceVariableNames: 'contents'
 	classVariableNames: ''
 	imports: #()

@@ -1,16 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.LOGPALETTE'
+OS.Win32Structure
+	subclass: #'OS.LOGPALETTE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_LOGPALETTE_Size' -> 16r404.
-		'_OffsetOf_palNumEntries' -> 16r2.
-		'_OffsetOf_palPalEntry' -> 16r4.
-		'_OffsetOf_palVersion' -> 16r0
-	}!
+			'_LOGPALETTE_Size' -> 16r404.
+			'_OffsetOf_palNumEntries' -> 16r2.
+			'_OffsetOf_palPalEntry' -> 16r4.
+			'_OffsetOf_palVersion' -> 16r0
+		}!
 OS.LOGPALETTE guid: (Core.GUID fromString: '{87b4c5fa-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.LOGPALETTE comment: '<LOGPALETTE> is an <ExternalStructure> class to wrap the struct ''Win32.LOGPALETTE'' from type information in the ''Win32 API'' library.
 

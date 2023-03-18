@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.TEXTMETRICW subclass: #'OS.NEWTEXTMETRICW'
+OS.TEXTMETRICW
+	subclass: #'OS.NEWTEXTMETRICW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_NEWTEXTMETRICW_Size' -> 16r4C.
-		'_OffsetOf_ntmAvgWidth' -> 16r48.
-		'_OffsetOf_ntmCellHeight' -> 16r44.
-		'_OffsetOf_ntmFlags' -> 16r3C.
-		'_OffsetOf_ntmSizeEM' -> 16r40
-	}!
+			'_NEWTEXTMETRICW_Size' -> 16r4C.
+			'_OffsetOf_ntmAvgWidth' -> 16r48.
+			'_OffsetOf_ntmCellHeight' -> 16r44.
+			'_OffsetOf_ntmFlags' -> 16r3C.
+			'_OffsetOf_ntmSizeEM' -> 16r40
+		}!
 OS.NEWTEXTMETRICW guid: (Core.GUID fromString: '{5a49e86c-3d79-4c3d-b5be-65a1b21f73ed}')!
 OS.NEWTEXTMETRICW comment: '<NEWTEXTMETRIC> is an <ExternalStructure> class to wrap the struct ''Win.NEWTEXTMETRIC'' from type information in the ''Windows API'' library.
 

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.AbstractDocumentShell subclass: #'UI.TextDocument'
+UI.AbstractDocumentShell
+	subclass: #'UI.TextDocument'
 	instanceVariableNames: 'documentPresenter statusModel modifiedModel'
 	classVariableNames: ''
 	imports: #()

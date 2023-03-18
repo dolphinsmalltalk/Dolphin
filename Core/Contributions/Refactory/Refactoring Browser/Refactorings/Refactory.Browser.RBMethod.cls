@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Refactory.Browser.RBMethod'
+Core.Object
+	subclass: #'Refactory.Browser.RBMethod'
 	instanceVariableNames: 'class compiledMethod source selector parseTree hasSourceIntervals'
 	classVariableNames: ''
 	imports: #()

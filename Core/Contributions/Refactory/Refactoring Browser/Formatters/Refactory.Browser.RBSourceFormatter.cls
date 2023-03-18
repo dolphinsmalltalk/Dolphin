@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.ParseNodeVisitor subclass: #'Refactory.Browser.RBSourceFormatter'
+Kernel.ParseNodeVisitor
+	subclass: #'Refactory.Browser.RBSourceFormatter'
 	instanceVariableNames: 'codeStream lineStart indent'
 	classVariableNames: 'MaxLineLength PeriodsAtEndOfMethod'
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Kernel.DeadObject'
+Core.Object
+	subclass: #'Kernel.DeadObject'
 	instanceVariableNames: ''
 	classVariableNames: 'Current'
 	imports: #()

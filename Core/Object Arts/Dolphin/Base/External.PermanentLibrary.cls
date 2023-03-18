@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.DynamicLinkLibrary subclass: #'External.PermanentLibrary'
+External.DynamicLinkLibrary
+	subclass: #'External.PermanentLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

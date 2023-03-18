@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.SmalltalkToolShell subclass: #'Tools.ResourceBrowser'
+Tools.SmalltalkToolShell
+	subclass: #'Tools.ResourceBrowser'
 	instanceVariableNames: 'resourceToolboxPresenter'
 	classVariableNames: ''
 	imports: #()

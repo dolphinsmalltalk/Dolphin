@@ -1,45 +1,46 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'OS.DEVMODE'
+External.Structure
+	subclass: #'OS.DEVMODE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_DEVMODE_Size' -> 16r94.
-		'_OffsetOf_dmBitsPerPel' -> 16r68.
-		'_OffsetOf_dmCollate' -> 16r44.
-		'_OffsetOf_dmColor' -> 16r3C.
-		'_OffsetOf_dmCopies' -> 16r36.
-		'_OffsetOf_dmDefaultSource' -> 16r38.
-		'_OffsetOf_dmDeviceName' -> 16r0.
-		'_OffsetOf_dmDisplayFlags' -> 16r74.
-		'_OffsetOf_dmDisplayFrequency' -> 16r78.
-		'_OffsetOf_dmDitherType' -> 16r88.
-		'_OffsetOf_dmDriverExtra' -> 16r26.
-		'_OffsetOf_dmDriverVersion' -> 16r22.
-		'_OffsetOf_dmDuplex' -> 16r3E.
-		'_OffsetOf_dmFields' -> 16r28.
-		'_OffsetOf_dmFormName' -> 16r46.
-		'_OffsetOf_dmICMIntent' -> 16r80.
-		'_OffsetOf_dmICMMethod' -> 16r7C.
-		'_OffsetOf_dmLogPixels' -> 16r66.
-		'_OffsetOf_dmMediaType' -> 16r84.
-		'_OffsetOf_dmOrientation' -> 16r2C.
-		'_OffsetOf_dmPaperLength' -> 16r30.
-		'_OffsetOf_dmPaperSize' -> 16r2E.
-		'_OffsetOf_dmPaperWidth' -> 16r32.
-		'_OffsetOf_dmPelsHeight' -> 16r70.
-		'_OffsetOf_dmPelsWidth' -> 16r6C.
-		'_OffsetOf_dmPrintQuality' -> 16r3A.
-		'_OffsetOf_dmReserved1' -> 16r8C.
-		'_OffsetOf_dmReserved2' -> 16r90.
-		'_OffsetOf_dmScale' -> 16r34.
-		'_OffsetOf_dmSize' -> 16r24.
-		'_OffsetOf_dmSpecVersion' -> 16r20.
-		'_OffsetOf_dmTTOption' -> 16r42.
-		'_OffsetOf_dmYResolution' -> 16r40
-	}!
+			'_DEVMODE_Size' -> 16r94.
+			'_OffsetOf_dmBitsPerPel' -> 16r68.
+			'_OffsetOf_dmCollate' -> 16r44.
+			'_OffsetOf_dmColor' -> 16r3C.
+			'_OffsetOf_dmCopies' -> 16r36.
+			'_OffsetOf_dmDefaultSource' -> 16r38.
+			'_OffsetOf_dmDeviceName' -> 16r0.
+			'_OffsetOf_dmDisplayFlags' -> 16r74.
+			'_OffsetOf_dmDisplayFrequency' -> 16r78.
+			'_OffsetOf_dmDitherType' -> 16r88.
+			'_OffsetOf_dmDriverExtra' -> 16r26.
+			'_OffsetOf_dmDriverVersion' -> 16r22.
+			'_OffsetOf_dmDuplex' -> 16r3E.
+			'_OffsetOf_dmFields' -> 16r28.
+			'_OffsetOf_dmFormName' -> 16r46.
+			'_OffsetOf_dmICMIntent' -> 16r80.
+			'_OffsetOf_dmICMMethod' -> 16r7C.
+			'_OffsetOf_dmLogPixels' -> 16r66.
+			'_OffsetOf_dmMediaType' -> 16r84.
+			'_OffsetOf_dmOrientation' -> 16r2C.
+			'_OffsetOf_dmPaperLength' -> 16r30.
+			'_OffsetOf_dmPaperSize' -> 16r2E.
+			'_OffsetOf_dmPaperWidth' -> 16r32.
+			'_OffsetOf_dmPelsHeight' -> 16r70.
+			'_OffsetOf_dmPelsWidth' -> 16r6C.
+			'_OffsetOf_dmPrintQuality' -> 16r3A.
+			'_OffsetOf_dmReserved1' -> 16r8C.
+			'_OffsetOf_dmReserved2' -> 16r90.
+			'_OffsetOf_dmScale' -> 16r34.
+			'_OffsetOf_dmSize' -> 16r24.
+			'_OffsetOf_dmSpecVersion' -> 16r20.
+			'_OffsetOf_dmTTOption' -> 16r42.
+			'_OffsetOf_dmYResolution' -> 16r40
+		}!
 OS.DEVMODE guid: (Core.GUID fromString: '{62ad7874-bbbf-4852-99d9-8040855ecb49}')!
 OS.DEVMODE comment: '<DEVMODE> is an <ExternalStructure> class to wrap the struct ''Win32.DEVMODE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

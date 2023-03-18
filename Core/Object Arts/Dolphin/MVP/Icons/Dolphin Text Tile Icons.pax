@@ -28,17 +28,19 @@ package!
 
 "Class Definitions"!
 
-Core.Object subclass: #'Graphics.TextTileIcon'
+Core.Object
+	subclass: #'Graphics.TextTileIcon'
 	instanceVariableNames: 'text fontName tilecolor textcolor _reserved5 _reserved6 flags _reserved8 _reserved9'
 	classVariableNames: 'TextFormat'
 	imports: #(#{Graphics.Gdiplus private})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'FontStyleMask' -> 16r1C.
-		'FontStyleNames' -> #(#regular #bold #italic #boldItalic #underline #strikeout).
-		'RotationMask' -> 16r3
-	}!
-Graphics.ImageInitializer subclass: #'Graphics.IconFromTextTileIconInitializer'
+			'FontStyleMask' -> 16r1C.
+			'FontStyleNames' -> #(#regular #bold #italic #boldItalic #underline #strikeout).
+			'RotationMask' -> 16r3
+		}!
+Graphics.ImageInitializer
+	subclass: #'Graphics.IconFromTextTileIconInitializer'
 	instanceVariableNames: 'extent textTile'
 	classVariableNames: ''
 	imports: #(#{Graphics.Gdiplus})

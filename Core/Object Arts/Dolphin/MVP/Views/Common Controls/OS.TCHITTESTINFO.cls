@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.CCHITTESTINFO subclass: #'OS.TCHITTESTINFO'
+OS.CCHITTESTINFO
+	subclass: #'OS.TCHITTESTINFO'
 	instanceVariableNames: 'iItem'
 	classVariableNames: ''
 	imports: #()

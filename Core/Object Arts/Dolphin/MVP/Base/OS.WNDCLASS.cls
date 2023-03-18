@@ -1,23 +1,24 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.WNDCLASS'
+OS.Win32Structure
+	subclass: #'OS.WNDCLASS'
 	instanceVariableNames: 'menuName className'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_cbClsExtra' -> 16r8.
-		'_OffsetOf_cbWndExtra' -> 16rC.
-		'_OffsetOf_hbrBackground' -> 16r1C.
-		'_OffsetOf_hCursor' -> 16r18.
-		'_OffsetOf_hIcon' -> 16r14.
-		'_OffsetOf_hInstance' -> 16r10.
-		'_OffsetOf_lpfnWndProc' -> 16r4.
-		'_OffsetOf_lpszClassName' -> 16r24.
-		'_OffsetOf_lpszMenuName' -> 16r20.
-		'_OffsetOf_style' -> 16r0.
-		'_WNDCLASS_Size' -> 16r28
-	}!
+			'_OffsetOf_cbClsExtra' -> 16r8.
+			'_OffsetOf_cbWndExtra' -> 16rC.
+			'_OffsetOf_hbrBackground' -> 16r1C.
+			'_OffsetOf_hCursor' -> 16r18.
+			'_OffsetOf_hIcon' -> 16r14.
+			'_OffsetOf_hInstance' -> 16r10.
+			'_OffsetOf_lpfnWndProc' -> 16r4.
+			'_OffsetOf_lpszClassName' -> 16r24.
+			'_OffsetOf_lpszMenuName' -> 16r20.
+			'_OffsetOf_style' -> 16r0.
+			'_WNDCLASS_Size' -> 16r28
+		}!
 OS.WNDCLASS guid: (Core.GUID fromString: '{87b4c61c-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.WNDCLASS comment: 'WNDCLASS is the class of <ExternalStructure> which represent the Windows structure of the same name. It is used to retrieve and specify Windows "Class" information, e.g. when registering a window class.
 '!

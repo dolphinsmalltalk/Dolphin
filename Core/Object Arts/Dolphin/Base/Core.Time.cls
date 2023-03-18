@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Magnitude subclass: #'Core.Time'
+Core.Magnitude
+	subclass: #'Core.Time'
 	instanceVariableNames: 'seconds'
 	classVariableNames: ''
 	imports: #()

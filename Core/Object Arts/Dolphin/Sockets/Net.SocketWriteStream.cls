@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.WriteStream subclass: #'Net.SocketWriteStream'
+Core.WriteStream
+	subclass: #'Net.SocketWriteStream'
 	instanceVariableNames: 'socket dirty'
 	classVariableNames: ''
 	imports: #()

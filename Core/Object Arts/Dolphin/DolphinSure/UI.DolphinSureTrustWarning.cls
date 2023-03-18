@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Dialog subclass: #'UI.DolphinSureTrustWarning'
+UI.Dialog
+	subclass: #'UI.DolphinSureTrustWarning'
 	instanceVariableNames: 'certificateImage description alwaysTrust'
 	classVariableNames: ''
 	imports: #()

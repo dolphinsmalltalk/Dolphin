@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.StRealVariableNode subclass: #'Refactory.Browser.RBPatternVariableNode'
+Kernel.StRealVariableNode
+	subclass: #'Refactory.Browser.RBPatternVariableNode'
 	instanceVariableNames: 'recurseInto isList isLiteral isStatement isAnything'
 	classVariableNames: ''
 	imports: #()

@@ -1,23 +1,24 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.TIME_ZONE_INFORMATION'
+OS.Win32Structure
+	subclass: #'OS.TIME_ZONE_INFORMATION'
 	instanceVariableNames: 'zoneId offset'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_bias' -> 16r0.
-		'_OffsetOf_daylightBias' -> 16rA8.
-		'_OffsetOf_daylightDate' -> 16r98.
-		'_OffsetOf_daylightName' -> 16r58.
-		'_OffsetOf_standardBias' -> 16r54.
-		'_OffsetOf_standardDate' -> 16r44.
-		'_OffsetOf_standardName' -> 16r4.
-		'_TIME_ZONE_INFORMATION_Size' -> 16rAC.
-		'TIME_ZONE_ID_DAYLIGHT' -> 16r2.
-		'TIME_ZONE_ID_STANDARD' -> 16r1.
-		'TIME_ZONE_ID_UNKNOWN' -> 16r0
-	}!
+			'_OffsetOf_bias' -> 16r0.
+			'_OffsetOf_daylightBias' -> 16rA8.
+			'_OffsetOf_daylightDate' -> 16r98.
+			'_OffsetOf_daylightName' -> 16r58.
+			'_OffsetOf_standardBias' -> 16r54.
+			'_OffsetOf_standardDate' -> 16r44.
+			'_OffsetOf_standardName' -> 16r4.
+			'_TIME_ZONE_INFORMATION_Size' -> 16rAC.
+			'TIME_ZONE_ID_DAYLIGHT' -> 16r2.
+			'TIME_ZONE_ID_STANDARD' -> 16r1.
+			'TIME_ZONE_ID_UNKNOWN' -> 16r0
+		}!
 OS.TIME_ZONE_INFORMATION guid: (Core.GUID fromString: '{ceb846ce-f4db-48fe-9fec-02e637cbc4b4}')!
 OS.TIME_ZONE_INFORMATION comment: '<TIME_ZONE_INFORMATION> is an <ExternalStructure> class to wrap the struct ''Win32.TIME_ZONE_INFORMATION'' from type information in the ''Win32 API'' library.
 

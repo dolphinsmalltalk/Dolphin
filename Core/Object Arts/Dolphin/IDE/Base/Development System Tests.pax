@@ -71,97 +71,113 @@ package!
 
 "Class Definitions"!
 
-Tools subclass: #'Tools.Tests'
+Tools
+	subclass: #'Tools.Tests'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{XProgramming.SUnit})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'Tools.Tests.MockScintillaView'
+Core.Object
+	subclass: #'Tools.Tests.MockScintillaView'
 	instanceVariableNames: 'lastStyled tokens text currentTextStyles styleIdMap'
 	classVariableNames: ''
 	imports: #(#{UI.Scintilla private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.ParseNodeVisitor subclass: #'Tools.Tests.StStyler'
+Kernel.ParseNodeVisitor
+	subclass: #'Tools.Tests.StStyler'
 	instanceVariableNames: 'view arrayDepth'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-XProgramming.SUnit.TestCase subclass: #'Refactory.Browser.Tests.RewriteTestCase'
+XProgramming.SUnit.TestCase
+	subclass: #'Refactory.Browser.Tests.RewriteTestCase'
 	instanceVariableNames: 'env'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Tools.Tests.CreateSubclassDialogTest'
+Core.Tests.DolphinTest
+	subclass: #'Tools.Tests.CreateSubclassDialogTest'
 	instanceVariableNames: 'subject'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Tools.Tests.DisassemblerTest'
+Core.Tests.DolphinTest
+	subclass: #'Tools.Tests.DisassemblerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Tools.Tests.KeyedAspectTest'
+Core.Tests.DolphinTest
+	subclass: #'Tools.Tests.KeyedAspectTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Tools.Tests.MenuPainterTest'
+Core.Tests.DolphinTest
+	subclass: #'Tools.Tests.MenuPainterTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Tools.Tests.MethodSearchTest'
+Core.Tests.DolphinTest
+	subclass: #'Tools.Tests.MethodSearchTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Tools.Tests.ProductReleaseTest'
+Core.Tests.DolphinTest
+	subclass: #'Tools.Tests.ProductReleaseTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Tools.Tests.SmalltalkSystemTest'
+Core.Tests.DolphinTest
+	subclass: #'Tools.Tests.SmalltalkSystemTest'
 	instanceVariableNames: 'devsys'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'OS.Tests.VersionResourceTest'
+Core.Tests.DolphinTest
+	subclass: #'OS.Tests.VersionResourceTest'
 	instanceVariableNames: 'updatePath sourceModule sourceSize sourceBytes'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.PresenterTest subclass: #'Tools.Tests.SmalltalkWorkspaceTest'
+UI.Tests.PresenterTest
+	subclass: #'Tools.Tests.SmalltalkWorkspaceTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.ImageViewAbstractTest subclass: #'Tools.Tests.ImageListViewTest'
+UI.Tests.ImageViewAbstractTest
+	subclass: #'Tools.Tests.ImageListViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.Tests.BrowserEnvironmentTest subclass: #'Tools.Tests.MethodCategoryEnvironmentTest'
+Refactory.Browser.Tests.BrowserEnvironmentTest
+	subclass: #'Tools.Tests.MethodCategoryEnvironmentTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.Tests.BrowserEnvironmentTest subclass: #'Tools.Tests.PackageEnvironmentTest'
+Refactory.Browser.Tests.BrowserEnvironmentTest
+	subclass: #'Tools.Tests.PackageEnvironmentTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

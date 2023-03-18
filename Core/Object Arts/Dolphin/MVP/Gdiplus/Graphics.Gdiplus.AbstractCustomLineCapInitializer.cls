@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.AbstractCustomLineCapInitializer'
+Graphics.Gdiplus.Initializer
+	subclass: #'Graphics.Gdiplus.AbstractCustomLineCapInitializer'
 	instanceVariableNames: 'strokeJoin widthScale'
 	classVariableNames: ''
 	imports: #()

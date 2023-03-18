@@ -1,21 +1,22 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Presenter subclass: #'Tools.SmalltalkWorkspace'
+UI.Presenter
+	subclass: #'Tools.SmalltalkWorkspace'
 	instanceVariableNames: 'evaluationContext errorModel findDetails workspacePool namespaces compilationErrors textStyles searchEnvironment modifiedModel flags indicatorStyles variableMetadataProvider'
 	classVariableNames: 'Abbreviations AnnotationMode AutoCompleteDwell DefaultCaretColor DefaultFont DefaultTabWidth FontQuality IndicatorStyles KeyBindings KeywordCompletions MaxAutoCompletionListHeight MaxAutoCompletionListSize MaxAutoCompletionListWidth OptionFlags StandardUnaryReturnTypes TextStyles WrapIndentMode'
 	imports: #(#{Kernel.CompilerFlags} #{UI.Scintilla private} #{Refactory.Browser private})
 	classInstanceVariableNames: 'additionalKeyBindings commandQueryHandlers'
 	classConstants: {
-		'AutoCompleteMask' -> 16r8.
-		'AutoCompletionCaseInsensitiveMask' -> 16r80.
-		'AutoCompletionEnabledMask' -> 16r10.
-		'AutoCompletionSpaceAddedMask' -> 16r40.
-		'AutoCompletionTruncatingMask' -> 16r20.
-		'LoadingMask' -> 16r1.
-		'UseDirectWriteMask' -> 16r100.
-		'VariableTipsMask' -> 16r2.
-		'WordWrapMask' -> 16r4
-	}!
+			'AutoCompleteMask' -> 16r8.
+			'AutoCompletionCaseInsensitiveMask' -> 16r80.
+			'AutoCompletionEnabledMask' -> 16r10.
+			'AutoCompletionSpaceAddedMask' -> 16r40.
+			'AutoCompletionTruncatingMask' -> 16r20.
+			'LoadingMask' -> 16r1.
+			'UseDirectWriteMask' -> 16r100.
+			'VariableTipsMask' -> 16r2.
+			'WordWrapMask' -> 16r4
+		}!
 Tools.SmalltalkWorkspace guid: (Core.GUID fromString: '{87b4c687-026e-11d3-9fd7-00a0cc3e4a32}')!
 Tools.SmalltalkWorkspace comment: '`SmalltalkWorkspace` is a `<presenter>` for displaying a workspace area within a `ScintillaView`. Note that, for efficiency purposes, a SmalltakWorkspace does not have a model. The textual data is held only within the associated view. since there seems little point in duplicating this text and holding it within the image as, say, a `<readableString>`.
 

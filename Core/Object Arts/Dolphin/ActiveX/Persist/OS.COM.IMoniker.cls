@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IPersistStream subclass: #'OS.COM.IMoniker'
+OS.COM.IPersistStream
+	subclass: #'OS.COM.IMoniker'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

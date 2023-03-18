@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.SharedLookupTable variableSubclass: #'Core.SharedIdentityDictionary'
+Core.SharedLookupTable
+	variableSubclass: #'Core.SharedIdentityDictionary'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

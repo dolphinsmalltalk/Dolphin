@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMRSETPIXELV'
+OS.ENHMETARECORD
+	subclass: #'OS.EMRSETPIXELV'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_EMRSETPIXELV_Size' -> 16r14.
-		'_OffsetOf_crColor' -> 16r10.
-		'_OffsetOf_ptlPixel' -> 16r8
-	}!
+			'_EMRSETPIXELV_Size' -> 16r14.
+			'_OffsetOf_crColor' -> 16r10.
+			'_OffsetOf_ptlPixel' -> 16r8
+		}!
 OS.EMRSETPIXELV guid: (Core.GUID fromString: '{a1dc1f6e-41ae-4ffa-90d8-778106a60b0b}')!
 OS.EMRSETPIXELV comment: '<EMRSETPIXELV> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETPIXELV'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

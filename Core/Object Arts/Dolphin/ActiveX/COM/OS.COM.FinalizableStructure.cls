@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.OLEStructure subclass: #'OS.COM.FinalizableStructure'
+OS.COM.OLEStructure
+	subclass: #'OS.COM.FinalizableStructure'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

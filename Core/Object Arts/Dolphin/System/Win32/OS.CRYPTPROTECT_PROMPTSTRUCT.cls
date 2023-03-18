@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.CRYPTPROTECT_PROMPTSTRUCT'
+OS.Win32Structure
+	subclass: #'OS.CRYPTPROTECT_PROMPTSTRUCT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_CRYPTPROTECT_PROMPTSTRUCT_Size' -> 16r10.
-		'_OffsetOf_dwPromptFlags' -> 16r4.
-		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_hwndApp' -> 16r8.
-		'_OffsetOf_szPrompt' -> 16rC
-	}!
+			'_CRYPTPROTECT_PROMPTSTRUCT_Size' -> 16r10.
+			'_OffsetOf_dwPromptFlags' -> 16r4.
+			'_OffsetOf_dwSize' -> 16r0.
+			'_OffsetOf_hwndApp' -> 16r8.
+			'_OffsetOf_szPrompt' -> 16rC
+		}!
 OS.CRYPTPROTECT_PROMPTSTRUCT guid: (Core.GUID fromString: '{870680a4-0d5d-45b2-88b4-74774c010bc5}')!
 OS.CRYPTPROTECT_PROMPTSTRUCT comment: '<CRYPTPROTECT_PROMPTSTRUCT> is an <ExternalStructure> class to wrap the struct ''Win32.CRYPTPROTECT_PROMPTSTRUCT'' from type information in the ''Win32 API'' library.
 

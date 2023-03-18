@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.AbstractInterfaceFunction subclass: #'OS.COM.ReleaseFunction'
+OS.COM.AbstractInterfaceFunction
+	subclass: #'OS.COM.ReleaseFunction'
 	instanceVariableNames: ''
 	classVariableNames: 'Descriptor'
 	imports: #()

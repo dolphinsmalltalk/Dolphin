@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Database.DBSchemaStatement subclass: #'Database.DBTablesStatement'
+Database.DBSchemaStatement
+	subclass: #'Database.DBTablesStatement'
 	instanceVariableNames: 'tableType'
 	classVariableNames: ''
 	imports: #()

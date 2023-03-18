@@ -1,15 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'UI.FramingCalculation'
+Core.Object
+	subclass: #'UI.FramingCalculation'
 	instanceVariableNames: 'name framingBlock offsetBlock flags'
 	classVariableNames: 'Calculations'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'IndependentMask' -> 16r4.
-		'ProportionalMask' -> 16r2.
-		'VerticalMask' -> 16r1
-	}!
+	classConstants: { 'IndependentMask' -> 16r4. 'ProportionalMask' -> 16r2. 'VerticalMask' -> 16r1 }!
 UI.FramingCalculation guid: (Core.GUID fromString: '{d8059738-a2e8-4291-8e24-e31cf4bee13a}')!
 UI.FramingCalculation comment: 'FramingCalculation instances are used to represent the individual edge constraints in a <FramingConstraints> instance. See that class'' comment for further details.
 

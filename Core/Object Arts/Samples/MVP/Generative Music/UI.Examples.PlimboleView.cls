@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.View subclass: #'UI.Examples.PlimboleView'
+UI.View
+	subclass: #'UI.Examples.PlimboleView'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

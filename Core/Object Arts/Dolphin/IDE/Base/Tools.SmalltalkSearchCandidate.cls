@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Tools.SmalltalkSearchCandidate'
+Core.Object
+	subclass: #'Tools.SmalltalkSearchCandidate'
 	instanceVariableNames: 'matchingName object'
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.StdioFileStream subclass: #'OS.StdioTextFileStream'
+OS.StdioFileStream
+	subclass: #'OS.StdioTextFileStream'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

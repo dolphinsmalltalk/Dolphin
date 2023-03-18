@@ -1,15 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.TBADDBITMAP'
+OS.Win32Structure
+	subclass: #'OS.TBADDBITMAP'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_OffsetOf_hInst' -> 16r0.
-		'_OffsetOf_nID' -> 16r4.
-		'_TBADDBITMAP_Size' -> 16r8
-	}!
+	classConstants: { '_OffsetOf_hInst' -> 16r0. '_OffsetOf_nID' -> 16r4. '_TBADDBITMAP_Size' -> 16r8 }!
 OS.TBADDBITMAP guid: (Core.GUID fromString: '{87b4c613-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.TBADDBITMAP comment: ''!
 !OS.TBADDBITMAP categoriesForClass!External-Data-Structured!External-Data-Structured-Win32! !

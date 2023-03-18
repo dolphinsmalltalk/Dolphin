@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTest subclass: #'Core.Tests.FileTest'
+Core.Tests.DolphinTest
+	subclass: #'Core.Tests.FileTest'
 	instanceVariableNames: 'tempFile'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants} #{OS.CRTConstants})

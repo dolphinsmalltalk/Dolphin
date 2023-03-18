@@ -18,7 +18,8 @@ package!
 
 "Class Definitions"!
 
-External.DynamicLinkLibrary subclass: #'OS.WinInetLibrary'
+External.DynamicLinkLibrary
+	subclass: #'OS.WinInetLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

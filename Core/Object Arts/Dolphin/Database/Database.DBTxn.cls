@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Database.DBTxn'
+Core.Object
+	subclass: #'Database.DBTxn'
 	instanceVariableNames: 'connection readOnly creator'
 	classVariableNames: ''
 	imports: #(#{OS.ODBCConstants})

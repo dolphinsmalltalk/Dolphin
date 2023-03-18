@@ -1,24 +1,25 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.BITMAPINFOHEADER'
+OS.Win32Structure
+	subclass: #'OS.BITMAPINFOHEADER'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_BITMAPINFOHEADER_Size' -> 16r28.
-		'_OffsetOf_biBitCount' -> 16rE.
-		'_OffsetOf_biClrImportant' -> 16r24.
-		'_OffsetOf_biClrUsed' -> 16r20.
-		'_OffsetOf_biCompression' -> 16r10.
-		'_OffsetOf_biHeight' -> 16r8.
-		'_OffsetOf_biPlanes' -> 16rC.
-		'_OffsetOf_biSizeImage' -> 16r14.
-		'_OffsetOf_biWidth' -> 16r4.
-		'_OffsetOf_biXPelsPerMeter' -> 16r18.
-		'_OffsetOf_biYPelsPerMeter' -> 16r1C.
-		'_OffsetOf_dwSize' -> 16r0
-	}!
+			'_BITMAPINFOHEADER_Size' -> 16r28.
+			'_OffsetOf_biBitCount' -> 16rE.
+			'_OffsetOf_biClrImportant' -> 16r24.
+			'_OffsetOf_biClrUsed' -> 16r20.
+			'_OffsetOf_biCompression' -> 16r10.
+			'_OffsetOf_biHeight' -> 16r8.
+			'_OffsetOf_biPlanes' -> 16rC.
+			'_OffsetOf_biSizeImage' -> 16r14.
+			'_OffsetOf_biWidth' -> 16r4.
+			'_OffsetOf_biXPelsPerMeter' -> 16r18.
+			'_OffsetOf_biYPelsPerMeter' -> 16r1C.
+			'_OffsetOf_dwSize' -> 16r0
+		}!
 OS.BITMAPINFOHEADER guid: (Core.GUID fromString: '{87b4c5cb-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.BITMAPINFOHEADER comment: 'BITMAPINFOHEADER is an <ExternalStructure> class to represent the Win32 structure of the same name.
 

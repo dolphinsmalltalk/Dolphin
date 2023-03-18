@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.LPVOID subclass: #'OS.COM.LPBSTR'
+External.LPVOID
+	subclass: #'OS.COM.LPBSTR'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

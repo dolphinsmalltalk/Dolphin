@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WinHttpServer.HTTP_PROPERTY_FLAGS subclass: #'WinHttpServer.HTTP_PROTECTION_LEVEL_INFO'
+WinHttpServer.HTTP_PROPERTY_FLAGS
+	subclass: #'WinHttpServer.HTTP_PROTECTION_LEVEL_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_HTTP_PROTECTION_LEVEL_INFO_Size' -> 16r8.
-		'_OffsetOf_Level' -> 16r4
-	}!
+	classConstants: { '_HTTP_PROTECTION_LEVEL_INFO_Size' -> 16r8. '_OffsetOf_Level' -> 16r4 }!
 WinHttpServer.HTTP_PROTECTION_LEVEL_INFO guid: (Core.GUID fromString: '{e1881388-d03e-4ea0-8e39-8f1439753299}')!
 WinHttpServer.HTTP_PROTECTION_LEVEL_INFO comment: '`HTTP_PROTECTION_LEVEL_INFO` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_PROTECTION_LEVEL_INFO'' from type information in the ''Windows Http Server API'' library.
 

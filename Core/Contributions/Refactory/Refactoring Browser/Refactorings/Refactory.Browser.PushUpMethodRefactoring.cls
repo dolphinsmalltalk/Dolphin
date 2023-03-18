@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.MethodRefactoring subclass: #'Refactory.Browser.PushUpMethodRefactoring'
+Refactory.Browser.MethodRefactoring
+	subclass: #'Refactory.Browser.PushUpMethodRefactoring'
 	instanceVariableNames: 'removeDuplicates selectors'
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Error subclass: #'XProgramming.SUnit.TestFailure'
+Core.Error
+	subclass: #'XProgramming.SUnit.TestFailure'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

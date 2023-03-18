@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Presenter subclass: #'Net.Examples.Chat'
+UI.Presenter
+	subclass: #'Net.Examples.Chat'
 	instanceVariableNames: 'calleeAddress outgoingMessage messageDisplay status socket acceptSocket sendQueue outgoingPort incomingPort'
 	classVariableNames: 'Statii'
 	imports: #(#{UI})

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.ClassLocator subclass: #'Kernel.ValidatingClassLocator'
+Kernel.ClassLocator
+	subclass: #'Kernel.ValidatingClassLocator'
 	instanceVariableNames: 'validationBlock'
 	classVariableNames: ''
 	imports: #()

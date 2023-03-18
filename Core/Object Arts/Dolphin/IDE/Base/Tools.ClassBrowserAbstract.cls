@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.SmalltalkToolShell subclass: #'Tools.ClassBrowserAbstract'
+Tools.SmalltalkToolShell
+	subclass: #'Tools.ClassBrowserAbstract'
 	instanceVariableNames: 'classesPresenter categoriesPresenter methodBrowserPresenter definitionPresenter modePresenter flags history variablesPresenter protocolsPresenter filterPresenter packageModel statusModel cardsPresenter loadedPlugins methodCategories'
 	classVariableNames: 'GrayedMethodFadeFactor HistoryListSize LooseMethodColor WordWrapDefinition'
 	imports: #()
 	classInstanceVariableNames: 'plugins'
-	classConstants: {
-		'FilterObjectMethodsMask' -> 16r200.
-		'ShowInheritedMethodsMask' -> 16r100
-	}!
+	classConstants: { 'FilterObjectMethodsMask' -> 16r200. 'ShowInheritedMethodsMask' -> 16r100 }!
 Tools.ClassBrowserAbstract guid: (Core.GUID fromString: '{87b4c6bc-026e-11d3-9fd7-00a0cc3e4a32}')!
 Tools.ClassBrowserAbstract isNonInstantiable: true!
 Tools.ClassBrowserAbstract comment: 'ClassBrowserAbstract is an abstract <SmalltalkToolShell> that implements most of the functionality required for a class browser development tool. Concrete subclasses implement the Class Hierarchy Browser and System Browser development tools.

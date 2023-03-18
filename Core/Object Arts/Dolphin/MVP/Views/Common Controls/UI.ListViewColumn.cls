@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'UI.ListViewColumn'
+Core.Object
+	subclass: #'UI.ListViewColumn'
 	instanceVariableNames: 'text width alignment getTextBlock getSortValueBlock getContentsBlock name parent getImageBlock flags getInfoTipBlock customDrawBlock'
 	classVariableNames: ''
 	imports: #(#{OS.ListViewConstants})
 	classInstanceVariableNames: ''
-	classConstants: {
-		'AutoResizeMask' -> 16r1.
-		'SortInvertedMask' -> 16r2
-	}!
+	classConstants: { 'AutoResizeMask' -> 16r1. 'SortInvertedMask' -> 16r2 }!
 UI.ListViewColumn guid: (Core.GUID fromString: '{87b4c499-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.ListViewColumn comment: 'ListViewColumn is a description of a column held by a <ListView>. Note that, columns are only displayed when a list is in #report mode.
 

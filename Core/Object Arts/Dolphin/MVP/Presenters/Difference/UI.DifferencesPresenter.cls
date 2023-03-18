@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Presenter subclass: #'UI.DifferencesPresenter'
+UI.Presenter
+	subclass: #'UI.DifferencesPresenter'
 	instanceVariableNames: 'beforePresenter afterPresenter beforeTitlePresenter afterTitlePresenter comparisonMode wordSeparators'
 	classVariableNames: 'WordSeparators'
 	imports: #()

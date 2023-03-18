@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.LinearLayout subclass: #'UI.ProportionalLayout'
+UI.LinearLayout
+	subclass: #'UI.ProportionalLayout'
 	instanceVariableNames: 'proportions isVertical'
 	classVariableNames: ''
 	imports: #()

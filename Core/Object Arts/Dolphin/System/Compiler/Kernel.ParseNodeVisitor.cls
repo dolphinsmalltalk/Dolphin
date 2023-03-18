@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Kernel.ParseNodeVisitor'
+Core.Object
+	subclass: #'Kernel.ParseNodeVisitor'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

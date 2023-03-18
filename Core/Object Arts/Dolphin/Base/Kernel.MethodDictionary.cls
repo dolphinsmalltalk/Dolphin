@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.IdentityDictionary variableSubclass: #'Kernel.MethodDictionary'
+Core.IdentityDictionary
+	variableSubclass: #'Kernel.MethodDictionary'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

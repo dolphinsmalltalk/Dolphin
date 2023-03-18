@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'UI.ValidationResult'
+Core.Object
+	subclass: #'UI.ValidationResult'
 	instanceVariableNames: 'value caption hint presenter'
 	classVariableNames: ''
 	imports: #()

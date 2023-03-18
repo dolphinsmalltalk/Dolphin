@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.GdiplusLibrary subclass: #'Graphics.Gdiplus.Tests.MockGdiplusLibrary'
+Graphics.Gdiplus.GdiplusLibrary
+	subclass: #'Graphics.Gdiplus.Tests.MockGdiplusLibrary'
 	instanceVariableNames: 'process messages'
 	classVariableNames: ''
 	imports: #()

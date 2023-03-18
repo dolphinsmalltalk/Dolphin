@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IDispatch subclass: #'MSXML.IXMLDOMNode'
+OS.COM.IDispatch
+	subclass: #'MSXML.IXMLDOMNode'
 	instanceVariableNames: ''
 	classVariableNames: 'NodeTypes VarTypeToXMLDataType'
 	imports: #()

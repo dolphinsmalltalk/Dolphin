@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Refactory.Browser.RBAbstractClass'
+Core.Object
+	subclass: #'Refactory.Browser.RBAbstractClass'
 	instanceVariableNames: 'newMethods instanceVariableNames removedSelectors scope'
 	classVariableNames: 'LookupSuperclass'
 	imports: #()

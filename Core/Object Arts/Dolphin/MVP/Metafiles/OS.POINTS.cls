@@ -1,15 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.POINT subclass: #'OS.POINTS'
+External.POINT
+	subclass: #'OS.POINTS'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_OffsetOf_x' -> 16r0.
-		'_OffsetOf_y' -> 16r2.
-		'_POINTS_Size' -> 16r4
-	}!
+	classConstants: { '_OffsetOf_x' -> 16r0. '_OffsetOf_y' -> 16r2. '_POINTS_Size' -> 16r4 }!
 OS.POINTS guid: (Core.GUID fromString: '{3278b910-3376-47e3-be99-02afe78a6230}')!
 OS.POINTS comment: '<POINTS> is an <ExternalStructure> class to wrap the struct ''Win32.POINTS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IUnknown subclass: #'ADODB.IRecFields'
+OS.COM.IUnknown
+	subclass: #'ADODB.IRecFields'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

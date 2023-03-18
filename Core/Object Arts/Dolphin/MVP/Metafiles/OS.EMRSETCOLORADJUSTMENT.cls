@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMRSETCOLORADJUSTMENT'
+OS.ENHMETARECORD
+	subclass: #'OS.EMRSETCOLORADJUSTMENT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_EMRSETCOLORADJUSTMENT_Size' -> 16r20.
-		'_OffsetOf_COLORADJUSTMENT' -> 16r8
-	}!
+	classConstants: { '_EMRSETCOLORADJUSTMENT_Size' -> 16r20. '_OffsetOf_COLORADJUSTMENT' -> 16r8 }!
 OS.EMRSETCOLORADJUSTMENT guid: (Core.GUID fromString: '{bc512904-3af5-4a18-a28b-bf413de2cf50}')!
 OS.EMRSETCOLORADJUSTMENT comment: '<EMRSETCOLORADJUSTMENT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETCOLORADJUSTMENT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

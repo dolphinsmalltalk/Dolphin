@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.StLiteralNode subclass: #'Kernel.StQualifiedReferenceNode'
+Kernel.StLiteralNode
+	subclass: #'Kernel.StQualifiedReferenceNode'
 	instanceVariableNames: 'pathString flags start stop binding'
 	classVariableNames: ''
 	imports: #()

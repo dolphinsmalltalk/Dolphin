@@ -1,16 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.NMCUSTOMDRAW subclass: #'OS.NMLVCUSTOMDRAW'
+OS.NMCUSTOMDRAW
+	subclass: #'OS.NMLVCUSTOMDRAW'
 	instanceVariableNames: 'column'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_NMLVCUSTOMDRAW_Size' -> 16r3C.
-		'_OffsetOf_clrText' -> 16r30.
-		'_OffsetOf_clrTextBk' -> 16r34.
-		'_OffsetOf_iSubItem' -> 16r38
-	}!
+			'_NMLVCUSTOMDRAW_Size' -> 16r3C.
+			'_OffsetOf_clrText' -> 16r30.
+			'_OffsetOf_clrTextBk' -> 16r34.
+			'_OffsetOf_iSubItem' -> 16r38
+		}!
 OS.NMLVCUSTOMDRAW guid: (Core.GUID fromString: '{7fbf7515-c756-4b0e-8d4f-01debafa1178}')!
 OS.NMLVCUSTOMDRAW comment: '`NMLVCUSTOMDRAW` is an `ExternalStructure` class to represent the Win32 structure of the same name.
 

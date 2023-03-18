@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.POINTArray subclass: #'External.POINTLArray'
+External.POINTArray
+	subclass: #'External.POINTLArray'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

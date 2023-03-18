@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY'
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY_Size' -> 16r88.
-		'_OffsetOf_AddrCount' -> 16r0.
-		'_OffsetOf_AddrList' -> 16r8
-	}!
+			'_HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY_Size' -> 16r88.
+			'_OffsetOf_AddrCount' -> 16r0.
+			'_OffsetOf_AddrList' -> 16r8
+		}!
 WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY guid: (Core.GUID fromString: '{3eebcb9d-9dc3-4701-a044-c16df022085b}')!
 WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY comment: '`HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY'' from type information in the ''Windows Http Server API'' library.
 

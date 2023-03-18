@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.KeyedAspect subclass: #'Tools.StackFrameSlot'
+Tools.KeyedAspect
+	subclass: #'Tools.StackFrameSlot'
 	instanceVariableNames: 'index'
 	classVariableNames: ''
 	imports: #()

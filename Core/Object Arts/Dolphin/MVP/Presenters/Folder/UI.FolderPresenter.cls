@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ListPresenter subclass: #'UI.FolderPresenter'
+UI.ListPresenter
+	subclass: #'UI.FolderPresenter'
 	instanceVariableNames: 'treeItem contentsModel isAutoNavigate openBlock history'
 	classVariableNames: ''
 	imports: #()

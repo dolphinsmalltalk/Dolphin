@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.RBReplaceRule subclass: #'Refactory.Browser.RBStringReplaceRule'
+Refactory.Browser.RBReplaceRule
+	subclass: #'Refactory.Browser.RBStringReplaceRule'
 	instanceVariableNames: 'replaceTree'
 	classVariableNames: ''
 	imports: #()

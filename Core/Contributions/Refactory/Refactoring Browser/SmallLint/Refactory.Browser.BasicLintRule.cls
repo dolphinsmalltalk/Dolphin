@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.LintRule subclass: #'Refactory.Browser.BasicLintRule'
+Refactory.Browser.LintRule
+	subclass: #'Refactory.Browser.BasicLintRule'
 	instanceVariableNames: 'result openSymbol'
 	classVariableNames: 'FilterDictionary'
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.Refactoring subclass: #'Refactory.Browser.SplitClassRefactoring'
+Refactory.Browser.Refactoring
+	subclass: #'Refactory.Browser.SplitClassRefactoring'
 	instanceVariableNames: 'class instanceVariables newClassName referenceVariableName newClass'
 	classVariableNames: ''
 	imports: #()

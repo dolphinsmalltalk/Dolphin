@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Number subclass: #'Core.Fraction'
+Core.Number
+	subclass: #'Core.Fraction'
 	instanceVariableNames: 'numerator denominator'
 	classVariableNames: ''
 	imports: #()

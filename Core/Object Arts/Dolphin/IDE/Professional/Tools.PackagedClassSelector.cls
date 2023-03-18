@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.ClassSelector subclass: #'Tools.PackagedClassSelector'
+Tools.ClassSelector
+	subclass: #'Tools.PackagedClassSelector'
 	instanceVariableNames: 'packagesPresenter'
 	classVariableNames: ''
 	imports: #()

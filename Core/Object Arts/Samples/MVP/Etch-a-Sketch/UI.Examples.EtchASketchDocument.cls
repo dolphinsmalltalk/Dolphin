@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ScribbleDocument subclass: #'UI.Examples.EtchASketchDocument'
+ScribbleDocument
+	subclass: #'UI.Examples.EtchASketchDocument'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

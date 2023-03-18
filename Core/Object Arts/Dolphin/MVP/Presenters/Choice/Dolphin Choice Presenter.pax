@@ -26,7 +26,8 @@ package!
 
 "Class Definitions"!
 
-UI.ValuePresenter subclass: #'UI.ChoicePresenter'
+UI.ValuePresenter
+	subclass: #'UI.ChoicePresenter'
 	instanceVariableNames: 'choicesModel nilChoice'
 	classVariableNames: ''
 	imports: #()

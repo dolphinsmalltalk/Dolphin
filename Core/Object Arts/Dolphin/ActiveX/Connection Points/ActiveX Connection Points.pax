@@ -32,44 +32,45 @@ package!
 
 "Class Definitions"!
 
-OS.COM.AbstractDispatchImplementation subclass: #'OS.COM.EventSink'
+OS.COM.AbstractDispatchImplementation
+	subclass: #'OS.COM.EventSink'
 	instanceVariableNames: 'idMap target connector cookie tiSource flags'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
+	classConstants: { 'GenericEventMask' -> 16r2. 'NoIndividualEventsMask' -> 16r4. 'TraceMask' -> 16r1 }!
+OS.COM.IUnknown
+	subclass: #'OS.COM.IConnectionPoint'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown
+	subclass: #'OS.COM.IConnectionPointContainer'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IEnumUnknown
+	subclass: #'OS.COM.IEnumConnectionPoints'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.OLEStructure
+	subclass: #'OS.COM.CONNECTDATA'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
 	classConstants: {
-		'GenericEventMask' -> 16r2.
-		'NoIndividualEventsMask' -> 16r4.
-		'TraceMask' -> 16r1
-	}!
-OS.COM.IUnknown subclass: #'OS.COM.IConnectionPoint'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-OS.COM.IUnknown subclass: #'OS.COM.IConnectionPointContainer'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-OS.COM.IEnumUnknown subclass: #'OS.COM.IEnumConnectionPoints'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-OS.COM.OLEStructure subclass: #'OS.COM.CONNECTDATA'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'_CONNECTDATA_Size' -> 16r8.
-		'_OffsetOf_dwCookie' -> 16r4.
-		'_OffsetOf_punk' -> 16r0
-	}!
+			'_CONNECTDATA_Size' -> 16r8.
+			'_OffsetOf_dwCookie' -> 16r4.
+			'_OffsetOf_punk' -> 16r0
+		}!
 
 "End of package definition"!
 

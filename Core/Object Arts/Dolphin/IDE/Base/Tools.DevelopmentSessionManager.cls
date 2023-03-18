@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.GUISessionManager subclass: #'Tools.DevelopmentSessionManager'
+UI.GUISessionManager
+	subclass: #'Tools.DevelopmentSessionManager'
 	instanceVariableNames: 'imageStamp installationDirectory backupOnImageSave productDetails showSplashAtStartup'
 	classVariableNames: ''
 	imports: #()

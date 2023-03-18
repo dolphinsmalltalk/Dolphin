@@ -25,19 +25,22 @@ package!
 
 "Class Definitions"!
 
-Refactory.Browser.CreateAccessorsForVariableRefactoring subclass: #'Refactory.Browser.RenameAccessorsForVariableRefactoring'
+Refactory.Browser.CreateAccessorsForVariableRefactoring
+	subclass: #'Refactory.Browser.RenameAccessorsForVariableRefactoring'
 	instanceVariableNames: 'newName'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.RenameClassVariableRefactoring subclass: #'Refactory.Browser.RenameClassVariableAndAccessorsRefactoring'
+Refactory.Browser.RenameClassVariableRefactoring
+	subclass: #'Refactory.Browser.RenameClassVariableAndAccessorsRefactoring'
 	instanceVariableNames: 'accessorsRefactoring'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.RenameInstanceVariableRefactoring subclass: #'Refactory.Browser.RenameInstanceVariableAndAccessorsRefactoring'
+Refactory.Browser.RenameInstanceVariableRefactoring
+	subclass: #'Refactory.Browser.RenameInstanceVariableAndAccessorsRefactoring'
 	instanceVariableNames: 'accessorsRefactoring'
 	classVariableNames: ''
 	imports: #()

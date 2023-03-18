@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.AbstractBitmapFromBlankInitializer subclass: #'Graphics.DIBSectionFromBlankInitializer'
+Graphics.AbstractBitmapFromBlankInitializer
+	subclass: #'Graphics.DIBSectionFromBlankInitializer'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.NMGETINFOTIP subclass: #'OS.NMTVGETINFOTIPW'
+OS.NMGETINFOTIP
+	subclass: #'OS.NMTVGETINFOTIPW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_NMTVGETINFOTIPW_Size' -> 16r1C.
-		'_OffsetOf_cchTextMax' -> 16r10.
-		'_OffsetOf_hItem' -> 16r14.
-		'_OffsetOf_lParam' -> 16r18.
-		'_OffsetOf_pszText' -> 16rC
-	}!
+			'_NMTVGETINFOTIPW_Size' -> 16r1C.
+			'_OffsetOf_cchTextMax' -> 16r10.
+			'_OffsetOf_hItem' -> 16r14.
+			'_OffsetOf_lParam' -> 16r18.
+			'_OffsetOf_pszText' -> 16rC
+		}!
 OS.NMTVGETINFOTIPW guid: (Core.GUID fromString: '{092d2532-2e9c-415e-9373-cf213741fa81}')!
 OS.NMTVGETINFOTIPW comment: ''!
 !OS.NMTVGETINFOTIPW categoriesForClass!External-Data-Structured-Win32! !

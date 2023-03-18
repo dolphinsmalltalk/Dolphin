@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Presenter subclass: #'Tools.ClassBrowserPlugin'
+UI.Presenter
+	subclass: #'Tools.ClassBrowserPlugin'
 	instanceVariableNames: ''
 	classVariableNames: 'DefaultPlugins'
 	imports: #()

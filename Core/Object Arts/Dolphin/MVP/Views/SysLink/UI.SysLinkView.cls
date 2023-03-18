@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.StaticView subclass: #'UI.SysLinkView'
+UI.StaticView
+	subclass: #'UI.SysLinkView'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.SysLinkConstants})

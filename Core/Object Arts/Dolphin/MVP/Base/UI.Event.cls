@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'UI.Event'
+Core.Object
+	subclass: #'UI.Event'
 	instanceVariableNames: 'window'
 	classVariableNames: ''
 	imports: #()

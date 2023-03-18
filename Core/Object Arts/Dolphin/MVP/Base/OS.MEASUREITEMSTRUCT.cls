@@ -1,16 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.OwnerDrawStruct subclass: #'OS.MEASUREITEMSTRUCT'
+OS.OwnerDrawStruct
+	subclass: #'OS.MEASUREITEMSTRUCT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_MEASUREITEMSTRUCT_Size' -> 16r18.
-		'_OffsetOf_itemData' -> 16r14.
-		'_OffsetOf_itemHeight' -> 16r10.
-		'_OffsetOf_itemWidth' -> 16rC
-	}!
+			'_MEASUREITEMSTRUCT_Size' -> 16r18.
+			'_OffsetOf_itemData' -> 16r14.
+			'_OffsetOf_itemHeight' -> 16r10.
+			'_OffsetOf_itemWidth' -> 16rC
+		}!
 OS.MEASUREITEMSTRUCT guid: (Core.GUID fromString: '{0b195eeb-b134-493b-87f4-a70c213ac690}')!
 OS.MEASUREITEMSTRUCT comment: '<MEASUREITEMSTRUCT> is an <ExternalStructure> class to wrap the struct ''Win.MEASUREITEMSTRUCT'' from type information in the ''Windows API (ANSI)'' library.
 

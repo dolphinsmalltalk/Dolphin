@@ -36,19 +36,22 @@ package!
 
 "Class Definitions"!
 
-Core.Tests.DolphinTest subclass: #'Tools.Tests.CRTLibraryImportTest'
+Core.Tests.DolphinTest
+	subclass: #'Tools.Tests.CRTLibraryImportTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Tools.Tests.LagoonTests'
+Core.Tests.DolphinTest
+	subclass: #'Tools.Tests.LagoonTests'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Tools.Tests.PackageClosureTests'
+Core.Tests.DolphinTest
+	subclass: #'Tools.Tests.PackageClosureTests'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{Refactory.Browser private})

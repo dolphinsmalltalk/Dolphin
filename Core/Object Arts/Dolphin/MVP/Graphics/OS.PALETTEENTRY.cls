@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.PALETTEENTRY'
+OS.Win32Structure
+	subclass: #'OS.PALETTEENTRY'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_peBlue' -> 16r2.
-		'_OffsetOf_peFlags' -> 16r3.
-		'_OffsetOf_peGreen' -> 16r1.
-		'_OffsetOf_peRed' -> 16r0.
-		'_PALETTEENTRY_Size' -> 16r4
-	}!
+			'_OffsetOf_peBlue' -> 16r2.
+			'_OffsetOf_peFlags' -> 16r3.
+			'_OffsetOf_peGreen' -> 16r1.
+			'_OffsetOf_peRed' -> 16r0.
+			'_PALETTEENTRY_Size' -> 16r4
+		}!
 OS.PALETTEENTRY guid: (Core.GUID fromString: '{87b4c606-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.PALETTEENTRY comment: '<PALETTEENTRY> is an <ExternalStructure> class to wrap the struct ''Win32.PALETTEENTRY'' from type information in the ''Win32 API'' library.
 

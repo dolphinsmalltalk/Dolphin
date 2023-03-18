@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.RuntimeSessionManager subclass: #'OS.COM.Examples.WebBrowserSessionManager'
+UI.RuntimeSessionManager
+	subclass: #'OS.COM.Examples.WebBrowserSessionManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

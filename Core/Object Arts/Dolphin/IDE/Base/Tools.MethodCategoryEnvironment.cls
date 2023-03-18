@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Tools.MethodCategoryEnvironment'
+Refactory.Browser.BrowserEnvironmentWrapper
+	subclass: #'Tools.MethodCategoryEnvironment'
 	instanceVariableNames: 'categories'
 	classVariableNames: ''
 	imports: #()

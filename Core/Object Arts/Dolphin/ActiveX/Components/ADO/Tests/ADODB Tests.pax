@@ -21,13 +21,15 @@ package!
 
 "Class Definitions"!
 
-ADODB subclass: #'ADODB.Tests'
+ADODB
+	subclass: #'ADODB.Tests'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{XProgramming.SUnit})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Database.Tests.DBTest subclass: #'ADODB.Tests.ADODBTest'
+Database.Tests.DBTest
+	subclass: #'ADODB.Tests.ADODBTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

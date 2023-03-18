@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'UI.Examples.VideoLibrary'
+Core.Object
+	subclass: #'UI.Examples.VideoLibrary'
 	instanceVariableNames: 'owner tapes'
 	classVariableNames: 'DefaultInstance'
 	imports: #()

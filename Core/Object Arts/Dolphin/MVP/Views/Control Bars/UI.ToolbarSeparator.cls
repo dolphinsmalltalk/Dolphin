@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ToolbarItem subclass: #'UI.ToolbarSeparator'
+UI.ToolbarItem
+	subclass: #'UI.ToolbarSeparator'
 	instanceVariableNames: 'width'
 	classVariableNames: ''
 	imports: #()

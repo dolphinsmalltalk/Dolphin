@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.TypeInfoAnalyzer subclass: #'OS.COM.APIInfoAnalyzer'
+OS.COM.TypeInfoAnalyzer
+	subclass: #'OS.COM.APIInfoAnalyzer'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

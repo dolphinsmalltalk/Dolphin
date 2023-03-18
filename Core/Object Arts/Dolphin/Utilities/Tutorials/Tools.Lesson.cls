@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Tools.Lesson'
+Core.Object
+	subclass: #'Tools.Lesson'
 	instanceVariableNames: 'title contents'
 	classVariableNames: ''
 	imports: #()

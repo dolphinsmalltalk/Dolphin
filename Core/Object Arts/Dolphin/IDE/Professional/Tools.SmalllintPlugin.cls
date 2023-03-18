@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.ClassBrowserPlugin subclass: #'Tools.SmalllintPlugin'
+Tools.ClassBrowserPlugin
+	subclass: #'Tools.SmalllintPlugin'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{Refactory.Browser private})

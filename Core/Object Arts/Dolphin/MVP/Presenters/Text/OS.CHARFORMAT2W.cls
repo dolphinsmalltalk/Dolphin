@@ -1,33 +1,34 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.CHARFORMAT2W'
+OS.Win32Structure
+	subclass: #'OS.CHARFORMAT2W'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.CommonDialogConstants} #{OS.RichEditConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_CHARFORMAT2W_Size' -> 16r74.
-		'_OffsetOf_bAnimation' -> 16r71.
-		'_OffsetOf_bCharSet' -> 16r18.
-		'_OffsetOf_bPitchAndFamily' -> 16r19.
-		'_OffsetOf_bRevAuthor' -> 16r72.
-		'_OffsetOf_bUnderlineColor' -> 16r73.
-		'_OffsetOf_bUnderlineType' -> 16r70.
-		'_OffsetOf_crBackColor' -> 16r60.
-		'_OffsetOf_crTextColor' -> 16r14.
-		'_OffsetOf_dwCookie' -> 16r68.
-		'_OffsetOf_dwEffects' -> 16r8.
-		'_OffsetOf_dwMask' -> 16r4.
-		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_lcid' -> 16r64.
-		'_OffsetOf_sSpacing' -> 16r5C.
-		'_OffsetOf_sStyle' -> 16r6C.
-		'_OffsetOf_szFaceName' -> 16r1A.
-		'_OffsetOf_wKerning' -> 16r6E.
-		'_OffsetOf_wWeight' -> 16r5A.
-		'_OffsetOf_yHeight' -> 16rC.
-		'_OffsetOf_yOffset' -> 16r10
-	}!
+			'_CHARFORMAT2W_Size' -> 16r74.
+			'_OffsetOf_bAnimation' -> 16r71.
+			'_OffsetOf_bCharSet' -> 16r18.
+			'_OffsetOf_bPitchAndFamily' -> 16r19.
+			'_OffsetOf_bRevAuthor' -> 16r72.
+			'_OffsetOf_bUnderlineColor' -> 16r73.
+			'_OffsetOf_bUnderlineType' -> 16r70.
+			'_OffsetOf_crBackColor' -> 16r60.
+			'_OffsetOf_crTextColor' -> 16r14.
+			'_OffsetOf_dwCookie' -> 16r68.
+			'_OffsetOf_dwEffects' -> 16r8.
+			'_OffsetOf_dwMask' -> 16r4.
+			'_OffsetOf_dwSize' -> 16r0.
+			'_OffsetOf_lcid' -> 16r64.
+			'_OffsetOf_sSpacing' -> 16r5C.
+			'_OffsetOf_sStyle' -> 16r6C.
+			'_OffsetOf_szFaceName' -> 16r1A.
+			'_OffsetOf_wKerning' -> 16r6E.
+			'_OffsetOf_wWeight' -> 16r5A.
+			'_OffsetOf_yHeight' -> 16rC.
+			'_OffsetOf_yOffset' -> 16r10
+		}!
 OS.CHARFORMAT2W guid: (Core.GUID fromString: '{87b4c5cf-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.CHARFORMAT2W comment: 'CHARFORMAT2W is an <ExternalStructure> class to represent the Win32 structure of the same name.
 

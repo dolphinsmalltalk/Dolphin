@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Refactory.Browser.RBStringReplacement'
+Core.Object
+	subclass: #'Refactory.Browser.RBStringReplacement'
 	instanceVariableNames: 'startPosition stopPosition string'
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.SmalltalkToolShell subclass: #'Tools.SmalltalkSystemShell'
+Tools.SmalltalkToolShell
+	subclass: #'Tools.SmalltalkSystemShell'
 	instanceVariableNames: 'systemFolderPresenter'
 	classVariableNames: 'Backcolor BackImage BackImageAlphaPercent BackImageIsTiled Default HotKey PlaySystemSounds ResetWhenInvisible Textcolor ViewMode'
 	imports: #()

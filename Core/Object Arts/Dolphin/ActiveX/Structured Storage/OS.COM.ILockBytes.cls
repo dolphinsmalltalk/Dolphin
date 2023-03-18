@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IUnknown subclass: #'OS.COM.ILockBytes'
+OS.COM.IUnknown
+	subclass: #'OS.COM.ILockBytes'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.COM.StructuredStorageConstants})

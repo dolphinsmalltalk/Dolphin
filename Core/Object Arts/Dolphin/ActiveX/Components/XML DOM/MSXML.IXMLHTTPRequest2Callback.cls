@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IUnknown subclass: #'MSXML.IXMLHTTPRequest2Callback'
+OS.COM.IUnknown
+	subclass: #'MSXML.IXMLHTTPRequest2Callback'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

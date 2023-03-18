@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.OLEStructure subclass: #'OS.COM.CUSTDATAITEM'
+OS.COM.OLEStructure
+	subclass: #'OS.COM.CUSTDATAITEM'
 	instanceVariableNames: 'key value'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_CUSTDATAITEM_Size' -> 16r20.
-		'_OffsetOf_guid' -> 16r0.
-		'_OffsetOf_varValue' -> 16r10
-	}!
+			'_CUSTDATAITEM_Size' -> 16r20.
+			'_OffsetOf_guid' -> 16r0.
+			'_OffsetOf_varValue' -> 16r10
+		}!
 OS.COM.CUSTDATAITEM guid: (Core.GUID fromString: '{a72e70d7-34d7-4c65-9b12-5941c51fa3c2}')!
 OS.COM.CUSTDATAITEM comment: '<CUSTDATAITEM> is an <ExternalStructure> class to wrap the struct ''OAIDL.CUSTDATAITEM'' from type information in the ''Ole Automation Type Library'' library.
 

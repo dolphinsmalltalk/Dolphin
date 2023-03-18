@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Shell subclass: #'Tools.TutorialPlayer'
+UI.Shell
+	subclass: #'Tools.TutorialPlayer'
 	instanceVariableNames: 'tutorialPosition tutorial title workspace'
 	classVariableNames: ''
 	imports: #()

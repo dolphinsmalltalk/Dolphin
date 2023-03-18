@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.SelectableItemsPresenter subclass: #'Tools.PackageSelector'
+UI.SelectableItemsPresenter
+	subclass: #'Tools.PackageSelector'
 	instanceVariableNames: 'filterPresenter packagesPresenter autoSelect'
 	classVariableNames: ''
 	imports: #(#{XProgramming.SUnit private} #{Refactory.Browser private})

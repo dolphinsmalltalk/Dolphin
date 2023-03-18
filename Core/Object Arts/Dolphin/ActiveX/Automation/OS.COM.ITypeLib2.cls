@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.ITypeLib subclass: #'OS.COM.ITypeLib2'
+OS.COM.ITypeLib
+	subclass: #'OS.COM.ITypeLib2'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

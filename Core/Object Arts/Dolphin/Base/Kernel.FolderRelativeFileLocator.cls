@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.RelativeFileLocator subclass: #'Kernel.FolderRelativeFileLocator'
+Kernel.RelativeFileLocator
+	subclass: #'Kernel.FolderRelativeFileLocator'
 	instanceVariableNames: 'basePath'
 	classVariableNames: ''
 	imports: #()

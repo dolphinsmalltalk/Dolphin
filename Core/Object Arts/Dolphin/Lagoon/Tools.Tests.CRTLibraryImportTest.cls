@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTest subclass: #'Tools.Tests.CRTLibraryImportTest'
+Core.Tests.DolphinTest
+	subclass: #'Tools.Tests.CRTLibraryImportTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

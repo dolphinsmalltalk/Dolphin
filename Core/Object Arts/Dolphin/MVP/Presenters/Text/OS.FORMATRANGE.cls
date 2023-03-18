@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.AbstractFORMATRANGE subclass: #'OS.FORMATRANGE'
+OS.AbstractFORMATRANGE
+	subclass: #'OS.FORMATRANGE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_FORMATRANGE_Size' -> 16r30.
-		'_OffsetOf_cpMax' -> 16r2C.
-		'_OffsetOf_cpMin' -> 16r28
-	}!
+			'_FORMATRANGE_Size' -> 16r30.
+			'_OffsetOf_cpMax' -> 16r2C.
+			'_OffsetOf_cpMin' -> 16r28
+		}!
 OS.FORMATRANGE guid: (Core.GUID fromString: '{9bdca5bb-f238-4744-a903-f02b32617822}')!
 OS.FORMATRANGE comment: 'FORMATRANGE is an <ExternalStructure> class to represent the Win32 structure of the same name.
 

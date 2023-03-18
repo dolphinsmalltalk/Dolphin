@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.MenuItemDialog subclass: #'Tools.MenuDialog'
+Tools.MenuItemDialog
+	subclass: #'Tools.MenuDialog'
 	instanceVariableNames: 'autoDismissPresenter checkColumnModePresenter'
 	classVariableNames: ''
 	imports: #()

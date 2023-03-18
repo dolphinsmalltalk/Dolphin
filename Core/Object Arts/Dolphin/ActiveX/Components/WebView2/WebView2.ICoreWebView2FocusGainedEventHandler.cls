@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2FocusChangedEventHandler subclass: #'WebView2.ICoreWebView2FocusGainedEventHandler'
+WebView2.ICoreWebView2FocusChangedEventHandler
+	subclass: #'WebView2.ICoreWebView2FocusGainedEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

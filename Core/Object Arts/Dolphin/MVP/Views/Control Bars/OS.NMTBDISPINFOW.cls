@@ -1,19 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.NMHDR subclass: #'OS.NMTBDISPINFOW'
+OS.NMHDR
+	subclass: #'OS.NMTBDISPINFOW'
 	instanceVariableNames: 'text'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_NMTBDISPINFOW_Size' -> 16r24.
-		'_OffsetOf_cchText' -> 16r20.
-		'_OffsetOf_dwMask' -> 16rC.
-		'_OffsetOf_idCommand' -> 16r10.
-		'_OffsetOf_iImage' -> 16r18.
-		'_OffsetOf_lParam' -> 16r14.
-		'_OffsetOf_pszText' -> 16r1C
-	}!
+			'_NMTBDISPINFOW_Size' -> 16r24.
+			'_OffsetOf_cchText' -> 16r20.
+			'_OffsetOf_dwMask' -> 16rC.
+			'_OffsetOf_idCommand' -> 16r10.
+			'_OffsetOf_iImage' -> 16r18.
+			'_OffsetOf_lParam' -> 16r14.
+			'_OffsetOf_pszText' -> 16r1C
+		}!
 OS.NMTBDISPINFOW guid: (Core.GUID fromString: '{9b3478db-36e6-431d-8f12-66016b6b5ef8}')!
 OS.NMTBDISPINFOW comment: '<NMTBDISPINFOW> is an <ExternalStructure> class to wrap the struct ''Win32.NMTBDISPINFOW'' from type information in the ''Win32 API'' library.
 

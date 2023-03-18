@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object variableByteSubclass: #'Core.GUID'
+Core.Object
+	variableByteSubclass: #'Core.GUID'
 	instanceVariableNames: ''
 	classVariableNames: 'Null'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_GUID_Size' -> 16r10.
-		'StringSize' -> 16r26
-	}!
+	classConstants: { '_GUID_Size' -> 16r10. 'StringSize' -> 16r26 }!
 Core.GUID guid: (Core.GUID fromString: '{87b4c48f-026e-11d3-9fd7-00a0cc3e4a32}')!
 Core.GUID comment: 'GUID is the class of 128-bit Globally Unique Identifiers (guids) which are used wherever a unique identifier is required in COM, for example to identify specific coclasses and interfaces.
 

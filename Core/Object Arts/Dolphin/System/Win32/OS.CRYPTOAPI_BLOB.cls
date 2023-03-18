@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'OS.CRYPTOAPI_BLOB'
+External.Structure
+	subclass: #'OS.CRYPTOAPI_BLOB'
 	instanceVariableNames: 'localData'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_CRYPTOAPI_BLOB_Size' -> 16r8.
-		'_OffsetOf_cbData' -> 16r0.
-		'_OffsetOf_pbData' -> 16r4
-	}!
+			'_CRYPTOAPI_BLOB_Size' -> 16r8.
+			'_OffsetOf_cbData' -> 16r0.
+			'_OffsetOf_pbData' -> 16r4
+		}!
 OS.CRYPTOAPI_BLOB guid: (Core.GUID fromString: '{e93356a1-821e-4719-8038-f2813b7615d2}')!
 OS.CRYPTOAPI_BLOB comment: '<CRYPTOAPI_BLOB> is an <ExternalStructure> class to wrap the struct ''Win32.CRYPTOAPI_BLOB'' from type information in the ''Win32 API'' library.
 

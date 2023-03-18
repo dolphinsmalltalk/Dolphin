@@ -190,613 +190,715 @@ package!
 
 "Class Definitions"!
 
-UI subclass: #'UI.Tests'
+UI
+	subclass: #'UI.Tests'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{XProgramming.SUnit})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.UserLibrary subclass: #'UI.Tests.FakeUserLibrary'
+OS.UserLibrary
+	subclass: #'UI.Tests.FakeUserLibrary'
 	instanceVariableNames: 'user32 process getForegroundWindowBlock getActiveWindowBlock getCursorPosBlock'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'UI.Tests.AbstractKeyboardTest'
+Core.Tests.DolphinTest
+	subclass: #'UI.Tests.AbstractKeyboardTest'
 	instanceVariableNames: 'savedLayout'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Graphics.Tests.AbstractPointTest'
+Core.Tests.DolphinTest
+	subclass: #'Graphics.Tests.AbstractPointTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Graphics.Tests.AbstractRectangleTest'
+Core.Tests.DolphinTest
+	subclass: #'Graphics.Tests.AbstractRectangleTest'
 	instanceVariableNames: 'desktop oddDesktop unary'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'UI.Tests.ClipboardTest'
+Core.Tests.DolphinTest
+	subclass: #'UI.Tests.ClipboardTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'UI.Tests.ColorDialogTest'
+Core.Tests.DolphinTest
+	subclass: #'UI.Tests.ColorDialogTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'UI.Tests.CommandDescriptionTest'
+Core.Tests.DolphinTest
+	subclass: #'UI.Tests.CommandDescriptionTest'
 	instanceVariableNames: 'savedKeyboardLayout'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'UI.Tests.DisplayMonitorTest'
+Core.Tests.DolphinTest
+	subclass: #'UI.Tests.DisplayMonitorTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'UI.Tests.EvaluationConverterTest'
+Core.Tests.DolphinTest
+	subclass: #'UI.Tests.EvaluationConverterTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'UI.Tests.FileDialogTest'
+Core.Tests.DolphinTest
+	subclass: #'UI.Tests.FileDialogTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'UI.Tests.FolderTest'
+Core.Tests.DolphinTest
+	subclass: #'UI.Tests.FolderTest'
 	instanceVariableNames: 'c windows system root oa'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'UI.Tests.LayoutManagerTest'
+Core.Tests.DolphinTest
+	subclass: #'UI.Tests.LayoutManagerTest'
 	instanceVariableNames: 'shell'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'UI.Tests.MenuTest'
+Core.Tests.DolphinTest
+	subclass: #'UI.Tests.MenuTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'UI.Tests.MoenTreeViewTest'
+Core.Tests.DolphinTest
+	subclass: #'UI.Tests.MoenTreeViewTest'
 	instanceVariableNames: 'treeModel treeView nodeA nodeB nodeC nodeD nodeE nodeF shell scroller useShell'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Graphics.Tests.Point3DTest'
+Core.Tests.DolphinTest
+	subclass: #'Graphics.Tests.Point3DTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'UI.Tests.PositionEventTest'
+Core.Tests.DolphinTest
+	subclass: #'UI.Tests.PositionEventTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'UI.Tests.PresenterTest'
+Core.Tests.DolphinTest
+	subclass: #'UI.Tests.PresenterTest'
 	instanceVariableNames: 'presenter'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'UI.Tests.RadioButtonSetPresenterTest'
+Core.Tests.DolphinTest
+	subclass: #'UI.Tests.RadioButtonSetPresenterTest'
 	instanceVariableNames: 'radioSet'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'UI.Tests.ResourceIdentifierTest'
+Core.Tests.DolphinTest
+	subclass: #'UI.Tests.ResourceIdentifierTest'
 	instanceVariableNames: 'tempViewResource'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'UI.Tests.TypeConverterTest'
+Core.Tests.DolphinTest
+	subclass: #'UI.Tests.TypeConverterTest'
 	instanceVariableNames: 'edit'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'UI.Tests.ValueConverterTest'
+Core.Tests.DolphinTest
+	subclass: #'UI.Tests.ValueConverterTest'
 	instanceVariableNames: 'converter value startTime newTime changed'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'UI.Tests.WindowsEventTest'
+Core.Tests.DolphinTest
+	subclass: #'UI.Tests.WindowsEventTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.AbstractKeyboardTest subclass: #'UI.Tests.AcceleratorTableTest'
+UI.Tests.AbstractKeyboardTest
+	subclass: #'UI.Tests.AcceleratorTableTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.AbstractKeyboardTest subclass: #'UI.Tests.KeyboardTest'
+UI.Tests.AbstractKeyboardTest
+	subclass: #'UI.Tests.KeyboardTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Tests.AbstractPointTest subclass: #'Graphics.Tests.PointTest'
+Graphics.Tests.AbstractPointTest
+	subclass: #'Graphics.Tests.PointTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Tests.AbstractPointTest subclass: #'External.Tests.POINTTest'
+Graphics.Tests.AbstractPointTest
+	subclass: #'External.Tests.POINTTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{Graphics private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.Tests.POINTTest subclass: #'OS.Tests.POINTLTest'
+External.Tests.POINTTest
+	subclass: #'OS.Tests.POINTLTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.Tests.POINTTest subclass: #'OS.Tests.POINTSTest'
+External.Tests.POINTTest
+	subclass: #'OS.Tests.POINTSTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Tests.AbstractRectangleTest subclass: #'Graphics.Tests.RectangleTest'
+Graphics.Tests.AbstractRectangleTest
+	subclass: #'Graphics.Tests.RectangleTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.Tests.AbstractRectangleTest subclass: #'External.Tests.RECTTest'
+Graphics.Tests.AbstractRectangleTest
+	subclass: #'External.Tests.RECTTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.Tests.RECTTest subclass: #'OS.Tests.RECTLTest'
+External.Tests.RECTTest
+	subclass: #'OS.Tests.RECTLTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.Tests.ExternalArrayTest subclass: #'External.Tests.POINTLArrayTest'
+External.Tests.ExternalArrayTest
+	subclass: #'External.Tests.POINTLArrayTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.LayoutManagerTest subclass: #'UI.Tests.BorderLayoutTest'
+UI.Tests.LayoutManagerTest
+	subclass: #'UI.Tests.BorderLayoutTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.LayoutManagerTest subclass: #'UI.Tests.FlowLayoutTest'
+UI.Tests.LayoutManagerTest
+	subclass: #'UI.Tests.FlowLayoutTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.LayoutManagerTest subclass: #'UI.Tests.FramingLayoutTest'
+UI.Tests.LayoutManagerTest
+	subclass: #'UI.Tests.FramingLayoutTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.LayoutManagerTest subclass: #'UI.Tests.GridLayoutTest'
+UI.Tests.LayoutManagerTest
+	subclass: #'UI.Tests.GridLayoutTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.LayoutManagerTest subclass: #'UI.Tests.ProportionalLayoutTest'
+UI.Tests.LayoutManagerTest
+	subclass: #'UI.Tests.ProportionalLayoutTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.PresenterTest subclass: #'UI.Tests.AbstractCardContainerTest'
+UI.Tests.PresenterTest
+	subclass: #'UI.Tests.AbstractCardContainerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.PresenterTest subclass: #'UI.Tests.AbstractContainerViewTest'
+UI.Tests.PresenterTest
+	subclass: #'UI.Tests.AbstractContainerViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.PresenterTest subclass: #'UI.Tests.AbstractShellViewTest'
+UI.Tests.PresenterTest
+	subclass: #'UI.Tests.AbstractShellViewTest'
 	instanceVariableNames: 'fakeUser32 cursorPos shells'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.PresenterTest subclass: #'UI.Tests.AbstractTextEditTest'
+UI.Tests.PresenterTest
+	subclass: #'UI.Tests.AbstractTextEditTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.PresenterTest subclass: #'UI.Tests.CheckBoxTest'
+UI.Tests.PresenterTest
+	subclass: #'UI.Tests.CheckBoxTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.PresenterTest subclass: #'UI.Tests.ChoicePresenterTest'
+UI.Tests.PresenterTest
+	subclass: #'UI.Tests.ChoicePresenterTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.PresenterTest subclass: #'UI.Tests.ComboBoxTest'
+UI.Tests.PresenterTest
+	subclass: #'UI.Tests.ComboBoxTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.PresenterTest subclass: #'UI.Tests.DateTimePickerTest'
+UI.Tests.PresenterTest
+	subclass: #'UI.Tests.DateTimePickerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.PresenterTest subclass: #'UI.Tests.DifferencesPresenterTest'
+UI.Tests.PresenterTest
+	subclass: #'UI.Tests.DifferencesPresenterTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.PresenterTest subclass: #'UI.Tests.GroupBoxTest'
+UI.Tests.PresenterTest
+	subclass: #'UI.Tests.GroupBoxTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.PresenterTest subclass: #'UI.Tests.HotKeyTest'
+UI.Tests.PresenterTest
+	subclass: #'UI.Tests.HotKeyTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.PresenterTest subclass: #'UI.Tests.InplaceTextEditorTest'
+UI.Tests.PresenterTest
+	subclass: #'UI.Tests.InplaceTextEditorTest'
 	instanceVariableNames: 'clipboard savedText'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.PresenterTest subclass: #'UI.Tests.LinkButtonTest'
+UI.Tests.PresenterTest
+	subclass: #'UI.Tests.LinkButtonTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.PresenterTest subclass: #'UI.Tests.MonthCalendarViewTest'
+UI.Tests.PresenterTest
+	subclass: #'UI.Tests.MonthCalendarViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.PresenterTest subclass: #'UI.Tests.ProgressBarTest'
+UI.Tests.PresenterTest
+	subclass: #'UI.Tests.ProgressBarTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.PresenterTest subclass: #'UI.Tests.PushButtonTest'
+UI.Tests.PresenterTest
+	subclass: #'UI.Tests.PushButtonTest'
 	instanceVariableNames: 'shell shellButtonA shellButtonB dialog dialogButtonA dialogButtonB'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.PresenterTest subclass: #'UI.Tests.ReferenceViewTest'
+UI.Tests.PresenterTest
+	subclass: #'UI.Tests.ReferenceViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.PresenterTest subclass: #'UI.Tests.ScrollBarTest'
+UI.Tests.PresenterTest
+	subclass: #'UI.Tests.ScrollBarTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.PresenterTest subclass: #'UI.Tests.ScrollingDecoratorTest'
+UI.Tests.PresenterTest
+	subclass: #'UI.Tests.ScrollingDecoratorTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.PresenterTest subclass: #'UI.Tests.SelectableItemsTest'
+UI.Tests.PresenterTest
+	subclass: #'UI.Tests.SelectableItemsTest'
 	instanceVariableNames: 'events selectionChanging selectionChanged timedout'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.PresenterTest subclass: #'UI.Tests.SliderTest'
+UI.Tests.PresenterTest
+	subclass: #'UI.Tests.SliderTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.PresenterTest subclass: #'UI.Tests.SlideyInneyOuteyThingTest'
+UI.Tests.PresenterTest
+	subclass: #'UI.Tests.SlideyInneyOuteyThingTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.PresenterTest subclass: #'UI.Tests.SpinButtonTest'
+UI.Tests.PresenterTest
+	subclass: #'UI.Tests.SpinButtonTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.PresenterTest subclass: #'UI.Tests.SplitterTest'
+UI.Tests.PresenterTest
+	subclass: #'UI.Tests.SplitterTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.PresenterTest subclass: #'UI.Tests.StaticRectangleTest'
+UI.Tests.PresenterTest
+	subclass: #'UI.Tests.StaticRectangleTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.PresenterTest subclass: #'UI.Tests.StaticViewTest'
+UI.Tests.PresenterTest
+	subclass: #'UI.Tests.StaticViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.PresenterTest subclass: #'UI.Tests.StatusBarTest'
+UI.Tests.PresenterTest
+	subclass: #'UI.Tests.StatusBarTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.PresenterTest subclass: #'UI.Tests.SysLinkViewTest'
+UI.Tests.PresenterTest
+	subclass: #'UI.Tests.SysLinkViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.PresenterTest subclass: #'UI.Tests.ToolbarTest'
+UI.Tests.PresenterTest
+	subclass: #'UI.Tests.ToolbarTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.PresenterTest subclass: #'UI.Tests.ViewTest'
+UI.Tests.PresenterTest
+	subclass: #'UI.Tests.ViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.AbstractCardContainerTest subclass: #'UI.Tests.CardContainerTest'
+UI.Tests.AbstractCardContainerTest
+	subclass: #'UI.Tests.CardContainerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.AbstractCardContainerTest subclass: #'UI.Tests.WizardCardContainerTest'
+UI.Tests.AbstractCardContainerTest
+	subclass: #'UI.Tests.WizardCardContainerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.AbstractContainerViewTest subclass: #'UI.Tests.ContainerViewTest'
+UI.Tests.AbstractContainerViewTest
+	subclass: #'UI.Tests.ContainerViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.AbstractContainerViewTest subclass: #'UI.Tests.StyledContainerTest'
+UI.Tests.AbstractContainerViewTest
+	subclass: #'UI.Tests.StyledContainerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.AbstractShellViewTest subclass: #'UI.Tests.DialogViewTest'
+UI.Tests.AbstractShellViewTest
+	subclass: #'UI.Tests.DialogViewTest'
 	instanceVariableNames: 'owner shell2'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.AbstractShellViewTest subclass: #'UI.Tests.ShellViewTest'
+UI.Tests.AbstractShellViewTest
+	subclass: #'UI.Tests.ShellViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.AbstractTextEditTest subclass: #'UI.Tests.AbstractMultilineTextEditTest'
+UI.Tests.AbstractTextEditTest
+	subclass: #'UI.Tests.AbstractMultilineTextEditTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.AbstractTextEditTest subclass: #'UI.Tests.TextEditTest'
+UI.Tests.AbstractTextEditTest
+	subclass: #'UI.Tests.TextEditTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.AbstractMultilineTextEditTest subclass: #'UI.Tests.MultilineTextEditTest'
+UI.Tests.AbstractMultilineTextEditTest
+	subclass: #'UI.Tests.MultilineTextEditTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.AbstractMultilineTextEditTest subclass: #'UI.Tests.RichTextEditTest'
+UI.Tests.AbstractMultilineTextEditTest
+	subclass: #'UI.Tests.RichTextEditTest'
 	instanceVariableNames: 'savedLocale'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.SelectableItemsTest subclass: #'UI.Tests.SelectableListItemsTest'
+UI.Tests.SelectableItemsTest
+	subclass: #'UI.Tests.SelectableListItemsTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.SelectableItemsTest subclass: #'UI.Tests.SelectableTreeItemsTest'
+UI.Tests.SelectableItemsTest
+	subclass: #'UI.Tests.SelectableTreeItemsTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.SelectableListItemsTest subclass: #'UI.Tests.AbstractTabViewTest'
+UI.Tests.SelectableListItemsTest
+	subclass: #'UI.Tests.AbstractTabViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.SelectableListItemsTest subclass: #'UI.Tests.ListControlTest'
+UI.Tests.SelectableListItemsTest
+	subclass: #'UI.Tests.ListControlTest'
 	instanceVariableNames: 'clicks'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.SelectableListItemsTest subclass: #'UI.Tests.ListPresenterTest'
+UI.Tests.SelectableListItemsTest
+	subclass: #'UI.Tests.ListPresenterTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.AbstractTabViewTest subclass: #'UI.Tests.TabViewTest'
+UI.Tests.AbstractTabViewTest
+	subclass: #'UI.Tests.TabViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.AbstractTabViewTest subclass: #'UI.Tests.TabViewXPTest'
+UI.Tests.AbstractTabViewTest
+	subclass: #'UI.Tests.TabViewXPTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.ListControlTest subclass: #'UI.Tests.ListBoxTest'
+UI.Tests.ListControlTest
+	subclass: #'UI.Tests.ListBoxTest'
 	instanceVariableNames: 'lbnSelChange'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.ListControlTest subclass: #'UI.Tests.ListViewTest'
+UI.Tests.ListControlTest
+	subclass: #'UI.Tests.ListViewTest'
 	instanceVariableNames: 'nmClick'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.ListBoxTest subclass: #'UI.Tests.MultiSelectListBoxTest'
+UI.Tests.ListBoxTest
+	subclass: #'UI.Tests.MultiSelectListBoxTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.ListBoxTest subclass: #'UI.Tests.SingleSelectListBoxTest'
+UI.Tests.ListBoxTest
+	subclass: #'UI.Tests.SingleSelectListBoxTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.ListViewTest subclass: #'UI.Tests.MultiSelectListViewTest'
+UI.Tests.ListViewTest
+	subclass: #'UI.Tests.MultiSelectListViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.ListViewTest subclass: #'UI.Tests.SingleSelectListViewTest'
+UI.Tests.ListViewTest
+	subclass: #'UI.Tests.SingleSelectListViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.ListViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.SelectableTreeItemsTest subclass: #'UI.Tests.MoenTreeViewTest2'
+UI.Tests.SelectableTreeItemsTest
+	subclass: #'UI.Tests.MoenTreeViewTest2'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.SelectableTreeItemsTest subclass: #'UI.Tests.TreePresenterTest'
+UI.Tests.SelectableTreeItemsTest
+	subclass: #'UI.Tests.TreePresenterTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.SelectableTreeItemsTest subclass: #'UI.Tests.TreeViewTest'
+UI.Tests.SelectableTreeItemsTest
+	subclass: #'UI.Tests.TreeViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.StaticViewTest subclass: #'UI.Tests.ColorViewTest'
+UI.Tests.StaticViewTest
+	subclass: #'UI.Tests.ColorViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.StaticViewTest subclass: #'UI.Tests.FontViewTest'
+UI.Tests.StaticViewTest
+	subclass: #'UI.Tests.FontViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.StaticViewTest subclass: #'UI.Tests.ImageViewAbstractTest'
+UI.Tests.StaticViewTest
+	subclass: #'UI.Tests.ImageViewAbstractTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.StaticViewTest subclass: #'UI.Tests.StaticBitmapTest'
+UI.Tests.StaticViewTest
+	subclass: #'UI.Tests.StaticBitmapTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.StaticViewTest subclass: #'UI.Tests.StaticIconTest'
+UI.Tests.StaticViewTest
+	subclass: #'UI.Tests.StaticIconTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.StaticViewTest subclass: #'UI.Tests.StaticPathTest'
+UI.Tests.StaticViewTest
+	subclass: #'UI.Tests.StaticPathTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.StaticViewTest subclass: #'UI.Tests.StaticTextTest'
+UI.Tests.StaticViewTest
+	subclass: #'UI.Tests.StaticTextTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.ImageViewAbstractTest subclass: #'UI.Tests.ImageViewTest'
+UI.Tests.ImageViewAbstractTest
+	subclass: #'UI.Tests.ImageViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

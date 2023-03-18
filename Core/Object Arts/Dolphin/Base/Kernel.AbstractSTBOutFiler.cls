@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.STBFiler subclass: #'Kernel.AbstractSTBOutFiler'
+Kernel.STBFiler
+	subclass: #'Kernel.AbstractSTBOutFiler'
 	instanceVariableNames: 'writeMap globals globalNils proxyOverrides refOffset'
 	classVariableNames: ''
 	imports: #()

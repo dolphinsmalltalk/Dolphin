@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.DoubleBufferedView subclass: #'UI.Examples.SlidingBallDemo'
+UI.DoubleBufferedView
+	subclass: #'UI.Examples.SlidingBallDemo'
 	instanceVariableNames: 'start end circle stepProcess'
 	classVariableNames: ''
 	imports: #()

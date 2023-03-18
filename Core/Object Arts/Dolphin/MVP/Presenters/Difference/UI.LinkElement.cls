@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Link subclass: #'UI.LinkElement'
+Core.Link
+	subclass: #'UI.LinkElement'
 	instanceVariableNames: 'value'
 	classVariableNames: ''
 	imports: #()

@@ -1,20 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'OS.MIB_IPADDRROW'
+External.Structure
+	subclass: #'OS.MIB_IPADDRROW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_MIB_IPADDRROW_Size' -> 16r18.
-		'_OffsetOf_dwAddr' -> 16r0.
-		'_OffsetOf_dwBCastAddr' -> 16rC.
-		'_OffsetOf_dwIndex' -> 16r4.
-		'_OffsetOf_dwMask' -> 16r8.
-		'_OffsetOf_dwReasmSize' -> 16r10.
-		'_OffsetOf_Unused1' -> 16r14.
-		'_OffsetOf_wType' -> 16r16
-	}!
+			'_MIB_IPADDRROW_Size' -> 16r18.
+			'_OffsetOf_dwAddr' -> 16r0.
+			'_OffsetOf_dwBCastAddr' -> 16rC.
+			'_OffsetOf_dwIndex' -> 16r4.
+			'_OffsetOf_dwMask' -> 16r8.
+			'_OffsetOf_dwReasmSize' -> 16r10.
+			'_OffsetOf_Unused1' -> 16r14.
+			'_OffsetOf_wType' -> 16r16
+		}!
 OS.MIB_IPADDRROW guid: (Core.GUID fromString: '{6b58a372-62e2-40b7-861b-d91fe418bacf}')!
 OS.MIB_IPADDRROW comment: '<MIB_IPADDRROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IPADDRROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

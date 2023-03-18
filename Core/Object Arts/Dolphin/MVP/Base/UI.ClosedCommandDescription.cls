@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.CommandDescription subclass: #'UI.ClosedCommandDescription'
+UI.CommandDescription
+	subclass: #'UI.ClosedCommandDescription'
 	instanceVariableNames: 'queryBlock receiver'
 	classVariableNames: ''
 	imports: #()

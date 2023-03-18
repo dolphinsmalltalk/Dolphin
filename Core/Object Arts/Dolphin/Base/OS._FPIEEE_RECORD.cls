@@ -1,20 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'OS._FPIEEE_RECORD'
+External.Structure
+	subclass: #'OS._FPIEEE_RECORD'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'__FPIEEE_RECORD_Size' -> 16r58.
-		'_OffsetOf_cause' -> 16r4.
-		'_OffsetOf_enable' -> 16r8.
-		'_OffsetOf_flags' -> 16r0.
-		'_OffsetOf_operand1' -> 16r10.
-		'_OffsetOf_operand2' -> 16r28.
-		'_OffsetOf_result' -> 16r40.
-		'_OffsetOf_status' -> 16rC
-	}!
+			'__FPIEEE_RECORD_Size' -> 16r58.
+			'_OffsetOf_cause' -> 16r4.
+			'_OffsetOf_enable' -> 16r8.
+			'_OffsetOf_flags' -> 16r0.
+			'_OffsetOf_operand1' -> 16r10.
+			'_OffsetOf_operand2' -> 16r28.
+			'_OffsetOf_result' -> 16r40.
+			'_OffsetOf_status' -> 16rC
+		}!
 OS._FPIEEE_RECORD guid: (Core.GUID fromString: '{87b4c590-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS._FPIEEE_RECORD comment: '_FPIEEE_RECORD is an <ExternalStructure> class to represent the Win32 structure of the same name. _FPIEEE_RECORD is used in the reporting of IEEE compliant floating point exceptions.'!
 !OS._FPIEEE_RECORD categoriesForClass!External-Data-Structured! !

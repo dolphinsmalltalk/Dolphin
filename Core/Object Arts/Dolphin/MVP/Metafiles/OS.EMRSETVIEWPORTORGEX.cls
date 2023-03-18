@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMRSETVIEWPORTORGEX'
+OS.ENHMETARECORD
+	subclass: #'OS.EMRSETVIEWPORTORGEX'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_EMRSETVIEWPORTORGEX_Size' -> 16r10.
-		'_OffsetOf_ptlOrigin' -> 16r8
-	}!
+	classConstants: { '_EMRSETVIEWPORTORGEX_Size' -> 16r10. '_OffsetOf_ptlOrigin' -> 16r8 }!
 OS.EMRSETVIEWPORTORGEX guid: (Core.GUID fromString: '{69136774-602e-4324-aff6-a261d792e0ff}')!
 OS.EMRSETVIEWPORTORGEX comment: '<EMRSETVIEWPORTORGEX> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETVIEWPORTORGEX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

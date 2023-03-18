@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.TutorialPlayer subclass: #'Tools.ProfStef'
+Tools.TutorialPlayer
+	subclass: #'Tools.ProfStef'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Security.DolphinSureTrustedData subclass: #'Security.DolphinSureCertificate'
+Security.DolphinSureTrustedData
+	subclass: #'Security.DolphinSureCertificate'
 	instanceVariableNames: ''
 	classVariableNames: 'UntrustedContentWarning'
 	imports: #(#{OS.Win32Constants})

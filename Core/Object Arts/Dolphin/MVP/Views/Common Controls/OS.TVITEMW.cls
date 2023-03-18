@@ -1,22 +1,23 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.CCITEM subclass: #'OS.TVITEMW'
+OS.CCITEM
+	subclass: #'OS.TVITEMW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.TreeViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_cChildren' -> 16r20.
-		'_OffsetOf_cchTextMax' -> 16r14.
-		'_OffsetOf_dwState' -> 16r8.
-		'_OffsetOf_hItem' -> 16r4.
-		'_OffsetOf_iImage' -> 16r18.
-		'_OffsetOf_iSelectedImage' -> 16r1C.
-		'_OffsetOf_lParam' -> 16r24.
-		'_OffsetOf_pszText' -> 16r10.
-		'_OffsetOf_stateMask' -> 16rC.
-		'_TVITEMW_Size' -> 16r28
-	}!
+			'_OffsetOf_cChildren' -> 16r20.
+			'_OffsetOf_cchTextMax' -> 16r14.
+			'_OffsetOf_dwState' -> 16r8.
+			'_OffsetOf_hItem' -> 16r4.
+			'_OffsetOf_iImage' -> 16r18.
+			'_OffsetOf_iSelectedImage' -> 16r1C.
+			'_OffsetOf_lParam' -> 16r24.
+			'_OffsetOf_pszText' -> 16r10.
+			'_OffsetOf_stateMask' -> 16rC.
+			'_TVITEMW_Size' -> 16r28
+		}!
 OS.TVITEMW guid: (Core.GUID fromString: '{87b4c622-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.TVITEMW comment: 'TVITEM is an <ExternalStructure> class which represents the Windows common control structure of the same name.
 

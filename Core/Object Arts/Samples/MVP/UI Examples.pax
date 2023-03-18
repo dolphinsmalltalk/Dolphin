@@ -16,7 +16,8 @@ package!
 
 "Class Definitions"!
 
-UI subclass: #'UI.Examples'
+UI
+	subclass: #'UI.Examples'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

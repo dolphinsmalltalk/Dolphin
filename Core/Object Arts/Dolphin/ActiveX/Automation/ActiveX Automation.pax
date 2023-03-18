@@ -302,828 +302,888 @@ package!
 
 "Class Definitions"!
 
-Kernel.SharedPool subclass: #'OS.COM.AutomationConstants'
+Kernel.SharedPool
+	subclass: #'OS.COM.AutomationConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'ACTIVEOBJECT_STRONG' -> 16r0.
-		'ACTIVEOBJECT_WEAK' -> 16r1.
-		'CC_CDECL' -> 16r1.
-		'CC_MACPASCAL' -> 16r3.
-		'CC_MAX' -> 16r9.
-		'CC_MPWCDECL' -> 16r7.
-		'CC_MPWPASCAL' -> 16r8.
-		'CC_MSCPASCAL' -> 16r2.
-		'CC_PASCAL' -> 16r2.
-		'CC_RESERVED' -> 16r5.
-		'CC_STDCALL' -> 16r4.
-		'CC_SYSCALL' -> 16r6.
-		'DESCKIND_FUNCDESC' -> 16r1.
-		'DESCKIND_IMPLICITAPPOBJ' -> 16r4.
-		'DESCKIND_MAX' -> 16r5.
-		'DESCKIND_NONE' -> 16r0.
-		'DESCKIND_TYPECOMP' -> 16r3.
-		'DESCKIND_VARDESC' -> 16r2.
-		'DISPATCH_METHOD' -> 16r1.
-		'DISPATCH_PROPERTYGET' -> 16r2.
-		'DISPATCH_PROPERTYPUT' -> 16r4.
-		'DISPATCH_PROPERTYPUTREF' -> 16r8.
-		'DISPID_ACCELERATOR' -> -16r21F.
-		'DISPID_APPEARANCE' -> -16r208.
-		'DISPID_AUTOSIZE' -> -16r1F4.
-		'DISPID_BACKCOLOR' -> -16r1F5.
-		'DISPID_BACKSTYLE' -> -16r1F6.
-		'DISPID_BORDERCOLOR' -> -16r1F7.
-		'DISPID_BORDERSTYLE' -> -16r1F8.
-		'DISPID_BORDERVISIBLE' -> -16r207.
-		'DISPID_BORDERWIDTH' -> -16r1F9.
-		'DISPID_CAPTION' -> -16r206.
-		'DISPID_COLLECT' -> -16r8.
-		'DISPID_COLUMN' -> -16r211.
-		'DISPID_CONSTRUCTOR' -> -16r6.
-		'DISPID_DESTRUCTOR' -> -16r7.
-		'DISPID_DISPLAYSTYLE' -> -16r21C.
-		'DISPID_DRAWMODE' -> -16r1FB.
-		'DISPID_DRAWSTYLE' -> -16r1FC.
-		'DISPID_DRAWWIDTH' -> -16r1FD.
-		'DISPID_ENABLED' -> -16r202.
-		'DISPID_ENTERKEYBEHAVIOR' -> -16r220.
-		'DISPID_EVALUATE' -> -16r5.
-		'DISPID_FILLCOLOR' -> -16r1FE.
-		'DISPID_FILLSTYLE' -> -16r1FF.
-		'DISPID_FONT' -> -16r200.
-		'DISPID_FORECOLOR' -> -16r201.
-		'DISPID_GROUPNAME' -> -16r21D.
-		'DISPID_HWND' -> -16r203.
-		'DISPID_IMEMODE' -> -16r21E.
-		'DISPID_LIST' -> -16r210.
-		'DISPID_LISTCOUNT' -> -16r213.
-		'DISPID_LISTINDEX' -> -16r20E.
-		'DISPID_MAXLENGTH' -> -16r215.
-		'DISPID_MOUSEICON' -> -16r20A.
-		'DISPID_MOUSEPOINTER' -> -16r209.
-		'DISPID_MULTILINE' -> -16r219.
-		'DISPID_MULTISELECT' -> -16r214.
-		'DISPID_NEWENUM' -> -16r4.
-		'DISPID_NUMBEROFCOLUMNS' -> -16r21B.
-		'DISPID_NUMBEROFROWS' -> -16r21A.
-		'DISPID_PASSWORDCHAR' -> -16r216.
-		'DISPID_PICTURE' -> -16r20B.
-		'DISPID_PROPERTYPUT' -> -16r3.
-		'DISPID_READYSTATE' -> -16r20D.
-		'DISPID_SCROLLBARS' -> -16r217.
-		'DISPID_SELECTED' -> -16r20F.
-		'DISPID_SELLENGTH' -> -16r224.
-		'DISPID_SELSTART' -> -16r223.
-		'DISPID_SELTEXT' -> -16r222.
-		'DISPID_TABKEYBEHAVIOR' -> -16r221.
-		'DISPID_TABSTOP' -> -16r204.
-		'DISPID_TEXT' -> -16r205.
-		'DISPID_UNKNOWN' -> -16r1.
-		'DISPID_VALID' -> -16r20C.
-		'DISPID_VALUE' -> 16r0.
-		'DISPID_WORDWRAP' -> -16r218.
-		'FADF_AUTO' -> 16r1.
-		'FADF_BSTR' -> 16r100.
-		'FADF_DISPATCH' -> 16r400.
-		'FADF_EMBEDDED' -> 16r4.
-		'FADF_FIXEDSIZE' -> 16r10.
-		'FADF_HAVEIID' -> 16r40.
-		'FADF_HAVEVARTYPE' -> 16r80.
-		'FADF_RECORD' -> 16r20.
-		'FADF_RESERVED' -> 16rF0E8.
-		'FADF_STATIC' -> 16r2.
-		'FADF_UNKNOWN' -> 16r200.
-		'FADF_VARIANT' -> 16r800.
-		'FUNC_DISPATCH' -> 16r4.
-		'FUNC_NONVIRTUAL' -> 16r2.
-		'FUNC_PUREVIRTUAL' -> 16r1.
-		'FUNC_STATIC' -> 16r3.
-		'FUNC_VIRTUAL' -> 16r0.
-		'FUNCFLAG_FBINDABLE' -> 16r4.
-		'FUNCFLAG_FDEFAULTBIND' -> 16r20.
-		'FUNCFLAG_FDEFAULTCOLLELEM' -> 16r100.
-		'FUNCFLAG_FDISPLAYBIND' -> 16r10.
-		'FUNCFLAG_FHIDDEN' -> 16r40.
-		'FUNCFLAG_FIMMEDIATEBIND' -> 16r1000.
-		'FUNCFLAG_FNONBROWSABLE' -> 16r400.
-		'FUNCFLAG_FREPLACEABLE' -> 16r800.
-		'FUNCFLAG_FREQUESTEDIT' -> 16r8.
-		'FUNCFLAG_FRESTRICTED' -> 16r1.
-		'FUNCFLAG_FSOURCE' -> 16r2.
-		'FUNCFLAG_FUIDEFAULT' -> 16r200.
-		'FUNCFLAG_FUSESGETLASTERROR' -> 16r80.
-		'ID_DEFAULTINST' -> -16r2.
-		'IDLFLAG_FIN' -> 16r1.
-		'IDLFLAG_FLCID' -> 16r4.
-		'IDLFLAG_FOUT' -> 16r2.
-		'IDLFLAG_FRETVAL' -> 16r8.
-		'IDLFLAG_NONE' -> 16r0.
-		'IMPLTYPEFLAG_FDEFAULT' -> 16r1.
-		'IMPLTYPEFLAG_FRESTRICTED' -> 16r4.
-		'IMPLTYPEFLAG_FSOURCE' -> 16r2.
-		'INVOKE_FUNC' -> 16r1.
-		'INVOKE_PROPERTYGET' -> 16r2.
-		'INVOKE_PROPERTYPUT' -> 16r4.
-		'INVOKE_PROPERTYPUTREF' -> 16r8.
-		'LIBFLAG_FCONTROL' -> 16r2.
-		'LIBFLAG_FHASDISKIMAGE' -> 16r8.
-		'LIBFLAG_FHIDDEN' -> 16r4.
-		'LIBFLAG_FRESTRICTED' -> 16r4.
-		'MEMBERID_NIL' -> -16r1.
-		'PARAMFLAG_FHASDEFAULT' -> 16r20.
-		'PARAMFLAG_FIN' -> 16r1.
-		'PARAMFLAG_FOPT' -> 16r10.
-		'PARAMFLAG_FOUT' -> 16r2.
-		'PARAMFLAG_FRETVAL' -> 16r8.
-		'PARAMFLAG_NONE' -> 16r0.
-		'REGKIND_DEFAULT' -> 16r0.
-		'REGKIND_NONE' -> 16r2.
-		'REGKIND_REGISTER' -> 16r1.
-		'STDOLE_LCID' -> 16r0.
-		'STDOLE_MAJORVERNUM' -> 16r1.
-		'STDOLE_MINORVERNUM' -> 16r0.
-		'SYS_MAC' -> 16r2.
-		'SYS_WIN16' -> 16r0.
-		'SYS_WIN32' -> 16r1.
-		'TKIND_ALIAS' -> 16r6.
-		'TKIND_COCLASS' -> 16r5.
-		'TKIND_DISPATCH' -> 16r4.
-		'TKIND_ENUM' -> 16r0.
-		'TKIND_INTERFACE' -> 16r3.
-		'TKIND_MAX' -> 16r8.
-		'TKIND_MODULE' -> 16r2.
-		'TKIND_RECORD' -> 16r1.
-		'TKIND_UNION' -> 16r7.
-		'TYPEFLAG_FAGGREGATABLE' -> 16r400.
-		'TYPEFLAG_FAPPOBJECT' -> 16r1.
-		'TYPEFLAG_FCANCREATE' -> 16r2.
-		'TYPEFLAG_FCONTROL' -> 16r20.
-		'TYPEFLAG_FDISPATCHABLE' -> 16r1000.
-		'TYPEFLAG_FDUAL' -> 16r40.
-		'TYPEFLAG_FHIDDEN' -> 16r10.
-		'TYPEFLAG_FLICENSED' -> 16r4.
-		'TYPEFLAG_FNONEXTENSIBLE' -> 16r80.
-		'TYPEFLAG_FOLEAUTOMATION' -> 16r100.
-		'TYPEFLAG_FPREDECLID' -> 16r8.
-		'TYPEFLAG_FRESTRICTED' -> 16r200.
-		'VAR_CONST' -> 16r2.
-		'VAR_DATEVALUEONLY' -> 16r2.
-		'VAR_DISPATCH' -> 16r3.
-		'VAR_PERINSTANCE' -> 16r0.
-		'VAR_STATIC' -> 16r1.
-		'VAR_TIMEVALUEONLY' -> 16r1.
-		'VARFLAG_FBINDABLE' -> 16r4.
-		'VARFLAG_FDEFAULTBIND' -> 16r20.
-		'VARFLAG_FDISPLAYBIND' -> 16r10.
-		'VARFLAG_FHIDDEN' -> 16r40.
-		'VARFLAG_FNONBROWSABLE' -> 16r400.
-		'VARFLAG_FREADONLY' -> 16r1.
-		'VARFLAG_FREQUESTEDIT' -> 16r8.
-		'VARFLAG_FRESTRICTED' -> 16r80.
-		'VARFLAG_FSOURCE' -> 16r2.
-		'VARFLAG_FUIDEFAULT' -> 16r200.
-		'VARIANT_ALPHABOOL' -> 16r2.
-		'VARIANT_CALENDAR_GREGORIAN' -> 16r40.
-		'VARIANT_CALENDAR_HIJRI' -> 16r8.
-		'VARIANT_CALENDAR_THAI' -> 16r20.
-		'VARIANT_FALSE' -> 16r0.
-		'VARIANT_LOCALBOOL' -> 16r10.
-		'VARIANT_NOUSEROVERRIDE' -> 16r4.
-		'VARIANT_NOVALUEPROP' -> 16r1.
-		'VARIANT_TRUE' -> -16r1.
-		'VARIANT_USE_NLS' -> 16r80.
-		'VT_ARRAY' -> 16r2000.
-		'VT_BLOB' -> 16r41.
-		'VT_BLOB_OBJECT' -> 16r46.
-		'VT_BOOL' -> 16rB.
-		'VT_BSTR' -> 16r8.
-		'VT_BYREF' -> 16r4000.
-		'VT_CARRAY' -> 16r1C.
-		'VT_CF' -> 16r47.
-		'VT_CLSID' -> 16r48.
-		'VT_CY' -> 16r6.
-		'VT_DATE' -> 16r7.
-		'VT_DECIMAL' -> 16rE.
-		'VT_DISPATCH' -> 16r9.
-		'VT_EMPTY' -> 16r0.
-		'VT_ERROR' -> 16rA.
-		'VT_FILETIME' -> 16r40.
-		'VT_HRESULT' -> 16r19.
-		'VT_I1' -> 16r10.
-		'VT_I2' -> 16r2.
-		'VT_I4' -> 16r3.
-		'VT_I8' -> 16r14.
-		'VT_INT' -> 16r16.
-		'VT_INT_PTR' -> 16r25.
-		'VT_LPSTR' -> 16r1E.
-		'VT_LPWSTR' -> 16r1F.
-		'VT_NULL' -> 16r1.
-		'VT_PTR' -> 16r1A.
-		'VT_R4' -> 16r4.
-		'VT_R8' -> 16r5.
-		'VT_RECORD' -> 16r24.
-		'VT_SAFEARRAY' -> 16r1B.
-		'VT_STORAGE' -> 16r43.
-		'VT_STORED_OBJECT' -> 16r45.
-		'VT_STREAM' -> 16r42.
-		'VT_STREAMED_OBJECT' -> 16r44.
-		'VT_TYPEMASK' -> 16rFFF.
-		'VT_UI1' -> 16r11.
-		'VT_UI2' -> 16r12.
-		'VT_UI4' -> 16r13.
-		'VT_UI8' -> 16r15.
-		'VT_UINT' -> 16r17.
-		'VT_UINT_PTR' -> 16r26.
-		'VT_UNKNOWN' -> 16rD.
-		'VT_USERDEFINED' -> 16r1D.
-		'VT_VARIANT' -> 16rC.
-		'VT_VECTOR' -> 16r1000.
-		'VT_VOID' -> 16r18
-	}!
-Kernel.SharedPool subclass: #'OS.COM.AutomationErrors'
+			'ACTIVEOBJECT_STRONG' -> 16r0.
+			'ACTIVEOBJECT_WEAK' -> 16r1.
+			'CC_CDECL' -> 16r1.
+			'CC_MACPASCAL' -> 16r3.
+			'CC_MAX' -> 16r9.
+			'CC_MPWCDECL' -> 16r7.
+			'CC_MPWPASCAL' -> 16r8.
+			'CC_MSCPASCAL' -> 16r2.
+			'CC_PASCAL' -> 16r2.
+			'CC_RESERVED' -> 16r5.
+			'CC_STDCALL' -> 16r4.
+			'CC_SYSCALL' -> 16r6.
+			'DESCKIND_FUNCDESC' -> 16r1.
+			'DESCKIND_IMPLICITAPPOBJ' -> 16r4.
+			'DESCKIND_MAX' -> 16r5.
+			'DESCKIND_NONE' -> 16r0.
+			'DESCKIND_TYPECOMP' -> 16r3.
+			'DESCKIND_VARDESC' -> 16r2.
+			'DISPATCH_METHOD' -> 16r1.
+			'DISPATCH_PROPERTYGET' -> 16r2.
+			'DISPATCH_PROPERTYPUT' -> 16r4.
+			'DISPATCH_PROPERTYPUTREF' -> 16r8.
+			'DISPID_ACCELERATOR' -> -16r21F.
+			'DISPID_APPEARANCE' -> -16r208.
+			'DISPID_AUTOSIZE' -> -16r1F4.
+			'DISPID_BACKCOLOR' -> -16r1F5.
+			'DISPID_BACKSTYLE' -> -16r1F6.
+			'DISPID_BORDERCOLOR' -> -16r1F7.
+			'DISPID_BORDERSTYLE' -> -16r1F8.
+			'DISPID_BORDERVISIBLE' -> -16r207.
+			'DISPID_BORDERWIDTH' -> -16r1F9.
+			'DISPID_CAPTION' -> -16r206.
+			'DISPID_COLLECT' -> -16r8.
+			'DISPID_COLUMN' -> -16r211.
+			'DISPID_CONSTRUCTOR' -> -16r6.
+			'DISPID_DESTRUCTOR' -> -16r7.
+			'DISPID_DISPLAYSTYLE' -> -16r21C.
+			'DISPID_DRAWMODE' -> -16r1FB.
+			'DISPID_DRAWSTYLE' -> -16r1FC.
+			'DISPID_DRAWWIDTH' -> -16r1FD.
+			'DISPID_ENABLED' -> -16r202.
+			'DISPID_ENTERKEYBEHAVIOR' -> -16r220.
+			'DISPID_EVALUATE' -> -16r5.
+			'DISPID_FILLCOLOR' -> -16r1FE.
+			'DISPID_FILLSTYLE' -> -16r1FF.
+			'DISPID_FONT' -> -16r200.
+			'DISPID_FORECOLOR' -> -16r201.
+			'DISPID_GROUPNAME' -> -16r21D.
+			'DISPID_HWND' -> -16r203.
+			'DISPID_IMEMODE' -> -16r21E.
+			'DISPID_LIST' -> -16r210.
+			'DISPID_LISTCOUNT' -> -16r213.
+			'DISPID_LISTINDEX' -> -16r20E.
+			'DISPID_MAXLENGTH' -> -16r215.
+			'DISPID_MOUSEICON' -> -16r20A.
+			'DISPID_MOUSEPOINTER' -> -16r209.
+			'DISPID_MULTILINE' -> -16r219.
+			'DISPID_MULTISELECT' -> -16r214.
+			'DISPID_NEWENUM' -> -16r4.
+			'DISPID_NUMBEROFCOLUMNS' -> -16r21B.
+			'DISPID_NUMBEROFROWS' -> -16r21A.
+			'DISPID_PASSWORDCHAR' -> -16r216.
+			'DISPID_PICTURE' -> -16r20B.
+			'DISPID_PROPERTYPUT' -> -16r3.
+			'DISPID_READYSTATE' -> -16r20D.
+			'DISPID_SCROLLBARS' -> -16r217.
+			'DISPID_SELECTED' -> -16r20F.
+			'DISPID_SELLENGTH' -> -16r224.
+			'DISPID_SELSTART' -> -16r223.
+			'DISPID_SELTEXT' -> -16r222.
+			'DISPID_TABKEYBEHAVIOR' -> -16r221.
+			'DISPID_TABSTOP' -> -16r204.
+			'DISPID_TEXT' -> -16r205.
+			'DISPID_UNKNOWN' -> -16r1.
+			'DISPID_VALID' -> -16r20C.
+			'DISPID_VALUE' -> 16r0.
+			'DISPID_WORDWRAP' -> -16r218.
+			'FADF_AUTO' -> 16r1.
+			'FADF_BSTR' -> 16r100.
+			'FADF_DISPATCH' -> 16r400.
+			'FADF_EMBEDDED' -> 16r4.
+			'FADF_FIXEDSIZE' -> 16r10.
+			'FADF_HAVEIID' -> 16r40.
+			'FADF_HAVEVARTYPE' -> 16r80.
+			'FADF_RECORD' -> 16r20.
+			'FADF_RESERVED' -> 16rF0E8.
+			'FADF_STATIC' -> 16r2.
+			'FADF_UNKNOWN' -> 16r200.
+			'FADF_VARIANT' -> 16r800.
+			'FUNC_DISPATCH' -> 16r4.
+			'FUNC_NONVIRTUAL' -> 16r2.
+			'FUNC_PUREVIRTUAL' -> 16r1.
+			'FUNC_STATIC' -> 16r3.
+			'FUNC_VIRTUAL' -> 16r0.
+			'FUNCFLAG_FBINDABLE' -> 16r4.
+			'FUNCFLAG_FDEFAULTBIND' -> 16r20.
+			'FUNCFLAG_FDEFAULTCOLLELEM' -> 16r100.
+			'FUNCFLAG_FDISPLAYBIND' -> 16r10.
+			'FUNCFLAG_FHIDDEN' -> 16r40.
+			'FUNCFLAG_FIMMEDIATEBIND' -> 16r1000.
+			'FUNCFLAG_FNONBROWSABLE' -> 16r400.
+			'FUNCFLAG_FREPLACEABLE' -> 16r800.
+			'FUNCFLAG_FREQUESTEDIT' -> 16r8.
+			'FUNCFLAG_FRESTRICTED' -> 16r1.
+			'FUNCFLAG_FSOURCE' -> 16r2.
+			'FUNCFLAG_FUIDEFAULT' -> 16r200.
+			'FUNCFLAG_FUSESGETLASTERROR' -> 16r80.
+			'ID_DEFAULTINST' -> -16r2.
+			'IDLFLAG_FIN' -> 16r1.
+			'IDLFLAG_FLCID' -> 16r4.
+			'IDLFLAG_FOUT' -> 16r2.
+			'IDLFLAG_FRETVAL' -> 16r8.
+			'IDLFLAG_NONE' -> 16r0.
+			'IMPLTYPEFLAG_FDEFAULT' -> 16r1.
+			'IMPLTYPEFLAG_FRESTRICTED' -> 16r4.
+			'IMPLTYPEFLAG_FSOURCE' -> 16r2.
+			'INVOKE_FUNC' -> 16r1.
+			'INVOKE_PROPERTYGET' -> 16r2.
+			'INVOKE_PROPERTYPUT' -> 16r4.
+			'INVOKE_PROPERTYPUTREF' -> 16r8.
+			'LIBFLAG_FCONTROL' -> 16r2.
+			'LIBFLAG_FHASDISKIMAGE' -> 16r8.
+			'LIBFLAG_FHIDDEN' -> 16r4.
+			'LIBFLAG_FRESTRICTED' -> 16r4.
+			'MEMBERID_NIL' -> -16r1.
+			'PARAMFLAG_FHASDEFAULT' -> 16r20.
+			'PARAMFLAG_FIN' -> 16r1.
+			'PARAMFLAG_FOPT' -> 16r10.
+			'PARAMFLAG_FOUT' -> 16r2.
+			'PARAMFLAG_FRETVAL' -> 16r8.
+			'PARAMFLAG_NONE' -> 16r0.
+			'REGKIND_DEFAULT' -> 16r0.
+			'REGKIND_NONE' -> 16r2.
+			'REGKIND_REGISTER' -> 16r1.
+			'STDOLE_LCID' -> 16r0.
+			'STDOLE_MAJORVERNUM' -> 16r1.
+			'STDOLE_MINORVERNUM' -> 16r0.
+			'SYS_MAC' -> 16r2.
+			'SYS_WIN16' -> 16r0.
+			'SYS_WIN32' -> 16r1.
+			'TKIND_ALIAS' -> 16r6.
+			'TKIND_COCLASS' -> 16r5.
+			'TKIND_DISPATCH' -> 16r4.
+			'TKIND_ENUM' -> 16r0.
+			'TKIND_INTERFACE' -> 16r3.
+			'TKIND_MAX' -> 16r8.
+			'TKIND_MODULE' -> 16r2.
+			'TKIND_RECORD' -> 16r1.
+			'TKIND_UNION' -> 16r7.
+			'TYPEFLAG_FAGGREGATABLE' -> 16r400.
+			'TYPEFLAG_FAPPOBJECT' -> 16r1.
+			'TYPEFLAG_FCANCREATE' -> 16r2.
+			'TYPEFLAG_FCONTROL' -> 16r20.
+			'TYPEFLAG_FDISPATCHABLE' -> 16r1000.
+			'TYPEFLAG_FDUAL' -> 16r40.
+			'TYPEFLAG_FHIDDEN' -> 16r10.
+			'TYPEFLAG_FLICENSED' -> 16r4.
+			'TYPEFLAG_FNONEXTENSIBLE' -> 16r80.
+			'TYPEFLAG_FOLEAUTOMATION' -> 16r100.
+			'TYPEFLAG_FPREDECLID' -> 16r8.
+			'TYPEFLAG_FRESTRICTED' -> 16r200.
+			'VAR_CONST' -> 16r2.
+			'VAR_DATEVALUEONLY' -> 16r2.
+			'VAR_DISPATCH' -> 16r3.
+			'VAR_PERINSTANCE' -> 16r0.
+			'VAR_STATIC' -> 16r1.
+			'VAR_TIMEVALUEONLY' -> 16r1.
+			'VARFLAG_FBINDABLE' -> 16r4.
+			'VARFLAG_FDEFAULTBIND' -> 16r20.
+			'VARFLAG_FDISPLAYBIND' -> 16r10.
+			'VARFLAG_FHIDDEN' -> 16r40.
+			'VARFLAG_FNONBROWSABLE' -> 16r400.
+			'VARFLAG_FREADONLY' -> 16r1.
+			'VARFLAG_FREQUESTEDIT' -> 16r8.
+			'VARFLAG_FRESTRICTED' -> 16r80.
+			'VARFLAG_FSOURCE' -> 16r2.
+			'VARFLAG_FUIDEFAULT' -> 16r200.
+			'VARIANT_ALPHABOOL' -> 16r2.
+			'VARIANT_CALENDAR_GREGORIAN' -> 16r40.
+			'VARIANT_CALENDAR_HIJRI' -> 16r8.
+			'VARIANT_CALENDAR_THAI' -> 16r20.
+			'VARIANT_FALSE' -> 16r0.
+			'VARIANT_LOCALBOOL' -> 16r10.
+			'VARIANT_NOUSEROVERRIDE' -> 16r4.
+			'VARIANT_NOVALUEPROP' -> 16r1.
+			'VARIANT_TRUE' -> -16r1.
+			'VARIANT_USE_NLS' -> 16r80.
+			'VT_ARRAY' -> 16r2000.
+			'VT_BLOB' -> 16r41.
+			'VT_BLOB_OBJECT' -> 16r46.
+			'VT_BOOL' -> 16rB.
+			'VT_BSTR' -> 16r8.
+			'VT_BYREF' -> 16r4000.
+			'VT_CARRAY' -> 16r1C.
+			'VT_CF' -> 16r47.
+			'VT_CLSID' -> 16r48.
+			'VT_CY' -> 16r6.
+			'VT_DATE' -> 16r7.
+			'VT_DECIMAL' -> 16rE.
+			'VT_DISPATCH' -> 16r9.
+			'VT_EMPTY' -> 16r0.
+			'VT_ERROR' -> 16rA.
+			'VT_FILETIME' -> 16r40.
+			'VT_HRESULT' -> 16r19.
+			'VT_I1' -> 16r10.
+			'VT_I2' -> 16r2.
+			'VT_I4' -> 16r3.
+			'VT_I8' -> 16r14.
+			'VT_INT' -> 16r16.
+			'VT_INT_PTR' -> 16r25.
+			'VT_LPSTR' -> 16r1E.
+			'VT_LPWSTR' -> 16r1F.
+			'VT_NULL' -> 16r1.
+			'VT_PTR' -> 16r1A.
+			'VT_R4' -> 16r4.
+			'VT_R8' -> 16r5.
+			'VT_RECORD' -> 16r24.
+			'VT_SAFEARRAY' -> 16r1B.
+			'VT_STORAGE' -> 16r43.
+			'VT_STORED_OBJECT' -> 16r45.
+			'VT_STREAM' -> 16r42.
+			'VT_STREAMED_OBJECT' -> 16r44.
+			'VT_TYPEMASK' -> 16rFFF.
+			'VT_UI1' -> 16r11.
+			'VT_UI2' -> 16r12.
+			'VT_UI4' -> 16r13.
+			'VT_UI8' -> 16r15.
+			'VT_UINT' -> 16r17.
+			'VT_UINT_PTR' -> 16r26.
+			'VT_UNKNOWN' -> 16rD.
+			'VT_USERDEFINED' -> 16r1D.
+			'VT_VARIANT' -> 16rC.
+			'VT_VECTOR' -> 16r1000.
+			'VT_VOID' -> 16r18
+		}!
+Kernel.SharedPool
+	subclass: #'OS.COM.AutomationErrors'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'DISP_E_ARRAYISLOCKED' -> -16r7FFDFFF3.
-		'DISP_E_BADINDEX' -> -16r7FFDFFF5.
-		'DISP_E_BADVARTYPE' -> -16r7FFDFFF8.
-		'DISP_E_DIVBYZERO' -> -16r7FFDFFEE.
-		'DISP_E_EXCEPTION' -> -16r7FFDFFF7.
-		'DISP_E_MEMBERNOTFOUND' -> -16r7FFDFFFD.
-		'DISP_E_OVERFLOW' -> -16r7FFDFFF6.
-		'DISP_E_PARAMNOTFOUND' -> -16r7FFDFFFC.
-		'DISP_E_TYPEMISMATCH' -> -16r7FFDFFFB.
-		'DISP_E_UNKNOWNNAME' -> -16r7FFDFFFA.
-		'TYPE_E_CANTLOADLIBRARY' -> -16r7FFD63B6.
-		'TYPE_E_ELEMENTNOTFOUND' -> -16r7FFD7FD5.
-		'TYPE_E_FIELDNOTFOUND' -> -16r7FFD7FE9.
-		'TYPE_E_LIBNOTREGISTERED' -> -16r7FFD7FE3.
-		'WCODE_HRESULT_FIRST' -> -16r7FFBFE00.
-		'WCODE_HRESULT_LAST' -> -16r7FFB0001
-	}!
-Kernel.SharedPool subclass: #'OS.COM.TypeGenerationFlags'
+			'DISP_E_ARRAYISLOCKED' -> -16r7FFDFFF3.
+			'DISP_E_BADINDEX' -> -16r7FFDFFF5.
+			'DISP_E_BADVARTYPE' -> -16r7FFDFFF8.
+			'DISP_E_DIVBYZERO' -> -16r7FFDFFEE.
+			'DISP_E_EXCEPTION' -> -16r7FFDFFF7.
+			'DISP_E_MEMBERNOTFOUND' -> -16r7FFDFFFD.
+			'DISP_E_OVERFLOW' -> -16r7FFDFFF6.
+			'DISP_E_PARAMNOTFOUND' -> -16r7FFDFFFC.
+			'DISP_E_TYPEMISMATCH' -> -16r7FFDFFFB.
+			'DISP_E_UNKNOWNNAME' -> -16r7FFDFFFA.
+			'TYPE_E_CANTLOADLIBRARY' -> -16r7FFD63B6.
+			'TYPE_E_ELEMENTNOTFOUND' -> -16r7FFD7FD5.
+			'TYPE_E_FIELDNOTFOUND' -> -16r7FFD7FE9.
+			'TYPE_E_LIBNOTREGISTERED' -> -16r7FFD7FE3.
+			'WCODE_HRESULT_FIRST' -> -16r7FFBFE00.
+			'WCODE_HRESULT_LAST' -> -16r7FFB0001
+		}!
+Kernel.SharedPool
+	subclass: #'OS.COM.TypeGenerationFlags'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'CommentStyleMask' -> 16r101.
-		'DefineProtocol' -> 16r20.
-		'LowercaseIdentifiers' -> 16r400.
-		'MinimizeWrappers' -> 16r80.
-		'NoClassComment' -> 16r1.
-		'NoCompile' -> 16r40.
-		'NoFunctionTable' -> 16r4.
-		'NoSourceInterfaces' -> 16r200.
-		'NoTypeLib' -> 16r2.
-		'OverwriteClassComments' -> 16r100.
-		'RawMethodsOnly' -> 16r10.
-		'Trace' -> 16r8.
-		'TraceOnly' -> 16r48.
-		'Verbose' -> 16r800.
-		'WrapperStyleMask' -> 16r90
-	}!
-Core.Object subclass: #'OS.COM.TypeInfoObject'
+			'CommentStyleMask' -> 16r101.
+			'DefineProtocol' -> 16r20.
+			'LowercaseIdentifiers' -> 16r400.
+			'MinimizeWrappers' -> 16r80.
+			'NoClassComment' -> 16r1.
+			'NoCompile' -> 16r40.
+			'NoFunctionTable' -> 16r4.
+			'NoSourceInterfaces' -> 16r200.
+			'NoTypeLib' -> 16r2.
+			'OverwriteClassComments' -> 16r100.
+			'RawMethodsOnly' -> 16r10.
+			'Trace' -> 16r8.
+			'TraceOnly' -> 16r48.
+			'Verbose' -> 16r800.
+			'WrapperStyleMask' -> 16r90
+		}!
+Core.Object
+	subclass: #'OS.COM.TypeInfoObject'
 	instanceVariableNames: 'tlbInterface generationFlags binding'
 	classVariableNames: 'ClassCommentStyleMap GuidClash HighLevelWrapperStyleMap NamespaceClash SuperclassClash TracingStyleMap'
 	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.TypeGenerationFlags})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'OS.COM.TypeLibDocumentation'
+Core.Object
+	subclass: #'OS.COM.TypeLibDocumentation'
 	instanceVariableNames: 'name helpstring helpcontext helpfile'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.InterfaceFunction subclass: #'OS.COM.DispatchFunction'
+OS.COM.InterfaceFunction
+	subclass: #'OS.COM.DispatchFunction'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.Win32Errors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.InterfaceImplementation subclass: #'OS.COM.AbstractDispatchImplementation'
+OS.COM.InterfaceImplementation
+	subclass: #'OS.COM.AbstractDispatchImplementation'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants} #{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.AbstractDispatchImplementation subclass: #'OS.COM.DualInterfaceImplementation'
+OS.COM.AbstractDispatchImplementation
+	subclass: #'OS.COM.DualInterfaceImplementation'
 	instanceVariableNames: 'interface piTypeInfo locale'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.DualInterfaceImplementation subclass: #'OS.COM.ForwardingDualInterfaceImplementation'
+OS.COM.DualInterfaceImplementation
+	subclass: #'OS.COM.ForwardingDualInterfaceImplementation'
 	instanceVariableNames: 'interfaceClass server'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.Enumerator subclass: #'OS.COM.VariantEnumerator'
+OS.COM.Enumerator
+	subclass: #'OS.COM.VariantEnumerator'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.ExternalArray subclass: #'OS.COM.BSTRArray'
+External.ExternalArray
+	subclass: #'OS.COM.BSTRArray'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.GenericExternalArray subclass: #'OS.COM.SAFEARRAY'
+External.GenericExternalArray
+	subclass: #'OS.COM.SAFEARRAY'
 	instanceVariableNames: 'data start recordInfo'
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_cbElements' -> 16r4.
-		'_OffsetOf_cDims' -> 16r0.
-		'_OffsetOf_cLocks' -> 16r8.
-		'_OffsetOf_fFeatures' -> 16r2.
-		'_OffsetOf_pvData' -> 16rC.
-		'_OffsetOf_rgsabound' -> 16r10.
-		'_SAFEARRAY_Size' -> 16r18
-	}!
-OS.COM.IUnknown subclass: #'OS.COM.ICreateErrorInfo'
+			'_OffsetOf_cbElements' -> 16r4.
+			'_OffsetOf_cDims' -> 16r0.
+			'_OffsetOf_cLocks' -> 16r8.
+			'_OffsetOf_fFeatures' -> 16r2.
+			'_OffsetOf_pvData' -> 16rC.
+			'_OffsetOf_rgsabound' -> 16r10.
+			'_SAFEARRAY_Size' -> 16r18
+		}!
+OS.COM.IUnknown
+	subclass: #'OS.COM.ICreateErrorInfo'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.IUnknown subclass: #'OS.COM.IDispatch'
+OS.COM.IUnknown
+	subclass: #'OS.COM.IDispatch'
 	instanceVariableNames: 'typeInfo dispatchImplementor'
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.IUnknown subclass: #'OS.COM.IPerPropertyBrowsing'
+OS.COM.IUnknown
+	subclass: #'OS.COM.IPerPropertyBrowsing'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.IUnknown subclass: #'OS.COM.IProvideClassInfo'
+OS.COM.IUnknown
+	subclass: #'OS.COM.IProvideClassInfo'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.IUnknown subclass: #'OS.COM.IRecordInfo'
+OS.COM.IUnknown
+	subclass: #'OS.COM.IRecordInfo'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.IUnknown subclass: #'OS.COM.ITypeComp'
+OS.COM.IUnknown
+	subclass: #'OS.COM.ITypeComp'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.IUnknown subclass: #'OS.COM.ITypeInfo'
+OS.COM.IUnknown
+	subclass: #'OS.COM.ITypeInfo'
 	instanceVariableNames: 'attributes allCustData'
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.IUnknown subclass: #'OS.COM.ITypeLib'
+OS.COM.IUnknown
+	subclass: #'OS.COM.ITypeLib'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.IEnumXXXX subclass: #'OS.COM.IEnumVARIANT'
+OS.COM.IEnumXXXX
+	subclass: #'OS.COM.IEnumVARIANT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.IProvideClassInfo subclass: #'OS.COM.IProvideClassInfo2'
+OS.COM.IProvideClassInfo
+	subclass: #'OS.COM.IProvideClassInfo2'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.ITypeInfo subclass: #'OS.COM.ITypeInfo2'
+OS.COM.ITypeInfo
+	subclass: #'OS.COM.ITypeInfo2'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.ITypeLib subclass: #'OS.COM.ITypeLib2'
+OS.COM.ITypeLib
+	subclass: #'OS.COM.ITypeLib2'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.OLEStructure subclass: #'OS.COM.AbstractELEMDESC'
+OS.COM.OLEStructure
+	subclass: #'OS.COM.AbstractELEMDESC'
 	instanceVariableNames: 'owner tdesc'
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_AbstractELEMDESC_Size' -> 16r8.
-		'_OffsetOf_tdescElem' -> 16r0
-	}!
-OS.COM.OLEStructure subclass: #'OS.COM.CURRENCY'
+	classConstants: { '_AbstractELEMDESC_Size' -> 16r8. '_OffsetOf_tdescElem' -> 16r0 }!
+OS.COM.OLEStructure
+	subclass: #'OS.COM.CURRENCY'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_CURRENCY_Size' -> 16r8.
-		'_OffsetOf_cy' -> 16r0.
-		'MaxValue' -> 922337203685477.5807s.
-		'MinValue' -> -922337203685477.5808s
-	}!
-OS.COM.OLEStructure subclass: #'OS.COM.CUSTDATAITEM'
+			'_CURRENCY_Size' -> 16r8.
+			'_OffsetOf_cy' -> 16r0.
+			'MaxValue' -> 922337203685477.5807s.
+			'MinValue' -> -922337203685477.5808s
+		}!
+OS.COM.OLEStructure
+	subclass: #'OS.COM.CUSTDATAITEM'
 	instanceVariableNames: 'key value'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_CUSTDATAITEM_Size' -> 16r20.
-		'_OffsetOf_guid' -> 16r0.
-		'_OffsetOf_varValue' -> 16r10
-	}!
-OS.COM.OLEStructure subclass: #'OS.COM.DECIMAL'
+			'_CUSTDATAITEM_Size' -> 16r20.
+			'_OffsetOf_guid' -> 16r0.
+			'_OffsetOf_varValue' -> 16r10
+		}!
+OS.COM.OLEStructure
+	subclass: #'OS.COM.DECIMAL'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_DECIMAL_Size' -> 16r10.
-		'_OffsetOf_hi32' -> 16r4.
-		'_OffsetOf_lo64' -> 16r8.
-		'_OffsetOf_scale' -> 16r2.
-		'_OffsetOf_sign' -> 16r3.
-		'_OffsetOf_wReserved' -> 16r0.
-		'MaxScale' -> 16r1C.
-		'MaxValue' -> 16rFFFFFFFFFFFFFFFFFFFFFFFF.
-		'SmallestValue' -> 0.0000000000000000000000000001s
-	}!
-OS.COM.OLEStructure subclass: #'OS.COM.DISPPARAMS'
+			'_DECIMAL_Size' -> 16r10.
+			'_OffsetOf_hi32' -> 16r4.
+			'_OffsetOf_lo64' -> 16r8.
+			'_OffsetOf_scale' -> 16r2.
+			'_OffsetOf_sign' -> 16r3.
+			'_OffsetOf_wReserved' -> 16r0.
+			'MaxScale' -> 16r1C.
+			'MaxValue' -> 16rFFFFFFFFFFFFFFFFFFFFFFFF.
+			'SmallestValue' -> 0.0000000000000000000000000001s
+		}!
+OS.COM.OLEStructure
+	subclass: #'OS.COM.DISPPARAMS'
 	instanceVariableNames: 'args vargs dispids'
 	classVariableNames: 'ZeroArgs'
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_DISPPARAMS_Size' -> 16r10.
-		'_OffsetOf_cArgs' -> 16r8.
-		'_OffsetOf_cNamedArgs' -> 16rC.
-		'_OffsetOf_rgdispidNamedArgs' -> 16r4.
-		'_OffsetOf_rgvarg' -> 16r0
-	}!
-OS.COM.OLEStructure subclass: #'OS.COM.FONTDESC'
+			'_DISPPARAMS_Size' -> 16r10.
+			'_OffsetOf_cArgs' -> 16r8.
+			'_OffsetOf_cNamedArgs' -> 16rC.
+			'_OffsetOf_rgdispidNamedArgs' -> 16r4.
+			'_OffsetOf_rgvarg' -> 16r0
+		}!
+OS.COM.OLEStructure
+	subclass: #'OS.COM.FONTDESC'
 	instanceVariableNames: 'name'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_FONTDESC_Size' -> 16r20.
-		'_OffsetOf_cySize' -> 16r8.
-		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_fItalic' -> 16r14.
-		'_OffsetOf_fStrikethrough' -> 16r1C.
-		'_OffsetOf_fUnderline' -> 16r18.
-		'_OffsetOf_lpstrName' -> 16r4.
-		'_OffsetOf_sCharset' -> 16r12.
-		'_OffsetOf_sWeight' -> 16r10
-	}!
-OS.COM.OLEStructure subclass: #'OS.COM.IDLDESC'
+			'_FONTDESC_Size' -> 16r20.
+			'_OffsetOf_cySize' -> 16r8.
+			'_OffsetOf_dwSize' -> 16r0.
+			'_OffsetOf_fItalic' -> 16r14.
+			'_OffsetOf_fStrikethrough' -> 16r1C.
+			'_OffsetOf_fUnderline' -> 16r18.
+			'_OffsetOf_lpstrName' -> 16r4.
+			'_OffsetOf_sCharset' -> 16r12.
+			'_OffsetOf_sWeight' -> 16r10
+		}!
+OS.COM.OLEStructure
+	subclass: #'OS.COM.IDLDESC'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_IDLDESC_Size' -> 16r8.
-		'_OffsetOf_dwReserved' -> 16r0.
-		'_OffsetOf_wIDLFlags' -> 16r4
-	}!
-OS.COM.OLEStructure subclass: #'OS.COM.PARAMDESC'
+			'_IDLDESC_Size' -> 16r8.
+			'_OffsetOf_dwReserved' -> 16r0.
+			'_OffsetOf_wIDLFlags' -> 16r4
+		}!
+OS.COM.OLEStructure
+	subclass: #'OS.COM.PARAMDESC'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_pparamdescex' -> 16r0.
-		'_OffsetOf_wParamFlags' -> 16r4.
-		'_PARAMDESC_Size' -> 16r8
-	}!
-OS.COM.OLEStructure subclass: #'OS.COM.PARAMDESCEX'
+			'_OffsetOf_pparamdescex' -> 16r0.
+			'_OffsetOf_wParamFlags' -> 16r4.
+			'_PARAMDESC_Size' -> 16r8
+		}!
+OS.COM.OLEStructure
+	subclass: #'OS.COM.PARAMDESCEX'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_cBytes' -> 16r0.
-		'_OffsetOf_varDefaultValue' -> 16r8.
-		'_PARAMDESCEX_Size' -> 16r18
-	}!
-OS.COM.OLEStructure subclass: #'OS.COM.SAFEARRAYBOUND'
+			'_OffsetOf_cBytes' -> 16r0.
+			'_OffsetOf_varDefaultValue' -> 16r8.
+			'_PARAMDESCEX_Size' -> 16r18
+		}!
+OS.COM.OLEStructure
+	subclass: #'OS.COM.SAFEARRAYBOUND'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_cElements' -> 16r0.
-		'_OffsetOf_lLbound' -> 16r4.
-		'_SAFEARRAYBOUND_Size' -> 16r8
-	}!
-OS.COM.OLEStructure subclass: #'OS.COM.TLIBATTR'
+			'_OffsetOf_cElements' -> 16r0.
+			'_OffsetOf_lLbound' -> 16r4.
+			'_SAFEARRAYBOUND_Size' -> 16r8
+		}!
+OS.COM.OLEStructure
+	subclass: #'OS.COM.TLIBATTR'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_guid' -> 16r0.
-		'_OffsetOf_lcid' -> 16r10.
-		'_OffsetOf_syskind' -> 16r14.
-		'_OffsetOf_wLibFlags' -> 16r1C.
-		'_OffsetOf_wMajorVerNum' -> 16r18.
-		'_OffsetOf_wMinorVerNum' -> 16r1A.
-		'_TLIBATTR_Size' -> 16r20
-	}!
-OS.COM.OLEStructure subclass: #'OS.COM.TYPEDESC'
+			'_OffsetOf_guid' -> 16r0.
+			'_OffsetOf_lcid' -> 16r10.
+			'_OffsetOf_syskind' -> 16r14.
+			'_OffsetOf_wLibFlags' -> 16r1C.
+			'_OffsetOf_wMajorVerNum' -> 16r18.
+			'_OffsetOf_wMinorVerNum' -> 16r1A.
+			'_TLIBATTR_Size' -> 16r20
+		}!
+OS.COM.OLEStructure
+	subclass: #'OS.COM.TYPEDESC'
 	instanceVariableNames: 'owner classDesc typeInfo'
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_hreftype' -> 16r0.
-		'_OffsetOf_lpadesc' -> 16r0.
-		'_OffsetOf_lptdesc' -> 16r0.
-		'_OffsetOf_vt' -> 16r4.
-		'_TYPEDESC_Size' -> 16r8.
-		'VTIndirections' -> #[0 0 0 0 0 0 0 0 0 1 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
-	}!
-OS.COM.AbstractELEMDESC subclass: #'OS.COM.ARRAYDESC'
+			'_OffsetOf_hreftype' -> 16r0.
+			'_OffsetOf_lpadesc' -> 16r0.
+			'_OffsetOf_lptdesc' -> 16r0.
+			'_OffsetOf_vt' -> 16r4.
+			'_TYPEDESC_Size' -> 16r8.
+			'VTIndirections'
+				-> #[0 0 0 0 0 0 0 0 0 1 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+		}!
+OS.COM.AbstractELEMDESC
+	subclass: #'OS.COM.ARRAYDESC'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_ARRAYDESC_Size' -> 16r14.
-		'_OffsetOf_cDims' -> 16r8.
-		'_OffsetOf_rgbounds' -> 16rC
-	}!
-OS.COM.AbstractELEMDESC subclass: #'OS.COM.ELEMDESC'
+			'_ARRAYDESC_Size' -> 16r14.
+			'_OffsetOf_cDims' -> 16r8.
+			'_OffsetOf_rgbounds' -> 16rC
+		}!
+OS.COM.AbstractELEMDESC
+	subclass: #'OS.COM.ELEMDESC'
 	instanceVariableNames: 'param index custData'
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_ELEMDESC_Size' -> 16r10.
-		'_OffsetOf_paramdesc' -> 16r8
-	}!
-OS.COM.FinalizableStructure subclass: #'OS.COM.CUSTDATA'
+	classConstants: { '_ELEMDESC_Size' -> 16r10. '_OffsetOf_paramdesc' -> 16r8 }!
+OS.COM.FinalizableStructure
+	subclass: #'OS.COM.CUSTDATA'
 	instanceVariableNames: 'associations table'
 	classVariableNames: 'WellKnownCustomAttributes'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_CUSTDATA_Size' -> 16r8.
-		'_OffsetOf_cCustData' -> 16r0.
-		'_OffsetOf_prgCustData' -> 16r4
-	}!
-OS.COM.FinalizableStructure subclass: #'OS.COM.Record'
+			'_CUSTDATA_Size' -> 16r8.
+			'_OffsetOf_cCustData' -> 16r0.
+			'_OffsetOf_prgCustData' -> 16r4
+		}!
+OS.COM.FinalizableStructure
+	subclass: #'OS.COM.Record'
 	instanceVariableNames: 'recordInfo owner'
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.FinalizableStructure subclass: #'OS.COM.TypeInfoStructure'
+OS.COM.FinalizableStructure
+	subclass: #'OS.COM.TypeInfoStructure'
 	instanceVariableNames: 'analyzer'
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.FinalizableStructure subclass: #'OS.COM.VARIANT'
+OS.COM.FinalizableStructure
+	subclass: #'OS.COM.VARIANT'
 	instanceVariableNames: 'data'
 	classVariableNames: 'Unspecified'
 	imports: #(#{OS.Win32Constants} #{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_boolVal' -> 16r8.
-		'_OffsetOf_bstrVal' -> 16r8.
-		'_OffsetOf_bVal' -> 16r8.
-		'_OffsetOf_byref' -> 16r8.
-		'_OffsetOf_cVal' -> 16r8.
-		'_OffsetOf_cyVal' -> 16r8.
-		'_OffsetOf_date' -> 16r8.
-		'_OffsetOf_dblVal' -> 16r8.
-		'_OffsetOf_decVal' -> 16r0.
-		'_OffsetOf_fltVal' -> 16r8.
-		'_OffsetOf_intVal' -> 16r8.
-		'_OffsetOf_iVal' -> 16r8.
-		'_OffsetOf_llVal' -> 16r8.
-		'_OffsetOf_lVal' -> 16r8.
-		'_OffsetOf_parray' -> 16r8.
-		'_OffsetOf_pboolVal' -> 16r8.
-		'_OffsetOf_pbstrVal' -> 16r8.
-		'_OffsetOf_pbVal' -> 16r8.
-		'_OffsetOf_pcVal' -> 16r8.
-		'_OffsetOf_pcyVal' -> 16r8.
-		'_OffsetOf_pdate' -> 16r8.
-		'_OffsetOf_pdblVal' -> 16r8.
-		'_OffsetOf_pdecVal' -> 16r8.
-		'_OffsetOf_pdispVal' -> 16r8.
-		'_OffsetOf_pfltVal' -> 16r8.
-		'_OffsetOf_pintVal' -> 16r8.
-		'_OffsetOf_piVal' -> 16r8.
-		'_OffsetOf_pllVal' -> 16r8.
-		'_OffsetOf_plVal' -> 16r8.
-		'_OffsetOf_pparray' -> 16r8.
-		'_OffsetOf_ppdispVal' -> 16r8.
-		'_OffsetOf_ppunkVal' -> 16r8.
-		'_OffsetOf_pRecInfo' -> 16rC.
-		'_OffsetOf_pscode' -> 16r8.
-		'_OffsetOf_puintVal' -> 16r8.
-		'_OffsetOf_puiVal' -> 16r8.
-		'_OffsetOf_pullVal' -> 16r8.
-		'_OffsetOf_pulVal' -> 16r8.
-		'_OffsetOf_punkVal' -> 16r8.
-		'_OffsetOf_pvarVal' -> 16r8.
-		'_OffsetOf_pvRecord' -> 16r8.
-		'_OffsetOf_scode' -> 16r8.
-		'_OffsetOf_uintVal' -> 16r8.
-		'_OffsetOf_uiVal' -> 16r8.
-		'_OffsetOf_ullVal' -> 16r8.
-		'_OffsetOf_ulVal' -> 16r8.
-		'_OffsetOf_vt' -> 16r0.
-		'_OffsetOf_wReserved1' -> 16r2.
-		'_OffsetOf_wReserved2' -> 16r4.
-		'_OffsetOf_wReserved3' -> 16r6.
-		'_VARIANT_Size' -> 16r10.
-		'VTClasses' -> #(#{Core.UndefinedObject} #{Core.UndefinedObject} #{External.Int16} #{External.Int32} #{External.FLOAT} #{External.DOUBLE} #{OS.COM.CURRENCY} #{OS.COM.DATE} #{OS.COM.BSTR} #{OS.COM.IDispatch} #{OS.HRESULT} #{OS.COM.VARIANT_BOOL} #{OS.COM.VARIANT} #{OS.COM.IUnknown} #{OS.COM.DECIMAL} nil #{External.Int8} #{External.UInt8} #{External.UInt16} #{External.UInt32} #{External.Int64} #{External.UInt64} #{External.Int32} #{External.UInt32} #{External.VOID} #{OS.HRESULT} #{External.Address} #{OS.COM.SAFEARRAY} #{External.Array} #{OS.COM.Record} #{Core.AnsiString} #{Core.Utf16String} nil nil nil nil #{External.Structure} #{External.IntPtr} #{External.UIntPtr} nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #{OS.FILETIME} #{Core.ByteArray} #{OS.COM.IStream} #{OS.COM.IStorage} #{OS.COM.IStream} #{OS.COM.IStorage} #{Core.ByteArray} #{External.UInt32} #{OS.COM.CLSID}).
-		'VTNames' -> #(#nil #null #int16 #int32 #float #double #cy #date #bstr #dispatch #hresult #varbool #variant #unknown #decimal #badVarType #int8 #uint8 #uint16 #uint32 #int64 #uint64 #int32 #uint32 #void #hresult #lpvoid #safearray #carray #typedef #lpstr #lpwstr #badVarType #badVarType #badVarType #badVarType #struct #intptr #uintptr #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #filetime #blob #stream #storage #streamed_object #stored_object #blob_object #cf #clsid)
-	}!
-OS.COM.TypeInfoStructure subclass: #'OS.COM.MemberDesc'
+			'_OffsetOf_boolVal' -> 16r8.
+			'_OffsetOf_bstrVal' -> 16r8.
+			'_OffsetOf_bVal' -> 16r8.
+			'_OffsetOf_byref' -> 16r8.
+			'_OffsetOf_cVal' -> 16r8.
+			'_OffsetOf_cyVal' -> 16r8.
+			'_OffsetOf_date' -> 16r8.
+			'_OffsetOf_dblVal' -> 16r8.
+			'_OffsetOf_decVal' -> 16r0.
+			'_OffsetOf_fltVal' -> 16r8.
+			'_OffsetOf_intVal' -> 16r8.
+			'_OffsetOf_iVal' -> 16r8.
+			'_OffsetOf_llVal' -> 16r8.
+			'_OffsetOf_lVal' -> 16r8.
+			'_OffsetOf_parray' -> 16r8.
+			'_OffsetOf_pboolVal' -> 16r8.
+			'_OffsetOf_pbstrVal' -> 16r8.
+			'_OffsetOf_pbVal' -> 16r8.
+			'_OffsetOf_pcVal' -> 16r8.
+			'_OffsetOf_pcyVal' -> 16r8.
+			'_OffsetOf_pdate' -> 16r8.
+			'_OffsetOf_pdblVal' -> 16r8.
+			'_OffsetOf_pdecVal' -> 16r8.
+			'_OffsetOf_pdispVal' -> 16r8.
+			'_OffsetOf_pfltVal' -> 16r8.
+			'_OffsetOf_pintVal' -> 16r8.
+			'_OffsetOf_piVal' -> 16r8.
+			'_OffsetOf_pllVal' -> 16r8.
+			'_OffsetOf_plVal' -> 16r8.
+			'_OffsetOf_pparray' -> 16r8.
+			'_OffsetOf_ppdispVal' -> 16r8.
+			'_OffsetOf_ppunkVal' -> 16r8.
+			'_OffsetOf_pRecInfo' -> 16rC.
+			'_OffsetOf_pscode' -> 16r8.
+			'_OffsetOf_puintVal' -> 16r8.
+			'_OffsetOf_puiVal' -> 16r8.
+			'_OffsetOf_pullVal' -> 16r8.
+			'_OffsetOf_pulVal' -> 16r8.
+			'_OffsetOf_punkVal' -> 16r8.
+			'_OffsetOf_pvarVal' -> 16r8.
+			'_OffsetOf_pvRecord' -> 16r8.
+			'_OffsetOf_scode' -> 16r8.
+			'_OffsetOf_uintVal' -> 16r8.
+			'_OffsetOf_uiVal' -> 16r8.
+			'_OffsetOf_ullVal' -> 16r8.
+			'_OffsetOf_ulVal' -> 16r8.
+			'_OffsetOf_vt' -> 16r0.
+			'_OffsetOf_wReserved1' -> 16r2.
+			'_OffsetOf_wReserved2' -> 16r4.
+			'_OffsetOf_wReserved3' -> 16r6.
+			'_VARIANT_Size' -> 16r10.
+			'VTClasses'
+				-> #(#{Core.UndefinedObject} #{Core.UndefinedObject} #{External.Int16} #{External.Int32} #{External.FLOAT} #{External.DOUBLE} #{OS.COM.CURRENCY} #{OS.COM.DATE} #{OS.COM.BSTR} #{OS.COM.IDispatch} #{OS.HRESULT} #{OS.COM.VARIANT_BOOL} #{OS.COM.VARIANT} #{OS.COM.IUnknown} #{OS.COM.DECIMAL} nil #{External.Int8} #{External.UInt8} #{External.UInt16} #{External.UInt32} #{External.Int64} #{External.UInt64} #{External.Int32} #{External.UInt32} #{External.VOID} #{OS.HRESULT} #{External.Address} #{OS.COM.SAFEARRAY} #{External.Array} #{OS.COM.Record} #{Core.AnsiString} #{Core.Utf16String} nil nil nil nil #{External.Structure} #{External.IntPtr} #{External.UIntPtr} nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #{OS.FILETIME} #{Core.ByteArray} #{OS.COM.IStream} #{OS.COM.IStorage} #{OS.COM.IStream} #{OS.COM.IStorage} #{Core.ByteArray} #{External.UInt32} #{OS.COM.CLSID}).
+			'VTNames'
+				-> #(#nil #null #int16 #int32 #float #double #cy #date #bstr #dispatch #hresult #varbool #variant #unknown #decimal #badVarType #int8 #uint8 #uint16 #uint32 #int64 #uint64 #int32 #uint32 #void #hresult #lpvoid #safearray #carray #typedef #lpstr #lpwstr #badVarType #badVarType #badVarType #badVarType #struct #intptr #uintptr #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #filetime #blob #stream #storage #streamed_object #stored_object #blob_object #cf #clsid)
+		}!
+OS.COM.TypeInfoStructure
+	subclass: #'OS.COM.MemberDesc'
 	instanceVariableNames: 'index custData documentation'
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.TypeInfoStructure subclass: #'OS.COM.TYPEATTR'
+OS.COM.TypeInfoStructure
+	subclass: #'OS.COM.TYPEATTR'
 	instanceVariableNames: 'piTypeInfo'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_cbAlignment' -> 16r34.
-		'_OffsetOf_cbSizeInstance' -> 16r24.
-		'_OffsetOf_cbSizeVft' -> 16r32.
-		'_OffsetOf_cFuncs' -> 16r2C.
-		'_OffsetOf_cImplTypes' -> 16r30.
-		'_OffsetOf_cVars' -> 16r2E.
-		'_OffsetOf_dwReserved' -> 16r14.
-		'_OffsetOf_guid' -> 16r0.
-		'_OffsetOf_idldescType' -> 16r44.
-		'_OffsetOf_lcid' -> 16r10.
-		'_OffsetOf_lpstrSchema' -> 16r20.
-		'_OffsetOf_memidConstructor' -> 16r18.
-		'_OffsetOf_memidDestructor' -> 16r1C.
-		'_OffsetOf_tdescAlias' -> 16r3C.
-		'_OffsetOf_typekind' -> 16r28.
-		'_OffsetOf_wMajorVerNum' -> 16r38.
-		'_OffsetOf_wMinorVerNum' -> 16r3A.
-		'_OffsetOf_wTypeFlags' -> 16r36.
-		'_TYPEATTR_Size' -> 16r4C
-	}!
-OS.COM.MemberDesc subclass: #'OS.COM.FUNCDESC'
+			'_OffsetOf_cbAlignment' -> 16r34.
+			'_OffsetOf_cbSizeInstance' -> 16r24.
+			'_OffsetOf_cbSizeVft' -> 16r32.
+			'_OffsetOf_cFuncs' -> 16r2C.
+			'_OffsetOf_cImplTypes' -> 16r30.
+			'_OffsetOf_cVars' -> 16r2E.
+			'_OffsetOf_dwReserved' -> 16r14.
+			'_OffsetOf_guid' -> 16r0.
+			'_OffsetOf_idldescType' -> 16r44.
+			'_OffsetOf_lcid' -> 16r10.
+			'_OffsetOf_lpstrSchema' -> 16r20.
+			'_OffsetOf_memidConstructor' -> 16r18.
+			'_OffsetOf_memidDestructor' -> 16r1C.
+			'_OffsetOf_tdescAlias' -> 16r3C.
+			'_OffsetOf_typekind' -> 16r28.
+			'_OffsetOf_wMajorVerNum' -> 16r38.
+			'_OffsetOf_wMinorVerNum' -> 16r3A.
+			'_OffsetOf_wTypeFlags' -> 16r36.
+			'_TYPEATTR_Size' -> 16r4C
+		}!
+OS.COM.MemberDesc
+	subclass: #'OS.COM.FUNCDESC'
 	instanceVariableNames: 'names arguments outputIndices retvalIndex methodName'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_FUNCDESC_Size' -> 16r34.
-		'_OffsetOf_callconv' -> 16r14.
-		'_OffsetOf_cParams' -> 16r18.
-		'_OffsetOf_cParamsOpt' -> 16r1A.
-		'_OffsetOf_cScodes' -> 16r1E.
-		'_OffsetOf_elemdescFunc' -> 16r20.
-		'_OffsetOf_funckind' -> 16rC.
-		'_OffsetOf_invkind' -> 16r10.
-		'_OffsetOf_lprgelemdescParam' -> 16r8.
-		'_OffsetOf_lprgscode' -> 16r4.
-		'_OffsetOf_memid' -> 16r0.
-		'_OffsetOf_oVft' -> 16r1C.
-		'_OffsetOf_wFuncFlags' -> 16r30
-	}!
-OS.COM.MemberDesc subclass: #'OS.COM.VARDESC'
+			'_FUNCDESC_Size' -> 16r34.
+			'_OffsetOf_callconv' -> 16r14.
+			'_OffsetOf_cParams' -> 16r18.
+			'_OffsetOf_cParamsOpt' -> 16r1A.
+			'_OffsetOf_cScodes' -> 16r1E.
+			'_OffsetOf_elemdescFunc' -> 16r20.
+			'_OffsetOf_funckind' -> 16rC.
+			'_OffsetOf_invkind' -> 16r10.
+			'_OffsetOf_lprgelemdescParam' -> 16r8.
+			'_OffsetOf_lprgscode' -> 16r4.
+			'_OffsetOf_memid' -> 16r0.
+			'_OffsetOf_oVft' -> 16r1C.
+			'_OffsetOf_wFuncFlags' -> 16r30
+		}!
+OS.COM.MemberDesc
+	subclass: #'OS.COM.VARDESC'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_elemdesc' -> 16rC.
-		'_OffsetOf_lpstrSchema' -> 16r4.
-		'_OffsetOf_lpvarValue' -> 16r8.
-		'_OffsetOf_memid' -> 16r0.
-		'_OffsetOf_oInst' -> 16r8.
-		'_OffsetOf_varkind' -> 16r20.
-		'_OffsetOf_wVarFlags' -> 16r1C.
-		'_VARDESC_Size' -> 16r24
-	}!
-External.DOUBLE subclass: #'OS.COM.DATE'
+			'_OffsetOf_elemdesc' -> 16rC.
+			'_OffsetOf_lpstrSchema' -> 16r4.
+			'_OffsetOf_lpvarValue' -> 16r8.
+			'_OffsetOf_memid' -> 16r0.
+			'_OffsetOf_oInst' -> 16r8.
+			'_OffsetOf_varkind' -> 16r20.
+			'_OffsetOf_wVarFlags' -> 16r1C.
+			'_VARDESC_Size' -> 16r24
+		}!
+External.DOUBLE
+	subclass: #'OS.COM.DATE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.Int16 subclass: #'OS.COM.VARIANT_BOOL'
+External.Int16
+	subclass: #'OS.COM.VARIANT_BOOL'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.LPVOID subclass: #'OS.COM.LPBSTR'
+External.LPVOID
+	subclass: #'OS.COM.LPBSTR'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.TypeInfoObject subclass: #'OS.COM.TypeInfoAnalyzer'
+OS.COM.TypeInfoObject
+	subclass: #'OS.COM.TypeInfoAnalyzer'
 	instanceVariableNames: 'typeLib guid index documentation'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'VTtoIDLTypeMap' -> #(nil 'short' 'long' 'float' 'double' 'CURRENCY' 'DATE' 'BSTR' 'IDispatch*' 'SCODE' 'VARIANT_BOOL' 'VARIANT' 'IUnknown*' 'DECIMAL' nil 'char' 'BYTE' 'unsigned short' 'unsigned long' '__int64' 'unsigned __int64' 'int' 'unsigned int' 'void' 'HRESULT' '*' 'SAFEARRAY*' '[]' 'typedef' 'LPSTR' 'LPWSTR')
-	}!
-OS.COM.TypeInfoObject subclass: #'OS.COM.TypeLibraryAnalyzer'
+			'VTtoIDLTypeMap'
+				-> #(nil 'short' 'long' 'float' 'double' 'CURRENCY' 'DATE' 'BSTR' 'IDispatch*' 'SCODE' 'VARIANT_BOOL' 'VARIANT' 'IUnknown*' 'DECIMAL' nil 'char' 'BYTE' 'unsigned short' 'unsigned long' '__int64' 'unsigned __int64' 'int' 'unsigned int' 'void' 'HRESULT' '*' 'SAFEARRAY*' '[]' 'typedef' 'LPSTR' 'LPWSTR')
+		}!
+OS.COM.TypeInfoObject
+	subclass: #'OS.COM.TypeLibraryAnalyzer'
 	instanceVariableNames: 'attributes namespaceName packageName _unused7 constantsPoolName aliasMap typeAnalyzers'
 	classVariableNames: 'StandardAliases TypeLibs'
 	imports: #(#{OS.Win32Constants} #{OS.COM.AutomationErrors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.TypeInfoAnalyzer subclass: #'OS.COM.APIInfoAnalyzer'
+OS.COM.TypeInfoAnalyzer
+	subclass: #'OS.COM.APIInfoAnalyzer'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.TypeInfoAnalyzer subclass: #'OS.COM.StructureTypeAnalyzer'
+OS.COM.TypeInfoAnalyzer
+	subclass: #'OS.COM.StructureTypeAnalyzer'
 	instanceVariableNames: ''
 	classVariableNames: 'BuiltIns'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.TypeInfoAnalyzer subclass: #'OS.COM.TKindAliasAnalyzer'
+OS.COM.TypeInfoAnalyzer
+	subclass: #'OS.COM.TKindAliasAnalyzer'
 	instanceVariableNames: ''
 	classVariableNames: 'BaseTypes'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.TypeInfoAnalyzer subclass: #'OS.COM.TKindCoclassAnalyzer'
+OS.COM.TypeInfoAnalyzer
+	subclass: #'OS.COM.TKindCoclassAnalyzer'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.TypeInfoAnalyzer subclass: #'OS.COM.TKindEnumAnalyzer'
+OS.COM.TypeInfoAnalyzer
+	subclass: #'OS.COM.TKindEnumAnalyzer'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.APIInfoAnalyzer subclass: #'OS.COM.InterfaceTypeAnalyzer'
+OS.COM.APIInfoAnalyzer
+	subclass: #'OS.COM.InterfaceTypeAnalyzer'
 	instanceVariableNames: 'protocol isSource'
 	classVariableNames: 'ReservedDispSelectors ReservedUnkSelectors'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.APIInfoAnalyzer subclass: #'OS.COM.TKindModuleAnalyzer'
+OS.COM.APIInfoAnalyzer
+	subclass: #'OS.COM.TKindModuleAnalyzer'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.InterfaceTypeAnalyzer subclass: #'OS.COM.TKindDispatchAnalyzer'
+OS.COM.InterfaceTypeAnalyzer
+	subclass: #'OS.COM.TKindDispatchAnalyzer'
 	instanceVariableNames: ''
 	classVariableNames: 'SpecialPropGets'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.InterfaceTypeAnalyzer subclass: #'OS.COM.TKindInterfaceAnalyzer'
+OS.COM.InterfaceTypeAnalyzer
+	subclass: #'OS.COM.TKindInterfaceAnalyzer'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.StructureTypeAnalyzer subclass: #'OS.COM.TKindRecordAnalyzer'
+OS.COM.StructureTypeAnalyzer
+	subclass: #'OS.COM.TKindRecordAnalyzer'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.StructureTypeAnalyzer subclass: #'OS.COM.TKindUnionAnalyzer'
+OS.COM.StructureTypeAnalyzer
+	subclass: #'OS.COM.TKindUnionAnalyzer'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

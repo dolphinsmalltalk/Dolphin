@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.SmalltalkToolShell subclass: #'Tools.AXComponentWizard'
+Tools.SmalltalkToolShell
+	subclass: #'Tools.AXComponentWizard'
 	instanceVariableNames: 'typeLibs types description guid namespaceName packageName forcePackage cards libraryName libraryPath buffer generateTypelib typelibVariableName constantsPoolName highLevelWrappers classComments tracing defineProtocols defineFunctionTables lowercaseIdentifiers verboseTracing showStandard'
 	classVariableNames: 'StandardEnums StandardInterfaces StandardStructs'
 	imports: #(#{OS.COM private})

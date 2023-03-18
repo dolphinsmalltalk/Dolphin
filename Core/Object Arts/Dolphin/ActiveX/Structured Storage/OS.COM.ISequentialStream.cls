@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IUnknown subclass: #'OS.COM.ISequentialStream'
+OS.COM.IUnknown
+	subclass: #'OS.COM.ISequentialStream'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.COM.StructuredStorageConstants})

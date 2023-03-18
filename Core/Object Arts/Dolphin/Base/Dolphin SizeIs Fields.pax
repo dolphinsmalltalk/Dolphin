@@ -27,19 +27,22 @@ package!
 
 "Class Definitions"!
 
-External.ArrayFieldLength subclass: #'External.SizeIsArrayFieldLength'
+External.ArrayFieldLength
+	subclass: #'External.SizeIsArrayFieldLength'
 	instanceVariableNames: 'sizeIs getLength setLength'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.ParseNodeVisitor subclass: #'Kernel.ArithmeticExpressionVisitor'
+Kernel.ParseNodeVisitor
+	subclass: #'Kernel.ArithmeticExpressionVisitor'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.ArithmeticExpressionVisitor subclass: #'External.SizeIsExpressionFormatter'
+Kernel.ArithmeticExpressionVisitor
+	subclass: #'External.SizeIsExpressionFormatter'
 	instanceVariableNames: 'codeStream structClass variable'
 	classVariableNames: ''
 	imports: #()

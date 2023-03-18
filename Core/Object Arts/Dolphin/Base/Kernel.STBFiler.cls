@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Kernel.STBFiler'
+Core.Object
+	subclass: #'Kernel.STBFiler'
 	instanceVariableNames: 'stream context version'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'MaxPredefinedRef' -> 16r18.
-		'STLFilerVersion' -> 16r5
-	}!
+	classConstants: { 'MaxPredefinedRef' -> 16r18. 'STLFilerVersion' -> 16r5 }!
 Kernel.STBFiler guid: (Core.GUID fromString: '{87b4c4c1-026e-11d3-9fd7-00a0cc3e4a32}')!
 Kernel.STBFiler isNonInstantiable: true!
 Kernel.STBFiler comment: ''!

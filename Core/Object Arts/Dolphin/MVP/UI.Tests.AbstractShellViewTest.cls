@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Tests.PresenterTest subclass: #'UI.Tests.AbstractShellViewTest'
+UI.Tests.PresenterTest
+	subclass: #'UI.Tests.AbstractShellViewTest'
 	instanceVariableNames: 'fakeUser32 cursorPos shells'
 	classVariableNames: ''
 	imports: #()

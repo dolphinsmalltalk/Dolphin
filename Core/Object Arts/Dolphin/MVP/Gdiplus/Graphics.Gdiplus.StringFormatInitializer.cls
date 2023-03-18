@@ -1,11 +1,26 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.StringFormatInitializer'
+Graphics.Gdiplus.Initializer
+	subclass: #'Graphics.Gdiplus.StringFormatInitializer'
 	instanceVariableNames: ''
-	classVariableNames: 'FormatFlagNames GenericDefault GenericTypographic'
+	classVariableNames: 'GenericDefault GenericTypographic'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'FormatFlagNames'
+				-> (IdentityDictionary withAll: {
+								-16r80000000 -> 'StringFormatFlagsBypassGDI'.
+								16r1 -> 'StringFormatFlagsDirectionRightToLeft'.
+								16r2 -> 'StringFormatFlagsDirectionVertical'.
+								16r4 -> 'StringFormatFlagsNoFitBlackBox'.
+								16r20 -> 'StringFormatFlagsDisplayFormatControl'.
+								16r400 -> 'StringFormatFlagsNoFontFallback'.
+								16r800 -> 'StringFormatFlagsMeasureTrailingSpaces'.
+								16r1000 -> 'StringFormatFlagsNoWrap'.
+								16r2000 -> 'StringFormatFlagsLineLimit'.
+								16r4000 -> 'StringFormatFlagsNoClip'
+							})
+		}!
 Graphics.Gdiplus.StringFormatInitializer guid: (Core.GUID fromString: '{14ad5dde-0284-402d-bbce-89611bcd32c4}')!
 Graphics.Gdiplus.StringFormatInitializer isNonInstantiable: true!
 Graphics.Gdiplus.StringFormatInitializer comment: ''!

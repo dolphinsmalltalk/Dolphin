@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Menu subclass: #'UI.MenuBar'
+UI.Menu
+	subclass: #'UI.MenuBar'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

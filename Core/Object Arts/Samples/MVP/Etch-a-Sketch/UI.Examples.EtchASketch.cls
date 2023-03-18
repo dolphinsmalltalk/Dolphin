@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Presenter subclass: #'UI.Examples.EtchASketch'
+UI.Presenter
+	subclass: #'UI.Examples.EtchASketch'
 	instanceVariableNames: 'upDownKnob leftRightKnob sketchPad lastLocation'
 	classVariableNames: ''
 	imports: #()

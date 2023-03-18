@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Folder subclass: #'Tools.PackageFolder'
+UI.Folder
+	subclass: #'Tools.PackageFolder'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

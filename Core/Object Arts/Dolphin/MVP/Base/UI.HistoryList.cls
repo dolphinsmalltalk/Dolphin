@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'UI.HistoryList'
+Core.Object
+	subclass: #'UI.HistoryList'
 	instanceVariableNames: 'history position maxAge searchPolicy'
 	classVariableNames: ''
 	imports: #()

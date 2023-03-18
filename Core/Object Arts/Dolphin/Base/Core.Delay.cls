@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Core.Delay'
+Core.Object
+	subclass: #'Core.Delay'
 	instanceVariableNames: 'duration resumptionTime waitSemaphore'
 	classVariableNames: 'AccessProtect Current HighestResolution ImageClock LowestResolution Pending Resolution TicksToNanos TimingProcess TimingSemaphore'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'DefaultResolution' -> 16r3D09
-	}!
+	classConstants: { 'DefaultResolution' -> 16r3D09 }!
 Core.Delay guid: (Core.GUID fromString: '{87b4c47b-026e-11d3-9fd7-00a0cc3e4a32}')!
 Core.Delay comment: '`Delay`s are used to introduce timed pauses in the execution of a `Process`.  `Delay`s can be constructed that specify a duration using the instance creation messages `#forMicroseconds:`, `#forMilliseconds:`, and `#forSeconds:`, or an absolute time based on the millisecond clock value, `#untilMilliseconds:`. Once constructed a `Delay` responds to the `#wait` message by suspending the active process for the desired duration, or until the desired absolute time is reached. 
 

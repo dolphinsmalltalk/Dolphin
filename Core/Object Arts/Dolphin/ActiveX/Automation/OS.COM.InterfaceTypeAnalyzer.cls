@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.APIInfoAnalyzer subclass: #'OS.COM.InterfaceTypeAnalyzer'
+OS.COM.APIInfoAnalyzer
+	subclass: #'OS.COM.InterfaceTypeAnalyzer'
 	instanceVariableNames: 'protocol isSource'
 	classVariableNames: 'ReservedDispSelectors ReservedUnkSelectors'
 	imports: #()

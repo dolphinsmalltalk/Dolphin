@@ -45,67 +45,78 @@ package!
 
 "Class Definitions"!
 
-Core.Object subclass: #'Kernel.D5BytecodeRewriter'
+Core.Object
+	subclass: #'Kernel.D5BytecodeRewriter'
 	instanceVariableNames: 'blockStack instructions ip ipMap bytecodes bytecode newIP blockMap needsContext'
 	classVariableNames: 'DispatchMap'
 	imports: #(#{Kernel.OpcodePool})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #Resource
+Core.Object
+	subclass: #Resource
 	instanceVariableNames: 'accessor icon'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #ResourceAccessor
+Core.Object
+	subclass: #ResourceAccessor
 	instanceVariableNames: 'flags'
 	classVariableNames: 'ChangedMask'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Resource subclass: #ViewResource
+Resource
+	subclass: #ViewResource
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ResourceAccessor subclass: #ResourceDummyAccessor
+ResourceAccessor
+	subclass: #ResourceDummyAccessor
 	instanceVariableNames: 'object'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ResourceAccessor subclass: #ResourceGeneratorAccessor
+ResourceAccessor
+	subclass: #ResourceGeneratorAccessor
 	instanceVariableNames: 'class selector'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ResourceAccessor subclass: #ResourceSTBAccessor
+ResourceAccessor
+	subclass: #ResourceSTBAccessor
 	instanceVariableNames: 'classLocator'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ResourceSTBAccessor subclass: #ResourceSTBByteArrayAccessor
+ResourceSTBAccessor
+	subclass: #ResourceSTBByteArrayAccessor
 	instanceVariableNames: 'byteArray'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ResourceSTBAccessor subclass: #ResourceSTBFileAccessor
+ResourceSTBAccessor
+	subclass: #ResourceSTBFileAccessor
 	instanceVariableNames: 'fileName'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.STBProxy subclass: #STBResourceSTBByteArrayAccessorProxy
+Kernel.STBProxy
+	subclass: #STBResourceSTBByteArrayAccessorProxy
 	instanceVariableNames: 'bytes'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.STBProxy subclass: #STBResourceSTBFileAccessorProxy
+Kernel.STBProxy
+	subclass: #STBResourceSTBFileAccessorProxy
 	instanceVariableNames: 'fileName bytes'
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.OrderedCollection variableSubclass: #'Core.SortedCollection'
+Core.OrderedCollection
+	variableSubclass: #'Core.SortedCollection'
 	instanceVariableNames: 'algorithm'
 	classVariableNames: ''
 	imports: #()

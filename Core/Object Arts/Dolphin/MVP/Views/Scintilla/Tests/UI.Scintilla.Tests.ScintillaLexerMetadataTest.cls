@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTest subclass: #'UI.Scintilla.Tests.ScintillaLexerMetadataTest'
+Core.Tests.DolphinTest
+	subclass: #'UI.Scintilla.Tests.ScintillaLexerMetadataTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

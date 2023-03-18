@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Graphics.Grid'
+Core.Object
+	subclass: #'Graphics.Grid'
 	instanceVariableNames: 'resolution'
 	classVariableNames: ''
 	imports: #()

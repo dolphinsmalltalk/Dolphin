@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.CRTLibrary subclass: #'OS.CRTLibraryNonBlocking'
+OS.CRTLibrary
+	subclass: #'OS.CRTLibraryNonBlocking'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

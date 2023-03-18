@@ -1,16 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.OLEStructure subclass: #'OS.COM.LICINFO'
+OS.COM.OLEStructure
+	subclass: #'OS.COM.LICINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_LICINFO_Size' -> 16rC.
-		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_fLicVerified' -> 16r8.
-		'_OffsetOf_fRuntimeKeyAvail' -> 16r4
-	}!
+			'_LICINFO_Size' -> 16rC.
+			'_OffsetOf_dwSize' -> 16r0.
+			'_OffsetOf_fLicVerified' -> 16r8.
+			'_OffsetOf_fRuntimeKeyAvail' -> 16r4
+		}!
 OS.COM.LICINFO guid: (Core.GUID fromString: '{87b4c5b8-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.COM.LICINFO comment: '`OS.COM.LICINFO` is an `External.Structure` class to represent the COM structure LICINFO. 
 

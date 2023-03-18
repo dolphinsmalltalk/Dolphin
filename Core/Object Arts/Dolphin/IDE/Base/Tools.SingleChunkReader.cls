@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.ChunkReader subclass: #'Tools.SingleChunkReader'
+Kernel.ChunkReader
+	subclass: #'Tools.SingleChunkReader'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

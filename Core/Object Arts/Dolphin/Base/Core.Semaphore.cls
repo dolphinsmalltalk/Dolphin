@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.LinkedList subclass: #'Core.Semaphore'
+Core.LinkedList
+	subclass: #'Core.Semaphore'
 	instanceVariableNames: 'signals'
 	classVariableNames: ''
 	imports: #()

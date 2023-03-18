@@ -1,27 +1,28 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'OS.MIB_IPFORWARDROW'
+External.Structure
+	subclass: #'OS.MIB_IPFORWARDROW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_MIB_IPFORWARDROW_Size' -> 16r38.
-		'_OffsetOf_dwForwardAge' -> 16r1C.
-		'_OffsetOf_dwForwardDest' -> 16r0.
-		'_OffsetOf_dwForwardIfIndex' -> 16r10.
-		'_OffsetOf_dwForwardMask' -> 16r4.
-		'_OffsetOf_dwForwardMetric1' -> 16r24.
-		'_OffsetOf_dwForwardMetric2' -> 16r28.
-		'_OffsetOf_dwForwardMetric3' -> 16r2C.
-		'_OffsetOf_dwForwardMetric4' -> 16r30.
-		'_OffsetOf_dwForwardMetric5' -> 16r34.
-		'_OffsetOf_dwForwardNextHop' -> 16rC.
-		'_OffsetOf_dwForwardNextHopAS' -> 16r20.
-		'_OffsetOf_dwForwardPolicy' -> 16r8.
-		'_OffsetOf_dwForwardProto' -> 16r18.
-		'_OffsetOf_dwForwardType' -> 16r14
-	}!
+			'_MIB_IPFORWARDROW_Size' -> 16r38.
+			'_OffsetOf_dwForwardAge' -> 16r1C.
+			'_OffsetOf_dwForwardDest' -> 16r0.
+			'_OffsetOf_dwForwardIfIndex' -> 16r10.
+			'_OffsetOf_dwForwardMask' -> 16r4.
+			'_OffsetOf_dwForwardMetric1' -> 16r24.
+			'_OffsetOf_dwForwardMetric2' -> 16r28.
+			'_OffsetOf_dwForwardMetric3' -> 16r2C.
+			'_OffsetOf_dwForwardMetric4' -> 16r30.
+			'_OffsetOf_dwForwardMetric5' -> 16r34.
+			'_OffsetOf_dwForwardNextHop' -> 16rC.
+			'_OffsetOf_dwForwardNextHopAS' -> 16r20.
+			'_OffsetOf_dwForwardPolicy' -> 16r8.
+			'_OffsetOf_dwForwardProto' -> 16r18.
+			'_OffsetOf_dwForwardType' -> 16r14
+		}!
 OS.MIB_IPFORWARDROW guid: (Core.GUID fromString: '{4e46d963-9a91-4e1a-b1eb-a9597b841a59}')!
 OS.MIB_IPFORWARDROW comment: '<MIB_IPFORWARDROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IPFORWARDROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

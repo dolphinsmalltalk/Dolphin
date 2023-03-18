@@ -25,13 +25,15 @@ package!
 
 "Class Definitions"!
 
-Security.ProtectedProductSerialNumber subclass: #'Security.Examples.MyCompanySerialNumber'
+Security.ProtectedProductSerialNumber
+	subclass: #'Security.Examples.MyCompanySerialNumber'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.ProtectedProductSessionManager subclass: #'Security.Examples.ProtectedScribbleSessionManager'
+UI.ProtectedProductSessionManager
+	subclass: #'Security.Examples.ProtectedScribbleSessionManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

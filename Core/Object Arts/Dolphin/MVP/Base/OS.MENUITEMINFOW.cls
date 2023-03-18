@@ -1,25 +1,26 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.MENUITEMINFOW'
+OS.Win32Structure
+	subclass: #'OS.MENUITEMINFOW'
 	instanceVariableNames: 'text bitmap'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_MENUITEMINFOW_Size' -> 16r30.
-		'_OffsetOf_cch' -> 16r28.
-		'_OffsetOf_dwItemData' -> 16r20.
-		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_dwTypeData' -> 16r24.
-		'_OffsetOf_fMask' -> 16r4.
-		'_OffsetOf_fState' -> 16rC.
-		'_OffsetOf_fType' -> 16r8.
-		'_OffsetOf_hbmpChecked' -> 16r18.
-		'_OffsetOf_hbmpItem' -> 16r2C.
-		'_OffsetOf_hbmpUnchecked' -> 16r1C.
-		'_OffsetOf_hSubMenu' -> 16r14.
-		'_OffsetOf_wID' -> 16r10
-	}!
+			'_MENUITEMINFOW_Size' -> 16r30.
+			'_OffsetOf_cch' -> 16r28.
+			'_OffsetOf_dwItemData' -> 16r20.
+			'_OffsetOf_dwSize' -> 16r0.
+			'_OffsetOf_dwTypeData' -> 16r24.
+			'_OffsetOf_fMask' -> 16r4.
+			'_OffsetOf_fState' -> 16rC.
+			'_OffsetOf_fType' -> 16r8.
+			'_OffsetOf_hbmpChecked' -> 16r18.
+			'_OffsetOf_hbmpItem' -> 16r2C.
+			'_OffsetOf_hbmpUnchecked' -> 16r1C.
+			'_OffsetOf_hSubMenu' -> 16r14.
+			'_OffsetOf_wID' -> 16r10
+		}!
 OS.MENUITEMINFOW guid: (Core.GUID fromString: '{d9f31567-d705-4885-9ed7-f92ae9fefbf2}')!
 OS.MENUITEMINFOW comment: '<MENUITEMINFOA> is an <ExternalStructure> class to wrap the Win32 structure of the same name.
 

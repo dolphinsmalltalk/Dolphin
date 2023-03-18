@@ -1,18 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.OLEStructure subclass: #'OS.COM.FORMATETC'
+OS.COM.OLEStructure
+	subclass: #'OS.COM.FORMATETC'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_FORMATETC_Size' -> 16r14.
-		'_OffsetOf_cfFormat' -> 16r0.
-		'_OffsetOf_dwAspect' -> 16r8.
-		'_OffsetOf_lindex' -> 16rC.
-		'_OffsetOf_ptd' -> 16r4.
-		'_OffsetOf_tymed' -> 16r10
-	}!
+			'_FORMATETC_Size' -> 16r14.
+			'_OffsetOf_cfFormat' -> 16r0.
+			'_OffsetOf_dwAspect' -> 16r8.
+			'_OffsetOf_lindex' -> 16rC.
+			'_OffsetOf_ptd' -> 16r4.
+			'_OffsetOf_tymed' -> 16r10
+		}!
 OS.COM.FORMATETC guid: (Core.GUID fromString: '{93cc6a56-76b0-48ed-9d91-a4b4b891ef2e}')!
 OS.COM.FORMATETC comment: '<FORMATETC> is an <ExternalStructure> class to wrap the struct ''OCIDL.FORMATETC'' from type information in the ''OCIDL Library'' library.
 

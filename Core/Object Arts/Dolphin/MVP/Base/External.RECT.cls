@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'External.RECT'
+External.Structure
+	subclass: #'External.RECT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

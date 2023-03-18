@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.TRACKMOUSEEVENT'
+OS.Win32Structure
+	subclass: #'OS.TRACKMOUSEEVENT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_dwFlags' -> 16r4.
-		'_OffsetOf_dwHoverTime' -> 16rC.
-		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_hwndTrack' -> 16r8.
-		'_TRACKMOUSEEVENT_Size' -> 16r10
-	}!
+			'_OffsetOf_dwFlags' -> 16r4.
+			'_OffsetOf_dwHoverTime' -> 16rC.
+			'_OffsetOf_dwSize' -> 16r0.
+			'_OffsetOf_hwndTrack' -> 16r8.
+			'_TRACKMOUSEEVENT_Size' -> 16r10
+		}!
 OS.TRACKMOUSEEVENT guid: (Core.GUID fromString: '{f8a7c94e-cff5-4d76-be3c-2de4f4f6a4ef}')!
 OS.TRACKMOUSEEVENT comment: '<TRACKMOUSEEVENT> is an <ExternalStructure> class to wrap the struct ''Win32.TRACKMOUSEEVENT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

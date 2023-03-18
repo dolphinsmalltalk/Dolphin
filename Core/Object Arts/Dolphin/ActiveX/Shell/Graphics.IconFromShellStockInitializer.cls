@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.IconFromSystemInitializer subclass: #'Graphics.IconFromShellStockInitializer'
+Graphics.IconFromSystemInitializer
+	subclass: #'Graphics.IconFromShellStockInitializer'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.ShellConstants private} #{OS.SHSTOCKICONINFO private})

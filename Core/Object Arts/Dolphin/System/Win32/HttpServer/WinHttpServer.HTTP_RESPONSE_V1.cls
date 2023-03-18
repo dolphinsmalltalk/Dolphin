@@ -1,21 +1,22 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_RESPONSE_V1'
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_RESPONSE_V1'
 	instanceVariableNames: 'contentType content'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_RESPONSE_V1_Size' -> 16r118.
-		'_OffsetOf_EntityChunkCount' -> 16r110.
-		'_OffsetOf_Flags' -> 16r0.
-		'_OffsetOf_Headers' -> 16r10.
-		'_OffsetOf_pEntityChunks' -> 16r114.
-		'_OffsetOf_pReason' -> 16rC.
-		'_OffsetOf_ReasonLength' -> 16rA.
-		'_OffsetOf_StatusCode' -> 16r8.
-		'_OffsetOf_Version' -> 16r4
-	}!
+			'_HTTP_RESPONSE_V1_Size' -> 16r118.
+			'_OffsetOf_EntityChunkCount' -> 16r110.
+			'_OffsetOf_Flags' -> 16r0.
+			'_OffsetOf_Headers' -> 16r10.
+			'_OffsetOf_pEntityChunks' -> 16r114.
+			'_OffsetOf_pReason' -> 16rC.
+			'_OffsetOf_ReasonLength' -> 16rA.
+			'_OffsetOf_StatusCode' -> 16r8.
+			'_OffsetOf_Version' -> 16r4
+		}!
 WinHttpServer.HTTP_RESPONSE_V1 guid: (Core.GUID fromString: '{c23ac8a9-b97f-4aec-8096-91648573c429}')!
 WinHttpServer.HTTP_RESPONSE_V1 comment: '`HTTP_RESPONSE_V1` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_RESPONSE_V1'' from type information in the ''Windows Http Server API'' library.
 

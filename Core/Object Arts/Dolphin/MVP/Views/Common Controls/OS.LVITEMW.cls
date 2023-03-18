@@ -1,28 +1,30 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.CCITEM subclass: #'OS.LVITEMW'
+OS.CCITEM
+	subclass: #'OS.LVITEMW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.ListViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_LVITEMW_Size' -> 16r3C.
-		'_OffsetOf_cchTextMax' -> 16r18.
-		'_OffsetOf_cColumns' -> 16r2C.
-		'_OffsetOf_dwState' -> 16rC.
-		'_OffsetOf_iGroup' -> 16r38.
-		'_OffsetOf_iGroupId' -> 16r28.
-		'_OffsetOf_iImage' -> 16r1C.
-		'_OffsetOf_iIndent' -> 16r24.
-		'_OffsetOf_iItem' -> 16r4.
-		'_OffsetOf_iSubItem' -> 16r8.
-		'_OffsetOf_lParam' -> 16r20.
-		'_OffsetOf_piColFmt' -> 16r34.
-		'_OffsetOf_pszText' -> 16r14.
-		'_OffsetOf_puColumns' -> 16r30.
-		'_OffsetOf_stateMask' -> 16r10.
-		'CallbackPrototype' -> #[3 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 0 0 0 0 255 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
-	}!
+			'_LVITEMW_Size' -> 16r3C.
+			'_OffsetOf_cchTextMax' -> 16r18.
+			'_OffsetOf_cColumns' -> 16r2C.
+			'_OffsetOf_dwState' -> 16rC.
+			'_OffsetOf_iGroup' -> 16r38.
+			'_OffsetOf_iGroupId' -> 16r28.
+			'_OffsetOf_iImage' -> 16r1C.
+			'_OffsetOf_iIndent' -> 16r24.
+			'_OffsetOf_iItem' -> 16r4.
+			'_OffsetOf_iSubItem' -> 16r8.
+			'_OffsetOf_lParam' -> 16r20.
+			'_OffsetOf_piColFmt' -> 16r34.
+			'_OffsetOf_pszText' -> 16r14.
+			'_OffsetOf_puColumns' -> 16r30.
+			'_OffsetOf_stateMask' -> 16r10.
+			'CallbackPrototype'
+				-> #[3 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 0 0 0 0 255 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+		}!
 OS.LVITEMW guid: (Core.GUID fromString: '{87b4c620-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.LVITEMW comment: 'LVITEMW is an <ExternalStructure> class which represents the Windows common control structure of the same name.
 

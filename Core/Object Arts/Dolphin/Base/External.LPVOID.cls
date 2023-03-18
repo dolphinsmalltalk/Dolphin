@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.SCALAR subclass: #'External.LPVOID'
+External.SCALAR
+	subclass: #'External.LPVOID'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_LPVOID_Size' -> 16r4
-	}!
+	classConstants: { '_LPVOID_Size' -> 16r4 }!
 External.LPVOID guid: (Core.GUID fromString: '{87b4c596-026e-11d3-9fd7-00a0cc3e4a32}')!
 External.LPVOID comment: 'LPVOID is an <ExternalStructure> class useful for representing pointers to arbitrary external memory blocks. In most respects LPVOID behaves like <ExternalAddress>, except that instances may be allocated using #newBuffer which can be passed to #lpvoid arguments without the VM implicitly dereferencing the address (i.e. the behaviour will be the same as if an ExternalAddress had been passed to an lppvoid parameter). LPVOID is also a pointer object, and can thus add instance variables to hold additional state.
 

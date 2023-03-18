@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Security subclass: #'Security.Tests'
+Security
+	subclass: #'Security.Tests'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

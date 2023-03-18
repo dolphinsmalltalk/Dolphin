@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.SequenceableCollection subclass: #'OS.COM.Enumerable'
+Core.SequenceableCollection
+	subclass: #'OS.COM.Enumerable'
 	instanceVariableNames: 'interface'
 	classVariableNames: ''
 	imports: #()

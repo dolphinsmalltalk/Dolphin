@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Refactory.Browser.RBParseTreeRule'
+Core.Object
+	subclass: #'Refactory.Browser.RBParseTreeRule'
 	instanceVariableNames: 'searchTree owner'
 	classVariableNames: ''
 	imports: #()

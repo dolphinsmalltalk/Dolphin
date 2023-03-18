@@ -1,15 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.INTEGER subclass: #'External.UInt64'
+External.INTEGER
+	subclass: #'External.UInt64'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_OffsetOf_highPart' -> 16r4.
-		'_OffsetOf_lowPart' -> 16r0.
-		'_UInt64_Size' -> 16r8
-	}!
+	classConstants: { '_OffsetOf_highPart' -> 16r4. '_OffsetOf_lowPart' -> 16r0. '_UInt64_Size' -> 16r8 }!
 External.UInt64 guid: (Core.GUID fromString: '{87b4c60b-026e-11d3-9fd7-00a0cc3e4a32}')!
 External.UInt64 comment: '`UInt64` is an `External.Structure` class to represent unsigned 64-bit integers. 
 

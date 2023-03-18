@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.ArithmeticValue subclass: #'Core.Number'
+Core.ArithmeticValue
+	subclass: #'Core.Number'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'MaxLiteralIntegerExponent' -> 16r7D0
-	}!
+	classConstants: { 'MaxLiteralIntegerExponent' -> 16r7D0 }!
 Core.Number guid: (Core.GUID fromString: '{87b4c657-026e-11d3-9fd7-00a0cc3e4a32}')!
 Core.Number isNonInstantiable: true!
 Core.Number comment: 'Number is the abstract class which defines the common protocol of all numeric objects.

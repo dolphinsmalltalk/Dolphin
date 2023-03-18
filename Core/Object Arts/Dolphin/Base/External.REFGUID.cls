@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Address variableByteSubclass: #'External.REFGUID'
+External.Address
+	variableByteSubclass: #'External.REFGUID'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

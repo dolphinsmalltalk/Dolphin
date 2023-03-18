@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-XProgramming.SUnit.TestResource subclass: #'OS.Tests.IniFileTestResource'
+XProgramming.SUnit.TestResource
+	subclass: #'OS.Tests.IniFileTestResource'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.AbstractLOGFONT subclass: #'OS.LOGFONT'
+OS.AbstractLOGFONT
+	subclass: #'OS.LOGFONT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_LOGFONT_Size' -> 16r3C.
-		'_OffsetOf_lfFaceName' -> 16r1C
-	}!
+	classConstants: { '_LOGFONT_Size' -> 16r3C. '_OffsetOf_lfFaceName' -> 16r1C }!
 OS.LOGFONT guid: (Core.GUID fromString: '{87b4c5f9-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.LOGFONT comment: '<LOGFONT> is an <ExternalStructure> class to wrap the Win32 structure LOGFONTA. 
 

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Error subclass: #'OS.COM.PropertyReadError'
+Core.Error
+	subclass: #'OS.COM.PropertyReadError'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

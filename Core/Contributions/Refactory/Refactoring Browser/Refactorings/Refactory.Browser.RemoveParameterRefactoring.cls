@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.ChangeMethodNameRefactoring subclass: #'Refactory.Browser.RemoveParameterRefactoring'
+Refactory.Browser.ChangeMethodNameRefactoring
+	subclass: #'Refactory.Browser.RemoveParameterRefactoring'
 	instanceVariableNames: 'parameterIndex argument'
 	classVariableNames: ''
 	imports: #()

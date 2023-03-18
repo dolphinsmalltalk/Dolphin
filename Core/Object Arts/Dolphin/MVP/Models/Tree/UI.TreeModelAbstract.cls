@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Model subclass: #'UI.TreeModelAbstract'
+Core.Model
+	subclass: #'UI.TreeModelAbstract'
 	instanceVariableNames: 'searchPolicy'
 	classVariableNames: ''
 	imports: #()

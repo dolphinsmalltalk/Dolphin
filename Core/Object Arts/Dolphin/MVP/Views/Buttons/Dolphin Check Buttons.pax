@@ -29,15 +29,28 @@ package!
 
 "Class Definitions"!
 
-UI.ValueConvertingControlView subclass: #'UI.CheckButton'
+UI.ValueConvertingControlView
+	subclass: #'UI.CheckButton'
 	instanceVariableNames: 'image'
 	classVariableNames: ''
 	imports: #(#{OS.ButtonConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'AlignmentMap' -> (IdentityDictionary withAll: {#bottomCenter -> 16rB00. #rightCenter -> 16rE00. #leftCenter -> 16rD00. #topCenter -> 16r700. #bottomLeft -> 16r900. #center -> 16rF00. #bottomRight -> 16rA00. #topRight -> 16r600. #topLeft -> 16r500})
-	}!
-UI.CheckButton subclass: #'UI.CheckBox'
+			'AlignmentMap'
+				-> (IdentityDictionary withAll: {
+								#bottomCenter -> 16rB00.
+								#bottomLeft -> 16r900.
+								#bottomRight -> 16rA00.
+								#center -> 16rF00.
+								#leftCenter -> 16rD00.
+								#rightCenter -> 16rE00.
+								#topCenter -> 16r700.
+								#topLeft -> 16r500.
+								#topRight -> 16r600
+							})
+		}!
+UI.CheckButton
+	subclass: #'UI.CheckBox'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

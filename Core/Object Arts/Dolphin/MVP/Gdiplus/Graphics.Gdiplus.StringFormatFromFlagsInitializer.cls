@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.StringFormatInitializer subclass: #'Graphics.Gdiplus.StringFormatFromFlagsInitializer'
+Graphics.Gdiplus.StringFormatInitializer
+	subclass: #'Graphics.Gdiplus.StringFormatFromFlagsInitializer'
 	instanceVariableNames: 'flags language alignment lineAlignment trimming digitSubstitution hotkeyPrefix tabOffsets characterRanges'
 	classVariableNames: ''
 	imports: #()

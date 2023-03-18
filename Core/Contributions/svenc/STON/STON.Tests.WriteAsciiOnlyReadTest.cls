@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-STON.Tests.WriteReadTest subclass: #'STON.Tests.WriteAsciiOnlyReadTest'
+STON.Tests.WriteReadTest
+	subclass: #'STON.Tests.WriteAsciiOnlyReadTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

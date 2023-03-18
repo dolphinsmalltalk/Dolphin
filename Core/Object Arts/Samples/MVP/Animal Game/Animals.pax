@@ -34,13 +34,15 @@ package!
 
 "Class Definitions"!
 
-Core.Object subclass: #'UI.Examples.Animal'
+Core.Object
+	subclass: #'UI.Examples.Animal'
 	instanceVariableNames: 'name'
 	classVariableNames: 'KnowledgeBase'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'UI.Examples.Question'
+Core.Object
+	subclass: #'UI.Examples.Question'
 	instanceVariableNames: 'text yes no'
 	classVariableNames: ''
 	imports: #()

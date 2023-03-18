@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.FinalizableStructure subclass: #'OS.COM.TypeInfoStructure'
+OS.COM.FinalizableStructure
+	subclass: #'OS.COM.TypeInfoStructure'
 	instanceVariableNames: 'analyzer'
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})

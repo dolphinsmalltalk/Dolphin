@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.ReferencesCategory subclass: #'Tools.SingleUnarySendMethodCategory'
+Tools.ReferencesCategory
+	subclass: #'Tools.SingleUnarySendMethodCategory'
 	instanceVariableNames: 'selector'
 	classVariableNames: ''
 	imports: #()

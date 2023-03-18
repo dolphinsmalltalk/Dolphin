@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Core.Model'
+Core.Object
+	subclass: #'Core.Model'
 	instanceVariableNames: 'events'
 	classVariableNames: ''
 	imports: #()

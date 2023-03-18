@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTest subclass: #'Kernel.Tests.ParserTest'
+Core.Tests.DolphinTest
+	subclass: #'Kernel.Tests.ParserTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{External.ExtCallArgTypes} #{Kernel.ParseErrorCodes})

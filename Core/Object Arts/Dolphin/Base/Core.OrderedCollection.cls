@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.SequencedGrowableCollection variableSubclass: #'Core.OrderedCollection'
+Core.SequencedGrowableCollection
+	variableSubclass: #'Core.OrderedCollection'
 	instanceVariableNames: 'firstIndex lastIndex'
 	classVariableNames: ''
 	imports: #()

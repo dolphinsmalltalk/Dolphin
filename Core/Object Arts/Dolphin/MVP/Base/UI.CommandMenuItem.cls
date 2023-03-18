@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.MenuItem subclass: #'UI.CommandMenuItem'
+UI.MenuItem
+	subclass: #'UI.CommandMenuItem'
 	instanceVariableNames: 'commandDescription image _reserved'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'IsDefaultMask' -> 16r100000
-	}!
+	classConstants: { 'IsDefaultMask' -> 16r100000 }!
 UI.CommandMenuItem guid: (Core.GUID fromString: '{87b4c660-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.CommandMenuItem comment: 'CommandMenuItem represents a <commandSource> menu item held by a <Menu>. The item is configured with a <CommandDescription> to be fired when the item is chosen.. 
 

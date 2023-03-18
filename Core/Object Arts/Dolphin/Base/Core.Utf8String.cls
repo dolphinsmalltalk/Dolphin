@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.UtfEncodedString variableByteSubclass: #'Core.Utf8String'
+Core.UtfEncodedString
+	variableByteSubclass: #'Core.Utf8String'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'Bom' -> #[239 187 191].
-		'LeadByteMask2' -> 16rC0.
-		'LeadByteMask3' -> 16rE0.
-		'LeadByteMask4' -> 16rF0.
-		'TrailByteMask' -> 16r80
-	}!
+			'Bom' -> #[239 187 191].
+			'LeadByteMask2' -> 16rC0.
+			'LeadByteMask3' -> 16rE0.
+			'LeadByteMask4' -> 16rF0.
+			'TrailByteMask' -> 16r80
+		}!
 Core.Utf8String guid: (Core.GUID fromString: '{c5ab1b05-241f-4955-8b44-0c80b93bafbb}')!
 Core.Utf8String isNullTerminated: true!
 Core.Utf8String comment: '`Utf8String` is the class of `Strings`s that use a the multi-byte UTF-8 encoding. UTF-8 is the defacto standard for text interchange, and is now the default representation in Dolphin (i.e. `String new` yields a new, empty, `Utf8String`).

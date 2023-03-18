@@ -19,7 +19,8 @@ package!
 
 "Class Definitions"!
 
-UI.ControlView subclass: #'UI.GroupBox'
+UI.ControlView
+	subclass: #'UI.GroupBox'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.ButtonConstants})

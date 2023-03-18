@@ -43,13 +43,15 @@ package!
 
 "Class Definitions"!
 
-Core.Tests.DolphinTest subclass: #'Kernel.Tests.STLClassCollectorTest'
+Core.Tests.DolphinTest
+	subclass: #'Kernel.Tests.STLClassCollectorTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.Tests.AbstractSTBFilerTest subclass: #'Kernel.Tests.STLFilerTest'
+Kernel.Tests.AbstractSTBFilerTest
+	subclass: #'Kernel.Tests.STLFilerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

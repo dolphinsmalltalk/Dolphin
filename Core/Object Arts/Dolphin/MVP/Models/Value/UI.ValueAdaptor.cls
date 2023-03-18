@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ValueModel subclass: #'UI.ValueAdaptor'
+UI.ValueModel
+	subclass: #'UI.ValueAdaptor'
 	instanceVariableNames: 'subject'
 	classVariableNames: ''
 	imports: #()

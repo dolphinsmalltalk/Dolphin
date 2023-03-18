@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.AbstractCustomLineCap subclass: #'Graphics.Gdiplus.CustomLineCap'
+Graphics.Gdiplus.AbstractCustomLineCap
+	subclass: #'Graphics.Gdiplus.CustomLineCap'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

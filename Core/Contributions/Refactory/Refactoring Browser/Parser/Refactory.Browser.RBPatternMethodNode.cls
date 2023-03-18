@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.StMethodNode subclass: #'Refactory.Browser.RBPatternMethodNode'
+Kernel.StMethodNode
+	subclass: #'Refactory.Browser.RBPatternMethodNode'
 	instanceVariableNames: 'isList'
 	classVariableNames: ''
 	imports: #()

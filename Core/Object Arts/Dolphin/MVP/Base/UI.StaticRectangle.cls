@@ -1,11 +1,25 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ControlView subclass: #'UI.StaticRectangle'
+UI.ControlView
+	subclass: #'UI.StaticRectangle'
 	instanceVariableNames: ''
-	classVariableNames: 'StyleMap'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'StyleMap'
+				-> (IdentityDictionary withAll: {
+								#blackFrame -> 16r7.
+								#blackRectangle -> 16r4.
+								#etchedFrame -> 16r12.
+								#etchedHorizontal -> 16r10.
+								#etchedVertical -> 16r11.
+								#grayFrame -> 16r8.
+								#grayRectangle -> 16r5.
+								#whiteFrame -> 16r9.
+								#whiteRectangle -> 16r6
+							})
+		}!
 UI.StaticRectangle guid: (Core.GUID fromString: '{aad4f3a9-dc68-42b2-bedc-0a4fc49880f2}')!
 UI.StaticRectangle comment: '`StaticRectangle` is a simple `ControlView` class which wraps the Windows STATIC control for simple rectangles and frames.
 

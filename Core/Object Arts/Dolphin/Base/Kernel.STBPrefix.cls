@@ -1,26 +1,27 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Kernel.STBPrefix'
+Core.Object
+	subclass: #'Kernel.STBPrefix'
 	instanceVariableNames: 'uint32'
 	classVariableNames: 'DataPrefix ProxyPrefix'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'BytesMask' -> 16r10.
-		'CharacterMask' -> 16r4.
-		'ClassPrefixMask' -> 16r4.
-		'DataPrefixMask' -> 16r2.
-		'IndexShift' -> -16r4.
-		'InstSizeMask' -> 16rFF.
-		'InstSizeShift' -> -16r8.
-		'LiteralPrefixMask' -> 16r8.
-		'LocatorLenShift' -> -16r10.
-		'MaxPredefinedRef' -> 16r18.
-		'NonZeroVersionMask' -> 16r40.
-		'ProxyMask' -> 16r8.
-		'SmallIntegerMask' -> 16r1.
-		'VariableMask' -> 16r20
-	}!
+			'BytesMask' -> 16r10.
+			'CharacterMask' -> 16r4.
+			'ClassPrefixMask' -> 16r4.
+			'DataPrefixMask' -> 16r2.
+			'IndexShift' -> -16r4.
+			'InstSizeMask' -> 16rFF.
+			'InstSizeShift' -> -16r8.
+			'LiteralPrefixMask' -> 16r8.
+			'LocatorLenShift' -> -16r10.
+			'MaxPredefinedRef' -> 16r18.
+			'NonZeroVersionMask' -> 16r40.
+			'ProxyMask' -> 16r8.
+			'SmallIntegerMask' -> 16r1.
+			'VariableMask' -> 16r20
+		}!
 Kernel.STBPrefix guid: (Core.GUID fromString: '{87b4c4c2-026e-11d3-9fd7-00a0cc3e4a32}')!
 Kernel.STBPrefix comment: 'STBPrefix represents the object prefix encoding used in an STB binary file stream. It encapsulates much of the complexity of the data encoding performed by the STBOutFiler and STBInFiler classes. As the data encoding has been designed to achieve a reasonably compact format there are some restrictions on the order in which the methods can be called.
 

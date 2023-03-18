@@ -26,13 +26,15 @@ package!
 
 "Class Definitions"!
 
-UI.ValuePresenter subclass: #'UI.ColorPresenter'
+UI.ValuePresenter
+	subclass: #'UI.ColorPresenter'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.StaticView subclass: #'UI.ColorView'
+UI.StaticView
+	subclass: #'UI.ColorView'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

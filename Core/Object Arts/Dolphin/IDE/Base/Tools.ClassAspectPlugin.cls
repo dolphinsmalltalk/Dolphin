@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.ClassBrowserPlugin subclass: #'Tools.ClassAspectPlugin'
+Tools.ClassBrowserPlugin
+	subclass: #'Tools.ClassAspectPlugin'
 	instanceVariableNames: 'textPresenter originalText currentClass'
 	classVariableNames: ''
 	imports: #()

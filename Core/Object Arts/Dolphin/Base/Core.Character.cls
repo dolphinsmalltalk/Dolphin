@@ -1,21 +1,22 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Magnitude subclass: #'Core.Character'
+Core.Magnitude
+	subclass: #'Core.Character'
 	instanceVariableNames: 'code'
 	classVariableNames: 'AnsiCharacters AnsiCodePage AnsiCodePoints CharacterSet Utf8Default'
 	imports: #(#{OS.NlsConstants private})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'EncodingMask' -> 16r3F000000.
-		'EscapeChars' -> #($0 nil nil nil nil nil nil $a $b $t $n $v $f $r).
-		'Utf16LeadMask' -> 16rD800.
-		'Utf16Mask' -> 16r2000000.
-		'Utf16SurrogateMask' -> 16rFC00.
-		'Utf16TrailMask' -> 16rDC00.
-		'Utf32Mask' -> 16r3000000.
-		'Utf8Mask' -> 16r1000000.
-		'Utf8SurrogateMask' -> 16rC0
-	}!
+			'EncodingMask' -> 16r3F000000.
+			'EscapeChars' -> #($0 nil nil nil nil nil nil $a $b $t $n $v $f $r).
+			'Utf16LeadMask' -> 16rD800.
+			'Utf16Mask' -> 16r2000000.
+			'Utf16SurrogateMask' -> 16rFC00.
+			'Utf16TrailMask' -> 16rDC00.
+			'Utf32Mask' -> 16r3000000.
+			'Utf8Mask' -> 16r1000000.
+			'Utf8SurrogateMask' -> 16rC0
+		}!
 Core.Character guid: (Core.GUID fromString: '{87b4c651-026e-11d3-9fd7-00a0cc3e4a32}')!
 Core.Character comment: '`Character` is the class of objects which serve as the elemental values of Smalltalk `Strings`.
 

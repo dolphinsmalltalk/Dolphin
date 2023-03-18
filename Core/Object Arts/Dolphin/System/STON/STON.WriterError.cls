@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Error subclass: #'STON.WriterError'
+Core.Error
+	subclass: #'STON.WriterError'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

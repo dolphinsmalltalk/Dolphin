@@ -1,18 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.HOSTENT'
+OS.Win32Structure
+	subclass: #'OS.HOSTENT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.WinSocketConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HOSTENT_Size' -> 16r10.
-		'_OffsetOf_h_addr_list' -> 16rC.
-		'_OffsetOf_h_addrtype' -> 16r8.
-		'_OffsetOf_h_aliases' -> 16r4.
-		'_OffsetOf_h_length' -> 16rA.
-		'_OffsetOf_h_name' -> 16r0
-	}!
+			'_HOSTENT_Size' -> 16r10.
+			'_OffsetOf_h_addr_list' -> 16rC.
+			'_OffsetOf_h_addrtype' -> 16r8.
+			'_OffsetOf_h_aliases' -> 16r4.
+			'_OffsetOf_h_length' -> 16rA.
+			'_OffsetOf_h_name' -> 16r0
+		}!
 OS.HOSTENT guid: (Core.GUID fromString: '{87b4c5f4-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.HOSTENT comment: '<HOSTENT> is an <ExternalStructure> class to wrap the struct ''Win32.HOSTENT'' from type information in the ''Win32 API'' library.
 

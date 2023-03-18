@@ -1,28 +1,29 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'Graphics.Gdiplus.ENHMETAHEADER3'
+External.Structure
+	subclass: #'Graphics.Gdiplus.ENHMETAHEADER3'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_ENHMETAHEADER3_Size' -> 16r58.
-		'_OffsetOf_dSignature' -> 16r28.
-		'_OffsetOf_iType' -> 16r0.
-		'_OffsetOf_nBytes' -> 16r30.
-		'_OffsetOf_nDescription' -> 16r3C.
-		'_OffsetOf_nHandles' -> 16r38.
-		'_OffsetOf_nPalEntries' -> 16r44.
-		'_OffsetOf_nRecords' -> 16r34.
-		'_OffsetOf_nSize' -> 16r4.
-		'_OffsetOf_nVersion' -> 16r2C.
-		'_OffsetOf_offDescription' -> 16r40.
-		'_OffsetOf_rclBounds' -> 16r8.
-		'_OffsetOf_rclFrame' -> 16r18.
-		'_OffsetOf_sReserved' -> 16r3A.
-		'_OffsetOf_szlDevice' -> 16r48.
-		'_OffsetOf_szlMillimeters' -> 16r50
-	}!
+			'_ENHMETAHEADER3_Size' -> 16r58.
+			'_OffsetOf_dSignature' -> 16r28.
+			'_OffsetOf_iType' -> 16r0.
+			'_OffsetOf_nBytes' -> 16r30.
+			'_OffsetOf_nDescription' -> 16r3C.
+			'_OffsetOf_nHandles' -> 16r38.
+			'_OffsetOf_nPalEntries' -> 16r44.
+			'_OffsetOf_nRecords' -> 16r34.
+			'_OffsetOf_nSize' -> 16r4.
+			'_OffsetOf_nVersion' -> 16r2C.
+			'_OffsetOf_offDescription' -> 16r40.
+			'_OffsetOf_rclBounds' -> 16r8.
+			'_OffsetOf_rclFrame' -> 16r18.
+			'_OffsetOf_sReserved' -> 16r3A.
+			'_OffsetOf_szlDevice' -> 16r48.
+			'_OffsetOf_szlMillimeters' -> 16r50
+		}!
 Graphics.Gdiplus.ENHMETAHEADER3 guid: (Core.GUID fromString: '{1b5c3dcf-8ea0-47df-b752-442dd272a353}')!
 Graphics.Gdiplus.ENHMETAHEADER3 comment: '<ENHMETAHEADER3> is an <ExternalStructure> class to wrap the struct ''Gdiplus.ENHMETAHEADER3'' from type information in the ''GDI+ Library 1.0'' library.
 

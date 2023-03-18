@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.MethodRefactoring subclass: #'Refactory.Browser.MoveVariableDefinitionRefactoring'
+Refactory.Browser.MethodRefactoring
+	subclass: #'Refactory.Browser.MoveVariableDefinitionRefactoring'
 	instanceVariableNames: 'selector interval name parseTree blockNodes definingNode method'
 	classVariableNames: ''
 	imports: #()

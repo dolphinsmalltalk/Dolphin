@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.RegKeyAbstract variableSubclass: #'OS.RegKeyValues'
+OS.RegKeyAbstract
+	variableSubclass: #'OS.RegKeyValues'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Dialog subclass: #'UI.ProgressDialog'
+UI.Dialog
+	subclass: #'UI.ProgressDialog'
 	instanceVariableNames: 'progressPresenter operation process textPresenter flags priority'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'AllowCancelMask' -> 16r1.
-		'IsReusableMask' -> 16r2
-	}!
+	classConstants: { 'AllowCancelMask' -> 16r1. 'IsReusableMask' -> 16r2 }!
 UI.ProgressDialog guid: (Core.GUID fromString: '{87b4c6ab-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.ProgressDialog comment: 'ProgressDialog is a <valueDialogPresenter> that can be used to indicate the progress of a background operation. The <valueModel> is used to hold a <number> that describes the current amount of progress through the operation. Typically, with the standard views, this will be an <integer> between 0 and 100%.
 

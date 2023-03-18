@@ -68,37 +68,43 @@ package!
 
 "Class Definitions"!
 
-Core.Model subclass: #'UI.Examples.PersonalAccount'
+Core.Model
+	subclass: #'UI.Examples.PersonalAccount'
 	instanceVariableNames: 'name accountNumber initialBalance transactions currentBalance'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Model subclass: #'UI.Examples.PersonalAccountTransaction'
+Core.Model
+	subclass: #'UI.Examples.PersonalAccountTransaction'
 	instanceVariableNames: 'date description amount isDebit'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Model subclass: #'UI.Examples.PersonalMoney'
+Core.Model
+	subclass: #'UI.Examples.PersonalMoney'
 	instanceVariableNames: 'owner accounts'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Shell subclass: #'UI.Examples.PersonalAccountShell'
+UI.Shell
+	subclass: #'UI.Examples.PersonalAccountShell'
 	instanceVariableNames: 'namePresenter accountNumberPresenter initialBalancePresenter transactionsPresenter currentBalancePresenter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.AbstractDocumentShell subclass: #'UI.Examples.PersonalMoneyShell'
+UI.AbstractDocumentShell
+	subclass: #'UI.Examples.PersonalMoneyShell'
 	instanceVariableNames: 'ownerPresenter accountsPresenter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Dialog subclass: #'UI.Examples.PersonalAccountTransactionDialog'
+UI.Dialog
+	subclass: #'UI.Examples.PersonalAccountTransactionDialog'
 	instanceVariableNames: 'datePresenter amountPresenter descriptionPresenter isDebitPresenter'
 	classVariableNames: ''
 	imports: #()

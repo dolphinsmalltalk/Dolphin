@@ -1,16 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMRARC'
+OS.ENHMETARECORD
+	subclass: #'OS.EMRARC'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_EMRARC_Size' -> 16r28.
-		'_OffsetOf_ptlEnd' -> 16r20.
-		'_OffsetOf_ptlStart' -> 16r18.
-		'_OffsetOf_rclBox' -> 16r8
-	}!
+			'_EMRARC_Size' -> 16r28.
+			'_OffsetOf_ptlEnd' -> 16r20.
+			'_OffsetOf_ptlStart' -> 16r18.
+			'_OffsetOf_rclBox' -> 16r8
+		}!
 OS.EMRARC guid: (Core.GUID fromString: '{a4d8acff-7c86-450e-ab37-011f1b1a9754}')!
 OS.EMRARC comment: '<EMRARC> is an <ExternalStructure> class to wrap the struct ''Win32.EMRARC'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

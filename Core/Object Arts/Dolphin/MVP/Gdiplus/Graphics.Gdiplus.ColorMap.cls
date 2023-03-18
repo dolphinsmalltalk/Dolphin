@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.GpStructure subclass: #'Graphics.Gdiplus.ColorMap'
+Graphics.Gdiplus.GpStructure
+	subclass: #'Graphics.Gdiplus.ColorMap'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_ColorMap_Size' -> 16r8.
-		'_OffsetOf_newColor' -> 16r4.
-		'_OffsetOf_oldColor' -> 16r0
-	}!
+			'_ColorMap_Size' -> 16r8.
+			'_OffsetOf_newColor' -> 16r4.
+			'_OffsetOf_oldColor' -> 16r0
+		}!
 Graphics.Gdiplus.ColorMap guid: (Core.GUID fromString: '{16b02cc4-3683-4fdc-8bdc-c450ef3137b2}')!
 Graphics.Gdiplus.ColorMap comment: '<GpColorMap> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpColorMap'' from type information in the ''GDI+ Library 1.0'' library.
 

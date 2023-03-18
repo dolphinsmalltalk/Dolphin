@@ -34,19 +34,22 @@ package!
 
 "Class Definitions"!
 
-UI.LayoutManager subclass: #'UI.ScrollingDecoratorLayout'
+UI.LayoutManager
+	subclass: #'UI.ScrollingDecoratorLayout'
 	instanceVariableNames: 'stretchToFit'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.ContainerView subclass: #'UI.ScrollingDecorator'
+UI.ContainerView
+	subclass: #'UI.ScrollingDecorator'
 	instanceVariableNames: 'scrollOffset tracking lineExtent'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.ValueConvertingControlView subclass: #'UI.ScrollBar'
+UI.ValueConvertingControlView
+	subclass: #'UI.ScrollBar'
 	instanceVariableNames: 'continuousTracking'
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.TreeModel subclass: #'UI.FolderHierarchyModel'
+UI.TreeModel
+	subclass: #'UI.FolderHierarchyModel'
 	instanceVariableNames: ''
 	classVariableNames: 'NodeSortAlgorithm'
 	imports: #()

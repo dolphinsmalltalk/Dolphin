@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Bitmap subclass: #'Graphics.DIBSection'
+Graphics.Bitmap
+	subclass: #'Graphics.DIBSection'
 	instanceVariableNames: 'depth imageBits'
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IDispatch subclass: #'MSXML.IMXReaderControl'
+OS.COM.IDispatch
+	subclass: #'MSXML.IMXReaderControl'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -6,7 +6,7 @@ Kernel.SourceFiler
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {'NormalizeEolsMask' -> 2}!
+	classConstants: { 'NormalizeEolsMask' -> 16r2 }!
 Kernel.AbstractChunkSourceFiler guid: (Core.GUID fromString: '{558b318a-9ff3-4346-a445-76ee18d5458b}')!
 Kernel.AbstractChunkSourceFiler isNonInstantiable: true!
 Kernel.AbstractChunkSourceFiler comment: ''!

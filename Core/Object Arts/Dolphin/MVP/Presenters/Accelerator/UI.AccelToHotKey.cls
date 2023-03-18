@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.TypeConverter subclass: #'UI.AccelToHotKey'
+UI.TypeConverter
+	subclass: #'UI.AccelToHotKey'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.HotKeyConstants} #{OS.Win32Constants})
 	classInstanceVariableNames: ''
-	classConstants: {
-		'ModifierMap' -> #(16r1 16r4 16r2 16r8 16r4 16r10)
-	}!
+	classConstants: { 'ModifierMap' -> #(16r1 16r4 16r2 16r8 16r4 16r10) }!
 UI.AccelToHotKey guid: (Core.GUID fromString: '{87b4c704-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.AccelToHotKey comment: 'AccelToHotKey is the class of <typeConverter> for use with the <HotKey> control to convert from a hot key code to the usual display representation of such key combinations, e.g. CTRL+C.
 

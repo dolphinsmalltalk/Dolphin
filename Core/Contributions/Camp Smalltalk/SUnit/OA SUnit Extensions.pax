@@ -61,19 +61,22 @@ package!
 
 "Class Definitions"!
 
-Core.Object subclass: #'XProgramming.SUnit.CommandLineTestRunner'
+Core.Object
+	subclass: #'XProgramming.SUnit.CommandLineTestRunner'
 	instanceVariableNames: 'results lastCase loggers verbose'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'XProgramming.SUnit.TestRunLogger'
+Core.Object
+	subclass: #'XProgramming.SUnit.TestRunLogger'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-XProgramming.SUnit.TestRunLogger subclass: #'XProgramming.SUnit.TestRunConsoleLogger'
+XProgramming.SUnit.TestRunLogger
+	subclass: #'XProgramming.SUnit.TestRunConsoleLogger'
 	instanceVariableNames: 'stream timings'
 	classVariableNames: ''
 	imports: #()

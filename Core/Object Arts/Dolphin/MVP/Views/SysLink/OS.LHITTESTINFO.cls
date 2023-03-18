@@ -1,15 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.LHITTESTINFO'
+OS.Win32Structure
+	subclass: #'OS.LHITTESTINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_LHITTESTINFO_Size' -> 16r10C0.
-		'_OffsetOf_item' -> 16r8.
-		'_OffsetOf_pt' -> 16r0
-	}!
+	classConstants: { '_LHITTESTINFO_Size' -> 16r10C0. '_OffsetOf_item' -> 16r8. '_OffsetOf_pt' -> 16r0 }!
 OS.LHITTESTINFO guid: (Core.GUID fromString: '{1498d0d0-6502-4ce2-8cf9-caa0625685ef}')!
 OS.LHITTESTINFO comment: ''!
 !OS.LHITTESTINFO categoriesForClass!External-Data-Structured-Win32! !

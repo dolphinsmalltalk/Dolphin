@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.EmbeddedField subclass: #'External.StructureField'
+External.EmbeddedField
+	subclass: #'External.StructureField'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

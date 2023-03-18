@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Core.Message'
+Core.Object
+	subclass: #'Core.Message'
 	instanceVariableNames: 'selector args'
 	classVariableNames: ''
 	imports: #()

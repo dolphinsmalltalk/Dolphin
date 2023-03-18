@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.IpHlpApiTableStruct subclass: #'OS.MIB_IPFORWARDTABLE'
+OS.IpHlpApiTableStruct
+	subclass: #'OS.MIB_IPFORWARDTABLE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_MIB_IPFORWARDTABLE_Size' -> 16r3C.
-		'_OffsetOf_table' -> 16r4
-	}!
+	classConstants: { '_MIB_IPFORWARDTABLE_Size' -> 16r3C. '_OffsetOf_table' -> 16r4 }!
 OS.MIB_IPFORWARDTABLE guid: (Core.GUID fromString: '{61ce489c-f9e4-43f1-978b-3cc2f491e64c}')!
 OS.MIB_IPFORWARDTABLE comment: '<MIB_IPFORWARDTABLE> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IPFORWARDTABLE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

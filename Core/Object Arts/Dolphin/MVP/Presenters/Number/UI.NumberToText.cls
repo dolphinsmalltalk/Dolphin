@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.AbstractToTextConverter subclass: #'UI.NumberToText'
+UI.AbstractToTextConverter
+	subclass: #'UI.NumberToText'
 	instanceVariableNames: '_reserved1'
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ToolbarItem subclass: #'UI.ToolbarButton'
+UI.ToolbarItem
+	subclass: #'UI.ToolbarButton'
 	instanceVariableNames: 'style commandDescription commandId'
 	classVariableNames: ''
 	imports: #()

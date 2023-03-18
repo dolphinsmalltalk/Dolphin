@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Database.DBRowBuffer subclass: #'Database.DBBoundBuffer'
+Database.DBRowBuffer
+	subclass: #'Database.DBBoundBuffer'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.ODBCConstants} #{OS.ODBCCTypes})

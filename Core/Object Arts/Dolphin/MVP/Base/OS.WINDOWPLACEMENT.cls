@@ -1,19 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.WINDOWPLACEMENT'
+OS.Win32Structure
+	subclass: #'OS.WINDOWPLACEMENT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_flags' -> 16r4.
-		'_OffsetOf_ptMaxPosition' -> 16r14.
-		'_OffsetOf_ptMinPosition' -> 16rC.
-		'_OffsetOf_rcNormalPosition' -> 16r1C.
-		'_OffsetOf_showCmd' -> 16r8.
-		'_WINDOWPLACEMENT_Size' -> 16r2C
-	}!
+			'_OffsetOf_dwSize' -> 16r0.
+			'_OffsetOf_flags' -> 16r4.
+			'_OffsetOf_ptMaxPosition' -> 16r14.
+			'_OffsetOf_ptMinPosition' -> 16rC.
+			'_OffsetOf_rcNormalPosition' -> 16r1C.
+			'_OffsetOf_showCmd' -> 16r8.
+			'_WINDOWPLACEMENT_Size' -> 16r2C
+		}!
 OS.WINDOWPLACEMENT guid: (Core.GUID fromString: '{87b4c61b-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.WINDOWPLACEMENT comment: ''!
 !OS.WINDOWPLACEMENT categoriesForClass!External-Data-Structured-Win32! !

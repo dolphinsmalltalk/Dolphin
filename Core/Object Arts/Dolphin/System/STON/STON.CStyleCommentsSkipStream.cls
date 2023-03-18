@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'STON.CStyleCommentsSkipStream'
+Core.Object
+	subclass: #'STON.CStyleCommentsSkipStream'
 	instanceVariableNames: 'stream peekedCharacter delimiter escape'
 	classVariableNames: ''
 	imports: #()

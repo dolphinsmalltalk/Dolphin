@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Database.Tests.DBConnectionTestResource subclass: #'Database.Tests.SQLServerNorthwindDB'
+Database.Tests.DBConnectionTestResource
+	subclass: #'Database.Tests.SQLServerNorthwindDB'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

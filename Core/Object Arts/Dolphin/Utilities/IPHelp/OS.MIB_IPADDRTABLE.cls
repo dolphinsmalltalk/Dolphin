@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.IpHlpApiTableStruct subclass: #'OS.MIB_IPADDRTABLE'
+OS.IpHlpApiTableStruct
+	subclass: #'OS.MIB_IPADDRTABLE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_MIB_IPADDRTABLE_Size' -> 16r1C.
-		'_OffsetOf_table' -> 16r4
-	}!
+	classConstants: { '_MIB_IPADDRTABLE_Size' -> 16r1C. '_OffsetOf_table' -> 16r4 }!
 OS.MIB_IPADDRTABLE guid: (Core.GUID fromString: '{cffa7131-3c9d-4864-9a6a-cfe3ff42a661}')!
 OS.MIB_IPADDRTABLE comment: '<MIB_IPADDRTABLE> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IPADDRTABLE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

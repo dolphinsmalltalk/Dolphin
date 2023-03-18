@@ -1,13 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.LinearGradientBrushInitializer subclass: #'Graphics.Gdiplus.LinearGradientBrushFromRectInitializer'
+Graphics.Gdiplus.LinearGradientBrushInitializer
+	subclass: #'Graphics.Gdiplus.LinearGradientBrushFromRectInitializer'
 	instanceVariableNames: 'rect mode'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'LinearGradientModeNames' -> #('LinearGradientModeHorizontal' 'LinearGradientModeVertical' 'LinearGradientModeForwardDiagonal' 'LinearGradientModeBackwardDiagonal')
-	}!
+			'LinearGradientModeNames'
+				-> #('LinearGradientModeHorizontal' 'LinearGradientModeVertical' 'LinearGradientModeForwardDiagonal' 'LinearGradientModeBackwardDiagonal')
+		}!
 Graphics.Gdiplus.LinearGradientBrushFromRectInitializer guid: (Core.GUID fromString: '{e5737bca-1af2-4189-9de4-d6c506a8c20a}')!
 Graphics.Gdiplus.LinearGradientBrushFromRectInitializer comment: ''!
 !Graphics.Gdiplus.LinearGradientBrushFromRectInitializer methodsFor!

@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.BP_ANIMATIONPARAMS'
+OS.Win32Structure
+	subclass: #'OS.BP_ANIMATIONPARAMS'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_BP_ANIMATIONPARAMS_Size' -> 16r10.
-		'_OffsetOf_dwDuration' -> 16rC.
-		'_OffsetOf_dwFlags' -> 16r4.
-		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_style' -> 16r8
-	}!
+			'_BP_ANIMATIONPARAMS_Size' -> 16r10.
+			'_OffsetOf_dwDuration' -> 16rC.
+			'_OffsetOf_dwFlags' -> 16r4.
+			'_OffsetOf_dwSize' -> 16r0.
+			'_OffsetOf_style' -> 16r8
+		}!
 OS.BP_ANIMATIONPARAMS guid: (Core.GUID fromString: '{74d57e87-6087-4e82-ac07-680d0a3db4e6}')!
 OS.BP_ANIMATIONPARAMS comment: '<BP_ANIMATIONPARAMS> is an <ExternalStructure> class to wrap the struct ''Win32.BP_ANIMATIONPARAMS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Error subclass: #'Core.FileException'
+OS.Win32Error
+	subclass: #'Core.FileException'
 	instanceVariableNames: 'file resumable'
 	classVariableNames: ''
 	imports: #()

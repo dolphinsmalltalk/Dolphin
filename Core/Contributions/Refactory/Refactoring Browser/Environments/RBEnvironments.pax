@@ -46,61 +46,71 @@ package!
 
 "Class Definitions"!
 
-Core.Object subclass: #'Refactory.Browser.BrowserEnvironment'
+Core.Object
+	subclass: #'Refactory.Browser.BrowserEnvironment'
 	instanceVariableNames: 'label searchStrings search filter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.BrowserEnvironment subclass: #'Refactory.Browser.BrowserEnvironmentWrapper'
+Refactory.Browser.BrowserEnvironment
+	subclass: #'Refactory.Browser.BrowserEnvironmentWrapper'
 	instanceVariableNames: 'environment progressBlock'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Refactory.Browser.AndEnvironment'
+Refactory.Browser.BrowserEnvironmentWrapper
+	subclass: #'Refactory.Browser.AndEnvironment'
 	instanceVariableNames: 'andedEnvironment'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Refactory.Browser.CategoryEnvironment'
+Refactory.Browser.BrowserEnvironmentWrapper
+	subclass: #'Refactory.Browser.CategoryEnvironment'
 	instanceVariableNames: 'categories'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Refactory.Browser.ClassEnvironment'
+Refactory.Browser.BrowserEnvironmentWrapper
+	subclass: #'Refactory.Browser.ClassEnvironment'
 	instanceVariableNames: 'classes metaClasses'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Refactory.Browser.NotEnvironment'
+Refactory.Browser.BrowserEnvironmentWrapper
+	subclass: #'Refactory.Browser.NotEnvironment'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Refactory.Browser.OrEnvironment'
+Refactory.Browser.BrowserEnvironmentWrapper
+	subclass: #'Refactory.Browser.OrEnvironment'
 	instanceVariableNames: 'oredEnvironment'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Refactory.Browser.ProtocolEnvironment'
+Refactory.Browser.BrowserEnvironmentWrapper
+	subclass: #'Refactory.Browser.ProtocolEnvironment'
 	instanceVariableNames: 'class protocols'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Refactory.Browser.SelectorEnvironment'
+Refactory.Browser.BrowserEnvironmentWrapper
+	subclass: #'Refactory.Browser.SelectorEnvironment'
 	instanceVariableNames: 'classSelectors metaClassSelectors'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Refactory.Browser.VariableEnvironment'
+Refactory.Browser.BrowserEnvironmentWrapper
+	subclass: #'Refactory.Browser.VariableEnvironment'
 	instanceVariableNames: 'instanceVariables instanceVariableReaders instanceVariableWriters classVariables selectorCache'
 	classVariableNames: ''
 	imports: #()

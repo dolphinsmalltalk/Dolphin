@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'OS.FD_SET'
+External.Structure
+	subclass: #'OS.FD_SET'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_FD_SET_Size' -> 16r104.
-		'_OffsetOf_fd_array' -> 16r4.
-		'_OffsetOf_fd_count' -> 16r0
-	}!
+			'_FD_SET_Size' -> 16r104.
+			'_OffsetOf_fd_array' -> 16r4.
+			'_OffsetOf_fd_count' -> 16r0
+		}!
 OS.FD_SET guid: (Core.GUID fromString: '{b99a7942-497e-4a39-97ef-9040c83d7829}')!
 OS.FD_SET comment: '<FD_SET> is an <ExternalStructure> class to wrap the struct ''WINSOCK2Lib.fd_set'' from type information in the ''Windows Sockets 2 Type Library'' library.
 

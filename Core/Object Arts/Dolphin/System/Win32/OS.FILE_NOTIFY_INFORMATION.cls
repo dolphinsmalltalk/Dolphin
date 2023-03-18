@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'OS.FILE_NOTIFY_INFORMATION'
+External.Structure
+	subclass: #'OS.FILE_NOTIFY_INFORMATION'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_FILE_NOTIFY_INFORMATION_Size' -> 16r10.
-		'_OffsetOf_Action' -> 16r4.
-		'_OffsetOf_FileName' -> 16rC.
-		'_OffsetOf_FileNameLength' -> 16r8.
-		'_OffsetOf_NextEntryOffset' -> 16r0
-	}!
+			'_FILE_NOTIFY_INFORMATION_Size' -> 16r10.
+			'_OffsetOf_Action' -> 16r4.
+			'_OffsetOf_FileName' -> 16rC.
+			'_OffsetOf_FileNameLength' -> 16r8.
+			'_OffsetOf_NextEntryOffset' -> 16r0
+		}!
 OS.FILE_NOTIFY_INFORMATION guid: (Core.GUID fromString: '{59c5b86e-902b-4194-ab8b-ef10d1cf539d}')!
 OS.FILE_NOTIFY_INFORMATION comment: '<FILE_NOTIFY_INFORMATION> is an <ExternalStructure> class to wrap the struct ''Win32.FILE_NOTIFY_INFORMATION'' from type information in the ''Win32 API'' library.
 

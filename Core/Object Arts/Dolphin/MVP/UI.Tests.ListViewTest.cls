@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Tests.ListControlTest subclass: #'UI.Tests.ListViewTest'
+UI.Tests.ListControlTest
+	subclass: #'UI.Tests.ListViewTest'
 	instanceVariableNames: 'nmClick'
 	classVariableNames: ''
 	imports: #()

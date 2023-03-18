@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.LayoutManager subclass: #'UI.GridLayout'
+UI.LayoutManager
+	subclass: #'UI.GridLayout'
 	instanceVariableNames: 'rows columns horizontalGap verticalGap'
 	classVariableNames: ''
 	imports: #()

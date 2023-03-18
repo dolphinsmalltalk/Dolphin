@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.GradientBrush subclass: #'Graphics.Gdiplus.LinearGradientBrush'
+Graphics.Gdiplus.GradientBrush
+	subclass: #'Graphics.Gdiplus.LinearGradientBrush'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

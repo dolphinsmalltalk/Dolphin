@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.OLEStructure subclass: #'OS.COM.SAFEARRAYBOUND'
+OS.COM.OLEStructure
+	subclass: #'OS.COM.SAFEARRAYBOUND'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_cElements' -> 16r0.
-		'_OffsetOf_lLbound' -> 16r4.
-		'_SAFEARRAYBOUND_Size' -> 16r8
-	}!
+			'_OffsetOf_cElements' -> 16r0.
+			'_OffsetOf_lLbound' -> 16r4.
+			'_SAFEARRAYBOUND_Size' -> 16r8
+		}!
 OS.COM.SAFEARRAYBOUND guid: (Core.GUID fromString: '{c06f3b74-0868-11d3-93af-00a024ca708a}')!
 OS.COM.SAFEARRAYBOUND comment: '<SAFEARRAYBOUND> is an <ExternalStructure> class to wrap the struct ''''OAIDL.SAFEARRAYBOUND'''' from type information in the ''''Ole Automation Type Library'''' library.
 

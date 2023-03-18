@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.Brush subclass: #'Graphics.Gdiplus.TransformableBrush'
+Graphics.Gdiplus.Brush
+	subclass: #'Graphics.Gdiplus.TransformableBrush'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

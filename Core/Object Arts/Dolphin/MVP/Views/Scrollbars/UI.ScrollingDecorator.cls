@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ContainerView subclass: #'UI.ScrollingDecorator'
+UI.ContainerView
+	subclass: #'UI.ScrollingDecorator'
 	instanceVariableNames: 'scrollOffset tracking lineExtent'
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ValueDialog subclass: #'Tools.AXTypeLibraryPrompter'
+UI.ValueDialog
+	subclass: #'Tools.AXTypeLibraryPrompter'
 	instanceVariableNames: 'typeLibs path guidPresenter'
 	classVariableNames: ''
 	imports: #(#{OS.COM private})

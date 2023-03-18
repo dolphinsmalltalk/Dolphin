@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Kernel.Bytecode'
+Core.Object
+	subclass: #'Kernel.Bytecode'
 	instanceVariableNames: 'instruction args jumpTarget ip'
 	classVariableNames: ''
 	imports: #()

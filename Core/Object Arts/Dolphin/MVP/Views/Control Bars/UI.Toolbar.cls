@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ControlBarAbstract subclass: #'UI.Toolbar'
+UI.ControlBarAbstract
+	subclass: #'UI.Toolbar'
 	instanceVariableNames: 'idMap items bitmapsStart insets tbFlags indent bitmapSize buttonSize _unused27 layoutManager'
 	classVariableNames: ''
 	imports: #(#{OS.ToolbarConstants})
 	classInstanceVariableNames: ''
-	classConstants: {
-		'LabelsMask' -> 16r1
-	}!
+	classConstants: { 'LabelsMask' -> 16r1 }!
 UI.Toolbar guid: (Core.GUID fromString: '{87b4c72f-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.Toolbar comment: '`Toolbar` is a `<compositeView>` implementing the Windows _ToolbarWindow32_ common control.
 

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.InterfaceImplementation subclass: #'WebView2.WebView2EventSink'
+OS.COM.InterfaceImplementation
+	subclass: #'WebView2.WebView2EventSink'
 	instanceVariableNames: 'source interfaceClass interface handler'
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IUnknown subclass: #'OS.COM.IAdviseSink'
+OS.COM.IUnknown
+	subclass: #'OS.COM.IAdviseSink'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

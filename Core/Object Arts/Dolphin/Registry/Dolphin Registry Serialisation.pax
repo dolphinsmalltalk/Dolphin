@@ -83,22 +83,20 @@ package!
 
 "Class Definitions"!
 
-Core.Object subclass: #'OS.RegistryDeserializer'
+Core.Object
+	subclass: #'OS.RegistryDeserializer'
 	instanceVariableNames: 'currentKey instVarMaps safeClasses objects validationBlock'
 	classVariableNames: ''
 	imports: #(#{OS private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'OS.RegistrySerializer'
+Core.Object
+	subclass: #'OS.RegistrySerializer'
 	instanceVariableNames: 'objects currentKey instVarsCache classNames'
 	classVariableNames: ''
 	imports: #(#{OS.WinRegConstants private})
 	classInstanceVariableNames: ''
-	classConstants: {
-		'BytesValueName' -> 'bytes'.
-		'ReferencePrefix' -> '@'.
-		'ValueSeparator' -> ':'
-	}!
+	classConstants: { 'BytesValueName' -> 'bytes'. 'ReferencePrefix' -> '@'. 'ValueSeparator' -> ':' }!
 
 "Loose Methods"!
 

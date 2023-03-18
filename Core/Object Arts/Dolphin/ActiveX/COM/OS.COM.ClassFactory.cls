@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.InterfaceImplementation subclass: #'OS.COM.ClassFactory'
+OS.COM.InterfaceImplementation
+	subclass: #'OS.COM.ClassFactory'
 	instanceVariableNames: 'serverClass clsid registration'
 	classVariableNames: 'Factories Instances LockCount'
 	imports: #()

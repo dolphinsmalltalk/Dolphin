@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.InspectorAbstract subclass: #'Tools.VisualObjectFinder'
+Tools.InspectorAbstract
+	subclass: #'Tools.VisualObjectFinder'
 	instanceVariableNames: 'mouseTracker finderIcon heading workspace foundView'
 	classVariableNames: 'FindNonDolphinWindows'
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Exception subclass: #'Kernel.ProcessTermination'
+Core.Exception
+	subclass: #'Kernel.ProcessTermination'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

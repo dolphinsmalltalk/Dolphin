@@ -40,35 +40,39 @@ package!
 
 "Class Definitions"!
 
-Core.Object subclass: #'OS.COM.ObjectRegistration'
+Core.Object
+	subclass: #'OS.COM.ObjectRegistration'
 	instanceVariableNames: 'clsid name toolboxImage'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.IUnknown subclass: #'OS.COM.ICatInformation'
+OS.COM.IUnknown
+	subclass: #'OS.COM.ICatInformation'
 	instanceVariableNames: ''
 	classVariableNames: 'CatMan Controls'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.IUnknown subclass: #'OS.COM.ICatRegister'
+OS.COM.IUnknown
+	subclass: #'OS.COM.ICatRegister'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.OLEStructure subclass: #'OS.COM.CATEGORYINFO'
+OS.COM.OLEStructure
+	subclass: #'OS.COM.CATEGORYINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_CATEGORYINFO_Size' -> 16r114.
-		'_OffsetOf_catid' -> 16r0.
-		'_OffsetOf_lcid' -> 16r10.
-		'_OffsetOf_szDescription' -> 16r14
-	}!
+			'_CATEGORYINFO_Size' -> 16r114.
+			'_OffsetOf_catid' -> 16r0.
+			'_OffsetOf_lcid' -> 16r10.
+			'_OffsetOf_szDescription' -> 16r14
+		}!
 
 "Loose Methods"!
 

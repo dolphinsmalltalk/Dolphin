@@ -1,16 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.AbstractTEXTRANGE subclass: #'OS.FINDTEXTEX'
+OS.AbstractTEXTRANGE
+	subclass: #'OS.FINDTEXTEX'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_FINDTEXTEX_Size' -> 16r14.
-		'_OffsetOf_chrg' -> 16r0.
-		'_OffsetOf_chrgText' -> 16rC.
-		'_OffsetOf_lpstrText' -> 16r8
-	}!
+			'_FINDTEXTEX_Size' -> 16r14.
+			'_OffsetOf_chrg' -> 16r0.
+			'_OffsetOf_chrgText' -> 16rC.
+			'_OffsetOf_lpstrText' -> 16r8
+		}!
 OS.FINDTEXTEX guid: (Core.GUID fromString: '{be0e52c5-c59b-4277-ac2a-cb775eac3904}')!
 OS.FINDTEXTEX comment: '<FINDTEXTEX> is an <ExternalStructure> class to wrap the struct ''Win.FINDTEXTEX'' from type information in the ''Windows API (ANSI)'' library.
 

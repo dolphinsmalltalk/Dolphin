@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.Enumerator subclass: #'OS.COM.InterfaceEnumerator'
+OS.COM.Enumerator
+	subclass: #'OS.COM.InterfaceEnumerator'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

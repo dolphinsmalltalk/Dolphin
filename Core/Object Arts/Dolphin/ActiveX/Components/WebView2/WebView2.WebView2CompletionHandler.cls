@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.InterfaceImplementation subclass: #'WebView2.WebView2CompletionHandler'
+OS.COM.InterfaceImplementation
+	subclass: #'WebView2.WebView2CompletionHandler'
 	instanceVariableNames: 'completionBlock'
 	classVariableNames: ''
 	imports: #()

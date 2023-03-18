@@ -20,7 +20,8 @@ package!
 
 "Class Definitions"!
 
-UI.TypeConverter subclass: #'UI.EvaluationConverter'
+UI.TypeConverter
+	subclass: #'UI.EvaluationConverter'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -1,21 +1,22 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.OLEStructure subclass: #'OS.COM.DECIMAL'
+OS.COM.OLEStructure
+	subclass: #'OS.COM.DECIMAL'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_DECIMAL_Size' -> 16r10.
-		'_OffsetOf_hi32' -> 16r4.
-		'_OffsetOf_lo64' -> 16r8.
-		'_OffsetOf_scale' -> 16r2.
-		'_OffsetOf_sign' -> 16r3.
-		'_OffsetOf_wReserved' -> 16r0.
-		'MaxScale' -> 16r1C.
-		'MaxValue' -> 16rFFFFFFFFFFFFFFFFFFFFFFFF.
-		'SmallestValue' -> 0.0000000000000000000000000001s
-	}!
+			'_DECIMAL_Size' -> 16r10.
+			'_OffsetOf_hi32' -> 16r4.
+			'_OffsetOf_lo64' -> 16r8.
+			'_OffsetOf_scale' -> 16r2.
+			'_OffsetOf_sign' -> 16r3.
+			'_OffsetOf_wReserved' -> 16r0.
+			'MaxScale' -> 16r1C.
+			'MaxValue' -> 16rFFFFFFFFFFFFFFFFFFFFFFFF.
+			'SmallestValue' -> 0.0000000000000000000000000001s
+		}!
 OS.COM.DECIMAL guid: (Core.GUID fromString: '{e6470841-9795-44b8-ba35-cccbab3e9a0c}')!
 OS.COM.DECIMAL comment: '`DECIMAL` is an `External.Structure` class to represent the COM Automation structure of the same name.
 

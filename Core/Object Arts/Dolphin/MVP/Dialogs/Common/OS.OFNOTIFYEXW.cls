@@ -1,16 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.NMHDR subclass: #'OS.OFNOTIFYEXW'
+OS.NMHDR
+	subclass: #'OS.OFNOTIFYEXW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_lpOFN' -> 16rC.
-		'_OffsetOf_pidl' -> 16r14.
-		'_OffsetOf_psf' -> 16r10.
-		'_OFNOTIFYEXW_Size' -> 16r18
-	}!
+			'_OffsetOf_lpOFN' -> 16rC.
+			'_OffsetOf_pidl' -> 16r14.
+			'_OffsetOf_psf' -> 16r10.
+			'_OFNOTIFYEXW_Size' -> 16r18
+		}!
 OS.OFNOTIFYEXW guid: (Core.GUID fromString: '{4c069709-5fae-4af1-ab44-f69e79128090}')!
 OS.OFNOTIFYEXW comment: '<OFNOTIFYEX> is an <ExternalStructure> class to wrap the struct ''Win32.OFNOTIFYEX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

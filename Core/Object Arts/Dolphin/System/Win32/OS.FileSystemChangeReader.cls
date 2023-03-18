@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'OS.FileSystemChangeReader'
+Core.Object
+	subclass: #'OS.FileSystemChangeReader'
 	instanceVariableNames: 'handle directory watchSubDirs notificationMask callback buffer overlapStruct filters'
 	classVariableNames: 'FileIOCompletionRoutineDescriptor'
 	imports: #(#{OS.Win32Constants} #{OS.FileSystemWatcherConstants} #{OS.Win32Errors})

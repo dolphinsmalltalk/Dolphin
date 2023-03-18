@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Kernel.PropertyManager'
+Core.Object
+	subclass: #'Kernel.PropertyManager'
 	instanceVariableNames: 'register'
 	classVariableNames: ''
 	imports: #()

@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.AssociationTest subclass: #'Kernel.Tests.VariableBindingTest'
+Core.Tests.AssociationTest
+	subclass: #'Kernel.Tests.VariableBindingTest'
 	instanceVariableNames: ''
 	classVariableNames: 'TestClassVar'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'TestClassConst' -> 16r1
-	}!
+	classConstants: { 'TestClassConst' -> 16r1 }!
 Kernel.Tests.VariableBindingTest guid: (Core.GUID fromString: '{dcc8c223-2afb-4398-8a76-d777493f6b70}')!
 Kernel.Tests.VariableBindingTest comment: ''!
 !Kernel.Tests.VariableBindingTest methodsFor!

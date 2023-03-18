@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.AndEnvironment subclass: #'Refactory.Browser.SmalllintFilterEnvironment'
+Refactory.Browser.AndEnvironment
+	subclass: #'Refactory.Browser.SmalllintFilterEnvironment'
 	instanceVariableNames: 'lintRuleName'
 	classVariableNames: ''
 	imports: #()

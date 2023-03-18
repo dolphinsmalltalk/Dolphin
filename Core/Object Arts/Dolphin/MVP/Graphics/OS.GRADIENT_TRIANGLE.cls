@@ -1,16 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.GRADIENT_TRIANGLE'
+OS.Win32Structure
+	subclass: #'OS.GRADIENT_TRIANGLE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_GRADIENT_TRIANGLE_Size' -> 16rC.
-		'_OffsetOf_Vertex1' -> 16r0.
-		'_OffsetOf_Vertex2' -> 16r4.
-		'_OffsetOf_Vertex3' -> 16r8
-	}!
+			'_GRADIENT_TRIANGLE_Size' -> 16rC.
+			'_OffsetOf_Vertex1' -> 16r0.
+			'_OffsetOf_Vertex2' -> 16r4.
+			'_OffsetOf_Vertex3' -> 16r8
+		}!
 OS.GRADIENT_TRIANGLE guid: (Core.GUID fromString: '{55c55d30-6be7-45da-86bb-0f8bea48586a}')!
 OS.GRADIENT_TRIANGLE comment: '<GRADIENT_TRIANGLE> is an <ExternalStructure> class to wrap the struct ''Win32.GRADIENT_TRIANGLE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

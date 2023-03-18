@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.WeakArray variableSubclass: #'Core.MourningWeakArray'
+Core.WeakArray
+	variableSubclass: #'Core.MourningWeakArray'
 	instanceVariableNames: 'pathologist'
 	classVariableNames: ''
 	imports: #()

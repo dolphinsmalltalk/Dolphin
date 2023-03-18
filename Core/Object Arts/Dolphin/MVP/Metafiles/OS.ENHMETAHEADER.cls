@@ -1,30 +1,31 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.ENHMETAHEADER'
+OS.ENHMETARECORD
+	subclass: #'OS.ENHMETAHEADER'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_ENHMETAHEADER_Size' -> 16r6C.
-		'_OffsetOf_bOpenGL' -> 16r60.
-		'_OffsetOf_cbPixelFormat' -> 16r58.
-		'_OffsetOf_dSignature' -> 16r28.
-		'_OffsetOf_nBytes' -> 16r30.
-		'_OffsetOf_nDescription' -> 16r3C.
-		'_OffsetOf_nHandles' -> 16r38.
-		'_OffsetOf_nPalEntries' -> 16r44.
-		'_OffsetOf_nRecords' -> 16r34.
-		'_OffsetOf_nVersion' -> 16r2C.
-		'_OffsetOf_offDescription' -> 16r40.
-		'_OffsetOf_offPixelFormat' -> 16r5C.
-		'_OffsetOf_rclBounds' -> 16r8.
-		'_OffsetOf_rclFrame' -> 16r18.
-		'_OffsetOf_sReserved' -> 16r3A.
-		'_OffsetOf_szlDevice' -> 16r48.
-		'_OffsetOf_szlMicrometers' -> 16r64.
-		'_OffsetOf_szlMillimeters' -> 16r50
-	}!
+			'_ENHMETAHEADER_Size' -> 16r6C.
+			'_OffsetOf_bOpenGL' -> 16r60.
+			'_OffsetOf_cbPixelFormat' -> 16r58.
+			'_OffsetOf_dSignature' -> 16r28.
+			'_OffsetOf_nBytes' -> 16r30.
+			'_OffsetOf_nDescription' -> 16r3C.
+			'_OffsetOf_nHandles' -> 16r38.
+			'_OffsetOf_nPalEntries' -> 16r44.
+			'_OffsetOf_nRecords' -> 16r34.
+			'_OffsetOf_nVersion' -> 16r2C.
+			'_OffsetOf_offDescription' -> 16r40.
+			'_OffsetOf_offPixelFormat' -> 16r5C.
+			'_OffsetOf_rclBounds' -> 16r8.
+			'_OffsetOf_rclFrame' -> 16r18.
+			'_OffsetOf_sReserved' -> 16r3A.
+			'_OffsetOf_szlDevice' -> 16r48.
+			'_OffsetOf_szlMicrometers' -> 16r64.
+			'_OffsetOf_szlMillimeters' -> 16r50
+		}!
 OS.ENHMETAHEADER guid: (Core.GUID fromString: '{11d9bf3d-7ee0-4ace-8c78-d192e7518fdf}')!
 OS.ENHMETAHEADER comment: '<ENHMETAHEADER> is an <ExternalStructure> class to wrap the struct ''Win32.ENHMETAHEADER''.
 

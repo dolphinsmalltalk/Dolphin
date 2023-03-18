@@ -72,13 +72,15 @@ package!
 
 "Class Definitions"!
 
-UI.VirtualTreeModel subclass: #'UI.Examples.RegTreeModel'
+UI.VirtualTreeModel
+	subclass: #'UI.Examples.RegTreeModel'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Shell subclass: #'UI.Examples.RegEdit'
+UI.Shell
+	subclass: #'UI.Examples.RegEdit'
 	instanceVariableNames: 'keyPresenter valuesPresenter statusModel'
 	classVariableNames: 'ResourceLib'
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.DynamicLinkLibrary subclass: #'OS.WinMMLibrary'
+External.DynamicLinkLibrary
+	subclass: #'OS.WinMMLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.CommonDialogStructure'
+OS.Win32Structure
+	subclass: #'OS.CommonDialogStructure'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.CommonDialogConstants})

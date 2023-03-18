@@ -115,87 +115,99 @@ package!
 
 "Class Definitions"!
 
-Kernel.InstructionInterpreter subclass: #'Tools.Disassembler'
+Kernel.InstructionInterpreter
+	subclass: #'Tools.Disassembler'
 	instanceVariableNames: 'stream'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.CommunityEditionSmalltalkSystem subclass: #'Tools.ProfessionalSmalltalkSystem'
+Tools.CommunityEditionSmalltalkSystem
+	subclass: #'Tools.ProfessionalSmalltalkSystem'
 	instanceVariableNames: 'systemBrowserClass ideaSpaceClass packagedResourceIdentifierDialogClass'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.ClassBrowserPlugin subclass: #'Tools.ClassDiagramPlugin'
+Tools.ClassBrowserPlugin
+	subclass: #'Tools.ClassDiagramPlugin'
 	instanceVariableNames: 'classesPresenter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.ClassBrowserPlugin subclass: #'Tools.DebugInfoPlugin'
+Tools.ClassBrowserPlugin
+	subclass: #'Tools.DebugInfoPlugin'
 	instanceVariableNames: 'disassemblyPresenter sourcePresenter textMapPresenter toggleDebugPresenter toggleOptimisedPresenter method'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.ClassBrowserPlugin subclass: #'Tools.ResourceListPlugin'
+Tools.ClassBrowserPlugin
+	subclass: #'Tools.ResourceListPlugin'
 	instanceVariableNames: 'resourcesPresenter flags'
 	classVariableNames: 'ShowInheritedResourcesMask ShowSubclassResourcesMask'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.ClassBrowserPlugin subclass: #'Tools.UnitTestPlugin'
+Tools.ClassBrowserPlugin
+	subclass: #'Tools.UnitTestPlugin'
 	instanceVariableNames: 'result icon autoSwitchProcess defectsPresenter modePresenter detailsPresenter'
 	classVariableNames: 'AutoSwitchDelay ErrorColor FailColor NoTestsColor PassColor RunningColor'
 	imports: #(#{XProgramming.SUnit private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.ClassSelector subclass: #'Tools.PackagedClassSelector'
+Tools.ClassSelector
+	subclass: #'Tools.PackagedClassSelector'
 	instanceVariableNames: 'packagesPresenter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.ResourceIdentifierDialog subclass: #'Tools.PackagedResourceIdentifierDialog'
+Tools.ResourceIdentifierDialog
+	subclass: #'Tools.PackagedResourceIdentifierDialog'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.ChooseClassDialog subclass: #'Tools.ChoosePackagedClassDialog'
+Tools.ChooseClassDialog
+	subclass: #'Tools.ChoosePackagedClassDialog'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.SmalltalkToolShell subclass: #'Tools.AXControlBrowser'
+Tools.SmalltalkToolShell
+	subclass: #'Tools.AXControlBrowser'
 	instanceVariableNames: 'site windowStatus inspector eventsPresenter flags traceWindow progId'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'TraceMask' -> 16r1
-	}!
-Tools.SmalltalkToolShell subclass: #'Tools.IdeaSpaceShell'
+	classConstants: { 'TraceMask' -> 16r1 }!
+Tools.SmalltalkToolShell
+	subclass: #'Tools.IdeaSpaceShell'
 	instanceVariableNames: 'cardsPresenter backgroundPresenter defaultMenuBar cardHistory filename'
 	classVariableNames: 'Watermark'
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.SmalltalkToolShell subclass: #'Tools.ProcessMonitor'
+Tools.SmalltalkToolShell
+	subclass: #'Tools.ProcessMonitor'
 	instanceVariableNames: 'listPresenter updateInterval'
 	classVariableNames: 'UpdateIntervals'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.ClassBrowserAbstract subclass: #'Tools.EnvironmentBrowserShell'
+Tools.ClassBrowserAbstract
+	subclass: #'Tools.EnvironmentBrowserShell'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.ClassBrowserAbstract subclass: #'Tools.SystemBrowserShell'
+Tools.ClassBrowserAbstract
+	subclass: #'Tools.SystemBrowserShell'
 	instanceVariableNames: ''
 	classVariableNames: 'AutoSelectPackages'
 	imports: #()

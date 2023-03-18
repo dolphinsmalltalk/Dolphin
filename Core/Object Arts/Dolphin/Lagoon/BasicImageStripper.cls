@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #BasicImageStripper
+Core.Object
+	subclass: #BasicImageStripper
 	instanceVariableNames: 'events'
 	classVariableNames: ''
 	imports: #()

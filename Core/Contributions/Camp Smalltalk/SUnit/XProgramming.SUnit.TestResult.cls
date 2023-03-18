@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'XProgramming.SUnit.TestResult'
+Core.Object
+	subclass: #'XProgramming.SUnit.TestResult'
 	instanceVariableNames: 'results failures errors passed skipped duration'
 	classVariableNames: ''
 	imports: #()

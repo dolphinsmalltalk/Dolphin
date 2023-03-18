@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.LockBytesAbstract subclass: #'OS.COM.LockBytes'
+OS.COM.LockBytesAbstract
+	subclass: #'OS.COM.LockBytes'
 	instanceVariableNames: 'bytes'
 	classVariableNames: ''
 	imports: #()

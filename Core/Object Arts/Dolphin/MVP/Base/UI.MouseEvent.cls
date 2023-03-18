@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.PointEvent subclass: #'UI.MouseEvent'
+UI.PointEvent
+	subclass: #'UI.MouseEvent'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

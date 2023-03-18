@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'UI.DragDropObject'
+Core.Object
+	subclass: #'UI.DragDropObject'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

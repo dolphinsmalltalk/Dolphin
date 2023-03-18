@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'UI.MoenTreeNode'
+Core.Object
+	subclass: #'UI.MoenTreeNode'
 	instanceVariableNames: 'object contour offset position parent child sibling clip extent flags'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'ExpandedMask' -> 16r1.
-		'HasExpandedMask' -> 16r2
-	}!
+	classConstants: { 'ExpandedMask' -> 16r1. 'HasExpandedMask' -> 16r2 }!
 UI.MoenTreeNode guid: (Core.GUID fromString: '{63ce49d1-2faf-11d3-93ba-00a024ca708a}')!
 UI.MoenTreeNode comment: 'MoenTreeNode is a private helper class which is part of the implementation of the <MoenTreeView>.
 

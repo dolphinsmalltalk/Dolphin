@@ -29,31 +29,36 @@ package!
 
 "Class Definitions"!
 
-Core.Object subclass: #'UI.TreeNode'
+Core.Object
+	subclass: #'UI.TreeNode'
 	instanceVariableNames: 'parent children object'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Model subclass: #'UI.TreeModelAbstract'
+Core.Model
+	subclass: #'UI.TreeModelAbstract'
 	instanceVariableNames: 'searchPolicy'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.TreeModelAbstract subclass: #'UI.TreeModel'
+UI.TreeModelAbstract
+	subclass: #'UI.TreeModel'
 	instanceVariableNames: 'anchorNode objectNodeMap'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.TreeModelAbstract subclass: #'UI.VirtualTreeModel'
+UI.TreeModelAbstract
+	subclass: #'UI.VirtualTreeModel'
 	instanceVariableNames: 'roots getChildrenBlock getParentBlock hasChildrenBlock filter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.TreeModel subclass: #'UI.ExpandingTreeModel'
+UI.TreeModel
+	subclass: #'UI.ExpandingTreeModel'
 	instanceVariableNames: 'getChildrenBlock hasChildrenBlock'
 	classVariableNames: ''
 	imports: #()

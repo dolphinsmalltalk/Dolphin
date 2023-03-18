@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.MONITORINFO subclass: #'OS.MONITORINFOEXW'
+OS.MONITORINFO
+	subclass: #'OS.MONITORINFOEXW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_MONITORINFOEXW_Size' -> 16r68.
-		'_OffsetOf_szDevice' -> 16r28
-	}!
+	classConstants: { '_MONITORINFOEXW_Size' -> 16r68. '_OffsetOf_szDevice' -> 16r28 }!
 OS.MONITORINFOEXW guid: (Core.GUID fromString: '{b51d5aa0-7d88-48dc-8c48-36240b05b9ad}')!
 OS.MONITORINFOEXW comment: '`MONITORINFOEXW` is an `External.Structure` class to wrap the struct ''Win32.MONITORINFOEXW'' from type information in the ''Win32 API'' library.
 

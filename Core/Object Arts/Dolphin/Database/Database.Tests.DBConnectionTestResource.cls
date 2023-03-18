@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-XProgramming.SUnit.TestResource subclass: #'Database.Tests.DBConnectionTestResource'
+XProgramming.SUnit.TestResource
+	subclass: #'Database.Tests.DBConnectionTestResource'
 	instanceVariableNames: 'connection isAvailable'
 	classVariableNames: ''
 	imports: #()

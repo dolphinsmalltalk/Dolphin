@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-MSXML.IXMLDOMParseError subclass: #'MSXML.IXMLDOMParseError2'
+MSXML.IXMLDOMParseError
+	subclass: #'MSXML.IXMLDOMParseError2'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

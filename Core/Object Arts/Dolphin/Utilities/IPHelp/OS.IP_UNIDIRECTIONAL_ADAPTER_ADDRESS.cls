@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'OS.IP_UNIDIRECTIONAL_ADAPTER_ADDRESS'
+External.Structure
+	subclass: #'OS.IP_UNIDIRECTIONAL_ADAPTER_ADDRESS'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_IP_UNIDIRECTIONAL_ADAPTER_ADDRESS_Size' -> 16r8.
-		'_OffsetOf_Address' -> 16r4.
-		'_OffsetOf_NumAdapters' -> 16r0
-	}!
+			'_IP_UNIDIRECTIONAL_ADAPTER_ADDRESS_Size' -> 16r8.
+			'_OffsetOf_Address' -> 16r4.
+			'_OffsetOf_NumAdapters' -> 16r0
+		}!
 OS.IP_UNIDIRECTIONAL_ADAPTER_ADDRESS guid: (Core.GUID fromString: '{7f8b1ec9-1399-47a6-94be-768366dac0dc}')!
 OS.IP_UNIDIRECTIONAL_ADAPTER_ADDRESS comment: '<IP_UNIDIRECTIONAL_ADAPTER_ADDRESS> is an <ExternalStructure> class to wrap the struct ''Win32.IP_UNIDIRECTIONAL_ADAPTER_ADDRESS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

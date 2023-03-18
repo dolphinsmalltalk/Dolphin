@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMRROUNDRECT'
+OS.ENHMETARECORD
+	subclass: #'OS.EMRROUNDRECT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_EMRROUNDRECT_Size' -> 16r20.
-		'_OffsetOf_rclBox' -> 16r8.
-		'_OffsetOf_szlCorner' -> 16r18
-	}!
+			'_EMRROUNDRECT_Size' -> 16r20.
+			'_OffsetOf_rclBox' -> 16r8.
+			'_OffsetOf_szlCorner' -> 16r18
+		}!
 OS.EMRROUNDRECT guid: (Core.GUID fromString: '{31c4124d-eff4-4b42-adfd-7ed8d589eade}')!
 OS.EMRROUNDRECT comment: '<EMRROUNDRECT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRROUNDRECT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

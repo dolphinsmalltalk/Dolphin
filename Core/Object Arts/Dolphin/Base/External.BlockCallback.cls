@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Callback subclass: #'External.BlockCallback'
+External.Callback
+	subclass: #'External.BlockCallback'
 	instanceVariableNames: 'block'
 	classVariableNames: ''
 	imports: #()

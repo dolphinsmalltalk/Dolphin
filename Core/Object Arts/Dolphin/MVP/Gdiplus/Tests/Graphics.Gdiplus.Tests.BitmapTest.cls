@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.Tests.ImageTests subclass: #'Graphics.Gdiplus.Tests.BitmapTest'
+Graphics.Gdiplus.Tests.ImageTests
+	subclass: #'Graphics.Gdiplus.Tests.BitmapTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

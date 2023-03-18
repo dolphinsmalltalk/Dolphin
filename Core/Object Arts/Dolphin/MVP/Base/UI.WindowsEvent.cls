@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Event subclass: #'UI.WindowsEvent'
+UI.Event
+	subclass: #'UI.WindowsEvent'
 	instanceVariableNames: 'message wParam lParam lResult'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})

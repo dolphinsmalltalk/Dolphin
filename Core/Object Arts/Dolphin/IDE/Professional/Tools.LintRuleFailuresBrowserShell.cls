@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.MethodBrowserShell subclass: #'Tools.LintRuleFailuresBrowserShell'
+Tools.MethodBrowserShell
+	subclass: #'Tools.LintRuleFailuresBrowserShell'
 	instanceVariableNames: 'lintRule'
 	classVariableNames: ''
 	imports: #()

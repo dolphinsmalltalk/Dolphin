@@ -43,59 +43,64 @@ package!
 
 "Class Definitions"!
 
-Refactory.Browser subclass: #'Refactory.Browser.Tests'
+Refactory.Browser
+	subclass: #'Refactory.Browser.Tests'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{XProgramming.SUnit})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'Refactory.Browser.TestData.LintRuleTestData'
+Core.Object
+	subclass: #'Refactory.Browser.TestData.LintRuleTestData'
 	instanceVariableNames: 'name foo1'
 	classVariableNames: 'Foo1'
 	imports: #(#{OS.CRTConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'Refactory.Browser.TestData.RefactoryTestDataApp'
+Core.Object
+	subclass: #'Refactory.Browser.TestData.RefactoryTestDataApp'
 	instanceVariableNames: 'temporaryVariable'
 	classVariableNames: 'ClassVar1 ClassVar2'
 	imports: #(#{OS.CRTConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.TestData.LintRuleTestData subclass: #'Refactory.Browser.TestData.BasicLintRuleTestData'
+Refactory.Browser.TestData.LintRuleTestData
+	subclass: #'Refactory.Browser.TestData.BasicLintRuleTestData'
 	instanceVariableNames: 'classBlock methodBlock result'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.TestData.LintRuleTestData subclass: #'Refactory.Browser.TestData.CompositeLintRuleTestData'
+Refactory.Browser.TestData.LintRuleTestData
+	subclass: #'Refactory.Browser.TestData.CompositeLintRuleTestData'
 	instanceVariableNames: 'rules'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.TestData.LintRuleTestData subclass: #'Refactory.Browser.TestData.FooLintRuleTestData'
+Refactory.Browser.TestData.LintRuleTestData
+	subclass: #'Refactory.Browser.TestData.FooLintRuleTestData'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.TestData.FooLintRuleTestData subclass: #'Refactory.Browser.TestData.TransformationRuleTestData'
+Refactory.Browser.TestData.FooLintRuleTestData
+	subclass: #'Refactory.Browser.TestData.TransformationRuleTestData'
 	instanceVariableNames: 'rewriteRule builder class'
 	classVariableNames: 'RecursiveSelfRule'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'Bar' -> 16r7B
-	}!
-Core.Model subclass: #'Refactory.Browser.Tests.ClassToRename'
+	classConstants: { 'Bar' -> 16r7B }!
+Core.Model
+	subclass: #'Refactory.Browser.Tests.ClassToRename'
 	instanceVariableNames: 'rewriteRule builder class'
 	classVariableNames: 'ClassVar1'
 	imports: #()
 	classInstanceVariableNames: 'notUsed'
-	classConstants: {
-		'ClassConst1' -> 16r1
-	}!
-Refactory.Browser.Tests.ClassToRename subclass: #'Refactory.Browser.Tests.SubclassOfClassToRename'
+	classConstants: { 'ClassConst1' -> 16r1 }!
+Refactory.Browser.Tests.ClassToRename
+	subclass: #'Refactory.Browser.Tests.SubclassOfClassToRename'
 	instanceVariableNames: 'rewriteRule1'
 	classVariableNames: 'SubclassVar1'
 	imports: #(#{Refactory.Browser.Tests.ClassToRename private})

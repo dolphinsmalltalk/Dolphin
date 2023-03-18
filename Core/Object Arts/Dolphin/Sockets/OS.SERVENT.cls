@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.SERVENT'
+OS.Win32Structure
+	subclass: #'OS.SERVENT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_s_aliases' -> 16r4.
-		'_OffsetOf_s_name' -> 16r0.
-		'_OffsetOf_s_port' -> 16r8.
-		'_OffsetOf_s_proto' -> 16rC.
-		'_SERVENT_Size' -> 16r10
-	}!
+			'_OffsetOf_s_aliases' -> 16r4.
+			'_OffsetOf_s_name' -> 16r0.
+			'_OffsetOf_s_port' -> 16r8.
+			'_OffsetOf_s_proto' -> 16rC.
+			'_SERVENT_Size' -> 16r10
+		}!
 OS.SERVENT guid: (Core.GUID fromString: '{87b4c610-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.SERVENT comment: '<SERVENT> is an <ExternalStructure> class to wrap the struct ''Win32.SERVENT'' from type information in the ''Win32 API'' library.
 

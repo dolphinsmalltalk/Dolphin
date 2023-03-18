@@ -1,19 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'OS.OVERLAPPED'
+External.Structure
+	subclass: #'OS.OVERLAPPED'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_hEvent' -> 16r10.
-		'_OffsetOf_Internal' -> 16r0.
-		'_OffsetOf_InternalHigh' -> 16r4.
-		'_OffsetOf_Offset' -> 16r8.
-		'_OffsetOf_OffsetHigh' -> 16rC.
-		'_OffsetOf_Pointer' -> 16r8.
-		'_OVERLAPPED_Size' -> 16r14
-	}!
+			'_OffsetOf_hEvent' -> 16r10.
+			'_OffsetOf_Internal' -> 16r0.
+			'_OffsetOf_InternalHigh' -> 16r4.
+			'_OffsetOf_Offset' -> 16r8.
+			'_OffsetOf_OffsetHigh' -> 16rC.
+			'_OffsetOf_Pointer' -> 16r8.
+			'_OVERLAPPED_Size' -> 16r14
+		}!
 OS.OVERLAPPED guid: (Core.GUID fromString: '{301c9a7a-d4b4-42d5-895d-e658d212df5b}')!
 OS.OVERLAPPED comment: '<OVERLAPPED> is an <ExternalStructure> class to wrap the struct ''Win32.OVERLAPPED'' from type information in the ''Win32 API'' library.
 

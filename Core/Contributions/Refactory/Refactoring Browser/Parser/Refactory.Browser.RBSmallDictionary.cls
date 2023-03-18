@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Collection subclass: #'Refactory.Browser.RBSmallDictionary'
+Core.Collection
+	subclass: #'Refactory.Browser.RBSmallDictionary'
 	instanceVariableNames: 'keys values size'
 	classVariableNames: ''
 	imports: #()

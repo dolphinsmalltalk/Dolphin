@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-MSXML.DOMNamedNodeMap variableSubclass: #'MSXML.DOMNotationsMap'
+MSXML.DOMNamedNodeMap
+	variableSubclass: #'MSXML.DOMNotationsMap'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

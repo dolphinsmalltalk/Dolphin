@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.ArithmeticExpressionVisitor subclass: #'External.SizeIsExpressionFormatter'
+Kernel.ArithmeticExpressionVisitor
+	subclass: #'External.SizeIsExpressionFormatter'
 	instanceVariableNames: 'codeStream structClass variable'
 	classVariableNames: ''
 	imports: #()

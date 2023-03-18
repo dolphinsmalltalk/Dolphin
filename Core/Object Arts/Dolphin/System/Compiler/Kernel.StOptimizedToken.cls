@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.StToken subclass: #'Kernel.StOptimizedToken'
+Kernel.StToken
+	subclass: #'Kernel.StOptimizedToken'
 	instanceVariableNames: 'stopPosition'
 	classVariableNames: ''
 	imports: #()

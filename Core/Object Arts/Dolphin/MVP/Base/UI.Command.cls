@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'UI.Command'
+Core.Object
+	subclass: #'UI.Command'
 	instanceVariableNames: 'commandDescription receiver undoAction redoAction isBenign'
 	classVariableNames: 'Current'
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.Scintilla.PositionTypeReference subclass: #'Tools.Scintilla.LineTypeReference'
+Tools.Scintilla.PositionTypeReference
+	subclass: #'Tools.Scintilla.LineTypeReference'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

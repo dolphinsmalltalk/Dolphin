@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-XProgramming.SUnit.TestResource subclass: #'OS.COM.Tests.TestTypelib'
+XProgramming.SUnit.TestResource
+	subclass: #'OS.COM.Tests.TestTypelib'
 	instanceVariableNames: 'analyzer'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})

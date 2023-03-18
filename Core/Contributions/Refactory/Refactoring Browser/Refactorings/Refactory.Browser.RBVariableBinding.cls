@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.VariableBinding subclass: #'Refactory.Browser.RBVariableBinding'
+Kernel.VariableBinding
+	subclass: #'Refactory.Browser.RBVariableBinding'
 	instanceVariableNames: 'realBinding'
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Error subclass: #'STON.ReaderError'
+Core.Error
+	subclass: #'STON.ReaderError'
 	instanceVariableNames: 'streamPosition'
 	classVariableNames: ''
 	imports: #()

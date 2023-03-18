@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.RuntimeSessionManager subclass: #'UI.Examples.NotepadSessionManager'
+UI.RuntimeSessionManager
+	subclass: #'UI.Examples.NotepadSessionManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Error subclass: #'Core.NotFoundError'
+Core.Error
+	subclass: #'Core.NotFoundError'
 	instanceVariableNames: 'receiver'
 	classVariableNames: ''
 	imports: #()

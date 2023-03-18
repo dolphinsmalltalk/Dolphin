@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Error subclass: #'Core.InvalidArgumentError'
+Core.Error
+	subclass: #'Core.InvalidArgumentError'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

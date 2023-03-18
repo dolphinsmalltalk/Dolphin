@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Security.ProductProtector subclass: #'Security.PC1ProductProtector'
+Security.ProductProtector
+	subclass: #'Security.PC1ProductProtector'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

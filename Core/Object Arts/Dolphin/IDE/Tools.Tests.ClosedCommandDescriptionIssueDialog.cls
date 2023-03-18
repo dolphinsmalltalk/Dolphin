@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Dialog subclass: #'Tools.Tests.ClosedCommandDescriptionIssueDialog'
+UI.Dialog
+	subclass: #'Tools.Tests.ClosedCommandDescriptionIssueDialog'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

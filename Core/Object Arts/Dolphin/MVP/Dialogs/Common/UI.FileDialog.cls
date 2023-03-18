@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.CommonDialog subclass: #'UI.FileDialog'
+UI.CommonDialog
+	subclass: #'UI.FileDialog'
 	instanceVariableNames: 'style fileTypes validationBlock'
 	classVariableNames: ''
 	imports: #()

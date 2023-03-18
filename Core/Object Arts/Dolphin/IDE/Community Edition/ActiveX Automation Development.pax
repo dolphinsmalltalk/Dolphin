@@ -581,49 +581,57 @@ package!
 
 "Class Definitions"!
 
-Core.Object subclass: #'Tools.AXMethodName'
+Core.Object
+	subclass: #'Tools.AXMethodName'
 	instanceVariableNames: 'keywords argumentNames indices'
 	classVariableNames: ''
 	imports: #(#{OS.COM private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'Tools.AXTypeLibRegistration'
+Core.Object
+	subclass: #'Tools.AXTypeLibRegistration'
 	instanceVariableNames: 'description guidString versionString minor major'
 	classVariableNames: ''
 	imports: #(#{OS.COM private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.Aspect subclass: #'Tools.AXAutomationAspect'
+Tools.Aspect
+	subclass: #'Tools.AXAutomationAspect'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.AXAutomationAspect subclass: #'Tools.AXRecordAspect'
+Tools.AXAutomationAspect
+	subclass: #'Tools.AXRecordAspect'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.AXAutomationAspect subclass: #'Tools.DispatchAspect'
+Tools.AXAutomationAspect
+	subclass: #'Tools.DispatchAspect'
 	instanceVariableNames: 'dispid'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.ValueDialog subclass: #'Tools.AXTypeLibraryPrompter'
+UI.ValueDialog
+	subclass: #'Tools.AXTypeLibraryPrompter'
 	instanceVariableNames: 'typeLibs path guidPresenter'
 	classVariableNames: ''
 	imports: #(#{OS.COM private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.SmalltalkToolShell subclass: #'Tools.AXComponentWizard'
+Tools.SmalltalkToolShell
+	subclass: #'Tools.AXComponentWizard'
 	instanceVariableNames: 'typeLibs types description guid namespaceName packageName forcePackage cards libraryName libraryPath buffer generateTypelib typelibVariableName constantsPoolName highLevelWrappers classComments tracing defineProtocols defineFunctionTables lowercaseIdentifiers verboseTracing showStandard'
 	classVariableNames: 'StandardEnums StandardInterfaces StandardStructs'
 	imports: #(#{OS.COM private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.BasicInspector subclass: #'Tools.AXInspector'
+Tools.BasicInspector
+	subclass: #'Tools.AXInspector'
 	instanceVariableNames: 'collection'
 	classVariableNames: ''
 	imports: #()

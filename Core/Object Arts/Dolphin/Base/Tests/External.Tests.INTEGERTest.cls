@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTest subclass: #'External.Tests.INTEGERTest'
+Core.Tests.DolphinTest
+	subclass: #'External.Tests.INTEGERTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

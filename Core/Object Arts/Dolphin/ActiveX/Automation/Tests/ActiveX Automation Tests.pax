@@ -40,55 +40,64 @@ package!
 
 "Class Definitions"!
 
-Core.Tests.DolphinTest subclass: #'OS.COM.Tests.BSTRTest'
+Core.Tests.DolphinTest
+	subclass: #'OS.COM.Tests.BSTRTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'OS.COM.Tests.CURRENCYTest'
+Core.Tests.DolphinTest
+	subclass: #'OS.COM.Tests.CURRENCYTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'OS.COM.Tests.DECIMALTest'
+Core.Tests.DolphinTest
+	subclass: #'OS.COM.Tests.DECIMALTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'OS.COM.Tests.IDispatchTest'
+Core.Tests.DolphinTest
+	subclass: #'OS.COM.Tests.IDispatchTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'OS.COM.Tests.TypeLibraryAnalyzerTest'
+Core.Tests.DolphinTest
+	subclass: #'OS.COM.Tests.TypeLibraryAnalyzerTest'
 	instanceVariableNames: 'analyzer'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'OS.COM.Tests.VARIANTTest'
+Core.Tests.DolphinTest
+	subclass: #'OS.COM.Tests.VARIANTTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.Tests.ExternalArrayTest subclass: #'OS.COM.Tests.BSTRArrayTest'
+External.Tests.ExternalArrayTest
+	subclass: #'OS.COM.Tests.BSTRArrayTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.Tests.GenericExternalArrayTest subclass: #'OS.COM.Tests.SAFEARRAYTest'
+External.Tests.GenericExternalArrayTest
+	subclass: #'OS.COM.Tests.SAFEARRAYTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.Win32Errors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-XProgramming.SUnit.TestResource subclass: #'OS.COM.Tests.TestTypelib'
+XProgramming.SUnit.TestResource
+	subclass: #'OS.COM.Tests.TestTypelib'
 	instanceVariableNames: 'analyzer'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})

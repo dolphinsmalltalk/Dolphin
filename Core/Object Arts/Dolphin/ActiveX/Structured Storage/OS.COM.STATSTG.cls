@@ -1,24 +1,25 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.FinalizableStructure subclass: #'OS.COM.STATSTG'
+OS.COM.FinalizableStructure
+	subclass: #'OS.COM.STATSTG'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.COM.StructuredStorageConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_atime' -> 16r20.
-		'_OffsetOf_cbSize' -> 16r8.
-		'_OffsetOf_clsid' -> 16r30.
-		'_OffsetOf_ctime' -> 16r18.
-		'_OffsetOf_dwStgFmt' -> 16r44.
-		'_OffsetOf_grfLocksSupported' -> 16r2C.
-		'_OffsetOf_grfMode' -> 16r28.
-		'_OffsetOf_grfStateBits' -> 16r40.
-		'_OffsetOf_mtime' -> 16r10.
-		'_OffsetOf_pwcsName' -> 16r0.
-		'_OffsetOf_type' -> 16r4.
-		'_STATSTG_Size' -> 16r48
-	}!
+			'_OffsetOf_atime' -> 16r20.
+			'_OffsetOf_cbSize' -> 16r8.
+			'_OffsetOf_clsid' -> 16r30.
+			'_OffsetOf_ctime' -> 16r18.
+			'_OffsetOf_dwStgFmt' -> 16r44.
+			'_OffsetOf_grfLocksSupported' -> 16r2C.
+			'_OffsetOf_grfMode' -> 16r28.
+			'_OffsetOf_grfStateBits' -> 16r40.
+			'_OffsetOf_mtime' -> 16r10.
+			'_OffsetOf_pwcsName' -> 16r0.
+			'_OffsetOf_type' -> 16r4.
+			'_STATSTG_Size' -> 16r48
+		}!
 OS.COM.STATSTG guid: (Core.GUID fromString: '{87b4c5c3-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.COM.STATSTG comment: 'STATSTG is an <ExternalStructure> class to represent the OLE Structured Storage structure of the same name.
 

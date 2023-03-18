@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMRSELECTOBJECT'
+OS.ENHMETARECORD
+	subclass: #'OS.EMRSELECTOBJECT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_EMRSELECTOBJECT_Size' -> 16rC.
-		'_OffsetOf_ihObject' -> 16r8
-	}!
+	classConstants: { '_EMRSELECTOBJECT_Size' -> 16rC. '_OffsetOf_ihObject' -> 16r8 }!
 OS.EMRSELECTOBJECT guid: (Core.GUID fromString: '{7a1bcb22-ae68-4f89-8318-06efd07dfcdb}')!
 OS.EMRSELECTOBJECT comment: '<EMRSELECTOBJECT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSELECTOBJECT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

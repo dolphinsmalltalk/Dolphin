@@ -1,28 +1,29 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.GpStructure subclass: #'Graphics.Gdiplus.MetafileHeader'
+Graphics.Gdiplus.GpStructure
+	subclass: #'Graphics.Gdiplus.MetafileHeader'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_MetafileHeader_Size' -> 16r8C.
-		'_OffsetOf_DpiX' -> 16r10.
-		'_OffsetOf_DpiY' -> 16r14.
-		'_OffsetOf_EmfHeader' -> 16r28.
-		'_OffsetOf_EmfPlusFlags' -> 16rC.
-		'_OffsetOf_EmfPlusHeaderSize' -> 16r80.
-		'_OffsetOf_height' -> 16r24.
-		'_OffsetOf_LogicalDpiX' -> 16r84.
-		'_OffsetOf_LogicalDpiY' -> 16r88.
-		'_OffsetOf_size' -> 16r4.
-		'_OffsetOf_type' -> 16r0.
-		'_OffsetOf_Version' -> 16r8.
-		'_OffsetOf_width' -> 16r20.
-		'_OffsetOf_WmfHeader' -> 16r28.
-		'_OffsetOf_x' -> 16r18.
-		'_OffsetOf_y' -> 16r1C
-	}!
+			'_MetafileHeader_Size' -> 16r8C.
+			'_OffsetOf_DpiX' -> 16r10.
+			'_OffsetOf_DpiY' -> 16r14.
+			'_OffsetOf_EmfHeader' -> 16r28.
+			'_OffsetOf_EmfPlusFlags' -> 16rC.
+			'_OffsetOf_EmfPlusHeaderSize' -> 16r80.
+			'_OffsetOf_height' -> 16r24.
+			'_OffsetOf_LogicalDpiX' -> 16r84.
+			'_OffsetOf_LogicalDpiY' -> 16r88.
+			'_OffsetOf_size' -> 16r4.
+			'_OffsetOf_type' -> 16r0.
+			'_OffsetOf_Version' -> 16r8.
+			'_OffsetOf_width' -> 16r20.
+			'_OffsetOf_WmfHeader' -> 16r28.
+			'_OffsetOf_x' -> 16r18.
+			'_OffsetOf_y' -> 16r1C
+		}!
 Graphics.Gdiplus.MetafileHeader guid: (Core.GUID fromString: '{83583420-dbfc-415f-ab1b-93e52a2206ef}')!
 Graphics.Gdiplus.MetafileHeader comment: '<GpMetafileHeader> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpMetafileHeader'' from type information in the ''GDI+ Library 1.0'' library.
 

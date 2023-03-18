@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.AbstractELEMDESC subclass: #'OS.COM.ELEMDESC'
+OS.COM.AbstractELEMDESC
+	subclass: #'OS.COM.ELEMDESC'
 	instanceVariableNames: 'param index custData'
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_ELEMDESC_Size' -> 16r10.
-		'_OffsetOf_paramdesc' -> 16r8
-	}!
+	classConstants: { '_ELEMDESC_Size' -> 16r10. '_OffsetOf_paramdesc' -> 16r8 }!
 OS.COM.ELEMDESC guid: (Core.GUID fromString: '{c06f3b77-0868-11d3-93af-00a024ca708a}')!
 OS.COM.ELEMDESC comment: 'ELEMDESC is an <ExternalStructure> class to represent the AX Automation structure of the same name.
 

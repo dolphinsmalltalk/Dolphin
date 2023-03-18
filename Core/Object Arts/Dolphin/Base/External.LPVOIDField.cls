@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.UIntPtrField subclass: #'External.LPVOIDField'
+External.UIntPtrField
+	subclass: #'External.LPVOIDField'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

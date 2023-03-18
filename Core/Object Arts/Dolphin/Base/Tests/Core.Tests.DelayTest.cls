@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTest subclass: #'Core.Tests.DelayTest'
+Core.Tests.DolphinTest
+	subclass: #'Core.Tests.DelayTest'
 	instanceVariableNames: 'delay startTime timerResolution'
 	classVariableNames: ''
 	imports: #()

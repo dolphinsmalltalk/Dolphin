@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.RBAbstractCondition subclass: #'Refactory.Browser.RBEmptyCondition'
+Refactory.Browser.RBAbstractCondition
+	subclass: #'Refactory.Browser.RBEmptyCondition'
 	instanceVariableNames: ''
 	classVariableNames: 'Current'
 	imports: #()

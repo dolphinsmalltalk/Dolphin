@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Net subclass: #'Net.Examples'
+Net
+	subclass: #'Net.Examples'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

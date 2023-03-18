@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.LayoutManager subclass: #'UI.LinearLayout'
+UI.LayoutManager
+	subclass: #'UI.LinearLayout'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.TypeInfoAnalyzer subclass: #'OS.COM.TKindAliasAnalyzer'
+OS.COM.TypeInfoAnalyzer
+	subclass: #'OS.COM.TKindAliasAnalyzer'
 	instanceVariableNames: ''
 	classVariableNames: 'BaseTypes'
 	imports: #()

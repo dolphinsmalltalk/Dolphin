@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Number subclass: #'Core.ScaledDecimal'
+Core.Number
+	subclass: #'Core.ScaledDecimal'
 	instanceVariableNames: 'fraction scale'
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Error subclass: #'Security.TrustedDataError'
+Core.Error
+	subclass: #'Security.TrustedDataError'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMRPIXELFORMAT'
+OS.ENHMETARECORD
+	subclass: #'OS.EMRPIXELFORMAT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_EMRPIXELFORMAT_Size' -> 16r30.
-		'_OffsetOf_pfd' -> 16r8
-	}!
+	classConstants: { '_EMRPIXELFORMAT_Size' -> 16r30. '_OffsetOf_pfd' -> 16r8 }!
 OS.EMRPIXELFORMAT guid: (Core.GUID fromString: '{d3d01d9c-95db-40f4-9304-d212a548def1}')!
 OS.EMRPIXELFORMAT comment: '<EMRPIXELFORMAT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRPIXELFORMAT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

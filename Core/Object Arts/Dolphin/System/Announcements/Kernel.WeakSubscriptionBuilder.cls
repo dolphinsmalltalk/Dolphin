@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Kernel.WeakSubscriptionBuilder'
+Core.Object
+	subclass: #'Kernel.WeakSubscriptionBuilder'
 	instanceVariableNames: 'announcer'
 	classVariableNames: ''
 	imports: #()

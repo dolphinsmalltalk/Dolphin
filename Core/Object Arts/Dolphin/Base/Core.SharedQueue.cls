@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Core.SharedQueue'
+Core.Object
+	subclass: #'Core.SharedQueue'
 	instanceVariableNames: 'accessProtect valueAvailable contents'
 	classVariableNames: 'AbsentCookie'
 	imports: #(#{OS.Win32Constants})

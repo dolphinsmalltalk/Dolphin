@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Security.ProtectedProductSerialNumber'
+Core.Object
+	subclass: #'Security.ProtectedProductSerialNumber'
 	instanceVariableNames: 'value stringValue'
 	classVariableNames: 'FixedLicenceMask'
 	imports: #()

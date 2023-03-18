@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.GraphicsTool subclass: #'UI.Menu'
+Graphics.GraphicsTool
+	subclass: #'UI.Menu'
 	instanceVariableNames: 'items text name flags image imageManager id _reserved1 _reserved2'
 	classVariableNames: 'DrawStateCallbackDescriptor'
 	imports: #()

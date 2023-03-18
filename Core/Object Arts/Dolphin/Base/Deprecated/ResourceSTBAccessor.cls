@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ResourceAccessor subclass: #ResourceSTBAccessor
+ResourceAccessor
+	subclass: #ResourceSTBAccessor
 	instanceVariableNames: 'classLocator'
 	classVariableNames: ''
 	imports: #()

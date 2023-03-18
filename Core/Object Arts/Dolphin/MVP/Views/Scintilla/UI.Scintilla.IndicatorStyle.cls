@@ -1,13 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Scintilla.QueryableAttribute subclass: #'UI.Scintilla.IndicatorStyle'
+UI.Scintilla.QueryableAttribute
+	subclass: #'UI.Scintilla.IndicatorStyle'
 	instanceVariableNames: 'forecolor style layer name alpha hoverStyle hoverForecolor flags foreAlpha strokeWidth'
 	classVariableNames: 'AlphaProperty FlagsProperty ForeAlphaProperty ForecolorProperty HoverForecolorProperty HoverStyleProperty LayerProperty StrokeWidthProperty StyleProperty'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'IndicatorStyles' -> #(#underline #squiggle #tt #hatch #strikeOut #hidden #box #roundBox #straightBox #dash #dots #squiggleLow #dotBox #squigglePixmap #compositionThick #compositionThin #fullBox #textFore #point #pointCharacter #gradient #gradientCentre #pointTop)
-	}!
+			'IndicatorStyles'
+				-> #(#underline #squiggle #tt #hatch #strikeOut #hidden #box #roundBox #straightBox #dash #dots #squiggleLow #dotBox #squigglePixmap #compositionThick #compositionThin #fullBox #textFore #point #pointCharacter #gradient #gradientCentre #pointTop)
+		}!
 UI.Scintilla.IndicatorStyle guid: (Core.GUID fromString: '{2de64fd7-5b9f-4ac7-81c6-912b56b41a4f}')!
 UI.Scintilla.IndicatorStyle comment: '`ScintillaIndicatorStyle` instances represent the indicator configuration for a particular `ScintillaView`.
 

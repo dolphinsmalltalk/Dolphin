@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.CompiledMethod variableSubclass: #'Kernel.CompileFailedMethod'
+Kernel.CompiledMethod
+	variableSubclass: #'Kernel.CompileFailedMethod'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.Tests.GradientBrushTest subclass: #'Graphics.Gdiplus.Tests.LinearGradientBrushTest'
+Graphics.Gdiplus.Tests.GradientBrushTest
+	subclass: #'Graphics.Gdiplus.Tests.LinearGradientBrushTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

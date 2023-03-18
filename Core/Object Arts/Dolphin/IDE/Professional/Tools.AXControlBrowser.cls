@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.SmalltalkToolShell subclass: #'Tools.AXControlBrowser'
+Tools.SmalltalkToolShell
+	subclass: #'Tools.AXControlBrowser'
 	instanceVariableNames: 'site windowStatus inspector eventsPresenter flags traceWindow progId'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'TraceMask' -> 16r1
-	}!
+	classConstants: { 'TraceMask' -> 16r1 }!
 Tools.AXControlBrowser guid: (Core.GUID fromString: '{e2e33600-aa60-11d3-b376-080046056106}')!
 Tools.AXControlBrowser comment: 'AXControlBrowser is a simple Active-X control (OCX) browser and test environment.
 

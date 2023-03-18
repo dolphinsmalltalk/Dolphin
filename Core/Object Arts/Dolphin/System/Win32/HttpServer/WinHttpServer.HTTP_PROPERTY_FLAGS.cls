@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_PROPERTY_FLAGS'
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_PROPERTY_FLAGS'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_HTTP_PROPERTY_FLAGS_Size' -> 16r4.
-		'_OffsetOf_Present' -> 16r0
-	}!
+	classConstants: { '_HTTP_PROPERTY_FLAGS_Size' -> 16r4. '_OffsetOf_Present' -> 16r0 }!
 WinHttpServer.HTTP_PROPERTY_FLAGS guid: (Core.GUID fromString: '{6ba76c16-b60f-4235-9179-145a93b3f5cb}')!
 WinHttpServer.HTTP_PROPERTY_FLAGS isNonInstantiable: true!
 WinHttpServer.HTTP_PROPERTY_FLAGS comment: '`HTTP_PROPERTY_FLAGS` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_PROPERTY_FLAGS'' from type information in the ''Windows Http Server API'' library.

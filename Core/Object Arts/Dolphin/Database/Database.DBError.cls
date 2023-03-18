@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Error subclass: #'Database.DBError'
+Core.Error
+	subclass: #'Database.DBError'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.ODBCRetCodes} #{OS.ODBCConstants})

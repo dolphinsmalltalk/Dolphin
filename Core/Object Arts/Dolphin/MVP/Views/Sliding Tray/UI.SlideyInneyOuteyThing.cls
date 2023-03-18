@@ -1,17 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ContainerView subclass: #'UI.SlideyInneyOuteyThing'
+UI.ContainerView
+	subclass: #'UI.SlideyInneyOuteyThing'
 	instanceVariableNames: 'tabs tray trayExtent animationDuration tickCounter siotFlags _siotReserved1 _siotReserved2'
-	classVariableNames: 'AnimationDuration Animations SlideInDelay'
+	classVariableNames: 'AnimationDuration SlideInDelay'
 	imports: #(#{OS.ThemeConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'AnimatedCardChangeMask' -> 16r8.
-		'AnimatedUnpinMask' -> 16r2.
-		'AnimationMask' -> 16rC0010.
-		'HideOnUnpinMask' -> 16r1.
-		'ResizableMask' -> 16r4
-	}!
+			'AnimatedCardChangeMask' -> 16r8.
+			'AnimatedUnpinMask' -> 16r2.
+			'AnimationMask' -> 16rC0010.
+			'Animations' -> (IdentityDictionary
+						withAll: { #blend -> 16r80000. #collapse -> 16r10. #roll -> 16r0. #slide -> 16r40000 }).
+			'HideOnUnpinMask' -> 16r1.
+			'ResizableMask' -> 16r4
+		}!
 UI.SlideyInneyOuteyThing guid: (Core.GUID fromString: '{b9cf8580-efea-4336-84cd-3108804dd202}')!
 UI.SlideyInneyOuteyThing comment: 'SlideyInneyOuteyThing is a decorator for a <CardContainer> which behaves like one of those slidey-inney-outey-things one sees in Visual Studio.NET, i.e: It displays a thin tab strip most of the time, but slides cards smoothly out (as if they were on a sliding "tray") when one hovers over them. The tray slides out over the top of any sibling views of the SlideyInneyOuteyThing, and so it does not cause any re-layout within the parent. The tray can then be pinned into place if desired, in which case the parent is re-layed out to accommodate the full extent of the SlideyInneyOuteyThing. When pinned a SlideyInneyOuteyThing behaves visually like a normal <CardContainer>. When unpinned, the tray will slide back when the user moves outside the tray/tabs for a short period. This is useful for panes which are used only occasionally since they need consume only a little space (for the tabs) when they are not being used.
 

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Prompter subclass: #'UI.IntegerPrompter'
+UI.Prompter
+	subclass: #'UI.IntegerPrompter'
 	instanceVariableNames: 'intervalPresenter interval'
 	classVariableNames: ''
 	imports: #()

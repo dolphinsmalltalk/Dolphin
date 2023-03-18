@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.AbstractDocumentShell subclass: #'UI.DocumentShell'
+UI.AbstractDocumentShell
+	subclass: #'UI.DocumentShell'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

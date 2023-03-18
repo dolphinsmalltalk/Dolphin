@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.TypeInfoAnalyzer subclass: #'OS.COM.TKindEnumAnalyzer'
+OS.COM.TypeInfoAnalyzer
+	subclass: #'OS.COM.TKindEnumAnalyzer'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

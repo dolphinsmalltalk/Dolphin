@@ -1,15 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.AbstractCHARRANGE subclass: #'OS.CHARRANGE'
+OS.AbstractCHARRANGE
+	subclass: #'OS.CHARRANGE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_CHARRANGE_Size' -> 16r8.
-		'_OffsetOf_cpMax' -> 16r4.
-		'_OffsetOf_cpMin' -> 16r0
-	}!
+	classConstants: { '_CHARRANGE_Size' -> 16r8. '_OffsetOf_cpMax' -> 16r4. '_OffsetOf_cpMin' -> 16r0 }!
 OS.CHARRANGE guid: (Core.GUID fromString: '{3fd4e349-a730-484e-afb1-5f2fd9036259}')!
 OS.CHARRANGE comment: '<CHARRANGE> is an <ExternalStructure> class to wrap the struct ''Win.CHARRANGE'' from type information in the ''Windows API (ANSI)'' library.
 

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTest subclass: #'Kernel.Tests.VMTest'
+Core.Tests.DolphinTest
+	subclass: #'Kernel.Tests.VMTest'
 	instanceVariableNames: 'expiryHandler'
 	classVariableNames: ''
 	imports: #(#{OS.CRTConstants})

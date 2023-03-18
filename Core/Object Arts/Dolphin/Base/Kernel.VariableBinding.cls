@@ -1,15 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Association subclass: #'Kernel.VariableBinding'
+Core.Association
+	subclass: #'Kernel.VariableBinding'
 	instanceVariableNames: 'environment flags'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'ClassMask' -> 16r2.
-		'DeprecatedMask' -> 16r100.
-		'PrivateMask' -> 16r1
-	}!
+	classConstants: { 'ClassMask' -> 16r2. 'DeprecatedMask' -> 16r100. 'PrivateMask' -> 16r1 }!
 Kernel.VariableBinding guid: (Core.GUID fromString: '{1e72742f-5466-4331-bb39-2ff12ac9743f}')!
 Kernel.VariableBinding comment: '`VariableBinding` is the special class of `Assocation`s representing the static variables of classes and namespaces. Static variables include both class and namespace (formerly global) variables. The can be referred to in code directly by name using either a fully-qualified name, or, visibility depending, a partially-qualified or unqualified name.
 

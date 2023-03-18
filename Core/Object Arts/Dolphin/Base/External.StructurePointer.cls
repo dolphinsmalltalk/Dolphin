@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'External.StructurePointer'
+External.Structure
+	subclass: #'External.StructurePointer'
 	instanceVariableNames: 'elementClass'
 	classVariableNames: ''
 	imports: #()

@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.StSemanticScope subclass: #'Kernel.StLexicalScope'
+Kernel.StSemanticScope
+	subclass: #'Kernel.StLexicalScope'
 	instanceVariableNames: 'node outer locals thisContextVariable flags'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'FarReturnMask' -> 16r2.
-		'NeedsSelfMask' -> 16r1
-	}!
+	classConstants: { 'FarReturnMask' -> 16r2. 'NeedsSelfMask' -> 16r1 }!
 Kernel.StLexicalScope guid: (Core.GUID fromString: '{cf1f5402-a16a-4f0c-8c08-630e2b5fbf47}')!
 Kernel.StLexicalScope isNonInstantiable: true!
 Kernel.StLexicalScope comment: ''!

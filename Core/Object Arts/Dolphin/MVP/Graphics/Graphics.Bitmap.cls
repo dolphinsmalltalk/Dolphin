@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Image subclass: #'Graphics.Bitmap'
+Graphics.Image
+	subclass: #'Graphics.Bitmap'
 	instanceVariableNames: 'hdc flags extent'
 	classVariableNames: 'SharedBitmaps'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'IsSharedMask' -> 16r2
-	}!
+	classConstants: { 'IsSharedMask' -> 16r2 }!
 Graphics.Bitmap guid: (Core.GUID fromString: '{87b4c63d-026e-11d3-9fd7-00a0cc3e4a32}')!
 Graphics.Bitmap comment: 'Bitmap is the class of <Image>s that represent Windows'' device-dependent Bitmaps.
 

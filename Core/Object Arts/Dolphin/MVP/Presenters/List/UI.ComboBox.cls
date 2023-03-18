@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.BasicListAbstract subclass: #'UI.ComboBox'
+UI.BasicListAbstract
+	subclass: #'UI.ComboBox'
 	instanceVariableNames: 'droppedHeight'
 	classVariableNames: ''
 	imports: #(#{OS.ComboBoxConstants})
 	classInstanceVariableNames: ''
-	classConstants: {
-		'Modes' -> #(#simple #dropDown #dropDownList)
-	}!
+	classConstants: { 'Modes' -> #(#simple #dropDown #dropDownList) }!
 UI.ComboBox guid: (Core.GUID fromString: '{87b4c72b-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.ComboBox comment: 'ComboBox is the <listView> implementing the standard Windows COMBOBOX control. It is for single selection use and, therefore, implements the <selectableItems> protocol for use with any <listModel>.
 

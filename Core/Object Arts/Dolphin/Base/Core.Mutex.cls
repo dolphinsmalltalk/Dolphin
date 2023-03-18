@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Core.Mutex'
+Core.Object
+	subclass: #'Core.Mutex'
 	instanceVariableNames: 'owner semaphore'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})

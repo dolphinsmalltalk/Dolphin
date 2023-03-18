@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Refactory.Browser.RefactoryChangeManager'
+Core.Object
+	subclass: #'Refactory.Browser.RefactoryChangeManager'
 	instanceVariableNames: 'undo redo isPerformingRefactoring'
 	classVariableNames: 'Instance UndoSize'
 	imports: #()

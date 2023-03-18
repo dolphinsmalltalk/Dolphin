@@ -1,14 +1,25 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.IconicListAbstract subclass: #'UI.ListView'
+UI.IconicListAbstract
+	subclass: #'UI.ListView'
 	instanceVariableNames: 'lastClickedColIndex columns viewMode lastSelIndices iconSpacing lvStyle thumbnailExtent lvFlags backImage backImageOffset backImageAlpha approvedSelIndices noRedrawCount _unused36 _unused37 _unused38 _unused39 _unused40 _unused41 _unused42 _unused43 _unused44 _unused45'
-	classVariableNames: 'LvModes SelectionStateMask UnknownItem'
+	classVariableNames: 'SelectionStateMask UnknownItem'
 	imports: #(#{OS.ListViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'BackImageIsTiledMask' -> 16r1.
-		'NoImageIndex' -> 16r0
-	}!
+			'BackImageIsTiledMask' -> 16r1.
+			'LvModes'
+				-> (IdentityDictionary withAll: {
+								#extraLargeIcons -> 16r0.
+								#largeIcons -> 16r0.
+								#list -> 16r3.
+								#report -> 16r1.
+								#smallIcons -> 16r2.
+								#thumbnails -> 16r0.
+								#tileIcons -> 16r0
+							}).
+			'NoImageIndex' -> 16r0
+		}!
 UI.ListView guid: (Core.GUID fromString: '{87b4c730-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.ListView comment: '`ListView` is the `<listView>` implementing the Windows "SysListView32" common control. It is for single selection use and, therefore, implements the `<selectableItems>` protocol for use with any `<listModel>`.
 

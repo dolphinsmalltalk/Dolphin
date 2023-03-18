@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Net.SocketError subclass: #'Net.SocketWaitCancelled'
+Net.SocketError
+	subclass: #'Net.SocketWaitCancelled'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

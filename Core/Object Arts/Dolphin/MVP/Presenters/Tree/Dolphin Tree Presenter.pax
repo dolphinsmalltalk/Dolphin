@@ -27,7 +27,8 @@ package!
 
 "Class Definitions"!
 
-UI.SelectableItemsPresenter subclass: #'UI.TreePresenter'
+UI.SelectableItemsPresenter
+	subclass: #'UI.TreePresenter'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

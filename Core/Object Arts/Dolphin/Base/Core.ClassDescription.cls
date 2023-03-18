@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Behavior subclass: #'Core.ClassDescription'
+Core.Behavior
+	subclass: #'Core.ClassDescription'
 	instanceVariableNames: 'instanceVariables methodsCatalogue protocols'
 	classVariableNames: ''
 	imports: #()

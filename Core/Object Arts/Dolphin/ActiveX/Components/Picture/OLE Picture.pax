@@ -36,44 +36,48 @@ package!
 
 "Class Definitions"!
 
-Graphics.Image subclass: #'OS.COM.Picture'
+Graphics.Image
+	subclass: #'OS.COM.Picture'
 	instanceVariableNames: 'picture extent hmExtent'
 	classVariableNames: ''
 	imports: #(#{Graphics})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.IUnknown subclass: #'OS.COM.IPicture'
+OS.COM.IUnknown
+	subclass: #'OS.COM.IPicture'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'PICTYPE_BITMAP' -> 16r1.
-		'PICTYPE_ENHMETAFILE' -> 16r4.
-		'PICTYPE_ICON' -> 16r3.
-		'PICTYPE_METAFILE' -> 16r2.
-		'PICTYPE_NONE' -> 16r0.
-		'PICTYPE_UNINITIALIZED' -> -16r1
-	}!
-OS.COM.IDispatch subclass: #'OS.COM.IPictureDisp'
+			'PICTYPE_BITMAP' -> 16r1.
+			'PICTYPE_ENHMETAFILE' -> 16r4.
+			'PICTYPE_ICON' -> 16r3.
+			'PICTYPE_METAFILE' -> 16r2.
+			'PICTYPE_NONE' -> 16r0.
+			'PICTYPE_UNINITIALIZED' -> -16r1
+		}!
+OS.COM.IDispatch
+	subclass: #'OS.COM.IPictureDisp'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.OLEStructure subclass: #'OS.COM.PICTDESC'
+OS.COM.OLEStructure
+	subclass: #'OS.COM.PICTDESC'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_dw1' -> 16rC.
-		'_OffsetOf_dw2' -> 16r10.
-		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_handle' -> 16r8.
-		'_OffsetOf_picType' -> 16r4.
-		'_PICTDESC_Size' -> 16r14
-	}!
+			'_OffsetOf_dw1' -> 16rC.
+			'_OffsetOf_dw2' -> 16r10.
+			'_OffsetOf_dwSize' -> 16r0.
+			'_OffsetOf_handle' -> 16r8.
+			'_OffsetOf_picType' -> 16r4.
+			'_PICTDESC_Size' -> 16r14
+		}!
 
 "Loose Methods"!
 

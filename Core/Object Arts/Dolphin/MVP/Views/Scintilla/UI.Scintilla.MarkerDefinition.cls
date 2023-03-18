@@ -1,11 +1,23 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Scintilla.Attribute subclass: #'UI.Scintilla.MarkerDefinition'
+UI.Scintilla.Attribute
+	subclass: #'UI.Scintilla.MarkerDefinition'
 	instanceVariableNames: 'code forecolor backcolor view name alpha selectionBackcolor strokeWidth layerCode _reserved11 _reserved12'
-	classVariableNames: 'Alpha Backcolor FolderNames Forecolor GlyphName Layer SelectionBackcolor StrokeWidth'
+	classVariableNames: 'Alpha Backcolor Forecolor GlyphName Layer SelectionBackcolor StrokeWidth'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'FolderNames'
+				-> (IdentityDictionary withAll: {
+								#folder -> 16r1E.
+								#folderEnd -> 16r19.
+								#folderMidTail -> 16r1B.
+								#folderOpen -> 16r1F.
+								#folderOpenMid -> 16r1A.
+								#folderSub -> 16r1D.
+								#folderTail -> 16r1C
+							})
+		}!
 UI.Scintilla.MarkerDefinition guid: (Core.GUID fromString: '{6191c503-f964-4afb-9973-c2106886ccf9}')!
 UI.Scintilla.MarkerDefinition comment: '`ScintillaMarkerDefinition` instances represent the configured types of `ScintillaMarker`s for a particular `ScintillaView`.
 

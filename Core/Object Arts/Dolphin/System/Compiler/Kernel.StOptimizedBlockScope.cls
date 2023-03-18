@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.StBlockScope subclass: #'Kernel.StOptimizedBlockScope'
+Kernel.StBlockScope
+	subclass: #'Kernel.StOptimizedBlockScope'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

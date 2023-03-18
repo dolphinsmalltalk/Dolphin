@@ -64,13 +64,15 @@ package!
 
 "Class Definitions"!
 
-UI.TextDocument subclass: #'UI.Examples.Notepad'
+UI.TextDocument
+	subclass: #'UI.Examples.Notepad'
 	instanceVariableNames: ''
 	classVariableNames: 'ResourceLib'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.RuntimeSessionManager subclass: #'UI.Examples.NotepadSessionManager'
+UI.RuntimeSessionManager
+	subclass: #'UI.Examples.NotepadSessionManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

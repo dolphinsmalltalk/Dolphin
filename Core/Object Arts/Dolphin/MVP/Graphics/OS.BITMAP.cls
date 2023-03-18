@@ -1,20 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.BITMAP'
+OS.Win32Structure
+	subclass: #'OS.BITMAP'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_BITMAP_Size' -> 16r18.
-		'_OffsetOf_bmBits' -> 16r14.
-		'_OffsetOf_bmBitsPixel' -> 16r12.
-		'_OffsetOf_bmHeight' -> 16r8.
-		'_OffsetOf_bmPlanes' -> 16r10.
-		'_OffsetOf_bmType' -> 16r0.
-		'_OffsetOf_bmWidth' -> 16r4.
-		'_OffsetOf_bmWidthBytes' -> 16rC
-	}!
+			'_BITMAP_Size' -> 16r18.
+			'_OffsetOf_bmBits' -> 16r14.
+			'_OffsetOf_bmBitsPixel' -> 16r12.
+			'_OffsetOf_bmHeight' -> 16r8.
+			'_OffsetOf_bmPlanes' -> 16r10.
+			'_OffsetOf_bmType' -> 16r0.
+			'_OffsetOf_bmWidth' -> 16r4.
+			'_OffsetOf_bmWidthBytes' -> 16rC
+		}!
 OS.BITMAP guid: (Core.GUID fromString: '{f44c9143-2b3f-11d3-8368-7a8b5a000000}')!
 OS.BITMAP comment: 'BITMAP is an <ExternalStructure> class to represent the Win32 structure of the same name.
 

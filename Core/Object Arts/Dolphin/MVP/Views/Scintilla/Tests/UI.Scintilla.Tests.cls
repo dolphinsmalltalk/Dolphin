@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Scintilla subclass: #'UI.Scintilla.Tests'
+UI.Scintilla
+	subclass: #'UI.Scintilla.Tests'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{XProgramming.SUnit})

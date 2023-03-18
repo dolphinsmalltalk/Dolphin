@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Tools.Scintilla.TypeReference'
+Core.Object
+	subclass: #'Tools.Scintilla.TypeReference'
 	instanceVariableNames: ''
 	classVariableNames: 'Enums TypeMap'
 	imports: #()

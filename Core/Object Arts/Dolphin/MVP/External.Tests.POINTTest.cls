@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Tests.AbstractPointTest subclass: #'External.Tests.POINTTest'
+Graphics.Tests.AbstractPointTest
+	subclass: #'External.Tests.POINTTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{Graphics private})

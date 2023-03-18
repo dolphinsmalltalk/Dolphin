@@ -1,18 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMRGRADIENTFILL'
+OS.ENHMETARECORD
+	subclass: #'OS.EMRGRADIENTFILL'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_EMRGRADIENTFILL_Size' -> 16r34.
-		'_OffsetOf_nTri' -> 16r1C.
-		'_OffsetOf_nVer' -> 16r18.
-		'_OffsetOf_rclBounds' -> 16r8.
-		'_OffsetOf_ulMode' -> 16r20.
-		'_OffsetOf_Ver' -> 16r24
-	}!
+			'_EMRGRADIENTFILL_Size' -> 16r34.
+			'_OffsetOf_nTri' -> 16r1C.
+			'_OffsetOf_nVer' -> 16r18.
+			'_OffsetOf_rclBounds' -> 16r8.
+			'_OffsetOf_ulMode' -> 16r20.
+			'_OffsetOf_Ver' -> 16r24
+		}!
 OS.EMRGRADIENTFILL guid: (Core.GUID fromString: '{1302823f-242e-4301-b5eb-ee7a20a4b787}')!
 OS.EMRGRADIENTFILL comment: '<EMRGRADIENTFILL> is an <ExternalStructure> class to wrap the struct ''Win32.EMRGRADIENTFILL'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

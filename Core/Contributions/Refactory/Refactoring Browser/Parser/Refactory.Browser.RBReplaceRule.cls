@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.RBParseTreeRule subclass: #'Refactory.Browser.RBReplaceRule'
+Refactory.Browser.RBParseTreeRule
+	subclass: #'Refactory.Browser.RBReplaceRule'
 	instanceVariableNames: 'verificationBlock'
 	classVariableNames: ''
 	imports: #()

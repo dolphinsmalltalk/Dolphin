@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.InterfaceTypeAnalyzer subclass: #'OS.COM.TKindDispatchAnalyzer'
+OS.COM.InterfaceTypeAnalyzer
+	subclass: #'OS.COM.TKindDispatchAnalyzer'
 	instanceVariableNames: ''
 	classVariableNames: 'SpecialPropGets'
 	imports: #()

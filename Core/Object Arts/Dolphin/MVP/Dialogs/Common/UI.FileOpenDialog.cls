@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.FileDialog subclass: #'UI.FileOpenDialog'
+UI.FileDialog
+	subclass: #'UI.FileOpenDialog'
 	instanceVariableNames: 'maxFileCount'
 	classVariableNames: ''
 	imports: #()

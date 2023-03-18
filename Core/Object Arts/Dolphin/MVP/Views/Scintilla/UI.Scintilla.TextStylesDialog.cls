@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ValueDialog subclass: #'UI.Scintilla.TextStylesDialog'
+UI.ValueDialog
+	subclass: #'UI.Scintilla.TextStylesDialog'
 	instanceVariableNames: 'stylesPresenter'
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.RuntimeSessionManager subclass: #'UI.Examples.XmlPadSessionManager'
+UI.RuntimeSessionManager
+	subclass: #'UI.Examples.XmlPadSessionManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

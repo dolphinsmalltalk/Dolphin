@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-MSXML.XmlDomVisitor subclass: #'MSXML.XmlFormatter'
+MSXML.XmlDomVisitor
+	subclass: #'MSXML.XmlFormatter'
 	instanceVariableNames: 'stream indent line newlineNeeded'
 	classVariableNames: ''
 	imports: #()

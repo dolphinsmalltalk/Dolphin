@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.MessageSendAbstract subclass: #'Core.MessageSend'
+Core.MessageSendAbstract
+	subclass: #'Core.MessageSend'
 	instanceVariableNames: 'receiver'
 	classVariableNames: 'EmptySend'
 	imports: #()

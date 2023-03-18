@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.AbstractSTBOutFiler subclass: #'Kernel.STLOutFiler'
+Kernel.AbstractSTBOutFiler
+	subclass: #'Kernel.STLOutFiler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

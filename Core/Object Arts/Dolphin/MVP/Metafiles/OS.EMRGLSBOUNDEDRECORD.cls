@@ -1,16 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMRGLSBOUNDEDRECORD'
+OS.ENHMETARECORD
+	subclass: #'OS.EMRGLSBOUNDEDRECORD'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_EMRGLSBOUNDEDRECORD_Size' -> 16r20.
-		'_OffsetOf_cbData' -> 16r18.
-		'_OffsetOf_Data' -> 16r1C.
-		'_OffsetOf_rclBounds' -> 16r8
-	}!
+			'_EMRGLSBOUNDEDRECORD_Size' -> 16r20.
+			'_OffsetOf_cbData' -> 16r18.
+			'_OffsetOf_Data' -> 16r1C.
+			'_OffsetOf_rclBounds' -> 16r8
+		}!
 OS.EMRGLSBOUNDEDRECORD guid: (Core.GUID fromString: '{0814602c-a45e-4098-9b9b-833717f75760}')!
 OS.EMRGLSBOUNDEDRECORD comment: '<EMRGLSBOUNDEDRECORD> is an <ExternalStructure> class to wrap the struct ''Win32.EMRGLSBOUNDEDRECORD'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

@@ -52,178 +52,192 @@ package!
 
 "Class Definitions"!
 
-Kernel.SharedPool subclass: #'OS.COM.PersistConstants'
+Kernel.SharedPool
+	subclass: #'OS.COM.PersistConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'ADVF_DATAONSTOP' -> 16r40.
-		'ADVF_NODATA' -> 16r1.
-		'ADVF_ONLYONCE' -> 16r4.
-		'ADVF_PRIMEFIRST' -> 16r2.
-		'ADVFCACHE_FORCEBUILTIN' -> 16r10.
-		'ADVFCACHE_NOHANDLER' -> 16r8.
-		'ADVFCACHE_ONSAVE' -> 16r20.
-		'DATADIR_GET' -> 16r1.
-		'DATADIR_SET' -> 16r2.
-		'TYMED_ENHMF' -> 16r40.
-		'TYMED_FILE' -> 16r2.
-		'TYMED_GDI' -> 16r10.
-		'TYMED_HGLOBAL' -> 16r1.
-		'TYMED_ISTORAGE' -> 16r8.
-		'TYMED_ISTREAM' -> 16r4.
-		'TYMED_MFPICT' -> 16r20.
-		'TYMED_NULL' -> 16r0
-	}!
-OS.COM.IUnknown subclass: #'OS.COM.IAdviseSink'
+			'ADVF_DATAONSTOP' -> 16r40.
+			'ADVF_NODATA' -> 16r1.
+			'ADVF_ONLYONCE' -> 16r4.
+			'ADVF_PRIMEFIRST' -> 16r2.
+			'ADVFCACHE_FORCEBUILTIN' -> 16r10.
+			'ADVFCACHE_NOHANDLER' -> 16r8.
+			'ADVFCACHE_ONSAVE' -> 16r20.
+			'DATADIR_GET' -> 16r1.
+			'DATADIR_SET' -> 16r2.
+			'TYMED_ENHMF' -> 16r40.
+			'TYMED_FILE' -> 16r2.
+			'TYMED_GDI' -> 16r10.
+			'TYMED_HGLOBAL' -> 16r1.
+			'TYMED_ISTORAGE' -> 16r8.
+			'TYMED_ISTREAM' -> 16r4.
+			'TYMED_MFPICT' -> 16r20.
+			'TYMED_NULL' -> 16r0
+		}!
+OS.COM.IUnknown
+	subclass: #'OS.COM.IAdviseSink'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.IUnknown subclass: #'OS.COM.IBindCtx'
+OS.COM.IUnknown
+	subclass: #'OS.COM.IBindCtx'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.IUnknown subclass: #'OS.COM.IDataObject'
+OS.COM.IUnknown
+	subclass: #'OS.COM.IDataObject'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.IUnknown subclass: #'OS.COM.IRunningObjectTable'
+OS.COM.IUnknown
+	subclass: #'OS.COM.IRunningObjectTable'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.IAdviseSink subclass: #'OS.COM.IAdviseSink2'
+OS.COM.IAdviseSink
+	subclass: #'OS.COM.IAdviseSink2'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.IAdviseSink subclass: #'OS.COM.IAdviseSinkEx'
+OS.COM.IAdviseSink
+	subclass: #'OS.COM.IAdviseSinkEx'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.IEnumUnknown subclass: #'OS.COM.IEnumMoniker'
+OS.COM.IEnumUnknown
+	subclass: #'OS.COM.IEnumMoniker'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.IPersistStream subclass: #'OS.COM.IMoniker'
+OS.COM.IPersistStream
+	subclass: #'OS.COM.IMoniker'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.OLEStructure subclass: #'OS.COM.BIND_OPTS'
+OS.COM.OLEStructure
+	subclass: #'OS.COM.BIND_OPTS'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_BIND_OPTS_Size' -> 16r10.
-		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_dwTickCountDeadline' -> 16rC.
-		'_OffsetOf_grfFlags' -> 16r4.
-		'_OffsetOf_grfMode' -> 16r8
-	}!
-OS.COM.OLEStructure subclass: #'OS.COM.BINDINFO'
+			'_BIND_OPTS_Size' -> 16r10.
+			'_OffsetOf_dwSize' -> 16r0.
+			'_OffsetOf_dwTickCountDeadline' -> 16rC.
+			'_OffsetOf_grfFlags' -> 16r4.
+			'_OffsetOf_grfMode' -> 16r8
+		}!
+OS.COM.OLEStructure
+	subclass: #'OS.COM.BINDINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_BINDINFO_Size' -> 16r24.
-		'_OffsetOf_cbstgmedData' -> 16r20.
-		'_OffsetOf_dwBindVerb' -> 16r18.
-		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_grfBindInfoF' -> 16r14.
-		'_OffsetOf_stgmedData' -> 16r8.
-		'_OffsetOf_szCustomVerb' -> 16r1C.
-		'_OffsetOf_szExtraInfo' -> 16r4
-	}!
-OS.COM.OLEStructure subclass: #'OS.COM.DVTARGETDEVICE'
+			'_BINDINFO_Size' -> 16r24.
+			'_OffsetOf_cbstgmedData' -> 16r20.
+			'_OffsetOf_dwBindVerb' -> 16r18.
+			'_OffsetOf_dwSize' -> 16r0.
+			'_OffsetOf_grfBindInfoF' -> 16r14.
+			'_OffsetOf_stgmedData' -> 16r8.
+			'_OffsetOf_szCustomVerb' -> 16r1C.
+			'_OffsetOf_szExtraInfo' -> 16r4
+		}!
+OS.COM.OLEStructure
+	subclass: #'OS.COM.DVTARGETDEVICE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_DVTARGETDEVICE_Size' -> 16rC.
-		'_OffsetOf_tdDeviceNameOffset' -> 16r6.
-		'_OffsetOf_tdDriverNameOffset' -> 16r4.
-		'_OffsetOf_tdExtDevmodeOffset' -> 16rA.
-		'_OffsetOf_tdPortNameOffset' -> 16r8.
-		'_OffsetOf_tdSize' -> 16r0
-	}!
-OS.COM.OLEStructure subclass: #'OS.COM.FORMATETC'
+			'_DVTARGETDEVICE_Size' -> 16rC.
+			'_OffsetOf_tdDeviceNameOffset' -> 16r6.
+			'_OffsetOf_tdDriverNameOffset' -> 16r4.
+			'_OffsetOf_tdExtDevmodeOffset' -> 16rA.
+			'_OffsetOf_tdPortNameOffset' -> 16r8.
+			'_OffsetOf_tdSize' -> 16r0
+		}!
+OS.COM.OLEStructure
+	subclass: #'OS.COM.FORMATETC'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_FORMATETC_Size' -> 16r14.
-		'_OffsetOf_cfFormat' -> 16r0.
-		'_OffsetOf_dwAspect' -> 16r8.
-		'_OffsetOf_lindex' -> 16rC.
-		'_OffsetOf_ptd' -> 16r4.
-		'_OffsetOf_tymed' -> 16r10
-	}!
-OS.COM.OLEStructure subclass: #'OS.COM.STATDATA'
+			'_FORMATETC_Size' -> 16r14.
+			'_OffsetOf_cfFormat' -> 16r0.
+			'_OffsetOf_dwAspect' -> 16r8.
+			'_OffsetOf_lindex' -> 16rC.
+			'_OffsetOf_ptd' -> 16r4.
+			'_OffsetOf_tymed' -> 16r10
+		}!
+OS.COM.OLEStructure
+	subclass: #'OS.COM.STATDATA'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_advf' -> 16r14.
-		'_OffsetOf_dwConnection' -> 16r1C.
-		'_OffsetOf_formatetc' -> 16r0.
-		'_OffsetOf_pAdvSink' -> 16r18.
-		'_STATDATA_Size' -> 16r20
-	}!
-OS.COM.BIND_OPTS subclass: #'OS.COM.BIND_OPTS2'
+			'_OffsetOf_advf' -> 16r14.
+			'_OffsetOf_dwConnection' -> 16r1C.
+			'_OffsetOf_formatetc' -> 16r0.
+			'_OffsetOf_pAdvSink' -> 16r18.
+			'_STATDATA_Size' -> 16r20
+		}!
+OS.COM.BIND_OPTS
+	subclass: #'OS.COM.BIND_OPTS2'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_BIND_OPTS2_Size' -> 16r20.
-		'_OffsetOf_dwClassContext' -> 16r14.
-		'_OffsetOf_dwTrackFlags' -> 16r10.
-		'_OffsetOf_locale' -> 16r18.
-		'_OffsetOf_pServerInfo' -> 16r1C
-	}!
-OS.COM.BIND_OPTS2 subclass: #'OS.COM.BIND_OPTS3'
+			'_BIND_OPTS2_Size' -> 16r20.
+			'_OffsetOf_dwClassContext' -> 16r14.
+			'_OffsetOf_dwTrackFlags' -> 16r10.
+			'_OffsetOf_locale' -> 16r18.
+			'_OffsetOf_pServerInfo' -> 16r1C
+		}!
+OS.COM.BIND_OPTS2
+	subclass: #'OS.COM.BIND_OPTS3'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_BIND_OPTS3_Size' -> 16r24.
-		'_OffsetOf_hwnd' -> 16r20
-	}!
-OS.COM.FinalizableStructure subclass: #'OS.COM.STGMEDIUM'
+	classConstants: { '_BIND_OPTS3_Size' -> 16r24. '_OffsetOf_hwnd' -> 16r20 }!
+OS.COM.FinalizableStructure
+	subclass: #'OS.COM.STGMEDIUM'
 	instanceVariableNames: 'value'
 	classVariableNames: 'GetSelectors'
 	imports: #(#{OS.COM.PersistConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_handle' -> 16r4.
-		'_OffsetOf_lpszFileName' -> 16r4.
-		'_OffsetOf_pstg' -> 16r4.
-		'_OffsetOf_pstm' -> 16r4.
-		'_OffsetOf_pUnkForRelease' -> 16r8.
-		'_OffsetOf_tymed' -> 16r0.
-		'_STGMEDIUM_Size' -> 16rC
-	}!
+			'_OffsetOf_handle' -> 16r4.
+			'_OffsetOf_lpszFileName' -> 16r4.
+			'_OffsetOf_pstg' -> 16r4.
+			'_OffsetOf_pstm' -> 16r4.
+			'_OffsetOf_pUnkForRelease' -> 16r8.
+			'_OffsetOf_tymed' -> 16r0.
+			'_STGMEDIUM_Size' -> 16rC
+		}!
 
 "Loose Methods"!
 

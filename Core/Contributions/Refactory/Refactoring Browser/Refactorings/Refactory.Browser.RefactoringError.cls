@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Error subclass: #'Refactory.Browser.RefactoringError'
+Core.Error
+	subclass: #'Refactory.Browser.RefactoringError'
 	instanceVariableNames: 'refactoring'
 	classVariableNames: ''
 	imports: #()

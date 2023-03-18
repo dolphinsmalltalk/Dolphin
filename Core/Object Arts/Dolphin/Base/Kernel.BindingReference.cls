@@ -1,19 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Kernel.BindingReference'
+Core.Object
+	subclass: #'Kernel.BindingReference'
 	instanceVariableNames: ''
 	classVariableNames: 'Generation Undeclared'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'MetaMask' -> 16r1.
-		'PathSeparator' -> $..
-		'PathSeparatorString' -> '.'.
-		'PrivateMask' -> 16r2.
-		'RelativeMask' -> 16r4.
-		'RelativePathPrefix' -> '_'.
-		'RelativePathStringPrefix' -> '_.'
-	}!
+			'MetaMask' -> 16r1.
+			'PathSeparator' -> $..
+			'PathSeparatorString' -> '.'.
+			'PrivateMask' -> 16r2.
+			'RelativeMask' -> 16r4.
+			'RelativePathPrefix' -> '_'.
+			'RelativePathStringPrefix' -> '_.'
+		}!
 Kernel.BindingReference guid: (Core.GUID fromString: '{2d52489e-7275-4df4-9022-294a7b2f9381}')!
 Kernel.BindingReference isNonInstantiable: true!
 Kernel.BindingReference comment: '`BindingReference` is the abstract superclass of binding reference objects.

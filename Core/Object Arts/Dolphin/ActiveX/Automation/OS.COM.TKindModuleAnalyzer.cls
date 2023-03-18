@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.APIInfoAnalyzer subclass: #'OS.COM.TKindModuleAnalyzer'
+OS.COM.APIInfoAnalyzer
+	subclass: #'OS.COM.TKindModuleAnalyzer'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2CompletedHandler subclass: #'WebView2.ICoreWebView2PrintCompletedHandler'
+WebView2.ICoreWebView2CompletedHandler
+	subclass: #'WebView2.ICoreWebView2PrintCompletedHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

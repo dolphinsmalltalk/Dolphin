@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.StaticText subclass: #'UI.StaticPath'
+UI.StaticText
+	subclass: #'UI.StaticPath'
 	instanceVariableNames: 'text'
 	classVariableNames: ''
 	imports: #()

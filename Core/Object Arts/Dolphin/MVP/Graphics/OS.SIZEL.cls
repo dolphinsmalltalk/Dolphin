@@ -1,15 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.SIZE subclass: #'OS.SIZEL'
+External.SIZE
+	subclass: #'OS.SIZEL'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_OffsetOf_cx' -> 16r0.
-		'_OffsetOf_cy' -> 16r4.
-		'_SIZEL_Size' -> 16r8
-	}!
+	classConstants: { '_OffsetOf_cx' -> 16r0. '_OffsetOf_cy' -> 16r4. '_SIZEL_Size' -> 16r8 }!
 OS.SIZEL guid: (Core.GUID fromString: '{3bfb9cb3-8eba-450f-9479-ba75abeb8463}')!
 OS.SIZEL comment: '`SIZE` is an `ExternalStructure` class to wrap the standard Win32 structure of the same name. `SIZE` is used in many places to represent a 2-dimensional distance where the x and y dimensions are expressed as 32-bit signed integers. `SIZEL` is an alias for the same class/structure.'!
 !OS.SIZEL categoriesForClass!Win32-Structs! !

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.SessionManager subclass: #'Kernel.AXDllSessionManager'
+Core.SessionManager
+	subclass: #'Kernel.AXDllSessionManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

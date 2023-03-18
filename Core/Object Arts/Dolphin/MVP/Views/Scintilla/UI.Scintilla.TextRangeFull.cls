@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.AbstractTEXTRANGE subclass: #'UI.Scintilla.TextRangeFull'
+OS.AbstractTEXTRANGE
+	subclass: #'UI.Scintilla.TextRangeFull'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_chrg' -> 16r0.
-		'_OffsetOf_lpstrText' -> 16r8.
-		'_TextRangeFull_Size' -> 16rC
-	}!
+			'_OffsetOf_chrg' -> 16r0.
+			'_OffsetOf_lpstrText' -> 16r8.
+			'_TextRangeFull_Size' -> 16rC
+		}!
 UI.Scintilla.TextRangeFull guid: (Core.GUID fromString: '{80bf6d59-182f-4d0c-97b2-4cd275856536}')!
 UI.Scintilla.TextRangeFull comment: ''!
 !UI.Scintilla.TextRangeFull methodsFor!

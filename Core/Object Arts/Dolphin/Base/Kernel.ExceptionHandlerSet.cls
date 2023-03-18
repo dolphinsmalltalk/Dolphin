@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.ExceptionHandlerAbstract subclass: #'Kernel.ExceptionHandlerSet'
+Kernel.ExceptionHandlerAbstract
+	subclass: #'Kernel.ExceptionHandlerSet'
 	instanceVariableNames: 'handlers'
 	classVariableNames: ''
 	imports: #()

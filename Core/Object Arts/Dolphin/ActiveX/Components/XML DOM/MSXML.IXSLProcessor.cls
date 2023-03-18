@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IDispatch subclass: #'MSXML.IXSLProcessor'
+OS.COM.IDispatch
+	subclass: #'MSXML.IXSLProcessor'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

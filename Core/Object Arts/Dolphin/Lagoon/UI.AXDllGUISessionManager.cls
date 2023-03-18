@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.GUISessionManager subclass: #'UI.AXDllGUISessionManager'
+UI.GUISessionManager
+	subclass: #'UI.AXDllGUISessionManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

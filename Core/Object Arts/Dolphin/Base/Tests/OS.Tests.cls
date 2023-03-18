@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS subclass: #'OS.Tests'
+OS
+	subclass: #'OS.Tests'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

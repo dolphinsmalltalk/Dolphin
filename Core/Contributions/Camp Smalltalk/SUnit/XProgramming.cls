@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.Namespace subclass: #XProgramming
+Kernel.Namespace
+	subclass: #XProgramming
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{Core})

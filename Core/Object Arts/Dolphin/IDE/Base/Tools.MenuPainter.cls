@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Tools.MenuPainter'
+Core.Object
+	subclass: #'Tools.MenuPainter'
 	instanceVariableNames: 'menu conflictingMnemonics conflictingAccelerators'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants private} #{OS private})

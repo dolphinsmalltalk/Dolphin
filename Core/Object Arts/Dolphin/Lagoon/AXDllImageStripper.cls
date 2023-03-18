@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ImageStripper subclass: #AXDllImageStripper
+ImageStripper
+	subclass: #AXDllImageStripper
 	instanceVariableNames: 'typeLibPath'
 	classVariableNames: ''
 	imports: #(#{OS.COM private})

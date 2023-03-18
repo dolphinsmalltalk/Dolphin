@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMRSETCOLORSPACE'
+OS.ENHMETARECORD
+	subclass: #'OS.EMRSETCOLORSPACE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_EMRSETCOLORSPACE_Size' -> 16rC.
-		'_OffsetOf_ihCS' -> 16r8
-	}!
+	classConstants: { '_EMRSETCOLORSPACE_Size' -> 16rC. '_OffsetOf_ihCS' -> 16r8 }!
 OS.EMRSETCOLORSPACE guid: (Core.GUID fromString: '{619bf7a2-5722-4d4b-843e-a482ed1e1b39}')!
 OS.EMRSETCOLORSPACE comment: '<EMRSETCOLORSPACE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETCOLORSPACE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

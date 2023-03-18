@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Security.SecureHashAlgorithm'
+Core.Object
+	subclass: #'Security.SecureHashAlgorithm'
 	instanceVariableNames: 'context'
 	classVariableNames: ''
 	imports: #()

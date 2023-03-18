@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.AbstractCHARRANGE subclass: #'UI.Scintilla.CharacterRangeFull'
+OS.AbstractCHARRANGE
+	subclass: #'UI.Scintilla.CharacterRangeFull'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_CharacterRangeFull_Size' -> 16r8.
-		'_OffsetOf_cpMax' -> 16r4.
-		'_OffsetOf_cpMin' -> 16r0
-	}!
+			'_CharacterRangeFull_Size' -> 16r8.
+			'_OffsetOf_cpMax' -> 16r4.
+			'_OffsetOf_cpMin' -> 16r0
+		}!
 UI.Scintilla.CharacterRangeFull guid: (Core.GUID fromString: '{70f3e4b8-de34-4813-8084-760a0998595d}')!
 UI.Scintilla.CharacterRangeFull comment: ''!
 !UI.Scintilla.CharacterRangeFull methodsFor!

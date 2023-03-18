@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_TIMEOUT_SET'
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_TIMEOUT_SET'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_SERVICE_CONFIG_TIMEOUT_SET_Size' -> 16r8.
-		'_OffsetOf_KeyDesc' -> 16r0.
-		'_OffsetOf_ParamDesc' -> 16r4
-	}!
+			'_HTTP_SERVICE_CONFIG_TIMEOUT_SET_Size' -> 16r8.
+			'_OffsetOf_KeyDesc' -> 16r0.
+			'_OffsetOf_ParamDesc' -> 16r4
+		}!
 WinHttpServer.HTTP_SERVICE_CONFIG_TIMEOUT_SET guid: (Core.GUID fromString: '{6f4abcfc-2a59-4996-a958-5de93dc64213}')!
 WinHttpServer.HTTP_SERVICE_CONFIG_TIMEOUT_SET comment: '`HTTP_SERVICE_CONFIG_TIMEOUT_SET` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_TIMEOUT_SET'' from type information in the ''Windows Http Server API'' library.
 

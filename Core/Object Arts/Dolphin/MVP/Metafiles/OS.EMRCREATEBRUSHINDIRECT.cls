@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMRCREATEBRUSHINDIRECT'
+OS.ENHMETARECORD
+	subclass: #'OS.EMRCREATEBRUSHINDIRECT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_EMRCREATEBRUSHINDIRECT_Size' -> 16r18.
-		'_OffsetOf_ihBrush' -> 16r8.
-		'_OffsetOf_lb' -> 16rC
-	}!
+			'_EMRCREATEBRUSHINDIRECT_Size' -> 16r18.
+			'_OffsetOf_ihBrush' -> 16r8.
+			'_OffsetOf_lb' -> 16rC
+		}!
 OS.EMRCREATEBRUSHINDIRECT guid: (Core.GUID fromString: '{491c3d56-fbf6-4cd9-8ea2-30cdf342f656}')!
 OS.EMRCREATEBRUSHINDIRECT comment: '<EMRCREATEBRUSHINDIRECT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRCREATEBRUSHINDIRECT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

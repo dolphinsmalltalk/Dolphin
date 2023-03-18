@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.View subclass: #'UI.DoubleBufferedView'
+UI.View
+	subclass: #'UI.DoubleBufferedView'
 	instanceVariableNames: 'backSurface requiresRender'
 	classVariableNames: ''
 	imports: #()

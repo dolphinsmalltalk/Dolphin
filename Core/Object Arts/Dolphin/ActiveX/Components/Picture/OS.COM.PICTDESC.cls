@@ -1,18 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.OLEStructure subclass: #'OS.COM.PICTDESC'
+OS.COM.OLEStructure
+	subclass: #'OS.COM.PICTDESC'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_dw1' -> 16rC.
-		'_OffsetOf_dw2' -> 16r10.
-		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_handle' -> 16r8.
-		'_OffsetOf_picType' -> 16r4.
-		'_PICTDESC_Size' -> 16r14
-	}!
+			'_OffsetOf_dw1' -> 16rC.
+			'_OffsetOf_dw2' -> 16r10.
+			'_OffsetOf_dwSize' -> 16r0.
+			'_OffsetOf_handle' -> 16r8.
+			'_OffsetOf_picType' -> 16r4.
+			'_PICTDESC_Size' -> 16r14
+		}!
 OS.COM.PICTDESC guid: (Core.GUID fromString: '{a1a65a80-aef9-11d3-b376-080046056106}')!
 OS.COM.PICTDESC comment: ''!
 !OS.COM.PICTDESC methodsFor!

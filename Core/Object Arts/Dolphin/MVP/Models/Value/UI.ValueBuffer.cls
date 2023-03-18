@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ValueHolder subclass: #'UI.ValueBuffer'
+UI.ValueHolder
+	subclass: #'UI.ValueBuffer'
 	instanceVariableNames: 'subject modified gate validater'
 	classVariableNames: ''
 	imports: #()

@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Tools.Examples.OAIDEExtensions'
+Core.Object
+	subclass: #'Tools.Examples.OAIDEExtensions'
 	instanceVariableNames: 'flags'
 	classVariableNames: 'Current'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'ClassCommentTemplateMask' -> 16r1.
-		'KeyHelpMask' -> 16r2
-	}!
+	classConstants: { 'ClassCommentTemplateMask' -> 16r1. 'KeyHelpMask' -> 16r2 }!
 Tools.Examples.OAIDEExtensions guid: (Core.GUID fromString: '{7803cf6a-7f63-44a5-80a6-feb5e0af07a2}')!
 Tools.Examples.OAIDEExtensions comment: 'Class to host Object Arts extensions to the standard Dolphin IDE tools.
 

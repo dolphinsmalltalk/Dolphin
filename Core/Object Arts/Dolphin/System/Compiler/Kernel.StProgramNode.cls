@@ -1,14 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Kernel.StProgramNode'
+Core.Object
+	subclass: #'Kernel.StProgramNode'
 	instanceVariableNames: 'parent comments scope'
 	classVariableNames: 'FormatterClass SuperSearch'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'InlinedBlockSelectors' -> #(#ifTrue: #ifTrue:ifFalse: #ifFalse: #ifFalse:ifTrue: #whileTrue: #whileTrue #whileFalse: #whileFalse #to:do: #to:by:do: #and: #or: #repeat #ifNil: #ifNotNil: #ifNil:ifNotNil: #ifNotNil:ifNil:).
-		'OptimizedSelectors' -> #(#ifTrue: #ifTrue:ifFalse: #ifFalse: #ifFalse:ifTrue: #whileTrue: #whileTrue #whileFalse: #whileFalse #to:do: #to:by:do: #and: #or: #repeat #ifNil: #ifNotNil: #ifNil:ifNotNil: #ifNotNil:ifNil: #yourself)
-	}!
+			'InlinedBlockSelectors'
+				-> #(#ifTrue: #ifTrue:ifFalse: #ifFalse: #ifFalse:ifTrue: #whileTrue: #whileTrue #whileFalse: #whileFalse #to:do: #to:by:do: #and: #or: #repeat #ifNil: #ifNotNil: #ifNil:ifNotNil: #ifNotNil:ifNil:).
+			'OptimizedSelectors'
+				-> #(#ifTrue: #ifTrue:ifFalse: #ifFalse: #ifFalse:ifTrue: #whileTrue: #whileTrue #whileFalse: #whileFalse #to:do: #to:by:do: #and: #or: #repeat #ifNil: #ifNotNil: #ifNil:ifNotNil: #ifNotNil:ifNil: #yourself)
+		}!
 Kernel.StProgramNode guid: (Core.GUID fromString: '{3e45084e-5de8-40c0-b448-c53339a17b52}')!
 Kernel.StProgramNode isNonInstantiable: true!
 Kernel.StProgramNode comment: 'StProgramNode is an abstract class that represents a parse tree node in a Smalltalk program.

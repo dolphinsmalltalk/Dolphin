@@ -1,23 +1,24 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.MSGBOXPARAMSW'
+OS.Win32Structure
+	subclass: #'OS.MSGBOXPARAMSW'
 	instanceVariableNames: 'text caption'
 	classVariableNames: ''
 	imports: #(#{OS.MessageBoxConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_MSGBOXPARAMSW_Size' -> 16r28.
-		'_OffsetOf_dwContextHelpId' -> 16r1C.
-		'_OffsetOf_dwLanguageId' -> 16r24.
-		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_dwStyle' -> 16r14.
-		'_OffsetOf_hInstance' -> 16r8.
-		'_OffsetOf_hwndOwner' -> 16r4.
-		'_OffsetOf_lpfnMsgBoxCallback' -> 16r20.
-		'_OffsetOf_lpszCaption' -> 16r10.
-		'_OffsetOf_lpszIcon' -> 16r18.
-		'_OffsetOf_lpszText' -> 16rC
-	}!
+			'_MSGBOXPARAMSW_Size' -> 16r28.
+			'_OffsetOf_dwContextHelpId' -> 16r1C.
+			'_OffsetOf_dwLanguageId' -> 16r24.
+			'_OffsetOf_dwSize' -> 16r0.
+			'_OffsetOf_dwStyle' -> 16r14.
+			'_OffsetOf_hInstance' -> 16r8.
+			'_OffsetOf_hwndOwner' -> 16r4.
+			'_OffsetOf_lpfnMsgBoxCallback' -> 16r20.
+			'_OffsetOf_lpszCaption' -> 16r10.
+			'_OffsetOf_lpszIcon' -> 16r18.
+			'_OffsetOf_lpszText' -> 16rC
+		}!
 OS.MSGBOXPARAMSW guid: (Core.GUID fromString: '{87b4c600-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.MSGBOXPARAMSW comment: 'MSGBOXPARAMS is an <ExternalStructure> class which represents the Windows structure of the same name.
 

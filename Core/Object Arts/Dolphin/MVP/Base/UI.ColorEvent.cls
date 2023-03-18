@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.WindowsEvent subclass: #'UI.ColorEvent'
+UI.WindowsEvent
+	subclass: #'UI.ColorEvent'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

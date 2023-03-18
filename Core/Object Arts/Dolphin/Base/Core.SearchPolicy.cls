@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Core.SearchPolicy'
+Core.Object
+	subclass: #'Core.SearchPolicy'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

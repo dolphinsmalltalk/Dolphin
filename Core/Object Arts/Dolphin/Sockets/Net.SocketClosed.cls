@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Net.SocketError subclass: #'Net.SocketClosed'
+Net.SocketError
+	subclass: #'Net.SocketClosed'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

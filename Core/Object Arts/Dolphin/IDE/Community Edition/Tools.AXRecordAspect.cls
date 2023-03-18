@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.AXAutomationAspect subclass: #'Tools.AXRecordAspect'
+Tools.AXAutomationAspect
+	subclass: #'Tools.AXRecordAspect'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

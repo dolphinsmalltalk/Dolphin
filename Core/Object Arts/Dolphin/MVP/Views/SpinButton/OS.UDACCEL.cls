@@ -1,15 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.UDACCEL'
+OS.Win32Structure
+	subclass: #'OS.UDACCEL'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_OffsetOf_nInc' -> 16r4.
-		'_OffsetOf_nSec' -> 16r0.
-		'_UDACCEL_Size' -> 16r8
-	}!
+	classConstants: { '_OffsetOf_nInc' -> 16r4. '_OffsetOf_nSec' -> 16r0. '_UDACCEL_Size' -> 16r8 }!
 OS.UDACCEL guid: (Core.GUID fromString: '{425d0ea4-542e-11d3-998b-d5ca2c3c1d61}')!
 OS.UDACCEL comment: '<UDACCEL> is an <ExternalStructure> class to wrap the struct ''UpDownLib.UDACCEL'' from type information in the ''Microsoft Windows Up-Down Control'' library.'!
 !OS.UDACCEL categoriesForClass!External-Data-Structured-Win32! !

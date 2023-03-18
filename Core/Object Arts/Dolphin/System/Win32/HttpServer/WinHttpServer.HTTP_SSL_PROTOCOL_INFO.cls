@@ -1,20 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SSL_PROTOCOL_INFO'
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_SSL_PROTOCOL_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_SSL_PROTOCOL_INFO_Size' -> 16r1C.
-		'_OffsetOf_CipherStrength' -> 16r8.
-		'_OffsetOf_CipherType' -> 16r4.
-		'_OffsetOf_HashStrength' -> 16r10.
-		'_OffsetOf_HashType' -> 16rC.
-		'_OffsetOf_KeyExchangeStrength' -> 16r18.
-		'_OffsetOf_KeyExchangeType' -> 16r14.
-		'_OffsetOf_Protocol' -> 16r0
-	}!
+			'_HTTP_SSL_PROTOCOL_INFO_Size' -> 16r1C.
+			'_OffsetOf_CipherStrength' -> 16r8.
+			'_OffsetOf_CipherType' -> 16r4.
+			'_OffsetOf_HashStrength' -> 16r10.
+			'_OffsetOf_HashType' -> 16rC.
+			'_OffsetOf_KeyExchangeStrength' -> 16r18.
+			'_OffsetOf_KeyExchangeType' -> 16r14.
+			'_OffsetOf_Protocol' -> 16r0
+		}!
 WinHttpServer.HTTP_SSL_PROTOCOL_INFO guid: (Core.GUID fromString: '{73784afd-f4e5-464e-b716-46ebb0c8c6d1}')!
 WinHttpServer.HTTP_SSL_PROTOCOL_INFO comment: '`HTTP_SSL_PROTOCOL_INFO` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_SSL_PROTOCOL_INFO'' from type information in the ''Windows Http Server API'' library.
 

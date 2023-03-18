@@ -1,19 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.TRIVERTEX'
+OS.Win32Structure
+	subclass: #'OS.TRIVERTEX'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_alpha' -> 16rE.
-		'_OffsetOf_blue' -> 16rC.
-		'_OffsetOf_green' -> 16rA.
-		'_OffsetOf_red' -> 16r8.
-		'_OffsetOf_x' -> 16r0.
-		'_OffsetOf_y' -> 16r4.
-		'_TRIVERTEX_Size' -> 16r10
-	}!
+			'_OffsetOf_alpha' -> 16rE.
+			'_OffsetOf_blue' -> 16rC.
+			'_OffsetOf_green' -> 16rA.
+			'_OffsetOf_red' -> 16r8.
+			'_OffsetOf_x' -> 16r0.
+			'_OffsetOf_y' -> 16r4.
+			'_TRIVERTEX_Size' -> 16r10
+		}!
 OS.TRIVERTEX guid: (Core.GUID fromString: '{c7529ab7-4488-494b-a3f0-8549402a5f57}')!
 OS.TRIVERTEX comment: '<TRIVERTEX> is an <ExternalStructure> class to wrap the struct ''Win32.TRIVERTEX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

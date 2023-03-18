@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IDispatch subclass: #'ADODB.Error'
+OS.COM.IDispatch
+	subclass: #'ADODB.Error'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

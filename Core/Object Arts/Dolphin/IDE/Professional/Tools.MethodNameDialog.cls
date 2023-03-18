@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Dialog subclass: #'Tools.MethodNameDialog'
+UI.Dialog
+	subclass: #'Tools.MethodNameDialog'
 	instanceVariableNames: 'selectorPresenter parametersPresenter parameterNamesPresenter hintBubble showChangesPresenter'
 	classVariableNames: ''
 	imports: #(#{Refactory.Browser private})

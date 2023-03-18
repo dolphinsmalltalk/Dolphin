@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'UI.FramingConstraints'
+Core.Object
+	subclass: #'UI.FramingConstraints'
 	instanceVariableNames: 'leftFraming leftOffset rightFraming rightOffset topFraming topOffset bottomFraming bottomOffset'
 	classVariableNames: ''
 	imports: #()

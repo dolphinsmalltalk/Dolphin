@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.DragDropObject subclass: #'UI.InternalDragDropObject'
+UI.DragDropObject
+	subclass: #'UI.InternalDragDropObject'
 	instanceVariableNames: 'availableFormats'
 	classVariableNames: ''
 	imports: #()

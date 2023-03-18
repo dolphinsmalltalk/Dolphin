@@ -21,13 +21,15 @@ package!
 
 "Class Definitions"!
 
-Core.Object subclass: #'UI.AbstractRecentMenu'
+Core.Object
+	subclass: #'UI.AbstractRecentMenu'
 	instanceVariableNames: 'openSelector recentMenuName isFullPathAlwaysRequired'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.AbstractRecentMenu subclass: #'UI.RegistryRecentMenu'
+UI.AbstractRecentMenu
+	subclass: #'UI.RegistryRecentMenu'
 	instanceVariableNames: 'productRegistryKey recentRegistryKey'
 	classVariableNames: ''
 	imports: #()

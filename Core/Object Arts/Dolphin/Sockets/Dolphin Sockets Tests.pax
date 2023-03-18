@@ -32,67 +32,78 @@ package!
 
 "Class Definitions"!
 
-Net subclass: #'Net.Tests'
+Net
+	subclass: #'Net.Tests'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{XProgramming.SUnit})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'OS.Tests.AbstractIN_ADDRTest'
+Core.Tests.DolphinTest
+	subclass: #'OS.Tests.AbstractIN_ADDRTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #AbstractSocketTest
+Core.Tests.DolphinTest
+	subclass: #AbstractSocketTest
 	instanceVariableNames: 'sockets'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Net.Tests.InternetAddressTest'
+Core.Tests.DolphinTest
+	subclass: #'Net.Tests.InternetAddressTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Net.Tests.PROTOENTTest'
+Core.Tests.DolphinTest
+	subclass: #'Net.Tests.PROTOENTTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'OS.Tests.SERVENTTest'
+Core.Tests.DolphinTest
+	subclass: #'OS.Tests.SERVENTTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'OS.Tests.SOCKADDRTest'
+Core.Tests.DolphinTest
+	subclass: #'OS.Tests.SOCKADDRTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #SocketErrorTest
+Core.Tests.DolphinTest
+	subclass: #SocketErrorTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.WinSocketErrors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.Tests.AbstractIN_ADDRTest subclass: #'OS.Tests.IN_ADDRTest'
+OS.Tests.AbstractIN_ADDRTest
+	subclass: #'OS.Tests.IN_ADDRTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.Tests.AbstractIN_ADDRTest subclass: #'OS.Tests.IN6_ADDRTest'
+OS.Tests.AbstractIN_ADDRTest
+	subclass: #'OS.Tests.IN6_ADDRTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AbstractSocketTest subclass: #'Net.Tests.SocketTest'
+AbstractSocketTest
+	subclass: #'Net.Tests.SocketTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

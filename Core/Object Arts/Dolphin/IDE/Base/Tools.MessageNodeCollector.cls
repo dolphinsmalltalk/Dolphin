@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.ParseNodeVisitor subclass: #'Tools.MessageNodeCollector'
+Kernel.ParseNodeVisitor
+	subclass: #'Tools.MessageNodeCollector'
 	instanceVariableNames: 'messages'
 	classVariableNames: ''
 	imports: #()

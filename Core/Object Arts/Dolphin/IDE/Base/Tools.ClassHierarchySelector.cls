@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.ClassSelector subclass: #'Tools.ClassHierarchySelector'
+Tools.ClassSelector
+	subclass: #'Tools.ClassHierarchySelector'
 	instanceVariableNames: 'flags'
 	classVariableNames: ''
 	imports: #()

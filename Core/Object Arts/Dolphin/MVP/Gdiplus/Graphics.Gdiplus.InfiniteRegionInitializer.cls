@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.RegionInitializer subclass: #'Graphics.Gdiplus.InfiniteRegionInitializer'
+Graphics.Gdiplus.RegionInitializer
+	subclass: #'Graphics.Gdiplus.InfiniteRegionInitializer'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

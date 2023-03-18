@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Int32 subclass: #'External.BOOL'
+External.Int32
+	subclass: #'External.BOOL'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_BOOL_Size' -> 16r4
-	}!
+	classConstants: { '_BOOL_Size' -> 16r4 }!
 External.BOOL guid: (Core.GUID fromString: '{73888634-0c5b-4d09-83dc-c52101c10ba3}')!
 External.BOOL comment: '<BOOL> is an <ExternalStructure> class to represent the Win32 BOOL (integer boolean) type.
 

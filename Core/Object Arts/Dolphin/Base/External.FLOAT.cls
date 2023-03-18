@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.SCALAR subclass: #'External.FLOAT'
+External.SCALAR
+	subclass: #'External.FLOAT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_FLOAT_Size' -> 16r4
-	}!
+	classConstants: { '_FLOAT_Size' -> 16r4 }!
 External.FLOAT guid: (Core.GUID fromString: '{87b4c595-026e-11d3-9fd7-00a0cc3e4a32}')!
 External.FLOAT comment: 'FLOAT is an <ExternalStructure> class to represent single precision (32-bit) floating point numbers in native format.
 

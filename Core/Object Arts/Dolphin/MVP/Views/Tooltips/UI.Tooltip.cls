@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ControlView subclass: #'UI.Tooltip'
+UI.ControlView
+	subclass: #'UI.Tooltip'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.TooltipConstants})

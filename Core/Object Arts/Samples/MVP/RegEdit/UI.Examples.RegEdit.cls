@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Shell subclass: #'UI.Examples.RegEdit'
+UI.Shell
+	subclass: #'UI.Examples.RegEdit'
 	instanceVariableNames: 'keyPresenter valuesPresenter statusModel'
 	classVariableNames: 'ResourceLib'
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'Graphics.Gdiplus.GpStructure'
+External.Structure
+	subclass: #'Graphics.Gdiplus.GpStructure'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

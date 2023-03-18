@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.FILETIME subclass: #'OS.LocalFILETIME'
+OS.FILETIME
+	subclass: #'OS.LocalFILETIME'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

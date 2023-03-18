@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.SmalltalkStyler subclass: #'Tools.SmalltalkMethodStyler'
+Tools.SmalltalkStyler
+	subclass: #'Tools.SmalltalkMethodStyler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

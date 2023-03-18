@@ -1,22 +1,23 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.TOOLINFOW'
+OS.Win32Structure
+	subclass: #'OS.TOOLINFOW'
 	instanceVariableNames: 'text'
 	classVariableNames: ''
 	imports: #(#{OS.TooltipConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_hinst' -> 16r20.
-		'_OffsetOf_hwnd' -> 16r8.
-		'_OffsetOf_lParam' -> 16r28.
-		'_OffsetOf_lpReserved' -> 16r2C.
-		'_OffsetOf_lpszText' -> 16r24.
-		'_OffsetOf_rect' -> 16r10.
-		'_OffsetOf_uFlags' -> 16r4.
-		'_OffsetOf_uId' -> 16rC.
-		'_TOOLINFOW_Size' -> 16r30
-	}!
+			'_OffsetOf_dwSize' -> 16r0.
+			'_OffsetOf_hinst' -> 16r20.
+			'_OffsetOf_hwnd' -> 16r8.
+			'_OffsetOf_lParam' -> 16r28.
+			'_OffsetOf_lpReserved' -> 16r2C.
+			'_OffsetOf_lpszText' -> 16r24.
+			'_OffsetOf_rect' -> 16r10.
+			'_OffsetOf_uFlags' -> 16r4.
+			'_OffsetOf_uId' -> 16rC.
+			'_TOOLINFOW_Size' -> 16r30
+		}!
 OS.TOOLINFOW guid: (Core.GUID fromString: '{87b4c617-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.TOOLINFOW comment: 'TOOLINFOW is an <ExternalStructure> class to represent the Win32 structure of the same name.
 

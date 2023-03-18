@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ValuePresenter subclass: #'UI.ChoicePresenter'
+UI.ValuePresenter
+	subclass: #'UI.ChoicePresenter'
 	instanceVariableNames: 'choicesModel nilChoice'
 	classVariableNames: ''
 	imports: #()

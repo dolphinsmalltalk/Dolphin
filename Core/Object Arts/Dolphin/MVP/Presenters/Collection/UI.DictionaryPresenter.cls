@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.HashedCollectionPresenter subclass: #'UI.DictionaryPresenter'
+UI.HashedCollectionPresenter
+	subclass: #'UI.DictionaryPresenter'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

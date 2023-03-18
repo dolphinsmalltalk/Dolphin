@@ -1,43 +1,44 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_LOG_FIELDS_DATA'
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_LOG_FIELDS_DATA'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_LOG_FIELDS_DATA_Size' -> 16r5C.
-		'_OffsetOf_ClientIp' -> 16r24.
-		'_OffsetOf_ClientIpLength' -> 16r8.
-		'_OffsetOf_Cookie' -> 16r44.
-		'_OffsetOf_CookieLength' -> 16r18.
-		'_OffsetOf_Host' -> 16r3C.
-		'_OffsetOf_HostLength' -> 16r14.
-		'_OffsetOf_Method' -> 16r34.
-		'_OffsetOf_MethodLength' -> 16r10.
-		'_OffsetOf_MethodNum' -> 16r54.
-		'_OffsetOf_ProtocolStatus' -> 16r4E.
-		'_OffsetOf_Referrer' -> 16r48.
-		'_OffsetOf_ReferrerLength' -> 16r1A.
-		'_OffsetOf_ServerIp' -> 16r30.
-		'_OffsetOf_ServerIpLength' -> 16rE.
-		'_OffsetOf_ServerName' -> 16r28.
-		'_OffsetOf_ServerNameLength' -> 16rA.
-		'_OffsetOf_ServerPort' -> 16r4C.
-		'_OffsetOf_ServiceName' -> 16r2C.
-		'_OffsetOf_ServiceNameLength' -> 16rC.
-		'_OffsetOf_SubStatus' -> 16r58.
-		'_OffsetOf_Type' -> 16r0.
-		'_OffsetOf_UriQuery' -> 16r38.
-		'_OffsetOf_UriQueryLength' -> 16r12.
-		'_OffsetOf_UriStem' -> 16r20.
-		'_OffsetOf_UriStemLength' -> 16r6.
-		'_OffsetOf_UserAgent' -> 16r40.
-		'_OffsetOf_UserAgentLength' -> 16r16.
-		'_OffsetOf_UserName' -> 16r1C.
-		'_OffsetOf_UserNameLength' -> 16r4.
-		'_OffsetOf_Win32Status' -> 16r50
-	}!
+			'_HTTP_LOG_FIELDS_DATA_Size' -> 16r5C.
+			'_OffsetOf_ClientIp' -> 16r24.
+			'_OffsetOf_ClientIpLength' -> 16r8.
+			'_OffsetOf_Cookie' -> 16r44.
+			'_OffsetOf_CookieLength' -> 16r18.
+			'_OffsetOf_Host' -> 16r3C.
+			'_OffsetOf_HostLength' -> 16r14.
+			'_OffsetOf_Method' -> 16r34.
+			'_OffsetOf_MethodLength' -> 16r10.
+			'_OffsetOf_MethodNum' -> 16r54.
+			'_OffsetOf_ProtocolStatus' -> 16r4E.
+			'_OffsetOf_Referrer' -> 16r48.
+			'_OffsetOf_ReferrerLength' -> 16r1A.
+			'_OffsetOf_ServerIp' -> 16r30.
+			'_OffsetOf_ServerIpLength' -> 16rE.
+			'_OffsetOf_ServerName' -> 16r28.
+			'_OffsetOf_ServerNameLength' -> 16rA.
+			'_OffsetOf_ServerPort' -> 16r4C.
+			'_OffsetOf_ServiceName' -> 16r2C.
+			'_OffsetOf_ServiceNameLength' -> 16rC.
+			'_OffsetOf_SubStatus' -> 16r58.
+			'_OffsetOf_Type' -> 16r0.
+			'_OffsetOf_UriQuery' -> 16r38.
+			'_OffsetOf_UriQueryLength' -> 16r12.
+			'_OffsetOf_UriStem' -> 16r20.
+			'_OffsetOf_UriStemLength' -> 16r6.
+			'_OffsetOf_UserAgent' -> 16r40.
+			'_OffsetOf_UserAgentLength' -> 16r16.
+			'_OffsetOf_UserName' -> 16r1C.
+			'_OffsetOf_UserNameLength' -> 16r4.
+			'_OffsetOf_Win32Status' -> 16r50
+		}!
 WinHttpServer.HTTP_LOG_FIELDS_DATA guid: (Core.GUID fromString: '{35c62b99-abf3-46f3-b967-7b54dc2641cc}')!
 WinHttpServer.HTTP_LOG_FIELDS_DATA comment: '`HTTP_LOG_FIELDS_DATA` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_LOG_FIELDS_DATA'' from type information in the ''Windows Http Server API'' library.
 

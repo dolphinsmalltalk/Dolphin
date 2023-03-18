@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.NMHDR subclass: #'OS.NMLVODSTATECHANGE'
+OS.NMHDR
+	subclass: #'OS.NMLVODSTATECHANGE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_NMLVODSTATECHANGE_Size' -> 16r1C.
-		'_OffsetOf_iFrom' -> 16rC.
-		'_OffsetOf_iTo' -> 16r10.
-		'_OffsetOf_uNewState' -> 16r14.
-		'_OffsetOf_uOldState' -> 16r18
-	}!
+			'_NMLVODSTATECHANGE_Size' -> 16r1C.
+			'_OffsetOf_iFrom' -> 16rC.
+			'_OffsetOf_iTo' -> 16r10.
+			'_OffsetOf_uNewState' -> 16r14.
+			'_OffsetOf_uOldState' -> 16r18
+		}!
 OS.NMLVODSTATECHANGE guid: (Core.GUID fromString: '{f44c9148-2b3f-11d3-8368-7a8b5a000000}')!
 OS.NMLVODSTATECHANGE comment: ''!
 !OS.NMLVODSTATECHANGE categoriesForClass!External-Data-Structured-Win32! !

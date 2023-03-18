@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMRSETARCDIRECTION'
+OS.ENHMETARECORD
+	subclass: #'OS.EMRSETARCDIRECTION'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_EMRSETARCDIRECTION_Size' -> 16rC.
-		'_OffsetOf_iArcDirection' -> 16r8
-	}!
+	classConstants: { '_EMRSETARCDIRECTION_Size' -> 16rC. '_OffsetOf_iArcDirection' -> 16r8 }!
 OS.EMRSETARCDIRECTION guid: (Core.GUID fromString: '{41d545c1-ed58-46f1-9b90-34ef56bd4213}')!
 OS.EMRSETARCDIRECTION comment: '<EMRSETARCDIRECTION> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETARCDIRECTION'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

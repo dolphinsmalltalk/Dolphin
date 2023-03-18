@@ -1,35 +1,36 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMRMASKBLT'
+OS.ENHMETARECORD
+	subclass: #'OS.EMRMASKBLT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_EMRMASKBLT_Size' -> 16r80.
-		'_OffsetOf_cbBitsMask' -> 16r7C.
-		'_OffsetOf_cbBitsSrc' -> 16r60.
-		'_OffsetOf_cbBmiMask' -> 16r74.
-		'_OffsetOf_cbBmiSrc' -> 16r58.
-		'_OffsetOf_crBkColorSrc' -> 16r4C.
-		'_OffsetOf_cxDest' -> 16r20.
-		'_OffsetOf_cyDest' -> 16r24.
-		'_OffsetOf_dwRop' -> 16r28.
-		'_OffsetOf_iUsageMask' -> 16r6C.
-		'_OffsetOf_iUsageSrc' -> 16r50.
-		'_OffsetOf_offBitsMask' -> 16r78.
-		'_OffsetOf_offBitsSrc' -> 16r5C.
-		'_OffsetOf_offBmiMask' -> 16r70.
-		'_OffsetOf_offBmiSrc' -> 16r54.
-		'_OffsetOf_rclBounds' -> 16r8.
-		'_OffsetOf_xDest' -> 16r18.
-		'_OffsetOf_xformSrc' -> 16r34.
-		'_OffsetOf_xMask' -> 16r64.
-		'_OffsetOf_xSrc' -> 16r2C.
-		'_OffsetOf_yDest' -> 16r1C.
-		'_OffsetOf_yMask' -> 16r68.
-		'_OffsetOf_ySrc' -> 16r30
-	}!
+			'_EMRMASKBLT_Size' -> 16r80.
+			'_OffsetOf_cbBitsMask' -> 16r7C.
+			'_OffsetOf_cbBitsSrc' -> 16r60.
+			'_OffsetOf_cbBmiMask' -> 16r74.
+			'_OffsetOf_cbBmiSrc' -> 16r58.
+			'_OffsetOf_crBkColorSrc' -> 16r4C.
+			'_OffsetOf_cxDest' -> 16r20.
+			'_OffsetOf_cyDest' -> 16r24.
+			'_OffsetOf_dwRop' -> 16r28.
+			'_OffsetOf_iUsageMask' -> 16r6C.
+			'_OffsetOf_iUsageSrc' -> 16r50.
+			'_OffsetOf_offBitsMask' -> 16r78.
+			'_OffsetOf_offBitsSrc' -> 16r5C.
+			'_OffsetOf_offBmiMask' -> 16r70.
+			'_OffsetOf_offBmiSrc' -> 16r54.
+			'_OffsetOf_rclBounds' -> 16r8.
+			'_OffsetOf_xDest' -> 16r18.
+			'_OffsetOf_xformSrc' -> 16r34.
+			'_OffsetOf_xMask' -> 16r64.
+			'_OffsetOf_xSrc' -> 16r2C.
+			'_OffsetOf_yDest' -> 16r1C.
+			'_OffsetOf_yMask' -> 16r68.
+			'_OffsetOf_ySrc' -> 16r30
+		}!
 OS.EMRMASKBLT guid: (Core.GUID fromString: '{99001d44-ed7a-4cee-84b9-dbcf1f67898b}')!
 OS.EMRMASKBLT comment: '<EMRMASKBLT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRMASKBLT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

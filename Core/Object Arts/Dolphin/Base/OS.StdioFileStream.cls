@@ -1,15 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.SequencedStream subclass: #'OS.StdioFileStream'
+Core.SequencedStream
+	subclass: #'OS.StdioFileStream'
 	instanceVariableNames: 'stream flags name oldFd fd crtlib locale'
 	classVariableNames: ''
 	imports: #(#{OS.CRTConstants})
 	classInstanceVariableNames: ''
-	classConstants: {
-		'DeviceMask' -> 16r40.
-		'NonBlockingMask' -> 16r2.
-		'ReadOnlyMask' -> 16r1
-	}!
+	classConstants: { 'DeviceMask' -> 16r40. 'NonBlockingMask' -> 16r2. 'ReadOnlyMask' -> 16r1 }!
 OS.StdioFileStream guid: (Core.GUID fromString: '{7b8405b3-0819-421f-8110-ca2763bcb59a}')!
 OS.StdioFileStream isNonInstantiable: true!
 OS.StdioFileStream comment: 'StdioFileStream is a <FileStream> implemented over C runtime library stdio streams. FileStream itself should be used by preference in most cases.

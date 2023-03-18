@@ -1,16 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.AbstractTEXTRANGE subclass: #'UI.Scintilla.TextToFindFull'
+OS.AbstractTEXTRANGE
+	subclass: #'UI.Scintilla.TextToFindFull'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_chrg' -> 16r0.
-		'_OffsetOf_chrgText' -> 16rC.
-		'_OffsetOf_lpstrText' -> 16r8.
-		'_TextToFindFull_Size' -> 16r14
-	}!
+			'_OffsetOf_chrg' -> 16r0.
+			'_OffsetOf_chrgText' -> 16rC.
+			'_OffsetOf_lpstrText' -> 16r8.
+			'_TextToFindFull_Size' -> 16r14
+		}!
 UI.Scintilla.TextToFindFull guid: (Core.GUID fromString: '{3841939b-c533-4fff-a6e2-744631df1de9}')!
 UI.Scintilla.TextToFindFull comment: ''!
 !UI.Scintilla.TextToFindFull methodsFor!

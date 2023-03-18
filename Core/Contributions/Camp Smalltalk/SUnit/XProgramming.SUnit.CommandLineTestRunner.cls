@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'XProgramming.SUnit.CommandLineTestRunner'
+Core.Object
+	subclass: #'XProgramming.SUnit.CommandLineTestRunner'
 	instanceVariableNames: 'results lastCase loggers verbose'
 	classVariableNames: ''
 	imports: #()

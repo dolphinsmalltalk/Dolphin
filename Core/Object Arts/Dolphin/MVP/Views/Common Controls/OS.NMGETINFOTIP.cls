@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.NMHDR subclass: #'OS.NMGETINFOTIP'
+OS.NMHDR
+	subclass: #'OS.NMGETINFOTIP'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Security.SerialNumberProtector subclass: #'Security.ElgamalSerialNumberProtector'
+Security.SerialNumberProtector
+	subclass: #'Security.ElgamalSerialNumberProtector'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

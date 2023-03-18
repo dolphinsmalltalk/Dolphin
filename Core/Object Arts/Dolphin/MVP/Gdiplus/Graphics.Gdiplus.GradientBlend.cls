@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.Attribute subclass: #'Graphics.Gdiplus.GradientBlend'
+Graphics.Gdiplus.Attribute
+	subclass: #'Graphics.Gdiplus.GradientBlend'
 	instanceVariableNames: 'positions'
 	classVariableNames: ''
 	imports: #()

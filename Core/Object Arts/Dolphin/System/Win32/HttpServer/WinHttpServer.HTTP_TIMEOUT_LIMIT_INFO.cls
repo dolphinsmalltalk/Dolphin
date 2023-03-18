@@ -1,19 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WinHttpServer.HTTP_PROPERTY_FLAGS subclass: #'WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO'
+WinHttpServer.HTTP_PROPERTY_FLAGS
+	subclass: #'WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_TIMEOUT_LIMIT_INFO_Size' -> 16r14.
-		'_OffsetOf_DrainEntityBody' -> 16r6.
-		'_OffsetOf_EntityBody' -> 16r4.
-		'_OffsetOf_HeaderWait' -> 16rC.
-		'_OffsetOf_IdleConnection' -> 16rA.
-		'_OffsetOf_MinSendRate' -> 16r10.
-		'_OffsetOf_RequestQueue' -> 16r8
-	}!
+			'_HTTP_TIMEOUT_LIMIT_INFO_Size' -> 16r14.
+			'_OffsetOf_DrainEntityBody' -> 16r6.
+			'_OffsetOf_EntityBody' -> 16r4.
+			'_OffsetOf_HeaderWait' -> 16rC.
+			'_OffsetOf_IdleConnection' -> 16rA.
+			'_OffsetOf_MinSendRate' -> 16r10.
+			'_OffsetOf_RequestQueue' -> 16r8
+		}!
 WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO guid: (Core.GUID fromString: '{7dae0007-41d0-4925-b425-a14d837d56d0}')!
 WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO comment: '`HTTP_TIMEOUT_LIMIT_INFO` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO'' from type information in the ''Windows Http Server API'' library.
 

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Graphics.Rectangle'
+Core.Object
+	subclass: #'Graphics.Rectangle'
 	instanceVariableNames: 'origin corner'
 	classVariableNames: 'Empty'
 	imports: #()

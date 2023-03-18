@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.InputState subclass: #'UI.GuiInputState'
+Kernel.InputState
+	subclass: #'UI.GuiInputState'
 	instanceVariableNames: ''
 	classVariableNames: 'EnumHandlesDescriptor'
 	imports: #()

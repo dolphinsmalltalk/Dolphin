@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.MultilineTextEdit subclass: #'UI.RichTextEdit'
+UI.MultilineTextEdit
+	subclass: #'UI.RichTextEdit'
 	instanceVariableNames: 'streamIn winStruct'
 	classVariableNames: 'Library ParagraphAlignmentMap StreamingDescriptor'
 	imports: #(#{OS.CommonDialogConstants} #{OS.RichEditConstants})
 	classInstanceVariableNames: ''
-	classConstants: {
-		'AutoUrlDetectionMask' -> 16r1000000.
-		'StreamInIndex' -> 16r11
-	}!
+	classConstants: { 'AutoUrlDetectionMask' -> 16r1000000. 'StreamInIndex' -> 16r11 }!
 UI.RichTextEdit guid: (Core.GUID fromString: '{87b4c744-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.RichTextEdit comment: 'RichTextEdit is a <valueView> class that implements the Windows "RichEdit" control for the displaying and editing of multi-line rich text. The <valueModel> associated with a RichTextEdit  must always yield a <richString> value when mapped through the installed type converter. A RichTextEdit will normally be used in conjunction with a <RichTextPresenter>. 
 

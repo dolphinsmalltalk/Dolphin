@@ -1,17 +1,26 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.View subclass: #'UI.MoenTreeView'
+UI.View
+	subclass: #'UI.MoenTreeView'
 	instanceVariableNames: 'anchorNode getTextBlock getImageBlock mtvFlags leading imageManager calculatedExtent parentSpacing selection linePen iconExtent maxTextExtent dtFlags margin textInset _mtvReserved0 _mtvReserved1 _mtvReserved2'
 	classVariableNames: ''
 	imports: #(#{OS.ThemeConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'AutoExpandingMask' -> 16r8000000.
-		'HasButtonsMask' -> 16r1.
-		'MultilineMask' -> 16rA010.
-		'SingleLineMask' -> 16r8024.
-		'ViewModes' -> (IdentityDictionary withAll: {#largeIcons -> (16r20@16r20). #noIcons -> (-16r1@16r0). #mediumIcons -> (16r18@16r18). #smallIcons -> (16r10@16r10). #custom -> nil. #tileIcons -> (16r30@16r30)})
-	}!
+			'AutoExpandingMask' -> 16r8000000.
+			'HasButtonsMask' -> 16r1.
+			'MultilineMask' -> 16rA010.
+			'SingleLineMask' -> 16r8024.
+			'ViewModes'
+				-> (IdentityDictionary withAll: {
+								#custom -> nil.
+								#largeIcons -> (16r20 @ 16r20).
+								#mediumIcons -> (16r18 @ 16r18).
+								#noIcons -> (-16r1 @ 16r0).
+								#smallIcons -> (16r10 @ 16r10).
+								#tileIcons -> (16r30 @ 16r30)
+							})
+		}!
 UI.MoenTreeView guid: (Core.GUID fromString: '{68f4ac03-2f95-11d3-93ba-00a024ca708a}')!
 UI.MoenTreeView comment: 'MoenTreeView is a <treeView> for displaying a <treeModel> in a graphic layout. It supports the single <selectableItems> protocol for handling item selection. MoenTreeViews can be used to display any type of object with the exception of the ''nil'' object which is used to distinguish the root.
 

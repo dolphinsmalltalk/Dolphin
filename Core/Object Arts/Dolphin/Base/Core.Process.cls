@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Link variableSubclass: #'Core.Process'
+Core.Link
+	variableSubclass: #'Core.Process'
 	instanceVariableNames: 'suspendedFrame priority myList callbackDepth tls _unused7 fpControl threadSync thread exceptionEnvironment _unused12 newWindow debugger name debugStream'
 	classVariableNames: 'DefaultMaxStack'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'DefaultFpControl' -> 16r80007.
-		'DefaultStack' -> 16r1
-	}!
+	classConstants: { 'DefaultFpControl' -> 16r80007. 'DefaultStack' -> 16r1 }!
 Core.Process guid: (Core.GUID fromString: '{87b4c64e-026e-11d3-9fd7-00a0cc3e4a32}')!
 Core.Process comment: 'A Process represents an individual thread of execution in the image.
 

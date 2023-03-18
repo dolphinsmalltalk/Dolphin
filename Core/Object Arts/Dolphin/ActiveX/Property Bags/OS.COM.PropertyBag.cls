@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.InterfaceImplementation subclass: #'OS.COM.PropertyBag'
+OS.COM.InterfaceImplementation
+	subclass: #'OS.COM.PropertyBag'
 	instanceVariableNames: 'propertyTable clsid saveAll clearDirty'
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})

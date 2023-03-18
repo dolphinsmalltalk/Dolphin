@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTest subclass: #'OS.Tests.RegistrySerializerTest'
+Core.Tests.DolphinTest
+	subclass: #'OS.Tests.RegistrySerializerTest'
 	instanceVariableNames: 'testKey'
 	classVariableNames: ''
 	imports: #()

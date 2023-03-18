@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.StQualifiedReferenceNode subclass: #'Refactory.Browser.RBQualifiedReferenceNode'
+Kernel.StQualifiedReferenceNode
+	subclass: #'Refactory.Browser.RBQualifiedReferenceNode'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

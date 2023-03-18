@@ -1,24 +1,25 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.LVCOLUMNW'
+OS.Win32Structure
+	subclass: #'OS.LVCOLUMNW'
 	instanceVariableNames: 'text'
 	classVariableNames: 'AlignmentMap'
 	imports: #(#{OS.ListViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_LVCOLUMNW_Size' -> 16r2C.
-		'_OffsetOf_cchTextMax' -> 16r10.
-		'_OffsetOf_cx' -> 16r8.
-		'_OffsetOf_cxDefault' -> 16r24.
-		'_OffsetOf_cxIdeal' -> 16r28.
-		'_OffsetOf_cxMin' -> 16r20.
-		'_OffsetOf_fmt' -> 16r4.
-		'_OffsetOf_iImage' -> 16r18.
-		'_OffsetOf_iOrder' -> 16r1C.
-		'_OffsetOf_iSubItem' -> 16r14.
-		'_OffsetOf_mask' -> 16r0.
-		'_OffsetOf_pszText' -> 16rC
-	}!
+			'_LVCOLUMNW_Size' -> 16r2C.
+			'_OffsetOf_cchTextMax' -> 16r10.
+			'_OffsetOf_cx' -> 16r8.
+			'_OffsetOf_cxDefault' -> 16r24.
+			'_OffsetOf_cxIdeal' -> 16r28.
+			'_OffsetOf_cxMin' -> 16r20.
+			'_OffsetOf_fmt' -> 16r4.
+			'_OffsetOf_iImage' -> 16r18.
+			'_OffsetOf_iOrder' -> 16r1C.
+			'_OffsetOf_iSubItem' -> 16r14.
+			'_OffsetOf_mask' -> 16r0.
+			'_OffsetOf_pszText' -> 16rC
+		}!
 OS.LVCOLUMNW guid: (Core.GUID fromString: '{87b4c5fc-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.LVCOLUMNW comment: 'LVCOLUMN is an <ExternalStructure> class which represents the Windows List View common control structure of the same name.
 

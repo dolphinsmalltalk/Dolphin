@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.LabelEditEvent subclass: #'UI.LabelEditingEvent'
+UI.LabelEditEvent
+	subclass: #'UI.LabelEditingEvent'
 	instanceVariableNames: 'font forecolor'
 	classVariableNames: ''
 	imports: #()

@@ -1,19 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.GpStructure subclass: #'Graphics.Gdiplus.WmfPlaceableFileHeader'
+Graphics.Gdiplus.GpStructure
+	subclass: #'Graphics.Gdiplus.WmfPlaceableFileHeader'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_BoundingBox' -> 16r6.
-		'_OffsetOf_Checksum' -> 16r14.
-		'_OffsetOf_Hmf' -> 16r4.
-		'_OffsetOf_Inch' -> 16rE.
-		'_OffsetOf_Key' -> 16r0.
-		'_OffsetOf_Reserved' -> 16r10.
-		'_WmfPlaceableFileHeader_Size' -> 16r18
-	}!
+			'_OffsetOf_BoundingBox' -> 16r6.
+			'_OffsetOf_Checksum' -> 16r14.
+			'_OffsetOf_Hmf' -> 16r4.
+			'_OffsetOf_Inch' -> 16rE.
+			'_OffsetOf_Key' -> 16r0.
+			'_OffsetOf_Reserved' -> 16r10.
+			'_WmfPlaceableFileHeader_Size' -> 16r18
+		}!
 Graphics.Gdiplus.WmfPlaceableFileHeader guid: (Core.GUID fromString: '{e244edf0-9096-42dd-944d-3be54248689f}')!
 Graphics.Gdiplus.WmfPlaceableFileHeader comment: '<GpWmfPlaceableFileHeader> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpWmfPlaceableFileHeader'' from type information in the ''GDI+ Library 1.0'' library.
 

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Kernel.AnnouncementSubscription'
+Core.Object
+	subclass: #'Kernel.AnnouncementSubscription'
 	instanceVariableNames: 'announcer announcementClass subscriber action'
 	classVariableNames: ''
 	imports: #()

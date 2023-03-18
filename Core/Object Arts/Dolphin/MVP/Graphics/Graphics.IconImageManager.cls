@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.ImageManager subclass: #'Graphics.IconImageManager'
+Graphics.ImageManager
+	subclass: #'Graphics.IconImageManager'
 	instanceVariableNames: 'bitmaps'
 	classVariableNames: 'Current'
 	imports: #()

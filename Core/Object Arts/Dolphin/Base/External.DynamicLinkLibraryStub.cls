@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.ProtoObject subclass: #'External.DynamicLinkLibraryStub'
+Kernel.ProtoObject
+	subclass: #'External.DynamicLinkLibraryStub'
 	instanceVariableNames: 'libraryClass'
 	classVariableNames: ''
 	imports: #()

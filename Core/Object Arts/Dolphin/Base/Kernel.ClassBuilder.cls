@@ -1,39 +1,73 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Kernel.ClassBuilder'
+Core.Object
+	subclass: #'Kernel.ClassBuilder'
 	instanceVariableNames: 'currentClass className instanceVariables superclass instanceSpec classVariables imports comment flags categories classConstants environment'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'ErrorAlreadyExists' -> '<1p>.<2s> already exists.'.
-		'ErrorBytesAndNamedInstVars' -> 'A byte subclass may not contain named instance variables.'.
-		'ErrorByteSubclassOfFixed' -> 'A byte subclass may not derive from a class containing named instance variables'.
-		'ErrorByteSubclassOfVariable' -> 'A byte subclass may not derive from a class containing indexed instance variables'.
-		'ErrorChangeMetaclassSuperclass' -> 'It is invalid to directly change the superclass of a metaclass.'.
-		'ErrorFixedInitialLayout' -> 'New inst vars must come after those already in <1p>'.
-		'ErrorFixedLayout' -> 'You must not change the instance variable layout of <1p>'.
-		'ErrorFixedSubclassOfVariable' -> 'Subclasses of an indexed class must also be indexed.'.
-		'ErrorFixedSubclassType' -> 'You may not change the subclass type of <1p>'.
-		'ErrorIndirectAndNullTerm' -> 'A byte subclass may not be both indirect and null-terminated.'.
-		'ErrorIndirectNotBytes' -> 'Indirect subclasses must contain bytes.'.
-		'ErrorInstVarAlreadyDefined' -> 'Proposed instance variable <1p> is multiply defined.'.
-		'ErrorInvalidClassName' -> 'Invalid class name ''<1s>'''.
-		'ErrorInvalidInstVarName' -> 'Proposed instance variable <1p> is invalid as a local identifier.'.
-		'ErrorNullTermNotBytes' -> 'Null-terminated subclasses must contain bytes.'.
-		'ErrorPointerSubclassOfBytes' -> 'A subclass containing pointers may not derive from a class containing bytes.'.
-		'ErrorRecursiveSubclass' -> 'Class cannot be a subclass of itself'.
-		'ErrorSuperclassIsSubclass' -> '<1p> is a subclass of the class being changed.'.
-		'ErrorTooManyInstVars' -> 'Classes are allowed a maximum of <1p> instance variables.'.
-		'ErrorUnsubclassable' -> '<1p> is not subclassable.'.
-		'FixedInitialLayout' -> (Set withAll: {ProcessorScheduler. PositionableStream. Process. Semaphore. Metaclass. Class. VariableBinding}).
-		'FixedLayout' -> (Set withAll: {Message. Array. False. BlockClosure. SmallInteger. Object. Context. UndefinedObject. ExternalMethod. MethodDictionary. Character. True}).
-		'FixedName' -> #(#Smalltalk #Root).
-		'IgnoreInstsMask' -> 16r2.
-		'QuietMask' -> 16r4.
-		'RecompileMask' -> 16r1.
-		'Unsubclassable' -> (IdentitySet withAll: {SmallInteger. Character})
-	}!
+			'ErrorAlreadyExists' -> '<1p>.<2s> already exists.'.
+			'ErrorBytesAndNamedInstVars'
+				-> 'A byte subclass may not contain named instance variables.'.
+			'ErrorByteSubclassOfFixed'
+				-> 'A byte subclass may not derive from a class containing named instance variables'.
+			'ErrorByteSubclassOfVariable'
+				-> 'A byte subclass may not derive from a class containing indexed instance variables'.
+			'ErrorChangeMetaclassSuperclass'
+				-> 'It is invalid to directly change the superclass of a metaclass.'.
+			'ErrorFixedInitialLayout' -> 'New inst vars must come after those already in <1p>'.
+			'ErrorFixedLayout' -> 'You must not change the instance variable layout of <1p>'.
+			'ErrorFixedSubclassOfVariable'
+				-> 'Subclasses of an indexed class must also be indexed.'.
+			'ErrorFixedSubclassType' -> 'You may not change the subclass type of <1p>'.
+			'ErrorIndirectAndNullTerm'
+				-> 'A byte subclass may not be both indirect and null-terminated.'.
+			'ErrorIndirectNotBytes' -> 'Indirect subclasses must contain bytes.'.
+			'ErrorInstVarAlreadyDefined'
+				-> 'Proposed instance variable <1p> is multiply defined.'.
+			'ErrorInvalidClassName' -> 'Invalid class name ''<1s>'''.
+			'ErrorInvalidInstVarName'
+				-> 'Proposed instance variable <1p> is invalid as a local identifier.'.
+			'ErrorNullTermNotBytes' -> 'Null-terminated subclasses must contain bytes.'.
+			'ErrorPointerSubclassOfBytes'
+				-> 'A subclass containing pointers may not derive from a class containing bytes.'.
+			'ErrorRecursiveSubclass' -> 'Class cannot be a subclass of itself'.
+			'ErrorSuperclassIsSubclass' -> '<1p> is a subclass of the class being changed.'.
+			'ErrorTooManyInstVars'
+				-> 'Classes are allowed a maximum of <1p> instance variables.'.
+			'ErrorUnsubclassable' -> '<1p> is not subclassable.'.
+			'FixedInitialLayout'
+				-> (Set withAll: {
+								Class.
+								Metaclass.
+								PositionableStream.
+								Process.
+								ProcessorScheduler.
+								Semaphore.
+								VariableBinding
+							}).
+			'FixedLayout'
+				-> (Set withAll: {
+								Array.
+								BlockClosure.
+								Character.
+								Context.
+								ExternalMethod.
+								False.
+								Message.
+								MethodDictionary.
+								Object.
+								SmallInteger.
+								True.
+								UndefinedObject
+							}).
+			'FixedName' -> #(#Smalltalk #Root).
+			'IgnoreInstsMask' -> 16r2.
+			'QuietMask' -> 16r4.
+			'RecompileMask' -> 16r1.
+			'Unsubclassable' -> (IdentitySet withAll: { Character. SmallInteger })
+		}!
 Kernel.ClassBuilder guid: (Core.GUID fromString: '{87b4c461-026e-11d3-9fd7-00a0cc3e4a32}')!
 Kernel.ClassBuilder comment: ''!
 !Kernel.ClassBuilder categoriesForClass!System-Support! !

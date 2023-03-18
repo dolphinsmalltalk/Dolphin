@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Tools.Grabber'
+Core.Object
+	subclass: #'Tools.Grabber'
 	instanceVariableNames: 'rectangle aspect constrain view composer'
 	classVariableNames: 'Cursors'
 	imports: #(#{OS.Win32Constants})

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Net.SocketAbstract'
+Core.Object
+	subclass: #'Net.SocketAbstract'
 	instanceVariableNames: 'port descriptor'
 	classVariableNames: ''
 	imports: #(#{OS.WinSocketConstants})

@@ -1,45 +1,46 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.OUTLINETEXTMETRICW'
+OS.Win32Structure
+	subclass: #'OS.OUTLINETEXTMETRICW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_otmAscent' -> 16r64.
-		'_OffsetOf_otmDescent' -> 16r68.
-		'_OffsetOf_otmEMSquare' -> 16r60.
-		'_OffsetOf_otmFiller' -> 16r40.
-		'_OffsetOf_otmfsSelection' -> 16r4C.
-		'_OffsetOf_otmfsType' -> 16r50.
-		'_OffsetOf_otmItalicAngle' -> 16r5C.
-		'_OffsetOf_otmLineGap' -> 16r6C.
-		'_OffsetOf_otmMacAscent' -> 16r88.
-		'_OffsetOf_otmMacDescent' -> 16r8C.
-		'_OffsetOf_otmMacLineGap' -> 16r90.
-		'_OffsetOf_otmPanoseNumber' -> 16r41.
-		'_OffsetOf_otmpFaceName' -> 16rCC.
-		'_OffsetOf_otmpFamilyName' -> 16rC8.
-		'_OffsetOf_otmpFullName' -> 16rD4.
-		'_OffsetOf_otmpStyleName' -> 16rD0.
-		'_OffsetOf_otmptSubscriptOffset' -> 16rA0.
-		'_OffsetOf_otmptSubscriptSize' -> 16r98.
-		'_OffsetOf_otmptSuperscriptOffset' -> 16rB0.
-		'_OffsetOf_otmptSuperscriptSize' -> 16rA8.
-		'_OffsetOf_otmrcFontBox' -> 16r78.
-		'_OffsetOf_otmsCapEmHeight' -> 16r70.
-		'_OffsetOf_otmsCharSlopeRise' -> 16r54.
-		'_OffsetOf_otmsCharSlopeRun' -> 16r58.
-		'_OffsetOf_otmsStrikeoutPosition' -> 16rBC.
-		'_OffsetOf_otmsStrikeoutSize' -> 16rB8.
-		'_OffsetOf_otmsUnderscorePosition' -> 16rC4.
-		'_OffsetOf_otmsUnderscoreSize' -> 16rC0.
-		'_OffsetOf_otmsXHeight' -> 16r74.
-		'_OffsetOf_otmTextMetrics' -> 16r4.
-		'_OffsetOf_otmusMinimumPPEM' -> 16r94.
-		'_OUTLINETEXTMETRICW_Size' -> 16rD8
-	}!
+			'_OffsetOf_dwSize' -> 16r0.
+			'_OffsetOf_otmAscent' -> 16r64.
+			'_OffsetOf_otmDescent' -> 16r68.
+			'_OffsetOf_otmEMSquare' -> 16r60.
+			'_OffsetOf_otmFiller' -> 16r40.
+			'_OffsetOf_otmfsSelection' -> 16r4C.
+			'_OffsetOf_otmfsType' -> 16r50.
+			'_OffsetOf_otmItalicAngle' -> 16r5C.
+			'_OffsetOf_otmLineGap' -> 16r6C.
+			'_OffsetOf_otmMacAscent' -> 16r88.
+			'_OffsetOf_otmMacDescent' -> 16r8C.
+			'_OffsetOf_otmMacLineGap' -> 16r90.
+			'_OffsetOf_otmPanoseNumber' -> 16r41.
+			'_OffsetOf_otmpFaceName' -> 16rCC.
+			'_OffsetOf_otmpFamilyName' -> 16rC8.
+			'_OffsetOf_otmpFullName' -> 16rD4.
+			'_OffsetOf_otmpStyleName' -> 16rD0.
+			'_OffsetOf_otmptSubscriptOffset' -> 16rA0.
+			'_OffsetOf_otmptSubscriptSize' -> 16r98.
+			'_OffsetOf_otmptSuperscriptOffset' -> 16rB0.
+			'_OffsetOf_otmptSuperscriptSize' -> 16rA8.
+			'_OffsetOf_otmrcFontBox' -> 16r78.
+			'_OffsetOf_otmsCapEmHeight' -> 16r70.
+			'_OffsetOf_otmsCharSlopeRise' -> 16r54.
+			'_OffsetOf_otmsCharSlopeRun' -> 16r58.
+			'_OffsetOf_otmsStrikeoutPosition' -> 16rBC.
+			'_OffsetOf_otmsStrikeoutSize' -> 16rB8.
+			'_OffsetOf_otmsUnderscorePosition' -> 16rC4.
+			'_OffsetOf_otmsUnderscoreSize' -> 16rC0.
+			'_OffsetOf_otmsXHeight' -> 16r74.
+			'_OffsetOf_otmTextMetrics' -> 16r4.
+			'_OffsetOf_otmusMinimumPPEM' -> 16r94.
+			'_OUTLINETEXTMETRICW_Size' -> 16rD8
+		}!
 OS.OUTLINETEXTMETRICW guid: (Core.GUID fromString: '{52831a87-901f-4a84-894b-ab539352b71f}')!
 OS.OUTLINETEXTMETRICW comment: '<OUTLINETEXTMETRIC> is an <ExternalStructure> class to wrap the struct ''Win.OUTLINETEXTMETRIC'' from type information in the ''Windows API (ANSI)'' library.'!
 !OS.OUTLINETEXTMETRICW categoriesForClass!Win-Structs! !

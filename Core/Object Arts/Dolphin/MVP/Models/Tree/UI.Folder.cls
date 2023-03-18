@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'UI.Folder'
+Core.Object
+	subclass: #'UI.Folder'
 	instanceVariableNames: 'pathname'
 	classVariableNames: ''
 	imports: #()

@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.TASKDIALOG_BUTTON'
+OS.Win32Structure
+	subclass: #'OS.TASKDIALOG_BUTTON'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_nButtonID' -> 16r0.
-		'_OffsetOf_pszButtonText' -> 16r4.
-		'_TASKDIALOG_BUTTON_Size' -> 16r8
-	}!
+			'_OffsetOf_nButtonID' -> 16r0.
+			'_OffsetOf_pszButtonText' -> 16r4.
+			'_TASKDIALOG_BUTTON_Size' -> 16r8
+		}!
 OS.TASKDIALOG_BUTTON guid: (Core.GUID fromString: '{19c44fa3-bf97-499c-a411-0252c8b78b31}')!
 OS.TASKDIALOG_BUTTON comment: '`TASKDIALOG_BUTTON` is an `External.Structure` class to wrap the struct ''Win32.TASKDIALOG_BUTTON'' from type information in the ''Win32 API'' library.
 

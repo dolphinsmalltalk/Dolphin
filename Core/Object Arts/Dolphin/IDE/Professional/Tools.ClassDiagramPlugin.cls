@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.ClassBrowserPlugin subclass: #'Tools.ClassDiagramPlugin'
+Tools.ClassBrowserPlugin
+	subclass: #'Tools.ClassDiagramPlugin'
 	instanceVariableNames: 'classesPresenter'
 	classVariableNames: ''
 	imports: #()

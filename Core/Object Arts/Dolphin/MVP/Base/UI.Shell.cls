@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Presenter subclass: #'UI.Shell'
+UI.Presenter
+	subclass: #'UI.Shell'
 	instanceVariableNames: 'caption commandHistory'
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'STON.Tests.TestDomainObject'
+Core.Object
+	subclass: #'STON.Tests.TestDomainObject'
 	instanceVariableNames: 'created modified integer float description color tags bytes boolean'
 	classVariableNames: ''
 	imports: #()

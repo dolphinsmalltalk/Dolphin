@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IPersist subclass: #'OS.COM.IPersistMemory'
+OS.COM.IPersist
+	subclass: #'OS.COM.IPersistMemory'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

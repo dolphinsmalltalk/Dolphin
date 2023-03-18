@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.WindowsEvent subclass: #'UI.KeyEvent'
+UI.WindowsEvent
+	subclass: #'UI.KeyEvent'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

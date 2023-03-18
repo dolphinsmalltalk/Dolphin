@@ -1,16 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.VS_VERSION_INFO_HEADER'
+OS.Win32Structure
+	subclass: #'OS.VS_VERSION_INFO_HEADER'
 	instanceVariableNames: 'key valueOffset'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_wLength' -> 16r0.
-		'_OffsetOf_wType' -> 16r4.
-		'_OffsetOf_wValueLength' -> 16r2.
-		'_VS_VERSION_INFO_HEADER_Size' -> 16r6
-	}!
+			'_OffsetOf_wLength' -> 16r0.
+			'_OffsetOf_wType' -> 16r4.
+			'_OffsetOf_wValueLength' -> 16r2.
+			'_VS_VERSION_INFO_HEADER_Size' -> 16r6
+		}!
 OS.VS_VERSION_INFO_HEADER guid: (Core.GUID fromString: '{efc64c05-aa07-41b8-ba73-60f7974c6e3f}')!
 OS.VS_VERSION_INFO_HEADER comment: 'VS_VERSION_INFO_HEADER is an ExternalStructure class to represent the headers for version resource blocks. It is not a real Win32 structure.
 

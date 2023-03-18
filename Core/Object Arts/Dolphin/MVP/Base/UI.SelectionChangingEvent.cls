@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.SelectionChangeEvent subclass: #'UI.SelectionChangingEvent'
+UI.SelectionChangeEvent
+	subclass: #'UI.SelectionChangingEvent'
 	instanceVariableNames: 'permit'
 	classVariableNames: ''
 	imports: #()

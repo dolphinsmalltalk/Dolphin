@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.OLEStructure subclass: #'OS.COM.BIND_OPTS'
+OS.COM.OLEStructure
+	subclass: #'OS.COM.BIND_OPTS'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_BIND_OPTS_Size' -> 16r10.
-		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_dwTickCountDeadline' -> 16rC.
-		'_OffsetOf_grfFlags' -> 16r4.
-		'_OffsetOf_grfMode' -> 16r8
-	}!
+			'_BIND_OPTS_Size' -> 16r10.
+			'_OffsetOf_dwSize' -> 16r0.
+			'_OffsetOf_dwTickCountDeadline' -> 16rC.
+			'_OffsetOf_grfFlags' -> 16r4.
+			'_OffsetOf_grfMode' -> 16r8
+		}!
 OS.COM.BIND_OPTS guid: (Core.GUID fromString: '{87b4c5b3-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.COM.BIND_OPTS comment: 'BIND_OPTS is an external structure class to represent the OLE moniker structure of the same name.
 

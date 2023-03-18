@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.StatusBarItemAbstract subclass: #'UI.StatusBarItem'
+UI.StatusBarItemAbstract
+	subclass: #'UI.StatusBarItem'
 	instanceVariableNames: 'getTextBlock getImageBlock getTipTextBlock'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})

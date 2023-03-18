@@ -28,13 +28,15 @@ package!
 
 "Class Definitions"!
 
-UI.ValuePresenter subclass: #'UI.BooleanPresenter'
+UI.ValuePresenter
+	subclass: #'UI.BooleanPresenter'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.AbstractToTextConverter subclass: #'UI.BooleanToText'
+UI.AbstractToTextConverter
+	subclass: #'UI.BooleanToText'
 	instanceVariableNames: 'format'
 	classVariableNames: ''
 	imports: #()

@@ -1,16 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.OLEStructure subclass: #'OS.COM.CATEGORYINFO'
+OS.COM.OLEStructure
+	subclass: #'OS.COM.CATEGORYINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_CATEGORYINFO_Size' -> 16r114.
-		'_OffsetOf_catid' -> 16r0.
-		'_OffsetOf_lcid' -> 16r10.
-		'_OffsetOf_szDescription' -> 16r14
-	}!
+			'_CATEGORYINFO_Size' -> 16r114.
+			'_OffsetOf_catid' -> 16r0.
+			'_OffsetOf_lcid' -> 16r10.
+			'_OffsetOf_szDescription' -> 16r14
+		}!
 OS.COM.CATEGORYINFO guid: (Core.GUID fromString: '{a8eebb01-0149-481c-8b90-1eeba6516286}')!
 OS.COM.CATEGORYINFO comment: '<CATEGORYINFO> is an <ExternalStructure> class to wrap the struct ''COMCAT.CATEGORYINFO'' from type information in the ''OLE Component Categories Library'' library.
 

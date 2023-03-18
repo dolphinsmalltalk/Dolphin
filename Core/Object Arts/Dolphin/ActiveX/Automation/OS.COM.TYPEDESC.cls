@@ -1,18 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.OLEStructure subclass: #'OS.COM.TYPEDESC'
+OS.COM.OLEStructure
+	subclass: #'OS.COM.TYPEDESC'
 	instanceVariableNames: 'owner classDesc typeInfo'
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_hreftype' -> 16r0.
-		'_OffsetOf_lpadesc' -> 16r0.
-		'_OffsetOf_lptdesc' -> 16r0.
-		'_OffsetOf_vt' -> 16r4.
-		'_TYPEDESC_Size' -> 16r8.
-		'VTIndirections' -> #[0 0 0 0 0 0 0 0 0 1 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
-	}!
+			'_OffsetOf_hreftype' -> 16r0.
+			'_OffsetOf_lpadesc' -> 16r0.
+			'_OffsetOf_lptdesc' -> 16r0.
+			'_OffsetOf_vt' -> 16r4.
+			'_TYPEDESC_Size' -> 16r8.
+			'VTIndirections'
+				-> #[0 0 0 0 0 0 0 0 0 1 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+		}!
 OS.COM.TYPEDESC guid: (Core.GUID fromString: '{c06f3b7a-0868-11d3-93af-00a024ca708a}')!
 OS.COM.TYPEDESC comment: 'TYPEDESC is an ExternalStructure class to represent the AX Automation structure, TYPEDESC.
 

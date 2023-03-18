@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.ArithmeticValue subclass: #'Graphics.Point'
+Core.ArithmeticValue
+	subclass: #'Graphics.Point'
 	instanceVariableNames: 'x y'
 	classVariableNames: 'Zero'
 	imports: #(#{Kernel.VMConstants private})

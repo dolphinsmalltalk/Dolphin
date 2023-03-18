@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.TVITEMW subclass: #'OS.TVITEMEXW'
+OS.TVITEMW
+	subclass: #'OS.TVITEMEXW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_hwnd' -> 16r30.
-		'_OffsetOf_iExpandedImage' -> 16r34.
-		'_OffsetOf_iIntegral' -> 16r28.
-		'_OffsetOf_uStateEx' -> 16r2C.
-		'_TVITEMEXW_Size' -> 16r38
-	}!
+			'_OffsetOf_hwnd' -> 16r30.
+			'_OffsetOf_iExpandedImage' -> 16r34.
+			'_OffsetOf_iIntegral' -> 16r28.
+			'_OffsetOf_uStateEx' -> 16r2C.
+			'_TVITEMEXW_Size' -> 16r38
+		}!
 OS.TVITEMEXW guid: (Core.GUID fromString: '{f1c35f1c-58a2-4d7f-9fd9-3184f8aa1c31}')!
 OS.TVITEMEXW comment: ''!
 !OS.TVITEMEXW categoriesForClass!External-Data-Structured-Win32! !

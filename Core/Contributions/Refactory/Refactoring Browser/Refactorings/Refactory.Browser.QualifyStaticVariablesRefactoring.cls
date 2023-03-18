@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.Refactoring subclass: #'Refactory.Browser.QualifyStaticVariablesRefactoring'
+Refactory.Browser.Refactoring
+	subclass: #'Refactory.Browser.QualifyStaticVariablesRefactoring'
 	instanceVariableNames: 'tree'
 	classVariableNames: ''
 	imports: #()

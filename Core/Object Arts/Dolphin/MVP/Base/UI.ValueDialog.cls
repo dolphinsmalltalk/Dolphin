@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Dialog subclass: #'UI.ValueDialog'
+UI.Dialog
+	subclass: #'UI.ValueDialog'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

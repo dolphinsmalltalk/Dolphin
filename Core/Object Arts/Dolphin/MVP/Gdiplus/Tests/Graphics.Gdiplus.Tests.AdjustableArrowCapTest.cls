@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.Tests.AbstractCustomLineCapTest subclass: #'Graphics.Gdiplus.Tests.AdjustableArrowCapTest'
+Graphics.Gdiplus.Tests.AbstractCustomLineCapTest
+	subclass: #'Graphics.Gdiplus.Tests.AdjustableArrowCapTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

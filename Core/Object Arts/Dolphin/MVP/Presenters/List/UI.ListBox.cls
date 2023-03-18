@@ -1,14 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.BasicListAbstract subclass: #'UI.ListBox'
+UI.BasicListAbstract
+	subclass: #'UI.ListBox'
 	instanceVariableNames: 'approvedSelIndices'
 	classVariableNames: ''
 	imports: #(#{OS.ListBoxConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'SelectionModeMask' -> 16r808.
-		'SelectionModes' -> (IdentityDictionary withAll: {#toggle -> 16r8. #multi -> 16r800. #single -> 16r0})
-	}!
+			'SelectionModeMask' -> 16r808.
+			'SelectionModes'
+				-> (IdentityDictionary withAll: { #multi -> 16r800. #single -> 16r0. #toggle -> 16r8 })
+		}!
 UI.ListBox guid: (Core.GUID fromString: '{87b4c72c-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.ListBox comment: 'ListBox is the <listView> implementing the standard Windows LISTBOX control. It is for single selection use and, therefore, implements the <selectableItems> protocol  for use with any <listModel>.
 

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.StTagNode subclass: #'Kernel.StAnnotationNode'
+Kernel.StTagNode
+	subclass: #'Kernel.StAnnotationNode'
 	instanceVariableNames: 'selector arguments'
 	classVariableNames: ''
 	imports: #()

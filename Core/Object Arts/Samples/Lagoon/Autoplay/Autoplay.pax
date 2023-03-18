@@ -71,13 +71,15 @@ package!
 
 "Class Definitions"!
 
-UI.Shell subclass: #'UI.Examples.Autoplay'
+UI.Shell
+	subclass: #'UI.Examples.Autoplay'
 	instanceVariableNames: 'browser navigating pageExtent homePage'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.RuntimeSessionManager subclass: #'UI.Examples.AutoplaySessionManager'
+UI.RuntimeSessionManager
+	subclass: #'UI.Examples.AutoplaySessionManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

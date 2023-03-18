@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Tools.CodeGenerationContext'
+Core.Object
+	subclass: #'Tools.CodeGenerationContext'
 	instanceVariableNames: 'writeStream targetClass'
 	classVariableNames: ''
 	imports: #()

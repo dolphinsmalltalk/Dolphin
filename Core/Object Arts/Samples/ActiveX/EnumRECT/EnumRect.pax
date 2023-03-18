@@ -37,13 +37,15 @@ package!
 
 "Class Definitions"!
 
-OS.COM.InterfaceImplementation subclass: #'OS.COM.Examples.EnumRECT'
+OS.COM.InterfaceImplementation
+	subclass: #'OS.COM.Examples.EnumRECT'
 	instanceVariableNames: 'm_iCur m_rgrc'
 	classVariableNames: 'CRECTS'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.IEnumXXXX subclass: #'OS.COM.Examples.IEnumRECT'
+OS.COM.IEnumXXXX
+	subclass: #'OS.COM.Examples.IEnumRECT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

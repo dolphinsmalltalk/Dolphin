@@ -1,24 +1,25 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.OSVERSIONINFOEXW'
+OS.Win32Structure
+	subclass: #'OS.OSVERSIONINFOEXW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_dwBuildNumber' -> 16rC.
-		'_OffsetOf_dwMajorVersion' -> 16r4.
-		'_OffsetOf_dwMinorVersion' -> 16r8.
-		'_OffsetOf_dwPlatformId' -> 16r10.
-		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_szCSDVersion' -> 16r14.
-		'_OffsetOf_wProductType' -> 16r11A.
-		'_OffsetOf_wReserved' -> 16r11B.
-		'_OffsetOf_wServicePackMajor' -> 16r114.
-		'_OffsetOf_wServicePackMinor' -> 16r116.
-		'_OffsetOf_wSuiteMask' -> 16r118.
-		'_OSVERSIONINFOEXW_Size' -> 16r11C
-	}!
+			'_OffsetOf_dwBuildNumber' -> 16rC.
+			'_OffsetOf_dwMajorVersion' -> 16r4.
+			'_OffsetOf_dwMinorVersion' -> 16r8.
+			'_OffsetOf_dwPlatformId' -> 16r10.
+			'_OffsetOf_dwSize' -> 16r0.
+			'_OffsetOf_szCSDVersion' -> 16r14.
+			'_OffsetOf_wProductType' -> 16r11A.
+			'_OffsetOf_wReserved' -> 16r11B.
+			'_OffsetOf_wServicePackMajor' -> 16r114.
+			'_OffsetOf_wServicePackMinor' -> 16r116.
+			'_OffsetOf_wSuiteMask' -> 16r118.
+			'_OSVERSIONINFOEXW_Size' -> 16r11C
+		}!
 OS.OSVERSIONINFOEXW guid: (Core.GUID fromString: '{1c5e8929-8791-4aa9-b7ea-152ef36b23dd}')!
 OS.OSVERSIONINFOEXW comment: '<OSVERSIONINFOEX> is an <ExternalStructure> class to wrap the struct ''Win32.OSVERSIONINFOEXW'' from type information in the ''Win32 API'' library.
 

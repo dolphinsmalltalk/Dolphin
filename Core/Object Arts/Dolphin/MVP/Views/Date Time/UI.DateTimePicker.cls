@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.DateTimeCommonControl subclass: #'UI.DateTimePicker'
+UI.DateTimeCommonControl
+	subclass: #'UI.DateTimePicker'
 	instanceVariableNames: 'displayFormat'
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.Tests.DolphinCompilerTestMethods subclass: #'Kernel.Tests.DolphinCompilerTestMethodsSubclass'
+Kernel.Tests.DolphinCompilerTestMethods
+	subclass: #'Kernel.Tests.DolphinCompilerTestMethodsSubclass'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Dialog subclass: #'Tools.ConvertToSiblingDialog'
+UI.Dialog
+	subclass: #'Tools.ConvertToSiblingDialog'
 	instanceVariableNames: 'classNamePresenter namespacePresenter subclassesPresenter statusModel'
 	classVariableNames: ''
 	imports: #(#{Refactory.Browser private})

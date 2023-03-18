@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ProtectedProductSessionManager subclass: #'Security.Examples.ProtectedNotepadSessionManager'
+UI.ProtectedProductSessionManager
+	subclass: #'Security.Examples.ProtectedNotepadSessionManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

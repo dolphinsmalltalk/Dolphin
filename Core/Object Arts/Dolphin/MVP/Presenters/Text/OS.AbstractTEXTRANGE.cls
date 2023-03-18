@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.AbstractTEXTRANGE'
+OS.Win32Structure
+	subclass: #'OS.AbstractTEXTRANGE'
 	instanceVariableNames: 'text'
 	classVariableNames: ''
 	imports: #()

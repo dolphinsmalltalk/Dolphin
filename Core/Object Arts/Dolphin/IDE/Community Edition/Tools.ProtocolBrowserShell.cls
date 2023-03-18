@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.SmalltalkToolShell subclass: #'Tools.ProtocolBrowserShell'
+Tools.SmalltalkToolShell
+	subclass: #'Tools.ProtocolBrowserShell'
 	instanceVariableNames: 'protocolsPresenter selectorsPresenter classesPresenter'
 	classVariableNames: ''
 	imports: #()

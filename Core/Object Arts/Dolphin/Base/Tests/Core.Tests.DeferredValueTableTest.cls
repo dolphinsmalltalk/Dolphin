@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.LookupTableTest subclass: #'Core.Tests.DeferredValueTableTest'
+Core.Tests.LookupTableTest
+	subclass: #'Core.Tests.DeferredValueTableTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

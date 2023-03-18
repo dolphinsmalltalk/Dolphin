@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.SearchPolicyTest subclass: #'Kernel.Tests.EqualitySearchPolicyTest'
+Core.Tests.SearchPolicyTest
+	subclass: #'Kernel.Tests.EqualitySearchPolicyTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

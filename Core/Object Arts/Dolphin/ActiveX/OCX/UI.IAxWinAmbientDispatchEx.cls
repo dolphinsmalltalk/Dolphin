@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.IAxWinAmbientDispatch subclass: #'UI.IAxWinAmbientDispatchEx'
+UI.IAxWinAmbientDispatch
+	subclass: #'UI.IAxWinAmbientDispatchEx'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

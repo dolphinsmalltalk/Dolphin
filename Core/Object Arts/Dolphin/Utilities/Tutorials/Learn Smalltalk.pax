@@ -24,13 +24,15 @@ package!
 
 "Class Definitions"!
 
-Tools.AbstractTutorial subclass: #'Tools.SmalltalkSyntaxTutorial'
+Tools.AbstractTutorial
+	subclass: #'Tools.SmalltalkSyntaxTutorial'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.TutorialPlayer subclass: #'Tools.ProfStef'
+Tools.TutorialPlayer
+	subclass: #'Tools.ProfStef'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

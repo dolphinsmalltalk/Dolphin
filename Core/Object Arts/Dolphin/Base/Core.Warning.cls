@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Notification subclass: #'Core.Warning'
+Core.Notification
+	subclass: #'Core.Warning'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

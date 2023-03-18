@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTest subclass: #'OS.Tests.RegKeyTest'
+Core.Tests.DolphinTest
+	subclass: #'OS.Tests.RegKeyTest'
 	instanceVariableNames: 'testKey'
 	classVariableNames: ''
 	imports: #(#{OS.WinRegConstants})

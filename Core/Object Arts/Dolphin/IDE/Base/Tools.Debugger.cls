@@ -1,18 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.SmalltalkToolShell subclass: #'Tools.Debugger'
+Tools.SmalltalkToolShell
+	subclass: #'Tools.Debugger'
 	instanceVariableNames: 'process topFrame localAccessor depth flags breakWhen stackPresenter sourcePresenter variablesPresenter inspectorPresenter breakAction suspendingList _method refactoringTool'
 	classVariableNames: 'AnimatePause DefaultStackDepth EnableDynamicMenus RestartOnMethodSave RunToCursorBehavior ShowWalkbacks SkipTable'
 	imports: #(#{Kernel.CompilerFlags} #{Kernel.OpcodePool})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'AnimateMask' -> 16r10.
-		'DisassemblyMask' -> 16r4.
-		'MainMask' -> 16r1.
-		'ResumableMask' -> 16r8.
-		'RunMask' -> 16r2.
-		'StackDepthIncrement' -> 16r64
-	}!
+			'AnimateMask' -> 16r10.
+			'DisassemblyMask' -> 16r4.
+			'MainMask' -> 16r1.
+			'ResumableMask' -> 16r8.
+			'RunMask' -> 16r2.
+			'StackDepthIncrement' -> 16r64
+		}!
 Tools.Debugger guid: (Core.GUID fromString: '{87b4c6bd-026e-11d3-9fd7-00a0cc3e4a32}')!
 Tools.Debugger comment: 'Debugger is a <SmalltalkToolShell> that implements the standard debugging tool. The debugger is usually invoked from a walkback dialog by pressing the Debug button. Walkbacks are displayed in the development environment when a breakpoint (''self halt'') is encountered, or when an unhandled exception occurs. It is also possible to configure the system so that debuggers are opened automatically when breakpoints are encountered or errors occur (see the Debugger options in Dolphin Options), though this is not particularly recommended as it can make the system crash if the error or breakpoint is in some code that is itself used by the Debugger.
 

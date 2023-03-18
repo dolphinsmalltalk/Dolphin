@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.IpHlpApiTableStruct subclass: #'OS.MIB_TCPTABLE'
+OS.IpHlpApiTableStruct
+	subclass: #'OS.MIB_TCPTABLE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_MIB_TCPTABLE_Size' -> 16r18.
-		'_OffsetOf_table' -> 16r4
-	}!
+	classConstants: { '_MIB_TCPTABLE_Size' -> 16r18. '_OffsetOf_table' -> 16r4 }!
 OS.MIB_TCPTABLE guid: (Core.GUID fromString: '{1308bd96-edb7-4030-85b1-a6651a737122}')!
 OS.MIB_TCPTABLE comment: '<MIB_TCPTABLE> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_TCPTABLE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

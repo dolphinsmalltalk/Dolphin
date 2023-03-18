@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMRSETMITERLIMIT'
+OS.ENHMETARECORD
+	subclass: #'OS.EMRSETMITERLIMIT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_EMRSETMITERLIMIT_Size' -> 16rC.
-		'_OffsetOf_eMiterLimit' -> 16r8
-	}!
+	classConstants: { '_EMRSETMITERLIMIT_Size' -> 16rC. '_OffsetOf_eMiterLimit' -> 16r8 }!
 OS.EMRSETMITERLIMIT guid: (Core.GUID fromString: '{bc8dabd4-f8b4-4f42-895c-1b712c75fc43}')!
 OS.EMRSETMITERLIMIT comment: '<EMRSETMITERLIMIT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETMITERLIMIT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

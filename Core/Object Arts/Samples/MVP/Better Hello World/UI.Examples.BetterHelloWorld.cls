@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Shell subclass: #'UI.Examples.BetterHelloWorld'
+UI.Shell
+	subclass: #'UI.Examples.BetterHelloWorld'
 	instanceVariableNames: 'textToDisplayPresenter'
 	classVariableNames: ''
 	imports: #()

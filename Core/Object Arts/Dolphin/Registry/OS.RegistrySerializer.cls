@@ -1,15 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'OS.RegistrySerializer'
+Core.Object
+	subclass: #'OS.RegistrySerializer'
 	instanceVariableNames: 'objects currentKey instVarsCache classNames'
 	classVariableNames: ''
 	imports: #(#{OS.WinRegConstants private})
 	classInstanceVariableNames: ''
-	classConstants: {
-		'BytesValueName' -> 'bytes'.
-		'ReferencePrefix' -> '@'.
-		'ValueSeparator' -> ':'
-	}!
+	classConstants: { 'BytesValueName' -> 'bytes'. 'ReferencePrefix' -> '@'. 'ValueSeparator' -> ':' }!
 OS.RegistrySerializer guid: (Core.GUID fromString: '{da611471-9e5f-4743-a322-503ebcf1ed71}')!
 OS.RegistrySerializer comment: '`OS.RegistrySerializer` is a simple object serialiser for storing object graphs in the Windows Registry. The graphs can be reconstructed from the registry using `OS.RegistryDeserializer`.
 

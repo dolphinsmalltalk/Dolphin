@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WinHttpServer.HttpServiceConfigQuery subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_SSL_QUERY'
+WinHttpServer.HttpServiceConfigQuery
+	subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_SSL_QUERY'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_SERVICE_CONFIG_SSL_QUERY_Size' -> 16rC.
-		'_OffsetOf_dwToken' -> 16r8.
-		'_OffsetOf_KeyDesc' -> 16r4
-	}!
+			'_HTTP_SERVICE_CONFIG_SSL_QUERY_Size' -> 16rC.
+			'_OffsetOf_dwToken' -> 16r8.
+			'_OffsetOf_KeyDesc' -> 16r4
+		}!
 WinHttpServer.HTTP_SERVICE_CONFIG_SSL_QUERY guid: (Core.GUID fromString: '{d0a38bb4-ba56-4dc6-9079-ac7694ef98ac}')!
 WinHttpServer.HTTP_SERVICE_CONFIG_SSL_QUERY comment: '`HTTP_SERVICE_CONFIG_SSL_QUERY` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_SSL_QUERY'' from type information in the ''Windows Http Server API'' library.
 

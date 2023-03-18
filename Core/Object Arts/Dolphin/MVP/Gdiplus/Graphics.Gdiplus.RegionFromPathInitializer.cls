@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.RegionInitializer subclass: #'Graphics.Gdiplus.RegionFromPathInitializer'
+Graphics.Gdiplus.RegionInitializer
+	subclass: #'Graphics.Gdiplus.RegionFromPathInitializer'
 	instanceVariableNames: 'path'
 	classVariableNames: ''
 	imports: #()

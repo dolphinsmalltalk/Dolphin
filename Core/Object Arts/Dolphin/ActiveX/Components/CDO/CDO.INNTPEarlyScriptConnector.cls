@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IDispatch subclass: #'CDO.INNTPEarlyScriptConnector'
+OS.COM.IDispatch
+	subclass: #'CDO.INNTPEarlyScriptConnector'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

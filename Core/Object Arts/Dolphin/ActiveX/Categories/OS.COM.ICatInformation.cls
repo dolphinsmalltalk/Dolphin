@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IUnknown subclass: #'OS.COM.ICatInformation'
+OS.COM.IUnknown
+	subclass: #'OS.COM.ICatInformation'
 	instanceVariableNames: ''
 	classVariableNames: 'CatMan Controls'
 	imports: #()

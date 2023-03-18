@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.SequenceableCollection subclass: #'Database.DBResultSet'
+Core.SequenceableCollection
+	subclass: #'Database.DBResultSet'
 	instanceVariableNames: 'statement buffer columns'
 	classVariableNames: ''
 	imports: #(#{OS.ODBCRetCodes} #{OS.ODBCConstants})

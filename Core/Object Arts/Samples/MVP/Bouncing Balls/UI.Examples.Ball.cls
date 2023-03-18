@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'UI.Examples.Ball'
+Core.Object
+	subclass: #'UI.Examples.Ball'
 	instanceVariableNames: 'position velocity icon'
 	classVariableNames: ''
 	imports: #()

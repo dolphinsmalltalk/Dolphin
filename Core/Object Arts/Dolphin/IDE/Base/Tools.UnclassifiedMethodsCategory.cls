@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.VirtualMethodCategory subclass: #'Tools.UnclassifiedMethodsCategory'
+Tools.VirtualMethodCategory
+	subclass: #'Tools.UnclassifiedMethodsCategory'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

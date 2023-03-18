@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Core.Collection'
+Core.Object
+	subclass: #'Core.Collection'
 	instanceVariableNames: ''
 	classVariableNames: 'AbsentCookie'
 	imports: #()

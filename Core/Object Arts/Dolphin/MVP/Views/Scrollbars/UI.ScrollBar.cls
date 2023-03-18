@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ValueConvertingControlView subclass: #'UI.ScrollBar'
+UI.ValueConvertingControlView
+	subclass: #'UI.ScrollBar'
 	instanceVariableNames: 'continuousTracking'
 	classVariableNames: ''
 	imports: #()

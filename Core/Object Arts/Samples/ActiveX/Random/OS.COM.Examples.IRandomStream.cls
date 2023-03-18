@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IDispatch subclass: #'OS.COM.Examples.IRandomStream'
+OS.COM.IDispatch
+	subclass: #'OS.COM.Examples.IRandomStream'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

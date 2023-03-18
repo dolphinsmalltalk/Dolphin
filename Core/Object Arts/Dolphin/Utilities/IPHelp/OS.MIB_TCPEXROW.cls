@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.MIB_TCPROW subclass: #'OS.MIB_TCPEXROW'
+OS.MIB_TCPROW
+	subclass: #'OS.MIB_TCPEXROW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_MIB_TCPEXROW_Size' -> 16r18.
-		'_OffsetOf_dwProcessId' -> 16r14
-	}!
+	classConstants: { '_MIB_TCPEXROW_Size' -> 16r18. '_OffsetOf_dwProcessId' -> 16r14 }!
 OS.MIB_TCPEXROW guid: (Core.GUID fromString: '{f2b03657-a3d2-486f-9d24-d597de178487}')!
 OS.MIB_TCPEXROW comment: '<MIB_TCPEXROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_TCPEXROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

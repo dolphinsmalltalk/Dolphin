@@ -1,13 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'OS.FileSystemChange'
+Core.Object
+	subclass: #'OS.FileSystemChange'
 	instanceVariableNames: 'time code fileNames'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'ActionMap' -> #(#fileAdded: #fileRemoved: #fileModified: #fileRenamedFrom:to: 16r5)
-	}!
+			'ActionMap' -> #(#fileAdded: #fileRemoved: #fileModified: #fileRenamedFrom:to: 16r5)
+		}!
 OS.FileSystemChange guid: (Core.GUID fromString: '{ad5f4ada-4f26-46de-a418-b5a0e0c6b937}')!
 OS.FileSystemChange comment: ''!
 !OS.FileSystemChange categoriesForClass!Kernel-Objects! !

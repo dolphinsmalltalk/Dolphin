@@ -1,19 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'MSXML.XHR_COOKIE'
+External.Structure
+	subclass: #'MSXML.XHR_COOKIE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_dwFlags' -> 16r18.
-		'_OffsetOf_ftExpires' -> 16r10.
-		'_OffsetOf_pwszName' -> 16r4.
-		'_OffsetOf_pwszP3PPolicy' -> 16rC.
-		'_OffsetOf_pwszUrl' -> 16r0.
-		'_OffsetOf_pwszValue' -> 16r8.
-		'_XHR_COOKIE_Size' -> 16r1C
-	}!
+			'_OffsetOf_dwFlags' -> 16r18.
+			'_OffsetOf_ftExpires' -> 16r10.
+			'_OffsetOf_pwszName' -> 16r4.
+			'_OffsetOf_pwszP3PPolicy' -> 16rC.
+			'_OffsetOf_pwszUrl' -> 16r0.
+			'_OffsetOf_pwszValue' -> 16r8.
+			'_XHR_COOKIE_Size' -> 16r1C
+		}!
 MSXML.XHR_COOKIE guid: (Core.GUID fromString: '{55d440a1-79a9-4f7b-9828-7efa635f6579}')!
 MSXML.XHR_COOKIE comment: '`XHR_COOKIE` is an `ExternalStructure` class to wrap the struct ''MSXML2.XHR_COOKIE'' from type information in the ''Microsoft XML, v6.0'' library.
 

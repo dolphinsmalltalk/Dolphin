@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Model subclass: #'Refactory.Browser.RBModel'
+Core.Model
+	subclass: #'Refactory.Browser.RBModel'
 	instanceVariableNames: 'changes environment rootClasses implementorsCache sendersCache rootNamespace smalltalkNamespace selectorsCache'
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.MethodRefactoring subclass: #'Refactory.Browser.InlineTemporaryRefactoring'
+Refactory.Browser.MethodRefactoring
+	subclass: #'Refactory.Browser.InlineTemporaryRefactoring'
 	instanceVariableNames: 'sourceInterval selector assignmentNode definingNode sourceTree method'
 	classVariableNames: ''
 	imports: #()

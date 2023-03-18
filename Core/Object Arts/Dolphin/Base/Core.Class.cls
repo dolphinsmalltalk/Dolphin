@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.ClassDescription subclass: #'Core.Class'
+Core.ClassDescription
+	subclass: #'Core.Class'
 	instanceVariableNames: 'subclasses name fullName classPool imports environment comment classCategories _guid'
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Tools.ParseContext'
+Core.Object
+	subclass: #'Tools.ParseContext'
 	instanceVariableNames: 'methodClass environment'
 	classVariableNames: ''
 	imports: #()

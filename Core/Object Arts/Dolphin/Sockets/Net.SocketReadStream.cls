@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.ReadStream subclass: #'Net.SocketReadStream'
+Core.ReadStream
+	subclass: #'Net.SocketReadStream'
 	instanceVariableNames: 'socket'
 	classVariableNames: ''
 	imports: #()

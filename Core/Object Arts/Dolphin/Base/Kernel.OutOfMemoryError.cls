@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Error subclass: #'Kernel.OutOfMemoryError'
+OS.Win32Error
+	subclass: #'Kernel.OutOfMemoryError'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

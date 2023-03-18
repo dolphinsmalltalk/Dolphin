@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.BatchAspectAccessor subclass: #'Tools.IndexedInstVarBatchAccessor'
+Tools.BatchAspectAccessor
+	subclass: #'Tools.IndexedInstVarBatchAccessor'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

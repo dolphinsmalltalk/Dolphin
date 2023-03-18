@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Random subclass: #'OS.RandomCRT'
+Core.Random
+	subclass: #'OS.RandomCRT'
 	instanceVariableNames: 'next'
 	classVariableNames: ''
 	imports: #(#{OS.CRTConstants})

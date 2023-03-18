@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS'
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_REQUEST_CHANNEL_BIND_STATUS_Size' -> 16r10.
-		'_OffsetOf_ChannelToken' -> 16r4.
-		'_OffsetOf_ChannelTokenSize' -> 16r8.
-		'_OffsetOf_Flags' -> 16rC.
-		'_OffsetOf_ServiceName' -> 16r0
-	}!
+			'_HTTP_REQUEST_CHANNEL_BIND_STATUS_Size' -> 16r10.
+			'_OffsetOf_ChannelToken' -> 16r4.
+			'_OffsetOf_ChannelTokenSize' -> 16r8.
+			'_OffsetOf_Flags' -> 16rC.
+			'_OffsetOf_ServiceName' -> 16r0
+		}!
 WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS guid: (Core.GUID fromString: '{2fc21c2a-e0c8-4c4c-a68f-e8270f8fbd2a}')!
 WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS comment: '`HTTP_REQUEST_CHANNEL_BIND_STATUS` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS'' from type information in the ''Windows Http Server API'' library.
 

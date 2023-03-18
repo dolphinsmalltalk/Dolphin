@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMREXTCREATEFONTINDIRECTW'
+OS.ENHMETARECORD
+	subclass: #'OS.EMREXTCREATEFONTINDIRECTW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_EMREXTCREATEFONTINDIRECTW_Size' -> 16r14C.
-		'_OffsetOf_elfw' -> 16rC.
-		'_OffsetOf_ihFont' -> 16r8
-	}!
+			'_EMREXTCREATEFONTINDIRECTW_Size' -> 16r14C.
+			'_OffsetOf_elfw' -> 16rC.
+			'_OffsetOf_ihFont' -> 16r8
+		}!
 OS.EMREXTCREATEFONTINDIRECTW guid: (Core.GUID fromString: '{29743add-8da1-4573-9b6b-8a3d2c5ac799}')!
 OS.EMREXTCREATEFONTINDIRECTW comment: '<EMREXTCREATEFONTINDIRECT> is an <ExternalStructure> class to wrap the struct ''Win32.EMREXTCREATEFONTINDIRECT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

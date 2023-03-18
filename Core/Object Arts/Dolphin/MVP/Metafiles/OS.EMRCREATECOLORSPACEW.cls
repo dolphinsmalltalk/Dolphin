@@ -1,18 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMRCREATECOLORSPACEW'
+OS.ENHMETARECORD
+	subclass: #'OS.EMRCREATECOLORSPACEW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_EMRCREATECOLORSPACEW_Size' -> 16r160.
-		'_OffsetOf_cbData' -> 16r158.
-		'_OffsetOf_Data' -> 16r15C.
-		'_OffsetOf_dwFlags' -> 16r154.
-		'_OffsetOf_ihCS' -> 16r8.
-		'_OffsetOf_lcs' -> 16rC
-	}!
+			'_EMRCREATECOLORSPACEW_Size' -> 16r160.
+			'_OffsetOf_cbData' -> 16r158.
+			'_OffsetOf_Data' -> 16r15C.
+			'_OffsetOf_dwFlags' -> 16r154.
+			'_OffsetOf_ihCS' -> 16r8.
+			'_OffsetOf_lcs' -> 16rC
+		}!
 OS.EMRCREATECOLORSPACEW guid: (Core.GUID fromString: '{27b16b33-1f59-4046-ae08-0652f9c089f1}')!
 OS.EMRCREATECOLORSPACEW comment: '<EMRCREATECOLORSPACEW> is an <ExternalStructure> class to wrap the struct ''Win32.EMRCREATECOLORSPACEW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

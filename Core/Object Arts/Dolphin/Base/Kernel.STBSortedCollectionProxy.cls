@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.STBCollectionProxy subclass: #'Kernel.STBSortedCollectionProxy'
+Kernel.STBCollectionProxy
+	subclass: #'Kernel.STBSortedCollectionProxy'
 	instanceVariableNames: 'sortAlgorithm'
 	classVariableNames: ''
 	imports: #()

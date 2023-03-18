@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Core.Signal'
+Core.Object
+	subclass: #'Core.Signal'
 	instanceVariableNames: 'description resumable'
 	classVariableNames: ''
 	imports: #()

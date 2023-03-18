@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTest subclass: #SocketErrorTest
+Core.Tests.DolphinTest
+	subclass: #SocketErrorTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.WinSocketErrors})

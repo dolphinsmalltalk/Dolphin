@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Tests.AbstractShellViewTest subclass: #'UI.Tests.ShellViewTest'
+UI.Tests.AbstractShellViewTest
+	subclass: #'UI.Tests.ShellViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

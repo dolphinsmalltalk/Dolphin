@@ -346,109 +346,127 @@ package!
 
 "Class Definitions"!
 
-Core.Object subclass: #'Tools.RefactoringTool'
+Core.Object
+	subclass: #'Tools.RefactoringTool'
 	instanceVariableNames: 'presenter'
 	classVariableNames: ''
 	imports: #(#{Refactory.Browser private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.ProfessionalSmalltalkSystem subclass: #'Tools.RefactoringSmalltalkSystem'
+Tools.ProfessionalSmalltalkSystem
+	subclass: #'Tools.RefactoringSmalltalkSystem'
 	instanceVariableNames: 'isOAD'
 	classVariableNames: 'RefactoringSignal'
 	imports: #(#{Refactory.Browser})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.ClassBrowserPlugin subclass: #'Tools.SmalllintPlugin'
+Tools.ClassBrowserPlugin
+	subclass: #'Tools.SmalllintPlugin'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{Refactory.Browser private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.SmalllintPlugin subclass: #'Tools.CodeMentorPlugin'
+Tools.SmalllintPlugin
+	subclass: #'Tools.CodeMentorPlugin'
 	instanceVariableNames: 'failuresPresenter infoSitePresenter infoBrowserPresenter progressPresenter checkerProcess rulesTreeModel isRefreshPending refreshMode'
 	classVariableNames: 'DefaultRefreshMode LintIconMap LintRulesDoc'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.SmalllintPlugin subclass: #'Tools.CodeRewriterPlugin'
+Tools.SmalllintPlugin
+	subclass: #'Tools.CodeRewriterPlugin'
 	instanceVariableNames: 'searchTextPresenter replaceTextPresenter isMethodPresenter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Dialog subclass: #'Tools.ConvertToSiblingDialog'
+UI.Dialog
+	subclass: #'Tools.ConvertToSiblingDialog'
 	instanceVariableNames: 'classNamePresenter namespacePresenter subclassesPresenter statusModel'
 	classVariableNames: ''
 	imports: #(#{Refactory.Browser private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Dialog subclass: #'Tools.MethodNameDialog'
+UI.Dialog
+	subclass: #'Tools.MethodNameDialog'
 	instanceVariableNames: 'selectorPresenter parametersPresenter parameterNamesPresenter hintBubble showChangesPresenter'
 	classVariableNames: ''
 	imports: #(#{Refactory.Browser private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.MethodNameDialog subclass: #'Tools.RenameMethodDialog'
+Tools.MethodNameDialog
+	subclass: #'Tools.RenameMethodDialog'
 	instanceVariableNames: 'scopePresenter scopeDescriptionPresenter allowExistingSelector'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.ValueDialog subclass: #'Tools.RenameAccessorsDialog'
+UI.ValueDialog
+	subclass: #'Tools.RenameAccessorsDialog'
 	instanceVariableNames: 'selectorsPresenter scopePresenter showChangesPresenter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.ChooseNamespaceDialog subclass: #'Tools.ChooseImportDialog'
+Tools.ChooseNamespaceDialog
+	subclass: #'Tools.ChooseImportDialog'
 	instanceVariableNames: 'private hintBubble namespacesOnly'
 	classVariableNames: ''
 	imports: #(#{Refactory.Browser private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.SmalltalkToolShell subclass: #'Tools.RewriteChangesBrowser'
+Tools.SmalltalkToolShell
+	subclass: #'Tools.RewriteChangesBrowser'
 	instanceVariableNames: 'changesPresenter differencesPresenter compositeChange'
 	classVariableNames: ''
 	imports: #(#{Refactory.Browser private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.MethodBrowserShell subclass: #'Tools.LintRuleFailuresBrowserShell'
+Tools.MethodBrowserShell
+	subclass: #'Tools.LintRuleFailuresBrowserShell'
 	instanceVariableNames: 'lintRule'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.RBMethodName subclass: #'Tools.ScopedMethodName'
+Refactory.Browser.RBMethodName
+	subclass: #'Tools.ScopedMethodName'
 	instanceVariableNames: 'methodClass originalArguments originalSelector scopeName scopes'
 	classVariableNames: ''
 	imports: #(#{Refactory.Browser})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.ClassRefactoring subclass: #'Refactory.Browser.CopyClassRefactoring'
+Refactory.Browser.ClassRefactoring
+	subclass: #'Refactory.Browser.CopyClassRefactoring'
 	instanceVariableNames: 'newName class superclass'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.RenameMethodRefactoring subclass: #'Refactory.Browser.RenameMethodReferencesTransformation'
+Refactory.Browser.RenameMethodRefactoring
+	subclass: #'Refactory.Browser.RenameMethodReferencesTransformation'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.RefactoringTool subclass: #'Tools.CodeRefactoringTool'
+Tools.RefactoringTool
+	subclass: #'Tools.CodeRefactoringTool'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{Kernel.ParseErrorCodes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.RefactoringTool subclass: #'Tools.MethodRefactoringTool'
+Tools.RefactoringTool
+	subclass: #'Tools.MethodRefactoringTool'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.SmalllintContext subclass: #'Tools.SmalllintCachingContext'
+Refactory.Browser.SmalllintContext
+	subclass: #'Tools.SmalllintCachingContext'
 	instanceVariableNames: ''
 	classVariableNames: 'Literals Mtx Selectors'
 	imports: #()

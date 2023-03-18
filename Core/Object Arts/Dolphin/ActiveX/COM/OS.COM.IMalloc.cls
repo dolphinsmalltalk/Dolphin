@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IUnknown subclass: #'OS.COM.IMalloc'
+OS.COM.IUnknown
+	subclass: #'OS.COM.IMalloc'
 	instanceVariableNames: ''
 	classVariableNames: 'Shared Task'
 	imports: #()

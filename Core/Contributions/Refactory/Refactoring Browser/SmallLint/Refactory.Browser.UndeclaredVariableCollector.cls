@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.StaticVariableBinder subclass: #'Refactory.Browser.UndeclaredVariableCollector'
+Kernel.StaticVariableBinder
+	subclass: #'Refactory.Browser.UndeclaredVariableCollector'
 	instanceVariableNames: 'undeclareds'
 	classVariableNames: ''
 	imports: #()

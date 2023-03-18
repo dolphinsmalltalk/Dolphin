@@ -1,25 +1,26 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'OS.COLORADJUSTMENT'
+External.Structure
+	subclass: #'OS.COLORADJUSTMENT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_COLORADJUSTMENT_Size' -> 16r18.
-		'_OffsetOf_caBlueGamma' -> 16rA.
-		'_OffsetOf_caBrightness' -> 16r12.
-		'_OffsetOf_caColorfulness' -> 16r14.
-		'_OffsetOf_caContrast' -> 16r10.
-		'_OffsetOf_caFlags' -> 16r2.
-		'_OffsetOf_caGreenGamma' -> 16r8.
-		'_OffsetOf_caIlluminantIndex' -> 16r4.
-		'_OffsetOf_caRedGamma' -> 16r6.
-		'_OffsetOf_caRedGreenTint' -> 16r16.
-		'_OffsetOf_caReferenceBlack' -> 16rC.
-		'_OffsetOf_caReferenceWhite' -> 16rE.
-		'_OffsetOf_caSize' -> 16r0
-	}!
+			'_COLORADJUSTMENT_Size' -> 16r18.
+			'_OffsetOf_caBlueGamma' -> 16rA.
+			'_OffsetOf_caBrightness' -> 16r12.
+			'_OffsetOf_caColorfulness' -> 16r14.
+			'_OffsetOf_caContrast' -> 16r10.
+			'_OffsetOf_caFlags' -> 16r2.
+			'_OffsetOf_caGreenGamma' -> 16r8.
+			'_OffsetOf_caIlluminantIndex' -> 16r4.
+			'_OffsetOf_caRedGamma' -> 16r6.
+			'_OffsetOf_caRedGreenTint' -> 16r16.
+			'_OffsetOf_caReferenceBlack' -> 16rC.
+			'_OffsetOf_caReferenceWhite' -> 16rE.
+			'_OffsetOf_caSize' -> 16r0
+		}!
 OS.COLORADJUSTMENT guid: (Core.GUID fromString: '{dbe19b72-cea9-47cf-80f1-de6d59eefd32}')!
 OS.COLORADJUSTMENT comment: '<COLORADJUSTMENT> is an <ExternalStructure> class to wrap the struct ''Win32.COLORADJUSTMENT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

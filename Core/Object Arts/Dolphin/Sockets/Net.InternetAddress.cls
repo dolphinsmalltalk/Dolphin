@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Net.InternetAddress'
+Core.Object
+	subclass: #'Net.InternetAddress'
 	instanceVariableNames: 'host ipAddress'
 	classVariableNames: ''
 	imports: #(#{OS.WinSocketConstants})
 	classInstanceVariableNames: ''
-	classConstants: {
-		'MaxHostName' -> 16r100
-	}!
+	classConstants: { 'MaxHostName' -> 16r100 }!
 Net.InternetAddress guid: (Core.GUID fromString: '{87b4c495-026e-11d3-9fd7-00a0cc3e4a32}')!
 Net.InternetAddress comment: 'This class represents an Internet IP address. It can be created indirectly from the host name using the #host: class method or, if the IP address is known, from this using #ipAddress:, #fromString: or #readFrom:. 
 

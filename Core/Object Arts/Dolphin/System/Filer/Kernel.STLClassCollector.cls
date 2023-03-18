@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.STLInFiler subclass: #'Kernel.STLClassCollector'
+Kernel.STLInFiler
+	subclass: #'Kernel.STLClassCollector'
 	instanceVariableNames: 'classes resourceIdentifiers'
 	classVariableNames: ''
 	imports: #()

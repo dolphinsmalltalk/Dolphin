@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IPersist subclass: #'OS.COM.IPersistPropertyBag'
+OS.COM.IPersist
+	subclass: #'OS.COM.IPersistPropertyBag'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

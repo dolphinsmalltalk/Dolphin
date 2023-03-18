@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ADODB._Collection subclass: #'ADODB.Fields15'
+ADODB._Collection
+	subclass: #'ADODB.Fields15'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -1,30 +1,31 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ValueConvertingControlView subclass: #'UI.WebView2View'
+UI.ValueConvertingControlView
+	subclass: #'UI.WebView2View'
 	instanceVariableNames: 'settingsFlags unavailableLink webviewEnvironment webviewController webview eventHandlers'
 	classVariableNames: ''
 	imports: #(#{WebView2})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'CanNavigateToStrings' -> 16r2000.
-		'DisableBrowserAcceleratorKeysMask' -> 16r2.
-		'DisableBuiltInErrorPageMask' -> 16r20.
-		'DisableDefaultContextMenuMask' -> 16r1.
-		'DisableDefaultScriptDialogsMask' -> 16r4.
-		'DisableDevToolsMask' -> 16r8.
-		'DisableExternalDropsMask' -> 16r4000.
-		'DisableGeneralAutofillMask' -> 16r400.
-		'DisableHostObjectsMask' -> 16r10.
-		'DisablePasswordAutosaveMask' -> 16r800.
-		'DisablePinchZoomMask' -> 16r1000.
-		'DisableScriptMask' -> 16r40.
-		'DisableSSOMask' -> 16r10000.
-		'DisableStatusBarMask' -> 16r80.
-		'DisableSwipeNavigationMask' -> 16r8000.
-		'DisableWebmessageMask' -> 16r100.
-		'DisableZoomControlMask' -> 16r200.
-		'EnableCustomErrorReportingMask' -> 16r20000
-	}!
+			'CanNavigateToStrings' -> 16r2000.
+			'DisableBrowserAcceleratorKeysMask' -> 16r2.
+			'DisableBuiltInErrorPageMask' -> 16r20.
+			'DisableDefaultContextMenuMask' -> 16r1.
+			'DisableDefaultScriptDialogsMask' -> 16r4.
+			'DisableDevToolsMask' -> 16r8.
+			'DisableExternalDropsMask' -> 16r4000.
+			'DisableGeneralAutofillMask' -> 16r400.
+			'DisableHostObjectsMask' -> 16r10.
+			'DisablePasswordAutosaveMask' -> 16r800.
+			'DisablePinchZoomMask' -> 16r1000.
+			'DisableScriptMask' -> 16r40.
+			'DisableSSOMask' -> 16r10000.
+			'DisableStatusBarMask' -> 16r80.
+			'DisableSwipeNavigationMask' -> 16r8000.
+			'DisableWebmessageMask' -> 16r100.
+			'DisableZoomControlMask' -> 16r200.
+			'EnableCustomErrorReportingMask' -> 16r20000
+		}!
 UI.WebView2View guid: (Core.GUID fromString: '{3a9f720c-51f6-49f2-8267-f2b3b878129c}')!
 UI.WebView2View comment: '`WebView2View` is a `<valueView>` that wraps the Microsoft Edge WebView2 embeddable browser to display content downloaded from a URL, or provided as a string.'!
 !UI.WebView2View categoriesForClass!MVP-Views! !

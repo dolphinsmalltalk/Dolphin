@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'UI.LayoutContext'
+Core.Object
+	subclass: #'UI.LayoutContext'
 	instanceVariableNames: 'container positions'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})

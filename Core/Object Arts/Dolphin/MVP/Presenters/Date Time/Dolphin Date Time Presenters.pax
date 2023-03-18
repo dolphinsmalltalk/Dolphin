@@ -32,31 +32,36 @@ package!
 
 "Class Definitions"!
 
-UI.ValuePresenter subclass: #'UI.DatePresenter'
+UI.ValuePresenter
+	subclass: #'UI.DatePresenter'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.ValuePresenter subclass: #'UI.TimePresenter'
+UI.ValuePresenter
+	subclass: #'UI.TimePresenter'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.AbstractToTextConverter subclass: #'UI.DateToText'
+UI.AbstractToTextConverter
+	subclass: #'UI.DateToText'
 	instanceVariableNames: 'format'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.AbstractToTextConverter subclass: #'UI.DurationToText'
+UI.AbstractToTextConverter
+	subclass: #'UI.DurationToText'
 	instanceVariableNames: 'format'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.AbstractToTextConverter subclass: #'UI.TimeToText'
+UI.AbstractToTextConverter
+	subclass: #'UI.TimeToText'
 	instanceVariableNames: 'format'
 	classVariableNames: ''
 	imports: #()

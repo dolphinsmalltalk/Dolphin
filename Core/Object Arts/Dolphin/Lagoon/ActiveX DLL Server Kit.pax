@@ -43,37 +43,43 @@ package!
 
 "Class Definitions"!
 
-ImageStripper subclass: #AXDllImageStripper
+ImageStripper
+	subclass: #AXDllImageStripper
 	instanceVariableNames: 'typeLibPath'
 	classVariableNames: ''
 	imports: #(#{OS.COM private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.InterfaceImplementation subclass: #'Kernel.IPDolphin'
+OS.COM.InterfaceImplementation
+	subclass: #'Kernel.IPDolphin'
 	instanceVariableNames: 'plugHole coclasses'
 	classVariableNames: 'Current'
 	imports: #(#{OS.COM private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.SessionManager subclass: #'Kernel.AXDllSessionManager'
+Core.SessionManager
+	subclass: #'Kernel.AXDllSessionManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.GUISessionManager subclass: #'UI.AXDllGUISessionManager'
+UI.GUISessionManager
+	subclass: #'UI.AXDllGUISessionManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.IUnknown subclass: #'Kernel.IIPDolphin'
+OS.COM.IUnknown
+	subclass: #'Kernel.IIPDolphin'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.IUnknown subclass: #'Kernel.IIPPlugHole'
+OS.COM.IUnknown
+	subclass: #'Kernel.IIPPlugHole'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.COM private})

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Tools.PluggableEnvironment'
+Refactory.Browser.BrowserEnvironmentWrapper
+	subclass: #'Tools.PluggableEnvironment'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

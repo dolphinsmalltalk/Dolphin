@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Model subclass: #'Refactory.Browser.Tests.ClassToRename'
+Core.Model
+	subclass: #'Refactory.Browser.Tests.ClassToRename'
 	instanceVariableNames: 'rewriteRule builder class'
 	classVariableNames: 'ClassVar1'
 	imports: #()
 	classInstanceVariableNames: 'notUsed'
-	classConstants: {
-		'ClassConst1' -> 16r1
-	}!
+	classConstants: { 'ClassConst1' -> 16r1 }!
 Refactory.Browser.Tests.ClassToRename guid: (Core.GUID fromString: '{83c27f52-b80f-487b-bd8c-b4035ca0cf2e}')!
 Refactory.Browser.Tests.ClassToRename isNonInstantiable: true!
 Refactory.Browser.Tests.ClassToRename comment: 'Class used to excercise RenameClassRefactory by RenameClassTest'!

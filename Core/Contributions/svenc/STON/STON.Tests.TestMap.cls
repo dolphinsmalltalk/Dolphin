@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Dictionary variableSubclass: #'STON.Tests.TestMap'
+Core.Dictionary
+	variableSubclass: #'STON.Tests.TestMap'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

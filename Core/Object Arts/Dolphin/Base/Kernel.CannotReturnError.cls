@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Error subclass: #'Kernel.CannotReturnError'
+Core.Error
+	subclass: #'Kernel.CannotReturnError'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

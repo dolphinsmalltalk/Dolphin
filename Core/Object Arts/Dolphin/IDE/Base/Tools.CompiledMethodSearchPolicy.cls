@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.SingletonSearchPolicy subclass: #'Tools.CompiledMethodSearchPolicy'
+Kernel.SingletonSearchPolicy
+	subclass: #'Tools.CompiledMethodSearchPolicy'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

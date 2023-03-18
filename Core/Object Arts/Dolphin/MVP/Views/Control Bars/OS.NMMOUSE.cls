@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.NMHDR subclass: #'OS.NMMOUSE'
+OS.NMHDR
+	subclass: #'OS.NMMOUSE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_NMMOUSE_Size' -> 16r20.
-		'_OffsetOf_dwHitInfo' -> 16r1C.
-		'_OffsetOf_dwItemData' -> 16r10.
-		'_OffsetOf_dwItemSpec' -> 16rC.
-		'_OffsetOf_pt' -> 16r14
-	}!
+			'_NMMOUSE_Size' -> 16r20.
+			'_OffsetOf_dwHitInfo' -> 16r1C.
+			'_OffsetOf_dwItemData' -> 16r10.
+			'_OffsetOf_dwItemSpec' -> 16rC.
+			'_OffsetOf_pt' -> 16r14
+		}!
 OS.NMMOUSE guid: (Core.GUID fromString: '{e2a1ec3f-20b2-49cc-b90f-80f002a28204}')!
 OS.NMMOUSE comment: 'NMMOUSE is the class of <ExternalStructure> which represent the Windows Common Control structure of the same name.
 

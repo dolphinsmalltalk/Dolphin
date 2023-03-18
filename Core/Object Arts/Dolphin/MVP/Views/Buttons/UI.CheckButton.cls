@@ -1,13 +1,25 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ValueConvertingControlView subclass: #'UI.CheckButton'
+UI.ValueConvertingControlView
+	subclass: #'UI.CheckButton'
 	instanceVariableNames: 'image'
 	classVariableNames: ''
 	imports: #(#{OS.ButtonConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'AlignmentMap' -> (IdentityDictionary withAll: {#bottomCenter -> 16rB00. #rightCenter -> 16rE00. #leftCenter -> 16rD00. #topCenter -> 16r700. #bottomLeft -> 16r900. #center -> 16rF00. #bottomRight -> 16rA00. #topRight -> 16r600. #topLeft -> 16r500})
-	}!
+			'AlignmentMap'
+				-> (IdentityDictionary withAll: {
+								#bottomCenter -> 16rB00.
+								#bottomLeft -> 16r900.
+								#bottomRight -> 16rA00.
+								#center -> 16rF00.
+								#leftCenter -> 16rD00.
+								#rightCenter -> 16rE00.
+								#topCenter -> 16r700.
+								#topLeft -> 16r500.
+								#topRight -> 16r600
+							})
+		}!
 UI.CheckButton guid: (Core.GUID fromString: '{e7a5424e-24cd-4389-a849-591db02a92d0}')!
 UI.CheckButton isNonInstantiable: true!
 UI.CheckButton comment: 'CheckButton is the abstract subclass of <valueView>s implementing the Windows "BUTTON" class in checkbox and radio button styles. The <valueModel> associated with a CheckButton must always yield a <boolean> value once mapped through the installed type converter, although nil is also an acceptable value for a <CheckBox> in 3-state mode. A CheckButton will normally be used in conjunction with either a <BooleanPresenter>, or in a group connected to a <RadioButtonSetPresenter>.

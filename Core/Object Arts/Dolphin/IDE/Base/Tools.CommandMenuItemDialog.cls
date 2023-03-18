@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.MenuItemDialog subclass: #'Tools.CommandMenuItemDialog'
+Tools.MenuItemDialog
+	subclass: #'Tools.CommandMenuItemDialog'
 	instanceVariableNames: 'acceleratorPresenter isRadioButtonStylePresenter isDefaultPresenter isModalPresenter'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})

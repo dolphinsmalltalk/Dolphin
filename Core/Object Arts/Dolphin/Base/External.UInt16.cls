@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.INTEGER subclass: #'External.UInt16'
+External.INTEGER
+	subclass: #'External.UInt16'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_UInt16_Size' -> 16r2
-	}!
+	classConstants: { '_UInt16_Size' -> 16r2 }!
 External.UInt16 guid: (Core.GUID fromString: '{87b4c5ad-026e-11d3-9fd7-00a0cc3e4a32}')!
 External.UInt16 comment: '`UInt16` is an `External.Structure` class to wrap 16-bit unsigned integer values.
 

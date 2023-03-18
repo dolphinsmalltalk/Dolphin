@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'External.MemoryMappedFile'
+Core.Object
+	subclass: #'External.MemoryMappedFile'
 	instanceVariableNames: 'file name handle maximumSize ownsFile'
 	classVariableNames: ''
 	imports: #(#{OS.MMFConstants} #{OS.Win32Constants})

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.HRESULTError subclass: #'OS.Win32Error'
+OS.HRESULTError
+	subclass: #'OS.Win32Error'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

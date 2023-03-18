@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.SCALAR subclass: #'External.INTEGER'
+External.SCALAR
+	subclass: #'External.INTEGER'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

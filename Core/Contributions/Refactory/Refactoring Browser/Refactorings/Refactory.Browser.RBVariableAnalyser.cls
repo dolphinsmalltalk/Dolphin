@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.StaticVariableBinder subclass: #'Refactory.Browser.RBVariableAnalyser'
+Kernel.StaticVariableBinder
+	subclass: #'Refactory.Browser.RBVariableAnalyser'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

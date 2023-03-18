@@ -1,19 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.OLEStructure subclass: #'OS.COM.PROPBAG2'
+OS.COM.OLEStructure
+	subclass: #'OS.COM.PROPBAG2'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_cfType' -> 16r6.
-		'_OffsetOf_clsid' -> 16r10.
-		'_OffsetOf_dwHint' -> 16r8.
-		'_OffsetOf_dwType' -> 16r0.
-		'_OffsetOf_pstrName' -> 16rC.
-		'_OffsetOf_vt' -> 16r4.
-		'_PROPBAG2_Size' -> 16r20
-	}!
+			'_OffsetOf_cfType' -> 16r6.
+			'_OffsetOf_clsid' -> 16r10.
+			'_OffsetOf_dwHint' -> 16r8.
+			'_OffsetOf_dwType' -> 16r0.
+			'_OffsetOf_pstrName' -> 16rC.
+			'_OffsetOf_vt' -> 16r4.
+			'_PROPBAG2_Size' -> 16r20
+		}!
 OS.COM.PROPBAG2 guid: (Core.GUID fromString: '{b5ebe54f-d5b4-4606-9447-90b11844193f}')!
 OS.COM.PROPBAG2 comment: '`OS.COM.PROPBAG2` is an `External.Structure` class to wrap the struct ''OCIDL.PROPBAG2'' from type information in the ''OCIDL Library'' library.
 '!

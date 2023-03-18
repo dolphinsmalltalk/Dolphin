@@ -104,958 +104,986 @@ package!
 
 "Class Definitions"!
 
-Kernel.Namespace subclass: #WinHttpServer
+Kernel.Namespace
+	subclass: #WinHttpServer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.COM private} #{OS private})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'CacheRangeChunkSize' -> 16r1.
-		'HeaderWaitTimeout' -> 16r1.
-		'Http503ResponseVerbosityBasic' -> 16r0.
-		'Http503ResponseVerbosityFull' -> 16r2.
-		'Http503ResponseVerbosityLimited' -> 16r1.
-		'HttpAuthenticationHardeningLegacy' -> 16r0.
-		'HttpAuthenticationHardeningMedium' -> 16r1.
-		'HttpAuthenticationHardeningStrict' -> 16r2.
-		'HttpAuthStatusFailure' -> 16r2.
-		'HttpAuthStatusNotAuthenticated' -> 16r1.
-		'HttpAuthStatusSuccess' -> 16r0.
-		'HttpCachePolicyMaximum' -> 16r3.
-		'HttpCachePolicyNocache' -> 16r0.
-		'HttpCachePolicyTimeToLive' -> 16r2.
-		'HttpCachePolicyUserInvalidates' -> 16r1.
-		'HttpDataChunkFromFileHandle' -> 16r1.
-		'HttpDataChunkFromFragmentCache' -> 16r2.
-		'HttpDataChunkFromFragmentCacheEx' -> 16r3.
-		'HttpDataChunkFromMemory' -> 16r0.
-		'HttpDataChunkMaximum' -> 16r4.
-		'HttpEnabledStateActive' -> 16r0.
-		'HttpEnabledStateInactive' -> 16r1.
-		'HttpHeaderAccept' -> 16r14.
-		'HttpHeaderAcceptCharset' -> 16r15.
-		'HttpHeaderAcceptEncoding' -> 16r16.
-		'HttpHeaderAcceptLanguage' -> 16r17.
-		'HttpHeaderAcceptRanges' -> 16r14.
-		'HttpHeaderAge' -> 16r15.
-		'HttpHeaderAllow' -> 16rA.
-		'HttpHeaderAuthorization' -> 16r18.
-		'HttpHeaderCacheControl' -> 16r0.
-		'HttpHeaderConnection' -> 16r1.
-		'HttpHeaderContentEncoding' -> 16rD.
-		'HttpHeaderContentLanguage' -> 16rE.
-		'HttpHeaderContentLength' -> 16rB.
-		'HttpHeaderContentLocation' -> 16rF.
-		'HttpHeaderContentMd5' -> 16r10.
-		'HttpHeaderContentRange' -> 16r11.
-		'HttpHeaderContentType' -> 16rC.
-		'HttpHeaderCookie' -> 16r19.
-		'HttpHeaderDate' -> 16r2.
-		'HttpHeaderEtag' -> 16r16.
-		'HttpHeaderExpect' -> 16r1A.
-		'HttpHeaderExpires' -> 16r12.
-		'HttpHeaderFrom' -> 16r1B.
-		'HttpHeaderHost' -> 16r1C.
-		'HttpHeaderIfMatch' -> 16r1D.
-		'HttpHeaderIfModifiedSince' -> 16r1E.
-		'HttpHeaderIfNoneMatch' -> 16r1F.
-		'HttpHeaderIfRange' -> 16r20.
-		'HttpHeaderIfUnmodifiedSince' -> 16r21.
-		'HttpHeaderKeepAlive' -> 16r3.
-		'HttpHeaderLastModified' -> 16r13.
-		'HttpHeaderLocation' -> 16r17.
-		'HttpHeaderMaxForwards' -> 16r22.
-		'HttpHeaderMaximum' -> 16r29.
-		'HttpHeaderPragma' -> 16r4.
-		'HttpHeaderProxyAuthenticate' -> 16r18.
-		'HttpHeaderProxyAuthorization' -> 16r23.
-		'HttpHeaderRange' -> 16r25.
-		'HttpHeaderReferer' -> 16r24.
-		'HttpHeaderRequestMaximum' -> 16r29.
-		'HttpHeaderResponseMaximum' -> 16r1E.
-		'HttpHeaderRetryAfter' -> 16r19.
-		'HttpHeaderServer' -> 16r1A.
-		'HttpHeaderSetCookie' -> 16r1B.
-		'HttpHeaderTe' -> 16r26.
-		'HttpHeaderTrailer' -> 16r5.
-		'HttpHeaderTransferEncoding' -> 16r6.
-		'HttpHeaderTranslate' -> 16r27.
-		'HttpHeaderUpgrade' -> 16r7.
-		'HttpHeaderUserAgent' -> 16r28.
-		'HttpHeaderVary' -> 16r1C.
-		'HttpHeaderVia' -> 16r8.
-		'HttpHeaderWarning' -> 16r9.
-		'HttpHeaderWwwAuthenticate' -> 16r1D.
-		'HttpLogDataTypeFields' -> 16r0.
-		'HttpLoggingRolloverDaily' -> 16r1.
-		'HttpLoggingRolloverHourly' -> 16r4.
-		'HttpLoggingRolloverMonthly' -> 16r3.
-		'HttpLoggingRolloverSize' -> 16r0.
-		'HttpLoggingRolloverWeekly' -> 16r2.
-		'HttpLoggingTypeIIS' -> 16r1.
-		'HttpLoggingTypeNCSA' -> 16r2.
-		'HttpLoggingTypeRaw' -> 16r3.
-		'HttpLoggingTypeW3C' -> 16r0.
-		'HttpProtectionLevelEdgeRestricted' -> 16r1.
-		'HttpProtectionLevelRestricted' -> 16r2.
-		'HttpProtectionLevelUnrestricted' -> 16r0.
-		'HttpQosSettingTypeBandwidth' -> 16r0.
-		'HttpQosSettingTypeConnectionLimit' -> 16r1.
-		'HttpQosSettingTypeFlowRate' -> 16r2.
-		'HttpRequestAuthTypeBasic' -> 16r1.
-		'HttpRequestAuthTypeDigest' -> 16r2.
-		'HttpRequestAuthTypeKerberos' -> 16r5.
-		'HttpRequestAuthTypeNegotiate' -> 16r4.
-		'HttpRequestAuthTypeNone' -> 16r0.
-		'HttpRequestAuthTypeNTLM' -> 16r3.
-		'HttpRequestInfoTypeAuth' -> 16r0.
-		'HttpRequestInfoTypeChannelBind' -> 16r1.
-		'HttpRequestInfoTypeSslProtocol' -> 16r2.
-		'HttpRequestInfoTypeSslTokenBinding' -> 16r3.
-		'HttpResponseInfoTypeAuthenticationProperty' -> 16r1.
-		'HttpResponseInfoTypeChannelBind' -> 16r3.
-		'HttpResponseInfoTypeMultipleKnownHeaders' -> 16r0.
-		'HttpResponseInfoTypeQoSProperty' -> 16r2.
-		'HttpServer503VerbosityProperty' -> 16r6.
-		'HttpServerAuthenticationProperty' -> 16r0.
-		'HttpServerBindingProperty' -> 16r7.
-		'HttpServerChannelBindProperty' -> 16rA.
-		'HttpServerExtendedAuthenticationProperty' -> 16r8.
-		'HttpServerListenEndpointProperty' -> 16r9.
-		'HttpServerLoggingProperty' -> 16r1.
-		'HttpServerProtectionLevelProperty' -> 16rB.
-		'HttpServerQosProperty' -> 16r2.
-		'HttpServerQueueLengthProperty' -> 16r4.
-		'HttpServerStateProperty' -> 16r5.
-		'HttpServerTimeoutsProperty' -> 16r3.
-		'HttpServiceBindingTypeA' -> 16r2.
-		'HttpServiceBindingTypeNone' -> 16r0.
-		'HttpServiceBindingTypeW' -> 16r1.
-		'HttpServiceConfigCache' -> 16r4.
-		'HttpServiceConfigIPListenList' -> 16r0.
-		'HttpServiceConfigMax' -> 16r7.
-		'HttpServiceConfigQueryExact' -> 16r0.
-		'HttpServiceConfigQueryMax' -> 16r2.
-		'HttpServiceConfigQueryNext' -> 16r1.
-		'HttpServiceConfigSslCcsCertInfo' -> 16r6.
-		'HttpServiceConfigSSLCertInfo' -> 16r1.
-		'HttpServiceConfigSslSniCertInfo' -> 16r5.
-		'HttpServiceConfigTimeout' -> 16r3.
-		'HttpServiceConfigUrlAclInfo' -> 16r2.
-		'HttpVerbCONNECT' -> 16rA.
-		'HttpVerbCOPY' -> 16rD.
-		'HttpVerbDELETE' -> 16r8.
-		'HttpVerbGET' -> 16r4.
-		'HttpVerbHEAD' -> 16r5.
-		'HttpVerbInvalid' -> 16r2.
-		'HttpVerbLOCK' -> 16r11.
-		'HttpVerbMaximum' -> 16r14.
-		'HttpVerbMKCOL' -> 16r10.
-		'HttpVerbMOVE' -> 16rC.
-		'HttpVerbOPTIONS' -> 16r3.
-		'HttpVerbPOST' -> 16r6.
-		'HttpVerbPROPFIND' -> 16rE.
-		'HttpVerbPROPPATCH' -> 16rF.
-		'HttpVerbPUT' -> 16r7.
-		'HttpVerbSEARCH' -> 16r13.
-		'HttpVerbTRACE' -> 16r9.
-		'HttpVerbTRACK' -> 16rB.
-		'HttpVerbUnknown' -> 16r1.
-		'HttpVerbUNLOCK' -> 16r12.
-		'HttpVerbUnparsed' -> 16r0.
-		'IdleConnectionTimeout' -> 16r0.
-		'MaxCacheResponseSize' -> 16r0
-	}!
-External.DynamicLinkLibrary subclass: #'WinHttpServer.HttpApiLibrary'
+			'CacheRangeChunkSize' -> 16r1.
+			'HeaderWaitTimeout' -> 16r1.
+			'Http503ResponseVerbosityBasic' -> 16r0.
+			'Http503ResponseVerbosityFull' -> 16r2.
+			'Http503ResponseVerbosityLimited' -> 16r1.
+			'HttpAuthenticationHardeningLegacy' -> 16r0.
+			'HttpAuthenticationHardeningMedium' -> 16r1.
+			'HttpAuthenticationHardeningStrict' -> 16r2.
+			'HttpAuthStatusFailure' -> 16r2.
+			'HttpAuthStatusNotAuthenticated' -> 16r1.
+			'HttpAuthStatusSuccess' -> 16r0.
+			'HttpCachePolicyMaximum' -> 16r3.
+			'HttpCachePolicyNocache' -> 16r0.
+			'HttpCachePolicyTimeToLive' -> 16r2.
+			'HttpCachePolicyUserInvalidates' -> 16r1.
+			'HttpDataChunkFromFileHandle' -> 16r1.
+			'HttpDataChunkFromFragmentCache' -> 16r2.
+			'HttpDataChunkFromFragmentCacheEx' -> 16r3.
+			'HttpDataChunkFromMemory' -> 16r0.
+			'HttpDataChunkMaximum' -> 16r4.
+			'HttpEnabledStateActive' -> 16r0.
+			'HttpEnabledStateInactive' -> 16r1.
+			'HttpHeaderAccept' -> 16r14.
+			'HttpHeaderAcceptCharset' -> 16r15.
+			'HttpHeaderAcceptEncoding' -> 16r16.
+			'HttpHeaderAcceptLanguage' -> 16r17.
+			'HttpHeaderAcceptRanges' -> 16r14.
+			'HttpHeaderAge' -> 16r15.
+			'HttpHeaderAllow' -> 16rA.
+			'HttpHeaderAuthorization' -> 16r18.
+			'HttpHeaderCacheControl' -> 16r0.
+			'HttpHeaderConnection' -> 16r1.
+			'HttpHeaderContentEncoding' -> 16rD.
+			'HttpHeaderContentLanguage' -> 16rE.
+			'HttpHeaderContentLength' -> 16rB.
+			'HttpHeaderContentLocation' -> 16rF.
+			'HttpHeaderContentMd5' -> 16r10.
+			'HttpHeaderContentRange' -> 16r11.
+			'HttpHeaderContentType' -> 16rC.
+			'HttpHeaderCookie' -> 16r19.
+			'HttpHeaderDate' -> 16r2.
+			'HttpHeaderEtag' -> 16r16.
+			'HttpHeaderExpect' -> 16r1A.
+			'HttpHeaderExpires' -> 16r12.
+			'HttpHeaderFrom' -> 16r1B.
+			'HttpHeaderHost' -> 16r1C.
+			'HttpHeaderIfMatch' -> 16r1D.
+			'HttpHeaderIfModifiedSince' -> 16r1E.
+			'HttpHeaderIfNoneMatch' -> 16r1F.
+			'HttpHeaderIfRange' -> 16r20.
+			'HttpHeaderIfUnmodifiedSince' -> 16r21.
+			'HttpHeaderKeepAlive' -> 16r3.
+			'HttpHeaderLastModified' -> 16r13.
+			'HttpHeaderLocation' -> 16r17.
+			'HttpHeaderMaxForwards' -> 16r22.
+			'HttpHeaderMaximum' -> 16r29.
+			'HttpHeaderPragma' -> 16r4.
+			'HttpHeaderProxyAuthenticate' -> 16r18.
+			'HttpHeaderProxyAuthorization' -> 16r23.
+			'HttpHeaderRange' -> 16r25.
+			'HttpHeaderReferer' -> 16r24.
+			'HttpHeaderRequestMaximum' -> 16r29.
+			'HttpHeaderResponseMaximum' -> 16r1E.
+			'HttpHeaderRetryAfter' -> 16r19.
+			'HttpHeaderServer' -> 16r1A.
+			'HttpHeaderSetCookie' -> 16r1B.
+			'HttpHeaderTe' -> 16r26.
+			'HttpHeaderTrailer' -> 16r5.
+			'HttpHeaderTransferEncoding' -> 16r6.
+			'HttpHeaderTranslate' -> 16r27.
+			'HttpHeaderUpgrade' -> 16r7.
+			'HttpHeaderUserAgent' -> 16r28.
+			'HttpHeaderVary' -> 16r1C.
+			'HttpHeaderVia' -> 16r8.
+			'HttpHeaderWarning' -> 16r9.
+			'HttpHeaderWwwAuthenticate' -> 16r1D.
+			'HttpLogDataTypeFields' -> 16r0.
+			'HttpLoggingRolloverDaily' -> 16r1.
+			'HttpLoggingRolloverHourly' -> 16r4.
+			'HttpLoggingRolloverMonthly' -> 16r3.
+			'HttpLoggingRolloverSize' -> 16r0.
+			'HttpLoggingRolloverWeekly' -> 16r2.
+			'HttpLoggingTypeIIS' -> 16r1.
+			'HttpLoggingTypeNCSA' -> 16r2.
+			'HttpLoggingTypeRaw' -> 16r3.
+			'HttpLoggingTypeW3C' -> 16r0.
+			'HttpProtectionLevelEdgeRestricted' -> 16r1.
+			'HttpProtectionLevelRestricted' -> 16r2.
+			'HttpProtectionLevelUnrestricted' -> 16r0.
+			'HttpQosSettingTypeBandwidth' -> 16r0.
+			'HttpQosSettingTypeConnectionLimit' -> 16r1.
+			'HttpQosSettingTypeFlowRate' -> 16r2.
+			'HttpRequestAuthTypeBasic' -> 16r1.
+			'HttpRequestAuthTypeDigest' -> 16r2.
+			'HttpRequestAuthTypeKerberos' -> 16r5.
+			'HttpRequestAuthTypeNegotiate' -> 16r4.
+			'HttpRequestAuthTypeNone' -> 16r0.
+			'HttpRequestAuthTypeNTLM' -> 16r3.
+			'HttpRequestInfoTypeAuth' -> 16r0.
+			'HttpRequestInfoTypeChannelBind' -> 16r1.
+			'HttpRequestInfoTypeSslProtocol' -> 16r2.
+			'HttpRequestInfoTypeSslTokenBinding' -> 16r3.
+			'HttpResponseInfoTypeAuthenticationProperty' -> 16r1.
+			'HttpResponseInfoTypeChannelBind' -> 16r3.
+			'HttpResponseInfoTypeMultipleKnownHeaders' -> 16r0.
+			'HttpResponseInfoTypeQoSProperty' -> 16r2.
+			'HttpServer503VerbosityProperty' -> 16r6.
+			'HttpServerAuthenticationProperty' -> 16r0.
+			'HttpServerBindingProperty' -> 16r7.
+			'HttpServerChannelBindProperty' -> 16rA.
+			'HttpServerExtendedAuthenticationProperty' -> 16r8.
+			'HttpServerListenEndpointProperty' -> 16r9.
+			'HttpServerLoggingProperty' -> 16r1.
+			'HttpServerProtectionLevelProperty' -> 16rB.
+			'HttpServerQosProperty' -> 16r2.
+			'HttpServerQueueLengthProperty' -> 16r4.
+			'HttpServerStateProperty' -> 16r5.
+			'HttpServerTimeoutsProperty' -> 16r3.
+			'HttpServiceBindingTypeA' -> 16r2.
+			'HttpServiceBindingTypeNone' -> 16r0.
+			'HttpServiceBindingTypeW' -> 16r1.
+			'HttpServiceConfigCache' -> 16r4.
+			'HttpServiceConfigIPListenList' -> 16r0.
+			'HttpServiceConfigMax' -> 16r7.
+			'HttpServiceConfigQueryExact' -> 16r0.
+			'HttpServiceConfigQueryMax' -> 16r2.
+			'HttpServiceConfigQueryNext' -> 16r1.
+			'HttpServiceConfigSslCcsCertInfo' -> 16r6.
+			'HttpServiceConfigSSLCertInfo' -> 16r1.
+			'HttpServiceConfigSslSniCertInfo' -> 16r5.
+			'HttpServiceConfigTimeout' -> 16r3.
+			'HttpServiceConfigUrlAclInfo' -> 16r2.
+			'HttpVerbCONNECT' -> 16rA.
+			'HttpVerbCOPY' -> 16rD.
+			'HttpVerbDELETE' -> 16r8.
+			'HttpVerbGET' -> 16r4.
+			'HttpVerbHEAD' -> 16r5.
+			'HttpVerbInvalid' -> 16r2.
+			'HttpVerbLOCK' -> 16r11.
+			'HttpVerbMaximum' -> 16r14.
+			'HttpVerbMKCOL' -> 16r10.
+			'HttpVerbMOVE' -> 16rC.
+			'HttpVerbOPTIONS' -> 16r3.
+			'HttpVerbPOST' -> 16r6.
+			'HttpVerbPROPFIND' -> 16rE.
+			'HttpVerbPROPPATCH' -> 16rF.
+			'HttpVerbPUT' -> 16r7.
+			'HttpVerbSEARCH' -> 16r13.
+			'HttpVerbTRACE' -> 16r9.
+			'HttpVerbTRACK' -> 16rB.
+			'HttpVerbUnknown' -> 16r1.
+			'HttpVerbUNLOCK' -> 16r12.
+			'HttpVerbUnparsed' -> 16r0.
+			'IdleConnectionTimeout' -> 16r0.
+			'MaxCacheResponseSize' -> 16r0
+		}!
+External.DynamicLinkLibrary
+	subclass: #'WinHttpServer.HttpApiLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'HTTP_AUTH_ENABLE_ALL' -> 16r1F.
-		'HTTP_AUTH_ENABLE_BASIC' -> 16r1.
-		'HTTP_AUTH_ENABLE_DIGEST' -> 16r2.
-		'HTTP_AUTH_ENABLE_KERBEROS' -> 16r10.
-		'HTTP_AUTH_ENABLE_NEGOTIATE' -> 16r8.
-		'HTTP_AUTH_ENABLE_NTLM' -> 16r4.
-		'HTTP_AUTH_EX_FLAG_CAPTURE_CREDENTIAL' -> 16r2.
-		'HTTP_AUTH_EX_FLAG_ENABLE_KERBEROS_CREDENTIAL_CACHING' -> 16r1.
-		'HTTP_BYTE_RANGE_TO_EOF' -> -16r1.
-		'HTTP_CHANNEL_BIND_CLIENT_SERVICE' -> 16r10.
-		'HTTP_CHANNEL_BIND_DOTLESS_SERVICE' -> 16r4.
-		'HTTP_CHANNEL_BIND_NO_SERVICE_NAME_CHECK' -> 16r2.
-		'HTTP_CHANNEL_BIND_PROXY' -> 16r1.
-		'HTTP_CHANNEL_BIND_PROXY_COHOSTING' -> 16r20.
-		'HTTP_CHANNEL_BIND_SECURE_CHANNEL_TOKEN' -> 16r8.
-		'HTTP_CREATE_REQUEST_QUEUE_FLAG_CONTROLLER' -> 16r2.
-		'HTTP_CREATE_REQUEST_QUEUE_FLAG_OPEN_EXISTING' -> 16r1.
-		'HTTP_FLUSH_RESPONSE_FLAG_RECURSIVE' -> 16r1.
-		'HTTP_INITIALIZE_CONFIG' -> 16r2.
-		'HTTP_INITIALIZE_SERVER' -> 16r1.
-		'HTTP_LIMIT_INFINITE' -> -16r1.
-		'HTTP_LOG_FIELD_BYTES_RECV' -> 16r2000.
-		'HTTP_LOG_FIELD_BYTES_SENT' -> 16r1000.
-		'HTTP_LOG_FIELD_CLIENT_IP' -> 16r4.
-		'HTTP_LOG_FIELD_CLIENT_PORT' -> 16r400000.
-		'HTTP_LOG_FIELD_COMPUTER_NAME' -> 16r20.
-		'HTTP_LOG_FIELD_COOKIE' -> 16r20000.
-		'HTTP_LOG_FIELD_DATE' -> 16r1.
-		'HTTP_LOG_FIELD_HOST' -> 16r100000.
-		'HTTP_LOG_FIELD_METHOD' -> 16r80.
-		'HTTP_LOG_FIELD_QUEUE_NAME' -> 16r4000000.
-		'HTTP_LOG_FIELD_REASON' -> 16r2000000.
-		'HTTP_LOG_FIELD_REFERER' -> 16r40000.
-		'HTTP_LOG_FIELD_SERVER_IP' -> 16r40.
-		'HTTP_LOG_FIELD_SERVER_PORT' -> 16r8000.
-		'HTTP_LOG_FIELD_SITE_ID' -> 16r1000000.
-		'HTTP_LOG_FIELD_SITE_NAME' -> 16r10.
-		'HTTP_LOG_FIELD_STATUS' -> 16r400.
-		'HTTP_LOG_FIELD_STREAM_ID' -> 16r8000000.
-		'HTTP_LOG_FIELD_SUB_STATUS' -> 16r200000.
-		'HTTP_LOG_FIELD_TIME' -> 16r2.
-		'HTTP_LOG_FIELD_TIME_TAKEN' -> 16r4000.
-		'HTTP_LOG_FIELD_URI' -> 16r800000.
-		'HTTP_LOG_FIELD_URI_QUERY' -> 16r200.
-		'HTTP_LOG_FIELD_URI_STEM' -> 16r100.
-		'HTTP_LOG_FIELD_USER_AGENT' -> 16r10000.
-		'HTTP_LOG_FIELD_USER_NAME' -> 16r8.
-		'HTTP_LOG_FIELD_VERSION' -> 16r80000.
-		'HTTP_LOG_FIELD_WIN32_STATUS' -> 16r800.
-		'HTTP_LOGGING_FLAG_LOCAL_TIME_ROLLOVER' -> 16r1.
-		'HTTP_LOGGING_FLAG_LOG_ERRORS_ONLY' -> 16r4.
-		'HTTP_LOGGING_FLAG_LOG_SUCCESS_ONLY' -> 16r8.
-		'HTTP_LOGGING_FLAG_USE_UTF8_CONVERSION' -> 16r2.
-		'HTTP_MAX_SERVER_QUEUE_LENGTH' -> 16r7FFFFFFF.
-		'HTTP_MIN_ALLOWED_BANDWIDTH_THROTTLING_RATE' -> 16r400.
-		'HTTP_MIN_ALLOWED_LOG_FILE_ROLLOVER_SIZE' -> 16r100000.
-		'HTTP_MIN_SERVER_QUEUE_LENGTH' -> 16r1.
-		'HTTP_RECEIVE_REQUEST_ENTITY_BODY_FLAG_FILL_BUFFER' -> 16r1.
-		'HTTP_RECEIVE_REQUEST_FLAG_COPY_BODY' -> 16r1.
-		'HTTP_RECEIVE_REQUEST_FLAG_FLUSH_BODY' -> 16r2.
-		'HTTP_RECEIVE_SECURE_CHANNEL_TOKEN' -> 16r1.
-		'HTTP_REQUEST_AUTH_FLAG_TOKEN_FOR_CACHED_CRED' -> 16r1.
-		'HTTP_REQUEST_FLAG_HTTP2' -> 16r4.
-		'HTTP_REQUEST_FLAG_IP_ROUTED' -> 16r2.
-		'HTTP_REQUEST_FLAG_MORE_ENTITY_BODY_EXISTS' -> 16r1.
-		'HTTP_RESPONSE_FLAG_MULTIPLE_ENCODINGS_AVAILABLE' -> 16r1.
-		'HTTP_RESPONSE_INFO_FLAGS_PRESERVE_ORDER' -> 16r1.
-		'HTTP_SEND_RESPONSE_FLAG_BUFFER_DATA' -> 16r4.
-		'HTTP_SEND_RESPONSE_FLAG_DISCONNECT' -> 16r1.
-		'HTTP_SEND_RESPONSE_FLAG_ENABLE_NAGLING' -> 16r8.
-		'HTTP_SEND_RESPONSE_FLAG_MORE_DATA' -> 16r2.
-		'HTTP_SEND_RESPONSE_FLAG_OPAQUE' -> 16r40.
-		'HTTP_SEND_RESPONSE_FLAG_PROCESS_RANGES' -> 16r20.
-		'HTTP_SERVICE_CONFIG_SSL_FLAG_NEGOTIATE_CLIENT_CERT' -> 16r2.
-		'HTTP_SERVICE_CONFIG_SSL_FLAG_NO_RAW_FILTER' -> 16r4.
-		'HTTP_SERVICE_CONFIG_SSL_FLAG_REJECT' -> 16r8.
-		'HTTP_SERVICE_CONFIG_SSL_FLAG_USE_DS_MAPPER' -> 16r1.
-		'HTTP_URL_FLAG_REMOVE_ALL' -> 16r1
-	}!
-External.Structure subclass: #'WinHttpServer.HttpServerStructure'
+			'HTTP_AUTH_ENABLE_ALL' -> 16r1F.
+			'HTTP_AUTH_ENABLE_BASIC' -> 16r1.
+			'HTTP_AUTH_ENABLE_DIGEST' -> 16r2.
+			'HTTP_AUTH_ENABLE_KERBEROS' -> 16r10.
+			'HTTP_AUTH_ENABLE_NEGOTIATE' -> 16r8.
+			'HTTP_AUTH_ENABLE_NTLM' -> 16r4.
+			'HTTP_AUTH_EX_FLAG_CAPTURE_CREDENTIAL' -> 16r2.
+			'HTTP_AUTH_EX_FLAG_ENABLE_KERBEROS_CREDENTIAL_CACHING' -> 16r1.
+			'HTTP_BYTE_RANGE_TO_EOF' -> -16r1.
+			'HTTP_CHANNEL_BIND_CLIENT_SERVICE' -> 16r10.
+			'HTTP_CHANNEL_BIND_DOTLESS_SERVICE' -> 16r4.
+			'HTTP_CHANNEL_BIND_NO_SERVICE_NAME_CHECK' -> 16r2.
+			'HTTP_CHANNEL_BIND_PROXY' -> 16r1.
+			'HTTP_CHANNEL_BIND_PROXY_COHOSTING' -> 16r20.
+			'HTTP_CHANNEL_BIND_SECURE_CHANNEL_TOKEN' -> 16r8.
+			'HTTP_CREATE_REQUEST_QUEUE_FLAG_CONTROLLER' -> 16r2.
+			'HTTP_CREATE_REQUEST_QUEUE_FLAG_OPEN_EXISTING' -> 16r1.
+			'HTTP_FLUSH_RESPONSE_FLAG_RECURSIVE' -> 16r1.
+			'HTTP_INITIALIZE_CONFIG' -> 16r2.
+			'HTTP_INITIALIZE_SERVER' -> 16r1.
+			'HTTP_LIMIT_INFINITE' -> -16r1.
+			'HTTP_LOG_FIELD_BYTES_RECV' -> 16r2000.
+			'HTTP_LOG_FIELD_BYTES_SENT' -> 16r1000.
+			'HTTP_LOG_FIELD_CLIENT_IP' -> 16r4.
+			'HTTP_LOG_FIELD_CLIENT_PORT' -> 16r400000.
+			'HTTP_LOG_FIELD_COMPUTER_NAME' -> 16r20.
+			'HTTP_LOG_FIELD_COOKIE' -> 16r20000.
+			'HTTP_LOG_FIELD_DATE' -> 16r1.
+			'HTTP_LOG_FIELD_HOST' -> 16r100000.
+			'HTTP_LOG_FIELD_METHOD' -> 16r80.
+			'HTTP_LOG_FIELD_QUEUE_NAME' -> 16r4000000.
+			'HTTP_LOG_FIELD_REASON' -> 16r2000000.
+			'HTTP_LOG_FIELD_REFERER' -> 16r40000.
+			'HTTP_LOG_FIELD_SERVER_IP' -> 16r40.
+			'HTTP_LOG_FIELD_SERVER_PORT' -> 16r8000.
+			'HTTP_LOG_FIELD_SITE_ID' -> 16r1000000.
+			'HTTP_LOG_FIELD_SITE_NAME' -> 16r10.
+			'HTTP_LOG_FIELD_STATUS' -> 16r400.
+			'HTTP_LOG_FIELD_STREAM_ID' -> 16r8000000.
+			'HTTP_LOG_FIELD_SUB_STATUS' -> 16r200000.
+			'HTTP_LOG_FIELD_TIME' -> 16r2.
+			'HTTP_LOG_FIELD_TIME_TAKEN' -> 16r4000.
+			'HTTP_LOG_FIELD_URI' -> 16r800000.
+			'HTTP_LOG_FIELD_URI_QUERY' -> 16r200.
+			'HTTP_LOG_FIELD_URI_STEM' -> 16r100.
+			'HTTP_LOG_FIELD_USER_AGENT' -> 16r10000.
+			'HTTP_LOG_FIELD_USER_NAME' -> 16r8.
+			'HTTP_LOG_FIELD_VERSION' -> 16r80000.
+			'HTTP_LOG_FIELD_WIN32_STATUS' -> 16r800.
+			'HTTP_LOGGING_FLAG_LOCAL_TIME_ROLLOVER' -> 16r1.
+			'HTTP_LOGGING_FLAG_LOG_ERRORS_ONLY' -> 16r4.
+			'HTTP_LOGGING_FLAG_LOG_SUCCESS_ONLY' -> 16r8.
+			'HTTP_LOGGING_FLAG_USE_UTF8_CONVERSION' -> 16r2.
+			'HTTP_MAX_SERVER_QUEUE_LENGTH' -> 16r7FFFFFFF.
+			'HTTP_MIN_ALLOWED_BANDWIDTH_THROTTLING_RATE' -> 16r400.
+			'HTTP_MIN_ALLOWED_LOG_FILE_ROLLOVER_SIZE' -> 16r100000.
+			'HTTP_MIN_SERVER_QUEUE_LENGTH' -> 16r1.
+			'HTTP_RECEIVE_REQUEST_ENTITY_BODY_FLAG_FILL_BUFFER' -> 16r1.
+			'HTTP_RECEIVE_REQUEST_FLAG_COPY_BODY' -> 16r1.
+			'HTTP_RECEIVE_REQUEST_FLAG_FLUSH_BODY' -> 16r2.
+			'HTTP_RECEIVE_SECURE_CHANNEL_TOKEN' -> 16r1.
+			'HTTP_REQUEST_AUTH_FLAG_TOKEN_FOR_CACHED_CRED' -> 16r1.
+			'HTTP_REQUEST_FLAG_HTTP2' -> 16r4.
+			'HTTP_REQUEST_FLAG_IP_ROUTED' -> 16r2.
+			'HTTP_REQUEST_FLAG_MORE_ENTITY_BODY_EXISTS' -> 16r1.
+			'HTTP_RESPONSE_FLAG_MULTIPLE_ENCODINGS_AVAILABLE' -> 16r1.
+			'HTTP_RESPONSE_INFO_FLAGS_PRESERVE_ORDER' -> 16r1.
+			'HTTP_SEND_RESPONSE_FLAG_BUFFER_DATA' -> 16r4.
+			'HTTP_SEND_RESPONSE_FLAG_DISCONNECT' -> 16r1.
+			'HTTP_SEND_RESPONSE_FLAG_ENABLE_NAGLING' -> 16r8.
+			'HTTP_SEND_RESPONSE_FLAG_MORE_DATA' -> 16r2.
+			'HTTP_SEND_RESPONSE_FLAG_OPAQUE' -> 16r40.
+			'HTTP_SEND_RESPONSE_FLAG_PROCESS_RANGES' -> 16r20.
+			'HTTP_SERVICE_CONFIG_SSL_FLAG_NEGOTIATE_CLIENT_CERT' -> 16r2.
+			'HTTP_SERVICE_CONFIG_SSL_FLAG_NO_RAW_FILTER' -> 16r4.
+			'HTTP_SERVICE_CONFIG_SSL_FLAG_REJECT' -> 16r8.
+			'HTTP_SERVICE_CONFIG_SSL_FLAG_USE_DS_MAPPER' -> 16r1.
+			'HTTP_URL_FLAG_REMOVE_ALL' -> 16r1
+		}!
+External.Structure
+	subclass: #'WinHttpServer.HttpServerStructure'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_BYTE_RANGE'
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_BYTE_RANGE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_BYTE_RANGE_Size' -> 16r10.
-		'_OffsetOf_Length' -> 16r8.
-		'_OffsetOf_StartingOffset' -> 16r0
-	}!
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_CACHE_POLICY'
+			'_HTTP_BYTE_RANGE_Size' -> 16r10.
+			'_OffsetOf_Length' -> 16r8.
+			'_OffsetOf_StartingOffset' -> 16r0
+		}!
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_CACHE_POLICY'
 	instanceVariableNames: ''
 	classVariableNames: 'NoCache UserInvalidates'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_CACHE_POLICY_Size' -> 16r8.
-		'_OffsetOf_Policy' -> 16r0.
-		'_OffsetOf_SecondsToLive' -> 16r4
-	}!
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_CHANNEL_BIND_INFO'
+			'_HTTP_CACHE_POLICY_Size' -> 16r8.
+			'_OffsetOf_Policy' -> 16r0.
+			'_OffsetOf_SecondsToLive' -> 16r4
+		}!
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_CHANNEL_BIND_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_CHANNEL_BIND_INFO_Size' -> 16r10.
-		'_OffsetOf_Flags' -> 16r4.
-		'_OffsetOf_Hardening' -> 16r0.
-		'_OffsetOf_NumberOfServiceNames' -> 16rC.
-		'_OffsetOf_ServiceNames' -> 16r8
-	}!
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_COOKED_URL'
+			'_HTTP_CHANNEL_BIND_INFO_Size' -> 16r10.
+			'_OffsetOf_Flags' -> 16r4.
+			'_OffsetOf_Hardening' -> 16r0.
+			'_OffsetOf_NumberOfServiceNames' -> 16rC.
+			'_OffsetOf_ServiceNames' -> 16r8
+		}!
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_COOKED_URL'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_COOKED_URL_Size' -> 16r18.
-		'_OffsetOf_AbsPathLength' -> 16r4.
-		'_OffsetOf_FullUrlLength' -> 16r0.
-		'_OffsetOf_HostLength' -> 16r2.
-		'_OffsetOf_pAbsPath' -> 16r10.
-		'_OffsetOf_pFullUrl' -> 16r8.
-		'_OffsetOf_pHost' -> 16rC.
-		'_OffsetOf_pQueryString' -> 16r14.
-		'_OffsetOf_QueryStringLength' -> 16r6
-	}!
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_DATA_CHUNK'
+			'_HTTP_COOKED_URL_Size' -> 16r18.
+			'_OffsetOf_AbsPathLength' -> 16r4.
+			'_OffsetOf_FullUrlLength' -> 16r0.
+			'_OffsetOf_HostLength' -> 16r2.
+			'_OffsetOf_pAbsPath' -> 16r10.
+			'_OffsetOf_pFullUrl' -> 16r8.
+			'_OffsetOf_pHost' -> 16rC.
+			'_OffsetOf_pQueryString' -> 16r14.
+			'_OffsetOf_QueryStringLength' -> 16r6
+		}!
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_DATA_CHUNK'
 	instanceVariableNames: 'data'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_DATA_CHUNK_Size' -> 16r20.
-		'_OffsetOf_DataChunkType' -> 16r0.
-		'_OffsetOf_FromFileHandle_ByteRange' -> 16r8.
-		'_OffsetOf_FromFileHandle_FileHandle' -> 16r18.
-		'_OffsetOf_FromFragmentCache_FragmentNameLength' -> 16r8.
-		'_OffsetOf_FromFragmentCache_pFragmentName' -> 16rC.
-		'_OffsetOf_FromFragmentCacheEx_ByteRange' -> 16r8.
-		'_OffsetOf_FromFragmentCacheEx_pFragmentName' -> 16r18.
-		'_OffsetOf_FromMemory_BufferLength' -> 16rC.
-		'_OffsetOf_FromMemory_pBuffer' -> 16r8
-	}!
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_HEADERS'
+			'_HTTP_DATA_CHUNK_Size' -> 16r20.
+			'_OffsetOf_DataChunkType' -> 16r0.
+			'_OffsetOf_FromFileHandle_ByteRange' -> 16r8.
+			'_OffsetOf_FromFileHandle_FileHandle' -> 16r18.
+			'_OffsetOf_FromFragmentCache_FragmentNameLength' -> 16r8.
+			'_OffsetOf_FromFragmentCache_pFragmentName' -> 16rC.
+			'_OffsetOf_FromFragmentCacheEx_ByteRange' -> 16r8.
+			'_OffsetOf_FromFragmentCacheEx_pFragmentName' -> 16r18.
+			'_OffsetOf_FromMemory_BufferLength' -> 16rC.
+			'_OffsetOf_FromMemory_pBuffer' -> 16r8
+		}!
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_HEADERS'
 	instanceVariableNames: ''
 	classVariableNames: 'HeaderToIndexMap'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_HEADERS_Size' -> 16r10.
-		'_OffsetOf_pTrailers' -> 16rC.
-		'_OffsetOf_pUnknownHeaders' -> 16r4.
-		'_OffsetOf_TrailerCount' -> 16r8.
-		'_OffsetOf_UnknownHeaderCount' -> 16r0
-	}!
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_KNOWN_HEADER'
+			'_HTTP_HEADERS_Size' -> 16r10.
+			'_OffsetOf_pTrailers' -> 16rC.
+			'_OffsetOf_pUnknownHeaders' -> 16r4.
+			'_OffsetOf_TrailerCount' -> 16r8.
+			'_OffsetOf_UnknownHeaderCount' -> 16r0
+		}!
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_KNOWN_HEADER'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_KNOWN_HEADER_Size' -> 16r8.
-		'_OffsetOf_pRawValue' -> 16r4.
-		'_OffsetOf_RawValueLength' -> 16r0
-	}!
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_LOG_FIELDS_DATA'
+			'_HTTP_KNOWN_HEADER_Size' -> 16r8.
+			'_OffsetOf_pRawValue' -> 16r4.
+			'_OffsetOf_RawValueLength' -> 16r0
+		}!
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_LOG_FIELDS_DATA'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_LOG_FIELDS_DATA_Size' -> 16r5C.
-		'_OffsetOf_ClientIp' -> 16r24.
-		'_OffsetOf_ClientIpLength' -> 16r8.
-		'_OffsetOf_Cookie' -> 16r44.
-		'_OffsetOf_CookieLength' -> 16r18.
-		'_OffsetOf_Host' -> 16r3C.
-		'_OffsetOf_HostLength' -> 16r14.
-		'_OffsetOf_Method' -> 16r34.
-		'_OffsetOf_MethodLength' -> 16r10.
-		'_OffsetOf_MethodNum' -> 16r54.
-		'_OffsetOf_ProtocolStatus' -> 16r4E.
-		'_OffsetOf_Referrer' -> 16r48.
-		'_OffsetOf_ReferrerLength' -> 16r1A.
-		'_OffsetOf_ServerIp' -> 16r30.
-		'_OffsetOf_ServerIpLength' -> 16rE.
-		'_OffsetOf_ServerName' -> 16r28.
-		'_OffsetOf_ServerNameLength' -> 16rA.
-		'_OffsetOf_ServerPort' -> 16r4C.
-		'_OffsetOf_ServiceName' -> 16r2C.
-		'_OffsetOf_ServiceNameLength' -> 16rC.
-		'_OffsetOf_SubStatus' -> 16r58.
-		'_OffsetOf_Type' -> 16r0.
-		'_OffsetOf_UriQuery' -> 16r38.
-		'_OffsetOf_UriQueryLength' -> 16r12.
-		'_OffsetOf_UriStem' -> 16r20.
-		'_OffsetOf_UriStemLength' -> 16r6.
-		'_OffsetOf_UserAgent' -> 16r40.
-		'_OffsetOf_UserAgentLength' -> 16r16.
-		'_OffsetOf_UserName' -> 16r1C.
-		'_OffsetOf_UserNameLength' -> 16r4.
-		'_OffsetOf_Win32Status' -> 16r50
-	}!
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_MULTIPLE_KNOWN_HEADERS'
+			'_HTTP_LOG_FIELDS_DATA_Size' -> 16r5C.
+			'_OffsetOf_ClientIp' -> 16r24.
+			'_OffsetOf_ClientIpLength' -> 16r8.
+			'_OffsetOf_Cookie' -> 16r44.
+			'_OffsetOf_CookieLength' -> 16r18.
+			'_OffsetOf_Host' -> 16r3C.
+			'_OffsetOf_HostLength' -> 16r14.
+			'_OffsetOf_Method' -> 16r34.
+			'_OffsetOf_MethodLength' -> 16r10.
+			'_OffsetOf_MethodNum' -> 16r54.
+			'_OffsetOf_ProtocolStatus' -> 16r4E.
+			'_OffsetOf_Referrer' -> 16r48.
+			'_OffsetOf_ReferrerLength' -> 16r1A.
+			'_OffsetOf_ServerIp' -> 16r30.
+			'_OffsetOf_ServerIpLength' -> 16rE.
+			'_OffsetOf_ServerName' -> 16r28.
+			'_OffsetOf_ServerNameLength' -> 16rA.
+			'_OffsetOf_ServerPort' -> 16r4C.
+			'_OffsetOf_ServiceName' -> 16r2C.
+			'_OffsetOf_ServiceNameLength' -> 16rC.
+			'_OffsetOf_SubStatus' -> 16r58.
+			'_OffsetOf_Type' -> 16r0.
+			'_OffsetOf_UriQuery' -> 16r38.
+			'_OffsetOf_UriQueryLength' -> 16r12.
+			'_OffsetOf_UriStem' -> 16r20.
+			'_OffsetOf_UriStemLength' -> 16r6.
+			'_OffsetOf_UserAgent' -> 16r40.
+			'_OffsetOf_UserAgentLength' -> 16r16.
+			'_OffsetOf_UserName' -> 16r1C.
+			'_OffsetOf_UserNameLength' -> 16r4.
+			'_OffsetOf_Win32Status' -> 16r50
+		}!
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_MULTIPLE_KNOWN_HEADERS'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_MULTIPLE_KNOWN_HEADERS_Size' -> 16r10.
-		'_OffsetOf_Flags' -> 16r4.
-		'_OffsetOf_HeaderId' -> 16r0.
-		'_OffsetOf_KnownHeaderCount' -> 16r8.
-		'_OffsetOf_KnownHeaders' -> 16rC
-	}!
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_PROPERTY_FLAGS'
+			'_HTTP_MULTIPLE_KNOWN_HEADERS_Size' -> 16r10.
+			'_OffsetOf_Flags' -> 16r4.
+			'_OffsetOf_HeaderId' -> 16r0.
+			'_OffsetOf_KnownHeaderCount' -> 16r8.
+			'_OffsetOf_KnownHeaders' -> 16rC
+		}!
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_PROPERTY_FLAGS'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_HTTP_PROPERTY_FLAGS_Size' -> 16r4.
-		'_OffsetOf_Present' -> 16r0
-	}!
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_QOS_SETTING_INFO'
+	classConstants: { '_HTTP_PROPERTY_FLAGS_Size' -> 16r4. '_OffsetOf_Present' -> 16r0 }!
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_QOS_SETTING_INFO'
 	instanceVariableNames: 'setting'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_QOS_SETTING_INFO_Size' -> 16r8.
-		'_OffsetOf_QosSetting' -> 16r4.
-		'_OffsetOf_QosType' -> 16r0
-	}!
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_REQUEST_AUTH_INFO'
+			'_HTTP_QOS_SETTING_INFO_Size' -> 16r8.
+			'_OffsetOf_QosSetting' -> 16r4.
+			'_OffsetOf_QosType' -> 16r0
+		}!
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_REQUEST_AUTH_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_REQUEST_AUTH_INFO_Size' -> 16r34.
-		'_OffsetOf_AccessToken' -> 16r10.
-		'_OffsetOf_AuthStatus' -> 16r0.
-		'_OffsetOf_AuthType' -> 16rC.
-		'_OffsetOf_ContextAttributes' -> 16r14.
-		'_OffsetOf_Flags' -> 16r8.
-		'_OffsetOf_MutualAuthDataLength' -> 16r24.
-		'_OffsetOf_PackageNameLength' -> 16r2C.
-		'_OffsetOf_PackedContext' -> 16r20.
-		'_OffsetOf_PackedContextLength' -> 16r18.
-		'_OffsetOf_PackedContextType' -> 16r1C.
-		'_OffsetOf_pMutualAuthData' -> 16r28.
-		'_OffsetOf_pPackageName' -> 16r30.
-		'_OffsetOf_SecStatus' -> 16r4
-	}!
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS'
+			'_HTTP_REQUEST_AUTH_INFO_Size' -> 16r34.
+			'_OffsetOf_AccessToken' -> 16r10.
+			'_OffsetOf_AuthStatus' -> 16r0.
+			'_OffsetOf_AuthType' -> 16rC.
+			'_OffsetOf_ContextAttributes' -> 16r14.
+			'_OffsetOf_Flags' -> 16r8.
+			'_OffsetOf_MutualAuthDataLength' -> 16r24.
+			'_OffsetOf_PackageNameLength' -> 16r2C.
+			'_OffsetOf_PackedContext' -> 16r20.
+			'_OffsetOf_PackedContextLength' -> 16r18.
+			'_OffsetOf_PackedContextType' -> 16r1C.
+			'_OffsetOf_pMutualAuthData' -> 16r28.
+			'_OffsetOf_pPackageName' -> 16r30.
+			'_OffsetOf_SecStatus' -> 16r4
+		}!
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_REQUEST_CHANNEL_BIND_STATUS_Size' -> 16r10.
-		'_OffsetOf_ChannelToken' -> 16r4.
-		'_OffsetOf_ChannelTokenSize' -> 16r8.
-		'_OffsetOf_Flags' -> 16rC.
-		'_OffsetOf_ServiceName' -> 16r0
-	}!
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_REQUEST_INFO'
+			'_HTTP_REQUEST_CHANNEL_BIND_STATUS_Size' -> 16r10.
+			'_OffsetOf_ChannelToken' -> 16r4.
+			'_OffsetOf_ChannelTokenSize' -> 16r8.
+			'_OffsetOf_Flags' -> 16rC.
+			'_OffsetOf_ServiceName' -> 16r0
+		}!
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_REQUEST_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_REQUEST_INFO_Size' -> 16rC.
-		'_OffsetOf_InfoLength' -> 16r4.
-		'_OffsetOf_InfoType' -> 16r0.
-		'_OffsetOf_pInfo' -> 16r8
-	}!
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_REQUEST_TOKEN_BINDING_INFO'
+			'_HTTP_REQUEST_INFO_Size' -> 16rC.
+			'_OffsetOf_InfoLength' -> 16r4.
+			'_OffsetOf_InfoType' -> 16r0.
+			'_OffsetOf_pInfo' -> 16r8
+		}!
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_REQUEST_TOKEN_BINDING_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_REQUEST_TOKEN_BINDING_INFO_Size' -> 16r14.
-		'_OffsetOf_KeyType' -> 16r10.
-		'_OffsetOf_TlsUnique' -> 16r8.
-		'_OffsetOf_TlsUniqueSize' -> 16rC.
-		'_OffsetOf_TokenBinding' -> 16r0.
-		'_OffsetOf_TokenBindingSize' -> 16r4
-	}!
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_REQUEST_V1'
+			'_HTTP_REQUEST_TOKEN_BINDING_INFO_Size' -> 16r14.
+			'_OffsetOf_KeyType' -> 16r10.
+			'_OffsetOf_TlsUnique' -> 16r8.
+			'_OffsetOf_TlsUniqueSize' -> 16rC.
+			'_OffsetOf_TokenBinding' -> 16r0.
+			'_OffsetOf_TokenBindingSize' -> 16r4
+		}!
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_REQUEST_V1'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_REQUEST_V1_Size' -> 16r1D0.
-		'_OffsetOf_Address' -> 16r4C.
-		'_OffsetOf_BytesReceived' -> 16r1B0.
-		'_OffsetOf_ConnectionId' -> 16r8.
-		'_OffsetOf_CookedUrl' -> 16r34.
-		'_OffsetOf_EntityChunkCount' -> 16r1B8.
-		'_OffsetOf_Flags' -> 16r0.
-		'_OffsetOf_Headers' -> 16r54.
-		'_OffsetOf_pEntityChunks' -> 16r1BC.
-		'_OffsetOf_pRawUrl' -> 16r30.
-		'_OffsetOf_pSslInfo' -> 16r1C8.
-		'_OffsetOf_pUnknownVerb' -> 16r2C.
-		'_OffsetOf_RawConnectionId' -> 16r1C0.
-		'_OffsetOf_RawUrlLength' -> 16r2A.
-		'_OffsetOf_RequestId' -> 16r10.
-		'_OffsetOf_UnknownVerbLength' -> 16r28.
-		'_OffsetOf_UrlContext' -> 16r18.
-		'_OffsetOf_Verb' -> 16r24.
-		'_OffsetOf_Version' -> 16r20
-	}!
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_RESPONSE_INFO'
+			'_HTTP_REQUEST_V1_Size' -> 16r1D0.
+			'_OffsetOf_Address' -> 16r4C.
+			'_OffsetOf_BytesReceived' -> 16r1B0.
+			'_OffsetOf_ConnectionId' -> 16r8.
+			'_OffsetOf_CookedUrl' -> 16r34.
+			'_OffsetOf_EntityChunkCount' -> 16r1B8.
+			'_OffsetOf_Flags' -> 16r0.
+			'_OffsetOf_Headers' -> 16r54.
+			'_OffsetOf_pEntityChunks' -> 16r1BC.
+			'_OffsetOf_pRawUrl' -> 16r30.
+			'_OffsetOf_pSslInfo' -> 16r1C8.
+			'_OffsetOf_pUnknownVerb' -> 16r2C.
+			'_OffsetOf_RawConnectionId' -> 16r1C0.
+			'_OffsetOf_RawUrlLength' -> 16r2A.
+			'_OffsetOf_RequestId' -> 16r10.
+			'_OffsetOf_UnknownVerbLength' -> 16r28.
+			'_OffsetOf_UrlContext' -> 16r18.
+			'_OffsetOf_Verb' -> 16r24.
+			'_OffsetOf_Version' -> 16r20
+		}!
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_RESPONSE_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_RESPONSE_INFO_Size' -> 16rC.
-		'_OffsetOf_Length' -> 16r4.
-		'_OffsetOf_pInfo' -> 16r8.
-		'_OffsetOf_Type' -> 16r0
-	}!
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_RESPONSE_V1'
+			'_HTTP_RESPONSE_INFO_Size' -> 16rC.
+			'_OffsetOf_Length' -> 16r4.
+			'_OffsetOf_pInfo' -> 16r8.
+			'_OffsetOf_Type' -> 16r0
+		}!
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_RESPONSE_V1'
 	instanceVariableNames: 'contentType content'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_RESPONSE_V1_Size' -> 16r118.
-		'_OffsetOf_EntityChunkCount' -> 16r110.
-		'_OffsetOf_Flags' -> 16r0.
-		'_OffsetOf_Headers' -> 16r10.
-		'_OffsetOf_pEntityChunks' -> 16r114.
-		'_OffsetOf_pReason' -> 16rC.
-		'_OffsetOf_ReasonLength' -> 16rA.
-		'_OffsetOf_StatusCode' -> 16r8.
-		'_OffsetOf_Version' -> 16r4
-	}!
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS'
+			'_HTTP_RESPONSE_V1_Size' -> 16r118.
+			'_OffsetOf_EntityChunkCount' -> 16r110.
+			'_OffsetOf_Flags' -> 16r0.
+			'_OffsetOf_Headers' -> 16r10.
+			'_OffsetOf_pEntityChunks' -> 16r114.
+			'_OffsetOf_pReason' -> 16rC.
+			'_OffsetOf_ReasonLength' -> 16rA.
+			'_OffsetOf_StatusCode' -> 16r8.
+			'_OffsetOf_Version' -> 16r4
+		}!
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS_Size' -> 16r8.
-		'_OffsetOf_Realm' -> 16r4.
-		'_OffsetOf_RealmLength' -> 16r0
-	}!
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS'
+			'_HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS_Size' -> 16r8.
+			'_OffsetOf_Realm' -> 16r4.
+			'_OffsetOf_RealmLength' -> 16r0
+		}!
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS_Size' -> 16r10.
-		'_OffsetOf_DomainName' -> 16r4.
-		'_OffsetOf_DomainNameLength' -> 16r0.
-		'_OffsetOf_Realm' -> 16rC.
-		'_OffsetOf_RealmLength' -> 16r8
-	}!
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVICE_BINDING_BASE'
+			'_HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS_Size' -> 16r10.
+			'_OffsetOf_DomainName' -> 16r4.
+			'_OffsetOf_DomainNameLength' -> 16r0.
+			'_OffsetOf_Realm' -> 16rC.
+			'_OffsetOf_RealmLength' -> 16r8
+		}!
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_SERVICE_BINDING_BASE'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { '_HTTP_SERVICE_BINDING_BASE_Size' -> 16r4. '_OffsetOf_Type' -> 16r0 }!
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_CACHE_SET'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_SERVICE_BINDING_BASE_Size' -> 16r4.
-		'_OffsetOf_Type' -> 16r0
-	}!
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_CACHE_SET'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'_HTTP_SERVICE_CONFIG_CACHE_SET_Size' -> 16r8.
-		'_OffsetOf_KeyDesc' -> 16r0.
-		'_OffsetOf_ParamDesc' -> 16r4
-	}!
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM'
+			'_HTTP_SERVICE_CONFIG_CACHE_SET_Size' -> 16r8.
+			'_OffsetOf_KeyDesc' -> 16r0.
+			'_OffsetOf_ParamDesc' -> 16r4
+		}!
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM'
 	instanceVariableNames: 'address'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM_Size' -> 16r8.
-		'_OffsetOf_AddrLength' -> 16r0.
-		'_OffsetOf_pAddress' -> 16r4
-	}!
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY'
+			'_HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM_Size' -> 16r8.
+			'_OffsetOf_AddrLength' -> 16r0.
+			'_OffsetOf_pAddress' -> 16r4
+		}!
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY_Size' -> 16r88.
-		'_OffsetOf_AddrCount' -> 16r0.
-		'_OffsetOf_AddrList' -> 16r8
-	}!
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_SSL_CCS_SET'
+			'_HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY_Size' -> 16r88.
+			'_OffsetOf_AddrCount' -> 16r0.
+			'_OffsetOf_AddrList' -> 16r8
+		}!
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_SSL_CCS_SET'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_SERVICE_CONFIG_SSL_CCS_SET_Size' -> 16rB8.
-		'_OffsetOf_KeyDesc' -> 16r0.
-		'_OffsetOf_ParamDesc' -> 16r80
-	}!
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_SSL_PARAM'
+			'_HTTP_SERVICE_CONFIG_SSL_CCS_SET_Size' -> 16rB8.
+			'_OffsetOf_KeyDesc' -> 16r0.
+			'_OffsetOf_ParamDesc' -> 16r80
+		}!
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_SSL_PARAM'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_SERVICE_CONFIG_SSL_PARAM_Size' -> 16r34.
-		'_OffsetOf_AppId' -> 16r8.
-		'_OffsetOf_DefaultCertCheckMode' -> 16r1C.
-		'_OffsetOf_DefaultFlags' -> 16r30.
-		'_OffsetOf_DefaultRevocationFreshnessTime' -> 16r20.
-		'_OffsetOf_DefaultRevocationUrlRetrievalTimeout' -> 16r24.
-		'_OffsetOf_pDefaultSslCtlIdentifier' -> 16r28.
-		'_OffsetOf_pDefaultSslCtlStoreName' -> 16r2C.
-		'_OffsetOf_pSslCertStoreName' -> 16r18.
-		'_OffsetOf_pSslHash' -> 16r4.
-		'_OffsetOf_SslHashLength' -> 16r0
-	}!
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SET'
+			'_HTTP_SERVICE_CONFIG_SSL_PARAM_Size' -> 16r34.
+			'_OffsetOf_AppId' -> 16r8.
+			'_OffsetOf_DefaultCertCheckMode' -> 16r1C.
+			'_OffsetOf_DefaultFlags' -> 16r30.
+			'_OffsetOf_DefaultRevocationFreshnessTime' -> 16r20.
+			'_OffsetOf_DefaultRevocationUrlRetrievalTimeout' -> 16r24.
+			'_OffsetOf_pDefaultSslCtlIdentifier' -> 16r28.
+			'_OffsetOf_pDefaultSslCtlStoreName' -> 16r2C.
+			'_OffsetOf_pSslCertStoreName' -> 16r18.
+			'_OffsetOf_pSslHash' -> 16r4.
+			'_OffsetOf_SslHashLength' -> 16r0
+		}!
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SET'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_SERVICE_CONFIG_SSL_SET_Size' -> 16r38.
-		'_OffsetOf_KeyDesc' -> 16r0.
-		'_OffsetOf_ParamDesc' -> 16r4
-	}!
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_KEY'
+			'_HTTP_SERVICE_CONFIG_SSL_SET_Size' -> 16r38.
+			'_OffsetOf_KeyDesc' -> 16r0.
+			'_OffsetOf_ParamDesc' -> 16r4
+		}!
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_KEY'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_SERVICE_CONFIG_SSL_SNI_KEY_Size' -> 16r88.
-		'_OffsetOf_Host' -> 16r80.
-		'_OffsetOf_IpPort' -> 16r0
-	}!
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_SET'
+			'_HTTP_SERVICE_CONFIG_SSL_SNI_KEY_Size' -> 16r88.
+			'_OffsetOf_Host' -> 16r80.
+			'_OffsetOf_IpPort' -> 16r0
+		}!
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_SET'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_SERVICE_CONFIG_SSL_SNI_SET_Size' -> 16rC0.
-		'_OffsetOf_KeyDesc' -> 16r0.
-		'_OffsetOf_ParamDesc' -> 16r88
-	}!
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_TIMEOUT_SET'
+			'_HTTP_SERVICE_CONFIG_SSL_SNI_SET_Size' -> 16rC0.
+			'_OffsetOf_KeyDesc' -> 16r0.
+			'_OffsetOf_ParamDesc' -> 16r88
+		}!
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_TIMEOUT_SET'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_SERVICE_CONFIG_TIMEOUT_SET_Size' -> 16r8.
-		'_OffsetOf_KeyDesc' -> 16r0.
-		'_OffsetOf_ParamDesc' -> 16r4
-	}!
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_URLACL_SET'
+			'_HTTP_SERVICE_CONFIG_TIMEOUT_SET_Size' -> 16r8.
+			'_OffsetOf_KeyDesc' -> 16r0.
+			'_OffsetOf_ParamDesc' -> 16r4
+		}!
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_URLACL_SET'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_SERVICE_CONFIG_URLACL_SET_Size' -> 16r8.
-		'_OffsetOf_KeyDesc' -> 16r0.
-		'_OffsetOf_ParamDesc' -> 16r4
-	}!
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SSL_CLIENT_CERT_INFO'
+			'_HTTP_SERVICE_CONFIG_URLACL_SET_Size' -> 16r8.
+			'_OffsetOf_KeyDesc' -> 16r0.
+			'_OffsetOf_ParamDesc' -> 16r4
+		}!
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_SSL_CLIENT_CERT_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_SSL_CLIENT_CERT_INFO_Size' -> 16r14.
-		'_OffsetOf_CertDeniedByMapper' -> 16r10.
-		'_OffsetOf_CertEncodedSize' -> 16r4.
-		'_OffsetOf_CertFlags' -> 16r0.
-		'_OffsetOf_pCertEncoded' -> 16r8.
-		'_OffsetOf_Token' -> 16rC
-	}!
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SSL_INFO'
+			'_HTTP_SSL_CLIENT_CERT_INFO_Size' -> 16r14.
+			'_OffsetOf_CertDeniedByMapper' -> 16r10.
+			'_OffsetOf_CertEncodedSize' -> 16r4.
+			'_OffsetOf_CertFlags' -> 16r0.
+			'_OffsetOf_pCertEncoded' -> 16r8.
+			'_OffsetOf_Token' -> 16rC
+		}!
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_SSL_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_SSL_INFO_Size' -> 16r1C.
-		'_OffsetOf_ConnectionKeySize' -> 16r2.
-		'_OffsetOf_pClientCertInfo' -> 16r14.
-		'_OffsetOf_pServerCertIssuer' -> 16rC.
-		'_OffsetOf_pServerCertSubject' -> 16r10.
-		'_OffsetOf_ServerCertIssuerSize' -> 16r4.
-		'_OffsetOf_ServerCertKeySize' -> 16r0.
-		'_OffsetOf_ServerCertSubjectSize' -> 16r8.
-		'_OffsetOf_SslClientCertNegotiated' -> 16r18
-	}!
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SSL_PROTOCOL_INFO'
+			'_HTTP_SSL_INFO_Size' -> 16r1C.
+			'_OffsetOf_ConnectionKeySize' -> 16r2.
+			'_OffsetOf_pClientCertInfo' -> 16r14.
+			'_OffsetOf_pServerCertIssuer' -> 16rC.
+			'_OffsetOf_pServerCertSubject' -> 16r10.
+			'_OffsetOf_ServerCertIssuerSize' -> 16r4.
+			'_OffsetOf_ServerCertKeySize' -> 16r0.
+			'_OffsetOf_ServerCertSubjectSize' -> 16r8.
+			'_OffsetOf_SslClientCertNegotiated' -> 16r18
+		}!
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_SSL_PROTOCOL_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_SSL_PROTOCOL_INFO_Size' -> 16r1C.
-		'_OffsetOf_CipherStrength' -> 16r8.
-		'_OffsetOf_CipherType' -> 16r4.
-		'_OffsetOf_HashStrength' -> 16r10.
-		'_OffsetOf_HashType' -> 16rC.
-		'_OffsetOf_KeyExchangeStrength' -> 16r18.
-		'_OffsetOf_KeyExchangeType' -> 16r14.
-		'_OffsetOf_Protocol' -> 16r0
-	}!
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_UNKNOWN_HEADER'
+			'_HTTP_SSL_PROTOCOL_INFO_Size' -> 16r1C.
+			'_OffsetOf_CipherStrength' -> 16r8.
+			'_OffsetOf_CipherType' -> 16r4.
+			'_OffsetOf_HashStrength' -> 16r10.
+			'_OffsetOf_HashType' -> 16rC.
+			'_OffsetOf_KeyExchangeStrength' -> 16r18.
+			'_OffsetOf_KeyExchangeType' -> 16r14.
+			'_OffsetOf_Protocol' -> 16r0
+		}!
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_UNKNOWN_HEADER'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_UNKNOWN_HEADER_Size' -> 16rC.
-		'_OffsetOf_NameLength' -> 16r0.
-		'_OffsetOf_pName' -> 16r4.
-		'_OffsetOf_pRawValue' -> 16r8.
-		'_OffsetOf_RawValueLength' -> 16r2
-	}!
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_VERSION'
+			'_HTTP_UNKNOWN_HEADER_Size' -> 16rC.
+			'_OffsetOf_NameLength' -> 16r0.
+			'_OffsetOf_pName' -> 16r4.
+			'_OffsetOf_pRawValue' -> 16r8.
+			'_OffsetOf_RawValueLength' -> 16r2
+		}!
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_VERSION'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_VERSION_Size' -> 16r4.
-		'_OffsetOf_MajorVersion' -> 16r0.
-		'_OffsetOf_MinorVersion' -> 16r2
-	}!
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HttpServiceConfigQuery'
+			'_HTTP_VERSION_Size' -> 16r4.
+			'_OffsetOf_MajorVersion' -> 16r0.
+			'_OffsetOf_MinorVersion' -> 16r2
+		}!
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HttpServiceConfigQuery'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_HttpServiceConfigQuery_Size' -> 16r4.
-		'_OffsetOf_QueryDesc' -> 16r0
-	}!
-WinHttpServer.HTTP_HEADERS subclass: #'WinHttpServer.HTTP_REQUEST_HEADERS'
+	classConstants: { '_HttpServiceConfigQuery_Size' -> 16r4. '_OffsetOf_QueryDesc' -> 16r0 }!
+WinHttpServer.HTTP_HEADERS
+	subclass: #'WinHttpServer.HTTP_REQUEST_HEADERS'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_HTTP_REQUEST_HEADERS_Size' -> 16r158.
-		'_OffsetOf_KnownHeaders' -> 16r10
-	}!
-WinHttpServer.HTTP_HEADERS subclass: #'WinHttpServer.HTTP_RESPONSE_HEADERS'
+	classConstants: { '_HTTP_REQUEST_HEADERS_Size' -> 16r158. '_OffsetOf_KnownHeaders' -> 16r10 }!
+WinHttpServer.HTTP_HEADERS
+	subclass: #'WinHttpServer.HTTP_RESPONSE_HEADERS'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_HTTP_RESPONSE_HEADERS_Size' -> 16r100.
-		'_OffsetOf_KnownHeaders' -> 16r10
-	}!
-WinHttpServer.HTTP_PROPERTY_FLAGS subclass: #'WinHttpServer.HTTP_BINDING_INFO'
+	classConstants: { '_HTTP_RESPONSE_HEADERS_Size' -> 16r100. '_OffsetOf_KnownHeaders' -> 16r10 }!
+WinHttpServer.HTTP_PROPERTY_FLAGS
+	subclass: #'WinHttpServer.HTTP_BINDING_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_HTTP_BINDING_INFO_Size' -> 16r8.
-		'_OffsetOf_RequestQueueHandle' -> 16r4
-	}!
-WinHttpServer.HTTP_PROPERTY_FLAGS subclass: #'WinHttpServer.HTTP_LISTEN_ENDPOINT_INFO'
+	classConstants: { '_HTTP_BINDING_INFO_Size' -> 16r8. '_OffsetOf_RequestQueueHandle' -> 16r4 }!
+WinHttpServer.HTTP_PROPERTY_FLAGS
+	subclass: #'WinHttpServer.HTTP_LISTEN_ENDPOINT_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_HTTP_LISTEN_ENDPOINT_INFO_Size' -> 16r8.
-		'_OffsetOf_EnableSharing' -> 16r4
-	}!
-WinHttpServer.HTTP_PROPERTY_FLAGS subclass: #'WinHttpServer.HTTP_LOGGING_INFO'
+	classConstants: { '_HTTP_LISTEN_ENDPOINT_INFO_Size' -> 16r8. '_OffsetOf_EnableSharing' -> 16r4 }!
+WinHttpServer.HTTP_PROPERTY_FLAGS
+	subclass: #'WinHttpServer.HTTP_LOGGING_INFO'
 	instanceVariableNames: 'directoryName softwareName'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_LOGGING_INFO_Size' -> 16r30.
-		'_OffsetOf_DirectoryName' -> 16r10.
-		'_OffsetOf_DirectoryNameLength' -> 16rE.
-		'_OffsetOf_Fields' -> 16r18.
-		'_OffsetOf_Format' -> 16r14.
-		'_OffsetOf_LoggingFlags' -> 16r4.
-		'_OffsetOf_MaxRecordSize' -> 16r22.
-		'_OffsetOf_NumOfExtFields' -> 16r20.
-		'_OffsetOf_pExtFields' -> 16r1C.
-		'_OffsetOf_pSecurityDescriptor' -> 16r2C.
-		'_OffsetOf_RolloverSize' -> 16r28.
-		'_OffsetOf_RolloverType' -> 16r24.
-		'_OffsetOf_SoftwareName' -> 16r8.
-		'_OffsetOf_SoftwareNameLength' -> 16rC
-	}!
-WinHttpServer.HTTP_PROPERTY_FLAGS subclass: #'WinHttpServer.HTTP_PROTECTION_LEVEL_INFO'
+			'_HTTP_LOGGING_INFO_Size' -> 16r30.
+			'_OffsetOf_DirectoryName' -> 16r10.
+			'_OffsetOf_DirectoryNameLength' -> 16rE.
+			'_OffsetOf_Fields' -> 16r18.
+			'_OffsetOf_Format' -> 16r14.
+			'_OffsetOf_LoggingFlags' -> 16r4.
+			'_OffsetOf_MaxRecordSize' -> 16r22.
+			'_OffsetOf_NumOfExtFields' -> 16r20.
+			'_OffsetOf_pExtFields' -> 16r1C.
+			'_OffsetOf_pSecurityDescriptor' -> 16r2C.
+			'_OffsetOf_RolloverSize' -> 16r28.
+			'_OffsetOf_RolloverType' -> 16r24.
+			'_OffsetOf_SoftwareName' -> 16r8.
+			'_OffsetOf_SoftwareNameLength' -> 16rC
+		}!
+WinHttpServer.HTTP_PROPERTY_FLAGS
+	subclass: #'WinHttpServer.HTTP_PROTECTION_LEVEL_INFO'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { '_HTTP_PROTECTION_LEVEL_INFO_Size' -> 16r8. '_OffsetOf_Level' -> 16r4 }!
+WinHttpServer.HTTP_PROPERTY_FLAGS
+	subclass: #'WinHttpServer.HTTP_SERVER_AUTHENTICATION_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_PROTECTION_LEVEL_INFO_Size' -> 16r8.
-		'_OffsetOf_Level' -> 16r4
-	}!
-WinHttpServer.HTTP_PROPERTY_FLAGS subclass: #'WinHttpServer.HTTP_SERVER_AUTHENTICATION_INFO'
+			'_HTTP_SERVER_AUTHENTICATION_INFO_Size' -> 16r24.
+			'_OffsetOf_AuthSchemes' -> 16r4.
+			'_OffsetOf_BasicParams' -> 16r1C.
+			'_OffsetOf_DigestParams' -> 16rC.
+			'_OffsetOf_DisableNTLMCredentialCaching' -> 16rA.
+			'_OffsetOf_ExFlags' -> 16rB.
+			'_OffsetOf_ReceiveContextHandle' -> 16r9.
+			'_OffsetOf_ReceiveMutualAuth' -> 16r8
+		}!
+WinHttpServer.HTTP_PROPERTY_FLAGS
+	subclass: #'WinHttpServer.HTTP_STATE_INFO'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { '_HTTP_STATE_INFO_Size' -> 16r8. '_OffsetOf_State' -> 16r4 }!
+WinHttpServer.HTTP_PROPERTY_FLAGS
+	subclass: #'WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_SERVER_AUTHENTICATION_INFO_Size' -> 16r24.
-		'_OffsetOf_AuthSchemes' -> 16r4.
-		'_OffsetOf_BasicParams' -> 16r1C.
-		'_OffsetOf_DigestParams' -> 16rC.
-		'_OffsetOf_DisableNTLMCredentialCaching' -> 16rA.
-		'_OffsetOf_ExFlags' -> 16rB.
-		'_OffsetOf_ReceiveContextHandle' -> 16r9.
-		'_OffsetOf_ReceiveMutualAuth' -> 16r8
-	}!
-WinHttpServer.HTTP_PROPERTY_FLAGS subclass: #'WinHttpServer.HTTP_STATE_INFO'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'_HTTP_STATE_INFO_Size' -> 16r8.
-		'_OffsetOf_State' -> 16r4
-	}!
-WinHttpServer.HTTP_PROPERTY_FLAGS subclass: #'WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'_HTTP_TIMEOUT_LIMIT_INFO_Size' -> 16r14.
-		'_OffsetOf_DrainEntityBody' -> 16r6.
-		'_OffsetOf_EntityBody' -> 16r4.
-		'_OffsetOf_HeaderWait' -> 16rC.
-		'_OffsetOf_IdleConnection' -> 16rA.
-		'_OffsetOf_MinSendRate' -> 16r10.
-		'_OffsetOf_RequestQueue' -> 16r8
-	}!
-WinHttpServer.HTTP_PROPERTY_FLAGS subclass: #'WinHttpServer.HttpQosSetting'
+			'_HTTP_TIMEOUT_LIMIT_INFO_Size' -> 16r14.
+			'_OffsetOf_DrainEntityBody' -> 16r6.
+			'_OffsetOf_EntityBody' -> 16r4.
+			'_OffsetOf_HeaderWait' -> 16rC.
+			'_OffsetOf_IdleConnection' -> 16rA.
+			'_OffsetOf_MinSendRate' -> 16r10.
+			'_OffsetOf_RequestQueue' -> 16r8
+		}!
+WinHttpServer.HTTP_PROPERTY_FLAGS
+	subclass: #'WinHttpServer.HttpQosSetting'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-WinHttpServer.HttpQosSetting subclass: #'WinHttpServer.HTTP_BANDWIDTH_LIMIT_INFO'
+WinHttpServer.HttpQosSetting
+	subclass: #'WinHttpServer.HTTP_BANDWIDTH_LIMIT_INFO'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { '_HTTP_BANDWIDTH_LIMIT_INFO_Size' -> 16r8. '_OffsetOf_MaxBandwidth' -> 16r4 }!
+WinHttpServer.HttpQosSetting
+	subclass: #'WinHttpServer.HTTP_CONNECTION_LIMIT_INFO'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { '_HTTP_CONNECTION_LIMIT_INFO_Size' -> 16r8. '_OffsetOf_MaxConnections' -> 16r4 }!
+WinHttpServer.HttpQosSetting
+	subclass: #'WinHttpServer.HTTP_FLOWRATE_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_BANDWIDTH_LIMIT_INFO_Size' -> 16r8.
-		'_OffsetOf_MaxBandwidth' -> 16r4
-	}!
-WinHttpServer.HttpQosSetting subclass: #'WinHttpServer.HTTP_CONNECTION_LIMIT_INFO'
+			'_HTTP_FLOWRATE_INFO_Size' -> 16r10.
+			'_OffsetOf_BurstSize' -> 16rC.
+			'_OffsetOf_MaxBandwidth' -> 16r4.
+			'_OffsetOf_MaxPeakBandwidth' -> 16r8
+		}!
+WinHttpServer.HTTP_REQUEST_V1
+	subclass: #'WinHttpServer.HTTP_REQUEST_V2'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_CONNECTION_LIMIT_INFO_Size' -> 16r8.
-		'_OffsetOf_MaxConnections' -> 16r4
-	}!
-WinHttpServer.HttpQosSetting subclass: #'WinHttpServer.HTTP_FLOWRATE_INFO'
+			'_HTTP_REQUEST_V2_Size' -> 16r1D8.
+			'_OffsetOf_pRequestInfo' -> 16r1D4.
+			'_OffsetOf_RequestInfoCount' -> 16r1D0
+		}!
+WinHttpServer.HTTP_RESPONSE_V1
+	subclass: #'WinHttpServer.HTTP_RESPONSE_V2'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_FLOWRATE_INFO_Size' -> 16r10.
-		'_OffsetOf_BurstSize' -> 16rC.
-		'_OffsetOf_MaxBandwidth' -> 16r4.
-		'_OffsetOf_MaxPeakBandwidth' -> 16r8
-	}!
-WinHttpServer.HTTP_REQUEST_V1 subclass: #'WinHttpServer.HTTP_REQUEST_V2'
+			'_HTTP_RESPONSE_V2_Size' -> 16r120.
+			'_OffsetOf_pResponseInfo' -> 16r11C.
+			'_OffsetOf_ResponseInfoCount' -> 16r118
+		}!
+WinHttpServer.HTTP_SERVICE_BINDING_BASE
+	subclass: #'WinHttpServer.HTTP_SERVICE_BINDING_A'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_REQUEST_V2_Size' -> 16r1D8.
-		'_OffsetOf_pRequestInfo' -> 16r1D4.
-		'_OffsetOf_RequestInfoCount' -> 16r1D0
-	}!
-WinHttpServer.HTTP_RESPONSE_V1 subclass: #'WinHttpServer.HTTP_RESPONSE_V2'
+			'_HTTP_SERVICE_BINDING_A_Size' -> 16rC.
+			'_OffsetOf_Buffer' -> 16r4.
+			'_OffsetOf_BufferSize' -> 16r8
+		}!
+WinHttpServer.HTTP_SERVICE_BINDING_BASE
+	subclass: #'WinHttpServer.HTTP_SERVICE_BINDING_W'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_RESPONSE_V2_Size' -> 16r120.
-		'_OffsetOf_pResponseInfo' -> 16r11C.
-		'_OffsetOf_ResponseInfoCount' -> 16r118
-	}!
-WinHttpServer.HTTP_SERVICE_BINDING_BASE subclass: #'WinHttpServer.HTTP_SERVICE_BINDING_A'
+			'_HTTP_SERVICE_BINDING_W_Size' -> 16rC.
+			'_OffsetOf_Buffer' -> 16r4.
+			'_OffsetOf_BufferSize' -> 16r8
+		}!
+WinHttpServer.HttpServiceConfigQuery
+	subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_SSL_CCS_QUERY'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_SERVICE_BINDING_A_Size' -> 16rC.
-		'_OffsetOf_Buffer' -> 16r4.
-		'_OffsetOf_BufferSize' -> 16r8
-	}!
-WinHttpServer.HTTP_SERVICE_BINDING_BASE subclass: #'WinHttpServer.HTTP_SERVICE_BINDING_W'
+			'_HTTP_SERVICE_CONFIG_SSL_CCS_QUERY_Size' -> 16r90.
+			'_OffsetOf_dwToken' -> 16r88.
+			'_OffsetOf_KeyDesc' -> 16r8
+		}!
+WinHttpServer.HttpServiceConfigQuery
+	subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_SSL_QUERY'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_SERVICE_BINDING_W_Size' -> 16rC.
-		'_OffsetOf_Buffer' -> 16r4.
-		'_OffsetOf_BufferSize' -> 16r8
-	}!
-WinHttpServer.HttpServiceConfigQuery subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_SSL_CCS_QUERY'
+			'_HTTP_SERVICE_CONFIG_SSL_QUERY_Size' -> 16rC.
+			'_OffsetOf_dwToken' -> 16r8.
+			'_OffsetOf_KeyDesc' -> 16r4
+		}!
+WinHttpServer.HttpServiceConfigQuery
+	subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_QUERY'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_SERVICE_CONFIG_SSL_CCS_QUERY_Size' -> 16r90.
-		'_OffsetOf_dwToken' -> 16r88.
-		'_OffsetOf_KeyDesc' -> 16r8
-	}!
-WinHttpServer.HttpServiceConfigQuery subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_SSL_QUERY'
+			'_HTTP_SERVICE_CONFIG_SSL_SNI_QUERY_Size' -> 16r98.
+			'_OffsetOf_dwToken' -> 16r90.
+			'_OffsetOf_KeyDesc' -> 16r8
+		}!
+WinHttpServer.HttpServiceConfigQuery
+	subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_URLACL_QUERY'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_SERVICE_CONFIG_SSL_QUERY_Size' -> 16rC.
-		'_OffsetOf_dwToken' -> 16r8.
-		'_OffsetOf_KeyDesc' -> 16r4
-	}!
-WinHttpServer.HttpServiceConfigQuery subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_QUERY'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'_HTTP_SERVICE_CONFIG_SSL_SNI_QUERY_Size' -> 16r98.
-		'_OffsetOf_dwToken' -> 16r90.
-		'_OffsetOf_KeyDesc' -> 16r8
-	}!
-WinHttpServer.HttpServiceConfigQuery subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_URLACL_QUERY'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'_HTTP_SERVICE_CONFIG_URLACL_QUERY_Size' -> 16rC.
-		'_OffsetOf_dwToken' -> 16r8.
-		'_OffsetOf_KeyDesc' -> 16r4
-	}!
+			'_HTTP_SERVICE_CONFIG_URLACL_QUERY_Size' -> 16rC.
+			'_OffsetOf_dwToken' -> 16r8.
+			'_OffsetOf_KeyDesc' -> 16r4
+		}!
 
 "Variable Aliases"!
 

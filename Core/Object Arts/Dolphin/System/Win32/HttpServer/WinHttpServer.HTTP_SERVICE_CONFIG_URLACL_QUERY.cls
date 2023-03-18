@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WinHttpServer.HttpServiceConfigQuery subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_URLACL_QUERY'
+WinHttpServer.HttpServiceConfigQuery
+	subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_URLACL_QUERY'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_SERVICE_CONFIG_URLACL_QUERY_Size' -> 16rC.
-		'_OffsetOf_dwToken' -> 16r8.
-		'_OffsetOf_KeyDesc' -> 16r4
-	}!
+			'_HTTP_SERVICE_CONFIG_URLACL_QUERY_Size' -> 16rC.
+			'_OffsetOf_dwToken' -> 16r8.
+			'_OffsetOf_KeyDesc' -> 16r4
+		}!
 WinHttpServer.HTTP_SERVICE_CONFIG_URLACL_QUERY guid: (Core.GUID fromString: '{fbe6f060-f472-445e-b48c-9caa8faedc7e}')!
 WinHttpServer.HTTP_SERVICE_CONFIG_URLACL_QUERY comment: '`HTTP_SERVICE_CONFIG_URLACL_QUERY` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_URLACL_QUERY'' from type information in the ''Windows Http Server API'' library.
 

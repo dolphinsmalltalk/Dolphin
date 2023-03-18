@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.AbstractTEXTRANGE subclass: #'OS.TEXTRANGE'
+OS.AbstractTEXTRANGE
+	subclass: #'OS.TEXTRANGE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_chrg' -> 16r0.
-		'_OffsetOf_lpstrText' -> 16r8.
-		'_TEXTRANGE_Size' -> 16rC
-	}!
+			'_OffsetOf_chrg' -> 16r0.
+			'_OffsetOf_lpstrText' -> 16r8.
+			'_TEXTRANGE_Size' -> 16rC
+		}!
 OS.TEXTRANGE guid: (Core.GUID fromString: '{87b4c615-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.TEXTRANGE comment: 'TEXTRANGE is the class of <ExternalStructure> which represents the Windows TEXTRANGE and TEXTRANGEW structures.
 

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTest subclass: #'UI.Tests.AbstractKeyboardTest'
+Core.Tests.DolphinTest
+	subclass: #'UI.Tests.AbstractKeyboardTest'
 	instanceVariableNames: 'savedLayout'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})

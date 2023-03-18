@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Security.PC1Cipher'
+Core.Object
+	subclass: #'Security.PC1Cipher'
 	instanceVariableNames: 'key box i j'
 	classVariableNames: 'RandPool'
 	imports: #()

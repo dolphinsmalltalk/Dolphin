@@ -25,22 +25,36 @@ package!
 
 "Class Definitions"!
 
-UI.ControlView subclass: #'UI.CommandButton'
+UI.ControlView
+	subclass: #'UI.CommandButton'
 	instanceVariableNames: 'commandDescription'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'StandardCommands' -> (IdentityDictionary withAll: {#cancel -> 16r2. #continue -> 16rB. #retry -> 16rA. #abort -> 16r3. #yes -> 16r6. #help -> 16r9. #no -> 16r7. #ignore -> 16r5. #close -> 16r8})
-	}!
-UI.CommandButton subclass: #'UI.PushButton'
+			'StandardCommands'
+				-> (IdentityDictionary withAll: {
+								#abort -> 16r3.
+								#cancel -> 16r2.
+								#close -> 16r8.
+								#continue -> 16rB.
+								#help -> 16r9.
+								#ignore -> 16r5.
+								#no -> 16r7.
+								#retry -> 16rA.
+								#yes -> 16r6
+							})
+		}!
+UI.CommandButton
+	subclass: #'UI.PushButton'
 	instanceVariableNames: 'image isDefault note _reserved1 _reserved2'
 	classVariableNames: ''
 	imports: #(#{OS.ButtonConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'ButtonStyleMap' -> (IdentityDictionary withAll: {#check -> 16r2. #push -> 16r0. #link -> 16rE. #toggle -> 16r1002})
-	}!
+			'ButtonStyleMap'
+				-> (IdentityDictionary withAll: { #check -> 16r2. #link -> 16rE. #push -> 16r0. #toggle -> 16r1002 })
+		}!
 
 "Loose Methods"!
 

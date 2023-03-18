@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.AbstractCHARField subclass: #'External.CHARField'
+External.AbstractCHARField
+	subclass: #'External.CHARField'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

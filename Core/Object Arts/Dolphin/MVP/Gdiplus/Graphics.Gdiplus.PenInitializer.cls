@@ -1,14 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.PenInitializer'
+Graphics.Gdiplus.Initializer
+	subclass: #'Graphics.Gdiplus.PenInitializer'
 	instanceVariableNames: 'ink width alignment lineJoin endCap startCap dashCap dashStyle dashPattern transform compoundArray'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'AlignmentNames' -> #('PenAlignmentCenter' 'PenAlignmentInset').
-		'DashStyleNames' -> #('DashStyleSolid' 'DashStyleDash' 'DashStyleDot' 'DashStyleDashDot' 'DashStyleDashDotDot' 'DashStyleCustom')
-	}!
+			'AlignmentNames' -> #('PenAlignmentCenter' 'PenAlignmentInset').
+			'DashStyleNames'
+				-> #('DashStyleSolid' 'DashStyleDash' 'DashStyleDot' 'DashStyleDashDot' 'DashStyleDashDotDot' 'DashStyleCustom')
+		}!
 Graphics.Gdiplus.PenInitializer guid: (Core.GUID fromString: '{b5a5d186-b0ef-421c-befb-c5628a17fee9}')!
 Graphics.Gdiplus.PenInitializer comment: ''!
 !Graphics.Gdiplus.PenInitializer methodsFor!

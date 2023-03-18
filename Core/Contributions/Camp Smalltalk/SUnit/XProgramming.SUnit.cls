@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-XProgramming subclass: #'XProgramming.SUnit'
+XProgramming
+	subclass: #'XProgramming.SUnit'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

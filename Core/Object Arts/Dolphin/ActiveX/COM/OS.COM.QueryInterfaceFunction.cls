@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.AbstractInterfaceFunction subclass: #'OS.COM.QueryInterfaceFunction'
+OS.COM.AbstractInterfaceFunction
+	subclass: #'OS.COM.QueryInterfaceFunction'
 	instanceVariableNames: ''
 	classVariableNames: 'Descriptor'
 	imports: #()

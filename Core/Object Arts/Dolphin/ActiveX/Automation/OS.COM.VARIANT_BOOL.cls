@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Int16 subclass: #'OS.COM.VARIANT_BOOL'
+External.Int16
+	subclass: #'OS.COM.VARIANT_BOOL'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

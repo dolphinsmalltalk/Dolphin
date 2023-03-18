@@ -1,18 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.OLEStructure subclass: #'OS.COM.DVTARGETDEVICE'
+OS.COM.OLEStructure
+	subclass: #'OS.COM.DVTARGETDEVICE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_DVTARGETDEVICE_Size' -> 16rC.
-		'_OffsetOf_tdDeviceNameOffset' -> 16r6.
-		'_OffsetOf_tdDriverNameOffset' -> 16r4.
-		'_OffsetOf_tdExtDevmodeOffset' -> 16rA.
-		'_OffsetOf_tdPortNameOffset' -> 16r8.
-		'_OffsetOf_tdSize' -> 16r0
-	}!
+			'_DVTARGETDEVICE_Size' -> 16rC.
+			'_OffsetOf_tdDeviceNameOffset' -> 16r6.
+			'_OffsetOf_tdDriverNameOffset' -> 16r4.
+			'_OffsetOf_tdExtDevmodeOffset' -> 16rA.
+			'_OffsetOf_tdPortNameOffset' -> 16r8.
+			'_OffsetOf_tdSize' -> 16r0
+		}!
 OS.COM.DVTARGETDEVICE guid: (Core.GUID fromString: '{48447b1a-95e7-4ede-be68-a34481486812}')!
 OS.COM.DVTARGETDEVICE comment: '<DVTARGETDEVICE> is an <ExternalStructure> class to wrap the struct ''OCIDL.DVTARGETDEVICE'' from type information in the ''OCIDL Library'' library.
 

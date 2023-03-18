@@ -1,19 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.GenericExternalArray subclass: #'OS.COM.SAFEARRAY'
+External.GenericExternalArray
+	subclass: #'OS.COM.SAFEARRAY'
 	instanceVariableNames: 'data start recordInfo'
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_cbElements' -> 16r4.
-		'_OffsetOf_cDims' -> 16r0.
-		'_OffsetOf_cLocks' -> 16r8.
-		'_OffsetOf_fFeatures' -> 16r2.
-		'_OffsetOf_pvData' -> 16rC.
-		'_OffsetOf_rgsabound' -> 16r10.
-		'_SAFEARRAY_Size' -> 16r18
-	}!
+			'_OffsetOf_cbElements' -> 16r4.
+			'_OffsetOf_cDims' -> 16r0.
+			'_OffsetOf_cLocks' -> 16r8.
+			'_OffsetOf_fFeatures' -> 16r2.
+			'_OffsetOf_pvData' -> 16rC.
+			'_OffsetOf_rgsabound' -> 16r10.
+			'_SAFEARRAY_Size' -> 16r18
+		}!
 OS.COM.SAFEARRAY guid: (Core.GUID fromString: '{c06f3b6a-0868-11d3-93af-00a024ca708a}')!
 OS.COM.SAFEARRAY comment: '`SAFEARRAY` is an `ExternalArray` class to represent the COM Automation arrays.
 

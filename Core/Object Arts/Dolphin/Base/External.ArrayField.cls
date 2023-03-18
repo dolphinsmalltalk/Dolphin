@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.EmbeddedField subclass: #'External.ArrayField'
+External.EmbeddedField
+	subclass: #'External.ArrayField'
 	instanceVariableNames: 'arrayLength'
 	classVariableNames: ''
 	imports: #()

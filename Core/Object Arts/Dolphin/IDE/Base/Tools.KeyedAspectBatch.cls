@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.KeyedAspect subclass: #'Tools.KeyedAspectBatch'
+Tools.KeyedAspect
+	subclass: #'Tools.KeyedAspectBatch'
 	instanceVariableNames: 'batchSize keys accessorClass'
 	classVariableNames: ''
 	imports: #()

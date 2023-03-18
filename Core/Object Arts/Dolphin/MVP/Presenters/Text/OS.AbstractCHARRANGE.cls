@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.AbstractCHARRANGE'
+OS.Win32Structure
+	subclass: #'OS.AbstractCHARRANGE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_CHARRANGE_Size' -> 16r8
-	}!
+	classConstants: { '_CHARRANGE_Size' -> 16r8 }!
 OS.AbstractCHARRANGE guid: (Core.GUID fromString: '{3595c0ec-31e8-4237-9857-8bc522529953}')!
 OS.AbstractCHARRANGE isNonInstantiable: true!
 OS.AbstractCHARRANGE comment: ''!

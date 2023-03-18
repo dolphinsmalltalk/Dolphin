@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Kernel.MethodName'
+Core.Object
+	subclass: #'Kernel.MethodName'
 	instanceVariableNames: 'className selector'
 	classVariableNames: ''
 	imports: #()

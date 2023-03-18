@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Core.DeferredValue'
+Core.Object
+	subclass: #'Core.DeferredValue'
 	instanceVariableNames: 'valueAvailable value exception'
 	classVariableNames: 'ValuePending'
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Kernel.STBProxy'
+Core.Object
+	subclass: #'Kernel.STBProxy'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

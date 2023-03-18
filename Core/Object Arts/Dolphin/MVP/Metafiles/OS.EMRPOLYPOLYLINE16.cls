@@ -1,18 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMRPOLYPOLYLINE16'
+OS.ENHMETARECORD
+	subclass: #'OS.EMRPOLYPOLYLINE16'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_EMRPOLYPOLYLINE16_Size' -> 16r28.
-		'_OffsetOf_aPolyCounts' -> 16r20.
-		'_OffsetOf_apts' -> 16r24.
-		'_OffsetOf_cpts' -> 16r1C.
-		'_OffsetOf_nPolys' -> 16r18.
-		'_OffsetOf_rclBounds' -> 16r8
-	}!
+			'_EMRPOLYPOLYLINE16_Size' -> 16r28.
+			'_OffsetOf_aPolyCounts' -> 16r20.
+			'_OffsetOf_apts' -> 16r24.
+			'_OffsetOf_cpts' -> 16r1C.
+			'_OffsetOf_nPolys' -> 16r18.
+			'_OffsetOf_rclBounds' -> 16r8
+		}!
 OS.EMRPOLYPOLYLINE16 guid: (Core.GUID fromString: '{2a9bb18a-1223-4e8d-a462-82c531b52df3}')!
 OS.EMRPOLYPOLYLINE16 comment: '<EMRPOLYPOLYLINE16> is an <ExternalStructure> class to wrap the struct ''Win32.EMRPOLYPOLYLINE16''.
 

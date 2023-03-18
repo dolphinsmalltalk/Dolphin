@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'XProgramming.SUnit.TestCase'
+Core.Object
+	subclass: #'XProgramming.SUnit.TestCase'
 	instanceVariableNames: 'testSelector'
 	classVariableNames: ''
 	imports: #()

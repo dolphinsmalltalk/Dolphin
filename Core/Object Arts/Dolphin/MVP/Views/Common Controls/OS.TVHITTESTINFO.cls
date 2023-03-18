@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.CCHITTESTINFO subclass: #'OS.TVHITTESTINFO'
+OS.CCHITTESTINFO
+	subclass: #'OS.TVHITTESTINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_OffsetOf_hItem' -> 16rC.
-		'_TVHITTESTINFO_Size' -> 16r10
-	}!
+	classConstants: { '_OffsetOf_hItem' -> 16rC. '_TVHITTESTINFO_Size' -> 16r10 }!
 OS.TVHITTESTINFO guid: (Core.GUID fromString: '{87b4c61f-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.TVHITTESTINFO comment: 'TVHITTESTINFO is an ExternalStructure class to represent the Win32 common control structure of the same name.
 

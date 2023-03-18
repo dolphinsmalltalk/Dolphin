@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.UInt32Bytes variableByteSubclass: #'Graphics.Gdiplus.ARGBBytes'
+External.UInt32Bytes
+	variableByteSubclass: #'Graphics.Gdiplus.ARGBBytes'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

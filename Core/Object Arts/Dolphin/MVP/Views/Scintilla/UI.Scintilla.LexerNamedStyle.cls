@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Scintilla.LexerMetadata subclass: #'UI.Scintilla.LexerNamedStyle'
+UI.Scintilla.LexerMetadata
+	subclass: #'UI.Scintilla.LexerNamedStyle'
 	instanceVariableNames: 'name'
 	classVariableNames: ''
 	imports: #()

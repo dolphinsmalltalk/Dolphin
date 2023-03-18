@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.WriteStream subclass: #'Core.ReadWriteStream'
+Core.WriteStream
+	subclass: #'Core.ReadWriteStream'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

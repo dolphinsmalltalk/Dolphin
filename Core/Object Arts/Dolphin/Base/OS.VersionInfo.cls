@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'OS.VersionInfo'
+Core.Object
+	subclass: #'OS.VersionInfo'
 	instanceVariableNames: 'fileInfo prefix fixedInfo'
 	classVariableNames: ''
 	imports: #()

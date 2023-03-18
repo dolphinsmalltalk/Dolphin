@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'UI.ToolbarItem'
+Core.Object
+	subclass: #'UI.ToolbarItem'
 	instanceVariableNames: 'toolbar'
 	classVariableNames: ''
 	imports: #(#{OS.ToolbarConstants})

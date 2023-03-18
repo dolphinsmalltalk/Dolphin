@@ -19,19 +19,22 @@ package!
 
 "Class Definitions"!
 
-Core.Object subclass: #'Kernel.CommandLine'
+Core.Object
+	subclass: #'Kernel.CommandLine'
 	instanceVariableNames: 'arguments argv optArg optIndex optOpt optionPrefixChars options parsingArg parsingArgStream parsingErrors parsingOptionStream parsingRules'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'Kernel.CommandLineOption'
+Core.Object
+	subclass: #'Kernel.CommandLineOption'
 	instanceVariableNames: 'name isArgumentAllowed isArgumentRequired block'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Notification subclass: #'Kernel.CommandLineError'
+Core.Notification
+	subclass: #'Kernel.CommandLineError'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

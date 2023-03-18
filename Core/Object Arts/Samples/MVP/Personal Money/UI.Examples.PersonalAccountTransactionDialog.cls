@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Dialog subclass: #'UI.Examples.PersonalAccountTransactionDialog'
+UI.Dialog
+	subclass: #'UI.Examples.PersonalAccountTransactionDialog'
 	instanceVariableNames: 'datePresenter amountPresenter descriptionPresenter isDebitPresenter'
 	classVariableNames: ''
 	imports: #()

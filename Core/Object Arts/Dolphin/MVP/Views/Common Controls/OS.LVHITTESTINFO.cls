@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.CCHITTESTINFO subclass: #'OS.LVHITTESTINFO'
+OS.CCHITTESTINFO
+	subclass: #'OS.LVHITTESTINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.ListViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_LVHITTESTINFO_Size' -> 16r14.
-		'_OffsetOf_iItem' -> 16rC.
-		'_OffsetOf_iSubItem' -> 16r10
-	}!
+			'_LVHITTESTINFO_Size' -> 16r14.
+			'_OffsetOf_iItem' -> 16rC.
+			'_OffsetOf_iSubItem' -> 16r10
+		}!
 OS.LVHITTESTINFO guid: (Core.GUID fromString: '{87b4c61e-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.LVHITTESTINFO comment: 'LVHITTESTINFO is an ExternalStructure class to represent the Win32 common control structure of the same name.
 

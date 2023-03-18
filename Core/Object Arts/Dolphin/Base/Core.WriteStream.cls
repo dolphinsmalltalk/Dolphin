@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.PositionableStream subclass: #'Core.WriteStream'
+Core.PositionableStream
+	subclass: #'Core.WriteStream'
 	instanceVariableNames: 'writeLimit'
 	classVariableNames: ''
 	imports: #()

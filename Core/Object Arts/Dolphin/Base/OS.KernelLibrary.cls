@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.PermanentLibrary subclass: #'OS.KernelLibrary'
+External.PermanentLibrary
+	subclass: #'OS.KernelLibrary'
 	instanceVariableNames: ''
 	classVariableNames: 'EnumNamesDescriptor WinVerOrGreaterMask'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'LongPathPrefix' -> '\\?\'
-	}!
+	classConstants: { 'LongPathPrefix' -> '\\?\' }!
 OS.KernelLibrary guid: (Core.GUID fromString: '{64674048-3a82-101b-8181-00aa003743d3}')!
 OS.KernelLibrary comment: 'KernelLibrary is the <ExternalLibrary> which represents the Win32 System DLL, KERNEL32.DLL. 
 

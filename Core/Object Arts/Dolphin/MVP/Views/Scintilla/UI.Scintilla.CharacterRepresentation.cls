@@ -1,11 +1,83 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'UI.Scintilla.CharacterRepresentation'
+Core.Object
+	subclass: #'UI.Scintilla.CharacterRepresentation'
 	instanceVariableNames: 'character representation appearance color'
-	classVariableNames: 'DefaultRepresentations'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'DefaultRepresentations'
+				-> (LookupTable withAll: {
+								$\0 -> $\x2400.
+								$\x1 -> $\x2401.
+								$\x2 -> $\x2402.
+								$\x3 -> $\x2403.
+								$\x4 -> $\x2404.
+								$\x5 -> $\x2405.
+								$\x6 -> $\x2406.
+								$\a -> $\x2407.
+								$\b -> $\x2408.
+								$\t -> $\x2409.
+								$\n -> $\x240A.
+								$\v -> $\x240B.
+								$\f -> $\x240C.
+								$\r -> $\x240D.
+								$\xE -> $\x240E.
+								$\xF -> $\x240F.
+								$\x10 -> $\x2410.
+								$\x11 -> $\x2411.
+								$\x12 -> $\x2412.
+								$\x13 -> $\x2413.
+								$\x14 -> $\x2414.
+								$\x15 -> $\x2415.
+								$\x16 -> $\x2416.
+								$\x17 -> $\x2417.
+								$\x18 -> $\x2418.
+								$\x19 -> $\x2419.
+								$\x1A -> $\x241A.
+								$\x1B -> $\x241B.
+								$\x1C -> $\x241C.
+								$\x1D -> $\x241D.
+								$\x1E -> $\x241E.
+								$\x1F -> $\x241F.
+								$\x7F -> $\x2421.
+								$\x80 -> 'PAD'.
+								$\x81 -> 'HOP'.
+								$\x82 -> 'BPH'.
+								$\x83 -> 'NBH'.
+								$\x84 -> 'IND'.
+								$\x85 -> 'NEL'.
+								$\x86 -> 'SSA'.
+								$\x87 -> 'ESA'.
+								$\x88 -> 'HTS'.
+								$\x89 -> 'HTJ'.
+								$\x8A -> 'VTS'.
+								$\x8B -> 'PLD'.
+								$\x8C -> 'PLU'.
+								$\x8D -> 'RI'.
+								$\x8E -> 'SS2'.
+								$\x8F -> 'SS3'.
+								$\x90 -> 'DCS'.
+								$\x91 -> 'PU1'.
+								$\x92 -> 'PU2'.
+								$\x93 -> 'STS'.
+								$\x94 -> 'CCH'.
+								$\x95 -> 'MW'.
+								$\x96 -> 'SPA'.
+								$\x97 -> 'EPA'.
+								$\x98 -> 'SOS'.
+								$\x99 -> 'SGCI'.
+								$\x9A -> 'SCI'.
+								$\x9B -> 'CSI'.
+								$\x9C -> 'ST'.
+								$\x9D -> 'OSC'.
+								$\x9E -> 'PM'.
+								$\x9F -> 'APC'.
+								$\x2028 -> $\x21B2.
+								$\x2029 -> $¶
+							})
+		}!
 UI.Scintilla.CharacterRepresentation guid: (Core.GUID fromString: '{8dada09d-fef9-4496-99af-3b3493157558}')!
 UI.Scintilla.CharacterRepresentation comment: ''!
 !UI.Scintilla.CharacterRepresentation categoriesForClass!MVP-Views-Support! !

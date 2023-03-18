@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-MSXML.IServerXMLHTTPRequest subclass: #'MSXML.IServerXMLHTTPRequest2'
+MSXML.IServerXMLHTTPRequest
+	subclass: #'MSXML.IServerXMLHTTPRequest2'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

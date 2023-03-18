@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Database.DBErrorDetails'
+Core.Object
+	subclass: #'Database.DBErrorDetails'
 	instanceVariableNames: 'msg nativeErr sqlState origin'
 	classVariableNames: ''
 	imports: #()

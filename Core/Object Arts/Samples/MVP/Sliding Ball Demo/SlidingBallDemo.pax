@@ -34,13 +34,15 @@ package!
 
 "Class Definitions"!
 
-UI.RuntimeSessionManager subclass: #'UI.Examples.SlidingBallSessionManager'
+UI.RuntimeSessionManager
+	subclass: #'UI.Examples.SlidingBallSessionManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.DoubleBufferedView subclass: #'UI.Examples.SlidingBallDemo'
+UI.DoubleBufferedView
+	subclass: #'UI.Examples.SlidingBallDemo'
 	instanceVariableNames: 'start end circle stepProcess'
 	classVariableNames: ''
 	imports: #()

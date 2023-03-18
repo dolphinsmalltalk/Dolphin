@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Tools.MethodCategorizationPolicy'
+Core.Object
+	subclass: #'Tools.MethodCategorizationPolicy'
 	instanceVariableNames: ''
 	classVariableNames: 'Default'
 	imports: #()

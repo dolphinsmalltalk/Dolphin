@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.GraphicsTool subclass: #'Graphics.Font'
+Graphics.GraphicsTool
+	subclass: #'Graphics.Font'
 	instanceVariableNames: 'logfont resolution'
 	classVariableNames: 'System'
 	imports: #()

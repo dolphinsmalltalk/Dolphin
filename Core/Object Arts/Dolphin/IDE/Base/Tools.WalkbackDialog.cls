@@ -1,14 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.DialogView subclass: #'Tools.WalkbackDialog'
+UI.DialogView
+	subclass: #'Tools.WalkbackDialog'
 	instanceVariableNames: 'callStack resumable caption debuggable'
-	classVariableNames: 'Commands'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'CallStackId' -> 16r3E9.
-		'IconId' -> 16r3F1
-	}!
+			'CallStackId' -> 16r3E9.
+			'Commands'
+				-> (LookupTable withAll: { 16r1 -> #debug. 16r2 -> #terminate. 16r3 -> #resume. 16r4 -> #copy }).
+			'IconId' -> 16r3F1
+		}!
 Tools.WalkbackDialog guid: (Core.GUID fromString: '{87b4c723-026e-11d3-9fd7-00a0cc3e4a32}')!
 Tools.WalkbackDialog comment: '
 Instance Variables:

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.WeakArray variableSubclass: #'Kernel.WeakAnnouncementSubscription'
+Core.WeakArray
+	variableSubclass: #'Kernel.WeakAnnouncementSubscription'
 	instanceVariableNames: 'announcer announcementClass action'
 	classVariableNames: ''
 	imports: #()

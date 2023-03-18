@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Integer variableByteSubclass: #'Core.LargeInteger'
+Core.Integer
+	variableByteSubclass: #'Core.LargeInteger'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

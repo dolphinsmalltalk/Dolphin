@@ -24,7 +24,8 @@ package!
 
 "Class Definitions"!
 
-External.ArrayFieldLength subclass: #'External.ConformantArrayFieldLength'
+External.ArrayFieldLength
+	subclass: #'External.ConformantArrayFieldLength'
 	instanceVariableNames: 'lengthField'
 	classVariableNames: ''
 	imports: #()

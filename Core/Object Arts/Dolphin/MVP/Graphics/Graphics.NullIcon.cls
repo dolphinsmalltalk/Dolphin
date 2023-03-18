@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Icon subclass: #'Graphics.NullIcon'
+Graphics.Icon
+	subclass: #'Graphics.NullIcon'
 	instanceVariableNames: ''
 	classVariableNames: 'Current'
 	imports: #()

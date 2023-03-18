@@ -70,37 +70,43 @@ package!
 
 "Class Definitions"!
 
-Tools.SmalltalkSystem subclass: #'Tools.CommunityEditionSmalltalkSystem'
+Tools.SmalltalkSystem
+	subclass: #'Tools.CommunityEditionSmalltalkSystem'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.SmalltalkToolShell subclass: #'Tools.ClassHierarchyDiagram'
+Tools.SmalltalkToolShell
+	subclass: #'Tools.ClassHierarchyDiagram'
 	instanceVariableNames: 'classesPresenter commentPresenter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.SmalltalkToolShell subclass: #'Tools.NamespacesShell'
+Tools.SmalltalkToolShell
+	subclass: #'Tools.NamespacesShell'
 	instanceVariableNames: 'dictionariesPresenter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.SmalltalkToolShell subclass: #'Tools.ProtocolBrowserShell'
+Tools.SmalltalkToolShell
+	subclass: #'Tools.ProtocolBrowserShell'
 	instanceVariableNames: 'protocolsPresenter selectorsPresenter classesPresenter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.SmalltalkToolShell subclass: #'Tools.SourceBrowser'
+Tools.SmalltalkToolShell
+	subclass: #'Tools.SourceBrowser'
 	instanceVariableNames: 'listPresenter changedOnly refreshBlock packagesFilter statusModel'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.SmalltalkToolShell subclass: #'Tools.UserPreferencesShell'
+Tools.SmalltalkToolShell
+	subclass: #'Tools.UserPreferencesShell'
 	instanceVariableNames: 'preferencesPresenter'
 	classVariableNames: ''
 	imports: #()

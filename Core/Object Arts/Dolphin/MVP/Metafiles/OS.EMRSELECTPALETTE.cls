@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMRSELECTPALETTE'
+OS.ENHMETARECORD
+	subclass: #'OS.EMRSELECTPALETTE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_EMRSELECTPALETTE_Size' -> 16rC.
-		'_OffsetOf_ihPal' -> 16r8
-	}!
+	classConstants: { '_EMRSELECTPALETTE_Size' -> 16rC. '_OffsetOf_ihPal' -> 16r8 }!
 OS.EMRSELECTPALETTE guid: (Core.GUID fromString: '{2bd77a04-2b0c-4d93-b7b6-a55fbb1003ab}')!
 OS.EMRSELECTPALETTE comment: '<EMRSELECTPALETTE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSELECTPALETTE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

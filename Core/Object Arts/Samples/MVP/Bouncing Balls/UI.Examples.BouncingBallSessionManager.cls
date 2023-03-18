@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.RuntimeSessionManager subclass: #'UI.Examples.BouncingBallSessionManager'
+UI.RuntimeSessionManager
+	subclass: #'UI.Examples.BouncingBallSessionManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

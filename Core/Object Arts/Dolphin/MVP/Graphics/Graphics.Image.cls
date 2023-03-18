@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.GraphicsTool subclass: #'Graphics.Image'
+Graphics.GraphicsTool
+	subclass: #'Graphics.Image'
 	instanceVariableNames: 'initializer'
 	classVariableNames: ''
 	imports: #()

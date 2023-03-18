@@ -64,13 +64,15 @@ package!
 
 "Class Definitions"!
 
-UI.Shell subclass: #'OS.Examples.FileSystemMonitor'
+UI.Shell
+	subclass: #'OS.Examples.FileSystemMonitor'
 	instanceVariableNames: 'directoryName notifyAttributes notifyDirectoryName notifyCreateTime notifyFileName notifyLastAccess notifyLastWrite notifySecurity notifySize filters includeSubDirs changeList'
 	classVariableNames: ''
 	imports: #(#{UI})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.RuntimeSessionManager subclass: #'OS.Examples.FileSystemMonitorSessionManager'
+UI.RuntimeSessionManager
+	subclass: #'OS.Examples.FileSystemMonitorSessionManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

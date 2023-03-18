@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ShellView subclass: #'UI.Splash'
+UI.ShellView
+	subclass: #'UI.Splash'
 	instanceVariableNames: 'splashDelay bitmap overlayWith'
 	classVariableNames: ''
 	imports: #()

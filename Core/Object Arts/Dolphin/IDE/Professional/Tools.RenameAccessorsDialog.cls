@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ValueDialog subclass: #'Tools.RenameAccessorsDialog'
+UI.ValueDialog
+	subclass: #'Tools.RenameAccessorsDialog'
 	instanceVariableNames: 'selectorsPresenter scopePresenter showChangesPresenter'
 	classVariableNames: ''
 	imports: #()

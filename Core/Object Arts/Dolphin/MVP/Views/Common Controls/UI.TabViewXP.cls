@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.TabView subclass: #'UI.TabViewXP'
+UI.TabView
+	subclass: #'UI.TabViewXP'
 	instanceVariableNames: '_tvxReserved0 lastSelection _tvxReserved1 _tvxReserved2 _tvxReserved3'
 	classVariableNames: ''
 	imports: #(#{OS.ThemeConstants})

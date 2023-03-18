@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-XProgramming.SUnit.TestResource subclass: #'XProgramming.SUnit.SimpleTestResource'
+XProgramming.SUnit.TestResource
+	subclass: #'XProgramming.SUnit.SimpleTestResource'
 	instanceVariableNames: 'runningState hasRun hasSetup hasRanOnce'
 	classVariableNames: ''
 	imports: #()

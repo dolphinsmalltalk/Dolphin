@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ADODB._ADO subclass: #'ADODB._Record'
+ADODB._ADO
+	subclass: #'ADODB._Record'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

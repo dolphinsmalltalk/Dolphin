@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.InterfaceImplementation subclass: #'OS.COM.PropertyBagErrorLog'
+OS.COM.InterfaceImplementation
+	subclass: #'OS.COM.PropertyBagErrorLog'
 	instanceVariableNames: 'errors guid'
 	classVariableNames: ''
 	imports: #()

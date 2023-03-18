@@ -1,16 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.NMHDR'
+OS.Win32Structure
+	subclass: #'OS.NMHDR'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.CommCtrlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_NMHDR_Size' -> 16rC.
-		'_OffsetOf_code' -> 16r8.
-		'_OffsetOf_hwndFrom' -> 16r0.
-		'_OffsetOf_idFrom' -> 16r4
-	}!
+			'_NMHDR_Size' -> 16rC.
+			'_OffsetOf_code' -> 16r8.
+			'_OffsetOf_hwndFrom' -> 16r0.
+			'_OffsetOf_idFrom' -> 16r4
+		}!
 OS.NMHDR guid: (Core.GUID fromString: '{87b4c601-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.NMHDR comment: 'NMHDR is a <Win32Structure> representing the NMHDR external Win32 API structure.'!
 !OS.NMHDR categoriesForClass!External-Data-Structured-Win32! !

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Database.DBSchemaStatement subclass: #'Database.DBSpecialColumnsStatement'
+Database.DBSchemaStatement
+	subclass: #'Database.DBSpecialColumnsStatement'
 	instanceVariableNames: 'columnType scope nullable'
 	classVariableNames: ''
 	imports: #()

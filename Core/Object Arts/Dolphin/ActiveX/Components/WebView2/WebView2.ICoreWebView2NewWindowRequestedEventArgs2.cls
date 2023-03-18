@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2NewWindowRequestedEventArgs subclass: #'WebView2.ICoreWebView2NewWindowRequestedEventArgs2'
+WebView2.ICoreWebView2NewWindowRequestedEventArgs
+	subclass: #'WebView2.ICoreWebView2NewWindowRequestedEventArgs2'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

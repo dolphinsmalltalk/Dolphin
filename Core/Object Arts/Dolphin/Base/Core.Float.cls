@@ -1,31 +1,32 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Number variableByteSubclass: #'Core.Float'
+Core.Number
+	variableByteSubclass: #'Core.Float'
 	instanceVariableNames: ''
 	classVariableNames: 'DefaultDecimalExponents FMinDenormalized Infinity NaN NegativeInfinity'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'EMax' -> 16r3FF.
-		'EMin' -> -16r3FE.
-		'EMinDenormalized' -> -16r432.
-		'FMax' -> 1.7976931348623157e308.
-		'FMin' -> 2.2250738585072014e-308.
-		'FpClassDenormal' -> 16r90.
-		'FpClassFinite' -> 16r1F8.
-		'FpClassInfinite' -> 16r204.
-		'FpClassNaN' -> 16r3.
-		'FpClassNegative' -> 16r3C.
-		'FpClassNormal' -> 16r108.
-		'FpClassStrictlyPositive' -> 16r380.
-		'FpClassZero' -> 16r60.
-		'InvalidOperationFlag' -> 16r1.
-		'Ln2' -> 0.6931471805599453.
-		'MantissaHighBit' -> 16r10000000000000.
-		'MantissaMask' -> 16rFFFFFFFFFFFFF.
-		'Precision' -> 16r35.
-		'SignificantDifference' -> 1.0e-9
-	}!
+			'EMax' -> 16r3FF.
+			'EMin' -> -16r3FE.
+			'EMinDenormalized' -> -16r432.
+			'FMax' -> 1.7976931348623157e308.
+			'FMin' -> 2.2250738585072014e-308.
+			'FpClassDenormal' -> 16r90.
+			'FpClassFinite' -> 16r1F8.
+			'FpClassInfinite' -> 16r204.
+			'FpClassNaN' -> 16r3.
+			'FpClassNegative' -> 16r3C.
+			'FpClassNormal' -> 16r108.
+			'FpClassStrictlyPositive' -> 16r380.
+			'FpClassZero' -> 16r60.
+			'InvalidOperationFlag' -> 16r1.
+			'Ln2' -> 0.6931471805599453.
+			'MantissaHighBit' -> 16r10000000000000.
+			'MantissaMask' -> 16rFFFFFFFFFFFFF.
+			'Precision' -> 16r35.
+			'SignificantDifference' -> 1.0e-9
+		}!
 Core.Float guid: (Core.GUID fromString: '{87b4c65a-026e-11d3-9fd7-00a0cc3e4a32}')!
 Core.Float comment: 'Float is the class of double precision floating point Numbers (64-bit) in IEEE-754 format.'!
 !Core.Float categoriesForClass!Magnitude-Numbers! !

@@ -1,19 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMREXTCREATEPEN'
+OS.ENHMETARECORD
+	subclass: #'OS.EMREXTCREATEPEN'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_EMREXTCREATEPEN_Size' -> 16r38.
-		'_OffsetOf_cbBits' -> 16r18.
-		'_OffsetOf_cbBmi' -> 16r10.
-		'_OffsetOf_elp' -> 16r1C.
-		'_OffsetOf_ihPen' -> 16r8.
-		'_OffsetOf_offBits' -> 16r14.
-		'_OffsetOf_offBmi' -> 16rC
-	}!
+			'_EMREXTCREATEPEN_Size' -> 16r38.
+			'_OffsetOf_cbBits' -> 16r18.
+			'_OffsetOf_cbBmi' -> 16r10.
+			'_OffsetOf_elp' -> 16r1C.
+			'_OffsetOf_ihPen' -> 16r8.
+			'_OffsetOf_offBits' -> 16r14.
+			'_OffsetOf_offBmi' -> 16rC
+		}!
 OS.EMREXTCREATEPEN guid: (Core.GUID fromString: '{797b4380-74af-4163-8248-87bca7b9a3f4}')!
 OS.EMREXTCREATEPEN comment: '<EMREXTCREATEPEN> is an <ExternalStructure> class to wrap the struct ''Win32.EMREXTCREATEPEN'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

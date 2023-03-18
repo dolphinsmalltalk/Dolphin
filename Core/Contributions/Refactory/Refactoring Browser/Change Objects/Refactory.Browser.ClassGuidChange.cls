@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.ClassAttributeChange subclass: #'Refactory.Browser.ClassGuidChange'
+Refactory.Browser.ClassAttributeChange
+	subclass: #'Refactory.Browser.ClassGuidChange'
 	instanceVariableNames: 'guid'
 	classVariableNames: ''
 	imports: #()

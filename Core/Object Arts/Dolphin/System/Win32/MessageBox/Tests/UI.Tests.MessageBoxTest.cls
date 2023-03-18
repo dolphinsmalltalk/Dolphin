@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTest subclass: #'UI.Tests.MessageBoxTest'
+Core.Tests.DolphinTest
+	subclass: #'UI.Tests.MessageBoxTest'
 	instanceVariableNames: 'subject enablement defaultButton buttonLabels caption radioButtonLabels'
 	classVariableNames: ''
 	imports: #(#{OS.MessageBoxConstants} #{OS.TaskDialogConstants})

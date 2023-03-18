@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Kernel.ExceptionSet'
+Core.Object
+	subclass: #'Kernel.ExceptionSet'
 	instanceVariableNames: 'selectors'
 	classVariableNames: ''
 	imports: #()

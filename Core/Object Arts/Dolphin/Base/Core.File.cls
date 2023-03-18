@@ -1,19 +1,35 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Core.File'
+Core.Object
+	subclass: #'Core.File'
 	instanceVariableNames: 'handle spec flags shareFlags intBuffer'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants private} #{OS private})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'AccessFlagsMask' -> -16r8.
-		'CheckModes' -> (IdentityDictionary withAll: {#append -> 16rC0000003. #truncate -> 16rC0000005. #create -> 16rC0000001. #open -> 16rC0000003. #read -> 16r80000003}).
-		'NoCheckModes' -> (IdentityDictionary withAll: {#append -> 16rC0000004. #truncate -> 16rC0000002. #create -> 16rC0000004. #open -> 16rC0000004. #read -> 16r80000004}).
-		'OpenFlagsMask' -> 16r7.
-		'PathDelimiters' -> '/\'.
-		'ShareModes' -> (IdentityDictionary withAll: {#exclusive -> 16r0. #readWrite -> 16r3. #write -> 16r2. #read -> 16r1}).
-		'SniffSize' -> 16r400
-	}!
+			'AccessFlagsMask' -> -16r8.
+			'CheckModes'
+				-> (IdentityDictionary withAll: {
+								#append -> 16rC0000003.
+								#create -> 16rC0000001.
+								#open -> 16rC0000003.
+								#read -> 16r80000003.
+								#truncate -> 16rC0000005
+							}).
+			'NoCheckModes'
+				-> (IdentityDictionary withAll: {
+								#append -> 16rC0000004.
+								#create -> 16rC0000004.
+								#open -> 16rC0000004.
+								#read -> 16r80000004.
+								#truncate -> 16rC0000002
+							}).
+			'OpenFlagsMask' -> 16r7.
+			'PathDelimiters' -> '/\'.
+			'ShareModes' -> (IdentityDictionary
+						withAll: { #exclusive -> 16r0. #read -> 16r1. #readWrite -> 16r3. #write -> 16r2 }).
+			'SniffSize' -> 16r400
+		}!
 Core.File guid: (Core.GUID fromString: '{87b4c48a-026e-11d3-9fd7-00a0cc3e4a32}')!
 Core.File comment: 'File is a class that exposes low-level (e.g. unbuffered) file I/O operations. It also includes a number of class side methods for manipulating file names and manipulating the file system.
 

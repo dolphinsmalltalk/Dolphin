@@ -1,33 +1,34 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMRPLGBLT'
+OS.ENHMETARECORD
+	subclass: #'OS.EMRPLGBLT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_EMRPLGBLT_Size' -> 16r8C.
-		'_OffsetOf_aptlDest' -> 16r18.
-		'_OffsetOf_cbBitsMask' -> 16r88.
-		'_OffsetOf_cbBitsSrc' -> 16r6C.
-		'_OffsetOf_cbBmiMask' -> 16r80.
-		'_OffsetOf_cbBmiSrc' -> 16r64.
-		'_OffsetOf_crBkColorSrc' -> 16r58.
-		'_OffsetOf_cxSrc' -> 16r38.
-		'_OffsetOf_cySrc' -> 16r3C.
-		'_OffsetOf_iUsageMask' -> 16r78.
-		'_OffsetOf_iUsageSrc' -> 16r5C.
-		'_OffsetOf_offBitsMask' -> 16r84.
-		'_OffsetOf_offBitsSrc' -> 16r68.
-		'_OffsetOf_offBmiMask' -> 16r7C.
-		'_OffsetOf_offBmiSrc' -> 16r60.
-		'_OffsetOf_rclBounds' -> 16r8.
-		'_OffsetOf_xformSrc' -> 16r40.
-		'_OffsetOf_xMask' -> 16r70.
-		'_OffsetOf_xSrc' -> 16r30.
-		'_OffsetOf_yMask' -> 16r74.
-		'_OffsetOf_ySrc' -> 16r34
-	}!
+			'_EMRPLGBLT_Size' -> 16r8C.
+			'_OffsetOf_aptlDest' -> 16r18.
+			'_OffsetOf_cbBitsMask' -> 16r88.
+			'_OffsetOf_cbBitsSrc' -> 16r6C.
+			'_OffsetOf_cbBmiMask' -> 16r80.
+			'_OffsetOf_cbBmiSrc' -> 16r64.
+			'_OffsetOf_crBkColorSrc' -> 16r58.
+			'_OffsetOf_cxSrc' -> 16r38.
+			'_OffsetOf_cySrc' -> 16r3C.
+			'_OffsetOf_iUsageMask' -> 16r78.
+			'_OffsetOf_iUsageSrc' -> 16r5C.
+			'_OffsetOf_offBitsMask' -> 16r84.
+			'_OffsetOf_offBitsSrc' -> 16r68.
+			'_OffsetOf_offBmiMask' -> 16r7C.
+			'_OffsetOf_offBmiSrc' -> 16r60.
+			'_OffsetOf_rclBounds' -> 16r8.
+			'_OffsetOf_xformSrc' -> 16r40.
+			'_OffsetOf_xMask' -> 16r70.
+			'_OffsetOf_xSrc' -> 16r30.
+			'_OffsetOf_yMask' -> 16r74.
+			'_OffsetOf_ySrc' -> 16r34
+		}!
 OS.EMRPLGBLT guid: (Core.GUID fromString: '{cdae1f25-39c4-4555-985b-3b2cd197d3e0}')!
 OS.EMRPLGBLT comment: '<EMRPLGBLT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRPLGBLT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

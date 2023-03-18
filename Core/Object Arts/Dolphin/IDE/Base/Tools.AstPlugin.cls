@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.ClassBrowserPlugin subclass: #'Tools.AstPlugin'
+Tools.ClassBrowserPlugin
+	subclass: #'Tools.AstPlugin'
 	instanceVariableNames: 'astPresenter sourcePresenter'
 	classVariableNames: ''
 	imports: #()

@@ -1,21 +1,22 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ListView subclass: #'UI.ListTreeView'
+UI.ListView
+	subclass: #'UI.ListTreeView'
 	instanceVariableNames: 'hasExplicitTreeModel treeModel dummy3 expanded hiddenExpanded options indentSeparation getChildrenBlock hasChildrenBlock getParentBlock sortBlock doSortChildrenBlock dummy2 dummy1'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: 'stateImageManager stateImageBlock'
 	classConstants: {
-		'ClosedImageIndex' -> 16r3.
-		'DisableExpandAllMask' -> 16r1.
-		'DoSortRootsMask' -> 16r10.
-		'HasButtonsMask' -> 16r2.
-		'HasLinesAtRootMask' -> 16r4.
-		'HasLinesMask' -> 16r8.
-		'LeafImageIndex' -> 16r1.
-		'OpenImageIndex' -> 16r2.
-		'UseSmartRefreshMask' -> 16r20
-	}!
+			'ClosedImageIndex' -> 16r3.
+			'DisableExpandAllMask' -> 16r1.
+			'DoSortRootsMask' -> 16r10.
+			'HasButtonsMask' -> 16r2.
+			'HasLinesAtRootMask' -> 16r4.
+			'HasLinesMask' -> 16r8.
+			'LeafImageIndex' -> 16r1.
+			'OpenImageIndex' -> 16r2.
+			'UseSmartRefreshMask' -> 16r20
+		}!
 UI.ListTreeView guid: (Core.GUID fromString: '{f2d6215c-2adc-4032-aacb-8c4da10950ab}')!
 UI.ListTreeView comment: 'Copyright © Chris Uppal, 2002 - 2004.
 chris.uppal@metagnostic.org

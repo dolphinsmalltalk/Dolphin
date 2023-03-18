@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.DualInterfaceImplementation subclass: #'OS.COM.Examples.RandomStream'
+OS.COM.DualInterfaceImplementation
+	subclass: #'OS.COM.Examples.RandomStream'
 	instanceVariableNames: 'lowerBound upperBound stream'
 	classVariableNames: ''
 	imports: #()

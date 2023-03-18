@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.NMHDR subclass: #'OS.NMTREEVIEWW'
+OS.NMHDR
+	subclass: #'OS.NMTREEVIEWW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_NMTREEVIEWW_Size' -> 16r68.
-		'_OffsetOf_action' -> 16rC.
-		'_OffsetOf_itemNew' -> 16r38.
-		'_OffsetOf_itemOld' -> 16r10.
-		'_OffsetOf_ptDrag' -> 16r60
-	}!
+			'_NMTREEVIEWW_Size' -> 16r68.
+			'_OffsetOf_action' -> 16rC.
+			'_OffsetOf_itemNew' -> 16r38.
+			'_OffsetOf_itemOld' -> 16r10.
+			'_OffsetOf_ptDrag' -> 16r60
+		}!
 OS.NMTREEVIEWW guid: (Core.GUID fromString: '{87b4c62a-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.NMTREEVIEWW comment: ''!
 !OS.NMTREEVIEWW categoriesForClass!External-Data-Structured-Win32! !

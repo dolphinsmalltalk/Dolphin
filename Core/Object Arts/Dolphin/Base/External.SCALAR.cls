@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'External.SCALAR'
+External.Structure
+	subclass: #'External.SCALAR'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_OffsetOf_value' -> 16r0.
-		'_SCALAR_Size' -> 16r0
-	}!
+	classConstants: { '_OffsetOf_value' -> 16r0. '_SCALAR_Size' -> 16r0 }!
 External.SCALAR guid: (Core.GUID fromString: '{704554ca-46f7-49b2-92df-edcbe398040a}')!
 External.SCALAR isNonInstantiable: true!
 External.SCALAR comment: ''!

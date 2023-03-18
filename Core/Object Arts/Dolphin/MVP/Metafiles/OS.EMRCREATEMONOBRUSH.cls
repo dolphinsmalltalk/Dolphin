@@ -1,19 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMRCREATEMONOBRUSH'
+OS.ENHMETARECORD
+	subclass: #'OS.EMRCREATEMONOBRUSH'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_EMRCREATEMONOBRUSH_Size' -> 16r20.
-		'_OffsetOf_cbBits' -> 16r1C.
-		'_OffsetOf_cbBmi' -> 16r14.
-		'_OffsetOf_ihBrush' -> 16r8.
-		'_OffsetOf_iUsage' -> 16rC.
-		'_OffsetOf_offBits' -> 16r18.
-		'_OffsetOf_offBmi' -> 16r10
-	}!
+			'_EMRCREATEMONOBRUSH_Size' -> 16r20.
+			'_OffsetOf_cbBits' -> 16r1C.
+			'_OffsetOf_cbBmi' -> 16r14.
+			'_OffsetOf_ihBrush' -> 16r8.
+			'_OffsetOf_iUsage' -> 16rC.
+			'_OffsetOf_offBits' -> 16r18.
+			'_OffsetOf_offBmi' -> 16r10
+		}!
 OS.EMRCREATEMONOBRUSH guid: (Core.GUID fromString: '{93fa5260-561a-45ad-93b2-64f1c310bc26}')!
 OS.EMRCREATEMONOBRUSH comment: '<EMRCREATEMONOBRUSH> is an <ExternalStructure> class to wrap the struct ''Win32.EMRCREATEMONOBRUSH'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

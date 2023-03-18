@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'UI.AbstractRecentMenu'
+Core.Object
+	subclass: #'UI.AbstractRecentMenu'
 	instanceVariableNames: 'openSelector recentMenuName isFullPathAlwaysRequired'
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IDispatch subclass: #'VBScript.IMatch'
+OS.COM.IDispatch
+	subclass: #'VBScript.IMatch'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

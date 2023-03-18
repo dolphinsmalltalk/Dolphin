@@ -1,24 +1,25 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.DISPLAY_DEVICEW'
+OS.Win32Structure
+	subclass: #'OS.DISPLAY_DEVICEW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_DISPLAY_DEVICEW_Size' -> 16r348.
-		'_OffsetOf_DeviceID' -> 16r148.
-		'_OffsetOf_DeviceKey' -> 16r248.
-		'_OffsetOf_DeviceName' -> 16r4.
-		'_OffsetOf_DeviceString' -> 16r44.
-		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_StateFlags' -> 16r144.
-		'DISPLAY_DEVICE_ATTACHED_TO_DESKTOP' -> 16r1.
-		'DISPLAY_DEVICE_MIRRORING_DRIVER' -> 16r8.
-		'DISPLAY_DEVICE_MULTI_DRIVER' -> 16r2.
-		'DISPLAY_DEVICE_PRIMARY_DEVICE' -> 16r4.
-		'DISPLAY_DEVICE_VGA_COMPATIBLE' -> 16r10
-	}!
+			'_DISPLAY_DEVICEW_Size' -> 16r348.
+			'_OffsetOf_DeviceID' -> 16r148.
+			'_OffsetOf_DeviceKey' -> 16r248.
+			'_OffsetOf_DeviceName' -> 16r4.
+			'_OffsetOf_DeviceString' -> 16r44.
+			'_OffsetOf_dwSize' -> 16r0.
+			'_OffsetOf_StateFlags' -> 16r144.
+			'DISPLAY_DEVICE_ATTACHED_TO_DESKTOP' -> 16r1.
+			'DISPLAY_DEVICE_MIRRORING_DRIVER' -> 16r8.
+			'DISPLAY_DEVICE_MULTI_DRIVER' -> 16r2.
+			'DISPLAY_DEVICE_PRIMARY_DEVICE' -> 16r4.
+			'DISPLAY_DEVICE_VGA_COMPATIBLE' -> 16r10
+		}!
 OS.DISPLAY_DEVICEW guid: (Core.GUID fromString: '{b21c0d9e-8924-4788-ad73-e7751f9f1c6b}')!
 OS.DISPLAY_DEVICEW comment: '`DISPLAY_DEVICEW` is an `External.Structure` class to wrap the struct ''Win32.DISPLAY_DEVICEW'' from type information in the ''Win32 API'' library.
 

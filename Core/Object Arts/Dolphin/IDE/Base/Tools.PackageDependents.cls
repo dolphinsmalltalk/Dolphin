@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.PackageDependencyPresenter subclass: #'Tools.PackageDependents'
+Tools.PackageDependencyPresenter
+	subclass: #'Tools.PackageDependents'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

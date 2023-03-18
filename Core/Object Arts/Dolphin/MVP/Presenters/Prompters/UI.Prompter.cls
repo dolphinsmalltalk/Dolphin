@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ValueDialog subclass: #'UI.Prompter'
+UI.ValueDialog
+	subclass: #'UI.Prompter'
 	instanceVariableNames: 'promptPresenter replyPresenter validationDwell hintDwell flags hintFont hintBubble'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'NoHintBubble' -> 16r1.
-		'NoHintWhenEmpty' -> 16r2
-	}!
+	classConstants: { 'NoHintBubble' -> 16r1. 'NoHintWhenEmpty' -> 16r2 }!
 UI.Prompter guid: (Core.GUID fromString: '{87b4c6ac-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.Prompter comment: '`Prompter` is a `<valueDialogPresenter>` that can be used to prompt a user to enter a `<readableString>` response to a question. The `<valueModel>` initially holds the default response and, if the dialog is confirmed, will hold the actual response from the user.
 

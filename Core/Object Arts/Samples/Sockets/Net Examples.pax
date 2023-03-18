@@ -16,7 +16,8 @@ package!
 
 "Class Definitions"!
 
-Net subclass: #'Net.Examples'
+Net
+	subclass: #'Net.Examples'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.LocaleTest subclass: #'OS.Tests.InvariantLocaleTest'
+Core.Tests.LocaleTest
+	subclass: #'OS.Tests.InvariantLocaleTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

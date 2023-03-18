@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.AbstractToTextConverter subclass: #'UI.DateToText'
+UI.AbstractToTextConverter
+	subclass: #'UI.DateToText'
 	instanceVariableNames: 'format'
 	classVariableNames: ''
 	imports: #()

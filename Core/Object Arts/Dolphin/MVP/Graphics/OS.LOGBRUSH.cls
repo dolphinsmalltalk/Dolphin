@@ -1,16 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.LOGBRUSH'
+OS.Win32Structure
+	subclass: #'OS.LOGBRUSH'
 	instanceVariableNames: 'hatch'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_LOGBRUSH_Size' -> 16rC.
-		'_OffsetOf_lbColor' -> 16r4.
-		'_OffsetOf_lbHatch' -> 16r8.
-		'_OffsetOf_lbStyle' -> 16r0
-	}!
+			'_LOGBRUSH_Size' -> 16rC.
+			'_OffsetOf_lbColor' -> 16r4.
+			'_OffsetOf_lbHatch' -> 16r8.
+			'_OffsetOf_lbStyle' -> 16r0
+		}!
 OS.LOGBRUSH guid: (Core.GUID fromString: '{87b4c5f8-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.LOGBRUSH comment: '<LOGBRUSH> is an <ExternalStructure> class to wrap the struct ''Win.LOGBRUSH'' from type information in the ''Windows API (ANSI)'' library.
 

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Kernel.SubscriptionRegistry'
+Core.Object
+	subclass: #'Kernel.SubscriptionRegistry'
 	instanceVariableNames: 'subscriptions monitor'
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.Parser subclass: #'Refactory.Browser.RBParser'
+Kernel.Parser
+	subclass: #'Refactory.Browser.RBParser'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

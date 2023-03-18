@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.ObjectRegistry subclass: #'Kernel.PermanentRegistry'
+Kernel.ObjectRegistry
+	subclass: #'Kernel.PermanentRegistry'
 	instanceVariableNames: 'freeHead'
 	classVariableNames: ''
 	imports: #()

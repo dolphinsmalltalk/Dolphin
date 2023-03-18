@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'UI.Scintilla.Attribute'
+Core.Object
+	subclass: #'UI.Scintilla.Attribute'
 	instanceVariableNames: 'id'
 	classVariableNames: ''
 	imports: #()

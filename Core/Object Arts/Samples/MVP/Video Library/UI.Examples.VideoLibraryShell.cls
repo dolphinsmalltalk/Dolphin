@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Shell subclass: #'UI.Examples.VideoLibraryShell'
+UI.Shell
+	subclass: #'UI.Examples.VideoLibraryShell'
 	instanceVariableNames: 'ownerPresenter tapesPresenter recordingsPresenter'
 	classVariableNames: ''
 	imports: #()

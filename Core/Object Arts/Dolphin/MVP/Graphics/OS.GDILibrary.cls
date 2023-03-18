@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.PermanentLibrary subclass: #'OS.GDILibrary'
+External.PermanentLibrary
+	subclass: #'OS.GDILibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

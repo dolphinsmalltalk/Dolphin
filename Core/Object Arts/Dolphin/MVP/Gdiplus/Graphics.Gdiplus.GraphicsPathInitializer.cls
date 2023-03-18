@@ -1,14 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.GraphicsPathInitializer'
+Graphics.Gdiplus.Initializer
+	subclass: #'Graphics.Gdiplus.GraphicsPathInitializer'
 	instanceVariableNames: 'pathPoints pathTypes fillMode'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'FillModeNames' -> #('FillModeAlternate' 'FillModeWinding').
-		'PathPointTypeNames' -> #('PathPointTypeStart' 'PathPointTypeLine' 16r2 'PathPointTypeBezier' 16r4 16r5 16r6)
-	}!
+			'FillModeNames' -> #('FillModeAlternate' 'FillModeWinding').
+			'PathPointTypeNames'
+				-> #('PathPointTypeStart' 'PathPointTypeLine' 16r2 'PathPointTypeBezier' 16r4 16r5 16r6)
+		}!
 Graphics.Gdiplus.GraphicsPathInitializer guid: (Core.GUID fromString: '{fcef1a11-834c-11d7-b609-00e0987e8081}')!
 Graphics.Gdiplus.GraphicsPathInitializer comment: ''!
 !Graphics.Gdiplus.GraphicsPathInitializer methodsFor!

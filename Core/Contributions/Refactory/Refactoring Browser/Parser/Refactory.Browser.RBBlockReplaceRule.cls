@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.RBReplaceRule subclass: #'Refactory.Browser.RBBlockReplaceRule'
+Refactory.Browser.RBReplaceRule
+	subclass: #'Refactory.Browser.RBBlockReplaceRule'
 	instanceVariableNames: 'replaceBlock'
 	classVariableNames: ''
 	imports: #()

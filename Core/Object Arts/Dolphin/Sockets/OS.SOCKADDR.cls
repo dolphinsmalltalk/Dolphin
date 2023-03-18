@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'OS.SOCKADDR'
+External.Structure
+	subclass: #'OS.SOCKADDR'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.WinSocketConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_sa_data' -> 16r2.
-		'_OffsetOf_sa_family' -> 16r0.
-		'_SOCKADDR_Size' -> 16r10
-	}!
+			'_OffsetOf_sa_data' -> 16r2.
+			'_OffsetOf_sa_family' -> 16r0.
+			'_SOCKADDR_Size' -> 16r10
+		}!
 OS.SOCKADDR guid: (Core.GUID fromString: '{0299d3de-9695-4177-9ce6-42ad495c8e57}')!
 OS.SOCKADDR comment: '<SOCKADDR> is an <ExternalStructure> class to wrap the struct ''Win32.SOCKADDR'' from type information in the ''Win32 API'' library.
 

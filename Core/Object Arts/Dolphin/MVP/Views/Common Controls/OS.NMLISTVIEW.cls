@@ -1,20 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.NMHDR subclass: #'OS.NMLISTVIEW'
+OS.NMHDR
+	subclass: #'OS.NMLISTVIEW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_NMLISTVIEW_Size' -> 16r2C.
-		'_OffsetOf_iItem' -> 16rC.
-		'_OffsetOf_iSubItem' -> 16r10.
-		'_OffsetOf_lParam' -> 16r28.
-		'_OffsetOf_ptAction' -> 16r20.
-		'_OffsetOf_uChanged' -> 16r1C.
-		'_OffsetOf_uNewState' -> 16r14.
-		'_OffsetOf_uOldState' -> 16r18
-	}!
+			'_NMLISTVIEW_Size' -> 16r2C.
+			'_OffsetOf_iItem' -> 16rC.
+			'_OffsetOf_iSubItem' -> 16r10.
+			'_OffsetOf_lParam' -> 16r28.
+			'_OffsetOf_ptAction' -> 16r20.
+			'_OffsetOf_uChanged' -> 16r1C.
+			'_OffsetOf_uNewState' -> 16r14.
+			'_OffsetOf_uOldState' -> 16r18
+		}!
 OS.NMLISTVIEW guid: (Core.GUID fromString: '{87b4c624-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.NMLISTVIEW comment: ''!
 !OS.NMLISTVIEW categoriesForClass!External-Data-Structured-Win32! !

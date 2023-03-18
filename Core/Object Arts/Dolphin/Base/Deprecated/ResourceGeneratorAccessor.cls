@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ResourceAccessor subclass: #ResourceGeneratorAccessor
+ResourceAccessor
+	subclass: #ResourceGeneratorAccessor
 	instanceVariableNames: 'class selector'
 	classVariableNames: ''
 	imports: #()

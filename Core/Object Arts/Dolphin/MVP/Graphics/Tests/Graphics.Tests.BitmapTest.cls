@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Tests.AbstractBitmapTest subclass: #'Graphics.Tests.BitmapTest'
+Graphics.Tests.AbstractBitmapTest
+	subclass: #'Graphics.Tests.BitmapTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

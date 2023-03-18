@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.SequenceableCollection subclass: #'Core.Interval'
+Core.SequenceableCollection
+	subclass: #'Core.Interval'
 	instanceVariableNames: 'start stop step'
 	classVariableNames: ''
 	imports: #()

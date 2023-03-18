@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'UI.Examples.VideoRecording'
+Core.Object
+	subclass: #'UI.Examples.VideoRecording'
 	instanceVariableNames: 'title date time length'
 	classVariableNames: ''
 	imports: #()

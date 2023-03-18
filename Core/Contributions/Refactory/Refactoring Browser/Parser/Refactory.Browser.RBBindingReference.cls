@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.BindingReferenceWrapper subclass: #'Refactory.Browser.RBBindingReference'
+Kernel.BindingReferenceWrapper
+	subclass: #'Refactory.Browser.RBBindingReference'
 	instanceVariableNames: 'model'
 	classVariableNames: ''
 	imports: #()

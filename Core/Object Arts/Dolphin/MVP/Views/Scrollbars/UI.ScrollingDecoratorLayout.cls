@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.LayoutManager subclass: #'UI.ScrollingDecoratorLayout'
+UI.LayoutManager
+	subclass: #'UI.ScrollingDecoratorLayout'
 	instanceVariableNames: 'stretchToFit'
 	classVariableNames: ''
 	imports: #()

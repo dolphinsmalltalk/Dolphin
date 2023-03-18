@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.SmalltalkToolShell subclass: #'Tools.FlipperInspector'
+Tools.SmalltalkToolShell
+	subclass: #'Tools.FlipperInspector'
 	instanceVariableNames: 'cards'
 	classVariableNames: 'Renderers'
 	imports: #()

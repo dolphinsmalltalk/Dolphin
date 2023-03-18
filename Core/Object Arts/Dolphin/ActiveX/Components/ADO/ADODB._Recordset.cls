@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ADODB.Recordset21 subclass: #'ADODB._Recordset'
+ADODB.Recordset21
+	subclass: #'ADODB._Recordset'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

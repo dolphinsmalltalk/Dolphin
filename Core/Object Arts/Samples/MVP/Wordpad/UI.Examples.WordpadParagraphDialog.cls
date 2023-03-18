@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Dialog subclass: #'UI.Examples.WordpadParagraphDialog'
+UI.Dialog
+	subclass: #'UI.Examples.WordpadParagraphDialog'
 	instanceVariableNames: 'leftPresenter rightPresenter firstLinePresenter alignmentPresenter'
 	classVariableNames: ''
 	imports: #()

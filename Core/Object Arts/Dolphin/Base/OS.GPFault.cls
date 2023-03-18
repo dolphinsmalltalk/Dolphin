@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Fault subclass: #'OS.GPFault'
+OS.Win32Fault
+	subclass: #'OS.GPFault'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Error subclass: #'MSXML.DOMParseError'
+Core.Error
+	subclass: #'MSXML.DOMParseError'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

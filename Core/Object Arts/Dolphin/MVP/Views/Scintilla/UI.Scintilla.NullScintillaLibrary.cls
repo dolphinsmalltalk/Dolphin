@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Scintilla.ScintillaLibrary subclass: #'UI.Scintilla.NullScintillaLibrary'
+UI.Scintilla.ScintillaLibrary
+	subclass: #'UI.Scintilla.NullScintillaLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

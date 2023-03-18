@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.STBFiler subclass: #'Kernel.AbstractSTBInFiler'
+Kernel.STBFiler
+	subclass: #'Kernel.AbstractSTBInFiler'
 	instanceVariableNames: 'readMap converters deferredActions flags readSize'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'UpgradingMask' -> 16r1
-	}!
+	classConstants: { 'UpgradingMask' -> 16r1 }!
 Kernel.AbstractSTBInFiler guid: (Core.GUID fromString: '{28fb7b4f-ca63-4a50-af05-a1c54269e4ff}')!
 Kernel.AbstractSTBInFiler isNonInstantiable: true!
 Kernel.AbstractSTBInFiler comment: ''!

@@ -44,103 +44,120 @@ package!
 
 "Class Definitions"!
 
-Tools subclass: #'Tools.Scintilla'
+Tools
+	subclass: #'Tools.Scintilla'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'Tools.Scintilla.InterfaceDefinition'
+Core.Object
+	subclass: #'Tools.Scintilla.InterfaceDefinition'
 	instanceVariableNames: 'id name isDeprecated comment selector constName'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'Tools.Scintilla.ParameterDefinition'
+Core.Object
+	subclass: #'Tools.Scintilla.ParameterDefinition'
 	instanceVariableNames: 'name typeName typeRef'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'Tools.Scintilla.ScintillaViewGenerator'
+Core.Object
+	subclass: #'Tools.Scintilla.ScintillaViewGenerator'
 	instanceVariableNames: 'events commentQueue lexerConstantPrefixes previewChanges commands parsingDeprecated model constantsPool generatedSelectors aliases functions defaultReturnValues'
 	classVariableNames: ''
 	imports: #(#{UI.Scintilla})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'Tools.Scintilla.TypeReference'
+Core.Object
+	subclass: #'Tools.Scintilla.TypeReference'
 	instanceVariableNames: ''
 	classVariableNames: 'Enums TypeMap'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.Scintilla.InterfaceDefinition subclass: #'Tools.Scintilla.EventDefinition'
+Tools.Scintilla.InterfaceDefinition
+	subclass: #'Tools.Scintilla.EventDefinition'
 	instanceVariableNames: 'args'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.Scintilla.InterfaceDefinition subclass: #'Tools.Scintilla.FunctionDefinition'
+Tools.Scintilla.InterfaceDefinition
+	subclass: #'Tools.Scintilla.FunctionDefinition'
 	instanceVariableNames: 'funcType returnType lParam wParam returnTypeName'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.Scintilla.TypeReference subclass: #'Tools.Scintilla.BoolTypeReference'
+Tools.Scintilla.TypeReference
+	subclass: #'Tools.Scintilla.BoolTypeReference'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.Scintilla.TypeReference subclass: #'Tools.Scintilla.ColourTypeReference'
+Tools.Scintilla.TypeReference
+	subclass: #'Tools.Scintilla.ColourTypeReference'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.Scintilla.TypeReference subclass: #'Tools.Scintilla.IntTypeReference'
+Tools.Scintilla.TypeReference
+	subclass: #'Tools.Scintilla.IntTypeReference'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.Scintilla.TypeReference subclass: #'Tools.Scintilla.PointerTypeReference'
+Tools.Scintilla.TypeReference
+	subclass: #'Tools.Scintilla.PointerTypeReference'
 	instanceVariableNames: 'name objectClass'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.Scintilla.TypeReference subclass: #'Tools.Scintilla.VoidTypeReference'
+Tools.Scintilla.TypeReference
+	subclass: #'Tools.Scintilla.VoidTypeReference'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.Scintilla.ColourTypeReference subclass: #'Tools.Scintilla.ColourAlphaTypeReference'
+Tools.Scintilla.ColourTypeReference
+	subclass: #'Tools.Scintilla.ColourAlphaTypeReference'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.Scintilla.IntTypeReference subclass: #'Tools.Scintilla.EnumTypeReference'
+Tools.Scintilla.IntTypeReference
+	subclass: #'Tools.Scintilla.EnumTypeReference'
 	instanceVariableNames: 'name prefix values defaultValueName'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.Scintilla.IntTypeReference subclass: #'Tools.Scintilla.KeyModTypeReference'
+Tools.Scintilla.IntTypeReference
+	subclass: #'Tools.Scintilla.KeyModTypeReference'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.Scintilla.IntTypeReference subclass: #'Tools.Scintilla.PositionTypeReference'
+Tools.Scintilla.IntTypeReference
+	subclass: #'Tools.Scintilla.PositionTypeReference'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.Scintilla.PositionTypeReference subclass: #'Tools.Scintilla.LineTypeReference'
+Tools.Scintilla.PositionTypeReference
+	subclass: #'Tools.Scintilla.LineTypeReference'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

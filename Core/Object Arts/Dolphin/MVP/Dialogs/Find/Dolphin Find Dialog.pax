@@ -37,21 +37,20 @@ package!
 
 "Class Definitions"!
 
-UI.FindDetails subclass: #'UI.AdvancedFindDetails'
+UI.FindDetails
+	subclass: #'UI.AdvancedFindDetails'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Dialog subclass: #'UI.AdvancedFindDialog'
+UI.Dialog
+	subclass: #'UI.AdvancedFindDialog'
 	instanceVariableNames: 'patternPresenter wholeWordPresenter matchCasePresenter modePresenter directionPresenter actionButton closeButton flags validationBlock wrapPresenter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'RegExpMask' -> 16r2.
-		'WildCardMask' -> 16r1
-	}!
+	classConstants: { 'RegExpMask' -> 16r2. 'WildCardMask' -> 16r1 }!
 
 "End of package definition"!
 

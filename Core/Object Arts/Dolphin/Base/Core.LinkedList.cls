@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.SequencedGrowableCollection subclass: #'Core.LinkedList'
+Core.SequencedGrowableCollection
+	subclass: #'Core.LinkedList'
 	instanceVariableNames: 'firstLink lastLink'
 	classVariableNames: ''
 	imports: #()

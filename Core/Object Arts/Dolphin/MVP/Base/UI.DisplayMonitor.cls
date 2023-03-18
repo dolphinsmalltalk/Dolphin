@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'UI.DisplayMonitor'
+Core.Object
+	subclass: #'UI.DisplayMonitor'
 	instanceVariableNames: 'handle info devices'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'MONITOR_DEFAULTTONEAREST' -> 16r2.
-		'MONITOR_DEFAULTTONULL' -> 16r0.
-		'MONITOR_DEFAULTTOPRIMARY' -> 16r1
-	}!
+			'MONITOR_DEFAULTTONEAREST' -> 16r2.
+			'MONITOR_DEFAULTTONULL' -> 16r0.
+			'MONITOR_DEFAULTTOPRIMARY' -> 16r1
+		}!
 UI.DisplayMonitor guid: (Core.GUID fromString: '{2ab65289-2a77-4c76-9ab2-82178699a48c}')!
 UI.DisplayMonitor comment: '`UI.DisplayMonitor` is a simple abstraction over the Windows Multiple Display Monitors API. It allows one to enumerate the attached monitors, and to identify:
   - the primary monitor;

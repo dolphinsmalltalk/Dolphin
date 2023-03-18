@@ -1,20 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'Graphics.Gdiplus.METAHEADER'
+External.Structure
+	subclass: #'Graphics.Gdiplus.METAHEADER'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_METAHEADER_Size' -> 16r18.
-		'_OffsetOf_mtHeaderSize' -> 16r2.
-		'_OffsetOf_mtMaxRecord' -> 16r10.
-		'_OffsetOf_mtNoObjects' -> 16rC.
-		'_OffsetOf_mtNoParameters' -> 16r14.
-		'_OffsetOf_mtSize' -> 16r8.
-		'_OffsetOf_mtType' -> 16r0.
-		'_OffsetOf_mtVersion' -> 16r4
-	}!
+			'_METAHEADER_Size' -> 16r18.
+			'_OffsetOf_mtHeaderSize' -> 16r2.
+			'_OffsetOf_mtMaxRecord' -> 16r10.
+			'_OffsetOf_mtNoObjects' -> 16rC.
+			'_OffsetOf_mtNoParameters' -> 16r14.
+			'_OffsetOf_mtSize' -> 16r8.
+			'_OffsetOf_mtType' -> 16r0.
+			'_OffsetOf_mtVersion' -> 16r4
+		}!
 Graphics.Gdiplus.METAHEADER guid: (Core.GUID fromString: '{0252c31a-1d28-4418-90fa-3243aff6de01}')!
 Graphics.Gdiplus.METAHEADER comment: '<METAHEADER> is an <ExternalStructure> class to wrap the struct ''Gdiplus.METAHEADER'' from type information in the ''GDI+ Library 1.0'' library.
 

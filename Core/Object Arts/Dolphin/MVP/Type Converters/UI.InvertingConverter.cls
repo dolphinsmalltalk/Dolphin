@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.TypeConverter subclass: #'UI.InvertingConverter'
+UI.TypeConverter
+	subclass: #'UI.InvertingConverter'
 	instanceVariableNames: 'wrappedConverter'
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.FullBindingReference subclass: #'Kernel.RelativeBindingReference'
+Kernel.FullBindingReference
+	subclass: #'Kernel.RelativeBindingReference'
 	instanceVariableNames: 'scope'
 	classVariableNames: ''
 	imports: #()

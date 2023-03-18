@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Address variableByteSubclass: #'External.MemoryMappedFileView'
+External.Address
+	variableByteSubclass: #'External.MemoryMappedFileView'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

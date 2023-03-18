@@ -32,19 +32,22 @@ package!
 
 "Class Definitions"!
 
-WebView2 subclass: #'WebView2.Tests'
+WebView2
+	subclass: #'WebView2.Tests'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{XProgramming.SUnit})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'WebView2.Tests.WebView2EnvironmentOptionsTest'
+Core.Tests.DolphinTest
+	subclass: #'WebView2.Tests.WebView2EnvironmentOptionsTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.PresenterTest subclass: #'WebView2.Tests.WebView2ViewTest'
+UI.Tests.PresenterTest
+	subclass: #'WebView2.Tests.WebView2ViewTest'
 	instanceVariableNames: 'domContentLoaded navigationCompleted processFailed webViewReady processExitedSink webviewEnvironment processExited'
 	classVariableNames: ''
 	imports: #(#{UI})

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Kernel.StToken'
+Core.Object
+	subclass: #'Kernel.StToken'
 	instanceVariableNames: 'start comments'
 	classVariableNames: ''
 	imports: #()

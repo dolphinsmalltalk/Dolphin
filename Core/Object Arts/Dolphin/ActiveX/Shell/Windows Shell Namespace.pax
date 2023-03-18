@@ -43,60 +43,58 @@ package!
 
 "Class Definitions"!
 
-External.Memory variableByteSubclass: #'OS.WindowsShellMemory'
+External.Memory
+	variableByteSubclass: #'OS.WindowsShellMemory'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.CommonDialog subclass: #'UI.BrowseFolderDialog'
+UI.CommonDialog
+	subclass: #'UI.BrowseFolderDialog'
 	instanceVariableNames: 'style bfFlags'
 	classVariableNames: ''
 	imports: #(#{OS.ShellConstants})
 	classInstanceVariableNames: ''
-	classConstants: {
-		'InitializedMask' -> 16r1
-	}!
-OS.COM.IUnknown subclass: #'OS.IShellFolder'
+	classConstants: { 'InitializedMask' -> 16r1 }!
+OS.COM.IUnknown
+	subclass: #'OS.IShellFolder'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.OLEStructure subclass: #'OS.ITEMIDLIST'
+OS.COM.OLEStructure
+	subclass: #'OS.ITEMIDLIST'
 	instanceVariableNames: 'back'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_ITEMIDLIST_Size' -> 16r4
-	}!
-OS.Win32Structure subclass: #'OS.SHITEMID'
+	classConstants: { '_ITEMIDLIST_Size' -> 16r4 }!
+OS.Win32Structure
+	subclass: #'OS.SHITEMID'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_OffsetOf_abID' -> 16r2.
-		'_OffsetOf_cb' -> 16r0.
-		'_SHITEMID_Size' -> 16r4
-	}!
-OS.CommonDialogStructure subclass: #'OS.BROWSEINFOW'
+	classConstants: { '_OffsetOf_abID' -> 16r2. '_OffsetOf_cb' -> 16r0. '_SHITEMID_Size' -> 16r4 }!
+OS.CommonDialogStructure
+	subclass: #'OS.BROWSEINFOW'
 	instanceVariableNames: 'title displayName'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_BROWSEINFOW_Size' -> 16r20.
-		'_OffsetOf_flags' -> 16r10.
-		'_OffsetOf_hwndOwner' -> 16r0.
-		'_OffsetOf_iImage' -> 16r1C.
-		'_OffsetOf_lParam' -> 16r18.
-		'_OffsetOf_lpfnHook' -> 16r14.
-		'_OffsetOf_lpszTitle' -> 16rC.
-		'_OffsetOf_pidlRoot' -> 16r4.
-		'_OffsetOf_pszDisplayName' -> 16r8
-	}!
+			'_BROWSEINFOW_Size' -> 16r20.
+			'_OffsetOf_flags' -> 16r10.
+			'_OffsetOf_hwndOwner' -> 16r0.
+			'_OffsetOf_iImage' -> 16r1C.
+			'_OffsetOf_lParam' -> 16r18.
+			'_OffsetOf_lpfnHook' -> 16r14.
+			'_OffsetOf_lpszTitle' -> 16rC.
+			'_OffsetOf_pidlRoot' -> 16r4.
+			'_OffsetOf_pszDisplayName' -> 16r8
+		}!
 
 "Loose Methods"!
 

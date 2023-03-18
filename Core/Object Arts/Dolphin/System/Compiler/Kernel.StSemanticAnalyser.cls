@@ -1,11 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.AbstractSemanticAnalyser subclass: #'Kernel.StSemanticAnalyser'
+Kernel.AbstractSemanticAnalyser
+	subclass: #'Kernel.StSemanticAnalyser'
 	instanceVariableNames: 'literals stringLiterals tempDecls isMutator'
-	classVariableNames: 'OptimizedMessages RestrictedSelectors SpecialSelectors'
+	classVariableNames: 'OptimizedMessages'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'RestrictedSelectors' -> (IdentitySet
+						withAll: #(#?? #~~ #== #and: #basicAt: #basicAt:put: #basicClass #basicNew: #basicSize #ifFalse: #ifFalse:ifTrue: #ifNil: #ifNil:ifNotNil: #ifNotNil: #ifNotNil:ifNil: #ifTrue: #ifTrue:ifFalse: #not #or: #timesRepeat: #to:by:do: #to:do: #yourself)).
+			'SpecialSelectors' -> (IdentitySet
+						withAll: #(#- #* #/ #// #?? #\\ #~~ #~= #+ #< #<= #= #== #> #>= #at: #at:put: #basicAt: #basicAt:put: #basicClass #basicNew: #basicSize #bitAnd: #bitOr: #bitShift: #class #isNil #new #new: #not #notNil #size #value #value: #value:value:))
+		}!
 Kernel.StSemanticAnalyser guid: (Core.GUID fromString: '{3922cac3-8a81-45a8-adb3-2795a6e7bc2f}')!
 Kernel.StSemanticAnalyser comment: 'StSemanticAnalyser is a <StParseNodeVisitor> that performs semantic analysis of an AST.'!
 !Kernel.StSemanticAnalyser categoriesForClass!System-Compiler! !

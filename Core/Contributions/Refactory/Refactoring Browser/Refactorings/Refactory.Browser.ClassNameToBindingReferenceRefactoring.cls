@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.ClassRefactoring subclass: #'Refactory.Browser.ClassNameToBindingReferenceRefactoring'
+Refactory.Browser.ClassRefactoring
+	subclass: #'Refactory.Browser.ClassNameToBindingReferenceRefactoring'
 	instanceVariableNames: 'class unqualifiedName'
 	classVariableNames: ''
 	imports: #(#{Refactory.Browser})

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Shell subclass: #'UI.Examples.GdiplusImageViewSampleShell'
+UI.Shell
+	subclass: #'UI.Examples.GdiplusImageViewSampleShell'
 	instanceVariableNames: 'image edgeChoice viewChoice padding paddingSpinner interpolationChoice classChoice useImageClass filename'
 	classVariableNames: ''
 	imports: #(#{Graphics.Gdiplus})

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.StBlockNode subclass: #'Refactory.Browser.RBPatternBlockNode'
+Kernel.StBlockNode
+	subclass: #'Refactory.Browser.RBPatternBlockNode'
 	instanceVariableNames: 'valueBlock'
 	classVariableNames: ''
 	imports: #()

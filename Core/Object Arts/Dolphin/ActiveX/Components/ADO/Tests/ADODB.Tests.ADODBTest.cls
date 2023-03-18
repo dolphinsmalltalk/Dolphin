@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Database.Tests.DBTest subclass: #'ADODB.Tests.ADODBTest'
+Database.Tests.DBTest
+	subclass: #'ADODB.Tests.ADODBTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

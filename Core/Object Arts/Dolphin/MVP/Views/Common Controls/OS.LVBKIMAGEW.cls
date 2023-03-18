@@ -1,19 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.LVBKIMAGEW'
+OS.Win32Structure
+	subclass: #'OS.LVBKIMAGEW'
 	instanceVariableNames: 'buf'
 	classVariableNames: ''
 	imports: #(#{OS.ListViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_LVBKIMAGEW_Size' -> 16r18.
-		'_OffsetOf_cchImageMax' -> 16rC.
-		'_OffsetOf_hbm' -> 16r4.
-		'_OffsetOf_pszImage' -> 16r8.
-		'_OffsetOf_ulFlags' -> 16r0.
-		'_OffsetOf_xOffsetPercent' -> 16r10.
-		'_OffsetOf_yOffsetPercent' -> 16r14
-	}!
+			'_LVBKIMAGEW_Size' -> 16r18.
+			'_OffsetOf_cchImageMax' -> 16rC.
+			'_OffsetOf_hbm' -> 16r4.
+			'_OffsetOf_pszImage' -> 16r8.
+			'_OffsetOf_ulFlags' -> 16r0.
+			'_OffsetOf_xOffsetPercent' -> 16r10.
+			'_OffsetOf_yOffsetPercent' -> 16r14
+		}!
 OS.LVBKIMAGEW guid: (Core.GUID fromString: '{33fccb1a-f5ba-4ae8-93ad-63d00b9aa869}')!
 OS.LVBKIMAGEW comment: ''!
 !OS.LVBKIMAGEW categoriesForClass!External-Data-Structured-Win32! !

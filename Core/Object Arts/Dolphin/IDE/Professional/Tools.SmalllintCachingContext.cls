@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.SmalllintContext subclass: #'Tools.SmalllintCachingContext'
+Refactory.Browser.SmalllintContext
+	subclass: #'Tools.SmalllintCachingContext'
 	instanceVariableNames: ''
 	classVariableNames: 'Literals Mtx Selectors'
 	imports: #()

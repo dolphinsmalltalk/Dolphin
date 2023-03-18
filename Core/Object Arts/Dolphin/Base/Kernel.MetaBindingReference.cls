@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.BindingReferenceWrapper subclass: #'Kernel.MetaBindingReference'
+Kernel.BindingReferenceWrapper
+	subclass: #'Kernel.MetaBindingReference'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

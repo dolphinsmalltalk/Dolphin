@@ -54,139 +54,160 @@ package!
 
 "Class Definitions"!
 
-Core.Object subclass: #'Kernel.StSemanticScope'
+Core.Object
+	subclass: #'Kernel.StSemanticScope'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'Kernel.StVariable'
+Core.Object
+	subclass: #'Kernel.StVariable'
 	instanceVariableNames: 'scope'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.ParseNodeVisitor subclass: #'Kernel.AbstractSemanticAnalyser'
+Kernel.ParseNodeVisitor
+	subclass: #'Kernel.AbstractSemanticAnalyser'
 	instanceVariableNames: 'methodNode classScope currentScope evalScope errorBlock scopes inStaticExpression inTag'
 	classVariableNames: ''
 	imports: #(#{Kernel.ParseErrorCodes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.AbstractSemanticAnalyser subclass: #'Kernel.StaticVariableBinder'
+Kernel.AbstractSemanticAnalyser
+	subclass: #'Kernel.StaticVariableBinder'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.AbstractSemanticAnalyser subclass: #'Kernel.StSemanticAnalyser'
+Kernel.AbstractSemanticAnalyser
+	subclass: #'Kernel.StSemanticAnalyser'
 	instanceVariableNames: 'literals stringLiterals tempDecls isMutator'
-	classVariableNames: 'OptimizedMessages RestrictedSelectors SpecialSelectors'
+	classVariableNames: 'OptimizedMessages'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.StSemanticScope subclass: #'Kernel.StClassScope'
+	classConstants: {
+			'RestrictedSelectors' -> (IdentitySet
+						withAll: #(#?? #~~ #== #and: #basicAt: #basicAt:put: #basicClass #basicNew: #basicSize #ifFalse: #ifFalse:ifTrue: #ifNil: #ifNil:ifNotNil: #ifNotNil: #ifNotNil:ifNil: #ifTrue: #ifTrue:ifFalse: #not #or: #timesRepeat: #to:by:do: #to:do: #yourself)).
+			'SpecialSelectors' -> (IdentitySet
+						withAll: #(#- #* #/ #// #?? #\\ #~~ #~= #+ #< #<= #= #== #> #>= #at: #at:put: #basicAt: #basicAt:put: #basicClass #basicNew: #basicSize #bitAnd: #bitOr: #bitShift: #class #isNil #new #new: #not #notNil #size #value #value: #value:value:))
+		}!
+Kernel.StSemanticScope
+	subclass: #'Kernel.StClassScope'
 	instanceVariableNames: 'methodClass environment instanceVariables selfVariable superVariable metaScope staticVariables'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.StSemanticScope subclass: #'Kernel.StEvalScope'
+Kernel.StSemanticScope
+	subclass: #'Kernel.StEvalScope'
 	instanceVariableNames: 'pools outer'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.StSemanticScope subclass: #'Kernel.StLexicalScope'
+Kernel.StSemanticScope
+	subclass: #'Kernel.StLexicalScope'
 	instanceVariableNames: 'node outer locals thisContextVariable flags'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'FarReturnMask' -> 16r2.
-		'NeedsSelfMask' -> 16r1
-	}!
-Kernel.StLexicalScope subclass: #'Kernel.StBlockScope'
+	classConstants: { 'FarReturnMask' -> 16r2. 'NeedsSelfMask' -> 16r1 }!
+Kernel.StLexicalScope
+	subclass: #'Kernel.StBlockScope'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'EmptyBlockMask' -> 16r200.
-		'NeedsOuterMask' -> 16r100
-	}!
-Kernel.StLexicalScope subclass: #'Kernel.StMethodScope'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.StBlockScope subclass: #'Kernel.StOptimizedBlockScope'
+	classConstants: { 'EmptyBlockMask' -> 16r200. 'NeedsOuterMask' -> 16r100 }!
+Kernel.StLexicalScope
+	subclass: #'Kernel.StMethodScope'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.StVariable subclass: #'Kernel.StInstanceVariable'
+Kernel.StBlockScope
+	subclass: #'Kernel.StOptimizedBlockScope'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.StVariable
+	subclass: #'Kernel.StInstanceVariable'
 	instanceVariableNames: 'index name'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.StVariable subclass: #'Kernel.StLocalVariable'
+Kernel.StVariable
+	subclass: #'Kernel.StLocalVariable'
 	instanceVariableNames: 'node storage reads'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.StVariable subclass: #'Kernel.StSpecialVariable'
+Kernel.StVariable
+	subclass: #'Kernel.StSpecialVariable'
 	instanceVariableNames: 'reads'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.StVariable subclass: #'Kernel.StStaticVariable'
+Kernel.StVariable
+	subclass: #'Kernel.StStaticVariable'
 	instanceVariableNames: 'binding'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.StLocalVariable subclass: #'Kernel.StArgumentVariable'
+Kernel.StLocalVariable
+	subclass: #'Kernel.StArgumentVariable'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.StLocalVariable subclass: #'Kernel.StGeneratedTempVariable'
+Kernel.StLocalVariable
+	subclass: #'Kernel.StGeneratedTempVariable'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.StLocalVariable subclass: #'Kernel.StTempVariable'
+Kernel.StLocalVariable
+	subclass: #'Kernel.StTempVariable'
 	instanceVariableNames: 'writes'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.StSpecialVariable subclass: #'Kernel.StSelfVariable'
+Kernel.StSpecialVariable
+	subclass: #'Kernel.StSelfVariable'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.StSpecialVariable subclass: #'Kernel.StSuperVariable'
+Kernel.StSpecialVariable
+	subclass: #'Kernel.StSuperVariable'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.StSpecialVariable subclass: #'Kernel.StThisContextVariable'
+Kernel.StSpecialVariable
+	subclass: #'Kernel.StThisContextVariable'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.StStaticVariable subclass: #'Kernel.StWorkspaceVariable'
+Kernel.StStaticVariable
+	subclass: #'Kernel.StWorkspaceVariable'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.CommonDialog subclass: #'UI.PrintDialog'
+UI.CommonDialog
+	subclass: #'UI.PrintDialog'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.PrintDialogConstants})

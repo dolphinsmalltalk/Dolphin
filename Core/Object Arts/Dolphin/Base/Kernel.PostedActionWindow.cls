@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Kernel.PostedActionWindow'
+Core.Object
+	subclass: #'Kernel.PostedActionWindow'
 	instanceVariableNames: 'handle actions'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})

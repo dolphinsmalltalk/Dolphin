@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.RECT subclass: #'Graphics.Gdiplus.AbstractRect'
+External.RECT
+	subclass: #'Graphics.Gdiplus.AbstractRect'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

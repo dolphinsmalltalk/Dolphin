@@ -1,25 +1,26 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.MemberDesc subclass: #'OS.COM.FUNCDESC'
+OS.COM.MemberDesc
+	subclass: #'OS.COM.FUNCDESC'
 	instanceVariableNames: 'names arguments outputIndices retvalIndex methodName'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_FUNCDESC_Size' -> 16r34.
-		'_OffsetOf_callconv' -> 16r14.
-		'_OffsetOf_cParams' -> 16r18.
-		'_OffsetOf_cParamsOpt' -> 16r1A.
-		'_OffsetOf_cScodes' -> 16r1E.
-		'_OffsetOf_elemdescFunc' -> 16r20.
-		'_OffsetOf_funckind' -> 16rC.
-		'_OffsetOf_invkind' -> 16r10.
-		'_OffsetOf_lprgelemdescParam' -> 16r8.
-		'_OffsetOf_lprgscode' -> 16r4.
-		'_OffsetOf_memid' -> 16r0.
-		'_OffsetOf_oVft' -> 16r1C.
-		'_OffsetOf_wFuncFlags' -> 16r30
-	}!
+			'_FUNCDESC_Size' -> 16r34.
+			'_OffsetOf_callconv' -> 16r14.
+			'_OffsetOf_cParams' -> 16r18.
+			'_OffsetOf_cParamsOpt' -> 16r1A.
+			'_OffsetOf_cScodes' -> 16r1E.
+			'_OffsetOf_elemdescFunc' -> 16r20.
+			'_OffsetOf_funckind' -> 16rC.
+			'_OffsetOf_invkind' -> 16r10.
+			'_OffsetOf_lprgelemdescParam' -> 16r8.
+			'_OffsetOf_lprgscode' -> 16r4.
+			'_OffsetOf_memid' -> 16r0.
+			'_OffsetOf_oVft' -> 16r1C.
+			'_OffsetOf_wFuncFlags' -> 16r30
+		}!
 OS.COM.FUNCDESC guid: (Core.GUID fromString: '{c06f3b6e-0868-11d3-93af-00a024ca708a}')!
 OS.COM.FUNCDESC comment: 'FUNCDESC is an <ExternalStructure> class to represent the Active-X Automation FUNCDESC structure.
 

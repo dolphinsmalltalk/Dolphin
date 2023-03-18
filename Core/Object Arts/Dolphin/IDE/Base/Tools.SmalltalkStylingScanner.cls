@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.Scanner subclass: #'Tools.SmalltalkStylingScanner'
+Kernel.Scanner
+	subclass: #'Tools.SmalltalkStylingScanner'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

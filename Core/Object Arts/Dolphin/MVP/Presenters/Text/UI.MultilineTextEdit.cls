@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.TextEdit subclass: #'UI.MultilineTextEdit'
+UI.TextEdit
+	subclass: #'UI.MultilineTextEdit'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.AXAutomationAspect subclass: #'Tools.DispatchAspect'
+Tools.AXAutomationAspect
+	subclass: #'Tools.DispatchAspect'
 	instanceVariableNames: 'dispid'
 	classVariableNames: ''
 	imports: #()

@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.INTEGER subclass: #'External.UInt8'
+External.INTEGER
+	subclass: #'External.UInt8'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_UInt8_Size' -> 16r1
-	}!
+	classConstants: { '_UInt8_Size' -> 16r1 }!
 External.UInt8 guid: (Core.GUID fromString: '{87b4c5a9-026e-11d3-9fd7-00a0cc3e4a32}')!
 External.UInt8 comment: '<BYTE> is an <ExternalStructure> class to wrap the Win32 type of the same name.
 

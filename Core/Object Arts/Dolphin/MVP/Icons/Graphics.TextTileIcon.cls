@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Graphics.TextTileIcon'
+Core.Object
+	subclass: #'Graphics.TextTileIcon'
 	instanceVariableNames: 'text fontName tilecolor textcolor _reserved5 _reserved6 flags _reserved8 _reserved9'
 	classVariableNames: 'TextFormat'
 	imports: #(#{Graphics.Gdiplus private})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'FontStyleMask' -> 16r1C.
-		'FontStyleNames' -> #(#regular #bold #italic #boldItalic #underline #strikeout).
-		'RotationMask' -> 16r3
-	}!
+			'FontStyleMask' -> 16r1C.
+			'FontStyleNames' -> #(#regular #bold #italic #boldItalic #underline #strikeout).
+			'RotationMask' -> 16r3
+		}!
 Graphics.TextTileIcon guid: (Core.GUID fromString: '{a5c05489-c3fa-486a-9e1b-1660f9b3a55a}')!
 Graphics.TextTileIcon comment: 'An icon representation of one or more letters on a plain solid colour background, which can be `Color none` for a transparent background. The text can contain any Unicode characters (including symbols, emoticons, etc), although there is limited font support for extended characters (if the text renders as an empty box, try using the ''Segoe UI Symbol'' font).
 

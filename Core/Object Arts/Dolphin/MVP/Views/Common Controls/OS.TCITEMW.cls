@@ -1,19 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.CCITEM subclass: #'OS.TCITEMW'
+OS.CCITEM
+	subclass: #'OS.TCITEMW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.TabViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_cchTextMax' -> 16r10.
-		'_OffsetOf_dwState' -> 16r4.
-		'_OffsetOf_iImage' -> 16r14.
-		'_OffsetOf_lParam' -> 16r18.
-		'_OffsetOf_pszText' -> 16rC.
-		'_OffsetOf_stateMask' -> 16r8.
-		'_TCITEMW_Size' -> 16r1C
-	}!
+			'_OffsetOf_cchTextMax' -> 16r10.
+			'_OffsetOf_dwState' -> 16r4.
+			'_OffsetOf_iImage' -> 16r14.
+			'_OffsetOf_lParam' -> 16r18.
+			'_OffsetOf_pszText' -> 16rC.
+			'_OffsetOf_stateMask' -> 16r8.
+			'_TCITEMW_Size' -> 16r1C
+		}!
 OS.TCITEMW guid: (Core.GUID fromString: '{87b4c621-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.TCITEMW comment: 'TCITEM is an <ExternalStructure> class which represents the Windows common control structure of the same name.
 

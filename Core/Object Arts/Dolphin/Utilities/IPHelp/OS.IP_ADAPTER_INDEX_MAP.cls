@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'OS.IP_ADAPTER_INDEX_MAP'
+External.Structure
+	subclass: #'OS.IP_ADAPTER_INDEX_MAP'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_IP_ADAPTER_INDEX_MAP_Size' -> 16r104.
-		'_OffsetOf_index' -> 16r0.
-		'_OffsetOf_Name' -> 16r4
-	}!
+			'_IP_ADAPTER_INDEX_MAP_Size' -> 16r104.
+			'_OffsetOf_index' -> 16r0.
+			'_OffsetOf_Name' -> 16r4
+		}!
 OS.IP_ADAPTER_INDEX_MAP guid: (Core.GUID fromString: '{fc9307a0-b028-4f04-81c9-9d74847a63ef}')!
 OS.IP_ADAPTER_INDEX_MAP comment: '<IP_ADAPTER_INDEX_MAP> is an <ExternalStructure> class to wrap the struct ''Win32.IP_ADAPTER_INDEX_MAP'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

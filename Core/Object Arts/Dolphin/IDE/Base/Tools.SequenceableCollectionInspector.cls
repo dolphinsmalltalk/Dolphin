@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.BasicInspector subclass: #'Tools.SequenceableCollectionInspector'
+Tools.BasicInspector
+	subclass: #'Tools.SequenceableCollectionInspector'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

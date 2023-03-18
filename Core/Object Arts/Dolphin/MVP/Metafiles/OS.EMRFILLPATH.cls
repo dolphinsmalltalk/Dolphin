@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMRFILLPATH'
+OS.ENHMETARECORD
+	subclass: #'OS.EMRFILLPATH'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_EMRFILLPATH_Size' -> 16r18.
-		'_OffsetOf_rclBounds' -> 16r8
-	}!
+	classConstants: { '_EMRFILLPATH_Size' -> 16r18. '_OffsetOf_rclBounds' -> 16r8 }!
 OS.EMRFILLPATH guid: (Core.GUID fromString: '{2fe2f5ac-b812-4a5e-88b9-1b90a426c138}')!
 OS.EMRFILLPATH comment: '<EMRFILLPATH> is an <ExternalStructure> class to wrap the struct ''Win32.EMRFILLPATH'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

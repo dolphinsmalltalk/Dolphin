@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.StProgramNode subclass: #'Kernel.StReturnNode'
+Kernel.StProgramNode
+	subclass: #'Kernel.StReturnNode'
 	instanceVariableNames: 'return value'
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.StLexicalScope subclass: #'Kernel.StMethodScope'
+Kernel.StLexicalScope
+	subclass: #'Kernel.StMethodScope'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

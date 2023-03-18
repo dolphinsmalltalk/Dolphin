@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.InterfaceImplementation subclass: #'WebView2.WebView2EnvironmentOptions'
+OS.COM.InterfaceImplementation
+	subclass: #'WebView2.WebView2EnvironmentOptions'
 	instanceVariableNames: 'additionalBrowserArguments flags locale browserVersion'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'AllowSSOMask' -> 16r1.
-		'CustomCrashReportingMask' -> 16r4.
-		'ExclusiveUserDataFolderAccessMask' -> 16r2
-	}!
+			'AllowSSOMask' -> 16r1.
+			'CustomCrashReportingMask' -> 16r4.
+			'ExclusiveUserDataFolderAccessMask' -> 16r2
+		}!
 WebView2.WebView2EnvironmentOptions guid: (Core.GUID fromString: '{a29cb496-0b83-42f6-b6b1-2670cb4d42fb}')!
 WebView2.WebView2EnvironmentOptions comment: ''!
 !WebView2.WebView2EnvironmentOptions categoriesForClass!COM-Implementations! !

@@ -1,19 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'WebView2.COREWEBVIEW2_PHYSICAL_KEY_STATUS'
+External.Structure
+	subclass: #'WebView2.COREWEBVIEW2_PHYSICAL_KEY_STATUS'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_COREWEBVIEW2_PHYSICAL_KEY_STATUS_Size' -> 16r18.
-		'_OffsetOf_IsExtendedKey' -> 16r8.
-		'_OffsetOf_IsKeyReleased' -> 16r14.
-		'_OffsetOf_IsMenuKeyDown' -> 16rC.
-		'_OffsetOf_RepeatCount' -> 16r0.
-		'_OffsetOf_ScanCode' -> 16r4.
-		'_OffsetOf_WasKeyDown' -> 16r10
-	}!
+			'_COREWEBVIEW2_PHYSICAL_KEY_STATUS_Size' -> 16r18.
+			'_OffsetOf_IsExtendedKey' -> 16r8.
+			'_OffsetOf_IsKeyReleased' -> 16r14.
+			'_OffsetOf_IsMenuKeyDown' -> 16rC.
+			'_OffsetOf_RepeatCount' -> 16r0.
+			'_OffsetOf_ScanCode' -> 16r4.
+			'_OffsetOf_WasKeyDown' -> 16r10
+		}!
 WebView2.COREWEBVIEW2_PHYSICAL_KEY_STATUS guid: (Core.GUID fromString: '{192b5d12-5eb1-4a47-8648-a87c55e672a2}')!
 WebView2.COREWEBVIEW2_PHYSICAL_KEY_STATUS comment: '`COREWEBVIEW2_PHYSICAL_KEY_STATUS` is an `ExternalStructure` class to wrap the struct ''WebView2.COREWEBVIEW2_PHYSICAL_KEY_STATUS'' from type information in the '''' library.
 

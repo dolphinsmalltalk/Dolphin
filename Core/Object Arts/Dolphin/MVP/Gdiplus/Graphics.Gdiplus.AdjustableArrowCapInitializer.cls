@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.AbstractCustomLineCapInitializer subclass: #'Graphics.Gdiplus.AdjustableArrowCapInitializer'
+Graphics.Gdiplus.AbstractCustomLineCapInitializer
+	subclass: #'Graphics.Gdiplus.AdjustableArrowCapInitializer'
 	instanceVariableNames: 'height width isFilled middleInset'
 	classVariableNames: ''
 	imports: #()

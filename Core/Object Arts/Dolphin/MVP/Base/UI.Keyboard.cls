@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'UI.Keyboard'
+Core.Object
+	subclass: #'UI.Keyboard'
 	instanceVariableNames: 'state virtualKeys modifierKeys keyNames'
 	classVariableNames: 'DefaultInstance InvariantInstance'
 	imports: #(#{OS.Win32Constants})

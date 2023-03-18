@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Shell subclass: #'UI.Examples.Autoplay'
+UI.Shell
+	subclass: #'UI.Examples.Autoplay'
 	instanceVariableNames: 'browser navigating pageExtent homePage'
 	classVariableNames: ''
 	imports: #()

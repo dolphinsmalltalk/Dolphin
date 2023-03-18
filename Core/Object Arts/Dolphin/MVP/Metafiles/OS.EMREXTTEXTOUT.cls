@@ -1,18 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMREXTTEXTOUT'
+OS.ENHMETARECORD
+	subclass: #'OS.EMREXTTEXTOUT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_EMREXTTEXTOUT_Size' -> 16r4C.
-		'_OffsetOf_EMRTEXT' -> 16r24.
-		'_OffsetOf_exScale' -> 16r1C.
-		'_OffsetOf_eyScale' -> 16r20.
-		'_OffsetOf_iGraphicsMode' -> 16r18.
-		'_OffsetOf_rclBounds' -> 16r8
-	}!
+			'_EMREXTTEXTOUT_Size' -> 16r4C.
+			'_OffsetOf_EMRTEXT' -> 16r24.
+			'_OffsetOf_exScale' -> 16r1C.
+			'_OffsetOf_eyScale' -> 16r20.
+			'_OffsetOf_iGraphicsMode' -> 16r18.
+			'_OffsetOf_rclBounds' -> 16r8
+		}!
 OS.EMREXTTEXTOUT guid: (Core.GUID fromString: '{2fee36e2-d281-4200-9f3f-7aa01d54e452}')!
 OS.EMREXTTEXTOUT isNonInstantiable: true!
 OS.EMREXTTEXTOUT comment: ''!

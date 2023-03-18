@@ -1,13 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.Brush subclass: #'Graphics.Gdiplus.HatchBrush'
+Graphics.Gdiplus.Brush
+	subclass: #'Graphics.Gdiplus.HatchBrush'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'ForegroundPercentages' -> #[12 12 18 18 23 32 3 6 12 25 37 47 50 62 75 87 94 97 25 25 50 50 37 37 25 25 50 50 50 50 12 12 12 12 12 37 25 22 19 34 30 50 9 11 9 20 75 59 44 50 50 22 39]
-	}!
+			'ForegroundPercentages'
+				-> #[12 12 18 18 23 32 3 6 12 25 37 47 50 62 75 87 94 97 25 25 50 50 37 37 25 25 50 50 50 50 12 12 12 12 12 37 25 22 19 34 30 50 9 11 9 20 75 59 44 50 50 22 39]
+		}!
 Graphics.Gdiplus.HatchBrush guid: (Core.GUID fromString: '{1a1a5ea4-6151-11d7-b609-00e0987e8081}')!
 Graphics.Gdiplus.HatchBrush comment: 'A hatch brush paints a background and paints, over that background, a foreground that consists of a pattern of lines, dots, dashes, squares, crosshatch, or some variation of these. The hatch brush consists of two colors: one for the background and one for the foreground.'!
 !Graphics.Gdiplus.HatchBrush methodsFor!

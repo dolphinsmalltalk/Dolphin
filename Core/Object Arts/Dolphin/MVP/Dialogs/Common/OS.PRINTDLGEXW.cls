@@ -1,34 +1,35 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.CommonDialogStructure subclass: #'OS.PRINTDLGEXW'
+OS.CommonDialogStructure
+	subclass: #'OS.PRINTDLGEXW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_dwResultAction' -> 16r50.
-		'_OffsetOf_ExclusionFlags' -> 16r1C.
-		'_OffsetOf_flags' -> 16r14.
-		'_OffsetOf_Flags2' -> 16r18.
-		'_OffsetOf_hDC' -> 16r10.
-		'_OffsetOf_hDevMode' -> 16r8.
-		'_OffsetOf_hDevNames' -> 16rC.
-		'_OffsetOf_hInstance' -> 16r38.
-		'_OffsetOf_hwndOwner' -> 16r4.
-		'_OffsetOf_lpCallback' -> 16r40.
-		'_OffsetOf_lphPropertyPages' -> 16r48.
-		'_OffsetOf_lpPageRanges' -> 16r28.
-		'_OffsetOf_lpPrintTemplateName' -> 16r3C.
-		'_OffsetOf_lStructSize' -> 16r0.
-		'_OffsetOf_nCopies' -> 16r34.
-		'_OffsetOf_nMaxPage' -> 16r30.
-		'_OffsetOf_nMaxPageRanges' -> 16r24.
-		'_OffsetOf_nMinPage' -> 16r2C.
-		'_OffsetOf_nPageRanges' -> 16r20.
-		'_OffsetOf_nPropertyPages' -> 16r44.
-		'_OffsetOf_nStartPage' -> 16r4C.
-		'_PRINTDLGEXW_Size' -> 16r54
-	}!
+			'_OffsetOf_dwResultAction' -> 16r50.
+			'_OffsetOf_ExclusionFlags' -> 16r1C.
+			'_OffsetOf_flags' -> 16r14.
+			'_OffsetOf_Flags2' -> 16r18.
+			'_OffsetOf_hDC' -> 16r10.
+			'_OffsetOf_hDevMode' -> 16r8.
+			'_OffsetOf_hDevNames' -> 16rC.
+			'_OffsetOf_hInstance' -> 16r38.
+			'_OffsetOf_hwndOwner' -> 16r4.
+			'_OffsetOf_lpCallback' -> 16r40.
+			'_OffsetOf_lphPropertyPages' -> 16r48.
+			'_OffsetOf_lpPageRanges' -> 16r28.
+			'_OffsetOf_lpPrintTemplateName' -> 16r3C.
+			'_OffsetOf_lStructSize' -> 16r0.
+			'_OffsetOf_nCopies' -> 16r34.
+			'_OffsetOf_nMaxPage' -> 16r30.
+			'_OffsetOf_nMaxPageRanges' -> 16r24.
+			'_OffsetOf_nMinPage' -> 16r2C.
+			'_OffsetOf_nPageRanges' -> 16r20.
+			'_OffsetOf_nPropertyPages' -> 16r44.
+			'_OffsetOf_nStartPage' -> 16r4C.
+			'_PRINTDLGEXW_Size' -> 16r54
+		}!
 OS.PRINTDLGEXW guid: (Core.GUID fromString: '{46f06e70-1bb5-4b02-98ee-6ab442f3b43f}')!
 OS.PRINTDLGEXW comment: '<PRINTDLGEX> is an <ExternalStructure> class to wrap the struct ''Win32.PRINTDLGEX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

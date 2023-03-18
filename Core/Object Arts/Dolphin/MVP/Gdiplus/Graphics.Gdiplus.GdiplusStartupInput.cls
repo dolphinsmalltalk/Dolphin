@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.GpStructure subclass: #'Graphics.Gdiplus.GdiplusStartupInput'
+Graphics.Gdiplus.GpStructure
+	subclass: #'Graphics.Gdiplus.GdiplusStartupInput'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_GdiplusStartupInput_Size' -> 16r10.
-		'_OffsetOf_DebugEventCallback' -> 16r4.
-		'_OffsetOf_GdiplusVersion' -> 16r0.
-		'_OffsetOf_SuppressBackgroundThread' -> 16r8.
-		'_OffsetOf_SuppressExternalCodecs' -> 16rC
-	}!
+			'_GdiplusStartupInput_Size' -> 16r10.
+			'_OffsetOf_DebugEventCallback' -> 16r4.
+			'_OffsetOf_GdiplusVersion' -> 16r0.
+			'_OffsetOf_SuppressBackgroundThread' -> 16r8.
+			'_OffsetOf_SuppressExternalCodecs' -> 16rC
+		}!
 Graphics.Gdiplus.GdiplusStartupInput guid: (Core.GUID fromString: '{0cb202b5-b002-428d-8a31-f44d2919cb02}')!
 Graphics.Gdiplus.GdiplusStartupInput comment: '<GdiplusStartupInput> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GdiplusStartupInput'' from type information in the ''GDI+ Library 1.0'' library.
 

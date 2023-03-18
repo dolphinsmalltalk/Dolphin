@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.RefactoringTool subclass: #'Tools.MethodRefactoringTool'
+Tools.RefactoringTool
+	subclass: #'Tools.MethodRefactoringTool'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

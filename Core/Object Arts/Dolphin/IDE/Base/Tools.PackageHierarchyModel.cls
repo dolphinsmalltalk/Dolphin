@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.FolderHierarchyModel subclass: #'Tools.PackageHierarchyModel'
+UI.FolderHierarchyModel
+	subclass: #'Tools.PackageHierarchyModel'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

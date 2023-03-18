@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_CACHE_POLICY'
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_CACHE_POLICY'
 	instanceVariableNames: ''
 	classVariableNames: 'NoCache UserInvalidates'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_CACHE_POLICY_Size' -> 16r8.
-		'_OffsetOf_Policy' -> 16r0.
-		'_OffsetOf_SecondsToLive' -> 16r4
-	}!
+			'_HTTP_CACHE_POLICY_Size' -> 16r8.
+			'_OffsetOf_Policy' -> 16r0.
+			'_OffsetOf_SecondsToLive' -> 16r4
+		}!
 WinHttpServer.HTTP_CACHE_POLICY guid: (Core.GUID fromString: '{02064551-c601-4e48-85ac-6d19fe34f58b}')!
 WinHttpServer.HTTP_CACHE_POLICY comment: '`HTTP_CACHE_POLICY` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_CACHE_POLICY'' from type information in the ''Windows Http Server API'' library.
 

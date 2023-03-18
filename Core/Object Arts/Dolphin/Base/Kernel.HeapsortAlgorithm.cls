@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.PluggableSortAlgorithm subclass: #'Kernel.HeapsortAlgorithm'
+Kernel.PluggableSortAlgorithm
+	subclass: #'Kernel.HeapsortAlgorithm'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

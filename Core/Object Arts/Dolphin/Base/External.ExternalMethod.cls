@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.CompiledMethod variableSubclass: #'External.ExternalMethod'
+Kernel.CompiledMethod
+	variableSubclass: #'External.ExternalMethod'
 	instanceVariableNames: ''
 	classVariableNames: 'ArgsLenIndex ArgumentStartIndex CallingConventionIndex ReturnParmIndex ReturnTypeIndex'
 	imports: #()

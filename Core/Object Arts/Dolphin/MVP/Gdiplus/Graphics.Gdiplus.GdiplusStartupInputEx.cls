@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.GdiplusStartupInput subclass: #'Graphics.Gdiplus.GdiplusStartupInputEx'
+Graphics.Gdiplus.GdiplusStartupInput
+	subclass: #'Graphics.Gdiplus.GdiplusStartupInputEx'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_GdiplusStartupInputEx_Size' -> 16r14.
-		'_OffsetOf_StartupParameters' -> 16r10
-	}!
+	classConstants: { '_GdiplusStartupInputEx_Size' -> 16r14. '_OffsetOf_StartupParameters' -> 16r10 }!
 Graphics.Gdiplus.GdiplusStartupInputEx guid: (Core.GUID fromString: '{9fa0e6e5-3e7d-46f3-a441-669977f4627e}')!
 Graphics.Gdiplus.GdiplusStartupInputEx comment: ''!
 !Graphics.Gdiplus.GdiplusStartupInputEx methodsFor!

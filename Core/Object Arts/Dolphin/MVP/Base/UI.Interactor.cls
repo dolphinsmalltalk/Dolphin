@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'UI.Interactor'
+Core.Object
+	subclass: #'UI.Interactor'
 	instanceVariableNames: 'presenter'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})

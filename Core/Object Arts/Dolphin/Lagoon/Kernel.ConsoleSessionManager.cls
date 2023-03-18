@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.SessionManager subclass: #'Kernel.ConsoleSessionManager'
+Core.SessionManager
+	subclass: #'Kernel.ConsoleSessionManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.CRTConstants})

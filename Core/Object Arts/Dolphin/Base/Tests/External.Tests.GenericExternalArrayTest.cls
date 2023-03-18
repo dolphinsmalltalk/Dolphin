@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Tests.ExternalArrayTest subclass: #'External.Tests.GenericExternalArrayTest'
+External.Tests.ExternalArrayTest
+	subclass: #'External.Tests.GenericExternalArrayTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

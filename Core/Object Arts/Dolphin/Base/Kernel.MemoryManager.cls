@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Kernel.MemoryManager'
+Core.Object
+	subclass: #'Kernel.MemoryManager'
 	instanceVariableNames: 'finalizer lastRequests hospice hospiceHighWater maxObjects undertaker bereavements bereaved bereavedHighWater gcInterval lastGCTime lastGCDuration _unused13 events'
 	classVariableNames: 'Current GCInterval'
 	imports: #()

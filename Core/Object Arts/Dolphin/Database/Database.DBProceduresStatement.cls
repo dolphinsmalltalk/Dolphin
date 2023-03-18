@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Database.DBSchemaStatement subclass: #'Database.DBProceduresStatement'
+Database.DBSchemaStatement
+	subclass: #'Database.DBProceduresStatement'
 	instanceVariableNames: 'procedureName'
 	classVariableNames: ''
 	imports: #()

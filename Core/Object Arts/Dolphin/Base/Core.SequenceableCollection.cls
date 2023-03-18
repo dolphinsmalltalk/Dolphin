@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Collection subclass: #'Core.SequenceableCollection'
+Core.Collection
+	subclass: #'Core.SequenceableCollection'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

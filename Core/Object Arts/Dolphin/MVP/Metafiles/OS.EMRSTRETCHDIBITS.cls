@@ -1,28 +1,29 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMRSTRETCHDIBITS'
+OS.ENHMETARECORD
+	subclass: #'OS.EMRSTRETCHDIBITS'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_EMRSTRETCHDIBITS_Size' -> 16r50.
-		'_OffsetOf_cbBitsSrc' -> 16r3C.
-		'_OffsetOf_cbBmiSrc' -> 16r34.
-		'_OffsetOf_cxDest' -> 16r48.
-		'_OffsetOf_cxSrc' -> 16r28.
-		'_OffsetOf_cyDest' -> 16r4C.
-		'_OffsetOf_cySrc' -> 16r2C.
-		'_OffsetOf_dwRop' -> 16r44.
-		'_OffsetOf_iUsageSrc' -> 16r40.
-		'_OffsetOf_offBitsSrc' -> 16r38.
-		'_OffsetOf_offBmiSrc' -> 16r30.
-		'_OffsetOf_rclBounds' -> 16r8.
-		'_OffsetOf_xDest' -> 16r18.
-		'_OffsetOf_xSrc' -> 16r20.
-		'_OffsetOf_yDest' -> 16r1C.
-		'_OffsetOf_ySrc' -> 16r24
-	}!
+			'_EMRSTRETCHDIBITS_Size' -> 16r50.
+			'_OffsetOf_cbBitsSrc' -> 16r3C.
+			'_OffsetOf_cbBmiSrc' -> 16r34.
+			'_OffsetOf_cxDest' -> 16r48.
+			'_OffsetOf_cxSrc' -> 16r28.
+			'_OffsetOf_cyDest' -> 16r4C.
+			'_OffsetOf_cySrc' -> 16r2C.
+			'_OffsetOf_dwRop' -> 16r44.
+			'_OffsetOf_iUsageSrc' -> 16r40.
+			'_OffsetOf_offBitsSrc' -> 16r38.
+			'_OffsetOf_offBmiSrc' -> 16r30.
+			'_OffsetOf_rclBounds' -> 16r8.
+			'_OffsetOf_xDest' -> 16r18.
+			'_OffsetOf_xSrc' -> 16r20.
+			'_OffsetOf_yDest' -> 16r1C.
+			'_OffsetOf_ySrc' -> 16r24
+		}!
 OS.EMRSTRETCHDIBITS guid: (Core.GUID fromString: '{bfcc8077-e3d1-4f40-81c8-b36128972f7a}')!
 OS.EMRSTRETCHDIBITS comment: '<EMRSTRETCHDIBITS> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSTRETCHDIBITS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

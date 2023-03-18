@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMRCOLORCORRECTPALETTE'
+OS.ENHMETARECORD
+	subclass: #'OS.EMRCOLORCORRECTPALETTE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_EMRCOLORCORRECTPALETTE_Size' -> 16r18.
-		'_OffsetOf_ihPalette' -> 16r8.
-		'_OffsetOf_nFirstEntry' -> 16rC.
-		'_OffsetOf_nPalEntries' -> 16r10.
-		'_OffsetOf_nReserved' -> 16r14
-	}!
+			'_EMRCOLORCORRECTPALETTE_Size' -> 16r18.
+			'_OffsetOf_ihPalette' -> 16r8.
+			'_OffsetOf_nFirstEntry' -> 16rC.
+			'_OffsetOf_nPalEntries' -> 16r10.
+			'_OffsetOf_nReserved' -> 16r14
+		}!
 OS.EMRCOLORCORRECTPALETTE guid: (Core.GUID fromString: '{b425fd3a-cd17-44a5-972f-7f4d44d06495}')!
 OS.EMRCOLORCORRECTPALETTE comment: '<COLORCORRECTPALETTE> is an <ExternalStructure> class to wrap the struct ''Win32.COLORCORRECTPALETTE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

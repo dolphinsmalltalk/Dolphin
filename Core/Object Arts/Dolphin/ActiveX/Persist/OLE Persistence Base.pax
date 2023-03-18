@@ -34,25 +34,29 @@ package!
 
 "Class Definitions"!
 
-OS.COM.IUnknown subclass: #'OS.COM.IPersist'
+OS.COM.IUnknown
+	subclass: #'OS.COM.IPersist'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.IPersist subclass: #'OS.COM.IPersistMemory'
+OS.COM.IPersist
+	subclass: #'OS.COM.IPersistMemory'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.IPersist subclass: #'OS.COM.IPersistStream'
+OS.COM.IPersist
+	subclass: #'OS.COM.IPersistStream'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.IPersistStream subclass: #'OS.COM.IPersistStreamInit'
+OS.COM.IPersistStream
+	subclass: #'OS.COM.IPersistStreamInit'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

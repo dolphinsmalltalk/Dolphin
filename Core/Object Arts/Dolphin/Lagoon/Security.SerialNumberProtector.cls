@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Security.SerialNumberProtector'
+Core.Object
+	subclass: #'Security.SerialNumberProtector'
 	instanceVariableNames: 'key'
 	classVariableNames: ''
 	imports: #()

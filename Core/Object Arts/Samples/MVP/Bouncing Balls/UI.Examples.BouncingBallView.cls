@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.DoubleBufferedView subclass: #'UI.Examples.BouncingBallView'
+UI.DoubleBufferedView
+	subclass: #'UI.Examples.BouncingBallView'
 	instanceVariableNames: 'balls stepProcess'
 	classVariableNames: ''
 	imports: #()

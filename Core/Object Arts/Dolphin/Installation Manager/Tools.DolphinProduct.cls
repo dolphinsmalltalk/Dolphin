@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Tools.DolphinProduct'
+Core.Object
+	subclass: #'Tools.DolphinProduct'
 	instanceVariableNames: 'version encryptedClasses'
 	classVariableNames: 'Current EditionsMap'
 	imports: #()

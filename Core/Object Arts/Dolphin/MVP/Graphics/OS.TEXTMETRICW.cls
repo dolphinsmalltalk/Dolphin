@@ -1,33 +1,34 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.TEXTMETRICW'
+OS.Win32Structure
+	subclass: #'OS.TEXTMETRICW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_tmAscent' -> 16r4.
-		'_OffsetOf_tmAveCharWidth' -> 16r14.
-		'_OffsetOf_tmBreakChar' -> 16r32.
-		'_OffsetOf_tmCharSet' -> 16r38.
-		'_OffsetOf_tmDefaultChar' -> 16r30.
-		'_OffsetOf_tmDescent' -> 16r8.
-		'_OffsetOf_tmDigitizedAspectX' -> 16r24.
-		'_OffsetOf_tmDigitizedAspectY' -> 16r28.
-		'_OffsetOf_tmExternalLeading' -> 16r10.
-		'_OffsetOf_tmFirstChar' -> 16r2C.
-		'_OffsetOf_tmHeight' -> 16r0.
-		'_OffsetOf_tmInternalLeading' -> 16rC.
-		'_OffsetOf_tmItalic' -> 16r34.
-		'_OffsetOf_tmLastChar' -> 16r2E.
-		'_OffsetOf_tmMaxCharWidth' -> 16r18.
-		'_OffsetOf_tmOverhang' -> 16r20.
-		'_OffsetOf_tmPitchAndFamily' -> 16r37.
-		'_OffsetOf_tmStruckOut' -> 16r36.
-		'_OffsetOf_tmUnderlined' -> 16r35.
-		'_OffsetOf_tmWeight' -> 16r1C.
-		'_TEXTMETRICW_Size' -> 16r3C
-	}!
+			'_OffsetOf_tmAscent' -> 16r4.
+			'_OffsetOf_tmAveCharWidth' -> 16r14.
+			'_OffsetOf_tmBreakChar' -> 16r32.
+			'_OffsetOf_tmCharSet' -> 16r38.
+			'_OffsetOf_tmDefaultChar' -> 16r30.
+			'_OffsetOf_tmDescent' -> 16r8.
+			'_OffsetOf_tmDigitizedAspectX' -> 16r24.
+			'_OffsetOf_tmDigitizedAspectY' -> 16r28.
+			'_OffsetOf_tmExternalLeading' -> 16r10.
+			'_OffsetOf_tmFirstChar' -> 16r2C.
+			'_OffsetOf_tmHeight' -> 16r0.
+			'_OffsetOf_tmInternalLeading' -> 16rC.
+			'_OffsetOf_tmItalic' -> 16r34.
+			'_OffsetOf_tmLastChar' -> 16r2E.
+			'_OffsetOf_tmMaxCharWidth' -> 16r18.
+			'_OffsetOf_tmOverhang' -> 16r20.
+			'_OffsetOf_tmPitchAndFamily' -> 16r37.
+			'_OffsetOf_tmStruckOut' -> 16r36.
+			'_OffsetOf_tmUnderlined' -> 16r35.
+			'_OffsetOf_tmWeight' -> 16r1C.
+			'_TEXTMETRICW_Size' -> 16r3C
+		}!
 OS.TEXTMETRICW guid: (Core.GUID fromString: '{ea0d6df4-3794-11d3-979e-0080c8d59432}')!
 OS.TEXTMETRICW comment: '<TEXTMETRIC> is an <ExternalStructure> class to wrap the struct ''Win.TEXTMETRIC'' from type information in the ''Windows API (ANSI)'' library.
 

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Database.DBAbstractRow subclass: #'Database.DBRowBuffer'
+Database.DBAbstractRow
+	subclass: #'Database.DBRowBuffer'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

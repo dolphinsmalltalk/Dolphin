@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Category subclass: #'Tools.IntermediateCategory'
+Core.Category
+	subclass: #'Tools.IntermediateCategory'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

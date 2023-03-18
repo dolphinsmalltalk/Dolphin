@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.VirtualMethodCategory subclass: #'Tools.MethodPrivacyCategory'
+Tools.VirtualMethodCategory
+	subclass: #'Tools.MethodPrivacyCategory'
 	instanceVariableNames: 'privacy'
 	classVariableNames: ''
 	imports: #()

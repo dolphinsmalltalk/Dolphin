@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.ChooseClassDialog subclass: #'Tools.ChooseNamespaceDialog'
+Tools.ChooseClassDialog
+	subclass: #'Tools.ChooseNamespaceDialog'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

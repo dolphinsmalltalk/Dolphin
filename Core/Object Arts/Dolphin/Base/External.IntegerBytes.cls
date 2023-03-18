@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.ByteArray variableByteSubclass: #'External.IntegerBytes'
+Core.ByteArray
+	variableByteSubclass: #'External.IntegerBytes'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

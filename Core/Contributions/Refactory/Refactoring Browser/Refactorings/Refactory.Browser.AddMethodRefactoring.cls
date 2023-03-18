@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.MethodRefactoring subclass: #'Refactory.Browser.AddMethodRefactoring'
+Refactory.Browser.MethodRefactoring
+	subclass: #'Refactory.Browser.AddMethodRefactoring'
 	instanceVariableNames: 'protocols source'
 	classVariableNames: ''
 	imports: #()

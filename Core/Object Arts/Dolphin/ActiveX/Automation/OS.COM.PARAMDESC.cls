@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.OLEStructure subclass: #'OS.COM.PARAMDESC'
+OS.COM.OLEStructure
+	subclass: #'OS.COM.PARAMDESC'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_pparamdescex' -> 16r0.
-		'_OffsetOf_wParamFlags' -> 16r4.
-		'_PARAMDESC_Size' -> 16r8
-	}!
+			'_OffsetOf_pparamdescex' -> 16r0.
+			'_OffsetOf_wParamFlags' -> 16r4.
+			'_PARAMDESC_Size' -> 16r8
+		}!
 OS.COM.PARAMDESC guid: (Core.GUID fromString: '{c06f3b73-0868-11d3-93af-00a024ca708a}')!
 OS.COM.PARAMDESC comment: 'PARAMDESC is an <ExternalStructure> to represent the AX Automation structure of the same name.
 

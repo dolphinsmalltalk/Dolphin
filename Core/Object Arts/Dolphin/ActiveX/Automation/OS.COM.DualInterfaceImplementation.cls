@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.AbstractDispatchImplementation subclass: #'OS.COM.DualInterfaceImplementation'
+OS.COM.AbstractDispatchImplementation
+	subclass: #'OS.COM.DualInterfaceImplementation'
 	instanceVariableNames: 'interface piTypeInfo locale'
 	classVariableNames: ''
 	imports: #()

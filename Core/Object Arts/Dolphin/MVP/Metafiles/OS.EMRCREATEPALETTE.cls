@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMRCREATEPALETTE'
+OS.ENHMETARECORD
+	subclass: #'OS.EMRCREATEPALETTE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_EMRCREATEPALETTE_Size' -> 16r14.
-		'_OffsetOf_ihPal' -> 16r8.
-		'_OffsetOf_lgpl' -> 16rC
-	}!
+			'_EMRCREATEPALETTE_Size' -> 16r14.
+			'_OffsetOf_ihPal' -> 16r8.
+			'_OffsetOf_lgpl' -> 16rC
+		}!
 OS.EMRCREATEPALETTE guid: (Core.GUID fromString: '{b8739ed2-de47-467f-aa8d-3a62f4c00509}')!
 OS.EMRCREATEPALETTE comment: '<EMRCREATEPALETTE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRCREATEPALETTE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

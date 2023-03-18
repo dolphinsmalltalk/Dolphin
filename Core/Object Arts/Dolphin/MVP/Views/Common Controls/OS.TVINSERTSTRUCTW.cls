@@ -1,16 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.TVINSERTSTRUCTW'
+OS.Win32Structure
+	subclass: #'OS.TVINSERTSTRUCTW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.TreeViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_hInsertAfter' -> 16r4.
-		'_OffsetOf_hParent' -> 16r0.
-		'_OffsetOf_item' -> 16r8.
-		'_TVINSERTSTRUCTW_Size' -> 16r40
-	}!
+			'_OffsetOf_hInsertAfter' -> 16r4.
+			'_OffsetOf_hParent' -> 16r0.
+			'_OffsetOf_item' -> 16r8.
+			'_TVINSERTSTRUCTW_Size' -> 16r40
+		}!
 OS.TVINSERTSTRUCTW guid: (Core.GUID fromString: '{87b4c618-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.TVINSERTSTRUCTW comment: ''!
 !OS.TVINSERTSTRUCTW categoriesForClass!External-Data-Structured-Win32! !

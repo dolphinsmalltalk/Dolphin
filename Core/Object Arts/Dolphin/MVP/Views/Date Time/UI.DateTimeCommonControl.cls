@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ValueConvertingControlView subclass: #'UI.DateTimeCommonControl'
+UI.ValueConvertingControlView
+	subclass: #'UI.DateTimeCommonControl'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.DateTimeCommCtrlConstants})

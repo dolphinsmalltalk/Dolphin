@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ValueConvertingControlView subclass: #'UI.ProgressBar'
+UI.ValueConvertingControlView
+	subclass: #'UI.ProgressBar'
 	instanceVariableNames: ''
 	classVariableNames: 'ValidRange'
 	imports: #(#{OS.ProgressBarConstants})

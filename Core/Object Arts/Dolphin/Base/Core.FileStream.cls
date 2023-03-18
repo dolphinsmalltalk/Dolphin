@@ -1,18 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.ReadWriteStream subclass: #'Core.FileStream'
+Core.ReadWriteStream
+	subclass: #'Core.FileStream'
 	instanceVariableNames: 'file flags pageBase logicalFileSize offset'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'BufferClasses' -> (IdentityDictionary withAll: {#utf8 -> Utf8String. #binary -> ByteArray. #ansi -> AnsiString}).
-		'BufferUpdatedMask' -> 16r3.
-		'DirtyBufferMask' -> 16r2.
-		'LimitsChangedMask' -> 16r1.
-		'OwnsFileMask' -> 16r100.
-		'PageSize' -> 16r2000
-	}!
+			'BufferClasses'
+				-> (IdentityDictionary withAll: { #ansi -> AnsiString. #binary -> ByteArray. #utf8 -> Utf8String }).
+			'BufferUpdatedMask' -> 16r3.
+			'DirtyBufferMask' -> 16r2.
+			'LimitsChangedMask' -> 16r1.
+			'OwnsFileMask' -> 16r100.
+			'PageSize' -> 16r2000
+		}!
 Core.FileStream guid: (Core.GUID fromString: '{87b4c6ff-026e-11d3-9fd7-00a0cc3e4a32}')!
 Core.FileStream comment: '`FileStream` is a specialized `ReadWriteStream` for streaming over binary and text files.
 

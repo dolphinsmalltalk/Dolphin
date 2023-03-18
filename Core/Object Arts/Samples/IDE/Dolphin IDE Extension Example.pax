@@ -36,15 +36,13 @@ package!
 
 "Class Definitions"!
 
-Core.Object subclass: #'Tools.Examples.OAIDEExtensions'
+Core.Object
+	subclass: #'Tools.Examples.OAIDEExtensions'
 	instanceVariableNames: 'flags'
 	classVariableNames: 'Current'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'ClassCommentTemplateMask' -> 16r1.
-		'KeyHelpMask' -> 16r2
-	}!
+	classConstants: { 'ClassCommentTemplateMask' -> 16r1. 'KeyHelpMask' -> 16r2 }!
 
 "Loose Methods"!
 

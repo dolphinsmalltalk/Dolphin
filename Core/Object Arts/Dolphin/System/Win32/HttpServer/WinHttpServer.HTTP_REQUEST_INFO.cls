@@ -1,16 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_REQUEST_INFO'
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_REQUEST_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_REQUEST_INFO_Size' -> 16rC.
-		'_OffsetOf_InfoLength' -> 16r4.
-		'_OffsetOf_InfoType' -> 16r0.
-		'_OffsetOf_pInfo' -> 16r8
-	}!
+			'_HTTP_REQUEST_INFO_Size' -> 16rC.
+			'_OffsetOf_InfoLength' -> 16r4.
+			'_OffsetOf_InfoType' -> 16r0.
+			'_OffsetOf_pInfo' -> 16r8
+		}!
 WinHttpServer.HTTP_REQUEST_INFO guid: (Core.GUID fromString: '{8c37d370-da00-4186-b515-ebe6b57d8cc6}')!
 WinHttpServer.HTTP_REQUEST_INFO comment: '`HTTP_REQUEST_INFO` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_REQUEST_INFO'' from type information in the ''Windows Http Server API'' library.
 

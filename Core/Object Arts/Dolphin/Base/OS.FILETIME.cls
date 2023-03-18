@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.FILETIME'
+OS.Win32Structure
+	subclass: #'OS.FILETIME'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_FILETIME_Size' -> 16r8.
-		'_OffsetOf_dwHighDateTime' -> 16r4.
-		'_OffsetOf_dwLowDateTime' -> 16r0.
-		'SmalltalkEpoch' -> 16r150560D76A70000.
-		'UnixEpoch' -> 16r19DB1DED53E8000
-	}!
+			'_FILETIME_Size' -> 16r8.
+			'_OffsetOf_dwHighDateTime' -> 16r4.
+			'_OffsetOf_dwLowDateTime' -> 16r0.
+			'SmalltalkEpoch' -> 16r150560D76A70000.
+			'UnixEpoch' -> 16r19DB1DED53E8000
+		}!
 OS.FILETIME guid: (Core.GUID fromString: '{87b4c5f1-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.FILETIME comment: 'FILETIME is an ExternalStructure class to represent the Win32 FILETIME structure.
 

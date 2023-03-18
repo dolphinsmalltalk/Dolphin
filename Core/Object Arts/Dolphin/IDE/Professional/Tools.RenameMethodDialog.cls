@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.MethodNameDialog subclass: #'Tools.RenameMethodDialog'
+Tools.MethodNameDialog
+	subclass: #'Tools.RenameMethodDialog'
 	instanceVariableNames: 'scopePresenter scopeDescriptionPresenter allowExistingSelector'
 	classVariableNames: ''
 	imports: #()

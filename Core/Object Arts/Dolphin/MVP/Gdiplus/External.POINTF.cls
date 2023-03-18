@@ -1,15 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.POINT subclass: #'External.POINTF'
+External.POINT
+	subclass: #'External.POINTF'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_OffsetOf_x' -> 16r0.
-		'_OffsetOf_y' -> 16r4.
-		'_POINTF_Size' -> 16r8
-	}!
+	classConstants: { '_OffsetOf_x' -> 16r0. '_OffsetOf_y' -> 16r4. '_POINTF_Size' -> 16r8 }!
 External.POINTF guid: (Core.GUID fromString: '{c6f719de-eec5-45f6-bd44-71200f76bd34}')!
 External.POINTF comment: '`POINTF` is an `ExternalStructure` class to wrap the struct of the same name.
 

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.StVariable subclass: #'Kernel.StStaticVariable'
+Kernel.StVariable
+	subclass: #'Kernel.StStaticVariable'
 	instanceVariableNames: 'binding'
 	classVariableNames: ''
 	imports: #()

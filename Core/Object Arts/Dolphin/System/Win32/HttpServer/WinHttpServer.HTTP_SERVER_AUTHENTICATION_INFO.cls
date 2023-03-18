@@ -1,20 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WinHttpServer.HTTP_PROPERTY_FLAGS subclass: #'WinHttpServer.HTTP_SERVER_AUTHENTICATION_INFO'
+WinHttpServer.HTTP_PROPERTY_FLAGS
+	subclass: #'WinHttpServer.HTTP_SERVER_AUTHENTICATION_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_SERVER_AUTHENTICATION_INFO_Size' -> 16r24.
-		'_OffsetOf_AuthSchemes' -> 16r4.
-		'_OffsetOf_BasicParams' -> 16r1C.
-		'_OffsetOf_DigestParams' -> 16rC.
-		'_OffsetOf_DisableNTLMCredentialCaching' -> 16rA.
-		'_OffsetOf_ExFlags' -> 16rB.
-		'_OffsetOf_ReceiveContextHandle' -> 16r9.
-		'_OffsetOf_ReceiveMutualAuth' -> 16r8
-	}!
+			'_HTTP_SERVER_AUTHENTICATION_INFO_Size' -> 16r24.
+			'_OffsetOf_AuthSchemes' -> 16r4.
+			'_OffsetOf_BasicParams' -> 16r1C.
+			'_OffsetOf_DigestParams' -> 16rC.
+			'_OffsetOf_DisableNTLMCredentialCaching' -> 16rA.
+			'_OffsetOf_ExFlags' -> 16rB.
+			'_OffsetOf_ReceiveContextHandle' -> 16r9.
+			'_OffsetOf_ReceiveMutualAuth' -> 16r8
+		}!
 WinHttpServer.HTTP_SERVER_AUTHENTICATION_INFO guid: (Core.GUID fromString: '{7f4599b6-bdfd-4a19-8a4a-a7fd55a9e207}')!
 WinHttpServer.HTTP_SERVER_AUTHENTICATION_INFO comment: '`HTTP_SERVER_AUTHENTICATION_INFO` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_SERVER_AUTHENTICATION_INFO'' from type information in the ''Windows Http Server API'' library.
 

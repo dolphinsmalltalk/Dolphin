@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.ClassBuilder subclass: #'Kernel.AnonymousClassBuilder'
+Kernel.ClassBuilder
+	subclass: #'Kernel.AnonymousClassBuilder'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

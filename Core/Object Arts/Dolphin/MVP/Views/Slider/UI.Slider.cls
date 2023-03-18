@@ -1,13 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ValueConvertingControlView subclass: #'UI.Slider'
+UI.ValueConvertingControlView
+	subclass: #'UI.Slider'
 	instanceVariableNames: 'autoTickFrequency _reserved1 _reserved2'
-	classVariableNames: 'HorizontalTickStyles VerticalTickStyles'
+	classVariableNames: ''
 	imports: #(#{OS.TrackBarConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'TickStyleMask' -> 16rC
-	}!
+			'HorizontalTickStyles'
+				-> (IdentityDictionary withAll: { #bothSides -> 16r8. #bottom -> 16r0. #top -> 16r4 }).
+			'TickStyleMask' -> 16rC.
+			'VerticalTickStyles'
+				-> (IdentityDictionary withAll: { #bothSides -> 16r8. #left -> 16r4. #right -> 16r0 })
+		}!
 UI.Slider guid: (Core.GUID fromString: '{425d0eab-542e-11d3-998b-d5ca2c3c1d61}')!
 UI.Slider comment: 'Slider is a <valueView> implementing the Windows "msctls_trackbar32" common control. The <valueModel> associated with a Slider must always yield an <integer> value when mapped through the installed type converter. A Slider will normally be used in conjunction with a <NumberPresenter>.
 

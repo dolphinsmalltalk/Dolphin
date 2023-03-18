@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Shell subclass: #'UI.Examples.Calculator'
+UI.Shell
+	subclass: #'UI.Examples.Calculator'
 	instanceVariableNames: 'input output'
 	classVariableNames: ''
 	imports: #()

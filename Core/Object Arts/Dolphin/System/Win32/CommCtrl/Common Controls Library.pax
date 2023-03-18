@@ -16,7 +16,8 @@ package!
 
 "Class Definitions"!
 
-External.DynamicLinkLibrary subclass: #'OS.CommCtrlLibrary'
+External.DynamicLinkLibrary
+	subclass: #'OS.CommCtrlLibrary'
 	instanceVariableNames: ''
 	classVariableNames: 'InitFlags'
 	imports: #()

@@ -57,127 +57,148 @@ package!
 
 "Class Definitions"!
 
-UI.Dialog subclass: #'Tools.Tests.ClosedCommandDescriptionIssueDialog'
+UI.Dialog
+	subclass: #'Tools.Tests.ClosedCommandDescriptionIssueDialog'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-XProgramming.SUnit.TestCase subclass: #'Tools.Tests.ClosedCommandDescriptionTest'
+XProgramming.SUnit.TestCase
+	subclass: #'Tools.Tests.ClosedCommandDescriptionTest'
 	instanceVariableNames: 'dialog'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Tools.Tests.ClassBrowserAbstractTest'
+Core.Tests.DolphinTest
+	subclass: #'Tools.Tests.ClassBrowserAbstractTest'
 	instanceVariableNames: 'browser methodsPresenter packageA plugins'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Tools.Tests.CodeMentorTest'
+Core.Tests.DolphinTest
+	subclass: #'Tools.Tests.CodeMentorTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Tools.Tests.DebuggerTest'
+Core.Tests.DolphinTest
+	subclass: #'Tools.Tests.DebuggerTest'
 	instanceVariableNames: 'process savedShowWalkbacks savedView'
 	classVariableNames: ''
 	imports: #(#{Kernel.OpcodePool})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Tools.Tests.IdeaSpaceShellTest'
+Core.Tests.DolphinTest
+	subclass: #'Tools.Tests.IdeaSpaceShellTest'
 	instanceVariableNames: 'ideaShell browserPlugins'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Tools.Tests.PackageBrowserShellTest'
+Core.Tests.DolphinTest
+	subclass: #'Tools.Tests.PackageBrowserShellTest'
 	instanceVariableNames: 'packageA packageB packageC dolphinTestA dolphinTestB dolphinTestC shell cardsPresenter classesPresenter methodsPresenter variablesPresenter resourcesPresenter dependencyPresenters methodAA methodAB methodAC methodBA methodBB methodCA'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Tools.Tests.PublishedAspectInspectorTest'
+Core.Tests.DolphinTest
+	subclass: #'Tools.Tests.PublishedAspectInspectorTest'
 	instanceVariableNames: 'inspector treePresenter displayPresenter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Tools.Tests.SmalltalkStylerTest'
+Core.Tests.DolphinTest
+	subclass: #'Tools.Tests.SmalltalkStylerTest'
 	instanceVariableNames: 'mock scintilla'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Tools.Tests.SmalltalkSystemShellTest'
+Core.Tests.DolphinTest
+	subclass: #'Tools.Tests.SmalltalkSystemShellTest'
 	instanceVariableNames: 'systemShell'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Tools.Tests.ViewComposerTest'
+Core.Tests.DolphinTest
+	subclass: #'Tools.Tests.ViewComposerTest'
 	instanceVariableNames: 'vc sampleClass'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.Tests.ClassBrowserAbstractTest subclass: #'Tools.Tests.ClassBrowserTest'
+Tools.Tests.ClassBrowserAbstractTest
+	subclass: #'Tools.Tests.ClassBrowserTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.Tests.ClassBrowserAbstractTest subclass: #'Tools.Tests.SystemBrowserTest'
+Tools.Tests.ClassBrowserAbstractTest
+	subclass: #'Tools.Tests.SystemBrowserTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.FolderTest subclass: #'Tools.Tests.PackageFolderTest'
+UI.Tests.FolderTest
+	subclass: #'Tools.Tests.PackageFolderTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.PresenterTest subclass: #'Tools.Tests.MethodWorkspaceTest'
+UI.Tests.PresenterTest
+	subclass: #'Tools.Tests.MethodWorkspaceTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.PresenterTest subclass: #'Tools.Tests.ResourceBrowserTest'
+UI.Tests.PresenterTest
+	subclass: #'Tools.Tests.ResourceBrowserTest'
 	instanceVariableNames: 'testClass'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.SelectableItemsTest subclass: #'Tools.Tests.ClassSelectorTest'
+UI.Tests.SelectableItemsTest
+	subclass: #'Tools.Tests.ClassSelectorTest'
 	instanceVariableNames: 'packageA packageB packageC dolphinTestA dolphinTestB dolphinTestC dolphinTestD dolphinTestE dolphinTestF dolphinTestG dolphinTestH dolphinTestI'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.SelectableItemsTest subclass: #'Tools.Tests.PackageSelectorTest'
+UI.Tests.SelectableItemsTest
+	subclass: #'Tools.Tests.PackageSelectorTest'
 	instanceVariableNames: 'packageA'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.Tests.ClassSelectorTest subclass: #'Tools.Tests.ClassHierarchySelectorTest'
+Tools.Tests.ClassSelectorTest
+	subclass: #'Tools.Tests.ClassHierarchySelectorTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.Tests.ClassSelectorTest subclass: #'Tools.Tests.ClassListSelectorTest'
+Tools.Tests.ClassSelectorTest
+	subclass: #'Tools.Tests.ClassListSelectorTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.Tests.ClassSelectorTest subclass: #'Tools.Tests.PackagedClassSelectorTest'
+Tools.Tests.ClassSelectorTest
+	subclass: #'Tools.Tests.PackagedClassSelectorTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

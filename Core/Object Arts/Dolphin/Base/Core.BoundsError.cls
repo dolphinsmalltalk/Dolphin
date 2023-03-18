@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Error subclass: #'Core.BoundsError'
+Core.Error
+	subclass: #'Core.BoundsError'
 	instanceVariableNames: 'receiver'
 	classVariableNames: ''
 	imports: #()

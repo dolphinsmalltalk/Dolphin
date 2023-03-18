@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.ImageInitializer subclass: #'Graphics.IconFromTextTileIconInitializer'
+Graphics.ImageInitializer
+	subclass: #'Graphics.IconFromTextTileIconInitializer'
 	instanceVariableNames: 'extent textTile'
 	classVariableNames: ''
 	imports: #(#{Graphics.Gdiplus})

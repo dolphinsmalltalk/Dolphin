@@ -25,31 +25,36 @@ package!
 
 "Class Definitions"!
 
-Kernel.Namespace subclass: #XProgramming
+Kernel.Namespace
+	subclass: #XProgramming
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{Core})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-XProgramming subclass: #'XProgramming.SUnit'
+XProgramming
+	subclass: #'XProgramming.SUnit'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'XProgramming.SUnit.SUnitNameResolver'
+Core.Object
+	subclass: #'XProgramming.SUnit.SUnitNameResolver'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Error subclass: #'XProgramming.SUnit.TestFailure'
+Core.Error
+	subclass: #'XProgramming.SUnit.TestFailure'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-XProgramming.SUnit.TestFailure subclass: #'XProgramming.SUnit.ResumableTestFailure'
+XProgramming.SUnit.TestFailure
+	subclass: #'XProgramming.SUnit.ResumableTestFailure'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

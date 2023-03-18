@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.MIB_UDPROW subclass: #'OS.MIB_UDPEXROW'
+OS.MIB_UDPROW
+	subclass: #'OS.MIB_UDPEXROW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_MIB_UDPEXROW_Size' -> 16rC.
-		'_OffsetOf_dwProcessId' -> 16r8
-	}!
+	classConstants: { '_MIB_UDPEXROW_Size' -> 16rC. '_OffsetOf_dwProcessId' -> 16r8 }!
 OS.MIB_UDPEXROW guid: (Core.GUID fromString: '{fda0765b-395f-447b-881b-26155c88393a}')!
 OS.MIB_UDPEXROW comment: '<MIB_UDPEXROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_UDPEXROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

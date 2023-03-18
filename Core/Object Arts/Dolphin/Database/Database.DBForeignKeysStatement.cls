@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Database.DBSchemaStatement subclass: #'Database.DBForeignKeysStatement'
+Database.DBSchemaStatement
+	subclass: #'Database.DBForeignKeysStatement'
 	instanceVariableNames: 'foreignCatalogName foreignSchemaName foreignTableName'
 	classVariableNames: ''
 	imports: #()

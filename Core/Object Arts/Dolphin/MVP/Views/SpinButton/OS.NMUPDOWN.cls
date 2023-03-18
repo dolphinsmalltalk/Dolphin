@@ -1,15 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.NMHDR subclass: #'OS.NMUPDOWN'
+OS.NMHDR
+	subclass: #'OS.NMUPDOWN'
 	instanceVariableNames: 'allow'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_NMUPDOWN_Size' -> 16r14.
-		'_OffsetOf_iDelta' -> 16r10.
-		'_OffsetOf_iPos' -> 16rC
-	}!
+	classConstants: { '_NMUPDOWN_Size' -> 16r14. '_OffsetOf_iDelta' -> 16r10. '_OffsetOf_iPos' -> 16rC }!
 OS.NMUPDOWN guid: (Core.GUID fromString: '{425d0ea7-542e-11d3-998b-d5ca2c3c1d61}')!
 OS.NMUPDOWN comment: '<NMUPDOWN> is an <ExternalStructure> class to wrap the struct ''UpDownLib.NMUPDOWN'' from type information in the ''Microsoft Windows Up-Down Control'' library.
 

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.CardContainer subclass: #'UI.SlidingCardTray'
+UI.CardContainer
+	subclass: #'UI.SlidingCardTray'
 	instanceVariableNames: '_sctReserved0 slider pinSize pinInteractor _sctReserved1 _sctReserved2'
 	classVariableNames: 'PinImageList'
 	imports: #(#{OS.TabViewConstants} #{OS.ThemeConstants})

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.RBAbstractCondition subclass: #'Refactory.Browser.RBCondition'
+Refactory.Browser.RBAbstractCondition
+	subclass: #'Refactory.Browser.RBCondition'
 	instanceVariableNames: 'block type errorBlock'
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Link subclass: #'UI.MoenLink'
+Core.Link
+	subclass: #'UI.MoenLink'
 	instanceVariableNames: 'x y'
 	classVariableNames: ''
 	imports: #()

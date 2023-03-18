@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Graphics.ImageManager'
+Core.Object
+	subclass: #'Graphics.ImageManager'
 	instanceVariableNames: 'images imageLists maskcolor backcolor'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.Tests.AnnouncerTest subclass: #'Kernel.Tests.WeakAnnouncerTest'
+Kernel.Tests.AnnouncerTest
+	subclass: #'Kernel.Tests.WeakAnnouncerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

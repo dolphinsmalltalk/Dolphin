@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.MethodBrowserShell subclass: #'Tools.MethodExplorerShell'
+Tools.MethodBrowserShell
+	subclass: #'Tools.MethodExplorerShell'
 	instanceVariableNames: 'historyTree historyList'
 	classVariableNames: 'HistoryListSize'
 	imports: #()

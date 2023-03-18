@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools subclass: #'Tools.Examples'
+Tools
+	subclass: #'Tools.Examples'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

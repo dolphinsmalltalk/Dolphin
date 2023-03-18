@@ -31,19 +31,22 @@ package!
 
 "Class Definitions"!
 
-Core.Magnitude subclass: #'Core.Date'
+Core.Magnitude
+	subclass: #'Core.Date'
 	instanceVariableNames: 'days'
 	classVariableNames: 'DaysInMonth DaysUntilMonth DefaultLongPicture YearPivot'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Magnitude subclass: #'Core.Time'
+Core.Magnitude
+	subclass: #'Core.Time'
 	instanceVariableNames: 'seconds'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Magnitude subclass: #'Core.TimeStamp'
+Core.Magnitude
+	subclass: #'Core.TimeStamp'
 	instanceVariableNames: 'date time'
 	classVariableNames: ''
 	imports: #()

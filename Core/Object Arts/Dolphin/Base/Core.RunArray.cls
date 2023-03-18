@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.ArrayedCollection subclass: #'Core.RunArray'
+Core.ArrayedCollection
+	subclass: #'Core.RunArray'
 	instanceVariableNames: 'values runs'
 	classVariableNames: ''
 	imports: #()

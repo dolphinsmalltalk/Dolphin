@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Category subclass: #'Core.ClassCategory'
+Core.Category
+	subclass: #'Core.ClassCategory'
 	instanceVariableNames: ''
 	classVariableNames: 'Deprecated Table Unclassified'
 	imports: #()

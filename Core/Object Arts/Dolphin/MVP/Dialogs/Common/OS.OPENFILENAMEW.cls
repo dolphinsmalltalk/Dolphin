@@ -1,36 +1,37 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.CommonDialogStructure subclass: #'OS.OPENFILENAMEW'
+OS.CommonDialogStructure
+	subclass: #'OS.OPENFILENAMEW'
 	instanceVariableNames: 'fileName title filter defExt initialDir'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_dwReserved' -> 16r50.
-		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_flags' -> 16r34.
-		'_OffsetOf_flagsEx' -> 16r54.
-		'_OffsetOf_hInstance' -> 16r8.
-		'_OffsetOf_hwndOwner' -> 16r4.
-		'_OffsetOf_lCustData' -> 16r40.
-		'_OffsetOf_lpfnHook' -> 16r44.
-		'_OffsetOf_lpstrCustomFilter' -> 16r10.
-		'_OffsetOf_lpstrDefExt' -> 16r3C.
-		'_OffsetOf_lpstrFile' -> 16r1C.
-		'_OffsetOf_lpstrFileTitle' -> 16r24.
-		'_OffsetOf_lpstrFilter' -> 16rC.
-		'_OffsetOf_lpstrInitialDir' -> 16r2C.
-		'_OffsetOf_lpstrTitle' -> 16r30.
-		'_OffsetOf_lpTemplateName' -> 16r48.
-		'_OffsetOf_nFileExtension' -> 16r3A.
-		'_OffsetOf_nFileOffset' -> 16r38.
-		'_OffsetOf_nFilterIndex' -> 16r18.
-		'_OffsetOf_nMaxCustFilter' -> 16r14.
-		'_OffsetOf_nMaxFile' -> 16r20.
-		'_OffsetOf_nMaxFileTitle' -> 16r28.
-		'_OffsetOf_pvReserved' -> 16r4C.
-		'_OPENFILENAMEW_Size' -> 16r58
-	}!
+			'_OffsetOf_dwReserved' -> 16r50.
+			'_OffsetOf_dwSize' -> 16r0.
+			'_OffsetOf_flags' -> 16r34.
+			'_OffsetOf_flagsEx' -> 16r54.
+			'_OffsetOf_hInstance' -> 16r8.
+			'_OffsetOf_hwndOwner' -> 16r4.
+			'_OffsetOf_lCustData' -> 16r40.
+			'_OffsetOf_lpfnHook' -> 16r44.
+			'_OffsetOf_lpstrCustomFilter' -> 16r10.
+			'_OffsetOf_lpstrDefExt' -> 16r3C.
+			'_OffsetOf_lpstrFile' -> 16r1C.
+			'_OffsetOf_lpstrFileTitle' -> 16r24.
+			'_OffsetOf_lpstrFilter' -> 16rC.
+			'_OffsetOf_lpstrInitialDir' -> 16r2C.
+			'_OffsetOf_lpstrTitle' -> 16r30.
+			'_OffsetOf_lpTemplateName' -> 16r48.
+			'_OffsetOf_nFileExtension' -> 16r3A.
+			'_OffsetOf_nFileOffset' -> 16r38.
+			'_OffsetOf_nFilterIndex' -> 16r18.
+			'_OffsetOf_nMaxCustFilter' -> 16r14.
+			'_OffsetOf_nMaxFile' -> 16r20.
+			'_OffsetOf_nMaxFileTitle' -> 16r28.
+			'_OffsetOf_pvReserved' -> 16r4C.
+			'_OPENFILENAMEW_Size' -> 16r58
+		}!
 OS.OPENFILENAMEW guid: (Core.GUID fromString: '{87b4c603-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.OPENFILENAMEW comment: 'OPENFILENAME is a <Win32Structure> which represents the Windows Common Dialog structure of the same name. It is used in conjunction with the GetOpenFileName() and GetSaveFileName() APIs which pop a common file dialog to browser for a file to load or save respectively. See the <FileDialog> and the Win32 documentation for further details.
 

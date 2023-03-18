@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Refactory.Browser.ReferenceFinder'
+Core.Object
+	subclass: #'Refactory.Browser.ReferenceFinder'
 	instanceVariableNames: 'backlinks objectsLeft testBlock foundBlock'
 	classVariableNames: ''
 	imports: #()

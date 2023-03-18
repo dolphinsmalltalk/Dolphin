@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.Scintilla.IntTypeReference subclass: #'Tools.Scintilla.EnumTypeReference'
+Tools.Scintilla.IntTypeReference
+	subclass: #'Tools.Scintilla.EnumTypeReference'
 	instanceVariableNames: 'name prefix values defaultValueName'
 	classVariableNames: ''
 	imports: #()

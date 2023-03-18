@@ -1,20 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.OLEStructure subclass: #'OS.COM.BINDINFO'
+OS.COM.OLEStructure
+	subclass: #'OS.COM.BINDINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_BINDINFO_Size' -> 16r24.
-		'_OffsetOf_cbstgmedData' -> 16r20.
-		'_OffsetOf_dwBindVerb' -> 16r18.
-		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_grfBindInfoF' -> 16r14.
-		'_OffsetOf_stgmedData' -> 16r8.
-		'_OffsetOf_szCustomVerb' -> 16r1C.
-		'_OffsetOf_szExtraInfo' -> 16r4
-	}!
+			'_BINDINFO_Size' -> 16r24.
+			'_OffsetOf_cbstgmedData' -> 16r20.
+			'_OffsetOf_dwBindVerb' -> 16r18.
+			'_OffsetOf_dwSize' -> 16r0.
+			'_OffsetOf_grfBindInfoF' -> 16r14.
+			'_OffsetOf_stgmedData' -> 16r8.
+			'_OffsetOf_szCustomVerb' -> 16r1C.
+			'_OffsetOf_szExtraInfo' -> 16r4
+		}!
 OS.COM.BINDINFO guid: (Core.GUID fromString: '{464f7fac-9ba3-4055-8492-dc95aba83383}')!
 OS.COM.BINDINFO comment: '<BINDINFO> is an <ExternalStructure> class to wrap the struct ''UrlMon.tagBINDINFO'' from type information in the ''UrlMon Library'' library.
 '!

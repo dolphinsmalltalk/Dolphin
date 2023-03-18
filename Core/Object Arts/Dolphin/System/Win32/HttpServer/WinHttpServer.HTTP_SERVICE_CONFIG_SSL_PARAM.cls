@@ -1,23 +1,24 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_SSL_PARAM'
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_SSL_PARAM'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_SERVICE_CONFIG_SSL_PARAM_Size' -> 16r34.
-		'_OffsetOf_AppId' -> 16r8.
-		'_OffsetOf_DefaultCertCheckMode' -> 16r1C.
-		'_OffsetOf_DefaultFlags' -> 16r30.
-		'_OffsetOf_DefaultRevocationFreshnessTime' -> 16r20.
-		'_OffsetOf_DefaultRevocationUrlRetrievalTimeout' -> 16r24.
-		'_OffsetOf_pDefaultSslCtlIdentifier' -> 16r28.
-		'_OffsetOf_pDefaultSslCtlStoreName' -> 16r2C.
-		'_OffsetOf_pSslCertStoreName' -> 16r18.
-		'_OffsetOf_pSslHash' -> 16r4.
-		'_OffsetOf_SslHashLength' -> 16r0
-	}!
+			'_HTTP_SERVICE_CONFIG_SSL_PARAM_Size' -> 16r34.
+			'_OffsetOf_AppId' -> 16r8.
+			'_OffsetOf_DefaultCertCheckMode' -> 16r1C.
+			'_OffsetOf_DefaultFlags' -> 16r30.
+			'_OffsetOf_DefaultRevocationFreshnessTime' -> 16r20.
+			'_OffsetOf_DefaultRevocationUrlRetrievalTimeout' -> 16r24.
+			'_OffsetOf_pDefaultSslCtlIdentifier' -> 16r28.
+			'_OffsetOf_pDefaultSslCtlStoreName' -> 16r2C.
+			'_OffsetOf_pSslCertStoreName' -> 16r18.
+			'_OffsetOf_pSslHash' -> 16r4.
+			'_OffsetOf_SslHashLength' -> 16r0
+		}!
 WinHttpServer.HTTP_SERVICE_CONFIG_SSL_PARAM guid: (Core.GUID fromString: '{7fe46aef-bb33-40ac-a388-846c53efde1d}')!
 WinHttpServer.HTTP_SERVICE_CONFIG_SSL_PARAM comment: '`HTTP_SERVICE_CONFIG_SSL_PARAM` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_SSL_PARAM'' from type information in the ''Windows Http Server API'' library.
 

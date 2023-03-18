@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-XProgramming.SUnit.TestFailure subclass: #'XProgramming.SUnit.ResumableTestFailure'
+XProgramming.SUnit.TestFailure
+	subclass: #'XProgramming.SUnit.ResumableTestFailure'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

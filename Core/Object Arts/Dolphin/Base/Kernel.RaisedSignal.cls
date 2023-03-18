@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Error subclass: #'Kernel.RaisedSignal'
+Core.Error
+	subclass: #'Kernel.RaisedSignal'
 	instanceVariableNames: 'signalType'
 	classVariableNames: ''
 	imports: #()

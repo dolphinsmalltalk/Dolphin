@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.CommandPolicy subclass: #'UI.DelegatingCommandPolicy'
+UI.CommandPolicy
+	subclass: #'UI.DelegatingCommandPolicy'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

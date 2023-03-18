@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.LookupTableTest subclass: #'Core.Tests.WeakIdentityDictionaryTest'
+Core.Tests.LookupTableTest
+	subclass: #'Core.Tests.WeakIdentityDictionaryTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

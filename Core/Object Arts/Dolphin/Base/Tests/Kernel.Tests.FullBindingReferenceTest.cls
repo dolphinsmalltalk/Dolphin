@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.Tests.ScopedBindingReferenceTest subclass: #'Kernel.Tests.FullBindingReferenceTest'
+Kernel.Tests.ScopedBindingReferenceTest
+	subclass: #'Kernel.Tests.FullBindingReferenceTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

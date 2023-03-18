@@ -1,18 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.FLASHWINFO'
+OS.Win32Structure
+	subclass: #'OS.FLASHWINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_FLASHWINFO_Size' -> 16r14.
-		'_OffsetOf_dwFlags' -> 16r8.
-		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_dwTimeout' -> 16r10.
-		'_OffsetOf_hwnd' -> 16r4.
-		'_OffsetOf_uCount' -> 16rC
-	}!
+			'_FLASHWINFO_Size' -> 16r14.
+			'_OffsetOf_dwFlags' -> 16r8.
+			'_OffsetOf_dwSize' -> 16r0.
+			'_OffsetOf_dwTimeout' -> 16r10.
+			'_OffsetOf_hwnd' -> 16r4.
+			'_OffsetOf_uCount' -> 16rC
+		}!
 OS.FLASHWINFO guid: (Core.GUID fromString: '{2a5e4594-f531-486b-a082-17686b820cd4}')!
 OS.FLASHWINFO comment: 'FLASHWINFO is the class of <ExternalStructure> which represent the Win32 structure of the same name.
 

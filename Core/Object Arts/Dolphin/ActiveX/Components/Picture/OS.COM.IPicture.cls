@@ -1,18 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IUnknown subclass: #'OS.COM.IPicture'
+OS.COM.IUnknown
+	subclass: #'OS.COM.IPicture'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'PICTYPE_BITMAP' -> 16r1.
-		'PICTYPE_ENHMETAFILE' -> 16r4.
-		'PICTYPE_ICON' -> 16r3.
-		'PICTYPE_METAFILE' -> 16r2.
-		'PICTYPE_NONE' -> 16r0.
-		'PICTYPE_UNINITIALIZED' -> -16r1
-	}!
+			'PICTYPE_BITMAP' -> 16r1.
+			'PICTYPE_ENHMETAFILE' -> 16r4.
+			'PICTYPE_ICON' -> 16r3.
+			'PICTYPE_METAFILE' -> 16r2.
+			'PICTYPE_NONE' -> 16r0.
+			'PICTYPE_UNINITIALIZED' -> -16r1
+		}!
 OS.COM.IPicture guid: (OS.COM.IID fromString: '{7bf80980-bf32-101a-8bbb-00aa00300cab}')!
 OS.COM.IPicture comment: '`IPicture` is a wrapper class for the COM interface ''stdole.IPicture'' generated from type information in the ''OLE Automation'' library. It contains methods to invoke the member functions exposed by that interface.
 

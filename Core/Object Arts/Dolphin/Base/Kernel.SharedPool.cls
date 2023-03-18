@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.Namespace subclass: #'Kernel.SharedPool'
+Kernel.Namespace
+	subclass: #'Kernel.SharedPool'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -1,18 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.BITMAPFILEHEADER'
+OS.Win32Structure
+	subclass: #'OS.BITMAPFILEHEADER'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_BITMAPFILEHEADER_Size' -> 16rE.
-		'_OffsetOf_bfOffBits' -> 16rA.
-		'_OffsetOf_bfReserved1' -> 16r6.
-		'_OffsetOf_bfReserved2' -> 16r8.
-		'_OffsetOf_bfSize' -> 16r2.
-		'_OffsetOf_bfType' -> 16r0
-	}!
+			'_BITMAPFILEHEADER_Size' -> 16rE.
+			'_OffsetOf_bfOffBits' -> 16rA.
+			'_OffsetOf_bfReserved1' -> 16r6.
+			'_OffsetOf_bfReserved2' -> 16r8.
+			'_OffsetOf_bfSize' -> 16r2.
+			'_OffsetOf_bfType' -> 16r0
+		}!
 OS.BITMAPFILEHEADER guid: (Core.GUID fromString: '{48f23680-5426-11d3-998b-bca753d3b065}')!
 OS.BITMAPFILEHEADER comment: '`BITMAPFILEHEADER` is an `External.Structure` class to wrap the struct ''Win32.BITMAPFILEHEADER'' from type information in the ''Win32 API'' library.
 

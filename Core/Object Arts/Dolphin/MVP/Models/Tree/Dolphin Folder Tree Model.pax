@@ -20,13 +20,15 @@ package!
 
 "Class Definitions"!
 
-Core.Object subclass: #'UI.Folder'
+Core.Object
+	subclass: #'UI.Folder'
 	instanceVariableNames: 'pathname'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.TreeModel subclass: #'UI.FolderHierarchyModel'
+UI.TreeModel
+	subclass: #'UI.FolderHierarchyModel'
 	instanceVariableNames: ''
 	classVariableNames: 'NodeSortAlgorithm'
 	imports: #()

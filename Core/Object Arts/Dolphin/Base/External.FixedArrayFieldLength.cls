@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.ArrayFieldLength subclass: #'External.FixedArrayFieldLength'
+External.ArrayFieldLength
+	subclass: #'External.FixedArrayFieldLength'
 	instanceVariableNames: 'elementCount'
 	classVariableNames: ''
 	imports: #()

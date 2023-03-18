@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI subclass: #'UI.Examples'
+UI
+	subclass: #'UI.Examples'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

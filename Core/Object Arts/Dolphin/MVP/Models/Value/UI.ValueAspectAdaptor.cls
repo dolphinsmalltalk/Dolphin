@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ValueAdaptor subclass: #'UI.ValueAspectAdaptor'
+UI.ValueAdaptor
+	subclass: #'UI.ValueAspectAdaptor'
 	instanceVariableNames: 'aspect putSelector getSelector'
 	classVariableNames: ''
 	imports: #()

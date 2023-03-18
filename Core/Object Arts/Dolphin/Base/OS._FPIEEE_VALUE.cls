@@ -1,16 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'OS._FPIEEE_VALUE'
+External.Structure
+	subclass: #'OS._FPIEEE_VALUE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'__FPIEEE_VALUE_Size' -> 16r18.
-		'_OffsetOf_filler' -> 16r14.
-		'_OffsetOf_flags' -> 16r10.
-		'_OffsetOf_value' -> 16r0
-	}!
+			'__FPIEEE_VALUE_Size' -> 16r18.
+			'_OffsetOf_filler' -> 16r14.
+			'_OffsetOf_flags' -> 16r10.
+			'_OffsetOf_value' -> 16r0
+		}!
 OS._FPIEEE_VALUE guid: (Core.GUID fromString: '{836cb53c-b7d3-492c-ad33-8574c49bed82}')!
 OS._FPIEEE_VALUE comment: '_FPIEEE_VALUE is an <ExternalStructure> class to represent the Win32 structure of the same name. _FPIEEE_VALUE is used in the reporting of IEEE compliant floating point exceptions. It is essentially a discriminated union that can hold the various types of operand that can be used in floating point operations.'!
 !OS._FPIEEE_VALUE categoriesForClass!External-Data-Structured! !

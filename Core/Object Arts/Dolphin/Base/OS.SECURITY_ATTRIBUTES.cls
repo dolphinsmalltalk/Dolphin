@@ -1,16 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.SECURITY_ATTRIBUTES'
+OS.Win32Structure
+	subclass: #'OS.SECURITY_ATTRIBUTES'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_bInheritHandle' -> 16r8.
-		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_lpSecurityDescriptor' -> 16r4.
-		'_SECURITY_ATTRIBUTES_Size' -> 16rC
-	}!
+			'_OffsetOf_bInheritHandle' -> 16r8.
+			'_OffsetOf_dwSize' -> 16r0.
+			'_OffsetOf_lpSecurityDescriptor' -> 16r4.
+			'_SECURITY_ATTRIBUTES_Size' -> 16rC
+		}!
 OS.SECURITY_ATTRIBUTES guid: (Core.GUID fromString: '{f44c9145-2b3f-11d3-8368-7a8b5a000000}')!
 OS.SECURITY_ATTRIBUTES comment: '<SECURITY_ATTRIBUTES> is an <ExternalStructure> class to wrap the struct ''Win32.SECURITY_ATTRIBUTES'' from type information in the ''Win32 API'' library.
 

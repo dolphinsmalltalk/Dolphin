@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.ShellView subclass: #'UI.Examples.Playground'
+UI.ShellView
+	subclass: #'UI.Examples.Playground'
 	instanceVariableNames: 'shapes'
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.ClassDescription subclass: #'Core.Metaclass'
+Core.ClassDescription
+	subclass: #'Core.Metaclass'
 	instanceVariableNames: 'instanceClass'
 	classVariableNames: ''
 	imports: #()

@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.BLENDFUNCTION'
+OS.Win32Structure
+	subclass: #'OS.BLENDFUNCTION'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_BLENDFUNCTION_Size' -> 16r4.
-		'_OffsetOf_AlphaFormat' -> 16r3.
-		'_OffsetOf_BlendFlags' -> 16r1.
-		'_OffsetOf_BlendOp' -> 16r0.
-		'_OffsetOf_SourceConstantAlpha' -> 16r2
-	}!
+			'_BLENDFUNCTION_Size' -> 16r4.
+			'_OffsetOf_AlphaFormat' -> 16r3.
+			'_OffsetOf_BlendFlags' -> 16r1.
+			'_OffsetOf_BlendOp' -> 16r0.
+			'_OffsetOf_SourceConstantAlpha' -> 16r2
+		}!
 OS.BLENDFUNCTION guid: (Core.GUID fromString: '{18e4db2f-bc13-4088-8c0d-df249d0bb979}')!
 OS.BLENDFUNCTION comment: '<BLENDFUNCTION> is an <ExternalStructure> class to wrap the struct ''Win32.BLENDFUNCTION'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

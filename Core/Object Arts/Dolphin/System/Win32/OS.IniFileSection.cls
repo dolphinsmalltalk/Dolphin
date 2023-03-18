@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.IniFileAbstract subclass: #'OS.IniFileSection'
+OS.IniFileAbstract
+	subclass: #'OS.IniFileSection'
 	instanceVariableNames: 'name'
 	classVariableNames: ''
 	imports: #()

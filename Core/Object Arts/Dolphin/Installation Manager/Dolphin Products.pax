@@ -24,31 +24,36 @@ package!
 
 "Class Definitions"!
 
-Core.Object subclass: #'Tools.DolphinProduct'
+Core.Object
+	subclass: #'Tools.DolphinProduct'
 	instanceVariableNames: 'version encryptedClasses'
 	classVariableNames: 'Current EditionsMap'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.DolphinProduct subclass: #'Tools.DolphinCoreProduct'
+Tools.DolphinProduct
+	subclass: #'Tools.DolphinCoreProduct'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.DolphinCoreProduct subclass: #'Tools.DolphinBaseProduct'
+Tools.DolphinCoreProduct
+	subclass: #'Tools.DolphinBaseProduct'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.DolphinBaseProduct subclass: #'Tools.DolphinCommunityEdition'
+Tools.DolphinBaseProduct
+	subclass: #'Tools.DolphinCommunityEdition'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.DolphinBaseProduct subclass: #'Tools.DolphinProfessional'
+Tools.DolphinBaseProduct
+	subclass: #'Tools.DolphinProfessional'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

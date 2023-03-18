@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'STON.Tests.TestKnownObject'
+Core.Object
+	subclass: #'STON.Tests.TestKnownObject'
 	instanceVariableNames: 'id description'
 	classVariableNames: 'KnownObjects'
 	imports: #()

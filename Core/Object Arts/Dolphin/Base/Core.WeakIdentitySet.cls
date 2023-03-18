@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.WeakSet variableSubclass: #'Core.WeakIdentitySet'
+Core.WeakSet
+	variableSubclass: #'Core.WeakIdentitySet'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

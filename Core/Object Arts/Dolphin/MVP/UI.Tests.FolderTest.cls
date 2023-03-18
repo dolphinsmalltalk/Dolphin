@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTest subclass: #'UI.Tests.FolderTest'
+Core.Tests.DolphinTest
+	subclass: #'UI.Tests.FolderTest'
 	instanceVariableNames: 'c windows system root oa'
 	classVariableNames: ''
 	imports: #()

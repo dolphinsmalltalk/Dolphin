@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.DoubleBufferedView subclass: #'UI.AnimatedImageView'
+UI.DoubleBufferedView
+	subclass: #'UI.AnimatedImageView'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

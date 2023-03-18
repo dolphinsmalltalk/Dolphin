@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Gdiplus.GdiplusBase subclass: #'Graphics.Gdiplus.CachedBitmap'
+Graphics.Gdiplus.GdiplusBase
+	subclass: #'Graphics.Gdiplus.CachedBitmap'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

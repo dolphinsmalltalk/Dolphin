@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.EMREXTTEXTOUT subclass: #'OS.EMREXTTEXTOUTA'
+OS.EMREXTTEXTOUT
+	subclass: #'OS.EMREXTTEXTOUTA'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_EMREXTTEXTOUTA_Size' -> 16r50.
-		'_OffsetOf_text' -> 16r4C
-	}!
+	classConstants: { '_EMREXTTEXTOUTA_Size' -> 16r50. '_OffsetOf_text' -> 16r4C }!
 OS.EMREXTTEXTOUTA guid: (Core.GUID fromString: '{897dbf3a-44ad-4594-ae7e-957cb1e28374}')!
 OS.EMREXTTEXTOUTA comment: '<EMREXTTEXTOUTA> is an <ExternalStructure> class to wrap the struct ''Win32.EMREXTTEXTOUTA'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Security.DolphinSureCertificateStore'
+Core.Object
+	subclass: #'Security.DolphinSureCertificateStore'
 	instanceVariableNames: 'regKey'
 	classVariableNames: ''
 	imports: #()

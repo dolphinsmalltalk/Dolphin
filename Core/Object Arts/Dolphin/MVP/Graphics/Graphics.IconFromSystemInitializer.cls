@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.ImageInitializer subclass: #'Graphics.IconFromSystemInitializer'
+Graphics.ImageInitializer
+	subclass: #'Graphics.IconFromSystemInitializer'
 	instanceVariableNames: 'extent identifier'
 	classVariableNames: ''
 	imports: #()

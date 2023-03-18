@@ -1,13 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.GraphicsTool subclass: #'Graphics.Pen'
+Graphics.GraphicsTool
+	subclass: #'Graphics.Pen'
 	instanceVariableNames: 'logPen'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'LineJoinNames' -> #('LineJoinMiter' 'LineJoinBevel' 'LineJoinRound' 'LineJoinMiterClipped')
-	}!
+			'LineJoinNames'
+				-> #('LineJoinMiter' 'LineJoinBevel' 'LineJoinRound' 'LineJoinMiterClipped')
+		}!
 Graphics.Pen guid: (Core.GUID fromString: '{87b4c637-026e-11d3-9fd7-00a0cc3e4a32}')!
 Graphics.Pen comment: 'Pen is a <GraphicsTool> that wraps a Windows GDI Pen object. Pens are selected into <Canvas>s to draw lines in various styles, widths, and colours.
 

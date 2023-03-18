@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Scintilla.ThreeStateBooleanPropertyDescriptor subclass: #'UI.Scintilla.InvertedThreeStateBooleanPropertyDescriptor'
+UI.Scintilla.ThreeStateBooleanPropertyDescriptor
+	subclass: #'UI.Scintilla.InvertedThreeStateBooleanPropertyDescriptor'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

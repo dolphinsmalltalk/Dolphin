@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.InspectorAbstract subclass: #'Tools.AspectInspector'
+Tools.InspectorAbstract
+	subclass: #'Tools.AspectInspector'
 	instanceVariableNames: 'aspectTreePresenter'
 	classVariableNames: ''
 	imports: #()

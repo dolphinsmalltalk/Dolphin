@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Error subclass: #'OS.HRESULTError'
+Core.Error
+	subclass: #'OS.HRESULTError'
 	instanceVariableNames: 'errorInfo osErrorMessage'
 	classVariableNames: 'FacilityClasses'
 	imports: #(#{OS.FacilityCodes private})

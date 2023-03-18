@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.CompilerNotification subclass: #'Kernel.CompilerInfoNotification'
+Kernel.CompilerNotification
+	subclass: #'Kernel.CompilerInfoNotification'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

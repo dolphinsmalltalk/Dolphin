@@ -27,28 +27,30 @@ package!
 
 "Class Definitions"!
 
-UI.CapturingInteractor subclass: #'UI.ButtonInteractor'
+UI.CapturingInteractor
+	subclass: #'UI.ButtonInteractor'
 	instanceVariableNames: 'buttonRect _unused5 commandDescription'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'ButtonStateMask' -> 16r3.
-		'PressedMask' -> 16r2
-	}!
-UI.ContainerView subclass: #'UI.SlideyInneyOuteyThing'
+	classConstants: { 'ButtonStateMask' -> 16r3. 'PressedMask' -> 16r2 }!
+UI.ContainerView
+	subclass: #'UI.SlideyInneyOuteyThing'
 	instanceVariableNames: 'tabs tray trayExtent animationDuration tickCounter siotFlags _siotReserved1 _siotReserved2'
-	classVariableNames: 'AnimationDuration Animations SlideInDelay'
+	classVariableNames: 'AnimationDuration SlideInDelay'
 	imports: #(#{OS.ThemeConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'AnimatedCardChangeMask' -> 16r8.
-		'AnimatedUnpinMask' -> 16r2.
-		'AnimationMask' -> 16rC0010.
-		'HideOnUnpinMask' -> 16r1.
-		'ResizableMask' -> 16r4
-	}!
-UI.CardContainer subclass: #'UI.SlidingCardTray'
+			'AnimatedCardChangeMask' -> 16r8.
+			'AnimatedUnpinMask' -> 16r2.
+			'AnimationMask' -> 16rC0010.
+			'Animations' -> (IdentityDictionary
+						withAll: { #blend -> 16r80000. #collapse -> 16r10. #roll -> 16r0. #slide -> 16r40000 }).
+			'HideOnUnpinMask' -> 16r1.
+			'ResizableMask' -> 16r4
+		}!
+UI.CardContainer
+	subclass: #'UI.SlidingCardTray'
 	instanceVariableNames: '_sctReserved0 slider pinSize pinInteractor _sctReserved1 _sctReserved2'
 	classVariableNames: 'PinImageList'
 	imports: #(#{OS.TabViewConstants} #{OS.ThemeConstants})

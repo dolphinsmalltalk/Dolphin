@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Graphics.GraphicsTool'
+Core.Object
+	subclass: #'Graphics.GraphicsTool'
 	instanceVariableNames: 'handle ownsHandle'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.DynamicLinkLibrary subclass: #'OS.ThemeLibrary'
+External.DynamicLinkLibrary
+	subclass: #'OS.ThemeLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.ThemeConstants})

@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.BITMAP subclass: #'OS.DIBSECTION'
+OS.BITMAP
+	subclass: #'OS.DIBSECTION'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_DIBSECTION_Size' -> 16r54.
-		'_OffsetOf_dsBitfields' -> 16r40.
-		'_OffsetOf_dsBmih' -> 16r18.
-		'_OffsetOf_dshSection' -> 16r4C.
-		'_OffsetOf_dsOffset' -> 16r50
-	}!
+			'_DIBSECTION_Size' -> 16r54.
+			'_OffsetOf_dsBitfields' -> 16r40.
+			'_OffsetOf_dsBmih' -> 16r18.
+			'_OffsetOf_dshSection' -> 16r4C.
+			'_OffsetOf_dsOffset' -> 16r50
+		}!
 OS.DIBSECTION guid: (Core.GUID fromString: '{87b4c5e7-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.DIBSECTION comment: '<DIBSECTION> is an <ExternalStructure> class to wrap the struct ''Win.DIBSECTION'' from type information in the ''Windows API (ANSI)'' library.
 

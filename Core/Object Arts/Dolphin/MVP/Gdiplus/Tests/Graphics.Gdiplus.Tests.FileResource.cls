@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-XProgramming.SUnit.TestResource subclass: #'Graphics.Gdiplus.Tests.FileResource'
+XProgramming.SUnit.TestResource
+	subclass: #'Graphics.Gdiplus.Tests.FileResource'
 	instanceVariableNames: 'tempDir tempFileLocator'
 	classVariableNames: ''
 	imports: #()

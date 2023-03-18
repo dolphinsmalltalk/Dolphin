@@ -1,19 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.WIN32_FILE_ATTRIBUTE_DATA'
+OS.Win32Structure
+	subclass: #'OS.WIN32_FILE_ATTRIBUTE_DATA'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_dwFileAttributes' -> 16r0.
-		'_OffsetOf_ftCreationTime' -> 16r4.
-		'_OffsetOf_ftLastAccessTime' -> 16rC.
-		'_OffsetOf_ftLastWriteTime' -> 16r14.
-		'_OffsetOf_nFileSizeHigh' -> 16r1C.
-		'_OffsetOf_nFileSizeLow' -> 16r20.
-		'_WIN32_FILE_ATTRIBUTE_DATA_Size' -> 16r24
-	}!
+			'_OffsetOf_dwFileAttributes' -> 16r0.
+			'_OffsetOf_ftCreationTime' -> 16r4.
+			'_OffsetOf_ftLastAccessTime' -> 16rC.
+			'_OffsetOf_ftLastWriteTime' -> 16r14.
+			'_OffsetOf_nFileSizeHigh' -> 16r1C.
+			'_OffsetOf_nFileSizeLow' -> 16r20.
+			'_WIN32_FILE_ATTRIBUTE_DATA_Size' -> 16r24
+		}!
 OS.WIN32_FILE_ATTRIBUTE_DATA guid: (Core.GUID fromString: '{93f205f7-0707-40b3-813b-cad835330f3e}')!
 OS.WIN32_FILE_ATTRIBUTE_DATA comment: '`WIN32_FILE_ATTRIBUTE_DATA` is an `ExternalStructure` class to wrap the struct ''Win32.WIN32_FILE_ATTRIBUTE_DATA'' from type information in the ''Win32 API'' library.
 

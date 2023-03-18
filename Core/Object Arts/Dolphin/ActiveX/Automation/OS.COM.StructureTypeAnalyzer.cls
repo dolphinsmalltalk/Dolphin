@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.TypeInfoAnalyzer subclass: #'OS.COM.StructureTypeAnalyzer'
+OS.COM.TypeInfoAnalyzer
+	subclass: #'OS.COM.StructureTypeAnalyzer'
 	instanceVariableNames: ''
 	classVariableNames: 'BuiltIns'
 	imports: #()

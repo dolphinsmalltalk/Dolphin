@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.ExternalArray subclass: #'Graphics.Gdiplus.ARGBArray'
+External.ExternalArray
+	subclass: #'Graphics.Gdiplus.ARGBArray'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

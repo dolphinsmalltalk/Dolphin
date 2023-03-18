@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.GRADIENT_RECT'
+OS.Win32Structure
+	subclass: #'OS.GRADIENT_RECT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_GRADIENT_RECT_Size' -> 16r8.
-		'_OffsetOf_lowerRight' -> 16r4.
-		'_OffsetOf_upperLeft' -> 16r0
-	}!
+			'_GRADIENT_RECT_Size' -> 16r8.
+			'_OffsetOf_lowerRight' -> 16r4.
+			'_OffsetOf_upperLeft' -> 16r0
+		}!
 OS.GRADIENT_RECT guid: (Core.GUID fromString: '{01040b06-a9e6-4438-8a6b-a8502a2c7794}')!
 OS.GRADIENT_RECT comment: '<GRADIENT_RECT> is an <ExternalStructure> class to wrap the struct ''Win32.GRADIENT_RECT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

@@ -1,19 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMRPOLYTEXTOUTA'
+OS.ENHMETARECORD
+	subclass: #'OS.EMRPOLYTEXTOUTA'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_EMRPOLYTEXTOUTA_Size' -> 16r50.
-		'_OffsetOf_aemrtext' -> 16r28.
-		'_OffsetOf_cStrings' -> 16r24.
-		'_OffsetOf_exScale' -> 16r1C.
-		'_OffsetOf_eyScale' -> 16r20.
-		'_OffsetOf_iGraphicsMode' -> 16r18.
-		'_OffsetOf_rclBounds' -> 16r8
-	}!
+			'_EMRPOLYTEXTOUTA_Size' -> 16r50.
+			'_OffsetOf_aemrtext' -> 16r28.
+			'_OffsetOf_cStrings' -> 16r24.
+			'_OffsetOf_exScale' -> 16r1C.
+			'_OffsetOf_eyScale' -> 16r20.
+			'_OffsetOf_iGraphicsMode' -> 16r18.
+			'_OffsetOf_rclBounds' -> 16r8
+		}!
 OS.EMRPOLYTEXTOUTA guid: (Core.GUID fromString: '{7c11c025-67e0-44de-87ab-e4f1377a4314}')!
 OS.EMRPOLYTEXTOUTA comment: '<EMRPOLYTEXTOUTA> is an <ExternalStructure> class to wrap the struct ''Win32.EMRPOLYTEXTOUTA'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

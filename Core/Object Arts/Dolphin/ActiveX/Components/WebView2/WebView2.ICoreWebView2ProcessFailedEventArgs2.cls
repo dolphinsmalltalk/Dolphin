@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2ProcessFailedEventArgs subclass: #'WebView2.ICoreWebView2ProcessFailedEventArgs2'
+WebView2.ICoreWebView2ProcessFailedEventArgs
+	subclass: #'WebView2.ICoreWebView2ProcessFailedEventArgs2'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

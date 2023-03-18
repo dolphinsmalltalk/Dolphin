@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_CHANNEL_BIND_INFO'
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_CHANNEL_BIND_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_CHANNEL_BIND_INFO_Size' -> 16r10.
-		'_OffsetOf_Flags' -> 16r4.
-		'_OffsetOf_Hardening' -> 16r0.
-		'_OffsetOf_NumberOfServiceNames' -> 16rC.
-		'_OffsetOf_ServiceNames' -> 16r8
-	}!
+			'_HTTP_CHANNEL_BIND_INFO_Size' -> 16r10.
+			'_OffsetOf_Flags' -> 16r4.
+			'_OffsetOf_Hardening' -> 16r0.
+			'_OffsetOf_NumberOfServiceNames' -> 16rC.
+			'_OffsetOf_ServiceNames' -> 16r8
+		}!
 WinHttpServer.HTTP_CHANNEL_BIND_INFO guid: (Core.GUID fromString: '{84ea1900-0bc6-4ac8-9025-7f74436d5dc9}')!
 WinHttpServer.HTTP_CHANNEL_BIND_INFO comment: '`HTTP_CHANNEL_BIND_INFO` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_CHANNEL_BIND_INFO'' from type information in the ''Windows Http Server API'' library.
 

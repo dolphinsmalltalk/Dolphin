@@ -1,16 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #'OS.MIBICMPSTATS_EX'
+External.Structure
+	subclass: #'OS.MIBICMPSTATS_EX'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_MIBICMPSTATS_EX_Size' -> 16r408.
-		'_OffsetOf_dwErrors' -> 16r4.
-		'_OffsetOf_dwMsgs' -> 16r0.
-		'_OffsetOf_rgdwTypeCount' -> 16r8
-	}!
+			'_MIBICMPSTATS_EX_Size' -> 16r408.
+			'_OffsetOf_dwErrors' -> 16r4.
+			'_OffsetOf_dwMsgs' -> 16r0.
+			'_OffsetOf_rgdwTypeCount' -> 16r8
+		}!
 OS.MIBICMPSTATS_EX guid: (Core.GUID fromString: '{82731d6f-0e73-4221-9881-7172ae7d82cd}')!
 OS.MIBICMPSTATS_EX comment: '<MIBICMPSTATS_EX> is an <ExternalStructure> class to wrap the struct ''Win32.MIBICMPSTATS_EX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

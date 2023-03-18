@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.VirtualColor subclass: #'Graphics.ThemeColor'
+Graphics.VirtualColor
+	subclass: #'Graphics.ThemeColor'
 	instanceVariableNames: 'name actualColor'
 	classVariableNames: ''
 	imports: #()

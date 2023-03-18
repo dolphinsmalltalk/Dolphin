@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Category subclass: #'Core.MethodCategory'
+Core.Category
+	subclass: #'Core.MethodCategory'
 	instanceVariableNames: ''
 	classVariableNames: 'Private Pseuds Public Table'
 	imports: #()

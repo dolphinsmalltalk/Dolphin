@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Kernel.Continuation'
+Core.Object
+	subclass: #'Kernel.Continuation'
 	instanceVariableNames: 'stack'
 	classVariableNames: ''
 	imports: #()

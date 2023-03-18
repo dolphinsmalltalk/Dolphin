@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.Scintilla.InterfaceDefinition subclass: #'Tools.Scintilla.EventDefinition'
+Tools.Scintilla.InterfaceDefinition
+	subclass: #'Tools.Scintilla.EventDefinition'
 	instanceVariableNames: 'args'
 	classVariableNames: ''
 	imports: #()

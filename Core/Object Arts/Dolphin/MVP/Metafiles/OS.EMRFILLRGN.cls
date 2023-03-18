@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.ENHMETARECORD subclass: #'OS.EMRFILLRGN'
+OS.ENHMETARECORD
+	subclass: #'OS.EMRFILLRGN'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_EMRFILLRGN_Size' -> 16r24.
-		'_OffsetOf_cbRgnData' -> 16r18.
-		'_OffsetOf_ihBrush' -> 16r1C.
-		'_OffsetOf_rclBounds' -> 16r8.
-		'_OffsetOf_RGNDATA' -> 16r20
-	}!
+			'_EMRFILLRGN_Size' -> 16r24.
+			'_OffsetOf_cbRgnData' -> 16r18.
+			'_OffsetOf_ihBrush' -> 16r1C.
+			'_OffsetOf_rclBounds' -> 16r8.
+			'_OffsetOf_RGNDATA' -> 16r20
+		}!
 OS.EMRFILLRGN guid: (Core.GUID fromString: '{5840d53d-c10c-442c-be9f-cfada623813e}')!
 OS.EMRFILLRGN comment: '<EMRFILLRGN> is an <ExternalStructure> class to wrap the struct ''Win32.EMRFILLRGN'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

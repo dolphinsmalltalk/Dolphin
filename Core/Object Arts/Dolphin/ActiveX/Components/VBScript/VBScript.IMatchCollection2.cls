@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-VBScript.IMatchCollection subclass: #'VBScript.IMatchCollection2'
+VBScript.IMatchCollection
+	subclass: #'VBScript.IMatchCollection2'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM'
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM'
 	instanceVariableNames: 'address'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM_Size' -> 16r8.
-		'_OffsetOf_AddrLength' -> 16r0.
-		'_OffsetOf_pAddress' -> 16r4
-	}!
+			'_HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM_Size' -> 16r8.
+			'_OffsetOf_AddrLength' -> 16r0.
+			'_OffsetOf_pAddress' -> 16r4
+		}!
 WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM guid: (Core.GUID fromString: '{00a93e39-c011-4a5b-af4d-13f2df7a38d4}')!
 WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM comment: '`HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM'' from type information in the ''Windows Http Server API'' library.
 

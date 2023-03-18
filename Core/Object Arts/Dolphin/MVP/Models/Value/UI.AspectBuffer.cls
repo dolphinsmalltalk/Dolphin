@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Model subclass: #'UI.AspectBuffer'
+Core.Model
+	subclass: #'UI.AspectBuffer'
 	instanceVariableNames: 'subject subjectCopy aspects gate validater'
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'UI.DragDropSession'
+Core.Object
+	subclass: #'UI.DragDropSession'
 	instanceVariableNames: 'dragSource dragPoint suggestedSource dragObjects defaultOperation dropTarget suggestedTarget operationsSupportedByDropTarget operation inDropTargetScrollZone dragImages scrollProcess'
 	classVariableNames: 'Current DefaultImages OperationDescriptions'
 	imports: #(#{OS.Win32Constants})

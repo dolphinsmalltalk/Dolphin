@@ -1,14 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WinHttpServer.HTTP_PROPERTY_FLAGS subclass: #'WinHttpServer.HTTP_LISTEN_ENDPOINT_INFO'
+WinHttpServer.HTTP_PROPERTY_FLAGS
+	subclass: #'WinHttpServer.HTTP_LISTEN_ENDPOINT_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_HTTP_LISTEN_ENDPOINT_INFO_Size' -> 16r8.
-		'_OffsetOf_EnableSharing' -> 16r4
-	}!
+	classConstants: { '_HTTP_LISTEN_ENDPOINT_INFO_Size' -> 16r8. '_OffsetOf_EnableSharing' -> 16r4 }!
 WinHttpServer.HTTP_LISTEN_ENDPOINT_INFO guid: (Core.GUID fromString: '{c96f66fd-b678-4046-9100-ed4b4bc7c9fe}')!
 WinHttpServer.HTTP_LISTEN_ENDPOINT_INFO comment: '`HTTP_LISTEN_ENDPOINT_INFO` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_LISTEN_ENDPOINT_INFO'' from type information in the ''Windows Http Server API'' library.
 

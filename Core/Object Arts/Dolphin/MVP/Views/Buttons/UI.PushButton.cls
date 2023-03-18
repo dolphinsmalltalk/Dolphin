@@ -1,13 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.CommandButton subclass: #'UI.PushButton'
+UI.CommandButton
+	subclass: #'UI.PushButton'
 	instanceVariableNames: 'image isDefault note _reserved1 _reserved2'
 	classVariableNames: ''
 	imports: #(#{OS.ButtonConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'ButtonStyleMap' -> (IdentityDictionary withAll: {#check -> 16r2. #push -> 16r0. #link -> 16rE. #toggle -> 16r1002})
-	}!
+			'ButtonStyleMap'
+				-> (IdentityDictionary withAll: { #check -> 16r2. #link -> 16rE. #push -> 16r0. #toggle -> 16r1002 })
+		}!
 UI.PushButton guid: (Core.GUID fromString: '{87b4c729-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.PushButton comment: 'PushButton is a <CommandButton> implementing the Windows "BUTTON" class, usually in push button mode, i.e. with the BS_PUSHLIKE style. 
 

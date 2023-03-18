@@ -39,27 +39,29 @@ package!
 
 "Class Definitions"!
 
-UI.ValuePresenter subclass: #'UI.CollectionPresenter'
+UI.ValuePresenter
+	subclass: #'UI.CollectionPresenter'
 	instanceVariableNames: 'addItemBlock listPresenter changing flags'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'ReadOnlyMask' -> 16r1
-	}!
-UI.CollectionPresenter subclass: #'UI.HashedCollectionPresenter'
+	classConstants: { 'ReadOnlyMask' -> 16r1 }!
+UI.CollectionPresenter
+	subclass: #'UI.HashedCollectionPresenter'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.CollectionPresenter subclass: #'UI.SequenceableCollectionPresenter'
+UI.CollectionPresenter
+	subclass: #'UI.SequenceableCollectionPresenter'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.HashedCollectionPresenter subclass: #'UI.DictionaryPresenter'
+UI.HashedCollectionPresenter
+	subclass: #'UI.DictionaryPresenter'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

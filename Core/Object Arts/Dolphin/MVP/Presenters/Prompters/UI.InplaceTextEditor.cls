@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Presenter subclass: #'UI.InplaceTextEditor'
+UI.Presenter
+	subclass: #'UI.InplaceTextEditor'
 	instanceVariableNames: 'textRectangle minExtent maxCharWidth confirmed ownerView hintBubble'
 	classVariableNames: ''
 	imports: #()

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Dialog subclass: #'Tools.ResourceIdentifierDialog'
+UI.Dialog
+	subclass: #'Tools.ResourceIdentifierDialog'
 	instanceVariableNames: 'classesPresenter resourceNamePresenter classValue'
 	classVariableNames: ''
 	imports: #()

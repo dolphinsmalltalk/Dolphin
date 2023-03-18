@@ -52,37 +52,43 @@ package!
 
 "Class Definitions"!
 
-Core.Object subclass: #'UI.Examples.VideoLibrary'
+Core.Object
+	subclass: #'UI.Examples.VideoLibrary'
 	instanceVariableNames: 'owner tapes'
 	classVariableNames: 'DefaultInstance'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'UI.Examples.VideoRecording'
+Core.Object
+	subclass: #'UI.Examples.VideoRecording'
 	instanceVariableNames: 'title date time length'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'UI.Examples.VideoTape'
+Core.Object
+	subclass: #'UI.Examples.VideoTape'
 	instanceVariableNames: 'name length recordings'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Shell subclass: #'UI.Examples.VideoLibraryShell'
+UI.Shell
+	subclass: #'UI.Examples.VideoLibraryShell'
 	instanceVariableNames: 'ownerPresenter tapesPresenter recordingsPresenter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Dialog subclass: #'UI.Examples.VideoRecordingDialog'
+UI.Dialog
+	subclass: #'UI.Examples.VideoRecordingDialog'
 	instanceVariableNames: 'titlePresenter datePresenter timePresenter lengthPresenter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.ValueDialog subclass: #'UI.Examples.NewVideoTapeDialog'
+UI.ValueDialog
+	subclass: #'UI.Examples.NewVideoTapeDialog'
 	instanceVariableNames: 'namePresenter lengthPresenter'
 	classVariableNames: ''
 	imports: #()

@@ -29,19 +29,22 @@ package!
 
 "Class Definitions"!
 
-UI.ValuePresenter subclass: #'UI.NumberPresenter'
+UI.ValuePresenter
+	subclass: #'UI.NumberPresenter'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.AbstractToTextConverter subclass: #'UI.NumberToText'
+UI.AbstractToTextConverter
+	subclass: #'UI.NumberToText'
 	instanceVariableNames: '_reserved1'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.NumberToText subclass: #'UI.IntegerToText'
+UI.NumberToText
+	subclass: #'UI.IntegerToText'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

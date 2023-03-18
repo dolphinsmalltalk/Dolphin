@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.ClassBrowserAbstract subclass: #'Tools.ClassBrowserShell'
+Tools.ClassBrowserAbstract
+	subclass: #'Tools.ClassBrowserShell'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'LocalHierarchyMask' -> 16r10
-	}!
+	classConstants: { 'LocalHierarchyMask' -> 16r10 }!
 Tools.ClassBrowserShell guid: (Core.GUID fromString: '{5655079d-fa03-4ca0-85c5-73cd64654603}')!
 Tools.ClassBrowserShell comment: 'ClassBrowserShell is a <SmalltalkToolShell> implementing the Class Hierarchy Browser development tool.
 

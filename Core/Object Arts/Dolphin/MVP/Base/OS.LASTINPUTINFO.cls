@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.LASTINPUTINFO'
+OS.Win32Structure
+	subclass: #'OS.LASTINPUTINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_LASTINPUTINFO_Size' -> 16r8.
-		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_dwTime' -> 16r4
-	}!
+			'_LASTINPUTINFO_Size' -> 16r8.
+			'_OffsetOf_dwSize' -> 16r0.
+			'_OffsetOf_dwTime' -> 16r4
+		}!
 OS.LASTINPUTINFO guid: (Core.GUID fromString: '{71c57485-4335-49cf-8a38-99d1c4d2a51b}')!
 OS.LASTINPUTINFO comment: 'LASTINPUTINFO is an <ExternalStructure> class to represent the Win32 structure of the same name.
 

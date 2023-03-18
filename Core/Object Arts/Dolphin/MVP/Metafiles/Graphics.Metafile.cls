@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Graphics.Image subclass: #'Graphics.Metafile'
+Graphics.Image
+	subclass: #'Graphics.Metafile'
 	instanceVariableNames: 'header'
 	classVariableNames: ''
 	imports: #()

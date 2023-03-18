@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Tools.SmalltalkWorkspace subclass: #'Tools.ValueWorkspace'
+Tools.SmalltalkWorkspace
+	subclass: #'Tools.ValueWorkspace'
 	instanceVariableNames: 'textModel'
 	classVariableNames: 'ValueIsSelfCookie'
 	imports: #()

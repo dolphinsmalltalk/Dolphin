@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_QOS_SETTING_INFO'
+WinHttpServer.HttpServerStructure
+	subclass: #'WinHttpServer.HTTP_QOS_SETTING_INFO'
 	instanceVariableNames: 'setting'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_HTTP_QOS_SETTING_INFO_Size' -> 16r8.
-		'_OffsetOf_QosSetting' -> 16r4.
-		'_OffsetOf_QosType' -> 16r0
-	}!
+			'_HTTP_QOS_SETTING_INFO_Size' -> 16r8.
+			'_OffsetOf_QosSetting' -> 16r4.
+			'_OffsetOf_QosType' -> 16r0
+		}!
 WinHttpServer.HTTP_QOS_SETTING_INFO guid: (Core.GUID fromString: '{a0bcefe3-d299-4e8a-9c7a-6e753a441ad6}')!
 WinHttpServer.HTTP_QOS_SETTING_INFO comment: '`HTTP_QOS_SETTING_INFO` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_QOS_SETTING_INFO'' from type information in the ''Windows Http Server API'' library.
 

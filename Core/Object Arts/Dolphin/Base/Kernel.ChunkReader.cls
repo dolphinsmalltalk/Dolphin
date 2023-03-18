@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Kernel.ChunkReader'
+Core.Object
+	subclass: #'Kernel.ChunkReader'
 	instanceVariableNames: 'chunkBlock endAction context'
 	classVariableNames: 'Null'
 	imports: #()

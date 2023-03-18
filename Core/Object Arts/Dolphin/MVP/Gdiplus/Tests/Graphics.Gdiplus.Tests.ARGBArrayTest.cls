@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Tests.ExternalArrayTest subclass: #'Graphics.Gdiplus.Tests.ARGBArrayTest'
+External.Tests.ExternalArrayTest
+	subclass: #'Graphics.Gdiplus.Tests.ARGBArrayTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

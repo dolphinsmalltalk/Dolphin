@@ -24,7 +24,8 @@ package!
 
 "Class Definitions"!
 
-Core.Tests.DolphinTest subclass: #'External.Tests.MemoryMappedFileTest'
+Core.Tests.DolphinTest
+	subclass: #'External.Tests.MemoryMappedFileTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

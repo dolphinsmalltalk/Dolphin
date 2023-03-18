@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Model subclass: #'UI.ValueModel'
+Core.Model
+	subclass: #'UI.ValueModel'
 	instanceVariableNames: 'settingValue comparisonPolicy'
 	classVariableNames: ''
 	imports: #()

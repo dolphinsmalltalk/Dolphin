@@ -1,16 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.EDITSTREAM'
+OS.Win32Structure
+	subclass: #'OS.EDITSTREAM'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_EDITSTREAM_Size' -> 16rC.
-		'_OffsetOf_dwCookie' -> 16r0.
-		'_OffsetOf_dwError' -> 16r4.
-		'_OffsetOf_pfnCallback' -> 16r8
-	}!
+			'_EDITSTREAM_Size' -> 16rC.
+			'_OffsetOf_dwCookie' -> 16r0.
+			'_OffsetOf_dwError' -> 16r4.
+			'_OffsetOf_pfnCallback' -> 16r8
+		}!
 OS.EDITSTREAM guid: (Core.GUID fromString: '{87b4c5ef-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.EDITSTREAM comment: ''!
 !OS.EDITSTREAM categoriesForClass!External-Data-Structured-Win32! !

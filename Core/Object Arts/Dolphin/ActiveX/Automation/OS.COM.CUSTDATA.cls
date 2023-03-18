@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.FinalizableStructure subclass: #'OS.COM.CUSTDATA'
+OS.COM.FinalizableStructure
+	subclass: #'OS.COM.CUSTDATA'
 	instanceVariableNames: 'associations table'
 	classVariableNames: 'WellKnownCustomAttributes'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_CUSTDATA_Size' -> 16r8.
-		'_OffsetOf_cCustData' -> 16r0.
-		'_OffsetOf_prgCustData' -> 16r4
-	}!
+			'_CUSTDATA_Size' -> 16r8.
+			'_OffsetOf_cCustData' -> 16r0.
+			'_OffsetOf_prgCustData' -> 16r4
+		}!
 OS.COM.CUSTDATA guid: (Core.GUID fromString: '{c06f3b7b-0868-11d3-93af-00a024ca708a}')!
 OS.COM.CUSTDATA comment: '<CUSTDATA> is an <ExternalStructure> class to wrap the struct ''OAIDL.CUSTDATA'' from type information in the ''Ole Automation Type Library'' library.
 

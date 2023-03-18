@@ -1,20 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure subclass: #'OS.SCROLLINFO'
+OS.Win32Structure
+	subclass: #'OS.SCROLLINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_fMask' -> 16r4.
-		'_OffsetOf_nMax' -> 16rC.
-		'_OffsetOf_nMin' -> 16r8.
-		'_OffsetOf_nPage' -> 16r10.
-		'_OffsetOf_nPos' -> 16r14.
-		'_OffsetOf_nTrackPos' -> 16r18.
-		'_SCROLLINFO_Size' -> 16r1C
-	}!
+			'_OffsetOf_dwSize' -> 16r0.
+			'_OffsetOf_fMask' -> 16r4.
+			'_OffsetOf_nMax' -> 16rC.
+			'_OffsetOf_nMin' -> 16r8.
+			'_OffsetOf_nPage' -> 16r10.
+			'_OffsetOf_nPos' -> 16r14.
+			'_OffsetOf_nTrackPos' -> 16r18.
+			'_SCROLLINFO_Size' -> 16r1C
+		}!
 OS.SCROLLINFO guid: (Core.GUID fromString: '{87b4c60f-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.SCROLLINFO comment: ''!
 !OS.SCROLLINFO categoriesForClass!External-Data-Structured-Win32! !

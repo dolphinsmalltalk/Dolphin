@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.IUnknown subclass: #'OS.COM.ITypeInfo'
+OS.COM.IUnknown
+	subclass: #'OS.COM.ITypeInfo'
 	instanceVariableNames: 'attributes allCustData'
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})

@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.MessageSequenceAbstract subclass: #'Kernel.EventMessageSequence'
+Core.MessageSequenceAbstract
+	subclass: #'Kernel.EventMessageSequence'
 	instanceVariableNames: 'receivers messages tally'
 	classVariableNames: ''
 	imports: #()

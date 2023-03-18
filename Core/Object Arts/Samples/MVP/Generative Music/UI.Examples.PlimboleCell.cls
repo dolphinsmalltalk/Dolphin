@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'UI.Examples.PlimboleCell'
+Core.Object
+	subclass: #'UI.Examples.PlimboleCell'
 	instanceVariableNames: 'location velocity plimbole palette'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})

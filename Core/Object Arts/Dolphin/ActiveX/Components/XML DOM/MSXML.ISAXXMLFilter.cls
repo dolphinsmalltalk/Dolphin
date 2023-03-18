@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-MSXML.ISAXXMLReader subclass: #'MSXML.ISAXXMLFilter'
+MSXML.ISAXXMLReader
+	subclass: #'MSXML.ISAXXMLFilter'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

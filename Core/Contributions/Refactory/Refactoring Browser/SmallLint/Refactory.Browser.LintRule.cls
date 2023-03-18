@@ -1,6 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Refactory.Browser.LintRule'
+Core.Object
+	subclass: #'Refactory.Browser.LintRule'
 	instanceVariableNames: 'name'
 	classVariableNames: ''
 	imports: #()

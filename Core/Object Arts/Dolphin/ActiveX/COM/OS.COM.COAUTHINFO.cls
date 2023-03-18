@@ -1,20 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.OLEStructure subclass: #'OS.COM.COAUTHINFO'
+OS.COM.OLEStructure
+	subclass: #'OS.COM.COAUTHINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_COAUTHINFO_Size' -> 16r1C.
-		'_OffsetOf_dwAuthnLevel' -> 16rC.
-		'_OffsetOf_dwAuthnSvc' -> 16r0.
-		'_OffsetOf_dwAuthzSvc' -> 16r4.
-		'_OffsetOf_dwCapabilities' -> 16r18.
-		'_OffsetOf_dwImpersonationLevel' -> 16r10.
-		'_OffsetOf_pAuthIdentityData' -> 16r14.
-		'_OffsetOf_pwszServerPrincName' -> 16r8
-	}!
+			'_COAUTHINFO_Size' -> 16r1C.
+			'_OffsetOf_dwAuthnLevel' -> 16rC.
+			'_OffsetOf_dwAuthnSvc' -> 16r0.
+			'_OffsetOf_dwAuthzSvc' -> 16r4.
+			'_OffsetOf_dwCapabilities' -> 16r18.
+			'_OffsetOf_dwImpersonationLevel' -> 16r10.
+			'_OffsetOf_pAuthIdentityData' -> 16r14.
+			'_OffsetOf_pwszServerPrincName' -> 16r8
+		}!
 OS.COM.COAUTHINFO guid: (Core.GUID fromString: '{27d02683-c29f-450c-a25f-3186b62d47f2}')!
 OS.COM.COAUTHINFO comment: '`OS.COM.COAUTHINFO` is an <External.Structure> class to wrap the struct ''OBJIDL.COAUTHINFO'' from type information in the ''ObjIDL Library'' library.
 
