@@ -143,14 +143,12 @@ AddressOTE* __fastcall NewBSTR(OTE* ote)
 		{
 		case StringEncoding::Ansi:
 		{
-			auto oteAnsi = reinterpret_cast<AnsiStringOTE*>(ote);
-			Utf16StringBuf buf(oteAnsi->m_location->m_characters, oteAnsi->Count);
+			Utf16StringBuf buf(reinterpret_cast<AnsiStringOTE*>(ote));
 			return NewBSTR(buf, buf.Count);
 		}
 		case StringEncoding::Utf8:
 		{
-			auto oteUtf8 = reinterpret_cast<Utf8StringOTE*>(ote);
-			Utf16StringBuf buf(oteUtf8->m_location->m_characters, oteUtf8->Count);
+			Utf16StringBuf buf(reinterpret_cast<Utf8StringOTE*>(ote));
 			return NewBSTR(buf, buf.Count);
 		}
 		case StringEncoding::Utf16:
@@ -340,6 +338,35 @@ FARPROC PRIMCALL Interpreter::GetDllCallProcAddress(DolphinX::ExternalMethodDesc
 
 ///////////////////////////////////////////////////////////////////////////////
 //
+CharOTE* Character::NewUtf16(char16_t codeUnit)
+{
+	SmallInteger code;
+
+	// If not a surrogate, may have an ANSI character that can represent the code point
+	if (!U_IS_SURROGATE(codeUnit))
+	{
+		AnsiString::CU ansiCodeUnit = 0;
+		if (codeUnit == 0 || (ansiCodeUnit = Interpreter::m_unicodeToAnsiCharMap[codeUnit]) != 0)
+		{
+			return NewAnsi(static_cast<unsigned char>(ansiCodeUnit));
+		}
+
+		// Non-ansi, non-surrogate, so return a full UTF-32 Character
+		code = (static_cast<SmallInteger>(StringEncoding::Utf32) << 24) | codeUnit;
+	}
+	else
+	{
+		// Return a UTF-16 Character for surrogates so it is possible to detect surrogates in the image
+		code = (static_cast<SmallInteger>(StringEncoding::Utf16) << 24) | codeUnit;
+	}
+
+	CharOTE* character = reinterpret_cast<CharOTE*>(ObjectMemory::newPointerObject(Pointers.ClassCharacter));
+	character->m_location->m_code = ObjectMemoryIntegerObjectOf(code);
+	character->beImmutable();
+
+	return character;
+}
+
 void Interpreter::push(char16_t utf16CodeUnit)
 {
 	SmallInteger code;
@@ -378,6 +405,24 @@ void Interpreter::push(char16_t utf16CodeUnit)
 void Interpreter::push(char32_t codePoint)
 {
 	StoreCharacterToStack(++m_registers.m_stackPointer, codePoint);
+}
+
+CharOTE* Character::NewUtf8(char8_t codeUnit)
+{
+	// If not a surrogate, must be Ascii
+	if (U8_IS_SINGLE(codeUnit))
+	{
+		return NewAnsi(static_cast<unsigned char>(codeUnit));
+	}
+
+	// Return a UTF-8 Character for surrogates so it is possible to detect surrogates in the image
+	SmallInteger code = (static_cast<SmallInteger>(StringEncoding::Utf8) << 24) | codeUnit;
+
+	CharOTE* character = reinterpret_cast<CharOTE*>(ObjectMemory::newPointerObject(Pointers.ClassCharacter));
+	character->m_location->m_code = ObjectMemoryIntegerObjectOf(code);
+	character->beImmutable();
+
+	return character;
 }
 
 argcount_t Interpreter::pushArgsAt(const ExternalDescriptor* descriptor, uint8_t* lpParms)
@@ -775,6 +820,29 @@ Oop* PRIMCALL Interpreter::primitiveValueWithArgsAt(Oop* const sp, primargcount_
 	return m_registers.m_stackPointer;
 }
 
+
+CharOTE* Character::NewUtf32(char32_t value)
+{
+	if (value <= 0x7f)
+	{
+		return NewAnsi(static_cast<unsigned char>(value));
+	}
+	else if (U_IS_BMP(value))
+	{
+		auto ansiCodeUnit = Interpreter::m_unicodeToAnsiCharMap[value];
+		if (ansiCodeUnit != 0)
+		{
+			return NewAnsi(ansiCodeUnit);
+		}
+	}
+
+	CharOTE* character = reinterpret_cast<CharOTE*>(ObjectMemory::newPointerObject(Pointers.ClassCharacter));
+	SmallInteger code = (static_cast<char32_t>(StringEncoding::Utf32) << 24) | (value & 0xffffff);
+	character->m_location->m_code = ObjectMemoryIntegerObjectOf(code);
+	character->beImmutable();
+
+	return character;
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -1499,4 +1567,3 @@ void doBlah()
 		return primitiveFailure(16+i);
 	}
 #endif
-

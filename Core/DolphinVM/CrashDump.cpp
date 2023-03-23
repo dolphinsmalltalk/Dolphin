@@ -14,6 +14,7 @@
 #include "RegKey.h"
 #include "VirtualMemoryStats.h"
 #include <codecvt>
+#include "STString.h"
 
 constexpr size_t DefaultStackDepth = 300;
 constexpr size_t DefaultWalkbackDepth = static_cast<size_t>(-1);

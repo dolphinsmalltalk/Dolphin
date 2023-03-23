@@ -28,6 +28,8 @@ namespace ST
 };
 typedef TOTE<ST::String> StringOTE;
 typedef TOTE<ST::Symbol> SymbolOTE;
+class Utf16StringOTE;
+class Utf8StringOTE;
 
 class AnsiStringOTE : public TOTE<ST::AnsiString>
 {
@@ -35,6 +37,14 @@ public:
 	__forceinline ptrdiff_t sizeForUpdate() const { return static_cast<ptrdiff_t>(m_size); }
 	__forceinline size_t sizeForRead() const { return m_size & SizeMask; }
 	__declspec(property(get = sizeForRead)) size_t Count;
+
+	bool OrdinalEquals(const AnsiStringOTE* __restrict oteComperand) const;
+	bool OrdinalEquals(const Utf8StringOTE* __restrict oteComperand) const;
+	bool OrdinalEquals(const Utf16StringOTE* __restrict oteComperand) const;
+
+	bool operator<=(const AnsiStringOTE* __restrict oteComperand) const;
+	bool operator<=(const Utf8StringOTE* __restrict oteComperand) const;
+	bool operator<=(const Utf16StringOTE* __restrict oteComperand) const;
 };
 
 class Utf8StringOTE : public TOTE<ST::Utf8String>
@@ -43,6 +53,15 @@ public:
 	__forceinline ptrdiff_t sizeForUpdate() const { return static_cast<ptrdiff_t>(m_size); }
 	__forceinline size_t sizeForRead() const { return m_size & SizeMask; }
 	__declspec(property(get = sizeForRead)) size_t Count;
+
+	bool OrdinalEquals(const AnsiStringOTE* __restrict oteComperand) const;
+	bool OrdinalEquals(const Utf16StringOTE* __restrict oteComperand) const;
+	bool OrdinalEquals(const Utf8StringOTE* __restrict oteComperand) const;
+	
+	bool operator<=(const AnsiStringOTE* __restrict oteComperand) const;
+	bool operator<=(const Utf8StringOTE* __restrict oteComperand) const;
+	bool operator<=(const Utf16StringOTE* __restrict oteComperand) const;
+
 };
 
 class Utf16StringOTE : public TOTE<ST::Utf16String>
@@ -51,6 +70,15 @@ public:
 	__forceinline ptrdiff_t sizeForUpdate() const { return static_cast<ptrdiff_t>(m_size) / static_cast<ptrdiff_t>(sizeof(char16_t)); }
 	__forceinline size_t sizeForRead() const { return (m_size & SizeMask) / sizeof(char16_t); }
 	__declspec(property(get = sizeForRead)) size_t Count;
+
+	bool OrdinalEquals(const AnsiStringOTE* __restrict oteComperand) const;
+	bool OrdinalEquals(const Utf8StringOTE* __restrict oteComperand) const;
+	bool OrdinalEquals(const Utf16StringOTE* __restrict oteComperand) const;
+	
+	bool operator<=(const AnsiStringOTE* __restrict oteComperand) const;
+	bool operator<=(const Utf8StringOTE* __restrict oteComperand) const;
+	bool operator<=(const Utf16StringOTE* __restrict oteComperand) const;
+	bool operator>=(const AnsiStringOTE* __restrict oteComperand) const;
 };
 
 class Utf32StringOTE : public TOTE<ST::Utf32String>
@@ -198,3 +226,11 @@ namespace ST
 std::wostream& operator<<(std::wostream& st, const AnsiStringOTE*);
 std::wostream& operator<<(std::wostream& st, const SymbolOTE*);
 #define ENCODINGPAIR(e1, e2) (static_cast<int>(e1) <<2 | static_cast<int>(e2))
+
+struct CmpOrdinalW
+{
+	__forceinline int operator() (const char16_t* psz1, size_t cch1, const char16_t* psz2, size_t cch2) const
+	{
+		return ::CompareStringOrdinal((LPCWCH)psz1, cch1, (LPCWCH)psz2, cch2, FALSE) - 2;
+	}
+};

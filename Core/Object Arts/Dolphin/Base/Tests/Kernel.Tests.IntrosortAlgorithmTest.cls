@@ -15,7 +15,9 @@ algorithmToTest
 	^IntrosortAlgorithm!
 
 testBigStringSort
-	self skipIfCiBuild. "Long running"
+	"Introsort is quicksort based and still doesn't behave terribly well when inverting the sort order of an already sorted collection. Mergesort/heapsort are much faster in this case."
+
+	self skipIfCiBuild.	"Relatively long running"
 	self bigStringSort!
 
 testNewSortBlock

@@ -89,19 +89,22 @@ wostream& operator<<(wostream& stream, const StringOTE* oteChars)
 		{
 		case StringEncoding::Ansi:
 		{
-			Utf16StringBuf buf(reinterpret_cast<const AnsiStringOTE*>(oteChars)->m_location->m_characters, oteChars->bytesSize());
+			Utf16StringBuf buf(reinterpret_cast<const AnsiStringOTE*>(oteChars));
 			printChars(stream, buf, buf.Count);
 			break;
 		}
 		case StringEncoding::Utf8:
 		{
-			Utf16StringBuf buf(reinterpret_cast<const Utf8StringOTE*>(oteChars)->m_location->m_characters, oteChars->bytesSize());
+			Utf16StringBuf buf(reinterpret_cast<const Utf8StringOTE*>(oteChars));
 			printChars(stream, buf, buf.Count);
 			break;
 		}
 		case StringEncoding::Utf16:
-			printChars(stream, reinterpret_cast<const Utf16StringOTE*>(oteChars)->m_location->m_characters, oteChars->bytesSize() / sizeof(Utf16String::CU));
+		{
+			auto oteUtf16 = reinterpret_cast<const Utf16StringOTE*>(oteChars);
+			printChars(stream, oteUtf16->m_location->m_characters, oteUtf16->Count);
 			break;
+		}
 		default:
 		case StringEncoding::Utf32:
 			stream << L"String with encoding " << (int)encoding;

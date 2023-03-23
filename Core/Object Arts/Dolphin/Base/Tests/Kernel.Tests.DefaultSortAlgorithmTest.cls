@@ -57,8 +57,8 @@ sort: aCollection sortBlock: aDyadicValuable
 	^sorted!
 
 testBigStringSort
-	self skipIfCiBuild. "Long running"
-	self bigStringSort! !
+	self sort: Symbol primAllSubinstances sortBlock: SortedCollection defaultSortBlock
+	"No point inverting the default sort, as that won't use DefaultSortAlgorithm"! !
 !Kernel.Tests.DefaultSortAlgorithmTest categoriesForMethods!
 add:sortBlock:!helpers!private! !
 algorithmToTest!private!unit tests! !

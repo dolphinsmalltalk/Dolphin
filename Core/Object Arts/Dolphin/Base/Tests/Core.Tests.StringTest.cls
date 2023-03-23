@@ -1377,6 +1377,7 @@ testJoin!public!unit tests! !
 testLastCodeUnit!public!unit tests! !
 testLastIndexOf!public!unit tests! !
 testLength!public!unit tests! !
+testLessOrEqual!public!unit tests! !
 testLines!public!unit tests! !
 testMatch!public! !
 testMutableCopy!public!unit tests! !

@@ -152,6 +152,18 @@
       <Filter>FFI</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\dnu.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Utf8String.cpp">
+      <Filter>Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Utf16String.cpp">
+      <Filter>Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\AnsiString.cpp">
+      <Filter>Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Utf32String.cpp">
+      <Filter>Primitives</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\environ.h" />

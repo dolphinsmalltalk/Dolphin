@@ -17,6 +17,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\alloc.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\AnsiString.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\axhost.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\bytecde.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\compact.cpp" />
@@ -73,6 +74,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\TraceStream.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Utf16String.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Utf32String.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Utf8String.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\vmref.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\wingui.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\zct.cpp" />

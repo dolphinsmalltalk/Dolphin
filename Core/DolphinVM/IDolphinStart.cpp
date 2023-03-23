@@ -10,6 +10,7 @@
 #include "DolphinSmalltalk_i.h"
 #include "DolphinSmalltalk.h"
 #include "Utf16StringBuf.h"
+#include "objmem.h"
 
 extern HINSTANCE hApplicationInstance;
 static IDolphin* piVM=NULL;

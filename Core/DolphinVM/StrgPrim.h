@@ -3,23 +3,10 @@
 #include "Utf8StringBuf.h"
 #include <memory.h>
 
+static void hashCombine(char32_t& ch, uint32_t& hash);
+
 ///////////////////////////////////////////////////////////////////////////////
 // Functors for instantiating primitive templates
-
-struct CmpIA
-{
-	__forceinline int operator() (LPCSTR psz1, size_t cch1, LPCSTR psz2, size_t cch2) const
-	{
-		return ::CompareStringA(LOCALE_USER_DEFAULT, NORM_IGNORECASE | LOCALE_USE_CP_ACP, psz1, cch1, psz2, cch2) - 2;
-	}
-};
-struct CmpIW
-{
-	__forceinline int operator() (const Utf16String::CU* psz1, size_t cch1, const Utf16String::CU* psz2, size_t cch2) const
-	{
-		return ::CompareStringW(LOCALE_USER_DEFAULT, NORM_IGNORECASE | NORM_LINGUISTIC_CASING, (PCNZWCH)psz1, cch1, (PCNZWCH)psz2, cch2) - 2;
-	}
-};
 
 struct CmpA
 {
@@ -28,15 +15,15 @@ struct CmpA
 		// lstrcmpA will stop at the first embedded null, and although our strings have a null
 		// terminator, they can also contain embedded nulls, and whole string should be compared.
 		// lstrcmpA is just a wrapper around CompareStringA. It passes the same values for locale and flags.
-		return CompareStringA(LOCALE_USER_DEFAULT, LOCALE_USE_CP_ACP, psz1, cch1, psz2, cch2) - 2;
+		return ::CompareStringA(LOCALE_USER_DEFAULT, LOCALE_USE_CP_ACP, psz1, cch1, psz2, cch2) - 2;
 	}
 };
 struct CmpW
 {
-	__forceinline int operator() (const Utf16String::CU* psz1, size_t cch1, const Utf16String::CU* psz2, size_t cch2) const
+	__forceinline int operator() (const char16_t* psz1, size_t cch1, const char16_t* psz2, size_t cch2) const
 	{
 		// lstrcmpW is just a wrapper around CompareStringA. It passes the same values for locale and flags.
-		return CompareStringW(LOCALE_USER_DEFAULT, 0, (PCNZWCH)psz1, cch1, (PCNZWCH)psz2, cch2) - 2;
+		return ::CompareStringW(LOCALE_USER_DEFAULT, 0, (PCNZWCH)psz1, cch1, (PCNZWCH)psz2, cch2) - 2;
 	}
 };
 
@@ -55,10 +42,35 @@ struct CmpOrdinalIA
 
 struct CmpOrdinalIW
 {
-	__forceinline int operator() (const Utf16String::CU* psz1, size_t cch1, const Utf16String::CU* psz2, size_t cch2) const
+	__forceinline int operator() (const char16_t* psz1, size_t cch1, const char16_t* psz2, size_t cch2) const
 	{
 		return ::CompareStringOrdinal((LPCWCH)psz1, cch1, (LPCWCH)psz2, cch2, TRUE) - 2;
 	}
 };
 
-static void hashCombine(char32_t& ch, uint32_t& hash);
+struct CmpIA
+{
+	__forceinline int operator() (LPCSTR psz1, size_t cch1, LPCSTR psz2, size_t cch2) const
+	{
+		return ::CompareStringA(LOCALE_USER_DEFAULT, NORM_IGNORECASE | LOCALE_USE_CP_ACP, psz1, cch1, psz2, cch2) - 2;
+	}
+};
+struct CmpIW
+{
+	__forceinline int operator() (const char16_t* psz1, size_t cch1, const char16_t* psz2, size_t cch2) const
+	{
+		return ::CompareStringW(LOCALE_USER_DEFAULT, NORM_IGNORECASE | NORM_LINGUISTIC_CASING, (PCNZWCH)psz1, cch1, (PCNZWCH)psz2, cch2) - 2;
+	}
+};
+
+struct CmpOrdinalA
+{
+	__forceinline int operator() (LPCSTR psz1, size_t cch1, LPCSTR psz2, size_t cch2) const
+	{
+		int cmp = memcmp(psz1, psz2, min(cch1, cch2));
+		return cmp == 0 && cch1 != cch2
+			? cch1 < cch2 ? -1 : 1
+			: cmp;
+	}
+};
+

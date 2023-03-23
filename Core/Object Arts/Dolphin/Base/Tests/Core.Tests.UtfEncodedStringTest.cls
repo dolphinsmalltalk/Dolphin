@@ -696,6 +696,24 @@ testLeftString
 	self assert: (subject leftString: 6) equals: '🐬a£文🍺'.
 	self assert: (self collectionClass empty leftString: 1) equals: ''!
 
+testLessOrEqual
+	super testLessOrEqual.
+	#('' '🐬' '🐬' '🐬' '🐬' '🐬a' 'a🐬' '🐬' 'a🐬' 'b🐬' 'a' '🐬' 'A' '🐬')
+		pairsDo: 
+			[:a :b |
+			| subject |
+			subject := self assimilateString: a.
+			self assert: subject <= b asUtf8String.
+			self assert: subject <= b asUtf16String].
+	#('🐬' '' '🐬' '£🐬')
+		pairsDo: 
+			[:a :b |
+			| subject |
+			subject := self assimilateString: a.
+			self deny: subject <= b asAnsiString.
+			self deny: subject <= b asUtf8String.
+			self deny: subject <= b asUtf16String].!
+
 testLetterICaseConversions
 	"Letter i is a a bit of a special case. Note that we don't test asLowercase/asUppercase/caseFolded, as the outcome of these depends on the default locale so is unstable. The conversions without a parameter are equivalent to, e.g. `string asLocale: Locale userDefault`"
 
@@ -964,6 +982,7 @@ testKeysAndValuesDo!public!unit tests! !
 testLast!public!unit tests! !
 testLastColon!public!unit tests! !
 testLeftString!public!unit tests! !
+testLessOrEqual!public!unit tests! !
 testLetterICaseConversions!public!unit tests! !
 testMatchExtended!public! !
 testMidString!public!unit tests! !

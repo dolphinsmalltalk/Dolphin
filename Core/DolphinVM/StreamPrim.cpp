@@ -848,8 +848,9 @@ Oop* PRIMCALL Interpreter::primitiveNextPutAll(Oop* const sp, primargcount_t)
 						// UTF-8, Ansi => Can write after translation, but we have to go indirectly via UTF16
 						// TODO: Implement a direct ANSI to UTF-8 translation
 						auto oteStringBuf = reinterpret_cast<Utf8StringOTE*>(oteBuf);
-						const AnsiString::CU* pArgChars = reinterpret_cast<const AnsiStringOTE*>(oteStringArg)->m_location->m_characters;
-						size_t cchArg = oteStringArg->getSize();
+						auto oteAnsi = reinterpret_cast<const AnsiStringOTE*>(oteStringArg);
+						const AnsiString::CU* pArgChars = oteAnsi->m_location->m_characters;
+						size_t cchArg = oteAnsi->Count;
 						size_t valueSize = Utf8StringBuf::LengthOfAnsi(pArgChars, cchArg);
 
 						newIndex = static_cast<size_t>(index) + valueSize;
@@ -867,8 +868,9 @@ Oop* PRIMCALL Interpreter::primitiveNextPutAll(Oop* const sp, primargcount_t)
 					case ENCODINGPAIR(StringEncoding::Utf8, StringEncoding::Utf16):
 					{
 						auto oteStringBuf = reinterpret_cast<Utf8StringOTE*>(oteBuf);
-						const Utf16String::CU* pArgChars = reinterpret_cast<const Utf16StringOTE*>(oteStringArg)->m_location->m_characters;
-						size_t cwchArg = oteStringArg->getSize() / sizeof(Utf16String::CU);
+						auto oteUtf16 = reinterpret_cast<const Utf16StringOTE*>(oteStringArg);
+						const Utf16String::CU* pArgChars = oteUtf16->m_location->m_characters;
+						size_t cwchArg = oteUtf16->Count;
 						size_t valueSize = Utf8StringBuf::LengthOfUtf16(pArgChars, cwchArg);
 
 						newIndex = static_cast<size_t>(index) + valueSize;
@@ -887,8 +889,9 @@ Oop* PRIMCALL Interpreter::primitiveNextPutAll(Oop* const sp, primargcount_t)
 					case ENCODINGPAIR(StringEncoding::Utf16, StringEncoding::Ansi):
 					{
 						auto oteStringBuf = reinterpret_cast<Utf16StringOTE*>(oteBuf);
-						auto pszArg = reinterpret_cast<const AnsiStringOTE*>(oteStringArg)->m_location->m_characters;
-						size_t cchArg = oteStringArg->getSize();
+						auto oteAnsi = reinterpret_cast<const AnsiStringOTE*>(oteStringArg);
+						auto pszArg = oteAnsi->m_location->m_characters;
+						size_t cchArg = oteAnsi->Count;
 						int cwchArg = Utf16StringBuf::LengthOfAnsi(pszArg, cchArg);
 						ASSERT(cwchArg >= 0);
 						size_t valueSize = cwchArg;
@@ -909,8 +912,9 @@ Oop* PRIMCALL Interpreter::primitiveNextPutAll(Oop* const sp, primargcount_t)
 					case ENCODINGPAIR(StringEncoding::Utf16, StringEncoding::Utf8):
 					{
 						auto oteStringBuf = reinterpret_cast<Utf16StringOTE*>(oteBuf);
-						auto pszArg = reinterpret_cast<const Utf8StringOTE*>(oteStringArg)->m_location->m_characters;
-						size_t cchArg = oteStringArg->getSize();
+						auto oteUtf8 = reinterpret_cast<const Utf8StringOTE*>(oteStringArg);
+						auto pszArg = oteUtf8->m_location->m_characters;
+						size_t cchArg = oteUtf8->Count;
 						int cwchArg = Utf16StringBuf::LengthOfUtf8(pszArg, cchArg);
 						ASSERT(cwchArg >= 0);
 						size_t valueSize = cwchArg;
@@ -934,7 +938,7 @@ Oop* PRIMCALL Interpreter::primitiveNextPutAll(Oop* const sp, primargcount_t)
 						auto oteUtf16String = reinterpret_cast<Utf16StringOTE*>(oteStringArg);
 						auto str = oteUtf16String->m_location;
 
-						size_t valueSize = oteUtf16String->bytesSize()/sizeof(Utf16String::CU);
+						size_t valueSize = oteUtf16String->Count;
 						newIndex = static_cast<size_t>(index) + valueSize;
 
 						if (newIndex > static_cast<size_t>(limit))			// Beyond write limit
@@ -944,7 +948,7 @@ Oop* PRIMCALL Interpreter::primitiveNextPutAll(Oop* const sp, primargcount_t)
 							return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);	// Attempt to write off end of buffer (or immutable)
 
 						auto pwsz = oteStringBuf->m_location->m_characters;
-						memcpy(pwsz + index, str->m_characters, valueSize*sizeof(Utf16String::CU));
+						memcpy(pwsz + index, str->m_characters, valueSize*sizeof(char16_t));
 					}
 					break;
 
