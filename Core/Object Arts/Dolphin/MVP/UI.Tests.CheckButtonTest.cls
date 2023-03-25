@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-PresenterTest subclass: #CheckButtonTest
+UI.Tests.PresenterTest
+	subclass: #'UI.Tests.CheckButtonTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-CheckButtonTest guid: (GUID fromString: '{e0bdffe5-2de1-45be-9686-3c62aed4734f}')!
-CheckButtonTest isAbstract: true!
-CheckButtonTest comment: ''!
-!CheckButtonTest categoriesForClass!Unclassified! !
-!CheckButtonTest methodsFor!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.CheckButtonTest guid: (Core.GUID fromString: '{e0bdffe5-2de1-45be-9686-3c62aed4734f}')!
+UI.Tests.CheckButtonTest isNonInstantiable: true!
+UI.Tests.CheckButtonTest comment: ''!
+!UI.Tests.CheckButtonTest methodsFor!
 
 getTextExtent: actualText
 	| subject textExtent canvas |
@@ -40,7 +41,7 @@ testCalculateExtent
 	subject text: 'abc'.
 	textWidth := (self getTextExtent: 'abc') x.
 	self assert: (subject extent x between: textWidth and: textWidth + 25)! !
-!CheckButtonTest categoriesForMethods!
+!UI.Tests.CheckButtonTest categoriesForMethods!
 getTextExtent:!helpers!private! !
 testCalculateExtent!public!unit tests! !
 !

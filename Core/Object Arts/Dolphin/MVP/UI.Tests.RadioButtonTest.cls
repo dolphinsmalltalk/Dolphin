@@ -1,18 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-CheckButtonTest subclass: #RadioButtonTest
+UI.Tests.CheckButtonTest
+	subclass: #'UI.Tests.RadioButtonTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-RadioButtonTest guid: (GUID fromString: '{4ca4c447-92eb-492a-a141-9537c646685e}')!
-RadioButtonTest comment: ''!
-!RadioButtonTest categoriesForClass!Unclassified! !
-!RadioButtonTest methodsFor!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.RadioButtonTest guid: (Core.GUID fromString: '{4ca4c447-92eb-492a-a141-9537c646685e}')!
+UI.Tests.RadioButtonTest comment: ''!
+!UI.Tests.RadioButtonTest methodsFor!
 
 classToTest
 	^RadioButton! !
-!RadioButtonTest categoriesForMethods!
+!UI.Tests.RadioButtonTest categoriesForMethods!
 classToTest!constants!private! !
 !
 
