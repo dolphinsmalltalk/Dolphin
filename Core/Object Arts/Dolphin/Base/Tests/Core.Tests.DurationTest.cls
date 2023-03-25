@@ -159,6 +159,11 @@ testHours
 	self assert: (1 hours - 1 nanoseconds) hours equals: 0.
 	self assert: -1 nanoseconds hours equals: 0!
 
+testHoursMinutes
+	| subject |
+	subject := Duration hours: 2 minutes: 3.
+	self assert: subject asSeconds equals: (2 * 60 + 3) * 60!
+
 testHumanReadablePrintString
 	self assert: -2.1 days humanReadablePrintString equals: '-2.1 days'.
 	self assert: 2 days humanReadablePrintString equals: '2 days'.
@@ -388,6 +393,7 @@ testFromString!public!unit tests! !
 testGreaterThan!public!unit tests! !
 testHash!public!unit tests! !
 testHours!public!unit tests! !
+testHoursMinutes!public!unit tests! !
 testHumanReadablePrintString!public!unit tests! !
 testLessThan!public!unit tests! !
 testMilliseconds!public!unit tests! !
