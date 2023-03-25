@@ -145,6 +145,35 @@ testHours
 	self assert: (1 hours - 1 nanoseconds) hours equals: 0.
 	self assert: -1 nanoseconds hours equals: 0!
 
+testHoursMinutes
+	| subject |
+	subject := Duration hours: 2 minutes: 3.
+	self assert: subject asSeconds equals: (2 * 60 + 3) * 60!
+
+testHumanReadablePrintString
+	self assert: -2.1 days humanReadablePrintString equals: '-2.1 days'.
+	self assert: 2 days humanReadablePrintString equals: '2 days'.
+	self assert: 1.5 days humanReadablePrintString equals: '36 hours'.
+	self assert: (2 days - 1 nanoseconds) humanReadablePrintString equals: '48 hours'.
+	self assert: 2.505 days humanReadablePrintString equals: '2.51 days'.
+	self assert: 2 hours humanReadablePrintString equals: '2 hours'.
+	self assert: 1.5 hours humanReadablePrintString equals: '90 minutes'.
+	self assert: (2 hours - 15 seconds) humanReadablePrintString equals: '119.75 minutes'.
+	self assert: 2.505 hours humanReadablePrintString equals: '2.51 hours'.
+	self assert: 119.99 minutes humanReadablePrintString equals: '119.99 minutes'.
+	self assert: 119.999 minutes humanReadablePrintString equals: '120 minutes'.
+	self assert: 2 minutes humanReadablePrintString equals: '2 minutes'.
+	self assert: (2 minutes - 1 nanoseconds) humanReadablePrintString equals: '120 s'.
+	self assert: 1 seconds humanReadablePrintString equals: '1 s'.
+	self assert: 1000 milliseconds humanReadablePrintString equals: '1 s'.
+	self assert: (1 seconds - 1 nanoseconds) humanReadablePrintString equals: '1000 ms'.
+	self assert: 1000 microseconds humanReadablePrintString equals: '1 ms'.
+	self assert: (1 milliseconds - 1 nanoseconds) humanReadablePrintString equals: '1000 µs'.
+	self assert: (1 microseconds - 1 nanoseconds) humanReadablePrintString equals: '999 ns'.
+	self assert: 1 nanoseconds humanReadablePrintString equals: '1 ns'.
+	self assert: (9 / 10) nanoseconds humanReadablePrintString equals: '0 s'.
+	self assert: 0 days humanReadablePrintString equals: '0 s'!
+
 testLessThan
 	| subject |
 	subject := 1.5 seconds.
@@ -333,6 +362,8 @@ testFromString!public!unit tests! !
 testGreaterThan!public!unit tests! !
 testHash!public!unit tests! !
 testHours!public!unit tests! !
+testHoursMinutes!public!unit tests! !
+testHumanReadablePrintString!public!unit tests! !
 testLessThan!public!unit tests! !
 testMilliseconds!public!unit tests! !
 testMinutes!public!unit tests! !

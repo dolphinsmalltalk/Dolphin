@@ -305,7 +305,7 @@ hours: aNumber
 hours: hoursNumber minutes: minutesNumber
 	"Answer a <Duration> representing the specified <number>s of hours and minutes. "
 
-	^self seconds: (hoursNumber * 3600) + minutesNumber * 60!
+	^self seconds: (hoursNumber * 60 + minutesNumber) * 60!
 
 hours: hoursNumber minutes: minutesNumber seconds: secondsNumber
 	"Answer a <Duration> of the specified <number>s of hours, minutes, and seconds. 
