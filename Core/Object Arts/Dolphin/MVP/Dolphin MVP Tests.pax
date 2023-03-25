@@ -73,8 +73,8 @@ package setClassNames: #(
 	#{UI.Tests.ProgressBarTest}
 	#{UI.Tests.ProportionalLayoutTest}
 	#{UI.Tests.PushButtonTest}
-	#{UI.Tests.RadioButtonTest}
 	#{UI.Tests.RadioButtonSetPresenterTest}
+	#{UI.Tests.RadioButtonTest}
 	#{UI.Tests.ReferenceViewTest}
 	#{UI.Tests.ResourceIdentifierTest}
 	#{UI.Tests.RichTextEditTest}
@@ -493,20 +493,6 @@ UI.Tests.PresenterTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.CheckButtonTest
-	subclass: #'UI.Tests.CheckBoxTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-UI.Tests.CheckButtonTest
-	subclass: #'UI.Tests.RadioButtonTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 UI.Tests.PresenterTest
 	subclass: #'UI.Tests.ChoicePresenterTest'
 	instanceVariableNames: ''
@@ -748,6 +734,20 @@ UI.Tests.AbstractMultilineTextEditTest
 UI.Tests.AbstractMultilineTextEditTest
 	subclass: #'UI.Tests.RichTextEditTest'
 	instanceVariableNames: 'savedLocale'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.CheckButtonTest
+	subclass: #'UI.Tests.CheckBoxTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.CheckButtonTest
+	subclass: #'UI.Tests.RadioButtonTest'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
