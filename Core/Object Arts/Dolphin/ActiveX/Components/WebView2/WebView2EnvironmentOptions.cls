@@ -3,7 +3,7 @@
 COMInterfaceImp subclass: #WebView2EnvironmentOptions
 	instanceVariableNames: 'additionalBrowserArguments flags locale browserVersion'
 	classVariableNames: ''
-	poolDictionaries: ''
+	poolDictionaries: 'WebView2Constants'
 	classInstanceVariableNames: ''!
 WebView2EnvironmentOptions guid: (GUID fromString: '{a29cb496-0b83-42f6-b6b1-2670cb4d42fb}')!
 WebView2EnvironmentOptions addClassConstant: 'AllowSSOMask' value: 16r1!

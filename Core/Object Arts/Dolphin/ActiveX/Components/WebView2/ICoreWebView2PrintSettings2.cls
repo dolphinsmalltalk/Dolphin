@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2PrintSettings subclass: #'WebView2.ICoreWebView2PrintSettings2'
+ICoreWebView2PrintSettings subclass: #ICoreWebView2PrintSettings2
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-WebView2.ICoreWebView2PrintSettings2 guid: (OS.COM.IID fromString: '{ca7f0e1f-3484-41d1-8c1a-65cd44a63f8d}')!
-WebView2.ICoreWebView2PrintSettings2 comment: '`ICoreWebView2PrintSettings2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2PrintSettings2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2PrintSettings2 guid: (IID fromString: '{ca7f0e1f-3484-41d1-8c1a-65cd44a63f8d}')!
+ICoreWebView2PrintSettings2 comment: '`ICoreWebView2PrintSettings2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2PrintSettings2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -72,8 +71,8 @@ interface ICoreWebView2PrintSettings2 : ICoreWebView2PrintSettings
 };
 ```
 '!
-!WebView2.ICoreWebView2PrintSettings2 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!WebView2.ICoreWebView2PrintSettings2 methodsFor!
+!ICoreWebView2PrintSettings2 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!ICoreWebView2PrintSettings2 methodsFor!
 
 collation
 	"Answer the <sdword> value of the 'Collation' property of the receiver."
@@ -216,7 +215,7 @@ pageRanges
 	"Answer the <lpwstr> value of the 'PageRanges' property of the receiver."
 
 	| ptr answer |
-	ptr := TaskMemory new.
+	ptr := COMTaskMemory new.
 	self get_PageRanges: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -248,7 +247,7 @@ printerName
 	"Answer the <lpwstr> value of the 'PrinterName' property of the receiver."
 
 	| ptr answer |
-	ptr := TaskMemory new.
+	ptr := COMTaskMemory new.
 	self get_PrinterName: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -338,7 +337,7 @@ put_PrinterName: value
 
 	<virtual stdcall: hresult 45 lpwstr>
 	^self invalidCall: _failureCode! !
-!WebView2.ICoreWebView2PrintSettings2 categoriesForMethods!
+!ICoreWebView2PrintSettings2 categoriesForMethods!
 collation!**auto generated**!properties!public! !
 collation:!**auto generated**!properties!public! !
 colorMode!**auto generated**!properties!public! !
@@ -374,7 +373,7 @@ put_PagesPerSide:!**auto generated**!COM Interfaces-ICoreWebView2PrintSettings2!
 put_PrinterName:!**auto generated**!COM Interfaces-ICoreWebView2PrintSettings2!private! !
 !
 
-!WebView2.ICoreWebView2PrintSettings2 class methodsFor!
+!ICoreWebView2PrintSettings2 class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2PrintSettings2'
@@ -414,7 +413,7 @@ defineFunctions
 		defineFunction: #put_PrinterName:
 			argumentTypes: 'lpwstr'
 ! !
-!WebView2.ICoreWebView2PrintSettings2 class categoriesForMethods!
+!ICoreWebView2PrintSettings2 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

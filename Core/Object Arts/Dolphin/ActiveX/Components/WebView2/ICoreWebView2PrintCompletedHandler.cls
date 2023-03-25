@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2CompletedHandler subclass: #'WebView2.ICoreWebView2PrintCompletedHandler'
+ICoreWebView2CompletedHandler subclass: #ICoreWebView2PrintCompletedHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-WebView2.ICoreWebView2PrintCompletedHandler guid: (OS.COM.IID fromString: '{8fd80075-ed08-42db-8570-f5d14977461e}')!
-WebView2.ICoreWebView2PrintCompletedHandler comment: '`ICoreWebView2PrintCompletedHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2PrintCompletedHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2PrintCompletedHandler guid: (IID fromString: '{8fd80075-ed08-42db-8570-f5d14977461e}')!
+ICoreWebView2PrintCompletedHandler comment: '`ICoreWebView2PrintCompletedHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2PrintCompletedHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -28,8 +27,8 @@ interface ICoreWebView2PrintCompletedHandler : IUnknown
 };
 ```
 '!
-!WebView2.ICoreWebView2PrintCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!WebView2.ICoreWebView2PrintCompletedHandler class methodsFor!
+!ICoreWebView2PrintCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!ICoreWebView2PrintCompletedHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2PrintCompletedHandler'
@@ -39,7 +38,7 @@ defineFunctions
 		defineFunction: #Invoke:arg:
 			argumentTypes: 'hresult sdword'
 ! !
-!WebView2.ICoreWebView2PrintCompletedHandler class categoriesForMethods!
+!ICoreWebView2PrintCompletedHandler class categoriesForMethods!
 defineFunctions!initializing!public! !
 !
 

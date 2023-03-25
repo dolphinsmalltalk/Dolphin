@@ -296,7 +296,7 @@ failureReportFolderPath
 	"Answer the <lpwstr> value of the 'FailureReportFolderPath' property of the receiver."
 
 	| ptr answer |
-	ptr := TaskMemory new.
+	ptr := COMTaskMemory new.
 	self get_FailureReportFolderPath: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
