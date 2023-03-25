@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2Interface subclass: #'WebView2.ICoreWebView2CustomSchemeRegistration'
+ICoreWebView2Interface subclass: #ICoreWebView2CustomSchemeRegistration
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-WebView2.ICoreWebView2CustomSchemeRegistration guid: (OS.COM.IID fromString: '{d60ac92c-37a6-4b26-a39e-95cfe59047bb}')!
-WebView2.ICoreWebView2CustomSchemeRegistration comment: '`ICoreWebView2CustomSchemeRegistration` is a wrapper class for the COM interface ''WebView2.ICoreWebView2CustomSchemeRegistration'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2CustomSchemeRegistration guid: (IID fromString: '{d60ac92c-37a6-4b26-a39e-95cfe59047bb}')!
+ICoreWebView2CustomSchemeRegistration comment: '`ICoreWebView2CustomSchemeRegistration` is a wrapper class for the COM interface ''WebView2.ICoreWebView2CustomSchemeRegistration'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -47,8 +46,8 @@ interface ICoreWebView2CustomSchemeRegistration : IUnknown
 };
 ```
 '!
-!WebView2.ICoreWebView2CustomSchemeRegistration categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!WebView2.ICoreWebView2CustomSchemeRegistration methodsFor!
+!ICoreWebView2CustomSchemeRegistration categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!ICoreWebView2CustomSchemeRegistration methodsFor!
 
 get_HasAuthorityComponent: hasAuthorityComponent
 	"Private - Get the value of the 'HasAuthorityComponent' property of the receiver.
@@ -79,17 +78,17 @@ get_TreatAsSecure: treatAsSecure
 
 getAllowedOrigins
 	| allowedOrigins taskAllocator pStrings count |
-	count := UInt32Bytes new.
-	pStrings := External.Address new.
+	count := DWORDBytes new.
+	pStrings := ExternalAddress new.
 	self GetAllowedOrigins: count allowedOrigins: pStrings.
 	count := count value.
 	allowedOrigins := Array new: count.
-	taskAllocator := TaskMemory allocator.
+	taskAllocator := COMTaskMemory allocator.
 	1 to: count
 		do: 
 			[:i |
 			| pwsz |
-			pwsz := pStrings uintPtrAtOffset: (i - 1) * Kernel.VMConstants.IntPtrSize.
+			pwsz := pStrings uintPtrAtOffset: (i - 1) * VMConstants.IntPtrSize.
 			allowedOrigins at: i put: (Utf16String fromAddress: pwsz).
 			self assert: [taskAllocator DidAlloc: pwsz].
 			taskAllocator Free: pwsz].
@@ -110,9 +109,9 @@ hasAuthorityComponent
 	"Answer the <boolean> value of the 'HasAuthorityComponent' property of the receiver."
 
 	| answer |
-	answer := UInt32Bytes new.
+	answer := BOOL newBuffer.
 	self get_HasAuthorityComponent: answer.
-	^answer asBoolean!
+	^answer value!
 
 hasAuthorityComponent: hasAuthorityComponent
 	"Set the 'HasAuthorityComponent' property of the receiver to the <boolean> value of the argument."
@@ -143,7 +142,7 @@ schemeName
 	"Answer the <Utf16String> value of the 'SchemeName' property of the receiver."
 
 	| ptr answer |
-	ptr := TaskMemory new.
+	ptr := COMTaskMemory new.
 	self get_SchemeName: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -169,15 +168,15 @@ treatAsSecure
 	"Answer the <sdword> value of the 'TreatAsSecure' property of the receiver."
 
 	| answer |
-	answer := UInt32Bytes new.
+	answer := BOOL newBuffer.
 	self get_TreatAsSecure: answer.
-	^answer asBoolean!
+	^answer value!
 
 treatAsSecure: treatAsSecure
 	"Set the 'TreatAsSecure' property of the receiver to the <boolean> value of the argument."
 
 	self put_TreatAsSecure: treatAsSecure asParameter! !
-!WebView2.ICoreWebView2CustomSchemeRegistration categoriesForMethods!
+!ICoreWebView2CustomSchemeRegistration categoriesForMethods!
 get_HasAuthorityComponent:!**auto generated**!COM Interfaces-ICoreWebView2CustomSchemeRegistration!private! !
 get_SchemeName:!**auto generated**!COM Interfaces-ICoreWebView2CustomSchemeRegistration!private! !
 get_TreatAsSecure:!**auto generated**!COM Interfaces-ICoreWebView2CustomSchemeRegistration!private! !
@@ -194,7 +193,7 @@ treatAsSecure!properties!public! !
 treatAsSecure:!properties!public! !
 !
 
-!WebView2.ICoreWebView2CustomSchemeRegistration class methodsFor!
+!ICoreWebView2CustomSchemeRegistration class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2CustomSchemeRegistration'
@@ -216,7 +215,7 @@ defineFunctions
 		defineFunction: #put_HasAuthorityComponent:
 			argumentTypes: 'sdword'
 ! !
-!WebView2.ICoreWebView2CustomSchemeRegistration class categoriesForMethods!
+!ICoreWebView2CustomSchemeRegistration class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

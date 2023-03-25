@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2Interface subclass: #'WebView2.ICoreWebView2EnvironmentOptions4'
+ICoreWebView2Interface subclass: #ICoreWebView2EnvironmentOptions4
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-WebView2.ICoreWebView2EnvironmentOptions4 guid: (OS.COM.IID fromString: '{ac52d13f-0d38-475a-9dca-876580d6793e}')!
-WebView2.ICoreWebView2EnvironmentOptions4 comment: '`ICoreWebView2EnvironmentOptions4` is a wrapper class for the COM interface ''WebView2.ICoreWebView2EnvironmentOptions4'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EnvironmentOptions4 guid: (IID fromString: '{ac52d13f-0d38-475a-9dca-876580d6793e}')!
+ICoreWebView2EnvironmentOptions4 comment: '`ICoreWebView2EnvironmentOptions4` is a wrapper class for the COM interface ''WebView2.ICoreWebView2EnvironmentOptions4'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -32,13 +31,13 @@ interface ICoreWebView2EnvironmentOptions4 : IUnknown
 };
 ```
 '!
-!WebView2.ICoreWebView2EnvironmentOptions4 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!WebView2.ICoreWebView2EnvironmentOptions4 methodsFor!
+!ICoreWebView2EnvironmentOptions4 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!ICoreWebView2EnvironmentOptions4 methodsFor!
 
 getCustomSchemeRegistrations
 	| registrations pArray count |
-	count := UInt32Bytes new.
-	pArray := External.Address new.
+	count := DWORDBytes new.
+	pArray := ExternalAddress new.
 	self GetCustomSchemeRegistrations: count schemeRegistrations: pArray.
 	count := count value.
 	registrations := Array new: count.
@@ -47,8 +46,8 @@ getCustomSchemeRegistrations
 			[:i |
 			registrations at: i
 				put: (ICoreWebView2CustomSchemeRegistration
-						attach: (pArray uintPtrAtOffset: (i - 1) * Kernel.VMConstants.IntPtrSize))].
-	TaskMemory free: pArray.
+						attach: (pArray uintPtrAtOffset: (i - 1) * VMConstants.IntPtrSize))].
+	COMTaskMemory free: pArray.
 	^registrations!
 
 GetCustomSchemeRegistrations: count schemeRegistrations: schemeRegistrations
@@ -78,14 +77,14 @@ SetCustomSchemeRegistrations: count schemeRegistrations: schemeRegistrations
 
 	<virtual stdcall: hresult 5 dword ICoreWebView2CustomSchemeRegistration**>
 	^self invalidCall: _failureCode! !
-!WebView2.ICoreWebView2EnvironmentOptions4 categoriesForMethods!
+!ICoreWebView2EnvironmentOptions4 categoriesForMethods!
 getCustomSchemeRegistrations!COM Interfaces-ICoreWebView2EnvironmentOptions4!public! !
 GetCustomSchemeRegistrations:schemeRegistrations:!**auto generated**!COM Interfaces-ICoreWebView2EnvironmentOptions4!private! !
 setCustomSchemeRegistrations:!COM Interfaces-ICoreWebView2EnvironmentOptions4!public! !
 SetCustomSchemeRegistrations:schemeRegistrations:!**auto generated**!COM Interfaces-ICoreWebView2EnvironmentOptions4!private! !
 !
 
-!WebView2.ICoreWebView2EnvironmentOptions4 class methodsFor!
+!ICoreWebView2EnvironmentOptions4 class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2EnvironmentOptions4'
@@ -97,7 +96,7 @@ defineFunctions
 		defineFunction: #SetCustomSchemeRegistrations:schemeRegistrations:
 			argumentTypes: 'dword ICoreWebView2CustomSchemeRegistration**'
 ! !
-!WebView2.ICoreWebView2EnvironmentOptions4 class categoriesForMethods!
+!ICoreWebView2EnvironmentOptions4 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

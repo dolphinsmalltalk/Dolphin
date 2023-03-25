@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-WebView2.ICoreWebView2CompletedHandler subclass: #'WebView2.ICoreWebView2PrintToPdfStreamCompletedHandler'
+ICoreWebView2CompletedHandler subclass: #ICoreWebView2PrintToPdfStreamCompletedHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-WebView2.ICoreWebView2PrintToPdfStreamCompletedHandler guid: (OS.COM.IID fromString: '{4c9f8229-8f93-444f-a711-2c0dfd6359d5}')!
-WebView2.ICoreWebView2PrintToPdfStreamCompletedHandler comment: '`ICoreWebView2PrintToPdfStreamCompletedHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2PrintToPdfStreamCompletedHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2PrintToPdfStreamCompletedHandler guid: (IID fromString: '{4c9f8229-8f93-444f-a711-2c0dfd6359d5}')!
+ICoreWebView2PrintToPdfStreamCompletedHandler comment: '`ICoreWebView2PrintToPdfStreamCompletedHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2PrintToPdfStreamCompletedHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -28,8 +27,8 @@ interface ICoreWebView2PrintToPdfStreamCompletedHandler : IUnknown
 };
 ```
 '!
-!WebView2.ICoreWebView2PrintToPdfStreamCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!WebView2.ICoreWebView2PrintToPdfStreamCompletedHandler class methodsFor!
+!ICoreWebView2PrintToPdfStreamCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!ICoreWebView2PrintToPdfStreamCompletedHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2PrintToPdfStreamCompletedHandler'
@@ -39,7 +38,7 @@ defineFunctions
 		defineFunction: #Invoke:arg:
 			argumentTypes: 'hresult IStream*'
 ! !
-!WebView2.ICoreWebView2PrintToPdfStreamCompletedHandler class categoriesForMethods!
+!ICoreWebView2PrintToPdfStreamCompletedHandler class categoriesForMethods!
 defineFunctions!initializing!public! !
 !
 
