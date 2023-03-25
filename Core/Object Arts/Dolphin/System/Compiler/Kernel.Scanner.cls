@@ -3,7 +3,7 @@
 Core.Object
 	subclass: #'Kernel.Scanner'
 	instanceVariableNames: 'stream buffer tokenStart currentCharacter characterType comments line errorHandler environment'
-	classVariableNames: ''
+	classVariableNames: 'SpecialLiterals'
 	imports: #(#{Kernel.ParseErrorCodes})
 	classInstanceVariableNames: ''
 	classConstants: {
@@ -13,26 +13,25 @@ Core.Object
 						withAll: { $0 -> $\0. $a -> $\a. $b -> $\b. $f -> $\f. $n -> $\n. $r -> $\r. $t -> $\t. $v -> $\v })
 		}!
 Kernel.Scanner guid: (Core.GUID fromString: '{f76f2335-9125-488e-a570-5a759a6e67b7}')!
-Kernel.Scanner comment: 'SmalltalkScanner is the Smalltalk lexical analyzer. It converts source text to a stream of <StToken>''s.
+Kernel.Scanner comment: '`Kernel.Scanner` is the Smalltalk lexical analyzer. It converts source text to a stream of `StToken`''s.
 
-Note that SmalltalkScanner is based on the RBScanner class written by John Brant and Don Roberts for their Refactoring Browser. It has been extended for Dolphin to incorporate additional error reporting capabilities (such as the line number on which the error occurred), and the ability to parse Dolphin''s FFI call syntax.
+Note that `Kernel.Scanner` is based on the `RBScanner` class written by John Brant and Don Roberts for their Refactoring Browser. It has been extended for Dolphin to incorporate additional error recovery and reporting capabilities, and the ability to parse Dolphin''s FFI call syntax.
 
-Instance Variables:
-	stream				<ReadStream> Input stream (method/expression source)
-	buffer				<WriteStream> Token building buffer.
-	tokenStart			<integer> position in stream at which current token starts.
-	currentCharacter		<Character> last character read from stream.
-	characterType		<Symbol>. Symbolic type of last character read from stream.
-	classificationTable	<Array> of <Symbol>. Symbolic types of each possible character (one slot per code point).
-	separatorsInLiterals	<boolean>. Whether to allow whitespace in literal constants.
-	extendedLiterals		<boolean>. Whether extended literal constants (prefixed with ##) are parsed.
-	comments			<OrderedCollection> of <Interval>. Ranges of the source occupied by comments.
-	errorBlock			<dyadicValuable> evaluated on encountering lexical errors
-	nameSpaceCharacter	<Character>. Namespace separator character (not currently used on Dolphin)
-	line					<integer> line number of current token.
+## Instance Variables:
+  stream				`ReadStream`. Input stream (method/expression source)
+  buffer				`WriteStream`. Token building buffer.
+  tokenStart			`<integer>` position in stream at which current token starts.
+  currentCharacter		`Character`. Last character read from stream.
+  characterType		`Symbol`. Symbolic type of last character read from stream.
+  classificationTable		`Array` of `Symbol`. Symbolic types of each possible character (one slot per code point).
+  comments			`OrderedCollection` of `Interval`. Ranges of the source occupied by comments.
+  line				`integer` line number of current token.
+  errorHandler			`<dyadicValuable>` evaluated on encountering lexical errors
+  environment			`Namespace` of code being scanned
 
-Class Instance Variables:
-	classificationTable	<Array>. Used to classify characters into types.
+## Class Constants
+  ClassificationTable		`Array` of `Symbol`. Used to classify ASCII characters into types.
+  EscapeChars			`IdentityDictionary`.
 
 '!
 !Kernel.Scanner categoriesForClass!System-Compiler! !
@@ -95,19 +94,20 @@ getComments
 illegalCharacter
 	| start badChar |
 	badChar := currentCharacter.
-	start := tokenStart - (buffer collection encodedSizeOf: badChar) + 1.
+	start := (tokenStart - (buffer collection encodedSizeOf: badChar) + 1) max: 1.
 	errorHandler
 		reportError: LErrBadChar
 		at: self errorPosition
 		line: self line
-		range: (start to: start)
+		range: (start to: tokenStart)
 		extras: {badChar}.
 	"Skip over the bad character"
 	self step.
 	^StIllegalCharacterToken
 		start: start
 		comments: nil
-		value: badChar!
+		value: badChar
+		stop: tokenStart!
 
 illegalNumber
 	self lexicalError: LErrBadNumber range: (tokenStart to: self previousStepPosition)!
@@ -279,6 +279,17 @@ scanBinary: aClass
 		comments: nil
 		value: val!
 
+scanComment
+	| ch start |
+	start := stream position.
+	
+	[ch := stream nextAvailable.
+	ch == $"] whileFalse: 
+				[ch == $\n ifTrue: [line := line + 1].
+				ch ifNil: [^self unterminatedComment: start]].
+	self addComment: (start to: stream position).
+	self step!
+
 scanExponentInteger: significandInteger
 	"Private - Dolphin supports a literal format for integers with exponents. These are not translated to Floats."
 
@@ -312,33 +323,18 @@ scanExtendedLiterals
 scanIdentifierOrKeyword
 	| name |
 	self scanName.
-	currentCharacter == $. ifTrue: [self scanNameSpaceName ifNotNil: [:token | ^token]].
+	"Don't want to scan nil: as nil literal following by colon, but as keyword"
 	(currentCharacter == $: and: [stream peek ~~ $=]) ifTrue: [^self scanKeyword].
-	name := buffer contents.
-	"LookupTable would be neater, but is slower and this method is one of the top hot-spots of the scanner"
-	name size <= 5
-		ifTrue: 
-			[name = 'nil'
-				ifTrue: 
-					[^StLiteralToken
-						start: tokenStart
-						comments: nil
-						value: nil
-						stop: self previousStepPosition].
-			name = 'true'
-				ifTrue: 
-					[^StLiteralToken
-						start: tokenStart
-						comments: nil
-						value: true
-						stop: self previousStepPosition].
-			name = 'false'
-				ifTrue: 
-					[^StLiteralToken
-						start: tokenStart
-						comments: nil
-						value: false
-						stop: self previousStepPosition]].
+	"Lookup special literals before checking for potential qualified name so, e.g. nil.self is parsed as literal(nil), special(.), identifier(self), not identifier(nil.self)"
+	(SpecialLiterals lookup: (name := buffer contents))
+		ifNotNil: 
+			[:proto |
+			^proto shallowCopy
+				start: tokenStart;
+				stop: tokenStart + name size - 1;
+				yourself].
+	(currentCharacter == $. and: [(self classify: stream peek) == #alphabetic])
+		ifTrue: [^self scanNameSpaceName].
 	^StIdentifierToken
 		start: tokenStart
 		comments: nil
@@ -487,11 +483,11 @@ scanName
 			whileTrue!
 
 scanNameSpaceName
-	(self classify: stream peek) ~~ #alphabetic ifTrue: [^nil].
 	buffer nextPut: $..
 	self step.
 	self scanName.
-	currentCharacter == $. ifTrue: [^self scanNameSpaceName].
+	(currentCharacter == $. and: [(self classify: stream peek) == #alphabetic])
+		ifTrue: [^self scanNameSpaceName].
 	^StIdentifierToken
 		start: tokenStart
 		comments: nil
@@ -725,19 +721,8 @@ stepBackTo: anInteger
 stripSeparators
 	
 	[[characterType == #separator] whileTrue: [self step].
-	currentCharacter == $"] whileTrue: 
-				[| start stop |
-				start := stream position.
-				
-				[| ch |
-				stream atEnd ifTrue: [^self unterminatedComment: start].
-				ch := stream next.
-				ch == $\n ifTrue: [line := line + 1].
-				ch == $"]
-						whileFalse.
-				stop := stream position.
-				self step.
-				self addComment: (start to: stop)]!
+	currentCharacter == $"]
+			whileTrue: [self scanComment]!
 
 unterminatedComment: anInteger 
 	self lexicalError: LErrCommentNotClosed range: (anInteger to: self errorPosition).
@@ -778,6 +763,7 @@ recoverFromUnterminatedComment:!error handling!private! !
 reportError:at:line:range:extras:!error handling!private! !
 scanAnySymbol!private!scanning! !
 scanBinary:!private!scanning! !
+scanComment!private!scanning! !
 scanExponentInteger:!private!scanning! !
 scanExtendedLiterals!private!scanning! !
 scanIdentifierOrKeyword!private!scanning! !
@@ -824,7 +810,19 @@ initialize
 		value: (escapeChars
 				shrink;
 				isImmutable: true;
-				yourself)!
+				yourself).
+	self addClassConstant: 'SpecialLiterals'
+		value: (LookupTable withAll: {
+						'nil' -> ((StLiteralToken value: nil)
+									isImmutable: true;
+									yourself).
+						'true' -> ((StLiteralToken value: true)
+									isImmutable: true;
+									yourself).
+						'false' -> ((StLiteralToken value: false)
+									isImmutable: true;
+									yourself)
+					})!
 
 initializeClassificationTable
 	| classificationTable |

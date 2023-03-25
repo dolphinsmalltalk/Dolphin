@@ -2,7 +2,7 @@
 
 Kernel.StValueToken
 	subclass: #'Kernel.StIllegalCharacterToken'
-	instanceVariableNames: ''
+	instanceVariableNames: 'stopPosition'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -16,9 +16,32 @@ acceptVisitor: aTokenVisitor
 	^aTokenVisitor visitIllegalCharacterToken: self!
 
 length
-	^1! !
+	^stopPosition - self start + 1!
+
+stop
+	^stopPosition!
+
+stop: anInteger
+	stopPosition := anInteger! !
 !Kernel.StIllegalCharacterToken categoriesForMethods!
 acceptVisitor:!public!visitor! !
 length!accessing!private! !
+stop!accessing!public! !
+stop:!initializing!private! !
+!
+
+!Kernel.StIllegalCharacterToken class methodsFor!
+
+start: startInteger comments: aCollectionOrNil value: aString stop: stopInteger
+	<primitive: 157>
+	^self new
+		start: startInteger;
+		comments: aCollectionOrNil;
+		value: aString;
+		stop: stopInteger;
+		yourself
+! !
+!Kernel.StIllegalCharacterToken class categoriesForMethods!
+start:comments:value:stop:!instance creation!public! !
 !
 

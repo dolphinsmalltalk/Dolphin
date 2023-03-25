@@ -11127,7 +11127,7 @@ wordChars!character classes!other settings!public! !
 wordChars:!character classes!other settings!public! !
 wordEndAt:onlyWordCharacters:!public!scintilla interface!words! !
 wordStartAt:onlyWordCharacters:!**auto generated**!public!scintilla interface!words! !
-wordTextAt:!**auto generated**!public!scintilla interface!words! !
+wordTextAt:!public!words! !
 wordWrap!line wrapping!public! !
 wordWrap:!line wrapping!public! !
 wrapCount:!**auto generated**!public!scintilla interface! !

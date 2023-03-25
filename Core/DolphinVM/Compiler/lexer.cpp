@@ -681,7 +681,7 @@ Lexer::TokenType Lexer::NextToken()
 		{
 			textpos_t pos = CharPosition;
 			int32_t cp = DecodeUtf8(ch);
-			CompileError(TEXTRANGE(pos, pos), LErrBadChar, (Oop)m_piVM->NewCharacter(cp < 0 ? 0xFFFD : cp));
+			CompileError(TEXTRANGE(pos, CharPosition), LErrBadChar, (Oop)m_piVM->NewCharacter(cp < 0 ? 0xFFFD : cp));
 		}
 	}
 	else

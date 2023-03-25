@@ -82,7 +82,8 @@ defineConstantsPool
 		classVariableNames: ''
 		imports: #()
 		classInstanceVariableNames: ''
-		classConstants: {'ANNOTATION_BOXED' -> 2.
+		classConstants: {
+				'ANNOTATION_BOXED' -> 2.
 				'ANNOTATION_HIDDEN' -> 0.
 				'ANNOTATION_INDENTED' -> 3.
 				'ANNOTATION_STANDARD' -> 1.
@@ -1330,7 +1331,8 @@ defineConstantsPool
 				'UNDO_MAY_COALESCE' -> 1.
 				'UNDO_NONE' -> 0.
 				'VISIBLE_SLOP' -> 1.
-				'VISIBLE_STRICT' -> 4})!
+				'VISIBLE_STRICT' -> 4
+			})!
 
 generateCommandMap
 	| stream selector |
@@ -1427,15 +1429,17 @@ generateEventHandler: aScintillaEventDef
 generateFunction: func
 	| stream |
 	func hasReturnValue ifTrue: [defaultReturnValues at: func constName put: func defaultReturnValue].
-	(self class ignoredMessages includes: func constName) 
+	((self class ignoredMessages includes: func constName) or: 
+			[| existing |
+			existing := ScintillaView compiledMethodAt: func selector ifAbsent: nil.
+			existing notNil and: [(existing categories includes: self autoGenCategoryName asMethodCategory) not]])
 		ifTrue: 
 			[Notification signal: 'Ignoring message ' , func constName.
 			^self].
 	stream := String writeStream: 256.
 	func emitMethodTextOn: stream.
 	self compileMethod: func selector source: stream contents.
-	func isCommand ifTrue: [commands at: func constName put: func selector].
-!
+	func isCommand ifTrue: [commands at: func constName put: func selector]!
 
 generateFunctions
 	functions do: [:each | self generateFunction: each]!

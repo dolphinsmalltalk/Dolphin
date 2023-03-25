@@ -120,6 +120,27 @@ testEmptyTemps
 		equals: #(#(##(1 to: 1) #unarySelector 'a') #(##(2 to: 2) #tempOpenBar '|') #(##(3 to: 3) #tempCloseBar '|') #(##(4
 				to: 4) #identifier 'x') #(##(5 to: 6) #binaryMessage '||') #(##(7 to: 7) #identifier 'y'))!
 
+testIllegalCharacter
+	| styler text tokens esc |
+	styler := SmalltalkMethodStyler new.
+	esc := Utf8String with: $\x1B.
+	text := esc , ' µs-🐬'.
+	mock text: text.
+	styler
+		colorTextFrom: 1
+		to: text size
+		in: mock.
+	tokens := mock tokens asArray.
+	self assert: tokens
+		equals: {
+				{ 1 to: 1. #illegal. esc }.
+				{ 2 to: 2. #whitespace. ' ' }.
+				{ 3 to: 4. #illegal. 'µ' }.
+				{ 5 to: 5. #identifier. 's' }.
+				{ 6 to: 6. #binaryMessage. '-' }.
+				{ 7 to: 10. #illegal. '🐬' }
+			}!
+
 testLegacyLiteralArray
 	"Smalltalk-80 supported optional # prefix on symbols and embedded literal arrays - we still need to recognise these as literals."
 
@@ -674,6 +695,7 @@ tearDown!public!unit tests! !
 testArrayNoSpace!public!unit tests! !
 testBinaryMethodSignature!public!unit tests! !
 testEmptyTemps!public!unit tests! !
+testIllegalCharacter!public!unit tests! !
 testLegacyLiteralArray!public!unit tests! !
 testLiteralArray!public!unit tests! !
 testLiteralBytes!public!unit tests! !

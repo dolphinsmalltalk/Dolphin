@@ -12,12 +12,6 @@ Kernel.Tests.ParserTest comment: 'SUnitBrowser openOnTestCase: self'!
 !Kernel.Tests.ParserTest categoriesForClass!Refactory-Testing! !
 !Kernel.Tests.ParserTest methodsFor!
 
-assertToken: aStToken isChar: aCharacter
-	self assert: aStToken isLiteralToken.
-	aCharacter codePoint < 16r80
-		ifTrue: [self assert: aStToken value identicalTo: aCharacter]
-		ifFalse: [self assert: aStToken value equals: aCharacter]!
-
 assertTree: anObject equals: anotherObject
 	self assert: anObject hash equals: anotherObject hash.
 	self assert: anObject equals: anotherObject!
@@ -65,22 +59,6 @@ parseMethod: aString
 parserClass
 	^Parser!
 
-scannerClass
-	^Scanner!
-
-scanNonNumericEnd: aString class: tokenClass
-	| expected stream extra scanner actual next |
-	stream := aString readStream.
-	expected := Number readSmalltalkSyntaxFrom: stream.
-	extra := stream upToEnd.
-	stream reset.
-	scanner := self scannerClass on: stream.
-	actual := scanner next.
-	self assert: actual isKindOf: tokenClass.
-	self assert: actual value equals: expected.
-	next := scanner next.
-	self assert: (extra beginsWith: next value)!
-
 testAnnotationEquality
 	| tags parseTree |
 	parseTree := self parseMethod: 'test <namespace: XProgramming> <mutable> <namespace: Core>'.
@@ -111,63 +89,6 @@ testBestNodeFor
 						assert: (bestNode == each or: 
 									[(bestNode parent == each and: [bestNode sourceInterval = each sourceInterval])
 										or: [each parent isCascade and: [each parent messages last = each]]])]]!
-
-testCharacterScanning
-	| subject tok |
-	subject := self scannerClass on: '$a$b$\t$\$  $c' readStream.
-	tok := subject next.
-	self assertToken: tok isChar: $a.
-	self assert: tok sourceInterval equals: (1 to: 2).
-	tok := subject next.
-	self assertToken: tok isChar: $b.
-	self assert: tok sourceInterval equals: (3 to: 4).
-	tok := subject next.
-	self assertToken: tok isChar: Character tab.
-	self assert: tok sourceInterval equals: (5 to: 7).
-	tok := subject next.
-	self assertToken: tok isChar: $\.
-	self assert: tok sourceInterval equals: (8 to: 9).
-	tok := subject next.
-	self assertToken: tok isChar: Character space.
-	self assert: tok sourceInterval equals: (10 to: 11).
-	tok := subject next.
-	self assertToken: tok isChar: $c.
-	self assert: tok sourceInterval equals: (13 to: 14).
-	0 to: 255
-		do: 
-			[:i |
-			| char ch source interval |
-			ch := Character value: i.
-			subject := self scannerClass on: ch printString readStream.
-			char := subject next.
-			self assertToken: char isChar: ch.
-			self assert: subject next isEof.
-			source := ' $\x<1s> ' expandMacrosWith: (i printStringBase: 16).
-			subject := self scannerClass on: source readStream.
-			char := subject next.
-			self assertToken: char isChar: ch.
-			interval := char sourceInterval.
-			self assert: interval equals: (2 to: source size - 1).
-			self assert: subject next isEof].
-	subject := self scannerClass on: ' $\. ' readStream.
-	tok := subject next.
-	self assertToken: tok isChar: (Character value: 92).
-	self assert: tok sourceInterval equals: (2 to: 3).
-	self assert: (subject next isSpecial: $.).
-	subject := self scannerClass on: '$\c' readStream.
-	tok := subject next.
-	self assertToken: tok isChar: (Character value: 92).
-	self assert: tok sourceInterval equals: (1 to: 2).
-	tok := subject next.
-	self assert: tok isIdentifier.
-	self assert: tok value equals: 'c'.
-	subject := self scannerClass on: '$\xAG' readStream.
-	tok := subject next.
-	self assertToken: tok isChar: (Character value: 16rA).
-	self assert: tok sourceInterval equals: (1 to: 4).
-	tok := subject next.
-	self assert: tok isIdentifier.
-	self assert: tok value equals: 'G'!
 
 testCopy
 	| tree copy |
@@ -313,27 +234,6 @@ testExternalCalls
 			self assert: eachArg indirections equals: 0.
 			self assertIsNil: eachArg structClass]!
 
-testFloatScanning
-	Float reset.
-	#('5.1234' '0.0' '0.5' '1.2e1' '1.2d2' '1.2e-1' '1.2e+1' '1.2d-2' '1.2d+2' '1.0e308' '1.0e+308' '2.2250738585072014e-308' '1.7976931348623158e308' '1.7976931348623158e+308' '0.5e0' '0.5d0' '0.5q0' '0.5e+0' '0.5d+0' '0.5q+0' '0.5e-0' '0.5d-0' '0.5q-0')
-		do: 
-			[:each |
-			| token expected actual |
-			expected := Number readFrom: each readStream.
-			token := (self scannerClass on: each readStream) next.
-			actual := token value.
-			self assert: actual isKindOf: Float.
-			self assert: actual equals: expected].
-
-	"Integer terminated by a period, not a float"
-	self assert: (self scannerClass on: '5.' readStream) next value identicalTo: 5.
-	self assert: (self scannerClass on: '1.0e-316' readStream) next value equals: 10.0 ** -316.
-
-	"Test termination on non-numeric character - these expressions are in error"
-	#('5.1234a' '0.5e' '1.5e2e3' '1.5e2e-3' '1.5e-Integer zero' '1.5e-' '1.5e+' '1.7976931348623158+e308')
-		do: [:each | self scanNonNumericEnd: each class: StNumberLiteralToken].
-	self scanNonNumericEnd: '5.F' class: StNumberLiteralToken!
-
 testKeywordAnnotationChildren
 	| parseTree children child annotation |
 	parseTree := self parseMethod: 'test <namespace: XProgramming>'.
@@ -422,24 +322,19 @@ verifyTree: copiedNode isDeepCopyOf: originalNode
 			self assert: copiedChild parent identicalTo: copiedNode.
 			self verifyTree: copiedChild isDeepCopyOf: originalChild]! !
 !Kernel.Tests.ParserTest categoriesForMethods!
-assertToken:isChar:!helpers!private! !
 assertTree:equals:!helpers!private! !
 parseAll!long running!public! !
 parseExpression:!helpers!private! !
 parseMethod:!helpers!private! !
 parserClass!constants!private! !
-scannerClass!constants!private! !
-scanNonNumericEnd:class:!helpers!private! !
 testAnnotationEquality!public!unit tests! !
 testAnnotationParents!public!unit tests! !
 testBestNodeFor!public!unit tests! !
-testCharacterScanning!public!unit tests! !
 testCopy!public!unit tests! !
 testExpressionSolver!public!unit tests! !
 testExternalCallChildren!public! !
 testExternalCallEquality!public!unit tests! !
 testExternalCalls!public!unit tests! !
-testFloatScanning!public!unit tests! !
 testKeywordAnnotationChildren!public! !
 testNodesDoAll!public!unit tests! !
 testPrimitiveTagChildren!public!unit tests! !

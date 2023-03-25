@@ -132,7 +132,8 @@ initialize
 	self initializeCommands!
 
 initializeCommands
-	Commands := (IdentityDictionary withAll: {SCI_BACKTAB -> #unindent.
+	Commands := (IdentityDictionary withAll: {
+						SCI_BACKTAB -> #unindent.
 						SCI_CANCEL -> #cancelModes.
 						SCI_CHARLEFT -> #moveLeft.
 						SCI_CHARLEFTEXTEND -> #extendLeft.
@@ -240,7 +241,8 @@ initializeCommands
 						SCI_WORDRIGHTEXTEND -> #extendToEndOfWord.
 						SCI_ZOOMIN -> #zoomIn.
 						SCI_ZOOMOUT -> #zoomOut.
-						SCI_NULL -> #yourself})
+						SCI_NULL -> #yourself
+					})
 				isImmutable: true;
 				yourself!
 

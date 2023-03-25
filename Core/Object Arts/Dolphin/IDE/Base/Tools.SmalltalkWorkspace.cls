@@ -1820,7 +1820,7 @@ onViewOpened!event handling!private! !
 parseContext!commands!public! !
 plainText!accessing!public! !
 plainTextRange:!accessing!public! !
-printIt!public! !
+printIt!commands!public! !
 prompt:toSaveChanges:!helpers!private! !
 promptForVariableName:!helpers!private! !
 publishedAspects!public! !
@@ -1857,11 +1857,11 @@ showMessageCompletionListAt:maxItems:!autocompletion!helpers!private! !
 showResult:at:!helpers!private! !
 showSelectorCompletionListAt:maxItems:!autocompletion!helpers!private! !
 showSymbolCompletionListAt:maxItems:!autocompletion!helpers!private! !
-showTipForByteArrayAt:!public! !
-showTipForCharacterAt:!event handling!private! !
+showTipForByteArrayAt:!helpers!private! !
+showTipForCharacterAt:!helpers!private! !
 showTipForIdentifier:!helpers!private! !
 showTipForIndicators:!helpers!private! !
-showTipForNumberAt:!private! !
+showTipForNumberAt:!helpers!private! !
 startAutocompleteTimer!autocompletion!helpers!private! !
 stylerClass:!accessing!public! !
 suggestClassForVariable:!autocompletion!helpers!public! !

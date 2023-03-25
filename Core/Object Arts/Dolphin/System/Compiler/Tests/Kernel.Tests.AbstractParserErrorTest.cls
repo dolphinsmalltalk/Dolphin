@@ -132,7 +132,7 @@ parseExprError: aString in: aClass range: anInterval line: lineInteger code: anI
 				source: aString) or: 
 						["Trace the actual error to help with diagnosis"
 						self traceException: ex source: aString.
-                        false]]!
+						false]]!
 
 parseExprError: aString range: anInterval line: lineInteger code: anInteger
 	| ast |
@@ -952,20 +952,20 @@ testErrorsInvalidExpressionStart
 testErrorsLexicalBadChar
 	"Non-ascii letters"
 
-	{$\x80. Character dolphin} , ((Character byteCharacterSet select: [:each | each isLetter])
+	{ $\x80. Character dolphin } , ((Character byteCharacterSet select: [:each | each isLetter])
 				difference: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz')
 		do: 
 			[:each |
 			self
 				lexicalError: '#(' , each asString
-				range: (3 to: 3)
+				range: (3 to: 3 + (Utf8String empty encodedSizeOf: each) - 1)
 				line: 1
 				code: LErrBadChar].
 	self
 		lexicalError: (Character dolphin asUtf8String
-				basicAt: 4 put: 16rC0;
+				basicAt: 3 put: 16rC0;
 				yourself)
-		range: (1 to: 1)
+		range: (1 to: 3)
 		line: 1
 		code: LErrBadChar!
 

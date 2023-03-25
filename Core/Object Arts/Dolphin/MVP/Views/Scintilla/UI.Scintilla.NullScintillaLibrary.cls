@@ -35,7 +35,8 @@ open: aString
 	self initialize!
 
 returnValues
-	^##((IdentityDictionary withAll: {SCI_ALLOCATEEXTENDEDSTYLES -> 0.
+	^##((IdentityDictionary withAll: {
+				SCI_ALLOCATEEXTENDEDSTYLES -> 0.
 				SCI_ALLOCATESUBSTYLES -> 0.
 				SCI_ANNOTATIONGETLINES -> 0.
 				SCI_ANNOTATIONGETSTYLE -> 0.
@@ -374,7 +375,8 @@ returnValues
 				SCI_VISIBLEFROMDOCLINE -> INVALID_POSITION.
 				SCI_WORDENDPOSITION -> INVALID_POSITION.
 				SCI_WORDSTARTPOSITION -> INVALID_POSITION.
-				SCI_WRAPCOUNT -> 0})
+				SCI_WRAPCOUNT -> 0
+			})
 		isImmutable: true;
 		yourself)! !
 !UI.Scintilla.NullScintillaLibrary categoriesForMethods!
