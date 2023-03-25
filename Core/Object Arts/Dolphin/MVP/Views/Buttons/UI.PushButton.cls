@@ -40,6 +40,24 @@ bmSetStyle: message wParam: wParam lParam: lParam
 	isDefault := wParam allMask: BS_DEFPUSHBUTTON.
 	^nil!
 
+calculateExtent: aLayoutContext
+	"Private - Answer the desired window extent (for the receiver within the specified
+	<LayoutContext>. By default the current extent recorded in the context (which might be a
+	suggestion or the existing extent) is retained. Subclasses can reimplement it to answer an
+	fixed preferred extent, or one calculated to fit the current contents of a view (for
+	example)."
+
+	"N.B. This should be the complete extent for the Window, including non-client adornments
+	such as borders, etc."
+
+	| size |
+	size := SIZEL new.
+	self
+		sendMessage: BCM_GETIDEALSIZE
+		wParam: 0
+		lpParam: size.
+	^size asPoint!
+
 command: codeInteger id: idInteger 
 	"Private - Responds to a command notification message which has been redirected to us."
 
@@ -206,6 +224,13 @@ onViewCreated
 	self isDefault ifTrue: [self setDefault: true].
 	(note notNil and: [note notEmpty]) ifTrue: [self setNote]!
 
+plainText: aString
+	"Sets the text of the receiver (and its command description) to aString"
+
+	super plainText: aString.
+	self invalidateCalculatedExtent.
+	commandDescription description: aString!
+
 setDefault: aBoolean 
 	"Private - Inform the receiver's shell of its (non-)default state."
 
@@ -247,7 +272,9 @@ text: aString
 	super text: aString.
 	commandDescription description: aString! !
 !UI.PushButton categoriesForMethods!
+baseCreationStyle!private!realizing/unrealizing! !
 bmSetStyle:wParam:lParam:!event handling-win32!private! !
+calculateExtent:!geometry!private! !
 command:id:!commands!private! !
 defaultWindowStyle!constants!private! !
 getNote!helpers!private! !
@@ -268,11 +295,11 @@ note!accessing!public! !
 note:!accessing!public! !
 onDestroyed!event handling!private! !
 onViewCreated!event handling!public! !
+plainText:!accessing!public! !
 setDefault:!accessing-styles!private! !
 setNote!helpers!private! !
 style!accessing!public! !
 style:!accessing!public! !
-text:!accessing!public! !
 !
 
 UI.PushButton methodProtocol: #commandSource attributes: #(#readOnly) selectors: #(#commandDescription)!

@@ -29,6 +29,7 @@ package setClassNames: #(
 	#{UI.Tests.BorderLayoutTest}
 	#{UI.Tests.CardContainerTest}
 	#{UI.Tests.CheckBoxTest}
+	#{UI.Tests.CheckButtonTest}
 	#{UI.Tests.ChoicePresenterTest}
 	#{UI.Tests.ClipboardTest}
 	#{UI.Tests.ColorDialogTest}
@@ -72,6 +73,7 @@ package setClassNames: #(
 	#{UI.Tests.ProgressBarTest}
 	#{UI.Tests.ProportionalLayoutTest}
 	#{UI.Tests.PushButtonTest}
+	#{UI.Tests.RadioButtonTest}
 	#{UI.Tests.RadioButtonSetPresenterTest}
 	#{UI.Tests.ReferenceViewTest}
 	#{UI.Tests.ResourceIdentifierTest}
@@ -485,7 +487,21 @@ UI.Tests.PresenterTest
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.Tests.PresenterTest
+	subclass: #'UI.Tests.CheckButtonTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.CheckButtonTest
 	subclass: #'UI.Tests.CheckBoxTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.CheckButtonTest
+	subclass: #'UI.Tests.RadioButtonTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
