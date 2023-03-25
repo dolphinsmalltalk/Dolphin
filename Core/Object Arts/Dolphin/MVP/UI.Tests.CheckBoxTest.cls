@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Tests.PresenterTest
+UI.Tests.CheckButtonTest
 	subclass: #'UI.Tests.CheckBoxTest'
 	instanceVariableNames: ''
 	classVariableNames: ''

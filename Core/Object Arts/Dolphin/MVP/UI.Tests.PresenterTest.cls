@@ -57,6 +57,9 @@ leftClickAt: aPoint
 	^self.
 !
 
+nonProportionalFont
+	^Font name: 'Courier'!
+
 oldDolphinVersionsForStbUpgrade
 	"Answer an <sequencedReadableCollection> of <Integer>, being the Dolphin versions for which there is a test view binary resource in a .vu file to attempt to upgrade."
 
@@ -146,6 +149,7 @@ classToTest!constants!private! !
 destroyPresenter!public!Running! !
 initializePresenter!public!Running! !
 leftClickAt:!helpers!private! !
+nonProportionalFont!constants!private! !
 oldDolphinVersionsForStbUpgrade!constants!private! !
 oldStlResources!constants!private! !
 setUp!public!Running! !

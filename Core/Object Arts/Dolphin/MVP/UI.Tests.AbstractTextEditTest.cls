@@ -15,9 +15,6 @@ UI.Tests.AbstractTextEditTest comment: ''!
 margins
 	^self subclassResponsibility!
 
-nonProportionalFont
-	^Font name: 'Courier'!
-
 testPositionOfChar
 	| text canvas lineHeight metrics i |
 	text := self text.
@@ -64,7 +61,6 @@ verifyUpgradedView: anInteger
 	self assert: view typeconverter isNullConverter! !
 !UI.Tests.AbstractTextEditTest categoriesForMethods!
 margins!constants!private! !
-nonProportionalFont!constants!private! !
 testPositionOfChar!public!unit tests! !
 text!constants!private! !
 verifyUpgradedView:!helpers!private! !

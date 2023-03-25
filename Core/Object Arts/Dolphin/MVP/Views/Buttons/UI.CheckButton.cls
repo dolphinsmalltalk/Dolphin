@@ -71,6 +71,24 @@ alignment: aSymbol
 basicWindowStyle
 	^self subclassResponsibility!
 
+calculateExtent: aLayoutContext
+	"Private - Answer the desired window extent (for the receiver within the specified
+	<LayoutContext>. By default the current extent recorded in the context (which might be a
+	suggestion or the existing extent) is retained. Subclasses can reimplement it to answer an
+	fixed preferred extent, or one calculated to fit the current contents of a view (for
+	example)."
+
+	"N.B. This should be the complete extent for the Window, including non-client adornments
+	such as borders, etc."
+
+	| size |
+	size := SIZEL new.
+	self
+		sendMessage: BCM_GETIDEALSIZE
+		wParam: 0
+		lpParam: size.
+	^size asPoint!
+
 command: anInteger id: id 
 	"Private - Responds to a command notification message which has been redirected to us."
 
@@ -155,11 +173,16 @@ onViewCreated
 	the control."
 
 	super onViewCreated.
-	self image: self image! !
+	self image: self image!
+
+plainText: aString
+	super plainText: aString.
+	self invalidateCalculatedExtent! !
 !UI.CheckButton categoriesForMethods!
 alignment!accessing!public! !
 alignment:!accessing!public! !
 basicWindowStyle!constants!private! !
+calculateExtent:!geometry!private! !
 command:id:!commands!private! !
 defaultWindowStyle!constants!private! !
 displayValue!private!updating! !
@@ -171,6 +194,7 @@ image:!accessing!public! !
 isPushLike!accessing-styles!public! !
 isPushLike:!accessing-styles!public! !
 onViewCreated!event handling!public! !
+plainText:!private!updating! !
 !
 
 !UI.CheckButton class methodsFor!

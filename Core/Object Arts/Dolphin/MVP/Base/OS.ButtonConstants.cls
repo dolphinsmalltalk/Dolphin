@@ -7,6 +7,7 @@ Kernel.SharedPool
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+			'BCM_GETIDEALSIZE' -> 16r1601.
 			'BCM_GETNOTE' -> 16r160A.
 			'BCM_GETNOTELENGTH' -> 16r160B.
 			'BCM_SETNOTE' -> 16r1609.
