@@ -1,0 +1,99 @@
+﻿| package |
+package := Package name: 'Send Input'.
+package paxVersion: 2.1;
+	basicComment: ''.
+
+
+package setClassNames: #(
+	#{OS.INPUT}
+	#{OS.SendInputConstants}
+).
+
+package setMethodNames: #(
+	#(#{OS.UserLibrary} #keybd_event:bScan:dwFlags:dwExtraInfo:)
+	#(#{OS.UserLibrary} #mouse_event:dx:dy:dwData:dwExtraInfo:)
+	#(#{OS.UserLibrary} #sendInput:pInputs:cbSize:)
+).
+
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+).
+
+package!
+
+"Class Definitions"!
+
+Kernel.SharedPool
+	subclass: #'OS.SendInputConstants'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'INPUT_HARDWARD' -> 16r2.
+			'INPUT_KEYBOARD' -> 16r1.
+			'INPUT_MOUSE' -> 16r0.
+			'KEYEVENTF_EXTENDEDKEY' -> 16r1.
+			'KEYEVENTF_KEYUP' -> 16r2.
+			'KEYEVENTF_SCANCODE' -> nil.
+			'KEYEVENTF_UNICODE' -> 16r4.
+			'MOUSEEVENTF_ABSOLUTE' -> 16r8000.
+			'MOUSEEVENTF_HWHEEL' -> 16r1000.
+			'MOUSEEVENTF_LEFTDOWN' -> 16r2.
+			'MOUSEEVENTF_LEFTUP' -> 16r4.
+			'MOUSEEVENTF_MIDDLEDOWN' -> 16r20.
+			'MOUSEEVENTF_MIDDLEUP' -> 16r40.
+			'MOUSEEVENTF_MOVE' -> 16r1.
+			'MOUSEEVENTF_MOVE_NOCOALESCE' -> 16r2000.
+			'MOUSEEVENTF_RIGHTDOWN' -> 16r8.
+			'MOUSEEVENTF_RIGHTUP' -> 16r10.
+			'MOUSEEVENTF_VIRTUALDESK' -> 16r4000.
+			'MOUSEEVENTF_WHEEL' -> 16r800.
+			'MOUSEEVENTF_XDOWN' -> 16r80.
+			'MOUSEEVENTF_XUP' -> 16r100
+		}!
+OS.Win32Structure
+	subclass: #'OS.INPUT'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.SendInputConstants})
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_INPUT_Size' -> 16r1C.
+			'_OffsetOf_dwExtraInfo' -> 16r18.
+			'_OffsetOf_dwFlags' -> 16r10.
+			'_OffsetOf_dx' -> 16r4.
+			'_OffsetOf_dy' -> 16r8.
+			'_OffsetOf_mouseData' -> 16rC.
+			'_OffsetOf_time' -> 16r14.
+			'_OffsetOf_Type' -> 16r0.
+			'_OffsetOf_uMsg' -> 16r8.
+			'_OffsetOf_wParamH' -> 16rA.
+			'_OffsetOf_wParamL' -> 16r8.
+			'_OffsetOf_wScan' -> 16r6.
+			'_OffsetOf_wVk' -> 16r4
+		}!
+
+"Loose Methods"!
+
+!OS.UserLibrary methodsFor!
+
+keybd_event: bVk bScan: bScan dwFlags: dwFlags dwExtraInfo: dwExtraInfo
+	<stdcall: void keybd_event uint8 uint8 uint32 uintptr>
+	^self invalidCall: _failureCode!
+
+mouse_event: dwFlags dx: dx dy: dy dwData: dwData dwExtraInfo: dwExtraInfo
+	<stdcall: void mouse_event uint32 uint32 uint32 uint32 uintptr>
+	^self invalidCall: _failureCode!
+
+sendInput: cInputs pInputs: pInputs cbSize: cbSize
+	<stdcall: uint32 SendInput uint32 lpvoid* int32>
+	^self invalidCall: _failureCode! !
+!OS.UserLibrary categoriesForMethods!
+keybd_event:bScan:dwFlags:dwExtraInfo:!public!win32 functions-message and message queue! !
+mouse_event:dx:dy:dwData:dwExtraInfo:!public!win32 functions-message and message queue! !
+sendInput:pInputs:cbSize:!public!win32 functions-message and message queue! !
+!
+
+"End of package definition"!
+

@@ -68,6 +68,20 @@ oldDolphinVersionsForStbUpgrade
 oldStlResources
 	^self class resourceIdentifiers!
 
+sendKeyPress: vkInteger extended: aBoolean
+	| scanCode flags |
+	scanCode := User32 mapVirtualKey: vkInteger uMapType: 0.
+	flags := aBoolean ifTrue: [SendInputConstants.KEYEVENTF_EXTENDEDKEY] ifFalse: [0].
+	User32
+		keybd_event: vkInteger
+			bScan: scanCode
+			dwFlags: flags
+			dwExtraInfo: 0;
+		keybd_event: vkInteger
+			bScan: scanCode
+			dwFlags: flags | SendInputConstants.KEYEVENTF_KEYUP
+			dwExtraInfo: 0!
+
 setUp
 	self shouldSetupPresenter ifTrue: [self initializePresenter]!
 
@@ -152,6 +166,7 @@ leftClickAt:!helpers!private! !
 nonProportionalFont!constants!private! !
 oldDolphinVersionsForStbUpgrade!constants!private! !
 oldStlResources!constants!private! !
+sendKeyPress:extended:!helpers!public! !
 setUp!public!Running! !
 shouldSetupPresenter!helpers!private! !
 tearDown!public!Running! !

@@ -180,6 +180,7 @@ package setPrerequisites: #(
 	'..\Presenters\Tree\Dolphin Tree Presenter'
 	'..\Type Converters\Dolphin Type Converters'
 	'..\Models\Value\Dolphin Value Models'
+	'Send Input'
 	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
 	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitPreload'
 ).

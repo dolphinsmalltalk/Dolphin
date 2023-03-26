@@ -7,7 +7,7 @@ Package manager
 	install: 'Core\Object Arts\Dolphin\MVP\Graphics\Tests\Dolphin GDI Graphics Tests.pax';
 	install: 'Core\Object Arts\Dolphin\System\Filer\Dolphin Literal Filer Tests.pax';
 	install: 'Core\Object Arts\Dolphin\MVP\Tests\Dolphin MVP Tests.pax';
-	install: 'Core\Object Arts\Dolphin\MVP\Deprecated\Dolphin MVP Tests (Deprecated).pax';
+	install: 'Core\Object Arts\Dolphin\MVP\Tests\Dolphin MVP Tests (Deprecated).pax';
 	install: 'Core\Object Arts\Dolphin\MVP\Views\Scintilla\Tests\Dolphin Scintilla View Tests.pax';
 	install: 'Core\Object Arts\Dolphin\MVP\Gdiplus\Tests\Gdiplus Tests.pax';
 	install: 'Core\Contributions\Camp Smalltalk\SUnit\SUnitTests.pax';
