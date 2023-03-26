@@ -12,7 +12,7 @@ WebView2.ICoreWebView2Environment comment: '`ICoreWebView2Environment` is a wrap
 
 The type library contains no documentation for this interface
 
-At the time of writing there are seven (!!) later versions of this interface. In order to reduce the burden of degrading gracefully to older versions, default implementations of the additional methods and properties are added.
+At the time of writing there are eleven (!!) later versions of this interface. In order to reduce the burden of degrading gracefully to older versions, default implementations of the additional methods and properties are added.
 
 IDL definition follows:
 ```
@@ -168,7 +168,7 @@ createCoreWebView2Controller: parentWindow withOptions: options thenDo: aDyadicV
 	| handler |
 	handler := (WebView2CompletionHandler completionBlock: aDyadicValuable)
 				queryInterface: ICoreWebView2CreateCoreWebView2ControllerCompletedHandler.
-	self CreateCoreWebView2ControllerWithOptions: parentWindow options: options handler: aDyadicValuable.
+	self CreateCoreWebView2ControllerWithOptions: parentWindow options: options handler: handler.
 	handler free!
 
 createCoreWebView2ControllerOptions
@@ -177,7 +177,7 @@ createCoreWebView2ControllerOptions
 	| answer |
 	answer := ICoreWebView2ControllerOptions newPointer.
 	self CreateCoreWebView2ControllerOptions: answer.
-	^answer asObject!
+	^answer downCast!
 
 CreateCoreWebView2ControllerOptions: options
 	"Private - Invoke the CreateCoreWebView2ControllerOptions() method of the COM object.
@@ -224,6 +224,23 @@ CreatePrintSettings: printSettings
 
 	^E_NOTIMPL
 !
+
+createSharedBuffer: size
+	"Answer the <ICoreWebView2SharedBuffer> result of invoking the CreateSharedBuffer() method of the COM object."
+
+	| answer |
+	answer := ICoreWebView2SharedBuffer newPointer.
+	self CreateSharedBuffer: size shared_buffer: answer.
+	^answer asObject!
+
+CreateSharedBuffer: size shared_buffer: shared_buffer
+	"Private - Invoke the CreateSharedBuffer() method of the COM object.
+
+		HRESULT __stdcall CreateSharedBuffer(
+			[in]unsigned __int64 Size,
+			[out, retval]ICoreWebView2SharedBuffer** shared_buffer);"
+
+	^E_NOTIMPL!
 
 createWebResourceRequest: uri method: method postData: postData headers: headers
 	"Answer the <ICoreWebView2WebResourceRequest> result of invoking the CreateWebResourceRequest() method of the COM object, or nil if not implemented by this version."
@@ -287,7 +304,7 @@ downCast
 	"Private - Answer the most recent environment interface available on the underlying COM object. There are already 10 versions of the ICoreWebView2Environment; answer the latest available. A little more forethought in the design so as to not have to define >10 versions of a public interface in a year or two might be nice!!"
 
 	| interfaceClass |
-	interfaceClass := ICoreWebView2Environment11.
+	interfaceClass := ICoreWebView2Environment12.
 	
 	[(self queryInterface: interfaceClass ifNone: []) ifNotNil: [:interface | ^interface].
 	(interfaceClass := interfaceClass superclass) == self class]
@@ -414,22 +431,24 @@ createCoreWebView2CompositionController:withOptions:thenDo:!methods!public! !
 CreateCoreWebView2CompositionControllerWithOptions:options:handler:!COM Interfaces-ICoreWebView2Environment10!private! !
 CreateCoreWebView2Controller:handler:!**auto generated**!COM Interfaces-ICoreWebView2Environment!private! !
 createCoreWebView2Controller:thenDo:!methods!public! !
-createCoreWebView2Controller:withOptions:thenDo:!**auto generated**!methods!public! !
-createCoreWebView2ControllerOptions!**auto generated**!methods!public! !
+createCoreWebView2Controller:withOptions:thenDo:!methods!public! !
+createCoreWebView2ControllerOptions!methods!public! !
 CreateCoreWebView2ControllerOptions:!COM Interfaces-ICoreWebView2Environment10!private! !
 CreateCoreWebView2ControllerWithOptions:options:handler:!COM Interfaces-ICoreWebView2Environment10!private! !
 CreateCoreWebView2PointerInfo:!COM Interfaces-ICoreWebView2Environment3!methods!private! !
 createPointerInfo!methods!public! !
 CreatePrintSettings:!COM Interfaces-ICoreWebView2Environment6!methods!private! !
+createSharedBuffer:!methods!public! !
+CreateSharedBuffer:shared_buffer:!COM Interfaces-ICoreWebView2Environment12!private! !
 createWebResourceRequest:method:postData:headers:!methods!public! !
 CreateWebResourceRequest:method:postData:headers:request:!COM Interfaces-ICoreWebView2Environment2!displaying!private! !
-createWebResourceResponse:statusCode:reasonPhrase:headers:!**auto generated**!methods!public! !
+createWebResourceResponse:statusCode:reasonPhrase:headers:!methods!public! !
 CreateWebResourceResponse:statusCode:reasonPhrase:headers:response:!**auto generated**!COM Interfaces-ICoreWebView2Environment!private! !
 displayOn:!displaying!public! !
-downCast!properties!public! !
+downCast!converting!public! !
 failureReportFolderPath!properties!public! !
 get_BrowserVersionString:!**auto generated**!COM Interfaces-ICoreWebView2Environment!private! !
-get_FailureReportFolderPath:!**auto generated**!COM Interfaces-ICoreWebView2Environment11!private! !
+get_FailureReportFolderPath:!COM Interfaces-ICoreWebView2Environment11!private! !
 get_UserDataFolder:!COM Interfaces-ICoreWebView2Environment7!private!properties! !
 GetProcessInfos:!COM Interfaces-ICoreWebView2Environment8!methods!private! !
 getProviderForHwnd:!methods!public! !

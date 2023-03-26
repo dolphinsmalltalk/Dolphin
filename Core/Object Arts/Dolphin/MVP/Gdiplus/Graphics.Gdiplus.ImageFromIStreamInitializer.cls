@@ -33,12 +33,8 @@ basicCreateHandle
 	| gpHandle |
 	gpHandle := Handle new.
 	Gdip gdipLoadImageFromStream: iStream asParameter image: gpHandle.
-	^gpHandle!
-
-hash
-	^(self species hash + iStream hash) hashMultiply! !
+	^gpHandle! !
 !Graphics.Gdiplus.ImageFromIStreamInitializer categoriesForMethods!
 basicCreateHandle!private!realizing/unrealizing! !
-hash!comparing!public! !
 !
 

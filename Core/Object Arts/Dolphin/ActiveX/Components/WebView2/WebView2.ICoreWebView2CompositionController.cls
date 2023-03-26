@@ -82,6 +82,17 @@ cursor
 	self get_Cursor: answer.
 	^answer asObject!
 
+downCast
+	"Private - Answer the most recent environment interface available on the underlying COM object."
+
+	| interfaceClass |
+	interfaceClass := ICoreWebView2CompositionController3.
+	
+	[(self queryInterface: interfaceClass ifNone: []) ifNotNil: [:interface | ^interface].
+	(interfaceClass := interfaceClass superclass) == self class]
+			whileFalse.
+	^self!
+
 get_Cursor: cursor
 	"Private - Get the value of the 'Cursor' property of the receiver.
 
@@ -197,6 +208,7 @@ uiaProvider
 Add_CursorChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2CompositionController!events!private! !
 currentCursor!properties!public! !
 cursor!**auto generated**!properties!public! !
+downCast!converting!public! !
 get_Cursor:!**auto generated**!COM Interfaces-ICoreWebView2CompositionController!private!properties! !
 get_RootVisualTarget:!**auto generated**!COM Interfaces-ICoreWebView2CompositionController!private!properties! !
 get_SystemCursorId:!**auto generated**!COM Interfaces-ICoreWebView2CompositionController!private!properties! !

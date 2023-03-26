@@ -12,7 +12,7 @@ WebView2.ICoreWebView2 comment: '`ICoreWebView2` is a wrapper class for the COM 
 
 The type library contains no documentation for this interface
 
-At the time of writing there are eight (!!) later versions of this interface. In order to reduce the burden of degrading gracefully to older versions, default implementations of the additional methods and properties are added.
+At the time of writing there are 16 (!!) later versions of this interface. In order to reduce the burden of degrading gracefully to older versions, default implementations of the additional methods and properties are added.
 
 IDL definition follows:
 ```
@@ -1095,6 +1095,16 @@ OpenTaskManagerWindow
 	"Not implemented by this version of WebView2"
 	^E_NOTIMPL!
 
+PostSharedBufferToScript: sharedBuffer access: access additionalDataAsJson: additionalDataAsJson
+	"Invoke the PostSharedBufferToScript() method of the COM object.
+
+		HRESULT __stdcall PostSharedBufferToScript(
+			[in]ICoreWebView2SharedBuffer* sharedBuffer,
+			[in]COREWEBVIEW2_SHARED_BUFFER_ACCESS access,
+			[in]LPWSTR additionalDataAsJson);"
+
+	^E_NOTIMPL!
+
 postWebMessageAsJson: webMessageAsJson
 	"Invoke the PostWebMessageAsJson() method of the COM object."
 
@@ -1497,8 +1507,8 @@ Resume
 
 		HRESULT __stdcall Resume();"
 
-	<virtual stdcall: hresult 70>
-	^self invalidCall: _failureCode!
+	"Not implemented by this version of WebView2"
+	^E_NOTIMPL!
 
 settings
 	"Answer the <ICoreWebView2Settings> value of the 'Settings' property of the receiver."
@@ -1592,7 +1602,8 @@ TrySuspend: handler
 		HRESULT __stdcall TrySuspend(
 			[in]ICoreWebView2TrySuspendCompletedHandler* handler);"
 
-	handler Invoke: E_NOTIMPL arg: 0! !
+	handler Invoke: E_NOTIMPL arg: 0.
+	^S_OK! !
 !WebView2.ICoreWebView2 categoriesForMethods!
 Add_BasicAuthenticationRequested:token:!COM Interfaces-ICoreWebView2_10!private! !
 Add_ClientCertificateRequested:token:!COM Interfaces-ICoreWebView2_5!private! !
@@ -1653,7 +1664,7 @@ defaultDownloadDialogMargin!properties!public! !
 defaultDownloadDialogMargin:!properties!public! !
 displayOn:!displaying!public! !
 documentTitle!properties!public! !
-downCast!helpers!private! !
+downCast!converting!public! !
 environment!properties!public! !
 ExecuteScript:handler:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 executeScript:thenDo:!async requests!public! !
@@ -1700,6 +1711,7 @@ openDevToolsWindow!**auto generated**!methods!public! !
 OpenDevToolsWindow!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 openTaskManagerWindow!methods!public! !
 OpenTaskManagerWindow!COM Interfaces-ICoreWebView2_6!private! !
+PostSharedBufferToScript:access:additionalDataAsJson:!**auto generated**!COM Interfaces-ICoreWebView2_17!public! !
 postWebMessageAsJson:!**auto generated**!methods!public! !
 PostWebMessageAsJson:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 postWebMessageAsString:!**auto generated**!methods!public! !

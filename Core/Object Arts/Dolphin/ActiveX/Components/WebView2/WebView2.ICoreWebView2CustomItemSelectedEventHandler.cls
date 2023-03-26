@@ -56,9 +56,15 @@ defineFunctions
 eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
-	^#customItemSelected! !
+	^#customItemSelected:!
+
+triggerBlockFor: aUrlPresenter
+	| event |
+	event := self eventName.
+	^[:source :args | aUrlPresenter trigger: event with: source]! !
 !WebView2.ICoreWebView2CustomItemSelectedEventHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 eventName!constants!public! !
+triggerBlockFor:!helpers!private! !
 !
 

@@ -52,6 +52,9 @@ interface ICoreWebView2NewWindowRequestedEventArgs : IUnknown
 !WebView2.ICoreWebView2NewWindowRequestedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
 !WebView2.ICoreWebView2NewWindowRequestedEventArgs methodsFor!
 
+downCast
+	^self queryInterface: ICoreWebView2NewWindowRequestedEventArgs2 ifNone: self!
+
 get_Handled: handled
 	"Private - Get the value of the 'Handled' property of the receiver.
 
@@ -202,6 +205,7 @@ windowFeatures
 	self get_WindowFeatures: answer.
 	^answer asObject! !
 !WebView2.ICoreWebView2NewWindowRequestedEventArgs categoriesForMethods!
+downCast!converting!public! !
 get_Handled:!**auto generated**!COM Interfaces-ICoreWebView2NewWindowRequestedEventArgs!private! !
 get_IsUserInitiated:!**auto generated**!COM Interfaces-ICoreWebView2NewWindowRequestedEventArgs!private! !
 get_name:!**auto generated**!COM Interfaces-ICoreWebView2NewWindowRequestedEventArgs2!private! !

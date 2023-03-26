@@ -74,6 +74,53 @@ tearDown
 			webviewEnvironment := nil].
 	presenter removeAllEventsTriggered!
 
+testContextMenu
+	<knownSlowTest>
+	| contextMenuHandler menuEvent newCmd iconStream cmdEventSink cmdFired |
+	iconStream := IStream read: (FileLocator installRelative: 'Resources\Dolphin.ico') asString.
+	newCmd := presenter view webviewEnvironment
+				createContextMenuItem: '&Blah'
+				iconStream: iconStream
+				kind: WebView2.COREWEBVIEW2_CONTEXT_MENU_ITEM_KIND_COMMAND.
+	self assertIsNil: newCmd children.
+	self assert: newCmd label equals: '&Blah'.
+	self assert: newCmd name equals: '&Blah'.
+	self assert: newCmd kind equals: #command.
+	self deny: newCmd isChecked.
+	self assert: newCmd isEnabled.
+	cmdFired := false.
+	cmdEventSink := WebView2EventSink
+				source: newCmd
+				interfaceClass: ICoreWebView2CustomItemSelectedEventHandler
+				handler: [:source | cmdFired := true].
+	cmdEventSink register.
+	contextMenuHandler := 
+			[:eventArgs |
+			| items |
+			items := eventArgs menuItems.
+			items
+				removeAtIndex: (items findFirst: [:each | each name = 'inspectElement']);
+				add: newCmd beforeIndex: 1.
+			menuEvent := eventArgs].
+	presenter
+		when: #contextMenuRequested:
+		send: #value:
+		to: contextMenuHandler.
+	navigationCompleted := nil.
+	presenter model value: 'edge://edge-urls'.
+	self assert: self waitForNavigationCompleted.
+	presenter view setFocus.
+	self sendKeyPress: Win32Constants.VK_APPS extended: true.
+	self waitAtMost: 50 milliseconds while: [menuEvent isNil].
+	"Hmmm, how can we tell that the context menu has actually popped up"
+	self waitAtMost: 50 milliseconds while: [true].
+	"Action the selected context menu command"
+	self sendKeyPress: VK_RETURN extended: false.
+	self waitAtMost: 50 milliseconds while: [cmdFired not].
+	cmdEventSink free.
+	newCmd free.
+	self assert: cmdFired!
+
 testNavigateToString
 	"Bit of a kick-the-tyres test, but it does execute a lot of the integration, e.g. creating the WebView2 environment, controller and view, and setting up event handlers and handling of events."
 
@@ -94,10 +141,16 @@ testProperties
 	"Test the default properties and setting properties for all the core interfaces. We do this in one test because of the high startup cost for a WebView2 instance."
 
 	<knownSlowTest>
+	navigationCompleted := nil.
+	presenter model value: 'edge://edge-urls/'.
+	self assert: self waitForNavigationCompleted.
 	self verifyWebViewProperties.
 	self verifyWebViewEnvironmentProperties.
 	self verifyWebViewControllerProperties.
-	self verifyWebViewSettings!
+	self verifyWebViewSettings.
+	self verifyWebViewProfile.
+	"Not really a property, but WebView2's are expensive to create"
+	self verifySharedBuffer!
 
 testWebBrowserCrashRecovery
 	"Test browser recovery after a crash of the browser process that causes it to exit"
@@ -115,6 +168,38 @@ testWebBrowserCrashRecovery
 	self assert: navigationCompleted isSuccess.
 	self assert: webview displayValue equals: 'edge://crashes/'.
 	self assert: navigationCompleted navigationId equals: domContentLoaded!
+
+verifySharedBuffer
+	"Private - Test browser recovery after a crash of the browser process that causes it to exit"
+
+	| webview buf testBytes bytes fv env |
+	webview := presenter view.
+	env := webview webviewEnvironment.
+	(env isKindOf: ICoreWebView2Environment12)
+		ifFalse: 
+			["Browser version is too old"
+			^self].
+	buf := env createSharedBuffer: 4096.
+	testBytes := Object comment asByteArray.
+	buf buffer
+		replaceFrom: 1
+		to: testBytes size
+		with: testBytes
+		startingAt: 1.
+	bytes := buf openStream contents.
+	self assert: bytes size equals: 4096.
+	self assert: (Utf8String fromByteArray: bytes length: testBytes size) equals: Object comment.
+	testBytes := testBytes resize: 4096.
+	self assert: buf buffer asByteArray equals: testBytes.
+	fv := buf memoryMappedFile mapView.
+	self assert: (fv copyFrom: 1 to: 4096) equals: testBytes.
+	fv free.
+	self assert: buf Close equals: OS.Win32Errors.S_OK.
+	self
+		should: [buf memoryMappedFile]
+		raise: HRESULTError
+		matching: [:ex | ex hresult asInteger = Win32Errors.RO_E_CLOSED].
+	buf free!
 
 verifyWebViewControllerProperties
 	| controller baseController |
@@ -187,6 +272,15 @@ verifyWebViewEnvironmentProperties
 	"ICoreWebView2Environment10: No new properties."
 	^environment!
 
+verifyWebViewProfile
+	| profile |
+	profile := presenter view webview profile.
+	self assert: (profile profilePath beginsWith: presenter view defaultUserDataFolder).
+	"How do we query the user's default downloads directory?"
+	self assert: profile defaultDownloadFolderPath equals: SessionManager current downloadsDirectory.
+	"The tracking prevention level may have been adjusted in the profile, so we can only assert that it is in range"
+	self assert: (profile preferredTrackingPreventionLevel between: COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_NONE and: COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_STRICT).!
+
 verifyWebViewProperties
 	| defaultMargin webview2 baseInterface |
 	webview2 := presenter view webview.
@@ -201,11 +295,11 @@ verifyWebViewProperties
 	self deny: webview2 canGoForward.
 	self deny: baseInterface containsFullScreenElement.
 	self deny: webview2 containsFullScreenElement.
-	self assert: baseInterface documentTitle equals: ''.
-	self assert: webview2 documentTitle equals: ''.
+	self assert: baseInterface documentTitle equals: 'Edge URLs'.
+	self assert: webview2 documentTitle equals: 'Edge URLs'.
 	self assert: baseInterface settings isKindOf: ICoreWebView2Settings7.
-	self assert: baseInterface source equals: 'about:blank'.
-	self assert: webview2 source equals: 'about:blank'.
+	self assert: baseInterface source equals: 'edge://edge-urls/'.
+	self assert: webview2 source equals: 'edge://edge-urls/'.
 	"ICoreWebView2_2: cookieManager, environment"
 	self assert: webview2 cookieManager isKindOf: ICoreWebView2CookieManager.
 	self assertIsNil: baseInterface cookieManager.
@@ -361,11 +455,14 @@ onNavigationCompleted:!event handling!private! !
 onProcessFailed:!event handling!private! !
 onWebViewAvailable!event handling!private! !
 tearDown!public!Running! !
+testContextMenu!public!unit tests! !
 testNavigateToString!public!unit tests! !
 testProperties!public!unit tests! !
 testWebBrowserCrashRecovery!public!unit tests! !
+verifySharedBuffer!helpers!private! !
 verifyWebViewControllerProperties!helpers!private! !
 verifyWebViewEnvironmentProperties!helpers!private! !
+verifyWebViewProfile!helpers!private! !
 verifyWebViewProperties!helpers!private! !
 verifyWebViewSettings!helpers!private! !
 viewClass!constants!private! !
@@ -374,6 +471,16 @@ waitForNavigationCompleted!helpers!private! !
 !
 
 !WebView2.Tests.WebView2ViewTest class methodsFor!
+
+resource_URLPresenter_WebView2_13
+	"Answer the literal data from which the 'WebView2' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	Tools.ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_URLPresenter_WebView2_13)
+	"
+
+	^#(#'!!STL' 5 985166 10 #{UI.STBViewProxy} #{UI.WebView2View} 34 21 nil nil 34 2 8 1140916224 1 416 918598 2 #{UI.ValueHolder} nil false 1769478 #{Kernel.EqualitySearchPolicy} nil nil nil 7 nil nil nil 416 nil nil 1049094 #{UI.NullConverter} nil nil 262145 nil nil nil nil nil 1310982 #{Core.MessageSequence} 34 1 1049350 #{Core.MessageSend} #createAt:extent: 34 2 918022 #{Graphics.Point} 6143 21 674 1179 289 416 1179910 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 76 14 0 0 154 0 0 0] 8 #() 674 193 193 nil 27)!
 
 resource_URLPresenter_WebView2_D7
 	"Answer the literal data from which the 'WebView2' resource can be reconstituted.
@@ -385,6 +492,7 @@ resource_URLPresenter_WebView2_D7
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.WebView2View) 34 21 nil nil 34 2 8 1140916224 1 416 721990 2 ##(Smalltalk.ValueHolder) nil false 1310726 ##(Smalltalk.EqualitySearchPolicy) nil nil nil 7 nil nil nil 416 nil nil 852486 ##(Smalltalk.NullConverter) nil nil 1 nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 12287 21 690 1179 289 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 76 26 0 0 154 0 0 0] 8 #() 690 193 193 nil 27 )! !
 !WebView2.Tests.WebView2ViewTest class categoriesForMethods!
+resource_URLPresenter_WebView2_13!public!resources-views! !
 resource_URLPresenter_WebView2_D7!public!resources-views! !
 !
 

@@ -64,6 +64,11 @@ asArray
 		keysAndValuesDo: [:i :each | answer basicAt: i put: each].
 	^answer!
 
+asByteArray
+	"Answer a <ByteArray> containing the constituent elements of the receiver."
+
+	^bytes copyFrom: 1 to: self byteSize!
+
 asOrderedCollection
 	"Answer an <OrderedCollection> whose elements are those of the receiver
 	The ordering is that of the #do: operation as implemented by the receiver,
@@ -458,6 +463,7 @@ allSatisfy:!public! !
 anySatisfy:!enumerating!public! !
 appendToStream:!double dispatch!private! !
 asArray!converting!public! !
+asByteArray!converting!public! !
 asOrderedCollection!converting!public! !
 at:!accessing!public! !
 at:ifAbsent:!accessing!public! !

@@ -197,14 +197,14 @@ isIdeaSpaceCard
 methodBrowserClass
 	^MethodBrowser!
 
-onDropDown: aToolbarButton 
+onDropDown: aToolbarButton
 	"Private - The receiver's toolbar has sent a notification that a button's drop-down arrow
 	has been pressed. Generate and pop-up the appropriate menu."
 
 	| popup |
 	popup := self buildPopupForCommand: aToolbarButton command asSymbol.
 	popup isNil ifTrue: [^nil].
-	popup queryAllFromView: self view.
+	popup queryAllAlong: self commandPolicy recursive: true.
 	popup showIn: self position: aToolbarButton screenRectangle bottomLeft.
 	^0!
 

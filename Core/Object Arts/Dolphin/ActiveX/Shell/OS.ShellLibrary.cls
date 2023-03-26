@@ -102,21 +102,21 @@ findExecutable: lpFile lpDirectory: directoryStringIn lpResult: buf
 	<stdcall: handle FindExecutableW lpwstr lpwstr lpwstr>
 	^self invalidCall: _failureCode!
 
-getSpecialFolderLocation: anInteger
+getKnownFolderLocation: aGUID
 	"
-	self default getSpecialFolderLocation: CSIDL_PERSONAL
+	Shell32 getKnownFolderLocation: FOLDERID_Downloads
 	"
 
-	| pszPath |
-	#todo.	"Support long paths? May not be possible as the API does not."
-	pszPath := Utf16String newFixed: MAX_PATH.
+	| ppszPath pszPath |
+	ppszPath := Address new.
 	self
-		shGetFolderPath: nil
-		nFolder: anInteger
+		shGetKnownFolderPath: aGUID
+		dwFlags: KF_FLAG_DEFAULT
 		hToken: nil
-		dwFlags: SHGFP_TYPE_CURRENT
-		pszPath: pszPath.
-	^pszPath trimNulls!
+		pszPath: ppszPath.
+	pszPath := Utf16String fromAddress: ppszPath.
+	OS.COM.Ole32 coTaskMemFree: ppszPath.
+	^pszPath!
 
 isUserAnAdmin
 	"Invoke the IsUserAnAdmin() function of the module wrapped by the receiver.
@@ -128,7 +128,7 @@ isUserAnAdmin
 	^self invalidCall: _failureCode!
 
 myPictures
-	^self getSpecialFolderLocation: ShellConstants.CSIDL_MYPICTURES!
+	^Shell32 getKnownFolderLocation: FOLDERID_Pictures!
 
 SHChangeNotify: wEventId uFlags: unit dwItem1: aLPCVOID1 dwItem2: aLPCVOID2
 	"Notify the system of an event that an application has performed that may affect the Shell.
@@ -183,18 +183,8 @@ shellOpen: fileString directory: dirString parameters: paramString
 				nShowCmd: SW_SHOWNORMAL.
 	^hInst asInteger <= 32 ifTrue: [self systemError] ifFalse: [hInst]!
 
-shGetFolderPath: hwndOwner nFolder: nFolder hToken: hToken dwFlags: dwFlags pszPath: pszPath
-	"Invoke the SHGetFolderPath() function of the module wrapped by the receiver.
-	Helpstring: Takes the CSIDL of a folder and returns the path
-
-		HRESULT __stdcall SHGetFolderPath(
-			HWND hwndOwner,
-			int nFolder,
-			HANDLE hToken,
-			DWORD dwFlags,
-			LPWSTR pszPath);"
-
-	<stdcall: hresult SHGetFolderPathW handle int32 handle uint32 lpwstr>
+shGetKnownFolderPath: frid dwFlags: dwFlags hToken: hToken pszPath: pszPath
+	<stdcall: hresult SHGetKnownFolderPath GUID* uint32 handle lpwstr*>
 	^self invalidCall: _failureCode!
 
 shGetStockIconInfo: siid uFlags: uFlags psii: psii
@@ -217,7 +207,7 @@ extractAssociatedIcon:lpIconPath:lpiIcon:!**auto generated**!public!win32 functi
 findExecutable:!public!win32 functions-shell library! !
 findExecutable:directory:!public!win32 functions-shell library! !
 findExecutable:lpDirectory:lpResult:!public!win32 functions-shell library! !
-getSpecialFolderLocation:!**auto generated**!public!win32 functions-shell library! !
+getKnownFolderLocation:!public!win32 functions-shell library! !
 isUserAnAdmin!**auto generated**!public!win32 functions-shell library! !
 myPictures!accessing!public! !
 SHChangeNotify:uFlags:dwItem1:dwItem2:!public!win32 functions-shell library! !
@@ -225,7 +215,7 @@ shellExecute:lpOperation:lpFile:lpParameters:lpDirectory:nShowCmd:!public!win32 
 shellOpen:!public!win32 functions-shell library! !
 shellOpen:directory:!public!win32 functions-shell library! !
 shellOpen:directory:parameters:!public!win32 functions-shell library! !
-shGetFolderPath:nFolder:hToken:dwFlags:pszPath:!**auto generated**!public!win32 functions-shell library! !
+shGetKnownFolderPath:dwFlags:hToken:pszPath:!**auto generated**!public!win32 functions-shell library! !
 shGetStockIconInfo:uFlags:psii:!**auto generated**!public!win32 functions-shell library! !
 !
 

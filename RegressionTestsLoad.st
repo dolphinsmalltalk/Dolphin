@@ -37,6 +37,7 @@ Package manager
 	install: 'Core\Object Arts\Dolphin\ActiveX\Components\XML DOM\Tests\XML DOM Tests.pax';
 	install: 'Core\Object Arts\Dolphin\System\SemVer\Tests\Dolphin SemVer Tests.pax';
 	install: 'Core\Object Arts\Dolphin\ActiveX\Components\Picture\Tests\OLE Picture Tests.pax';
-	install: 'Core\Object Arts\Dolphin\ActiveX\Components\WebView2\WebView2 Tests';
+	install: 'Core\Object Arts\Dolphin\ActiveX\Components\WebView2\WebView2 Tests.pax';
+	install: 'Core\Object Arts\Dolphin\ActiveX\Shell\Windows Shell Tests.pax';
 	yourself.
 !

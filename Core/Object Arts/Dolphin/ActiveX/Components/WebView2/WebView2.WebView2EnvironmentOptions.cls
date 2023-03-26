@@ -2,7 +2,7 @@
 
 OS.COM.InterfaceImplementation
 	subclass: #'WebView2.WebView2EnvironmentOptions'
-	instanceVariableNames: 'additionalBrowserArguments flags locale browserVersion'
+	instanceVariableNames: 'additionalBrowserArguments flags locale browserVersion trackingPreventionLevel'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -19,8 +19,8 @@ WebView2.WebView2EnvironmentOptions comment: ''!
 additionalBrowserArguments
 	^additionalBrowserArguments!
 
-additionalBrowserArguments: anObject
-	additionalBrowserArguments := anObject!
+additionalBrowserArguments: aString
+	additionalBrowserArguments := aString!
 
 allowSSO
 	^flags allMask: AllowSSOMask!
@@ -58,6 +58,15 @@ get_AllowSingleSignOnUsingOSPrimaryAccount: allow
 			[out, retval]long* allow);"
 
 	allow value: self allowSSO asParameter.
+	^S_OK!
+
+get_EnableTrackingPrevention: value
+	"Private - Get the value of the 'EnableTrackingPrevention' property of the receiver.
+
+		HRESULT __stdcall EnableTrackingPrevention(
+			[out, retval]long* value);"
+
+	value value: self trackingPreventionLevel.
 	^S_OK!
 
 get_ExclusiveUserDataFolderAccess: value
@@ -110,8 +119,9 @@ GetCustomSchemeRegistrations: count schemeRegistrations: schemeRegistrations
 
 initialize
 	super initialize.
-	flags := AllowSSOMask | ExclusiveUserDataFolderAccessMask.
-	browserVersion := CORE_WEBVIEW_TARGET_PRODUCT_VERSION!
+	flags := ##(AllowSSOMask | ExclusiveUserDataFolderAccessMask).
+	browserVersion := CORE_WEBVIEW_TARGET_PRODUCT_VERSION.
+	trackingPreventionLevel := COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_BALANCED!
 
 isCustomCrashReportingEnabled
 	^flags allMask: CustomCrashReportingMask!
@@ -120,7 +130,7 @@ isCustomCrashReportingEnabled: aBoolean
 	flags := flags mask: CustomCrashReportingMask set: aBoolean!
 
 locale
-	^locale ifNil: [Locale userDefault]!
+	^locale ?? Locale.UserDefault!
 
 locale: aLocale
 	locale := aLocale!
@@ -143,6 +153,16 @@ put_AllowSingleSignOnUsingOSPrimaryAccount: allow
 			[in]long allow);"
 
 	self allowSSO: allow asBoolean.
+	^S_OK!
+
+put_EnableTrackingPrevention: value
+	"Private - Set the value of the 'EnableTrackingPrevention' property of the object wrapped by the 
+	 receiver to the <int32> argument, value.
+
+		HRESULT __stdcall EnableTrackingPrevention(
+			[in]long value);"
+
+	self trackingPreventionLevel: value.
 	^S_OK!
 
 put_ExclusiveUserDataFolderAccess: value
@@ -195,10 +215,32 @@ SetCustomSchemeRegistrations: count schemeRegistrations: schemeRegistrations
 	^E_NOTIMPL!
 
 supportedInterfaces
-	^{ICoreWebView2EnvironmentOptions.
+	^{
+		ICoreWebView2EnvironmentOptions.
 		ICoreWebView2EnvironmentOptions2.
 		ICoreWebView2EnvironmentOptions3.
-		ICoreWebView2EnvironmentOptions4}! !
+		ICoreWebView2EnvironmentOptions4.
+		ICoreWebView2EnvironmentOptions5
+	}!
+
+trackingPreventionLevel
+	"Answer the <integer> from the COREWEBVIEW2_TRACKING_PREVENTION_LEVEL enumeration that specifies the tracking prevention level to be configured for WebView2's created in the environment.
+	By default this is COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_BALANCED (2)."
+
+	^trackingPreventionLevel!
+
+trackingPreventionLevel: value
+	(value between: COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_NONE
+		and: COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_STRICT)
+			ifFalse: 
+				[InvalidArgumentError
+					signal: 'Tracking prevention level <1p> not in expected range [<2p>, <3p>}' << {
+									value.
+									COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_NONE.
+									COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_STRICT
+								}
+					with: 'value'].
+	trackingPreventionLevel := value! !
 !WebView2.WebView2EnvironmentOptions categoriesForMethods!
 additionalBrowserArguments!accessing!public! !
 additionalBrowserArguments:!accessing!public! !
@@ -206,10 +248,11 @@ allowSSO!accessing!public! !
 allowSSO:!accessing!public! !
 browserVersion!accessing!public! !
 browserVersion:!accessing!public! !
-exclusiveUserDataFolderAccess!public! !
-exclusiveUserDataFolderAccess:!public! !
+exclusiveUserDataFolderAccess!accessing!public! !
+exclusiveUserDataFolderAccess:!accessing!public! !
 get_AdditionalBrowserArguments:!COM Interfaces-ICoreWebView2EnvironmentOptions!private! !
 get_AllowSingleSignOnUsingOSPrimaryAccount:!COM Interfaces-ICoreWebView2EnvironmentOptions!private! !
+get_EnableTrackingPrevention:!COM Interfaces-ICoreWebView2EnvironmentOptions5!private! !
 get_ExclusiveUserDataFolderAccess:!COM Interfaces-ICoreWebView2EnvironmentOptions2!private! !
 get_IsCustomCrashReportingEnabled:!COM Interfaces-ICoreWebView2EnvironmentOptions3!private! !
 get_Language:!COM Interfaces-ICoreWebView2EnvironmentOptions!private! !
@@ -222,12 +265,15 @@ locale!accessing!public! !
 locale:!accessing!public! !
 put_AdditionalBrowserArguments:!COM Interfaces-ICoreWebView2EnvironmentOptions!private! !
 put_AllowSingleSignOnUsingOSPrimaryAccount:!COM Interfaces-ICoreWebView2EnvironmentOptions!private! !
+put_EnableTrackingPrevention:!COM Interfaces-ICoreWebView2EnvironmentOptions5!private! !
 put_ExclusiveUserDataFolderAccess:!COM Interfaces-ICoreWebView2EnvironmentOptions2!private! !
 put_IsCustomCrashReportingEnabled:!COM Interfaces-ICoreWebView2EnvironmentOptions3!private! !
 put_Language:!COM Interfaces-ICoreWebView2EnvironmentOptions!private! !
 put_TargetCompatibleBrowserVersion:!COM Interfaces-ICoreWebView2EnvironmentOptions!private! !
 SetCustomSchemeRegistrations:schemeRegistrations:!COM Interfaces-ICoreWebView2EnvironmentOptions4!private! !
 supportedInterfaces!constants!public! !
+trackingPreventionLevel!accessing!public! !
+trackingPreventionLevel:!accessing!public! !
 !
 
 WebView2.WebView2EnvironmentOptions methodProtocol: #ICoreWebView2EnvironmentOptions attributes: #(#readOnly) selectors: #(#get_AdditionalBrowserArguments: #get_AllowSingleSignOnUsingOSPrimaryAccount: #get_Language: #get_TargetCompatibleBrowserVersion: #put_AdditionalBrowserArguments: #put_AllowSingleSignOnUsingOSPrimaryAccount: #put_Language: #put_TargetCompatibleBrowserVersion:)!

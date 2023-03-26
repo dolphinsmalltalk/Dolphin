@@ -46,6 +46,24 @@ interface ICoreWebView2PermissionRequestedEventArgs : IUnknown
 !WebView2.ICoreWebView2PermissionRequestedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
 !WebView2.ICoreWebView2PermissionRequestedEventArgs methodsFor!
 
+downCast
+	| interfaceClass |
+	interfaceClass := ICoreWebView2PermissionRequestedEventArgs3.
+	
+	[(self queryInterface: interfaceClass ifNone: []) ifNotNil: [:interface | ^interface].
+	(interfaceClass := interfaceClass superclass) == self class]
+			whileFalse.
+	^self!
+
+get_Handled: handled
+	"Private - Get the value of the 'Handled' property of the receiver.
+
+		HRESULT __stdcall Handled(
+			[out, retval]long* Handled);"
+
+	handled value: 0.
+	^S_OK!
+
 get_IsUserInitiated: isUserInitiated
 	"Private - Get the value of the 'IsUserInitiated' property of the receiver.
 
@@ -63,6 +81,15 @@ get_PermissionKind: permissionKind
 
 	<virtual stdcall: hresult 5 int32*>
 	^self invalidCall: _failureCode!
+
+get_SavesInProfile: value
+	"Private - Get the value of the 'SavesInProfile' property of the receiver.
+
+		HRESULT __stdcall SavesInProfile(
+			[out, retval]long* value);"
+
+	value value: 0.
+	^S_OK!
 
 get_State: state
 	"Private - Get the value of the 'State' property of the receiver.
@@ -99,6 +126,19 @@ GetDeferral: deferral
 	<virtual stdcall: hresult 9 ICoreWebView2Deferral**>
 	^self invalidCall: _failureCode!
 
+handled
+	"Answer whether this event is considered to have  been handled already."
+
+	| answer |
+	answer := ByteArray new: 4.
+	self get_Handled: answer.
+	^(answer int32AtOffset: 0) ~~ 0!
+
+handled: aBoolean
+	"Set whether this event is considered as having been handled already."
+
+	self put_Handled: aBoolean asParameter!
+
 isUserInitiated
 	"Answer the <Boolean> value of the 'IsUserInitiated' property of the receiver."
 
@@ -115,6 +155,24 @@ permissionKind
 	self get_PermissionKind: answer.
 	^answer asObject!
 
+put_Handled: handled
+	"Private - Set the value of the 'Handled' property of the object wrapped by the 
+	 receiver to the <sdword> argument, handled.
+
+		HRESULT __stdcall Handled(
+			[in]long Handled);"
+
+	^E_NOTIMPL!
+
+put_SavesInProfile: value
+	"Private - Set the value of the 'SavesInProfile' property of the object wrapped by the 
+	 receiver to the <int32> argument, value.
+
+		HRESULT __stdcall SavesInProfile(
+			[in]long value);"
+
+	^E_NOTIMPL!
+
 put_State: state
 	"Private - Set the value of the 'State' property of the object wrapped by the 
 	 receiver to the <sdword> argument, state.
@@ -124,6 +182,19 @@ put_State: state
 
 	<virtual stdcall: hresult 8 int32>
 	^self invalidCall: _failureCode!
+
+savesInProfile
+	"Answer the <boolean> value of the 'SavesInProfile' property of the receiver."
+
+	| answer |
+	answer := ByteArray new: 4.
+	self get_SavesInProfile: answer.
+	^(answer int32AtOffset: 0) ~~ 0!
+
+savesInProfile: value
+	"Set the 'SavesInProfile' property of the receiver to the <boolean> argument."
+
+	self put_SavesInProfile: value asParameter!
 
 state
 	"Answer the <sdword> value of the 'State' property of the receiver."
@@ -148,15 +219,24 @@ uri
 	ptr free.
 	^answer! !
 !WebView2.ICoreWebView2PermissionRequestedEventArgs categoriesForMethods!
+downCast!converting!public! !
+get_Handled:!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs2!private! !
 get_IsUserInitiated:!**auto generated**!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs!private! !
 get_PermissionKind:!**auto generated**!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs!private! !
+get_SavesInProfile:!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs3!private! !
 get_State:!**auto generated**!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs!private! !
 get_uri:!**auto generated**!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs!private! !
 getDeferral!**auto generated**!methods!public! !
 GetDeferral:!**auto generated**!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs!private! !
+handled!properties!public! !
+handled:!properties!public! !
 isUserInitiated!properties!public! !
 permissionKind!**auto generated**!properties!public! !
+put_Handled:!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs2!private! !
+put_SavesInProfile:!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs3!private! !
 put_State:!**auto generated**!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs!private! !
+savesInProfile!properties!public! !
+savesInProfile:!properties!public! !
 state!**auto generated**!properties!public! !
 state:!**auto generated**!properties!public! !
 uri!properties!public! !

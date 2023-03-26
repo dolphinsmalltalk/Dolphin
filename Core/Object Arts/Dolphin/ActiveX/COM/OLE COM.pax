@@ -107,6 +107,7 @@ package setClassNames: #(
 
 package setMethodNames: #(
 	#(#{Core.ByteArray} #copyToCOMTaskMemory)
+	#(#{Core.InvalidArgumentError} #hresult)
 	#(#{Core.SessionManager} #comStartup)
 	#(#{Core.String} #asBSTR)
 	#(#{Core.String} #copyToCOMTaskMemory)
@@ -520,6 +521,17 @@ copyToCOMTaskMemory
 		startingAt: 1! !
 !Core.ByteArray categoriesForMethods!
 copyToCOMTaskMemory!copying!public! !
+!
+
+!Core.InvalidArgumentError methodsFor!
+
+hresult
+	"Answer the <HRESULT> error code associated with the receiver.
+	Overridden by subclasses to answer more specified HRESULT codes."
+
+	^OS.HRESULT fromInteger: E_INVALIDARG! !
+!Core.InvalidArgumentError categoriesForMethods!
+hresult!accessing!public! !
 !
 
 !Core.SessionManager methodsFor!

@@ -527,7 +527,7 @@ printOn: aStream
 		basicPrint: self;
 		nextPut: $(; display: self text; nextPut: $)!
 
-queryAllAlong: aCommandPolicy
+queryAllAlong: aCommandPolicy recursive: aBoolean
 	"Private - Query the command status for the receiver and each of its command items and
 	immediate sub-menus using the specified <commandPolicy>. The checked/enabled/default status
 	of each item is updated to reflect the command status (as determined by the <commandTarget>s
@@ -544,22 +544,24 @@ queryAllAlong: aCommandPolicy
 	itemInfo := MENUITEMINFOW newBuffer.
 	items keysAndValuesDo: 
 			[:i :menuItem |
-			| itemQuery |
-			itemQuery := menuItem queryAlong: aCommandPolicy.
-			"Set the checked and enabled states, update the text (if desired), etc"
-			itemInfo
-				menuItem: menuItem
-				text: itemQuery text
-				state: (itemQuery isChecked ifTrue: [MFS_CHECKED] ifFalse: [MFS_UNCHECKED])
-						| (itemQuery isEnabled ifTrue: [MFS_ENABLED] ifFalse: [MFS_DISABLED])
-							| (itemQuery isDefault ifTrue: [MFS_DEFAULT] ifFalse: [0]).
-			self setItem: i info: itemInfo]!
+			(aBoolean and: [menuItem hasSubmenu])
+				ifTrue: [menuItem queryAllAlong: aCommandPolicy recursive: true]
+				ifFalse: 
+					[| itemQuery |
+					itemQuery := menuItem queryAlong: aCommandPolicy.
+					"Set the checked and enabled states, update the text (if desired), etc"
+					itemInfo
+						menuItem: menuItem
+						text: itemQuery text
+						state: (itemQuery isChecked ifTrue: [MFS_CHECKED] ifFalse: [MFS_UNCHECKED])
+								| (itemQuery isEnabled ifTrue: [MFS_ENABLED] ifFalse: [MFS_DISABLED])
+									| (itemQuery isDefault ifTrue: [MFS_DEFAULT] ifFalse: [0]).
+					self setItem: i info: itemInfo]]!
 
 queryAllFromView: aView
 	"Private - Query each menu item along a route from the <View>, aView."
 
-	^self queryAllAlong: aView presenter commandPolicy.
-!
+	^self queryAllAlong: aView presenter commandPolicy recursive: false!
 
 queryAlong: aCommandPolicy 
 	"Answer a <CommandQuery> reflecting the current state of the receiver's command for the
@@ -733,7 +735,7 @@ notEmpty!public!testing! !
 onDrawItem:!event handling-win32!private! !
 postCopy!copying!public! !
 printOn:!printing!public! !
-queryAllAlong:!operations!public! !
+queryAllAlong:recursive:!operations!public! !
 queryAllFromView:!operations!private! !
 queryAlong:!operations!public! !
 registerAcceleratorKeyIn:!adding!public! !

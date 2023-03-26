@@ -23,6 +23,7 @@ package setPrerequisites: #(
 	'..\..\..\MVP\Dolphin MVP Tests'
 	'..\..\..\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\..\MVP\Models\Value\Dolphin Value Models'
+	'..\..\Structured Storage\OLE Structured Storage'
 	'..\..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
 	'..\..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitPreload'
 	'WebView2'

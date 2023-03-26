@@ -20,6 +20,7 @@ subjectClass
 testAsByteArray
 	| b1 b2 infoHeader fileHeader |
 	model := self subjectClass fromFile: self fileResource pafRgb0000FF_100x100bmp.
+	self assert: model mimeType equals: 'image/bmp'.
 	b1 := model asByteArray: 'image/bmp'.
 	b2 := self fileResource rgb0000FF_100x100bmpBytes.
 	self assert: b1 size equals: b2 size.
@@ -63,6 +64,7 @@ testFromBitmap
 	| bmp |
 	bmp := self gdiBitmapClass fromFile: self fileResource pafRgb0000FF_100x100bmp.
 	model := self subjectClass fromBitmap: bmp.
+	self assert: model mimeType equals: 'image/bmp'.
 	self assert: model isPersistent.
 	self assert: model extent equals: 100 @ 100.
 	self assert: (model pixelAt: 50 @ 50) equals: Color blue.
@@ -161,7 +163,9 @@ testPixelAfterSave
 			toFile := File path: baseFile extension: ext.
 			bitmap saveToFile: toFile.
 			image := self subjectClass fromFile: toFile.
-			self assert: (image pixelAt: 1 @ 1) = transparentBlack equals: supported].
+			self assert: (image pixelAt: 1 @ 1) = transparentBlack equals: supported.
+			image free.
+			File delete: toFile].
 	bitmap free! !
 !Graphics.Gdiplus.Tests.BitmapTest categoriesForMethods!
 gdiBitmapClass!constants!private! !

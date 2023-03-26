@@ -209,7 +209,7 @@ onDropDown: aToolbarButton
 	| popup |
 	popup := self buildPopupForCommand: aToolbarButton command asSymbol.
 	popup isNil ifTrue: [^nil].
-	popup queryAllFromView: self view.
+	popup queryAllAlong: self commandPolicy recursive: true.
 	popup showIn: self position: aToolbarButton screenRectangle bottomLeft.
 	^0!
 

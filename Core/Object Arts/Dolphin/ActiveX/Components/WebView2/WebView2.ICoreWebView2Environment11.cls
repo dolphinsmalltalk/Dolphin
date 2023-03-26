@@ -31,16 +31,6 @@ interface ICoreWebView2Environment11 : ICoreWebView2Environment10
 !WebView2.ICoreWebView2Environment11 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
 !WebView2.ICoreWebView2Environment11 methodsFor!
 
-failureReportFolderPath
-	"Answer the <lpwstr> value of the 'FailureReportFolderPath' property of the receiver."
-
-	| ptr answer |
-	ptr := TaskMemory new.
-	self get_FailureReportFolderPath: ptr.
-	answer := Utf16String fromAddress: ptr.
-	ptr free.
-	^answer!
-
 get_FailureReportFolderPath: value
 	"Private - Get the value of the 'FailureReportFolderPath' property of the receiver.
 
@@ -50,7 +40,6 @@ get_FailureReportFolderPath: value
 	<virtual stdcall: hresult 24 lpwstr*>
 	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2Environment11 categoriesForMethods!
-failureReportFolderPath!properties!public! !
 get_FailureReportFolderPath:!**auto generated**!COM Interfaces-ICoreWebView2Environment11!private! !
 !
 

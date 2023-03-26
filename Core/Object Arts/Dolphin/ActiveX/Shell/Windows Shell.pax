@@ -5,9 +5,7 @@ package paxVersion: 2.1;
 	basicComment: 'Dolphin Smalltalk Windows Shell Basics
 Copyright (c) Object Arts Ltd, 1998-2000. 
 
-This package wraps some of the basic functionality of the Windows Shell that is exposed through traditional Win32 APIs (as opposed to COM), for example launching processes using ShellExec.
-
-This package is not supposed to be dependent on the OLE COM package.'.
+This package wraps some of the basic functionality of the Windows Shell that is exposed through traditional Win32 APIs (as opposed to COM), for example launching processes using ShellExec.'.
 
 package basicPackageVersion: '6.1'.
 
@@ -25,6 +23,7 @@ package setClassNames: #(
 
 package setMethodNames: #(
 	#(#{Core.SessionManager} #documentsDirectory)
+	#(#{Core.SessionManager} #downloadsDirectory)
 	#(#{Graphics.Icon class} #shellStock:)
 	#(#{Graphics.Icon class} #shellStock:extent:)
 	#(#{UI.View} #acceptDroppedFiles:)
@@ -47,6 +46,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Base\Dolphin Basic Geometry'
 	'..\..\MVP\Graphics\Dolphin GDI Graphics'
 	'..\..\MVP\Base\Dolphin MVP Base'
+	'..\COM\OLE COM'
 ).
 
 package!
@@ -82,50 +82,16 @@ Kernel.SharedPool
 			'BIF_RETURNONLYFSDIRS' -> 16r1.
 			'BIF_STATUSTEXT' -> 16r4.
 			'BIF_USENEWUI' -> 16r50.
-			'CSIDL_ADMINTOOLS' -> 16r30.
-			'CSIDL_ALTSTARTUP' -> 16r1D.
-			'CSIDL_APPDATA' -> 16r1A.
-			'CSIDL_BITBUCKET' -> 16rA.
-			'CSIDL_COMMON_ADMINTOOLS' -> 16r2F.
-			'CSIDL_COMMON_ALTSTARTUP' -> 16r1E.
-			'CSIDL_COMMON_APPDATA' -> 16r23.
-			'CSIDL_COMMON_DESKTOPDIRECTORY' -> 16r19.
-			'CSIDL_COMMON_DOCUMENTS' -> 16r2E.
-			'CSIDL_COMMON_FAVORITES' -> 16r1F.
-			'CSIDL_COMMON_PROGRAMS' -> 16r17.
-			'CSIDL_COMMON_STARTMENU' -> 16r16.
-			'CSIDL_COMMON_STARTUP' -> 16r18.
-			'CSIDL_CONTROLS' -> 16r3.
-			'CSIDL_COOKIES' -> 16r21.
-			'CSIDL_DESKTOP' -> 16r0.
-			'CSIDL_DESKTOPDIRECTORY' -> 16r10.
-			'CSIDL_DRIVES' -> 16r11.
-			'CSIDL_FAVORITES' -> 16r6.
-			'CSIDL_FLAG_CREATE' -> 16r8000.
-			'CSIDL_FONTS' -> 16r14.
-			'CSIDL_HISTORY' -> 16r22.
-			'CSIDL_INTERNET' -> 16r1.
-			'CSIDL_INTERNET_CACHE' -> 16r20.
-			'CSIDL_LOCAL_APPDATA' -> 16r1C.
-			'CSIDL_MYMUSIC' -> 16rD.
-			'CSIDL_MYPICTURES' -> 16r27.
-			'CSIDL_NETHOOD' -> 16r13.
-			'CSIDL_NETWORK' -> 16r12.
-			'CSIDL_PERSONAL' -> 16r5.
-			'CSIDL_PRINTERS' -> 16r4.
-			'CSIDL_PRINTHOOD' -> 16r1B.
-			'CSIDL_PROGRAM_FILES' -> 16r26.
-			'CSIDL_PROGRAM_FILES_COMMON' -> 16r2B.
-			'CSIDL_PROGRAMS' -> 16r2.
-			'CSIDL_RECENT' -> 16r8.
-			'CSIDL_RESOURCES' -> 16r38.
-			'CSIDL_RESOURCES_LOCALIZED' -> 16r39.
-			'CSIDL_SENDTO' -> 16r9.
-			'CSIDL_STARTMENU' -> 16rB.
-			'CSIDL_STARTUP' -> 16r7.
-			'CSIDL_SYSTEM' -> 16r25.
-			'CSIDL_TEMPLATES' -> 16r15.
-			'CSIDL_WINDOWS' -> 16r24.
+			'FOLDERID_Desktop' -> (GUID fromString: '{b4bfcc3a-db2c-424c-b029-7fe99a87c641}').
+			'FOLDERID_Documents' -> (GUID fromString: '{fdd39ad0-238f-46af-adb4-6c85480369c7}').
+			'FOLDERID_Downloads' -> (GUID fromString: '{374de290-123f-4565-9164-39c4925e467b}').
+			'FOLDERID_LocalAppData'
+				-> (GUID fromString: '{f1b32785-6fba-4fcf-9d55-7b8e7f157091}').
+			'FOLDERID_Pictures' -> (GUID fromString: '{33e28130-4e1e-4676-835a-98395c3bc3bb}').
+			'FOLDERID_ProgramFilesX86'
+				-> (GUID fromString: '{7c5a40ef-a0fb-4bfc-874a-c0f2e0b9fa8e}').
+			'FOLDERID_Windows' -> (GUID fromString: '{f38bf404-1d43-42f2-9305-67de0b28fc23}').
+			'KF_FLAG_DEFAULT' -> 16r0.
 			'NIF_ICON' -> 16r2.
 			'NIF_MESSAGE' -> 16r1.
 			'NIF_TIP' -> 16r4.
@@ -323,9 +289,15 @@ OS.Win32Structure
 documentsDirectory
 	"Answer the path of the Windows 'My Documents' directory on the host computer for the current user."
 
-	^Shell32 getSpecialFolderLocation: ShellConstants.CSIDL_PERSONAL! !
+	^Shell32 getKnownFolderLocation: ShellConstants.FOLDERID_Documents!
+
+downloadsDirectory
+	"Answer the path of the user's downloads directory."
+
+	^Shell32 getKnownFolderLocation: ShellConstants.FOLDERID_Downloads! !
 !Core.SessionManager categoriesForMethods!
 documentsDirectory!accessing!public! !
+downloadsDirectory!public!win32 functions-shell library! !
 !
 
 !Graphics.Icon class methodsFor!

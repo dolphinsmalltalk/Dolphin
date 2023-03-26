@@ -40,6 +40,9 @@ interface ICoreWebView2ControllerOptions : IUnknown
 !WebView2.ICoreWebView2ControllerOptions categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
 !WebView2.ICoreWebView2ControllerOptions methodsFor!
 
+downCast
+	^self queryInterface: ICoreWebView2ControllerOptions2 ifNone: self!
+
 get_IsInPrivateModeEnabled: value
 	"Private - Get the value of the 'IsInPrivateModeEnabled' property of the receiver.
 
@@ -58,6 +61,15 @@ get_ProfileName: value
 	<virtual stdcall: hresult 4 lpwstr*>
 	^self invalidCall: _failureCode!
 
+get_ScriptLocale: locale
+	"Private - Get the value of the 'ScriptLocale' property of the receiver.
+
+		HRESULT __stdcall ScriptLocale(
+			[out, retval]LPWSTR* locale);"
+
+	locale value: (Locale userDefault tag asUtf16String copyToCOMTaskMemory detach).
+	^S_OK!
+
 isInPrivateModeEnabled
 	"Answer the <sdword> value of the 'IsInPrivateModeEnabled' property of the receiver."
 
@@ -72,7 +84,7 @@ isInPrivateModeEnabled: value
 	self put_IsInPrivateModeEnabled: value!
 
 printableProperties
-	^#(#profileName #isInPrivateModeEnabled)!
+	^#(#profileName #isInPrivateModeEnabled #scriptLocale)!
 
 profileName
 	"Answer the <lpwstr> value of the 'ProfileName' property of the receiver."
@@ -98,7 +110,7 @@ put_IsInPrivateModeEnabled: value
 		HRESULT __stdcall IsInPrivateModeEnabled(
 			[in]long value);"
 
-	<virtual stdcall: hresult 7 int32>
+	<virtual stdcall: hresult 7 bool>
 	^self invalidCall: _failureCode!
 
 put_ProfileName: value
@@ -109,10 +121,37 @@ put_ProfileName: value
 			[in]LPWSTR value);"
 
 	<virtual stdcall: hresult 5 lpwstr>
-	^self invalidCall: _failureCode! !
+	^self invalidCall: _failureCode!
+
+put_ScriptLocale: locale
+	"Private - Set the value of the 'ScriptLocale' property of the object wrapped by the 
+	 receiver to the <lpwstr> argument, locale.
+
+		HRESULT __stdcall ScriptLocale(
+			[in]LPWSTR locale);"
+
+	"Not implemented at this level - request to set the script locale is ignored"
+	^E_NOTIMPL!
+
+scriptLocale
+	"Answer the <lpwstr> value of the 'ScriptLocale' property of the receiver."
+
+	| ptr answer |
+	ptr := TaskMemory new.
+	self get_ScriptLocale: ptr.
+	answer := Utf16String fromAddress: ptr.
+	ptr free.
+	^answer!
+
+scriptLocale: locale
+	"Set the 'ScriptLocale' property of the receiver to the <lpwstr> value of the argument."
+
+	self put_ScriptLocale: locale asUtf16String! !
 !WebView2.ICoreWebView2ControllerOptions categoriesForMethods!
+downCast!converting!public! !
 get_IsInPrivateModeEnabled:!**auto generated**!COM Interfaces-ICoreWebView2ControllerOptions!private! !
 get_ProfileName:!**auto generated**!COM Interfaces-ICoreWebView2ControllerOptions!private! !
+get_ScriptLocale:!COM Interfaces-ICoreWebView2ControllerOptions2!private! !
 isInPrivateModeEnabled!properties!public! !
 isInPrivateModeEnabled:!**auto generated**!properties!public! !
 printableProperties!printing!private! !
@@ -120,6 +159,9 @@ profileName!properties!public! !
 profileName:!**auto generated**!properties!public! !
 put_IsInPrivateModeEnabled:!**auto generated**!COM Interfaces-ICoreWebView2ControllerOptions!private! !
 put_ProfileName:!**auto generated**!COM Interfaces-ICoreWebView2ControllerOptions!private! !
+put_ScriptLocale:!COM Interfaces-ICoreWebView2ControllerOptions2!private! !
+scriptLocale!properties!public! !
+scriptLocale:!properties!public! !
 !
 
 !WebView2.ICoreWebView2ControllerOptions class methodsFor!
@@ -134,11 +176,11 @@ defineFunctions
 		defineFunction: #put_ProfileName:
 			argumentTypes: 'lpwstr';
 		defineFunction: #get_IsInPrivateModeEnabled:
-			argumentTypes: 'sdword*';
+			argumentTypes: 'bool*';
 		defineFunction: #put_IsInPrivateModeEnabled:
-			argumentTypes: 'sdword'
+			argumentTypes: 'bool'
 ! !
 !WebView2.ICoreWebView2ControllerOptions class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!initializing!public! !
 !
 

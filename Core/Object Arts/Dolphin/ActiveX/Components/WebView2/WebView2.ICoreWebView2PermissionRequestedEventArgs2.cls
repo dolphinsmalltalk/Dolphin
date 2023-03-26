@@ -43,19 +43,6 @@ get_Handled: handled
 	<virtual stdcall: hresult 10 int32*>
 	^self invalidCall: _failureCode!
 
-handled
-	"Answer the <sdword> value of the 'Handled' property of the receiver."
-
-	| answer |
-	answer := Int32 new.
-	self get_Handled: answer.
-	^answer asObject!
-
-handled: handled
-	"Set the 'Handled' property of the receiver to the <sdword> value of the argument."
-
-	self put_Handled: handled!
-
 put_Handled: handled
 	"Private - Set the value of the 'Handled' property of the object wrapped by the 
 	 receiver to the <sdword> argument, handled.
@@ -67,8 +54,6 @@ put_Handled: handled
 	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2PermissionRequestedEventArgs2 categoriesForMethods!
 get_Handled:!**auto generated**!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs2!private! !
-handled!**auto generated**!properties!public! !
-handled:!**auto generated**!properties!public! !
 put_Handled:!**auto generated**!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs2!private! !
 !
 

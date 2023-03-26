@@ -286,6 +286,7 @@ package setPrerequisites: #(
 	'..\Graphics\Dolphin GDI Graphics'
 	'..\Models\List\Dolphin List Models'
 	'..\Base\Dolphin MVP Base'
+	'..\..\ActiveX\COM\OLE COM'
 	'..\..\ActiveX\Structured Storage\OLE Structured Storage'
 ).
 
@@ -1355,7 +1356,7 @@ Graphics.Gdiplus.GdiplusBase
 Graphics.Gdiplus.GdiplusBase
 	subclass: #'Graphics.Gdiplus.Image'
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'DecodersByExtension DecodersByMimeType EncodersByExtension EncodersByMimeType'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!

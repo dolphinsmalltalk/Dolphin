@@ -77,6 +77,9 @@ cancel: aBoolean
 
 	self put_Cancel: aBoolean asParameter!
 
+downCast
+	^self queryInterface: ICoreWebView2NavigationStartingEventArgs2 ifNone: self!
+
 get_AdditionalAllowedFrameAncestors: value
 	^E_NOTIMPL!
 
@@ -203,6 +206,7 @@ additionalAllowedFrameAncestors!properties!public! !
 additionalAllowedFrameAncestors:!properties!public! !
 cancel!properties!public! !
 cancel:!properties!public! !
+downCast!converting!public! !
 get_AdditionalAllowedFrameAncestors:!COM Interfaces-ICoreWebView2NavigationStartingEventArgs2!private! !
 get_Cancel:!**auto generated**!COM Interfaces-ICoreWebView2NavigationStartingEventArgs!private! !
 get_IsRedirected:!**auto generated**!COM Interfaces-ICoreWebView2NavigationStartingEventArgs!private! !

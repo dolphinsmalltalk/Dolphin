@@ -50,9 +50,21 @@ argsClass
 eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
-	^self subclassResponsibility! !
+	^self subclassResponsibility!
+
+hasArgs
+	^self argsClass == IUnknown!
+
+triggerBlockFor: aUrlPresenter
+	| event |
+	event := self eventName.
+	^self hasArgs
+		ifTrue: [[aUrlPresenter trigger: event]]
+		ifFalse: [[:source :args | aUrlPresenter trigger: event with: args]]! !
 !WebView2.ICoreWebView2EventHandler class categoriesForMethods!
 argsClass!constants!public! !
 eventName!constants!public! !
+hasArgs!public!testing! !
+triggerBlockFor:!helpers!private! !
 !
 

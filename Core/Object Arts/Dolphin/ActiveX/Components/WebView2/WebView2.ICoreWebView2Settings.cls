@@ -12,7 +12,7 @@ WebView2.ICoreWebView2Settings comment: '`ICoreWebView2Settings` is a wrapper cl
 
 The type library contains no documentation for this interface
 
-At the time of writing there are five later versions of this interface. In order to reduce the burden of degrading gracefully to older versions, default implementations of the additional methods and properties are added.
+At the time of writing there are six later versions of this interface. In order to reduce the burden of degrading gracefully to older versions, default implementations of the additional methods and properties are added.
 
 IDL definition follows:
 ```
@@ -613,7 +613,7 @@ areDevToolsEnabled!properties!public!testing! !
 areDevToolsEnabled:!properties!public! !
 areHostObjectsAllowed!properties!public!testing! !
 areHostObjectsAllowed:!properties!public! !
-downCast!properties!public! !
+downCast!converting!public! !
 get_AreBrowserAcceleratorKeysEnabled:!COM Interfaces-ICoreWebView2Settings3!private! !
 get_AreDefaultContextMenusEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
 get_AreDefaultScriptDialogsEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !

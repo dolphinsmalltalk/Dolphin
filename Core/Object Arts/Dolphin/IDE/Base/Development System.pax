@@ -767,6 +767,11 @@ package setMethodNames: #(
 	#(#{UI.View class} #publishedEventsOfInstances)
 	#(#{UI.WebView2View class} #publishedAspectsOfInstances)
 	#(#{UI.WebView2View class} #publishedEventsOfInstances)
+	#(#{WebView2.ICoreWebView2Sequence} #newBatchAccessor)
+	#(#{WebView2.ICoreWebView2Sequence} #publishedAspects)
+	#(#{WebView2.ICoreWebView2Sequence} #publishedKeyedAspects)
+	#(#{WebView2.ICoreWebView2Sequence} #publishedKeyedAspectsBatchSize)
+	#(#{WebView2.ICoreWebView2Sequence class} #newInstanceAspect:class:)
 ).
 
 package setPrerequisites: #(
@@ -9344,8 +9349,18 @@ publishedAspectsOfInstances
 
 	| aspects |
 	aspects := super publishedAspectsOfInstances.
-	#(#allowSSO #isCustomCrashReportingEnabled #canNavigateToStrings #isStatusBarEnabled #isScriptEnabled #areBrowserAcceleratorKeysEnabled #allowExternalDrop #allowContextMenu #areDefaultScriptDialogsEnabled #areDevToolsEnabled #areHostObjectsAllowed #isBuiltInErrorPageEnabled #isGeneralAutofillEnabled #isPasswordAutosaveEnabled #isPinchZoomEnabled #isSwipeNavigationEnabled #isWebMessageEnabled #isZoomControlEnabled)
+	#(#allowSSO #isCustomCrashReportingEnabled #canNavigateToStrings #isStatusBarEnabled #isScriptEnabled #areBrowserAcceleratorKeysEnabled #allowExternalDrop #allowContextMenu #areDefaultScriptDialogsEnabled #areDevToolsEnabled #areHostObjectsAllowed #isBuiltInErrorPageEnabled #isGeneralAutofillEnabled #isPasswordAutosaveEnabled #isPinchZoomEnabled #isSwipeNavigationEnabled #isWebMessageEnabled #isZoomControlEnabled #isInPrivateModeEnabled)
 		do: [:each | aspects add: (Aspect boolean: each)].
+	aspects add: (Aspect
+				choice: #trackingPreventionLevel
+				fromMap: 
+					[LookupTable withAll: {
+								'None' -> COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_NONE.
+								'Basic' -> COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_BASIC.
+								'Balanced' -> COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_BALANCED.
+								'Strict' -> COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_STRICT
+							}]
+				nullValue: nil).
 	^aspects!
 
 publishedEventsOfInstances
@@ -9358,6 +9373,50 @@ publishedEventsOfInstances
 !UI.WebView2View class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 publishedEventsOfInstances!events!public! !
+!
+
+!WebView2.ICoreWebView2Sequence methodsFor!
+
+newBatchAccessor
+	^KeyedAspectBatchAccessor subject: self batchSize: self publishedKeyedAspectsBatchSize!
+
+publishedAspects
+	"Answer a <LookupTable> of the <Aspect>s published by the receiver.
+    	Implementation Note: By adding superclass aspects to the keyed aspect
+    	table we get much better performance because it reduces the number 
+    	of rehashes that are necessary due to resizing."
+
+	^self publishedKeyedAspects!
+
+publishedKeyedAspects
+	"Answers a <LookupTable> of the published aspects of the 
+    	receiver's keyed contents."
+
+	^LookupTable new
+		addAll: (self newBatchAccessor getBatchAccessors collect: [:each | each aspectDescriptor]);
+		yourself!
+
+publishedKeyedAspectsBatchSize
+    	"Private - Answers the number of keyed aspects to display in the PAI return at a time"
+    
+    	^50
+    ! !
+!WebView2.ICoreWebView2Sequence categoriesForMethods!
+newBatchAccessor!public! !
+publishedAspects!public! !
+publishedKeyedAspects!public! !
+publishedKeyedAspectsBatchSize!private! !
+!
+
+!WebView2.ICoreWebView2Sequence class methodsFor!
+
+newInstanceAspect: aSymbol class: aspectClass 
+	"Private - Answer a new <Aspect> of the class, aspectClass, and with name, aSymbol, 
+    	which is appropriate for representing aspects of the receiver's type."
+
+	^aspectClass sequenceableCollection: aSymbol! !
+!WebView2.ICoreWebView2Sequence class categoriesForMethods!
+newInstanceAspect:class:!private! !
 !
 
 "End of package definition"!

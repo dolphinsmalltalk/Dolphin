@@ -235,6 +235,11 @@ isEmpty
 
 	^self size == 0!
 
+keys
+	"Answer a <collection> containing the receiver's keys."
+
+	^1 to: self size!
+
 keysAndValuesDo: operation 
 	"Evaluate the <dyadicValuable>, operation, for each element of the receiver
 	with the <integer> index of that element and the element itself as the arguments."
@@ -253,6 +258,13 @@ nextIndexOf: anElement from: start to: stop
 
 	start to: stop do: [:i | (self at: i) = anElement ifTrue: [^i]].
 	^0!
+
+printOn: aPuttableStream
+	aPuttableStream
+		basicPrint: self;
+		nextPut: $(.
+	self do: [:each | each printOn: aPuttableStream] separatedBy: [aPuttableStream space].
+	aPuttableStream nextPut: $)!
 
 reverse
 	"Answer a new <sequencedReadableCollection> which contains the same elements as the receiver, but in reverse order."
@@ -322,9 +334,11 @@ indexOf:ifAbsent:!public!searching! !
 indexOfSubCollection:startingAt:!public!searching! !
 indexOfSubCollection:startingAt:ifAbsent:!public!searching! !
 isEmpty!public!testing! !
+keys!accessing!public! !
 keysAndValuesDo:!enumerating!public! !
 last!accessing!public! !
 nextIndexOf:from:to:!public!searching! !
+printOn:!printing!public! !
 reverse!copying!public! !
 reversedFrom:to:!copying!public! !
 reverseDo:!enumerating!public! !

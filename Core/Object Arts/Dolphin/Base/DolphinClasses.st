@@ -2218,6 +2218,7 @@ Kernel.SharedPool
 			'ERROR_STACK_OVERFLOW' -> 16r3E9.
 			'ERROR_SUCCESS' -> 16r0.
 			'NO_ERROR' -> 16r0.
+			'RO_E_CLOSED' -> -16r7FFFFFED.
 			'S_FALSE' -> 16r1.
 			'S_OK' -> 16r0.
 			'SEVERITY_ERROR' -> 16r1.

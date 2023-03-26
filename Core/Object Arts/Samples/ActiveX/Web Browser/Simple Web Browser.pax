@@ -68,7 +68,7 @@ package!
 
 UI.Shell
 	subclass: #'OS.COM.Examples.WebBrowserShell'
-	instanceVariableNames: 'address browser statusModel zoomModel flags'
+	instanceVariableNames: 'address browser statusModel zoomModel flags profileModel'
 	classVariableNames: ''
 	imports: #(#{UI})
 	classInstanceVariableNames: ''

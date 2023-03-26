@@ -51,18 +51,9 @@ struct tagGpImageCodecInfo {
 !Graphics.Gdiplus.ImageCodecInfo methodsFor!
 
 Clsid
-	"Answer the <GUID> value of the receiver's 'Clsid' field."
+	"Answer the <OS.COM.CLSID> value of the receiver's 'Clsid' field."
 
-	^GUID fromAddress: bytes yourAddress!
-
-Clsid: aGUID
-	"Set the receiver's 'Clsid' field to the value of the argument, aGUID"
-
-	aGUID
-		replaceBytesOf: bytes
-		from: ##(_OffsetOf_Clsid + 1)
-		to: ##(_OffsetOf_Clsid + GUID._GUID_Size)
-		startingAt: 1!
+	^OS.COM.CLSID fromAddress: bytes yourAddress!
 
 CodecName
 	"Answer the <Utf16String> value of the receiver's 'CodecName' field."
@@ -153,20 +144,20 @@ SigMask
 
 	^UInt8 fromAddress: (bytes intPtrAtOffset: _OffsetOf_SigMask)!
 
-SigMask: aBYTE
-	"Set the receiver's 'SigMask' field to the value of the argument, aBYTE"
+SigMask: anUInt8
+	"Set the receiver's 'SigMask' field to the value of the argument, anUInt8"
 
-	bytes uintPtrAtOffset: _OffsetOf_SigMask put: aBYTE yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_SigMask put: anUInt8 yourAddress!
 
 SigPattern
 	"Answer the <UInt8> value of the receiver's 'SigPattern' field."
 
 	^UInt8 fromAddress: (bytes intPtrAtOffset: _OffsetOf_SigPattern)!
 
-SigPattern: aBYTE
-	"Set the receiver's 'SigPattern' field to the value of the argument, aBYTE"
+SigPattern: anUInt8
+	"Set the receiver's 'SigPattern' field to the value of the argument, anUInt8"
 
-	bytes uintPtrAtOffset: _OffsetOf_SigPattern put: aBYTE yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_SigPattern put: anUInt8 yourAddress!
 
 SigSize
 	"Answer the <Integer> value of the receiver's 'SigSize' field."
@@ -189,7 +180,6 @@ Version: anInteger
 	bytes uint32AtOffset: _OffsetOf_Version put: anInteger! !
 !Graphics.Gdiplus.ImageCodecInfo categoriesForMethods!
 Clsid!**compiled accessors**!public! !
-Clsid:!**compiled accessors**!public! !
 CodecName!**compiled accessors**!public! !
 CodecName:!**compiled accessors**!public! !
 DllName!**compiled accessors**!public! !
@@ -223,7 +213,7 @@ byteSize
 
 defineFields
 	"Define the fields of the GpImageCodecInfo structure.
-		GpImageCodecInfo compileDefinition
+		ImageCodecInfo compileDefinition
 	
 		typedef [uuid(059E6E3A-2877-4EA7-A11C-7E5C1AC62165)]
 		struct tagGpImageCodecInfo {
@@ -245,7 +235,7 @@ defineFields
 
 	self
 		defineField: #Clsid
-			type: (StructureField type: GUID)
+			type: (StructureField type: COM.CLSID)
 			offset: 0;
 		defineField: #FormatID
 			type: (StructureField type: GUID)
@@ -289,7 +279,7 @@ getFieldNames
 	^#(#Clsid #FormatID #CodecName #DllName #FormatDescription #FilenameExtension #MimeType #Flags #Version #SigCount #SigSize #SigPattern #SigMask)! !
 !Graphics.Gdiplus.ImageCodecInfo class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
-defineFields!**auto generated**!public!template definition! !
+defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !
 

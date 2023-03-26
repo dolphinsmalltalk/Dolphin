@@ -3,7 +3,7 @@ package := Package name: 'Dolphin Memory-Mapped Files'.
 package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Memory-Mapped Files
-Copyright (c) Object Arts Ltd, 2004.
+Copyright (c) Object Arts Ltd, 2004-2023.
 
 Memory-mapped files are a simple and high-performance means of accessing the data in files as if loaded into memory. They are implemented using the operating system''s virtual memory system, and the OS will page the files data into and out of physical memory on demand.
 
@@ -12,9 +12,9 @@ Win32 memory-mapped files involve three objects:
 2) The memory-mapping.
 3) A view onto the memory mapping (of which there can be many).
 
-To use memory-mapped files, one must first open a file, for example using Dolphin''s <File> object. One can then create a memory mapping onto that (or use one of the convenience instance creation methods to open the file at the same time as creating the mapping). In Dolphin the mappings are represented by instances of the MemoryMappedFile class. Finally one can create views onto the mapping that effectively make a range of the file available as (what appears to be) a contigous block of memory. Typically one would map a single view onto the entire file, especially since the views must start at 64Kb boundaries. In Dolphin the views are represented by instances of the <MemoryMappedFileView> class. This is a subclass of <ExternalAddress>, and it instances can thus be substitued in place of any other pointer object and used in conjunction with Dolphin''s <ExternalStructure>''s. If, for example, one had a large binary file containing a huge sequence of floating point values, this could be represented by a reference instance of DOUBLEArray pointing at the data through a <MemoryMappedFileView>. This would be a much more efficient way to access the data than loading the entire lot into an in-memory DOUBLEArray.
+To use memory-mapped files, usually one must first open a file, for example using Dolphin''s `Core.File` object. One can then create a memory mapping onto that (or use one of the convenient instance creation methods to open the file at the same time as creating the mapping). In Dolphin the mappings are represented by instances of the `Exernal.MemoryMappedFile` class. Finally one can create views onto the mapping that effectively make a range of the file available as (what appears to be) a contigous block of memory. Typically one would map a single view onto the entire file, especially since the views must start at 64Kb boundaries. In Dolphin the views are represented by instances of the `External.MemoryMappedFileView` class. This is a subclass of `External.Address`, and it instances can thus be substitued in place of any other pointer object and used in conjunction with Dolphin''s `External.Structure`''s. If, for example, one had a large binary file containing a huge sequence of IEEE 64-bit floating point values, this could be represented by a reference instance of `External.DOUBLEArray` pointing at the data through a `External.MemoryMappedFileView`. This would be a much more efficient way to access the data than loading the entire lot into an in-memory DOUBLEArray.
 
-Note that the memory-mapping and its views can be free''d in any order, so one can discard the <MemoryMappedFile> object before any <MemoryMappedFileView>s. Both are marked as finalizable so they need not be explicitly free''d anyway.
+Note that the memory-mapping and its views can be free''d in any order, so one can discard the `MemoryMappedFile` object before any `MemoryMappedFileView`s. Both are marked as finalizable so they need not be explicitly free''d anyway.
 
 Although memory-mapped files are simple and very fast, they do have certain limitations:
 1) The maximum size of a file mapping (not necessarily the underlying file) is 2Gb, because it must be accessed through the virtual memory system using a 32-bit pointer.
@@ -76,11 +76,11 @@ Kernel.SharedPool
 		}!
 Core.Object
 	subclass: #'External.MemoryMappedFile'
-	instanceVariableNames: 'file name handle maximumSize ownsFile'
+	instanceVariableNames: 'file name handle maximumSize flags'
 	classVariableNames: ''
 	imports: #(#{OS.MMFConstants} #{OS.Win32Constants})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'OwnsFileMask' -> 16r2. 'OwnsHandleMask' -> 16r1. 'ReadOnlyMask' -> 16r4 }!
 External.Address
 	variableByteSubclass: #'External.MemoryMappedFileView'
 	instanceVariableNames: ''
@@ -149,10 +149,10 @@ unmapViewOfFile: lpBaseAddress
 	"Invoke the UnmapViewOfFile() function of the module wrapped by the receiver.
 	Helpstring: Releases file mapping
 
-		long __stdcall UnmapViewOfFile(
+		BOOL __stdcall UnmapViewOfFile(
 			void* lpBaseAddress);"
 
-	<stdcall: sdword UnmapViewOfFile void*>
+	<stdcall: bool UnmapViewOfFile void*>
 	^self invalidCall: _failureCode! !
 !OS.KernelLibrary categoriesForMethods!
 createFileMapping:lpAttributes:flProtect:dwMaximumSizeHigh:dwMaximumSizeLow:lpName:!public!win32 functions-file management! !

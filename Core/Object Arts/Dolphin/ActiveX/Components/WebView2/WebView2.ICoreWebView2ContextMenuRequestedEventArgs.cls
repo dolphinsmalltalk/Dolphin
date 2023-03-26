@@ -75,7 +75,7 @@ get_Handled: value
 		HRESULT __stdcall Handled(
 			[out, retval]long* value);"
 
-	<virtual stdcall: hresult 10 int32*>
+	<virtual stdcall: hresult 10 bool*>
 	^self invalidCall: _failureCode!
 
 get_Location: value
@@ -161,7 +161,7 @@ put_Handled: value
 		HRESULT __stdcall Handled(
 			[in]long value);"
 
-	<virtual stdcall: hresult 9 int32>
+	<virtual stdcall: hresult 9 bool>
 	^self invalidCall: _failureCode!
 
 put_SelectedCommandId: value
@@ -224,9 +224,9 @@ defineFunctions
 		defineFunction: #get_SelectedCommandId:
 			argumentTypes: 'sdword*';
 		defineFunction: #put_Handled:
-			argumentTypes: 'sdword';
+			argumentTypes: 'bool';
 		defineFunction: #get_Handled:
-			argumentTypes: 'sdword*';
+			argumentTypes: 'bool*';
 		defineFunction: #GetDeferral:
 			argumentTypes: 'ICoreWebView2Deferral**'
 ! !

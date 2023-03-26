@@ -156,7 +156,7 @@ downCast
 	"Private - Answer the most recent frame interface available on the underlying COM object."
 
 	| interfaceClass |
-	interfaceClass := ICoreWebView2Frame3.
+	interfaceClass := ICoreWebView2Frame4.
 	
 	[(self queryInterface: interfaceClass ifNone: []) ifNotNil: [:interface | ^interface].
 	(interfaceClass := interfaceClass superclass) == self class]
@@ -216,6 +216,16 @@ name
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
 	^answer!
+
+PostSharedBufferToScript: sharedBuffer access: access additionalDataAsJson: additionalDataAsJson
+	"Invoke the PostSharedBufferToScript() method of the COM object.
+
+		HRESULT __stdcall PostSharedBufferToScript(
+			[in]ICoreWebView2SharedBuffer* sharedBuffer,
+			[in]COREWEBVIEW2_SHARED_BUFFER_ACCESS access,
+			[in]LPWSTR additionalDataAsJson);"
+
+	^E_NOTIMPL!
 
 postWebMessageAsJson: webMessageAsJson
 	"Invoke the PostWebMessageAsJson() method of the COM object."
@@ -332,20 +342,21 @@ Add_DOMContentLoaded:token:!COM Interfaces-ICoreWebView2Frame2!events!private! !
 Add_NameChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2Frame!events!private! !
 Add_NavigationCompleted:token:!COM Interfaces-ICoreWebView2Frame2!events!private! !
 Add_NavigationStarting:token:!COM Interfaces-ICoreWebView2Frame2!events!private! !
-Add_PermissionRequested:token:!**auto generated**!COM Interfaces-ICoreWebView2Frame3!private! !
+Add_PermissionRequested:token:!COM Interfaces-ICoreWebView2Frame3!private! !
 Add_WebMessageReceived:token:!COM Interfaces-ICoreWebView2Frame2!events!private! !
 addHostObjectToScriptWithOrigins:object:originsCount:origins:!**auto generated**!methods!public! !
 AddHostObjectToScriptWithOrigins:object:originsCount:origins:!**auto generated**!COM Interfaces-ICoreWebView2Frame!private! !
-downCast!properties!public! !
+downCast!converting!public! !
 ExecuteScript:handler:!COM Interfaces-ICoreWebView2Frame2!methods!private! !
 executeScript:thenDo:!methods!public! !
 get_name:!**auto generated**!COM Interfaces-ICoreWebView2Frame!private!properties! !
 isDestroyed!methods!public! !
 IsDestroyed:!**auto generated**!COM Interfaces-ICoreWebView2Frame!methods!private! !
 name!properties!public! !
-postWebMessageAsJson:!**auto generated**!methods!public! !
+PostSharedBufferToScript:access:additionalDataAsJson:!COM Interfaces-ICoreWebView2Frame4!public! !
+postWebMessageAsJson:!methods!public! !
 PostWebMessageAsJson:!COM Interfaces-ICoreWebView2Frame2!methods!private! !
-postWebMessageAsString:!**auto generated**!methods!public! !
+postWebMessageAsString:!methods!public! !
 PostWebMessageAsString:!COM Interfaces-ICoreWebView2Frame2!methods!private! !
 printableProperties!printing!private! !
 Remove_ContentLoading:!COM Interfaces-ICoreWebView2Frame2!events!private! !
@@ -354,9 +365,9 @@ Remove_DOMContentLoaded:!COM Interfaces-ICoreWebView2Frame2!events!private! !
 Remove_NameChanged:!**auto generated**!COM Interfaces-ICoreWebView2Frame!events!private! !
 Remove_NavigationCompleted:!COM Interfaces-ICoreWebView2Frame2!events!private! !
 Remove_NavigationStarting:!COM Interfaces-ICoreWebView2Frame2!events!private! !
-Remove_PermissionRequested:!**auto generated**!COM Interfaces-ICoreWebView2Frame3!private! !
+Remove_PermissionRequested:!COM Interfaces-ICoreWebView2Frame3!private! !
 Remove_WebMessageReceived:!COM Interfaces-ICoreWebView2Frame2!events!private! !
-removeHostObjectFromScript:!**auto generated**!methods!public! !
+removeHostObjectFromScript:!methods!public! !
 RemoveHostObjectFromScript:!**auto generated**!COM Interfaces-ICoreWebView2Frame!private! !
 !
 

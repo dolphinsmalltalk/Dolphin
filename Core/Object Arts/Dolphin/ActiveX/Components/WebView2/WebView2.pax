@@ -45,6 +45,7 @@ package setClassNames: #(
 	#{WebView2.ICoreWebView2_14}
 	#{WebView2.ICoreWebView2_15}
 	#{WebView2.ICoreWebView2_16}
+	#{WebView2.ICoreWebView2_17}
 	#{WebView2.ICoreWebView2_2}
 	#{WebView2.ICoreWebView2_3}
 	#{WebView2.ICoreWebView2_4}
@@ -89,6 +90,7 @@ package setClassNames: #(
 	#{WebView2.ICoreWebView2Controller3}
 	#{WebView2.ICoreWebView2Controller4}
 	#{WebView2.ICoreWebView2ControllerOptions}
+	#{WebView2.ICoreWebView2ControllerOptions2}
 	#{WebView2.ICoreWebView2Cookie}
 	#{WebView2.ICoreWebView2CookieList}
 	#{WebView2.ICoreWebView2CookieManager}
@@ -112,6 +114,7 @@ package setClassNames: #(
 	#{WebView2.ICoreWebView2Environment}
 	#{WebView2.ICoreWebView2Environment10}
 	#{WebView2.ICoreWebView2Environment11}
+	#{WebView2.ICoreWebView2Environment12}
 	#{WebView2.ICoreWebView2Environment2}
 	#{WebView2.ICoreWebView2Environment3}
 	#{WebView2.ICoreWebView2Environment4}
@@ -124,6 +127,7 @@ package setClassNames: #(
 	#{WebView2.ICoreWebView2EnvironmentOptions2}
 	#{WebView2.ICoreWebView2EnvironmentOptions3}
 	#{WebView2.ICoreWebView2EnvironmentOptions4}
+	#{WebView2.ICoreWebView2EnvironmentOptions5}
 	#{WebView2.ICoreWebView2EstimatedEndTimeChangedEventHandler}
 	#{WebView2.ICoreWebView2EventArgs}
 	#{WebView2.ICoreWebView2EventHandler}
@@ -135,6 +139,7 @@ package setClassNames: #(
 	#{WebView2.ICoreWebView2Frame}
 	#{WebView2.ICoreWebView2Frame2}
 	#{WebView2.ICoreWebView2Frame3}
+	#{WebView2.ICoreWebView2Frame4}
 	#{WebView2.ICoreWebView2FrameContentLoadingEventHandler}
 	#{WebView2.ICoreWebView2FrameCreatedEventArgs}
 	#{WebView2.ICoreWebView2FrameCreatedEventHandler}
@@ -150,6 +155,7 @@ package setClassNames: #(
 	#{WebView2.ICoreWebView2FrameWebMessageReceivedEventHandler}
 	#{WebView2.ICoreWebView2GetCookiesCompletedHandler}
 	#{WebView2.ICoreWebView2GetFaviconCompletedHandler}
+	#{WebView2.ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler}
 	#{WebView2.ICoreWebView2HistoryChangedEventHandler}
 	#{WebView2.ICoreWebView2HttpHeadersCollection}
 	#{WebView2.ICoreWebView2HttpHeadersCollectionIterator}
@@ -174,7 +180,10 @@ package setClassNames: #(
 	#{WebView2.ICoreWebView2NewWindowRequestedEventHandler}
 	#{WebView2.ICoreWebView2PermissionRequestedEventArgs}
 	#{WebView2.ICoreWebView2PermissionRequestedEventArgs2}
+	#{WebView2.ICoreWebView2PermissionRequestedEventArgs3}
 	#{WebView2.ICoreWebView2PermissionRequestedEventHandler}
+	#{WebView2.ICoreWebView2PermissionSetting}
+	#{WebView2.ICoreWebView2PermissionSettingCollectionView}
 	#{WebView2.ICoreWebView2PointerInfo}
 	#{WebView2.ICoreWebView2PrintCompletedHandler}
 	#{WebView2.ICoreWebView2PrintSettings}
@@ -189,12 +198,15 @@ package setClassNames: #(
 	#{WebView2.ICoreWebView2ProcessInfosChangedEventHandler}
 	#{WebView2.ICoreWebView2Profile}
 	#{WebView2.ICoreWebView2Profile2}
+	#{WebView2.ICoreWebView2Profile3}
+	#{WebView2.ICoreWebView2Profile4}
 	#{WebView2.ICoreWebView2RasterizationScaleChangedEventHandler}
 	#{WebView2.ICoreWebView2ScriptDialogOpeningEventArgs}
 	#{WebView2.ICoreWebView2ScriptDialogOpeningEventHandler}
 	#{WebView2.ICoreWebView2Sequence}
 	#{WebView2.ICoreWebView2ServerCertificateErrorDetectedEventArgs}
 	#{WebView2.ICoreWebView2ServerCertificateErrorDetectedEventHandler}
+	#{WebView2.ICoreWebView2SetPermissionStateCompletedHandler}
 	#{WebView2.ICoreWebView2Settings}
 	#{WebView2.ICoreWebView2Settings2}
 	#{WebView2.ICoreWebView2Settings3}
@@ -202,6 +214,7 @@ package setClassNames: #(
 	#{WebView2.ICoreWebView2Settings5}
 	#{WebView2.ICoreWebView2Settings6}
 	#{WebView2.ICoreWebView2Settings7}
+	#{WebView2.ICoreWebView2SharedBuffer}
 	#{WebView2.ICoreWebView2SourceChangedEventArgs}
 	#{WebView2.ICoreWebView2SourceChangedEventHandler}
 	#{WebView2.ICoreWebView2StateChangedEventHandler}
@@ -232,9 +245,11 @@ package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
 	'..\..\..\MVP\Base\Dolphin Basic Geometry'
 	'..\..\..\MVP\Graphics\Dolphin GDI Graphics'
+	'..\..\..\System\Win32\Dolphin Memory-Mapped Files'
 	'..\..\..\MVP\Base\Dolphin MVP Base'
 	'..\..\..\Registry\Dolphin Registry Access'
 	'..\..\..\MVP\Views\SysLink\Dolphin SysLink Control'
+	'..\..\..\MVP\Icons\Dolphin Text Tile Icons'
 	'..\..\..\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\..\MVP\Models\Value\Dolphin Value Models'
 	'..\..\COM\OLE COM'
@@ -386,6 +401,7 @@ Kernel.Namespace
 			'COREWEBVIEW2_PERMISSION_KIND_GEOLOCATION' -> 16r3.
 			'COREWEBVIEW2_PERMISSION_KIND_LOCAL_FONTS' -> 16rA.
 			'COREWEBVIEW2_PERMISSION_KIND_MICROPHONE' -> 16r1.
+			'COREWEBVIEW2_PERMISSION_KIND_MIDI_SYSTEM_EXCLUSIVE_MESSAGES' -> 16rB.
 			'COREWEBVIEW2_PERMISSION_KIND_MULTIPLE_AUTOMATIC_DOWNLOADS' -> 16r7.
 			'COREWEBVIEW2_PERMISSION_KIND_NOTIFICATIONS' -> 16r4.
 			'COREWEBVIEW2_PERMISSION_KIND_OTHER_SENSORS' -> 16r5.
@@ -452,6 +468,12 @@ Kernel.Namespace
 			'COREWEBVIEW2_SERVER_CERTIFICATE_ERROR_ACTION_ALWAYS_ALLOW' -> 16r0.
 			'COREWEBVIEW2_SERVER_CERTIFICATE_ERROR_ACTION_CANCEL' -> 16r1.
 			'COREWEBVIEW2_SERVER_CERTIFICATE_ERROR_ACTION_DEFAULT' -> 16r2.
+			'COREWEBVIEW2_SHARED_BUFFER_ACCESS_READ_ONLY' -> 16r0.
+			'COREWEBVIEW2_SHARED_BUFFER_ACCESS_READ_WRITE' -> 16r1.
+			'COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_BALANCED' -> 16r2.
+			'COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_BASIC' -> 16r1.
+			'COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_NONE' -> 16r0.
+			'COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_STRICT' -> 16r3.
 			'COREWEBVIEW2_WEB_ERROR_STATUS_CANNOT_CONNECT' -> 16rC.
 			'COREWEBVIEW2_WEB_ERROR_STATUS_CERTIFICATE_COMMON_NAME_IS_INCORRECT' -> 16r1.
 			'COREWEBVIEW2_WEB_ERROR_STATUS_CERTIFICATE_EXPIRED' -> 16r2.
@@ -505,7 +527,7 @@ OS.COM.InterfaceImplementation
 	classConstants: {}!
 OS.COM.InterfaceImplementation
 	subclass: #'WebView2.WebView2EnvironmentOptions'
-	instanceVariableNames: 'additionalBrowserArguments flags locale browserVersion'
+	instanceVariableNames: 'additionalBrowserArguments flags locale browserVersion trackingPreventionLevel'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -698,6 +720,13 @@ WebView2.ICoreWebView2Interface
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2Interface
+	subclass: #'WebView2.ICoreWebView2EnvironmentOptions5'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2Interface
 	subclass: #'WebView2.ICoreWebView2EventArgs'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -740,6 +769,13 @@ WebView2.ICoreWebView2Interface
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2Interface
+	subclass: #'WebView2.ICoreWebView2PermissionSetting'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2Interface
 	subclass: #'WebView2.ICoreWebView2PointerInfo'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -772,6 +808,13 @@ WebView2.ICoreWebView2Interface
 	classConstants: {}!
 WebView2.ICoreWebView2Interface
 	subclass: #'WebView2.ICoreWebView2Settings'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2Interface
+	subclass: #'WebView2.ICoreWebView2SharedBuffer'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -910,6 +953,13 @@ WebView2.ICoreWebView2_15
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+WebView2.ICoreWebView2_16
+	subclass: #'WebView2.ICoreWebView2_17'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 WebView2.ICoreWebView2Certificate
 	subclass: #'WebView2.ICoreWebView2ClientCertificate'
 	instanceVariableNames: ''
@@ -975,6 +1025,13 @@ WebView2.ICoreWebView2Sequence
 	classConstants: {}!
 WebView2.ICoreWebView2Sequence
 	subclass: #'WebView2.ICoreWebView2CookieList'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2Sequence
+	subclass: #'WebView2.ICoreWebView2PermissionSettingCollectionView'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1072,6 +1129,13 @@ WebView2.ICoreWebView2CompletedHandler
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2CompletedHandler
+	subclass: #'WebView2.ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2CompletedHandler
 	subclass: #'WebView2.ICoreWebView2PrintCompletedHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -1087,6 +1151,13 @@ WebView2.ICoreWebView2CompletedHandler
 	classConstants: {}!
 WebView2.ICoreWebView2CompletedHandler
 	subclass: #'WebView2.ICoreWebView2PrintToPdfStreamCompletedHandler'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2CompletedHandler
+	subclass: #'WebView2.ICoreWebView2SetPermissionStateCompletedHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1136,6 +1207,13 @@ WebView2.ICoreWebView2Controller2
 	classConstants: {}!
 WebView2.ICoreWebView2Controller3
 	subclass: #'WebView2.ICoreWebView2Controller4'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2ControllerOptions
+	subclass: #'WebView2.ICoreWebView2ControllerOptions2'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1206,6 +1284,13 @@ WebView2.ICoreWebView2Environment9
 	classConstants: {}!
 WebView2.ICoreWebView2Environment10
 	subclass: #'WebView2.ICoreWebView2Environment11'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2Environment11
+	subclass: #'WebView2.ICoreWebView2Environment12'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1395,6 +1480,13 @@ WebView2.ICoreWebView2NewWindowRequestedEventArgs
 	classConstants: {}!
 WebView2.ICoreWebView2PermissionRequestedEventArgs
 	subclass: #'WebView2.ICoreWebView2PermissionRequestedEventArgs2'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2PermissionRequestedEventArgs2
+	subclass: #'WebView2.ICoreWebView2PermissionRequestedEventArgs3'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1778,6 +1870,13 @@ WebView2.ICoreWebView2Frame2
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+WebView2.ICoreWebView2Frame3
+	subclass: #'WebView2.ICoreWebView2Frame4'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 WebView2.ICoreWebView2PrintSettings
 	subclass: #'WebView2.ICoreWebView2PrintSettings2'
 	instanceVariableNames: ''
@@ -1787,6 +1886,20 @@ WebView2.ICoreWebView2PrintSettings
 	classConstants: {}!
 WebView2.ICoreWebView2Profile
 	subclass: #'WebView2.ICoreWebView2Profile2'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2Profile2
+	subclass: #'WebView2.ICoreWebView2Profile3'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2Profile3
+	subclass: #'WebView2.ICoreWebView2Profile4'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1836,7 +1949,7 @@ WebView2.ICoreWebView2Settings6
 	classConstants: {}!
 UI.ValueConvertingControlView
 	subclass: #'UI.WebView2View'
-	instanceVariableNames: 'settingsFlags unavailableLink webviewEnvironment webviewController webview eventHandlers'
+	instanceVariableNames: 'settingsFlags unavailableLink webviewEnvironment webviewController webview eventHandlers environmentOptions environmentEventHandlers profileName scriptLocale _unused26'
 	classVariableNames: ''
 	imports: #(#{WebView2})
 	classInstanceVariableNames: ''
@@ -1853,12 +1966,11 @@ UI.ValueConvertingControlView
 			'DisablePasswordAutosaveMask' -> 16r800.
 			'DisablePinchZoomMask' -> 16r1000.
 			'DisableScriptMask' -> 16r40.
-			'DisableSSOMask' -> 16r10000.
 			'DisableStatusBarMask' -> 16r80.
 			'DisableSwipeNavigationMask' -> 16r8000.
 			'DisableWebmessageMask' -> 16r100.
 			'DisableZoomControlMask' -> 16r200.
-			'EnableCustomErrorReportingMask' -> 16r20000
+			'EnableInPrivateModeMask' -> 16r10000
 		}!
 
 "End of package definition"!

@@ -32,6 +32,18 @@ testAllowSSO
 	self deny: subject allowSSO.
 	self deny: interface allowSingleSignOnUsingOSPrimaryAccount.!
 
+testEnableTrackingPrevention
+	| subject interface |
+	subject := WebView2EnvironmentOptions new.
+	interface := subject queryInterface: ICoreWebView2EnvironmentOptions5.
+	self assert: subject trackingPreventionLevel equals: COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_BALANCED.
+	self assert: interface enableTrackingPrevention
+		equals: COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_BALANCED.
+	interface enableTrackingPrevention: COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_STRICT.
+	self assert: subject trackingPreventionLevel equals: COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_STRICT.
+	self assert: interface enableTrackingPrevention
+		equals: COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_STRICT!
+
 testExclusiveDataFolderAccess
 	| subject interface |
 	subject := WebView2EnvironmentOptions new.
@@ -80,6 +92,7 @@ testTargetCompatibleBrowserVersion
 !WebView2.Tests.WebView2EnvironmentOptionsTest categoriesForMethods!
 testAdditionalBrowserArguments!public! !
 testAllowSSO!public! !
+testEnableTrackingPrevention!public! !
 testExclusiveDataFolderAccess!public! !
 testIsCustomCrashReportingEnabled!public! !
 testLanguage!public! !

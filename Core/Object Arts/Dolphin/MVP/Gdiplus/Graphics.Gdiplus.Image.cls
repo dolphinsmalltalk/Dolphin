@@ -3,7 +3,7 @@
 Graphics.Gdiplus.GdiplusBase
 	subclass: #'Graphics.Gdiplus.Image'
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'DecodersByExtension DecodersByMimeType EncodersByExtension EncodersByMimeType'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -646,12 +646,9 @@ saveToFile: pathString encoderParams: aGpEncoderParameters
 	"Save the receiver to the specified file with parameters specified by aGpEncoderParameters.
 	Use the image encoder associated with the file's extension."
 
-	| mimeType encoder |
-	mimeType := self class encoderMimeTypeForExtension: (File splitExtensionFrom: pathString).
-	encoder := self class encoderClsid: mimeType.
 	self
 		saveToFile: pathString
-		clsidEncoder: encoder
+		clsidEncoder: (self class encoderClsidForExtension: (File splitExtensionFrom: pathString))
 		encoderParams: aGpEncoderParameters!
 
 saveToIStream: pStream mimeType: mimeString 
@@ -672,12 +669,10 @@ saveToIStream: pStream mimeType: mimeString encoderParams: aGpEncoderParameters
 	"MSDN: Do not save an image to the same stream that was used to construct the image. 
 	Doing so might damage the stream. "
 
-	| encoder |
-	encoder := self class encoderClsid: mimeString.
 	Gdip
 		gdipSaveImageToStream: self asParameter
 		stream: pStream
-		clsidEncoder: encoder
+		clsidEncoder: (self class encoderClsid: mimeString)
 		encoderParams: aGpEncoderParameters!
 
 selectActiveFrame: anInteger
@@ -851,22 +846,41 @@ Graphics.Gdiplus.Image methodProtocol: #image attributes: #(#readOnly) selectors
 
 !Graphics.Gdiplus.Image class methodsFor!
 
+cacheDecoderClsids
+	DecodersByExtension := LookupTable new.
+	DecodersByMimeType := LookupTable new.
+	self decoders do: [:each | | clsid |
+		clsid := each Clsid.
+		DecodersByMimeType at: each MimeType put: clsid.
+		($; split: each FilenameExtension) do: [:ext |
+			DecodersByExtension at: ($. split: ext) last caseFolded put: clsid]]!
+
+cacheEncoderClsids
+	EncodersByExtension := LookupTable new.
+	EncodersByMimeType := LookupTable new.
+	self encoders do: [:each | | clsid |
+		clsid := each Clsid.
+		EncodersByMimeType at: each MimeType put: clsid.
+		($; split: each FilenameExtension) do: [:ext |
+			EncodersByExtension at: ($. split: ext) last caseFolded put: clsid]]!
+
+decoderClsid: aMimeTypeString
+	"Private - Answer the <CLSID> of the image decoder for the specified MIME type.
+
+		(self decoderClsid: 'image/jpeg')
+	"
+
+	^self decodersByMimeType at: aMimeTypeString!
+
 decoderFileExtensions
 	"Answer a list of strings that represent the supported decoder file extensions."
 
-	| extensions |
-	extensions := OrderedCollection new.
-	self decoders do: 
-			[:decoder |
-			| strm |
-			strm := decoder FilenameExtension readStream.
-			[strm atEnd] whileFalse: [(strm skipTo: $.) ifTrue: [extensions add: (strm upTo: $;)]]].
-	^extensions!
+	^self decodersByExtension keys!
 
 decoderMimeTypes
 	"Answer a list of strings that represent the supported decoder mime types."
 
-	^self decoders collect: [:e | e MimeType asString]!
+	^self decodersByMimeType keys!
 
 decoders
 	"Answer a <StructureArray> of <GpImageCodecInfo> that describe the available image
@@ -874,13 +888,25 @@ decoders
 
 	^self getImageCodecs: false!
 
+decodersByExtension
+	^DecodersByExtension
+		ifNil: 
+			[self cacheDecoderClsids.
+			DecodersByExtension]!
+
+decodersByMimeType
+	^DecodersByMimeType
+		ifNil: 
+			[self cacheDecoderClsids.
+			DecodersByMimeType]!
+
 encoderClsid: aMimeTypeString
 	"Private - Answer the <CLSID> of the image encoder for the specified MIME type.
 
 		(self encoderClsid: 'image/jpeg') = (self encoderClsidForExtension: 'jpg')
 	"
 
-	^(self encoders detect: [:each | each MimeType = aMimeTypeString]) Clsid!
+	^self encodersByMimeType at: aMimeTypeString!
 
 encoderClsidForExtension: aString
 	"Answer a GUID that represents the image encoder associated with aString file extension.
@@ -888,24 +914,12 @@ encoderClsidForExtension: aString
 		self encoderClsidForExtension: 'jpg'
 	"
 
-	^(self encoders
-		detect: [:e | (e FilenameExtension
-				findString: aString
-				startingAt: 1
-				ignoreCase: true) > 0])
-			Clsid!
+	^self encodersByExtension at: (Locale.Invariant foldcaseString: aString)!
 
 encoderFileExtensions
 	"Answer a list of strings that represent the supported encoder file extensions."
 
-	| extensions |
-	extensions := OrderedCollection new.
-	self encoders do: 
-			[:encoder |
-			| strm |
-			strm := encoder FilenameExtension readStream.
-			[strm atEnd] whileFalse: [(strm skipTo: $.) ifTrue: [extensions add: (strm upTo: $;)]]].
-	^extensions!
+	^self encodersByExtension keys!
 
 encoderMimeTypeForExtension: aString
 	"Answer a String mime type associated with aString file extension.
@@ -913,23 +927,30 @@ encoderMimeTypeForExtension: aString
 	 	self encoderMimeTypeForExtension: 'jpg'
 	"
 
-	^(self encoders
-		detect: [:e | (e FilenameExtension
-				findString: aString
-				startingAt: 1
-				ignoreCase: true) > 0])
-			MimeType!
+	^self encodersByMimeType keyAtValue: (self encoderClsidForExtension: aString)!
 
 encoderMimeTypes
 	"Answer a list of strings that represent the supported image encoder mime types."
 
-	^self encoders collect: [:e | e MimeType asString]!
+	^self encodersByMimeType keys!
 
 encoders
 	"Answer a <StructureArray> of <GpImageCodecInfo> that describe the available image
 	encoders."
 
 	^self getImageCodecs: true!
+
+encodersByExtension
+	^EncodersByExtension
+		ifNil: 
+			[self cacheEncoderClsids.
+			EncodersByExtension]!
+
+encodersByMimeType
+	^EncodersByMimeType
+		ifNil: 
+			[self cacheEncoderClsids.
+			EncodersByMimeType]!
 
 fileTypes
 	"Answer an array of file types for use with the <FileOpenDialog>."
@@ -986,7 +1007,7 @@ getImageCodecs: aBoolean
 	collection we might as well leave it as a single block of memory accessed via a
 	StructureArray."
 
-	| numCodecs codecs buf byteSize |
+	| numCodecs buf byteSize |
 	buf := ByteArray newFixed: 8.
 	aBoolean
 		ifTrue: [Gdip gdipGetImageEncodersSize: buf size: buf yourAddress + 4]
@@ -1005,42 +1026,40 @@ getImageCodecs: aBoolean
 				gdipGetImageDecoders: numCodecs
 				size: byteSize
 				decoders: buf].
-	codecs := StructureArray
-				fromAddress: buf
-				length: numCodecs
-				elementClass: ImageCodecInfo.
-	^codecs!
+	^StructureArray
+		fromAddress: buf
+		length: numCodecs
+		elementClass: ImageCodecInfo!
 
 icon
 	"Answers an Icon that can be used to represent this class"
 
 	^Graphics.Image icon!
 
-mimeTypeForExtension: aString
-	"Answer a String mime type associated with the file extension aString.
-
-		self mimeTypeForExtension: 'jpg'
-	"
-
-	^(self encoders
-		detect: [:e | (e FilenameExtension
-				findString: aString
-				startingAt: 1
-				ignoreCase: true) > 0]
-		ifNone: nil) ifNotNil: [:encoder | encoder MimeType]!
-
 nameOfImageFlag: anInteger
-	^Gdiplus.ImageFlagsNames at: anInteger highBit + 1! !
+	^Gdiplus.ImageFlagsNames at: anInteger highBit + 1!
+
+onStartup2
+	"Private - Perform system startup processing for all subclasses."
+
+	DecodersByExtension := DecodersByMimeType := EncodersByExtension := EncodersByMimeType := nil! !
 !Graphics.Gdiplus.Image class categoriesForMethods!
+cacheDecoderClsids!helpers!private! !
+cacheEncoderClsids!helpers!private! !
+decoderClsid:!enquiries!private! !
 decoderFileExtensions!enquiries!public! !
 decoderMimeTypes!enquiries!public! !
 decoders!enquiries!public! !
+decodersByExtension!enquiries!private! !
+decodersByMimeType!enquiries!private! !
 encoderClsid:!enquiries!private! !
 encoderClsidForExtension:!enquiries!private! !
 encoderFileExtensions!enquiries!public! !
 encoderMimeTypeForExtension:!enquiries!private! !
 encoderMimeTypes!enquiries!public! !
 encoders!enquiries!public! !
+encodersByExtension!enquiries!private! !
+encodersByMimeType!enquiries!private! !
 fileTypes!enquiries!public! !
 fromByteArray:!instance creation!public! !
 fromFile:!instance creation!public! !
@@ -1048,7 +1067,7 @@ fromFile:usingLocator:!instance creation!public! !
 fromIStream:!instance creation!public! !
 getImageCodecs:!helpers!private! !
 icon!constants!public! !
-mimeTypeForExtension:!enquiries!private! !
 nameOfImageFlag:!enquiries!public! !
+onStartup2!event handling!private! !
 !
 

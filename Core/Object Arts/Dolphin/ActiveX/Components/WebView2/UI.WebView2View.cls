@@ -2,7 +2,7 @@
 
 UI.ValueConvertingControlView
 	subclass: #'UI.WebView2View'
-	instanceVariableNames: 'settingsFlags unavailableLink webviewEnvironment webviewController webview eventHandlers'
+	instanceVariableNames: 'settingsFlags unavailableLink webviewEnvironment webviewController webview eventHandlers environmentOptions environmentEventHandlers profileName scriptLocale _unused26'
 	classVariableNames: ''
 	imports: #(#{WebView2})
 	classInstanceVariableNames: ''
@@ -19,12 +19,11 @@ UI.ValueConvertingControlView
 			'DisablePasswordAutosaveMask' -> 16r800.
 			'DisablePinchZoomMask' -> 16r1000.
 			'DisableScriptMask' -> 16r40.
-			'DisableSSOMask' -> 16r10000.
 			'DisableStatusBarMask' -> 16r80.
 			'DisableSwipeNavigationMask' -> 16r8000.
 			'DisableWebmessageMask' -> 16r100.
 			'DisableZoomControlMask' -> 16r200.
-			'EnableCustomErrorReportingMask' -> 16r20000
+			'EnableInPrivateModeMask' -> 16r10000
 		}!
 UI.WebView2View guid: (Core.GUID fromString: '{3a9f720c-51f6-49f2-8267-f2b3b878129c}')!
 UI.WebView2View comment: '`WebView2View` is a `<valueView>` that wraps the Microsoft Edge WebView2 embeddable browser to display content downloaded from a URL, or provided as a string.'!
@@ -55,13 +54,13 @@ allowExternalDrop: aBoolean
 	self webviewController ifNotNil: [:controller | controller allowExternalDrop: aBoolean]!
 
 allowSSO
-	^settingsFlags noMask: DisableSSOMask!
+	^environmentOptions allowSSO!
 
 allowSSO: aBoolean
 	"Set whether single sign-on should be enabled (the default)."
 
 	self allowSSO = aBoolean ifTrue: [^self].
-	self recreateAround: [settingsFlags := settingsFlags mask: DisableSSOMask set: aBoolean not]!
+	self recreateAround: [environmentOptions allowSSO: aBoolean]!
 
 areBrowserAcceleratorKeysEnabled
 	"Answer whether the Edge default accelerator keys should be enabled."
@@ -132,25 +131,30 @@ createUnavailableLink
 		to: self!
 
 createWebView
-	webviewEnvironment createCoreWebView2Controller: handle
-		thenDo: [:hr :controller | hr < 0 ifFalse: [self onControllerCreated: controller]]	"We could create a composition controller here, but there is no point as we don't have any integration with Direct Composition"!
+	"Currently we don't attempt to set any controller options - see ICoreWebView2ControllerOptions[2]"
+
+	| controllerOptions |
+	controllerOptions := webviewEnvironment createCoreWebView2ControllerOptions.
+	self isInPrivateModeEnabled ifTrue: [controllerOptions isInPrivateModeEnabled: true].
+	profileName isNil ifFalse: [controllerOptions profileName: profileName].
+	scriptLocale isNil ifFalse: [controllerOptions scriptLocale: scriptLocale tag].
+	webviewEnvironment
+		createCoreWebView2Controller: handle
+		withOptions: controllerOptions
+		thenDo: [:hr :controller | hr < 0 ifFalse: [self onControllerCreated: controller]].	"We could create a composition controller here, but there is no point as we don't have any integration with Direct Composition"
+	controllerOptions free!
 
 createWebViewEnvironment
-	| completed userDataFolder options |
+	| completed userDataFolder |
 	completed := (WebView2CompletionHandler
 				completionBlock: [:hr :env | hr < 0 ifFalse: [self onEnvironmentCreated: env]])
 					queryInterface: ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler.
-	userDataFolder := File composePath: (SessionManager current getenv: 'LocalAppData')
-				subPath: (File splitFilenameFrom: (DynamicLinkLibrary moduleFileName: nil)) , '.WebView2'.
-	options := WebView2EnvironmentOptions new.
-	options
-		allowSSO: self allowSSO;
-		isCustomCrashReportingEnabled: self isCustomCrashReportingEnabled.
+	userDataFolder := self defaultUserDataFolder.
 	
 	[WebView2Loader default
 		createCoreWebView2EnvironmentWithOptions: nil
 		userDataFolder: userDataFolder
-		environmentOptions: (options queryInterface: ICoreWebView2EnvironmentOptions)
+		environmentOptions: (environmentOptions queryInterface: ICoreWebView2EnvironmentOptions)
 		environmentCreatedHandler: completed]
 			on: Win32Error
 			do: [:ex | self createUnavailableLink].
@@ -159,6 +163,10 @@ createWebViewEnvironment
 		when: #positionChanged:
 		send: #onShellPositionChanged:
 		to: self!
+
+defaultUserDataFolder
+	^File composePath: (SessionManager current getenv: 'LocalAppData')
+		subPath: (File splitFilenameFrom: (DynamicLinkLibrary moduleFileName: nil)) , '.WebView2'!
 
 defaultWindowProcessing: message wParam: wParam lParam: lParam
 	"Private - Pass an event to the 'default' window procedure of the receiver."
@@ -174,10 +182,8 @@ defaultWindowProcessing: message wParam: wParam lParam: lParam
 destroyDeadWebView
 	"Private - Tear down the remnants of a dead web view after browser process exit. This involves destroying the event sink objects, without unregistering them as that will fail, and freeing up the existing controller and view. The environment is retained in case a new view is to be created."
 
-	eventHandlers := eventHandlers
-				select: [:each | each source == webviewEnvironment or: 
-							[each destroy.
-							false]].
+	eventHandlers := eventHandlers do: [:each | each destroy].
+	eventHandlers := OrderedCollection new.
 	webviewController close.
 	self releaseWebView!
 
@@ -199,20 +205,27 @@ displayValue: anObject
 documentTitle
 	^webview documentTitle!
 
+environmentOptions
+	^environmentOptions!
+
 filerProxy
 	| saved |
-	saved := {webviewEnvironment.
+	saved := {
+				webviewEnvironment.
 				webviewController.
 				webview.
 				unavailableLink.
-				eventHandlers}.
-	webviewEnvironment := webviewController := webview := unavailableLink := eventHandlers := nil.
+				eventHandlers.
+				environmentEventHandlers
+			}.
+	environmentEventHandlers := webviewEnvironment := webviewController := webview := unavailableLink := eventHandlers := nil.
 	^[super filerProxy] ensure: 
 			[webviewEnvironment := saved at: 1.
 			webviewController := saved at: 2.
 			webview := saved at: 3.
 			unavailableLink := saved at: 4.
-			eventHandlers := saved at: 5]!
+			eventHandlers := saved at: 5.
+			environmentEventHandlers := saved at: 6]!
 
 goBack
 	webview goBack!
@@ -223,7 +236,8 @@ goForward
 initialize
 	super initialize.
 	settingsFlags := 0.
-	webview := DeafObject.Current!
+	webview := DeafObject.Current.
+	environmentOptions := WebView2EnvironmentOptions new!
 
 initializeControl
 	"Settings must be established before navigating, or they will not take effect"
@@ -243,14 +257,13 @@ isBuiltInErrorPageEnabled: aBoolean
 	self webviewSettings ifNotNil: [:settings | settings isBuiltInErrorPageEnabled: aBoolean]!
 
 isCustomCrashReportingEnabled
-	^settingsFlags allMask: EnableCustomErrorReportingMask!
+	^environmentOptions isCustomCrashReportingEnabled!
 
 isCustomCrashReportingEnabled: aBoolean
 	"Set whether custom error reporting should be enabled (suppressing the default behaviour of uploading crashes to Microsoft)."
 
 	self isCustomCrashReportingEnabled = aBoolean ifTrue: [^self].
-	self
-		recreateAround: [settingsFlags := settingsFlags mask: EnableCustomErrorReportingMask set: aBoolean]!
+	self recreateAround: [environmentOptions isCustomCrashReportingEnabled: aBoolean]!
 
 isGeneralAutofillEnabled
 	^settingsFlags noMask: DisableGeneralAutofillMask!
@@ -258,6 +271,14 @@ isGeneralAutofillEnabled
 isGeneralAutofillEnabled: aBoolean
 	settingsFlags := settingsFlags mask: DisableGeneralAutofillMask set: aBoolean not.
 	self webviewSettings ifNotNil: [:settings | settings isGeneralAutofillEnabled: aBoolean]!
+
+isInPrivateModeEnabled
+	^settingsFlags allMask: EnableInPrivateModeMask!
+
+isInPrivateModeEnabled: aBoolean
+	self isInPrivateModeEnabled = aBoolean ifTrue: [^self].
+	settingsFlags := settingsFlags mask: EnableInPrivateModeMask set: aBoolean.
+	webviewController isNull ifFalse: [self recreate]!
 
 isPasswordAutosaveEnabled
 	^settingsFlags noMask: DisablePasswordAutosaveMask!
@@ -329,27 +350,23 @@ observeControllerEvents
 						handler: [:source :args | self presenter trigger: ICoreWebView2CursorChangedEventHandler eventName with: args])]!
 
 observeEnvironmentEvents
-	##({ICoreWebView2NewBrowserVersionAvailableEventHandler.
+	environmentEventHandlers := OrderedCollection new: 3.
+	##({
+		ICoreWebView2NewBrowserVersionAvailableEventHandler.
 		ICoreWebView2BrowserProcessExitedEventHandler.
-		ICoreWebView2ProcessInfosChangedEventHandler})
-			do: [:each | self observeEvent: each from: webviewEnvironment]!
+		ICoreWebView2ProcessInfosChangedEventHandler
+	}) do: 
+				[:each |
+				self registerEnvironmentEventSink: (WebView2EventSink
+							source: webviewEnvironment
+							interfaceClass: each
+							handler: (each triggerBlockFor: self presenter))]!
 
 observeEvent: anICoreWebView2EventHandlerClass from: anICoreWebView2EventSource
-	| event argsClass handlerBlock |
-	event := anICoreWebView2EventHandlerClass eventName.
-	argsClass := anICoreWebView2EventHandlerClass argsClass.
-	handlerBlock := argsClass == IUnknown
-				ifTrue: [[:source :args | self presenter trigger: event]]
-				ifFalse: 
-					[argsClass superclass isNonInstantiable
-						ifTrue: [[:source :args | self presenter trigger: event with: args]]
-						ifFalse: 
-							["Here we are assuming that there is only ever xxxEventArgs and xxxEventArgs2. This is true currently. If more depth is added, we could walk up the hierarchy querying"
-							[:source :args | self presenter trigger: event with: (args queryInterface: argsClass ifNone: [args])]]].
 	^self registerEventSink: (WebView2EventSink
 				source: anICoreWebView2EventSource
 				interfaceClass: anICoreWebView2EventHandlerClass
-				handler: handlerBlock)!
+				handler: (anICoreWebView2EventHandlerClass triggerBlockFor: self presenter))!
 
 observeWindowEvents
 	"For some events we want to do more than just trigger a Smalltalk event, so these have custom handlers"
@@ -453,7 +470,7 @@ onSourceChanged: anICoreWebView2SourceChangedEventArgs
 	self presenter trigger: #sourceChanged: with: anICoreWebView2SourceChangedEventArgs!
 
 onUnavailableLinkClicked: aLITEM 
-	ShellLibrary default shellOpen: aLITEM url!
+	Shell32 shellOpen: aLITEM url!
 
 onViewCreated
 	"The receiver has just been fully created. This is a suitable place to perform
@@ -470,6 +487,14 @@ onViewCreated
 
 profile
 	^webview profile!
+
+profileName
+	^profileName!
+
+profileName: aString
+	profileName = aString ifTrue: [^self].
+	profileName := aString.
+	webviewController notNull ifTrue: [self recreate]!
 
 queryCommand: query
 	"Enters details about a potential command for the receiver into the 
@@ -496,6 +521,10 @@ queryControllerInterface: anIUnknown
 			whileFalse.
 	^anIUnknown queryInterface: ICoreWebView2Controller!
 
+registerEnvironmentEventSink: aWebView2EventSink
+	aWebView2EventSink register.
+	^environmentEventHandlers add: aWebView2EventSink!
+
 registerEventSink: aWebView2EventSink
 	aWebView2EventSink register.
 	^eventHandlers add: aWebView2EventSink!
@@ -514,8 +543,22 @@ releaseWebView
 resizeContentToFit
 	self content rectangle: self clientRectangle!
 
-settings
-	"Do nothing here. Could show a settings dialog"!
+scriptLocale
+	^scriptLocale!
+
+scriptLocale: aLocale
+	scriptLocale = aLocale ifTrue: [^self].
+	scriptLocale := aLocale.
+	webviewController notNull ifTrue: [self recreate]!
+
+setFocus
+	"Sets focus to the receiver. Answers the View which previously had focus, or nil if
+	none/invalid handle. Implicitly re-enables the enclosing popup (shell) view if currently
+	disabled."
+
+	^self getFirstChild
+		ifNil: [super setFocus]
+		ifNotNil: [:chromeWidget | (View fromHandle: chromeWidget) setFocus]!
 
 showWithStyle: anInteger
 	| result |
@@ -534,14 +577,24 @@ subclassWindow: hWnd
 subViews
 	^#()!
 
-unregisterEvents
-	eventHandlers ifNil: [^self].
-	eventHandlers do: [:each | each free].
-	eventHandlers := nil!
+trackingPreventionLevel
+	^environmentOptions trackingPreventionLevel!
 
-unregisterEventSink: aWebView2EventSink
-	aWebView2EventSink free.
-	eventHandlers remove: aWebView2EventSink ifAbsent: []!
+trackingPreventionLevel: anInteger
+	| level |
+	level := anInteger ?? COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_BALANCED.
+	self trackingPreventionLevel = level ifTrue: [^self].
+	self recreateAround: [environmentOptions trackingPreventionLevel: level]!
+
+unregisterEvents
+	eventHandlers
+		ifNotNil: 
+			[eventHandlers do: [:each | each free].
+			eventHandlers := nil].
+	environmentEventHandlers
+		ifNotNil: 
+			[environmentEventHandlers do: [:each | each free].
+			environmentEventHandlers := nil]!
 
 updateSettings
 	| settings |
@@ -603,11 +656,13 @@ content!accessing!private! !
 createUnavailableLink!private!realizing/unrealizing! !
 createWebView!private!realizing/unrealizing! !
 createWebViewEnvironment!private!realizing/unrealizing! !
+defaultUserDataFolder!enquiries!private! !
 defaultWindowProcessing:wParam:lParam:!dispatching!private! !
 destroyDeadWebView!private!realizing/unrealizing! !
 displayValue!private!updating! !
 displayValue:!private!updating! !
 documentTitle!accessing!public! !
+environmentOptions!accessing!public! !
 filerProxy!binary filing!private! !
 goBack!commands!public! !
 goForward!commands!public! !
@@ -619,6 +674,8 @@ isCustomCrashReportingEnabled!public!settings! !
 isCustomCrashReportingEnabled:!public!settings! !
 isGeneralAutofillEnabled!public!settings! !
 isGeneralAutofillEnabled:!public!settings! !
+isInPrivateModeEnabled!public!settings! !
+isInPrivateModeEnabled:!public!settings! !
 isPasswordAutosaveEnabled!public!settings! !
 isPasswordAutosaveEnabled:!public!settings! !
 isPinchZoomEnabled!public!settings! !
@@ -649,18 +706,24 @@ onSourceChanged:!event handling!private! !
 onUnavailableLinkClicked:!event handling!private! !
 onViewCreated!event handling!public! !
 profile!commands!public! !
+profileName!accessing!public! !
+profileName:!accessing!public! !
 queryCommand:!commands!public! !
 queryControllerInterface:!helpers!private! !
+registerEnvironmentEventSink:!helpers!public! !
 registerEventSink:!helpers!public! !
 releaseWebView!operations!private!realizing/unrealizing! !
 resizeContentToFit!helpers!private! !
-settings!public! !
+scriptLocale!accessing!public! !
+scriptLocale:!accessing!public! !
+setFocus!operations!public! !
 showWithStyle:!operations!private! !
 stop!commands!public! !
 subclassWindow:!operations!private! !
 subViews!hierarchy!public!sub views! !
+trackingPreventionLevel!public!settings! !
+trackingPreventionLevel:!public!settings! !
 unregisterEvents!private!realizing/unrealizing! !
-unregisterEventSink:!helpers!public! !
 updateSettings!private!realizing/unrealizing! !
 webview!accessing!public! !
 webviewController!accessing!public! !
@@ -698,6 +761,38 @@ initialize
 		addClassConstant: 'DisableSwipeNavigationMask' value: 16r8000
 !
 
+stbConvert: instVarArray fromVersion: verInteger
+	"Convert from earlier version view by updating and answering the array of instance variables
+	(for the View), instVarArray."
+
+	| instVars |
+	instVars := instVarArray.
+	verInteger < 13 ifTrue: [instVars := super stbConvert: instVarArray fromVersion: verInteger].
+	verInteger < 14 ifTrue: [instVars := self stbConvertFromVersion13: instVars].
+	^instVars!
+
+stbConvertFromVersion13: anArray
+	"Private - Perform an STB conversion from a version 13 <WebView2View> to version 14.
+	Adds environmentOptions instance variable and a few spares."
+
+	| count settingsFlags |
+	settingsFlags := anArray at: 16.
+	count := anArray size + 5.
+	^(Array new: count)
+		replaceFrom: 1
+			to: 21
+			with: anArray
+			startingAt: 1;
+		at: 22
+			put: (WebView2EnvironmentOptions new
+					allowSSO: (settingsFlags noMask: 16r10000);
+					isCustomCrashReportingEnabled: (settingsFlags allMask: 16r20000);
+					yourself);
+		yourself!
+
+stbVersion
+	^14!
+
 webview2Events
 	"This is the full set of events. Not all are actually published currently; for example the frame and download events are not."
 
@@ -711,6 +806,9 @@ winClassName
 !UI.WebView2View class categoriesForMethods!
 icon!constants!public! !
 initialize!development!initializing!private! !
+stbConvert:fromVersion:!binary filing!public! !
+stbConvertFromVersion13:!binary filing!private! !
+stbVersion!binary filing!public! !
 webview2Events!events!public! !
 winClassName!constants!private! !
 !

@@ -66,6 +66,9 @@ lockBits: aRectangle flags: flagsInteger format: formatInteger
 		lockedBitmapData: data.
 	^data!
 
+mimeType
+	^self filename isNil ifTrue: ['image/bmp'] ifFalse: [super mimeType]!
+
 pixelAt: aPoint
 	"Answer an ARGB that is the color of the receiver at aPoint."
 
@@ -99,6 +102,7 @@ initializerClass!private!realizing/unrealizing! !
 lockBits:!accessing!public! !
 lockBits:flags:!accessing!public! !
 lockBits:flags:format:!accessing!public! !
+mimeType!public! !
 pixelAt:!accessing!public! !
 pixelAt:put:!accessing!public! !
 unlockBits:!accessing!public! !

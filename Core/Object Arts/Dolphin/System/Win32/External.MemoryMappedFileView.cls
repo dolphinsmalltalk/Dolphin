@@ -41,3 +41,13 @@ flush!operations!public! !
 free!public!realizing/unrealizing! !
 !
 
+!External.MemoryMappedFileView class methodsFor!
+
+fromInteger: anInteger
+	^self new
+		basicUIntPtrAtOffset: 0 put: anInteger;
+		yourself! !
+!External.MemoryMappedFileView class categoriesForMethods!
+fromInteger:!public! !
+!
+

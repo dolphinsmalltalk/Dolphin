@@ -2,11 +2,11 @@
 
 Core.Object
 	subclass: #'External.MemoryMappedFile'
-	instanceVariableNames: 'file name handle maximumSize ownsFile'
+	instanceVariableNames: 'file name handle maximumSize flags'
 	classVariableNames: ''
 	imports: #(#{OS.MMFConstants} #{OS.Win32Constants})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'OwnsFileMask' -> 16r2. 'OwnsHandleMask' -> 16r1. 'ReadOnlyMask' -> 16r4 }!
 External.MemoryMappedFile guid: (Core.GUID fromString: '{87c4eee1-16f8-422b-b9e6-2e1c2963affd}')!
 External.MemoryMappedFile comment: 'MemoryMappedFile is an abstraction over the Win32 Memory-Mapped File API.
 
@@ -30,6 +30,7 @@ asParameter
 	handle isNull 
 		ifTrue: 
 			[handle := self createMapping.
+			flags := flags bitOr: OwnsHandleMask.
 			self beFinalizable].
 	^handle!
 
@@ -45,8 +46,8 @@ basicFree
 		print: file;
 		cr."
 
-	Kernel32 closeHandle: handle.
-	ownsFile ifTrue: [file close]!
+	self ownsHandle ifTrue: [Kernel32 closeHandle: handle].
+	self ownsFile ifTrue: [file close]!
 
 createMapping
 	"Private - Create the file mapping and answer its handle."
@@ -68,10 +69,9 @@ free
 	file := handle := nil!
 
 isReadOnly
-	"Answer whether this is a read-only mapping. This decision is based on the file-open mode of
-	the mapped <File>."
+	"Answer whether this is a read-only mapping. This decision is based on the file-open mode of the mapped <File>."
 
-	^file accessFlags noMask: GENERIC_WRITE!
+	^flags allMask: ReadOnlyMask!
 
 mapView
 	"Answer a <MemoryMappedFileView> addressing the entire content of the file."
@@ -119,10 +119,23 @@ maximumSize: anInteger
 		ifTrue: [^self error: 'Maximum size of a file mapping object cannot be changed after realization'].
 	maximumSize := anInteger!
 
+ownsFile
+	^flags allMask: OwnsFileMask!
+
+ownsHandle
+	^flags allMask: OwnsHandleMask!
+
 setFile: aFile owned: aBoolean name: aString 
 	file := aFile.
-	ownsFile := aBoolean.
+	flags := aBoolean ifTrue: [OwnsFileMask] ifFalse: [0].
+	(file accessFlags noMask: GENERIC_WRITE) 
+			ifTrue: [flags := flags bitOr: ReadOnlyMask].
 	name := aString.
+	maximumSize := 0!
+
+setHandle: anInteger 
+	handle := anInteger.
+	flags := 0.
 	maximumSize := 0! !
 !External.MemoryMappedFile categoriesForMethods!
 asParameter!converting!public! !
@@ -134,10 +147,18 @@ mapView!operations!public! !
 mapViewFrom:to:!operations!public! !
 maximumSize!accessing!public! !
 maximumSize:!accessing!public! !
+ownsFile!private!testing! !
+ownsHandle!private!testing! !
 setFile:owned:name:!initializing!private! !
+setHandle:!initializing!private! !
 !
 
 !External.MemoryMappedFile class methodsFor!
+
+fromHandle: aHandle
+	^self basicNew
+		setHandle: aHandle;
+		yourself!
 
 icon
 	^File icon!
@@ -188,6 +209,7 @@ open: aString mode: aSymbol check: aBoolean
 			name: nil;
 		yourself! !
 !External.MemoryMappedFile class categoriesForMethods!
+fromHandle:!public! !
 icon!constants!public! !
 onFile:!instance creation!public! !
 onFile:named:!instance creation!public! !
