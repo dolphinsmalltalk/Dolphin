@@ -19,7 +19,7 @@ package setPrerequisites: #(
 	'..\..\..\Base\Dolphin Basic Geometry'
 	'..\..\..\Graphics\Dolphin GDI Graphics'
 	'..\..\..\Base\Dolphin MVP Base'
-	'..\..\..\Dolphin MVP Tests'
+	'..\..\..\Tests\Dolphin MVP Tests'
 	'..\..\..\..\System\Random\Dolphin Random Stream'
 	'..\Dolphin Scintilla View'
 	'..\..\..\Type Converters\Dolphin Type Converters'

@@ -83,7 +83,7 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin Basic Geometry'
 	'..\..\Graphics\Dolphin GDI Graphics'
 	'..\..\Graphics\Tests\Dolphin GDI Graphics Tests'
-	'..\..\Dolphin MVP Tests'
+	'..\..\Tests\Dolphin MVP Tests'
 	'..\Gdiplus'
 	'..\Gdiplus (Old Names)'
 	'..\..\..\ActiveX\Structured Storage\OLE Structured Storage'

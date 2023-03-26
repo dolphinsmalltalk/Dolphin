@@ -21,9 +21,9 @@ package setPrerequisites: #(
 	'..\Base\Dolphin Basic Geometry'
 	'..\Views\Common Controls\Dolphin Common Controls'
 	'..\Models\List\Dolphin List Models'
-	'Dolphin MVP (Deprecated)'
+	'..\Deprecated\Dolphin MVP (Deprecated)'
 	'..\Base\Dolphin MVP Base'
-	'..\Dolphin MVP Tests').
+	'Dolphin MVP Tests').
 
 package!
 

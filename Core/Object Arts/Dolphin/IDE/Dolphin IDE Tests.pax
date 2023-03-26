@@ -40,7 +40,7 @@ package setPrerequisites: #(
 	'..\MVP\Views\Common Controls\Dolphin Common Controls'
 	'..\MVP\Graphics\Dolphin GDI Graphics'
 	'..\MVP\Base\Dolphin MVP Base'
-	'..\MVP\Dolphin MVP Tests'
+	'..\MVP\Tests\Dolphin MVP Tests'
 	'Professional\Dolphin Professional Tools'
 	'..\MVP\Views\Buttons\Dolphin Push Buttons'
 	'Professional\Dolphin Refactoring Browser'

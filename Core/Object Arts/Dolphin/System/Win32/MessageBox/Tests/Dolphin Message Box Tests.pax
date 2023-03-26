@@ -20,7 +20,7 @@ package setPrerequisites: #(
 	'..\..\..\..\Base\Tests\Dolphin Base Tests'
 	'..\Dolphin Message Box'
 	'..\..\..\..\MVP\Base\Dolphin MVP Base'
-	'..\..\..\..\MVP\Dolphin MVP Tests'
+	'..\..\..\..\MVP\Tests\Dolphin MVP Tests'
 	'..\..\..\..\Registry\Dolphin Registry Access'
 ).
 

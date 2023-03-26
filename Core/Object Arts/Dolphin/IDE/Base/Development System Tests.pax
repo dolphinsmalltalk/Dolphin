@@ -50,7 +50,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Dialogs\Common\Dolphin Common Print Dialog'
 	'..\..\MVP\Graphics\Dolphin GDI Graphics'
 	'..\..\MVP\Base\Dolphin MVP Base'
-	'..\..\MVP\Dolphin MVP Tests'
+	'..\..\MVP\Tests\Dolphin MVP Tests'
 	'..\Professional\Dolphin Professional Tools'
 	'..\..\MVP\Views\Scintilla\Dolphin Scintilla View'
 	'..\..\MVP\Views\Scintilla\Tests\Dolphin Scintilla View Tests'

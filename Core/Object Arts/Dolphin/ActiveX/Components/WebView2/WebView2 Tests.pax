@@ -20,7 +20,7 @@ package setPrerequisites: #(
 	'..\..\..\MVP\Base\Dolphin Basic Geometry'
 	'..\..\..\MVP\Graphics\Dolphin GDI Graphics'
 	'..\..\..\MVP\Base\Dolphin MVP Base'
-	'..\..\..\MVP\Dolphin MVP Tests'
+	'..\..\..\MVP\Tests\Dolphin MVP Tests'
 	'..\..\..\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\..\MVP\Models\Value\Dolphin Value Models'
 	'..\..\Structured Storage\OLE Structured Storage'
