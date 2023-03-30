@@ -609,10 +609,9 @@ inlineMessage: aStMessageNode inMethod: aSelector of: aBehavior
 	Implements the 'Inline Message' refactoring: 'Inlines a message send. If there are multiple implementors 
 	of the message, it will prompt for the implementation that should be inlined.'"
 
-	| refactoring |
+	| refactoring receiver |
 	(aStMessageNode isMessage and: 
-			[| receiver |
-			receiver := aStMessageNode receiver.
+			[receiver := aStMessageNode receiver.
 			receiver isSelfVariable or: [receiver isSuperVariable]])
 		ifTrue: 
 			[refactoring := InlineMethodRefactoring
@@ -624,7 +623,9 @@ inlineMessage: aStMessageNode inMethod: aSelector of: aBehavior
 						inline: aStMessageNode sourceInterval
 						inMethod: aSelector
 						forClass: aBehavior.
-			(aStMessageNode isMessage and: [aStMessageNode receiver isStaticVariable])
+			(aStMessageNode isMessage and: 
+					[receiver := aStMessageNode receiver.
+					receiver isVariable and: [receiver isStaticVariable]])
 				ifTrue: 
 					[| binding |
 					binding := aStMessageNode receiver binding.
