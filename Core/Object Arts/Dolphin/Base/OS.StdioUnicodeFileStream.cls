@@ -9,33 +9,16 @@ OS.StdioTextFileStream
 	classConstants: {}!
 OS.StdioUnicodeFileStream guid: (Core.GUID fromString: '{a1e19207-b693-4313-ad8d-1f288be1a89e}')!
 OS.StdioUnicodeFileStream isNonInstantiable: true!
-OS.StdioUnicodeFileStream comment: ''!
+OS.StdioUnicodeFileStream comment: '`OS.StdioUnicodeFileStream` is the abstract class of `StdioFileStream`s for streaming Unicode string data.'!
 !OS.StdioUnicodeFileStream categoriesForClass!Collections-Streams! !
 !OS.StdioUnicodeFileStream methodsFor!
-
-basicNextAvailable
-	"Private - Answer an <integer> in the range 0..65535, being the next of the receiver's future sequence
-	values. Answer nil if at EOF."
-
-	^(crtlib feof: stream)
-		ifFalse: 
-			[| ch |
-			ch := crtlib fgetwc: stream.
-			ch == 16rFFFF ifFalse: [ch]]!
 
 basicNextPut: anInteger
 	"Private - Store the byte <integer> (in the range 0..65535) as the next element of the receiver."
 
+	self prepareToWrite.
 	crtlib fputwc: anInteger stream: stream.
 	^anInteger!
-
-basicPeek
-	| ch |
-	ch := crtlib fgetwc: stream.
-	^ch == 16rFFFF
-		ifFalse: 
-			[crtlib ungetwc: ch stream: stream.
-			ch]!
 
 bufferClass
 	"Private - The stdio buffer is always UTF-16 encoded, and the API calls always in terms of
@@ -43,23 +26,34 @@ bufferClass
 
 	^Utf16String!
 
+getchar
+	| ch |
+	self prepareToRead.
+	ch := crtlib fgetwc: stream.
+	^ch == 16rFFFF ifFalse: [ch]!
+
 getString: aUtf16String
 	^crtlib
 		fgetws: aUtf16String
 		n: aUtf16String size + 1
 		stream: stream!
 
+modeModifiers
+	^'t'!
+
 nextPutAll: aCollection
 	"Store the elements in the argument, aCollection, as the next elements accessible by the receiver. 
 	Answer aCollection"
 
+	self prepareToWrite.
 	crtlib fputws: aCollection asUtf16String stream: stream.
 	^aCollection!
 
-open: fileId mode: modeSymbol
+open: pathString mode: modeString flags: anInteger
 	super
-		open: fileId
-		mode: modeSymbol.
+		open: pathString
+		mode: modeString
+		flags: anInteger.
 	offset := crtlib _ftelli64: stream!
 
 setStream: anExternalAddress name: aString flags: anInteger
@@ -69,18 +63,19 @@ setStream: anExternalAddress name: aString flags: anInteger
 		name: aString
 		flags: anInteger!
 
-translationMode
-	^CRTConstants._O_U16TEXT! !
+ungetchar: aCodeUnit
+	crtlib ungetwc: aCodeUnit stream: stream.
+	^aCodeUnit! !
 !OS.StdioUnicodeFileStream categoriesForMethods!
-basicNextAvailable!accessing!private! !
 basicNextPut:!accessing!private! !
-basicPeek!accessing!private! !
 bufferClass!constants!private! !
+getchar!accessing!private! !
 getString:!accessing!private! !
+modeModifiers!constants!private! !
 nextPutAll:!accessing!public! !
-open:mode:!instance creation!private! !
+open:mode:flags:!instance creation!private! !
 setStream:name:flags:!initializing!private! !
-translationMode!constants!private! !
+ungetchar:!accessing!private! !
 !
 
 !OS.StdioUnicodeFileStream class methodsFor!

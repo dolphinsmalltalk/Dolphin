@@ -16,6 +16,10 @@ If there is a function of the C runtime library which you wish to make use of th
 !OS.CRTLibrary categoriesForClass!External-Libraries! !
 !OS.CRTLibrary methodsFor!
 
+_chsize_s: fdInteger size: sizeInteger
+	<cdecl: errno _chsize_s int32 int64>
+	^self invalidCall: _failureCode!
+
 _clearfp
 	"Clear and return the floating point status word
 
@@ -125,8 +129,8 @@ _wcsicmp: string1 string2: string2
 	<cdecl: int32 _wcsicmp lpwstr lpwstr>
 	^self invalidCall: _failureCode!
 
-_wfopen_s: pFile filename: nameString mode: modeString
-	<cdecl: errno _wfopen_s handle* lpwstr lpwstr>
+_wfsopen: nameString mode: modeString shflag: shflagInteger
+	<cdecl: handle _wfsopen lpwstr lpwstr int32>
 	^self invalidCall: _failureCode!
 
 atoi: aString
@@ -220,6 +224,9 @@ invalidCall: anInteger
 		ifFalse: 
 			[anInteger == CRTConstants.STRUNCATE ifTrue: [anInteger] ifFalse: [CRTError signalWith: anInteger]]!
 
+isNonBlocking
+	^false!
+
 memcmp: buf1 buf2: buf2 count: count
 	"Compare the first count bytes in two buffers, answering <0 if buf1 is < buf2, 0 if equal,
 	and >0 if buf2 > buf1.
@@ -291,6 +298,7 @@ wcsncpy_s: strDestination bufferSize: numberOfElements strSource: strSource coun
 	<cdecl: errno wcsncpy_s lpvoid uintptr lpwstr uintptr>
 	^self invalidCall: _failureCode! !
 !OS.CRTLibrary categoriesForMethods!
+_chsize_s:size:!CRT functions-file handling!public! !
 _clearfp!CRT functions-floating point support!public! !
 _close:!CRT functions-low level I/O!public! !
 _control87:mask:!CRT functions-floating point support!public! !
@@ -311,7 +319,7 @@ _splitpath_s:drive:driveLen:dir:dirLen:fname:fnameLen:ext:extLen:!CRT functions-
 _statusfp!CRT functions-floating point support!public! !
 _wcserror_s:sizeInWords:errnum:!CRT functions-string manipulation!public! !
 _wcsicmp:string2:!CRT functions-string manipulation!public! !
-_wfopen_s:filename:mode:!CRT functions-stream I/O!public! !
+_wfsopen:mode:shflag:!CRT functions-stream I/O!public! !
 atoi:!CRT functions-data conversion!public! !
 close!public!realizing/unrealizing! !
 errno!CRT functions-process and environment control!public! !
@@ -331,6 +339,7 @@ free:!CRT functions-memory allocation!public! !
 fwrite:size:count:stream:!CRT functions-stream I/O!public! !
 initialize!initializing!private! !
 invalidCall:!exceptions!private! !
+isNonBlocking!public!testing! !
 memcmp:buf2:count:!CRT functions-buffer manipulation!public! !
 memcpy_s:destSize:src:count:!public! !
 setlocale:locale:!CRT functions-localization!public! !

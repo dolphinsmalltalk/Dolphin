@@ -117,7 +117,7 @@ anyMask: mask
 	"Answer whether any of the bits that are set in the <integer> mask are also set 
 	in the receiver."
 
-	^(self bitAnd: mask) ~= 0!
+	^(self bitAnd: mask) ~~ 0!
 
 asBoolean
 	"Answer whether the receiver is non-zero."

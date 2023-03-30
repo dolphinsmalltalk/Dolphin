@@ -150,12 +150,11 @@ saveAsFile: pathString
 	"Save this picture to a file at the specified path, and existing file at that path is
 	overwritten."
 
-	| fstream istream |
-	fstream := FileStream write: pathString text: false.
-	istream := fstream queryInterface: IStream.
+	| istream |
+	istream := IStream write: pathString.
 	self picture saveAsFile: istream fSaveMemCopy: true.
 	istream free.
-	fstream close! !
+! !
 !OS.COM.Picture categoriesForMethods!
 addToImageList:mask:!double dispatch!private! !
 asBitmap!public! !

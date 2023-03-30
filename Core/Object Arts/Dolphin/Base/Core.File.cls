@@ -82,8 +82,6 @@ beSparse
 	stored if they have large empty (zero) regions. This will throw an error if the file system
 	does not support sparse files, or if the file has not been opened with write permissions."
 
-	| bytesReturnedBuf |
-	bytesReturnedBuf := External.UInt32Bytes new.
 	(Kernel32
 		deviceIoControl: self asParameter
 		dwIoControlCode: FSCTL_SET_SPARSE
@@ -91,7 +89,7 @@ beSparse
 		nInBufferSize: 0
 		lpOutBuffer: nil
 		nOutBufferSize: 0
-		lpBytesReturned: bytesReturnedBuf
+		lpBytesReturned: intBuffer
 		lpoverlapped: nil) ifFalse: [Kernel32 systemError]!
 
 checkBoundsOf: aStringOrByteArray startingAt: startIndex for: bytesToTransferInteger
@@ -422,6 +420,9 @@ setToEnd
 	^self seek: 0 sense: FILE_END
 !
 
+shareFlags
+	^shareFlags!
+
 shareFlags: anInteger
 	"Private - Save away the Win32 sharing mode."
 
@@ -566,6 +567,7 @@ securityAttributes!accessing!public! !
 seek:sense:!positioning!public! !
 setHandle:flags:!initializing!private! !
 setToEnd!positioning!public! !
+shareFlags!accessing!private! !
 shareFlags:!accessing!private! !
 signalOsError:!exceptions!private! !
 size!accessing!public! !
@@ -950,28 +952,34 @@ initialize
 		NoCheckModes		Ditto, without error checking."
 
 	self addClassConstant: 'ShareModes'
-		value: ##((IdentityDictionary withAll: {#read -> FILE_SHARE_READ.
+		value: ((IdentityDictionary withAll: {
+						#read -> FILE_SHARE_READ.
 						#readWrite -> (FILE_SHARE_READ | FILE_SHARE_WRITE).
 						#write -> FILE_SHARE_WRITE.
-						#exclusive -> 0})
+						#exclusive -> 0
+					})
 				isImmutable: true;
 				yourself).
 	"open will only ever open an existing file"
 	self addClassConstant: 'CheckModes'
-		value: ##((IdentityDictionary withAll: {#read -> (OPEN_EXISTING | GENERIC_READ).
+		value: ((IdentityDictionary withAll: {
+						#read -> (OPEN_EXISTING | GENERIC_READ).
 						#create -> (CREATE_NEW | GENERIC_READ | GENERIC_WRITE).
 						#open -> (OPEN_EXISTING | GENERIC_READ | GENERIC_WRITE).
 						#append -> (OPEN_EXISTING | GENERIC_READ | GENERIC_WRITE).
-						#truncate -> (TRUNCATE_EXISTING | GENERIC_READ | GENERIC_WRITE)})
+						#truncate -> (TRUNCATE_EXISTING | GENERIC_READ | GENERIC_WRITE)
+					})
 				isImmutable: true;
 				yourself).
 	"No check read is a bit of a nonsense, but ..."
 	self addClassConstant: 'NoCheckModes'
-		value: ##((IdentityDictionary withAll: {#read -> (OPEN_ALWAYS | GENERIC_READ).
+		value: ((IdentityDictionary withAll: {
+						#read -> (OPEN_ALWAYS | GENERIC_READ).
 						#create -> (OPEN_ALWAYS | GENERIC_READ | GENERIC_WRITE).
 						#open -> (OPEN_ALWAYS | GENERIC_READ | GENERIC_WRITE).
 						#append -> (OPEN_ALWAYS | GENERIC_READ | GENERIC_WRITE).
-						#truncate -> (CREATE_ALWAYS | GENERIC_READ | GENERIC_WRITE)})
+						#truncate -> (CREATE_ALWAYS | GENERIC_READ | GENERIC_WRITE)
+					})
 				isImmutable: true;
 				yourself)!
 

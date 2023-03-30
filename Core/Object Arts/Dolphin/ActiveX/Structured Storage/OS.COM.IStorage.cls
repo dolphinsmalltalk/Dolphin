@@ -4,7 +4,7 @@ OS.COM.IUnknown
 	subclass: #'OS.COM.IStorage'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.COM.StructuredStorageConstants})
+	imports: #(#{OS.COM.StorageConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OS.COM.IStorage guid: (OS.COM.IID fromString: '{0000000b-0000-0000-c000-000000000046}')!

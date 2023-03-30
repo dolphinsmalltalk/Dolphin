@@ -424,6 +424,17 @@ testDeleteDirectory
 	self deleteDirectory: 'c:\FileTest1\BranchWithLeafWithFile\'.
 	self deleteDirectory: 'c:\FileTest1\BranchWithLeafWithFiles🐬\'!
 
+testFileTimes
+	"Tests that file accesor exists and that #lastWriteTime works (for patch #1397)"
+
+	| now file tempFileName |
+	now := OS.FILETIME now.
+	tempFileName := File temporaryFilename.
+	file := File open: tempFileName.
+	self assert: file lastWriteTime asInteger >= now asInteger.
+	file close.
+	File delete: tempFileName!
+
 testFindFiles
 	| found |
 	found := Set new.
@@ -799,6 +810,7 @@ testComposePath!public!unit tests! !
 testCreateDirectoryPath!public!unit tests! !
 testCreateTemporaryDirectory!public!unit tests! !
 testDeleteDirectory!public!unit tests! !
+testFileTimes!public!unit tests! !
 testFindFiles!public!unit tests! !
 testForDirectoriesIn!public!unit tests! !
 testFullPathOf!public!unit tests! !

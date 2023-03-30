@@ -6,7 +6,10 @@ OS.COM.ISequentialStream
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'WriteOpenModes'
+				-> (IdentityDictionary withAll: { #append -> 16r11. #create -> 16r11. #truncate -> 16r1011 })
+		}!
 OS.COM.IStream guid: (OS.COM.IID fromString: '{0000000c-0000-0000-c000-000000000046}')!
 OS.COM.IStream comment: 'IStream is a COMInterface class to wrap the standard OLE/COM structured storage interface of the same name.
 
@@ -282,23 +285,23 @@ position
 	"Answer the current position in the receiver's stream."
 
 	| position |
-	position := UInt64Bytes new.
+	position := ByteArray newFixed: 8.
 	self 
 		Seek: 0
 		dwOrigin: STREAM_SEEK_CUR
 		plibNewPosition: position.
-	^position asInteger!
+	^position uint64AtOffset: 0!
 
 position: anInteger 
 	"Seek to the specified position in the receiver's stream."
 
 	| newPosition |
-	newPosition := UInt64Bytes new.
+	newPosition := ByteArray newFixed: 8.
 	self 
 		Seek: anInteger
 		dwOrigin: STREAM_SEEK_SET
 		plibNewPosition: newPosition.
-	newPosition asInteger ~= anInteger ifTrue: [self errorSubscriptBounds: anInteger]!
+	(newPosition uint64AtOffset: 0) ~= anInteger ifTrue: [self errorSubscriptBounds: anInteger]!
 
 reset
 	"Set the receiver back to the beginning."
@@ -383,7 +386,7 @@ stat
 	Simplified wrapper around #Stat:grfStateFlag:."
 
 	| struct |
-	struct := STATSTG new.
+	struct := STATSTG newBuffer.
 	self Stat: struct grfStatFlag: STATFLAG_DEFAULT.
 	^struct!
 
@@ -431,18 +434,24 @@ UnlockRegion: libOffset cb: cb dwLockType: dwLockType
 	"
 
 	<virtual stdcall: hresult 12 uint64 uint64 uint32>
-	^self invalidCall: _failureCode! !
+	^self invalidCall: _failureCode!
+
+upToEnd
+	"Answer a collection consisting of the future sequence values of the receiver (i.e. from the
+	current position to the end)."
+
+	^self next: self size - self position! !
 !OS.COM.IStream categoriesForMethods!
 at:!accessing!public! !
 at:put:!accessing!public! !
 atEnd!public!testing! !
 cacheStats!helpers!private! !
-Clone:!**auto generated**!primitives!public! !
-Commit:!**auto generated**!primitives!public! !
+Clone:!**auto generated**!COM Interfaces-IStream!primitives!public! !
+Commit:!**auto generated**!COM Interfaces-IStream!primitives!public! !
 contents!accessing!public! !
 copy!copying!public! !
 copyFrom:to:!copying!public! !
-CopyTo:cb:pcbRead:pcbWritten:!**auto generated**!primitives!public! !
+CopyTo:cb:pcbRead:pcbWritten:!**auto generated**!COM Interfaces-IStream!primitives!public! !
 copyTo:count:!copying!public! !
 cr!accessing!public! !
 do:!public! !
@@ -455,7 +464,7 @@ isReadable!public!testing! !
 isWriteable!public!testing! !
 lockFrom:to:!operations!public! !
 lockFrom:to:type:!operations!public! !
-LockRegion:cb:dwLockType:!**auto generated**!primitives!public! !
+LockRegion:cb:dwLockType:!**auto generated**!COM Interfaces-IStream!primitives!public! !
 mode!accessing!public! !
 name!accessing!public! !
 nextCLSID!accessing!public! !
@@ -468,20 +477,21 @@ position!accessing!public! !
 position:!accessing!public! !
 reset!accessing!public! !
 resize:!accessing!public! !
-Revert!**auto generated**!primitives!public! !
+Revert!**auto generated**!COM Interfaces-IStream!primitives!public! !
 rollback!operations!public! !
-Seek:dwOrigin:plibNewPosition:!**auto generated**!primitives!public! !
-SetSize:!**auto generated**!primitives!public! !
+Seek:dwOrigin:plibNewPosition:!**auto generated**!COM Interfaces-IStream!primitives!public! !
+SetSize:!**auto generated**!COM Interfaces-IStream!primitives!public! !
 setToEnd!positioning!public! !
 size!accessing!public! !
 skip:!positioning!public! !
 space!accessing!public! !
 stat!accessing!public! !
-Stat:grfStatFlag:!**auto generated**!primitives!public! !
+Stat:grfStatFlag:!**auto generated**!COM Interfaces-IStream!primitives!public! !
 tab!accessing!public! !
 unlockFrom:to:!operations!public! !
 unlockFrom:to:type:!operations!public! !
-UnlockRegion:cb:dwLockType:!**auto generated**!primitives!public! !
+UnlockRegion:cb:dwLockType:!**auto generated**!COM Interfaces-IStream!primitives!public! !
+upToEnd!accessing!public! !
 !
 
 OS.COM.IStream methodProtocol: #gettableStream attributes: #(#ansi #readOnly) selectors: #(#atEnd #do: #next #next: #nextLine #nextMatchFor: #peek #peekFor: #skip: #skipTo: #upTo:)!
@@ -510,13 +520,15 @@ defineFunctions
 fromBytes: aByteArray
 	"Answer a pointer instance of the receiver that can be used to stream over a copy of the bytes in the argument."
 
-	^(Shlwapi shCreateMemStream: aByteArray cbInit: aByteArray size)
-		ifNil: [Win32Error signal]
-		ifNotNil: 
-			[:stm |
-			stm
-				beFinalizable;
-				yourself]!
+	| stream |
+	stream := Shlwapi shCreateMemStream: aByteArray cbInit: aByteArray size.
+	stream
+		ifNil: 
+			["If SHCreateMemStream returns NULL, it was unable to allocate the necessary memory. Callers should assume the cause is E_OUTOFMEMORY"
+			^(HRESULTError fromInteger: E_OUTOFMEMORY) signal].
+	^stream
+		beFinalizable;
+		yourself!
 
 onHGLOBAL
 	"Answer an instance of the receiver which is writing to the system provided
@@ -548,12 +560,54 @@ onURL: urlString
 		ppStream: answer
 		dwReserved: 0
 		lpfnCB: nil.
-	^answer! !
+	^answer!
+
+read: aString
+	"Answer an instance of the receiver for streaming over the contents of the file whose file system path is specified by the readableString> argument."
+
+	| instance |
+	instance := self newPointer.
+	Shlwapi
+		shCreateStreamOnFileEx: aString
+		grfMode: ##(STGM_READ | STGM_SHARE_DENY_WRITE)
+		dwAttributes: FILE_ATTRIBUTE_NORMAL
+		fCreate: false
+		pstmTemplate: nil
+		ppstm: instance.
+	^instance!
+
+write: aString
+	"Answer an instance of the receiver for writing to a new or existing file whose file system path is specified by the readableString> argument.
+	If the file doest not exist, it is created. If the file does exist, it is truncated."
+
+	^self write: aString mode: #truncate!
+
+write: aString mode: aSymbol
+	"Answer a new instance of the receiver open to write to the file identified by the <readableString> first argument.
+	The open mode is specified by the <Symbol> 2nd argument, and may be one of:
+		#create - create a new file, position at its start.
+		#append - open an existing file, position at its end.
+		#truncate	- create or open a file, position at its start."
+
+	| instance |
+	instance := self newPointer.
+	Shlwapi
+		shCreateStreamOnFileEx: aString
+		grfMode: (WriteOpenModes at: aSymbol)
+		dwAttributes: FILE_ATTRIBUTE_NORMAL
+		fCreate: aSymbol ~~ #append
+		pstmTemplate: nil
+		ppstm: instance.
+	aSymbol == #append ifTrue: [instance setToEnd].
+	^instance! !
 !OS.COM.IStream class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 fromBytes:!instance creation!public! !
 onHGLOBAL!instance creation!public! !
 onHGLOBAL:!instance creation!public! !
 onURL:!instance creation!public! !
+read:!instance creation!public! !
+write:!instance creation!public! !
+write:mode:!instance creation!public! !
 !
 

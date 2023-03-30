@@ -215,6 +215,11 @@ Kernel.SharedPool
 			'_S_IEXEC' -> 16r40.
 			'_S_IREAD' -> 16r100.
 			'_S_IWRITE' -> 16r80.
+			'_SH_DENYNO' -> 16r40.
+			'_SH_DENYRD' -> 16r30.
+			'_SH_DENYRW' -> 16r10.
+			'_SH_DENYWR' -> 16r20.
+			'_SH_SECURE' -> 16r80.
 			'_SW_DENORMAL' -> 16r80000.
 			'_SW_INEXACT' -> 16r1.
 			'_SW_INVALID' -> 16r10.
@@ -222,6 +227,7 @@ Kernel.SharedPool
 			'_SW_UNDERFLOW' -> 16r1.
 			'_SW_ZERODIVIDE' -> 16r8.
 			'_TRUNCATE' -> -16r1.
+			'EACCES' -> 16rD.
 			'EBADF' -> 16r9.
 			'EINVAL' -> 16r16.
 			'ENOENT' -> 16r2.
@@ -2199,6 +2205,7 @@ Kernel.SharedPool
 			'E_UNEXPECTED' -> -16r7FFF0001.
 			'ERROR_ACCESS_DENIED' -> 16r5.
 			'ERROR_ALREADY_EXISTS' -> 16rB7.
+			'ERROR_FILE_EXISTS' -> 16r50.
 			'ERROR_FILE_NOT_FOUND' -> 16r2.
 			'ERROR_HANDLE_EOF' -> 16r26.
 			'ERROR_INSUFFICIENT_BUFFER' -> 16r7A.
@@ -2215,6 +2222,7 @@ Kernel.SharedPool
 			'ERROR_NOACCESS' -> 16r3E6.
 			'ERROR_OPERATION_ABORTED' -> 16r3E3.
 			'ERROR_PROC_NOT_FOUND' -> 16r7F.
+			'ERROR_SHARING_VIOLATION' -> 16r20.
 			'ERROR_STACK_OVERFLOW' -> 16r3E9.
 			'ERROR_SUCCESS' -> 16r0.
 			'NO_ERROR' -> 16r0.
@@ -2225,7 +2233,6 @@ Kernel.SharedPool
 			'SEVERITY_SUCCESS' -> 16r0.
 			'STATUS_INVALID_PARAMETER' -> -16r3FFFFFF3.
 			'STATUS_TIMER_RESOLUTION_NOT_SET' -> -16r3FFFFDBB.
-			'STG_E_INVALIDFUNCTION' -> -16r7FFCFFFF.
 			'WCODE_HRESULT_FIRST' -> -16r7FFBFE00.
 			'WCODE_HRESULT_LAST' -> -16r7FFB0001
 		}!
@@ -4775,7 +4782,20 @@ Core.SequencedStream
 	classVariableNames: ''
 	imports: #(#{OS.CRTConstants})
 	classInstanceVariableNames: ''
-	classConstants: { 'DeviceMask' -> 16r40. 'NonBlockingMask' -> 16r2. 'ReadOnlyMask' -> 16r1 }!
+	classConstants: {
+			'AccessModeMask' -> 16r3.
+			'CreationModeMask' -> 16r700.
+			'DefaultReadFlags' -> 16r40.
+			'DefaultReadWriteFlags' -> 16r22.
+			'DeviceMask' -> 16r400000.
+			'NonBlockingMask' -> 16r800000.
+			'ReadingMask' -> 16r2000000.
+			'ShareModeMask' -> 16rF0.
+			'ShareModes' -> (IdentityDictionary
+						withAll: { #exclusive -> 16r10. #read -> 16r20. #readWrite -> 16r40. #write -> 16r30 }).
+			'TranslationModeMask' -> 16r7C000.
+			'WritingMask' -> 16r1000000
+		}!
 Core.PositionableStream
 	subclass: #'Core.ReadStream'
 	instanceVariableNames: ''

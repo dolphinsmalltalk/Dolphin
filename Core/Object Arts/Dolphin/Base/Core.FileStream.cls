@@ -376,7 +376,7 @@ next: sizeInteger putAll: aSequenceableCollection startingAt: startInteger
 		ifFalse: 
 			[| lastPos lastPageStart startNextPage wholePagesSize writeOffset |
 			lastPos := pageBase + position + sizeInteger - 1.
-			writeOffset := PageSize - position.
+			writeOffset := PageSize - position + startInteger.
 			"Update and write current page"
 			position < PageSize
 				ifTrue: 
@@ -402,7 +402,7 @@ next: sizeInteger putAll: aSequenceableCollection startingAt: startInteger
 								replaceFrom: 1
 								to: PageSize
 								with: aSequenceableCollection
-								startingAt: startInteger + writeOffset + (i * PageSize).
+								startingAt: writeOffset + (i * PageSize).
 							file write: collection count: PageSize].
 					self assert: [file position = (lastPageStart - 1)]].
 
@@ -415,7 +415,7 @@ next: sizeInteger putAll: aSequenceableCollection startingAt: startInteger
 						replaceFrom: 1
 						to: position
 						with: aSequenceableCollection
-						startingAt: startInteger + writeOffset + wholePagesSize.
+						startingAt: writeOffset + wholePagesSize.
 					flags := flags bitOr: BufferUpdatedMask]].
 	^aSequenceableCollection!
 
@@ -656,83 +656,123 @@ on: aFile type: aSymbol
 		mode: #create
 		type: aSymbol!
 
-open: aString mode: modeSymbol check: checkBoolean type: encSymbol
-	"Private - Answer an instance of the receiver opened on aString for accessMode access with
-	encoding specified by the <Symbol>, encSymbol , reporting errors if the file can't be opened
-	(though file exist/file does not exist error notifications depend on the value of
-	checkBoolean). By default we share for read only."
+open: aString mode: modeSymbol check: checkBoolean type: encodingSymbol share: shareSymbol
+	"Answer an instance of the receiver opened on aString for modeSymbol access with encoding specified by the <Symbol>, encodingSymbol , reporting errors if the file can't be opened (though file exist/file does not exist error notifications depend on the value of checkBoolean). 
+	The <Symbol>, shareSymbol, specifies the allowed concurrent access, and must be one of the following: 
+		#read - others are permitted to open (or have opened) for reading
+		#write - others are permitted to open (or have opened) for writing
+		#readWrite - others are permitted to open (or have opened) for reading and writing
+		#none - others are not permitted to open (or have opened) the file"
 
 	| file |
 	file := File
 				open: aString
 				mode: modeSymbol
 				check: checkBoolean
-				share: #readWrite.
+				share: shareSymbol.
 	^(self
 		file: file
 		mode: modeSymbol
-		type: encSymbol)
+		type: encodingSymbol)
 		ownsFile: true;
 		yourself!
 
-read: fileId
-	"Answer an instance of the receiver whose future sequence values consist
-	of the textual contents of the file identified by the <readableString> path, fileId."
+read: aString
+	"Answer a new instance of the receiver whose future sequence values consist of the textual contents of the file at the path specified by the <readableString> argument.
+		- It is an error for the file or its folder path to not exist. If the file does exist, it is opened and the stream is positioned at the beginning of the content.
+		- Others are permitted to open the file for reading or writing (or have already done so)."
 
-	^self read: fileId type: #text!
+	^self read: aString type: #text!
 
 read: aString text: aBoolean
-	"Answer an instance of the receiver whose future sequence values consist
-	of the contents of the file named, aString, and whose access is character
-	based or binary, depending on the argument aBoolean. Raise an exception
-	if the file does not exist."
-
-	^self read: aString type: (aBoolean ifTrue: [#text] ifFalse: [#binary])!
-
-read: fileId type: fileType
-	"Answer an instance of the receiver whose future sequence values consist
-	of the contents of the file identified by the <readableString>, fileId, and 
-	whose external stream type and sequence value type is determined by the
-	<symbol> argument, fileType (i.e. one of #binary, #text, #utf8, #utf16, or #utf32)."
+	"Answer an instance of the receiver whose future sequence values consist of the contents of the file at the path specified by the <readableString> first argument.
+		- If the <boolean> 2nd argument is true, the file is assumed to contain text (i.e. Strings/Characters). The content will be sniffed to determine the encoding. If the argument is false, then the file is opened to read/write raw binary (bytes).
+		- It is an error for the file or its folder path to not exist. If the file does exist, it is opened and the stream is positioned at the beginning of the content
+		- Others are permitted to open the file for reading or writing (or have already done so)."
 
 	^self
-		open: fileId
+		read: aString
+		text: aBoolean
+		share: #read!
+
+read: aString text: aBoolean share: aSymbol
+	"Answer an instance of the receiver whose future sequence values consist of the contents of the file at the path specified by the <readableString> first argument.
+		- If the <boolean> 2nd argument is true, the file is assumed to contain text (i.e. Strings/Characters). The content will be sniffed to determine the encoding. If the argument is false, then the file is opened to read/write raw binary (bytes).
+		- It is an error for the file or its folder path to not exist. If the file does exist, it is opened and the stream is positioned at the beginning of the content
+		- Others may be permitted to open the file for reading or writing (or have already done so), depending on the final <Symbol> argument, shareSymbol, one of #read, #write, #readWrite, #exclusive."
+
+	^self read: aString type: (aBoolean ifTrue: [#text] ifFalse: [#binary]) share: aSymbol!
+
+read: aString type: encodingSymbol
+	"Answer a new instance of the receiver whose future sequence values consist of the contents of the file at the path specified by the <readableString> first argument.
+		- The encoding of the content is assumed to be that specified by the <Symbol> second argument, one of #binary, #text, #utf8, #utf16, or #utf32.
+		- For #text encoding, the file is sniffed to determine the actual (or likely) text encoding.
+		- It is an error for the file or its folder path to not exist. If the file does exist, it is opened and the stream is positioned at the beginning of the content
+		- Others are permitted to open the file for reading (or have already done so)."
+
+	^self
+		read: aString
+		type: encodingSymbol
+		share: #read!
+
+read: aString type: encodingSymbol share: shareSymbol
+	"Answer an instance of the receiver whose future sequence values consist of the contents of the file at the path specified by the <readableString> first argument.
+		- The encoding of the content is assumed to be that specified by the <Symbol> second argument, one of #binary, #text, #utf8, #utf16, or #utf32.
+		- For #text encoding, the file is sniffed to determine the actual (or likely) text encoding.
+		- It is an error for the file or its folder path to not exist. If the file does exist, it is opened and the stream is positioned at the beginning of the content
+		- Others may be permitted to open the file for reading or writing (or have already done so), depending on the final <Symbol> argument, shareSymbol, one of #read, #write, #readWrite, #exclusive."
+
+	^self
+		open: aString
 		mode: #read
 		check: true
-		type: fileType!
+		type: encodingSymbol
+		share: shareSymbol!
 
 readWrite: aString
-	"Answer an instance of the receiver opened on aFileName."
+	"Answer an instance of the receiver whose initial future sequence values consist of the contents of the file at the path specified by the <readableString> argument, but which can also be written to.
+		- The file is assumed to contain text. The content is sniffed to determine the encoding.
+		- It is an error for the folder path to not exist. 
+		- If the file does not exist, it is created and initially empty.
+		- If the file does exist, it is opened and the stream is positioned at the beginning of the content
+		- Others are permitted to open the file for reading (or have already done so). An error is raised if the file is aready open for writing."
 
-	^self
-		open: aString
-		mode: #create
-		check: false
-		type: #text!
+	^self readWrite: aString text: true!
 
 readWrite: aString text: aBoolean
-	"Answer an instance of the receiver opened on aFileName."
+	"Answer an instance of the receiver whose initial future sequence values consist of the contents of the file at the path specified by the <readableString> first argument, but which can also be written to.
+		- If the <boolean> 2nd argument is true, the file is assumed to contain text (i.e. Strings/Characters). The content will be sniffed to determine the encoding. If the argument is false, then the file is opened to read/write raw binary (bytes).
+		- It is an error for the folder path to not exist. 
+		- If the file does not exist, it is created and initially empty.
+		- If the file does exist, it is opened and the stream is positioned at the beginning of the content
+		- Others are permitted to open the file for reading (or have already done so). An error is raised if the file is aready open for writing."
 
 	^self
 		open: aString
 		mode: #create
 		check: false
-		type: (aBoolean ifTrue: [#text] ifFalse: [#binary])!
+		type: (aBoolean ifTrue: [#text] ifFalse: [#binary])
+		share: #read!
 
-write: fileId
-	"Answer an instance of the receiver opened on a new or truncated file 
-	identified by the <readableString> path, fileId."
+write: aString
+	"Answer a new instance of the receiver for writing a file at the path specified by the <readableString> argument.
+		- The file will contain text.
+		- It is an error for the folder path to not exist. 
+		- If the file already exists, it is truncated, otherwise a new file is created.
+		- Others are permitted to open the file for reading. An error is raised if the file is aready open for writing."
 
-	^self write: fileId mode: #truncate!
+	^self write: aString mode: #truncate!
 
-write: fileId mode: mode
-	"Answer a new instance of the receiver open on the textual contents of
-	the file identified by the <readableString> path, fileId.
-	See #write:mode:check:type: for a description of the mode argument."
+write: aString mode: aSymbol
+	"Answer a new instance of the receiver for writing a file at the path specified by the <readableString> argument.
+		- The content is encoded per the <Symbol> argument. See #write:mode:check:type: for a description of the encoding options.
+		- It is an error for the directory in which the file is to be written not to exist. 
+		- If the file already exists, it is truncated, otherwise a new file is created.
+		- Others are permitted to open the file for reading. An error is raised if the file is aready open for writing."
 
 	^self
-		write: fileId
-		mode: mode
+		write: aString
+		mode: aSymbol
 		check: false
 		type: #text!
 
@@ -752,32 +792,25 @@ write: aString mode: aSymbol check: checkBoolean text: textBoolean
 		check: checkBoolean
 		type: (textBoolean ifTrue: [#text] ifFalse: [#binary])!
 
-write: fileId mode: mode check: check type: fileType
-	"Answer a new instance of the receiver open on the contents of
-	the file identified by the <readableString> path, fileId.
-	The <symbol> argument, mode, identifies the manner in which the file
-	is opened. 
-
-	The mode may be one of:
-		#create 		create a new file, position at its start.
+write: aString mode: modeSymbol check: aBoolean type: encodingSymbol
+	"Answer a new instance of the receiver for writing to the file identified at the path specified by the <readableString> first argument.
+	- The <symbol> argument, modeSymbol, identifies the manner in which the file is opened, and may be one of:
+		#create 	create a new file, position at its start.
 		#append	open an existing file, position at its end.
 		#truncate	create or open a file, position at its start.
+	- See also the File class for further information on the mode.
+	- The <boolean> third argument determines whether or not errors are reported if the file does or does not exist (depending on the mode). 
+	- The <symbol>, encodingSymbol, specifies the data encoding (binary or text) for which the new instance is configured.
+	- Others are permitted to open the file for reading (or have already done so). An error is raised if the file is aready open for writing."
 
-	See also the File class for further information on the mode.
-
-	The <boolean> argument, check, determines whether or not errors are reported 
-	if the file does or does not exist (depending on the mode). The <symbol>, type,
-	specifies the data encoding (binary or text) for which the new instance is 
-	configured."
-	
-	"Implementation Note: Dolphin's FileStreams require read access for buffering, so result is
-	actually a read/write file stream."
+	"Implementation Note: Dolphin's FileStreams require read access for buffering, so result is actually a read/write file stream."
 
 	^self
-		open: fileId
-		mode: mode
-		check: check
-		type: fileType!
+		open: aString
+		mode: modeSymbol
+		check: aBoolean
+		type: encodingSymbol
+		share: #read!
 
 write: fileId mode: mode type: type
 	"Answer a new instance of the receiver open on the textual contents of
@@ -791,10 +824,7 @@ write: fileId mode: mode type: type
 		type: type!
 
 write: aString text: aBoolean
-	"Create a new file/truncate an existing file for write access (in fact our 
-	filestreams require read/write access for buffering, so the result is actually 
-	a read/write file stream) through the receiver. The stream will expect text
-	or binary depending on the value of aBoolean."
+	"Create a new file/truncate an existing file for write access (in fact our filestreams require read/write access for buffering, so the result is actually a read/write file stream) through the receiver. The stream will write text or binary depending on the value of aBoolean."
 
 	^self write: aString 
 		mode: #truncate
@@ -819,10 +849,12 @@ file:mode:type:!instance creation!private! !
 on:!instance creation!public! !
 on:text:!instance creation!public! !
 on:type:!instance creation!public! !
-open:mode:check:type:!instance creation!private! !
+open:mode:check:type:share:!instance creation!public! !
 read:!instance creation!public! !
 read:text:!instance creation!public! !
+read:text:share:!instance creation!public! !
 read:type:!instance creation!public! !
+read:type:share:!instance creation!public! !
 readWrite:!instance creation!public! !
 readWrite:text:!instance creation!public! !
 write:!instance creation!public! !

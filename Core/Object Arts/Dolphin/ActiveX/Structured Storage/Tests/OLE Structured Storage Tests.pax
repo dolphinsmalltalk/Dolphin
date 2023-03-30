@@ -1,0 +1,109 @@
+﻿| package |
+package := Package name: 'OLE Structured Storage Tests'.
+package paxVersion: 2.1;
+	environmentName: #{OS.COM};
+	basicComment: ''.
+
+
+package setClassNames: #(
+	#{OS.COM.Tests.IStreamTest}
+).
+
+package setMethodNames: #(
+	#(#{Core.Tests.AbstractFileStreamTest} #testIStream)
+	#(#{Core.Tests.AbstractFileStreamTest} #testIStreamStat)
+).
+
+package setPrerequisites: #(
+	'..\..\..\Base\Dolphin'
+	'..\..\..\Base\Tests\Dolphin Base Tests'
+	'..\..\COM\OLE COM'
+	'..\..\COM\Tests\OLE COM Tests'
+	'..\OLE Structured Storage'
+).
+
+package!
+
+"Class Definitions"!
+
+Core.Tests.DolphinTest
+	subclass: #'OS.COM.Tests.IStreamTest'
+	instanceVariableNames: 'temp'
+	classVariableNames: ''
+	imports: #(#{OS.COM.StorageConstants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"Loose Methods"!
+
+!Core.Tests.AbstractFileStreamTest methodsFor!
+
+testIStream
+	| clsid subject istream bytes helloWorld empty |
+	subject := self tempWriteStream: #binary.
+	istream := subject queryInterface: IStream.
+	clsid := CLSID newUnique.
+	istream nextPutCLSID: clsid.
+	"Seeking forward should extend the stream - we seek forward a lot to skip at least one FileStream page, but reduce the empty space to make it easier to see what is going on."
+	empty := 40.
+	istream skip: empty.
+	self assert: istream position equals: empty + 16.
+	self assert: istream size equals: empty + 16.
+	helloWorld := 'Hello 🐬 World' asByteArray.
+	istream nextPutAll: helloWorld.
+	"Seeking back should not truncate"
+	istream position: 0.
+	self assert: istream size equals: empty + 16 + helloWorld size.
+	self assert: (istream next: 16) equals: clsid asByteArray.
+	"Test write after read - stdio streams have an odd behaviour where this requires an intervening file-positioning call"
+	istream nextPutAll: helloWorld.
+	"Test read after write works too"
+	self assert: (istream next: empty) equals: (ByteArray new: empty - helloWorld size) , helloWorld.
+	istream free.
+	subject close.
+	bytes := File readAllBytes: tempFileName.
+	self assert: bytes
+		equals: clsid asByteArray , helloWorld , (ByteArray new: empty - helloWorld size) , helloWorld!
+
+testIStreamStat
+	| stat subject istream |
+	subject := self tempWriteStream: #binary.
+	subject nextPutAll: self randomData1.
+	istream := subject queryInterface: IStream.
+	stat := istream stat.
+	self assert: stat grfMode
+		equals: StorageConstants.STGM_CREATE | StorageConstants.STGM_READWRITE
+				| StorageConstants.STGM_SHARE_DENY_WRITE.
+	istream free.
+	stat free.
+	subject close.
+	subject := self tempReadStream: #binary.
+	istream := subject queryInterface: IStream.
+	stat := istream stat.
+	self assert: stat isFinalizable.
+	self assert: stat name equals: tempFileName.
+	self assert: stat mtime equals: (File lastWriteTime: tempFileName).
+	self assert: stat grfMode equals: StorageConstants.STGM_READ | StorageConstants.STGM_SHARE_DENY_WRITE.
+	self assert: stat isOLEStream.
+	self assert: stat grfLocksSupported equals: 0.
+	self assert: stat cbSize equals: self randomData1 size.
+	istream free.
+	subject close.
+	subject := self streamClass
+				write: tempFileName
+				mode: #append
+				check: true
+				type: #binary.
+	self assert: subject isWriteable.
+	istream := subject queryInterface: IStream.
+	stat := istream stat.
+	self assert: stat grfMode equals: StorageConstants.STGM_READWRITE | StorageConstants.STGM_SHARE_DENY_WRITE.
+	istream free.
+	subject close! !
+!Core.Tests.AbstractFileStreamTest categoriesForMethods!
+testIStream!public!unit tests! !
+testIStreamStat!public!unit tests! !
+!
+
+"End of package definition"!
+

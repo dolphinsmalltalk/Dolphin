@@ -20,9 +20,7 @@ Instance Variables:
 callback: stub interface: aCOMInterface withArgumentsAt: anAddress
 	"Private - Forward a COM virtual function call as a message to the appropriate implementing
 	object stored in the interface, aCOMInterface, with arguments instantiated from memory pointed 
-	at by anAddress, corresponding to the receiver's argument types. Answer the result.
-	Implementation Note: This is the normal form of COM dispatch. It isn't necessary to override
-	this, but we do so purely to avoid two message sends for performance reasons."
+	at by anAddress, corresponding to the receiver's argument types. Answer the result."
 
 	^aCOMInterface implementor
 		perform: selector 
@@ -52,7 +50,7 @@ selector: aSymbol
 
 	selector := aSymbol! !
 !OS.COM.InterfaceFunction categoriesForMethods!
-callback:interface:withArgumentsAt:!evaluating!private! !
+callback:interface:withArgumentsAt:!debugger-step through!evaluating!private! !
 descriptor!accessing!private! !
 descriptor:!accessing!private! !
 selector!accessing!private! !

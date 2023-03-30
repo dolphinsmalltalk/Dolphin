@@ -60,7 +60,7 @@ fileLoad
 
 	| stream |
 	self hasFilename ifFalse: [^self].
-	stream := FileStream read: self filename text: self isText.
+	stream := FileStream read: self filename text: self isText share: #readWrite.
 	self streamIn: stream.
 	stream close!
 

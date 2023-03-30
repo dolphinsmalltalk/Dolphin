@@ -328,7 +328,7 @@ argSizes:!**compiled accessors**!public! !
 asParameter!converting!public! !
 attach:!initializing!public! !
 basicFree!private!realizing/unrealizing! !
-callback:vfn:withArgumentsAt:!evaluating!private! !
+callback:vfn:withArgumentsAt:!debugger-step through!evaluating!private! !
 copy!copying!public! !
 detach!public!realizing/unrealizing! !
 free!private!realizing/unrealizing! !
@@ -337,7 +337,7 @@ hash!comparing!public! !
 hresultError:!exceptions!public! !
 identity!accessing!public! !
 iid!constants!public! !
-implementor!accessing!public! !
+implementor!accessing!debugger-step over!public! !
 implementor:!accessing!public! !
 initialize:!initializing!private! !
 initializeAtAddress:!initializing!private! !
@@ -1090,7 +1090,7 @@ defineSizeConstant:!private!template definition! !
 defineTemplate!public!template definition! !
 defineVTable!automatic generation!public! !
 elementSize!accessing!public! !
-functions!initializing!private! !
+functions!debugger-step over!initializing!private! !
 generatedFunctionCategories!constants!public! !
 getFieldNames!constants!private! !
 getObject:!instance creation!public! !

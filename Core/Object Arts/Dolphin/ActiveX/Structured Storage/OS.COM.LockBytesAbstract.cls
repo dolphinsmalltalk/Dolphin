@@ -4,7 +4,7 @@ OS.COM.InterfaceImplementation
 	subclass: #'OS.COM.LockBytesAbstract'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.COM.StructuredStorageConstants private})
+	imports: #(#{OS.COM.StorageConstants private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OS.COM.LockBytesAbstract guid: (Core.GUID fromString: '{043e5260-ad92-11d3-b376-080046056106}')!

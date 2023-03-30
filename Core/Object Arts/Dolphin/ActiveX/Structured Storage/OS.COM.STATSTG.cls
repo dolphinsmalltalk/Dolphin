@@ -4,19 +4,19 @@ OS.COM.FinalizableStructure
 	subclass: #'OS.COM.STATSTG'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.COM.StructuredStorageConstants})
+	imports: #(#{OS.COM.StorageConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_OffsetOf_atime' -> 16r20.
 			'_OffsetOf_cbSize' -> 16r8.
 			'_OffsetOf_clsid' -> 16r30.
 			'_OffsetOf_ctime' -> 16r18.
-			'_OffsetOf_dwStgFmt' -> 16r44.
 			'_OffsetOf_grfLocksSupported' -> 16r2C.
 			'_OffsetOf_grfMode' -> 16r28.
 			'_OffsetOf_grfStateBits' -> 16r40.
 			'_OffsetOf_mtime' -> 16r10.
 			'_OffsetOf_pwcsName' -> 16r0.
+			'_OffsetOf_reserved' -> 16r44.
 			'_OffsetOf_type' -> 16r4.
 			'_STATSTG_Size' -> 16r48
 		}!
@@ -76,10 +76,14 @@ ctime
 
 	^FILETIME fromAddress: bytes yourAddress + _OffsetOf_ctime!
 
-dwStgFmt
-	"Answer the <Integer> value of the receiver's 'dwStgFmt' field."
+ctime: aFILETIME
+	"Set the receiver's 'ctime' field to the value of the argument, aFILETIME"
 
-	^bytes uint32AtOffset: _OffsetOf_dwStgFmt!
+	aFILETIME
+		replaceBytesOf: bytes
+		from: ##(_OffsetOf_ctime + 1)
+		to: ##(_OffsetOf_ctime + FILETIME._FILETIME_Size)
+		startingAt: 1!
 
 grfLocksSupported
 	"Answer the <Integer> value of the receiver's 'grfLocksSupported' field."
@@ -95,6 +99,11 @@ grfMode
 	"Answer the <Integer> value of the receiver's 'grfMode' field."
 
 	^bytes uint32AtOffset: _OffsetOf_grfMode!
+
+grfMode: anInteger
+	"Set the receiver's 'grfMode' field to the value of the argument, anInteger"
+
+	bytes uint32AtOffset: _OffsetOf_grfMode put: anInteger!
 
 grfStateBits
 	"Answer the <Integer> value of the receiver's 'grfStateBits' field."
@@ -120,10 +129,19 @@ mtime
 
 	^FILETIME fromAddress: bytes yourAddress + _OffsetOf_mtime!
 
+mtime: aFILETIME
+	"Set the receiver's 'mtime' field to the value of the argument, aFILETIME"
+
+	aFILETIME
+		replaceBytesOf: bytes
+		from: ##(_OffsetOf_mtime + 1)
+		to: ##(_OffsetOf_mtime + FILETIME._FILETIME_Size)
+		startingAt: 1!
+
 name
 	"Answer the <readableString> name of the object whose status the receiver is recording."
 
-	^self pwcsName asString!
+	^self pwcsName!
 
 name: aString
 	"Set the <readableString> name of the object whose status the receiver is recording."
@@ -160,14 +178,16 @@ cbSize!**compiled accessors**!public! !
 cbSize:!**compiled accessors**!public! !
 clsid!**compiled accessors**!public! !
 ctime!**compiled accessors**!public! !
-dwStgFmt!**compiled accessors**!public! !
+ctime:!**compiled accessors**!public! !
 grfLocksSupported!**compiled accessors**!public! !
 grfLocksSupported:!**compiled accessors**!public! !
 grfMode!**compiled accessors**!public! !
+grfMode:!**compiled accessors**!public! !
 grfStateBits!**compiled accessors**!public! !
 isOLEStorage!public!testing! !
 isOLEStream!public!testing! !
 mtime!**compiled accessors**!public! !
+mtime:!**compiled accessors**!public! !
 name!accessing!public! !
 name:!accessing!public! !
 pwcsName!**compiled accessors**!public! !
@@ -215,17 +235,17 @@ defineFields
 		defineField: #pwcsName type: (PointerField type: Utf16String);
 		defineField: #type type: UInt32Field new;
 		defineField: #cbSize type: UInt64Field new;
-		defineField: #mtime type: (StructureField type: FILETIME) beReadOnly;
-		defineField: #ctime type: (StructureField type: FILETIME) beReadOnly;
+		defineField: #mtime type: (StructureField type: FILETIME);
+		defineField: #ctime type: (StructureField type: FILETIME);
 		defineField: #atime type: (StructureField type: FILETIME);
-		defineField: #grfMode type: UInt32Field readOnly;
+		defineField: #grfMode type: UInt32Field new;
 		defineField: #grfLocksSupported type: UInt32Field new;
 		defineField: #clsid type: (StructureField type: CLSID) beReadOnly;
 		defineField: #grfStateBits type: UInt32Field readOnly;
-		defineField: #dwStgFmt type: UInt32Field readOnly!
+		defineField: #reserved type: UInt32Field filler!
 
 getFieldNames
-	^#(#pwcsName #type #cbSize #mtime #ctime #atime #grfMode #grfLocksSupported #clsid #grfStateBits #dwStgFmt)! !
+	^#(#pwcsName #type #cbSize #mtime #ctime #atime #grfMode #grfLocksSupported #clsid #grfStateBits)! !
 !OS.COM.STATSTG class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 clear:!public!realizing/unrealizing! !

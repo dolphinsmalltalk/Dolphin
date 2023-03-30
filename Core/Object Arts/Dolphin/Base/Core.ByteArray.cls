@@ -353,7 +353,7 @@ int64AtOffset: anInteger put: anObject
 	"Store the 64-bit signed integer value of the 2nd argument at the zero-relative offset in the receiver's bytes  specifiec by the <integer> 1st argument."
 
 	self
-		uint32AtOffset: anInteger put: (anObject bitAnd: 16rFFFFFFFF);
+		uint32AtOffset: anInteger put: (16rFFFFFFFF bitAnd: anObject);
 		int32AtOffset: anInteger + 4 put: (anObject bitShift: -32)!
 
 int8AtOffset: anInteger
@@ -655,7 +655,7 @@ uint64AtOffset: anIntegerOffset put: anIntegerValue
 	"Replace the unsigned 64-bit integer in the receiver at the <integer> offset (i.e. zero relative) specified by the first argument with the value of the second <integer> argument."
 
 	self
-		uint32AtOffset: anIntegerOffset put: (anIntegerValue bitAnd: 16rFFFFFFFF);
+		uint32AtOffset: anIntegerOffset put: (16rFFFFFFFF bitAnd: anIntegerValue);
 		uint32AtOffset: anIntegerOffset + 4 put: (anIntegerValue bitShift: -32)!
 
 uint8AtOffset: anInteger

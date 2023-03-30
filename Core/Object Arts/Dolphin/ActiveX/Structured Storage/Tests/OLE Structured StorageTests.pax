@@ -1,0 +1,31 @@
+﻿| package |
+package := Package name: 'OLE Structured StorageTests'.
+package paxVersion: 2.1;
+	basicComment: ''.
+
+
+package setClassNames: #(
+	#{OS.COM.Tests.IStreamTest}
+).
+
+package setPrerequisites: #(
+	'..\..\..\Base\Dolphin'
+	'..\..\..\Base\Tests\Dolphin Base Tests'
+	'..\..\COM\Tests\OLE COM Tests'
+	'..\OLE Structured Storage'
+).
+
+package!
+
+"Class Definitions"!
+
+Core.Tests.DolphinTest
+	subclass: #'OS.COM.Tests.IStreamTest'
+	instanceVariableNames: 'temp'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"End of package definition"!
+

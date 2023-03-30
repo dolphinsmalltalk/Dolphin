@@ -8,7 +8,8 @@ OS.StdioFileStream
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OS.StdioBinaryFileStream guid: (Core.GUID fromString: '{70295d5a-b304-43e4-aa04-c800a93858d4}')!
-OS.StdioBinaryFileStream comment: ''!
+OS.StdioBinaryFileStream comment: '`OS.StdioBinaryFileStream` is the concrete class of `StdioFileStream` for streaming over binary data.
+'!
 !OS.StdioBinaryFileStream categoriesForClass!Collections-Streams! !
 !OS.StdioBinaryFileStream methodsFor!
 
@@ -23,6 +24,9 @@ externalType
 
 	^#binary!
 
+modeModifiers
+	^'b'!
+
 next
 	"Answer an <integer> in the range 0..255, being the next of the receiver's future sequence values."
 
@@ -32,11 +36,11 @@ next: countInteger putAll: aSequenceableCollection startingAt: startInteger
 	"Append countInteger elements of aSequenceableCollection from startInteger
 	to the receiver. Answer aSequenceableCollection."
 
-	| end bytes |
-	end := startInteger + countInteger - 1.
-	bytes := ((startInteger == 1 and: [end == aSequenceableCollection size])
-			ifTrue: [aSequenceableCollection] 
-			ifFalse: [aSequenceableCollection copyFrom: startInteger to: end]) asByteArray.
+	| bytes |
+	bytes := startInteger == 1
+				ifTrue: [aSequenceableCollection]
+				ifFalse: [aSequenceableCollection copyFrom: startInteger to: startInteger + countInteger - 1].
+	self prepareToWrite.
 	crtlib
 		fwrite: bytes
 		size: 1
@@ -75,9 +79,6 @@ peekFor: anObject
 					[crtlib ungetc: ch stream: stream.
 					false]]!
 
-translationMode
-	^CRTConstants._O_BINARY!
-
 upToEnd
 	"Answer a collection consisting of the future sequence values of the receiver (i.e. from 
 	the current position to the end)."
@@ -88,12 +89,12 @@ upToEnd
 !OS.StdioBinaryFileStream categoriesForMethods!
 contentsSpecies!constants!private! !
 externalType!accessing!public! !
+modeModifiers!constants!private! !
 next!accessing!public! !
 next:putAll:startingAt:!accessing!public! !
 nextLine!accessing!public! !
 peek!accessing!public! !
 peekFor:!accessing!public! !
-translationMode!constants!private! !
 upToEnd!accessing!public! !
 !
 
@@ -106,9 +107,13 @@ encodingType
 	"Answer the standard encoding to use when attaching streams of this class. 
 	Although this ought to be #binary at this level (untranslated binary being the most general), for historical compatibility it is not."
 
-	^#binary! !
+	^#binary!
+
+translationMode
+	^CRTConstants._O_BINARY! !
 !OS.StdioBinaryFileStream class categoriesForMethods!
 encodingMode!constants!private! !
 encodingType!constants!public! !
+translationMode!constants!private! !
 !
 

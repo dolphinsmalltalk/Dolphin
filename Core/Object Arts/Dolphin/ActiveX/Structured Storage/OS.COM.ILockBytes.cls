@@ -4,7 +4,7 @@ OS.COM.IUnknown
 	subclass: #'OS.COM.ILockBytes'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.COM.StructuredStorageConstants})
+	imports: #(#{OS.COM.StorageConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OS.COM.ILockBytes guid: (OS.COM.IID fromString: '{0000000a-0000-0000-c000-000000000046}')!
@@ -87,13 +87,13 @@ readAt: offset bytes: data count: count
 	requested."
 
 	| bytesRead |
-	bytesRead := UInt32Bytes new.
+	bytesRead := ByteArray newFixed: 4.
 	self
 		ReadAt: offset
 		pv: data
 		cb: count
 		pcbRead: bytesRead.
-	bytesRead := bytesRead asInteger.
+	bytesRead := bytesRead uint32AtOffset: 0.
 	^bytesRead == count ifTrue: [data] ifFalse: [self errorSubscriptBounds: offset + bytesRead + 1]!
 
 readAt: offset count: count 
@@ -188,13 +188,13 @@ writeAt: offset bytes: data count: count
 	or an address) at the specified offset. Answer the number of bytes actually written."
 
 	| bytesWritten |
-	bytesWritten := UInt32Bytes new.
+	bytesWritten := ByteArray newFixed: 4.
 	self
 		WriteAt: offset
 		pv: data
 		cb: count
 		pcbWritten: bytesWritten.
-	^bytesWritten asInteger!
+	^bytesWritten uint32AtOffset: 0!
 
 WriteAt: ulOffset pv: pv cb: cb pcbWritten: pcbWritten
 	"Invoke the WriteAt() method of the object wrapped by the receiver.

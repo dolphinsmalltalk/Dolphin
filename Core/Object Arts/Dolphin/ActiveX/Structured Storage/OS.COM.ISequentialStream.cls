@@ -4,7 +4,7 @@ OS.COM.IUnknown
 	subclass: #'OS.COM.ISequentialStream'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.COM.StructuredStorageConstants})
+	imports: #(#{OS.COM.StorageConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OS.COM.ISequentialStream guid: (OS.COM.IID fromString: '{0c733a30-2a1c-11ce-ade5-00aa0044773d}')!
@@ -132,12 +132,12 @@ read: buffer count: anInteger
 	equivalent of Files)"
 
 	| read |
-	read := UInt32Bytes new.
+	read := ByteArray new: 4.
 	self
 		Read: buffer
 		cb: anInteger
 		pcbRead: read.
-	^read asInteger!
+	^read uint32AtOffset: 0!
 
 skipTo: anObject 
 	"Set the receiver's position reference to be past the next occurrence of the
@@ -167,6 +167,17 @@ upTo: anObject
 			whileFalse: [newStream nextPut: nextObject].
 	^newStream contents!
 
+upToEnd
+	"Answer a collection consisting of the future sequence values of the receiver (i.e. from the
+	current position to the end)."
+
+	| remainder block |
+	remainder := self contentsSpecies writeStream.
+	
+	[block := self nextAvailable: 1024.
+	block isEmpty] whileFalse: [remainder nextPutAll: block].
+	^remainder contents!
+
 Write: pv cb: cb pcbWritten: pcbWritten
 	"Invoke the Write() method of the object wrapped by the receiver.
 	
@@ -185,12 +196,12 @@ write: buffer count: anInteger
 	from the supplied buffer. Answer the actual number of bytes written."
 
 	| written |
-	written := UInt32Bytes new.
+	written := ByteArray newFixed: 4.
 	self
 		Write: buffer
 		cb: anInteger
 		pcbWritten: written.
-	^written asInteger! !
+	^written uint32AtOffset: 0! !
 !OS.COM.ISequentialStream categoriesForMethods!
 close!operations!public! !
 contentsSpecies!accessing!private! !
@@ -209,6 +220,7 @@ Read:cb:pcbRead:!**auto generated**!primitives!public! !
 read:count:!accessing!public! !
 skipTo:!positioning!public! !
 upTo:!accessing!public! !
+upToEnd!accessing!public! !
 Write:cb:pcbWritten:!**auto generated**!primitives!public! !
 write:count:!accessing!public! !
 !

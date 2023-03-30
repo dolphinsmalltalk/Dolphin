@@ -32,6 +32,7 @@ uncompress
 
 ; CRT functions imported by the image
 
+	_chsize_s
 	_clearfp
 	_close
 	_control87
@@ -52,7 +53,7 @@ uncompress
 	_statusfp
 	_wcserror_s
 	_wcsicmp
-	_wfopen_s
+	_wfsopen
 	atoi
 	fclose
 	feof

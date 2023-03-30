@@ -40,6 +40,9 @@ maxSize
 
 	^256 * (1024 ** 4) - (64 * 1024)!
 
+sharingError
+	^FileException matching: [:ex | ex statusCode = OS.Win32Errors.ERROR_SHARING_VIOLATION]!
+
 streamClass
 	^FileStream!
 
@@ -66,15 +69,6 @@ tearDownTempStream
 	likely to work in case of test error"
 
 	filestream file free!
-
-testFileTimes
-	"Tests that file accesor exists and that #lastWriteTime works (for patch #1397)"
-
-	| now file |
-	now := OS.FILETIME now.
-	filestream := self streamClass write: tempFileName.
-	file := filestream file.
-	self assert: file lastWriteTime asInteger >= now asInteger!
 
 testNextAvailableColonWithPaging
 	"#640"
@@ -287,12 +281,12 @@ assertBufferEmptyOrDirty:size:!helpers!private! !
 bufferSize!constants!private! !
 maxPosition!constants!private! !
 maxSize!constants!private! !
+sharingError!constants!private! !
 streamClass!helpers!private! !
 streamClassSupportsUtf16!helpers!private! !
 streamOn:!helpers!private! !
 streamOnFile:type:!helpers!private! !
 tearDownTempStream!helpers!private! !
-testFileTimes!public!unit tests! !
 testNextAvailableColonWithPaging!public!unit tests! !
 testNextPutAll!public!unit tests! !
 testOwnsFile!public! !

@@ -34,7 +34,10 @@ fgetws: buf n: bufsize stream: aFILE
 
 fread_s: buffer bufferSize: bufsizeInteger elementSize: elemSizeInteger count: countInteger stream: aFILE
 	<overlap cdecl: int32 fread_s lpvoid intptr intptr intptr handle>
-	^self invalidCall: _failureCode! !
+	^self invalidCall: _failureCode!
+
+isNonBlocking
+	^true! !
 !OS.CRTLibraryNonBlocking categoriesForMethods!
 _errno!CRT functions-process and environment control!public! !
 fgetc:!CRT functions-stream I/O!public! !
@@ -42,6 +45,7 @@ fgets:n:stream:!CRT functions-stream I/O!public! !
 fgetwc:!CRT functions-stream I/O!public! !
 fgetws:n:stream:!CRT functions-stream I/O!public! !
 fread_s:bufferSize:elementSize:count:stream:!CRT functions-stream I/O!public! !
+isNonBlocking!public!testing! !
 !
 
 !OS.CRTLibraryNonBlocking class methodsFor!

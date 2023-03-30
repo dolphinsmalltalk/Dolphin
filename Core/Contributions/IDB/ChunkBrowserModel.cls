@@ -46,7 +46,10 @@ initialize
 
 loadFromFile: aString
 	| stream |
-	stream := FileStream read: aString.
+	stream := FileStream
+				read: aString
+				type: #text
+				share: #readWrite.
 	chunks := [self chunkClass chunksFromStream: stream] ensure: [stream close]!
 
 loadFromPatchFile: aString

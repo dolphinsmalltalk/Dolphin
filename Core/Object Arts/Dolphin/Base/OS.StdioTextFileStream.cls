@@ -9,7 +9,7 @@ OS.StdioFileStream
 	classConstants: {}!
 OS.StdioTextFileStream guid: (Core.GUID fromString: '{8a9acce8-979d-4821-aa11-a5b4157634af}')!
 OS.StdioTextFileStream isNonInstantiable: true!
-OS.StdioTextFileStream comment: ''!
+OS.StdioTextFileStream comment: '`OS.StdioTextFileStream` is the abstract class of `StdioFileStream`s for streaming over textual data.'!
 !OS.StdioTextFileStream categoriesForClass!Collections-Streams! !
 !OS.StdioTextFileStream methodsFor!
 
@@ -66,6 +66,7 @@ nextLine
 	blockSize := 128.
 	answer := self contentsSpecies writeStream: blockSize.
 	buf := self bufferClass newFixed: blockSize - 1.
+	self prepareToRead.
 	
 	[| read |
 	(self getString: buf) == 0
@@ -106,17 +107,6 @@ peek
 	ch notNil ifTrue: [self position: pos].
 	^ch!
 
-peekFor: aCharacter
-	"Answer the next element in the collection, but do not change the position reference. 
-	Answer nil if the receiver is at its end."
-
-	| pos ch |
-	pos := self position.
-	^(ch := self nextAvailable) notNil
-		and: [ch = aCharacter or: 
-					[self position: pos.
-					false]]!
-
 upToEnd
 	"Answer a collection consisting of the future sequence values of the receiver (i.e. from 
 	the current position to the end)."
@@ -136,7 +126,6 @@ next:putAll:startingAt:!accessing!public! !
 nextLine!accessing!public! !
 nextPut:!accessing!public! !
 peek!accessing!public! !
-peekFor:!accessing!public! !
 upToEnd!accessing!public! !
 !
 

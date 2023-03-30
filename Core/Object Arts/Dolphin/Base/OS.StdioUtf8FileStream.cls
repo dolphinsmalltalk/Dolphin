@@ -8,7 +8,7 @@ OS.StdioUnicodeFileStream
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OS.StdioUtf8FileStream guid: (Core.GUID fromString: '{c1c28046-101f-4bf6-92f9-e30cea1e8d82}')!
-OS.StdioUtf8FileStream comment: ''!
+OS.StdioUtf8FileStream comment: '`OS.StdioUtf16FileStream` is the concrete class of `StdioFileStream` for streaming over UTF-8 encoded data.'!
 !OS.StdioUtf8FileStream categoriesForClass!Collections-Streams! !
 !OS.StdioUtf8FileStream methodsFor!
 
@@ -20,6 +20,9 @@ contentsSpecies
 	from the receiver."
 
 	^Utf8String!
+
+modeModifiers
+	^'t, ccs=UTF-8'!
 
 position
 	"Answer the absolute (zero-based) position of the file pointer."
@@ -48,9 +51,6 @@ size
 
 	^super size - offset!
 
-translationMode
-	^CRTConstants._O_U8TEXT!
-
 upToEnd
 	"Answer a collection consisting of the future sequence values of the receiver (i.e. from 
 	the current position to the end)."
@@ -59,18 +59,22 @@ upToEnd
 !OS.StdioUtf8FileStream categoriesForMethods!
 basicNext:!accessing!private! !
 contentsSpecies!constants!private! !
+modeModifiers!constants!private! !
 position!accessing!public! !
 position:!positioning!public! !
 size!accessing!public! !
-translationMode!constants!private! !
 upToEnd!accessing!public! !
 !
 
 !OS.StdioUtf8FileStream class methodsFor!
 
 encodingType
-	^#utf8! !
+	^#utf8!
+
+translationMode
+	^CRTConstants._O_U8TEXT! !
 !OS.StdioUtf8FileStream class categoriesForMethods!
 encodingType!constants!public! !
+translationMode!constants!private! !
 !
 

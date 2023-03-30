@@ -8,7 +8,7 @@ OS.StdioTextFileStream
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OS.StdioAnsiFileStream guid: (Core.GUID fromString: '{37ed07fd-6fc6-41d9-aa82-7147a1af19fd}')!
-OS.StdioAnsiFileStream comment: ''!
+OS.StdioAnsiFileStream comment: '`OS.StdioAnsiFileStream` is the concrete class of `StdioFileStream` for streaming over ANSI string data.'!
 !OS.StdioAnsiFileStream categoriesForClass!Collections-Streams! !
 !OS.StdioAnsiFileStream methodsFor!
 
@@ -21,16 +21,20 @@ getString: anAnsiString
 		n: anAnsiString size + 1
 		stream: stream!
 
+modeModifiers
+	^'t'!
+
 next
 	"Answer a <Character> being the next of the receiver's future sequence values interpreted as
 	an ANSI code point. Raise an error if at EOF."
 
 	^Character ansiValue: self basicNext!
 
-nextPutAll: aCollection 
+nextPutAll: aCollection
 	"Store the elements in the argument, aCollection, as the next elements accessible by the receiver. 
 	Answer aCollection"
-	
+
+	self prepareToWrite.
 	crtlib fputs: aCollection asAnsiString stream: stream.
 	^aCollection!
 
@@ -57,9 +61,18 @@ peekFor: anObject
 !OS.StdioAnsiFileStream categoriesForMethods!
 contentsSpecies!accessing!private! !
 getString:!accessing!private! !
+modeModifiers!constants!private! !
 next!accessing!public! !
 nextPutAll:!accessing!public! !
 peek!accessing!public! !
 peekFor:!accessing!public! !
+!
+
+!OS.StdioAnsiFileStream class methodsFor!
+
+translationMode
+	^CRTConstants._O_TEXT! !
+!OS.StdioAnsiFileStream class categoriesForMethods!
+translationMode!constants!private! !
 !
 

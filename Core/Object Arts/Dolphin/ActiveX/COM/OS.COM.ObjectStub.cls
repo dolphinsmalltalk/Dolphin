@@ -170,8 +170,9 @@ innerQueryInterface: pIID ppvObject: ppvOut
 	| interfaceClass interface |
 	ppvOut value: 0.	"must set, even on error"
 	"Notification signal: self printString, ': Querying interface ', (IID fromAddress: pIID yourAddress) displayString."
-	interfaceClass := Interface classForIID: pIID ifNone: [^E_NOINTERFACE	"IID not recognised"].
-	interface := self queryInterface: interfaceClass ifNone: [^E_NOINTERFACE	"interface not supported"].
+	interfaceClass := (Interface classForIID: pIID ifNone: nil)
+				ifNil: [^E_NOINTERFACE	"IID not recognised"].
+	interface := (self queryInterface: interfaceClass ifNone: nil) ifNil: [^E_NOINTERFACE	"interface not supported"].
 	"Notification signal: 'Answering interface ', interface printString."
 	ppvOut value: interface detach.
 	^S_OK!
@@ -272,13 +273,13 @@ QueryInterface: pIID ppvObject: ppvOut
 	This method is a mere shell to provide aggregation support.
 	See internalQueryInterface:ppvObject: for more details."
 
-	^outerUnknown isNil
-		ifTrue: [self innerQueryInterface: pIID ppvObject: ppvOut]
-		ifFalse: [
+	^outerUnknown
+		ifNil: [self innerQueryInterface: pIID ppvObject: ppvOut]
+		ifNotNil: 
+			[| pi |
 			"Unfortunately we cannot pass the address through due to the implicit
 			indirection of lppvoid parameter types - with the benefit of hindsight, perhaps
 			this wasn't the best of ideas, but..."
-			| pi |
 			pi := External.Address new.
 			outerUnknown QueryInterface: pIID ppvObject: pi.
 			ppvOut value: pi]!
@@ -305,7 +306,7 @@ supportsInterface: interface
 !OS.COM.ObjectStub categoriesForMethods!
 addInterface:!accessing-interfaces!private! !
 AddRef!COM Interfaces-IUnknown!private! !
-callback:vfn:withArgumentsAt:!evaluating!private! !
+callback:vfn:withArgumentsAt:!debugger-step through!evaluating!private! !
 cookie!accessing!private! !
 disconnect!public!realizing/unrealizing! !
 findInterface:ifNoneAdd:!accessing-interfaces!private! !

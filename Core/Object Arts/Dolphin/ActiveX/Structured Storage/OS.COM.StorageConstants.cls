@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.SharedPool
-	subclass: #'OS.COM.StructuredStorageConstants'
+	subclass: #'OS.COM.StorageConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -15,6 +15,7 @@ Kernel.SharedPool
 			'STATFLAG_NOOPEN' -> 16r2.
 			'STG_E_ACCESSDENIED' -> -16r7FFCFFFB.
 			'STG_E_INVALIDFUNCTION' -> -16r7FFCFFFF.
+			'STG_E_SEEKERROR' -> -16r7FFCFFE7.
 			'STGC_DANGEROUSLYCOMMITMERELYTODISKCACHE' -> 16r4.
 			'STGC_DEFAULT' -> 16r0.
 			'STGC_ONLYIFCURRENT' -> 16r2.
@@ -51,6 +52,6 @@ Kernel.SharedPool
 			'STREAM_SEEK_END' -> 16r2.
 			'STREAM_SEEK_SET' -> 16r0
 		}!
-OS.COM.StructuredStorageConstants guid: (Core.GUID fromString: '{3ed0417a-f038-403d-abb9-4bf66a49a04d}')!
-OS.COM.StructuredStorageConstants isNonInstantiable: true!
-OS.COM.StructuredStorageConstants comment: ''!
+OS.COM.StorageConstants guid: (Core.GUID fromString: '{3ed0417a-f038-403d-abb9-4bf66a49a04d}')!
+OS.COM.StorageConstants isNonInstantiable: true!
+OS.COM.StorageConstants comment: ''!

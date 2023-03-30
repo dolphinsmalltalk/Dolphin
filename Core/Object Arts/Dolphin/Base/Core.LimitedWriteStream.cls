@@ -140,6 +140,11 @@ setToEnd
 
 	stream setToEnd!
 
+size
+	"Answer the number of values in the stream."
+
+	^stream size!
+
 visit: aCompositeObject do: aNiladicValuable
 	visited
 		ifNil: [visited := IdentitySet with: aCompositeObject]
@@ -181,6 +186,7 @@ position:!positioning!public! !
 reset!public! !
 setStream:limit:limitBlock:!initializing!private! !
 setToEnd!positioning!public! !
+size!accessing!public! !
 visit:do:!public! !
 visitedBlock!public! !
 visitedBlock:!public! !

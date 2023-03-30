@@ -1,16 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 OS.COM.LockBytesAbstract
-	subclass: #'OS.COM.LockFileBytes'
+	subclass: #OLELockFileBytes
 	instanceVariableNames: 'file'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.LockFileBytes guid: (Core.GUID fromString: '{043e5261-ad92-11d3-b376-080046056106}')!
-OS.COM.LockFileBytes comment: 'OLELockFileBytes is an implementation of the <ILockBytes> interface on to an arbitrary <File>. It is useful because the system does not provide a standard implementation of ILockBytes against a file, which makes it difficult to connect an <IStream> to an arbitrary file without first copying its contents into a global memory block.'!
-!OS.COM.LockFileBytes categoriesForClass!COM-Implementations! !
-!OS.COM.LockFileBytes methodsFor!
+OLELockFileBytes guid: (Core.GUID fromString: '{043e5261-ad92-11d3-b376-080046056106}')!
+OLELockFileBytes comment: '`OLELockFileBytes` is an implementation of the `ILockBytes` interface on to an arbitrary `File`. 
+
+`OLELockFileBytes` was originally implemented in Dolphin because the Windows of the time (Windows 95/98) did not provide a standard implementation of `ILockBytes` against a file, making it difficult to connect an `IStream` to an arbitrary file without first copying its contents into a global memory block, however later versions of Windows included SHCreateStreamOnFile. Windows XP added SHCreateStreamOnFileEx. The class is, therefore, no longer required and is deprecated.'!
+!OLELockFileBytes categoriesForClass!COM-Implementations! !
+!OLELockFileBytes methodsFor!
 
 contents
 	"Answer the contents of the receiver (the byte array)"
@@ -64,7 +66,7 @@ Stat: pstatstg grfStatFlag: grfStatFlag
 		mtime: pstatstg mtime.
 	(grfStatFlag allMask: STATFLAG_NONAME) ifFalse: [pstatstg name: file name].
 	^S_OK! !
-!OS.COM.LockFileBytes categoriesForMethods!
+!OLELockFileBytes categoriesForMethods!
 contents!accessing!public! !
 copyBytesInto:from:to:!COM Interfaces-ILockBytes!private! !
 file!accessing!private! !
@@ -74,7 +76,7 @@ size!accessing!public! !
 Stat:grfStatFlag:!COM Interfaces-ILockBytes!private! !
 !
 
-!OS.COM.LockFileBytes class methodsFor!
+!OLELockFileBytes class methodsFor!
 
 on: aFile
 	"Answer an <ILockBytes> on a new instance of the receiver attached to the 
@@ -82,8 +84,8 @@ on: aFile
 
 	^self new
 		file: aFile;
-		queryInterface: ILockBytes! !
-!OS.COM.LockFileBytes class categoriesForMethods!
+		queryInterface: OS.COM.ILockBytes! !
+!OLELockFileBytes class categoriesForMethods!
 on:!instance creation!public! !
 !
 

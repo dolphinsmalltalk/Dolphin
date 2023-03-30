@@ -67,6 +67,11 @@ Kernel.SharedPool
 			'_S_IEXEC' -> 16r40.
 			'_S_IREAD' -> 16r100.
 			'_S_IWRITE' -> 16r80.
+			'_SH_DENYNO' -> 16r40.
+			'_SH_DENYRD' -> 16r30.
+			'_SH_DENYRW' -> 16r10.
+			'_SH_DENYWR' -> 16r20.
+			'_SH_SECURE' -> 16r80.
 			'_SW_DENORMAL' -> 16r80000.
 			'_SW_INEXACT' -> 16r1.
 			'_SW_INVALID' -> 16r10.
@@ -74,6 +79,7 @@ Kernel.SharedPool
 			'_SW_UNDERFLOW' -> 16r1.
 			'_SW_ZERODIVIDE' -> 16r8.
 			'_TRUNCATE' -> -16r1.
+			'EACCES' -> 16rD.
 			'EBADF' -> 16r9.
 			'EINVAL' -> 16r16.
 			'ENOENT' -> 16r2.

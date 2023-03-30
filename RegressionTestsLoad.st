@@ -22,6 +22,7 @@ Package manager
 	install: 'Core\Object Arts\Dolphin\System\Win32\Windows Ini Files Tests.pax';
 	install: 'Core\Object Arts\Dolphin\Database\Database Tests.pax';
 	install: 'Core\Object Arts\Dolphin\ActiveX\COM\Tests\OLE COM Tests.pax';
+	install: 'Core\Object Arts\Dolphin\ActiveX\Structured Storage\Tests\OLE Structured Storage Tests.pax';
 	install: 'Core\Object Arts\Dolphin\ActiveX\Persist\Tests\OLE Persistence and Data Transfer Tests.pax';
 	install: 'Core\Object Arts\Dolphin\ActiveX\Automation\Tests\ActiveX Automation Tests.pax';
 	install: 'Core\Object Arts\Dolphin\ActiveX\Connection Points\Tests\ActiveX Connection Points Tests.pax';

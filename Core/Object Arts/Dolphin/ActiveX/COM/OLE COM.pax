@@ -142,7 +142,7 @@ OS
 	subclass: #'OS.COM'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.Win32Errors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Kernel.SharedPool
@@ -629,7 +629,7 @@ unregisterCOMStub: cookie
 	comStubs isNil ifTrue: [comStubs := PermanentRegistry new].
 	comStubs removeAtIndex: cookie! !
 !Kernel.ProcessorScheduler categoriesForMethods!
-comCallback:id:subId:withArgumentsAt:cookie:!callbacks!not restartable!private!vm entry points! !
+comCallback:id:subId:withArgumentsAt:cookie:!callbacks!debugger-step through!not restartable!private!vm entry points! !
 registerCOMStub:!accessing!private! !
 unregisterCOMStub:!callbacks!private! !
 !

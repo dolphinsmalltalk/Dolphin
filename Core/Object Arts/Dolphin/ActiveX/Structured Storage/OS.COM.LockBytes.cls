@@ -8,9 +8,9 @@ OS.COM.LockBytesAbstract
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OS.COM.LockBytes guid: (Core.GUID fromString: '{87b4c541-026e-11d3-9fd7-00a0cc3e4a32}')!
-OS.COM.LockBytes comment: 'OLELockBytes is an implementation of the ILockBytes interface on a Smalltalk <ByteArray>. It is primarily intended for testing and development purposes (it is a handy way to see exactly what is being written to a stream), and also as an example implementation of a system COM interface.
+OS.COM.LockBytes comment: '`OS.COM.LockBytes` is an implementation of the ILockBytes interface on a Smalltalk `ByteArray`. It is primarily intended for testing and development purposes (it is a handy way to see exactly what is being written to a stream), and also as an example implementation of a system COM interface.
 
-OLELockBytes is similar to the system provided ILockBytes implementation on top of a global memory handle, except that the underlying storage mechanism is a ByteArray and it is somewhat slower. It doesn''t support locking.'!
+`LockBytes` is similar to the system provided `ILockBytes` implementation on top of a global memory handle, except that the underlying storage mechanism is a `ByteArray` and it is somewhat slower. It doesn''t support locking.'!
 !OS.COM.LockBytes categoriesForClass!COM-Implementations! !
 !OS.COM.LockBytes methodsFor!
 

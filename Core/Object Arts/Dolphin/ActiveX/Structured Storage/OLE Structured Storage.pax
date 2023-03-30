@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'OLE Structured Storage'.
 package paxVersion: 2.1;
+	environmentName: #{OS.COM};
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk OLE Structured Storage Support. 
 Copyright (c) Object Arts Ltd 1997-2003. Portions copyright (c) CGI Group (Europe) Ltd, 1997.
@@ -27,13 +28,14 @@ package setClassNames: #(
 	#{OS.COM.IStream}
 	#{OS.COM.LockBytes}
 	#{OS.COM.LockBytesAbstract}
-	#{OS.COM.LockFileBytes}
 	#{OS.COM.STATSTG}
-	#{OS.COM.StructuredStorageConstants}
+	#{OS.COM.StorageConstants}
 	#{OS.COM.URLMonLibrary}
 ).
 
 package setMethodNames: #(
+	#(#{Core.FileStream} #SetSize:)
+	#(#{Core.FileStream} #Stat:grfStatFlag:)
 	#(#{Core.SequencedStream} #Commit:)
 	#(#{Core.SequencedStream} #CopyTo:cb:pcbRead:pcbWritten:)
 	#(#{Core.SequencedStream} #finalRelease)
@@ -47,6 +49,7 @@ package setMethodNames: #(
 	#(#{Core.SequencedStream} #Stat:grfStatFlag:)
 	#(#{Core.SequencedStream} #UnlockRegion:cb:dwLockType:)
 	#(#{Core.SequencedStream} #Write:cb:pcbWritten:)
+	#(#{Core.WriteStream} #SetSize:)
 	#(#{OS.COM.OLELibrary} #createILockBytesOnHGlobal:fDeleteOnRelease:pplkbyt:)
 	#(#{OS.COM.OLELibrary} #createStreamOnHGlobal:fDeleteOnRelease:ppstm:)
 	#(#{OS.COM.OLELibrary} #getConvertStg:)
@@ -68,6 +71,11 @@ package setMethodNames: #(
 	#(#{OS.COM.OLELibrary} #writeClassStm:rclsid:)
 	#(#{OS.COM.OLELibrary} #writeFmtUserTypeStg:cf:lpszUserType:)
 	#(#{OS.ShlwapiLibrary} #shCreateMemStream:cbInit:)
+	#(#{OS.ShlwapiLibrary} #shCreateStreamOnFileEx:grfMode:dwAttributes:fCreate:pstmTemplate:ppstm:)
+	#(#{OS.StdioFileStream} #Read:cb:pcbRead:)
+	#(#{OS.StdioFileStream} #SetSize:)
+	#(#{OS.StdioFileStream} #Stat:grfStatFlag:)
+	#(#{OS.StdioTextFileStream} #Write:cb:pcbWritten:)
 ).
 
 package setPrerequisites: #(
@@ -80,7 +88,7 @@ package!
 "Class Definitions"!
 
 Kernel.SharedPool
-	subclass: #'OS.COM.StructuredStorageConstants'
+	subclass: #'OS.COM.StorageConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -94,6 +102,7 @@ Kernel.SharedPool
 			'STATFLAG_NOOPEN' -> 16r2.
 			'STG_E_ACCESSDENIED' -> -16r7FFCFFFB.
 			'STG_E_INVALIDFUNCTION' -> -16r7FFCFFFF.
+			'STG_E_SEEKERROR' -> -16r7FFCFFE7.
 			'STGC_DANGEROUSLYCOMMITMERELYTODISKCACHE' -> 16r4.
 			'STGC_DEFAULT' -> 16r0.
 			'STGC_ONLYIFCURRENT' -> 16r2.
@@ -141,7 +150,7 @@ OS.COM.InterfaceImplementation
 	subclass: #'OS.COM.LockBytesAbstract'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.COM.StructuredStorageConstants private})
+	imports: #(#{OS.COM.StorageConstants private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OS.COM.LockBytesAbstract
@@ -151,18 +160,11 @@ OS.COM.LockBytesAbstract
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.LockBytesAbstract
-	subclass: #'OS.COM.LockFileBytes'
-	instanceVariableNames: 'file'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 OS.COM.IUnknown
 	subclass: #'OS.COM.ILockBytes'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.COM.StructuredStorageConstants})
+	imports: #(#{OS.COM.StorageConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OS.COM.IUnknown
@@ -176,14 +178,14 @@ OS.COM.IUnknown
 	subclass: #'OS.COM.ISequentialStream'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.COM.StructuredStorageConstants})
+	imports: #(#{OS.COM.StorageConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OS.COM.IUnknown
 	subclass: #'OS.COM.IStorage'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.COM.StructuredStorageConstants})
+	imports: #(#{OS.COM.StorageConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OS.COM.ISequentialStream
@@ -192,29 +194,85 @@ OS.COM.ISequentialStream
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'WriteOpenModes'
+				-> (IdentityDictionary withAll: { #append -> 16r11. #create -> 16r11. #truncate -> 16r1011 })
+		}!
 OS.COM.FinalizableStructure
 	subclass: #'OS.COM.STATSTG'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.COM.StructuredStorageConstants})
+	imports: #(#{OS.COM.StorageConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_OffsetOf_atime' -> 16r20.
 			'_OffsetOf_cbSize' -> 16r8.
 			'_OffsetOf_clsid' -> 16r30.
 			'_OffsetOf_ctime' -> 16r18.
-			'_OffsetOf_dwStgFmt' -> 16r44.
 			'_OffsetOf_grfLocksSupported' -> 16r2C.
 			'_OffsetOf_grfMode' -> 16r28.
 			'_OffsetOf_grfStateBits' -> 16r40.
 			'_OffsetOf_mtime' -> 16r10.
 			'_OffsetOf_pwcsName' -> 16r0.
+			'_OffsetOf_reserved' -> 16r44.
 			'_OffsetOf_type' -> 16r4.
 			'_STATSTG_Size' -> 16r48
 		}!
 
 "Loose Methods"!
+
+!Core.FileStream methodsFor!
+
+SetSize: libNewSize
+	"Invoke the SetSize() method of the object wrapped by the receiver.
+	
+		HRESULT __stdcall SetSize(
+			[in] ULARGE_INTEGER libNewSize);
+	"
+
+	| pos |
+	pos := self position.
+	self position: libNewSize.
+	flags := flags bitOr: LimitsChangedMask.
+	self position: pos.
+	^S_OK!
+
+Stat: pstatstg grfStatFlag: grfStatFlag
+	"Implement the IStream::Stat() method.
+	
+		HRESULT __stdcall Stat(
+			[out] STATSTG* pstatstg,
+			[in] unsigned long grfStatFlag);
+	"
+
+	| hr grfMode |
+	hr := super Stat: pstatstg grfStatFlag: grfStatFlag.
+	hr < 0 ifTrue: [^hr].
+	(grfStatFlag allMask: StorageConstants.STATFLAG_NONAME)
+		ifFalse: [pstatstg name: self name].
+	file
+		getTimes: pstatstg ctime
+		atime: pstatstg atime
+		mtime: pstatstg mtime.
+	"FileStreams require that files at least be readable."
+	grfMode := (file accessFlags allMask: Win32Constants.GENERIC_WRITE)
+				ifTrue: [StorageConstants.STGM_READWRITE]
+				ifFalse: [StorageConstants.STGM_READ].
+	file openFlags = Win32Constants.OPEN_EXISTING
+		ifFalse: [grfMode := grfMode bitOr: StorageConstants.STGM_CREATE].
+	grfMode := grfMode
+				bitOr: (##({
+						StorageConstants.STGM_SHARE_EXCLUSIVE.
+						StorageConstants.STGM_SHARE_DENY_WRITE.
+						StorageConstants.STGM_SHARE_DENY_READ.
+						StorageConstants.STGM_SHARE_DENY_NONE
+					}) at: file shareFlags + 1).
+	pstatstg grfMode: grfMode.
+	^hr! !
+!Core.FileStream categoriesForMethods!
+SetSize:!COM Interfaces-IStream!public! !
+Stat:grfStatFlag:!COM Interfaces-IStream!public! !
+!
 
 !Core.SequencedStream methodsFor!
 
@@ -229,7 +287,7 @@ Commit: grfCommitFlags
 	than to flush the stream. The flags are ignored."
 
 	self flush.
-	^OS.Win32Errors.S_OK!
+	^S_OK!
 
 CopyTo: pstm cb: cb pcbRead: pcbRead pcbWritten: pcbWritten 
 	"Implement the IStream::CopyTo() method.
@@ -255,7 +313,7 @@ CopyTo: pstm cb: cb pcbRead: pcbRead pcbWritten: pcbWritten
 			countWritten ifTrue: [written := written + pcbWritten value]].
 	pcbRead bytes notNull ifTrue: [pcbRead value: read].
 	countWritten ifTrue: [pcbWritten value: written].
-	^OS.Win32Errors.S_OK!
+	^S_OK!
 
 finalRelease
 	"The last reference to the receiver (as a COM object) has been released.
@@ -283,7 +341,7 @@ LockRegion: libOffset cb: cb dwLockType: dwLockType
 	optional. The STG_E_INVALIDFUNCTION error is returned if the requested type of locking is
 	not supported."
 
-	^OS.COM.StructuredStorageConstants.STG_E_INVALIDFUNCTION!
+	^StorageConstants.STG_E_INVALIDFUNCTION!
 
 queryInterface: anInterfaceClass 
 	"Answer a new interface which supports the specified interface protocol
@@ -299,8 +357,8 @@ queryInterface: interfaceClass ifNone: exceptionHandler
 	a subinstance will do, or even a completely different class, as long as the
 	protocol of the requested class is supported.."
 
-	^(OS.COM.IStream supportsInterface: interfaceClass)
-		ifTrue: [OS.COM.IStream on: self]
+	^(IStream supportsInterface: interfaceClass)
+		ifTrue: [IStream on: self]
 		ifFalse: [exceptionHandler value]!
 
 Read: pv cb: cb pcbRead: pcbRead 
@@ -318,8 +376,8 @@ Read: pv cb: cb pcbRead: pcbRead
 		basicNext: count
 		into: pv
 		startingAt: 1.
-	pcbRead bytes notNull ifTrue: [pcbRead value: count].
-	^OS.Win32Errors.S_OK!
+	pcbRead bytes isNull ifFalse: [pcbRead value: count].
+	^S_OK!
 
 Revert
 	"Implement the IStream::Revert() method
@@ -329,7 +387,7 @@ Revert
 
 	"Implementation Note: Transactions are not supported, so this method has no effect."
 
-	^OS.Win32Errors.S_FALSE!
+	^S_FALSE!
 
 Seek: dlibMove dwOrigin: dwOrigin plibNewPosition: plibNewPosition
 	"Implement the IStream::Seek() method..
@@ -340,32 +398,42 @@ Seek: dlibMove dwOrigin: dwOrigin plibNewPosition: plibNewPosition
 			[out] ULARGE_INTEGER* plibNewPosition);
 	"
 
-	| hr |
-	hr := 
-			[dwOrigin == OS.COM.StructuredStorageConstants.STREAM_SEEK_SET
-				ifTrue: [self position: dlibMove]
+	| currentSize position |
+	currentSize := self size.
+	position := dwOrigin == StorageConstants.STREAM_SEEK_SET
+				ifTrue: [dlibMove]
 				ifFalse: 
-					[dwOrigin == OS.COM.StructuredStorageConstants.STREAM_SEEK_CUR
-						ifTrue: [self skip: dlibMove]
+					[dwOrigin == StorageConstants.STREAM_SEEK_CUR
+						ifTrue: [self position + dlibMove]
 						ifFalse: 
-							[dwOrigin == OS.COM.StructuredStorageConstants.STREAM_SEEK_END
-								ifTrue: [self position: self size - dlibMove]
-								ifFalse: [self errorSubscriptBounds: -1]]].
-			OS.Win32Errors.S_OK]
-					on: BoundsError
-					do: [:ex | OS.COM.StructuredStorageConstants.STG_E_INVALIDFUNCTION].
-	plibNewPosition bytes notNull
-		ifTrue: [plibNewPosition value: (hr < 0 ifTrue: [0] ifFalse: [self position])].
-	^hr!
+							[dwOrigin == StorageConstants.STREAM_SEEK_END
+								ifTrue: [currentSize - dlibMove]
+								ifFalse: [-1]]].
+	"It is not an error to seek beyond the current end of stream. This is expected to extend the stream."
+	(position < 0 or: [position > currentSize and: [(self SetSize: position) < 0]])
+		ifTrue: 
+			[plibNewPosition bytes isNull ifFalse: [plibNewPosition value: 0].
+			^StorageConstants.STG_E_INVALIDFUNCTION].
+	self position: position.
+	plibNewPosition bytes isNull ifFalse: [plibNewPosition value: position].
+	^S_OK!
 
 SetSize: libNewSize 
 	"Invoke the SetSize() method of the object wrapped by the receiver.
 	
 		HRESULT __stdcall SetSize(
 			[in] ULARGE_INTEGER libNewSize);
+
+	IStream::SetSize changes the size of the stream object. Call this method to preallocate space for the stream. If the libNewSize parameter is larger than the current stream size, the stream is extended to the indicated size by filling the intervening space with bytes of undefined value. This operation is similar to the ISequentialStream::Write method if the seek pointer is past the current end of the stream.
+
+	If the libNewSize parameter is smaller than the current stream, the stream is truncated to the indicated size.	
+
+	The seek pointer is not affected by the change in stream size.
 	"
 
-	^OS.Win32Errors.E_NOTIMPL!
+	^StorageConstants.STG_E_INVALIDFUNCTION
+
+!
 
 Stat: pstatstg grfStatFlag: grfStatFlag
 	"Implement the IStream::Stat() method.
@@ -379,9 +447,9 @@ Stat: pstatstg grfStatFlag: grfStatFlag
 
 	pstatstg class init: pstatstg.
 	pstatstg
-		type: ##(OS.COM.StructuredStorageConstants at: 'STGTY_STREAM');
-		cbSize: self size.
-	^OS.Win32Errors.S_OK!
+		type: StorageConstants.STGTY_STREAM;
+		cbSize: self size * self elementSize.
+	^S_OK!
 
 UnlockRegion: libOffset cb: cb dwLockType: dwLockType 
 	"Implement the IStream::UnlockRegion() method.
@@ -394,7 +462,7 @@ UnlockRegion: libOffset cb: cb dwLockType: dwLockType
 
 	"Implementation Note: Locking is not supported."
 
-	^OS.COM.StructuredStorageConstants.STG_E_INVALIDFUNCTION!
+	^StorageConstants.STG_E_INVALIDFUNCTION!
 
 Write: pv cb: cb pcbWritten: pcbWritten 
 	"Implement the IStream::Write() method.
@@ -409,22 +477,43 @@ Write: pv cb: cb pcbWritten: pcbWritten
 		next: cb
 		putAll: pv
 		startingAt: 1.
-	pcbWritten bytes notNull ifTrue: [pcbWritten value: cb].
-	^OS.Win32Errors.S_OK! !
+	pcbWritten bytes isNull ifFalse: [pcbWritten value: cb].
+	^S_OK! !
 !Core.SequencedStream categoriesForMethods!
 Commit:!public! !
-CopyTo:cb:pcbRead:pcbWritten:!public! !
+CopyTo:cb:pcbRead:pcbWritten:!COM Interfaces-IStream!public! !
 finalRelease!public! !
-LockRegion:cb:dwLockType:!public! !
+LockRegion:cb:dwLockType:!COM Interfaces-IStream!public! !
 queryInterface:!accessing-interfaces!public! !
 queryInterface:ifNone:!accessing-interfaces!public! !
-Read:cb:pcbRead:!public! !
-Revert!public! !
-Seek:dwOrigin:plibNewPosition:!public! !
-SetSize:!public! !
-Stat:grfStatFlag:!public! !
-UnlockRegion:cb:dwLockType:!public! !
-Write:cb:pcbWritten:!public! !
+Read:cb:pcbRead:!COM Interfaces-IStream!public! !
+Revert!COM Interfaces-IStream!public! !
+Seek:dwOrigin:plibNewPosition:!COM Interfaces-IStream!public! !
+SetSize:!COM Interfaces-IStream!public! !
+Stat:grfStatFlag:!COM Interfaces-IStream!public! !
+UnlockRegion:cb:dwLockType:!COM Interfaces-IStream!public! !
+Write:cb:pcbWritten:!COM Interfaces-IStream!public! !
+!
+
+!Core.WriteStream methodsFor!
+
+SetSize: libNewSize
+	"Invoke the SetSize() method of the object wrapped by the receiver.
+	
+		HRESULT __stdcall SetSize(
+			[in] ULARGE_INTEGER libNewSize);
+
+	IStream::SetSize changes the size of the stream object. Call this method to preallocate space for the stream. If the libNewSize parameter is larger than the current stream size, the stream is extended to the indicated size by filling the intervening space with bytes of undefined value. This operation is similar to the ISequentialStream::Write method if the seek pointer is past the current end of the stream.
+
+	If the libNewSize parameter is smaller than the current stream, the stream is truncated to the indicated size.	
+
+	The seek pointer is not affected by the change in stream size.
+	"
+
+	collection resize: (readLimit := writeLimit := libNewSize).
+	^S_OK! !
+!Core.WriteStream categoriesForMethods!
+SetSize:!COM Interfaces-IStream!public! !
 !
 
 !OS.COM.OLELibrary methodsFor!
@@ -698,10 +787,109 @@ shCreateMemStream: pInit cbInit: cbInit
 			[in]BYTE* pInit,
 			[in]unsigned int cbInit);"
 
-	<stdcall: COM.IStream* 12 uint8* uint32>
+	<stdcall: IStream* 12 uint8* uint32>
+	^self invalidCall: _failureCode!
+
+shCreateStreamOnFileEx: pszFile grfMode: grfMode dwAttributes: dwAttributes fCreate: fCreate pstmTemplate: pstmTemplate ppstm: ppstm
+	"
+	grfMode			fCreate	File exists?	Behavior
+	STGM_CREATE		(ignored)	Yes			File is opened (old contents lost)
+	STGM_CREATE		(ignored)	No			File is created
+	STGM_FAILIFTHERE	FALSE	Yes			File is opened (old contents preserved)
+	STGM_FAILIFTHERE	FALSE	No			Fails
+	STGM_FAILIFTHERE	TRUE	Yes			Fails
+	STGM_FAILIFTHERE	TRUE	No			File is created
+
+	From: https://devblogs.microsoft.com/oldnewthing/20070119-01/?p=28343"
+
+	<stdcall: hresult SHCreateStreamOnFileEx lpwstr uint32 uint32 bool IStream* IStream**>
 	^self invalidCall: _failureCode! !
 !OS.ShlwapiLibrary categoriesForMethods!
 shCreateMemStream:cbInit:!**auto generated**!public! !
+shCreateStreamOnFileEx:grfMode:dwAttributes:fCreate:pstmTemplate:ppstm:!public! !
+!
+
+!OS.StdioFileStream methodsFor!
+
+Read: pv cb: cb pcbRead: pcbRead
+	"Implement the IStream::Read().
+	
+		HRESULT __stdcall Read(
+			[out] byte* pv,
+			[in] unsigned long cb,
+			[out] unsigned long* pcbRead);
+	"
+
+	| read |
+	"We don't use prepareToRead here because #size flushes if needed, and as a result would clear the FlushOnWrite flag too"
+	read := crtlib
+				fread_s: pv
+				bufferSize: cb
+				elementSize: 1
+				count: (cb min: self size - self position)
+				stream: stream.
+	flags := flags bitOr: ReadingMask.
+	pcbRead bytes isNull ifFalse: [pcbRead value: read].
+	^S_OK!
+
+SetSize: libNewSize
+	"Invoke the SetSize() method of the object wrapped by the receiver.
+	
+		HRESULT __stdcall SetSize(
+			[in] ULARGE_INTEGER libNewSize);
+	"
+
+	self flush.
+	crtlib _chsize_s: self fileno size: libNewSize.
+	^S_OK!
+
+Stat: pstatstg grfStatFlag: grfStatFlag
+	"Implement the IStream::Stat() method.
+	
+		HRESULT __stdcall Stat(
+			[out] STATSTG* pstatstg,
+			[in] unsigned long grfStatFlag);
+	"
+
+	| hr grfMode attr |
+	hr := super Stat: pstatstg grfStatFlag: grfStatFlag.
+	hr < 0 ifTrue: [^hr].
+	(grfStatFlag noMask: StorageConstants.STATFLAG_NONAME) ifTrue: [pstatstg name: self name].
+	attr := File attributesEx: self name.
+	pstatstg
+		ctime: attr ftCreationTime;
+		mtime: attr ftLastWriteTime;
+		atime: attr ftLastAccessTime.
+	"The STGM access mode and sharing flags are the same as the CRT flags"
+	grfMode := flags bitAnd: ##(AccessModeMask|ShareModeMask).
+	(self creationMode allMask: _O_CREAT)
+		ifTrue: [grfMode := grfMode bitOr: StorageConstants.STGM_CREATE].
+	pstatstg grfMode: grfMode.
+	^hr! !
+!OS.StdioFileStream categoriesForMethods!
+Read:cb:pcbRead:!COM Interfaces-IStream!public! !
+SetSize:!COM Interfaces-IStream!public! !
+Stat:grfStatFlag:!COM Interfaces-IStream!public! !
+!
+
+!OS.StdioTextFileStream methodsFor!
+
+Write: pv cb: cb pcbWritten: pcbWritten
+	"Implement the IStream::Write() method.
+	
+		HRESULT __stdcall Write(
+			[in] byte* pv,
+			[in] unsigned long cb,
+			[out] unsigned long* pcbWritten);
+	"
+
+	"The sequence to write is arriving as bytes, so we have to just assume it is in the correct encoding."
+
+	self nextPutAll: (self bufferClass fromByteArray: pv length: cb // self bufferClass elementSize).
+	pcbWritten bytes isNull ifFalse: [pcbWritten value: cb].
+	^S_OK! !
+!OS.StdioTextFileStream categoriesForMethods!
+Write:cb:pcbWritten:!COM Interfaces-IStream!public! !
 !
 
 "End of package definition"!

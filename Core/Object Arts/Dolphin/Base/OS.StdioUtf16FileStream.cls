@@ -8,7 +8,7 @@ OS.StdioUnicodeFileStream
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OS.StdioUtf16FileStream guid: (Core.GUID fromString: '{59d77acf-50ff-4508-a672-0eaf7422f32a}')!
-OS.StdioUtf16FileStream comment: ''!
+OS.StdioUtf16FileStream comment: '`OS.StdioUtf16FileStream` is the concrete class of `StdioFileStream` for streaming over UTF-16 encoded data.'!
 !OS.StdioUtf16FileStream categoriesForClass!Collections-Streams! !
 !OS.StdioUtf16FileStream methodsFor!
 
@@ -17,6 +17,9 @@ contentsSpecies
 	from the receiver."
 
 	^Utf16String!
+
+modeModifiers
+	^'t, ccs=UTF-16LE'!
 
 position
 	"Answer the absolute (zero-based) position of the file pointer."
@@ -36,8 +39,17 @@ size
 	^super size - offset bitShift: -1! !
 !OS.StdioUtf16FileStream categoriesForMethods!
 contentsSpecies!constants!private! !
+modeModifiers!constants!private! !
 position!accessing!public! !
 position:!positioning!public! !
 size!accessing!public! !
+!
+
+!OS.StdioUtf16FileStream class methodsFor!
+
+translationMode
+	^CRTConstants._O_U16TEXT! !
+!OS.StdioUtf16FileStream class categoriesForMethods!
+translationMode!constants!private! !
 !
 

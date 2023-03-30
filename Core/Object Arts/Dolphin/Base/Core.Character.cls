@@ -702,7 +702,10 @@ codePoint: anInteger ifInvalid: exceptionHandler
 			[(AnsiCharacters lookup: anInteger)
 				ifNil: 
 					[(self isValidCodePoint: anInteger)
-						ifTrue: [self basicUtf32Value: anInteger]
+						ifTrue: 
+							[(self newCode: (Utf32Mask bitOr: anInteger))
+								isImmutable: true;
+								yourself]
 						ifFalse: [exceptionHandler value]]]!
 
 cr
@@ -867,13 +870,17 @@ utf16Value: anInteger ifInvalid: exceptionHandler
 					[(anInteger bitAnd: 16rF800) == Utf16String.LeadSurrogateMask
 						ifTrue: 
 							["Surrogate"
-							self newCode: (Utf16Mask bitOr: anInteger)]
+							(self newCode: (Utf16Mask bitOr: anInteger))
+								isImmutable: true;
+								yourself]
 						ifFalse: 
 							[(anInteger <= UCHAR_MAX_VALUE
 								and: [anInteger < 16rFDD0 or: [anInteger > 16rFDEF and: [(anInteger allMask: 16rFFFE) not]]])
 									ifTrue: 
 										["Valid non-ascii/non-ansi code point"
-										self newCode: (Utf32Mask bitOr: anInteger)]
+										(self newCode: (Utf32Mask bitOr: anInteger))
+											isImmutable: true;
+											yourself]
 									ifFalse: [exceptionHandler value]]]]!
 
 utf8Value: anInteger
@@ -888,7 +895,9 @@ utf8Value: anInteger
 			[anInteger <= 16rFF
 				ifTrue: 
 					["Some kind of surrogate"
-					self newCode: (Utf8Mask bitOr: anInteger)]
+					(self newCode: (Utf8Mask bitOr: anInteger))
+						isImmutable: true;
+						yourself]
 				ifFalse: [self error: 'Invalid UTF-8 code unit: ' , anInteger printString]]!
 
 value: anInteger

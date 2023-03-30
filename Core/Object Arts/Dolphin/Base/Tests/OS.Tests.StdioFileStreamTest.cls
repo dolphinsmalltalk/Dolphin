@@ -17,6 +17,9 @@ bufferSize
 maxPosition
 	^2 ** 63 - 1!
 
+sharingError
+	^CRTError matching: [:ex | ex errno = CRTConstants.EACCES]!
+
 streamClass
 	^StdioFileStream!
 
@@ -94,11 +97,10 @@ testFromHandleOnFile
 	written := 'Hello world'.
 	filestream nextPutAll: written.
 	filestream close.
-	handle := Handle new.
-	Ucrt
-		_wfopen_s: handle
-		filename: tempFileName
-		mode: 'rt, ccs=UTF-8'.
+	handle := Ucrt
+				_wfsopen: tempFileName
+				mode: 'rt, ccs=UTF-8'
+				shflag: CRTConstants._SH_SECURE.
 	filestream := StdioFileStream fromHandle: handle.
 	self assert: filestream isFinalizable.
 	self deny: filestream isNonBlocking.
@@ -172,10 +174,26 @@ testNextLineUpToEof
 			filestream := self tempReadStream.
 			actual := filestream nextLine.
 			self assert: actual equals: expected.
-			filestream close]! !
+			filestream close]!
+
+testStdErrWriteable
+	| stderr |
+	stderr := SessionManager current stderr.
+	self assert: stderr isWriteable!
+
+testStdInNotWriteable
+	| stdin |
+	stdin := SessionManager current stdin.
+	self deny: stdin isWriteable!
+
+testStdOutWriteable
+	| stdout |
+	stdout := SessionManager current stdout.
+	self assert: stdout isWriteable! !
 !OS.Tests.StdioFileStreamTest categoriesForMethods!
 bufferSize!constants!private! !
 maxPosition!constants!private! !
+sharingError!constants!private! !
 streamClass!helpers!private! !
 streamOnFile:type:!helpers!private! !
 strings!constants!private! !
@@ -188,6 +206,9 @@ testFromHandleOnPipe!public!unit tests! !
 testMarkusKuhnUtf8!gettableStream only!public! !
 testNextLineCrOnly!public!unit tests! !
 testNextLineUpToEof!public!unit tests! !
+testStdErrWriteable!public!unit tests! !
+testStdInNotWriteable!public!unit tests! !
+testStdOutWriteable!public!unit tests! !
 !
 
 !OS.Tests.StdioFileStreamTest class methodsFor!

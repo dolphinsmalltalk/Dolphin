@@ -142,6 +142,11 @@ setToEnd
 
 	^self subclassResponsibility!
 
+size
+	"Answer the number of values in the stream."
+
+	^self subclassResponsibility!
+
 skip: anInteger
 	"Set the receiver's position to be the current position plus the argument, anInteger,
 	possibly adjusting the result so as to remain within the bounds of the collection."
@@ -248,6 +253,7 @@ position:!positioning!public! !
 reset!positioning!public! !
 reverseContents!accessing!public! !
 setToEnd!positioning!public! !
+size!accessing!public! !
 skip:!positioning!public! !
 skipSeparators!positioning!public! !
 skipToAll:!positioning!public! !

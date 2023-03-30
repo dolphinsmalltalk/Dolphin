@@ -67,6 +67,9 @@ readWriteStreamOnString: aString
 setUp
 	tempFileName := File temporaryFilename!
 
+sharingError
+	^self subclassResponsibility!
+
 streamClassSupportsPointers
 	^false!
 
@@ -109,7 +112,10 @@ tearDownTempStream
 	filestream close!
 
 tempReadStream
-	^self streamClass read: tempFileName!
+	^self tempReadStream: #text!
+
+tempReadStream: aSymbol
+	^self streamClass read: tempFileName type: aSymbol!
 
 tempReadWriteStream
 	| answer |
@@ -380,6 +386,41 @@ testRewindAfterWrite
 	actual := File readAllText: tempFileName.
 	self assert: actual equals: 'Hello'!
 
+testSharing
+	| read sharingError |
+	filestream := self tempWriteStream.
+	filestream
+		nextPutAll: 'Hello 🐬 world';
+		flush.
+	sharingError := self sharingError.
+	self should: [self tempWriteStream: #binary] raise: sharingError.
+	"By default read streams are opened with #read sharing, so won't open a stream being written"
+	self should: [self tempReadStream: #binary] raise: sharingError.
+	"If we open in #text mode the File must be  opened to sniff it, so we'll always get a Win32Error"
+	self
+		should: [self tempReadStream: #text]
+		raise: OS.Win32Error
+		matching: [:ex | ex statusCode = OS.Win32Errors.ERROR_SHARING_VIOLATION].
+	"But we should be able to open with read/write sharing - the mode specifies that we are allowed to share with others that have opened the file for reading or writing"
+	read := self streamClass
+				read: tempFileName
+				type: #utf8
+				share: #readWrite.
+	self assert: read upToEnd equals: 'Hello 🐬 world'.
+	"Now try opening a stream for write that is open for reading with read/write, should be fine."
+	filestream close.
+	filestream := self tempWriteStream.
+	filestream
+		nextPutAll: 'Hello 💩 world';
+		flush.
+	self assert: read contents equals: 'Hello 💩 world'.
+	"Now try opening a stream for write that is open for reading with read, should not be permitted."
+	filestream close.
+	read close.
+	read := self tempReadStream.
+	self should: [self tempWriteStream: #binary] raise: sharingError.
+	self should: [self tempWriteStream: #text] raise: sharingError!
+
 testTruncate
 	| actual |
 	filestream := self tempWriteStream.
@@ -411,6 +452,7 @@ randomData1!constants!private! !
 randomData2!constants!private! !
 readWriteStreamOnString:!helpers!private! !
 setUp!public!running! !
+sharingError!constants!private! !
 streamClassSupportsPointers!helpers!private! !
 streamOnBytes:type:!helpers!private! !
 streamWith:!helpers!private! !
@@ -418,6 +460,7 @@ strings!constants!private! !
 tearDown!public!running! !
 tearDownTempStream!helpers!private! !
 tempReadStream!helpers!private! !
+tempReadStream:!helpers!private! !
 tempReadWriteStream!helpers!private! !
 tempWriteStream!helpers!private! !
 tempWriteStream:!helpers!private! !
@@ -431,6 +474,7 @@ testPositionPastEnd!public!unit tests! !
 testRandomWriteOnePage!public!unit tests! !
 testReset!public!unit tests! !
 testRewindAfterWrite!public!unit tests! !
+testSharing!public!unit tests! !
 testTruncate!public!unit tests! !
 writeableCollections!constants!private! !
 !
