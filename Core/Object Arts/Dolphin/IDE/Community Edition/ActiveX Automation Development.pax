@@ -5724,23 +5724,19 @@ namespaceClashPrompt: aClass
 	mb
 		text: ('The class <1d> is in a different namespace to the target namespace ''<2d>''.
 
-The class can be renamed into the target namespace, or left in its existing namespace.
-
-Press Yes to rename the class to <3d>.
-Press No to keep the existing class name <1d>.
-Press Cancel to quit.'
+The class can be renamed to <3d>, or left in its existing namespace.'
 				expandMacrosWith: aClass fullName
 				with: environment
-				with: (BindingReference pathString: aClass unqualifiedName home: environment)
-						asFullyQualifiedReference).
+				with: (environment fullyQualifiedReference append: aClass unqualifiedName)).
 	mb
 		buttonStyle: #yesNoCancel;
+		customButtons: #(#(#yes '&Rename') #(#no '&Don''t Rename'));
 		defaultButton: 2.
 	mb caption: ('Dolphin Type Library Analyzer: Generating <1s> <2s>.<3d>'
 				expandMacrosWith: type
 				with: self typeLib name
 				with: self).
-	^##(LookupTable withAll: {#yes -> #ignore. #no -> #retry. #cancel -> #abort}) at: mb open!
+	^##(LookupTable withAll: { #yes -> #ignore. #no -> #retry. #cancel -> #abort }) at: mb open!
 
 packageCheck: anAssociation
 	"Private - The receiver's variable is already present, check to make sure it it in the same package,
