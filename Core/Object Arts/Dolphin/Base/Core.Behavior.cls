@@ -781,7 +781,7 @@ removeSelectors: aCollection
 	methods := methodDictionary removeSelectors: aCollection.
 	methodDictionary isEmpty ifTrue: [methodDictionary := nil].
 	self flushMethodCache.
-	methods do: [:each | self methodRemoved: each].
+	methods do: [:each | self notifyMethodRemoved: each].
 	^methods!
 
 requiresInstallation
