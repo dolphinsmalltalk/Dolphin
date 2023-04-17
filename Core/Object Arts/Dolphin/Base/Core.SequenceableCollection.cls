@@ -160,7 +160,7 @@ associations
 
 	| answer |
 	answer := WriteStream on: (Array new: self size).
-	self keysAndValuesDo: [:i :each | answer at: i put: i -> each].
+	self keysAndValuesDo: [:i :each | answer nextPut: i -> each].
 	^answer grabContents!
 
 asString

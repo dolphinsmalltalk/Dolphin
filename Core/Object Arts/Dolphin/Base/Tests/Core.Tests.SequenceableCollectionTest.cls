@@ -51,6 +51,15 @@ testAsByteArray
 	self assert: (self newCollection: sequence) asByteArray
 		equals: (self byteArrayForSequence: sequence)!
 
+testAssociations
+	#(#() #(65) #(65 66) #(65 66 67) #(65 66 67 68)) do: 
+			[:sequence |
+			| subject actual expected |
+			subject := self newCollection: sequence.
+			actual := subject associations.
+			expected := (1 to: sequence size) collect: [:i | i -> (subject at: i)].
+			self assert: actual equals: expected]!
+
 testAt
 	| subject |
 	subject := self newCollection: #().
@@ -878,6 +887,7 @@ newEmptyCollection:!helpers!private! !
 newNumericArray:!helpers!private! !
 newUnsortedCollection:!helpers!private! !
 testAsByteArray!public!unit tests! !
+testAssociations!public!unit tests! !
 testAt!public!unit tests! !
 testBeginsWith!public!unit tests! !
 testBinarySearch!public!unit tests! !
