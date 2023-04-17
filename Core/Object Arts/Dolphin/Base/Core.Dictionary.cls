@@ -173,7 +173,7 @@ at: key ifAbsentPut: operation
 	preexisting := self at: key ifAbsent: AbsentCookie.
 	^preexisting == AbsentCookie ifTrue: [self at: key put: operation value] ifFalse: [preexisting]!
 
-at: keyObject ifAbsentPutClean: aMonadicValuable
+at: keyObject ifAbsentPutClean: aNiladicValuable
 	"Answer the value of the receiver keyed by the first <Object> argument. If key is not one of the receiver's keys, then add the result of evaluating  the <niladicValuable> 2nd argument and answer that result.
 	Note that unlike #at:ifAbsentPut:, this method assumes that the valuable does not modify the receiver, and therefore it only looks up the key position once. Thus it is more efficient but less general purpose."
 
@@ -181,7 +181,7 @@ at: keyObject ifAbsentPutClean: aMonadicValuable
 	keyObject isNil ifTrue: [^self error: 'key cannot be nil'].
 	index := self findKeyOrNil: keyObject.
 	^((self basicAt: index)
-		ifNil: [self privateAt: index put: (self newAssociation: keyObject value: aMonadicValuable value)])
+		ifNil: [self privateAt: index put: (self newAssociation: keyObject value: aNiladicValuable value)])
 			value!
 
 at: key ifPresent: operation

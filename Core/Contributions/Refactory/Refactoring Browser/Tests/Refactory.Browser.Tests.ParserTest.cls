@@ -651,7 +651,7 @@ testSmallDictionary
 testTokens
 	| tokens scanner |
 	scanner := Scanner on: '#foo foo: bar := [ ##( + foo.bar.baz' readStream.
-	tokens := scanner contents.
+	tokens := scanner upToEnd.
 	tokens printString.
 	tokens with: #(4 4 3 2 1 3 1 11) do: [:token :length | self assert: token length equals: length]!
 

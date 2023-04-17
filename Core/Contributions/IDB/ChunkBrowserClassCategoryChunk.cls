@@ -20,29 +20,28 @@ Public Domain Freeware'!
 browseTarget
 	^self identity1AsClass!
 
+categoryClass
+	^ClassCategory!
+
 hash
 	^super hash bitXor: rawText hash!
 
 isMatch
-	^self identity1AsClass
-		ifNotNil:
-			[:arg | 
-			| categories |
-			categories := arg instanceClass categories collect: [:each | each name].
-			categories anySatisfy: [:each | each = rawText]]!
+	^self identity1AsClass ifNotNil: [:class | self category includesClass: class]!
 
 restore
 	"Answers nil or the error information"
 
 	^self identity1AsClass
 		ifNil: [index -> 'Target class missing']
-		ifNotNil:
-			[:arg | 
-			(ClassCategory name: rawText) addClass: arg.
+		ifNotNil: 
+			[:class |
+			self category addClass: class.
 			nil]! !
 !ChunkBrowserClassCategoryChunk categoriesForMethods!
 =!comparing!public! !
 browseTarget!operations!public! !
+categoryClass!constants!public! !
 hash!comparing!public! !
 isMatch!public!testing! !
 restore!operations!public! !

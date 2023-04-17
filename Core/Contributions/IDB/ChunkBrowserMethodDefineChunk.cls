@@ -20,8 +20,8 @@ browseTarget
 canShowDifferences
 	^self identity1AndIdentity2AsCompiledMethod notNil!
 
-initializeFromSeriesStart: aChunkBrowserSeriesStartChunk
-	super initializeFromSeriesStart: aChunkBrowserSeriesStartChunk.
+initialize: aString start: aChunkBrowserSeriesStartChunk
+	super initialize: aString start: aChunkBrowserSeriesStartChunk.
 	identity2 := SelectorParser parse: rawText!
 
 isMatch
@@ -74,7 +74,7 @@ sourceFromImage
 !ChunkBrowserMethodDefineChunk categoriesForMethods!
 browseTarget!operations!public! !
 canShowDifferences!public!testing! !
-initializeFromSeriesStart:!initializing!public! !
+initialize:start:!initializing!public! !
 isMatch!public!testing! !
 restore!operations!public! !
 sourceFromImage!accessing!public! !

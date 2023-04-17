@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #SelectorParser
-	instanceVariableNames: ''
+	instanceVariableNames: 'stream'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -21,132 +21,77 @@ Public Domain Freeware'!
 !SelectorParser categoriesForClass!IDB Goodies! !
 !SelectorParser methodsFor!
 
-binaryTokenFrom: aStream 
-	"Answer the binary token from aStream"
-
-	| start stop |
-	start := aStream position.
-	
-	[aStream atEnd 
-		ifTrue: 
-			[aStream position: start.
-			^aStream upToEnd].
-	(self isBinaryDelimiter: aStream next) 
-		ifTrue: 
-			[stop := aStream position.
-			aStream position: start.
-			^aStream next: stop - start - 1]] 
-			repeat!
-
-firstTokenFrom: aStream 
-	"Answer the first token from the current position in the stream. After skipping 
-	separators and (recursively) comment we know the next token will be either a 
-	binary selector or unary/keyword selector"
-
-	aStream skipSeparators ifFalse: [^String new].
-	(aStream peekFor: $") 
-		ifTrue: 
-			[aStream skipTo: $".
-			^self firstTokenFrom: aStream].
-	^(self isBinaryStarter: aStream peek) 
-		ifTrue: [self binaryTokenFrom: aStream]
-		ifFalse: [self keywordOrUnaryTokenFrom: aStream]!
-
-isBinaryDelimiter: aCharacter 
-	"Answer true is aCharacter cannot be part of a binary selector"
-
-	^(##(' "_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789' , Character tab asString 
-		, Character cr asString , Character nl asString 
-		, Character newPage asString) indexOf: aCharacter) 
-		~= 0!
-
-isBinaryStarter: aCharacter 
-	"Answer true is aCharacter can be the first character in a binary selector.
-	Defined with regard to the current image. Adding binary selectors to the
-	image may also require modifications here. See class comment"
-
-	^(##('<=>\@|~&%*+,-/') indexOf: aCharacter) ~= 0!
-
-isKeyword: aString 
+isKeyword: aString
 	"Answer true if aString is a valid keyword token"
 
-	^aString size >= 2 and: [aString last = $: and: [self isKeywordStarter: aString first]]!
+	| len |
+	len := aString size.
+	^len > 1 and: [(aString at: len) == $: and: [(Scanner classify: (aString at: 1)) == #alphabetic]]!
 
-isKeywordStarter: aCharacter 
-	"Answer true is aCharacter is the first character of a keyword selector"
-
-	^(##('_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ') indexOf: aCharacter) ~= 0!
-
-isNonBinaryDelimiter: aCharacter 
-	"Answer true is aCharacter cannot be part of a unary selector, keyword
-	selector or the arguments in a selector string"
-
-	^(##(' "#''^([<|-' , Character tab asString , Character cr asString , Character nl asString 
-		, Character newPage asString) indexOf: aCharacter) 
-		~= 0!
-
-keywordOrArgumentTokenFrom: aStream 
-	"Answer the next token from aStream. Once we have got past separators
-	and (possibly recursive) comments we can treat it in the same way (in terms 
-	of character sequences) as the initial unary/keyword token. "
-
-	aStream skipSeparators ifFalse: [^String new].
-	(aStream peekFor: $") 
-		ifTrue: 
-			[aStream skipTo: $".
-			^self keywordOrArgumentTokenFrom: aStream].
-	^self keywordOrUnaryTokenFrom: aStream!
-
-keywordOrUnaryTokenFrom: aStream 
-	"Answer the unary or keyword token from aStream. The only difference
-	is that the unary token needs to be answered without it's delimiter but the
-	keyword tokens needs to include it's delimiter - a colon"
-
-	| start stop char |
-	start := aStream position.
-	
-	[aStream atEnd 
-		ifTrue: 
-			[aStream position: start.
-			^aStream upToEnd].
-	(char := aStream next) = $: 
-		ifTrue: 
-			[stop := aStream position.
-			aStream position: start.
-			^aStream next: stop - start].
-	(self isNonBinaryDelimiter: char) 
-		ifTrue: 
-			[stop := aStream position.
-			aStream position: start.
-			^aStream next: stop - start - 1]] 
-			repeat!
-
-parse: aString 
+parse: aString
 	"Answer the Smalltalk selector parsed from aString. If the first token
 	is a binary or unary token we need do no more, otherwise we have to
 	get keyword tokens but omit the intervening arguments"
 
-	| readStream writeStream token |
-	readStream := aString readStream.
-	token := self firstTokenFrom: readStream.
+	| token keywords |
+	stream := ReadStream on: aString.
+	token := self scanFirstToken.
 	(self isKeyword: token) ifFalse: [^token].
-	writeStream := String writeStream: 100.
-	[self isKeyword: token] whileTrue: 
-			[writeStream nextPutAll: token.
-			self keywordOrArgumentTokenFrom: readStream.
-			token := self keywordOrArgumentTokenFrom: readStream].
-	^writeStream contents! !
+	keywords := WriteStream on: (aString class new: 40).
+	
+	[keywords nextPutAll: token.
+	self scanKeywordOrArgumentToken.
+	self isKeyword: (token := self scanKeywordOrArgumentToken)]
+			whileTrue.
+	^keywords contents!
+
+scanBinaryToken
+	"Answer the binary token from aStream"
+
+	| ch start |
+	start := stream position + 1.
+	[(Scanner classify: (ch := stream nextAvailable)) == #binary] whileTrue.
+	^stream collection copyFrom: start to: (ch ifNil: [stream position] ifNotNil: [stream position - 1])!
+
+scanFirstToken
+	"Answer the first token from the current position in the stream. After skipping separators and comments we know the next token will be either a binary selector or unary/keyword selector"
+
+	[stream skipSeparators and: [stream peekFor: $"]] whileTrue: [stream skipTo: $"].
+	^(Scanner classify: stream peek) == #binary
+		ifTrue: [self scanBinaryToken]
+		ifFalse: [self scanKeywordOrUnaryToken]!
+
+scanKeywordOrArgumentToken
+	"Answer the next token from aStream. Once we have got past separators
+	and (possibly recursive) comments we can treat it in the same way (in terms 
+	of character sequences) as the initial unary/keyword token. "
+
+	[stream skipSeparators and: [stream peekFor: $"]] whileTrue: [stream skipTo: $"].
+	^self scanKeywordOrUnaryToken!
+
+scanKeywordOrUnaryToken
+	"Answer the unary or keyword token from aStream. The only difference
+	is that the unary token needs to be answered without it's delimiter but the
+	keyword tokens needs to include it's delimiter - a colon"
+
+	| ch start stop |
+	start := stream position + 1.
+	
+	[| charClass |
+	charClass := Scanner classify: (ch := stream nextAvailable).
+	charClass == #alphabetic or: [charClass == #digit]]
+			whileTrue.
+	stop := stream position.
+	(ch == $: or: [ch isNil]) ifFalse: [stream position: (stop := stop - 1)].
+	"We know the stream is a ReadStream over the original source string, so access the collection directly for speed"
+	^stream collection copyFrom: start to: stop! !
 !SelectorParser categoriesForMethods!
-binaryTokenFrom:!operations!public! !
-firstTokenFrom:!operations!public! !
-isBinaryDelimiter:!public!testing! !
-isBinaryStarter:!public!testing! !
 isKeyword:!public!testing! !
-isKeywordStarter:!public!testing! !
-isNonBinaryDelimiter:!public!testing! !
-keywordOrArgumentTokenFrom:!operations!public! !
-keywordOrUnaryTokenFrom:!operations!public! !
 parse:!operations!public! !
+scanBinaryToken!operations!public! !
+scanFirstToken!operations!public! !
+scanKeywordOrArgumentToken!operations!public! !
+scanKeywordOrUnaryToken!operations!public! !
 !
 
 !SelectorParser class methodsFor!

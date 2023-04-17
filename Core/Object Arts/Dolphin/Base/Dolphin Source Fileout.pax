@@ -407,7 +407,8 @@ storeCommentString: aString forClass: aClass
 	<Class>, aClass, to the receiver's source stream encoding the position and 
 	index into the class' source descriptor so that the comment may be retrieved later."
 
-	stream nextPutAll: aClass name; nextPutAll: ' comment:'; cr.
+	self emitClassName: aClass on: stream.
+	stream nextPutAll: ' comment: '.
 	self storeSource: aString fullPrintString for: aClass.
 	stream cr!
 
@@ -943,19 +944,14 @@ logComment: aString
 			self logComment: aString to: logger]!
 
 logComment: aString to: aSourceFiler
-	"Private - Record aString to the specified source file as a comment. All comments
-	logged are prefixed with a timestamp."
+	"Private - Record aString to the specified source file as a comment. All comments	logged are prefixed with a timestamp, and then a full width colon character."
 
-	| timestamp stampedComment |
-	timestamp := DateAndTime now.
-	stampedComment := String writeStream: 25 + aString size.
-	stampedComment locale: Locale invariant.
-	#todo.	"Use the standard form for a DateAndTime here - Ian's chunk browser relies on the original format, so that needs to be fixed."
-	timestamp printOn: stampedComment format: 'HH:mm:ss, dd MMMM yyyy'.
-	stampedComment
-		nextPutAll: ': ';
-		nextPutAll: aString.
-	stampedComment := stampedComment contents.
+	| stampedComment |
+	stampedComment := (String writeStream: 37 + aString size)
+				print: DateAndTime now;
+				nextPut: $：;
+				nextPutAll: aString;
+				grabContents.
 	mutex critical: 
 			[aSourceFiler
 				emitComment: stampedComment;

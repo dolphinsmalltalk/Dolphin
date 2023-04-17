@@ -432,27 +432,28 @@ readFrom: aStream
 	^self
 		readFrom: aStream
 		sign: sign
-		withDays: true!
+		withDays: true
+		ifInvalid: [##(self) errorInvalidFormat]!
 
-readFrom: aStream sign: sign withDays: aBoolean
+readFrom: aStream sign: sign withDays: aBoolean ifInvalid: aNiladicValuable
 	| mm hh ss days |
-	aStream peek isDigit ifFalse: [^self errorInvalidFormat].
+	aStream peek isDigit ifFalse: [^aNiladicValuable value].
 	aBoolean
 		ifTrue: 
 			[days := Integer readFrom: aStream radix: 10.
-			((aStream peekFor: $:) and: [aStream peek isDigit]) ifFalse: [^self errorInvalidFormat]]
+			((aStream peekFor: $:) and: [aStream peek isDigit]) ifFalse: [^aNiladicValuable value]]
 		ifFalse: [days := 0].
 	hh := Integer readFrom: aStream radix: 10.
 	((hh between: 0 and: 23) and: [(aStream peekFor: $:) and: [aStream peek isDigit]])
-		ifFalse: [^self errorInvalidFormat].
+		ifFalse: [^aNiladicValuable value].
 	mm := Integer readFrom: aStream radix: 10.
-	(mm between: 0 and: 59) ifFalse: [^self errorInvalidFormat].
+	(mm between: 0 and: 59) ifFalse: [^aNiladicValuable value].
 	"We allow seconds to be optional"
 	(aStream peekFor: $:)
 		ifTrue: 
-			[aStream peek isDigit ifFalse: [^self errorInvalidFormat].
+			[aStream peek isDigit ifFalse: [^aNiladicValuable value].
 			ss := Integer readFrom: aStream radix: 10.
-			(ss between: 0 and: 59) ifFalse: [^self errorInvalidFormat].
+			(ss between: 0 and: 59) ifFalse: [^aNiladicValuable value].
 			"We read the fraction part of the seconds separately as an Integer in order to avoid an rounding error that might arise should we read the whole as a Float."
 			(aStream peekFor: $.)
 				ifTrue: 
@@ -464,7 +465,7 @@ readFrom: aStream sign: sign withDays: aBoolean
 					ch notNil and: [ch isDigit]] whileTrue: 
 								[ff := ff * 10 + ch digitValue.
 								digits := digits + 1].
-					(digits between: 1 and: 9) ifFalse: [^self errorInvalidFormat].
+					(digits between: 1 and: 9) ifFalse: [^aNiladicValuable value].
 					ss := ss + (ff / digits exp10)]]
 		ifFalse: [ss := 0].
 	^self seconds: (((days * 24 + hh) * 60 + mm) * 60 + ss) * sign!
@@ -496,7 +497,7 @@ minutes:!instance creation!public! !
 nanoseconds:!instance creation!public! !
 onPreStripImage!class hierarchy-removing!private! !
 readFrom:!instance creation!public! !
-readFrom:sign:withDays:!helpers!private! !
+readFrom:sign:withDays:ifInvalid:!helpers!private! !
 seconds:!instance creation!public! !
 zero!instance creation!public! !
 !

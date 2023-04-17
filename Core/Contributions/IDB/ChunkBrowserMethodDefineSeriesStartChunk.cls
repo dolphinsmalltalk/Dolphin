@@ -22,16 +22,13 @@ seriesClass!constants!public! !
 
 !ChunkBrowserMethodDefineSeriesStartChunk class methodsFor!
 
-isChunkClassFor: aString
+isChunkClassFor: aString tokens: anArray
 	"'Abc methodsFor' or 'Abc class methodsFor'"
 
-	| firstSpaceIndex |
-	^(firstSpaceIndex := aString indexOf: $\x20) == 0
-		ifTrue: [false]
-		ifFalse: 
-			[(aString indexOfSubCollection: ' methodsFor') = firstSpaceIndex
-				or: [(aString indexOfSubCollection: ' class methodsFor') = firstSpaceIndex]]! !
+	^(anArray size between: 2 and: 3) and: 
+			[(self isToken: anArray last identifier: 'methodsFor')
+				and: [self isTokenClassIdentifier: anArray first]]! !
 !ChunkBrowserMethodDefineSeriesStartChunk class categoriesForMethods!
-isChunkClassFor:!public!testing! !
+isChunkClassFor:tokens:!public!testing! !
 !
 

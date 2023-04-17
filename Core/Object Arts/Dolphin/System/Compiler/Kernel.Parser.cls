@@ -1418,11 +1418,10 @@ parseMethodNoError: aString in: methodClass
 		onError: [:err | ^nil]!
 
 parseMethodPattern: aString
-	| parser |
-	parser := self new.
-	parser errorBlock: [:error | ^nil].
-	parser initializeParserWith: aString.
-	^parser parseMessagePattern selector!
+	^(self new
+		errorBlock: [:error | ^nil];
+		initializeParserWith: aString;
+		parseMessagePattern) selector!
 
 warningClass
 	^CompilerWarningNotification! !

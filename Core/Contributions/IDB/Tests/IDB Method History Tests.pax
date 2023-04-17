@@ -6,6 +6,7 @@ package paxVersion: 1;
 
 package classNames
 	add: #MethodHistoryTest;
+	add: #SelectorParserTest;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -17,6 +18,7 @@ package globalAliases: (Set new
 package setPrerequisites: #(
 	'..\..\..\Object Arts\Dolphin\Base\Dolphin'
 	'..\IDB Method History'
+	'..\..\..\Object Arts\Dolphin\System\Compiler\Smalltalk Parser'
 	'..\..\Camp Smalltalk\SUnit\SUnit').
 
 package!
@@ -24,6 +26,11 @@ package!
 "Class Definitions"!
 
 TestCase subclass: #MethodHistoryTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+TestCase subclass: #SelectorParserTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

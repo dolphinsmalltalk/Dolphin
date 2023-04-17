@@ -14,38 +14,52 @@ Public Domain Freeware'!
 !ChunkBrowserClassProtocolChunk categoriesForClass!IDB Goodies! !
 !ChunkBrowserClassProtocolChunk methodsFor!
 
-browseTarget
-	^self identity1AsClass!
-
-initialize: aString
-	"Abc methodProtocol: aSymbol attributes: anArrayOfSymbols selectors: anArrayOfSymbols
+initialize: aString tokens: anArray
+	"Private - Abc methodProtocol: aSymbol attributes: anArrayOfSymbols selectors: anArrayOfSymbols
 	Abc class methodProtocol: aSymbol attributes: anArrayOfSymbols selectors: anArrayOfSymbols"
 
-	| target1 target2 target3 |
-	super initialize: aString.
-	identity1 := self classNameFromRawText.
-	target1 := aString indexOf: $#.
-	target2 := aString indexOfSubCollection: 'attributes:'.
-	target3 := aString indexOfSubCollection: 'selectors:'.
-	identity2 := ((aString copyFrom: target1 to: target2 - 1) copyWithoutAll: '#''') trimBlanks.
-	attributes := ((aString copyFrom: target2 + 'attributes:' size to: target3 - 1)
-		copyWithoutAll: '#()') trimBlanks subStrings collect: [:each | each asSymbol].
-	selectors := ((aString copyFrom: target3 + 'selectors:' size to: aString size)
-		copyWithoutAll: '#()') trimBlanks subStrings collect: [:each | each asSymbol]!
+	| tokens token symbols |
+	super initialize: aString tokens: anArray.
+	tokens := ReadStream on: anArray.
+	identity1 := self classIdentityFromTokenStream: tokens.
+	"methodProtocol:"
+	tokens next.
+	identity2 := tokens next value.
+	"attributes: #(#a #b)"
+	tokens
+		next;
+		next.
+	symbols := Array writeStream.
+	
+	[token := tokens next.
+	token isSpecial: $)] whileFalse: [symbols nextPut: token value].
+	attributes := symbols contents.
+	"selectors: #(#foo #bar)"
+	tokens
+		next;
+		next.
+	symbols reset.
+	
+	[token := tokens next.
+	token isSpecial: $)] whileFalse: [symbols nextPut: token value].
+	selectors := symbols contents!
 
 isMatch
 	^self identity1AsClass
-		ifNotNil:
-			[(MethodProtocol exists: identity2)
-				and:
+		ifNotNil: 
+			[:class |
+			(class conformsToProtocol: identity2) and: 
 					[| protocol |
-					protocol := MethodProtocol name: identity2.
-					(protocol selectors symmetricDifference: selectors) isEmpty
-						and: [(protocol attributes symmetricDifference: attributes) isEmpty]]]! !
+					protocol := self methodProtocol.
+					protocol notNil
+						and: [(protocol selectors noDifference: selectors) and: [protocol attributes noDifference: attributes]]]]!
+
+methodProtocol
+	^(MethodProtocol exists: identity2) ifTrue: [MethodProtocol name: identity2]! !
 !ChunkBrowserClassProtocolChunk categoriesForMethods!
-browseTarget!operations!public! !
-initialize:!initializing!public! !
+initialize:tokens:!initializing!private! !
 isMatch!public!testing! !
+methodProtocol!accessing!private! !
 !
 
 !ChunkBrowserClassProtocolChunk class methodsFor!
@@ -53,17 +67,40 @@ isMatch!public!testing! !
 chunkType
 	^#'Class Protocol'!
 
-isChunkClassFor: aString
+isChunkClassFor: aString tokens: anArrayOfStToken
 	"Abc methodProtocol: aSymbol attributes: anArrayOfSymbols selectors: anArrayOfSymbols
 	Abc class methodProtocol: aSymbol attributes: anArrayOfSymbols selectors: anArrayOfSymbols"
 
-	| firstSpaceIndex |
-	^(firstSpaceIndex := aString indexOf: Character space) ~= 0
-		and:
-			[#(' methodProtocol: #' ' class methodProtocol: #')
-				anySatisfy: [:each | (aString indexOfSubCollection: each) = firstSpaceIndex]]! !
+	| tokens token |
+	anArrayOfStToken size >= 9 ifFalse: [^false].
+	tokens := ReadStream on: anArrayOfStToken.
+	self isTokenClassIdentifier: tokens next.
+	token := tokens next.
+	(self isToken: token identifier: 'class') ifTrue: [token := tokens next].
+	(self isToken: token keyword: 'methodProtocol:') ifFalse: [^false].
+	token := tokens next.
+	token isLiteralSymbolToken ifFalse: [^false].
+	token := tokens next.
+	(self isToken: token keyword: 'attributes:') ifFalse: [^false].
+	token := tokens next.
+	token isLiteralArrayToken ifFalse: [^false].
+	
+	[token := tokens nextAvailable.
+	token isNil ifTrue: [^false].
+	token isSpecial: $)]
+			whileFalse: [token isLiteralSymbolToken ifFalse: [^false]].
+	token := tokens nextAvailable.
+	(token notNil and: [self isToken: token keyword: 'selectors:']) ifFalse: [^false].
+	token := tokens nextAvailable.
+	(token notNil and: [token isLiteralArrayToken]) ifFalse: [^false].
+	
+	[token := tokens nextAvailable.
+	token isNil ifTrue: [^false].
+	token isSpecial: $)]
+			whileFalse: [token isLiteralSymbolToken ifFalse: [^false]].
+	^tokens atEnd! !
 !ChunkBrowserClassProtocolChunk class categoriesForMethods!
 chunkType!constants!public! !
-isChunkClassFor:!public!testing! !
+isChunkClassFor:tokens:!public!testing! !
 !
 

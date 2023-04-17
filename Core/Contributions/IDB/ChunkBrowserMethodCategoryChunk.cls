@@ -17,13 +17,15 @@ Public Domain Freeware'!
 browseTarget
 	^self identity1AndIdentity2AsCompiledMethod!
 
+categoryClass
+	^MethodCategory!
+
+initialize: aString start: aChunkBrowserSeriesStartChunk
+	super initialize: aString start: aChunkBrowserSeriesStartChunk.
+	identity2 := aChunkBrowserSeriesStartChunk identity2!
+
 isMatch
-	^self identity1AndIdentity2AsCompiledMethod
-		ifNotNil:
-			[:arg | 
-			| categories |
-			categories := arg categories collect: [:each | each name].
-			categories anySatisfy: [:each | each = rawText]]!
+	^self identity1AndIdentity2AsCompiledMethod ifNotNil: [:method | self category includesMethod: method]!
 
 restore
 	"Answers nil or the error information"
@@ -31,11 +33,13 @@ restore
 	^self identity1AndIdentity2AsCompiledMethod
 		ifNil: [index -> 'Target class or method missing']
 		ifNotNil:
-			[:arg | 
-			rawText asMethodCategory addMethod: arg.
+			[:method | 
+			rawText asMethodCategory addMethod: method.
 			nil]! !
 !ChunkBrowserMethodCategoryChunk categoriesForMethods!
 browseTarget!operations!public! !
+categoryClass!accessing!constants!public! !
+initialize:start:!initializing!public! !
 isMatch!public!testing! !
 restore!operations!public! !
 !

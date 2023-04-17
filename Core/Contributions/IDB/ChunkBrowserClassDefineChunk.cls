@@ -14,30 +14,17 @@ Public Domain Freeware'!
 !ChunkBrowserClassDefineChunk categoriesForClass!IDB Goodies! !
 !ChunkBrowserClassDefineChunk methodsFor!
 
-browseTarget
-	^self identity1AsClass!
-
 canShowDifferences
 	^self identity1AsClass notNil!
 
-initialize: aString
-	"Abd subclass: #Def instanceVariableNames: ''	classVariableNames: '' poolDictionaries: '' classInstanceVariableNames: ''
+initialize: aString tokens: anArray
+	"Private - Abd subclass: #Def instanceVariableNames: ''	classVariableNames: '' poolDictionaries: '' classInstanceVariableNames: ''
 	Abd variableSubclass: #Def instanceVariableNames: ''	classVariableNames: '' poolDictionaries: '' classInstanceVariableNames: ''
 	Abd variableByteSubclass: #Def instanceVariableNames: ''	classVariableNames: '' poolDictionaries: '' classInstanceVariableNames: ''"
 
-	| space1 space2 eol |
-	super initialize: aString.
-	space1 := rawText indexOf: $\x20.
-	space2 := rawText
-				nextIndexOf: $\x20
-				from: space1 + 1
-				to: rawText size.
-	eol := rawText
-				nextIndexOf: String lineDelimiter first
-				from: space2 + 1
-				to: rawText size.
-	identity1 := rawText copyFrom: space2 + 2 to: eol - 1.
-	identity2 := rawText copyFrom: 1 to: space1 - 1!
+	super initialize: aString tokens: anArray.
+	identity2 := anArray first value.
+	identity1 := anArray third value!
 
 isMatch
 	^self identity1AsClass ifNotNil: [:arg | arg instanceClass definition = rawText]!
@@ -48,9 +35,8 @@ restore
 sourceFromImage
 	^self identity1AsClass instanceClass definition! !
 !ChunkBrowserClassDefineChunk categoriesForMethods!
-browseTarget!operations!public! !
 canShowDifferences!public!testing! !
-initialize:!initializing!public! !
+initialize:tokens:!initializing!private! !
 isMatch!public!testing! !
 restore!operations!public! !
 sourceFromImage!accessing!public! !
@@ -61,19 +47,23 @@ sourceFromImage!accessing!public! !
 chunkType
 	^#'Class Define'!
 
-isChunkClassFor: aString
+isChunkClassFor: aString tokens: anArrayOfStToken
 	"Abd subclass: #Def instanceVariableNames: ''	classVariableNames: '' poolDictionaries: '' classInstanceVariableNames: ''
 	Abd variableSubclass: #Def instanceVariableNames: ''	classVariableNames: '' poolDictionaries: '' classInstanceVariableNames: ''
 	Abd variableByteSubclass: #Def instanceVariableNames: ''	classVariableNames: '' poolDictionaries: '' classInstanceVariableNames: ''"
 
-	| firstSpaceIndex |
-	^(firstSpaceIndex := aString indexOf: $\x20) ~~ 0 and: 
-			[(#(' subclass: ' ' variableSubclass: ' ' variableByteSubclass: ')
-				anySatisfy: [:each | (aString indexOfSubCollection: each) = firstSpaceIndex]) and: 
-						[#('instanceVariableNames: ' 'classVariableNames: ' 'classInstanceVariableNames: ')
-							allSatisfy: [:each | (aString indexOfSubCollection: each) ~~ 0]]]! !
+	| token |
+	anArrayOfStToken size < 11 ifTrue: [^false].
+	(self isToken: (anArrayOfStToken at: 4) keyword: 'instanceVariableNames:') ifFalse: [^false].
+	(self isToken: anArrayOfStToken second
+		amongKeywords: ##(Set withAll: #('subclass:' 'variableSubclass:' 'variableByteSubclass:')))
+			ifFalse: [^false].
+	token := anArrayOfStToken first.
+	((self isTokenClassIdentifier: token) or: [token isLiteralToken and: [token value isNil]])
+		ifFalse: [^false].
+	^anArrayOfStToken third isLiteralSymbolToken! !
 !ChunkBrowserClassDefineChunk class categoriesForMethods!
 chunkType!constants!public! !
-isChunkClassFor:!public!testing! !
+isChunkClassFor:tokens:!public!testing! !
 !
 

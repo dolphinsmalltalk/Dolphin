@@ -14,23 +14,17 @@ Public Domain Freeware'!
 !ChunkBrowserClassCommentChunk categoriesForClass!IDB Goodies! !
 !ChunkBrowserClassCommentChunk methodsFor!
 
-browseTarget
-	^self identity1AsClass!
+initialize: aString tokens: anArray
+	"Private - Abc comment: ''"
 
-initialize: aString
-	"Abc comment: ''"
-
-	super initialize: aString.
-	identity1 := rawText copyFrom: 1 to: (rawText indexOf: $ ).
-	comment := rawText
-		copyFrom: (rawText findFirst: [:each | each = $'])
-		to: (rawText findLast: [:each | each = $'])!
+	super initialize: aString tokens: anArray.
+	identity1 := anArray first value.
+	comment := anArray third value!
 
 isMatch
-	^self identity1AsClass ifNotNil: [:arg | arg instanceClass comment fullPrintString = comment]! !
+	^self identity1AsClass ifNotNil: [:arg | arg instanceClass comment = comment]! !
 !ChunkBrowserClassCommentChunk categoriesForMethods!
-browseTarget!operations!public! !
-initialize:!initializing!public! !
+initialize:tokens:!initializing!private! !
 isMatch!public!testing! !
 !
 
@@ -39,16 +33,15 @@ isMatch!public!testing! !
 chunkType
 	^#'Class Comment'!
 
-isChunkClassFor: aString
-	"Abc comment:'
-	Don't check for trailing space in aString as the change log adds multiple entries for class
-	comments - some delimited with a space but some with a crlf"
+isChunkClassFor: aString tokens: anArray
+	"Abc comment:'"
 
-	| firstSpaceIndex |
-	^(firstSpaceIndex := aString indexOf: $\x20) ~~ 0
-		and: [(aString indexOfSubCollection: ' comment:') = firstSpaceIndex]! !
+	^anArray size == 3 and: 
+			[(self isToken: anArray second keyword: 'comment:') and: 
+					[(self isTokenString: anArray third)
+						and: [self isTokenClassIdentifier: anArray first]]]! !
 !ChunkBrowserClassCommentChunk class categoriesForMethods!
 chunkType!constants!public! !
-isChunkClassFor:!public!testing! !
+isChunkClassFor:tokens:!public!testing! !
 !
 

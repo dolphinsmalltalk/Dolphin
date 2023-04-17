@@ -705,7 +705,7 @@ removeFromSystem
 	is inherited. N.B. Do not supersend #uninitialize from an override, as you may damage a superclass which is not being removed."
 
 	self subclassesDo: [:each | each removeFromSystem].
-	self sourceManager logEvaluate: self name , ' removeFromSystem'.
+	self sourceManager logEvaluate: self fullName , ' removeFromSystem'.
 	ClassBuilder removeClass: self!
 
 removeImport: aBindingReference

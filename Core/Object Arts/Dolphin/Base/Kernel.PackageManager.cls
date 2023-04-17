@@ -238,11 +238,10 @@ allSourceObjects
 	^answer!
 
 allVariableAliases
-	^self packages inject: Set new
-		into: 
-			[:all :each |
-			all addAll: each aliasVariableNames.
-			all]!
+	| aliases |
+	aliases := Set new.
+	self packages do: [:each | aliases addAll: each aliasVariableNames].
+	^aliases!
 
 basePackages
 	^basePackages ifNil: [basePackages := IdentitySet new]!

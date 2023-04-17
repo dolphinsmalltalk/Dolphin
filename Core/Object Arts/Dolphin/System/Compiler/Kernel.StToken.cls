@@ -55,6 +55,9 @@ isLiteralArrayToken
 isLiteralByteArrayToken
 	^false!
 
+isLiteralSymbolToken
+	^false!
+
 isLiteralToken
 	^false!
 
@@ -115,6 +118,7 @@ isIdentifier!public!testing! !
 isKeyword!public!testing! !
 isLiteralArrayToken!public!testing! !
 isLiteralByteArrayToken!public!testing! !
+isLiteralSymbolToken!public!testing! !
 isLiteralToken!public!testing! !
 isNumberLiteralToken!public!testing! !
 isOptimized!public!testing! !

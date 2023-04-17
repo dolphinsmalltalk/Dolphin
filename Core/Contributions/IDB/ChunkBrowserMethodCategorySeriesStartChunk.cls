@@ -14,31 +14,34 @@ Public Domain Freeware'!
 !ChunkBrowserMethodCategorySeriesStartChunk categoriesForClass!IDB Goodies! !
 !ChunkBrowserMethodCategorySeriesStartChunk methodsFor!
 
-initialize: aString
-	"'Abc categoriesFor: #abc' or 'Abc class categoriesFor: #abc'"
+initialize: aString tokens: anArray
+	"Private - 'Abc categoriesFor: #abc' or 'Abc class categoriesFor: #abc'"
 
-	super initialize: aString.
-	identity2 := aString copyFrom: (aString indexOf: $#) + 1!
+	super initialize: aString tokens: anArray.
+	identity2 := anArray last value!
 
 seriesClass
 	^ChunkBrowserMethodCategoryChunk! !
 !ChunkBrowserMethodCategorySeriesStartChunk categoriesForMethods!
-initialize:!initializing!public! !
+initialize:tokens:!initializing!private! !
 seriesClass!constants!public! !
 !
 
 !ChunkBrowserMethodCategorySeriesStartChunk class methodsFor!
 
-isChunkClassFor: aString
+isChunkClassFor: aString tokens: anArray
 	"'Abc categoriesFor: #abc' or 'Abc class categoriesFor: #abc'"
 
-	| firstSpaceIndex |
-	^(firstSpaceIndex := aString indexOf: Character space) = 0
-		ifTrue: [false]
-		ifFalse:
-			[(aString indexOfSubCollection: ' categoriesFor: #') = firstSpaceIndex
-				or: [(aString indexOfSubCollection: ' class categoriesFor: #') = firstSpaceIndex]]! !
+	| tokens token |
+	(anArray size between: 3 and: 4) ifFalse: [^false].
+	tokens := ReadStream on: anArray.
+	self isTokenClassIdentifier: tokens next.
+	token := tokens next.
+	(self isToken: token identifier: 'class') ifTrue: [token := tokens next].
+	(self isToken: token keyword: 'categoriesFor:') ifFalse: [^false].
+	token := tokens nextAvailable.
+	^token notNil and: [token isLiteralSymbolToken and: [tokens atEnd]]! !
 !ChunkBrowserMethodCategorySeriesStartChunk class categoriesForMethods!
-isChunkClassFor:!public!testing! !
+isChunkClassFor:tokens:!public!testing! !
 !
 

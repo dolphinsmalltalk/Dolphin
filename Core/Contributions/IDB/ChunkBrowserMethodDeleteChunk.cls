@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 ChunkBrowserExpressionChunk subclass: #ChunkBrowserMethodDeleteChunk
-	instanceVariableNames: ''
+	instanceVariableNames: 'selectors'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -15,60 +15,56 @@ Public Domain Freeware'!
 !ChunkBrowserMethodDeleteChunk methodsFor!
 
 browseTarget
-	^self identity1AndIdentity2AsCompiledMethod!
+	^self identity1AsClass
+		ifNotNil: 
+			[:class |
+			(selectors detect: [:each | class includesSelector: each] ifNone: nil)
+				ifNil: [class]
+				ifNotNil: [:selector | class compiledMethodAt: selector]]!
 
 identity1AndIdentity2AsCompiledMethod
 	"Overridden for browse"
 
 	^self identity1AsClass
-		ifNotNil:
-			[:arg | 
-			| selectors |
-			selectors := identity2 subStrings.
-			(selectors notEmpty and: [arg includesSelector: selectors first asSymbol])
-				ifTrue: [arg compiledMethodAt: selectors first asSymbol]]!
+		ifNotNil: 
+			[:class |
+			(selectors detect: [:each | class includesSelector: each] ifNone: nil)
+				ifNotNil: [:selector | class compiledMethodAt: selector]]!
 
-initialize: aString
-	"	ClassName removeSelector: #SelectorSymbol
+initialize: aString tokens: anArray
+	"Private - 	ClassName removeSelector: #SelectorSymbol
 		ClassName class removeSelector: #SelectorSymbol
 		ClassName removeSelector: #SelectorSymbol ifAbsent: []
 		ClassName class removeSelector: #SelectorSymbol ifAbsent: []
 		ClassName removeSelectors: #(SelectorSymbols)
 		ClassName class removeSelectors: #(SelectorSymbols)"
 
-	| hashIndex |
-	super initialize: aString.
-	identity1 := self classNameFromRawText.
-	hashIndex := aString indexOf: $#.
-	identity2 := (aString indexOfSubCollection: #removeSelectors:) == 0
-		ifTrue:
-			[| stop |
-			stop := aString
-				nextIndexOf: Character space
-				from: hashIndex
-				to: aString size.
-			aString copyFrom: hashIndex + 1 to: (stop == 0 ifTrue: [aString size] ifFalse: [stop])]
-		ifFalse:
-			[(aString
-				copyFrom: hashIndex + 1
-				to:
-					(aString
-						nextIndexOf: $)
-						from: hashIndex
-						to: aString size)) copyWithoutAll: '#()'].
-	identity2 := identity2 trimBlanks	"PE/27/05/2004: remove trailing blank (thanks Pieter)"!
+	| tokens token |
+	super initialize: aString tokens: anArray.
+	tokens := ReadStream on: anArray.
+	identity1 := self classIdentityFromTokenStream: tokens.
+	tokens next value = 'removeSelectors:'
+		ifTrue: 
+			[self assert: [tokens next isLiteralArrayToken].
+			selectors := Array writeStream.
+			[(token := tokens next) isSpecial: $)] whileFalse: [selectors nextPut: token value].
+			selectors := selectors contents.
+			identity2 := selectors displayString.
+			identity2 := identity2 copyFrom: 3 to: identity2 size - 1]
+		ifFalse: 
+			[identity2 := tokens next value.
+			selectors := { identity2 }]!
 
 isMatch
 	"Answer true if class missing as the method must be deleted?"
 
 	^self identity1AsClass
 		ifNil: [true]
-		ifNotNil:
-			[:arg | (identity2 subStrings anySatisfy: [:each | arg includesSelector: each asSymbol]) not]! !
+		ifNotNil: [:class | (selectors anySatisfy: [:each | class includesSelector: each]) not]! !
 !ChunkBrowserMethodDeleteChunk categoriesForMethods!
 browseTarget!operations!public! !
 identity1AndIdentity2AsCompiledMethod!helpers!public! !
-initialize:!initializing!public! !
+initialize:tokens:!initializing!private! !
 isMatch!public!testing! !
 !
 
@@ -77,7 +73,7 @@ isMatch!public!testing! !
 chunkType
 	^#'Method Delete'!
 
-isChunkClassFor: aString
+isChunkClassFor: aString tokens: anArrayOfStToken
 	"	ClassName removeSelector: #SelectorSymbol
 		ClassName class removeSelector: #SelectorSymbol
 		ClassName removeSelector: #SelectorSymbol ifAbsent: []
@@ -85,13 +81,28 @@ isChunkClassFor: aString
 		ClassName removeSelectors: #(SelectorSymbols)
 		ClassName class removeSelectors: #(SelectorSymbols)"
 
-	| firstSpaceIndex |
-	^(firstSpaceIndex := aString indexOf: Character space) ~= 0
-		and:
-			[#(' removeSelector: #' ' class removeSelector: #' ' removeSelectors: #(' ' class removeSelectors: #(')
-				anySatisfy: [:each | (aString indexOfSubCollection: each) = firstSpaceIndex]]! !
+	| tokens token |
+	anArrayOfStToken size >= 3 ifFalse: [^false].
+	tokens := ReadStream on: anArrayOfStToken.
+	(self isTokenClassIdentifier: tokens next) ifFalse: [^false].
+	token := tokens next.
+	(token isIdentifier and: [token value = 'class']) ifTrue: [token := tokens next].
+	token isKeyword ifFalse: [^false].
+	token value = 'removeSelector:'
+		ifTrue: 
+			["Don't bother to check for the optional trailing ifAbsent: argument"
+			^tokens next isLiteralSymbolToken].
+	token value = 'removeSelectors:' ifFalse: [^false].
+	token := tokens nextAvailable.
+	(token notNil and: [token isLiteralArrayToken]) ifFalse: [^false].
+	
+	[token := tokens nextAvailable.
+	token isNil ifTrue: [^false].
+	token isSpecial: $)]
+			whileFalse: [token isLiteralSymbolToken ifFalse: [^false]].
+	^tokens atEnd! !
 !ChunkBrowserMethodDeleteChunk class categoriesForMethods!
 chunkType!constants!public! !
-isChunkClassFor:!public!testing! !
+isChunkClassFor:tokens:!public!testing! !
 !
 

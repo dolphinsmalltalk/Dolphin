@@ -46,21 +46,21 @@ atEnd
 classify: aCharacter
 	"May be asked to classify nil if peek at end of stream"
 
-	^aCharacter ifNil: [#eof] ifNotNil: [ClassificationTable lookup: aCharacter codePoint + 1]!
+	^aCharacter ifNil: [#eof] ifNotNil: [ClassificationTable lookup: aCharacter code + 1]!
 
 constantExpected
 	self lexicalError: LErrExpectConst.
 	^self literalErrorToken: buffer contents stop: self previousStepPosition!
 
 contents
-	| contentsStream |
-	contentsStream := WriteStream on: (Array new: 50).
-	self do: [:each | contentsStream nextPut: each].
-	^contentsStream contents!
+	"This doesn't behave like #contents on streams in that it does not reset to the start of the token stream"
+
+	#deprecated.
+	self upToEnd!
 
 do: aBlock
-	"Evaluate the argument, aBlock, for each of the remaining elements that can be accessed by 
-	the receiver."
+	"Evaluate the argument, aBlock, for each of the _remaining_ elements that can be accessed by the receiver.
+	Note that this doesn't reset to the start of the token stream."
 
 	[self atEnd] whileFalse: [aBlock value: self next]
 !
@@ -111,6 +111,13 @@ illegalCharacter
 
 illegalNumber
 	self lexicalError: LErrBadNumber range: (tokenStart to: self previousStepPosition)!
+
+initializeOn: aStream
+	stream := aStream.
+	buffer := WriteStream on: (Utf8String new: 60).
+	errorHandler := self.
+	line := 1.
+	environment := Smalltalk!
 
 lexicalError: anInteger
 	^self lexicalError: anInteger range: (tokenStart to: self errorPosition)!
@@ -209,13 +216,6 @@ next
 
 notificationClass
 	^Parser notificationClass!
-
-on: aStream
-	buffer := WriteStream on: (Utf8String new: 60).
-	stream := aStream.
-	errorHandler := self.
-	line := 1.
-	environment := Smalltalk!
 
 previousStepPosition
 	^characterType == #eof 
@@ -730,7 +730,13 @@ unterminatedComment: anInteger
 
 unterminatedString
 	self lexicalError: LErrStringNotClosed.
-	^self literalErrorToken: buffer contents stop: self previousStepPosition! !
+	^self literalErrorToken: buffer contents stop: self previousStepPosition!
+
+upToEnd
+	| contentsStream token |
+	contentsStream := WriteStream on: (Array new: 50).
+	[(token := self next) isEof] whileFalse: [contentsStream nextPut: token].
+	^contentsStream contents! !
 !Kernel.Scanner categoriesForMethods!
 addComment:!private!scanning! !
 atEnd!public!testing! !
@@ -746,6 +752,7 @@ extendedLiteralExpected!error handling!private! !
 getComments!accessing!public! !
 illegalCharacter!error handling!private! !
 illegalNumber!error handling!private! !
+initializeOn:!initializing!private! !
 lexicalError:!error handling!private! !
 lexicalError:range:!error handling!private! !
 line!accessing!public! !
@@ -756,7 +763,6 @@ newIntegerToken:exponent:!helpers!private! !
 newScaledDecimalToken:precision:scale:!helpers!private! !
 next!accessing!public! !
 notificationClass!constants!error handling!private! !
-on:!initializing!private! !
 previousStepPosition!accessing!private! !
 readIntegerOfRadix:!private!scanning! !
 recoverFromUnterminatedComment:!error handling!private! !
@@ -789,6 +795,7 @@ stepBackTo:!helpers!private! !
 stripSeparators!private!scanning! !
 unterminatedComment:!error handling!private! !
 unterminatedString!error handling!private! !
+upToEnd!accessing!public! !
 !
 
 Kernel.Scanner methodProtocol: #parseErrorHandler attributes: #(#readOnly) selectors: #(#reportError:at:line:range:extras:)!
@@ -842,7 +849,7 @@ initializeClassificationTable
 isSelector: aSymbol
 	| scanner token |
 	scanner := self basicNew.
-	scanner on: (ReadStream on: aSymbol).
+	scanner initializeOn: (ReadStream on: aSymbol).
 	scanner step.
 	token := scanner scanAnySymbol.
 	token isLiteralToken ifFalse: [^false].
@@ -855,27 +862,25 @@ isVariable: aString
 	aString isEmpty ifTrue: [^false].
 	(ClassificationTable lookup: aString first codePoint + 1) == #alphabetic ifFalse: [^false].
 	scanner := self basicNew.
-	scanner on: (ReadStream on: aString asString).
+	scanner initializeOn: (ReadStream on: aString asString).
 	scanner step.
 	token := scanner next.
 	^token isIdentifier and: [token stop = aString size]!
 
-on: aStream 
-	| scanner |
-	scanner := self basicNew on: aStream.
-	scanner
+on: aStream
+	^self basicNew
+		initializeOn: aStream;
 		step;
-		stripSeparators.
-	^scanner!
+		stripSeparators;
+		yourself!
 
-on: aStream errorHandler: parseErrorHandler 
-	| scanner |
-	scanner := self basicNew on: aStream.
-	scanner
+on: aStream errorHandler: parseErrorHandler
+	^self basicNew
+		initializeOn: aStream;
 		errorHandler: parseErrorHandler;
 		step;
-		stripSeparators.
-	^scanner! !
+		stripSeparators;
+		yourself! !
 !Kernel.Scanner class categoriesForMethods!
 classify:!public!scanning! !
 initialize!development!initializing!public! !

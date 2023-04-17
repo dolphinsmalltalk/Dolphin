@@ -14,25 +14,19 @@ Public Domain Freeware'!
 !ChunkBrowserClassGUIDChunk categoriesForClass!IDB Goodies! !
 !ChunkBrowserClassGUIDChunk methodsFor!
 
-browseTarget
-	^self identity1AsClass!
+initialize: aString tokens: anArray
+	"Private - Abc guid: (GUID fromString: '{6AA41459-4B33-412A-95A7-261C78522521})'
+	Abc guid: (IID fromString: '{6AA41459-4B33-412A-95A7-261C78522521})'
+	Abc guid: (CLSID fromString: '{6AA41459-4B33-412A-95A7-261C78522521}')"
 
-initialize: aString
-	"Abc guid: (GUID fromString: '{6AA41459-4B33-412A-95A7-261C78522521}'
-	Abc guid: (IID fromString: '{6AA41459-4B33-412A-95A7-261C78522521}'
-	Abc guid: (CLSID fromString: '{6AA41459-4B33-412A-95A7-261C78522521}'"
-
-	super initialize: aString.
-	identity1 := rawText copyFrom: 1 to: (rawText indexOf: $ ).
-	id := rawText
-		copyFrom: (rawText findFirst: [:each | each = $']) + 1
-		to: (rawText findLast: [:each | each = $']) - 1!
+	super initialize: aString tokens: anArray.
+	identity1 := anArray first value.
+	id := (anArray at: anArray size - 1) value!
 
 isMatch
-	^self identity1AsClass ifNotNil: [:arg | arg instanceClass guid asString = id]! !
+	^self identity1AsClass ifNotNil: [:class | class instanceClass guid asString = id]! !
 !ChunkBrowserClassGUIDChunk categoriesForMethods!
-browseTarget!operations!public! !
-initialize:!initializing!public! !
+initialize:tokens:!initializing!private! !
 isMatch!public!testing! !
 !
 
@@ -41,18 +35,19 @@ isMatch!public!testing! !
 chunkType
 	^#'Class GUID'!
 
-isChunkClassFor: aString
-	"Abc guid: (GUID fromString: '{6AA41459-4B33-412A-95A7-261C78522521}'
-	Abc guid: (IID fromString: '{6AA41459-4B33-412A-95A7-261C78522521}'
-	Abc guid: (CLSID fromString: '{6AA41459-4B33-412A-95A7-261C78522521}'"
+isChunkClassFor: aString tokens: anArray
+	"Abc guid: (GUID fromString: '{6AA41459-4B33-412A-95A7-261C78522521})'
+	Abc guid: (IID fromString: '{6AA41459-4B33-412A-95A7-261C78522521})'
+	Abc guid: (CLSID fromString: '{6AA41459-4B33-412A-95A7-261C78522521}')"
 
-	| firstSpaceIndex |
-	^(firstSpaceIndex := aString indexOf: Character space) ~= 0 and: 
-			[(aString indexOfSubCollection: ' guid: (Core.GUID fromString: ''{') = firstSpaceIndex or: 
-					[(aString indexOfSubCollection: ' guid: (IID fromString: ''{') = firstSpaceIndex
-						or: [(aString indexOfSubCollection: ' guid: (CLSID fromString: ''{') = firstSpaceIndex]]]! !
+	^anArray size == 7 and: 
+			[(self isToken: anArray second keyword: 'guid:') and: 
+					[(self isTokenClassIdentifier: anArray first) and: 
+							[
+							[GUID fromString: (anArray at: anArray size - 1) value.
+							true] on: RPCError do: [:ex | false]]]]! !
 !ChunkBrowserClassGUIDChunk class categoriesForMethods!
 chunkType!constants!public! !
-isChunkClassFor:!public!testing! !
+isChunkClassFor:tokens:!public!testing! !
 !
 

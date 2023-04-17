@@ -14,20 +14,16 @@ Public Domain Freeware'!
 !ChunkBrowserClassDeleteChunk categoriesForClass!IDB Goodies! !
 !ChunkBrowserClassDeleteChunk methodsFor!
 
-browseTarget
-	^self identity1AsClass!
+initialize: aString tokens: anArray
+	"Private - Abcd removeFromSystem"
 
-initialize: aString
-	"Abcd removeFromSystem"
-
-	super initialize: aString.
-	identity1 := rawText copyFrom: 1 to: (rawText indexOf: $ )!
+	super initialize: aString tokens: anArray.
+	identity1 := anArray first value!
 
 isMatch
 	^self identity1AsClass isNil! !
 !ChunkBrowserClassDeleteChunk categoriesForMethods!
-browseTarget!operations!public! !
-initialize:!initializing!public! !
+initialize:tokens:!initializing!private! !
 isMatch!public!testing! !
 !
 
@@ -36,14 +32,14 @@ isMatch!public!testing! !
 chunkType
 	^#'Class Delete'!
 
-isChunkClassFor: aString
+isChunkClassFor: aString tokens: anArray
 	"Abcd removeFromSystem"
 
-	| firstSpaceIndex |
-	^(firstSpaceIndex := aString indexOf: Character space) ~= 0
-		and: [(aString indexOfSubCollection: ' removeFromSystem') = firstSpaceIndex]! !
+	^anArray size == 2 and: 
+			[(self isToken: anArray second identifier: 'removeFromSystem')
+				and: [self isTokenClassIdentifier: anArray first]]! !
 !ChunkBrowserClassDeleteChunk class categoriesForMethods!
 chunkType!constants!public! !
-isChunkClassFor:!public!testing! !
+isChunkClassFor:tokens:!public!testing! !
 !
 

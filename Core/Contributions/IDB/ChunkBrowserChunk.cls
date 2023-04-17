@@ -6,6 +6,7 @@ Object subclass: #ChunkBrowserChunk
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ChunkBrowserChunk guid: (GUID fromString: '{81a73b99-1ef4-4578-b810-1fdb663e27f2}')!
+ChunkBrowserChunk addClassConstant: 'ChunkClasses' value: {Smalltalk.ChunkBrowserMethodCategorySeriesStartChunk. Smalltalk.ChunkBrowserMethodDefineSeriesStartChunk. Smalltalk.ChunkBrowserMethodsCategoriesSeriesStartChunk. Smalltalk.ChunkBrowserClassDefineChunk. Smalltalk.ChunkBrowserClassDeleteChunk. Smalltalk.ChunkBrowserMethodDeleteChunk. Smalltalk.ChunkBrowserClassCommentChunk. Smalltalk.ChunkBrowserClassGUIDChunk. Smalltalk.ChunkBrowserClassProtocolChunk. Smalltalk.ChunkBrowserClassCategorySeriesStartChunk. Smalltalk.ChunkBrowserSystemChunk}!
 ChunkBrowserChunk comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2006 Ian Bartholomew
@@ -19,6 +20,10 @@ Public Domain Freeware'!
 
 = aChunk
 	^self class == aChunk class and: [identity1 = aChunk identity1 and: [identity2 = aChunk identity2]]!
+
+addChunksFrom: sourceFiler to: chunks
+	chunks addLast: self.
+	index := chunks size!
 
 browse
 	"Open a broser on the receiver"
@@ -61,12 +66,13 @@ chunkIconIndex
 chunkType
 	^self class chunkType!
 
-classNameFromRawText
-	| firstSpaceIndex |
-	firstSpaceIndex := rawText indexOf: $\x20.
-	^(rawText indexOfSubCollection: ' class') = firstSpaceIndex
-		ifTrue: [rawText copyFrom: 1 to: firstSpaceIndex + 5]
-		ifFalse: [rawText copyFrom: 1 to: firstSpaceIndex - 1]!
+classIdentityFromTokenStream: aReadStream
+	| className |
+	className := aReadStream next value.
+	(self class isToken: aReadStream next identifier: 'class')
+		ifTrue: [className := className , ' class']
+		ifFalse: [aReadStream skip: -1].
+	^className!
 
 hash
 	^(self class hash bitXor: identity1 hash) bitXor: identity2 hash!
@@ -76,16 +82,10 @@ identity1
 
 identity1AndIdentity2AsCompiledMethod
 	^self identity1AsClass
-		ifNotNil:
-			[:arg | (arg includesSelector: identity2 asSymbol) ifTrue: [arg compiledMethodAt: identity2 asSymbol]]!
+		ifNotNil: [:class | class compiledMethodAt: identity2 asSymbol ifAbsent: nil]!
 
 identity1AsClass
-	| className i |
-	i := identity1 indexOf: $\x20.
-	className := i == 0
-				ifTrue: [identity1 asQualifiedReference]
-				ifFalse: [(identity1 copyFrom: 1 to: i - 1) asQualifiedReference meta].
-	^className valueOrNil!
+	^identity1 asQualifiedReference valueOrNil!
 
 identity2
 	^identity2!
@@ -99,8 +99,10 @@ index: anInteger
 initialize: aString
 	rawText := aString.
 	picked := false.
-	identity1 := String new.
-	identity2 := String new!
+	identity1 := identity2 := ''!
+
+initialize: aString tokens: anArray
+	self initialize: aString!
 
 isFilteredUsing: aChunkBrowserFilter
 	"Answers true if the receiver passes all the tests in aChunkBrowserFilter"
@@ -124,11 +126,6 @@ isImageSave
 
 isMatch
 	self subclassResponsibility!
-
-isSeriesStart
-	"Override if the receiver is a chunk representing the start of a series"
-
-	^false!
 
 matchIcon
 	^true icon!
@@ -159,6 +156,7 @@ showIn: aTextPresenter
 !ChunkBrowserChunk categoriesForMethods!
 <=!comparing!public! !
 =!comparing!public! !
+addChunksFrom:to:!operations!public! !
 browse!operations!public! !
 browseTarget!operations!public! !
 canBrowse!public!testing! !
@@ -167,7 +165,7 @@ canShowDifferences!public!testing! !
 chunkClass!accessing!public! !
 chunkIconIndex!accessing!public! !
 chunkType!accessing!constants!public! !
-classNameFromRawText!helpers!public! !
+classIdentityFromTokenStream:!initializing!private! !
 hash!comparing!public! !
 identity1!accessing!public! !
 identity1AndIdentity2AsCompiledMethod!helpers!public! !
@@ -175,11 +173,11 @@ identity1AsClass!helpers!public! !
 identity2!accessing!public! !
 index!accessing!public! !
 index:!accessing!public! !
-initialize:!initializing!public! !
+initialize:!initializing!private! !
+initialize:tokens:!initializing!private! !
 isFilteredUsing:!operations!public! !
 isImageSave!public!testing! !
 isMatch!public!testing! !
-isSeriesStart!public!testing! !
 matchIcon!accessing!constants!public! !
 mismatchIcon!accessing!constants!public! !
 missingIcon!constants!public! !
@@ -193,47 +191,16 @@ showIn:!displaying!public! !
 
 !ChunkBrowserChunk class methodsFor!
 
-chunkClasses
-	"A collection of classes that should be tested to decide the type of a chunk"
-
-	ChunkClasses
-		ifNil: 
-			[ChunkClasses := OrderedCollection new
-						add: ChunkBrowserMethodCategorySeriesStartChunk;
-						add: ChunkBrowserMethodDefineSeriesStartChunk;
-						add: ChunkBrowserClassDefineChunk;
-						add: ChunkBrowserClassDeleteChunk;
-						add: ChunkBrowserMethodDeleteChunk;
-						add: ChunkBrowserClassCommentChunk;
-						add: ChunkBrowserClassGUIDChunk;
-						add: ChunkBrowserClassProtocolChunk;
-						add: ChunkBrowserClassCategorySeriesStartChunk;
-						add: ChunkBrowserSystemChunk;
-						yourself].
-	^ChunkClasses!
-
 chunksFromStream: aStream
 	"Answer a collection of subclasses representing the chunks found in aStream"
 
 	| chunks sourceFiler |
-	chunks := OrderedCollection new.
+	chunks := OrderedCollection new: 128.
 	sourceFiler := ChunkSourceFiler on: aStream.
 	[aStream atEnd] whileFalse: 
 			[| chunkText |
 			chunkText := sourceFiler nextChunk.
-			chunkText isEmpty
-				ifFalse: 
-					[| chunkInstance |
-					chunkInstance := self instanceFor: chunkText.
-					chunkInstance isSeriesStart
-						ifTrue: 
-							[| seriesChunkText |
-							seriesChunkText := sourceFiler nextChunk.
-							[seriesChunkText isEmpty] whileFalse: 
-									[chunks add: (chunkInstance seriesInstanceFor: seriesChunkText).
-									seriesChunkText := sourceFiler nextChunk]]
-						ifFalse: [chunks add: chunkInstance]]].
-	chunks keysAndValuesDo: [:index :each | each index: index].
+			chunkText isEmpty ifFalse: [(self instanceFor: chunkText) addChunksFrom: sourceFiler to: chunks]].
 	^chunks!
 
 chunksFromText: aString
@@ -244,27 +211,73 @@ chunksFromText: aString
 chunkType
 	self subclassResponsibility!
 
+initialize
+	"A collection of classes that should be tested to decide the type of a chunk"
+
+	self addClassConstant: 'ChunkClasses'
+		value: {
+				ChunkBrowserMethodCategorySeriesStartChunk.
+				ChunkBrowserMethodDefineSeriesStartChunk.
+				ChunkBrowserMethodsCategoriesSeriesStartChunk.
+				ChunkBrowserClassDefineChunk.
+				ChunkBrowserClassDeleteChunk.
+				ChunkBrowserMethodDeleteChunk.
+				ChunkBrowserClassCommentChunk.
+				ChunkBrowserClassGUIDChunk.
+				ChunkBrowserClassProtocolChunk.
+				ChunkBrowserClassCategorySeriesStartChunk.
+				ChunkBrowserSystemChunk
+			}!
+
 instanceFor: aString
 	"Detect the correct class for the chunk in aString and answer an instance of it"
 
-	^(self chunkClasses
-		detect: [:each | each isChunkClassFor: aString]
-		ifNone: [ChunkBrowserOtherChunk]) newFor: aString!
+	| tokens |
+	tokens := (Scanner on: (ReadStream on: aString)) upToEnd.
+	1 to: ChunkClasses size
+		do: 
+			[:i |
+			| each |
+			each := ChunkClasses at: i.
+			(each isChunkClassFor: aString tokens: tokens) ifTrue: [^each newFor: aString tokens: tokens]].
+	^ChunkBrowserOtherChunk newFor: aString tokens: tokens!
 
-isChunkClassFor: aString
+isChunkClassFor: aString tokens: anArrayOfStToken
 	self subclassResponsibility!
 
-newFor: aString
+isToken: aStToken amongKeywords: aCollectionOfStrings
+	^aStToken isKeyword and: [aCollectionOfStrings includes: aStToken value]!
+
+isToken: token identifier: aString
+	^token isIdentifier and: [token value = aString]!
+
+isToken: aStToken keyword: aString
+	^aStToken isKeyword and: [aStToken value = aString]!
+
+isTokenClassIdentifier: aStToken
+	"The scanner will identify syntactically valid identifiers, qualified or not. We don't impose any additional restriction on the class names here as this is just used for matching purposes, and the chunks targeting classes are identifiable more reliably by other means."
+
+	^aStToken isIdentifier!
+
+isTokenString: aStToken
+	^aStToken isLiteralToken and: [aStToken value isString]!
+
+newFor: aString tokens: anArray
 	"Answer an initialized instance of the receiving chunk class"
 
-	^self new initialize: aString! !
+	^self new initialize: aString tokens: anArray! !
 !ChunkBrowserChunk class categoriesForMethods!
-chunkClasses!constants!public! !
 chunksFromStream:!helpers!public! !
 chunksFromText:!helpers!public! !
 chunkType!accessing!constants!public! !
+initialize!constants!public! !
 instanceFor:!instance creation!public! !
-isChunkClassFor:!public!testing! !
-newFor:!instance creation!public! !
+isChunkClassFor:tokens:!public!testing! !
+isToken:amongKeywords:!private!testing! !
+isToken:identifier:!private!testing! !
+isToken:keyword:!private!testing! !
+isTokenClassIdentifier:!private!testing! !
+isTokenString:!private!testing! !
+newFor:tokens:!instance creation!public! !
 !
 

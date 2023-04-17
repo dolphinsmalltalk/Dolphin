@@ -531,7 +531,8 @@ retryUInt32AtOffset: anInteger put: anObject failureCode: failureCode
 			[| intVal |
 			"Not a suitable value. Attempt to coerce to Integer and retry. Will error if anObject does understand #asInteger."
 			intVal := anObject asInteger.
-			(intVal >= 0 and: [intVal <= 16rFFFFFFFF]) ifTrue: [^self uint32AtOffset: anInteger put: intVal]].
+			(intVal ~~ anObject and: [intVal >= 0 and: [intVal <= 16rFFFFFFFF]])
+				ifTrue: [^self uint32AtOffset: anInteger put: intVal]].
 	^self updatePrimitiveFailed: failureCode atOffset: anInteger!
 
 retryUIntPtrAtOffset: anInteger put: anObject failureCode: failureCode

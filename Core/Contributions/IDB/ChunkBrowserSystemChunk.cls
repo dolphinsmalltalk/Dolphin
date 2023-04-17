@@ -14,43 +14,27 @@ Public Domain Freeware'!
 !ChunkBrowserSystemChunk categoriesForClass!IDB Goodies! !
 !ChunkBrowserSystemChunk methodsFor!
 
-compressedChanges
-	identity1 := 'Compressed changes'!
-
-compressedSources
-	identity1 := 'Compressed sources'!
-
-imageSave
-	identity1 := 'Image save'!
-
-imageStart
-	identity1 := 'Image start'!
-
 initializeIdentity
 	"
-	''11:06:39, 03 April 2002: Dolphin Smalltalk
-	''11:06:39, 03 April 2002: Loading package
-	''11:06:39, 03 April 2002: Loading source package
-	''11:06:39, 03 April 2002: Uninstalling package
-	''11:06:39, 03 April 2002: Image saved
-	''11:06:39, 03 April 2002: Compressed sources
-	''11:06:39, 03 April 2002: Compressed changes
+	'' 2002-04-03T11:06:39+01:00：Dolphin Smalltalk
+	'' 2002-04-03T11:06:39+01:00：Loading package 'DSDN' from：C:\Documents and Settings\Ian\My Documents\Dolphin Smalltalk 5.0\DSDN\DSDN.pac
+	'' 2002-04-03T11:06:39+01:00：Loading source package
+	'' 2002-04-03T11:06:39+01:00：Uninstalling package 'ChunkBrower'
+	'' 2002-04-03T11:06:39+01:00：Image saved
+	'' 2002-04-03T11:06:39+01:00：Compressed sources
+	'' 2002-04-03T11:06:39+01:00：Compressed changes
+	'' 2002-04-03T11:06:39+01:00：Compressing sources...
 	"
 
-	| terminate |
-	self perform: (self class symbolFor: rawText).
-	terminate := rawText indexOfSubCollection: ': '.
-	(identity2 isEmpty and: [terminate ~= 0])
-		ifTrue: [identity2 := rawText copyFrom: 2 to: terminate - 1]!
+	identity1 := self class identityFor: rawText.
+	identity2 := (identity1 endsWith: 'package')
+				ifTrue: [self packageName]
+				ifFalse: [(DateAndTime readFrom: (rawText readStream
+								next;
+								yourself)) displayString]!
 
 isImageSave
 	^identity1 = 'Image save'!
-
-loadPackage
-	"11:28:22, 06 April 2002: Loading package 'DSDN' from: C:\Documents and Settings\Ian\My Documents\Dolphin Smalltalk 5.0\DSDN\DSDN.pac"
-
-	identity1 := 'Load package'.
-	identity2 := self packageName!
 
 packageName
 	| quoteIndex |
@@ -61,23 +45,11 @@ packageName
 			(rawText
 				nextIndexOf: $'
 				from: quoteIndex
-				to: rawText size) - 1!
-
-uninstallPackage
-	"15:15:09, 07 April 2002: Uninstalling package 'ChunkBrowser'"
-
-	identity1 := 'Uninstall package'.
-	identity2 := self packageName! !
+				to: rawText size) - 1! !
 !ChunkBrowserSystemChunk categoriesForMethods!
-compressedChanges!operations!public! !
-compressedSources!operations!public! !
-imageSave!operations!public! !
-imageStart!operations!public! !
 initializeIdentity!initializing!public! !
 isImageSave!public!testing! !
-loadPackage!operations!public! !
 packageName!helpers!public! !
-uninstallPackage!operations!public! !
 !
 
 !ChunkBrowserSystemChunk class methodsFor!
@@ -86,66 +58,50 @@ chunkType
 	^#System!
 
 hasText: aString
-	^(self symbolFor: aString) notNil!
+	^(self identityFor: aString) notNil!
 
 hasTime: aString
-	"''11:06:39, 03 April 2002: Image saved''
-	Got to be pretty unlucky if this fails and it's a lot faster than trying
-	to convert aString to a Time"
+	"'' 2002-04-03T11:06:39+01:00：Image saved''"
 
-	^aString fourth = $:
-		and:
-			[(aString at: 7) = $:
-				and:
-					[(aString at: 10) = $,
-						and:
-							[| bits |
-							bits := (aString copyFrom: 2 to: 35) subStrings.
-							bits size >= 4
-								and:
-									[bits first size = 9
-										and:
-											[bits second size = 2
-												and:
-													[(bits third allSatisfy: [:each | each isLetter])
-														and: [bits fourth size = 5 and: [bits fourth last = $:]]]]]]]]!
+	^(DateAndTime readFrom: ((ReadStream on: aString)
+				next;
+				yourself)
+		ifInvalid: nil) notNil!
 
-isChunkClassFor: aString
-	"
-	''11:06:39, 03 April 2002: Dolphin Smalltalk
-	''11:06:39, 03 April 2002: Loading package
-	''11:06:39, 03 April 2002: Loading source package
-	''11:06:39, 03 April 2002: Uninstalling package
-	''11:06:39, 03 April 2002: Image saved
-	''11:06:39, 03 April 2002: Compressed sources
-	''11:06:39, 03 April 2002: Compressed changes
-	''11:06:39, 03 April 2002: Compressing sources...
-	"
-
-	^aString size > 30
-		and:
-			[aString first = $"
-				and: [aString last = $" and: [(self hasTime: aString) and: [self hasText: aString]]]]!
-
-symbolFor: aString
+identityFor: aString
 	| lookup |
-	lookup := ##((Dictionary new)
-			at: ': Dolphin Smalltalk' put: #imageStart;
-			at: ': Loading package' put: #loadPackage;
-			at: ': Loading source package' put: #loadPackage;
-			at: ': Uninstalling package' put: #uninstallPackage;
-			at: ': Image saved' put: #imageSave;
-			at: ': Compressed sources' put: #compressedSources;
-			at: ': Compressed changes' put: #compressedChanges;
-			at: ': Compressing sources...' put: #compressedSources;
-			yourself).
-	^(lookup associations detect: [:each | (aString indexOfSubCollection: each key) ~= 0] ifNone: [nil])
-		ifNotNil: [:arg | arg value]! !
+	lookup := ##({
+				'：Dolphin Smalltalk' -> 'Image start'.
+				'：Loading package' -> 'Load package'.
+				'：Loading source package' -> 'Load package'.
+				'：Uninstalling package' -> 'Uninstall package'.
+				'：Image saved' -> 'Image save'.
+				'：Compressed sources' -> 'Compressed sources'.
+				'：Compressed changes' -> 'Compressed changes'.
+				'：Compressing sources...' -> 'Compressed sources'
+			}).
+	^(lookup detect: [:each | (aString indexOfSubCollection: each key startingAt: 1) ~= 0] ifNone: nil)
+		ifNotNil: [:arg | arg value]!
+
+isChunkClassFor: aString tokens: anArray
+	"
+	'' 2002-04-03T11:06:39+01:00：Dolphin Smalltalk
+	'' 2002-04-03T11:06:39+01:00：Loading package 'DSDN' from：C:\Documents and Settings\Ian\My Documents\Dolphin Smalltalk 5.0\DSDN\DSDN.pac
+	'' 2002-04-03T11:06:39+01:00：Loading source package
+	'' 2002-04-03T11:06:39+01:00：Uninstalling package 'ChunkBrower'
+	'' 2002-04-03T11:06:39+01:00：Image saved
+	'' 2002-04-03T11:06:39+01:00：Compressed sources
+	'' 2002-04-03T11:06:39+01:00：Compressed changes
+	'' 2002-04-03T11:06:39+01:00：Compressing sources...
+	"
+
+	^anArray isEmpty
+		and: [(aString includes: $：) and: [(self hasTime: aString) and: [self hasText: aString]]]! !
 !ChunkBrowserSystemChunk class categoriesForMethods!
 chunkType!constants!public! !
 hasText:!public!testing! !
 hasTime:!public!testing! !
-isChunkClassFor:!public!testing! !
-symbolFor:!constants!public! !
+identityFor:!constants!public! !
+isChunkClassFor:tokens:!public!testing! !
 !
 

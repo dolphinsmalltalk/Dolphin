@@ -37,6 +37,7 @@ package classNames
 	add: #ChunkBrowserMethodDefineChunk;
 	add: #ChunkBrowserMethodDefineSeriesStartChunk;
 	add: #ChunkBrowserMethodDeleteChunk;
+	add: #ChunkBrowserMethodsCategoriesSeriesStartChunk;
 	add: #ChunkBrowserModel;
 	add: #ChunkBrowserOtherChunk;
 	add: #ChunkBrowserSeriesChunk;
@@ -127,7 +128,7 @@ ChunkBrowserExpressionChunk subclass: #ChunkBrowserClassProtocolChunk
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ChunkBrowserExpressionChunk subclass: #ChunkBrowserMethodDeleteChunk
-	instanceVariableNames: ''
+	instanceVariableNames: 'selectors'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -172,6 +173,11 @@ ChunkBrowserSeriesStartChunk subclass: #ChunkBrowserMethodCategorySeriesStartChu
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ChunkBrowserSeriesStartChunk subclass: #ChunkBrowserMethodDefineSeriesStartChunk
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ChunkBrowserSeriesStartChunk subclass: #ChunkBrowserMethodsCategoriesSeriesStartChunk
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

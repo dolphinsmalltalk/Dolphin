@@ -513,13 +513,9 @@ readPageFor: anInteger
 	readLimit := file
 				position: pageBase - 1;
 				read: collection count: PageSize.
-	readLimit == PageSize
-		ifFalse: 
-			["Zero out the remainder of the buffer to clear any data read for the
-			 previously visited page. This is necessary in case we position beyond the
-			 current end of file and write some data - we don't want stale data from the
-			 previous page showing through."
-			OS.Kernel32 zeroMemory: collection yourAddress + readLimit length: PageSize - readLimit]!
+	readLimit == PageSize ifTrue: [^self].
+	"Zero out the remainder of the buffer to clear any data read for the previously visited page. This is necessary in case we position beyond the current end of file and write some data - we don't want stale data from the previous page showing through."
+	OS.Kernel32 zeroMemory: collection yourAddress + readLimit length: PageSize - readLimit!
 
 reset
 	self position: 0!

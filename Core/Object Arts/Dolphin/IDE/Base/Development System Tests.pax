@@ -351,7 +351,7 @@ testTokensFromTo
 			presenter text: text.
 			presenter restyleAll.
 			tokens := (presenter tokensFrom: 1 to: presenter textLength) asArray.
-			expected := (Scanner on: presenter text readStream) contents
+			expected := (Scanner on: presenter text readStream) upToEnd
 						collect: [:each | (styler styleNameFor: each) -> (text copyFrom: each start to: each stop)].
 			self assert: tokens equals: expected]! !
 !UI.Scintilla.Tests.ScintillaViewTest categoriesForMethods!

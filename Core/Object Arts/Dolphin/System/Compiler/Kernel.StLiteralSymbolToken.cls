@@ -17,10 +17,14 @@ formatOn: aStream source: aString
 		ifTrue: [aStream nextPutAll: value]
 		ifFalse: [value asString printOn: aStream]!
 
+isLiteralSymbolToken
+	^true!
+
 valueClass
 	^Symbol! !
 !Kernel.StLiteralSymbolToken categoriesForMethods!
 formatOn:source:!public! !
+isLiteralSymbolToken!public!testing! !
 valueClass!public! !
 !
 

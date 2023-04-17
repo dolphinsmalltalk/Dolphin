@@ -100,7 +100,7 @@ at: anObject ifAbsent: aNiladicValuable
 		ifNil: [aNiladicValuable value]
 		ifNotNil: [values at: index]!
 
-at: keyObject ifAbsentPutClean: aMonadicValuable
+at: keyObject ifAbsentPutClean: aNiladicValuable
 	"Answer the value of the receiver keyed by the first <Object> argument. If key is not one of the receiver's keys, then add the result of evaluating  the <niladicValuable> 2nd argument and answer that result.
 	Note that unlike #at:ifAbsentPut:, this method assumes that the valuable does not modify the receiver, and therefore it only looks up the key position once. Thus it is more efficient but less general purpose."
 
@@ -109,7 +109,7 @@ at: keyObject ifAbsentPutClean: aMonadicValuable
 	^(self basicAt: (index := self findKeyOrNil: keyObject))
 		ifNil: 
 			[| value |
-			values at: index put: (value := aMonadicValuable value).
+			values at: index put: (value := aNiladicValuable value).
 			self privateAt: index put: keyObject.
 			value]
 		ifNotNil: [values at: index]!

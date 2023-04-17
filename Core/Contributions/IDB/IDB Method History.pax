@@ -68,6 +68,7 @@ package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\MVP\Icons\Dolphin Text Tile Icons'
 	'..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\Object Arts\Dolphin\MVP\Models\Value\Dolphin Value Models'
+	'..\..\Object Arts\Dolphin\System\Compiler\Smalltalk Parser'
 	'..\..\Object Arts\Dolphin\ActiveX\Shell\Windows Shell').
 
 package!
@@ -85,7 +86,7 @@ Object subclass: #MethodVersion
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #SelectorParser
-	instanceVariableNames: ''
+	instanceVariableNames: 'stream'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

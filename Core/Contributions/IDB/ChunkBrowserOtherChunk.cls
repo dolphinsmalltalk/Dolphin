@@ -37,25 +37,34 @@ chunkIconIndex
 hash
 	^super hash bitXor: rawText hash!
 
-initialize: aString
-	super initialize: aString.
-	identity1 := String new.
+initialize: aString tokens: anArray
+	super initialize: aString tokens: anArray.
 	self initializeIdentity!
 
 initializeIdentity
-	| tidy |
 	identity1 := (rawText first = $" and: [rawText last = $"])
-		ifTrue: ['comment']
-		ifFalse: ['evaluation'].
-	tidy := rawText copyReplacing: Character cr withObject: $_.
-	tidy := tidy copyWithout: Character lf.
-	identity2 := tidy copyFrom: 1 to: (tidy size min: 100)!
+				ifTrue: ['comment']
+				ifFalse: ['evaluation'].
+	identity2 := self summaryFromText!
 
 isMatch
 	^nil!
 
 restore
-	^nil! !
+	^nil!
+
+summaryFromText
+	| text summary ch |
+	text := ReadStream on: rawText.
+	summary := String writeStream: 102.
+	
+	[(ch := text nextAvailable) isNil
+		or: [summary position == 99 and: 
+					[summary nextPut: $\x2026.
+					true]]]
+			whileFalse: 
+				[ch == $\r ifTrue: [summary nextPutAll: '\n'] ifFalse: [ch == $\n ifFalse: [summary nextPut: ch]]].
+	^summary grabContents! !
 !ChunkBrowserOtherChunk categoriesForMethods!
 =!comparing!public! !
 browseTarget!operations!public! !
@@ -64,17 +73,22 @@ canCompare!public!testing! !
 chunkClass!accessing!public! !
 chunkIconIndex!accessing!public! !
 hash!comparing!public! !
-initialize:!initializing!public! !
+initialize:tokens:!initializing!private! !
 initializeIdentity!initializing!public! !
 isMatch!public!testing! !
 restore!operations!public! !
+summaryFromText!initializing!private! !
 !
 
 !ChunkBrowserOtherChunk class methodsFor!
 
 chunkType
-	^#Other! !
+	^#Other!
+
+isChunkClassFor: aString tokens: anArray
+	^true! !
 !ChunkBrowserOtherChunk class categoriesForMethods!
 chunkType!constants!public! !
+isChunkClassFor:tokens:!public!testing! !
 !
 
