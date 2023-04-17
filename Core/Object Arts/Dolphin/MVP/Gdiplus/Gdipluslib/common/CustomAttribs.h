@@ -43,6 +43,7 @@
 #define _Out_writes_opt_(sizeExpr) [out, size_is(#sizeExpr), _OptionalCustomAttrib_]
 #define _Out_writes_bytes_(sizeExpr) [out, size_is(#sizeExpr)]
 #define _Out_writes_to_(sizeExpr, lenExpr) [out, size_is(#sizeExpr)]
+#define _Inout_updates_ [in, out, size_is(#sizeExpr)]
 #define _Inout_updates_bytes_(sizeExpr) [in, out, size_is(#sizeExpr)]
 #define _Outptr_result_bytebuffer_(sizeExpr) [out, size_is(#sizeExpr)]
 #define _Deref_out_range_(relation, var)
@@ -55,8 +56,10 @@
 #define _Out_opt_ [out, _OptionalCustomAttrib_]
 #define _Inout_opt_ [in, out , _OptionalCustomAttrib_]
 #define _Outptr_ [out]
+#define _Outptr_opt_ [out, _OptionalCustomAttrib_]
 #define _Outptr_result_maybenull_ [out]
 #define _Outptr_opt_result_maybenull_ [out, _OptionalCustomAttrib_]
+#define _Outptr_opt_result_buffer_ [out, _OptionalCustomAttrib_]
 
 #define _Success_(e)
 

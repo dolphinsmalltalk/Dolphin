@@ -3,10 +3,29 @@
 UI.Shell
 	subclass: #'OS.COM.Examples.WebBrowserShell'
 	instanceVariableNames: 'address browser statusModel zoomModel flags profileModel'
-	classVariableNames: ''
+	classVariableNames: 'CurrentColorScheme PreferredColorScheme'
 	imports: #(#{UI})
 	classInstanceVariableNames: ''
-	classConstants: { 'ImagesBlockedMask' -> 16r2. 'LogEventsMask' -> 16r1 }!
+	classConstants: {
+			'ColorSchemes' -> {
+						LookupTable withAll: {
+									#browserBackground -> Color white.
+									#browserBar -> (Color brightness: 16r10 / 16r11).
+									#browserForeground -> Color black.
+									#browserHistoryArrow -> Color commonGreen.
+									#browserToolbarButton -> Color transparent
+								}.
+						LookupTable withAll: {
+									#browserBackground -> (Color brightness: 16r3B / 16rFF).
+									#browserBar -> (Color brightness: 16r3B / 16rFF).
+									#browserForeground -> Color white.
+									#browserHistoryArrow -> Color limeGreen.
+									#browserToolbarButton -> (Color brightness: 16r3B / 16rFF)
+								}
+					}.
+			'ImagesBlockedMask' -> 16r2.
+			'LogEventsMask' -> 16r1
+		}!
 OS.COM.Examples.WebBrowserShell guid: (Core.GUID fromString: '{840f8a35-998b-4346-ab86-95db62f03a47}')!
 OS.COM.Examples.WebBrowserShell comment: '`WebBrowserShell` is a simple web browser application built around the Microsoft WebView2 Web Browser control, which is using the Edge chromium-based browser.
 
@@ -42,14 +61,20 @@ buildPopupForCommand: aSymbol
 
 buildSettingsPopup
 	| menu submenu |
-	menu := Menu new.
+	menu := Menu new
+				"name: #settingsMenu;"
+				yourself.
 	menu
 		addCommand: #toggleEventLogging description: 'Log WebView2 &Events to Transcript';
-		addSeparator;
-		addCommand: #toggleAllowContextMenu description: 'WebView2 Context &Menus';
-		addCommand: #toggleBrowserAcceleratorKeysEnabled description: 'WebView2 &Accelerator Keys';
-		addCommand: #toggleBuiltinErrorPageEnabled description: 'WebView2 &Error Pages';
-		addCommand: #toggleDefaultScriptDialogsEnabled description: 'WebView2 Script &Dialogs';
+		addSeparator.
+	submenu := menu addSubmenu: '&Default WebView2 UI'.
+	submenu
+	"	name: #defaultWebviewUIEnablement;"
+		addCommand: #toggleAllowContextMenu description: 'Context &Menus';
+		addCommand: #toggleBrowserAcceleratorKeysEnabled description: '&Accelerator Keys';
+		addCommand: #toggleBuiltinErrorPageEnabled description: '&Error Pages';
+		addCommand: #toggleDefaultScriptDialogsEnabled description: 'Script &Dialogs'.
+	menu
 		addSeparator;
 		addCommand: #toggleAllowExternalDrop description: 'Accept &Dropped Files';
 		addCommand: #toggleDevToolsEnabled description: '&DevTools (F12)';
@@ -59,7 +84,9 @@ buildSettingsPopup
 		addCommand: #toggleSwipeNavigation description: 'S&wipe Navigation';
 		addCommand: #toggleStatusBar description: '&Status Bubbles';
 		addCommand: #toggleZoomControl description: '&Zoom Control'.
-	submenu := menu addSubmenu: 'Preferred &Color Scheme'.
+	submenu := (menu addSubmenu: 'Preferred &Color Scheme')
+				"name: #colorScheme;"
+				yourself.
 	#('&Auto' '&Light' '&Dark') keysAndValuesDo: 
 			[:eachKey :eachValue |
 			submenu
@@ -76,7 +103,9 @@ buildSettingsPopup
 		addCommand: #toggleJavaScript description: '&JavaScript';
 		addCommand: #toggleInPrivateMode description: 'In Private &Mode';
 		yourself.
-	submenu := menu addSubmenu: '&Tracking Prevention Level'.
+	submenu := (menu addSubmenu: '&Tracking Prevention Level')
+				"name: #trackingPreventionLevel;"
+				yourself.
 	#('&None' '&Basic' 'Ba&lanced' '&Strict') keysAndValuesDo: 
 			[:eachKey :eachValue |
 			submenu
@@ -101,6 +130,10 @@ createSchematicWiring
 	"Create the trigger wiring for the receiver"
 
 	super createSchematicWiring.
+	self class
+		when: #colorSchemeChanged
+		send: #onColorSchemeChanged
+		to: self.
 	"Some events we need to hook to stay in sync"
 	browser
 		when: #webviewAvailable
@@ -131,7 +164,11 @@ createSchematicWiring
 				when: each
 				send: #onWebView2Event:name:
 				to: self
-				withArguments: {nil. each}]!
+				withArguments: { nil. each }].
+	SessionManager current
+		when: #settingChanged:
+		send: #onSystemSettingChanged:
+		to: self!
 
 displayError: ex
 	statusModel value: ex.
@@ -212,6 +249,13 @@ navigateTo: aString
 					[statusModel value: ex.
 					Sound errorBeep]]!
 
+onColorSchemeChanged
+	self view
+		invalidate;
+		hasDarkWindowFrame: CurrentColorScheme = WebView2.COREWEBVIEW2_PREFERRED_COLOR_SCHEME_DARK.
+	"We have to rebuild the toolbar to repopulate it with new icons rendered from the TextTileIcons with the foreground/background colours of the new scheme"
+	(self view viewNamed: 'toolbar') recreate!
+
 onDocumentTitleChanged
 	"Private - Event fired by Edge WebView2 when the document title has changed, so update the browser caption."
 
@@ -256,6 +300,11 @@ onSourceChanged: anICoreWebView2NavigationCompletedEventArgs
 	"Keep the address bar in sync"
 
 	address model value: self browserView model value!
+
+onSystemSettingChanged: anArray
+	(anArray first = 'ImmersiveColorSet'
+		and: [self preferredColorScheme = WebView2.COREWEBVIEW2_PREFERRED_COLOR_SCHEME_AUTO])
+			ifTrue: [self updateColorScheme]!
 
 onViewOpened
 	"Received when the receiver's view is been connected. "
@@ -309,11 +358,14 @@ onWebView2Event: anICoreWebView2EventArgs name: aSymbol
 onWebViewAvailable
 	"Private - The edge browser is loaded as a number of asynchronous steps. The #webviewAvailable event is fired when the browser is ready for navigation."
 
+	self preferredColorScheme: PreferredColorScheme.
+	"The view resource is configured in the light colour scheme, so if that is not the current scheme we'll need to rebuild the toolbar, change the caption colour, etc"
+	CurrentColorScheme ~= WebView2.COREWEBVIEW2_PREFERRED_COLOR_SCHEME_LIGHT
+		ifTrue: [self onColorSchemeChanged].
 	"Display the Edge browser version in the status bar field on the right"
-
 	(self view viewNamed: 'browserVersion') model: self browserView webviewEnvironment asValue.
 	self onZoomFactorChanged.
-	profileModel value: self browserView profile !
+	profileModel value: self browserView profile!
 
 onZoomFactorChanged
 	zoomModel value: '<1p>%%' << (self browserView zoomFactor * 100) rounded!
@@ -327,10 +379,18 @@ openUrl: aString
 	browser model value: aString!
 
 preferredColorScheme
-	^self browserView profile preferredColorScheme!
+	| profile preferred |
+	profile := self browserView profile.
+	preferred := profile preferredColorScheme.
+	profile free.
+	^preferred!
 
 preferredColorScheme: anInteger
-	^self browserView profile preferredColorScheme: anInteger!
+	"Switch the browser colour scheme to that identified by the <integer> argument, from the COREWEBVIEW2_PREFERRED_COLOR_SCHEME enumeration.
+	The choices are 'auto', to track the OS setting, 'light', and 'dark'. The dark mode has detail issues, especially with the toolbar, because Windows does not provide public APIs for dark-mode theming of Win32 controls. We do the best we can with the standard theming, but but it would be worth exploring the undocumented APIs to see if some of the fit and finish issues can be eliminated."
+
+	self browserView profile preferredColorScheme: anInteger.
+	self updateColorScheme!
 
 print
 	self webview2 showBrowserPrintDialog!
@@ -368,8 +428,8 @@ queryCommand: aCommandQuery
 querySettingsCommands: aCommandQuery
 	"Private - Enters details about a potential settings command for the receiver into aCommandQuery"
 
-	| commandSymbol webview |
-	commandSymbol := aCommandQuery command asSymbol.
+	| commandSymbol webview command |
+	commandSymbol := aCommandQuery commandSymbol.
 	webview := self webview2.
 	commandSymbol == #settingsMenu
 		ifTrue: 
@@ -412,10 +472,14 @@ querySettingsCommands: aCommandQuery
 					[aCommandQuery
 						isEnabled: webview notNil;
 						isChecked: (browser view perform: each second).
-					true]]!
+					true]].
+	^false!
 
 refresh
 	self webview2 reload!
+
+settingsMenu
+	^self!
 
 toggleAllowContextMenu
 	| webview |
@@ -514,6 +578,9 @@ toggleZoomControl
 trackingPreventionLevel: anInteger
 	self browserView trackingPreventionLevel: anInteger!
 
+updateColorScheme
+	self class updateColorScheme: self preferredColorScheme!
+
 webview2
 	| webview |
 	webview := browser view webview.
@@ -545,11 +612,13 @@ isLoggingEvents!public!testing! !
 isLoggingEvents:!commands!public! !
 navigate!commands!public! !
 navigateTo:!operations!private! !
+onColorSchemeChanged!private!updating! !
 onDocumentTitleChanged!event handling!private! !
 onDropDown:!event handling!private! !
 onFavIconChanged!event handling!private! !
 onProcessFailed:!event handling!private! !
 onSourceChanged:!event handling!private! !
+onSystemSettingChanged:!event handling-win32!private! !
 onViewOpened!event handling!public! !
 onWebResourceRequested:!event handling!private! !
 onWebView2Event:name:!event handling!private! !
@@ -564,6 +633,7 @@ printToPdf!commands!public! !
 queryCommand:!commands!private! !
 querySettingsCommands:!commands!private! !
 refresh!commands!public! !
+settingsMenu!commands!public! !
 toggleAllowContextMenu!commands!public! !
 toggleAllowExternalDrop!commands!public! !
 toggleBlockImages!commands!public! !
@@ -580,6 +650,7 @@ toggleStatusBar!commands!public! !
 toggleWebMessaging!commands!public! !
 toggleZoomControl!commands!public! !
 trackingPreventionLevel:!operations!public! !
+updateColorScheme!private!updating! !
 webview2!accessing!private! !
 webviewSettings!accessing!private! !
 zoomReset!commands!public! !
@@ -605,10 +676,14 @@ initialize
 		self initialize
 	"
 
-	Smalltalk developmentSystem 
+	Smalltalk developmentSystem
 		addSamplesFolderIconFor: self
 		description: self displayString
-		helpId: 10621!
+		helpId: 10621.
+	PreferredColorScheme := WebView2.COREWEBVIEW2_PREFERRED_COLOR_SCHEME_AUTO.
+	CurrentColorScheme := WebView2.COREWEBVIEW2_PREFERRED_COLOR_SCHEME_LIGHT.
+	(ColorSchemes at: CurrentColorScheme)
+		keysAndValuesDo: [:eachKey :eachValue | ThemeColor addNamed: eachKey color: eachValue]!
 
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.
@@ -618,17 +693,35 @@ resource_Default_view
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 5 985166 10 #{UI.STBViewProxy} #{UI.ShellView} 34 27 nil nil 8 #(13565952 65536) 416 nil 917510 #{Graphics.Color} #default nil 551 nil nil nil 416 984838 #{UI.BorderLayout} 1 1 410 #{UI.Toolbar} 34 28 nil 416 34 2 8 1140853516 131137 528 nil 480 nil 7 nil nil nil 528 480 8 1810814016 170 192 34 2 410 #{UI.Toolbar} 34 28 nil 528 34 2 8 1140853580 131073 640 nil 480 nil 519 nil nil nil 640 480 8 1810814016 170 192 8 #() nil nil nil 170 192 34 14 24141 1311814 1 #{UI.ToolbarIconButton} 640 1 1377606 4 #{UI.CommandDescription} #print 8 'Print ...' 1 1 1378630 2 #{Graphics.TextTileIcon} $🖶 nil nil nil nil nil 1 nil nil 24141 24137 786 640 1 818 #goBack 8 'Back' 1 1 866 $🡠 nil nil 466 #commonGreen nil nil 1 nil nil 24137 24147 786 640 273 818 #settingsMenu 8 'Settings' 1 1 866 $⚙ nil nil nil nil nil 1 nil nil 24147 24143 786 640 1 818 #help 8 'Information' 1 1 866 $🛈 nil nil nil nil nil 1 nil nil 24143 24139 786 640 1 818 #goForward 8 'Forward' 1 1 866 $🡢 nil nil 960 nil nil 1 nil nil 24139 24135 786 640 5 818 #home 8 'Home page' 1 1 866 $⌂ nil nil nil nil nil 1 nil nil 24135 24145 786 640 1 818 #openTaskManagerWindow 8 'Open &Task Manager' 1 1 866 $⚛ nil nil nil nil nil 1 nil nil 24145 34 8 1168 896 1104 800 1040 1232 976 1245766 1 #{UI.ToolbarSeparator} 640 1 nil nil 1 nil nil nil nil nil 1310982 #{Core.MessageSequence} 34 1 1049350 #{Core.MessageSend} #createAt:extent: 34 2 918022 #{Graphics.Point} 5 3 1442 581 79 640 1179910 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 2 0 0 0 1 0 0 0 36 1 0 0 40 0 0 0] 8 #() 1442 193 193 nil 29 8 'browserTools' nil nil nil 170 192 736 8 #() nil 1180166 #{Graphics.Rectangle} 1442 5 3 1442 5 5 1 nil 1442 65 65 nil nil 498 1 1 nil nil nil 640 410 #{UI.ContainerView} 34 15 nil 528 34 2 8 1140850688 131073 1712 nil nil nil 7 nil 852998 #{Graphics.Font} nil true 721158 #{OS.LOGFONTW} 8 #[240 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 83 0 101 0 103 0 111 0 101 0 32 0 85 0 73 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 1442 193 193 nil 1712 498 9 1 nil nil 410 #{UI.PushButton} 34 20 nil 1712 34 2 8 1140924416 1 1888 nil nil 1442 101 51 7 nil nil nil 1888 nil 8 1810709872 818 #navigate 8 '&Go' 1 1 nil nil true nil nil nil 1346 34 3 1394 #createAt:extent: 34 2 1442 1673 11 1442 101 59 1888 1394 #isEnabled: 8 #(false) 1888 1394 #text: 34 1 8 '&Go' 1888 1490 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 68 3 0 0 5 0 0 0 118 3 0 0 34 0 0 0] 8 #() 1552 nil 29 nil 410 #{UI.TextEdit} 34 16 nil 1712 34 2 8 1140916352 1025 2240 nil 480 nil 7 461638 4 #{UI.Menu} nil true 34 2 1180742 2 #{UI.CommandMenuItem} 1 818 #navigate 8 '&Go' 1 1 nil nil nil 2354 2097153 818 #accept 8 '&Accept' 1 1 nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil 2240 nil 8 1810702576 1049094 #{UI.NullConverter} nil nil 1 1346 34 2 1394 #createAt:extent: 34 2 1442 9 11 1442 1657 59 2240 1394 #setMarginWidths: 34 1 8 #(4 4) 2240 1490 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 4 0 0 0 5 0 0 0 64 3 0 0 34 0 0 0] 8 #() 1552 nil 27 170 192 34 4 2240 8 'address' 1888 8 'go' 1618 1442 9 11 1442 9 11 1346 34 1 1394 #createAt:extent: 34 2 1442 585 3 1442 1781 79 1712 1490 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 36 1 0 0 1 0 0 0 158 4 0 0 40 0 0 0] 34 2 2240 1888 1552 nil 27 1346 34 1 1394 #createAt:extent: 34 2 1442 1 1 1442 2369 85 528 1490 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 160 4 0 0 42 0 0 0] 34 2 640 1712 1552 nil 29 410 #{UI.StatusBar} 34 21 nil 416 34 2 8 1140850956 1 3120 nil 480 nil 7 nil 1778 nil true 655622 #{OS.LOGFONT} 8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 18 84 105 109 101 115 32 78 101 119 32 82 111 109 97 110 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 1442 193 193 nil 3120 nil 8 1810507520 170 192 34 8 1050438 1 #{UI.StatusBarItem} 8193 251 3120 nil 786950 #{Core.Message} #displayString 736 3346 #iconImageIndex 736 nil 8 'profile' 3314 8193 101 3120 nil 3346 #displayString 8 #() nil nil 8 'zoom' 3314 8193 -1 3120 nil 3346 #displayString 8 #() nil nil 8 'status' 3314 8193 301 3120 nil 3346 #displayString 8 #() 3346 #iconImageIndex 3504 nil 8 'browserVersion' nil nil nil 34 4 3472 3328 3408 3536 1311814 1 #{UI.StatusBarNullItem} 8705 1 3120 nil nil 1346 34 1 1394 #createAt:extent: 34 2 1442 1 1533 1442 2369 43 3120 1490 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 254 2 0 0 160 4 0 0 19 3 0 0] 8 #() 1552 nil 29 nil nil 410 #{UI.WebView2View} 34 26 nil 416 34 2 8 1140850688 1 3808 918598 2 #{UI.ValueHolder} nil false 1769478 #{Kernel.EqualitySearchPolicy} nil nil nil 7 nil nil nil 3808 nil nil 2498 nil nil 262145 nil nil nil nil nil 2295046 #{WebView2.WebView2EnvironmentOptions} nil 15 nil 8 '110.0.1549.0' 5 nil nil nil nil 1346 34 1 1394 #createAt:extent: 34 2 1442 1 85 1442 2369 1449 3808 1490 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 42 0 0 0 160 4 0 0 254 2 0 0] 736 1552 nil 29 170 192 34 4 3120 8 'progress' 3808 8 'browser' nil nil nil nil nil 14213 nil nil nil nil 1 nil nil 1346 34 2 1394 #createAt:extent: 34 2 1442 6143 21 1442 2401 1653 416 1394 #text: 34 1 8 'Simple Web Browser' 416 1490 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 175 16 0 0 68 3 0 0] 34 3 3120 528 3808 1552 nil 27)!
+	^#(#'!!STL' 5 985166 10 #{UI.STBViewProxy} #{UI.ShellView} 34 27 nil nil 8 #(13565952 65536) 416 nil 1245702 #{Graphics.ThemeColor} #browserBar nil 551 nil nil nil 416 984838 #{UI.BorderLayout} 1 1 410 #{UI.Toolbar} 34 28 nil 416 34 2 8 1140853580 131073 528 nil nil nil 7 nil nil nil 528 nil 8 1811207232 170 192 34 2 410 #{UI.Toolbar} 34 28 nil 528 34 2 8 1140851532 131137 640 nil 480 nil 519 nil nil nil 640 nil 8 1811207232 170 192 8 #() nil nil nil 170 192 34 14 10555 1311814 1 #{UI.ToolbarIconButton} 640 273 1377606 4 #{UI.CommandDescription} #settingsMenu 8 'Settings' 1 1 1378630 2 #{Graphics.TextTileIcon} $⚙ nil 466 #browserToolbarButton 466 #browserForeground nil nil 1 nil nil 10555 10551 786 640 1 818 #help 8 'Information' 1 1 866 $🛈 nil 896 912 nil nil 1 nil nil 10551 10547 786 640 1 818 #goForward 8 'Forward' 1 1 866 $🡢 nil 896 466 #browserHistoryArrow nil nil 1 nil nil 10547 10543 786 640 5 818 #home 8 'Home page' 1 1 866 $⌂ nil 896 912 nil nil 1 nil nil 10543 10553 786 640 1 818 #openTaskManagerWindow 8 'Open &Task Manager' 1 1 866 $⚛ nil 896 912 nil nil 1 nil nil 10553 10549 786 640 1 818 #print 8 'Print ...' 1 1 866 $🖶 nil 896 912 nil nil 1 nil nil 10549 10545 786 640 1 818 #goBack 8 'Back' 1 1 866 $🡠 nil 896 1056 nil nil 1 nil nil 10545 34 8 1072 1264 992 1200 928 1136 800 1245766 1 #{UI.ToolbarSeparator} 640 1 nil nil 1 nil nil nil nil nil 1310982 #{Core.MessageSequence} 34 1 1049350 #{Core.MessageSend} #createAt:extent: 34 2 918022 #{Graphics.Point} 5 3 1474 581 79 640 1179910 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 2 0 0 0 1 0 0 0 36 1 0 0 40 0 0 0] 8 #() 1474 193 193 nil 29 8 'browserTools' nil nil nil 170 192 736 8 #() nil 1180166 #{Graphics.Rectangle} 1474 5 3 1474 5 5 1 nil 1474 65 65 nil nil 498 1 1 nil nil nil 640 410 #{UI.ContainerView} 34 15 nil 528 34 2 8 1140850688 131073 1744 nil 480 nil 7 nil 852998 #{Graphics.Font} nil true 721158 #{OS.LOGFONTW} 8 #[241 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 83 0 101 0 103 0 111 0 101 0 32 0 85 0 73 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 1474 193 193 nil 1744 498 9 1 nil nil 410 #{UI.PushButton} 34 20 nil 1744 34 2 8 1140924416 1 1920 nil 480 1474 101 51 7 nil nil nil 1920 nil 8 1811103088 818 #navigate 8 '&Go' 1 1 nil nil true nil nil nil 1378 34 3 1426 #createAt:extent: 34 2 1474 1673 13 1474 101 57 1920 1426 #isEnabled: 8 #(false) 1920 1426 #text: 34 1 8 '&Go' 1920 1522 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 68 3 0 0 6 0 0 0 118 3 0 0 34 0 0 0] 8 #() 1584 nil 29 nil 410 #{UI.TextEdit} 34 16 nil 1744 34 2 8 1149304960 1 2272 nil 466 #browserBackground nil 7 461638 4 #{UI.Menu} nil true 34 2 1180742 2 #{UI.CommandMenuItem} 1 818 #navigate 8 '&Go' 1 1 nil nil nil 2402 2097153 818 #accept 8 '&Accept' 1 1 nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil 2272 912 8 1811095792 1049094 #{UI.NullConverter} nil nil 1 1378 34 2 1426 #createAt:extent: 34 2 1474 9 13 1474 1657 57 2272 1426 #setMarginWidths: 34 1 8 #(4 4) 2272 1522 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 4 0 0 0 6 0 0 0 64 3 0 0 34 0 0 0] 8 #() 1584 nil 27 170 192 34 4 1920 8 'go' 2272 8 'address' 1650 1474 9 13 1474 9 11 1378 34 1 1426 #createAt:extent: 34 2 1474 585 3 1474 1781 79 1744 1522 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 36 1 0 0 1 0 0 0 158 4 0 0 40 0 0 0] 34 2 2272 1920 1584 nil 27 1378 34 1 1426 #createAt:extent: 34 2 1474 1 1 1474 2369 85 528 1522 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 160 4 0 0 42 0 0 0] 34 2 640 1744 1584 nil 29 410 #{UI.StatusBar} 34 21 nil 416 34 2 8 1140850956 65 3168 nil 917510 #{Graphics.Color} #transparent nil 7 nil 1312262 #{Graphics.UxThemeFont} nil true nil 1888 1609 nil nil 3168 912 8 1810900736 170 192 34 8 1050438 1 #{UI.StatusBarItem} 8193 -1 3168 nil 786950 #{Core.Message} #displayString 8 #() nil nil 8 'status' 3346 8193 301 3168 nil 3378 #displayString 8 #() 3378 #iconImageIndex 3408 nil 8 'browserVersion' 3346 8193 251 3168 nil 3378 #displayString 8 #() 3378 #iconImageIndex 3552 nil 8 'profile' 3346 8193 101 3168 nil 3378 #displayString 8 #() nil nil 8 'zoom' nil nil nil 34 4 3360 3520 3600 3440 1311814 1 #{UI.StatusBarNullItem} 8705 1 3168 nil nil 1378 34 1 1426 #createAt:extent: 34 2 1474 1 1533 1474 2369 43 3168 1522 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 254 2 0 0 160 4 0 0 19 3 0 0] 8 #() 1584 nil 29 nil nil 410 #{UI.WebView2View} 34 26 nil 416 34 2 8 1140850688 1 3856 918598 2 #{UI.ValueHolder} nil false 1769478 #{Kernel.EqualitySearchPolicy} nil nil nil 7 nil nil nil 3856 nil nil 2546 nil nil 262145 nil nil nil nil nil 2295046 #{WebView2.WebView2EnvironmentOptions} nil 15 nil 8 '110.0.1549.0' 5 nil nil nil nil 1378 34 1 1426 #createAt:extent: 34 2 1474 1 85 1474 2369 1449 3856 1522 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 42 0 0 0 160 4 0 0 254 2 0 0] 736 1584 nil 29 170 192 34 6 3168 8 'progress' 3856 8 'browser' 528 8 'toolbar' nil nil nil nil nil 13651 nil nil nil nil 1 nil nil 1378 34 2 1426 #createAt:extent: 34 2 1474 6143 21 1474 2401 1653 416 1426 #text: 34 1 8 'WebView2 Browser' 416 1522 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 175 16 0 0 68 3 0 0] 34 3 3168 528 3856 1584 nil 27)!
 
 shutdownOnExit
 	"Answer whether a runtime session should be shutdown when an instance of the receiver is closed."
 
-	^true! !
+	^true!
+
+updateColorScheme: anInteger
+	| actual |
+	PreferredColorScheme := anInteger.
+	actual := anInteger = WebView2.COREWEBVIEW2_PREFERRED_COLOR_SCHEME_AUTO
+				ifTrue: 
+					["[Microsoft recommand a cheesy check on the value of the system foreground colour](https://learn.microsoft.com/en-us/windows/apps/desktop/modernize/apply-windows-themes) to detect if in dark mode!! Just too horrible, so use the undocumented theme API instead."
+					UxTheme refreshImmersiveColorPolicyState.
+					actual := UxTheme shouldAppsUseDarkMode
+								ifTrue: [WebView2.COREWEBVIEW2_PREFERRED_COLOR_SCHEME_DARK]
+								ifFalse: [WebView2.COREWEBVIEW2_PREFERRED_COLOR_SCHEME_LIGHT]]
+				ifFalse: [anInteger].
+	CurrentColorScheme = actual ifTrue: [^self].
+	CurrentColorScheme := actual.
+	(ColorSchemes at: actual)
+		keysAndValuesDo: [:eachKey :eachValue | (Color named: eachKey) actualColor: eachValue].
+	self trigger: #colorSchemeChanged! !
 !OS.COM.Examples.WebBrowserShell class categoriesForMethods!
 displayOn:!printing!public! !
 icon!constants!public! !
 initialize!development!initializing!private! !
 resource_Default_view!public!resources-views! !
 shutdownOnExit!public!testing! !
+updateColorScheme:!private!updating! !
 !
 

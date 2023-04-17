@@ -23,88 +23,81 @@ associationAt: aString ifAbsent: aNiladicValuable
 		ifTrue: [aNiladicValuable value]
 		ifFalse: [self associationClass key: aString value: value]!
 
-at: key ifAbsent: exceptionHandler
-	"Answer the value named by the argument, key.  If keyString is not found,
-	answer the result of evaluating the niladic valuable, exceptionHandler.
-	May also raise a Win32Error exception if registry access fails for some
-	reason."
+at: aString ifAbsent: aNiladicValuable
+	"Answer the value named by the <String> argument.  If the key is not found, answer the result of evaluating the <niladicValuable> last argument.
+	May also raise a Win32Error exception if registry access fails for some reason."
 
-	^self valueAt: key ifAbsent: exceptionHandler!
+	^self valueAt: aString ifAbsent: aNiladicValuable!
 
-at: key put: anObject
-	"Store the argument anObject with the external key, aKey,
-	in the receiver. Answer anObject"
+at: aString put: anObject
+	"Store the argument anObject as a named sub-value of the receiver. Throw an error if the object cannot be represented as a registry value. Answer anObject."
 
-	^self valueAt: key put: anObject!
+	^self valueAt: aString put: anObject!
 
-changeKey: key to: newKey
-	"Private - Change the key of the element of the receiver with key, key, to
-	newKey (e.g. rename a  registry value). Answer the value of the element
-	whose key was changed."
-
+changeKey: aString1 to: aString2
 	| assoc |
-	assoc := self associationAt: key.
-	assoc key: newKey.
+	assoc := self associationAt: aString1.
+	assoc key: aString2.
 	self add: assoc.
-	self removeKey: key.
+	self removeKey: aString1.
 	^assoc!
 
-fileOutOn: stream
-	"File out the receiver in the regedit text representation to the <puttableStream> argument, stream."
+fileOutOn: aPuttableStream
+	"File out the receiver in the regedit text representation to the <puttableStream> argument."
 
 	self keysAndValuesDo: 
 			[:k :v |
 			| wrapAt |
-			wrapAt := stream position + 76.
+			wrapAt := aPuttableStream position + 76.
 			k isEmpty
-				ifTrue: [stream nextPut: $@]
+				ifTrue: [aPuttableStream nextPut: $@]
 				ifFalse: 
-					[stream
+					[aPuttableStream
 						nextPut: $";
 						nextPutAll: k;
 						nextPut: $"].
-			stream nextPut: $=.
+			aPuttableStream nextPut: $=.
 			v isInteger
 				ifTrue: 
-					[stream
+					[aPuttableStream
 						nextPutAll: 'dword:';
 						nextPutAll: ('%08x' sprintfWith: v)]
 				ifFalse: 
 					[(v isKindOf: String)
 						ifTrue: 
-							[stream
+							[aPuttableStream
 								nextPut: $";
 								nextPutAll: v;
 								nextPut: $"]
 						ifFalse: 
-							[stream nextPutAll: 'hex:'.
+							[aPuttableStream nextPutAll: 'hex:'.
 							v do: 
 									[:b |
-									stream position > wrapAt
+									aPuttableStream position > wrapAt
 										ifTrue: 
-											[stream
+											[aPuttableStream
 												nextPut: $\;
 												cr;
 												space;
 												space.
-											wrapAt := stream position + 74].
-									stream nextPutAll: ('%02x' sprintfWith: b)]
-								separatedBy: [stream nextPut: $,]]].
-			stream cr]!
+											wrapAt := aPuttableStream position + 74].
+									aPuttableStream nextPutAll: ('%02x' sprintfWith: b)]
+								separatedBy: [aPuttableStream nextPut: $,]]].
+			aPuttableStream cr]!
 
-includesKey: keyString
-	"Answer whether the receiver has a key equal to the argument, key"
+includesKey: aString
+	"Answer whether the receiver has value with the specified name."
 
-	self at: keyString ifAbsent: [^false].
+	self at: aString ifAbsent: [^false].
 	^true!
 
-keysAndValuesDo: operation
-	"Evaluate the monadic valuable, operation, for each of the receiver's names and values."
+keysAndValuesDo: aDyadicValuable
+	"Evaluate the <dyadicValuable) argument for each of the receiver's names and values."
 
-	^self subValueNamesAndValuesDo: operation!
+	^self subValueNamesAndValuesDo: aDyadicValuable!
 
 keysDo: aMonadicValuable
-	"Evaluate the monadic valuable, operation, for each of the receiver's sub-keys."
+	"Evaluate the <monadicValuable> argument for each of the receiver's sub-keys."
 
 	^self subValueNamesDo: aMonadicValuable!
 
@@ -117,17 +110,13 @@ removeAssociationAt: aString ifAbsent: aNiladicValuable
 		ifTrue: [aNiladicValuable value]
 		ifFalse: [self associationClass key: aString value: value]!
 
-removeKey: key ifAbsent: exceptionHandler
-	"Remove the key (and its associated value), from the receiver. If key is
-	not in the receiver, answer the result of evaluating the niladic valuable,
-	exceptionHandler. Otherwise, answer the value named by key.
-	N.B. At present we use the delete the entire sub-tree below the specified
-	key, which Windows 95 does anyway."
+removeKey: aString ifAbsent: aNiladicValuable
+	"Remove the key (and its associated value), from the receiver. If the key is not in the receiver, answer the result of evaluating the <niladicValuable> last argument. Otherwise, answer the value named by the key string."
 
-	^self removeSubValue: key ifAbsent: exceptionHandler!
+	^self removeSubValue: aString ifAbsent: aNiladicValuable!
 
 size
-	"Answer the number of elements in the receiver."
+	"Answer the number of values under the registry key."
 
 	^self keyInfo valueCount!
 

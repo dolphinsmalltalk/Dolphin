@@ -929,6 +929,15 @@ getThemeSysColorBrush: htheme iColorId: iColorId
 	<stdcall: handle GetThemeSysColorBrush handle int32>
 	^self invalidCall: _failureCode!
 
+getThemeSysFont: htheme iFontId: iFontId
+	| logfont |
+	logfont := LOGFONTW newBuffer.
+	self
+		getThemeSysFont: htheme
+		iFontId: iFontId
+		plf: logfont.
+	^logfont!
+
 getThemeSysFont: htheme iFontId: iFontId plf: plf
 	"Invoke the GetThemeSysFont() function of the module wrapped by the receiver.
 	Helpstring: Get the LOGFONT for the specified System font.
@@ -1119,6 +1128,10 @@ openThemeData: hwnd pszClassList: pszClassList
 	<stdcall: handle OpenThemeData handle lpwstr>
 	^self invalidCall: _failureCode!
 
+refreshImmersiveColorPolicyState
+	<stdcall: int32 104>
+	^0!
+
 setThemeAppProperties: dwFlags
 	"Invoke the SetThemeAppProperties() function of the module wrapped by the receiver.
 	Helpstring: Sets the flags that control theming within the app
@@ -1139,7 +1152,14 @@ setWindowTheme: hwnd pszSubAppName: pszSubAppName pszSubIdList: pszSubIdList
 			[in]LPWSTR pszSubIdList);"
 
 	<stdcall: hresult SetWindowTheme handle lpwstr lpwstr>
-	^self invalidCall: _failureCode! !
+	^self invalidCall: _failureCode!
+
+shouldAppsUseDarkMode
+	<stdcall: bool 132>
+	^false
+"
+UxTheme shouldAppsUseDarkMode
+"! !
 !OS.ThemeLibrary categoriesForMethods!
 beginBufferedAnimation:hdcTarget:prcTarget:dwFormat:pPaintParams:pAnimationParams:phdcFrom:phdcTo:!**auto generated**!public! !
 beginBufferedPaint:prcTarget:dwFormat:pPaintParams:phDC:!**auto generated**!public! !
@@ -1185,6 +1205,7 @@ getThemeString:iPartId:iStateId:iPropId:pszBuff:cchMaxBuffChars:!**auto generate
 getThemeSysBool:iBoolId:!**auto generated**!public! !
 getThemeSysColor:iColorId:!**auto generated**!public! !
 getThemeSysColorBrush:iColorId:!**auto generated**!public! !
+getThemeSysFont:iFontId:!helpers!public! !
 getThemeSysFont:iFontId:plf:!**auto generated**!public! !
 getThemeSysInt:iIntId:piValue:!**auto generated**!public! !
 getThemeSysSize:iSizeId:!**auto generated**!public! !
@@ -1202,8 +1223,10 @@ isThemePartDefined:iPartId:iStateId:!**auto generated**!public! !
 onExit!private! !
 onStartup!private! !
 openThemeData:pszClassList:!**auto generated**!public! !
+refreshImmersiveColorPolicyState!public!undocumented dark mode APIs! !
 setThemeAppProperties:!**auto generated**!public! !
 setWindowTheme:pszSubAppName:pszSubIdList:!**auto generated**!public! !
+shouldAppsUseDarkMode!public!undocumented dark mode APIs! !
 !
 
 !OS.ThemeLibrary class methodsFor!

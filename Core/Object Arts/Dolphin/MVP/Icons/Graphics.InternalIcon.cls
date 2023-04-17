@@ -41,6 +41,16 @@ asAlphaBitmap: aPoint
 
 	^DIBSection initializer: (BitmapFromIconInitializer extent: aPoint icon: self)!
 
+asImageKey
+	"Answer the form of the receiver to use as an image key in an ImageManager. Normally this is just the receiver, but in some cases there may be a need to snapshot certain attributes used in rendering the image so that subsequent attempts to use the image from the image manager do not match an old rendering of the image that should have changed, e.g. because ThemeColors are used in displaying the image, and the theme has been updated."
+
+	^tileColor
+		ifNil: [self]
+		ifNotNil: 
+			[self shallowCopy
+				tileColor: tileColor actualColor;
+				yourself]!
+
 asMenuBitmap
 	"Answer a 32-bpp bitmap (i.e. with alpha channel) containing the receiver's image at system
 	menu image extent. Note that the result will be a shared bitmap which is always the same
@@ -116,8 +126,9 @@ tileColor: aColor
 	tileColor := aColor! !
 !Graphics.InternalIcon categoriesForMethods!
 =!comparing!public! !
-addToImageList:mask:!double dispatch!private! !
+addToImageList:mask:!double dispatch!public! !
 asAlphaBitmap:!converting!public! !
+asImageKey!converting!public! !
 asMenuBitmap!converting!public! !
 asParameter!converting!public! !
 bitmap!accessing!public! !

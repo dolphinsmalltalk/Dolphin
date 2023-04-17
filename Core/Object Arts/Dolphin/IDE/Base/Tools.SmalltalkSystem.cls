@@ -2271,7 +2271,7 @@ objectArtsHomePage
 objectArtsUrl
 	"Private - Answer the URL of the Object Arts home page"
 
-	^'http://www.object-arts.com'!
+	^'http://www.github.com/DolphinSmalltalk/Dolphin'!
 
 okToInstallPatchLevel: anInteger
 	"Private - Check to see if an attempt to upgrade to a patch level of anInteger is valid. 

@@ -351,6 +351,12 @@ hasCaption: aBoolean
 		set: aBoolean
 		recreateIfChanged: false) ifTrue: [self frameChanged]!
 
+hasDarkWindowFrame
+	^Dwmapi hasDarkWindowFrame: self!
+
+hasDarkWindowFrame: aBoolean
+	Dwmapi hasDarkWindowFrame: self set: aBoolean!
+
 hasMaximize
 	"Answers true if the receiver has a maximize button. i.e. it has the WS_MAXIMIZEBOX style"
 
@@ -1241,6 +1247,8 @@ getDefId!default button!private! !
 getLastActivePopup!hierarchy!private! !
 hasCaption!accessing-styles!public! !
 hasCaption:!accessing-styles!public! !
+hasDarkWindowFrame!public!testing! !
+hasDarkWindowFrame:!accessing!public! !
 hasMaximize!accessing-styles!public! !
 hasMaximize:!accessing-styles!public! !
 hasMenu!accessing!private! !

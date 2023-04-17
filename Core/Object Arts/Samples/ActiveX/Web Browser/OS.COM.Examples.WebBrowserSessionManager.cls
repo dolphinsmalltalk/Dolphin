@@ -16,15 +16,9 @@ main
 
 	| pad |
 	pad := self mainShellClass show.
-	self argc > 1 ifTrue: [pad openUrl: (self argv at: 2)]!
-
-objectArtsUrl
-	"Private - Answer the URL of the Object Arts home page"
-
-	^'http://www.object-arts.com'.! !
+	self argc > 1 ifTrue: [pad openUrl: (self argv at: 2)]! !
 !OS.COM.Examples.WebBrowserSessionManager categoriesForMethods!
 main!operations!public! !
-objectArtsUrl!constants!private! !
 !
 
 !OS.COM.Examples.WebBrowserSessionManager class methodsFor!

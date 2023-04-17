@@ -29,11 +29,6 @@ alphaMask
 
 	^code bitAnd: 16rFF000000!
 
-argb
-	"Answer a four-element <Array> containing alpha, red, green, and blue components of the receiver expressed as integer in the range [0,255]."
-
-	^{self alpha. self red. self green. self blue}!
-
 argbCode
 	"Answer the receiver's colour value in 32-bit ARGB encoding with 8-bits per component in alpha, red, green, blue order."
 
@@ -41,16 +36,20 @@ argbCode
 
 	^code!
 
-asRGB
-	"Answer an <RGB> representing an opaque version of the receiver but with the same red, green and blue components."
+asARGB
+	"Answer the receiver as an <ARGB>."
 
-	^Color fromRgbCode: (((code bitShift: -16) bitAnd: 16rFF)
-				bitOr: ((code bitAnd: 16r00FF00) bitOr: ((code bitAnd: 16rFF) bitShift: 16)))!
+	^self!
 
 blue
 	"Answer the receiver's blue component component expressed as an <integer> in the range [0,255]."
 
-	^code bitAnd: 255!
+	^code bitAnd: 16rFF!
+
+green
+	"Answer the receiver's green component component expressed as an <integer> in the range [0,255]."
+
+	^(code bitShift: -8) bitAnd: 16rFF!
 
 isNone
 	"Answer whether the receiver is a special <Color> representing no colour."
@@ -70,7 +69,7 @@ normalizedAlpha
 red
 	"Answer the receiver's red component component expressed as an <integer> in the range [0,255]."
 
-	^(code bitShift: -16) bitAnd: 255!
+	^(code bitShift: -16) bitAnd: 16rFF!
 
 rgbCode
 	^((code bitShift: -16) bitAnd: 16rFF)
@@ -79,10 +78,10 @@ rgbCode
 alpha!accessing!public! !
 alpha:!accessing!public! !
 alphaMask!accessing!private! !
-argb!converting!public! !
 argbCode!accessing!public! !
-asRGB!converting!public! !
+asARGB!converting!public! !
 blue!accessing!public! !
+green!accessing!public! !
 isNone!public!testing! !
 isOpaque!public!testing! !
 normalizedAlpha!accessing!public! !

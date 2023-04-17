@@ -58,10 +58,10 @@ actualTextcolor
 		ifNil: 
 			[tilecolor
 				ifNil: [Color.WindowText]
-				ifNotNil: [tilecolor luminance > 0.6 ifTrue: [Color black] ifFalse: [Color white]]]!
+				ifNotNil: [tilecolor luminance > ##(149 / 255.0) ifTrue: [Color black] ifFalse: [Color white]]]!
 
 addToImageList: aWinImageList mask: aColorOrNil
-	"Private - Add a pictorial representation of the receiver to aWinImageList drawn directly at the
+	"Add a pictorial representation of the receiver to aWinImageList drawn directly at the
 	extent of the image list so as to produce a high-quality image."
 
 	| bitmap index |
@@ -111,6 +111,13 @@ asAlphaBitmap: aPoint
 
 asBitmap
 	^self bitmapWithExtent: self extent!
+
+asImageKey
+	"Answer the form of the receiver to use as an image key in an ImageManager. Normally this is just the receiver, but in some cases there may be a need to lock down certain attributes used in rendering the image that might change over time."
+
+	^self shallowCopy
+		lockActualColors;
+		yourself!
 
 asLargeIcon
 	"Answer a 'large' (32x32) <Icon> equivalent of the receiver. This is sometimes needed, e.g. to set the icon for a Window."
@@ -306,6 +313,10 @@ largeIcon
 	Notification deprecated.
 	^self asLargeIcon!
 
+lockActualColors
+	tilecolor ifNotNil: [tilecolor := tilecolor actualColor].
+	textcolor ifNotNil: [textcolor := textcolor actualColor]!
+
 printOn: aStream
 	"Append the ASCII representation of the receiver to aStream."
 
@@ -416,10 +427,11 @@ withExtent: arg1
 actualFontName!accessing!private! !
 actualFontStyle!accessing!private! !
 actualTextcolor!accessing!private! !
-addToImageList:mask:!double dispatch!private! !
+addToImageList:mask:!double dispatch!public! !
 applyTransforms:rect:!drawing-bitmaps!private! !
 asAlphaBitmap:!converting!public! !
 asBitmap!converting!public! !
+asImageKey!converting!public! !
 asLargeIcon!converting!public! !
 asMenuBitmap!converting!public! !
 asParameter!converting!public! !
@@ -447,6 +459,7 @@ imageType!constants!public! !
 isPersistent!public! !
 isRealized!public!testing! !
 largeIcon!converting!public! !
+lockActualColors!initializing!private! !
 printOn:!printing!public! !
 realize!public!realizing/unrealizing! !
 rotation!accessing!public! !
@@ -462,7 +475,7 @@ withExtent:!public! !
 !
 
 Graphics.TextTileIcon methodProtocol: #icon attributes: #() selectors: #(#asAlphaBitmap: #asMenuBitmap #asParameter #asSmallIcon #drawOn: #drawOn:at: #drawOn:at:extent: #extent #imageIndex #isPersistent #isRealized #withExtent:)!
-Graphics.TextTileIcon methodProtocol: #image attributes: #(#readOnly) selectors: #(#drawOn: #drawOn:at: #drawOn:at:extent: #extent #freeDC #isPersistent)!
+Graphics.TextTileIcon methodProtocol: #image attributes: #(#readOnly) selectors: #(#addToImageList:mask: #drawOn: #drawOn:at: #drawOn:at:extent: #extent #freeDC #isPersistent)!
 
 !Graphics.TextTileIcon class methodsFor!
 

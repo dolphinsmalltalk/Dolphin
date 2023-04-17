@@ -32,11 +32,6 @@ asParameter
 
 	^self actualColor asParameter!
 
-asRGB
-	"Answer the receiver as an RGB"
-
-	^self actualColor asRGB!
-
 isDefault
 	"Answer whether the <Color> to which the receiver resolves is 'Color default'"
 
@@ -62,11 +57,10 @@ rgbCode
 
 	^self actualColor rgbCode! !
 !Graphics.VirtualColor categoriesForMethods!
-actualColor!accessing!private! !
+actualColor!accessing!public! !
 alpha!accessing!public! !
 argbCode!converting!public! !
 asParameter!converting!public! !
-asRGB!converting!public! !
 isDefault!public!testing! !
 isNone!public!testing! !
 isSymbolic!public!testing! !

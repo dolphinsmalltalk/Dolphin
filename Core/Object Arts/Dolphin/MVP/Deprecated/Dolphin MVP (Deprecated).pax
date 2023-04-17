@@ -23,7 +23,6 @@ package classNames
 package methodNames
 	add: #AcceleratorTable -> #accelerators;
 	add: #AcceleratorTable -> #addKey:commandDescription:;
-	add: #ARGB -> #asARGB;
 	add: #BasicListAbstract -> #basicSelectionByIndex:;
 	add: #BLENDFUNCTION -> #beAlpha;
 	add: #BLENDFUNCTION -> #beNotAlpha;
@@ -39,10 +38,8 @@ package methodNames
 	add: #Clipboard -> #getObjectBinaryStoreBytes;
 	add: #Clipboard -> #getObjectBinaryStoreBytesIfNone:;
 	add: #Clipboard -> #setText:format:;
-	add: #Color -> #asARGB;
 	add: #Color -> #asIndexedColor;
 	add: #Color -> #saturation;
-	add: #ColorNone -> #saturation;
 	add: #ColorRef -> #asIndexedColor;
 	add: #ColorRef -> #asIndexedColorUsingPalette:;
 	add: #GDILibrary -> #enumFonts:lpFaceName:lpFontFunc:lParam:;
@@ -80,7 +77,6 @@ package methodNames
 	add: #Slider -> #selection:;
 	add: #StatusBarItemAbstract -> #beFullWidth;
 	add: #STBViewProxy -> #for:;
-	add: #SystemColor -> #asIndexedColor;
 	add: #SystemMetrics -> #hasButtonNotes;
 	add: #SystemMetrics -> #hasDesktopComposition;
 	add: #SystemMetrics -> #hasEnhancedThemes;
@@ -110,7 +106,6 @@ package methodNames
 	add: #View -> #hasWindowEdge:;
 	add: #View -> #winHelpPopup:topic:;
 	add: #View -> #winHelpPopup:topic:at:;
-	add: #VirtualColor -> #asIndexedColor;
 	add: 'Brush class' -> #dkGray;
 	add: 'Brush class' -> #hatchedDiagonal;
 	add: 'Brush class' -> #hollow;
@@ -228,15 +223,6 @@ addKey: vKeyCode commandDescription: aCommandDescription
 !AcceleratorTable categoriesForMethods!
 accelerators!accessing!public! !
 addKey:commandDescription:!adding!public! !
-!
-
-!ARGB methodsFor!
-
-asARGB
-	Notification deprecated.	"Generally speaking it should not be necessary to convert colours explicitly to ARGB representation, rather any Color should be accepted and converted at the point of passing to an external API if needed."
-	^self! !
-!ARGB categoriesForMethods!
-asARGB!converting!public! !
 !
 
 !BasicListAbstract methodsFor!
@@ -418,25 +404,20 @@ setText:format:!accessing!public! !
 
 !Color methodsFor!
 
-asARGB
-	Notification deprecated.	"Generally speaking it should not be necessary to convert colours explicitly to ARGB representation, rather any Color should be accepted and converted at the point of passing to an external API if needed."
-	^self argbClass fromArgbCode: self argbCode!
-
 asIndexedColor
 	"Answer the receiver as an <IndexedColor>."
 
 	"IndexedColors are soft-deprecated. You should avoid their deliberate use, although they may continue to exist in older view resources, etc, and be returned from certain older APIs."
 
-	Notification deprecated.
+	#deprecated.
 	^self asRGB asIndexedColor!
 
 saturation
 	"Ambiguous as to the color model - this is actually the HLS saturation."
 
 	Notification deprecated.
-	^self asRGB hls at: 3! !
+	^self hls at: 3! !
 !Color categoriesForMethods!
-asARGB!converting!public! !
 asIndexedColor!converting!public! !
 saturation!accessing!public! !
 !
@@ -450,15 +431,6 @@ buttonFace
 buttonFace!instance creation!public! !
 !
 
-!ColorNone methodsFor!
-
-saturation
-	Notification deprecated.
-	^0! !
-!ColorNone categoriesForMethods!
-saturation!public! !
-!
-
 !ColorRef methodsFor!
 
 asIndexedColor
@@ -466,7 +438,7 @@ asIndexedColor
 
 	"IndexedColors are soft-deprecated. You should avoid their deliberate use, although they may continue to exist in older view resources, etc, and be returned from certain older APIs."
 
-	Notification deprecated.
+	#deprecated.
 	^self asIndexedColorUsingPalette: self defaultPalette!
 
 asIndexedColorUsingPalette: hPalette
@@ -852,19 +824,6 @@ for: aView
 for:!instance creation!public! !
 !
 
-!SystemColor methodsFor!
-
-asIndexedColor
-	"Answer the receiver as an <IndexedColor>."
-
-	"IndexedColors are soft-deprecated. You should avoid their deliberate use, although they may continue to exist in older view resources, etc, and be returned from certain older APIs."
-
-	Notification deprecated.
-	^(Color fromRgbCode: self rgbCode) asIndexedColor! !
-!SystemColor categoriesForMethods!
-asIndexedColor!converting!public! !
-!
-
 !SystemColor class methodsFor!
 
 fromId: anInteger
@@ -1112,19 +1071,6 @@ hasWindowEdge!accessing-styles!public! !
 hasWindowEdge:!accessing-styles!public! !
 winHelpPopup:topic:!public! !
 winHelpPopup:topic:at:!public! !
-!
-
-!VirtualColor methodsFor!
-
-asIndexedColor
-	"Answer the receiver as an <IndexedColor>."
-
-	"IndexedColors are soft-deprecated. You should avoid their deliberate use, although they may continue to exist in older view resources, etc, and be returned from certain older APIs."
-
-	Notification deprecated.
-	^self actualColor asIndexedColor! !
-!VirtualColor categoriesForMethods!
-asIndexedColor!converting!public! !
 !
 
 !WindowsEvent class methodsFor!

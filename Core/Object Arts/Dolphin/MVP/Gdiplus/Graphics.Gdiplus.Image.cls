@@ -12,7 +12,7 @@ Graphics.Gdiplus.Image comment: 'GdiplusImage provides methods for loading and s
 !Graphics.Gdiplus.Image methodsFor!
 
 addToImageList: aWinImageList mask: aColorOrNil
-	"Private - Add a pictorial representation of the receiver to aWinImageList scaled to the
+	"Add a pictorial representation of the receiver to aWinImageList scaled to the
 	extent of the image list."
 
 	| bitmap index extent |
@@ -746,7 +746,7 @@ width
 	Gdip gdipGetImageWidth: self asParameter width: buf.
 	^buf asInteger! !
 !Graphics.Gdiplus.Image categoriesForMethods!
-addToImageList:mask:!double dispatch!private! !
+addToImageList:mask:!double dispatch!public! !
 asBitmap!converting!public! !
 asByteArray:!converting!public! !
 asByteArray:compression:!converting!public! !
@@ -842,7 +842,7 @@ thumbnailWithHeight:!operations!public!thumbnails! !
 width!accessing!public! !
 !
 
-Graphics.Gdiplus.Image methodProtocol: #image attributes: #(#readOnly) selectors: #(#drawOn: #drawOn:at: #drawOn:at:extent: #extent #freeDC #isPersistent)!
+Graphics.Gdiplus.Image methodProtocol: #image attributes: #(#readOnly) selectors: #(#addToImageList:mask: #drawOn: #drawOn:at: #drawOn:at:extent: #extent #freeDC #isPersistent)!
 
 !Graphics.Gdiplus.Image class methodsFor!
 

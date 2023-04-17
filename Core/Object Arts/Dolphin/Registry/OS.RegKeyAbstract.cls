@@ -317,7 +317,7 @@ objectFromValue: aByteArray type: typeInteger size: sizeInteger
 			notImplemented.
 			"REG_QWORD: 11"
 			[:bytes :size | bytes int64AtOffset: 0]})
-		at: typeInteger + 1) cull: aByteArray cull: sizeInteger!
+		at: typeInteger + 1) value: aByteArray value: sizeInteger!
 
 parentKey
 	"Answer the parent key of the receiver, or nil if at a root."
@@ -1043,45 +1043,7 @@ usersRoot: aSymbol
 	^self
 		hive: 'HKEY_USERS'
 		handle: HKEY_USERS
-		mode: aSymbol!
-
-valueUnmarshallers
-	"Private - Answer an <Array> of <dyadicValuable>s, one for each of the registry value types, that can be used to instantiate an appropriate Smalltalk object from bytes read from the registry."
-
-	| notImplemented |
-	notImplemented := [:bytes :size | Error notYetImplemented].
-	^{
-		"REG_NONE: 0"
-		[:bytes :size | nil].
-		"REG_SZ: 1"
-		[:bytes :size |
-		size == 0
-			ifTrue: [Utf16String empty]
-			ifFalse: [Utf16String fromByteArray: bytes length: (size bitShift: -1) - 1]].
-		"REG_EXPAND_SZ: 2"
-		[:bytes :size |
-		Kernel32
-			expandEnvironmentStrings: (Utf16String fromByteArray: bytes length: (size bitShift: -1) - 1)].
-		"REG_BINARY: 3"
-		[:bytes :size| bytes copyFrom: 1 to: size].
-		"REG_DWORD: 4"
-		[:bytes :size | bytes int32AtOffset: 0].
-		"REG_DWORD_BIG_ENDIAN: 5"
-		notImplemented.
-		"REG_LINK: 6"
-		notImplemented.
-		"REG_MULTI_SZ: 7"
-		[:bytes :size | RegKeyAbstract decodeMultiSz: bytes size: size].
-		"REG_RESOURCE_LIST:8"
-		notImplemented.
-		"REG_FULL_RESOURCE_DESCRIPTOR: 9"
-		notImplemented.
-		"REG_RESOURCE_REQUIREMENTS_LIST: 10"
-		notImplemented.
-		"REG_QWORD: 11"
-		[:bytes :size | bytes int64AtOffset: 0]}	
-
-! !
+		mode: aSymbol! !
 !OS.RegKeyAbstract class categoriesForMethods!
 classesRoot!instance creation!public! !
 classesRoot:!instance creation!public! !
@@ -1104,6 +1066,5 @@ tally:name:parentPath:rootKey:sam:!instance creation!private! !
 userRoot!instance creation!public! !
 usersRoot!instance creation!public! !
 usersRoot:!instance creation!public! !
-valueUnmarshallers!constants!private! !
 !
 

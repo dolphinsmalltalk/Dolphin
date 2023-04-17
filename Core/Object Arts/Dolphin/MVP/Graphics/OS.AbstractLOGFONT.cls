@@ -160,7 +160,7 @@ lfWidth: anInteger
 createFont!private!realizing/unrealizing! !
 faceName!accessing!public! !
 faceName:!accessing!public! !
-getData:!accessing!public! !
+getData:!helpers!private! !
 isFixedWidth!public! !
 lfCharSet!**compiled accessors**!public! !
 lfCharSet:!**compiled accessors**!public! !

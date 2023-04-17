@@ -16,6 +16,7 @@ package basicScriptAt: #postinstall put: 'RegKeyAbstract addProtocol: #registryW
 
 package setClassNames: #(
 	#{OS.RegistryDeserializer}
+	#{OS.RegistryDeserializerStub}
 	#{OS.RegistrySerializer}
 ).
 
@@ -57,10 +58,10 @@ package setMethodNames: #(
 	#(#{External.UInt32Bytes} #regKeyType)
 	#(#{External.UInt64Bytes} #regKeyType)
 	#(#{External.UIntPtrBytes} #regKeyType)
+	#(#{Graphics.AbstractFont} #writeToRegistry:name:)
+	#(#{Graphics.AbstractFont class} #readFromRegistry:params:)
 	#(#{Graphics.Color} #writeToRegistry:name:)
 	#(#{Graphics.Color class} #readFromRegistry:params:)
-	#(#{Graphics.Font} #writeToRegistry:name:)
-	#(#{Graphics.Font class} #readFromRegistry:params:)
 	#(#{Graphics.VirtualColor} #writeToRegistry:name:)
 	#(#{Kernel.DefaultSortAlgorithm class} #readFromRegistry:params:)
 	#(#{Kernel.MethodAnnotations class} #readFromRegistry:params:)
@@ -85,9 +86,16 @@ package!
 
 Core.Object
 	subclass: #'OS.RegistryDeserializer'
-	instanceVariableNames: 'currentKey instVarMaps safeClasses objects validationBlock'
+	instanceVariableNames: 'currentKey instVarMaps safeClasses objects validationBlock substitute'
 	classVariableNames: ''
 	imports: #(#{OS private})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Object
+	subclass: #'OS.RegistryDeserializerStub'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Object
@@ -96,7 +104,7 @@ Core.Object
 	classVariableNames: ''
 	imports: #(#{OS.WinRegConstants private})
 	classInstanceVariableNames: ''
-	classConstants: { 'BytesValueName' -> 'bytes'. 'ReferencePrefix' -> '@'. 'ValueSeparator' -> ':' }!
+	classConstants: {}!
 
 "Loose Methods"!
 
@@ -523,6 +531,35 @@ regKeyType
 regKeyType!public! !
 !
 
+!Graphics.AbstractFont methodsFor!
+
+writeToRegistry: aRegistryWriter name: aString
+	"Store a serialised representation of the receiver to the registry using the services of the <registryWriter> first argument, as a sub-key or value of its current key with the with the <readableString> name, aString."
+
+	aRegistryWriter
+		writeObject: self
+		class: Font
+		name: aString
+		parameter: nil
+		do: [:writer :font | writer objectAt: 'logfont' put: font logFont]! !
+!Graphics.AbstractFont categoriesForMethods!
+writeToRegistry:name:!public! !
+!
+
+!Graphics.AbstractFont class methodsFor!
+
+readFromRegistry: aRegistryDeserializer params: anArray
+	"Read an instance of the receiver previously serialised under the specified registry key."
+
+	| font |
+	font := self new.
+	aRegistryDeserializer registerCurrentObject: font.
+	font logFont: (aRegistryDeserializer objectAt: 'logfont').
+	^font! !
+!Graphics.AbstractFont class categoriesForMethods!
+readFromRegistry:params:!public! !
+!
+
 !Graphics.Color methodsFor!
 
 writeToRegistry: aRegistryWriter name: aString
@@ -551,34 +588,6 @@ readFromRegistry: aRegistryDeserializer params: anArray
 				ifTrue: [Color fromRgbaCode: (Shlwapi strToUInt: param)]
 				ifFalse: [self named: param]]! !
 !Graphics.Color class categoriesForMethods!
-readFromRegistry:params:!public! !
-!
-
-!Graphics.Font methodsFor!
-
-writeToRegistry: aRegistryWriter name: aString
-	"Store a serialised representation of the receiver to the registry using the services of the <registryWriter> first argument, as a sub-key or value of its current key with the with the <readableString> name, aString."
-
-	aRegistryWriter
-		writeObject: self
-		name: aString
-		parameter: nil
-		do: [:writer :font | writer objectAt: 'logfont' put: font logFont]! !
-!Graphics.Font categoriesForMethods!
-writeToRegistry:name:!public! !
-!
-
-!Graphics.Font class methodsFor!
-
-readFromRegistry: aRegistryDeserializer params: anArray
-	"Read an instance of the receiver previously serialised under the specified registry key."
-
-	| font |
-	font := self new.
-	aRegistryDeserializer registerCurrentObject: font.
-	font logFont: (aRegistryDeserializer objectAt: 'logfont').
-	^font! !
-!Graphics.Font class categoriesForMethods!
 readFromRegistry:params:!public! !
 !
 
@@ -628,7 +637,7 @@ readFromRegistry:params:!public! !
 classAt: aString put: aClass with: parameterObject
 	"Write a class sub-key describing the <Object>, anObject, under the receiver's current key with the <readableString> name, aString. The default value of the sub-key is a REG_MULTISZ, the first element of which is the class short name (i.e. a name that can be used to bind the class in the context of the Smalltalk namespace). The final argument, parameterObject, represents optional additional  metadata and it's display string is stored as the 2nd element of the REG_MULTISZ default value. If parameterObject is nil, then only the class name is written. Typically parameterObject is the indexable size of anObject, but it may be an identifier that uniquely identifies anObject in its class in order that it can be deserialised to the same instance. Answer the REG_MULTISZ <Utf16String> value written as the default value of the key."
 
-	^(OS.RegistrySerializer regKey: self)
+	^(RegistrySerializer regKey: self)
 		classAt: aString
 		put: aClass
 		with: parameterObject!
@@ -648,14 +657,14 @@ objectAt: aString ifAbsent: aNiladicValuable
 		ifNotNil: 
 			[:subKey |
 			| object |
-			object := OS.RegistryDeserializer readFrom: subKey.
+			object := RegistryDeserializer readFrom: subKey.
 			subKey free.
 			object]!
 
 objectAt: aString put: anObject
 	"Serialize the <Object> last argument under a sub-key of the receiver named by the <readableString> first argument. Answer anObject."
 
-	OS.RegistrySerializer
+	RegistrySerializer
 		write: anObject
 		to: self
 		name: aString.

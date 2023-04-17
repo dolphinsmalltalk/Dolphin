@@ -25,24 +25,23 @@ at: aString ifAbsent: aNiladicValuable
 	"Answer the value named by the <readableString> first argument.  If the key is not found, answer the result of evaluating the <niladicValuable> second argument.
 	May also raise a Win32Error exception if registry access fails for some reason."
 
-	| utf16 subHandle exists needsFree |
+	| utf16 subHandle ret needsFree |
 	aString ifNil: [^aNiladicValuable value].
 	needsFree := self realize.
-	exists := (AdvApi32
+	ret := AdvApi32
 				regOpenKeyEx: handle
 				lpSubKey: (utf16 := aString asUtf16String)
 				ulOptions: 0
 				samDesired: sam
-				phkResult: (subHandle := Handle new)) == ERROR_SUCCESS.
+				phkResult: (subHandle := Handle new).
 	needsFree ifTrue: [self free].
-	^exists
+	^ret == ERROR_SUCCESS
 		ifTrue: 
 			[(self newSubKey: utf16 sam: sam)
 				handle: subHandle;
 				beFinalizable;
 				yourself]
-		ifFalse: 
-			[aNiladicValuable value]!
+		ifFalse: [aNiladicValuable value]!
 
 at: key put: anObject
 	"Store the argument anObject with the <readableString> external key, key, in the receiver. Answer anObject.
@@ -98,7 +97,7 @@ fileOutOn: aStream
 	self do: [:sk | sk fileOutOn: aStream]!
 
 includesKey: keyString
-	"Answer whether the receiver has a key equal to the argument, key"
+	"Answer whether the receiver has a sub-key of the same name as the <String> argument."
 
 	| subKey err needsFree |
 	keyString isNil ifTrue: [^false].
@@ -115,7 +114,7 @@ includesKey: keyString
 	^err == ERROR_SUCCESS!
 
 keysAndValuesDo: aDyadicValuable
-	"Evaluate the <dyadicValuable>, operation, for each key sub-key name and sub-key pair in the receiver."
+	"Evaluate the <dyadicValuable>, operation, for each sub-key name and sub-key pair in the receiver."
 
 	| path |
 	path := self pathFromRoot.
@@ -140,16 +139,14 @@ removeAssociationAt: anObject ifAbsent: aNiladicValuable
 	^self removeKey: anObject ifAbsent: aNiladicValuable!
 
 removeKey: aString ifAbsent: aNiladicValuable
-	"Remove the specified key (and its associated value), from the receiver. If the key is not in the receiver, answer the result of evaluating the <niladicValuable> second argument. Otherwise, answer the value named by the key."
+	"Remove the specified sub-key of the receiver. If the named sub-key is not in the receiver, answer the result of evaluating the <niladicValuable> second argument. Otherwise, answer the named sub-key."
 
 	^(self removeSubTree: aString)
 		ifTrue: [self newSubKey: aString sam: sam]
 		ifFalse: [aNiladicValuable value]!
 
 size
-	"Answer the number of elements in the receiver.
-	If insufficient access is available to determine the key info, then fill 
-	it is filled out with sensible null values."
+	"Answer the number of sub-keys under the registry key the receiver represents."
 
 	^self keyInfo subKeyCount!
 

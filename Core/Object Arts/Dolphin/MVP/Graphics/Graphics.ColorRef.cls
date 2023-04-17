@@ -28,33 +28,15 @@ asCOLORREF
 
 	^code!
 
-asRGB
-	"Answer the <RGB> colour equivalent to the receiver."
-
-	^self errorNotARealColor!
-
-blue
-	"Answer the receiver's blue component component expressed as an <integer> in the range [0,255]."
-
-	^(code bitShift: -16) bitAnd: 16rFF!
-
 errorNotARealColor
 	"Private - Raise an error to the effect that the receiver does not represent a real colour
 	value, and cannot therefore be converted to another type of <Color>."
 
-	^self error: 'Cannot convert to an RGB'!
-
-red
-	"Answer the receiver's red component component expressed as an <integer> in the range [0,255]."
-
-	^code bitAnd: 16rFF! !
+	^self error: 'Cannot convert to an RGB'! !
 !Graphics.ColorRef categoriesForMethods!
 asColorRef!converting!public! !
 asCOLORREF!accessing!public! !
-asRGB!converting!public! !
-blue!accessing!public! !
 errorNotARealColor!exceptions!private! !
-red!accessing!public! !
 !
 
 !Graphics.ColorRef class methodsFor!

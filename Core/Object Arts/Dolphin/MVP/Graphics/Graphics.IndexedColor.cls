@@ -69,11 +69,6 @@ asParameter
 
 	^index!
 
-asRGB
-	"Answer the receiver as an RGB using the default palette."
-
-	^Color fromRgbCode: self rgbCode!
-
 asRGBUsingNoPalette
 	Notification deprecated.	"Use #asRGB"
 	^self asRGB!
@@ -124,23 +119,8 @@ rgbCodeFromPalette: aPalette
 rgbCodeFromStdPalette
 	"Answer the COLORREF encoded RGB value that the receiver represents in a standard palette."
 
-	^##(IdentityDictionary withAll: {16r1000000 -> 16r000000.
-				16r1000001 -> 16r000080.
-				16r1000002 -> 16r008000.
-				16r1000003 -> 16r008080.
-				16r1000004 -> 16r800000.
-				16r1000005 -> 16r800080.
-				16r1000006 -> 16r808000.
-				16r1000007 -> 16rC0C0C0.
-				16r100000C -> 16r808080.
-				16r100000D -> 16r0000FF.
-				16r100000E -> 16r00FF00.
-				16r100000F -> 16r00FFFF.
-				16r1000010 -> 16rFF0000.
-				16r1000011 -> 16rFF00FF.
-				16r1000012 -> 16rFFFF00.
-				16r1000013 -> 16rFFFFFF})
-		at: self index!
+	^#(16r000000 16r000080 16r008000 16r008080 16r800000 16r800080 16r808000 16rC0C0C0 nil nil nil nil 16r808080 16r0000FF 16r00FF00 16r00FFFF 16rFF0000 16rFF00FF 16rFFFF00 16rFFFFFF)
+		at: index - 16rFFFFFF!
 
 setIndex: anInteger
 	index := anInteger!
@@ -158,7 +138,6 @@ stbSaveOn: anSTBOutFiler
 !Graphics.IndexedColor categoriesForMethods!
 asCOLORREF!accessing!public! !
 asParameter!converting!public! !
-asRGB!converting!public!wine fix! !
 asRGBUsingNoPalette!converting!public! !
 asRGBUsingPalette:!converting!public! !
 index!accessing!public! !

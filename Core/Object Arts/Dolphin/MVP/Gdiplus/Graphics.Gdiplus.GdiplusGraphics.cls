@@ -437,8 +437,8 @@ drawString: aString font: aFont rect: aRectangle format: aStringFormat brush: aB
 	specified by aStringFormat, and aBrush to fill the string."
 
 	| font brush text |
-	font := aFont ifNil: [Font new].
-	brush := aBrush ifNil: [SolidBrush new].
+	font := aFont ifNil: [Font genericSansSerif].
+	brush := aBrush ifNil: [Brush black].
 	"Note that we must convert to UTF-16 explicitly to ensure we pass the correct string length."
 	text := aString asUtf16String.
 	Gdip

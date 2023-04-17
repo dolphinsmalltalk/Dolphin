@@ -25,7 +25,7 @@ alpha: anAlphaInteger
 	^alpha == 255
 		ifTrue: [self]
 		ifFalse: 
-			[self argbClass
+			[ARGB
 				fromArgbCode: ((((code bitShift: -16) bitAnd: 16rFF)
 						bitOr: ((code bitAnd: 16r00FF00) bitOr: ((code bitAnd: 16rFF) bitShift: 16)))
 							bitOr: (alpha bitShift: 24))]!

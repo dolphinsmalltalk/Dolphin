@@ -27,7 +27,7 @@ Instance Variables:
 	^self == anObject or: [self species == anObject species and: [initializer = anObject initializer]]!
 
 addToImageList: aWinImageList mask: aColorOrNil
-	"Private - Add a pictorial representation of the receiver to aWinImageList"
+	"Add a pictorial representation of the receiver to aWinImageList"
 
 	^self subclassResponsibility!
 
@@ -188,7 +188,7 @@ setInitializer: anImageInitializer
 	^self! !
 !Graphics.Image categoriesForMethods!
 =!comparing!public! !
-addToImageList:mask:!private!testing! !
+addToImageList:mask:!public!testing! !
 asSharedCopy!converting!public! !
 basicFree!private!realizing/unrealizing! !
 copy!copying!public! !
@@ -219,7 +219,7 @@ printOn:!printing!public! !
 setInitializer:!private! !
 !
 
-Graphics.Image methodProtocol: #image attributes: #(#readOnly) selectors: #(#drawOn: #drawOn:at: #drawOn:at:extent: #extent #freeDC #isPersistent)!
+Graphics.Image methodProtocol: #image attributes: #(#readOnly) selectors: #(#addToImageList:mask: #drawOn: #drawOn:at: #drawOn:at:extent: #extent #freeDC #isPersistent)!
 
 !Graphics.Image class methodsFor!
 

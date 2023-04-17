@@ -13,20 +13,17 @@ UI.ColorView comment: 'ColorView is a <valueView> for displaying static <color>s
 !UI.ColorView methodsFor!
 
 basicActualBackcolor
-	| color |
+	| color alpha argb dest |
 	color := super basicActualBackcolor.
-	^color isDefault
-		ifTrue: [ColorRef defaultColorRepresentation]
-		ifFalse: 
-			[| alpha rgb dest |
-			"Show the colour blended with the window colour"
-			alpha := color alpha.
-			rgb := color asRGB.
-			dest := Color window.
-			Color
-				r: (rgb red * alpha + (dest red * (255 - alpha))) // 255
-				g: (rgb green * alpha + (dest green * (255 - alpha))) // 255
-				b: (rgb blue * alpha + (dest blue * (255 - alpha))) // 255]!
+	color isDefault ifTrue: [^ColorRef defaultColorRepresentation].
+	"Show the colour blended with the window colour"
+	dest := Color window asRGB.
+	argb := color asARGB.
+	alpha := argb alpha.
+	^Color
+		r: (argb red * alpha + (dest red * (255 - alpha))) // 255
+		g: (argb green * alpha + (dest green * (255 - alpha))) // 255
+		b: (argb blue * alpha + (dest blue * (255 - alpha))) // 255!
 
 displayValue
 	"Answer the displayable contents of the receiver"

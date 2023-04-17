@@ -104,6 +104,9 @@ unit!accessing!public! !
 
 !Graphics.Gdiplus.Font class methodsFor!
 
+defaultPointSize
+	^Graphics.Font defaultPointSize!
+
 fontFamily: fontFamily emSize: emSize
 	Notification deprecated.
 	^self fontFamily: fontFamily pointSize: emSize!
@@ -125,7 +128,7 @@ fontFamily: aGdiplusFontFamily pointSize: anInteger
 genericMonospace
 	"Answer a new generic monospace font of the default size."
 
-	^self genericMonospace: Graphics.Font default pointSize!
+	^self genericMonospace: self defaultPointSize!
 
 genericMonospace: anInteger
 	"Answer a new generic monospace font of the specified point size."
@@ -135,7 +138,7 @@ genericMonospace: anInteger
 genericSansSerif
 	"Answer a new sans-serif instance of the receiver of default size."
 
-	^self genericSansSerif: Graphics.Font default pointSize!
+	^self genericSansSerif: self defaultPointSize!
 
 genericSansSerif: anInteger
 	"Answer a new sans-serif instance of the receiver of specified point size."
@@ -145,7 +148,7 @@ genericSansSerif: anInteger
 genericSerif
 	"Answer a new generic serif font of the default size."
 
-	^self genericSerif: Graphics.Font default pointSize!
+	^self genericSerif: self defaultPointSize!
 
 genericSerif: anInteger
 	"Answer a new generic serif font of the specified point size."
@@ -195,6 +198,7 @@ new
 
 	^self genericSansSerif! !
 !Graphics.Gdiplus.Font class categoriesForMethods!
+defaultPointSize!instance creation!public! !
 fontFamily:emSize:!instance creation!public! !
 fontFamily:emSize:style:unit:!instance creation!public! !
 fontFamily:pointSize:!instance creation!public! !

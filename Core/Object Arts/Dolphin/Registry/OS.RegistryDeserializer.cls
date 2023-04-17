@@ -2,7 +2,7 @@
 
 Core.Object
 	subclass: #'OS.RegistryDeserializer'
-	instanceVariableNames: 'currentKey instVarMaps safeClasses objects validationBlock'
+	instanceVariableNames: 'currentKey instVarMaps safeClasses objects validationBlock substitute'
 	classVariableNames: ''
 	imports: #(#{OS private})
 	classInstanceVariableNames: ''
@@ -86,7 +86,7 @@ findClass: typeOrRef
 
 ignoreUnknownClasses
 	"Configure the receiver so that it will only deserialise instances of the classes pre-configured into the receiver's known classes collection, e.g. using #safeClassReferences: or #addSafeClass:,
-	References to class objects themselves (i.e. metaclass references) are generally allowed as these will resolve to the class by direct name lookup. Any other objects will be ignored."
+	References to class objects themselves (i.e. metaclass references) are generally allowed as these will resolve to the class by direct name lookup. Any other objects will skipped over and appear as the substitute object (nil, by default) in the deserialized object graph. This is the default option because is safe."
 
 	validationBlock := [:ref | ref isMeta]!
 
@@ -103,12 +103,15 @@ instVarMapFor: aClass
 			instVarMaps at: aClass put: map]!
 
 lookupReferencedObject: aString
-	^objects
-		at: (currentKey rootKey newSubKey: (PathCch
-						pathCombine: currentKey pathFromRoot
-						pszMore: aString
-						dwFlags: PATHCCH_NONE)
-				sam: WinRegConstants.KEY_READ)!
+	| subKey |
+	subKey := PathCch
+				pathCombine: currentKey pathFromRoot
+				pszMore: aString
+				dwFlags: PATHCCH_NONE.
+	^objects at: subKey
+		ifAbsentPutClean: 
+			["Forward reference - this happens because the Registry API enumerates sub-keys in an arbitrary order, and we don't impose one"
+			RegistryDeserializerStub new]!
 
 namesAndObjectsDo: aDyadicValuable
 	| parentKey |
@@ -181,7 +184,8 @@ readObject
 					[(self findClass: typeOrRef)
 						ifNil: 
 							[Notification signal: currentKey pathFromRoot , ' stores a ' , typeOrRef
-										, ' which is not a known and/or safe class, and will be ignored']
+										, ' which is not a known and/or safe class, and will be substituted'.
+							self skipObject: params]
 						ifNotNil: [:class | object := class readFromRegistry: self params: params]]].
 	needsFree ifTrue: [currentKey free].
 	^object!
@@ -199,11 +203,19 @@ readObjectOfClass: aClass params: anArray
 	^object!
 
 registerCurrentObject: anObject
-	objects at: currentKey put: anObject!
+	| obj |
+	(obj := objects at: currentKey pathFromRoot ifAbsentPutClean: [anObject]) == anObject
+		ifTrue: [^self].
+	obj class == OS.RegistryDeserializerStub
+		ifTrue: 
+			["Resolve forward reference - slow, but relatively rare"
+			obj oneWayBecome: anObject]
+		ifFalse: [self error: 'Object already registered for ' , currentKey displayString]!
 
 safeClassReferences: aCollection
 	"Set the <abstractDictionary> of <BindingReference>s that resolve to classes pre-recognised as safe to be deserialised by the receiver. These will not be presented to the validationBlock."
 
+	safeClasses := LookupTable new: aCollection size.
 	aCollection do: [:each | safeClasses at: each value shortName put: each]!
 
 setRegKey: aRegKey
@@ -212,6 +224,20 @@ setRegKey: aRegKey
 	safeClasses :=self defaultSafeClassReferences.
 	objects := LookupTable new: 16.
 	self ignoreUnknownClasses!
+
+skipObject: anArray
+	"Private - Skip over an object that is not know to be safe, replacing it in the object graph with the substitute object. We need to read all the sub-objects of the substituted object as the serializer may have created refs to these, if shared."
+
+	self registerCurrentObject: substitute.
+	self namesAndObjectsDo: [:instVar :value | ]!
+
+substitute
+	"The object to be substituted in place of objects in the deserialization graph that are not of classes passed by the validation block (i.e. objects that are not known to be safe)."
+
+	^substitute!
+
+substitute: anObject
+	substitute := anObject!
 
 valueAt: aString 
 	^currentKey valueAt: aString! !
@@ -232,6 +258,9 @@ readObjectOfClass:params:!deserializing!public! !
 registerCurrentObject:!deserializing!public! !
 safeClassReferences:!initializing!public! !
 setRegKey:!initializing!private! !
+skipObject:!private! !
+substitute!public! !
+substitute:!public! !
 valueAt:!accessing!public! !
 !
 

@@ -24,7 +24,7 @@ InternalBitmaps can now be used for toolbar images, but the source image will ne
 		and: [self gdiplusBitmap initializer = comperand gdiplusBitmap initializer]!
 
 addToImageList: aWinImageList mask: aColorOrNil 
-	"Private - Add a pictorial representation of the receiver to aWinImageList scaled to the
+	"Add a pictorial representation of the receiver to aWinImageList scaled to the
 	extent of the image list. We assume that the receiver contains transparency information so
 	the mask color is ignored"
 
@@ -112,6 +112,9 @@ drawOnGraphics: aGraphics at: dstOrigin extent: dstExtent from: srcOrigin extent
 extent
 	^self gdiplusBitmap extent!
 
+freeDC
+	"Private - Free the receiver's cached memory DC, if any."!
+
 fullIdentifier
 	"For compatibility with bitmaps."
 
@@ -136,6 +139,12 @@ internalize
 	"Should be performed after termination of any operation that draws into the receiver"
 
 	gdiplusBitmap := gdiplusBitmap internalize!
+
+isPersistent
+	"Private - Answer true if the receiver holds sufficient information such that it can recreate itself when the Smalltalk image is saved and restored. 
+	InternalBitmaps are self describing, so this is always true."
+
+	^true!
 
 isShared: aBoolean
 	"For compatibility with bitmaps"
@@ -162,7 +171,7 @@ setBitmap: aGdiplusBitmap
 	gdiplusBitmap := aGdiplusBitmap! !
 !Graphics.InternalBitmap categoriesForMethods!
 =!comparing!public! !
-addToImageList:mask:!double dispatch!private! !
+addToImageList:mask:!double dispatch!public! !
 asBitmap!public! !
 asByteArray!converting!public! !
 asIcon!public! !
@@ -175,6 +184,7 @@ drawOn:at:!drawing-bitmaps!public! !
 drawOn:at:extent:!drawing-bitmaps!public! !
 drawOnGraphics:at:extent:from:extent:unit:attributes:!drawing-gdiplus!public! !
 extent!accessing!public! !
+freeDC!public! !
 fullIdentifier!public! !
 gdiplusBitmap!initializing!private! !
 graphics!accessing!drawing-gdiplus!public! !
@@ -182,10 +192,13 @@ handle!public! !
 hash!comparing!public! !
 imageType!public! !
 internalize!public! !
+isPersistent!public! !
 isShared:!public! !
 printOn:!printing!public! !
 setBitmap:!initializing!private! !
 !
+
+Graphics.InternalBitmap methodProtocol: #image attributes: #(#readOnly) selectors: #(#addToImageList:mask: #drawOn: #drawOn:at: #drawOn:at:extent: #extent #freeDC #isPersistent)!
 
 !Graphics.InternalBitmap class methodsFor!
 

@@ -36,7 +36,7 @@ stbSaveOn: anSTBOutFiler
 
 	anSTBOutFiler saveObject: self! !
 !Graphics.PluggableColor categoriesForMethods!
-actualColor!private!testing! !
+actualColor!accessing!public! !
 printOn:!printing!public! !
 setValuable:!initializing!private! !
 stbSaveOn:!binary filing!public! !

@@ -99,18 +99,6 @@ addToCommandRoute: route
 
 	^route appendPresenter: self!
 
-addToImageList: aWinImageList mask: aColorOrNil 
-	"Private - Add a pictorial representation of the receiver to aWinImageList. Typically this is used to create
-	a thumbnail representation of the receiver."
-
-	| thumbnail |
-	(self respondsTo: #createThumbnailExtent:mask:) 
-		ifFalse: 
-			["If GDI+ is not present just use an icon"
-			^aWinImageList addIcon: self icon].
-	thumbnail := self createThumbnailExtent: aWinImageList extent mask: aColorOrNil.
-	^aWinImageList addBitmap: thumbnail mask: aColorOrNil!
-
 adjustRectangle: aRectangle 
 	"Update the <Rectangle> argument, which is a proposed new position and extent for the
 	receiver, to account for any of the receiver's foibles. The default is to accept the
@@ -4593,7 +4581,6 @@ actualFont!accessing!font!private! !
 actualPreferredExtent:!geometry!private! !
 addSubView:!hierarchy!public!sub views! !
 addToCommandRoute:!commands!public! !
-addToImageList:mask:!double dispatch!private! !
 adjustRectangle:!geometry!public! !
 allChildWindowHandlesDo:!hierarchy!public! !
 allParents!hierarchy!public! !

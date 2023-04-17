@@ -49,6 +49,20 @@ testArgbCode
 	self assert: ((Color named: #gradientActiveCaption) alpha: 64) argbCode
 		equals: ((Color named: #gradientActiveCaption) asRGB alpha: 64) argbCode!
 
+testAsARGB
+	self assert: Color orchid asARGB equals: Color orchid.
+	self assert: IndexedColor brown asARGB equals: Color olive.
+	self assert: Color none asARGB equals: (Color white alpha: 0).
+	self shouldRaiseNotARealColorError: [Color default asARGB].
+	self assert: (Color orchid alpha: 99) asARGB
+		equals: (Color
+				a: 99
+				r: 218
+				g: 112
+				b: 214).
+	self assert: ((Color named: #gradientActiveCaption) alpha: 100) asARGB
+		equals: ((Color named: #gradientActiveCaption) asRGB alpha: 100)!
+
 testAsColorRef
 	self assert: Color orchid asColorRef identicalTo: Color orchid.
 	self assert: IndexedColor brown asColorRef equals: Color olive.
@@ -72,7 +86,7 @@ testAsCOLORREF
 testAsRGB
 	self assert: Color orchid asRGB identicalTo: Color orchid.
 	self assert: IndexedColor brown asRGB equals: Color olive.
-	self shouldRaiseNotARealColorError: [Color none asRGB].
+	self assert: Color none asRGB equals: Color white.	"Alpha is discarded"
 	self shouldRaiseNotARealColorError: [Color default asRGB].
 	"Alpha of ARGB is lost"
 	self assert: (Color orchid alpha: 99) asRGB equals: Color orchid.
@@ -136,7 +150,7 @@ testChroma
 
 testClassBlack
 	self assert: Color black isKindOf: RGB.
-	self assert: Color black code equals: 0.
+	self assert: Color black asInteger equals: 0.
 	self assert: IndexedColor black isKindOf: IndexedColor.
 	self assert: IndexedColor black rgbCode equals: 0!
 
@@ -163,14 +177,14 @@ testClassFromHtmlSpec
 
 testClassWhite
 	self assert: Color white isKindOf: RGB.
-	self assert: Color white code equals: 16rFFFFFF.
+	self assert: Color white asInteger equals: 16rFFFFFF.
 	self assert: IndexedColor white isKindOf: IndexedColor.
 	self assert: IndexedColor white rgbCode equals: 16rFFFFFF!
 
 testConversions
-	"The virtual colours 'none' and 'default' do not relate to any particular colour in general, only in context."
+	"The virtual colour 'default' doesnot relate to any particular colour in general, only in context."
 
-	{Color none. Color default} do: [:each | self shouldRaiseNotARealColorError: [each asRGB]].
+	self shouldRaiseNotARealColorError: [Color default asRGB].
 	"Try a few standard colours"
 	{Color white -> (RGB
 					r: 255
@@ -303,7 +317,7 @@ testHls
 				s: 1
 				l: 0.5) hls equals: #(0.0 0.5 1.0).
 	self shouldRaiseNotARealColorError: [Color default hls].
-	self assert: (Color hsv: Color none hsv) equals: Color white.
+	self assert: (Color hls: Color none hls) equals: Color white.
 	"Round trip all the named colours"
 	(Color.NamedColors reject: [:each | each isDefault or: [each alpha ~~ 255]]) do: 
 			[:each |
@@ -314,6 +328,20 @@ testHls
 
 	self assert: ((Color named: #gradientActiveCaption) alpha: 100) hls
 		equals: (Color named: #gradientActiveCaption) hls!
+
+testHslSaturation
+	self assert: (Color
+				h: 0
+				s: 1
+				l: 0.5) hlsSaturation equals: 1.
+	self assert: (Color
+				h: 0
+				s: 0.5
+				l: 0.75) hlsSaturation equals: 0.5.
+	self shouldRaiseNotARealColorError: [Color default hlsSaturation].
+	self assert: Color none hlsSaturation equals: 0.
+	self assert: ((Color named: #gradientActiveCaption) alpha: 100) hlsSaturation
+		equals: (Color named: #gradientActiveCaption) asRGB hlsSaturation!
 
 testHsv
 	self assert: (Color
@@ -338,14 +366,48 @@ testHsv
 	self assert: ((Color named: #gradientActiveCaption) alpha: 100) hsv
 		equals: (Color named: #gradientActiveCaption) hsv!
 
+testHsvSaturation
+	self assert: (Color
+				h: 0
+				s: 1
+				v: 1) hsvSaturation equals: 1.
+	self assert: (Color
+				h: 0
+				s: 0.5
+				v: 0.5) hsvSaturation equals: 0.5.
+	self shouldRaiseNotARealColorError: [Color default hsvSaturation].
+	self assert: Color none hsvSaturation equals: 0.
+	self assert: IndexedColor yellow hsvSaturation equals: 1.0.
+	self assert: (Color named: #gradientActiveCaption) hsvSaturation
+		equals: (Color named: #gradientActiveCaption) asRGB hsvSaturation!
+
 testHue
 	self assert: (Color
 				r: 128
 				g: 128
 				b: 255) hue equals: 240.
+	self assert: Color none hue equals: 0.
 	self assert: IndexedColor yellow hue equals: 60.0.
 	self assert: ((Color named: #gradientActiveCaption) alpha: 100) hue
 		equals: (Color named: #gradientActiveCaption) hue!
+
+testIndexedColorStdPalette
+	self assert: IndexedColor black rgbCodeFromStdPalette equals: 16r000000.
+	self assert: IndexedColor darkRed rgbCodeFromStdPalette equals: 16r000080.
+	self assert: IndexedColor darkGreen rgbCodeFromStdPalette equals: 16r008000.
+	self assert: IndexedColor brown rgbCodeFromStdPalette equals: 16r008080.
+	self assert: IndexedColor darkBlue rgbCodeFromStdPalette equals: 16r800000.
+	self assert: IndexedColor darkMagenta rgbCodeFromStdPalette equals: 16r800080.
+	self assert: IndexedColor darkCyan rgbCodeFromStdPalette equals: 16r808000.
+	self assert: IndexedColor gray rgbCodeFromStdPalette equals: 16rC0C0C0.
+	self assert: IndexedColor darkGray rgbCodeFromStdPalette equals: 16r808080.
+	self assert: IndexedColor red rgbCodeFromStdPalette equals: 16r0000FF.
+	self assert: IndexedColor green rgbCodeFromStdPalette equals: 16r00FF00.
+	self assert: IndexedColor yellow rgbCodeFromStdPalette equals: 16r00FFFF.
+	self assert: IndexedColor blue rgbCodeFromStdPalette equals: 16rFF0000.
+	self assert: IndexedColor magenta rgbCodeFromStdPalette equals: 16rFF00FF.
+	self assert: IndexedColor cyan rgbCodeFromStdPalette equals: 16rFFFF00.
+	self assert: IndexedColor white rgbCodeFromStdPalette equals: 16rFFFFFF!
 
 testIntensity
 	| halfOrchid |
@@ -362,8 +424,9 @@ testIntensity
 	self assert: (Color face3d intensity: 0.75) equals: (Color face3d asRGB intensity: 0.75).
 	self assert: (IndexedColor yellow intensity: 0.5) equals: Color olive.
 	self assert: (Color none intensity: 0.5) equals: (Color gray alpha: 0).
+	"ColorAlpha"
 	self assert: (((Color named: #gradientActiveCaption) alpha: 100) intensity: 0.5)
-		equals: ((Color named: #gradientActiveCaption) intensity: 0.5)!
+		equals: (((Color named: #gradientActiveCaption) asRGB intensity: 0.5) alpha: 100)!
 
 testIsDefault
 	self deny: Color orchid isDefault.
@@ -428,6 +491,18 @@ testIsTransparent
 		Color none.
 		Color black alpha: 0.
 		(Color named: #gradientActiveCaption) alpha: 0} do: [:each | self assert: each isTransparent]!
+
+testLuminance
+	self assert: Color red luminance equals: 0.299.
+	self assert: Color blue luminance equals: 0.114.
+	self assert: Color green luminance equals: 0.587.
+	self assert: Color black luminance equals: 0.
+	self assert: Color white luminance equals: 1.
+	self assert: Color none luminance equals: 1.
+	self shouldRaiseNotARealColorError: [Color default luminance].
+	self assert: Color caption luminance equals: Color caption asRGB luminance.
+	self assert: ((Color named: #gradientActiveCaption) alpha: 64) luminance
+		equals: (Color named: #gradientActiveCaption) luminance!
 
 testName
 	self assert: Color highlight name identicalTo: #highlight.
@@ -520,11 +595,16 @@ testPrintString
 
 testRed
 	self assert: Color red red equals: 255.
+	self assert: Color red asARGB red equals: 255.
 	self assert: Color blue red equals: 0.
+	self assert: Color blue asARGB red equals: 0.
+	self assert: Color green red equals: 0.
+	self assert: Color green asARGB red equals: 0.
 	self assert: (Color yellow alpha: 100) red equals: 255.
 	self assert: IndexedColor brown red equals: 128.
 	self shouldRaiseNotARealColorError: [Color default red].
 	self assert: Color none red equals: 255.
+	self assert: Color none asARGB red equals: 255.
 	self assert: (Color named: #gradientActiveCaption) red
 		equals: (Color named: #gradientActiveCaption) asRGB red.
 	self assert: ((Color named: #gradientActiveCaption) alpha: 64) red
@@ -607,6 +687,7 @@ shouldRaiseNotARealColorError:!helpers!private! !
 testActualColor!public!unit tests! !
 testAlpha!public!unit tests! !
 testArgbCode!public!unit tests! !
+testAsARGB!public!unit tests! !
 testAsColorRef!public!unit tests! !
 testAsCOLORREF!public!unit tests! !
 testAsRGB!public!unit tests! !
@@ -625,14 +706,18 @@ testFaded!public!unit tests! !
 testGreen!public!unit tests! !
 testHash!public!unit tests! !
 testHls!public!unit tests! !
+testHslSaturation!public!unit tests! !
 testHsv!public!unit tests! !
+testHsvSaturation!public!unit tests! !
 testHue!public!unit tests! !
+testIndexedColorStdPalette!public!unit tests! !
 testIntensity!public!unit tests! !
 testIsDefault!public!unit tests! !
 testIsGrayscale!public!unit tests! !
 testIsNone!public!unit tests! !
 testIsSymbolic!public! !
 testIsTransparent!public!unit tests! !
+testLuminance!public!unit tests! !
 testName!public! !
 testNormalizedAlpha!public!unit tests! !
 testNormalizedBlue!public!unit tests! !

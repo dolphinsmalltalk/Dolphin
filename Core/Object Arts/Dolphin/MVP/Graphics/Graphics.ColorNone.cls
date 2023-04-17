@@ -36,55 +36,17 @@ argbCode
 	"Answer the receiver's colour value in 32-bit ARGB encoding with 8-bits per component in alpha, red, green, blue order.
 	Note that we choose to represent Color none/transparent as transparent white."
 
-	^16rFFFFFF!
+	^16r00FFFFFF!
 
 brush
 	"Answer a Brush configured for solid painting of the receiver's color."
 
 	^StockBrush fromId: Win32Constants.NULL_BRUSH!
 
-hls
-	"Answer the hue, luminance, and saturation values that correspond to the receiver."
-
-	"Color none is a completely transparent Color white."
-
-	^#(0.0 1.0 0.0)!
-
-hslSaturation
-	"Answer a <Number> in the range [0, 1] representing the HSL saturation of the receiver."
-
-	"Color none is a completely transparent Color white."
-
-	^0.0!
-
-hsv
-	"Answer a three-element <Array> containing the hue, saturation and brightness values that describe the receiver in the HSV colour system."
-
-	"Color none is a represented as a completely transparent white."
-
-	^#(0.0 0.0 1.0)!
-
-hsvSaturation
-	"Answer a <Number> in the range [0,1] representing the HSV saturation of the receiver."
-
-	"Color none is a completely transparent Color white."
-
-	^0.0!
-
-hue
-	"Answer a <Number> in the range [0,360] representing the receiver's hue in the HSV or HLS color models."
-
-	^0.0!
-
 isNone
 	"Answer whether the receiver is the special <Color> representing no colour."
 
 	^true!
-
-luminance
-	"Behaves as Color white for this purpose, but with zero alpha."
-
-	^1.0!
 
 name
 	"Answer the symbolic name of the colour, or nil if it does not have a name (or known name)."
@@ -115,13 +77,7 @@ alpha:!accessing!public! !
 alphaMask!accessing!private! !
 argbCode!accessing!public! !
 brush!converting!public! !
-hls!converting!public! !
-hslSaturation!accessing!public! !
-hsv!converting!public! !
-hsvSaturation!accessing!public! !
-hue!public! !
 isNone!public!testing! !
-luminance!public! !
 name!accessing!public! !
 normalizedAlpha!public! !
 pen!converting!public! !

@@ -69,10 +69,29 @@ package!
 UI.Shell
 	subclass: #'OS.COM.Examples.WebBrowserShell'
 	instanceVariableNames: 'address browser statusModel zoomModel flags profileModel'
-	classVariableNames: ''
+	classVariableNames: 'CurrentColorScheme PreferredColorScheme'
 	imports: #(#{UI})
 	classInstanceVariableNames: ''
-	classConstants: { 'ImagesBlockedMask' -> 16r2. 'LogEventsMask' -> 16r1 }!
+	classConstants: {
+			'ColorSchemes' -> {
+						LookupTable withAll: {
+									#browserBackground -> Color white.
+									#browserBar -> (Color brightness: 16r10 / 16r11).
+									#browserForeground -> Color black.
+									#browserHistoryArrow -> Color commonGreen.
+									#browserToolbarButton -> Color transparent
+								}.
+						LookupTable withAll: {
+									#browserBackground -> (Color brightness: 16r3B / 16rFF).
+									#browserBar -> (Color brightness: 16r3B / 16rFF).
+									#browserForeground -> Color white.
+									#browserHistoryArrow -> Color limeGreen.
+									#browserToolbarButton -> (Color brightness: 16r3B / 16rFF)
+								}
+					}.
+			'ImagesBlockedMask' -> 16r2.
+			'LogEventsMask' -> 16r1
+		}!
 UI.RuntimeSessionManager
 	subclass: #'OS.COM.Examples.WebBrowserSessionManager'
 	instanceVariableNames: ''

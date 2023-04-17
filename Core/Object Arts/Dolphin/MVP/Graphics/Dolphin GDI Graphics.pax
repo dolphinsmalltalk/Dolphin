@@ -8,6 +8,7 @@ Copyright ©️ Object Arts Ltd. 1997-2021. Portions Copyright (c) CGI Group (Eu
 package setClassNames: #(
 	#{External.SIZE}
 	#{Graphics.AbstractBitmapFromBlankInitializer}
+	#{Graphics.AbstractFont}
 	#{Graphics.AbstractRGB}
 	#{Graphics.ARGB}
 	#{Graphics.Bitmap}
@@ -51,6 +52,7 @@ package setClassNames: #(
 	#{Graphics.StockPen}
 	#{Graphics.SysColorBrush}
 	#{Graphics.SystemColor}
+	#{Graphics.SystemFont}
 	#{Graphics.ThemeColor}
 	#{Graphics.VirtualColor}
 	#{Graphics.WatermarkBitmapInitializer}
@@ -91,6 +93,7 @@ package setMethodNames: #(
 	#(#{Core.ClassDescription} #defaultResourceIcon)
 	#(#{Core.ClassDescription} #defaultResourceIconName)
 	#(#{Core.Object} #addToImageList:mask:)
+	#(#{Core.Object} #asImageKey)
 	#(#{OS.CommCtrlLibrary} #imageList_AddMasked:hbmImage:crMask:)
 	#(#{OS.CommCtrlLibrary} #imageList_BeginDrag:iTrack:dxHotspot:dyHotspot:)
 	#(#{OS.CommCtrlLibrary} #imageList_Create:cy:flags:cInitial:cGrow:)
@@ -353,16 +356,16 @@ External.PermanentLibrary
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Graphics.GraphicsTool
-	subclass: #'Graphics.Brush'
-	instanceVariableNames: 'logBrush'
+	subclass: #'Graphics.AbstractFont'
+	instanceVariableNames: 'logfont resolution'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Graphics.GraphicsTool
-	subclass: #'Graphics.Font'
-	instanceVariableNames: 'logfont resolution'
-	classVariableNames: 'System'
+	subclass: #'Graphics.Brush'
+	instanceVariableNames: 'logBrush'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -423,6 +426,29 @@ Graphics.GraphicsTool
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Graphics.AbstractFont
+	subclass: #'Graphics.Font'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.AbstractFont
+	subclass: #'Graphics.SystemFont'
+	instanceVariableNames: 'id'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.SystemFont
+	subclass: #'Graphics.StockFont'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'StockNames' -> (IdentityDictionary withAll: { 16rD -> #system. 16r11 -> #default })
+		}!
 Graphics.Brush
 	subclass: #'Graphics.HatchBrush'
 	instanceVariableNames: 'id color'
@@ -440,13 +466,6 @@ Graphics.Brush
 Graphics.StockBrush
 	subclass: #'Graphics.SysColorBrush'
 	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Graphics.Font
-	subclass: #'Graphics.StockFont'
-	instanceVariableNames: 'id'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -1067,9 +1086,15 @@ defaultResourceIconName!constants!public! !
 addToImageList: aWinImageList mask: aColorOrNil 
 	"Private - Add a pictorial representation of the receiver to aWinImageList."
 
-	^self icon addToImageList: aWinImageList mask: aColorOrNil! !
+	^self icon addToImageList: aWinImageList mask: aColorOrNil!
+
+asImageKey
+	"Answer the form of the receiver to use as an image key in an ImageManager. Normally this is just the receiver, but in some cases there may be a need to snapshot certain attributes used in rendering the image so that subsequent attempts to use the image from the image manager do not match an old rendering of the image that should have changed, e.g. because ThemeColors are used in displaying the image, and the theme has been updated."
+
+	^self! !
 !Core.Object categoriesForMethods!
-addToImageList:mask:!double dispatch!private! !
+addToImageList:mask:!public! !
+asImageKey!converting!public! !
 !
 
 !OS.CommCtrlLibrary methodsFor!

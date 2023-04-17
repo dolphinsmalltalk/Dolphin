@@ -46,7 +46,7 @@ setColor: aColor alpha: anInteger
 	color := aColor.
 	alpha := anInteger! !
 !Graphics.ColorAlpha categoriesForMethods!
-actualColor!accessing!private! !
+actualColor!accessing!public! !
 alpha!accessing!public! !
 alpha:!accessing!public! !
 isOpaque!public!testing! !

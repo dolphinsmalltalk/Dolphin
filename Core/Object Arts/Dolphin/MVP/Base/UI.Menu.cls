@@ -563,7 +563,7 @@ queryAllFromView: aView
 
 	^self queryAllAlong: aView presenter commandPolicy recursive: false!
 
-queryAlong: aCommandPolicy 
+queryAlong: aCommandPolicy
 	"Answer a <CommandQuery> reflecting the current state of the receiver's command for the
 	specified <commandPolicy>."
 

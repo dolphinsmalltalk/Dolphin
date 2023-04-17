@@ -370,9 +370,9 @@ package setMethodNames: #(
 	#(#{External.UInt64} #printOn:)
 	#(#{External.WCHARField} #accessorMessage)
 	#(#{External.WCHARField} #characterCreationMessage)
+	#(#{Graphics.AbstractFont class} #newInstanceAspect:class:)
 	#(#{Graphics.Bitmap class} #newInstanceAspect:class:)
 	#(#{Graphics.Color class} #newInstanceAspect:class:)
-	#(#{Graphics.Font class} #newInstanceAspect:class:)
 	#(#{Graphics.Gdiplus.Image class} #newInstanceAspect:class:)
 	#(#{Graphics.Gdiplus.ImageView class} #publishedAspectsOfInstances)
 	#(#{Graphics.Icon class} #newInstanceAspect:class:)
@@ -4294,6 +4294,17 @@ accessorMessage!automatic generation!private! !
 characterCreationMessage!automatic generation!private! !
 !
 
+!Graphics.AbstractFont class methodsFor!
+
+newInstanceAspect: aSymbol class: aspectClass 
+	"Private - Answer a new <Aspect> of the class, aspectClass, and with name, aSymbol, 
+    	which is appropriate for representing aspects of the receiver's type."
+
+	^aspectClass font: aSymbol! !
+!Graphics.AbstractFont class categoriesForMethods!
+newInstanceAspect:class:!adapters!private! !
+!
+
 !Graphics.Bitmap class methodsFor!
 
 newInstanceAspect: aSymbol class: aspectClass 
@@ -4313,17 +4324,6 @@ newInstanceAspect: aSymbol class: aspectClass
 
 	^aspectClass color: aSymbol! !
 !Graphics.Color class categoriesForMethods!
-newInstanceAspect:class:!adapters!private! !
-!
-
-!Graphics.Font class methodsFor!
-
-newInstanceAspect: aSymbol class: aspectClass 
-	"Private - Answer a new <Aspect> of the class, aspectClass, and with name, aSymbol, 
-    	which is appropriate for representing aspects of the receiver's type."
-
-	^aspectClass font: aSymbol! !
-!Graphics.Font class categoriesForMethods!
 newInstanceAspect:class:!adapters!private! !
 !
 

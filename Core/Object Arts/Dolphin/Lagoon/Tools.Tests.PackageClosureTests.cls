@@ -19,11 +19,10 @@ consoleAppUnimplemented
 
 simpleGuiAppUnimplementedMessages
 	"Private - Answer the collection of selectors of methods expected to be missing in a simple GUI app with the image stripper:
-		- createThumbnailExtent:mask: - send by View>>addToImageList:extent: when GDI+ is loaded, but only if understood. This may show up in the UnimplementedMessages section of the actual deployment log for GUI apps.
 		- defineTemplate- sent from ExternalStructure>>ensureDefined, which is replaced with a no-op stub in deployed apps. Should not be in the UnimplementedMessages section of the actual deployment log for GUI apps.
 		- ttmRelayEvent: - only sent (from MVP base) if the Dolphin ToolTips package is loaded. This may show up in the UnimplementedMessages section of the actual deployment log for GUI apps."
 
-	^#(#createThumbnailExtent:mask: #ttmRelayEvent: #defineTemplate)!
+	^#(#ttmRelayEvent: #defineTemplate)!
 
 testCommandLineHelloWorld
 	"Tests predicted unimplemented messages of a minimal console application. Note that the actual set will be less and can be determined by deploying the application with deployment logging enabled, and looking at the UnimplementedMesages element in the resulting log. In the case of 'Hello World' the unimplemented message set should actually be empty when deploying."

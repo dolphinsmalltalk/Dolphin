@@ -27,18 +27,8 @@ alpha
 
 	^self errorNotARealColor!
 
-blue
-	"Answer the receiver's blue component expressed as an <integer> in the range [0,255]."
-
-	^self errorNotARealColor!
-
 brush
 	"Answer a Brush configured for solid painting of the receiver's color."
-
-	^self errorNotARealColor!
-
-green
-	"Answer the receiver's green component expressed as an <integer> in the range [0,255]."
 
 	^self errorNotARealColor!
 
@@ -68,8 +58,8 @@ pen
 
 	^self errorNotARealColor!
 
-red
-	"Answer the receiver's red component expressed as an <integer> in the range [0,255]."
+rgbCode
+	"Answer the receiver's color value in 24-bit RGB encoding with 8-bits per component in (blue, green, red) order."
 
 	^self errorNotARealColor!
 
@@ -83,15 +73,13 @@ species
 !Graphics.ColorDefault categoriesForMethods!
 =!comparing!public! !
 alpha!public! !
-blue!accessing!public! !
 brush!converting!public! !
-green!accessing!public! !
 hash!comparing!public! !
 isDefault!public!testing! !
 name!accessing!public! !
 normalizedAlpha!public! !
 pen!converting!public! !
-red!accessing!public! !
+rgbCode!accessing!public! !
 shallowCopy!copying!public! !
 species!accessing!public! !
 !

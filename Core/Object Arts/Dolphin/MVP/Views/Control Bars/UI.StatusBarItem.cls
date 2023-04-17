@@ -42,6 +42,7 @@ drawItem: aCanvas bounding: aRectangle
 	(model isNil or: [model value isNil]) ifTrue: [^self].
 	aCanvas save.
 	aCanvas font: parentView actualFont.
+	parentView forecolor ifNotNil: [:textcolor | aCanvas forecolor: textcolor].
 	"The image is drawn in one of the system icon sizes (the largest that will fit). It's
 	possible that the status bar is too small to draw even a 16x16 icon (most likely it is less
 	than 15 pixels high due to a design-time error. In this case draw a 16x16 icon and just let

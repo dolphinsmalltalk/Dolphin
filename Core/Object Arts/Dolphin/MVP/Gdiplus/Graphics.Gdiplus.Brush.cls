@@ -14,6 +14,9 @@ Graphics.Gdiplus.Brush comment: 'GdiplusBrush is an abstract class that defines 
 '!
 !Graphics.Gdiplus.Brush methodsFor!
 
+actualColor
+	^self!
+
 createGpPen: aFloat
 	| gpHandle |
 	gpHandle := Handle new.
@@ -48,6 +51,7 @@ type
 	Gdip gdipGetBrushType: self handle type: buf.
 	^buf asInteger! !
 !Graphics.Gdiplus.Brush categoriesForMethods!
+actualColor!accessing!public! !
 createGpPen:!operations!private! !
 gdiplusBrush:!converting!public! !
 isNone!public!testing! !

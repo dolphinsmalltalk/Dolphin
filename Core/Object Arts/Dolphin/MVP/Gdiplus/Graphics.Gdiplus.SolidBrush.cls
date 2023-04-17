@@ -11,6 +11,9 @@ Graphics.Gdiplus.SolidBrush guid: (Core.GUID fromString: '{7f8ddb06-89ba-471a-a0
 Graphics.Gdiplus.SolidBrush comment: 'A solid brush paints a single, constant color that can be opaque or transparent.'!
 !Graphics.Gdiplus.SolidBrush methodsFor!
 
+actualColor
+	^self color actualColor!
+
 asColor
 	^self color!
 
@@ -40,6 +43,7 @@ luminance
 
 	^self color luminance! !
 !Graphics.Gdiplus.SolidBrush categoriesForMethods!
+actualColor!accessing!public! !
 asColor!converting!public! !
 color!accessing!public! !
 color:!accessing!public! !

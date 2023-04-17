@@ -252,7 +252,7 @@ isUnpinAnimated
 
 	^(siotFlags allMask: AnimatedUnpinMask) and: 
 			["When aero is enabled the unpin animation results in scarring on some display drivers"
-			DwmApiLibrary isDesktopCompositionEnabled not]!
+			Dwmapi isDesktopCompositionEnabled not]!
 
 isUnpinAnimated: aBoolean 
 	"Set whether the unpin operation is animated - note that this is only relevant if

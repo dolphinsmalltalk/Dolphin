@@ -266,6 +266,7 @@ package setMethodNames: #(
 	#(#{Graphics.Point} #scaledTo:)
 	#(#{Graphics.Rectangle} #_clipGpGraphics:mode:)
 	#(#{Graphics.Rectangle} #_combineGpRegion:mode:)
+	#(#{UI.View} #addToImageList:mask:)
 	#(#{UI.View} #createThumbnailExtent:mask:)
 	#(#{UI.View} #graphics)
 ).
@@ -2406,6 +2407,13 @@ _combineGpRegion:mode:!double dispatch!private! !
 
 !UI.View methodsFor!
 
+addToImageList: aWinImageList mask: aColorOrNil
+	"Add a pictorial representation of the receiver to aWinImageList. Typically this is used to create a thumbnail representation of the receiver."
+
+	| thumbnail |
+	thumbnail := self createThumbnailExtent: aWinImageList extent mask: aColorOrNil.
+	^aWinImageList addBitmap: thumbnail mask: aColorOrNil!
+
 createThumbnailExtent: extent mask: aColor
 	| image crop rect scale thumbnail canvas r scaledExtent |
 	image := Gdiplus.Bitmap fromView: self.
@@ -2441,6 +2449,7 @@ graphics
 
 	^Gdiplus.GdiplusGraphics fromView: self! !
 !UI.View categoriesForMethods!
+addToImageList:mask:!double dispatch!public! !
 createThumbnailExtent:mask:!private! !
 graphics!drawing!public! !
 !

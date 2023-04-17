@@ -61,6 +61,13 @@ testBag
 	self assert: restored class identicalTo: subject class.
 	self assert: restored equals: subject!
 
+testBooleans
+	| rehydrated booleans |
+	booleans := #(true #(true) false #(false)).
+	testKey objectAt: self selector put: booleans.
+	rehydrated := testKey objectAt: self selector.
+	self assert: rehydrated equals: booleans!
+
 testByteArrayRef
 	| method bytes2 rehydrated key deserializer |
 	method := self class compiledMethodAt: self selector.
@@ -201,13 +208,27 @@ testIntegerBytes
 	subjects at: 1 put: nil.
 	self assert: rehydrated equals: subjects!
 
+testInterval
+	| rehydrated interval |
+	interval := 2 to: 10 by: 1.5.
+	testKey objectAt: self selector put: { interval. { interval } }.
+	rehydrated := testKey objectAt: self selector.
+	self assert: rehydrated equals: { interval. { interval } }!
+
 testLocales
 	| key welsh locales serializer rehydrated |
 	welsh := Locale named: 'cy'.
-	locales := {Locale smalltalk. welsh. Locale invariant. Locale named: 'en-Cy'. welsh. Locale named: 'cy-GB'}.
+	locales := {
+				Locale smalltalk.
+				welsh.
+				Locale invariant.
+				Locale named: 'en-Cy'.
+				welsh.
+				Locale named: 'cy-GB'
+			}.
 	testKey objectAt: self selector put: locales.
 	key := testKey at: self selector.
-	serializer := OS.RegistryDeserializer regKey: key.
+	serializer := RegistryDeserializer regKey: key.
 	rehydrated := serializer readObject.
 	key free.
 	self assert: rehydrated equals: locales.
@@ -229,10 +250,25 @@ testNumbers
 	rehydrated := testKey objectAt: self selector.
 	self assert: rehydrated equals: numbers!
 
+testOrderedCollection
+	| numbers rehydrated key deserializer |
+	numbers := self numberTestValues asOrderedCollection.
+	numbers addFirst: 0.
+	numbers removeFirst.
+	numbers addLast: 0.
+	numbers removeLast.
+	testKey objectAt: self selector put: numbers.
+	key := testKey at: self selector.
+	deserializer := RegistryDeserializer regKey: key.
+	rehydrated := deserializer readObject.
+	key free.
+	self assert: rehydrated equals: numbers.
+	self assert: rehydrated isKindOf: OrderedCollection!
+
 testRemoveNamedInstVar
 	"Simulates the schema migration scenario of an named instance variable being removed - previously serialized values under old inst var names should just be ignored"
 
-	| interval deserializer rehydrated index instVarMap key |
+	| interval deserializer rehydrated instVarMap key |
 	interval := 1 to: 10 by: 0.25.
 	testKey objectAt: self selector put: interval.
 	"Sanity check that it reads back ok, also populating the inst var name cache"
@@ -241,16 +277,20 @@ testRemoveNamedInstVar
 	key free.
 	rehydrated := deserializer readObject.
 	self assert: rehydrated equals: interval.
-	instVarMap := deserializer instVarMapFor: Interval.
+
 	"Remove a variable serialized as a value"
-	index := instVarMap removeKey: 'stop'.
+	deserializer := RegistryDeserializer regKey: key.
+	instVarMap := deserializer instVarMapFor: Interval.
+	instVarMap removeKey: 'stop'.
 	rehydrated := deserializer readObject.
 	self assertIsNil: rehydrated stop.
 	rehydrated stop: 10.
 	self assert: rehydrated equals: interval.
-	instVarMap at: 'stop' put: index.
+
 	"Remove a variable serialized as a class key"
-	index := instVarMap removeKey: 'step'.
+	deserializer := RegistryDeserializer regKey: key.
+	instVarMap := deserializer instVarMapFor: Interval.
+	instVarMap removeKey: 'step'.
 	rehydrated := deserializer readObject.
 	self assertIsNil: rehydrated step.
 	rehydrated step: 0.25.
@@ -261,7 +301,7 @@ testScintillaTextStyles
 	styles := Tools.SmalltalkWorkspace textStyles.
 	testKey objectAt: self selector put: styles.
 	key := testKey at: self selector.
-	deserializer := OS.RegistryDeserializer regKey: key.
+	deserializer := RegistryDeserializer regKey: key.
 	deserializer addSafeClass: UI.Scintilla.TextStyle.
 	rehydratedStyles := deserializer readObject.
 	key free.
@@ -336,6 +376,47 @@ testSortedCollectionDefaultAlgorithm
 	rehydrated add: 5.
 	self assert: rehydrated equals: numbers!
 
+testStockFont
+	| subject rehydrated font |
+	subject := Graphics.Font system.
+	testKey objectAt: self selector put: { subject. Array with: subject }.
+	rehydrated := testKey objectAt: self selector.
+	font := subject copy.
+	self assert: rehydrated equals: {font. {font}}!
+
+testUnsafeObjects
+	| subject rehydrated notifications duration literal |
+	literal := ##('abc' -> Object new).
+	subject := 
+			["Not actually unsafe, since the become primitive will detect this and fail, but you get the idea. Blocks contain arbitrary code, so shouldn't be loaded from potentially unsafe locations."
+			Object become: literal].
+	duration := 1 seconds.
+	testKey objectAt: self selector
+		put: {
+				subject.
+				duration.
+				{ literal. subject. duration }.
+				subject.
+				subject method.
+				duration.
+				#become:
+			}.
+	notifications := OrderedCollection new.
+	rehydrated := [testKey objectAt: self selector] on: Notification
+				do: 
+					[:ex |
+					notifications add: ex.
+					ex resume].
+	self assert: rehydrated
+		equals: { nil. duration. { 'abc' -> nil. nil. duration }. nil. nil. duration. #become: }.
+	self assert: notifications size equals: 3.
+	self assert: notifications first messageText
+		equals: 'Software\Object Arts\Dolphin Smalltalk\RegistrySerializerTest\testUnsafeObjects\1 stores a BlockClosure which is not a known and/or safe class, and will be substituted'.
+	self assert: notifications second messageText
+		equals: 'Software\Object Arts\Dolphin Smalltalk\RegistrySerializerTest\testUnsafeObjects\1\method stores a CompiledMethod which is not a known and/or safe class, and will be substituted'.
+	self assert: notifications third messageText
+		equals: 'Software\Object Arts\Dolphin Smalltalk\RegistrySerializerTest\testUnsafeObjects\1\method\1\value stores a Object which is not a known and/or safe class, and will be substituted'!
+
 verifyDictionarySerializationStringKeys: aClass
 	| restored subject key |
 	subject := aClass new.
@@ -366,7 +447,8 @@ verifyDictionarySerializationWithNonStringKeys: aClass
 		at: #Symbol put: #Symbol;
 		at: 'sameFloat' put: float;
 		at: #Interval put: (1 to: 10 by: 2);
-		at: 'myself' put: subject.
+		at: 'myself' put: subject;
+		at: true put: true.
 	testKey objectAt: self selector put: subject.
 	key := testKey at: self selector.
 	"The keys names should be integers"
@@ -374,7 +456,7 @@ verifyDictionarySerializationWithNonStringKeys: aClass
 	"Only the default value should be present"
 	self assert: key subValues keys single equals: ''.
 	"And it's value should be the class and tally"
-	self assert: (key valueAt: '') equals: {subject class shortName. subject size printString}.
+	self assert: (key valueAt: '') equals: { subject class shortName. subject size printString }.
 	key free.
 	"It should read-back as an equivalent dictionary"
 	restored := testKey objectAt: self selector.
@@ -391,6 +473,7 @@ numberTestValues!constants!private! !
 setUp!private!running! !
 tearDown!private!running! !
 testBag!public!unit tests! !
+testBooleans!public!unit tests! !
 testByteArrayRef!public!unit tests! !
 testByteArrays!public!unit tests! !
 testClasses!public!unit tests! !
@@ -402,16 +485,20 @@ testEmptyArray!public!unit tests! !
 testFont!public!unit tests! !
 testIdentityDictionaryWithSymbolKeys!public!unit tests! !
 testIntegerBytes!public!unit tests! !
+testInterval!public!unit tests! !
 testLocales!public!unit tests! !
 testLookupTableWithNonStringKeys!public!unit tests! !
 testLookupTableWithStringKeys!public!unit tests! !
 testNumbers!public!unit tests! !
+testOrderedCollection!public!unit tests! !
 testRemoveNamedInstVar!public!unit tests! !
 testScintillaTextStyles!public!unit tests! !
 testSelfRef!public!unit tests! !
 testSet!public!unit tests! !
 testSortedCollection!public!unit tests! !
 testSortedCollectionDefaultAlgorithm!public!unit tests! !
+testStockFont!public!unit tests! !
+testUnsafeObjects!public!unit tests! !
 verifyDictionarySerializationStringKeys:!helpers!private! !
 verifyDictionarySerializationWithNonStringKeys:!helpers!private! !
 !

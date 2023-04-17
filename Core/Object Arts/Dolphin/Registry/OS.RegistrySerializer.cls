@@ -6,7 +6,7 @@ Core.Object
 	classVariableNames: ''
 	imports: #(#{OS.WinRegConstants private})
 	classInstanceVariableNames: ''
-	classConstants: { 'BytesValueName' -> 'bytes'. 'ReferencePrefix' -> '@'. 'ValueSeparator' -> ':' }!
+	classConstants: {}!
 OS.RegistrySerializer guid: (Core.GUID fromString: '{da611471-9e5f-4743-a322-503ebcf1ed71}')!
 OS.RegistrySerializer comment: '`OS.RegistrySerializer` is a simple object serialiser for storing object graphs in the Windows Registry. The graphs can be reconstructed from the registry using `OS.RegistryDeserializer`.
 
@@ -91,7 +91,7 @@ bytesAt: aString put: aByteObject as: aClass
 		createClassKey: aClass
 		name: aString
 		with: aByteObject basicSize)
-		basicValueAt: BytesValueName
+		basicValueAt: ##('bytes' asUtf16String)
 			put: aByteObject
 			type: REG_BINARY
 			size: aByteObject byteSize;
@@ -156,7 +156,7 @@ registerObject: anObject key: aString
 	objects at: anObject put: keyString!
 
 registerObject: aValueObject value: aString
-	objects at: aValueObject put: currentKey pathFromRoot , ValueSeparator , aString!
+	objects at: aValueObject put: currentKey pathFromRoot , ##($: asUtf16String) , aString!
 
 setRegKey: aRegKey 
 	currentKey := aRegKey.
@@ -202,20 +202,28 @@ writeCollection: aCollection at: aString
 			self basicWriteCollection: aCollection key: aString]
 		ifNotNil: [:ref | self writeReference: ref key: aString]!
 
-writeObject: anObject name: aString parameter: parameterObject do: aMonadicValuable
+writeObject: anObject class: aClass name: aString parameter: parameterObject do: aMonadicValuable
 	(objects lookup: anObject)
 		ifNil: 
 			[| parentKey |
 			self registerObject: anObject key: aString.
 			parentKey := currentKey.
 			currentKey := self
-						createClassKey: anObject class
+						createClassKey: aClass
 						name: aString
 						with: parameterObject.
 			aMonadicValuable cull: self cull: anObject.
 			currentKey free.
 			currentKey := parentKey]
 		ifNotNil: [:ref | self writeReference: ref key: aString]!
+
+writeObject: anObject name: aString parameter: parameterObject do: aMonadicValuable
+	self
+		writeObject: anObject
+		class: anObject class
+		name: aString
+		parameter: parameterObject
+		do: aMonadicValuable!
 
 writePointerObject: anObject at: aString
 	| parentKey instVars size |
@@ -250,7 +258,7 @@ writeReference: pathString key: nameString
 		dwAttrTo: Win32Constants.FILE_ATTRIBUTE_DIRECTORY.
 	currentKey
 		basicAt: nameString
-		put: ReferencePrefix , relPath trimNulls
+		put: ##($@ asUtf16String) , relPath trimNulls
 		type: OS.WinRegConstants.REG_MULTI_SZ! !
 !OS.RegistrySerializer categoriesForMethods!
 basicObjectAt:put:!accessing!public! !
@@ -273,6 +281,7 @@ stringAt:put:!accessing!public! !
 valueAt:put:type:!public!serializing! !
 write:name:!public!serializing! !
 writeCollection:at:!public!serializing! !
+writeObject:class:name:parameter:do:!public!serializing! !
 writeObject:name:parameter:do:!public!serializing! !
 writePointerObject:at:!helpers!private! !
 writeReference:key:!helpers!private! !
@@ -284,11 +293,6 @@ OS.RegistrySerializer methodProtocol: #registryWriter attributes: #() selectors:
 
 icon
 	^RegKeyAbstract icon!
-
-initialize
-	self addClassConstant: 'BytesValueName' value: 'bytes' asUtf16String.
-	self addClassConstant: 'ValueSeparator' value: ':' asUtf16String.
-	self addClassConstant: 'ReferencePrefix' value: '@' asUtf16String!
 
 regKey: aRegKey
 	^self new
@@ -305,7 +309,6 @@ write: anObject to: aRegKey name: aString
 	(self regKey: aRegKey) write: anObject name: aString! !
 !OS.RegistrySerializer class categoriesForMethods!
 icon!constants!public! !
-initialize!class initialization!public! !
 regKey:!public! !
 write:to:!public! !
 write:to:name:!public! !

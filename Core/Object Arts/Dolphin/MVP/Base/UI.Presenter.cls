@@ -92,7 +92,7 @@ addToCommandRoute: aCommandPolicy
 	^aCommandPolicy appendPresenter: self!
 
 addToImageList: aWinImageList mask: aColorOrNil 
-	"Private - Add a pictorial representation of the receiver to aWinImageList. Typically this is used to create
+	"Add a pictorial representation of the receiver to aWinImageList. Typically this is used to create
 	a thumbnail representation of the receiver."
 
 	^self view addToImageList: aWinImageList mask: aColorOrNil!
@@ -812,7 +812,7 @@ add:name:helpId:!public!subpresenters! !
 additionalAccelerators!constants!public! !
 additionalKeyBindings!constants!private! !
 addToCommandRoute:!commands!public! !
-addToImageList:mask:!double dispatch!private! !
+addToImageList:mask:!double dispatch!public! !
 allSubPresentersDo:!enumerating!public! !
 asParameter!converting!public! !
 attachSubPresenterViews:!accessing!private! !
@@ -1251,5 +1251,6 @@ showOn:!instance creation!public! !
 updateAdditionalAccelerators:!event handling!private! !
 !
 
+UI.Presenter class methodProtocol: #imageSource attributes: #(#readOnly) selectors: #(#addToImageList:mask: #asImageKey)!
 UI.Presenter class methodProtocol: #'presenter factory' attributes: #(#readOnly) selectors: #(#create #create: #create:in: #create:in:on: #create:on: #createIn: #createIn:on: #createOn: #defaultModel #defaultView #on: #show #show: #show:on: #showOn:)!
 

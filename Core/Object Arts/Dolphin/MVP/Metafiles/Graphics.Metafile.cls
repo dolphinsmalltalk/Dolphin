@@ -17,7 +17,7 @@ Instance Variables:
 !Graphics.Metafile methodsFor!
 
 addToImageList: anImageList mask: aColorOrNil
-	"Private - Add a pictorial representation of the receiver to anImageList"
+	"Add a pictorial representation of the receiver to anImageList"
 
 	| extent bmp index |
 	extent := anImageList extent.
@@ -158,7 +158,7 @@ saveAsFile: pathString
 
 	Gdi32 copyEnhMetaFile: self asParameter lpszFile: pathString! !
 !Graphics.Metafile categoriesForMethods!
-addToImageList:mask:!private!testing! !
+addToImageList:mask:!public!testing! !
 clearCached!private!realizing/unrealizing! !
 copyHandle!private!realizing/unrealizing! !
 description!accessing!public! !

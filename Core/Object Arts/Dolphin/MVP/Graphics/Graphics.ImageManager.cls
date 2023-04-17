@@ -65,7 +65,7 @@ basicAddImage: anImage extent: extent maskcolor: aColor
 	| index |
 	imageLists isEmpty ifTrue: [imageLists at: extent put: (self newImageListWithExtent: extent)].
 	imageLists do: [:each | index := (anImage addToImageList: each mask: aColor) + 1].
-	^images at: anImage put: index!
+	^images at: anImage asImageKey put: index!
 
 buildImageListWithExtent: aPoint
 	"Private - Build a new image list with the extent specified by the <Point> argument,

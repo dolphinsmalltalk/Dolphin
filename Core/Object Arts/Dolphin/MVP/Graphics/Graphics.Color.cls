@@ -67,8 +67,10 @@ alphaMask
 
 	^16rFF000000!
 
-argbClass
-	^self class argbClass!
+argb
+	"Answer a four-element <Array> containing alpha, red, green, and blue components of the receiver expressed as integer in the range [0,255]."
+
+	^{self alpha. self red. self green. self blue}!
 
 argbCode
 	"Answer the receiver's colour value in 32-bit ARGB encoding with 8-bits per component in alpha, red, green, blue order."
@@ -77,6 +79,11 @@ argbCode
 	bgr := self rgbCode.
 	^self alphaMask bitOr: (((bgr bitShift: -16) bitAnd: 16rFF)
 				bitOr: ((bgr bitAnd: 16r00FF00) bitOr: ((bgr bitAnd: 16rFF) bitShift: 16)))!
+
+asARGB
+	"Answer the receiver as an <ARGB>."
+
+	^ARGB fromArgbCode: self argbCode!
 
 asColor
 	^self!
@@ -100,7 +107,13 @@ asDword
 asGrayscale
 	"Answer a <Color> that is a grayscale representation of the receiver."
 
-	^self asRGB asGrayscale!
+	| grey |
+	grey := (self red * 30 + (self green * 59) + (self blue * 11)) // 100.
+	^Color
+		a: self alpha
+		r: grey
+		g: grey
+		b: grey!
 
 asParameter
 	"Answer the receiver in a form suitable for an API call."
@@ -110,9 +123,9 @@ asParameter
 	^self subclassResponsibility!
 
 asRGB
-	"Answer the receiver as an <RGB>"
+	"Answer the receiver as an <RGB>. Any alpha is discarded."
 
-	^self subclassResponsibility!
+	^RGB fromRgbCode: self rgbCode!
 
 asUIntPtr
 	"Answer the receiver in a form suitable for passing/returning as a Windows LRESULT
@@ -125,12 +138,12 @@ asUIntPtr
 blue
 	"Answer the receiver's blue component component expressed as an <integer> in the range [0,255]."
 
-	^self asRGB blue!
+	^(self rgbCode bitShift: -16) bitAnd: 16rFF!
 
 brightness
 	"Answer a <Number> in the range [0,1] representing the brightness of this color in the HSV colour model."
 
-	^self asRGB brightness!
+	^((self red max: self green) max: self blue) / 255.0!
 
 brush
 	"Answer a Brush configured for solid painting of the receiver's color."
@@ -145,7 +158,11 @@ brushClass
 chroma
 	"Answer a <Number> in the range [0,1] representing the chroma value of the receiver."
 
-	^self asRGB chroma!
+	| r g b |
+	r := self red.
+	g := self green.
+	b := self blue.
+	^(((r max: g) max: b) - ((r min: g) min: b)) / 255.0!
 
 darker
 	"Answer a darker shade of this color."
@@ -163,15 +180,18 @@ faded
 	^self fadedBy: 2!
 
 fadedBy: aNumber
-	"Answer a new <Color> which is a copy of the receiver faded by
-	the specified factor."
+	"Answer a new <Color> which is a copy of the receiver faded by the specified factor."
 
-	^(self asRGB fadedBy: aNumber) alpha: self alpha!
+	^Color
+		a: self alpha
+		r: 255 - ((255 - self red) // aNumber)
+		g: 255 - ((255 - self green) // aNumber)
+		b: 255 - ((255 - self blue) // aNumber)!
 
 green
 	"Answer the receiver's green component component expressed as an <integer> in the range [0,255]."
 
-	^self asRGB green!
+	^(self rgbCode bitShift: -8) bitAnd: 16rFF!
 
 hash
 	"Answer the <SmallInteger> hash code for the receiver."
@@ -179,34 +199,111 @@ hash
 	^(self rgbCode bitShift: 6) bitXor: self alpha!
 
 hls
-	"Answer a three-element <Array> containing hue, luminance, and saturation values that correspond to the receiver in the HLS colour system."
+	"Answer a three element <Array> representing the hue, lightness, and saturation values that correspond to the receiver."
 
-	^self asRGB hls!
+	| r g b max min span h chroma |
+	r := self red.
+	g := self green.
+	b := self blue.
+	max := (r max: g) max: b.
+	min := (r min: g) min: b.
+	span := max - min.
+	span == 0
+		ifTrue: [h := 0.0]
+		ifFalse: 
+			[h := r == max
+						ifTrue: [(g - b) asFloat / span * 60.0]
+						ifFalse: 
+							[g == max
+								ifTrue: [120.0 + ((b - r) asFloat / span * 60.0)]
+								ifFalse: [240.0 + ((r - g) asFloat / span * 60.0)]].
+			h < 0.0 ifTrue: [h := 360.0 + h]].
+	chroma := (max - min) asFloat / 255.0.
+	^{h.
+		(max + min) asFloat / ##(255.0 * 2).
+		chroma isZero
+			ifTrue: [chroma]
+			ifFalse: [chroma / (1.0 - ((max + min) / ##(255.0 * 2) * 2.0 - 1.0) abs)]}!
 
-hslSaturation
-	"Answer a <Number> in the range [0,1] representing the HSL saturation of the receiver."
+hlsSaturation
+	"Answer a <Float> in the range [0.0, 1.0] representing the HSL saturation of the receiver. Note any alpha is ignored
+	- the influence of this would depend on the background colour with which the receiver is blended"
 
-	^self asRGB hslSaturation!
+	| chroma r g b max min |
+	r := self red.
+	g := self green.
+	b := self blue.
+	max := (r max: g) max: b.
+	min := (r min: g) min: b.
+	chroma := (max - min) / 255.0.
+	"Chroma is zero for black and white, which are the two cases of division by zero below."
+	^chroma isZero
+		ifTrue: [chroma]
+		ifFalse: [chroma / (1.0 - ((max + min) / ##(255.0 * 2) * 2.0 - 1.0) abs)]!
 
 hsv
-	"Answer a three-element <Array> containing the hue, saturation and brightness values that describe the receiver in the HSV colour system."
+	"Answer a three-element <Array> representing the hue, saturation and brightness values that describe the receiver in the HSV colour system."
 
-	^self asRGB hsv!
+	| r g b max min span h |
+	r := self red.
+	g := self green.
+	b := self blue.
+	max := (r max: g) max: b.
+	min := (r min: g) min: b.
+	span := max - min.
+	span == 0
+		ifTrue: [h := 0.0]
+		ifFalse: 
+			[h := r == max
+						ifTrue: [(g - b) asFloat / span * 60.0]
+						ifFalse: 
+							[g == max
+								ifTrue: [120.0 + ((b - r) asFloat / span * 60.0)]
+								ifFalse: [240.0 + ((r - g) asFloat / span * 60.0)]].
+			h < 0.0 ifTrue: [h := 360.0 + h]].
+	^{h.
+		max isZero ifTrue: [0.0] ifFalse: [(max - ((r min: g) min: b)) asFloat / max asFloat].
+		max / 255.0}!
 
 hsvSaturation
-	"Answer a <Number> in the range [0,1] representing the HSV saturation of the receiver."
+	"Answer a <Number> in the range [0, 1] representing the HSV saturation of the receiver."
 
-	^self asRGB hsvSaturation!
+	| max r g b |
+	r := self red.
+	g := self green.
+	b := self blue.
+	max := (r max: g) max: b.
+	^max isZero ifTrue: [0.0] ifFalse: [(max - ((r min: g) min: b)) asFloat / max]!
 
 hue
 	"Answer a <Number> in the range [0,360] representing the receiver's hue in the HSV or HLS color models."
 
-	^self asRGB hue!
+	| r g b max min span h |
+	r := self red.
+	g := self green.
+	b := self blue.
+	max := (r max: g) max: b.
+	min := (r min: g) min: b.
+	span := max - min.
+	span == 0 ifTrue: [^0.0].
+	h := r == max
+				ifTrue: [(g - b) asFloat / span * 60.0]
+				ifFalse: 
+					[g == max
+						ifTrue: [120.0 + ((b - r) asFloat / span * 60.0)]
+						ifFalse: [240.0 + ((r - g) asFloat / span * 60.0)]].
+	^h < 0.0 ifTrue: [360.0 + h] ifFalse: [h]!
 
-intensity: aFraction
-	"Answer a new <Color> which is a copy of the receiver given a fractional intensity away from black."
+intensity: aNumber
+	"Answer a new <Color> which is a copy of the receiver the specified fractional intensity away from black."
 
-	^self asRGB intensity: aFraction!
+	| multiplier |
+	multiplier := aNumber clampBetween: 0 and: 1.
+	^Color
+		a: self alpha
+		r: (multiplier * self red) rounded
+		g: (multiplier * self green) rounded
+		b: (multiplier * self blue) rounded!
 
 isDefault
 	"Answer whether the receiver is the special <Color> representing the default colour for the
@@ -219,7 +316,9 @@ isDefault
 isGrayscale
 	"Answer whether each of this Colors red, green and blue components are of the same magnitude, i.e. it is a shade of grey."
 
-	^self asRGB isGrayscale!
+	| red |
+	red := self red.
+	^red = self green and: [red = self blue]!
 
 isNone
 	"Answer whether the receiver is the special <Color> representing no colour (transparent)."
@@ -255,12 +354,16 @@ lighter
 lightness
 	"Answer a <Number> in the range [0,1] representing the lightness of the receiver in the HSL colour system."
 
-	^self asRGB lightness!
+	| r g b |
+	r := self red.
+	g := self green.
+	b := self blue.
+	^(((r max: g) max: b) + ((r min: g) min: b)) / ##(255.0 * 2)!
 
 luminance
 	"Answer a <Number> in the range [0,1] representing the luminance of the receiver, a brightness value weighted by the human eye's color sensitivity."
 
-	^self asRGB luminance!
+	^(299 * self red + (587 * self green) + (114 * self blue)) / ##(1000.0 * 255.0)!
 
 name
 	"Answer the symbolic name of the colour, or nil if it does not have a name (or known name)."
@@ -361,7 +464,7 @@ printOn: aPuttableStream
 red
 	"Answer the receiver's red component expressed as an <integer> in the range [0,255]."
 
-	^self asRGB red!
+	^self rgbCode bitAnd: 16rFF!
 
 registerName: aSymbol
 	"Some colours are registered for reverse lookup, so that for example if we have RGB(255,255,0) then it is printed as Color yellow.
@@ -372,7 +475,7 @@ registerName: aSymbol
 rgb
 	"Answer a three-element <Array> containing red, green, and blue components of the receiver expressed as integer in the range [0,255]."
 
-	^self asRGB rgb!
+	^{self red. self green. self blue}!
 
 rgbaCode
 	"Answer the receiver's colour value in 32-bit RGBA encoding (or ABGR if you prefer), i.e. red | (green << 8) | (blue << 16) | (alpha << 24)."
@@ -382,7 +485,7 @@ rgbaCode
 rgbCode
 	"Answer the receiver's color value in 24-bit RGB encoding with 8-bits per component in (blue, green, red) order."
 
-	^self asRGB rgbCode!
+	^self subclassResponsibility!
 
 setAlpha: aFloat 
 	^self alpha: aFloat * 255!
@@ -403,14 +506,15 @@ stbSaveOn: anSTBOutFiler
 			anSTBOutFiler nextPut: symbol]! !
 !Graphics.Color categoriesForMethods!
 =!comparing!public! !
-actualColor!accessing!private! !
+actualColor!accessing!public! !
 adjustBrightness:!public! !
 adjustSaturation:brightness:!public! !
 alpha!accessing!public! !
 alpha:!accessing!public! !
 alphaMask!accessing!private! !
-argbClass!constants!private! !
+argb!converting!public! !
 argbCode!accessing!public! !
+asARGB!converting!public! !
 asColor!converting!public! !
 asColorRef!converting!public! !
 asCOLORREF!accessing!public! !
@@ -431,7 +535,7 @@ fadedBy:!converting!public! !
 green!accessing!public! !
 hash!comparing!public! !
 hls!converting!public! !
-hslSaturation!accessing!public! !
+hlsSaturation!accessing!public! !
 hsv!converting!public! !
 hsvSaturation!accessing!public! !
 hue!accessing!public! !
@@ -444,7 +548,7 @@ isSelfEvaluating!public!testing! !
 isSymbolic!public!testing! !
 isTransparent!public!testing! !
 lighter!public! !
-lightness!public! !
+lightness!accessing!public! !
 luminance!accessing!public! !
 name!accessing!public! !
 normalizedAlpha!public! !
@@ -482,7 +586,7 @@ a: alphaInteger r: redInteger g: greenInteger b: blueInteger
 				g: greenInteger
 				b: blueInteger]
 		ifFalse: 
-			[self argbClass
+			[ARGB
 				a: alphaInteger
 				r: redInteger
 				g: greenInteger
@@ -711,7 +815,7 @@ fromArgbCode: anInteger
 
 	^((anInteger bitShift: -24) bitAnd: 16rFF) ~~ 16rFF
 		ifTrue: 
-			[anInteger == self argbNoneCode ifTrue: [self none] ifFalse: [self argbClass fromArgbCode: anInteger]]
+			[anInteger == self argbNoneCode ifTrue: [self none] ifFalse: [ARGB fromArgbCode: anInteger]]
 		ifFalse: 
 			[self fromRgbCode: (((anInteger bitShift: -16) bitAnd: 16rFF)
 						bitOr: ((anInteger bitAnd: 16r00FF00) bitOr: ((anInteger bitAnd: 16rFF) bitShift: 16)))]!
@@ -1248,7 +1352,7 @@ new
 	^self shouldNotImplement!
 
 none
-	"Answer the special IndexedColour respresenting no colour."
+	"Answer the special <ColorRef> respresenting no colour (synonym for #transparent). This is encoded as white with 0 alpha."
 
 	^None
 !
@@ -1425,7 +1529,7 @@ tooltipText
 	^self named: #tooltipText!
 
 transparent
-	^self named: #transparent!
+	^None!
 
 turquoise
 	^self named: #turquoise!
@@ -1653,7 +1757,7 @@ thistle!**auto generated**!common colors!public! !
 tomato!**auto generated**!common colors!public! !
 tooltip!named colors!public!system colors! !
 tooltipText!named colors!public!system colors! !
-transparent!**auto generated**!common colors!public! !
+transparent!common colors!public! !
 turquoise!**auto generated**!common colors!public! !
 violet!**auto generated**!common colors!public! !
 wheat!**auto generated**!common colors!public! !

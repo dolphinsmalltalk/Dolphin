@@ -63,11 +63,6 @@ asParameter
 
 	^self rgbCode!
 
-asRGB
-	"Answer the receiver as an RGB"
-
-	^Color fromRgbCode: self rgbCode!
-
 brushClass
 	"Private - Answer the class of Brush to be used in conjunction with the receiver."
 
@@ -136,7 +131,6 @@ shallowCopy
 	^self! !
 !Graphics.SystemColor categoriesForMethods!
 asParameter!converting!public! !
-asRGB!converting!public! !
 brushClass!constants!private! !
 id!accessing!public! !
 isSymbolic!public!testing! !
