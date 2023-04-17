@@ -538,6 +538,9 @@ createSchematicWiring
 		when: #methodAdded:
 			send: #onMethodAdded:
 			to: self;
+		when: #methodUpdated:
+			send: #onMethodUpdated:
+			to: self;
 		when: #methodRemoved:
 			send: #onMethodRemoved:
 			to: self;
@@ -1367,6 +1370,23 @@ onMethodSelected
 	(self loadedPlugins includes: self currentCard) ifFalse: [self ensureSourceVisible].
 	self trigger: #methodSelected!
 
+onMethodUpdated: aCompilationResult
+	"Private - The development system has updated the CompiledMethod identified by aCompilationResult. We may need to update the category tree, being careful not to depend on our method browser component having responded to the event already."
+
+	| newMethod actualClass methodClass selectedMethod |
+	(actualClass := self actualClass) ifNil: [^self].
+	newMethod := aCompilationResult method.
+	methodClass := newMethod methodClass.
+	(methodClass == actualClass
+		or: [self isShowInheritedMethods and: [actualClass includesBehavior: methodClass]])
+			ifFalse: [^self].
+	self addCategoriesOfMethod: newMethod.
+	(selectedMethod := self method) ifNil: [^self].
+	(selectedMethod == newMethod or: [selectedMethod == aCompilationResult oldMethod])
+		ifTrue: 
+			[self methodCategories: (self allCategoriesOfMethod: newMethod).
+			self updateCaption]!
+
 onModeSelectionChanged
 	"Private - The browser has toggled from instance to class mode, or vice versa."
 
@@ -2012,14 +2032,17 @@ removeMethodsInProtocol
 	| actualClass |
 	actualClass := self actualClass.
 	self protocols do: 
-			[:p | | args |
-			args := { actualClass. p}.
+			[:p |
+			| args methods |
+			methods := p methodsInBehavior: actualClass.
+			args := { actualClass. p. methods size }.
 			(MessageBox new
 				defaultButton: 2;
 				owner: self view;
 				headline: 'Remove <2d> from <1p>?' << args;
-				confirm: 'Are you sure you would like to remove the protocol <2d> and all of its methods from <1p>?' << args)
-					ifTrue: [actualClass removeSelectors: ((p methodsInBehavior: actualClass) collect: [:m | m selector])]]!
+				confirm: '<1p> will no longer conform to <2d>, and <3d> of its methods will be deleted.<n><n>Are you sure you would like to remove the protocol <2d> and all of its methods from <1p>?'
+							<< args)
+					ifTrue: [actualClass removeSelectors: (methods collect: [:m | m selector])]]!
 
 removePlugin: aClassBrowserPlugin 
 	self loadedPlugins remove: aClassBrowserPlugin.
@@ -2652,6 +2675,7 @@ onMethodListDoubleClicked:!event handling!private! !
 onMethodRemoved:!event handling!private! !
 onMethodRepackaged:from:to:!event handling!private! !
 onMethodSelected!event handling!private! !
+onMethodUpdated:!event handling!private! !
 onModeSelectionChanged!event handling!private! !
 onPackageDoubleClicked:!event handling!private! !
 onPromptToSaveChanges:!helpers!private! !
