@@ -246,10 +246,7 @@ selectableItems
 	^resourcesPresenter!
 
 selectCategory: aStringOrNil
-	^categoriesPresenter selections: {aStringOrNil}!
-
-systemModel
-	^self parentPresenter systemModel! !
+	^categoriesPresenter selections: {aStringOrNil}! !
 !Tools.ResourceToolboxPresenter categoriesForMethods!
 add:toCategory:!operations!private! !
 addResourceIdentifierFor:!helpers!private! !
@@ -286,7 +283,6 @@ resourceIdentifiers!accessing!public! !
 resourcesPresenter!accessing!private! !
 selectableItems!accessing!private! !
 selectCategory:!accessing!public! !
-systemModel!commands!private! !
 !
 
 !Tools.ResourceToolboxPresenter class methodsFor!

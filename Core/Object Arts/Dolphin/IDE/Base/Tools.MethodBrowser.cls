@@ -1063,9 +1063,6 @@ sourceSelection
 
 	^sourcePresenter view selection!
 
-systemModel
-	^self parentPresenter systemModel!
-
 togglePrivate
 	"Private - Toggle the selected method between public and private status."
 
@@ -1202,7 +1199,6 @@ source!accessing!public! !
 sourcePresenter!accessing!private! !
 sourcePresenter:!accessing!private! !
 sourceSelection!accessing!public! !
-systemModel!commands!private! !
 togglePrivate!commands!private! !
 updateMethodNamespace!event handling!private! !
 !

@@ -296,10 +296,7 @@ showResourcesReferencingView: aResourceIdentifier
 			resID hiddenObjects anySatisfy: 
 					[:each | 
 					(each isKindOf: STBViewProxy) 
-						and: [each viewClass == ReferenceView and: [(each instVars at: idIndex) = aResourceIdentifier]]]]!
-
-systemModel
-	^self parentPresenter systemModel! !
+						and: [each viewClass == ReferenceView and: [(each instVars at: idIndex) = aResourceIdentifier]]]]! !
 !Tools.ResourceListPresenter categoriesForMethods!
 browseClass!commands!public! !
 browseHierarchy!commands!public! !
@@ -335,7 +332,6 @@ showAllResources!filtering!public! !
 showResource!commands!public! !
 showResourcesOwnedByPackages:!filtering!public! !
 showResourcesReferencingView:!helpers!private! !
-systemModel!commands!private! !
 !
 
 !Tools.ResourceListPresenter class methodsFor!

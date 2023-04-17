@@ -1629,9 +1629,6 @@ symbolsStartingWith: aString maxItems: anInteger
 					stream size > anInteger ifTrue: [^#()]]].
 	^stream contents!
 
-systemModel
-	^self parentPresenter systemModel!
-
 text
 	"Answer the receiver's text contents - always plainText in DX6 and later."
 
@@ -1866,7 +1863,6 @@ startAutocompleteTimer!autocompletion!helpers!private! !
 stylerClass:!accessing!public! !
 suggestClassForVariable:!autocompletion!helpers!public! !
 symbolsStartingWith:maxItems:!autocompletion!helpers!private! !
-systemModel!constants!private! !
 text!accessing!public! !
 text:!accessing!public! !
 textLength!accessing!public! !

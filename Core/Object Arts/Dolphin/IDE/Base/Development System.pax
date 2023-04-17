@@ -653,6 +653,7 @@ package setMethodNames: #(
 	#(#{UI.MonthCalendarView class} #publishedAspectsOfInstances)
 	#(#{UI.MultilineTextEdit class} #publishedAspectsOfInstances)
 	#(#{UI.PluggableTypeConverter class} #publishedAspectsOfInstances)
+	#(#{UI.Presenter} #systemModel)
 	#(#{UI.Presenter class} #addView:asResource:)
 	#(#{UI.Presenter class} #defaultAcceleratorKeyBindings)
 	#(#{UI.Presenter class} #editNewDefaultView)
@@ -7776,6 +7777,14 @@ publishedAspectsOfInstances
 		yourself! !
 !UI.PluggableTypeConverter class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
+!
+
+!UI.Presenter methodsFor!
+
+systemModel
+	^self parentPresenter systemModel! !
+!UI.Presenter categoriesForMethods!
+systemModel!accessing!public! !
 !
 
 !UI.Presenter class methodsFor!
