@@ -80,7 +80,7 @@ defaultScrollInterval
 	"Answers the time (in ms) between the scroll operations while the
 	drop pointer is in the scroll zone"
 
-	^100!
+	^100 milliseconds!
 
 dragObjectClass
 	^self subclassResponsibility!
