@@ -102,6 +102,17 @@ detach
 			[self AddRef.
 			self yourAddress asExternalAddress]!
 
+downCast
+	"Query the latest derivation of this interface. This should be an instance of the latest knwon version of the interface if the common practice of deriving later versions as a subclass of the previous version is employed. It is an error if there is more than one subclass of the receiver's class. If the receiver is already of the most derived type known, then answer the receiver."
+
+	| interfaceClass thisClass |
+	thisClass := self class.
+	interfaceClass := thisClass latestDerivation.
+	[interfaceClass == thisClass] whileFalse: 
+			[(self queryInterface: interfaceClass ifNone: nil) ifNotNil: [:interface | ^interface].
+			interfaceClass := interfaceClass superclass].
+	^self!
+
 free
 	"Private - Frees the receiver's external resources by releasing the interface. 
 	Normally inside Smalltalk we have no need to call #AddRef and #Release explicitly 
@@ -331,6 +342,7 @@ basicFree!private!realizing/unrealizing! !
 callback:vfn:withArgumentsAt:!debugger-step through!evaluating!private! !
 copy!copying!public! !
 detach!public!realizing/unrealizing! !
+downCast!converting!public! !
 free!private!realizing/unrealizing! !
 getExtendedErrorInfo:!exceptions!private! !
 hash!comparing!public! !
@@ -790,6 +802,15 @@ interfaceClasses
 
 	^InterfaceClasses!
 
+latestDerivation
+	"Answer the latest derivation of this interface. This should be the latest version if the common practice of deriving later versions as a subclass of the previous version is employed. It is an error if there is more than one subclass."
+
+	| count |
+	count := subclasses size.
+	count == 0 ifTrue: [^self].
+	count == 1 ifTrue: [^(subclasses at: 1) latestDerivation].
+	^self shouldNotImplement!
+
 new
 	"Answer a new instance of the receiver and associated component instance
 	(created via CoCreateInstance)."
@@ -1102,6 +1123,7 @@ initializeInterface!class initialization!private! !
 initializeRegister!initializing!private! !
 initializeTypeLib!initializing!private! !
 interfaceClasses!accessing!private! !
+latestDerivation!enquiries!public! !
 new!instance creation!public! !
 newBuffer!instance creation!public! !
 newInternal!instance creation!public! !

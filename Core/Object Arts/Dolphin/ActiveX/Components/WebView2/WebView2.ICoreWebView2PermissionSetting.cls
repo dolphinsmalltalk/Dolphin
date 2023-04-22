@@ -6,7 +6,10 @@ WebView2.ICoreWebView2Interface
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'PermissionNames'
+				-> #('Microphone' 'Camera' 'Geolocation' 'Notifications' 'OtherSensors' 'ClipboardRead' 'MultipleAutomaticDownloads' 'FileReadWrite' 'Autoplay' 'LocalFonts' 'MidiSystemExclusiveMessages' 'WindowManagement')
+		}!
 WebView2.ICoreWebView2PermissionSetting guid: (OS.COM.IID fromString: '{792b6eca-5576-421c-9119-74ebb3a4ffb3}')!
 WebView2.ICoreWebView2PermissionSetting comment: '`ICoreWebView2PermissionSetting` is a wrapper class for the COM interface ''WebView2.ICoreWebView2PermissionSetting'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
@@ -72,6 +75,11 @@ permissionKind
 	self get_PermissionKind: answer.
 	^answer int32AtOffset: 0!
 
+permissionName
+	"Answer a <String> identifying the permission requested."
+
+	^(PermissionNames lookup: self permissionKind) ?? 'UnknownPermission'!
+
 permissionOrigin
 	"Answer the <lpwstr> value of the 'PermissionOrigin' property of the receiver."
 
@@ -83,19 +91,28 @@ permissionOrigin
 	^answer!
 
 permissionState
-	"Answer the <int32> value of the 'PermissionState' property of the receiver."
+	"Answer a 3-state <boolean>|nil value (i.e. true|false|nil) that is the state of the represented permission.
+		- If the permission is explicitly allowed, the answer is true.
+		- If the permission is explicity denied, the answer is false.
+		- If the permission has no explicit setting (i.e. it is the default) the answer is nil, indicating it is not set."
 
-	| answer |
-	answer := ByteArray new: 4.
-	self get_PermissionState: answer.
-	^answer int32AtOffset: 0! !
+	| state |
+	state := ByteArray new: 4.
+	self get_PermissionState: state.
+	state := state int32AtOffset: 0.
+	^state == 0 ifFalse: [(state - 1) asBoolean]!
+
+printableProperties
+	^#(#permissionName #permissionOrigin #permissionState)! !
 !WebView2.ICoreWebView2PermissionSetting categoriesForMethods!
 get_PermissionKind:!**auto generated**!COM Interfaces-ICoreWebView2PermissionSetting!private! !
 get_PermissionOrigin:!**auto generated**!COM Interfaces-ICoreWebView2PermissionSetting!private! !
 get_PermissionState:!**auto generated**!COM Interfaces-ICoreWebView2PermissionSetting!private! !
 permissionKind!properties!public! !
+permissionName!properties!public! !
 permissionOrigin!properties!public! !
 permissionState!properties!public! !
+printableProperties!printing!private! !
 !
 
 !WebView2.ICoreWebView2PermissionSetting class methodsFor!

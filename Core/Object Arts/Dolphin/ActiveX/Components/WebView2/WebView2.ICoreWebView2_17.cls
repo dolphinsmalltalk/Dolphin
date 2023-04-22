@@ -41,7 +41,8 @@ PostSharedBufferToScript: sharedBuffer access: access additionalDataAsJson: addi
 			[in]COREWEBVIEW2_SHARED_BUFFER_ACCESS access,
 			[in]LPWSTR additionalDataAsJson);"
 
-	^E_NOTIMPL! !
+	<virtual stdcall: hresult 117 ICoreWebView2SharedBuffer* int32 lpwstr>
+	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2_17 categoriesForMethods!
 PostSharedBufferToScript:access:additionalDataAsJson:!**auto generated**!COM Interfaces-ICoreWebView2_17!public! !
 !

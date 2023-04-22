@@ -31,9 +31,6 @@ interface ICoreWebView2DevToolsProtocolEventReceivedEventArgs : IUnknown
 !WebView2.ICoreWebView2DevToolsProtocolEventReceivedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
 !WebView2.ICoreWebView2DevToolsProtocolEventReceivedEventArgs methodsFor!
 
-downCast
-	^self queryInterface: ICoreWebView2DevToolsProtocolEventReceivedEventArgs2 ifNone: self!
-
 get_ParameterObjectAsJson: parameterObjectAsJson
 	"Private - Get the value of the 'ParameterObjectAsJson' property of the receiver.
 
@@ -53,7 +50,6 @@ parameterObjectAsJson
 	ptr free.
 	^answer! !
 !WebView2.ICoreWebView2DevToolsProtocolEventReceivedEventArgs categoriesForMethods!
-downCast!converting!public! !
 get_ParameterObjectAsJson:!**auto generated**!COM Interfaces-ICoreWebView2DevToolsProtocolEventReceivedEventArgs!private! !
 parameterObjectAsJson!properties!public! !
 !

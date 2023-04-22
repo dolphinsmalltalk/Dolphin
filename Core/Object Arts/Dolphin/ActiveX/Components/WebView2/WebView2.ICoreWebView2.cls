@@ -705,15 +705,6 @@ documentTitle
 	ptr free.
 	^answer!
 
-downCast
-	| interfaceClass |
-	interfaceClass := ICoreWebView2_16.
-	
-	[(self queryInterface: interfaceClass ifNone: []) ifNotNil: [:interface | ^interface].
-	(interfaceClass := interfaceClass superclass) == self class]
-			whileFalse.
-	^self!
-
 environment
 	"Answer the <ICoreWebView2Environment> value of the 'Environment' property of the receiver."
 
@@ -1664,7 +1655,6 @@ defaultDownloadDialogMargin!properties!public! !
 defaultDownloadDialogMargin:!properties!public! !
 displayOn:!displaying!public! !
 documentTitle!properties!public! !
-downCast!converting!public! !
 environment!properties!public! !
 ExecuteScript:handler:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 executeScript:thenDo:!async requests!public! !

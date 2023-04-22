@@ -40,9 +40,6 @@ interface ICoreWebView2ControllerOptions : IUnknown
 !WebView2.ICoreWebView2ControllerOptions categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
 !WebView2.ICoreWebView2ControllerOptions methodsFor!
 
-downCast
-	^self queryInterface: ICoreWebView2ControllerOptions2 ifNone: self!
-
 get_IsInPrivateModeEnabled: value
 	"Private - Get the value of the 'IsInPrivateModeEnabled' property of the receiver.
 
@@ -148,7 +145,6 @@ scriptLocale: locale
 
 	self put_ScriptLocale: locale asUtf16String! !
 !WebView2.ICoreWebView2ControllerOptions categoriesForMethods!
-downCast!converting!public! !
 get_IsInPrivateModeEnabled:!**auto generated**!COM Interfaces-ICoreWebView2ControllerOptions!private! !
 get_ProfileName:!**auto generated**!COM Interfaces-ICoreWebView2ControllerOptions!private! !
 get_ScriptLocale:!COM Interfaces-ICoreWebView2ControllerOptions2!private! !

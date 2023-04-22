@@ -419,14 +419,20 @@ verifyWebViewSettings
 	settings isSwipeNavigationEnabled: false.
 	self deny: settings isSwipeNavigationEnabled.
 	self assert: baseSettings isSwipeNavigationEnabled.
-	"ICoreWebView2Settings6: hiddenPdfToolbarItems"
+	"ICoreWebView2Settings7: hiddenPdfToolbarItems"
 	self assert: settings hiddenPdfToolbarItems equals: WebView2.COREWEBVIEW2_PDF_TOOLBAR_ITEMS_NONE.
 	self assert: baseSettings hiddenPdfToolbarItems equals: WebView2.COREWEBVIEW2_PDF_TOOLBAR_ITEMS_NONE.
 	hidden := WebView2.COREWEBVIEW2_PDF_TOOLBAR_ITEMS_PRINT
 				| WebView2.COREWEBVIEW2_PDF_TOOLBAR_ITEMS_SAVE_AS.
 	settings hiddenPdfToolbarItems: hidden.
-	self assert: settings hiddenPdfToolbarItems equals: hidden.
-	self assert: baseSettings hiddenPdfToolbarItems equals: WebView2.COREWEBVIEW2_PDF_TOOLBAR_ITEMS_NONE!
+	"ICoreWebView2Settings8: isReputationCheckingRequired (SmartScreen)"
+	self assert: settings isReputationCheckingRequired.
+	self assert: baseSettings isReputationCheckingRequired.
+	(settings isKindOf: ICoreWebView2Settings8)
+		ifTrue: 
+			[settings isReputationCheckingRequired: false.
+			self deny: settings isReputationCheckingRequired.
+			self assert: baseSettings isReputationCheckingRequired]!
 
 viewClass
 	^UI.WebView2View!

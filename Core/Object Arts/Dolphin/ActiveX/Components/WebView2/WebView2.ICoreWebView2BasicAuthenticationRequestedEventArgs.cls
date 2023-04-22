@@ -107,14 +107,6 @@ get_uri: value
 	<virtual stdcall: hresult 4 lpwstr*>
 	^self invalidCall: _failureCode!
 
-getDeferral
-	"Answer the <ICoreWebView2Deferral> result of invoking the GetDeferral() method of the COM object."
-
-	| answer |
-	answer := ICoreWebView2Deferral newPointer.
-	self GetDeferral: answer.
-	^answer asObject!
-
 GetDeferral: deferral
 	"Private - Invoke the GetDeferral() method of the COM object.
 
@@ -164,7 +156,6 @@ get_Cancel:!**auto generated**!COM Interfaces-ICoreWebView2BasicAuthenticationRe
 get_Challenge:!**auto generated**!COM Interfaces-ICoreWebView2BasicAuthenticationRequestedEventArgs!private! !
 get_Response:!**auto generated**!COM Interfaces-ICoreWebView2BasicAuthenticationRequestedEventArgs!private! !
 get_uri:!**auto generated**!COM Interfaces-ICoreWebView2BasicAuthenticationRequestedEventArgs!private! !
-getDeferral!**auto generated**!methods!public! !
 GetDeferral:!**auto generated**!COM Interfaces-ICoreWebView2BasicAuthenticationRequestedEventArgs!private! !
 printableProperties!printing!private! !
 put_Cancel:!**auto generated**!COM Interfaces-ICoreWebView2BasicAuthenticationRequestedEventArgs!private! !

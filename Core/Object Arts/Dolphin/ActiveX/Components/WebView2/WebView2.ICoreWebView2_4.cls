@@ -53,9 +53,14 @@ Add_DownloadStarting: eventHandler token: token
 	^self invalidCall: _failureCode!
 
 Add_FrameCreated: eventHandler token: token
-	"Not supported by this version"
+	"Private - Invoke the add_FrameCreated() method of the COM object.
 
-	^E_NOTIMPL!
+		HRESULT __stdcall add_FrameCreated(
+			[in]ICoreWebView2FrameCreatedEventHandler* eventHandler,
+			[out]EventRegistrationToken* token);"
+
+	<virtual stdcall: hresult 74 ICoreWebView2FrameCreatedEventHandler* int64*>
+	^self invalidCall: _failureCode!
 
 Remove_DownloadStarting: token
 	"Private - Invoke the remove_DownloadStarting() method of the COM object.

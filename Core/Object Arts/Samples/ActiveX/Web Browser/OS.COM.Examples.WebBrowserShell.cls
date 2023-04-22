@@ -61,19 +61,18 @@ buildPopupForCommand: aSymbol
 
 buildSettingsPopup
 	| menu submenu |
-	menu := Menu new
-				"name: #settingsMenu;"
-				yourself.
+	menu := Menu new yourself.
+	"name: #settingsMenu;"
 	menu
 		addCommand: #toggleEventLogging description: 'Log WebView2 &Events to Transcript';
 		addSeparator.
 	submenu := menu addSubmenu: '&Default WebView2 UI'.
 	submenu
-	"	name: #defaultWebviewUIEnablement;"
 		addCommand: #toggleAllowContextMenu description: 'Context &Menus';
 		addCommand: #toggleBrowserAcceleratorKeysEnabled description: '&Accelerator Keys';
 		addCommand: #toggleBuiltinErrorPageEnabled description: '&Error Pages';
 		addCommand: #toggleDefaultScriptDialogsEnabled description: 'Script &Dialogs'.
+	"	name: #defaultWebviewUIEnablement;"
 	menu
 		addSeparator;
 		addCommand: #toggleAllowExternalDrop description: 'Accept &Dropped Files';
@@ -84,9 +83,8 @@ buildSettingsPopup
 		addCommand: #toggleSwipeNavigation description: 'S&wipe Navigation';
 		addCommand: #toggleStatusBar description: '&Status Bubbles';
 		addCommand: #toggleZoomControl description: '&Zoom Control'.
-	submenu := (menu addSubmenu: 'Preferred &Color Scheme')
-				"name: #colorScheme;"
-				yourself.
+	submenu := (menu addSubmenu: 'Preferred &Color Scheme') yourself.
+	"name: #colorScheme;"
 	#('&Auto' '&Light' '&Dark') keysAndValuesDo: 
 			[:eachKey :eachValue |
 			submenu
@@ -103,9 +101,8 @@ buildSettingsPopup
 		addCommand: #toggleJavaScript description: '&JavaScript';
 		addCommand: #toggleInPrivateMode description: 'In Private &Mode';
 		yourself.
-	submenu := (menu addSubmenu: '&Tracking Prevention Level')
-				"name: #trackingPreventionLevel;"
-				yourself.
+	submenu := (menu addSubmenu: '&Tracking Prevention Level') yourself.
+	"name: #trackingPreventionLevel;"
 	#('&None' '&Basic' 'Ba&lanced' '&Strict') keysAndValuesDo: 
 			[:eachKey :eachValue |
 			submenu
@@ -114,6 +111,7 @@ buildSettingsPopup
 								description: eachValue))
 						isRadioButtonStyle: true;
 						yourself)].
+	menu addCommand: #toggleSmartScreen description: '&SmartScreen'.
 	^menu!
 
 createComponents
@@ -428,7 +426,7 @@ queryCommand: aCommandQuery
 querySettingsCommands: aCommandQuery
 	"Private - Enters details about a potential settings command for the receiver into aCommandQuery"
 
-	| commandSymbol webview command |
+	| commandSymbol webview |
 	commandSymbol := aCommandQuery commandSymbol.
 	webview := self webview2.
 	commandSymbol == #settingsMenu
@@ -465,15 +463,14 @@ querySettingsCommands: aCommandQuery
 				isEnabled: true;
 				isChecked: self preferredColorScheme = aCommandQuery command argument.
 			^true].
-	^#(#(#toggleAllowContextMenu #allowContextMenu) #(#toggleAllowExternalDrop #allowExternalDrop) #(#toggleBrowserAcceleratorKeysEnabled #areBrowserAcceleratorKeysEnabled) #(#toggleBuiltinErrorPageEnabled #isBuiltInErrorPageEnabled) #(#toggleDefaultScriptDialogsEnabled #areDefaultScriptDialogsEnabled) #(#toggleDevToolsEnabled #areDevToolsEnabled) #(#toggleGeneralAutofill #isGeneralAutofillEnabled) #(#toggleJavaScript #isScriptEnabled) #(#togglePasswordAutosave #isPasswordAutosaveEnabled) #(#togglePinchZoomEnabled #isPinchZoomEnabled) #(#toggleStatusBar #isStatusBarEnabled) #(#toggleSwipeNavigation #isSwipeNavigationEnabled) #(#toggleWebMessaging #isWebMessageEnabled) #(#toggleZoomControl #isZoomControlEnabled))
+	^#(#(#toggleAllowContextMenu #allowContextMenu) #(#toggleAllowExternalDrop #allowExternalDrop) #(#toggleBrowserAcceleratorKeysEnabled #areBrowserAcceleratorKeysEnabled) #(#toggleBuiltinErrorPageEnabled #isBuiltInErrorPageEnabled) #(#toggleDefaultScriptDialogsEnabled #areDefaultScriptDialogsEnabled) #(#toggleDevToolsEnabled #areDevToolsEnabled) #(#toggleGeneralAutofill #isGeneralAutofillEnabled) #(#toggleJavaScript #isScriptEnabled) #(#togglePasswordAutosave #isPasswordAutosaveEnabled) #(#togglePinchZoomEnabled #isPinchZoomEnabled) #(#toggleStatusBar #isStatusBarEnabled) #(#toggleSwipeNavigation #isSwipeNavigationEnabled) #(#toggleWebMessaging #isWebMessageEnabled) #(#toggleZoomControl #isZoomControlEnabled) #(#toggleSmartScreen #isSmartScreenEnabled))
 		anySatisfy: 
 			[:each |
 			commandSymbol == each first and: 
 					[aCommandQuery
 						isEnabled: webview notNil;
 						isChecked: (browser view perform: each second).
-					true]].
-	^false!
+					true]]!
 
 refresh
 	self webview2 reload!
@@ -551,6 +548,13 @@ togglePasswordAutosave
 	| webview |
 	webview := browser view.
 	webview isPasswordAutosaveEnabled: webview isPasswordAutosaveEnabled not.
+	"Most settings do not take effect until after navigation, so refresh"
+	self refresh!
+
+toggleSmartScreen
+	| webview |
+	webview := browser view.
+	webview isSmartScreenEnabled: webview isSmartScreenEnabled not.
 	"Most settings do not take effect until after navigation, so refresh"
 	self refresh!
 
@@ -646,6 +650,7 @@ toggleGeneralAutofill!commands!public! !
 toggleInPrivateMode!commands!public! !
 toggleJavaScript!commands!public! !
 togglePasswordAutosave!commands!public! !
+toggleSmartScreen!commands!public! !
 toggleStatusBar!commands!public! !
 toggleWebMessaging!commands!public! !
 toggleZoomControl!commands!public! !

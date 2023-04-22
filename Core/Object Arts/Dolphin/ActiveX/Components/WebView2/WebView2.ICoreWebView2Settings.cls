@@ -147,17 +147,6 @@ areHostObjectsAllowed: allowed
 
 	self put_AreHostObjectsAllowed: allowed asParameter!
 
-downCast
-	"Private - Answer the most recent settings interface available on the underlying COM object."
-
-	| interfaceClass |
-	interfaceClass := ICoreWebView2Settings7.
-	
-	[(self queryInterface: interfaceClass ifNone: []) ifNotNil: [:interface | ^interface].
-	(interfaceClass := interfaceClass superclass) == self class]
-			whileFalse.
-	^self!
-
 get_AreBrowserAcceleratorKeysEnabled: areBrowserAcceleratorKeysEnabled
 	"Private - Get the value of the 'AreBrowserAcceleratorKeysEnabled' property of the receiver.
 
@@ -247,6 +236,15 @@ get_IsPinchZoomEnabled: enabled
 
 	enabled value: 1.
 	^S_FALSE!
+
+get_IsReputationCheckingRequired: value
+	"Private - Get the value of the 'IsReputationCheckingRequired' property of the receiver.
+
+		HRESULT __stdcall IsReputationCheckingRequired(
+			[out, retval]long* value);"
+
+	value value: 1.
+	^S_OK!
 
 get_IsScriptEnabled: isScriptEnabled
 	"Private - Get the value of the 'IsScriptEnabled' property of the receiver.
@@ -366,6 +364,19 @@ isPinchZoomEnabled: enabled
 	"Set the 'IsPinchZoomEnabled' property of the receiver to the <sdword> value of the argument."
 
 	self put_IsPinchZoomEnabled: enabled asParameter!
+
+isReputationCheckingRequired
+	"Answer the <boolean> value of the 'IsReputationCheckingRequired' property of the receiver."
+
+	| answer |
+	answer := UInt32Bytes new.
+	self get_IsReputationCheckingRequired: answer.
+	^answer asBoolean!
+
+isReputationCheckingRequired: value
+	"Set the 'IsReputationCheckingRequired' property of the receiver to the <boolean> value of the argument."
+
+	self put_IsReputationCheckingRequired: value asParameter!
 
 isScriptEnabled
 	"Answer the <Boolean> value of the 'IsScriptEnabled' property of the receiver."
@@ -530,6 +541,15 @@ put_IsPinchZoomEnabled: enabled
 
 	^E_NOTIMPL!
 
+put_IsReputationCheckingRequired: value
+	"Private - Set the value of the 'IsReputationCheckingRequired' property of the object wrapped by the 
+	 receiver to the <int32> argument, value.
+
+		HRESULT __stdcall IsReputationCheckingRequired(
+			[in]long value);"
+
+	^E_NOTIMPL!
+
 put_IsScriptEnabled: isScriptEnabled
 	"Private - Set the value of the 'IsScriptEnabled' property of the object wrapped by the 
 	 receiver to the <sdword> argument, isScriptEnabled.
@@ -613,7 +633,6 @@ areDevToolsEnabled!properties!public!testing! !
 areDevToolsEnabled:!properties!public! !
 areHostObjectsAllowed!properties!public!testing! !
 areHostObjectsAllowed:!properties!public! !
-downCast!converting!public! !
 get_AreBrowserAcceleratorKeysEnabled:!COM Interfaces-ICoreWebView2Settings3!private! !
 get_AreDefaultContextMenusEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
 get_AreDefaultScriptDialogsEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
@@ -624,6 +643,7 @@ get_IsBuiltInErrorPageEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Se
 get_IsGeneralAutofillEnabled:!COM Interfaces-ICoreWebView2Settings4!private! !
 get_IsPasswordAutosaveEnabled:!COM Interfaces-ICoreWebView2Settings4!private! !
 get_IsPinchZoomEnabled:!COM Interfaces-ICoreWebView2Settings5!private! !
+get_IsReputationCheckingRequired:!COM Interfaces-ICoreWebView2Settings8!private! !
 get_IsScriptEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
 get_IsStatusBarEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
 get_IsSwipeNavigationEnabled:!COM Interfaces-ICoreWebView2Settings6!private! !
@@ -640,6 +660,8 @@ isPasswordAutosaveEnabled!properties!public!testing! !
 isPasswordAutosaveEnabled:!properties!public! !
 isPinchZoomEnabled!properties!public!testing! !
 isPinchZoomEnabled:!properties!public! !
+isReputationCheckingRequired!properties!public! !
+isReputationCheckingRequired:!properties!public! !
 isScriptEnabled!properties!public!testing! !
 isScriptEnabled:!properties!public! !
 isStatusBarEnabled!properties!public!testing! !
@@ -661,13 +683,14 @@ put_IsBuiltInErrorPageEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Se
 put_IsGeneralAutofillEnabled:!COM Interfaces-ICoreWebView2Settings4!private! !
 put_IsPasswordAutosaveEnabled:!COM Interfaces-ICoreWebView2Settings4!private! !
 put_IsPinchZoomEnabled:!COM Interfaces-ICoreWebView2Settings5!private! !
+put_IsReputationCheckingRequired:!COM Interfaces-ICoreWebView2Settings8!private! !
 put_IsScriptEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
 put_IsStatusBarEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
 put_IsSwipeNavigationEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings6!private! !
 put_IsWebMessageEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
 put_IsZoomControlEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
 put_UserAgent:!COM Interfaces-ICoreWebView2Settings2!private! !
-userAgent!**auto generated**!properties!public! !
+userAgent!properties!public! !
 userAgent:!**auto generated**!properties!public! !
 !
 

@@ -52,9 +52,6 @@ interface ICoreWebView2NewWindowRequestedEventArgs : IUnknown
 !WebView2.ICoreWebView2NewWindowRequestedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
 !WebView2.ICoreWebView2NewWindowRequestedEventArgs methodsFor!
 
-downCast
-	^self queryInterface: ICoreWebView2NewWindowRequestedEventArgs2 ifNone: self!
-
 get_Handled: handled
 	"Private - Get the value of the 'Handled' property of the receiver.
 
@@ -102,14 +99,6 @@ get_WindowFeatures: value
 
 	<virtual stdcall: hresult 11 ICoreWebView2WindowFeatures**>
 	^self invalidCall: _failureCode!
-
-getDeferral
-	"Answer the <ICoreWebView2Deferral> result of invoking the GetDeferral() method of the COM object."
-
-	| answer |
-	answer := ICoreWebView2Deferral newPointer.
-	self GetDeferral: answer.
-	^answer asObject!
 
 GetDeferral: deferral
 	"Private - Invoke the GetDeferral() method of the COM object.
@@ -205,14 +194,12 @@ windowFeatures
 	self get_WindowFeatures: answer.
 	^answer asObject! !
 !WebView2.ICoreWebView2NewWindowRequestedEventArgs categoriesForMethods!
-downCast!converting!public! !
 get_Handled:!**auto generated**!COM Interfaces-ICoreWebView2NewWindowRequestedEventArgs!private! !
 get_IsUserInitiated:!**auto generated**!COM Interfaces-ICoreWebView2NewWindowRequestedEventArgs!private! !
 get_name:!**auto generated**!COM Interfaces-ICoreWebView2NewWindowRequestedEventArgs2!private! !
 get_NewWindow:!**auto generated**!COM Interfaces-ICoreWebView2NewWindowRequestedEventArgs!private! !
 get_uri:!**auto generated**!COM Interfaces-ICoreWebView2NewWindowRequestedEventArgs!private! !
 get_WindowFeatures:!**auto generated**!COM Interfaces-ICoreWebView2NewWindowRequestedEventArgs!private! !
-getDeferral!**auto generated**!methods!public! !
 GetDeferral:!**auto generated**!COM Interfaces-ICoreWebView2NewWindowRequestedEventArgs!private! !
 handled!properties!public! !
 handled:!properties!public! !

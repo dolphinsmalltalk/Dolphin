@@ -46,15 +46,6 @@ interface ICoreWebView2PermissionRequestedEventArgs : IUnknown
 !WebView2.ICoreWebView2PermissionRequestedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
 !WebView2.ICoreWebView2PermissionRequestedEventArgs methodsFor!
 
-downCast
-	| interfaceClass |
-	interfaceClass := ICoreWebView2PermissionRequestedEventArgs3.
-	
-	[(self queryInterface: interfaceClass ifNone: []) ifNotNil: [:interface | ^interface].
-	(interfaceClass := interfaceClass superclass) == self class]
-			whileFalse.
-	^self!
-
 get_Handled: handled
 	"Private - Get the value of the 'Handled' property of the receiver.
 
@@ -109,14 +100,6 @@ get_uri: uri
 	<virtual stdcall: hresult 4 lpwstr*>
 	^self invalidCall: _failureCode!
 
-getDeferral
-	"Answer the <ICoreWebView2Deferral> result of invoking the GetDeferral() method of the COM object."
-
-	| answer |
-	answer := ICoreWebView2Deferral newPointer.
-	self GetDeferral: answer.
-	^answer asObject!
-
 GetDeferral: deferral
 	"Private - Invoke the GetDeferral() method of the COM object.
 
@@ -155,6 +138,14 @@ permissionKind
 	self get_PermissionKind: answer.
 	^answer asObject!
 
+permissionName
+	"Answer a <String> identifying the permission requested."
+
+	^(ICoreWebView2PermissionSetting.PermissionNames lookup: self permissionKind) ?? 'UnknownPermission'!
+
+printableProperties
+	^#(#isUserInitiated #permissionName #savesInProfile #uri)!
+
 put_Handled: handled
 	"Private - Set the value of the 'Handled' property of the object wrapped by the 
 	 receiver to the <sdword> argument, handled.
@@ -186,10 +177,10 @@ put_State: state
 savesInProfile
 	"Answer the <boolean> value of the 'SavesInProfile' property of the receiver."
 
-	| answer |
-	answer := ByteArray new: 4.
-	self get_SavesInProfile: answer.
-	^(answer int32AtOffset: 0) ~~ 0!
+	| buf |
+	buf := UInt32Bytes new.
+	self get_SavesInProfile: buf.
+	^buf asBoolean!
 
 savesInProfile: value
 	"Set the 'SavesInProfile' property of the receiver to the <boolean> argument."
@@ -219,19 +210,19 @@ uri
 	ptr free.
 	^answer! !
 !WebView2.ICoreWebView2PermissionRequestedEventArgs categoriesForMethods!
-downCast!converting!public! !
 get_Handled:!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs2!private! !
 get_IsUserInitiated:!**auto generated**!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs!private! !
 get_PermissionKind:!**auto generated**!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs!private! !
 get_SavesInProfile:!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs3!private! !
 get_State:!**auto generated**!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs!private! !
 get_uri:!**auto generated**!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs!private! !
-getDeferral!**auto generated**!methods!public! !
 GetDeferral:!**auto generated**!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs!private! !
 handled!properties!public! !
 handled:!properties!public! !
 isUserInitiated!properties!public! !
 permissionKind!**auto generated**!properties!public! !
+permissionName!properties!public! !
+printableProperties!printing!private! !
 put_Handled:!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs2!private! !
 put_SavesInProfile:!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs3!private! !
 put_State:!**auto generated**!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs!private! !

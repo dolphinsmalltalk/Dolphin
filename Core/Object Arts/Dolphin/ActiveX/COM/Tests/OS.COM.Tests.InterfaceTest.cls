@@ -46,9 +46,15 @@ testGetObject
 	"clsid monikers are quite interesting, as they allow one to bind to the class. Here for the OLE Font object"
 	factory := IClassFactory getObject: 'clsid:' , '{0be35203-8f91-11ce-9de3-00aa004bb851}'.
 	font := factory createInstance: nil iid: (IID fromString: '{bef6e002-a874-101a-8bba-00aa00300cab}').
-	font name! !
+	font name!
+
+testLatestDerivation
+	self should: [IUnknown latestDerivation] raise: Error matching: [:ex | ex description = 'IUnknown class should not implement #latestDerivation'].
+	self assert: IErrorInfo latestDerivation identicalTo: IErrorInfo.
+	self assert: IClassFactory latestDerivation identicalTo: IClassFactory2! !
 !OS.COM.Tests.InterfaceTest categoriesForMethods!
 testAllRegistered!public!unit tests! !
 testGetObject!public!unit tests! !
+testLatestDerivation!public!unit tests! !
 !
 

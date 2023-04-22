@@ -106,9 +106,6 @@ interface ICoreWebView2PrintSettings : IUnknown
 !WebView2.ICoreWebView2PrintSettings categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
 !WebView2.ICoreWebView2PrintSettings methodsFor!
 
-downCast
-	^self queryInterface: ICoreWebView2PrintSettings2 ifNone: [self]!
-
 footerUri
 	"Answer the <lpwstr> value of the 'FooterUri' property of the receiver."
 
@@ -538,7 +535,6 @@ shouldPrintSelectionOnly: shouldPrintSelectionOnly
 
 	self put_ShouldPrintSelectionOnly: shouldPrintSelectionOnly asParameter! !
 !WebView2.ICoreWebView2PrintSettings categoriesForMethods!
-downCast!converting!public! !
 footerUri!properties!public! !
 footerUri:!**auto generated**!properties!public! !
 get_FooterUri:!**auto generated**!COM Interfaces-ICoreWebView2PrintSettings!private! !

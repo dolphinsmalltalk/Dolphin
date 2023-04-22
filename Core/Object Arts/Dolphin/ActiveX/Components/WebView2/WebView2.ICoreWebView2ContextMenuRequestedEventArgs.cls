@@ -105,14 +105,6 @@ get_SelectedCommandId: value
 	<virtual stdcall: hresult 8 int32*>
 	^self invalidCall: _failureCode!
 
-getDeferral
-	"Answer the <ICoreWebView2Deferral> result of invoking the GetDeferral() method of the COM object."
-
-	| answer |
-	answer := ICoreWebView2Deferral newPointer.
-	self GetDeferral: answer.
-	^answer asObject!
-
 GetDeferral: deferral
 	"Private - Invoke the GetDeferral() method of the COM object.
 
@@ -193,7 +185,6 @@ get_Handled:!**auto generated**!COM Interfaces-ICoreWebView2ContextMenuRequested
 get_Location:!**auto generated**!COM Interfaces-ICoreWebView2ContextMenuRequestedEventArgs!private! !
 get_MenuItems:!**auto generated**!COM Interfaces-ICoreWebView2ContextMenuRequestedEventArgs!private! !
 get_SelectedCommandId:!**auto generated**!COM Interfaces-ICoreWebView2ContextMenuRequestedEventArgs!private! !
-getDeferral!**auto generated**!methods!public! !
 GetDeferral:!**auto generated**!COM Interfaces-ICoreWebView2ContextMenuRequestedEventArgs!private! !
 handled!properties!public! !
 handled:!**auto generated**!properties!public! !

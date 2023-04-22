@@ -67,6 +67,8 @@ clearBrowsingData: dataKinds startTime: startTime endTime: endTime handler: aMon
 	handler free!
 
 clearBrowsingData: dataKinds thenDo: aMonadicValuable
+	"Clear browsing data of the kinds indicated by the flags in the <integer> dataKinds argument and when done invoke the <monadicValuable> argument passing an integer HRESULT indicating success/failure."
+
 	| handler |
 	handler := (WebView2CompletionHandler completionBlock: aMonadicValuable)
 				queryInterface: ICoreWebView2ClearBrowsingDataCompletedHandler.
@@ -101,6 +103,15 @@ ClearBrowsingDataInTimeRange: dataKinds startTime: startTime endTime: endTime ha
 	handler Invoke: E_NOTIMPL.
 	^E_NOTIMPL!
 
+clearBrowsingDataThenDo: aMonadicValuable
+	"Clear all browsing data (history, cookies, etc) and when done invoke the <monadicValuable> argument passing an integer HRESULT indicating success/failure."
+
+	| handler |
+	handler := (WebView2CompletionHandler completionBlock: aMonadicValuable)
+				queryInterface: ICoreWebView2ClearBrowsingDataCompletedHandler.
+	self ClearBrowsingDataAll: handler.
+	handler free!
+
 defaultDownloadFolderPath
 	"Answer the <readableString> value of the 'DefaultDownloadFolderPath' property of the receiver."
 
@@ -124,17 +135,6 @@ displayOn: aStream
 	self isNull ifTrue: [^super displayOn: aStream].
 	name := self profileName.
 	aStream nextPutAll: (name isEmpty ifTrue: ['Default profile'] ifFalse: [name])!
-
-downCast
-	"Private - Answer the most recent settings interface available on the underlying COM object."
-
-	| interfaceClass |
-	interfaceClass := ICoreWebView2Profile4.
-	
-	[(self queryInterface: interfaceClass ifNone: []) ifNotNil: [:interface | ^interface].
-	(interfaceClass := interfaceClass superclass) == self class]
-			whileFalse.
-	^self!
 
 get_DefaultDownloadFolderPath: value
 	"Private - Get the value of the 'DefaultDownloadFolderPath' property of the receiver.
@@ -335,11 +335,11 @@ clearBrowsingData:thenDo:!methods!public! !
 ClearBrowsingDataAll:!COM Interfaces-ICoreWebView2Profile2!private! !
 clearBrowsingDataAllThenDo:!methods!public! !
 ClearBrowsingDataInTimeRange:startTime:endTime:handler:!COM Interfaces-ICoreWebView2Profile2!private! !
+clearBrowsingDataThenDo:!methods!public! !
 defaultDownloadFolderPath!properties!public! !
 defaultDownloadFolderPath:!**auto generated**!properties!public! !
 defaultTrackingPreventionLevel!constants!private! !
 displayOn:!displaying!public! !
-downCast!converting!public! !
 get_DefaultDownloadFolderPath:!**auto generated**!COM Interfaces-ICoreWebView2Profile!private! !
 get_IsInPrivateModeEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Profile!private! !
 get_PreferredColorScheme:!**auto generated**!COM Interfaces-ICoreWebView2Profile!private! !

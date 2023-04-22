@@ -103,14 +103,6 @@ get_ServerCertificate: value
 	<virtual stdcall: hresult 6 ICoreWebView2Certificate**>
 	^self invalidCall: _failureCode!
 
-getDeferral
-	"Answer the <ICoreWebView2Deferral> result of invoking the GetDeferral() method of the COM object."
-
-	| answer |
-	answer := ICoreWebView2Deferral newPointer.
-	self GetDeferral: answer.
-	^answer asObject!
-
 GetDeferral: deferral
 	"Private - Invoke the GetDeferral() method of the COM object.
 
@@ -158,7 +150,6 @@ get_Action:!**auto generated**!COM Interfaces-ICoreWebView2ServerCertificateErro
 get_ErrorStatus:!**auto generated**!COM Interfaces-ICoreWebView2ServerCertificateErrorDetectedEventArgs!private! !
 get_RequestUri:!**auto generated**!COM Interfaces-ICoreWebView2ServerCertificateErrorDetectedEventArgs!private! !
 get_ServerCertificate:!**auto generated**!COM Interfaces-ICoreWebView2ServerCertificateErrorDetectedEventArgs!private! !
-getDeferral!**auto generated**!methods!public! !
 GetDeferral:!**auto generated**!COM Interfaces-ICoreWebView2ServerCertificateErrorDetectedEventArgs!private! !
 printableProperties!printing!private! !
 put_Action:!**auto generated**!COM Interfaces-ICoreWebView2ServerCertificateErrorDetectedEventArgs!private! !

@@ -17,6 +17,9 @@ Graphics.AbstractFont comment: ''!
 
 	^self species == aFont species and: [self logFont = aFont logFont]!
 
+actualFont
+	^self!
+
 characterSet
 	"Answer an <integer> identifying the character set of the receiver."
 
@@ -171,6 +174,7 @@ weight
 	^self logFont lfWeight! !
 !Graphics.AbstractFont categoriesForMethods!
 =!comparing!public! !
+actualFont!public! !
 characterSet!accessing!public! !
 createHandle!private!realizing/unrealizing! !
 desktopResolution!initializing!private! !

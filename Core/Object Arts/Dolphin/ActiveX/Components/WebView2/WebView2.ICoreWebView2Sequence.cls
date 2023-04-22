@@ -230,11 +230,6 @@ indexOfSubCollection: targetSequence startingAt: start ifAbsent: exceptionHandle
 		ifTrue: [exceptionHandler value]
 		ifFalse: [index]!
 
-isEmpty
-	"Answer whether the receiver contains any elements."
-
-	^self size == 0!
-
 keys
 	"Answer a <collection> containing the receiver's keys."
 
@@ -333,7 +328,6 @@ indexOf:!public!searching! !
 indexOf:ifAbsent:!public!searching! !
 indexOfSubCollection:startingAt:!public!searching! !
 indexOfSubCollection:startingAt:ifAbsent:!public!searching! !
-isEmpty!public!testing! !
 keys!accessing!public! !
 keysAndValuesDo:!enumerating!public! !
 last!accessing!public! !

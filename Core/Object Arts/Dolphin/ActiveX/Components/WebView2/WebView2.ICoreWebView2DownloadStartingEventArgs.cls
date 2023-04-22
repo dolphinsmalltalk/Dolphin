@@ -109,14 +109,6 @@ get_ResultFilePath: resultFilePath
 	<virtual stdcall: hresult 7 lpwstr*>
 	^self invalidCall: _failureCode!
 
-getDeferral
-	"Answer the <ICoreWebView2Deferral> result of invoking the GetDeferral() method of the COM object."
-
-	| answer |
-	answer := ICoreWebView2Deferral newPointer.
-	self GetDeferral: answer.
-	^answer asObject!
-
 GetDeferral: deferral
 	"Private - Invoke the GetDeferral() method of the COM object.
 
@@ -191,7 +183,6 @@ get_Cancel:!**auto generated**!COM Interfaces-ICoreWebView2DownloadStartingEvent
 get_DownloadOperation:!**auto generated**!COM Interfaces-ICoreWebView2DownloadStartingEventArgs!private! !
 get_Handled:!**auto generated**!COM Interfaces-ICoreWebView2DownloadStartingEventArgs!private! !
 get_ResultFilePath:!**auto generated**!COM Interfaces-ICoreWebView2DownloadStartingEventArgs!private! !
-getDeferral!**auto generated**!methods!public! !
 GetDeferral:!**auto generated**!COM Interfaces-ICoreWebView2DownloadStartingEventArgs!private! !
 handled!properties!public! !
 handled:!properties!public! !

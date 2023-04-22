@@ -17,6 +17,11 @@ Graphics.SystemFont comment: ''!
 
 	^aFont class == self class and: [id == aFont id]!
 
+actualFont
+	"Answer the actual Font that is the current setting of this system font."
+
+	^self copy!
+
 clearCached
 	"Private - Clear down the receiver's cached information and handles.
 	Should be overridden by subclasses which wish to clear down other
@@ -57,6 +62,7 @@ stbSaveOn: anSTBOutFiler
 	super stbSaveOn: anSTBOutFiler.! !
 !Graphics.SystemFont categoriesForMethods!
 =!comparing!public! !
+actualFont!public! !
 clearCached!private!realizing/unrealizing! !
 copy!copying!public! !
 hash!comparing!public! !

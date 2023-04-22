@@ -31,9 +31,6 @@ interface ICoreWebView2ProcessFailedEventArgs : IUnknown
 !WebView2.ICoreWebView2ProcessFailedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
 !WebView2.ICoreWebView2ProcessFailedEventArgs methodsFor!
 
-downCast
-	^self queryInterface: ICoreWebView2ProcessFailedEventArgs2 ifNone: self!
-
 exitCode
 	"Answer the <sdword> value of the 'ExitCode' property of the receiver."
 
@@ -119,7 +116,6 @@ reason
 	self get_reason: answer.
 	^answer asObject! !
 !WebView2.ICoreWebView2ProcessFailedEventArgs categoriesForMethods!
-downCast!converting!public! !
 exitCode!properties!public! !
 frameInfosForFailedProcess!properties!public! !
 get_ExitCode:!**auto generated**!COM Interfaces-ICoreWebView2ProcessFailedEventArgs2!private! !

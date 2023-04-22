@@ -19,6 +19,7 @@ UI.ValueConvertingControlView
 			'DisablePasswordAutosaveMask' -> 16r800.
 			'DisablePinchZoomMask' -> 16r1000.
 			'DisableScriptMask' -> 16r40.
+			'DisableSmartScreen' -> 16r20000.
 			'DisableStatusBarMask' -> 16r80.
 			'DisableSwipeNavigationMask' -> 16r8000.
 			'DisableWebmessageMask' -> 16r100.
@@ -156,7 +157,7 @@ createWebViewEnvironment
 		userDataFolder: userDataFolder
 		environmentOptions: (environmentOptions queryInterface: ICoreWebView2EnvironmentOptions)
 		environmentCreatedHandler: completed]
-			on: Win32Error
+			on: HRESULTError
 			do: [:ex | self createUnavailableLink].
 	completed free.
 	self topShell
@@ -300,6 +301,13 @@ isScriptEnabled
 isScriptEnabled: aBoolean
 	settingsFlags := settingsFlags mask: DisableScriptMask set: aBoolean not.
 	self webviewSettings ifNotNil: [:settings | settings isScriptEnabled: aBoolean]!
+
+isSmartScreenEnabled
+	^settingsFlags noMask: DisableSmartScreen!
+
+isSmartScreenEnabled: aBoolean
+	settingsFlags := settingsFlags mask: DisableSmartScreen set: aBoolean not.
+	self webviewSettings ifNotNil: [:settings | settings isReputationCheckingRequired: aBoolean]!
 
 isStatusBarEnabled
 	^settingsFlags noMask: DisableStatusBarMask!
@@ -682,6 +690,8 @@ isPinchZoomEnabled!public!settings! !
 isPinchZoomEnabled:!public!settings! !
 isScriptEnabled!public!settings! !
 isScriptEnabled:!public!settings! !
+isSmartScreenEnabled!public!settings! !
+isSmartScreenEnabled:!public!settings! !
 isStatusBarEnabled!public!settings! !
 isStatusBarEnabled:!public!settings! !
 isSwipeNavigationEnabled!public!settings! !

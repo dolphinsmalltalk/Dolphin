@@ -64,15 +64,6 @@ ClearBrowsingData: dataKinds handler: handler
 	<virtual stdcall: hresult 11 int32 ICoreWebView2ClearBrowsingDataCompletedHandler*>
 	^self invalidCall: _failureCode!
 
-clearBrowsingData: dataKinds thenDo: aMonadicValuable
-	"Clear browsing data of the kinds indicated by the flags in the <integer> dataKinds argument and when done invoke the <monadicValuable> argument passing an integer HRESULT indicating success/failure."
-
-	| handler |
-	handler := (WebView2CompletionHandler completionBlock: aMonadicValuable)
-				queryInterface: ICoreWebView2ClearBrowsingDataCompletedHandler.
-	self ClearBrowsingData: dataKinds handler: handler.
-	handler free!
-
 ClearBrowsingDataAll: handler
 	"Private - Invoke the ClearBrowsingDataAll() method of the COM object.
 
@@ -92,23 +83,12 @@ ClearBrowsingDataInTimeRange: dataKinds startTime: startTime endTime: endTime ha
 			[in]ICoreWebView2ClearBrowsingDataCompletedHandler* handler);"
 
 	<virtual stdcall: hresult 12 int32 double double ICoreWebView2ClearBrowsingDataCompletedHandler*>
-	^self invalidCall: _failureCode!
-
-clearBrowsingDataThenDo: aMonadicValuable
-	"Clear all browsing data (history, cookies, etc) and when done invoke the <monadicValuable> argument passing an integer HRESULT indicating success/failure."
-
-	| handler |
-	handler := (WebView2CompletionHandler completionBlock: aMonadicValuable)
-				queryInterface: ICoreWebView2ClearBrowsingDataCompletedHandler.
-	self ClearBrowsingDataAll: handler.
-	handler free! !
+	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2Profile2 categoriesForMethods!
 clearBrowsingData:from:to:thenDo:!methods!public! !
 ClearBrowsingData:handler:!**auto generated**!COM Interfaces-ICoreWebView2Profile2!private! !
-clearBrowsingData:thenDo:!methods!public! !
 ClearBrowsingDataAll:!**auto generated**!COM Interfaces-ICoreWebView2Profile2!private! !
 ClearBrowsingDataInTimeRange:startTime:endTime:handler:!**auto generated**!COM Interfaces-ICoreWebView2Profile2!private! !
-clearBrowsingDataThenDo:!methods!public! !
 !
 
 !WebView2.ICoreWebView2Profile2 class methodsFor!

@@ -37,9 +37,6 @@ interface ICoreWebView2NavigationCompletedEventArgs : IUnknown
 !WebView2.ICoreWebView2NavigationCompletedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
 !WebView2.ICoreWebView2NavigationCompletedEventArgs methodsFor!
 
-downCast
-	^self queryInterface: ICoreWebView2NavigationCompletedEventArgs2 ifNone: self!
-
 get_HttpStatusCode: http_status_code
 	^E_NOTIMPL!
 
@@ -105,7 +102,6 @@ webErrorStatus
 	self get_WebErrorStatus: answer.
 	^answer asObject! !
 !WebView2.ICoreWebView2NavigationCompletedEventArgs categoriesForMethods!
-downCast!converting!public! !
 get_HttpStatusCode:!COM Interfaces-ICoreWebView2NavigationCompletedEventArgs2!private! !
 get_IsSuccess:!**auto generated**!COM Interfaces-ICoreWebView2NavigationCompletedEventArgs!private! !
 get_NavigationId:!**auto generated**!COM Interfaces-ICoreWebView2NavigationCompletedEventArgs!private! !

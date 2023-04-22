@@ -14,11 +14,6 @@ WebView2.ICoreWebView2Interface comment: '`ICoreWebView2Interface` is not define
 !WebView2.ICoreWebView2Interface categoriesForClass!COM-Interfaces! !
 !WebView2.ICoreWebView2Interface methodsFor!
 
-downCast
-	"Answer the most recent available interface of the receiver's type implemented by the underlying COM object."
-
-	^self!
-
 printableProperties
 	^#()!
 
@@ -41,7 +36,6 @@ printPropertiesOn: aStream
 				print: (self perform: each)]
 		separatedBy: [aStream nextPutAll: ', ']! !
 !WebView2.ICoreWebView2Interface categoriesForMethods!
-downCast!converting!public! !
 printableProperties!printing!private! !
 printOn:!development!printing!public! !
 printPropertiesOn:!development!printing!private! !

@@ -300,17 +300,6 @@ displayOn: aWriteStream
 		ifTrue: [super displayOn: aWriteStream]
 		ifFalse: [aWriteStream nextPutAll: self browserVersionString]!
 
-downCast
-	"Private - Answer the most recent environment interface available on the underlying COM object. There are already 10 versions of the ICoreWebView2Environment; answer the latest available. A little more forethought in the design so as to not have to define >10 versions of a public interface in a year or two might be nice!!"
-
-	| interfaceClass |
-	interfaceClass := ICoreWebView2Environment12.
-	
-	[(self queryInterface: interfaceClass ifNone: []) ifNotNil: [:interface | ^interface].
-	(interfaceClass := interfaceClass superclass) == self class]
-			whileFalse.
-	^self!
-
 failureReportFolderPath
 	"Answer the <lpwstr> value of the 'FailureReportFolderPath' property of the receiver."
 
@@ -445,7 +434,6 @@ CreateWebResourceRequest:method:postData:headers:request:!COM Interfaces-ICoreWe
 createWebResourceResponse:statusCode:reasonPhrase:headers:!methods!public! !
 CreateWebResourceResponse:statusCode:reasonPhrase:headers:response:!**auto generated**!COM Interfaces-ICoreWebView2Environment!private! !
 displayOn:!displaying!public! !
-downCast!converting!public! !
 failureReportFolderPath!properties!public! !
 get_BrowserVersionString:!**auto generated**!COM Interfaces-ICoreWebView2Environment!private! !
 get_FailureReportFolderPath:!COM Interfaces-ICoreWebView2Environment11!private! !

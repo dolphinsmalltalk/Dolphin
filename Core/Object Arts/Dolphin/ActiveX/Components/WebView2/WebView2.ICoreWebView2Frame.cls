@@ -152,17 +152,6 @@ AddHostObjectToScriptWithOrigins: name object: object originsCount: originsCount
 	<virtual stdcall: hresult 7 lpwstr variant* uint32 lpwstr*>
 	^self invalidCall: _failureCode!
 
-downCast
-	"Private - Answer the most recent frame interface available on the underlying COM object."
-
-	| interfaceClass |
-	interfaceClass := ICoreWebView2Frame4.
-	
-	[(self queryInterface: interfaceClass ifNone: []) ifNotNil: [:interface | ^interface].
-	(interfaceClass := interfaceClass superclass) == self class]
-			whileFalse.
-	^self!
-
 ExecuteScript: javaScript handler: handler
 	"Private - Invoke the ExecuteScript() method of the COM object.
 
@@ -346,7 +335,6 @@ Add_PermissionRequested:token:!COM Interfaces-ICoreWebView2Frame3!private! !
 Add_WebMessageReceived:token:!COM Interfaces-ICoreWebView2Frame2!events!private! !
 addHostObjectToScriptWithOrigins:object:originsCount:origins:!**auto generated**!methods!public! !
 AddHostObjectToScriptWithOrigins:object:originsCount:origins:!**auto generated**!COM Interfaces-ICoreWebView2Frame!private! !
-downCast!converting!public! !
 ExecuteScript:handler:!COM Interfaces-ICoreWebView2Frame2!methods!private! !
 executeScript:thenDo:!methods!public! !
 get_name:!**auto generated**!COM Interfaces-ICoreWebView2Frame!private!properties! !

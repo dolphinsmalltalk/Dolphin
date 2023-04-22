@@ -24,6 +24,18 @@ createCoreWebView2EnvironmentWithOptions: browserExecutableFolder userDataFolder
 	<stdcall: hresult CreateCoreWebView2EnvironmentWithOptions lpwstr lpwstr ICoreWebView2EnvironmentOptions* ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler*>
 	^self invalidCall: _failureCode!
 
+getAvailableCoreWebView2BrowserVersionString: browserExecutableFolder
+	"
+	WebView2Loader default getAvailableCoreWebView2BrowserVersionString: nil
+	"
+
+	| ptr versionInfo |
+	ptr := TaskMemory new.
+	self getAvailableCoreWebView2BrowserVersionString: browserExecutableFolder versionInfo: ptr.
+	versionInfo := Utf16String fromAddress: ptr.
+	ptr free.
+	^versionInfo!
+
 getAvailableCoreWebView2BrowserVersionString: browserExecutableFolder versionInfo: versionInfo
 	<stdcall: hresult GetAvailableCoreWebView2BrowserVersionString lpwstr lpwstr*>
 	^self invalidCall: _failureCode! !
@@ -31,6 +43,7 @@ getAvailableCoreWebView2BrowserVersionString: browserExecutableFolder versionInf
 compareBrowserVersions:version2:result:!public! !
 createCoreWebView2Environment:!public! !
 createCoreWebView2EnvironmentWithOptions:userDataFolder:environmentOptions:environmentCreatedHandler:!public! !
+getAvailableCoreWebView2BrowserVersionString:!enquiries!public! !
 getAvailableCoreWebView2BrowserVersionString:versionInfo:!public! !
 !
 

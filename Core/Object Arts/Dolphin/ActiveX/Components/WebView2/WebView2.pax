@@ -214,6 +214,7 @@ package setClassNames: #(
 	#{WebView2.ICoreWebView2Settings5}
 	#{WebView2.ICoreWebView2Settings6}
 	#{WebView2.ICoreWebView2Settings7}
+	#{WebView2.ICoreWebView2Settings8}
 	#{WebView2.ICoreWebView2SharedBuffer}
 	#{WebView2.ICoreWebView2SourceChangedEventArgs}
 	#{WebView2.ICoreWebView2SourceChangedEventHandler}
@@ -406,6 +407,7 @@ Kernel.Namespace
 			'COREWEBVIEW2_PERMISSION_KIND_NOTIFICATIONS' -> 16r4.
 			'COREWEBVIEW2_PERMISSION_KIND_OTHER_SENSORS' -> 16r5.
 			'COREWEBVIEW2_PERMISSION_KIND_UNKNOWN_PERMISSION' -> 16r0.
+			'COREWEBVIEW2_PERMISSION_KIND_WINDOW_MANAGEMENT' -> 16rC.
 			'COREWEBVIEW2_PERMISSION_STATE_ALLOW' -> 16r1.
 			'COREWEBVIEW2_PERMISSION_STATE_DEFAULT' -> 16r0.
 			'COREWEBVIEW2_PERMISSION_STATE_DENY' -> 16r2.
@@ -774,7 +776,10 @@ WebView2.ICoreWebView2Interface
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'PermissionNames'
+				-> #('Microphone' 'Camera' 'Geolocation' 'Notifications' 'OtherSensors' 'ClipboardRead' 'MultipleAutomaticDownloads' 'FileReadWrite' 'Autoplay' 'LocalFonts' 'MidiSystemExclusiveMessages' 'WindowManagement')
+		}!
 WebView2.ICoreWebView2Interface
 	subclass: #'WebView2.ICoreWebView2PointerInfo'
 	instanceVariableNames: ''
@@ -1947,6 +1952,13 @@ WebView2.ICoreWebView2Settings6
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+WebView2.ICoreWebView2Settings7
+	subclass: #'WebView2.ICoreWebView2Settings8'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 UI.ValueConvertingControlView
 	subclass: #'UI.WebView2View'
 	instanceVariableNames: 'settingsFlags unavailableLink webviewEnvironment webviewController webview eventHandlers environmentOptions environmentEventHandlers profileName scriptLocale _unused26'
@@ -1966,6 +1978,7 @@ UI.ValueConvertingControlView
 			'DisablePasswordAutosaveMask' -> 16r800.
 			'DisablePinchZoomMask' -> 16r1000.
 			'DisableScriptMask' -> 16r40.
+			'DisableSmartScreen' -> 16r20000.
 			'DisableStatusBarMask' -> 16r80.
 			'DisableSwipeNavigationMask' -> 16r8000.
 			'DisableWebmessageMask' -> 16r100.
