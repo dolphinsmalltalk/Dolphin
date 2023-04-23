@@ -2801,10 +2801,10 @@ Core.Object
 Core.Object
 	subclass: #'Kernel.MethodProtocol'
 	instanceVariableNames: 'name comment selectors flags'
-	classVariableNames: 'ANSIMask Protocols ReadOnlyMask StubAddedSignal'
+	classVariableNames: 'Protocols StubAddedSignal'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'ANSIMask' -> 16r2. 'ReadOnlyMask' -> 16r1 }!
 Core.Object
 	subclass: #'Kernel.ModalMsgLoop'
 	instanceVariableNames: 'loop'
@@ -2948,10 +2948,10 @@ Core.Object
 Core.Object
 	subclass: #'Kernel.SourceManager'
 	instanceVariableNames: 'mutex'
-	classVariableNames: 'ChangesIndex DefaultInstance SourcesIndex'
+	classVariableNames: 'DefaultInstance'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'ChangesIndex' -> 16r2. 'SourcesIndex' -> 16r1 }!
 Core.Object
 	subclass: #'Kernel.StackFrame'
 	instanceVariableNames: 'process index'
@@ -3765,10 +3765,16 @@ Kernel.CompiledMethod
 Kernel.CompiledMethod
 	variableSubclass: #'External.ExternalMethod'
 	instanceVariableNames: ''
-	classVariableNames: 'ArgsLenIndex ArgumentStartIndex CallingConventionIndex ReturnParmIndex ReturnTypeIndex'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'ArgsLenIndex' -> 16r6.
+			'ArgumentStartIndex' -> 16r9.
+			'CallingConventionIndex' -> 16r5.
+			'ReturnParmIndex' -> 16r7.
+			'ReturnTypeIndex' -> 16r8
+		}!
 External.DynamicLinkLibrary
 	subclass: #'OS.AdvApiLibrary'
 	instanceVariableNames: ''

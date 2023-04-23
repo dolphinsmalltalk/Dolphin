@@ -3,10 +3,10 @@
 UI.ValueConvertingControlView
 	subclass: #'UI.ProgressBar'
 	instanceVariableNames: ''
-	classVariableNames: 'ValidRange'
+	classVariableNames: ''
 	imports: #(#{OS.ProgressBarConstants})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'ValidRange' -> (16r0 to: 16rFFFF) }!
 UI.ProgressBar guid: (Core.GUID fromString: '{87b4c737-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.ProgressBar comment: 'ProgressBar is a <valueView> implementing the Windows "msctls_progress32" common control. The <valueModel> associated with a ProgressBar must always yield an <integer> value when mapped through the installed type converter. A ProgressBar will normally be used in conjunction with a <NumberPresenter>.
 
@@ -108,15 +108,16 @@ range: anIntegerInterval
 	if there was not one."
 
 	| answer |
-	self assert: [(anIntegerInterval start >= self class validRange start) & (anIntegerInterval stop <= self class validRange stop)].
+	self
+		assert: [anIntegerInterval start >= ValidRange start & (anIntegerInterval stop <= ValidRange stop)].
 	answer := self
-		sendMessage: PBM_SETRANGE
-		wParam: 0
-		lpParam: (anIntegerInterval start asInteger bitOr: (anIntegerInterval stop asInteger bitShift: 16)).
+				sendMessage: PBM_SETRANGE
+				wParam: 0
+				lpParam: (anIntegerInterval start asInteger bitOr: (anIntegerInterval stop asInteger bitShift: 16)).
 	^answer == 0
 		ifTrue: [self errorInCommonControlCall]
-		ifFalse: [
-			self refreshContents.
+		ifFalse: 
+			[self refreshContents.
 			answer lowWord to: answer highWord]!
 
 setControlBackcolor: aColor 
@@ -169,20 +170,13 @@ icon
 initialize
 	"Private - Initialise the receiver."
 
-	CommCtrlLibrary addInitFlag: ICC_PROGRESS_CLASS.
-	ValidRange := 0 to: 65535!
+	CommCtrlLibrary addInitFlag: ICC_PROGRESS_CLASS!
 
 themePartName
 	^'PROGRESS'!
 
 uninitialize
 	CommCtrlLibrary removeInitFlag: ICC_PROGRESS_CLASS!
-
-validRange
-	"Private - Answer an Interval delimiting the valid range for the 
-	receiver's win common control."
-
-	^ValidRange!
 
 winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
@@ -195,7 +189,6 @@ icon!constants!public! !
 initialize!development!initializing!private! !
 themePartName!constants!private! !
 uninitialize!class hierarchy-removing!private! !
-validRange!constants!private! !
 winClassName!constants!private! !
 !
 

@@ -1338,10 +1338,15 @@ Core.Object
 Core.Object
 	subclass: #'UI.FindDetails'
 	instanceVariableNames: 'pattern replaceWith searchMode flags action'
-	classVariableNames: 'IgnoreCaseMask UpMask WholeWordMask WrapMask'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'IgnoreCaseMask' -> 16r1.
+			'UpMask' -> 16r1000.
+			'WholeWordMask' -> 16r2.
+			'WrapMask' -> 16r4
+		}!
 Core.Object
 	subclass: #'UI.FramingCalculation'
 	instanceVariableNames: 'name framingBlock offsetBlock flags'
@@ -1739,10 +1744,13 @@ UI.MenuItem
 UI.MenuItem
 	subclass: #'UI.DividerMenuItem'
 	instanceVariableNames: ''
-	classVariableNames: 'BarBreak Break DividerLookup Separator'
+	classVariableNames: 'BarBreak Break Separator'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'DividerLookup'
+				-> (LookupTable withAll: { 16r20 -> #barBreak. 16r40 -> #break. 16r800 -> #separator })
+		}!
 UI.Presenter
 	subclass: #'UI.SelectableItemsPresenter'
 	instanceVariableNames: ''

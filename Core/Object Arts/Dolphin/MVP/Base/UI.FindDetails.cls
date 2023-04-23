@@ -3,10 +3,15 @@
 Core.Object
 	subclass: #'UI.FindDetails'
 	instanceVariableNames: 'pattern replaceWith searchMode flags action'
-	classVariableNames: 'IgnoreCaseMask UpMask WholeWordMask WrapMask'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'IgnoreCaseMask' -> 16r1.
+			'UpMask' -> 16r1000.
+			'WholeWordMask' -> 16r2.
+			'WrapMask' -> 16r4
+		}!
 UI.FindDetails guid: (Core.GUID fromString: '{ec9a373c-74cf-4a2c-b29c-227014e985f9}')!
 UI.FindDetails comment: ''!
 !UI.FindDetails categoriesForClass!Kernel-Objects! !
@@ -151,13 +156,6 @@ icon
 
 	^Icon fromId: 'Find.ico'!
 
-initialize
-	IgnoreCaseMask := 1.
-	WholeWordMask := 2.
-	WrapMask := 4.
-	UpMask := 1000.
-!
-
 new
 	^super new initialize!
 
@@ -180,7 +178,6 @@ searchModes
 	^#(#text #wildcardExpression)! !
 !UI.FindDetails class categoriesForMethods!
 icon!constants!public! !
-initialize!development!initializing!public! !
 new!instance creation!public! !
 newPattern:!instance creation!public! !
 searchModes!constants!public! !

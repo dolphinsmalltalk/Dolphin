@@ -3,10 +3,13 @@
 Core.Object
 	subclass: #'UI.StatusBarItemAbstract'
 	instanceVariableNames: 'style width parentView model'
-	classVariableNames: 'BorderStyles'
+	classVariableNames: ''
 	imports: #(#{OS.StatusBarConstants})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'BorderStyles' -> (IdentityDictionary
+						withAll: { #noBorder -> 16r100. #raisedBorder -> 16r200. #sunkenBorder -> 16r0 })
+		}!
 UI.StatusBarItemAbstract guid: (Core.GUID fromString: '{87b4c4bf-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.StatusBarItemAbstract isNonInstantiable: true!
 UI.StatusBarItemAbstract comment: '`StatusBarItemAbstract` is an abstract class whose subclasses represent the items held by a `StatusBar` view.
@@ -309,18 +312,6 @@ icon
 
 	^StatusBar icon!
 
-initialize
-	"Private - Initialize the receiver.
-
-	self initialize.
-"
-
-	BorderStyles := ##(IdentityDictionary new
-				at: #noBorder put: SBT_NOBORDERS;
-				at: #sunkenBorder put: 0;
-				at: #raisedBorder put: SBT_POPOUT;
-				yourself)!
-
 new
 	"Answer a new initialize instance of the receiver."
 
@@ -351,7 +342,6 @@ stbVersion
 	^1! !
 !UI.StatusBarItemAbstract class categoriesForMethods!
 icon!constants!public! !
-initialize!development!initializing!private! !
 new!instance creation!public! !
 separator:!instance creation!public! !
 stbConvertFrom:!binary filing!private! !

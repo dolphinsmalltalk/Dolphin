@@ -3,10 +3,10 @@
 Tools.ClassBrowserPlugin
 	subclass: #'Tools.ResourceListPlugin'
 	instanceVariableNames: 'resourcesPresenter flags'
-	classVariableNames: 'ShowInheritedResourcesMask ShowSubclassResourcesMask'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'ShowInheritedResourcesMask' -> 16r1. 'ShowSubclassResourcesMask' -> 16r2 }!
 Tools.ResourceListPlugin guid: (Core.GUID fromString: '{9bf86123-58b4-42e2-bdf8-063f7e315276}')!
 Tools.ResourceListPlugin comment: '`ResourceListPlugin` is a `<classBrowserPlugin>` that displays a list of the view resources associated with a class, optionally including those inherited from superclasses and/or those owned by subclasses.
 
@@ -164,10 +164,6 @@ icon
 
 	^View icon!
 
-initialize
-	ShowInheritedResourcesMask := 1.
-	ShowSubclassResourcesMask := 2!
-
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
@@ -179,7 +175,6 @@ resource_Default_view
 	^#(#'!!STL' 5 985166 10 #{UI.STBViewProxy} #{UI.ContainerView} 34 15 nil nil 34 2 8 1409286144 131073 416 nil nil nil 5 nil nil nil 416 984838 #{UI.BorderLayout} 1 1 nil nil nil nil 410 #{UI.ReferenceView} 34 14 nil 416 34 2 8 1140850688 131073 512 nil nil nil 5 461638 4 #{UI.Menu} nil true 34 8 1180742 2 #{UI.CommandMenuItem} 2097153 1377606 4 #{UI.CommandDescription} #editResource 8 '&Edit' 1 1 852806 4 #{Graphics.Icon} nil true 2819078 #{Graphics.ImageFromStringResourceInitializer} 8 'ViewComposer.ico' 2490894 #{Kernel.STBExternalResourceLibraryProxy} 8 'dolphindr8.dll' nil 65541 nil nil nil 626 1 658 #browseReferences 8 'Browse &References' 1 1 nil nil nil 626 1 658 #showResource 8 '&Show' 1 1 706 nil true 738 8 'TestView.ico' 800 65541 nil nil nil 626 1 658 #newView 8 '&New…' 1 1 nil nil nil 1179974 1 #{UI.DividerMenuItem} 4097 626 1 658 #deleteResource 8 '&Delete' 1 1 706 nil true 738 8 'EditClear.ico' 800 65541 nil nil nil 1026 4097 578 nil true 34 7 626 1 658 #toggleShowInheritedResources 8 'Show I&nherited' 1 1 nil nil nil 626 1 658 #toggleShowSubclassResources 8 'Show &Subclass' 1 1 nil nil nil 1026 4097 626 1 658 #tileIconMode 8 '&Tiles' 1 1 nil nil nil 626 1 658 #largeIconMode 8 '&Icons' 1 1 nil nil nil 626 1025 658 #listMode 8 '&List' 1 1 nil nil nil 626 1025 658 #reportMode 8 '&Details' 1 1 nil nil nil 8 '&View' nil 134217729 nil nil nil nil nil 8 '' nil 134217729 nil nil nil nil nil nil nil 512 1376838 1 #{UI.ResourceIdentifier} #{Tools.ResourceListPresenter} #resource_Package_view nil 1310982 #{Core.MessageSequence} 34 2 1049350 #{Core.MessageSend} #createAt:extent: 34 2 918022 #{Graphics.Point} 1 1 1666 1061 501 512 1618 #contextMenu: 34 1 592 512 1179910 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 18 2 0 0 250 0 0 0] 8 #() 1666 193 193 nil 27 170 192 34 2 512 8 'resources' nil 1570 34 1 1618 #createAt:extent: 34 2 1666 12287 21 1666 1061 501 416 1746 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 17 26 0 0 4 1 0 0] 34 1 512 1808 nil 27)! !
 !Tools.ResourceListPlugin class categoriesForMethods!
 icon!constants!public! !
-initialize!initializing!public! !
 resource_Default_view!public!resources-views! !
 !
 

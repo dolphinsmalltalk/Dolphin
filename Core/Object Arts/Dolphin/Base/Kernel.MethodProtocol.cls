@@ -3,10 +3,10 @@
 Core.Object
 	subclass: #'Kernel.MethodProtocol'
 	instanceVariableNames: 'name comment selectors flags'
-	classVariableNames: 'ANSIMask Protocols ReadOnlyMask StubAddedSignal'
+	classVariableNames: 'Protocols StubAddedSignal'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'ANSIMask' -> 16r2. 'ReadOnlyMask' -> 16r1 }!
 Kernel.MethodProtocol guid: (Core.GUID fromString: '{87b4c503-026e-11d3-9fd7-00a0cc3e4a32}')!
 Kernel.MethodProtocol comment: 'MethodProtocol is a meta-information class which groups a set of selectors to form a cohesive unit of behavior which is independent of the class hierarchy. A class is said to conform to a MethodProtocol if it implements each of the selectors in the protocol, and if it claims to support the protocol, i.e. implementation of the set of selectors is a necessary but not sufficient condition because the implementation of the selectors must be as specified by the protocol. The precise semantics of the protocol are not formally specified by instances of this class, and cannot be tested by it, therefore if the programmer asserts that a class conforms to a protocol and it implements all the necessary selectors, that is deemed sufficient for conformance. A class automatically conforms to any protocols to which its superclasses conform.
 
@@ -478,8 +478,7 @@ initialize
 
 	StubAddedSignal := NotificationSignal description: '%1'.
 	Protocols isNil ifTrue: [self initializeProtocols].
-	ReadOnlyMask := 1.
-	ANSIMask := 2!
+!
 
 initializeProtocols
 	"Private - Discard all existing protocols."

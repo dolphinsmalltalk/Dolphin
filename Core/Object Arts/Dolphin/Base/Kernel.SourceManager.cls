@@ -3,10 +3,10 @@
 Core.Object
 	subclass: #'Kernel.SourceManager'
 	instanceVariableNames: 'mutex'
-	classVariableNames: 'ChangesIndex DefaultInstance SourcesIndex'
+	classVariableNames: 'DefaultInstance'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'ChangesIndex' -> 16r2. 'SourcesIndex' -> 16r1 }!
 Kernel.SourceManager guid: (Core.GUID fromString: '{87b4c4bd-026e-11d3-9fd7-00a0cc3e4a32}')!
 Kernel.SourceManager comment: ''!
 !Kernel.SourceManager categoriesForClass!Development!System-Support! !
@@ -494,12 +494,6 @@ default: aSourceManager
 	DefaultInstance := aSourceManager.
 	DefaultInstance notNil ifTrue: [ DefaultInstance openSources ].!
 
-initialize
-	"Initialize the class variables of the receiver"
-
-	SourcesIndex := 1.
-	ChangesIndex := 2!
-
 new
 	^super new initialize!
 
@@ -526,7 +520,6 @@ uninitialize
 !Kernel.SourceManager class categoriesForMethods!
 default!accessing!public! !
 default:!accessing!public! !
-initialize!initializing!public! !
 new!instance creation!public! !
 newDefault!instance creation!public! !
 reset!initializing!private! !

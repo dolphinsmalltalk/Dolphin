@@ -3,10 +3,13 @@
 UI.MenuItem
 	subclass: #'UI.DividerMenuItem'
 	instanceVariableNames: ''
-	classVariableNames: 'BarBreak Break DividerLookup Separator'
+	classVariableNames: 'BarBreak Break Separator'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'DividerLookup'
+				-> (LookupTable withAll: { 16r20 -> #barBreak. 16r40 -> #break. 16r800 -> #separator })
+		}!
 UI.DividerMenuItem guid: (Core.GUID fromString: '{87b4c661-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.DividerMenuItem comment: 'DividerMenuItem represents a divider that can be placed between other items in a <Menu>. Separate singleton instances for the various styles are held in class variables and answered by the #separator, #break and #barBreak [instance creation] methods.
 
@@ -115,18 +118,6 @@ break
 	^Break
 !
 
-initialize
-	"Private - Initialize the receiver's class variables.
-
-		DividerMenuItem initialize
-	"
-
-	DividerLookup := LookupTable new
-				at: MFT_SEPARATOR put: #separator;
-				at: MFT_MENUBREAK put: #break;
-				at: MFT_MENUBARBREAK put: #barBreak;
-				yourself!
-
 new
 	"Answers an instance of the receiver"
 
@@ -167,7 +158,6 @@ uninitialize
 !UI.DividerMenuItem class categoriesForMethods!
 barBreak!instance creation!public! !
 break!instance creation!public! !
-initialize!development!initializing!private! !
 new!instance creation!public! !
 onPreStripImage!class hierarchy-removing!private! !
 separator!instance creation!public! !

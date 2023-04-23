@@ -3,7 +3,7 @@
 OS.Win32Structure
 	subclass: #'OS.LVCOLUMNW'
 	instanceVariableNames: 'text'
-	classVariableNames: 'AlignmentMap'
+	classVariableNames: ''
 	imports: #(#{OS.ListViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
@@ -18,7 +18,9 @@ OS.Win32Structure
 			'_OffsetOf_iOrder' -> 16r1C.
 			'_OffsetOf_iSubItem' -> 16r14.
 			'_OffsetOf_mask' -> 16r0.
-			'_OffsetOf_pszText' -> 16rC
+			'_OffsetOf_pszText' -> 16rC.
+			'AlignmentMap'
+				-> (IdentityDictionary withAll: { #center -> 16r2. #left -> 16r0. #right -> 16r1 })
 		}!
 OS.LVCOLUMNW guid: (Core.GUID fromString: '{87b4c5fc-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.LVCOLUMNW comment: 'LVCOLUMN is an <ExternalStructure> class which represents the Windows List View common control structure of the same name.
@@ -282,22 +284,11 @@ fromColumn: aListViewColumn
 	^self newBuffer setColumn: aListViewColumn!
 
 getFieldNames
-	^#(#mask #fmt #cx #pszText #cchTextMax #iSubItem #iImage #iOrder #cxMin #cxDefault #cxIdeal)!
-
-initialize
-	"Private - Initialize the class variables of the receiver."
-
-	AlignmentMap := ##(IdentityDictionary new
-				at: #left put: LVCFMT_LEFT;
-				at: #right put: LVCFMT_RIGHT;
-				at: #center put: LVCFMT_CENTER;
-				shrink;
-				yourself)! !
+	^#(#mask #fmt #cx #pszText #cchTextMax #iSubItem #iImage #iOrder #cxMin #cxDefault #cxIdeal)! !
 !OS.LVCOLUMNW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 fromColumn:!instance creation!public! !
 getFieldNames!**compiled accessors**!constants!private! !
-initialize!development!initializing!private! !
 !
 

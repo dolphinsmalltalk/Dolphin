@@ -102,10 +102,20 @@ Kernel.SharedPool
 Core.Object
 	subclass: #'UI.MessageBoxAbstract'
 	instanceVariableNames: 'text caption owner'
-	classVariableNames: 'IconStyles'
+	classVariableNames: ''
 	imports: #(#{OS.MessageBoxConstants})
 	classInstanceVariableNames: 'defaultCaptions'
-	classConstants: {}!
+	classConstants: {
+			'IconStyles'
+				-> (IdentityDictionary withAll: {
+								#error -> 16r10.
+								#none -> 16r0.
+								#notify -> 16r40.
+								#prompt -> 16r20.
+								#user -> 16r80.
+								#warning -> 16r30
+							})
+		}!
 Core.Warning
 	subclass: #'UI.ConfirmationRequiredWarning'
 	instanceVariableNames: 'confirmBlock refuseBlock cancelBlock'

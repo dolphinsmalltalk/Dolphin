@@ -441,10 +441,15 @@ OS.NMHDR
 UI.MultilineTextEdit
 	subclass: #'UI.RichTextEdit'
 	instanceVariableNames: 'streamIn winStruct'
-	classVariableNames: 'Library ParagraphAlignmentMap StreamingDescriptor'
+	classVariableNames: 'Library StreamingDescriptor'
 	imports: #(#{OS.CommonDialogConstants} #{OS.RichEditConstants})
 	classInstanceVariableNames: ''
-	classConstants: { 'AutoUrlDetectionMask' -> 16r1000000. 'StreamInIndex' -> 16r11 }!
+	classConstants: {
+			'AutoUrlDetectionMask' -> 16r1000000.
+			'ParagraphAlignmentMap'
+				-> (IdentityDictionary withAll: { #center -> 16r3. #left -> 16r1. #right -> 16r2 }).
+			'StreamInIndex' -> 16r11
+		}!
 
 "Loose Methods"!
 

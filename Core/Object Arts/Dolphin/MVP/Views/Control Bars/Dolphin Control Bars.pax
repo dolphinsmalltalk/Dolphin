@@ -257,10 +257,13 @@ Kernel.SharedPool
 Core.Object
 	subclass: #'UI.StatusBarItemAbstract'
 	instanceVariableNames: 'style width parentView model'
-	classVariableNames: 'BorderStyles'
+	classVariableNames: ''
 	imports: #(#{OS.StatusBarConstants})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'BorderStyles' -> (IdentityDictionary
+						withAll: { #noBorder -> 16r100. #raisedBorder -> 16r200. #sunkenBorder -> 16r0 })
+		}!
 Core.Object
 	subclass: #'UI.ToolbarItem'
 	instanceVariableNames: 'toolbar'
@@ -395,10 +398,55 @@ UI.ToolbarButton
 UI.ToolbarButton
 	subclass: #'UI.ToolbarSystemButton'
 	instanceVariableNames: 'bitmapId bitmapIndex'
-	classVariableNames: 'BitmapButtons Bitmaps HistoryButtons StandardButtons ViewButtons'
+	classVariableNames: 'BitmapButtons'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'Bitmaps'
+				-> (IdentityDictionary withAll: { #history -> 16r8. #standard -> 16r0. #view -> 16r4 }).
+			'HistoryButtons'
+				-> (IdentityDictionary withAll: {
+								#addToFavorites -> 16r3.
+								#favorites -> 16r2.
+								#historyBack -> 16r0.
+								#historyForward -> 16r1.
+								#historyTree -> 16r4
+							}).
+			'StandardButtons'
+				-> (IdentityDictionary withAll: {
+								#clearSelection -> 16r5.
+								#copySelection -> 16r1.
+								#cutSelection -> 16r0.
+								#fileNew -> 16r6.
+								#fileOpen -> 16r7.
+								#fileSave -> 16r8.
+								#find -> 16rC.
+								#help -> 16rB.
+								#pasteClipboard -> 16r2.
+								#print -> 16rE.
+								#printPreview -> 16r9.
+								#properties -> 16rA.
+								#redo -> 16r4.
+								#replace -> 16rD.
+								#undo -> 16r3
+							}).
+			'ViewButtons'
+				-> (IdentityDictionary withAll: {
+								#largeIcons -> 16r0.
+								#list -> 16r2.
+								#newConnect -> 16r9.
+								#newDisconnect -> 16rA.
+								#newFolder -> 16rB.
+								#parentFolder -> 16r8.
+								#report -> 16r3.
+								#smallIcons -> 16r1.
+								#sortDate -> 16r6.
+								#sortName -> 16r4.
+								#sortSize -> 16r5.
+								#sortType -> 16r7.
+								#viewMenu -> 16rC
+							})
+		}!
 UI.AbstractNonReferenceDelegatingView
 	subclass: #'UI.ToolButton'
 	instanceVariableNames: ''

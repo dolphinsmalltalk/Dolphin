@@ -363,13 +363,6 @@ icon
 
 	^MSXML icon!
 
-initialize
-	"
-	self initialize
-	"
-
-	self addClassConstant: 'RememberPlacementMask' value: 1!
-
 installKeyName
 	"Private - Answer the name of the base installation registry key."
 
@@ -403,7 +396,6 @@ displayOn:!displaying!public! !
 explicitDependencies!must not strip!private! !
 fileTypes!constants!public! !
 icon!constants!public! !
-initialize!development!initializing!public! !
 installKeyName!accessing!public! !
 legacySettingsKeyName!private! !
 resource_Default_view!public!resources-views! !

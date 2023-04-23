@@ -146,10 +146,10 @@ Tools.ClassBrowserPlugin
 Tools.ClassBrowserPlugin
 	subclass: #'Tools.ResourceListPlugin'
 	instanceVariableNames: 'resourcesPresenter flags'
-	classVariableNames: 'ShowInheritedResourcesMask ShowSubclassResourcesMask'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'ShowInheritedResourcesMask' -> 16r1. 'ShowSubclassResourcesMask' -> 16r2 }!
 Tools.ClassBrowserPlugin
 	subclass: #'Tools.UnitTestPlugin'
 	instanceVariableNames: 'result icon autoSwitchProcess defectsPresenter modePresenter detailsPresenter'

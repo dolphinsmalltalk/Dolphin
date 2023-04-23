@@ -272,7 +272,6 @@ text: aString
 	super text: aString.
 	commandDescription description: aString! !
 !UI.PushButton categoriesForMethods!
-baseCreationStyle!private!realizing/unrealizing! !
 bmSetStyle:wParam:lParam:!event handling-win32!private! !
 calculateExtent:!geometry!private! !
 command:id:!commands!private! !
@@ -300,6 +299,7 @@ setDefault:!accessing-styles!private! !
 setNote!helpers!private! !
 style!accessing!public! !
 style:!accessing!public! !
+text:!accessing!public! !
 !
 
 UI.PushButton methodProtocol: #commandSource attributes: #(#readOnly) selectors: #(#commandDescription)!

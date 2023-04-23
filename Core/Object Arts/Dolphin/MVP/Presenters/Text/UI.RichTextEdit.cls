@@ -3,10 +3,15 @@
 UI.MultilineTextEdit
 	subclass: #'UI.RichTextEdit'
 	instanceVariableNames: 'streamIn winStruct'
-	classVariableNames: 'Library ParagraphAlignmentMap StreamingDescriptor'
+	classVariableNames: 'Library StreamingDescriptor'
 	imports: #(#{OS.CommonDialogConstants} #{OS.RichEditConstants})
 	classInstanceVariableNames: ''
-	classConstants: { 'AutoUrlDetectionMask' -> 16r1000000. 'StreamInIndex' -> 16r11 }!
+	classConstants: {
+			'AutoUrlDetectionMask' -> 16r1000000.
+			'ParagraphAlignmentMap'
+				-> (IdentityDictionary withAll: { #center -> 16r3. #left -> 16r1. #right -> 16r2 }).
+			'StreamInIndex' -> 16r11
+		}!
 UI.RichTextEdit guid: (Core.GUID fromString: '{87b4c744-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.RichTextEdit comment: 'RichTextEdit is a <valueView> class that implements the Windows "RichEdit" control for the displaying and editing of multi-line rich text. The <valueModel> associated with a RichTextEdit  must always yield a <richString> value when mapped through the installed type converter. A RichTextEdit will normally be used in conjunction with a <RichTextPresenter>. 
 
@@ -1011,13 +1016,13 @@ initialize
 
 	"Descriptor for stream out callback"
 	StreamingDescriptor := External.FunctionDescriptor argumentTypes: 'uint32 lpvoid int32 UInt32*'.
-	ParagraphAlignmentMap := IdentityDictionary new
+	self addClassConstant: 'ParagraphAlignmentMap' value: (IdentityDictionary new
 				at: #left put: PFA_LEFT;
 				at: #right put: PFA_RIGHT;
 				at: #center put: PFA_CENTER;
 				shrink;
 				isImmutable: true;
-				yourself!
+				yourself)!
 
 maxTextLimit
 	"Private - Answer the absolute maximum amount of text that the receiver can ever hold."
