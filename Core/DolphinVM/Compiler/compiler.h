@@ -387,6 +387,16 @@ private:
 	void PatchBindingReferenceLiterals(POTE oteMethod);
 
 	// text map
+	struct TEXTMAP
+	{
+		ip_t ip;
+		textpos_t start;
+		textpos_t stop;
+
+		TEXTMAP(const ip_t ip, const textpos_t start, const textpos_t stop) { this->ip = ip; this->start = start; this->stop = stop; }
+		TEXTMAP() : ip(ip_t::npos), start(textpos_t::npos), stop(textpos_t::npos) { }
+	};
+
 	size_t AddTextMap(ip_t ip, const TEXTRANGE&);
 	size_t AddTextMap(ip_t ip, textpos_t textStart, textpos_t textStop);
 	bool AdjustTextMapEntry(ip_t ip, ip_t newIP);
@@ -501,16 +511,6 @@ private:
 
 	uintptr_t m_primitiveIndex = 0;			// Index of primitive or zero
 	Oop m_compilerObject = 0;				// The object which was the receiver of the primCompile:... message to start compilation
-
-	struct TEXTMAP
-	{
-		ip_t ip;
-		textpos_t start;
-		textpos_t stop;
-
-		TEXTMAP(const ip_t ip, const textpos_t start, const textpos_t stop) { this->ip = ip; this->start = start; this->stop = stop; }
-		TEXTMAP() : ip((ip_t)-1), start((textpos_t)-1), stop((textpos_t)-1) { }
-	};
 
 	typedef vector<TEXTMAP> TEXTMAPLIST;
 	TEXTMAPLIST m_textMaps;

@@ -28,7 +28,12 @@ struct BYTECODE
 {
 	enum class Flags : uint8_t { IsOpCode = 0x00, IsData = 0x01, IsJump = 0x02 };
 
-	uint8_t		byte;
+	union
+	{
+		uint8_t		byte;
+		OpCode		opcode;
+	};
+
 	Flags		flags;
 	uint16_t	jumpsTo;		// count of the number of other byte codes using this as a jump target
 
@@ -47,7 +52,7 @@ struct BYTECODE
 
 	bool isInstruction(OpCode b) const
 	{
-		return IsOpCode && Opcode == b; 
+		return IsOpCode && opcode == b; 
 	};
 	
 	__declspec(property(get = get_IsData)) bool IsData;
@@ -63,12 +68,12 @@ struct BYTECODE
 	{ 
 		_ASSERTE(pScope != nullptr);
 		Opcode = b;
-		makeNonData();
 		this->pScope = pScope;
 	}
 
 	void makeNop(LexicalScope* pScope)
 	{
+		_ASSERTE(!IsJumpSource);
 		makeOpCode(OpCode::Nop, pScope);
 	}
 
@@ -115,11 +120,12 @@ struct BYTECODE
 	INLINE OpCode get_Opcode() const
 	{
 		_ASSERTE(IsOpCode);
-		return static_cast<OpCode>(byte);
+		return opcode;
 	}
 	INLINE void set_Opcode(OpCode opcode)
 	{
-		byte = static_cast<uint8_t>(opcode);
+		this->opcode = opcode;
+		makeNonData();
 	}
 
 	__declspec(property(get = get_IsBreak)) bool IsBreak;
@@ -386,7 +392,7 @@ struct BYTECODE
 	INLINE bool get_IsLongConditionalJump() const
 	{
 		OpCode op = Opcode;
-		return op== OpCode::LongJumpIfTrue ||
+		return op == OpCode::LongJumpIfTrue ||
 			op == OpCode::LongJumpIfFalse ||
 			op == OpCode::LongJumpIfNil ||
 			op == OpCode::LongJumpIfNotNil;

@@ -287,7 +287,7 @@ size_t Compiler::OptimizePairs()
 			if (bytecode1.IsPseudoPush && byte2 == OpCode::ReturnMessageStackTop)
 			{
 				// Can avoid need to modify text map if we remove the push and adjust the return instruction
-				bytecode2.Opcode = OpCode::ReturnSelf + (byte1 - OpCode::ShortPushSelf);
+				bytecode2.opcode = OpCode::ReturnSelf + (byte1 - OpCode::ShortPushSelf);
 				RemoveInstruction(i);
 				count++;
 				continue;	// Go round again without advancing, to reconsider the changed instruction
@@ -296,7 +296,7 @@ size_t Compiler::OptimizePairs()
 			// We must perform same optimisation in debug code to keep the text maps synchronised
 			else if (bytecode1.IsPseudoPush && byte2 == OpCode::Break && m_bytecodes[next+1].Opcode == OpCode::ReturnMessageStackTop)
 			{
-				m_bytecodes[next+1].Opcode = OpCode::ReturnSelf + (byte1 - OpCode::ShortPushSelf);
+				m_bytecodes[next+1].opcode = OpCode::ReturnSelf + (byte1 - OpCode::ShortPushSelf);
 				RemoveInstruction(i);
 				_ASSERTE(m_bytecodes[i].Opcode == OpCode::Break);
 				count++;
@@ -307,8 +307,8 @@ size_t Compiler::OptimizePairs()
 			{
 				// Although the result of a previous optimisation, this code sequence has a slightly more 
 				// efficient form, also it can be optimised down further to Pop; Return Self.
-				bytecode1.Opcode = OpCode::PopStackTop;
-				bytecode2.Opcode = OpCode::ReturnSelf;
+				bytecode1.opcode = OpCode::PopStackTop;
+				bytecode2.opcode = OpCode::ReturnSelf;
 				count++;
 				continue;
 			}
@@ -355,7 +355,7 @@ size_t Compiler::OptimizePairs()
 					{
 						target.removeJumpTo();
 						_ASSERTE(bytecode2.InstructionLength == 3);
-						bytecode2.Opcode = OpCode::ReturnIfNotNil;
+						bytecode2.opcode = OpCode::ReturnIfNotNil;
 						bytecode2.makeNonJump();
 						RemoveBytes(next + 1, 2);		// Delete the jump extension bytes
 						count++;
@@ -371,7 +371,7 @@ size_t Compiler::OptimizePairs()
 					{
 						target.removeJumpTo();
 						_ASSERTE(jump.InstructionLength == 3);
-						jump.Opcode = OpCode::ReturnIfNotNil;
+						jump.opcode = OpCode::ReturnIfNotNil;
 						jump.makeNonJump();
 						RemoveBytes(next + 2, 2);		// Delete the jump extension bytes
 						count++;
@@ -384,7 +384,7 @@ size_t Compiler::OptimizePairs()
 					// then equivalent to an unconditional jump
 					_ASSERTE(!bytecode2.IsJumpTarget);
 					VoidTextMapEntry(i+1);
-					bytecode2.Opcode = OpCode::LongJump;
+					bytecode2.opcode = OpCode::LongJump;
 					RemoveInstruction(i);	// Remove the push ...
 					count++;
 					continue;	// Continue optimization with unconditional jump now at i
@@ -395,7 +395,7 @@ size_t Compiler::OptimizePairs()
 					// then equivalent to an unconditional jump
 					_ASSERTE(!bytecode2.IsJumpTarget);
 					VoidTextMapEntry(i+1);
-					bytecode2.Opcode = OpCode::LongJump;
+					bytecode2.opcode = OpCode::LongJump;
 					RemoveInstruction(i);	// Remove the push ...
 					count++;
 					continue;	// Continue optimization with unconditional jump now at i
@@ -406,7 +406,7 @@ size_t Compiler::OptimizePairs()
 					// then equivalent to an unconditional jump
 					_ASSERTE(!bytecode2.IsJumpTarget);
 					VoidTextMapEntry(i+1);
-					bytecode2.Opcode = OpCode::LongJump;
+					bytecode2.opcode = OpCode::LongJump;
 					RemoveInstruction(i);	// Remove the push ...
 					count++;
 					continue;	// Continue optimization with unconditional jump now at i
@@ -419,14 +419,14 @@ size_t Compiler::OptimizePairs()
 					if (byte2 == OpCode::SendArithmeticAdd)
 					{
 						// To avoid having to adjust the text map entry, remove the push and update the SpecialSendAdd
-						bytecode2.Opcode = OpCode::IncrementStackTop;
+						bytecode2.opcode = OpCode::IncrementStackTop;
 						RemoveInstruction(i);	// Remove the ShortPushOne
 						count++;
 						continue;	// A new instruction will now be at i to be considered, so don't advance
 					}
 					else if (byte2 == OpCode::SendArithmeticSub)
 					{
-						bytecode2.Opcode = OpCode::DecrementStackTop;
+						bytecode2.opcode = OpCode::DecrementStackTop;
 						RemoveInstruction(i);	// Remove the ShortPushOne
 						count++;
 						continue;	// A new instruction will now be at i to be considered, so don't advance
@@ -439,14 +439,14 @@ size_t Compiler::OptimizePairs()
 						BYTECODE& bytecode3 = m_bytecodes[next+1];
 						if ( bytecode3.Opcode == OpCode::SendArithmeticAdd)
 						{
-							bytecode3.Opcode = OpCode::IncrementStackTop;
+							bytecode3.opcode = OpCode::IncrementStackTop;
 							RemoveInstruction(i);	// Remove the ShortPushOne, leave the Break before Increment
 							count++;
 							continue;
 						}
 						else if (bytecode3.Opcode == OpCode::SendArithmeticSub)
 						{
-							bytecode3.Opcode = OpCode::DecrementStackTop;
+							bytecode3.opcode = OpCode::DecrementStackTop;
 							RemoveInstruction(i);	// Remove the ShortPushOne
 							count++;
 							continue;	// A new instruction will now be at i to be considered, so don't advance
@@ -459,14 +459,14 @@ size_t Compiler::OptimizePairs()
 				{
 					if (byte2 == OpCode::SendArithmeticAdd)
 					{
-						bytecode2.Opcode = OpCode::DecrementStackTop;
+						bytecode2.opcode = OpCode::DecrementStackTop;
 						RemoveInstruction(i);	// Remove the ShortPushMinusOne
 						count++;
 						continue;	// A new instruction will now be at i to be considered, so don't advance
 					}
 					else if (byte2 == OpCode::SendArithmeticSub)
 					{
-						bytecode2.Opcode = OpCode::IncrementStackTop;
+						bytecode2.opcode = OpCode::IncrementStackTop;
 						RemoveInstruction(i);	// Remove the ShortPushMinusOne
 						count++;
 						continue;	// A new instruction will now be at i to be considered, so don't advance
@@ -479,14 +479,14 @@ size_t Compiler::OptimizePairs()
 						BYTECODE& bytecode3 = m_bytecodes[next+1];
 						if (bytecode3.Opcode == OpCode::SendArithmeticAdd)
 						{
-							bytecode3.Opcode = OpCode::DecrementStackTop;
+							bytecode3.opcode = OpCode::DecrementStackTop;
 							RemoveInstruction(i);	// Remove the ShortPushMinusOne, leave the Break before Increment
 							count++;
 							continue;
 						}
 						else if (bytecode3.Opcode == OpCode::SendArithmeticSub)
 						{
-							bytecode3.Opcode = OpCode::IncrementStackTop;
+							bytecode3.opcode = OpCode::IncrementStackTop;
 							RemoveInstruction(i);	// Remove the ShortPushMinusOne
 							count++;
 							continue;	// A new instruction will now be at i to be considered, so don't advance
@@ -500,7 +500,7 @@ size_t Compiler::OptimizePairs()
 					if (byte2 == OpCode::SpecialSendIdentical)
 					{
 						_ASSERTE(!bytecode1.IsJumpSource);
-						bytecode2.Opcode = OpCode::IsZero;
+						bytecode2.opcode = OpCode::IsZero;
 						RemoveInstruction(i);
 						count++;
 						continue;	// A new instruction will now be at i to be considered, so don't advance
@@ -534,7 +534,7 @@ size_t Compiler::OptimizePairs()
 			{
 				// A store instruction followed by a pop that is not immediately
 				// jumped to can be coerced (heh heh) into a pop and store.
-				if (byte2== OpCode::PopStackTop)
+				if (byte2 == OpCode::PopStackTop)
 				{
 					_ASSERTE(!bytecode2.IsJumpTarget);
 					if (byte1 == OpCode::StoreOuterTemp)
@@ -547,28 +547,28 @@ size_t Compiler::OptimizePairs()
 
 						if (depth == 0 && index < NumPopStoreContextTemps)
 						{
-							bytecode1.Opcode = OpCode::PopStoreContextTemp + index;
+							bytecode1.opcode = OpCode::PopStoreContextTemp + index;
 							RemoveByte(i+1);		// Delete the index belonging to the extended instruction
 							_ASSERTE(m_bytecodes[i+1].Opcode == OpCode::PopStackTop);
 							RemoveInstruction(i+1);
 						}
 						else if (depth == 1 && index < NumPopStoreOuterTemps)
 						{
-							bytecode1.Opcode = OpCode::ShortPopStoreOuterTemp + index;
+							bytecode1.opcode = OpCode::ShortPopStoreOuterTemp + index;
 							RemoveByte(i+1);		// Delete the index belonging to the extended instruction
 							_ASSERTE(m_bytecodes[i+1].Opcode == OpCode::PopStackTop);
 							RemoveInstruction(i+1);
 						}
 						else
 						{
-							bytecode1.Opcode = OpCode::PopStoreOuterTemp;
+							bytecode1.opcode = OpCode::PopStoreOuterTemp;
 							RemoveInstruction(next);
 						}
 						count++;
 					}
 					else
 					{
-						bytecode1.Opcode = byte1 - FirstExtendedStore + FirstPopStore;
+						bytecode1.opcode = byte1 - FirstExtendedStore + FirstPopStore;
 						RemoveInstruction(next);
 						count++;
 						
@@ -580,13 +580,13 @@ size_t Compiler::OptimizePairs()
 						unsigned index = m_bytecodes[i+1].byte;
 						if (bytecode1.Opcode == OpCode::PopStoreInstVar && index < NumShortPopStoreInstVars)
 						{
-							bytecode1.Opcode = OpCode::ShortPopStoreInstVar + index;
+							bytecode1.opcode = OpCode::ShortPopStoreInstVar + index;
 							RemoveByte(i+1);		// Delete the index belonging to the extended instruction
 							count++;
 						}
 						else if (bytecode1.Opcode == OpCode::PopStoreTemp && index < NumShortPopStoreTemps)
 						{
-							bytecode1.Opcode = OpCode::ShortPopStoreTemp + index;
+							bytecode1.opcode = OpCode::ShortPopStoreTemp + index;
 							RemoveByte(i+1);		// Delete the index belonging to the extended instruction
 							count++;
 						}
@@ -602,7 +602,7 @@ size_t Compiler::OptimizePairs()
 				 {
 					_ASSERTE(NumShortStoreTemps <= NumShortPopStoreTemps);
 					auto index = indexOfShortStoreTemp(byte1);
-					bytecode1.Opcode = OpCode::ShortPopStoreTemp + index;
+					bytecode1.opcode = OpCode::ShortPopStoreTemp + index;
 					RemoveInstruction(next);
 					count++;
 					continue;	// A new instruction will now be at i to be considered, so don't advance
@@ -614,7 +614,7 @@ size_t Compiler::OptimizePairs()
 				_ASSERTE(bytecode2.InstructionLength == 3);
 				if (byte2 == OpCode::LongJumpIfTrue)
 				{
-					bytecode2.Opcode = OpCode::LongJumpIfNil;
+					bytecode2.opcode = OpCode::LongJumpIfNil;
 					// Because we've effectively replaced the isNil message send
 					// we need to adjust the textMap entry so that it points at the jump,
 					// or it will be point at the preceeding instruction when the isNil send
@@ -626,7 +626,7 @@ size_t Compiler::OptimizePairs()
 				}
 				else if (byte2 == OpCode::LongJumpIfFalse)
 				{
-					bytecode2.Opcode = OpCode::LongJumpIfNotNil;
+					bytecode2.opcode = OpCode::LongJumpIfNotNil;
 					// Ditto adjustment of text map entry because of removal of isNil
 					VERIFY(AdjustTextMapEntry(i, i+1));
 					RemoveInstruction(i);
@@ -639,7 +639,7 @@ size_t Compiler::OptimizePairs()
 				_ASSERTE(bytecode2.InstructionLength == 3);
 				if (byte2 == OpCode::LongJumpIfTrue)
 				{
-					bytecode2.Opcode = OpCode::LongJumpIfNotNil;
+					bytecode2.opcode = OpCode::LongJumpIfNotNil;
 					// Ditto adjustment of text map entry because of removal of notNil
 					VERIFY(AdjustTextMapEntry(i, i+1));
 					RemoveInstruction(i);					// Remove separate isNil test
@@ -648,7 +648,7 @@ size_t Compiler::OptimizePairs()
 				}
 				else if (byte2 == OpCode::LongJumpIfFalse)
 				{
-					bytecode2.Opcode = OpCode::LongJumpIfNil;
+					bytecode2.opcode = OpCode::LongJumpIfNil;
 					// Ditto adjustment of text map entry because of removal of isNil
 					VERIFY(AdjustTextMapEntry(i, next));
 					RemoveInstruction(i);
@@ -662,7 +662,7 @@ size_t Compiler::OptimizePairs()
 				{
 					// A Dup immediately before a Return ToS is redundant
 					_ASSERTE(!bytecode2.IsJumpTarget);
-					bytecode1.Opcode = OpCode::ReturnMessageStackTop;
+					bytecode1.opcode = OpCode::ReturnMessageStackTop;
 					count++;
 					// Leave the other return to be removed as unreachable code
 					continue;	// A new instruction will now be at i to be considered, so don't advance
@@ -675,7 +675,7 @@ size_t Compiler::OptimizePairs()
 					{
 						target.removeJumpTo();
 						bytecode2.makeNonJump();
-						bytecode2.Opcode = OpCode::ReturnIfNotNil;
+						bytecode2.opcode = OpCode::ReturnIfNotNil;
 						RemoveBytes(next + 1, 2);
 						count++;
 					}
@@ -703,7 +703,7 @@ size_t Compiler::OptimizePairs()
 				{
 					// e.g. code of the form: `@expr ifNotNil: [:x | ^x]
 					_ASSERTE(m_bytecodes[next].target == next + 4);
-					m_bytecodes[next + 3].Opcode = OpCode::ReturnIfNotNil;
+					m_bytecodes[next + 3].opcode = OpCode::ReturnIfNotNil;
 					// Remove the jump (will update jumpsTo of the target)
 					VoidTextMapEntry(next);
 					RemoveInstruction(next);
@@ -741,12 +741,12 @@ size_t Compiler::OptimizePairs()
 				auto index = bytecode2.indexOfShortPushTemp();
 				if (index < NumShortStoreTemps)
 				{
-					bytecode1.Opcode = OpCode::ShortStoreTemp + index;
+					bytecode1.opcode = OpCode::ShortStoreTemp + index;
 					RemoveInstruction(next);
 				}
 				else
 				{
-					bytecode1.Opcode = OpCode::StoreTemp;
+					bytecode1.opcode = OpCode::StoreTemp;
 					bytecode2.byte = index;
 					bytecode2.makeData();
 				}
@@ -777,7 +777,7 @@ size_t Compiler::OptimizePairs()
 					__assume(false);
 					break;
 				}
-				bytecode1.Opcode = invertedJmp;
+				bytecode1.opcode = invertedJmp;
 				m_bytecodes[bytecode1.target].removeJumpTo();		// We're no longer jumping to original target
 				bytecode1.target = bytecode2.target;
 				// We want the inbound-jumps count of the eventual target to remain the same so
@@ -793,7 +793,7 @@ size_t Compiler::OptimizePairs()
 			{
 				bytecode2.makeData();
 				bytecode2.byte = bytecode1.indexOfShortPopStoreInstVar();
-				bytecode1.Opcode = OpCode::StoreInstVar;
+				bytecode1.opcode = OpCode::StoreInstVar;
 				count++;
 				continue;
 			}
@@ -803,7 +803,7 @@ size_t Compiler::OptimizePairs()
 				&& ((m_bytecodes[i+1].byte < NumShortPushInstVars && byte2 == OpCode::ShortPushInstVar + m_bytecodes[i + 1].byte)
 					|| (byte2 == OpCode::PushInstVar && m_bytecodes[i + 1].byte == m_bytecodes[next + 1].byte)))
 			{
-				bytecode1.Opcode = OpCode::StoreInstVar;
+				bytecode1.opcode = OpCode::StoreInstVar;
 				RemoveInstruction(next);
 				count++;
 				continue;
@@ -906,7 +906,7 @@ size_t Compiler::CombinePairs1()
 						// Push Self will become the Send Self instruction
 						VERIFY(AdjustTextMapEntry(next, i));
 
-						bytecode1.Opcode = OpCode::SendSelfWithNoArgs;
+						bytecode1.opcode = OpCode::SendSelfWithNoArgs;
 						bytecode2.makeData();
 						bytecode2.byte = m;
 						RemoveByte(next+1);
@@ -920,12 +920,12 @@ size_t Compiler::CombinePairs1()
 					auto n = bytecode2.indexOfShortSendNoArgs();
 					if (n < NumShortSendSelfWithNoArgs)
 					{
-						bytecode1.Opcode = OpCode::ShortSendSelfWithNoArgs + n;
+						bytecode1.opcode = OpCode::ShortSendSelfWithNoArgs + n;
 						RemoveInstruction(next);
 					}
 					else
 					{
-						bytecode1.Opcode = OpCode::SendSelfWithNoArgs;
+						bytecode1.opcode = OpCode::SendSelfWithNoArgs;
 						bytecode2.byte = n;
 						bytecode2.makeData();
 					}
@@ -950,7 +950,7 @@ size_t Compiler::CombinePairs1()
 					bytecode2.makeData();
 					bytecode2.byte = n << 5 | m;
 
-					bytecode1.Opcode = OpCode::SendTempWithNoArgs;
+					bytecode1.opcode = OpCode::SendTempWithNoArgs;
 				}
 				else if (byte2 == OpCode::Send)
 				{
@@ -963,7 +963,7 @@ size_t Compiler::CombinePairs1()
 						// Push Temp will become the Send Temp instruction
 						VERIFY(AdjustTextMapEntry(next, i));
 
-						bytecode1.Opcode = OpCode::SendTempWithNoArgs;
+						bytecode1.opcode = OpCode::SendTempWithNoArgs;
 						bytecode2.makeData();
 						bytecode2.byte = n << 5 | m;
 						RemoveByte(next+1);
@@ -989,9 +989,9 @@ size_t Compiler::CombinePairs1()
 							if (m == n)
 							{
 								VERIFY(AdjustTextMapEntry(next, i));
-								bytecode1.Opcode = byte2 == OpCode::IncrementStackTop ? OpCode::IncrementTemp : OpCode::DecrementTemp;
+								bytecode1.opcode = byte2 == OpCode::IncrementStackTop ? OpCode::IncrementTemp : OpCode::DecrementTemp;
 								VERIFY(AdjustTextMapEntry(next+1, next));
-								bytecode2.Opcode = OpCode::PopStoreTemp;
+								bytecode2.opcode = OpCode::PopStoreTemp;
 								bytecode2.makeData();
 								bytecode3.byte = n;
 								bytecode3.makeData();
@@ -1003,10 +1003,10 @@ size_t Compiler::CombinePairs1()
 							auto m = bytecode3.indexOfShortStoreTemp();
 							if (m == n)
 							{
-								bytecode1.Opcode = byte2 == OpCode::IncrementStackTop ? OpCode::IncrementPushTemp : OpCode::DecrementPushTemp;
+								bytecode1.opcode = byte2 == OpCode::IncrementStackTop ? OpCode::IncrementPushTemp : OpCode::DecrementPushTemp;
 								// There may be no text map entries if these instructions are part of a to:[by:]do: loop
 								AdjustTextMapEntry(next, i);
-								bytecode2.Opcode = OpCode::StoreTemp;
+								bytecode2.opcode = OpCode::StoreTemp;
 								AdjustTextMapEntry(next+1, next);
 								bytecode2.makeData();
 								bytecode3.byte = n;
@@ -1019,7 +1019,7 @@ size_t Compiler::CombinePairs1()
 							auto m = m_bytecodes[next+2].byte;
 							if (m == n)
 							{
-								bytecode1.Opcode = bytecode3.Opcode == OpCode::PopStoreTemp
+								bytecode1.opcode = bytecode3.Opcode == OpCode::PopStoreTemp
 										? bytecode2.Opcode == OpCode::IncrementStackTop ? OpCode::IncrementTemp : OpCode::DecrementTemp
 										: bytecode2.Opcode == OpCode::IncrementStackTop ? OpCode::IncrementPushTemp : OpCode::DecrementPushTemp;
 								// The [Pop]StoreTemp instruction is now data, but is otherwise correct
@@ -1059,7 +1059,7 @@ size_t Compiler::CombinePairs1()
 						// Push Temp will become the Send Temp instruction
 						VERIFY(AdjustTextMapEntry(next, i));
 
-						bytecode1.Opcode = OpCode::SendTempWithNoArgs;
+						bytecode1.opcode = OpCode::SendTempWithNoArgs;
 						m_bytecodes[i+1].byte = bytecode2.indexOfShortSendNoArgs() << 5 || n;
 						RemoveByte(next);
 					}
@@ -1087,7 +1087,7 @@ size_t Compiler::CombinePairs1()
 								// inc or dec. On overflow a 'Send +' is executed, but the instructionPointer is left
 								// pointing at the first data byte before the send, which is then executed as the 
 								// correct temp store operation when the + method returns.
-								bytecode1.Opcode = bytecode3.Opcode == OpCode::PopStoreTemp
+								bytecode1.opcode = bytecode3.Opcode == OpCode::PopStoreTemp
 										? bytecode2.Opcode == OpCode::IncrementStackTop ? OpCode::IncrementTemp : OpCode::DecrementTemp
 										: bytecode2.Opcode == OpCode::IncrementStackTop ? OpCode::IncrementPushTemp : OpCode::DecrementPushTemp;
 								// The [Pop]StoreTemp instruction is now data, but is otherwise correct
@@ -1146,7 +1146,7 @@ size_t Compiler::CombinePairs2()
 				{
 					// Pop followed by Push Self is common in a sequence of statements that send to self.
 
-					bytecode1.Opcode = OpCode::PopPushSelf;
+					bytecode1.opcode = OpCode::PopPushSelf;
 					RemoveInstruction(next);
 					count++;
 				}
@@ -1155,7 +1155,7 @@ size_t Compiler::CombinePairs2()
 				{
 					// The Pop/Dup sequence is common in cascades
 
-					bytecode1.Opcode = OpCode::PopDup;
+					bytecode1.opcode = OpCode::PopDup;
 					RemoveInstruction(next);
 					count++;
 				}
@@ -1163,7 +1163,7 @@ size_t Compiler::CombinePairs2()
 				else if (byte2 == OpCode::ReturnSelf)
 				{
 					// Remove the Pop and adjust the return to avoid need to adjust the text map entry
-					bytecode2.Opcode = OpCode::PopReturnSelf;
+					bytecode2.opcode = OpCode::PopReturnSelf;
 					RemoveInstruction(i);
 					count++;
 				}
@@ -1173,7 +1173,7 @@ size_t Compiler::CombinePairs2()
 					// Pop followed by a push of a temp is common in a sequence of statements where
 					// messages are sent to a temp
 
-					bytecode1.Opcode = OpCode::ShortPopPushTemp + indexOfShortPushTemp(byte2);
+					bytecode1.opcode = OpCode::ShortPopPushTemp + indexOfShortPushTemp(byte2);
 					bytecode1.pVarRef = bytecode2.pVarRef;
 					RemoveInstruction(next);
 					count++;
@@ -1193,7 +1193,7 @@ size_t Compiler::CombinePairs2()
 					_ASSERTE(len1 == 1);
 					if (bytecode2.Opcode == OpCode::PushTemp)
 					{
-						bytecode1.Opcode = OpCode::PushSelfAndTemp;
+						bytecode1.opcode = OpCode::PushSelfAndTemp;
 						// Remove the PushTemp, grabbing its index data byte
 						_ASSERTE(next == i+1);
 						RemoveBytes(next, 1);
@@ -1204,12 +1204,12 @@ size_t Compiler::CombinePairs2()
 						auto i = bytecode2.indexOfShortPushTemp();
 						if (i < NumShortPushSelfAndTemps)
 						{
-							bytecode1.Opcode = OpCode::ShortPushSelfAndTemp + i;
+							bytecode1.opcode = OpCode::ShortPushSelfAndTemp + i;
 							RemoveInstruction(next);
 						}
 						else
 						{
-							bytecode1.Opcode = OpCode::PushSelfAndTemp;
+							bytecode1.opcode = OpCode::PushSelfAndTemp;
 							bytecode2.byte = i;
 							bytecode2.makeData();
 						}
@@ -1230,7 +1230,7 @@ size_t Compiler::CombinePairs2()
 					auto m = m_bytecodes[next+1].byte;
 					if (m < MAXFORBITS(4))
 					{
-						bytecode1.Opcode = OpCode::PushTempPair;
+						bytecode1.opcode = OpCode::PushTempPair;
 						RemoveBytes(next, 1);
 						_ASSERTE(m_bytecodes[next].IsData);
 						m_bytecodes[next].byte = n << 4 | m;
@@ -1242,7 +1242,7 @@ size_t Compiler::CombinePairs2()
 					auto m = bytecode2.indexOfShortPushTemp();
 					_ASSERTE(n <= MAXFORBITS(4));
 					_ASSERTE(m <= MAXFORBITS(4));
-					bytecode1.Opcode = OpCode::PushTempPair;
+					bytecode1.opcode = OpCode::PushTempPair;
 					bytecode2.byte = n << 4 | m;
 					bytecode2.makeData();
 					count++;
@@ -1264,7 +1264,7 @@ size_t Compiler::CombinePairs2()
 							auto m = m_bytecodes[next+1].byte;
 							if (m <= MAXFORBITS(4))
 							{
-								bytecode1.Opcode = OpCode::PushTempPair;
+								bytecode1.opcode = OpCode::PushTempPair;
 								m_bytecodes[i+1].byte = n << 4 | m;
 								RemoveInstruction(next);
 								count++;
@@ -1276,7 +1276,7 @@ size_t Compiler::CombinePairs2()
 							auto m = bytecode2.indexOfShortPushTemp();
 							_ASSERTE(n <= MAXFORBITS(4));
 							_ASSERTE(m <= MAXFORBITS(4));
-							bytecode1.Opcode = OpCode::PushTempPair;
+							bytecode1.opcode = OpCode::PushTempPair;
 							m_bytecodes[i+1].byte = n << 4 | m;
 							RemoveInstruction(next);
 							count++;
@@ -1392,7 +1392,7 @@ size_t Compiler::OptimizeJumps()
 					// to maintain the same stack
 					target.removeJumpTo();
 					bytecode.makeNonJump();
-					bytecode.Opcode = OpCode::PopStackTop;
+					bytecode.opcode = OpCode::PopStackTop;
 					VoidTextMapEntry(i);
 					RemoveBytes(i+1, 2);
 				}
@@ -1500,7 +1500,7 @@ size_t Compiler::InlineReturns()
 					// All return instructions must be 1 byte long
 					_ASSERTE(target.InstructionLength == 1);
 					len = 1;
-					bytecode.Opcode = targetByte;
+					bytecode.opcode = targetByte;
 					target.removeJumpTo();
 					bytecode.makeNonJump();
 					if (WantTextMap)
@@ -1530,7 +1530,7 @@ size_t Compiler::InlineReturns()
 					if (!(returnOp.Opcode == OpCode::ReturnBlockStackTop && m_bytecodes[i+len].pScope->RealScope->IsEmptyBlock))
 					{
 						len = 2;
-						bytecode.Opcode = OpCode::Break;
+						bytecode.opcode = OpCode::Break;
 						target.removeJumpTo();
 						bytecode.makeNonJump();
 						m_bytecodes[i+1].makeOpCode(m_bytecodes[currentTarget+1].Opcode, bytecode.pScope);
@@ -1553,7 +1553,7 @@ size_t Compiler::InlineReturns()
 						_ASSERTE(target.InstructionLength == 1);
 						len = 2;
 
-						bytecode.Opcode = targetByte;
+						bytecode.opcode = targetByte;
 						target.removeJumpTo();
 						bytecode.makeNonJump();
 						m_bytecodes[i+1].makeOpCode(m_bytecodes[currentTarget+1].Opcode, bytecode.pScope);
@@ -1574,7 +1574,7 @@ size_t Compiler::InlineReturns()
 						_ASSERTE(target.InstructionLength == 1);
 						len = 3;
 
-						bytecode.Opcode = targetByte;
+						bytecode.opcode = targetByte;
 						target.removeJumpTo();
 						bytecode.makeNonJump();
 						m_bytecodes[i+1].makeOpCode(OpCode::Break, bytecode.pScope);
@@ -1599,7 +1599,7 @@ size_t Compiler::InlineReturns()
 						_ASSERTE(target.InstructionLength == 1);
 						len = 2;
 
-						bytecode.Opcode = targetByte;
+						bytecode.opcode = targetByte;
 						target.removeJumpTo();
 						bytecode.makeNonJump();
 						m_bytecodes[i+1].makeOpCode(m_bytecodes[currentTarget+1].Opcode, bytecode.pScope);
@@ -1619,7 +1619,7 @@ size_t Compiler::InlineReturns()
 						_ASSERTE(target.InstructionLength == 1);
 						len = 3;
 
-						bytecode.Opcode = targetByte;
+						bytecode.opcode = targetByte;
 						target.removeJumpTo();
 						bytecode.makeNonJump();
 						m_bytecodes[i+1].makeOpCode(OpCode::Break, bytecode.pScope);
@@ -1744,7 +1744,7 @@ size_t Compiler::ShortenJumps()
 				if (isInShortJumpRange(distance, 1))		// Account for extension
 				{
 					// Can shorten to short jump
-					bytecode.Opcode = OpCode::ShortJump;
+					bytecode.opcode = OpCode::ShortJump;
 					RemoveByte(i+1);
 					count++;
 				}
@@ -1761,7 +1761,7 @@ size_t Compiler::ShortenJumps()
 				if (isInShortJumpRange(distance, 1))
 				{
 					// Can shorten to short jump
-					bytecode.Opcode = OpCode::ShortJumpIfFalse;
+					bytecode.opcode = OpCode::ShortJumpIfFalse;
 					RemoveByte(i+1);
 					count++;
 				}
@@ -1778,7 +1778,7 @@ size_t Compiler::ShortenJumps()
 				if (isInNearJumpRange(distance, 2))
 				{
 					// Can shorten to near jump
-					bytecode.Opcode = OpCode::NearJump;
+					bytecode.opcode = OpCode::NearJump;
 					RemoveByte(i+1);
 					count++;
 				}
@@ -1788,7 +1788,7 @@ size_t Compiler::ShortenJumps()
 				if (isInNearJumpRange(distance, 2))
 				{
 					// Can shorten to near jump
-					bytecode.Opcode = OpCode::NearJumpIfTrue;
+					bytecode.opcode = OpCode::NearJumpIfTrue;
 					RemoveByte(i+1);
 					count++;
 				}
@@ -1797,7 +1797,7 @@ size_t Compiler::ShortenJumps()
 			case OpCode::LongJumpIfFalse:
 				if (isInNearJumpRange(distance, 2))
 				{
-					bytecode.Opcode = OpCode::NearJumpIfFalse;
+					bytecode.opcode = OpCode::NearJumpIfFalse;
 					RemoveByte(i+1);
 					count++;
 				}
@@ -1816,7 +1816,7 @@ size_t Compiler::ShortenJumps()
 			case OpCode::LongJumpIfNil:
 				if (isInNearJumpRange(distance, 2))
 				{
-					bytecode.Opcode = OpCode::NearJumpIfNil;
+					bytecode.opcode = OpCode::NearJumpIfNil;
 					RemoveByte(i+1);
 					count++;
 				}
@@ -1825,7 +1825,7 @@ size_t Compiler::ShortenJumps()
 			case OpCode::LongJumpIfNotNil:
 				if (isInNearJumpRange(distance, 2))
 				{
-					bytecode.Opcode = OpCode::NearJumpIfNotNil;
+					bytecode.opcode = OpCode::NearJumpIfNotNil;
 					RemoveByte(i+1);
 					count++;
 				}
@@ -2018,7 +2018,7 @@ POTE Compiler::NewMethod()
 		MakeQuickMethod(hdr, static_cast<STPrimitives>(m_primitiveIndex));
 		//classRequired=true;
 	}
-	else if (m_bytecodes[ip_t::zero].IsPseudoReturn)
+	else if (m_bytecodes[ip_t::zero].IsPseudoReturn && CodeSize < sizeof(uintptr_t))
 	{
 		//_ASSERTE(!bNeedsContext); Not a valid assertion, since could have a block after the return at the top
 		// Primitive return of self, true, false, nil
@@ -2026,7 +2026,6 @@ POTE Compiler::NewMethod()
 		
 		// We go ahead and generate the bytes anyway, as they'll fit in a SmallInteger and
 		// may be of interest for debugging/browsing
-		_ASSERTE(CodeSize < sizeof(uintptr_t));
 	}
 	else if (byte0 == OpCode::ShortPushConst && static_cast<OpCode>(byte1) == OpCode::ReturnMessageStackTop)
 	{
@@ -2048,7 +2047,7 @@ POTE Compiler::NewMethod()
 
 		swap(m_literalFrame[0], m_literalFrame[index]);
 
-		m_bytecodes[ip_t::zero].Opcode = OpCode::ShortPushConst;
+		m_bytecodes[ip_t::zero].opcode = OpCode::ShortPushConst;
 		MakeQuickMethod(hdr, PRIMITIVE_RETURN_LITERAL_ZERO);
 	}
 	else if (byte0 == OpCode::ShortPushStatic && static_cast<OpCode>(byte1) == OpCode::ReturnMessageStackTop)
@@ -2071,7 +2070,7 @@ POTE Compiler::NewMethod()
 
 		swap(m_literalFrame[0], m_literalFrame[index]);
 
-		m_bytecodes[ip_t::zero].Opcode = OpCode::ShortPushStatic;
+		m_bytecodes[ip_t::zero].opcode = OpCode::ShortPushStatic;
 		MakeQuickMethod(hdr, PRIMITIVE_RETURN_STATIC_ZERO);
 	}
 	else if (m_bytecodes[ip_t::zero].IsShortPushInstVar && ArgumentCount == 0)
@@ -2084,7 +2083,7 @@ POTE Compiler::NewMethod()
 
 			// Convert to long form to simplify the interpreter's code to exec. this quick method.
 			byte1 = m_bytecodes[ip_t::zero].indexOfPushInstVar();
-			m_bytecodes[ip_t::zero].Opcode = OpCode::PushInstVar;
+			m_bytecodes[ip_t::zero].opcode = OpCode::PushInstVar;
 			m_codePointer = ip_t::one;
 			GenData(byte1);
 			m_codePointer++;
@@ -2141,7 +2140,7 @@ POTE Compiler::NewMethod()
 		int16_t immediateWord = static_cast<int16_t>(byte2 << 8) + byte1;
 		insertImmediateAsFirstLiteral(IntegerObjectOf(immediateWord));
 		// We can save space by replacing the LongPushImmediate instruction with 2-byte argument with a single byte push const 0
-		m_bytecodes[ip_t::zero].Opcode = OpCode::ShortPushConst;
+		m_bytecodes[ip_t::zero].opcode = OpCode::ShortPushConst;
 		RemoveBytes(ip_t::one, 2);
 		// Since we have modified the instructions after FixupJumps, we must patch up the method scope (there should only be one) 
 		// to reflect the new shorter method
@@ -2160,7 +2159,7 @@ POTE Compiler::NewMethod()
 									| m_bytecodes[longPush - 4].byte);
 		insertImmediateAsFirstLiteral(IntegerObjectOf(immediateValue));
 		// We can save space by replacing the ExLongPushImmediate instruction with 4-byte argument with a single byte push const 0
-		m_bytecodes[ip_t::zero].Opcode = OpCode::ShortPushConst;
+		m_bytecodes[ip_t::zero].opcode = OpCode::ShortPushConst;
 		constexpr size_t bytesToRemove = ExLongPushImmediateInstructionSize - 1;
 		RemoveBytes(ip_t::one, bytesToRemove);
 		pMethodScope->AdjustFinalIP(-static_cast<int>(bytesToRemove));
@@ -2187,7 +2186,7 @@ POTE Compiler::NewMethod()
 		{
 			byte2 = byte1 - static_cast<uint8_t>(OpCode::ShortPopStoreInstVar);
 			InsertByte(ip_t::two, byte2, BYTECODE::Flags::IsData, m_bytecodes[ip_t::one].pScope);
-			m_bytecodes[ip_t::one].Opcode = OpCode::PopStoreInstVar;
+			m_bytecodes[ip_t::one].opcode = OpCode::PopStoreInstVar;
 			pMethodScope->FinalIP = ip_t::three;
 			m_codePointer++;
 			byte1 = static_cast<uint8_t>(OpCode::PopStoreInstVar);
@@ -2589,12 +2588,12 @@ void Compiler::FixupTempRef(ip_t i)
 		{
 			if (index < NumShortPushTemps)
 			{
-				byte1.Opcode = OpCode::ShortPushTemp + index;
+				byte1.opcode = OpCode::ShortPushTemp + index;
 				byte2.makeNop(byte1.pScope);
 			}
 			else
 			{
-				byte1.Opcode = OpCode::PushTemp;
+				byte1.opcode = OpCode::PushTemp;
 				byte2.byte = static_cast<uint8_t>(index);
 			}
 		}
@@ -2602,12 +2601,12 @@ void Compiler::FixupTempRef(ip_t i)
 		{
 			if (index < NumShortStoreTemps)
 			{
-				byte1.Opcode = OpCode::ShortStoreTemp + index;
+				byte1.opcode = OpCode::ShortStoreTemp + index;
 				byte2.makeNop(byte1.pScope);
 			}
 			else
 			{
-				byte1.Opcode = OpCode::StoreTemp;
+				byte1.opcode = OpCode::StoreTemp;
 				byte2.byte = static_cast<uint8_t>(index);
 			}
 		}
@@ -2627,13 +2626,13 @@ void Compiler::FixupTempRef(ip_t i)
 
 			if (outer < 2 && index < NumPushContextTemps && bIsPush)
 			{
-				byte1.Opcode = (outer == 0 ? OpCode::ShortPushContextTemp : OpCode::ShortPushOuterTemp) + index;
+				byte1.opcode = (outer == 0 ? OpCode::ShortPushContextTemp : OpCode::ShortPushOuterTemp) + index;
 				byte2.makeNop(byte1.pScope);
 				byte3.makeNop(byte1.pScope);
 			}
 			else if (outer <= OuterTempMaxDepth && index <= OuterTempMaxIndex)
 			{
-				byte1.Opcode = bIsPush ? OpCode::PushOuterTemp : OpCode::StoreOuterTemp;
+				byte1.opcode = bIsPush ? OpCode::PushOuterTemp : OpCode::StoreOuterTemp;
 				byte2.byte = (outer << OuterTempIndexBits) | static_cast<uint8_t>(index);
 				byte3.makeNop(byte1.pScope);
 			}
@@ -2813,19 +2812,19 @@ void Compiler::MakeCleanBlockAt(ip_t i)
 	size_t index = AddToFrame(reinterpret_cast<Oop>(blockPointer), pScope->TextRange, LiteralType::Normal);
 	if (index < NumShortPushConsts)		// In range of short instructions ?
 	{
-		byte1.Opcode = OpCode::ShortPushConst + index;
+		byte1.opcode = OpCode::ShortPushConst + index;
 		UngenData(i+1, byte1.pScope);
 		UngenData(i+2, byte1.pScope);
 	}
 	else if (index <= UINT8_MAX)				// In range of single extended instructions ?
 	{
-		byte1.Opcode = OpCode::PushConst;
+		byte1.opcode = OpCode::PushConst;
 		m_bytecodes[i+1].byte = static_cast<uint8_t>(index);
 		UngenData(i+2, byte1.pScope);
 	}
 	else
 	{
-		byte1.Opcode = OpCode::LongPushConst;
+		byte1.opcode = OpCode::LongPushConst;
 		m_bytecodes[i+1].byte = index & UINT8_MAX;
 		m_bytecodes[i+2].byte = (index >> 8) & UINT8_MAX;
 	}
@@ -2854,23 +2853,51 @@ void Compiler::MakeCleanBlockAt(ip_t i)
 	{
 		UngenData(i+3, pOuter);
 
+		auto nextAfter = byte1.target;
+
 		m_bytecodes[i+4].makeOpCode(OpCode::LongJump, pOuter);
-		m_bytecodes[i+4].makeJumpTo(byte1.target);
+		m_bytecodes[i+4].makeJumpTo(nextAfter);
 
 		// +5 and +6 remain the jump offset
 
 		initIP += BlockCopyInstructionLength;
 		_ASSERTE(m_bytecodes[initIP].IsOpCode);
+
+		auto newInitIp = m_codePointer;
+		int offset = (int)newInitIp - (int)initIP;
+
+		// Now we are going to move all the bytecodes to the end of the method so that they are out of line
+		for (auto i = initIP; i < nextAfter; i++)
+		{
+			BYTECODE bc = m_bytecodes[i];
+			if (bc.IsOpCode)
+			{
+				if (bc.IsJumpSource)
+				{
+					bc.target += offset;
+					m_bytecodes[i].makeNonJump();
+				}
+				auto it = FindTextMapEntry(i);
+				if (it != m_textMaps.end())
+				{
+					TEXTMAP tm = *it;
+					m_textMaps.erase(it);
+					tm.ip = m_codePointer;
+					m_textMaps.push_back(tm);
+				}
+			}
+			m_bytecodes.push_back(bc);
+			m_codePointer++;
+			m_bytecodes[i].makeNop(pOuter);
+		}
+
 		// We must mark the blocks first bytecode as a jump target to prevent
 		// it being treated as unreachable code
-		m_bytecodes[initIP].addJumpTo();
-	}
+		m_bytecodes[newInitIp].addJumpTo();
 
-	if (!useEmptyBlock)
-	{
 		// This text map is needed by the Debugger to remap the initial IP of block frames.
 		textpos_t blockStart = pScope->TextRange.m_start;
-		InsertTextMapEntry(initIP, blockStart, blockStart-1);
+		InsertTextMapEntry(newInitIp, blockStart, blockStart-1);
 	}
 }
 

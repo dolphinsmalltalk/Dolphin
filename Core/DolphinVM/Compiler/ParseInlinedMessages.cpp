@@ -514,7 +514,7 @@ void Compiler::InlineOptimizedBlock(ip_t nStart, ip_t nStop)
 
 		case OpCode::FarReturn:
 			if (!IsInBlock)
-				bytecode.Opcode = OpCode::ReturnMessageStackTop;
+				bytecode.opcode = OpCode::ReturnMessageStackTop;
 			// Drop through
 
 		default:

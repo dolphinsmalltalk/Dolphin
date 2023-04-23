@@ -529,7 +529,7 @@ void Compiler::UngenInstruction(ip_t pos)
 	
 	const size_t len = bc.InstructionLength;
 	// Nop-out the instruction (N.B. doesn't remove it!)
-	bc.Opcode = OpCode::Nop;
+	bc.opcode = OpCode::Nop;
 	// Also nop-out any data bytes associated with the instruction
 	for (size_t i=1;i<len;i++)
 		UngenData(pos+i, bc.pScope);
@@ -1994,7 +1994,7 @@ void Compiler::ParseContinuation(ip_t exprMark, textpos_t textPosition)
 	// instruction in the code stream which can be removed.
 	if (m_bytecodes[continuationPointer].Opcode == OpCode::PopDup)
 	{
-		m_bytecodes[continuationPointer].Opcode = OpCode::PopStackTop;
+		m_bytecodes[continuationPointer].opcode = OpCode::PopStackTop;
 	}
 	else
 	{
@@ -3860,7 +3860,6 @@ Compiler::TEXTMAPLIST::iterator Compiler::FindTextMapEntry(ip_t ip)
 
 	return m_textMaps.end();
 }
-
 bool Compiler::RemoveTextMapEntry(ip_t ip)
 {
 	if (!WantTextMap) return true;
@@ -3868,10 +3867,6 @@ bool Compiler::RemoveTextMapEntry(ip_t ip)
 	TEXTMAPLIST::iterator it = FindTextMapEntry(ip);
 	if (it != m_textMaps.end())
 	{
-		const TEXTMAP& tm = (*it);
-		const BYTECODE& bc = m_bytecodes[ip];
-		ptrdiff_t i = it - m_textMaps.begin();
-
 		m_textMaps.erase(it);
 		return true;
 	}
