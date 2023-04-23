@@ -24,29 +24,34 @@ pszText
 	^self subclassResponsibility!
 
 text
-	^Utf16String fromAddress: self pszText!
+	^self pszText!
 
-text: text
-	"Set the receiver's tip text to the string representation of the argument, text,
-	up to the maximum number of characters specified by the receiver's #cchTextMax field.
-	Answer the potentially truncated text."
+text: anObject
+	"Set the receiver's tip text to the displayString representation of the argument, up to the maximum number of characters specified by the receiver's #cchTextMax field.  If the string is too large for the buffer, it is ellipsised with U+2026. Answer the potentially truncated text."
 
-	| tipText max |
-	tipText := text displayString asUtf16String.
-	tipText size >= (max := self cchTextMax)
+	| utf16 max |
+	utf16 := anObject displayString asUtf16String.
+	utf16 size >= (max := self cchTextMax)
 		ifTrue: 
-			[| last |
-			"We need to allow space for a U+2026 and the null terminator"
-			last := max - 2.
-			"Ensure we don't truncate in the middle of a character"
-			(tipText at: last) isUtf16Lead ifTrue: [last := last - 1].
-			tipText := (tipText copyFrom: 1 to: last) , '…'].
-	tipText copyToBuffer: self pszText ofSize: max.
-	^tipText! !
+			["We need to allow space for a U+2026 and the null terminator, ensuring we don't truncate in the middle of a character"
+			utf16 := (utf16 copyFrom: 1
+						to: ((utf16 at: max - 2) isUtf16Lead ifTrue: [max - 3] ifFalse: [max - 2])) , '…'].
+	OS.Ucrt
+		wcsncpy_s: (bytes intPtrAtOffset: self textPointerOffset)
+		bufferSize: max
+		strSource: utf16
+		count: OS.CRTConstants._TRUNCATE.
+	^utf16!
+
+textPointerOffset
+	"Private - Answer the offset of the text pointer in the receiver. "
+
+	^self subclassResponsibility! !
 !OS.NMGETINFOTIP categoriesForMethods!
 cchTextMax!accessing!public! !
 pszText!accessing!public! !
 text!accessing!public! !
 text:!accessing!public! !
+textPointerOffset!constants!private! !
 !
 

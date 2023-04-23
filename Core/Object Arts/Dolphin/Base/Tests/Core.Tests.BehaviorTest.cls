@@ -80,7 +80,37 @@ testWhichMethodsOnlySelfSend
 	self assert: ((subject whichMethodsOnlySelfSend: #class) collect: [:each | each selector]) asArray
 		equals: #(#returnSendSelfSpecial).
 	self assert: ((subject whichMethodsOnlySelfSend: #value) collect: [:each | each selector]) asArray
-		equals: #(#sendSelfSpecial)! !
+		equals: #(#sendSelfSpecial)!
+
+testWithAllSuperclasses
+	self assert: Object withAllSuperclasses asArray equals: { Object }.
+	self assert: Object class withAllSuperclasses asArray
+		equals: { Object class. Class. ClassDescription. Behavior. Object }.
+	self assert: ProtoObject withAllSuperclasses asArray equals: { ProtoObject }.
+	self assert: Utf8String withAllSuperclasses asArray
+		equals: {
+				Utf8String.
+				UtfEncodedString.
+				String.
+				ArrayedCollection.
+				SequenceableCollection.
+				Collection.
+				Object
+			}.
+	self assert: Utf8String class withAllSuperclasses asArray
+		equals: {
+				Utf8String class.
+				UtfEncodedString class.
+				String class.
+				ArrayedCollection class.
+				SequenceableCollection class.
+				Collection class.
+				Object class.
+				Class.
+				ClassDescription.
+				Behavior.
+				Object
+			}! !
 !Core.Tests.BehaviorTest categoriesForMethods!
 testHasAbstractMethods!public! !
 testIncludesBehavior!public! !
@@ -89,6 +119,7 @@ testIsAbstract!public! !
 testIsNonInstantiable!public! !
 testUnderstoodSelectors!public! !
 testWhichMethodsOnlySelfSend!public! !
+testWithAllSuperclasses!public! !
 !
 
 !Core.Tests.BehaviorTest class methodsFor!

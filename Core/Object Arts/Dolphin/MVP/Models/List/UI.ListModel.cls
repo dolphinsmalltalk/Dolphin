@@ -80,6 +80,13 @@ at: anInteger
 
 !
 
+at: index ifAbsent: exceptionBlock
+	"Answer an <Object> which is the element of the receiver 
+	at the specified index. If the index is out of bounds answer
+	the result of evaluating the <niladicValuable> exceptionBlock."
+
+	^self list at: index ifAbsent: exceptionBlock!
+
 at: index put: newElement 
 	"Replace the element of the receiver at the specified index with the argument, 
 	newElement. If the index is out of bounds, raise an exception.
@@ -325,6 +332,7 @@ addAll:!adding!public! !
 addAll:afterIndex:!adding!public! !
 addAnsweringIndex:!adding!public! !
 at:!accessing!public! !
+at:ifAbsent:!accessing!public! !
 at:put:!accessing!public! !
 beSorted!public!sorting! !
 beSorted:!public!sorting! !

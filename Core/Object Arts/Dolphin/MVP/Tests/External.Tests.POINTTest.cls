@@ -26,6 +26,10 @@ testAsObject
 	self assert: point x equals: 101.
 	self assert: point y equals: 202!
 
+testPrintString
+	self assert: self subjectClass new printString equals: ('a ', self subjectClass name, '(0@0)').
+	self assert: (self subjectClass fromPoint: (123@456)) printString equals: ('a ', self subjectClass name, '(123@456)')!
+
 testValue
 	| point subject |
 	subject := self subjectClass x: 101 y: 202.
@@ -36,6 +40,7 @@ testValue
 !External.Tests.POINTTest categoriesForMethods!
 testAsDword!public!unit tests! !
 testAsObject!public!unit tests! !
+testPrintString!public! !
 testValue!public!unit tests! !
 !
 

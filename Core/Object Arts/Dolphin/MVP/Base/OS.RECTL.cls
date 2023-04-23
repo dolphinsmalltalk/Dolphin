@@ -25,9 +25,10 @@ asRectangle
 
 	"Implementation Note: This is used so much during layout, that it is worth providing an inlined implementation as an optimization."
 
-	^Graphics.Rectangle
-		origin: (bytes int32AtOffset: _OffsetOf_left) @ (bytes int32AtOffset: _OffsetOf_top)
-		corner: (bytes int32AtOffset: _OffsetOf_right) @ (bytes int32AtOffset: _OffsetOf_bottom)!
+	<namespace: Graphics>
+	^Rectangle
+		origin: (Point x: (bytes int32AtOffset: _OffsetOf_left) y: (bytes int32AtOffset: _OffsetOf_top))
+		corner: (Point x: (bytes int32AtOffset: _OffsetOf_right) y: (bytes int32AtOffset: _OffsetOf_bottom))!
 
 bottom
 	"Answer the <Integer> value of the receiver's 'bottom' field."
@@ -40,17 +41,22 @@ bottom: anInteger
 	bytes int32AtOffset: _OffsetOf_bottom put: anInteger!
 
 bottomRight
-	"Answer a Point representing the bottom right position of the receiver."
+	"Answer a <Point> representing the bottom right position of the receiver."
 
-	^(bytes int32AtOffset: _OffsetOf_right) @ (bytes int32AtOffset: _OffsetOf_bottom)!
+	^Graphics.Point x: (bytes int32AtOffset: _OffsetOf_right) y: (bytes int32AtOffset: _OffsetOf_bottom)!
 
 extent
 	"Answer a Point representing the extent of the receiver. The x coordinate is the width and the y coordinate is the height."
 
 	"Override as an optimisation"
 
-	^((bytes int32AtOffset: _OffsetOf_right) - (bytes int32AtOffset: _OffsetOf_left))
-		@ ((bytes int32AtOffset: _OffsetOf_bottom) - (bytes int32AtOffset: _OffsetOf_top))!
+	^Graphics.Point x: (bytes int32AtOffset: _OffsetOf_right) - (bytes int32AtOffset: _OffsetOf_left)
+		y: (bytes int32AtOffset: _OffsetOf_bottom) - (bytes int32AtOffset: _OffsetOf_top)!
+
+height
+	"Answer the height of the receiver."
+
+	^(bytes int32AtOffset: _OffsetOf_bottom) - (bytes int32AtOffset: _OffsetOf_top)!
 
 left
 	"Answer the <Integer> value of the receiver's 'left' field."
@@ -72,6 +78,15 @@ right: anInteger
 
 	bytes int32AtOffset: _OffsetOf_right put: anInteger!
 
+subtract: aRectangle
+	| result |
+	result := RECTL newBuffer.
+	User32
+		subtractRect: result
+		lprcSrc1: self
+		lprcSrc2: aRectangle asParameter.
+	^result!
+
 top
 	"Answer the <Integer> value of the receiver's 'top' field."
 
@@ -80,19 +95,27 @@ top
 top: anInteger
 	"Set the receiver's 'top' field to the value of the argument, anInteger"
 
-	bytes int32AtOffset: _OffsetOf_top put: anInteger! !
+	bytes int32AtOffset: _OffsetOf_top put: anInteger!
+
+topLeft
+	"Answer a <Point> representing the top left position of the receiver."
+
+	^Graphics.Point x: (bytes int32AtOffset: _OffsetOf_left) y: (bytes int32AtOffset: _OffsetOf_top)! !
 !OS.RECTL categoriesForMethods!
 asRectangle!converting!public! !
 bottom!**compiled accessors**!public! !
 bottom:!**compiled accessors**!public! !
 bottomRight!accessing!public! !
 extent!accessing!public! !
+height!accessing!public! !
 left!**compiled accessors**!public! !
 left:!**compiled accessors**!public! !
 right!**compiled accessors**!public! !
 right:!**compiled accessors**!public! !
+subtract:!public!rectangle functions! !
 top!**compiled accessors**!public! !
 top:!**compiled accessors**!public! !
+topLeft!accessing!public! !
 !
 
 !OS.RECTL class methodsFor!

@@ -213,7 +213,7 @@ writePreambleFor: anObject
 	for use from custom implementations of the class side #stbSaveOn: message."
 
 	self
-		writeClass: anObject class withPrefix: STBPrefix forData;
+		writeClass: anObject class withPrefix: STBPrefix.DataPrefix;
 		register: anObject! !
 !Kernel.AbstractSTBOutFiler categoriesForMethods!
 basicNextPut:!operations!private! !

@@ -223,12 +223,6 @@ addSelectionRange: anInterval
 
 	self sciAddSelection: anInterval stop + 1 anchor: anInterval start!
 
-allKeyBindings
-	| bindings |
-	bindings := DefaultKeyBindings copy.
-	keyBindings ifNotNil: [keyBindings do: [:each | bindings at: each acceleratorKey put: each]].
-	^bindings!
-
 anchorPosition
 	"Returns the position of the opposite end of the selection to the caret."
 
@@ -907,9 +901,10 @@ callTipStyle
 callTipTabWidth
 	^callTipTabWidth!
 
-callTipTabWidth: anInteger 
+callTipTabWidth: anInteger
 	callTipTabWidth := anInteger.
-	self setCallTipTabWidth!
+	"It seems odd that we pass the tab width to an API that appears to expect a style id, but it doesn't. The API implicitly sets the call-tip style to STYLE_CALLTIP, and the argument really is the tab width."
+	self sciCallTipUseStyle: callTipTabWidth!
 
 cancelAutoCompletion
 	"Remove the auto-completion list from the screen."
@@ -1069,7 +1064,7 @@ caretStyle: aSymbol
 	"Set the style of caret displayed in the receiver; one of #invisible (no caret), #line or
 	#block"
 
-	^self sciSetCaretStyle: (self class caretStyles indexOf: aSymbol ifAbsent: [CARETSTYLE_LINE + 1]) - 1!
+	^self sciSetCaretStyle: (self class caretStyles indexOf: aSymbol ifAbsent: ##(CARETSTYLE_LINE + 1)) - 1!
 
 caretWidth
 	"Returns the width of the insert mode caret."
@@ -1343,7 +1338,7 @@ currentLineBackcolorLayer
 currentLineBackcolorLayer: aSymbol
 	"See #currentLineBackcolor:"
 
-	self sciSetCaretLineLayer: (self class layerNames indexOf: aSymbol ifAbsent: [1]) - 1!
+	self sciSetCaretLineLayer: (self class layerNames indexOf: aSymbol ifAbsent: 1) - 1!
 
 currentLineFrameWidth
 	"Retrieve the caret line frame width. Width = 0 means this option is disabled."
@@ -1639,6 +1634,7 @@ drawingTechnology: aSymbol
 	tech := aSymbol
 				ifNil: [SC_TECHNOLOGY_DEFAULT]
 				ifNotNil: [(self class drawingTechnologies keyAtValue: aSymbol) - 1].
+	self sciGetTechnology == tech ifTrue: [^self].
 	self sciSetTechnology: tech.
 	"When not using direct-write, we need to turn on double buffering or the view may flash a lot"
 	self sciSetBufferedDraw: tech == SC_TECHNOLOGY_DEFAULT!
@@ -2836,8 +2832,8 @@ identifyTextMatchingSelectionWithStyleName: aSymbol
 idleStylingMode
 	^self class idleStylingModes at: self sciGetIdleStyling + 1!
 
-idleStylingMode: aSymbol 
-	^self sciSetIdleStyling: (self class idleStylingModes indexOf: aSymbol ifAbsent: [1]) - 1!
+idleStylingMode: aSymbol
+	^self sciSetIdleStyling: (self class idleStylingModes indexOf: aSymbol ifAbsent: 1) - 1!
 
 idOfStyleNamed: aSymbol 
 	^(self styleNamed: aSymbol) ifNil: [0] ifNotNil: [:style | style id]!
@@ -2921,12 +2917,12 @@ indentationGuides
 
 	^self class indentationGuideStyles lookup: self sciGetIndentationGuides!
 
-indentationGuides: aSymbolOrNil 
+indentationGuides: aSymbolOrNil
 	"Set the style of indication guides to be displayed in the receiver, one of nil (no
 	guides), #real, #lookForward, #lookBoth."
 
 	self sciSetIndentationGuides: (self class indentationGuideStyles indexOf: aSymbolOrNil
-				ifAbsent: [SC_IV_NONE])!
+				ifAbsent: SC_IV_NONE)!
 
 indentationOfLine: lineInteger
 	"Retrieve the number of columns that a line is indented."
@@ -3023,7 +3019,7 @@ initialize
 		at: SC_ELEMENT_LIST_BACK put: Color.Window.
 	scFlags := 0.
 	stringClass := Utf8String.
-	self initializeRegisteredImages!
+	registeredImages := LookupTable new!
 
 initializeControl
 	"Private - Prime the Scintilla control with any settings stored in instance variables that
@@ -3032,13 +3028,12 @@ initializeControl
 	"Discard registered images rather than restoring - these can be re-registered dynamically as required"
 
 	| marginStylesOffset annotationStyleOffset |
-	self initializeRegisteredImages.
+	registeredImages := LookupTable new.
 	self sciSetModEventMask: self modificationEventMask.
 	"See Scintilla documentatio: https://www.scintilla.org/ScintillaDoc.html#SCI_GETBUFFEREDDRAW, although it incorrectly states that this should almost always be turned off. My experience is that unless Direct Draw is being used, that there is a lot of flicker without double-buffering."
 	self sciSetBufferedDraw: self sciGetTechnology == SC_TECHNOLOGY_DEFAULT.
-	self setCallTipTabWidth.
-	"Allocate extended styles for margins and annotations: We use the same styles range for the 4.4.4 EOL annotations - 256 separate styles ought to be sufficient for annotations all up."
-	marginStylesOffset := self sciAllocateExtendedStyles: NumMarginStyles + NumAnnotationStyles.
+	self sciCallTipUseStyle: callTipTabWidth.
+	marginStylesOffset := self sciAllocateExtendedStyles: ##(NumMarginStyles + NumAnnotationStyles).
 	self sciMarginSetStyleOffset: marginStylesOffset.
 	annotationStyleOffset := marginStylesOffset + NumMarginStyles.
 	self
@@ -3057,9 +3052,6 @@ initializeControl
 
 initializeMarkerDefinitions
 	markerDefinitions do: [:each | each initializeView: self]!
-
-initializeRegisteredImages
-	registeredImages := LookupTable new!
 
 insertText: aString
 	"Insert text into the document at current position."
@@ -8549,7 +8541,8 @@ scnStyleNeeded: pSCNotification
 	notificationMask := self modificationEventMask.
 	
 	["Temporarily disable style change notifications to speed up the colouring"
-	self modificationEventMask: (notificationMask maskClear: ##(SC_MOD_CHANGESTYLE | SC_PERFORMED_USER)).
+	self modificationEventMask: (notificationMask
+				bitAnd: ##((SC_MOD_CHANGESTYLE | SC_PERFORMED_USER) bitInvert)).
 	self styler
 		onStyleNeeded: self
 		from: last
@@ -8780,7 +8773,7 @@ selectionLayer: aSymbol
 		#underText	- the selection background colour is drawn with translucency under the text. If the colour has no alpha, this will look the same as #base.
 		#overText		- the selection background colour is drawn with translucency over the text. If the colour has no alpha, the text will be obliterated (probably not useful)."
 
-	self sciSetSelectionLayer: (self class layerNames indexOf: aSymbol ifAbsent: [1]) - 1!
+	self sciSetSelectionLayer: (self class layerNames indexOf: aSymbol ifAbsent: 1) - 1!
 
 selectionMode
 	"Answer a <Symbol> naming the current selection mode."
@@ -8913,9 +8906,6 @@ setCallTipHighlightColor
 				ifNil: 
 					["Set to default hardcoded in the control"
 					Color navy])!
-
-setCallTipTabWidth
-	self sciCallTipUseStyle: callTipTabWidth!
 
 setCaretBlinkTime
 	self sciSetCaretPeriod: (caretBlinkTime
@@ -9252,7 +9242,7 @@ state
 	| answer |
 	answer := super state.
 	#(#(#sciSetChangeHistory: #sciGetChangeHistory ##(SC_CHANGE_HISTORY_DISABLED)) #(#sciSetMouseDwellTime: #sciGetMouseDwellTime ##(SC_TIME_FOREVER)) #(#setIndicators: #indicators #()) #(#sciSetCaretStyle: #sciGetCaretStyle ##(CARETSTYLE_LINE)) #(#caretWidth: #caretWidth 1) #(#sciSetCaretSticky: #sciGetCaretSticky ##(SC_CARETSTICKY_OFF)) #(#isCurrentLineHighlightedAlways: #isCurrentLineHighlightedAlways false) #(#sciSetEOLMode: #sciGetEOLMode ##(SC_EOL_CRLF)) #(#hasVisibleLineEndings: #hasVisibleLineEndings false) #(#wordWrap: #wordWrap false) #(#sciSetLayoutCache: #sciGetLayoutCache ##(SC_CACHE_CARET)) #(#margins: #margins nil) #(#markers: #markers ##(IdentitySet
-		new)) #(#isOvertypeEnabled: #isOvertypeEnabled false) #(#printMagnification: #printMagnification 0) #(#printColourMode: #printColourMode ##(SC_PRINT_NORMAL)) #(#canHScroll: #canHScroll true) #(#canScrollPastEnd: #canScrollPastEnd true) #(#scrollWidth: #scrollWidth 2000) #(#xOffset: #xOffset 0) #(#sciSetSelectionMode: #sciGetSelectionMode ##(SC_SEL_STREAM)) #(#backspaceUnindents: #backspaceUnindents false) #(#sciSetIndentationGuides: #sciGetIndentationGuides ##(SC_IV_NONE)) #(#indentation: #indentation 0) #(#tabIndents: #tabIndents true) #(#tabWidth: #tabWidth 8) #(#isUsingTabs: #isUsingTabs true) #(#tabMinimumWidth: #tabMinimumWidth 2) #(#targetRange: #targetRange ##(0
+		new)) #(#isOvertypeEnabled: #isOvertypeEnabled false) #(#printMagnification: #printMagnification 0) #(#printColourMode: #printColourMode ##(SC_PRINT_NORMAL)) #(#sciSetHScrollBar: #canHScroll true) #(#canScrollPastEnd: #canScrollPastEnd true) #(#scrollWidth: #scrollWidth 2000) #(#xOffset: #xOffset 0) #(#sciSetSelectionMode: #sciGetSelectionMode ##(SC_SEL_STREAM)) #(#backspaceUnindents: #backspaceUnindents false) #(#sciSetIndentationGuides: #sciGetIndentationGuides ##(SC_IV_NONE)) #(#indentation: #indentation 0) #(#tabIndents: #tabIndents true) #(#tabWidth: #tabWidth 8) #(#isUsingTabs: #isUsingTabs true) #(#tabMinimumWidth: #tabMinimumWidth 2) #(#targetRange: #targetRange ##(0
 		to: -1)) #(#sciSetViewWS: #sciGetViewWS ##(SCWS_INVISIBLE)) #(#autoCompletionSeparator: #autoCompletionSeparator $\x20) #(#autoCompletionImageIdSeparator: #autoCompletionImageIdSeparator $?) #(#isAutoCompletionCancelledAtStart: #isAutoCompletionCancelledAtStart true) #(#isAutoCompletionCaseInsensitive: #isAutoCompletionCaseInsensitive false) #(#isAutoCompletionCancelledWhenNoMatch: #isAutoCompletionCancelledWhenNoMatch true) #(#isAutoCompletionTruncating: #isAutoCompletionTruncating false) #(#maxCompletionListHeight: #maxCompletionListHeight 5) #(#maxCompletionListWidth: #maxCompletionListWidth 0) #(#edgeColumn: #edgeColumn 1) #(#sciSetEdgeMode: #sciGetEdgeMode ##(EDGE_NONE)) #(#zoomLevel: #zoomLevel 0) #(#setLexerLanguage: #lexer #container) #(#controlCharacter: #controlCharacter nil) #(#positionCacheSize: #positionCacheSize 1024) #(#areHotspotsSingleLine: #areHotspotsSingleLine true) #(#sciAnnotationSetVisible: #sciAnnotationGetVisible ##(ANNOTATION_HIDDEN)) #(#setRawAnnotations: #getRawAnnotations #()) #(#sciEOLAnnotationSetVisible: #sciEOLAnnotationGetVisible ##(ANNOTATION_HIDDEN)) #(#setEolAnnotations: #getEolAnnotations #()) #(#extraAscent: #extraAscent 0) #(#extraDescent: #extraDescent 0) #(#areAdditionalCaretsVisible: #areAdditionalCaretsVisible true) #(#sciSetTechnology: #sciGetTechnology ##(SC_TECHNOLOGY_DEFAULT)) #(#sciSetFontQuality: #sciGetFontQuality ##(SC_EFF_QUALITY_DEFAULT)) #(#whitespaceMarkerSize: #whitespaceMarkerSize 1) #(#sciSetMultiPaste: #sciGetMultiPaste ##(SC_MULTIPASTE_ONCE)) #(#sciSetIMEInteraction: #sciGetIMEInteraction ##(SC_IME_WINDOWED)) #(#sciAutoCSetOrder: #sciAutoCGetOrder ##(SC_ORDER_PRESORTED)) #(#sciSetPhasesDraw: #sciGetPhasesDraw ##(SC_PHASES_TWO)) #(#sciSetIdleStyling: #sciGetIdleStyling ##(SC_IDLESTYLING_NONE)) #(#isMouseWheelCaptured: #isMouseWheelCaptured true) #(#sciSetTabDrawMode: #sciGetTabDrawMode 0) #(#sciSetAccessibility: #sciGetAccessibility 0) #(#currentLineFrameWidth: #currentLineFrameWidth 0) #(#isAccessibilityEnabled: #isAccessibilityEnabled false) #(#sciSetWrapIndentMode: #sciGetWrapIndentMode ##(SC_WRAPINDENT_FIXED)) #(#sciFoldDisplayTextSetStyle: #sciFoldDisplayTextGetStyle 0) #(#defaultFoldTextTag: #defaultFoldTextTag '') #(#hasAdditionalSelectionTyping: #hasAdditionalSelectionTyping false) #(#sciSetSelectionLayer: #sciGetSelectionLayer ##(SC_LAYER_BASE)) #(#sciSetCaretLineLayer: #sciGetCaretLineLayer ##(SC_LAYER_BASE)) #(#isOnlyUnwrappedLineHighlighted: #isOnlyUnwrappedLineHighlighted false) #(#maxLayoutThreads: #maxLayoutThreads 1))
 			do: 
 				[:each |
@@ -9727,11 +9717,14 @@ updateKeyBindings
 	"Private - Update the control with the key bindings configured for the receiver, replacing
 	its default command key assignments."
 
+	| assignBinding |
 	self sciClearAllCmdKeys.
-	self allKeyBindings do: 
+	assignBinding := 
 			[:each |
 			each message == SCI_NULL
-				ifFalse: [self sciAssignCmdKey: each scintillaKeyCode sciCommand: each message]]!
+				ifFalse: [self sciAssignCmdKey: each scintillaKeyCode sciCommand: each message]].
+	DefaultKeyBindings do: assignBinding.
+	keyBindings do: assignBinding!
 
 updateMarkers
 	self deleteMarkers: 0.
@@ -10071,7 +10064,6 @@ addKeyBinding:!key bindings!public! !
 addMarker:!markers!public! !
 addMarkerType:at:!markers!public! !
 addSelectionRange:!public!selection! !
-allKeyBindings!key bindings!private! !
 anchorPosition!**auto generated**!public!scintilla interface!selection! !
 anchorPosition:!**auto generated**!public!scintilla interface!selection! !
 annotateLine:withAll:!annotations!public! !
@@ -10400,7 +10392,6 @@ indicatorsUnder:!indicators!private! !
 initialize!initializing!public! !
 initializeControl!initializing!private! !
 initializeMarkerDefinitions!helpers!markers!private! !
-initializeRegisteredImages!initializing!private! !
 insertText:!public!text retrieval & modification! !
 insertText:at:!public!text retrieval & modification! !
 invalidateStyling!public!styling! !
@@ -11006,7 +10997,6 @@ sendMessage:wParam:!operations!private! !
 sendMessage:wParam:lParam:!operations!private! !
 sendMessage:wParam:lpParam:!operations!private! !
 setCallTipHighlightColor!call tips!private! !
-setCallTipTabWidth!helpers!private! !
 setCaretBlinkTime!caret, selection, and hotspot styles!private! !
 setCurrentTextStyles:!private!style definition! !
 setDefaultTextStyle!private!style definition! !

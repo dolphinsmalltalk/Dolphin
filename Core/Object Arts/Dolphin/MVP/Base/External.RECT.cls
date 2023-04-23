@@ -86,8 +86,9 @@ extent: newExtent
 	the corner stays in the same quadrant it was in relative to the origin point.
 	If aPoint contains any negative value, the result is undefined)."
 
-	self right: self left + newExtent x.
-	self bottom: self top + newExtent y!
+	self
+		width: newExtent x;
+		height: newExtent y!
 
 hash
 	"Answer the <integer> hash value for the receiver such that for any two Rectangles which
@@ -99,6 +100,11 @@ height
 	"Answer the height of the receiver."
 
 	^self bottom - self top!
+
+height: aNumber
+	"Change the receiver's height to aNumber. (The origin remains the same. If aNumber is negative, then the result is undefined)."
+
+	self bottom: self top + aNumber!
 
 left
 	^self subclassResponsibility!
@@ -135,7 +141,12 @@ topLeft
 width
 	"Answer the width of the receiver."
 
-	^self right - self left! !
+	^self right - self left!
+
+width: aNumber
+	"Change the receiver's width to aNumber. (The origin remains the same. If aNumber is negative, the result is undefined)"
+
+	self right: self left + aNumber! !
 !External.RECT categoriesForMethods!
 =!comparing!public! !
 area!accessing!public! !
@@ -153,6 +164,7 @@ extent!accessing!public! !
 extent:!accessing!public! !
 hash!comparing!public! !
 height!accessing!public! !
+height:!accessing!public! !
 left!accessing!public! !
 left:!accessing!public! !
 origin!accessing!public! !
@@ -163,6 +175,7 @@ top!accessing!public! !
 top:!accessing!public! !
 topLeft!accessing!public! !
 width!accessing!public! !
+width:!accessing!public! !
 !
 
 !External.RECT class methodsFor!

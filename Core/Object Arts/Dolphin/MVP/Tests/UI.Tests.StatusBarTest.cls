@@ -17,6 +17,30 @@ classToTest
 oldDolphinVersionsForStbUpgrade
 	^1 to: 4!
 
+testAddAndRemoveItems
+	| items |
+	"There must always at least one item - a dummy one is present if we haven't added any"
+	self assert: presenter items size equals: 1.
+	self assert: presenter contents isEmpty.
+	items := {
+				StatusBarItem new
+					width: 147;
+					model: 'Foo' asValue;
+					yourself
+			}.
+	presenter items: items.
+	self assert: presenter items asArray equals: items.
+	self assert: presenter contents asArray equals: items.
+	self assert: items first parentView equals: presenter.
+	presenter removeItem: items first.
+	self assert: presenter items size equals: 1.
+	self assert: presenter contents isEmpty.
+	self assertIsNil: items first parentView.
+	presenter addItem: items first.
+	self assert: presenter items asArray equals: items.
+	self assert: presenter contents asArray equals: items.
+	self assert: items first parentView equals: presenter!
+
 testItemLayout
 	"This test assumes that the bar is large enough to fit all the fixed size items without truncation."
 
@@ -174,6 +198,7 @@ vuFile
 !UI.Tests.StatusBarTest categoriesForMethods!
 classToTest!helpers!private! !
 oldDolphinVersionsForStbUpgrade!constants!private! !
+testAddAndRemoveItems!public!unit tests! !
 testItemLayout!public!unit tests! !
 testItemLayout:!helpers!private! !
 testToggleItemAutoResize!public!unit tests! !

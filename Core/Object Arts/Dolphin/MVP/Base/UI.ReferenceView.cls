@@ -22,7 +22,7 @@ Instance Variables (inherited)
 
 configureReferee
 	referee
-		rectangle: (Rectangle extent: self extent);
+		extent: self extent;
 		isManaged: false;
 		isTabStop: self isTabStop;
 		isGroupStop: self isGroupStop;

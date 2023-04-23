@@ -407,7 +407,7 @@ hasSysMenu: aBoolean
 		recreateIfChanged: false) ifTrue: [self frameChanged]!
 
 hasTaskbarIcon
-	^(self exStyleAllMask: WS_EX_NOACTIVATE) not!
+	^self extendedStyle noMask: WS_EX_NOACTIVATE!
 
 hasTaskbarIcon: aBoolean 
 	"Set whether or not the receiver is activated and appears in the task bar on creation (i.e. it 
@@ -433,7 +433,7 @@ invalidateUserInterface
 	"Invalidates the user interface of the receiver indicating that it needs
 	to be requeried using #validateUserInterface (usually at idle time)"
 
-	flags := flags maskClear: UIValidMask.
+	flags := flags bitAnd: ##(UIValidMask bitInvert).
 	SessionManager.Current inputState prod!
 
 isInitiallyCentered
@@ -450,7 +450,7 @@ isLayeredWindow
 	"Answers true if the receiver is a layered window. 
 	i.e. it has the WS_EX_LAYERED style"
 
-	^self exStyleAllMask: WS_EX_LAYERED!
+	^self extendedStyle allMask: WS_EX_LAYERED!
 
 isLayeredWindow: aBoolean 
 	"Sets the receiver to be a tool window if aBoolean is true.
@@ -506,7 +506,7 @@ isToolWindow
 	a normal title bar, and the window title is drawn using a smaller font. 
 	i.e. it has the WS_EX_TOOLWINDOW style"
 
-	^self exStyleAllMask: WS_EX_TOOLWINDOW!
+	^self extendedStyle allMask: WS_EX_TOOLWINDOW!
 
 isToolWindow: aBoolean 
 	"Sets the receiver to be a tool window if aBoolean is true.

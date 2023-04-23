@@ -708,9 +708,8 @@ queryCommand: aCommandQuery
 	"Private - Enter details about a potential command for the receiver 
 	into the <CommandQuery> argument."
 
-	| selector class |
+	| selector |
 	selector := aCommandQuery commandSymbol.
-	class := self selectionOrNil.
 	#browseIt == selector
 		ifTrue: 
 			[selector := self browseItCommand.
@@ -728,25 +727,27 @@ queryCommand: aCommandQuery
 	selector == #browseHierarchy
 		ifTrue: 
 			[| name |
-			class notNil
-				ifTrue: 
-					[name := class name.
+			self selectionOrNil
+				ifNil: 
+					[name := 'Class'.
+					aCommandQuery isEnabled: false]
+				ifNotNil: 
+					[:class |
+					name := class name.
 					aCommandQuery
 						isDefault: true;
-						isEnabled: true]
-				ifFalse: 
-					[name := 'Class'.
-					aCommandQuery isEnabled: false].
-			aCommandQuery text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: {name}
+						isEnabled: true].
+			aCommandQuery text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: { name }
 						locale: Locale smalltalk).
 			^true].
 	#browseSystem == selector
 		ifTrue: 
-			[aCommandQuery isEnabled: class notNil.
+			[aCommandQuery isEnabled: self hasSelection.
 			^true].
 	#browseClassPackage == selector
 		ifTrue: 
-			[| name pkg |
+			[| name pkg class |
+			class := self selectionOrNil.
 			(class isNil or: [(pkg := class owningPackage) isNil])
 				ifTrue: 
 					[aCommandQuery isEnabled: false.
@@ -754,17 +755,17 @@ queryCommand: aCommandQuery
 				ifFalse: 
 					[aCommandQuery isEnabled: true.
 					name := pkg name printString].
-			aCommandQuery text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: {name}
+			aCommandQuery text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: { name }
 						locale: Locale smalltalk).
 			^true].
 	(#(#browseClass #fileInClass #fileOutClass #checkInClass #checkOutClass #categorizeClass #clearSelection #inspectIt #browseMenu #browseHierarchy #browseReferences #browseClassReferences #browseClassVariables #browseInstanceVariables #browseAllMethods #browsePackages #classPackage #browseChangedMethods #browseVariablesMenu)
 		identityIncludes: selector)
 			ifTrue: 
-				[aCommandQuery isEnabled: class notNil.
+				[aCommandQuery isEnabled: self hasSelection.
 				^true].
 	#renameClass == selector
 		ifTrue: 
-			[aCommandQuery isEnabled: (self developmentSystem canRenameClass: class).
+			[aCommandQuery isEnabled: (self developmentSystem canRenameClass: self selectionOrNil).
 			^true].
 	(#(#removeClass) identityIncludes: selector)
 		ifTrue: 
@@ -783,31 +784,43 @@ queryCommand: aCommandQuery
 			^true].
 	#browsePublishedEvents == selector
 		ifTrue: 
-			[aCommandQuery isEnabled: (class notNil and: [class respondsTo: #publishedEventsOfInstances]).
+			[| class |
+			class := self selectionOrNil.
+			aCommandQuery isEnabled: (class notNil and: [class respondsTo: #publishedEventsOfInstances]).
 			^true].
 	#browsePublishedAspects == selector
 		ifTrue: 
-			[aCommandQuery isEnabled: (class notNil and: [class respondsTo: #publishedAspectsOfInstances]).
+			[| class |
+			class := self selectionOrNil.
+			aCommandQuery isEnabled: (class notNil and: [class respondsTo: #publishedAspectsOfInstances]).
 			^true].
 	#viewsMenu == selector
 		ifTrue: 
-			[aCommandQuery isEnabled: (class notNil
+			[| class |
+			class := self selectionOrNil.
+			aCommandQuery isEnabled: (class notNil
 						and: [(class includesBehavior: Presenter) or: [class includesBehavior: View]]).
 			^true].
 	(#(#viewsEditMenu #viewsShowMenu) identityIncludes: selector)
 		ifTrue: 
-			[aCommandQuery isEnabled: (class notNil and: [class resourceIdentifiers notEmpty]).
+			[| class |
+			class := self selectionOrNil.
+			aCommandQuery isEnabled: (class notNil and: [class resourceIdentifiers notEmpty]).
 			#viewsShowMenu == selector ifTrue: [aCommandQuery isDefault: true].
 			^true].
 	(#(#browseInstanceVariables #createInstanceVariableAccessors) identityIncludes: selector)
 		ifTrue: 
-			[aCommandQuery isEnabled: (class notNil and: [self actualClass instanceVariableNames notEmpty]).
+			[| class |
+			class := self actualClass.
+			aCommandQuery isEnabled: (class notNil and: [class instanceVariableNames notEmpty]).
 			^true].
 	#browseTests == selector
 		ifTrue: 
 			[aCommandQuery
 				isEnabled: (self testBrowserClass notNil and: 
-							[class notNil and: 
+							[| class |
+							class := self selectionOrNil.
+							class notNil and: 
 									["Test if the selected class is a kind of TestCase without taking a dependency on the SUnit package, so it can be uninstalled if desired."
 									class inheritsFrom: #{TestCase} value]]).
 			^true].

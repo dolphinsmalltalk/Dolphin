@@ -3,7 +3,7 @@
 Core.Object
 	subclass: #'Kernel.ByteCodeDispatcher'
 	instanceVariableNames: 'byteCodes method ip interpreter instructionLength byteCode instructions'
-	classVariableNames: 'RunStarts'
+	classVariableNames: ''
 	imports: #(#{Kernel.OpcodePool})
 	classInstanceVariableNames: ''
 	classConstants: {
@@ -11,7 +11,9 @@ Core.Object
 			'InstructionLengths'
 				-> #[1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 7 4 4 5].
 			'Instructions'
-				-> #(#break #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushTemp: #shortPushTemp: #shortPushTemp: #shortPushTemp: #shortPushTemp: #shortPushTemp: #shortPushTemp: #shortPushTemp: #pushContextTemp: #pushContextTemp: #shortPushOuterTemp: #shortPushOuterTemp: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushStatic: #shortPushStatic: #shortPushStatic: #shortPushStatic: #shortPushStatic: #shortPushStatic: #shortPushStatic: #shortPushStatic: #shortPushStatic: #shortPushStatic: #shortPushStatic: #shortPushStatic: #pushSelf #pushPseudo: #pushPseudo: #pushPseudo: #shortPushImmediate: #shortPushImmediate: #shortPushImmediate: #shortPushImmediate: #shortPushSelfAndTemp: #shortPushSelfAndTemp: #shortPushSelfAndTemp: #shortPushSelfAndTemp: #shortStoreTemp: #shortStoreTemp: #shortStoreTemp: #shortStoreTemp: #shortPopPushTemp: #shortPopPushTemp: #popPushSelf #popDup #popContextTemp: #popContextTemp: #shortPopOuterTemp: #shortPopOuterTemp: #shortPopInstVar: #shortPopInstVar: #shortPopInstVar: #shortPopInstVar: #shortPopInstVar: #shortPopInstVar: #shortPopInstVar: #shortPopInstVar: #shortPopTemp: #shortPopTemp: #shortPopTemp: #shortPopTemp: #shortPopTemp: #shortPopTemp: #shortPopTemp: #shortPopTemp: #popStackTop #incrementStackTop #decrementStackTop #duplicateStackTop #returnSelf #returnPseudo: #returnPseudo: #returnPseudo: #returnFromMessage #returnFromBlock #returnFromBlockHome #popReturnSelf #nop #shortJump: #shortJump: #shortJump: #shortJump: #shortJump: #shortJump: #shortJump: #shortJump: #shortJumpIfFalse: #shortJumpIfFalse: #shortJumpIfFalse: #shortJumpIfFalse: #shortJumpIfFalse: #shortJumpIfFalse: #shortJumpIfFalse: #shortJumpIfFalse: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendSelfZeroArgs: #shortSendSelfZeroArgs: #shortSendSelfZeroArgs: #shortSendSelfZeroArgs: #shortSendSelfZeroArgs: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #isZero #pushActiveFrame #shortSpecialSendEx: #shortSpecialSendEx: #shortSpecialSendEx: #returnIfNotNil #pushInstVar: #pushTemp: #pushConst: #pushStatic: #storeInstVar: #storeTemp: #storeStatic: #popInstVar: #popTemp: #popStatic: #pushImmediate: #pushChar: #send: #supersend: #specialSend: #nearJump: #nearJumpIfTrue: #nearJumpIfFalse: #nearJumpIfNil: #nearJumpIfNotNil: #unused: #unused: #sendTempZeroArgs: #pushSelfAndTemp: #pushOuterTemp: #storeOuterTemp: #popOuterTemp: #sendSelfZeroArgs: #unused: #pushTempPair: #longPushConst:with: #longPushStatic:with: #longStoreStatic:with: #longPopStoreStatic:with: #longPushImmediate:with: #longSend:with: #longSupersend:with: #longJump:with: #longJumpIfTrue:with: #longJumpIfFalse:with: #longJumpIfNil:with: #longJumpIfNotNil:with: #pushOuter:temp: #storeOuter:temp: #incTemp:temp: #incPushTemp:temp: #decTemp:temp: #decPushTemp:temp: #blockCopy:stack:env:copy:offset1:offset2: #exLongSend:with:with: #exLongSupersend:with:with: #exLongPushImmediate:byte2:byte3:byte4:)
+				-> #(#break #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushTemp: #shortPushTemp: #shortPushTemp: #shortPushTemp: #shortPushTemp: #shortPushTemp: #shortPushTemp: #shortPushTemp: #pushContextTemp: #pushContextTemp: #shortPushOuterTemp: #shortPushOuterTemp: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushStatic: #shortPushStatic: #shortPushStatic: #shortPushStatic: #shortPushStatic: #shortPushStatic: #shortPushStatic: #shortPushStatic: #shortPushStatic: #shortPushStatic: #shortPushStatic: #shortPushStatic: #pushSelf #pushPseudo: #pushPseudo: #pushPseudo: #shortPushImmediate: #shortPushImmediate: #shortPushImmediate: #shortPushImmediate: #shortPushSelfAndTemp: #shortPushSelfAndTemp: #shortPushSelfAndTemp: #shortPushSelfAndTemp: #shortStoreTemp: #shortStoreTemp: #shortStoreTemp: #shortStoreTemp: #shortPopPushTemp: #shortPopPushTemp: #popPushSelf #popDup #popContextTemp: #popContextTemp: #shortPopOuterTemp: #shortPopOuterTemp: #shortPopInstVar: #shortPopInstVar: #shortPopInstVar: #shortPopInstVar: #shortPopInstVar: #shortPopInstVar: #shortPopInstVar: #shortPopInstVar: #shortPopTemp: #shortPopTemp: #shortPopTemp: #shortPopTemp: #shortPopTemp: #shortPopTemp: #shortPopTemp: #shortPopTemp: #popStackTop #incrementStackTop #decrementStackTop #duplicateStackTop #returnSelf #returnPseudo: #returnPseudo: #returnPseudo: #returnFromMessage #returnFromBlock #returnFromBlockHome #popReturnSelf #nop #shortJump: #shortJump: #shortJump: #shortJump: #shortJump: #shortJump: #shortJump: #shortJump: #shortJumpIfFalse: #shortJumpIfFalse: #shortJumpIfFalse: #shortJumpIfFalse: #shortJumpIfFalse: #shortJumpIfFalse: #shortJumpIfFalse: #shortJumpIfFalse: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendSelfZeroArgs: #shortSendSelfZeroArgs: #shortSendSelfZeroArgs: #shortSendSelfZeroArgs: #shortSendSelfZeroArgs: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #isZero #pushActiveFrame #shortSpecialSendEx: #shortSpecialSendEx: #shortSpecialSendEx: #returnIfNotNil #pushInstVar: #pushTemp: #pushConst: #pushStatic: #storeInstVar: #storeTemp: #storeStatic: #popInstVar: #popTemp: #popStatic: #pushImmediate: #pushChar: #send: #supersend: #specialSend: #nearJump: #nearJumpIfTrue: #nearJumpIfFalse: #nearJumpIfNil: #nearJumpIfNotNil: #unused: #unused: #sendTempZeroArgs: #pushSelfAndTemp: #pushOuterTemp: #storeOuterTemp: #popOuterTemp: #sendSelfZeroArgs: #unused: #pushTempPair: #longPushConst:with: #longPushStatic:with: #longStoreStatic:with: #longPopStoreStatic:with: #longPushImmediate:with: #longSend:with: #longSupersend:with: #longJump:with: #longJumpIfTrue:with: #longJumpIfFalse:with: #longJumpIfNil:with: #longJumpIfNotNil:with: #pushOuter:temp: #storeOuter:temp: #incTemp:temp: #incPushTemp:temp: #decTemp:temp: #decPushTemp:temp: #blockCopy:stack:env:copy:offset1:offset2: #exLongSend:with:with: #exLongSupersend:with:with: #exLongPushImmediate:byte2:byte3:byte4:).
+			'RunStarts'
+				-> #[0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 17 17 17 17 17 17 17 17 25 25 27 27 29 29 29 29 29 29 29 29 29 29 29 29 29 29 29 29 45 45 45 45 45 45 45 45 45 45 45 45 57 58 58 58 61 61 61 61 65 65 65 65 69 69 69 69 73 73 75 76 77 77 79 79 81 81 81 81 81 81 81 81 89 89 89 89 89 89 89 89 97 98 99 100 101 102 102 102 105 106 107 108 109 110 110 110 110 110 110 110 110 118 118 118 118 118 118 118 118 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 126 158 158 158 158 158 158 158 158 158 158 158 158 158 171 171 171 171 171 176 176 176 176 176 176 176 176 176 176 176 176 176 176 190 190 190 190 190 190 190 190 198 199 200 200 200 203 204 205 206 207 208 209 210 211 212 213 214 215 216 217 218 219 220 221 222 223 224 224 226 227 228 229 230 231 232 233 234 235 236 237 238 239 240 241 242 243 244 245 246 247 248 249 250 251 252 253 254 255]
 		}!
 Kernel.ByteCodeDispatcher guid: (Core.GUID fromString: '{87b4c45d-026e-11d3-9fd7-00a0cc3e4a32}')!
 Kernel.ByteCodeDispatcher comment: 'ByteCodeDispatchers decode bytecodes in <CompiledMethod>s and dispatches them to a plug-in <bytecodeInterpreter> client.
@@ -94,6 +96,13 @@ containsInstruction: discriminator
 		whileFalse: [(self instruction: (instructions at: self next + 1) do: discriminator) ifTrue: [^true]].
 	^false!
 
+dispatch: aSymbol
+	| args argc |
+	argc := instructionLength - 1.
+	args := Array new: argc.
+	1 to: argc do: [:i | args at: argc - i + 1 put: (byteCodes at: ip - i)].
+	^interpreter perform: aSymbol withArguments: args!
+
 dispatchAll
 	"Private - Interpret the receiver's method sending messages for each instruction to the client."
 
@@ -107,13 +116,13 @@ dispatchNext
 
 	"Implementation Note: For performance reasons this effectively duplicates the code in #instruction:do:"
 
-	self fetch
+	(instructions at: self next + 1)
 		ifNotNil: 
 			[:instr |
 			instructionLength == 1
 				ifTrue: 
-					[instr lastCodeUnit == $:
-						ifTrue: [interpreter perform: instr with: byteCode - (RunStarts at: instr)]
+					[(instr at: instr size) == $:
+						ifTrue: [interpreter perform: instr with: byteCode - (RunStarts at: byteCode + 1)]
 						ifFalse: [interpreter perform: instr]]
 				ifFalse: 
 					[instructionLength == 2
@@ -133,12 +142,7 @@ dispatchNext
 												with: (byteCodes at: ip - 3)
 												with: (byteCodes at: ip - 2)
 												with: (byteCodes at: ip - 1)]
-										ifFalse: 
-											[| args argc |
-											argc := instructionLength - 1.
-											args := Array new: argc.
-											1 to: argc do: [:i | args at: argc - i + 1 put: (byteCodes at: ip - i)].
-											interpreter perform: instr withArguments: args]]]]]!
+										ifFalse: [self dispatch: instr]]]]]!
 
 fetch
 	^instructions at: self next + 1!
@@ -173,14 +177,16 @@ instruction: aSymbol do: aDyadicValuable
 	instructionLength == 1
 		ifTrue: 
 			[^aDyadicValuable value: aSymbol
-				value: (aSymbol lastCodeUnit == $: ifTrue: [{byteCode - (RunStarts at: aSymbol)}] ifFalse: [#()])].
-	instructionLength == 2 ifTrue: [^aDyadicValuable value: aSymbol value: {byteCodes at: ip - 1}].
+				value: (aSymbol lastCodeUnit == $:
+						ifTrue: [{ byteCode - (RunStarts at: byteCode + 1) }]
+						ifFalse: [#()])].
+	instructionLength == 2 ifTrue: [^aDyadicValuable value: aSymbol value: { byteCodes at: ip - 1 }].
 	instructionLength == 3
-		ifTrue: [^aDyadicValuable value: aSymbol value: {byteCodes at: ip - 2. byteCodes at: ip - 1}].
+		ifTrue: [^aDyadicValuable value: aSymbol value: { byteCodes at: ip - 2. byteCodes at: ip - 1 }].
 	^instructionLength == 4
 		ifTrue: 
 			[aDyadicValuable value: aSymbol
-				value: {byteCodes at: ip - 3. byteCodes at: ip - 2. byteCodes at: ip - 1}]
+				value: { byteCodes at: ip - 3. byteCodes at: ip - 2. byteCodes at: ip - 1 }]
 		ifFalse: 
 			[| args argc |
 			args := Array new: (argc := instructionLength - 1).
@@ -310,36 +316,21 @@ segments
 			answer nextPut: (byteCodes copyFrom: start to: ip - 1)].
 	^answer contents!
 
-selectorOfMessageSend: aSymbol 
-	aSymbol == #shortSendZeroArgs: 
-		ifTrue: [^method literalAt: byteCode - ShortSendZeroArgs + 1].
-	aSymbol == #shortSendSelfZeroArgs: 
+selectorOfMessageSend: aSymbol
+	aSymbol == #shortSendZeroArgs: ifTrue: [^method literalAt: byteCode - ShortSendZeroArgs + 1].
+	aSymbol == #shortSendSelfZeroArgs:
 		ifTrue: [^method literalAt: byteCode - ShortSendSelfZeroArgs + 1].
-	aSymbol == #shortSpecialSend: 
-		ifTrue: [^self selectorOfSpecialSend: byteCode - ShortSpecialSend].
-	aSymbol == #shortSpecialSendEx: 
-		ifTrue: [^self selectorOfSpecialSendEx: byteCode - ShortSpecialSendEx].
+	aSymbol == #shortSpecialSend: ifTrue: [^VM selectorOfSpecialSend: byteCode - ShortSpecialSend].
+	aSymbol == #shortSpecialSendEx:
+		ifTrue: [^VM selectorOfSpecialSendEx: byteCode - ShortSpecialSendEx].
 	aSymbol == #shortSendOneArg: ifTrue: [^method literalAt: byteCode - ShortSendOneArg + 1].
-	aSymbol == #shortSendTwoArgs: 
-		ifTrue: [^method literalAt: byteCode - ShortSendTwoArgs + 1].
-	(aSymbol == #send: or: [aSymbol == #supersend:]) 
+	aSymbol == #shortSendTwoArgs: ifTrue: [^method literalAt: byteCode - ShortSendTwoArgs + 1].
+	(aSymbol == #send: or: [aSymbol == #supersend:])
 		ifTrue: [^method literalAt: ((byteCodes at: ip - 1) bitAnd: 31) + 1].
-	(aSymbol == #sendSelfZeroArgs: 
-		or: [aSymbol == #longSend:with: or: [aSymbol == #longSupersend:with:]]) 
+	(aSymbol == #sendSelfZeroArgs:
+		or: [aSymbol == #longSend:with: or: [aSymbol == #longSupersend:with:]])
 			ifTrue: [^method literalAt: (byteCodes at: ip - 1) + 1].
 	^nil!
-
-selectorOfSpecialSend: anInteger
-	"Private - Answer the selector which corresponds to the special send with the specified offset from the start
-	of the special send instructions."
-
-	^VM selectorOfSpecialSend: anInteger!
-
-selectorOfSpecialSendEx: anInteger
-	"Private - Answer the selector which corresponds to the special send with the specified offset from the start
-	of the extra special send instructions."
-
-	^VM selectorOfSpecialSendEx: anInteger!
 
 sendsSpecialSelector: anInteger
 	"Answer whether the method which the receiver is interpreting sends the special selector
@@ -400,6 +391,7 @@ accessToInstVarAt:!public!testing! !
 atEnd!private!testing! !
 byteCodes!accessing!public! !
 containsInstruction:!public!testing! !
+dispatch:!interpreting!private! !
 dispatchAll!interpreting!private! !
 dispatchNext!interpreting!private! !
 fetch!interpreting!private! !
@@ -425,8 +417,6 @@ readsStatic:!public!testing! !
 reset!interpreting!public! !
 segments!accessing!public! !
 selectorOfMessageSend:!interpreting!private! !
-selectorOfSpecialSend:!enquiries!private! !
-selectorOfSpecialSendEx:!accessing!private! !
 sendsSpecialSelector:!public!testing! !
 specialMessages!accessing!private! !
 writesInstVarAt:!public!testing! !
@@ -454,31 +444,32 @@ initialize
 	"
 
 	| instructions runStarts |
-	instructions := OrderedCollection new.
-	runStarts := IdentityDictionary new.
-	self bytecodeRuns do: 
-			[:each |
+	instructions := Array new: 256.
+	runStarts := ByteArray new: 256.
+	self bytecodeRuns inject: 0 into: [:bc :each |
 			| instruction runLength |
 			instruction := each last.
 			runLength := each first.
-			runLength > 1 ifTrue: [runStarts at: instruction put: instructions size].
-			runLength timesRepeat: [instructions add: instruction]].
-	self assert: [instructions size = 256].
-	self addClassConstant: 'Instructions' value: instructions asArray.
-	RunStarts := runStarts.
-	self addClassConstant: 'InstructionLengths'
-		value: ((0 to: 255) collect: 
-					[:i |
-					i < FirstDoubleByte
-						ifTrue: [1]
-						ifFalse: 
-							[i < FirstTripleByte
-								ifTrue: [2]
-								ifFalse: 
-									[i < FirstMultiByte
-										ifTrue: [3]
-										ifFalse: [i == BlockCopy ifTrue: [7] ifFalse: [i == ExLongPushImmediate ifTrue: [5] ifFalse: [4]]]]]])
-				asByteArray!
+			1 to: runLength do: [:i | 
+				instructions at: bc + i put: instruction.
+				runStarts at: bc + i put: bc].
+			bc + runLength].
+	self
+		addClassConstant: 'Instructions' value: instructions;
+		addClassConstant: 'RunStarts' value: runStarts;
+		addClassConstant: 'InstructionLengths'
+			value: ((0 to: 255) collect: 
+						[:i |
+						i < FirstDoubleByte
+							ifTrue: [1]
+							ifFalse: 
+								[i < FirstTripleByte
+									ifTrue: [2]
+									ifFalse: 
+										[i < FirstMultiByte
+											ifTrue: [3]
+											ifFalse: [i == BlockCopy ifTrue: [7] ifFalse: [i == ExLongPushImmediate ifTrue: [5] ifFalse: [4]]]]]])
+					asByteArray!
 
 instructions
 	^Instructions!

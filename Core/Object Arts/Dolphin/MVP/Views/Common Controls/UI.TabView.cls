@@ -59,15 +59,17 @@ basicAdd: anObject atIndex: anInteger
 basicClear
 	"Private - Clears down the tab view control (but not its model)."
 
-	(self sendMessage: TCM_DELETEALLITEMS) == 0 ifTrue: [^self errorInCommonControlCall]!
+	self
+		sendMessageNz: TCM_DELETEALLITEMS
+		wParam: 0
+		lpParam: 0!
 
 basicItemFromPoint: aPoint
 	"Private - Answer a TCHITTESTINFO populated with details of the item under the <Point>
 	argument."
 
 	| struct |
-	struct := TCHITTESTINFO new.
-	struct pt: aPoint asParameter.
+	struct := TCHITTESTINFO position: aPoint.
 	struct iItem: (self
 				sendMessage: TCM_HITTEST
 				wParam: 0
@@ -80,11 +82,13 @@ basicRefreshContents
 			self list keysAndValuesDo: [:index :each | self basicAdd: each atIndex: index]].
 	self invalidate!
 
-basicRemoveAtIndex: anInteger 
+basicRemoveAtIndex: anInteger
 	"Private - Delete item at anInteger index in the receiver"
 
-	(self sendMessage: TCM_DELETEITEM wParam: anInteger - 1) == 0 
-		ifTrue: [^self errorInCommonControlCall]!
+	self
+		sendMessageNz: TCM_DELETEITEM
+		wParam: anInteger - 1
+		lpParam: nil!
 
 beNoIcons
 	"Work without icons."
@@ -157,7 +161,7 @@ getItem: anInteger
 	| tcItem |
 	tcItem := TCITEMW newBuffer.
 	tcItem
-		newTextBuffer: 256;
+		newTextBuffer: 128;
 		maskIn: tcItem imageValidMask.
 	self
 		sendMessage: TCM_GETITEMW
@@ -292,11 +296,16 @@ itemCount
 
 	^self sendMessage: TCM_GETITEMCOUNT!
 
-itemRect: anInteger textOnly: aBoolean 
+itemRect: anInteger
+	"Answers the rectangle surrounding the item with anIntegerIndex within the receiver"
+
+	^(self tcmGetItemRect: anInteger - 1) asRectangle!
+
+itemRect: anInteger textOnly: aBoolean
 	"Answers the rectangle surrounding the item with anIntegerIndex within
 	the receiver, optionally for the text label only."
 
-	^(self tcmGetItemRect: anInteger-1) asObject!
+	^self itemRect: anInteger!
 
 itemStructure
 	^TCITEMW!
@@ -416,19 +425,16 @@ selectionByIndex
 
 	^(self sendMessage: TCM_GETCURSEL) + 1!
 
-selectionByIndex: anInteger ifAbsent: exceptionHandler 
-	"Selects the object identified by the specified one-based <integer> index in the receiver.
-	If the index is zero then all selections are cleared. Answers the new selection index, or
-	the result of evaluating the <niladicValuable>, exceptionHandler, if the index is out of
-	range."
+selectionByIndex: anInteger ifAbsent: exceptionHandler
+	"Selects the object identified by the specified one-based <integer> index in the receiver. If the index is zero then all selections are cleared. 
+	Answers the new selection index, or the result of evaluating the <niladicValuable>, exceptionHandler, if the index is out of range."
 
-	self selectionByIndex = anInteger 
+	self selectionByIndex = anInteger
 		ifFalse: 
-			[(anInteger >= 0 and: [anInteger <= self itemCount]) ifFalse: [^exceptionHandler value].
-			self setSingleSelection: anInteger.
+			[((self setSingleSelection: anInteger) == 0 and: [anInteger < 0 or: [anInteger > self itemCount]])
+				ifTrue: [^exceptionHandler value].
 
-			"Windows only sends the selection change notification when the selection is
-			the result of a user action so force it here"
+			"The tab control only sends the selection change notification when the selection is the result of a user action so force it here"
 			self onSelChanged: nil].
 	^anInteger!
 
@@ -442,8 +448,10 @@ selectionState
 				selector: #setSingleSelection:
 				argument: selectedIndex]!
 
-setSingleSelection: anInteger 
-	self sendMessage: TCM_SETCURSEL wParam: anInteger - 1!
+setSingleSelection: anInteger
+	"Set the selected tab, answering the index of the previously selected tab, or 0 if there was no selection (which is possible), or the selection change failed (e.g. anInteger is out of range)"
+
+	^(self sendMessage: TCM_SETCURSEL wParam: anInteger - 1) + 1!
 
 setViewMode: aSymbol 
 	viewMode := aSymbol!
@@ -522,7 +530,7 @@ tcmGetCurFocus
 	^self sendMessage: TCM_GETCURSEL!
 
 tcmGetExtendedStyle
-	"Private - Answer the views extended style flags."
+	"Private - Answer the view's extended style flags."
 
 	^self sendMessage: TCM_GETEXTENDEDSTYLE wParam: 0 lpParam: 0!
 
@@ -653,6 +661,7 @@ isMultiline:!accessing!public! !
 isVertical!accessing-styles!public! !
 isVertical:!accessing-styles!public! !
 itemCount!accessing!public! !
+itemRect:!accessing!public! !
 itemRect:textOnly:!public! !
 itemStructure!constants!private! !
 makeTcItemStruct:!adding!private! !

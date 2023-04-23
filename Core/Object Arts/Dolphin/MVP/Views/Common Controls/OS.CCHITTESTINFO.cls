@@ -6,17 +6,12 @@ OS.Win32Structure
 	classVariableNames: ''
 	imports: #(#{OS.CommCtrlConstants})
 	classInstanceVariableNames: ''
-	classConstants: { '_CCHITTESTINFO_Size' -> 16rC. '_OffsetOf_flags' -> 16r8. '_OffsetOf_pt' -> 16r0 }!
+	classConstants: { '_CCHITTESTINFO_Size' -> 16r8. '_OffsetOf_pt' -> 16r0 }!
 OS.CCHITTESTINFO guid: (Core.GUID fromString: '{87b4c5cd-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.CCHITTESTINFO isNonInstantiable: true!
 OS.CCHITTESTINFO comment: 'CCHITTESTINFO is an ExternalStructure class which implements shared behaviour and state for the common controls hit-test structures, LVHITTESTINFO, TCHITTESTINFO, and TVHITTESTINFO. There is no actual Win32 common control structure of this name.'!
 !OS.CCHITTESTINFO categoriesForClass!External-Data-Structured-Win32! !
 !OS.CCHITTESTINFO methodsFor!
-
-flags
-	"Answer the <Integer> value of the receiver's 'flags' field."
-
-	^bytes uint32AtOffset: _OffsetOf_flags!
 
 handle
 	"Private - Answer the item 'handle' associated with the receiver."
@@ -28,6 +23,16 @@ isItemHit
 
 	^self handle notNull!
 
+position: aPoint
+	bytes
+		int32AtOffset: ##(_OffsetOf_pt + POINTL._OffsetOf_x) put: aPoint x;
+		int32AtOffset: ##(_OffsetOf_pt + POINTL._OffsetOf_y) put: aPoint y!
+
+pt
+	"Answer the <POINTL> value of the receiver's 'pt' field."
+
+	^POINTL fromAddress: bytes yourAddress!
+
 pt: aPOINTL
 	"Set the receiver's 'pt' field to the value of the argument, aPOINTL"
 
@@ -37,9 +42,10 @@ pt: aPOINTL
 		to: ##(_OffsetOf_pt + POINTL._POINTL_Size)
 		startingAt: 1! !
 !OS.CCHITTESTINFO categoriesForMethods!
-flags!**compiled accessors**!public! !
 handle!accessing!private! !
 isItemHit!public!testing! !
+position:!accessing!public! !
+pt!**compiled accessors**!public! !
 pt:!**compiled accessors**!public! !
 !
 
@@ -54,15 +60,16 @@ defineFields
 		CCHITTESTINFO compileDefinition
 	"
 
-	self
-		defineField: #pt type: (StructureField type: POINTL) beWriteOnly;
-		defineField: #flags type: UInt32Field readOnly!
+	self defineField: #pt type: (StructureField type: POINTL)!
 
-getFieldNames
-	^#(#pt #flags)! !
+position: aPoint
+	^self basicNew bytes: ((ByteArray newFixed: self byteSize)
+				int32AtOffset: ##(_OffsetOf_pt + POINTL._OffsetOf_x) put: aPoint x;
+				int32AtOffset: ##(_OffsetOf_pt + POINTL._OffsetOf_y) put: aPoint y;
+				yourself)! !
 !OS.CCHITTESTINFO class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!development!public!template definition! !
-getFieldNames!constants!private! !
+position:!accessing!instance creation!public! !
 !
 

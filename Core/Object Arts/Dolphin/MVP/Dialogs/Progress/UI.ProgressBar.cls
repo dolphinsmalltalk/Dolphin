@@ -108,17 +108,17 @@ range: anIntegerInterval
 	if there was not one."
 
 	| answer |
-	self
-		assert: [anIntegerInterval start >= ValidRange start & (anIntegerInterval stop <= ValidRange stop)].
+	(anIntegerInterval start >= ValidRange start and: [anIntegerInterval stop <= ValidRange stop])
+		ifFalse: 
+			[InvalidArgumentError
+				signal: '<1p> is outside [<2p>..<3p>]' << { anIntegerInterval. ValidRange start. ValidRange stop }
+				with: 'anIntegerInterval'].
 	answer := self
-				sendMessage: PBM_SETRANGE
+				sendMessageNz: PBM_SETRANGE
 				wParam: 0
 				lpParam: (anIntegerInterval start asInteger bitOr: (anIntegerInterval stop asInteger bitShift: 16)).
-	^answer == 0
-		ifTrue: [self errorInCommonControlCall]
-		ifFalse: 
-			[self refreshContents.
-			answer lowWord to: answer highWord]!
+	self refreshContents.
+	^answer lowWord to: answer highWord!
 
 setControlBackcolor: aColor 
 	self 

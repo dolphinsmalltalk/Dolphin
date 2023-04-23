@@ -375,7 +375,6 @@ onViewCreated
 		when: #headerClicked
 		send: #hideTray
 		to: self.
-	self assert: [self isStateRestoring or: [tabs isManaged not]].
 	self usePreferredExtent: true.
 	self observeTabs.
 !

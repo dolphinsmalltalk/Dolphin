@@ -112,10 +112,10 @@ allSuperclasses
 	cannot be relied upon in portable code because the ANSI standard specifies
 	only <collection>."
 
-	| answer |
-	answer := OrderedCollection new.
-	self allSuperclassesDo: [:each | answer addLast: each].
-	^answer!
+	| supers |
+	supers := WriteStream on: (Array new: 4).
+	self allSuperclassesDo: [:each | supers nextPut: each].
+	^supers contents!
 
 allSuperclassesDo: aMonadicValuable
 	"Private - Evaluate the monadic valuable argument for each of the receiver's 
@@ -961,12 +961,13 @@ whichSelectorsWrite: aString
 		collect: [:each | each selector]!
 
 withAllSuperclasses
-	"Answer an <OrderedCollection> containing the receiver, and all of the receiver''s 
-	superclasses in breadth-first order."
+	"Answer an <sequencedReadableCollection> starting with the receiver, and then all of the receiver''s superclasses in sequence up to a root class."
 
-	^(self allSuperclasses)
-		addFirst: self;
-		yourself!
+	| classes |
+	classes := WriteStream on: (Array new: 4).
+	classes nextPut: self.
+	self allSuperclassesDo: [:each | classes nextPut: each].
+	^classes contents!
 
 withAllSuperclassesDo: aMonadicValuable
 	"Evaluate the monadic valuable argument for the receiver and each 

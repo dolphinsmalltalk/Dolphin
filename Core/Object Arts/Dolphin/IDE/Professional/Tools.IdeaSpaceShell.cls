@@ -12,10 +12,10 @@ Tools.IdeaSpaceShell comment: ''!
 !Tools.IdeaSpaceShell categoriesForClass!MVP-Presenters! !
 !Tools.IdeaSpaceShell methodsFor!
 
-absorbCard: card 
+absorbCard: card
 	card view setParent: cardsPresenter view.
-	card view 
-		setWindowPosAfter: HWND_BOTTOM asParameter
+	card view
+		setWindowPosAfter: HWND_BOTTOM
 		x: 0
 		y: 0
 		width: 0

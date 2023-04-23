@@ -14,9 +14,16 @@ package setClassNames: #(
 	#{Graphics.Tests.Point3DTest}
 	#{Graphics.Tests.PointTest}
 	#{Graphics.Tests.RectangleTest}
+	#{OS.Tests.CCITEMTest}
+	#{OS.Tests.LVITEMWTest}
+	#{OS.Tests.NMGETINFOTIPTest}
+	#{OS.Tests.NMLVGETINFOTIPWTest}
+	#{OS.Tests.NMTVGETINFOTIPWTest}
 	#{OS.Tests.POINTLTest}
 	#{OS.Tests.POINTSTest}
 	#{OS.Tests.RECTLTest}
+	#{OS.Tests.TCITEMWTest}
+	#{OS.Tests.TVITEMWTest}
 	#{UI.Tests}
 	#{UI.Tests.AbstractCardContainerTest}
 	#{UI.Tests.AbstractContainerViewTest}
@@ -229,6 +236,13 @@ Core.Tests.DolphinTest
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Tests.DolphinTest
+	subclass: #'OS.Tests.CCITEMTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest
 	subclass: #'UI.Tests.ClipboardTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -294,6 +308,13 @@ Core.Tests.DolphinTest
 Core.Tests.DolphinTest
 	subclass: #'UI.Tests.MoenTreeViewTest'
 	instanceVariableNames: 'treeModel treeView nodeA nodeB nodeC nodeD nodeE nodeF shell scroller useShell'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest
+	subclass: #'OS.Tests.NMGETINFOTIPTest'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -417,6 +438,27 @@ External.Tests.RECTTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+OS.Tests.CCITEMTest
+	subclass: #'OS.Tests.LVITEMWTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.Tests.CCITEMTest
+	subclass: #'OS.Tests.TCITEMWTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.Tests.CCITEMTest
+	subclass: #'OS.Tests.TVITEMWTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 External.Tests.ExternalArrayTest
 	subclass: #'External.Tests.POINTLArrayTest'
 	instanceVariableNames: ''
@@ -454,6 +496,20 @@ UI.Tests.LayoutManagerTest
 	classConstants: {}!
 UI.Tests.LayoutManagerTest
 	subclass: #'UI.Tests.ProportionalLayoutTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.Tests.NMGETINFOTIPTest
+	subclass: #'OS.Tests.NMLVGETINFOTIPWTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.Tests.NMGETINFOTIPTest
+	subclass: #'OS.Tests.NMTVGETINFOTIPWTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

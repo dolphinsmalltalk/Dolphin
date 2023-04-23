@@ -839,7 +839,7 @@ fromArray: anArray
 fromCOLORREF: anInteger
 	"Answer an appropriate <Color> to represent the color code value, anInteger."
 
-	^((anInteger bitAnd: 16rFFFFFF) < 256 and: [(anInteger bitAnd: 16rFF000000) == 16r1000000])
+	^((anInteger bitAnd: 16rFFFFFF) < 256 and: [(16rFF000000 bitAnd: anInteger) == 16r1000000])
 		ifTrue: [IndexedColor withIndex: anInteger]
 		ifFalse: [ColorRef fromCOLORREF: anInteger]!
 

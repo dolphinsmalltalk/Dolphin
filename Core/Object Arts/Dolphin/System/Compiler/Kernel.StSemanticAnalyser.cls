@@ -519,18 +519,15 @@ visitSequenceNode: aSequenceNode
 	answer := super visitSequenceNode: aSequenceNode.
 	currentScope temporaries do: 
 			[:each |
-			| reads writes |
-			reads := each reads.
-			writes := each writes.
-			writes isEmpty
+			each writes isEmpty
 				ifTrue: 
 					["Not Written..."
-					reads isEmpty
+					each reads isEmpty
 						ifTrue: [self signalError: CWarnUnreferencedTemp forNode: each node]
-						ifFalse: [self signalError: CWarnReadNotWritten forNode: reads first]]
+						ifFalse: [self signalError: CWarnReadNotWritten forNode: each reads first]]
 				ifFalse: 
 					["Written..."
-					reads isEmpty ifTrue: [self signalError: CWarnWrittenNotRead forNode: writes first]]].
+					each reads isEmpty ifTrue: [self signalError: CWarnWrittenNotRead forNode: each writes first]]].
 	^answer!
 
 visitSuperVariableNode: aSuperVariableNode

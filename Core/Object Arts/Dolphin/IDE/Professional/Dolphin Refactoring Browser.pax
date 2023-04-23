@@ -2888,69 +2888,87 @@ queryRefactoringCommand: aCommandQuery
 	"Private - Enter details about a potential refactoring command for the receiver 
 	into the <CommandQuery> argument."
 
-	| selector class |
+	| selector |
 	selector := aCommandQuery commandSymbol.
-	class := self actualClass.
 	(#(#classRefactoringsMenu #addClassVariable #addImport) identityIncludes: selector)
 		ifTrue: 
-			[aCommandQuery isEnabled: class notNil.
+			[aCommandQuery isEnabled: self actualClass notNil.
 			^true].
 	#addInstanceVariable == selector
 		ifTrue: 
-			[| prefix |
+			[| prefix class |
+			class := self actualClass.
 			prefix := (class notNil and: [class isMeta]) ifTrue: ['Class '] ifFalse: [''].
 			aCommandQuery
-				text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: {prefix}
+				text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: { prefix }
 							locale: Locale smalltalk);
 				isEnabled: (class notNil and: [class isPointers]).
 			^true].
 	(#(#removeInstanceVariables #protectInstanceVariables #abstractInstanceVariables #renameInstanceVariable)
 		identityIncludes: selector)
 			ifTrue: 
-				[aCommandQuery isEnabled: (class notNil and: [class instanceVariableNames notEmpty]).
+				[| class |
+				class := self actualClass.
+				aCommandQuery isEnabled: (class notNil and: [class instanceVariableNames notEmpty]).
 				^true].
 	#pushDownInstanceVariables == selector
 		ifTrue: 
-			[aCommandQuery
+			[| class |
+			class := self actualClass.
+			aCommandQuery
 				isEnabled: (class notNil and: [class subclasses notEmpty and: [class instanceVariableNames notEmpty]]).
 			^true].
 	#pushDownVariables == selector
 		ifTrue: 
-			[aCommandQuery
+			[| class |
+			class := self actualClass.
+			aCommandQuery
 				isEnabled: (class notNil and: 
 							[class subclasses notEmpty and: [class instanceVariableNames notEmpty or: [class classPool notEmpty]]]).
 			^true].
 	#pullUpInstanceVariables == selector
 		ifTrue: 
-			[aCommandQuery isEnabled: (class notNil
+			[| class |
+			class := self actualClass.
+			aCommandQuery isEnabled: (class notNil
 						and: [class allSubclasses anySatisfy: [:each | each instanceVariableNames notEmpty]]).
 			^true].
 	#pullUpClassVariables == selector
 		ifTrue: 
-			[aCommandQuery isEnabled: (class notNil
+			[| class |
+			class := self actualClass.
+			aCommandQuery isEnabled: (class notNil
 						and: [class instanceClass allSubclasses anySatisfy: [:each | each classBindingNames notEmpty]]).
 			^true].
 	(#(#renameClassVariable #removeClassVariables #pushDownClassVariables #createClassVariableAccessors #abstractClassVariables)
 		identityIncludes: selector)
 			ifTrue: 
-				[aCommandQuery isEnabled: (class notNil and: [class instanceClass classBindingNames notEmpty]).
+				[| class |
+				class := self actualClass.
+				aCommandQuery isEnabled: (class notNil and: [class instanceClass classBindingNames notEmpty]).
 				^true].
 	(#(#renameVariables #removeVariables #pushDownVariables #protectVariables #abstractVariables #createVariableAccessors)
 		identityIncludes: selector)
 			ifTrue: 
-				[aCommandQuery isEnabled: (class notNil
+				[| class |
+				class := self actualClass.
+				aCommandQuery isEnabled: (class notNil
 							and: [class instanceVariableNames notEmpty or: [class instanceClass classBindingNames notEmpty]]).
 				^true].
 	#pushDownVariables == selector
 		ifTrue: 
-			[aCommandQuery
+			[| class |
+			class := self actualClass.
+			aCommandQuery
 				isEnabled: (class notNil and: 
 							[class subclasses notEmpty
 								and: [class instanceVariableNames notEmpty or: [class instanceClass classBindingNames notEmpty]]]).
 			^true].
 	#pullUpVariables == selector
 		ifTrue: 
-			[aCommandQuery
+			[| class |
+			class := self actualClass.
+			aCommandQuery
 				isEnabled: (class notNil and: 
 							[| isFixed |
 							isFixed := ClassBuilder isFixedLayout: class.

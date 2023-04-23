@@ -638,7 +638,7 @@ getTextExtentPoint32: hdc lpString: lpString c: cbString lpSize: lpSize
 			int c,
 			SIZEL* lpSize);"
 
-	<stdcall: bool GetTextExtentPoint32W handle lpwstr int32 lpvoid>
+	<stdcall: bool GetTextExtentPoint32W handle lpwstr int32 SIZEL*>
 	^self invalidCall: _failureCode!
 
 getTextMetrics: hdc lptm: lptm
@@ -653,10 +653,11 @@ getViewportExtEx: hdc lpSize: lpSize
 	current viewport for the specified device context. 
 
 		BOOL GetViewportExtEx(
-			HDC  hdc,	// handle of device context 
-			LPPOINT  lpPoint 	// points to retrieved extent origin );"
+			[in]  HDC    hdc,
+			[out] LPSIZE lpsize
+		);"
 
-	<stdcall: bool GetViewportExtEx handle POINTL*>
+	<stdcall: bool GetViewportExtEx handle SIZEL*>
 	^self invalidCall: _failureCode!
 
 getViewportOrgEx: hdc lppt: lppt
@@ -1082,12 +1083,12 @@ setViewportExtEx: hdc nXExtent: nXExtent nYExtent: nYExtent lpSize: lpSize
 	of the viewport for a device context by using the specified values. 
 
 		BOOL SetViewportExtEx(
-			HDC  hdc,	// handle of device context 
-			int  X,	// x-coordinate of new origin 
-			int  Y,	// y-coordinate of new origin 
-			LPPOINT  lpPoint 	// points to previous origin );"
-
-	<stdcall: bool SetViewportExtEx handle int32 int32 POINTL*>
+			[in]  HDC    hdc,
+			[in]  int    x,
+			[in]  int    y,
+			[out] LPSIZE lpsz);
+	"
+	<stdcall: bool SetViewportExtEx handle int32 int32 SIZEL*>
 	^self invalidCall: _failureCode!
 
 setViewportOrgEx: hdc nXOrg: x nYOrg: y lppt: aPOINT

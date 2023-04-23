@@ -64,11 +64,41 @@ testLocalScope
 testMessages
 	"Messages sent in a primitive, including those with special byte codes - note that #ifTrue: and whileFalse: are not detected. These are in the literal frame; recognising the bytecode patterns would be expensive, but they could be detected from the frame as special cases since we know they are messages."
 
-	#todo.	"#+ should be included"
 	self assert: (Object >> #basicIdentityIndexOf:from:to:) messages asSortedArray
-		equals: #(#< #== #basicAt:).
+		equals: #(#+ #< #== #basicAt:).
 	"Special inst var return method - no messages"
-	self assert: (Association >> #setKey:) messages asArray equals: #()!
+	self assert: (Association >> #setKey:) messages asArray equals: #().
+	"Null coalescence operator #??"
+	self assert: (Behavior >> #methodDictionary) messages asArray equals: #(#??).
+	"Not identical #~~"
+	self assert: (Boolean >> #xor:) messages asArray equals: #(#~~).
+	"#not"
+	self assert: (true class >> #xor:) messages asArray equals: #(#not).
+	"#+ encoded in an incrementStackTop instruction"
+	self assert: (SequenceableCollection >> #allButFirst:) messages asSortedArray
+		equals: #(#+ #copyFrom:to: #size).
+	"#- encoded in a decrementStackTop instruction"
+	self assert: ((SequenceableCollection >> #before:ifAbsent:) messages includes: #-).
+	"#+ encoded in an Increment and push temp instruction"
+	self assert: ((ArrayedCollection >> #do:) messages includes: #+).
+	"#- encoded in an Decrement and push temp instruction"
+	self assert: (SequenceableCollection >> #findLast:) messages asSortedArray
+		equals: #(#- #> #at: #size #value:).
+	"#- encoded in a decrement temp instruction"
+	self assert: ((LargeInteger >> #digitLength) messages includes: #-).
+	"#+ encoded in an increment temp instruction"
+	self assert: ((LinkedList >> #at:) messages includes: #+).
+	"Push send self instructions"
+	self assert: ((SessionManager >> #serverShutdown) messages includes: #isHeadless).
+	"Push temp and send instructions"
+	self assert: ((BlockFrame >> #block) messages includes: #block).
+	"Supersend"
+	self assert: ((Bag >> #postCopy) messages includes: #postCopy).
+	"Long send"
+	self assert: ((Compiler class >> #notificationCallback:) messages
+				includes: #code:in:for:selector:position:line:range:extras:).
+	"isZero (i.e. == 0)"
+	self assert: (Collection >> #isEmpty) messages asSortedArray equals: #(#== #size)!
 
 testRecompileMaintainsEnvironmentAndPackage
 	"Verify that a recompiled method's environment is maintained if different from it's method class', and likewise the owning package"

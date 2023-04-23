@@ -510,14 +510,15 @@ byteSize: anInteger
 
 canUnderstand: aSymbol
 	^(super canUnderstand: aSymbol) or: 
-			[| size field |
-			(aSymbol at: (size := aSymbol size)) == $:
-				ifTrue: 
-					[field := self template lookup: (aSymbol copyFrom: 1 to: size - 1).
-					field notNil and: [field isWriteable]]
-				ifFalse: 
-					[field := self template lookup: aSymbol.
-					field notNil and: [field isReadable]]]!
+			[self isCompiled not and: 
+					[| size field |
+					(aSymbol at: (size := aSymbol size)) == $:
+						ifTrue: 
+							[field := self template lookup: (aSymbol copyFrom: 1 to: size - 1).
+							field notNil and: [field isWriteable]]
+						ifFalse: 
+							[field := self template lookup: aSymbol.
+							field notNil and: [field isReadable]]]]!
 
 changedByteSizeFrom: anInteger
 	"Private - If the size of the receiver changes such that it fits into a different type for passing/returning structures by value, then we must recompile all existing referencing methods that might have a static literal snapshot of the byte size of the receiver."

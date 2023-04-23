@@ -46,30 +46,10 @@ actualBitmapSize
 				ifTrue: [visibleParent actualBitmapSize]
 				ifFalse: [self defaultBitmapSize]]!
 
-addBitmap: aBitmap index: anIntegerIndex
-	"Private - Add the sub-bitmap identified by anIntegerIndex within aBitmap
-	to the receiver. Answer the index of the sub-bitmap within the registered
-	entries"
+addBitmap: aBitmap index: anInteger
+	"Private - Add the sub-bitmap identified by anIntegerIndex within aBitmap to the receiver. Answer the index of the sub-bitmap within the registered entries."
 
-	| start |
-	start := bitmapsStart at: aBitmap
-				ifAbsentPutClean: 
-					[| gdiBitmap size |
-					gdiBitmap := aBitmap asBitmap.
-					gdiBitmap setMap3DColors: true.
-					"If the extent reported by the bitmap is not correct, then the start index will be out,
-					 so watch out for caching duff old extent (see Bitmap>>loadFromInstance)."
-					size := gdiBitmap extent x // self actualBitmapSize x.
-
-					"#305 We must make sure that the bitmap is not selected into a DC or the result will
-					be a blank image in the list. This won't damage the bitmap in any way because the canvas
-			`		can always be lazily recreated."
-					gdiBitmap freeDC.
-					self tbAddBitmap: (TBADDBITMAP newBuffer
-								nID: gdiBitmap asParameter;
-								yourself)
-						size: size].
-	^start + anIntegerIndex!
+	^(bitmapsStart at: aBitmap ifAbsentPutClean: [self tbAddBitmap: aBitmap]) + anInteger!
 
 addEditTools
 	"Private - Add the standard edit tools to the receiver."
@@ -122,11 +102,13 @@ addSystemBitmap: systemBitmapId index: anIntegerIndex
 	| start |
 	start := bitmapsStart at: systemBitmapId
 				ifAbsentPutClean: 
-					[| addBitmap |
-					(addBitmap := TBADDBITMAP newBuffer)
-						hInst: HINST_COMMCTRL;
-						nID: systemBitmapId.
-					self tbAddBitmap: addBitmap size: 0].
+					[self
+						sendMessage: TB_ADDBITMAP
+						wParam: 0
+						lpParam: (TBADDBITMAP newBuffer
+								hInst: HINST_COMMCTRL;
+								nID: systemBitmapId;
+								yourself)].
 	^start + anIntegerIndex!
 
 applyFont
@@ -171,7 +153,10 @@ basicAddItems: tools
 						fsStyle: toolbarItem style;
 						iString: (hasLabels ifTrue: [toolbarItem textIndexIn: self] ifFalse: [-1])].
 	buttons beUnfinalizable.	"Nothing to free here"
-	self tbAddButtons: buttons.
+	self
+		sendMessageNz: TB_ADDBUTTONSW
+		wParam: buttons size
+		lpParam: buttons.
 	^tools!
 
 bitmapSize
@@ -231,7 +216,7 @@ calculateExtent: aLayoutContext
 	size x: size x + self indent.
 	"Neither does the Windows calculation allow for a similar border above and below the button.
 	We'll add half the pad height."
-	size y: size y + (self tbGetPadding y // 2).
+	size y: size y + ((self sendMessage: TB_GETPADDING) highWord // 2).
 	^self calcExtentFromClientExtent: size!
 
 canCustomize
@@ -325,6 +310,17 @@ filerProxy
 	saved := bitmapsStart.
 	bitmapsStart := nil.
 	^[super filerProxy] ensure: [bitmapsStart := saved]!
+
+getItemRect: anInteger
+	"Private - Answer the bounding <RECTL> for the button at the specified zero-based <Integer> index."
+
+	| rect |
+	rect := RECTL newBuffer.
+	self
+		sendMessageNz: TB_GETITEMRECT
+		wParam: anInteger
+		lpParam: rect.
+	^rect!
 
 hasFlatAppearance
 	"Answer whether the receiver has a flat appearance. A flat toolbar draws its buttons without
@@ -449,11 +445,6 @@ itemFromId: anInteger
 
 	^idMap lookup: anInteger!
 
-itemRect: index
-	"Answer the bounding <Rectangle> for the button at 1-based <Integer> index."
-
-	^(self tbGetItemRect: index - 1) asRectangle!
-
 items
 	"Private - Answer the receiver's <OrderedCollection> of <ToolbarItem>s.
 	Implementation Note: We explicity convert to an OrderedCollection here to make
@@ -553,16 +544,15 @@ onEraseRequired: aColorEvent
 						ifFalse: [(rect left + (self calculateExtent: nil) x) @ rect top]) corner: rect corner)].
 	^true!
 
-onPositionChanged: aPositionEvent 
-	"Handle a window position change event (move or resize).
-	Implementation Note:  Toolbars (depending on the Common Control Library
-	version) do not redraw properly when wrapping so we always invalidate them 
-	here."
+onPositionChanged: aPositionEvent
+	"Handle a window position change event (move or resize)."
 
-	aPositionEvent isResize 
+	"Implementation Note:  Toolbars (depending on the Common Control Library version) do not redraw properly when wrapping so we always invalidate them here."
+
+	aPositionEvent isResize
 		ifTrue: 
 			["Dynamically change the receiver's orientation to take best advantage of the available space."
-			self isVertical: aPositionEvent height > aPositionEvent width.
+			self isVertical: aPositionEvent isTall.
 			self invalidate].
 	^super onPositionChanged: aPositionEvent!
 
@@ -574,10 +564,12 @@ onViewCreated
 	Finish the job and install the known ToolbarItems"
 
 	super onViewCreated.
-	self tbButtonStructSize: TBBUTTON._TBBUTTON_Size.
+	self
+		sendMessage: TB_BUTTONSTRUCTSIZE
+		wParam: TBBUTTON._TBBUTTON_Size
+		lParam: 0.
 	bitmapsStart := LookupTable new.
 	self changeButtonSize: [self tbSetBitmapSize: self actualBitmapSize].
-	#todo.	"Store extended style in an inst. var (appear to be some unused?) and provide accessors/mode settings"
 	self tbSetExtendedStyle: ##(TBSTYLE_EX_DRAWDDARROWS | TBSTYLE_EX_DOUBLEBUFFER).
 	self clearIdMap.
 	self indent == 0 ifFalse: [self tbSetIndent: self indent].
@@ -599,31 +591,29 @@ removeItem: aToolbarItem
 	items := (items copyFrom: 1 to: index-1), (items copyFrom: index+1).
 	aToolbarItem commandId ~= 0 ifTrue: [
 		idMap removeKey: aToolbarItem commandId].
-	self tbDeleteButton: index.
+	self tbDeleteButton: index - 1.
 	^aToolbarItem!
 
 size
 	"Answer the number of ToolbarItems in the receiver."
 
-	^self tbButtonCount!
+	^self sendMessage: TB_BUTTONCOUNT!
 
-tbAddBitmap: struct size: size
-	"Private - Adds the images referenced in struct to the receiver.
-	Answer the index of the first element, or -1 if the call failed."
+tbAddBitmap: aBitmap
+	| size gdiBitmap |
+	gdiBitmap := aBitmap asBitmap.
+	gdiBitmap setMap3DColors: true.
+	"If the extent reported by the bitmap is not correct, then the start index will be out, so watch out for caching duff old extent (see Bitmap>>loadFromInstance)."
+	size := gdiBitmap extent x // self actualBitmapSize x.
 
+	"#305 We must make sure that the bitmap is not selected into a DC or the result will be a blank image in the list. This won't damage the bitmap in any way because the canvas can always be lazily recreated."
+	gdiBitmap freeDC.
 	^self
 		sendMessage: TB_ADDBITMAP
 		wParam: size
-		lpParam: struct asParameter!
-
-tbAddButtons: tbButtons
-	"Private - Adds a StructureArray of tbButtons to the receiver."
-
-	| index |
-	index := self sendMessage: TB_ADDBUTTONSW wParam: tbButtons size lpParam: tbButtons asParameter.
-	^index == 0
-		ifTrue: [self errorInCommonControlCall]
-		ifFalse: [index]!
+		lpParam: ((ByteArray newFixed: TBADDBITMAP._TBADDBITMAP_Size)
+				uintPtrAtOffset: TBADDBITMAP._OffsetOf_nID put: gdiBitmap asParameter;
+				yourself)!
 
 tbAddString: aString
 	"Private - Add aString to the receiver. Answer the index of the new string."
@@ -642,17 +632,6 @@ tbAutoSize
 
 	self sendMessage: TB_AUTOSIZE!
 
-tbButtonCount
-	"Private - Answer number of buttons in the toolbar."
-
-	^self sendMessage: TB_BUTTONCOUNT!
-
-tbButtonStructSize: anInteger
-	^self
-		sendMessage: TB_BUTTONSTRUCTSIZE
-		wParam: anInteger
-		lParam: 0!
-
 tbCheckButton: anIntegerId state: checkBoolean
 	"Private - Set whether the button with anIntegerId is checked or not.
 	See the note in #tbEnableButton:state: regarding the deliberate lack of error checking"
@@ -665,36 +644,31 @@ tbCustomize
 	self sendMessage: TB_CUSTOMIZE!
 
 tbDeleteButton: anInteger
-	"Private - Delete the button with anInteger index from the receiver."
+	"Private - Delete the button with the specified zero-based <integer> index from the receiver."
 
-	(self sendMessage: TB_DELETEBUTTON wParam: anInteger - 1 lParam: 0) == 0
-		ifTrue: [^self errorInCommonControlCall]!
+	self
+		sendMessageNz: TB_DELETEBUTTON
+		wParam: anInteger
+		lpParam: nil!
 
 tbEnableButton: anIntegerId state: enableBoolean
-	"Private - Set whether the button with anIntegerId is enabled or not.
+	"Private - Set whether the button with anIntegerId is enabled or not."
 
-	Note: Unusually we don't generate an #errorInCommonControlCall if this fails.
-	This is to prevent a walkback appearing in the idle processing of #validUserInterface
-	when enabling/disabling toolbar buttons while a view is being closed. The problem only
-	occurs when a view is closed by a process other than the user interface process 
-	(e.g the Debugger). Unfortunately it is not possible to test the toolbar with #isOpen 
-	because it reports that it still is. I suspect that although the toolbar is still open - the 
-	buttons are not"
-
-	(self sendMessage: TB_ENABLEBUTTON wParam: anIntegerId lParam: enableBoolean asParameter) == 0
-		ifTrue: [self errorInCommonControlCall]!
+	self
+		sendMessageNz: TB_ENABLEBUTTON
+		wParam: anIntegerId
+		lpParam: enableBoolean asParameter!
 
 tbGetButton: anInteger
-	"Private - Answer a TBBUTTON describing the button with anInteger index in the receiver."
+	"Private - Answer a TBBUTTON describing the button with the specified zero-based <integer> index in the receiver."
 
 	| tbButton |
 	tbButton := TBBUTTON newBuffer.
-	^(self
-		sendMessage: TB_GETBUTTON
-		wParam: anInteger - 1
-		lpParam: tbButton asParameter) == 0
-		ifTrue: [self errorInCommonControlCall]
-		ifFalse: [tbButton]!
+	self
+		sendMessageNz: TB_GETBUTTON
+		wParam: anInteger
+		lpParam: tbButton asParameter.
+	^tbButton!
 
 tbGetButtonInfo: iID tbbi: binfo
 	"Private - Populate the <TBBUTTONINFO>, binfo,  argument with information about the 
@@ -713,59 +687,28 @@ tbGetButtonSize
 	size := self sendMessage: TB_GETBUTTONSIZE.
 	^size lowWord @ size highWord!
 
-tbGetIdealHeight
-	"Private - Answer the ideal height for the receiver."
-
-	| size |
-	size := SIZEL newBuffer.
-	self
-		sendMessage: TB_GETIDEALSIZE
-		wParam: true asParameter
-		lpParam: size.
-	^size cy!
-
-tbGetIdealWidth
-	"Private - Answer the ideal width for the receiver."
-
-	| size |
-	size := SIZEL newBuffer.
-	self
-		sendMessage: TB_GETIDEALSIZE
-		wParam: false asParameter
-		lpParam: size.
-	^size cx!
-
 tbGetItemRect: anInteger
 	"Private - Answer the bounding RECTL for the receiver's button with the zero-based
 	<Integer> index."
 
 	| rect |
 	rect := RECTL newBuffer.
-	(self
-		sendMessage: TB_GETITEMRECT
+	self
+		sendMessageNz: TB_GETITEMRECT
 		wParam: anInteger
-		lpParam: rect) == 0
-		ifTrue: [^self errorInCommonControlCall].
+		lpParam: rect.
 	^rect!
 
 tbGetMaxSize
 	"Private - Answer the maximum extent for the receiver."
 
 	| size |
-	size := POINTL newBuffer.
+	size := SIZEL newBuffer.
 	self
-		sendMessage: TB_GETMAXSIZE
+		sendMessageNz: TB_GETMAXSIZE
 		wParam: 0
 		lpParam: size.
 	^size asPoint!
-
-tbGetPadding
-	"Private - Answer the padding between buttons of the receiver."
-
-	| pad |
-	pad := self sendMessage: TB_GETPADDING.
-	^pad lowWord @ pad highWord
-!
 
 tbGetRect: id
 	"Private - Answer the bounding RECTL for the receiver's button with the specified
@@ -773,11 +716,10 @@ tbGetRect: id
 
 	| rect |
 	rect := RECTL newBuffer.
-	(self
-		sendMessage: TB_GETRECT
+	self
+		sendMessageNz: TB_GETRECT
 		wParam: id
-		lpParam: rect) == 0
-		ifTrue: [^self errorInCommonControlCall].
+		lpParam: rect.
 	^rect!
 
 tbGetRows
@@ -801,16 +743,20 @@ tbGetToolTips
 	^(self sendMessage: TB_GETTOOLTIPS) asExternalHandle!
 
 tbHideButton: anIntegerId state: hideBoolean
-	"Private - Set whether the button with anIntegerId is shown or hidden on the toolbar."
+	"Private - Set whether the button with the command id specified as the <integer> first argument is shown or hidden on the toolbar."
 
-	(self sendMessage: TB_HIDEBUTTON wParam: anIntegerId lParam: hideBoolean asParameter) == 0
-		ifTrue: [self errorInCommonControlCall]!
+	self
+		sendMessageNz: TB_HIDEBUTTON
+		wParam: anIntegerId
+		lpParam: hideBoolean asParameter!
 
 tbIndeterminate: anIntegerId state: indeterminateBoolean
 	"Private - Set whether the button with anIntegerId is in its indeterminate state."
 
-	(self sendMessage: TB_INDETERMINATE wParam: anIntegerId lParam: indeterminateBoolean asParameter) == 0
-		ifTrue: [^self errorInCommonControlCall]!
+	self
+		sendMessageNz: TB_INDETERMINATE
+		wParam: anIntegerId
+		lpParam: indeterminateBoolean asParameter!
 
 tbIsButtonChecked: anIntegerId
 	"Private - Answer whether the button with anIntegerId is checked."
@@ -918,37 +864,36 @@ tbnToolbarChange: pNMHDR
 tbPressButton: anIntegerId state: pressBoolean
 	"Private - Press or release the button with anIntegerId."
 
-	(self
-		sendMessage: TB_PRESSBUTTON
+	self
+		sendMessageNz: TB_PRESSBUTTON
 		wParam: anIntegerId
-		lParam: pressBoolean asParameter) == 0
-		ifTrue: [^self errorInCommonControlCall]!
+		lpParam: pressBoolean asParameter!
 
-tbSetBitmapSize: aPoint 
+tbSetBitmapSize: aPoint
 	"Private - Set the size of the bitmapped images for the receiver
 	to aPoint. Must be sent before any items are added."
 
-	(self 
-		sendMessage: TB_SETBITMAPSIZE
+	self
+		sendMessageNz: TB_SETBITMAPSIZE
 		wParam: 0
-		lParam: aPoint asUIntPtr) == 0 
-		ifTrue: [^self errorInCommonControlCall]!
+		lpParam: aPoint asUIntPtr!
 
-tbSetButtonSize: aPoint 
+tbSetButtonSize: aPoint
 	"Private - Set the size of the receiver's items to be aPoint.
 	Must be sent before any items are added"
 
-	(self 
-		sendMessage: TB_SETBUTTONSIZE
+	self
+		sendMessageNz: TB_SETBUTTONSIZE
 		wParam: 0
-		lParam: aPoint asUIntPtr) == 0 
-		ifTrue: [^self errorInCommonControlCall]!
+		lpParam: aPoint asUIntPtr!
 
 tbSetCmdID: anInteger id: anIntegerId
 	"Private - Set the command id for the button with anInteger index to be anIntegerId."
 
-	(self sendMessage: TB_SETCMDID wParam: anInteger - 1 lParam: anIntegerId) == 0
-		ifTrue: [^self errorInCommonControlCall]!
+	self
+		sendMessageNz: TB_SETCMDID
+		wParam: anInteger - 1
+		lpParam: anIntegerId!
 
 tbSetExtendedStyle: tbExStyleMask
 	"Private - Set the extended toolbar styles of the receiver to the <Integer>
@@ -1065,6 +1010,7 @@ defaultGradientBackcolor!colors!constants!private! !
 defaultGradientForecolor!colors!constants!private! !
 defaultWindowStyle!constants!private! !
 filerProxy!binary filing!private! !
+getItemRect:!geometry!private! !
 hasFlatAppearance!accessing-styles!public! !
 hasFlatAppearance:!accessing-styles!public! !
 hasLabels!accessing-styles!public! !
@@ -1082,7 +1028,6 @@ insets:!accessing!public! !
 itemAtIndex:!accessing!public! !
 itemClass!constants!public! !
 itemFromId:!accessing!private! !
-itemRect:!geometry!public! !
 items!accessing!private! !
 items:!accessing!private! !
 layoutManager!geometry!public! !
@@ -1096,12 +1041,9 @@ onViewCreated!event handling!public! !
 removeAllItems!public!removing! !
 removeItem:!public!removing! !
 size!geometry!public! !
-tbAddBitmap:size:!helpers!private! !
-tbAddButtons:!helpers!private! !
+tbAddBitmap:!helpers!private! !
 tbAddString:!adding!private! !
 tbAutoSize!operations!private! !
-tbButtonCount!geometry!private! !
-tbButtonStructSize:!helpers!private! !
 tbCheckButton:state:!operations!private! !
 tbCustomize!operations!private! !
 tbDeleteButton:!helpers!private! !
@@ -1109,11 +1051,8 @@ tbEnableButton:state:!operations!private! !
 tbGetButton:!accessing!private! !
 tbGetButtonInfo:tbbi:!accessing!private! !
 tbGetButtonSize!geometry!private! !
-tbGetIdealHeight!geometry!private! !
-tbGetIdealWidth!geometry!private! !
 tbGetItemRect:!geometry!private! !
 tbGetMaxSize!geometry!private! !
-tbGetPadding!geometry!private! !
 tbGetRect:!geometry!private! !
 tbGetRows!geometry!private! !
 tbGetState:!accessing!private! !

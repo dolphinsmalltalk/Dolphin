@@ -718,7 +718,6 @@ onMethod: oldCompiledMethod updatedTo: newCompiledMethod
 
 onMethodAdded: aCompilationResult 
 	| method |
-	self assert: [aCompilationResult isNew].
 	method := aCompilationResult method.
 	(self filter value: method) 
 		ifTrue: 
@@ -752,13 +751,13 @@ onMethodSelected
 	"Private - The method selected within the receiver has changed. 
 	Refresh the source pane"
 
-	| text method |
+	| text |
 	self promptToCopyChanges.
-	text := String new.
-	method := self selectedMethod.
-	method notNil
-		ifTrue: 
-			[text := AutoFormat
+	text := self selectedMethod
+				ifNil: ['']
+				ifNotNil: 
+					[:method |
+					AutoFormat
 						ifTrue: [method parseTreeNoError ifNil: [method getSource] ifNotNil: [:tree | tree formattedCode]]
 						ifFalse: [method getSource]].
 	sourcePresenter

@@ -12,6 +12,11 @@ OS.SIZEL comment: '`SIZE` is an `ExternalStructure` class to wrap the standard W
 !OS.SIZEL categoriesForClass!Win32-Structs! !
 !OS.SIZEL methodsFor!
 
+asPoint
+	"Answer a suitable Smalltalk object to represent the receiver's value, in this case a <Point>."
+
+	^Graphics.Point x: (bytes int32AtOffset: _OffsetOf_cx) y: (bytes int32AtOffset: _OffsetOf_cy)!
+
 cx
 	"Answer the <Integer> value of the receiver's 'cx' field."
 
@@ -44,6 +49,7 @@ width
 width: anObject
 	bytes int32AtOffset: _OffsetOf_cx put: anObject! !
 !OS.SIZEL categoriesForMethods!
+asPoint!converting!public! !
 cx!**compiled accessors**!public! !
 cx:!**compiled accessors**!public! !
 cy!**compiled accessors**!public! !

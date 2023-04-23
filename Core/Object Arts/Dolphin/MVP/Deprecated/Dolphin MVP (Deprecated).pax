@@ -102,8 +102,6 @@ package methodNames
 	add: #TypeConverter -> #rightExceptionalValue:;
 	add: #UserLibrary -> #winHelp:lpszHelp:uCommand:dwData:;
 	add: #View -> #defaultWindowProcessing:;
-	add: #View -> #hasWindowEdge;
-	add: #View -> #hasWindowEdge:;
 	add: #View -> #winHelpPopup:topic:;
 	add: #View -> #winHelpPopup:topic:at:;
 	add: 'Brush class' -> #dkGray;
@@ -1034,16 +1032,6 @@ defaultWindowProcessing: anEvent
 	#deprecated.
 	^anEvent defaultWindowProcessing!
 
-hasWindowEdge
-	#deprecated.	"6.0: This style is automatically managed by Windows and changing it has no
-			effect."
-	^self exStyleAllMask: WS_EX_WINDOWEDGE!
-
-hasWindowEdge: aBoolean 
-	#deprecated.	"6.0: This style is automatically managed by Windows and changing it has no
-			effect."
-	(self exStyleMask: WS_EX_WINDOWEDGE set: aBoolean) ifTrue: [self frameChanged]!
-
 winHelpPopup: helpFileString topic: topicId 
 	#deprecated. "Not supported on Windows 10 and later."
 	^self 
@@ -1067,8 +1055,6 @@ winHelpPopup: helpFileString topic: topicId at: aPointOrNil
 		dwData: topicId! !
 !View categoriesForMethods!
 defaultWindowProcessing:!dispatching!public! !
-hasWindowEdge!accessing-styles!public! !
-hasWindowEdge:!accessing-styles!public! !
 winHelpPopup:topic:!public! !
 winHelpPopup:topic:at:!public! !
 !

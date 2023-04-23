@@ -158,10 +158,7 @@ brushOrigin: aPoint
 clipBox
 	"Answers the smallest <Rectangle> the completely bounds the receiver's current clipping region."
 
-	| answer |
-	answer := RECTL newBuffer.
-	Gdi32 getClipBox: self asParameter lprc: answer.
-	^answer asRectangle!
+	^self getClipBox asRectangle!
 
 colorDepth
 	"Answers the colour bit depth supported by the receiver"
@@ -407,6 +404,12 @@ free
 	handle notNull ifTrue: [self basicFree].
 	handle := source := font := pen := brush := nil.
 	owned := false!
+
+getClipBox
+	| answer |
+	answer := RECTL newBuffer.
+	Gdi32 getClipBox: self asParameter lprc: answer.
+	^answer!
 
 getDeviceCaps: anInteger
 	"Private - Answer the specified device capability."
@@ -840,16 +843,16 @@ text: aString at: aPoint
 textExtent: aString
 	"Answer the extent of aString using the receiver's currently selected font. Note this will only provide an accurate result for a single line of text, and when paired with the GDI ExtTextOut function for painting the text, which will only be the case if the Canvas>>text:at: method is used. For calculating the extent of text drawn with the User32 DrawText API (e.g. by Canvas>>formatText:&c) one of the textExtent:width:&c family of methods must be used."
 
-	| size text |
-	size := POINTL newBuffer.
+	| extent text |
+	extent := SIZEL newBuffer.
 	"We need to do an explicit conversion to UTF16 here, because we have to pass the correct number of code units."
 	text := aString asUtf16String.
 	(Gdi32
 		getTextExtentPoint32: self asParameter
 		lpString: text
 		c: text size
-		lpSize: size asParameter) ifFalse: [^Gdi32 systemError].
-	^size asPoint!
+		lpSize: extent) ifFalse: [^Gdi32 systemError].
+	^extent asPoint!
 
 textExtent: aString width: anIntegerWidth alignment: anAlignSymbol
 	"Answer the extent of aString when formatted with an areas of anIntegerWidth
@@ -862,7 +865,7 @@ textExtent: aString width: anIntegerWidth alignment: anAlignSymbol
 				at: #center put: DT_CENTER;
 				at: #right put: DT_RIGHT;
 				shrink;
-				yourself) at: anAlignSymbol ifAbsent: [DT_LEFT].
+				yourself) at: anAlignSymbol ifAbsent: DT_LEFT.
 	rect := RECTL width: anIntegerWidth.
 	height := self
 				formatText: aString
@@ -896,7 +899,7 @@ viewportExtent
 	"Answers the extent of the receiver's viewport mapping."
 
 	| extent |
-	extent := POINTL newBuffer.
+	extent := SIZEL newBuffer.
 	(Gdi32 getViewportExtEx: self asParameter lpSize: extent) ifFalse: [^Gdi32 systemError].
 	^extent asPoint!
 
@@ -905,7 +908,7 @@ viewportExtent: aPoint
 	Answers the old viewport extent"
 
 	| previous |
-	previous := POINTL newBuffer.
+	previous := SIZEL newBuffer.
 	(Gdi32
 		setViewportExtEx: self asParameter
 		nXExtent: aPoint x
@@ -965,7 +968,7 @@ windowExtent: aPoint
 		nXExtent: aPoint x
 		nYExtent: aPoint y
 		lpSize: previous) ifFalse: [^Gdi32 systemError].
-	^previous asObject!
+	^previous asPoint!
 
 windowOrigin
 	"Answers the origin of the receiver's window mapping."
@@ -1040,6 +1043,7 @@ formatText:in:!drawing!public! !
 formatText:in:flags:!drawing!public! !
 frameRectangle:brush:!drawing!public! !
 free!public!realizing/unrealizing! !
+getClipBox!enquiries!private! !
 getDeviceCaps:!accessing!private! !
 getFont!accessing!public!tools! !
 getPixel:!drawing!private! !

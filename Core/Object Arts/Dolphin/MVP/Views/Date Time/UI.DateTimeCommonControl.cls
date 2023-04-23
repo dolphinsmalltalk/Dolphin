@@ -117,11 +117,10 @@ range: interval
 		ifTrue: 
 			[array at: 2 put: interval last asSYSTEMTIME.
 			gd := gd bitOr: GDTR_MAX].
-	(self
-		sendMessage: self setRangeMessage
+	self
+		sendMessageNz: self setRangeMessage
 		wParam: gd
-		lpParam: array asParameter) asBoolean
-		ifFalse: [^self errorInCommonControlCall]!
+		lpParam: array asParameter!
 
 setRangeMessage
 	^self subclassResponsibility!

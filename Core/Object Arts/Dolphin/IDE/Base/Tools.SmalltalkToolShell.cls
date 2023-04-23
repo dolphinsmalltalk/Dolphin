@@ -575,7 +575,7 @@ ensureOptionsLoaded
 	optionFlags ifNil: [self loadOptions]!
 
 finishedLoadingOptions
-	optionFlags := optionFlags maskClear: LoadingMask!
+	optionFlags := optionFlags bitAnd: ##(LoadingMask bitInvert)!
 
 getAdditionalKeyBindings
 	self ensureOptionsLoaded.

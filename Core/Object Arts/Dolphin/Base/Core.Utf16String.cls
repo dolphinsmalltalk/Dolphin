@@ -69,7 +69,7 @@ at: anInteger
 	"Answer the character at index, anInteger, in the receiver."
 
 	<primitive: 63>
-	^Character utf16Value: (self basicAt: anInteger) ifInvalid: [Character.Replacement]!
+	^Character utf16Value: (self basicAt: anInteger) ifInvalid: Character.Replacement!
 
 before: aCharacter ifAbsent: aNiladicValuable
 	"Answer the <Character> representing the code point before the <Character> argument, or if not present the result of evaluating the <niladicValuable> argument."
@@ -88,15 +88,6 @@ byteSize
 	"Private - Answer the size in bytes of this object. For historical reasons this includes the null terminator (which is actually part of the memory allocated for the String by the Dolphin VM)."
 
 	^self basicSize + 1 bitShift: 1!
-
-copyToBuffer: anAddress ofSize: anInteger
-	"Private - Copy the receiver into the buffer at the specified address, truncating if necessary to fit within the specified size. Answer whether the text could be copied without truncation."
-
-	^(OS.Ucrt
-		wcsncpy_s: anAddress
-		bufferSize: anInteger
-		strSource: self
-		count: OS.CRTConstants._TRUNCATE) == 0!
 
 countElements
 	^OS.ICU u_countChar32: self length: self size!
@@ -117,14 +108,14 @@ decodeAt: anInteger
 				ifTrue: 
 					["Valid surrogate pair"
 					Character codePoint: (leading bitShift: 10) + trailing - SurrogateOffset
-						ifInvalid: [Character.Replacement]]
+						ifInvalid: Character.Replacement]
 				ifFalse: 
 					["No trailing surrogate, answer the replacement character"
 					Character.Replacement]]
 		ifFalse: 
 			[surrogateBits == TrailSurrogateMask
 				ifTrue: [Character.Replacement]
-				ifFalse: [Character utf16Value: leading ifInvalid: [Character.Replacement]]]!
+				ifFalse: [Character utf16Value: leading ifInvalid: Character.Replacement]]!
 
 decodeNextFrom: aReadStream
 	"Private - Read the next <Character> in the receiver's encoding from the <ReadStream> argument, which
@@ -145,12 +136,12 @@ decodeNextFrom: aReadStream
 							(c2 bitAnd: SurrogateMask) == TrailSurrogateMask
 								ifTrue: 
 									["Valid surrogate pair"
-									Character codePoint: (c bitShift: 10) + c2 - SurrogateOffset ifInvalid: [Character.Replacement]]
+									Character codePoint: (c bitShift: 10) + c2 - SurrogateOffset ifInvalid: Character.Replacement]
 								ifFalse: 
 									["No trailing surrogate, answer the replacement character"
 									aReadStream pop.
 									Character.Replacement]]]
-				ifFalse: [Character utf16Value: c ifInvalid: [Character.Replacement]]]!
+				ifFalse: [Character utf16Value: c ifInvalid: Character.Replacement]]!
 
 encodedAt: anInteger put: aCharacter
 	"Private - Encode the specified <Character> beginning at the specified position in the receiver.
@@ -344,7 +335,6 @@ at:!accessing!public! !
 before:ifAbsent:!public!searching! !
 bom!constants!encode/decode!private! !
 byteSize!accessing!private! !
-copyToBuffer:ofSize:!copying!private! !
 countElements!accessing!public! !
 decodeAt:!encode/decode!private! !
 decodeNextFrom:!encode/decode!private! !

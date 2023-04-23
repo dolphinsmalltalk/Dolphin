@@ -444,9 +444,6 @@ sendSelf: literalIndex args: argumentCount
 		macroInstructionPart2;
 		send: literalIndex args: argumentCount!
 
-sendSelfSelector: aSymbol args: anInteger 
-	!
-
 sendSelfZeroArgs: anInteger 
 	"Interpret a Send Self [N] with 0 Args instruction."
 
@@ -554,14 +551,14 @@ shortSpecialSend: anInteger
 	"Interpret a Short Special Send instruction."
 
 	| selector |
-	selector := dispatcher selectorOfSpecialSend: anInteger.
+	selector := VM selectorOfSpecialSend: anInteger.
 	self sendSelector: selector args: selector argumentCount!
 
 shortSpecialSendEx: anInteger
 	"Interpret a Short Special Send Ex instruction."
 
 	| selector |
-	selector := dispatcher selectorOfSpecialSendEx: anInteger.
+	selector := VM selectorOfSpecialSendEx: anInteger.
 	self sendSelector: selector args: selector argumentCount!
 
 shortStoreTemp: anInteger
@@ -633,7 +630,7 @@ decPushTemp:temp:!instructions-stack ops!public! !
 decrementStackTop!instructions-miscellaneous!public! !
 decTemp:temp:!instructions-miscellaneous!public! !
 dispatcher!accessing!public! !
-dispatcher:!accessing!public! !
+dispatcher:!initializing!public! !
 duplicateStackTop!instructions-stack ops!public! !
 exLongPushImmediate:byte2:byte3:byte4:!instructions-stack ops!public! !
 exLongSend:with:with:!instructions-sending!public! !
@@ -707,7 +704,6 @@ send:!instructions-sending!public! !
 send:args:!interpreting!private! !
 sendSelector:args:!interpreting!private! !
 sendSelf:args:!interpreting!private! !
-sendSelfSelector:args:!interpreting!private! !
 sendSelfZeroArgs:!instructions-sending!public! !
 sendTempZeroArgs:!instructions-sending!public! !
 sendZeroArgs:toTemp:!interpreting!private! !

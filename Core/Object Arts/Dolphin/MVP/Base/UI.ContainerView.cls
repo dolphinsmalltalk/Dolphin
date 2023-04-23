@@ -140,7 +140,7 @@ insets: aRectangleOrPointOrNil
 isControlParent
 	"Answer whether the receiver can contain controls which may be tabbed to."
 
-	^self exStyleAllMask: WS_EX_CONTROLPARENT!
+	^self extendedStyle allMask: WS_EX_CONTROLPARENT!
 
 isControlParent: aBoolean 
 	"Set whether the receiver can contain controls which may be tabbed to."

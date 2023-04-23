@@ -451,15 +451,6 @@ copyReplaceAll: oldSequencedReadableCollection with: newSequencedReadableCollect
 	^super copyReplaceAll: (self class coerceString: oldSequencedReadableCollection asString)
 		with: (self class coerceString: newSequencedReadableCollection asString)!
 
-copyToBuffer: anAddress ofSize: anInteger
-	"Private - Copy the receiver into the buffer at the specified address, truncating if necessary to fit within the specified size. Answer whether the text could be copied without truncation."
-
-	^(OS.Ucrt
-		strncpy_s: anAddress
-		bufferSize: anInteger
-		strSource: self
-		count: OS.CRTConstants._TRUNCATE) == 0!
-
 decodeAt: anInteger
 	"Private - Answer the encoded object beginning at the specified position in the receiver."
 
@@ -1291,7 +1282,6 @@ codePointsDo:!enumerating!public! !
 compareOrdinals:ignoringCase:!comparing!public! !
 contains:!public!searching! !
 copyReplaceAll:with:!copying!public! !
-copyToBuffer:ofSize:!copying!private! !
 decodeAt:!encode/decode!private! !
 decodeNextAvailable:from:!encode/decode!private! !
 decodeNextFrom:!encode/decode!private! !

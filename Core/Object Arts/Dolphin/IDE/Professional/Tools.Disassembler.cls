@@ -475,7 +475,7 @@ shortSpecialSend: anInteger
 	self printSendPrefix.
 	stream
 		space;
-		print: (dispatcher selectorOfSpecialSend: anInteger)!
+		print: (VM selectorOfSpecialSend: anInteger)!
 
 shortSpecialSendEx: anInteger
 	"Private - Interpret a Short Special Send Ex instruction."
@@ -485,7 +485,7 @@ shortSpecialSendEx: anInteger
 	self printSendPrefix.
 	stream
 		space;
-		print: (dispatcher selectorOfSpecialSendEx: anInteger)!
+		print: (VM selectorOfSpecialSendEx: anInteger)!
 
 storeInstVar: offset
 	"Private - Interpret a Store Instance Variable instruction."

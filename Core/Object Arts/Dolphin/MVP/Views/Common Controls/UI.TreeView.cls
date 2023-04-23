@@ -155,8 +155,7 @@ basicItemFromPoint: aPoint
 	argument."
 
 	| struct |
-	struct := TVHITTESTINFO new.
-	struct pt: aPoint asParameter.
+	struct := TVHITTESTINFO position: aPoint.
 	self
 		sendMessage: TVM_HITTEST
 		wParam: 0
@@ -478,6 +477,9 @@ hasLinesAtRoot: aBoolean
 
 	self baseStyleMask: TVS_LINESATROOT set: aBoolean recreateIfChanged: false!
 
+hasSelection
+	^self selectionByIndex ~~ 0!
+
 hideDropHighlight
 	"Private - Hide any drop highlight within the receiver."
 
@@ -572,7 +574,7 @@ itemRect: itemHandle textOnly: aBoolean
 	"Answers the rectangle surrounding the item with anIntegerIndex within
 	the receiver, optionally for the text label only."
 
-	^(self tvmGetItemRect: itemHandle textOnly: aBoolean) asObject!
+	^(self tvmGetItemRect: itemHandle textOnly: aBoolean) asRectangle!
 
 itemStructure
 	^TVITEMW!
@@ -689,29 +691,25 @@ onDestroyed
 onDisplayDetailsRequired: aTVITEM
 	"Private - Get the display info for the requested <TVITEM>."
 
-	| object requestMask saveDetails |
+	| object requestMask |
 	object := handleObjectMap lookup: aTVITEM handle.
 	"The TreeView sometimes asks for display details for items that are being removed"
 	object ifNil: [^0].
-	saveDetails := tvFlags anyMask: UpdateModeMask.
 	requestMask := aTVITEM mask.
+	(requestMask allMask: TVIF_CHILDREN)
+		ifTrue: 
+			[aTVITEM children: (model hasChildren: object) asParameter.
+			"If only requesting children details, tell the control to not ask again, regardless of updateMode"
+			requestMask == TVIF_CHILDREN
+				ifTrue: 
+					[aTVITEM maskIn: TVIF_DI_SETITEM.
+					^0]].
 	((requestMask allMask: TVIF_IMAGE) and: [self hasIcons])
 		ifTrue: 
 			[self getImageBlock
 				ifNotNil: [:getImage | (getImage value: object) ifNotNil: [:index | aTVITEM images: index - 1]]].
-	(requestMask allMask: TVIF_CHILDREN)
-		ifTrue: 
-			[aTVITEM children: (model hasChildren: object) asParameter.
-			"If only requesting children details, tell it to not ask again, regardless of updateMode"
-			requestMask == TVIF_CHILDREN ifTrue: [saveDetails := true]].
-	(requestMask allMask: TVIF_TEXT)
-		ifTrue: 
-			[aTVITEM textInBuffer: (self getTextBlock value: object).
-			"There appears to be a bug in the tree view such that if it asks for text in combination with
-			 other information and is told to save it, then it displays only the first character of the text,
-			 therefore we only tell it to save the information if it has asked for the text in isolation."
-			requestMask == TVIF_TEXT ifFalse: [saveDetails := false]].
-	saveDetails ifTrue: [aTVITEM maskIn: TVIF_DI_SETITEM].
+	(requestMask allMask: TVIF_TEXT) ifTrue: [aTVITEM textInBuffer: (self getTextBlock value: object)].
+	(tvFlags anyMask: UpdateModeMask) ifTrue: [aTVITEM maskIn: TVIF_DI_SETITEM].
 	"Suppress default processing"
 	^0!
 
@@ -752,7 +750,7 @@ onItem: anObject addedInParent: aParentObject
 	previousSiblingIndex := (self model
 				keyOfNode: anObject
 				in: siblings
-				ifAbsent: [0]) - 1.
+				ifAbsent: 0) - 1.
 
 	"The model may have added more than one sibling, so we have to locate the first of them that we know about currently"
 	previousSiblingHandle := nil.
@@ -1226,7 +1224,12 @@ wantCustomDrawItemNotifications: pNMHDR
 	"Implementation Note: The TreeView control sends prepaint notifications with an
 	empty paint area and invalid colours. We suppress these as they are, ahem, unhelpful."
 
-	^self customDrawBlock notNil and: [(RECTL fromAddress: pNMHDR asInteger + 20) area ~~ 0]!
+	^self customDrawBlock notNil and: 
+			[(pNMHDR int32AtOffset: NMCUSTOMDRAW._OffsetOf_rc + RECTL._OffsetOf_right)
+				- (pNMHDR int32AtOffset: NMCUSTOMDRAW._OffsetOf_rc + RECTL._OffsetOf_left) > 0
+				and: 
+					[(pNMHDR int32AtOffset: NMCUSTOMDRAW._OffsetOf_rc + RECTL._OffsetOf_bottom)
+						- (pNMHDR int32AtOffset: NMCUSTOMDRAW._OffsetOf_rc + RECTL._OffsetOf_top) > 0]]!
 
 wmKeyDown: message wParam: wParam lParam: lParam
 	"Private - Handle WM_KEYDOWN.
@@ -1296,6 +1299,7 @@ hasLines!accessing-styles!public!testing! !
 hasLines:!accessing-styles!public! !
 hasLinesAtRoot!accessing-styles!public!testing! !
 hasLinesAtRoot:!accessing-styles!public! !
+hasSelection!public!selection! !
 hideDropHighlight!drag & drop!private! !
 includesItem:!enquiries!public! !
 indentSeparation!accessing!public! !

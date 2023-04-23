@@ -142,22 +142,8 @@ byteCodeDispatcherClass
 byteCodes
 	"Private - Answer the byte codes (a ByteArray) for the receiver"
 
-	| bytes remaining size firstByte |
-	self isPacked ifFalse: [^byteCodes].
-	"This code is slightly more complex than needed, but avoids LargeInteger arithmetic for
-	speed. It assumes there is at least one bytecode (which there must be)."
-	firstByte := ((byteCodes bitAnd: 16r7F) bitShift: 1) bitOr: 1.
-	remaining := byteCodes bitShift: -7.
-	remaining == 0 ifTrue: [^ByteArray with: firstByte].
-	size := remaining digitLength + 1.
-	bytes := ByteArray new: size.
-	bytes at: 1 put: firstByte.
-	2 to: size
-		do: 
-			[:i |
-			bytes at: i put: (remaining bitAnd: 16rFF).
-			remaining := remaining bitShift: -8].
-	^bytes!
+	byteCodes isImmediate ifTrue: [^self unpackBytes].
+	^byteCodes!
 
 byteCodes: anObject
 	"Private - Set the value of the receiver's ''byteCodes'' instance variable to the argument,
@@ -453,12 +439,10 @@ localScope
 !
 
 messages
-	"Answer the set of messages sent by the receiver."
+	"Answer a <collection> of the messages sent by the receiver."
 
-	| answer |
-	answer := IdentitySet new: 10.
-	self messagesDo: [:sel | answer add: sel].
-	^answer!
+	(self extraIndex between: 1 and: 7) ifTrue: [^#()].
+	^(MessageSendCollector dispatcher: self byteCodeDispatcher) messages!
 
 messagesDo: aBlock
 	"Evaluate the <monadicValuable> argument, aBlock, for each of the messages 
@@ -466,7 +450,7 @@ messagesDo: aBlock
 
 	| idx |
 	((idx := self extraIndex) == 0 or: [idx > 8])
-		ifTrue: [(MessageSendCollector dispatcher: self byteCodeDispatcher) messagesDo: aBlock]!
+		ifTrue: [(MessageSendEnumerator dispatcher: self byteCodeDispatcher) messagesDo: aBlock]!
 
 methodClass
 	"Answer the Class to which this method belongs (as opposed to the class of CompiledMethods)"
@@ -632,7 +616,7 @@ superMessages
 
 	| answer |
 	answer := IdentitySet new.
-	(MessageSendCollector dispatcher: self byteCodeDispatcher)
+	(MessageSendEnumerator dispatcher: self byteCodeDispatcher)
 		superMessagesDo: [:each | answer add: each].
 	^answer!
 
@@ -651,6 +635,22 @@ textMap
 	"Private - Answer a map between IP's and source ranges in the receiver."
 
 	^self debugInfo textMap!
+
+unpackBytes
+	| size firstByte bytes remaining |
+	firstByte := ((byteCodes bitAnd: 16r7F) bitShift: 1) bitOr: 1.	"This code is slightly more complex than needed, but avoids LargeInteger arithmetic for
+	speed. It assumes there is at least one bytecode (which there must be)."
+	remaining := byteCodes bitShift: -7.
+	remaining == 0 ifTrue: [^ByteArray with: firstByte].
+	size := remaining digitLength + 1.
+	bytes := ByteArray new: size.
+	bytes at: 1 put: firstByte.
+	2 to: size
+		do: 
+			[:i |
+			bytes at: i put: (remaining bitAnd: 16rFF).
+			remaining := remaining bitShift: -8].
+	^bytes!
 
 value: anObject withArguments: anArray
 	"Evaluate the receiver with the argument, anObject, as its receiver, and with the argument, anArray, as the arguments to the message.
@@ -758,6 +758,7 @@ superMessages!accessing!development!public! !
 tempCount!method header!private! !
 tempsMap!accessing!development!private! !
 textMap!accessing!development!private! !
+unpackBytes!accessing!private! !
 value:withArguments:!evaluating!public! !
 writesInstVar:!development!public!testing! !
 writesInstVar:at:!development!public!testing! !

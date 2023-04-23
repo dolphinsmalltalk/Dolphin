@@ -85,7 +85,7 @@ flowSplit: aCompositeView context: aLayoutContext
 			items addLast: each.
 			lineWidth := lineWidth + horizontalGap + itemExtent x.
 			lineHeight := lineHeight max: itemExtent y].
-	items notEmpty ifTrue: [lines addLast: {lineWidth @ lineHeight. items}].
+	items isEmpty ifFalse: [lines addLast: {lineWidth @ lineHeight. items}].
 	^lines!
 
 horizontalAlignment
@@ -106,43 +106,43 @@ initialize
 	super initialize.
 	horizontalGap := verticalGap := flags := 0!
 
-layoutContainer: aCompositeView context: aLayoutContext 
+layoutContainer: aCompositeView context: aLayoutContext
 	"Private - Update the <LayoutContext> argument with rectangles for the sub-views of its the
 	specified container view, laying out those sub-views according to the rules and
 	configuration of the particular layout manager."
 
-	| halign insets clientRect calcX valign calcYOffset |
+	| align insets clientRect calcX calcYOffset |
 	insets := aCompositeView actualInsets: aLayoutContext.
-	halign := self horizontalAlignment.
 	clientRect := (aLayoutContext clientRectangleOf: aCompositeView) insetBy: insets.
-	calcX := halign == AlignHCenter 
+	align := self horizontalAlignment.
+	calcX := align == AlignHCenter
 				ifTrue: [[:width | (clientRect width - width) // 2 + clientRect left]]
 				ifFalse: 
-					[halign == AlignRight 
+					[align == AlignRight
 						ifTrue: [[:width | clientRect right - width]]
 						ifFalse: [[:width | clientRect left]]].
-	valign := self verticalAlignment.
-	calcYOffset := valign == AlignVCenter 
+	align := self verticalAlignment.
+	calcYOffset := align == AlignVCenter
 				ifTrue: [[:lineHeight :itemHeight | (lineHeight - itemHeight) // 2]]
 				ifFalse: 
-					[valign == AlignBottom 
+					[align == AlignBottom
 						ifTrue: [[:lineHeight :itemHeight | lineHeight - itemHeight]]
 						ifFalse: [[:lineHeight :itemHeight | 0]]].
 	(self flowSplit: aCompositeView context: aLayoutContext) inject: clientRect top
 		into: 
-			[:y :eachLine | 
+			[:y :eachLine |
 			| lineExtent lineHeight |
 			lineExtent := eachLine at: 1.
 			lineHeight := lineExtent y.
 			(eachLine at: 2) inject: (calcX value: lineExtent x)
 				into: 
-					[:x :eachView | 
+					[:x :eachView |
 					| extent |
 					extent := eachView layoutExtent: aLayoutContext.
 					aLayoutContext setView: eachView
 						rectangle: (x @ ((calcYOffset value: lineHeight value: extent y) + y) extent: extent).
 					x + extent x + horizontalGap].
-			y + lineHeight+ verticalGap]!
+			y + lineHeight + verticalGap]!
 
 preferredLayoutExtentOf: aCompositeView context: aLayoutContext
 	"Answer a <Point> specifying the preferred extent for the <CompositeView> argument when

@@ -8,6 +8,7 @@ OS.CCHITTESTINFO
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_LVHITTESTINFO_Size' -> 16r14.
+			'_OffsetOf_flags' -> 16r8.
 			'_OffsetOf_iItem' -> 16rC.
 			'_OffsetOf_iSubItem' -> 16r10
 		}!
@@ -19,6 +20,11 @@ LVHISTTESTINFO is used for hit-testing with Enhanced List View controls. For exa
 This Supercedes the LV_HITTESTINFO class present in release 2.1 and earlier.'!
 !OS.LVHITTESTINFO categoriesForClass!External-Data-Structured-Win32! !
 !OS.LVHITTESTINFO methodsFor!
+
+flags
+	"Answer the <Integer> value of the receiver's 'flags' field."
+
+	^bytes uint32AtOffset: _OffsetOf_flags!
 
 handle
 	"Private - Answer the item 'handle' associated with the receiver.
@@ -36,6 +42,7 @@ iSubItem
 
 	^bytes int32AtOffset: _OffsetOf_iSubItem! !
 !OS.LVHITTESTINFO categoriesForMethods!
+flags!**compiled accessors**!public! !
 handle!accessing!private! !
 iItem!**compiled accessors**!public! !
 iSubItem!**compiled accessors**!public! !
@@ -60,8 +67,10 @@ defineFields
 
 	super defineFields.
 	self
+		defineField: #flags type: UInt32Field readOnly;
 		defineField: #iItem type: Int32Field readOnly;
-		defineField: #iSubItem type: Int32Field readOnly!
+		defineField: #iSubItem type: Int32Field readOnly.
+	self assert: [self byteSize = 20]!
 
 getFieldNames
 	^#(#pt #flags #iItem #iSubItem)! !

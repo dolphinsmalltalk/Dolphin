@@ -266,7 +266,7 @@ baseStyle: anInteger maskedBy: aMaskInteger
 		maskedBy: aMaskInteger
 		recreateIfChanged: true!
 
-baseStyle: styleBitsToAdd maskedBy: styleBitMask recreateIfChanged: aBoolean 
+baseStyle: styleBitsToAdd maskedBy: styleBitMask recreateIfChanged: aBoolean
 	"Private - Copies the bits in styleBitsToAdd masked by styleBitMask to the base style
 	of the receiver. Any bits set in styleBitMask which are not set in styleBitsToAdd
 	will also be reset. If the style was changed, and the window is open, then it is
@@ -274,20 +274,17 @@ baseStyle: styleBitsToAdd maskedBy: styleBitMask recreateIfChanged: aBoolean
 
 	| baseStyle newBaseStyle |
 	baseStyle := self baseStyle.
-	newBaseStyle := baseStyle maskClear: styleBitMask.
-	newBaseStyle := newBaseStyle maskSet: (styleBitsToAdd bitAnd: styleBitMask).
+	newBaseStyle := (baseStyle bitAnd: styleBitMask bitInvert)
+				bitOr: (styleBitsToAdd bitAnd: styleBitMask).
 	newBaseStyle = baseStyle ifTrue: [^false].
-	aBoolean 
+	aBoolean
 		ifTrue: [self recreateAround: [self baseStyle: newBaseStyle]]
 		ifFalse: 
-			[| winStyle newWinStyle |
-			self baseStyle: newBaseStyle.
-			self isOpen 
+			[self baseStyle: newBaseStyle.
+			self isOpen
 				ifTrue: 
-					[winStyle := self getWindowStyle.
-					newWinStyle := winStyle maskClear: styleBitMask.
-					newWinStyle := newWinStyle maskSet: (styleBitsToAdd bitAnd: styleBitMask).
-					self setWindowStyle: newWinStyle]].
+					[self setWindowStyle: ((self getWindowStyle bitAnd: styleBitMask bitInvert)
+								bitOr: (styleBitsToAdd bitAnd: styleBitMask))]].
 	^true!
 
 baseStyleAllMask: anInteger
@@ -382,18 +379,17 @@ basicPaint: message wParam: wParam lParam: lParam
 	to implement specialized painting. Note that the return value from #onPaintRequired: is
 	ignored."
 
-	| ps |
-	ps := PAINTSTRUCT new.
 	(User32
 		getUpdateRect: handle
 		lpRect: nil
 		bErase: false)
 			ifTrue: 
-				[| hdc |
-				(hdc := User32 beginPaint: handle lpPaint: ps) isNil
-					ifFalse: 
-						["Rather than use #ifCurtailed: we use an Error handler so can validate and
-						 prevent recursive walkback"
+				[| ps |
+				ps := PAINTSTRUCT newBuffer.
+				(User32 beginPaint: handle lpPaint: ps)
+					ifNotNil: 
+						[:hdc |
+						"Rather than use #ensure:/#ifCurtailed: we use an Error handler so can validate on error to prevent recursive walkbacks"
 						
 						[self onPaintRequired: (PaintEvent
 									window: self
@@ -408,14 +404,13 @@ basicPaint: message wParam: wParam lParam: lParam
 				User32 endPaint: handle lpPaint: ps]
 			ifFalse: 
 				[| canv |
-				"No update region, therefore assume an internal paint. We mustn't call
-				 Begin/End paint - see Win32 docs on WM_PAINT."
+				"No update region, therefore assume an internal paint. We mustn't call Begin/End paint - see Win32 docs on WM_PAINT."
 				canv := self canvas.
 				self onPaintRequired: (PaintEvent
 							window: self
 							wParam: wParam
 							hdc: canv asParameter
-							paintStruct: ps).
+							paintStruct: PAINTSTRUCT newBuffer).
 				canv free].
 	^0	"We've handled it"!
 
@@ -1179,22 +1174,15 @@ exStyle: styleBitsInteger maskedBy: styleMaskInteger recreateIfChanged: aBoolean
 
 	| exStyle newExStyle |
 	exStyle := self extendedStyle.
-	newExStyle := exStyle maskClear: styleMaskInteger.
-	newExStyle := newExStyle maskSet: (styleBitsInteger bitAnd: styleMaskInteger).
+	newExStyle := (exStyle bitAnd: styleMaskInteger bitInvert)
+				bitOr: (styleBitsInteger bitAnd: styleMaskInteger).
 	newExStyle = exStyle ifTrue: [^false].
-	{self baseStyle. newExStyle}.
 	aBoolean
 		ifTrue: [self recreateAround: [self extendedStyle: newExStyle]]
 		ifFalse: 
 			[self extendedStyle: newExStyle.
 			self isOpen ifTrue: [self setWindowExStyle: newExStyle]].
 	^true!
-
-exStyleAllMask: anInteger
-	"Private - Answers true if the extended creation style bits contains all the bits in anInteger"
-
-	^self extendedStyle allMask: anInteger.
-!
 
 exStyleMask: exStyleBitsMask set: aBoolean 
 	"Private - Sets/clears the extended creation style bits in exStyleBitsMask according to
@@ -1261,11 +1249,10 @@ findItem: anInteger ifAbsent: exceptionHandler
 findItemHandle: anInteger ifAbsent: exceptionHandler
 	"Private - Answer the handle of a child window within the receiver with the specified <integer> id, or if no such immediate child, then the first child of a child with encountered with that id, and so on. i.e. this is a recursive version of #getItemHandle:ifAbsent:. If there is no such child in the receiver, or its children, etc, then answer the result of evaluating the <niladicValuable>, exceptionHandler."
 
-	(self getItemHandle: anInteger ifAbsent: nil)
+	^(self getItemHandle: anInteger ifAbsent: nil)
 		ifNil: 
-			[self subViewsDo: [:each | (each findItemHandle: anInteger ifAbsent: nil) ifNotNil: [:hWnd | ^hWnd]]]
-		ifNotNil: [:hWnd | ^hWnd].
-	^exceptionHandler value!
+			[(self subViewsFind: [:each | each findItemHandle: anInteger ifAbsent: nil])
+				ifNil: [exceptionHandler value]]!
 
 findMatch: aFindDetails inRange: anInterval
 	"Private - Find the first occurrence of text in the receiver that matches the specified
@@ -1365,13 +1352,14 @@ forecolorChanged
 frameChanged
 	"Private - Ask Windows to apply recent frame style changes set with SetWindowLong."
 
-	self 
-		setWindowPosAfter: nil
+	User32
+		setWindowPos: handle
+		hWndInsertAfter: nil
 		x: 0
 		y: 0
-		width: 0
-		height: 0
-		flags: ##(SWP_FRAMECHANGED | SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER)!
+		cx: 0
+		cy: 0
+		uFlags: ##(SWP_FRAMECHANGED | SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER)!
 
 frameWidths
 	"Answer the widths of the frames (if any) configured for the receiver."
@@ -1448,6 +1436,14 @@ getPreviousSibling
 
 	^self getWindow: GW_HWNDPREV!
 
+getRect
+	"Private - Answer a <RECTL> containing the receiver's outer rectangle in the coordinate system of its parent."
+
+	^User32
+		mapRectangle: self getWindowRect
+		from: nil
+		to: self parentView asParameter!
+
 getScrollInfo: siStruct bar: bar
 	"Private - Get the information about the receiver's bar.
 	Answer whether values were retrieved."
@@ -1496,8 +1492,7 @@ getWindowRect
 getWindowStyle
 	"Private - Answer the window style of the receiver."
 
-	^self getWindowLong: GWL_STYLE
-!
+	^User32 getWindowLong: handle nIndex: GWL_STYLE!
 
 getWindowText
 	"Private - Answers the text from the receiver"
@@ -1556,7 +1551,7 @@ hasClientEdge
 	"Answer whether the receiver has the client edge style (a bordering which gives the window a
 	sunken 3D edge)."
 
-	^self exStyleAllMask: WS_EX_CLIENTEDGE!
+	^self extendedStyle allMask: WS_EX_CLIENTEDGE!
 
 hasClientEdge: aBoolean 
 	"Sets the receiver to have a sunken 3D border (Win95 edging style for controls intended to
@@ -1617,7 +1612,7 @@ hasStaticEdge
 	"Answer whether the receiver has the Static Edge style (a subtler 3D sunken edge than
 	WS_EX_CLIENTEDGE, intended for use with windows which do not accept input)."
 
-	^self exStyleAllMask: WS_EX_STATICEDGE!
+	^self extendedStyle allMask: WS_EX_STATICEDGE!
 
 hasStaticEdge: aBoolean 
 	"Sets the receiver to have a subtly sunken 3D border (Win95 edging style for controls not
@@ -1751,7 +1746,7 @@ invalidateCalculatedExtent
 	and thereby effects the appropriate layout recalculation. In some cases, however, 
 	it is necessary to poke it for a layout to take place. We do this here by invalidating 
 	a minimal rectangle of the receiver."
-	self invalidateRect: (RECTL left: 0 top: 0 right: 1 bottom: 1)!
+	self invalidateRect: (RECTL width: 1 height: 1)!
 
 invalidateLayout
 	"Invalidates the layout of the receiver and all its parent indicating that the geometry
@@ -1781,7 +1776,7 @@ invalidateRect: aRectangle erase: aBoolean
 	^self hasTransparentBackground
 		ifTrue: 
 			[self parentView invalidateRect: (aRectangle isNil
-						ifTrue: [self rectangle]
+						ifTrue: [self getRect]
 						ifFalse: [self mapRectangle: aRectangle to: self parentView])
 				erase: aBoolean]
 		ifFalse: 
@@ -2029,7 +2024,7 @@ isTopView
 isTransparent
 	"Answer whether the receiver is transparent (i.e. it has the WS_EX_TRANSPARENT style)."
 
-	^self exStyleAllMask: WS_EX_TRANSPARENT!
+	^self extendedStyle allMask: WS_EX_TRANSPARENT!
 
 isTransparent: aBoolean
 	"Set whether or not the receiver is transparent (i.e. it 
@@ -2131,7 +2126,7 @@ managedSubViews
 
 	| answer |
 	answer := WriteStream on: {}.
-	self managedSubViewsDo: [:each | answer nextPut: each].
+	self subViewsDo: [:each | each isManaged ifTrue: [answer nextPut: each]].
 	^answer grabContents!
 
 managedSubViewsDo: aMonadicValuable 
@@ -2164,11 +2159,10 @@ mapPointToScreen: aPoint
 mapRectangle: aRectangle to: anotherView
 	"Maps aRectangle from the coordinate system of the receiver into that of anotherView."
 
-	^(self class
+	^(User32
 		mapRectangle: aRectangle
-		from: self
-		to: anotherView) asRectangle
-!
+		from: handle
+		to: anotherView asParameter) asRectangle!
 
 mapScreenToClient: aPoint
 	"Maps the `Point` argument from screen coordinates to the coordinate system of the receiver."
@@ -2719,12 +2713,12 @@ parentView
 
 	^creationParent!
 
-parentView: aView 
+parentView: aView
 	"Private - Sets the parent of the receiver to aView. Can only be used when the
 	receiver is not yet realized since Windows has a bug when reparenting"
 
 	creationParent := aView.
-	creationStyle at: 1 put: (self baseStyle mask: WS_CHILD set: true)!
+	creationStyle at: 1 put: (self baseStyle bitOr: WS_CHILD)!
 
 performAction
 	"Cause an #actionPerformed event to be routed"
@@ -2782,17 +2776,21 @@ plainTextRange: anInterval
 position
 	"Answers the position of the receiver in the coordinates of its parent."
 
-	^self rectangle topLeft
+	^self getRect topLeft
 !
 
 position: aPoint
 	"Set the top left position of the receiver to aPoint. aPoint is in the coordinate
 	system of the receiver's parent. Answer whether the position request was accepted."
 
-	^self setWindowPosAfter: 0 
-		x: aPoint x y: aPoint y  
-		width: 0 height: 0
-		flags: ##(SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE)!
+	^User32
+		setWindowPos: handle
+		hWndInsertAfter: 0
+		x: aPoint x
+		y: aPoint y
+		cx: 0
+		cy: 0
+		uFlags: ##(SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE)!
 
 positionForKeyboardContextMenu
 	"Answer the desired position for a context menu requested from the keyboard.
@@ -2954,28 +2952,26 @@ recreateAround: aNiladicValuable
 	presenter := existingPresenter!
 
 rectangle
-	"Answer a Rectangle containing the receiver's outer rectangle in the coordinate system of its parent."
+	"Answer a <Rectangle> containing the receiver's outer rectangle in the coordinate system of its parent."
 
-	^(self class
-		mapRectangle: self getWindowRect
-		from: nil
-		to: self parentView) asRectangle!
+	^self getRect asRectangle!
 
-rectangle: aRectangle 
+rectangle: aRectangle
 	"Set the boundary of the receiver to aRectangle. 
 	aRectangle is in the coordinate system of the receiver's parent."
 
 	| newRectangle |
 	newRectangle := self adjustRectangle: aRectangle.
-	newRectangle = self rectangle 
+	newRectangle = self rectangle
 		ifFalse: 
-			[self 
-				setWindowPosAfter: 0
+			[User32
+				setWindowPos: handle
+				hWndInsertAfter: 0
 				x: aRectangle left
 				y: aRectangle top
-				width: aRectangle width
-				height: aRectangle height
-				flags: ##(SWP_NOZORDER | SWP_NOACTIVATE)]!
+				cx: aRectangle width
+				cy: aRectangle height
+				uFlags: ##(SWP_NOZORDER | SWP_NOACTIVATE)]!
 
 refreshContents
 	"The receiver's display needs to be refreshed. The default is to invalidate the
@@ -3049,12 +3045,6 @@ requestDropOperations: aDragDropSession
 
 			aDragDropSession supportedOperations: #(#move #copy)].
 	self presenter trigger: #requestDropOperations: with: aDragDropSession!
-
-requestLayoutExtent: aPointExtent 
-	"Request that the receiver occupies has aPointExtent. If under the control of a layout manager we
-	have to delegate the request through this"
-
-	self requestLayoutRectangle: (self position extent: aPointExtent)!
 
 requestLayoutRectangle: aRectangle 
 	"Request that the receiver occupies aRectangle. If under the control of a layout manager we
@@ -3140,12 +3130,9 @@ richText: aRichText
 !
 
 screenRectangle
-	"Answer the boundary of the receiver window in screen coordinates"
+	"Answer the <Rectangle> boundary of the receiver window in screen coordinates"
 
-	| localRect |
-	localRect := self rectangle.
-	^self parentView mapRectangle: localRect to: self class desktop.
-!
+	^self parentView mapRectangle: self getRect to: self class desktop!
 
 screenRectangle: aRectangle
 	"Sets the boundary of the receiver to aRectangle.
@@ -3234,14 +3221,15 @@ setEvents: anEventsCollectionOrNil
 
 	events := anEventsCollectionOrNil!
 
-setExtent: aPoint 
-	self 
-		setWindowPosAfter: 0
+setExtent: aPoint
+	User32
+		setWindowPos: handle
+		hWndInsertAfter: 0
 		x: 0
 		y: 0
-		width: aPoint x
-		height: aPoint y
-		flags: ##(SWP_NOMOVE | SWP_NOZORDER | SWP_NOACTIVATE)!
+		cx: aPoint x
+		cy: aPoint y
+		uFlags: ##(SWP_NOMOVE | SWP_NOZORDER | SWP_NOACTIVATE)!
 
 setFocus
 	"Sets focus to the receiver. Answers the View which previously had focus, or nil if
@@ -4528,7 +4516,7 @@ wndClassName
 x
 	"Answer the left coordinate of the receiver in the coordinate system of the parent."
 
-	^self rectangle left!
+	^self getRect left!
 
 x: anInteger
 	"Sets the left edge position of the receiver to anInteger."
@@ -4538,7 +4526,7 @@ x: anInteger
 y
 	"Answer the top coordinate of the receiver in the coordinate system of the parent."
 
-	^self rectangle top!
+	^self getRect top!
 
 y: anInteger
 	"Sets the top edge position of the receiver to anInteger."
@@ -4556,11 +4544,17 @@ zOrderAfter: aViewOrNil withFlags: anInteger
 	The flags specified by anInteger are ORed with (SWP_NOSIZE | SWP_NOMOVE)."
 
 	aViewOrNil isNil
-		ifTrue: [ self zOrderTop ]
-		ifFalse: [ self setWindowPosAfter: aViewOrNil asParameter
-			x: 0 y: 0 width: 0 height: 0 
-			flags: (anInteger bitOr: ##(SWP_NOSIZE | SWP_NOMOVE)).
-			self parentView onZOrderChanged ]!
+		ifTrue: [self zOrderTop]
+		ifFalse: 
+			[User32
+				setWindowPos: handle
+				hWndInsertAfter: aViewOrNil asParameter
+				x: 0
+				y: 0
+				cx: 0
+				cy: 0
+				uFlags: (anInteger bitOr: ##(SWP_NOSIZE | SWP_NOMOVE)).
+			self parentView onZOrderChanged]!
 
 zOrderBottom
 	"Places the receiver at the bottom of the Z order. If the receiver is a topmost window,
@@ -4700,7 +4694,6 @@ enterIdle!event handling-win32!private! !
 eraseParentBackground:!event handling!private! !
 exStyle:maskedBy:!accessing-styles!private! !
 exStyle:maskedBy:recreateIfChanged:!accessing-styles!private! !
-exStyleAllMask:!accessing-styles!private! !
 exStyleMask:set:!accessing-styles!private! !
 exStyleMask:set:recreateIfChanged:!accessing-styles!private! !
 extendedStyle!accessing-styles!private! !
@@ -4733,6 +4726,7 @@ getNoRedrawCount!private! !
 getOwner!hierarchy!private! !
 getParent!hierarchy!private! !
 getPreviousSibling!hierarchy!private! !
+getRect!geometry!private! !
 getScrollInfo:bar:!accessing!private! !
 getWindow:!hierarchy!private! !
 getWindowDC!drawing!private! !
@@ -4954,7 +4948,6 @@ repositionShell:!helpers!private! !
 requestDragImages:!drag & drop!public! !
 requestDragObjects:!drag & drop!public! !
 requestDropOperations:!drag & drop!public! !
-requestLayoutExtent:!geometry!public! !
 requestLayoutRectangle:!geometry!public! !
 resolution!accessing!public! !
 resolutionScaledBy:!geometry!private! !
@@ -5402,19 +5395,6 @@ initialize
 						isImmutable: true;
 						yourself]!
 
-mapRectangle: aRectangle from: aSourceView to: aDestinationView
-	"Answers a RECTL like aRectangle mapped from the coordinate system of aSourceView 
-	into that of aDestinationView"
-
-	| rect |
-	rect := RECTL marshal: aRectangle.
-	User32
-		mapWindowPoints: aSourceView asParameter
-		hWndTo: aDestinationView asParameter
-		lpPoints: rect
-		cPoints: 2.
-	^rect!
-
 new
 	"Answer a new, initialized, instance of the receiver."
 
@@ -5761,7 +5741,7 @@ wndClassName
 	cases being when one wants different attributes associated with the Window class than the Dolphin
 	defaults."
 
-	^'DolphinWindow'! !
+	^##('DolphinWindow' asUtf16String)! !
 !UI.View class categoriesForMethods!
 active!accessing!public! !
 activeHandle!accessing!private! !
@@ -5788,7 +5768,6 @@ fromHandle:!instance creation!public! !
 fromPoint:!instance creation!private! !
 icon!constants!public! !
 initialize!development!initializing!private! !
-mapRectangle:from:to:!geometry!public! !
 new!instance creation!public! !
 onExit!event handling!public! !
 onStartup!event handling!public! !

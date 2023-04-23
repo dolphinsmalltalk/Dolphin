@@ -23,6 +23,11 @@ cchTextMax
 
 	^bytes int32AtOffset: _OffsetOf_cchTextMax!
 
+cchTextMax: anInteger
+	"Set the receiver's 'cchTextMax' field to the value of the argument, anInteger"
+
+	bytes int32AtOffset: _OffsetOf_cchTextMax put: anInteger!
+
 hItem
 	"Answer the <Integer> value of the receiver's 'hItem' field."
 
@@ -39,15 +44,28 @@ lParam
 	^bytes uintPtrAtOffset: _OffsetOf_lParam!
 
 pszText
-	"Answer the <ExternalAddress> value of the receiver's 'pszText' field."
+	"Answer the <Utf16String> value of the receiver's 'pszText' field."
 
-	^(bytes uintPtrAtOffset: _OffsetOf_pszText) asExternalAddress! !
+	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_pszText)!
+
+pszText: anUtf16String
+	"Set the receiver's 'pszText' field to the value of the argument, anUtf16String"
+
+	bytes uintPtrAtOffset: _OffsetOf_pszText put: anUtf16String yourAddress!
+
+textPointerOffset
+	"Private - Answer the offset of the text pointer in the receiver. "
+
+	^_OffsetOf_pszText! !
 !OS.NMTVGETINFOTIPW categoriesForMethods!
 cchTextMax!**compiled accessors**!public! !
+cchTextMax:!**compiled accessors**!public! !
 hItem!**compiled accessors**!public! !
 itemHandle!accessing!public! !
 lParam!**compiled accessors**!public! !
 pszText!**compiled accessors**!public! !
+pszText:!**compiled accessors**!public! !
+textPointerOffset!constants!private! !
 !
 
 !OS.NMTVGETINFOTIPW class methodsFor!
@@ -62,8 +80,8 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #pszText type: LPVOIDField readOnly;
-		defineField: #cchTextMax type: Int32Field readOnly;
+		defineField: #pszText type: (PointerField type: Utf16String);
+		defineField: #cchTextMax type: Int32Field new;
 		defineField: #hItem type: UIntPtrField readOnly;
 		defineField: #lParam type: UIntPtrField readOnly!
 

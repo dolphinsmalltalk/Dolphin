@@ -114,11 +114,6 @@ stateValidMask
 
 	^TCIF_STATE!
 
-text
-	"Answer the text of the receiver"
-
-	^text copyFrom: 1 to: (Ucrt wcslen: text)!
-
 textPointerOffset
 	"Private - Answer the offset of the text pointer in the receiver. "
 
@@ -140,7 +135,6 @@ pszText:!**compiled accessors**!public! !
 stateMask!**compiled accessors**!public! !
 stateMask:!**compiled accessors**!public! !
 stateValidMask!constants!private! !
-text!accessing!public! !
 textPointerOffset!constants!private! !
 !
 

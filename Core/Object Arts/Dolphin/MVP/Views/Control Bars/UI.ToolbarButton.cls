@@ -239,8 +239,7 @@ validateUserInterface: route
 	| query mask |
 	query := route query: self commandDescription.
 	"Set the state all at once to improve performance"
-	mask := 0.
-	query isEnabled ifTrue: [mask := mask bitOr: TBSTATE_ENABLED].
+	mask := query isEnabled ifTrue: [TBSTATE_ENABLED] ifFalse: [0].
 	query isChecked ifTrue: [mask := mask bitOr: ##(TBSTATE_CHECKED|TBSTATE_PRESSED)].
 	self stateMask: mask! !
 !UI.ToolbarButton categoriesForMethods!

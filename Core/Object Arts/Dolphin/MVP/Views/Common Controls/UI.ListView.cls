@@ -320,8 +320,7 @@ basicItemFromPoint: aPoint
 	item (and sub-item) under the client coordinate represented by the <Point> argument."
 
 	| struct |
-	struct := LVHITTESTINFO new.
-	struct pt: aPoint asParameter.
+	struct := LVHITTESTINFO position: aPoint.
 	self
 		sendMessage: LVM_SUBITEMHITTEST
 		wParam: 0
@@ -364,11 +363,11 @@ basicResetSelection
 	anLvItem stateMask: ##(LVIS_SELECTED | LVNI_FOCUSED).
 	self lvmSetItem: -1 state: anLvItem!
 
-basicUpdateColumnAtIndex: anInteger
-	| column |
-	column := self columnAtIndex: anInteger.
-	anInteger == 1 ifTrue: [column text setTextInto: self].
-	self lvmSetColumn: (LVCOLUMNW fromColumn: column) at: anInteger - 1!
+basicUpdateColumn: aListViewColumn
+	| i |
+	i := columns identityIndexOf: aListViewColumn.
+	i == 1 ifTrue: [aListViewColumn text setTextInto: self].
+	self lvmSetColumn: (LVCOLUMNW fromColumn: aListViewColumn) at: i - 1!
 
 beSorted: aBlockClosure 
 	self list: (self list asSortedCollection: aBlockClosure)!
@@ -477,7 +476,7 @@ columnsList
 
 	^self allColumns!
 
-columnsList: anOrderedCollection 
+columnsList: anOrderedCollection
 	"Set the columns of the receiver to be those in anOrderedCollection of ListViewColumns"
 
 	| oldSize newSize |
@@ -488,13 +487,11 @@ columnsList: anOrderedCollection
 		by: -1
 		do: [:each | self basicRemoveColumnAtIndex: each].
 	columns := anOrderedCollection.
-	oldSize + 1 to: newSize
-		do: [:each | self basicAddColumn: (columns at: each) atIndex: each].
+	oldSize + 1 to: newSize do: [:each | self basicAddColumn: (columns at: each) atIndex: each].
 	1 to: (oldSize min: newSize)
-		do: 
-			[:each | 
-			(columns at: each) parent: self.
-			self basicUpdateColumnAtIndex: each].
+		do: [:each | self basicUpdateColumn: ((columns at: each)
+						parent: self;
+						yourself)].
 	self
 		invalidateLayout;
 		invalidate!
@@ -1056,12 +1053,19 @@ itemFromPoint:  coord
 	ht := self basicItemFromPoint: coord.
 	^ht isItemHit ifTrue: [ht iItem+1]!
 
-itemRect: itemHandle textOnly: aBoolean
-	"Answers the rectangle surrounding the item with anIntegerIndex within
-	the receiver, optionally for the text label only."
+itemRect: anInteger textOnly: aBoolean
+	"Answers the rectangle surrounding the indexed item within the receiver, optionally for the text label only."
 
-	^self lvmGetItemRect: itemHandle-1 
-		bounding: (aBoolean ifTrue: [LVIR_LABEL] ifFalse: [LVIR_BOUNDS])!
+	| rect |
+	rect := RECTL newBuffer.
+	aBoolean ifTrue: [rect left: LVIR_LABEL].
+	(User32
+		sendMessage: handle
+		msg: LVM_GETITEMRECT
+		wParam: anInteger - 1
+		lpParam: rect) == 0
+		ifTrue: [^self errorInCommonControlCall: anInteger - 1].
+	^rect asRectangle!
 
 itemsPerPage
 	^self sendMessage: LVM_GETCOUNTPERPAGE!
@@ -1110,12 +1114,10 @@ lvmApproximateViewRect: countInteger cx: cxInteger cy: cyInteger
 lvmArrange: arrangeStyle
 	"Private - Arrange items when in icon style."
 
-	(User32
-		sendMessage: handle
-		msg: LVM_ARRANGE
+	self
+		sendMessageNz: LVM_ARRANGE
 		wParam: arrangeStyle
-		lParam: 0) == 0
-		ifTrue: [^self errorInCommonControlCall]!
+		lpParam: 0!
 
 lvmCreateDragImage: index position: position
 	"Private - Answer a Handle for the drag image list and the argument, position,
@@ -1194,12 +1196,10 @@ lvmGetColumnOrderArray
 	| iCount iArray |
 	iCount := self columnCount.
 	iArray := UInt32Array new: iCount.
-	(User32
-		sendMessage: handle
-		msg: LVM_GETCOLUMNORDERARRAY
+	self
+		sendMessageNz: LVM_GETCOLUMNORDERARRAY
 		wParam: iCount
-		lpParam: iArray) == 0
-		ifTrue: [^self errorInCommonControlCall].
+		lpParam: iArray.
 	^iArray!
 
 lvmGetColumnWidth: columnIndex
@@ -1239,12 +1239,10 @@ lvmGetImageList: wParam
 lvmGetItem: aLvItem
 	"Private - Retrieve the requested items attributes into the argument, aLvItem."
 
-	(User32
-		sendMessage: handle
-		msg: LVM_GETITEMW
+	self
+		sendMessageNz: LVM_GETITEMW
 		wParam: 0
-		lpParam: aLvItem) == 0
-		ifTrue: [^self errorInCommonControlCall]!
+		lpParam: aLvItem!
 
 lvmGetItemCount
 	"Private - Answers the number of items in the underlying list-view control."
@@ -1267,20 +1265,6 @@ lvmGetItemPosition: anInteger
 		lpParam: pt) == 0
 		ifTrue: [^self errorInCommonControlCall: anInteger].
 	^pt asPoint!
-
-lvmGetItemRect: index bounding: boundingValue
-	"Private - Answer a bounding Rectangle for all or part of an item."
-
-	| rect |
-	rect := RECTL newBuffer.
-	rect left: boundingValue.
-	(User32
-		sendMessage: handle
-		msg: LVM_GETITEMRECT
-		wParam: index
-		lpParam: rect) == 0
-		ifTrue: [^self errorInCommonControlCall: index].
-	^rect asRectangle!
 
 lvmGetItemSpacing
 	| dword |
@@ -1314,24 +1298,20 @@ lvmGetOrigin
 
 	| pt |
 	pt := POINTL newBuffer.
-	(User32
-		sendMessage: handle
-		msg: LVM_GETORIGIN
+	self
+		sendMessageNz: LVM_GETORIGIN
 		wParam: 0
-		lpParam: pt) == 0
-		ifTrue: [^self errorInCommonControlCall].
+		lpParam: pt.
 	^pt asPoint!
 
 lvmGetStringWidth: aString
 	"Private - Answer the width of aString when displayed in this view."
 
-	| width |
-	width := User32
-				sendMessage: handle
-				msg: LVM_GETSTRINGWIDTH
-				wParam: 0
-				lpParam: aString.
-	^width == 0 ifTrue: [self errorInCommonControlCall] ifFalse: [width]!
+	aString isEmpty ifTrue: [^0].
+	^self
+		sendMessageNz: LVM_GETSTRINGWIDTH
+		wParam: 0
+		lpParam: aString!
 
 lvmGetSubItemRect: rowInteger subitem: colInteger bounding: flagInteger
 	"Private - Answer a bounding Rectangle for all or part of a subitem."
@@ -1364,12 +1344,10 @@ lvmGetViewRect
 
 	| rect |
 	rect := RECTL newBuffer.
-	(User32
-		sendMessage: handle
-		msg: LVM_GETVIEWRECT
+	self
+		sendMessageNz: LVM_GETVIEWRECT
 		wParam: 0
-		lpParam: rect) == 0
-		ifTrue: [^self errorInCommonControlCall].
+		lpParam: rect.
 	^rect asRectangle!
 
 lvmInsertAt: column column: anLvColumn
@@ -1420,12 +1398,10 @@ lvmSetCallbackMask: anInteger
 lvmSetColumn: anLvColumn at: columnIndex
 	"Private - Set the attributes of a column."
 
-	(User32
-		sendMessage: handle
-		msg: LVM_SETCOLUMNW
+	self
+		sendMessageNz: LVM_SETCOLUMNW
 		wParam: columnIndex
-		lpParam: anLvColumn asParameter) == 0
-		ifTrue: [^self errorInCommonControlCall]!
+		lpParam: anLvColumn asParameter!
 
 lvmSetColumnOrderArray: iArray
 	"Private - Sets the left-to-right order of columns in the receiver to the zero-based positions
@@ -1471,7 +1447,7 @@ lvmSetExtendedListViewStyle: dwExMask dwExStyle: dwExStyle
 				msg: LVM_SETEXTENDEDLISTVIEWSTYLE
 				wParam: dwExMask
 				lParam: dwExStyle.
-	lvStyle := (prevStyle maskClear: dwExMask) maskSet: (dwExStyle bitAnd: dwExMask).
+	lvStyle := (prevStyle bitAnd: dwExMask bitInvert) bitOr: (dwExStyle bitAnd: dwExMask).
 	^prevStyle!
 
 lvmSetIconSpacing: aPoint
@@ -1498,12 +1474,10 @@ lvmSetItem: anLvItem
 	"Private - Set some or all of the receiver's default attributes as 
 	specified in the argument, anLvItem."
 
-	(User32
-		sendMessage: handle
-		msg: LVM_SETITEMW
+	self
+		sendMessageNz: LVM_SETITEMW
 		wParam: 0
-		lpParam: anLvItem asParameter) == 0
-		ifTrue: [^self errorInCommonControlCall]!
+		lpParam: anLvItem asParameter!
 
 lvmSetItem: anInteger position: aPos
 	"Private - Move an item to the specified position in the receiver when
@@ -1822,7 +1796,7 @@ onDisplayDetailsRequired: anLVITEM
 			 is for the primary column and its text block is nil, in which case the view
 			 level block is used"
 			anLVITEM
-				textInBuffer: (((column notNil and: [subItem > 0 or: [column getTextBlock notNil]])
+				textInBuffer: (((column notNil and: [subItem ~~ 0 or: [column getTextBlock notNil]])
 						ifTrue: [column]
 						ifFalse: [self]) textFromRow: rowObject)].
 	(mask allMask: LVIF_INDENT)
@@ -2377,14 +2351,7 @@ updateAllVirtual
 updateColumn: aListViewColumn
 	"Private - Update the view to reflect the current state of aListViewColumn."
 
-	self updateColumnAtIndex: (self allColumns indexOf: aListViewColumn)!
-
-updateColumnAtIndex: anInteger
-	"Private - Update the view to reflect the current state of the column
-	at columnIndex. If this is the primary column then we must update
-	the receiver's text too."
-
-	self basicUpdateColumnAtIndex: anInteger.
+	self basicUpdateColumn: aListViewColumn.
 	self updateAll!
 
 updateItem: anObject atIndex: anInteger
@@ -2480,7 +2447,7 @@ basicRefreshContents!private!updating! !
 basicRemoveAtIndex:!private!removing! !
 basicRemoveColumnAtIndex:!columns!public!removing! !
 basicResetSelection!private!selection! !
-basicUpdateColumnAtIndex:!columns!private!updating! !
+basicUpdateColumn:!columns!private!updating! !
 beSorted:!public!sorting! !
 buildViewsPopup!helpers!private! !
 cancelLabelEdit!operations!private! !
@@ -2590,7 +2557,6 @@ lvmGetImageList:!image management!private! !
 lvmGetItem:!accessing!private! !
 lvmGetItemCount!accessing!private! !
 lvmGetItemPosition:!geometry!private! !
-lvmGetItemRect:bounding:!geometry!private! !
 lvmGetItemSpacing!accessing!private! !
 lvmGetItemState:mask:!accessing!private! !
 lvmGetNextItem:flags:!accessing!private! !
@@ -2705,7 +2671,6 @@ tileIconMode!commands!public! !
 updateAllNonVirtual!private!updating! !
 updateAllVirtual!private!updating! !
 updateColumn:!columns!private!updating! !
-updateColumnAtIndex:!columns!private!updating! !
 updateItem:atIndex:!event handling!public! !
 updateSelectionCache!helpers!private!selection! !
 viewMode!accessing!public! !

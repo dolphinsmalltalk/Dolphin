@@ -35,6 +35,7 @@ testEmpty
 	self assert: (SelectorParser parse: '.') equals: ''!
 
 testExhaustive
+	<knownSlowTest>
 	Object
 		allMethodsDo: [:each | self assert: (SelectorParser parse: each getSource) equals: each selector]!
 

@@ -320,6 +320,16 @@ paintTransparentBackgroundOn: canvas
 
 	!
 
+sendMessageNz: anIntegerMessageID wParam: wParam lpParam: lParam
+	| rc |
+	rc := User32
+				sendMessage: handle
+				msg: anIntegerMessageID
+				wParam: wParam
+				lpParam: lParam.
+	rc == 0 ifTrue: [self errorInCommonControlCall].
+	^rc!
+
 setControlBackcolor
 	| color |
 	color := self basicActualBackcolor.
@@ -375,7 +385,7 @@ wantParentNotifications
 	according to aBoolean.
 	N.B. Dolphin reflects these notifications back to the receiver."
 
-	^(self exStyleAllMask: WS_EX_NOPARENTNOTIFY) not!
+	^self extendedStyle noMask: WS_EX_NOPARENTNOTIFY!
 
 wantParentNotifications: aBoolean
 	"Set the whether the receiver's parent will be sent notifications from the receiver
@@ -459,6 +469,7 @@ onEraseRequired:!event handling!public! !
 onInputMaskRequired:!event handling!public! !
 onViewCreated!event handling!public! !
 paintTransparentBackgroundOn:!private!updating! !
+sendMessageNz:wParam:lpParam:!operations!private! !
 setControlBackcolor!helpers!private! !
 setControlBackcolor:!helpers!private! !
 setFont:!accessing!font!private! !

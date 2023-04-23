@@ -2,7 +2,7 @@
 
 Core.Object
 	subclass: #'OS.SystemMetrics'
-	instanceVariableNames: 'menuCheckExtent dragHysteresis scrollThumbExtent sizingFrameExtent dialogFrameExtent borderExtent nonClientMetrics menuFont edgeExtent hasFlatMenus iconTitleFont hasSmoothScrollingLists defaultColorDepth isNotWine'
+	instanceVariableNames: 'menuCheckExtent dragHysteresis scrollThumbExtent sizingFrameExtent dialogFrameExtent borderExtent nonClientMetrics menuFont edgeExtent hasFlatMenus iconTitleFont hasSmoothScrollingLists defaultColorDepth isNotWine menuImageExtent'
 	classVariableNames: 'Current'
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
@@ -248,7 +248,7 @@ menuImageExtent
 
 	"Implementation Note: This seems to be fixed and not available as a config. item?"
 
-	^self smallIconExtent!
+	^menuImageExtent ifNil: [menuImageExtent := self getMetric: SM_CXSMICON pair: SM_CYSMICON]!
 
 menuImageTextGap
 	"The gap between the text in a menu item and the image. It doesn't seem to be possible to
@@ -297,7 +297,7 @@ onSettingChanged: anArray
 	| code |
 	(##(#('Policy' 'intl' 'Environment' 'ImmersiveColorSet') asSet) includes: anArray first)
 		ifTrue: [^self].
-	menuCheckExtent := dragHysteresis := scrollThumbExtent := sizingFrameExtent := dialogFrameExtent := borderExtent := edgeExtent := nil.
+	menuImageExtent := menuCheckExtent := dragHysteresis := scrollThumbExtent := sizingFrameExtent := dialogFrameExtent := borderExtent := edgeExtent := nil.
 	code := anArray second.
 	code == SPI_SETICONTITLELOGFONT
 		ifTrue: 

@@ -13,6 +13,11 @@ OS.POINTL comment: '`POINTL` is an `External.Structure` class to wrap the Win32 
 !OS.POINTL categoriesForClass!Win32-Structs! !
 !OS.POINTL methodsFor!
 
+asPoint
+	"Answer a <Point> that matches the receiver."
+
+	^Graphics.Point x: (bytes int32AtOffset: _OffsetOf_x) y: (bytes int32AtOffset: _OffsetOf_y)!
+
 asUIntPtr
 	"Answer the receiver in a form suitable for passing or returning 
 	as a  machine-word sized (32 or 64-bit) value."
@@ -37,10 +42,10 @@ x: anInteger
 	bytes int32AtOffset: _OffsetOf_x put: anInteger!
 
 x: xInteger y: yInteger
-
 	bytes
 		int32AtOffset: _OffsetOf_x put: xInteger;
-		int32AtOffset: _OffsetOf_y put: yInteger!
+		int32AtOffset: _OffsetOf_y put: yInteger.
+	^self!
 
 y
 	"Answer the <Integer> value of the receiver's 'y' field."
@@ -52,6 +57,7 @@ y: anInteger
 
 	bytes int32AtOffset: _OffsetOf_y put: anInteger! !
 !OS.POINTL categoriesForMethods!
+asPoint!converting!public! !
 asUIntPtr!converting!public! !
 isZero!public!testing! !
 x!**compiled accessors**!public! !

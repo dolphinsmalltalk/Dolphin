@@ -103,6 +103,11 @@ errorDuplicateName: aString
 	^self error: 'duplicate name: ', aString
 !
 
+getItemRect: anInteger
+	"Private - Answer the bounding <RECTL> for the button at zero-based <Integer> index."
+
+	^self subclassResponsibility!
+
 hasDivider
 	"Answers whether the receiver has a divider at its top edge (this is the
 	CCS_NODIVIDER style)."
@@ -151,9 +156,9 @@ itemAtIndex: anInteger
 	^self subclassResponsibility!
 
 itemRect: anInteger
-	"Answer the bounding <Rectangle> for the item at the specified 1-based <Integer> index."
+	"Answer the bounding <Rectangle> for the receiver's item at the specified 1-based <integer> index."
 
-	^self subclassResponsibility!
+	^(self getItemRect: anInteger - 1) asRectangle!
 
 items
 	^self subclassResponsibility!
@@ -327,6 +332,7 @@ defaultExtentOf:!public! !
 defaultWindowExStyle!constants!private! !
 defaultWindowStyle!constants!private! !
 errorDuplicateName:!exceptions!public! !
+getItemRect:!geometry!private! !
 hasDivider!accessing-styles!public! !
 hasDivider:!accessing-styles!public! !
 indexOfItem:!items!private! !

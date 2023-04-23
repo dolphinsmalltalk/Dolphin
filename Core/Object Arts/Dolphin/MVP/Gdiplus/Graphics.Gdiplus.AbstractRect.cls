@@ -21,9 +21,6 @@ bottom
 bottom: aNumber
 	self height: aNumber - self y!
 
-height: aFloat
-	self subclassResponsibility!
-
 left
 	^self x!
 
@@ -44,9 +41,6 @@ top: aNumber
 	self height: self height + (self y - aNumber).
 	self y: aNumber!
 
-width: aFloat
-	self subclassResponsibility!
-
 x
 	self subclassResponsibility!
 
@@ -62,14 +56,12 @@ y: aFloat
 asRectangle!converting!public! !
 bottom!accessing!public! !
 bottom:!accessing!public! !
-height:!accessing!public! !
 left!accessing!public! !
 left:!accessing!public! !
 right!accessing!public! !
 right:!accessing!public! !
 top!accessing!public! !
 top:!accessing!public! !
-width:!accessing!public! !
 x!accessing!public! !
 x:!accessing!public! !
 y!accessing!public! !

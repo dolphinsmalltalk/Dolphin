@@ -42,7 +42,7 @@ cy: anInteger
 	bytes int32AtOffset: _OffsetOf_cy put: anInteger!
 
 extent
-	^self cx @ self cy!
+	^Graphics.Point x: (bytes int32AtOffset: _OffsetOf_cx) y: (bytes int32AtOffset: _OffsetOf_cy)!
 
 flags
 	"Answer the <Integer> value of the receiver's 'flags' field."

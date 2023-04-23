@@ -134,7 +134,7 @@ layoutContainer: aCompositeView context: aLayoutContext
 	1 to: count
 		do: 
 			[:index |
-			| each viewMajorExtent viewExtent |
+			| each viewMajorExtent |
 			each := subViews at: index.
 			viewMajorExtent := (self hasFixedSize: each)
 						ifTrue: [self majorDimensionOf: (each layoutExtent: aLayoutContext)]
@@ -142,8 +142,8 @@ layoutContainer: aCompositeView context: aLayoutContext
 							[index = count
 								ifTrue: [majorExtent + (self majorDimensionOf: insets origin) - (self majorDimensionOf: offset)]
 								ifFalse: [((self arrangementOf: each) / totalProportions * freeSize) truncated]].
-			viewExtent := self pointWithMajor: viewMajorExtent minor: minorExtent.
-			aLayoutContext setView: each rectangle: (offset extent: viewExtent).
+			aLayoutContext setView: each
+				rectangle: (offset extent: (self pointWithMajor: viewMajorExtent minor: minorExtent)).
 			offset := offset + (self pointWithMajor: viewMajorExtent minor: 0)]!
 
 nearestResizableViewFrom: fromView inViews: views by: direction 

@@ -130,7 +130,7 @@ dlgCode
 	receiver. This can be modified depending on the particular message received
 	with a WM_GETDLGCODE."
 
-	^(super dlgCode maskClear: DLGC_HASSETSEL) bitOr: DLGC_WANTALLKEYS!
+	^(super dlgCode bitAnd: ##(DLGC_HASSETSEL bitInvert)) bitOr: DLGC_WANTALLKEYS!
 
 duplicateLine
 	"Duplicate the current line."

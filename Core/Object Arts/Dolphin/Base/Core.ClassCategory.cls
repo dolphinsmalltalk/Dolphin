@@ -6,7 +6,7 @@ Core.Category
 	classVariableNames: 'Deprecated Table Unclassified'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'UnclassifiedName' -> 'Unclassified' }!
 Core.ClassCategory guid: (Core.GUID fromString: '{87b4c500-026e-11d3-9fd7-00a0cc3e4a32}')!
 Core.ClassCategory comment: ''!
 !Core.ClassCategory categoriesForClass!System-Support! !
@@ -30,7 +30,7 @@ includesClass: class
 	"Answer whether the receiver includes the <ClassDescription>, class."
 
 	^class classCategories
-		ifNil: [self == self class unclassified]
+		ifNil: [name = UnclassifiedName]
 		ifNotNil: [:classCategories | classCategories identityIncludes: self]!
 
 isEmpty
@@ -86,9 +86,9 @@ initialize
 
 	"During the boot, weakness doesn't work properly, so some repairs may be needed"
 
-	Unclassified := Table at: self unclassifiedName ifAbsentPut: [self newNamed: self unclassifiedName].
+	Unclassified := Table at: UnclassifiedName ifAbsentPut: [self newNamed: UnclassifiedName].
 	Deprecated := Table at: 'Deprecated' ifAbsentPut: [self newNamed: 'Deprecated'].
-	Table removeKey: 'No category' ifAbsent: nil!
+	Table removeKey: 'No category' ifAbsent: nil"Private - Answer the String name used to mark a none existing category.""Private - Answer the String name used to mark a none existing category."!
 
 name: cat
 	"Answer a new or existing class category with the specified name."
@@ -107,14 +107,8 @@ unclassified
 
 	^Unclassified
 		ifNil: 
-			[Unclassified := self newNamed: self unclassifiedName.
-			self table at: self unclassifiedName put: Unclassified.
-			Unclassified]!
-
-unclassifiedName
-	"Private - Answer the String name used to mark a none existing category."
-
-	^ 'Unclassified'!
+			[Unclassified := self newNamed: UnclassifiedName.
+			self table at: UnclassifiedName put: Unclassified]!
 
 uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
@@ -128,7 +122,6 @@ initialize!initializing!private! !
 name:!instance creation!public! !
 table!accessing!private! !
 unclassified!instance creation!public! !
-unclassifiedName!constants!private! !
 uninitialize!class hierarchy-removing!private! !
 !
 

@@ -1,89 +1,74 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.InstructionInterpreter
+Kernel.MessageSendInterpreter
 	subclass: #'Kernel.MessageSendCollector'
-	instanceVariableNames: 'messageBlock superMessageBlock'
+	instanceVariableNames: 'messages'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-			'SendInstructions'
-				-> #(nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendSelfZeroArgs: #shortSendSelfZeroArgs: #shortSendSelfZeroArgs: #shortSendSelfZeroArgs: #shortSendSelfZeroArgs: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: nil nil #shortSpecialSendEx: #shortSpecialSendEx: #shortSpecialSendEx: #shortSpecialSendEx: nil nil nil nil nil nil nil nil nil nil nil nil #send: #supersend: #specialSend: nil nil nil nil nil nil nil #sendTempZeroArgs: nil nil nil nil #sendSelfZeroArgs: nil nil nil nil nil nil nil #longSend:with: #longSupersend:with: nil nil nil nil nil nil nil nil nil nil nil nil #exLongSend:with:with: #exLongSupersend:with:with: nil)
-		}!
-Kernel.MessageSendCollector guid: (Core.GUID fromString: '{5228f2f4-3ec1-4fdb-a520-c6e478fcd8ad}')!
-Kernel.MessageSendCollector comment: 'MessageSendCollector is an <InstructionInterpreter> that evaluates user supplied blocks against all the message send instructions it is dispatched. It is typically used to collect all the message sends in a method, hence the name.
+	classConstants: {}!
+Kernel.MessageSendCollector guid: (Core.GUID fromString: '{f883fe35-9906-4e8c-9ef2-f84400555550}')!
+Kernel.MessageSendCollector comment: '`MessageSendCollector` is an `InstructionInterpreter` that collects all the message sends in a method.
 
-Instance Variables:
-	messageBlock			<monadicValuable>
-	superMessageBlock		<monadicValuable>
+## Instance Variables:
+  `messages`			`<IdentitySet>`. The collected sent messages.
+  `superMessages`		`<IdentitySet>`. The collected supersend messages.
 
 '!
 !Kernel.MessageSendCollector categoriesForClass!Kernel-Objects! !
 !Kernel.MessageSendCollector methodsFor!
 
-dispatchNext
-	dispatcher dispatchNext!
+messages
+	^messages
+		ifNil: 
+			[messages := IdentitySet new: method size.
+			self interpret.
+			messages]!
 
-initialize
-	superMessageBlock := messageBlock := [:selector | ]!
+send: extensionByte
+	messages add: (method basicAt: (extensionByte bitAnd: 31) + 1)!
 
-messagesDo: aBlockClosure 
-	superMessageBlock := messageBlock := aBlockClosure.
-	self interpret!
+sendSelector: aSymbol args: anInteger 
+	messages add: aSymbol!
 
-sendSelector: aSymbol args: anObject 
-	messageBlock value: aSymbol!
+shortSendOneArg: literalIndex
+	messages add: (method basicAt: literalIndex + 1)!
 
-sendSelfSelector: aSymbol args: anObject 
-	messageBlock value: aSymbol!
+shortSendSelfZeroArgs: anInteger
+	"Interpret a Short Send Self [N] with 0 Args instruction."
+
+	messages add: (method basicAt: anInteger + 1)!
+
+shortSendTwoArgs: literalIndex
+	messages add: (method basicAt: literalIndex + 1)!
+
+shortSendZeroArgs: literalIndex
+	messages add: (method basicAt: literalIndex + 1)!
 
 shortSpecialSend: anInteger
 	"Interpret a Short Special Send instruction."
 
-	"Implementation Note: This override is not strictly needed, but since we don't need the argument count 
-	we can avoid the cost of asking a selector for its argument count."
-
-	self sendSelector: (dispatcher selectorOfSpecialSend: anInteger) args: -1!
+	messages add: (VM selectorOfSpecialSend: anInteger)!
 
 shortSpecialSendEx: anInteger
 	"Interpret a Short Special Send instruction."
 
-	"Implementation Note: This override is not strictly needed, but since we don't need the argument count 
-	we can avoid the cost of asking a selector for its argument count."
+	messages add: (VM selectorOfSpecialSendEx: anInteger)!
 
-	self sendSelector: (dispatcher selectorOfSpecialSendEx: anInteger) args: -1!
+supersend: literalIndex args: argumentCount
+	"Private - Interpret a Supersend [N] with M args instruction."
 
-superMessagesDo: aBlockClosure 
-	superMessageBlock := aBlockClosure.
-	self interpret!
-
-supersendSelector: aSymbol 
-	superMessageBlock value: aSymbol! !
+	messages add: (method basicAt: literalIndex + 1)! !
 !Kernel.MessageSendCollector categoriesForMethods!
-dispatchNext!interpreting!private! !
-initialize!initializing!private! !
-messagesDo:!enumerating!public! !
-sendSelector:args:!interpreting!private! !
-sendSelfSelector:args:!interpreting!private! !
+messages!accessing!public! !
+send:!instructions-sending!public! !
+sendSelector:args:!private! !
+shortSendOneArg:!instructions-sending!public! !
+shortSendSelfZeroArgs:!instructions-sending!public! !
+shortSendTwoArgs:!instructions-sending!public! !
+shortSendZeroArgs:!instructions-sending!public! !
 shortSpecialSend:!instructions-sending!public! !
 shortSpecialSendEx:!instructions-sending!public! !
-superMessagesDo:!enumerating!public! !
-supersendSelector:!interpreting!private! !
-!
-
-!Kernel.MessageSendCollector class methodsFor!
-
-dispatcher: aByteCodeDispatcher
-	"Configure the dispatcher to dispatch only the send instructions as processing the others is a waste of time."
-
-	aByteCodeDispatcher instructions: SendInstructions.
-	^super dispatcher: aByteCodeDispatcher!
-
-initialize
-	self addClassConstant: 'SendInstructions'
-		value: (ByteCodeDispatcher instructions collect: [:each | ('*send*' match: each) ifTrue: [each]])! !
-!Kernel.MessageSendCollector class categoriesForMethods!
-dispatcher:!instance creation!public! !
-initialize!class initialization!development!public! !
+supersend:args:!interpreting!private! !
 !
 

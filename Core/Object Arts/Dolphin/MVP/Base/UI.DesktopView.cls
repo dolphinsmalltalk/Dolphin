@@ -166,7 +166,7 @@ invalidateUserInterface
 	"Invalidates the user interface of the receiver indicating that it needs
 	to be requeried using #validateUserInterface (usually at idle time)"
 
-	flags := flags maskClear: UIValidMask.!
+	flags := flags bitAnd: ##(UIValidMask bitInvert)!
 
 isDesktop
 	"Answer whether the receiver represents the desktop window"

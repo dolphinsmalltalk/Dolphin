@@ -61,7 +61,7 @@ alignment: aSymbol
 	used to control whether the check button is to the left or right of the label."
 
 	| alignment |
-	alignment := AlignmentMap at: aSymbol ifAbsent: [##(BS_LEFT | BS_VCENTER)].
+	alignment := AlignmentMap at: aSymbol ifAbsent: ##(BS_LEFT | BS_VCENTER).
 	self 
 		baseStyle: alignment
 		maskedBy: ##(BS_LEFT | BS_RIGHT | BS_BOTTOM | BS_TOP | BS_CENTER | BS_VCENTER)

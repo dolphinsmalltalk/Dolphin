@@ -64,10 +64,7 @@ selectedAspectValueRect
 	| aspectListView rect |
 	aspectListView := aspectTreePresenter view.
 	rect := aspectListView subItemRectRow: aspectListView selectionByIndex column: 2.
-	^View 
-		mapRectangle: rect
-		from: aspectListView
-		to: View desktop! !
+	^aspectListView mapRectangle: rect to: View desktop! !
 !Tools.PropertyInspector categoriesForMethods!
 createComponents!private! !
 onAspectActioned!event handling!private! !

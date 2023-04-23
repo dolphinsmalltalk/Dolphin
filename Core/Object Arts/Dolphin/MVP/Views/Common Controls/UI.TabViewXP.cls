@@ -23,10 +23,10 @@ calcClientRectangleFromRectangle: aRectangle
 	^self tcmAdjustRect: false for: aRectangle!
 
 createVerticalFont
-	| lf |
-	lf := self actualFont logFont copy.
-	lf lfEscapement: (self isInverted ifTrue: [2700] ifFalse: [900]).
-	^Font fromLogFont: lf!
+	| vertical |
+	vertical := self actualFont copy.
+	vertical logFont lfEscapement: (self isInverted ifTrue: [2700] ifFalse: [900]).
+	^vertical!
 
 imageTextGap
 	^6!
@@ -92,7 +92,7 @@ paintBottomOrientationOn: aCanvas
 paintLabel: anInteger on: aCanvas in: aRectangle
 	| inverted rcItem textExtent labelRect textOffset text tcItem imageIndex |
 	tcItem := self getItem: anInteger.
-	text := tcItem text.
+	text := tcItem pszText.
 	imageIndex := self hasIcons ifTrue: [tcItem iImage + 1] ifFalse: [-1].
 	inverted := self isInverted.
 	rcItem := aRectangle copy.
@@ -168,13 +168,12 @@ paintRightOrientationOn: aCanvas
 	self paintVerticalTabLabelsOn: aCanvas!
 
 paintTabLabelsOn: aCanvas
-	| selectedIndex nOldMode oldFont rect itemCount |
+	| selectedIndex nOldMode oldFont itemCount |
 	itemCount := self itemCount.
 	itemCount < 1 ifTrue: [^self].
 	nOldMode := aCanvas backgroundMode: TRANSPARENT.
 	oldFont := aCanvas font: self actualFont.
-	selectedIndex := self selectionByIndex.
-	1 to: selectedIndex - 1
+	1 to: (selectedIndex := self selectionByIndex) - 1
 		do: 
 			[:i |
 			self
@@ -184,7 +183,8 @@ paintTabLabelsOn: aCanvas
 	"It doesn't particularly make sense, but there can be no selection in a TabView."
 	selectedIndex ~~ 0
 		ifTrue: 
-			[rect := self itemRect: selectedIndex.
+			[| rect |
+			rect := self itemRect: selectedIndex.
 			self
 				paintLabel: selectedIndex
 				on: aCanvas
@@ -215,7 +215,7 @@ paintThemedBackgroundOn: aCanvas in: aRectangle
 	bkColor isNone
 		ifFalse: 
 			["This is the background fill behind the tabs"
-			aCanvas fillRectangle: (aCanvas clipBox subtract: aRectangle) color: bkColor]!
+			aCanvas fillRectangle: (aCanvas getClipBox subtract: aRectangle) color: bkColor]!
 
 paintThemedTabsOn: aCanvas offset: aMonadicValuable
 	| selected hot numItems dc hTheme part rcItem  |
@@ -300,7 +300,7 @@ paintVerticalLabel: anInteger on: aCanvas in: aRectangle
 	| text inverted textExtent textOffset labelRect tcItem imageIndex |
 	inverted := self isInverted.
 	tcItem := self getItem: anInteger.
-	text := tcItem text copyWithout: $&.
+	text := tcItem pszText copyWithout: $&.
 	imageIndex := self hasIcons ifTrue: [tcItem iImage + 1] ifFalse: [-1].
 	textExtent := (aCanvas textExtent: text) transpose.
 	imageIndex <= 0

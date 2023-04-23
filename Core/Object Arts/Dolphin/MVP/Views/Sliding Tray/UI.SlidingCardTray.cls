@@ -158,7 +158,7 @@ openTheme
 				prc: nil
 				eSize: TS_TRUE
 				psz: pinSize].
-	pinSize := pinSize asObject!
+	pinSize := pinSize asPoint!
 
 paintClassicBackgroundOn: aCanvas
 	aCanvas fillRectangle: self headerRectangle color: Color inactiveCaption!
@@ -239,7 +239,7 @@ pinImageList
 	^PinImageList!
 
 pinInset
-	^2 @ 1!
+	^##(2 @ 1)!
 
 pinRectangle
 	| insetRect |

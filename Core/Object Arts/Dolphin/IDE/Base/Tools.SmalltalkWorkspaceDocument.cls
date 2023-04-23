@@ -541,7 +541,7 @@ fileTypes
 		FileDialog allFilesType}!
 
 finishedLoadingOptions
-	OptionFlags := OptionFlags maskClear: LoadingMask!
+	OptionFlags := OptionFlags bitAnd: ##(LoadingMask bitInvert)!
 
 icon
 	"Answers an Icon that can be used to represent this class"

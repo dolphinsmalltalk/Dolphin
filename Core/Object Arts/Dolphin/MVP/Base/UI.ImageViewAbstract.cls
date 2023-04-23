@@ -151,14 +151,13 @@ invalidateRect: aRectangle erase: aBoolean
 	"Invalidates the specified client rectangle (a RECTL, Rectangle, or nil for the whole client window).
 	Set whether to erase the receiver's background before repainting. Answer whether the function succeeds."
 
-	"There is a possibility that this may be called before the receiver has been created
-	so check for this to avoid accidentally redrawing the entire desktop"
+	"There is a possibility that this may be called before the receiver has been created so check for this to avoid accidentally redrawing the entire desktop"
 
 	handle isNull ifTrue: [^false].
 	^self hasTransparentBackground
 		ifTrue: 
 			[self parentView invalidateRect: (aRectangle isNil
-						ifTrue: [self rectangle]
+						ifTrue: [self getRect]
 						ifFalse: [self mapRectangle: aRectangle to: self parentView])
 				erase: aBoolean]
 		ifFalse: 

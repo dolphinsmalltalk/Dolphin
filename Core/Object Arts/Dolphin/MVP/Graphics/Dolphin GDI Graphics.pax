@@ -197,7 +197,7 @@ Core.Object
 	classConstants: {}!
 Core.Object
 	subclass: #'OS.SystemMetrics'
-	instanceVariableNames: 'menuCheckExtent dragHysteresis scrollThumbExtent sizingFrameExtent dialogFrameExtent borderExtent nonClientMetrics menuFont edgeExtent hasFlatMenus iconTitleFont hasSmoothScrollingLists defaultColorDepth isNotWine'
+	instanceVariableNames: 'menuCheckExtent dragHysteresis scrollThumbExtent sizingFrameExtent dialogFrameExtent borderExtent nonClientMetrics menuFont edgeExtent hasFlatMenus iconTitleFont hasSmoothScrollingLists defaultColorDepth isNotWine menuImageExtent'
 	classVariableNames: 'Current'
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''

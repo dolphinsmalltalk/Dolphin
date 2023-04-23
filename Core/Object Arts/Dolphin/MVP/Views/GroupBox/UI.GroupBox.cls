@@ -36,13 +36,11 @@ defaultWindowStyle
 	^(super defaultWindowStyle maskClear: WS_TABSTOP) bitOr: BS_GROUPBOX!
 
 onPositionChanged: aPositionEvent
-	"Private - Handle a window position change event (move or resize).
-	Implementation Note:  Windows group boxes are partially transparent and do not 
-	redraw most of their area, so when they are moved they leave behind traces of their
-	former presence. We therefore force the parent to redraw to clear up."
+	"Private - Handle a window position change event (move or resize)."
 
-	aPositionEvent isMove ifTrue: [
-		self parentView invalidateRect: self rectangle].
+	"Implementation Note:  Windows group boxes are partially transparent and do not redraw most of their area, so when they are moved they leave behind traces of their former presence. We therefore force the parent to redraw to clear up."
+
+	aPositionEvent isMove ifTrue: [self parentView invalidateRect: self getRect].
 	^super onPositionChanged: aPositionEvent! !
 !UI.GroupBox categoriesForMethods!
 defaultExtent!constants!private! !

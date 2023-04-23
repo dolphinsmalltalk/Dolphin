@@ -6,7 +6,7 @@ Core.Object
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'DeferRectangles' -> true }!
 UI.LayoutContext guid: (Core.GUID fromString: '{85935809-471d-43cd-98f0-4c8f861663de}')!
 UI.LayoutContext comment: 'LayoutContext is used by LayoutManagers to buffer window layout changes such as moving, resizing (i.e. changing the view rectangle) and hiding/showing views. LayoutContext can then apply the buffered changes en-masse using the Win32 DeferWindowPos APIs. This minimises the amount of unecesary relayout and redrawing that would otherwise occur as layout managers allocate space to their charges.
 
@@ -17,9 +17,9 @@ Note that DeferWindowPos is only able to batch up window repositioning requests 
 apply
 	"Apply the batch of deferred window positioning operations that the receiver represents."
 
-	self deferRectangles ifFalse: [^self].
+	DeferRectangles ifFalse: [^self].
 	self repositionSubViewsOf: container.
-	positions at: container ifPresent: [:pos | container rectangle: (pos at: 2)]!
+	(positions lookup: container) ifNotNil: [:pos | pos applyRectangle]!
 
 clientExtentOf: aView 
 	"Answer a <Point> representing the client extent of the specified <View>. This may be
@@ -33,37 +33,7 @@ clientRectangleOf: aView
 
 	^(positions lookup: aView)
 		ifNil: [aView clientRectangle]
-		ifNotNil: [:array | aView calcClientRectangleFromRectangle: (array at: 2)]!
-
-deferRectangles
-	^true!
-
-deferWindowPositions: aSequencedReadableCollection
-	| count |
-	count := aSequencedReadableCollection size.
-	count == 0 ifTrue: [^self].
-	User32 endDeferWindowPos: (aSequencedReadableCollection inject: (User32 beginDeferWindowPos: count)
-				into: 
-					[:hdwp :each |
-					| rect view flags |
-					view := each at: 1.
-					flags := ##(SWP_NOZORDER | SWP_NOACTIVATE).
-					rect := (each at: 2)
-								ifNil: 
-									[flags := flags bitOr: ##(SWP_NOSIZE | SWP_NOMOVE).
-									Rectangle.Empty]
-								ifNotNil: [:r | view adjustRectangle: r].
-					(each at: 3)
-						ifNotNil: [:show | flags := flags bitOr: (show ifTrue: [SWP_SHOWWINDOW] ifFalse: [SWP_HIDEWINDOW])].
-					User32
-						deferWindowPos: hdwp
-						hwnd: view asParameter
-						hwndInsertAfter: 0
-						x: rect left
-						y: rect top
-						cx: rect width
-						cy: rect height
-						uFlags: flags])!
+		ifNotNil: [:pos | aView calcClientRectangleFromRectangle: pos rectangle]!
 
 extentOf: aView 
 	"Answer a <Point>, being the window extent (not client extent) of the specified <View>. This
@@ -72,52 +42,46 @@ extentOf: aView
 
 	^(self rectangleOf: aView) extent!
 
-hideView: aView 
-	self setView: aView visibility: false!
+hideView: aView
+	(self positionForView: aView) show: false!
 
 isViewVisible: aView
 	"Answer whether the specified <View> will be visible after the window repositioning
 	operations specified in this context are applied."
 
-	(positions lookup: aView) ifNotNil: [:pos | (pos at: 3) ifNotNil: [:show | ^show]].
+	(positions lookup: aView) ifNotNil: [:pos | pos show ifNotNil: [:show | ^show]].
 	^aView hasVisibleStyle!
 
 positionForView: aView
-	^positions at: aView ifAbsentPutClean: [{aView. nil. nil}]!
+	^(positions lookup: aView) ifNil: [positions at: aView put: (LayoutPosition view: aView)]!
 
 rectangleOf: aView
 	"Answer the window <Rectangle> of the specified <View>. This may be different to its current
 	view rectangle if it has been repositioned during this operation."
 
-	(positions lookup: aView) ifNotNil: [:pos | (pos at: 2) ifNotNil: [:rect | ^rect]].
+	(positions lookup: aView) ifNotNil: [:pos | pos rectangle ifNotNil: [:rect | ^rect]].
 	^aView rectangle!
 
 repositionSubViewsOf: aView
 	"Private - Recursively reposition the sub-views of the argument.
-	Unfortunately the DeferWindowPos API has the limitation that all windows in the repositioning batch must have the same parent, and consequently we must recursively position the subviews as multiple batches,
-	rather than accumulating all the positions and then applying one large deferred update."
+	Unfortunately the DeferWindowPos API has the limitation that all windows in the repositioning batch must have the same parent, and consequently we must recursively position the subviews as multiple batches, rather than accumulating all the positions and then applying one large deferred update."
 
-	| pairs |
-	pairs := OrderedCollection new.
+	| newPositions hdwp stream count |
+	stream := WriteStream on: (newPositions := Array new).
 	aView subViewsDo: 
 			[:each |
 			self repositionSubViewsOf: each.
-			positions at: each
-				ifPresent: 
-					[:pos |
-					| view rect |
-					view := pos at: 1.
-					rect := pos at: 2.
-					((rect notNil and: [rect ~= view rectangle]) or: 
-							[| show |
-							show := pos at: 3.
-							show notNil and: [show ~= view isWindowVisible]])
-						ifTrue: [pairs addLast: pos]]].
-	self deferWindowPositions: pairs!
+			(positions lookup: each) ifNotNil: [:pos | pos hasPositionChange ifTrue: [stream nextPut: pos]]].
+	count := stream position.
+	count == 0 ifTrue: [^self].
+	hdwp := User32 beginDeferWindowPos: count.
+	1 to: count do: [:i | hdwp := (newPositions at: i) deferWindowPos: hdwp].
+	User32 endDeferWindowPos: hdwp!
 
 setContainer: aContainerView
-	positions := LookupTable new.
-	container := aContainerView!
+	container := aContainerView.
+	positions := IdentityDictionary new.
+	^self!
 
 setView: aView extent: aPoint 
 	"Set the window extent of the <View>, aView, to be the dimensions specified by the <Point>,
@@ -138,21 +102,16 @@ setView: aView rectangle: aRectangle
 	will not actually be repositioned until the batch of deferred position changes represented
 	by the receiver are applied."
 
-	(self positionForView: aView) at: 2 put: aRectangle.
-	self deferRectangles ifFalse: [aView rectangle: aRectangle].
+	(self positionForView: aView) rectangle: aRectangle.
+	DeferRectangles ifFalse: [aView rectangle: aRectangle].
 	^aRectangle!
 
-setView: aView visibility: aBoolean 
-	(self positionForView: aView) at: 3 put: aBoolean!
-
-showView: aView 
-	self setView: aView visibility: true! !
+showView: aView
+	(self positionForView: aView) show: true! !
 !UI.LayoutContext categoriesForMethods!
 apply!operations!public! !
 clientExtentOf:!accessing!public! !
 clientRectangleOf:!accessing!public! !
-deferRectangles!private!testing! !
-deferWindowPositions:!operations!public! !
 extentOf:!accessing!public! !
 hideView:!accessing!public! !
 isViewVisible:!enquiries!public! !
@@ -163,16 +122,13 @@ setContainer:!initializing!private! !
 setView:extent:!accessing!public! !
 setView:origin:!accessing!public! !
 setView:rectangle:!accessing!public! !
-setView:visibility:!accessing!public! !
 showView:!accessing!public! !
 !
 
 !UI.LayoutContext class methodsFor!
 
-forContainer: aView 
-	^(self new)
-		setContainer: aView;
-		yourself! !
+forContainer: aView
+	^self new setContainer: aView! !
 !UI.LayoutContext class categoriesForMethods!
 forContainer:!instance creation!public! !
 !

@@ -98,7 +98,7 @@ initialize
 invalidate
 	"Invalidate the entire client area so that it will be re-painted"
 
-	parentView invalidateRect: self rectangle!
+	parentView invalidateItem: self!
 
 isAutoResize
 	"Answer true if the receiver will attempt to share the available width in its parent <StatusBar> with other auto-resize items"

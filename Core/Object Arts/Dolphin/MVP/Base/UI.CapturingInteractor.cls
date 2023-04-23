@@ -31,7 +31,7 @@ UI.CapturingInteractor comment: '`CapturingInteractor` is an abstract class of `
 !UI.CapturingInteractor methodsFor!
 
 buttonsReleased
-	stateFlags := stateFlags maskClear: ##(LeftDownMask | MiddleDownMask | RightDownMask)!
+	stateFlags := stateFlags bitAnd: ##((LeftDownMask | MiddleDownMask | RightDownMask) bitInvert)!
 
 captureMouse
 	self setCapture.

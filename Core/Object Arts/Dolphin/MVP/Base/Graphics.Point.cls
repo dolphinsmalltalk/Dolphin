@@ -82,7 +82,7 @@ abs
 addToPoint: aPoint
 	"Private - Answer the <point> result of adding the receiver to the known <point> argument."
 
-	^(aPoint x + x) @ (aPoint y + y)!
+	^self class x: aPoint x + x y: aPoint y + y!
 
 asDword
 	"Answer the receiver in a form suitable for returning as the result of a window
@@ -262,7 +262,7 @@ transpose
 	"Answer a new Point with the x and y coordinates of the receiver
 	reversed"
 
-	^y @ x!
+	^self class x: y y: x!
 
 truncated
 	"Answer a new Point with the x and y values of the receiver truncated toward zero"

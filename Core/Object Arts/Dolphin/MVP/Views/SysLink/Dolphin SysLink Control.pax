@@ -33,6 +33,7 @@ package setPrerequisites: #(
 	'..\..\..\System\Win32\CommCtrl\Common Controls Library'
 	'..\..\..\Base\Dolphin'
 	'..\..\Base\Dolphin Basic Geometry'
+	'..\Common Controls\Dolphin Common Controls'
 	'..\..\Graphics\Dolphin GDI Graphics'
 	'..\..\Base\Dolphin MVP Base'
 	'..\Buttons\Dolphin Push Buttons'
@@ -71,13 +72,6 @@ Kernel.SharedPool
 			'MAX_LINKID_TEXT' -> 16r30
 		}!
 OS.Win32Structure
-	subclass: #'OS.LHITTESTINFO'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: { '_LHITTESTINFO_Size' -> 16r10C0. '_OffsetOf_item' -> 16r8. '_OffsetOf_pt' -> 16r0 }!
-OS.Win32Structure
 	subclass: #'OS.LITEM'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -92,6 +86,13 @@ OS.Win32Structure
 			'_OffsetOf_szID' -> 16r10.
 			'_OffsetOf_szURL' -> 16r70
 		}!
+OS.CCHITTESTINFO
+	subclass: #'OS.LHITTESTINFO'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { '_LHITTESTINFO_Size' -> 16r10C0. '_OffsetOf_item' -> 16r8 }!
 OS.NMHDR
 	subclass: #'OS.NMLINK'
 	instanceVariableNames: ''

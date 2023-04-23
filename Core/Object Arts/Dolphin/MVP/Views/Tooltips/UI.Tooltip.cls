@@ -223,11 +223,10 @@ trackPosition: aPoint
 ttmAddTool: aTOOLINFOW
 	"Register a new tool with the receiver."
 
-	(self
-		sendMessage: TTM_ADDTOOLW
+	self
+		sendMessageNz: TTM_ADDTOOLW
 		wParam: 0
-		lpParam: aTOOLINFOW asParameter) == 0
-		ifTrue: [^self errorInCommonControlCall]!
+		lpParam: aTOOLINFOW!
 
 ttmDelTool: aTOOLINFOW
 	"Unregister a tool from the receiver."
@@ -249,13 +248,12 @@ ttmGetCurrentTool
 	"Retrieve the text for the current tool."
 
 	| struct |
-	struct := TOOLINFOW new.
-	^(self
-		sendMessage: TTM_GETCURRENTTOOLW
+	struct := TOOLINFOW newBuffer.
+	self
+		sendMessageNz: TTM_GETCURRENTTOOLW
 		wParam: 0
-		lpParam: struct) == 0
-		ifTrue: [self errorInCommonControlCall]
-		ifFalse: [struct]!
+		lpParam: struct.
+	^struct!
 
 ttmGetDelayTime: anInteger 
 	^self sendMessage: TTM_GETDELAYTIME wParam: anInteger!
@@ -263,12 +261,11 @@ ttmGetDelayTime: anInteger
 ttmGetMargin
 	| answer |
 	answer := RECTL newBuffer.
-	(self
-		sendMessage: TTM_GETMARGIN
+	self
+		sendMessageNz: TTM_GETMARGIN
 		wParam: 0
-		lpParam: answer) == 0
-		ifTrue: [self errorInCommonControlCall]
-		ifFalse: [answer]!
+		lpParam: answer.
+	^answer!
 
 ttmGetToolCount
 	"Answer the number of tools with which the receiver is associated."
@@ -278,11 +275,10 @@ ttmGetToolCount
 ttmGetToolInfo: aTOOLINFOW
 	"Retrieve tool details identified in aTOOLINFOW, filling out the structure."
 
-	(self
-		sendMessage: TTM_GETTOOLINFOW
+	self
+		sendMessageNz: TTM_GETTOOLINFOW
 		wParam: 0
-		lpParam: aTOOLINFOW asParameter) == 0
-		ifTrue: [^self errorInCommonControlCall]!
+		lpParam: aTOOLINFOW asParameter!
 
 ttmRelayEvent: aMSG 
 	"Private - Forward the windows mouse message, aMSG, to the tool tip control."

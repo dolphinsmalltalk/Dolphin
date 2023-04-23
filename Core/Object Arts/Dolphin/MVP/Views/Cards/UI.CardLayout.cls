@@ -211,7 +211,6 @@ showCard: aView
 
 	| previousCard |
 	currentCard == aView ifTrue: [^self].
-	self assert: [names anySatisfy: [:each | each value == aView]].
 	aView show.
 	currentCard notNil ifTrue: [currentCard hide].
 	previousCard := currentCard.

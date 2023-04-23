@@ -112,6 +112,7 @@ package setClassNames: #(
 	#{UI.KeyEvent}
 	#{UI.LayoutContext}
 	#{UI.LayoutManager}
+	#{UI.LayoutPosition}
 	#{UI.LinearLayout}
 	#{UI.Menu}
 	#{UI.MenuBar}
@@ -240,6 +241,7 @@ package setMethodNames: #(
 	#(#{OS.UserLibrary} #loadMenu:lpMenuName:)
 	#(#{OS.UserLibrary} #lockWindowUpdate:)
 	#(#{OS.UserLibrary} #makeDragList:)
+	#(#{OS.UserLibrary} #mapRectangle:from:to:)
 	#(#{OS.UserLibrary} #mapWindowPoints:hWndTo:lpPoints:cPoints:)
 	#(#{OS.UserLibrary} #modifyMenu:uPosition:uFlags:uIDNewItem:lpNewItem:)
 	#(#{OS.UserLibrary} #monitorFromPoint:dwFlags:)
@@ -1402,12 +1404,19 @@ Core.Object
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'DeferRectangles' -> true }!
 Core.Object
 	subclass: #'UI.LayoutManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Object
+	subclass: #'UI.LayoutPosition'
+	instanceVariableNames: 'view rectangle show'
+	classVariableNames: ''
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Object
@@ -3275,6 +3284,16 @@ makeDragList: aWindowHandle
 	<stdcall: bool MakeDragList handle>
 	^self invalidCall: _failureCode!
 
+mapRectangle: aRectangle from: hwndSrc to: hwndDest
+	| rect |
+	rect := RECTL marshal: aRectangle.
+	self
+		mapWindowPoints: hwndSrc asParameter
+		hWndTo: hwndDest asParameter
+		lpPoints: rect
+		cPoints: 2.
+	^rect!
+
 mapWindowPoints: fromHwnd hWndTo: toHwnd lpPoints: points cPoints: count
 	"Map a set of points from a coordinate space relative to one window 
 	to a coordinate space relative to another window.
@@ -3882,6 +3901,7 @@ loadAccelerators:lpTableName:!public!win32 functions-keyboard accelerator! !
 loadMenu:lpMenuName:!public!win32 functions-menu! !
 lockWindowUpdate:!public!win32 functions-painting and drawing! !
 makeDragList:!public!win32 functions-list box! !
+mapRectangle:from:to:!geometry!public! !
 mapWindowPoints:hWndTo:lpPoints:cPoints:!public!win32 functions-coordinate space and transformation! !
 modifyMenu:uPosition:uFlags:uIDNewItem:lpNewItem:!public!win32 functions-menu! !
 monitorFromPoint:dwFlags:!**auto generated**!public!win32 functions-multiple display monitors! !

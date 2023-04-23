@@ -81,6 +81,9 @@ asParameter
 		right: corner x
 		bottom: corner y!
 
+asRectangle
+	^self!
+
 bottom
 	"Answer the y coordinate of the receiver's bottom edge."
 
@@ -191,13 +194,6 @@ containsPoint: aPoint
 	origin point <= aPoint (inclusive), and aPoint < corner point (non-inclusive)"
 
 	^origin <= aPoint and: [aPoint < corner]!
-
-copy
-	"Answer a copy of the receiver."
-
-	^self class origin: self origin copy corner: self corner copy
-	
-	!
 
 corner
 	"Answer the <Point> at the bottom-right corner of the receiver."
@@ -386,6 +382,12 @@ position: aPoint
 
 	self origin: aPoint extent: self extent!
 
+postCopy
+	origin := origin copy.
+	corner := corner copy.
+	^self
+	!
+
 printOn: aStream
 	"Append a short textual description of the receiver to aStream."
 
@@ -450,7 +452,7 @@ subtract: aRectangle
 		subtractRect: rect
 		lprcSrc1: self asParameter
 		lprcSrc2: aRectangle asParameter.
-	^rect asObject!
+	^rect asRectangle!
 
 top
 	"Answer the position of the receiver's top edge."
@@ -550,6 +552,7 @@ _offsetRectangle:!double dispatch!private! !
 area!accessing!public! !
 areasOutside:!accessing!public! !
 asParameter!converting!public! !
+asRectangle!public! !
 bottom!accessing!public! !
 bottom:!accessing!public! !
 bottomAlign!accessing!public! !
@@ -570,7 +573,6 @@ centerY:!accessing!public! !
 constrain:!public!rectangle functions! !
 contains:!public!testing! !
 containsPoint:!public!testing! !
-copy!copying!public! !
 corner!accessing!public! !
 corner:!accessing!public! !
 expandBy:!public!rectangle functions! !
@@ -603,6 +605,7 @@ origin:corner:!accessing!public! !
 origin:extent:!accessing!public! !
 position!accessing!public! !
 position:!accessing!public! !
+postCopy!copying!public! !
 printOn:!printing!public! !
 right!accessing!public! !
 right:!accessing!public! !

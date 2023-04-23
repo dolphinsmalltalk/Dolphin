@@ -50,6 +50,24 @@ cch: anInteger
 
 	bytes uint32AtOffset: _OffsetOf_cch put: anInteger!
 
+commandMenuItem: aCommandMenuItem
+	| mask fType |
+	mask := aCommandMenuItem image
+				ifNil: [##(MIIM_STRING | MIIM_ID)]
+				ifNotNil: 
+					[:img |
+					self bitmap: img.
+					##(MIIM_STRING | MIIM_ID | MIIM_BITMAP)].
+	fType := aCommandMenuItem styleFlags.
+	fType == 0
+		ifFalse: 
+			[bytes uint32AtOffset: _OffsetOf_fType put: fType.
+			mask := mask bitOr: MIIM_FTYPE].
+	self basicText: aCommandMenuItem text.
+	bytes
+		uint32AtOffset: _OffsetOf_wID put: aCommandMenuItem id;
+		uint32AtOffset: _OffsetOf_fMask put: mask!
+
 dwItemData: anInteger
 	"Set the receiver's 'dwItemData' field to the value of the argument, anInteger"
 
@@ -135,10 +153,10 @@ menuItem: aMenuItem text: aStringOrNil state: stateInteger
 			[:image |
 			self bitmap: image.
 			mask := mask bitOr: MIIM_BITMAP].
-	self
-		fType: aMenuItem styleFlags;
-		fState: stateInteger;
-		fMask: mask!
+	bytes
+		uint32AtOffset: _OffsetOf_fMask put: mask;
+		uint32AtOffset: _OffsetOf_fType put: aMenuItem styleFlags;
+		uint32AtOffset: _OffsetOf_fState put: stateInteger!
 
 type: anInteger
 	"Private - Set the fType field only. Used when creating menu items."
@@ -160,6 +178,7 @@ wID: anInteger
 basicText:!accessing!private! !
 bitmap:!helpers!public! !
 cch:!**compiled accessors**!public! !
+commandMenuItem:!initializing!private! !
 dwItemData:!**compiled accessors**!public! !
 dwSize:!**compiled accessors**!public! !
 dwTypeData!**compiled accessors**!public! !

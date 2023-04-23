@@ -45,7 +45,7 @@ defineFields
 	"
 
 	self
-		defineField: #hdc type: UInt32Field readOnly beUncompiled;
+		defineField: #hdc type: HANDLEField readOnly beUncompiled;
 		defineField: #fErase type: BOOLField readOnly;
 		defineField: #rcPaint type: (StructureField type: RECTL) beReadOnly;
 		defineField: #fRestore type: BOOLField filler;

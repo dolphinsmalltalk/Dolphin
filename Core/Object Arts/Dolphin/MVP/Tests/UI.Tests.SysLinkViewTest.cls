@@ -14,6 +14,15 @@ UI.Tests.SysLinkViewTest comment: ''!
 classToTest
 	^SysLinkView!
 
+testItemFromPoint
+	| ext |
+	presenter displayValue: '<A HREF="http://www.foo.com">Foo</A> <A HREF="http://www.bar.com">Bar</A>'.
+	self waitForInputIdle.
+	self assert: (presenter itemFromPoint: 0 @ 0) equals: 1.
+	ext := presenter canvas textExtent: 'Foo '.
+	self assert: (presenter itemFromPoint: ext) equals: 2.
+	self assertIsNil: (presenter itemFromPoint: 1000 @ 1000)!
+
 verifyUpgradedView: anInteger
 	| view |
 	super verifyUpgradedView: anInteger.
@@ -22,6 +31,7 @@ verifyUpgradedView: anInteger
 	self assert: view text equals: '<A HREF="http://www.object-arts.com">Object Arts Home</A>'! !
 !UI.Tests.SysLinkViewTest categoriesForMethods!
 classToTest!helpers!private! !
+testItemFromPoint!public! !
 verifyUpgradedView:!helpers!private! !
 !
 

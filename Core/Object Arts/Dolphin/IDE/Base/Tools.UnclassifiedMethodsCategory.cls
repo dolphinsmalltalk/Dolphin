@@ -76,14 +76,14 @@ initialize
 	| unclassified names |
 	names := #('unclassified' 'no category' 'as yet unclassified').
 	names do: [:each | self removeCategory: each].
-	self addPseud: (self newNamed: self unclassifiedName).
+	self addPseud: (self newNamed: UnclassifiedName).
 	unclassified := self unclassified.
 	names do: [:each | Table at: each put: unclassified]!
 
 uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
-	self removePseud: self unclassifiedName! !
+	self removePseud: UnclassifiedName! !
 !Tools.UnclassifiedMethodsCategory class categoriesForMethods!
 initialize!initializing!private! !
 uninitialize!class hierarchy-removing!private! !

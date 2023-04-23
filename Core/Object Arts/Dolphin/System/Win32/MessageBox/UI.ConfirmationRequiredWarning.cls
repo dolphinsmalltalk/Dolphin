@@ -24,7 +24,7 @@ cancel
 	self resume: self cancelBlock value!
 
 cancelBlock
-	^cancelBlock ?? []!
+	^cancelBlock!
 
 cancelBlock: aNiladicValuable
 	cancelBlock := aNiladicValuable!
@@ -37,7 +37,7 @@ confirm
 	self resume: self confirmBlock value!
 
 confirmBlock
-	^confirmBlock ?? [true]!
+	^confirmBlock ?? true!
 
 confirmBlock: aNiladicValuable
 	confirmBlock := aNiladicValuable!
@@ -63,7 +63,7 @@ refuse
 	self resume: self refuseBlock value!
 
 refuseBlock
-	^refuseBlock ?? [false]!
+	^refuseBlock ?? false!
 
 refuseBlock: aNiladicValuable
 	refuseBlock := aNiladicValuable! !

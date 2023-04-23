@@ -74,8 +74,10 @@ dtmSetFormat: aStringFormat
 dtmSetSystemTime: wFlags lpSysTime: aSYSTEMTIME
 	"Set the receiver's system time to aSYSTEMTIME or set it to none if the argument is nil."
 
-	(self sendMessage: DTM_SETSYSTEMTIME wParam: wFlags lpParam: aSYSTEMTIME asParameter) == 0
-		ifTrue: [ self errorInCommonControlCall ]!
+	self
+		sendMessageNz: DTM_SETSYSTEMTIME
+		wParam: wFlags
+		lpParam: aSYSTEMTIME asParameter!
 
 dtnDateTimeChange: pNMHDR
 	"The systemtime has been changed by the user."

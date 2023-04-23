@@ -73,46 +73,50 @@ actualClassChain
 	"Private - Answer the method search chain for the actual class selected in the receiver after taking account
 	of instance or class mode and whether superclass searching is enabled."
 
-	| actualClass |
-	(actualClass := self actualClass) isNil ifTrue: [^#()].
-	^self isShowInheritedMethods
+	| actualClass chain |
+	(actualClass := self actualClass) ifNil: [^#()].
+	self isShowInheritedMethods ifFalse: [^{ actualClass }].
+	chain := actualClass withAllSuperclasses.
+	self isFilterObjectMethods
 		ifTrue: 
-			[| chain |
-			chain := actualClass withAllSuperclasses.
-			self isFilterObjectMethods
+			[| objectClass |
+			objectClass := self isInstanceMode ifTrue: [Object] ifFalse: [Object class].
+			actualClass ~~ objectClass
 				ifTrue: 
-					[| objectClass |
-					objectClass := self isInstanceMode ifTrue: [Object] ifFalse: [Object class].
-					actualClass ~= objectClass ifTrue: [chain := chain upTo: objectClass]].
-			chain]
-		ifFalse: [{actualClass}]!
+					[| i |
+					i := chain identityIndexOf: objectClass.
+					i == 0 ifFalse: [chain := chain copyFrom: 1 to: i - 1]]].
+	^chain!
 
 actualClassChainCategories
-	"Private - Answer an <OrderedCollection> of all the method categories in the search chain for the actual class selected in the receiver.
+	"Private - Answer an <set> of all the method categories in the search chain for the actual class selected in the receiver.
 	This is after taking account of instance or class mode and whether superclass searching is enabled."
 
-	| categories |
-	categories := Set new.
-	self actualClassChain do: [:each | categories addAll: each methodCategories].
+	"Implementation Note: Optimized for the common case of displaying only the immediate classes methods."
+
+	| chain categories |
+	chain := self actualClassChain.
+	categories := chain first methodCategories.
+	2 to: chain size do: [:i | (chain at: i) methodsCatalogue keysDo: [:each | categories add: each]].
 	^categories!
 
 actualClassChainMethods
-	"Private - Answer an <OrderedCollection> of all the methods in the search chain for the
-	actual class selected in the receiver. This is after taking account of instance or class
-	mode and whether superclass searching is enabled. Implementation Note: Optimized for the
-	common case of displaying only the immediate classes methods."
+	"Private - Answer an <OrderedCollection> of all the methods in the search chain for the actual class selected in the receiver. This is after taking account of instance or class mode and whether superclass searching is enabled."
 
-	| dict classes |
-	classes := self actualClassChain.
-	classes size = 1
-		ifTrue: [dict := classes first methodDictionary]
+	"Implementation Note: Optimized for the common case of displaying only the immediate classes methods."
+
+	| chain |
+	chain := self actualClassChain.
+	^chain size == 1
+		ifTrue: [chain first methodDictionary values]
 		ifFalse: 
-			[dict := IdentityDictionary new.
-			classes reverseDo: 
+			[| dict |
+			dict := IdentityDictionary new.
+			chain reverseDo: 
 					[:eachClass |
 					eachClass methodDictionary
-						keysAndValuesDo: [:eachSelector :eachMethod | dict at: eachSelector put: eachMethod]]].
-	^dict values!
+						keysAndValuesDo: [:eachSelector :eachMethod | dict at: eachSelector put: eachMethod]].
+			dict values]!
 
 actualClasses
 	"Answer the actual classes selected in the receiver after taking account of instance or class mode. Answer an empty collection if there is no class selected."
@@ -186,12 +190,9 @@ applyOptions
 
 	super applyOptions.
 	definitionPresenter view wordWrap: self class wordWrapDefinition.
-	self class defaultShowInheritedMethods 
-		ifTrue: [self toggleShowInheritedMethods].
-	self class defaultFilterObjectMethods 
-		ifTrue: [self toggleFilterObjectMethods].
-	self createPlugins.
-!
+	self isShowingInheritedMethods: self class defaultShowInheritedMethods.
+	self isFilteringObjectMethods: self class defaultFilterObjectMethods.
+	self createPlugins!
 
 browseContainingText
 	"Prompt for a string and open a method browser displaying the
@@ -834,6 +835,9 @@ isEditableMethod: aCompiledMethod
 	^(self  isInheritedMethod: aCompiledMethod) not
 !
 
+isFilteringObjectMethods: aBoolean
+	flags := flags mask: FilterObjectMethodsMask set: aBoolean!
+
 isFilterObjectMethods
 	"Answer whether the receiver is in 'filter <Object> methods' mode"
 
@@ -875,6 +879,9 @@ isMethodVisible: aCompiledMethod
 isModified
 	^methodBrowserPresenter isModified 
 		or: [definitionPresenter isModified or: [self loadedPlugins anySatisfy: [:each | each isModified]]]!
+
+isShowingInheritedMethods: aBoolean
+	flags := flags mask: ShowInheritedMethodsMask set: aBoolean!
 
 isShowInheritedMethods
 	"Answer whether the receiver is in 'show inherited methods' mode"
@@ -2306,7 +2313,7 @@ systemModel
 toggleFilterObjectMethods
 	"Toggle between showing <Object> methods or not"
 
-	(flags := flags mask: FilterObjectMethodsMask set: self isFilterObjectMethods not).
+	self isFilteringObjectMethods: self isFilterObjectMethods not.
 	self onClassSelected!
 
 toggleProtocolReadOnly
@@ -2319,7 +2326,7 @@ toggleProtocolReadOnly
 toggleShowInheritedMethods
 	"Toggle between showing inherited methods or not"
 
-	(flags := flags mask: ShowInheritedMethodsMask set: self isShowInheritedMethods not).
+	self isShowingInheritedMethods: self isShowInheritedMethods not.
 	self onClassSelected!
 
 updateCaption
@@ -2341,19 +2348,16 @@ updateCategories
 	"Private - Update the tree of method categories, attempting to maintain
 	the current selection."
 
-	| class |
-	class := self actualClass.
-	class isNil
-		ifTrue: [categoriesPresenter model clear]
-		ifFalse: 
-			[| last allCategory |
+	classesPresenter hasSelection
+		ifTrue: 
+			[| last |
 			last := self category.
 			"Set up the category tree for the class"
 			categoriesPresenter model list: self actualClassChainCategories.
-			allCategory := self allCategory.
-			categoriesPresenter expand: allCategory.
+			categoriesPresenter expand: self allCategory.
 			(last isNil or: [(categoriesPresenter selection: last ifAbsent: []) ~= last])
-				ifTrue: [categoriesPresenter selection: allCategory]]!
+				ifTrue: [categoriesPresenter selection: self allCategory]]
+		ifFalse: [categoriesPresenter model clear]!
 
 updateClass: aspectString presenter: aSmalltalkWorkspace source: sourceString
 	| class event |
@@ -2626,6 +2630,7 @@ isDisplayingCategories!commands!private! !
 isDisplayingProtocols!commands!private! !
 isDisplayingVariables!commands!private! !
 isEditableMethod:!modes!public! !
+isFilteringObjectMethods:!commands!public! !
 isFilterObjectMethods!public!refactoring!testing! !
 isInheritedMethod:!modes!public! !
 isInstanceMode!modes!private! !
@@ -2633,6 +2638,7 @@ isInstanceMode:!modes!private! !
 isMethodFiltrate:!private!testing! !
 isMethodVisible:!private!testing! !
 isModified!public!testing! !
+isShowingInheritedMethods:!commands!public! !
 isShowInheritedMethods!public!refactoring!testing! !
 isSourceCardVisible!private!testing! !
 killVisitTimer!helpers!private! !

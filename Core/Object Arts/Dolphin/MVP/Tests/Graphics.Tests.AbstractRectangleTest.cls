@@ -51,6 +51,22 @@ testComparing
 	self assert: oddDesktop equals: rectangle.
 	self assert: rectangle equals: oddDesktop!
 
+testCopy
+	| subject copy |
+	subject := self subjectClass origin: 51 @ 101 corner: 101 @ 202.
+	self assert: subject corner equals: 101 @ 202.
+	copy := subject copy.
+	self deny: subject == copy.
+	self assert: copy equals: subject.
+	self deny: subject origin == copy origin.
+	self deny: subject corner == copy corner.
+	subject top: 103.
+	self assert: subject origin equals: 51 @ 103.
+	self deny: copy equals: subject.
+	self assert: copy origin equals: 51 @ 101.
+	copy right: 105.
+	self assert: subject corner equals: 101 @ 202!
+
 testHeight
 	self assert: oddDesktop height equals: 1021!
 
@@ -100,6 +116,7 @@ testCenter!public!unit tests! !
 testCenterRight!public!unit tests! !
 testCenterX!public!unit tests! !
 testComparing!public! !
+testCopy!public! !
 testHeight!public!unit tests! !
 testLeft!public!unit tests! !
 testOriginCorner!public!unit tests! !

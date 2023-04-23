@@ -328,17 +328,15 @@ rowSortBlock
 	(i.e. back to the original). This effectively toggles the sort order between ascending (or
 	whatever it was originally) and descending, each time the sort block is accessed."
 
-	^self isSortable 
+	^self isSortable
 		ifTrue: 
-			[
-			| contentFromRow sortBlock |
+			[| contentFromRow sortBlock |
 			"Note that we avoid creating a self-reference from the block."
-			contentFromRow := getContentsBlock isNil ifTrue: [[:each | each]] ifFalse: [getContentsBlock].
+			contentFromRow := getContentsBlock ?? [:each | each].
 			sortBlock := getSortValueBlock.
-			self isSortOrderInverted 
+			self isSortOrderInverted
 				ifTrue: [[:a :b | sortBlock value: (contentFromRow value: b) value: (contentFromRow value: a)]]
-				ifFalse: 
-					[[:a :b | sortBlock value: (contentFromRow value: a) value: (contentFromRow value: b)]]]!
+				ifFalse: [[:a :b | sortBlock value: (contentFromRow value: a) value: (contentFromRow value: b)]]]!
 
 sortBlock
 	"Answer a single argument Block which takes a content object for 

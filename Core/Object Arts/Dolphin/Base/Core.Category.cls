@@ -189,16 +189,6 @@ newNamed: categoryName
 		setName: categoryName asString;
 		yourself!
 
-unclassified
-	"Answer a Category used to mark an unclassified object."
-
-	^self name: self unclassifiedName!
-
-unclassifiedName
-	"Private - Answer the String name used to mark a none existing category."
-
-	^self subclassResponsibility!
-
 uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
@@ -207,8 +197,6 @@ uninitialize
 name:!instance creation!public! !
 new!instance creation!public! !
 newNamed:!instance creation!private! !
-unclassified!instance creation!public! !
-unclassifiedName!constants!private! !
 uninitialize!class hierarchy-removing!private! !
 !
 

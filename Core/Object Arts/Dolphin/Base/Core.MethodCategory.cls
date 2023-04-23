@@ -6,7 +6,7 @@ Core.Category
 	classVariableNames: 'Private Pseuds Public Table'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'UnclassifiedName' -> '*-unclassified' }!
 Core.MethodCategory guid: (Core.GUID fromString: '{87b4c502-026e-11d3-9fd7-00a0cc3e4a32}')!
 Core.MethodCategory comment: 'MethodCategory is the class of objects used to classify the methods of classes in taxonomies that are generally unrelated to the class hierarchy.
 
@@ -273,10 +273,10 @@ setMethod: aCompiledMethod categories: aCollectionOfCategories
 	newCategories do: [:each | each addMethodSilently: aCompiledMethod].
 	^unwanted notEmpty or: [newCategories notEmpty]!
 
-unclassifiedName
-	"Private - Answer the <readableString> name for the unclassified category."
+unclassified
+	"Answer a Category used to mark an unclassified object."
 
-	^ '*-unclassified'!
+	^self name: UnclassifiedName!
 
 uninitialize
 	"Private - Uninitialize the receiver as it may be about to be removed from the system."
@@ -297,7 +297,7 @@ public!instance creation!public! !
 removeCategory:!public!removing! !
 removePseud:!public!removing! !
 setMethod:categories:!helpers!private! !
-unclassifiedName!constants!private! !
+unclassified!instance creation!public! !
 uninitialize!class hierarchy-removing!private! !
 !
 

@@ -23,9 +23,8 @@ Note that, internally, an additional separator is placed as the first item in th
 !UI.StatusBar categoriesForClass!MVP-Views! !
 !UI.StatusBar methodsFor!
 
-addItem: aStatusBarItem 
-	"Append a new <StatusBarItem> to the list of items displayed in the receiver. Answer the new
-	item."
+addItem: aStatusBarItem
+	"Append a new <StatusBarItem> to the list of items displayed in the receiver. Answer the new item."
 
 	aStatusBarItem parentView: self.
 	parts := self contents copyWith: aStatusBarItem.
@@ -55,6 +54,19 @@ defaultWindowStyle
 	"Private - Answer a default base style to use when creating the receiver"
 
 	^super defaultWindowStyle bitOr: ##(SBARS_SIZEGRIP | SBARS_TOOLTIPS)!
+
+getItemRect: anInteger
+	"Private - Answer a <RECTL> describing the bounds of item at the specified zero-based <Integer> index."
+
+	| rect |
+	rect := RECTL newBuffer.
+	self
+		sendMessage: SB_GETRECT
+		wParam: anInteger
+		lpParam: rect.
+	"There is an apparent bug in the status bar control in that it may report the rectangle of the last item wrongly"
+	(rect width == 0 and: [self width > 0]) ifTrue: [rect width: self width].
+	^rect!
 
 getWindowText
 	"Private - Answers the text from the receiver. There is a bug in
@@ -104,52 +116,42 @@ hasToolTips: aBoolean
 		set: aBoolean
 		recreateIfChanged: true!
 
-indexOfItem: part 
-	"Private - Answer the 1-based <integer> index of part."
+indexOfItem: aStatusBarItem 
+	"Private - Answer the 1-based <integer> index of the <StatusBarItem> argument, or 0 if it is not one of the receiver's parts."
 
-	^parts identityIndexOf: part!
+	^parts identityIndexOf: aStatusBarItem!
 
 initialize
-	"Private - Initialize the state of the receiver.
+	"Private - Initialize the state of the receiver."
 
-	Note that we ensure that an empty separator is included as
-	the first part. This is because of an apparent common control bug
-	when you remove the last part in a status view, the SB_SETPARTS will
-	return an error."
+	"Note that we ensure that an empty separator is included as the first part. This is because of an apparent common control bug when you remove the last part in a status view, the SB_SETPARTS will return an error."
 
 	super initialize.
 	(leftOverSeparator := StatusBarNullItem separator: 0) parentView: self.
-	parts := {leftOverSeparator}!
+	parts := { leftOverSeparator }!
 
-itemAtIndex: anIntegerIndex 
-	"Answers the status bar item at anIntegerIndex in the receiver"
+invalidateItem: aStatusBarItem
+	self invalidateRect: (self getItemRect: (self indexOfItem: aStatusBarItem) - 1)!
 
-	^parts at: anIntegerIndex!
+itemAtIndex: anInteger
+	"Answers the <StatusBarItem> at the specified 1-based <integer> in the receiver."
 
-itemFromId: dwItemSpec
-	"Private - Answers the sub-item of the receiver with the specified <integer> item spec."
+	^parts at: anInteger!
 
-	^parts lookup: dwItemSpec + 1!
+itemFromId: anInteger
+	"Private - Answers the sub-item of the receiver with the specified 0-based <integer> item spec."
 
-itemRect: anInteger
-	"Answer the bounding <Rectangle> for the item at the specified 1-based <Integer> index."
-
-	| rect |
-	rect := (self sbGetRect: anInteger - 1) asRectangle.
-	"There is an apparent bug in the status bar control in that it may report the rectangle of
-	the last item wrongly"
-	(rect width = 0 and: [self width > 0]) ifTrue: [rect width: self width].
-	^rect!
+	^parts lookup: anInteger + 1!
 
 items
-	"Private - Answer the receiver's <OrderedCollection> of <StatusItem>s."
+	"Private - Answer the receiver's parts as an <OrderedCollection> of <StatusItem>s."
 
 	^parts asOrderedCollection!
 
 items: aCollection
-	"Private - Sets the receiver's collection of <StatusItem>s to those in 
-	the <collection>, tools.
-	Implementation Note: The items are stored as an <Array> to save space."
+	"Private - Sets the receiver's collection of <StatusItem>s to those in the <collection>, tools."
+
+	"Implementation Note: The items are stored as an <Array> for efficiency since they are generally not changed once the view has been created."
 
 	aCollection size > 256 ifTrue: [self error: 'Too many items'].
 	parts := aCollection asArray.
@@ -175,11 +177,10 @@ layoutManager: aLayoutManager
 	layoutManager := aLayoutManager.
 	self basicInvalidateLayout!
 
-onDrawItem: drawItemStruct 
+onDrawItem: drawItemStruct
 	| part |
 	part := parts at: drawItemStruct itemID + 1.
-	part drawItem: (Canvas withNonOwnedDC: drawItemStruct hDC)
-		bounding: drawItemStruct rcItem asRectangle.
+	part drawItem: (Canvas withNonOwnedDC: drawItemStruct hDC) bounding: drawItemStruct rcItem.
 	^true!
 
 onViewCreated
@@ -189,35 +190,34 @@ onViewCreated
 	super onViewCreated.
 	self setControlBackcolor.
 	self setRightEdges.
-	parts do: 
-			[:part |
+	1 to: parts size
+		do: 
+			[:i |
+			| part |
+			part := parts at: i.
 			part parentView: self.
-			self setItemText: part]!
+			self setItemText: part at: i]!
 
 rectangleOfItem: aStatusBarItem 
 	^self itemRect: (self indexOfItem: aStatusBarItem)!
 
 removeItem: aStatusBarItem
-	"Remove aStatusOwnerDraw from the receiver's contents of visible parts.
-	Answer aStatusOwnerDraw.
+	"Remove the specified <StatusBarItem> from the receiver's visible parts. Answer the argument."
 
-	Note that we always ensure that there is one part, the leftOverSeparator,
-	registered with the common control to get around a bug in the control."
+	"Note that we always ensure that there is one part, the leftOverSeparator, registered with the common control to get around a bug in the control."
 
-	| partIndex |
-	partIndex := parts indexOfItem: aStatusBarItem.
-	parts size = 1 ifTrue: [self addItem: leftOverSeparator].
-	parts remove: aStatusBarItem.
+	| index |
+	index := self indexOfItem: aStatusBarItem.
+	index == 0 ifTrue: [^self errorNotFound: aStatusBarItem].
+	parts size == 1 ifTrue: [self addItem: leftOverSeparator].
+	parts := parts copyWithoutIndex: index.
 	aStatusBarItem parentView: nil.
 	self setRightEdges.
-	parts
-		from: partIndex
-		to: parts size
-		do: [:part | self setItemText: part].
+	index to: parts size do: [:i | self setItemText: (parts at: i) at: i].
 	^aStatusBarItem!
 
 rightEdgesForWidth: anInteger
-	| edges right fixedWidth numResizable widths numParts borders horizontalGap share |
+	| edges width right fixedWidth numResizable numParts horizontalGap share |
 	numParts := parts size.
 	numParts < 1
 		ifTrue: 
@@ -225,17 +225,14 @@ rightEdgesForWidth: anInteger
 			^Int32Array with: -1].
 	numResizable := 0.
 	fixedWidth := 0.
-	borders := self sbGetBorders.
-	horizontalGap := borders at: 3.
-	widths := Array new: numParts.
+	edges := self sbGetBorders.
 	1 to: numParts
 		do: 
 			[:i |
-			| width |
 			width := (parts at: i) width.
-			width = -1 ifTrue: [numResizable := numResizable + 1] ifFalse: [fixedWidth := fixedWidth + width].
-			widths at: i put: width].
-	right := borders at: 1.
+			width == -1 ifTrue: [numResizable := numResizable + 1] ifFalse: [fixedWidth := fixedWidth + width]].
+	right := edges at: 1.
+	horizontalGap := edges at: 3.
 	"Note `share` can be a Fraction. This is slow, but there are typically only a few parts (max 256), and avoids accumulating rounding error."
 	share := numResizable == 0
 				ifFalse: 
@@ -245,8 +242,7 @@ rightEdgesForWidth: anInteger
 	1 to: numParts
 		do: 
 			[:i |
-			| width |
-			width := widths at: i.
+			width := (parts at: i) width.
 			right := right + (width == -1 ifTrue: [share] ifFalse: [width]).
 			edges at: i put: right truncated.
 			right := right + horizontalGap].
@@ -266,18 +262,6 @@ sbGetBorders
 		wParam: 0
 		lpParam: answer.
 	^answer!
-
-sbGetRect: anInteger
-	| rect |
-	rect := RECTL newBuffer.
-	(self
-		sendMessage: SB_GETRECT
-		wParam: anInteger
-		lpParam: rect) == 0
-		ifTrue: 
-			["self errorInCommonControlCall"
-			].
-	^rect!
 
 sbGetTipText: anInteger
 	| buf |
@@ -304,24 +288,17 @@ setItem: aStatusBarItem tipText: aString
 		wParam: (self indexOfItem: aStatusBarItem) - 1
 		lpParam: aString asUtf16String!
 
-setItemText: aStatusBarItem
+setItemText: aStatusBarItem at: anInteger
 	"Private - Set the SB_SETTEXT of the receiver's common control for specified one of the receiver's <StatusBarItem>s."
 
-	"In the case of owner-drawn items, this amounts to an instruction to the control to request re-draw of the item."
+	"In the case of owner-drawn items, this amounts to an instruction to the control to request re-draw of the item, and we don't need to pass the text here."
 
-	| index style lParam |
-	(index := self indexOfItem: aStatusBarItem) == 0 ifTrue: [^self].
+	| style |
 	style := aStatusBarItem style.
-	lParam := (style allMask: SBT_OWNERDRAW)
-				ifTrue: 
-					["If owner drawn, we don't need to pass the text"
-					0]
-				ifFalse: [aStatusBarItem getText asUtf16String].
-	(self
-		sendMessage: SB_SETTEXT
-		wParam: (style bitOr: index - 1)
-		lpParam: lParam) == 0
-		ifTrue: [^self errorInCommonControlCall]!
+	self
+		sendMessageNz: SB_SETTEXT
+		wParam: (style bitOr: anInteger - 1)
+		lpParam: ((style allMask: SBT_OWNERDRAW) ifFalse: [aStatusBarItem getText asUtf16String])!
 
 setRightEdges
 	"Private - Inform the common control of the right edge for each of the receiver's parts."
@@ -331,11 +308,10 @@ setRightEdges
 setRightEdges: anInteger
 	| edges |
 	edges := self rightEdgesForWidth: anInteger.
-	(self
-		sendMessage: SB_SETPARTS
+	self
+		sendMessageNz: SB_SETPARTS
 		wParam: edges size
-		lpParam: edges) == 0
-		ifTrue: [^self errorInCommonControlCall]!
+		lpParam: edges!
 
 setWindowText: aString 
 	"Private - Sets the text of the receiver. There is a bug in
@@ -355,15 +331,19 @@ sizeGripWidth
 updateItem: aStatusBarItem
 	"Private - Update the controls knowledge of this part."
 
+	| index |
+	index := self indexOfItem: aStatusBarItem.
+	index == 0 ifTrue: [^self].
 	self setRightEdges.
-	self setItemText: aStatusBarItem.
-	self invalidateRect: (self rectangleOfItem: aStatusBarItem)! !
+	self setItemText: aStatusBarItem at: index.
+	self invalidateRect: (self getItemRect: index - 1)! !
 !UI.StatusBar categoriesForMethods!
 addItem:!adding!items!public! !
 addItem:name:!adding!items!public! !
 contents!accessing!public! !
 defaultExtent!constants!private! !
 defaultWindowStyle!constants!private! !
+getItemRect:!geometry!private! !
 getWindowText!accessing!private!win32 bug fix! !
 getWindowTextLength!accessing!private!win32 bug fix! !
 hasSizeGrip!accessing-styles!public! !
@@ -372,9 +352,9 @@ hasToolTips!accessing-styles!public! !
 hasToolTips:!accessing-styles!public! !
 indexOfItem:!items!private! !
 initialize!initializing!private! !
+invalidateItem:!drawing!public! !
 itemAtIndex:!items!public! !
 itemFromId:!accessing!private! !
-itemRect:!geometry!public! !
 items!accessing!private! !
 items:!accessing!private! !
 layout:!geometry!private! !
@@ -386,11 +366,10 @@ rectangleOfItem:!accessing!private! !
 removeItem:!items!public!removing! !
 rightEdgesForWidth:!geometry!private! !
 sbGetBorders!accessing!private! !
-sbGetRect:!accessing!private! !
 sbGetTipText:!accessing!private! !
 setControlBackcolor:!helpers!private! !
 setItem:tipText:!operations!private! !
-setItemText:!accessing!private! !
+setItemText:at:!accessing!private! !
 setRightEdges!helpers!private! !
 setRightEdges:!helpers!private! !
 setWindowText:!accessing!private!win32 bug fix! !

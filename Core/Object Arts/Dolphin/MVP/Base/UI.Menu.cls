@@ -91,13 +91,14 @@ applyFlags
 basicFree
 	"Private - Free the Menu resource handle and all submenus."
 
-	items keysAndValuesDo: 
-			[:i :menuItem |
+	1 to: items size
+		do: 
+			[:i |
 			User32
 				removeMenu: handle
 				uPosition: i - 1
 				uFlags: MF_BYPOSITION.
-			menuItem free].
+			(items at: i) free].
 	User32 destroyMenu: handle!
 
 basicRealize
@@ -107,9 +108,10 @@ basicRealize
 	super basicRealize.
 	self applyFlags.
 	info := MENUITEMINFOW newBuffer.
-	items keysAndValuesDo: 
-			[:i :each |
-			each
+	1 to: items size
+		do: 
+			[:i |
+			(items at: i)
 				insertIntoMenu: self
 				at: i
 				info: info]!
@@ -458,15 +460,11 @@ items: collection
 itemsDo: aMonadicValuable 
 	items do: aMonadicValuable!
 
-itemWithId: anInteger 
+itemWithId: anInteger
 	"Find and return the command in the menu associated with the specified id, or nil if not found."
 
-	(anInteger = 0 or: [anInteger = self id]) ifTrue: [^self].
-	items do: 
-			[:item | 
-			| found |
-			found := item itemWithId: anInteger.
-			found notNil ifTrue: [^found]].
+	(anInteger == 0 or: [anInteger = self id]) ifTrue: [^self].
+	1 to: items size do: [:i | ((items at: i) itemWithId: anInteger) ifNotNil: [:found | ^found]].
 	^nil!
 
 menuFromHandle: menuHandle 

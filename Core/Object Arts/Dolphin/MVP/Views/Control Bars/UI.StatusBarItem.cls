@@ -48,7 +48,7 @@ drawItem: aCanvas bounding: aRectangle
 	than 15 pixels high due to a design-time error. In this case draw a 16x16 icon and just let
 	the system truncate it."
 	imageSize := self imageSizeIn: aRectangle.
-	imageRect := aRectangle origin extent: imageSize.
+	imageRect := aRectangle topLeft extent: imageSize.
 	textOffset := 1 + (self drawImageOn: aCanvas in: imageRect).
 	self drawTextOn: aCanvas offset: textOffset.
 	aCanvas restore!

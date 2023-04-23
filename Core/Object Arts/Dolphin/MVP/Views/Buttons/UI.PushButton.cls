@@ -240,10 +240,10 @@ setNote
 	| text |
 	self style == #link ifFalse: [^self].
 	text := self note asUtf16String.
-	(self
-		sendMessage: BCM_SETNOTE
+	self
+		sendMessageNz: BCM_SETNOTE
 		wParam: 0
-		lpParam: text) == 0 ifTrue: [Win32Error signal]!
+		lpParam: text!
 
 style
 	^ButtonStyleMap 

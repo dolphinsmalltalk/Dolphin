@@ -14,10 +14,12 @@ OS.CCITEM comment: 'CCITEM is an <ExternalStructure> class which implements shar
 !OS.CCITEM methodsFor!
 
 cchTextMax
+	"Answer size of the receiver's text buffer in UTF-16 code-units (i.e. 16-bit words), including the terminating null."
+
 	^self subclassResponsibility!
 
-cchTextMax: anObject 
-	"Set the receiver's cchTextMax field to the value of anObject."
+cchTextMax: anInteger 
+	"Set the size of the receiver's text buffer in UTF-16 code-units (i.e. 16-bit words), to include the terminating null."
 
 	self subclassResponsibility!
 
@@ -96,7 +98,7 @@ newTextBuffer: anInteger
 	text := Utf16String newFixed: anInteger.
 	self
 		pszText: text;
-		cchTextMax: anInteger;
+		cchTextMax: anInteger + 1;
 		maskIn: self textValidMask!
 
 param: anInteger
@@ -164,35 +166,30 @@ text
 	^text ifNil: [self pszText]!
 
 text: aString
-	"Sets receiver's pszMember field to Utf16String. We also hang on to it in our text instance var to
-	ensure that its lifetime is sufficiently long for us to safely use it."
+	"Sets receiver's pszMember field to Utf16String. We also hang on to it in our text instance var to ensure that its lifetime is sufficiently long for us to safely use it."
 
 	text := aString displayString asUtf16String.
 	self
 		pszText: text;
-		cchTextMax: text size;
+		cchTextMax: text size + 1;
 		maskIn: self textValidMask!
 
-textCallback
-	"Sets the receiver into text callback mode"
-
-	bytes uint32AtOffset: self textPointerOffset put: LPSTR_TEXTCALLBACK.
-	self maskIn: self textValidMask!
-
-textInBuffer: aString
-	"Writes aString into a system buffer pointed to by pszText and of size cchTextMax (including null terminator). This is used to provide text back to the control, and it has allocated the buffer. If the string is too large for the buffer, it is ellipsised with U+2026."
+textInBuffer: anObject
+	"Writes the displayString of the argument into a system buffer pointed to by pszText and of size cchTextMax (including null terminator). This is used to provide text back to the control, and it has allocated the buffer. If the display string is too large for the buffer, it is ellipsised with U+2026. Answer the potentially truncated text."
 
 	| utf16 max |
-	utf16 := aString displayString asUtf16String.
+	utf16 := anObject displayString asUtf16String.
 	utf16 size >= (max := self cchTextMax)
 		ifTrue: 
-			[| last |
-			"We need to allow space for a U+2026 and the null terminator"
-			last := max - 2.
-			"Ensure we don't truncate in the middle of a character"
-			(utf16 at: last) isUtf16Lead ifTrue: [last := last - 1].
-			utf16 := (utf16 copyFrom: 1 to: last) , '…'].
-	utf16 copyToBuffer: (bytes int32AtOffset: self textPointerOffset) ofSize: max!
+			["We need to allow space for a U+2026 and the null terminator, ensuring we don't truncate in the middle of a character"
+			utf16 := (utf16 copyFrom: 1
+						to: ((utf16 at: max - 2) isUtf16Lead ifTrue: [max - 3] ifFalse: [max - 2])) , '…'].
+	OS.Ucrt
+		wcsncpy_s: (bytes intPtrAtOffset: self textPointerOffset)
+		bufferSize: max
+		strSource: utf16
+		count: OS.CRTConstants._TRUNCATE.
+	^utf16!
 
 textPointerOffset
 	"Private - Answer the offset of the text pointer in the receiver. "
@@ -235,7 +232,6 @@ stateMaskOut:!accessing!private! !
 stateValidMask!constants!private! !
 text!accessing!public! !
 text:!accessing!public! !
-textCallback!accessing!public! !
 textInBuffer:!constants!public! !
 textPointerOffset!constants!private! !
 textValidMask!constants!private! !

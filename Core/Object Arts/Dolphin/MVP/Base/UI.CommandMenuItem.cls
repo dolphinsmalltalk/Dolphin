@@ -141,22 +141,7 @@ itemWithId: anInteger
 populateItemInfo: aMENUITEMINFO
 	"Private - Copy the receiver's item information into the <MENUITEMINFOW> argument."
 
-	| mask fType |
-	mask := self image
-				ifNil: [##(MIIM_STRING | MIIM_ID)]
-				ifNotNil: 
-					[:img |
-					aMENUITEMINFO bitmap: img.
-					##(MIIM_STRING | MIIM_ID | MIIM_BITMAP)].
-	fType := self styleFlags.
-	fType == 0
-		ifFalse: 
-			[aMENUITEMINFO fType: fType.
-			mask := mask bitOr: MIIM_FTYPE].
-	aMENUITEMINFO
-		basicText: self text;
-		wID: self id;
-		fMask: mask!
+	aMENUITEMINFO commandMenuItem: self!
 
 postCopy
 	"Apply any final flourish to the copy that may be required."

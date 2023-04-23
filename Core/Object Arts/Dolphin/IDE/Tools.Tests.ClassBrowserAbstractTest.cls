@@ -177,45 +177,30 @@ inheritedMethodAddRemoveTests
 	self assertIsOnlyMethodVisible: (TestCase compiledMethodAt: method selector)!
 
 setUp
-	plugins := ClassBrowserAbstract allSubclasses collect: 
-					[:each |
-					| a |
-					a := each -> each basicPlugins.
-					each basicPlugins: #().
-					a].
+	plugins := self browserClass
+				ensureOptionsLoaded;
+				basicPlugins.
+	self browserClass basicPlugins: #().
 	packageA := Core.Tests.DolphinTestPackages current a!
 
 tearDown
 	| methods |
-	plugins do: [:a | a key basicPlugins: a value].
+	self browserClass basicPlugins: plugins.
 	methods := packageA methods.
 	browser destroy.
 	self deleteTestMethods: methods.
 	browser := methodsPresenter := packageA := nil!
 
 testAddRemoveOfInheritedMethods
-	self browser toggleShowInheritedMethods.
+	self browser actualClass: ClassBrowserAbstractTest.
+	browser toggleShowInheritedMethods.
 	self assert: browser isShowInheritedMethods.
 	self assert: browser isFilterObjectMethods equals: browser class defaultFilterObjectMethods.
-	browser actualClass: ClassBrowserAbstractTest.
 	self inheritedMethodAddRemoveTests.
 	browser toggleFilterObjectMethods.
 	self deleteTestMethods: packageA methods.
 	self deny: browser isFilterObjectMethods equals: browser class defaultFilterObjectMethods.
 	self inheritedMethodAddRemoveTests!
-
-testBrowseItOpensSystemBrowserOnPackageOfLooseMethod
-	| default |
-	#'1512'.
-	default := SmalltalkSystem current defaultBrowserClass.
-	
-	[| method |
-	SmalltalkSystem current defaultBrowserClass: SystemBrowserShell.
-	method := Object compiledMethodAt: #asValue.
-	self assert: method isLoose.
-	browser := method browse.
-	self assert: browser packages equals: {method owningPackage}]
-			ensure: [SmalltalkSystem current defaultBrowserClass: default]!
 
 testEvaluationContext
 	"#832"
@@ -223,10 +208,10 @@ testEvaluationContext
 	| browserClass |
 	browserClass := self browser actualClass.
 	self assert: methodsPresenter evaluationContext equals: browserClass.
-	browser actualClass: Behavior.
-	self assert: methodsPresenter evaluationContext identicalTo: Behavior.
-	browser method: (Message compiledMethodAt: #arguments).
-	self assert: methodsPresenter evaluationContext identicalTo: Message.
+	browser actualClass: BindingContext.
+	self assert: methodsPresenter evaluationContext identicalTo: BindingContext.
+	browser method: (Context compiledMethodAt: #block).
+	self assert: methodsPresenter evaluationContext identicalTo: Context.
 	browser actualClass: nil.
 	self assertIsNil: methodsPresenter evaluationContext!
 
@@ -344,7 +329,6 @@ inheritedMethodAddRemoveTests!helpers!private! !
 setUp!private!Running! !
 tearDown!private!Running! !
 testAddRemoveOfInheritedMethods!public!unit tests! !
-testBrowseItOpensSystemBrowserOnPackageOfLooseMethod!public!unit tests! !
 testEvaluationContext!public!unit tests! !
 testIsMethodVisible!public!unit tests! !
 testIsMethodVisibleClassSide!public!unit tests! !

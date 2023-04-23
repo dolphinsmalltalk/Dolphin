@@ -495,7 +495,7 @@ displayIt
 	Display the result at the current insert point (i.e. immediately after the selection)."
 
 	<acceleratorKey: 'Ctrl+D'>
-	self evaluateAndDisplay: [:obj | obj displayString: self developmentSystem displayItLocale]"Private - Answer the development system model."!
+	self evaluateAndDisplay: [:obj | obj displayString: self developmentSystem displayItLocale]!
 
 dragOver: aDragDropSession
 	"The drag operation described by the <DragDropSession> argument has moved to a new position
@@ -2265,7 +2265,7 @@ ensureOptionsLoaded
 	OptionFlags ifNil: [self loadOptions]!
 
 finishedLoadingOptions
-	OptionFlags := OptionFlags maskClear: LoadingMask!
+	OptionFlags := OptionFlags bitAnd: ##(LoadingMask bitInvert)!
 
 fontQuality
 	self ensureOptionsLoaded.

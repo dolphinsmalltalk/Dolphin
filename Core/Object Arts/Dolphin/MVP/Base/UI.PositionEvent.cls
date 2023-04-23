@@ -82,6 +82,11 @@ isResize
 
 	^self flags noMask: SWP_NOSIZE!
 
+isTall
+	"Answer whether the rectangle associated with the receiver is tall (heigh > width). This assumes that the position event is for a resize."
+
+	^self lpwp cy > lpwp cx!
+
 isVisibilityChange
 	"Answer whether the receiver is describing a hide/show event."
 
@@ -147,6 +152,7 @@ isHideWindow!public!testing! !
 isMove!public!testing! !
 isRectangleChanged!public!testing! !
 isResize!public!testing! !
+isTall!public!testing! !
 isVisibilityChange!public!testing! !
 isZOrderChanged!public!testing! !
 lpwp!accessing!private! !
