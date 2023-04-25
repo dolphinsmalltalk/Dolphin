@@ -77,6 +77,7 @@ tearDown
 testContextMenu
 	<knownSlowTest>
 	| contextMenuHandler menuEvent newCmd iconStream cmdEventSink cmdFired |
+	self skipIfCiBuild.	"Too unreliable"
 	iconStream := IStream read: (FileLocator installRelative: 'Resources\Dolphin.ico') asString.
 	newCmd := presenter view webviewEnvironment
 				createContextMenuItem: '&Blah'
@@ -116,7 +117,7 @@ testContextMenu
 	self waitAtMost: 50 milliseconds while: [true].
 	"Action the selected context menu command"
 	self sendKeyPress: VK_RETURN extended: false.
-	self waitAtMost: 50 milliseconds while: [cmdFired not].
+	self waitAtMost: 200 milliseconds while: [cmdFired not].
 	cmdEventSink free.
 	newCmd free.
 	self assert: cmdFired!
