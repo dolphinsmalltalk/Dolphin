@@ -227,7 +227,7 @@ terminateProcess
 	proc := self process.
 	(MessageBox new
 		headline: 'Terminate process <1d>?' << proc id;
-		text: 'The <1s> process will be terminated.' << proc name;
+		text: 'The <1p> process will be terminated.' << proc name;
 		customButtons: #(#(#yes '&Terminate') #(#no 'Cancel'));
 		isCancellable: true;
 		confirm) ifTrue: [proc terminate]!
