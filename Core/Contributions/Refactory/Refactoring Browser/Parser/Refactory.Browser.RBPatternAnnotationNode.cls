@@ -25,7 +25,7 @@ copyInContext: aDictionary
 		arguments: (self copyList: self arguments inContext: aDictionary)!
 
 isPatternNode
-	^false!
+	^true!
 
 isPatternVariable: aString
 	^aString includes: RBPatternScanner.VariableCharacter!
