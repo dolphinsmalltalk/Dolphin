@@ -98,16 +98,8 @@ resourceIdentifiers!accessing!public! !
 classesIn: aLiteralArray
 	"Answer a new instance attached to the binary stream aStream."
 
-	^(self on: aLiteralArray readStream) contents!
-
-on: aStream
-	"Answer a new instance attached to the binary stream aStream."
-
-	^self new
-		stream: aStream;
-		initialize! !
+	^(self on: aLiteralArray readStream) contents! !
 !Kernel.STLClassCollector class categoriesForMethods!
 classesIn:!instance creation!public! !
-on:!instance creation!public! !
 !
 

@@ -23,9 +23,6 @@ hash
 isCustom
 	^false!
 
-isDefault
-	^false!
-
 isSelfEvaluating
 	^true!
 
@@ -39,7 +36,6 @@ positions: aSequencedOfPositions
 =!comparing!public! !
 hash!comparing!public! !
 isCustom!public!testing! !
-isDefault!public!testing! !
 isSelfEvaluating!public!testing! !
 positions!accessing!private! !
 positions:!initializing!private! !

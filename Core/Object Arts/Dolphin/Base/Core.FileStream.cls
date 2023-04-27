@@ -498,10 +498,6 @@ primitiveNextPut: anIntegerOrCharacter
 	self position: self position.
 	^collection encodeOn: self put: anIntegerOrCharacter!
 
-primitiveNextPutAll: aCollection
-	<primitive: 173>
-	^aCollection appendToStream: self!
-
 readPageFor: anInteger
 	"Private - Read the page containing position anInteger and record the pageBase
 	and readLimit. The readLimit will be equal to the page size unless there are insufficient
@@ -603,7 +599,6 @@ position!accessing!public! !
 position:!accessing!positioning!public! !
 primitiveBasicNextPut:!accessing!private! !
 primitiveNextPut:!accessing!private! !
-primitiveNextPutAll:!accessing!private! !
 readPageFor:!buffer!private! !
 reset!positioning!public! !
 reverseContents!accessing!public! !

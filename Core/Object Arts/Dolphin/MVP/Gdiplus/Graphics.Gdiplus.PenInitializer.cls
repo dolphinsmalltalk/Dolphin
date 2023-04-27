@@ -432,17 +432,11 @@ ink: aGpBrushOrColor width: aFloat
 	^self new ink: aGpBrushOrColor width: aFloat!
 
 stbConvertFrom: anSTBClassFormat
-	^[:data | PenInitializer ink: (data at: 2) width: (data at: 3)]!
-
-stbVersion
-	"1: Instance variables of subclasses pulled up (although this does not affect the layout), and additional inst vars added for all the additional attributes that can be set on a Pen."
-
-	^1! !
+	^[:data | PenInitializer ink: (data at: 2) width: (data at: 3)]! !
 !Graphics.Gdiplus.PenInitializer class categoriesForMethods!
 cloneHandle:!private!realizing/unrealizing! !
 freeHandle:!private!realizing/unrealizing! !
 ink:width:!instance creation!public! !
 stbConvertFrom:!binary filing!public! !
-stbVersion!binary filing!public! !
 !
 

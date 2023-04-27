@@ -363,7 +363,6 @@ package setMethodNames: #(
 	#(#{External.Structure class} #shouldOverrideGetFieldNames)
 	#(#{External.StructureArrayField} #printAccessorExpressionSuffixOn:)
 	#(#{External.StructureArrayField} #printElementSizeExpressionBodyOn:)
-	#(#{External.StructureArrayField} #printStructClassSize:on:)
 	#(#{External.StructureArrayPointerField} #printAccessorExpressionSuffixOn:)
 	#(#{External.StructureField} #printMutatorBody:on:)
 	#(#{External.StructurePointer} #printOn:)
@@ -4184,18 +4183,10 @@ printAccessorExpressionSuffixOn: aCodeGenerationContext
 	aCodeGenerationContext printClass: self fieldClass!
 
 printElementSizeExpressionBodyOn: aCodeGenerationContext
-	self printStructClassSize: self elementClass on: aCodeGenerationContext!
-
-printStructClassSize: aStructureClass on: aCodeGenerationContext
-	aCodeGenerationContext printClass: aStructureClass.
-	aCodeGenerationContext writeStream
-		nextPutAll: '._';
-		nextPutAll: aStructureClass unqualifiedName;
-		nextPutAll: '_Size'! !
+	self printStructClassSize: self elementClass on: aCodeGenerationContext! !
 !External.StructureArrayField categoriesForMethods!
 printAccessorExpressionSuffixOn:!automatic generation!private! !
 printElementSizeExpressionBodyOn:!automatic generation!private! !
-printStructClassSize:on:!automatic generation!private! !
 !
 
 !External.StructureArrayPointerField methodsFor!

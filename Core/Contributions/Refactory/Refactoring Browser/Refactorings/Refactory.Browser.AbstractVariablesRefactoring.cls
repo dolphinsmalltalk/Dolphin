@@ -143,9 +143,6 @@ removeDefinedClassVariables
 shouldAbstractVariables
 	^(self lookupOption: #abstractVariables) cull: self!
 
-shouldShowChanges
-	^(self lookupOption: #showChanges) cull: self!
-
 transform
 	self hasVariablesToAbstract
 		ifTrue: [self shouldAbstractVariables ifFalse: [self refactoringAborted]].
@@ -167,7 +164,6 @@ processAssignmentNode:!public!transforming! !
 processReferenceNode:!public!transforming! !
 removeDefinedClassVariables!public!transforming! !
 shouldAbstractVariables!private!requests! !
-shouldShowChanges!private!requests! !
 transform!public!transforming! !
 !
 

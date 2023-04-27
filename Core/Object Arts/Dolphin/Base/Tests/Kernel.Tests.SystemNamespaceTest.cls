@@ -48,9 +48,6 @@ testFullyQualifiedReference
 	self assert: ref equals: self subject fullName asQualifiedReference.
 	self deny: ref isRelative!
 
-testIncludesKey
-	self subclassResponsibility!
-
 testShortName
 	self assert: self subject shortName equals: self subject name! !
 !Kernel.Tests.SystemNamespaceTest categoriesForMethods!
@@ -65,7 +62,6 @@ testClassVariableNames!public! !
 testEnvironment!public!unit tests! !
 testFullName!public!unit tests! !
 testFullyQualifiedReference!public!unit tests! !
-testIncludesKey!public! !
 testShortName!public!unit tests! !
 !
 

@@ -323,11 +323,6 @@ simpleName
 
 	^self unqualifiedName!
 
-storeOn: aStream
-	"This should probably store the full path."
-
-	self printOn: aStream!
-
 undeclare
 	"Remove the binding in the target namespace that would be resolved by the receiver, if it exists."
 
@@ -406,7 +401,6 @@ scope!constants!private! !
 scope:!converting!private! !
 shortName!accessing!public! !
 simpleName!accessing!public! !
-storeOn:!public!storing! !
 undeclare!operations!public! !
 unqualifiedName!accessing!public! !
 value!accessing!public! !

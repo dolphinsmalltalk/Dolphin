@@ -97,7 +97,6 @@ package setMethodNames: #(
 	#(#{Core.Fraction} #asVariant)
 	#(#{Core.GUID class} #arrayType:)
 	#(#{Core.GUID class} #typeName)
-	#(#{Core.Integer} #asVariant)
 	#(#{Core.LargeInteger} #asVariant)
 	#(#{Core.Locale} #displayCURRENCY:on:)
 	#(#{Core.Locale} #displayDECIMAL:on:)
@@ -1306,16 +1305,6 @@ typeName
 !Core.GUID class categoriesForMethods!
 arrayType:!constants!private! !
 typeName!constants!private! !
-!
-
-!Core.Integer methodsFor!
-
-asVariant
-	"Answer the VARIANT representation of the receiver (a VT_I4, VT_I8, or VT_UI8)."
-
-	^self subclassResponsibility! !
-!Core.Integer categoriesForMethods!
-asVariant!converting!public! !
 !
 
 !Core.LargeInteger methodsFor!

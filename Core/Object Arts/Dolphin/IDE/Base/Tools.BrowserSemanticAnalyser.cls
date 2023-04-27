@@ -98,9 +98,6 @@ targetOfMessage: aStMessageNode
 	receiver isLiteralNode ifTrue: [^receiver valueClass].
 	^nil!
 
-undeclaredVariable: aStVariableNode
-	self signalError: CErrUndeclared forNode: aStVariableNode!
-
 visitMessageNode: aMessageNode
 	"Process a message send (check for unimplemented selectors)"
 
@@ -128,7 +125,6 @@ contextBindingFor:!helpers!private! !
 initialize!initializing!public! !
 readStaticVariable:!helpers!private! !
 targetOfMessage:!commands!private!refactoring! !
-undeclaredVariable:!error handling!private! !
 visitMessageNode:!public!visitor/double dispatching! !
 visitSequenceNode:!public!visitor/double dispatching! !
 !

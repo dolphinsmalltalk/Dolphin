@@ -158,11 +158,6 @@ stbConvertFrom: anSTBClassFormat
 	StringFormatFromFlagsInitializer flags: (data at: 2)
 		language: (data at: 3) ?? OS.NlsConstants.LANG_NEUTRAL]!
 
-stbVersion
-	"1: pathPoints now stored as a POINTLArray to reduce marshalling/unmarshalling overhead."
-
-	^1!
-
 uninitialize
 	GenericDefault := GenericTypographic := nil! !
 !Graphics.Gdiplus.StringFormatInitializer class categoriesForMethods!
@@ -174,7 +169,6 @@ genericTypographic!instance creation!public! !
 initialize!class initialization!public! !
 onPreStripImage!class hierarchy-removing!private! !
 stbConvertFrom:!binary filing!public! !
-stbVersion!binary filing!public! !
 uninitialize!class hierarchy-removing!private! !
 !
 

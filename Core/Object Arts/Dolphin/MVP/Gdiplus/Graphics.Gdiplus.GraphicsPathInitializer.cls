@@ -170,17 +170,11 @@ stbConvertFrom: anSTBClassFormat
 	self
 		points: (data at: 2)
 		types: (data at: 3)
-		fillMode: (data at: 4)]!
-
-stbVersion
-	"1: pathPoints now stored as a POINTLArray to reduce marshalling/unmarshalling overhead."
-
-	^1! !
+		fillMode: (data at: 4)]! !
 !Graphics.Gdiplus.GraphicsPathInitializer class categoriesForMethods!
 cloneHandle:!private!realizing/unrealizing! !
 freeHandle:!private!realizing/unrealizing! !
 points:types:fillMode:!instance creation!public! !
 stbConvertFrom:!binary filing!public! !
-stbVersion!binary filing!public! !
 !
 

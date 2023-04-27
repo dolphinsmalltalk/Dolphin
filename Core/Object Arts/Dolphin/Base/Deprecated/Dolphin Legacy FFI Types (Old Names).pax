@@ -28,14 +28,6 @@ package setMethodNames: #(
 	#(#{Core.PositionableStream} #nextWORD)
 	#(#{Core.Stream} #nextDWORDPut:)
 	#(#{Core.Stream} #nextSDWORDPut:)
-	#(#{External.Address} #dwordAtOffset:)
-	#(#{External.Address} #dwordAtOffset:put:)
-	#(#{External.Address} #sdwordAtOffset:)
-	#(#{External.Address} #sdwordAtOffset:put:)
-	#(#{External.Address} #swordAtOffset:)
-	#(#{External.Address} #swordAtOffset:put:)
-	#(#{External.Address} #wordAtOffset:)
-	#(#{External.Address} #wordAtOffset:put:)
 ).
 
 package setVariableNames: #(
@@ -309,58 +301,6 @@ nextSDWORDPut: anInteger
 !Core.Stream categoriesForMethods!
 nextDWORDPut:!binary filing!public! !
 nextSDWORDPut:!binary filing!public! !
-!
-
-!External.Address methodsFor!
-
-dwordAtOffset: anInteger
-	"Soft deprecated. Retained in applications that still refer to the old FFI class names, e.g. DWORD."
-
-	^self uint32AtOffset: anInteger!
-
-dwordAtOffset: anInteger put: anObject
-	"Soft deprecated. Retained in applications that still refer to the old FFI class names, e.g. DWORD."
-
-	^self uint32AtOffset: anInteger put: anObject!
-
-sdwordAtOffset: anInteger
-	"Soft deprecated. Retained in applications that still refer to the old FFI class names, e.g. SDWORD."
-
-	^self int32AtOffset: anInteger!
-
-sdwordAtOffset: anInteger put: anObject
-	"Soft deprecated. Retained in applications that still refer to the old FFI class names, e.g. SDWORD."
-
-	^self int32AtOffset: anInteger put: anObject!
-
-swordAtOffset: anInteger
-	"Soft deprecated. Retain in applications that still refer to the old FFI class names, e.g. SWORD."
-
-	^self int16AtOffset: anInteger!
-
-swordAtOffset: anInteger put: anObject
-	"Soft deprecated. Retain in applications that still refer to the old FFI class names, e.g. SWORD."
-
-	^self int16AtOffset: anInteger put: anObject!
-
-wordAtOffset: anInteger
-	"Soft deprecated. Retain in applications that still refer to the old FFI class names, e.g. WORD."
-
-	^self uint16AtOffset: anInteger!
-
-wordAtOffset: anInteger put: anObject
-	"Soft deprecated. Retain in applications that still refer to the old FFI class names, e.g. WORD."
-
-	^self uint16AtOffset: anInteger put: anObject! !
-!External.Address categoriesForMethods!
-dwordAtOffset:!accessing!primitives!public! !
-dwordAtOffset:put:!accessing!primitives!public! !
-sdwordAtOffset:!accessing!primitives!public! !
-sdwordAtOffset:put:!accessing!primitives!public! !
-swordAtOffset:!accessing!primitives!public! !
-swordAtOffset:put:!accessing!primitives!public! !
-wordAtOffset:!accessing!primitives!public! !
-wordAtOffset:put:!accessing!primitives!public! !
 !
 
 "End of package definition"!

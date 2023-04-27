@@ -78,13 +78,6 @@ testPeerAddressNotConnected
 		matching: [:ex | ex errorCode = WinSocketErrors.WSAECONNRESET].
 	s1 close!
 
-testQueryPort
-	"See #1317"
-
-	| s |
-	s := self serverSocketClass port: 1000.
-	[self assert: s queryPort = 1000] ensure: [s close]!
-
 testQueryPortUnbound
 	| s |
 	s := self serverSocketClass new.
@@ -144,7 +137,6 @@ testConnectFailure!public!unit tests! !
 testListenUnbound!public!unit tests! !
 testPeerAddress!public!unit tests! !
 testPeerAddressNotConnected!public!unit tests! !
-testQueryPort!public!unit tests! !
 testQueryPortUnbound!public!unit tests! !
 testSTBMessages!public!unit tests! !
 !

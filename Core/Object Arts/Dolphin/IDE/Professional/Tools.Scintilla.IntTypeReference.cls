@@ -19,14 +19,10 @@ name
 	^'int'!
 
 objectClass
-	^Integer!
-
-printParameter: aString on: aWriteStream
-	aWriteStream nextPutAll: aString! !
+	^Integer! !
 !Tools.Scintilla.IntTypeReference categoriesForMethods!
 defaultValue!accessing!public! !
 name!accessing!public! !
 objectClass!accessing!public! !
-printParameter:on:!generating!public! !
 !
 

@@ -38,7 +38,6 @@ package setMethodNames: #(
 	#(#{Kernel.AbstractChunkSourceFiler} #storeCommentString:forPackage:)
 	#(#{Kernel.AbstractChunkSourceFiler} #storeSource:for:)
 	#(#{Kernel.BootSessionManager} #saveImageTo:)
-	#(#{Kernel.ChunkSourceFiler} #printBasicDefinitionOfClass:on:)
 	#(#{Kernel.ChunkSourceFiler} #storeSource:for:)
 	#(#{Kernel.CompiledMethod} #storeCategories)
 	#(#{Kernel.SourceFiler} #collateClass:against:)
@@ -510,52 +509,6 @@ saveImageTo:!operations-saving!private! !
 
 !Kernel.ChunkSourceFiler methodsFor!
 
-printBasicDefinitionOfClass: aClass on: aPuttableStream
-	| classConstants |
-	aClass superclass
-		ifNil: [aPuttableStream nextPutAll: 'nil']
-		ifNotNil: [:base | self emitClassName: base on: aPuttableStream].
-	aPuttableStream
-		space;
-		nextPutAll: aClass kindOfSubclass;
-		space;
-		print: (aClass isInBaseEnvironment
-					ifTrue: [aClass unqualifiedName]
-					ifFalse: [aClass fullName asSymbol]);
-		crtab.
-	self
-		printVariables: aClass instanceVariableNames
-		string: 'instanceVariableNames:'
-		on: aPuttableStream.
-	aPuttableStream crtab.
-	self
-		printVariables: aClass classVariableNames asSortedArray
-		string: 'classVariableNames:'
-		on: aPuttableStream.
-	aPuttableStream
-		crtab;
-		nextPutAll: 'imports: ';
-		print: aClass imports;
-		crtab.
-	self
-		printVariables: aClass classInstanceVariableNames
-		string: 'classInstanceVariableNames:'
-		on: aPuttableStream.
-	aPuttableStream
-		crtab;
-		nextPutAll: 'classConstants: {'.
-	classConstants := aClass classConstants.
-	classConstants isEmpty
-		ifFalse: 
-			[classConstants asSortedArray do: 
-					[:each |
-					aPuttableStream
-						crtab: 2;
-						print: each]
-				separatedBy: [aPuttableStream nextPut: $.].
-			aPuttableStream crtab].
-	aPuttableStream nextPut: $}!
-
 storeSource: aString for: aSourceObject 
 	"Private - Store the <readableString>, aString, as the source text for the <sourceObject>,
 	aSourceObject. If the receiver has been associated with a source file (i.e. the
@@ -569,7 +522,6 @@ storeSource: aString for: aSourceObject
 		ifTrue: 
 			[aSourceObject sourceDescriptor: (aString isEmpty ifFalse: [self sourceDescriptorForIndex: sourceFileIndex position: position])]! !
 !Kernel.ChunkSourceFiler categoriesForMethods!
-printBasicDefinitionOfClass:on:!private!source filing-file out! !
 storeSource:for:!private!source filing-file out! !
 !
 

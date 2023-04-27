@@ -50,7 +50,6 @@ package methodNames
 	add: #CompilerNotification -> #extra;
 	add: #CRTLibrary -> #_spawnvp:cmdname:argv:;
 	add: #Dictionary -> #at:ifAbsentPutValue:;
-	add: #ExternalAddress -> #byteAtOffset:;
 	add: #ExternalLibrary -> #invalidCall;
 	add: #ExternalStructure -> #do:;
 	add: #ExternalStructure -> #do:separatedBy:;
@@ -239,16 +238,6 @@ dateSeparator
 !AbstractWindowsLocale categoriesForMethods!
 dateOrder!constants!public! !
 dateSeparator!constants!public! !
-!
-
-!ExternalAddress methodsFor!
-
-byteAtOffset: anInteger
-	"Soft deprecated. Retain in applications that still refer to the old FFI class names, e.g. BYTE."
-
-	^self uint8AtOffset: anInteger! !
-!ExternalAddress categoriesForMethods!
-byteAtOffset:!accessing!primitives!public! !
 !
 
 !ArithmeticValue methodsFor!
