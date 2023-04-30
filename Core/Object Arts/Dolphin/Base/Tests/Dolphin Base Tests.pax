@@ -1025,7 +1025,7 @@ DolphinTestClassResource subclass: #MustBeBooleanTestClasses
 	classInstanceVariableNames: ''!
 
 TestRunLogger subclass: #TestRunConsoleLogger
-	instanceVariableNames: 'stream timings'
+	instanceVariableNames: 'stream timings notifications'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

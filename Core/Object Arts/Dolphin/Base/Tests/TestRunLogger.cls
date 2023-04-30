@@ -22,6 +22,15 @@ finishedCase: aSymbol
 finishedRun: aTestResult knownSlowTests: aCollection
 	self subclassResponsibility!
 
+initializedResource: aTestResource in: aDuration
+	!
+
+initializingResouce: aTestResource
+!
+
+notify: aNotification
+!
+
 slowTestThreshold
 	"Answer a <Duration> which is the execution time threshold over which tests should be reported as slow."
 
@@ -36,6 +45,9 @@ startingRun: aTestSuite
 !TestRunLogger categoriesForMethods!
 finishedCase:!logging!public! !
 finishedRun:knownSlowTests:!helpers!logging!public! !
+initializedResource:in:!logging!public! !
+initializingResouce:!logging!public! !
+notify:!logging!public! !
 slowTestThreshold!helpers!private! !
 startingCase:!logging!public! !
 startingRun:!logging!public! !

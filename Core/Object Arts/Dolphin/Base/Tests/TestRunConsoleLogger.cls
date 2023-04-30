@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 TestRunLogger subclass: #TestRunConsoleLogger
-	instanceVariableNames: 'stream timings'
+	instanceVariableNames: 'stream timings notifications'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -14,12 +14,19 @@ TestRunConsoleLogger comment: ''!
 
 !TestRunConsoleLogger methodsFor!
 
+emitTimestamp
+	Locale userDefault
+		printTime: DateAndTime now
+		on: stream
+		format: 'H:mm:ssFFF'.
+	stream space!
+
 finishedCase: aTestCaseResult
 	stream
 		nextPutAll: aTestCaseResult outcome asUppercase;
 		nextPutAll: ' in '.
 	aTestCaseResult duration printHumanReadableOn: stream.
-	stream cr!
+	self logNotifications!
 
 finishedRun: aTestResult knownSlowTests: aCollection
 	| passed |
@@ -41,7 +48,37 @@ finishedRun: aTestResult knownSlowTests: aCollection
 		ifFalse: [self summarizeFailures: aTestResult].
 	stream flush!
 
+initializedResource: aTestResource in: aDuration
+	stream
+		nextPutAll: 'Completed in ';
+		nextPutAll: aDuration humanReadablePrintString.
+	self logNotifications!
+
+initializingResource: aTestResource
+	self emitTimestamp.
+	stream
+		nextPutAll: 'Initializing ';
+		print: aTestResource;
+		nextPutAll: ' ... ';
+		flush!
+
+logNotifications
+	notifications isEmpty
+		ifFalse: 
+			[stream nextPutAll: ', with notifications:'.
+			notifications do: 
+					[:each |
+					stream
+						crtab: 2;
+						print: each].
+			notifications := OrderedCollection new].
+	stream cr!
+
+notify: aNotification
+	notifications add: aNotification!
+
 startingCase: aTestCase
+	self emitTimestamp.
 	stream
 		print: aTestCase;
 		nextPutAll: ' ... ';
@@ -56,8 +93,9 @@ startingRun: aTestSuite
 		cr;
 		flush!
 
-stream: anObject
-	stream := anObject!
+stream: aWriteStream
+	stream := aWriteStream.
+	notifications := OrderedCollection new!
 
 summarizeFailures: aTestResult
 	| failures errors |
@@ -111,8 +149,13 @@ summarizeTimings: aTestResult baseline: aCollection threshold: aDuration
 				cr]! !
 
 !TestRunConsoleLogger categoriesForMethods!
+emitTimestamp!logging!private! !
 finishedCase:!logging!public! !
 finishedRun:knownSlowTests:!logging!public! !
+initializedResource:in:!logging!public! !
+initializingResource:!logging!public! !
+logNotifications!logging!public! !
+notify:!logging!public! !
 startingCase:!logging!public! !
 startingRun:!logging!public! !
 stream:!accessing!private! !
