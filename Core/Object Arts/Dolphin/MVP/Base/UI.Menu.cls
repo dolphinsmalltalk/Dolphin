@@ -91,14 +91,7 @@ applyFlags
 basicFree
 	"Private - Free the Menu resource handle and all submenus."
 
-	1 to: items size
-		do: 
-			[:i |
-			User32
-				removeMenu: handle
-				uPosition: i - 1
-				uFlags: MF_BYPOSITION.
-			(items at: i) free].
+	1 to: items size do: [:i | (items at: i) detach].
 	User32 destroyMenu: handle!
 
 basicRealize
@@ -129,8 +122,7 @@ clear
 clearCached
 	"Private - Clear down the receiver's cached information and handles."
 
-	super clearCached.
-	id := nil!
+	handle := id := nil!
 
 command
 	"Answer the command selector for the receiver.
@@ -195,6 +187,14 @@ description
 
 description: aString 
 	self text: aString!
+
+detach
+	"Private - Disassociate the receiver from its handle, and do the same for all sub-menus (recursively). Called when a parent menu is destroyed by a call to DestroyMenu, which is a recursive destroy."
+
+	handle ifNil: [^self].
+	self beUnfinalizable.
+	self clearCached.
+	1 to: items size do: [:i | (items at: i) detach]!
 
 drawItemImage: itemImage on: hDC at: topLeft disabled: aBoolean
 	| imageList extent imageIndex callback |
@@ -691,6 +691,7 @@ defaultFlags!initializing!private! !
 deleteItemAt:!accessing!private! !
 description!accessing!private! !
 description:!accessing!public! !
+detach!private!realizing/unrealizing! !
 drawItemImage:on:at:disabled:!helpers!private! !
 findCommand:!public!searching! !
 flags:!accessing!private! !

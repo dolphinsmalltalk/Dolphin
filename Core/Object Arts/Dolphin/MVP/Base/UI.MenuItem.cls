@@ -51,6 +51,9 @@ commandDescription
 
 	^self subclassResponsibility!
 
+detach
+	"Private - The receiver's parent menu chain has been destroyed."!
+
 edit
 	"Private - Edit the receiver in a dialog box. By default you can't edit
 	a MenuItem."
@@ -178,6 +181,7 @@ acceleratorKey:!accessing!private! !
 allItems!accessing!public! !
 command!commands!public! !
 commandDescription!accessing!private! !
+detach!private!realizing/unrealizing! !
 edit!accessing!operations!private! !
 flags!accessing!private! !
 flags:!accessing!private! !
