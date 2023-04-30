@@ -18,7 +18,7 @@ should: aBlockClosure raiseHRESULT: anInteger
 	self
 		should: aBlockClosure
 		raise: HRESULTError
-		matching: [:ex | ex hresult asInteger = anInteger asSDword]!
+		matching: [:ex | ex hresult asInteger = anInteger asInt32]!
 
 shouldRaiseNotBindable: aBlockClosure
 	self should: aBlockClosure raiseHRESULT: 16r800401E8	"MK_E_NOTBINDABLE: Moniker is not bindable"!

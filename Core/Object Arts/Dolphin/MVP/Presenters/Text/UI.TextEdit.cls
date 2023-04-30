@@ -690,7 +690,7 @@ marginWidths
 
 	| dword |
 	dword := self sendMessage: EM_GETMARGINS.
-	^{dword highWord. dword lowWord}!
+	^{ dword lowWord. dword highWord }!
 
 maxTextLimit
 	"Private - Answer the absolute maximum amount of text that the receiver can ever hold."
@@ -1067,15 +1067,13 @@ setAlignment: anInteger
 	self baseStyle: anInteger maskedBy: ##(ES_LEFT|ES_CENTER|ES_RIGHT)!
 
 setMarginWidths: anArray
-	| margins |
+	"Private - Set the widths of the right and left margins of the control to the <integer> pixel widths specified in the 2-element <Array> argument."
+
 	SystemMetrics current hasTextBoxMargins ifFalse: [^self].
-	margins := UInt32 new
-				highWord: anArray first;
-				lowWord: anArray last.
 	self
 		sendMessage: EM_SETMARGINS
-		wParam: (EC_LEFTMARGIN bitOr: EC_RIGHTMARGIN)
-		lParam: margins asParameter!
+		wParam: ##(EC_LEFTMARGIN | EC_RIGHTMARGIN)
+		lParam: ((anArray last bitShift: 16) bitOr: anArray first)!
 
 setReadOnly: aBoolean
 	"Private - Instruct the receiver's control to be read-only or writeable depending
@@ -1149,7 +1147,7 @@ tabFocus
 textLimit
 	"Answer the current text limit for the control (i.e. the amount of text it can hold)."
 
-	^(self sendMessage: EM_GETLIMITTEXT) asDword!
+	^(self sendMessage: EM_GETLIMITTEXT) asUInt32!
 
 textLimit: anInteger
 	"Set the maximum text limit for the receiver. The initial default limit is around 32kb.

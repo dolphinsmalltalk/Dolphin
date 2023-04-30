@@ -169,7 +169,7 @@ testCollisionIn: aGdiplusBitmap
 				x: each x
 				y: each y
 				color: color1) == Ok
-				and: [(color1 int32AtOffset: 0) ~= ##(Color white argbCode asSDword)]]!
+				and: [(color1 int32AtOffset: 0) ~= ##(Color white argbCode asInt32)]]!
 
 x
 	^self position x!

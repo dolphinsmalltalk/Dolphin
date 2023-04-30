@@ -124,9 +124,9 @@ defineFunctions
 		defineFunction: #GetCustData:pVarVal:
 			argumentTypes: 'GUID* VARIANT*';
 		defineFunction: #GetLibStatistics:pcchUniqueNames:
-			argumentTypes: 'dword* dword*';
+			argumentTypes: 'uint32* uint32*';
 		defineFunction: #GetDocumentation2:lcid:pbstrHelpString:pdwHelpStringContext:pbstrHelpStringDll:
-			argumentTypes: 'sdword dword bstr* dword* bstr*';
+			argumentTypes: 'int32 dword bstr* uint32* bstr*';
 		defineFunction: #GetAllCustData:
 			argumentTypes: 'CUSTDATA*'
 ! !

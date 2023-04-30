@@ -135,11 +135,11 @@ defineFunctions
 	self
 		defineFunction: #IsDirty;
 		defineFunction: #Load:cbSize:
-			argumentTypes: 'byte* dword';
+			argumentTypes: 'byte* uint32';
 		defineFunction: #Save:fClearDirty:cbSize:
-			argumentTypes: 'byte* sdword dword';
+			argumentTypes: 'byte* int32 uint32';
 		defineFunction: #GetSizeMax:
-			argumentTypes: 'dword*';
+			argumentTypes: 'uint32*';
 		defineFunction: #InitNew
 ! !
 !OS.COM.IPersistMemory class categoriesForMethods!

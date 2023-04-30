@@ -452,16 +452,16 @@ defineFunctions
 		defineFunction: #get_Handle:
 			argumentTypes: 'handle*';
 		defineFunction: #get_hPal:
-			returnType: 'sdword'
+			returnType: 'int32'
 			argumentTypes: 'handle*';
 		defineFunction: #get_Type:
-			argumentTypes: 'sword*';
+			argumentTypes: 'int16*';
 		defineFunction: #get_Width:
-			argumentTypes: 'sdword*';
+			argumentTypes: 'int32*';
 		defineFunction: #get_Height:
-			argumentTypes: 'sdword*';
+			argumentTypes: 'int32*';
 		defineFunction: #Render:x:y:cx:cy:xSrc:ySrc:cxSrc:cySrc:prcWBounds:
-			argumentTypes: 'handle sdword sdword sdword sdword sdword sdword sdword sdword RECTL*';
+			argumentTypes: 'handle int32 int32 int32 int32 int32 int32 int32 int32 RECTL*';
 		defineFunction: #put_hPal:
 			argumentTypes: 'handle';
 		defineFunction: #get_CurDC:
@@ -474,9 +474,9 @@ defineFunctions
 			argumentTypes: 'bool';
 		defineFunction: #PictureChanged;
 		defineFunction: #SaveAsFile:fSaveMemCopy:pcbSize:
-			argumentTypes: 'void* bool sdword*';
+			argumentTypes: 'void* bool int32*';
 		defineFunction: #get_Attributes:
-			argumentTypes: 'sdword*';
+			argumentTypes: 'int32*';
 		defineFunction: #SetHdc:
 			argumentTypes: 'handle'
 !

@@ -117,7 +117,7 @@ readDirectoryChangesW: hDirectory lpBuffer: lpBuffer nBufferLength: nBufferLengt
 			[in]OVERLAPPED* lpOverlapped,
 			[in]long lpCompletionRoutine);"
 
-	<stdcall: sdword ReadDirectoryChangesW sdword void* dword bool dword dword* OVERLAPPED* lpvoid>
+	<stdcall: int32 ReadDirectoryChangesW int32 void* uint32 bool uint32 uint32* OVERLAPPED* lpvoid>
 	^self invalidCall: _failureCode! !
 !OS.KernelLibrary categoriesForMethods!
 readDirectoryChangesW:lpBuffer:nBufferLength:bWatchSubtree:dwNotifyFilter:lpBytesReturned:lpOverlapped:lpCompletionRoutine:!**auto generated**!public! !

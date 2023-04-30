@@ -49,6 +49,12 @@ testAsPoint
 	self assert: point x equals: 101.
 	self assert: point y equals: 202!
 
+testAsUInt32
+	| subject uint |
+	subject := self subjectClass x: 16r7654 y: 16r3210.
+	uint := subject asUInt32.
+	self assert: uint equals: 16r32107654!
+
 testComparePOINTL
 	| subject point |
 	point := POINTL fromPoint: 101 @ 102.
@@ -383,6 +389,7 @@ subjectSupportNonIntegralValues!private!testing! !
 testAdd!public!unit tests! !
 testAsGenericPoint!public!unit tests! !
 testAsPoint!public!unit tests! !
+testAsUInt32!public!unit tests! !
 testComparePOINTL!public!unit tests! !
 testComparePOINTS!public!unit tests! !
 testComparing!public!unit tests! !

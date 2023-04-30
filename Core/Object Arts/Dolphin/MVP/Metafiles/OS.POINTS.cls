@@ -25,7 +25,7 @@ struct tagPOINTS {
 !OS.POINTS categoriesForClass!Win32-Structs! !
 !OS.POINTS methodsFor!
 
-asDword
+asUInt32
 	"Answer the receiver in a form suitable for passing or returning 
 	as a 32-bit value (i.e. a 32-bit integer)."
 
@@ -37,12 +37,17 @@ asUIntPtr
 
 	"Implementation Note: The compiler will optimise out the condition because it is constant."
 
-	^VMConstants.IsWin64 ifTrue: [self asPoint asUIntPtr] ifFalse: [bytes uint32AtOffset: 0]!
+	^VMConstants.IsWin64
+		ifTrue: 
+			[(((bytes int16AtOffset: _OffsetOf_y) bitAnd: VMConstants.HalfPtrMask)
+				bitShift: VMConstants.HalfPtrBits)
+					bitOr: ((bytes int16AtOffset: _OffsetOf_x) bitAnd: VMConstants.HalfPtrMask)]
+		ifFalse: [bytes uint32AtOffset: 0]!
 
 isZero
 	"Answer whether the receiver is equal to Point zero."
 
-	^self asDword == 0!
+	^self asUInt32 == 0!
 
 x
 	"Answer the <Integer> value of the receiver's 'x' field."
@@ -64,7 +69,7 @@ y: anInteger
 
 	bytes int16AtOffset: _OffsetOf_y put: anInteger! !
 !OS.POINTS categoriesForMethods!
-asDword!converting!public! !
+asUInt32!converting!public! !
 asUIntPtr!converting!public! !
 isZero!public!testing! !
 x!**compiled accessors**!public! !

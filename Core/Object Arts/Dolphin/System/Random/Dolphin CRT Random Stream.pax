@@ -36,7 +36,7 @@ Core.Random
 !OS.CRTLibrary methodsFor!
 
 rand
-	<cdecl: sdword rand>
+	<cdecl: int32 rand>
 	^self invalidCall: _failureCode!
 
 srand: anInteger

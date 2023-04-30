@@ -700,7 +700,7 @@ strToInt: lpSrc
 		int __stdcall StrToInt(
 			LPCWSTR lpSrc);"
 
-	<stdcall: sdword StrToIntW lpwstr>
+	<stdcall: int32 StrToIntW lpwstr>
 	^self invalidCall: _failureCode!
 
 strToUInt: pszSrc

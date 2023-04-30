@@ -69,7 +69,7 @@ getPrivateProfileInt: lpAppName lpKeyName: lpKeyName nDefault: nDefault lpFileNa
 			[in]int nDefault,
 			[in]LPCWSTR lpFileName);"
 
-	<stdcall: dword GetPrivateProfileIntW lpwstr lpstr sdword lpwstr>
+	<stdcall: uint32 GetPrivateProfileIntW lpwstr lpstr int32 lpwstr>
 	^self invalidCall: _failureCode!
 
 getPrivateProfileSection: lpAppName lpReturnedString: lpReturnedString nSize: nSize lpFileName: lpFileName

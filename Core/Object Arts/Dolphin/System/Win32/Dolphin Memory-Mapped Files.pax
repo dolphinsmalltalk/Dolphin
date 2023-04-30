@@ -116,7 +116,7 @@ flushViewOfFile: lpBaseAddress dwNumberOfBytesToFlush: dwNumberOfBytesToFlush
 			void* lpBaseAddress,
 			DWORD dwNumberOfBytesToFlush);"
 
-	<stdcall: sdword FlushViewOfFile void* dword>
+	<stdcall: int32 FlushViewOfFile void* uint32>
 	^self invalidCall: _failureCode!
 
 mapViewOfFile: hFileMappingObject dwDesiredAccess: dwDesiredAccess dwFileOffsetHigh: dwFileOffsetHigh dwFileOffsetLow: dwFileOffsetLow dwNumberOfBytesToMap: dwNumberOfBytesToMap

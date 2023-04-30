@@ -395,11 +395,11 @@ defineFunctions
 
 	self
 		defineFunction: #ShowContextMenu:x:y:pcmdtReserved:pdispReserved:dwRetVal:
-			argumentTypes: 'dword dword dword IUnknown* IDispatch* hresult*';
+			argumentTypes: 'uint32 uint32 uint32 IUnknown* IDispatch* hresult*';
 		defineFunction: #GetHostInfo:pdwDoubleClick:
-			argumentTypes: 'dword* dword*';
+			argumentTypes: 'uint32* uint32*';
 		defineFunction: #ShowUI:pActiveObject:pCommandTarget:pFrame:pDoc:dwRetVal:
-			argumentTypes: 'dword IUnknown* IUnknown* IUnknown* IUnknown* hresult*';
+			argumentTypes: 'uint32 IUnknown* IUnknown* IUnknown* IUnknown* hresult*';
 		defineFunction: #HideUI;
 		defineFunction: #UpdateUI;
 		defineFunction: #EnableModeless:
@@ -409,17 +409,17 @@ defineFunctions
 		defineFunction: #OnFrameWindowActivate:
 			argumentTypes: 'varbool';
 		defineFunction: #ResizeBorder:top:right:bottom:pUIWindow:fFrameWindow:
-			argumentTypes: 'sdword sdword sdword sdword IUnknown* varbool';
+			argumentTypes: 'int32 int32 int32 int32 IUnknown* varbool';
 		defineFunction: #TranslateAccelerator:nMessage:wParam:lParam:bstrGuidCmdGroup:nCmdID:dwRetVal:
-			argumentTypes: 'dword dword dword dword bstr dword hresult*';
+			argumentTypes: 'uint32 uint32 uint32 uint32 bstr uint32 hresult*';
 		defineFunction: #GetOptionKeyPath:dw:
-			argumentTypes: 'bstr* dword';
+			argumentTypes: 'bstr* uint32';
 		defineFunction: #GetDropTarget:ppDropTarget:
 			argumentTypes: 'IUnknown* IUnknown**';
 		defineFunction: #GetExternal:
 			argumentTypes: 'IDispatch**';
 		defineFunction: #TranslateUrl:bstrURLIn:pbstrURLOut:
-			argumentTypes: 'dword bstr bstr*';
+			argumentTypes: 'uint32 bstr bstr*';
 		defineFunction: #FilterDataObject:ppDORet:
 			argumentTypes: 'IUnknown* IUnknown**'
 ! !

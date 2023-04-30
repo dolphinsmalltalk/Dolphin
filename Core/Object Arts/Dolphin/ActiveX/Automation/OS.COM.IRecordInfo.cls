@@ -323,23 +323,23 @@ defineFunctions
 		defineFunction: #GetName:
 			argumentTypes: 'bstr*';
 		defineFunction: #GetSize:
-			argumentTypes: 'dword*';
+			argumentTypes: 'uint32*';
 		defineFunction: #GetTypeInfo:
 			argumentTypes: 'ITypeInfo**';
 		defineFunction: #GetField:szFieldName:pvarField:
-			returnType: 'sdword'
+			returnType: 'int32'
 			argumentTypes: 'void* lpwstr variant*';
 		defineFunction: #GetFieldNoCopy:szFieldName:pvarField:ppvDataCArray:
 			argumentTypes: 'void* lpwstr variant* void**';
 		defineFunction: #PutField:pvData:szFieldName:pvarField:
-			returnType: 'sdword'
-			argumentTypes: 'dword void* lpwstr variant*';
+			returnType: 'int32'
+			argumentTypes: 'uint32 void* lpwstr variant*';
 		defineFunction: #PutFieldNoCopy:pvData:szFieldName:pvarField:
-			argumentTypes: 'dword void* lpwstr variant*';
+			argumentTypes: 'uint32 void* lpwstr variant*';
 		defineFunction: #GetFieldNames:rgBstrNames:
-			argumentTypes: 'dword* bstr*';
+			argumentTypes: 'uint32* bstr*';
 		defineFunction: #IsMatchingType:
-			returnType: 'sdword'
+			returnType: 'int32'
 			argumentTypes: 'IRecordInfo*';
 		defineFunction: #RecordCreate
 			returnType: 'void*';

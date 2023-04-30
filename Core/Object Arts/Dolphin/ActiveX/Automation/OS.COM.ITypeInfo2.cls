@@ -391,35 +391,35 @@ defineFunctions
 
 	self
 		defineFunction: #GetTypeKind:
-			argumentTypes: 'sdword*';
+			argumentTypes: 'int32*';
 		defineFunction: #GetTypeFlags:
-			argumentTypes: 'dword*';
+			argumentTypes: 'uint32*';
 		defineFunction: #GetFuncIndexOfMemId:invkind:pFuncIndex:
-			argumentTypes: 'sdword sdword dword*';
+			argumentTypes: 'int32 int32 uint32*';
 		defineFunction: #GetVarIndexOfMemId:pVarIndex:
-			argumentTypes: 'sdword dword*';
+			argumentTypes: 'int32 uint32*';
 		defineFunction: #GetCustData:pVarVal:
 			argumentTypes: 'GUID* VARIANT*';
 		defineFunction: #GetFuncCustData:guid:pVarVal:
-			argumentTypes: 'dword GUID* VARIANT*';
+			argumentTypes: 'uint32 GUID* VARIANT*';
 		defineFunction: #GetParamCustData:indexParam:guid:pVarVal:
-			argumentTypes: 'dword dword GUID* VARIANT*';
+			argumentTypes: 'uint32 uint32 GUID* VARIANT*';
 		defineFunction: #GetVarCustData:guid:pVarVal:
-			argumentTypes: 'dword GUID* VARIANT*';
+			argumentTypes: 'uint32 GUID* VARIANT*';
 		defineFunction: #GetImplTypeCustData:guid:pVarVal:
-			argumentTypes: 'dword GUID* VARIANT*';
+			argumentTypes: 'uint32 GUID* VARIANT*';
 		defineFunction: #GetDocumentation2:lcid:pbstrHelpString:pdwHelpStringContext:pbstrHelpStringDll:
-			argumentTypes: 'sdword dword bstr* dword* bstr*';
+			argumentTypes: 'int32 uint32 bstr* uint32* bstr*';
 		defineFunction: #GetAllCustData:
 			argumentTypes: 'CUSTDATA*';
 		defineFunction: #GetAllFuncCustData:pCustData:
-			argumentTypes: 'dword CUSTDATA*';
+			argumentTypes: 'uint32 CUSTDATA*';
 		defineFunction: #GetAllParamCustData:indexParam:pCustData:
-			argumentTypes: 'dword dword CUSTDATA*';
+			argumentTypes: 'uint32 uint32 CUSTDATA*';
 		defineFunction: #GetAllVarCustData:pCustData:
-			argumentTypes: 'dword CUSTDATA*';
+			argumentTypes: 'uint32 CUSTDATA*';
 		defineFunction: #GetAllImplTypeCustData:pCustData:
-			argumentTypes: 'dword CUSTDATA*'
+			argumentTypes: 'uint32 CUSTDATA*'
 ! !
 !OS.COM.ITypeInfo2 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !

@@ -148,12 +148,6 @@ addToScaledDecimal: aScaledDecimal
 
 	^(aScaledDecimal + self x) @ (aScaledDecimal + self y)!
 
-asDword
-	"Answer the receiver in a form suitable for passing or returning 
-	as a 32-bit value (i.e. a 32-bit integer)."
-
-	^(UInt32 fromPoint: self) value!
-
 asGenericPoint
 	"Answer a Point created that matches the receiver"
 
@@ -175,11 +169,15 @@ asPoint3D
 
 	^self x @ self y @ 0!
 
-asUIntPtr
-	"Answer the receiver in a form suitable for passing or returning 
-	as a  machine-word sized (32 or 64-bit) value."
+asUInt32
+	"Answer the receiver in a form suitable for passing or returning as a 32-bit value (i.e. a 32-bit integer)."
 
-	^self asPoint asUIntPtr!
+	^self subclassResponsibility!
+
+asUIntPtr
+	"Answer the receiver in a form suitable for passing or returning as a  machine-word sized (32 or 64-bit) value."
+
+	^self subclassResponsibility!
 
 between: min and: max
 	"Answer whether the receiver is inclusively between the <magnitude> arguments, 
@@ -609,11 +607,11 @@ addToInteger:!double dispatch!private! !
 addToPoint:!double dispatch!private! !
 addToPoint3D:!double dispatch!private! !
 addToScaledDecimal:!double dispatch!private! !
-asDword!converting!public! !
 asGenericPoint!converting!public! !
 asObject!converting!public! !
 asPoint!converting!public! !
 asPoint3D!converting!public! !
+asUInt32!converting!public! !
 asUIntPtr!converting!public! !
 between:and:!comparing!public! !
 ceiling!public!truncation and round off! !

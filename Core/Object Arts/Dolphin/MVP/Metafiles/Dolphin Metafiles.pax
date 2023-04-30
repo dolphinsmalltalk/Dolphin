@@ -255,7 +255,7 @@ createEnhMetaFile: hdc lpFileName: lpFileName lpRect: lpRect lpDescription: lpDe
 			int* lpRect,
 			LPCWSTR lpDescription);"
 
-	<stdcall: handle CreateEnhMetaFileW handle lpwstr sdword* lpwstr>
+	<stdcall: handle CreateEnhMetaFileW handle lpwstr int32* lpwstr>
 	^self invalidCall: _failureCode!
 
 deleteEnhMetaFile: hemf
@@ -349,7 +349,7 @@ playEnhMetaFile: hdc hemf: hemf lpRect: lpRect
 			HENHMETAFILE hemf,
 			int* lpRect);"
 
-	<stdcall: bool PlayEnhMetaFile handle handle sdword*>
+	<stdcall: bool PlayEnhMetaFile handle handle int32*>
 	^self invalidCall: _failureCode!
 
 playEnhMetaFileRecord: hdc lpHandletable: lpHandletable lpEnhMetaRecord: lpEnhMetaRecord nHandles: nHandles

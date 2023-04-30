@@ -24,6 +24,18 @@ testAbs
 	self assert: (self subjectClass x: 1 y: -1) abs equals: (self subjectClass x: 1 y: 1).
 	self assert: (self subjectClass x: -1 y: -1) abs equals: (self subjectClass x: 1 y: 1)!
 
+testAsUInt32
+	| subject uint |
+	subject := self subjectClass x: 16r7654 y: 16r3210.
+	uint := subject asUInt32.
+	self assert: uint equals: 16r32107654!
+
+testAsUInt32OutOfRange
+	| subject uint |
+	subject := self subjectClass x: 16r10001 y: 16r10002.
+	uint := subject asUInt32.
+	self assert: uint equals: 16r00020001!
+
 testDivideLarge
 	| largeNeg largePos subject |
 	largeNeg := SmallInteger minimum - 1.
@@ -49,6 +61,8 @@ testStrictlyPositive
 subjectClass!constants!private! !
 subjectSupportNonIntegralValues!private!testing! !
 testAbs!public!unit tests! !
+testAsUInt32!public!unit tests! !
+testAsUInt32OutOfRange!public!unit tests! !
 testDivideLarge!public! !
 testEquals!public!unit tests! !
 testStrictlyPositive!public!unit tests! !

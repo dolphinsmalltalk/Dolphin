@@ -160,15 +160,13 @@ mask: anInteger
 	self updateViewProperty: MaskProperty!
 
 maskPrintString
-	| dword |
+	| uint32 |
 	mask ifNil: [^nil].
-	dword := mask asDword.
-	^dword = Scintilla.SC_MASK_FOLDERS
+	uint32 := mask asUInt32.
+	^uint32 = SC_MASK_FOLDERS
 		ifTrue: ['SC_MASK_FOLDERS']
 		ifFalse: 
-			[dword = ##(Scintilla.SC_MASK_FOLDERS bitInvert asDword)
-				ifTrue: ['~SC_MASK_FOLDERS']
-				ifFalse: [dword hex]]!
+			[uint32 = ##(SC_MASK_FOLDERS bitInvert asUInt32) ifTrue: ['~SC_MASK_FOLDERS'] ifFalse: [uint32 hex]]!
 
 type
 	"The symbolic name of the Scintilla margin type, defaulting to #symbol."

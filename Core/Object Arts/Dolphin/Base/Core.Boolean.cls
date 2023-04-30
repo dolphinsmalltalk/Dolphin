@@ -60,16 +60,15 @@ asBoolean
 
 	^self!
 
-asDword
-	"Answer the receiver in a form suitable for passing/returning as a
-	32-bit integer value."
-
-	^self subclassResponsibility
-!
-
 asParameter
 	"Answer the value of the receiver in a form suitable for
 	passing to an external function call."
+
+	^self subclassResponsibility!
+
+asUInt32
+	"Answer the receiver in a form suitable for passing/returning as a
+	32-bit integer value."
 
 	^self subclassResponsibility!
 
@@ -185,8 +184,8 @@ xor: operand
 and:!control flow!public! !
 asBit!converting!public! !
 asBoolean!converting!public! !
-asDword!converting!public! !
 asParameter!converting!public! !
+asUInt32!converting!public! !
 asUIntPtr!converting!public! !
 deepCopy!copying!public! !
 eqv:!logical operations!public! !

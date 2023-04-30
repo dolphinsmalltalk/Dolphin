@@ -84,7 +84,7 @@ defineFunctions
 	self
 		defineFunction: #InitNew;
 		defineFunction: #Load:pErrorLog:
-			returnType: 'sdword'		"Really an HRESULT, but want to suppress auto-exceptions"
+			returnType: 'int32'		"Really an HRESULT, but want to suppress auto-exceptions"
 			argumentTypes: 'IPropertyBag* IErrorLog*';
 		defineFunction: #Save:fClearDirty:fSaveAllProperties:
 			argumentTypes: 'IPropertyBag* bool bool'

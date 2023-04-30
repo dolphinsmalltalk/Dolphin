@@ -522,9 +522,9 @@ defineFunctions
 		defineFunction: #put_Name:
 			argumentTypes: 'bstr';
 		defineFunction: #get_Size:
-			argumentTypes: 'qword*';
+			argumentTypes: 'uint64*';
 		defineFunction: #put_Size:
-			argumentTypes: 'qword';
+			argumentTypes: 'uint64';
 		defineFunction: #get_Bold:
 			argumentTypes: 'bool*';
 		defineFunction: #put_Bold:
@@ -542,13 +542,13 @@ defineFunctions
 		defineFunction: #put_Strikethrough:
 			argumentTypes: 'bool';
 		defineFunction: #get_Weight:
-			argumentTypes: 'sword*';
+			argumentTypes: 'int16*';
 		defineFunction: #put_Weight:
-			argumentTypes: 'sword';
+			argumentTypes: 'int16';
 		defineFunction: #get_Charset:
-			argumentTypes: 'sword*';
+			argumentTypes: 'int16*';
 		defineFunction: #put_Charset:
-			argumentTypes: 'sword';
+			argumentTypes: 'int16';
 		defineFunction: #get_hFont:
 			argumentTypes: 'handle*';
 		defineFunction: #Clone:
@@ -556,7 +556,7 @@ defineFunctions
 		defineFunction: #IsEqual:
 			argumentTypes: 'IFont*';
 		defineFunction: #SetRatio:cyHimetric:
-			argumentTypes: 'sdword sdword';
+			argumentTypes: 'int32 int32';
 		defineFunction: #AddRefHfont:
 			argumentTypes: 'handle';
 		defineFunction: #ReleaseHfont:

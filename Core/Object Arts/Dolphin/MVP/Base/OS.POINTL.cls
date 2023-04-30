@@ -18,13 +18,24 @@ asPoint
 
 	^Graphics.Point x: (bytes int32AtOffset: _OffsetOf_x) y: (bytes int32AtOffset: _OffsetOf_y)!
 
+asUInt32
+	"Answer the receiver in a form suitable for passing or returning as a 32-bit value (i.e. a 32-bit integer)."
+
+	^((bytes int32AtOffset: _OffsetOf_x) bitAnd: 16rFFFF)
+		bitOr: (((bytes int32AtOffset: _OffsetOf_y) bitAnd: 16rFFFF) bitShift: 16)!
+
 asUIntPtr
 	"Answer the receiver in a form suitable for passing or returning 
 	as a  machine-word sized (32 or 64-bit) value."
 
 	"Implementation Note: The compiler will optimise out the condition because it is constant."
 
-	^VMConstants.IsWin64 ifTrue: [bytes uintPtrAtOffset: 0] ifFalse: [self asPoint asUIntPtr]!
+	^VMConstants.IsWin64
+		ifTrue: [bytes uintPtrAtOffset: 0]
+		ifFalse: 
+			[((bytes int32AtOffset: _OffsetOf_x) bitAnd: VMConstants.HalfPtrMask)
+				bitOr: (((bytes int32AtOffset: _OffsetOf_y) bitAnd: VMConstants.HalfPtrMask)
+						bitShift: VMConstants.HalfPtrBits)]!
 
 isZero
 	"Answer whether the receiver is equal to Point zero."
@@ -58,6 +69,7 @@ y: anInteger
 	bytes int32AtOffset: _OffsetOf_y put: anInteger! !
 !OS.POINTL categoriesForMethods!
 asPoint!converting!public! !
+asUInt32!converting!public! !
 asUIntPtr!converting!public! !
 isZero!public!testing! !
 x!**compiled accessors**!public! !

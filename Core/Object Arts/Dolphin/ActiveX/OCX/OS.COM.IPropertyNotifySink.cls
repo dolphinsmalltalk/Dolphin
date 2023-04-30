@@ -38,9 +38,9 @@ defineFunctions
 
 	self
 		defineFunction: #OnChanged:
-			argumentTypes: 'sdword';
+			argumentTypes: 'int32';
 		defineFunction: #OnRequestEdit:
-			argumentTypes: 'sdword'
+			argumentTypes: 'int32'
 ! !
 !OS.COM.IPropertyNotifySink class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !

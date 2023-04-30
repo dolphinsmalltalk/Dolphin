@@ -104,10 +104,7 @@ getSysParamBool: anInteger
 		type: BOOL
 		ifError: [^false]) value!
 
-getSysParamDword: anInteger
-	^(self getSysParamStruct: anInteger type: UInt32Bytes) value!
-
-getSysParamSdword: anInteger
+getSysParamInt32: anInteger
 	^(self getSysParamStruct: anInteger type: UInt32Bytes) asSignedInteger!
 
 getSysParamStruct: anInteger type: anExternalStructureClass
@@ -115,6 +112,9 @@ getSysParamStruct: anInteger type: anExternalStructureClass
 		getSysParam: anInteger
 		type: anExternalStructureClass
 		ifError: [User32 systemError]!
+
+getSysParamUInt32: anInteger
+	^(self getSysParamStruct: anInteger type: UInt32Bytes) value!
 
 getSysParamW: anInteger type: anExternalStructureClass ifError: aNiladicValuable
 	| struct |
@@ -376,9 +376,9 @@ getMetric:!helpers!private! !
 getMetric:pair:!helpers!private! !
 getSysParam:type:ifError:!helpers!private! !
 getSysParamBool:!helpers!private! !
-getSysParamDword:!helpers!private! !
-getSysParamSdword:!helpers!private! !
+getSysParamInt32:!helpers!private! !
 getSysParamStruct:type:!helpers!private! !
+getSysParamUInt32:!helpers!private! !
 getSysParamW:type:ifError:!helpers!private! !
 hasFlatMenus!capability enquiries!public! !
 hasGdiPalettes!capability enquiries!public! !

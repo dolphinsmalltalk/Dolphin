@@ -15,12 +15,6 @@ External.UInt32Bytes comment: ''!
 asBoolean
 	^(self int32AtOffset: 0) ~~ 0!
 
-asDword
-	"Answer the receiver in a form suitable for passing/returning as 
-	a 32-bit value."
-
-	^self value!
-
 asInteger
 	"Answer the 32-bit unsigned <integer> value of the receiver."
 
@@ -31,15 +25,45 @@ asSignedInteger
 
 	^self int32AtOffset: 0!
 
+asUInt32
+	"Answer the receiver in a form suitable for passing/returning as 
+	a 32-bit value."
+
+	^self value!
+
+highWord
+	"Answer the high-order word of the receiver. Assumes little-endian ordering."
+
+	^self uint16AtOffset: 2!
+
+highWord: anInteger
+	"Set the high-order word of the receiver. Assumes little-endian ordering. Answer the receiver."
+
+	self uint16AtOffset: 2 put: anInteger!
+
+lowWord
+	"Answer the low-order word of the receiver. Assumes little-endian	ordering."
+
+	^self uint16AtOffset: 0!
+
+lowWord: anInteger
+	"Answer the low-order word of the receiver. Assumes little-endian ordering. Answer the receiver."
+
+	self uint16AtOffset: 0 put: anInteger!
+
 value: anObject
 	"Set the 32-bit unsigned <integer> value stored in the receiver."
 
 	self uint32AtOffset: 0 put: anObject! !
 !External.UInt32Bytes categoriesForMethods!
 asBoolean!converting!public! !
-asDword!converting!public! !
 asInteger!converting!public! !
 asSignedInteger!converting!public! !
+asUInt32!converting!public! !
+highWord!accessing!public! !
+highWord:!accessing!public! !
+lowWord!accessing!public! !
+lowWord:!accessing!public! !
 value:!accessing!public! !
 !
 

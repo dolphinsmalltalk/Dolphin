@@ -185,14 +185,14 @@ defineFunctions
 
 	self
 		defineFunction: #GetDisplayString:pBstr:
-			argumentTypes: 'sdword bstr*';
+			argumentTypes: 'int32 bstr*';
 		defineFunction: #MapPropertyToPage:pClsid:
-			argumentTypes: 'sdword GUID*';
+			argumentTypes: 'int32 GUID*';
 		defineFunction: #GetPredefinedStrings:pCaStringsOut:pCaCookiesOut:
-			returnType: 'sdword'
-			argumentTypes: 'sdword CALPOLESTR* CADWORD*';
+			returnType: 'int32'
+			argumentTypes: 'int32 CALPOLESTR* CADWORD*';
 		defineFunction: #GetPredefinedValue:dwCookie:pVarOut:
-			argumentTypes: 'sdword dword VARIANT*'
+			argumentTypes: 'int32 uint32 VARIANT*'
 ! !
 !OS.COM.IPerPropertyBrowsing class categoriesForMethods!
 defineFunctions!initializing!public! !

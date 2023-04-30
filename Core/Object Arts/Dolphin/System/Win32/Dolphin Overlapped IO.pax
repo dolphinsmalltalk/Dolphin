@@ -57,7 +57,7 @@ cancelIo: hFile
 		long __stdcall CancelIo(
 			[in]long hFile);"
 
-	<stdcall: sdword CancelIo sdword>
+	<stdcall: int32 CancelIo int32>
 	^self invalidCall: _failureCode!
 
 createIoCompletionPort: fileHandle existingCompletionPort: existingCompletionPort completionKey: completionKey numberOfConcurrentThreads: numberOfConcurrentThreads
@@ -70,7 +70,7 @@ createIoCompletionPort: fileHandle existingCompletionPort: existingCompletionPor
 			[in]unsigned long CompletionKey,
 			[in]unsigned long NumberOfConcurrentThreads);"
 
-	<stdcall: sdword CreateIoCompletionPort sdword sdword dword dword>
+	<stdcall: int32 CreateIoCompletionPort int32 int32 uint32 uint32>
 	^self invalidCall: _failureCode!
 
 getOverlappedResult: hFile lpOverlapped: lpOverlapped lpNumberOfBytesTransferred: lpNumberOfBytesTransferred bWait: bWait
@@ -83,7 +83,7 @@ getOverlappedResult: hFile lpOverlapped: lpOverlapped lpNumberOfBytesTransferred
 			[out]unsigned long* lpNumberOfBytesTransferred,
 			[in]long bWait);"
 
-	<stdcall: sdword GetOverlappedResult sdword OVERLAPPED* dword* sdword>
+	<stdcall: int32 GetOverlappedResult int32 OVERLAPPED* uint32* int32>
 	^self invalidCall: _failureCode!
 
 getQueuedCompletionStatus: completionPort lpNumberOfBytesTransferred: lpNumberOfBytesTransferred lpCompletionKey: lpCompletionKey lpOverlapped: lpOverlapped dwMilliseconds: dwMilliseconds
@@ -97,7 +97,7 @@ getQueuedCompletionStatus: completionPort lpNumberOfBytesTransferred: lpNumberOf
 			[out]OVERLAPPED** lpOverlapped,
 			[in]unsigned long dwMilliseconds);"
 
-	<stdcall: sdword GetQueuedCompletionStatus sdword dword* uintptr* OVERLAPPED** dword>
+	<stdcall: int32 GetQueuedCompletionStatus int32 uint32* uintptr* OVERLAPPED** uint32>
 	^self invalidCall: _failureCode!
 
 postQueuedCompletionStatus: completionPort dwNumberOfBytesTransferred: dwNumberOfBytesTransferred dwCompletionKey: dwCompletionKey lpOverlapped: lpOverlapped
@@ -110,7 +110,7 @@ postQueuedCompletionStatus: completionPort dwNumberOfBytesTransferred: dwNumberO
 			[in]unsigned long dwCompletionKey,
 			[in]OVERLAPPED* lpOverlapped);"
 
-	<stdcall: sdword PostQueuedCompletionStatus sdword dword dword OVERLAPPED*>
+	<stdcall: int32 PostQueuedCompletionStatus int32 uint32 uint32 OVERLAPPED*>
 	^self invalidCall: _failureCode! !
 !OS.KernelLibrary categoriesForMethods!
 cancelIo:!**auto generated**!public! !

@@ -419,30 +419,30 @@ defineFunctions
 
 	self
 		defineFunction: #SetClientSite:
-			returnType: 'sdword'
+			returnType: 'int32'
 			argumentTypes: 'IOleClientSite*';
 		defineFunction: #GetClientSite:
 			argumentTypes: 'IOleClientSite**';
 		defineFunction: #SetHostNames:szContainerObj:
-			returnType: 'sdword'
+			returnType: 'int32'
 			argumentTypes: 'lpwstr lpwstr';
 		defineFunction: #Close:
-			returnType: 'sdword'
-			argumentTypes: 'dword';
+			returnType: 'int32'
+			argumentTypes: 'uint32';
 		defineFunction: #SetMoniker:pmk:
-"			argumentTypes: 'dword IMoniker*';"
-			argumentTypes: 'dword IUnknown*';
+"			argumentTypes: 'uint32 IMoniker*';"
+			argumentTypes: 'uint32 IUnknown*';
 		defineFunction: #GetMoniker:dwWhichMoniker:ppmk:
-"			argumentTypes: 'dword dword IMoniker**';"
-			argumentTypes: 'dword dword IUnknown**';
+"			argumentTypes: 'uint32 uint32 IMoniker**';"
+			argumentTypes: 'uint32 uint32 IUnknown**';
 		defineFunction: #InitFromData:fCreation:dwReserved:
-"			argumentTypes: 'IDataObject* sdword dword';"
-			argumentTypes: 'IUnknown* sdword dword';
+"			argumentTypes: 'IDataObject* int32 uint32';"
+			argumentTypes: 'IUnknown* int32 uint32';
 		defineFunction: #GetClipboardData:ppDataObject:
-"			argumentTypes: 'dword IDataObject**';"
-			argumentTypes: 'dword IUnknown**';
+"			argumentTypes: 'uint32 IDataObject**';"
+			argumentTypes: 'uint32 IUnknown**';
 		defineFunction: #DoVerb:lpmsg:pActiveSite:lindex:hwndParent:lprcPosRect:
-			argumentTypes: 'sdword MSG* IOleClientSite* sdword handle RECTL*';
+			argumentTypes: 'int32 MSG* IOleClientSite* int32 handle RECTL*';
 		defineFunction: #EnumVerbs:
 "			argumentTypes: 'IEnumOLEVERB**';"
 			argumentTypes: 'IUnknown**';
@@ -451,23 +451,23 @@ defineFunctions
 		defineFunction: #GetUserClassID:
 			argumentTypes: 'GUID*';
 		defineFunction: #GetUserType:pszUserType:
-			argumentTypes: 'dword lpwstr*';
+			argumentTypes: 'uint32 lpwstr*';
 		defineFunction: #SetExtent:psizel:
-			returnType: 'sdword'		"Fixed size objects return E_FAIL"
-			argumentTypes: 'dword SIZE*';
+			returnType: 'int32'		"Fixed size objects return E_FAIL"
+			argumentTypes: 'uint32 SIZE*';
 		defineFunction: #GetExtent:psizel:
-			argumentTypes: 'dword SIZE*';
+			argumentTypes: 'uint32 SIZE*';
 		defineFunction: #Advise:pdwConnection:
-"			argumentTypes: 'IAdviseSink* dword*';"
-			argumentTypes: 'IUnknown* dword*';
+"			argumentTypes: 'IAdviseSink* uint32*';"
+			argumentTypes: 'IUnknown* uint32*';
 		defineFunction: #Unadvise:
-			returnType: 'sdword'				"Typically don't care about errors on Unadvise"
-			argumentTypes: 'dword';
+			returnType: 'int32'				"Typically don't care about errors on Unadvise"
+			argumentTypes: 'uint32';
 		defineFunction: #EnumAdvise:
 "			argumentTypes: 'IEnumSTATDATA**';"
 			argumentTypes: 'IUnknown**';
 		defineFunction: #GetMiscStatus:pdwStatus:
-			argumentTypes: 'dword dword*';
+			argumentTypes: 'uint32 uint32*';
 		defineFunction: #SetColorScheme:
 			argumentTypes: 'LOGPALETTE*'
 ! !

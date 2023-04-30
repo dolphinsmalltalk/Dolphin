@@ -17,11 +17,13 @@ subjectClass
 subjectSupportNonIntegralValues
 	^true!
 
-testAsDword
+testAsUInt32
+	| subject |
+	subject := self subjectClass x: 16rEFFE y: 16rF00F.
 	self
-		should: [super testAsDword]
+		should: [subject asUInt32]
 		raise: Error
-		matching: [:ex | ex description = (self subjectClass printString , ' should not implement #asDword')]!
+		matching: [:ex | ex description = ('<1p> should not implement #asUInt32' << self subjectClass)]!
 
 testPrintString
 	self assert: self subjectClass new printString equals: 'a POINTF(0.0@0.0)'.
@@ -29,7 +31,7 @@ testPrintString
 !External.Tests.POINTFTest categoriesForMethods!
 subjectClass!public! !
 subjectSupportNonIntegralValues!public! !
-testAsDword!public! !
+testAsUInt32!public!unit tests! !
 testPrintString!public! !
 !
 

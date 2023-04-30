@@ -99,11 +99,6 @@ asCOLORREF
 
 	^self rgbCode!
 
-asDword
-	"Answer the receiver in a form suitable for passing as a 32-bit unsigned integer parameter."
-
-	^self asParameter!
-
 asGrayscale
 	"Answer a <Color> that is a grayscale representation of the receiver."
 
@@ -126,6 +121,11 @@ asRGB
 	"Answer the receiver as an <RGB>. Any alpha is discarded."
 
 	^RGB fromRgbCode: self rgbCode!
+
+asUInt32
+	"Answer the receiver in a form suitable for passing as a 32-bit unsigned integer parameter."
+
+	^self asParameter!
 
 asUIntPtr
 	"Answer the receiver in a form suitable for passing/returning as a Windows LRESULT
@@ -518,10 +518,10 @@ asARGB!converting!public! !
 asColor!converting!public! !
 asColorRef!converting!public! !
 asCOLORREF!accessing!public! !
-asDword!converting!public! !
 asGrayscale!converting!public! !
 asParameter!converting!public! !
 asRGB!converting!public! !
+asUInt32!converting!public! !
 asUIntPtr!converting!public! !
 blue!accessing!public! !
 brightness!accessing!public! !

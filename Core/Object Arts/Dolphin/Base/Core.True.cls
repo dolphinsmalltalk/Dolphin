@@ -31,18 +31,18 @@ asBit
 
 	^1!
 
-asDword
-	"Answer the receiver in a form suitable for passing/returning as a
-	32-bit integer value."
-
-	^1!
-
 asParameter
 	"Answer the value of the receiver in a form suitable for
 	passing to an external function call."
 
 	^1
 !
+
+asUInt32
+	"Answer the receiver in a form suitable for passing/returning as a
+	32-bit integer value."
+
+	^1!
 
 asUIntPtr
 	"Answer the receiver in a form suitable for passing/returning as a Windows LRESULT
@@ -126,8 +126,8 @@ xor: operand
 !Core.True categoriesForMethods!
 and:!control flow!public! !
 asBit!converting!public! !
-asDword!converting!public! !
 asParameter!converting!public! !
+asUInt32!converting!public! !
 asUIntPtr!converting!public! !
 ifFalse:!control flow!public! !
 ifFalse:ifTrue:!control flow!public! !

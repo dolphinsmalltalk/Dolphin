@@ -1023,7 +1023,7 @@ testIndirectUInt32AtOffsetPrimitives
 			[:each |
 			"Should be able to write any 32-bit integer value, and read it back"
 			self assert: (p uint32AtOffset: 4 put: each) equals: each.
-			self assert: (b uint32AtOffset: 4) equals: each asDword.
+			self assert: (b uint32AtOffset: 4) equals: each asUInt32.
 			self assert: (b uint32AtOffset: 0) equals: 0.
 			self assert: (b uint32AtOffset: 8) equals: 0].
 
@@ -3216,17 +3216,17 @@ testSignedFromUnsigned
 			| signed expected dword |
 			self assert: each isImmutable.
 			expected := each > 16r7FFFFFFF ifTrue: [each - 16rFFFFFFFF - 1] ifFalse: [each].
-			signed := VM signedFromUnsigned: each.
+			signed := VM int32FromUInt32: each.
 			self assert: signed equals: expected.
 			each class == SmallInteger
 				ifFalse: 
 					[dword := each + 1 - 1.
 					self assert: dword isImmutable.
-					signed := VM signedFromUnsigned: dword.
+					signed := VM int32FromUInt32: dword.
 					self assert: signed equals: expected.
 					self assert: signed isImmutable]].
-	self should: [VM signedFromUnsigned: 16r100000000] raise: Error.
-	self should: [VM signedFromUnsigned: (2 raisedToInteger: 32) + 1] raise: Error!
+	self should: [VM int32FromUInt32: 16r100000000] raise: Error.
+	self should: [VM int32FromUInt32: (2 raisedToInteger: 32) + 1] raise: Error!
 
 testUInt32AtOffsetPut
 	| bytes dword max |
@@ -3498,7 +3498,7 @@ verifyExtCallGpf: aBoolean
 verifyExtCallIntDivZero: aBoolean
 	| method |
 	method := self
-				compile: ('ldiv: numer denom: denom %<<1?overlap :>stdcall: qword ldiv sdword sdword> ^self invalidCall: _failureCode'
+				compile: ('ldiv: numer denom: denom %<<1?overlap :>stdcall: qword ldiv int32 int32> ^self invalidCall: _failureCode'
 						expandMacrosWith: aBoolean)
 				in: CRTLibrary.
 	self

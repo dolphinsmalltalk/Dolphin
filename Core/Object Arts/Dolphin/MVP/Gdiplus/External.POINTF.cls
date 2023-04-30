@@ -14,8 +14,13 @@ External.POINTF comment: '`POINTF` is an `ExternalStructure` class to wrap the s
 !External.POINTF categoriesForClass!External-Data-Structured! !
 !External.POINTF methodsFor!
 
-asDword
+asUInt32
 	"Answer the receiver in a form suitable for passing or returning as a 32-bit value (i.e. a 32-bit integer)."
+
+	^self shouldNotImplement!
+
+asUIntPtr
+	"Answer the receiver in a form suitable for passing or returning as a  machine-word sized (32 or 64-bit) value."
 
 	^self shouldNotImplement!
 
@@ -65,7 +70,8 @@ y: aFloat
 
 	bytes floatAtOffset: _OffsetOf_y put: aFloat! !
 !External.POINTF categoriesForMethods!
-asDword!converting!public! !
+asUInt32!converting!public! !
+asUIntPtr!converting!public! !
 ceiling!public!truncation and round off! !
 floor!public!truncation and round off! !
 isZero!public!testing! !

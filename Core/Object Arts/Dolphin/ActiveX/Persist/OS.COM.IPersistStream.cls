@@ -109,13 +109,13 @@ defineFunctions
 
 	self
 		defineFunction: #IsDirty
-			returnType: 'sdword';
+			returnType: 'int32';
 		defineFunction: #Load:
 			argumentTypes: 'IStream*';
 		defineFunction: #Save:fClearDirty:
 			argumentTypes: 'IStream* bool';
 		defineFunction: #GetSizeMax:
-			argumentTypes: 'qword*'
+			argumentTypes: 'uint64*'
 ! !
 !OS.COM.IPersistStream class categoriesForMethods!
 defineFunctions!initializing!public! !

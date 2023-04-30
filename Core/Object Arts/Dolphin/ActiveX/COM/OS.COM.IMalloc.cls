@@ -122,7 +122,7 @@ defineFunctions
 			returnType: 'dword'
 			argumentTypes: 'void*';
 		defineFunction: #DidAlloc:
-			returnType: 'sdword'
+			returnType: 'int32'
 			argumentTypes: 'void*';
 		defineFunction: #HeapMinimize
 			returnType: 'void'

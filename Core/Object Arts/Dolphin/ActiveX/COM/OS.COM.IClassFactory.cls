@@ -84,7 +84,7 @@ defineFunctions
 
 	self
 		defineFunction: #CreateInstance:riid:ppvObject:
-			returnType: 'sdword'
+			returnType: 'int32'
 			argumentTypes: 'IUnknown* GUID* IUnknown**';
 		defineFunction: #LockServer:
 			argumentTypes: 'bool'! !

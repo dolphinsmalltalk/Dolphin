@@ -14,13 +14,11 @@ OS.Tests.POINTLTest comment: ''!
 subjectClass
 	^POINTL!
 
-testAsDwordOverflow
-	| subject |
-	subject := self subjectClass x: 16r100000 y: 16rBEEF.
-	self
-		should: [subject asDword]
-		raise: HRESULTError
-		matching: [:ex | ex hresult = (HRESULT fromPrimitiveFailureCode: _PrimitiveFailureCode.IntegerOutOfRange)]!
+testAsUInt32OutOfRange
+	| subject uint |
+	subject := self subjectClass x: 16r10001 y: 16r10002.
+	uint := subject asUInt32.
+	self assert: uint equals: 16r00020001!
 
 testDivideLarge
 	| largeNeg largePos subject |
@@ -30,7 +28,7 @@ testDivideLarge
 	self assert: subject / largeNeg equals: 1 @ (largePos / largeNeg)! !
 !OS.Tests.POINTLTest categoriesForMethods!
 subjectClass!constants!private! !
-testAsDwordOverflow!public!unit tests! !
+testAsUInt32OutOfRange!public!unit tests! !
 testDivideLarge!public! !
 !
 

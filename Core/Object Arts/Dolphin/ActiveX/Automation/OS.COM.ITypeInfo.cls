@@ -637,34 +637,34 @@ defineFunctions
 		defineFunction: #GetTypeComp:
 			argumentTypes: 'ITypeComp**';
 		defineFunction: #GetFuncDesc:ppFuncDesc:
-			argumentTypes: 'dword FUNCDESC**';
+			argumentTypes: 'uint32 FUNCDESC**';
 		defineFunction: #GetVarDesc:ppVarDesc:
-			argumentTypes: 'dword VARDESC**';
+			argumentTypes: 'int32 VARDESC**';
 		defineFunction: #GetNames:rgBstrNames:cMaxNames:pcNames:
-			argumentTypes: 'sdword bstr* dword dword*';
+			argumentTypes: 'int32 bstr* uint32 uint32*';
 		defineFunction: #GetRefTypeOfImplType:pRefType:
-			argumentTypes: 'dword dword*';
+			argumentTypes: 'uint32 uint32*';
 		defineFunction: #GetImplTypeFlags:pImplTypeFlags:
-			argumentTypes: 'dword sdword*';
+			argumentTypes: 'uint32 int32*';
 		defineFunction: #GetIDsOfNames:cNames:pMemId: 
-			returnType: 'sdword'
-			argumentTypes: 'lpwstr* dword sdword*';
+			returnType: 'int32'
+			argumentTypes: 'lpwstr* uint32 int32*';
 		defineFunction: #Invoke:memid:wFlags:pDispParams:pVarResult:pExcepInfo:puArgErr:
-			argumentTypes: 'lpvoid dword word DISPPARAMS* VARIANT* EXCEPINFO* dword*';
+			argumentTypes: 'lpvoid uint32 uint16 DISPPARAMS* VARIANT* EXCEPINFO* uint32*';
 		defineFunction: #GetDocumentation:pBstrName:pBstrDocString:pdwHelpContext:pBstrHelpFile:
-			argumentTypes: 'sdword bstr* bstr* dword* bstr*';
+			argumentTypes: 'int32 bstr* bstr* uint32* bstr*';
 		defineFunction: #GetDllEntry:invkind:pBstrDllName:pBstrName:pwOrdinal:
-			argumentTypes: 'sdword sdword bstr* bstr* word*';
+			argumentTypes: 'int32 int32 bstr* bstr* uint16*';
 		defineFunction: #GetRefTypeInfo:ppTInfo:
-			argumentTypes: 'dword ITypeInfo**';
+			argumentTypes: 'uint32 ITypeInfo**';
 		defineFunction: #AddressOfMember:invKind:ppv: 
-			argumentTypes: 'sdword sdword lppvoid'; 
+			argumentTypes: 'int32 int32 lppvoid'; 
 		defineFunction: #CreateInstance:riid:ppvObj:
 			argumentTypes: 'IUnknown* GUID* void**';
 		defineFunction: #GetMops:pBstrMops:
-			argumentTypes: 'sdword bstr*';
+			argumentTypes: 'int32 bstr*';
 		defineFunction: #GetContainingTypeLib:pIndex:
-			argumentTypes: 'ITypeLib** dword*';
+			argumentTypes: 'ITypeLib** uint32*';
 
 		"This group of methods is for releasing the structures returned by methods 1, 3, and 4 respectively"
 		defineFunction: #ReleaseTypeAttr: 

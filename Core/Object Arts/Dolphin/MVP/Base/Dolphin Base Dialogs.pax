@@ -77,7 +77,7 @@ sendDlgItemMessage: aWindowHandle nIDDlgItem: anIntegerId msg: aString wParam: w
 			LPARAM  lParam 	// second message parameter
 		   );"
 
-	<stdcall: uintptr SendDlgItemMessageW handle sdword dword uintptr intptr>
+	<stdcall: uintptr SendDlgItemMessageW handle int32 uint32 uintptr intptr>
 	^self invalidCall: _failureCode!
 
 setDlgItemInt: hDlg nIDDlgItem: anIntegerId uValue: uValue bSigned: bSigned
@@ -89,7 +89,7 @@ setDlgItemInt: hDlg nIDDlgItem: anIntegerId uValue: uValue bSigned: bSigned
 			BOOL bSigned // signed or unsigned indicator 
 		);"
 
-	<stdcall: bool SetDlgItemInt handle sdword dword bool>
+	<stdcall: bool SetDlgItemInt handle int32 uint32 bool>
 	^self invalidCall: _failureCode! !
 !OS.UserLibrary categoriesForMethods!
 endDialog:nResult:!public!win32 functions-dialog box! !

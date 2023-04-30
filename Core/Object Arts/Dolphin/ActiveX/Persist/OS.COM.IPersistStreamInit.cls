@@ -50,7 +50,7 @@ defineFunctions
 	"
 
 	self
-		defineFunction: #InitNew returnType: 'sdword'! !
+		defineFunction: #InitNew returnType: 'int32'! !
 !OS.COM.IPersistStreamInit class categoriesForMethods!
 defineFunctions!initializing!public! !
 !

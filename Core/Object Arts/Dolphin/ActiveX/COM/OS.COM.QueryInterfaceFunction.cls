@@ -62,7 +62,7 @@ initialize
 
 	Descriptor := IUnknown descriptorClass
 				callingConvention: IUnknown stdMethodCallType
-				returnType: 'sdword'
+				returnType: 'int32'
 				argumentTypes: 'GUID* void**'!
 
 uninitialize

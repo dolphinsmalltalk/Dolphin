@@ -3961,7 +3961,7 @@ markerTypesOnLine: anInteger
 	set on the line with the specified one-based <integer> index."
 
 	| mask types |
-	mask := (self sciMarkerGet: anInteger) asDword.
+	mask := (self sciMarkerGet: anInteger) asUInt32.
 	types := IdentitySet new.
 	markerDefinitions do: [:each | (mask allMask: (1 bitShift: each id)) ifTrue: [types add: each name]].
 	^types!

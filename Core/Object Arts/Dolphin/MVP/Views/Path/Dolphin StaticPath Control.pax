@@ -48,7 +48,7 @@ pathSetDlgItemPath: hDlg id: id pszPath: pszPath
 			int id,
 			LPCSTR pszPath);"
 
-	<stdcall: void PathSetDlgItemPathW handle sdword lpwstr>
+	<stdcall: void PathSetDlgItemPathW handle int32 lpwstr>
 	^self invalidCall: _failureCode! !
 !OS.ShlwapiLibrary categoriesForMethods!
 pathSetDlgItemPath:id:pszPath:!**auto generated**!public!win32 functions-path! !

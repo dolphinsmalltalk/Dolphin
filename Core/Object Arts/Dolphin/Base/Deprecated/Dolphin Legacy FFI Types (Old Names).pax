@@ -5,6 +5,7 @@ package paxVersion: 2.1;
 
 
 package setMethodNames: #(
+	#(#{Core.Boolean} #asDword)
 	#(#{Core.ByteArray} #basicDwordAtOffset:)
 	#(#{Core.ByteArray} #basicDwordAtOffset:put:)
 	#(#{Core.ByteArray} #dwordAtOffset:)
@@ -21,6 +22,8 @@ package setMethodNames: #(
 	#(#{Core.ByteArray} #swordAtOffset:put:)
 	#(#{Core.ByteArray} #wordAtOffset:)
 	#(#{Core.ByteArray} #wordAtOffset:put:)
+	#(#{Core.Integer} #asDword)
+	#(#{Core.Integer} #asSDword)
 	#(#{Core.Integer} #isSDWORD)
 	#(#{Core.PositionableStream} #nextDWORD)
 	#(#{Core.PositionableStream} #nextSDWORD)
@@ -28,6 +31,7 @@ package setMethodNames: #(
 	#(#{Core.PositionableStream} #nextWORD)
 	#(#{Core.Stream} #nextDWORDPut:)
 	#(#{Core.Stream} #nextSDWORDPut:)
+	#(#{External.UInt32Bytes} #asDword)
 ).
 
 package setVariableNames: #(
@@ -155,6 +159,15 @@ Smalltalk.WORDField := External.UInt16Field!
 
 "Loose Methods"!
 
+!Core.Boolean methodsFor!
+
+asDword
+	#deprecated.
+	^self asUInt32! !
+!Core.Boolean categoriesForMethods!
+asDword!converting!public! !
+!
+
 !Core.ByteArray methodsFor!
 
 basicDwordAtOffset: anInteger
@@ -257,11 +270,21 @@ wordAtOffset:put:!accessing!public! !
 
 !Core.Integer methodsFor!
 
+asDword
+	#deprecated.
+	^self asUInt32!
+
+asSDword
+	#deprecated.
+	^self asInt32!
+
 isSDWORD
 	"Soft deprecated - retained in applications that still reference the old external integer type names"
 
 	^self isInt32! !
 !Core.Integer categoriesForMethods!
+asDword!converting!public! !
+asSDword!converting!public! !
 isSDWORD!public!testing! !
 !
 
@@ -301,6 +324,15 @@ nextSDWORDPut: anInteger
 !Core.Stream categoriesForMethods!
 nextDWORDPut:!binary filing!public! !
 nextSDWORDPut:!binary filing!public! !
+!
+
+!External.UInt32Bytes methodsFor!
+
+asDword
+	#deprecated.
+	^self asUInt32! !
+!External.UInt32Bytes categoriesForMethods!
+asDword!converting!public! !
 !
 
 "End of package definition"!

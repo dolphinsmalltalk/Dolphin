@@ -12,12 +12,6 @@ External.Tests.POINTTest isNonInstantiable: true!
 External.Tests.POINTTest comment: ''!
 !External.Tests.POINTTest methodsFor!
 
-testAsDword
-	| dword subject |
-	subject := self subjectClass x: 16r7654 y: 16r3210.
-	dword := subject asDword.
-	self assert: dword equals: 16r32107654!
-
 testAsObject
 	| point subject |
 	subject := self subjectClass x: 101 y: 202.
@@ -38,7 +32,6 @@ testValue
 	self assert: point x equals: 101.
 	self assert: point y equals: 202! !
 !External.Tests.POINTTest categoriesForMethods!
-testAsDword!public!unit tests! !
 testAsObject!public!unit tests! !
 testPrintString!public! !
 testValue!public!unit tests! !

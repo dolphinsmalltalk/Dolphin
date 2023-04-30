@@ -49,7 +49,7 @@ defineFunctions
 		defineFunction: #Save:fClearDirty:fSaveAllProperties:
 			argumentTypes: 'IPropertyBag2* bool bool';"
 		defineFunction: #IsDirty
-			returnType: 'sdword'
+			returnType: 'int32'
 ! !
 !OS.COM.IPersistPropertyBag2 class categoriesForMethods!
 defineFunctions!initializing!public! !

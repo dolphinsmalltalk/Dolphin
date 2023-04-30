@@ -182,7 +182,7 @@ regCloseKey: hKey
 			HKEYhKey 	// handle of key to close 
 		);"
 
-	<stdcall: sdword RegCloseKey handle>
+	<stdcall: int32 RegCloseKey handle>
 	^self invalidCall: _failureCode!
 
 regConnectRegistry: lpMachineName hKey: hKey phkResult: phkResult
@@ -265,7 +265,7 @@ regEnumKeyEx: hKey dwIndex: dwIndex lpName: lpName lpcbName: lpcbName lpReserved
 			PFILETIME lpftLastWriteTime	// address for time key last written to 
 		);"
 
-	<stdcall: errno RegEnumKeyExW handle sdword lpwstr dword* dword* lpwstr dword* FILETIME*>
+	<stdcall: errno RegEnumKeyExW handle int32 lpwstr uint32* uint32* lpwstr uint32* FILETIME*>
 	"Custom error handling - ERROR_NO_MORE_ITEMS is not really an error, just an end of collection indication"
 	(_failureCode == ERROR_NO_MORE_ITEMS or: [_failureCode == ERROR_MORE_DATA])
 		ifFalse: [self invalidCall: _failureCode].

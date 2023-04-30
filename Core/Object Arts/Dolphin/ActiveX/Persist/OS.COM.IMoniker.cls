@@ -461,14 +461,14 @@ defineFunctions
 		defineFunction: #BindToStorage:pmkToLeft:riid:ppvObj:
 			argumentTypes: 'IBindCtx* IMoniker* GUID* IUnknown**';
 		defineFunction: #Reduce:dwReduceHowFar:ppmkToLeft:ppmkReduced:
-			argumentTypes: 'IBindCtx* dword IMoniker** IMoniker**';
+			argumentTypes: 'IBindCtx* uint32 IMoniker** IMoniker**';
 		defineFunction: #ComposeWith:fOnlyIfNotGeneric:ppmkComposite:
 			argumentTypes: 'IMoniker* bool IMoniker**';
 		defineFunction: #Enum:ppenumMoniker:
-			returnType: 'sdword'
+			returnType: 'int32'
 			argumentTypes: 'bool IEnumMoniker**';
 		defineFunction: #IsEqual: argumentTypes: 'IMoniker*';
-		defineFunction: #Hash: argumentTypes: 'dword*';
+		defineFunction: #Hash: argumentTypes: 'uint32*';
 		defineFunction: #IsRunning:pmkToLeft:pmkNewlyRunning:
 			argumentTypes: 'IBindCtx* IMoniker* IMoniker*';
 		defineFunction: #GetTimeOfLastChange:pmkToLeft:pFileTime:
@@ -479,8 +479,8 @@ defineFunctions
 		defineFunction: #GetDisplayName:pmkToLeft:ppszDisplayName:
 			argumentTypes: 'IBindCtx* IMoniker* lpwstr*';
 		defineFunction: #ParseDisplayName:pmkToLeft:pszDisplayName:pchEaten:ppmkOut:
-			argumentTypes: 'IBindCtx* IMoniker* lpwstr dword* IMoniker**';
-		defineFunction: #IsSystemMoniker: argumentTypes: 'dword*'!
+			argumentTypes: 'IBindCtx* IMoniker* lpwstr uint32* IMoniker**';
+		defineFunction: #IsSystemMoniker: argumentTypes: 'uint32*'!
 
 forCLSID: aCLSID
 	| answer |

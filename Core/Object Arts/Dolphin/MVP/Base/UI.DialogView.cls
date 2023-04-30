@@ -170,7 +170,7 @@ enableItem: anInteger state: aBoolean
 
 endDialog: result
 	"Close the receiver with result as the result of the dialog (should be an Integer
-	or convertible to anInteger by asDword)"
+	or convertible to anInteger by asUIntPtr)"
 
 	User32 endDialog: handle nResult: result asUIntPtr!
 

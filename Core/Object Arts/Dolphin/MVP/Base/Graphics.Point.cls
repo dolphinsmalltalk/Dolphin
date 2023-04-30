@@ -4,7 +4,7 @@ Core.ArithmeticValue
 	subclass: #'Graphics.Point'
 	instanceVariableNames: 'x y'
 	classVariableNames: 'Zero'
-	imports: #(#{Kernel.VMConstants private})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Graphics.Point guid: (Core.GUID fromString: '{87b4c658-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -84,12 +84,6 @@ addToPoint: aPoint
 
 	^self class x: aPoint x + x y: aPoint y + y!
 
-asDword
-	"Answer the receiver in a form suitable for returning as the result of a window
-	procedure (or passing to a function expecting a 32-bit value)."
-
-	^(UInt32 fromPoint: self) value!
-
 asGenericPoint
 	"Answer the receiver"
 
@@ -110,13 +104,16 @@ asPoint3D
 
 	^self x @ self y @ 0!
 
-asUIntPtr
-	"Answer the receiver in a form suitable for passing/returning as a Windows LRESULT
-	(32 or 64-bit, depending on host OS) return value. The default is self (which will cause the
-	default window proc. of the window to be called for most objects other than Integers when
-	used as a return value)."
+asUInt32
+	"Answer the receiver in a form suitable for returning as the result of a window procedure (or passing to a function expecting a 32-bit value)."
 
-	^(self x bitAnd: HalfPtrMask) bitOr: ((self y bitAnd: HalfPtrMask) bitShift: HalfPtrBits)!
+	^((y bitAnd: 16rFFFF) bitShift: 16) bitOr: (x bitAnd: 16rFFFF)!
+
+asUIntPtr
+	"Answer the receiver in a form suitable for passing/returning as a Windows LRESULT (32 or 64-bit, depending on host OS) return value. The default is self (which will cause the default window proc. of the window to be called for most objects other than Integers when used as a return value)."
+
+	^(self x bitAnd: VMConstants.HalfPtrMask)
+		bitOr: ((self y bitAnd: VMConstants.HalfPtrMask) bitShift: VMConstants.HalfPtrBits)!
 
 ceiling
 	"Answer a new Point with the x and y values of the receiver truncated
@@ -306,11 +303,11 @@ y: aNumber
 =!comparing!public! !
 abs!arithmetic!public! !
 addToPoint:!double dispatch!private! !
-asDword!converting!public! !
 asGenericPoint!converting!public! !
 asParameter!converting!public! !
 asPoint!converting!public! !
 asPoint3D!converting!public! !
+asUInt32!converting!public! !
 asUIntPtr!converting!public! !
 ceiling!public!truncation and round off! !
 coerce:!coercing!private! !

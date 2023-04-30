@@ -85,7 +85,7 @@ defineFunctions
 			argumentTypes: 'FORMATETC* STGMEDIUM*';
 		defineFunction: #OnViewChange:lindex:
 			returnType: 'void'
-			argumentTypes: 'dword sdword';
+			argumentTypes: 'uint32 int32';
 		defineFunction: #OnRename:
 			returnType: 'void'
 			argumentTypes: 'IMoniker*';

@@ -38,6 +38,7 @@ package methodNames
 	add: #Clipboard -> #getObjectBinaryStoreBytes;
 	add: #Clipboard -> #getObjectBinaryStoreBytesIfNone:;
 	add: #Clipboard -> #setText:format:;
+	add: #Color -> #asDword;
 	add: #Color -> #asIndexedColor;
 	add: #Color -> #saturation;
 	add: #ColorRef -> #asIndexedColor;
@@ -63,6 +64,8 @@ package methodNames
 	add: #Menu -> #remove:ifAbsent:;
 	add: #Menu -> #replace:with:;
 	add: #MoenTreeView -> #updateItem:andChildren:imagesOnly:;
+	add: #Point -> #asDword;
+	add: #POINT -> #asDword;
 	add: #Prompter -> #validationBlock;
 	add: #RGB -> #asIndexedColorUsingPalette:;
 	add: #ScrollingDecorator -> #continuousTracking;
@@ -402,6 +405,10 @@ setText:format:!accessing!public! !
 
 !Color methodsFor!
 
+asDword
+	#deprecated.
+	^self asUInt32!
+
 asIndexedColor
 	"Answer the receiver as an <IndexedColor>."
 
@@ -416,6 +423,7 @@ saturation
 	Notification deprecated.
 	^self hls at: 3! !
 !Color categoriesForMethods!
+asDword!converting!public! !
 asIndexedColor!converting!public! !
 saturation!accessing!public! !
 !
@@ -698,6 +706,24 @@ handle: hWnd wParam: wParam hdc: hdc paintStruct: ps
 		paintStruct: ps! !
 !PaintEvent class categoriesForMethods!
 handle:wParam:hdc:paintStruct:!instance creation!public! !
+!
+
+!Point methodsFor!
+
+asDword
+	#deprecated.
+	^self asUInt32! !
+!Point categoriesForMethods!
+asDword!converting!public! !
+!
+
+!POINT methodsFor!
+
+asDword
+	#deprecated.
+	^self asUInt32! !
+!POINT categoriesForMethods!
+asDword!converting!public! !
 !
 
 !Prompter methodsFor!

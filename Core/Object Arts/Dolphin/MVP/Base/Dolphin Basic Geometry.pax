@@ -38,7 +38,6 @@ package setMethodNames: #(
 	#(#{Core.Number} #divideIntoPoint:)
 	#(#{Core.Number} #multiplyByPoint:)
 	#(#{Core.Number} #subtractFromPoint:)
-	#(#{External.UInt32 class} #fromPoint:)
 	#(#{OS.UserLibrary} #subtractRect:lprcSrc1:lprcSrc2:)
 ).
 
@@ -61,7 +60,7 @@ Core.ArithmeticValue
 	subclass: #'Graphics.Point'
 	instanceVariableNames: 'x y'
 	classVariableNames: 'Zero'
-	imports: #(#{Kernel.VMConstants private})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.ArithmeticValue
@@ -250,22 +249,6 @@ asPoint3D!converting!public! !
 divideIntoPoint:!double dispatch!private! !
 multiplyByPoint:!double dispatch!private! !
 subtractFromPoint:!double dispatch!private! !
-!
-
-!External.UInt32 class methodsFor!
-
-fromPoint: aPoint
-	"Private - Answer a new instance of the receiver with high and low
-	words set from aPoint assuming its co-ordinates to be 16-bit signed
-	integer values, with X in the low-word. This instantiator is somewhat
-	similar to the Windows MAKEPOINT macro."
-
-	^(self new)
-		lowSWord: aPoint x;
-		highSWord: aPoint y;
-		yourself! !
-!External.UInt32 class categoriesForMethods!
-fromPoint:!instance creation!private! !
 !
 
 !OS.UserLibrary methodsFor!

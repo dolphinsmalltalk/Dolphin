@@ -240,11 +240,11 @@ defineFunctions
 		defineFunction: #GetDataHere:pmedium: argumentTypes: 'FORMATETC* STGMEDIUM*';
 		defineFunction: #QueryGetData: argumentTypes: 'FORMATETC*';
 		defineFunction: #GetCanonicalFormatEtc:pformatetcOut: argumentTypes: 'FORMATETC* FORMATETC*';
-		defineFunction: #SetData:pmedium:fRelease: argumentTypes: 'FORMATETC* STGMEDIUM* sdword';
-		defineFunction: #EnumFormatEtc:ppenumFormatEtc: argumentTypes: 'dword IUnknown**';
+		defineFunction: #SetData:pmedium:fRelease: argumentTypes: 'FORMATETC* STGMEDIUM* int32';
+		defineFunction: #EnumFormatEtc:ppenumFormatEtc: argumentTypes: 'uint32 IUnknown**';
 		defineFunction: #DAdvise:advf:pAdvSink:pdwConnection:
-			argumentTypes: 'FORMATETC* dword IAdviseSink* dword*';
-		defineFunction: #DUnadvise: argumentTypes: 'dword';
+			argumentTypes: 'FORMATETC* uint32 IAdviseSink* uint32*';
+		defineFunction: #DUnadvise: argumentTypes: 'uint32';
 		defineFunction: #EnumDAdvise: argumentTypes: 'IUnknown**'! !
 !OS.COM.IDataObject class categoriesForMethods!
 defineFunctions!initializing!public! !

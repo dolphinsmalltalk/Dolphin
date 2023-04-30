@@ -303,14 +303,14 @@ testI4
 	self should: [var int32: -2147483649] raise: Error!
 
 testI4REF
-	| var sdword |
-	sdword := Int32 new value: 2147483647.
-	var := sdword asVariant.
+	| var int32 |
+	int32 := Int32 new value: 2147483647.
+	var := int32 asVariant.
 	self assert: var vt identicalTo: VT_I4 | VT_BYREF.
-	self assert: var value equals: sdword.
-	self assert: var value yourAddress equals: sdword yourAddress.
+	self assert: var value equals: int32.
+	self assert: var value yourAddress equals: int32 yourAddress.
 	var value value: -2147483648.
-	self assert: sdword value equals: -2147483648!
+	self assert: int32 value equals: -2147483648!
 
 testI8
 	| var copy |

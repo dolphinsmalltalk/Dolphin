@@ -27,14 +27,14 @@ marqueeSelectionEventsToItem: anInteger
 				window: presenter
 				message: WM_MOUSEMOVE
 				wParam: downEvent wParam
-				lParam: (presenter mapPointToScreen: downEvent position - 5) asDword).
+				lParam: (presenter mapPointToScreen: downEvent position - 5) asUInt32).
 	mouseEvents nextPut: (MouseEvent
 				window: presenter
 				message: WM_MOUSEMOVE
 				wParam: downEvent wParam
-				lParam: (presenter mapPointToScreen: targetPos) asDword).
+				lParam: (presenter mapPointToScreen: targetPos) asUInt32).
 	mouseEvents nextPut: ((self mouseUpForMouseDown: downEvent)
-				lParam: targetPos asDword;
+				lParam: targetPos asUInt32;
 				yourself).
 	^mouseEvents contents!
 

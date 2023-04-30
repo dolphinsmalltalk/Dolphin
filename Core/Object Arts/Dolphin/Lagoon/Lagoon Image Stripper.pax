@@ -155,7 +155,7 @@ removeTemplate!private!template definition! !
 !OS.UserLibrary methodsFor!
 
 messageBox: hWnd lpText: lpText lpCaption: lpCaption uType: uType
-	<stdcall: sdword MessageBoxW handle lpwstr lpwstr dword>
+	<stdcall: int32 MessageBoxW handle lpwstr lpwstr uint32>
 	^self invalidCall: _failureCode! !
 !OS.UserLibrary categoriesForMethods!
 messageBox:lpText:lpCaption:uType:!public!win32 functions-dialog box! !

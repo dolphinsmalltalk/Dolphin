@@ -277,17 +277,17 @@ defineFunctions
 	"
 
 	self
-		defineFunction: #GetTypeInfoCount returnType: 'dword';
-		defineFunction: #GetTypeInfo:ppTInfo: argumentTypes: 'dword ITypeInfo**';
-		defineFunction: #GetTypeInfoType:pTKind: argumentTypes: 'dword Int32*';
+		defineFunction: #GetTypeInfoCount returnType: 'uint32';
+		defineFunction: #GetTypeInfo:ppTInfo: argumentTypes: 'uint32 ITypeInfo**';
+		defineFunction: #GetTypeInfoType:pTKind: argumentTypes: 'uint32 int32*';
 		defineFunction: #GetTypeInfoOfGuid:ppTInfo: argumentTypes: 'GUID* ITypeInfo**';
 		defineFunction: #GetLibAttr: argumentTypes: 'TLIBATTR**';
 		defineFunction: #GetTypeComp: argumentTypes: 'ITypeComp**';        
 		defineFunction: #GetDocumentation:pBstrName:pBstrDocString:pdwHelpContext:pBstrHelpFile:
-			argumentTypes: 'sdword BSTR* BSTR* UInt32* BSTR*';
-		defineFunction: #IsName:lHashVal:pfName: argumentTypes: 'lpwstr dword UInt32*';		
+			argumentTypes: 'int32 BSTR* BSTR* uint32* BSTR*';
+		defineFunction: #IsName:lHashVal:pfName: argumentTypes: 'lpwstr uint32 uint32*';		
 		defineFunction: #FindName:lHashVal:ppTInfo:rgMemId:pcFound:
-			argumentTypes: 'lpwstr dword ITypeInfo** Int32* UInt32*';
+			argumentTypes: 'lpwstr uint32 ITypeInfo** int32* uint32*';
 		defineFunction: #ReleaseTLibAttr: returnType: 'void' argumentTypes: 'TLIBATTR*'!
 
 fromAttributes: attr

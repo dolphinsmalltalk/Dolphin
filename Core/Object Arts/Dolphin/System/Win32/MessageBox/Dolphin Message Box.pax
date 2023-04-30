@@ -215,7 +215,7 @@ overlappedTaskDialogIndirect: pTaskConfig pnButton: pnButton pnRadioButton: pnRa
 			[out]int* pnRadioButton,
 			[out]BOOL* pfVerificationFlagChecked);"
 
-	<overlap stdcall: hresult TaskDialogIndirect TASKDIALOGCONFIG* sdword* sdword* bool*>
+	<overlap stdcall: hresult TaskDialogIndirect TASKDIALOGCONFIG* int32* int32* bool*>
 	^self invalidCall: _failureCode!
 
 taskDialogIndirect: pTaskConfig pnButton: pnButton pnRadioButton: pnRadioButton pfVerificationFlagChecked: pfVerificationFlagChecked
@@ -228,7 +228,7 @@ taskDialogIndirect: pTaskConfig pnButton: pnButton pnRadioButton: pnRadioButton 
 			[out]int* pnRadioButton,
 			[out]BOOL* pfVerificationFlagChecked);"
 
-	<stdcall: hresult TaskDialogIndirect TASKDIALOGCONFIG* sdword* sdword* bool*>
+	<stdcall: hresult TaskDialogIndirect TASKDIALOGCONFIG* int32* int32* bool*>
 	^self invalidCall: _failureCode! !
 !OS.CommCtrlLibrary categoriesForMethods!
 overlappedTaskDialogIndirect:pnButton:pnRadioButton:pfVerificationFlagChecked:!**auto generated**!public! !

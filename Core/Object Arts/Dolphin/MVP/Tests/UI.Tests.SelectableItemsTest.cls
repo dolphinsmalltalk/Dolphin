@@ -49,7 +49,7 @@ mouseDownEventAt: position buttons: anArray
 				withAll: {#left -> WM_LBUTTONDOWN. #right -> WM_RBUTTONDOWN. #middle -> WM_MBUTTONDOWN})
 					at: mouseButton)
 		wParam: keys
-		lParam: position asDword!
+		lParam: position asUInt32!
 
 mouseDownEventOn: anObject buttons: anArray
 	^self mouseDownEventOnItem: (presenter view handleFromObject: anObject) buttons: anArray!
