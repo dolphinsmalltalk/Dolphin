@@ -24,10 +24,19 @@ subjectClass
 	^Picture!
 
 testFromFileNotFound
-	| subject |
+	| subject handle |
 	subject := self subjectClass fromFile: 'NothingToSeeHere'.
 	"We get a default picture if the file was not found"
-	self assert: subject handle notNull! !
+	handle := [subject handle] on: Notification
+				do: 
+					[:ex |
+					self assert: ex description
+						equals: 'Failed to load OLE Picture from file <1p>: <2d>' << {
+										FileLocator imageRelative localFileSpecFor: 'NothingToSeeHere'.
+										HRESULT fromInteger: 16r800C0005 asSDword
+									}.
+					ex resume].
+	self assert: handle notNull! !
 !OS.COM.Tests.PictureTest categoriesForMethods!
 canonicalInstance!constants!private! !
 expectedImageExtent!constants!private! !

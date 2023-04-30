@@ -73,7 +73,8 @@ testBuiltins
 						ifFalse: [argTypes single beginsWith: refType].
 					"Double indirection"
 					source := source , '*'.
-					desc := self subjectClass fromString: source environment: External.
+					"Ignore notifications about double indirection of indirection type"
+					desc := [self subjectClass fromString: source environment: External] on: Notification do: [:ex | ex resume].
 					argTypes := desc argumentTypes.
 					self assert: argTypes single equals: 'lppvoid']]!
 

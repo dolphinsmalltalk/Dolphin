@@ -1020,7 +1020,7 @@ testOptimizedLoopReadBeforeWritten
 				compileExpression: '| r | r := OrderedCollection new. 1 to: 5 do: [:i | | a | r add: a displayString, i displayString. a := i]. r') 
 					method.
 	actual := expr value.
-	self skip: 'Results of actual block evaluation in a loop and optimized loop should be the same - any	read-before-written locals must be reinitialized to zero on each iteration'.
+	self skip: 'Results of actual block evaluation in a loop and optimized loop should be the same - any	read-before-written locals must be reinitialized to nil on each iteration'.
 	self assert: actual equals: expected!
 
 testQualifiedReference
@@ -1208,9 +1208,13 @@ testSpecialLiteralsAsUnarySelectors
 	| method |
 	#(nil true false) do: 
 			[:each |
-			self
-				shouldnt: [method := self compileMethod: ('<1p> ^super <1p>' expandMacrosWith: each) in: self class]
-				raise: self compilationErrorClass.
+			method := [method := self compileMethod: ('<1p> ^super <1p>' expandMacrosWith: each) in: self class]
+						on: CompilerNotification
+						do: 
+							[:ex |
+							"Supersend generates a warning, since superclass doesn't implement"
+							self assert: ex severityName equals: #Warning.
+							ex resume].
 			self denyIsNil: method]!
 
 testStringLiteralFolding
@@ -1256,8 +1260,14 @@ testSymbolScanning
 			self assert: sym equals: chars].
 	#('#2' '#;' '#:') do: 
 			[:each |
-			self should: [self evaluateExpression: each] raise: self compilationErrorClass.
-			self assertIsNil: (self evaluateExpression: each)].
+			| errors |
+			errors := OrderedCollection new.
+			self assertIsNil: ([self evaluateExpression: each] on: self compilationErrorClass
+						do: 
+							[:ex |
+							errors add: ex.
+							ex resume]).
+			self assert: errors single description equals: 'Error: nil>>(null) at line 1: constant expected'].
 	#('#a:a' '#a:ab' '#ab:a' '#ab:ab') do: 
 			[:each |
 			self
@@ -1515,7 +1525,6 @@ testWhileFalse
 	"Test for empty condition block removed as the compiler now treats this as an error."
 
 	| result method |
-
 	"Test a simple counting loop"
 	result := self compileExpression: '| i | i := 0. [i := i + 1. i > 10] whileFalse. i'.
 	method := result method.
@@ -1525,8 +1534,13 @@ testWhileFalse
 	self assert: (method value: nil withArguments: #()) equals: 11.
 
 	"Test case which cannot be inlined"
-	result := self
-				compileExpression: '| i block | i := 0. block := [i := i + 1. i > 10]. block whileFalse. i'.
+	result := 
+			[self compileExpression: '| i block | i := 0. block := [i := i + 1. i > 10]. block whileFalse. i']
+					on: self compilationWarningClass
+					do: 
+						[:ex |
+						self assert: ex errorCode equals: CWarnExpectNiladicBlockReceiver.
+						ex resume].
 	method := result method.
 	self denyIsNil: method.
 	self assert: method needsContext.
@@ -1545,8 +1559,13 @@ testWhileTrue
 	self assert: (method value: nil withArguments: #()) equals: 11.
 
 	"Test case which cannot be inlined"
-	result := self
-				compileExpression: '| i block | i := 0. block := [i := i + 1. i <= 10]. block whileTrue. i'.
+	result := 
+			[self compileExpression: '| i block | i := 0. block := [i := i + 1. i <= 10]. block whileTrue. i']
+					on: self compilationWarningClass
+					do: 
+						[:ex |
+						self assert: ex errorCode equals: CWarnExpectNiladicBlockReceiver.
+						ex resume].
 	method := result method.
 	self denyIsNil: method.
 	self assert: method needsContext.

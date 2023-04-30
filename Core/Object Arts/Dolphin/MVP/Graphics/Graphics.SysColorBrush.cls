@@ -21,7 +21,7 @@ SysColorBrushes are not normally instantiated directly, but rather by sending th
 color
 	"Answer the <Color> of this solid brush."
 
-	^SystemColor fromId: id!
+	^SystemColor withIndex: id!
 
 createHandle
 	"Private - Get the handle of the system color brush with the receiver's id."

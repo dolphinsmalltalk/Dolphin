@@ -12,11 +12,12 @@ Core.Tests.DolphinTestClassResource isNonInstantiable: true!
 Core.Tests.DolphinTestClassResource comment: ''!
 !Core.Tests.DolphinTestClassResource methodsFor!
 
-compileAccessorsFor: aClass 
+compileAccessorsFor: aClass
 	aClass instanceVariableNames do: 
-			[:each | 
-			aClass compile: each , ' ^' , each.
-			aClass compile: each , ': x ' , each , ' := x']!
+			[:each |
+			aClass compiledMethodAt: each asSymbol ifAbsent: [aClass compile: each , ' ^' , each].
+			aClass compiledMethodAt: (each copyWith: $:) asSymbol
+				ifAbsent: [aClass compile: each , ': x ' , each , ' := x']]!
 
 compileMethods
 	"To be implemented by subclasses as required"!
@@ -35,6 +36,10 @@ createClass: className superclass: superClass instVars: instanceVariables import
 
 createClasses
 	^self subclassResponsibility!
+
+createClassesAndMethods
+	self createClasses.
+	self compileMethods!
 
 createPackage
 	package := self createPackage: self packageName!
@@ -66,8 +71,7 @@ setUp
 	super setUp.
 	self createPackage.
 	self createPools.
-	self createClasses.
-	self compileMethods!
+	self createClassesAndMethods!
 
 tearDown
 	super tearDown.
@@ -77,6 +81,7 @@ compileAccessorsFor:!Init / Release!private! !
 compileMethods!accessing!public! !
 createClass:superclass:instVars:imports:classVars:!Init / Release!private! !
 createClasses!Init / Release!private! !
+createClassesAndMethods!Init / Release!public! !
 createPackage!Init / Release!private! !
 createPool:!Init / Release!private! !
 createPools!Init / Release!private! !

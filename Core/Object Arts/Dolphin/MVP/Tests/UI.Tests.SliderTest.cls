@@ -33,6 +33,12 @@ testRange
 							presenter range: range.
 							self assert: presenter range equals: range]]]!
 
+verifyStbUpgrade: anInteger
+	| notifications |
+	notifications := super verifyStbUpgrade: anInteger.
+	self assert: notifications single description
+		equals: 'Deprecated message sent: Slider>>#selection: from: MessageSendAbstract>>#value'!
+
 verifyUpgradedView: anInteger
 	| view |
 	super verifyUpgradedView: anInteger.
@@ -57,6 +63,7 @@ vuFile
 classToTest!helpers!private! !
 oldDolphinVersionsForStbUpgrade!constants!private! !
 testRange!public!unit tests! !
+verifyStbUpgrade:!helpers!private! !
 verifyUpgradedView:!helpers!private! !
 vuFile!constants!private! !
 !

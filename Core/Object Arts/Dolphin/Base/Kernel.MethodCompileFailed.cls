@@ -25,6 +25,9 @@ error: aCompilerErrorNotification environment: aNamespace
 	compilerErrorNotification := aCompilerErrorNotification.
 	environment := aNamespace!
 
+errorCode
+	^compilerErrorNotification errorCode!
+
 resumeWithStubMethod
 	"Private - Create a stub method which causes an error if evaluated but has the source of the proposed method that did not compile. Answer the <CompilationResult> for the stub method as the result of resuming the notification."
 
@@ -45,6 +48,7 @@ resumeWithStubMethod
 defaultAction!handling!public! !
 environment!accessing!public! !
 error:environment:!initializing!private! !
+errorCode!accessing!public! !
 resumeWithStubMethod!handler responses!operations!private! !
 !
 

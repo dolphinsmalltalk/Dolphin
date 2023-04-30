@@ -1962,7 +1962,7 @@ testWarningUnoptimizedLoopsNonNiladicArg
 
 			"Because of the single-pass way in which the compiler works, this is currently an error. 
 			It could more easily be made a warning if the code generation phase was separate."
-			format := stem , '<1s> [:a|]'.
+			format := stem , '<1s> [:b|]'.
 			source := format expandMacrosWith: each.
 			self
 				parseMethodError: source
@@ -2001,7 +2001,7 @@ testWarningUnoptimizedLoopsNonNiladicReceiver
 			"Empty block cannot be used for loop condition"
 			each = 'repeat'
 				ifFalse: 
-					[stem := 'x [ | a | ] '.
+					[stem := 'x [ ] '.
 					source := stem , each.
 					self
 						parseMethodError: source

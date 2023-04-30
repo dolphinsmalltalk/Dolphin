@@ -24,10 +24,24 @@ initialize
 	verbose := false.
 	loggers := OrderedCollection new!
 
+initializeResource: aTestResource
+	| startTime |
+	loggers do: [:each | each initializingResource: aTestResource].
+	startTime := DateAndTime now.
+	[aTestResource isAvailable ifFalse: [aTestResource signalInitializationError]] on: Notification
+		do: 
+			[:ex |
+			self logNotification: ex.
+			ex resume].
+	loggers do: [:each | each initializedResource: aTestResource in: DateAndTime now - startTime]!
+
 logFinishedCase: aTestCase
 	| result |
 	result := results resultFor: aTestCase.
 	loggers do: [:each | each finishedCase: result]!
+
+logNotification: aNotification
+	loggers do: [:each | each notify: aNotification]!
 
 logStartingCase: aTestCase
 	loggers do: [:each | each startingCase: aTestCase]!
@@ -48,7 +62,11 @@ runSuite: aTestSuite
 	self startRun: aTestSuite.
 	
 	[lastCase := nil.
-	aTestSuite run: results.
+	[aTestSuite run: results] on: Notification
+		do: 
+			[:ex |
+			self logNotification: ex.
+			ex resume].
 	self
 		update: nil
 		with: nil
@@ -61,7 +79,7 @@ startRun: aTestSuite
 	aTestSuite addDependentToHierachy: self.
 	results := TestResult new.
 	self logStartingRun: aTestSuite.
-	aTestSuite resources do: [:res | res isAvailable ifFalse: [res signalInitializationError]]!
+	aTestSuite resources do: [:res | self initializeResource: res]!
 
 update: anObject with: argument from: originator
 	originator class == TestSuite
@@ -80,7 +98,9 @@ verbose: aBoolean
 addLogger:!initializing!private! !
 finishRun:!operations!private! !
 initialize!initializing!private! !
+initializeResource:!operations!private! !
 logFinishedCase:!private!updating! !
+logNotification:!logging!private! !
 logStartingCase:!logging!private! !
 logStartingRun:!logging!private! !
 newStdOutLogger!logging!private! !

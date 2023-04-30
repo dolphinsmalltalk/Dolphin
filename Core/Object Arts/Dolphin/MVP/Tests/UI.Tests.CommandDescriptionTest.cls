@@ -39,7 +39,7 @@ testAcceleratorKeyString
 	self
 		should: [subject acceleratorKeyString: 'Num *']
 		raise: Error
-		matching: [:ex | ex description equals: 'Unrecognised virtual key: ''Num *''']!
+		matching: [:ex | ex description = 'Unrecognised virtual key: ''Num *''']!
 
 testRegistry
 	self assert: CommandDescription.CommandDescriptionRegistry hasWeakKeys.

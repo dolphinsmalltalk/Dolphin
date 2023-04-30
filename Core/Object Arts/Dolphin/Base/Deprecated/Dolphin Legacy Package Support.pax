@@ -28,6 +28,7 @@ package setMethodNames: #(
 	#(#{Core.Class} #variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:)
 	#(#{Core.Class} #variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:)
 	#(#{Core.ClassDescription} #sharedVariableString)
+	#(#{Core.FileStream} #beBinary)
 	#(#{Core.UndefinedObject} #subclass:instanceVariableNames:classVariableNames:poolDictionaries:)
 	#(#{Core.UndefinedObject} #subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:)
 	#(#{Kernel.Package} #allResourceNames:)
@@ -177,6 +178,19 @@ sharedVariableString
 	^$\x20 join: self sharedPoolNames asSortedArray! !
 !Core.ClassDescription categoriesForMethods!
 sharedVariableString!accessing!public! !
+!
+
+!Core.FileStream methodsFor!
+
+beBinary
+	"Treat the elements of the stream as bytes (Integers)."
+
+	#deprecated.	"Only works correctly for switching from AnsiString"
+	(collection isKindOf: UtfEncodedString)
+		ifTrue: [self error: 'Unable to switch from UTF encoded content to binary'].
+	collection := collection asByteArray! !
+!Core.FileStream categoriesForMethods!
+beBinary!modes!public! !
 !
 
 !Core.UndefinedObject methodsFor!

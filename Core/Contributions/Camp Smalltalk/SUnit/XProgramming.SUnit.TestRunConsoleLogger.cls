@@ -2,7 +2,7 @@
 
 XProgramming.SUnit.TestRunLogger
 	subclass: #'XProgramming.SUnit.TestRunConsoleLogger'
-	instanceVariableNames: 'stream timings'
+	instanceVariableNames: 'stream timings notifications'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -12,12 +12,19 @@ XProgramming.SUnit.TestRunConsoleLogger comment: ''!
 !XProgramming.SUnit.TestRunConsoleLogger categoriesForClass!Kernel-Objects! !
 !XProgramming.SUnit.TestRunConsoleLogger methodsFor!
 
+emitTimestamp
+	stream locale
+		printTime: DateAndTime now
+		on: stream
+		format: 'H:mm:ssFFF'.
+	stream space!
+
 finishedCase: aTestCaseResult
 	stream
 		nextPutAll: aTestCaseResult outcome asUppercase;
 		nextPutAll: ' in ';
-		display: aTestCaseResult duration;
-		cr!
+		display: aTestCaseResult duration.
+	self logNotifications!
 
 finishedRun: aTestResult
 	| passed |
@@ -35,10 +42,38 @@ finishedRun: aTestResult
 		ifFalse: [self summarizeFailures: aTestResult].
 	stream flush!
 
-startingCase: aTestCase
-	stream locale printTime: DateAndTime now on: stream format: 'H:mm:ssFFF'.
+initializedResource: aTestResource in: aDuration
 	stream
-		space;
+		nextPutAll: 'Completed in ';
+		display: aDuration.
+	self logNotifications!
+
+initializingResource: aTestResource
+	self emitTimestamp.
+	stream
+		nextPutAll: 'Initializing ';
+		print: aTestResource;
+		nextPutAll: ' ... ';
+		flush!
+
+logNotifications
+	notifications isEmpty
+		ifFalse: 
+			[stream nextPutAll: ', with notifications:'.
+			notifications do: 
+					[:each |
+					stream
+						crtab: 2;
+						print: each].
+			notifications := OrderedCollection new].
+	stream cr!
+
+notify: aNotification
+	notifications add: aNotification!
+
+startingCase: aTestCase
+	self emitTimestamp.
+	stream
 		print: aTestCase;
 		nextPutAll: ' ... ';
 		flush!
@@ -52,8 +87,9 @@ startingRun: aTestSuite
 		cr;
 		flush!
 
-stream: anObject
-	stream := anObject!
+stream: aWriteStream
+	stream := aWriteStream.
+	notifications := OrderedCollection new!
 
 summarizeFailures: aTestResult
 	| failures errors |
@@ -106,8 +142,13 @@ summarizeTimings: aTestResult threshold: aDuration
 				print: each case;
 				cr]! !
 !XProgramming.SUnit.TestRunConsoleLogger categoriesForMethods!
+emitTimestamp!logging!private! !
 finishedCase:!logging!public! !
 finishedRun:!logging!public! !
+initializedResource:in:!logging!public! !
+initializingResource:!logging!public! !
+logNotifications!logging!public! !
+notify:!logging!public! !
 startingCase:!logging!public! !
 startingRun:!logging!public! !
 stream:!accessing!private! !

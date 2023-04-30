@@ -79,12 +79,13 @@ testAddInstVarName
 	| testClass obj inst |
 	testClass := self classBuilderTestClass.
 	testClass addInstVarName: 'foo' asUtf16String.
-	testClass compile: 'foo: anObject foo := anObject';
+	testClass
+		compile: 'foo: anObject foo := anObject';
 		compile: 'foo ^foo'.
 	obj := Object new.
 	inst := testClass new foo: obj.
-	self assert: inst foo identicalTo: obj
-	!
+	self assert: inst foo identicalTo: obj.
+	testClass removeSelectors: #(#foo #foo:)!
 
 testAddRemoveImports
 	| imports subclass |
@@ -188,7 +189,7 @@ testBuildAnonymousInRootNamespace
 	self assert: anon fullName equals: 'a subclass of ' , base fullName.
 	self
 		should: [anon basicCompile: 'x ^Object']
-		raise: Kernel.CompilerErrorNotification
+		raise: MethodCompileFailed
 		matching: [:ex | ex errorCode = Kernel.ParseErrorCodes.CErrUndeclared]!
 
 testBuildAnonymousRootClass
@@ -250,6 +251,7 @@ testMoveClassToSuperclassWithInstVars
 
 testMoveClassToSuperclassWithNoInstVars
 	| newClass |
+	self classBuilderTestSubclass1 removeSelectors: #(#var3 #var3: #var4 #var4:).
 	(self newTestSubjectToModify: self classBuilderTestSubclass1)
 		instanceVariables: #();
 		modifyOrCreate.

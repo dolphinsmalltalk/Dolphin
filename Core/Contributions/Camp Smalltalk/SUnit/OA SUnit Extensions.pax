@@ -77,7 +77,7 @@ Core.Object
 	classConstants: {}!
 XProgramming.SUnit.TestRunLogger
 	subclass: #'XProgramming.SUnit.TestRunConsoleLogger'
-	instanceVariableNames: 'stream timings'
+	instanceVariableNames: 'stream timings notifications'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

@@ -203,17 +203,28 @@ b2xwaGluZHIwMDUuZGxsAAAAAA==''))!!
 
 '!
 
-loadAndTestPackage: filename
+loadAndTestPackage: aString
+	| packageFilename notifications |
 	self checkNoTestPackageContents.
-	loadedPackages := Package manager install: (self resourceFilename: filename).
-	self checkTestPackageContents
-!
+	packageFilename := self resourceFilename: aString.
+	notifications := OrderedCollection new.
+	loadedPackages := [Package manager install: packageFilename] on: Notification
+				do: 
+					[:ex |
+					"Ignore package loading notification"
+					notifications add: ex.
+					ex resume].
+	self assert: notifications size > 0.
+	self checkTestPackageContents.
+	^notifications!
 
 loadTestAndUninstallPackage: aString
-	self loadAndTestPackage: aString.
+	| notifications |
+	notifications := self loadAndTestPackage: aString.
 	self assert: loadedPackages first paxVersion equals: 1.
 	self uninstallTestPackages.
-	self checkNoTestPackageContents!
+	self checkNoTestPackageContents.
+	^notifications!
 
 setUp
 	| var |
@@ -234,12 +245,15 @@ tearDown
 testForwardRefLoadPac
 	"#1720: Test loading and converting of old packages with forward reference view referereces"
 
-	| pacName |
+	| pacName notifications |
 	pacName := self resourceFilename: 'D5LoadTest.pac'.
 	(FileStream write: pacName)
 		nextPutAll: self d5ForwardRefTestPacContents;
 		close.
-	[loadedPackages := Package manager install: pacName] ensure: [File delete: pacName]!
+	notifications := OrderedCollection new.
+	[[loadedPackages := Package manager install: pacName]
+		on: Notification do: [:ex | notifications add: ex. ex resume]] ensure: [File delete: pacName].
+	"self assert: notifications first description equals: "!
 
 testLegacyFormatErrorAliasToQualifiedName
 	| package ref filer filerClass |
@@ -374,41 +388,91 @@ testLoad21Pac
 	"The 2.1 packages were a mix of text and binary. The package itself was binary filed, and the view resources also.
 	The test 2.1 package contains a stb version 1 Views and so exercises the whole stb conversion stack. We don't have anything with version 0, but that predated the first commercial release."
 
-	self loadTestAndUninstallPackage: 'ScribbleTestPackages\2.1\ScribbleTest21.pac'!
+	| scribble21 notifications stbUpgradeMessage |
+	scribble21 := 'ScribbleTestPackages\2.1\ScribbleTest21.pac'.
+	notifications := self loadTestAndUninstallPackage: scribble21.
+	self assert: notifications size equals: 4.
+	stbUpgradeMessage := 'Converting package from version 4 to: <1d>' << Package stbVersion.
+	self assert: notifications first description equals: stbUpgradeMessage.
+	self assert: notifications second description
+		equals: 'Loading package ''ScribbleTest21'' from: <1d>' << (self resourceFilename: scribble21).
+	"The package object is deserialized twice"
+	stbUpgradeMessage := 'Converting package from version 4 to: <1d>' << Package stbVersion.
+	self assert: notifications first description equals: stbUpgradeMessage.
+	self assert: notifications fourth description
+		equals: 'The package ''ScribbleTest21'' was saved with a different version of the Dolphin VM (98.2). 
+It will probably load, but it may not operate correctly. 
+If you experience subsequent problems please contact the package supplier for an updated version.'!
 
 testLoad40Pac
-	self loadTestAndUninstallPackage: 'ScribbleTestPackages\4.0\ScribbleTest4.pac'!
+	| notifications scribble4pac |
+	scribble4pac := 'ScribbleTestPackages\4.0\ScribbleTest4.pac'.
+	notifications := self loadTestAndUninstallPackage: scribble4pac.
+	self assert: notifications single description
+		equals: 'Loading package ''ScribbleTest4'' from: <1d>' << (self resourceFilename: scribble4pac)!
 
 testLoad40Pax
-	self loadTestAndUninstallPackage: 'ScribbleTestPackages\4.0\ScribbleTest4.pax'!
+	| scribble4pax notifications |
+	scribble4pax := 'ScribbleTestPackages\4.0\ScribbleTest4.pax'.
+	notifications := self loadTestAndUninstallPackage: scribble4pax.
+	self assert: notifications size equals: 2.
+	self assert: notifications first description
+		equals: 'Loading source package ''ScribbleTest4'' from: <1d>'
+				<< (self resourceFilename: scribble4pax).
+	self assert: notifications second description
+		equals: 'ReferenceView can''t load ''Scribble.Scribble test'''!
 
 testLoad51Pac
-	self loadTestAndUninstallPackage: 'ScribbleTestPackages\5.1\ScribbleTest51.pac'!
+	| notifications scribble51pac |
+	scribble51pac := 'ScribbleTestPackages\5.1\ScribbleTest51.pac'.
+	notifications := self loadTestAndUninstallPackage: scribble51pac.
+	self assert: notifications single description
+		equals: 'Loading package ''ScribbleTest51'' from: <1d>' << (self resourceFilename: scribble51pac)!
 
 testLoad51Pax
-	self loadTestAndUninstallPackage: 'ScribbleTestPackages\5.1\ScribbleTest51.pax'!
+	| notifications scribble51pax |
+	scribble51pax := 'ScribbleTestPackages\5.1\ScribbleTest51.pax'.
+	notifications := self loadTestAndUninstallPackage: scribble51pax.
+	self assert: notifications size equals: 2.
+	self assert: notifications first description
+		equals: 'Loading source package ''ScribbleTest51'' from: <1d>'
+				<< (self resourceFilename: scribble51pax).
+	self assert: notifications second description
+		equals: 'ReferenceView can''t load ''Scribble.Scribble test'''!
 
 testLoad60Pac
-	self loadTestAndUninstallPackage: 'ScribbleTestPackages\6.0\ScribbleTest6.pac'!
+	| notifications scribble6pac |
+	scribble6pac := 'ScribbleTestPackages\6.0\ScribbleTest6.pac'.
+	notifications := self loadTestAndUninstallPackage: scribble6pac.
+	self assert: notifications single description
+		equals: 'Loading package ''ScribbleTest6'' from: <1d>' << (self resourceFilename: scribble6pac)!
 
 testLoad60Pax
-	self loadTestAndUninstallPackage: 'ScribbleTestPackages\6.0\ScribbleTest6.pax'!
+	| notifications scribble6pax |
+	scribble6pax := 'ScribbleTestPackages\6.0\ScribbleTest6.pax'.
+	notifications := self loadTestAndUninstallPackage: scribble6pax.
+	self assert: notifications single description
+		equals: 'Loading source package ''ScribbleTest6'' from: <1d>'
+				<< (self resourceFilename: scribble6pax)!
 
 testLoad70Pax
 	"Test loading of D7 package in version 1 pax format."
 
-	| scribbleTestPackage aliasName binaryVariableName sourceVariableName testPool poolConst testPackagePath filer actual expected method |
+	| scribbleTestPackage aliasName binaryVariableName sourceVariableName testPool poolConst testPackagePath filer actual expected method notifications |
 	testPackagePath := 'ScribbleTestPackages\7.0\ScribbleTest7.pax'.
-	self loadAndTestPackage: testPackagePath.
+	notifications := self loadAndTestPackage: testPackagePath.
+	self assert: notifications single description
+		equals: 'Loading source package ''ScribbleTest7'' from: <1d>'
+				<< (self resourceFilename: testPackagePath).
 	scribbleTestPackage := loadedPackages first.
 	self assert: scribbleTestPackage paxVersion equals: 1.
 	aliasName := #{Smalltalk.AliasToScribbleTest}.
-	self assert: scribbleTestPackage aliasVariableNames asArray equals: {aliasName}.
+	self assert: scribbleTestPackage aliasVariableNames asArray equals: { aliasName }.
 	self assert: aliasName value identicalTo: #{Smalltalk.ScribbleTest} value.
 	self assert: (scribbleTestPackage manager packageOfVariableNamed: aliasName)
 		identicalTo: scribbleTestPackage.
 	binaryVariableName := #{Smalltalk.ScribbleTestBinaryGlobal}.
-	self assert: scribbleTestPackage binaryVariableNames asArray equals: {binaryVariableName}.
+	self assert: scribbleTestPackage binaryVariableNames asArray equals: { binaryVariableName }.
 	self assert: (scribbleTestPackage manager packageOfVariableNamed: binaryVariableName)
 		identicalTo: scribbleTestPackage.
 	self assert: binaryVariableName value equals: #('Scribble').
@@ -449,16 +513,20 @@ testLoad70Pax
 testLoad72Pax
 	"Test loading of the interim 2.0 package format which uses BindingReferences, but not namespace qualified names."
 
-	| scribbleTestPackage aliasName binaryVariableName sourceVariableName testPool |
-	self loadAndTestPackage: 'ScribbleTestPackages\7.2\ScribbleTest72.pax'.
+	| testPackagePath scribbleTestPackage aliasName binaryVariableName sourceVariableName testPool notifications |
+	testPackagePath := 'ScribbleTestPackages\7.2\ScribbleTest72.pax'.
+	notifications := self loadAndTestPackage: testPackagePath.
+	self assert: notifications single description
+		equals: 'Loading source package ''ScribbleTest72'' from: <1d>'
+				<< (self resourceFilename: testPackagePath).
 	scribbleTestPackage := loadedPackages first.
 	"Package gets downgraded to version 1 format as we don't want to support the interim source format going forward"
 	self assert: scribbleTestPackage paxVersion equals: 1.
 	aliasName := #{Smalltalk.AliasToScribbleTest}.
-	self assert: scribbleTestPackage aliasVariableNames asArray equals: {aliasName}.
+	self assert: scribbleTestPackage aliasVariableNames asArray equals: { aliasName }.
 	self assert: aliasName value identicalTo: #{Smalltalk.ScribbleTest} value.
 	binaryVariableName := #{Smalltalk.ScribbleTestBinaryGlobal}.
-	self assert: scribbleTestPackage binaryVariableNames asArray equals: {binaryVariableName}.
+	self assert: scribbleTestPackage binaryVariableNames asArray equals: { binaryVariableName }.
 	self assert: binaryVariableName value equals: #('Scribble').
 	sourceVariableName := #{Smalltalk.ScribbleTestSourceGlobal}.
 	self assert: scribbleTestPackage sourceVariableNames asArray equals: #().

@@ -65,15 +65,15 @@ tearDown
 	testClass := testSubclass1 := testSubclass2 := nil!
 
 testClass
-	classesDirtied ifTrue: [self createClasses].
+	classesDirtied ifTrue: [self createClassesAndMethods].
 	^testClass!
 
 testSubclass1
-	classesDirtied ifTrue: [self createClasses].
+	classesDirtied ifTrue: [self createClassesAndMethods].
 	^testSubclass1!
 
 testSubclass2
-	classesDirtied ifTrue: [self createClasses].
+	classesDirtied ifTrue: [self createClassesAndMethods].
 	^testSubclass2! !
 !Kernel.Tests.ClassBuilderTestClasses categoriesForMethods!
 compileMethods!public!unit tests! !

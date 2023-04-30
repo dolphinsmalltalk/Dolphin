@@ -200,14 +200,6 @@ basicUpTo: anObject
 			answer := answer , (collection copyFrom: startIndex to: endIndex)].
 	^answer!
 
-beBinary
-	"Treat the elements of the stream as bytes (Integers)."
-
-	Notification deprecated.	"Only works correctly for switching from AnsiString"
-	(collection isKindOf: UtfEncodedString)
-		ifTrue: [self error: 'Unable to switch from UTF encoded content to binary'].
-	collection := collection asByteArray!
-
 beText
 	"Treat the elements of the stream as Characters."
 
@@ -566,7 +558,6 @@ basicNext:into:startingAt:!accessing!public! !
 basicNext:putAll:startingAt:!accessing!private! !
 basicNextPut:!accessing!private! !
 basicUpTo:!accessing!private! !
-beBinary!modes!public! !
 beText!modes!public! !
 bufferClassFor:mode:type:!instance creation!private! !
 close!operations!public! !

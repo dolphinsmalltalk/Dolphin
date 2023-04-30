@@ -513,7 +513,7 @@ asIndexedColor
 
 	"IndexedColors are soft-deprecated. You should avoid their deliberate use, although they may continue to exist in older view resources, etc, and be returned from certain older APIs."
 
-	Notification deprecated.
+	#deprecated.
 	^self! !
 !IndexedColor categoriesForMethods!
 asIndexedColor!converting!public! !

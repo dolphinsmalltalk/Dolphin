@@ -185,14 +185,10 @@ fromIPicture: anIPicture
 
 imageType
 	^self shouldNotImplement
-!
-
-resourceInitializerClass
-	^Error notYetImplemented! !
+! !
 !OS.COM.Picture class categoriesForMethods!
 fileTypes!instance creation!private! !
 fromIPicture:!public! !
 imageType!private! !
-resourceInitializerClass!constants!private! !
 !
 

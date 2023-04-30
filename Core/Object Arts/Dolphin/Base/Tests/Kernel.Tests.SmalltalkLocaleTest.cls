@@ -81,7 +81,7 @@ testPrintFloatSeparators
 	format
 		decimalPlaces: 3;
 		decimalSeparator: $@;
-		thousandSeparator: $^.
+		groupSeparator: $^.
 	self assert: (subject printFloat: 1234567890.123 format: format) equals: '1234567890@123'!
 
 testStbConvertFromVersion0

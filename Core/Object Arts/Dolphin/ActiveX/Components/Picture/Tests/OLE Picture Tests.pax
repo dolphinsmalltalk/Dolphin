@@ -9,6 +9,7 @@ package setClassNames: #(
 ).
 
 package setPrerequisites: #(
+	'..\..\..\..\Base\Dolphin'
 	'..\..\..\..\MVP\Graphics\Tests\Dolphin GDI Graphics Tests'
 	'..\..\..\COM\Tests\OLE COM Tests'
 	'..\OLE Picture'

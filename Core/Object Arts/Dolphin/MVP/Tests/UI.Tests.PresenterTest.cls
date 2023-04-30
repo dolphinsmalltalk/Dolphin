@@ -120,16 +120,27 @@ testStlUpgradesFromLiteralResources
 			self destroyPresenter]!
 
 verifyStbUpgrade: anInteger
-	| stream filer version |
-	stream := self resourceStream: 'ViewResources/D<1p>/<2s>' << {anInteger. self vuFile} text: false.
-	filer := STBInFiler on: stream.
-	presenter := filer
+	| stream filer version notifications |
+	stream := self resourceStream: 'ViewResources/D<1p>/<2s>' << { anInteger. self vuFile } text: false.
+	filer := (STBInFiler on: stream)
 				context: View desktop;
-				basicNext.
+				yourself.
+	presenter := [filer basicNext] on: Notification
+				do: 
+					[:ex |
+					self assert: ex description
+						equals: 'STB reference to deprecated class ComparisonPolicy encountered. Please resave the offending resource or binary file'.
+					ex resume].
 	stream close.
 	version := presenter version.
-	filer evaluateDeferredActions.
-	self verifyUpgradedView: version!
+	notifications := OrderedCollection new.
+	[filer evaluateDeferredActions] on: Notification
+		do: 
+			[:ex |
+			notifications add: ex.
+			ex resume].
+	self verifyUpgradedView: version.
+	^notifications!
 
 verifyStlUpgrade: anArray
 	| version filer |

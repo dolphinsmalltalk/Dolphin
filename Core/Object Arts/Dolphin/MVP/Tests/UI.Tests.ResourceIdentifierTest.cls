@@ -60,6 +60,7 @@ testDeserializeAll
 testReferenceToNonExistentView
 	| childRid parentView anonPresenterClass anonMetaclass |
 	anonPresenterClass := Presenter newAnonymousSubclass.
+	anonPresenterClass setName: #TestPresenter environment: UI.Tests.
 	anonMetaclass := anonPresenterClass class.
 	childRid := self
 				createResourceNamed: 'Test view issue990'
@@ -79,7 +80,7 @@ testReferenceToNonExistentView
 		matching: 
 			[:err |
 			err description
-				= 'Resource [a subclass of UI.Presenter>>#resource_Test_view_issue990] does not exist'].
+				= 'Resource [UI.Tests.TestPresenter>>#resource_Test_view_issue990] does not exist'].
 	anonMetaclass removeSelector: #resource_Parent_Test_view_issue990 ifAbsent: nil.
 	self assert: (anonMetaclass respondsTo: #resource_Parent_Test_view_issue990) not!
 

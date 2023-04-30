@@ -30,7 +30,7 @@ ifNil: aNiladicValuable ifNotNil: aMonadicValuable
 testBlockWithAllTempTypes
 	| sharedOuter copied local innerBlock |
 	local := 0.
-	copied := 2.
+	copied := local + 2.
 	sharedOuter := 1.
 	
 	^[:arg1 :arg2 | 
@@ -42,6 +42,7 @@ testBlockWithAllTempTypes
 			[sharedBlock := #abc.
 			sharedOuter := sharedOuter * 10.
 			sharedBlock].
+	innerBlock.
 	localBlock]!
 
 testCopyingBlocks1
@@ -55,14 +56,15 @@ testCopyingBlocks2
 	^[2 > 1 ifTrue: [a]] value!
 
 testImmutableLiterals
-	| bytes array string float scaledDecimal |
+	| bytes array string float scaledDecimal ints |
 	bytes := #[1 2 3].
 	array := #(1 'abc' #[1 2] 1.23 1.23s #(4)).
 	string := 'abc'.
 	float := 1.23.
 	scaledDecimal := 1.23s.
 	"Symbols not tested, as it is not the responsiblity of the compiler to make them immutable."
-	#(-16rFFFFFFFF -16r80000000 -16r7FFFFFFF -16r40000001 -16r80000000 16r40000000 16r7FFFFFFF 16r80000000 16rFFFFFFFF -16rFFFFFFFFFFFFFFFF -16r8000000000000000 -16r7FFFFFFFFFFFFFFF -16r4000000000000001 -16r8000000000000000 16r4000000000000000 16r7FFFFFFFFFFFFFFF 16r8000000000000000 16rFFFFFFFFFFFFFFFF)!
+	ints := #(-16rFFFFFFFF -16r80000000 -16r7FFFFFFF -16r40000001 -16r80000000 16r40000000 16r7FFFFFFF 16r80000000 16rFFFFFFFF -16rFFFFFFFFFFFFFFFF -16r8000000000000000 -16r7FFFFFFFFFFFFFFF -16r4000000000000001 -16r8000000000000000 16r4000000000000000 16r7FFFFFFFFFFFFFFF 16r8000000000000000 16rFFFFFFFFFFFFFFFF).
+	{ bytes. array. string. float. scaledDecimal. ints }!
 
 testIncrementOptimisationMNU
 	| i j |
@@ -70,7 +72,7 @@ testIncrementOptimisationMNU
 	i class.
 	j := i + 1.
 	5 class.
-	^i!
+	^i, j printString!
 
 testIncrementPushTempOptimisation
 	| i j |
@@ -382,11 +384,10 @@ testWarningRedefiningInstVarAsTemp
 	^iv1!
 
 testWarningRedefiningMethodArgInBlock: a 
-	^
 	[| a |
 	a := 2.
 	a] value.
-	a!
+	^a!
 
 testWarningRedefiningStaticAsArg: Object 
 	^Object!

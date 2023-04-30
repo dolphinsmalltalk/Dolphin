@@ -186,7 +186,8 @@ testConversions
 
 	self shouldRaiseNotARealColorError: [Color default asRGB].
 	"Try a few standard colours"
-	{Color white -> (RGB
+	{
+		Color white -> (RGB
 					r: 255
 					g: 255
 					b: 255).
@@ -210,15 +211,22 @@ testConversions
 					r: 128
 					g: 0
 					b: 0).
-		IndexedColor brown -> Color olive} do: 
+		IndexedColor brown -> Color olive
+	} do: 
 				[:each |
-				| rgb |
+				| rgb indexed |
 				rgb := each key asRGB.
 				self assert: rgb isKindOf: RGB.
 				self assert: rgb red equals: each value red.
 				self assert: rgb green equals: each value green.
 				self assert: rgb blue equals: each value blue.
-				self assert: rgb asIndexedColor equals: each key.
+				indexed := [rgb asIndexedColor] on: Notification
+							do: 
+								[:ex |
+								self assert: ex description
+											= 'Deprecated message sent: RGB>>#asIndexedColorUsingPalette: from: ColorRef>>#asIndexedColor'.
+								ex resume].
+				self assert: indexed equals: each key.
 				self assert: (Color fromInteger: each key asParameter) equals: each key.
 				each key class == IndexedColor
 					ifFalse: [self assert: (RGB named: each key name) equals: each key asRGB]].

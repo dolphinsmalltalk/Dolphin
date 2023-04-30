@@ -20,18 +20,26 @@ connectString
 		with: self pwd!
 
 createDatabase
-	| sql cmd process |
+	| sql cmd process stderr |
 	sql := self class owningPackage fileLocator localFileSpecFor: 'Northwind.sql'.
-	cmd := 'sqlcmd -S <1d> -U <2d> -P <3d> -i "<4d>"'
+	cmd := 'sqlcmd -b -S <1d> -U <2d> -P <3d> -i "<4d>"'
 				expandMacrosWith: self serverName
 				with: self uid
 				with: self pwd
 				with: sql.
 	process := Smalltalk.ExternalProcess new.
 	process commandLine: cmd.
+	stderr := process stderrStream.
 	^
 	[process executeSync.
-	process processExitCode == 0] on: Smalltalk.ExternalProcessExecuteError do: [:ex | false]!
+	process processExitCode == 0 or: 
+			[Notification signal: '<1p> failed to create database<n><2s>' << { self class. stderr upToEnd }.
+			false]]
+			on: Smalltalk.ExternalProcessExecuteError
+			do: 
+				[:ex |
+				Notification signal: ex description.
+				false]!
 
 dropDatabase
 	self connection

@@ -262,8 +262,8 @@ testLongDateFormats
 	self assert: (Locale standard: 'ja-JP') longDateFormat equals: 'yyyy''年''M''月''d''日'''.
 	self assert: (Locale standard: 'zh-CN') longDateFormat equals: 'yyyy''年''M''月''d''日'''.
 	self assert: (Locale standard: 'ko-KR') longDateFormat equals: 'yyyy''년'' M''월'' d''일'' dddd'.
-	self assert: ((Locale standard: 'dz-BT') longDateFormat
-				equals: 'dddd, སྤྱི་ལོ་yyyy MMMM ཚེས་dd')!
+	self assert: (Locale standard: 'dz-BT') longDateFormat
+		equals: 'dddd, སྤྱི་ལོ་yyyy MMMM ཚེས་dd'!
 
 testMonthAbbreviation
 	#('en-US' 'en-GB') do: [:each | self verifyEnglishMonthAbbreviations: (Locale standard: each)]!
