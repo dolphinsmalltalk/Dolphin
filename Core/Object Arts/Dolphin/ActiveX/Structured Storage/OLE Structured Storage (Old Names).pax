@@ -33,7 +33,7 @@ Smalltalk.IStorage := OS.COM.IStorage!
 
 Smalltalk.IStream := OS.COM.IStream!
 
-Smalltalk.OLEStructuredStorageConstants := OS.COM.StructuredStorageConstants!
+Smalltalk.OLEStructuredStorageConstants := OS.COM.StorageConstants!
 
 Smalltalk.URLMonLibrary := OS.COM.URLMonLibrary!
 
