@@ -60,14 +60,17 @@ OS.Win32Structure
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_INPUT_Size' -> 16r1C.
-			'_OffsetOf_dwExtraInfo' -> 16r18.
-			'_OffsetOf_dwFlags' -> 16r10.
 			'_OffsetOf_dx' -> 16r4.
 			'_OffsetOf_dy' -> 16r8.
+			'_OffsetOf_ki_dwExtraInfo' -> 16r10.
+			'_OffsetOf_ki_dwFlags' -> 16r8.
+			'_OffsetOf_ki_time' -> 16rC.
+			'_OffsetOf_mi_dwExtraInfo' -> 16r18.
+			'_OffsetOf_mi_dwFlags' -> 16r10.
+			'_OffsetOf_mi_time' -> 16r14.
 			'_OffsetOf_mouseData' -> 16rC.
-			'_OffsetOf_time' -> 16r14.
-			'_OffsetOf_Type' -> 16r0.
-			'_OffsetOf_uMsg' -> 16r8.
+			'_OffsetOf_type' -> 16r0.
+			'_OffsetOf_uMsg' -> 16r4.
 			'_OffsetOf_wParamH' -> 16rA.
 			'_OffsetOf_wParamL' -> 16r8.
 			'_OffsetOf_wScan' -> 16r6.

@@ -8,14 +8,17 @@ OS.Win32Structure
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_INPUT_Size' -> 16r1C.
-			'_OffsetOf_dwExtraInfo' -> 16r18.
-			'_OffsetOf_dwFlags' -> 16r10.
 			'_OffsetOf_dx' -> 16r4.
 			'_OffsetOf_dy' -> 16r8.
+			'_OffsetOf_ki_dwExtraInfo' -> 16r10.
+			'_OffsetOf_ki_dwFlags' -> 16r8.
+			'_OffsetOf_ki_time' -> 16rC.
+			'_OffsetOf_mi_dwExtraInfo' -> 16r18.
+			'_OffsetOf_mi_dwFlags' -> 16r10.
+			'_OffsetOf_mi_time' -> 16r14.
 			'_OffsetOf_mouseData' -> 16rC.
-			'_OffsetOf_time' -> 16r14.
-			'_OffsetOf_Type' -> 16r0.
-			'_OffsetOf_uMsg' -> 16r8.
+			'_OffsetOf_type' -> 16r0.
+			'_OffsetOf_uMsg' -> 16r4.
 			'_OffsetOf_wParamH' -> 16rA.
 			'_OffsetOf_wParamL' -> 16r8.
 			'_OffsetOf_wScan' -> 16r6.
@@ -46,24 +49,34 @@ struct tagINPUT {
 !OS.INPUT methodsFor!
 
 dwExtraInfo
-	"Answer the <Integer> value of the receiver's 'dwExtraInfo' field."
-
-	^bytes uintPtrAtOffset: _OffsetOf_dwExtraInfo!
+	| type |
+	type := self type.
+	^type == INPUT_MOUSE
+		ifTrue: [self mi_dwExtraInfo]
+		ifFalse: [type == INPUT_KEYBOARD ifTrue: [self ki_dwExtraInfo] ifFalse: [self shouldNotImplement]]!
 
 dwExtraInfo: anInteger
-	"Set the receiver's 'dwExtraInfo' field to the value of the argument, anInteger"
-
-	bytes uintPtrAtOffset: _OffsetOf_dwExtraInfo put: anInteger!
+	| type |
+	type := self type.
+	^type == INPUT_MOUSE
+		ifTrue: [self mi_dwExtraInfo: anInteger]
+		ifFalse: 
+			[type == INPUT_KEYBOARD ifTrue: [self ki_dwExtraInfo: anInteger] ifFalse: [self shouldNotImplement]]!
 
 dwFlags
-	"Answer the <Integer> value of the receiver's 'dwFlags' field."
-
-	^bytes uint32AtOffset: _OffsetOf_dwFlags!
+	| type |
+	type := self type.
+	^type == INPUT_MOUSE
+		ifTrue: [self mi_dwFlags]
+		ifFalse: [type == INPUT_KEYBOARD ifTrue: [self ki_dwFlags] ifFalse: [self shouldNotImplement]]!
 
 dwFlags: anInteger
-	"Set the receiver's 'dwFlags' field to the value of the argument, anInteger"
-
-	bytes uint32AtOffset: _OffsetOf_dwFlags put: anInteger!
+	| type |
+	type := self type.
+	^type == INPUT_MOUSE
+		ifTrue: [self mi_dwFlags: anInteger]
+		ifFalse: 
+			[type == INPUT_KEYBOARD ifTrue: [self ki_dwFlags: anInteger] ifFalse: [self shouldNotImplement]]!
 
 dx
 	"Answer the <Integer> value of the receiver's 'dx' field."
@@ -91,17 +104,77 @@ getValidFields
 	structure, that are valid in this particular instance."
 
 	| type |
-	type := self Type.
+	type := self type.
 	^type == INPUT_MOUSE
-		ifTrue: [#(#dx #dy #mouseData #dwFlags #time #dwExtraInfo)]
+		ifTrue: [#(#dx #dy #mouseData #mi_dwFlags #mi_time #mi_dwExtraInfo)]
 		ifFalse: 
 			[type == INPUT_KEYBOARD
 				ifTrue: 
 					["KEYBDINPUT"
-					#(#wVk #wScan #dwFlags #time)]
+					#(#wVk #wScan #ki_dwFlags #ki_time)]
 				ifFalse: 
 					["HARDWARDINPUT"
 					#(#uMsg #wParamL #wParamH)]]!
+
+ki_dwExtraInfo
+	"Answer the <Integer> value of the receiver's 'ki_dwExtraInfo' field."
+
+	^bytes uint32AtOffset: _OffsetOf_ki_dwExtraInfo!
+
+ki_dwExtraInfo: anInteger
+	"Set the receiver's 'ki_dwExtraInfo' field to the value of the argument, anInteger"
+
+	bytes uint32AtOffset: _OffsetOf_ki_dwExtraInfo put: anInteger!
+
+ki_dwFlags
+	"Answer the <Integer> value of the receiver's 'ki_dwFlags' field."
+
+	^bytes uint32AtOffset: _OffsetOf_ki_dwFlags!
+
+ki_dwFlags: anInteger
+	"Set the receiver's 'ki_dwFlags' field to the value of the argument, anInteger"
+
+	bytes uint32AtOffset: _OffsetOf_ki_dwFlags put: anInteger!
+
+ki_time
+	"Answer the <Integer> value of the receiver's 'ki_time' field."
+
+	^bytes uint32AtOffset: _OffsetOf_ki_time!
+
+ki_time: anInteger
+	"Set the receiver's 'ki_time' field to the value of the argument, anInteger"
+
+	bytes uint32AtOffset: _OffsetOf_ki_time put: anInteger!
+
+mi_dwExtraInfo
+	"Answer the <Integer> value of the receiver's 'mi_dwExtraInfo' field."
+
+	^bytes uintPtrAtOffset: _OffsetOf_mi_dwExtraInfo!
+
+mi_dwExtraInfo: anInteger
+	"Set the receiver's 'mi_dwExtraInfo' field to the value of the argument, anInteger"
+
+	bytes uintPtrAtOffset: _OffsetOf_mi_dwExtraInfo put: anInteger!
+
+mi_dwFlags
+	"Answer the <Integer> value of the receiver's 'mi_dwFlags' field."
+
+	^bytes uint32AtOffset: _OffsetOf_mi_dwFlags!
+
+mi_dwFlags: anInteger
+	"Set the receiver's 'mi_dwFlags' field to the value of the argument, anInteger"
+
+	bytes uint32AtOffset: _OffsetOf_mi_dwFlags put: anInteger!
+
+mi_time
+	"Answer the <Integer> value of the receiver's 'mi_time' field."
+
+	^bytes uint32AtOffset: _OffsetOf_mi_time!
+
+mi_time: anInteger
+	"Set the receiver's 'mi_time' field to the value of the argument, anInteger"
+
+	bytes uint32AtOffset: _OffsetOf_mi_time put: anInteger!
 
 mouseData
 	"Answer the <Integer> value of the receiver's 'mouseData' field."
@@ -114,24 +187,28 @@ mouseData: anInteger
 	bytes uint32AtOffset: _OffsetOf_mouseData put: anInteger!
 
 time
-	"Answer the <Integer> value of the receiver's 'time' field."
-
-	^bytes uint32AtOffset: _OffsetOf_time!
+	| type |
+	type := self type.
+	^type == INPUT_MOUSE
+		ifTrue: [self mi_time]
+		ifFalse: [type == INPUT_KEYBOARD ifTrue: [self ki_time] ifFalse: [self shouldNotImplement]]!
 
 time: anInteger
-	"Set the receiver's 'time' field to the value of the argument, anInteger"
+	| type |
+	type := self type.
+	^type == INPUT_MOUSE
+		ifTrue: [self mi_time: anInteger]
+		ifFalse: [type == INPUT_KEYBOARD ifTrue: [self ki_time: anInteger] ifFalse: [self shouldNotImplement]]!
 
-	bytes uint32AtOffset: _OffsetOf_time put: anInteger!
+type
+	"Answer the <Integer> value of the receiver's 'type' field."
 
-Type
-	"Answer the <Integer> value of the receiver's 'Type' field."
+	^bytes int32AtOffset: _OffsetOf_type!
 
-	^bytes int32AtOffset: _OffsetOf_Type!
+type: anInteger
+	"Set the receiver's 'type' field to the value of the argument, anInteger"
 
-Type: anInteger
-	"Set the receiver's 'Type' field to the value of the argument, anInteger"
-
-	bytes int32AtOffset: _OffsetOf_Type put: anInteger!
+	bytes int32AtOffset: _OffsetOf_type put: anInteger!
 
 uMsg
 	"Answer the <Integer> value of the receiver's 'uMsg' field."
@@ -183,21 +260,33 @@ wVk: anInteger
 
 	bytes uint16AtOffset: _OffsetOf_wVk put: anInteger! !
 !OS.INPUT categoriesForMethods!
-dwExtraInfo!**compiled accessors**!public! !
-dwExtraInfo:!**compiled accessors**!public! !
-dwFlags!**compiled accessors**!public! !
-dwFlags:!**compiled accessors**!public! !
+dwExtraInfo!accessing!public! !
+dwExtraInfo:!accessing!public! !
+dwFlags!accessing!public! !
+dwFlags:!accessing!public! !
 dx!**compiled accessors**!public! !
 dx:!**compiled accessors**!public! !
 dy!**compiled accessors**!public! !
 dy:!**compiled accessors**!public! !
-getValidFields!private! !
+getValidFields!accessing!private! !
+ki_dwExtraInfo!**compiled accessors**!public! !
+ki_dwExtraInfo:!**compiled accessors**!public! !
+ki_dwFlags!**compiled accessors**!public! !
+ki_dwFlags:!**compiled accessors**!public! !
+ki_time!**compiled accessors**!public! !
+ki_time:!**compiled accessors**!public! !
+mi_dwExtraInfo!**compiled accessors**!public! !
+mi_dwExtraInfo:!**compiled accessors**!public! !
+mi_dwFlags!**compiled accessors**!public! !
+mi_dwFlags:!**compiled accessors**!public! !
+mi_time!**compiled accessors**!public! !
+mi_time:!**compiled accessors**!public! !
 mouseData!**compiled accessors**!public! !
 mouseData:!**compiled accessors**!public! !
-time!**compiled accessors**!public! !
-time:!**compiled accessors**!public! !
-Type!**compiled accessors**!public! !
-Type:!**compiled accessors**!public! !
+time!accessing!public! !
+time:!accessing!public! !
+type!**compiled accessors**!public! !
+type:!**compiled accessors**!public! !
 uMsg!**compiled accessors**!public! !
 uMsg:!**compiled accessors**!public! !
 wParamH!**compiled accessors**!public! !
@@ -232,7 +321,7 @@ defineFields
 "
 
 	self
-		defineField: #Type
+		defineField: #type
 		type: Int32Field new
 		offset: 0.
 
@@ -245,13 +334,13 @@ defineFields
 		defineField: #wScan
 			type: UInt16Field new
 			offset: 6;
-		defineField: #dwFlags
+		defineField: #ki_dwFlags
 			type: UInt32Field new
 			offset: 8;
-		defineField: #time
+		defineField: #ki_time
 			type: UInt32Field new
 			offset: 12;
-		defineField: #dwExtraInfo
+		defineField: #ki_dwExtraInfo
 			type: UInt32Field new
 			offset: 16.
 
@@ -266,13 +355,13 @@ defineFields
 		defineField: #mouseData
 			type: UInt32Field new
 			offset: 12;
-		defineField: #dwFlags
+		defineField: #mi_dwFlags
 			type: UInt32Field new
 			offset: 16;
-		defineField: #time
+		defineField: #mi_time
 			type: UInt32Field new
 			offset: 20;
-		defineField: #dwExtraInfo
+		defineField: #mi_dwExtraInfo
 			type: UIntPtrField new
 			offset: 24.
 
@@ -280,17 +369,17 @@ defineFields
 	self
 		defineField: #uMsg
 			type: UInt32Field new
-			offset: 8;
+			offset: 4;
 		defineField: #wParamL
 			type: UInt16Field new
 			offset: 8;
 		defineField: #wParamH
 			type: UInt16Field new
 			offset: 10.
-	self byteSize: 28!
+	self byteSize: 24 + VMConstants.IntPtrSize!
 
 getFieldNames
-	^#(#Type #dx #wVk #wScan #dy #uMsg #wParamL #wParamH #mouseData #dwFlags #time #dwExtraInfo)! !
+	^#(#type #dx #uMsg #wVk #wScan #dy #ki_dwFlags #wParamL #wParamH #ki_time #mouseData #ki_dwExtraInfo #mi_dwFlags #mi_time #mi_dwExtraInfo)! !
 !OS.INPUT class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
