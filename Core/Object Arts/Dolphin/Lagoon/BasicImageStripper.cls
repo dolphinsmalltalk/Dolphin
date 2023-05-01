@@ -87,10 +87,11 @@ _compileExternalStructuresNow: aCollection
 			[aCollection do: [:each | each fullyCompileDefinition].
 			"Lazy template definition is not required (or possible), so stub it out"
 			External.Structure class compile: 'ensureDefined ^nil'.
- 			External.Structure removeTemplate.
+			External.Structure removeTemplate.
 			aCollection do: [:each | each removeTemplate].
 			"ExternalStructure DNU processing is no longer needed since fully compiled"
-			self _removeSelectors: #(#getFieldNames #canUnderstand:) of: External.Structure class.
+			self _removeSelectors: #(#getFieldNames #canUnderstand: #dynamicSelectorsDo: #offsetOf:)
+				of: External.Structure class.
 			self _removeSelectors: #(#doesNotUnderstand:) of: External.Structure].
 	"Field meta-data classes are no longer required"
 	self _deleteFieldClasses.

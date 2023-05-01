@@ -18,24 +18,12 @@ MEMORY_BASIC_INFORMATION comment: ''!
 !MEMORY_BASIC_INFORMATION categoriesForClass!Deprecated! !
 !MEMORY_BASIC_INFORMATION methodsFor!
 
-AllocationBase
-	"Answer the <ExternalAddress> value of the receiver's 'AllocationBase' field."
-
-	^(bytes uintPtrAtOffset: _OffsetOf_AllocationBase) asExternalAddress!
-
-BaseAddress
-	"Answer the <ExternalAddress> value of the receiver's 'BaseAddress' field."
-
-	^(bytes uintPtrAtOffset: _OffsetOf_BaseAddress) asExternalAddress!
-
 moduleFileName
 	"Answer the filename of the module to which the receiver's region
 	maps. Only relevant for text segments."
 
 	^ExternalLibrary moduleFileName: self AllocationBase! !
 !MEMORY_BASIC_INFORMATION categoriesForMethods!
-AllocationBase!**compiled accessors**!public! !
-BaseAddress!**compiled accessors**!public! !
 moduleFileName!accessing!public! !
 !
 
@@ -60,9 +48,9 @@ defineFields
 		} MEMORY_BASIC_INFORMATION;"
 
 	self
+		beUncompiled;
 		defineField: #BaseAddress type: LPVOIDField readOnly;
 		defineField: #AllocationBase type: LPVOIDField readOnly;
-		beUncompiled;
 		defineField: #AllocationProtect type: UInt32Field readOnly;
 		defineField: #RegionSize type: UInt32Field readOnly;
 		defineField: #State type: UInt32Field readOnly;

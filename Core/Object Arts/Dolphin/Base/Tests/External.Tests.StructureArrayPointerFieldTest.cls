@@ -39,10 +39,8 @@ testGenerateAccessorsForSizedArray
 	actual := struct Test.
 	self assert: actual equals: data.
 	"Test uncompiled write/read while we are here."
+	self makeStructUncompiled: structClass.
 	struct := structClass new.
-	structClass
-		methodDictionary: nil;
-		flushMethodCache.
 	struct Test: data.
 	self assert: struct Size equals: 2.
 	self assert: struct Test equals: data! !

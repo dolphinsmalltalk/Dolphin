@@ -169,6 +169,9 @@ isReadable
 
 	^flags anyMask: ReadableMask!
 
+isUncompiled
+	^(flags bitAnd: ##(AccessorMask | MutatorMask)) == 0!
+
 isWriteable
 	"Answer whether the receiver is a writeable attribute."
 
@@ -211,6 +214,7 @@ isNullable!public!testing! !
 isNullable:!accessing!modes!public! !
 isOverride!public!testing! !
 isReadable!public!testing! !
+isUncompiled!public!testing! !
 isWriteable!public!testing! !
 readFrom:!indirect accessing!private! !
 writeInto:value:!indirect accessing!private! !

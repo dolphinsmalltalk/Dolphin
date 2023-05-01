@@ -99,32 +99,32 @@ Ipv6Address: aSOCKADDR_IN6
 		startingAt: 1!
 
 NamedAddress_Address
-	"Answer the <WORDArray> value of the receiver's 'NamedAddress_Address' field."
+	"Answer the <UInt16Array> value of the receiver's 'NamedAddress_Address' field."
 
 	^UInt16Array fromAddress: bytes yourAddress + _OffsetOf_NamedAddress_Address length: 256!
 
-NamedAddress_Address: aWORDArray
-	"Set the receiver's 'NamedAddress_Address' field to the value of the argument, aWORDArray"
+NamedAddress_Address: anUInt16Array
+	"Set the receiver's 'NamedAddress_Address' field to the value of the argument, anUInt16Array"
 
 	| size |
-	size := aWORDArray byteSize min: ##(256 * UInt16Array elementSize).
-	aWORDArray
+	size := anUInt16Array byteSize min: ##(256 * UInt16Array elementSize).
+	anUInt16Array
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_NamedAddress_Address + 1)
 		to: _OffsetOf_NamedAddress_Address + size
 		startingAt: 1!
 
 NamedAddress_Port
-	"Answer the <WORDArray> value of the receiver's 'NamedAddress_Port' field."
+	"Answer the <UInt16Array> value of the receiver's 'NamedAddress_Port' field."
 
 	^UInt16Array fromAddress: bytes yourAddress + _OffsetOf_NamedAddress_Port length: 6!
 
-NamedAddress_Port: aWORDArray
-	"Set the receiver's 'NamedAddress_Port' field to the value of the argument, aWORDArray"
+NamedAddress_Port: anUInt16Array
+	"Set the receiver's 'NamedAddress_Port' field to the value of the argument, anUInt16Array"
 
 	| size |
-	size := aWORDArray byteSize min: ##(6 * UInt16Array elementSize).
-	aWORDArray
+	size := anUInt16Array byteSize min: ##(6 * UInt16Array elementSize).
+	anUInt16Array
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_NamedAddress_Port + 1)
 		to: _OffsetOf_NamedAddress_Port + size

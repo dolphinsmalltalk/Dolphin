@@ -6,7 +6,11 @@ Core.Object
 	classVariableNames: 'RecordClasses'
 	imports: #()
 	classInstanceVariableNames: 'template flags alignment'
-	classConstants: { 'CompiledMask' -> 16r1 }!
+	classConstants: {
+			'_Structure_Size' -> 16r0.
+			'CompileNewFieldsMask' -> 16r1.
+			'UncompiledFieldsMask' -> 16r2
+		}!
 External.Structure guid: (Core.GUID fromString: '{87b4c489-026e-11d3-9fd7-00a0cc3e4a32}')!
 External.Structure isNonInstantiable: true!
 External.Structure comment: ''!
@@ -193,18 +197,22 @@ doesNotUnderstand: aMessage
 	selector of aMessage is looked up in the receiver's class' template, and 
 	if found the appropriate field is retrieved/set."
 
-	| key |
-	(key := aMessage selector) lastCodeUnit == $: ifTrue: [key := key copyFrom: 1 to: key size - 1].
-	^(self template lookup: key)
-		ifNil: [super doesNotUnderstand: aMessage]
+	| fields fieldName |
+	fields := self template.
+	self class hasUncompiledFields ifFalse: [^super doesNotUnderstand: aMessage].
+	fieldName := aMessage selector.
+	fieldName lastCodeUnit == $: ifTrue: [fieldName := fieldName copyFrom: 1 to: fieldName size - 1].
+	(fields lookup: fieldName)
 		ifNotNil: 
 			[:field |
-			| args |
-			args := aMessage arguments.
-			args size == 0
-				ifTrue: [field isReadable ifTrue: [^field readFrom: self]]
-				ifFalse: [field isWriteable ifTrue: [^field writeInto: self value: (args at: 1)]].
-			super doesNotUnderstand: aMessage]!
+			field isUncompiled
+				ifTrue: 
+					[| args |
+					args := aMessage arguments.
+					args size == 0
+						ifTrue: [field isReadable ifTrue: [^field readFrom: self]]
+						ifFalse: [field isWriteable ifTrue: [^field writeInto: self value: (args at: 1)]]]].
+	^super doesNotUnderstand: aMessage!
 
 fieldsDo: aMonadicValuable
 	"Evaluate the <monadicValuable> argument, operation, for each of the receiver's fields."
@@ -487,12 +495,12 @@ basicByteSize
 beCompiled
 	"Mark the receiver as a structure which is to be compiled"
 
-	flags := flags maskSet: CompiledMask!
+	flags := flags maskSet: CompileNewFieldsMask!
 
 beUncompiled
 	"Mark the receiver as a structure which is not to be compiled"
 
-	flags := flags maskClear: CompiledMask
+	flags := flags maskClear: CompileNewFieldsMask
 !
 
 byteSize
@@ -510,7 +518,7 @@ byteSize: anInteger
 
 canUnderstand: aSymbol
 	^(super canUnderstand: aSymbol) or: 
-			[self isCompiled not and: 
+			[self hasUncompiledFields and: 
 					[| size field |
 					(aSymbol at: (size := aSymbol size)) == $:
 						ifTrue: 
@@ -551,7 +559,8 @@ defineField: fieldName type: anExternalField offset: offset
 
 	| offsetConstant |
 	anExternalField structClass: self.
-	self isCompiled ifFalse: [anExternalField beUncompiled].
+	self shouldCompileNewFields ifFalse: [anExternalField beUncompiled].
+	anExternalField isUncompiled ifTrue: [self hasUncompiledFields: true].
 	alignment := alignment max: anExternalField alignment.
 	anExternalField offset: offset.
 	self byteSize: (self basicByteSize max: offset + anExternalField byteSize).
@@ -613,10 +622,15 @@ descriptorClass
 dynamicSelectorsDo: aMonadicValuable
 	"Evaluate the <monadicValuable> argument for each of the extra message selectors understood by the receiver at run time that might not have an associated method."
 
-	self template keysAndValuesDo: 
+	| fields |
+	fields := self template.
+	self hasUncompiledFields ifFalse: [^self].
+	fields keysAndValuesDo: 
 			[:fieldName :field |
-			field isReadable ifTrue: [aMonadicValuable value: fieldName].
-			field isWriteable ifTrue: [aMonadicValuable value: (fieldName copyWith: $:) asSymbol]]!
+			field isUncompiled
+				ifTrue: 
+					[field isReadable ifTrue: [aMonadicValuable value: fieldName].
+					field isWriteable ifTrue: [aMonadicValuable value: (fieldName , ':') asSymbol]]]!
 
 elementSize
 	"Answer the size (in bytes) of the structure the receiver represents
@@ -669,6 +683,14 @@ getFieldNames
 
 	^self fieldNamesFromTemplate!
 
+hasUncompiledFields
+	"Private - Answer whether the receiver contains any fields which do not have compiled accessors."
+
+	^flags allMask: UncompiledFieldsMask!
+
+hasUncompiledFields: aBoolean
+	flags := flags mask: UncompiledFieldsMask set: aBoolean!
+
 inheritTemplate
 	| ancestor |
 	ancestor := self superclass.
@@ -698,12 +720,6 @@ initializeTemplate
 
 	self resetTemplate.
 	self newTemplate!
-
-isCompiled
-	"Private - Answer whether the receiver is a compiled definition (i.e. methods have been generated
-	from the template)."
-
-	^flags anyMask: CompiledMask!
 
 isFieldBrowsable: aSymbol
 	template notNil ifTrue: [(template lookup: aSymbol) ifNotNil: [:field | ^field isBrowsable]].
@@ -901,7 +917,7 @@ removeRedundantOffsetConstants
 
 resetTemplate
 	self byteSize: 0.
-	flags := CompiledMask.
+	flags := CompileNewFieldsMask.
 	alignment := template := nil!
 
 setGuid: aGUID
@@ -915,6 +931,12 @@ setGuid: aGUID
 		super setGuid: aGUID.
 		self register]
 !
+
+shouldCompileNewFields
+	"Private - Answer whether fields subsequently added to the receiver should, by default, have accessors generated when the receiver's definition is compiled.
+	This is usually true, so field accessors are normally generated. However it can be turned off for a whole structure, or part of the structure. Also, individual fields can be marked as uncompiled, overriding this setting."
+
+	^flags anyMask: CompileNewFieldsMask!
 
 stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 	self ensureDefined.
@@ -966,7 +988,7 @@ baseAlignment!private!template definition! !
 basicByteSize!accessing!public! !
 beCompiled!modes!public!template definition! !
 beUncompiled!modes!public!template definition! !
-byteSize!accessing!public! !
+byteSize!**compiled accessors**!constants!public! !
 byteSize:!initializing!private! !
 canUnderstand:!methods-testing!public! !
 changedByteSizeFrom:!private!template definition! !
@@ -986,11 +1008,12 @@ fieldOffsetConstantPrefix!constants!private!template definition! !
 fromAddress:!instance creation!public! !
 fromBytes:!instance creation!public! !
 getFieldNames!accessing!private! !
+hasUncompiledFields!private!testing! !
+hasUncompiledFields:!private!testing! !
 inheritTemplate!private!template definition! !
 init:!initializing!public! !
 initializeAfterLoad!development!initializing!private! !
 initializeTemplate!private!template definition! !
-isCompiled!private!testing! !
 isFieldBrowsable:!printing!private! !
 libraryAndIndex!constants!public! !
 new!instance creation!public! !
@@ -1013,6 +1036,7 @@ registerClass:forGUID:!adding!public! !
 removeRedundantOffsetConstants!private!template definition! !
 resetTemplate!public!template definition! !
 setGuid:!accessing!private! !
+shouldCompileNewFields!private!testing! !
 stbReadFrom:format:size:!binary filing!public! !
 structurePacker!public!template definition! !
 template!accessing!private! !

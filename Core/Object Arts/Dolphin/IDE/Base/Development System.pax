@@ -359,7 +359,7 @@ package setMethodNames: #(
 	#(#{External.Structure class} #inheritsFieldNamed:)
 	#(#{External.Structure class} #newCodeGenerationContext)
 	#(#{External.Structure class} #recompileDefinition)
-	#(#{External.Structure class} #shouldCompile:forField:)
+	#(#{External.Structure class} #shouldCompile:forField:named:)
 	#(#{External.Structure class} #shouldOverrideGetFieldNames)
 	#(#{External.StructureArrayField} #printAccessorExpressionSuffixOn:)
 	#(#{External.StructureArrayField} #printElementSizeExpressionBodyOn:)
@@ -4075,14 +4075,18 @@ compileNewFields
 			[:getSelector :field |
 			field isReadable
 				ifTrue: 
-					[(self shouldCompile: getSelector forField: field)
-						ifTrue: [self compileGetMethod: getSelector forField: field]].
+					[(self
+						shouldCompile: getSelector
+						forField: field
+						named: getSelector) ifTrue: [self compileGetMethod: getSelector forField: field]].
 			field isWriteable
 				ifTrue: 
 					[| setSelector |
 					setSelector := (getSelector , ':') asSymbol.
-					(self shouldCompile: setSelector forField: field)
-						ifTrue: [self compileSetMethod: setSelector forField: field]]]!
+					(self
+						shouldCompile: setSelector
+						forField: field
+						named: getSelector) ifTrue: [self compileSetMethod: setSelector forField: field]]]!
 
 compileSetMethod: aSelector forField: anExternalField
 	"Private - Generate a compiled 'set' accessor method for the selector aSymbol 
@@ -4109,9 +4113,9 @@ hasHandCodedMethodFor: selector
 	"Private - Answer whether the receiver appears to have a hand coded implementation
 	for the specified selector <Symbol>."
 
-	| method |
-	method := self compiledMethodAt: selector ifAbsent: [^false].
-	^(self autoGenCategory asMethodCategory includesMethod: method) not!
+	^(self compiledMethodAt: selector ifAbsent: nil)
+		ifNil: [false]
+		ifNotNil: [:method | (self autoGenCategory asMethodCategory includesMethod: method) not]!
 
 inheritsFieldNamed: aSymbol
 	| base |
@@ -4129,15 +4133,15 @@ recompileDefinition
 	self compileGetFieldNames.
 	self compileByteSize!
 
-shouldCompile: selector forField: anExternalField
+shouldCompile: selectorSymbol forField: anExternalField named: fieldNameSymbol
 	"Private - Answer whether to compile an accessor method
 	with the specified selector for the specified field in the
 	receiver."
 
 	^anExternalField canGenerateAccessors and: 
-			[(self hasHandCodedMethodFor: selector) not and: 
+			[(self hasHandCodedMethodFor: selectorSymbol) not and: 
 					["Don't generate inherited fields unless specifically marked for override"
-					anExternalField isOverride or: [(self inheritsFieldNamed: (selector upTo: $:) asSymbol) not]]	"Don't overwrite manually written methods"]!
+					anExternalField isOverride or: [(self inheritsFieldNamed: fieldNameSymbol) not]]	"Don't overwrite manually written methods"]!
 
 shouldOverrideGetFieldNames
 	^self isNonInstantiable not and: 
@@ -4164,7 +4168,7 @@ hasHandCodedMethodFor:!compiling!private! !
 inheritsFieldNamed:!compiling!private! !
 newCodeGenerationContext!compiling!private! !
 recompileDefinition!compiling!private! !
-shouldCompile:forField:!compiling!private! !
+shouldCompile:forField:named:!compiling!private! !
 shouldOverrideGetFieldNames!compiling!private! !
 !
 

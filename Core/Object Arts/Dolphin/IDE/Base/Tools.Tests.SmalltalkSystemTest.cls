@@ -20,9 +20,9 @@ testAllSelectorsImplementedIn
 	env := Refactory.Browser.BrowserEnvironment new
 				forPackages: {Object owningPackage. Smalltalk.ImageStripper owningPackage}.
 	"Preconditions"
-	self assert: (env definesClass: OS.MSG)
+	self assert: (env definesClass: OS.MSGBOXPARAMSW)
 		description: 'Test inconclusive; package does not own expected class'.
-	self assert: (OS.MSG dynamicSelectors includes: #x)
+	self assert: (OS.MSGBOXPARAMSW dynamicSelectors includes: #dwLanguageId:)
 		description: 'Test inconclusive; MSG does not have expected dynamic selector'.
 	self assert: (Smalltalk.ImageStripper >> #_addReferencedViews:to: sendsSelector: #viewClass)
 		description: 'Test inconclusive; example unimplemented selector not sent'.

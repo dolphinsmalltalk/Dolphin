@@ -47,10 +47,13 @@ elfStyle!**compiled accessors**!public! !
 
 !OS.ENUMLOGFONTW class methodsFor!
 
+byteSize
+	^_ENUMLOGFONTW_Size!
+
 defineFields
 	"Define the fields of the ENUMLOGFONT structure.
 
-	ENUMLOGFONT compileDefinition
+	ENUMLOGFONTW compileDefinition
 
 		typedef [uuid(f10411f6-c151-4390-af05-3702d4f98f12)]
 		struct tagENUMLOGFONT {
@@ -69,6 +72,7 @@ defineFields
 getFieldNames
 	^#(#lfHeight #lfWidth #lfEscapement #lfOrientation #lfWeight #lfItalic #lfUnderline #lfStrikeOut #lfCharSet #lfOutPrecision #lfClipPrecision #lfQuality #lfPitchAndFamily #lfFaceName #elfFullName #elfStyle)! !
 !OS.ENUMLOGFONTW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

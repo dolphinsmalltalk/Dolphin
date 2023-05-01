@@ -22,7 +22,7 @@ testGenerateAccessorsForSizedString
 		defineField: #Size
 			type: <3d> new
 			offset: 4'
-				<< {ArrayPointerField. String. UInt32Field}.
+				<< { ArrayPointerField. String. UInt32Field }.
 	structClass recompileDefinition.
 	actual := (structClass compiledMethodAt: #Test:) parseTree.
 	expected := Parser
@@ -37,9 +37,7 @@ testGenerateAccessorsForSizedString
 	self assert: (actual includes: $\0).
 	self assert: actual equals: string.
 	"Test uncompiled write/read while we are here."
-	structClass
-		methodDictionary: nil;
-		flushMethodCache.
+	self makeStructUncompiled: structClass.
 	string := '🐬' copyWith: $\0.
 	struct Test: string.
 	self assert: struct Size equals: string size.
@@ -56,7 +54,7 @@ testGenerateAccessorsForSizeIsExpression
 		defineField: #Size
 			type: <4d> new
 			offset: 0'
-				<< {ArrayPointerField. SizeIsArrayFieldLength. Utf16String. UInt32Field}.
+				<< { ArrayPointerField. SizeIsArrayFieldLength. Utf16String. UInt32Field }.
 	structClass recompileDefinition.
 	actual := (structClass compiledMethodAt: #Test:) parseTree.
 	expected := Parser
@@ -71,9 +69,7 @@ testGenerateAccessorsForSizeIsExpression
 	self assert: (actual includes: $\0).
 	self assert: actual equals: string.
 	"Test uncompiled write/read while we are here."
-	structClass
-		methodDictionary: nil;
-		flushMethodCache.
+	self makeStructUncompiled: structClass.
 	string := ('🐬' copyWith: $\0) asUtf16String.
 	struct Test: string.
 	self assert: struct Size equals: string size * 2.

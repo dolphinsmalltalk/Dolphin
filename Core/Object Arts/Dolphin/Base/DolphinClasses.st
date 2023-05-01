@@ -3025,7 +3025,11 @@ Core.Object
 	classVariableNames: 'RecordClasses'
 	imports: #()
 	classInstanceVariableNames: 'template flags alignment'
-	classConstants: { 'CompiledMask' -> 16r1 }!
+	classConstants: {
+			'_Structure_Size' -> 16r0.
+			'CompileNewFieldsMask' -> 16r1.
+			'UncompiledFieldsMask' -> 16r2
+		}!
 Core.Object
 	subclass: #'Kernel.UndeclaredVariable'
 	instanceVariableNames: ''
