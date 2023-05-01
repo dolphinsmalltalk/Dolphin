@@ -75,7 +75,7 @@ setElementCount: anArrayedCollection of: anExternalField in: anExternalStructure
 				ifTrue: [sizeField writeInto: anExternalStructure value: anArrayedCollection size]]!
 
 setLengthSelector
-	^(lengthField copyWith: $:) asSymbol! !
+	^(lengthField, ':') asSymbol! !
 !External.ConformantArrayFieldLength categoriesForMethods!
 getElementCountOf:in:!indirect accessing!private! !
 lengthField:!accessing!private! !

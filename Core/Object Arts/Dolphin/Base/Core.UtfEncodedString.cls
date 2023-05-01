@@ -144,7 +144,7 @@ collect: aMonadicValuable
 copyWith: aCharacter
 	"Answer a <String> which is a copy of the receiver that has the specified <Character> concatenated to its end."
 
-	^self , (self class with: aCharacter)!
+	^self , (self copyingClass with: aCharacter)!
 
 copyWith: anObject atIndex: anInteger
 	"Answer a <String> which is a copy of the receiver that has anObject inserted at the index, anInteger."

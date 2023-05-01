@@ -687,7 +687,7 @@ on: aFile type: aSymbol
 				ifFalse: 
 					[flags := DefaultReadFlags.
 					'r'].
-	^(Ucrt _fdopen: fd mode: (mode copyWith: (encoding == #binary ifTrue: [$b] ifFalse: [$t])))
+	^(Ucrt _fdopen: fd mode: mode , (encoding == #binary ifTrue: ['b'] ifFalse: ['t']))
 		ifNil: [CRTError signal]
 		ifNotNil: 
 			[:handle |

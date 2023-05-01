@@ -478,14 +478,6 @@ testConcatenateInvalidUtf8
 	self assert: actual
 		equals: (Utf8String fromByteArray: #[194 98 194 226 130 172 144 128 128 240 159 172])!
 
-testCopyWith
-	| subject actual |
-	subject := self assimilateString: 'a£文1🍺'.
-	self assert: subject length equals: 5.
-	actual := subject copyWith: Character dolphin.
-	self assert: actual equals: 'a£文1🍺🐬'.
-	self assert: actual length equals: 6!
-
 testCopyWithAtIndex
 	| subject actual |
 	subject := self assimilateString: 'a£文1🍺'.
@@ -795,7 +787,6 @@ testAsUtf16StringMarkusKuhnUnexpectedContinuations!public!unit tests! !
 testAsUtf16StringMarkusKuhnUtf8Complete!public!unit tests! !
 testConcatenateInvalidUtf16!public!unit tests! !
 testConcatenateInvalidUtf8!public!unit tests! !
-testCopyWith!public!unit tests! !
 testCopyWithAtIndex!public!unit tests! !
 testDecodeNextFrom5and6Byte!public!unit tests! !
 testDecodeNextFromOverlong!public!unit tests! !

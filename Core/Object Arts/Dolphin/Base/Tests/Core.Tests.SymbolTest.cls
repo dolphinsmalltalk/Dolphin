@@ -59,6 +59,17 @@ testAtPut
 	1 to: literal size + 1
 		do: [:each | self should: [literal at: each put: $x] raise: Processor constWriteSignal]!
 
+testCopyWith
+	| copy |
+	super testCopyWith.
+	self assertIsNil: (Symbol findInterned: '🍺').
+	copy := #x copyWith: $🍺.
+	"Regression test for bug where Symbol>>#copyWith: would intern the argument"
+	self assertIsNil: (Symbol findInterned: '🍺').
+	self assertIsNil: (Symbol findInterned: 'x🍺').
+	self assert: copy class identicalTo: Utf8String.
+	self assert: copy equals: 'x🍺'!
+
 testEncodeOnPut
 	self should: [super testEncodeOnPut] raise: Error matching: [:ex | ex description = 'Symbol class should not implement #new:']!
 
@@ -160,6 +171,7 @@ newEmptyCollection:!helpers!private! !
 testArgumentCount!public!unit tests! !
 testAsString!helpers!public! !
 testAtPut!public!unit tests! !
+testCopyWith!public! !
 testEncodeOnPut!public!unit tests! !
 testInstVarAtPut!public!unit tests! !
 testKeywords!public!unit tests! !

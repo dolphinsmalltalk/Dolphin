@@ -1477,7 +1477,7 @@ workingDirectory
 
 	| dir |
 	dir := Kernel32 getCurrentDirectory.
-	^dir lastCodeUnit == $\ ifTrue: [dir] ifFalse: [dir copyWith: $\]!
+	^dir lastCodeUnit == $\ ifTrue: [dir] ifFalse: [dir , '\']!
 
 workingDirectory: aString
 	"Set the current working directory."

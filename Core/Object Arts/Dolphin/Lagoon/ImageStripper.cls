@@ -153,7 +153,7 @@ _basicDeleteMethod: aCompiledMethod
 	"If removed a method that was previously identified as an aspect getter, we can stop preserving the corresponding setters"
 	(deploymentContext _aspectGetters remove: aCompiledMethod ifAbsent: nil) ifNil: [^true].
 	getSelector := aCompiledMethod selector.
-	(Symbol findInterned: (getSelector copyWith: $:))
+	(Symbol findInterned: (getSelector , ':'))
 		ifNotNil: 
 			[:setSelector |
 			aCompiledMethod methodClass withAllSubclassesDo: 

@@ -16,7 +16,7 @@ compileAccessorsFor: aClass
 	aClass instanceVariableNames do: 
 			[:each |
 			aClass compiledMethodAt: each asSymbol ifAbsent: [aClass compile: each , ' ^' , each].
-			aClass compiledMethodAt: (each copyWith: $:) asSymbol
+			aClass compiledMethodAt: (each , ':') asSymbol
 				ifAbsent: [aClass compile: each , ': x ' , each , ' := x']]!
 
 compileMethods
