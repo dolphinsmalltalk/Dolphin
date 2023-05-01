@@ -360,6 +360,10 @@ classPool
 	^classPool ifNil: [Dictionary new]!
 
 classUpdated
+	self isAnonymous
+		ifTrue: 
+			["Don't propagate update events for anonymous classes. We don't want these to appear in browsers, etc, and they can't be packaged."
+			^self].
 	self logDefinition.
 	Smalltalk classUpdated: self!
 
