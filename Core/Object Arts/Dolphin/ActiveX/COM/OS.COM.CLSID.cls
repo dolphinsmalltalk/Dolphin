@@ -6,7 +6,7 @@ Core.GUID
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { '_CLSID_Size' -> 16r10 }!
 OS.COM.CLSID guid: (Core.GUID fromString: '{87b4c643-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.COM.CLSID comment: '`OS.COM.CLSID` is the class of 128-bit Globally Unique Identifiers (guids) which are specifically used to uniquely identify coclasses (components) in COM.
 

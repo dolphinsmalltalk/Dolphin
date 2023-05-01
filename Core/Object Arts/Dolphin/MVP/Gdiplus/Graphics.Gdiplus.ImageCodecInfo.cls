@@ -55,6 +55,15 @@ Clsid
 
 	^OS.COM.CLSID fromAddress: bytes yourAddress!
 
+Clsid: aCLSID
+	"Set the receiver's 'Clsid' field to the value of the argument, aCLSID"
+
+	aCLSID
+		replaceBytesOf: bytes
+		from: ##(_OffsetOf_Clsid + 1)
+		to: ##(_OffsetOf_Clsid + OS.COM.CLSID._CLSID_Size)
+		startingAt: 1!
+
 CodecName
 	"Answer the <Utf16String> value of the receiver's 'CodecName' field."
 
@@ -180,6 +189,7 @@ Version: anInteger
 	bytes uint32AtOffset: _OffsetOf_Version put: anInteger! !
 !Graphics.Gdiplus.ImageCodecInfo categoriesForMethods!
 Clsid!**compiled accessors**!public! !
+Clsid:!**compiled accessors**!public! !
 CodecName!**compiled accessors**!public! !
 CodecName:!**compiled accessors**!public! !
 DllName!**compiled accessors**!public! !
