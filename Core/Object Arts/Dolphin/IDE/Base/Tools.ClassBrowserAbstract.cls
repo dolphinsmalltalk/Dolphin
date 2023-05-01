@@ -615,13 +615,13 @@ currentCard
 
 	^self cardsPresenter view currentCard presenter!
 
-customDrawCategoryTree: aNMTVCUSTOMDRAW 
+customDrawCategoryTree: aNMTVCUSTOMDRAW
 	"Private - Custom drawing to implement the emphasis in the method category tree."
 
 	| category |
 	category := aNMTVCUSTOMDRAW item.
 	category isNil ifTrue: [^self].
-	self emphasiseCategoryItem: aNMTVCUSTOMDRAW isRelevant: (self methodCategories includes: category)!
+	self emphasiseCategoryItem: aNMTVCUSTOMDRAW isRelevant: (methodCategories includes: category)!
 
 customDrawProtocols: aNMLVCUSTOMDRAW 
 	"Private - Custom drawing to implement the emphasis in the Method Protocol list."
@@ -935,11 +935,6 @@ method: method ifAbsent: exceptionHandler
 			"Now try again"
 			methodBrowserPresenter selection: method ifAbsent: exceptionHandler]!
 
-methodCategories
-	"Answer the categories, including intermediate categories, of which the currently selected method is a member."
-
-	^methodCategories!
-
 methodCategories: aCollection 
 	(methodCategories noDifference: aCollection) ifTrue: [^self].
 	methodCategories := aCollection.
@@ -992,12 +987,12 @@ onCategorySelected
 	(self isDisplayingCategories and: [self category notNil]) ifFalse: [^self].
 	method := self method.
 	self updateMethodsInCategory.
-	self method == method 
+	self method == method
 		ifFalse: 
 			[methodBrowserPresenter selection: method
 				ifAbsent: 
-					["Ignore"
-					]].
+					["Method selection cleared, so we need to ensure that none of the categories remain emboldened."
+					self methodCategories: #()]].
 	self updateCaption!
 
 onClassCategorized: aClass
@@ -2646,7 +2641,6 @@ loadedPlugins!accessing!public! !
 method!accessing!public! !
 method:!accessing!public! !
 method:ifAbsent:!accessing!public! !
-methodCategories!accessing!private! !
 methodCategories:!accessing!private! !
 methodProtocols!accessing!private! !
 methodProtocols:!accessing!public! !
