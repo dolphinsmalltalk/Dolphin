@@ -161,45 +161,45 @@ setTestSelector: aSymbol
 
 setUp!
 
-should: aBlock
-	self assert: aBlock value!
+should: aNiladicValuable
+	self assert: aNiladicValuable value!
 
-should: aBlock description: aStringOrValuable
-	self assert: aBlock value description: aStringOrValuable!
+should: aNiladicValuable description: aStringOrValuable
+	self assert: aNiladicValuable value description: aStringOrValuable!
 
-should: aBlock raise: anExceptionalEvent
+should: aNiladicValuable raise: anExceptionSelector
 	self
-		should: aBlock
-		raise: anExceptionalEvent
-		description: ['Expected ' , anExceptionalEvent printString]!
+		should: aNiladicValuable
+		raise: anExceptionSelector
+		description: ['Expected <1p>' << anExceptionSelector]!
 
-should: aBlock raise: anExceptionalEvent description: aStringOrValuable
+should: aNiladicValuable raise: anExceptionSelector description: aStringOrValuable
 	"If the code completes without the expected error (or any other) assert. If any other error occurs, let it pass to outer handlers (or likely go unhandled) so that the error stack is preserved for debugging, or to allow nesting of should/shouldnt:raise:. In the original implementation other errors would also cause an assertion failure, losing crucial information for debugging and preventing nesting."
 
 	^self assert: (
-			[aBlock value.
-			false] on: anExceptionalEvent do: [:ex | true])
+			[aNiladicValuable value.
+			false] on: anExceptionSelector do: [:ex | true])
 		description: aStringOrValuable!
 
-shouldnt: aBlock
-	self deny: aBlock value!
+shouldnt: aNiladicValuable
+	self deny: aNiladicValuable value!
 
-shouldnt: aBlock description: aStringOrValuable
-	self deny: aBlock value description: aStringOrValuable!
+shouldnt: aNiladicValuable description: aStringOrValuable
+	self deny: aNiladicValuable value description: aStringOrValuable!
 
-shouldnt: aBlock raise: anExceptionalEvent
+shouldnt: aNiladicValuable raise: anExceptionSelector
 	self
-		shouldnt: aBlock
-		raise: anExceptionalEvent
-		description: ['Unexpected exception: ' , anExceptionalEvent printString]!
+		shouldnt: aNiladicValuable
+		raise: anExceptionSelector
+		description: 'Unexpected exception: <1p>'!
 
-shouldnt: aBlock raise: anExceptionalEvent description: aStringOrValuable
-	[aBlock value]
-		on: anExceptionalEvent
+shouldnt: aNiladicValuable raise: anExceptionSelector description: aStringOrValuable
+	[aNiladicValuable value]
+		on: anExceptionSelector
 		do: 
 			[:ex |
 			"In the original SUnit implementation the exception info was lost because the code asserted after completion of the handler block. By asserting from the handler, we preserve the original exception info on the stack for debugging purposes."
-			self fail: aStringOrValuable value]
+			self fail: aStringOrValuable value << ex]
 		on: Error
 		do: 
 			[:ex |

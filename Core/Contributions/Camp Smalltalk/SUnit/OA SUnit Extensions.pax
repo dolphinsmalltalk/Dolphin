@@ -187,17 +187,17 @@ isCiBuild
 isKnownSlowTest
 	^self thisTestMethod hasAnnotation: #knownSlowTest!
 
-should: aBlock raise: anException matching: discriminator
+should: aNiladicValuable raise: anExceptionSelector matching: aMonadicValuable
 	"Example usage:
 		self should: [array at: $1] raise: Error matching: [:ex | ex messageText = 'Index: $1 is not an integer'].
 	"
 
 	self
-		should: aBlock
-		raise: (anException matching: discriminator)
-		description: 'Matching exception not raised'!
+		should: aNiladicValuable
+		raise: (anExceptionSelector matching: aMonadicValuable)
+		description: ['Matching <1p> not raised' << anExceptionSelector]!
 
-should: aZeroArgBlock trigger: aSymbol against: anObject
+should: aNiladicValuable trigger: aSymbol against: anObject
 	"Example Usage:
 		self 
 			should: [Object trigger: #testNoArgs]
@@ -206,11 +206,11 @@ should: aZeroArgBlock trigger: aSymbol against: anObject
 	"
 
 	self
-		should: aZeroArgBlock
+		should: aNiladicValuable
 		triggerAllOf: {aSymbol}
 		against: anObject!
 
-should: aBlock trigger: eventSymbol1 butNot: eventSymbol2 against: anObject
+should: aNiladicValuable trigger: eventSymbol1 butNot: eventSymbol2 against: anObject
 	"Example usage:
 		self 
 			should: [presenter selection: each]
@@ -220,13 +220,13 @@ should: aBlock trigger: eventSymbol1 butNot: eventSymbol2 against: anObject
 	"
 
 	self
-		should: aBlock
+		should: aNiladicValuable
 		triggerAllOf: {eventSymbol1}
 		matching: [:message | true]
 		butNoneOf: {eventSymbol2}
 		against: anObject!
 
-should: aZeroArgBlock trigger: aSymbol matching: discriminatorBlock against: anObject
+should: aNiladicValuable trigger: aSymbol matching: discriminatorBlock against: anObject
 	"Example usage:
 		self 
 			should: [Object trigger: #testTwoArgs:arg2:]
@@ -237,27 +237,27 @@ should: aZeroArgBlock trigger: aSymbol matching: discriminatorBlock against: anO
 
 	self assert: aSymbol argumentCount equals: discriminatorBlock argumentCount.
 	self
-		should: aZeroArgBlock
+		should: aNiladicValuable
 		triggerAllOf: {aSymbol}
 		matching: [:message | discriminatorBlock valueWithArguments: message arguments]
 		against: anObject!
 
-should: aZeroArgBlock triggerAllOf: aCollectionOfSymbols against: anObject 
+should: aNiladicValuable triggerAllOf: aCollectionOfSymbols against: anObject 
 	self 
-		should: aZeroArgBlock
+		should: aNiladicValuable
 		triggerAllOf: aCollectionOfSymbols
 		matching: [:message | true]
 		against: anObject!
 
-should: aZeroArgBlock triggerAllOf: aCollectionOfSymbols matching: aOneArgBlockOrNil against: anObject 
+should: aNiladicValuable triggerAllOf: aCollectionOfSymbols matching: aOneArgBlockOrNil against: anObject 
 	self 
-		should: aZeroArgBlock
+		should: aNiladicValuable
 		triggerAllOf: aCollectionOfSymbols
 		matching: aOneArgBlockOrNil
 		butNoneOf: #()
 		against: anObject!
 
-should: aZeroArgBlock triggerAllOf: aCollectionOfSymbols matching: aOneArgBlock butNoneOf: aCollectionOfSymbols2 against: anObject
+should: aNiladicValuable triggerAllOf: aCollectionOfSymbols matching: aOneArgBlock butNoneOf: aCollectionOfSymbols2 against: anObject
 	| fired allEvents |
 	fired := Bag new.
 	allEvents := aCollectionOfSymbols union: aCollectionOfSymbols2.
@@ -270,7 +270,7 @@ should: aZeroArgBlock triggerAllOf: aCollectionOfSymbols matching: aOneArgBlock 
 			and the test will be invalid"
 			self deny: (nil respondsTo: each).
 			anObject when: each sendTo: nil].
-	aZeroArgBlock on: MessageNotUnderstood
+	aNiladicValuable on: MessageNotUnderstood
 		do: 
 			[:mnu |
 			(mnu receiver ~~ nil or: [(allEvents includes: mnu selector) not]) ifTrue: [mnu pass].
@@ -283,7 +283,7 @@ should: aZeroArgBlock triggerAllOf: aCollectionOfSymbols matching: aOneArgBlock 
 	"If this assertion fails, then the object triggered one or more events that it should not have"
 	self assert: (aCollectionOfSymbols2 intersection: fired) isEmpty!
 
-shouldnt: aBlock trigger: aSymbol against: anObject
+shouldnt: aNiladicValuable trigger: aSymbol against: anObject
 	"Example usage:
 		self 
 			shouldnt: [presenter selection: each]
@@ -292,11 +292,11 @@ shouldnt: aBlock trigger: aSymbol against: anObject
 	"
 
 	self
-		shouldnt: aBlock
+		shouldnt: aNiladicValuable
 		triggerAnyOf: {aSymbol}
 		against: anObject!
 
-shouldnt: aZeroArgBlock triggerAnyOf: aCollectionOfSymbols against: anObject 
+shouldnt: aNiladicValuable triggerAnyOf: aCollectionOfSymbols against: anObject 
 	"Example usage:
 		self 
 			shouldnt: [presenter model remove: objects last]
@@ -305,7 +305,7 @@ shouldnt: aZeroArgBlock triggerAnyOf: aCollectionOfSymbols against: anObject
 	"
 
 	self 
-		should: aZeroArgBlock
+		should: aNiladicValuable
 		triggerAllOf: #()
 		matching: [:message | true]
 		butNoneOf: aCollectionOfSymbols

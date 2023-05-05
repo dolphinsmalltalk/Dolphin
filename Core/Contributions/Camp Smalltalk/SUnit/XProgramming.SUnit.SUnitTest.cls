@@ -157,7 +157,7 @@ testShouldRaise
 	self
 		should: [self shouldnt: [InvalidArgumentError signal: 'Foo' with: 'Bar'] raise: InvalidArgumentError]
 		raise: TestFailure
-		matching: [:ex | ex messageText = 'Unexpected exception: InvalidArgumentError'].
+		matching: [:ex | ex messageText = 'Unexpected exception: an InvalidArgumentError(''Invalid argument ''''Bar'''': Foo'')'].
 	self
 		should: 
 			[self
