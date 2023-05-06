@@ -26,22 +26,23 @@ Note that in Dolphin all <abstractDictionary>s are implemented as instances of <
 !Refactory.Browser.VariableEnvironment methodsFor!
 
 addClass: aClass classVariable: aString
-	(classVariables at: aClass fullName ifAbsentPutClean: [Set new]) add: aString.
+	(classVariables at: aClass fullyQualifiedReference ifAbsentPutClean: [Set new]) add: aString.
 	self flushCachesFor: aClass.
 	self addSearchString: aString!
 
 addClass: aClass instanceVariable: aString
-	(instanceVariables at: aClass fullName ifAbsentPutClean: [Set new]) add: aString.
+	(instanceVariables at: aClass fullyQualifiedReference ifAbsentPutClean: [Set new]) add: aString.
 	self flushCachesFor: aClass.
 	self addSearchString: aString!
 
 addClass: aClass instanceVariableReader: aString
-	(instanceVariableReaders at: aClass fullName ifAbsentPutClean: [Set new]) add: aString.
+	(instanceVariableReaders at: aClass fullyQualifiedReference ifAbsentPutClean: [Set new])
+		add: aString.
 	self flushCachesFor: aClass.
 	self addSearchString: aString!
 
 addClass: aClass instanceVariableWriter: aString
-	(instanceVariableWriters at: aClass fullName ifAbsentPutClean: [Set new]) add: aString.
+	(instanceVariableWriters at: aClass fullyQualifiedReference ifAbsentPutClean: [Set new]) add: aString.
 	self flushCachesFor: aClass.
 	self addSearchString: aString!
 
@@ -51,7 +52,7 @@ allClassesDo: aBlock
 	instVarBlock := 
 			[:each |
 			| class |
-			class := self classForName: each.
+			class := each value.
 			classes add: class.
 			class allSubclassesDo: [:eachSub | classes add: eachSub]].
 	instanceVariables keysDo: instVarBlock.
@@ -59,7 +60,7 @@ allClassesDo: aBlock
 	instanceVariableWriters keysDo: instVarBlock.
 	classVariables keysDo: 
 			[:each |
-			(self classForName: each)
+			each valueOrNil
 				ifNotNil: 
 					[:class |
 					classes add: class.
@@ -76,16 +77,6 @@ allClassesDo: aBlock
 			i := i + 1.
 			progress value: i * 100 // numClasses]!
 
-classForName: aString
-	| index |
-	index := aString
-				nextIndexOf: $\x20
-				from: 1
-				to: aString size.
-	^(index == 0
-		ifTrue: [BindingReference pathString: aString]
-		ifFalse: [(BindingReference pathString: (aString copyFrom: 1 to: index - 1)) meta]) valueOrNil!
-
 classNamesWithVariables
 	| classNames |
 	classNames := Set new.
@@ -94,20 +85,21 @@ classNamesWithVariables
 		addAll: instanceVariableReaders keys;
 		addAll: instanceVariableWriters keys;
 		addAll: classVariables keys.
-	^classNames!
+	^classNames collect: [:each | each asString]!
 
 classVariables: anObject
 	classVariables := anObject!
 
 classVariableSelectorsFor: aClass
 	| selectors classVars instanceClass |
+	classVariables isEmpty ifTrue: [^#()].
 	instanceClass := aClass instanceClass.
 	selectors := IdentitySet new.
 	classVars := Set new.
 	classVariables keysDo: 
 			[:each |
 			| cls |
-			cls := self classForName: each.
+			cls := each valueOrNil.
 			(cls notNil and: [instanceClass includesBehavior: cls])
 				ifTrue: [classVars addAll: (classVariables at: each)]].
 	classVars do: 
@@ -118,7 +110,7 @@ classVariableSelectorsFor: aClass
 	^selectors!
 
 classVariablesFor: aClass
-	^classVariables at: aClass fullName ifAbsent: #()!
+	^classVariables at: aClass fullyQualifiedReference ifAbsent: #()!
 
 computeSelectorCacheFor: aClass 
 	^(self instanceVariableSelectorsFor: aClass)
@@ -134,7 +126,7 @@ environmentForClassVariable: aSymbol in: aClass
 	| selectorEnvironment assoc block |
 	selectorEnvironment := SelectorEnvironment onEnvironment: self.
 	selectorEnvironment addSearchString: aSymbol.
-	((classVariables at: aClass fullName ifAbsent: #()) includes: aSymbol)
+	((classVariables at: aClass fullyQualifiedReference ifAbsent: #()) includes: aSymbol)
 		ifFalse: [^selectorEnvironment].
 	assoc := aClass bindingFor: aSymbol.
 	block := 
@@ -148,18 +140,17 @@ environmentForClassVariable: aSymbol in: aClass
 	^selectorEnvironment!
 
 environmentForInstanceVariable: aString in: aClass
-	| selectorEnvironment isReader isWriter |
+	| selectorEnvironment isReader isWriter ref |
 	selectorEnvironment := SelectorEnvironment onEnvironment: self.
 	selectorEnvironment addSearchString: aString.
 	isReader := isWriter := false.
-	((instanceVariables at: aClass fullName ifAbsent: #()) includes: aString)
+	ref := aClass fullyQualifiedReference.
+	((instanceVariables at: ref ifAbsent: #()) includes: aString)
 		ifTrue: 
 			[isReader := true.
 			isWriter := true].
-	((instanceVariableWriters at: aClass fullName ifAbsent: #()) includes: aString)
-		ifTrue: [isWriter := true].
-	((instanceVariableReaders at: aClass fullName ifAbsent: #()) includes: aString)
-		ifTrue: [isReader := true].
+	((instanceVariableWriters at: ref ifAbsent: #()) includes: aString) ifTrue: [isWriter := true].
+	((instanceVariableReaders at: ref ifAbsent: #()) includes: aString) ifTrue: [isReader := true].
 	aClass withAllSubclasses do: 
 			[:each |
 			isWriter
@@ -182,12 +173,11 @@ includesCategory: aCategory
 	^(self classNamesFor: aCategory) notEmpty!
 
 includesClass: aClass
-	| name |
-	#rbFix.	"SW: The *Variable dictionaries are keyed by class name not class"
+	| ref |
 	(super includesClass: aClass) ifFalse: [^false].
-	name := aClass fullName.
-	(instanceVariables includesKey: name) ifTrue: [^true].
-	(classVariables includesKey: name) ifTrue: [^true].
+	ref := aClass fullyQualifiedReference.
+	(instanceVariables includesKey: ref) ifTrue: [^true].
+	(classVariables includesKey: ref) ifTrue: [^true].
 	^(self selectorCacheFor: aClass) anySatisfy: [:each | self includesSelector: each in: aClass]!
 
 includesProtocol: aProtocol in: aClass 
@@ -199,16 +189,16 @@ includesSelector: aSymbol in: aClass
 
 initialize
 	super initialize.
-	instanceVariables := self lookupTableClass new.
-	classVariables := self lookupTableClass new.
-	instanceVariableReaders := self lookupTableClass new.
-	instanceVariableWriters := self lookupTableClass new!
+	instanceVariables := LookupTable new.
+	classVariables := LookupTable new.
+	instanceVariableReaders := LookupTable new.
+	instanceVariableWriters := LookupTable new!
 
-instanceVariableReaders: anObject
-	instanceVariableReaders := anObject!
+instanceVariableReaders: aLookupTable
+	instanceVariableReaders := aLookupTable!
 
-instanceVariables: anObject
-	instanceVariables := anObject!
+instanceVariables: aLookupTable
+	instanceVariables := aLookupTable!
 
 instanceVariableSelectorsFor: aClass
 	| selectors |
@@ -222,35 +212,32 @@ instanceVariableSelectorsFor: aClass
 	^selectors!
 
 instanceVariablesFor: aClass
-	| vars name |
+	| vars ref |
 	vars := Set new.
-	name := aClass fullName.
+	ref := aClass fullyQualifiedReference.
 	vars
-		addAll: (instanceVariables at: name ifAbsent: #());
-		addAll: (instanceVariableReaders at: name ifAbsent: #());
-		addAll: (instanceVariableWriters at: name ifAbsent: #()).
+		addAll: (instanceVariables at: ref ifAbsent: #());
+		addAll: (instanceVariableReaders at: ref ifAbsent: #());
+		addAll: (instanceVariableWriters at: ref ifAbsent: #()).
 	^vars!
 
-instanceVariableWriters: anObject
-	instanceVariableWriters := anObject!
+instanceVariableWriters: aLookupTable
+	instanceVariableWriters := aLookupTable!
 
-instVarsFor: aClass in: aDictionary
+instVarsFor: aClass in: aLookupTable
 	| instVars |
-	aDictionary keysAndValuesDo: 
-			[:eachKey :eachValue |
+	aLookupTable isEmpty ifTrue: [^#()].
+	instVars := Set new.
+	aLookupTable keysAndValuesDo: 
+			[:bindingRef :vars |
 			| cls |
-			cls := self classForName: eachKey.
-			(cls notNil and: [aClass includesBehavior: cls])
-				ifTrue: [(instVars ifNil: [instVars := OrderedCollection new]) addAll: eachValue]].
-	^instVars ?? #()!
+			cls := bindingRef valueOrNil.
+			(cls notNil and: [aClass includesBehavior: cls]) ifTrue: [instVars addAll: vars]].
+	^instVars!
 
 isEmpty
 	^instanceVariables isEmpty and: 
 			[instanceVariableReaders isEmpty and: [instanceVariableWriters isEmpty and: [classVariables isEmpty]]]!
-
-lookupTableClass
-	#rbFix.	"Class ref. extracted to method, and use LookupTable rather than Dictionary for improved performance."
-	^LookupTable!
 
 numberVariables
 	^instanceVariables size + instanceVariableReaders size + instanceVariableWriters size
@@ -269,35 +256,47 @@ problemCount
 	^self numberVariables!
 
 removeClass: aClass classVariable: aSymbol
-	| vars |
-	vars := classVariables at: aClass fullName ifAbsent: [Set new].
-	vars remove: aSymbol ifAbsent: nil.
-	vars isEmpty ifTrue: [classVariables removeKey: aClass fullName ifAbsent: nil].
+	| ref |
+	ref := aClass fullyQualifiedReference.
+	(classVariables lookup: ref)
+		ifNotNil: 
+			[:vars |
+			vars remove: aSymbol ifAbsent: nil.
+			vars isEmpty ifTrue: [classVariables removeKey: ref ifAbsent: nil]].
 	self flushCachesFor: aClass!
 
 removeClass: aClass instanceVariable: aString
-	| vars |
-	vars := instanceVariables at: aClass fullName ifAbsent: [Set new].
-	vars remove: aString ifAbsent: nil.
-	vars isEmpty ifTrue: [instanceVariables removeKey: aClass fullName ifAbsent: nil].
+	| ref |
+	ref := aClass fullyQualifiedReference.
+	(instanceVariables lookup: ref)
+		ifNotNil: 
+			[:vars |
+			vars remove: aString ifAbsent: nil.
+			vars isEmpty ifTrue: [instanceVariables removeKey: ref ifAbsent: nil]].
 	self flushCachesFor: aClass!
 
 removeClass: aClass instanceVariableReader: aString
-	| vars |
-	vars := instanceVariableReaders at: aClass fullName ifAbsent: [Set new].
-	vars remove: aString ifAbsent: nil.
-	vars isEmpty ifTrue: [instanceVariableReaders removeKey: aClass fullName ifAbsent: nil].
+	| ref |
+	ref := aClass fullyQualifiedReference.
+	(instanceVariableReaders lookup: ref)
+		ifNotNil: 
+			[:vars |
+			vars remove: aString ifAbsent: nil.
+			vars isEmpty ifTrue: [instanceVariableReaders removeKey: ref ifAbsent: nil]].
 	self flushCachesFor: aClass!
 
 removeClass: aClass instanceVariableWriter: aString
-	| vars |
-	vars := instanceVariableWriters at: aClass fullName ifAbsent: [Set new].
-	vars remove: aString ifAbsent: nil.
-	vars isEmpty ifTrue: [instanceVariableWriters removeKey: aClass fullName ifAbsent: nil].
+	| ref |
+	ref := aClass fullyQualifiedReference.
+	(instanceVariableWriters lookup: ref)
+		ifNotNil: 
+			[:vars |
+			vars remove: aString ifAbsent: nil.
+			vars isEmpty ifTrue: [instanceVariableWriters removeKey: ref ifAbsent: nil]].
 	self flushCachesFor: aClass!
 
 selectorCacheFor: aClass
-	^(selectorCache ifNil: [selectorCache := self lookupTableClass new]) at: aClass
+	^(selectorCache ifNil: [selectorCache := LookupTable new]) at: aClass
 		ifAbsentPutClean: [self computeSelectorCacheFor: aClass]!
 
 storeOn: aStream
@@ -331,7 +330,6 @@ addClass:instanceVariable:!accessing!public! !
 addClass:instanceVariableReader:!accessing!public! !
 addClass:instanceVariableWriter:!accessing!public! !
 allClassesDo:!enumerating!private! !
-classForName:!helpers!private! !
 classNamesWithVariables!accessing!public! !
 classVariables:!accessing!private! !
 classVariableSelectorsFor:!helpers!private! !
@@ -353,7 +351,6 @@ instanceVariablesFor:!accessing!public! !
 instanceVariableWriters:!accessing!private! !
 instVarsFor:in:!helpers!private! !
 isEmpty!public!testing! !
-lookupTableClass!constants!private! !
 numberVariables!accessing!public! !
 postCopy!copying!public! !
 problemCount!accessing!public! !
