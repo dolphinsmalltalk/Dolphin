@@ -106,9 +106,10 @@ addClassConstant: aString value: anObject
 			[requiresRecompile := self canModifyBinding: binding newValue: anObject.
 			"If aborted by user, don't set the value."
 			requiresRecompile ifNil: [^binding]].
+	anObject beReadOnlyObject.
 	binding
 		setValue: anObject;
-		isImmutable: true.
+		beReadOnlyObject.
 	self isChanged: true.
 	requiresRecompile ifTrue: [Object recompileAllReferencesToLiteral: binding].
 	^binding!
@@ -1019,7 +1020,7 @@ subclasses: aCollection
 	"Set the receiver's subclasses to the specified collection. The subclasses are maintained as an immutable array."
 
 	subclasses := aCollection asArray
-				isImmutable: true;
+				beReadOnlyObject;
 				yourself!
 
 subclassesDo: aMonadicValuable
