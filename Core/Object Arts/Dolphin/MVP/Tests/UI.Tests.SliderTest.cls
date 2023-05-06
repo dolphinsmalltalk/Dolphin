@@ -17,6 +17,18 @@ classToTest
 oldDolphinVersionsForStbUpgrade
 	^#(4)!
 
+testHasTicks
+	presenter hasTicks: false.
+	self deny: presenter hasTicks.
+	self deny: presenter hasAutoTicks.
+	presenter ticks: #().
+	self deny: presenter hasTicks.
+	self deny: presenter hasAutoTicks.
+	presenter ticks: #(0 100).
+	self assert: presenter hasTicks.
+	self deny: presenter hasAutoTicks.
+!
+
 testRange
 	| range |
 	presenter hasAutoTicks: true.
@@ -31,7 +43,10 @@ testRange
 							[:step |
 							range := start to: stop by: step.
 							presenter range: range.
-							self assert: presenter range equals: range]]]!
+							self assert: presenter range equals: range]]].
+	"Empty range can be set, although only logically"
+	presenter range: (1 to: 0).
+	self assert: presenter range equals: (1 to: 0)!
 
 verifyStbUpgrade: anInteger
 	| notifications |
@@ -62,6 +77,7 @@ vuFile
 !UI.Tests.SliderTest categoriesForMethods!
 classToTest!helpers!private! !
 oldDolphinVersionsForStbUpgrade!constants!private! !
+testHasTicks!public!unit tests! !
 testRange!public!unit tests! !
 verifyStbUpgrade:!helpers!private! !
 verifyUpgradedView:!helpers!private! !

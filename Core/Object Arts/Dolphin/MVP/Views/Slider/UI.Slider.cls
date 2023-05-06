@@ -208,21 +208,20 @@ range
 
 	^(self sendMessage: TBM_GETRANGEMIN) to: (self sendMessage: TBM_GETRANGEMAX) by: autoTickFrequency!
 
-range: anIntegerInterval 
+range: anIntegerInterval
 	"Set the receiver's bar range to the <Interval> argument. Note that the start, stop and
 	increment of the Interval must be <integer>s, the step must be positive, and the interval
-	must not be empty. The 'step' of the interval is used to position the ticks (if
+	should not be empty. The 'step' of the interval is used to position the ticks (if
 	auto-generated)."
 
-	anIntegerInterval start < anIntegerInterval stop ifFalse: [self error: 'invalid range'].
 	self autoTickFrequency: anIntegerInterval step.
-	self 
+	self
 		sendMessage: TBM_SETRANGEMIN
-		wParam: false asParameter
+		wParam: 0
 		lParam: anIntegerInterval start.
-	self 
+	self
 		sendMessage: TBM_SETRANGEMAX
-		wParam: true asParameter
+		wParam: 1
 		lParam: anIntegerInterval stop!
 
 selectionRange
@@ -360,25 +359,28 @@ ticks
 	ticks nextPut: range stop.
 	^ticks contents!
 
-ticks: aCollection 
+ticks: aCollection
 	"Show the tick marks in aCollection. Any existing ticks are removed."
 
 	"For legacy reasons we allow the argument to be nil."
 
 	| range lower upper |
-	aCollection notNil ifFalse: [^self].
+	aCollection ifNil: [^self].
 	self clearTicks.
-	self
-		hasAutoTicks: false;
-		hasTicks: true.
+	self hasAutoTicks: false.
+	aCollection isEmpty
+		ifTrue: 
+			[self hasTicks: false.
+			^self].
+	self hasTicks: true.
 	range := self range.
 	lower := range start + 1.
 	upper := range stop - 1.
 	aCollection do: 
-			[:each | 
-			(each between: lower and: upper) 
+			[:each |
+			(each between: lower and: upper)
 				ifTrue: 
-					[self 
+					[self
 						sendMessage: TBM_SETTIC
 						wParam: 0
 						lParam: each]]!
