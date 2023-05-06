@@ -1446,6 +1446,7 @@ returnFromMessage
 					[compilerClass
 						evaluate: expression
 						for: receiver
+						environment: nil
 						evaluationPools: inspectorPresenter allPools
 						logged: false]
 							on: compilerClass errorClass
