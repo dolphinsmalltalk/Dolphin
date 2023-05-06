@@ -596,20 +596,21 @@ initialize
 	self addClassConstant: 'HotspotMask' value: 2r110000000000.
 	self addClassConstant: 'InvisibleMask' value: 2r11000000000000.
 	propertyDescriptors := self buildPropertyDescriptors
-				isImmutable: true;
+				beReadOnlyObject;
 				yourself.
 	self addClassConstant: 'PredefinedStyleNames'
 		value: ((IdentityDictionary
-				withAll: ((STYLE_NORMAL + 1 to: STYLE_DEFAULT - 1) collect: [:each | each -> each])
-						, {#normal -> STYLE_NORMAL.
+				withAll: ((STYLE_NORMAL + 1 to: STYLE_DEFAULT - 1) collect: [:each | each -> each]) , {
+								#normal -> STYLE_NORMAL.
 								#braceHighlight -> STYLE_BRACELIGHT.
 								#braceMismatch -> STYLE_BRACEBAD.
 								#controlChar -> STYLE_CONTROLCHAR.
 								#lineNumber -> STYLE_LINENUMBER.
 								#indentGuide -> STYLE_INDENTGUIDE.
 								#callTip -> STYLE_CALLTIP.
-								#foldDisplayText -> STYLE_FOLDDISPLAYTEXT})
-				isImmutable: true;
+								#foldDisplayText -> STYLE_FOLDDISPLAYTEXT
+							})
+				beReadOnlyObject;
 				yourself)!
 
 name: aSymbol 

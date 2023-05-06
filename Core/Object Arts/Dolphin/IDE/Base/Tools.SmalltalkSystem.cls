@@ -4683,7 +4683,7 @@ initializeFileDrops
 				yourself.
 	#('pac' 'pax') do: [:each | FileDrops at: each put: #dropPackageFile:].
 	#('st' 'chg' 'sml') do: [:each | FileDrops at: each put: #dropScriptFile:].
-	FileDrops isImmutable: true!
+	FileDrops beReadOnlyObject!
 
 new
 	"Private - The receiver is a Singleton class; use #current"

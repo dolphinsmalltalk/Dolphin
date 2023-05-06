@@ -229,7 +229,7 @@ forMethod: aCompiledMethod
 
 initialize
 	SelectorPrefix := 'resource_' asUtf8String
-				isImmutable: true;
+				beReadOnlyObject;
 				yourself!
 
 nameFromSelector: aSymbol

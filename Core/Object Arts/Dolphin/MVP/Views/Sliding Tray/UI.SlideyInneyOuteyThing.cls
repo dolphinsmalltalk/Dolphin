@@ -608,7 +608,7 @@ initialize
 				at: #slide put: AW_SLIDE;
 				at: #blend put: AW_BLEND;
 				shrink;
-				isImmutable: true;
+				beReadOnlyObject;
 				yourself)!
 
 resource_Default_view

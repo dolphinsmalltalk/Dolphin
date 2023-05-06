@@ -197,7 +197,7 @@ fromPairs: aSequencedReadableCollection
 				basicAt: i * 2 - 1 put: pair first;
 				basicAt: i * 2 put: pair second].
 	^instance
-		isImmutable: true;
+		beReadOnlyObject;
 		yourself!
 
 initialize

@@ -628,8 +628,8 @@ initializeRefactoringOptions
 		self initializeRefactoringOptions
 	"
 
-	RefactoringOptions := (IdentityDictionary
-				withAll: {#abstractVariables -> [:refactoring | refactoring getOptionAbstractVariables].
+	RefactoringOptions := (IdentityDictionary withAll: {
+						#abstractVariables -> [:refactoring | refactoring getOptionAbstractVariables].
 						#alreadyDefined
 							-> [:refactoring :class :selector | refactoring getOptionAlreadyDefined: class selector: selector].
 						#copyDownSuperclassMethod
@@ -677,8 +677,9 @@ initializeRefactoringOptions
 							-> [:refactoring :selector | refactoring getOptionUseExistingMethod: selector].
 						#variableTypes
 							-> [:refactoring :initial :selected | refactoring getOptionVariableTypes: initial selected: selected].
-						#showChanges -> [:refactoring | refactoring getOptionShowChanges]})
-				isImmutable: true;
+						#showChanges -> [:refactoring | refactoring getOptionShowChanges]
+					})
+				beReadOnlyObject;
 				yourself!
 
 new

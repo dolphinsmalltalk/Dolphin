@@ -197,8 +197,8 @@ initialize
 		self initialize
 	"
 
-	ValueIsSelfCookie := (Object new)
-				isImmutable: true;
+	ValueIsSelfCookie := Object new
+				beReadOnlyObject;
 				yourself!
 
 resource_Default_view

@@ -87,9 +87,9 @@ name
 name: aSymbol 
 	name := aSymbol asSymbol!
 
-newAssociation: keyObject value: valueObject 
+newAssociation: keyObject value: valueObject
 	^(super newAssociation: keyObject value: valueObject)
-		isImmutable: true;
+		beReadOnlyObject;
 		yourself!
 
 owningPackage

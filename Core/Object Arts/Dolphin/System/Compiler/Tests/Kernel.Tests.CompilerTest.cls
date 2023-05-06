@@ -61,18 +61,17 @@ evalTestMethod: aCompiledMethod withArgs: anArray
 evaluateExpression: aString 
 	^Compiler evaluate: aString!
 
-getTestMethod: aSymbol 
+getTestMethod: aSymbol
 	| oldMethod result method |
 	oldMethod := DolphinCompilerTestMethods compiledMethodAt: aSymbol.
-	self shouldnt: 
-			[result := self compileMethod: oldMethod getSource in: DolphinCompilerTestMethods]
+	self shouldnt: [result := self compileMethod: oldMethod getSource in: DolphinCompilerTestMethods]
 		raise: self compilationErrorClass.
 	method := result method.
 	method selector: aSymbol.
 	method
 		sourceDescriptor: oldMethod sourceDescriptor;
 		isPrivate: oldMethod isPrivate;
-		isImmutable: true.	"The method has not actually changed, so it is inappropriate to issue a #methodUpdated: event"
+		beReadOnlyObject.	"The method has not actually changed, so it is inappropriate to issue a #methodUpdated: event"
 	^method!
 
 knownTempsMapIssues

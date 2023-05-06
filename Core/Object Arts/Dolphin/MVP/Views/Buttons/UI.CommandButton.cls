@@ -150,7 +150,7 @@ initialize
 				at: #retry put: IDTRYAGAIN;
 				at: #continue put: IDCONTINUE;
 				shrink;
-				isImmutable: true;
+				beReadOnlyObject;
 				yourself)!
 
 themePartName

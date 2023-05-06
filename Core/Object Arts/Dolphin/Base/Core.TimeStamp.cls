@@ -141,9 +141,8 @@ second
 setDate: aDate time: aTime
 	date := aDate.
 	time := aTime.
-	self isImmutable: true.
-	^self
-!
+	self beReadOnlyObject.
+	^self!
 
 storeOn: aStream 
 	aStream

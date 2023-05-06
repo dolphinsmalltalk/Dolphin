@@ -512,7 +512,7 @@ setDefault: anExternalLibrary
 					[:binding |
 					binding
 						setValue: (default ifNil: [DynamicLinkLibraryStub libraryClass: self]);
-						isImmutable: true]]!
+						beReadOnlyObject]]!
 
 sharedVariableName
 	"Private - Answer a <BindingReference> that refers to the shared variable holding the default instance of the receiver, or nil if there is no variable."

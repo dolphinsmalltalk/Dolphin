@@ -958,7 +958,7 @@ initialize
 						#write -> FILE_SHARE_WRITE.
 						#exclusive -> 0
 					})
-				isImmutable: true;
+				beReadOnlyObject;
 				yourself).
 	"open will only ever open an existing file"
 	self addClassConstant: 'CheckModes'
@@ -969,7 +969,7 @@ initialize
 						#append -> (OPEN_EXISTING | GENERIC_READ | GENERIC_WRITE).
 						#truncate -> (TRUNCATE_EXISTING | GENERIC_READ | GENERIC_WRITE)
 					})
-				isImmutable: true;
+				beReadOnlyObject;
 				yourself).
 	"No check read is a bit of a nonsense, but ..."
 	self addClassConstant: 'NoCheckModes'
@@ -980,7 +980,7 @@ initialize
 						#append -> (OPEN_ALWAYS | GENERIC_READ | GENERIC_WRITE).
 						#truncate -> (CREATE_ALWAYS | GENERIC_READ | GENERIC_WRITE)
 					})
-				isImmutable: true;
+				beReadOnlyObject;
 				yourself)!
 
 isDirectory: aString

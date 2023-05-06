@@ -327,7 +327,7 @@ initialize
 				at: #check put: BS_CHECKBOX;
 				at: #link put: BS_COMMANDLINK;
 				shrink;
-				isImmutable: true;
+				beReadOnlyObject;
 				yourself).
 
 	"Implementation makes some assumptions about the nature of the default button encoding in the style flags"

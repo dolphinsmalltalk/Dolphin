@@ -29,7 +29,8 @@ defaultSafeClassReferences
 	"Answer an <abstractDictionary>, mapping from <readableString> class names to a <BindingReference> that resolves to the named class, for the default set of classes that are considered safe to load from the Registry. The basic value types that are representable as registry value types, e.g. SmallInteger, String, ByteArray, etc, are always considered safe and do not need to be in the map.
 	An example of a potentially unsafe class is SortedCollection, although it is safe if the default sort algorithm is used. Any pluggable sort algorithm that contains a code block is potentially unsafe, but will normally be blocked because code objects (BlockClosures, CompiledMethods) are not safe without further validation of the deserialised instance and so are not included in the default safe list. The returned collection is shared, so if you want to use it as a basis and add some further classes, you'll need to make a copy of it (i.e. send it #copy)."
 
-	^##((LookupTable withAll: {'Array' -> #{Core.Array}.
+	^##((LookupTable withAll: {
+				'Array' -> #{Core.Array}.
 				'Association' -> #{Core.Association}.
 				'Bag' -> #{Core.Bag}.
 				'Character' -> #{Core.Character}.
@@ -68,8 +69,9 @@ defaultSafeClassReferences
 				'UI.Scintilla.KeyBinding' -> #{UI.Scintilla.KeyBinding}.
 				'UI.Scintilla.Margin' -> #{UI.Scintilla.Margin}.
 				'UI.Scintilla.MarkerDefinition' -> #{UI.Scintilla.MarkerDefinition}.
-				'UI.Scintilla.TextStyle' -> #{UI.Scintilla.TextStyle}})
-		isImmutable: true;
+				'UI.Scintilla.TextStyle' -> #{UI.Scintilla.TextStyle}
+			})
+		beReadOnlyObject;
 		yourself)!
 
 findClass: typeOrRef

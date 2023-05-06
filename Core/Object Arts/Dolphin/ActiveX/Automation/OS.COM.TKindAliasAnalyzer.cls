@@ -81,7 +81,7 @@ initialize
 	self wireHandleNames do: [:each | BaseTypes at: 'wire' , each put: Handle].
 	BaseTypes
 		shrink;
-		isImmutable: true;
+		beReadOnlyObject;
 		yourself!
 
 typekind

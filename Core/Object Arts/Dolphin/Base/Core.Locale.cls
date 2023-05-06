@@ -509,8 +509,7 @@ numberFormat
 	^numberFormat
 		ifNil: 
 			[self numberFormat: self getNumberFormat.
-			numberFormat isImmutable: true.
-			numberFormat bytes isImmutable: true.
+			numberFormat beReadOnlyObject.
 			numberFormat]!
 
 numberFormat: aNUMBERFORMATWOrNil

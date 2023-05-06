@@ -300,7 +300,7 @@ literalCharacter
 	^$#!
 
 makeTreeImmutable
-	self nodesDo: [:each | each isImmutable: true]!
+	self nodesDo: [:each | each beReadOnlyObject]!
 
 methodClass
 	^self methodNode methodClass!

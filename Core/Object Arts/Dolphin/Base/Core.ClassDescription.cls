@@ -936,7 +936,7 @@ setInstanceVariables: aCollection
 	instanceVariables := aCollection isEmpty
 				ifFalse: 
 					[aCollection asArray
-						isImmutable: true;
+						beReadOnlyObject;
 						yourself]!
 
 setShapeFlags: anIntegerMask to: aBoolean

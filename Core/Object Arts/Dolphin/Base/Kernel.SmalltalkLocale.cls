@@ -562,15 +562,16 @@ initialize
 	Current := self new
 				integerBase: 10;
 				numberFormat;
-				isImmutable: true;
+				beReadOnlyObject;
 				yourself.
 	Hex := self new
 				integerBase: 16;
 				numberFormat;
-				isImmutable: true;
+				beReadOnlyObject;
 				yourself.
 	controlPictures := IdentityDictionary new.
-	($\x0 to: $\x1F) do: [:ch | controlPictures at: ch put: (Character codePoint: 16r2400 + ch codePoint)].
+	($\x0 to: $\x1F)
+		do: [:ch | controlPictures at: ch put: (Character codePoint: 16r2400 + ch codePoint)].
 	controlPictures at: $\x20 put: $\x2423.
 	controlPictures at: $\x7F put: $\x2421.
 	self addClassConstant: 'ControlCodePictures' value: controlPictures!

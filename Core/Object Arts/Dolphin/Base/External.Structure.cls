@@ -98,6 +98,10 @@ beNullPointer
 
 	self initializeAtAddress: self pointerClass new!
 
+beReadOnlyObject
+	bytes beReadOnlyObject.
+	^super beReadOnlyObject!
+
 bufferClass
 	"Private - Answer the default class to use as a contents buffer"
 
@@ -418,6 +422,7 @@ asParameter!converting!public! !
 basicFree!private!realizing/unrealizing! !
 beNullHeapPointer!modes!private! !
 beNullPointer!modes!private! !
+beReadOnlyObject!initializing!public! !
 bufferClass!constants!private! !
 bytes!accessing!public! !
 bytes:!initializing!private! !

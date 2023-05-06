@@ -31,7 +31,7 @@ collectionClass
 testImmutability
 	| subject |
 	subject := self newDictionary.
-	subject isImmutable: true.
+	subject beReadOnlyObject.
 	"Attempt to add new key"
 	self should: [subject at: #key2 put: (self assimilate: 2)] raise: Processor constWriteSignal.
 	"Attempt to modify value associated with existing key - checks that the values are immutable too"
@@ -42,8 +42,7 @@ testImmutability
 	subject at: #key2 put: (self assimilate: 2).
 	self assert: (subject at: #key2) equals: 2.
 	subject at: #key put: (self assimilate: 1.2).
-	self assert: (subject at: #key) equals: 1.2
-! !
+	self assert: (subject at: #key) equals: 1.2! !
 !Core.Tests.LookupTableTest categoriesForMethods!
 assertIs:deepCopyOf:!private!unit tests! !
 collectionClass!helpers!private! !

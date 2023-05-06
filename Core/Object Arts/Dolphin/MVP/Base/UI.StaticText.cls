@@ -199,7 +199,7 @@ initialize
 				at: #leftNoWrap put: SS_LEFTNOWORDWRAP;
 				at: #simple put: SS_SIMPLE;
 				shrink;
-				isImmutable: true;
+				beReadOnlyObject;
 				yourself)! !
 !UI.StaticText class categoriesForMethods!
 icon!constants!public! !

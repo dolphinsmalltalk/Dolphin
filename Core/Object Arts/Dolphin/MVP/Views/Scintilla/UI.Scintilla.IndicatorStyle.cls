@@ -379,7 +379,7 @@ initialize
 	"
 
 	propertyDescriptors := self buildPropertyDescriptors
-				isImmutable: true;
+				beReadOnlyObject;
 				yourself!
 
 new

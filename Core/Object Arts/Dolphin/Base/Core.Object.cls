@@ -437,6 +437,13 @@ beFinalizable
 
 	^self setSpecialBehavior: ##(Behavior._GetSpecialMask bitOr: Behavior._IsFinalizableMask)!
 
+beReadOnlyObject
+	"Make the receiver a constant object, and answer whether it was a constant object before potentially changing that state. Any subsequent attempt to write to either named or indexable instance variables of the receiver will result in an exception (except via <mutable> instance variable accessor methods)."
+
+	"The selector is chosen for compatibility with Pharo, and because #beImmutable is already in use by the AspectDescriptor for a different purpose."
+
+	^self isImmutable: true!
+
 beStrong
 	"Revoke the receiver's status as an object whose indexable pointer variables hold
 	only weak references to their contents. Has no effect on objects which are already strong.
@@ -1570,6 +1577,7 @@ become:!mutating!public! !
 becomeA:!mutating!public! !
 becomeAn:!mutating!public! !
 beFinalizable!accessing!public! !
+beReadOnlyObject!initializing!public! !
 beStrong!accessing!public! !
 beUnfinalizable!accessing!public! !
 beWeak!accessing!public! !

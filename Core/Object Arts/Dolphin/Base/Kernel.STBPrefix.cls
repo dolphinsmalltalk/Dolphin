@@ -258,10 +258,10 @@ fromInteger: anInteger
 
 initialize
 	DataPrefix := (self fromInteger: DataPrefixMask)
-				isImmutable: true;
+				beReadOnlyObject;
 				yourself.
 	ProxyPrefix := (self fromInteger: DataPrefixMask | ProxyMask)
-				isImmutable: true;
+				beReadOnlyObject;
 				yourself!
 
 uninitialize

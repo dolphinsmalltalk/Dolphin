@@ -5392,7 +5392,7 @@ initialize
 	MessageMap isNil
 		ifTrue: 
 			[MessageMap := self buildMessageMap
-						isImmutable: true;
+						beReadOnlyObject;
 						yourself]!
 
 new

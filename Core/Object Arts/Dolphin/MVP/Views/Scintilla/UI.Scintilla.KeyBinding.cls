@@ -243,7 +243,7 @@ initializeCommands
 						SCI_ZOOMOUT -> #zoomOut.
 						SCI_NULL -> #yourself
 					})
-				isImmutable: true;
+				beReadOnlyObject;
 				yourself!
 
 initializeVirtualKeyMap
@@ -274,7 +274,7 @@ initializeVirtualKeyMap
 		at: VK_OEM_4 + 1 put: $[ codePoint;
 		at: VK_OEM_5 + 1 put: $\ codePoint;
 		at: VK_OEM_6 + 1 put: $] codePoint;
-		isImmutable: true!
+		beReadOnlyObject!
 
 new
 	^self newAcceleratorKey: 0 message: SCI_NULL!

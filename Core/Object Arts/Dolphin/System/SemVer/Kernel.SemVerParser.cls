@@ -134,7 +134,7 @@ initializeClassificationTable
 		do: [:alpha | classificationTable at: alpha codePoint put: AlphaMask].
 	'01234567890' do: [:digit | classificationTable at: digit codePoint put: digit digitValue + 1].
 	classificationTable at: $- codePoint put: AlphaMask.
-	classificationTable isImmutable: true.
+	classificationTable beReadOnlyObject.
 	self addClassConstant: 'ClassificationTable' value: classificationTable!
 
 on: aReadStream

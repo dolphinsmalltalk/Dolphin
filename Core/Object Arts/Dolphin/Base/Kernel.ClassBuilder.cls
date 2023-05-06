@@ -1066,7 +1066,7 @@ validateImports
 				ifTrue: [distinct nextPut: canonical]
 				ifFalse: [canonical isPrivate ifFalse: [added isPrivate: false]]].
 	imports := distinct grabContents
-				isImmutable: true;
+				beReadOnlyObject;
 				yourself!
 
 validateInstanceSpec
@@ -1404,12 +1404,13 @@ initialize
 	"
 
 	self addClassConstant: 'Unsubclassable'
-		value: ({Character. SmallInteger} asIdentitySet
-				isImmutable: true;
+		value: ({ Character. SmallInteger } asIdentitySet
+				beReadOnlyObject;
 				yourself).
 	"Classes that, in addition to all byte classes, have a fixed layout"
 	self addClassConstant: 'FixedLayout'
-		value: ({true class.
+		value: ({
+				true class.
 				false class.
 				Array.
 				Character.
@@ -1420,19 +1421,22 @@ initialize
 				Message.
 				MethodDictionary.
 				UndefinedObject.
-				Object} asSet
-				isImmutable: true;
+				Object
+			} asSet
+				beReadOnlyObject;
 				yourself).
 	"add: ProtoObject;"
 	self addClassConstant: 'FixedInitialLayout'
-		value: ({Class.
+		value: ({
+				Class.
 				Metaclass.
 				PositionableStream.
 				Semaphore.
 				Process.
 				ProcessorScheduler.
-				VariableBinding} asSet
-				isImmutable: true;
+				VariableBinding
+			} asSet
+				beReadOnlyObject;
 				yourself).
 	self addClassConstant: 'FixedName' value: #(#Smalltalk #Root)!
 

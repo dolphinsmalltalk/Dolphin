@@ -11153,7 +11153,8 @@ changeHistoryModes
 defaultAnnotationStyles
 	"Answer the default annotation style settings to be used for new instances of the receiver."
 
-	^{(TextStyle name: #Error)
+	^{
+		(TextStyle name: #Error)
 			forecolor: Color firebrick;
 			backcolor: Color floralWhite;
 			yourself.
@@ -11163,8 +11164,9 @@ defaultAnnotationStyles
 			yourself.
 		(TextStyle name: #Notification)
 			backcolor: Color gainsboro;
-			yourself}
-		isImmutable: true;
+			yourself
+	}
+		beReadOnlyObject;
 		yourself!
 
 defaultCallTipStyle
@@ -11325,13 +11327,13 @@ idleStylingModes
 imeInteractionModes
 	^#(#windowed #inline)!
 
-immutableCopyOfCollection: aCollection 
+immutableCopyOfCollection: aCollection
 	^(aCollection collect: 
-			[:each | 
-			(each copy)
-				isImmutable: true;
+			[:each |
+			each copy
+				beReadOnlyObject;
 				yourself])
-		isImmutable: true;
+		beReadOnlyObject;
 		yourself!
 
 indentationGuideStyles
@@ -11344,24 +11346,26 @@ initialize
 
 	| defaultKeyBindings keyMap |
 	self addClassConstant: 'CodePages'
-		value: ((IdentityDictionary withAll: {NlsConstants.CP_ACP -> #ansi. SC_CP_UTF8 -> #utf8})
-				isImmutable: true;
+		value: ((IdentityDictionary withAll: { NlsConstants.CP_ACP -> #ansi. SC_CP_UTF8 -> #utf8 })
+				beReadOnlyObject;
 				yourself).
 	self addClassConstant: 'DefaultTextStyles'
-		value: ((LookupTable
-				withAll: {#container -> (self immutableCopyOfCollection: self defaultTextStyles).
+		value: ((LookupTable withAll: {
+						#container -> (self immutableCopyOfCollection: self defaultTextStyles).
 						#xml -> (self immutableCopyOfCollection: self xmlTextStyles).
 						#null -> (self immutableCopyOfCollection: self txtTextStyles).
 						#smalltalk -> (self immutableCopyOfCollection: self smalltalkTextStyles).
 						#markdown -> (self immutableCopyOfCollection: self markdownTextStyles).
-						#json -> (self immutableCopyOfCollection: self jsonTextStyles)})
-				isImmutable: true;
+						#json -> (self immutableCopyOfCollection: self jsonTextStyles)
+					})
+				beReadOnlyObject;
 				yourself).
 	self addClassConstant: 'LexerKeywords'
-		value: ((LookupTable
-				withAll: {#json
-							-> #('false true null' '@id @context @type @value @language @container @list @set @reverse @index @base @vocab @graph')})
-				isImmutable: true;
+		value: ((LookupTable withAll: {
+						#json
+							-> #('false true null' '@id @context @type @value @language @container @list @set @reverse @index @base @vocab @graph')
+					})
+				beReadOnlyObject;
 				yourself).
 	keyMap := self defaultKeyMap.
 	defaultKeyBindings := IdentityDictionary new: keyMap size.
@@ -11371,9 +11375,9 @@ initialize
 			keyCode := AcceleratorTable keyCode: each first asInteger modifiers: each second | FVIRTKEY.
 			defaultKeyBindings at: keyCode
 				put: ((KeyBinding newAcceleratorKey: keyCode message: each last)
-						isImmutable: true;
+						beReadOnlyObject;
 						yourself)].
-	defaultKeyBindings isImmutable: true.
+	defaultKeyBindings beReadOnlyObject.
 	self addClassConstant: 'DefaultKeyBindings' value: defaultKeyBindings!
 
 jsonTextStyles

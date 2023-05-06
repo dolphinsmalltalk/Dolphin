@@ -413,8 +413,8 @@ initialize
 	"
 
 	defaultCaptions := (IdentityDictionary
-				withAll: {#notify -> 'Note'. #error -> 'Error'. #warning -> 'Warning'})
-				isImmutable: true;
+				withAll: { #notify -> 'Note'. #error -> 'Error'. #warning -> 'Warning' })
+				beReadOnlyObject;
 				yourself.
 	self addClassConstant: 'IconIds'
 		value: (ByteArray

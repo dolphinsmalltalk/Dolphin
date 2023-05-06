@@ -75,7 +75,7 @@ initialize
 				at: #etchedHorizontal put: SS_ETCHEDHORZ;
 				at: #etchedVertical put: SS_ETCHEDVERT;
 				shrink;
-				isImmutable: true;
+				beReadOnlyObject;
 				yourself)!
 
 resource_Default_view

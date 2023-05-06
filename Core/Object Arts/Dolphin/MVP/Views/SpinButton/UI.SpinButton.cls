@@ -393,7 +393,7 @@ initialize
 				at: #right put: UDS_ALIGNRIGHT;
 				at: #unattached put: 0;
 				shrink;
-				isImmutable: true;
+				beReadOnlyObject;
 				yourself)!
 
 themePartName

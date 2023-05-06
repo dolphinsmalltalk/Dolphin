@@ -2710,7 +2710,7 @@ initialize
 				at: #list put: LVS_LIST;
 				at: #report put: LVS_REPORT;
 				shrink;
-				isImmutable: true;
+				beReadOnlyObject;
 				yourself).
 	UnknownItem := Object new!
 

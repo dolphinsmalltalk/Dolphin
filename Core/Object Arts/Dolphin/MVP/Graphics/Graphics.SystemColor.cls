@@ -152,7 +152,7 @@ initialize
 					[:each |
 					| syscolor |
 					syscolor := self basicNew setId: each.
-					syscolor isImmutable: true.
+					syscolor beReadOnlyObject.
 					self addNamed: (namesById at: each) color: syscolor.
 					syscolor].
 	self addClassConstant: 'NamesById' value: namesById.

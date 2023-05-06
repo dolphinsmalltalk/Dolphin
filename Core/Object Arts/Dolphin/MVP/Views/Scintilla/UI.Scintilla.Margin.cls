@@ -287,14 +287,16 @@ initialize
 	self addClassConstant: 'MarginTypes'
 		value: #(#symbol #lineNumber #symbolBackground #symbolForeground #text #rightJustifiedText #color).
 	self addClassConstant: 'CursorTypes'
-		value: ((IdentityDictionary withAll: {SC_CURSORARROW -> #arrow.
+		value: ((IdentityDictionary withAll: {
+						SC_CURSORARROW -> #arrow.
 						SC_CURSORREVERSEARROW -> #reverseArrow.
 						SC_CURSORWAIT -> #wait.
-						SC_CURSORNORMAL -> #normal})
-				isImmutable: true;
+						SC_CURSORNORMAL -> #normal
+					})
+				beReadOnlyObject;
 				yourself).
 	propertyDescriptors := self buildPropertyDescriptors
-				isImmutable: true;
+				beReadOnlyObject;
 				yourself!
 
 stbConvertFrom: anSTBClassFormat

@@ -1200,7 +1200,7 @@ updateMap
 		at: #comment put: #(64 #updateComment #clearComment);
 		at: #dependents put: #(128 #updateDependents #clearDependents);
 		shrink;
-		isImmutable: true;
+		beReadOnlyObject;
 		yourself)!
 
 updateMethods

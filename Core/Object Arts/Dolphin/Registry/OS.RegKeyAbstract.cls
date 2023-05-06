@@ -959,22 +959,26 @@ initialize
 		RegKeyAbstract initialize
 	"
 
-	AccessModes := ##((IdentityDictionary withAll: {#read -> KEY_READ.
+	AccessModes := ##((IdentityDictionary withAll: {
+						#read -> KEY_READ.
 						#readWrite -> (KEY_READ | KEY_WRITE).
 						#all -> KEY_ALL_ACCESS.
 						#write -> KEY_WRITE.
-						#execute -> KEY_EXECUTE})
-				isImmutable: true;
+						#execute -> KEY_EXECUTE
+					})
+				beReadOnlyObject;
 				yourself).
 	"We retain the DWORD/QWORD terminology here, because these are the registry types"
-	ValueTypes := ##((IdentityDictionary withAll: {#string -> REG_SZ.
+	ValueTypes := ##((IdentityDictionary withAll: {
+						#string -> REG_SZ.
 						#dword -> REG_DWORD.
 						#stringArray -> REG_MULTI_SZ.
 						#qword -> REG_QWORD.
 						#binary -> REG_BINARY.
 						#expandString -> REG_EXPAND_SZ.
-						#none -> REG_NONE})
-				isImmutable: true;
+						#none -> REG_NONE
+					})
+				beReadOnlyObject;
 				yourself).
 	self addClassConstant: 'PathSeparator' value: '\' asUtf16String!
 

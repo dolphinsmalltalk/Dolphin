@@ -1457,7 +1457,7 @@ initialize
 				at: #right put: ES_RIGHT;
 				at: #center put: ES_CENTER;
 				shrink;
-				isImmutable: true;
+				beReadOnlyObject;
 				yourself).
 	self addClassConstant: 'FormatMap'
 		value: (IdentityDictionary new
@@ -1466,9 +1466,9 @@ initialize
 				at: #lowercase put: ES_LOWERCASE;
 				at: #numeric put: ES_NUMBER;
 				shrink;
-				isImmutable: true;
+				beReadOnlyObject;
 				yourself).
-	View registerMessageMappings: {WM_CTLCOLOREDIT -> #wmCtlColor:wParam:lParam:}!
+	View registerMessageMappings: { WM_CTLCOLOREDIT -> #wmCtlColor:wParam:lParam: }!
 
 onStartup
 	"Lookup the value of the FindDialog message.

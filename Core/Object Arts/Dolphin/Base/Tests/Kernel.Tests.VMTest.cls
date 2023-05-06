@@ -15,7 +15,7 @@ SUnitBrowser openOnTestCase: self'!
 
 assertImmutableAtPut: anObject
 	| value |
-	anObject isImmutable: true.
+	anObject beReadOnlyObject.
 	value := anObject at: 1.
 	self should: [anObject at: 0 put: value] raise: BoundsError.
 	1 to: anObject size + 1
@@ -182,7 +182,7 @@ exerciseReplaceElementsOf: targetCollection from: startInteger to: stopInteger w
 
 exerciseReplaceElementsOf: targetCollection with: sourceCollection
 	| target |
-	targetCollection isImmutable: true.
+	targetCollection beReadOnlyObject.
 
 	"Immutable target"
 	self should: 
@@ -363,9 +363,9 @@ hashBytes: aByteArray
 
 immutableTestSubjects
 	^#(#(1 2 3) #[1 2 3] 'abc' 1.0e38 ##('abc' asUtf8String
-		isImmutable: true;
+		beReadOnlyObject;
 		yourself) ##('abc' asUtf16String
-		isImmutable: true;
+		beReadOnlyObject;
 		yourself))!
 
 isFault: anException raisedIn: aCompiledMethod receiver: anObject
@@ -726,7 +726,7 @@ testImmutableAtPut
 				ifFalse: 
 					[self assert: a isImmutable not.
 					1 to: 3 do: [:i | a at: i put: (a at: 3 - i + 1)].
-					a isImmutable: true].
+					a beReadOnlyObject].
 			self assertImmutableAtPut: a].
 	self assertImmutableAtPut: #abc!
 
@@ -738,7 +738,7 @@ testImmutableBasicAtPut
 			a := each shallowCopy.
 			self assert: a isImmutable not.
 			1 to: 3 do: [:i | a basicAt: i put: (a basicAt: 3 - i + 1)].
-			a isImmutable: true.
+			a beReadOnlyObject.
 			self assertImmutableBasicAtPut: a].
 	self assertImmutableBasicAtPut: #abc!
 
@@ -761,11 +761,11 @@ testImmutableInstVarAtPut
 	instances := OrderedCollection withAll: self immutableTestSubjects.
 	"Package has a lot of named iv's"
 	instances add: (Package new
-				isImmutable: true;
+				beReadOnlyObject;
 				yourself).
 	"Sets have named and indexable variables"
 	instances add: (self class methodDictionary values asSet
-				isImmutable: true;
+				beReadOnlyObject;
 				yourself).
 	instances do: 
 			[:each |
@@ -777,7 +777,7 @@ testImmutableInstVarAtPut
 					[self assert: a isImmutable not.
 					size := a class instSize + a basicSize.
 					1 to: size do: [:i | a instVarAt: i put: (a instVarAt: size - i + 1)].
-					a isImmutable: true].
+					a beReadOnlyObject].
 			self assertImmutableInstVarAtPut: a].
 	self assertImmutableInstVarAtPut: #abc!
 
@@ -790,20 +790,20 @@ testImmutableNextPut
 			self should: [strm nextPut: s last] raise: Processor constWriteSignal]!
 
 testImmutableNextPutAll
-	{#[1 2 3]. 'abc'. #(1 2 3). 'abc' asUtf8String. 'abc' asUtf16String. #abc} do: 
+	{ #[1 2 3]. 'abc'. #(1 2 3). 'abc' asUtf8String. 'abc' asUtf16String. #abc } do: 
 			[:each |
 			| strm |
-			each isImmutable: true.
+			each beReadOnlyObject.
 			self assertImmutableAtPut: each.
 			strm := WriteStream on: each.
 			self should: [strm nextPutAll: (each copyFrom: 2 to: 3)] raise: Processor constWriteSignal].
-	{Utf8String. Utf16String} do: 
+	{ Utf8String. Utf16String } do: 
 			[:eachTarget |
-			{AnsiString. Utf8String. Utf16String} do: 
+			{ AnsiString. Utf8String. Utf16String } do: 
 					[:each |
 					self should: 
 							[((eachTarget with: $\x1F42C)
-								isImmutable: true;
+								beReadOnlyObject;
 								yourself) writeStream
 								nextPutAll: (each with: $£)]
 						raise: Processor constWriteSignal]]!
@@ -842,7 +842,7 @@ testImmutableWriteAccessors
 	inst := class new.
 	vars keysAndValuesDo: [:i :each | inst perform: (each copyWith: $:) asSymbol with: i].
 	vars keysAndValuesDo: [:i :each | self assert: (inst instVarAt: i) equals: i].
-	inst isImmutable: true.
+	inst beReadOnlyObject.
 	"Note that the primitive write accessor will fail and fall back on executing the method bytecodes, which will fail sending #errorInstVarAt:put:"
 	vars do: 
 			[:each |
@@ -1578,37 +1578,41 @@ testPrimitiveBytesEqual
 	"More than one word, odd length"
 	string6 := 'abcdefghi'.
 	string7 := 'abcdefghj'.
-	{{string1. string1. true}.
-		{bytes1. bytes1. true}.
-		{bytes1. bytes1 copy. true}.
-		{bytes1. bytes2. false}.
-		{bytes2. bytes1. false}.
-		{string1. string1 copy. true}.
-		{string1.
+	{
+		{ string1. string1. true }.
+		{ bytes1. bytes1. true }.
+		{ bytes1. bytes1 copy. true }.
+		{ bytes1. bytes2. false }.
+		{ bytes2. bytes1. false }.
+		{ string1. string1 copy. true }.
+		{
+			string1.
 			string1 copy
-				isImmutable: true;
+				beReadOnlyObject;
 				yourself.
-			true}.
-		{string2. string2 copy. true}.
-		{string3. string3 copy. true}.
-		{string4. string4 copy. true}.
-		{string5. string5 copy. true}.
-		{string6. string6 copy. true}.
-		{string6. string7. false}.
-		{string7. string6. false}.
-		{string1. string2. false}.
-		{string2. string1. false}.
-		{string1. string3. false}.
-		{string3. string1. false}.
-		{string1. string4. false}.
-		{string4. string1. false}.
-		{string1. string5. false}.
-		{string5. string1. false}.
-		{string1. string1 asSymbol. 'InvalidParameter1'}.
-		{string1 asSymbol. string1. 'InvalidParameter1'}} do: 
+			true
+		}.
+		{ string2. string2 copy. true }.
+		{ string3. string3 copy. true }.
+		{ string4. string4 copy. true }.
+		{ string5. string5 copy. true }.
+		{ string6. string6 copy. true }.
+		{ string6. string7. false }.
+		{ string7. string6. false }.
+		{ string1. string2. false }.
+		{ string2. string1. false }.
+		{ string1. string3. false }.
+		{ string3. string1. false }.
+		{ string1. string4. false }.
+		{ string4. string1. false }.
+		{ string1. string5. false }.
+		{ string5. string1. false }.
+		{ string1. string1 asSymbol. 'InvalidParameter1' }.
+		{ string1 asSymbol. string1. 'InvalidParameter1' }
+	} do: 
 				[:each |
 				| actual |
-				actual := method value: each first withArguments: {each second}.
+				actual := method value: each first withArguments: { each second }.
 				self assert: actual equals: each last]!
 
 testPrimitiveBytesIsNull
@@ -1616,13 +1620,13 @@ testPrimitiveBytesIsNull
 	method := self createPrimitiveMethodLike: External.IntegerBytes >> #isNull.
 	subject := External.UInt32Bytes new.
 	self assert: (method value: subject withArguments: #()).
-	subject isImmutable: true.
+	subject beReadOnlyObject.
 	self assert: (method value: subject withArguments: #()).
 	subject := External.UInt32Bytes fromInteger: 1.
 	self deny: (method value: subject withArguments: #()).
 	subject := External.UIntPtrBytes newFixed: 8.
 	self assert: (method value: subject withArguments: #()) equals: 'ObjectTypeMismatch'.
-	{External.Address. External.Handle} do: 
+	{ External.Address. External.Handle } do: 
 			[:each |
 			self assert: (each fromInteger: 1) isNull not.
 			self assert: (each fromInteger: -1) isNull not.
@@ -2105,19 +2109,19 @@ testPrimitiveInstVarAt
 	mutableOc := OrderedCollection with: '3' with: '4'.
 	self deny: mutableOc isImmutable.
 	immutableOc := mutableOc copy
-				isImmutable: true;
+				beReadOnlyObject;
 				yourself.
 	self assert: immutableOc isImmutable.
 	1 to: 2
 		do: 
 			[:i |
-			self assert: (method value: mutableOc withArguments: {i}) equals: i.
-			self assert: (method value: immutableOc withArguments: {i}) equals: i].
+			self assert: (method value: mutableOc withArguments: { i }) equals: i.
+			self assert: (method value: immutableOc withArguments: { i }) equals: i].
 	3 to: 4
 		do: 
 			[:i |
-			self assert: (method value: mutableOc withArguments: {i}) equals: i printString.
-			self assert: (method value: immutableOc withArguments: {i}) equals: i printString].
+			self assert: (method value: mutableOc withArguments: { i }) equals: i printString.
+			self assert: (method value: immutableOc withArguments: { i }) equals: i printString].
 	immutableBytes := #[10 20 30 40].
 	self assert: immutableBytes isImmutable.
 	mutableBytes := immutableBytes copy.
@@ -2125,22 +2129,22 @@ testPrimitiveInstVarAt
 	1 to: immutableBytes size
 		do: 
 			[:i |
-			self assert: (method value: immutableBytes withArguments: {i}) equals: i * 10.
-			self assert: (method value: mutableBytes withArguments: {i}) equals: i * 10].
+			self assert: (method value: immutableBytes withArguments: { i }) equals: i * 10.
+			self assert: (method value: mutableBytes withArguments: { i }) equals: i * 10].
 	"Out of bounds"
-	{-1. 0. 5. SmallInteger minimum. SmallInteger maximum} do: 
+	{ -1. 0. 5. SmallInteger minimum. SmallInteger maximum } do: 
 			[:each |
-			self assert: (method value: mutableOc withArguments: {each}) equals: 'OutOfBounds'.
-			self assert: (method value: immutableOc withArguments: {each}) equals: 'OutOfBounds'.
-			self assert: (method value: mutableBytes withArguments: {each}) equals: 'OutOfBounds'.
-			self assert: (method value: immutableBytes withArguments: {each}) equals: 'OutOfBounds'].
+			self assert: (method value: mutableOc withArguments: { each }) equals: 'OutOfBounds'.
+			self assert: (method value: immutableOc withArguments: { each }) equals: 'OutOfBounds'.
+			self assert: (method value: mutableBytes withArguments: { each }) equals: 'OutOfBounds'.
+			self assert: (method value: immutableBytes withArguments: { each }) equals: 'OutOfBounds'].
 	"Invalid index"
-	{SmallInteger minimum - 1. SmallInteger maximum + 1. nil} do: 
+	{ SmallInteger minimum - 1. SmallInteger maximum + 1. nil } do: 
 			[:each |
-			self assert: (method value: mutableOc withArguments: {each}) equals: 'InvalidParameter1'.
-			self assert: (method value: immutableOc withArguments: {each}) equals: 'InvalidParameter1'.
-			self assert: (method value: mutableBytes withArguments: {each}) equals: 'InvalidParameter1'.
-			self assert: (method value: immutableBytes withArguments: {each}) equals: 'InvalidParameter1']!
+			self assert: (method value: mutableOc withArguments: { each }) equals: 'InvalidParameter1'.
+			self assert: (method value: immutableOc withArguments: { each }) equals: 'InvalidParameter1'.
+			self assert: (method value: mutableBytes withArguments: { each }) equals: 'InvalidParameter1'.
+			self assert: (method value: immutableBytes withArguments: { each }) equals: 'InvalidParameter1']!
 
 testPrimitiveInstVarAtPut
 	| mutableOc method immutableBytes mutableBytes immutableOc immutableStrings mutableStrings |
@@ -2148,7 +2152,7 @@ testPrimitiveInstVarAtPut
 	mutableOc := OrderedCollection new: 2.
 	self deny: mutableOc isImmutable.
 	immutableOc := mutableOc copy
-				isImmutable: true;
+				beReadOnlyObject;
 				yourself.
 	self assert: immutableOc isImmutable.
 	self assert: (method value: mutableOc withArguments: #(1 1)) equals: 1.
@@ -2159,11 +2163,11 @@ testPrimitiveInstVarAtPut
 	self assert: mutableOc asArray equals: #('3' '4').
 	self assert: (method value: immutableOc withArguments: #(1 1)) equals: 'AccessViolation'.
 	immutableBytes := #[10 20 30 40].
-	mutableStrings := {String new: 4. Utf8String new: 4. Utf16String new: 4}.
-	immutableStrings := {AnsiString. Utf8String. Utf16String} collect: 
+	mutableStrings := { String new: 4. Utf8String new: 4. Utf16String new: 4 }.
+	immutableStrings := { AnsiString. Utf8String. Utf16String } collect: 
 					[:each |
 					(each fromString: 'abcd')
-						isImmutable: true;
+						beReadOnlyObject;
 						yourself].
 	self assert: immutableBytes isImmutable.
 	mutableBytes := immutableBytes copy.
@@ -2171,37 +2175,38 @@ testPrimitiveInstVarAtPut
 	1 to: immutableBytes size
 		do: 
 			[:i |
-			self assert: (method value: immutableBytes withArguments: {i. i * 10}) equals: 'AccessViolation'.
+			self assert: (method value: immutableBytes withArguments: { i. i * 10 }) equals: 'AccessViolation'.
 			immutableStrings
-				do: [:s | self assert: (method value: s withArguments: {i. 96 + i}) equals: 'AccessViolation'].
-			mutableStrings do: [:s | self assert: (method value: s withArguments: {i. 96 + i}) equals: 96 + i].
-			self assert: (method value: mutableBytes withArguments: {i. i * 10}) equals: i * 10.
+				do: [:s | self assert: (method value: s withArguments: { i. 96 + i }) equals: 'AccessViolation'].
+			mutableStrings do: [:s | self assert: (method value: s withArguments: { i. 96 + i }) equals: 96 + i].
+			self assert: (method value: mutableBytes withArguments: { i. i * 10 }) equals: i * 10.
 			self assert: (mutableBytes basicAt: i) equals: i * 10].
 	mutableStrings with: immutableStrings do: [:a :b | self assert: a equals: b].
 	"Out of bounds"
-	{-1. 0. 5. SmallInteger minimum. SmallInteger maximum} do: 
+	{ -1. 0. 5. SmallInteger minimum. SmallInteger maximum } do: 
 			[:each |
 			| expectedImmutable |
-			self assert: (method value: mutableOc withArguments: {each. each}) equals: 'OutOfBounds'.
+			self assert: (method value: mutableOc withArguments: { each. each }) equals: 'OutOfBounds'.
 			expectedImmutable := each <= 0 ifTrue: ['OutOfBounds'] ifFalse: ['AccessViolation'].
-			self assert: (method value: immutableOc withArguments: {each. each}) equals: expectedImmutable.
+			self assert: (method value: immutableOc withArguments: { each. each }) equals: expectedImmutable.
 			mutableStrings
-				do: [:s | self assert: (method value: s withArguments: {each. $a codePoint}) equals: 'OutOfBounds'].
+				do: [:s | self assert: (method value: s withArguments: { each. $a codePoint }) equals: 'OutOfBounds'].
 			immutableStrings
-				do: [:s | self assert: (method value: s withArguments: {each. $a codePoint}) equals: expectedImmutable].
-			self assert: (method value: mutableBytes withArguments: {each. 255}) equals: 'OutOfBounds'.
-			self assert: (method value: immutableBytes withArguments: {each. 255}) equals: expectedImmutable].
+				do: [:s | self assert: (method value: s withArguments: { each. $a codePoint }) equals: expectedImmutable].
+			self assert: (method value: mutableBytes withArguments: { each. 255 }) equals: 'OutOfBounds'.
+			self assert: (method value: immutableBytes withArguments: { each. 255 }) equals: expectedImmutable].
 	"Invalid index"
-	{SmallInteger minimum - 1. SmallInteger maximum + 1. nil} do: 
+	{ SmallInteger minimum - 1. SmallInteger maximum + 1. nil } do: 
 			[:each |
-			self assert: (method value: mutableOc withArguments: {each. each}) equals: 'InvalidParameter1'.
-			self assert: (method value: immutableOc withArguments: {each. each}) equals: 'InvalidParameter1'.
+			self assert: (method value: mutableOc withArguments: { each. each }) equals: 'InvalidParameter1'.
+			self assert: (method value: immutableOc withArguments: { each. each }) equals: 'InvalidParameter1'.
 			mutableStrings
-				do: [:s | self assert: (method value: s withArguments: {each. each}) equals: 'InvalidParameter1'].
+				do: [:s | self assert: (method value: s withArguments: { each. each }) equals: 'InvalidParameter1'].
 			immutableStrings
-				do: [:s | self assert: (method value: s withArguments: {each. each}) equals: 'InvalidParameter1'].
-			self assert: (method value: mutableBytes withArguments: {each. each}) equals: 'InvalidParameter1'.
-			self assert: (method value: immutableBytes withArguments: {each. each}) equals: 'InvalidParameter1'].
+				do: [:s | self assert: (method value: s withArguments: { each. each }) equals: 'InvalidParameter1'].
+			self assert: (method value: mutableBytes withArguments: { each. each }) equals: 'InvalidParameter1'.
+			self assert: (method value: immutableBytes withArguments: { each. each })
+				equals: 'InvalidParameter1'].
 	"Invalid byte content"
 	#($a -1 256 nil) do: 
 			[:each |
@@ -2681,7 +2686,7 @@ testPrimitiveSetMutableInstVar
 	self deny: assoc isImmutable.
 	method value: assoc withArguments: #(3).
 	self assert: assoc value identicalTo: 3.
-	assoc isImmutable: true.
+	assoc beReadOnlyObject.
 	self should: [assoc value: 4] raise: Processor constWriteSignal.
 	self assert: assoc value identicalTo: 3.
 	method value: assoc withArguments: #(4).
@@ -3045,7 +3050,7 @@ testPrimitiveStructIsNull
 	method := self createPrimitiveMethodLike: Structure >> #isNull.
 	subject := UInt32 new.
 	self deny: (method value: subject withArguments: #()).
-	subject bytes isImmutable: true.
+	subject bytes beReadOnlyObject.
 	self deny: (method value: subject withArguments: #()).
 	subject bytes: nil.
 	self assert: (method value: subject withArguments: #()).
@@ -3231,7 +3236,7 @@ testSignedFromUnsigned
 testUInt32AtOffsetPut
 	| bytes dword max |
 	bytes := ByteArray new: 4.
-	{'s'. SmallInteger maximum + 1. Object new} do: 
+	{ 's'. SmallInteger maximum + 1. Object new } do: 
 			[:each |
 			self
 				should: [bytes uint32AtOffset: each put: 1]
@@ -3264,12 +3269,12 @@ testUInt32AtOffsetPut
 			dword := UInt32 fromInteger: 16r11223344.
 			bytes uint32AtOffset: each - 4 put: dword.
 			self assert: (bytes uint32AtOffset: each - 4) equals: 16r11223344.
-			dword isImmutable: true.
+			dword beReadOnlyObject.
 			bytes := ByteArray new: each.
 			bytes uint32AtOffset: each - 4 put: dword.
 			self assert: (bytes uint32AtOffset: each - 4) equals: 16r11223344.
 			bytes := ByteArray new: each.
-			bytes isImmutable: true.
+			bytes beReadOnlyObject.
 			self should: [bytes uint32AtOffset: each - 4 put: 1] raise: Processor constWriteSignal]!
 
 testVMPointersImmutable

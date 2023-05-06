@@ -46,7 +46,7 @@ unmockGdip
 	messages := binding value messages.
 	binding
 		value: GdiplusLibrary default;
-		isImmutable: true.
+		beReadOnlyObject.
 	^messages! !
 !Graphics.Gdiplus.Tests.InitializerTests categoriesForMethods!
 createHandle!private!unit tests! !

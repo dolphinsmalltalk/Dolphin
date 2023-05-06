@@ -652,7 +652,7 @@ initialize
 	"Empty can't be a class constant or it creates a load order problem in that the Number>>@ method is not defined when the class is declared in the .pax file"
 
 	Empty := self new
-				isImmutable: true;
+				beReadOnlyObject;
 				yourself!
 
 left: leftNumber top: topNumber right: rightNumber bottom: bottomNumber 

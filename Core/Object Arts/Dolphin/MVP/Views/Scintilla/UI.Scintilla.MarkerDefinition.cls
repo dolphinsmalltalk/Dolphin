@@ -461,17 +461,19 @@ initialize
 	"
 
 	propertyDescriptors := self buildPropertyDescriptors
-				isImmutable: true;
+				beReadOnlyObject;
 				yourself.
 	self addClassConstant: 'FolderNames'
-		value: ((IdentityDictionary withAll: {#folderEnd -> SC_MARKNUM_FOLDEREND.
+		value: ((IdentityDictionary withAll: {
+						#folderEnd -> SC_MARKNUM_FOLDEREND.
 						#folderOpenMid -> SC_MARKNUM_FOLDEROPENMID.
 						#folderMidTail -> SC_MARKNUM_FOLDERMIDTAIL.
 						#folderTail -> SC_MARKNUM_FOLDERTAIL.
 						#folderSub -> SC_MARKNUM_FOLDERSUB.
 						#folder -> SC_MARKNUM_FOLDER.
-						#folderOpen -> SC_MARKNUM_FOLDEROPEN})
-				isImmutable: true;
+						#folderOpen -> SC_MARKNUM_FOLDEROPEN
+					})
+				beReadOnlyObject;
 				yourself)!
 
 plusMinus

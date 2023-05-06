@@ -221,7 +221,7 @@ initialize
 				at: #bottomLeft put: BS_LEFT | BS_BOTTOM;
 				at: #bottomRight put: BS_RIGHT | BS_BOTTOM;
 				shrink;
-				isImmutable: true;
+				beReadOnlyObject;
 				yourself)!
 
 themePartName

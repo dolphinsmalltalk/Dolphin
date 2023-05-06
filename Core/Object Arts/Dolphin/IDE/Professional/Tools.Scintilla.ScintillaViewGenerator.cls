@@ -1964,7 +1964,7 @@ ignoredMessages
 
 	ignoredMessages
 		shrink;
-		isImmutable: true;
+		beReadOnlyObject;
 		yourself)
 !
 

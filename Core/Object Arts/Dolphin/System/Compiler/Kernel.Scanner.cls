@@ -816,18 +816,18 @@ initialize
 	self addClassConstant: 'EscapeChars'
 		value: (escapeChars
 				shrink;
-				isImmutable: true;
+				beReadOnlyObject;
 				yourself).
 	self addClassConstant: 'SpecialLiterals'
 		value: (LookupTable withAll: {
 						'nil' -> ((StLiteralToken value: nil)
-									isImmutable: true;
+									beReadOnlyObject;
 									yourself).
 						'true' -> ((StLiteralToken value: true)
-									isImmutable: true;
+									beReadOnlyObject;
 									yourself).
 						'false' -> ((StLiteralToken value: false)
-									isImmutable: true;
+									beReadOnlyObject;
 									yourself)
 					})!
 
@@ -843,7 +843,7 @@ initializeClassificationTable
 	(Character byteCharacterSet select: [:each | each isSeparator])
 		do: [:separator | classificationTable at: separator codePoint + 1 put: #separator].
 	classificationTable at: $\0 codePoint + 1 put: #separator.
-	classificationTable isImmutable: true.
+	classificationTable beReadOnlyObject.
 	self addClassConstant: 'ClassificationTable' value: classificationTable!
 
 isSelector: aSymbol

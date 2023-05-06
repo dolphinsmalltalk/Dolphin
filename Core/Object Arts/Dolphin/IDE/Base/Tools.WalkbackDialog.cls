@@ -176,7 +176,7 @@ initialize
 				at: 3 put: #resume;
 				at: 4 put: #copy;
 				shrink;
-				isImmutable: true;
+				beReadOnlyObject;
 				yourself)! !
 !Tools.WalkbackDialog class categoriesForMethods!
 initialize!initializing!private! !

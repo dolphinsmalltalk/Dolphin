@@ -720,7 +720,7 @@ initialize
 				at: TCS_VERTICAL put: #left;
 				at: TCS_BOTTOM | TCS_VERTICAL put: #right;
 				shrink;
-				isImmutable: true;
+				beReadOnlyObject;
 				yourself).
 	self addClassConstant: 'TabViewModes'
 		value: (IdentityDictionary new
@@ -733,7 +733,7 @@ initialize
 				at: #thumbnails put: 64 @ 64;
 				at: #extraLargeIcons put: 256 @ 256;
 				shrink;
-				isImmutable: true;
+				beReadOnlyObject;
 				yourself)!
 
 tabOrientations

@@ -807,9 +807,9 @@ lintIconMap
 	LintIconMap := nil
 	"
 
-	LintIconMap isNil 
+	LintIconMap isNil
 		ifTrue: 
-			[LintIconMap := (LookupTable new)
+			[LintIconMap := LookupTable new
 						at: 'bugs' put: self lintErrorIcon;
 						at: 'possible bugs' put: self lintErrorIcon;
 						at: 'unnecessary code' put: self lintWarningIcon;
@@ -817,7 +817,7 @@ lintIconMap
 						at: 'miscellaneous' put: self lintInfoIcon;
 						at: 'all checks passed' put: self lintPassIcon;
 						shrink;
-						isImmutable: true;
+						beReadOnlyObject;
 						yourself].
 	^LintIconMap!
 
@@ -869,12 +869,12 @@ publishedAspects
 		yourself!
 
 refreshModes
-	^##((LookupTable new)
+	^##(LookupTable new
 		at: 'Update on request' put: #manual;
 		at: 'Update in background' put: #continuous;
 		at: 'Update in foreground' put: #whenVisible;
 		shrink;
-		isImmutable: true;
+		beReadOnlyObject;
 		yourself)!
 
 report: failedRules for: aBrowserEnvionment

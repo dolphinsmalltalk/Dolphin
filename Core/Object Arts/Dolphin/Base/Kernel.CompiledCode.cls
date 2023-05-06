@@ -156,7 +156,7 @@ byteCodes: anObject
 	codes := (anObject isInteger or: [anObject size > 4 or: [anObject first even]])
 				ifTrue: [anObject]
 				ifFalse: [self class packByteCodes: anObject].
-	codes isImmutable: true.
+	codes beReadOnlyObject.
 	self setByteCodes: codes!
 
 byteCodeSegments

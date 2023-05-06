@@ -414,7 +414,7 @@ fromUtf16String: anAddressOrUtf16String
 
 initialize
 	empty := self new
-				isImmutable: true;
+				beReadOnlyObject;
 				yourself.
 	VM registryAt: #Utf16String put: self.
 	self extraInstanceSpec: EncodingUtf16.

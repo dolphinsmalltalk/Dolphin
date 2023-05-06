@@ -278,7 +278,8 @@ invariantVKeyMap
 	"Yes, VK_OEM_PLUS really does translate to the key name '='"
 
 	^SearchPolicy ordinalCaseInsensitive newLookupTable
-		addAll: {'BACKSPACE' -> VK_BACK.
+		addAll: {
+					'BACKSPACE' -> VK_BACK.
 					'TAB' -> VK_TAB.
 					'ENTER' -> VK_RETURN.
 					'SHIFT' -> VK_SHIFT.
@@ -373,8 +374,9 @@ invariantVKeyMap
 					'DEL' -> (VK_DELETE | KF_EXTENDED).
 					'DELETE' -> (VK_DELETE | KF_EXTENDED).
 					'PAUSE' -> VK_PAUSE.
-					'CAPSLOCK' -> VK_CAPITAL};
-		isImmutable: true;
+					'CAPSLOCK' -> VK_CAPITAL
+				};
+		beReadOnlyObject;
 		yourself!
 
 layoutName

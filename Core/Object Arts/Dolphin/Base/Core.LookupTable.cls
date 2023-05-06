@@ -130,6 +130,10 @@ basicValues
 
 	^values!
 
+beReadOnlyObject
+	values beReadOnlyObject.
+	^super beReadOnlyObject!
+
 copyElementsInto: newMe
 	"Private - Add the receiver's elements into the argument, newMe.
 	Private part of the implementation of hashed collection resizing."
@@ -357,6 +361,7 @@ at:ifAbsent:!accessing!public! !
 at:ifAbsentPutClean:!accessing!public! !
 at:put:!accessing!public! !
 basicValues!accessing!private! !
+beReadOnlyObject!initializing!public! !
 copyElementsInto:!adding!private! !
 do:!debugger-step through!enumerating!public! !
 findElementOrNil:!private!searching! !

@@ -479,7 +479,7 @@ initialize
 				at: #bottom put: TBS_BOTTOM;
 				at: #bothSides put: TBS_BOTH;
 				shrink;
-				isImmutable: true;
+				beReadOnlyObject;
 				yourself).
 	self addClassConstant: 'VerticalTickStyles'
 		value: (IdentityDictionary new

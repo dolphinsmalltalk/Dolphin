@@ -707,7 +707,7 @@ initialize
 				at: #multi put: LBS_EXTENDEDSEL;
 				at: #toggle put: LBS_MULTIPLESEL;
 				shrink;
-				isImmutable: true;
+				beReadOnlyObject;
 				yourself).
 	self addClassConstant: 'SelectionModeMask'
 		value: (SelectionModes inject: 0 into: [:sum :each | sum + each])!

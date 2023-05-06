@@ -1262,8 +1262,9 @@ initialize
 		MessageBox initialize
 	"
 
-	defaultCaptions := (IdentityDictionary withAll: {#prompt -> 'Please confirm…'. #notify -> 'Note'})
-				isImmutable: true;
+	defaultCaptions := (IdentityDictionary
+				withAll: { #prompt -> 'Please confirm…'. #notify -> 'Note' })
+				beReadOnlyObject;
 				yourself.
 	self addClassConstant: 'CommonButtonFlags'
 		value: ((Array new: 11)

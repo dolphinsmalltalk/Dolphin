@@ -563,7 +563,7 @@ initialize
 				yourself.
 	#('st' 'cls' 'pac' 'pax' 'chg' 'sml' 'ist')
 		do: [:each | LanguageExtensions at: each put: #container].
-	LanguageExtensions isImmutable: true!
+	LanguageExtensions beReadOnlyObject!
 
 invalidateOptions
 	OptionFlags := nil!
