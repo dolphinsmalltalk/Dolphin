@@ -59,6 +59,11 @@ setLeftToRightBlock:rightToLeftBlock:!initializing!private! !
 
 !UI.PluggableTypeConverter class methodsFor!
 
+leftToRight: aMonadicValuable
+	"Answer a new instance of the receiver that converts between values in the left domain to values in the right domain by evaluating the <monadicValuable>, aMonadicValuable, and which always answers a nil value for the conversion in the reverse direction. This is appropriate for use with static views that do not accept input and so do not require the right-to-left conversion."
+
+	^self leftToRight: aMonadicValuable rightToLeft: [:value | nil]!
+
 leftToRight: leftMonadicValuable rightToLeft: rightMonadicValuable 
 	"Answer a new instance of the receiver that converts between values 
 	in the left domain to values in the right domain by evaluating the 
@@ -72,7 +77,8 @@ leftToRight: leftMonadicValuable rightToLeft: rightMonadicValuable
 new
 	^self leftToRight: [:left | left] rightToLeft: [:right | right]! !
 !UI.PluggableTypeConverter class categoriesForMethods!
+leftToRight:!instance creation!public! !
 leftToRight:rightToLeft:!instance creation!public! !
-new!public! !
+new!instance creation!public! !
 !
 

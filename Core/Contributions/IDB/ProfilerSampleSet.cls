@@ -82,6 +82,11 @@ isActive: anObject
 
 	isActive := anObject!
 
+isEmpty
+	"Answer whether there are any samples in the set."
+
+	^samples isEmpty!
+
 name
 	"Answer the name of this sample set"
 
@@ -231,6 +236,7 @@ duration!accessing!public! !
 initialize!initializing!public! !
 isActive!accessing!public! !
 isActive:!accessing!public! !
+isEmpty!public!testing! !
 name!accessing!public! !
 profilerIconIndex!accessing!public! !
 reportTo:!public!reporting! !

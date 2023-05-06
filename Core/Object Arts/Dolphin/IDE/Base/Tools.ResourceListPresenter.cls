@@ -67,9 +67,8 @@ createComponents
 	previewPresenter := self add: ImagePresenter new name: 'preview'.
 	resourceIdModel := ValueHolder new.
 	previewPresenter model: (ValueConverter subject: resourceIdModel
-				typeConverter: (PluggableTypeConverter 
-						leftToRight: [:resourceId | self imageFromResource: resourceId]
-						rightToLeft: [:image | nil]))!
+				typeConverter: (PluggableTypeConverter
+						leftToRight: [:resourceId | self imageFromResource: resourceId]))!
 
 createSchematicWiring
 	"Create the trigger wiring for the receiver"
