@@ -49,6 +49,7 @@ package setMethodNames: #(
 	#(#{XProgramming.SUnit.TestCase class} #debugWithResult:)
 	#(#{XProgramming.SUnit.TestCaseResult} #isKnownSlowTest)
 	#(#{XProgramming.SUnit.TestResult} #debugCase:)
+	#(#{XProgramming.SUnit.TestSuite} #displayOn:)
 ).
 
 package setPrerequisites: #(
@@ -424,6 +425,14 @@ debugCase: aTestCase
 				signal return]! !
 !XProgramming.SUnit.TestResult categoriesForMethods!
 debugCase:!public!running! !
+!
+
+!XProgramming.SUnit.TestSuite methodsFor!
+
+displayOn: aPuttableStream
+	aPuttableStream nextPutAll: self name! !
+!XProgramming.SUnit.TestSuite categoriesForMethods!
+displayOn:!displaying!public! !
 !
 
 "End of package definition"!

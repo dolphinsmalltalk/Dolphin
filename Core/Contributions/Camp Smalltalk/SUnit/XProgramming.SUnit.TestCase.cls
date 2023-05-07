@@ -284,16 +284,12 @@ buildSuiteFromAllSelectors
 buildSuiteFromLocalSelectors
 	^self buildSuiteFromMethods: self testSelectors!
 
-buildSuiteFromMethods: testMethods 
-	^testMethods asSortedArray
-		inject: ((TestSuite new)
-				name: self name asString;
-				yourself)
-		into: 
-			[:suite :selector | 
-			suite
-				addTest: (self selector: selector);
-				yourself]!
+buildSuiteFromMethods: testMethods
+	| suite |
+	suite := TestSuite new.
+	testMethods asSortedArray do: [:selector | suite addTest: (self selector: selector)].
+	suite name: (suite tests size = 1 ifTrue: [suite tests first printString] ifFalse: [self fullName]).
+	^suite!
 
 buildSuiteFromSelectors
 	^self shouldInheritSelectors

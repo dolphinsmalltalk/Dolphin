@@ -60,6 +60,10 @@ classUnderTest
 				ifNone: nil.
 	^classUnderTest!
 
+completeRun: aTestSuite
+	aTestSuite removeDependentFromHierachy: self.
+	self stopAutoSwitchProcess!
+
 createComponents
 	"Private - Create the presenters contained by the receiver"
 
@@ -159,12 +163,12 @@ displayReset
 	self displayDefects: #().
 	result := nil!
 
-displayRunning
+displayRunning: aString
 	"Indicate that tests are being run"
 
 	self icon: (Icon fromId: 'UnitTestPluginDefect.ico').
 	self displayColor: self class runningColor.
-	self displayMode: 'Running'.
+	self displayMode: aString.
 	self displayDetails: '…'!
 
 hasDefects
@@ -223,11 +227,12 @@ installTestCommandsInClassMenu: aMenu withAccelerator: needsAccel
 	"Private - Installs the test commands required by the receiver into aMenu. If an accelerator is required (i.e. in the case of
 	non-context menus) then needsAccel should be true"
 
-	| runTestsCommandDescription toggleToTestClassCommandDescription |
+	| hasTests runTestsCommandDescription toggleToTestClassCommandDescription |
+	hasTests := [:query | query isEnabled: self hasTests].
 	runTestsCommandDescription := ClosedCommandDescription
 				command: #runTests
-				description: '&Run Tests'
-				queryBlock: [:query | query isEnabled: self hasTests]
+				description: 'R&un Tests'
+				queryBlock: hasTests
 				receiver: self.
 	needsAccel ifTrue: [runTestsCommandDescription acceleratorKeyString: 'Ctrl+Alt+R'].
 	runTestsCommandDescription image: self class icon.
@@ -239,7 +244,7 @@ installTestCommandsInClassMenu: aMenu withAccelerator: needsAccel
 					query
 						isEnabled: self hasTestClass;
 						text: (query commandDescription menuText
-									expandMacrosWithArguments: {self toggleToTestsClassDescription}
+									expandMacrosWithArguments: { self toggleToTestsClassDescription }
 									locale: Locale smalltalk)]
 				receiver: self.
 	toggleToTestClassCommandDescription image: [self toggleToTestsClass ifNotNil: [:class | class icon]].
@@ -247,21 +252,42 @@ installTestCommandsInClassMenu: aMenu withAccelerator: needsAccel
 	aMenu
 		addSeparator;
 		addCommandDescription: runTestsCommandDescription;
-		addCommandDescription: toggleToTestClassCommandDescription!
+		addCommandDescription: toggleToTestClassCommandDescription.
+	#{Smalltalk.Profiler} valueOrNil
+		ifNotNil: 
+			[:profiler |
+			aMenu addCommandDescription: ((ClosedCommandDescription
+						command: #profileTests
+						description: 'Profi&le Tests'
+						queryBlock: hasTests
+						receiver: self)
+						image: profiler icon;
+						yourself)]!
 
-installTestCommandsInMethodMenu: aMenu 
+installTestCommandsInMethodMenu: aMenu
 	"Private - Installs the method test commands required by the receiver into aMenu."
 
-	| runTestsCommandDescription |
-	runTestsCommandDescription := ClosedCommandDescription 
+	| runTestsCommandDescription hasIndividualTests |
+	hasIndividualTests := [:query | query isEnabled: self hasIndividualTests].
+	runTestsCommandDescription := ClosedCommandDescription
 				command: #runTests
-				description: '&Run Tests'
-				queryBlock: [:query | query isEnabled: self hasIndividualTests]
+				description: 'R&un Tests'
+				queryBlock: hasIndividualTests
 				receiver: self.
 	runTestsCommandDescription image: self class icon.
 	aMenu
 		addSeparator;
-		addCommandDescription: runTestsCommandDescription!
+		addCommandDescription: runTestsCommandDescription.
+	#{Smalltalk.Profiler} valueOrNil
+		ifNotNil: 
+			[:profiler |
+			aMenu addCommandDescription: ((ClosedCommandDescription
+						command: #profileTests
+						description: 'Profi&le Tests'
+						queryBlock: hasIndividualTests
+						receiver: self)
+						image: profiler icon;
+						yourself)]!
 
 onBrowserClassSelected
 	"Private - Event handler for a class being selected within the receiver's associated browser. "
@@ -278,6 +304,25 @@ onViewOpened
 	super onViewOpened.
 	self installMenuCommands.
 	self displayReset!
+
+prepareToRun: aTestSuite
+	self
+		displayRunning: 'Running';
+		startAutoSwitchProcess.
+	aTestSuite addDependentToHierachy: self!
+
+profileSuite: aTestSuite
+	self displayRunning: 'Profiling'.
+	result := #{Smalltalk.Profiler} value profile: [aTestSuite run]
+				inSetNamed: '<1d> - <2d>' << { aTestSuite. DateAndTime now }.
+	self updateWindow!
+
+profileTests
+	| suite |
+	suite := self testSuite.
+	(#{Smalltalk.Profiler} isDefined and: [suite notNil])
+		ifTrue: [self profileSuite: suite]
+		ifFalse: [self displayReset]!
 
 queryCommand: aCommandQuery 
 	"Private - Enter details about a potential command for the receiver 
@@ -298,14 +343,9 @@ queryCommand: aCommandQuery
 refreshIcon
 	self view arrangement: self!
 
-runSuite: aTestSuite 
-	self
-		displayRunning;
-		startAutoSwitchProcess.
-	aTestSuite addDependentToHierachy: self.
-	result := [aTestSuite run] ensure: 
-					[aTestSuite removeDependentFromHierachy: self.
-					self stopAutoSwitchProcess].
+runSuite: aTestSuite
+	self prepareToRun: aTestSuite.
+	result := [aTestSuite run] ensure: [self completeRun: aTestSuite].
 	self updateWindow!
 
 runTests
@@ -323,15 +363,19 @@ stopAutoSwitchProcess
 	autoSwitchProcess := nil!
 
 suiteForTestClasses
-	| allTests testClasses |
+	| allTests testClasses count |
 	testClasses := self testClasses.
-	testClasses isEmpty ifTrue: [^nil].
+	count := testClasses size.
+	count = 0 ifTrue: [^nil].
 	#todo.	"Improve SUnit TestSuite building so we don't have logic spread around for building suites"
 	allTests := Set new.
 	testClasses do: [:each | allTests addAll: each suite tests].
 	^TestSuite new
 		addTests: allTests;
-		yourself!
+		name: (count = 1
+					ifTrue: [testClasses anyOne fullName]
+					ifFalse: ['<1p> & <2d> other<3?s:>' << { testClasses asSortedArray first. count - 1. count > 2 }])
+						yourself!
 
 suiteForTestMethods: aCollectionOfCompiledMethods
 	"Private - Answer a `TestSuite` build from the specified methods, assumed to be methods of, or inherited by, a single selected test class."
@@ -397,6 +441,7 @@ updateWindow
 allContextMenus!helpers!private! !
 allMenuBarMenus!helpers!private! !
 classUnderTest!Accessing!private! !
+completeRun:!operations!private! !
 createComponents!initializing!private! !
 createSchematicWiring!helpers!private! !
 debugTest!commands!public! !
@@ -411,7 +456,7 @@ displayMode:!private!updating! !
 displayOn:!displaying!private! !
 displayPass!private!updating! !
 displayReset!private!updating! !
-displayRunning!private!updating! !
+displayRunning:!private!updating! !
 hasDefects!public!testing! !
 hasIndividualTests!public!updating! !
 hasTestClass!public!testing! !
@@ -424,6 +469,9 @@ installTestCommandsInMethodMenu:!helpers!private! !
 onBrowserClassSelected!event handling!private! !
 onBrowserMethodSelected!event handling!private! !
 onViewOpened!event handling!private! !
+prepareToRun:!operations!private! !
+profileSuite:!operations!private! !
+profileTests!commands!public! !
 queryCommand:!commands!private! !
 refreshIcon!operations!private! !
 runSuite:!operations!private! !
