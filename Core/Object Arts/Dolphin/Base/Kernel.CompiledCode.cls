@@ -809,17 +809,20 @@ onPreStripImage
 	InfoCacheKeys := InfoCacheValues := nil!
 
 packByteCodes: anArray
-	| bytes codes |
+	| bytes codes count |
 	bytes := anArray asByteArray.
-	codes := (bytes size == 4
+	count := bytes size.
+	codes := (count == 4
 				ifTrue: [bytes int32AtOffset: 0]
 				ifFalse: 
 					[| packed |
 					packed := 0.
-					bytes reverseDo: [:each | packed := (packed bitShift: 8) + each].
+					count to: 1
+						by: -1
+						do: [:i | packed := (packed bitShift: 8) + (bytes at: i)].
 					packed])
 					bitShift: -1.
-	self assert: [codes class == SmallInteger].
+	codes isImmediate ifFalse: [self error: 'Cannot pack byte codes <1p> into a SmallInteger' << bytes].
 	^codes! !
 !Kernel.CompiledCode class categoriesForMethods!
 elementsExpired:of:!development!finalizing!private! !

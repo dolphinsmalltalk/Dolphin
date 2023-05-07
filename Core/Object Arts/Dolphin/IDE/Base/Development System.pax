@@ -1885,10 +1885,14 @@ whichMethodsOnlySelfSend: aSymbol
 					[:index |
 					| specialSend send sendRet |
 					specialSend := index + OpcodePool.ShortSpecialSend - 1.
-					sendRet := CompiledCode
-								packByteCodes: {OpcodePool.PushSelf. specialSend. OpcodePool.ReturnFromMessage} asByteArray.
-					send := CompiledCode
-								packByteCodes: {OpcodePool.PushSelf. specialSend. OpcodePool.ReturnSelf} asByteArray.
+					sendRet := CompiledCode packByteCodes: (ByteArray
+										with: OpcodePool.PushSelf
+										with: specialSend
+										with: OpcodePool.ReturnFromMessage).
+					send := CompiledCode packByteCodes: (ByteArray
+										with: OpcodePool.PushSelf
+										with: specialSend
+										with: OpcodePool.ReturnSelf).
 					
 					[:method |
 					| packed |

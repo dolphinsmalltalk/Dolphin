@@ -359,8 +359,9 @@ testCopyingBlocks2
 testDecrementPushTempOptimisation
 	| disasm expr expected |
 	expr := (self compileExpression: '| j | 5 to: 1  by: -1 do: [:i | j := i]. j') method.
+	self assert: expr literals single equals: #to:by:do:.
 	disasm := expr disassembly.
-	expected := 'Normal, 0 args, 2 stack temps, <1d> literals
+	expected := 'Normal, 0 args, 2 stack temps, 1 literals
 
 	1	Push 5
 	3	Store Temp[1]
@@ -376,8 +377,7 @@ testDecrementPushTempOptimisation
 	15	Jump If False -9 to 8
 	17	Pop
 	18	Pop; Push Temp[0]
-	19	Return'
-				expandMacrosWith: expr literalCount.
+	19	Return'.
 	self assert: disasm equals: expected.
 	self assert: (expr value: nil) equals: 1.
 	expr := (self
@@ -582,19 +582,39 @@ testFloatScanning
 		by: -1
 		do: [:each | self assert: (self evaluateExpression: ('1.0e<d>' expandMacrosWith: each)) - (10.0 ** each)]"!
 
+testIdentical
+	"Test that #== generates special send, but retained in literal frame"
+
+	| result method disasm expected |
+	result := self compileExpression: '1 == 2'.
+	method := result method.
+	self assert: method literals single equals: #==.
+	disasm := method disassembly.
+	expected := 'Normal, 0 args, 1 literals
+
+	1	Push 1
+	2	Push 2
+	3	Special Send #==
+	4	Return'.
+	self assert: disasm equals: expected!
+
 testIfNil
-	| compiled |
+	| compiled method |
 	compiled := self compileExpression: 'key ifNil: [value]' in: Association.
-	self assert: (compiled method value: nil -> 2) equals: 2.
-	self assert: (compiled method value: 1 -> 2) equals: 1.
-	self deny: (compiled method messages includes: 'ifNil:' asSymbol).
+	method := compiled method.
+	self assert: (method literals includes: #ifNil:).
+	self assert: (method value: nil -> 2) equals: 2.
+	self assert: (method value: 1 -> 2) equals: 1.
+	self deny: (method messages includes: 'ifNil:' asSymbol).
 	self assertBlocksOptimized: compiled!
 
 testIfNilifNotNil
-	| compiled |
+	| compiled method |
 	compiled := self compileExpression: 'key ifNil: [value+1] ifNotNil: [:x | 1+x]' in: Association.
-	self assert: (compiled method value: nil -> 1 withArguments: #()) equals: 2.
-	self assert: (compiled method value: 5 -> nil withArguments: #()) equals: 6.
+	method := compiled method.
+	self assert: (method literals includes: #ifNil:ifNotNil:).
+	self assert: (method value: nil -> 1 withArguments: #()) equals: 2.
+	self assert: (method value: 5 -> nil withArguments: #()) equals: 6.
 	self assertBlocksOptimized: compiled!
 
 testIfNilifNotNilNoArg
@@ -629,17 +649,21 @@ testIfNilUnused
 	self assertBlocksOptimized: compiled!
 
 testIfNotNil
-	| compiled |
+	| compiled method |
 	compiled := self compileExpression: 'key ifNotNil: [:x | x + 2]' in: Association.
-	self assert: (compiled method value: 1 -> nil) equals: 3.
-	self assertIsNil: (compiled method value: nil -> 1).
+	method := compiled method.
+	self assert: (method literals includes: #ifNotNil:).
+	self assert: (method value: 1 -> nil) equals: 3.
+	self assertIsNil: (method value: nil -> 1).
 	self assertBlocksOptimized: compiled!
 
 testIfNotNilifNil
-	| compiled |
+	| compiled method |
 	compiled := self compileExpression: 'key ifNotNil: [:x | x + 2] ifNil: [3]' in: Association.
-	self assert: (compiled method value: 5 -> nil) equals: 7.
-	self assert: (compiled method value: nil -> 5) equals: 3.
+	method := compiled method.
+	self assert: (method literals includes: #ifNotNil:ifNil:).
+	self assert: (method value: 5 -> nil) equals: 7.
+	self assert: (method value: nil -> 5) equals: 3.
 	self assertBlocksOptimized: compiled!
 
 testIfNotNilifNilNoArg
@@ -719,6 +743,7 @@ testIncrementDecrementOptimisation
 	#('1 + 1' '1 - -1') do: 
 			[:each |
 			method := (self compileExpression: each) method.
+			self assert: (method literals includes: each subStrings second asSymbol).
 			self assert: (method value: nil withArguments: #()) equals: 2.
 			self assert: method byteCodes
 				equals: (ByteArray
@@ -761,9 +786,11 @@ testIncrementDecrementOptimisation
 testIncrementPushTempOptimisation
 	| disasm method map debugMethod debugMap i |
 	method := self getTestMethod: #testIncrementPushTempOptimisation.
+	"#+ should still be in literal frame as a reference, even though not used (same for special send of #class)"
+	self assert: method literals equals: #(#class #+).
 	disasm := method disassembly.
 	self assert: disasm
-		equals: 'Normal, 0 args, 2 stack temps, 0 literals
+		equals: 'Normal, 0 args, 2 stack temps, 2 literals
 
 	1	Push 1
 	2	Store Temp[0]
@@ -821,6 +848,7 @@ testIncrementPushTempOptimisation
 testIncrementTempOptimisation
 	| disasm method map debugMethod debugMap i expected |
 	method := self getTestMethod: #testIncrementTempOptimisation.
+	self assert: method literals equals: #(#> #whileFalse: #+).
 	disasm := method disassembly.
 	expected := 'Normal, 0 args, 1 stack temps, <1d> literals
 
@@ -999,13 +1027,31 @@ testNestedWhileTrueAtStartOfCleanBlock
 	"Nested optimized blocks where the block occurs before the message are a tricky case
 	for the compiler"
 
-	| method block |
+	| method block literals |
 	method := self getTestMethod: #testNestedWhileTrueAtStartOfCleanBlock.
 	block := method value: DolphinCompilerTestMethods new withArguments: #().
-	self assert: (method literals identityIncludes: block).
+	literals := method literals.
+	self assert: (literals identityIncludes: block).
+	self assert: literals last equals: #whileTrue.
 	self deny: block identicalTo: [].
 	"Block should start immediately after a short push const and return stack top"
 	self assert: block initialIP equals: 3!
+
+testNotIdentical
+	"Test that #~~ generates special send, but retained in literal frame"
+
+	| result method disasm expected |
+	result := self compileExpression: '1 ~~ 2'.
+	method := result method.
+	self assert: method literals single equals: #~~.
+	disasm := method disassembly.
+	expected := 'Normal, 0 args, 1 literals
+
+	1	Push 1
+	2	Push 2
+	3	Special Send #~~
+	4	Return'.
+	self assert: disasm equals: expected!
 
 testOptimizedLoopReadBeforeWritten
 	| expected expr actual |
@@ -1224,9 +1270,9 @@ testStringLiteralFolding
 				compileExpression: '| a1 aa1 a2 aa2 | a1 := ##(''A'' asLowercase asUtf8String). #blah. aa1 := ''A''. #blah. a2 := ''a''. #blah. aa2 := ''A''. a1 == a2 and: [aa1 == aa2]')
 					method.
 	self assert: (expr value: nil withArguments: #()).
-	self assert: expr literalCount equals: 6.
+	self assert: expr literalCount equals: 7.
 	literals := expr literals.
-	self assert: (literals noDifference: #('a' #blah 'A' #asLowercase #asUtf8String #and:)).
+	self assert: literals asSortedArray equals: #(#== 'a' 'A' #and: #asLowercase #asUtf8String #blah).
 	self assert: (literals allSatisfy: [:each | each isImmutable])!
 
 testStringLiteralWithEmbeddedNulls
@@ -1408,6 +1454,7 @@ testTimesRepeat
 	| result method src warnings |
 	result := self compileExpression: '5 timesRepeat: []'.
 	method := result method.
+	self assert: method literals last equals: #timesRepeat:.
 	self denyIsNil: method.
 	self deny: method needsContext.
 	self deny: (method byteCodeSegments anySatisfy: [:each | each first = BlockCopy]).
@@ -1482,6 +1529,7 @@ testToByDo
 						compileExpression: ('| a | a := OrderedCollection new. <1d> to: 2 by: 1 do: [:i | a add: i]. a'
 								expandMacrosWith: i).
 			method := result method.
+			self assert: method literals last equals: #to:by:do:.
 			self denyIsNil: method.
 			self deny: method needsContext.
 			self assert: (method value: nil withArguments: #()) equals: (i to: 2) asOrderedCollection.
@@ -1502,7 +1550,7 @@ testToByDo
 				and: [(src copyFrom: ex range start to: ex range stop) = 'aBlock']]!
 
 testToByDoWithFloatSteps
-	{1 to: 2 by: 0.5. 1 to: 0 by: -0.5} do: 
+	{ 1 to: 2 by: 0.5. 1 to: 0 by: -0.5 } do: 
 			[:each |
 			| result method text |
 			text := String writeStream.
@@ -1527,6 +1575,7 @@ testWhileFalse
 	"Test a simple counting loop"
 	result := self compileExpression: '| i | i := 0. [i := i + 1. i > 10] whileFalse. i'.
 	method := result method.
+	self assert: method literals asSortedArray equals: #(#+ #> #whileFalse).
 	self denyIsNil: method.
 	self deny: method needsContext.
 	self deny: (method byteCodeSegments anySatisfy: [:each | each first = BlockCopy]).
@@ -1552,6 +1601,7 @@ testWhileTrue
 	| result method |
 	result := self compileExpression: '| i | i := 0. [i := i + 1. i <= 10] whileTrue. i'.
 	method := result method.
+	self assert: method literals asSortedArray equals: #(#+ #<= #whileTrue).
 	self denyIsNil: method.
 	self deny: method needsContext.
 	self deny: (method byteCodeSegments anySatisfy: [:each | each first = BlockCopy]).
@@ -1583,6 +1633,27 @@ testWriteAccessor
 			self assert: accessor extraIndex equals: 7.
 			inst perform: selector with: each.
 			self assert: (inst perform: each asSymbol) equals: each]!
+
+testYourself
+	"Test that yourself is optimised away, although retained in literal frame"
+
+	| result method disasm expected |
+	result := self compileExpression: '^(Array new: 1) at: 1 put: 1234; yourself'.
+	method := result method.
+	self assert: method literals equals: { Array binding. #at:put:. #new:. #yourself }.
+	disasm := method disassembly.
+	expected := 'Normal, 0 args, 4 literals
+
+	1	Push Static[0]: #Array -> Array
+	2	Push 1
+	3	Special Send #new:
+	4	Dup
+	5	Push 1
+	6	Push 1234
+	9	Special Send #at:put:
+	10	Pop
+	11	Return'.
+	self assert: disasm equals: expected!
 
 verifyTempsMapOf: aCompiledMethod
 	| dispatcher info ipRange tempsMap emptyBlock method parseTree textMap tempsAtIp refdTemps |
@@ -1734,6 +1805,7 @@ testEmptyIfInLoop!public!unit tests! !
 testExtCallStructLiterals!public!unit tests! !
 testFarReturnFromBlock!public!unit tests! !
 testFloatScanning!public!unit tests! !
+testIdentical!public!unit tests! !
 testIfNil!public!unit tests! !
 testIfNilifNotNil!public!unit tests! !
 testIfNilifNotNilNoArg!public!unit tests! !
@@ -1760,6 +1832,7 @@ testLiteralStringEncoding!public!unit tests! !
 testMutableAnnotation!public!unit tests! !
 testNestedCopyingBlocks!public!unit tests! !
 testNestedWhileTrueAtStartOfCleanBlock!public!unit tests! !
+testNotIdentical!public!unit tests! !
 testOptimizedLoopReadBeforeWritten!public!unit tests! !
 testQualifiedReference!public!unit tests! !
 testRadixInteger!public!unit tests! !
@@ -1787,6 +1860,7 @@ testToByDoWithFloatSteps!public!unit tests! !
 testWhileFalse!public!unit tests! !
 testWhileTrue!public!unit tests! !
 testWriteAccessor!public!unit tests! !
+testYourself!public!unit tests! !
 verifyTempsMapOf:!helpers!private! !
 verifyTextMapsOf:!helpers!private! !
 !

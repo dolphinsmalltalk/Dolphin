@@ -281,7 +281,7 @@ u8string Compiler::GetClassName()
 ///////////////////////////////////
 
 
-inline OpCode Compiler::FindNameAsSpecialMessage(const u8string& name) const
+inline OpCode Compiler::AddNameAsSpecialMessage(const u8string& name, const TEXTRANGE& range)
 {
 	// Returns true and an appropriate (index) if (name) is a
 	// special message
@@ -295,6 +295,7 @@ inline OpCode Compiler::FindNameAsSpecialMessage(const u8string& name) const
 		LPUTF8 psz = (LPUTF8)FetchBytesOf(stringPointer);
 		if (name == psz)
 		{
+			AddToFrame(reinterpret_cast<Oop>(stringPointer), range, LiteralType::ReferenceOnly);
 			return OpCode::ShortSpecialSend + i;
 		}
 	}
@@ -308,6 +309,7 @@ inline OpCode Compiler::FindNameAsSpecialMessage(const u8string& name) const
 			LPUTF8 psz = (LPUTF8)FetchBytesOf(stringPointer);
 			if (name == psz)
 			{
+				AddToFrame(reinterpret_cast<Oop>(stringPointer), range, LiteralType::ReferenceOnly);
 				return OpCode::ShortSpecialSendEx + i;
 			}
 		}
@@ -1091,7 +1093,7 @@ ip_t Compiler::GenMessage(const u8string& pattern, argcount_t argCount, textpos_
 	if (m_sendType != SendType::Super)
 	{
 		// Look for special or arithmetic messages
-		OpCode bytecode = FindNameAsSpecialMessage(pattern);
+		OpCode bytecode = AddNameAsSpecialMessage(pattern, TEXTRANGE(messageStart, ThisTokenRange.m_stop));
 		if (bytecode !=  OpCode::Break)
 		{
 			return GenInstruction(bytecode);

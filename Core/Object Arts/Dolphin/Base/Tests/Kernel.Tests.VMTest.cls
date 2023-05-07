@@ -3692,7 +3692,7 @@ verifyPrimitiveAt: opAt performBlock: performAt
 			lit := opAt value: array value: 2.
 			lit == WeakArray or: [(lit isKindOf: VariableBinding) and: [lit value == WeakArray]]].
 	self assert: (opAt value: array value: 3) identicalTo: #setDependents:.
-	self assert: (opAt value: array value: array size) identicalTo: #ifTrue:.
+	self assert: (opAt value: array value: array size) identicalTo: #new.
 	{-1. 0. array size + 1. SmallInteger maximum. SmallInteger minimum} do: 
 			[:each |
 			self should: [opAt value: array value: each] raise: BoundsError.

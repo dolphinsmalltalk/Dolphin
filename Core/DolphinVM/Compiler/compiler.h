@@ -165,7 +165,7 @@ private:
 	POTE InternSymbol(const u8string&);
 
 	// Lookup
-	OpCode FindNameAsSpecialMessage(const u8string&) const;
+	OpCode AddNameAsSpecialMessage(const u8string&, const TEXTRANGE&);
 	bool IsPseudoVariable(const u8string&) const;
 	size_t FindNameAsInstanceVariable(const u8string&) const;
 	TempVarRef* AddTempRef(const u8string& strName, VarRefType refType, const TEXTRANGE& refRange, textpos_t expressionEnd);
