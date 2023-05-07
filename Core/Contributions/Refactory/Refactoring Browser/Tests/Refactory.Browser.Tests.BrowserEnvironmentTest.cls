@@ -109,13 +109,13 @@ testAndEnvironment
 	self assert: andEnvironment classNames asSortedCollection
 		equals: (originalEnvironment referencesTo: #printString) classNames asSortedCollection!
 
-testAssociationAt
+testBindingFor
 	| subject |
 	subject := ClassEnvironment onEnvironment: universalEnvironment
-				classes: {Object. Object class. Core}.
-	self assert: (subject associationAt: #'Core.Object') identicalTo: Object binding.
-	self assertIsNil: (subject associationAt: #'Core.Association').
-	self assert: (subject associationAt: #'Core.Processor') identicalTo: (Core bindingFor: #Processor)!
+				classes: { Object. Object class. Core }.
+	self assert: (subject bindingFor: #'Core.Object') identicalTo: Object binding.
+	self assertIsNil: (subject bindingFor: #'Core.Association').
+	self assert: (subject bindingFor: #'Core.Processor') identicalTo: (Core bindingFor: #Processor)!
 
 testBrowserEnvironment
 	self universalTestFor: universalEnvironment.
@@ -356,7 +356,6 @@ universalTestFor: aBrowserEnvironment
 	self copyFor: aBrowserEnvironment.
 	self categoriesFor: aBrowserEnvironment.
 	self classesFor: aBrowserEnvironment.
-	self keysFor: aBrowserEnvironment.
 	self assert: aBrowserEnvironment problemCount = 0 equals: aBrowserEnvironment isEmpty! !
 !Refactory.Browser.Tests.BrowserEnvironmentTest categoriesForMethods!
 categoriesFor:!public!universal tests! !
@@ -371,7 +370,7 @@ storeStringFor:!public!universal tests! !
 tearDown!public!Running! !
 testAllClassesDo!BrowserEnvironment tests!public! !
 testAndEnvironment!AndEnvironment tests!public! !
-testAssociationAt!BrowserEnvironment tests!public! !
+testBindingFor!BrowserEnvironment tests!public! !
 testBrowserEnvironment!BrowserEnvironment tests!public! !
 testCategoryEnvironment!BrowserEnvironment tests!public! !
 testClassEnvironment!BrowserEnvironment tests!public! !

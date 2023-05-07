@@ -49,8 +49,8 @@ allClassesDo: aBlock
 
 	Smalltalk allBehaviorsDo: aBlock!
 
-associationAt: aKey
-	^(Smalltalk resolveBindingPath: (BindingReference.PathSeparator split: aKey))
+bindingFor: aString
+	^(Smalltalk resolveBindingPath: (BindingReference.PathSeparator split: aString))
 		ifNotNil: 
 			[:binding |
 			| class |
@@ -60,17 +60,6 @@ associationAt: aKey
 							["We want to include non-class bindings if the Namespace is included"
 							binding environment].
 			(self includesClassOrMetaclass: class) ifTrue: [binding]]!
-
-at: aKey
-	#rbFix.	"Replace #keyNotFoundError: with #errorNotFound"
-	^self at: aKey ifAbsent: [Smalltalk errorNotFound: aKey]!
-
-at: aKey ifAbsent: aBlock
-	| assoc |
-	assoc := self associationAt: aKey.
-	^assoc isNil
-		ifTrue: [aBlock value]
-		ifFalse: [assoc value]!
 
 categories
 	| answer unclassified |
@@ -266,16 +255,6 @@ isSelectorEnvironment
 isSystem
 	^true!
 
-keys
-	| keys |
-	keys := IdentitySet new.
-	Smalltalk keysAndValuesDo: 
-			[:key :value |
-			value isBehavior
-				ifTrue: [(self includesClassOrMetaclass: value) ifTrue: [keys add: key]]
-				ifFalse: [(self includesClass: value class) ifTrue: [keys add: key]]].
-	^keys!
-
 label
 	^label isNil
 		ifTrue: [self defaultLabel]
@@ -303,9 +282,6 @@ labelFormats
 				#superclassHierarchy -> 'Superclass hierarchy of <1p>'.
 				#someMethods -> 'Some methods'.
 				#someMethodsOf -> 'Some methods of <1p>'})!
-
-lookup: aKey
-	^(self associationAt: aKey) value!
 
 matches: aString
 	^SelectorEnvironment matches: aString in: self!
@@ -426,9 +402,7 @@ whichProtocolsInclude: aSelector in: aClass
 addSearchString:!accessing!public! !
 allClasses!enumerating!public! !
 allClassesDo:!enumerating!public! !
-associationAt:!accessing/classes!accessing-classes!public! !
-at:!accessing/classes!public! !
-at:ifAbsent:!accessing/classes!public! !
+bindingFor:!public! !
 categories!accessing!public! !
 classes!accessing/classes!public! !
 classesAndSelectorsDo:!accessing!public! !
@@ -467,11 +441,9 @@ isClassEnvironment!public!testing! !
 isEmpty!public!testing! !
 isSelectorEnvironment!public!testing! !
 isSystem!public!testing! !
-keys!accessing/classes!accessing-classes!public! !
 label!accessing!private! !
 label:!initialize/release!public! !
 labelFormats!constants!public! !
-lookup:!accessing/classes!public! !
 matches:!environments!public! !
 methodsDo:!public! !
 not!environments!public! !
