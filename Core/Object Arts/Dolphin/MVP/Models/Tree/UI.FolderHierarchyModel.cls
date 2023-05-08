@@ -47,9 +47,7 @@ defaultSearchPolicy
 
 initialize
 	self addClassConstant: 'NodeSortAlgorithm'
-		value: ((SortedCollection defaultSortAlgorithmClass newSortBlock: [:x :y | x object <= y object])
-				beReadOnlyObject;
-				yourself)! !
+		value: (SortedCollection defaultSortAlgorithmClass newSortBlock: [:x :y | x object <= y object])! !
 !UI.FolderHierarchyModel class categoriesForMethods!
 defaultSearchPolicy!constants!public! !
 initialize!development!initializing!private! !

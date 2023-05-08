@@ -4676,14 +4676,15 @@ initialize
 		addNamed: #workspaceSelection color: (Color highlight alpha: 60)!
 
 initializeFileDrops
-	FileDrops := LookupTable new
+	| fileDrops |
+	fileDrops := LookupTable new
 				at: 'cls' put: #dropClassFile:;
 				at: 'txt' put: #dropTextFile:;
 				at: 'xml' put: #dropXmlFile:;
 				yourself.
-	#('pac' 'pax') do: [:each | FileDrops at: each put: #dropPackageFile:].
-	#('st' 'chg' 'sml') do: [:each | FileDrops at: each put: #dropScriptFile:].
-	FileDrops beReadOnlyObject!
+	#('pac' 'pax') do: [:each | fileDrops at: each put: #dropPackageFile:].
+	#('st' 'chg' 'sml') do: [:each | fileDrops at: each put: #dropScriptFile:].
+	self addClassConstant: 'FileDrops' value: fileDrops!
 
 new
 	"Private - The receiver is a Singleton class; use #current"

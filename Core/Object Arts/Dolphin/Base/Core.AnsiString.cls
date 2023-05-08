@@ -148,7 +148,7 @@ encoding
 
 initialize
 	empty := self new
-				beReadOnlyObject;
+				beImmutableObject;
 				yourself.
 	VM registryAt: #AnsiString put: self.
 	self extraInstanceSpec: EncodingAnsi!

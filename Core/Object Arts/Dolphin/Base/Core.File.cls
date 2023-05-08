@@ -952,36 +952,30 @@ initialize
 		NoCheckModes		Ditto, without error checking."
 
 	self addClassConstant: 'ShareModes'
-		value: ((IdentityDictionary withAll: {
+		value: (IdentityDictionary withAll: {
 						#read -> FILE_SHARE_READ.
 						#readWrite -> (FILE_SHARE_READ | FILE_SHARE_WRITE).
 						#write -> FILE_SHARE_WRITE.
 						#exclusive -> 0
-					})
-				beReadOnlyObject;
-				yourself).
+					}).
 	"open will only ever open an existing file"
 	self addClassConstant: 'CheckModes'
-		value: ((IdentityDictionary withAll: {
+		value: (IdentityDictionary withAll: {
 						#read -> (OPEN_EXISTING | GENERIC_READ).
 						#create -> (CREATE_NEW | GENERIC_READ | GENERIC_WRITE).
 						#open -> (OPEN_EXISTING | GENERIC_READ | GENERIC_WRITE).
 						#append -> (OPEN_EXISTING | GENERIC_READ | GENERIC_WRITE).
 						#truncate -> (TRUNCATE_EXISTING | GENERIC_READ | GENERIC_WRITE)
-					})
-				beReadOnlyObject;
-				yourself).
+					}).
 	"No check read is a bit of a nonsense, but ..."
 	self addClassConstant: 'NoCheckModes'
-		value: ((IdentityDictionary withAll: {
+		value: (IdentityDictionary withAll: {
 						#read -> (OPEN_ALWAYS | GENERIC_READ).
 						#create -> (OPEN_ALWAYS | GENERIC_READ | GENERIC_WRITE).
 						#open -> (OPEN_ALWAYS | GENERIC_READ | GENERIC_WRITE).
 						#append -> (OPEN_ALWAYS | GENERIC_READ | GENERIC_WRITE).
 						#truncate -> (CREATE_ALWAYS | GENERIC_READ | GENERIC_WRITE)
-					})
-				beReadOnlyObject;
-				yourself)!
+					})!
 
 isDirectory: aString
 	"Answer true if there is a directory whose path is given by aString."

@@ -71,7 +71,7 @@ defaultSafeClassReferences
 				'UI.Scintilla.MarkerDefinition' -> #{UI.Scintilla.MarkerDefinition}.
 				'UI.Scintilla.TextStyle' -> #{UI.Scintilla.TextStyle}
 			})
-		beReadOnlyObject;
+		beImmutableObject;
 		yourself)!
 
 findClass: typeOrRef

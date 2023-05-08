@@ -173,7 +173,7 @@ basicCompile: aString flags: anInteger environment: aNamespace
 			self addSelector: selector withMethod: method.
 			method
 				storeSourceString: aString asString;
-				beReadOnlyObject].
+				beImmutableObject].
 	^result!
 
 basicNew
@@ -703,7 +703,7 @@ recompileMethod: aCompiledMethod environment: aNamespace
 			method
 				sourceDescriptor: aCompiledMethod sourceDescriptor;
 				isPrivate: aCompiledMethod isPrivate;
-				beReadOnlyObject;
+				beImmutableObject;
 				yourself].
 	^result!
 
@@ -1094,10 +1094,7 @@ Core.Behavior methodProtocol: #instantiator attributes: #(#ansi #readOnly) selec
 !Core.Behavior class methodsFor!
 
 initialize
-	self addClassConstant: '_NullMethodDictionary'
-		value: (MethodDictionary new
-				beReadOnlyObject;
-				yourself)! !
+	self addClassConstant: '_NullMethodDictionary' value: MethodDictionary new! !
 !Core.Behavior class categoriesForMethods!
 initialize!development!initializing!public! !
 !

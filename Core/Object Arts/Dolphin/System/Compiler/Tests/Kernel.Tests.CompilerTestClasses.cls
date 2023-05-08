@@ -29,7 +29,8 @@ createClasses
 				superclass: Object
 				instVars: ivs contents
 				imports: #()
-				classVars: ''!
+				classVars: ''
+				classConsts: #()!
 
 tearDown
 	super tearDown.

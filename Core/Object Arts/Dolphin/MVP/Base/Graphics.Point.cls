@@ -348,7 +348,7 @@ Graphics.Point methodProtocol: #point attributes: #(#readOnly) selectors: #(#- #
 
 initialize
 	Zero := (self x: 0 y: 0)
-				beReadOnlyObject;
+				beImmutableObject;
 				yourself!
 
 new

@@ -3,10 +3,10 @@
 Core.Object
 	subclass: #'UI.ResourceIdentifier'
 	instanceVariableNames: 'owningClass selector'
-	classVariableNames: 'SelectorPrefix'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'SelectorPrefix' -> 'resource_' }!
 UI.ResourceIdentifier guid: (Core.GUID fromString: '{6235654d-3f88-48c0-80d9-90230e9ede77}')!
 UI.ResourceIdentifier comment: ''!
 !UI.ResourceIdentifier categoriesForClass!MVP-Resources! !
@@ -227,11 +227,6 @@ forMethod: aCompiledMethod
 	thisName isNil ifTrue: [^nil].
 	^self class: aCompiledMethod methodClass instanceClass name: thisName!
 
-initialize
-	SelectorPrefix := 'resource_' asUtf8String
-				beReadOnlyObject;
-				yourself!
-
 nameFromSelector: aSymbol
 	| resname prefixSize nameSize |
 	aSymbol isNil ifTrue: [^nil].
@@ -310,7 +305,6 @@ class:name:!instance creation!public! !
 class:selector:!instance creation!public! !
 exportFileExtension!constants!public! !
 forMethod:!instance creation!public! !
-initialize!class initialization!public! !
 nameFromSelector:!helpers!public! !
 newClass:selector:!instance creation!private! !
 onPreStripImage!class hierarchy-removing!private! !

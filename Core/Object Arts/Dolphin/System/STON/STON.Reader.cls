@@ -576,7 +576,6 @@ initialize
 	self addClassConstant: 'EscapeChars'
 		value: (escapeChars
 				shrink;
-				beReadOnlyObject;
 				yourself).
 	self initializeHexDigitValues!
 

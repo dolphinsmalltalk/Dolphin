@@ -3,11 +3,24 @@
 UI.AbstractDocumentShell
 	subclass: #'Tools.SmalltalkWorkspaceDocument'
 	instanceVariableNames: 'workspacePresenter searchPresenter'
-	classVariableNames: 'DefaultExtent DefaultView LanguageExtensions OptionFlags'
+	classVariableNames: 'DefaultExtent DefaultView OptionFlags'
 	imports: #(#{Refactory.Browser private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'CanUseIdeaSpaceMask' -> 16r8.
+			'LanguageExtensions'
+				-> (LookupTable withAll: {
+								'chg' -> #container.
+								'cls' -> #container.
+								'ist' -> #container.
+								'json' -> #json.
+								'pac' -> #container.
+								'pax' -> #container.
+								'sml' -> #container.
+								'st' -> #container.
+								'ston' -> #smalltalk.
+								'xml' -> #xml
+							}).
 			'LoadingMask' -> 16r1.
 			'ReUseIfOpenMask' -> 16r2.
 			'VariableTipsMask' -> 16r4
@@ -553,17 +566,18 @@ initialize
 		self initialize
 	"
 
+	| languageExtensions |
 	SmalltalkSystem current
 		addSystemFolderIcon: self toolsFolderIcon;
 		registerTool: self.
-	LanguageExtensions := LookupTable new
+	languageExtensions := LookupTable new
 				at: 'xml' put: #xml;
 				at: 'json' put: #json;
 				at: 'ston' put: #smalltalk;
 				yourself.
 	#('st' 'cls' 'pac' 'pax' 'chg' 'sml' 'ist')
-		do: [:each | LanguageExtensions at: each put: #container].
-	LanguageExtensions beReadOnlyObject!
+		do: [:each | languageExtensions at: each put: #container].
+	self addClassConstant: 'LanguageExtensions' value: languageExtensions!
 
 invalidateOptions
 	OptionFlags := nil!

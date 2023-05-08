@@ -1,4 +1,4 @@
 ﻿!Core.Object methodsFor!
 
-beReadOnlyObject
+beImmutableObject
 	^self isImmutable: true! !

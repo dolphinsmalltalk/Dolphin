@@ -562,12 +562,12 @@ initialize
 	Current := self new
 				integerBase: 10;
 				numberFormat;
-				beReadOnlyObject;
+				beImmutableObject;
 				yourself.
 	Hex := self new
 				integerBase: 16;
 				numberFormat;
-				beReadOnlyObject;
+				beImmutableObject;
 				yourself.
 	controlPictures := IdentityDictionary new.
 	($\x0 to: $\x1F)

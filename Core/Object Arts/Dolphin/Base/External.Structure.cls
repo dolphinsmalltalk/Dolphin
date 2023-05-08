@@ -88,6 +88,10 @@ basicFree
 
 	self class clear: bytes!
 
+beImmutableObject
+	bytes beImmutableObject.
+	^super beImmutableObject!
+
 beNullHeapPointer
 	"Private - Set the receiver's contents to be a NULL heap pointer."
 
@@ -97,10 +101,6 @@ beNullPointer
 	"Private - Set the receiver's contents to be a NULL pointer."
 
 	self initializeAtAddress: self pointerClass new!
-
-beReadOnlyObject
-	bytes beReadOnlyObject.
-	^super beReadOnlyObject!
 
 bufferClass
 	"Private - Answer the default class to use as a contents buffer"
@@ -420,9 +420,9 @@ asByteArray!converting!public! !
 asObject!accessing!public! !
 asParameter!converting!public! !
 basicFree!private!realizing/unrealizing! !
+beImmutableObject!initializing!public! !
 beNullHeapPointer!modes!private! !
 beNullPointer!modes!private! !
-beReadOnlyObject!initializing!public! !
 bufferClass!constants!private! !
 bytes!accessing!public! !
 bytes:!initializing!private! !

@@ -2095,7 +2095,7 @@ initialize
 	"Set up the debug empty block"
 	VM registryAtIndex: 8 put: nil.
 	debugEmptyBlock := VM emptyBlock method asDebugMethod value.
-	debugEmptyBlock method beReadOnlyObject.
+	debugEmptyBlock method beImmutableObject.
 	VM registryAtIndex: 8 put: debugEmptyBlock!
 
 initializeSkipTable

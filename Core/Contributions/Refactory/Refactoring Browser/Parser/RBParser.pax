@@ -1229,7 +1229,7 @@ superMessages
 			[SuperSearch := RBPatternParser parseExpression: 'super `@msg: ``@args' onError: nil.
 			SuperSearch
 				selector;
-				beReadOnlyObject].
+				beImmutableObject].
 	searcher := ParseTreeSearcher new.
 	searcher addRule: (RBSearchRule searchForTree: SuperSearch
 				thenDo: 

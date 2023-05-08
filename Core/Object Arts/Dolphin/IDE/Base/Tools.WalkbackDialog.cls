@@ -170,14 +170,7 @@ initialize
 	"
 
 	self addClassConstant: 'Commands'
-		value: (LookupTable new
-				at: IDCANCEL put: #terminate;
-				at: IDOK put: #debug;
-				at: 3 put: #resume;
-				at: 4 put: #copy;
-				shrink;
-				beReadOnlyObject;
-				yourself)! !
+		value: (LookupTable withAll: { IDCANCEL -> #terminate. IDOK -> #debug. 3 -> #resume. 4 -> #copy })! !
 !Tools.WalkbackDialog class categoriesForMethods!
 initialize!initializing!private! !
 !

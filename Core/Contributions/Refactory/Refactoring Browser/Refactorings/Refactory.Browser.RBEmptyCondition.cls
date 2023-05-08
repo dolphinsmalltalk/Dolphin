@@ -33,7 +33,7 @@ current
 
 initialize
 	Current := self new
-				beReadOnlyObject;
+				beImmutableObject;
 				yourself! !
 !Refactory.Browser.RBEmptyCondition class categoriesForMethods!
 current!public! !

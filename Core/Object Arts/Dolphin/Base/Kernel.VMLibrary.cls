@@ -599,7 +599,7 @@ initialize
 				at: #Int64 put: 147;
 				at: #TimingSemaphore put: 150;
 				at: #MethodAnnotations put: 151;
-				beReadOnlyObject;
+				beImmutableObject;
 				shrink;
 				yourself)!
 

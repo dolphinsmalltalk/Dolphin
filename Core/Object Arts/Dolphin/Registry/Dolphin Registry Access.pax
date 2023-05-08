@@ -58,10 +58,30 @@ package!
 Core.Dictionary
 	variableSubclass: #'OS.RegKeyAbstract'
 	instanceVariableNames: 'name parentPath rootKey sam handle keyInfo'
-	classVariableNames: 'AccessModes ValueTypes'
+	classVariableNames: ''
 	imports: #(#{OS.WinRegConstants} #{OS.Win32Errors})
 	classInstanceVariableNames: ''
-	classConstants: { 'PathSeparator' -> '\' }!
+	classConstants: {
+			'AccessModes'
+				-> (IdentityDictionary withAll: {
+								#all -> 16rF003F.
+								#execute -> 16r20019.
+								#read -> 16r20019.
+								#readWrite -> 16r2001F.
+								#write -> 16r20006
+							}).
+			'PathSeparator' -> '\'.
+			'ValueTypes'
+				-> (IdentityDictionary withAll: {
+								#binary -> 16r3.
+								#dword -> 16r4.
+								#expandString -> 16r2.
+								#none -> 16r0.
+								#qword -> 16rB.
+								#string -> 16r1.
+								#stringArray -> 16r7
+							})
+		}!
 OS.RegKeyAbstract
 	variableSubclass: #'OS.RegKey'
 	instanceVariableNames: ''

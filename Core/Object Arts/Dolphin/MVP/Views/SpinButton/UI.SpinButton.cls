@@ -388,13 +388,8 @@ initialize
 	CommCtrlLibrary addInitFlag: ICC_UPDOWN_CLASS.
 	self addClassConstant: 'AlignmentMask' value: ##(UDS_ALIGNLEFT | UDS_ALIGNRIGHT).
 	self addClassConstant: 'AlignmentMap'
-		value: (IdentityDictionary new
-				at: #left put: UDS_ALIGNLEFT;
-				at: #right put: UDS_ALIGNRIGHT;
-				at: #unattached put: 0;
-				shrink;
-				beReadOnlyObject;
-				yourself)!
+		value: (IdentityDictionary
+				withAll: { #left -> UDS_ALIGNLEFT. #right -> UDS_ALIGNRIGHT. #unattached -> 0 })!
 
 themePartName
 	^'SPIN'!

@@ -702,13 +702,8 @@ initialize
 
 	self registerMessageMappings: self listboxMessageMappings.
 	self addClassConstant: 'SelectionModes'
-		value: (IdentityDictionary new
-				at: #single put: 0;
-				at: #multi put: LBS_EXTENDEDSEL;
-				at: #toggle put: LBS_MULTIPLESEL;
-				shrink;
-				beReadOnlyObject;
-				yourself).
+		value: (IdentityDictionary
+				withAll: { #single -> 0. #multi -> LBS_EXTENDEDSEL. #toggle -> LBS_MULTIPLESEL }).
 	self addClassConstant: 'SelectionModeMask'
 		value: (SelectionModes inject: 0 into: [:sum :each | sum + each])!
 

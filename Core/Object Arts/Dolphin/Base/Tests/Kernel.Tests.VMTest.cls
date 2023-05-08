@@ -15,7 +15,7 @@ SUnitBrowser openOnTestCase: self'!
 
 assertImmutableAtPut: anObject
 	| value |
-	anObject beReadOnlyObject.
+	anObject beImmutableObject.
 	value := anObject at: 1.
 	self should: [anObject at: 0 put: value] raise: BoundsError.
 	1 to: anObject size + 1
@@ -182,7 +182,7 @@ exerciseReplaceElementsOf: targetCollection from: startInteger to: stopInteger w
 
 exerciseReplaceElementsOf: targetCollection with: sourceCollection
 	| target |
-	targetCollection beReadOnlyObject.
+	targetCollection beImmutableObject.
 
 	"Immutable target"
 	self should: 
@@ -363,9 +363,9 @@ hashBytes: aByteArray
 
 immutableTestSubjects
 	^#(#(1 2 3) #[1 2 3] 'abc' 1.0e38 ##('abc' asUtf8String
-		beReadOnlyObject;
+		beImmutableObject;
 		yourself) ##('abc' asUtf16String
-		beReadOnlyObject;
+		beImmutableObject;
 		yourself))!
 
 isFault: anException raisedIn: aCompiledMethod receiver: anObject
@@ -726,7 +726,7 @@ testImmutableAtPut
 				ifFalse: 
 					[self assert: a isImmutable not.
 					1 to: 3 do: [:i | a at: i put: (a at: 3 - i + 1)].
-					a beReadOnlyObject].
+					a beImmutableObject].
 			self assertImmutableAtPut: a].
 	self assertImmutableAtPut: #abc!
 
@@ -738,7 +738,7 @@ testImmutableBasicAtPut
 			a := each shallowCopy.
 			self assert: a isImmutable not.
 			1 to: 3 do: [:i | a basicAt: i put: (a basicAt: 3 - i + 1)].
-			a beReadOnlyObject.
+			a beImmutableObject.
 			self assertImmutableBasicAtPut: a].
 	self assertImmutableBasicAtPut: #abc!
 
@@ -761,11 +761,11 @@ testImmutableInstVarAtPut
 	instances := OrderedCollection withAll: self immutableTestSubjects.
 	"Package has a lot of named iv's"
 	instances add: (Package new
-				beReadOnlyObject;
+				beImmutableObject;
 				yourself).
 	"Sets have named and indexable variables"
 	instances add: (self class methodDictionary values asSet
-				beReadOnlyObject;
+				beImmutableObject;
 				yourself).
 	instances do: 
 			[:each |
@@ -777,7 +777,7 @@ testImmutableInstVarAtPut
 					[self assert: a isImmutable not.
 					size := a class instSize + a basicSize.
 					1 to: size do: [:i | a instVarAt: i put: (a instVarAt: size - i + 1)].
-					a beReadOnlyObject].
+					a beImmutableObject].
 			self assertImmutableInstVarAtPut: a].
 	self assertImmutableInstVarAtPut: #abc!
 
@@ -793,7 +793,7 @@ testImmutableNextPutAll
 	{ #[1 2 3]. 'abc'. #(1 2 3). 'abc' asUtf8String. 'abc' asUtf16String. #abc } do: 
 			[:each |
 			| strm |
-			each beReadOnlyObject.
+			each beImmutableObject.
 			self assertImmutableAtPut: each.
 			strm := WriteStream on: each.
 			self should: [strm nextPutAll: (each copyFrom: 2 to: 3)] raise: Processor constWriteSignal].
@@ -803,7 +803,7 @@ testImmutableNextPutAll
 					[:each |
 					self should: 
 							[((eachTarget with: $\x1F42C)
-								beReadOnlyObject;
+								beImmutableObject;
 								yourself) writeStream
 								nextPutAll: (each with: $£)]
 						raise: Processor constWriteSignal]]!
@@ -842,7 +842,7 @@ testImmutableWriteAccessors
 	inst := class new.
 	vars keysAndValuesDo: [:i :each | inst perform: (each copyWith: $:) asSymbol with: i].
 	vars keysAndValuesDo: [:i :each | self assert: (inst instVarAt: i) equals: i].
-	inst beReadOnlyObject.
+	inst beImmutableObject.
 	"Note that the primitive write accessor will fail and fall back on executing the method bytecodes, which will fail sending #errorInstVarAt:put:"
 	vars do: 
 			[:each |
@@ -1588,7 +1588,7 @@ testPrimitiveBytesEqual
 		{
 			string1.
 			string1 copy
-				beReadOnlyObject;
+				beImmutableObject;
 				yourself.
 			true
 		}.
@@ -1620,7 +1620,7 @@ testPrimitiveBytesIsNull
 	method := self createPrimitiveMethodLike: External.IntegerBytes >> #isNull.
 	subject := External.UInt32Bytes new.
 	self assert: (method value: subject withArguments: #()).
-	subject beReadOnlyObject.
+	subject beImmutableObject.
 	self assert: (method value: subject withArguments: #()).
 	subject := External.UInt32Bytes fromInteger: 1.
 	self deny: (method value: subject withArguments: #()).
@@ -2109,7 +2109,7 @@ testPrimitiveInstVarAt
 	mutableOc := OrderedCollection with: '3' with: '4'.
 	self deny: mutableOc isImmutable.
 	immutableOc := mutableOc copy
-				beReadOnlyObject;
+				beImmutableObject;
 				yourself.
 	self assert: immutableOc isImmutable.
 	1 to: 2
@@ -2152,7 +2152,7 @@ testPrimitiveInstVarAtPut
 	mutableOc := OrderedCollection new: 2.
 	self deny: mutableOc isImmutable.
 	immutableOc := mutableOc copy
-				beReadOnlyObject;
+				beImmutableObject;
 				yourself.
 	self assert: immutableOc isImmutable.
 	self assert: (method value: mutableOc withArguments: #(1 1)) equals: 1.
@@ -2167,7 +2167,7 @@ testPrimitiveInstVarAtPut
 	immutableStrings := { AnsiString. Utf8String. Utf16String } collect: 
 					[:each |
 					(each fromString: 'abcd')
-						beReadOnlyObject;
+						beImmutableObject;
 						yourself].
 	self assert: immutableBytes isImmutable.
 	mutableBytes := immutableBytes copy.
@@ -2686,7 +2686,7 @@ testPrimitiveSetMutableInstVar
 	self deny: assoc isImmutable.
 	method value: assoc withArguments: #(3).
 	self assert: assoc value identicalTo: 3.
-	assoc beReadOnlyObject.
+	assoc beImmutableObject.
 	self should: [assoc value: 4] raise: Processor constWriteSignal.
 	self assert: assoc value identicalTo: 3.
 	method value: assoc withArguments: #(4).
@@ -3050,7 +3050,7 @@ testPrimitiveStructIsNull
 	method := self createPrimitiveMethodLike: Structure >> #isNull.
 	subject := UInt32 new.
 	self deny: (method value: subject withArguments: #()).
-	subject bytes beReadOnlyObject.
+	subject bytes beImmutableObject.
 	self deny: (method value: subject withArguments: #()).
 	subject bytes: nil.
 	self assert: (method value: subject withArguments: #()).
@@ -3269,12 +3269,12 @@ testUInt32AtOffsetPut
 			dword := UInt32 fromInteger: 16r11223344.
 			bytes uint32AtOffset: each - 4 put: dword.
 			self assert: (bytes uint32AtOffset: each - 4) equals: 16r11223344.
-			dword beReadOnlyObject.
+			dword beImmutableObject.
 			bytes := ByteArray new: each.
 			bytes uint32AtOffset: each - 4 put: dword.
 			self assert: (bytes uint32AtOffset: each - 4) equals: 16r11223344.
 			bytes := ByteArray new: each.
-			bytes beReadOnlyObject.
+			bytes beImmutableObject.
 			self should: [bytes uint32AtOffset: each - 4 put: 1] raise: Processor constWriteSignal]!
 
 testVMPointersImmutable

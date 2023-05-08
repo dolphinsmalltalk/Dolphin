@@ -68,7 +68,7 @@ numberSelectorsFor: aBrowserEnvironment
 setUp
 	super setUp.
 	universalEnvironment := BrowserEnvironment new.
-	universalEnvironment beReadOnlyObject!
+	universalEnvironment beImmutableObject!
 
 storeStringFor: aBrowserEnvironment
 	| newEnvironment |

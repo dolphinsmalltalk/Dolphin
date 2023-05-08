@@ -2894,10 +2894,10 @@ Core.Object
 Core.Object
 	subclass: #'UI.ResourceIdentifier'
 	instanceVariableNames: 'owningClass selector'
-	classVariableNames: 'SelectorPrefix'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'SelectorPrefix' -> 'resource_' }!
 Core.Object
 	subclass: #'Core.SearchPolicy'
 	instanceVariableNames: ''

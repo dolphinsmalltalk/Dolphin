@@ -1452,22 +1452,14 @@ initialize
 	"
 
 	self addClassConstant: 'AlignmentMap'
-		value: (IdentityDictionary new
-				at: #left put: ES_LEFT;
-				at: #right put: ES_RIGHT;
-				at: #center put: ES_CENTER;
-				shrink;
-				beReadOnlyObject;
-				yourself).
+		value: (IdentityDictionary withAll: { #left -> ES_LEFT. #right -> ES_RIGHT. #center -> ES_CENTER }).
 	self addClassConstant: 'FormatMap'
-		value: (IdentityDictionary new
-				at: #mixed put: 0;
-				at: #uppercase put: ES_UPPERCASE;
-				at: #lowercase put: ES_LOWERCASE;
-				at: #numeric put: ES_NUMBER;
-				shrink;
-				beReadOnlyObject;
-				yourself).
+		value: (IdentityDictionary withAll: {
+						#mixed -> 0.
+						#uppercase -> ES_UPPERCASE.
+						#lowercase -> ES_LOWERCASE.
+						#numeric -> ES_NUMBER
+					}).
 	View registerMessageMappings: { WM_CTLCOLOREDIT -> #wmCtlColor:wParam:lParam: }!
 
 onStartup

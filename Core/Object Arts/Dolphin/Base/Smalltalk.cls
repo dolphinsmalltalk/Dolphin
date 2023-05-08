@@ -24,7 +24,7 @@ allClasses
 	allClasses isNil
 		ifTrue: 
 			[allClasses := Class allClasses
-						beReadOnlyObject;
+						beImmutableObject;
 						yourself].
 	^allClasses!
 

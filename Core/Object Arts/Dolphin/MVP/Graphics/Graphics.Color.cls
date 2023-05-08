@@ -1158,7 +1158,7 @@ initialize
 	ColorNames := LookupTable new.
 	default := ColorDefault basicNew
 				setCode: Win32Constants.CLR_DEFAULT;
-				beReadOnlyObject;
+				beImmutableObject;
 				yourself.
 	self
 		addNamed: #default color: default;
@@ -1166,7 +1166,7 @@ initialize
 	self addClassVariable: 'None'
 		value: (ColorNone basicNew
 				setCode: Win32Constants.CLR_NONE;
-				beReadOnlyObject;
+				beImmutableObject;
 				yourself).
 	self initializeCommonColors.
 	#(#black #white) do: [:each | self addClassVariable: each capitalized value: (self named: each)]!
@@ -1187,7 +1187,7 @@ initializeCommonColors
 			[:n :v |
 			| color |
 			color := (self fromArgbCode: v)
-						beReadOnlyObject;
+						beImmutableObject;
 						yourself.
 			self addNamed: n color: color.
 			color isTransparent ifFalse: [commonColors add: color]].

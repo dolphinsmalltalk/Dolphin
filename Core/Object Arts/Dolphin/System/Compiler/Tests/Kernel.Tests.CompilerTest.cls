@@ -71,7 +71,7 @@ getTestMethod: aSymbol
 	method
 		sourceDescriptor: oldMethod sourceDescriptor;
 		isPrivate: oldMethod isPrivate;
-		beReadOnlyObject.	"The method has not actually changed, so it is inappropriate to issue a #methodUpdated: event"
+		beImmutableObject.	"The method has not actually changed, so it is inappropriate to issue a #methodUpdated: event"
 	^method!
 
 knownTempsMapIssues

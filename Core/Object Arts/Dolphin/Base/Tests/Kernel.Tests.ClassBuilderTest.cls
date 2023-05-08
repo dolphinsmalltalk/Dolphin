@@ -205,7 +205,7 @@ testBuildAnonymousRootClass
 	self assert: instance printString equals: 'anon'!
 
 testClassVars
-	| testClass |
+	| testClass const |
 	testClass := self classBuilderTestClass.
 	self
 		assert: ((testClass classVariables collect: 
@@ -215,7 +215,18 @@ testClassVars
 					self assert: each isClassVariable.
 					each key])
 				noDifference: #('Var1' 'Var2')).
-	#namespaceToDo	"Test add/remove class variable, add/remove class constant, change immediate constant to variable, change constant to variable, change variable to immediate constant, change variable to constant."!
+	const := testClass classConstants single.
+	self assert: const key equals: 'Const1'.
+	self assert: const value equals: (Set with: 'abc').
+	self assert: const isImmutable.
+	self assert: const value isImmutable.
+	testClass addClassConstant: 'Var1' value: (1 to: 5).
+	self assert: testClass classVariables single key equals: 'Var2'.
+	const := testClass classConstants detect: [:each | each key = 'Var1'].
+	self assert: const isImmutable.
+	self assert: const value isImmutable.
+	#namespaceToDo.	"Test add/remove class variable, remove class constant, change immediate constant to variable, change constant to variable, change variable to immediate constant."
+	dirtiedClasses := true.!
 
 testCreateSubclassWithSameUnqualifiedName
 	| testSubclass subject |

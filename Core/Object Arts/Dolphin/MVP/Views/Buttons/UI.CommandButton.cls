@@ -138,20 +138,18 @@ initialize
 	button when focus is moved, even if another default button exists."
 
 	self addClassConstant: 'StandardCommands'
-		value: ((IdentityDictionary new: 10)
-				at: #cancel put: IDCANCEL;
-				at: #abort put: IDABORT;
-				at: #retry put: IDRETRY;
-				at: #ignore put: IDIGNORE;
-				at: #yes put: IDYES;
-				at: #no put: IDNO;
-				at: #close put: IDCLOSE;
-				at: #help put: IDHELP;
-				at: #retry put: IDTRYAGAIN;
-				at: #continue put: IDCONTINUE;
-				shrink;
-				beReadOnlyObject;
-				yourself)!
+		value: (IdentityDictionary withAll: {
+						#cancel -> IDCANCEL.
+						#abort -> IDABORT.
+						#retry -> IDRETRY.
+						#ignore -> IDIGNORE.
+						#yes -> IDYES.
+						#no -> IDNO.
+						#close -> IDCLOSE.
+						#help -> IDHELP.
+						#retry -> IDTRYAGAIN.
+						#continue -> IDCONTINUE
+					})!
 
 themePartName
 	^'BUTTON'! !

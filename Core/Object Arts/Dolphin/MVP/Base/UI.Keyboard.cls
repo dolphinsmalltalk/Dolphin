@@ -376,7 +376,7 @@ invariantVKeyMap
 					'PAUSE' -> VK_PAUSE.
 					'CAPSLOCK' -> VK_CAPITAL
 				};
-		beReadOnlyObject;
+		beImmutableObject;
 		yourself!
 
 layoutName

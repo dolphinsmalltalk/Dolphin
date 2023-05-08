@@ -29,7 +29,7 @@ initialize
 	"
 
 	propertyDescriptors := self buildPropertyDescriptors
-				beReadOnlyObject;
+				beImmutableObject;
 				yourself.
 	Forecolor := propertyDescriptors at: 1.
 	Forecolor defaultValue: Color gray.

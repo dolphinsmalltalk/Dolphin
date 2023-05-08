@@ -461,10 +461,10 @@ initialize
 	"
 
 	propertyDescriptors := self buildPropertyDescriptors
-				beReadOnlyObject;
+				beImmutableObject;
 				yourself.
 	self addClassConstant: 'FolderNames'
-		value: ((IdentityDictionary withAll: {
+		value: (IdentityDictionary withAll: {
 						#folderEnd -> SC_MARKNUM_FOLDEREND.
 						#folderOpenMid -> SC_MARKNUM_FOLDEROPENMID.
 						#folderMidTail -> SC_MARKNUM_FOLDERMIDTAIL.
@@ -472,9 +472,7 @@ initialize
 						#folderSub -> SC_MARKNUM_FOLDERSUB.
 						#folder -> SC_MARKNUM_FOLDER.
 						#folderOpen -> SC_MARKNUM_FOLDEROPEN
-					})
-				beReadOnlyObject;
-				yourself)!
+					})!
 
 plusMinus
 	"Answer a set of marker definitions for fold margin markers in the 'Plus/Minus' style. This

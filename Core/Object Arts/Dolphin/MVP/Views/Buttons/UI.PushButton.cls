@@ -321,14 +321,12 @@ initialize
 
 	self registerMessageMappings: self buttonMessageMappings.
 	self addClassConstant: 'ButtonStyleMap'
-		value: (IdentityDictionary new
-				at: #push put: BS_PUSHBUTTON;
-				at: #toggle put: BS_CHECKBOX | BS_PUSHLIKE;
-				at: #check put: BS_CHECKBOX;
-				at: #link put: BS_COMMANDLINK;
-				shrink;
-				beReadOnlyObject;
-				yourself).
+		value: (IdentityDictionary withAll: {
+						#push -> BS_PUSHBUTTON.
+						#toggle -> (BS_CHECKBOX | BS_PUSHLIKE).
+						#check -> BS_CHECKBOX.
+						#link -> BS_COMMANDLINK
+					}).
 
 	"Implementation makes some assumptions about the nature of the default button encoding in the style flags"
 	self assert: [BS_DEFPUSHBUTTON == 1 and: [BS_DEFCOMMANDLINK == (BS_COMMANDLINK | BS_DEFPUSHBUTTON)]]!

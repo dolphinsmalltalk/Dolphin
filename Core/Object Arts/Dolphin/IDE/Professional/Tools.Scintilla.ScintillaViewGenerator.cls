@@ -1341,7 +1341,7 @@ generateCommandMap
 	stream
 		display: selector;
 		cr;
-		nextPutAll: 'Commands := (IdentityDictionary withAll: {';
+		nextPutAll: 'self addClassConstant: ''Commands'' value: (IdentityDictionary withAll: {';
 		cr.
 	commands at: 'SCI_NULL' put: #yourself.
 	(self sciCommands asSortedArray copyWith: 'SCI_NULL') do: 
@@ -1354,18 +1354,12 @@ generateCommandMap
 			[stream
 				nextPut: $.;
 				cr].
-	stream
-		nextPutAll: '})';
-		cr;
-		display: #isImmutable:;
-		display: true;
-		nextPut: $;;
-		nextPutAll: 'yourself'.
+	stream nextPutAll: '})'.
 	self
 		compile: stream contents
 		selector: selector
 		in: KeyBinding class
-		categories: self autoGenMethodCategories , {'private'. 'development'}!
+		categories: self autoGenMethodCategories , { 'private'. 'development' }!
 
 generateConstantsPool
 	| stream changes source |
@@ -1510,8 +1504,7 @@ generateNullLibraryDefaults
 	stream
 		nextPutAll: '})';
 		cr;
-		display: #isImmutable:;
-		display: true;
+		display: #beImmutableObject;
 		nextPut: $;;
 		nextPutAll: 'yourself';
 		nextPut: $).
@@ -1964,7 +1957,7 @@ ignoredMessages
 
 	ignoredMessages
 		shrink;
-		beReadOnlyObject;
+		beImmutableObject;
 		yourself)
 !
 

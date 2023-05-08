@@ -22,9 +22,7 @@ mockGdip
 	| binding |
 	binding := #{Gdip} binding.
 	GdiplusLibrary default == binding value ifFalse: [^self].
-	binding
-		isImmutable: false;
-		value: MockGdiplusLibrary new!
+	binding setValue: MockGdiplusLibrary new!
 
 setUp
 	super setUp.
@@ -44,9 +42,7 @@ unmockGdip
 	binding := #{Gdip} binding.
 	GdiplusLibrary default == binding value ifTrue: [^self].
 	messages := binding value messages.
-	binding
-		value: GdiplusLibrary default;
-		beReadOnlyObject.
+	binding setValue: GdiplusLibrary default.
 	^messages! !
 !Graphics.Gdiplus.Tests.InitializerTests categoriesForMethods!
 createHandle!private!unit tests! !

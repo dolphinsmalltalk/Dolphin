@@ -11166,7 +11166,7 @@ defaultAnnotationStyles
 			backcolor: Color gainsboro;
 			yourself
 	}
-		beReadOnlyObject;
+		beImmutableObject;
 		yourself!
 
 defaultCallTipStyle
@@ -11331,9 +11331,9 @@ immutableCopyOfCollection: aCollection
 	^(aCollection collect: 
 			[:each |
 			each copy
-				beReadOnlyObject;
+				beImmutableObject;
 				yourself])
-		beReadOnlyObject;
+		beImmutableObject;
 		yourself!
 
 indentationGuideStyles
@@ -11346,27 +11346,21 @@ initialize
 
 	| defaultKeyBindings keyMap |
 	self addClassConstant: 'CodePages'
-		value: ((IdentityDictionary withAll: { NlsConstants.CP_ACP -> #ansi. SC_CP_UTF8 -> #utf8 })
-				beReadOnlyObject;
-				yourself).
+		value: (IdentityDictionary withAll: { NlsConstants.CP_ACP -> #ansi. SC_CP_UTF8 -> #utf8 }).
 	self addClassConstant: 'DefaultTextStyles'
-		value: ((LookupTable withAll: {
+		value: (LookupTable withAll: {
 						#container -> (self immutableCopyOfCollection: self defaultTextStyles).
 						#xml -> (self immutableCopyOfCollection: self xmlTextStyles).
 						#null -> (self immutableCopyOfCollection: self txtTextStyles).
 						#smalltalk -> (self immutableCopyOfCollection: self smalltalkTextStyles).
 						#markdown -> (self immutableCopyOfCollection: self markdownTextStyles).
 						#json -> (self immutableCopyOfCollection: self jsonTextStyles)
-					})
-				beReadOnlyObject;
-				yourself).
+					}).
 	self addClassConstant: 'LexerKeywords'
-		value: ((LookupTable withAll: {
+		value: (LookupTable withAll: {
 						#json
 							-> #('false true null' '@id @context @type @value @language @container @list @set @reverse @index @base @vocab @graph')
-					})
-				beReadOnlyObject;
-				yourself).
+					}).
 	keyMap := self defaultKeyMap.
 	defaultKeyBindings := IdentityDictionary new: keyMap size.
 	keyMap do: 
@@ -11375,9 +11369,8 @@ initialize
 			keyCode := AcceleratorTable keyCode: each first asInteger modifiers: each second | FVIRTKEY.
 			defaultKeyBindings at: keyCode
 				put: ((KeyBinding newAcceleratorKey: keyCode message: each last)
-						beReadOnlyObject;
+						beImmutableObject;
 						yourself)].
-	defaultKeyBindings beReadOnlyObject.
 	self addClassConstant: 'DefaultKeyBindings' value: defaultKeyBindings!
 
 jsonTextStyles

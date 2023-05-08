@@ -817,7 +817,7 @@ lintIconMap
 						at: 'miscellaneous' put: self lintInfoIcon;
 						at: 'all checks passed' put: self lintPassIcon;
 						shrink;
-						beReadOnlyObject;
+						beImmutableObject;
 						yourself].
 	^LintIconMap!
 
@@ -874,7 +874,7 @@ refreshModes
 		at: 'Update in background' put: #continuous;
 		at: 'Update in foreground' put: #whenVisible;
 		shrink;
-		beReadOnlyObject;
+		beImmutableObject;
 		yourself)!
 
 report: failedRules for: aBrowserEnvionment

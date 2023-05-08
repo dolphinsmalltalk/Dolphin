@@ -154,7 +154,7 @@ compileForEvaluation: aString in: aBehaviorOrNil environment: aNamespaceOrNil ev
 			[aBehaviorOrNil ifNotNil: [expression methodClass: aBehaviorOrNil].
 			expression
 				storeSourceString: source evaluationPools: anArray;
-				beReadOnlyObject].
+				beImmutableObject].
 	^results!
 
 compilerNotification: aCompilerNotification 

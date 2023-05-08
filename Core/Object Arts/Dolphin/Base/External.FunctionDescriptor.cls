@@ -418,7 +418,6 @@ initializeExternalRefTypes
 		at: ExtCallArgChar8 + 1 put: ExtCallArgLPSTR8;
 		at: ExtCallArgLPSTR8 + 1 put: ExtCallArgLPPVOID;
 		at: ExtCallArgCOMPTR + 1 put: ExtCallArgLPPVOID.
-	referenceTypes beReadOnlyObject.
 	self addClassConstant: 'ReferenceTypes' value: referenceTypes!
 
 initializeExternalTypes
@@ -466,7 +465,6 @@ initializeExternalTypes
 	"Init the reverse mapping of the type enumeration to string names"
 	typeNames := Array new: ExtCallArgMax + 1.
 	valueTypes keysAndValuesDo: [:eachKey :eachValue | typeNames at: eachValue + 1 put: eachKey].
-	typeNames beReadOnlyObject.
 
 	"Legacy names"
 	valueTypes
@@ -521,8 +519,7 @@ initializeExternalTypes
 		at: 'VARIANT' put: ExtCallArgVARIANT;
 		at: 'VARIANT_BOOL' put: ExtCallArgVARBOOL;
 		at: 'DATE' put: ExtCallArgDATE;
-		shrink;
-		beReadOnlyObject.
+		shrink.
 	"The ValueTypes variable is assigned for testing purposes"
 	self addClassConstant: 'ValueTypes' value: valueTypes.
 	self addClassConstant: 'TypeNames' value: typeNames!

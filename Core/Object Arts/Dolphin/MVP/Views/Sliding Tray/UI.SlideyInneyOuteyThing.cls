@@ -602,14 +602,8 @@ initialize
 	SlideInDelay := 500.
 	self addClassConstant: 'AnimationMask' value: AW_SLIDE | AW_BLEND | AW_CENTER.
 	self addClassConstant: 'Animations'
-		value: (IdentityDictionary new
-				at: #roll put: 0;
-				at: #collapse put: AW_CENTER;
-				at: #slide put: AW_SLIDE;
-				at: #blend put: AW_BLEND;
-				shrink;
-				beReadOnlyObject;
-				yourself)!
+		value: (IdentityDictionary
+				withAll: { #roll -> 0. #collapse -> AW_CENTER. #slide -> AW_SLIDE. #blend -> AW_BLEND })!
 
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.

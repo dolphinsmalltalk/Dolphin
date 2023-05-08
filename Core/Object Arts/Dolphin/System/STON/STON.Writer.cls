@@ -462,7 +462,6 @@ initializeSTONCharacters
 	"This is the minimal STON set of named escapes"
 	escapes := #(8 '\b' 9 '\t' 10 '\n' 12 '\f' 13 '\r' 39 '\''' 92 '\\').
 	escapes pairsDo: [:code :escape | chars at: code + 1 put: escape].
-	chars beReadOnlyObject.
 	self addClassConstant: 'STONCharacters' value: chars!
 
 initializeSTONSimpleSymbolCharacters
@@ -477,7 +476,6 @@ initializeSTONSimpleSymbolCharacters
 			| char |
 			char := (each - 1) asCharacter.
 			(self isSimpleSymbolChar: char) ifTrue: [chars at: each put: 0]].
-	chars beReadOnlyObject.
 	self addClassConstant: 'STONSimpleSymbolCharacters' value: chars!
 
 isSimpleSymbolChar: char

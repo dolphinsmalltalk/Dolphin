@@ -1264,7 +1264,7 @@ initialize
 
 	defaultCaptions := (IdentityDictionary
 				withAll: { #prompt -> 'Please confirm…'. #notify -> 'Note' })
-				beReadOnlyObject;
+				beImmutableObject;
 				yourself.
 	self addClassConstant: 'CommonButtonFlags'
 		value: ((Array new: 11)

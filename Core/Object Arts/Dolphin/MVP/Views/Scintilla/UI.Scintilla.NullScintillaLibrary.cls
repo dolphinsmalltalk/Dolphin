@@ -377,7 +377,7 @@ returnValues
 				SCI_WORDSTARTPOSITION -> INVALID_POSITION.
 				SCI_WRAPCOUNT -> 0
 			})
-		beReadOnlyObject;
+		beImmutableObject;
 		yourself)! !
 !UI.Scintilla.NullScintillaLibrary categoriesForMethods!
 directBooleanFunction:msg:wParam:lParam:!operations!private! !

@@ -192,15 +192,13 @@ initialize
 	"
 
 	self addClassConstant: 'AlignmentMap'
-		value: (IdentityDictionary new
-				at: #left put: SS_LEFT;
-				at: #right put: SS_RIGHT;
-				at: #center put: SS_CENTER;
-				at: #leftNoWrap put: SS_LEFTNOWORDWRAP;
-				at: #simple put: SS_SIMPLE;
-				shrink;
-				beReadOnlyObject;
-				yourself)! !
+		value: (IdentityDictionary withAll: {
+						#left -> SS_LEFT.
+						#right -> SS_RIGHT.
+						#center -> SS_CENTER.
+						#leftNoWrap -> SS_LEFTNOWORDWRAP.
+						#simple -> SS_SIMPLE
+					})! !
 !UI.StaticText class categoriesForMethods!
 icon!constants!public! !
 initialize!development!initializing!private! !

@@ -2701,17 +2701,15 @@ initialize
 
 	CommCtrlLibrary addInitFlag: ICC_LISTVIEW_CLASSES.
 	self addClassConstant: 'LvModes'
-		value: (IdentityDictionary new
-				at: #thumbnails put: LVS_ICON;
-				at: #smallIcons put: LVS_SMALLICON;
-				at: #largeIcons put: LVS_ICON;
-				at: #tileIcons put: LVS_ICON;
-				at: #extraLargeIcons put: LVS_ICON;
-				at: #list put: LVS_LIST;
-				at: #report put: LVS_REPORT;
-				shrink;
-				beReadOnlyObject;
-				yourself).
+		value: (IdentityDictionary withAll: {
+						#thumbnails -> LVS_ICON.
+						#smallIcons -> LVS_SMALLICON.
+						#largeIcons -> LVS_ICON.
+						#tileIcons -> LVS_ICON.
+						#extraLargeIcons -> LVS_ICON.
+						#list -> LVS_LIST.
+						#report -> LVS_REPORT
+					}).
 	UnknownItem := Object new!
 
 onStartup

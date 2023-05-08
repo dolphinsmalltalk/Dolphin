@@ -17,14 +17,16 @@ createClasses
 				superclass: Object
 				instVars: ''
 				imports: #()
-				classVars: ''.
+				classVars: ''
+				classConsts: #().
 	trueClass compile: 'mustBeBoolean ^true'.
 	falseClass := self
 				createClass: #MustBeBooleanTestFalseClass
 				superclass: Object
 				instVars: ''
 				imports: #()
-				classVars: ''.
+				classVars: ''
+				classConsts: #().
 	falseClass compile: 'mustBeBoolean ^false'!
 
 falseClass

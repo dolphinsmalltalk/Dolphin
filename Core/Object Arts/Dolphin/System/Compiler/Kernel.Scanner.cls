@@ -813,21 +813,18 @@ initialize
 	escapeChars := IdentityDictionary new.
 	Character.EscapeChars
 		keysAndValuesDo: [:i :c | c ifNotNil: [escapeChars at: c put: (Character value: i - 1)]].
-	self addClassConstant: 'EscapeChars'
-		value: (escapeChars
-				shrink;
-				beReadOnlyObject;
-				yourself).
+	escapeChars shrink.
+	self addClassConstant: 'EscapeChars' value: escapeChars.
 	self addClassConstant: 'SpecialLiterals'
 		value: (LookupTable withAll: {
 						'nil' -> ((StLiteralToken value: nil)
-									beReadOnlyObject;
+									beImmutableObject;
 									yourself).
 						'true' -> ((StLiteralToken value: true)
-									beReadOnlyObject;
+									beImmutableObject;
 									yourself).
 						'false' -> ((StLiteralToken value: false)
-									beReadOnlyObject;
+									beImmutableObject;
 									yourself)
 					})!
 
@@ -843,7 +840,6 @@ initializeClassificationTable
 	(Character byteCharacterSet select: [:each | each isSeparator])
 		do: [:separator | classificationTable at: separator codePoint + 1 put: #separator].
 	classificationTable at: $\0 codePoint + 1 put: #separator.
-	classificationTable beReadOnlyObject.
 	self addClassConstant: 'ClassificationTable' value: classificationTable!
 
 isSelector: aSymbol

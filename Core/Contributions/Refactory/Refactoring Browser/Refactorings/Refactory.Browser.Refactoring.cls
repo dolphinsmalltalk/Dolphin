@@ -679,7 +679,7 @@ initializeRefactoringOptions
 							-> [:refactoring :initial :selected | refactoring getOptionVariableTypes: initial selected: selected].
 						#showChanges -> [:refactoring | refactoring getOptionShowChanges]
 					})
-				beReadOnlyObject;
+				beImmutableObject;
 				yourself!
 
 new

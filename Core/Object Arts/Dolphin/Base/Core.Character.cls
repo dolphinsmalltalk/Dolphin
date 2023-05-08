@@ -746,10 +746,7 @@ euro
 	^$\x20AC!
 
 initialize
-	self addClassConstant: 'CharacterSet'
-		value: ((AnsiString fromByteArray: (0 to: 255) asByteArray)
-				beReadOnlyObject;
-				yourself).
+	self addClassConstant: 'CharacterSet' value: (AnsiString fromByteArray: (0 to: 255) asByteArray).
 	self addClassConstant: 'EscapeChars'
 		value: ((Array new: 14)
 				at: 0 + 1 put: $0;
@@ -827,12 +824,12 @@ onStartup
 	AnsiCodePage := (VM getProcAddress: 'AnsiCodePage' ifAbsent: [#[0 0 0 0]]) uint32AtOffset: 0.
 	utf := self byteCharacterSet asUtf16String.
 	AnsiCodePoints := ((0 to: utf size * 2 - 1 by: 2) collect: [:each | utf uint16AtOffset: each])
-				beReadOnlyObject;
+				beImmutableObject;
 				yourself.
 	#todo.	"Integers from 0 to 255 with a few gaps substituted by large values do not make for good hash distribution, so make the table larger than normal until #766 is fixed."
 	ansiCharacters := IdentityDictionary new: 513.
 	self byteCharacterSet do: [:each | ansiCharacters at: each codePoint put: each].
-	ansiCharacters beReadOnlyObject.
+	ansiCharacters beImmutableObject.
 	AnsiCharacters := ansiCharacters!
 
 replacement

@@ -714,27 +714,23 @@ initialize
 
 	CommCtrlLibrary addInitFlag: ICC_TAB_CLASSES.
 	self addClassConstant: 'TabOrientations'
-		value: (IdentityDictionary new
-				at: 0 put: #top;
-				at: TCS_BOTTOM put: #bottom;
-				at: TCS_VERTICAL put: #left;
-				at: TCS_BOTTOM | TCS_VERTICAL put: #right;
-				shrink;
-				beReadOnlyObject;
-				yourself).
+		value: (IdentityDictionary withAll: {
+						0 -> #top.
+						TCS_BOTTOM -> #bottom.
+						TCS_VERTICAL -> #left.
+						(TCS_BOTTOM | TCS_VERTICAL) -> #right
+					}).
 	self addClassConstant: 'TabViewModes'
-		value: (IdentityDictionary new
-				at: #noIcons put: 0 @ 0;
-				at: #smallIcons put: 16 @ 16;
-				at: #mediumSmallIcons put: 20 @ 20;
-				at: #mediumIcons put: 24 @ 24;
-				at: #largeIcons put: 32 @ 32;
-				at: #tileIcons put: 48 @ 48;
-				at: #thumbnails put: 64 @ 64;
-				at: #extraLargeIcons put: 256 @ 256;
-				shrink;
-				beReadOnlyObject;
-				yourself)!
+		value: (IdentityDictionary withAll: {
+						#noIcons -> (0 @ 0).
+						#smallIcons -> (16 @ 16).
+						#mediumSmallIcons -> (20 @ 20).
+						#mediumIcons -> (24 @ 24).
+						#largeIcons -> (32 @ 32).
+						#tileIcons -> (48 @ 48).
+						#thumbnails -> (64 @ 64).
+						#extraLargeIcons -> (256 @ 256)
+					})!
 
 tabOrientations
 	^TabOrientations!

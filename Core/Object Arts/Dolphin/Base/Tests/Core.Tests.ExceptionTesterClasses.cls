@@ -17,20 +17,23 @@ createClasses
 				superclass: Notification
 				instVars: ''
 				imports: #()
-				classVars: ''.
+				classVars: ''
+				classConsts: #().
 	resumableErrorClass := self
 				createClass: #MyResumableTestError
 				superclass: Error
 				instVars: ''
 				imports: #()
-				classVars: ''.
+				classVars: ''
+				classConsts: #().
 	resumableErrorClass compile: 'isResumable ^true'.
 	testErrorClass := self
 				createClass: #MyTestError
 				superclass: Error
 				instVars: ''
 				imports: #()
-				classVars: ''!
+				classVars: ''
+				classConsts: #()!
 
 isAvailable
 	^testNotificationClass notNil!

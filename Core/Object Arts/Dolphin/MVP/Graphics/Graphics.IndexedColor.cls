@@ -170,7 +170,7 @@ initialize
 			[:s :i |
 			| color |
 			color := self basicNew setIndex: i.
-			color beReadOnlyObject.
+			color beImmutableObject.
 			byIndex at: i put: color.
 			byName at: s put: color.
 			names at: i put: s].

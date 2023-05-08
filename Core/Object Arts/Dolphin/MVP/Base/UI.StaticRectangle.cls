@@ -64,19 +64,17 @@ initialize
 	"
 
 	self addClassConstant: 'StyleMap'
-		value: (IdentityDictionary new
-				at: #blackFrame put: SS_BLACKFRAME;
-				at: #blackRectangle put: SS_BLACKRECT;
-				at: #grayFrame put: SS_GRAYFRAME;
-				at: #grayRectangle put: SS_GRAYRECT;
-				at: #whiteFrame put: SS_WHITEFRAME;
-				at: #whiteRectangle put: SS_WHITERECT;
-				at: #etchedFrame put: SS_ETCHEDFRAME;
-				at: #etchedHorizontal put: SS_ETCHEDHORZ;
-				at: #etchedVertical put: SS_ETCHEDVERT;
-				shrink;
-				beReadOnlyObject;
-				yourself)!
+		value: (IdentityDictionary withAll: {
+						#blackFrame -> SS_BLACKFRAME.
+						#blackRectangle -> SS_BLACKRECT.
+						#grayFrame -> SS_GRAYFRAME.
+						#grayRectangle -> SS_GRAYRECT.
+						#whiteFrame -> SS_WHITEFRAME.
+						#whiteRectangle -> SS_WHITERECT.
+						#etchedFrame -> SS_ETCHEDFRAME.
+						#etchedHorizontal -> SS_ETCHEDHORZ.
+						#etchedVertical -> SS_ETCHEDVERT
+					})!
 
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.

@@ -1017,13 +1017,7 @@ initialize
 	"Descriptor for stream out callback"
 	StreamingDescriptor := External.FunctionDescriptor argumentTypes: 'uint32 lpvoid int32 UInt32*'.
 	self addClassConstant: 'ParagraphAlignmentMap'
-		value: (IdentityDictionary new
-				at: #left put: PFA_LEFT;
-				at: #right put: PFA_RIGHT;
-				at: #center put: PFA_CENTER;
-				shrink;
-				beReadOnlyObject;
-				yourself)!
+		value: (IdentityDictionary withAll: { #left -> PFA_LEFT. #right -> PFA_RIGHT. #center -> PFA_CENTER })!
 
 maxTextLimit
 	"Private - Answer the absolute maximum amount of text that the receiver can ever hold."

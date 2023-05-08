@@ -279,7 +279,10 @@ declareClassVariablesOf: aClass
 								yourself)].
 			consts do: 
 					[:each |
-					pool add: ((VariableBinding key: each key value: each value)
+					| value |
+					value := each value.
+					value beImmutableObject.
+					pool add: ((VariableBinding key: each key value: value)
 								environment: aClass;
 								isClassVariable: true;
 								isConstant: true;
@@ -1066,7 +1069,7 @@ validateImports
 				ifTrue: [distinct nextPut: canonical]
 				ifFalse: [canonical isPrivate ifFalse: [added isPrivate: false]]].
 	imports := distinct grabContents
-				beReadOnlyObject;
+				beImmutableObject;
 				yourself!
 
 validateInstanceSpec
@@ -1403,13 +1406,10 @@ initialize
 		ClassBuilder initialize
 	"
 
-	self addClassConstant: 'Unsubclassable'
-		value: ({ Character. SmallInteger } asIdentitySet
-				beReadOnlyObject;
-				yourself).
+	self addClassConstant: 'Unsubclassable' value: { Character. SmallInteger } asIdentitySet.
 	"Classes that, in addition to all byte classes, have a fixed layout"
 	self addClassConstant: 'FixedLayout'
-		value: ({
+		value: {
 				true class.
 				false class.
 				Array.
@@ -1422,12 +1422,10 @@ initialize
 				MethodDictionary.
 				UndefinedObject.
 				Object
-			} asSet
-				beReadOnlyObject;
-				yourself).
+			} asSet.
 	"add: ProtoObject;"
 	self addClassConstant: 'FixedInitialLayout'
-		value: ({
+		value: {
 				Class.
 				Metaclass.
 				PositionableStream.
@@ -1435,9 +1433,7 @@ initialize
 				Process.
 				ProcessorScheduler.
 				VariableBinding
-			} asSet
-				beReadOnlyObject;
-				yourself).
+			} asSet.
 	self addClassConstant: 'FixedName' value: #(#Smalltalk #Root)!
 
 invalidRemoveError

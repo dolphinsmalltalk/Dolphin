@@ -210,19 +210,17 @@ initialize
 	"
 
 	self addClassConstant: 'AlignmentMap'
-		value: (IdentityDictionary new
-				at: #leftCenter put: BS_LEFT | BS_VCENTER;
-				at: #rightCenter put: BS_RIGHT | BS_VCENTER;
-				at: #topCenter put: BS_CENTER | BS_TOP;
-				at: #bottomCenter put: BS_CENTER | BS_BOTTOM;
-				at: #center put: BS_CENTER | BS_VCENTER;
-				at: #topLeft put: BS_LEFT | BS_TOP;
-				at: #topRight put: BS_RIGHT | BS_TOP;
-				at: #bottomLeft put: BS_LEFT | BS_BOTTOM;
-				at: #bottomRight put: BS_RIGHT | BS_BOTTOM;
-				shrink;
-				beReadOnlyObject;
-				yourself)!
+		value: (IdentityDictionary withAll: {
+						#leftCenter -> (BS_LEFT | BS_VCENTER).
+						#rightCenter -> (BS_RIGHT | BS_VCENTER).
+						#topCenter -> (BS_CENTER | BS_TOP).
+						#bottomCenter -> (BS_CENTER | BS_BOTTOM).
+						#center -> (BS_CENTER | BS_VCENTER).
+						#topLeft -> (BS_LEFT | BS_TOP).
+						#topRight -> (BS_RIGHT | BS_TOP).
+						#bottomLeft -> (BS_LEFT | BS_BOTTOM).
+						#bottomRight -> (BS_RIGHT | BS_BOTTOM)
+					})!
 
 themePartName
 	^'BUTTON'!

@@ -23,19 +23,22 @@ createClasses
 				superclass: Object
 				instVars: 'var1 var2'
 				imports: #(#{ClassBuilderTestPool1})
-				classVars: 'Var1 Var2'.
+				classVars: 'Var1 Var2'
+				classConsts: { 'Const1' -> (Set with: 'abc') }.
 	testSubclass1 := self
 				createClass: #'Kernel.Tests.ClassBuilderTestSubClass'
 				superclass: testClass
 				instVars: 'var3 var4'
 				imports: #(#{ClassBuilderTestPool2})
-				classVars: ''.
+				classVars: ''
+				classConsts: #().
 	testSubclass2 := self
 				createClass: #'Root.ClassBuilderTestSubClass2'
 				superclass: testClass
 				instVars: 'var3 var4'
 				imports: #(#{ClassBuilderTestPool3} #{ClassBuilderTestPool2})
-				classVars: ''!
+				classVars: ''
+				classConsts: #()!
 
 createPools
 	testPool1 := self createPool: #ClassBuilderTestPool1.

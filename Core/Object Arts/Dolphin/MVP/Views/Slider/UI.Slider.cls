@@ -474,21 +474,11 @@ initialize
 	CommCtrlLibrary addInitFlag: ICC_BAR_CLASSES.
 	self addClassConstant: 'TickStyleMask' value: ##(TBS_TOP | TBS_BOTH | TBS_BOTTOM).
 	self addClassConstant: 'HorizontalTickStyles'
-		value: (IdentityDictionary new
-				at: #top put: TBS_TOP;
-				at: #bottom put: TBS_BOTTOM;
-				at: #bothSides put: TBS_BOTH;
-				shrink;
-				beReadOnlyObject;
-				yourself).
+		value: (IdentityDictionary
+				withAll: { #top -> TBS_TOP. #bottom -> TBS_BOTTOM. #bothSides -> TBS_BOTH }).
 	self addClassConstant: 'VerticalTickStyles'
-		value: (IdentityDictionary new
-				at: #left put: TBS_LEFT;
-				at: #right put: TBS_RIGHT;
-				at: #bothSides put: TBS_BOTH;
-				shrink;
-				shrink;
-				yourself)!
+		value: (IdentityDictionary
+				withAll: { #left -> TBS_LEFT. #right -> TBS_RIGHT. #bothSides -> TBS_BOTH })!
 
 stbConvertFromVersion9: anArray 
 	"Private - Perform an STB conversion from a version 9 (or earlier) <View> to version 10,

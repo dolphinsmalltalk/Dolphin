@@ -31,7 +31,7 @@ collectionClass
 testImmutability
 	| subject |
 	subject := self newDictionary.
-	subject beReadOnlyObject.
+	subject beImmutableObject.
 	"Attempt to add new key"
 	self should: [subject at: #key2 put: (self assimilate: 2)] raise: Processor constWriteSignal.
 	"Attempt to modify value associated with existing key - checks that the values are immutable too"

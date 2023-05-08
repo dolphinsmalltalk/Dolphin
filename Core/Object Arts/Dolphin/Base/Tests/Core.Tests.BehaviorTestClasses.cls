@@ -23,7 +23,8 @@ createClasses
 				superclass: Object
 				instVars: ''
 				imports: #()
-				classVars: ''.
+				classVars: ''
+				classConsts: #().
 	classWithAbstractMethod1 compile: 'abstractMethod ^self subclassResponsibility'.
 	classWithAbstractMethod1 class compile: 'nonAbstractMethod  ^#(subclassResponsibility)'.
 	classWithAbstractMethod2 := self
@@ -31,7 +32,8 @@ createClasses
 				superclass: Object
 				instVars: 'iv1'
 				imports: #()
-				classVars: ''.
+				classVars: ''
+				classConsts: #().
 	classWithAbstractMethod2 class compile: 'abstractMethod self subclassResponsibility'.
 	classWithAbstractMethod2 compile: 'nonAbstractMethod1 #(subclassResponsibility)'.
 	classWithAbstractMethod2 compile: 'nonAbstractMethod2  ^iv1 subclassResponsibility'.

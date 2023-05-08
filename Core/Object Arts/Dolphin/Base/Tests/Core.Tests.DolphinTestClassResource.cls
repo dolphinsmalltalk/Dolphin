@@ -22,13 +22,14 @@ compileAccessorsFor: aClass
 compileMethods
 	"To be implemented by subclasses as required"!
 
-createClass: className superclass: superClass instVars: instanceVariables imports: anArray classVars: classVariablesString
+createClass: className superclass: superClass instVars: instanceVariables imports: anArray classVars: classVariablesString classConsts: constsArray
 	| subclass |
 	subclass := (superClass
 				newClassBuilder: className
 				instanceVariableNames: instanceVariables
 				classVariableNames: classVariablesString
 				imports: anArray)
+				classConstants: constsArray;
 				beQuiet;
 				modifyOrCreate.
 	package addClass: subclass.
@@ -79,7 +80,7 @@ tearDown
 !Core.Tests.DolphinTestClassResource categoriesForMethods!
 compileAccessorsFor:!Init / Release!private! !
 compileMethods!accessing!public! !
-createClass:superclass:instVars:imports:classVars:!Init / Release!private! !
+createClass:superclass:instVars:imports:classVars:classConsts:!Init / Release!private! !
 createClasses!Init / Release!private! !
 createClassesAndMethods!Init / Release!public! !
 createPackage!Init / Release!private! !

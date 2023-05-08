@@ -3,10 +3,30 @@
 Core.Dictionary
 	variableSubclass: #'OS.RegKeyAbstract'
 	instanceVariableNames: 'name parentPath rootKey sam handle keyInfo'
-	classVariableNames: 'AccessModes ValueTypes'
+	classVariableNames: ''
 	imports: #(#{OS.WinRegConstants} #{OS.Win32Errors})
 	classInstanceVariableNames: ''
-	classConstants: { 'PathSeparator' -> '\' }!
+	classConstants: {
+			'AccessModes'
+				-> (IdentityDictionary withAll: {
+								#all -> 16rF003F.
+								#execute -> 16r20019.
+								#read -> 16r20019.
+								#readWrite -> 16r2001F.
+								#write -> 16r20006
+							}).
+			'PathSeparator' -> '\'.
+			'ValueTypes'
+				-> (IdentityDictionary withAll: {
+								#binary -> 16r3.
+								#dword -> 16r4.
+								#expandString -> 16r2.
+								#none -> 16r0.
+								#qword -> 16rB.
+								#string -> 16r1.
+								#stringArray -> 16r7
+							})
+		}!
 OS.RegKeyAbstract guid: (Core.GUID fromString: '{87b4c52b-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.RegKeyAbstract isNonInstantiable: true!
 OS.RegKeyAbstract comment: '`RegKeyAbstract` is the abstract class of objects with concrete subclasses to represent keys in the Windows Registration Database. The keys may have sub-keys which are represented by instances of `RegKey`. A `RegKey` is also a dictionary of registry values represented in Dolphin by instances of `RegKeyValues`.
@@ -959,17 +979,17 @@ initialize
 		RegKeyAbstract initialize
 	"
 
-	AccessModes := ##((IdentityDictionary withAll: {
+	self addClassConstant: 'AccessModes'
+		value: ##(IdentityDictionary withAll: {
 						#read -> KEY_READ.
 						#readWrite -> (KEY_READ | KEY_WRITE).
 						#all -> KEY_ALL_ACCESS.
 						#write -> KEY_WRITE.
 						#execute -> KEY_EXECUTE
-					})
-				beReadOnlyObject;
-				yourself).
+					}).
 	"We retain the DWORD/QWORD terminology here, because these are the registry types"
-	ValueTypes := ##((IdentityDictionary withAll: {
+	self addClassConstant: 'ValueTypes'
+		value: ##(IdentityDictionary withAll: {
 						#string -> REG_SZ.
 						#dword -> REG_DWORD.
 						#stringArray -> REG_MULTI_SZ.
@@ -977,9 +997,7 @@ initialize
 						#binary -> REG_BINARY.
 						#expandString -> REG_EXPAND_SZ.
 						#none -> REG_NONE
-					})
-				beReadOnlyObject;
-				yourself).
+					}).
 	self addClassConstant: 'PathSeparator' value: '\' asUtf16String!
 
 localMachineRoot

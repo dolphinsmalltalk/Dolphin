@@ -188,7 +188,7 @@ classConstants
 	"The answer is a temporary value representing a subset of the class variable bindings collection, so mark it immutable to catch errors of attempting to modify it"
 
 	^(self definedBindings select: [:each | each isImmutable and: [each value isSelfEvaluating]])
-		beReadOnlyObject;
+		beImmutableObject;
 		yourself!
 
 classInModel: aRBModel
@@ -586,7 +586,7 @@ newMethodFor: aCompiledMethod
 
 newMethods
 	^newMethods ?? ##(IdentityDictionary new
-				beReadOnlyObject;
+				beImmutableObject;
 				yourself)!
 
 owningPackage
@@ -618,7 +618,7 @@ realClass
 
 removedSelectors
 	^removedSelectors ?? ##(IdentitySet new
-				beReadOnlyObject;
+				beImmutableObject;
 				yourself)!
 
 removeInstanceVariable: aString

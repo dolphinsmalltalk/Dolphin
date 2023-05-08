@@ -89,7 +89,7 @@ name: aSymbol
 
 newAssociation: keyObject value: valueObject
 	^(super newAssociation: keyObject value: valueObject)
-		beReadOnlyObject;
+		beImmutableObject;
 		yourself!
 
 owningPackage
