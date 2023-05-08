@@ -788,7 +788,7 @@ icon!constants!public! !
 !Refactory.Browser.ChangeMethodNameRefactoring methodsFor!
 
 getOptionRenameAllDefinitions: aCollection of: aSymbol
-	| details count |
+	| details count prompt |
 	aCollection size <= 1 ifTrue: [^true].
 	details := String writeStream.
 	details
@@ -805,14 +805,19 @@ getOptionRenameAllDefinitions: aCollection of: aSymbol
 		cr;
 		nextPutAll: 'All definitions must be renamed to preserve behaviour. You can re-initiate the rename and constrain the scope of the rename to package, hierarchy, class or even individual method level in the rename dialog if you wish, but this may not preserve behaviour.'.
 	count := aCollection size.
-	^MessageBox new
-		caption: self displayString;
-		headline: 'Rename <1p> methods defined in <2d> classes in <3p>?'
-					<< {aSymbol. count. model environment};
-		customButtons: #(#(#yes '&Rename All') #(#no 'Cancel'));
-		defaultButton: 2;
-		detailsText: details contents;
-		confirm! !
+	prompt := MessageBox new
+				caption: self displayString;
+				headline: 'Rename <1p> methods defined in <2d> classes in <3p>?'
+							<< { aSymbol. count. model environment };
+				customButtons: #(#(#yes '&Rename All') #(#no 'Cancel'));
+				defaultButton: 2;
+				detailsText: details contents;
+				checkboxText: 'Show proposed changes?';
+				isChecked: self shouldShowChanges;
+				yourself.
+	prompt confirm ifFalse: [^false].
+	prompt isChecked ifTrue: [self shouldShowChanges: true].
+	^true! !
 !Refactory.Browser.ChangeMethodNameRefactoring categoriesForMethods!
 getOptionRenameAllDefinitions:of:!options!public! !
 !
