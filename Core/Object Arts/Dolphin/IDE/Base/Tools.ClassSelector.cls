@@ -5,7 +5,7 @@ UI.SelectableItemsPresenter
 	instanceVariableNames: 'classesPresenter searchEnvironment'
 	classVariableNames: ''
 	imports: #(#{Refactory.Browser private} #{XProgramming.SUnit private})
-	classInstanceVariableNames: 'commandQueryHandlers'
+	classInstanceVariableNames: ''
 	classConstants: { 'ClassModeMask' -> 16r1. 'ShowFullNamesMask' -> 16r2 }!
 Tools.ClassSelector guid: (Core.GUID fromString: '{cb9d5680-134d-4c0b-9052-ad4536946a49}')!
 Tools.ClassSelector isNonInstantiable: true!
@@ -60,49 +60,58 @@ actualClasses
 browseChangedMethods
 	"Browse the changed methods in the selected classes"
 
-	self developmentSystem browseChangedMethodsOf: self selection!
+	<commandQuerySelector: #queryClassesCommand:>
+	self developmentSystem browseChangedMethodsOfClasses: self selections!
 
 browseClass
+	<commandQuerySelector: #queryClassCommand:>
 	self selection browse!
 
 browseClassPackage
 	"Open a package browser on the selected class' package."
-	
+
+	<commandQuerySelector: #queryBrowseClassPackage:>
 	| pkg |
 	pkg := self selection owningPackage.
-	pkg isNil
-		ifTrue: [self developmentSystem browsePackages]
-		ifFalse: [pkg browse]!
+	pkg isNil ifTrue: [self developmentSystem browsePackages] ifFalse: [pkg browse]!
 
 browseClassReferences
 	"Browse all the methods which refer to the class selected in the receiver."
 
-	| env class |
-	class := self selection.
+	<commandQuerySelector: #queryClassesCommand:>
+	| env references |
 	env := self searchEnvironment.
-	self
-		routeCommand: (CommandDescription command: (Message selector: #browseMethodsInEnvironments:
-						argument: {env referencesToVariable: class binding. env referencesToClass: class}))!
+	references := Array writeStream: 2.
+	self selections do: 
+			[:class |
+			references
+				nextPut: (env referencesToVariable: class binding);
+				nextPut: (env referencesToClass: class)].
+	self routeCommand: (CommandDescription
+				command: (Message selector: #browseMethodsInEnvironments: argument: references grabContents))!
 
 browseClassVariables
 	"Browse one of the class variables of the selected class."
 
+	<commandQuerySelector: #queryClassCommand:>
 	self developmentSystem browseClassVariables: self selection!
 
 browseHierarchy
 	"Open a new class hierarchy browser on the hierarchy at the same point as the receiver."
 
-	self developmentSystem browseHierarchy: self actualClass
-!
+	<commandQuerySelector: #queryBrowseHierarchy:>
+	self developmentSystem browseHierarchy: self actualClass!
 
 browseInstanceVariables
 	"Browse methods in the selected class and its subclasses that reference one of its variables."
 
+	<commandQuerySelector: #queryInstanceVariablesCommand:>
 	self developmentSystem browseInstanceVariables: self actualClass!
 
 browseIt
 	"Browse the selected item in the pane with focus."
 
+	<commandQuerySelector: #queryClassCommand:>
 	self perform: self browseItCommand!
 
 browseItCommand
@@ -112,15 +121,21 @@ browseItCommand
 	classesPresenter hasFocus ifTrue: [^#browseClass].
 	^nil!
 
+browseMenu
+	<commandQuerySelector: #queryClassesCommand:>
+	!
+
 browsePackages
 	"Implement the context-sensitive browse packages command by browsing to the currently
 	selected class' package."
-	
+
+	<commandQuerySelector: #queryClassCommand:>
 	self browseClassPackage!
 
 browsePublishedAspects
 	"Browse the published aspects for the current class. Copy the choice (if any) to the clipboard."
 
+	<commandQuerySelector: #queryBrowsePublishedAspects:>
 	| class pubs choice |
 	class := self selection.
 	pubs := class publishedAspectsOfInstances.
@@ -133,6 +148,7 @@ browsePublishedEvents
 	"Browse the published events that can be triggered by instances of the current class.
 	Copy the chosen symbolic event name (if any) to the clipboard."
 
+	<commandQuerySelector: #queryBrowsePublishedEvents:>
 	| pubEvents choice class |
 	class := self selection.
 	pubEvents := class publishedEventsOfInstances asSortedCollection.
@@ -144,6 +160,7 @@ browsePublishedEvents
 browseReferences
 	"Context-sensitive browse references command (Shift+F12)."
 
+	<commandQuerySelector: #queryClassesCommand:>
 	<acceleratorKey: 'Shift+F12'>
 	self browseClassReferences!
 
@@ -155,8 +172,12 @@ browserEnvironment
 browseSystem
 	"Open a new system browser on at the same point as the receiver."
 
-	self developmentSystem browseSystem: self actualClass
-!
+	<commandQuerySelector: #queryClassCommand:>
+	self developmentSystem browseSystem: self actualClass!
+
+browseVariablesMenu
+	<commandQuerySelector: #queryClassCommand:>
+	Sound warningBeep!
 
 buildAllVariablesMenu: aMenu
 	"Private - Build a dynamic pull-out menu which lists all of a class' existing 
@@ -218,6 +239,7 @@ canRefactor
 categorizeClass
 	"Invokes a dialog to categorize the current class"
 
+	<commandQuerySelector: #queryClassCommand:>
 	| chosenCategories aClass originalCategories categories |
 	aClass := self selection.
 	originalCategories := aClass categories.
@@ -255,6 +277,7 @@ classNamesSelector: aSymbol
 classPackage
 	"Prompt for the user to repackage the selected class."
 
+	<commandQuerySelector: #queryClassCommand:>
 	| class newPkg oldPkg |
 	class := self selection.
 	oldPkg := class owningPackage.
@@ -263,20 +286,65 @@ classPackage
 				caption: 'Package of <1p>…' << class
 				default: nil
 				validationBlock: [:package | package notNil and: [class fullyQualifiedReference isDefined]].
-	(newPkg isNil or: [newPkg = oldPkg]) ifFalse: [self queryMoveClass: class toPackage: newPkg]!
+	(newPkg isNil or: [newPkg = oldPkg]) ifFalse: [self confirmMoveClass: class toPackage: newPkg]!
 
 clearSelection
 	"Private - Remove the selected object from the system"
 
+	<commandQuerySelector: #queryClassesCommand:>
 	self perform: self deleteItCommand!
 
+confirmMoveClass: aClass toPackage: aPackage
+	"Private - Move aClass from its existing package to the receiver's current package if
+	the user agrees."
+
+	| classPackage packMan subclasses mb response |
+	packMan := self developmentSystem packageManager.
+	classPackage := packMan packageOfClass: aClass.
+	subclasses := (aClass allSubclasses
+				collect: [:s | Pair first: s second: (packMan packageOfClass: s)])
+					select: [:a | a second isNil or: [a second == classPackage]].
+	mb := MessageBox new.
+	classPackage isNil
+		ifTrue: [response := #yes	"Move all subclasses without package too"]
+		ifFalse: 
+			[| prompt |
+			prompt := 'The class <1p> is currently owned by the <2p> package, and will be moved to the <3p> package.'
+						<< { aClass. classPackage name. aPackage name }.
+			subclasses isEmpty
+				ifTrue: 
+					[response := mb
+								headline: 'Repackage <1p>?' << { aClass. aPackage name };
+								customButtons: #(#(#yes '&Repackage') #(#no '&Don''t Repackage'));
+								isCancellable: true;
+								defaultButton: 2;
+								confirm: prompt.
+					response ifFalse: [^false]]
+				ifFalse: 
+					[response := mb
+								headline: 'Repackage <1p> and subclasses?' << { aClass. aPackage name };
+								customButtons: #(#(#yes '&Repackage All') #(#no 'Repackage Class &Only') #(#cancel '&Don''t Repackage'));
+								text: prompt , ('<n><n>Would you like to move its subclasses in <1p>, or without a package, too?'
+													<< { classPackage name. aPackage name });
+								confirmOrCancel.
+					response == #cancel ifTrue: [^false]]].
+	packMan addClass: aClass to: aPackage.
+	response == #yes
+		ifTrue: 
+			["Move the subclasses too"
+			subclasses do: [:a | packMan addClass: a first to: aPackage]].
+	^true!
+
 copyClass
-	(self developmentSystem copyClass: self selection) ifNotNil: [:newClass | self actualClass: newClass]!
+	<commandQuerySelector: #queryClassCommand:>
+	(self developmentSystem copyClass: self selection)
+		ifNotNil: [:newClass | self actualClass: newClass]!
 
 createInstanceVariableAccessors
 	"Prompt to generate compiled 'get' and 'set' accessor methods for each of the immediate
 	instance variables of the current class that are not currently endowed with both."
 
+	<commandQuerySelector: #queryInstanceVariablesCommand:>
 	self createVariableAccessors: false!
 
 createSchematicWiring
@@ -376,13 +444,14 @@ editView: viewName
 fileInClass
 	"Files in the selected class via the package that owns it"
 
+	<commandQuerySelector: #queryClassCommand:>
 	self developmentSystem classFileIn: self selection!
 
 fileOutClass
 	"Files out the selected class via the package that owns it"
 
-	self developmentSystem classFileOut: self selection
-!
+	<commandQuerySelector: #queryClassCommand:>
+	self developmentSystem classFileOut: self selection!
 
 findClass
 	"Prompts for a class name and finds it within the receiver. Will accept wild-
@@ -407,9 +476,13 @@ initialize
 	self flags: 0.
 	searchEnvironment := BrowserEnvironment new!
 
+initiateRename
+	classesPresenter view editSelectionLabel!
+
 inspectIt
 	"Open an inspector on the currently selected class."
 
+	<commandQuerySelector: #queryClassCommand:>
 	self selection inspect!
 
 isInstanceMode
@@ -704,189 +777,107 @@ populateVarMenu: aMenu class: class command: cmdSelector variables: aCollection 
 				isModalCommand: true;
 				isAbortable: aBoolean]!
 
-queryCommand: aCommandQuery
-	"Private - Enter details about a potential command for the receiver 
-	into the <CommandQuery> argument."
-
-	| selector |
-	selector := aCommandQuery commandSymbol.
-	#browseIt == selector
-		ifTrue: 
-			[selector := self browseItCommand.
-			selector isNil
+queryBrowseClassPackage: aCommandQuery
+	| pkg class name |
+	class := self selectionOrNil.
+	name := (class isNil or: [(pkg := class owningPackage) isNil])
 				ifTrue: 
 					[aCommandQuery isEnabled: false.
-					^true]].
-	#clearSelection == selector
-		ifTrue: 
-			[selector := self deleteItCommand.
-			selector isNil
-				ifTrue: 
-					[aCommandQuery isEnabled: false.
-					^true]].
-	selector == #browseHierarchy
-		ifTrue: 
-			[| name |
-			self selectionOrNil
-				ifNil: 
-					[name := 'Class'.
-					aCommandQuery isEnabled: false]
-				ifNotNil: 
-					[:class |
-					name := class name.
-					aCommandQuery
-						isDefault: true;
-						isEnabled: true].
-			aCommandQuery text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: { name }
-						locale: Locale smalltalk).
-			^true].
-	#browseSystem == selector
-		ifTrue: 
-			[aCommandQuery isEnabled: self hasSelection.
-			^true].
-	#browseClassPackage == selector
-		ifTrue: 
-			[| name pkg class |
-			class := self selectionOrNil.
-			(class isNil or: [(pkg := class owningPackage) isNil])
-				ifTrue: 
-					[aCommandQuery isEnabled: false.
-					name := '']
+					'']
 				ifFalse: 
 					[aCommandQuery isEnabled: true.
-					name := pkg name printString].
-			aCommandQuery text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: { name }
-						locale: Locale smalltalk).
-			^true].
-	(#(#browseClass #fileInClass #fileOutClass #checkInClass #checkOutClass #categorizeClass #clearSelection #inspectIt #browseMenu #browseHierarchy #browseReferences #browseClassReferences #browseClassVariables #browseInstanceVariables #browseAllMethods #browsePackages #classPackage #browseChangedMethods #browseVariablesMenu)
-		identityIncludes: selector)
-			ifTrue: 
-				[aCommandQuery isEnabled: self hasSelection.
-				^true].
-	#renameClass == selector
-		ifTrue: 
-			[aCommandQuery isEnabled: (self developmentSystem canRenameClass: self selectionOrNil).
-			^true].
-	(#(#removeClass) identityIncludes: selector)
-		ifTrue: 
-			[aCommandQuery isEnabled: self hasSelection.
-			^true].
-	#removeImport == selector
-		ifTrue: 
-			[| imports |
-			imports := Set new.
-			self selections do: [:each | imports addAll: each imports].
-			aCommandQuery isEnabled: imports notEmpty.
-			^true].
-	#changeClassNamespace == selector
-		ifTrue: 
-			[aCommandQuery isEnabled: (self developmentSystem canChangeClassNamespaces: self selections).
-			^true].
-	#browsePublishedEvents == selector
-		ifTrue: 
-			[| class |
-			class := self selectionOrNil.
-			aCommandQuery isEnabled: (class notNil and: [class respondsTo: #publishedEventsOfInstances]).
-			^true].
-	#browsePublishedAspects == selector
-		ifTrue: 
-			[| class |
-			class := self selectionOrNil.
-			aCommandQuery isEnabled: (class notNil and: [class respondsTo: #publishedAspectsOfInstances]).
-			^true].
-	#viewsMenu == selector
-		ifTrue: 
-			[| class |
-			class := self selectionOrNil.
-			aCommandQuery isEnabled: (class notNil
-						and: [(class includesBehavior: Presenter) or: [class includesBehavior: View]]).
-			^true].
-	(#(#viewsEditMenu #viewsShowMenu) identityIncludes: selector)
-		ifTrue: 
-			[| class |
-			class := self selectionOrNil.
-			aCommandQuery isEnabled: (class notNil and: [class resourceIdentifiers notEmpty]).
-			#viewsShowMenu == selector ifTrue: [aCommandQuery isDefault: true].
-			^true].
-	(#(#browseInstanceVariables #createInstanceVariableAccessors) identityIncludes: selector)
-		ifTrue: 
-			[| class |
-			class := self actualClass.
-			aCommandQuery isEnabled: (class notNil and: [class instanceVariableNames notEmpty]).
-			^true].
-	#browseTests == selector
-		ifTrue: 
-			[aCommandQuery
-				isEnabled: (self testBrowserClass notNil and: 
-							[| class |
-							class := self selectionOrNil.
-							class notNil and: 
-									["Test if the selected class is a kind of TestCase without taking a dependency on the SUnit package, so it can be uninstalled if desired."
-									class inheritsFrom: #{TestCase} value]]).
-			^true].
-	#toggleShowFullNames == selector
-		ifTrue: 
-			[aCommandQuery
-				isEnabled: true;
-				isChecked: self isShowingFullNames.
-			^true].
-	^super queryCommand: aCommandQuery!
+					pkg name printString].
+	aCommandQuery text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: { name }
+				locale: Locale smalltalk)!
 
-queryMoveClass: aClass toPackage: aPackage
-	"Private - Move aClass from its existing package to the receiver's current package if
-	the user agrees."
+queryBrowseHierarchy: aCommandQuery
+	| name |
+	name := self selectionOrNil
+				ifNil: 
+					[aCommandQuery isEnabled: false.
+					'Class']
+				ifNotNil: 
+					[:class |
+					aCommandQuery
+						isDefault: true;
+						isEnabled: true.
+					class name].
+	aCommandQuery text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: { name }
+				locale: Locale smalltalk)!
 
-	| classPackage packMan subclasses mb response |
-	packMan := self developmentSystem packageManager.
-	classPackage := packMan packageOfClass: aClass.
-	subclasses := (aClass allSubclasses
-				collect: [:s | Pair first: s second: (packMan packageOfClass: s)])
-					select: [:a | a second isNil or: [a second == classPackage]].
-	mb := MessageBox new.
-	classPackage isNil
-		ifTrue: [response := #yes	"Move all subclasses without package too"]
-		ifFalse: 
-			[| prompt |
-			prompt := 'The class <1p> is currently owned by the <2p> package, and will be moved to the <3p> package.'
-						<< {aClass. classPackage name. aPackage name}.
-			subclasses isEmpty
-				ifTrue: 
-					[response := mb
-								headline: 'Repackage <1p>?' << {aClass. aPackage name};
-								customButtons: #(#(#yes '&Repackage') #(#no '&Don''t Repackage'));
-								isCancellable: true;
-								defaultButton: 2;
-								confirm: prompt.
-					response ifFalse: [^false]]
-				ifFalse: 
-					[response := mb
-								headline: 'Repackage <1p> and subclasses?' << {aClass. aPackage name};
-								customButtons: #(#(#yes '&Repackage All') #(#no 'Repackage Class &Only') #(#cancel '&Don''t Repackage'));
-								text: prompt , ('<n><n>Would you like to move its subclasses in <1p>, or without a package, too?'
-													<< {classPackage name. aPackage name});
-								confirmOrCancel.
-					response == #cancel ifTrue: [^false]]].
-	packMan addClass: aClass to: aPackage.
-	response == #yes
-		ifTrue: 
-			["Move the subclasses too"
-			subclasses do: [:a | packMan addClass: a first to: aPackage]].
+queryBrowseItCommand: aCommandQuery
+	self browseItCommand isNil
+		ifTrue: [aCommandQuery isEnabled: false]
+		ifFalse: [self queryClassCommand: aCommandQuery]!
+
+queryBrowsePublishedAspects: aCommandQuery
+	| class |
+	class := self selectionOrNil.
+	aCommandQuery isEnabled: (class notNil and: [class respondsTo: #publishedAspectsOfInstances])!
+
+queryBrowsePublishedEvents: aCommandQuery
+	| class |
+	class := self selectionOrNil.
+	aCommandQuery isEnabled: (class notNil and: [class respondsTo: #publishedEventsOfInstances])!
+
+queryChangeClassNamespace: aCommandQuery
+	aCommandQuery isEnabled: (self developmentSystem canChangeClassNamespaces: self selections)!
+
+queryClassCommand: aCommandQuery
+	aCommandQuery isEnabled: self hasSingleSelection.
 	^true!
+
+queryClassesCommand: aCommandQuery
+	aCommandQuery isEnabled: self hasSelection.
+	^true!
+
+queryClassVariablesCommand: aCommandQuery
+	| class |
+	class := self actualClass.
+	aCommandQuery isEnabled: (class notNil and: [class instanceClass definedBindings notEmpty])!
+
+queryInstanceVariablesCommand: aCommandQuery
+	| class |
+	class := self actualClass.
+	aCommandQuery isEnabled: (class notNil and: [class instanceVariableNames notEmpty])!
+
+queryRenameClass: aCommandQuery
+	aCommandQuery isEnabled: (self developmentSystem canRenameClass: self selectionOrNil)!
+
+queryShowFullNames: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: self isShowingFullNames!
+
+queryViewsMenu: aCommandQuery
+	| class |
+	class := self selectionOrNil.
+	aCommandQuery isEnabled: (class notNil
+				and: [(class includesBehavior: Presenter) or: [class includesBehavior: View]])!
+
+queryViewsSubMenu: aCommandQuery
+	| class |
+	class := self selectionOrNil.
+	aCommandQuery isEnabled: (class notNil and: [class resourceIdentifiers notEmpty]).
+	#viewsShowMenu == aCommandQuery commandSymbol ifTrue: [aCommandQuery isDefault: true]!
 
 removeClass
 	"Removes the selected class(es) from the system. If refactoring is available, then the 'Remove Class' refactoring is employed."
 
+	<commandQuerySelector: #queryClassesCommand:>
 	self permitSelectionChange ifTrue: [self developmentSystem removeClasses: self selections]!
 
 renameClass
 	"Private - Initiate in-place label edit for the selected class."
 
-	classesPresenter view editSelectionLabel!
+	<commandQuerySelector: #queryRenameClass:>
+	self initiateRename!
 
 renameClassVariable
 	"Private - Initiate the rename of a class variable. Note that the view may also implement this 
 	command with a dynamic pull-out menu (of the same name)."
 
+	<commandQuerySelector: #queryClassVariablesCommand:>
 	| classVar class |
 	class := self selection.
 	classVar := ChoicePrompter choices: class classBindingNames asSortedCollection
@@ -897,11 +888,16 @@ renameInstanceVariable
 	"Private - Initiate the rename of an instance variable. Note that the view may also implement this 
 	command with a dynamic pull-out menu (of the same name)."
 
+	<commandQuerySelector: #queryInstanceVariablesCommand:>
 	| instVar class |
 	class := self actualClass.
 	instVar := ChoicePrompter choices: class instanceVariableNames asSortedCollection
 				caption: 'Rename Instance Variable…'.
 	instVar isNil ifFalse: [self developmentSystem renameInstanceVariable: instVar in: class]!
+
+renameVariables
+	<commandQuerySelector: #queryVariablesCommand:>
+	Sound warningBeep!
 
 searchEnvironment
 	^searchEnvironment!
@@ -932,16 +928,26 @@ showPresenter: viewName
 	self selection show: viewName
 	!
 
-testBrowserClass
-	^SmalltalkSystem current testBrowserClass!
-
 toggleShowFullNames
 	"Private - Enable/disable the display of class full names (i.e. with namespace qualifier) in the class hierarchy view. There is no good reason to do this in the class list, as this already has a Namespace column showing the qualifier."
 
+	<commandQuerySelector: #queryShowFullNames:>
 	| fullNames |
 	fullNames := self isShowingFullNames not.
 	self isShowingFullNames: fullNames.
-	self classNamesSelector: (fullNames ifTrue: [#fullName] ifFalse: [#unqualifiedName])! !
+	self classNamesSelector: (fullNames ifTrue: [#fullName] ifFalse: [#unqualifiedName])!
+
+viewsEditMenu
+	<commandQuerySelector: #queryViewsSubMenu:>
+	!
+
+viewsMenu
+	<commandQuerySelector: #queryViewsMenu:>
+	!
+
+viewsShowMenu
+	<commandQuerySelector: #queryViewsSubMenu:>
+	! !
 !Tools.ClassSelector categoriesForMethods!
 actualClass!accessing!public! !
 actualClass:!accessing!public! !
@@ -956,12 +962,14 @@ browseHierarchy!commands!public! !
 browseInstanceVariables!commands!public! !
 browseIt!commands!public! !
 browseItCommand!helpers!private! !
+browseMenu!commands!public! !
 browsePackages!commands!public! !
 browsePublishedAspects!commands!public! !
 browsePublishedEvents!commands!public! !
 browseReferences!commands!public! !
 browserEnvironment!public! !
 browseSystem!commands!public! !
+browseVariablesMenu!commands!public! !
 buildAllVariablesMenu:!menus!private! !
 buildViewsMenu:command:!menus!private! !
 canRefactor!public!testing! !
@@ -971,6 +979,7 @@ classHierarchyPresenter!accessing!private! !
 classNamesSelector:!accessing!private! !
 classPackage!commands!public! !
 clearSelection!commands!private! !
+confirmMoveClass:toPackage:!operations!private! !
 copyClass!commands!private! !
 createInstanceVariableAccessors!commands!public!refactoring! !
 createSchematicWiring!initializing!public! !
@@ -986,6 +995,7 @@ findClass!commands!public! !
 flags!accessing!private! !
 flags:!accessing!private! !
 initialize!initializing!private! !
+initiateRename!commands!private!refactoring! !
 inspectIt!commands!public! !
 isInstanceMode!modes!public! !
 isInstanceMode:!modes!public! !
@@ -1008,31 +1018,34 @@ packages:!accessing!public! !
 performDropChanges:target:!helpers!private! !
 permitSelectionChange!helpers!private! !
 populateVarMenu:class:command:variables:format:abortable:!menus!private! !
-queryCommand:!commands!private! !
-queryMoveClass:toPackage:!operations!private! !
+queryBrowseClassPackage:!command queries!private! !
+queryBrowseHierarchy:!command queries!private! !
+queryBrowseItCommand:!command queries!private! !
+queryBrowsePublishedAspects:!command queries!private! !
+queryBrowsePublishedEvents:!command queries!private! !
+queryChangeClassNamespace:!command queries!private! !
+queryClassCommand:!command queries!private! !
+queryClassesCommand:!command queries!private! !
+queryClassVariablesCommand:!command queries!private! !
+queryInstanceVariablesCommand:!command queries!private! !
+queryRenameClass:!command queries!private! !
+queryShowFullNames:!command queries!private! !
+queryViewsMenu:!command queries!private! !
+queryViewsSubMenu:!command queries!private! !
 removeClass!commands!public! !
 renameClass!commands!private!refactoring! !
 renameClassVariable!commands!private!refactoring! !
 renameInstanceVariable!commands!private!refactoring! !
+renameVariables!commands!private! !
 searchEnvironment!commands!private! !
 searchEnvironment:!public! !
 selectableItems!accessing!private! !
 selectionEnvironment!accessing!private! !
 setInitialFocus!operations!public! !
 showPresenter:!commands!public! !
-testBrowserClass!constants!private! !
 toggleShowFullNames!commands!private!refactoring! !
-!
-
-!Tools.ClassSelector class methodsFor!
-
-getCommandQueryHandlers
-	^commandQueryHandlers!
-
-setCommandQueryHandlers: anArray 
-	commandQueryHandlers := anArray! !
-!Tools.ClassSelector class categoriesForMethods!
-getCommandQueryHandlers!accessing!private! !
-setCommandQueryHandlers:!accessing!private! !
+viewsEditMenu!commands!public! !
+viewsMenu!commands!public! !
+viewsShowMenu!commands!public! !
 !
 

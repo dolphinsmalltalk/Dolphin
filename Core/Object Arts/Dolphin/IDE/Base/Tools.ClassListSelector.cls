@@ -143,6 +143,13 @@ initialize
 	super initialize.
 	browserEnvironment := BrowserEnvironment new forClasses: #()!
 
+initiateRename
+	"Private - Initiate in-place label edit for the selected class."
+
+	classesListPresenter view isWindowVisible
+		ifTrue: [classesListPresenter view editSelectionLabel]
+		ifFalse: [super initiateRename]!
+
 model: aListModel
 	"Connects the receiver to a new model."
 
@@ -202,13 +209,6 @@ onViewClosed
 	self developmentSystem removeEventsTriggeredFor: self.
 	Package manager removeEventsTriggeredFor: self!
 
-renameClass
-	"Private - Initiate in-place label edit for the selected class."
-
-	classesListPresenter view isWindowVisible 
-		ifTrue: [classesListPresenter view editSelectionLabel]
-		ifFalse: [super renameClass]!
-
 selectableItems
 	"Private - Answer the name of the <selectableItems> component that actually handles the selectable items in the receiver"
 	
@@ -237,6 +237,7 @@ deleteItCommand!helpers!private! !
 flags!accessing!private! !
 flags:!accessing!private! !
 initialize!initializing!private! !
+initiateRename!commands!private!refactoring! !
 model:!accessing!public! !
 onCardChangedFrom:to:!public! !
 onClassRepackaged:from:to:!event handling!private! !
@@ -245,7 +246,6 @@ onListSelectionChanged!event handling!private!selection! !
 onNamespacesSelectionChanged!event handling!private! !
 onSelectionChanged!event handling!private!selection! !
 onViewClosed!event handling!private! !
-renameClass!commands!private!refactoring! !
 selectableItems!accessing!private! !
 updateClasses!private!updating! !
 !

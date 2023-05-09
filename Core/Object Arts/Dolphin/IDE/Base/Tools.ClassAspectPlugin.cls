@@ -16,11 +16,12 @@ Tools.ClassAspectPlugin comment: '`ClassAspectPlugin` is an abstract class of `<
 accept
 	"Save the text to the class."
 
+	<commandQuerySelector: #queryClassCommand:>
 	| overwrite |
 	overwrite := self promptToOverwrite.
 	overwrite ifFalse: [^self].
 	textPresenter isModified: false.
-	originalText := (textPresenter model)
+	originalText := textPresenter model
 				apply;
 				value!
 
@@ -158,17 +159,8 @@ promptToSaveClassChanges: aSelectionChangingEvent
 	textPresenter prompt: self caption asLowercase toSaveChanges: aSelectionChangingEvent.
 	^aSelectionChangingEvent value!
 
-queryCommand: aCommandQuery 
-	"Private - Enter details about a potential command for the receiver 
-	into the <CommandQuery> argument."
-
-	| selector |
-	selector := aCommandQuery commandSymbol.
-	#accept == selector 
-		ifTrue: 
-			[aCommandQuery isEnabled: self browser hasClassSelected.
-			^true].
-	^super queryCommand: aCommandQuery!
+queryClassCommand: aCommandQuery
+	aCommandQuery isEnabled: self browser hasClassSelected!
 
 refreshIcon
 	self view arrangement: self!
@@ -201,7 +193,7 @@ onClassUpdated:!event handling!private! !
 onShownInBrowser!event handling!private! !
 promptToOverwrite!helpers!private! !
 promptToSaveClassChanges:!helpers!public! !
-queryCommand:!commands!private! !
+queryClassCommand:!command queries!private! !
 refreshIcon!private!updating! !
 systemUpdateEvent!constants!private! !
 textPresenterClass!initializing!private! !

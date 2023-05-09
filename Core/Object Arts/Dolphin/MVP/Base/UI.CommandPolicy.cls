@@ -118,16 +118,12 @@ newCommandQuery: action
 		source: self source!
 
 prependTarget: target
-	"Append the <commandTarget>, target, to the existing chain-of-command if not already
-	present. Answers the target if it was added, or nil if already in the path.
-	This can be used by the presenter answering the command policy to amend the
-	default routing by inserting new command targets at its start. Note that the new
-	target will moved from its current position already present in the path."
+	"Prepend the <commandTarget>, target, to the existing chain-of-command. If the target is already present in the chain, then it is moved from its existing position to the start of the chain. Answer the target.
+	This can be used by the presenter answering the command policy to amend the default routing by inserting new command targets at its start."
 
 	| idx cofc |
 	cofc := self commandPath.
-	(idx := cofc identityIndexOf: target) ~= 0
-		ifTrue: [cofc removeAtIndex: idx].
+	(idx := cofc identityIndexOf: target) ~= 0 ifTrue: [cofc removeAtIndex: idx].
 	cofc addFirst: target.
 	^target!
 

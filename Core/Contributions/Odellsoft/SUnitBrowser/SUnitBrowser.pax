@@ -78,6 +78,8 @@ package classNames
 package methodNames
 	add: #ClassSelector -> #browseTests;
 	add: #ClassSelector -> #buildTestSuite;
+	add: #ClassSelector -> #queryBrowseTests:;
+	add: #ClassSelector -> #testBrowserClass;
 	add: #PackageSelector -> #browseTests;
 	add: #PackageSelector -> #buildTestSuite;
 	add: 'Toolbar class' -> #resource_SUnitBrowser_Resource_browser_toolbar;
@@ -157,6 +159,7 @@ SUnitAbsWrapper subclass: #SUnitTestResourceWrapper
 browseTests
 	"Open an SUnit Test Browser on the selected Test Case."
 
+	<commandQuerySelector: #queryBrowseTests:>
 	self testBrowserClass sunitbShow: self buildTestSuite!
 
 buildTestSuite
@@ -180,10 +183,24 @@ buildTestSuite
 					classSuite := eachClass buildSuite.
 					suite
 						addTests: (classSuite allTests select: [:eachTest | eachClass canUnderstand: eachTest selector])]].
-	^suite! !
+	^suite!
+
+queryBrowseTests: aCommandQuery
+	aCommandQuery
+		isEnabled: (self testBrowserClass notNil and: 
+					[| class |
+					class := self selectionOrNil.
+					class notNil and: 
+							["Test if the selected class is a kind of TestCase without taking a dependency on the SUnit package, so it can be uninstalled if desired."
+							class inheritsFrom: #{TestCase} value]])!
+
+testBrowserClass
+	^SmalltalkSystem current testBrowserClass! !
 !ClassSelector categoriesForMethods!
 browseTests!commands!public! !
-buildTestSuite!commands!public! !
+buildTestSuite!helpers!public! !
+queryBrowseTests:!command queries!private! !
+testBrowserClass!constants!private! !
 !
 
 !PackageSelector methodsFor!

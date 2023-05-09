@@ -1436,7 +1436,7 @@ Core.Object
 	instanceVariableNames: 'model view parentPresenter events subPresenters names helpId'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})
-	classInstanceVariableNames: 'acceleratorKeyAnnotations'
+	classInstanceVariableNames: 'acceleratorKeyAnnotations commandQuerySelectors commandQueryHandlers'
 	classConstants: {}!
 Core.Object
 	subclass: #'UI.View'

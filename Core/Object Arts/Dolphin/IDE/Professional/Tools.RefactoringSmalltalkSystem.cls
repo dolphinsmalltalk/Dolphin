@@ -490,13 +490,8 @@ extendMethodBrowserMenus: browser
 	| ctxMenu otherMenu |
 	ctxMenu := (browser view viewNamed: 'methodlist') presenterConnectionPoint contextMenu.
 	otherMenu := ctxMenu findCommand: #browseOther.
-	otherMenu
-		insertItem: (CommandMenuItem commandDescription: (ClosedCommandDescription
-						command: (Message selector: #recompileDiffs)
-						description: 'Recompile &diffs'
-						queryBlock: [:query | query isEnabled: browser hasMethodSelected]
-						receiver: browser))
-				yourself
+	otherMenu insertItem: (CommandMenuItem
+				commandDescription: (CommandDescription command: #recompileDiffs description: 'Recompile &diffs'))
 		after: #browseCompilationFailures!
 
 extractMethod: anInterval from: aSymbol in: aBehavior
@@ -1617,15 +1612,11 @@ initialize
 	"Private - Initialize the receiver on load (take over as the development system model)."
 
 	self installCurrent.
-	RefactoringSignal := Refactoring preconditionSignal.
-	#(#{SmalltalkToolShell} #{ClassSelector} #{PackageSelector})
-		do: [:each | each value addCommandQueryHandler: #queryRefactoringCommand:]!
+	RefactoringSignal := Refactoring preconditionSignal!
 
 uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
-	#(#{SmalltalkToolShell} #{ClassSelector} #{PackageSelector})
-		do: [:each | each value removeCommandQueryHandler: #queryRefactoringCommand:].
 	MethodCategory removeCategory: '*-RB fixes'.
 	self uninstallCurrent! !
 !Tools.RefactoringSmalltalkSystem class categoriesForMethods!

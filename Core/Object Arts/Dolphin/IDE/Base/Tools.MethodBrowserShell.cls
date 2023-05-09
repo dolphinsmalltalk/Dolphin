@@ -70,9 +70,6 @@ hasEditableMethodsSelected
 hasMethods
 	^self browser hasMethods!
 
-hasMethodSelected
-	^self browser hasMethodSelected!
-
 isEditableMethod: aCompiledMethod 
 	^true!
 
@@ -123,7 +120,11 @@ parseContext
 					env := package ifNil: [class environment] ifNotNil: [package environment ifNil: [class environment]].
 					ParseContext methodClass: class environment: (model modelClassFor: env)]]!
 
+queryMethodCommand: aCommandQuery
+	aCommandQuery isEnabled: browserPresenter hasMethodSelected!
+
 recompileDiffs
+	<commandQuerySelector: #queryMethodCommand:>
 	self developmentSystem recompileDiffs: self selectedMethod!
 
 saveNewMethod: aString
@@ -160,7 +161,7 @@ systemModel
 	^self model! !
 !Tools.MethodBrowserShell categoriesForMethods!
 browser!accessing!public! !
-canSaveMethod!commands!private! !
+canSaveMethod!private!testing! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
 filter!accessing!public! !
@@ -169,7 +170,6 @@ findSelector:!public!searching! !
 hasEditableMethodSelected!public!testing! !
 hasEditableMethodsSelected!public!testing! !
 hasMethods!browsing!public! !
-hasMethodSelected!idb goodies!public!testing! !
 isEditableMethod:!enquiries!public! !
 method!accessing!public! !
 methods!accessing!public! !
@@ -177,6 +177,7 @@ methods:!accessing!public! !
 onMethodSelected!event handling!private! !
 onViewOpened!event handling!public! !
 parseContext!accessing!public! !
+queryMethodCommand:!command queries!private! !
 recompileDiffs!public! !
 saveNewMethod:!helpers!private! !
 searchEnvironment:!public! !

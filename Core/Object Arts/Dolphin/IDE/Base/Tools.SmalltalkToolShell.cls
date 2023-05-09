@@ -5,7 +5,7 @@ UI.Shell
 	instanceVariableNames: 'searchPresenter fontSizePresenter'
 	classVariableNames: 'HistoryDwellTime SearchFieldFlashes'
 	imports: #(#{Refactory.Browser private})
-	classInstanceVariableNames: 'optionFlags defaultView defaultExtent defaultSlideyPinsMap additionalKeyBindings commandQueryHandlers'
+	classInstanceVariableNames: 'optionFlags defaultView defaultExtent defaultSlideyPinsMap additionalKeyBindings'
 	classConstants: {
 			'CanUseIdeaSpaceMask' -> 16r2.
 			'LoadingMask' -> 16r1.
@@ -581,9 +581,6 @@ getAdditionalKeyBindings
 	self ensureOptionsLoaded.
 	^additionalKeyBindings!
 
-getCommandQueryHandlers
-	^commandQueryHandlers!
-
 historyDwellTime
 	"Answer the period of time, expressed in milliseconds, for which it is necessary to 'visit'
 	a class, method, etc, before that visit is recorded in the visit history list."
@@ -766,9 +763,6 @@ setAdditionalKeyBindings: anArray
 	additionalKeyBindings := anArray.
 	self persistOptions!
 
-setCommandQueryHandlers: anArray 
-	commandQueryHandlers := anArray!
-
 setOptionFlag: anInteger value: aBoolean
 	"Private - Set the receiver to reuse an already open instance of the receiver instead of
 	creating an additional one according to aBoolean."
@@ -875,7 +869,6 @@ defaultView:!options!public! !
 ensureOptionsLoaded!options!private! !
 finishedLoadingOptions!options!private! !
 getAdditionalKeyBindings!options!private! !
-getCommandQueryHandlers!options!private! !
 historyDwellTime!options!public! !
 historyDwellTime:!options!public! !
 icon!constants!public! !
@@ -896,7 +889,6 @@ reuseIfOpen:!options!public! !
 searchFieldFlashes!options!public! !
 searchFieldFlashes:!options!public! !
 setAdditionalKeyBindings:!options!private! !
-setCommandQueryHandlers:!options!private! !
 setOptionFlag:value:!options!private! !
 show!instance creation!public! !
 show:inIdeaSpace:!private! !

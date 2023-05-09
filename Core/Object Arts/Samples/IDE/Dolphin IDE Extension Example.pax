@@ -20,6 +20,7 @@ package setClassNames: #(
 
 package setMethodNames: #(
 	#(#{Tools.ClassCommentPlugin} #emitClassLayoutDescription)
+	#(#{Tools.SmalltalkToolShell} #browseKeyBindings)
 ).
 
 package setPrerequisites: #(
@@ -52,6 +53,7 @@ emitClassLayoutDescription
 	"Emits a description of the instance variables for the context class at the
 	insertion point in the receiver."
 
+	<commandQuerySelector: #queryClassCommand:>
 	| desc |
 	[desc := OAIDEExtensions current variableDescriptionsFor: self browser selectedClass]
 		on: OperationAborted
@@ -61,6 +63,14 @@ emitClassLayoutDescription
 	desc isNil ifFalse: [textPresenter replaceSelection: desc]! !
 !Tools.ClassCommentPlugin categoriesForMethods!
 emitClassLayoutDescription!commands!development!public! !
+!
+
+!Tools.SmalltalkToolShell methodsFor!
+
+browseKeyBindings
+	OAIDEExtensions current browseKeyBindingsOfShell: self view! !
+!Tools.SmalltalkToolShell categoriesForMethods!
+browseKeyBindings!operations!private! !
 !
 
 "End of package definition"!

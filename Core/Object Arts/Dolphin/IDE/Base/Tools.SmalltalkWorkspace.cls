@@ -5,7 +5,7 @@ UI.Presenter
 	instanceVariableNames: 'evaluationContext errorModel findDetails workspacePool namespaces compilationErrors textStyles searchEnvironment modifiedModel flags indicatorStyles variableMetadataProvider'
 	classVariableNames: 'Abbreviations AnnotationMode AutoCompleteDwell DefaultCaretColor DefaultFont DefaultTabWidth FontQuality IndicatorStyles KeyBindings KeywordCompletions MaxAutoCompletionListHeight MaxAutoCompletionListSize MaxAutoCompletionListWidth OptionFlags StandardUnaryReturnTypes TextStyles WrapIndentMode'
 	imports: #(#{Kernel.CompilerFlags} #{UI.Scintilla private} #{Refactory.Browser private})
-	classInstanceVariableNames: 'additionalKeyBindings commandQueryHandlers'
+	classInstanceVariableNames: 'additionalKeyBindings'
 	classConstants: {
 			'AutoCompleteMask' -> 16r8.
 			'AutoCompletionCaseInsensitiveMask' -> 16r80.
@@ -2283,9 +2283,6 @@ fontQuality: aSymbol
 getAdditionalKeyBindings
 	^additionalKeyBindings ifNil: [self setAdditionalAccelerators: self additionalAccelerators]!
 
-getCommandQueryHandlers
-	^commandQueryHandlers!
-
 icon
 	"Answers an Icon that can be used to represent this class"
 
@@ -2528,9 +2525,6 @@ setAdditionalKeyBindings: anArray
 	additionalKeyBindings := anArray.
 	self persistOptions!
 
-setCommandQueryHandlers: anArray 
-	commandQueryHandlers := anArray!
-
 setOptionFlag: anInteger value: aBoolean
 	"Private - Set the receiver to reuse an already open instance of the receiver instead of
 	creating an additional one according to aBoolean."
@@ -2643,7 +2637,6 @@ finishedLoadingOptions!options!private! !
 fontQuality!accessing!public! !
 fontQuality:!accessing!public! !
 getAdditionalKeyBindings!accessing!private! !
-getCommandQueryHandlers!accessing!private! !
 icon!constants!public! !
 indicatorStyles!accessing!public! !
 indicatorStyles:!accessing!public! !
@@ -2676,7 +2669,6 @@ publishedAspects!options!public! !
 publishedEventsOfInstances!events!public! !
 resource_Default_view!public!resources-views! !
 setAdditionalKeyBindings:!accessing!private! !
-setCommandQueryHandlers:!accessing!private! !
 setOptionFlag:value:!options!private! !
 startLoadingOptions!options!private! !
 textStyles!accessing!public! !

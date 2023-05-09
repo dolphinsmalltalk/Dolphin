@@ -96,6 +96,7 @@ actualClassChainCategories
 
 	| chain categories |
 	chain := self actualClassChain.
+	chain isEmpty ifTrue: [^#()].
 	categories := chain first methodCategories.
 	2 to: chain size do: [:i | (chain at: i) methodsCatalogue keysDo: [:each | categories add: each]].
 	^categories!

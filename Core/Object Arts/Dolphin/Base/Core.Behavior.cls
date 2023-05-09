@@ -129,6 +129,13 @@ allSuperclassesDo: aMonadicValuable
 	current isNil] 
 			whileFalse: [aMonadicValuable value: current]!
 
+annotatedMethodRemoved: aCompiledMethod
+	"Annotations are being removed as a consequence of the removal of an annotated method. This is an opportunity to update any metadata that might be based on method annotations."
+
+	"By default, do nothing"
+
+	!
+
 annotationsUpdated: aCompilationResult 
 	"Annotations may have been added or removed in the receiver's methods. This is an opportunity to update any metadata that might be based on method annotations."
 	
@@ -570,6 +577,7 @@ methodDictionary: aMethodDictionary
 methodRemoved: aCompiledMethod 
 	"React to the removal of the specified method from this class. This is before the system update event with selector #methodRemoved: is triggered."
 
+	aCompiledMethod isAnnotated ifTrue: [self annotatedMethodRemoved: aCompiledMethod]
 	"Do nothing at this level - this is an override point for classes"!
 
 methodsDo: aMonadicValuable
@@ -981,7 +989,8 @@ addToSuper!class hierarchy-adding!private! !
 allInstanceVariableNames!instance variables!public! !
 allSuperclasses!class hierarchy-accessing!public! !
 allSuperclassesDo:!class hierarchy-accessing!enumerating!private! !
-annotationsUpdated:!public! !
+annotatedMethodRemoved:!event handling!public! !
+annotationsUpdated:!event handling!public! !
 basicCompile:!compiling!private! !
 basicCompile:environment:!compiling!private! !
 basicCompile:flags:environment:!compiling!private! !

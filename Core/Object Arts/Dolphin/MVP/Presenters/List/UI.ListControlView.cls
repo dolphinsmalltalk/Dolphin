@@ -689,7 +689,7 @@ updateSelectionCache!helpers!private!selection! !
 
 UI.ListControlView methodProtocol: #indexSelectableItems attributes: #(#readOnly) selectors: #(#selectionByIndex #selectionByIndex: #selectionByIndex:ifAbsent: #selectionByIndexIfNone:)!
 UI.ListControlView methodProtocol: #listView attributes: #(#readOnly) selectors: #(#list #list: #onItem:addedAtIndex: #onItem:removedAtIndex: #onItem:updatedAtIndex: #onListChanged)!
-UI.ListControlView methodProtocol: #selectableItems attributes: #(#readOnly) selectors: #(#hasSelection #onSelectionChanged #onSelectionChanging: #resetSelection #selection #selection: #selection:ifAbsent: #selectionIfNone: #selectionOrNil #selectionOrNil: #selections #selections: #selections:ifAbsent:)!
+UI.ListControlView methodProtocol: #selectableItems attributes: #(#readOnly) selectors: #(#hasSelection #hasSingleSelection #onSelectionChanged #onSelectionChanging: #resetSelection #selection #selection: #selection:ifAbsent: #selectionIfNone: #selectionOrNil #selectionOrNil: #selections #selections: #selections:ifAbsent:)!
 
 !UI.ListControlView class methodsFor!
 

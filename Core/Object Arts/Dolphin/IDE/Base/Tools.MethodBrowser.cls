@@ -5,7 +5,7 @@ UI.ListPresenter
 	instanceVariableNames: 'methodsPresenter sourcePresenter filter searchEnvironment refactoringTool namespaceModel'
 	classVariableNames: 'AdditionalAccelerators AutoFormat InfoTips WordWrap'
 	imports: #(#{Kernel.CompilerFlags} #{Refactory.Browser private})
-	classInstanceVariableNames: 'commandQueryHandlers'
+	classInstanceVariableNames: ''
 	classConstants: {}!
 Tools.MethodBrowser guid: (Core.GUID fromString: '{87b4c68d-026e-11d3-9fd7-00a0cc3e4a32}')!
 Tools.MethodBrowser comment: 'MethodBrowser is a <compositePresenter> used to display a <collection> of <CompiledMethod>s. The browser can be instantiated and then filled with methods using #methods: aspect, the value of which must be a <BrowserEnvironment>. The methods defined in the environment are enumerated and displayed in the browser list.
@@ -1219,9 +1219,6 @@ defaultModel
 getAdditionalKeyBindings
 	^AdditionalAccelerators!
 
-getCommandQueryHandlers
-	^commandQueryHandlers!
-
 hasInfoTips
 	^InfoTips!
 
@@ -1298,9 +1295,6 @@ There are no methods to browse' 4336 4242 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 2
 setAdditionalKeyBindings: anArray
 	AdditionalAccelerators := anArray!
 
-setCommandQueryHandlers: anArray 
-	commandQueryHandlers := anArray!
-
 wordWrap
 	"Answer true if instances of the receiver use word wrapping by default."
 
@@ -1315,7 +1309,6 @@ autoFormat!accessing!public! !
 autoFormat:!accessing!public! !
 defaultModel!models!public! !
 getAdditionalKeyBindings!accessing!private! !
-getCommandQueryHandlers!accessing!private! !
 hasInfoTips!accessing!options!public! !
 hasInfoTips:!accessing!options!public! !
 icon!constants!public! !
@@ -1326,7 +1319,6 @@ resource_Class_browser_method_list!public!resources-views! !
 resource_Default_view!public!resources-views! !
 resource_Method_browser_method_list!public!resources-views! !
 setAdditionalKeyBindings:!accessing!private! !
-setCommandQueryHandlers:!accessing!private! !
 wordWrap!accessing!options!public! !
 wordWrap:!accessing!options!public! !
 !

@@ -1177,10 +1177,22 @@ Tools.MethodSearch
 Core.Model
 	subclass: #'Tools.SmalltalkSystem'
 	instanceVariableNames: 'systemFolderClass workspaceClass defaultInspectorClass defaultBrowserClass systemFolder packageBrowserClass debuggerClass viewComposerClass protocolBrowserClass workspaceShellClass resourceBrowserClass changedIcon hierarchyBrowserClass preferAlternateInspectors formatterClass classChooserClass resourceIdentifierDialogClass findDetails methodWorkspaceClass allSelectors argumentClasses methodExplorerClass aboutBoxClass testBrowserClass toolbarBitmapSize displayItLocale'
-	classVariableNames: 'ChangedIcon Current FileDrops RegisteredTools'
+	classVariableNames: 'ChangedIcon Current RegisteredTools'
 	imports: #(#{Kernel.CompilerFlags} #{Refactory.Browser} #{Kernel.ParseErrorCodes} #{XProgramming.SUnit private})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'FileDrops'
+				-> (LookupTable withAll: {
+								'chg' -> #dropScriptFile:.
+								'cls' -> #dropClassFile:.
+								'pac' -> #dropPackageFile:.
+								'pax' -> #dropPackageFile:.
+								'sml' -> #dropScriptFile:.
+								'st' -> #dropScriptFile:.
+								'txt' -> #dropTextFile:.
+								'xml' -> #dropXmlFile:
+							})
+		}!
 UI.TreeModel
 	subclass: #'Tools.CategoryTreeModel'
 	instanceVariableNames: 'title'
@@ -1305,7 +1317,7 @@ UI.Presenter
 	instanceVariableNames: 'evaluationContext errorModel findDetails workspacePool namespaces compilationErrors textStyles searchEnvironment modifiedModel flags indicatorStyles variableMetadataProvider'
 	classVariableNames: 'Abbreviations AnnotationMode AutoCompleteDwell DefaultCaretColor DefaultFont DefaultTabWidth FontQuality IndicatorStyles KeyBindings KeywordCompletions MaxAutoCompletionListHeight MaxAutoCompletionListSize MaxAutoCompletionListWidth OptionFlags StandardUnaryReturnTypes TextStyles WrapIndentMode'
 	imports: #(#{Kernel.CompilerFlags} #{UI.Scintilla private} #{Refactory.Browser private})
-	classInstanceVariableNames: 'additionalKeyBindings commandQueryHandlers'
+	classInstanceVariableNames: 'additionalKeyBindings'
 	classConstants: {
 			'AutoCompleteMask' -> 16r8.
 			'AutoCompletionCaseInsensitiveMask' -> 16r80.
@@ -1364,14 +1376,14 @@ UI.SelectableItemsPresenter
 	instanceVariableNames: 'classesPresenter searchEnvironment'
 	classVariableNames: ''
 	imports: #(#{Refactory.Browser private} #{XProgramming.SUnit private})
-	classInstanceVariableNames: 'commandQueryHandlers'
+	classInstanceVariableNames: ''
 	classConstants: { 'ClassModeMask' -> 16r1. 'ShowFullNamesMask' -> 16r2 }!
 UI.SelectableItemsPresenter
 	subclass: #'Tools.PackageSelector'
 	instanceVariableNames: 'filterPresenter packagesPresenter autoSelect'
 	classVariableNames: ''
 	imports: #(#{XProgramming.SUnit private} #{Refactory.Browser private})
-	classInstanceVariableNames: 'commandQueryHandlers'
+	classInstanceVariableNames: ''
 	classConstants: {}!
 Tools.ClassSelector
 	subclass: #'Tools.ClassHierarchySelector'
@@ -1392,7 +1404,7 @@ UI.ListPresenter
 	instanceVariableNames: 'methodsPresenter sourcePresenter filter searchEnvironment refactoringTool namespaceModel'
 	classVariableNames: 'AdditionalAccelerators AutoFormat InfoTips WordWrap'
 	imports: #(#{Kernel.CompilerFlags} #{Refactory.Browser private})
-	classInstanceVariableNames: 'commandQueryHandlers'
+	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.ListPresenter
 	subclass: #'Tools.ResourceListPresenter'
@@ -1413,7 +1425,7 @@ UI.Shell
 	instanceVariableNames: 'searchPresenter fontSizePresenter'
 	classVariableNames: 'HistoryDwellTime SearchFieldFlashes'
 	imports: #(#{Refactory.Browser private})
-	classInstanceVariableNames: 'optionFlags defaultView defaultExtent defaultSlideyPinsMap additionalKeyBindings commandQueryHandlers'
+	classInstanceVariableNames: 'optionFlags defaultView defaultExtent defaultSlideyPinsMap additionalKeyBindings'
 	classConstants: {
 			'CanUseIdeaSpaceMask' -> 16r2.
 			'LoadingMask' -> 16r1.
