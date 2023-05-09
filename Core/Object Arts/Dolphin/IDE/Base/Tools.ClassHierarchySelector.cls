@@ -45,7 +45,7 @@ newClass
 	| aClass package |
 	aClass := self selectionOrNil.
 	package := aClass isNil ifFalse: [aClass owningPackage].
-	(self developmentSystem createSubclassOf: aClass inPackage: package) 
+	(self developmentSystem createSubclassOf: aClass inPackage: package)
 		ifNotNil: [:newClass | self actualClass: newClass]! !
 !Tools.ClassHierarchySelector categoriesForMethods!
 createComponents!initializing!public! !

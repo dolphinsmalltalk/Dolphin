@@ -462,7 +462,7 @@ defaultHelpId
 hasClassSelected
 	"Answer true if the receiver has a single (i.e. not multiple) class selected"
 
-	^self selectedClass notNil!
+	^classesPresenter hasSingleSelection!
 
 hasEditableMethodSelected
 	^self selectedMethod notNil!
@@ -910,7 +910,7 @@ queryCommand: aCommandQuery
 			^true].
 	(#(#browseLocalMessageReferences #browseLocalMessageDefinitions) identityIncludes: selector)
 		ifTrue: 
-			[aCommandQuery isEnabled: self packages notEmpty.
+			[self queryHasPackages: aCommandQuery.
 			^true].
 	(#(#browseHierarchy #browseReferences) identityIncludes: selector)
 		ifTrue: 
@@ -949,7 +949,7 @@ queryCommand: aCommandQuery
 			methods := self selectedMethods.
 			aCommandQuery isEnabled: methods notEmpty.
 			aCommandQuery text: (aCommandQuery description
-						expandMacrosWithArguments: {methods size = 1 ifTrue: [methods first] ifFalse: ['&Methods']}
+						expandMacrosWithArguments: { methods size = 1 ifTrue: [methods first] ifFalse: ['&Methods'] }
 						locale: Locale smalltalk).
 			^true].
 	#browseVariableReferences == selector
@@ -965,6 +965,9 @@ queryCommand: aCommandQuery
 			[aCommandQuery isEnabled: self resourceIdentifiers notEmpty.
 			^true].
 	^super queryCommand: aCommandQuery!
+
+queryHasPackages: aCommandQuery
+	aCommandQuery isEnabled: self hasPackages!
 
 refreshCard: aSymbol
 	currentCard == aSymbol 
@@ -996,11 +999,6 @@ removeVariables
 	"Private - Remove the currently selected variables from their packages."
 
 	self variableNames do: [:each | Package manager addVariableNamed: each to: nil]!
-
-renameClass
-	"Private - Initiate in-place label edit for the selected class."
-
-	classesPresenter view editSelectionLabel!
 
 resourceIdentifier
 	"Private - Answer the currently selected <ResourceIdentifier>, or nil if there not exactly one selection."
@@ -1071,7 +1069,7 @@ selectedMethod
 selectedMethods
 	"Answer a <collection> of the currently selected loose methods."
 
-	^methodsPresenter selections!
+	^(self isCardUpToDate: #methods) ifTrue: [methodsPresenter selections] ifFalse: [#()]!
 
 selectionEnvironment
 	^packagesPresenter selectionEnvironment!
@@ -1348,12 +1346,12 @@ packages:!accessing!public! !
 promptToSaveChanges!helpers!private! !
 promptToSaveChanges:!helpers!private! !
 queryCommand:!commands!public! !
+queryHasPackages:!command queries!public! !
 refreshCard:!helpers!private! !
 release!dependency!public! !
 removeClasses!commands!private! !
 removeLooseMethods!commands!private! !
 removeVariables!commands!private! !
-renameClass!public! !
 resourceIdentifier!accessing!private! !
 resourceIdentifiers!accessing!private! !
 saveComment!commands!private! !

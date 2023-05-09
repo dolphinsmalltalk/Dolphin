@@ -277,7 +277,7 @@ isAnnotated
 
 	| count |
 	count := self size.
-	^count > 0 and: [(self literalAt: count) isKindOf: MethodAnnotations]!
+	^count > 0 and: [(self basicAt: count) isKindOf: MethodAnnotations]!
 
 isCompilationFailure
 	^false!
