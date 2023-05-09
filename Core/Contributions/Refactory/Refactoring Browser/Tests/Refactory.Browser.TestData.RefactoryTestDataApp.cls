@@ -17,6 +17,13 @@ Refactory.Browser.TestData.RefactoryTestDataApp comment: 'Test class for Smallli
 	#rbFix.	"Added to test #overridesSpecialMessage"
 	^self primitiveFailed!
 
+annotationReference
+	<renameThisMethod: #foo>
+	^self!
+
+annotationReferenceTwo
+	<rename: #foo two: #bar>!
+
 anySatisfy
 	^((1 to: 10) detect: [:each | each > 2] ifNone: [nil]) isNil!
 
@@ -563,6 +570,8 @@ yourselfNotUsed
 		yourself! !
 !Refactory.Browser.TestData.RefactoryTestDataApp categoriesForMethods!
 ==!comparing!public! !
+annotationReference!public!test! !
+annotationReferenceTwo!public!test! !
 anySatisfy!lint!public! !
 asOrderedCollectionNotNeeded!lint!public! !
 assignmentInBlock!lint!public! !

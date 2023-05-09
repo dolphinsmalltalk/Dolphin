@@ -60,7 +60,9 @@ testRenamePermuteArgs
 	self assert: (class parseTreeFor: ('rename:' , 'two:') asSymbol)
 		equals: (self parseMethod: 'rename: argumentMethod two: this ^self printString, this, argumentMethod').
 	self assert: (class parseTreeFor: #exampleCall)
-		equals: (self parseMethod: 'exampleCall ^self rename: 2 two: 1')!
+		equals: (self parseMethod: 'exampleCall ^self rename: 2 two: 1').
+	self assert: (class parseTreeFor: #annotationReferenceTwo)
+		equals: (self parseMethod: 'annotationReferenceTwo <rename: #bar two: #foo')!
 
 testRenamePrimitive
 	| refactoring count optionCalled refs |
@@ -107,6 +109,8 @@ testRenameTestMethod
 	self assert: (class parseTreeFor: #symbolReference)
 		equals: (self parseMethod: 'symbolReference
 		^ #(#renameThisMethod2: #(4 #renameThisMethod2:))').
+	self assert: (class parseTreeFor: #annotationReference)
+		equals: (self parseMethod: 'annotationReference <renameThisMethod2: #foo> ^self').
 	self deny: (class directlyDefinesMethod: ('rename' , 'ThisMethod:') asSymbol)!
 
 testRenameTestMethod1

@@ -30,6 +30,9 @@ replaceString: replaceString
 				ifTrue: [replaceTree := StSequenceNode statements: {replaceTree}]
 				ifFalse: [searchTree := StSequenceNode statements: {searchTree}]]!
 
+replaceTree
+	^replaceTree!
+
 searchFor: searchString replaceWith: replaceString 
 	self searchString: searchString.
 	self replaceString: replaceString!
@@ -57,6 +60,7 @@ searchForTree: aBRProgramNode replaceWith: replaceString when: aBlock
 foundMatchFor:!matching!public! !
 methodReplaceString:!initialize/release!public! !
 replaceString:!initialize/release!public! !
+replaceTree!accessing!public! !
 searchFor:replaceWith:!initialize/release!public! !
 searchFor:replaceWith:when:!initialize/release!public! !
 searchForMethod:replaceWith:!initialize/release!public! !

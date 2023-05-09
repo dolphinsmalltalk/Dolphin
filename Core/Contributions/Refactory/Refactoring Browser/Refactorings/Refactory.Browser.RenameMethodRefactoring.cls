@@ -27,13 +27,20 @@ myConditions
 				, ' doesn''t have the correct number of arguments.'!
 
 parseTreeRewriter
-	| rewriteRule oldString newString |
+	| rewriteRule oldString newString replaceSends replace search |
 	oldString := self buildSelectorString: oldSelector.
 	newString := self buildSelectorString: newSelector withPermuteMap: permutation.
 	rewriteRule := self hasPermutedArguments
 				ifTrue: [ParseTreeRewriter new]
 				ifFalse: [ParseTreeRewriter replaceLiteral: oldSelector with: newSelector].
-	rewriteRule replace: '``@object ' , oldString with: '``@object ' , newString.
+	replaceSends := rewriteRule replace: '``@object ' , oldString with: '``@object ' , newString.
+	"Synthesize a replace rule for annotations from the message rewrite - we can't parse annotations as an expression"
+	search := replaceSends searchTree.
+	replace := replaceSends replaceTree.
+	rewriteRule replaceTree: (StAnnotationNode selector: search selector
+				arguments: (search arguments collect: [:each | each copy]))
+		withTree: (StAnnotationNode selector: replace selector
+				arguments: (replace arguments collect: [:each | each copy])).
 	^rewriteRule!
 
 preconditions

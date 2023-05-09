@@ -28,7 +28,7 @@ isPatternNode
 	^true!
 
 isPatternVariable: aString
-	^aString includes: RBPatternScanner.VariableCharacter!
+	^(aString at: 1) == RBPatternScanner.VariableCharacter!
 
 isSelectorList
 	^isList!
@@ -55,11 +55,11 @@ matchSelectorAgainst: aNode inContext: aDictionary
 	1 to: (keywords := self keywords) size
 		do: 
 			[:i |
-			| keyword |
-			keyword := keywords at: i.
-			(aDictionary at: keyword
-				ifAbsentPut: [(self isPatternVariable: keyword) ifTrue: [otherKeywords at: i] ifFalse: [keyword]])
-					= (otherKeywords at: i) ifFalse: [^false]].
+			| keyword other |
+			other := otherKeywords at: i.
+			(aDictionary at: (keyword := keywords at: i)
+				ifAbsentPut: [(self isPatternVariable: keyword) ifTrue: [other] ifFalse: [keyword]]) = other
+				ifFalse: [^false]].
 	^true!
 
 setSelector: aSymbol arguments: anArray

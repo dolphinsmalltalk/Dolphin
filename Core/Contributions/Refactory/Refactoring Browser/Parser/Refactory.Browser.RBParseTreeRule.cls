@@ -40,6 +40,9 @@ performOn: aProgramNode
 searchString: aString
 	searchTree := RBPatternParser parseExpression: aString onError: nil!
 
+searchTree
+	^searchTree!
+
 sentMessages
 	^searchTree sentMessages! !
 !Refactory.Browser.RBParseTreeRule categoriesForMethods!
@@ -50,6 +53,7 @@ methodSearchString:!initialize/release!public! !
 owner:!initialize/release!public! !
 performOn:!matching!public! !
 searchString:!initialize/release!public! !
+searchTree!accessing!public! !
 sentMessages!accessing!public! !
 !
 

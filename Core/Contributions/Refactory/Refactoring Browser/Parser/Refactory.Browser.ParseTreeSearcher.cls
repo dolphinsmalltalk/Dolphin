@@ -27,7 +27,8 @@ addArgumentRules: ruleCollection
 
 addRule: aParseTreeRule
 	searches := searches asOrderedCollection.
-	self basicAddRule: aParseTreeRule!
+	self basicAddRule: aParseTreeRule.
+	^aParseTreeRule!
 
 addRules: ruleCollection
 	ruleCollection do: [:each | self basicAddRule: each]!
@@ -221,8 +222,7 @@ buildSelectorString: aSelector
 
 buildSelectorTree: aSelector
 	aSelector isEmpty ifTrue: [^nil].
-	^Refactory.Browser.RBPatternParser
-		parseExpression: '``@receiver ' , (self buildSelectorString: aSelector)
+	^RBPatternParser parseExpression: '``@receiver ' , (self buildSelectorString: aSelector)
 		onError: [:err :pos | ^nil]!
 
 buildTree: aString method: aBoolean
