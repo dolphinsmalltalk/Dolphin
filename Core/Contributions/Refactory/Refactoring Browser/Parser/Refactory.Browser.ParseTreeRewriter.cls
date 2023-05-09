@@ -30,7 +30,7 @@ lookForMoreMatchesInContext: oldContext
 				ifTrue: [oldContext at: key put: (value collect: [:each | self visitNode: each])]]!
 
 replace: searchString with: replaceString
-	self addRule: (RBStringReplaceRule searchFor: searchString replaceWith: replaceString)!
+	^self addRule: (RBStringReplaceRule searchFor: searchString replaceWith: replaceString)!
 
 replace: searchString with: replaceString when: aBlock
 	self addRule: (RBStringReplaceRule

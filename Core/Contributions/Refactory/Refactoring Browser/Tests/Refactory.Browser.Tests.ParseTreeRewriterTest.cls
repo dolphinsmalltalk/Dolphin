@@ -211,9 +211,11 @@ self match.'.
 
 testRewriteDynamicArray
 	| newSource rewriter |
-	rewriter := ParseTreeRewriter new replace: '
+	rewriter := ParseTreeRewriter new
+				replace: '
 		{`@first. `@second. `@third}'
-				with: 'Array with: `@first  with: `@second  with: `@third'.
+					with: 'Array with: `@first  with: `@second  with: `@third';
+				yourself.
 	newSource := (rewriter
 				executeTree: (self parseRewriteExpression: ' {(1 @ 255).	(Color lightMagenta). 3}'))
 					ifTrue: [rewriter tree formattedCode].

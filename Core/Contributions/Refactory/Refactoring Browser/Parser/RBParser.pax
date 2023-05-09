@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'RBParser'.
 package paxVersion: 2.1;
+	environmentName: #{Refactory.Browser};
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin RBParser Package
 Copyright John Brant and Don Roberts.
@@ -357,7 +358,7 @@ refersToVariable: aString
 	| tree searcher |
 	tree := self parseTreeNoError.
 	(tree isNil or: [(tree defines: aString) or: [tree body defines: aString]]) ifTrue: [^false].
-	searcher := Refactory.Browser.ParseTreeSearcher new.
+	searcher := ParseTreeSearcher new.
 	searcher
 		matches: aString do: [:node :answer | true];
 		matches: '[:`@vars | | `@temps | `@.Stmts]'
@@ -396,7 +397,7 @@ scanPatternVariable
 	currentCharacter == ${
 		ifTrue: 
 			[self step.
-			^Refactory.Browser.PatternBlockToken
+			^PatternBlockToken
 				start: tokenStart
 				comments: nil
 				value: '`{'].
@@ -425,13 +426,13 @@ references: aVariableName
 	^self name = aVariableName!
 
 replaceSourceFrom: aNode
-	self addReplacement: (Refactory.Browser.RBStringReplacement
+	self addReplacement: (RBStringReplacement
 				replaceFrom: aNode start
 				to: aNode stop
 				with: self name)!
 
 replaceSourceWith: aNode
-	self addReplacement: (Refactory.Browser.RBStringReplacement
+	self addReplacement: (RBStringReplacement
 				replaceFrom: self start
 				to: self stop
 				with: aNode formattedCode)! !
@@ -515,15 +516,15 @@ replaceSourceWith: aNode
 	(self value hasParentheses not and: [aNode arguments first precedence >= aNode precedence])
 		ifTrue: 
 			[self
-				addReplacement: (Refactory.Browser.RBStringReplacement
+				addReplacement: (RBStringReplacement
 							replaceFrom: self value start
 							to: self value start - 1
 							with: '(');
-				addReplacement: (Refactory.Browser.RBStringReplacement
+				addReplacement: (RBStringReplacement
 							replaceFrom: self value stop + 1
 							to: self value stop
 							with: ')')].
-	self addReplacement: (Refactory.Browser.RBStringReplacement
+	self addReplacement: (RBStringReplacement
 				replaceFrom: self variable start
 				to: self assignmentPosition + 1
 				with: aNode receiver name , ' ' , aNode selector)! !
@@ -729,7 +730,7 @@ replaceNode:withNode:!public!replacing! !
 !Kernel.StIdentifierToken methodsFor!
 
 isPatternVariable
-	^(value at: 1) == Refactory.Browser.RBPatternScanner.VariableCharacter! !
+	^(value at: 1) == RBPatternScanner.VariableCharacter! !
 !Kernel.StIdentifierToken categoriesForMethods!
 isPatternVariable!public!testing! !
 !
@@ -737,7 +738,7 @@ isPatternVariable!public!testing! !
 !Kernel.StKeywordToken methodsFor!
 
 isPatternVariable
-	^(value at: 1) == Refactory.Browser.RBPatternScanner.VariableCharacter! !
+	^(value at: 1) == RBPatternScanner.VariableCharacter! !
 !Kernel.StKeywordToken categoriesForMethods!
 isPatternVariable!public!testing! !
 !
@@ -745,13 +746,13 @@ isPatternVariable!public!testing! !
 !Kernel.StLiteralNode methodsFor!
 
 replaceSourceFrom: aNode
-	self addReplacement: (Refactory.Browser.RBStringReplacement
+	self addReplacement: (RBStringReplacement
 				replaceFrom: aNode start
 				to: aNode stop
 				with: self formattedCode)!
 
 replaceSourceWith: aNode
-	self addReplacement: (Refactory.Browser.RBStringReplacement
+	self addReplacement: (RBStringReplacement
 				replaceFrom: self start
 				to: self stop
 				with: aNode formattedCode)! !
@@ -811,11 +812,11 @@ replaceContainmentSourceWith: aNode
 				ifTrue: [self receiver]
 				ifFalse: [self arguments detect: [:each | (self mappingFor: each) = aNode]].
 	self
-		addReplacement: (Refactory.Browser.RBStringReplacement
+		addReplacement: (RBStringReplacement
 					replaceFrom: self start
 					to: originalNode start - 1
 					with: (needsParenthesis ifTrue: ['('] ifFalse: ['']));
-		addReplacement: (Refactory.Browser.RBStringReplacement
+		addReplacement: (RBStringReplacement
 					replaceFrom: originalNode stop + 1
 					to: self stop
 					with: (needsParenthesis ifTrue: [')'] ifFalse: ['']))!
@@ -848,11 +849,11 @@ replaceSourceWithMessageNode: aNode
 			[(self hasParentheses not and: [self parent precedence <= aNode precedence])
 				ifTrue: 
 					[self
-						addReplacement: (Refactory.Browser.RBStringReplacement
+						addReplacement: (RBStringReplacement
 									replaceFrom: self start
 									to: self start - 1
 									with: '(');
-						addReplacement: (Refactory.Browser.RBStringReplacement
+						addReplacement: (RBStringReplacement
 									replaceFrom: self stop + 1
 									to: self stop
 									with: ')')]].
@@ -861,7 +862,7 @@ replaceSourceWithMessageNode: aNode
 			[:old :new |
 			old value ~= new value
 				ifTrue: 
-					[self addReplacement: (Refactory.Browser.RBStringReplacement
+					[self addReplacement: (RBStringReplacement
 								replaceFrom: old start
 								to: old stop
 								with: ((isBinaryToKeyword and: [(self source at: old start - 1) isSeparator not])
@@ -900,14 +901,14 @@ changeSourceSelectors: oldSelectorParts arguments: oldArguments
 	oldSelectorParts with: selectorParts
 		do: 
 			[:old :new |
-			self addReplacement: (Refactory.Browser.RBStringReplacement
+			self addReplacement: (RBStringReplacement
 						replaceFrom: old start
 						to: old stop
 						with: new value)].
 	oldArguments with: arguments
 		do: 
 			[:old :new |
-			self addReplacement: (Refactory.Browser.RBStringReplacement
+			self addReplacement: (RBStringReplacement
 						replaceFrom: old start
 						to: old stop
 						with: new value)]]
@@ -1212,7 +1213,7 @@ replaceWith: aNode
 
 selfMessages
 	| searcher |
-	searcher := Refactory.Browser.ParseTreeSearcher new.
+	searcher := ParseTreeSearcher new.
 	searcher matches: 'self `@msg: ``@args'
 		do: 
 			[:aNode :answer |
@@ -1222,7 +1223,6 @@ selfMessages
 	^searcher executeTree: self initialAnswer: Set new!
 
 superMessages
-	<namespace: Refactory.Browser>
 	| searcher |
 	SuperSearch isNil
 		ifTrue: 
