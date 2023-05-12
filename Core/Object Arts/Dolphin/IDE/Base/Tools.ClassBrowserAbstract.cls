@@ -167,6 +167,7 @@ addToCommandRoute: aCommandPolicy
 		appendTarget: self;
 		appendTarget: methodBrowserPresenter;
 		appendTarget: classesPresenter.
+	self loadedPlugins do: [:each | each addToCommandRouteInactive: aCommandPolicy].
 	^super addToCommandRoute: aCommandPolicy!
 
 allCategoriesOfMethod: aCompiledMethod

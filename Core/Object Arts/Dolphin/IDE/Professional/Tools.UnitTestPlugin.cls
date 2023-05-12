@@ -37,6 +37,11 @@ When tests fail, a list of the defects is retained by the plugin. Using the drop
 !Tools.UnitTestPlugin categoriesForClass!Browser-Plugins! !
 !Tools.UnitTestPlugin methodsFor!
 
+addToCommandRouteInactive: aCommandPolicy
+	"Update the command routing path of the <CommandPolicy> argument with the receiver's contribution to the command path when it is not the active plugin. This is generally only required for plugins that contribute global commands associated with keyboard accelerators and/or on the menubar menus."
+
+	self addToCommandRoute: aCommandPolicy!
+
 allContextMenus
 	| allMenus |
 	allMenus := OrderedCollection new.
@@ -91,6 +96,7 @@ createSchematicWiring
 debugTest
 	"Debug the currently selected defect. If no defects are selected then select and ebug the first one"
 
+	<commandQuerySelector: #queryHasDefects:>
 	defectsPresenter hasSelection ifFalse: [defectsPresenter selectionByIndex: 1].
 	self debugTest: defectsPresenter selection!
 
@@ -227,26 +233,12 @@ installTestCommandsInClassMenu: aMenu withAccelerator: needsAccel
 	"Private - Installs the test commands required by the receiver into aMenu. If an accelerator is required (i.e. in the case of
 	non-context menus) then needsAccel should be true"
 
-	| hasTests runTestsCommandDescription toggleToTestClassCommandDescription |
-	hasTests := [:query | query isEnabled: self hasTests].
-	runTestsCommandDescription := ClosedCommandDescription
-				command: #runTests
-				description: 'R&un Tests'
-				queryBlock: hasTests
-				receiver: self.
+	| runTestsCommandDescription toggleToTestClassCommandDescription |
+	runTestsCommandDescription := CommandDescription command: #runTests description: 'R&un Tests'.
 	needsAccel ifTrue: [runTestsCommandDescription acceleratorKeyString: 'Ctrl+Alt+R'].
 	runTestsCommandDescription image: self class icon.
-	toggleToTestClassCommandDescription := ClosedCommandDescription
-				command: #toggleToTests
-				description: '&Go to <1d> '
-				queryBlock: 
-					[:query |
-					query
-						isEnabled: self hasTestClass;
-						text: (query commandDescription menuText
-									expandMacrosWithArguments: { self toggleToTestsClassDescription }
-									locale: Locale smalltalk)]
-				receiver: self.
+	toggleToTestClassCommandDescription := CommandDescription command: #toggleToTests
+				description: '&Go to <1d>'.
 	toggleToTestClassCommandDescription image: [self toggleToTestsClass ifNotNil: [:class | class icon]].
 	needsAccel ifTrue: [toggleToTestClassCommandDescription acceleratorKeyString: 'Ctrl+Alt+T'].
 	aMenu
@@ -256,24 +248,16 @@ installTestCommandsInClassMenu: aMenu withAccelerator: needsAccel
 	#{Smalltalk.Profiler} valueOrNil
 		ifNotNil: 
 			[:profiler |
-			aMenu addCommandDescription: ((ClosedCommandDescription
-						command: #profileTests
-						description: 'Profi&le Tests'
-						queryBlock: hasTests
-						receiver: self)
+			aMenu
+				addCommandDescription: ((CommandDescription command: #profileTests description: 'Profi&le Tests')
 						image: profiler icon;
 						yourself)]!
 
 installTestCommandsInMethodMenu: aMenu
 	"Private - Installs the method test commands required by the receiver into aMenu."
 
-	| runTestsCommandDescription hasIndividualTests |
-	hasIndividualTests := [:query | query isEnabled: self hasIndividualTests].
-	runTestsCommandDescription := ClosedCommandDescription
-				command: #runTests
-				description: 'R&un Tests'
-				queryBlock: hasIndividualTests
-				receiver: self.
+	| runTestsCommandDescription |
+	runTestsCommandDescription := ClosedCommandDescription command: #runTests description: 'R&un Tests'.
 	runTestsCommandDescription image: self class icon.
 	aMenu
 		addSeparator;
@@ -281,11 +265,8 @@ installTestCommandsInMethodMenu: aMenu
 	#{Smalltalk.Profiler} valueOrNil
 		ifNotNil: 
 			[:profiler |
-			aMenu addCommandDescription: ((ClosedCommandDescription
-						command: #profileTests
-						description: 'Profi&le Tests'
-						queryBlock: hasIndividualTests
-						receiver: self)
+			aMenu
+				addCommandDescription: ((CommandDescription command: #profileTests description: 'Profi&le Tests')
 						image: profiler icon;
 						yourself)]!
 
@@ -318,27 +299,25 @@ profileSuite: aTestSuite
 	self updateWindow!
 
 profileTests
+	<commandQuerySelector: #queryHasTests:>
 	| suite |
 	suite := self testSuite.
 	(#{Smalltalk.Profiler} isDefined and: [suite notNil])
 		ifTrue: [self profileSuite: suite]
 		ifFalse: [self displayReset]!
 
-queryCommand: aCommandQuery 
-	"Private - Enter details about a potential command for the receiver 
-	into the <CommandQuery> argument."
+queryHasDefects: aCommandQuery
+	aCommandQuery isEnabled: self hasDefects!
 
-	| selector |
-	selector := aCommandQuery commandSymbol.
-	#runTests == selector 
-		ifTrue: 
-			[aCommandQuery isEnabled: self hasTests.
-			^true].
-	#debugTest == selector 
-		ifTrue: 
-			[aCommandQuery isEnabled: self hasDefects.
-			^true].
-	^super queryCommand: aCommandQuery!
+queryHasTests: aCommandQuery
+	aCommandQuery isEnabled: self hasTests!
+
+queryToggleToTests: query
+	^query
+		isEnabled: self hasTestClass;
+		text: (query commandDescription menuText
+					expandMacrosWithArguments: { self toggleToTestsClassDescription }
+					locale: Locale smalltalk)!
 
 refreshIcon
 	self view arrangement: self!
@@ -349,6 +328,7 @@ runSuite: aTestSuite
 	self updateWindow!
 
 runTests
+	<commandQuerySelector: #queryHasTests:>
 	self testSuite ifNil: [self displayReset] ifNotNil: [:suite | self runSuite: suite]!
 
 startAutoSwitchProcess
@@ -406,6 +386,7 @@ testSuite
 toggleToTests
 	"Switch the associated browser between the class under test and the corresponding test class"
 
+	<commandQuerySelector: #queryToggleToTests:>
 	| toggleToClass |
 	toggleToClass := self toggleToTestsClass.
 	toggleToClass ifNil: [^Error beep].
@@ -438,13 +419,14 @@ updateWindow
 		ifFalse: [result hasFailures ifTrue: [self displayFail] ifFalse: [self displayPass]].
 	self updateDefects! !
 !Tools.UnitTestPlugin categoriesForMethods!
+addToCommandRouteInactive:!commands-routing!public! !
 allContextMenus!helpers!private! !
 allMenuBarMenus!helpers!private! !
 classUnderTest!Accessing!private! !
 completeRun:!operations!private! !
 createComponents!initializing!private! !
 createSchematicWiring!helpers!private! !
-debugTest!commands!public! !
+debugTest!commands-actions!public! !
 debugTest:!operations!private! !
 defaultHelpId!constants!public! !
 displayColor:!private!updating! !
@@ -471,11 +453,13 @@ onBrowserMethodSelected!event handling!private! !
 onViewOpened!event handling!private! !
 prepareToRun:!operations!private! !
 profileSuite:!operations!private! !
-profileTests!commands!public! !
-queryCommand:!commands!private! !
+profileTests!commands-actions!public! !
+queryHasDefects:!commands-queries!private! !
+queryHasTests:!commands-queries!private! !
+queryToggleToTests:!helpers!private! !
 refreshIcon!operations!private! !
 runSuite:!operations!private! !
-runTests!commands!public! !
+runTests!commands-actions!public! !
 startAutoSwitchProcess!helpers!private! !
 stopAutoSwitchProcess!helpers!private! !
 suiteForTestClasses!accessing!private! !
@@ -483,7 +467,7 @@ suiteForTestMethods:!accessing!private! !
 testClass!Accessing!private! !
 testClasses!accessing!private! !
 testSuite!accessing!public! !
-toggleToTests!commands!public! !
+toggleToTests!commands-actions!public! !
 toggleToTestsClass!helpers!private! !
 toggleToTestsClassDescription!helpers!private! !
 update:!helpers!private! !
