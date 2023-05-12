@@ -1,0 +1,55 @@
+﻿| package |
+package := Package name: 'Dolphin Professional Tools Tests'.
+package paxVersion: 2.1;
+	basicComment: ''.
+
+
+package setClassNames: #(
+	#{Refactory.Browser.Tests.RenameMethodReferencesTransformationTest}
+	#{Refactory.Browser.Tests.RewriteTestCase}
+	#{Tools.Tests.DisassemblerTest}
+).
+
+package setPrerequisites: #(
+	'..\..\..\..\Samples\MVP\Animal Game\Animals'
+	'..\..\Base\Development System Tests'
+	'..\..\..\Base\Dolphin'
+	'..\..\..\Base\Tests\Dolphin Base Tests'
+	'..\Dolphin Professional Tools'
+	'..\Dolphin Refactoring Browser'
+	'..\..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
+	'..\..\..\..\..\Contributions\Refactory\Refactoring Browser\Refactorings\RBRefactorings'
+	'..\..\..\..\..\Contributions\Refactory\Refactoring Browser\SmallLint\RBSmallLint'
+	'..\..\..\..\..\Contributions\Refactory\Refactoring Browser\Tests\RBTestMethods'
+	'..\..\..\..\..\Contributions\Refactory\Refactoring Browser\Tests\RBTests'
+	'..\..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
+).
+
+package!
+
+"Class Definitions"!
+
+XProgramming.SUnit.TestCase
+	subclass: #'Refactory.Browser.Tests.RewriteTestCase'
+	instanceVariableNames: 'env'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest
+	subclass: #'Tools.Tests.DisassemblerTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.Tests.RefactoringTest
+	subclass: #'Refactory.Browser.Tests.RenameMethodReferencesTransformationTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"End of package definition"!
+

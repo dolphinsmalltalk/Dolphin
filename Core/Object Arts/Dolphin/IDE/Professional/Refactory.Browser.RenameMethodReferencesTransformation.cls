@@ -54,7 +54,7 @@ preconditions
 					[(self shouldReplaceReferencesTo: oldSelector with: newSelector) or: [self refactoringAborted]])!
 
 shouldReplaceReferencesTo: oldSymbol with: newSymbol
-	^(self options at: #replaceReferences)
+	^(self lookupOption: #replaceReferences)
 		cull: self
 		cull: oldSymbol
 		cull: newSymbol! !
