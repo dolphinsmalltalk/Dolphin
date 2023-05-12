@@ -386,7 +386,13 @@ tearDown
 	super tearDown.
 	RefactoringManager instance release.
 	(RefactoringManager classPool associationAt: #Instance
-		ifAbsent: [RefactoringManager classPool associationAt: 'Instance']) value: manager! !
+		ifAbsent: [RefactoringManager classPool associationAt: 'Instance']) value: manager!
+
+verifyMethod: aSymbol of: aClass equals: aString
+	| parseTree modelClass |
+	modelClass := aClass classInModel: model.
+	parseTree := (modelClass methodFor: aSymbol) boundParseTree.
+	self assert: parseTree equals: (self parseMethod: aString in: modelClass)! !
 !Refactory.Browser.Tests.RefactoringTest categoriesForMethods!
 abstractVariableTestData!constants!private! !
 childrenToSiblingTestData!constants!private! !
@@ -403,5 +409,6 @@ shouldAbort:!helpers!private! !
 shouldFail:existingVariable:!helpers!private! !
 shouldFail:withMessage:!helpers!private! !
 tearDown!public!set up! !
+verifyMethod:of:equals:!helpers!private! !
 !
 

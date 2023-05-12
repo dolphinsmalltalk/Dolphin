@@ -7,10 +7,8 @@ package paxVersion: 2.1;
 
 package setClassNames: #(
 	#{OS.Tests.VersionResourceTest}
-	#{Refactory.Browser.Tests.RewriteTestCase}
 	#{Tools.Tests}
 	#{Tools.Tests.CreateSubclassDialogTest}
-	#{Tools.Tests.DisassemblerTest}
 	#{Tools.Tests.ImageListViewTest}
 	#{Tools.Tests.KeyedAspectTest}
 	#{Tools.Tests.MenuPainterTest}
@@ -35,13 +33,11 @@ package setMethodNames: #(
 	#(#{Kernel.Tests.ParserErrorTest} #testWarnMsgUnimplemented)
 	#(#{Kernel.Tests.ParserErrorTest} #testWarnUndefinedSelector)
 	#(#{Kernel.Tests.ParserErrorTest} #testWarnUnimplementedAbstractMethod)
-	#(#{Refactory.Browser.Tests.RefactoringTest} #verifyMethod:of:equals:)
 	#(#{UI.Scintilla.Tests.ScintillaViewTest} #testTokensFromTo)
 	#(#{UI.Tests.BorderLayoutTest} #testResourceBrowserPreview)
 ).
 
 package setPrerequisites: #(
-	'..\..\..\Samples\MVP\Animal Game\Animals'
 	'Development System'
 	'..\..\Base\Dolphin'
 	'..\..\Base\Tests\Dolphin Base Tests'
@@ -51,7 +47,6 @@ package setPrerequisites: #(
 	'..\..\MVP\Graphics\Dolphin GDI Graphics'
 	'..\..\MVP\Base\Dolphin MVP Base'
 	'..\..\MVP\Tests\Dolphin MVP Tests'
-	'..\Professional\Dolphin Professional Tools'
 	'..\..\MVP\Views\Scintilla\Dolphin Scintilla View'
 	'..\..\MVP\Views\Scintilla\Tests\Dolphin Scintilla View Tests'
 	'..\..\MVP\Type Converters\Dolphin Type Converters'
@@ -59,7 +54,6 @@ package setPrerequisites: #(
 	'..\..\Lagoon\Lagoon Image Stripper'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\SmallLint\RBSmallLint'
-	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Tests\RBTestMethods'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Tests\RBTests'
 	'..\..\System\Compiler\Tests\Smalltalk Compiler Tests'
 	'..\..\System\Compiler\Smalltalk Parser'
@@ -92,23 +86,9 @@ Kernel.ParseNodeVisitor
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-XProgramming.SUnit.TestCase
-	subclass: #'Refactory.Browser.Tests.RewriteTestCase'
-	instanceVariableNames: 'env'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 Core.Tests.DolphinTest
 	subclass: #'Tools.Tests.CreateSubclassDialogTest'
 	instanceVariableNames: 'subject'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Core.Tests.DolphinTest
-	subclass: #'Tools.Tests.DisassemblerTest'
-	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -326,17 +306,6 @@ testWarningUsesBooleanClass!public!unit tests! !
 testWarnMsgUnimplemented!public!unit tests! !
 testWarnUndefinedSelector!public!unit tests! !
 testWarnUnimplementedAbstractMethod!public!unit tests! !
-!
-
-!Refactory.Browser.Tests.RefactoringTest methodsFor!
-
-verifyMethod: aSymbol of: aClass equals: aString
-	| parseTree modelClass |
-	modelClass := aClass classInModel: model.
-	parseTree := (modelClass methodFor: aSymbol) boundParseTree.
-	self assert: parseTree equals: (self parseMethod: aString in: modelClass)! !
-!Refactory.Browser.Tests.RefactoringTest categoriesForMethods!
-verifyMethod:of:equals:!helpers!private! !
 !
 
 !UI.Scintilla.Tests.ScintillaViewTest methodsFor!

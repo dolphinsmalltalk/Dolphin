@@ -29,6 +29,7 @@ Package manager
 	install: 'Core\Object Arts\Dolphin\System\Compiler\Tests\Smalltalk Compiler Tests.pax';
 	install: 'Core\Object Arts\Dolphin\IDE\Base\Development System Tests.pax';
 	install: 'Core\Object Arts\Dolphin\IDE\Dolphin IDE Tests.pax';
+	install: 'Core\Object Arts\Dolphin\IDE\Professional\Tests\Dolphin Professional Tools Tests.pax';
 	install: 'Core\Object Arts\Dolphin\Lagoon\Lagoon Tests.pax';
 	install: 'Core\Contributions\Solutions Software\Tests\SSW EditableListView Tests.pax';
 	install: 'Core\Object Arts\Dolphin\Sockets\Dolphin Sockets Tests.pax';
