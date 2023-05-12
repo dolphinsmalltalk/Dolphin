@@ -189,56 +189,46 @@ performCommand: aCommand
 
 	^self view performCommand: aCommand!
 
-queryCommand: aCommandQuery 
-	"Enters details about a potential command for the receiver into the <CommandQuery>
-	arugment."
-
-	| cmd |
-	cmd := aCommandQuery commandSymbol.
-
-	"Handle Undo/Redo commands"
-	cmd == #undo 
+queryRedo: aCommandQuery
+	| description |
+	description := ''.
+	aCommandQuery beDisabled.
+	self hasCommandHistory
 		ifTrue: 
-			[| description |
-			description := ''.
-			aCommandQuery beDisabled.
-			self hasCommandHistory 
+			[commandHistory hasFuture
 				ifTrue: 
-					[commandHistory pastSize >= 0 
+					[| command |
+					command := self commandHistory next.
+					command canRedo
 						ifTrue: 
-							[| command |
-							command := self commandHistory current.
-							description := command description.
-							aCommandQuery beEnabled].
-					aCommandQuery text: (aCommandQuery commandDescription menuText expandMacrosWith: description)].
-			^true].
-	cmd == #redo 
+							[description := self commandHistory next description.
+							aCommandQuery beEnabled]].
+			aCommandQuery text: (aCommandQuery commandDescription menuText expandMacrosWith: description)].
+	^true!
+
+queryUndo: aCommandQuery
+	| description |
+	description := ''.
+	aCommandQuery beDisabled.
+	self hasCommandHistory
 		ifTrue: 
-			[| description |
-			description := ''.
-			aCommandQuery beDisabled.
-			self hasCommandHistory 
+			[commandHistory pastSize >= 0
 				ifTrue: 
-					[commandHistory hasFuture 
-						ifTrue: 
-							[| command |
-							command := self commandHistory next.
-							command canRedo 
-								ifTrue: 
-									[description := self commandHistory next description.
-									aCommandQuery beEnabled]].
-					aCommandQuery text: (aCommandQuery commandDescription menuText expandMacrosWith: description)].
-			^true].
-	^super queryCommand: aCommandQuery!
+					[| command |
+					command := self commandHistory current.
+					description := command description.
+					aCommandQuery beEnabled].
+			aCommandQuery text: (aCommandQuery commandDescription menuText expandMacrosWith: description)].
+	^true!
 
 redo
 	"Redo the last command that is forward in the command history list. During the redo operation
 	we place the receiver in a state where it will not accept any further command histories."
 
-	"Save the original history list"
-
+	<commandQuerySelector: #queryRedo:>
 	| history |
 	self hasCommandHistory ifFalse: [^self].
+	"Save the original history list"
 	history := commandHistory.
 	commandHistory := nil.
 	[(history goForward: 1) redo] ensure: 
@@ -265,6 +255,7 @@ undo
 	"Undo the current command in the command history list. During the undo operation
 	we place the receiver in a state where it will not accept any further command histories."
 
+	<commandQuerySelector: #queryUndo:>
 	| history command |
 	self hasCommandHistory ifFalse: [^self].
 	"Save the original history list"
@@ -312,12 +303,12 @@ allAdditionalKeyBindings!constants!private! !
 caption!accessing!public! !
 caption:!accessing!public! !
 clearCommandHistory!accessing!public! !
-close!commands!public! !
+close!commands-actions!public! !
 commandHistory!accessing!private! !
-commandPolicyClass!commands!constants!public! !
-commandPolicyWithSource:!commands!public! !
+commandPolicyClass!commands-routing!public! !
+commandPolicyWithSource:!commands-routing!public! !
 createView:!operations!private! !
-exit!commands!public! !
+exit!commands-actions!public! !
 hasCommandHistory!accessing!public! !
 hasCommandHistory:!accessing!public! !
 onAboutToDisplaySystemMenu:!event handling!public! !
@@ -332,12 +323,13 @@ onViewNcActivated:!event handling!public! !
 onViewNcDeactivated:!event handling!public! !
 onViewOpened!event handling!public! !
 onViewRestored:!event handling!public! !
-performCommand:!commands!public! !
-queryCommand:!commands!private! !
-redo!commands!public! !
+performCommand:!commands-routing!public! !
+queryRedo:!commands-queries!private! !
+queryUndo:!commands-queries!private! !
+redo!commands-actions!public! !
 setInitialFocus!operations!public! !
 shortCaption!accessing!public! !
-undo!commands!public! !
+undo!commands-actions!public! !
 updateCaption!public!updating! !
 updateIcon!private!updating! !
 view:!accessing!public! !
