@@ -111,7 +111,7 @@ browseInstanceVariables
 browseIt
 	"Browse the selected item in the pane with focus."
 
-	<commandQuerySelector: #queryClassCommand:>
+	<commandQuerySelector: #queryBrowseIt:>
 	self perform: self browseItCommand!
 
 browseItCommand
@@ -176,8 +176,7 @@ browseSystem
 	self developmentSystem browseSystem: self actualClass!
 
 browseVariablesMenu
-	<commandQuerySelector: #queryClassCommand:>
-	Sound warningBeep!
+	<commandQuerySelector: #queryClassCommand:>!
 
 buildAllVariablesMenu: aMenu
 	"Private - Build a dynamic pull-out menu which lists all of a class' existing 
@@ -196,7 +195,7 @@ buildAllVariablesMenu: aMenu
 			[self
 				populateVarMenu: aMenu
 				class: class
-				command: #browseReferencesToInstVar:inHierarchyOf:within:
+				command: #browseReferencesToInstVars:inHierarchyOf:within:
 				variables: instVars
 				format: '<1s>.<2s>'
 				abortable: false].
@@ -211,7 +210,7 @@ buildAllVariablesMenu: aMenu
 			[self
 				populateVarMenu: aMenu
 				class: class
-				command: #browseReferencesToClassVar:of:within:
+				command: #browseReferencesToClassVars:of:within:
 				variables: classVars
 				format: '<1s>.<2s>'
 				abortable: false]!
@@ -255,7 +254,7 @@ categorizeClass
 		ifTrue: [aClass categories: chosenCategories]!
 
 chooseVariables: aBoolean caption: aString
-	"Note that this is deliberately _not_ part of the 'Dolphin Refactoring Browse' package"
+	"Note that this is deliberately _not_ part of the 'Dolphin Refactoring Browser' package because it is required by #createVariableAccessors:"
 
 	| varNames class |
 	varNames := (aBoolean
@@ -291,7 +290,7 @@ classPackage
 clearSelection
 	"Private - Remove the selected object from the system"
 
-	<commandQuerySelector: #queryClassesCommand:>
+	<commandQuerySelector: #queryDeleteIt:>
 	self perform: self deleteItCommand!
 
 confirmMoveClass: aClass toPackage: aPackage
@@ -529,8 +528,8 @@ newView
 	selected class. If there are several possibilities allow the user to select
 	the one to edit"
 
-	self developmentSystem openViewComposerOnNewViewFor: self selection
-	!
+	<commandQuerySelector: #queryHasClassSupportingViews:>
+	self developmentSystem openViewComposerOnNewViewFor: self selection!
 
 onAboutToDisplayMenu: aMenu 
 	"The pop-up <Menu>, popup, is about to be displayed.
@@ -771,9 +770,10 @@ populateVarMenu: aMenu class: class command: cmdSelector variables: aCollection 
 			msg := MessageSend
 						receiver: self developmentSystem
 						selector: cmdSelector
-						arguments: {each value. class. self searchEnvironment}.
+						arguments: { { each value }. class. self searchEnvironment }.
 			(aMenu addCommand: msg
-				description: (aString expandMacrosWithArguments: {each key name. each value} locale: Locale smalltalk))
+				description: (aString expandMacrosWithArguments: { each key name. each value }
+						locale: Locale smalltalk))
 				isModalCommand: true;
 				isAbortable: aBoolean]!
 
@@ -805,10 +805,12 @@ queryBrowseHierarchy: aCommandQuery
 	aCommandQuery text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: { name }
 				locale: Locale smalltalk)!
 
-queryBrowseItCommand: aCommandQuery
-	self browseItCommand isNil
-		ifTrue: [aCommandQuery isEnabled: false]
-		ifFalse: [self queryClassCommand: aCommandQuery]!
+queryBrowseIt: aCommandQuery
+	self browseItCommand
+		ifNil: 
+			["Not handled at this level, but continue searching the chain"
+			aCommandQuery isEnabled: false]
+		ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
 
 queryBrowsePublishedAspects: aCommandQuery
 	| class |
@@ -836,6 +838,19 @@ queryClassVariablesCommand: aCommandQuery
 	class := self actualClass.
 	aCommandQuery isEnabled: (class notNil and: [class instanceClass definedBindings notEmpty])!
 
+queryDeleteIt: aCommandQuery
+	self deleteItCommand
+		ifNil: 
+			["Not handled at this level, but continue searching the chain"
+			aCommandQuery isEnabled: false]
+		ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
+
+queryHasClassSupportingViews: aCommandQuery
+	| class |
+	class := self selectionOrNil.
+	aCommandQuery isEnabled: (class notNil
+				and: [(class includesBehavior: Presenter) or: [class includesBehavior: View]])!
+
 queryInstanceVariablesCommand: aCommandQuery
 	| class |
 	class := self actualClass.
@@ -849,17 +864,14 @@ queryShowFullNames: aCommandQuery
 		isEnabled: true;
 		isChecked: self isShowingFullNames!
 
-queryViewsMenu: aCommandQuery
+queryViewsEditMenu: aCommandQuery
 	| class |
 	class := self selectionOrNil.
-	aCommandQuery isEnabled: (class notNil
-				and: [(class includesBehavior: Presenter) or: [class includesBehavior: View]])!
+	aCommandQuery isEnabled: (class notNil and: [class resourceIdentifiers notEmpty])!
 
-queryViewsSubMenu: aCommandQuery
-	| class |
-	class := self selectionOrNil.
-	aCommandQuery isEnabled: (class notNil and: [class resourceIdentifiers notEmpty]).
-	#viewsShowMenu == aCommandQuery commandSymbol ifTrue: [aCommandQuery isDefault: true]!
+queryViewsShowMenu: aCommandQuery
+	self queryViewsEditMenu: aCommandQuery.
+	aCommandQuery isDefault: true!
 
 removeClass
 	"Removes the selected class(es) from the system. If refactoring is available, then the 'Remove Class' refactoring is employed."
@@ -896,7 +908,7 @@ renameInstanceVariable
 	instVar isNil ifFalse: [self developmentSystem renameInstanceVariable: instVar in: class]!
 
 renameVariables
-	<commandQuerySelector: #queryVariablesCommand:>
+	<commandQuerySelector: #queryHasVariablesSelected:>
 	Sound warningBeep!
 
 searchEnvironment
@@ -938,72 +950,72 @@ toggleShowFullNames
 	self classNamesSelector: (fullNames ifTrue: [#fullName] ifFalse: [#unqualifiedName])!
 
 viewsEditMenu
-	<commandQuerySelector: #queryViewsSubMenu:>
+	<commandQuerySelector: #queryViewsEditMenu:>
 	!
 
 viewsMenu
-	<commandQuerySelector: #queryViewsMenu:>
+	<commandQuerySelector: #queryHasClassSupportingViews:>
 	!
 
 viewsShowMenu
-	<commandQuerySelector: #queryViewsSubMenu:>
+	<commandQuerySelector: #queryViewsShowMenu:>
 	! !
 !Tools.ClassSelector categoriesForMethods!
 actualClass!accessing!public! !
 actualClass:!accessing!public! !
 actualClass:ifAbsent:!accessing!public! !
 actualClasses!accessing!public! !
-browseChangedMethods!commands!public! !
-browseClass!commands!public! !
-browseClassPackage!commands!public! !
-browseClassReferences!commands!public! !
-browseClassVariables!commands!public! !
-browseHierarchy!commands!public! !
-browseInstanceVariables!commands!public! !
-browseIt!commands!public! !
+browseChangedMethods!commands-actions!public! !
+browseClass!commands-actions!public! !
+browseClassPackage!commands-actions!public! !
+browseClassReferences!commands-actions!public! !
+browseClassVariables!commands-actions!public! !
+browseHierarchy!commands-actions!public! !
+browseInstanceVariables!commands-actions!public! !
+browseIt!commands-actions!public! !
 browseItCommand!helpers!private! !
-browseMenu!commands!public! !
-browsePackages!commands!public! !
-browsePublishedAspects!commands!public! !
-browsePublishedEvents!commands!public! !
-browseReferences!commands!public! !
+browseMenu!commands-menus!private! !
+browsePackages!commands-actions!public! !
+browsePublishedAspects!commands-actions!public! !
+browsePublishedEvents!commands-actions!public! !
+browseReferences!commands-actions!public! !
 browserEnvironment!public! !
-browseSystem!commands!public! !
-browseVariablesMenu!commands!public! !
+browseSystem!commands-actions!public! !
+browseVariablesMenu!commands-menus!private! !
 buildAllVariablesMenu:!menus!private! !
 buildViewsMenu:command:!menus!private! !
 canRefactor!public!testing! !
-categorizeClass!commands!public! !
-chooseVariables:caption:!commands!private!refactoring! !
+categorizeClass!commands-actions!public! !
+chooseVariables:caption:!helpers!private! !
 classHierarchyPresenter!accessing!private! !
 classNamesSelector:!accessing!private! !
-classPackage!commands!public! !
-clearSelection!commands!private! !
+classPackage!commands-actions!public! !
+clearSelection!commands-actions!private! !
 confirmMoveClass:toPackage:!operations!private! !
-copyClass!commands!private! !
-createInstanceVariableAccessors!commands!public!refactoring! !
+copyClass!commands-actions!private! !
+createInstanceVariableAccessors!commands-actions!public!refactoring! !
 createSchematicWiring!initializing!public! !
-createVariableAccessors:!commands!public!refactoring! !
+createVariableAccessors:!commands-actions!public!refactoring! !
 deleteItCommand!helpers!private! !
-developmentSystem!commands!private! !
+developmentSystem!commands-actions!private! !
 dropClass:onto:changes:!operations!private! !
 dropMethod:onto:isMove:changes:!helpers!private! !
-editView:!commands!public! !
-fileInClass!commands!public! !
-fileOutClass!commands!public! !
-findClass!commands!public! !
+editView:!commands-actions!public! !
+fileInClass!commands-actions!public! !
+fileOutClass!commands-actions!public! !
+findClass!commands-actions!public! !
 flags!accessing!private! !
 flags:!accessing!private! !
 initialize!initializing!private! !
-initiateRename!commands!private!refactoring! !
-inspectIt!commands!public! !
+initiateRename!helpers!private! !
+inspectIt!commands-actions!public! !
 isInstanceMode!modes!public! !
 isInstanceMode:!modes!public! !
 isShowingFullNames!modes!public! !
 isShowingFullNames:!modes!public! !
 maximumVariableMenuEntries!menus!private! !
 model:!accessing!public! !
-newView!commands!public! !
+newView!commands-actions!public! !
 onAboutToDisplayMenu:!event handling!menus!public! !
 onAboutToRenameClass:!event handling!private! !
 onClass:renameTo:accept:!event handling!public! !
@@ -1018,34 +1030,36 @@ packages:!accessing!public! !
 performDropChanges:target:!helpers!private! !
 permitSelectionChange!helpers!private! !
 populateVarMenu:class:command:variables:format:abortable:!menus!private! !
-queryBrowseClassPackage:!command queries!private! !
-queryBrowseHierarchy:!command queries!private! !
-queryBrowseItCommand:!command queries!private! !
-queryBrowsePublishedAspects:!command queries!private! !
-queryBrowsePublishedEvents:!command queries!private! !
-queryChangeClassNamespace:!command queries!private! !
-queryClassCommand:!command queries!private! !
-queryClassesCommand:!command queries!private! !
-queryClassVariablesCommand:!command queries!private! !
-queryInstanceVariablesCommand:!command queries!private! !
-queryRenameClass:!command queries!private! !
-queryShowFullNames:!command queries!private! !
-queryViewsMenu:!command queries!private! !
-queryViewsSubMenu:!command queries!private! !
-removeClass!commands!public! !
-renameClass!commands!private!refactoring! !
-renameClassVariable!commands!private!refactoring! !
-renameInstanceVariable!commands!private!refactoring! !
-renameVariables!commands!private! !
-searchEnvironment!commands!private! !
+queryBrowseClassPackage:!commands-queries!private! !
+queryBrowseHierarchy:!commands-queries!private! !
+queryBrowseIt:!commands-queries!private! !
+queryBrowsePublishedAspects:!commands-queries!private! !
+queryBrowsePublishedEvents:!commands-queries!private! !
+queryChangeClassNamespace:!commands-queries!private! !
+queryClassCommand:!commands-queries!private! !
+queryClassesCommand:!commands-queries!private! !
+queryClassVariablesCommand:!commands-queries!private! !
+queryDeleteIt:!commands-queries!private! !
+queryHasClassSupportingViews:!commands-queries!private! !
+queryInstanceVariablesCommand:!commands-queries!private! !
+queryRenameClass:!commands-queries!private! !
+queryShowFullNames:!commands-queries!private! !
+queryViewsEditMenu:!commands-queries!private! !
+queryViewsShowMenu:!commands-queries!private! !
+removeClass!commands-actions!public! !
+renameClass!commands-actions!private!refactoring! !
+renameClassVariable!commands-actions!private!refactoring! !
+renameInstanceVariable!commands-actions!private!refactoring! !
+renameVariables!commands-actions!private! !
+searchEnvironment!commands-actions!private! !
 searchEnvironment:!public! !
 selectableItems!accessing!private! !
 selectionEnvironment!accessing!private! !
 setInitialFocus!operations!public! !
-showPresenter:!commands!public! !
-toggleShowFullNames!commands!private!refactoring! !
-viewsEditMenu!commands!public! !
-viewsMenu!commands!public! !
-viewsShowMenu!commands!public! !
+showPresenter:!commands-actions!public! !
+toggleShowFullNames!commands-actions!private!refactoring! !
+viewsEditMenu!commands-actions!public! !
+viewsMenu!commands-actions!public! !
+viewsShowMenu!commands-actions!public! !
 !
 

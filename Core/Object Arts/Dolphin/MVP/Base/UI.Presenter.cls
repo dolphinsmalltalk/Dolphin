@@ -693,6 +693,13 @@ queryCommandHandlers: aCommandQuery
 			whileFalse: [class := class superclass].
 	^false!
 
+queryContextCommand: aCommandQuery as: aSymbol
+	| originalCommand |
+	originalCommand := aCommandQuery commandDescription.
+	aCommandQuery commandDescription: (CommandDescription command: aSymbol).
+	^[self queryCommandHandlers: aCommandQuery]
+		ensure: [aCommandQuery commandDescription: originalCommand]!
+
 remove: aPresenter
 	"Removes aPresenter from the receiver's collection of sub-presenters.
 	Answers aPresenter"
@@ -911,6 +918,7 @@ preTranslateKeyboardInput:!dispatching!public! !
 preTranslateMouseInput:!dispatching!public! !
 queryCommand:!commands!private! !
 queryCommandHandlers:!commands!private! !
+queryContextCommand:as:!public! !
 remove:!public!subpresenters! !
 requestDragImages:!drag & drop!public! !
 requestDragObjects:!drag & drop!public! !
@@ -964,18 +972,6 @@ acceleratorKeyBindings: aDictionary
 	<Symbol>s."
 
 	self setAdditionalAccelerators: (aDictionary associations collect: [:each | {each value. each key}])!
-
-addCommandQueryHandler: aSymbol
-	"Register an additional CommandQuery handler to be invoked by the #queryCommand: processing
-	of instances of the receiver. This allows for additional commands to be added without
-	needing to modify the '#queryCommand: method. The handler is passed an instance of
-	<CommandQuery>, and should answer true if it handles the command, false if not. Handled
-	commands should be enabled/disabled in the normal way."
-
-	#deprecated.	"<commandQuerySelector: #queryBlah:> annotations should be added to the command methods and it will be added to the query selector map automatically on package load"
-	commandQueryHandlers := commandQueryHandlers
-				ifNil: [{aSymbol}]
-				ifNotNil: [commandQueryHandlers copyWith: aSymbol]!
 
 additionalAccelerators
 	"Answer a collection of additional accelerator definitions for commands not on the menu bar of the receiver's view(s). Each element of the collection should be a two element <Array>, the first element of which is the command symbol and the second the accelerator key string."
@@ -1160,14 +1156,6 @@ on: aModel
 
 	^(super new) on: aModel; yourself!
 
-removeCommandQueryHandler: aSymbol
-	"Unregister an additional CommandQuery handler to reverse out a previous
-	addCommandQueryHandler: call. This should be called by IDE extension packages that are
-	uninstalling command handlers."
-
-	#deprecated.	"see #addCommandQueryHandler:"
-	commandQueryHandlers := commandQueryHandlers copyWithout: aSymbol!
-
 resetDefaultAdditionalAccelerators
 	acceleratorKeyAnnotations := nil!
 
@@ -1240,7 +1228,6 @@ updateAdditionalAccelerators
 acceleratorKeyAnnotations!constants!private! !
 acceleratorKeyBindings!constants!public! !
 acceleratorKeyBindings:!constants!public! !
-addCommandQueryHandler:!accessing!public! !
 additionalAccelerators!accessing!public! !
 additionalKeyBindings!accessing!private! !
 annotatedMethodRemoved:!private! !
@@ -1266,7 +1253,6 @@ icon!constants!public! !
 loadViewResource:inContext:!operations!private! !
 new!instance creation!public! !
 on:!instance creation!public! !
-removeCommandQueryHandler:!accessing!public! !
 resetDefaultAdditionalAccelerators!public! !
 resource_Container_view!public!resources-views! !
 resource_Default_view!public!resources-views! !

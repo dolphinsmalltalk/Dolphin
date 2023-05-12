@@ -46,22 +46,28 @@ package setMethodNames: #(
 	#(#{Core.Process} #priorityName)
 	#(#{Kernel.ProcessorScheduler} #nameOfPriority:)
 	#(#{Smalltalk.StyledContainer class} #publishedAspectsOfInstances)
+	#(#{Tools.ClassBrowserAbstract} #toggleLocalHierarchy)
+	#(#{Tools.Debugger} #queryToggleDisassembly:)
+	#(#{Tools.Debugger} #toggleDisassembly)
 	#(#{Tools.PackageSelector} #browseDeployed)
 	#(#{Tools.PackageSelector} #browsePackageSources)
 	#(#{Tools.PackageSelector} #browseSources)
 	#(#{Tools.SmalltalkSystem} #openIdeaSpace)
 	#(#{Tools.SmalltalkSystem} #updateHelpMenus)
 	#(#{Tools.SmalltalkToolShell} #addToNewIdeaSpace)
-	#(#{Tools.SmalltalkToolShell} #browseMethodsInEnvironments:)
 	#(#{Tools.SmalltalkToolShell} #browseSystem)
 	#(#{Tools.SmalltalkToolShell} #destroy)
 	#(#{Tools.SmalltalkToolShell} #dragToolToIdeaSpace)
 	#(#{Tools.SmalltalkToolShell} #exit)
+	#(#{Tools.SmalltalkToolShell} #queryMoveToIdeaSpace:)
 	#(#{Tools.SmalltalkToolShell class} #addToNewIdeaSpace:)
 	#(#{Tools.SmalltalkToolShell class} #dragToolToIdeaSpace:)
 	#(#{Tools.SmalltalkWorkspaceDocument} #addToNewIdeaSpace)
 	#(#{Tools.SmalltalkWorkspaceDocument} #browseSources)
+	#(#{Tools.SmalltalkWorkspaceDocument} #destroy)
 	#(#{Tools.SmalltalkWorkspaceDocument} #dragToolToIdeaSpace)
+	#(#{Tools.SmalltalkWorkspaceDocument} #exit)
+	#(#{Tools.SmalltalkWorkspaceDocument} #queryMoveToIdeaSpace:)
 	#(#{UI.LinkButton class} #publishedAspectsOfInstances)
 	#(#{UI.SlideyInneyOuteyThing class} #example1)
 	#(#{UI.SlideyInneyOuteyThing class} #publishedAspectsOfInstances)
@@ -312,6 +318,54 @@ publishedAspectsOfInstances
 publishedAspectsOfInstances!constants!public! !
 !
 
+!Tools.ClassBrowserAbstract methodsFor!
+
+toggleLocalHierarchy
+	"Toggle between the entire hierarchy and showing only the current class and its subclasses."
+
+	<commandQuerySelector: #queryToggleLocalHierarchy:>
+	| instClass actualClass |
+	self promptToSaveChanges ifFalse: [^self].
+
+	"Use the selected class rather than the actual class, so always follows instance hierarchy"
+	instClass := self selectedClass.
+	actualClass := self actualClass.
+	self isLocalHierarchyMode: self isLocalHierarchyMode not.
+	self isLocalHierarchyMode
+		ifTrue: 
+			["Toggled into local hierarchy mode"
+			self displayLocalHierarchyOf: instClass.
+			self actualClass: actualClass]
+		ifFalse: 
+			["Toggled out of local hierarchy mode..."
+			classesPresenter model: self model classHierarchy.
+			actualClass notNil ifTrue: [self actualClass: actualClass]].
+	self validateUserInterface! !
+!Tools.ClassBrowserAbstract categoriesForMethods!
+toggleLocalHierarchy!commands-actions!public! !
+!
+
+!Tools.Debugger methodsFor!
+
+queryToggleDisassembly: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: self isDisassembled!
+
+toggleDisassembly
+	"Private - Switch between source/disassembly modes."
+
+	<commandQuerySelector: #queryToggleDisassembly:>
+	self beDisassembled: self isDisassembled not.
+	sourcePresenter
+		isReadOnly: self isDisassembled;
+		isAutoParseEnabled: (self isDisassembled not and: [sourcePresenter class isAutoParseEnabled]).
+	self displayFrame! !
+!Tools.Debugger categoriesForMethods!
+queryToggleDisassembly:!commands-queries!private! !
+toggleDisassembly!commands-actions!private! !
+!
+
 !Tools.PackageSelector methodsFor!
 
 browseDeployed
@@ -388,12 +442,8 @@ updateHelpMenus!private!utilities! !
 !Tools.SmalltalkToolShell methodsFor!
 
 addToNewIdeaSpace
+	<commandQuerySelector: #queryMoveToIdeaSpace:>
 	^self class addToNewIdeaSpace: self!
-
-browseMethodsInEnvironments: aCollectionOfBrowserEnvironment
-	^(self developmentSystem browseMethodsInEnvironments: aCollectionOfBrowserEnvironment)
-		model: self model;
-		yourself!
 
 browseSystem
 	"Open a new system browser on Object."
@@ -407,20 +457,24 @@ destroy
 	^super destroy!
 
 dragToolToIdeaSpace
+	<commandQuerySelector: #queryMoveToIdeaSpace:>
 	^self class dragToolToIdeaSpace: self!
 
 exit
 	"Attempt to close the receiver's view. If this is an IdeaSpace card then we ask the IdeaSpace to close it."
 
 	self isIdeaSpaceCard ifTrue: [^self ideaSpace closeCard: self].
-	^super exit! !
+	^super exit!
+
+queryMoveToIdeaSpace: aCommandQuery
+	aCommandQuery isEnabled: (self isIdeaSpaceCard not and: [self class canUseIdeaSpace])! !
 !Tools.SmalltalkToolShell categoriesForMethods!
 addToNewIdeaSpace!public! !
-browseMethodsInEnvironments:!browsing!public! !
-browseSystem!commands!public! !
-destroy!commands!public! !
+browseSystem!commands-actions!public! !
+destroy!commands-actions!public! !
 dragToolToIdeaSpace!public! !
-exit!commands!public! !
+exit!commands-actions!public! !
+queryMoveToIdeaSpace:!commands-queries!private! !
 !
 
 !Tools.SmalltalkToolShell class methodsFor!
@@ -446,6 +500,7 @@ dragToolToIdeaSpace:!public! !
 !Tools.SmalltalkWorkspaceDocument methodsFor!
 
 addToNewIdeaSpace
+	<commandQuerySelector: #queryMoveToIdeaSpace:>
 	^IdeaSpaceShell addToNewIdeaSpace: self!
 
 browseSources
@@ -453,12 +508,31 @@ browseSources
 	
 	self model browseSources!
 
+destroy
+	"Attempt to forcibly close the receiver's view. If this is an IdeaSpace card then we ask the IdeaSpace to destroy it."
+
+	self isIdeaSpaceCard ifTrue: [^self ideaSpace destroyCard: self].
+	^super destroy!
+
 dragToolToIdeaSpace
-	^IdeaSpaceShell dragToolToIdeaSpace: self! !
+	<commandQuerySelector: #queryMoveToIdeaSpace:>
+	^IdeaSpaceShell dragToolToIdeaSpace: self!
+
+exit
+	"Attempt to close the receiver's view. If this is an IdeaSpace card then we ask the IdeaSpace to close it."
+
+	self isIdeaSpaceCard ifTrue: [^self ideaSpace closeCard: self].
+	^super exit!
+
+queryMoveToIdeaSpace: aCommandQuery
+	aCommandQuery isEnabled: self isIdeaSpaceCard not! !
 !Tools.SmalltalkWorkspaceDocument categoriesForMethods!
 addToNewIdeaSpace!public! !
-browseSources!commands!public! !
+browseSources!commands-actions!public! !
+destroy!commands-actions!public! !
 dragToolToIdeaSpace!public! !
+exit!commands-actions!public! !
+queryMoveToIdeaSpace:!commands-queries!private! !
 !
 
 !UI.LinkButton class methodsFor!

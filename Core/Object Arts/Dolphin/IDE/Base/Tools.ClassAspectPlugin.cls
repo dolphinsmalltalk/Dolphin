@@ -173,7 +173,7 @@ systemUpdateEvent
 textPresenterClass
 	^SmalltalkSystem current workspaceClass! !
 !Tools.ClassAspectPlugin categoriesForMethods!
-accept!commands!public! !
+accept!commands-actions!public! !
 applyOptions!options!private! !
 aspect!constants!private! !
 backgroundUpdate!private!updating! !
@@ -193,7 +193,7 @@ onClassUpdated:!event handling!private! !
 onShownInBrowser!event handling!private! !
 promptToOverwrite!helpers!private! !
 promptToSaveClassChanges:!helpers!public! !
-queryClassCommand:!command queries!private! !
+queryClassCommand:!commands-queries!private! !
 refreshIcon!private!updating! !
 systemUpdateEvent!constants!private! !
 textPresenterClass!initializing!private! !

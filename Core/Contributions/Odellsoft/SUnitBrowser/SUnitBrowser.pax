@@ -197,9 +197,9 @@ queryBrowseTests: aCommandQuery
 testBrowserClass
 	^SmalltalkSystem current testBrowserClass! !
 !ClassSelector categoriesForMethods!
-browseTests!commands!public! !
+browseTests!commands-actions!public! !
 buildTestSuite!helpers!public! !
-queryBrowseTests:!command queries!private! !
+queryBrowseTests:!commands-queries!private! !
 testBrowserClass!constants!private! !
 !
 

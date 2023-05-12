@@ -60,15 +60,8 @@ Class Variables:
 !Tools.Debugger categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools! !
 !Tools.Debugger methodsFor!
 
-accept
-	"Private - Saves the current method source, restarting the method frame if the system
-	options so indicate."
-
-	self accept: self class restartOnMethodSave methodSource: self source!
-
 accept: aBoolean methodSource: aString
-	"Private - Saves the current method source, optionally restarting the frame depending on the
-	value of the <Boolean> argument.."
+	"Private - Saves the <String> 2nd argument as the source for the current method, optionally restarting the frame depending on the value of the <Boolean> argument.."
 
 	| method originalSelection hadErrors devsys |
 	originalSelection := sourcePresenter view selectionRange.
@@ -103,10 +96,23 @@ accept: aBoolean methodSource: aString
 	sourcePresenter view selectionRange: originalSelection.
 	aBoolean ifTrue: [self restartMethod] ifFalse: [sourcePresenter isModified: false]!
 
+acceptItCommand
+	"Private - Answer the <Symbol> of the contextual command to save changes to something, depending on the subview with focus and/or selection."
+
+	inspectorPresenter hasFocus ifFalse: [^#acceptMethod].
+	^nil!
+
+acceptMethod
+	"Private - Saves the current method source, restarting the method frame if the system options so indicate."
+
+	<commandQuerySelector: #querySaveMethod:>
+	self accept: self class restartOnMethodSave methodSource: self source!
+
 acceptNoRestart
 	"Private - Saves the current method source without restarting the frame (i.e. the debugged
 	process becomes out of sync. with the current method)."
 
+	<commandQuerySelector: #querySaveMethod:>
 	self accept: false methodSource: self source!
 
 addToCommandRoute: aCommandPolicy
@@ -121,6 +127,7 @@ allFrames
 	"Private - Include all stack frames in the call stack. There cannot possibly be any more
 	than the size of the process."
 
+	<commandQuerySelector: #queryShowMoreFrames:>
 	self depth: process size!
 
 animatePause
@@ -201,12 +208,10 @@ breakWhen: discriminator
 
 	breakWhen addLast: discriminator!
 
-browseDefinitions
-	"Private - Open a new method browser on the definitions of the of the currently selected
-	stack frame's selector."
+browseDefinitionsCommand
+	"Private - Open a new method browser on the definitions of the of the currently selected stack frame's selector."
 
-	self browseDefinitionsMatching: (MethodSearch newSelector: self selectedMethod selector)
-		in: self searchEnvironment!
+	^#browseMessageDefinitions!
 
 browseDefinitionsMatching: aMethodSearch in: aBrowserEnvironment
 	| definitions |
@@ -241,6 +246,14 @@ browseIt
 
 	variablesPresenter hasFocus ifTrue: [self browseVariableClass] ifFalse: [self browseHierarchy]!
 
+browseMessageDefinitions
+	"Private - Open a new method browser on the definitions of the of the currently selected
+	stack frame's selector."
+
+	<commandQuerySelector: #queryHasBrowsableMethod:>
+	self browseDefinitionsMatching: (MethodSearch newSelector: self selectedMethod selector)
+		in: self searchEnvironment!
+
 browseMessages
 	"Private - Browse the definitions of one of the messages sent within the method of the
 	currently selected stack frame. Prompt for which message to actually browse."
@@ -248,9 +261,9 @@ browseMessages
 	self model browseMessagesSentBy: self selectedMethod in: self searchEnvironment!
 
 browseMethodInheritanceChain
-	"Private - Open a method browser displaying the definitions of the currently selected stack
-	frame's method's selector in its superclass chain."
+	"Private - Open a method browser displaying the definitions of the currently selected stack frame's method's selector in its superclass chain."
 
+	<commandQuerySelector: #queryBrowseMethodInheritanceChain:>
 	self model browseMethodHierarchyFrom: self selectedMethod!
 
 browseReferences
@@ -291,6 +304,7 @@ browseSystem
 		ifFalse: [self model browseSystemOnMethod: self selectedMethod]!
 
 browseVariableClass
+	<commandQuerySelector: #queryHasVariableSelected:>
 	localAccessor value browse!
 
 buildParseTree
@@ -440,6 +454,10 @@ debugState: aString
 defaultHelpId
 	^10881!
 
+definitionsMenu
+	<commandQuerySelector: #queryMessagesMenu:>
+	!
+
 depth
 	"Private - Answer the requested stack depth to be displayed by the receiver (the actual
 	stack depth may be less if there are insufficient frames)."
@@ -471,8 +489,9 @@ displayFrame
 displayLocal: anAspectAccessor
 	"Private - Inspect the value of the selected local/instance variable."
 
+	
 	localAccessor removeEventsTriggeredFor: self.
-	localAccessor := anAspectAccessor.
+	localAccessor := anAspectAccessor asValue.
 	inspectorPresenter model: localAccessor.
 	localAccessor
 		when: #valueChanged
@@ -571,14 +590,22 @@ generateStubFor: aMessage inClass: aClass
 		notNil!
 
 hasEditableMethodSelected
-	^(self isRunning or: [self isAnimating]) not 
-		and: [self isDisassembled not and: [self hasMethodSelected]]!
+	^self isPaused and: [self isDisassembled not and: [self hasMethodSelected]]!
 
 hasEditableMethodsSelected
 	^self hasEditableMethodSelected!
 
+hasLiveFrame
+	| frame |
+	frame := self frame.
+	^(frame isNil or: [frame isDead]) not!
+
 hasMethodSelected
 	^self selectedMethod notNil and: [self selectedMethod isExpression not]!
+
+implementDNUMenu
+	<commandQuerySelector: #queryImplementMenu:>
+	!
 
 initialize
 	"Private - Initialize the receiver"
@@ -588,10 +615,17 @@ initialize
 	flags := 0.
 	breakWhen := OrderedCollection new!
 
-inspectIt
-	"Private - Open an inspector on the currently selected local variable (or instance variable)."
+inspectFrame
+	"Private - Open an inspector on the currently selected frame."
 
-	localAccessor value inspect!
+	<commandQuerySelector: #queryHasFrameSelected:>
+	self frame inspect!
+
+inspectItCommand
+	"Answer the <Symbol> of the contextual command to inspect something, depending on the subview with focus and/or selection."
+
+	stackPresenter hasFocus ifTrue: [^#inspectFrame].
+	^#inspectVariable!
 
 inspectReferences
 	"Private - Open a new Inspector on all the objects which references the currently selected local variable or instance variable."
@@ -603,6 +637,12 @@ inspectReferences
 			[MessageBox notify: ('There are no additional references to:<n><t><1p>'
 						expandMacrosWith: variablesPresenter selection first)]
 		ifFalse: [refs inspect]!
+
+inspectVariable
+	"Private - Open an inspector on the currently selected local variable (or instance variable)."
+
+	<commandQuerySelector: #queryHasVariableSelected:>
+	localAccessor value inspect!
 
 isAnimating
 	"Private - Answer whether the receiver is in 'Animate' mode (i.e. repeatedly single-stepping
@@ -633,11 +673,19 @@ isMain: aBoolean
 
 	flags := flags mask: MainMask set: aBoolean!
 
+isPaused
+	^flags noMask: ##(RunMask | AnimateMask)!
+
 isResumable
 	"Private - Answer whether the process the receiver is debugging is resumable."
 
 	^flags anyMask: ResumableMask
 !
+
+isRunnable
+	"Runnable if not currently running/animating (i.e. paused), but is resumable."
+
+	^(flags bitAnd: ##(RunMask | AnimateMask | ResumableMask)) == ResumableMask!
 
 isRunning
 	"Private - Answer whether the process the receiver is debugging is currently running."
@@ -691,6 +739,7 @@ markMethodAsUnbound: oldMethod
 moreFrames
 	"Private - Increase the number of stack frames displayed in the call stack."
 
+	<commandQuerySelector: #queryShowMoreFrames:>
 	self depth: depth + StackDepthIncrement!
 
 nameForArgument: anObject 
@@ -711,6 +760,7 @@ newLocalsTreeWithRoots: anOrderedCollection
 nilVariable
 	"Private - Nil the currently selected variable or stack slot."
 
+	<commandQuerySelector: #queryNilVariable:>
 	variablesPresenter model collapse: localAccessor.
 	localAccessor value: nil!
 
@@ -912,7 +962,8 @@ onTempSelected
 			self displayLocal: newTemp.
 			inspectorPresenter view enable]
 		ifNil: 
-			[inspectorPresenter view
+			[self displayLocal: nil.
+			inspectorPresenter view
 				clearAll;
 				disable]!
 
@@ -1030,118 +1081,92 @@ promptToSaveChanges
 
 	^self onPromptToSaveChanges: (SelectionChangingEvent forSource: self)!
 
-queryCommand: aCommandQuery
-	"Private - Enter details about a potential command for the receiver into the 
-	<CommandQuery>."
+queryBrowseMethodInheritanceChain: aCommandQuery
+	aCommandQuery
+		isEnabled: (self selectedMethod ifNil: [false] ifNotNil: [:method | method isOverride])!
 
-	| selector running runnable animating |
-	selector := aCommandQuery commandSymbol.
+queryHasBrowsableMethod: aCommandQuery
+	aCommandQuery isEnabled: (self isPaused and: [self hasMethodSelected])!
+
+queryHasEditableMethodSelected: aCommandQuery
+	aCommandQuery isEnabled: self hasEditableMethodSelected!
+
+queryHasFrameSelected: aCommandQuery
+	aCommandQuery isEnabled: self frame notNil!
+
+queryHasVariableSelected: aCommandQuery
+	aCommandQuery isEnabled: variablesPresenter hasSelection!
+
+queryImplementMenu: aCommandQuery
+	"Note that the implement menu is not just for DNUs any more, but any message which is not directly implemented by its receiver."
+
+	aCommandQuery
+		isEnabled: (self isPaused and: [self class enableDynamicMenus and: [self canImplementMessage]])!
+
+queryMessagesMenu: aCommandQuery
+	aCommandQuery isEnabled: (self class enableDynamicMenus and: [self selectedMethod notNil])!
+
+queryNilVariable: aCommandQuery
+	aCommandQuery isEnabled: (variablesPresenter hasSelection and: [localAccessor canSet])!
+
+queryRestartFrame: aCommandQuery
+	aCommandQuery
+		isEnabled: (self isPaused and: 
+					[| frame |
+					frame := self frame.
+					frame notNil and: [frame isRestartable]])!
+
+queryReturnFromMessage: aCommandQuery
+	aCommandQuery
+		isEnabled: (self isPaused and: 
+					[| frame |
+					frame := self frame.
+					frame notNil and: [frame canReturn]])!
+
+queryRun: aCommandQuery
+	aCommandQuery isEnabled: self isRunnable!
+
+queryRunToCursor: aCommandQuery
+	aCommandQuery
+		isEnabled: (self isRunnable and: 
+					[self hasLiveFrame and: 
+							["Cannot run to cursor in disassembly view"
+							self isDisassembled not]])!
+
+querySaveMethod: aCommandQuery
+	aCommandQuery isEnabled: self canSaveMethod!
+
+queryShowMoreFrames: aCommandQuery
+	aCommandQuery isEnabled: (self isPaused and: [self depth <= self frames size])!
+
+queryShowNextStatement: aCommandQuery
+	aCommandQuery isEnabled: self isPaused!
+
+queryStep: aCommandQuery
+	aCommandQuery isEnabled: (self isRunnable and: [self hasLiveFrame])!
+
+queryStepInto: aCommandQuery
+	aCommandQuery
+		isEnabled: (self isRunnable and: 
+					["Can only step-into in the top stack frame"
+					self frame = topFrame and: [topFrame isDead not]])!
+
+queryTerminateProcess: aCommandQuery
+	aCommandQuery isEnabled: process isTerminated not!
+
+queryToggleAnimation: aCommandQuery
+	| animating |
 	animating := self isAnimating.
-	running := self isRunning or: [animating].
-	runnable := running not and: [self isResumable].
-	#nilVariable == selector
-		ifTrue: 
-			[aCommandQuery isEnabled: (localAccessor notNil and: [localAccessor canSet]).
-			^true].
-	#accept == selector
-		ifTrue: 
-			[aCommandQuery isEnabled: (inspectorPresenter hasFocus not and: [self canSaveMethod]).
-			^true].
-	#browseVariableClass == selector
-		ifTrue: 
-			[aCommandQuery isEnabled: localAccessor notNil.
-			^true].
-	selector == #userBreak
-		ifTrue: 
-			[aCommandQuery isEnabled: (running and: [animating not]).
-			^true].
-	(#(#resumeProcess #runProcess) identityIncludes: selector)
-		ifTrue: 
-			[aCommandQuery isEnabled: runnable.
-			^true].
-	selector == #toggleDisassembly
-		ifTrue: 
-			[aCommandQuery
-				isEnabled: true;
-				isChecked: self isDisassembled.
-			^true].
-	selector == #toggleAnimation
-		ifTrue: 
-			[aCommandQuery
-				isEnabled: (runnable or: [animating]);
-				isChecked: animating.
-			^true].
-	(#(#moreFrames #allFrames) identityIncludes: selector)
-		ifTrue: 
-			[aCommandQuery isEnabled: (running not and: [self depth <= self frames size]).
-			^true].
-	#showNextStatement == selector
-		ifTrue: 
-			[aCommandQuery isEnabled: running not.
-			^true].
-	#terminateProcess == selector
-		ifTrue: 
-			[aCommandQuery isEnabled: process isTerminated not.
-			^true].
-	(#(#definitionsMenu #referencesMenu) identityIncludes: selector)
-		ifTrue: 
-			[aCommandQuery isEnabled: true.
-			^true].
-	^(self queryFrameCommand: aCommandQuery) or: [super queryCommand: aCommandQuery]!
+	aCommandQuery
+		isEnabled: (animating or: [self isRunnable]);
+		isChecked: animating!
 
-queryFrameCommand: aCommandQuery
-	"Private - All of these commands required that a stack frame be selected"
+queryUserBreak: aCommandQuery
+	aCommandQuery isEnabled: (flags bitAnd: ##(RunMask | AnimateMask)) == RunMask!
 
-	| selector running runnable animating frame |
-	selector := aCommandQuery commandSymbol.
-	animating := self isAnimating.
-	running := self isRunning or: [animating].
-	runnable := running not and: [self isResumable].
-	frame := self frame.
-	(frame isNil or: [frame isDead]) ifTrue: [^false].
-	"Note that the implement menu is not just for DNUs any more, but any message which is not directly
-	 implemented by its receiver."
-	selector == #implementDNUMenu
-		ifTrue: 
-			[aCommandQuery
-				isEnabled: (running not and: [self class enableDynamicMenus and: [self canImplementMessage]]).
-			^true].
-	#browseMethodInheritanceChain == selector
-		ifTrue: 
-			[aCommandQuery
-				isEnabled: (self selectedMethod ifNil: [false] ifNotNil: [:method | method isOverride]).
-			^true].
-	#messagesMenu == selector
-		ifTrue: 
-			[aCommandQuery isEnabled: (self class enableDynamicMenus and: [self selectedMethod notNil]).
-			^true].
-	(#(#stepOver #stepOut) identityIncludes: selector)
-		ifTrue: 
-			[aCommandQuery isEnabled: (runnable and: [frame notNil]).
-			^true].
-	selector == #returnFromMessage
-		ifTrue: 
-			[aCommandQuery isEnabled: (running not and: [frame notNil and: [frame sender notNil]]).
-			^true].
-	selector == #restartFrame
-		ifTrue: 
-			[aCommandQuery isEnabled: (running not and: [frame notNil and: [frame isRestartable]]).
-			^true].
-	selector == #stepInto
-		ifTrue: 
-			["Can only step-into in the top stack frame"
-			aCommandQuery isEnabled: (runnable and: [frame = topFrame]).
-			^true].
-	selector == #runToCursor
-		ifTrue: 
-			["Can run to cursor if not in disassembly view"
-			aCommandQuery isEnabled: (runnable and: [frame notNil and: [self isDisassembled not]]).
-			^true].
-	selector == #acceptNoRestart
-		ifTrue: 
-			[aCommandQuery isEnabled: self canSaveMethod.
-			^true].
-	^false!
+referencesMenu
+	<commandQuerySelector: #queryMessagesMenu:>
+	!
 
 refreshFrame
 	"Private - Update the receiver's display of the existing frame."
@@ -1227,6 +1252,7 @@ restartFrame
 	"Private - Unwind the currently selected frame and reset the IP so that the method starts
 	executing from its beginning again."
 
+	<commandQuerySelector: #queryRestartFrame:>
 	self restartFrameWithFocus: false!
 
 restartFrame: frame 
@@ -1400,6 +1426,7 @@ resumeProcess
 	"Private - Restart the debugged process from the point at which it was last suspended. This
 	might involve being resuspended on a Semaphore."
 
+	<commandQuerySelector: #queryRun:>
 	process debugger: nil.
 	self view close ifFalse: [process debugger: self] ifTrue: [self resume]!
 
@@ -1426,6 +1453,7 @@ returnFromMessage
 	return value for which the user is prompted (may be any expression). Also resets the
 	non-resumable flag allowing debugging to continue after a non-continuable error."
 
+	<commandQuerySelector: #queryReturnFromMessage:>
 	| frame expression returnValue receiver loopCookie |
 	frame := self frame.
 	receiver := frame receiver.
@@ -1472,6 +1500,7 @@ runDebuggedProcess
 runProcess
 	"Private - Run the debugged process to the next breakpoint or step interrupt."
 
+	<commandQuerySelector: #queryRun:>
 	self debugState: 'Run to Next Breakpoint'.
 	self breakWhen: [:iFrame | false].
 	self mainView disable.
@@ -1481,6 +1510,7 @@ runToCursor
 	"Private - Step to the last breakpoint immediately before the current caret position in the
 	source pane."
 
+	<commandQuerySelector: #queryRunToCursor:>
 	| ipInterval method frame |
 	self debugState: 'Run to Cursor'.
 	ipInterval := self cursorIPRange.
@@ -1491,7 +1521,7 @@ runToCursor
 	with blocks (which we would otherwise not run into). This may however prevent running to
 	cursor in a block further down the stack."
 	self breakWhen: 
-			[:iFrame | 
+			[:iFrame |
 			iFrame index < frame index or: [iFrame method = method and: [ipInterval includes: iFrame ip]]].
 	self mainView disable.
 	self runDebuggedProcess!
@@ -1589,7 +1619,8 @@ setVariablesList: aSequenceableCollection
 			wasExpanded ifTrue: [variablesPresenter expand: newSelection]]!
 
 showNextStatement
-	self frame = topFrame 
+	<commandQuerySelector: #queryShowNextStatement:>
+	self frame = topFrame
 		ifTrue: [self setSourceSelection]
 		ifFalse: [stackPresenter selection: topFrame]!
 
@@ -1632,6 +1663,7 @@ stepInto
 	"Private - Process a command to step into the next message send. This can only be done from the top
 	stack frame."
 
+	<commandQuerySelector: #queryStepInto:>
 	self debugState: 'Step Into'.
 	self step!
 
@@ -1649,17 +1681,18 @@ stepIntoBlock
 stepOut
 	"Private - Step out of the currently selected frame (i.e. return to its sender)."
 
+	<commandQuerySelector: #queryStep:>
 	| frame |
 	self debugState: 'Step Out'.
 	frame := self frame.
 	self makeDebugFrame: frame sender.
-	self breakWhen: [:iFrame | iFrame index < frame index].		"break when returned from selected frame"
+	self breakWhen: [:iFrame | iFrame index < frame index].		"break when returned fromselected frame"
 	self runDebuggedProcess!
 
 stepOver
-	"Private - Step to the next expression in the currently selected frame. Note that this
-	should not stop on a breakpoint in any block homed lower in the stack."
+	"Private - Step to the next expression in the currently selected frame. Note that this should not stop on a breakpoint in any block homed lower in the stack."
 
+	<commandQuerySelector: #queryStep:>
 	| frame |
 	self beRunning.
 	self debugState: 'Step over'.
@@ -1745,6 +1778,7 @@ terminateProcess
 	attached debugger, so we don't need to do anything other than just request the process
 	terminate."
 
+	<commandQuerySelector: #queryTerminateProcess:>
 	| mb |
 	self beAnimated: false.
 	mb := MessageBox new.
@@ -1761,25 +1795,13 @@ toggleAnimation
 	fun, rather than anything of serious utility. It is also handy for stress testing the
 	debugger."
 
+	<commandQuerySelector: #queryToggleAnimation:>
 	| newState |
 	newState := self isAnimating not.
 	self beAnimated: newState.
 	newState ifFalse: [^self].
 	self debugState: 'Animate'.
 	self step!
-
-toggleDisassembly
-	"Private - Switch between source/disassembly modes."
-
-	#{Disassembler} isDefined
-		ifFalse: 
-			[MessageBox warning: self selectedMethod disassembly.
-			^self].
-	self beDisassembled: self isDisassembled not.
-	sourcePresenter
-		isReadOnly: self isDisassembled;
-		isAutoParseEnabled: (self isDisassembled not and: [sourcePresenter class isAutoParseEnabled]).
-	self displayFrame!
 
 updateForBreakAt: interruptFrame
 	self
@@ -1873,20 +1895,22 @@ updateTemporaries
 userBreak
 	"Private - The user deliberately broke a process running in the debugger from the menu."
 
+	<commandQuerySelector: #queryUserBreak:>
 	self assert: [process ~~ Processor activeProcess].
 	self beAnimated: false.
-	self beBroken; suspend.
+	self
+		beBroken;
+		suspend.
 	self debugState: 'User break'.
 	topFrame := process topFrame.
-	self populateStackModel
-	
-	! !
+	self populateStackModel! !
 !Tools.Debugger categoriesForMethods!
-accept!commands!private! !
 accept:methodSource:!operations!private! !
-acceptNoRestart!commands!private! !
-addToCommandRoute:!commands!public! !
-allFrames!commands!private! !
+acceptItCommand!commands-mappings!private! !
+acceptMethod!commands-actions!private! !
+acceptNoRestart!commands-actions!private! !
+addToCommandRoute:!commands-routing!public! !
+allFrames!commands-actions!private! !
 animatePause!accessing!private! !
 beAnimated:!modes!private! !
 beBroken!modes!private! !
@@ -1894,21 +1918,22 @@ beDisassembled:!private!testing! !
 beRunning!modes!private! !
 blockedRestartWarning:!operations!private! !
 break:!operations!private! !
-breakFrame:!commands!private! !
+breakFrame:!operations!private! !
 breakWhen:!accessing!private! !
-browseDefinitions!commands!private! !
+browseDefinitionsCommand!commands-mappings!private! !
 browseDefinitionsMatching:in:!private! !
 browseDefinitionsOfSelector:in:!private! !
-browseHierarchy!commands!private! !
-browseIt!commands!public! !
-browseMessages!commands!private! !
-browseMethodInheritanceChain!commands!private! !
-browseReferences!browsing!commands!public! !
+browseHierarchy!commands-actions!private! !
+browseIt!commands-actions!public! !
+browseMessageDefinitions!commands-actions!private! !
+browseMessages!commands-actions!private! !
+browseMethodInheritanceChain!commands-actions!private! !
+browseReferences!browsing!commands-actions!public! !
 browseReferencesMatching:in:!private! !
 browseReferencesToLiteral:in:!browsing!private! !
-browseSystem!commands!public! !
-browseVariableClass!commands!private! !
-buildParseTree!commands!private! !
+browseSystem!commands-actions!public! !
+browseVariableClass!commands-actions!private! !
+buildParseTree!commands-actions!private! !
 canImplementMessage!private!testing! !
 canSaveMethod!private!testing! !
 classForVariable:!public! !
@@ -1916,9 +1941,10 @@ clearCachedMethodInfo!helpers!private! !
 continue:with:!operations!private! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
-cursorIPRange!commands!private! !
+cursorIPRange!commands-actions!private! !
 debugState:!private!updating! !
 defaultHelpId!public! !
+definitionsMenu!commands-menus!private! !
 depth!accessing!private! !
 depth:!accessing!private! !
 displayFrame!private!updating! !
@@ -1933,25 +1959,31 @@ frames!accessing!private! !
 generateStubFor:inClass:!helpers!private! !
 hasEditableMethodSelected!public!testing! !
 hasEditableMethodsSelected!public!testing! !
+hasLiveFrame!commands-queries!helpers!private! !
 hasMethodSelected!public!testing! !
+implementDNUMenu!commands-menus!private! !
 initialize!initializing!private! !
-inspectIt!commands!private! !
-inspectReferences!commands!private! !
+inspectFrame!commands-actions!private! !
+inspectItCommand!commands-mappings!private! !
+inspectReferences!commands-actions!private! !
+inspectVariable!commands-actions!private! !
 isAnimating!private!testing! !
 isDisassembled!private!testing! !
 isFrameRestartable!private!testing! !
 isInCompositeOp!private!testing! !
 isMain:!accessing!private! !
+isPaused!private!testing! !
 isResumable!private!testing! !
+isRunnable!private!testing! !
 isRunning!private!testing! !
-killProcess!commands!private! !
+killProcess!commands-actions!private! !
 mainView!accessing!private! !
 makeDebugFrame:!helpers!private! !
 markMethodAsUnbound:!helpers!private! !
-moreFrames!commands!private! !
+moreFrames!commands-actions!private! !
 nameForArgument:!helpers!private! !
 newLocalsTreeWithRoots:!private!updating! !
-nilVariable!commands!private! !
+nilVariable!commands-actions!private! !
 onAboutToDisplayMenu:!event handling!public! !
 onBreak:!event handling!private! !
 onCloseRequested:!event handling!private! !
@@ -1969,34 +2001,53 @@ onVariableValueChanged!public! !
 onViewClosed!event handling!private! !
 onWalkback:topFrame:resumable:!event handling!private! !
 parseContext!accessing!public! !
-parseTree!commands!private! !
+parseTree!commands-actions!private! !
 performMethodsRefactoring:name:!private!refactoring! !
 populateImplementMenu:!helpers!private! !
 populateStackModel!private!updating! !
 process:topFrame:!accessing!initializing!private! !
-promptToSaveChanges!commands!private! !
-queryCommand:!commands!private! !
-queryFrameCommand:!commands!private! !
+promptToSaveChanges!commands-actions!private! !
+queryBrowseMethodInheritanceChain:!commands-queries!private! !
+queryHasBrowsableMethod:!commands-queries!private! !
+queryHasEditableMethodSelected:!commands-queries!private! !
+queryHasFrameSelected:!public! !
+queryHasVariableSelected:!commands-queries!private! !
+queryImplementMenu:!commands-queries!private! !
+queryMessagesMenu:!commands-queries!private! !
+queryNilVariable:!commands-queries!private! !
+queryRestartFrame:!commands-queries!private! !
+queryReturnFromMessage:!commands-queries!private! !
+queryRun:!commands-queries!private! !
+queryRunToCursor:!commands-queries!private! !
+querySaveMethod:!commands-queries!private! !
+queryShowMoreFrames:!commands-queries!private! !
+queryShowNextStatement:!commands-queries!private! !
+queryStep:!commands-queries!private! !
+queryStepInto:!commands-queries!private! !
+queryTerminateProcess:!commands-queries!private! !
+queryToggleAnimation:!commands-queries!private! !
+queryUserBreak:!commands-queries!private! !
+referencesMenu!commands-menus!private! !
 refreshFrame!private!updating! !
 restartBlock:inFrame:!operations!private! !
 restartBlockFrame:!operations!private! !
-restartFrame!commands!private! !
+restartFrame!commands-actions!private! !
 restartFrame:!operations!private! !
-restartFrameWithFocus:!commands!private! !
+restartFrameWithFocus:!commands-actions!private! !
 restartMethod!operations!private! !
 restartMethodFrame:!operations!private! !
-restartWithStubFor:inClass:!commands!private! !
+restartWithStubFor:inClass:!commands-actions!private! !
 resumable:!modes!private! !
 resume!operations!private! !
-resumeProcess!commands!private! !
+resumeProcess!commands-actions!private! !
 return:fromFrame:!operations!private! !
 return:toFrame:!operations!private! !
-returnFromMessage!commands!private! !
+returnFromMessage!commands-actions!private! !
 runDebuggedProcess!operations!private! !
 runProcess!operations!private! !
-runToCursor!commands!private! !
-saveNewMethod:!commands!public! !
-searchEnvironment!commands!private! !
+runToCursor!commands-actions!private! !
+saveNewMethod:!commands-actions!public! !
+searchEnvironment!commands-actions!private! !
 selectedMethod!accessing!public! !
 selectedMethods!accessing!public! !
 selectedNode!accessing!private! !
@@ -2004,27 +2055,26 @@ selectionIP!accessing!private! !
 setInitialFocus!operations!public! !
 setSourceSelection!private!updating! !
 setVariablesList:!private!updating! !
-showNextStatement!commands!private! !
+showNextStatement!commands-actions!private! !
 skipMaskFor:!helpers!private! !
 source!accessing!private! !
 sourceRangeAt:inTextMap:!helpers!private! !
 step!operations!private! !
 stepInFrame:!operations!private! !
-stepInto!commands!private! !
-stepIntoBlock!commands!private! !
-stepOut!commands!private! !
-stepOver!commands!private! !
+stepInto!commands-actions!private! !
+stepIntoBlock!commands-actions!private! !
+stepOut!commands-actions!private! !
+stepOver!commands-actions!private! !
 stubTextFor:inClass:!helpers!private! !
 suspend!operations!private! !
 suspendProcess!operations!private! !
 terminateOnClose!private!testing! !
-terminateProcess!commands!private! !
+terminateProcess!commands-actions!private! !
 tipForVariable:!enquiries!public! !
-toggleAnimation!commands!private! !
-toggleDisassembly!commands!private! !
+toggleAnimation!commands-actions!private! !
 updateForBreakAt:!operations!private! !
 updateTemporaries!private!updating! !
-userBreak!commands!private! !
+userBreak!commands-actions!private! !
 !
 
 Tools.Debugger methodProtocol: #debugEventHandler attributes: #(#readOnly) selectors: #(#onBreak: #onHalt: #onStep: #onTerminate #onWalkback:topFrame:resumable:)!

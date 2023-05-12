@@ -62,11 +62,6 @@ canSaveState
 
 	^true!
 
-chooseDefaultFont
-	"Launch a dialog to prompt for a change in the default font used by the system tools."
-	
-	self model chooseDefaultFont!
-
 createComponents
 	"Create the presenters contained by the receiver"
 
@@ -88,12 +83,6 @@ createSchematicWiring
 
 defaultHelpId
 	^10729!
-
-destroy
-	"Attempt to forcibly close the receiver's view. If this is an IdeaSpace card then we ask the IdeaSpace to destroy it."
-
-	self isIdeaSpaceCard ifTrue: [^self ideaSpace destroyCard: self].
-	^super destroy!
 
 developmentSystem
 	^SmalltalkSystem current!
@@ -128,12 +117,6 @@ educationCenter
 
 	self model educationCenter!
 
-exit
-	"Attempt to close the receiver's view. If this is an IdeaSpace card then we ask the IdeaSpace to close it."
-
-	self isIdeaSpaceCard ifTrue: [^self ideaSpace closeCard: self].
-	^super exit!
-
 fileFileIn
 	"The user has selected the standard File/File In command. File in the 
 	current contents of the receiver."
@@ -163,6 +146,7 @@ fileOpen
 forgetSize
 	"Forget the default size for new instances of this tool."
 
+	<commandQuerySelector: #queryForgetSize:>
 	self class defaultExtent: nil!
 
 getDocumentData
@@ -265,21 +249,16 @@ openWorkspace
 	openFilename isNil ifTrue: [^nil].
 	^self openOn: openFilename!
 
-queryCommand: aCommandQuery 
-	"Private - Enter details about a potential command for the receiver into the 
-	<CommandQuery>."
+queryForgetSize: aCommandQuery
+	aCommandQuery isEnabled: DefaultExtent notNil!
 
-	| command |
-	command := aCommandQuery commandSymbol.
-	(#(#dragToolToIdeaSpace #addToNewIdeaSpace) includes: command) 
-		ifTrue: 
-			[aCommandQuery isEnabled: self isIdeaSpaceCard not.
-			^true].
-	^super queryCommand: aCommandQuery!
+queryRememberThisSize: aCommandQuery
+	aCommandQuery isEnabled: self view extent ~= self class defaultExtent!
 
 rememberThisSize
 	"Record the size of the receiver as the default extent for its tool class."
 
+	<commandQuerySelector: #queryRememberThisSize:>
 	self class defaultExtent: self view extent!
 
 saveStateOn: aWriteStream
@@ -358,36 +337,33 @@ workspace
 
 	^workspacePresenter! !
 !Tools.SmalltalkWorkspaceDocument categoriesForMethods!
-aboutDolphin!commands!public! !
+aboutDolphin!commands-actions!public! !
 applyOptions!public! !
-browsePackages!commands!public! !
+browsePackages!commands-actions!public! !
 buildPopupForCommand:!private! !
 canSaveState!private!saved state! !
-chooseDefaultFont!commands!public! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
 defaultHelpId!public! !
-destroy!commands!public! !
 developmentSystem!accessing!private! !
 displayOn:!displaying!public! !
-dropClassFile:!commands!private! !
-dropPackageFile:!commands!private! !
-dropScriptFile:!commands!private! !
-dropTextFile:!commands!private! !
-dropXmlFile:!commands!private! !
-educationCenter!commands!public! !
-exit!commands!public! !
-fileFileIn!commands!public! !
-fileLoad!commands!public! !
-fileNew!commands!public! !
-fileOpen!commands!public! !
-forgetSize!commands!public! !
+dropClassFile:!operations!private! !
+dropPackageFile:!operations!private! !
+dropScriptFile:!operations!private! !
+dropTextFile:!operations!private! !
+dropXmlFile:!operations!private! !
+educationCenter!commands-actions!public! !
+fileFileIn!commands-actions!public! !
+fileLoad!commands-actions!public! !
+fileNew!commands-actions!public! !
+fileOpen!commands-actions!public! !
+forgetSize!commands-actions!public! !
 getDocumentData!accessing!private! !
-guidedTour!commands!public! !
+guidedTour!commands-actions!public! !
 hasContents!public! !
-help!commands!public! !
+help!commands-actions!public! !
 ideaSpace!public! !
-inspectSystemOptions!commands!public! !
+inspectSystemOptions!commands-actions!public! !
 isIdeaSpaceCard!public! !
 isModified!public!testing! !
 isModified:!modes!public! !
@@ -395,23 +371,24 @@ isText!public!testing! !
 language:!public! !
 onDropDown:!private! !
 onViewOpened!event handling!private! !
-openViewComposer!commands!public! !
+openViewComposer!commands-actions!public! !
 openWorkspace!public! !
-queryCommand:!commands!private! !
-rememberThisSize!commands!public! !
+queryForgetSize:!commands-queries!private! !
+queryRememberThisSize:!commands-queries!private! !
+rememberThisSize!commands-actions!public! !
 saveStateOn:!private!saved state! !
 searchForClass:!private! !
 searchForMethod:!private! !
 searchForObject:!public! !
 searchForPackage:!public! !
 searchForSymbol:!private! !
-searchSmalltalk!commands!public! !
-searchSmalltalkFor:!commands!public! !
+searchSmalltalk!commands-actions!public! !
+searchSmalltalkFor:!operations!public! !
 setDocumentData:!accessing!private! !
 setInitialFocus!operations!public! !
 setLexer!helpers!private! !
 show!operations!public! !
-smalltalkExit!commands!public! !
+smalltalkExit!commands-actions!public! !
 systemModel!accessing!private! !
 workspace!accessing!public! !
 !
@@ -464,7 +441,7 @@ defaultExtent
 	"Answer a <Point> which is the user's chosen default extent for new instances
 	of the receiver, or nil if left up to Windows."
 
-	DefaultExtent ifNil: [self loadOptions].
+	self ensureOptionsLoaded.
 	^DefaultExtent ifNil: [self defaultDefaultExtent]!
 
 defaultExtent: aPoint
@@ -539,6 +516,9 @@ displayOn: aPuttableStream
 	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	aPuttableStream nextPutAll: 'Workspace'!
+
+ensureOptionsLoaded
+	OptionFlags ifNil: [self loadOptions]!
 
 fileTypes
 	"Answer an Array of file types that can be associated with this
@@ -760,6 +740,7 @@ defaultTabWidth:!options!public! !
 defaultView!options!public! !
 defaultView:!options!public! !
 displayOn:!displaying!public! !
+ensureOptionsLoaded!public! !
 fileTypes!constants!public! !
 finishedLoadingOptions!options!private! !
 icon!constants!public! !

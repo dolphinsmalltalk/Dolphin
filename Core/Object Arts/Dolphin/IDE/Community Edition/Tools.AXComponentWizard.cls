@@ -57,6 +57,7 @@ apply
 browseIDL
 	"Open a new workspace populated with the IDL for the currently selected library."
 
+	<commandQuerySelector: #queryHasLibrarySelected:>
 	| lib stm |
 	lib := self typeLib.
 	stm := ReadWriteStream on: (String new: 2048).
@@ -69,11 +70,13 @@ browseIDL
 browseTypeClass
 	"Open a new class browser on the class of the selected type."
 
+	<commandQuerySelector: #queryBrowseTypeClass>
 	^types selections first programObject browse!
 
 browseTypesIDL
 	"Open a new workspace populated with the IDL for the currently selected types."
 
+	<commandQuerySelector: #queryHasTypesSelected:>
 	| stm |
 	stm := ReadWriteStream on: (String new: 2048).
 	types selections do: 
@@ -91,6 +94,7 @@ cancel
 !
 
 chooseNamespace
+	<commandQuerySelector: #queryHasLibrarySelected:>
 	| choice namespaces |
 	namespaces := ClassHierarchyModel withRoots: (Namespace subclasses copyWithout: SharedPool).
 	choice := ValueConverter subject: namespaceName model
@@ -107,6 +111,7 @@ chooseNamespace
 choosePackage
 	"Sets the package name from a choice of all the available packages"
 
+	<commandQuerySelector: #queryHasLibrarySelected:>
 	| oldPkg |
 	oldPkg := packageName value isEmpty
 				ifTrue: [nil]
@@ -235,6 +240,7 @@ generatableStructsInTlb: aTypeLibraryAnalyzer
 generate
 	"Apply the attribute changes and attempt to generate the requested interfaces"
 
+	<commandQuerySelector: #queryHasTypesSelected:>
 	| typeLibrary selected progress step |
 	self apply.
 	typeLibrary := self typeLib.
@@ -267,13 +273,7 @@ initialize
 	super initialize.
 	showStandard := false!
 
-inspectIt
-	"Open an inspector on the currently selected library or type."
-
-	self perform: self inspectItCommand!
-
 inspectItCommand
-
 	| focus |
 	focus := View focus.
 	focus == typeLibs view ifTrue: [^#inspectLibrary].
@@ -284,9 +284,11 @@ inspectLibrary
 	"Open an inspector on the <AXTypeLibraryAnalyzer> representing the currently
 	selected library."
 
+	<commandQuerySelector: #queryHasLibrarySelected:>
 	self typeLib inspect!
 
 inspectType
+	<commandQuerySelector: #queryHasTypesSelected:>
 	| selections |
 	selections := types selections.
 	(selections size = 1 ifTrue: [selections first] ifFalse: [selections]) inspect!
@@ -294,6 +296,7 @@ inspectType
 libraryListNextCard
 	"The user has selected a library and is desirous of moving to the next card."
 
+	<commandQuerySelector: #queryLibraryListNextCard:>
 	^cards nextCard!
 
 loadTypeLib
@@ -346,48 +349,31 @@ parametersNextCard
 	self apply.
 	^cards nextCard!
 
-queryCommand: aCommandQuery
-	"Private - Enter details about a potential command for the receiver 
-	into the <CommandQuery>."
+queryBrowseTypeClass: aCommandQuery
+	| selectedTypes |
+	selectedTypes := types selections.
+	aCommandQuery isEnabled: (selectedTypes size = 1 and: [selectedTypes first isVariableDefined])!
 
-	| selected cmd lib |
-	cmd := aCommandQuery commandSymbol.
-	lib := self typeLib.
-	#inspectIt == cmd
-		ifTrue: 
-			[cmd := self inspectItCommand.
-			cmd isNil
-				ifTrue: 
-					[aCommandQuery isEnabled: false.
-					^false]].
-	#typeLibHelp == cmd
-		ifTrue: 
-			[aCommandQuery isEnabled: (lib notNil and: [lib helpfile notEmpty]).
-			^true].
-	#libraryListNextCard == cmd
-		ifTrue: 
-			[aCommandQuery isEnabled: (lib notNil and: [lib isInstalled]).
-			^true].
-	(#(#choosePackage #browseIDL #inspectLibrary #chooseNamespace) identityIncludes: cmd)
-		ifTrue: 
-			[aCommandQuery isEnabled: lib notNil.
-			^true].
-	selected := types selections.
-	(#(#generate #browseTypesIDL #inspectType) identityIncludes: cmd)
-		ifTrue: 
-			[aCommandQuery isEnabled: selected notEmpty.
-			^true].
-	#browseTypeClass == cmd
-		ifTrue: 
-			[aCommandQuery isEnabled: (selected size = 1 and: [selected first isVariableDefined]).
-			^true].
-	#toggleStandardTypes == cmd
-		ifTrue: 
-			[aCommandQuery
-				isEnabled: true;
-				isChecked: showStandard.
-			^true].
-	^super queryCommand: aCommandQuery!
+queryHasLibrarySelected: aCommandQuery
+	aCommandQuery isEnabled: self typeLib notNil!
+
+queryHasTypesSelected: aCommandQuery
+	aCommandQuery isEnabled: types selections notEmpty!
+
+queryLibraryListNextCard: aCommandQuery
+	| tlb |
+	tlb := self typeLib.
+	aCommandQuery isEnabled: (tlb notNil and: [tlb isInstalled])!
+
+queryToggleStandardTypes: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: showStandard!
+
+queryTypeLibHelp: aCommandQuery
+	| tlb |
+	tlb := self typeLib.
+	aCommandQuery isEnabled: (tlb notNil and: [tlb helpfile notEmpty])!
 
 refresh
 	"Refresh the list of current AXTypeLibraryAnalyzers in the image"
@@ -412,6 +398,7 @@ standardInterfaces
 	^StandardInterfaces!
 
 toggleStandardTypes
+	<commandQuerySelector: #queryToggleStandardTypes:>
 	showStandard := showStandard not.
 	self typeLib ifNotNil: [:typeLib | self updateTypesList: typeLib]!
 
@@ -428,6 +415,7 @@ typeLib: aTypeLibraryAnalyzerOrNil
 typeLibHelp
 	"Open the selected type-libraries help file."
 
+	<commandQuerySelector: #queryTypeLibHelp:>
 	OS.Shell32 shellOpen: self typeLib helpfile!
 
 updateTypelibVariable
@@ -451,39 +439,43 @@ updateTypesList: typelib
 	types list: (list contents asSortedCollection: [:a :b | a name <= b name])! !
 !Tools.AXComponentWizard categoriesForMethods!
 apply!operations!private! !
-browseIDL!commands!public! !
-browseTypeClass!commands!public! !
-browseTypesIDL!commands!public! !
-cancel!commands!public! !
-chooseNamespace!commands!private! !
-choosePackage!commands!public! !
+browseIDL!commands-actions!public! !
+browseTypeClass!commands-actions!public! !
+browseTypesIDL!commands-actions!public! !
+cancel!commands-actions!public! !
+chooseNamespace!commands-actions!public! !
+choosePackage!commands-actions!public! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
 displayInstalledTypeLib:!private!updating! !
-finish!commands!public! !
+finish!commands-actions!public! !
 generatableEnumsInTlb:!private!updating! !
 generatableInterfacesInTlb:!helpers!private! !
 generatableStructsInTlb:!helpers!private! !
-generate!commands!public! !
+generate!commands-actions!public! !
 initialize!initializing!private! !
-inspectIt!commands!public! !
 inspectItCommand!public! !
-inspectLibrary!commands!public! !
+inspectLibrary!commands-actions!public! !
 inspectType!public! !
-libraryListNextCard!commands!public! !
-loadTypeLib!commands!public! !
+libraryListNextCard!commands-actions!public! !
+loadTypeLib!commands-actions!public! !
 onTypeLibrarySelected!event handling!private! !
 onViewOpened!event handling!public! !
-parametersNextCard!commands!public! !
-queryCommand:!commands!private! !
-refresh!commands!public! !
-selectInstalled!commands!public! !
-selectUninstalled!commands!public! !
+parametersNextCard!commands-actions!public! !
+queryBrowseTypeClass:!commands-queries!private! !
+queryHasLibrarySelected:!commands-queries!private! !
+queryHasTypesSelected:!commands-queries!private! !
+queryLibraryListNextCard:!commands-queries!private! !
+queryToggleStandardTypes:!commands-queries!private! !
+queryTypeLibHelp:!commands-queries!private! !
+refresh!commands-actions!public! !
+selectInstalled!commands-actions!public! !
+selectUninstalled!commands-actions!public! !
 standardInterfaces!private! !
-toggleStandardTypes!commands!private! !
+toggleStandardTypes!commands-actions!private! !
 typeLib!accessing!public! !
 typeLib:!accessing!public! !
-typeLibHelp!commands!public! !
+typeLibHelp!commands-actions!public! !
 updateTypelibVariable!private!updating! !
 updateTypesList:!private!updating! !
 !
@@ -492,7 +484,7 @@ updateTypesList:!private!updating! !
 
 defaultAdditionalAccelerators
 	^super defaultAdditionalAccelerators 
-		, #(#(#selectAll 'Ctrl+A') #(#inspectIt 'Ctrl+I'))!
+		, #(#(#selectAll 'Ctrl+A'))!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."

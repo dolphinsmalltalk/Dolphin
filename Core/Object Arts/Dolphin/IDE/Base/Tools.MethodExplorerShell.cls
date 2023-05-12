@@ -133,11 +133,8 @@ deleteItCommand
 	historyTree hasFocus ifTrue: [^#removeHistoryNode].
 	^nil!
 
-hasFuture
-	^historyList hasFuture!
-
-hasPast
-	^historyList hasPast!
+futureSize
+	^historyList futureSize!
 
 historySkip: anInteger
 	"Private - Move around in the history list by the specified <integer> delta (negative for
@@ -232,6 +229,9 @@ onViewOpened
 		to: self.
 !
 
+pastSize
+	^historyList pastSize!
+
 queryCommand: aCommandQuery
 	"Private - Enter details about a potential command for the receiver 
 	into the <CommandQuery>."
@@ -245,45 +245,31 @@ queryCommand: aCommandQuery
 				ifTrue: 
 					[aCommandQuery isEnabled: false.
 					^true]].
-	#historyBack: == selector
-		ifTrue: 
-			[| dist |
-			dist := aCommandQuery command arguments first.
-			aCommandQuery isEnabled: historyList pastSize >= dist.
-			^true].
-	#historyForward: == selector
-		ifTrue: 
-			[| dist |
-			dist := aCommandQuery command arguments first.
-			aCommandQuery isEnabled: historyList futureSize >= dist.
-			^true].
-	selector == #historyForward
-		ifTrue: 
-			[self hasFuture
-				ifTrue: 
-					[aCommandQuery
-						isEnabled: true;
-						text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: {historyList next}
-									locale: Locale smalltalk)]
-				ifFalse: 
-					[aCommandQuery
-						isEnabled: false;
-						text: 'Forward'].
-			^true].
-	selector == #historyBack
-		ifTrue: 
-			[self hasPast
-				ifTrue: 
-					[aCommandQuery
-						isEnabled: true;
-						text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: {historyList previous}
-									locale: Locale smalltalk)]
-				ifFalse: 
-					[aCommandQuery
-						isEnabled: false;
-						text: 'Back'].
-			^true].
 	^super queryCommand: aCommandQuery!
+
+queryHistoryBack: aCommandQuery
+	self hasPast
+		ifTrue: 
+			[aCommandQuery
+				isEnabled: true;
+				text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: { historyList previous }
+							locale: Locale smalltalk)]
+		ifFalse: 
+			[aCommandQuery
+				isEnabled: false;
+				text: 'Back']!
+
+queryHistoryForward: aCommandQuery
+	self hasFuture
+		ifTrue: 
+			[aCommandQuery
+				isEnabled: true;
+				text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: { historyList next }
+							locale: Locale smalltalk)]
+		ifFalse: 
+			[aCommandQuery
+				isEnabled: false;
+				text: 'Forward']!
 
 recordMethodVisit
 	"Private - Add to the visit history - note that the current item is at the top of the history list"
@@ -345,8 +331,7 @@ createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
 defaultHelpId!public! !
 deleteItCommand!helpers!private! !
-hasFuture!public!testing! !
-hasPast!public!testing! !
+futureSize!accessing!public! !
 historySkip:!commands!private! !
 historyTree!public! !
 initialize!initializing!private! !
@@ -358,7 +343,10 @@ onTimerTick:!event handling!private! !
 onTipTextRequired:!event handling!private! !
 onTreeSelectionChanged!event handling!private! !
 onViewOpened!event handling!private! !
+pastSize!accessing!public! !
 queryCommand:!commands!private! !
+queryHistoryBack:!commands!private! !
+queryHistoryForward:!commands!private! !
 recordMethodVisit!helpers!private! !
 removeHistoryNode!helpers!private! !
 saveStateOn:!private!saved state! !
