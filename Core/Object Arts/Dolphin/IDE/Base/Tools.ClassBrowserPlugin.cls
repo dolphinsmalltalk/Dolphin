@@ -15,6 +15,11 @@ When a plug-in is created it is assigned the class browser to which it is attach
 !Tools.ClassBrowserPlugin categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools! !
 !Tools.ClassBrowserPlugin methodsFor!
 
+addToCommandRouteInactive: aCommandPolicy
+	"Update the command routing path of the <CommandPolicy> argument with the receiver's contribution to the command path when it is not the active plugin. This is generally only required for plugins that contribute global commands associated with keyboard accelerators and/or on the menubar menus."
+
+	!
+
 applyOptions!
 
 browser
@@ -84,6 +89,7 @@ promptToSaveClassChanges: aSelectionChangingEvent
 systemModel
 	^model systemModel! !
 !Tools.ClassBrowserPlugin categoriesForMethods!
+addToCommandRouteInactive:!commands-routing!public! !
 applyOptions!options!private! !
 browser!accessing!public! !
 createSchematicWiring!initializing!private! !
