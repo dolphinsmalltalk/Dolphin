@@ -95,7 +95,6 @@ browseItCommand
 	to if sent to the receiver at this moment."
 
 	filterPresenter hasFocus ifTrue: [^#browseFolder].
-	packagesPresenter hasFocus ifTrue: [^nil].
 	^nil!
 
 browsePackages

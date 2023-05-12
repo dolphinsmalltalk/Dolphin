@@ -64,24 +64,14 @@ scannerClass!constants!public! !
 icon
 	^Icon fromId: 'MethodHistory.ico'!
 
-initialize
-	#(#{ClassBrowserAbstract} #{MethodBrowserShell} #{Debugger}) 
-		do: [:each | each value addCommandQueryHandler: #queryMethodHistoryCommand:]!
-
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
 
 	^(super publishedAspects)
 		removeKey: #reuseIfOpen;
-		yourself!
-
-uninitialize
-	#(#{ClassBrowserAbstract} #{MethodBrowserShell} #{Debugger})
-		do: [:each | each value removeCommandQueryHandler: #queryMethodHistoryCommand:]! !
+		yourself! !
 !HistoryBrowser class categoriesForMethods!
 icon!public! !
-initialize!initializing!private! !
 publishedAspects!operations!public! !
-uninitialize!initializing!private! !
 !
 

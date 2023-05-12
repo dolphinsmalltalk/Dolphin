@@ -32,15 +32,10 @@ package methodNames
 	add: #ChunkSourceFiler -> #sourceDescriptorForPosition:;
 	add: #ClassBrowserAbstract -> #browseMethodHistory;
 	add: #ClassBrowserAbstract -> #browseMethodHistoryForClass;
-	add: #ClassBrowserAbstract -> #canBrowseMethodHistory;
-	add: #ClassBrowserAbstract -> #canBrowseMethodHistoryForClass;
 	add: #CompiledMethod -> #loadedVersion;
 	add: #CompiledMethod -> #versionHistory;
 	add: #Debugger -> #browseMethodHistory;
-	add: #Debugger -> #canBrowseMethodHistory;
 	add: #MethodBrowserShell -> #browseMethodHistory;
-	add: #MethodBrowserShell -> #canBrowseMethodHistory;
-	add: #SmalltalkToolShell -> #queryMethodHistoryCommand:;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -131,29 +126,21 @@ sourceDescriptorForPosition:!private!source filing-file in! !
 !ClassBrowserAbstract methodsFor!
 
 browseMethodHistory
+	<commandQuerySelector: #queryHasMethodSelected:>
+	| method |
 	#idbAdded.
-	MethodHistoryBrowser
-		showOnClass: methodBrowserPresenter selectedMethod methodClass
-		selector: methodBrowserPresenter selectedMethod selector!
+	method := self selectedMethod.
+	MethodHistoryBrowser showOnClass: method methodClass selector: method selector!
 
 browseMethodHistoryForClass
 	"Open a browser on the history of methods in the current class"
 
+	<commandQuerySelector: #queryHasClassSelected:>
 	#idbAdded.
-	ClassHistoryBrowser showOnClass: self actualClass!
-
-canBrowseMethodHistory
-	#idbAdded.
-	^methodBrowserPresenter hasMethodSelected!
-
-canBrowseMethodHistoryForClass
-	#idbAdded.
-	^self hasClassSelected! !
+	ClassHistoryBrowser showOnClass: self actualClass! !
 !ClassBrowserAbstract categoriesForMethods!
-browseMethodHistory!accessing!commands!idb goodies!private! !
-browseMethodHistoryForClass!commands!idb goodies!public! !
-canBrowseMethodHistory!idb goodies!private!testing! !
-canBrowseMethodHistoryForClass!idb goodies!private!testing! !
+browseMethodHistory!commands-actions!idb goodies!private! !
+browseMethodHistoryForClass!commands-actions!idb goodies!public! !
 !
 
 !CompiledMethod methodsFor!
@@ -177,51 +164,28 @@ versionHistory!accessing!public! !
 browseMethodHistory
 	"Open a browser on the history of the current method"
 
+	<commandQuerySelector: #queryHasBrowsableMethod:>
+	| method |
 	#idbAdded.
+	method := self selectedMethod.
 	MethodHistoryBrowser
-		showOnClass: self selectedMethod methodClass
-		selector: self selectedMethod selector
-		debugger: self!
-
-canBrowseMethodHistory
-	#idbAdded.
-	^self hasEditableMethodSelected! !
+		showOnClass: method methodClass
+		selector: method selector
+		debugger: self! !
 !Debugger categoriesForMethods!
-browseMethodHistory!commands!idb goodies!private! !
-canBrowseMethodHistory!accessing!idb goodies!private!testing! !
+browseMethodHistory!commands-actions!idb goodies!private! !
 !
 
 !MethodBrowserShell methodsFor!
 
 browseMethodHistory
+	<commandQuerySelector: #queryHasMethodSelected:>
+	| method |
 	#idbAdded.
-	MethodHistoryBrowser showOnClass: self selectedMethod methodClass
-		selector: self selectedMethod selector!
-
-canBrowseMethodHistory
-	#idbAdded.
-	^self browser hasMethodSelected! !
+	method := self selectedMethod.
+	MethodHistoryBrowser showOnClass: method methodClass selector: method selector! !
 !MethodBrowserShell categoriesForMethods!
-browseMethodHistory!accessing!commands!idb goodies!private! !
-canBrowseMethodHistory!accessing!idb goodies!private!testing! !
-!
-
-!SmalltalkToolShell methodsFor!
-
-queryMethodHistoryCommand: aCommandQuery 
-	| selector |
-	selector := aCommandQuery commandSymbol.
-	selector == #browseMethodHistory 
-		ifTrue: 
-			[aCommandQuery isEnabled: self canBrowseMethodHistory.
-			^true].
-	selector == #browseMethodHistoryForClass 
-		ifTrue: 
-			[aCommandQuery isEnabled: self canBrowseMethodHistoryForClass.
-			^true].
-	^false! !
-!SmalltalkToolShell categoriesForMethods!
-queryMethodHistoryCommand:!commands!private! !
+browseMethodHistory!commands-actions!idb goodies!private! !
 !
 
 "End of package definition"!

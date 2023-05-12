@@ -133,13 +133,14 @@ publishedAspectsOfInstances!must strip!public! !
 browseMethodProtocol
 	"Private - Browse the currently selected protocol."
 
+	<commandQuerySelector: #queryHasProtocolSelected:>
 	| protocol |
 	protocol := self protocols first.
 	self model browseProtocols
 		protocol: protocol;
 		actualClass: (self actualClass whichClassImplementsProtocol: protocol)! !
 !Tools.ClassBrowserAbstract categoriesForMethods!
-browseMethodProtocol!commands!private! !
+browseMethodProtocol!commands-actions!private! !
 !
 
 !Tools.SmalltalkSystem methodsFor!

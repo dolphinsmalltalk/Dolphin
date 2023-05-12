@@ -26,6 +26,9 @@ canSaveMethod
 		ifTrue: [self isEditableMethod: self method]
 		ifFalse: [self hasClassSelected or: [self packages size = 1]]!
 
+canShowLocalHierarchy
+	^false!
+
 createComponents
 	"Create the presenters contained by the receiver"
 
@@ -78,26 +81,6 @@ packages
 
 	^classesPresenter packages!
 
-queryCommand: aCommandQuery 
-	"Private - Enter details about a potential command for the receiver into the 
-	<CommandQuery>."
-
-	| command |
-	command := aCommandQuery commandSymbol.
-	#forgetSize == command 
-		ifTrue: 
-			[aCommandQuery isEnabled: self class defaultExtent notNil.
-			^true].
-	command == #historyBack 
-		ifTrue: 
-			[aCommandQuery isEnabled: self hasPast.
-			^true].
-	command == #historyForward 
-		ifTrue: 
-			[aCommandQuery isEnabled: self hasFuture.
-			^true].
-	^super queryCommand: aCommandQuery!
-
 resetForFoundClass: aClass
 	"Private - Reset the receiver to place it into a state required to display aClass
 	that has just been searched for. This should first navigate the receiver 
@@ -144,7 +127,8 @@ selectionEnvironment
 slideyPinNames
 	^super slideyPinNames , #('packagesSlidey')! !
 !Tools.SystemBrowserShell categoriesForMethods!
-canSaveMethod!commands!private! !
+canSaveMethod!private!testing! !
+canShowLocalHierarchy!private!testing! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
 hasPackageSelected!public!testing! !
@@ -153,8 +137,7 @@ onPackageSelected!event handling!private! !
 packageForNewMethod!operations!private! !
 packageNames!accessing!public! !
 packages!accessing!public! !
-queryCommand:!commands!private! !
-resetForFoundClass:!commands!private! !
+resetForFoundClass:!operations!private! !
 saveStateOn:!private!saved state! !
 searchForPackage:!operations!public! !
 selectionEnvironment!accessing!public! !

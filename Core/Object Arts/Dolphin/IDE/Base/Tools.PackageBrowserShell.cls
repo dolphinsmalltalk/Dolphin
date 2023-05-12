@@ -34,12 +34,12 @@ Class Variables:
 !Tools.PackageBrowserShell categoriesForClass!MVP-Presenters! !
 !Tools.PackageBrowserShell methodsFor!
 
-accept
-	"Accept the changes to any of the panes in the receiver"
+acceptItCommand
+	"Private - Answer the <Symbol> of the contextual command to save changes, depending on the subview with focus."
 
-	currentCard == #comment ifTrue: [^self saveComment].
-	currentCard == #scripts ifTrue: [currentCard == #scripts ifTrue: [^self saveScript]].
-	Sound errorBeep!
+	currentCard == #comment ifTrue: [^#saveComment].
+	currentCard == #scripts ifTrue: [^#saveScript].
+	^nil!
 
 addToCommandRoute: route 
 	"Update the <OrderedCollection>, path, with the receiver's contribution to the command path
@@ -68,6 +68,7 @@ browseClass
 	class is selected then an <EnvironmentBrowserShell> is opened and configured to display
 	those classes."
 
+	<commandQuerySelector: #queryHasClassesSelected:>
 	| classes |
 	classes := self selectedClasses.
 	^classes size = 1
@@ -78,30 +79,46 @@ browseClassReferences
 	"Browse all the methods in the entire system which refer to the class selected in the
 	receiver."
 
+	<commandQuerySelector: #queryHasClassesSelected:>
 	self browseClassReferencesIn: self browserEnvironment!
 
 browseClassReferencesIn: aBrowserEnvironment
-	| class |
-	class := self selectedClass.
-	self browseMethodsInEnvironments: {aBrowserEnvironment referencesToVariable: class binding.
-				aBrowserEnvironment referencesToClass: class}!
+	| class environments |
+	class := self selectedClasses.
+	environments := Array writeStream.
+	class do: 
+			[:each |
+			environments
+				nextPut: (aBrowserEnvironment referencesToVariable: each binding);
+				nextPut: (aBrowserEnvironment referencesToClass: each)].
+	self browseMethodsInEnvironments: environments contents!
 
-browseDefinitions
-	^self browseMessageDefinitions!
+browseDefinitionsCommand
+	currentCard == #methods ifTrue: [^#browseMessageDefinitions].
+	^nil!
 
-browseHierarchy
-	"Private - Open a hierarchy browser on the currently selected class or method."
+browseHierarchyCommand
+	^##(IdentityDictionary withAll: {
+				#methods -> #browseHierarchyOfMethod.
+				#classes -> #browseHierarchyOfClass.
+				#variables -> #browseHierarchyOfVariable
+			})
+		lookup: currentCard!
 
-	(self selectedMethod notNil and: [currentCard == #methods]) 
-		ifTrue: [^self developmentSystem browseClassHierarchyOfMethod: self selectedMethod].
-	(self selectedClass notNil and: [currentCard == #classes]) 
-		ifTrue: [^self developmentSystem browseHierarchy: self selectedClass].
-	self developmentSystem browseHierarchy!
+browseHierarchyOfClass
+	<commandQuerySelector: #queryHasClassSelected:>
+	self developmentSystem browseHierarchy: self selectedClass!
 
-browseIt
-	"Open a default browser on the currently selected class or method."
+browseHierarchyOfMethod
+	<commandQuerySelector: #queryHasMethodSelected:>
+	self developmentSystem browseClassHierarchyOfMethod: self selectedMethod!
 
-	self perform: self browseItCommand!
+browseHierarchyOfVariable
+	<commandQuerySelector: #queryHasLiveVariableSelected:>
+	| var |
+	var := self sharedVariable binding.
+	self developmentSystem
+		browseHierarchy: (var isClassBinding ifTrue: [var value] ifFalse: [var environment])!
 
 browseItCommand
 	"Private - Answer the command that the context-sensitive 'Browse-It' command would be linked
@@ -112,7 +129,7 @@ browseItCommand
 	focus == packagesPresenter packagesPresenter view ifTrue: [^#browsePackages].
 	focus == classesPresenter view ifTrue: [^#browseClass].
 	focus == methodsPresenter view ifTrue: [^#browseMethods].
-	"focus == variablesPresenter view ifTrue: [^#browseVariables]."
+	focus == variablesPresenter view ifTrue: [^#browseVariableClass].
 	^nil!
 
 browseLocalClassReferences
@@ -125,12 +142,14 @@ browseLocalMessageDefinitions
 	"Open a method browser displaying all implementors of the current selector in the currently
 	selected packages."
 
+	<commandQuerySelector: #queryHasPackagesSelected:>
 	self browseMessageDefinitionsIn: self searchEnvironment!
 
 browseLocalMessageReferences
 	"Open a method browser displaying all references to the current selector in the currently
 	selected packages."
 
+	<commandQuerySelector: #queryHasPackagesSelected:>
 	self browseMessageReferencesIn: self searchEnvironment!
 
 browseLooseMethods: aCollection
@@ -143,50 +162,58 @@ browseLooseMethods: aCollection
 browseMessageDefinitions
 	"Open a method browser displaying all implementors of the current selector in the system."
 
+	<commandQuerySelector: #queryHasMethodsSelected:>
 	self browseMessageDefinitionsIn: self browserEnvironment!
 
 browseMessageDefinitionsIn: aBrowserEnvironment
-	self selectedMethod
-		ifNil: 
-			[(self developmentSystem promptForDefinitionsOf: '' in: aBrowserEnvironment)
-				ifNotNil: [:search | self browseMethodsIn: (aBrowserEnvironment definitionsMatching: search)]]
-		ifNotNil: 
-			[:method |
-			self browseMethodsIn: (aBrowserEnvironment
-						definitionsMatching: (MethodSearch newSelector: method selector))]!
+	| methods |
+	methods := self selectedMethods.
+	methods isEmpty
+		ifTrue: [self model browseMessageDefinitionsIn: aBrowserEnvironment]
+		ifFalse: 
+			[self browseMethodsInEnvironments: (methods
+						collect: [:each | aBrowserEnvironment definitionsMatching: (MethodSearch newSelector: each selector)])]!
 
 browseMessageReferences
 	"Open a method browser displaying all references to the current selector in the entire system."
 
+	<commandQuerySelector: #queryHasMethodsSelected:>
 	self browseMessageReferencesIn: self browserEnvironment!
 
-browseMessageReferencesIn: aBrowserEnvironment 
-	self selectedMethod 
-		ifNil: [self model browseMessageReferencesIn: aBrowserEnvironment]
-		ifNotNil: [:method | self model browseReferencesToLiteral: method selector in: aBrowserEnvironment]!
+browseMessageReferencesIn: aBrowserEnvironment
+	| methods |
+	methods := self selectedMethods.
+	methods isEmpty
+		ifTrue: [self model browseMessageReferencesIn: aBrowserEnvironment]
+		ifFalse: 
+			[self browseMethodsInEnvironments: (methods
+						collect: [:each | aBrowserEnvironment referencesToLiteral: each selector])]!
 
 browseMethodClass
 	"Open a default browser on the currently selected method."
-
+	
+	<commandQuerySelector: #queryHasMethodSelected:>
 	^self selectedMethod browse!
 
 browseMethods
 	"Open a default browser on the currently selected method or methods."
 
+	<commandQuerySelector: #queryBrowseMethods:>
 	| methods |
 	methods := self selectedMethods.
 	methods size == 1 ifTrue: [self browseMethodClass] ifFalse: [self browseLooseMethods: methods]!
 
 browsePackages
+	<commandQuerySelector: #queryHasPackagesSelected:>
 	^packagesPresenter browsePackageSources!
 
-browseReferences
-	<acceleratorKey: 'Shift+F12'>
-	(self selectedMethod notNil and: [currentCard == #methods]) ifTrue: [^self browseMessageReferences].
-	(self selectedClass notNil and: [currentCard == #classes]) ifTrue: [^self browseClassReferences].
-	(self sharedVariable notNil and: [currentCard == #variables])
-		ifTrue: [^self browseVariableReferences].
-	Sound warningBeep!
+browseReferencesCommand
+	^##(IdentityDictionary withAll: {
+				#methods -> #browseMessageReferences.
+				#classes -> #browseClassReferences.
+				#variables -> #browseVariableReferences
+			})
+		lookup: currentCard!
 
 browseSystem
 	"Open a system browser on the currently selected class or method,
@@ -203,11 +230,17 @@ browseSystem
 		ifTrue: [browser actualClass: class].
 	^browser!
 
+browseVariableClass
+	"Open a default browser on the currently selected method."
+
+	<commandQuerySelector: #queryHasLiveVariableSelected:>
+	^self sharedVariable browse!
+
 browseVariableReferences
 	"Browse all the methods which refer to the shared variable selected in the receiver."
 
-	self model browseSharedVariableReferences: self sharedVariable
-		in: self browserEnvironment!
+	<commandQuerySelector: #queryHasVariableSelected:>
+	self model browseSharedVariableReferences: self sharedVariable in: self browserEnvironment!
 
 buildPopupForCommand: aSymbol 
 	"Private - Dynamically build an appropriate popup menu for aSymbol command."
@@ -496,18 +529,11 @@ initialize
 inspectClasses
 	"Open an inspector on the currently selected classes."
 
+	<commandQuerySelector: #queryHasClassesSelected:>
 	self inspectCollection: self selectedClasses!
 
 inspectCollection: aCollection
 	(aCollection size = 1 ifTrue: [aCollection first] ifFalse: [aCollection]) inspect!
-
-inspectIt
-	"Open a browser on the selected category/protocol/variables.
-	Note that we only receive this command it one of the filter panes is selected
-	as class hierarchy, method browser, and workspace presenters all handle
-	it themselves."
-
-	self perform: self inspectItCommand!
 
 inspectItCommand
 	"Private - Answer the command that the context-sensitive 'Inspect-It' command would be linked
@@ -525,6 +551,7 @@ inspectItCommand
 inspectMethods
 	"Open an inspector on the currently selected methods."
 
+	<commandQuerySelector: #queryHasMethodsSelected:>
 	self inspectCollection: self selectedMethods!
 
 inspectResources
@@ -535,6 +562,7 @@ inspectResources
 inspectSharedVariables
 	"Open an inspector on the currently selected variables."
 
+	<commandQuerySelector: #queryHasVariablesSelected:>
 	self inspectCollection: (self variableNames collect: [:each | each bindingOrNil])!
 
 isCardUpToDate: aSymbol
@@ -884,90 +912,55 @@ promptToSaveChanges: aSelectionChangingEvent
 	^(commentPresenter prompt: 'comment' toSaveChanges: aSelectionChangingEvent) 
 		and: [scriptTextPresenter prompt: 'script' toSaveChanges: aSelectionChangingEvent]!
 
-queryCommand: aCommandQuery
-	"Private - Enters details about a potential command for the receiver into 
-	the <CommandQuery>, query"
+queryBrowseMethods: aCommandQuery
+	| methods |
+	methods := self selectedMethods.
+	aCommandQuery isEnabled: methods notEmpty.
+	aCommandQuery text: (aCommandQuery description
+				expandMacrosWithArguments: { methods size = 1 ifTrue: [methods first] ifFalse: ['&Methods'] }
+				locale: Locale smalltalk)!
 
-	| selector |
-	selector := aCommandQuery commandSymbol.
-	selector == #browseIt
-		ifTrue: 
-			[selector := self browseItCommand.
-			selector isNil
-				ifTrue: 
-					[aCommandQuery isEnabled: false.
-					^true]].
-	selector == #inspectIt
-		ifTrue: 
-			[selector := self inspectItCommand.
-			selector isNil
-				ifTrue: 
-					[aCommandQuery isEnabled: false.
-					^true]].
-	selector == #browsePackages
-		ifTrue: 
-			[aCommandQuery isEnabled: ((packagesPresenter respondsTo: selector) and: [self packages notEmpty]).
-			^true].
-	(#(#browseLocalMessageReferences #browseLocalMessageDefinitions) identityIncludes: selector)
-		ifTrue: 
-			[self queryHasPackages: aCommandQuery.
-			^true].
-	(#(#browseHierarchy #browseReferences) identityIncludes: selector)
-		ifTrue: 
-			[aCommandQuery isEnabled: (self selectedClass notNil
-						or: [self selectedMethod notNil or: [self sharedVariable notNil]]).
-			^true].
-	(#(#browseMethodClass #browseMessageDefinitions #browseMessageReferences #browseDefinitions)
-		identityIncludes: selector)
-			ifTrue: 
-				[aCommandQuery isEnabled: (self selectedMethod notNil and: [currentCard == #methods]).
-				^true].
-	(#(#browseClass #browseClassReferences) identityIncludes: selector)
-		ifTrue: 
-			[aCommandQuery isEnabled: self selectedClasses notEmpty.
-			^true].
-	#accept == selector
-		ifTrue: 
-			[packagesPresenter hasSinglePackage
-				ifTrue: 
-					[aCommandQuery
-						isEnabled: true;
-						isDefault: true]
-				ifFalse: [aCommandQuery isEnabled: false].
-			^true].
-	(#(#removeClasses #inspectClasses) identityIncludes: selector)
-		ifTrue: 
-			[aCommandQuery isEnabled: self selectedClasses notEmpty.
-			^true].
-	(#(#removeLooseMethods #inspectMethods) identityIncludes: selector)
-		ifTrue: 
-			[aCommandQuery isEnabled: self selectedMethods notEmpty.
-			^true].
-	#browseMethods == selector
-		ifTrue: 
-			[| methods |
-			methods := self selectedMethods.
-			aCommandQuery isEnabled: methods notEmpty.
-			aCommandQuery text: (aCommandQuery description
-						expandMacrosWithArguments: { methods size = 1 ifTrue: [methods first] ifFalse: ['&Methods'] }
-						locale: Locale smalltalk).
-			^true].
-	#browseVariableReferences == selector
-		ifTrue: 
-			[aCommandQuery isEnabled: self sharedVariable notNil.
-			^true].
-	(#(#inspectSharedVariables #browseGlobals #removeVariables) identityIncludes: selector)
-		ifTrue: 
-			[aCommandQuery isEnabled: self variableNames notEmpty.
-			^true].
-	selector == #upgradeResources
-		ifTrue: 
-			[aCommandQuery isEnabled: self resourceIdentifiers notEmpty.
-			^true].
-	^super queryCommand: aCommandQuery!
+queryHasClassesSelected: aCommandQuery
+	aCommandQuery isEnabled: classesPresenter hasSelection!
 
-queryHasPackages: aCommandQuery
+queryHasLiveVariableSelected: aCommandQuery
+	| ref |
+	ref := self sharedVariable.
+	aCommandQuery isEnabled: (ref notNil and: [ref isDefined])!
+
+queryHasMethodSelected: aCommandQuery
+	aCommandQuery isEnabled: self hasMethodSelected!
+
+queryHasMethodsSelected: aCommandQuery
+	aCommandQuery isEnabled: self selectedMethods notEmpty!
+
+queryHasPackagesSelected: aCommandQuery
 	aCommandQuery isEnabled: self hasPackages!
+
+queryHasResourcesSelected: aCommandQuery
+	aCommandQuery isEnabled: self resourceIdentifiers notEmpty!
+
+queryHasVariableSelected: aCommandQuery
+	aCommandQuery isEnabled: self sharedVariable notNil!
+
+queryHasVariablesSelected: aCommandQuery
+	aCommandQuery isEnabled: self variableNames notEmpty!
+
+querySaveComment: aCommandQuery
+	(packagesPresenter hasSinglePackage and: [commentPresenter isModified])
+		ifTrue: 
+			[aCommandQuery
+				isEnabled: true;
+				isDefault: true]
+		ifFalse: [aCommandQuery isEnabled: false]!
+
+querySaveScript: aCommandQuery
+	(packagesPresenter hasSinglePackage and: [scriptTextPresenter isModified])
+		ifTrue: 
+			[aCommandQuery
+				isEnabled: true;
+				isDefault: true]
+		ifFalse: [aCommandQuery isEnabled: false]!
 
 refreshCard: aSymbol
 	currentCard == aSymbol 
@@ -986,6 +979,7 @@ release
 removeClasses
 	"Private - Remove the currently selected classes from the package."
 
+	<commandQuerySelector: #queryHasClassesSelected:>
 	self selectedClasses do: [:e | e owningPackage removeClass: e]!
 
 removeLooseMethods
@@ -993,11 +987,13 @@ removeLooseMethods
 	Note that the methods are not actually removed from the system (i.e.
 	ownership is transferred to the package of their method class)."
 
+	<commandQuerySelector: #queryHasMethodsSelected:>
 	self selectedMethods do: [:each | each owningPackage removeMethod: each]!
 
 removeVariables
 	"Private - Remove the currently selected variables from their packages."
 
+	<commandQuerySelector: #queryHasVariablesSelected:>
 	self variableNames do: [:each | Package manager addVariableNamed: each to: nil]!
 
 resourceIdentifier
@@ -1016,15 +1012,16 @@ resourceIdentifiers
 saveComment
 	"Private - Save the comment from the source text."
 
+	<commandQuerySelector: #querySaveComment:>
 	self singlePackage comment: commentPresenter plainText.
 	commentPresenter isModified: false!
 
 saveScript
 	"Private - Save the script from the source text."
 
+	<commandQuerySelector: #querySaveScript:>
 	self singlePackage scriptAt: self scriptName put: self scriptText.
-	self updateScriptNames.
-!
+	self updateScriptNames!
 
 scriptName
 	"Answer the currently selected script name."
@@ -1255,35 +1252,39 @@ updateVariables
 upgradeResources
 	"Private - Uprade & resave the selected resources, by loading them into a ViewComposer."
 
+	<commandQuerySelector: #queryHasResourcesSelected:>
 	self resourceIdentifiers do: [:each | each reassign]!
 
 variableNames
 	^variablesPresenter selections! !
 !Tools.PackageBrowserShell categoriesForMethods!
-accept!commands!public! !
-addToCommandRoute:!commands!public! !
+acceptItCommand!commands-mappings!private! !
+addToCommandRoute:!commands-routing!public! !
 applyOptions!operations!options!private! !
-browseClass!commands!public! !
-browseClassReferences!commands!public! !
+browseClass!commands-actions!public! !
+browseClassReferences!commands-actions!public! !
 browseClassReferencesIn:!helpers!private! !
-browseDefinitions!commands!public! !
-browseHierarchy!commands!private! !
-browseIt!commands!public! !
+browseDefinitionsCommand!commands-mappings!private! !
+browseHierarchyCommand!commands-mappings!private! !
+browseHierarchyOfClass!commands-actions!private! !
+browseHierarchyOfMethod!commands-actions!private! !
+browseHierarchyOfVariable!commands-actions!private! !
 browseItCommand!helpers!private! !
-browseLocalClassReferences!commands!public! !
-browseLocalMessageDefinitions!commands!public! !
-browseLocalMessageReferences!commands!public! !
+browseLocalClassReferences!commands-actions!public! !
+browseLocalMessageDefinitions!commands-actions!public! !
+browseLocalMessageReferences!commands-actions!public! !
 browseLooseMethods:!helpers!private! !
-browseMessageDefinitions!commands!public! !
+browseMessageDefinitions!commands-actions!public! !
 browseMessageDefinitionsIn:!helpers!private! !
-browseMessageReferences!commands!public! !
+browseMessageReferences!commands-actions!public! !
 browseMessageReferencesIn:!helpers!private! !
-browseMethodClass!commands!public! !
-browseMethods!commands!public! !
-browsePackages!commands!public! !
-browseReferences!commands!public! !
-browseSystem!commands!public! !
-browseVariableReferences!commands!public! !
+browseMethodClass!commands-actions!public! !
+browseMethods!commands-actions!public! !
+browsePackages!commands-actions!public! !
+browseReferencesCommand!commands-mappings!private! !
+browseSystem!commands-actions!public! !
+browseVariableClass!commands-actions!public! !
+browseVariableReferences!commands-actions!public! !
 buildPopupForCommand:!event handling!private! !
 cacheCurrentCard:!event handling!private! !
 canSaveState!private!saved state! !
@@ -1296,8 +1297,8 @@ clearPrerequisites!private!updating! !
 clearResources!private!updating! !
 clearScriptNames!private!updating! !
 clearVariables!private!updating! !
-createComponents!commands!initializing!private! !
-createSchematicWiring!commands!initializing!private! !
+createComponents!commands-actions!private! !
+createSchematicWiring!commands-actions!private! !
 customDrawClassList:!private! !
 defaultHelpId!public! !
 hasClassSelected!public!testing! !
@@ -1307,13 +1308,12 @@ hasMethodSelected!public!testing! !
 hasPackages!private!testing! !
 hasPackageSelected!public!testing! !
 initialize!initializing!private! !
-inspectClasses!commands!public! !
+inspectClasses!commands-actions!public! !
 inspectCollection:!helpers!private! !
-inspectIt!commands!public! !
 inspectItCommand!helpers!private! !
-inspectMethods!commands!public! !
-inspectResources!commands!public! !
-inspectSharedVariables!commands!public! !
+inspectMethods!commands-actions!public! !
+inspectResources!commands-actions!public! !
+inspectSharedVariables!commands-actions!public! !
 isCardUpToDate:!private!testing! !
 markCardDirty:!helpers!private! !
 objectRepackaged:from:to:card:list:!event handling!private! !
@@ -1340,21 +1340,30 @@ onVariableRenamed:from:!event handling!private! !
 onVariableRepackaged:from:to:!event handling!private! !
 onViewClosed!event handling!private! !
 onViewOpened!event handling!private! !
-openWorkspace!commands!public! !
+openWorkspace!commands-actions!public! !
 packages!accessing!public! !
 packages:!accessing!public! !
 promptToSaveChanges!helpers!private! !
 promptToSaveChanges:!helpers!private! !
-queryCommand:!commands!public! !
-queryHasPackages:!command queries!public! !
+queryBrowseMethods:!commands-queries!private! !
+queryHasClassesSelected:!commands-queries!private! !
+queryHasLiveVariableSelected:!commands-queries!public! !
+queryHasMethodSelected:!commands-queries!private! !
+queryHasMethodsSelected:!commands-queries!private! !
+queryHasPackagesSelected:!commands-queries!private! !
+queryHasResourcesSelected:!commands-queries!private! !
+queryHasVariableSelected:!commands-queries!public! !
+queryHasVariablesSelected:!commands-queries!public! !
+querySaveComment:!commands-queries!public! !
+querySaveScript:!commands-queries!public! !
 refreshCard:!helpers!private! !
 release!dependency!public! !
-removeClasses!commands!private! !
-removeLooseMethods!commands!private! !
-removeVariables!commands!private! !
+removeClasses!commands-actions!private! !
+removeLooseMethods!commands-actions!private! !
+removeVariables!commands-actions!private! !
 resourceIdentifier!accessing!private! !
 resourceIdentifiers!accessing!private! !
-saveComment!commands!private! !
+saveComment!commands-actions!private! !
 saveScript!operations!private! !
 scriptName!accessing!private! !
 scriptText!accessing!private! !
@@ -1388,7 +1397,7 @@ updateResources!private!updating! !
 updateScriptNames!private!updating! !
 updateStatus!private!updating! !
 updateVariables!private!updating! !
-upgradeResources!commands!public! !
+upgradeResources!commands-actions!public! !
 variableNames!accessing!public! !
 !
 

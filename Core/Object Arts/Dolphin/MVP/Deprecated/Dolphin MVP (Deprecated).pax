@@ -117,6 +117,8 @@ package methodNames
 	add: 'ListPresenter class' -> #resource_Multiselection_enhanced_list_view;
 	add: 'ListPresenter class' -> #resource_Multiselection_list_box;
 	add: 'PaintEvent class' -> #handle:wParam:hdc:paintStruct:;
+	add: 'Presenter class' -> #addCommandQueryHandler:;
+	add: 'Presenter class' -> #removeCommandQueryHandler:;
 	add: 'RGB class' -> #stdColor:;
 	add: 'STBViewProxy class' -> #for:;
 	add: 'SystemColor class' -> #fromId:;
@@ -724,6 +726,26 @@ asDword
 	^self asUInt32! !
 !POINT categoriesForMethods!
 asDword!converting!public! !
+!
+
+!Presenter class methodsFor!
+
+addCommandQueryHandler: aSymbol
+	Notification deprecated.	"This mechanism is replaced by <commandQuerySelector: #queryBlah:> annotations, declared in the corresponding command methods. These are added to a query selector map automatically on package load."
+	commandQueryHandlers := commandQueryHandlers
+				ifNil: [{ aSymbol }]
+				ifNotNil: [commandQueryHandlers copyWith: aSymbol]!
+
+removeCommandQueryHandler: aSymbol
+	"Unregister an additional CommandQuery handler to reverse out a previous
+	addCommandQueryHandler: call. This should be called by IDE extension packages that are
+	uninstalling command handlers."
+
+	Notification deprecated.	"see #addCommandQueryHandler:"
+	commandQueryHandlers := commandQueryHandlers copyWithout: aSymbol! !
+!Presenter class categoriesForMethods!
+addCommandQueryHandler:!accessing!public! !
+removeCommandQueryHandler:!accessing!public! !
 !
 
 !Prompter methodsFor!

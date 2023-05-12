@@ -57,25 +57,6 @@ createComponents
 defaultHelpId
 	^10895!
 
-displayLocalHierarchyOf: class
-	"Private - Update the receiver to display only the local hierarchy of the <ClassDescription>,
-	class."
-
-	| instClass |
-	instClass := class instanceClass.
-	classesPresenter model: (ClassHierarchyModel withAllClasses
-				filter: [:x | (instClass allSuperclasses includes: x) or: [instClass withAllSubclasses includes: x]])!
-
-isLocalHierarchyMode
-	"Private - Answer whether the receiver is in 'local hierarchy' mode displaying a subset of the entire
-	class hierarchy."
-
-	^false
-	"^flags allMask: LocalHierarchyMask"!
-
-isLocalHierarchyMode: aBoolean 
-	"flags := flags mask: LocalHierarchyMask set: aBoolean"!
-
 isMethodVisible: aCompiledMethod 
 	^(self browserEnvironment includesMethod: aCompiledMethod) 
 		and: [super isMethodVisible: aCompiledMethod]!
@@ -83,17 +64,6 @@ isMethodVisible: aCompiledMethod
 model: aSystemModel
 	super model: aSystemModel.
 	self browserEnvironment: aSystemModel browserEnvironment!
-
-onTipTextRequired: tool
-	"Private - Tool tip text is required for the <ToolbarItem>, tool."
-
-	| cmd |
-	cmd := tool command asSymbol.
-	cmd == #toggleLocalHierarchy ifTrue: [
-		^(self isLocalHierarchyMode 
-				ifTrue: ['Browse entire hierarchy']
-				ifFalse: ['Browse local hierarchy of ', self selectedClass name])].
-	^super onTipTextRequired: tool!
 
 parseContext
 	^self method
@@ -125,26 +95,6 @@ printCaptionForClass: aClass on: aWriteStream
 printCaptionForMethod: aCompiledMethod on: aWriteStream
 	self printBasicCaptionOn: aWriteStream!
 
-queryCommand: aCommandQuery 
-	"Private - Enter details about a potential command for the receiver 
-	into the <CommandQuery>."
-
-	| cmd |
-	cmd := aCommandQuery commandSymbol.
-	#toggleLocalHierarchy == cmd 
-		ifTrue: 
-			[self isLocalHierarchyMode 
-				ifTrue: 
-					[aCommandQuery
-						isEnabled: true;
-						isChecked: true]
-				ifFalse: 
-					[aCommandQuery
-						isEnabled: (self hasClassSelected and: [self actualClass superclass notNil]);
-						isChecked: false].
-			^true].
-	^super queryCommand: aCommandQuery!
-
 resetFor: aClass 
 	"Reset the receiver to place it into a state required to display aClass"
 
@@ -169,50 +119,23 @@ saveStateOn: aWriteStream
 	aWriteStream nextPut: $]!
 
 searchEnvironment
-	^model browserEnvironment!
-
-toggleLocalHierarchy
-	"Toggle between the entire hierarchy and showing only the current class and its subclasses."
-
-	| instClass actualClass |
-	self promptToSaveChanges ifFalse: [^self].
-
-	"Use the selected class rather than the actual class, so always follows instance hierarchy"
-	instClass := self selectedClass.
-	actualClass := self actualClass.
-	self isLocalHierarchyMode: self isLocalHierarchyMode not.
-	self isLocalHierarchyMode 
-		ifTrue: 
-			["Toggled into local hierarchy mode"
-			self displayLocalHierarchyOf: instClass.
-			self actualClass: actualClass]
-		ifFalse: 
-			["Toggled out of local hierarchy mode..."
-			classesPresenter model: self model classHierarchy.
-			actualClass notNil ifTrue: [self actualClass: actualClass]].
-	self validateUserInterface! !
+	^model browserEnvironment! !
 !Tools.EnvironmentBrowserShell categoriesForMethods!
-browseExecutableManifest!commands!public! !
-browseExecutableManifestFile:!commands!public! !
+browseExecutableManifest!commands-actions!public! !
+browseExecutableManifestFile:!operations!public! !
 browserEnvironment:!initializing!private! !
-browseUnimplemented!commands!public! !
+browseUnimplemented!commands-actions!public! !
 createComponents!initializing!public! !
 defaultHelpId!constants!public! !
-displayLocalHierarchyOf:!private!updating! !
-isLocalHierarchyMode!private!testing! !
-isLocalHierarchyMode:!accessing!private! !
 isMethodVisible:!private!testing! !
 model:!accessing!public! !
-onTipTextRequired:!event handling!private! !
 parseContext!public! !
 printBasicCaptionOn:!private!updating! !
 printCaptionForClass:on:!private!updating! !
 printCaptionForMethod:on:!private!updating! !
-queryCommand:!commands!private! !
-resetFor:!commands!public! !
+resetFor:!operations!public! !
 saveStateOn:!private!saved state! !
-searchEnvironment!commands!public! !
-toggleLocalHierarchy!commands!public! !
+searchEnvironment!accessing!public! !
 !
 
 !Tools.EnvironmentBrowserShell class methodsFor!

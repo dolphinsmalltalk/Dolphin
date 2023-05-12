@@ -65,7 +65,7 @@ hasEditableMethodSelected
 	^self selectedMethod ifNil: [false] ifNotNil: [:method | self isEditableMethod: method]!
 
 hasEditableMethodsSelected
-	^self browser hasMethodsSelected!
+	^self selectedMethods allSatisfy: [:each | self isEditableMethod: each]!
 
 hasMethods
 	^self browser hasMethods!
@@ -120,11 +120,11 @@ parseContext
 					env := package ifNil: [class environment] ifNotNil: [package environment ifNil: [class environment]].
 					ParseContext methodClass: class environment: (model modelClassFor: env)]]!
 
-queryMethodCommand: aCommandQuery
+queryHasMethodSelected: aCommandQuery
 	aCommandQuery isEnabled: browserPresenter hasMethodSelected!
 
 recompileDiffs
-	<commandQuerySelector: #queryMethodCommand:>
+	<commandQuerySelector: #queryHasMethodSelected:>
 	self developmentSystem recompileDiffs: self selectedMethod!
 
 saveNewMethod: aString
@@ -145,6 +145,11 @@ selectedMethod
 	"Answer the currently selected method, or nil if there is not exactly one selected."
 
 	^self browser selectedMethod!
+
+selectedMethods
+	"Answer the currently selected methods, or an empty collection if there are no selections."
+
+	^self browser selectedMethods!
 
 setInitialFocus
 	browserPresenter hasMethodSelected 
@@ -177,11 +182,12 @@ methods:!accessing!public! !
 onMethodSelected!event handling!private! !
 onViewOpened!event handling!public! !
 parseContext!accessing!public! !
-queryMethodCommand:!command queries!private! !
+queryHasMethodSelected:!commands-queries!private! !
 recompileDiffs!public! !
 saveNewMethod:!helpers!private! !
 searchEnvironment:!public! !
 selectedMethod!accessing!public! !
+selectedMethods!accessing!public! !
 setInitialFocus!operations!public! !
 statusModel!event handling!public! !
 statusText:!accessing!private! !
