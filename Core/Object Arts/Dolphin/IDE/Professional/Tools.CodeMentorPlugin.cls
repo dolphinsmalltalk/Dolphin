@@ -199,8 +199,8 @@ filterInRules: rules
 filterOutRule
 	"Add the current method to the filters for the current failed rule(s) so that it won't be classed as a failure next time around"
 
-	self filterOutRules: self failedRule failedRules.
-!
+	<commandQuerySelector: #queryFilterOutRule:>
+	self filterOutRules: self failedRule failedRules!
 
 filterOutRules: rules
 	"Private - Add filters for the supplied rules"
@@ -339,6 +339,9 @@ isFilterActive
 	"Private - Answer true if one or more rule failures are omitted due to active filters"
 
 	^self filteredRules notEmpty!
+
+isRefreshable
+	^isRefreshPending or: [self refreshMode == #manual]!
 
 lintRuleFailuresBrowserClass
 	^LintRuleFailuresBrowserShell!
@@ -505,36 +508,20 @@ printTransformationRuleHtmlFor: anIXMLDOMElement on: aStream
 				print: node innerXML;
 				nextPutAll: '"> automatic transformation</a> available to address this issue.</i></p>']!
 
-queryCommand: aCommandQuery
-	"Private - Enter details about a potential command for the receiver 
-	into the <CommandQuery> argument."
-
-	| selector |
-	selector := aCommandQuery commandSymbol.
-	#filterOutRule == selector
-		ifTrue: 
-			[| failedRule text |
-			failedRule := self failedRule.
-			text := (failedRule notNil and: [failedRule problemCount > 1])
-						ifTrue: ['Ignore these <1p> rule failures' expandMacrosWith: failedRule problemCount]
-						ifFalse: ['Ignore this rule failure'].
-			aCommandQuery
-				isEnabled: (failedRule notNil and: [failedRule notEmpty]);
-				text: text.
-			^true].
-	#selectIgnoredRules == selector
-		ifTrue: 
-			[aCommandQuery isEnabled: self isFilterActive.
-			^true].
-	#refresh == selector
-		ifTrue: 
-			[aCommandQuery isEnabled: (isRefreshPending or: [self refreshMode == #manual]).
-			^true].
-	^super queryCommand: aCommandQuery!
+queryFilterOutRule: aCommandQuery
+	| text failedRule |
+	failedRule := self failedRule.
+	text := (failedRule notNil and: [failedRule problemCount > 1])
+				ifTrue: ['Ignore these <1p> rule failures' expandMacrosWith: failedRule problemCount]
+				ifFalse: ['Ignore this rule failure'].
+	aCommandQuery
+		isEnabled: (failedRule notNil and: [failedRule notEmpty]);
+		text: text!
 
 refresh
 	"Refresh the receiver's display after first re-running the checks"
 
+	<commandQuerySelector: #isRefreshable>
 	self clearFailures.
 	self startCheckerProcess.
 	isRefreshPending := false.
@@ -606,11 +593,12 @@ runLintChecks
 			postToMessageQueue!
 
 selectFilteredRules
+	<commandQuerySelector: #isFilterActive>
 	| filteredRules originalFilteredRules addFilters removeFilters |
 	originalFilteredRules := self filteredRules.
-	filteredRules := ChoicePrompter 
+	filteredRules := ChoicePrompter
 				on: originalFilteredRules
-				multipleChoices: ((self filteredRules , self allRules failedRules) asSet 
+				multipleChoices: ((self filteredRules , self allRules failedRules) asSet
 						asSortedCollection: [:x :y | x name <= y name])
 				caption: 'Select Rules to Ignore'.
 	filteredRules isNil ifTrue: [^self].
@@ -668,36 +656,37 @@ addFailedRule:!helpers!private! !
 allRules!operations!private! !
 applyTransform:!helpers!private! !
 autoRefresh!operations!private! !
-browseAllFailedMethods!commands!private! !
-browseFailedClass:!commands!private! !
-browseFailedMethod:!commands!public! !
-browseFailedMethods:!commands!private! !
+browseAllFailedMethods!commands-actions!private! !
+browseFailedClass:!operations!private! !
+browseFailedMethod:!operations!public! !
+browseFailedMethods:!operations!private! !
 clearFailures!operations!private! !
-clearIgnoredRules!commands!public! !
+clearIgnoredRules!commands-actions!public! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
 defaultHelpId!constants!public! !
 displayOn:!displaying!public! !
-exportIgnoredRules!commands!public! !
+exportIgnoredRules!commands-actions!public! !
 failedClassesFor:!accessing!private! !
-failedRule!commands!private! !
+failedRule!commands-actions!private! !
 filteredRuleNames!accessing!private! !
 filteredRules!accessing!public! !
-filterInRules:!commands!private! !
-filterOutRule!commands!public! !
-filterOutRules:!commands!private! !
+filterInRules:!operations!private! !
+filterOutRule!commands-actions!public! !
+filterOutRules:!operations!private! !
 getRuleInfo:!helpers!private! !
 htmlDescriptionFor:!helpers!private! !
 htmlStyle!helpers!private! !
 icon!accessing!public! !
-importIgnoredRules!commands!public! !
+importIgnoredRules!commands-actions!public! !
 indicateFailures:!operations!private! !
 indicateStatus!operations!private! !
 indicateSuccess!operations!private! !
 infoBrowserPresenter!accessing!private! !
 initialize!initializing!private! !
 isBusy!accessing!public! !
-isFilterActive!commands!private! !
+isFilterActive!private!testing! !
+isRefreshable!private!testing! !
 lintRuleFailuresBrowserClass!constants!private! !
 lintRules!accessing!private! !
 onBrowserEnvironmentSelected!event handling!private! !
@@ -716,16 +705,16 @@ parentRuleOf:!helpers!private! !
 printClassFailuresHtmlFor:on:!helpers!printing!private! !
 printMethodFailuresHtmlFor:on:!helpers!printing!private! !
 printTransformationRuleHtmlFor:on:!helpers!printing!private! !
-queryCommand:!commands!private! !
-refresh!commands!public! !
+queryFilterOutRule:!commands-queries!private! !
+refresh!commands-actions!public! !
 refreshIcon!operations!private! !
 refreshMode!accessing!public! !
 refreshMode:!accessing!public! !
-refreshResults!commands!public! !
+refreshResults!commands-actions!public! !
 resetProgressBar!operations!private! !
 rulesTreeModel!accessing!private! !
 runLintChecks!operations!public! !
-selectFilteredRules!commands!public! !
+selectFilteredRules!commands-actions!public! !
 showDescriptionFor:!operations!private! !
 smalltalkUrlTag!constants!private! !
 splitName:!helpers!private! !

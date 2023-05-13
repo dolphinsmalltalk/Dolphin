@@ -68,7 +68,7 @@ browseClass
 	class is selected then an <EnvironmentBrowserShell> is opened and configured to display
 	those classes."
 
-	<commandQuerySelector: #queryHasClassesSelected:>
+	<commandQuerySelector: #hasClassesSelected>
 	| classes |
 	classes := self selectedClasses.
 	^classes size = 1
@@ -79,7 +79,7 @@ browseClassReferences
 	"Browse all the methods in the entire system which refer to the class selected in the
 	receiver."
 
-	<commandQuerySelector: #queryHasClassesSelected:>
+	<commandQuerySelector: #hasClassesSelected>
 	self browseClassReferencesIn: self browserEnvironment!
 
 browseClassReferencesIn: aBrowserEnvironment
@@ -106,15 +106,15 @@ browseHierarchyCommand
 		lookup: currentCard!
 
 browseHierarchyOfClass
-	<commandQuerySelector: #queryHasClassSelected:>
+	<commandQuerySelector: #hasClassSelected>
 	self developmentSystem browseHierarchy: self selectedClass!
 
 browseHierarchyOfMethod
-	<commandQuerySelector: #queryHasMethodSelected:>
+	<commandQuerySelector: #hasMethodSelected>
 	self developmentSystem browseClassHierarchyOfMethod: self selectedMethod!
 
 browseHierarchyOfVariable
-	<commandQuerySelector: #queryHasLiveVariableSelected:>
+	<commandQuerySelector: #hasLiveVariableSelected>
 	| var |
 	var := self sharedVariable binding.
 	self developmentSystem
@@ -142,14 +142,14 @@ browseLocalMessageDefinitions
 	"Open a method browser displaying all implementors of the current selector in the currently
 	selected packages."
 
-	<commandQuerySelector: #queryHasPackagesSelected:>
+	<commandQuerySelector: #hasPackages>
 	self browseMessageDefinitionsIn: self searchEnvironment!
 
 browseLocalMessageReferences
 	"Open a method browser displaying all references to the current selector in the currently
 	selected packages."
 
-	<commandQuerySelector: #queryHasPackagesSelected:>
+	<commandQuerySelector: #hasPackages>
 	self browseMessageReferencesIn: self searchEnvironment!
 
 browseLooseMethods: aCollection
@@ -162,7 +162,7 @@ browseLooseMethods: aCollection
 browseMessageDefinitions
 	"Open a method browser displaying all implementors of the current selector in the system."
 
-	<commandQuerySelector: #queryHasMethodsSelected:>
+	<commandQuerySelector: #hasMethodsSelected>
 	self browseMessageDefinitionsIn: self browserEnvironment!
 
 browseMessageDefinitionsIn: aBrowserEnvironment
@@ -177,7 +177,7 @@ browseMessageDefinitionsIn: aBrowserEnvironment
 browseMessageReferences
 	"Open a method browser displaying all references to the current selector in the entire system."
 
-	<commandQuerySelector: #queryHasMethodsSelected:>
+	<commandQuerySelector: #hasMethodsSelected>
 	self browseMessageReferencesIn: self browserEnvironment!
 
 browseMessageReferencesIn: aBrowserEnvironment
@@ -192,7 +192,7 @@ browseMessageReferencesIn: aBrowserEnvironment
 browseMethodClass
 	"Open a default browser on the currently selected method."
 	
-	<commandQuerySelector: #queryHasMethodSelected:>
+	<commandQuerySelector: #hasMethodSelected>
 	^self selectedMethod browse!
 
 browseMethods
@@ -204,7 +204,7 @@ browseMethods
 	methods size == 1 ifTrue: [self browseMethodClass] ifFalse: [self browseLooseMethods: methods]!
 
 browsePackages
-	<commandQuerySelector: #queryHasPackagesSelected:>
+	<commandQuerySelector: #hasPackages>
 	^packagesPresenter browsePackageSources!
 
 browseReferencesCommand
@@ -233,13 +233,13 @@ browseSystem
 browseVariableClass
 	"Open a default browser on the currently selected method."
 
-	<commandQuerySelector: #queryHasLiveVariableSelected:>
+	<commandQuerySelector: #hasLiveVariableSelected>
 	^self sharedVariable browse!
 
 browseVariableReferences
 	"Browse all the methods which refer to the shared variable selected in the receiver."
 
-	<commandQuerySelector: #queryHasVariableSelected:>
+	<commandQuerySelector: #hasVariableSelected>
 	self model browseSharedVariableReferences: self sharedVariable in: self browserEnvironment!
 
 buildPopupForCommand: aSymbol 
@@ -492,21 +492,26 @@ customDrawClassList: anNMLVCUSTOMDRAW
 defaultHelpId
 	^10807!
 
+hasClassesSelected
+	^classesPresenter hasSelection!
+
 hasClassSelected
 	"Answer true if the receiver has a single (i.e. not multiple) class selected"
 
 	^classesPresenter hasSingleSelection!
 
-hasEditableMethodSelected
-	^self selectedMethod notNil!
-
-hasEditableMethodsSelected
-	^self selectedMethods notEmpty!
+hasLiveVariableSelected
+	| ref |
+	ref := self sharedVariable.
+	^ref notNil and: [ref isDefined]!
 
 hasMethodSelected
 	"Answer true if the receiver has a single (i.e. not multiple) method selected"
 
 	^self selectedMethod notNil!
+
+hasMethodsSelected
+	^self selectedMethods notEmpty!
 
 hasPackages
 	"Private - Answer whether one or more packages are currently selected."
@@ -517,6 +522,15 @@ hasPackageSelected
 	"Answer true if the receiver has a single (i.e. not multiple) package selected"
 
 	^self singlePackage notNil!
+
+hasResourcesSelected
+	^self resourceIdentifiers notEmpty!
+
+hasVariableSelected
+	^self sharedVariable notNil!
+
+hasVariablesSelected
+	^self variableNames notEmpty!
 
 initialize
 	"Private - Initialize the state of the receiver"
@@ -529,7 +543,7 @@ initialize
 inspectClasses
 	"Open an inspector on the currently selected classes."
 
-	<commandQuerySelector: #queryHasClassesSelected:>
+	<commandQuerySelector: #hasClassesSelected>
 	self inspectCollection: self selectedClasses!
 
 inspectCollection: aCollection
@@ -551,7 +565,7 @@ inspectItCommand
 inspectMethods
 	"Open an inspector on the currently selected methods."
 
-	<commandQuerySelector: #queryHasMethodsSelected:>
+	<commandQuerySelector: #hasMethodsSelected>
 	self inspectCollection: self selectedMethods!
 
 inspectResources
@@ -562,7 +576,7 @@ inspectResources
 inspectSharedVariables
 	"Open an inspector on the currently selected variables."
 
-	<commandQuerySelector: #queryHasVariablesSelected:>
+	<commandQuerySelector: #hasVariablesSelected>
 	self inspectCollection: (self variableNames collect: [:each | each bindingOrNil])!
 
 isCardUpToDate: aSymbol
@@ -920,32 +934,6 @@ queryBrowseMethods: aCommandQuery
 				expandMacrosWithArguments: { methods size = 1 ifTrue: [methods first] ifFalse: ['&Methods'] }
 				locale: Locale smalltalk)!
 
-queryHasClassesSelected: aCommandQuery
-	aCommandQuery isEnabled: classesPresenter hasSelection!
-
-queryHasLiveVariableSelected: aCommandQuery
-	| ref |
-	ref := self sharedVariable.
-	aCommandQuery isEnabled: (ref notNil and: [ref isDefined])!
-
-queryHasMethodSelected: aCommandQuery
-	aCommandQuery isEnabled: self hasMethodSelected!
-
-queryHasMethodsSelected: aCommandQuery
-	aCommandQuery isEnabled: self selectedMethods notEmpty!
-
-queryHasPackagesSelected: aCommandQuery
-	aCommandQuery isEnabled: self hasPackages!
-
-queryHasResourcesSelected: aCommandQuery
-	aCommandQuery isEnabled: self resourceIdentifiers notEmpty!
-
-queryHasVariableSelected: aCommandQuery
-	aCommandQuery isEnabled: self sharedVariable notNil!
-
-queryHasVariablesSelected: aCommandQuery
-	aCommandQuery isEnabled: self variableNames notEmpty!
-
 querySaveComment: aCommandQuery
 	(packagesPresenter hasSinglePackage and: [commentPresenter isModified])
 		ifTrue: 
@@ -979,7 +967,7 @@ release
 removeClasses
 	"Private - Remove the currently selected classes from the package."
 
-	<commandQuerySelector: #queryHasClassesSelected:>
+	<commandQuerySelector: #hasClassesSelected>
 	self selectedClasses do: [:e | e owningPackage removeClass: e]!
 
 removeLooseMethods
@@ -987,13 +975,13 @@ removeLooseMethods
 	Note that the methods are not actually removed from the system (i.e.
 	ownership is transferred to the package of their method class)."
 
-	<commandQuerySelector: #queryHasMethodsSelected:>
+	<commandQuerySelector: #hasMethodsSelected>
 	self selectedMethods do: [:each | each owningPackage removeMethod: each]!
 
 removeVariables
 	"Private - Remove the currently selected variables from their packages."
 
-	<commandQuerySelector: #queryHasVariablesSelected:>
+	<commandQuerySelector: #hasVariablesSelected>
 	self variableNames do: [:each | Package manager addVariableNamed: each to: nil]!
 
 resourceIdentifier
@@ -1252,7 +1240,7 @@ updateVariables
 upgradeResources
 	"Private - Uprade & resave the selected resources, by loading them into a ViewComposer."
 
-	<commandQuerySelector: #queryHasResourcesSelected:>
+	<commandQuerySelector: #hasResourcesSelected>
 	self resourceIdentifiers do: [:each | each reassign]!
 
 variableNames
@@ -1301,12 +1289,16 @@ createComponents!commands-actions!private! !
 createSchematicWiring!commands-actions!private! !
 customDrawClassList:!private! !
 defaultHelpId!public! !
+hasClassesSelected!private!testing! !
 hasClassSelected!public!testing! !
-hasEditableMethodSelected!public!testing! !
-hasEditableMethodsSelected!public!testing! !
+hasLiveVariableSelected!private!testing! !
 hasMethodSelected!public!testing! !
+hasMethodsSelected!public!testing! !
 hasPackages!private!testing! !
 hasPackageSelected!public!testing! !
+hasResourcesSelected!private!testing! !
+hasVariableSelected!private!testing! !
+hasVariablesSelected!private!testing! !
 initialize!initializing!private! !
 inspectClasses!commands-actions!public! !
 inspectCollection:!helpers!private! !
@@ -1346,16 +1338,8 @@ packages:!accessing!public! !
 promptToSaveChanges!helpers!private! !
 promptToSaveChanges:!helpers!private! !
 queryBrowseMethods:!commands-queries!private! !
-queryHasClassesSelected:!commands-queries!private! !
-queryHasLiveVariableSelected:!commands-queries!public! !
-queryHasMethodSelected:!commands-queries!private! !
-queryHasMethodsSelected:!commands-queries!private! !
-queryHasPackagesSelected:!commands-queries!private! !
-queryHasResourcesSelected:!commands-queries!private! !
-queryHasVariableSelected:!commands-queries!public! !
-queryHasVariablesSelected:!commands-queries!public! !
-querySaveComment:!commands-queries!public! !
-querySaveScript:!commands-queries!public! !
+querySaveComment:!commands-queries!private! !
+querySaveScript:!commands-queries!private! !
 refreshCard:!helpers!private! !
 release!dependency!public! !
 removeClasses!commands-actions!private! !

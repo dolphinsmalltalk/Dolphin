@@ -114,6 +114,9 @@ browseUnimplemented
 		caption: ('Unimplemented Selectors in <1p> (and prerequisites)' expandMacrosWith: sendingEnvironment)
 		environment: implementingEnvironment!
 
+canRefactor
+	^self developmentSystem canRefactor and: [self hasPackages]!
+
 checkCanUninstall: package
 	"Private - Uninstallation of the <Package>, package, has been initiated. Verify that it can be uninstalled
 	and if not inform the user accordingly and abort the operation."
@@ -1000,6 +1003,7 @@ browseIt!commands!public! !
 browseItCommand!helpers!private! !
 browsePackages!commands!public! !
 browseUnimplemented!public! !
+canRefactor!commands!private!refactoring! !
 checkCanUninstall:!helpers!private! !
 clearSelection!commands!private! !
 commonFolder:!operations!private! !

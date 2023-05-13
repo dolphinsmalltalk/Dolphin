@@ -249,12 +249,75 @@ commandDescription: item source: aView
 	^(super new initialize) 
 		commandDescription: item source: aView!
 
+findQueryHandlersIn: aClass
+	"Find all the command query annotations in the <Class> argument, and use them to build a map between command symbols (the selectors of the annotated methods), and selectors to perform to run the command query. The command query selectors can be unary, in which case the expectation is that the performed method is a testing method that will answer a <boolean> enablement status for the command, or can be a one-argument selector. Command queries that expect an argument are passed a <CommandQuery> object, and can update the enablement, checked status, and even change the command description text that will be displayed on a menu (where relevant)."
+
+	| queries |
+	queries := IdentityDictionary new.
+	aClass methodsDo: 
+			[:eachMethod |
+			eachMethod annotations
+				ifNotNil: 
+					[:annotations |
+					annotations selectorsAndArgumentsDo: 
+							[:annotationSelector :annotationArgs |
+							annotationSelector == #commandQuerySelector:
+								ifTrue: 
+									[| querySelector argc |
+									querySelector := annotationArgs single.
+									argc := querySelector argumentCount.
+									argc == 1
+										ifTrue: [queries at: eachMethod selector put: (Message selector: querySelector arguments: #('placeholder for aCommandQuery'))]
+										ifFalse: 
+											[argc == 0
+												ifTrue: 
+													[queries at: eachMethod selector put: [:rcvr :query | query isEnabled: (rcvr perform: querySelector)]]
+												ifFalse: [Notification signal: 'Ignoring invalid command query selector #' , querySelector]]]]]].
+	^queries!
+
 new
 	"Answers an instance of the receiver on a nil message"
 
-	^self commandDescription: CommandDescription new source: nil! !
+	^self commandDescription: CommandDescription new source: nil!
+
+validateQueriesIn: aCompilationResult
+	| method affectsQueries annotations |
+	method := aCompilationResult oldMethod.
+	affectsQueries := method notNil and: [method hasAnnotation: #commandQuerySelector:].
+	method := aCompilationResult method.
+	(method notNil and: [(annotations := method annotations) notNil])
+		ifTrue: 
+			[| class |
+			class := method methodClass.
+			annotations withSelector: #commandQuerySelector:
+				do: 
+					[:each |
+					| selector |
+					selector := each first.
+					(self validateQuerySelector: selector in: class)
+						ifFalse: 
+							["As there are validation issues, we want the change to be ignored, rather than used to build an invalid set of command queries"
+							^false]]].
+	^affectsQueries!
+
+validateQuerySelector: aSymbol in: aClass
+	| argc |
+	argc := aSymbol argumentCount.
+	argc > 1
+		ifTrue: 
+			[Warning signal: 'Command query selectors must have at most 1 argument, not the <2d> of <1p>'
+						<< { aSymbol. argc }.
+			^false].
+	(aClass canUnderstand: aSymbol)
+		ifFalse: 
+			[Warning signal: '<1p> does not understand the command query selector <2p>' << { aClass. aSymbol }.
+			^false].
+	^true! !
 !UI.CommandQuery class categoriesForMethods!
 commandDescription:source:!instance creation!public! !
+findQueryHandlersIn:!public! !
 new!instance creation!public! !
+validateQueriesIn:!private! !
+validateQuerySelector:in:!private! !
 !
 

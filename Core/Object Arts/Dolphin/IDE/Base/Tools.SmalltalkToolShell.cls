@@ -185,7 +185,7 @@ fontSize: anInteger
 forgetSize
 	"Forget the default size for new instances of this tool."
 
-	<commandQuerySelector: #queryForgetSize:>
+	<commandQuerySelector: #hasRememberedSize>
 	(self class)
 		defaultSlideyPinsMap: nil;
 		defaultExtent: nil!
@@ -211,6 +211,9 @@ hasPast
 	"Answer whether there is any past history to visit."
 
 	^self pastSize > 0!
+
+hasRememberedSize
+	^self class defaultExtent notNil!
 
 help
 	"Bring up a help page for this tool."
@@ -372,9 +375,6 @@ queryDeleteIt: aCommandQuery
 			["Not handled at this level, but continue searching the chain"
 			aCommandQuery isEnabled: false]
 		ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
-
-queryForgetSize: aCommandQuery
-	aCommandQuery isEnabled: self class defaultExtent notNil!
 
 queryHistoryBack: aCommandQuery
 	aCommandQuery isEnabled: self hasPast!
@@ -547,6 +547,7 @@ futureSize!accessing!public! !
 getPinStateFor:!accessing!private! !
 hasFuture!public!testing! !
 hasPast!public!testing! !
+hasRememberedSize!private!testing! !
 help!commands-actions!public! !
 historyBack!commands-actions!private! !
 historyBack:!commands-actions!private! !
@@ -571,7 +572,6 @@ queryBrowseHierarchy:!commands-queries!private! !
 queryBrowseIt:!commands-queries!private! !
 queryBrowseReferences:!commands-queries!private! !
 queryDeleteIt:!commands-queries!private! !
-queryForgetSize:!commands-queries!private! !
 queryHistoryBack:!commands-queries!private! !
 queryHistoryFastForward:!commands-queries!private! !
 queryHistoryForward:!commands-queries!private! !

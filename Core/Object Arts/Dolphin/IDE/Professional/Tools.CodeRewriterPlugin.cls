@@ -86,22 +86,6 @@ model: anObject
 	super model: anObject.
 	searchTextPresenter errorModel: self model statusModel.!
 
-queryCommand: aCommandQuery
-	"Private - Enter details about a potential command for the receiver 
-	into the <CommandQuery> argument."
-
-	| selector |
-	selector := aCommandQuery commandSymbol.
-	#search == selector
-		ifTrue: 
-			[aCommandQuery isEnabled: self hasSearchText.
-			^true].
-	#replace == selector
-		ifTrue: 
-			[aCommandQuery isEnabled: self hasSearchText.
-			^true].
-	^super queryCommand: aCommandQuery!
-
 renameMethodArgument
 	| pair |
 	pair := 'anObject' -> ''.
@@ -113,12 +97,14 @@ renameMethodArgument
 	self runTransformation: (TransformationRule renameArgument: pair key to: pair value)!
 
 replace
+	<commandQuerySelector: #hasSearchText>
 	self buildReplaceRule ifNotNil: [:rule | self runTransformation: rule]!
 
 replaceText
 	^replaceTextPresenter text!
 
 search
+	<commandQuerySelector: #hasSearchText>
 	searchTextPresenter clearStatus.
 	self buildSearchRule
 		ifNotNil: [:searchRule | (self runRule: searchRule) isNil ifFalse: [self browseRuleResults: searchRule]]!
@@ -135,21 +121,20 @@ transform
 		ifNotNil: [:rule | self runTransformation: rule]! !
 !Tools.CodeRewriterPlugin categoriesForMethods!
 browseRuleResults:!helpers!private! !
-buildReplaceRule!commands!private! !
+buildReplaceRule!helpers!private! !
 buildSearchRule!helpers!private! !
 captionText:!helpers!private! !
 createComponents!initializing!public! !
 defaultHelpId!public! !
 displayOn:!displaying!public! !
-hasSearchText!commands!private! !
+hasSearchText!private!testing! !
 model:!accessing!public! !
-queryCommand:!commands!private! !
-renameMethodArgument!commands!public! !
-replace!commands!public! !
+renameMethodArgument!commands-actions!public! !
+replace!commands-actions!public! !
 replaceText!accessing!private! !
-search!commands!public! !
+search!commands-actions!public! !
 searchText!accessing!private! !
-transform!commands!public! !
+transform!commands-actions!public! !
 !
 
 !Tools.CodeRewriterPlugin class methodsFor!

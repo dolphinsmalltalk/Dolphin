@@ -733,9 +733,9 @@ asDword!converting!public! !
 
 addCommandQueryHandler: aSymbol
 	Notification deprecated.	"This mechanism is replaced by <commandQuerySelector: #queryBlah:> annotations, declared in the corresponding command methods. These are added to a query selector map automatically on package load."
-	commandQueryHandlers := commandQueryHandlers
+	queryCommandHandlers := queryCommandHandlers
 				ifNil: [{ aSymbol }]
-				ifNotNil: [commandQueryHandlers copyWith: aSymbol]!
+				ifNotNil: [queryCommandHandlers copyWith: aSymbol]!
 
 removeCommandQueryHandler: aSymbol
 	"Unregister an additional CommandQuery handler to reverse out a previous
@@ -743,7 +743,7 @@ removeCommandQueryHandler: aSymbol
 	uninstalling command handlers."
 
 	Notification deprecated.	"see #addCommandQueryHandler:"
-	commandQueryHandlers := commandQueryHandlers copyWithout: aSymbol! !
+	queryCommandHandlers := queryCommandHandlers copyWithout: aSymbol! !
 !Presenter class categoriesForMethods!
 addCommandQueryHandler:!accessing!public! !
 removeCommandQueryHandler:!accessing!public! !
@@ -947,7 +947,7 @@ supportsAlphaBlending!capability enquiries!public! !
 clear
 	"Clears the contents of the receiver"
 
-	<commandQuerySelector: #queryCanCut:>
+	<commandQuerySelector: #canCut>
 	Notification deprecated.	"Use #clearAll"
 	self clearAll!
 

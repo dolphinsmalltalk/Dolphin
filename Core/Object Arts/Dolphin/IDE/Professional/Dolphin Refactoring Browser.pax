@@ -204,6 +204,9 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.VariableRefactoring class} #displayPrefix)
 	#(#{Tools.ChooseNamespaceDialog class} #resource_Refactoring_view)
 	#(#{Tools.ClassBrowserAbstract} #abstractInstanceVariables)
+	#(#{Tools.ClassBrowserAbstract} #canPushDownInstanceVariables)
+	#(#{Tools.ClassBrowserAbstract} #canPushDownMethods)
+	#(#{Tools.ClassBrowserAbstract} #canPushUpMethods)
 	#(#{Tools.ClassBrowserAbstract} #methodRefactoringTool)
 	#(#{Tools.ClassBrowserAbstract} #methodsToOverride)
 	#(#{Tools.ClassBrowserAbstract} #overrideMethods)
@@ -213,9 +216,6 @@ package setMethodNames: #(
 	#(#{Tools.ClassBrowserAbstract} #pushMethods:)
 	#(#{Tools.ClassBrowserAbstract} #pushUpMethods)
 	#(#{Tools.ClassBrowserAbstract} #queryOverrideMethods:)
-	#(#{Tools.ClassBrowserAbstract} #queryPushDownInstanceVariables:)
-	#(#{Tools.ClassBrowserAbstract} #queryPushDownMethods:)
-	#(#{Tools.ClassBrowserAbstract} #queryPushUpMethods:)
 	#(#{Tools.ClassBrowserAbstract} #removeInstanceVariables)
 	#(#{Tools.ClassBrowserAbstract} #renameMethod)
 	#(#{Tools.ClassBrowserAbstract} #selectedOverridableMethods)
@@ -229,12 +229,19 @@ package setMethodNames: #(
 	#(#{Tools.ClassSelector} #buildInstVarMenu:selectors:)
 	#(#{Tools.ClassSelector} #buildPullUpVariablesMenu:)
 	#(#{Tools.ClassSelector} #buildVariablesMenu:instVarSelectors:classVarSelectors:)
+	#(#{Tools.ClassSelector} #canChangeClassNamespace)
+	#(#{Tools.ClassSelector} #canPullUpClassVariables)
+	#(#{Tools.ClassSelector} #canPullUpInstanceVariables)
+	#(#{Tools.ClassSelector} #canPullUpVariables)
+	#(#{Tools.ClassSelector} #canPushDownInstanceVariables)
+	#(#{Tools.ClassSelector} #canPushDownVariables)
 	#(#{Tools.ClassSelector} #changeClassNamespace)
 	#(#{Tools.ClassSelector} #classRefactoringsMenu)
 	#(#{Tools.ClassSelector} #cloneClass:under:changes:)
 	#(#{Tools.ClassSelector} #convertToSibling)
 	#(#{Tools.ClassSelector} #createClassVariableAccessors)
 	#(#{Tools.ClassSelector} #createVariableAccessors)
+	#(#{Tools.ClassSelector} #hasImports)
 	#(#{Tools.ClassSelector} #populateClassVarMenu:selectors:)
 	#(#{Tools.ClassSelector} #populateInstVarMenu:selectors:)
 	#(#{Tools.ClassSelector} #populatePullUpVariableMenu:forClass:command:classVariables:ifTooMany:)
@@ -249,13 +256,6 @@ package setMethodNames: #(
 	#(#{Tools.ClassSelector} #pushDownInstanceVariables)
 	#(#{Tools.ClassSelector} #pushDownVariables)
 	#(#{Tools.ClassSelector} #queryAddInstanceVariable:)
-	#(#{Tools.ClassSelector} #queryHasVariablesSelected:)
-	#(#{Tools.ClassSelector} #queryPullUpClassVariables:)
-	#(#{Tools.ClassSelector} #queryPullUpInstanceVariables:)
-	#(#{Tools.ClassSelector} #queryPullUpVariables:)
-	#(#{Tools.ClassSelector} #queryPushDownInstanceVariables:)
-	#(#{Tools.ClassSelector} #queryPushDownVariables:)
-	#(#{Tools.ClassSelector} #queryRemoveImport:)
 	#(#{Tools.ClassSelector} #removeClassVariables)
 	#(#{Tools.ClassSelector} #removeDuplicateMethods)
 	#(#{Tools.ClassSelector} #removeImport)
@@ -286,6 +286,7 @@ package setMethodNames: #(
 	#(#{Tools.PackageBrowserShell} #changeClassNamespace)
 	#(#{Tools.PackageBrowserShell} #chooseMethodsForRefactoring:)
 	#(#{Tools.PackageBrowserShell} #classRefactoringsMenu)
+	#(#{Tools.PackageBrowserShell} #hasMethodWithArguments)
 	#(#{Tools.PackageBrowserShell} #hasRefactorableMethodSelected)
 	#(#{Tools.PackageBrowserShell} #methodRefactoringsMenu)
 	#(#{Tools.PackageBrowserShell} #newMethodNamePrompter:caption:allowExisting:)
@@ -295,8 +296,6 @@ package setMethodNames: #(
 	#(#{Tools.PackageBrowserShell} #performMethodRenameRefactoring:)
 	#(#{Tools.PackageBrowserShell} #performMethodsRefactoring:name:)
 	#(#{Tools.PackageBrowserShell} #promptForMethodName:caption:allowExisting:)
-	#(#{Tools.PackageBrowserShell} #queryHasClassSelected:)
-	#(#{Tools.PackageBrowserShell} #queryRemoveParameter:)
 	#(#{Tools.PackageBrowserShell} #removeMethod)
 	#(#{Tools.PackageBrowserShell} #removeMethods)
 	#(#{Tools.PackageBrowserShell} #removeParameter)
@@ -307,7 +306,6 @@ package setMethodNames: #(
 	#(#{Tools.PackageBrowserShell} #renameMethod)
 	#(#{Tools.PackageBrowserShell} #renameMethodReferences:)
 	#(#{Tools.PackageSelector} #moveAllTempsToInnerScope)
-	#(#{Tools.PackageSelector} #queryPackageRefactoring:)
 	#(#{Tools.PackageSelector} #removeDuplicateMethods)
 	#(#{Tools.SmalltalkToolShell} #chooseMethodForRefactoring:)
 	#(#{UI.Dialog} #validationDwell)
@@ -2435,8 +2433,20 @@ resource_Refactoring_view!public!resources-views! !
 abstractInstanceVariables
 	"Private - Invoke the 'Abstract Instance Variable' refactoring on the currently selected variables."
 
-	<commandQuerySelector: #queryHasInstanceVariablesSelected:>
+	<commandQuerySelector: #hasInstanceVariablesSelected>
 	self model abstractInstanceVariables: self variables within: BrowserEnvironment new!
+
+canPushDownInstanceVariables
+	| class |
+	^(class := self actualClass) notNil and: [class subclasses notEmpty and: [self variables notEmpty]]!
+
+canPushDownMethods
+	^self methodRefactoringTool canPushDownMethods
+		and: [(self selectedMethods collect: [:each | each methodClass]) asSet size = 1]!
+
+canPushUpMethods
+	^self methodRefactoringTool canPushUpMethods
+		and: [(self selectedMethods collect: [:each | each methodClass]) asSet size = 1]!
 
 methodRefactoringTool
 	^methodBrowserPresenter refactoringTool!
@@ -2501,18 +2511,18 @@ overrideMethods
 protectInstanceVariables
 	"Private - Invoke the 'Protect/Concrete Instance Variable' refactoring on the users choice of instance variables."
 
-	<commandQuerySelector: #queryHasInstanceVariablesSelected:>
+	<commandQuerySelector: #hasInstanceVariablesSelected>
 	self model protectInstanceVariables: self variables!
 
 pushDownInstanceVariables
 	"Invoke the 'Push Down Instance Variable' refactoring on the currently selected variables."
 
-	<commandQuerySelector: #queryPushDownInstanceVariables:>
+	<commandQuerySelector: #canPushDownInstanceVariables>
 	self model pushDownInstanceVariables: self variables!
 
 pushDownMethods
 	<acceleratorKey: 'Shift+Ctrl+7'>
-	<commandQuerySelector: #queryPushDownMethods:>
+	<commandQuerySelector: #canPushDownMethods>
 	self pushMethods: false!
 
 pushMethods: aBoolean
@@ -2531,7 +2541,7 @@ pushMethods: aBoolean
 
 pushUpMethods
 	<acceleratorKey: 'Shift+Ctrl+6'>
-	<commandQuerySelector: #queryPushUpMethods:>
+	<commandQuerySelector: #canPushUpMethods>
 	self pushMethods: true!
 
 queryOverrideMethods: aCommandQuery
@@ -2547,23 +2557,10 @@ queryOverrideMethods: aCommandQuery
 						}
 					locale: Locale smalltalk)!
 
-queryPushDownInstanceVariables: aCommandQuery
-	| class |
-	aCommandQuery isEnabled: ((class := self actualClass) notNil
-				and: [class subclasses notEmpty and: [self variables notEmpty]])!
-
-queryPushDownMethods: aCommandQuery
-	aCommandQuery isEnabled: (self methodRefactoringTool canPushDownMethods
-				and: [(self selectedMethods collect: [:each | each methodClass]) asSet size = 1])!
-
-queryPushUpMethods: aCommandQuery
-	aCommandQuery isEnabled: (self methodRefactoringTool canPushUpMethods
-				and: [(self selectedMethods collect: [:each | each methodClass]) asSet size = 1])!
-
 removeInstanceVariables
 	"Invoke the 'Remove Instance Variable' refactoring on the currently selected variables."
 
-	<commandQuerySelector: #queryHasInstanceVariablesSelected:>
+	<commandQuerySelector: #hasInstanceVariablesSelected>
 	self model removeInstanceVariables: self variables within: self searchEnvironment!
 
 renameMethod
@@ -2576,6 +2573,9 @@ selectedOverridableMethods
 	^self selectedMethods reject: [:each | each methodClass == class]! !
 !Tools.ClassBrowserAbstract categoriesForMethods!
 abstractInstanceVariables!commands-actions!private!refactoring! !
+canPushDownInstanceVariables!private!refactoring!testing! !
+canPushDownMethods!private!refactoring!testing! !
+canPushUpMethods!private!refactoring!updating! !
 methodRefactoringTool!commands-actions!private!refactoring! !
 methodsToOverride!helpers!private! !
 overrideMethods!commands-actions!private!refactoring! !
@@ -2585,9 +2585,6 @@ pushDownMethods!commands-actions!public!refactoring! !
 pushMethods:!commands-actions!private!refactoring! !
 pushUpMethods!commands-actions!public!refactoring! !
 queryOverrideMethods:!commands-queries!private!refactoring! !
-queryPushDownInstanceVariables:!commands-queries!private!refactoring! !
-queryPushDownMethods:!commands-queries!private!refactoring! !
-queryPushUpMethods:!commands-queries!private!refactoring! !
 removeInstanceVariables!public!refactoring! !
 renameMethod!accessing!private! !
 selectedOverridableMethods!accessing!private! !
@@ -2598,7 +2595,7 @@ selectedOverridableMethods!accessing!private! !
 developmentSystem
 	^SmalltalkSystem current! !
 !Tools.ClassBrowserPlugin categoriesForMethods!
-developmentSystem!commands!private! !
+developmentSystem!accessing!private! !
 !
 
 !Tools.ClassSelector methodsFor!
@@ -2609,7 +2606,7 @@ abstractClassVariables
 	same name) which has the advantage of not requiring a dialog, but which enables the user to 
 	choose only one instance variable at a time."
 
-	<commandQuerySelector: #queryClassVariablesCommand:>
+	<commandQuerySelector: #hasClassWithStaticVariables>
 	(self chooseVariables: true caption: 'Abstract Class Variables…')
 		ifNotNil: [:varNames | self developmentSystem abstractClassVariables: varNames within: BrowserEnvironment new]!
 
@@ -2619,23 +2616,23 @@ abstractInstanceVariables
 	same name) which has the advantage of not requiring a dialog, but which enables the user to 
 	choose only one instance variable at a time."
 
-	<commandQuerySelector: #queryInstanceVariablesCommand:>
+	<commandQuerySelector: #hasClassWithInstanceVariables>
 	(self chooseVariables: false caption: 'Abstract Instance Variables…')
 		ifNotNil: [:varNames | self developmentSystem abstractInstanceVariables: varNames within: BrowserEnvironment new]!
 
 abstractVariables
-	<commandQuerySelector: #queryHasVariablesSelected:>
+	<commandQuerySelector: #hasClassWithVariablesSelected>
 	Sound warningBeep!
 
 addClassVariable
 	"Private - Invoke the 'Add Class Variable' refactoring to add a class variable to the
 	currently selected class."
 
-	<commandQuerySelector: #queryClassCommand:>
+	<commandQuerySelector: #hasSingleSelection>
 	self developmentSystem addClassVariableTo: self selection!
 
 addImport
-	<commandQuerySelector: #queryClassesCommand:>
+	<commandQuerySelector: #hasSelection>
 	self developmentSystem addImportToClasses: self selections!
 
 addInstanceVariable
@@ -2684,12 +2681,49 @@ buildVariablesMenu: aMenu instVarSelectors: instVarSelectors classVarSelectors: 
 	(aMenu notEmpty and: [self selection classPool notEmpty]) ifTrue: [aMenu addSeparator].
 	self populateClassVarMenu: aMenu selectors: classVarSelectors!
 
+canChangeClassNamespace
+	^self developmentSystem canChangeClassNamespaces: self selections!
+
+canPullUpClassVariables
+	| class |
+	class := self actualClass.
+	^class notNil
+		and: [class instanceClass allSubclasses anySatisfy: [:each | each classBindingNames notEmpty]]!
+
+canPullUpInstanceVariables
+	| class |
+	class := self actualClass.
+	^class notNil and: [class allSubclasses anySatisfy: [:each | each instanceVariableNames notEmpty]]!
+
+canPullUpVariables
+	| class |
+	class := self actualClass.
+	^class notNil and: 
+			[| isFixed |
+			isFixed := ClassBuilder isFixedLayout: class.
+			class allSubclasses anySatisfy: 
+					[:each |
+					(isFixed not and: [each instanceVariableNames notEmpty])
+						or: [each instanceClass classBindingNames notEmpty]]]!
+
+canPushDownInstanceVariables
+	| class |
+	class := self actualClass.
+	^class notNil and: [class subclasses notEmpty and: [class instanceVariableNames notEmpty]]!
+
+canPushDownVariables
+	| class |
+	class := self actualClass.
+	^class notNil and: 
+			[class subclasses notEmpty
+				and: [class instanceVariableNames notEmpty or: [class instanceClass definedBindings notEmpty]]]!
+
 changeClassNamespace
-	<commandQuerySelector: #queryChangeClassNamespace:>
+	<commandQuerySelector: #canChangeClassNamespace>
 	self developmentSystem changeNamespaceOfClasses: self selections!
 
 classRefactoringsMenu
-	<commandQuerySelector: #queryClassesCommand:>
+	<commandQuerySelector: #hasSelection>
 	Sound warningBeep!
 
 cloneClass: aClass under: superClass changes: aCompositeRefactoryChange
@@ -2713,19 +2747,25 @@ convertToSibling
 	class and its current subclasses, copying common methods to the new superclass and adding 
 	#subclassResponsibility methods as necessary)."
 
-	<commandQuerySelector: #queryClassCommand:>
+	<commandQuerySelector: #hasSingleSelection>
 	self developmentSystem convertToSibling: self selection!
 
 createClassVariableAccessors
 	"Prompt to generate compiled 'get' and 'set' accessor methods for the immediate
 	class variables of the selected class."
 
-	<commandQuerySelector: #queryClassVariablesCommand:>
+	<commandQuerySelector: #hasClassWithStaticVariables>
 	self createVariableAccessors: true!
 
 createVariableAccessors
-	<commandQuerySelector: #queryHasVariablesSelected:>
+	<commandQuerySelector: #hasClassWithVariablesSelected>
 	Sound warningBeep!
+
+hasImports
+	| imports |
+	imports := Set new.
+	self selections do: [:each | imports addAll: each imports].
+	^imports notEmpty!
 
 populateClassVarMenu: aMenu selectors: selectors
 	| class varNames |
@@ -2838,12 +2878,12 @@ protectInstanceVariables
 	same name) which has the advantage of not requiring a dialog, but which enables the user to 
 	choose only one instance variable at a time."
 
-	<commandQuerySelector: #queryInstanceVariablesCommand:>
+	<commandQuerySelector: #hasClassWithInstanceVariables>
 	(self chooseVariables: false caption: 'Protect Instance Variables…')
 		ifNotNil: [:varNames | self developmentSystem protectInstanceVariables: varNames]!
 
 protectVariables
-	<commandQuerySelector: #queryHasVariablesSelected:>
+	<commandQuerySelector: #hasClassWithVariablesSelected>
 	Sound warningBeep!
 
 pullUpClassVariables
@@ -2852,7 +2892,7 @@ pullUpClassVariables
 	same name) which has the advantage of not requiring a dialog, but which enables the user to 
 	choose only one instance variable at a time."
 
-	<commandQuerySelector: #queryPullUpClassVariables:>
+	<commandQuerySelector: #canPullUpClassVariables>
 	| class pairs |
 	class := self selection.
 	pairs := self
@@ -2877,7 +2917,7 @@ pullUpInstanceVariables
 	same name) which has the advantage of not requiring a dialog, but which enables the user to 
 	choose only one instance variable at a time."
 
-	<commandQuerySelector: #queryPullUpInstanceVariables:>
+	<commandQuerySelector: #canPullUpInstanceVariables>
 	| class pairs |
 	class := self actualClass.
 	pairs := self
@@ -2912,7 +2952,7 @@ pullUpVariableNamePairs: aBoolean for: class maximum: anInteger
 	^pairs!
 
 pullUpVariables
-	<commandQuerySelector: #queryPullUpVariables:>
+	<commandQuerySelector: #canPullUpVariables>
 	Sound warningBeep!
 
 pushDownClassVariables
@@ -2921,7 +2961,7 @@ pushDownClassVariables
 	same name) which has the advantage of not requiring a dialog, but which enables the user to 
 	choose only one instance variable at a time."
 
-	<commandQuerySelector: #queryClassVariablesCommand:>
+	<commandQuerySelector: #hasClassWithStaticVariables>
 	(self chooseVariables: true caption: 'Push Down Class Variables…')
 		ifNotNil: [:varNames | self developmentSystem pushDownInstanceVariables: varNames]!
 
@@ -2931,12 +2971,12 @@ pushDownInstanceVariables
 	same name) which has the advantage of not requiring a dialog, but which enables the user to 
 	choose only one instance variable at a time."
 
-	<commandQuerySelector: #queryPushDownInstanceVariables:>
+	<commandQuerySelector: #canPushDownInstanceVariables>
 	(self chooseVariables: false caption: 'Push Down Instance Variables…')
 		ifNotNil: [:varNames | self developmentSystem pushDownInstanceVariables: varNames]!
 
 pushDownVariables
-	<commandQuerySelector: #queryPushDownVariables:>
+	<commandQuerySelector: #canPushDownVariables>
 	Sound warningBeep!
 
 queryAddInstanceVariable: aCommandQuery
@@ -2948,68 +2988,18 @@ queryAddInstanceVariable: aCommandQuery
 					locale: Locale smalltalk);
 		isEnabled: (class notNil and: [class isPointers])!
 
-queryHasVariablesSelected: aCommandQuery
-	| class |
-	class := self actualClass.
-	aCommandQuery isEnabled: (class notNil
-				and: [class instanceVariableNames notEmpty or: [class instanceClass classBindingNames notEmpty]])!
-
-queryPullUpClassVariables: aCommandQuery
-	| class |
-	class := self actualClass.
-	aCommandQuery isEnabled: (class notNil
-				and: [class instanceClass allSubclasses anySatisfy: [:each | each classBindingNames notEmpty]])!
-
-queryPullUpInstanceVariables: aCommandQuery
-	| class |
-	class := self actualClass.
-	aCommandQuery isEnabled: (class notNil
-				and: [class allSubclasses anySatisfy: [:each | each instanceVariableNames notEmpty]])!
-
-queryPullUpVariables: aCommandQuery
-	| class |
-	class := self actualClass.
-	aCommandQuery
-		isEnabled: (class notNil and: 
-					[| isFixed |
-					isFixed := ClassBuilder isFixedLayout: class.
-					class allSubclasses anySatisfy: 
-							[:each |
-							(isFixed not and: [each instanceVariableNames notEmpty])
-								or: [each instanceClass classBindingNames notEmpty]]])!
-
-queryPushDownInstanceVariables: aCommandQuery
-	| class |
-	class := self actualClass.
-	aCommandQuery
-		isEnabled: (class notNil and: [class subclasses notEmpty and: [class instanceVariableNames notEmpty]])!
-
-queryPushDownVariables: aCommandQuery
-	| class |
-	class := self actualClass.
-	aCommandQuery
-		isEnabled: (class notNil and: 
-					[class subclasses notEmpty
-						and: [class instanceVariableNames notEmpty or: [class instanceClass definedBindings notEmpty]]])!
-
-queryRemoveImport: aCommandQuery
-	| imports |
-	imports := Set new.
-	self selections do: [:each | imports addAll: each imports].
-	aCommandQuery isEnabled: imports notEmpty!
-
 removeClassVariables
 	"Invoke the 'Remove Class Variable' refactoring on the users choice of class variables.
 	Note that the view may also implement this command with a dynamic pull-out menu (of the
 	same name) which has the advantage of not requiring a dialog, but which enables the user to 
 	choose only one instance variable at a time."
 
-	<commandQuerySelector: #queryClassVariablesCommand:>
+	<commandQuerySelector: #hasClassWithStaticVariables>
 	(self chooseVariables: true caption: 'Remove Class Variables…')
 		ifNotNil: [:pairs | self developmentSystem removeStaticVariables: pairs within: self searchEnvironment]!
 
 removeDuplicateMethods
-	<commandQuerySelector: #queryClassCommand:>
+	<commandQuerySelector: #hasSingleSelection>
 	| class |
 	class := self actualClass.
 	(self developmentSystem removeMethodsDuplicatedInSuperclassOf: class)
@@ -3022,7 +3012,7 @@ removeDuplicateMethods
 				open]!
 
 removeImport
-	<commandQuerySelector: #queryRemoveImport:>
+	<commandQuerySelector: #hasImports>
 	self developmentSystem removeImportFromClasses: self selections!
 
 removeInstanceVariables
@@ -3031,12 +3021,12 @@ removeInstanceVariables
 	same name) which has the advantage of not requiring a dialog, but which enables the user to 
 	choose only one instance variable at a time."
 
-	<commandQuerySelector: #queryInstanceVariablesCommand:>
+	<commandQuerySelector: #hasClassWithInstanceVariables>
 	(self chooseVariables: false caption: 'Remove Instance Variables…')
 		ifNotNil: [:varNames | self developmentSystem removeInstanceVariables: varNames within: self searchEnvironment]!
 
 removeVariables
-	<commandQuerySelector: #queryHasVariablesSelected:>
+	<commandQuerySelector: #hasClassWithVariablesSelected>
 	Sound warningBeep! !
 !Tools.ClassSelector categoriesForMethods!
 abstractClassVariables!commands-actions!public!refactoring! !
@@ -3048,12 +3038,19 @@ addInstanceVariable!commands-actions!private!refactoring! !
 buildInstVarMenu:selectors:!menus!private!refactoring! !
 buildPullUpVariablesMenu:!menus!private!refactoring! !
 buildVariablesMenu:instVarSelectors:classVarSelectors:!menus!private!refactoring! !
+canChangeClassNamespace!private!testing! !
+canPullUpClassVariables!private!refactoring!testing! !
+canPullUpInstanceVariables!private!refactoring!testing! !
+canPullUpVariables!private!refactoring!testing! !
+canPushDownInstanceVariables!private!refactoring!testing! !
+canPushDownVariables!private!refactoring!testing! !
 changeClassNamespace!commands-actions!public!refactoring! !
 classRefactoringsMenu!commands-menus!public!refactoring! !
 cloneClass:under:changes:!private! !
 convertToSibling!commands-actions!public!refactoring! !
 createClassVariableAccessors!commands-actions!public!refactoring! !
 createVariableAccessors!commands-menus!private! !
+hasImports!private!refactoring!testing! !
 populateClassVarMenu:selectors:!menus!private!refactoring! !
 populateInstVarMenu:selectors:!menus!private!refactoring! !
 populatePullUpVariableMenu:forClass:command:classVariables:ifTooMany:!menus!private!refactoring! !
@@ -3068,13 +3065,6 @@ pushDownClassVariables!commands-actions!public!refactoring! !
 pushDownInstanceVariables!commands-actions!public!refactoring! !
 pushDownVariables!commands-actions!private! !
 queryAddInstanceVariable:!commands-queries!private! !
-queryHasVariablesSelected:!commands-queries!private! !
-queryPullUpClassVariables:!commands-queries!private! !
-queryPullUpInstanceVariables:!commands-queries!private! !
-queryPullUpVariables:!commands-queries!private! !
-queryPushDownInstanceVariables:!commands-queries!private! !
-queryPushDownVariables:!commands-queries!private! !
-queryRemoveImport:!commands-queries!private! !
 removeClassVariables!commands-actions!public!refactoring! !
 removeDuplicateMethods!commands-actions!private!refactoring! !
 removeImport!commands-actions!public!refactoring! !
@@ -3260,7 +3250,7 @@ renameVariable:operation:validationBlock:!operations!private!refactoring! !
 !Tools.PackageBrowserShell methodsFor!
 
 addImport
-	<commandQuerySelector: #queryHasClassesSelected:>
+	<commandQuerySelector: #hasClassesSelected>
 	self developmentSystem addImportToClasses: self selectedClasses!
 
 addParameter
@@ -3268,7 +3258,7 @@ addParameter
 	the selector of the method to which the parameter is added, and constrained to operate
 	only within the selected packages."
 
-	<commandQuerySelector: #queryHasPackagesSelected:>
+	<commandQuerySelector: #hasPackages>
 	(self chooseMethodForRefactoring: 'Add Parameter in Package(s)…') 
 		ifNotNil: [:method | self addParameterTo: method]
 !
@@ -3281,11 +3271,11 @@ addParameterToMethod
 	'Add Parameter to Method refactoring' against a selected loose method, 
 	constrained within the selected packages."
 
-	<commandQuerySelector: #queryHasMethodSelected:>
+	<commandQuerySelector: #hasMethodSelected>
 	self addParameterTo: self selectedMethod!
 
 changeClassNamespace
-	<commandQuerySelector: #queryHasClassesSelected:>
+	<commandQuerySelector: #hasClassesSelected>
 	self developmentSystem changeNamespaceOfClasses: self selectedClasses!
 
 chooseMethodsForRefactoring: aString
@@ -3303,14 +3293,19 @@ chooseMethodsForRefactoring: aString
 	^definitions!
 
 classRefactoringsMenu
-	<commandQuerySelector: #queryHasPackagesSelected:>
+	<commandQuerySelector: #hasPackages>
 	Sound warningBeep!
 
+hasMethodWithArguments
+	| method |
+	method := self selectedMethod.
+	^method notNil and: [method argumentCount > 0]!
+
 hasRefactorableMethodSelected
-	^self hasEditableMethodSelected!
+	^self hasMethodSelected!
 
 methodRefactoringsMenu
-	<commandQuerySelector: #queryHasPackagesSelected:>
+	<commandQuerySelector: #hasPackages:>
 	Sound warningBeep!
 
 newMethodNamePrompter: aCompiledMethod caption: aString allowExisting: aBoolean
@@ -3389,14 +3384,6 @@ promptForMethodName: aCompiledMethod caption: aString allowExisting: aBoolean
 		caption: aString
 		allowExisting: aBoolean) showModal!
 
-queryHasClassSelected: aCommandQuery
-	aCommandQuery isEnabled: self hasClassSelected!
-
-queryRemoveParameter: aCommandQuery
-	| method |
-	method := self selectedMethod.
-	aCommandQuery isEnabled: (self hasPackages and: [method notNil and: [method argumentCount > 0]])!
-
 removeMethod
 	"Private - Prompt the user for a selector and invoke the 'Safe Remove Method' refactoring to 
 	remove the specified methods from the system if defined but not referenced from within 
@@ -3407,7 +3394,7 @@ removeMethod
 	methods selected on the methods tab. It allows the selection of an arbitrary method to be
 	renamed at package scope, not just loose methods."
 
-	<commandQuerySelector: #queryHasMethodsSelected:>
+	<commandQuerySelector: #hasMethodsSelected>
 	| methods |
 	methods := self chooseMethodsForRefactoring: 'Safe Remove Methods from Package(s)…'.
 	methods isEmpty
@@ -3443,7 +3430,7 @@ removeParameter
 	"Private - Command to invoke the Remove Parameter to Method refactoring, but constrained to operate
 	only within the selected packages."
 
-	<commandQuerySelector: #queryHasPackagesSelected:>
+	<commandQuerySelector: #hasPackages>
 	| method ast arg |
 	method := self chooseMethodForRefactoring: 'Remove Parameter in Package(s)…'.
 	method isNil ifTrue: [^self].
@@ -3454,13 +3441,13 @@ removeParameter
 	arg notNil ifTrue: [methodRefactoringTool removeParameter: arg from: method]!
 
 removeParameterMenu
-	<commandQuerySelector: #queryRemoveParameter:>
+	<commandQuerySelector: #hasMethodWithArguments>
 	Sound warningBeep!
 
 renameClass
 	"Private - Initiate in-place label edit for the selected class."
 
-	<commandQuerySelector: #queryHasClassSelected:>
+	<commandQuerySelector: #hasClassSelected>
 	classesPresenter view editSelectionLabel!
 
 renameLooseMethod
@@ -3485,7 +3472,7 @@ renameMethod
 	method selected on the methods tab. It allows the selection of an arbitrary method to be
 	renamed at package scope, not just loose methods."
 
-	<commandQuerySelector: #queryHasPackagesSelected:>
+	<commandQuerySelector: #hasPackages>
 	(self chooseMethodForRefactoring: 'Rename Method in Package(s)…') 
 		ifNotNil: [:method | methodRefactoringTool renameMethod: method]!
 
@@ -3510,6 +3497,7 @@ addParameterToMethod!commands-actions!public! !
 changeClassNamespace!commands-actions!public! !
 chooseMethodsForRefactoring:!private!refactoring! !
 classRefactoringsMenu!commands-menus!public! !
+hasMethodWithArguments!private!testing! !
 hasRefactorableMethodSelected!private!refactoring!testing! !
 methodRefactoringsMenu!commands-menus!public! !
 newMethodNamePrompter:caption:allowExisting:!helpers!private!refactoring! !
@@ -3519,8 +3507,6 @@ parseTree!helpers!private! !
 performMethodRenameRefactoring:!helpers!private!refactoring! !
 performMethodsRefactoring:name:!private! !
 promptForMethodName:caption:allowExisting:!helpers!private!refactoring! !
-queryHasClassSelected:!commands-queries!private! !
-queryRemoveParameter:!commands-queries!private! !
 removeMethod!commands-actions!public! !
 removeMethods!commands-actions!public! !
 removeParameter!commands-actions!private! !
@@ -3542,16 +3528,8 @@ moveAllTempsToInnerScope
 Are you sure that you would like to proceed?')
 			ifTrue: [self developmentSystem moveAllTempsToInnerScope: self selectionEnvironment]!
 
-queryPackageRefactoring: aCommandQuery
-	"Private - Enters details about a potential refactoring command for the receiver into the 
-	<CommandQuery> argument."
-
-	| canRefactor |
-	canRefactor := self developmentSystem canRefactor and: [self hasPackages].
-	aCommandQuery isEnabled: canRefactor!
-
 removeDuplicateMethods
-	<commandQuerySelector: #queryPackageRefactoring:>
+	<commandQuerySelector: #canRefactor>
 	| count pkgs |
 	pkgs := self packages.
 	count := pkgs inject: 0 into: [:sum :eachPackage | sum + eachPackage classNames size].
@@ -3572,7 +3550,6 @@ removeDuplicateMethods
 		showModal! !
 !Tools.PackageSelector categoriesForMethods!
 moveAllTempsToInnerScope!commands!private!refactoring! !
-queryPackageRefactoring:!commands!private!refactoring! !
 removeDuplicateMethods!development!private! !
 !
 

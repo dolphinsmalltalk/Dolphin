@@ -1231,7 +1231,7 @@ charNearestPosition: aPoint
 clearAll
 	"Delete all text in the document."
 
-	<commandQuerySelector: #queryCanCut:>
+	<commandQuerySelector: #canCut>
 	self modifyText: [self basicClearAll]!
 
 clearContainerIndicators
@@ -9555,7 +9555,7 @@ twiddleLines
 undo
 	"Undo one action in the undo history."
 
-	<commandQuerySelector: #queryCanUndo:>
+	<commandQuerySelector: #canUndo>
 	self cancelModes.
 	self basicUndo!
 

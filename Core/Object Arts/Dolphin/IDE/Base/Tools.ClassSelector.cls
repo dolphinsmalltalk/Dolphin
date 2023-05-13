@@ -60,11 +60,11 @@ actualClasses
 browseChangedMethods
 	"Browse the changed methods in the selected classes"
 
-	<commandQuerySelector: #queryClassesCommand:>
+	<commandQuerySelector: #hasSelection>
 	self developmentSystem browseChangedMethodsOfClasses: self selections!
 
 browseClass
-	<commandQuerySelector: #queryClassCommand:>
+	<commandQuerySelector: #hasSingleSelection>
 	self selection browse!
 
 browseClassPackage
@@ -78,7 +78,7 @@ browseClassPackage
 browseClassReferences
 	"Browse all the methods which refer to the class selected in the receiver."
 
-	<commandQuerySelector: #queryClassesCommand:>
+	<commandQuerySelector: #hasSelection>
 	| env references |
 	env := self searchEnvironment.
 	references := Array writeStream: 2.
@@ -93,7 +93,7 @@ browseClassReferences
 browseClassVariables
 	"Browse one of the class variables of the selected class."
 
-	<commandQuerySelector: #queryClassCommand:>
+	<commandQuerySelector: #hasSingleSelection>
 	self developmentSystem browseClassVariables: self selection!
 
 browseHierarchy
@@ -105,7 +105,7 @@ browseHierarchy
 browseInstanceVariables
 	"Browse methods in the selected class and its subclasses that reference one of its variables."
 
-	<commandQuerySelector: #queryInstanceVariablesCommand:>
+	<commandQuerySelector: #hasClassWithInstanceVariables>
 	self developmentSystem browseInstanceVariables: self actualClass!
 
 browseIt
@@ -122,20 +122,20 @@ browseItCommand
 	^nil!
 
 browseMenu
-	<commandQuerySelector: #queryClassesCommand:>
+	<commandQuerySelector: #hasSelection>
 	!
 
 browsePackages
 	"Implement the context-sensitive browse packages command by browsing to the currently
 	selected class' package."
 
-	<commandQuerySelector: #queryClassCommand:>
+	<commandQuerySelector: #hasSingleSelection>
 	self browseClassPackage!
 
 browsePublishedAspects
 	"Browse the published aspects for the current class. Copy the choice (if any) to the clipboard."
 
-	<commandQuerySelector: #queryBrowsePublishedAspects:>
+	<commandQuerySelector: #hasClassWithPublishedAspects>
 	| class pubs choice |
 	class := self selection.
 	pubs := class publishedAspectsOfInstances.
@@ -148,7 +148,7 @@ browsePublishedEvents
 	"Browse the published events that can be triggered by instances of the current class.
 	Copy the chosen symbolic event name (if any) to the clipboard."
 
-	<commandQuerySelector: #queryBrowsePublishedEvents:>
+	<commandQuerySelector: #hasClassWithPublishedEvents>
 	| pubEvents choice class |
 	class := self selection.
 	pubEvents := class publishedEventsOfInstances asSortedCollection.
@@ -160,7 +160,7 @@ browsePublishedEvents
 browseReferences
 	"Context-sensitive browse references command (Shift+F12)."
 
-	<commandQuerySelector: #queryClassesCommand:>
+	<commandQuerySelector: #hasSelection>
 	<acceleratorKey: 'Shift+F12'>
 	self browseClassReferences!
 
@@ -172,11 +172,12 @@ browserEnvironment
 browseSystem
 	"Open a new system browser on at the same point as the receiver."
 
-	<commandQuerySelector: #queryClassCommand:>
+	<commandQuerySelector: #hasSingleSelection>
 	self developmentSystem browseSystem: self actualClass!
 
 browseVariablesMenu
-	<commandQuerySelector: #queryClassCommand:>!
+	<commandQuerySelector: #hasSingleSelection>
+	!
 
 buildAllVariablesMenu: aMenu
 	"Private - Build a dynamic pull-out menu which lists all of a class' existing 
@@ -235,10 +236,13 @@ buildViewsMenu: aMenu command: selector
 canRefactor
 	^self developmentSystem canRefactor!
 
+canRenameClass
+	^self developmentSystem canRenameClass: self selectionOrNil!
+
 categorizeClass
 	"Invokes a dialog to categorize the current class"
 
-	<commandQuerySelector: #queryClassCommand:>
+	<commandQuerySelector: #hasSingleSelection>
 	| chosenCategories aClass originalCategories categories |
 	aClass := self selection.
 	originalCategories := aClass categories.
@@ -276,7 +280,7 @@ classNamesSelector: aSymbol
 classPackage
 	"Prompt for the user to repackage the selected class."
 
-	<commandQuerySelector: #queryClassCommand:>
+	<commandQuerySelector: #hasSingleSelection>
 	| class newPkg oldPkg |
 	class := self selection.
 	oldPkg := class owningPackage.
@@ -335,7 +339,7 @@ confirmMoveClass: aClass toPackage: aPackage
 	^true!
 
 copyClass
-	<commandQuerySelector: #queryClassCommand:>
+	<commandQuerySelector: #hasSingleSelection>
 	(self developmentSystem copyClass: self selection)
 		ifNotNil: [:newClass | self actualClass: newClass]!
 
@@ -343,7 +347,7 @@ createInstanceVariableAccessors
 	"Prompt to generate compiled 'get' and 'set' accessor methods for each of the immediate
 	instance variables of the current class that are not currently endowed with both."
 
-	<commandQuerySelector: #queryInstanceVariablesCommand:>
+	<commandQuerySelector: #hasClassWithInstanceVariables>
 	self createVariableAccessors: false!
 
 createSchematicWiring
@@ -443,13 +447,13 @@ editView: viewName
 fileInClass
 	"Files in the selected class via the package that owns it"
 
-	<commandQuerySelector: #queryClassCommand:>
+	<commandQuerySelector: #hasSingleSelection>
 	self developmentSystem classFileIn: self selection!
 
 fileOutClass
 	"Files out the selected class via the package that owns it"
 
-	<commandQuerySelector: #queryClassCommand:>
+	<commandQuerySelector: #hasSingleSelection>
 	self developmentSystem classFileOut: self selection!
 
 findClass
@@ -468,6 +472,42 @@ flags
 flags: anInteger
 	self subclassResponsibility!
 
+hasClassSupportingViews
+	| class |
+	class := self selectionOrNil.
+	^class notNil and: [(class includesBehavior: Presenter) or: [class includesBehavior: View]]!
+
+hasClassWithInstanceVariables
+	| class |
+	class := self actualClass.
+	^class notNil and: [class instanceVariableNames notEmpty]!
+
+hasClassWithPublishedAspects
+	| class |
+	class := self selectionOrNil.
+	^class notNil and: [class respondsTo: #publishedAspectsOfInstances]!
+
+hasClassWithPublishedEvents
+	| class |
+	class := self selectionOrNil.
+	^class notNil and: [class respondsTo: #publishedEventsOfInstances]!
+
+hasClassWithStaticVariables
+	| class |
+	class := self actualClass.
+	^class notNil and: [class instanceClass definedBindings notEmpty]!
+
+hasClassWithVariablesSelected
+	| class |
+	class := self actualClass.
+	^class notNil
+		and: [class instanceVariableNames notEmpty or: [class instanceClass classBindingNames notEmpty]]!
+
+hasViews
+	| class |
+	class := self selectionOrNil.
+	^class notNil and: [class resourceIdentifiers notEmpty]!
+
 initialize
 	"Private - Initialize the receiver"
 
@@ -481,7 +521,7 @@ initiateRename
 inspectIt
 	"Open an inspector on the currently selected class."
 
-	<commandQuerySelector: #queryClassCommand:>
+	<commandQuerySelector: #hasSingleSelection>
 	self selection inspect!
 
 isInstanceMode
@@ -528,7 +568,7 @@ newView
 	selected class. If there are several possibilities allow the user to select
 	the one to edit"
 
-	<commandQuerySelector: #queryHasClassSupportingViews:>
+	<commandQuerySelector: #hasClassSupportingViews>
 	self developmentSystem openViewComposerOnNewViewFor: self selection!
 
 onAboutToDisplayMenu: aMenu 
@@ -812,32 +852,6 @@ queryBrowseIt: aCommandQuery
 			aCommandQuery isEnabled: false]
 		ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
 
-queryBrowsePublishedAspects: aCommandQuery
-	| class |
-	class := self selectionOrNil.
-	aCommandQuery isEnabled: (class notNil and: [class respondsTo: #publishedAspectsOfInstances])!
-
-queryBrowsePublishedEvents: aCommandQuery
-	| class |
-	class := self selectionOrNil.
-	aCommandQuery isEnabled: (class notNil and: [class respondsTo: #publishedEventsOfInstances])!
-
-queryChangeClassNamespace: aCommandQuery
-	aCommandQuery isEnabled: (self developmentSystem canChangeClassNamespaces: self selections)!
-
-queryClassCommand: aCommandQuery
-	aCommandQuery isEnabled: self hasSingleSelection.
-	^true!
-
-queryClassesCommand: aCommandQuery
-	aCommandQuery isEnabled: self hasSelection.
-	^true!
-
-queryClassVariablesCommand: aCommandQuery
-	| class |
-	class := self actualClass.
-	aCommandQuery isEnabled: (class notNil and: [class instanceClass definedBindings notEmpty])!
-
 queryDeleteIt: aCommandQuery
 	self deleteItCommand
 		ifNil: 
@@ -845,51 +859,33 @@ queryDeleteIt: aCommandQuery
 			aCommandQuery isEnabled: false]
 		ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
 
-queryHasClassSupportingViews: aCommandQuery
-	| class |
-	class := self selectionOrNil.
-	aCommandQuery isEnabled: (class notNil
-				and: [(class includesBehavior: Presenter) or: [class includesBehavior: View]])!
-
-queryInstanceVariablesCommand: aCommandQuery
-	| class |
-	class := self actualClass.
-	aCommandQuery isEnabled: (class notNil and: [class instanceVariableNames notEmpty])!
-
-queryRenameClass: aCommandQuery
-	aCommandQuery isEnabled: (self developmentSystem canRenameClass: self selectionOrNil)!
-
 queryShowFullNames: aCommandQuery
 	aCommandQuery
 		isEnabled: true;
 		isChecked: self isShowingFullNames!
 
-queryViewsEditMenu: aCommandQuery
-	| class |
-	class := self selectionOrNil.
-	aCommandQuery isEnabled: (class notNil and: [class resourceIdentifiers notEmpty])!
-
 queryViewsShowMenu: aCommandQuery
-	self queryViewsEditMenu: aCommandQuery.
-	aCommandQuery isDefault: true!
+	aCommandQuery
+		isEnabled: self hasViews;
+		isDefault: true!
 
 removeClass
 	"Removes the selected class(es) from the system. If refactoring is available, then the 'Remove Class' refactoring is employed."
 
-	<commandQuerySelector: #queryClassesCommand:>
+	<commandQuerySelector: #hasSelection>
 	self permitSelectionChange ifTrue: [self developmentSystem removeClasses: self selections]!
 
 renameClass
 	"Private - Initiate in-place label edit for the selected class."
 
-	<commandQuerySelector: #queryRenameClass:>
+	<commandQuerySelector: #canRenameClass>
 	self initiateRename!
 
 renameClassVariable
 	"Private - Initiate the rename of a class variable. Note that the view may also implement this 
 	command with a dynamic pull-out menu (of the same name)."
 
-	<commandQuerySelector: #queryClassVariablesCommand:>
+	<commandQuerySelector: #hasClassWithStaticVariables>
 	| classVar class |
 	class := self selection.
 	classVar := ChoicePrompter choices: class classBindingNames asSortedCollection
@@ -900,7 +896,7 @@ renameInstanceVariable
 	"Private - Initiate the rename of an instance variable. Note that the view may also implement this 
 	command with a dynamic pull-out menu (of the same name)."
 
-	<commandQuerySelector: #queryInstanceVariablesCommand:>
+	<commandQuerySelector: #hasClassWithInstanceVariables>
 	| instVar class |
 	class := self actualClass.
 	instVar := ChoicePrompter choices: class instanceVariableNames asSortedCollection
@@ -908,7 +904,7 @@ renameInstanceVariable
 	instVar isNil ifFalse: [self developmentSystem renameInstanceVariable: instVar in: class]!
 
 renameVariables
-	<commandQuerySelector: #queryHasVariablesSelected:>
+	<commandQuerySelector: #hasClassWithVariablesSelected>
 	Sound warningBeep!
 
 searchEnvironment
@@ -950,11 +946,11 @@ toggleShowFullNames
 	self classNamesSelector: (fullNames ifTrue: [#fullName] ifFalse: [#unqualifiedName])!
 
 viewsEditMenu
-	<commandQuerySelector: #queryViewsEditMenu:>
+	<commandQuerySelector: #hasViews>
 	!
 
 viewsMenu
-	<commandQuerySelector: #queryHasClassSupportingViews:>
+	<commandQuerySelector: #hasClassSupportingViews>
 	!
 
 viewsShowMenu
@@ -984,7 +980,8 @@ browseSystem!commands-actions!public! !
 browseVariablesMenu!commands-menus!private! !
 buildAllVariablesMenu:!menus!private! !
 buildViewsMenu:command:!menus!private! !
-canRefactor!public!testing! !
+canRefactor!public!refactoring!testing! !
+canRenameClass!private!testing! !
 categorizeClass!commands-actions!public! !
 chooseVariables:caption:!helpers!private! !
 classHierarchyPresenter!accessing!private! !
@@ -1006,6 +1003,13 @@ fileOutClass!commands-actions!public! !
 findClass!commands-actions!public! !
 flags!accessing!private! !
 flags:!accessing!private! !
+hasClassSupportingViews!private!testing! !
+hasClassWithInstanceVariables!private!testing! !
+hasClassWithPublishedAspects!private!testing! !
+hasClassWithPublishedEvents!private!testing! !
+hasClassWithStaticVariables!private!testing! !
+hasClassWithVariablesSelected!private!testing! !
+hasViews!private!testing! !
 initialize!initializing!private! !
 initiateRename!helpers!private! !
 inspectIt!commands-actions!public! !
@@ -1033,18 +1037,8 @@ populateVarMenu:class:command:variables:format:abortable:!menus!private! !
 queryBrowseClassPackage:!commands-queries!private! !
 queryBrowseHierarchy:!commands-queries!private! !
 queryBrowseIt:!commands-queries!private! !
-queryBrowsePublishedAspects:!commands-queries!private! !
-queryBrowsePublishedEvents:!commands-queries!private! !
-queryChangeClassNamespace:!commands-queries!private! !
-queryClassCommand:!commands-queries!private! !
-queryClassesCommand:!commands-queries!private! !
-queryClassVariablesCommand:!commands-queries!private! !
 queryDeleteIt:!commands-queries!private! !
-queryHasClassSupportingViews:!commands-queries!private! !
-queryInstanceVariablesCommand:!commands-queries!private! !
-queryRenameClass:!commands-queries!private! !
 queryShowFullNames:!commands-queries!private! !
-queryViewsEditMenu:!commands-queries!private! !
 queryViewsShowMenu:!commands-queries!private! !
 removeClass!commands-actions!public! !
 renameClass!commands-actions!private!refactoring! !

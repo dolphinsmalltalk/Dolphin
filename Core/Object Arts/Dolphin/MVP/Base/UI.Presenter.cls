@@ -5,7 +5,7 @@ Core.Object
 	instanceVariableNames: 'model view parentPresenter events subPresenters names helpId'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})
-	classInstanceVariableNames: 'acceleratorKeyAnnotations commandQuerySelectors commandQueryHandlers'
+	classInstanceVariableNames: 'acceleratorKeyAnnotations commandQueries queryCommandHandlers'
 	classConstants: {}!
 UI.Presenter guid: (Core.GUID fromString: '{87b4c4a9-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.Presenter comment: 'Presenter is an abstract class whose subclasses conform to <presenter> and represent components in the Model-View-Presenter framework. A presenter is the equivalent of a "user interface component" in the Dolphin MVP framework. It achieves flexibility over other component based architectures by allowing its data (its model) and its screen representation (its view) to be pluggable. Thus, one can change the way a user sees and manipulates a component by changing its view and one can change the data that the component is representing  by changing the model. Substituting a presenter''s model also allows several  presenter and view pairs to share and interact with the same data.  
@@ -681,14 +681,13 @@ queryCommandHandlers: aCommandQuery
 	class := self class.
 	command := aCommandQuery commandSymbol.
 	
-	[(class commandQuerySelectors lookup: command)
+	[(class commandQueries lookup: command)
 		ifNotNil: 
-			[:selector |
+			[:handler |
 			"Unless the handler specifically returns false, assume the command query was handled and terminate the search"
-			(self perform: selector with: aCommandQuery) == false ifFalse: [^true]].
+			(handler value: self value: aCommandQuery) == false ifFalse: [^true]].
 	"Try the legacy extension handlers - this mechanism is deprecated as of Dolphin 8.1"
-	class commandQueryHandlers
-		do: [:each | (self perform: each with: aCommandQuery) ifTrue: [^true]].
+	class queryCommandHandlers do: [:each | (self perform: each with: aCommandQuery) ifTrue: [^true]].
 	class == ##(self)]
 			whileFalse: [class := class superclass].
 	^false!
@@ -993,21 +992,17 @@ annotatedMethodRemoved: aCompiledMethod
 	"Private - An annotated method of the receiver has been removed. This is an opportunity to update any metadata that might be based on method annotations."
 
 	(aCompiledMethod hasAnnotation: #acceleratorKey:) ifTrue: [self updateAdditionalAccelerators].
-	(aCompiledMethod hasAnnotation: #commandQuerySelector:) ifTrue: [commandQuerySelectors := nil]!
+	(aCompiledMethod hasAnnotation: #commandQuerySelector:) ifTrue: [self resetCommandQueries]!
 
 annotationsUpdated: aCompilationResult
 	"Private - Annotations may have been added or removed in the receiver's methods. This is an opportunity to update any metadata that might be based on method annotations."
 
 	(aCompilationResult affectsAnnotation: #acceleratorKey:)
 		ifTrue: [self updateAdditionalAccelerators].
-	(aCompilationResult affectsAnnotation: #commandQuerySelector:)
-		ifTrue: [commandQuerySelectors := nil]!
+	(CommandQuery validateQueriesIn: aCompilationResult) ifTrue: [self resetCommandQueries]!
 
-commandQueryHandlers
-	^commandQueryHandlers ?? #()!
-
-commandQuerySelectors
-	^commandQuerySelectors ifNil: [commandQuerySelectors := self findCommandQuerySelectors]!
+commandQueries
+	^commandQueries ifNil: [commandQueries := CommandQuery findQueryHandlersIn: self]!
 
 create
 	"Answers an instance of the receiver with a default view"
@@ -1115,20 +1110,6 @@ findAcceleratorKeyAnnotations
 						do: [:args | stream nextPut: {each selector. AcceleratorTable canonicalizeKeyString: (args at: 1)}]]].
 	^stream contents!
 
-findCommandQuerySelectors
-	| selectors |
-	selectors := IdentityDictionary new.
-	self methodsDo: 
-			[:eachMethod |
-			eachMethod annotations
-				ifNotNil: 
-					[:annotations |
-					annotations selectorsAndArgumentsDo: 
-							[:annotationSelector :annotationArgs |
-							annotationSelector == #commandQuerySelector:
-								ifTrue: [selectors at: eachMethod selector put: annotationArgs single]]]].
-	^selectors!
-
 getAdditionalKeyBindings
 	^nil!
 
@@ -1155,6 +1136,12 @@ on: aModel
 	but connected to aModel."
 
 	^(super new) on: aModel; yourself!
+
+queryCommandHandlers
+	^queryCommandHandlers ?? #()!
+
+resetCommandQueries
+	commandQueries := nil!
 
 resetDefaultAdditionalAccelerators
 	acceleratorKeyAnnotations := nil!
@@ -1232,8 +1219,7 @@ additionalAccelerators!accessing!public! !
 additionalKeyBindings!accessing!private! !
 annotatedMethodRemoved:!private! !
 annotationsUpdated:!private! !
-commandQueryHandlers!accessing!private! !
-commandQuerySelectors!accessing!private! !
+commandQueries!accessing!private! !
 create!instance creation!public! !
 create:!instance creation!public! !
 create:in:!instance creation!public! !
@@ -1247,12 +1233,13 @@ defaultModel!models!public! !
 defaultResourceIdentifier!constants!public! !
 defaultView!constants!public! !
 findAcceleratorKeyAnnotations!constants!private! !
-findCommandQuerySelectors!accessing!private! !
 getAdditionalKeyBindings!accessing!private! !
 icon!constants!public! !
 loadViewResource:inContext:!operations!private! !
 new!instance creation!public! !
 on:!instance creation!public! !
+queryCommandHandlers!accessing!private! !
+resetCommandQueries!initializing!private! !
 resetDefaultAdditionalAccelerators!public! !
 resource_Container_view!public!resources-views! !
 resource_Default_view!public!resources-views! !

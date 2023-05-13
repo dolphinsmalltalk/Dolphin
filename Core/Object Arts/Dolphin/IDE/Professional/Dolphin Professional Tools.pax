@@ -56,18 +56,18 @@ package setMethodNames: #(
 	#(#{Tools.SmalltalkSystem} #updateHelpMenus)
 	#(#{Tools.SmalltalkToolShell} #addToNewIdeaSpace)
 	#(#{Tools.SmalltalkToolShell} #browseSystem)
+	#(#{Tools.SmalltalkToolShell} #canMoveToIdeaSpace)
 	#(#{Tools.SmalltalkToolShell} #destroy)
 	#(#{Tools.SmalltalkToolShell} #dragToolToIdeaSpace)
 	#(#{Tools.SmalltalkToolShell} #exit)
-	#(#{Tools.SmalltalkToolShell} #queryMoveToIdeaSpace:)
 	#(#{Tools.SmalltalkToolShell class} #addToNewIdeaSpace:)
 	#(#{Tools.SmalltalkToolShell class} #dragToolToIdeaSpace:)
 	#(#{Tools.SmalltalkWorkspaceDocument} #addToNewIdeaSpace)
 	#(#{Tools.SmalltalkWorkspaceDocument} #browseSources)
+	#(#{Tools.SmalltalkWorkspaceDocument} #canMoveToIdeaSpace)
 	#(#{Tools.SmalltalkWorkspaceDocument} #destroy)
 	#(#{Tools.SmalltalkWorkspaceDocument} #dragToolToIdeaSpace)
 	#(#{Tools.SmalltalkWorkspaceDocument} #exit)
-	#(#{Tools.SmalltalkWorkspaceDocument} #queryMoveToIdeaSpace:)
 	#(#{UI.LinkButton class} #publishedAspectsOfInstances)
 	#(#{UI.SlideyInneyOuteyThing class} #example1)
 	#(#{UI.SlideyInneyOuteyThing class} #publishedAspectsOfInstances)
@@ -442,13 +442,16 @@ updateHelpMenus!private!utilities! !
 !Tools.SmalltalkToolShell methodsFor!
 
 addToNewIdeaSpace
-	<commandQuerySelector: #queryMoveToIdeaSpace:>
+	<commandQuerySelector: #canMoveToIdeaSpace>
 	^self class addToNewIdeaSpace: self!
 
 browseSystem
 	"Open a new system browser on Object."
 
 	^self developmentSystem browseSystem!
+
+canMoveToIdeaSpace
+	^self isIdeaSpaceCard not and: [self class canUseIdeaSpace]!
 
 destroy
 	"Attempt to forcibly close the receiver's view. If this is an IdeaSpace card then we ask the IdeaSpace to destroy it."
@@ -457,24 +460,21 @@ destroy
 	^super destroy!
 
 dragToolToIdeaSpace
-	<commandQuerySelector: #queryMoveToIdeaSpace:>
+	<commandQuerySelector: #canMoveToIdeaSpace>
 	^self class dragToolToIdeaSpace: self!
 
 exit
 	"Attempt to close the receiver's view. If this is an IdeaSpace card then we ask the IdeaSpace to close it."
 
 	self isIdeaSpaceCard ifTrue: [^self ideaSpace closeCard: self].
-	^super exit!
-
-queryMoveToIdeaSpace: aCommandQuery
-	aCommandQuery isEnabled: (self isIdeaSpaceCard not and: [self class canUseIdeaSpace])! !
+	^super exit! !
 !Tools.SmalltalkToolShell categoriesForMethods!
 addToNewIdeaSpace!public! !
 browseSystem!commands-actions!public! !
+canMoveToIdeaSpace!private!testing! !
 destroy!commands-actions!public! !
 dragToolToIdeaSpace!public! !
 exit!commands-actions!public! !
-queryMoveToIdeaSpace:!commands-queries!private! !
 !
 
 !Tools.SmalltalkToolShell class methodsFor!
@@ -500,13 +500,16 @@ dragToolToIdeaSpace:!public! !
 !Tools.SmalltalkWorkspaceDocument methodsFor!
 
 addToNewIdeaSpace
-	<commandQuerySelector: #queryMoveToIdeaSpace:>
+	<commandQuerySelector: #canMoveToIdeaSpace>
 	^IdeaSpaceShell addToNewIdeaSpace: self!
 
 browseSources
 	"Open a new source browser on the entire system sources"
 	
 	self model browseSources!
+
+canMoveToIdeaSpace
+	^self isIdeaSpaceCard not!
 
 destroy
 	"Attempt to forcibly close the receiver's view. If this is an IdeaSpace card then we ask the IdeaSpace to destroy it."
@@ -515,24 +518,21 @@ destroy
 	^super destroy!
 
 dragToolToIdeaSpace
-	<commandQuerySelector: #queryMoveToIdeaSpace:>
+	<commandQuerySelector: #canMoveToIdeaSpace>
 	^IdeaSpaceShell dragToolToIdeaSpace: self!
 
 exit
 	"Attempt to close the receiver's view. If this is an IdeaSpace card then we ask the IdeaSpace to close it."
 
 	self isIdeaSpaceCard ifTrue: [^self ideaSpace closeCard: self].
-	^super exit!
-
-queryMoveToIdeaSpace: aCommandQuery
-	aCommandQuery isEnabled: self isIdeaSpaceCard not! !
+	^super exit! !
 !Tools.SmalltalkWorkspaceDocument categoriesForMethods!
 addToNewIdeaSpace!public! !
 browseSources!commands-actions!public! !
+canMoveToIdeaSpace!private!testing! !
 destroy!commands-actions!public! !
 dragToolToIdeaSpace!public! !
 exit!commands-actions!public! !
-queryMoveToIdeaSpace:!commands-queries!private! !
 !
 
 !UI.LinkButton class methodsFor!

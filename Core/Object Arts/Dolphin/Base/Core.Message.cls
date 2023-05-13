@@ -157,7 +157,7 @@ value: receiver value: argument
 	further set of parameterization cases where blocks would otherwise
 	be required."
 
-	^self forwardTo: receiver with: argument!
+	^receiver perform: selector with: argument!
 
 valueWithArguments: argArray
 	"Evaluate the receiver with an <Array> of arguments in argArray"

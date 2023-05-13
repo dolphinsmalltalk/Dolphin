@@ -68,7 +68,14 @@ hasEditableMethodsSelected
 	^self selectedMethods allSatisfy: [:each | self isEditableMethod: each]!
 
 hasMethods
-	^self browser hasMethods!
+	"Answer whether there are any methods in the browser model."
+
+	^browserPresenter hasMethods!
+
+hasMethodSelected
+	"Answer whether a single method is selected in the browser"
+
+	^browserPresenter hasMethodSelected!
 
 isEditableMethod: aCompiledMethod 
 	^true!
@@ -120,11 +127,8 @@ parseContext
 					env := package ifNil: [class environment] ifNotNil: [package environment ifNil: [class environment]].
 					ParseContext methodClass: class environment: (model modelClassFor: env)]]!
 
-queryHasMethodSelected: aCommandQuery
-	aCommandQuery isEnabled: browserPresenter hasMethodSelected!
-
 recompileDiffs
-	<commandQuerySelector: #queryHasMethodSelected:>
+	<commandQuerySelector: #hasMethodSelected>
 	self developmentSystem recompileDiffs: self selectedMethod!
 
 saveNewMethod: aString
@@ -152,9 +156,7 @@ selectedMethods
 	^self browser selectedMethods!
 
 setInitialFocus
-	browserPresenter hasMethodSelected 
-		ifTrue: [browserPresenter setInitialFocus]
-		ifFalse: [super setInitialFocus]!
+	self hasMethodSelected ifTrue: [browserPresenter setInitialFocus] ifFalse: [super setInitialFocus]!
 
 statusModel
 	^self browser errorModel!
@@ -174,7 +176,8 @@ findDetails:!accessing!public! !
 findSelector:!public!searching! !
 hasEditableMethodSelected!public!testing! !
 hasEditableMethodsSelected!public!testing! !
-hasMethods!browsing!public! !
+hasMethods!public!testing! !
+hasMethodSelected!public!testing! !
 isEditableMethod:!enquiries!public! !
 method!accessing!public! !
 methods!accessing!public! !
@@ -182,7 +185,6 @@ methods:!accessing!public! !
 onMethodSelected!event handling!private! !
 onViewOpened!event handling!public! !
 parseContext!accessing!public! !
-queryHasMethodSelected:!commands-queries!private! !
 recompileDiffs!public! !
 saveNewMethod:!helpers!private! !
 searchEnvironment:!public! !
