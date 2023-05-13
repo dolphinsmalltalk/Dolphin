@@ -68,19 +68,14 @@ emitMethodBodyOn: aPuttableStream
 		ifFalse: [self emitScintillaCallOn: aPuttableStream]!
 
 emitMethodCommentOn: aPuttableStream
-	| target devsys |
 	self comment isEmpty ifTrue: [^self].
-	target := String writeStream.
-	target nextPut: $".
-	self isPrivate ifTrue: [target nextPutAll: 'Private - '].
-	self emitCommentString: self comment on: target.
-	target nextPut: $".
-	devsys := SmalltalkSystem current.
 	aPuttableStream
-		nextPutAll: (devsys
-					wrapText: target contents
-					indent: devsys workspaceClass defaultTabWidth + 1
-					tabWidth: devsys workspaceClass defaultTabWidth);
+		tab;
+		nextPut: $".
+	self isPrivate ifTrue: [aPuttableStream nextPutAll: 'Private - '].
+	self emitCommentString: self comment on: aPuttableStream.
+	aPuttableStream
+		nextPut: $";
 		cr!
 
 emitMethodPreambleOn: aPuttableStream 
