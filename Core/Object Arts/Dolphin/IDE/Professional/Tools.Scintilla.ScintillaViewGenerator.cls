@@ -1558,6 +1558,18 @@ parseCategory: aReadableStream
 				upToEnd.
 	parsingDeprecated := category asLowercase = 'deprecated'!
 
+parseCommentLine: aStream
+	(aStream peekFor: $#)
+		ifTrue: 
+			[self parseFileComment: aStream.
+			^self].
+	(aStream peekFor: $!!)
+		ifTrue: 
+			[self parseShBang: aStream.
+			^self].
+	aStream skipSeparators.
+	^self parseInterfaceComment: aStream!
+
 parseEnum: aReadableStream
 	| typeName prefix |
 	typeName := aReadableStream upTo: $=.
@@ -1629,28 +1641,26 @@ parseLex: aReadableStream
 	lexerId := aReadableStream nextWord.
 	lexerConstantPrefixes addAll: aReadableStream upToEnd subStrings!
 
-parseLine: aString 
+parseLine: aString
 	| lineStream lineType |
 	lineStream := aString readStream.
+	(lineStream peekFor: $#)
+		ifTrue: 
+			[self parseCommentLine: lineStream.
+			^self].
 	lineType := lineStream nextWord.
 	lineType ifNil: [^self].
 	lineType = 'cat' ifTrue: [^self parseCategory: lineStream].
 	(#('fun' 'get' 'set') includes: lineType) ifTrue: [^self parseFunction: lineStream type: lineType].
 	lineType = 'val' ifTrue: [^self parseValue: lineStream].
 	lineType = 'evt' ifTrue: [^self parseEvent: lineStream].
-	lineType = '#!!' ifTrue: [^self parseShBang: lineStream].
-	lineType = '#' ifTrue: [^self parseInterfaceComment: lineStream].
 	lineType = 'enu' ifTrue: [^self parseEnum: lineStream].
 	lineType = 'lex' ifTrue: [^self parseLex: lineStream].
 	lineType = 'ali' ifTrue: [^self parseAlias: lineStream].
 	lineType = 'enu' ifTrue: [^self parseEnum: lineStream].
-	(lineType beginsWith: '##') ifTrue: [^self parseFileComment: lineStream].
 
 	"Catch all"
-	Transcript
-		show: 'Unrecognised line: ';
-		show: aString;
-		cr!
+	self error: 'Unrecognised line: ' , aString!
 
 parseShBang: aReadableStream 
 	"You aint gonna need these, even if there were any"
@@ -1806,6 +1816,7 @@ initialize!helpers!initializing!public! !
 isIgnoredConstant:!helpers!private! !
 parseAlias:!helpers!private! !
 parseCategory:!helpers!private! !
+parseCommentLine:!helpers!private! !
 parseEnum:!helpers!private! !
 parseEvent:!helpers!private! !
 parseFile!helpers!public! !

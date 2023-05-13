@@ -3473,6 +3473,8 @@ isSelectionEmpty
 		lParam: 0!
 
 isSelectionHidden
+	"Is the selection visible or hidden?"
+
 	^library
 		directBooleanFunction: this
 		msg: SCI_GETSELECTIONHIDDEN
