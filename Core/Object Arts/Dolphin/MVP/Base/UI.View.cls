@@ -5,7 +5,7 @@ Core.Object
 	instanceVariableNames: 'handle creationParent creationStyle presenter model backcolor preferredExtent flags contextMenu font events interactor'
 	classVariableNames: 'MessageMap NextId ViewClosedError WndClassAtom'
 	imports: #(#{OS.Win32Constants} #{OS.Win32Errors})
-	classInstanceVariableNames: 'theme'
+	classInstanceVariableNames: 'theme commandQuerySelectors'
 	classConstants: {
 			'CreateCenteredMask' -> 16r40.
 			'DragSourceMask' -> 16r4.
@@ -2889,16 +2889,27 @@ printOn: aStream
 propagateSettingsChange: aSettingsChangeEvent
 	self subViewsDo: [:each | each settingChanged: aSettingsChangeEvent]!
 
-queryCommand: aCommandQuery
-	"Private - Update aCommandQuery to indicates how a command would be processed.
-	if sent to the receiver. Answers whether the receiver recognised the command
-	as one of its own (this may be ignored by the command router). This need not
-	be supersent if the #isEnabled: is sent to the <CommandQuery> to explicitly
-	enable or disable a particular command."
+queryCommand: aCommandQuery 
+	"Private - Enter details about a potential command for the receiver 
+	into the <CommandQuery>, query."
 
-	(aCommandQuery canPerformAgainst: self) ifTrue: [
-		aCommandQuery beEnabled].
-	^false "not explicitly recognised at this level"!
+	(self queryCommandHandlers: aCommandQuery) ifTrue: [^true].
+	(aCommandQuery canPerformAgainst: self) ifTrue: [aCommandQuery beEnabled].
+	^false	"There was no specific enablement of the command at this level"!
+
+queryCommandHandlers: aCommandQuery
+	| class command |
+	class := self class.
+	command := aCommandQuery commandSymbol.
+	
+	[(class commandQuerySelectors lookup: command)
+		ifNotNil: 
+			[:selector |
+			"Unless the handler specifically returns false, assume the command query was handled and terminate the search"
+			(self perform: selector with: aCommandQuery) == false ifFalse: [^true]].
+	class == ##(self)]
+			whileFalse: [class := class superclass].
+	^false!
 
 queryCommandRouteFor: action
 	"Private - Answer <CommandQuery> that indicates how the <commandDescription>, action,
@@ -4574,7 +4585,7 @@ actualBackcolor!accessing!private! !
 actualFont!accessing!font!private! !
 actualPreferredExtent:!geometry!private! !
 addSubView:!hierarchy!public!sub views! !
-addToCommandRoute:!commands!public! !
+addToCommandRoute:!commands-routing!public! !
 adjustRectangle:!geometry!public! !
 allChildWindowHandlesDo:!hierarchy!public! !
 allParents!hierarchy!public! !
@@ -4633,8 +4644,8 @@ clientWidth!geometry!public! !
 clipChildren!accessing-styles!public! !
 clipChildren:!accessing-styles!public! !
 close!public!realizing/unrealizing! !
-command:id:!commands!private! !
-commandPolicy!commands!public! !
+command:id:!commands-routing!private! !
+commandPolicy!commands-routing!public! !
 commandSource!accessing!public! !
 connectModel!models!public! !
 contextMenu!menus!public! !
@@ -4932,8 +4943,9 @@ preTranslateMouseInput:!dispatching!public! !
 previousSiblingView!hierarchy!public!sub views! !
 printOn:!development!printing!public! !
 propagateSettingsChange:!event handling!private! !
-queryCommand:!commands!private! !
-queryCommandRouteFor:!commands!private! !
+queryCommand:!commands-queries!private! !
+queryCommandHandlers:!commands-queries!private! !
+queryCommandRouteFor:!commands-queries!private! !
 queryContextMenu!menus!public! !
 queryMouseTracking!enquiries!private! !
 recreate!public!realizing/unrealizing! !
@@ -4998,7 +5010,7 @@ subViewsDo:!hierarchy!public!sub views! !
 subViewsFind:!hierarchy!private!sub views! !
 tabFirst!public!tabbing! !
 tabFocus!private!tabbing! !
-tabNext!commands!public! !
+tabNext!commands-actions!public! !
 tabNextSiblingFrom:forward:!private!tabbing! !
 text!accessing!public! !
 text:!accessing!public! !
@@ -5154,6 +5166,17 @@ activeOrDesktop
 
 	^self activeHandle ifNotNil: [:hWnd | View fromHandle: hWnd] ifNil: [self desktop]!
 
+annotatedMethodRemoved: aCompiledMethod
+	"Private - An annotated method of the receiver has been removed. This is an opportunity to update any metadata that might be based on method annotations."
+
+	(aCompiledMethod hasAnnotation: #commandQuerySelector:) ifTrue: [commandQuerySelectors := nil]!
+
+annotationsUpdated: aCompilationResult
+	"Private - Annotations may have been added or removed in the receiver's methods. This is an opportunity to update any metadata that might be based on method annotations."
+
+	(aCompilationResult affectsAnnotation: #commandQuerySelector:)
+		ifTrue: [commandQuerySelectors := nil]!
+
 buildMessageMap
 	"Private - Initialize the map of Windows message numbers to the selectors of the low-level event handlers in the receiver.
 	N.B. Must not be stripped, as this is the only thing which prevents the handlers themselves from being stripped.
@@ -5238,6 +5261,9 @@ closeAll
 
 	^(self topLevelViews reject: [ :w | w close ]) isEmpty!
 
+commandQuerySelectors
+	^commandQuerySelectors ifNil: [commandQuerySelectors := self findCommandQuerySelectors]!
+
 cursor
 	"Answers the default cursor to be used for the mouse pointer when over instances of the receiver.
 	Answer nil so the default cursor for the window class is used. This can be overridden for entire classes, 
@@ -5294,6 +5320,20 @@ destroyAll
 
 	self topLevelViews do: [:w | w destroy].
 	SessionManager.Current inputState purgeDeadWindows!
+
+findCommandQuerySelectors
+	| selectors |
+	selectors := IdentityDictionary new.
+	self methodsDo: 
+			[:eachMethod |
+			eachMethod annotations
+				ifNotNil: 
+					[:annotations |
+					annotations selectorsAndArgumentsDo: 
+							[:annotationSelector :annotationArgs |
+							annotationSelector == #commandQuerySelector:
+								ifTrue: [selectors at: eachMethod selector put: annotationArgs single]]]].
+	^selectors!
 
 focus
 	"Answers the View with focus or nil if there is none.
@@ -5746,9 +5786,12 @@ wndClassName
 active!accessing!public! !
 activeHandle!accessing!private! !
 activeOrDesktop!enquiries!public! !
+annotatedMethodRemoved:!private! !
+annotationsUpdated:!private! !
 buildMessageMap!constants!must not strip!private! !
 capture!accessing!public! !
 closeAll!operations!private! !
+commandQuerySelectors!accessing!private! !
 cursor!accessing!public! !
 defaultGetImageBlock!adapters!constants!public! !
 defaultGetTextBlock!adapters!constants!public! !
@@ -5758,6 +5801,7 @@ defaultView!constants!public! !
 desktop!accessing!public! !
 desktopHandle!enquiries!private! !
 destroyAll!operations!private! !
+findCommandQuerySelectors!accessing!private! !
 focus!accessing!public! !
 focusHandle!accessing!private! !
 foreground!enquiries!public! !

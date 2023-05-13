@@ -1443,7 +1443,7 @@ Core.Object
 	instanceVariableNames: 'handle creationParent creationStyle presenter model backcolor preferredExtent flags contextMenu font events interactor'
 	classVariableNames: 'MessageMap NextId ViewClosedError WndClassAtom'
 	imports: #(#{OS.Win32Constants} #{OS.Win32Errors})
-	classInstanceVariableNames: 'theme'
+	classInstanceVariableNames: 'theme commandQuerySelectors'
 	classConstants: {
 			'CreateCenteredMask' -> 16r40.
 			'DragSourceMask' -> 16r4.
