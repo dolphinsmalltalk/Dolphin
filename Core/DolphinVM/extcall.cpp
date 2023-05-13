@@ -373,7 +373,7 @@ void Interpreter::push(char16_t utf16CodeUnit)
 
 	if (utf16CodeUnit <= 0x7f)
 	{
-		pushObject((OTE*)Character::NewAnsi(static_cast<unsigned char>(utf16CodeUnit)));
+		pushObject(Character::NewAnsi(static_cast<unsigned char>(utf16CodeUnit)));
 		return;
 	} 
 
@@ -383,7 +383,7 @@ void Interpreter::push(char16_t utf16CodeUnit)
 		auto ansiCodeUnit = Interpreter::m_unicodeToAnsiCharMap[utf16CodeUnit];
 		if (ansiCodeUnit != 0)
 		{
-			pushObject(reinterpret_cast<OTE*>(Character::NewAnsi(ansiCodeUnit)));
+			pushObject(Character::NewAnsi(ansiCodeUnit));
 			return;
 		}
 

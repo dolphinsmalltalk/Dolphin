@@ -332,26 +332,26 @@ void Interpreter::pushUnknown(Oop object)
 // Public methods for performing callbacks
 Oop	__stdcall Interpreter::perform(Oop receiver, SymbolOTE* selector TRACEPARM) /* throws SE_VMCALLBACKUNWIND */
 {
-	pushObject((OTE*)Pointers.Scheduler);
+	pushObject(Pointers.Scheduler);
 	pushUnknown(receiver);
-	pushObject((OTE*)selector);
+	pushObject(selector);
 	return callback(Pointers.callbackPerformSymbol, 2 TRACEARG(traceFlag));
 }
 
 Oop	__stdcall Interpreter::performWith(Oop receiver, SymbolOTE* selector, Oop arg TRACEPARM) /* throws SE_VMCALLBACKUNWIND */
 {
-	pushObject((OTE*)Pointers.Scheduler);
+	pushObject(Pointers.Scheduler);
 	pushUnknown(receiver);
-	pushObject((OTE*)selector);
+	pushObject(selector);
 	pushUnknown(arg);
 	return callback(Pointers.callbackPerformWithSymbol, 3 TRACEARG(traceFlag));
 }
 
 Oop	__stdcall Interpreter::performWithWith(Oop receiver, SymbolOTE* selector, Oop arg1, Oop arg2 TRACEPARM) /* throws SE_VMCALLBACKUNWIND */
 {
-	pushObject((OTE*)Pointers.Scheduler);
+	pushObject(Pointers.Scheduler);
 	pushUnknown(receiver);
-	pushObject((OTE*)selector);
+	pushObject(selector);
 	pushUnknown(arg1);
 	pushUnknown(arg2);
 	return callback(Pointers.callbackPerformWithWithSymbol, 4 TRACEARG(traceFlag));
@@ -359,9 +359,9 @@ Oop	__stdcall Interpreter::performWithWith(Oop receiver, SymbolOTE* selector, Oo
 
 Oop	__stdcall Interpreter::performWithWithWith(Oop receiver, SymbolOTE* selector, Oop arg1, Oop arg2, Oop arg3 TRACEPARM) /* throws SE_VMCALLBACKUNWIND */
 {
-	pushObject((OTE*)Pointers.Scheduler);
+	pushObject(Pointers.Scheduler);
 	pushUnknown(receiver);
-	pushObject((OTE*)selector);
+	pushObject(selector);
 	pushUnknown(arg1);
 	pushUnknown(arg2);
 	pushUnknown(arg3);
@@ -371,9 +371,9 @@ Oop	__stdcall Interpreter::performWithWithWith(Oop receiver, SymbolOTE* selector
 
 Oop	__stdcall Interpreter::performWithArguments(Oop receiver, SymbolOTE* selector, Oop anArray TRACEPARM) /* throws SE_VMCALLBACKUNWIND */
 {
-	pushObject((OTE*)Pointers.Scheduler);
+	pushObject(Pointers.Scheduler);
 	pushUnknown(receiver);
-	pushObject((OTE*)selector);
+	pushObject(selector);
 	ASSERT(ObjectMemory::fetchClassOf(anArray) == Pointers.ClassArray);
 	pushUnknown(anArray);
 	return callback(Pointers.callbackPerformWithArgumentsSymbol, 3 TRACEARG(traceFlag));
@@ -405,7 +405,7 @@ SymbolOTE* __stdcall Interpreter::NewSymbol(const char8_t* name, size_t length) 
 	// to intern the symbol (Symbol intern: aString)
 	//
 
-	pushObject((OTE*)Pointers.ClassSymbol);
+	pushObject(Pointers.ClassSymbol);
 	pushNewObject((OTE*)Utf8String::New(name, length));
 	SymbolOTE* symbolPointer = reinterpret_cast<SymbolOTE*>(callback(Pointers.InternSelector, 1 TRACEARG(TRACEFLAG::TraceOff)));
 	ASSERT(symbolPointer->m_oteClass == Pointers.ClassSymbol);
@@ -620,7 +620,7 @@ inline LRESULT __stdcall Interpreter::GenericCallbackMain(SmallInteger id, uint8
 	{
 		// All accesses to stack/OT allocations must be inside the
 		// memoryExceptionFilter to implement stack and OT growth-on-demand
-		pushObject((OTE*)Pointers.Scheduler);
+		pushObject(Pointers.Scheduler);
 		pushSmallInteger(id);
 		// Add sizeof(DWORD*) to the stack pointer as it includes the return address for
 		// the call which invoked the function
@@ -830,7 +830,7 @@ LRESULT __fastcall Interpreter::VirtualCallbackMain(SmallInteger offset, COMThun
 	LRESULT result;
 	__try
 	{
-		pushObject((OTE*)Pointers.Scheduler);
+		pushObject(Pointers.Scheduler);
 		pushSmallInteger(offset+1);	// Smalltalk expects 1-based index
 		COMThunk* thisPtr = *args;
 		pushSmallInteger(thisPtr->id);
