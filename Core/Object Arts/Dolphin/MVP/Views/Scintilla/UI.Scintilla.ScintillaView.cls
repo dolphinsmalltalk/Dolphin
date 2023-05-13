@@ -233,8 +233,7 @@ anchorPosition
 		lParam: 0) + 1!
 
 anchorPosition: anchorInteger
-	"Set the selection anchor to a position. The anchor is the opposite end of the selection
-	from the caret."
+	"Set the selection anchor to a position. The anchor is the opposite end of the selection from the caret."
 
 	library
 		directFunction: this
@@ -469,8 +468,7 @@ autoCompletionCancelChars: aString
 	self sciAutoCStops: aString!
 
 autoCompletionCurrentText
-	"Get currently selected item text in the auto-completion list Returns the length of the item
-	text Result is NUL-terminated."
+	"Get currently selected item text in the auto-completion list Returns the length of the item text Result is NUL-terminated."
 
 	| len |
 	len := library
@@ -547,8 +545,7 @@ backspace
 		lParam: 0!
 
 backspaceNoLine
-	"Delete the selection or if no selection, the character before the caret. Will not delete
-	the character before at the start of a line."
+	"Delete the selection or if no selection, the character before the caret. Will not delete the character before at the start of a line."
 
 	library
 		directFunction: this
@@ -674,8 +671,7 @@ basicDuplicateLine
 		lParam: 0!
 
 basicDuplicateSelection
-	"Private - Duplicate the selection. If selection empty duplicate the line containing the
-	caret."
+	"Private - Duplicate the selection. If selection empty duplicate the line containing the caret."
 
 	library
 		directFunction: this
@@ -1069,8 +1065,7 @@ canScrollPastEnd
 		lParam: 0!
 
 canScrollPastEnd: endAtLastLineBoolean
-	"Sets the scroll range so that maximum scroll position has the last line at the bottom of
-	the view (default). Setting this to false allows scrolling one page below the last line."
+	"Sets the scroll range so that maximum scroll position has the last line at the bottom of the view (default). Setting this to false allows scrolling one page below the last line."
 
 	library
 		directFunction: this
@@ -1415,8 +1410,7 @@ currentLineFrameWidth
 		lParam: 0!
 
 currentLineFrameWidth: widthInteger
-	"Display the caret line framed. Set width !!= 0 to enable this option and width = 0 to
-	disable it."
+	"Display the caret line framed. Set width !!= 0 to enable this option and width = 0 to disable it."
 
 	library
 		directFunction: this
@@ -1425,8 +1419,7 @@ currentLineFrameWidth: widthInteger
 		lParam: 0!
 
 currentLineText
-	"Retrieve the text of the line containing the caret. Returns the index of the caret on the
-	line. Result is NUL-terminated."
+	"Retrieve the text of the line containing the caret. Returns the index of the caret on the line. Result is NUL-terminated."
 
 	| len |
 	len := library
@@ -1611,8 +1604,7 @@ deleteToStartOfWord
 		lParam: 0!
 
 describeKeywordSets
-	"Retrieve a '\n' separated list of descriptions of the keyword sets understood by the
-	current lexer. Result is NUL-terminated."
+	"Retrieve a '\n' separated list of descriptions of the keyword sets understood by the current lexer. Result is NUL-terminated."
 
 	| len |
 	len := library
@@ -1805,8 +1797,7 @@ ensureLineVisible: lineInteger
 		lParam: 0!
 
 ensureLineVisibleEnforcingPolicy: lineInteger
-	"Ensure a particular line is visible by expanding any header line hiding it. Use the
-	currently set visibility policy to determine which range to display."
+	"Ensure a particular line is visible by expanding any header line hiding it. Use the currently set visibility policy to determine which range to display."
 
 	library
 		directFunction: this
@@ -1852,8 +1843,7 @@ errorStatus: statusInteger
 		lParam: 0!
 
 expandChildren: lineInteger level: levelInteger
-	"Expand a fold header and all children. Use the level argument instead of the line's current
-	level."
+	"Expand a fold header and all children. Use the level argument instead of the line's current level."
 
 	library
 		directFunction: this
@@ -1961,8 +1951,7 @@ extendRectangleRight
 		lParam: 0!
 
 extendRectangleToEndOfLine
-	"Move caret to last position on line, extending rectangular selection to new caret
-	position."
+	"Move caret to last position on line, extending rectangular selection to new caret position."
 
 	library
 		directFunction: this
@@ -1971,8 +1960,7 @@ extendRectangleToEndOfLine
 		lParam: 0!
 
 extendRectangleToStartOfLine
-	"Move caret to first position on line, extending rectangular selection to new caret
-	position."
+	"Move caret to first position on line, extending rectangular selection to new caret position."
 
 	library
 		directFunction: this
@@ -1981,8 +1969,7 @@ extendRectangleToStartOfLine
 		lParam: 0!
 
 extendRectangleToVcHome
-	"Move caret to before first visible character on line. If already there move to first
-	character on line. In either case, extend rectangular selection to new caret position."
+	"Move caret to before first visible character on line. If already there move to first character on line. In either case, extend rectangular selection to new caret position."
 
 	library
 		directFunction: this
@@ -2009,8 +1996,7 @@ extendRight
 		lParam: 0!
 
 extendStutteredPageDown
-	"Move caret to bottom of page, or one page down if already at bottom of page, extending
-	selection to new caret position."
+	"Move caret to bottom of page, or one page down if already at bottom of page, extending selection to new caret position."
 
 	library
 		directFunction: this
@@ -2019,8 +2005,7 @@ extendStutteredPageDown
 		lParam: 0!
 
 extendStutteredPageUp
-	"Move caret to top of page, or one page up if already at top of page, extending selection to
-	new caret position."
+	"Move caret to top of page, or one page up if already at top of page, extending selection to new caret position."
 
 	library
 		directFunction: this
@@ -2056,8 +2041,7 @@ extendToEndOfLine
 		lParam: 0!
 
 extendToEndOfNextWord
-	"Move caret right one word, position cursor at end of word, extending selection to new caret
-	position."
+	"Move caret right one word, position cursor at end of word, extending selection to new caret position."
 
 	library
 		directFunction: this
@@ -2066,8 +2050,7 @@ extendToEndOfNextWord
 		lParam: 0!
 
 extendToEndOfPreviousWord
-	"Move caret left one word, position cursor at end of word, extending selection to new caret
-	position."
+	"Move caret left one word, position cursor at end of word, extending selection to new caret position."
 
 	library
 		directFunction: this
@@ -2094,8 +2077,7 @@ extendToEndOfWordPart
 		lParam: 0!
 
 extendToEndOfWrappedLine
-	"Like LineEndExtend but when word-wrap is enabled extends first to end of display line
-	LineEndDisplayExtend, then to start of document line LineEndExtend."
+	"Like LineEndExtend but when word-wrap is enabled extends first to end of display line LineEndDisplayExtend, then to start of document line LineEndExtend."
 
 	library
 		directFunction: this
@@ -2158,8 +2140,7 @@ extendToStartOfWordPart
 		lParam: 0!
 
 extendToStartOfWrappedLine
-	"Like HomeExtend but when word-wrap is enabled extends first to start of display line
-	HomeDisplayExtend, then to start of document line HomeExtend."
+	"Like HomeExtend but when word-wrap is enabled extends first to start of display line HomeDisplayExtend, then to start of document line HomeExtend."
 
 	library
 		directFunction: this
@@ -2177,8 +2158,7 @@ extendToVcHome
 		lParam: 0!
 
 extendToWrappedVcHome
-	"Like VCHomeExtend but when word-wrap is enabled extends first to start of display line
-	VCHomeDisplayExtend, then behaves like VCHomeExtend."
+	"Like VCHomeExtend but when word-wrap is enabled extends first to start of display line VCHomeDisplayExtend, then behaves like VCHomeExtend."
 
 	library
 		directFunction: this
@@ -2360,8 +2340,7 @@ foldLine: lineInteger action: actionInteger
 		lParam: actionInteger!
 
 foldLine: lineInteger level: levelInteger
-	"Set the fold level of a line. This encodes an integer level along with flags indicating
-	whether the line is a header and whether it is effectively white space."
+	"Set the fold level of a line. This encodes an integer level along with flags indicating whether the line is a header and whether it is effectively white space."
 
 	library
 		directFunction: this
@@ -2905,8 +2884,7 @@ inactiveSelectionForecolor: aColor
 	self setOrResetElement: SC_ELEMENT_SELECTION_INACTIVE_TEXT color: aColor!
 
 indent
-	"If selection is empty or all on one line replace the selection with a tab character. If
-	more than one line selected, indent the lines."
+	"If selection is empty or all on one line replace the selection with a tab character. If more than one line selected, indent the lines."
 
 	library
 		directFunction: this
@@ -2954,8 +2932,7 @@ indentationOfLine: lineInteger
 		lParam: 0!
 
 indexOfLine: lineInteger column: columnInteger
-	"Find the position of a column on a line taking into account tabs and multi-byte characters.
-	If beyond end of line, return line end position."
+	"Find the position of a column on a line taking into account tabs and multi-byte characters. If beyond end of line, return line end position."
 
 	^(library
 		directFunction: this
@@ -3137,8 +3114,7 @@ isAutoCompletionCancelledAtStart
 		lParam: 0!
 
 isAutoCompletionCancelledAtStart: cancelBoolean
-	"Should the auto-completion list be cancelled if the user backspaces to a position before
-	where the box was created."
+	"Should the auto-completion list be cancelled if the user backspaces to a position before where the box was created."
 
 	library
 		directFunction: this
@@ -3201,8 +3177,7 @@ isAutoCompletionSingleMatchChosen: chooseSingleBoolean
 		lParam: 0!
 
 isAutoCompletionTruncating
-	"Retrieve whether or not autocompletion deletes any word characters after the inserted text
-	upon completion."
+	"Retrieve whether or not autocompletion deletes any word characters after the inserted text upon completion."
 
 	^library
 		directBooleanFunction: this
@@ -3211,8 +3186,7 @@ isAutoCompletionTruncating
 		lParam: 0!
 
 isAutoCompletionTruncating: dropRestOfWordBoolean
-	"Set whether or not autocompletion deletes any word characters after the inserted text upon
-	completion."
+	"Set whether or not autocompletion deletes any word characters after the inserted text upon completion."
 
 	library
 		directFunction: this
@@ -3584,8 +3558,7 @@ isUsingTabs
 		lParam: 0!
 
 isUsingTabs: useTabsBoolean
-	"Indentation will only use space characters if useTabs is false, otherwise it will use a
-	combination of tabs and spaces."
+	"Indentation will only use space characters if useTabs is false, otherwise it will use a combination of tabs and spaces."
 
 	library
 		directFunction: this
@@ -4014,8 +3987,7 @@ maxCompletionListWidth
 		lParam: 0!
 
 maxCompletionListWidth: characterCountInteger
-	"Set the maximum width, in characters, of auto-completion and user lists. Set to 0 to
-	autosize to fit longest item, which is the default."
+	"Set the maximum width, in characters, of auto-completion and user lists. Set to 0 to autosize to fit longest item, which is the default."
 
 	library
 		directFunction: this
@@ -4259,8 +4231,7 @@ moveToEndOfWordPart
 		lParam: 0!
 
 moveToEndOfWrappedLine
-	"Like LineEnd but when word-wrap is enabled goes first to end of display line
-	LineEndDisplay, then to start of document line LineEnd."
+	"Like LineEnd but when word-wrap is enabled goes first to end of display line LineEndDisplay, then to start of document line LineEnd."
 
 	library
 		directFunction: this
@@ -4314,8 +4285,7 @@ moveToStartOfWordPart
 		lParam: 0!
 
 moveToStartOfWrappedLine
-	"Like Home but when word-wrap is enabled goes first to start of display line HomeDisplay,
-	then to start of document line Home."
+	"Like Home but when word-wrap is enabled goes first to start of display line HomeDisplay, then to start of document line Home."
 
 	library
 		directFunction: this
@@ -4324,8 +4294,7 @@ moveToStartOfWrappedLine
 		lParam: 0!
 
 moveToVcHome
-	"Move caret to before first visible character on line. If already there move to first
-	character on line."
+	"Move caret to before first visible character on line. If already there move to first character on line."
 
 	library
 		directFunction: this
@@ -4334,8 +4303,7 @@ moveToVcHome
 		lParam: 0!
 
 moveToVcStartOfDisplayLine
-	"Move caret to before first visible character on display line. If already there move to
-	first character on display line."
+	"Move caret to before first visible character on display line. If already there move to first character on display line."
 
 	library
 		directFunction: this
@@ -4344,8 +4312,7 @@ moveToVcStartOfDisplayLine
 		lParam: 0!
 
 moveToWrappedVcHome
-	"Like VCHome but when word-wrap is enabled goes first to start of display line
-	VCHomeDisplay, then behaves like VCHome."
+	"Like VCHome but when word-wrap is enabled goes first to start of display line VCHomeDisplay, then behaves like VCHome."
 
 	library
 		directFunction: this
@@ -4499,8 +4466,7 @@ performUndoableAction: aNiladicBlock
 	aNiladicBlock ensure: [self endUndoGroup]!
 
 plainText
-	"Retrieve all the text in the document. Returns number of characters retrieved. Result is
-	NUL-terminated."
+	"Retrieve all the text in the document. Returns number of characters retrieved. Result is NUL-terminated."
 
 	| len |
 	len := library
@@ -4996,8 +4962,7 @@ sciAllocateLines: linesInteger
 		lParam: 0!
 
 sciAllocateSubStyles: styleBaseInteger numberStyles: numberStylesInteger
-	"Private - Allocate a set of sub styles for a particular base style, returning start of
-	range"
+	"Private - Allocate a set of sub styles for a particular base style, returning start of range"
 
 	^library
 		directFunction: this
@@ -5192,8 +5157,7 @@ sciAutoCGetTypeSeparator
 		lParam: 0!
 
 sciAutoCSetCaseInsensitiveBehaviour: behaviourInteger
-	"Private - Set auto-completion case insensitive behaviour to either prefer case-sensitive
-	matches or have no preference."
+	"Private - Set auto-completion case insensitive behaviour to either prefer case-sensitive matches or have no preference."
 
 	library
 		directFunction: this
@@ -5202,8 +5166,7 @@ sciAutoCSetCaseInsensitiveBehaviour: behaviourInteger
 		lParam: 0!
 
 sciAutoCSetFillUps: characterSetString
-	"Private - Define a set of characters that when typed will cause the autocompletion to
-	choose the selected item."
+	"Private - Define a set of characters that when typed will cause the autocompletion to choose the selected item."
 
 	library
 		directFunction: this
@@ -5239,8 +5202,7 @@ sciAutoCSetOrder: orderInteger
 		lParam: 0!
 
 sciAutoCSetSeparator: separatorCharacterInteger
-	"Private - Change the separator character in the string setting up an auto-completion list.
-	Default is space but can be changed if items contain space."
+	"Private - Change the separator character in the string setting up an auto-completion list. Default is space but can be changed if items contain space."
 
 	library
 		directFunction: this
@@ -5249,8 +5211,7 @@ sciAutoCSetSeparator: separatorCharacterInteger
 		lParam: 0!
 
 sciAutoCSetTypeSeparator: separatorCharacterInteger
-	"Private - Change the type-separator character in the string setting up an auto-completion
-	list. Default is '?' but can be changed if items contain '?'."
+	"Private - Change the type-separator character in the string setting up an auto-completion list. Default is '?' but can be changed if items contain '?'."
 
 	library
 		directFunction: this
@@ -5259,8 +5220,7 @@ sciAutoCSetTypeSeparator: separatorCharacterInteger
 		lParam: 0!
 
 sciAutoCShow: lengthEnteredInteger itemList: itemListString
-	"Private - Display a auto-completion list. The lengthEntered parameter indicates how many
-	characters before the caret should be used to provide context."
+	"Private - Display a auto-completion list. The lengthEntered parameter indicates how many characters before the caret should be used to provide context."
 
 	library
 		directFunction: this
@@ -5278,8 +5238,7 @@ sciAutoCStops: characterSetString
 		lpParam: characterSetString!
 
 sciBraceBadLightIndicator: useSettingBoolean indicator: indicatorInteger
-	"Private - Use specified indicator to highlight non matching brace instead of changing its
-	style."
+	"Private - Use specified indicator to highlight non matching brace instead of changing its style."
 
 	library
 		directFunction: this
@@ -5288,8 +5247,7 @@ sciBraceBadLightIndicator: useSettingBoolean indicator: indicatorInteger
 		lParam: indicatorInteger!
 
 sciBraceHighlightIndicator: useSettingBoolean indicator: indicatorInteger
-	"Private - Use specified indicator to highlight matching braces instead of changing their
-	style."
+	"Private - Use specified indicator to highlight matching braces instead of changing their style."
 
 	library
 		directFunction: this
@@ -5298,8 +5256,7 @@ sciBraceHighlightIndicator: useSettingBoolean indicator: indicatorInteger
 		lParam: indicatorInteger!
 
 sciBraceMatch: posInteger maxReStyle: maxReStyleInteger
-	"Private - Find the position of a matching brace or INVALID_POSITION if no match. The
-	maxReStyle must be 0 for now. It may be defined in a future release."
+	"Private - Find the position of a matching brace or INVALID_POSITION if no match. The maxReStyle must be 0 for now. It may be defined in a future release."
 
 	^(library
 		directFunction: this
@@ -5362,8 +5319,7 @@ sciChangeInsertion: lengthInteger text: textString
 		lpParam: textString!
 
 sciChangeLexerState: startInteger end: endInteger
-	"Private - Indicate that the internal state of a lexer has changed over a range and
-	therefore there may be a need to redraw."
+	"Private - Indicate that the internal state of a lexer has changed over a range and therefore there may be a need to redraw."
 
 	^library
 		directFunction: this
@@ -5381,8 +5337,7 @@ sciCharPositionFromPoint: xInteger y: yInteger
 		lParam: yInteger) + 1!
 
 sciCharPositionFromPointClose: xInteger y: yInteger
-	"Private - Find the position of a character from a point within the window. Return
-	INVALID_POSITION if not close to text."
+	"Private - Find the position of a character from a point within the window. Return INVALID_POSITION if not close to text."
 
 	^(library
 		directFunction: this
@@ -5427,8 +5382,7 @@ sciClearRepresentation: encodedCharacterString
 		lParam: 0!
 
 sciContractedFoldNext: lineStartInteger
-	"Private - Find the next line at or after lineStart that is a contracted fold header line.
-	Return -1 when no more lines."
+	"Private - Find the next line at or after lineStart that is a contracted fold header line. Return -1 when no more lines."
 
 	^(library
 		directFunction: this
@@ -5473,8 +5427,7 @@ sciCountCodeUnits: startInteger end: endInteger
 		lParam: endInteger - 1!
 
 sciCreateDocument: bytesInteger documentOptions: documentOptionsInteger
-	"Private - Create a new document object. Starts with reference count of 1 and not selected
-	into editor."
+	"Private - Create a new document object. Starts with reference count of 1 and not selected into editor."
 
 	^Address fromAddress: (library
 				directFunction: this
@@ -5534,8 +5487,7 @@ sciDescriptionOfStyle: styleInteger
 			result]!
 
 sciDistanceToSecondaryStyles
-	"Private - Where styles are duplicated by a feature such as active/inactive code return the
-	distance between the two types."
+	"Private - Where styles are duplicated by a feature such as active/inactive code return the distance between the two types."
 
 	^library
 		directFunction: this
@@ -5553,8 +5505,7 @@ sciDropSelectionN: selectionInteger
 		lParam: 0!
 
 sciEncodedFromUTF8: utf8String
-	"Private - Translates a UTF8 string into the document encoding. Return the length of the
-	result in bytes. On error return 0."
+	"Private - Translates a UTF8 string into the document encoding. Return the length of the result in bytes. On error return 0."
 
 	| len |
 	len := library
@@ -5803,8 +5754,7 @@ sciGetCaretPeriod
 		lParam: 0!
 
 sciGetCaretSticky
-	"Private - Can the caret preferred x position only be changed by explicit movement
-	commands?"
+	"Private - Can the caret preferred x position only be changed by explicit movement commands?"
 
 	^library
 		directFunction: this
@@ -5924,8 +5874,7 @@ sciGetElementColour: elementInteger
 				lParam: 0)!
 
 sciGetElementIsSet: elementInteger
-	"Private - Get whether an element has been set by SetElementColour. When false, a
-	platform-defined or default colour is used."
+	"Private - Get whether an element has been set by SetElementColour. When false, a platform-defined or default colour is used."
 
 	^library
 		directBooleanFunction: this
@@ -6027,8 +5976,7 @@ sciGetLineCharacterIndex
 		lParam: 0!
 
 sciGetLineEndTypesActive
-	"Private - Get the line end types currently recognised. May be a subset of the allowed types
-	due to lexer limitation."
+	"Private - Get the line end types currently recognised. May be a subset of the allowed types due to lexer limitation."
 
 	^library
 		directFunction: this
@@ -6046,8 +5994,7 @@ sciGetLineEndTypesAllowed
 		lParam: 0!
 
 sciGetLineEndTypesSupported
-	"Private - Bit set of LineEndType enumertion for which line ends beyond the standard LF, CR,
-	and CRLF are supported by the lexer."
+	"Private - Bit set of LineEndType enumertion for which line ends beyond the standard LF, CR, and CRLF are supported by the lexer."
 
 	^library
 		directFunction: this
@@ -6065,8 +6012,7 @@ sciGetLineIndentPosition: lineInteger
 		lParam: 0) + 1!
 
 sciGetLineSelEndPosition: lineInteger
-	"Private - Retrieve the position of the end of the selection at the given line
-	(INVALID_POSITION if no selection on this line)."
+	"Private - Retrieve the position of the end of the selection at the given line (INVALID_POSITION if no selection on this line)."
 
 	^(library
 		directFunction: this
@@ -6075,8 +6021,7 @@ sciGetLineSelEndPosition: lineInteger
 		lParam: 0) + 1!
 
 sciGetLineSelStartPosition: lineInteger
-	"Private - Retrieve the position of the start of the selection at the given line
-	(INVALID_POSITION if no selection on this line)."
+	"Private - Retrieve the position of the start of the selection at the given line (INVALID_POSITION if no selection on this line)."
 
 	^(library
 		directFunction: this
@@ -6229,8 +6174,7 @@ sciGetPrintWrapMode
 		lParam: 0!
 
 sciGetProperty: keyString
-	"Private - Retrieve a 'property' value previously set with SetProperty. Result is
-	NUL-terminated."
+	"Private - Retrieve a 'property' value previously set with SetProperty. Result is NUL-terminated."
 
 	| len |
 	len := library
@@ -6251,8 +6195,7 @@ sciGetProperty: keyString
 			result]!
 
 sciGetPropertyExpanded: keyString
-	"Private - Retrieve a 'property' value previously set with SetProperty, with '$()' variable
-	replacement on returned buffer. Result is NUL-terminated."
+	"Private - Retrieve a 'property' value previously set with SetProperty, with '$()' variable replacement on returned buffer. Result is NUL-terminated."
 
 	| len |
 	len := library
@@ -6273,8 +6216,7 @@ sciGetPropertyExpanded: keyString
 			result]!
 
 sciGetPropertyInt: keyString defaultValue: defaultValueInteger
-	"Private - Retrieve a 'property' value previously set with SetProperty, interpreted as an
-	int AFTER any '$()' variable replacement."
+	"Private - Retrieve a 'property' value previously set with SetProperty, interpreted as an int AFTER any '$()' variable replacement."
 
 	^library
 		directFunction: this
@@ -6442,8 +6384,7 @@ sciGetSelectionNStartVirtualSpace: selectionInteger
 		lParam: 0) + 1!
 
 sciGetStyledTextFull: trTextRangeFull
-	"Private - Retrieve a buffer of cells that can be past 2GB. Returns the number of bytes in
-	the buffer not including terminating NULs."
+	"Private - Retrieve a buffer of cells that can be past 2GB. Returns the number of bytes in the buffer not including terminating NULs."
 
 	^library
 		directFunction: this
@@ -6461,8 +6402,7 @@ sciGetStyleFromSubStyle: subStyleInteger
 		lParam: 0!
 
 sciGetSubStyleBases
-	"Private - Get the set of base styles that can be extended with sub styles Result is
-	NUL-terminated."
+	"Private - Get the set of base styles that can be extended with sub styles Result is NUL-terminated."
 
 	| len |
 	len := library
@@ -6510,8 +6450,7 @@ sciGetTabDrawMode
 		lParam: 0!
 
 sciGetTag: tagNumberInteger
-	"Private - Retrieve the value of a tag from a regular expression search. Result is
-	NUL-terminated."
+	"Private - Retrieve the value of a tag from a regular expression search. Result is NUL-terminated."
 
 	| len |
 	len := library
@@ -6586,8 +6525,7 @@ sciGetVirtualSpaceOptions
 		lParam: 0!
 
 sciGetWhitespaceChars
-	"Private - Get the set of characters making up whitespace for when moving or selecting by
-	word."
+	"Private - Get the set of characters making up whitespace for when moving or selecting by word."
 
 	| len |
 	len := library
@@ -6608,8 +6546,7 @@ sciGetWhitespaceChars
 			result]!
 
 sciGetWordChars
-	"Private - Get the set of characters making up words for when moving or selecting by word.
-	Returns the number of characters"
+	"Private - Get the set of characters making up words for when moving or selecting by word. Returns the number of characters"
 
 	| len |
 	len := library
@@ -6879,8 +6816,7 @@ sciMarkerDefinePixmap: markerNumberInteger pixmap: pixmapString
 		lpParam: pixmapString!
 
 sciMarkerDefineRGBAImage: markerNumberInteger pixels: pixelsString
-	"Private - Define a marker from RGBA data. It has the width and height from
-	RGBAImageSetWidth/Height"
+	"Private - Define a marker from RGBA data. It has the width and height from RGBAImageSetWidth/Height"
 
 	library
 		directFunction: this
@@ -6898,8 +6834,7 @@ sciMarkerDeleteHandle: markerHandleInteger
 		lParam: 0!
 
 sciMarkerEnableHighlight: enabledBoolean
-	"Private - Enable/disable highlight for current folding block (smallest one that contains
-	the caret)"
+	"Private - Enable/disable highlight for current folding block (smallest one that contains the caret)"
 
 	library
 		directFunction: this
@@ -6935,8 +6870,7 @@ sciMarkerLineFromHandle: markerHandleInteger
 		lParam: 0) + 1!
 
 sciMarkerNext: lineStartInteger markerMask: markerMaskInteger
-	"Private - Find the next line at or after lineStart that includes a marker in mask. Return
-	-1 when no more lines."
+	"Private - Find the next line at or after lineStart that includes a marker in mask. Return -1 when no more lines."
 
 	^(library
 		directFunction: this
@@ -6981,8 +6915,7 @@ sciMultiEdgeAddLine: columnInteger edgeColour: edgeColourColor
 		lParam: edgeColourColor rgbCode!
 
 sciMultipleSelectAddEach
-	"Private - Add each occurrence of the main selection in the target to the set of selections.
-	If the current selection is empty then select word around caret."
+	"Private - Add each occurrence of the main selection in the target to the set of selections. If the current selection is empty then select word around caret."
 
 	library
 		directFunction: this
@@ -6991,8 +6924,7 @@ sciMultipleSelectAddEach
 		lParam: 0!
 
 sciMultipleSelectAddNext
-	"Private - Add the next occurrence of the main selection to the set of selections as main.
-	If the current selection is empty then select word around caret."
+	"Private - Add the next occurrence of the main selection to the set of selections as main. If the current selection is empty then select word around caret."
 
 	library
 		directFunction: this
@@ -7040,8 +6972,7 @@ sciPointYFromPosition: posInteger
 		lParam: posInteger - 1!
 
 sciPositionAfter: posInteger
-	"Private - Given a valid document position, return the next position taking code page into
-	account. Maximum value returned is the last position in the document."
+	"Private - Given a valid document position, return the next position taking code page into account. Maximum value returned is the last position in the document."
 
 	^(library
 		directFunction: this
@@ -7050,8 +6981,7 @@ sciPositionAfter: posInteger
 		lParam: 0) + 1!
 
 sciPositionBefore: posInteger
-	"Private - Given a valid document position, return the previous position taking code page
-	into account. Returns 0 if passed 0."
+	"Private - Given a valid document position, return the previous position taking code page into account. Returns 0 if passed 0."
 
 	^(library
 		directFunction: this
@@ -7069,8 +6999,7 @@ sciPositionFromPoint: xInteger y: yInteger
 		lParam: yInteger) + 1!
 
 sciPositionFromPointClose: xInteger y: yInteger
-	"Private - Find the position from a point within the window but return INVALID_POSITION if
-	not close to text."
+	"Private - Find the position from a point within the window but return INVALID_POSITION if not close to text."
 
 	^(library
 		directFunction: this
@@ -7079,8 +7008,7 @@ sciPositionFromPointClose: xInteger y: yInteger
 		lParam: yInteger) + 1!
 
 sciPositionRelative: posInteger relative: relativeInteger
-	"Private - Given a valid document position, return a position that differs in a number of
-	characters. Returned value is always between 0 and last position in document."
+	"Private - Given a valid document position, return a position that differs in a number of characters. Returned value is always between 0 and last position in document."
 
 	^library
 		directFunction: this
@@ -7089,9 +7017,7 @@ sciPositionRelative: posInteger relative: relativeInteger
 		lParam: relativeInteger!
 
 sciPositionRelativeCodeUnits: posInteger relative: relativeInteger
-	"Private - Given a valid document position, return a position that differs in a number of
-	UTF-16 code units. Returned value is always between 0 and last position in document. The
-	result may point half way (2 bytes) inside a non-BMP character."
+	"Private - Given a valid document position, return a position that differs in a number of UTF-16 code units. Returned value is always between 0 and last position in document. The result may point half way (2 bytes) inside a non-BMP character."
 
 	^library
 		directFunction: this
@@ -7109,8 +7035,7 @@ sciPrivateLexerCall: operationInteger pointer: pointerAddress
 				lpParam: pointerAddress)!
 
 sciPropertyNames
-	"Private - Retrieve a '\n' separated list of properties understood by the current lexer.
-	Result is NUL-terminated."
+	"Private - Retrieve a '\n' separated list of properties understood by the current lexer. Result is NUL-terminated."
 
 	| len |
 	len := library
@@ -7149,8 +7074,7 @@ sciRegisterImage: typeInteger xpmData: xpmDataString
 		lpParam: xpmDataString!
 
 sciRegisterRGBAImage: typeInteger pixels: pixelsString
-	"Private - Register an RGBA image for use in autocompletion lists. It has the width and
-	height from RGBAImageSetWidth/Height"
+	"Private - Register an RGBA image for use in autocompletion lists. It has the width and height from RGBAImageSetWidth/Height"
 
 	library
 		directFunction: this
@@ -7204,8 +7128,7 @@ sciReplaceSel: textString
 		lpParam: textString!
 
 sciReplaceTarget: lengthInteger text: textString
-	"Private - Replace the target text with the argument text. Text is counted so it can contain
-	NULs. Returns the length of the replacement text."
+	"Private - Replace the target text with the argument text. Text is counted so it can contain NULs. Returns the length of the replacement text."
 
 	^library
 		directFunction: this
@@ -7214,8 +7137,7 @@ sciReplaceTarget: lengthInteger text: textString
 		lpParam: textString!
 
 sciReplaceTargetMinimal: lengthInteger text: textString
-	"Private - Replace the target text with the argument text but ignore prefix and suffix that
-	are the same as current."
+	"Private - Replace the target text with the argument text but ignore prefix and suffix that are the same as current."
 
 	^(library
 		directFunction: this
@@ -7224,11 +7146,7 @@ sciReplaceTargetMinimal: lengthInteger text: textString
 		lpParam: textString) + 1!
 
 sciReplaceTargetRE: lengthInteger text: textString
-	"Private - Replace the target text with the argument text after \d processing. Text is
-	counted so it can contain NULs. Looks for \d where d is between 1 and 9 and replaces these
-	with the strings matched in the last search operation which were surrounded by \( and \).
-	Returns the length of the replacement text including any change caused by processing the \d
-	patterns."
+	"Private - Replace the target text with the argument text after \d processing. Text is counted so it can contain NULs. Looks for \d where d is between 1 and 9 and replaces these with the strings matched in the last search operation which were surrounded by \( and \). Returns the length of the replacement text including any change caused by processing the \d patterns."
 
 	^library
 		directFunction: this
@@ -7282,9 +7200,7 @@ sciScrollCaret
 		lParam: 0!
 
 sciScrollRange: secondaryInteger primary: primaryInteger
-	"Private - Scroll the argument positions and the range between them into view giving
-	priority to the primary position then the secondary position. This may be used to make a
-	search match visible."
+	"Private - Scroll the argument positions and the range between them into view giving priority to the primary position then the secondary position. This may be used to make a search match visible."
 
 	library
 		directFunction: this
@@ -7302,9 +7218,7 @@ sciSearchAnchor
 		lParam: 0!
 
 sciSearchInTarget: lengthInteger text: textString
-	"Private - Search for a counted string in the target and set the target to the found range.
-	Text is counted so it can contain NULs. Returns start of found range or -1 for failure in
-	which case target is not moved."
+	"Private - Search for a counted string in the target and set the target to the found range. Text is counted so it can contain NULs. Returns start of found range or -1 for failure in which case target is not moved."
 
 	^(library
 		directFunction: this
@@ -7340,8 +7254,7 @@ sciSetBidirectional: bidirectionalInteger
 		lParam: 0!
 
 sciSetBufferedDraw: bufferedBoolean
-	"Private - If drawing is buffered then each line of text is drawn into a bitmap buffer
-	before drawing it to the screen to avoid flicker."
+	"Private - If drawing is buffered then each line of text is drawn into a bitmap buffer before drawing it to the screen to avoid flicker."
 
 	library
 		directFunction: this
@@ -7422,8 +7335,7 @@ sciSetCharsDefault
 		lParam: 0!
 
 sciSetCodePage: codePageInteger
-	"Private - Set the code page used to interpret the bytes of the document as characters. The
-	SC_CP_UTF8 value can be used to enter Unicode mode."
+	"Private - Set the code page used to interpret the bytes of the document as characters. The SC_CP_UTF8 value can be used to enter Unicode mode."
 
 	library
 		directFunction: this
@@ -7432,8 +7344,7 @@ sciSetCodePage: codePageInteger
 		lParam: 0!
 
 sciSetControlCharSymbol: symbolInteger
-	"Private - Change the way control characters are displayed: If symbol is < 32, keep the
-	drawn way, else, use the given character."
+	"Private - Change the way control characters are displayed: If symbol is < 32, keep the drawn way, else, use the given character."
 
 	library
 		directFunction: this
@@ -7460,8 +7371,7 @@ sciSetEdgeColour: edgeColourColor
 		lParam: 0!
 
 sciSetEdgeMode: edgeModeInteger
-	"Private - The edge may be displayed by a line (EDGE_LINE/EDGE_MULTILINE) or by highlighting
-	text that goes beyond it (EDGE_BACKGROUND) or not displayed at all (EDGE_NONE)."
+	"Private - The edge may be displayed by a line (EDGE_LINE/EDGE_MULTILINE) or by highlighting text that goes beyond it (EDGE_BACKGROUND) or not displayed at all (EDGE_NONE)."
 
 	library
 		directFunction: this
@@ -7470,8 +7380,7 @@ sciSetEdgeMode: edgeModeInteger
 		lParam: 0!
 
 sciSetElementColour: elementInteger colourElement: colourElementColor
-	"Private - Set the colour of an element. Translucency (alpha) may or may not be significant
-	and this may depend on the platform. The alpha byte should commonly be 0xff for opaque."
+	"Private - Set the colour of an element. Translucency (alpha) may or may not be significant and this may depend on the platform. The alpha byte should commonly be 0xff for opaque."
 
 	library
 		directFunction: this
@@ -7597,8 +7506,7 @@ sciSetLayoutCache: cacheModeInteger
 		lParam: 0!
 
 sciSetLengthForEncode: bytesInteger
-	"Private - Set the length of the utf8 argument for calling EncodedFromUTF8. Set to -1 and
-	the string will be measured to the first nul."
+	"Private - Set the length of the utf8 argument for calling EncodedFromUTF8. Set to -1 and the string will be measured to the first nul."
 
 	library
 		directFunction: this
@@ -7607,8 +7515,7 @@ sciSetLengthForEncode: bytesInteger
 		lParam: 0!
 
 sciSetLineEndTypesAllowed: lineEndBitSetInteger
-	"Private - Set the line end types that the application wants to use. May not be used if
-	incompatible with lexer or encoding."
+	"Private - Set the line end types that the application wants to use. May not be used if incompatible with lexer or encoding."
 
 	library
 		directFunction: this
@@ -7689,8 +7596,7 @@ sciSetMouseDwellTime: periodMillisecondsInteger
 		lParam: 0!
 
 sciSetMouseSelectionRectangularSwitch: mouseSelectionRectangularSwitchBoolean
-	"Private - Set whether switching to rectangular mode while selecting with the mouse is
-	allowed."
+	"Private - Set whether switching to rectangular mode while selecting with the mouse is allowed."
 
 	library
 		directFunction: this
@@ -7717,10 +7623,7 @@ sciSetPasteConvertEndings: convertBoolean
 		lParam: 0!
 
 sciSetPhasesDraw: phasesInteger
-	"Private - In one phase draw, text is drawn in a series of rectangular blocks with no
-	overlap. In two phase draw, text is drawn in a series of lines allowing runs to overlap
-	horizontally. In multiple phase draw, each element is drawn over the whole drawing area,
-	allowing text to overlap from one line to the next."
+	"Private - In one phase draw, text is drawn in a series of rectangular blocks with no overlap. In two phase draw, text is drawn in a series of lines allowing runs to overlap horizontally. In multiple phase draw, each element is drawn over the whole drawing area, allowing text to overlap from one line to the next."
 
 	library
 		directFunction: this
@@ -7747,8 +7650,7 @@ sciSetProperty: keyString value: valueString
 		lpParam: valueString!
 
 sciSetPunctuationChars: charactersString
-	"Private - Set the set of characters making up punctuation characters Should be called after
-	SetWordChars."
+	"Private - Set the set of characters making up punctuation characters Should be called after SetWordChars."
 
 	library
 		directFunction: this
@@ -7802,8 +7704,7 @@ sciSetRepresentationColour: encodedCharacterString colour: colourColor
 		lParam: colourColor rgbaCode!
 
 sciSetSavePoint
-	"Private - Remember the current position in the undo history as the position at which the
-	document was saved."
+	"Private - Remember the current position in the undo history as the position at which the document was saved."
 
 	library
 		directFunction: this
@@ -7830,8 +7731,7 @@ sciSetSelection: caretInteger anchor: anchorInteger
 		lParam: anchorInteger - 1!
 
 sciSetSelectionLayer: layerInteger
-	"Private - Set the layer for drawing selections: either opaquely on base layer or
-	translucently over text"
+	"Private - Set the layer for drawing selections: either opaquely on base layer or translucently over text"
 
 	library
 		directFunction: this
@@ -7840,8 +7740,7 @@ sciSetSelectionLayer: layerInteger
 		lParam: 0!
 
 sciSetSelectionMode: selectionModeInteger
-	"Private - Set the selection mode to stream (SC_SEL_STREAM) or rectangular
-	(SC_SEL_RECTANGLE/SC_SEL_THIN) or by lines (SC_SEL_LINES)."
+	"Private - Set the selection mode to stream (SC_SEL_STREAM) or rectangular (SC_SEL_RECTANGLE/SC_SEL_THIN) or by lines (SC_SEL_LINES)."
 
 	library
 		directFunction: this
@@ -7967,8 +7866,7 @@ sciSetText: textString
 		lpParam: textString!
 
 sciSetViewWS: viewWSInteger
-	"Private - Make white space characters invisible, always visible or visible outside
-	indentation."
+	"Private - Make white space characters invisible, always visible or visible outside indentation."
 
 	library
 		directFunction: this
@@ -7986,8 +7884,7 @@ sciSetVirtualSpaceOptions: virtualSpaceOptionsInteger
 		lParam: 0!
 
 sciSetVisiblePolicy: visiblePolicyInteger visibleSlop: visibleSlopInteger
-	"Private - Set the way the display area is determined when a particular line is to be moved
-	to by Find, FindNext, GotoLine, etc."
+	"Private - Set the way the display area is determined when a particular line is to be moved to by Find, FindNext, GotoLine, etc."
 
 	library
 		directFunction: this
@@ -7996,8 +7893,7 @@ sciSetVisiblePolicy: visiblePolicyInteger visibleSlop: visibleSlopInteger
 		lParam: visibleSlopInteger!
 
 sciSetWhitespaceChars: charactersString
-	"Private - Set the set of characters making up whitespace for when moving or selecting by
-	word. Should be called after SetWordChars."
+	"Private - Set the set of characters making up whitespace for when moving or selecting by word. Should be called after SetWordChars."
 
 	library
 		directFunction: this
@@ -8006,8 +7902,7 @@ sciSetWhitespaceChars: charactersString
 		lpParam: charactersString!
 
 sciSetWordChars: charactersString
-	"Private - Set the set of characters making up words for when moving or selecting by word.
-	First sets defaults like SetCharsDefault."
+	"Private - Set the set of characters making up words for when moving or selecting by word. First sets defaults like SetCharsDefault."
 
 	library
 		directFunction: this
@@ -8052,8 +7947,7 @@ sciSetWrapVisualFlagsLocation: wrapVisualFlagsLocationInteger
 		lParam: 0!
 
 sciSetXCaretPolicy: caretPolicyInteger caretSlop: caretSlopInteger
-	"Private - Set the way the caret is kept visible when going sideways. The exclusion zone is
-	given in pixels."
+	"Private - Set the way the caret is kept visible when going sideways. The exclusion zone is given in pixels."
 
 	library
 		directFunction: this
@@ -8062,8 +7956,7 @@ sciSetXCaretPolicy: caretPolicyInteger caretSlop: caretSlopInteger
 		lParam: caretSlopInteger!
 
 sciSetYCaretPolicy: caretPolicyInteger caretSlop: caretSlopInteger
-	"Private - Set the way the line the caret is on is kept visible. The exclusion zone is given
-	in lines."
+	"Private - Set the way the line the caret is on is kept visible. The exclusion zone is given in lines."
 
 	library
 		directFunction: this
@@ -8129,8 +8022,7 @@ sciSupportsFeature: featureInteger
 		lParam: 0!
 
 sciTagsOfStyle: styleInteger
-	"Private - Retrieve a ' ' separated list of style tags like 'literal quoted string'. Result
-	is NUL-terminated."
+	"Private - Retrieve a ' ' separated list of style tags like 'literal quoted string'. Result is NUL-terminated."
 
 	| len |
 	len := library
@@ -8172,8 +8064,7 @@ sciTargetAsUTF8
 			result]!
 
 sciTextWidth: styleInteger text: textString
-	"Private - Measure the pixel width of some text in a particular style. NUL terminated text
-	argument. Does not handle tab or control characters."
+	"Private - Measure the pixel width of some text in a particular style. NUL terminated text argument. Does not handle tab or control characters."
 
 	^library
 		directFunction: this
@@ -8659,8 +8550,7 @@ searchNext: searchFlagsInteger text: textString
 		lpParam: textString) + 1!
 
 searchPrev: searchFlagsInteger text: textString
-	"Find some text starting at the search anchor and moving backwards. Does not ensure the
-	selection is visible."
+	"Find some text starting at the search anchor and moving backwards. Does not ensure the selection is visible."
 
 	^(library
 		directFunction: this
@@ -9190,8 +9080,7 @@ showVerticalScrollBar: visibleBoolean
 		lParam: 0!
 
 splitTarget: pixelWidthInteger
-	"Split the lines in the target into lines that are less wide than pixelWidth where
-	possible."
+	"Split the lines in the target into lines that are less wide than pixelWidth where possible."
 
 	library
 		directFunction: this
@@ -9212,8 +9101,7 @@ startRecording
 		lParam: 0!
 
 startStylingFrom: startInteger
-	"Set the current styling position to start. The unused parameter is no longer used and
-	should be set to 0."
+	"Set the current styling position to start. The unused parameter is no longer used and should be set to 0."
 
 	library
 		directFunction: this
@@ -9306,8 +9194,7 @@ styleNamed: aSymbol
 	^currentTextStyles lookup: aSymbol!
 
 styleNext: lengthInteger mask: styleInteger
-	"Change style from current styling position for length characters to a style and move the
-	current styling position to after this newly styled segment."
+	"Change style from current styling position for length characters to a style and move the current styling position to after this newly styled segment."
 
 	library
 		directFunction: this
@@ -10032,8 +9919,7 @@ zoomLevel
 		lParam: 0!
 
 zoomLevel: zoomInPointsInteger
-	"Set the zoom level. This number of points is added to the size of all fonts. It may be
-	positive to magnify or negative to reduce."
+	"Set the zoom level. This number of points is added to the size of all fonts. It may be positive to magnify or negative to reduce."
 
 	library
 		directFunction: this
