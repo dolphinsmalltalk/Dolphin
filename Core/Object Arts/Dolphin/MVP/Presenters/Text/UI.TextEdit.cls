@@ -55,13 +55,23 @@ apply
 	"Apply the changes made to the edit to the receiver's model. Answer whether
 	any update actually occurred to the model."
 
+	<commandQuerySelector: #queryApply:>
 	| modified |
 	modified := self isTextModified.
 	modified ifTrue: [self updateModel].
 	^modified!
 
+basicClearAll
+	self value: ''!
+
 basicClearSelection
 	self sendMessage: WM_CLEAR!
+
+basicCopySelection
+	self sendMessage: WM_COPY!
+
+basicCutSelection
+	self sendMessage: WM_CUT!
 
 basicFindNext
 	"Private - Highlight the next occurrence which satisfies the find operation held in findDetails."
@@ -75,8 +85,14 @@ basicLineFromPosition: anInteger
 	^self sendMessage: EM_LINEFROMCHAR wParam: anInteger
 !
 
+basicPasteClipboard
+	self sendMessage: WM_PASTE!
+
 basicPositionAtLine: anInteger 
 	^self sendMessage: EM_LINEINDEX wParam: anInteger!
+
+basicRedo
+	self error: 'Redo not supported'!
 
 basicSelectAll
 	self basicSelectionStart: 0 end: -1!
@@ -104,6 +120,9 @@ basicSelectionStart: start end: end
 	meaningful value."
 
 	self sendMessage: EM_SETSEL wParam: start lParam: end!
+
+basicUndo
+	self sendMessage: EM_UNDO!
 
 calcRectangleFromClientRectangle: aRectangle
 	"Private - Given a client rectangle represented by the <Rectangle> argument, answer the
@@ -187,16 +206,18 @@ charNearestPosition: aPoint
 		wParam: 0
 		lParam: pt asUIntPtr) lowWord + 1!
 
-clear
+clearAll
 	"Clears the contents of the receiver"
 
-	self value: ''!
+	<commandQuerySelector: #queryCanCut:>
+	self basicClearAll!
 
 clearSelection
 	"Delete the current selection from the receiver.
 	N.B. If there is no selection, deletes the character immediately after the
 	caret (i.e. behaves like Del key)."
 
+	<commandQuerySelector: #queryCanCut:>
 	| range |
 	range := self selectionRange.
 	range isEmpty ifTrue: [self selectionStart: range start end: range start].
@@ -216,8 +237,8 @@ command: anInteger id: id
 copySelection
 	"Copy the current selection to the clipboard."
 
-	self sendMessage: WM_COPY
-!
+	<commandQuerySelector: #queryCanCopy:>
+	self basicCopySelection!
 
 cueBanner
 	"Answer the textual cue to be displayed when this single-line text box is empty and does not
@@ -243,8 +264,8 @@ cueBanner: aString
 cutSelection
 	"Cut the current selection and place on the clipboard."
 
-	self sendMessage: WM_CUT
-!
+	<commandQuerySelector: #queryCanCut:>
+	self basicCutSelection!
 
 defaultSelectionRange
 	^1 to: 0!
@@ -309,6 +330,7 @@ dragOver: session
 editFind
 	"Launch the common Find dialog."
 
+	<commandQuerySelector: #queryFind:>
 	self findPrompt: self suggestedFindText!
 
 emptyUndoBuffer
@@ -369,6 +391,7 @@ extentForText: aString
 find
 	"Launch the FindText dialog in response to a generic toolbar find command."
 
+	<commandQuerySelector: #queryFind:>
 	self editFind!
 
 find: aFindDetails range: anInterval 
@@ -396,6 +419,7 @@ findDialogClass
 findNext
 	"Hilight the next occurrence which satisfies the find operation held in findDetails."
 
+	<commandQuerySelector: #queryFindNext:>
 	self findDetails isNil
 		ifTrue: [self find]
 		ifFalse: [self basicFindNext ifFalse: [Sound defaultBeep]]!
@@ -444,6 +468,7 @@ findPrompt: aString
 findReplace
 	"Launch the FindReplaceText dialog."
 
+	<commandQuerySelector: #queryFindReplace:>
 	self findReplacePrompt: self suggestedFindText!
 
 findReplacePrompt: aString
@@ -821,12 +846,14 @@ passwordCharacter: aCharacter
 pasteClipboard
 	"Paste the clipboard text into the receiver's window."
 
-	self sendMessage: WM_PASTE!
+	<commandQuerySelector: #queryCanPaste:>
+	self basicPasteClipboard!
 
 pastePlainText
 	"Paste the clipboard text into the receiver's window."
 
-	self pasteClipboard!
+	<commandQuerySelector: #queryCanPaste:>
+	self basicPasteClipboard!
 
 plainTextAtLine: anInteger 
 	^self plainTextRange: (self lineRange: anInteger)!
@@ -879,54 +906,43 @@ preTranslateKeyboardInput: aMSG
 			^true].
 	^false!
 
-queryCommand: aCommandQuery 
-	"Private - Enters details about a potential command for the receiver into the 
-	<CommandQuery> argument."
+queryApply: aCommandQuery
+	aCommandQuery isEnabled: self isTextModified!
 
-	| command |
-	command := aCommandQuery commandSymbol.
-	(#(#pasteClipboard #pastePlainText) identityIncludes: command) 
-		ifTrue: 
-			[aCommandQuery isEnabled: self canPaste.
-			^true].
-	#copySelection == command 
-		ifTrue: 
-			[aCommandQuery
-				receiver: self;
-				isEnabled: self hasSelection.
-			^true].
-	(#(#cutSelection #clearSelection #clear) identityIncludes: command) 
-		ifTrue: 
-			[aCommandQuery
-				receiver: self;
-				isEnabled: (self isReadOnly not and: [self hasSelection]).
-			^true].
-	(#(#editFind #find) identityIncludes: command) 
-		ifTrue: 
-			[aCommandQuery isEnabled: (self isFindEnabled and: [self textLength > 0]).
-			^true].
-	#findReplace == command 
-		ifTrue: 
-			[aCommandQuery isEnabled: (self isFindEnabled and: [self isReadOnly not and: [self textLength > 0]]).
-			^true].
-	command == #findNext 
-		ifTrue: 
-			[aCommandQuery isEnabled: self findDetails notNil.
-			^true].
-	command == #apply 
-		ifTrue: 
-			[aCommandQuery isEnabled: self isTextModified.
-			^true].
-	command == #undo 
-		ifTrue: 
-			[aCommandQuery isEnabled: self canUndo.
-			^true].
-	^super queryCommand: aCommandQuery!
+queryCanCopy: aCommandQuery
+
+	aCommandQuery
+		receiver: self;
+		isEnabled: self hasSelection!
+
+queryCanCut: aCommandQuery
+	aCommandQuery
+		receiver: self;
+		isEnabled: (self isReadOnly not and: [self hasSelection])!
+
+queryCanPaste: aCommandQuery
+	aCommandQuery isEnabled: self canPaste!
+
+queryCanRedo: aCommandQuery
+	aCommandQuery isEnabled: self canRedo!
+
+queryCanUndo: aCommandQuery
+	aCommandQuery isEnabled: self canUndo!
+
+queryFind: aCommandQuery
+	aCommandQuery isEnabled: (self isFindEnabled and: [self textLength > 0])!
+
+queryFindNext: aCommandQuery
+	aCommandQuery isEnabled: self findDetails notNil!
+
+queryFindReplace: aCommandQuery
+	aCommandQuery isEnabled: (self isFindEnabled and: [self isReadOnly not and: [self textLength > 0]])!
 
 redo
 	"Redo the last undone edit action."
 
-	^self error: 'Redo not supported'!
+	<commandQuerySelector: #queryCanRedo:>
+	self basicRedo!
 
 refreshContents
 	"The model held by the receiver has been changed so refresh 
@@ -1172,7 +1188,8 @@ textRange
 undo
 	"Undo the last undoable edit action."
 
-	self sendMessage: EM_UNDO!
+	<commandQuerySelector: #queryCanUndo:>
+	self basicUndo!
 
 updateModel
 	"Private - The displayed value of the receiver may have been changed so set this
@@ -1291,14 +1308,20 @@ wmSetFocus: message wParam: wParam lParam: lParam
 !UI.TextEdit categoriesForMethods!
 alignment!accessing!public! !
 alignment:!accessing!public! !
-apply!commands!public! !
+apply!commands-actions!public! !
+basicClearAll!private!updating! !
 basicClearSelection!helpers!private! !
+basicCopySelection!clipboard operations!private! !
+basicCutSelection!clipboard operations!private! !
 basicFindNext!private!searching & replacing! !
 basicLineFromPosition:!accessing!private! !
+basicPasteClipboard!clipboard operations!private! !
 basicPositionAtLine:!accessing!private! !
+basicRedo!private!undo & redo! !
 basicSelectAll!private!selection! !
 basicSelectionRange!accessing!private! !
 basicSelectionStart:end:!accessing!private! !
+basicUndo!private!undo & redo! !
 calcRectangleFromClientRectangle:!geometry!private! !
 calculateExtent:!geometry!private! !
 canHScroll!accessing-styles!public! !
@@ -1309,13 +1332,13 @@ canUndo!public!testing!undo & redo! !
 caretPosition!caret!public! !
 caretPosition:!accessing!caret!public! !
 charNearestPosition:!accessing!public! !
-clear!operations!public! !
-clearSelection!clipboard operations!commands!public! !
-command:id:!commands!private! !
-copySelection!clipboard operations!commands!public! !
+clearAll!commands-actions!public! !
+clearSelection!clipboard operations!commands-actions!public! !
+command:id:!commands-routing!private! !
+copySelection!clipboard operations!commands-actions!public! !
 cueBanner!accessing!public! !
 cueBanner:!accessing!public! !
-cutSelection!clipboard operations!commands!public! !
+cutSelection!clipboard operations!commands-actions!public! !
 defaultSelectionRange!constants!private! !
 defaultTextLimit!constants!private! !
 defaultWindowExStyle!constants!private! !
@@ -1324,8 +1347,8 @@ displayValue!private!updating! !
 displayValue:!private!updating! !
 dlgCode!constants!private! !
 dragOver:!drag & drop!public! !
-editFind!commands!public!searching & replacing! !
-emptyUndoBuffer!commands!public!undo & redo! !
+editFind!commands-actions!public!searching & replacing! !
+emptyUndoBuffer!commands-actions!public!undo & redo! !
 enChange!event handling-win32!private! !
 enKillFocus!event handling-win32!private! !
 enMaxText!event handling-win32!private! !
@@ -1333,16 +1356,16 @@ enSetFocus!event handling-win32!private! !
 ensureCaretVisible!caret!operations!public! !
 enUpdate!event handling-win32!private! !
 extentForText:!geometry!private! !
-find!public!searching & replacing! !
+find!commands-actions!public!searching & replacing! !
 find:range:!private!searching & replacing! !
 findDetails!private!searching & replacing! !
 findDetails:!private!searching & replacing! !
 findDialogClass!constants!private! !
-findNext!commands!public!searching & replacing! !
+findNext!commands-actions!public!searching & replacing! !
 findNext:!helpers!private!searching & replacing! !
 findNextWrapped:!public!searching & replacing! !
 findPrompt:!private!searching & replacing! !
-findReplace!commands!public!searching & replacing! !
+findReplace!commands-actions!public!searching & replacing! !
 findReplacePrompt:!public!searching & replacing! !
 format!public!testing! !
 format:!accessing!public! !
@@ -1386,24 +1409,32 @@ onTipTextRequired:!event handling!public! !
 onViewCreated!event handling!operations!public! !
 passwordCharacter!accessing!public! !
 passwordCharacter:!accessing!public! !
-pasteClipboard!clipboard operations!commands!public! !
-pastePlainText!clipboard operations!commands!public! !
+pasteClipboard!clipboard operations!commands-actions!public! !
+pastePlainText!clipboard operations!commands-actions!public! !
 plainTextAtLine:!public! !
 positionAtLine:!accessing!public! !
 positionForKeyboardContextMenu!enquiries!public! !
 positionOfChar:!accessing!public! !
 preTranslateKeyboardInput:!dispatching!public! !
-queryCommand:!commands!private! !
-redo!operations!public!undo & redo! !
+queryApply:!commands-queries!private! !
+queryCanCopy:!commands-queries!private! !
+queryCanCut:!commands-queries!private! !
+queryCanPaste:!commands-queries!private! !
+queryCanRedo:!commands-queries!private! !
+queryCanUndo:!commands-queries!private! !
+queryFind:!commands-queries!private! !
+queryFindNext:!commands-queries!private! !
+queryFindReplace:!commands-queries!private! !
+redo!commands-actions!public! !
 refreshContents!operations!public! !
 replace:!private!searching & replacing! !
 replaceAll:!event handling!public! !
 replaceSelection:!public!selection! !
-scrollDown!commands!public! !
+scrollDown!commands-actions!public! !
 scrollToEnd!public!scrolling! !
-scrollUp!commands!public! !
-selectAll!commands!public!selection! !
-selectAllIfSingleLine!commands!public!selection! !
+scrollUp!commands-actions!public! !
+selectAll!commands-actions!public!selection! !
+selectAllIfSingleLine!commands-actions!public!selection! !
 selection!public!selection! !
 selectionPlainText:!private!selection! !
 selectionRange!public!selection! !
@@ -1420,7 +1451,7 @@ tabFocus!private!tabbing! !
 textLimit!accessing!public! !
 textLimit:!accessing!public! !
 textRange!accessing!public! !
-undo!operations!public! !
+undo!commands-actions!public! !
 updateModel!private!updating! !
 updatePerChar!public!testing! !
 updatePerChar:!accessing!public! !

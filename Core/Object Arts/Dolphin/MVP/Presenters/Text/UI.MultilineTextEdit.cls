@@ -12,6 +12,37 @@ UI.MultilineTextEdit comment: 'MultilineTextEdit is a <valueView> class that imp
 !UI.MultilineTextEdit categoriesForClass!MVP-Views! !
 !UI.MultilineTextEdit methodsFor!
 
+basicCopyLine
+	| range |
+	range := self lineRange: self currentLine.
+	(self plainTextRange: range) copyToClipboard!
+
+basicCopySelectionOrLine
+	self hasSelection ifTrue: [self basicCopySelection] ifFalse: [self basicCopyLine]!
+
+basicCutLine
+	self selectLineAndTerminator: self currentLine.
+	self basicCutSelection!
+
+basicDeleteLine
+	self selectLineAndTerminator: self currentLine.
+	self clearSelection!
+
+basicDuplicateLine
+	| range |
+	range := self lineRange: self currentLine.
+	self insertText: String lineDelimiter , (self plainTextRange: range) at: range stop + 1!
+
+basicDuplicateSelection
+	| sel |
+	sel := self selectionRange.
+	sel isEmpty
+		ifTrue: [self duplicateLine]
+		ifFalse: 
+			[| text |
+			text := self plainTextRange: sel.
+			self insertText: text at: sel stop + 1]!
+
 basicSelectionStart: start end: end
 	"Private - Sets the selected range of text to the range defined by start and end 
 	(0 based, end-exclusive). (0 to: -1) means select all. -1 for start means lose
@@ -74,12 +105,12 @@ canVScroll: aBoolean
 copyLine
 	"Copy the current line. The selection is unaffected."
 
-	| range |
-	range := self lineRange: self currentLine.
-	(self plainTextRange: range) copyToClipboard!
+	<commandQuerySelector: #queryCanCopy:>
+	self basicCopyLine!
 
 copySelectionOrLine
-	self hasSelection ifTrue: [self copySelection] ifFalse: [self copyLine]!
+	<commandQuerySelector: #queryCanCopy:>
+	self basicCopySelectionOrLine!
 
 currentLine
 	"Answer the line on which the caret is currently positioned."
@@ -91,8 +122,8 @@ cutLine
 	"Delete the line on which the caret is located into the clipboard, including the line delimiter (i.e. subsequent lines shift
 	up by one). If it is the last line just cuts the text on that line, if any."
 
-	self selectLineAndTerminator: self currentLine.
-	self cutSelection!
+	<commandQuerySelector: #queryCanCut:>
+	self basicCutLine!
 
 defaultExtent
 	"Private - Answer the default size of the receiver
@@ -109,8 +140,8 @@ deleteLine
 	"Delete the line on which the caret is located, including the line delimiter (i.e. subsequent lines shift
 	up by one). If it is the last line just deletes the text on that line, if any."
 
-	self selectLineAndTerminator: self currentLine.
-	self clearSelection!
+	<commandQuerySelector: #queryCanCut:>
+	self basicDeleteLine!
 
 displayOnFormats
 	"Private - Answers an array of selectors that can be used to determine how the receiver is
@@ -135,21 +166,14 @@ dlgCode
 duplicateLine
 	"Duplicate the current line."
 
-	| range |
-	range := self lineRange: self currentLine.
-	self insertText: String lineDelimiter , (self plainTextRange: range) at: range stop + 1!
+	<commandQuerySelector: #queryCanDuplicate:>
+	self basicDuplicateLine!
 
 duplicateSelection
 	"Duplicate the current selection (or line if the selection is empty)."
 
-	| sel |
-	sel := self selectionRange.
-	sel isEmpty 
-		ifTrue: [self duplicateLine]
-		ifFalse: 
-			[| text |
-			text := self plainTextRange: sel.
-			self insertText: text at: sel stop + 1]!
+	<commandQuerySelector: #queryCanDuplicate:>
+	self basicDuplicateSelection!
 
 goto: anInteger 
 	"Move the caret to the specified position (not line) and ensure it is visible."
@@ -200,19 +224,13 @@ lineLength: anIntegerLineNumber
 	^self lineLengthFromPosition: (self positionAtLine: anIntegerLineNumber).
 !
 
-queryCommand: aCommandQuery 
-	"Private - Enters details about a potential command for the receiver into the 
-	<CommandQuery>."
+queryCanDuplicate: aCommandQuery
+	aCommandQuery isEnabled: self isReadOnly not!
 
-	| command |
-	command := aCommandQuery commandSymbol.
-	command == #toggleWordWrap 
-		ifTrue: 
-			[aCommandQuery
-				isEnabled: true;
-				isChecked: self wordWrap.
-			^true].
-	^super queryCommand: aCommandQuery!
+queryToggleWordWrap: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: self wordWrap!
 
 resetCharFormat
 	"Resets the formatting attributes of the selection to the default mode."!
@@ -306,6 +324,7 @@ toggleWordWrap
 	which will go into an infinite loop if a keyboard shortcut or navigation key is pressed when the active
 	view does not have focus anywhere."
 
+	<commandQuerySelector: #queryToggleWordWrap:>
 	| focus |
 	focus := self class focus.	
 	self wordWrap: self wordWrap not.
@@ -365,32 +384,39 @@ wordWrap: aBoolean
 
 	self canHScroll: aBoolean not! !
 !UI.MultilineTextEdit categoriesForMethods!
+basicCopyLine!clipboard operations!private! !
+basicCopySelectionOrLine!clipboard operations!private! !
+basicCutLine!clipboard operations!private! !
+basicDeleteLine!operations!private! !
+basicDuplicateLine!operations!private! !
+basicDuplicateSelection!private!selection! !
 basicSelectionStart:end:!accessing!private! !
 calculateExtent:!geometry!private! !
 canHScroll!public!testing! !
 canHScroll:!accessing-styles!public! !
 canVScroll!public!testing! !
 canVScroll:!accessing-styles!public! !
-copyLine!clipboard operations!commands!public! !
-copySelectionOrLine!clipboard operations!commands!public! !
+copyLine!clipboard operations!commands-actions!public! !
+copySelectionOrLine!clipboard operations!commands-actions!public! !
 currentLine!public!selection! !
-cutLine!clipboard operations!commands!public! !
+cutLine!clipboard operations!commands-actions!public! !
 defaultExtent!constants!private! !
 defaultWindowStyle!constants!private! !
-deleteLine!commands!public! !
+deleteLine!commands-actions!public! !
 displayOnFormats!displaying!private! !
 displayOnText!displaying!private! !
 dlgCode!constants!private! !
-duplicateLine!commands!public! !
-duplicateSelection!commands!public! !
+duplicateLine!commands-actions!public! !
+duplicateSelection!commands-actions!public! !
 goto:!caret!public! !
-gotoLine:!caret!commands!public! !
+gotoLine:!operations!public! !
 initialize!initializing!private! !
 insertText:at:!public!text retrieval & modification! !
 lineCount!accessing!public! !
 lineHeight:!public! !
 lineLength:!accessing!public! !
-queryCommand:!commands!private! !
+queryCanDuplicate:!commands-queries!private! !
+queryToggleWordWrap:!commands-queries!private! !
 resetCharFormat!operations!public! !
 selectCurrentLine!public!selection! !
 selectLine:!public!selection! !
@@ -400,7 +426,7 @@ showVerticalScrollBar:!accessing-styles!private! !
 tabFocus!private!tabbing! !
 tabWidth:!accessing!public! !
 textAtLine:!accessing!private! !
-toggleWordWrap!commands!public! !
+toggleWordWrap!commands-actions!public! !
 wmKeyDown:wParam:lParam:!event handling-win32!private! !
 wmKeyUp:wParam:lParam:!event handling-win32!private! !
 wordWrap!accessing-styles!public! !

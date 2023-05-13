@@ -610,6 +610,79 @@ basicClearSelection
 		wParam: 0
 		lParam: 0!
 
+basicCopyLine
+	"Private - Copy the line containing the caret."
+
+	library
+		directFunction: this
+		msg: SCI_LINECOPY
+		wParam: 0
+		lParam: 0!
+
+basicCopySelection
+	"Private - Copy the selection to the clipboard."
+
+	library
+		directFunction: this
+		msg: SCI_COPY
+		wParam: 0
+		lParam: 0!
+
+basicCopySelectionOrLine
+	"Private - Copy the selection, if selection empty copy the line with the caret"
+
+	library
+		directFunction: this
+		msg: SCI_COPYALLOWLINE
+		wParam: 0
+		lParam: 0!
+
+basicCutLine
+	"Private - Cut the line containing the caret."
+
+	library
+		directFunction: this
+		msg: SCI_LINECUT
+		wParam: 0
+		lParam: 0!
+
+basicCutSelection
+	"Private - Cut the selection to the clipboard."
+
+	library
+		directFunction: this
+		msg: SCI_CUT
+		wParam: 0
+		lParam: 0!
+
+basicDeleteLine
+	"Private - Delete the line containing the caret."
+
+	library
+		directFunction: this
+		msg: SCI_LINEDELETE
+		wParam: 0
+		lParam: 0!
+
+basicDuplicateLine
+	"Private - Duplicate the current line."
+
+	library
+		directFunction: this
+		msg: SCI_LINEDUPLICATE
+		wParam: 0
+		lParam: 0!
+
+basicDuplicateSelection
+	"Private - Duplicate the selection. If selection empty duplicate the line containing the
+	caret."
+
+	library
+		directFunction: this
+		msg: SCI_SELECTIONDUPLICATE
+		wParam: 0
+		lParam: 0!
+
 basicKeyBindings
 	^keyBindings!
 
@@ -622,6 +695,15 @@ basicLineFromPosition: posInteger
 		wParam: posInteger
 		lParam: 0!
 
+basicPasteClipboard
+	"Private - Paste the contents of the clipboard into the document replacing the selection."
+
+	library
+		directFunction: this
+		msg: SCI_PASTE
+		wParam: 0
+		lParam: 0!
+
 basicPositionAtLine: lineInteger
 	"Private - Retrieve the position at the start of a line."
 
@@ -629,6 +711,15 @@ basicPositionAtLine: lineInteger
 		directFunction: this
 		msg: SCI_POSITIONFROMLINE
 		wParam: lineInteger
+		lParam: 0!
+
+basicRedo
+	"Private - Redoes the next action on the undo history."
+
+	library
+		directFunction: this
+		msg: SCI_REDO
+		wParam: 0
 		lParam: 0!
 
 basicRemoveAllAnnotations
@@ -1145,6 +1236,7 @@ charNearestPosition: aPoint
 clearAll
 	"Delete all text in the document."
 
+	<commandQuerySelector: #queryCanCut:>
 	self modifyText: [self basicClearAll]!
 
 clearContainerIndicators
@@ -1244,37 +1336,10 @@ convertToUppercase
 		wParam: 0
 		lParam: 0!
 
-copyLine
-	"Copy the line containing the caret."
-
-	library
-		directFunction: this
-		msg: SCI_LINECOPY
-		wParam: 0
-		lParam: 0!
-
 copyRange: anInterval
 	"Copy a range of text to the clipboard."
 
 	self sciCopyRange: anInterval start end: anInterval stop + 1!
-
-copySelection
-	"Copy the selection to the clipboard."
-
-	library
-		directFunction: this
-		msg: SCI_COPY
-		wParam: 0
-		lParam: 0!
-
-copySelectionOrLine
-	"Copy the selection, if selection empty copy the line with the caret"
-
-	library
-		directFunction: this
-		msg: SCI_COPYALLOWLINE
-		wParam: 0
-		lParam: 0!
 
 currentIndicatorId
 	"Get the current indicator"
@@ -1380,24 +1445,6 @@ currentLineText
 				wParam: len
 				lpParam: result.
 			result]!
-
-cutLine
-	"Cut the line containing the caret."
-
-	library
-		directFunction: this
-		msg: SCI_LINECUT
-		wParam: 0
-		lParam: 0!
-
-cutSelection
-	"Cut the selection to the clipboard."
-
-	library
-		directFunction: this
-		msg: SCI_CUT
-		wParam: 0
-		lParam: 0!
 
 decodeStyledText: aByteArray
 	| tokens pair lastStyle buffer wsStyle stream ws |
@@ -1508,15 +1555,6 @@ defaultWindowStyle
 	mention this, but Scite does set this style when creating the window."
 
 	^super defaultWindowStyle bitOr: WS_CLIPCHILDREN!
-
-deleteLine
-	"Delete the line containing the caret."
-
-	library
-		directFunction: this
-		msg: SCI_LINEDELETE
-		wParam: 0
-		lParam: 0!
 
 deleteMarkers: markerNumberInteger
 	"Delete all markers with a particular number from all lines."
@@ -1638,24 +1676,6 @@ drawingTechnology: aSymbol
 	self sciSetTechnology: tech.
 	"When not using direct-write, we need to turn on double buffering or the view may flash a lot"
 	self sciSetBufferedDraw: tech == SC_TECHNOLOGY_DEFAULT!
-
-duplicateLine
-	"Duplicate the current line."
-
-	library
-		directFunction: this
-		msg: SCI_LINEDUPLICATE
-		wParam: 0
-		lParam: 0!
-
-duplicateSelection
-	"Duplicate the selection. If selection empty duplicate the line containing the caret."
-
-	library
-		directFunction: this
-		msg: SCI_SELECTIONDUPLICATE
-		wParam: 0
-		lParam: 0!
 
 edgeColor
 	"Retrieve the colour used in edge indication."
@@ -4471,15 +4491,6 @@ passwordCharacter
 passwordCharacter: aCharacter 
 	^self shouldNotImplement!
 
-pasteClipboard
-	"Paste the contents of the clipboard into the document replacing the selection."
-
-	library
-		directFunction: this
-		msg: SCI_PASTE
-		wParam: 0
-		lParam: 0!
-
 performUndoableAction: aNiladicBlock 
 	"Evaluate the <niladicBlock> argument as a composite update within an undo group
 	such that it may be undone as a single undo operation."
@@ -4631,47 +4642,34 @@ punctuation: aStringOrNil
 				punctuation: aStringOrNil;
 				yourself)!
 
-queryCommand: aCommandQuery 
-	"Private - Enters details about a potential command for the receiver into the 
-	<CommandQuery>."
+queryToggleIndentationGuides: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: self hasIndentationGuides!
 
-	| command |
-	command := aCommandQuery commandSymbol.
-	command == #toggleStyling 
-		ifTrue: 
-			[aCommandQuery
+queryToggleLineEndings: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: self hasVisibleLineEndings!
+
+queryToggleLineNumbers: aCommandQuery
+	self lineNumberMargin
+		ifNil: [aCommandQuery isEnabled: false]
+		ifNotNil: 
+			[:margin |
+			aCommandQuery
 				isEnabled: true;
-				isChecked: self isStylingEnabled.
-			^true].
-	command == #toggleLineNumbers 
-		ifTrue: 
-			[self lineNumberMargin 
-				ifNil: [aCommandQuery isEnabled: false]
-				ifNotNil: 
-					[:margin | 
-					aCommandQuery
-						isEnabled: true;
-						isChecked: margin width ~= 0].
-			^true].
-	command == #toggleLineEndings 
-		ifTrue: 
-			[aCommandQuery
-				isEnabled: true;
-				isChecked: self hasVisibleLineEndings.
-			^true].
-	command == #toggleIndentationGuides 
-		ifTrue: 
-			[aCommandQuery
-				isEnabled: true;
-				isChecked: self hasIndentationGuides.
-			^true].
-	command == #toggleWhitespace 
-		ifTrue: 
-			[aCommandQuery
-				isEnabled: true;
-				isChecked: self whitespaceVisibility ~~ #invisible.
-			^true].
-	^super queryCommand: aCommandQuery!
+				isChecked: margin width ~= 0]!
+
+queryToggleStyling: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: self isStylingEnabled!
+
+queryToggleWhitespace: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: self whitespaceVisibility ~~ #invisible!
 
 rangeOfIndicator: anIntegerOrSymbol at: positionInteger
 	"Answer an <Interval> representing the range of one-based character positions of the
@@ -4723,15 +4721,6 @@ rectangularSelectionCaret: caretInteger
 		directFunction: this
 		msg: SCI_SETRECTANGULARSELECTIONCARET
 		wParam: caretInteger - 1
-		lParam: 0!
-
-redo
-	"Redoes the next action on the undo history."
-
-	library
-		directFunction: this
-		msg: SCI_REDO
-		wParam: 0
 		lParam: 0!
 
 rememberCaretX
@@ -9577,16 +9566,19 @@ toggleFoldMargin
 toggleIndentationGuides
 	"Show or hide the indentation guides."
 
+	<commandQuerySelector: #queryToggleIndentationGuides:>
 	self hasIndentationGuides: self hasIndentationGuides not!
 
 toggleLineEndings
 	"Show or hide the end-of-line characters."
 
+	<commandQuerySelector: #queryToggleLineEndings:>
 	self hasVisibleLineEndings: self hasVisibleLineEndings not!
 
 toggleLineNumbers
 	"Show or hide the first line number margin, inverting the current state."
 
+	<commandQuerySelector: #queryToggleLineNumbers:>
 	self hasLineNumbers: self hasLineNumbers not!
 
 toggleOvertype
@@ -9601,11 +9593,13 @@ toggleOvertype
 toggleStyling
 	"Enable/disable dynamic styling of text in the receiver."
 
+	<commandQuerySelector: #queryToggleStyling:>
 	self isStylingEnabled: self isStylingEnabled not!
 
 toggleWhitespace
 	"Show or hide the whitespace markers in the view."
 
+	<commandQuerySelector: #queryToggleWhitespace:>
 	self whitespaceVisibility: (self whitespaceVisibility == #invisible 
 				ifTrue: [#visibleAlways]
 				ifFalse: [#invisible])!
@@ -9613,6 +9607,7 @@ toggleWhitespace
 toggleWordWrap
 	"Toggle the receiver into/out-of word wrap mode."
 
+	<commandQuerySelector: #queryToggleWordWrap:>
 	self wordWrap: self wordWrap not!
 
 tokenEndAt: anInteger 
@@ -9671,6 +9666,7 @@ twiddleLines
 undo
 	"Undo one action in the undo history."
 
+	<commandQuerySelector: #queryCanUndo:>
 	self cancelModes.
 	self basicUndo!
 
@@ -10054,7 +10050,7 @@ zoomOut
 		wParam: 0
 		lParam: 0! !
 !UI.Scintilla.ScintillaView categoriesForMethods!
-acceptAutoCompletion!**auto generated**!autocompletion!commands!public!scintilla interface! !
+acceptAutoCompletion!**auto generated**!autocompletion!commands-actions!public!scintilla interface! !
 activeHotspotBackcolor!caret, selection, and hotspot styles!element colors!public! !
 activeHotspotBackcolor:!caret, selection, and hotspot styles!element colors!public! !
 activeHotspotForecolor!caret, selection, and hotspot styles!element colors!public! !
@@ -10099,17 +10095,27 @@ autoCompletionSeparator:!autocompletion!public!scintilla interface! !
 autoCompletionSortMode!autocompletion!public! !
 autoCompletionSortMode:!autocompletion!public! !
 backcolorChanged!helpers!private! !
-backspace!**auto generated**!commands!public!scintilla interface! !
-backspaceNoLine!**auto generated**!commands!public!scintilla interface! !
+backspace!**auto generated**!commands-actions!public!scintilla interface! !
+backspaceNoLine!**auto generated**!commands-actions!public!scintilla interface! !
 backspaceUnindents!**auto generated**!public!scintilla interface!tabs & indentation guides!testing! !
 backspaceUnindents:!**auto generated**!public!scintilla interface!tabs & indentation guides! !
 basicAnnotateLine:withText:inStyles:!annotations!helpers!private! !
 basicClearAll!**auto generated**!private!scintilla interface!text retrieval & modification! !
 basicClearContainerIndicators!indicators!private! !
 basicClearSelection!**auto generated**!private!scintilla interface!selection! !
+basicCopyLine!**auto generated**!clipboard operations!private!scintilla interface! !
+basicCopySelection!**auto generated**!clipboard operations!private!scintilla interface! !
+basicCopySelectionOrLine!**auto generated**!clipboard operations!private!scintilla interface! !
+basicCutLine!**auto generated**!clipboard operations!private!scintilla interface! !
+basicCutSelection!**auto generated**!clipboard operations!private!scintilla interface! !
+basicDeleteLine!**auto generated**!private!scintilla interface!text retrieval & modification! !
+basicDuplicateLine!operations!private! !
+basicDuplicateSelection!**auto generated**!private!scintilla interface!selection! !
 basicKeyBindings!key bindings!private! !
 basicLineFromPosition:!accessing!private! !
+basicPasteClipboard!**auto generated**!clipboard operations!private!scintilla interface! !
 basicPositionAtLine:!accessing!private! !
+basicRedo!**auto generated**!private!scintilla interface!undo & redo! !
 basicRemoveAllAnnotations!**auto generated**!annotations!private!removing!scintilla interface! !
 basicSelectAll!**auto generated**!private!scintilla interface!selection! !
 basicSelectionStart:end:!private!scintilla interface!selection! !
@@ -10137,7 +10143,7 @@ callTipTabWidth!call tips!public! !
 callTipTabWidth:!call tips!public! !
 cancelAutoCompletion!**auto generated**!autocompletion!public!scintilla interface! !
 cancelCallTip!**auto generated**!call tips!public!scintilla interface! !
-cancelModes!**auto generated**!commands!public!scintilla interface! !
+cancelModes!**auto generated**!commands-actions!public!scintilla interface! !
 canHScroll!**auto generated**!public!scintilla interface!scrolling!testing! !
 canHScroll:!public!scrolling! !
 canonicalizeLineEndings:!line endings!public! !
@@ -10159,7 +10165,7 @@ caretStyle!caret, selection, and hotspot styles!public! !
 caretStyle:!caret, selection, and hotspot styles!public! !
 caretWidth!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface! !
 caretWidth:!caret, selection, and hotspot styles!public!scintilla interface! !
-centerCurrentLine!**auto generated**!commands!public!scintilla interface! !
+centerCurrentLine!**auto generated**!commands-actions!public!scintilla interface! !
 changeHistoryMode!change history!other settings!public! !
 changeHistoryMode:!change history!other settings!public! !
 characterAt:!public!text retrieval & modification! !
@@ -10169,24 +10175,21 @@ characterRepresentations!accessing!character representations!public! !
 characterRepresentations:!accessing!character representations!public! !
 charCloseToPosition:!public!selection! !
 charNearestPosition:!public!selection! !
-clearAll!commands!public!scintilla interface!text retrieval & modification! !
+clearAll!commands-actions!public!scintilla interface!text retrieval & modification! !
 clearContainerIndicators!indicators!public! !
-clearHandle!private! !
+clearHandle!private!realizing/unrealizing! !
 clearIndicator:from:to:!indicators!public! !
 clearRange:!public!text retrieval & modification! !
 clearTabStops:!**auto generated**!public!scintilla interface!tabs & indentation guides! !
 codePage!other settings!public! !
 codePage:!other settings!public! !
 columnFromPosition:!**auto generated**!enquiries!public!scintilla interface! !
-command:id:!commands!private! !
+command:id:!commands-actions!private! !
 controlCharacter!caret, selection, and hotspot styles!public! !
 controlCharacter:!caret, selection, and hotspot styles!public! !
-convertToLowercase!**auto generated**!commands!public!scintilla interface! !
-convertToUppercase!**auto generated**!commands!public!scintilla interface! !
-copyLine!**auto generated**!clipboard operations!commands!public!scintilla interface! !
+convertToLowercase!**auto generated**!commands-actions!public!scintilla interface! !
+convertToUppercase!**auto generated**!commands-actions!public!scintilla interface! !
 copyRange:!clipboard operations!public! !
-copySelection!**auto generated**!clipboard operations!commands!public!scintilla interface! !
-copySelectionOrLine!**auto generated**!clipboard operations!commands!public!scintilla interface! !
 currentIndicatorId!**auto generated**!indicators!public!scintilla interface! !
 currentIndicatorId:!**auto generated**!indicators!public!scintilla interface! !
 currentIndicatorValue!**auto generated**!indicators!public!scintilla interface! !
@@ -10198,8 +10201,6 @@ currentLineBackcolorLayer:!caret, selection, and hotspot styles!public! !
 currentLineFrameWidth!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface! !
 currentLineFrameWidth:!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface! !
 currentLineText!**auto generated**!public!scintilla interface!selection! !
-cutLine!**auto generated**!clipboard operations!commands!public!scintilla interface! !
-cutSelection!**auto generated**!clipboard operations!commands!public!scintilla interface! !
 decodeStyledText:!private!text retrieval & modification! !
 defaultCurrentLineBackcolor!caret, selection, and hotspot styles!constants!element colors!private! !
 defaultEdgeColor!long lines!private!scintilla interface! !
@@ -10211,13 +10212,12 @@ defaultTextLimit!constants!private! !
 defaultTextStylesFor:!constants!public!style definition! !
 defaultWhitespaceChars!constants!public! !
 defaultWindowStyle!constants!private! !
-deleteLine!**auto generated**!commands!public!scintilla interface! !
 deleteMarkers:!**auto generated**!markers!public!scintilla interface! !
-deleteToEndOfLine!**auto generated**!commands!public!scintilla interface! !
-deleteToEndOfWord!**auto generated**!commands!public!scintilla interface! !
-deleteToNextWord!**auto generated**!commands!public!scintilla interface! !
-deleteToStartOfLine!**auto generated**!commands!public!scintilla interface! !
-deleteToStartOfWord!**auto generated**!commands!public!scintilla interface! !
+deleteToEndOfLine!**auto generated**!commands-actions!public!scintilla interface!text retrieval & modification! !
+deleteToEndOfWord!**auto generated**!commands-actions!public!scintilla interface!text retrieval & modification! !
+deleteToNextWord!**auto generated**!commands-actions!public!scintilla interface!text retrieval & modification! !
+deleteToStartOfLine!**auto generated**!commands-actions!public!scintilla interface!text retrieval & modification! !
+deleteToStartOfWord!**auto generated**!commands-actions!public!scintilla interface!text retrieval & modification! !
 describeKeywordSets!**auto generated**!lexer!public!scintilla interface! !
 destroyAutoCompletionListImages!**auto generated**!autocompletion!public!scintilla interface! !
 documentLineFromLine:!**auto generated**!folding!public!scintilla interface! !
@@ -10225,15 +10225,13 @@ drawingPhases!other settings!public!scintilla interface! !
 drawingPhases:!other settings!public! !
 drawingTechnology!other settings!public!scintilla interface! !
 drawingTechnology:!other settings!public! !
-duplicateLine!**auto generated**!commands!public!scintilla interface! !
-duplicateSelection!**auto generated**!commands!public!scintilla interface! !
 edgeColor!long lines!public! !
 edgeColor:!long lines!public! !
 edgeColumn!**auto generated**!long lines!public!scintilla interface! !
 edgeColumn:!**auto generated**!long lines!public!scintilla interface! !
 edgeMode!long lines!public! !
 edgeMode:!long lines!public! !
-editStyles!commands!public! !
+editStyles!commands-actions!public! !
 elementColors!accessibility!element colors!public! !
 emptyUndoBuffer!**auto generated**!public!scintilla interface!undo & redo! !
 endOfLineAnnotationMode!annotations!public! !
@@ -10253,42 +10251,42 @@ enUpdate!event handling-win32!private! !
 errorStatus!**auto generated**!error handling!public!scintilla interface! !
 errorStatus:!**auto generated**!error handling!public!scintilla interface! !
 expandChildren:level:!**auto generated**!folding!private!scintilla interface! !
-extendDown!**auto generated**!commands!public!scintilla interface!selection! !
-extendLeft!**auto generated**!commands!public!scintilla interface!selection! !
-extendPageDown!**auto generated**!commands!public!scintilla interface!selection! !
-extendPageUp!**auto generated**!commands!public!scintilla interface!selection! !
-extendParaDown!**auto generated**!commands!public!scintilla interface!selection! !
-extendParaUp!**auto generated**!commands!public!scintilla interface!selection! !
-extendRectangleDown!**auto generated**!commands!public!scintilla interface!selection! !
-extendRectangleLeft!**auto generated**!commands!public!scintilla interface!selection! !
-extendRectanglePageDown!**auto generated**!commands!public!scintilla interface!selection! !
-extendRectanglePageUp!**auto generated**!commands!public!scintilla interface!selection! !
-extendRectangleRight!**auto generated**!commands!public!scintilla interface!selection! !
-extendRectangleToEndOfLine!**auto generated**!commands!public!scintilla interface!selection! !
-extendRectangleToStartOfLine!**auto generated**!commands!public!scintilla interface!selection! !
-extendRectangleToVcHome!**auto generated**!commands!public!scintilla interface!selection! !
-extendRectangleUp!**auto generated**!commands!public!scintilla interface!selection! !
-extendRight!**auto generated**!commands!public!scintilla interface!selection! !
-extendStutteredPageDown!**auto generated**!commands!public!scintilla interface!selection! !
-extendStutteredPageUp!**auto generated**!commands!public!scintilla interface!selection! !
-extendToEndOfDisplayLine!**auto generated**!commands!public!scintilla interface!selection! !
-extendToEndOfDocument!**auto generated**!commands!public!scintilla interface!selection! !
-extendToEndOfLine!**auto generated**!commands!public!scintilla interface!selection! !
-extendToEndOfNextWord!**auto generated**!commands!public!scintilla interface!selection! !
-extendToEndOfPreviousWord!**auto generated**!commands!public!scintilla interface!selection! !
-extendToEndOfWord!**auto generated**!commands!public!scintilla interface!selection! !
-extendToEndOfWordPart!**auto generated**!commands!public!scintilla interface!selection! !
-extendToEndOfWrappedLine!**auto generated**!commands!public!scintilla interface!selection! !
-extendToStartOfDisplayLine!**auto generated**!commands!public!scintilla interface!selection! !
-extendToStartOfDocument!**auto generated**!commands!public!scintilla interface!selection! !
-extendToStartOfLine!**auto generated**!commands!public!scintilla interface!selection! !
-extendToStartOfVcDisplayLine!**auto generated**!commands!public!scintilla interface! !
-extendToStartOfWord!**auto generated**!commands!public!scintilla interface!selection! !
-extendToStartOfWordPart!**auto generated**!commands!public!scintilla interface!selection! !
-extendToStartOfWrappedLine!**auto generated**!commands!public!scintilla interface!selection! !
-extendToVcHome!**auto generated**!commands!public!scintilla interface!selection! !
-extendToWrappedVcHome!**auto generated**!commands!public!scintilla interface!selection! !
-extendUp!**auto generated**!commands!public!scintilla interface!selection! !
+extendDown!**auto generated**!commands-actions!public!scintilla interface!selection! !
+extendLeft!**auto generated**!commands-actions!public!scintilla interface!selection! !
+extendPageDown!**auto generated**!commands-actions!public!scintilla interface!selection! !
+extendPageUp!**auto generated**!commands-actions!public!scintilla interface!selection! !
+extendParaDown!**auto generated**!commands-actions!public!scintilla interface!selection! !
+extendParaUp!**auto generated**!commands-actions!public!scintilla interface!selection! !
+extendRectangleDown!**auto generated**!commands-actions!public!scintilla interface!selection! !
+extendRectangleLeft!**auto generated**!commands-actions!public!scintilla interface!selection! !
+extendRectanglePageDown!**auto generated**!commands-actions!public!scintilla interface!selection! !
+extendRectanglePageUp!**auto generated**!commands-actions!public!scintilla interface!selection! !
+extendRectangleRight!**auto generated**!commands-actions!public!scintilla interface!selection! !
+extendRectangleToEndOfLine!**auto generated**!commands-actions!public!scintilla interface!selection! !
+extendRectangleToStartOfLine!**auto generated**!commands-actions!public!scintilla interface!selection! !
+extendRectangleToVcHome!**auto generated**!commands-actions!public!scintilla interface!selection! !
+extendRectangleUp!**auto generated**!commands-actions!public!scintilla interface!selection! !
+extendRight!**auto generated**!commands-actions!public!scintilla interface!selection! !
+extendStutteredPageDown!**auto generated**!commands-actions!public!scintilla interface!selection! !
+extendStutteredPageUp!**auto generated**!commands-actions!public!scintilla interface!selection! !
+extendToEndOfDisplayLine!**auto generated**!commands-actions!public!scintilla interface!selection! !
+extendToEndOfDocument!**auto generated**!commands-actions!public!scintilla interface!selection! !
+extendToEndOfLine!**auto generated**!commands-actions!public!scintilla interface!selection! !
+extendToEndOfNextWord!**auto generated**!commands-actions!public!scintilla interface!selection! !
+extendToEndOfPreviousWord!**auto generated**!commands-actions!public!scintilla interface!selection! !
+extendToEndOfWord!**auto generated**!commands-actions!public!scintilla interface!selection! !
+extendToEndOfWordPart!**auto generated**!commands-actions!public!scintilla interface!selection! !
+extendToEndOfWrappedLine!**auto generated**!commands-actions!public!scintilla interface!selection! !
+extendToStartOfDisplayLine!**auto generated**!commands-actions!public!scintilla interface!selection! !
+extendToStartOfDocument!**auto generated**!commands-actions!public!scintilla interface!selection! !
+extendToStartOfLine!**auto generated**!commands-actions!public!scintilla interface!selection! !
+extendToStartOfVcDisplayLine!**auto generated**!commands-actions!public!scintilla interface! !
+extendToStartOfWord!**auto generated**!commands-actions!public!scintilla interface!selection! !
+extendToStartOfWordPart!**auto generated**!commands-actions!public!scintilla interface!selection! !
+extendToStartOfWrappedLine!**auto generated**!commands-actions!public!scintilla interface!selection! !
+extendToVcHome!**auto generated**!commands-actions!public!scintilla interface!selection! !
+extendToWrappedVcHome!**auto generated**!commands-actions!public!scintilla interface!selection! !
+extendUp!**auto generated**!commands-actions!public!scintilla interface!selection! !
 extraAscent!**auto generated**!public!scintilla interface!white space! !
 extraAscent:!**auto generated**!public!scintilla interface!white space! !
 extraDescent!**auto generated**!public!scintilla interface!white space! !
@@ -10300,7 +10298,7 @@ findAutoCompletionEntry:!**auto generated**!autocompletion!public!scintilla inte
 findMatchingBrace:!brace highlighting!public! !
 findString:startingAt:!public!searching & replacing! !
 findStyleStart:before:!brace highlighting!public! !
-foldAll!commands!folding!public! !
+foldAll!commands-actions!folding!public! !
 foldChildren:action:!**auto generated**!folding!public!scintilla interface! !
 foldFlags!folding!public! !
 foldFlags:!folding!public! !
@@ -10324,7 +10322,7 @@ fontQuality!other settings!public! !
 fontQuality:!other settings!public! !
 forecolor:!accessing!public! !
 formatRectangle!accessing!public! !
-formFeed!**auto generated**!commands!public!scintilla interface! !
+formFeed!**auto generated**!commands-actions!public!scintilla interface! !
 getCharacterClassifications!character classes!private! !
 getDirectPointer!helpers!private! !
 getElementColor:!element colors!private! !
@@ -10334,7 +10332,7 @@ getRawAnnotation:!annotations!private! !
 getRawAnnotations!annotations!private! !
 getSelectionRange:!private!selection! !
 goto:!**auto generated**!caret!public!scintilla interface! !
-gotoLine:!**auto generated**!caret!commands!public!scintilla interface! !
+gotoLine:!**auto generated**!caret!commands-actions!public!scintilla interface! !
 hangingIndent!**auto generated**!line wrapping!public!scintilla interface! !
 hangingIndent:!**auto generated**!line wrapping!public!scintilla interface! !
 hasAdditionalSelectionTyping!**auto generated**!public!scintilla interface! !
@@ -10346,7 +10344,7 @@ hasFoldMargin:!folding!margins!public! !
 hasIndentationGuides!public!tabs & indentation guides! !
 hasIndentationGuides:!public!tabs & indentation guides! !
 hasLineNumbers!margins!public!testing! !
-hasLineNumbers:!commands!margins!public! !
+hasLineNumbers:!commands-actions!margins!public! !
 hasSelection!public!selection! !
 hasVisibleLineEndings!**auto generated**!line endings!public!scintilla interface!testing! !
 hasVisibleLineEndings:!**auto generated**!line endings!public!scintilla interface!testing! !
@@ -10373,7 +10371,7 @@ inactiveSelectionBackcolor!caret, selection, and hotspot styles!element colors!p
 inactiveSelectionBackcolor:!caret, selection, and hotspot styles!element colors!public! !
 inactiveSelectionForecolor!caret, selection, and hotspot styles!element colors!public! !
 inactiveSelectionForecolor:!caret, selection, and hotspot styles!element colors!public! !
-indent!**auto generated**!commands!public!scintilla interface! !
+indent!**auto generated**!commands-actions!public!scintilla interface! !
 indentation!**auto generated**!public!scintilla interface!tabs & indentation guides! !
 indentation:!**auto generated**!public!scintilla interface!tabs & indentation guides! !
 indentationGuides!public!tabs & indentation guides! !
@@ -10455,10 +10453,10 @@ isUndoEnabled!**auto generated**!public!scintilla interface!testing!undo & redo!
 isUndoEnabled:!**auto generated**!public!scintilla interface!undo & redo! !
 isUsingTabs!**auto generated**!public!scintilla interface!tabs & indentation guides!testing! !
 isUsingTabs:!**auto generated**!public!scintilla interface!tabs & indentation guides! !
-joinTarget!**auto generated**!commands!line wrapping!public!scintilla interface! !
+joinTarget!**auto generated**!commands-actions!line wrapping!public!scintilla interface! !
 keyBindings!key bindings!public! !
 keyBindings:!key bindings!public! !
-keyboardCommands!commands!public! !
+keyboardCommands!commands-actions!public! !
 lastChildLine:level:!**auto generated**!folding!public!scintilla interface! !
 lastLineWithState!enquiries!public!styling! !
 layoutCachingMode!line wrapping!public! !
@@ -10508,39 +10506,39 @@ modificationEventMask:!notifications!public! !
 modifyText:!private!text retrieval & modification! !
 mouseDwellTime!other settings!public! !
 mouseDwellTime:!other settings!public! !
-moveCaretInsideView!**auto generated**!caret!commands!public!scintilla interface! !
-moveDown!**auto generated**!caret!commands!public!scintilla interface! !
-moveLeft!**auto generated**!caret!commands!public!scintilla interface! !
-movePageDown!**auto generated**!caret!commands!public!scintilla interface! !
-movePageUp!**auto generated**!caret!commands!public!scintilla interface! !
-moveParaDown!**auto generated**!caret!commands!public!scintilla interface! !
-moveParaUp!**auto generated**!caret!commands!public!scintilla interface! !
-moveRight!**auto generated**!caret!commands!public!scintilla interface! !
-moveSelectedLinesDown!**auto generated**!commands!public!scintilla interface! !
-moveSelectedLinesUp!**auto generated**!commands!public!scintilla interface! !
-moveStutteredPageDown!**auto generated**!caret!commands!public!scintilla interface! !
-moveStutteredPageUp!**auto generated**!caret!commands!public!scintilla interface! !
-moveToEndOfDisplayLine!**auto generated**!caret!commands!public!scintilla interface! !
-moveToEndOfDocument!**auto generated**!caret!commands!public!scintilla interface! !
-moveToEndOfLine!**auto generated**!caret!commands!public!scintilla interface! !
-moveToEndOfNextWord!**auto generated**!caret!commands!public!scintilla interface! !
-moveToEndOfPreviousWord!**auto generated**!caret!commands!public!scintilla interface! !
-moveToEndOfWord!**auto generated**!caret!commands!public!scintilla interface! !
-moveToEndOfWordPart!**auto generated**!caret!commands!public!scintilla interface! !
-moveToEndOfWrappedLine!**auto generated**!caret!commands!public!scintilla interface! !
-moveToStartOfDisplayLine!**auto generated**!caret!commands!public!scintilla interface! !
-moveToStartOfDocument!**auto generated**!caret!commands!public!scintilla interface! !
-moveToStartOfLine!**auto generated**!caret!commands!public!scintilla interface! !
-moveToStartOfWord!**auto generated**!caret!commands!public!scintilla interface! !
-moveToStartOfWordPart!**auto generated**!caret!commands!public!scintilla interface! !
-moveToStartOfWrappedLine!**auto generated**!caret!commands!public!scintilla interface! !
-moveToVcHome!**auto generated**!caret!commands!public!scintilla interface! !
-moveToVcStartOfDisplayLine!**auto generated**!caret!commands!public!scintilla interface! !
-moveToWrappedVcHome!**auto generated**!caret!commands!public!scintilla interface! !
-moveUp!**auto generated**!caret!commands!public!scintilla interface! !
+moveCaretInsideView!**auto generated**!caret!commands-actions!public!scintilla interface! !
+moveDown!**auto generated**!caret!commands-actions!public!scintilla interface! !
+moveLeft!**auto generated**!caret!commands-actions!public!scintilla interface! !
+movePageDown!**auto generated**!caret!commands-actions!public!scintilla interface! !
+movePageUp!**auto generated**!caret!commands-actions!public!scintilla interface! !
+moveParaDown!**auto generated**!caret!commands-actions!public!scintilla interface! !
+moveParaUp!**auto generated**!caret!commands-actions!public!scintilla interface! !
+moveRight!**auto generated**!caret!commands-actions!public!scintilla interface! !
+moveSelectedLinesDown!**auto generated**!commands-actions!public!scintilla interface! !
+moveSelectedLinesUp!**auto generated**!commands-actions!public!scintilla interface! !
+moveStutteredPageDown!**auto generated**!caret!commands-actions!public!scintilla interface! !
+moveStutteredPageUp!**auto generated**!caret!commands-actions!public!scintilla interface! !
+moveToEndOfDisplayLine!**auto generated**!caret!commands-actions!public!scintilla interface! !
+moveToEndOfDocument!**auto generated**!caret!commands-actions!public!scintilla interface! !
+moveToEndOfLine!**auto generated**!caret!commands-actions!public!scintilla interface! !
+moveToEndOfNextWord!**auto generated**!caret!commands-actions!public!scintilla interface! !
+moveToEndOfPreviousWord!**auto generated**!caret!commands-actions!public!scintilla interface! !
+moveToEndOfWord!**auto generated**!caret!commands-actions!public!scintilla interface! !
+moveToEndOfWordPart!**auto generated**!caret!commands-actions!public!scintilla interface! !
+moveToEndOfWrappedLine!**auto generated**!caret!commands-actions!public!scintilla interface! !
+moveToStartOfDisplayLine!**auto generated**!caret!commands-actions!public!scintilla interface! !
+moveToStartOfDocument!**auto generated**!caret!commands-actions!public!scintilla interface! !
+moveToStartOfLine!**auto generated**!caret!commands-actions!public!scintilla interface! !
+moveToStartOfWord!**auto generated**!caret!commands-actions!public!scintilla interface! !
+moveToStartOfWordPart!**auto generated**!caret!commands-actions!public!scintilla interface! !
+moveToStartOfWrappedLine!**auto generated**!caret!commands-actions!public!scintilla interface! !
+moveToVcHome!**auto generated**!caret!commands-actions!public!scintilla interface! !
+moveToVcStartOfDisplayLine!**auto generated**!caret!commands-actions!public!scintilla interface! !
+moveToWrappedVcHome!**auto generated**!caret!commands-actions!public!scintilla interface! !
+moveUp!**auto generated**!caret!commands-actions!public!scintilla interface! !
 multiPasteMode!clipboard operations!multiple selection and virtual space!public! !
 multiPasteMode:!clipboard operations!multiple selection and virtual space!public! !
-newLine!**auto generated**!commands!public!scintilla interface!text retrieval & modification! !
+newLine!**auto generated**!commands-actions!public!scintilla interface!text retrieval & modification! !
 newNotification:!autocompletion!event handling-scintilla!helpers!notifications!private! !
 newTextBuffer:!helpers!private! !
 nmNotify:!**auto generated**!event handling-win32!private!scintilla interface! !
@@ -10552,7 +10550,6 @@ onViewCreated!event handling!public! !
 parentOfFoldedLine:!**auto generated**!public!scintilla interface! !
 passwordCharacter!accessing!public! !
 passwordCharacter:!accessing!public! !
-pasteClipboard!**auto generated**!clipboard operations!commands!public!scintilla interface! !
 performUndoableAction:!public!undo & redo! !
 plainText!**auto generated**!accessing!public!scintilla interface!text retrieval & modification! !
 plainText:!private!text retrieval & modification!updating! !
@@ -10571,13 +10568,16 @@ printMagnification!**auto generated**!printing!public!scintilla interface! !
 printMagnification:!**auto generated**!printing!public!scintilla interface! !
 punctuation!character classes!public! !
 punctuation:!character classes!public! !
-queryCommand:!commands!private! !
+queryToggleIndentationGuides:!commands-actions!commands-queries!private! !
+queryToggleLineEndings:!commands-actions!commands-queries!private! !
+queryToggleLineNumbers:!commands-actions!commands-queries!private! !
+queryToggleStyling:!commands-actions!commands-queries!private! !
+queryToggleWhitespace:!commands-actions!commands-queries!private! !
 rangeOfIndicator:at:!enquiries!indicators!public! !
 rectangularSelectionAnchor!**auto generated**!multiple selection and virtual space!public!scintilla interface! !
 rectangularSelectionAnchor:!**auto generated**!multiple selection and virtual space!public!scintilla interface! !
 rectangularSelectionCaret!**auto generated**!multiple selection and virtual space!public!scintilla interface! !
 rectangularSelectionCaret:!**auto generated**!multiple selection and virtual space!public!scintilla interface! !
-redo!**auto generated**!commands!public!scintilla interface!undo & redo! !
 rememberCaretX!**auto generated**!caret!public!scintilla interface! !
 removeAllAnnotations!annotations!public!removing! !
 removeAllEdges!**auto generated**!long lines!public!scintilla interface! !
@@ -10596,12 +10596,12 @@ requiredLineMarginWidth!enquiries!helpers!margins!private! !
 resetElementColor:!autocompletion!element colors!private! !
 resetKeyBindings!helpers!key bindings!private! !
 resetMarkers!helpers!markers!private! !
-resetZoom!commands!public!zooming! !
+resetZoom!commands-actions!public!zooming! !
 restyleAll!public!styling! !
 restyleFrom:to:!**auto generated**!public!scintilla interface!styling! !
-reverseSelectedLines!**auto generated**!commands!public!scintilla interface!selection! !
+reverseSelectedLines!**auto generated**!commands-actions!public!scintilla interface!selection! !
 rgbaBitsFromBitmap:!autocompletion!helpers!private! !
-rotateSelection!**auto generated**!commands!multiple selection and virtual space!public!scintilla interface!selection! !
+rotateSelection!**auto generated**!commands-actions!multiple selection and virtual space!public!scintilla interface!selection! !
 sciAddRefDocument:!**auto generated**!multiple views!private!scintilla interface! !
 sciAddSelection:anchor:!**auto generated**!multiple selection and virtual space!private!scintilla interface!selection! !
 sciAddStyledText:c:!**auto generated**!private!scintilla interface!text retrieval & modification! !
@@ -10806,8 +10806,8 @@ sciMarkerNumberFromLine:which:!**auto generated**!markers!private!scintilla inte
 sciMarkerPrevious:markerMask:!**auto generated**!enquiries!markers!private!scintilla interface! !
 sciMarkerSymbolDefined:!**auto generated**!enquiries!markers!private!scintilla interface! !
 sciMultiEdgeAddLine:edgeColour:!**auto generated**!long lines!private!scintilla interface! !
-sciMultipleSelectAddEach!**auto generated**!commands!private!scintilla interface! !
-sciMultipleSelectAddNext!**auto generated**!commands!private!scintilla interface! !
+sciMultipleSelectAddEach!**auto generated**!commands-actions!private!scintilla interface! !
+sciMultipleSelectAddNext!**auto generated**!commands-actions!private!scintilla interface! !
 sciNameOfStyle:!**auto generated**!lexer-style metadata!private!scintilla interface! !
 sciPointXFromPosition:!**auto generated**!enquiries!private!scintilla interface! !
 sciPointYFromPosition:!**auto generated**!enquiries!private!scintilla interface! !
@@ -10962,10 +10962,10 @@ scnUpdateUI:!event handling-scintilla!notifications!private! !
 scnURIDropped:!event handling-scintilla!notifications!private! !
 scnUserListSelection:!event handling-scintilla!notifications!private! !
 scnZoom:!event handling-scintilla!notifications!private! !
-scrollDown!**auto generated**!commands!public!scintilla interface!scrolling! !
-scrollToEnd!**auto generated**!commands!public!scintilla interface!scrolling! !
-scrollToStart!**auto generated**!commands!public!scintilla interface!scrolling! !
-scrollUp!**auto generated**!commands!public!scintilla interface!scrolling! !
+scrollDown!**auto generated**!commands-actions!public!scintilla interface!scrolling! !
+scrollToEnd!**auto generated**!commands-actions!public!scintilla interface!scrolling! !
+scrollToStart!**auto generated**!commands-actions!public!scintilla interface!scrolling! !
+scrollUp!**auto generated**!commands-actions!public!scintilla interface!scrolling! !
 scrollWidth!**auto generated**!public!scintilla interface!scrolling! !
 scrollWidth:!**auto generated**!public!scintilla interface!scrolling! !
 searchNext:text:!**auto generated**!public!scintilla interface! !
@@ -11029,7 +11029,7 @@ showCallTip:at:!call tips!public!scintilla interface! !
 showLinesFrom:to:!**auto generated**!public!scintilla interface! !
 showUserList:id:!autocompletion!public!scintilla interface! !
 showVerticalScrollBar:!**auto generated**!public!scintilla interface!scrolling! !
-splitTarget:!**auto generated**!commands!line wrapping!public!scintilla interface! !
+splitTarget:!**auto generated**!commands-actions!line wrapping!public!scintilla interface! !
 startDwellTimer!notifications!private! !
 startRecording!**auto generated**!macro recording!public!scintilla interface! !
 startStylingFrom:!**auto generated**!public!scintilla interface!styling! !
@@ -11050,7 +11050,7 @@ stylerClass:!public!styling! !
 styleUnderCaret!enquiries!public!styling! !
 styleWithId:!enquiries!public!style definition! !
 stylingPosition!**auto generated**!public!scintilla interface!styling! !
-swapPrimarySelectionAnchorAndCaret!**auto generated**!commands!public!scintilla interface!selection! !
+swapPrimarySelectionAnchorAndCaret!**auto generated**!commands-actions!public!scintilla interface!selection! !
 tabDrawMode!other settings!public! !
 tabDrawMode:!other settings!public! !
 tabIndents!**auto generated**!public!scintilla interface!tabs & indentation guides!testing! !
@@ -11069,25 +11069,25 @@ textLimit!accessing!public! !
 textLimit:!accessing!public! !
 textStyles!public!style definition! !
 textStyles:!public!style definition! !
-toggleFold:!**auto generated**!folding!operations!public!scintilla interface! !
+toggleFold:!**auto generated**!folding!public!scintilla interface! !
 toggleFold:showText:!**auto generated**!public!scintilla interface! !
-toggleFoldMargin!commands!margins!public! !
-toggleIndentationGuides!commands!public!tabs & indentation guides! !
-toggleLineEndings!commands!public!tabs & indentation guides! !
-toggleLineNumbers!commands!margins!public! !
-toggleOvertype!**auto generated**!commands!public!scintilla interface! !
-toggleStyling!commands!public!styling! !
-toggleWhitespace!commands!margins!public! !
-toggleWordWrap!commands!public! !
+toggleFoldMargin!commands-actions!margins!public! !
+toggleIndentationGuides!commands-actions!public!tabs & indentation guides! !
+toggleLineEndings!commands-actions!public!tabs & indentation guides! !
+toggleLineNumbers!commands-actions!margins!public! !
+toggleOvertype!**auto generated**!commands-actions!public!scintilla interface! !
+toggleStyling!commands-actions!public!styling! !
+toggleWhitespace!commands-actions!margins!public! !
+toggleWordWrap!commands-actions!public! !
 tokenEndAt:!enquiries!public! !
 tokenRangeAt:!enquiries!public! !
 tokensFrom:to:!public!text retrieval & modification! !
 tokenStartAt:!enquiries!public! !
 tokenTextAt:!enquiries!public! !
-twiddleLines!**auto generated**!commands!public!scintilla interface! !
-undo!commands!public!scintilla interface!undo & redo! !
-unfoldAll!commands!folding!public! !
-unindent!**auto generated**!commands!public!scintilla interface! !
+twiddleLines!**auto generated**!commands-actions!public!scintilla interface! !
+undo!commands-actions!public!scintilla interface!undo & redo! !
+unfoldAll!commands-actions!folding!public! !
+unindent!**auto generated**!commands-actions!public!scintilla interface! !
 updateControlStyles!initializing!private! !
 updateIndicators!helpers!indicators!private! !
 updateIndicatorStyles!helpers!indicators!private! !
@@ -11126,10 +11126,10 @@ wrapIndentMode:!other settings!public! !
 xOffset!**auto generated**!public!scintilla interface!scrolling! !
 xOffset:!**auto generated**!public!scintilla interface!scrolling! !
 zoomFactor!public!zooming! !
-zoomIn!**auto generated**!commands!public!scintilla interface!zooming! !
+zoomIn!**auto generated**!commands-actions!public!scintilla interface!zooming! !
 zoomLevel!**auto generated**!public!scintilla interface!zooming! !
 zoomLevel:!**auto generated**!public!scintilla interface!zooming! !
-zoomOut!**auto generated**!commands!public!scintilla interface!zooming! !
+zoomOut!**auto generated**!commands-actions!public!scintilla interface!zooming! !
 !
 
 !UI.Scintilla.ScintillaView class methodsFor!

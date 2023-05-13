@@ -54,7 +54,20 @@ emitBasicWParamLParamFunctionOn: aPuttableStream
 		crtab.
 	self emitMethodBodyOn: aPuttableStream!
 
-emitCommentOn: aPuttableStream
+emitCommentString: aString on: aPuttableStream 
+	aString do: [:each | aPuttableStream nextPut: (each == $" ifTrue: [$'] ifFalse: [each])]!
+
+emitMethodBodyOn: aPuttableStream
+	self emitMethodPreambleOn: aPuttableStream.
+	self hasReturnValue
+		ifTrue: 
+			[aPuttableStream nextPutAll: '^('.
+			self returnType emitReturnConversionAround: [self emitScintillaCallOn: aPuttableStream]
+				on: aPuttableStream.
+			aPuttableStream nextPut: $)]
+		ifFalse: [self emitScintillaCallOn: aPuttableStream]!
+
+emitMethodCommentOn: aPuttableStream
 	| target devsys |
 	self comment isEmpty ifTrue: [^self].
 	target := String writeStream.
@@ -70,21 +83,8 @@ emitCommentOn: aPuttableStream
 					tabWidth: devsys workspaceClass defaultTabWidth);
 		cr!
 
-emitCommentString: aString on: aPuttableStream 
-	aString do: [:each | aPuttableStream nextPut: (each == $" ifTrue: [$'] ifFalse: [each])]!
-
-emitMethodBodyOn: aPuttableStream
-	self emitMethodPreambleOn: aPuttableStream.
-	self hasReturnValue
-		ifTrue: 
-			[aPuttableStream nextPutAll: '^('.
-			self returnType emitReturnConversionAround: [self emitScintillaCallOn: aPuttableStream]
-				on: aPuttableStream.
-			aPuttableStream nextPut: $)]
-		ifFalse: [self emitScintillaCallOn: aPuttableStream]!
-
 emitMethodPreambleOn: aPuttableStream 
-	self emitCommentOn: aPuttableStream.
+	self emitMethodCommentOn: aPuttableStream.
 	self isDeprecated 
 		ifTrue: 
 			[aPuttableStream
@@ -298,9 +298,9 @@ defaultReturnValue!accessing!private! !
 displayOn:!displaying!public! !
 emitBasicNullLParamFunctionOn:!generating!private! !
 emitBasicWParamLParamFunctionOn:!generating!private! !
-emitCommentOn:!helpers!private! !
 emitCommentString:on:!helpers!private! !
 emitMethodBodyOn:!generating!private! !
+emitMethodCommentOn:!helpers!private! !
 emitMethodPreambleOn:!helpers!private! !
 emitMethodTextOn:!generating!public! !
 emitNullLParamFunctionOn:!generating!private! !

@@ -41,6 +41,13 @@ ansiText: anAnsiString
 
 	self streamInFrom: anAnsiString asAnsiString readStream format: SF_TEXT!
 
+basicClearAll
+	"Private - Clears the contents of the receiver.
+	Override to ensure the receiver has the correct character formatting."
+
+	super basicClearAll.
+	self resetCharFormat!
+
 basicLineFromPosition: anInteger 
 	"Private - Answers the zero-based line index from the zero-based character position,
 	anInteger. If anInteger is greater than the length of the text in the receiver, then the
@@ -50,6 +57,11 @@ basicLineFromPosition: anInteger
 		sendMessage: EM_EXLINEFROMCHAR
 		wParam: 0
 		lParam: anInteger!
+
+basicPasteClipboard
+	"Private - Paste the clipboard text into the receiver's window."
+
+	self replaceSelection: Clipboard current getText!
 
 basicSelectionRange
 	"Private - Answer an interval identifying the selected range of text/OLE objects, as
@@ -143,13 +155,6 @@ charNearestPosition: aPoint
 		sendMessage: EM_CHARFROMPOS
 		wParam: 0
 		lpParam: aPoint asParameter) + 1!
-
-clear
-	"Clears the contents of the receiver.
-	Override to ensure the receiver has the correct character formatting."
-
-	super clear.
-	self resetCharFormat!
 
 color: aColor
 	"Private - Set the colour of the selection in the receiver to aColor."
@@ -479,11 +484,6 @@ paragraphOffset: anInteger
 	pf offset: anInteger.
 	self selectionParaFormat: pf!
 
-pastePlainText
-	"Paste the clipboard text into the receiver's window."
-
-	self replaceSelection: Clipboard current getText!
-
 plainText
 	"Answer a <Utf16String> containing the plain text contents of the receiver."
 
@@ -549,18 +549,6 @@ privGetRichText
 	in the image when stripping because #richText is implemented on View."
 
 	^self richTextClass fromRtf: self urtfText!
-
-queryCommand: aCommandQuery 
-	"Private - Enters details about a potential command for the receiver into the 
-	<CommandQuery> argument."
-
-	| command |
-	command := aCommandQuery commandSymbol.
-	(#(#pastePlainText) identityIncludes: command) 
-		ifTrue: 
-			[aCommandQuery isEnabled: self canPaste.
-			^true].
-	^super queryCommand: aCommandQuery!
 
 resetCharFormat
 	"Resets the formatting attributes of the selection to the default mode."
@@ -904,7 +892,9 @@ wmInitMenu: message wParam: wParam lParam: lParam
 !UI.RichTextEdit categoriesForMethods!
 ansiText!public!streaming! !
 ansiText:!public!streaming! !
+basicClearAll!private!updating! !
 basicLineFromPosition:!accessing!private! !
+basicPasteClipboard!clipboard operations!private! !
 basicSelectionRange!helpers!private! !
 basicSelectionStart:end:!helpers!private! !
 beBold!modes!public! !
@@ -918,7 +908,6 @@ calculateExtent:!geometry!private! !
 canPaste!public!testing! !
 canRedo!public!testing!undo & redo! !
 charNearestPosition:!accessing!public! !
-clear!operations!public! !
 color:!helpers!private! !
 defaultCharFormat!accessing!private! !
 defaultCharFormat:!accessing!private! !
@@ -958,14 +947,12 @@ paragraphIndent!accessing!public! !
 paragraphIndent:!accessing!public! !
 paragraphOffset!accessing!public! !
 paragraphOffset:!accessing!public! !
-pastePlainText!commands!public! !
 plainText!accessing!public! !
 plainTextFrom:to:!accessing!public! !
 pointSize:!accessing!private! !
 positionAtLine:!accessing!public! !
 positionOfChar:!accessing!public! !
-privGetRichText!private!updating! !
-queryCommand:!commands!private! !
+privGetRichText!accessing!private! !
 resetCharFormat!operations!public! !
 richText!accessing!public! !
 richText:!accessing!private! !

@@ -88,6 +88,7 @@ package methodNames
 	add: #SystemMetrics -> #hasMenuImages;
 	add: #SystemMetrics -> #hasTreeViewHotTracking;
 	add: #SystemMetrics -> #supportsAlphaBlending;
+	add: #TextEdit -> #clear;
 	add: #TextEdit -> #findNextWrapped:down:wholeWord:matchCase:;
 	add: #TextEdit -> #isLowercase;
 	add: #TextEdit -> #isLowercase:;
@@ -943,6 +944,13 @@ supportsAlphaBlending!capability enquiries!public! !
 
 !TextEdit methodsFor!
 
+clear
+	"Clears the contents of the receiver"
+
+	<commandQuerySelector: #queryCanCut:>
+	Notification deprecated.	"Use #clearAll"
+	self clearAll!
+
 findNextWrapped: aString down: downBoolean wholeWord: wordBoolean matchCase: caseBoolean
 	#deprecated.
 	self findNextWrapped: (FindDetails new
@@ -986,6 +994,7 @@ setModify: aBoolean
 	#deprecated.
 	self isTextModified: aBoolean! !
 !TextEdit categoriesForMethods!
+clear!commands-actions!public! !
 findNextWrapped:down:wholeWord:matchCase:!public!searching & replacing! !
 isLowercase!public!testing! !
 isLowercase:!public!testing! !
