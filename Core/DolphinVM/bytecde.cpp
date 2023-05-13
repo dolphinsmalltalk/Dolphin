@@ -644,7 +644,7 @@ ContextOTE* __fastcall Context::New(size_t tempCount, Oop oopOuter)
 // not objects
 void Interpreter::invalidReturn(Oop resultPointer)
 {
-	pushObject((OTE*)Pointers.Scheduler);	// Receiver of cannotReturn
+	pushObject(Pointers.Scheduler);	// Receiver of cannotReturn
 	push(resultPointer);
 	sendSelectorArgumentCount(Pointers.CannotReturnSelector, 1);
 }

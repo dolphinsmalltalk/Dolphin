@@ -213,7 +213,7 @@ public:
 	static void push(char16_t);
 
 	// To be used when pushing a known non-SmallInteger (skips the SmallInteger check)
-	static void pushObject(OTE* object)
+	template<typename T> static void pushObject(TOTE<T>* object)
 	{
 		push(reinterpret_cast<Oop>(object));
 	}

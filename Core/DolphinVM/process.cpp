@@ -673,7 +673,7 @@ void Interpreter::sendVMInterrupt(ProcessOTE* interruptedProcess, VMInterrupts n
 	HARDASSERT(!actualActiveProcess()->IsWaiting());
 	HARDASSERT(isNil(actualActiveProcess()->Next()));
 
-	pushObject(reinterpret_cast<POTE>(Pointers.Scheduler));
+	pushObject(Pointers.Scheduler);
 	uint8_t* pProc = reinterpret_cast<uint8_t*>(actualActiveProcess());
 	uint8_t* pFrame = reinterpret_cast<uint8_t*>(m_registers.m_pActiveFrame);
 	HARDASSERT(pFrame > pProc);
