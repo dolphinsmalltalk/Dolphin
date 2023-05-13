@@ -105,11 +105,10 @@ canVScroll: aBoolean
 copyLine
 	"Copy the current line. The selection is unaffected."
 
-	<commandQuerySelector: #queryCanCopy:>
+	<commandQuerySelector: #hasSelection>
 	self basicCopyLine!
 
 copySelectionOrLine
-	<commandQuerySelector: #queryCanCopy:>
 	self basicCopySelectionOrLine!
 
 currentLine
@@ -122,7 +121,7 @@ cutLine
 	"Delete the line on which the caret is located into the clipboard, including the line delimiter (i.e. subsequent lines shift
 	up by one). If it is the last line just cuts the text on that line, if any."
 
-	<commandQuerySelector: #queryCanCut:>
+	<commandQuerySelector: #canCut>
 	self basicCutLine!
 
 defaultExtent
@@ -140,7 +139,7 @@ deleteLine
 	"Delete the line on which the caret is located, including the line delimiter (i.e. subsequent lines shift
 	up by one). If it is the last line just deletes the text on that line, if any."
 
-	<commandQuerySelector: #queryCanCut:>
+	<commandQuerySelector: #canCut>
 	self basicDeleteLine!
 
 displayOnFormats
@@ -166,13 +165,13 @@ dlgCode
 duplicateLine
 	"Duplicate the current line."
 
-	<commandQuerySelector: #queryCanDuplicate:>
+	<commandQuerySelector: #isWriteable>
 	self basicDuplicateLine!
 
 duplicateSelection
 	"Duplicate the current selection (or line if the selection is empty)."
 
-	<commandQuerySelector: #queryCanDuplicate:>
+	<commandQuerySelector: #isWriteable>
 	self basicDuplicateSelection!
 
 goto: anInteger 
@@ -223,9 +222,6 @@ lineLength: anIntegerLineNumber
 
 	^self lineLengthFromPosition: (self positionAtLine: anIntegerLineNumber).
 !
-
-queryCanDuplicate: aCommandQuery
-	aCommandQuery isEnabled: self isReadOnly not!
 
 queryToggleWordWrap: aCommandQuery
 	aCommandQuery
@@ -415,7 +411,6 @@ insertText:at:!public!text retrieval & modification! !
 lineCount!accessing!public! !
 lineHeight:!public! !
 lineLength:!accessing!public! !
-queryCanDuplicate:!commands-queries!private! !
 queryToggleWordWrap:!commands-queries!private! !
 resetCharFormat!operations!public! !
 selectCurrentLine!public!selection! !

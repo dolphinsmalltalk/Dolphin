@@ -5,7 +5,7 @@ Core.Object
 	instanceVariableNames: 'handle creationParent creationStyle presenter model backcolor preferredExtent flags contextMenu font events interactor'
 	classVariableNames: 'MessageMap NextId ViewClosedError WndClassAtom'
 	imports: #(#{OS.Win32Constants} #{OS.Win32Errors})
-	classInstanceVariableNames: 'theme commandQuerySelectors'
+	classInstanceVariableNames: 'theme commandQueries'
 	classConstants: {
 			'CreateCenteredMask' -> 16r40.
 			'DragSourceMask' -> 16r4.
@@ -2902,11 +2902,11 @@ queryCommandHandlers: aCommandQuery
 	class := self class.
 	command := aCommandQuery commandSymbol.
 	
-	[(class commandQuerySelectors lookup: command)
+	[(class commandQueries lookup: command)
 		ifNotNil: 
-			[:selector |
+			[:handler |
 			"Unless the handler specifically returns false, assume the command query was handled and terminate the search"
-			(self perform: selector with: aCommandQuery) == false ifFalse: [^true]].
+			(handler value: self value: aCommandQuery) == false ifFalse: [^true]].
 	class == ##(self)]
 			whileFalse: [class := class superclass].
 	^false!
@@ -5169,13 +5169,12 @@ activeOrDesktop
 annotatedMethodRemoved: aCompiledMethod
 	"Private - An annotated method of the receiver has been removed. This is an opportunity to update any metadata that might be based on method annotations."
 
-	(aCompiledMethod hasAnnotation: #commandQuerySelector:) ifTrue: [commandQuerySelectors := nil]!
+	(aCompiledMethod hasAnnotation: #commandQuerySelector:) ifTrue: [self resetCommandQueries]!
 
 annotationsUpdated: aCompilationResult
 	"Private - Annotations may have been added or removed in the receiver's methods. This is an opportunity to update any metadata that might be based on method annotations."
 
-	(aCompilationResult affectsAnnotation: #commandQuerySelector:)
-		ifTrue: [commandQuerySelectors := nil]!
+	(CommandQuery validateQueriesIn: aCompilationResult) ifTrue: [self resetCommandQueries]!
 
 buildMessageMap
 	"Private - Initialize the map of Windows message numbers to the selectors of the low-level event handlers in the receiver.
@@ -5261,8 +5260,8 @@ closeAll
 
 	^(self topLevelViews reject: [ :w | w close ]) isEmpty!
 
-commandQuerySelectors
-	^commandQuerySelectors ifNil: [commandQuerySelectors := self findCommandQuerySelectors]!
+commandQueries
+	^commandQueries ifNil: [commandQueries := CommandQuery findQueryHandlersIn: self]!
 
 cursor
 	"Answers the default cursor to be used for the mouse pointer when over instances of the receiver.
@@ -5320,20 +5319,6 @@ destroyAll
 
 	self topLevelViews do: [:w | w destroy].
 	SessionManager.Current inputState purgeDeadWindows!
-
-findCommandQuerySelectors
-	| selectors |
-	selectors := IdentityDictionary new.
-	self methodsDo: 
-			[:eachMethod |
-			eachMethod annotations
-				ifNotNil: 
-					[:annotations |
-					annotations selectorsAndArgumentsDo: 
-							[:annotationSelector :annotationArgs |
-							annotationSelector == #commandQuerySelector:
-								ifTrue: [selectors at: eachMethod selector put: annotationArgs single]]]].
-	^selectors!
 
 focus
 	"Answers the View with focus or nil if there is none.
@@ -5513,6 +5498,9 @@ reregisterClass
 		unregisterClass;
 		registerClass
 !
+
+resetCommandQueries
+	commandQueries := nil!
 
 resetTheme
 	theme := nil!
@@ -5791,7 +5779,7 @@ annotationsUpdated:!private! !
 buildMessageMap!constants!must not strip!private! !
 capture!accessing!public! !
 closeAll!operations!private! !
-commandQuerySelectors!accessing!private! !
+commandQueries!accessing!private! !
 cursor!accessing!public! !
 defaultGetImageBlock!adapters!constants!public! !
 defaultGetTextBlock!adapters!constants!public! !
@@ -5801,7 +5789,6 @@ defaultView!constants!public! !
 desktop!accessing!public! !
 desktopHandle!enquiries!private! !
 destroyAll!operations!private! !
-findCommandQuerySelectors!accessing!private! !
 focus!accessing!public! !
 focusHandle!accessing!private! !
 foreground!enquiries!public! !
@@ -5821,6 +5808,7 @@ registerMessage:!dispatching!public! !
 registerMessageMappings:!class initialization!public! !
 releaseCapture!operations!public! !
 reregisterClass!operations!private! !
+resetCommandQueries!initializing!private! !
 resetTheme!private!theming! !
 resource_Default_view!public!resources-views! !
 selectorForMessage:!dispatching!private! !

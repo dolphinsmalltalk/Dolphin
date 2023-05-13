@@ -133,7 +133,7 @@ publishedAspectsOfInstances!must strip!public! !
 browseMethodProtocol
 	"Private - Browse the currently selected protocol."
 
-	<commandQuerySelector: #queryHasProtocolSelected:>
+	<commandQuerySelector: #hasProtocolSelected>
 	| protocol |
 	protocol := self protocols first.
 	self model browseProtocols

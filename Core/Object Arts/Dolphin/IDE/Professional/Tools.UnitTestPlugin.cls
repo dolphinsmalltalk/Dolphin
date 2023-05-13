@@ -96,7 +96,7 @@ createSchematicWiring
 debugTest
 	"Debug the currently selected defect. If no defects are selected then select and ebug the first one"
 
-	<commandQuerySelector: #queryHasDefects:>
+	<commandQuerySelector: #hasDefects>
 	defectsPresenter hasSelection ifFalse: [defectsPresenter selectionByIndex: 1].
 	self debugTest: defectsPresenter selection!
 
@@ -299,18 +299,12 @@ profileSuite: aTestSuite
 	self updateWindow!
 
 profileTests
-	<commandQuerySelector: #queryHasTests:>
+	<commandQuerySelector: #hasTests>
 	| suite |
 	suite := self testSuite.
 	(#{Smalltalk.Profiler} isDefined and: [suite notNil])
 		ifTrue: [self profileSuite: suite]
 		ifFalse: [self displayReset]!
-
-queryHasDefects: aCommandQuery
-	aCommandQuery isEnabled: self hasDefects!
-
-queryHasTests: aCommandQuery
-	aCommandQuery isEnabled: self hasTests!
 
 queryToggleToTests: query
 	^query
@@ -328,7 +322,7 @@ runSuite: aTestSuite
 	self updateWindow!
 
 runTests
-	<commandQuerySelector: #queryHasTests:>
+	<commandQuerySelector: #hasTests>
 	self testSuite ifNil: [self displayReset] ifNotNil: [:suite | self runSuite: suite]!
 
 startAutoSwitchProcess
@@ -454,8 +448,6 @@ onViewOpened!event handling!private! !
 prepareToRun:!operations!private! !
 profileSuite:!operations!private! !
 profileTests!commands-actions!public! !
-queryHasDefects:!commands-queries!private! !
-queryHasTests:!commands-queries!private! !
 queryToggleToTests:!helpers!private! !
 refreshIcon!operations!private! !
 runSuite:!operations!private! !

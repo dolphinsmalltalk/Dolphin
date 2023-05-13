@@ -57,7 +57,7 @@ apply
 browseIDL
 	"Open a new workspace populated with the IDL for the currently selected library."
 
-	<commandQuerySelector: #queryHasLibrarySelected:>
+	<commandQuerySelector: #hasLibrarySelected>
 	| lib stm |
 	lib := self typeLib.
 	stm := ReadWriteStream on: (String new: 2048).
@@ -70,13 +70,13 @@ browseIDL
 browseTypeClass
 	"Open a new class browser on the class of the selected type."
 
-	<commandQuerySelector: #queryBrowseTypeClass>
+	<commandQuerySelector: #hasTypeWithClass>
 	^types selections first programObject browse!
 
 browseTypesIDL
 	"Open a new workspace populated with the IDL for the currently selected types."
 
-	<commandQuerySelector: #queryHasTypesSelected:>
+	<commandQuerySelector: #hasTypesSelected>
 	| stm |
 	stm := ReadWriteStream on: (String new: 2048).
 	types selections do: 
@@ -94,7 +94,7 @@ cancel
 !
 
 chooseNamespace
-	<commandQuerySelector: #queryHasLibrarySelected:>
+	<commandQuerySelector: #hasLibrarySelected>
 	| choice namespaces |
 	namespaces := ClassHierarchyModel withRoots: (Namespace subclasses copyWithout: SharedPool).
 	choice := ValueConverter subject: namespaceName model
@@ -111,7 +111,7 @@ chooseNamespace
 choosePackage
 	"Sets the package name from a choice of all the available packages"
 
-	<commandQuerySelector: #queryHasLibrarySelected:>
+	<commandQuerySelector: #hasLibrarySelected>
 	| oldPkg |
 	oldPkg := packageName value isEmpty
 				ifTrue: [nil]
@@ -240,7 +240,7 @@ generatableStructsInTlb: aTypeLibraryAnalyzer
 generate
 	"Apply the attribute changes and attempt to generate the requested interfaces"
 
-	<commandQuerySelector: #queryHasTypesSelected:>
+	<commandQuerySelector: #hasTypesSelected>
 	| typeLibrary selected progress step |
 	self apply.
 	typeLibrary := self typeLib.
@@ -269,6 +269,27 @@ generate
 	progress showModal.
 	types view updateAll!
 
+hasInstalledTypeLib
+	| tlb |
+	tlb := self typeLib.
+	^tlb notNil and: [tlb isInstalled]!
+
+hasLibrarySelected
+	^self typeLib notNil!
+
+hasTypeLibWithHelp
+	| tlb |
+	tlb := self typeLib.
+	^tlb notNil and: [tlb helpfile notEmpty]!
+
+hasTypesSelected
+	^types selections notEmpty!
+
+hasTypeWithClass
+	| selectedTypes |
+	selectedTypes := types selections.
+	^selectedTypes size = 1 and: [selectedTypes first isVariableDefined]!
+
 initialize
 	super initialize.
 	showStandard := false!
@@ -284,11 +305,11 @@ inspectLibrary
 	"Open an inspector on the <AXTypeLibraryAnalyzer> representing the currently
 	selected library."
 
-	<commandQuerySelector: #queryHasLibrarySelected:>
+	<commandQuerySelector: #hasLibrarySelected>
 	self typeLib inspect!
 
 inspectType
-	<commandQuerySelector: #queryHasTypesSelected:>
+	<commandQuerySelector: #hasTypesSelected>
 	| selections |
 	selections := types selections.
 	(selections size = 1 ifTrue: [selections first] ifFalse: [selections]) inspect!
@@ -296,7 +317,7 @@ inspectType
 libraryListNextCard
 	"The user has selected a library and is desirous of moving to the next card."
 
-	<commandQuerySelector: #queryLibraryListNextCard:>
+	<commandQuerySelector: #hasInstalledTypeLib>
 	^cards nextCard!
 
 loadTypeLib
@@ -349,31 +370,10 @@ parametersNextCard
 	self apply.
 	^cards nextCard!
 
-queryBrowseTypeClass: aCommandQuery
-	| selectedTypes |
-	selectedTypes := types selections.
-	aCommandQuery isEnabled: (selectedTypes size = 1 and: [selectedTypes first isVariableDefined])!
-
-queryHasLibrarySelected: aCommandQuery
-	aCommandQuery isEnabled: self typeLib notNil!
-
-queryHasTypesSelected: aCommandQuery
-	aCommandQuery isEnabled: types selections notEmpty!
-
-queryLibraryListNextCard: aCommandQuery
-	| tlb |
-	tlb := self typeLib.
-	aCommandQuery isEnabled: (tlb notNil and: [tlb isInstalled])!
-
 queryToggleStandardTypes: aCommandQuery
 	aCommandQuery
 		isEnabled: true;
 		isChecked: showStandard!
-
-queryTypeLibHelp: aCommandQuery
-	| tlb |
-	tlb := self typeLib.
-	aCommandQuery isEnabled: (tlb notNil and: [tlb helpfile notEmpty])!
 
 refresh
 	"Refresh the list of current AXTypeLibraryAnalyzers in the image"
@@ -415,7 +415,7 @@ typeLib: aTypeLibraryAnalyzerOrNil
 typeLibHelp
 	"Open the selected type-libraries help file."
 
-	<commandQuerySelector: #queryTypeLibHelp:>
+	<commandQuerySelector: #hasTypeLibWithHelp>
 	OS.Shell32 shellOpen: self typeLib helpfile!
 
 updateTypelibVariable
@@ -453,6 +453,11 @@ generatableEnumsInTlb:!private!updating! !
 generatableInterfacesInTlb:!helpers!private! !
 generatableStructsInTlb:!helpers!private! !
 generate!commands-actions!public! !
+hasInstalledTypeLib!private!testing! !
+hasLibrarySelected!private!testing! !
+hasTypeLibWithHelp!private!testing! !
+hasTypesSelected!private!testing! !
+hasTypeWithClass!private!testing! !
 initialize!initializing!private! !
 inspectItCommand!public! !
 inspectLibrary!commands-actions!public! !
@@ -462,12 +467,7 @@ loadTypeLib!commands-actions!public! !
 onTypeLibrarySelected!event handling!private! !
 onViewOpened!event handling!public! !
 parametersNextCard!commands-actions!public! !
-queryBrowseTypeClass:!commands-queries!private! !
-queryHasLibrarySelected:!commands-queries!private! !
-queryHasTypesSelected:!commands-queries!private! !
-queryLibraryListNextCard:!commands-queries!private! !
 queryToggleStandardTypes:!commands-queries!private! !
-queryTypeLibHelp:!commands-queries!private! !
 refresh!commands-actions!public! !
 selectInstalled!commands-actions!public! !
 selectUninstalled!commands-actions!public! !

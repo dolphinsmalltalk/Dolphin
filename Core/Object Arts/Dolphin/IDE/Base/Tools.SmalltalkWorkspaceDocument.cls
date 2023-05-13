@@ -146,7 +146,7 @@ fileOpen
 forgetSize
 	"Forget the default size for new instances of this tool."
 
-	<commandQuerySelector: #queryForgetSize:>
+	<commandQuerySelector: #hasRememberedSize>
 	self class defaultExtent: nil!
 
 getDocumentData
@@ -161,6 +161,12 @@ guidedTour
 
 hasContents
 	^self hasFilename or: [self getDocumentData notEmpty]!
+
+hasNonDefaultExtent
+	^self view extent ~= self class defaultExtent!
+
+hasRememberedSize
+	^DefaultExtent notNil!
 
 help
 	"Brings up a help page for the receiver"
@@ -249,16 +255,10 @@ openWorkspace
 	openFilename isNil ifTrue: [^nil].
 	^self openOn: openFilename!
 
-queryForgetSize: aCommandQuery
-	aCommandQuery isEnabled: DefaultExtent notNil!
-
-queryRememberThisSize: aCommandQuery
-	aCommandQuery isEnabled: self view extent ~= self class defaultExtent!
-
 rememberThisSize
 	"Record the size of the receiver as the default extent for its tool class."
 
-	<commandQuerySelector: #queryRememberThisSize:>
+	<commandQuerySelector: #hasNonDefaultExtent>
 	self class defaultExtent: self view extent!
 
 saveStateOn: aWriteStream
@@ -361,6 +361,8 @@ forgetSize!commands-actions!public! !
 getDocumentData!accessing!private! !
 guidedTour!commands-actions!public! !
 hasContents!public! !
+hasNonDefaultExtent!private!testing! !
+hasRememberedSize!private!testing! !
 help!commands-actions!public! !
 ideaSpace!public! !
 inspectSystemOptions!commands-actions!public! !
@@ -373,8 +375,6 @@ onDropDown:!private! !
 onViewOpened!event handling!private! !
 openViewComposer!commands-actions!public! !
 openWorkspace!public! !
-queryForgetSize:!commands-queries!private! !
-queryRememberThisSize:!commands-queries!private! !
 rememberThisSize!commands-actions!public! !
 saveStateOn:!private!saved state! !
 searchForClass:!private! !

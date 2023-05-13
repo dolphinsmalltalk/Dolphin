@@ -90,21 +90,15 @@ onShownInBrowser
 	super onShownInBrowser.
 	self showClassResources!
 
-queryCommand: aCommandQuery 
-	"Private - Enter details about a potential command for the receiver 
-	into the <CommandQuery> argument."
+queryToggleShowInheritedResources: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: self isShowingInheritedResources!
 
-	| selector |
-	selector := aCommandQuery commandSymbol.
-	#toggleShowInheritedResources == selector 
-		ifTrue: 
-			[aCommandQuery isEnabled: true; isChecked: self isShowingInheritedResources.
-			^true].
-	#toggleShowSubclassResources == selector 
-		ifTrue: 
-			[aCommandQuery isEnabled: true; isChecked: self isShowingSubclassResources.
-			^true].
-	^super queryCommand: aCommandQuery!
+queryToggleShowSubclassResources: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: self isShowingSubclassResources!
 
 showClassResources
 	| classes filter |
@@ -132,14 +126,16 @@ showClassResources
 toggleShowInheritedResources
 	"Toggle between showing resources owned by subclasses or not"
 
+	<commandQuerySelector: #queryToggleShowInheritedResources:>
 	self isShowingInheritedResources: self isShowingInheritedResources not!
 
 toggleShowSubclassResources
 	"Toggle between showing resources inherited from superclasses or not"
 
+	<commandQuerySelector: #queryToggleShowSubclassResources:>
 	self isShowingSubclassResources: self isShowingSubclassResources not! !
 !Tools.ResourceListPlugin categoriesForMethods!
-createComponents!commands!initializing!private! !
+createComponents!initializing!operations!private! !
 createSchematicWiring!initializing!public! !
 defaultHelpId!constants!public! !
 displayOn:!displaying!public! !
@@ -151,10 +147,11 @@ isShowingSubclassResources:!accessing!private! !
 onBrowserClassSelected!event handling!public! !
 onBrowserMethodSelected!event handling!private! !
 onShownInBrowser!event handling!public! !
-queryCommand:!commands!private! !
+queryToggleShowInheritedResources:!commands-queries!private! !
+queryToggleShowSubclassResources:!commands-queries!private! !
 showClassResources!private!updating! !
-toggleShowInheritedResources!commands!public! !
-toggleShowSubclassResources!commands!public! !
+toggleShowInheritedResources!commands-actions!public! !
+toggleShowSubclassResources!commands-actions!public! !
 !
 
 !Tools.ResourceListPlugin class methodsFor!
