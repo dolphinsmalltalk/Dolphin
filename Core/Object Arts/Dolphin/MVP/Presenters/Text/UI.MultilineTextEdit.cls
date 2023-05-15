@@ -105,7 +105,7 @@ canVScroll: aBoolean
 copyLine
 	"Copy the current line. The selection is unaffected."
 
-	<commandQuerySelector: #hasSelection>
+	<commandQuery: #hasSelection>
 	self basicCopyLine!
 
 copySelectionOrLine
@@ -121,7 +121,7 @@ cutLine
 	"Delete the line on which the caret is located into the clipboard, including the line delimiter (i.e. subsequent lines shift
 	up by one). If it is the last line just cuts the text on that line, if any."
 
-	<commandQuerySelector: #canCut>
+	<commandQuery: #canCut>
 	self basicCutLine!
 
 defaultExtent
@@ -139,7 +139,7 @@ deleteLine
 	"Delete the line on which the caret is located, including the line delimiter (i.e. subsequent lines shift
 	up by one). If it is the last line just deletes the text on that line, if any."
 
-	<commandQuerySelector: #canCut>
+	<commandQuery: #canCut>
 	self basicDeleteLine!
 
 displayOnFormats
@@ -165,13 +165,13 @@ dlgCode
 duplicateLine
 	"Duplicate the current line."
 
-	<commandQuerySelector: #isWriteable>
+	<commandQuery: #isWriteable>
 	self basicDuplicateLine!
 
 duplicateSelection
 	"Duplicate the current selection (or line if the selection is empty)."
 
-	<commandQuerySelector: #isWriteable>
+	<commandQuery: #isWriteable>
 	self basicDuplicateSelection!
 
 goto: anInteger 
@@ -320,12 +320,11 @@ toggleWordWrap
 	which will go into an infinite loop if a keyboard shortcut or navigation key is pressed when the active
 	view does not have focus anywhere."
 
-	<commandQuerySelector: #queryToggleWordWrap:>
+	<commandQuery: #queryToggleWordWrap:>
 	| focus |
-	focus := self class focus.	
+	focus := self class focus.
 	self wordWrap: self wordWrap not.
-	focus == self ifTrue: [self setFocus]
-	!
+	focus == self ifTrue: [self setFocus]!
 
 wmKeyDown: message wParam: wParam lParam: lParam 
 	"Private - Handle WM_KEYDOWN.

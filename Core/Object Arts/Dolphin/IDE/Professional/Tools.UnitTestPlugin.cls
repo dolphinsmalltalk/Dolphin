@@ -96,7 +96,7 @@ createSchematicWiring
 debugTest
 	"Debug the currently selected defect. If no defects are selected then select and ebug the first one"
 
-	<commandQuerySelector: #hasDefects>
+	<commandQuery: #hasDefects>
 	defectsPresenter hasSelection ifFalse: [defectsPresenter selectionByIndex: 1].
 	self debugTest: defectsPresenter selection!
 
@@ -299,7 +299,7 @@ profileSuite: aTestSuite
 	self updateWindow!
 
 profileTests
-	<commandQuerySelector: #hasTests>
+	<commandQuery: #hasTests>
 	| suite |
 	suite := self testSuite.
 	(#{Smalltalk.Profiler} isDefined and: [suite notNil])
@@ -322,7 +322,7 @@ runSuite: aTestSuite
 	self updateWindow!
 
 runTests
-	<commandQuerySelector: #hasTests>
+	<commandQuery: #hasTests>
 	self testSuite ifNil: [self displayReset] ifNotNil: [:suite | self runSuite: suite]!
 
 startAutoSwitchProcess
@@ -380,7 +380,7 @@ testSuite
 toggleToTests
 	"Switch the associated browser between the class under test and the corresponding test class"
 
-	<commandQuerySelector: #queryToggleToTests:>
+	<commandQuery: #queryToggleToTests:>
 	| toggleToClass |
 	toggleToClass := self toggleToTestsClass.
 	toggleToClass ifNil: [^Error beep].

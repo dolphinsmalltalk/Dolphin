@@ -126,7 +126,7 @@ sourceDescriptorForPosition:!private!source filing-file in! !
 !ClassBrowserAbstract methodsFor!
 
 browseMethodHistory
-	<commandQuerySelector: #hasMethodSelected>
+	<commandQuery: #hasMethodSelected>
 	| method |
 	#idbAdded.
 	method := self selectedMethod.
@@ -135,7 +135,7 @@ browseMethodHistory
 browseMethodHistoryForClass
 	"Open a browser on the history of methods in the current class"
 
-	<commandQuerySelector: #hasClassSelected>
+	<commandQuery: #hasClassSelected>
 	#idbAdded.
 	ClassHistoryBrowser showOnClass: self actualClass! !
 !ClassBrowserAbstract categoriesForMethods!
@@ -164,7 +164,7 @@ versionHistory!accessing!public! !
 browseMethodHistory
 	"Open a browser on the history of the current method"
 
-	<commandQuerySelector: #hasBrowsableMethod>
+	<commandQuery: #hasBrowsableMethod>
 	| method |
 	#idbAdded.
 	method := self selectedMethod.
@@ -179,7 +179,7 @@ browseMethodHistory!commands-actions!idb goodies!private! !
 !MethodBrowserShell methodsFor!
 
 browseMethodHistory
-	<commandQuerySelector: #hasMethodSelected>
+	<commandQuery: #hasMethodSelected>
 	| method |
 	#idbAdded.
 	method := self selectedMethod.

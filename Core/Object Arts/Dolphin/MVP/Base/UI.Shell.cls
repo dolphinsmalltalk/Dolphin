@@ -225,7 +225,7 @@ redo
 	"Redo the last command that is forward in the command history list. During the redo operation
 	we place the receiver in a state where it will not accept any further command histories."
 
-	<commandQuerySelector: #queryRedo:>
+	<commandQuery: #queryRedo:>
 	| history |
 	self hasCommandHistory ifFalse: [^self].
 	"Save the original history list"
@@ -255,7 +255,7 @@ undo
 	"Undo the current command in the command history list. During the undo operation
 	we place the receiver in a state where it will not accept any further command histories."
 
-	<commandQuerySelector: #queryUndo:>
+	<commandQuery: #queryUndo:>
 	| history command |
 	self hasCommandHistory ifFalse: [^self].
 	"Save the original history list"

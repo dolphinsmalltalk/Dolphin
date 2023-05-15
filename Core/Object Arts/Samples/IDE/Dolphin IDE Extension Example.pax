@@ -53,7 +53,7 @@ emitClassLayoutDescription
 	"Emits a description of the instance variables for the context class at the
 	insertion point in the receiver."
 
-	<commandQuerySelector: #hasClassSelected>
+	<commandQuery: #hasClassSelected>
 	| desc |
 	[desc := OAIDEExtensions current variableDescriptionsFor: self browser selectedClass]
 		on: OperationAborted

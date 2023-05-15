@@ -16,7 +16,7 @@ Tools.ClassAspectPlugin comment: '`ClassAspectPlugin` is an abstract class of `<
 accept
 	"Save the text to the class."
 
-	<commandQuerySelector: #hasClassSelected>
+	<commandQuery: #hasClassSelected>
 	| overwrite |
 	overwrite := self promptToOverwrite.
 	overwrite ifFalse: [^self].

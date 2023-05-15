@@ -947,7 +947,7 @@ supportsAlphaBlending!capability enquiries!public! !
 clear
 	"Clears the contents of the receiver"
 
-	<commandQuerySelector: #canCut>
+	<commandQuery: #canCut>
 	Notification deprecated.	"Use #clearAll"
 	self clearAll!
 

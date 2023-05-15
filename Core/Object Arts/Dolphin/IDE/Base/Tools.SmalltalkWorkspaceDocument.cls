@@ -146,7 +146,7 @@ fileOpen
 forgetSize
 	"Forget the default size for new instances of this tool."
 
-	<commandQuerySelector: #hasRememberedSize>
+	<commandQuery: #hasRememberedSize>
 	self class defaultExtent: nil!
 
 getDocumentData
@@ -258,7 +258,7 @@ openWorkspace
 rememberThisSize
 	"Record the size of the receiver as the default extent for its tool class."
 
-	<commandQuerySelector: #hasNonDefaultExtent>
+	<commandQuery: #hasNonDefaultExtent>
 	self class defaultExtent: self view extent!
 
 saveStateOn: aWriteStream

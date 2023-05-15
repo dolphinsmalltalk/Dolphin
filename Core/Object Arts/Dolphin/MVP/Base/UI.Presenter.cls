@@ -992,7 +992,7 @@ annotatedMethodRemoved: aCompiledMethod
 	"Private - An annotated method of the receiver has been removed. This is an opportunity to update any metadata that might be based on method annotations."
 
 	(aCompiledMethod hasAnnotation: #acceleratorKey:) ifTrue: [self updateAdditionalAccelerators].
-	(aCompiledMethod hasAnnotation: #commandQuerySelector:) ifTrue: [self resetCommandQueries]!
+	(aCompiledMethod hasAnnotation: #commandQuery:) ifTrue: [self resetCommandQueries]!
 
 annotationsUpdated: aCompilationResult
 	"Private - Annotations may have been added or removed in the receiver's methods. This is an opportunity to update any metadata that might be based on method annotations."

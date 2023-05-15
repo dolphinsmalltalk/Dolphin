@@ -68,7 +68,7 @@ browseClass
 	class is selected then an <EnvironmentBrowserShell> is opened and configured to display
 	those classes."
 
-	<commandQuerySelector: #hasClassesSelected>
+	<commandQuery: #hasClassesSelected>
 	| classes |
 	classes := self selectedClasses.
 	^classes size = 1
@@ -79,7 +79,7 @@ browseClassReferences
 	"Browse all the methods in the entire system which refer to the class selected in the
 	receiver."
 
-	<commandQuerySelector: #hasClassesSelected>
+	<commandQuery: #hasClassesSelected>
 	self browseClassReferencesIn: self browserEnvironment!
 
 browseClassReferencesIn: aBrowserEnvironment
@@ -106,15 +106,15 @@ browseHierarchyCommand
 		lookup: currentCard!
 
 browseHierarchyOfClass
-	<commandQuerySelector: #hasClassSelected>
+	<commandQuery: #hasClassSelected>
 	self developmentSystem browseHierarchy: self selectedClass!
 
 browseHierarchyOfMethod
-	<commandQuerySelector: #hasMethodSelected>
+	<commandQuery: #hasMethodSelected>
 	self developmentSystem browseClassHierarchyOfMethod: self selectedMethod!
 
 browseHierarchyOfVariable
-	<commandQuerySelector: #hasLiveVariableSelected>
+	<commandQuery: #hasLiveVariableSelected>
 	| var |
 	var := self sharedVariable binding.
 	self developmentSystem
@@ -142,14 +142,14 @@ browseLocalMessageDefinitions
 	"Open a method browser displaying all implementors of the current selector in the currently
 	selected packages."
 
-	<commandQuerySelector: #hasPackages>
+	<commandQuery: #hasPackages>
 	self browseMessageDefinitionsIn: self searchEnvironment!
 
 browseLocalMessageReferences
 	"Open a method browser displaying all references to the current selector in the currently
 	selected packages."
 
-	<commandQuerySelector: #hasPackages>
+	<commandQuery: #hasPackages>
 	self browseMessageReferencesIn: self searchEnvironment!
 
 browseLooseMethods: aCollection
@@ -162,7 +162,7 @@ browseLooseMethods: aCollection
 browseMessageDefinitions
 	"Open a method browser displaying all implementors of the current selector in the system."
 
-	<commandQuerySelector: #hasMethodsSelected>
+	<commandQuery: #hasMethodsSelected>
 	self browseMessageDefinitionsIn: self browserEnvironment!
 
 browseMessageDefinitionsIn: aBrowserEnvironment
@@ -177,7 +177,7 @@ browseMessageDefinitionsIn: aBrowserEnvironment
 browseMessageReferences
 	"Open a method browser displaying all references to the current selector in the entire system."
 
-	<commandQuerySelector: #hasMethodsSelected>
+	<commandQuery: #hasMethodsSelected>
 	self browseMessageReferencesIn: self browserEnvironment!
 
 browseMessageReferencesIn: aBrowserEnvironment
@@ -191,20 +191,20 @@ browseMessageReferencesIn: aBrowserEnvironment
 
 browseMethodClass
 	"Open a default browser on the currently selected method."
-	
-	<commandQuerySelector: #hasMethodSelected>
+
+	<commandQuery: #hasMethodSelected>
 	^self selectedMethod browse!
 
 browseMethods
 	"Open a default browser on the currently selected method or methods."
 
-	<commandQuerySelector: #queryBrowseMethods:>
+	<commandQuery: #queryBrowseMethods:>
 	| methods |
 	methods := self selectedMethods.
 	methods size == 1 ifTrue: [self browseMethodClass] ifFalse: [self browseLooseMethods: methods]!
 
 browsePackages
-	<commandQuerySelector: #hasPackages>
+	<commandQuery: #hasPackages>
 	^packagesPresenter browsePackageSources!
 
 browseReferencesCommand
@@ -233,13 +233,13 @@ browseSystem
 browseVariableClass
 	"Open a default browser on the currently selected method."
 
-	<commandQuerySelector: #hasLiveVariableSelected>
+	<commandQuery: #hasLiveVariableSelected>
 	^self sharedVariable browse!
 
 browseVariableReferences
 	"Browse all the methods which refer to the shared variable selected in the receiver."
 
-	<commandQuerySelector: #hasVariableSelected>
+	<commandQuery: #hasVariableSelected>
 	self model browseSharedVariableReferences: self sharedVariable in: self browserEnvironment!
 
 buildPopupForCommand: aSymbol 
@@ -543,7 +543,7 @@ initialize
 inspectClasses
 	"Open an inspector on the currently selected classes."
 
-	<commandQuerySelector: #hasClassesSelected>
+	<commandQuery: #hasClassesSelected>
 	self inspectCollection: self selectedClasses!
 
 inspectCollection: aCollection
@@ -565,7 +565,7 @@ inspectItCommand
 inspectMethods
 	"Open an inspector on the currently selected methods."
 
-	<commandQuerySelector: #hasMethodsSelected>
+	<commandQuery: #hasMethodsSelected>
 	self inspectCollection: self selectedMethods!
 
 inspectResources
@@ -576,7 +576,7 @@ inspectResources
 inspectSharedVariables
 	"Open an inspector on the currently selected variables."
 
-	<commandQuerySelector: #hasVariablesSelected>
+	<commandQuery: #hasVariablesSelected>
 	self inspectCollection: (self variableNames collect: [:each | each bindingOrNil])!
 
 isCardUpToDate: aSymbol
@@ -967,7 +967,7 @@ release
 removeClasses
 	"Private - Remove the currently selected classes from the package."
 
-	<commandQuerySelector: #hasClassesSelected>
+	<commandQuery: #hasClassesSelected>
 	self selectedClasses do: [:e | e owningPackage removeClass: e]!
 
 removeLooseMethods
@@ -975,13 +975,13 @@ removeLooseMethods
 	Note that the methods are not actually removed from the system (i.e.
 	ownership is transferred to the package of their method class)."
 
-	<commandQuerySelector: #hasMethodsSelected>
+	<commandQuery: #hasMethodsSelected>
 	self selectedMethods do: [:each | each owningPackage removeMethod: each]!
 
 removeVariables
 	"Private - Remove the currently selected variables from their packages."
 
-	<commandQuerySelector: #hasVariablesSelected>
+	<commandQuery: #hasVariablesSelected>
 	self variableNames do: [:each | Package manager addVariableNamed: each to: nil]!
 
 resourceIdentifier
@@ -1000,14 +1000,14 @@ resourceIdentifiers
 saveComment
 	"Private - Save the comment from the source text."
 
-	<commandQuerySelector: #querySaveComment:>
+	<commandQuery: #querySaveComment:>
 	self singlePackage comment: commentPresenter plainText.
 	commentPresenter isModified: false!
 
 saveScript
 	"Private - Save the script from the source text."
 
-	<commandQuerySelector: #querySaveScript:>
+	<commandQuery: #querySaveScript:>
 	self singlePackage scriptAt: self scriptName put: self scriptText.
 	self updateScriptNames!
 
@@ -1240,7 +1240,7 @@ updateVariables
 upgradeResources
 	"Private - Uprade & resave the selected resources, by loading them into a ViewComposer."
 
-	<commandQuerySelector: #hasResourcesSelected>
+	<commandQuery: #hasResourcesSelected>
 	self resourceIdentifiers do: [:each | each reassign]!
 
 variableNames

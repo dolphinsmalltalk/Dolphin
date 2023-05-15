@@ -50,7 +50,7 @@ about: aString
 		text: aString!
 
 character
-	<commandQuerySelector: #queryDiffMode:>
+	<commandQuery: #queryDiffMode:>
 	self mode: #character!
 
 compare: upperString id: upperIdString and: lowerString id: lowerIdString
@@ -64,7 +64,7 @@ createComponents
 	diffsPresenter := self add: DifferencesPresenter new name: 'diffs'!
 
 line
-	<commandQuerySelector: #queryDiffMode:>
+	<commandQuery: #queryDiffMode:>
 	self mode: #line!
 
 mode: aSymbol 
@@ -106,7 +106,7 @@ textStyles: anCollectionOfScintillaTextStyle
 	diffsPresenter textStyles: anCollectionOfScintillaTextStyle!
 
 word
-	<commandQuerySelector: #queryDiffMode:>
+	<commandQuery: #queryDiffMode:>
 	self mode: #word! !
 !DiffBrowser categoriesForMethods!
 about!commands-actions!public! !

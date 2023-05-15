@@ -159,7 +159,7 @@ SUnitAbsWrapper subclass: #SUnitTestResourceWrapper
 browseTests
 	"Open an SUnit Test Browser on the selected Test Case."
 
-	<commandQuerySelector: #hasTestCases>
+	<commandQuery: #hasTestCases>
 	self testBrowserClass sunitbShow: self buildTestSuite!
 
 buildTestSuite

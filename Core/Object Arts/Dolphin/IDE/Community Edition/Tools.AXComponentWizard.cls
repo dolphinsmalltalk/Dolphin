@@ -57,7 +57,7 @@ apply
 browseIDL
 	"Open a new workspace populated with the IDL for the currently selected library."
 
-	<commandQuerySelector: #hasLibrarySelected>
+	<commandQuery: #hasLibrarySelected>
 	| lib stm |
 	lib := self typeLib.
 	stm := ReadWriteStream on: (String new: 2048).
@@ -70,13 +70,13 @@ browseIDL
 browseTypeClass
 	"Open a new class browser on the class of the selected type."
 
-	<commandQuerySelector: #hasTypeWithClass>
+	<commandQuery: #hasTypeWithClass>
 	^types selections first programObject browse!
 
 browseTypesIDL
 	"Open a new workspace populated with the IDL for the currently selected types."
 
-	<commandQuerySelector: #hasTypesSelected>
+	<commandQuery: #hasTypesSelected>
 	| stm |
 	stm := ReadWriteStream on: (String new: 2048).
 	types selections do: 
@@ -94,7 +94,7 @@ cancel
 !
 
 chooseNamespace
-	<commandQuerySelector: #hasLibrarySelected>
+	<commandQuery: #hasLibrarySelected>
 	| choice namespaces |
 	namespaces := ClassHierarchyModel withRoots: (Namespace subclasses copyWithout: SharedPool).
 	choice := ValueConverter subject: namespaceName model
@@ -111,7 +111,7 @@ chooseNamespace
 choosePackage
 	"Sets the package name from a choice of all the available packages"
 
-	<commandQuerySelector: #hasLibrarySelected>
+	<commandQuery: #hasLibrarySelected>
 	| oldPkg |
 	oldPkg := packageName value isEmpty
 				ifTrue: [nil]
@@ -240,7 +240,7 @@ generatableStructsInTlb: aTypeLibraryAnalyzer
 generate
 	"Apply the attribute changes and attempt to generate the requested interfaces"
 
-	<commandQuerySelector: #hasTypesSelected>
+	<commandQuery: #hasTypesSelected>
 	| typeLibrary selected progress step |
 	self apply.
 	typeLibrary := self typeLib.
@@ -305,11 +305,11 @@ inspectLibrary
 	"Open an inspector on the <AXTypeLibraryAnalyzer> representing the currently
 	selected library."
 
-	<commandQuerySelector: #hasLibrarySelected>
+	<commandQuery: #hasLibrarySelected>
 	self typeLib inspect!
 
 inspectType
-	<commandQuerySelector: #hasTypesSelected>
+	<commandQuery: #hasTypesSelected>
 	| selections |
 	selections := types selections.
 	(selections size = 1 ifTrue: [selections first] ifFalse: [selections]) inspect!
@@ -317,7 +317,7 @@ inspectType
 libraryListNextCard
 	"The user has selected a library and is desirous of moving to the next card."
 
-	<commandQuerySelector: #hasInstalledTypeLib>
+	<commandQuery: #hasInstalledTypeLib>
 	^cards nextCard!
 
 loadTypeLib
@@ -398,7 +398,7 @@ standardInterfaces
 	^StandardInterfaces!
 
 toggleStandardTypes
-	<commandQuerySelector: #queryToggleStandardTypes:>
+	<commandQuery: #queryToggleStandardTypes:>
 	showStandard := showStandard not.
 	self typeLib ifNotNil: [:typeLib | self updateTypesList: typeLib]!
 
@@ -415,7 +415,7 @@ typeLib: aTypeLibraryAnalyzerOrNil
 typeLibHelp
 	"Open the selected type-libraries help file."
 
-	<commandQuerySelector: #hasTypeLibWithHelp>
+	<commandQuery: #hasTypeLibWithHelp>
 	OS.Shell32 shellOpen: self typeLib helpfile!
 
 updateTypelibVariable

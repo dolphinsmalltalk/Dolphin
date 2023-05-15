@@ -126,13 +126,13 @@ showClassResources
 toggleShowInheritedResources
 	"Toggle between showing resources owned by subclasses or not"
 
-	<commandQuerySelector: #queryToggleShowInheritedResources:>
+	<commandQuery: #queryToggleShowInheritedResources:>
 	self isShowingInheritedResources: self isShowingInheritedResources not!
 
 toggleShowSubclassResources
 	"Toggle between showing resources inherited from superclasses or not"
 
-	<commandQuerySelector: #queryToggleShowSubclassResources:>
+	<commandQuery: #queryToggleShowSubclassResources:>
 	self isShowingSubclassResources: self isShowingSubclassResources not! !
 !Tools.ResourceListPlugin categoriesForMethods!
 createComponents!initializing!operations!private! !

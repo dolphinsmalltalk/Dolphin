@@ -33,7 +33,7 @@ Class Instance Variables:
 accept
 	"Save the source on the currently displayed source card."
 
-	<commandQuerySelector: #queryAcceptIt:>
+	<commandQuery: #queryAcceptIt:>
 	self perform: self acceptItCommand!
 
 acceptItCommand
@@ -56,7 +56,7 @@ applyOptions
 browseDefinitions
 	"Context-sensitive browse definitions command (F12)."
 
-	<commandQuerySelector: #queryBrowseDefinitions:>
+	<commandQuery: #queryBrowseDefinitions:>
 	<acceleratorKey: 'F12'>
 	self perform: self browseDefinitionsCommand!
 
@@ -68,7 +68,7 @@ browseDefinitionsCommand
 browseHierarchy
 	"Open a class hierarchy browser navigated appropriately based on initiating context."
 
-	<commandQuerySelector: #queryBrowseHierarchy:>
+	<commandQuery: #queryBrowseHierarchy:>
 	self perform: self browseHierarchyCommand!
 
 browseHierarchyCommand
@@ -79,7 +79,7 @@ browseHierarchyCommand
 browseIt
 	"Open a browser on the selected item in the window with focus."
 
-	<commandQuerySelector: #queryBrowseIt:>
+	<commandQuery: #queryBrowseIt:>
 	self perform: self browseItCommand!
 
 browseItCommand
@@ -100,7 +100,7 @@ browseMethodsInEnvironments: aCollectionOfBrowserEnvironment
 browseReferences
 	"Context-sensitive browse references command (Shift+F12)."
 
-	<commandQuerySelector: #queryBrowseReferences:>
+	<commandQuery: #queryBrowseReferences:>
 	<acceleratorKey: 'Shift+F12'>
 	self perform: self browseReferencesCommand!
 
@@ -185,8 +185,8 @@ fontSize: anInteger
 forgetSize
 	"Forget the default size for new instances of this tool."
 
-	<commandQuerySelector: #hasRememberedSize>
-	(self class)
+	<commandQuery: #hasRememberedSize>
+	self class
 		defaultSlideyPinsMap: nil;
 		defaultExtent: nil!
 
@@ -224,28 +224,28 @@ help
 historyBack
 	"Private - Return to the previously visited method."
 
-	<commandQuerySelector: #queryHistoryBack:>
+	<commandQuery: #queryHistoryBack:>
 	self historyBack: 1!
 
 historyBack: delta
 	"Private - Return to a previously visited method <integer>, delta, visits
 	in the past.."
 
-	<commandQuerySelector: #queryHistoryRewind:>
+	<commandQuery: #queryHistoryRewind:>
 	self historySkip: delta negated!
 
 historyForward
 	"Private - Return to the previously visited class which has been
 	moved back over by a jump back in time."
 
-	<commandQuerySelector: #queryHistoryForward:>
+	<commandQuery: #queryHistoryForward:>
 	self historyForward: 1!
 
 historyForward: delta
 	"Private - Return to the previously visited class which has been
 	moved back over by a jump back in time."
 
-	<commandQuerySelector: #queryHistoryFastForward:>
+	<commandQuery: #queryHistoryFastForward:>
 	self historySkip: delta!
 
 historySkip: anInteger
@@ -263,9 +263,11 @@ inspectIt
 	as class hierarchy, method browser, and workspace presenters all handle
 	it themselves."
 
+	"VW compatibility"
+
 	<acceleratorKey: 'Ctrl+I'>
-	<acceleratorKey: 'Ctrl+Q'>		"VW compatibility"
-	<commandQuerySelector: #queryInspectIt:>
+	<acceleratorKey: 'Ctrl+Q'>
+	<commandQuery: #queryInspectIt:>
 	self perform: self inspectItCommand!
 
 inspectItCommand

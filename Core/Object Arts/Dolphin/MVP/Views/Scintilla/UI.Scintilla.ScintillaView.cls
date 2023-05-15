@@ -1231,7 +1231,7 @@ charNearestPosition: aPoint
 clearAll
 	"Delete all text in the document."
 
-	<commandQuerySelector: #canCut>
+	<commandQuery: #canCut>
 	self modifyText: [self basicClearAll]!
 
 clearContainerIndicators
@@ -9455,19 +9455,19 @@ toggleFoldMargin
 toggleIndentationGuides
 	"Show or hide the indentation guides."
 
-	<commandQuerySelector: #queryToggleIndentationGuides:>
+	<commandQuery: #queryToggleIndentationGuides:>
 	self hasIndentationGuides: self hasIndentationGuides not!
 
 toggleLineEndings
 	"Show or hide the end-of-line characters."
 
-	<commandQuerySelector: #queryToggleLineEndings:>
+	<commandQuery: #queryToggleLineEndings:>
 	self hasVisibleLineEndings: self hasVisibleLineEndings not!
 
 toggleLineNumbers
 	"Show or hide the first line number margin, inverting the current state."
 
-	<commandQuerySelector: #queryToggleLineNumbers:>
+	<commandQuery: #queryToggleLineNumbers:>
 	self hasLineNumbers: self hasLineNumbers not!
 
 toggleOvertype
@@ -9482,21 +9482,21 @@ toggleOvertype
 toggleStyling
 	"Enable/disable dynamic styling of text in the receiver."
 
-	<commandQuerySelector: #queryToggleStyling:>
+	<commandQuery: #queryToggleStyling:>
 	self isStylingEnabled: self isStylingEnabled not!
 
 toggleWhitespace
 	"Show or hide the whitespace markers in the view."
 
-	<commandQuerySelector: #queryToggleWhitespace:>
-	self whitespaceVisibility: (self whitespaceVisibility == #invisible 
+	<commandQuery: #queryToggleWhitespace:>
+	self whitespaceVisibility: (self whitespaceVisibility == #invisible
 				ifTrue: [#visibleAlways]
 				ifFalse: [#invisible])!
 
 toggleWordWrap
 	"Toggle the receiver into/out-of word wrap mode."
 
-	<commandQuerySelector: #queryToggleWordWrap:>
+	<commandQuery: #queryToggleWordWrap:>
 	self wordWrap: self wordWrap not!
 
 tokenEndAt: anInteger 
@@ -9555,7 +9555,7 @@ twiddleLines
 undo
 	"Undo one action in the undo history."
 
-	<commandQuerySelector: #canUndo>
+	<commandQuery: #canUndo>
 	self cancelModes.
 	self basicUndo!
 
