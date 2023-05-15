@@ -268,10 +268,23 @@ calculateNodeExtents: aMoenTreeNode forCanvas: aCanvas
 								ifTrue: [(textInset x + nodeExtent x) @ (iconExtent y max: nodeExtent y)]
 								ifFalse: [nodeExtent]])]!
 
+canCollapse
+	^selection notNil and: [selection isExpanded not and: [self hasChildren: selection]]!
+
+canCollapseAll
+	^selection isNil or: [selection isExpanded and: [self hasChildren: selection]]!
+
+canExpand
+	^selection notNil and: [selection isExpanded and: [self hasChildren: selection]]!
+
+canExpandAll
+	^selection isNil or: [self hasChildren: selection]!
+
 collapse
 	"Collapse the selected node, hiding any children and displaying a '+' button
 	if there are any."
 
+	<commandQuery: #canCollapse>
 	Cursor wait showWhile: [self collapseNode: self selectedNode cause: #keyboard]!
 
 collapse: anObject
@@ -280,6 +293,7 @@ collapse: anObject
 	self collapseNode: (self nodeForObject: anObject) cause: #unknown!
 
 collapseAll
+	<commandQuery: #canCollapseAll>
 	Cursor wait showWhile: [self collapseAll: self selectionOrNil]!
 
 collapseAll: anObject
@@ -410,6 +424,7 @@ expand
 	"Expand the selected node, showing any children and displaying a '-' button.
 	Implementation Note: This may take a while, so display the wait cursor."
 
+	<commandQuery: #canExpand>
 	Cursor wait showWhile: [self expandNode: self selectedNode]!
 
 expand: anObject
@@ -421,6 +436,7 @@ expand: anObject
 expandAll
 	"Expand the entire tree below the current selection."
 
+	<commandQuery: #canExpandAll>
 	Cursor wait showWhile: [self expandAll: self selectionOrNil]!
 
 expandAll: anObject
@@ -1463,34 +1479,6 @@ previousSibling: aMoenTreeNode
 					siblingNode := siblingNode sibling].
 			childNode]!
 
-queryCommand: aCommandQuery
-	"Private - Enters details about a potential command for the receiver into the 
-	<CommandQuery>."
-
-	| command |
-	command := aCommandQuery commandSymbol.
-	#expand == command 
-		ifTrue: 
-			[aCommandQuery isEnabled: (selection notNil 
-						and: [selection isExpanded not and: [self hasChildren: selection]]).
-			^true].
-	#collapse == command 
-		ifTrue: 
-			[aCommandQuery isEnabled: (selection notNil 
-						and: [selection isExpanded and: [self hasChildren: selection]]).
-			^true].
-	#collapseAll == command 
-		ifTrue: 
-			[aCommandQuery isEnabled: (selection isNil 
-						or: [selection isExpanded and: [self hasChildren: selection]]).
-			^true].
-	#expandAll == command 
-		ifTrue: 
-			[aCommandQuery 
-				isEnabled: (selection isNil or: [self hasChildren: selection]).
-			^true].
-	^super queryCommand: aCommandQuery!
-
 rectanglesChanged
 	self
 		generateAbsolutes;
@@ -1821,9 +1809,13 @@ calculateExtent:!accessing!private! !
 calculateNodeExtents!geometry!private! !
 calculateNodeExtents:!geometry!private! !
 calculateNodeExtents:forCanvas:!geometry!private! !
-collapse!commands!public! !
+canCollapse!private!testing! !
+canCollapseAll!private!testing! !
+canExpand!private!testing! !
+canExpandAll!private!testing! !
+collapse!commands-actions!public! !
 collapse:!operations!public! !
-collapseAll!commands!public! !
+collapseAll!commands-actions!public! !
 collapseAll:!expanding/collapsing!public! !
 collapseNode:cause:!operations!private! !
 collapseSubtree:!operations!private! !
@@ -1837,9 +1829,9 @@ editSelectionLabel!operations!public! !
 ensureNodeVisible:!operations!private! !
 ensureSelectionVisible!helpers!public! !
 errorNoSelection!exceptions!private! !
-expand!commands!public! !
+expand!commands-actions!public! !
 expand:!operations!public! !
-expandAll!commands!public! !
+expandAll!commands-actions!public! !
 expandAll:!expanding/collapsing!public! !
 expandNode:!operations!private! !
 expandSubtree:!operations!private! !
@@ -1929,7 +1921,6 @@ parentSpacing!accessing!public! !
 parentSpacing:!accessing!public! !
 populateNode:!operations!private! !
 previousSibling:!accessing!private! !
-queryCommand:!commands!private! !
 rectanglesChanged!event handling!public! !
 refreshContents!public!updating! !
 removeNode:!event handling!public! !
