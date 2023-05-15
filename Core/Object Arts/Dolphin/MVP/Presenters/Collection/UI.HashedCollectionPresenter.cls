@@ -24,7 +24,7 @@ addItem: anObject
 	self onValueChanged.
 	listPresenter selection: anObject!
 
-canGrow
+canAddOrRemoveItems
 	"Private - Answer true if it is valid to add and remove elements of the receiver's collection"
 
 	^self isReadOnly not and: [self model canSet]!
@@ -60,11 +60,11 @@ removeItem
 !UI.HashedCollectionPresenter categoriesForMethods!
 addElement:!adding!private! !
 addItem:!operations!public! !
-canGrow!private!testing! !
+canAddOrRemoveItems!private!testing! !
 elements!accessing!public! !
 onListChanged!event handling!public! !
 onValueChanged!event handling!public! !
 removeElement:!private!removing! !
-removeItem!commands!public!removing! !
+removeItem!commands-actions!public!removing! !
 !
 

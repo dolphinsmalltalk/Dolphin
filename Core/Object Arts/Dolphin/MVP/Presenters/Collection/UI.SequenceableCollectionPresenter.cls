@@ -14,6 +14,12 @@ UI.SequenceableCollectionPresenter comment: 'SequenceableCollectionPresenter is 
 !UI.SequenceableCollectionPresenter categoriesForClass!MVP-Presenters! !
 !UI.SequenceableCollectionPresenter methodsFor!
 
+canMoveDown
+	^self canReorder and: [listPresenter selectionByIndex between: 1 and: self listModel size - 1]!
+
+canMoveUp
+	^self canReorder and: [listPresenter selectionByIndex > 1]!
+
 canReorder
 	"Private - Answer true if it is valid to reorder the receiver's collection"
 
@@ -23,6 +29,7 @@ canReorder
 moveDown
 	"Moves the current selection closer to the end of the receiver's list"
 
+	<commandQuery: #canMoveDown>
 	| index list |
 	index := listPresenter selectionByIndex.
 	list := self listModel.
@@ -36,13 +43,18 @@ moveDown
 moveFirst
 	"Moves the current selection to be the first item in the receiver's list"
 
+	<commandQuery: #canMoveUp>
 	| list index |
 	index := listPresenter selectionByIndex.
 	list := self listModel.
 	list noEventsDo: 
 			[| item |
 			item := list at: index.
-			list replaceFrom: 2 to: index with: list startingAt: 1.
+			list
+				replaceFrom: 2
+				to: index
+				with: list
+				startingAt: 1.
 			list at: 1 put: item].
 	list notifyListChanged.
 	listPresenter selectionByIndex: 1!
@@ -50,6 +62,7 @@ moveFirst
 moveLast
 	"Moves the current selection to be the last item in the receiver's list"
 
+	<commandQuery: #canMoveDown>
 	| list index last |
 	index := listPresenter selectionByIndex.
 	list := self listModel.
@@ -69,6 +82,7 @@ moveLast
 moveUp
 	"Moves the current selection closer to the head of the receiver's list"
 
+	<commandQuery: #canMoveUp>
 	| index list |
 	index := listPresenter selectionByIndex.
 	list := self listModel.
@@ -80,35 +94,16 @@ onValueChanged
 	"Private - The value has been changed in the receiver's model.
 	Transfer the value to the listModel"
 
-	listPresenter list: self value!
-
-queryCommand: query
-	"Private - Enters details about a potential command for the receiver into 
-	the <CommandQuery>, query"
-
-	| command |
-	command := query commandSymbol.
-	(#(#moveUp #moveFirst) identityIncludes: command) 
-		ifTrue: 
-			[query isEnabled: (self canReorder and: [listPresenter selectionByIndex > 1]).
-			^true].
-	(#(#moveDown #moveLast) identityIncludes: command) 
-		ifTrue: 
-			[query 
-				isEnabled: (self canReorder and: 
-							[| selected |
-							selected := listPresenter selectionByIndex.
-							selected > 0 and: [selected < self listModel size]]).
-			^true].
-	^super queryCommand: query! !
+	listPresenter list: self value! !
 !UI.SequenceableCollectionPresenter categoriesForMethods!
+canMoveDown!private!testing! !
+canMoveUp!private!testing! !
 canReorder!private!testing! !
-moveDown!commands!operations!public! !
-moveFirst!commands!operations!public! !
-moveLast!commands!operations!public! !
-moveUp!commands!operations!public! !
+moveDown!commands-actions!operations!public! !
+moveFirst!commands-actions!operations!public! !
+moveLast!commands-actions!operations!public! !
+moveUp!commands-actions!operations!public! !
 onValueChanged!event handling!private! !
-queryCommand:!commands!private! !
 !
 
 !UI.SequenceableCollectionPresenter class methodsFor!
