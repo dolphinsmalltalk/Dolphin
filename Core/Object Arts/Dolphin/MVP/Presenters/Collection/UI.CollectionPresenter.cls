@@ -19,7 +19,8 @@ Instance Variables:
 addItem
 	"Uses the receiver's addItemBlock to answer a new item to add to the collection"
 
-	self canGrow
+	<commandQuery: #canAddOrRemoveItems>
+	self canAddOrRemoveItems
 		ifTrue: 
 			[| item |
 			item := addItemBlock notNil ifTrue: [addItemBlock value] ifFalse: [self defaultAddItem].
@@ -32,12 +33,14 @@ addItem: anObject
 	self listModel add: anObject
 	!
 
-canGrow
+canAddOrRemoveItems
 	"Private - Answer true if it is valid to add and remove elements of the receiver's collection"
 
 	^self isReadOnly not and: 
-			[self model canSet 
-				and: [self model value class conformsToProtocol: #sequencedContractibleCollection]]!
+			[self model canSet and: [self model value class conformsToProtocol: #sequencedContractibleCollection]]!
+
+canRemoveItem
+	^self canAddOrRemoveItems and: [listPresenter hasSelection]!
 
 createComponents
 	"Create the presenters contained by the receiver"
@@ -151,25 +154,10 @@ promptForExpression: promptString caption: captionString
 			whileTrue.
 	^result!
 
-queryCommand: query
-	"Private - Enters details about a potential command for the receiver into 
-	the <CommandQuery>, query"
-
-	| command |
-	command := query commandSymbol.
-	(#(#addItem) identityIncludes: command) 
-		ifTrue: 
-			[query isEnabled: self canGrow.
-			^true].
-	(#(#removeItem) identityIncludes: command) 
-		ifTrue: 
-			[query isEnabled: (self canGrow and: [listPresenter hasSelection]).
-			^true].
-	^super queryCommand: query!
-
 removeItem
 	"Removes the current selection from the receiver's list"
 
+	<commandQuery: #canRemoveItem>
 	| index |
 	index:= listPresenter selectionByIndex.
 	self listModel removeAtIndex: index.
@@ -192,9 +180,10 @@ setAddItemBlock: aNiladicValuable
 
 	addItemBlock := aNiladicValuable! !
 !UI.CollectionPresenter categoriesForMethods!
-addItem!commands!public! !
+addItem!commands-actions!public! !
 addItem:!operations!public! !
-canGrow!private!testing! !
+canAddOrRemoveItems!private!testing! !
+canRemoveItem!private!testing! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
 defaultAddItem!helpers!private! !
@@ -208,8 +197,7 @@ onListChanged!event handling!private! !
 onSelectionChanged!public! !
 onValueChanged!event handling!private! !
 promptForExpression:caption:!helpers!private! !
-queryCommand:!commands!private! !
-removeItem!commands!operations!public! !
+removeItem!commands-actions!operations!public! !
 selectionOrNil!public!selection! !
 selectionOrNil:!public!selection! !
 setAddItemBlock:!accessing!public! !
