@@ -258,20 +258,15 @@ preTranslateKeyboardInput: aMSG
 
 	^tabs preTranslateKeyboardInput: aMSG!
 
-queryCommand: aCommandQuery 
-	"Update aCommandQuery to indicate how a command would be processed
-	if sent to the receiver. Answers whether the receiver recognised the command
-	as one of its own (this may be ignored by the command router). This need not
-	be supersent if the #isEnabled: is sent to the <CommandQuery> to explicitly
-	enable or disable a particular command."
+queryTabOrientation: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: self tabOrientation == aCommandQuery command arguments first!
 
-	| cmd |
-	cmd := aCommandQuery commandSymbol.
-	#viewMode: == cmd 
-		ifTrue: [aCommandQuery isChecked: self viewMode == aCommandQuery command arguments first].
-	#tabOrientation: == cmd 
-		ifTrue: [aCommandQuery isChecked: self tabOrientation == aCommandQuery command arguments first].
-	^super queryCommand: aCommandQuery!
+queryViewMode: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: self viewMode == aCommandQuery command arguments first!
 
 refreshTabs
 	"Rebuild the associated tab view to include all the managed subviews
@@ -304,6 +299,7 @@ tabOrientation: aSymbol
 	displayed. The <Symbol> argument can be one of #left, #right, #top (the default) or
 	#bottom."
 
+	<commandQuery: #queryTabOrientation:>
 	tabs tabOrientation: aSymbol!
 
 tabs
@@ -331,6 +327,7 @@ viewMode: aSymbol
 		#smallIcons
 		#largeIcons"
 
+	<commandQuery: #queryViewMode:>
 	tabs viewMode: aSymbol!
 
 wmPrint: message wParam: wParam lParam: lParam
@@ -393,7 +390,8 @@ onTabChanging:!event handling!private! !
 onViewCreated!event handling!private! !
 onZOrderChanged!event handling!private! !
 preTranslateKeyboardInput:!public! !
-queryCommand:!commands!public! !
+queryTabOrientation:!commands-queries!private! !
+queryViewMode:!commands-queries!private! !
 refreshTabs!public!updating! !
 removeSubView:!public! !
 tabOrientation!accessing-styles!public! !

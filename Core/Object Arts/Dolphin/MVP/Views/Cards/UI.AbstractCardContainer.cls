@@ -55,14 +55,24 @@ firstCard
 	associated container. It is an error to ask for the first card
 	when there is none. Answers the view that is the first card."
 
+	<commandQuery: #isNotFirstCard>
 	self cardLayout firstCard.
 	^self tabOntoCurrentCard!
+
+isNotFirstCard
+	| cards |
+	cards := self cardLayout cards.
+	^cards notEmpty and: [self currentCard ~= cards first]!
+
+isNotLastCard
+	^self currentCard ~= self cardLayout cards last!
 
 lastCard
 	"Show the card which is last in the z-order sequence of the 
 	associated container. It is an error to ask for the first card
 	when there is none. Answers the view that is the last card."
 
+	<commandQuery: #isNotLastCard>
 	self cardLayout lastCard.
 	^self tabOntoCurrentCard!
 
@@ -71,6 +81,7 @@ nextCard
 	associated container after the current card that is visible. 
 	Answers the view that is the next card or nil if there is none"
 
+	<commandQuery: #isNotLastCard>
 	self cardLayout nextCard.
 	^self tabOntoCurrentCard!
 
@@ -109,24 +120,9 @@ previousCard
 	associated container before the current card that is visible. 
 	Answers the view that is the previous card or nil if there is none"
 
+	<commandQuery: #isNotFirstCard>
 	self cardLayout previousCard.
 	^self tabOntoCurrentCard!
-
-queryCommand: aCommandQuery 
-	"Private - Enter details about a potential command for the receiver into the <CommandQuery>
-	argument."
-
-	| cmd |
-	cmd := aCommandQuery commandSymbol.
-	cmd == #nextCard 
-		ifTrue: 
-			[aCommandQuery isEnabled: self currentCard ~= self cardLayout cards last.
-			^true].
-	cmd == #previousCard 
-		ifTrue: 
-			[aCommandQuery isEnabled: self currentCard ~= self cardLayout cards first.
-			^true].
-	^super queryCommand: aCommandQuery!
 
 tabOntoCurrentCard
 	"Private - The receiver has just displayed a new card.
@@ -153,18 +149,19 @@ validateSubViewLayouts: aLayoutContext
 cardLayout!accessing!private! !
 cards!accessing!public! !
 currentCard!accessing!public! !
-cycleNextCard!commands!public! !
-cyclePreviousCard!commands!public! !
+cycleNextCard!commands-actions!public! !
+cyclePreviousCard!commands-actions!public! !
 defaultLayoutManager!initializing!private! !
 ensureSubViewVisible:!public!sub views! !
-firstCard!commands!public! !
-lastCard!commands!public! !
-nextCard!commands!public! !
+firstCard!commands-actions!public! !
+isNotFirstCard!private!testing! !
+isNotLastCard!private!testing! !
+lastCard!commands-actions!public! !
+nextCard!commands-actions!public! !
 onCardChangedFrom:to:!event handling!private! !
 onSubViewAdded:!event handling!private! !
 onViewCreated!event handling!private! !
-previousCard!commands!public! !
-queryCommand:!commands!private! !
+previousCard!commands-actions!public! !
 tabOntoCurrentCard!operations!private! !
 validateSubViewLayouts:!geometry!private! !
 !

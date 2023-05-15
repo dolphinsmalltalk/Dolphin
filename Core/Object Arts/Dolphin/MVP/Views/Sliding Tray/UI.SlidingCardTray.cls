@@ -259,6 +259,14 @@ pinStateId
 				ifTrue: [self isPinPressed ifTrue: [EBHP_PRESSED] ifFalse: [EBHP_HOT]]
 				ifFalse: [EBHP_NORMAL]]!
 
+queryTogglePin: aCommandQuery
+	slider
+		ifNil: [aCommandQuery isEnabled: false]
+		ifNotNil: 
+			[aCommandQuery
+				isEnabled: true;
+				isChecked: slider isPinned]!
+
 setSlider: aSlideyInneyOuteyThing
 	slider := aSlideyInneyOuteyThing.
 	tabs := slider tabs.
@@ -299,6 +307,7 @@ tabOrientation: aSymbol
 	self captionGeometryChanged!
 
 togglePin
+	<commandQuery: #queryTogglePin:>
 	slider ifNotNil: [slider isPinned: slider isPinned not]!
 
 trackMouseOverPin: aMouseEvent 
@@ -383,10 +392,11 @@ pinImageList!accessing!private! !
 pinInset!constants!private! !
 pinRectangle!accessing!private! !
 pinStateId!accessing!private! !
+queryTogglePin:!commands-actions!private! !
 setSlider:!initializing!private! !
 sizingEdgeInfo!helpers!private! !
 tabOrientation:!accessing-styles!public! !
-togglePin!commands!public! !
+togglePin!commands-actions!public! !
 trackMouseOverPin:!helpers!private! !
 wmNcCalcSize:wParam:lParam:!event handling-win32!private! !
 wmNcHitTest:wParam:lParam:!event handling-win32!private! !
