@@ -55,7 +55,7 @@ apply
 	"Apply the changes made to the edit to the receiver's model. Answer whether
 	any update actually occurred to the model."
 
-	<commandQuerySelector: #isTextModified>
+	<commandQuery: #isTextModified>
 	| modified |
 	modified := self isTextModified.
 	modified ifTrue: [self updateModel].
@@ -218,7 +218,7 @@ charNearestPosition: aPoint
 clearAll
 	"Clears the contents of the receiver"
 
-	<commandQuerySelector: #canCut>
+	<commandQuery: #canCut>
 	self basicClearAll!
 
 clearSelection
@@ -226,7 +226,7 @@ clearSelection
 	N.B. If there is no selection, deletes the character immediately after the
 	caret (i.e. behaves like Del key)."
 
-	<commandQuerySelector: #canCut>
+	<commandQuery: #canCut>
 	| range |
 	range := self selectionRange.
 	range isEmpty ifTrue: [self selectionStart: range start end: range start].
@@ -246,7 +246,7 @@ command: anInteger id: id
 copySelection
 	"Copy the current selection to the clipboard."
 
-	<commandQuerySelector: #hasSelection>
+	<commandQuery: #hasSelection>
 	self basicCopySelection!
 
 cueBanner
@@ -273,7 +273,7 @@ cueBanner: aString
 cutSelection
 	"Cut the current selection and place on the clipboard."
 
-	<commandQuerySelector: #canCut>
+	<commandQuery: #canCut>
 	self basicCutSelection!
 
 defaultSelectionRange
@@ -339,7 +339,7 @@ dragOver: session
 editFind
 	"Launch the common Find dialog."
 
-	<commandQuerySelector: #canFind>
+	<commandQuery: #canFind>
 	self findPrompt: self suggestedFindText!
 
 emptyUndoBuffer
@@ -400,7 +400,7 @@ extentForText: aString
 find
 	"Launch the FindText dialog in response to a generic toolbar find command."
 
-	<commandQuerySelector: #canFind>
+	<commandQuery: #canFind>
 	self editFind!
 
 find: aFindDetails range: anInterval 
@@ -428,7 +428,7 @@ findDialogClass
 findNext
 	"Hilight the next occurrence which satisfies the find operation held in findDetails."
 
-	<commandQuerySelector: #hasFindDetails>
+	<commandQuery: #hasFindDetails>
 	self findDetails isNil
 		ifTrue: [self find]
 		ifFalse: [self basicFindNext ifFalse: [Sound defaultBeep]]!
@@ -477,7 +477,7 @@ findPrompt: aString
 findReplace
 	"Launch the FindReplaceText dialog."
 
-	<commandQuerySelector: #canFindReplace>
+	<commandQuery: #canFindReplace>
 	self findReplacePrompt: self suggestedFindText!
 
 findReplacePrompt: aString
@@ -864,13 +864,13 @@ passwordCharacter: aCharacter
 pasteClipboard
 	"Paste the clipboard text into the receiver's window."
 
-	<commandQuerySelector: #canPaste>
+	<commandQuery: #canPaste>
 	self basicPasteClipboard!
 
 pastePlainText
 	"Paste the clipboard text into the receiver's window."
 
-	<commandQuerySelector: #canPaste>
+	<commandQuery: #canPaste>
 	self basicPasteClipboard!
 
 plainTextAtLine: anInteger 
@@ -927,7 +927,7 @@ preTranslateKeyboardInput: aMSG
 redo
 	"Redo the last undone edit action."
 
-	<commandQuerySelector: #canRedo>
+	<commandQuery: #canRedo>
 	self basicRedo!
 
 refreshContents
@@ -1174,7 +1174,7 @@ textRange
 undo
 	"Undo the last undoable edit action."
 
-	<commandQuerySelector: #canUndo>
+	<commandQuery: #canUndo>
 	self basicUndo!
 
 updateModel

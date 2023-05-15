@@ -2433,7 +2433,7 @@ resource_Refactoring_view!public!resources-views! !
 abstractInstanceVariables
 	"Private - Invoke the 'Abstract Instance Variable' refactoring on the currently selected variables."
 
-	<commandQuerySelector: #hasInstanceVariablesSelected>
+	<commandQuery: #hasInstanceVariablesSelected>
 	self model abstractInstanceVariables: self variables within: BrowserEnvironment new!
 
 canPushDownInstanceVariables
@@ -2469,7 +2469,7 @@ methodsToOverride
 			ifNotNil: [:selectors | selectors collect: [:each | selectedClass lookupMethod: each]]!
 
 overrideMethods
-	<commandQuerySelector: #queryOverrideMethods:>
+	<commandQuery: #queryOverrideMethods:>
 	| stream class changes name methods devsys |
 	class := self actualClass.
 	stream := String writeStream.
@@ -2511,18 +2511,18 @@ overrideMethods
 protectInstanceVariables
 	"Private - Invoke the 'Protect/Concrete Instance Variable' refactoring on the users choice of instance variables."
 
-	<commandQuerySelector: #hasInstanceVariablesSelected>
+	<commandQuery: #hasInstanceVariablesSelected>
 	self model protectInstanceVariables: self variables!
 
 pushDownInstanceVariables
 	"Invoke the 'Push Down Instance Variable' refactoring on the currently selected variables."
 
-	<commandQuerySelector: #canPushDownInstanceVariables>
+	<commandQuery: #canPushDownInstanceVariables>
 	self model pushDownInstanceVariables: self variables!
 
 pushDownMethods
 	<acceleratorKey: 'Shift+Ctrl+7'>
-	<commandQuerySelector: #canPushDownMethods>
+	<commandQuery: #canPushDownMethods>
 	self pushMethods: false!
 
 pushMethods: aBoolean
@@ -2541,7 +2541,7 @@ pushMethods: aBoolean
 
 pushUpMethods
 	<acceleratorKey: 'Shift+Ctrl+6'>
-	<commandQuerySelector: #canPushUpMethods>
+	<commandQuery: #canPushUpMethods>
 	self pushMethods: true!
 
 queryOverrideMethods: aCommandQuery
@@ -2560,7 +2560,7 @@ queryOverrideMethods: aCommandQuery
 removeInstanceVariables
 	"Invoke the 'Remove Instance Variable' refactoring on the currently selected variables."
 
-	<commandQuerySelector: #hasInstanceVariablesSelected>
+	<commandQuery: #hasInstanceVariablesSelected>
 	self model removeInstanceVariables: self variables within: self searchEnvironment!
 
 renameMethod
@@ -2606,7 +2606,7 @@ abstractClassVariables
 	same name) which has the advantage of not requiring a dialog, but which enables the user to 
 	choose only one instance variable at a time."
 
-	<commandQuerySelector: #hasClassWithStaticVariables>
+	<commandQuery: #hasClassWithStaticVariables>
 	(self chooseVariables: true caption: 'Abstract Class Variables…')
 		ifNotNil: [:varNames | self developmentSystem abstractClassVariables: varNames within: BrowserEnvironment new]!
 
@@ -2616,30 +2616,30 @@ abstractInstanceVariables
 	same name) which has the advantage of not requiring a dialog, but which enables the user to 
 	choose only one instance variable at a time."
 
-	<commandQuerySelector: #hasClassWithInstanceVariables>
+	<commandQuery: #hasClassWithInstanceVariables>
 	(self chooseVariables: false caption: 'Abstract Instance Variables…')
 		ifNotNil: [:varNames | self developmentSystem abstractInstanceVariables: varNames within: BrowserEnvironment new]!
 
 abstractVariables
-	<commandQuerySelector: #hasClassWithVariablesSelected>
+	<commandQuery: #hasClassWithVariablesSelected>
 	Sound warningBeep!
 
 addClassVariable
 	"Private - Invoke the 'Add Class Variable' refactoring to add a class variable to the
 	currently selected class."
 
-	<commandQuerySelector: #hasSingleSelection>
+	<commandQuery: #hasSingleSelection>
 	self developmentSystem addClassVariableTo: self selection!
 
 addImport
-	<commandQuerySelector: #hasSelection>
+	<commandQuery: #hasSelection>
 	self developmentSystem addImportToClasses: self selections!
 
 addInstanceVariable
 	"Private - Invoke the 'Add Instance Variable' refactoring to add an instance variable to the
 	currently selected class."
 
-	<commandQuerySelector: #queryAddInstanceVariable:>
+	<commandQuery: #queryAddInstanceVariable:>
 	self developmentSystem addInstanceVariableTo: self actualClass!
 
 buildInstVarMenu: aMenu selectors: selectors
@@ -2719,11 +2719,11 @@ canPushDownVariables
 				and: [class instanceVariableNames notEmpty or: [class instanceClass definedBindings notEmpty]]]!
 
 changeClassNamespace
-	<commandQuerySelector: #canChangeClassNamespace>
+	<commandQuery: #canChangeClassNamespace>
 	self developmentSystem changeNamespaceOfClasses: self selections!
 
 classRefactoringsMenu
-	<commandQuerySelector: #hasSelection>
+	<commandQuery: #hasSelection>
 	Sound warningBeep!
 
 cloneClass: aClass under: superClass changes: aCompositeRefactoryChange
@@ -2747,18 +2747,18 @@ convertToSibling
 	class and its current subclasses, copying common methods to the new superclass and adding 
 	#subclassResponsibility methods as necessary)."
 
-	<commandQuerySelector: #hasSingleSelection>
+	<commandQuery: #hasSingleSelection>
 	self developmentSystem convertToSibling: self selection!
 
 createClassVariableAccessors
 	"Prompt to generate compiled 'get' and 'set' accessor methods for the immediate
 	class variables of the selected class."
 
-	<commandQuerySelector: #hasClassWithStaticVariables>
+	<commandQuery: #hasClassWithStaticVariables>
 	self createVariableAccessors: true!
 
 createVariableAccessors
-	<commandQuerySelector: #hasClassWithVariablesSelected>
+	<commandQuery: #hasClassWithVariablesSelected>
 	Sound warningBeep!
 
 hasImports
@@ -2878,12 +2878,12 @@ protectInstanceVariables
 	same name) which has the advantage of not requiring a dialog, but which enables the user to 
 	choose only one instance variable at a time."
 
-	<commandQuerySelector: #hasClassWithInstanceVariables>
+	<commandQuery: #hasClassWithInstanceVariables>
 	(self chooseVariables: false caption: 'Protect Instance Variables…')
 		ifNotNil: [:varNames | self developmentSystem protectInstanceVariables: varNames]!
 
 protectVariables
-	<commandQuerySelector: #hasClassWithVariablesSelected>
+	<commandQuery: #hasClassWithVariablesSelected>
 	Sound warningBeep!
 
 pullUpClassVariables
@@ -2892,7 +2892,7 @@ pullUpClassVariables
 	same name) which has the advantage of not requiring a dialog, but which enables the user to 
 	choose only one instance variable at a time."
 
-	<commandQuerySelector: #canPullUpClassVariables>
+	<commandQuery: #canPullUpClassVariables>
 	| class pairs |
 	class := self selection.
 	pairs := self
@@ -2917,7 +2917,7 @@ pullUpInstanceVariables
 	same name) which has the advantage of not requiring a dialog, but which enables the user to 
 	choose only one instance variable at a time."
 
-	<commandQuerySelector: #canPullUpInstanceVariables>
+	<commandQuery: #canPullUpInstanceVariables>
 	| class pairs |
 	class := self actualClass.
 	pairs := self
@@ -2952,7 +2952,7 @@ pullUpVariableNamePairs: aBoolean for: class maximum: anInteger
 	^pairs!
 
 pullUpVariables
-	<commandQuerySelector: #canPullUpVariables>
+	<commandQuery: #canPullUpVariables>
 	Sound warningBeep!
 
 pushDownClassVariables
@@ -2961,7 +2961,7 @@ pushDownClassVariables
 	same name) which has the advantage of not requiring a dialog, but which enables the user to 
 	choose only one instance variable at a time."
 
-	<commandQuerySelector: #hasClassWithStaticVariables>
+	<commandQuery: #hasClassWithStaticVariables>
 	(self chooseVariables: true caption: 'Push Down Class Variables…')
 		ifNotNil: [:varNames | self developmentSystem pushDownInstanceVariables: varNames]!
 
@@ -2971,12 +2971,12 @@ pushDownInstanceVariables
 	same name) which has the advantage of not requiring a dialog, but which enables the user to 
 	choose only one instance variable at a time."
 
-	<commandQuerySelector: #canPushDownInstanceVariables>
+	<commandQuery: #canPushDownInstanceVariables>
 	(self chooseVariables: false caption: 'Push Down Instance Variables…')
 		ifNotNil: [:varNames | self developmentSystem pushDownInstanceVariables: varNames]!
 
 pushDownVariables
-	<commandQuerySelector: #canPushDownVariables>
+	<commandQuery: #canPushDownVariables>
 	Sound warningBeep!
 
 queryAddInstanceVariable: aCommandQuery
@@ -2994,12 +2994,12 @@ removeClassVariables
 	same name) which has the advantage of not requiring a dialog, but which enables the user to 
 	choose only one instance variable at a time."
 
-	<commandQuerySelector: #hasClassWithStaticVariables>
+	<commandQuery: #hasClassWithStaticVariables>
 	(self chooseVariables: true caption: 'Remove Class Variables…')
 		ifNotNil: [:pairs | self developmentSystem removeStaticVariables: pairs within: self searchEnvironment]!
 
 removeDuplicateMethods
-	<commandQuerySelector: #hasSingleSelection>
+	<commandQuery: #hasSingleSelection>
 	| class |
 	class := self actualClass.
 	(self developmentSystem removeMethodsDuplicatedInSuperclassOf: class)
@@ -3012,7 +3012,7 @@ removeDuplicateMethods
 				open]!
 
 removeImport
-	<commandQuerySelector: #hasImports>
+	<commandQuery: #hasImports>
 	self developmentSystem removeImportFromClasses: self selections!
 
 removeInstanceVariables
@@ -3021,12 +3021,12 @@ removeInstanceVariables
 	same name) which has the advantage of not requiring a dialog, but which enables the user to 
 	choose only one instance variable at a time."
 
-	<commandQuerySelector: #hasClassWithInstanceVariables>
+	<commandQuery: #hasClassWithInstanceVariables>
 	(self chooseVariables: false caption: 'Remove Instance Variables…')
 		ifNotNil: [:varNames | self developmentSystem removeInstanceVariables: varNames within: self searchEnvironment]!
 
 removeVariables
-	<commandQuerySelector: #hasClassWithVariablesSelected>
+	<commandQuery: #hasClassWithVariablesSelected>
 	Sound warningBeep! !
 !Tools.ClassSelector categoriesForMethods!
 abstractClassVariables!commands-actions!public!refactoring! !
@@ -3250,7 +3250,7 @@ renameVariable:operation:validationBlock:!operations!private!refactoring! !
 !Tools.PackageBrowserShell methodsFor!
 
 addImport
-	<commandQuerySelector: #hasClassesSelected>
+	<commandQuery: #hasClassesSelected>
 	self developmentSystem addImportToClasses: self selectedClasses!
 
 addParameter
@@ -3258,10 +3258,9 @@ addParameter
 	the selector of the method to which the parameter is added, and constrained to operate
 	only within the selected packages."
 
-	<commandQuerySelector: #hasPackages>
-	(self chooseMethodForRefactoring: 'Add Parameter in Package(s)…') 
-		ifNotNil: [:method | self addParameterTo: method]
-!
+	<commandQuery: #hasPackages>
+	(self chooseMethodForRefactoring: 'Add Parameter in Package(s)…')
+		ifNotNil: [:method | self addParameterTo: method]!
 
 addParameterTo: aCompiledMethod
 	self model addParameterToMethod: aCompiledMethod inPackages: self packages!
@@ -3271,11 +3270,11 @@ addParameterToMethod
 	'Add Parameter to Method refactoring' against a selected loose method, 
 	constrained within the selected packages."
 
-	<commandQuerySelector: #hasMethodSelected>
+	<commandQuery: #hasMethodSelected>
 	self addParameterTo: self selectedMethod!
 
 changeClassNamespace
-	<commandQuerySelector: #hasClassesSelected>
+	<commandQuery: #hasClassesSelected>
 	self developmentSystem changeNamespaceOfClasses: self selectedClasses!
 
 chooseMethodsForRefactoring: aString
@@ -3293,7 +3292,7 @@ chooseMethodsForRefactoring: aString
 	^definitions!
 
 classRefactoringsMenu
-	<commandQuerySelector: #hasPackages>
+	<commandQuery: #hasPackages>
 	Sound warningBeep!
 
 hasMethodWithArguments
@@ -3305,7 +3304,7 @@ hasRefactorableMethodSelected
 	^self hasMethodSelected!
 
 methodRefactoringsMenu
-	<commandQuerySelector: #hasPackages:>
+	<commandQuery: #hasPackages:>
 	Sound warningBeep!
 
 newMethodNamePrompter: aCompiledMethod caption: aString allowExisting: aBoolean
@@ -3394,7 +3393,7 @@ removeMethod
 	methods selected on the methods tab. It allows the selection of an arbitrary method to be
 	renamed at package scope, not just loose methods."
 
-	<commandQuerySelector: #hasMethodsSelected>
+	<commandQuery: #hasMethodsSelected>
 	| methods |
 	methods := self chooseMethodsForRefactoring: 'Safe Remove Methods from Package(s)…'.
 	methods isEmpty
@@ -3430,7 +3429,7 @@ removeParameter
 	"Private - Command to invoke the Remove Parameter to Method refactoring, but constrained to operate
 	only within the selected packages."
 
-	<commandQuerySelector: #hasPackages>
+	<commandQuery: #hasPackages>
 	| method ast arg |
 	method := self chooseMethodForRefactoring: 'Remove Parameter in Package(s)…'.
 	method isNil ifTrue: [^self].
@@ -3441,13 +3440,13 @@ removeParameter
 	arg notNil ifTrue: [methodRefactoringTool removeParameter: arg from: method]!
 
 removeParameterMenu
-	<commandQuerySelector: #hasMethodWithArguments>
+	<commandQuery: #hasMethodWithArguments>
 	Sound warningBeep!
 
 renameClass
 	"Private - Initiate in-place label edit for the selected class."
 
-	<commandQuerySelector: #hasClassSelected>
+	<commandQuery: #hasClassSelected>
 	classesPresenter view editSelectionLabel!
 
 renameLooseMethod
@@ -3472,8 +3471,8 @@ renameMethod
 	method selected on the methods tab. It allows the selection of an arbitrary method to be
 	renamed at package scope, not just loose methods."
 
-	<commandQuerySelector: #hasPackages>
-	(self chooseMethodForRefactoring: 'Rename Method in Package(s)…') 
+	<commandQuery: #hasPackages>
+	(self chooseMethodForRefactoring: 'Rename Method in Package(s)…')
 		ifNotNil: [:method | methodRefactoringTool renameMethod: method]!
 
 renameMethodReferences: aCompiledMethod
@@ -3529,7 +3528,7 @@ Are you sure that you would like to proceed?')
 			ifTrue: [self developmentSystem moveAllTempsToInnerScope: self selectionEnvironment]!
 
 removeDuplicateMethods
-	<commandQuerySelector: #canRefactor>
+	<commandQuery: #canRefactor>
 	| count pkgs |
 	pkgs := self packages.
 	count := pkgs inject: 0 into: [:sum :eachPackage | sum + eachPackage classNames size].

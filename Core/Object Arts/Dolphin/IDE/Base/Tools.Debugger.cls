@@ -105,14 +105,14 @@ acceptItCommand
 acceptMethod
 	"Private - Saves the current method source, restarting the method frame if the system options so indicate."
 
-	<commandQuerySelector: #canSaveMethod>
+	<commandQuery: #canSaveMethod>
 	self accept: self class restartOnMethodSave methodSource: self source!
 
 acceptNoRestart
 	"Private - Saves the current method source without restarting the frame (i.e. the debugged
 	process becomes out of sync. with the current method)."
 
-	<commandQuerySelector: #canSaveMethod>
+	<commandQuery: #canSaveMethod>
 	self accept: false methodSource: self source!
 
 addToCommandRoute: aCommandPolicy
@@ -127,7 +127,7 @@ allFrames
 	"Private - Include all stack frames in the call stack. There cannot possibly be any more
 	than the size of the process."
 
-	<commandQuerySelector: #hasMoreFrames>
+	<commandQuery: #hasMoreFrames>
 	self depth: process size!
 
 animatePause
@@ -250,7 +250,7 @@ browseMessageDefinitions
 	"Private - Open a new method browser on the definitions of the of the currently selected
 	stack frame's selector."
 
-	<commandQuerySelector: #hasBrowsableMethod>
+	<commandQuery: #hasBrowsableMethod>
 	self browseDefinitionsMatching: (MethodSearch newSelector: self selectedMethod selector)
 		in: self searchEnvironment!
 
@@ -263,7 +263,7 @@ browseMessages
 browseMethodInheritanceChain
 	"Private - Open a method browser displaying the definitions of the currently selected stack frame's method's selector in its superclass chain."
 
-	<commandQuerySelector: #hasOverrideSelected>
+	<commandQuery: #hasOverrideSelected>
 	self model browseMethodHierarchyFrom: self selectedMethod!
 
 browseReferences
@@ -304,7 +304,7 @@ browseSystem
 		ifFalse: [self model browseSystemOnMethod: self selectedMethod]!
 
 browseVariableClass
-	<commandQuerySelector: #hasVariableSelected>
+	<commandQuery: #hasVariableSelected>
 	localAccessor value browse!
 
 buildParseTree
@@ -478,7 +478,7 @@ defaultHelpId
 	^10881!
 
 definitionsMenu
-	<commandQuerySelector: #queryMessagesMenu:>
+	<commandQuery: #queryMessagesMenu:>
 	!
 
 depth
@@ -645,7 +645,7 @@ hasVariableSelected
 	^variablesPresenter hasSelection!
 
 implementDNUMenu
-	<commandQuerySelector: #queryImplementMenu:>
+	<commandQuery: #queryImplementMenu:>
 	!
 
 initialize
@@ -659,7 +659,7 @@ initialize
 inspectFrame
 	"Private - Open an inspector on the currently selected frame."
 
-	<commandQuerySelector: #hasFrameSelected>
+	<commandQuery: #hasFrameSelected>
 	self frame inspect!
 
 inspectItCommand
@@ -682,7 +682,7 @@ inspectReferences
 inspectVariable
 	"Private - Open an inspector on the currently selected local variable (or instance variable)."
 
-	<commandQuerySelector: #hasVariableSelected>
+	<commandQuery: #hasVariableSelected>
 	localAccessor value inspect!
 
 isAnimating
@@ -788,7 +788,7 @@ markMethodAsUnbound: oldMethod
 moreFrames
 	"Private - Increase the number of stack frames displayed in the call stack."
 
-	<commandQuerySelector: #hasMoreFrames>
+	<commandQuery: #hasMoreFrames>
 	self depth: depth + StackDepthIncrement!
 
 nameForArgument: anObject 
@@ -809,7 +809,7 @@ newLocalsTreeWithRoots: anOrderedCollection
 nilVariable
 	"Private - Nil the currently selected variable or stack slot."
 
-	<commandQuerySelector: #hasMutableVariableSelected>
+	<commandQuery: #hasMutableVariableSelected>
 	variablesPresenter model collapse: localAccessor.
 	localAccessor value: nil!
 
@@ -1147,7 +1147,7 @@ queryToggleAnimation: aCommandQuery
 		isChecked: animating!
 
 referencesMenu
-	<commandQuerySelector: #queryMessagesMenu:>
+	<commandQuery: #queryMessagesMenu:>
 	!
 
 refreshFrame
@@ -1234,7 +1234,7 @@ restartFrame
 	"Private - Unwind the currently selected frame and reset the IP so that the method starts
 	executing from its beginning again."
 
-	<commandQuerySelector: #isFrameRestartable>
+	<commandQuery: #isFrameRestartable>
 	self restartFrameWithFocus: false!
 
 restartFrame: frame 
@@ -1408,7 +1408,7 @@ resumeProcess
 	"Private - Restart the debugged process from the point at which it was last suspended. This
 	might involve being resuspended on a Semaphore."
 
-	<commandQuerySelector: #isRunnable>
+	<commandQuery: #isRunnable>
 	process debugger: nil.
 	self view close ifFalse: [process debugger: self] ifTrue: [self resume]!
 
@@ -1435,7 +1435,7 @@ returnFromMessage
 	return value for which the user is prompted (may be any expression). Also resets the
 	non-resumable flag allowing debugging to continue after a non-continuable error."
 
-	<commandQuerySelector: #canReturnFromFrame>
+	<commandQuery: #canReturnFromFrame>
 	| frame expression returnValue receiver loopCookie |
 	frame := self frame.
 	receiver := frame receiver.
@@ -1482,7 +1482,7 @@ runDebuggedProcess
 runProcess
 	"Private - Run the debugged process to the next breakpoint or step interrupt."
 
-	<commandQuerySelector: #isRunnable>
+	<commandQuery: #isRunnable>
 	self debugState: 'Run to Next Breakpoint'.
 	self breakWhen: [:iFrame | false].
 	self mainView disable.
@@ -1492,7 +1492,7 @@ runToCursor
 	"Private - Step to the last breakpoint immediately before the current caret position in the
 	source pane."
 
-	<commandQuerySelector: #canRunToCursor>
+	<commandQuery: #canRunToCursor>
 	| ipInterval method frame |
 	self debugState: 'Run to Cursor'.
 	ipInterval := self cursorIPRange.
@@ -1601,7 +1601,7 @@ setVariablesList: aSequenceableCollection
 			wasExpanded ifTrue: [variablesPresenter expand: newSelection]]!
 
 showNextStatement
-	<commandQuerySelector: #isPaused>
+	<commandQuery: #isPaused>
 	self isTopFrameSelected
 		ifTrue: [self setSourceSelection]
 		ifFalse: [stackPresenter selection: topFrame]!
@@ -1645,7 +1645,7 @@ stepInto
 	"Private - Process a command to step into the next message send. This can only be done from the top
 	stack frame."
 
-	<commandQuerySelector: #canStepInto>
+	<commandQuery: #canStepInto>
 	self debugState: 'Step Into'.
 	self step!
 
@@ -1663,18 +1663,18 @@ stepIntoBlock
 stepOut
 	"Private - Step out of the currently selected frame (i.e. return to its sender)."
 
-	<commandQuerySelector: #canStep>
+	<commandQuery: #canStep>
 	| frame |
 	self debugState: 'Step Out'.
 	frame := self frame.
 	self makeDebugFrame: frame sender.
-	self breakWhen: [:iFrame | iFrame index < frame index].		"break when returned fromselected frame"
+	self breakWhen: [:iFrame | iFrame index < frame index].	"break when returned fromselected frame"
 	self runDebuggedProcess!
 
 stepOver
 	"Private - Step to the next expression in the currently selected frame. Note that this should not stop on a breakpoint in any block homed lower in the stack."
 
-	<commandQuerySelector: #canStep>
+	<commandQuery: #canStep>
 	| frame |
 	self beRunning.
 	self debugState: 'Step over'.
@@ -1760,7 +1760,7 @@ terminateProcess
 	attached debugger, so we don't need to do anything other than just request the process
 	terminate."
 
-	<commandQuerySelector: #isProcessLive>
+	<commandQuery: #isProcessLive>
 	| mb |
 	self beAnimated: false.
 	mb := MessageBox new.
@@ -1777,7 +1777,7 @@ toggleAnimation
 	fun, rather than anything of serious utility. It is also handy for stress testing the
 	debugger."
 
-	<commandQuerySelector: #queryToggleAnimation:>
+	<commandQuery: #queryToggleAnimation:>
 	| newState |
 	newState := self isAnimating not.
 	self beAnimated: newState.
@@ -1877,7 +1877,7 @@ updateTemporaries
 userBreak
 	"Private - The user deliberately broke a process running in the debugger from the menu."
 
-	<commandQuerySelector: #canBreak>
+	<commandQuery: #canBreak>
 	self assert: [process ~~ Processor activeProcess].
 	self beAnimated: false.
 	self

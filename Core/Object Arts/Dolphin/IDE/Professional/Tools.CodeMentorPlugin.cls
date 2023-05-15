@@ -199,7 +199,7 @@ filterInRules: rules
 filterOutRule
 	"Add the current method to the filters for the current failed rule(s) so that it won't be classed as a failure next time around"
 
-	<commandQuerySelector: #queryFilterOutRule:>
+	<commandQuery: #queryFilterOutRule:>
 	self filterOutRules: self failedRule failedRules!
 
 filterOutRules: rules
@@ -521,7 +521,7 @@ queryFilterOutRule: aCommandQuery
 refresh
 	"Refresh the receiver's display after first re-running the checks"
 
-	<commandQuerySelector: #isRefreshable>
+	<commandQuery: #isRefreshable>
 	self clearFailures.
 	self startCheckerProcess.
 	isRefreshPending := false.
@@ -593,7 +593,7 @@ runLintChecks
 			postToMessageQueue!
 
 selectFilteredRules
-	<commandQuerySelector: #isFilterActive>
+	<commandQuery: #isFilterActive>
 	| filteredRules originalFilteredRules addFilters removeFilters |
 	originalFilteredRules := self filteredRules.
 	filteredRules := ChoicePrompter

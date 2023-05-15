@@ -128,7 +128,7 @@ parseContext
 					ParseContext methodClass: class environment: (model modelClassFor: env)]]!
 
 recompileDiffs
-	<commandQuerySelector: #hasMethodSelected>
+	<commandQuery: #hasMethodSelected>
 	self developmentSystem recompileDiffs: self selectedMethod!
 
 saveNewMethod: aString

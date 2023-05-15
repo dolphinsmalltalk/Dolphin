@@ -261,7 +261,7 @@ findQueryHandlersIn: aClass
 					[:annotations |
 					annotations selectorsAndArgumentsDo: 
 							[:annotationSelector :annotationArgs |
-							annotationSelector == #commandQuerySelector:
+							annotationSelector == #commandQuery:
 								ifTrue: 
 									[| querySelector argc |
 									querySelector := annotationArgs single.
@@ -283,13 +283,13 @@ new
 validateQueriesIn: aCompilationResult
 	| method affectsQueries annotations |
 	method := aCompilationResult oldMethod.
-	affectsQueries := method notNil and: [method hasAnnotation: #commandQuerySelector:].
+	affectsQueries := method notNil and: [method hasAnnotation: #commandQuery:].
 	method := aCompilationResult method.
 	(method notNil and: [(annotations := method annotations) notNil])
 		ifTrue: 
 			[| class |
 			class := method methodClass.
-			annotations withSelector: #commandQuerySelector:
+			annotations withSelector: #commandQuery:
 				do: 
 					[:each |
 					| selector |

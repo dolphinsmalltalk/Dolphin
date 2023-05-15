@@ -97,14 +97,14 @@ renameMethodArgument
 	self runTransformation: (TransformationRule renameArgument: pair key to: pair value)!
 
 replace
-	<commandQuerySelector: #hasSearchText>
+	<commandQuery: #hasSearchText>
 	self buildReplaceRule ifNotNil: [:rule | self runTransformation: rule]!
 
 replaceText
 	^replaceTextPresenter text!
 
 search
-	<commandQuerySelector: #hasSearchText>
+	<commandQuery: #hasSearchText>
 	searchTextPresenter clearStatus.
 	self buildSearchRule
 		ifNotNil: [:searchRule | (self runRule: searchRule) isNil ifFalse: [self browseRuleResults: searchRule]]!

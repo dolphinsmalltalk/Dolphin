@@ -323,7 +323,7 @@ publishedAspectsOfInstances!constants!public! !
 toggleLocalHierarchy
 	"Toggle between the entire hierarchy and showing only the current class and its subclasses."
 
-	<commandQuerySelector: #queryToggleLocalHierarchy:>
+	<commandQuery: #queryToggleLocalHierarchy:>
 	| instClass actualClass |
 	self promptToSaveChanges ifFalse: [^self].
 
@@ -355,7 +355,7 @@ queryToggleDisassembly: aCommandQuery
 toggleDisassembly
 	"Private - Switch between source/disassembly modes."
 
-	<commandQuerySelector: #queryToggleDisassembly:>
+	<commandQuery: #queryToggleDisassembly:>
 	self beDisassembled: self isDisassembled not.
 	sourcePresenter
 		isReadOnly: self isDisassembled;
@@ -442,7 +442,7 @@ updateHelpMenus!private!utilities! !
 !Tools.SmalltalkToolShell methodsFor!
 
 addToNewIdeaSpace
-	<commandQuerySelector: #canMoveToIdeaSpace>
+	<commandQuery: #canMoveToIdeaSpace>
 	^self class addToNewIdeaSpace: self!
 
 browseSystem
@@ -460,7 +460,7 @@ destroy
 	^super destroy!
 
 dragToolToIdeaSpace
-	<commandQuerySelector: #canMoveToIdeaSpace>
+	<commandQuery: #canMoveToIdeaSpace>
 	^self class dragToolToIdeaSpace: self!
 
 exit
@@ -500,7 +500,7 @@ dragToolToIdeaSpace:!public! !
 !Tools.SmalltalkWorkspaceDocument methodsFor!
 
 addToNewIdeaSpace
-	<commandQuerySelector: #canMoveToIdeaSpace>
+	<commandQuery: #canMoveToIdeaSpace>
 	^IdeaSpaceShell addToNewIdeaSpace: self!
 
 browseSources
@@ -518,7 +518,7 @@ destroy
 	^super destroy!
 
 dragToolToIdeaSpace
-	<commandQuerySelector: #canMoveToIdeaSpace>
+	<commandQuery: #canMoveToIdeaSpace>
 	^IdeaSpaceShell dragToolToIdeaSpace: self!
 
 exit

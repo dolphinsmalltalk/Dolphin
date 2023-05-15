@@ -132,7 +132,7 @@ addMethod: method toCategory: target
 addMethodCategory
 	"Private - Add a new method category to the receiver's category pane."
 
-	<commandQuerySelector: #hasClassSelected>
+	<commandQuery: #hasClassSelected>
 	| actualClass newCategory |
 	actualClass := self actualClass.
 	newCategory := (CategoryPrompter choices: MethodCategory allMethodCategories
@@ -144,7 +144,7 @@ addMethodCategory
 addMethodProtocol
 	"Private - Add a new <MethodProtocol> to the selected class in the receiver."
 
-	<commandQuerySelector: #hasClassSelected>
+	<commandQuery: #hasClassSelected>
 	| actualClass newProtocol protocols |
 	actualClass := self actualClass.
 	protocols := MethodProtocol allMethodProtocols asSortedCollection: [:a :b | a name < b name].
@@ -194,7 +194,7 @@ applyOptions
 	self createPlugins!
 
 browseClassHierarchy
-	<commandQuerySelector: #hasClassSelected>
+	<commandQuery: #hasClassSelected>
 	self developmentSystem browseHierarchy: self actualClass!
 
 browseContainingText
@@ -217,7 +217,7 @@ browseHierarchyCommand
 browseInstVarReferences
 	"Browse methods that reference any of the selected instance variables of the selected class."
 
-	<commandQuerySelector: #hasInstanceVariablesSelected>
+	<commandQuery: #hasInstanceVariablesSelected>
 	self model
 		browseReferencesToInstVars: (self variables collect: [:each | each value])
 		inHierarchyOf: self actualClass
@@ -239,7 +239,7 @@ browseMessageDefinitionsIn: aBrowserEnvironment
 	"Private - Prompt for a selector and open a method browser displaying all definitions of
 	that selector in the specified <BrowserEnvironment>."
 
-	<commandQuerySelector: #hasClassSelected>
+	<commandQuery: #hasClassSelected>
 	(self developmentSystem promptForDefinitionsOf: '' in: aBrowserEnvironment)
 		ifNotNil: [:search | self browseDefinitionsMatching: search in: aBrowserEnvironment]!
 
@@ -247,20 +247,20 @@ browseMessageReferencesIn: aBrowserEnvironment
 	"Private - Prompt for a selector and open a method browser displaying the references to that
 	selector from methods defined in the specified <BrowserEnvironment>."
 
-	<commandQuerySelector: #hasClassSelected>
+	<commandQuery: #hasClassSelected>
 	(self developmentSystem promptForReferencesTo: '' in: aBrowserEnvironment)
 		ifNotNil: [:search | self browseReferencesMatching: search in: aBrowserEnvironment]!
 
 browseMethodCategory
 	"Private - Browse all the methods which are in the currently selected category."
 
-	<commandQuerySelector: #hasMethodCategoriesSelected>
+	<commandQuery: #hasMethodCategoriesSelected>
 	self model browseMethodCategories: self categories in: self searchEnvironment!
 
 browseOverriddenMethod
 	"Reposition the browser to the method which the currently selected method is overridding."
 
-	<commandQuerySelector: #hasOverrideSelected>
+	<commandQuery: #hasOverrideSelected>
 	| method |
 	method := self method.
 	self method: (method methodClass superclass lookupMethod: method selector)!
@@ -282,7 +282,7 @@ browseSelectorsInProtocol
 	implemented in the receiver and its superclasses, with all those which are
 	part of the protocol selected."
 
-	<commandQuerySelector: #hasMutableProtocolSelected>
+	<commandQuery: #hasMutableProtocolSelected>
 	| protocol newSelectors oldSelectors added removed |
 	protocol := self protocols first.
 	oldSelectors := protocol selectors.
@@ -423,7 +423,7 @@ classMethodFilter
 clearSelection
 	"Private - Remove the selected object from the system"
 
-	<commandQuerySelector: #queryDeleteIt:>
+	<commandQuery: #queryDeleteIt:>
 	self perform: self deleteItCommand!
 
 createAccessors
@@ -432,8 +432,8 @@ createAccessors
 	Accessors' refactoring (which is undoable), otherwise it uses the base Dolphin
 	implementation (which is not undoable)."
 
-	<commandQuerySelector: #hasInstanceVariablesSelected>
-	self model 
+	<commandQuery: #hasInstanceVariablesSelected>
+	self model
 		createVariableAccessors: self variables
 		classVariables: false
 		within: self searchEnvironment!
@@ -794,7 +794,7 @@ hierarchyOfCategory: aMethodCategory
 	^(categoriesPresenter model withAllChildren: aMethodCategory) reject: [:each | each isIntermediate]!
 
 historyClear
-	<commandQuerySelector: #hasHistory>
+	<commandQuery: #hasHistory>
 	history clear!
 
 historySkip: anInteger
@@ -828,7 +828,7 @@ inspectCollection: aCollection
 	(aCollection size = 1 ifTrue: [aCollection first] ifFalse: [aCollection]) inspect!
 
 inspectInstanceVariables
-	<commandQuerySelector: #hasInstanceVariablesSelected>
+	<commandQuery: #hasInstanceVariablesSelected>
 	| vars |
 	vars := self variables.
 	self inspectCollection: (vars isEmpty ifTrue: [variablesPresenter list asArray] ifFalse: [vars])!
@@ -847,7 +847,7 @@ inspectItCommand
 	^nil!
 
 inspectMethodCategories
-	<commandQuerySelector: #hasMethodCategoriesSelected>
+	<commandQuery: #hasMethodCategoriesSelected>
 	self inspectCollection: self categories!
 
 inspectMethodProtocols
@@ -1013,7 +1013,7 @@ modifiedModel: aValueHolder
 newMethod
 	"Sets the receiver up for creating a new method"
 
-	<commandQuerySelector: #hasClassSelected>
+	<commandQuery: #hasClassSelected>
 	methodBrowserPresenter newMethod!
 
 onBrowserCardChangedFrom: previousView to: currentView
@@ -1917,7 +1917,7 @@ recordMethodVisit
 		ifFalse: [history current: method]!
 
 reformatAll
-	<commandQuerySelector: #hasClassSelected>
+	<commandQuery: #hasClassSelected>
 	| env |
 	env := classesPresenter selectionEnvironment.
 	(MessageBox new
@@ -1939,7 +1939,7 @@ removeMethodCategory
 	"Private - Remove the currently selected category without deleting any
 	of the methods."
 
-	<commandQuerySelector: #hasNonVirtualCategorySelected>
+	<commandQuery: #hasNonVirtualCategorySelected>
 	| actualClass catModel args |
 	actualClass := self actualClass.
 	args := { actualClass. self category }.
@@ -1957,16 +1957,14 @@ removeMethodCategory
 removeMethodProtocol
 	"Private - Remove the currently selected protocols from the class."
 
-	<commandQuerySelector: #canRemoveMethodProtocols>
-	self protocols do: [:p |
-		self model removeClass: self actualClass fromProtocol: p ].
-!
+	<commandQuery: #canRemoveMethodProtocols>
+	self protocols do: [:p | self model removeClass: self actualClass fromProtocol: p]!
 
 removeMethodsInCategory
 	"Private - Remove all of the methods in the currently selected category. As this is rather
 	drastic the user will be prompted."
 
-	<commandQuerySelector: #canRemoveMethodsInCategory>
+	<commandQuery: #canRemoveMethodsInCategory>
 	| classEnvironment categoryEnvironment searchEnvironment mb |
 	searchEnvironment := self searchEnvironment.
 	classEnvironment := searchEnvironment forClasses: { self actualClass }.
@@ -1993,7 +1991,7 @@ removeMethodsInProtocol
 	"Private - Remove all of the methods in the currently selected protocol.
 	As this is pretty drastic we give the user a second chance."
 
-	<commandQuerySelector: #hasProtocolsSelected>
+	<commandQuery: #hasProtocolsSelected>
 	| actualClass |
 	actualClass := self actualClass.
 	self protocols do: 
@@ -2016,11 +2014,11 @@ removePlugin: aClassBrowserPlugin
 renameInstanceVariable
 	"Private - Initiate a rename of the  first selected instance variable."
 
-	<commandQuerySelector: #hasInstanceVariableSelected>
+	<commandQuery: #hasInstanceVariableSelected>
 	variablesPresenter view editSelectionLabel!
 
 renameIt
-	<commandQuerySelector: #queryRenameItCommand:>
+	<commandQuery: #queryRenameItCommand:>
 	<acceleratorKey: 'F2'>
 	self perform: self renameItCommand!
 
@@ -2038,7 +2036,7 @@ renameItCommand
 renameMethodCategory
 	"Private - Prompter for a new name for the current category, and rename it."
 
-	<commandQuerySelector: #hasNonVirtualCategorySelected>
+	<commandQuery: #hasNonVirtualCategorySelected>
 	| originalCategory newName actualClass |
 	originalCategory := self category.
 	actualClass := self actualClass.
@@ -2081,7 +2079,7 @@ renameMethodCategory: aMethodCategory to: aString
 renameMethodCategoryInPlace
 	"Private - Initiate an in-place rename of the currently selected category node."
 
-	<commandQuerySelector: #hasNonVirtualCategorySelected>
+	<commandQuery: #hasNonVirtualCategorySelected>
 	categoriesPresenter selectableItems view editSelectionLabel!
 
 renameMethodProtocol
@@ -2103,19 +2101,19 @@ resetForFoundClass: class
 saveDefinition
 	"Private - Save the class definition currently in the definition window"
 
-	<commandQuerySelector: #hasClassSelected>
-
+	<commandQuery: #hasClassSelected>
 	| wasModified |
 	wasModified := definitionPresenter isModified.
 	definitionPresenter isModified: false.
-	#todo. "Use change objects so this is undoable/redoable."
+	#todo.	"Use change objects so this is undoable/redoable."
+	
 	[definitionPresenter evaluateRange: (1 to: definitionPresenter textLength)
 		ifFail: 
 			[definitionPresenter isModified: wasModified.
-			^self]] 
+			^self]]
 			on: Error
 			do: 
-				[:e | 
+				[:e |
 				definitionPresenter isModified: wasModified.
 				e okCancel]!
 
@@ -2275,14 +2273,14 @@ systemModel
 toggleFilterObjectMethods
 	"Toggle between showing <Object> methods or not"
 
-	<commandQuerySelector: #queryFilterObjectMethods:>
+	<commandQuery: #queryFilterObjectMethods:>
 	self isFilteringObjectMethods: self isFilterObjectMethods not.
 	self onClassSelected!
 
 toggleProtocolReadOnly
 	"Toggle the currenty method protocol between read-only and updatable status."
 
-	<commandQuerySelector: #queryToggleProtocolReadOnly:>
+	<commandQuery: #queryToggleProtocolReadOnly:>
 	| prot |
 	prot := self protocols first.
 	prot isReadOnly: prot isReadOnly not!
@@ -2290,7 +2288,7 @@ toggleProtocolReadOnly
 toggleShowInheritedMethods
 	"Toggle between showing inherited methods or not"
 
-	<commandQuerySelector: #queryToggleShowInheritedMethods:>
+	<commandQuery: #queryToggleShowInheritedMethods:>
 	self isShowingInheritedMethods: self isShowInheritedMethods not.
 	self onClassSelected!
 
