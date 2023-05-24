@@ -100,7 +100,8 @@ testDynamicSelectors
 	self assert: _FPIEEE_RECORD dynamicSelectors single equals: #status.
 	self assert: _FPIEEE_VALUE dynamicSelectors size equals: 0.
 	subject := Structure newAnonymousSubclass.
-	subject initializeTemplate.
+	subject ensureDefined.
+	self assert: subject dynamicSelectors isEmpty.
 	subject
 		beUncompiled;
 		defineField: #writeOnly type: UInt32Field writeOnly;
