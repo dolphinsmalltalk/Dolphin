@@ -17,6 +17,10 @@ classToTest
 oldDolphinVersionsForStbUpgrade
 	^1 to: 4!
 
+testRange
+	presenter range: (50 to: 32768).
+	self assert: presenter range equals: (50 to: 32768)!
+
 verifyUpgradedView: anInteger
 	| view |
 	super verifyUpgradedView: anInteger.
@@ -29,6 +33,7 @@ vuFile
 !UI.Tests.ProgressBarTest categoriesForMethods!
 classToTest!helpers!private! !
 oldDolphinVersionsForStbUpgrade!constants!private! !
+testRange!public!unit tests! !
 verifyUpgradedView:!helpers!private! !
 vuFile!constants!private! !
 !

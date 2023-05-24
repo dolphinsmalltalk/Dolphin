@@ -74,7 +74,7 @@ UI.ValueConvertingControlView
 	classVariableNames: ''
 	imports: #(#{OS.ProgressBarConstants})
 	classInstanceVariableNames: ''
-	classConstants: { 'ValidRange' -> (16r0 to: 16rFFFF) }!
+	classConstants: {}!
 
 "Loose Methods"!
 

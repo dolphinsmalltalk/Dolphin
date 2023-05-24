@@ -6,7 +6,7 @@ UI.ValueConvertingControlView
 	classVariableNames: ''
 	imports: #(#{OS.ProgressBarConstants})
 	classInstanceVariableNames: ''
-	classConstants: { 'ValidRange' -> (16r0 to: 16rFFFF) }!
+	classConstants: {}!
 UI.ProgressBar guid: (Core.GUID fromString: '{87b4c737-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.ProgressBar comment: 'ProgressBar is a <valueView> implementing the Windows "msctls_progress32" common control. The <valueModel> associated with a ProgressBar must always yield an <integer> value when mapped through the installed type converter. A ProgressBar will normally be used in conjunction with a <NumberPresenter>.
 
@@ -80,6 +80,15 @@ incrementBy: anInteger
 		sendMessage: PBM_DELTAPOS
 		wParam: anInteger asParameter!
 
+isMarquee
+	^self baseStyleAllMask: PBS_MARQUEE!
+
+isMarquee: aBoolean 
+	self 
+		baseStyleMask: PBS_MARQUEE
+		set: aBoolean
+		recreateIfChanged: false!
+
 isSmooth
 	^self baseStyleAllMask: PBS_SMOOTH!
 
@@ -97,34 +106,33 @@ onViewCreated
 range
 	"Answer the current bar range of the receiver."
 
-	| range |
-	self noRedrawDo: 
-			[range := self range: (0 to: 100).
-			self range: range].
-	^range!
+	^(self sendMessage: PBM_GETRANGE wParam: 1) to: (self sendMessage: PBM_GETRANGE wParam: 0)!
 
 range: anIntegerInterval
 	"Set the receiver's bar range to anIntegerInterval. Answer the previous range of nil
 	if there was not one."
 
-	| answer |
-	(anIntegerInterval start >= ValidRange start and: [anIntegerInterval stop <= ValidRange stop])
-		ifFalse: 
-			[InvalidArgumentError
-				signal: '<1p> is outside [<2p>..<3p>]' << { anIntegerInterval. ValidRange start. ValidRange stop }
-				with: 'anIntegerInterval'].
-	answer := self
-				sendMessageNz: PBM_SETRANGE
-				wParam: 0
-				lpParam: (anIntegerInterval start asInteger bitOr: (anIntegerInterval stop asInteger bitShift: 16)).
+	| start stop |
+	start := anIntegerInterval start asInteger.
+	stop := anIntegerInterval stop asInteger.
+	stop <= start
+		ifTrue: 
+			[InvalidArgumentError signal: 'Invalid range <1p>' << { anIntegerInterval } with: 'anIntegerInterval'].
+	self
+		sendMessageNz: PBM_SETRANGE32
+		wParam: anIntegerInterval start asInteger
+		lpParam: anIntegerInterval stop.
 	self refreshContents.
-	^answer lowWord to: answer highWord!
+	^self range!
 
 setControlBackcolor: aColor 
 	self 
 		sendMessage: CCM_SETBKCOLOR
 		wParam: 0
 		lParam: aColor asCOLORREF!
+
+startMarquee
+	self sendMessage: PBM_SETMARQUEE wParam: 1!
 
 state
 	"Private - Answer a MessageSequence which, when replayed, will restore the receiver 
@@ -135,7 +143,10 @@ state
 					receiver: self
 					selector: #range:
 					argument: self range);
-		yourself! !
+		yourself!
+
+stopMarquee
+	self sendMessage: PBM_SETMARQUEE wParam: 0! !
 !UI.ProgressBar categoriesForMethods!
 backcolorChanged!helpers!private! !
 barPosition!accessing!private! !
@@ -146,13 +157,17 @@ displayValue!private!updating! !
 displayValue:!private!updating! !
 forecolor:!accessing!public! !
 incrementBy:!positioning!public! !
-isSmooth!accessing-styles!public!updating! !
-isSmooth:!accessing-styles!public!updating! !
+isMarquee!accessing-styles!public! !
+isMarquee:!accessing-styles!public! !
+isSmooth!accessing-styles!public! !
+isSmooth:!accessing-styles!public! !
 onViewCreated!accessing!public! !
 range!accessing!public! !
 range:!accessing!public! !
 setControlBackcolor:!accessing!private! !
+startMarquee!positioning!public! !
 state!accessing!private! !
+stopMarquee!positioning!public! !
 !
 
 !UI.ProgressBar class methodsFor!
