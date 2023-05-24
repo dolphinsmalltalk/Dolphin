@@ -35,9 +35,13 @@ showDialogWithButtons
 	dialogButtonB := dialog addSubView: PushButton new!
 
 showShellWithButtons
-	shell := ShellView show.
+	shell := ShellView new.
+	shell
+		createAt: 100 @ 100 extent: 500 @ 75;
+		layoutManager: FlowLayout new.
 	shellButtonA := shell addSubView: PushButton new.
-	shellButtonB := shell addSubView: PushButton new!
+	shellButtonB := shell addSubView: PushButton new.
+	shell show!
 
 tearDown
 	shell
@@ -53,6 +57,7 @@ tearDown
 testCalculateExtent
 	"Test that checkboxes are able to resize to fit their text (and button). We really don't need to verify this precisely as we aren't testing the control's behaviour, rather that it does size to fit."
 
+	<nocreate>
 	| actualText textWidth |
 	self showShellWithButtons.
 	shellButtonA usePreferredExtent: true.
@@ -72,10 +77,12 @@ testCalculateExtent
 	self assert: (shellButtonA extent x between: textWidth and: textWidth + 25)!
 
 testDialogDefaultButtons
+	<nocreate>
 	self showDialogWithButtons.
 	self tryDefaultButtonsA: dialogButtonA B: dialogButtonB!
 
 testShellDefaultButtons
+	<nocreate>
 	self showShellWithButtons.
 	self tryDefaultButtonsA: shellButtonA B: shellButtonB!
 
