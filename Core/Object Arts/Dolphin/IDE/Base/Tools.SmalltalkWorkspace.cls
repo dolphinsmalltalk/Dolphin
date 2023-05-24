@@ -185,6 +185,12 @@ browseReferencesCommand
 cancelAutoCompletion
 	self view cancelAutoCompletion!
 
+canReformatComment
+	^self isEditable and: [self view styleUnderCaret name == #comment]!
+
+canReformatSource
+	^self isEditable and: [self textLength > 0]!
+
 caretPosition: anInteger 
 	self view caretPosition: anInteger!
 
@@ -192,6 +198,7 @@ chooseNamespaces
 	"Display a ListPrompter to allow the user to choose the evaluation pools associated with the
 	receiver"
 
+	<commandQuery: #isEditable>
 	ChoicePrompter
 		on: (self aspectValue: #namespaces)
 		multipleChoices: (SmalltalkSystem current availableNamespaces
@@ -255,6 +262,7 @@ classForVariable: aStVariable
 clear
 	"Remove all contents in the receiver's view"
 
+	<commandQuery: #isEditable>
 	self view clear.
 	self newVariablePool!
 
@@ -273,6 +281,7 @@ cloneNew
 	contain the same contents and have the same evaluation context and workspace pools. Answers
 	the clone"
 
+	<commandQuery: #isEditable>
 	| clone |
 	clone := SmalltalkSystem current newWorkspace.
 	clone workspace
@@ -391,6 +400,7 @@ completeWord
 	The list will be displayed unless the number of choices is far too large or there are none
 	matching, in which case a warning beep will sound."
 
+	<commandQuery: #isEditable>
 	<acceleratorKey: 'Ctrl+.'>
 	| last styleName |
 	last := view caretPosition - 1.
@@ -494,6 +504,7 @@ displayIt
 	"Evaluate the currently selected text (or the current line if there is no selection). 
 	Display the result at the current insert point (i.e. immediately after the selection)."
 
+	<commandQuery: #isEditable>
 	<acceleratorKey: 'Ctrl+D'>
 	self evaluateAndDisplay: [:obj | obj displayString: self developmentSystem displayItLocale]!
 
@@ -649,6 +660,7 @@ evaluationContext: anObject
 fileItIn
 	"Files in the current selection in chunk format"
 
+	<commandQuery: #hasSelection>
 	^(self chunkFilerClass on: self selection readStream) fileIn!
 
 findDetails
@@ -848,6 +860,7 @@ inspectWorkspacePool
 	"Private - Open an inspector on the Workspace Pool containing the receiver's shared
 	variables."
 
+	<commandQuery: #isEditable>
 	self workspacePool inspect!
 
 isAutoCompletionCaseInsensitive
@@ -1088,6 +1101,7 @@ printIt
 	(i.e. show the printString of) the result at the current insert point (i.e. immediately
 	after the selection)."
 
+	<commandQuery: #isEditable>
 	<acceleratorKey: 'Ctrl+P'>
 	self evaluateAndDisplay: [:obj | obj printString]!
 
@@ -1145,56 +1159,29 @@ publishedAspects
 		add: self class indicatorStylesAspect;
 		yourself!
 
-queryCommand: aCommandQuery
-	"Private - Enter details about a potential command for the receiver into the 
-	<CommandQuery>."
+queryToggleAutoCompletion: aCommandQuery
+	(self isReadOnly not and: [self hasSmalltalkStyler and: [self isSyntaxColoringEnabled]])
+		ifTrue: 
+			[aCommandQuery
+				isChecked: self isAutoCompletionEnabled;
+				isEnabled: true]
+		ifFalse: 
+			[aCommandQuery
+				isChecked: false;
+				isEnabled: false]!
 
-	| selector |
-	selector := aCommandQuery commandSymbol.
-	#fileItIn == selector
+queryToggleStyling: aCommandQuery
+	self hasSmalltalkStyler
 		ifTrue: 
-			[aCommandQuery isEnabled: self hasSelection.
-			^true].
-	#reformatSource == selector
-		ifTrue: 
-			[aCommandQuery isEnabled: self isEditable.
-			^true].
-	#reformatComment == selector
-		ifTrue: 
-			[aCommandQuery isEnabled: (self isEditable and: [self view styleUnderCaret name == #comment]).
-			^true].
-	(#(#chooseNamespaces #inspectWorkspacePool #cloneNew #clear #displayIt #printIt #completeWord)
-		identityIncludes: selector)
-			ifTrue: 
-				[aCommandQuery isEnabled: self isReadOnly not.
-				^true].
-	#toggleAutoCompletion == selector
-		ifTrue: 
-			[(self isReadOnly not and: [self hasSmalltalkStyler and: [self isSyntaxColoringEnabled]])
-				ifTrue: 
-					[aCommandQuery
-						isChecked: self isAutoCompletionEnabled;
-						isEnabled: true]
-				ifFalse: 
-					[aCommandQuery
-						isChecked: false;
-						isEnabled: false].
-			^true].
-	#toggleStyling == selector
-		ifTrue: 
-			[self hasSmalltalkStyler
-				ifTrue: 
-					[aCommandQuery
-						isEnabled: true;
-						isChecked: self isSyntaxColoringEnabled]
-				ifFalse: 
-					[aCommandQuery
-						isEnabled: false;
-						isChecked: false].
-			"Ensure the command is not handled by the view"
-			aCommandQuery receiver: self.
-			^true].
-	^super queryCommand: aCommandQuery!
+			[aCommandQuery
+				isEnabled: true;
+				isChecked: self isSyntaxColoringEnabled]
+		ifFalse: 
+			[aCommandQuery
+				isEnabled: false;
+				isChecked: false].
+	"Ensure the command is not handled by the view"
+	aCommandQuery receiver: self!
 
 rangeToCompleteAt: anInteger 
 	^(self isWhitespaceAt: anInteger) 
@@ -1208,6 +1195,7 @@ reformatComment
 	"Rewrap the comment under the caret so that its lines start at the position of the 
 	comment's opening quote, and are no longer than the current  of the workspace view."
 
+	<commandQuery: #canReformatComment>
 	| range |
 	range := view tokenRangeAt: view caretPosition.
 	self wrapLinesInRange: range indent: (view columnFromPosition: range start)!
@@ -1216,6 +1204,7 @@ reformatSource
 	"Reformat and syntax colour the selected range of source in the receiver as if it is an expression. 
 	Attempts to maintain the base indentation of the first selected line."
 
+	<commandQuery: #canReformatSource>
 	| source formatter reformatted expr tabs |
 	source := self hasSelection ifTrue: [self selection] ifFalse: [self text].
 	tabs := (source findFirst: [:each | each ~~ Character tab]) - 1.
@@ -1655,9 +1644,11 @@ tipForVariable: aStVariable
 	^aStVariable infoTip!
 
 toggleAutoCompletion
+	<commandQuery: #queryToggleAutoCompletion:>
 	^self isAutoCompletionEnabled: self isAutoCompletionEnabled not!
 
 toggleStyling
+	<commandQuery: #queryToggleStyling:>
 	^self view toggleStyling!
 
 tokenBefore: anInteger 
@@ -1712,16 +1703,18 @@ applyOptions!operations!options!private! !
 areVariableTipsEnabled!public!testing! !
 areVariableTipsEnabled:!public!testing! !
 autoComplete:at:maxItems:!autocompletion!helpers!private! !
-basicFindNext!commands!public! !
-basicInspectIt!commands!public! !
-browseDefinitions!commands!public! !
-browseDefinitionsCommand!commands!private! !
-browseIt!commands!public! !
-browseReferences!commands!public! !
-browseReferencesCommand!commands!private! !
+basicFindNext!commands-actions!public! !
+basicInspectIt!commands-actions!public! !
+browseDefinitions!commands-actions!public! !
+browseDefinitionsCommand!commands-actions!private! !
+browseIt!commands-actions!public! !
+browseReferences!commands-actions!public! !
+browseReferencesCommand!commands-actions!private! !
 cancelAutoCompletion!helpers!private! !
+canReformatComment!commands-queries!private! !
+canReformatSource!commands-queries!private! !
 caretPosition:!accessing!caret!public! !
-chooseNamespaces!commands!public! !
+chooseNamespaces!commands-actions!public! !
 chunkFilerClass!constants!public! !
 classForIdentifier:!autocompletion!helpers!private! !
 classForToken:!autocompletion!helpers!private! !
@@ -1729,50 +1722,50 @@ classForVariable:!public! !
 clear!operations!public! !
 clearErrors!operations!public! !
 clearStatus!operations!public! !
-cloneNew!commands!public! !
+cloneNew!commands-actions!public! !
 compilationErrors!accessing!private! !
-compileAll!commands!public! !
+compileAll!commands-actions!public! !
 compileAllIfFail:!helpers!private! !
-compileIt!commands!public! !
+compileIt!commands-actions!public! !
 compileItIfFail:!helpers!private! !
 compileRange:ifFail:!helpers!private! !
 compileRange:ifFail:debug:!helpers!private! !
 compilerNotification:offset:!helpers!private! !
-completeWord!autocompletion!commands!public! !
+completeWord!autocompletion!commands-actions!public! !
 completeWordAt:with:!autocompletion!helpers!private! !
 completionListSortBlock!autocompletion!constants!private! !
 completionStringFor:at:!autocompletion!helpers!private! !
-copySelection!commands!public! !
+copySelection!commands-actions!public! !
 createComponents!initializing!private! !
 createSchematicWiring!initializing!private! !
-debugIt!commands!public! !
+debugIt!commands-actions!public! !
 debugItIfFail:!helpers!private! !
 defaultCompilerFlags!constants!private! !
 defaultParseContext!accessing!autocompletion!private! !
 defaultStylerClass!constants!private! !
 developmentSystem!constants!private! !
-displayIt!commands!public! !
+displayIt!commands-actions!public! !
 dragOver:!drag & drop!public! !
 drop:!drag & drop!public! !
 dropObjectRef:!helpers!private! !
 errorModel!accessing!public! !
 errorModel:!accessing!public! !
-evaluateAndDisplay:!commands!public! !
-evaluateIt!commands!public! !
+evaluateAndDisplay:!commands-actions!public! !
+evaluateIt!commands-actions!public! !
 evaluateItIfFail:!helpers!private! !
 evaluateItIfFail:debug:!helpers!private! !
 evaluateRange:ifFail:!helpers!private! !
 evaluateRange:ifFail:debug:!helpers!private! !
 evaluationContext!accessing!public! !
 evaluationContext:!accessing!public! !
-fileItIn!commands!public! !
+fileItIn!commands-actions!public! !
 findDetails!accessing!public! !
 findDetails:!accessing!public! !
 firstError!helpers!private! !
 getCompletionSignatureFor:at:!autocompletion!helpers!private! !
 hasErrors!public!testing! !
 hasSelection!public!testing! !
-hasSmalltalkStyler!commands!private! !
+hasSmalltalkStyler!commands-actions!private! !
 highlightCompilationErrors:!helpers!private! !
 identifierAt:!helpers!private! !
 identifiersStartingWith:maxItems:!autocompletion!helpers!private! !
@@ -1781,8 +1774,8 @@ indicatorStyles:!accessing!public! !
 initialize!initializing!private! !
 insertCompletion:at:!autocompletion!helpers!private! !
 insertKeywordCompletion:startingAt:!autocompletion!helpers!private! !
-inspectIt!commands!public! !
-inspectWorkspacePool!commands!private! !
+inspectIt!commands-actions!public! !
+inspectWorkspacePool!commands-actions!private! !
 isAutoCompletionCaseInsensitive!public!testing! !
 isAutoCompletionEnabled!autocompletion!private!testing! !
 isAutoCompletionEnabled:!accessing!autocompletion!private! !
@@ -1814,21 +1807,22 @@ onRightButtonReleased:!event handling!public! !
 onTimerTick:!event handling!private! !
 onTipTextRequired:!event handling!private! !
 onViewOpened!event handling!private! !
-parseContext!commands!public! !
+parseContext!commands-actions!public! !
 plainText!accessing!public! !
 plainTextRange:!accessing!public! !
-printIt!commands!public! !
+printIt!commands-actions!public! !
 prompt:toSaveChanges:!helpers!private! !
 promptForVariableName:!helpers!private! !
 publishedAspects!public! !
-queryCommand:!commands!private! !
+queryToggleAutoCompletion:!commands-actions!commands-queries!private! !
+queryToggleStyling:!commands-actions!commands-queries!private! !
 rangeToCompleteAt:!autocompletion!helpers!private! !
-reformatComment!commands!public! !
-reformatSource!commands!public! !
+reformatComment!commands-actions!public! !
+reformatSource!commands-actions!public! !
 replaceSelection:!operations!public! !
 resolveIdentifier:ifDefined:!autocompletion!helpers!private! !
 resolveVariable:!autocompletion!helpers!private! !
-searchEnvironment!commands!public! !
+searchEnvironment!commands-actions!public! !
 searchEnvironment:!accessing!public! !
 selectedWord!helpers!private! !
 selectEvaluationRange!helpers!private! !
@@ -1836,9 +1830,9 @@ selection!accessing!public! !
 selectionRange!accessing!public! !
 selectionRange:!accessing!public! !
 selectLine:!operations!public! !
-selectNext!commands!public! !
+selectNext!commands-actions!public! !
 selectorsStartingWith:maxItems:!autocompletion!helpers!private! !
-selectPrev!commands!public! !
+selectPrev!commands-actions!public! !
 selfClass!accessing!autocompletion!private! !
 setBackcolor!helpers!private! !
 setCaretColor!helpers!private! !
@@ -1869,8 +1863,8 @@ textLength!accessing!public! !
 textStyles!accessing!public! !
 textStyles:!accessing!public! !
 tipForVariable:!public! !
-toggleAutoCompletion!commands!public! !
-toggleStyling!commands!public! !
+toggleAutoCompletion!commands-actions!public! !
+toggleStyling!commands-actions!public! !
 tokenBefore:!accessing!autocompletion!private! !
 tokenRangeAt:!accessing!autocompletion!private! !
 tokenStartAt:!accessing!autocompletion!private! !

@@ -104,9 +104,9 @@ snatchAbbreviation
 					ifTrue: [^MessageBox warning: 'Do not enter an abbreviation containing a colon.'].
 				self class abbreviations at: key put: text]! !
 !SmalltalkWorkspace categoriesForMethods!
-expandAbbreviation!commands!private! !
+expandAbbreviation!commands-actions!private! !
 findSeparatorLeftAndKey:!helpers!private! !
-snatchAbbreviation!commands!private! !
+snatchAbbreviation!commands-actions!private! !
 !
 
 !SmalltalkWorkspace class methodsFor!
