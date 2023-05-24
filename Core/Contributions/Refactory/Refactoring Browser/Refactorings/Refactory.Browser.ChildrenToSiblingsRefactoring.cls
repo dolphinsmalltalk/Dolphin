@@ -38,7 +38,7 @@ changeIsKindOfReferences
 			| variable |
 			variable := msg arguments first.
 			msg
-				arguments: {(StVariableNode named: (self shortestNameToBind: superclass binding from: variable))
+				arguments: {(StBasicVariableNode named: (self shortestNameToBind: superclass binding from: variable))
 							comments: variable comments;
 							yourself}.
 			msg]

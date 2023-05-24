@@ -98,8 +98,9 @@ package setMethodNames: #(
 	#(#{Kernel.BindingReference} #referenceInModel:)
 	#(#{Kernel.CompiledCode} #hasLiteralMatching:)
 	#(#{Kernel.Namespace class} #newClassInModel:)
-	#(#{Kernel.StAbstractVariableNode} #isBindingChanged)
-	#(#{Kernel.StAbstractVariableNode} #refersToClass:)
+	#(#{Kernel.StBasicVariableNode} #isBindingChanged)
+	#(#{Kernel.StBasicVariableNode} #refersToBinding:)
+	#(#{Kernel.StBasicVariableNode} #refersToClass:)
 	#(#{Kernel.StLiteralArrayNode} #refersToClass:)
 	#(#{Kernel.StLiteralArrayNode} #refersToSymbol:)
 	#(#{Kernel.StLiteralNode} #refersToClass:)
@@ -115,7 +116,6 @@ package setMethodNames: #(
 	#(#{Kernel.StVariable} #refersToBinding:)
 	#(#{Kernel.StVariable} #refersToClass:)
 	#(#{Kernel.StVariableNode} #isBindingChanged)
-	#(#{Kernel.StVariableNode} #refersToBinding:)
 	#(#{Kernel.StVariableNode} #refersToClass:)
 	#(#{Kernel.VariableBinding} #realBinding)
 	#(#{Kernel.VariableBinding} #refersToBinding:)
@@ -738,17 +738,23 @@ newClassInModel: aRBModel
 newClassInModel:!private!refactoring! !
 !
 
-!Kernel.StAbstractVariableNode methodsFor!
+!Kernel.StBasicVariableNode methodsFor!
 
 isBindingChanged
 	"Assuming that this node has been bound by a semantic analyser, would it bind differently now?"
 
-	^false!
+	| originalBinding |
+	originalBinding := self binding.
+	^originalBinding notNil and: [originalBinding ~~ self resolveBinding]!
 
-refersToClass: aRBClass
-	^false! !
-!Kernel.StAbstractVariableNode categoriesForMethods!
-isBindingChanged!accessing!public! !
+refersToBinding: aVariableBinding
+	^variable notNil and: [variable refersToBinding: aVariableBinding]!
+
+refersToClass: aClass
+	^variable notNil and: [variable refersToClass: aClass]! !
+!Kernel.StBasicVariableNode categoriesForMethods!
+isBindingChanged!public!testing! !
+refersToBinding:!public!testing! !
 refersToClass:!public!testing! !
 !
 
@@ -854,18 +860,12 @@ refersToClass:!public!testing! !
 isBindingChanged
 	"Assuming that this node has been bound by a semantic analyser, would it bind differently now?"
 
-	| originalBinding |
-	originalBinding := self binding.
-	^originalBinding notNil and: [originalBinding ~~ self resolveBinding]!
+	^false!
 
-refersToBinding: aVariableBinding
-	^variable notNil and: [variable refersToBinding: aVariableBinding]!
-
-refersToClass: aClass
-	^variable notNil and: [variable refersToClass: aClass]! !
+refersToClass: aRBClass
+	^false! !
 !Kernel.StVariableNode categoriesForMethods!
-isBindingChanged!public!testing! !
-refersToBinding:!public!testing! !
+isBindingChanged!accessing!public! !
 refersToClass:!public!testing! !
 !
 

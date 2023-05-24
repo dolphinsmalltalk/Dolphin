@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.StAbstractVariableNode
+Kernel.StVariableNode
 	subclass: #'Kernel.StSpecialVariableNode'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -26,11 +26,21 @@ isConstantNode
 isSpecialVariable
 	"Answer whether the variable described by the receiver is one of the special (aka pseudo) variables 'self', 'super' or 'thisContext'."
 
-	^true! !
+	^true!
+
+isThisContext
+	"Answer whether the variable described by the receiver is the special 'thisContext' variable."
+
+	^false!
+
+valueClass
+	^Error notYetImplemented! !
 !Kernel.StSpecialVariableNode categoriesForMethods!
 acceptVisitor:!public!visitor! !
 isConstantNode!public!testing! !
 isSpecialVariable!public!testing! !
+isThisContext!public!testing! !
+valueClass!public! !
 !
 
 !Kernel.StSpecialVariableNode class methodsFor!

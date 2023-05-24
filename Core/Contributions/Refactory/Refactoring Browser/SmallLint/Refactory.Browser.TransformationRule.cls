@@ -347,7 +347,7 @@ streamLiterals
 						[node parent selector = #writeStream or: 
 								[node parent selector = #on: and: 
 										[node parent receiver = (<1p> named: ''WriteStream'') 
-											or: [node parent receiver = (<1p> named: ''ReadWriteStream'')]]]]}' << StVariableNode.
+											or: [node parent receiver = (<1p> named: ''ReadWriteStream'')]]]]}' << StBasicVariableNode.
 			"->"
 			'`{`#l value isEmpty 
 					ifTrue: 
@@ -356,7 +356,7 @@ streamLiterals
 											ifTrue: [''String'']
 											ifFalse: [`#l value class name asString]))
 							selector: #new]
-					ifFalse: [<2p> receiver: `#l copy selector: #copy]}' << {StVariableNode. StMessageNode}}}
+					ifFalse: [<2p> receiver: `#l copy selector: #copy]}' << {StBasicVariableNode. StMessageNode}}}
 		methods: false
 		name: 'Convert write streams on literals to be write streams on non-literals'!
 

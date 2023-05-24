@@ -67,7 +67,7 @@ getElementCountOf: anExternalField in: anExternalStructure
 
 invertSizeIsExpression: aParseTree paramName: aString
 	| variables assignment |
-	assignment := StAssignmentNode variable: (StVariableNode named: aString , ' size') value: aParseTree.
+	assignment := StAssignmentNode variable: (StBasicVariableNode named: aString , ' size') value: aParseTree.
 	variables := OrderedCollection new.
 	assignment nodesDo: [:each | each isVariable ifTrue: [variables add: each]].
 	variables size > 2

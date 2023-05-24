@@ -25,10 +25,10 @@ package setClassNames: #(
 	#{Kernel.ParseNodeVisitor}
 	#{Kernel.Parser}
 	#{Kernel.Scanner}
-	#{Kernel.StAbstractVariableNode}
 	#{Kernel.StAnnotationNode}
 	#{Kernel.StAssignmentNode}
 	#{Kernel.StAssignmentToken}
+	#{Kernel.StBasicVariableNode}
 	#{Kernel.StBinarySelectorToken}
 	#{Kernel.StBlockNode}
 	#{Kernel.StBraceArrayNode}
@@ -203,13 +203,6 @@ Kernel.StTagNode
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Kernel.StValueNode
-	subclass: #'Kernel.StAbstractVariableNode'
-	instanceVariableNames: 'start variable'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.StValueNode
 	subclass: #'Kernel.StAssignmentNode'
 	instanceVariableNames: 'variable assignment value'
 	classVariableNames: ''
@@ -258,58 +251,9 @@ Kernel.StValueNode
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.StAbstractVariableNode
-	subclass: #'Kernel.StRealVariableNode'
-	instanceVariableNames: 'name'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.StAbstractVariableNode
-	subclass: #'Kernel.StSpecialVariableNode'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.StRealVariableNode
-	subclass: #'Kernel.StParameterNode'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.StRealVariableNode
-	subclass: #'Kernel.StTempDeclNode'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.StRealVariableNode
+Kernel.StValueNode
 	subclass: #'Kernel.StVariableNode'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.StSpecialVariableNode
-	subclass: #'Kernel.StSelfVariableNode'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.StSpecialVariableNode
-	subclass: #'Kernel.StSuperVariableNode'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.StSpecialVariableNode
-	subclass: #'Kernel.StThisContextVariableNode'
-	instanceVariableNames: ''
+	instanceVariableNames: 'start variable'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -344,6 +288,62 @@ Kernel.AbstractLiteralArrayNode
 	classConstants: {}!
 Kernel.AbstractLiteralArrayNode
 	subclass: #'Kernel.StLiteralByteArrayNode'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.StVariableNode
+	subclass: #'Kernel.StRealVariableNode'
+	instanceVariableNames: 'name'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.StVariableNode
+	subclass: #'Kernel.StSpecialVariableNode'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.StRealVariableNode
+	subclass: #'Kernel.StBasicVariableNode'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.StRealVariableNode
+	subclass: #'Kernel.StParameterNode'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.StRealVariableNode
+	subclass: #'Kernel.StTempDeclNode'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.StSpecialVariableNode
+	subclass: #'Kernel.StSelfVariableNode'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.StSpecialVariableNode
+	subclass: #'Kernel.StSuperVariableNode'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.StSpecialVariableNode
+	subclass: #'Kernel.StThisContextVariableNode'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

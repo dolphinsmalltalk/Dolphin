@@ -50,7 +50,7 @@ modifyImplementorParseTree: parseTree in: aClass
 	| name newArg allTempVars |
 	allTempVars := parseTree allDefinedVariables.
 	name := self safeVariableNameFor: aClass temporaries: allTempVars.
-	newArg := StVariableNode named: name.
+	newArg := StBasicVariableNode named: name.
 	parseTree arguments: parseTree arguments , {newArg}.
 	super modifyImplementorParseTree: parseTree in: aClass!
 

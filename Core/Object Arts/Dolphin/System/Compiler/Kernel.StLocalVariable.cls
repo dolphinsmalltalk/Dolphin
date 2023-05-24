@@ -8,6 +8,7 @@ Kernel.StVariable
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Kernel.StLocalVariable guid: (Core.GUID fromString: '{0a285b01-fe92-41ca-97c5-99914ab50746}')!
+Kernel.StLocalVariable isNonInstantiable: true!
 Kernel.StLocalVariable comment: '<StlocalVariable> is an abstract class of <StVariable> with concrete subclasses to describe local variables, either temporaries or arguments. '!
 !Kernel.StLocalVariable categoriesForClass!Kernel-Objects! !
 !Kernel.StLocalVariable methodsFor!

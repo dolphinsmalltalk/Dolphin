@@ -79,7 +79,7 @@ match: aNode inContext: aDictionary
 	^(aDictionary at: self ifAbsentPut: [aNode]) = aNode!
 
 matchingClass
-	^StAbstractVariableNode!
+	^StVariableNode!
 
 matchLiteral: aNode inContext: aDictionary 
 	^aNode isLiteralNode

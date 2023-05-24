@@ -213,7 +213,7 @@ methodDelimiter
 
 nameNewMethod: aSymbol
 	| args newSend |
-	args := parameters collect: [:each | StVariableNode named: each].
+	args := parameters collect: [:each | StParameterNode named: each].
 	extractedParseTree renameSelector: aSymbol andArguments: args asArray.
 	aSymbol argumentCount = 0
 		ifTrue: 

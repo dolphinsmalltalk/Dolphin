@@ -459,7 +459,6 @@ package setMethodNames: #(
 	#(#{Kernel.SharedPool class} #referencesTo:)
 	#(#{Kernel.SourceFiler} #emitResourceMethod:literals:)
 	#(#{Kernel.SourceFiler} #emitResourceMethodHeader:)
-	#(#{Kernel.StAbstractVariableNode} #displayOn:)
 	#(#{Kernel.StackFrame} #canReturn)
 	#(#{Kernel.StackFrame} #debugIpFor:)
 	#(#{Kernel.StackFrame} #debugPrintOn:)
@@ -529,6 +528,7 @@ package setMethodNames: #(
 	#(#{Kernel.StVariable} #staticValueClass)
 	#(#{Kernel.StVariable} #valueClass)
 	#(#{Kernel.StVariable} #valueClass:)
+	#(#{Kernel.StVariableNode} #displayOn:)
 	#(#{Kernel.StWorkspaceVariable} #printInfoTipOn:)
 	#(#{Kernel.StWorkspaceVariable} #staticValueClass)
 	#(#{OS._FPIEEE_RECORD} #printFieldsOn:)
@@ -5357,18 +5357,6 @@ emitResourceMethod:literals:!private!source filing! !
 emitResourceMethodHeader:!private!source filing! !
 !
 
-!Kernel.StAbstractVariableNode methodsFor!
-
-displayOn: aPuttableStream
-	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
-
-	aPuttableStream
-		nextPutAll: 'Var ';
-		print: self name! !
-!Kernel.StAbstractVariableNode categoriesForMethods!
-displayOn:!printing!public! !
-!
-
 !Kernel.StackFrame methodsFor!
 
 canReturn
@@ -6084,6 +6072,18 @@ printInfoTipOn:frame:!accessing!public! !
 staticValueClass!accessing!public! !
 valueClass!accessing!public! !
 valueClass:!public! !
+!
+
+!Kernel.StVariableNode methodsFor!
+
+displayOn: aPuttableStream
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
+
+	aPuttableStream
+		nextPutAll: 'Var ';
+		print: self name! !
+!Kernel.StVariableNode categoriesForMethods!
+displayOn:!printing!public! !
 !
 
 !Kernel.StWorkspaceVariable methodsFor!

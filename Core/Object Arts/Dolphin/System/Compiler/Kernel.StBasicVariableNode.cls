@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.StRealVariableNode
-	subclass: #'Kernel.StVariableNode'
+	subclass: #'Kernel.StBasicVariableNode'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.StVariableNode guid: (Core.GUID fromString: '{b60d460e-99a6-4378-8b43-67b3bcb4cd16}')!
-Kernel.StVariableNode comment: 'StVariableNode is a parse tree node that represents a normal variable with a user-chosen identifier (global, inst var, temp, etc.).
+Kernel.StBasicVariableNode guid: (Core.GUID fromString: '{b60d460e-99a6-4378-8b43-67b3bcb4cd16}')!
+Kernel.StBasicVariableNode comment: 'StVariableNode is a parse tree node that represents a normal variable with a user-chosen identifier (global, inst var, temp, etc.).
 
 Instance Variables:
 	name	<String> identifier of the variable.'!
-!Kernel.StVariableNode categoriesForClass!System-Compiler! !
-!Kernel.StVariableNode methodsFor!
+!Kernel.StBasicVariableNode categoriesForClass!System-Compiler! !
+!Kernel.StBasicVariableNode methodsFor!
 
 binding
 	^variable ifNil: [self resolveBinding] ifNotNil: [variable binding]!
@@ -33,7 +33,7 @@ resolveBinding
 	initial := name at: 1.
 	^(initial isUppercase or: [initial == $_])
 		ifTrue: [(self lookupInScope: scope) ifNotNil: [:var | var binding]]! !
-!Kernel.StVariableNode categoriesForMethods!
+!Kernel.StBasicVariableNode categoriesForMethods!
 binding!accessing!private! !
 hasQualifiedName!public!testing! !
 isStaticVariable!public!testing! !

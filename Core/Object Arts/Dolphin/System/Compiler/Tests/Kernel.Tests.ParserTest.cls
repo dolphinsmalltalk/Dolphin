@@ -141,7 +141,7 @@ testExternalCallChildren
 	self assert: child children size equals: 1.
 	self assert: child parent identicalTo: tag.
 	grandChild := child children first.
-	self assert: grandChild isKindOf: StVariableNode.
+	self assert: grandChild isKindOf: StBasicVariableNode.
 	self assert: grandChild name equals: 'POINTL'.
 	self assert: grandChild parent identicalTo: child.
 	child := children third.
@@ -244,7 +244,7 @@ testKeywordAnnotationChildren
 	children := annotation children.
 	self assert: children size equals: 1.
 	child := children first.
-	self assert: child isKindOf: StVariableNode.
+	self assert: child isKindOf: StBasicVariableNode.
 	self assert: child name equals: 'XProgramming'.
 	self assert: child parent identicalTo: annotation.!
 

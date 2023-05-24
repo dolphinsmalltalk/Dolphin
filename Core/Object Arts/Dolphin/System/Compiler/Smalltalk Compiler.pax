@@ -31,7 +31,6 @@ package setClassNames: #(
 ).
 
 package setMethodNames: #(
-	#(#{Kernel.StAbstractVariableNode} #lookupInScope:)
 	#(#{Kernel.StMethodNode} #analyze)
 	#(#{Kernel.StMethodNode} #newClassScope)
 	#(#{Kernel.StProgramNode} #classScope)
@@ -43,6 +42,7 @@ package setMethodNames: #(
 	#(#{Kernel.StSelfVariableNode} #lookupInScope:)
 	#(#{Kernel.StSuperVariableNode} #lookupInScope:)
 	#(#{Kernel.StThisContextVariableNode} #lookupInScope:)
+	#(#{Kernel.StVariableNode} #lookupInScope:)
 ).
 
 package setPrerequisites: #(
@@ -216,14 +216,6 @@ Kernel.StStaticVariable
 
 "Loose Methods"!
 
-!Kernel.StAbstractVariableNode methodsFor!
-
-lookupInScope: aStSemanticScope
-	^self subclassResponsibility! !
-!Kernel.StAbstractVariableNode categoriesForMethods!
-lookupInScope:!operations!public! !
-!
-
 !Kernel.StMethodNode methodsFor!
 
 analyze
@@ -302,6 +294,14 @@ lookupInScope:!operations!public! !
 lookupInScope: aStSemanticScope
 	^aStSemanticScope thisContextVariable! !
 !Kernel.StThisContextVariableNode categoriesForMethods!
+lookupInScope:!operations!public! !
+!
+
+!Kernel.StVariableNode methodsFor!
+
+lookupInScope: aStSemanticScope
+	^self subclassResponsibility! !
+!Kernel.StVariableNode categoriesForMethods!
 lookupInScope:!operations!public! !
 !
 
