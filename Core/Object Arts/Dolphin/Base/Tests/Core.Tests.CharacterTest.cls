@@ -362,8 +362,8 @@ testIsControl
 	self assert: $\xFEFF isControl!
 
 testIsDigit
-	#($0 $1 $2 $3 $4 $5 $6 $7 $8 $9) do: [:each | self assert: each isDigit].
-
+	self assert: ((0 to: 255) select: [:each | (Character codePoint: each) isDigit])
+		equals: ($0 asciiValue to: $9 asciiValue).
 
 	"Arabic indic digits - are decimal digits, but not by the ANSI isDigit definition"
 	($٠ to: $٩) do: [:each | self deny: each isDigit].
@@ -379,7 +379,8 @@ testIsEnglishLetter
 
 	self assert: ((0 to: 255) select: [:each | (Character codePoint: each) isEnglishLetter])
 		equals: ($A asciiValue to: $Z asciiValue) , ($a asciiValue to: $z asciiValue).
-	#($ñ $\x3B2 $\x1F42C $\x6D3 $\x2A77F) do: [:each | self deny: each isEnglishLetter]!
+	#($\x40 $\x16 $\x5B $\x60 $\x16 $\x7B $ñ $\x3B2 $\x1F42C $\x6D3 $\x2A77F)
+		do: [:each | self deny: each isEnglishLetter]!
 
 testIsGraph
 	"Graph characters are non-blank printable characters."
