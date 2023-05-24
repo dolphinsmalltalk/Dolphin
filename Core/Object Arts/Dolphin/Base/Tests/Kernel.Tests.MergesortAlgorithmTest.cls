@@ -15,7 +15,6 @@ algorithmToTest
 	^MergesortAlgorithm!
 
 testBigStringSort
-	<skipIf: #isCiBuild> "Long running"
 	self bigStringSort!
 
 testTempArrayLargeEnough
