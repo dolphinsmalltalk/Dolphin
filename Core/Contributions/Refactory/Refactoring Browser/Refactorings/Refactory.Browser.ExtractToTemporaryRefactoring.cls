@@ -31,7 +31,7 @@ compileNewMethod
 
 constructAssignmentFrom: aNode 
 	| valueNode |
-	valueNode := StVariableNode named: newVariableName.
+	valueNode := StBasicVariableNode named: newVariableName.
 	^StAssignmentNode variable: valueNode value: aNode!
 
 extract: anInterval to: aString from: aSelector in: aClass 
@@ -48,11 +48,11 @@ insertTemporary
 	(node notNil and: [node isValue]) 
 		ifFalse: [self refactoringError: 'Cannot assign to non-value nodes'].
 	statementNode := node statementNode.
-	node replaceWith: (StVariableNode named: newVariableName).
+	node replaceWith: (StBasicVariableNode named: newVariableName).
 	(statementNode parent)
 		addNode: (self constructAssignmentFrom: node)
 			before: (node == statementNode 
-					ifTrue: [StVariableNode named: newVariableName]
+					ifTrue: [StBasicVariableNode named: newVariableName]
 					ifFalse: [statementNode]);
 		addTemporaryNamed: newVariableName!
 

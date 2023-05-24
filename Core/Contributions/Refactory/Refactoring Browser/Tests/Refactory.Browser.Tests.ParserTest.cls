@@ -177,10 +177,10 @@ testBlockRewrites
 		replace: 'asdf'
 		with: 'fdsa'
 		when: [:aNode | aNode parent parent isReturn].
-	rewriter replace: 'self foo' withValueFrom: [:aNode | StVariableNode named: aNode selector asString].
+	rewriter replace: 'self foo' withValueFrom: [:aNode | StBasicVariableNode named: aNode selector asString].
 	rewriter
 		replaceArgument: 'asdf'
-		withValueFrom: [:aNode | StVariableNode named: 'xxx']
+		withValueFrom: [:aNode | StBasicVariableNode named: 'xxx']
 		when: [:aNode | false].
 	rewriter executeTree: tree.
 	self compare: rewriter tree
@@ -260,7 +260,7 @@ testEqualToWithMappingAfterRewrite
 	pattern := RBPatternParser parseMethod: 'foo: `arg ^`arg baz'.
 	context := RBSmallDictionary new
 				at: '-source-' put: nil;
-				at: (RBPatternVariableNode named: '`arg') put: (StVariableNode named: 'bar');
+				at: (RBPatternVariableNode named: '`arg') put: (StBasicVariableNode named: 'bar');
 				yourself.
 	tree1 := pattern copyInContext: context.
 	tree2 := self parseMethod: 'foo: abc ^abc baz'.
@@ -268,7 +268,7 @@ testEqualToWithMappingAfterRewrite
 	self assert: (tree1 equalTo: tree2 withMapping: (LookupTable with: 'bar' -> 'abc')).
 	self deny: (tree1 equalTo: tree2 withMapping: (LookupTable with: 'bar' -> 'def')).
 	"The base case is the following:"
-	self assert: ((StVariableNode named: 'foo') equalTo: (StParameterNode named: 'foo')
+	self assert: ((StBasicVariableNode named: 'foo') equalTo: (StParameterNode named: 'foo')
 				withMapping: LookupTable new)!
 
 testEqualToWithMappingRename
@@ -446,7 +446,7 @@ testPositions
 	self assert: blockNode sourceInterval equals: (1 to: 10).
 	self assert: blockNode size equals: 1.	"test dummy collection protocol"
 	blockNode printString.	"coverage"
-	self deny: (blockNode isLast: (StVariableNode named: 'b')).
+	self deny: (blockNode isLast: (StBasicVariableNode named: 'b')).
 	self compare: blockNode
 		to: (StBlockNode
 				arguments: (OrderedCollection with: (StParameterNode named: 'a') with: (StParameterNode named: 'b'))
@@ -564,7 +564,7 @@ testReplacingNodes
 	tree := self
 				parseMethod: '+ a | a b | self ifTrue: [a] ifFalse: [b := c]. a := b. [:b :c :a | a foo: a; foo1: a; foo2: a foo: b]. ^a'.
 	search := ParseTreeSearcher new.
-	block := [:aNode :answer | aNode replaceWith: (StVariableNode named: 'q')].
+	block := [:aNode :answer | aNode replaceWith: (StBasicVariableNode named: 'q')].
 	search
 		matches: 'a' do: block;
 		matchesArgument: 'a' do: block.

@@ -15,10 +15,16 @@ Kernel.StThisContextVariableNode comment: ''!
 acceptVisitor: aProgramNodeVisitor
 	^aProgramNodeVisitor visitThisContextVariableNode: self!
 
+isThisContext
+	"Answer whether the variable described by the receiver is the special 'thisContext' variable."
+
+	^true!
+
 name
 	^'thisContext'! !
 !Kernel.StThisContextVariableNode categoriesForMethods!
 acceptVisitor:!public!visitor! !
+isThisContext!public!testing! !
 name!constants!public! !
 !
 

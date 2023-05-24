@@ -20,7 +20,7 @@ addTemporary: sourceNode assignedTo: replacementNode
 	newName := self renameConflictingTemporary: sourceNode name.
 	(inlineParseTree body)
 		addTemporaryNamed: newName;
-		addNodeFirst: (StAssignmentNode variable: (StVariableNode named: newName)
+		addNodeFirst: (StAssignmentNode variable: (StBasicVariableNode named: newName)
 					value: replacementNode)!
 
 checkSuperMessages

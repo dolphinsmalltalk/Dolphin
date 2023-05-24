@@ -60,6 +60,11 @@ isRead
 
 	^true!
 
+isSpecialVariable
+	"Answer whether the variable described by the receiver is one of the special (aka pseudo) variables 'self', 'super' or 'thisContext'."
+
+	^false!
+
 isStaticVariable
 	"Answer whether the receiver describes a reference to a 'static' variable such as a class
 	variable, pool constant, or a global."
@@ -116,6 +121,7 @@ isConstant!public!testing! !
 isInstanceVariable!public!testing! !
 isLocalVariable!public!testing! !
 isRead!public!testing! !
+isSpecialVariable!public!testing! !
 isStaticVariable!public!testing! !
 isTempVariable!public!testing! !
 isWritten!public!testing! !

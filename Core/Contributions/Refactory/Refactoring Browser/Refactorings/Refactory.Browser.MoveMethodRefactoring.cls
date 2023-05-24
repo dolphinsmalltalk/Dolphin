@@ -69,11 +69,11 @@ checkTemporaryVariableNames
 compileDelegatorMethod
 	| statementNode delegatorNode method |
 	delegatorNode := StMessageNode
-				receiver: (StVariableNode named: variable)
+				receiver: (StBasicVariableNode named: variable)
 				selectorParts: parseTree selectorParts
 				arguments: (parseTree argumentNames collect: 
 							[:each |
-							each = selfVariableName ifTrue: [StSelfVariableNode start: 0] ifFalse: [StVariableNode named: each]]).
+							each = selfVariableName ifTrue: [StSelfVariableNode start: 0] ifFalse: [StBasicVariableNode named: each]]).
 	self hasOnlySelfReturns ifFalse: [delegatorNode := StReturnNode value: delegatorNode].
 	statementNode := StSequenceNode temporaries: #() statements: {delegatorNode}.
 	method := (class whoDefinesMethod: selector) methodFor: selector.

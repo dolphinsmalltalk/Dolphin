@@ -8,6 +8,7 @@ Kernel.StVariable
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Kernel.StSpecialVariable guid: (Core.GUID fromString: '{83bccab3-8ad0-4dbb-bbf0-dba008295503}')!
+Kernel.StSpecialVariable isNonInstantiable: true!
 Kernel.StSpecialVariable comment: '<StSpecialVariable> is an abstract class of <StVariable> with concrete subclasses to describe the special variables, ''self'', ''super'', and ''thisContext''. '!
 !Kernel.StSpecialVariable categoriesForClass!Kernel-Objects! !
 !Kernel.StSpecialVariable methodsFor!
@@ -29,6 +30,11 @@ isRead
 
 	^reads notNil!
 
+isSpecialVariable
+	"Answer whether the variable described by the receiver is one of the special (aka pseudo) variables 'self', 'super' or 'thisContext'."
+
+	^true!
+
 reads
 	"Answer the <sequencedReadableCollection> of <StVariableNode>'s that describe reads from the
 	variable described by the receiver."
@@ -39,6 +45,7 @@ addAssignment:fromScope:!public! !
 addRead:fromScope:!public! !
 isConstant!public!testing! !
 isRead!public!testing! !
+isSpecialVariable!public!testing! !
 reads!accessing!public! !
 !
 
