@@ -1199,16 +1199,23 @@ getOptionExtractAssignment: aString
 		confirm!
 
 getOptionInlineExpression: aString
-	^MessageBox new
-		caption: self displayString;
-		headline: 'Inline expression?';
-		text: 'The following expression can be inlined or assigned to a temporary:<n><n><t><1s>?' << aString;
-		customButtons: #(#(#yes '&Inline') #(#no '&Assign Temporary'));
-		defaultButton: 2;
-		detailsText: 'The expression shown is passed as one of the arguments to the method you are inlining. You can safely inline the expression if constant and/or side-effect free, or if it is only referred to once in the inlined method. If not, it should be assigned to a temporary to preserve existing behaviour. If unsure, choose ''Assign Temporary''. You can always inline the temporary later if you wish.';
-		expandLabel: 'Show help';
-		collapseLabel: 'Hide help';
-		confirm!
+	| prompt response |
+	prompt := MessageBox new
+				caption: self displayString;
+				headline: 'Inline expression?';
+				text: 'The following expression can be inlined or assigned to a temporary:<n><n><t><1s>?' << aString;
+				customButtons: #(#(#yes '&Inline') #(#no '&Assign Temporary'));
+				defaultButton: 2;
+				detailsText: 'The expression shown is passed as one of the arguments to the method you are inlining. You can safely inline the expression if constant and/or side-effect free, or if it is only referred to once in the inlined method. If not, it should be assigned to a temporary to preserve existing behaviour. If unsure, choose ''Assign Temporary''. You can always inline the temporary later if you wish.';
+				expandLabel: 'Show help';
+				collapseLabel: 'Hide help';
+				isCancellable: true;
+				checkboxText: SmalltalkSystem current showChangesText;
+				yourself.
+	response := prompt confirmOrCancel.
+	response == #cancel ifTrue: [^self refactoringAborted].
+	prompt isChecked ifTrue: [self shouldShowChanges: true].
+	^response == #yes!
 
 getOptionNewMethodName: aRBMethodName classes: anArray
 	| dialog |

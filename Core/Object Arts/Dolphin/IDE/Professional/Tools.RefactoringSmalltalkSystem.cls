@@ -585,16 +585,24 @@ inlineAllSelfSendsOf: aCollectionOfMethods within: aBrowserEnvironment
 	caption := String writeStream.
 	caption nextPutAll: 'Inline self sends of '.
 	^self performRefactoringAction: 
-			[aCollectionOfMethods do: 
+			[| shouldShowChanges |
+			shouldShowChanges := false.
+			aCollectionOfMethods do: 
 					[:each |
-					(InlineAllSendersRefactoring
-						model: namespace
-						sendersOf: each selector
-						in: each methodClass) primitiveExecute.
+					| refactoring |
+					refactoring := InlineAllSendersRefactoring
+								model: namespace
+								sendersOf: each selector
+								in: each methodClass.
+					refactoring shouldShowChanges: shouldShowChanges.
+					refactoring primitiveExecute.
+					shouldShowChanges := refactoring shouldShowChanges.
 					caption display: each]
 				separatedBy: [caption nextPutAll: ', '].
 			namespace name: caption contents.
-			self changeManager performChange: namespace changes.
+			shouldShowChanges
+				ifTrue: [namespace browseChanges]
+				ifFalse: [self changeManager performChange: namespace changes].
 			namespace]!
 
 inlineMessage: aStMessageNode inMethod: aSelector of: aBehavior
