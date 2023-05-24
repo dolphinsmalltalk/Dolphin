@@ -35,12 +35,22 @@ imports: anArray
 	anArray isEmpty ifFalse: [self error: 'Root must not have imports']!
 
 nestedClasses
-	^super nestedClasses copyWithout: self! !
+	^super nestedClasses copyWithout: self!
+
+shortName
+	^#Root!
+
+shortNameFor: aString
+	"Private - Answer the short name for the receiver's variable named, aString. The short name is the shortest name that binds to variable starting from the Smalltalk namespace. All of the receiver's variables are bindable by unqualified name from Smalltalk because Smalltalk is nested within Root."
+
+	^aString! !
 !Root class categoriesForMethods!
 bindingFor:!bindings!public! !
 environment!public! !
 fullNameFor:!helpers!private! !
 imports:!pool variables!public! !
 nestedClasses!accessing!public! !
+shortName!accessing!public! !
+shortNameFor:!enquiries!private! !
 !
 

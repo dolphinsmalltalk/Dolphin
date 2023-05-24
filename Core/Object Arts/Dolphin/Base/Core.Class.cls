@@ -672,6 +672,9 @@ refersTo: anObject asLiteralOf: aCompiledCode
 	^(self class == anObject class and: [self = anObject])
 		or: [(anObject isKindOf: VariableBinding) and: [anObject value == self and: [anObject isClassBinding]]]!
 
+relativeShortName: aString
+	^self shortName , '.' , aString!
+
 removeBindingFor: aString
 	^(self localBindingFor: aString)
 		ifNotNil: 
@@ -908,10 +911,12 @@ setName: aSymbolOrNil environment: aNamespace
 shortName
 	"Answer the shortest <String> name of the receiver that is bindable from Smalltalk. i.e. for classes defined directly in Smalltalk, or in any of its imports, this will be an unqualified name. Otherwise it is the fully qualified name relative to Smalltalk."
 
-	^name
-		ifNil: [super name]
-		ifNotNil: 
-			[self isInBaseEnvironment ifTrue: [name] ifFalse: [Smalltalk shortNameFor: name in: environment]]!
+	^name ifNil: [super name] ifNotNil: [environment shortNameFor: name]!
+
+shortNameFor: aString
+	"Private - Answer the short name for the receiver's variable named, aString. The short name is the shortest name that binds to variable starting from the Smalltalk namespace. This may be unqualified, partially qualified, or fully-qualified."
+
+	^Smalltalk shortNameFor: aString in: self!
 
 simpleName
 	"Answer the receiver's name within it's environment.
@@ -1029,7 +1034,7 @@ subclassesDo: aMonadicValuable
 	subclasses do: aMonadicValuable!
 
 unaliasedName
-	"Answer the shortest name for the receiver that is bindable from Smalltalk without using an alias."
+	"Answer an unambiguous name for the receiver that is bindable from Smalltalk without using an alias."
 
 	^self isInBaseEnvironment
 		ifTrue: [name]
@@ -1213,6 +1218,7 @@ printNameOn:relativeTo:!printing!private! !
 printOn:!printing!public! !
 printString!printing!public! !
 refersTo:asLiteralOf:!private!testing! !
+relativeShortName:!class variables!private! !
 removeBindingFor:!bindings!public! !
 removeClassConstant:!class variables!development!public! !
 removeClassVarName:!class hierarchy-mutating!class variables!public! !
@@ -1238,6 +1244,7 @@ setGuid:!accessing!private! !
 setImports:!accessing!private! !
 setName:environment:!accessing!private! !
 shortName!accessing!public! !
+shortNameFor:!enquiries!private! !
 simpleName!accessing!public! !
 sourceDescriptor!accessing!public!source filing! !
 sourceDescriptor:!accessing!private!source filing! !
@@ -1362,7 +1369,7 @@ foldLiterals
 										ifTrue: 
 											[totalStrings := totalStrings + 1.
 											each at: i put: (literalStrings addIfAbsent: literal)]].
-							(literal isKindOf: MethodAnnotations)
+							(literal basicClass == MethodAnnotations)
 								ifTrue: 
 									[totalAnnotations := totalAnnotations + 1.
 									each at: count put: (annotations addIfAbsent: literal)]]]].

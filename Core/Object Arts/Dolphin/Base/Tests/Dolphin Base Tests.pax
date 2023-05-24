@@ -202,6 +202,7 @@ package setPrerequisites: #(
 	'..\Dolphin'
 	'..\Dolphin Additional Sort Algorithms'
 	'..\Dolphin Anonymous Classes'
+	'..\Deprecated\Dolphin Base (Old Names)'
 	'..\..\MVP\Base\Dolphin Basic Geometry'
 	'..\Dolphin Command-line Parser'
 	'..\..\System\Random\Dolphin CRT Random Stream'

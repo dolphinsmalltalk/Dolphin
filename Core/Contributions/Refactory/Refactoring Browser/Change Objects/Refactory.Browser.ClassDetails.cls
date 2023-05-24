@@ -248,9 +248,7 @@ sharedPoolNames
 shortName
 	"Answer the shortest <String> name of the receiver that is bindable from Smalltalk. i.e. for classes defined directly in Smalltalk, or in any of its imports, this will be an unqualified name. Otherwise it is the fully qualified name relative to Smalltalk."
 
-	^self isInBaseEnvironment
-		ifTrue: [self unqualifiedName]
-		ifFalse: [Smalltalk shortNameFor: self unqualifiedName in: self environment]!
+	^self environment shortNameFor: self unqualifiedName!
 
 sourceFilerClass
 	^(self package

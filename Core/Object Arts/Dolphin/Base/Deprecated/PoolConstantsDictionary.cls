@@ -106,6 +106,11 @@ preResize: newMe
 
 	name isNil ifFalse: [newMe name: name]!
 
+shortNameFor: aString
+	"Private - Answer the short name for the receiver's variable named, aString. The short name is the shortest name that binds to variable starting from the Smalltalk namespace. This may be unqualified, partially qualified, or fully-qualified."
+
+	^Smalltalk shortNameFor: aString in: self!
+
 sourceFilerClass
 	^LegacyChunkSourceFiler! !
 !PoolConstantsDictionary categoriesForMethods!
@@ -124,6 +129,7 @@ name:!accessing!private! !
 newAssociation:value:!helpers!private! !
 owningPackage!public!source filing! !
 preResize:!adding!private! !
+shortNameFor:!enquiries!private! !
 sourceFilerClass!public!source filing! !
 !
 

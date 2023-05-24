@@ -108,6 +108,7 @@ package setAliasVariableNames: #(
 
 package setPrerequisites: #(
 	'..\..\..\..\Object Arts\Dolphin\Base\Dolphin'
+	'..\..\..\..\Object Arts\Dolphin\Base\Tests\Dolphin Base Tests'
 	'..\Change Objects\RBChangeObjects'
 	'..\Environments\RBEnvironments'
 	'..\Formatters\RBFormatters'

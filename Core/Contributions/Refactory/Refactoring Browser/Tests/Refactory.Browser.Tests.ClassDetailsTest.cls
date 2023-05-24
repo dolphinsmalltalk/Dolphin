@@ -110,6 +110,21 @@ testPrintStringRootClassLegacy
 	poolDictionaries: ''''
 	classInstanceVariableNames: '''''!
 
+testShortName
+	{
+		Root.
+		Smalltalk.
+		Graphics.
+		Object.
+		ProtoObject.
+		self class.
+		Smalltalk.Scribble.
+		Core.Tests.
+		Core.Tests.ClassTest.
+		Kernel.Tests.
+		Kernel.Tests.VariableBindingTest
+	} do: [:each | self assert: (ClassDetails fromClass: each) shortName equals: each shortName]!
+
 testStoreStringFull
 	| subject rehydrated storeString |
 	subject := ClassDetails fromClass: Refactory.Browser.TestData.RefactoryTestDataApp.
@@ -168,6 +183,7 @@ testPrintStringLegacy!public! !
 testPrintStringMissingSuperclass!public! !
 testPrintStringRootClass!public! !
 testPrintStringRootClassLegacy!public! !
+testShortName!public! !
 testStoreStringFull!public! !
 testStoreStringMinimal!public! !
 testVariables!public! !
