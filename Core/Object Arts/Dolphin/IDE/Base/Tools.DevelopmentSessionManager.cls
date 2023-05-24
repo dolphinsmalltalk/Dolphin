@@ -321,15 +321,56 @@ onUnhandledWarning: aWarning
 	Override the superclass implementation in order to give the user
 	the opportunity to bring up a walkback and go into the debugger."
 
-	| response |
+	| mb description details |
+	description := aWarning description readStream.
+	mb := MessageBox new
+				headline: description nextLine;
+				yourself.
+	details := description upToEnd.
+	details := details notEmpty
+				ifTrue: 
+					[(WriteStream with: details)
+						cr;
+						cr;
+						yourself]
+				ifFalse: [String writeStream].
 	aWarning isSuppressible
-		ifTrue: [aWarning okToContinue ifFalse: [Processor activeProcess terminate]]
+		ifTrue: 
+			[mb
+				isSuppressible: true;
+				uniqueId: aWarning raisingFrame method suppressionId.
+			aWarning isUserResumable
+				ifTrue: 
+					[(mb
+						customButtons: #(#(#ok '&Continue'));
+						detailsText: (details
+									nextPutAll: 'Press Continue to resume execution, disregarding the warning.
+Press Cancel to terminate the process, cancelling the operation.
+
+You can suppress this warning, in which case it will not be shown again. If the warning is suppressed, then it will be ignored on future occurrence, regardless of the choice you make now.';
+									contents);
+						buttonStyle: #okCancel;
+						warning) ~~ #ok
+						ifTrue: [Processor activeProcess terminate]]
+				ifFalse: 
+					["Not resumable"
+					mb errorMsg.
+					Processor activeProcess terminate]]
 		ifFalse: 
-			[response := aWarning abortRetryOrIgnore.
+			[| response |
+			response := mb
+						buttonStyle: #abortRetryIgnore;
+						customButtons: #(#(#abort '&Cancel') #(#retry '&Debug') #(#ignore '&Continue'));
+						detailsText: (details
+									nextPutAll: 'Press Cancel to terminate the process, cancelling the operation.
+Press Debug to open a debugger at the warning site.
+Press Continue to resume execution, disregarding the warning.';
+									contents);
+						warning.
 			response == #retry
 				ifTrue: [self unhandledException: aWarning]
 				ifFalse: [response == #abort ifTrue: [Processor activeProcess terminate]]
-			"ignore - Resume execution"]!
+			"#ignore - Continue execution"]!
 
 onUserBreak
 	"Bring up the Smalltalk debugger (suspending the active process) ..."

@@ -77,6 +77,9 @@ storeSourceString: aString evaluationPools: anArray
 					nonEmptyPools notEmpty ifTrue: [nonEmptyPools]].
 	self sourceDescriptor: (pools isNil ifTrue: [aString] ifFalse: [{aString. pools}])!
 
+suppressionId
+	^sourceDescriptor hash!
+
 value
 	"Evaluate the expression with nil as 'self'."
 
@@ -95,6 +98,7 @@ getSource!accessing!development!public! !
 isExpression!private!testing! !
 owningPackage!accessing!public! !
 storeSourceString:evaluationPools:!accessing!private! !
+suppressionId!accessing!private! !
 value!evaluating!public! !
 value:!evaluating!public! !
 !
