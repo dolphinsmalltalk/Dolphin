@@ -189,6 +189,16 @@ showModal
 	self forkOperation.
 	^super showModal!
 
+startMarquee
+	progressPresenter view
+		isMarquee: true;
+		startMarquee!
+
+stopMarquee
+	progressPresenter view
+		stopMarquee;
+		isMarquee: false!
+
 text: progressText
 	"Set the descriptive text displayed in the receiver to be the <readableString>,
 	progressText."
@@ -220,6 +230,8 @@ progress!accessing!public! !
 queryCommand:!commands!private! !
 show!operations!public! !
 showModal!operations!public! !
+startMarquee!operations!public! !
+stopMarquee!operations!public! !
 text:!accessing!public! !
 value:!accessing!public! !
 !
