@@ -33,6 +33,7 @@ accept
 	"Save the method source, updating the existing method or adding a new one depending on
 	whether the user has edited the method signature."
 
+	<commandQuery: #canSaveMethod>
 	parentPresenter saveNewMethod: self source!
 
 addToCommandRoute: route 
@@ -92,9 +93,10 @@ browseDefinitionsCommand
 	^super browseDefinitionsCommand!
 
 browseMessage
+	<commandQuery: #queryBrowseMessage:>
 	| node |
 	node := self selectedMessageNode.
-	self developmentSystem browseMethod: ((self targetOfMessage: node) lookupMethod: node selector)"Private - Answer the development system model."!
+	self developmentSystem browseMethod: ((self targetOfMessage: node) lookupMethod: node selector)!
 
 browseReferencesCommand
 	"Private - Answer the context-sensitive 'Browse References' command for the selected node."
@@ -285,52 +287,50 @@ parseTree
 promptToSaveChanges
 	^parentPresenter promptToSaveChanges!
 
+queryBrowseDefsOrRefs: aCommandQuery
+	| message |
+	message := self selectedMessage.
+	aCommandQuery
+		isEnabled: true;
+		text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: { message ?? '…' }
+					locale: Locale smalltalk)!
+
+queryBrowseMessage: aCommandQuery
+	| text node |
+self halt.
+	node := self selectedMessageNode.
+	text := nil.
+	(node isNil or: 
+			[| target |
+			target := self targetOfMessage: node.
+			target isNil or: [(text := target lookupMethod: node selector) isNil]])
+		ifTrue: 
+			[aCommandQuery isEnabled: false.
+			text := 'Message']
+		ifFalse: [aCommandQuery isEnabled: true].
+	aCommandQuery text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: { text }
+				locale: Locale smalltalk).
+	^true!
+
 queryCommand: aCommandQuery
 	"Private - Enter details about a potential command for the receiver into the
 	<CommandQuery>."
 
 	| selector |
 	selector := aCommandQuery commandSymbol.
-	#reformatMenu == selector
-		ifTrue: 
-			[aCommandQuery isEnabled: self isReadOnly not.
-			^true].
-	(#(#accept #reformatAccept) identityIncludes: selector)
-		ifTrue: 
-			[aCommandQuery isEnabled: self canSaveMethod.
-			^true].
-	#reformatSource == selector
-		ifTrue: 
-			[aCommandQuery isEnabled: (self isReadOnly not and: [self textLength > 0]).
-			^true].
 	(#(#browseDefinitions #browseReferences) identityIncludes: selector)
 		ifTrue: 
-			[| message |
-			message := self selectedMessage.
-			aCommandQuery
-				isEnabled: true;
-				text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: {message ?? '…'}
-							locale: Locale smalltalk).
-			^true].
-	#browseMessage == selector
-		ifTrue: 
-			[| text node |
-			node := self selectedMessageNode.
-			(node isNil or: 
-					[| target |
-					target := self targetOfMessage: node.
-					target isNil or: [(text := target lookupMethod: node selector) isNil]])
-				ifTrue: 
-					[aCommandQuery isEnabled: false.
-					text := 'Message']
-				ifFalse: [aCommandQuery isEnabled: true].
-			aCommandQuery text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: {text}
-						locale: Locale smalltalk).
+			[self queryBrowseDefsOrRefs: aCommandQuery.
 			^true].
 	^super queryCommand: aCommandQuery!
 
 reformatAccept
+	<commandQuery: #canSaveMethod>
 	self reformattedSource ifNotNil: [:aString | parentPresenter saveNewMethod: aString]!
+
+reformatMenu
+	<commandQuery: #isEditable>
+	!
 
 reformatSource
 	"Reformat and syntax colour the current contents of the method source pane, but do not
@@ -488,16 +488,16 @@ widenSourceSelection
 			whileTrue: [node := node parent].
 	self selectionRange: node sourceInterval! !
 !Tools.MethodWorkspace categoriesForMethods!
-accept!commands!public! !
-addToCommandRoute:!commands!public! !
+accept!commands-actions!public! !
+addToCommandRoute:!commands-routing!public! !
 allDefinedVariablesDo:!autocompletion!enumerating!private! !
 applyOptions!operations!options!private! !
 autoParse!helpers!private! !
-browseDefinitionsCommand!commands!private! !
-browseMessage!commands!public! !
-browseReferencesCommand!commands!private! !
+browseDefinitionsCommand!commands-mappings!private! !
+browseMessage!commands-actions!public! !
+browseReferencesCommand!commands-mappings!private! !
 buildParseTree!helpers!private! !
-canSaveMethod!commands!private! !
+canSaveMethod!commands-queries!private! !
 clear!operations!public! !
 clearParseTree!helpers!private! !
 contextBindingFor:!private!refactoring! !
@@ -527,9 +527,12 @@ parseContext!accessing!private! !
 parseSourceIn:!helpers!private! !
 parseTree!accessing!private! !
 promptToSaveChanges!helpers!public! !
-queryCommand:!commands!private! !
-reformatAccept!commands!public! !
-reformatSource!commands!public! !
+queryBrowseDefsOrRefs:!commands-queries!private! !
+queryBrowseMessage:!commands-queries!private! !
+queryCommand:!commands-queries!private! !
+reformatAccept!commands-actions!public! !
+reformatMenu!commands-menus!public! !
+reformatSource!commands-actions!public! !
 reformattedSource!helpers!private! !
 repositionAtSourceLine:!operations!public! !
 resetParseTimer!helpers!private! !
@@ -548,7 +551,7 @@ source!accessing!public! !
 source:!accessing!public! !
 targetOfMessage:!helpers!private! !
 variableClassification:!helpers!private! !
-widenSourceSelection!commands!public! !
+widenSourceSelection!commands-actions!public! !
 !
 
 !Tools.MethodWorkspace class methodsFor!
