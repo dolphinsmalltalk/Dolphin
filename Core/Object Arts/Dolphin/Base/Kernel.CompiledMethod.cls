@@ -197,7 +197,10 @@ recompile
 storeSourceString: aString
 	"Private - Record aString as the source for the receiver. Delegate to the receiver's source manager"
 
-	self class sourceManager storeSourceString: aString forMethod: self! !
+	self class sourceManager storeSourceString: aString forMethod: self!
+
+suppressionId
+	^self! !
 !Kernel.CompiledMethod categoriesForMethods!
 <=!comparing!public! !
 categories!categories-accessing!development!public! !
@@ -229,6 +232,7 @@ protocols!categories-accessing!development!public! !
 realCategories!categories-accessing!public! !
 recompile!compiling!development!private! !
 storeSourceString:!private!source filing-methods! !
+suppressionId!accessing!private! !
 !
 
 !Kernel.CompiledMethod class methodsFor!

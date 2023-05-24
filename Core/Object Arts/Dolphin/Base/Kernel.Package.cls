@@ -493,7 +493,8 @@ environment
 environment: aNamespace
 	"Set the default environment for the package, in the context of which any loose (extension) methods should be compiled, or nil if there is no default environment for loose methods and the extended class' own environment should be used for resolving static variable references in the method source."
 
-	| ref currentEnvironment preamble failures |
+	| ref failures |
+	"Cannot be here if current namespace is nil and new namespace is nil, due to earlier guard"
 	self environment == aNamespace ifTrue: [^self].
 	(self isLegacySourceFormat and: [aNamespace ~~ Smalltalk])
 		ifTrue: 
@@ -504,23 +505,8 @@ environment: aNamespace
 					[aNamespace owningPackage = self
 						ifTrue: [self error: 'The default namespace for a package cannot be one of its own classes'].
 					aNamespace fullyQualifiedReference].
-	currentEnvironment := self environment.
-	preamble := currentEnvironment isNil
-				ifTrue: 
-					["Cannot be here if current namespace is nil and new namespace is nil, due to earlier guard"
-					'The namespace for extension methods of ''<1d>'' will be set to <3p>, requiring that the methods be recompiled.']
-				ifFalse: 
-					[aNamespace isNil
-						ifTrue: 
-							['The namespace for extension methods of ''<1d>'' will be reset, requiring that those methods be recompiled in the scope of the classes they extend.']
-						ifFalse: 
-							['The namespace for extension methods of ''<1d>'' will be changed from <2p> to <3p>, requiring that the methods be recompiled.']].
-	Warning
-		signal: (preamble
-				, '<n><n>Methods may fail to recompile if they contain static variable references that are not resolvable in their new scope. This may render the system unstable if the methods that fail to compile are critical to system operation.<n><n>Press Abort to cancel the change, Retry to open a debugger, or Ignore to continue with the change.'
-					expandMacrosWith: self
-					with: currentEnvironment
-					with: aNamespace).
+	#todo. "Add a refactoring to update the namespace safely. The capability exists add extra qualification, or remove unnecessary qualification, from class/static variable refs, as used in rename class/namespace refactoring. Until then, warn that it might generate compilation errors."
+	self warnChangingDefaultNamespaceFrom: self environment to: aNamespace.
 	self environmentName: ref.
 	failures := SortedCollection new.
 	self methodsDo: 
@@ -1942,7 +1928,26 @@ vmVersionCheck: verWhenSaved
 It will probably load, but it may not operate correctly. 
 If you experience subsequent problems please contact the package supplier for an updated version.'
 				expandMacrosWith: self name
-				with: versionString)! !
+				with: versionString)!
+
+warnChangingDefaultNamespaceFrom: currentNamespace to: newNamespace
+	| preamble |
+	preamble := currentNamespace isNil
+				ifTrue: 
+					["Cannot be here if current namespace is nil and new namespace is nil, due to earlier guard"
+					'The namespace for extension methods of ''<1d>'' will be set to <3p><n>Setting a package''s default namespace requires that extension methods be recompiled.']
+				ifFalse: 
+					[newNamespace isNil
+						ifTrue: 
+							['The namespace for extension methods of ''<1d>'' will be reset<n>Resetting a package''s default namespace requires that its extension methods be recompiled in the scope of the classes they extend.']
+						ifFalse: 
+							['The namespace for extension methods of ''<1d>'' will be changed from <2p> to <3p><n>Changing a package''s default namespace requires that its extension methods be recompiled.']].
+	Warning
+		signal: (preamble
+				, '<n><n>Methods may fail to recompile if they contain static variable references that are not resolvable in their new scope. This may render the system unstable if the methods that fail to compile are critical to system operation.'
+					expandMacrosWith: self
+					with: currentNamespace
+					with: newNamespace)! !
 !Kernel.Package categoriesForMethods!
 about!commands!public! !
 aboutBlock!accessing!public! !
@@ -2161,6 +2166,7 @@ variableNames:!private! !
 variables!private!source filing! !
 versionIfRequired!public! !
 vmVersionCheck:!constants!private! !
+warnChangingDefaultNamespaceFrom:to:!helpers!private! !
 !
 
 !Kernel.Package class methodsFor!
