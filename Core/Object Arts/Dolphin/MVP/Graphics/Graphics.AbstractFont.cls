@@ -254,12 +254,6 @@ name: aString pointSize: anInteger
 		pointSize: anInteger;
 		yourself!
 
-onPreStripImage
-	"Private - The image is about to be stripped. Nil the lazily initialized cursors to allow
-	them to be removed (and also perhaps the ref to the resource library)."
-
-	self uninitialize!
-
 system
 	"Answer the stock System font."
 
@@ -273,7 +267,6 @@ icon!constants!public! !
 name:!instance creation!public! !
 name:pixelSize:!instance creation!public! !
 name:pointSize:!instance creation!public! !
-onPreStripImage!class hierarchy-removing!private! !
 system!instance creation!public! !
 !
 
