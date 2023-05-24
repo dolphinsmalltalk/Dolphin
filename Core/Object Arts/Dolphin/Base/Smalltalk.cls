@@ -115,14 +115,18 @@ setEvents: anEventsCollectionOrNil
 
 	events := anEventsCollectionOrNil!
 
+shortNameFor: aString
+	"Private - Answer the short name for the receiver's variable named, aString. The short name is the shortest name that binds to variable starting from the Smalltalk namespace. All of the receiver's variables are of course bindable by unqualified name."
+
+	^aString!
+
 shortNameFor: aString in: aNamespace
 	^(aNamespace isNil or: 
-			[aNamespace == self or: 
-					[(self fullBindingFor: aString)
-						ifNil: [self imports anySatisfy: [:each | each valueOrNil == aNamespace]]
-						ifNotNil: [:binding | binding environment == aNamespace or: [binding environment == self]]]])
+			[(self fullBindingFor: aString)
+				ifNil: [self imports anySatisfy: [:each | each valueOrNil == aNamespace]]
+				ifNotNil: [:binding | binding environment == aNamespace or: [binding environment == self]]])
 		ifTrue: [aString]
-		ifFalse: [aNamespace shortName , '.' , aString]!
+		ifFalse: [aNamespace relativeShortName: aString]!
 
 staticVariableRemoved: aVariableBinding
 	self
@@ -143,6 +147,7 @@ getEvents!events!private! !
 oldNames!accessing!public! !
 removeClass:!operations!public! !
 setEvents:!events!private! !
+shortNameFor:!enquiries!private! !
 shortNameFor:in:!helpers!private! !
 staticVariableRemoved:!class hierarchy-mutating!class variables!private! !
 !

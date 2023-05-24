@@ -66,12 +66,37 @@ testRefersToLiteral
 	self assert: (method refersToLiteral: subject).
 	self assert: (method refersToLiteral: subject environment).
 	self assert: (method refersToLiteral: subject environment environment).
-	self assert: (method refersToLiteral: subject environment environment environment)! !
+	self assert: (method refersToLiteral: subject environment environment environment)!
+
+testShortName
+	self assert: (Smalltalk bindings select: [:each | BindingReference isQualifiedName: each shortName])
+		equals: #().
+
+	"Root vars are bindable unqualified"
+	self assert: (Root bindings select: [:each | BindingReference isQualifiedName: each shortName])
+		equals: #().
+
+	"Class in Core, imported into Smalltalk so bindable using an unqualified name"
+	self assert: Object binding shortName equals: #Object.
+
+	"Ditto namespace variable in Core"
+	self assert: (Core bindingFor: #Processor) shortName equals: #Processor.
+
+	"Class var or a class in Kernel, which is imported, so partially qualified name is bindable"
+	self assert: (_PrimitiveFailureCode bindingFor: 'InvalidParameter') shortName
+		equals: '_PrimitiveFailureCode.InvalidParameter'.
+
+	"Class in child namespace of a Smalltalk imported namespace where the imported binding is ambiguous"
+	self assert: Core.Tests binding shortName equals: #Tests.
+	self assert: Core.Tests.ClassTest binding shortName equals: 'Tests.ClassTest'.
+	self assert: self class environment binding shortName equals: 'Kernel.Tests'.
+	self assert: self class binding shortName equals: 'Kernel.Tests.VariableBindingTest'! !
 !Kernel.Tests.VariableBindingTest categoriesForMethods!
 testAbsoluteName!public!unit tests! !
 testFullName!public! !
 testFullyQualifiedReference!public! !
 testIsClassBinding!public! !
 testRefersToLiteral!public!unit tests! !
+testShortName!public! !
 !
 

@@ -65,7 +65,14 @@ testMissingSmalltalkImport
 	
 	[Smalltalk setImports: (original copyWith: importBlah).
 	self assertIsNil: #Foo asQualifiedReference bindingOrNil]
-			ensure: [Smalltalk setImports: original]! !
+			ensure: [Smalltalk setImports: original]!
+
+testShortNameViaImport
+	"Test the case of a name that is bindable, but only by following an import path. This won't resolve for a NamespaceImport as these must always be the full unambiguous path from Root."
+
+	| subject |
+	subject := self newSubjectWithPathString: 'External.Array'.
+	self assert: subject shortName equals: 'External.Array'! !
 !Kernel.Tests.NamespaceImportTest categoriesForMethods!
 bindingTestCases!constants!private! !
 pathTestCases!private!unit tests! !
@@ -76,5 +83,6 @@ testBindingScope!public!unit tests! !
 testHome!public!unit tests! !
 testIsRelative!public!unit tests! !
 testMissingSmalltalkImport!public!unit tests! !
+testShortNameViaImport!public!unit tests! !
 !
 

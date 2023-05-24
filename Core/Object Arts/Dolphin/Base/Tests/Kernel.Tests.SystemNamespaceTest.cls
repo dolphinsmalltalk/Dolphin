@@ -49,6 +49,8 @@ testFullyQualifiedReference
 	self deny: ref isRelative!
 
 testShortName
+	"Root and Smalltalk's short names do not need qualification"
+
 	self assert: self subject shortName equals: self subject name! !
 !Kernel.Tests.SystemNamespaceTest categoriesForMethods!
 canonicalSubject!private! !

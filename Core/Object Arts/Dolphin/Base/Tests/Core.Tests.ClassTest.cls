@@ -150,7 +150,25 @@ testPoolBinding
 
 	self assert: (Exception fullBindingFor: 'WS_CHILD') notNil.
 	"But the imports are private, and so not be exported as externally resolvable names"
-	self assert: (Smalltalk fullBindingFor: 'Exception.WS_CHILD') isNil! !
+	self assert: (Smalltalk fullBindingFor: 'Exception.WS_CHILD') isNil!
+
+testShortName
+	"The short name of a class is the minimally qualified name required to bind it starting from the Smalltalk namespace"
+
+	"Object, a root class, is in Core, which is imported into Smalltalk, so bindable using its unqualified name"
+
+	self assert: Object shortName equals: 'Object'.
+	"Non-root imported classes"
+	self assert: Kernel.CompiledMethod shortName equals: #CompiledMethod.
+	self assert: External.DynamicLinkLibraryStub shortName equals: #DynamicLinkLibraryStub.
+	"Class requireing a fully-qualified short name"
+	self assert: TestRunConsoleLogger shortName equals: 'XProgramming.SUnit.TestRunConsoleLogger'.
+	"Aliased class"
+	self assert: Smalltalk.ExternalAddress shortName equals: #Address.
+	"The short name of a class in a nested namespace should be qualified with the short name of its namespace, not necessarily the full name"
+	self assert: self class shortName equals: 'Tests.ClassTest'.
+	"Core is imported before Kernel, so Tests in Core is bindable unqualified, but Kernel.Tests is not"
+	self assert: Kernel.Tests.NamespaceTest shortName equals: 'Kernel.Tests.NamespaceTest'! !
 !Core.Tests.ClassTest categoriesForMethods!
 allClassHierarchyInstancesDo:!helpers!private! !
 testAllRoots!public!unit tests! !
@@ -163,5 +181,6 @@ testIncludesNamespace!public!unit tests! !
 testLessOrEqual!public!unit tests! !
 testNestedClasses!public!unit tests! !
 testPoolBinding!public!unit tests! !
+testShortName!public!unit tests! !
 !
 

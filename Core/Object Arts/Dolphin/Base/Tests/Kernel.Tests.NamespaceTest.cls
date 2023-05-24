@@ -253,17 +253,13 @@ testResolveImportIntoCustomEnvironment
 
 testShortName
 	"The short name of a namespace is it's unqualified name if it is defined in Smalltalk, or in one of Smalltalk's imports, otherwise it is the full name."
-
-	self assert: Behavior shortName equals: 'Behavior'.
 	self assert: XProgramming shortName equals: 'XProgramming'.
 	self assert: XProgramming.SUnit shortName equals: 'XProgramming.SUnit'.
-	self assert: TestRunConsoleLogger shortName equals: 'XProgramming.SUnit.TestRunConsoleLogger'.
+
 	"Where there is ambiguity in imported namespaces, the order of imports takes precedence (Core is imported into Smaltlalk before Kernel)."
 	self assert: Core.Tests shortName equals: 'Tests'.
 	self assert: Kernel.Tests shortName equals: 'Kernel.Tests'.
-	"The short name of a class in a nested namespace should be qualified with the short name of its namespace, not necessarily the full name"
-	self assert: Core.Tests.ObjectTest shortName equals: 'Tests.ObjectTest'.
-	self assert: Kernel.Tests.NamespaceTest shortName equals: 'Kernel.Tests.NamespaceTest'!
+!
 
 testSimpleName
 	"#simpleName is defined for compatibility. It is the same as the #unqualifiedName (or indeed the #name)."

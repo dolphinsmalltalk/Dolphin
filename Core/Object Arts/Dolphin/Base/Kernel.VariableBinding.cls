@@ -52,10 +52,10 @@ asQualifiedReference
 displayOn: aPuttableStream
 	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	aPuttableStream nextPutAll: key!
+	aPuttableStream nextPutAll: self shortName!
 
 displayString
-	^key!
+	^self shortName!
 
 environment
 	^environment!
@@ -144,6 +144,11 @@ setFlags: anInteger
 	<mutable>
 	flags := anInteger!
 
+shortName
+	"Answer the <String> fully qualified name of this variable, which is a dot-separated path from (but not including) Smalltalk."
+
+	^environment shortNameFor: key!
+
 targetVariable
 	^self!
 
@@ -174,6 +179,7 @@ owningPackage!accessing!development!public! !
 owningPackage:!accessing!development!public! !
 refersTo:asLiteralOf:!private!testing! !
 setFlags:!accessing!private! !
+shortName!accessing!public! !
 targetVariable!accessing!public! !
 unqualifiedName!accessing!public! !
 !

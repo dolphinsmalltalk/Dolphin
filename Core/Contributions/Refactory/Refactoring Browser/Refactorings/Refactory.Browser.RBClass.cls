@@ -197,6 +197,9 @@ getInstanceSpec
 guid
 	^self realClass ifNotNil: [realClass guid]!
 
+importedNamespacesDo: aMonadicValuable
+	self imports do: [:each | each valueOrNil ifNotNil: [:ns | aMonadicValuable value: ns]]!
+
 imports
 	imports
 		ifNil: 
@@ -480,9 +483,12 @@ setSuperclass: aRBClass
 shortName
 	"Answer the shortest <String> name of the receiver that is bindable from Smalltalk. i.e. for classes defined directly in Smalltalk, or in any of its imports, this will be an unqualified name. Otherwise it is the fully qualified name relative to Smalltalk."
 
-	^self isInBaseEnvironment
-		ifTrue: [name]
-		ifFalse: [self model smalltalkNamespace shortNameFor: self unqualifiedName in: self environment]!
+	^(self environment ifNil: [self model smalltalkNamespace]) shortNameFor: self unqualifiedName!
+
+shortNameFor: aString
+	"Private - Answer the short name for the receiver's variable named, aString. The short name is the shortest name that binds to variable starting from the Smalltalk namespace. This may be unqualified, partially qualified, or fully-qualified."
+
+	^self model smalltalkNamespace shortNameFor: aString in: self!
 
 subclasses
 	^subclasses
@@ -546,6 +552,7 @@ fullyQualifiedReference!accessing!namespaces!public! !
 getEnvironment!accessing!public! !
 getInstanceSpec!accessing!private! !
 guid!accessing!public! !
+importedNamespacesDo:!public! !
 imports!accessing!public! !
 imports:!accessing!public! !
 includesEnvironment:!namespaces!public!testing! !
@@ -593,6 +600,7 @@ resolveUnqualifiedName:environment:!bindings!private! !
 setModel:name:realClass:!accessing!initializing!private! !
 setSuperclass:!initializing!private! !
 shortName!accessing!public! !
+shortNameFor:!enquiries!private! !
 subclasses!accessing!public! !
 superclass!accessing!public! !
 superclass:!accessing!private! !

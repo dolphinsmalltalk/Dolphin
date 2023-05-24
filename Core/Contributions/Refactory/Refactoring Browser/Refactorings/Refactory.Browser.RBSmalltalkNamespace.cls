@@ -12,6 +12,11 @@ Refactory.Browser.RBSmalltalkNamespace comment: ''!
 !Refactory.Browser.RBSmalltalkNamespace categoriesForClass!Refactory-Model! !
 !Refactory.Browser.RBSmalltalkNamespace methodsFor!
 
+shortNameFor: aString
+	"Private - Answer the short name for the receiver's variable named, aString. The short name is the shortest name that binds to variable starting from the Smalltalk namespace. All of the receiver's variables are of course bindable by unqualified name."
+
+	^aString!
+
 shortNameFor: aString in: aNamespace
 	^(aNamespace isNil or: 
 			[aNamespace == self or: 
@@ -21,6 +26,7 @@ shortNameFor: aString in: aNamespace
 		ifTrue: [aString]
 		ifFalse: [aNamespace fullNameFor: aString]! !
 !Refactory.Browser.RBSmalltalkNamespace categoriesForMethods!
+shortNameFor:!enquiries!private! !
 shortNameFor:in:!helpers!private! !
 !
 

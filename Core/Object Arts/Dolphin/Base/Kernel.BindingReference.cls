@@ -315,7 +315,15 @@ scope: anObject
 shortName
 	"Answer the shortest <String> name equivalent to the receiver's pathString that is bindable from Smalltalk. i.e. for variables defined directly in Smalltalk, or in any of its imports, this will be an unqualified name. Otherwise it is the fully qualified name relative to Smalltalk."
 
-	^Smalltalk shortNameFor: self basicUnqualifiedName in: self environment!
+	^self bindingOrNil
+		ifNil: 
+			["Not bindable, so try to bind environment to answer short name relative to that"
+			self environment
+				ifNil: 
+					["Environment not bindable either, so just answer the full name"
+					self pathString]
+				ifNotNil: [:ns | ns shortNameFor: self basicUnqualifiedName]]
+		ifNotNil: [:binding | binding shortName]!
 
 simpleName
 	"Answer the unqualified name part of the receiver (the final component of the name).

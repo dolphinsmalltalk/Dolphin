@@ -98,14 +98,19 @@ resolvePublicBinding: aBindingContext
 
 	^self bindingFor: aBindingContext identifier!
 
+shortNameFor: aString
+	"Private - Answer the short name for the receiver's variable named, aString. The short name is the shortest name that binds to the variable from a workspace for which the receiver is activing as a variable pool. Workspace variables are always unqualified."
+
+	^aString!
+
 unqualifiedName
 	^self anonymousName! !
 !Kernel.PoolDictionary categoriesForMethods!
 anonymousName!constants!private! !
-asQualifiedReference!private! !
+asQualifiedReference!converting!private! !
 associationClass!constants!private! !
 convertToSharedPool!development!private! !
-displayOn:!public! !
+displayOn:!displaying!public! !
 environment!accessing!public! !
 fullName!accessing!public! !
 fullNameFor:!helpers!private! !
@@ -114,7 +119,8 @@ name!accessing!public! !
 name:!accessing!private! !
 newAssociation:value:!helpers!private! !
 resolveLocalBindingPath:!bindings!private! !
-resolvePublicBinding:!private! !
+resolvePublicBinding:!bindings!private! !
+shortNameFor:!enquiries!private! !
 unqualifiedName!accessing!private! !
 !
 

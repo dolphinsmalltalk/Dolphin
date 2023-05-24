@@ -360,18 +360,31 @@ testRelativeNoScope
 	self should: [self newSubjectWithPath: #('_' 'Object')] raise: Error!
 
 testShortName
-	#(#Root #Smalltalk #Core #'Core.Class' #'Kernel.BindingContext') do: 
+	#(#Root #Smalltalk #Core 'Core.Class' 'Kernel.BindingContext' 'Kernel.Missing' 'Core.Tests' 'Core.Object' 'Object' 'Smalltalk.String') do: 
 			[:each |
 			| subject |
 			subject := self newSubjectWithPathString: each.
 			self assert: subject shortName equals: ($. split: each) last , self nameSuffix.
 			self assert: subject shortName equals: subject simpleName].
-	#('XProgramming.SUnit' 'XProgramming.SUnit.TestRunConsoleLogger') do: 
+	self assert: (self newSubjectWithPathString: 'Core.Tests.ClassTest') shortName
+		equals: 'Tests.ClassTest' , self nameSuffix.
+	#('XProgramming.SUnit' 'XProgramming.SUnit.TestRunConsoleLogger' 'Kernel.Tests.BindingReferenceTest')
+		do: 
 			[:each |
 			| subject |
 			subject := self newSubjectWithPathString: each.
 			self assert: subject shortName equals: subject pathString , self nameSuffix.
-			self deny: subject shortName equals: subject simpleName]!
+			self deny: subject shortName equals: subject simpleName].
+	"If the environment does not exist, then the short name should just be the path"
+	self deny: #{Foo} isDefined.
+	#('Foo' 'Foo.Bar')
+		do: [:each | self assert: (self newSubjectWithPathString: each) shortName equals: each , self nameSuffix]!
+
+testShortNameViaImport
+	"Test the case of a name that is bindable, but only by following an import path."
+	| subject |
+	subject := self newSubjectWithPathString: 'External.Array'.
+	self assert: subject shortName equals: 'Array' , self nameSuffix!
 
 testStoreString
 	self printStringTestCases do: 
@@ -455,6 +468,7 @@ testRefersToLiteralClass!public!unit tests! !
 testRefersToLiteralNotFound!public!unit tests! !
 testRelativeNoScope!public!unit tests! !
 testShortName!public!unit tests! !
+testShortNameViaImport!public!unit tests! !
 testStoreString!public!unit tests! !
 testUnqualifiedName!public!unit tests! !
 testValue!public!unit tests! !
