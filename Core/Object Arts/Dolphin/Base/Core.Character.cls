@@ -301,14 +301,12 @@ isControl
 isDigit
 	"Answer whether the receiver is one of the ASCII representations of a decimal-digit character (i.e. it is one of $0 $1 $2 $3 $4 $5 $6 $7 $8 $9). This is as defined in ANSI NCITS 319-1998. Unlike #isLetter, the implementation cannot define additional characters for which #isDigit is true, so this does not correspond to the Unicode Decimal Number general category, and will not include any decimal digits except the ASCII decimals."
 
-	^code >= ##($0 codePoint) and: [code <= ##($9 codePoint)]!
+	^code <= ##($9 code) and: [code >= ##($0 code)]!
 
 isEnglishLetter
 	"Answer whether the receiver is a letter from the English alphabet, i.e. [a-zA-Z]."
 
-	^code >= ##($a asciiValue)
-		ifTrue: [code <= ##($z asciiValue)]
-		ifFalse: [code >= ##($A asciiValue) and: [code <= ##($Z asciiValue)]]!
+	^code <= ##($z code) and: [code >= ##($a code) or: [code >= ##($A code) and: [code <= ##($Z code)]]]!
 
 isGraph
 	"Answer whether the receiver is a printable character, other than blanks. See also #isPrintable"
