@@ -662,6 +662,9 @@ fieldNamesFromTemplate
 fieldOffsetConstantPrefix
 	^'_OffsetOf_'!
 
+flags
+	^flags!
+
 fromAddress: anAddress
 	"Answer a new instance that points to the ExternalAddress 
 	respresented by anAddress (which responds to the protocol
@@ -699,6 +702,7 @@ hasUncompiledFields: aBoolean
 inheritTemplate
 	| ancestor |
 	ancestor := self superclass.
+	flags := ancestor flags.
 	template := ancestor template.
 	self byteSize: ancestor byteSize.
 	alignment := ancestor alignment!
@@ -1010,6 +1014,7 @@ elementSize!accessing!public! !
 ensureDefined!instance creation!private! !
 fieldNamesFromTemplate!accessing!private! !
 fieldOffsetConstantPrefix!constants!private!template definition! !
+flags!accessing!private! !
 fromAddress:!instance creation!public! !
 fromBytes:!instance creation!public! !
 getFieldNames!accessing!private! !
