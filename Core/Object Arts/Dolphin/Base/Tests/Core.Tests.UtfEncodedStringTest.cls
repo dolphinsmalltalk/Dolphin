@@ -190,6 +190,8 @@ testAsUppercase
 	"There are two lower-case forms of the greek letter Sigma."
 	self assert: ('Ὀδυσσεύς' asUppercase: de) equals: 'ὈΔΥΣΣΕΎΣ'.
 	self deny: ('Straße' asUppercase: de) equals: 'STRAẞE'.
+	"Single code-point ligature converted to 3 uppercase code points"
+	self assert: (self collectionClass with: $ﬄ) asUppercase equals: 'FFL'.
 	"Turkish dotted and dotless i should be converted correctly preserved the dot or absence of dot"
 	tr := Locale standard: 'tr-TR'.
 	self assert: ('ınteresting' asUppercase: tr) equals: 'INTERESTİNG'.
@@ -215,15 +217,10 @@ testBeginsWithExtended
 	comparand := Character dolphin asUtf16String , 'a£'.
 	self assert: (subject beginsWith: comparand)!
 
-testBeginsWithIgnoreCase
+testBeginsWithIgnoreCaseExtended
 	| subject comparand |
 	subject := self newCollection: { Character dolphin. $a. $\0. $£. $b. $c }.
-	self assert: (subject beginsWith: subject ignoreCase: true).
-	self assert: (subject beginsWith: subject ignoreCase: false).
-	comparand := self newCollection: { Character dolphin. $A. $\0. $£ }.
-	self assert: (subject beginsWith: comparand ignoreCase: true).
-	self deny: (subject beginsWith: comparand ignoreCase: false).
-	comparand := comparand asUtf16String.
+	comparand := Utf16String withAll: { Character dolphin. $A. $\0. $£ }.
 	self assert: (subject beginsWith: comparand ignoreCase: true).
 	self deny: (subject beginsWith: comparand ignoreCase: false).
 	"Note that this is an ordinal comparison, so linguistic case folding is not used."
@@ -959,7 +956,7 @@ equalityTestCases!constants!private! !
 indexOfTestCases!constants!private! !
 lengthTestCases!constants!private! !
 makeStringFromCodeUnits:!helpers!private! !
-matchingPairs!public! !
+matchingPairs!constants!private! !
 ordinalCaseConversionCases!constants!private! !
 reverseTestCases!constants!private! !
 testAllButFirst!public!unit tests! !
@@ -972,7 +969,7 @@ testAsAnsiStringDotlessI!public!unit tests! !
 testAsLowercase!public!unit tests! !
 testAsUppercase!public!unit tests! !
 testBeginsWithExtended!public!unit tests! !
-testBeginsWithIgnoreCase!public!unit tests! !
+testBeginsWithIgnoreCaseExtended!public!unit tests! !
 testCollect!public!unit tests! !
 testCompareEszett!public! !
 testConcatenation!public!unit tests! !
@@ -983,7 +980,7 @@ testCopyWithout!public!unit tests! !
 testCopyWithoutIndex!public!unit tests! !
 testCountElements!public!unit tests! !
 testDecodeAt!public!unit tests! !
-testDecodeNextFrom!constants!public! !
+testDecodeNextFrom!public!unit tests! !
 testDetectIfNoneExtended!public!unit tests! !
 testEncodeOnPut!public!unit tests! !
 testFindFirst!public!unit tests! !

@@ -45,18 +45,6 @@ testAsPhrase
 	self assert: #GetIDsOfNames:rgszNames:cNames:lcid:rgdispid: asPhrase
 		equals: 'Get IDs Of Names Rgsz Names C Names Lcid Rgdispid'!
 
-testBeginsWithIgnoreCase
-	| subject comparand |
-	subject := self newCollection: {$a. $\0. $£. $b. $c}.
-	self assert: (subject beginsWith: subject ignoreCase: true).
-	self assert: (subject beginsWith: subject ignoreCase: false).
-	comparand := self newCollection: {$A. $\0. $£}.
-	self assert: (subject beginsWith: comparand ignoreCase: true).
-	self deny: (subject beginsWith: comparand ignoreCase: false).
-	comparand := self newCollection: {$A. $\0. $b. $£}.
-	self deny: (subject beginsWith: comparand ignoreCase: false).
-	self deny: (subject beginsWith: comparand ignoreCase: true)!
-
 testClassWith
 	self assert: (AnsiString with: $a) equals: 'a' asAnsiString.
 	self assert: (AnsiString with: Character replacement)
@@ -191,7 +179,6 @@ assimilate:!helpers!private! !
 assimilateString:!helpers!private! !
 collectionClass!helpers!private! !
 testAsPhrase!public!unit tests! !
-testBeginsWithIgnoreCase!public!unit tests! !
 testClassWith!public! !
 testConcatenateInvalidUtf16!public!unit tests! !
 testConcatenateInvalidUtf8!public!unit tests! !
