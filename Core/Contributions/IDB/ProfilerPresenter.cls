@@ -56,7 +56,9 @@ model: aProfilerSampleSet
 	self filterChanged!
 
 parseContext
-	^self selectedMethod!
+	^self selectedMethod
+		ifNotNil: [:method | method parseContext]
+		ifNil: [self systemModel defaultParseContext]!
 
 selectedMethod
 	^nil!

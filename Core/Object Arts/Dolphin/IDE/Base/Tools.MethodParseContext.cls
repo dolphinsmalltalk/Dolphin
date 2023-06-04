@@ -22,12 +22,19 @@ methodClass
 	^method methodClass!
 
 owningPackage
-	^method owningPackage! !
+	^method owningPackage!
+
+printOn: aStream
+	aStream
+		print: self species;
+		nextPutAll: ' method: ';
+		print: method! !
 !Tools.MethodParseContext categoriesForMethods!
 environment!accessing!public! !
 method:!initializing!private! !
 methodClass!accessing!public! !
 owningPackage!accessing!public! !
+printOn:!printing!public! !
 !
 
 !Tools.MethodParseContext class methodsFor!

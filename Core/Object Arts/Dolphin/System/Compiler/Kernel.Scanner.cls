@@ -56,7 +56,7 @@ contents
 	"This doesn't behave like #contents on streams in that it does not reset to the start of the token stream"
 
 	#deprecated.
-	self upToEnd!
+	^self upToEnd!
 
 do: aBlock
 	"Evaluate the argument, aBlock, for each of the _remaining_ elements that can be accessed by the receiver.
@@ -187,20 +187,6 @@ newIntegerToken: significandInteger exponent: exponentInteger
 		stop: self previousStepPosition
 		source: buffer contents!
 
-newScaledDecimalToken: significandInteger precision: precisionInteger scale: scaleInteger
-	| decimalValue |
-	decimalValue := scaleInteger <= ScaledDecimal maxPrecision
-				ifTrue: [ScaledDecimal newFromNumber: significandInteger / precisionInteger exp10 scale: scaleInteger]
-				ifFalse: 
-					[self illegalNumber.
-					0s].
-	^StNumberLiteralToken
-		start: tokenStart
-		comments: nil
-		value: decimalValue
-		stop: self previousStepPosition
-		source: buffer contents!
-
 next
 	| token |
 	buffer reset.
@@ -222,19 +208,29 @@ previousStepPosition
 		ifTrue: [stream position]
 		ifFalse: [stream position - 1]!
 
+readDecimalInteger
+	| value digit |
+	
+	[currentCharacter isNil or: 
+			[digit := currentCharacter code - ##($0 code).
+			digit > 9 or: [digit < 0]]]
+			whileFalse: 
+				[buffer nextPut: currentCharacter.
+				self step.
+				value := (value ?? 0) * 10 + digit].
+	^value!
+
 readIntegerOfRadix: anInteger
-	| value |
-	value := nil.
-	[currentCharacter isNil] whileFalse: 
-			[| digit |
-			((digit := #[127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 0 1 2 3 4 5 6 7 8 9 127 127 127 127 127 127 127 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127]
+	| value digit |
+	
+	[currentCharacter isNil or: 
+			[((digit := #[127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 0 1 2 3 4 5 6 7 8 9 127 127 127 127 127 127 127 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127]
 						lookup: currentCharacter code) ?? 127)
-				< anInteger
-					ifTrue: 
-						[buffer nextPut: currentCharacter.
-						self step.
-						value := (value ?? 0) * anInteger + digit]
-					ifFalse: [^value]].
+				>= anInteger]]
+			whileFalse: 
+				[buffer nextPut: currentCharacter.
+				self step.
+				value := (value ?? 0) * anInteger + digit].
 	^value!
 
 recoverFromUnterminatedComment: anInteger 
@@ -299,7 +295,7 @@ scanExponentInteger: significandInteger
 	self step.
 	sign := self scanSign.
 	^self newIntegerToken: significandInteger
-		exponent: ((self readIntegerOfRadix: 10)
+		exponent: (self readDecimalInteger
 				ifNotNil: [:exp | exp * sign]
 				ifNil: 
 					[self stepBackTo: pos.
@@ -495,17 +491,13 @@ scanNameSpaceName
 
 scanNumber: signInteger
 	| integerPart |
-	(integerPart := self readIntegerOfRadix: 10)
-		ifNil: 
-			["This should not happen since we have previously detected a digit"
-			^self error: 'internal error'].
+	integerPart := self readDecimalInteger.
 	"The type of number is determined by what we find next"
-	currentCharacter == $.
-		ifTrue: [^self scanSmalltalkReal: integerPart sign: signInteger]
-		ifFalse: 
+	characterType == #alphabetic
+		ifTrue: 
 			[currentCharacter == $r
 				ifTrue: 
-					[(integerPart between: 2 and: 36)
+					[(integerPart >= 2 and: [integerPart <= 36])
 						ifTrue: 
 							[| pos |
 							pos := stream position.
@@ -523,16 +515,14 @@ scanNumber: signInteger
 				ifFalse: 
 					[currentCharacter == $s
 						ifTrue: 
-							["s will always be part of token, regardless if there is a scale value"
-							buffer nextPut: $s.
-							self step.
-							^self
-								newScaledDecimalToken: integerPart * signInteger
+							[^self
+								scanScaledDecimal: integerPart * signInteger
 								precision: 0
-								scale: (self readIntegerOfRadix: 10) ?? 0]
+								defaultScale: 0]
 						ifFalse: 
 							["Also support St-80 format integer of the form 1e5, not valid ANSI syntax though"
-							currentCharacter == $e ifTrue: [^self scanExponentInteger: integerPart * signInteger]]]].
+							currentCharacter == $e ifTrue: [^self scanExponentInteger: integerPart * signInteger]]]]
+		ifFalse: [currentCharacter == $. ifTrue: [^self scanSmalltalkReal: integerPart sign: signInteger]].
 	^StNumberLiteralToken
 		start: tokenStart
 		comments: nil
@@ -558,6 +548,23 @@ scanQualifiedReference
 	token := StQualifiedReferenceToken start: tokenStart.
 	self step.
 	^token!
+
+scanScaledDecimal: aNumber precision: precisionInteger defaultScale: scaleInteger
+	| value scale |
+	buffer nextPut: $s.
+	self step.
+	scale := self readDecimalInteger ?? scaleInteger.
+	value := scale <= ScaledDecimal maxPrecision
+				ifTrue: [ScaledDecimal newFromNumber: aNumber / precisionInteger exp10 scale: scale]
+				ifFalse: 
+					[self illegalNumber.
+					aNumber negative ifTrue: [-1s] ifFalse: [1s]].
+	^StNumberLiteralToken
+		start: tokenStart
+		comments: nil
+		value: value
+		stop: self previousStepPosition
+		source: buffer contents!
 
 scanSign
 	^currentCharacter == $-
@@ -590,7 +597,7 @@ scanSmalltalkReal: anInteger sign: signInteger
 	buffer nextPut: $..
 	self step.
 	fractionStart := stream position.
-	fractionalPart := self readIntegerOfRadix: 10.
+	fractionalPart := self readDecimalInteger.
 	scale := self previousStepPosition - fractionStart + 1.
 	significand := fractionalPart == 0
 				ifTrue: 
@@ -610,7 +617,7 @@ scanSmalltalkReal: anInteger sign: signInteger
 			self step.
 			"Allow plus prefix on the exponent, although not ANSI Smalltalk syntax"
 			exponentSign := self scanSign.
-			exponent := self readIntegerOfRadix: 10.
+			exponent := self readDecimalInteger.
 			exponent
 				ifNil: 
 					["Found Float with trailing exponent character which is not
@@ -622,12 +629,10 @@ scanSmalltalkReal: anInteger sign: signInteger
 		ifFalse: 
 			[currentCharacter == $s
 				ifTrue: 
-					[buffer nextPut: $s.
-					self step.	"Skip the $s"
-					^self
-						newScaledDecimalToken: significand * signInteger
+					[^self
+						scanScaledDecimal: significand * signInteger
 						precision: precision
-						scale: (self readIntegerOfRadix: 10) ?? scale].
+						defaultScale: scale].
 			exponent := 0].
 	^self
 		newFloatToken: significand
@@ -674,11 +679,11 @@ scanSymbol
 					lastColon := stream position.
 					self step]].
 	value := buffer contents.
-	(lastColon notNil and: [value lastCodeUnit ~~ $:])
+	(lastColon notNil and: [(value at: value size) ~~ $:])
 		ifTrue: 
 			[stream position: lastColon.
 			self step.
-			value := value first: lastColon - startPosition + 1].
+			value := value copyFrom: 1 to: lastColon - startPosition + 1].
 	^StLiteralSymbolToken
 		start: tokenStart
 		comments: nil
@@ -760,10 +765,10 @@ literalErrorToken:stop:!error handling!private! !
 metaVariableExpected!error handling!private! !
 newFloatToken:precision:exponent:!helpers!private! !
 newIntegerToken:exponent:!helpers!private! !
-newScaledDecimalToken:precision:scale:!helpers!private! !
 next!accessing!public! !
 notificationClass!constants!error handling!private! !
 previousStepPosition!accessing!private! !
+readDecimalInteger!private!scanning! !
 readIntegerOfRadix:!private!scanning! !
 recoverFromUnterminatedComment:!error handling!private! !
 reportError:at:line:range:extras:!error handling!private! !
@@ -784,6 +789,7 @@ scanNameSpaceName!private!scanning! !
 scanNumber:!private!scanning! !
 scanOptimized!private!scanning! !
 scanQualifiedReference!private!scanning! !
+scanScaledDecimal:precision:defaultScale:!private!scanning! !
 scanSign!private!scanning! !
 scanSmalltalkReal:sign:!private!scanning! !
 scanSpecialCharacter!private!scanning! !

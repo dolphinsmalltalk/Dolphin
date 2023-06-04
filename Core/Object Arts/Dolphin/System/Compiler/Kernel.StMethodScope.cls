@@ -12,16 +12,34 @@ Kernel.StMethodScope comment: ''!
 !Kernel.StMethodScope categoriesForClass!Kernel-Objects! !
 !Kernel.StMethodScope methodsFor!
 
+environment
+	^node environment!
+
 environment: aNamespace
 	super environment: aNamespace.
 	node environment: aNamespace!
 
 methodScope
-	^self! !
+	^self!
+
+owningPackage
+	| class |
+	class := self methodClass.
+	^(class compiledMethodAt: self selector ifAbsent: nil)
+		ifNil: [class owningPackage]
+		ifNotNil: [:method | method owningPackage]!
+
+selector
+	^node selector! !
 !Kernel.StMethodScope categoriesForMethods!
+environment!accessing!public! !
 environment:!accessing!public! !
 methodScope!accessing!public! !
+owningPackage!public! !
+selector!accessing!public! !
 !
+
+Kernel.StMethodScope methodProtocol: #parseContext attributes: #(#readOnly) selectors: #(#environment #methodClass #owningPackage #resolveIdentifier:)!
 
 !Kernel.StMethodScope class methodsFor!
 

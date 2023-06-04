@@ -199,11 +199,6 @@ fromRectangle: aRectangle
 		bottom: aRectangle bottom
 !
 
-icon
-	"Answer a suitable iconic representation for the receiver."
-
-	^Graphics.Rectangle icon!
-
 left: left top: top right: right bottom: bottom
 	^self subclassResponsibility!
 
@@ -249,7 +244,6 @@ origin: originPoint extent: extentPoint
 !External.RECT class categoriesForMethods!
 extent:!instance creation!public! !
 fromRectangle:!instance creation!public! !
-icon!constants!public! !
 left:top:right:bottom:!instance creation!public! !
 left:top:width:height:!instance creation!public! !
 marshal:!instance creation!public! !

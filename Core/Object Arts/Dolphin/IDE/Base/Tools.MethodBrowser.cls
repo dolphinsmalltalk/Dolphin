@@ -816,7 +816,10 @@ onViewOpened
 	self applyOptions!
 
 parseContext
-	^parentPresenter ifNotNil: [parentPresenter parseContext]!
+	parentPresenter ifNotNil: [^parentPresenter parseContext].
+	^self selectedMethod
+		ifNil: [self developmentSystem defaultParseContext]
+		ifNotNil: [:method | method parseContext]!
 
 parseTree
 	^sourcePresenter parseTree!

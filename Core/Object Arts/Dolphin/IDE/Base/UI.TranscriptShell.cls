@@ -64,7 +64,7 @@ clearAll
 	| newBuffer |
 	self flush.
 	self hasOutputWindow ifTrue: [outputWindow clear].
-	newBuffer := String writeStream.
+	newBuffer := String smalltalkWriteStream.
 	bufferProtect critical: [buffer := newBuffer]!
 
 close

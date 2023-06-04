@@ -61,8 +61,6 @@ setMethodClass:environment:identifier:!initializing!private! !
 visitImport:from:!public! !
 !
 
-Kernel.BindingContext methodProtocol: #parseContext attributes: #(#readOnly) selectors: #(#environment #methodClass #owningPackage)!
-
 !Kernel.BindingContext class methodsFor!
 
 methodClass: aClass environment: aNamespace identifier: aString

@@ -443,7 +443,7 @@ temps
 tempsBeforeIp: anInteger
 	"Private - Answer a list of temporaries for the instruction before the specified ip."
 
-	^anInteger isNil ifTrue: [{}] ifFalse: [self basicMethod debugInfo tempsAtIp: anInteger - 1]!
+	^anInteger isNil ifTrue: [#()] ifFalse: [self basicMethod debugInfo tempsAtIp: anInteger - 1]!
 
 textMap
 	"Private - Answer the map between source text and ip values for the receiver's method."

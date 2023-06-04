@@ -28,12 +28,16 @@ resolveIdentifier: aString
 			[:each |
 			(each bindingFor: aString)
 				ifNotNil: [:binding | ^StWorkspaceVariable scope: self binding: binding]].
-	^outer resolveIdentifier: aString! !
+	^outer resolveIdentifier: aString!
+
+visibleVariablesDo: aMonadicValuable visited: aSet
+	outer visibleVariablesDo: aMonadicValuable visited: aSet! !
 !Kernel.StEvalScope categoriesForMethods!
 outer!accessing!public! !
 outer:!initializing!private! !
 pools:!initializing!private! !
 resolveIdentifier:!operations!private! !
+visibleVariablesDo:visited:!operations!public! !
 !
 
 !Kernel.StEvalScope class methodsFor!

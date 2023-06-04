@@ -63,6 +63,9 @@ isInlined
 isStaticExpressionNode
 	^true!
 
+left: leftInteger
+	left := leftInteger!
+
 left: leftInteger body: aSequenceNode right: rightInteger 
 	left := leftInteger.
 	self body: aSequenceNode.
@@ -84,6 +87,9 @@ postCopy
 
 precedence
 	^0!
+
+right: rightInteger 
+	right := rightInteger!
 
 setValue: anObject
 	<mutable>
@@ -123,12 +129,14 @@ initialize!initializing!public! !
 isImmediateNode!public!testing! !
 isInlined!public!testing! !
 isStaticExpressionNode!public!testing! !
+left:!initializing!private! !
 left:body:right:!initializing!public! !
 methodClass!accessing!private! !
 methodClass:!accessing!private! !
 needsParenthesis!public!testing! !
 postCopy!copying!public! !
 precedence!accessing!public! !
+right:!initializing!private! !
 setValue:!public! !
 source!accessing!public! !
 source:!accessing!private! !
@@ -146,11 +154,11 @@ body: aSequenceNode
 initialize
 	UnevaluatedCookie := Object new!
 
-left: leftInteger body: aSequenceNode right: rightInteger 
-	^(self new)
-		left: leftInteger
-			body: aSequenceNode
-			right: rightInteger;
+left: leftInteger body: aSequenceNode right: rightInteger
+	^self new
+		left: leftInteger;
+		body: aSequenceNode;
+		right: rightInteger;
 		yourself!
 
 new

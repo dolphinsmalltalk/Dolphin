@@ -29,9 +29,9 @@ childrenDo: aMonadicValuable
 contents
 	^contents!
 
-contents: aRBLiteralNodeCollection 
-	contents := aRBLiteralNodeCollection.
-	contents do: [:each | each parent: self]!
+contents: anArray
+	contents := anArray.
+	1 to: contents size do: [:i | (contents at: i) parent: self]!
 
 copyInContext: aDictionary
 	^self class

@@ -112,9 +112,7 @@ onViewOpened
 
 parseContext
 	^self selectedMethod
-		ifNil: 
-			[ParseContext methodClass: (model modelClassFor: UndefinedObject)
-				environment: (model modelClassFor: Smalltalk)]
+		ifNil: [model defaultParseContext]
 		ifNotNil: [:method | (model modelMethodFor: method) parseContext]!
 
 recompileDiffs

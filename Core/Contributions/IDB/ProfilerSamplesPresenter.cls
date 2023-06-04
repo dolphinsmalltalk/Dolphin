@@ -139,7 +139,9 @@ onViewOpened
 	self workspace view isReadOnly: true!
 
 parseContext
-	^self selectedMethod!
+	^self selectedMethod
+		ifNotNil: [:method | method parseContext]
+		ifNil: [self systemModel defaultParseContext]!
 
 queryCommand: aCommandQuery
 	"Private - Enter details about a potential command for the receiver into the <CommandQuery>."

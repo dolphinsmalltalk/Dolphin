@@ -649,6 +649,9 @@ hasOverrideSelected
 hasVariableSelected
 	^variablesPresenter hasSelection!
 
+iconForVariable: aStVariable
+	^aStVariable iconInFrame: self frame!
+
 implementDNUMenu
 	<commandQuery: #queryImplementMenu:>
 	!
@@ -1059,7 +1062,9 @@ onWalkback: titleString topFrame: aStackFrame resumable: aBoolean
 	self suspendProcess!
 
 parseContext
-	^self selectedMethod ifNotNil: [:method | method parseContext]!
+	^self selectedMethod
+		ifNil: [model defaultParseContext]
+		ifNotNil: [:method | (model modelMethodFor: method) parseContext]!
 
 parseTree
 	^sourcePresenter parseTree!
@@ -1968,6 +1973,7 @@ hasMoreFrames!private!testing! !
 hasMutableVariableSelected!private!testing! !
 hasOverrideSelected!private!testing! !
 hasVariableSelected!private!testing! !
+iconForVariable:!public! !
 implementDNUMenu!commands-menus!private! !
 initialize!initializing!private! !
 inspectFrame!commands-actions!private! !
@@ -2071,7 +2077,7 @@ userBreak!commands-actions!private! !
 !
 
 Tools.Debugger methodProtocol: #debugEventHandler attributes: #(#readOnly) selectors: #(#onBreak: #onHalt: #onStep: #onTerminate #onWalkback:topFrame:resumable:)!
-Tools.Debugger methodProtocol: #variableMetadataProvider attributes: #(#readOnly) selectors: #(#classForVariable: #tipForVariable:)!
+Tools.Debugger methodProtocol: #variableMetadataProvider attributes: #() selectors: #(#classForVariable: #iconForVariable: #tipForVariable:)!
 
 !Tools.Debugger class methodsFor!
 

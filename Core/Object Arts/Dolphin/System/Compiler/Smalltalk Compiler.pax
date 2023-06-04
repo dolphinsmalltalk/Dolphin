@@ -6,7 +6,7 @@ package paxVersion: 2.1;
 
 
 package setClassNames: #(
-	#{Kernel.AbstractSemanticAnalyser}
+	#{Kernel.SemanticAnalyser}
 	#{Kernel.StArgumentVariable}
 	#{Kernel.StaticVariableBinder}
 	#{Kernel.StBlockScope}
@@ -69,20 +69,20 @@ Core.Object
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Kernel.ParseNodeVisitor
-	subclass: #'Kernel.AbstractSemanticAnalyser'
+	subclass: #'Kernel.SemanticAnalyser'
 	instanceVariableNames: 'methodNode classScope currentScope evalScope errorBlock scopes inStaticExpression inTag'
 	classVariableNames: ''
 	imports: #(#{Kernel.ParseErrorCodes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.AbstractSemanticAnalyser
+Kernel.SemanticAnalyser
 	subclass: #'Kernel.StaticVariableBinder'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.AbstractSemanticAnalyser
+Kernel.SemanticAnalyser
 	subclass: #'Kernel.StSemanticAnalyser'
 	instanceVariableNames: 'literals stringLiterals tempDecls isMutator'
 	classVariableNames: 'OptimizedMessages'
@@ -231,7 +231,7 @@ newClassScope!accessing!private! !
 !Kernel.StProgramNode methodsFor!
 
 classScope
-	^scope classScope!
+	^scope ifNotNil: [scope classScope]!
 
 methodScope
 	^scope methodScope! !

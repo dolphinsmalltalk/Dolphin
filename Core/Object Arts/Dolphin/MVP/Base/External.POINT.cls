@@ -702,11 +702,6 @@ fromPoint: aPoint
 getFieldNames
 	^#(#x #y)!
 
-icon
-	"Answer a suitable iconic representation for the receiver."
-
-	^Graphics.Point icon!
-
 marshal: aPoint
 	"Answer a new instance of the receiver representing aPoint."
 
@@ -724,7 +719,6 @@ x: x y: y
 !External.POINT class categoriesForMethods!
 fromPoint:!instance creation!public! !
 getFieldNames!constants!private! !
-icon!constants!development!public! !
 marshal:!instance creation!public! !
 x:y:!instance creation!public! !
 !

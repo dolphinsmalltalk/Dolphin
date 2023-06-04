@@ -33,6 +33,11 @@ package setMethodNames: #(
 	#(#{UI.Scintilla.ScintillaView} #sciSetEdgeColumn:)
 	#(#{UI.Scintilla.ScintillaView} #secondarySelectionAlpha:)
 	#(#{UI.Scintilla.ScintillaView} #selectionAlpha:)
+	#(#{UI.Scintilla.ScintillaView} #tokenEndAt:)
+	#(#{UI.Scintilla.ScintillaView} #tokenRangeAt:)
+	#(#{UI.Scintilla.ScintillaView} #tokensFrom:to:)
+	#(#{UI.Scintilla.ScintillaView} #tokenStartAt:)
+	#(#{UI.Scintilla.ScintillaView} #tokenTextAt:)
 ).
 
 package setPrerequisites: #(
@@ -220,7 +225,27 @@ secondarySelectionAlpha: alphaInteger
 
 selectionAlpha: alphaInteger
 	#deprecated.	"Retained as used in old saved view state."
-	self selectionBackcolor: (self selectionBackcolor alpha: alphaInteger)! !
+	self selectionBackcolor: (self selectionBackcolor alpha: alphaInteger)!
+
+tokenEndAt: anInteger
+	#deprecated.	"Imprecise terminology, too easily confused with real scanner tokens. The 'tokens' here are just runs of the same style."
+	^self styleRunEndAt: anInteger!
+
+tokenRangeAt: anInteger
+	#deprecated.	"Imprecise terminology, too easily confused with real scanner tokens. The 'tokens' here are just runs of the same style."
+	^self styleRunRangeAt: anInteger!
+
+tokensFrom: startInteger to: stopInteger
+	#deprecated.	"Imprecise terminology, too easily confused with real scanner tokens. The 'tokens' here are just runs of the same style."
+	^self styleRunsFrom: startInteger to: stopInteger!
+
+tokenStartAt: anInteger
+	#deprecated.	"Imprecise terminology, too easily confused with real scanner tokens. The 'tokens' here are just runs of the same style."
+	^self styleRunStartAt: anInteger!
+
+tokenTextAt: anInteger
+	#deprecated.
+	^self styleRunTextAt: anInteger! !
 !UI.Scintilla.ScintillaView categoriesForMethods!
 currentLineAlpha:!caret, selection, and hotspot styles!public! !
 firstVisibleLine:!public!scrolling! !
@@ -240,6 +265,11 @@ marginCount:!margins!public!scintilla interface! !
 sciSetEdgeColumn:!long lines!private!scintilla interface! !
 secondarySelectionAlpha:!caret, selection, and hotspot styles!public! !
 selectionAlpha:!caret, selection, and hotspot styles!public! !
+tokenEndAt:!enquiries!public! !
+tokenRangeAt:!enquiries!public! !
+tokensFrom:to:!public!text retrieval & modification! !
+tokenStartAt:!enquiries!public! !
+tokenTextAt:!enquiries!public! !
 !
 
 "End of package definition"!

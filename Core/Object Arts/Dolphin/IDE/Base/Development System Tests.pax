@@ -16,6 +16,7 @@ package setClassNames: #(
 	#{Tools.Tests.MethodSearchTest}
 	#{Tools.Tests.MockScintillaView}
 	#{Tools.Tests.PackageEnvironmentTest}
+	#{Tools.Tests.ParseContextTest}
 	#{Tools.Tests.ProductReleaseTest}
 	#{Tools.Tests.SmalltalkSystemTest}
 	#{Tools.Tests.SmalltalkWorkspaceTest}
@@ -33,7 +34,7 @@ package setMethodNames: #(
 	#(#{Kernel.Tests.ParserErrorTest} #testWarnMsgUnimplemented)
 	#(#{Kernel.Tests.ParserErrorTest} #testWarnUndefinedSelector)
 	#(#{Kernel.Tests.ParserErrorTest} #testWarnUnimplementedAbstractMethod)
-	#(#{UI.Scintilla.Tests.ScintillaViewTest} #testTokensFromTo)
+	#(#{UI.Scintilla.Tests.ScintillaViewTest} #testStyleRunsFromTo)
 	#(#{UI.Tests.BorderLayoutTest} #testResourceBrowserPreview)
 ).
 
@@ -53,8 +54,11 @@ package setPrerequisites: #(
 	'..\..\MVP\Models\Value\Dolphin Value Models'
 	'..\..\Lagoon\Lagoon Image Stripper'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
+	'..\..\..\..\Contributions\Refactory\RBNamespaces'
+	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Refactorings\RBRefactorings'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\SmallLint\RBSmallLint'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Tests\RBTests'
+	'..\..\System\Compiler\Smalltalk Compiler'
 	'..\..\System\Compiler\Tests\Smalltalk Compiler Tests'
 	'..\..\System\Compiler\Smalltalk Parser'
 	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
@@ -109,6 +113,13 @@ Core.Tests.DolphinTest
 	classConstants: {}!
 Core.Tests.DolphinTest
 	subclass: #'Tools.Tests.MethodSearchTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest
+	subclass: #'Tools.Tests.ParseContextTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -310,7 +321,7 @@ testWarnUnimplementedAbstractMethod!public!unit tests! !
 
 !UI.Scintilla.Tests.ScintillaViewTest methodsFor!
 
-testTokensFromTo
+testStyleRunsFromTo
 	| tokens expected styler |
 	presenter textStyles: Tools.SmalltalkWorkspace textStyles.
 	presenter stylerClass: Tools.SmalltalkExpressionStyler.
@@ -319,12 +330,12 @@ testTokensFromTo
 			[:text |
 			presenter text: text.
 			presenter restyleAll.
-			tokens := (presenter tokensFrom: 1 to: presenter textLength) asArray.
+			tokens := (presenter styleRunsFrom: 1 to: presenter textLength) asArray.
 			expected := (Scanner on: presenter text readStream) upToEnd
 						collect: [:each | (styler styleNameFor: each) -> (text copyFrom: each start to: each stop)].
 			self assert: tokens equals: expected]! !
 !UI.Scintilla.Tests.ScintillaViewTest categoriesForMethods!
-testTokensFromTo!public!unit tests! !
+testStyleRunsFromTo!public!unit tests! !
 !
 
 !UI.Tests.BorderLayoutTest methodsFor!

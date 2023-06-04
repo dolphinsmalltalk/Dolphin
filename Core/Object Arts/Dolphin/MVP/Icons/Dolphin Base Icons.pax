@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin Base Icons'.
 package paxVersion: 2.1;
+	environmentName: #{Graphics};
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Base Icons
 Copyright (c) Object Arts Ltd, 2018.
@@ -76,6 +77,8 @@ package setMethodNames: #(
 	#(#{External.ExternalArray class} #icon)
 	#(#{External.FLOAT class} #icon)
 	#(#{External.INTEGER class} #icon)
+	#(#{External.POINT class} #icon)
+	#(#{External.RECT class} #icon)
 	#(#{External.Structure class} #icon)
 	#(#{Graphics class} #icon)
 	#(#{Graphics.Color} #icon)
@@ -91,6 +94,7 @@ package setMethodNames: #(
 	#(#{Kernel.CompileFailedMethod class} #icon)
 	#(#{Kernel.Compiler class} #icon)
 	#(#{Kernel.CompilerNotification class} #icon)
+	#(#{Kernel.Context class} #icon)
 	#(#{Kernel.DeadObject class} #icon)
 	#(#{Kernel.DeafObject class} #icon)
 	#(#{Kernel.FullBindingReference class} #icon)
@@ -124,6 +128,7 @@ package setMethodNames: #(
 	#(#{UI.GridLayout class} #icon)
 	#(#{UI.Keyboard class} #icon)
 	#(#{UI.LayoutManager class} #icon)
+	#(#{UI.LayoutPosition class} #icon)
 	#(#{UI.ProportionalLayout class} #icon)
 	#(#{UI.RadioButton class} #icon)
 	#(#{UI.RadioButtonSetPresenter class} #icon)
@@ -768,10 +773,11 @@ icon!constants!public! !
 !Core.UndefinedObject class methodsFor!
 
 icon
-	"Answers an Icon that can be used to represent this class: ☢"
+	"Answers an Icon that can be used to represent this class: ⯑"
 
-	<namespace: Graphics>
-	^##(TextTileIcon text: $\x2622 fontName: 'Segoe UI Emoji')! !
+	^##((TextTileIcon text: $\x2BD1 fontName: 'Georgia')
+		textcolor: Color navy;
+		yourself)! !
 !Core.UndefinedObject class categoriesForMethods!
 icon!constants!public! !
 !
@@ -867,7 +873,9 @@ icon!constants!public! !
 icon
 	"Answer a suitable iconic representation for the receiver."
 
-	^Float icon! !
+	^##((TextTileIcon text: '0.8' fontName: 'Arial Narrow')
+		textcolor: Color darkGreen;
+		yourself)! !
 !External.DOUBLE class categoriesForMethods!
 icon!constants!public! !
 !
@@ -887,7 +895,9 @@ icon!constants!public! !
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^Array icon! !
+	^##((TextTileIcon text: '#()' fontName: 'Arial')
+		textcolor: Color darkGreen;
+		yourself)! !
 !External.ExternalArray class categoriesForMethods!
 icon!constants!public! !
 !
@@ -897,7 +907,9 @@ icon!constants!public! !
 icon
 	"Answer a suitable iconic representation for the receiver."
 
-	^Float icon! !
+	^##((TextTileIcon text: '0.8' fontName: 'Arial Narrow')
+		textcolor: Color darkGreen;
+		yourself)! !
 !External.FLOAT class categoriesForMethods!
 icon!constants!public! !
 !
@@ -905,10 +917,36 @@ icon!constants!public! !
 !External.INTEGER class methodsFor!
 
 icon
- 	"Answers an Icon that can be used to represent this class"
- 
-	^Integer icon! !
+	"Answers an Icon that can be used to represent this class"
+
+	^##((TextTileIcon text: '42' fontName: 'Arial')
+		textcolor: Color darkGreen;
+		yourself)! !
 !External.INTEGER class categoriesForMethods!
+icon!constants!public! !
+!
+
+!External.POINT class methodsFor!
+
+icon
+	"Answer a suitable iconic representation for the receiver."
+
+	^##((TextTileIcon text: $\x2316 fontName: 'Arial')
+		textcolor: Color darkGreen;
+		yourself)! !
+!External.POINT class categoriesForMethods!
+icon!constants!development!public! !
+!
+
+!External.RECT class methodsFor!
+
+icon
+	"Answer a suitable iconic representation for the receiver."
+
+	^##((TextTileIcon text: $\x25AC fontName: 'Cambria')
+		textcolor: Color darkGreen;
+		yourself)! !
+!External.RECT class categoriesForMethods!
 icon!constants!public! !
 !
 
@@ -1075,6 +1113,16 @@ icon
 
 	^self severityClass icon! !
 !Kernel.CompilerNotification class categoriesForMethods!
+icon!constants!public! !
+!
+
+!Kernel.Context class methodsFor!
+
+icon
+	^##((TextTileIcon text: $\x25A4 fontName: 'Segoe UI')
+		textcolor: Color navy;
+		yourself)! !
+!Kernel.Context class categoriesForMethods!
 icon!constants!public! !
 !
 
@@ -1436,6 +1484,18 @@ icon
 
 	^##(TextTileIcon text: $\x29C9 fontName: 'Cambria')! !
 !UI.LayoutManager class categoriesForMethods!
+icon!constants!public! !
+!
+
+!UI.LayoutPosition class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class: ⯐"
+
+	^##((TextTileIcon text: $\x2BD0 fontName: 'Arial')
+		textcolor: Color darkBlue;
+		yourself)! !
+!UI.LayoutPosition class categoriesForMethods!
 icon!constants!public! !
 !
 

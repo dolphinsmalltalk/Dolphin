@@ -8,8 +8,7 @@ Kernel.StSemanticAnalyser
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Tools.BrowserSemanticAnalyser guid: (Core.GUID fromString: '{590e979a-62f2-4b0e-9722-469cfb549990}')!
-Tools.BrowserSemanticAnalyser comment: 'SemanticAnalyser is a <StParseNodeVisitor> that performs checks for semantic errors (e.g. referencing an undeclared variable, sending an unimplemented message, etc) against a parse tree. It is used for dynamic error highlighting in the browsers. Most of the issues are reported as warnings, since they may not definitely be errors. The <SmalltalkParser> itself detects some actual semantic errors.'!
-!Tools.BrowserSemanticAnalyser categoriesForClass!System-Compiler! !
+Tools.BrowserSemanticAnalyser comment: '`Tools.BrowserSemanticAnalyser` is an extended semantic analyser for use in the IDE that detects and reports some additional semantic warnings that may help with early detection of issues while coding, e.g. sending unimplemented messages, or subclass responsbilities that are not implemented in all subclasses. All of these issues are reported by SmallLint (i.e. the Code Mentor), but the browser analyser runs unobtrusively and automatically, providing more immediate feedback.'!
 !Tools.BrowserSemanticAnalyser methodsFor!
 
 checkHardBreakpoint: aStMessageNode 
