@@ -128,8 +128,8 @@ testCategoryEnvironment
 	aCategoryEnvironment := CategoryEnvironment onEnvironment: universalEnvironment
 				categories: #('Kernel-Objects').
 	self universalTestFor: aCategoryEnvironment.
-	#rbFix.	"There are actually 2 implementors of #printString in Dolphin's Kernel-Objects category"
-	self assert: (aCategoryEnvironment implementorsOf: #printString) numberSelectors equals: 2!
+	#rbFix.	"There are actually 4 implementors of #printString in the Kernel-Objects category in Dolphin 8"
+	self assert: (aCategoryEnvironment implementorsOf: #printString) numberSelectors equals: 4!
 
 testClassEnvironment
 	| aClassEnvironment classes |

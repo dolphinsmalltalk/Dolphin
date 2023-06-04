@@ -163,6 +163,13 @@ or: operand
 
 	^self subclassResponsibility!
 
+printOn: target
+	"Append the a textual representation of the receiver to the puttableStream, <target>..
+	Note that this override refines #printString to comply with the ANSI 
+	protocol <boolean>."
+
+	target nextPutAll: self printString!
+
 shallowCopy
 	"Answer the receiver as there are only two Booleans, the manifest constants
 	true and false."
@@ -200,6 +207,7 @@ isAtomic!public!testing! !
 isLiteral!public!testing! !
 not!logical operations!public! !
 or:!control flow!public! !
+printOn:!printing!public! !
 shallowCopy!copying!public! !
 species!comparing!public! !
 xor:!logical operations!public! !
