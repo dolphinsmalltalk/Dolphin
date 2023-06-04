@@ -1,23 +1,22 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.ParseNodeVisitor
-	subclass: #'Kernel.AbstractSemanticAnalyser'
+	subclass: #'Kernel.SemanticAnalyser'
 	instanceVariableNames: 'methodNode classScope currentScope evalScope errorBlock scopes inStaticExpression inTag'
 	classVariableNames: ''
 	imports: #(#{Kernel.ParseErrorCodes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.AbstractSemanticAnalyser guid: (Core.GUID fromString: '{8290173a-f40a-473c-bb63-44928d0bda4f}')!
-Kernel.AbstractSemanticAnalyser isNonInstantiable: true!
-Kernel.AbstractSemanticAnalyser comment: ''!
-!Kernel.AbstractSemanticAnalyser categoriesForClass!Refactory-ParseTree Matching! !
-!Kernel.AbstractSemanticAnalyser methodsFor!
+Kernel.SemanticAnalyser guid: (Core.GUID fromString: '{8290173a-f40a-473c-bb63-44928d0bda4f}')!
+Kernel.SemanticAnalyser comment: '`Kernel.SemanticAnalyser` is the class of `<parseNodeVisitor>`s that performs semantic analysis of an AST.
 
-analyseParseTree: aStMethodNode pools: anArray onError: aMonadicValuableOrNil
+At this basic level the analyser builds the lexical scope hierarchy and attempts to bind all variables. It detects very few errors and does not report even those, not even undeclared variables, nor perform any other tasks required in a compiler for code generation such as collecting the literals or analyzing block variable usage. The subclass `Kernel.StSemanticAnalyser` performs these tasks for the Smalltalk compiler back-end.'!
+!Kernel.SemanticAnalyser categoriesForClass!Refactory-ParseTree Matching! !
+!Kernel.SemanticAnalyser methodsFor!
+
+analyseParseTree: aStMethodNode pools: anArray
 	^self
-		setMethodNode: aStMethodNode
-			pools: anArray
-			errorBlock: aMonadicValuableOrNil;
+		setMethodNode: aStMethodNode pools: anArray;
 		visitNode: aStMethodNode!
 
 bindVariable: aStVariableNode
@@ -33,9 +32,6 @@ bindVariable: aStVariableNode
 			aStVariableNode variable: var.
 			var]!
 
-compilationErrorClass
-	^Parser notificationClass!
-
 currentScope
 	^currentScope!
 
@@ -43,15 +39,13 @@ enterMethodNode: aMethodNode
 	currentScope := scopes addLast: (StMethodScope forScopeNode: aMethodNode outer: currentScope).
 	aMethodNode scope: currentScope!
 
-errorBlock: aMonadicValuable
-	"Set the <monadicValuable> that is evaluated for any semantic errors (not warnings) detected while analysing the AST.
-	The argument will be a CompilerErrorNotification. If the block returns, then the error will be signalled, but as these 
-	are resumable the analysis can recover and continue in order to detect any further errors."
-
-	errorBlock := aMonadicValuable!
-
 exitMethodNode: aMethodNode
 	self removeScope!
+
+expectNamespace: aStProgramNode
+	"Private - A namespace static variable was expected when parsing a #namespace: annotation, but instead the <StProgramNode> argument was encountered."
+
+	"To be overridden by subclasses that want to report an error, or otherwise handle"!
 
 initialize
 	super initialize.
@@ -75,60 +69,26 @@ removeScope
 scopes
 	^scopes!
 
-setMethodNode: aStMethodNode pools: anArray errorBlock: aMonadicValuable
+setMethodNode: aStMethodNode pools: anArray
 	methodNode := aStMethodNode.
 	currentScope := classScope := aStMethodNode newClassScope.
 	anArray isEmpty
 		ifFalse: 
 			[evalScope := StEvalScope pools: anArray outer: currentScope.
-			currentScope := evalScope].
-	errorBlock := aMonadicValuable!
-
-signalError: anInteger forNode: aNode 
-	^self 
-		signalError: anInteger
-		forNode: aNode
-		extras: #()!
-
-signalError: anInteger forNode: aNode extra: anObject
-	^self
-		signalError: anInteger
-		forNode: aNode
-		extras: {anObject}!
-
-signalError: anInteger forNode: aNode extras: anArray 
-	^self 
-		signalError: anInteger
-		forNode: aNode
-		range: aNode sourceInterval
-		extras: anArray!
-
-signalError: codeInteger forNode: aStProgramNode range: anInterval extras: anArray
-	| source position err |
-	source := methodNode source.
-	position := aStProgramNode startWithoutParentheses.
-	err := self compilationErrorClass
-				code: codeInteger
-				in: source
-				for: self methodClass
-				selector: methodNode selector
-				position: position
-				line: (self lineOfSourcePosition: position)
-				range: anInterval
-				extras: anArray.
-	"Warnings are not passed to the error block"
-	(err severityClass == Error and: [errorBlock notNil]) ifTrue: [errorBlock value: err].
-	"If the error block returns, then the exception is signalled"
-	^err signal!
+			currentScope := evalScope]!
 
 undeclaredVariable: aStVariableNode
-	self signalError: CErrUndeclared forNode: aStVariableNode!
+	"Private - The argument <StVariableNode> represents an identifier that cannot be bound in its scope."
+
+	"To be overridden by subclasses that want to report an error or otherwise handle."
+
+	!
 
 visitAnnotationNode: aStAnnotationNode
-	"Visiting the args will detect any undeclared variables."
-
 	inTag := true.
+	"Visiting the args will detect any undeclared variables."
 	[super visitAnnotationNode: aStAnnotationNode] ensure: [inTag := false].
+	"We need to process any #namespace: annotation as part of basic analysis as this affects the subsequent binding of static variables"
 	aStAnnotationNode selector == #namespace:
 		ifTrue: 
 			[| arg var binding |
@@ -139,7 +99,7 @@ visitAnnotationNode: aStAnnotationNode
 							[binding := var binding.
 							binding notNil and: [binding isClassBinding]]])
 				ifTrue: [currentScope environment: binding value]
-				ifFalse: [self signalError: CErrExpectNamespace forNode: arg]]!
+				ifFalse: [self expectNamespace: arg]]!
 
 visitAssignmentNode: aStAssignmentNode
 	self visitNode: aStAssignmentNode value.
@@ -202,25 +162,20 @@ visitTempDeclNode: aStTempDeclNode
 	aStTempDeclNode variable: (currentScope declareTemp: aStTempDeclNode)!
 
 visitVariableNode: aVariableNode
-	^self subclassResponsibility! !
-!Kernel.AbstractSemanticAnalyser categoriesForMethods!
-analyseParseTree:pools:onError:!operations!public! !
+	^self bindVariable: aVariableNode! !
+!Kernel.SemanticAnalyser categoriesForMethods!
+analyseParseTree:pools:!operations!public! !
 bindVariable:!helpers!private! !
-compilationErrorClass!constants!private! !
 currentScope!accessing!private! !
 enterMethodNode:!helpers!private! !
-errorBlock:!accessing!private! !
 exitMethodNode:!helpers!private! !
+expectNamespace:!error handling!private! !
 initialize!initializing!public! !
 lineOfSourcePosition:!helpers!private! !
 methodClass!accessing!private! !
 removeScope!helpers!private! !
 scopes!accessing!public! !
-setMethodNode:pools:errorBlock:!initializing!private! !
-signalError:forNode:!error handling!private! !
-signalError:forNode:extra:!error handling!private! !
-signalError:forNode:extras:!error handling!private! !
-signalError:forNode:range:extras:!error handling!private! !
+setMethodNode:pools:!initializing!private! !
 undeclaredVariable:!error handling!private! !
 visitAnnotationNode:!public!visiting! !
 visitAssignmentNode:!public!visitor/double dispatching! !
@@ -237,19 +192,17 @@ visitTempDeclNode:!public!visiting! !
 visitVariableNode:!public!visitor/double dispatching! !
 !
 
-!Kernel.AbstractSemanticAnalyser class methodsFor!
+!Kernel.SemanticAnalyser class methodsFor!
 
 analyseParseTree: aStMethodNode
-	^self analyseParseTree: aStMethodNode pools: #() onError: nil!
+	^self analyseParseTree: aStMethodNode pools: #()!
 
-analyseParseTree: aParseTree pools: anArray onError: aMonadicValuableOrNil
+analyseParseTree: aParseTree pools: anArray
 	^self new
-		analyseParseTree: aParseTree methodNode
-			pools: anArray
-			onError: aMonadicValuableOrNil;
+		analyseParseTree: aParseTree methodNode pools: anArray;
 		yourself! !
-!Kernel.AbstractSemanticAnalyser class categoriesForMethods!
+!Kernel.SemanticAnalyser class categoriesForMethods!
 analyseParseTree:!operations!public! !
-analyseParseTree:pools:onError:!operations!public! !
+analyseParseTree:pools:!operations!public! !
 !
 

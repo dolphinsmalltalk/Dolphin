@@ -26,25 +26,14 @@ newFloatToken: significandInteger precision: precisionInteger exponent: exponent
 		stop: self previousStepPosition!
 
 newIntegerToken: significandInteger exponent: exponentInteger
-	"Private -Return a new literal number token with an integer value. We don't need the actual
-	<Integer> value for styling purposes, so can avoid the final cost of computing it by largely 
-	ignoring the exponent (if any)."
+	"Private -Return a new literal number token with an integer value."
+
+	"We don't need the actual <Integer> value for styling purposes, so can avoid the final cost of computing it by largely ignoring the exponent (if any)."
 
 	^StNumberLiteralToken
 		start: tokenStart
 		comments: nil
 		value: (exponentInteger negative ifTrue: [significandInteger sign / 2] ifFalse: [significandInteger])
-		stop: self previousStepPosition!
-
-newScaledDecimalToken: significandInteger precision: precisionInteger scale: scaleInteger
-	"Private -Return a new literal number token with a <ScaledDecimal> value. We don't need the
-	actual value for styling purposes, so can avoid the final cost of computing it, which may
-	not be insignificant since this involves exponentiation and fractional arithmetic."
-
-	^StNumberLiteralToken
-		start: tokenStart
-		comments: nil
-		value: (significandInteger negative ifTrue: [-1s] ifFalse: [1s])
 		stop: self previousStepPosition!
 
 reportError: anInteger at: posInteger line: lineInteger range: anInterval extras: anArray
@@ -103,12 +92,26 @@ scanQualifiedReference
 		start: tokenStart
 		comments: nil
 		value: bindingRef
+		stop: self previousStepPosition!
+
+scanScaledDecimal: aNumber precision: precisionInteger defaultScale: scaleInteger
+	"Private - "
+
+	"We don't need the actual value for styling purposes, so can avoid the final cost of computing."
+
+	buffer nextPut: $s.
+	self step.
+	self readDecimalInteger.
+	^StNumberLiteralToken
+		start: tokenStart
+		comments: nil
+		value: (aNumber negative ifTrue: [-1s] ifFalse: [1s])
 		stop: self previousStepPosition! !
 !Tools.SmalltalkStylingScanner categoriesForMethods!
 newFloatToken:precision:exponent:!helpers!private! !
 newIntegerToken:exponent:!helpers!private! !
-newScaledDecimalToken:precision:scale:!helpers!private! !
 reportError:at:line:range:extras:!error handling!private! !
 scanQualifiedReference!private!scanning! !
+scanScaledDecimal:precision:defaultScale:!private!scanning! !
 !
 

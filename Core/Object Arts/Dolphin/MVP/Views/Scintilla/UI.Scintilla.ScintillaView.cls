@@ -9226,6 +9226,46 @@ stylerClass: aScintillaStylerClass
 
 	self styler: (aScintillaStylerClass ?? NullStyler) new!
 
+styleRunEndAt: anInteger
+	"Answer the <integer> end position of the token that includes the specified <integer>
+	position. This is dependent on there being valid styling information available, and that the
+	styles delimit tokens."
+
+	| stop tokenId max |
+	tokenId := self styleIdAt: anInteger.
+	stop := anInteger.
+	max := self textLength.
+	[stop < max and: [(self styleIdAt: stop + 1) == tokenId]] whileTrue: [stop := stop + 1].
+	^stop!
+
+styleRunRangeAt: anInteger
+	"Answer the <Interval> of the style run in the receiver around the specified <integer> position. This is dependent on there being valid styling information available."
+
+	^(self styleRunStartAt: anInteger) to: (self styleRunEndAt: anInteger)!
+
+styleRunsFrom: startInteger to: stopInteger
+	"Answer an <sequencedReadableCollection> of <Associations> representing the tokenised form
+	of the text in the specified range, as deduced from the styling information. The key of each
+	association is the name of the style, and the value is the token text."
+
+	| bytes |
+	bytes := self styledTextFrom: startInteger to: stopInteger.
+	^self decodeStyledText: bytes!
+
+styleRunStartAt: anInteger
+	"Answer the <integer> start position of the run of text of the same style around the specified <integer> position. This is dependent on there being valid styling information available."
+
+	| start tokenId |
+	tokenId := self styleIdAt: anInteger.
+	start := anInteger.
+	[start > 1 and: [(self styleIdAt: start - 1) == tokenId]] whileTrue: [start := start - 1].
+	^start!
+
+styleRunTextAt: anInteger
+	"Answer a string containing the run of text of the same style around the specified position."
+
+	^self plainTextFrom: (self styleRunStartAt: anInteger) to: (self styleRunEndAt: anInteger)!
+
 styleUnderCaret
 	"Answer a <ScintillaTextStyle> representing the style of the character under the caret."
 
@@ -9497,55 +9537,6 @@ toggleWordWrap
 
 	<commandQuery: #queryToggleWordWrap:>
 	self wordWrap: self wordWrap not!
-
-tokenEndAt: anInteger 
-	"Answer the <integer> end position of the token that includes the specified <integer>
-	position. This is dependent on there being valid styling information available, and that the
-	styles delimit tokens."
-
-	| stop tokenId max |
-	tokenId := self styleIdAt: anInteger.
-	stop := anInteger.
-	max := self textLength.
-	[stop < max and: [(self styleIdAt: stop + 1) == tokenId]] whileTrue: [stop := stop + 1].
-	^stop!
-
-tokenRangeAt: anInteger 
-	"Answer the <Interval> of text in the receiver occupied by the token under the specified
-	<integer> position. This is dependent on there being valid styling information available,
-	and that the styles delimit tokens."
-
-	^(self tokenStartAt: anInteger) to: (self tokenEndAt: anInteger)!
-
-tokensFrom: startInteger to: stopInteger 
-	"Answer an <sequencedReadableCollection> of <Associations> representing the tokenised form
-	of the text in the specified range, as deduced from the styling information. The key of each
-	association is the name of the style, and the value is the token text."
-
-	| bytes |
-	bytes := self styledTextFrom: startInteger to: stopInteger.
-	^self decodeStyledText: bytes!
-
-tokenStartAt: anInteger 
-	"Answer the <integer> start position of the token that includes the specified <integer>
-	position. This is dependent on there being valid styling information available, and that the
-	styles delimit tokens."
-
-	| start tokenId |
-	tokenId := self styleIdAt: anInteger.
-	start := anInteger.
-	[start > 1 and: [(self styleIdAt: start - 1) == tokenId]] whileTrue: [start := start - 1].
-	^start!
-
-tokenTextAt: anInteger
-	"Answer a string containing the plain text of the token that overlaps the specified position."
-
-	^self plainTextFrom: (self tokenStartAt: anInteger) to: (self tokenEndAt: anInteger)!
-
-tokenUnderCaret
-	"Answer a <String> for the token under the caret, a token being defined by the range of text that has the same text style."
-
-	^self tokenTextAt: self caretPosition!
 
 twiddleLines
 	"Switch the current line with the previous."
@@ -10939,6 +10930,11 @@ styler!public!styling! !
 styler:!public!styling! !
 stylerClass!public!styling! !
 stylerClass:!public!styling! !
+styleRunEndAt:!enquiries!public! !
+styleRunRangeAt:!enquiries!public! !
+styleRunsFrom:to:!public!text retrieval & modification! !
+styleRunStartAt:!enquiries!public! !
+styleRunTextAt:!enquiries!public! !
 styleUnderCaret!enquiries!public!styling! !
 styleWithId:!enquiries!public!style definition! !
 stylingPosition!**auto generated**!public!scintilla interface!styling! !
@@ -10971,12 +10967,6 @@ toggleOvertype!**auto generated**!commands-actions!public!scintilla interface! !
 toggleStyling!commands-actions!public!styling! !
 toggleWhitespace!commands-actions!margins!public! !
 toggleWordWrap!commands-actions!public! !
-tokenEndAt:!enquiries!public! !
-tokenRangeAt:!enquiries!public! !
-tokensFrom:to:!public!text retrieval & modification! !
-tokenStartAt:!enquiries!public! !
-tokenTextAt:!enquiries!public! !
-tokenUnderCaret!enquiries!public!styling! !
 twiddleLines!**auto generated**!commands-actions!public!scintilla interface! !
 undo!commands-actions!public!scintilla interface!undo & redo! !
 unfoldAll!commands-actions!folding!public! !

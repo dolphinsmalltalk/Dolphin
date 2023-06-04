@@ -132,7 +132,11 @@ unreferencedArguments
 		ifTrue: 
 			["All arguments to primitive methods are implicitly referenced"
 			#()]
-		ifFalse: [locals select: [:each | each isArgument and: [each isRead not]]]! !
+		ifFalse: [locals select: [:each | each isArgument and: [each isRead not]]]!
+
+visibleVariablesDo: aMonadicValuable visited: aSet
+	locals do: [:each | (aSet addNewElement: each name) ifTrue: [aMonadicValuable value: each]].
+	outer visibleVariablesDo: aMonadicValuable visited: aSet! !
 !Kernel.StLexicalScope categoriesForMethods!
 argumentCount!accessing!public! !
 declareArgument:!helpers!private! !
@@ -161,5 +165,6 @@ resolveIdentifier:!operations!private! !
 temporaries!accessing!private! !
 thisContextVariable!accessing!public! !
 unreferencedArguments!accessing!public! !
+visibleVariablesDo:visited:!operations!public! !
 !
 

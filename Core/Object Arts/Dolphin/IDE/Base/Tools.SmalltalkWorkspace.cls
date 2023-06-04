@@ -12,6 +12,8 @@ UI.Presenter
 			'AutoCompletionEnabledMask' -> 16r10.
 			'AutoCompletionSpaceAddedMask' -> 16r40.
 			'AutoCompletionTruncatingMask' -> 16r20.
+			'LiteralStyleNames'
+				-> (Set withAll: #(#literalNumber #literalPseudo #literalString #literalSymbol)).
 			'LoadingMask' -> 16r1.
 			'UseDirectWriteMask' -> 16r100.
 			'VariableTipsMask' -> 16r2.
@@ -61,16 +63,23 @@ In Dolphin 5.1 and earlier `SmalltalkWorkspace` could work with an `TextEdit` vi
 !Tools.SmalltalkWorkspace categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools! !
 !Tools.SmalltalkWorkspace methodsFor!
 
-allDefinedVariablesDo: aMonadicValuable 
-	workspacePool bindingsDo: aMonadicValuable!
-
 allPools
-	"Private - Answers an Array of all the PoolDictionaries used during evaluations in the
-	receiver. The workspacePool of locals must be the first element of the array"
+	"Private - Answers an Array of all the PoolDictionaries used during evaluations in the receiver. The workspacePool of locals must be the first element of the array"
 
-	^(OrderedCollection with: self workspacePool) 
-		addAll: self namespaces; 
-		asArray!
+	^{ self workspacePool } , self namespaces!
+
+allVariablesVisibleFrom: aStProgramNode do: aMonadicValuable
+	| parseContext classScope |
+	parseContext := self parseContext.
+	classScope := parseContext scope.
+	parseContext methodClass allInstanceVariableNames keysAndValuesDo: 
+			[:i :each |
+			aMonadicValuable value: (StInstanceVariable
+						scope: classScope
+						index: i
+						name: each)].
+	workspacePool
+		bindingsDo: [:each | aMonadicValuable value: (StWorkspaceVariable scope: classScope binding: each)]!
 
 applyOptions
 	"Private - Apply the class options to the receiver"
@@ -118,14 +127,14 @@ autoComplete: aSymbol at: posInteger maxItems: maxInteger
 					[self
 						showIdentifierCompletionListAt: posInteger
 						maxItems: maxInteger
-						start: (self tokenStartAt: posInteger - 1)].
+						start: (self styleRunStartAt: posInteger - 1)].
 			^self].
 	aSymbol == #identifier
 		ifTrue: 
 			[self
 				showIdentifierCompletionListAt: posInteger
 				maxItems: maxInteger
-				start: (self tokenStartAt: posInteger).
+				start: (view styleRunStartAt: posInteger).
 			^self].
 	aSymbol == #literalSymbol
 		ifTrue: 
@@ -137,7 +146,10 @@ autoComplete: aSymbol at: posInteger maxItems: maxInteger
 			^self].
 	(#(#unarySelector #keywordSelector #binarySelector) identityIncludes: aSymbol)
 		ifTrue: 
-			[self showSelectorCompletionListAt: posInteger maxItems: maxInteger.
+			[self
+				showSelectorCompletionListAt: posInteger
+				maxItems: maxInteger
+				start: (self styleRunStartAt: posInteger).
 			^self].
 	^nil!
 
@@ -173,8 +185,8 @@ browseDefinitionsCommand
 	| tokenStyle |
 	self hasSelection ifTrue: [^#browseMessageDefinitions].
 	tokenStyle := view styleUnderCaret name.
-	tokenStyle == #literalSymbol ifTrue: [^#browseSelectorDefinitions].
 	tokenStyle == #identifier ifTrue: [^#browseVariableDefinition].
+	tokenStyle == #literalSymbol ifTrue: [^#browseSelectorDefinitions].
 	^#browseMessageDefinitions!
 
 browseDefinitionsMatching: aMethodSearch
@@ -197,8 +209,7 @@ browseLiteralReferences
 	"Open a method browser showing references to the value of the current literal node. Note this can be any literal value, not just symbols. For example you can search for all occurrences of String 'abc' in the system, or $🐬"
 
 	<commandQuery: #queryBrowseLiteralReferences:>
-	self
-		browseReferencesMatching: (MethodSearch newLiteral: (view tokenUnderCaret copyFrom: 2) asSymbol)!
+	self browseReferencesMatching: (MethodSearch newLiteral: self selectedLiteralValue)!
 
 browseMessageDefinitions
 	self browseMessageDefinitions: self selectedWord in: self searchEnvironment!
@@ -230,8 +241,8 @@ browseReferencesCommand
 	| tokenStyle |
 	self hasSelection ifTrue: [^#browseMessageReferences].
 	tokenStyle := view styleUnderCaret name.
-	tokenStyle == #literalSymbol ifTrue: [^#browseLiteralReferences].
 	tokenStyle == #identifier ifTrue: [^#browseVariableReferences].
+	(LiteralStyleNames includes: tokenStyle) ifTrue: [^#browseLiteralReferences].
 	^#browseMessageReferences!
 
 browseReferencesMatching: aMethodSearch
@@ -244,7 +255,7 @@ browseReferencesMatching: aMethodSearch
 						arguments: { aMethodSearch. self searchEnvironment }))!
 
 browseSelectorDefinitions
-	"Open a method browser showing references to the value of the current literal node. Note this can be any literal value, not just symbols. For example you can search for all occurrences of String 'abc' in the system, or $🐬"
+	"Open a method browser showing definitions of the <Symbol> selector that is selected or under the cursor."
 
 	<commandQuery: #queryBrowseSelectorDefinitions:>
 	self browseDefinitionsMatching: (MethodSearch newLiteral: self selectedSymbol)!
@@ -254,7 +265,7 @@ browseVariableDefinition
 
 	<commandQuery: #queryBrowseVariableDefinition:>
 	| var range |
-	range := view tokenRangeAt: self selectedTokenPosition.
+	range := view styleRunRangeAt: self selectedTokenPosition.
 	var := self variableForIdentifierStyle: #identifier range: range.
 	self browseClassDefinition: (self suggestClassForVariable: var)!
 
@@ -263,7 +274,7 @@ browseVariableReferences
 
 	<commandQuery: #queryBrowseVariableReferences:>
 	| var range |
-	range := view tokenRangeAt: self selectedTokenPosition.
+	range := view styleRunRangeAt: self selectedTokenPosition.
 	var := self variableForIdentifierStyle: #identifier range: range.
 	self browseClassReferences: (self suggestClassForVariable: var)!
 
@@ -286,7 +297,7 @@ chooseNamespaces
 	<commandQuery: #isEditable>
 	ChoicePrompter
 		on: (self aspectValue: #namespaces)
-		multipleChoices: (SmalltalkSystem current availableNamespaces
+		multipleChoices: (self systemModel availableNamespaces
 				asSortedArray: [:a :b | a fullName <= b fullName])
 		caption: 'Available Namespaces'!
 
@@ -297,10 +308,10 @@ classForRange: anInterval
 	^(self variableForIdentifierStyle: #identifier range: anInterval)
 		ifNotNil: [:variable | self suggestClassForVariable: variable]!
 
-classForToken: anAssociation
+classForStyleRun: anAssociation
 	"Private - Answer the inferred class of the specified token, or nil if not known."
 
-	| style tokenRange |
+	| style range |
 	anAssociation isNil ifTrue: [^nil].
 	style := anAssociation value.
 	(##(IdentityDictionary withAll: {
@@ -312,29 +323,29 @@ classForToken: anAssociation
 				#literalBindingReference -> BindingReference
 			})
 		lookup: style) ifNotNil: [:literalClass | ^literalClass].
-	tokenRange := anAssociation key.
-	style == #identifier ifTrue: [^self classForRange: tokenRange].
+	range := anAssociation key.
+	style == #identifier ifTrue: [^self classForRange: range].
 	style == #literalPseudo
 		ifTrue: 
 			[^##(LookupTable withAll: { 'nil' -> nil class. 'false' -> false class. 'true' -> true class })
-				lookup: (view plainTextRange: tokenRange)].
+				lookup: (view plainTextRange: range)].
 	style == #literalNumber
-		ifTrue: [^(SmalltalkStylingScanner on: (view plainTextRange: tokenRange) readStream) next valueClass].
+		ifTrue: [^(SmalltalkStylingScanner on: (view plainTextRange: range) readStream) next valueClass].
 	style == #specialCharacter
 		ifTrue: 
 			[| ch |
-			ch := view characterAt: tokenRange stop.
+			ch := view characterAt: range stop.
 			ch == $] ifTrue: [^BlockClosure].
 			ch == $} ifTrue: [^Array]].
 	style == #unaryMessage
 		ifTrue: 
 			[| tokenText |
-			tokenText := view plainTextRange: tokenRange.
+			tokenText := view plainTextRange: range.
 			tokenText = 'class'
 				ifTrue: 
 					[| penultimate |
-					penultimate := self tokenBefore: tokenRange start - 1.
-					^(self classForToken: penultimate) ifNotNil: [:class | class basicClass]].
+					penultimate := self styleRunBefore: range start - 1.
+					^(self classForStyleRun: penultimate) ifNotNil: [:class | class basicClass]].
 			(StandardUnaryReturnTypes lookup: tokenText) ifNotNil: [:class | ^class]].
 	^nil!
 
@@ -365,7 +376,7 @@ cloneNew
 
 	<commandQuery: #isEditable>
 	| clone |
-	clone := SmalltalkSystem current newWorkspace.
+	clone := self developmentSystem newWorkspace.
 	clone workspace
 		text: self text;
 		workspacePool: self workspacePool;
@@ -477,6 +488,27 @@ compilerNotification: aCompilerNotification offset: anInteger
 	self selectionRange: aCompilerNotification range + anInteger.
 	aCompilerNotification okToContinue!
 
+completeInitialWord
+	self
+		showIdentifierCompletionListAt: 0
+		maxItems: self maxCompletionListSize
+		start: 1!
+
+completeQualifiedIdentifier: qualifierString startingWith: prefixString maxItems: anInteger
+	(self resolveClassNamed: qualifierString)
+		ifNotNil: 
+			[:class |
+			| choices |
+			choices := prefixString isEmpty
+						ifTrue: [class classPool keys]
+						ifFalse: 
+							[| ignoreCase |
+							ignoreCase := self isAutoCompletionCaseInsensitive.
+							class classPool keys select: [:each | each beginsWith: prefixString ignoreCase: ignoreCase]].
+			choices size <= anInteger
+				ifTrue: [^self showCompletionList: choices prefixLength: prefixString size]].
+	self view cancelAutoCompletion!
+
 completeWord
 	"The user has requested that a completion list be displayed to complete the current 'word'.
 	The list will be displayed unless the number of choices is far too large or there are none
@@ -486,13 +518,18 @@ completeWord
 	<acceleratorKey: 'Ctrl+.'>
 	| last styleName |
 	last := view caretPosition - 1.
+	last == 0
+		ifTrue: 
+			[self completeInitialWord.
+			^self].
 	styleName := (view styleAt: last) name.
 	(self
 		autoComplete: styleName
 		at: last
 		maxItems: self maxCompletionListSize)
 			ifNil: 
-				[self showCompletionListAfterToken: (self tokenBefore: last) maxItems: self maxCompletionListSize].
+				[self showCompletionListAfterStyleRun: (self styleRunBefore: last)
+					maxItems: self maxCompletionListSize].
 	view isAutoCompletionActive not ifTrue: [Sound warningBeep]!
 
 completeWordAt: anInteger with: aString
@@ -572,9 +609,6 @@ defaultCompilerFlags
 	receiver."
 
 	^Interactive!
-
-defaultParseContext
-	^ParseContext methodClass: ProtoObject environment: Smalltalk!
 
 defaultStylerClass
 	^SmalltalkExpressionStyler!
@@ -764,7 +798,7 @@ firstError
 getCompletionSignatureFor: aString at: anInteger
 	| prev receiverStyle selector |
 	selector := aString asSymbol.
-	prev := self tokenBefore: anInteger - 1.
+	prev := self styleRunBefore: anInteger - 1.
 	prev isNil
 		ifTrue: 
 			[(self selfClass lookupMethod: selector)
@@ -821,54 +855,20 @@ highlightCompilationErrors: anInteger
 		indicators: indicators;
 		annotations: annotations!
 
+iconForVariable: aStVariable
+	^aStVariable icon!
+
 identifierAt: anInteger
 	| style |
 	style := (view styleAt: anInteger) name.
 	^(#(#identifier #tempDecl #argDecl #blockArgDecl) identityIncludes: style)
 		ifTrue: 
 			[| range |
-			range := view tokenRangeAt: anInteger.
+			range := view styleRunRangeAt: anInteger.
 			StIdentifierToken
 				start: range start
 				comments: nil
 				value: (view plainTextRange: range)]!
-
-identifiersStartingWith: aString maxItems: anInteger
-	"Private - Build and answer a colleciton of identifiers that are potential completions for
-	the specified prefix. If in case-sensitive mode assume that the convention of starting all
-	class/pool/global variables with an uppercase letter, and all temps and inst. vars with a
-	lowercase one, is followed. If there are more matching identifiers than the specified
-	maximum, then answer an empty collection."
-
-	| variables ignoreCase filter accum selectVars |
-	variables := Set new.
-	ignoreCase := self isAutoCompletionCaseInsensitive.
-	filter := aString isEmpty
-				ifTrue: [[:each | true]]
-				ifFalse: [[:each | each displayString beginsWith: aString ignoreCase: ignoreCase]].
-	accum := 
-			[:each |
-			variables add: each.
-			variables size > anInteger ifTrue: [^#()]].
-	selectVars := [:each | (filter value: each) ifTrue: [accum value: each]].
-	(ignoreCase or: [aString isEmpty or: [aString first isUppercase not]])
-		ifTrue: 
-			[(#(nil true false) select: filter)
-				do: [:each | accum value: (ListItem text: each printString icon: each icon)].
-			(#('thisContext' 'super' 'self') select: filter) do: accum.
-			self allDefinedVariablesDo: selectVars.
-			self selfClass allInstanceVariableNames do: selectVars].
-	(ignoreCase or: [aString isEmpty or: [aString first isUppercase]])
-		ifTrue: 
-			[| class |
-			class := self selfClass instanceClass.
-			class withAllSuperclassesDo: 
-					[:eachClass |
-					eachClass bindingsDo: selectVars.
-					eachClass importedNamespacesDo: [:eachNs | eachNs bindingsDo: selectVars]].
-			namespaces do: [:eachPool | eachPool bindingsDo: selectVars].
-			class environment ?? Smalltalk bindingsDo: selectVars].
-	^variables!
 
 indicatorStyles
 	^indicatorStyles!
@@ -1001,6 +1001,8 @@ killAutocompleteTimer
 	self view killTimer: SCI_AUTOCSHOW!
 
 maxCompletionListSize
+	"Private - Answer the maximum number of items to display in a completion list when explicitly requested by the user. This is typically a much larger number than the maximum for auto-completion lists because we generally don't want them to pop up automatically until the number of choices is reasonable. This limit is to avoid an excessive delay in generating and displaying the list, although it can be very large."
+
 	^10000!
 
 maybeExtendingQualifiedNameAt: anInteger 
@@ -1025,21 +1027,22 @@ maybeShowCompletionList
 				((char == $^ and: [styleName == #specialCharacter])
 					or: [char == $\x20 and: [(view styleIdAt: last) = (view idOfStyleNamed: #whitespace)]])
 						ifTrue: 
-							[self showCompletionListAfterToken: (self tokenBefore: last) maxItems: self class maxAutoCompletionListSize]]!
+							[self showCompletionListAfterStyleRun: (self styleRunBefore: last) maxItems: self class maxAutoCompletionListSize]]!
 
-messagesForToken: anAssociation startingWith: aString maxItems: anInteger
+messagesForStyleRun: anAssociation startingWith: aString maxItems: anInteger
 	"Private - Answer the set of selectors that could potentially be sent as messages following
 	the specified token."
 
 	| selectors class ignoreCase icon |
 	ignoreCase := self isAutoCompletionCaseInsensitive.
 	icon := Message icon.
-	class := self classForToken: anAssociation.
+	class := self classForStyleRun: anAssociation.
 	"When completing against a variable that happens to have the value nil,
 	treat it as possibly being of any type, as most likely it is simply uninitialized."
-	(class == UndefinedObject and: [anAssociation value == #identifier]) ifTrue: [class := nil].
+	(class notNil and: [class realClass == UndefinedObject and: [anAssociation value == #identifier]])
+		ifTrue: [class := nil].
 	selectors := Set new.
-	(class ifNil: [SmalltalkSystem current]) allSelectors do: 
+	(class ifNil: [self systemModel]) allSelectors do: 
 			[:each |
 			(each beginsWith: aString ignoreCase: ignoreCase)
 				ifTrue: 
@@ -1054,23 +1057,17 @@ modifiedModel: aValueModel
 	modifiedModel := aValueModel!
 
 nameBindingContext
-	^self evaluationContext
-		ifNil: [self defaultParseContext]
-		ifNotNil: 
-			[:context |
-			| class |
-			class := context basicClass.
-			ParseContext methodClass: class environment: class environment]!
+	^self parseContext!
 
 namespaces
-	"Answers the evaluation pool for this workspace."
+	"Answers the namespaces imported into this workspace."
 
 	^namespaces!
 
-namespaces: aCollectionOfNamespaces
-	"Sets the evaluation pools for this workspace to aCollectionOfNamespaces"
+namespaces: aSequenceableCollection
+	"Sets the namespaces importeed into this workspace to the specified sequence."
 
-	namespaces := aCollectionOfNamespaces asArray!
+	namespaces := aSequenceableCollection asArray!
 
 newVariablePool
 	workspacePool := PoolDictionary new!
@@ -1112,7 +1109,7 @@ onHoverStart: aPoint
 	index := scintilla charCloseToPosition: aPoint.
 	index <= 0 ifTrue: [^self].
 	style := (view styleAt: index) name.
-	range := view tokenRangeAt: index.
+	range := view styleRunRangeAt: index.
 	"Can be useful to see a tip for Characters, especially those expressed in $\xNN[NN] form. The tip now includes the Unicode character name."
 	style == #literalCharacter
 		ifTrue: 
@@ -1165,7 +1162,7 @@ onViewOpened
 
 parseContext
 	^self evaluationContext
-		ifNil: [ParseContext methodClass: UndefinedObject environment: Smalltalk]
+		ifNil: [self systemModel defaultParseContext]
 		ifNotNil: [:receiverObj | ParseContext methodClass: receiverObj basicClass]!
 
 parseTree
@@ -1242,6 +1239,46 @@ publishedAspects
 		add: self class indicatorStylesAspect;
 		yourself!
 
+putAllStaticIdentifiersStartingWith: aString on: aWriteStream
+	| visited class visitStatics select env |
+	visited := IdentitySet new.
+	select := aString isEmpty
+				ifTrue: [[:each | aWriteStream nextPut: (ListItem text: each key icon: each value icon)]]
+				ifFalse: 
+					[| ignoreCase |
+					ignoreCase := self isAutoCompletionCaseInsensitive.
+					
+					[:each |
+					(each key beginsWith: aString ignoreCase: ignoreCase)
+						ifTrue: [aWriteStream nextPut: (ListItem text: each key icon: each value icon)]]].
+	env := self searchEnvironment.
+	visitStatics := 
+			[:eachClass |
+			(visited includes: eachClass)
+				ifFalse: 
+					[visited add: eachClass.
+					(env includesClassOrMetaclass: eachClass realClass)
+						ifTrue: 
+							[eachClass bindingsDo: select.
+							eachClass importedNamespacesDo: 
+									[:eachNs |
+									(visited includes: eachNs)
+										ifFalse: 
+											[visited add: eachNs.
+											(env includesClassOrMetaclass: eachNs realClass) ifTrue: [eachNs bindingsDo: select]]]]]].
+	class := self selfClass instanceClass.
+	class withAllSuperclassesDo: visitStatics.
+	class environment ?? Smalltalk withAllSuperclassesDo: visitStatics.
+	"Finally any namespaces configured into the workspace scope"
+	namespaces do: [:each | each bindingsDo: select]!
+
+queryBrowseClassOfLiteral: aCommandQuery
+	self selectedLiteralValue
+		ifNotNil: 
+			[:literal |
+			aCommandQuery isEnabled: true.
+			(aCommandQuery menuText includes: $<) ifTrue: [aCommandQuery text: 'Class <1p>' << literal class]]!
+
 queryBrowseDefinitions: aCommandQuery
 	"Browse Definitions (F12) is a context-sensitive command. We open a browser appropriate to the selected node, or let some other presenter handle if if the selected node is not browsable.
 	As the command's menu text typically has an insertion to specify what will be browsed, we ensure it is reset, otherwise it might end up displaying whatever was last browsable."
@@ -1251,13 +1288,13 @@ queryBrowseDefinitions: aCommandQuery
 		ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
 
 queryBrowseLiteralReferences: aCommandQuery
-	| pos |
-	pos := self selectedTokenPosition.
-	(pos ~~ 0 and: [(view styleAt: pos) name == #literalSymbol])
-		ifTrue: 
-			[aCommandQuery
+	self selectedLiteralValue
+		ifNotNil: 
+			[:literal |
+			aCommandQuery
 				isEnabled: true;
-				text: (aCommandQuery menuText expandMacrosWithArguments: { 'Symbol <1d>' << view tokenUnderCaret }
+				text: (aCommandQuery menuText
+							expandMacrosWithArguments: { literal species name , ' ' , (literal printStringLimitedTo: 30) }
 							locale: Locale smalltalk)]!
 
 queryBrowseReferences: aCommandQuery
@@ -1274,7 +1311,7 @@ queryBrowseSelectorDefinitions: aCommandQuery
 			[:selector |
 			aCommandQuery
 				isEnabled: true;
-				text: (aCommandQuery menuText expandMacrosWithArguments: { 'selector <1d>' << selector }
+				text: (aCommandQuery menuText expandMacrosWithArguments: { 'selector <1p>' << selector }
 							locale: Locale smalltalk)]!
 
 queryBrowseVariableDefinition: aCommandQuery
@@ -1283,7 +1320,7 @@ queryBrowseVariableDefinition: aCommandQuery
 	(pos ~~ 0 and: [(view styleAt: pos) name == #identifier])
 		ifTrue: 
 			[| var varClass |
-			var := self variableForIdentifierStyle: #identifier range: (view tokenRangeAt: pos).
+			var := self variableForIdentifierStyle: #identifier range: (view styleRunRangeAt: pos).
 			varClass := self suggestClassForVariable: var.
 			aCommandQuery isEnabled: true.
 			(aCommandQuery menuText includes: $<)
@@ -1297,7 +1334,7 @@ queryBrowseVariableReferences: aCommandQuery
 	(pos ~~ 0 and: [(view styleAt: pos) name == #identifier])
 		ifTrue: 
 			[| var varClass |
-			var := self variableForIdentifierStyle: #identifier range: (view tokenRangeAt: pos).
+			var := self variableForIdentifierStyle: #identifier range: (view styleRunRangeAt: pos).
 			varClass := self suggestClassForVariable: var.
 			aCommandQuery
 				isEnabled: true;
@@ -1333,7 +1370,7 @@ rangeToCompleteAt: anInteger
 		ifTrue: [anInteger to: anInteger - 1]
 		ifFalse: 
 			[self isAutoCompletionTruncating 
-				ifTrue: [self tokenRangeAt: anInteger]
+				ifTrue: [self styleRunRangeAt: anInteger]
 				ifFalse: [anInteger to: view caretPosition - 1]]!
 
 reformatComment
@@ -1342,7 +1379,7 @@ reformatComment
 
 	<commandQuery: #canReformatComment>
 	| range |
-	range := view tokenRangeAt: view caretPosition.
+	range := view styleRunRangeAt: view caretPosition.
 	self wrapLinesInRange: range indent: (view columnFromPosition: range start)!
 
 reformatSource
@@ -1379,6 +1416,11 @@ replaceSelection: aString
 	
 	^self view replaceSelection: aString!
 
+resolveClassNamed: qualifierString
+	(self nameBindingContext resolveIdentifier: qualifierString)
+		ifNotNil: [:var | var binding ifNotNil: [:binding | binding isClassBinding ifTrue: [^binding value]]].
+	^nil!
+
 resolveIdentifier: aString
 	^(self nameBindingContext resolveIdentifier: aString)
 		ifNil: 
@@ -1397,7 +1439,16 @@ searchEnvironment: aBrowserEnvironment
 selectedIdentifier
 	| pos |
 	pos := self selectedTokenPosition.
-	^(pos ~~ 0 and: [(view styleAt: pos) name == #identifier]) ifTrue: [view tokenTextAt: pos]!
+	^(pos ~~ 0 and: [(view styleAt: pos) name == #identifier]) ifTrue: [view styleRunTextAt: pos]!
+
+selectedLiteralValue
+	| pos tokenStyle |
+	pos := self selectedTokenPosition.
+	pos == 0 ifTrue: [^nil].
+	tokenStyle := (view styleAt: pos) name.
+	(LiteralStyleNames includes: tokenStyle)
+		ifTrue: [^(Scanner on: (view plainTextRange: (self styleRunRangeAt: pos)) readStream) next value].
+	^nil!
 
 selectedSymbol
 	| pos |
@@ -1405,7 +1456,7 @@ selectedSymbol
 	^(pos ~~ 0 and: [(view styleAt: pos) name == #literalSymbol])
 		ifTrue: 
 			[| tokenRange |
-			tokenRange := view tokenRangeAt: pos.
+			tokenRange := view styleRunRangeAt: pos.
 			(view plainTextFrom: tokenRange start + 1 to: tokenRange stop) asSymbol]!
 
 selectedTokenPosition
@@ -1413,7 +1464,7 @@ selectedTokenPosition
 		ifTrue: 
 			[| start |
 			start := view selectionStart.
-			(view tokenRangeAt: start) = view selectionRange ifTrue: [start] ifFalse: [0]]
+			(view styleRunRangeAt: start) = view selectionRange ifTrue: [start] ifFalse: [0]]
 		ifFalse: [view caretPosition]!
 
 selectedWord
@@ -1424,7 +1475,7 @@ selectedWord
 	| selected |
 	selected := self selection.
 	^selected isEmpty
-		ifTrue: [view tokenTextAt: view caretPosition]
+		ifTrue: [view styleRunTextAt: view caretPosition]
 		ifFalse: [selected trimBlanks subStrings first]!
 
 selectEvaluationRange
@@ -1559,23 +1610,27 @@ showCompletionList: aCollection prefixLength: anInteger
 		prefixLength: anInteger
 		withIcons: true!
 
-showCompletionListAfterToken: anAssociation maxItems: anInteger 
+showCompletionListAfterStyleRun: anAssociation maxItems: anInteger
 	| styleName |
 	anAssociation isNil ifTrue: [^self].
 	"Don't try and autocomplete after tokens inside arrays"
-	(view isIndicator: view styler literalArrayIndicatorId setAt: anAssociation key stop) 
+	(view isIndicator: view styler literalArrayIndicatorId setAt: anAssociation key stop)
 		ifTrue: [^self].
 	styleName := anAssociation value.
-	((#(#tempCloseBar #argDecl #unarySelector #assignment #binaryMessage #keywordMessage) 
-		identityIncludes: styleName) or: [self isSpecialToken: anAssociation oneOf: '.[(^']) 
+	((#(#tempCloseBar #argDecl #unarySelector #assignment #binaryMessage #keywordMessage)
+		identityIncludes: styleName) or: [self isSpecialToken: anAssociation oneOf: '.[(^'])
 		ifTrue: 
-			[self showCompletionList: (self identifiersStartingWith: '' maxItems: anInteger) prefixLength: 0.
+			[self showCompletionList: (self
+						visibleIdentifiersAt: anAssociation key start
+						startingWith: ''
+						atMost: anInteger)
+				prefixLength: 0.
 			^self].
-	((#(#identifier #unaryMessage #literalString #literalNumber #literalCharacter #literalPseudo #literalSymbol) 
-		identityIncludes: styleName) or: [self isSpecialToken: anAssociation oneOf: '])}']) 
+	((#(#identifier #unaryMessage #literalString #literalNumber #literalCharacter #literalPseudo #literalSymbol)
+		identityIncludes: styleName) or: [self isSpecialToken: anAssociation oneOf: '])}'])
 		ifTrue: 
-			[self showCompletionList: (self 
-						messagesForToken: anAssociation
+			[self showCompletionList: (self
+						messagesForStyleRun: anAssociation
 						startingWith: ''
 						maxItems: anInteger)
 				prefixLength: 0.
@@ -1600,43 +1655,31 @@ showFirstError: anInteger
 				ifNotNil: [:first | self showError: first offset: anInteger]].
 	^compilationErrors notEmpty!
 
-showIdentifierCompletionListAt: posInteger maxItems: maxInteger start: start
+showIdentifierCompletionListAt: posInteger maxItems: maxInteger start: startInteger
 	"Trim blanks in case requesting display of identifier list on whitespace"
 
-	| prefix choices lastDot |
-	prefix := (view plainTextFrom: start to: posInteger) trimBlanks.
+	| prefix lastDot |
+	prefix := (view plainTextFrom: startInteger to: posInteger) trimBlanks.
 	lastDot := prefix lastIndexOf: $..
-	lastDot isZero
-		ifTrue: [choices := self identifiersStartingWith: prefix maxItems: maxInteger]
+	lastDot == 0
+		ifTrue: 
+			[self showCompletionList: (self
+						visibleIdentifiersAt: startInteger
+						startingWith: prefix
+						atMost: maxInteger)
+				prefixLength: prefix size]
 		ifFalse: 
-			[| qualifier nameContext |
-			"Qualified name, find the binding"
-			qualifier := prefix copyFrom: 1 to: lastDot - 1.
-			prefix := prefix copyFrom: lastDot + 1 to: prefix size.
-			choices := #().
-			nameContext := self nameBindingContext.
-			(nameContext resolveIdentifier: qualifier)
-				ifNotNil: 
-					[:var |
-					| binding |
-					binding := var binding.
-					binding isClassBinding
-						ifTrue: 
-							[choices := prefix isEmpty
-										ifTrue: [binding value classPool keys]
-										ifFalse: 
-											[| ignoreCase |
-											ignoreCase := self isAutoCompletionCaseInsensitive.
-											binding value classPool keys select: [:each | each beginsWith: prefix ignoreCase: ignoreCase]].
-							choices size > maxInteger ifTrue: [choices := #()]]]].
-	self showCompletionList: choices prefixLength: prefix size!
+			[self
+				completeQualifiedIdentifier: (prefix copyFrom: 1 to: lastDot - 1)
+				startingWith: (prefix copyFrom: lastDot + 1 to: prefix size)
+				maxItems: maxInteger]!
 
 showMessageCompletionListAt: posInteger maxItems: maxInteger 
 	| start prefix selectors |
-	start := self tokenStartAt: posInteger.
+	start := self styleRunStartAt: posInteger.
 	prefix := view plainTextFrom: start to: posInteger.
 	selectors := self 
-				messagesForToken: (self tokenBefore: start - 1)
+				messagesForStyleRun: (self styleRunBefore: start - 1)
 				startingWith: prefix
 				maxItems: maxInteger.
 	self showCompletionList: selectors prefixLength: prefix size!
@@ -1649,16 +1692,15 @@ showResult: aString at: anInteger
 	self replaceSelection: aString.
 	self selectionRange: (anInteger to: anInteger + aString size - 1)!
 
-showSelectorCompletionListAt: posInteger maxItems: maxInteger
-	| prefix start choices |
-	start := self tokenStartAt: posInteger.
-	prefix := view plainTextFrom: start to: posInteger.
+showSelectorCompletionListAt: posInteger maxItems: maxInteger start: startInteger
+	| prefix choices |
+	prefix := view plainTextFrom: startInteger to: posInteger.
 	choices := self selectorsStartingWith: prefix maxItems: maxInteger.
 	self showCompletionList: choices prefixLength: prefix size!
 
 showSymbolCompletionListAt: posInteger maxItems: maxInteger
 	| prefix start symbols quoted prefixLength |
-	start := self tokenStartAt: posInteger.
+	start := self styleRunStartAt: posInteger.
 	prefix := view plainTextRange: (start to: posInteger).
 	prefixLength := prefix size.
 	prefix first == $#
@@ -1680,7 +1722,7 @@ showTipForByteArrayAt: anInteger
 
 showTipForCharacterAt: anInteger
 	| representation ch tokenText tip charName |
-	tokenText := view tokenTextAt: anInteger.
+	tokenText := view styleRunTextAt: anInteger.
 	ch := (Scanner on: tokenText readStream) next value.
 	tip := String writeStream.
 	(ch isGraph
@@ -1726,7 +1768,7 @@ showTipForIndicators: aCollectionOfScintillaIndicators
 
 showTipForNumberAt: anInteger
 	| tokenText token number standard |
-	tokenText := view tokenTextAt: anInteger.
+	tokenText := view styleRunTextAt: anInteger.
 	token := (Scanner on: tokenText readStream) next.
 	number := token value.
 	standard := number printString.
@@ -1745,8 +1787,21 @@ startAutocompleteTimer
 stylerClass: aScintillaStylerClass
 	self view stylerClass: aScintillaStylerClass!
 
+styleRunBefore: anInteger
+	^view styler styleRunBefore: anInteger!
+
+styleRunRangeAt: anInteger
+	^(view styleAt: anInteger) name == #specialCharacter
+		ifTrue: [anInteger to: anInteger]
+		ifFalse: [view styleRunRangeAt: anInteger]!
+
+styleRunStartAt: anInteger
+	^(view styleAt: anInteger) name == #specialCharacter
+		ifTrue: [anInteger]
+		ifFalse: [view styleRunStartAt: anInteger]!
+
 suggestClassForVariable: aStVariable
-	^variableMetadataProvider classForVariable: aStVariable!
+	^aStVariable ifNotNil: [variableMetadataProvider classForVariable: aStVariable]!
 
 symbolsStartingWith: aString maxItems: anInteger
 	| stream ignoreCase |
@@ -1792,19 +1847,6 @@ toggleAutoCompletion
 toggleStyling
 	<commandQuery: #queryToggleStyling:>
 	^self view toggleStyling!
-
-tokenBefore: anInteger 
-	^view styler tokenBefore: anInteger!
-
-tokenRangeAt: anInteger 
-	^(view styleAt: anInteger) name == #specialCharacter 
-		ifTrue: [anInteger to: anInteger]
-		ifFalse: [view tokenRangeAt: anInteger]!
-
-tokenStartAt: anInteger 
-	^(view styleAt: anInteger) name == #specialCharacter 
-		ifTrue: [anInteger]
-		ifFalse: [view tokenStartAt: anInteger]!
 
 updateErrorStatus
 	self errorModel ifNotNil: [:errors | errors value: self firstError]!
@@ -1852,6 +1894,32 @@ variableForIdentifierStyle: aSymbol range: anInterval
 variableMetadataProvider: aVariableResolver
 	variableMetadataProvider := aVariableResolver!
 
+visibleIdentifiersAt: posInteger startingWith: aString atMost: maxInteger
+	"Private - Build and answer a collection of identifiers that are visible at the <integer> caret position, posInteger, as potential completions for the <String> prefix, aString. If in case-sensitive mode assume that the convention is followed of starting all class/pool/global variables with an uppercase letter, and all temps and inst. vars with a lowercase letter. If there are more matching identifiers than the maximum specified by the <integer>, maxInteger, then answer an empty collection."
+
+	| ignoreCase identifiers |
+	identifiers := LimitedWriteStream
+				on: (Array new: maxInteger)
+				limit: maxInteger
+				limitBlock: [^#()].
+	ignoreCase := self isAutoCompletionCaseInsensitive.
+	(ignoreCase or: [aString isEmpty or: [aString first isUppercase not]])
+		ifTrue: 
+			[| currentNode |
+			#(nil true false) do: 
+					[:each |
+					(each printString beginsWith: aString ignoreCase: ignoreCase)
+						ifTrue: [identifiers nextPut: (ListItem text: each printString icon: each icon)]].
+			currentNode := self nodeForRange: (posInteger to: posInteger).
+			self allVariablesVisibleFrom: currentNode
+				do: 
+					[:each |
+					(each name beginsWith: aString ignoreCase: ignoreCase)
+						ifTrue: [identifiers nextPut: (ListItem text: each name icon: (self iconForVariable: each))]]].
+	(ignoreCase or: [aString isEmpty or: [aString first isUppercase]])
+		ifTrue: [self putAllStaticIdentifiersStartingWith: aString on: identifiers].
+	^identifiers contents!
+
 workspacePool
 	"Answer the <Dictionary> for locals used in evaluations within the receiver"
 
@@ -1872,8 +1940,8 @@ wrapLinesInRange: anInterval indent: anInteger
 				tabWidth: scintilla tabWidth.
 	scintilla replaceTarget: justified"Private - Answer the development system model."! !
 !Tools.SmalltalkWorkspace categoriesForMethods!
-allDefinedVariablesDo:!autocompletion!enumerating!private! !
 allPools!accessing!private! !
+allVariablesVisibleFrom:do:!autocompletion!enumerating!private! !
 applyOptions!operations!options!private! !
 areVariableTipsEnabled!public!testing! !
 areVariableTipsEnabled:!public!testing! !
@@ -1905,8 +1973,8 @@ caretPosition:!accessing!caret!public! !
 chooseNamespaces!commands-actions!public! !
 chunkFilerClass!constants!public! !
 classForRange:!autocompletion!helpers!private! !
-classForToken:!autocompletion!helpers!private! !
-classForVariable:!public! !
+classForStyleRun:!autocompletion!helpers!private! !
+classForVariable:!helpers!public! !
 clear!operations!public! !
 clearErrors!operations!public! !
 clearStatus!operations!public! !
@@ -1919,6 +1987,8 @@ compileItIfFail:!helpers!private! !
 compileRange:ifFail:!helpers!private! !
 compileRange:ifFail:debug:!helpers!private! !
 compilerNotification:offset:!helpers!private! !
+completeInitialWord!autocompletion!helpers!private! !
+completeQualifiedIdentifier:startingWith:maxItems:!autocompletion!helpers!private! !
 completeWord!autocompletion!commands-actions!public! !
 completeWordAt:with:!autocompletion!helpers!private! !
 completionListSortBlock!autocompletion!constants!private! !
@@ -1929,7 +1999,6 @@ createSchematicWiring!initializing!private! !
 debugIt!commands-actions!public! !
 debugItIfFail:!helpers!private! !
 defaultCompilerFlags!constants!private! !
-defaultParseContext!accessing!autocompletion!private! !
 defaultStylerClass!constants!private! !
 developmentSystem!constants!private! !
 displayIt!commands-actions!public! !
@@ -1955,8 +2024,8 @@ hasErrors!public!testing! !
 hasSelection!public!testing! !
 hasSmalltalkStyler!commands-actions!private! !
 highlightCompilationErrors:!helpers!private! !
+iconForVariable:!helpers!public! !
 identifierAt:!helpers!private! !
-identifiersStartingWith:maxItems:!autocompletion!helpers!private! !
 indicatorStyles!accessing!public! !
 indicatorStyles:!accessing!public! !
 initialize!initializing!private! !
@@ -1980,7 +2049,7 @@ killAutocompleteTimer!autocompletion!private! !
 maxCompletionListSize!autocompletion!constants!private! !
 maybeExtendingQualifiedNameAt:!autocompletion!helpers!private! !
 maybeShowCompletionList!autocompletion!helpers!private! !
-messagesForToken:startingWith:maxItems:!autocompletion!helpers!private! !
+messagesForStyleRun:startingWith:maxItems:!autocompletion!helpers!private! !
 modifiedModel!accessing!public! !
 modifiedModel:!accessing!public! !
 nameBindingContext!accessing!autocompletion!private! !
@@ -2003,7 +2072,9 @@ plainTextRange:!accessing!public! !
 printIt!commands-actions!public! !
 prompt:toSaveChanges:!helpers!private! !
 promptForVariableName:!helpers!private! !
-publishedAspects!public! !
+publishedAspects!development!public! !
+putAllStaticIdentifiersStartingWith:on:!autocompletion!helpers!private! !
+queryBrowseClassOfLiteral:!commands-queries!private! !
 queryBrowseDefinitions:!commands-queries!private! !
 queryBrowseLiteralReferences:!commands-queries!private! !
 queryBrowseReferences:!commands-queries!private! !
@@ -2016,10 +2087,12 @@ rangeToCompleteAt:!autocompletion!helpers!private! !
 reformatComment!commands-actions!public! !
 reformatSource!commands-actions!public! !
 replaceSelection:!operations!public! !
+resolveClassNamed:!helpers!private! !
 resolveIdentifier:!autocompletion!helpers!private! !
 searchEnvironment!commands-actions!public! !
 searchEnvironment:!accessing!public! !
 selectedIdentifier!helpers!private! !
+selectedLiteralValue!commands-actions!public! !
 selectedSymbol!helpers!private! !
 selectedTokenPosition!helpers!private! !
 selectedWord!helpers!private! !
@@ -2038,21 +2111,24 @@ setFont!helpers!private! !
 setTabWidth!helpers!private! !
 setWordWrap!helpers!private! !
 showCompletionList:prefixLength:!autocompletion!helpers!private! !
-showCompletionListAfterToken:maxItems:!autocompletion!helpers!private! !
+showCompletionListAfterStyleRun:maxItems:!autocompletion!helpers!private! !
 showError:offset:!helpers!private! !
 showFirstError:!operations!private! !
 showIdentifierCompletionListAt:maxItems:start:!autocompletion!helpers!private! !
 showMessageCompletionListAt:maxItems:!autocompletion!helpers!private! !
 showResult:at:!helpers!private! !
-showSelectorCompletionListAt:maxItems:!autocompletion!helpers!private! !
+showSelectorCompletionListAt:maxItems:start:!autocompletion!helpers!private! !
 showSymbolCompletionListAt:maxItems:!autocompletion!helpers!private! !
 showTipForByteArrayAt:!helpers!private! !
 showTipForCharacterAt:!helpers!private! !
-showTipForIdentifierStyle:range:!event handling!private! !
+showTipForIdentifierStyle:range:!helpers!private! !
 showTipForIndicators:!helpers!private! !
 showTipForNumberAt:!helpers!private! !
 startAutocompleteTimer!autocompletion!helpers!private! !
 stylerClass:!accessing!public! !
+styleRunBefore:!accessing!autocompletion!private! !
+styleRunRangeAt:!accessing!autocompletion!private! !
+styleRunStartAt:!accessing!autocompletion!private! !
 suggestClassForVariable:!autocompletion!helpers!public! !
 symbolsStartingWith:maxItems:!autocompletion!helpers!private! !
 text!accessing!public! !
@@ -2060,30 +2136,28 @@ text:!accessing!public! !
 textLength!accessing!public! !
 textStyles!accessing!public! !
 textStyles:!accessing!public! !
-tipForVariable:!public! !
+tipForVariable:!helpers!public! !
 toggleAutoCompletion!commands-actions!public! !
 toggleStyling!commands-actions!public! !
-tokenBefore:!accessing!autocompletion!private! !
-tokenRangeAt:!accessing!autocompletion!private! !
-tokenStartAt:!accessing!autocompletion!private! !
 updateErrorStatus!operations!public! !
 validateUserInterface!operations!public! !
-variableForIdentifierStyle:range:!event handling!private! !
+variableForIdentifierStyle:range:!helpers!private! !
 variableMetadataProvider:!accessing!public! !
+visibleIdentifiersAt:startingWith:atMost:!autocompletion!helpers!private! !
 workspacePool!accessing!public! !
 workspacePool:!accessing!public! !
 wrapLinesInRange:indent:!helpers!private! !
 !
 
 Tools.SmalltalkWorkspace methodProtocol: #textPresenter attributes: #() selectors: #(#clear #findDetails #findDetails: #hasSelection #isModified #isModified: #replaceSelection: #selectionRange #selectionRange:)!
-Tools.SmalltalkWorkspace methodProtocol: #variableMetadataProvider attributes: #(#readOnly) selectors: #(#classForVariable: #tipForVariable:)!
+Tools.SmalltalkWorkspace methodProtocol: #variableMetadataProvider attributes: #() selectors: #(#classForVariable: #iconForVariable: #tipForVariable:)!
 
 !Tools.SmalltalkWorkspace class methodsFor!
 
 actualFont
 	"Answer the actual <Font> to use for instances of the receiver"
 
-	^self defaultFont ifNil: [SmalltalkSystem current actualFont]!
+	^self defaultFont ifNil: [self model actualFont]!
 
 annotationMode
 	self ensureOptionsLoaded.

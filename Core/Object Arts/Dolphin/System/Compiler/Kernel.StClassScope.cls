@@ -80,7 +80,13 @@ superVariable
 		ifNil: 
 			[superVariable := StSuperVariable new
 						scope: self;
-						yourself]! !
+						yourself]!
+
+visibleVariablesDo: aMonadicValuable visited: aSet
+	self instanceVariables
+		do: [:each | (aSet addNewElement: each name) ifTrue: [aMonadicValuable value: each]].
+	aMonadicValuable value: self selfVariable.
+	aMonadicValuable value: self superVariable! !
 !Kernel.StClassScope categoriesForMethods!
 classScope!accessing!public! !
 clearVariableCache!initializing!public! !
@@ -94,6 +100,7 @@ outer!accessing!public! !
 resolveIdentifier:!operations!private! !
 selfVariable!operations!public! !
 superVariable!operations!public! !
+visibleVariablesDo:visited:!operations!public! !
 !
 
 !Kernel.StClassScope class methodsFor!

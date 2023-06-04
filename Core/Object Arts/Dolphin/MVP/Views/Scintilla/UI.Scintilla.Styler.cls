@@ -56,6 +56,9 @@ prepareToStyleView: aScintillaView
 resetStylingIn: aScintillaView from: startPos to: anInteger 
 	aScintillaView startStylingFrom: startPos!
 
+styleRunBefore: anInteger
+	^self subclassResponsibility!
+
 stylingStartBefore: startInteger in: aScintillaView 
 	"Locate the position before the <integer>, startInteger, from which to start styling in the
 	<ScintillaView>, aScintillaView. This needs to be a position from which we can safely start
@@ -94,10 +97,7 @@ stylingStartBefore: startInteger in: aScintillaView
 			id := style id.
 			[prev > 0 and: [(aScintillaView styleIdAt: prev) == id]] whileTrue: [prev := prev - 1].
 			[prev == 0 or: [(aScintillaView styleIdAt: prev) == id]] whileFalse: [prev := prev - 1]].
-	^prev + 1!
-
-tokenBefore: anInteger 
-	^self subclassResponsibility! !
+	^prev + 1! !
 !UI.Scintilla.Styler categoriesForMethods!
 blockSize!constants!private! !
 colorText:in:startingAt:!operations!private! !
@@ -105,8 +105,8 @@ colorTextFrom:to:in:!event handling!public! !
 onStyleNeeded:from:to:!event handling!public! !
 prepareToStyleView:!initializing!public! !
 resetStylingIn:from:to:!helpers!private! !
+styleRunBefore:!helpers!public! !
 stylingStartBefore:in:!event handling!public! !
-tokenBefore:!helpers!public! !
 !
 
 !UI.Scintilla.Styler class methodsFor!

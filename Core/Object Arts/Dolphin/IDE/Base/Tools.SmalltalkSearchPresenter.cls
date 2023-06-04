@@ -192,7 +192,7 @@ rangeToCompleteAt: anInteger
 		ifTrue: [anInteger to: anInteger - 1]
 		ifFalse: 
 			[self isAutoCompletionTruncating 
-				ifTrue: [self tokenRangeAt: anInteger]
+				ifTrue: [self styleRunRangeAt: anInteger]
 				ifFalse: [anInteger to: view caretPosition - 1]]!
 
 searchItemsStartingWith: aString maxItems: anInteger
@@ -281,7 +281,7 @@ showCompletionList: aCollection prefixLength: anInteger
 
 showCompletionListAt: posInteger maxItems: maxInteger 
 	| prefix start choices |
-	start := self tokenStartAt: posInteger.
+	start := self styleRunStartAt: posInteger.
 	start = 0 ifTrue: [^self].
 	prefix := view plainTextFrom: start to: posInteger.
 	choices := self searchItemsStartingWith: prefix maxItems: maxInteger.
@@ -290,18 +290,18 @@ showCompletionListAt: posInteger maxItems: maxInteger
 startAutocompleteTimer
 	self view setTimer: SCI_AUTOCSHOW interval: self class autoCompleteDwell!
 
-tokenBefore: anInteger 
-	^view styler tokenBefore: anInteger!
+styleRunBefore: anInteger
+	^view styler styleRunBefore: anInteger!
 
-tokenRangeAt: anInteger 
-	^(view styleAt: anInteger) name == #specialCharacter 
+styleRunRangeAt: anInteger
+	^(view styleAt: anInteger) name == #specialCharacter
 		ifTrue: [anInteger to: anInteger]
-		ifFalse: [view tokenRangeAt: anInteger]!
+		ifFalse: [view styleRunRangeAt: anInteger]!
 
-tokenStartAt: anInteger 
-	^(view styleAt: anInteger) name == #specialCharacter 
+styleRunStartAt: anInteger
+	^(view styleAt: anInteger) name == #specialCharacter
 		ifTrue: [anInteger]
-		ifFalse: [view tokenStartAt: anInteger]! !
+		ifFalse: [view styleRunStartAt: anInteger]! !
 !Tools.SmalltalkSearchPresenter categoriesForMethods!
 addMethodsOfClass:startingWith:toSearchCandidates:max:!autocompletion!helpers!private! !
 applyOptions!operations!options!private! !
@@ -335,9 +335,9 @@ selectorsStartingWith:maxItems:!autocompletion!helpers!private! !
 showCompletionList:prefixLength:!autocompletion!helpers!private! !
 showCompletionListAt:maxItems:!helpers!private! !
 startAutocompleteTimer!autocompletion!helpers!private! !
-tokenBefore:!accessing!autocompletion!private! !
-tokenRangeAt:!accessing!autocompletion!private! !
-tokenStartAt:!accessing!autocompletion!private! !
+styleRunBefore:!accessing!autocompletion!private! !
+styleRunRangeAt:!accessing!autocompletion!private! !
+styleRunStartAt:!accessing!autocompletion!private! !
 !
 
 !Tools.SmalltalkSearchPresenter class methodsFor!

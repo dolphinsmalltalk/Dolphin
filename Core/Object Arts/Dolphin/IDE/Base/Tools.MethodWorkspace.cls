@@ -45,9 +45,9 @@ addToCommandRoute: route
 	refactoringTool notNil ifTrue: [route appendTarget: refactoringTool].
 	^super addToCommandRoute: route!
 
-allDefinedVariablesDo: aMonadicValuable 
-	self parseTree 
-		ifNotNil: [:ast | ast allDefinedVariableNodesDo: [:each | aMonadicValuable value: each name]]!
+allVariablesVisibleFrom: aStProgramNode do: aMonadicValuable
+	(aStProgramNode ifNil: [self parseTree])
+		ifNotNil: [:ast | ast scope visibleVariablesDo: [:each | aMonadicValuable value: each]]!
 
 applyOptions
 	"Private - Apply the class options to the receiver"
@@ -60,7 +60,7 @@ autoParse
 	
 	[| ast |
 	ast := self parseTree.
-	BrowserSemanticAnalyser analyseParseTree: ast pools: self allPools onError: nil]
+	BrowserSemanticAnalyser analyseParseTree: ast pools: self allPools]
 			on: Parser notificationClass
 			do: 
 				[:err |
@@ -117,7 +117,7 @@ browseDefinitionsCommand
 	node isLiteralNode
 		ifTrue: 
 			[| literalType |
-			literalType := node valueClass.
+			literalType := node valueClass realClass.
 			literalType == Symbol ifTrue: [^#browseSelectorDefinitions].
 			literalType == BindingReference ifTrue: [^#browseBindingReferenceTarget].
 			^#browseClassOfLiteral].
@@ -155,12 +155,6 @@ browseInstanceVariableReferences
 								referencesToInstVar: self selectedNode name
 								inHierarchyOf: self parseContext methodClass realClass
 								within: self searchEnvironment)))!
-
-browseLiteralReferences
-	"Open a method browser showing references to the value of the current literal node. Note this can be any literal value, not just symbols. For example you can search for all occurrences of String 'abc' in the system, or $🐬"
-
-	<commandQuery: #queryBrowseLiteralReferences:>
-	self browseReferencesMatching: (MethodSearch newLiteral: self selectedNode value)!
 
 browseMessageDefinitions
 	"Browse definitions of the object identified by the node under the cursor."
@@ -249,7 +243,7 @@ browseTemporaryVariableReferences
 
 buildParseTree
 	| parseContext |
-	parseContext := self parseContext ifNil: [self defaultParseContext].
+	parseContext := self parseContext.
 	self clearErrors.
 	self selectedMethod
 		ifNotNil: 
@@ -260,11 +254,16 @@ buildParseTree
 						parseExpression: method getSource
 						in: parseContext methodClass
 						environment: parseContext environment]].
-	^[self parseSourceIn: parseContext] on: Compiler notificationClass
-		do: 
-			[:err |
-			compilationErrors addLast: err.
-			err resume]!
+	^
+	[Parser
+		parseMethod: self source
+		in: parseContext methodClass
+		environment: parseContext environment]
+			on: Compiler notificationClass
+			do: 
+				[:err |
+				compilationErrors addLast: err.
+				err resume]!
 
 canSaveMethod
 	^self isReadOnly not and: [parentPresenter canSaveMethod and: [self textLength > 0]]!
@@ -282,6 +281,12 @@ clearParseTree
 
 	parseTree := DeafObject.Current.
 	self resetParseTimer!
+
+completeInitialWord
+	self
+		showSelectorCompletionListAt: 0
+		maxItems: self maxCompletionListSize
+		start: 1!
 
 contextBindingFor: aString 
 	self allPools do: [:each | (each bindingFor: aString) ifNotNil: [:binding | ^binding]].
@@ -342,13 +347,6 @@ isSelectionMatched
 isSelectionMatched: aBoolean
 	flags := flags mask: NoSelectionMatching set: aBoolean not!
 
-isTempVariable: aStVariableNode
-	"Private - Answer whether the specified variable node represents one of the temporaries in
-	the current method (note that parameters are included)."
-
-	self parseTree allDefinedVariableNodesDo: [:each | each = aStVariableNode ifTrue: [^true]].
-	^false!
-
 killParseTimer
 	self view killTimer: 1000!
 
@@ -361,12 +359,8 @@ method
 
 nameBindingContext
 	^evaluationContext
-		ifNil: [self parseContext ifNil: [self defaultParseContext]]
-		ifNotNil: 
-			[:context |
-			| class |
-			class := context basicClass.
-			ParseContext methodClass: class environment: class environment]!
+		ifNil: [self parseContext]
+		ifNotNil: [:context | ParseContext methodClass: context basicClass]!
 
 onAboutToDisplayMenu: aMenu 
 	"The system is about to display the <Menu> argument this is our chance to fiddle with it."
@@ -391,16 +385,13 @@ onUpdateUI: anSCNotification
 !
 
 parseContext
-	^parentPresenter ifNotNil: [:p | p parseContext]!
-
-parseSourceIn: aParseContext
-	^Parser
-		parseMethod: self source
-		in: aParseContext methodClass
-		environment: aParseContext environment!
+	^parentPresenter parseContext!
 
 parseTree
-	parseTree == DeafObject.Current ifTrue: [parseTree := self buildParseTree].
+	parseTree == DeafObject.Current
+		ifTrue: 
+			[parseTree := self buildParseTree.
+			SemanticAnalyser analyseParseTree: parseTree pools: { self workspacePool }].
 	^parseTree!
 
 promptToSaveChanges
@@ -419,7 +410,7 @@ queryBrowseAnnotatedMethods: aCommandQuery
 queryBrowseBindingReferenceTarget: aCommandQuery
 	| node |
 	node := self selectedNode.
-	((node isLiteralNode and: [node valueClass == BindingReference]) ifTrue: [node value bindingOrNil])
+	((node isLiteralNode and: [node valueClass realClass == BindingReference]) ifTrue: [node value bindingOrNil])
 		ifNotNil: 
 			[:binding |
 			aCommandQuery isEnabled: true.
@@ -432,15 +423,6 @@ queryBrowseBindingReferenceTarget: aCommandQuery
 
 queryBrowseClass: aCommandQuery
 	^self queryBrowseVariableDefinition: aCommandQuery classification: #classGlobal!
-
-queryBrowseClassOfLiteral: aCommandQuery
-	| node |
-	node := self selectedNode.
-	node isLiteralNode
-		ifTrue: 
-			[aCommandQuery isEnabled: true.
-			(aCommandQuery menuText includes: $<)
-				ifTrue: [aCommandQuery text: 'Class <1p>' << node value class]]!
 
 queryBrowseClassReferences: aCommandQuery
 	^self queryBrowseVariableReferences: aCommandQuery classification: #classGlobal!
@@ -491,19 +473,6 @@ queryBrowseInstanceVariableReferences: aCommandQuery
 								}
 							locale: Locale smalltalk)]!
 
-queryBrowseLiteralReferences: aCommandQuery
-	| node |
-	node := self selectedNode.
-	node isLiteralNode
-		ifTrue: 
-			[| literal |
-			literal := node value.
-			aCommandQuery
-				isEnabled: true;
-				text: (aCommandQuery menuText
-							expandMacrosWithArguments: { literal species name , ' ' , literal printString }
-							locale: Locale smalltalk)]!
-
 queryBrowseMessage: aCommandQuery
 	| node message |
 	node := self selectedNode.
@@ -531,17 +500,6 @@ queryBrowseReferencesToBindingReference: aCommandQuery
 			[aCommandQuery
 				isEnabled: true;
 				text: (aCommandQuery menuText expandMacrosWithArguments: { node value printString }
-							locale: Locale smalltalk)]!
-
-queryBrowseSelectorDefinitions: aCommandQuery
-	| node |
-	node := self selectedNode.
-	((node isLiteralNode and: [node valueClass == Symbol]) ifTrue: [node value])
-		ifNotNil: 
-			[:selector |
-			aCommandQuery
-				isEnabled: true;
-				text: (aCommandQuery menuText expandMacrosWithArguments: { 'selector <1p>' << selector }
 							locale: Locale smalltalk)]!
 
 queryBrowseSharedVariableDefinition: aCommandQuery
@@ -664,6 +622,11 @@ resolveVariableOfNode: aStVariableNode
 selectedErrorRange
 	^self selectedNode sourceInterval!
 
+selectedLiteralValue
+	| node |
+	node := self selectedNode.
+	^node isLiteralNode ifTrue: [node value]!
+
 selectedMessage
 	#todo.	"Handle case of selected node being method signature"
 	^self selectedNode
@@ -689,7 +652,9 @@ selectedNode
 	^(self nodeForRange: range) ifNil: [self parseTree]!
 
 selectedSymbol
-	^self selectedNode value!
+	| literal |
+	literal := self selectedLiteralValue.
+	^literal class == Symbol ifTrue: [literal]!
 
 selectedVariable
 	^self resolveVariableOfNode: self selectedNode!
@@ -754,7 +719,7 @@ widenSourceSelection
 !Tools.MethodWorkspace categoriesForMethods!
 accept!commands-actions!public! !
 addToCommandRoute:!commands-routing!public! !
-allDefinedVariablesDo:!autocompletion!enumerating!private! !
+allVariablesVisibleFrom:do:!autocompletion!enumerating!private! !
 applyOptions!operations!options!private! !
 autoParse!helpers!private! !
 browseAnnotatedMethods!commands-actions!public! !
@@ -768,7 +733,6 @@ browseDefinitionsCommand!commands-mappings!private! !
 browseEnvironments:!browsing!private! !
 browseInstanceVariableDefinition!commands-actions!public! !
 browseInstanceVariableReferences!commands-actions!public! !
-browseLiteralReferences!commands-actions!public! !
 browseMessageDefinitions!commands-actions!public! !
 browseMessageReferences!commands-actions!public! !
 browseMessageTarget!commands-actions!public! !
@@ -784,6 +748,7 @@ buildParseTree!helpers!private! !
 canSaveMethod!commands-queries!private! !
 clear!operations!public! !
 clearParseTree!helpers!private! !
+completeInitialWord!autocompletion!helpers!private! !
 contextBindingFor:!private!refactoring! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
@@ -797,7 +762,6 @@ isAutoParseEnabled:!accessing!public! !
 isEditable!private!testing! !
 isSelectionMatched!accessing!public! !
 isSelectionMatched:!accessing!public! !
-isTempVariable:!private!refactoring! !
 killParseTimer!helpers!private! !
 lineFromPosition:!enquiries!public! !
 method!accessing!private! !
@@ -807,23 +771,19 @@ onTextChanged!event handling!public! !
 onTimerTick:!event handling!public! !
 onUpdateUI:!event handling!public! !
 parseContext!accessing!private! !
-parseSourceIn:!helpers!private! !
 parseTree!accessing!private! !
 promptToSaveChanges!helpers!public! !
 queryBrowseAnnotatedMethods:!commands-queries!private! !
 queryBrowseBindingReferenceTarget:!commands-queries!private! !
 queryBrowseClass:!commands-queries!private! !
-queryBrowseClassOfLiteral:!commands-queries!private! !
 queryBrowseClassReferences:!commands-queries!private! !
 queryBrowseClassVariableDefinition:!commands-queries!private! !
 queryBrowseClassVariableReferences:!commands-queries!private! !
 queryBrowseInstanceVariableDefinition:!commands-queries!private! !
 queryBrowseInstanceVariableReferences:!commands-queries!private! !
-queryBrowseLiteralReferences:!commands-queries!private! !
 queryBrowseMessage:!commands-queries!private! !
 queryBrowseMessageTarget:!commands-queries!private! !
 queryBrowseReferencesToBindingReference:!commands-queries!private! !
-queryBrowseSelectorDefinitions:!commands-queries!private! !
 queryBrowseSharedVariableDefinition:!commands-queries!private! !
 queryBrowseSharedVariableReferences:!commands-queries!private! !
 queryBrowseSpecialVariableDefinition:!commands-queries!private! !
@@ -840,11 +800,12 @@ repositionAtSourceLine:!operations!public! !
 resetParseTimer!helpers!private! !
 resolveVariableOfNode:!autocompletion!helpers!private! !
 selectedErrorRange!accessing!private!refactoring! !
+selectedLiteralValue!helpers!private! !
 selectedMessage!accessing!private! !
 selectedMessageNode!accessing!private!refactoring! !
 selectedMethod!accessing!public! !
 selectedNode!accessing!public! !
-selectedSymbol!commands-actions!public! !
+selectedSymbol!helpers!private! !
 selectedVariable!helpers!private! !
 selectionChanged!event handling!public! !
 selectorFromNode:!helpers!private! !

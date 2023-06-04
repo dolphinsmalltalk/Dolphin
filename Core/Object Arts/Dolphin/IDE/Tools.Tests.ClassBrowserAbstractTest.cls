@@ -207,13 +207,13 @@ testEvaluationContext
 
 	| browserClass |
 	browserClass := self browser actualClass.
-	self assert: methodsPresenter evaluationContext equals: browserClass.
+	self assert: methodsPresenter evaluationContext equals: browserClass ?? UndefinedObject.
 	browser actualClass: BindingContext.
 	self assert: methodsPresenter evaluationContext identicalTo: BindingContext.
 	browser method: (Context compiledMethodAt: #block).
 	self assert: methodsPresenter evaluationContext identicalTo: Context.
 	browser actualClass: nil.
-	self assertIsNil: methodsPresenter evaluationContext!
+	self assert: methodsPresenter evaluationContext identicalTo: UndefinedObject!
 
 testIsMethodVisible
 	self deny: self browser isShowInheritedMethods.

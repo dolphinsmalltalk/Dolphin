@@ -340,7 +340,7 @@ nameForArgument: aStProgramNode
 							[:aClass |
 							| type |
 							type := self developmentSystem typeForArgumentClass: aClass.
-							aClass isMeta
+							^aClass isMeta
 								ifTrue: ['aClass']
 								ifFalse: [(type name first isVowel ifTrue: ['an'] ifFalse: ['a']) , type name]]].
 			^aStProgramNode name].

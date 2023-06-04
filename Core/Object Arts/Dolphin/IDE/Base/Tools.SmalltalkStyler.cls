@@ -106,7 +106,7 @@ colourTokens: aSmalltalkScanner startingAt: anInteger
 	| position offset |
 	position := 1.
 	offset := anInteger - 1.
-	last := self tokenBefore: offset.
+	last := self styleRunBefore: offset.
 	[aSmalltalkScanner atEnd] whileFalse: 
 			[| nextAfter aStToken styleName |
 			aStToken := aSmalltalkScanner next.
@@ -218,6 +218,23 @@ styleForToken: aStToken
 			^#tag].
 	^aStToken acceptVisitor: self!
 
+styleRunBefore: anInteger
+	| start id white comment stop |
+	anInteger < 1 ifTrue: [^nil].
+	start := anInteger.
+	id := nil.
+	white := view idOfStyleNamed: #whitespace.
+	comment := view idOfStyleNamed: #comment.
+	
+	[id := view styleIdAt: start.
+	id == comment or: [id == white and: [(view characterAt: start) isSeparator]]]
+			whileTrue: 
+				[start := start - 1.
+				start == 0 ifTrue: [^nil]].
+	stop := start.
+	[(start := start - 1) == 0 or: [(view styleIdAt: start) ~~ id]] whileFalse.
+	^(start + 1 to: stop) -> (view styleWithId: id) name!
+
 stylingStartBefore: startInteger in: aScintillaView 
 	"Private - Locate the position before the <integer>, startInteger, from which to start styling in the
 	<ScintillaView>, aScintillaView. This needs to be a position from which we can safely start
@@ -237,23 +254,6 @@ stylingStartBefore: startInteger in: aScintillaView
 			 the start of that array. This is the one case where significant look back
 			 might be required (because of literal array nesting)."
 			arrayRange start]!
-
-tokenBefore: anInteger 
-	| start id white comment stop |
-	anInteger < 1 ifTrue: [^nil].
-	start := anInteger.
-	id := nil.
-	white := view idOfStyleNamed: #whitespace.
-	comment := view idOfStyleNamed: #comment.
-	
-	[id := view styleIdAt: start.
-	id == comment or: [id == white and: [(view characterAt: start) isSeparator]]] 
-			whileTrue: 
-				[start := start - 1.
-				start == 0 ifTrue: [^nil]].
-	stop := start.
-	[(start := start - 1) == 0 or: [(view styleIdAt: start) ~~ id]] whileFalse.
-	^(start + 1 to: stop) -> (view styleWithId: id) name!
 
 visitAssignmentToken: aStAssignmentToken
 	^#assignment!
@@ -435,8 +435,8 @@ resetStylingIn:from:to:!helpers!private! !
 scannerClass!constants!private! !
 styleForBar!helpers!private! !
 styleForToken:!helpers!private! !
+styleRunBefore:!helpers!public! !
 stylingStartBefore:in:!helpers!private! !
-tokenBefore:!helpers!public! !
 visitAssignmentToken:!public!visiting! !
 visitBinarySelectorToken:!public!visiting! !
 visitErrorToken:!public!visiting! !

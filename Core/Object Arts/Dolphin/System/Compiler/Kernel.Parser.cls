@@ -47,6 +47,15 @@ atEnd
 blockNodeClass
 	^StBlockNode!
 
+blockNotClosed: aStBlockNode
+	| blockEnd |
+	blockEnd := aStBlockNode body stop.
+	blockEnd == 0 ifTrue: [blockEnd := aStBlockNode bar ?? aStBlockNode left].
+	self parserError: CErrBlockNotClosed range: (aStBlockNode left to: blockEnd).
+	"Error ignored, attempt to recover..."
+	aStBlockNode right: blockEnd.
+	^aStBlockNode!
+
 braceArrayNodeClass
 	^StBraceArrayNode!
 
@@ -73,6 +82,50 @@ errorBlock: aBlock
 errorPosition
 	^currentToken start!
 
+expectAnnotationArgument
+	| node |
+	self parserError: CErrExpectAnnotationArg.
+	"Attempt to recover by treating it as a literal value, the AST will be invalid of course"
+	node := StLiteralValueNode new literalToken: (StLiteralToken
+						start: currentToken start
+						comments: nil
+						value: (source copyFrom: currentToken start to: currentToken stop)
+						stop: currentToken stop).
+	self step.
+	self addCommentsTo: node.
+	^node!
+
+expectExternalType
+	self parserError: CErrExpectExtType.
+	"Error ignored, attempt to recover by creating a dummy arg type node and stepping over the offending token..."
+	self step.
+	^StExternalArgTypeNode new
+		start: currentToken start;
+		stop: currentToken stop;
+		typeOrdinal: ExtCallArgLPVOID;
+		indirections: 0;
+		yourself!
+
+expectPrimitiveIndex: startInteger
+	self parserError: CErrExpectPrimIdx.
+	"Error ignored, attempt to recover, skip the offending token unless it is the close tag and return a dummy primitive node..."
+	(currentToken isBinary: #>) ifFalse: [self step].
+	^(StPrimitiveNode primitiveIndex: 0)
+		start: startInteger;
+		yourself!
+
+expectVariable: aStVariableNodeClass
+	| node |
+	self parserError: CErrExpectVariable.
+	"Error ignored, attempt to recover..."
+	node := aStVariableNodeClass identifierToken: (StIdentifierToken
+						start: currentToken start
+						comments: nil
+						value: (source copyFrom: currentToken start to: currentToken stop)).
+	self step.
+	self addCommentsTo: node.
+	^node!
+
 externalReferenceTypeFor: anInteger
 	^(External.FunctionDescriptor referenceTypeFor: anInteger) ?? ExtCallArgLPPVOID!
 
@@ -83,6 +136,19 @@ initialize
 initializeParserWith: aString
 	source := aString.
 	self scanner: (self scannerClass on: (ReadStream on: source) errorHandler: self)!
+
+invalidExpressionStart
+	| node |
+	self parserError: CErrInvalExprStart.
+	"Attempt to recover by treating it as a literal value, the AST will be invalid of course"
+	node := StLiteralValueNode new literalToken: (StLiteralToken
+						start: currentToken start
+						comments: nil
+						value: (source copyFrom: currentToken start to: currentToken stop)
+						stop: currentToken stop).
+	self step.
+	self addCommentsTo: node.
+	^node!
 
 line
 	"Anwswer one-based <integer> line number of the receiver's current position in the 
@@ -110,10 +176,10 @@ parameterNodeClass
 	^StParameterNode!
 
 parseAnnotationArgument
-	| token node |
 	currentToken isIdentifier
 		ifTrue: 
-			[node := self variableNodeClass identifierToken: currentToken.
+			[| node |
+			node := self variableNodeClass identifierToken: currentToken.
 			self step.
 			^node].
 	(currentToken isLiteralToken and: [currentToken isMultiKeyword not])
@@ -122,17 +188,7 @@ parseAnnotationArgument
 	currentToken isLiteralByteArrayToken ifTrue: [^self parseLiteralByteArray].
 	currentToken isOptimized ifTrue: [^self parseOptimizedExpression].
 	currentToken isQualifiedReference ifTrue: [^self parseQualifiedReference].
-	self parserError: CErrExpectAnnotationArg.
-	"Attempt to recover by treating it as a literal value, the AST will be invalid of course"
-	token := StLiteralToken
-				start: currentToken start
-				comments: nil
-				value: (source copyFrom: currentToken start to: currentToken stop)
-				stop: currentToken stop.
-	self step.
-	node := StLiteralValueNode new literalToken: token.
-	self addCommentsTo: node.
-	^node!
+	^self expectAnnotationArgument!
 
 parseAssignment
 	"Need one token lookahead to see if we have a ':='. This method could 
@@ -184,23 +240,14 @@ parseBinaryPattern
 	^node!
 
 parseBlock
-	| position node |
-	position := currentToken start.
-	self step.
+	| node |
 	node := self blockNodeClass new.
 	"Set start position before attempting to parse the block args so can use for error reporting if necessary"
-	node left: position.
+	node left: currentToken start.
+	self step.
 	self parseBlockArgsInto: node.
 	node body: (self parseStatementsOf: node).
-	(currentToken isSpecial: $])
-		ifFalse: 
-			[| blockEnd |
-			blockEnd := node body sourceInterval stop.
-			blockEnd = 0 ifTrue: [blockEnd := node bar ?? position].
-			self parserError: CErrBlockNotClosed range: (position to: blockEnd).
-			"Error ignored, attempt to recover..."
-			node right: blockEnd.
-			^node].
+	(currentToken isSpecial: $]) ifFalse: [^self blockNotClosed: node].
 	node right: currentToken start.
 	self step.
 	^node!
@@ -233,13 +280,13 @@ parseBlockArgsInto: node
 								value: #|;
 								start: currentToken start + 1]
 						ifFalse: 
-							[self parserError: CErrBlockArgListNotClosed range: (node start to: args last sourceInterval stop)]]]
+							[self parserError: CErrBlockArgListNotClosed range: (node start to: args last stop)]]]
 		ifFalse: 
 			["St-80 allows, for example, [:a] as a valid block, ANSI requires the arg list termination bar, i.e. [:a|]"
 			(st80Syntax and: [currentToken isSpecial: $]])
 				ifFalse: 
 					["Error ignored, no recovery needed"
-					self parserError: CErrBlockArgListNotClosed range: (node start to: args last sourceInterval stop)]].
+					self parserError: CErrBlockArgListNotClosed range: (node start to: args last stop)]].
 	node arguments: args.
 	^node!
 
@@ -247,15 +294,14 @@ parseBlockParameter
 	^self parseVariableNode: self parameterNodeClass!
 
 parseBraceArray
-	| start node |
-	start := currentToken start.
-	self step.
+	| node |
 	node := self braceArrayNodeClass new.
-	node left: start.
+	node left: currentToken start.
+	self step.
 	self parseStatementList: node.
 	(currentToken isSpecial: $})
 		ifFalse: 
-			[self parserError: CErrBraceNotClosed range: (start to: self errorPosition - 1)
+			[self parserError: CErrBraceNotClosed range: (node left to: self errorPosition - 1)
 			"Error ignored, no recovery needed as reached EOF looking for a closing brace"].
 	node right: currentToken stop.
 	self step.
@@ -312,25 +358,10 @@ parseExpression: aString
 	^body!
 
 parseExternalArgType
-	| valueType indirections typeToken structClass stop start |
-	start := currentToken sourceInterval start.
-	currentToken isIdentifier
-		ifFalse: 
-			[self parserError: CErrExpectExtType range: currentToken sourceInterval.
-			"Error ignored, attempt to recover by creating a dummy arg type node and
-			stepping over the offending token..."
-			self step.
-			^StExternalArgTypeNode new
-				start: currentToken start;
-				stop: currentToken stop;
-				typeOrdinal: ExtCallArgLPVOID;
-				indirections: 0;
-				yourself].
-	structClass := nil.
+	| valueType indirections typeToken stop start |
+	currentToken isIdentifier ifFalse: [^self expectExternalType].
+	start := currentToken start.
 	valueType := External.FunctionDescriptor typeFromName: currentToken value ifAbsent: ExtCallArgSTRUCT.
-	"We can't look up the struct class until semantic analysis, so hold as a variable for later resolution"
-	structClass := valueType == ExtCallArgSTRUCT
-				ifTrue: [self variableNodeClass identifierToken: currentToken].
 	typeToken := currentToken.
 	self step.
 	indirections := self parseExternalArgTypeQualifier.
@@ -357,7 +388,10 @@ parseExternalArgType
 		stop: stop;
 		typeOrdinal: valueType;
 		indirections: indirections;
-		structClass: structClass;
+		structClass: (valueType == ExtCallArgSTRUCT
+					ifTrue: 
+						["We can't look up the struct class until semantic analysis, so hold as a variable for later resolution"
+						self variableNodeClass identifierToken: typeToken]);
 		yourself!
 
 parseExternalArgTypeQualifier
@@ -410,7 +444,7 @@ parseExternalCallArgs: aStExternalCallNode
 			"Error ignored, but no recovery needed as the decl is syntactically correct, it just defines too few types."].
 	got > expected
 		ifTrue: 
-			[self parserError: CErrTooManyArgTypes range: (start to: types last sourceInterval stop)
+			[self parserError: CErrTooManyArgTypes range: (start to: types last stop)
 			"Error ignored, but no recovery needed as the decl is syntactically correct, it just defines too many types."].
 	^types!
 
@@ -644,26 +678,23 @@ parseMethodParameter
 	^self parseVariableNode: self parameterNodeClass!
 
 parseOptimizedExpression
-	| position node body isClosed |
-	position := currentToken start.
-	self step.
+	| node |
 	node := self optimizedNodeClass new.
-	body := self parseStatementsOf: node.
-	isClosed := currentToken isSpecial: $).
-	node
-		left: position
-		body: body
-		right: (isClosed ifTrue: [currentToken start] ifFalse: [scanner previousStepPosition]).
-	isClosed ifFalse: [self parserError: CErrStaticExprNotClosed range: node sourceInterval].
+	node left: currentToken start.
 	node source: source.
+	self step.
+	node body: (self parseStatementsOf: node).
+	(currentToken isSpecial: $))
+		ifTrue: [node right: currentToken start]
+		ifFalse: 
+			[node right: scanner previousStepPosition.
+			self parserError: CErrStaticExprNotClosed range: node sourceInterval].
 	self step.
 	^node!
 
 parseOverlappedCall: startInteger
-	| callConvId |
 	self step.
-	callConvId := self parseExternalCallingConvention.
-	^(self parseExternalCall: callConvId startingAt: startInteger)
+	^(self parseExternalCall: self parseExternalCallingConvention startingAt: startInteger)
 		isOverlapped: true;
 		yourself!
 
@@ -687,13 +718,7 @@ parsePrimitive: startInteger
 	| primitiveNode primitiveIndex |
 	self step.
 	(currentToken isLiteralToken not or: [currentToken value isInteger not])
-		ifTrue: 
-			[self parserError: CErrExpectPrimIdx.
-			"Error ignored, attempt to recover, skip the offending token unless it is the close tag and return a dummy primitive node..."
-			(currentToken isBinary: #>) ifFalse: [self step].
-			^(StPrimitiveNode primitiveIndex: 0)
-				start: startInteger;
-				yourself].
+		ifTrue: [^self expectPrimitiveIndex: startInteger].
 	primitiveIndex := currentToken value.
 	(primitiveIndex between: 1 and: VMConstants.MaxPrimitive)
 		ifFalse: [self parserError: CErrBadPrimIdx].
@@ -708,21 +733,20 @@ parsePrimitive: startInteger
 	^primitiveNode!
 
 parsePrimitiveIdentifier: aStVariableNodeClass
-	| token node |
-	token := currentToken.
+	| node |
+	node := aStVariableNodeClass identifierToken: currentToken.
 	self step.
-	node := aStVariableNodeClass identifierToken: token.
 	self addCommentsTo: node.
 	^node!
 
 parsePrimitiveLiteral
-	| token |
-	token := currentToken.
+	| node |
+	node := StLiteralValueNode new literalToken: currentToken.
 	self step.
-	^StLiteralValueNode new literalToken: token!
+	^node!
 
 parsePrimitiveObject
-	| token node |
+	"Attempt to recover by treating it as a literal value, the AST will be invalid of course"
 	currentToken isIdentifier ifTrue: [^self parsePrimitiveIdentifier: self variableNodeClass].
 	(currentToken isLiteralToken and: [currentToken isMultiKeyword not])
 		ifTrue: [^self parsePrimitiveLiteral].
@@ -737,17 +761,7 @@ parsePrimitiveObject
 			char == ${ ifTrue: [^self parseBraceArray]].
 	currentToken isOptimized ifTrue: [^self parseOptimizedExpression].
 	currentToken isQualifiedReference ifTrue: [^self parseQualifiedReference].
-	self parserError: CErrInvalExprStart.
-	"Attempt to recover by treating it as a literal value, the AST will be invalid of course"
-	token := StLiteralToken
-				start: currentToken start
-				comments: nil
-				value: (source copyFrom: currentToken start to: currentToken stop)
-				stop: currentToken stop.
-	self step.
-	node := StLiteralValueNode new literalToken: token.
-	self addCommentsTo: node.
-	^node!
+	^self invalidExpressionStart!
 
 parseQualifiedReference
 	| start stop node |
@@ -775,7 +789,7 @@ parseQualifiedReference
 					self step]
 				ifFalse: 
 					["If one token lookahead doesn't find the closing brace, assume the current token is part of a subsequent message and the close brace is missing"
-					self parserError: CErrQualifiedRefNotClosed range: (start to: stop)]].
+					self parserError: CErrQualifiedRefNotClosed range: (node startWithoutParentheses to: stop)]].
 	node stop: stop.
 	^node!
 
@@ -1003,27 +1017,17 @@ parseUnaryTag: startInteger
 		yourself!
 
 parseVariableNode: aStVariableNodeClass
-	| token node |
-	currentToken isIdentifier ifTrue: [^self parsePrimitiveIdentifier: aStVariableNodeClass].
-	self parserError: CErrExpectVariable.
 	"Error ignored, attempt to recover..."
-	token := StIdentifierToken
-				start: currentToken start
-				comments: nil
-				value: (source copyFrom: currentToken start to: currentToken stop).
-	self step.
-	node := aStVariableNodeClass identifierToken: token.
-	self addCommentsTo: node.
-	^node!
+	currentToken isIdentifier ifTrue: [^self parsePrimitiveIdentifier: aStVariableNodeClass].
+	^self expectVariable: aStVariableNodeClass!
 
 parseVirtualCall: startInteger
-	| vfnIndex node callConvId |
+	| vfnIndex node |
 	self step.
-	callConvId := self parseExternalCallingConvention.
 	node := StExternalCallNode new.
 	node
 		start: startInteger;
-		callingConvention: callConvId;
+		callingConvention: self parseExternalCallingConvention;
 		returnType: self parseExternalArgType.
 	node isVirtual: true.
 	(currentToken isLiteralToken not or: [(vfnIndex := currentToken value) isInteger not])
@@ -1196,20 +1200,26 @@ annotationNodeClass!constants!private! !
 assignmentNodeClass!constants!private! !
 atEnd!public!testing! !
 blockNodeClass!constants!private! !
+blockNotClosed:!parsing!private! !
 braceArrayNodeClass!constants!private! !
 cascadeNodeClass!constants!private! !
 errorBlock:!accessing!public! !
 errorPosition!error handling!public! !
-externalReferenceTypeFor:!parsing!private! !
+expectAnnotationArgument!error handling!private! !
+expectExternalType!error handling!private! !
+expectPrimitiveIndex:!error handling!private! !
+expectVariable:!error handling!private! !
+externalReferenceTypeFor:!helpers!private! !
 initialize!initializing!public! !
 initializeParserWith:!initializing!private! !
+invalidExpressionStart!error handling!private! !
 line!accessing!public! !
 messageNodeClass!constants!private! !
 methodClass:environment:!initializing!private! !
 methodNodeClass!constants!private! !
 nextToken!helpers!private! !
 optimizedNodeClass!constants!private! !
-parameterNodeClass!parsing!private! !
+parameterNodeClass!constants!private! !
 parseAnnotationArgument!parsing!private! !
 parseAssignment!parsing!private! !
 parseBinaryMessage!parsing!private! !
@@ -1279,7 +1289,7 @@ scanner:!accessing!public! !
 scannerClass!constants!private! !
 sequenceNodeClass!constants!private! !
 step!parsing!private! !
-tempDeclClass!parsing!private! !
+tempDeclClass!constants!private! !
 validateArg:args:!parsing!private! !
 validateTemp:of:temps:!parsing!private! !
 variableNodeClass!constants!private! !

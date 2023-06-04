@@ -140,22 +140,20 @@ testIntegerScanning
 
 	| source subject token |
 	#('0' '-0' '1' '-1' '-1.' '123.' '123 ' '1073741823' '-1073741824' '1e1' '1e+1' '1073741823e0' '1073741823e-0' '-1073741823e-0')
-		do: 
-			[:each |
-			self
-				scanNumber: each
-				valueClass: SmallInteger].
-	#('1e-1' '1e-307') do: 
-			[:each |
-			self
-				scanNumber: each
-				valueClass: Fraction].
-	#('1073741824' '-1073741825' '2147483647' '2147483649' '-2147483648' '-2147483649' '1e308') do: 
-			[:each |
-			self
-				scanNumber: each
-				valueClass: LargeInteger].
-	#('0A' '-0A' '123e' '1e1e2' '1e+-2') do: [:each | self scanNonNumericEnd: each class: SmallInteger].
+		do: [:each | self scanNumber: each valueClass: SmallInteger].
+	#('1e-1' '1e-307') do: [:each | self scanNumber: each valueClass: Fraction].
+	#('1073741824' '-1073741825' '2147483647' '2147483649' '-2147483648' '-2147483649' '1e308')
+		do: [:each | self scanNumber: each valueClass: LargeInteger].
+	#('0A' '-0A' '123e' '1e1e2' '1e+-2' '2r2' '1eA')
+		do: [:each | self scanNonNumericEnd: each class: SmallInteger].
+
+	"Radix integer terminated by digit that is out of range of the radix"
+	subject := self scannerClass on: '2r1012' readStream.
+	token := subject next.
+	self assert: token value identicalTo: 5.
+	token := subject next.
+	self assert: token value identicalTo: 2.
+	self assert: subject atEnd.
 
 	"Initially appears to be negative exponent"
 	source := '123e-'.

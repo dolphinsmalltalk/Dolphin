@@ -1013,6 +1013,11 @@ methodsMatching: aMonadicValuable
 modifiedModel: aValueHolder
 	(self view viewNamed: 'modified' ifNone: nil) ifNotNil: [:item | item model: aValueHolder]!
 
+namespaceForNewMethodOf: aClass
+	self packageForNewMethod
+		ifNotNil: [:package | package environment ifNotNil: [:packageNs | ^model modelClassFor: packageNs]].
+	^aClass environment!
+
 newMethod
 	"Sets the receiver up for creating a new method"
 
@@ -1737,16 +1742,15 @@ parseContext
 	"Answer the {Class. Namespace} scope in who's context methods should be compiled."
 
 	^self method
+		ifNotNil: [:m | (model modelMethodFor: m) parseContext]
 		ifNil: 
 			[self actualClass
+				ifNil: [model defaultParseContext]
 				ifNotNil: 
 					[:class |
-					| ns |
-					ns := self packageForNewMethod
-								ifNil: [class environment]
-								ifNotNil: [:package | package environment ifNil: [class environment]].
-					ParseContext methodClass: class environment: ns]]
-		ifNotNil: [:method | method parseContext]!
+					| modelClass |
+					modelClass := model modelClassFor: class.
+					ParseContext methodClass: modelClass environment: (self namespaceForNewMethodOf: modelClass)]]!
 
 parseTree
 	^methodBrowserPresenter parseTree!
@@ -2620,6 +2624,7 @@ methodProtocols!accessing!private! !
 methodProtocols:!accessing!public! !
 methodsMatching:!helpers!private! !
 modifiedModel:!accessing!public! !
+namespaceForNewMethodOf:!accessing!private! !
 newMethod!commands-actions!public! !
 onBrowserCardChangedFrom:to:!event handling!private! !
 onCategory:renameTo:accept:!event handling!private! !

@@ -65,20 +65,6 @@ model: aSystemModel
 	super model: aSystemModel.
 	self browserEnvironment: aSystemModel browserEnvironment!
 
-parseContext
-	^self method
-		ifNil: 
-			[self actualClass
-				ifNotNil: 
-					[:class |
-					| ns |
-					ns := self packageForNewMethod
-								ifNil: [class environment]
-								ifNotNil: [:package | package environment ifNil: [class environment]].
-					ParseContext methodClass: (model modelClassFor: class)
-						environment: (model modelClassFor: ns)]]
-		ifNotNil: [:method | (model modelMethodFor: method) parseContext]!
-
 printBasicCaptionOn: aPuttableStream
 	self browserEnvironment displayOn: aPuttableStream!
 
@@ -122,7 +108,6 @@ createComponents!initializing!public! !
 defaultHelpId!constants!public! !
 isMethodVisible:!private!testing! !
 model:!accessing!public! !
-parseContext!public! !
 printBasicCaptionOn:!private!updating! !
 printCaptionForClass:on:!private!updating! !
 printCaptionForMethod:on:!private!updating! !

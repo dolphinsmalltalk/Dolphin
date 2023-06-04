@@ -150,6 +150,7 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.RBModel} #modelMethodFor:)
 	#(#{Refactory.Browser.RBModel class} #icon)
 	#(#{Refactory.Browser.RBNamespaceClass class} #icon)
+	#(#{Refactory.Browser.RBPatternVariableNode class} #icon)
 	#(#{Refactory.Browser.RBRootNamespace class} #icon)
 	#(#{Refactory.Browser.RBSmalltalkNamespace class} #icon)
 	#(#{Refactory.Browser.Refactoring} #chooseFrom:caption:)
@@ -1690,6 +1691,16 @@ icon
 	^Namespace icon! !
 !Refactory.Browser.RBNamespaceClass class categoriesForMethods!
 icon!public! !
+!
+
+!Refactory.Browser.RBPatternVariableNode class methodsFor!
+
+icon
+	^##((TextTileIcon text: '`@q' fontName: 'Consolas')
+		textcolor: Color navy;
+		yourself)! !
+!Refactory.Browser.RBPatternVariableNode class categoriesForMethods!
+icon!constants!public! !
 !
 
 !Refactory.Browser.RBRootNamespace class methodsFor!

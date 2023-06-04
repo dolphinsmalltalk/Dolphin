@@ -39,7 +39,7 @@ onStyleNeeded: aScintillaView from: startInteger to: stopInteger
 
 	aScintillaView applyStyle: self normalStyleName toNext: stopInteger - startInteger + 1!
 
-tokenBefore: anInteger 
+styleRunBefore: anInteger
 	^nil! !
 !UI.Scintilla.NullStyler categoriesForMethods!
 colorText:in:startingAt:!operations!private! !
@@ -47,7 +47,7 @@ initialize!initializing!public! !
 normalStyleName!accessing!public! !
 normalStyleName:!accessing!public! !
 onStyleNeeded:from:to:!event handling!public! !
-tokenBefore:!helpers!public! !
+styleRunBefore:!helpers!public! !
 !
 
 !UI.Scintilla.NullStyler class methodsFor!

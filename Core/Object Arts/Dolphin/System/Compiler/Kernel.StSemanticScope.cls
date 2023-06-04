@@ -16,11 +16,17 @@ Kernel.StSemanticScope comment: ''!
 classScope
 	^self outer classScope!
 
+environment
+	^self outer environment!
+
 environment: aNamespace
 	self outer environment: aNamespace!
 
 isInlined
 	^false!
+
+methodClass
+	^self outer methodClass!
 
 methodScope
 	^self outer methodScope!
@@ -40,16 +46,26 @@ superVariable
 	^self outer superVariable!
 
 thisContextVariable
-	^nil! !
+	^nil!
+
+visibleVariablesDo: aMonadicValuable
+	self visibleVariablesDo: aMonadicValuable visited: Set new!
+
+visibleVariablesDo: aMonadicValuable visited: aSet
+	^self subclassResponsibility! !
 !Kernel.StSemanticScope categoriesForMethods!
 classScope!accessing!public! !
+environment!accessing!public! !
 environment:!accessing!public! !
 isInlined!accessing!public! !
+methodClass!accessing!public! !
 methodScope!accessing!public! !
 outer!accessing!public! !
 resolveIdentifier:!operations!private! !
 selfVariable!accessing!public! !
 superVariable!accessing!public! !
 thisContextVariable!accessing!public! !
+visibleVariablesDo:!public! !
+visibleVariablesDo:visited:!operations!public! !
 !
 

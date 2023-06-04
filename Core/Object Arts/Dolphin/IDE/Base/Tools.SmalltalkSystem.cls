@@ -1611,6 +1611,9 @@ defaultPackage: aPackageOrNil
 
 	self packageManager defaultPackage: aPackageOrNil!
 
+defaultParseContext
+	^ParseContext methodClass: UndefinedObject environment: Smalltalk!
+
 defaultPublishedAspectsLiteralsMapOf: aTool 
 	"Private - Answers a literal representation of the default state of the published aspects of the
 	receiver. This can be used to compare with the current state to find the aspects with
@@ -3863,6 +3866,9 @@ resourceIdentifierDialogClass: aDialogClass
 resourceManager
 	^self sessionManager resourceManager!
 
+rootNamespace
+	^Root!
+
 samplesFolder
 	"Private - Answer the <SmalltalkSystemFolder> that holds the available Sample Applications"
 
@@ -4421,6 +4427,7 @@ defaultMaxStack:!accessing!public! !
 defaultMethodCategories!accessing!public! !
 defaultPackage!accessing!public! !
 defaultPackage:!accessing!public! !
+defaultParseContext!accessing!public! !
 defaultPublishedAspectsLiteralsMapOf:!accessing!private!theming! !
 definitionsMatching:inHierarchyOf:within:!enquiries!private! !
 definitionsOf:!enquiries!private! !
@@ -4636,6 +4643,7 @@ resourceBrowserClass:!options!public! !
 resourceIdentifierDialogClass!options!public! !
 resourceIdentifierDialogClass:!accessing!public! !
 resourceManager!private! !
+rootNamespace!constants!public! !
 samplesFolder!accessing!private! !
 samplesFolderIcon!initializing!private! !
 sanitizeWindowTextForMenu:!helpers!private! !

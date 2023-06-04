@@ -116,8 +116,8 @@ isLast: aNode
 left
 	^left!
 
-left: anObject
-	left := anObject!
+left: anInteger
+	left := anInteger!
 
 needsParenthesis
 	^false!
@@ -134,8 +134,8 @@ precedence
 right
 	^right!
 
-right: anObject
-	right := anObject!
+right: anInteger
+	right := anInteger!
 
 startWithoutParentheses
 	^left!

@@ -106,6 +106,7 @@ package setMethodNames: #(
 	#(#{OS.COM class} #icon)
 	#(#{OS.COM.AbstractDispatchImplementation class} #icon)
 	#(#{OS.COM.AbstractELEMDESC} #printFieldsOn:)
+	#(#{OS.COM.AbstractInterfaceFunction class} #icon)
 	#(#{OS.COM.APIInfoAnalyzer} #areWrappersRequired)
 	#(#{OS.COM.APIInfoAnalyzer} #compileMethodWrapper:)
 	#(#{OS.COM.APIInfoAnalyzer} #functionHasReturnValue:)
@@ -570,6 +571,7 @@ package setPrerequisites: #(
 	'..\..\Registry\Dolphin Registry Access'
 	'..\..\Base\Dolphin SizeIs Fields'
 	'..\..\MVP\Presenters\Text\Dolphin Text Presenter'
+	'..\..\MVP\Icons\Dolphin Text Tile Icons'
 	'..\..\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\MVP\Models\Value\Dolphin Value Models'
 	'..\..\ActiveX\COM\OLE COM'
@@ -1578,6 +1580,19 @@ printFieldsOn: aStream
 	^super printFieldsOn: aStream! !
 !OS.COM.AbstractELEMDESC categoriesForMethods!
 printFieldsOn:!printing!private! !
+!
+
+!OS.COM.AbstractInterfaceFunction class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	<namespace: Graphics>
+	^##((TextTileIcon text: $\x2394 fontName: 'Consolas')
+		textcolor: Color navy;
+		yourself)! !
+!OS.COM.AbstractInterfaceFunction class categoriesForMethods!
+icon!constants!public! !
 !
 
 !OS.COM.APIInfoAnalyzer methodsFor!

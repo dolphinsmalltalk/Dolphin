@@ -22,8 +22,9 @@ acceptVisitor: aProgramNodeVisitor
 formattedCode
 	^self token formattedFrom: self source!
 
-literalToken: aLiteralToken 
-	token := aLiteralToken!
+literalToken: aLiteralToken
+	token := aLiteralToken.
+	^self!
 
 startWithoutParentheses
 	^token start!
@@ -43,7 +44,7 @@ valueClass
 =!comparing!public! !
 acceptVisitor:!public!visitor! !
 formattedCode!accessing!public! !
-literalToken:!accessing!private! !
+literalToken:!initializing!private! !
 startWithoutParentheses!accessing!public! !
 stopWithoutParentheses!accessing!public! !
 token!accessing!public! !
