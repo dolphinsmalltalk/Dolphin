@@ -113,6 +113,8 @@ testAsUppercase
 	self assert: $δ asUppercase equals: $Δ.
 	"U+00DF Latin Small Letter Sharp S (eszett) - there has been an official capitalized version for some time (U+1E9E Latin Capital Letter Sharp S), but not converted by ICU at this time. For a string conversion it would convert eszett to SS, but as this is a single character conversion it can't do that."
 	self assert: $ß asUppercase equals: $ß.
+	"Ditton U+FB04, ffl ligature, can't be converted as it requires 3 uppercase code points"
+	self assert: $ﬄ asUppercase equals: $ﬄ. 
 	"Thai 7 - not a letter"
 	self assert: $๗ asUppercase equals: $๗.
 	"U+01C6 Latin Small Letter Dz with Caron -> U+01C4 Latin Capital Letter DZ with Caron"

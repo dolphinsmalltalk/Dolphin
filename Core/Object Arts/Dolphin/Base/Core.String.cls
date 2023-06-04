@@ -345,6 +345,7 @@ beginsWith: aString ignoreCase: aBoolean
 	Note that unlike #beginsWith:, the comparand must be a <String>, but like #beginsWith: it is an ordinal comparison of the code points."
 
 	| string1 string2 cch |
+	aString isEmpty ifTrue: [^true].
 	string1 := self asUtf16String.
 	string2 := aString asUtf16String.
 	cch := string2 size.

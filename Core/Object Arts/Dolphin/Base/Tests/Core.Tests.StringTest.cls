@@ -147,6 +147,20 @@ testBeginsWithEmbeddedNulls
 			self assert: (double beginsWith: each).
 			self deny: ((self newCollection: #($a)) , poundB beginsWith: each)]!
 
+testBeginsWithIgnoreCase
+	| subject comparand |
+	subject := self newCollection: {$a. $\0. $£. $b. $c}.
+	self assert: (subject beginsWith: '' ignoreCase: true).
+	self assert: (subject beginsWith: '' ignoreCase: false).
+	self assert: (subject beginsWith: subject ignoreCase: true).
+	self assert: (subject beginsWith: subject ignoreCase: false).
+	comparand := self newCollection: {$A. $\0. $£}.
+	self assert: (subject beginsWith: comparand ignoreCase: true).
+	self deny: (subject beginsWith: comparand ignoreCase: false).
+	comparand := self newCollection: {$A. $\0. $b. $£}.
+	self deny: (subject beginsWith: comparand ignoreCase: false).
+	self deny: (subject beginsWith: comparand ignoreCase: true)!
+
 testBeginsWithMixedEncodings
 	| empty a ab b abc ad |
 	empty := self collectionClass empty.
@@ -1356,8 +1370,8 @@ equalityTestCases!constants!private! !
 findActualIndicesOf:in:!helpers!private! !
 indexOfTestCases!constants!private! !
 lengthTestCases!constants!private! !
-matchingPairs!public! !
-mismatchedPairs!public! !
+matchingPairs!constants!private! !
+mismatchedPairs!constants!private! !
 newNumericArray:!helpers!private! !
 ordinalCaseConversionCases!constants!private! !
 reverseTestCases!constants!private! !
@@ -1366,6 +1380,7 @@ testAsByteArray!public!unit tests! !
 testAt!public!unit tests! !
 testBefore!public!unit tests! !
 testBeginsWithEmbeddedNulls!public!unit tests! !
+testBeginsWithIgnoreCase!public!unit tests! !
 testBeginsWithMixedEncodings!public!unit tests! !
 testBinarySelectorExpandMacrosWith!public!unit tests! !
 testBinarySelectorExpandMacrosWithArguments!public!unit tests! !
