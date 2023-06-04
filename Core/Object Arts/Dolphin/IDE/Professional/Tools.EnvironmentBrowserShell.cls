@@ -154,10 +154,7 @@ initializeTool
 		registerTool: self!
 
 onEnvironment: aBrowserEnvironment
-	^self create
-		browserEnvironment: aBrowserEnvironment;
-		showShell;
-		yourself!
+	^self showOn: (RBModel onEnvironment: aBrowserEnvironment)!
 
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.
