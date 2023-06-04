@@ -111,12 +111,10 @@ or: operand
 
 	^operand value!
 
-printOn: target
-	"Append the a textual representation of the receiver to the puttableStream, <target>..
-	Note that this override refines #printString to comply with the ANSI 
-	protocol <boolean>."
-	
-	target nextPutAll: 'false'!
+printString
+	"Answer a <readableString> whose characters are a description of the receiver as a developer would want to see it."
+
+	^'false'!
 
 xor: operand
 	"Answer whether either the receiver or the boolean argument <operand> is true, but not both.
@@ -135,7 +133,7 @@ ifTrue:!control flow!public! !
 ifTrue:ifFalse:!control flow!public! !
 not!logical operations!public! !
 or:!control flow!public! !
-printOn:!printing!public! !
+printString!printing!public! !
 xor:!logical operations!public! !
 !
 
