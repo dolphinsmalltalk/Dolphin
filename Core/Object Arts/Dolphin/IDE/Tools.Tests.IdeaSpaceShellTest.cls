@@ -256,7 +256,7 @@ testSaveRestore
 
 	"Environment Browser on Object subclassses"
 	self newEnvironmentBrowserCard
-		browserEnvironment: (SmalltalkSystem current browserEnvironmentForClasses: Object subclasses);
+		model: (Refactory.Browser.RBModel onEnvironment: (SmalltalkSystem current browserEnvironmentForClasses: Object subclasses));
 		method: Presenter >> #createComponents.
 
 	"Workspace"

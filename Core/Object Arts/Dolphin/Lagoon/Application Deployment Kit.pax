@@ -88,7 +88,6 @@ package setPrerequisites: #(
 	'..\MVP\Presenters\List\Dolphin List Presenter'
 	'..\System\Win32\MessageBox\Dolphin Message Box'
 	'..\MVP\Base\Dolphin MVP Base'
-	'..\IDE\Professional\Dolphin Professional Tools'
 	'..\MVP\Views\Buttons\Dolphin Push Buttons'
 	'..\MVP\Presenters\Text\Dolphin Rich Text Presenter'
 	'..\MVP\Presenters\Text\Dolphin Text Presenter'
