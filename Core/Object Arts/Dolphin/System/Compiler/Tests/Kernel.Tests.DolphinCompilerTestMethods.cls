@@ -45,6 +45,17 @@ testBlockWithAllTempTypes
 	innerBlock.
 	localBlock]!
 
+testCleanBlockInCopyingBlock
+	| a |
+	a := #(1 2 3).
+	^[a collect: [:each | each printString]]!
+
+testCopyingBlockNestedInCleanBlock
+	| a copyingBlock |
+	a := 'abc'.
+	copyingBlock := [:arg | [arg , arg reverse]] value: a.
+	^copyingBlock!
+
 testCopyingBlocks1
 	| array |
 	array := Array new.
@@ -525,6 +536,8 @@ basicSize!public!unit tests! !
 ifNil:!public!unit tests! !
 ifNil:ifNotNil:!public!unit tests! !
 testBlockWithAllTempTypes!public!unit tests! !
+testCleanBlockInCopyingBlock!public!unit tests! !
+testCopyingBlockNestedInCleanBlock!public!unit tests! !
 testCopyingBlocks1!public!unit tests! !
 testCopyingBlocks2!public!unit tests! !
 testImmutableLiterals!public!unit tests! !

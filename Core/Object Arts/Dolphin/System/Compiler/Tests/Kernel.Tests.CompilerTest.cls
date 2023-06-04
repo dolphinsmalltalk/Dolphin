@@ -200,6 +200,7 @@ testBlockWithAllTempTypes
 	self assert: method needsContext.
 	self assert: method envTempCount equals: 2.
 	self assert: method stackTempCount equals: 2.
+	self assert: method tempsMap equals: {(1 to: 53) -> #(#('copied' 0 1) #('innerBlock' 1 2) #('local' 0 2) #('sharedOuter' 1 1)). (16 to: 52) -> #(#('arg1' 0 1) #('arg2' 0 2) #('copied' 0 3) #('innerBlock' 2 2) #('localBlock' 0 4) #('sharedBlock' 1 1) #('sharedOuter' 2 1)). (39 to: 49) -> #(#('innerBlock' 3 2) #('sharedBlock' 2 1) #('sharedOuter' 3 1))}.
 	block1 := method value: DolphinCompilerTestMethods new withArguments: #().
 	self assert: block1 isKindOf: BlockClosure.
 	"Should only be one copied values, 0 temps and args"
@@ -313,6 +314,36 @@ testCharacterScanning
 		raise: MessageNotUnderstood
 		matching: [:ex | ex tag = (Message selector: #G)]!
 
+testCleanBlockInCopyingBlock
+	| method block |
+	method := self getTestMethod: #testCleanBlockInCopyingBlock.
+	block := method value: DolphinCompilerTestMethods new withArguments: #().
+	self assert: block isKindOf: BlockClosure.
+	self assert: block value equals: #('1' '2' '3').
+
+	"Note how the copying block is moved out of line (i.e. after the main method return) because it is part of the enclosing clean block. If it copied values from the method context, then the enclosing block would also have to be a copying block, but it only copies the arg to the clean block."
+	self assert: method disassembly
+		equals: 'Normal, 0 args, 1 stack temps, 4 literals
+
+	1	Push Const[0]: #(1 2 3)
+	2	Store Temp[0]
+	3	Block Copy, 0 args, 1 copied values, skip +4 to 14
+	10	Push Temp[0]
+	11	Push Const[3]: [] in Kernel.Tests.DolphinCompilerTestMethods>>#testCleanBlo…
+	12	Send[2]: #collect: with 1 args
+	13	Return From Block
+	14	Return
+	15	Push Temp[0]; Send[1]: #printString with 0 args
+	17	Return From Block'.
+
+	"The temps map entry for the main method body must not include the clean block moved out of line. The copyingBlock temp is optimised out of the code, but remains allocated. This keeps the stack frame the same for debug and non-debug methods."
+	self assert: method tempsMap
+		equals: {
+				(1 to: 14) -> #(#('a' 0 1)).
+				(10 to: 13) -> #(#('a' 0 1)).
+				(15 to: 17) -> #(#('each' 0 1))
+			}!
+
 testCompileTimeExpressions
 	| result |
 	self shouldnt: [result := self evaluateExpression: '##()'] raise: self compilationErrorClass.
@@ -339,6 +370,38 @@ testConstExpressionReferences
 	self assert: (method refersToLiteral: #x).
 	self assert: (method refersToLiteral: #y).
 	self deny: (method refersToLiteral: #z)!
+
+testCopyingBlockNestedInCleanBlock
+	| method block |
+	method := self getTestMethod: #testCopyingBlockNestedInCleanBlock.
+	block := method literals at: 4.
+	self assert: block isKindOf: BlockClosure.
+	self assert: (block value: 'xyz') value equals: 'xyzzyx'.
+
+	"Note how the copying block is moved out of line (i.e. after the main method return) because it is part of the enclosing clean block. If it copied values from the method context, then the enclosing block would also have to be a copying block, but it only copies the arg to the clean block."
+	self assert: method disassembly
+		equals: 'Normal, 0 args, 2 stack temps, 5 literals
+
+	1	Push Const[0]: ''abc''
+	2	Pop Temp[0]
+	3	Push Const[3]: [] in Kernel.Tests.DolphinCompilerTestMethods>>#testCopyingB…
+	4	Push Temp[0]
+	5	Special Send #value:
+	6	Return
+	7	Push Temp[0]
+	8	Block Copy, 0 args, 1 copied values, skip +4 to 19
+	15	Push Temp[0]
+	16	Push Temp[0]; Send[1]: #reverse with 0 args
+	18	Send[2]: #, with 1 args
+	19	Return From Block'.
+
+	"The temps map entry for the main method body must not include the clean block moved out of line. The copyingBlock temp is optimised out of the code, but remains allocated. This keeps the stack frame the same for debug and non-debug methods."
+	^self assert: method tempsMap
+		equals: {
+				(1 to: 6) -> #(#('a' 0 1) #('copyingBlock' 0 2)).
+				(7 to: 19) -> #(#('arg' 0 1)).
+				(15 to: 19) -> #(#('arg' 0 1))
+			}!
 
 testCopyingBlocks1
 	| method |
@@ -1035,7 +1098,18 @@ testNestedWhileTrueAtStartOfCleanBlock
 	self assert: literals last equals: #whileTrue.
 	self deny: block identicalTo: [].
 	"Block should start immediately after a short push const and return stack top"
-	self assert: block initialIP equals: 3!
+	self assert: block initialIP equals: 3.
+	self assert: method disassembly
+		equals: 'Normal, 0 args, 4 literals
+
+	1	Push Const[2]: [] in Kernel.Tests.DolphinCompilerTestMethods>>#testNestedWh…
+	2	Return
+	3	Push Const[0]: #()
+	4	Send[1]: #notEmpty with 0 args
+	5	Jump If True -4 to 3
+	7	Push nil
+	8	Return From Block'.
+	self assert: method tempsMap equals: { (1 to: 2) -> #(). (3 to: 8) -> #(). (3 to: 4) -> #() }!
 
 testNotIdentical
 	"Test that #~~ generates special send, but retained in literal frame"
@@ -1794,8 +1868,10 @@ testBlockWithAllTempTypes!public!unit tests! !
 testBraceArrays!public!unit tests! !
 testByteArraysInLiteralArrays!public!unit tests! !
 testCharacterScanning!public!unit tests! !
+testCleanBlockInCopyingBlock!public!unit tests! !
 testCompileTimeExpressions!public!unit tests! !
 testConstExpressionReferences!public!unit tests! !
+testCopyingBlockNestedInCleanBlock!public!unit tests! !
 testCopyingBlocks1!public!unit tests! !
 testCopyingBlocks2!public!unit tests! !
 testDecrementPushTempOptimisation!public!unit tests! !

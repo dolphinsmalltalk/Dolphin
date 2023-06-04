@@ -1338,7 +1338,6 @@ void Compiler::FixupJumps()
 	}
 
 	pCurrentScope->FinalIP = LastIp;
-	_ASSERTE(GetMethodScope()->FinalIP == LastIp);
 }
 
 size_t Compiler::OptimizeJumps()
@@ -1876,6 +1875,7 @@ void Compiler::FixupJump(ip_t pos)
 	case OpCode::NearJump:
 	case OpCode::NearJumpIfFalse:
 		_ASSERTE(!WantOptimize || !isInShortJumpRange(distance, 1));	// Why not optimized?
+		[[fallthrough]];
 	case OpCode::NearJumpIfTrue:
 	case OpCode::NearJumpIfNil:
 	case OpCode::NearJumpIfNotNil:

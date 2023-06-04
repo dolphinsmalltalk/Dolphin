@@ -568,7 +568,8 @@ public:
 		if (m_finalIP < ip)
 		{
 			m_finalIP = ip;
-			if (Outer != nullptr)
+			// Clean blocks are moved out of line of the parent scope
+			if (Outer != nullptr && !IsCleanBlock)
 			{
 				Outer->FinalIP = ip;
 			}

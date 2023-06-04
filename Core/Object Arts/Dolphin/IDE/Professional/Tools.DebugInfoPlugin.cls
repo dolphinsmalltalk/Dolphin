@@ -80,6 +80,7 @@ displayMethod
 		ifTrue: 
 			[self clear.
 			^self].
+	method selector: method selector asSymbol.
 	disassemblyPresenter text: method disassembly.
 	textMapPresenter list: debugInfo textMap!
 
