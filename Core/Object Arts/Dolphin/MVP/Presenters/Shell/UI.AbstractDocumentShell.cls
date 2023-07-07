@@ -37,7 +37,7 @@ canSave
 	"Answer whether the document is in a valid state and can be saved. Subclasses to override as
 	appropriate."
 
-	^true!
+	^self isModified!
 
 canSaveState
 	"Private - Answer true if the receiver can successfully have its state saved by #saveStateOn:. Some
@@ -87,10 +87,14 @@ fileOpen
 	openFilename isNil ifTrue: [^nil].
 	^self openOn: openFilename!
 
+fileOpenRecentMenu
+	<commandQuery: #hasRecentFiles>!
+
 fileRevert
 	"Revert the contents of the receiver's document to those in the
 	associated file"
 
+	<queryCommand: #hasFilename>
 	self isModified
 		ifTrue: 
 			[(MessageBox new
@@ -103,7 +107,7 @@ fileSave
 	"Saves the receiver to its associated file (if any).
 	Prompts for a filename if none is yet specified."
 
-	self canSave ifFalse: [^false].
+	<commandQuery: #canSave>
 	^self saveDocument!
 
 fileSaveAs
@@ -134,6 +138,9 @@ hasFilename
 
 	^filename notNil
 !
+
+hasRecentFiles
+	^self getRecentList notEmpty!
 
 isModified
 	"Answer whether the document in the receiver has been modified."
@@ -213,20 +220,6 @@ promptToSaveChanges
 	continue := true asValue.
 	self onPromptToSaveChanges: continue.
 	^continue value!
-
-queryCommand: query
-	"Private - Enters details about a potential command for the receiver into 
-	the <CommandQuery>, query"
-
-	(query commandSymbol == #fileRevert) ifTrue: [
-		query isEnabled: self hasFilename.
-		^true].
-	(query commandSymbol == #fileOpenRecentMenu ) ifTrue: [
-		query isEnabled: self getRecentList notEmpty.
-		^true].
-
-	^super queryCommand: query
-!
 
 saveChangesPrompt
 	| docName |
@@ -330,18 +323,20 @@ basicCaption!accessing!private! !
 canSave!public!testing! !
 canSaveState!private!saved state! !
 createSchematicWiring!initializing!public! !
-fileClearRecentList!commands!public! !
-fileLoad!commands!public! !
+fileClearRecentList!commands-actions!public! !
+fileLoad!commands-actions!public! !
 filename!accessing!public! !
 filename:!accessing!public! !
-fileOpen!commands!public! !
-fileRevert!commands!public! !
-fileSave!commands!public! !
-fileSaveAs!commands!public! !
+fileOpen!commands-actions!public! !
+fileOpenRecentMenu!commands-menus!private! !
+fileRevert!commands-actions!public! !
+fileSave!commands-actions!public! !
+fileSaveAs!commands-actions!public! !
 getDocumentData!accessing!private! !
 getRecentList!private! !
 hasContents!public! !
 hasFilename!public!testing! !
+hasRecentFiles!private!testing! !
 isModified!public!testing! !
 isModified:!modes!not an aspect!public! !
 isText!public!testing! !
@@ -349,8 +344,7 @@ onAboutToDisplayMenu:!event handling!private! !
 onCloseRequested:!event handling!private! !
 onPromptToSaveChanges:!private!testing! !
 openOn:!public! !
-promptToSaveChanges!commands!private! !
-queryCommand:!commands!private! !
+promptToSaveChanges!helpers!private! !
 saveChangesPrompt!private! !
 saveDocument!operations!private! !
 saveDocumentAs!operations!private! !

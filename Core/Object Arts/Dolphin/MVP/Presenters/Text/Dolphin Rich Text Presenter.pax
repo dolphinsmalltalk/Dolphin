@@ -448,7 +448,7 @@ UI.MultilineTextEdit
 			'AutoUrlDetectionMask' -> 16r1000000.
 			'ParagraphAlignmentMap'
 				-> (IdentityDictionary withAll: { #center -> 16r3. #left -> 16r1. #right -> 16r2 }).
-			'StreamInIndex' -> 16r11
+			'StreamInIndex' -> 16r15
 		}!
 
 "Loose Methods"!

@@ -10,7 +10,7 @@ UI.MultilineTextEdit
 			'AutoUrlDetectionMask' -> 16r1000000.
 			'ParagraphAlignmentMap'
 				-> (IdentityDictionary withAll: { #center -> 16r3. #left -> 16r1. #right -> 16r2 }).
-			'StreamInIndex' -> 16r11
+			'StreamInIndex' -> 16r15
 		}!
 UI.RichTextEdit guid: (Core.GUID fromString: '{87b4c744-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.RichTextEdit comment: 'RichTextEdit is a <valueView> class that implements the Windows "RichEdit" control for the displaying and editing of multi-line rich text. The <valueModel> associated with a RichTextEdit  must always yield a <richString> value when mapped through the installed type converter. A RichTextEdit will normally be used in conjunction with a <RichTextPresenter>. 

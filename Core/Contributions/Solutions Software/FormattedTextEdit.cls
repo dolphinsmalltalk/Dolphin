@@ -292,12 +292,8 @@ stbConvertFrom: anSTBClassFormat
 		1 to: data size do: [:i | newInstance instVarAt: i put: (data at: i)].
 		newInstance]].
 
-	^super stbConvertFrom: anSTBClassFormat!
-
-stbVersion
-	^21! !
+	^super stbConvertFrom: anSTBClassFormat! !
 !FormattedTextEdit class categoriesForMethods!
 stbConvertFrom:!binary filing!public! !
-stbVersion!binary filing!public! !
 !
 
