@@ -105,6 +105,41 @@ testAnySatisfy
 									visited size = k]).
 					self assert: visited asArray equals: (subject asArray copyFrom: 1 to: k)]]!
 
+testAsArray
+	| subject ordered |
+	subject := self newCollection: #().
+	ordered := subject asArray.
+	self assert: ordered equals: #().
+	"Test with one, two, more than two elements"
+	1 to: 3
+		do: 
+			[:i |
+			| elems expected |
+			elems := 1 to: i.
+			subject := self newCollection: elems.
+			expected := Array new: i.
+			subject inject: 1 into: [:j :each | expected at: j put: each. j + 1].
+			ordered := subject asArray.
+			self assert: ordered equals: expected]!
+
+testAsOrderedCollection
+	| subject ordered |
+	subject := self newCollection: #().
+	ordered := subject asOrderedCollection.
+	self assert: ordered equals: OrderedCollection new.
+	"Test with one, two, more than two elements"
+	1 to: 3
+		do: 
+			[:i |
+			| elems expected |
+			elems := 1 to: i.
+			subject := self newCollection: elems.
+			expected := OrderedCollection new.
+			subject do: [:each | expected addLast: each].
+			ordered := subject asOrderedCollection.
+			self assert: ordered size equals: i.
+			self assert: ordered equals: expected]!
+
 testCount
 	| none all odd |
 	all := [:each | true].
@@ -202,6 +237,8 @@ shouldnt:implement:!helpers!private! !
 testAllSatisfy!public!unit tests! !
 testAnyone!public!unit tests! !
 testAnySatisfy!public!unit tests! !
+testAsArray!public!unit tests! !
+testAsOrderedCollection!public!unit tests! !
 testCount!public!unit tests! !
 testDetectIfNone!public!unit tests! !
 testDistinct!public!unit tests! !
