@@ -424,6 +424,18 @@ testDeleteDirectory
 	self deleteDirectory: 'c:\FileTest1\BranchWithLeafWithFile\'.
 	self deleteDirectory: 'c:\FileTest1\BranchWithLeafWithFiles🐬\'!
 
+testFileNotFound
+	| tmpFilePath |
+	tmpFilePath := File composePath: File tempPath subPath: GUID newUnique idlString.
+	self deny: (File exists: tmpFilePath).
+	tempFile := [File open: tmpFilePath] on: OS.Win32Error
+				do: 
+					[:ex |
+					self assert: (ex isResumable and: [ex statusCode = OS.Win32Errors.ERROR_FILE_NOT_FOUND]).
+					(File open: tmpFilePath mode: #create) close.
+					ex resume].
+	self assert: (File canonicalizePath: tempFile pathName) equals: (File canonicalizePath: tmpFilePath)!
+
 testFileTimes
 	"Tests that file accesor exists and that #lastWriteTime works (for patch #1397)"
 
@@ -442,7 +454,15 @@ testFindFiles
 		for: '*.' , SessionManager current imageExtension
 		in: FileLocator imageRelative basePath
 		do: [:data | found add: data path].
-	self assert: (found includes: SessionManager current imageFileName)!
+	self assert: (found includes: SessionManager current imageFileName).
+	self
+		should: 
+			[File
+				for: '*.*'
+				in: GUID newUnique idlString
+				do: [:each | self fail: 'Really?']]
+		raise: OS.Win32Error
+		matching: [:ex | ex statusCode = OS.Win32Errors.ERROR_PATH_NOT_FOUND]!
 
 testForDirectoriesIn
 	| all windir |
@@ -457,7 +477,11 @@ testForDirectoriesIn
 			[:each |
 			| dirPath |
 			dirPath := File composePath: windir subPath: each.
-			self assert: (File isDirectory: dirPath)]!
+			self assert: (File isDirectory: dirPath)].
+	self
+		should: [File forDirectoriesIn: GUID newUnique idlString do: [:each | self fail: 'Really?']]
+		raise: OS.Win32Error
+		matching: [:ex | ex statusCode = OS.Win32Errors.ERROR_PATH_NOT_FOUND]!
 
 testFullPathOf
 	| longPath longFilename |
@@ -811,6 +835,7 @@ testComposePath!public!unit tests! !
 testCreateDirectoryPath!public!unit tests! !
 testCreateTemporaryDirectory!public!unit tests! !
 testDeleteDirectory!public!unit tests! !
+testFileNotFound!public!unit tests! !
 testFileTimes!public!unit tests! !
 testFindFiles!public!unit tests! !
 testForDirectoriesIn!public!unit tests! !

@@ -1,4 +1,5 @@
-﻿!Core.Object methodsFor!
+!External.Handle methodsFor!
 
-beImmutableObject
-	^self isImmutable: true! !
+isInvalid
+	^self asSignedInteger == -1
+! !

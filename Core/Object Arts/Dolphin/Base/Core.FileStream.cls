@@ -443,8 +443,7 @@ on: aCollection file: aFile
 	super on: aCollection.
 	file := aFile.
 	self beFinalizable.
-	flags := 0.
-	offset := 0!
+	flags := offset := 0!
 
 ownsFile
 	^flags anyMask: OwnsFileMask!
