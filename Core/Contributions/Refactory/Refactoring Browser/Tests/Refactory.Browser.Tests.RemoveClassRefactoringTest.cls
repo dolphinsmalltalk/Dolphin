@@ -24,7 +24,12 @@ testBadName
 testRemoveClass
 	| refactoring className |
 	className := self removableClassWithSubclasses.
-	refactoring := RemoveClassRefactoring classNames: {className}.
+	refactoring := RemoveClassRefactoring classNames: { className }.
+	refactoring setOption: #removeReferencedClass
+		toUse: 
+			[:ref :class :methods |
+			self assert: class identicalTo: (ref model classNamed: className).
+			true].
 	self executeRefactoring: refactoring.
 	self assertIsNil: (refactoring model classNamed: className).
 	self assert: (refactoring model classNamed: TransformationRuleTestData fullName) superclass

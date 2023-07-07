@@ -448,7 +448,9 @@ resolvePublicBinding: aBindingContext
 	This is used to find bindings for second and subsequent components of qualified names."
 
 	(self hierarchyBindingFor: aBindingContext identifier)
-		ifNotNil: [:var | var isPrivate ifFalse: [^var]].
+		ifNotNil: 
+			[:var |
+			(var isPrivate not or: [aBindingContext includesNamespace: var environment]) ifTrue: [^var]].
 	"Search only the local imports, not the imports of the imports."
 	^self resolveLocallyImportedBinding: aBindingContext!
 

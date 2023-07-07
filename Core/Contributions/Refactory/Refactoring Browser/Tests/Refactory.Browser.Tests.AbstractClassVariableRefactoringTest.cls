@@ -48,6 +48,45 @@ testAbstractClassVariable
 												in: class
 												categories: aSmalllintContext protocols]]')!
 
+testAbstractClassVariableFullyQualified
+	| refactoring meta class subclass externalClass |
+	refactoring := AbstractClassVariableRefactoring variable: 'ClassVar1' class: ClassToRename.
+	self executeRefactoring: refactoring.
+	class := refactoring model classFor: ClassToRename.
+	meta := class metaclass.
+	self assert: (meta parseTreeFor: #classVar1) equals: (self parseMethod: 'classVar1 ^ClassVar1').
+	self assert: (meta parseTreeFor: #classVar1:)
+		equals: (self parseMethod: 'classVar1: anObject ClassVar1 := anObject').
+	self assert: (meta parseTreeFor: #initialize)
+		equals: (self parseMethod: 'initialize self classVar1: ''ClassVar1 of ClassToRename''').
+	self assert: (class parseTreeFor: #refersToOwnClassVariable)
+		equals: (self parseMethod: 'refersToOwnClassVariable ^self class classVar1').
+	self assert: (class parseTreeFor: #refersToOwnClassVariableFullyQualified)
+		equals: (self parseMethod: 'refersToOwnClassVariableFullyQualified ^self class classVar1').
+	"The refs from the subclass should also be rewritten"
+	subclass := refactoring model classFor: SubclassOfClassToRename.
+	#(#refersToInheritedClassVariable #refersToInheritedClassVariableFullyQualified #refersToInheritedClassVariableQualifiedByOwnName)
+		do: 
+			[:selector |
+			self assert: (subclass parseTreeFor: selector)
+				equals: (self parseMethod: '<1s> ^self class classVar1' << selector)].
+	self assert: (subclass parseTreeFor: #refersToInheritedClassVariableWithShadowing)
+		equals: (self
+				parseMethod: 'refersToInheritedClassVariableWithShadowing | ClassVar1 | ClassVar1 := self class classVar1, self class classVar1. ^ClassVar1').
+	"Binding refs should be unchanged, although these will obviously be by-passing the desired abstraction by directly binding to the variable."
+	self assert: (subclass parseTreeFor: #refersToInheritedClassVariableUnqualifiedBinding)
+		equals: (self parseMethod: 'refersToInheritedClassVariableUnqualifiedBinding ^#{ClassVar1}').
+	self assert: (subclass parseTreeFor: #refersToInheritedClassVariableFullyQualifiedBinding)
+		equals: (self
+				parseMethod: 'refersToInheritedClassVariableFullyQualifiedBinding ^#{Refactory.Browser.Tests.ClassToRename.ClassVar1}').
+	"Likewise external references from classes outside the defining hierarchy should also be abstracted."
+	externalClass := refactoring model classFor: RefactoryTestDataApp.
+	#(#refersToClassVariableFullyQualified #refersToClassVariablePartiallyQualified)
+		do: 
+			[:selector |
+			self assert: (externalClass parseTreeFor: selector)
+				equals: (self parseMethod: '<1s> ^Refactory.Browser.Tests.ClassToRename classVar1' << selector)].!
+
 testInheritedName
 	self shouldFail: (AbstractClassVariableRefactoring variable: #DependentsFields
 				class: BasicLintRuleTestData)
@@ -118,6 +157,7 @@ testNonExistantName
 !Refactory.Browser.Tests.AbstractClassVariableRefactoringTest categoriesForMethods!
 setUp!public!set up! !
 testAbstractClassVariable!public!tests! !
+testAbstractClassVariableFullyQualified!public!tests! !
 testInheritedName!failure tests!public! !
 testInvalidClass!failure tests!public! !
 testMetaClassFailure!failure tests!public! !

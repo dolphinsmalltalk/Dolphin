@@ -585,9 +585,9 @@ getOptionAbstractVariables
 	| details instVars classVars accessesInstVars |
 	details := String writeStream.
 	instVars := instVarReaders union: instVarWriters.
-	accessesInstVars := instVars isEmpty.
+	accessesInstVars := instVars notEmpty.
 	accessesInstVars
-		ifFalse: 
+		ifTrue: 
 			[details
 				nextPutAll: 'The following instance variables are directly accessed:';
 				cr.
@@ -596,7 +596,7 @@ getOptionAbstractVariables
 				on: details
 				limit: self maxDetails // 2
 				type: 'instance variables'].
-	classVars := classVarReaders union: classVarWriters.
+	classVars := privateClassVarReaders union: privateClassVarWriters.
 	classVars isEmpty
 		ifFalse: 
 			[accessesInstVars
@@ -605,7 +605,7 @@ getOptionAbstractVariables
 						cr;
 						cr].
 			details
-				nextPutAll: 'The following class variables are directly accessed:';
+				nextPutAll: 'The following private class variables are directly accessed:';
 				cr.
 			self
 				printNameList: classVars asSortedArray
@@ -619,7 +619,7 @@ getOptionAbstractVariables
 	^MessageBox new
 		caption: self displayString;
 		headline: 'Abstract variable references?';
-		text: 'This method has direct variable references which will need to be converted to getter/setters in the extracted method<1?s:>.'
+		text: 'This method has direct variable references that will need to be converted to getter/setters in the extracted method<1?s:>.'
 					<< {toClasses size > 1};
 		customButtons: #(#(#yes '&Abstract Variables') #(#no 'Cancel'));
 		defaultButton: 2;
@@ -936,28 +936,55 @@ displayOn: aPuttableStream
 				separatedBy: [aPuttableStream nextPutAll: ', ']]!
 
 getOptionAddImports: aCollection
-	| details |
-	details := String writeStream.
-	details nextPutAll: 'The following namespaces will need to be imported'.
-	toClasses size == 1
-		ifTrue: 
-			[details
-				nextPutAll: ' into ';
-				nextPutAll: toClasses first unqualifiedName].
-	details
-		nextPut: $:;
-		cr.
-	self
-		printNameList: aCollection asSortedCollection
-		on: details
-		limit: self maxDetails
-		type: 'namespaces'.
-	^MessageBox new
+	| resp prompt multipleImports multipleTargets details targetDescription |
+	prompt := MessageBox new.
+	prompt
 		caption: self displayString;
-		text: 'This method contains references to shared variables from namespaces that may need to be imported into the target.';
-		customButtons: #(#(#yes '&Add Imports') #(#no '&Cancel'));
-		detailsText: details contents;
-		confirm! !
+		checkboxText: SmalltalkSystem current showChangesText;
+		isChecked: self shouldShowChanges.
+	multipleTargets := toClasses size > 1.
+	multipleImports := aCollection size > 1.
+	details := String writeStream.
+	multipleImports
+		ifTrue: 
+			[details nextPutAll: 'The following namespaces can be imported'.
+			multipleTargets
+				ifFalse: 
+					[details
+						nextPutAll: ' into ';
+						nextPutAll: toClasses first shortName].
+			details
+				nextPut: $:;
+				cr.
+			self
+				printNameList: aCollection asSortedArray
+				on: details
+				limit: self maxDetails
+				type: 'namespaces'.
+			details
+				cr;
+				cr].
+	targetDescription := multipleTargets
+				ifTrue: ['the target classes']
+				ifFalse: [toClasses first unqualifiedName].
+	details
+		nextPutAll: 'Adding imports may cause other methods in the hierarchy of <1d> that reference shared variables to be rewritten, removing or even adding name qualification.<n><n>Choosing not to add imports, but rather to use partially or fully-qualified names where necessary, is recommended as it will limit the scope of the refactoring only to the methods involved. The Add Import class refactoring can always be applied later if desired, and will remove name qualification automatically where possible.<n><n>Alternatively you can opt to preview the refactoring changes to see either the wider impact of adding imports, or where qualified names will be used'
+				<< targetDescription.
+	prompt detailsText: details contents.
+	prompt
+		text: '<1d> contains references to shared variables imported from <2d>.<n><n><3d> can be imported into <4d>, or alternatively qualified names can be substituted where required.'
+					<< {
+							parseTree methodNode ?? 'This method'.
+							multipleImports ifTrue: ['namespaces'] ifFalse: [aCollection anyOne].
+							multipleImports ifTrue: ['The namespaces'] ifFalse: [aCollection anyOne].
+							targetDescription
+						};
+		customButtons: { { #yes. '&Add Import<1?s:>' << multipleImports }. #(#no '&Qualify Names') };
+		defaultButton: 2.
+	resp := prompt confirmOrCancel.
+	resp == #cancel ifTrue: [self refactoringAborted].
+	prompt isChecked ifTrue: [self shouldShowChanges: true].
+	^resp == #yes! !
 !Refactory.Browser.ExpandImportsRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
 getOptionAddImports:!options!public! !
@@ -2371,7 +2398,7 @@ renameArgument: beforeString to: afterString
 	^Refactory.Browser.TransformationRule new
 		name: ('Rename argument <1p> to <2p>' expandMacrosWith: beforeString with: afterString);
 		rewriteUsing: (Refactory.Browser.ParseTreeRewriter new
-					replaceArgument: beforeString with: afterString;
+					renameArgument: beforeString to: afterString;
 					replace: beforeString with: afterString;
 					yourself);
 		yourself! !
@@ -3154,7 +3181,7 @@ performMethodRenameRefactoring: aMonadicValuable
 	sender := home sender.
 	(sender notNil and: [sender isRestartable]) ifTrue: [self restartMethodFrame: sender]! !
 !Tools.Debugger categoriesForMethods!
-canMoveMethods!commands-actions!private!refactoring! !
+canMoveMethods!private!testing! !
 hasRefactorableMethodSelected!public!refactoring!testing! !
 performMethodRefactoring:!helpers!public!refactoring! !
 performMethodRenameRefactoring:!helpers!private!refactoring! !

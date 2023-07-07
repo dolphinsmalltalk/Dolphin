@@ -4,9 +4,9 @@ Refactory.Browser.TestData.LintRuleTestData
 	subclass: #'Refactory.Browser.TestData.BasicLintRuleTestData'
 	instanceVariableNames: 'classBlock methodBlock result'
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.Win32Errors} #{OS.FacilityCodes})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'ERROR_FILE_EXISTS' -> 'Shadow' }!
 Refactory.Browser.TestData.BasicLintRuleTestData guid: (Core.GUID fromString: '{0c2676b4-1e69-400c-8d24-80f8510c0996}')!
 Refactory.Browser.TestData.BasicLintRuleTestData comment: ''!
 !Refactory.Browser.TestData.BasicLintRuleTestData categoriesForClass!Refactory-Test data! !
@@ -49,6 +49,18 @@ result: aResult
 resultClass: aClass 
 	result := aClass new!
 
+sharedVarRefs
+	"Refs to shared variables, includes a class var and inherited class var shadowing same named imported variables."
+
+	^{
+		ENOENT.
+		ERROR_FILE_NOT_FOUND.
+		ERROR_FILE_EXISTS.
+		OS.Win32Errors.ERROR_FILE_EXISTS.
+		FACILITY_WIN32.
+		OS.FacilityCodes.FACILITY_WIN32
+	}!
+
 viewResults
 	result openEditor! !
 !Refactory.Browser.TestData.BasicLintRuleTestData categoriesForMethods!
@@ -63,6 +75,7 @@ resetResult!initialize/release!public! !
 result!accessing!public! !
 result:!initialize/release!public! !
 resultClass:!initialize/release!public! !
+sharedVarRefs!public! !
 viewResults!private! !
 !
 
@@ -416,6 +429,16 @@ fileBlocks
 								[`var `@messages: `@args]') 
 		name: 'Assignment inside unwind blocks should be outside.'!
 
+foo1
+	^{
+		Foo1.
+		LintRuleTestData.Foo1.
+		Refactory.Browser.TestData.LintRuleTestData.Foo1.
+		#(#{Foo1} #{Refactory.Browser.TestData.LintRuleTestData.Foo1}).
+		#{_.LintRuleTestData.Foo1}.
+		#{Refactory.Browser.TestData.LintRuleTestData.Foo1}
+	}!
+
 fullBlocks
 	| detector |
 	detector := self new.
@@ -486,6 +509,9 @@ implementedNotSent
 			(context uses: context selector)
 				ifFalse: [result addClass: context selectedClass selector: context selector]].
 	^detector!
+
+initialize
+	Foo1 := 'Class var Foo1'!
 
 instVarInSubclasses
 	| detector |
@@ -1162,11 +1188,13 @@ equalsTrue!public!unnecessary code! !
 equivalentSuperclassMethods!public!unnecessary code! !
 extraBlock!public!unnecessary code! !
 fileBlocks!possible bugs!public! !
+foo1!accessing!private! !
 fullBlocks!miscellaneous!public! !
 guardingClause!intention revealing!public! !
 ifTrueBlocks!miscellaneous!public! !
 ifTrueReturns!intention revealing!public! !
 implementedNotSent!public!unnecessary code! !
+initialize!public! !
 instVarInSubclasses!miscellaneous!public! !
 justSendsSuper!public!unnecessary code! !
 lintProtocols!accessing!public! !

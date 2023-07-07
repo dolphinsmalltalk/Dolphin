@@ -21,6 +21,7 @@ package setClassNames: #(
 	#{Refactory.Browser.AddMethodRefactoring}
 	#{Refactory.Browser.AddParameterRefactoring}
 	#{Refactory.Browser.ChangeMethodNameRefactoring}
+	#{Refactory.Browser.ChangeStaticVariableQualificationRefactoring}
 	#{Refactory.Browser.ChildrenToSiblingsRefactoring}
 	#{Refactory.Browser.ClassImportsRefactoring}
 	#{Refactory.Browser.ClassNameToBindingReferenceRefactoring}
@@ -101,20 +102,30 @@ package setMethodNames: #(
 	#(#{Kernel.StBasicVariableNode} #isBindingChanged)
 	#(#{Kernel.StBasicVariableNode} #refersToBinding:)
 	#(#{Kernel.StBasicVariableNode} #refersToClass:)
+	#(#{Kernel.StLiteralArrayNode} #isOrContainsQualifiedReferenceMatching:)
 	#(#{Kernel.StLiteralArrayNode} #refersToClass:)
 	#(#{Kernel.StLiteralArrayNode} #refersToSymbol:)
+	#(#{Kernel.StLiteralArrayNode} #rewriteQualifiedReferencesWith:)
+	#(#{Kernel.StLiteralNode} #isOrContainsQualifiedReferenceMatching:)
+	#(#{Kernel.StLiteralNode} #qualifiedReferencesDo:)
 	#(#{Kernel.StLiteralNode} #refersToClass:)
 	#(#{Kernel.StLiteralNode} #refersToSymbol:)
+	#(#{Kernel.StLiteralNode} #rewriteQualifiedReferencesWith:)
 	#(#{Kernel.StLiteralValueNode} #refersToSymbol:)
 	#(#{Kernel.StProgramNode} #refersToBinding:)
 	#(#{Kernel.StProgramNode} #refersToClass:)
+	#(#{Kernel.StQualifiedReferenceNode} #copyWithName:)
 	#(#{Kernel.StQualifiedReferenceNode} #isBindingChanged)
+	#(#{Kernel.StQualifiedReferenceNode} #isOrContainsQualifiedReferenceMatching:)
+	#(#{Kernel.StQualifiedReferenceNode} #qualifiedReferencesDo:)
 	#(#{Kernel.StQualifiedReferenceNode} #refersToBinding:)
 	#(#{Kernel.StQualifiedReferenceNode} #refersToClass:)
+	#(#{Kernel.StQualifiedReferenceNode} #rewriteQualifiedReferencesWith:)
 	#(#{Kernel.StStaticVariable} #refersToBinding:)
 	#(#{Kernel.StStaticVariable} #refersToClass:)
 	#(#{Kernel.StVariable} #refersToBinding:)
 	#(#{Kernel.StVariable} #refersToClass:)
+	#(#{Kernel.StVariableNode} #copyWithName:)
 	#(#{Kernel.StVariableNode} #isBindingChanged)
 	#(#{Kernel.StVariableNode} #refersToClass:)
 	#(#{Kernel.VariableBinding} #realBinding)
@@ -288,7 +299,7 @@ Refactory.Browser.RBAbstractCondition
 	classConstants: {}!
 Refactory.Browser.Refactoring
 	subclass: #'Refactory.Browser.AbstractVariablesRefactoring'
-	instanceVariableNames: 'tree fromClass instVarReaders instVarWriters classVarReaders classVarWriters toClasses ignore'
+	instanceVariableNames: 'tree fromClass instVarReaders instVarWriters privateClassVarReaders privateClassVarWriters toClasses ignore'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -309,7 +320,7 @@ Refactory.Browser.Refactoring
 	classConstants: {}!
 Refactory.Browser.Refactoring
 	subclass: #'Refactory.Browser.ExpandImportsRefactoring'
-	instanceVariableNames: 'imports fromClass parseTree toClasses'
+	instanceVariableNames: 'imports fromClass parseTree toClasses isExpanded'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -317,13 +328,6 @@ Refactory.Browser.Refactoring
 Refactory.Browser.Refactoring
 	subclass: #'Refactory.Browser.MethodRefactoring'
 	instanceVariableNames: 'class'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Refactory.Browser.Refactoring
-	subclass: #'Refactory.Browser.QualifyStaticVariablesRefactoring'
-	instanceVariableNames: 'tree'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -338,13 +342,6 @@ Refactory.Browser.Refactoring
 Refactory.Browser.Refactoring
 	subclass: #'Refactory.Browser.SplitClassRefactoring'
 	instanceVariableNames: 'class instanceVariables newClassName referenceVariableName newClass'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Refactory.Browser.Refactoring
-	subclass: #'Refactory.Browser.UnqualifyStaticVariablesRefactoring'
-	instanceVariableNames: 'tree'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -408,6 +405,13 @@ Refactory.Browser.MethodRefactoring
 Refactory.Browser.MethodRefactoring
 	subclass: #'Refactory.Browser.ChangeMethodNameRefactoring'
 	instanceVariableNames: 'newSelector oldSelector permutation implementors'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.MethodRefactoring
+	subclass: #'Refactory.Browser.ChangeStaticVariableQualificationRefactoring'
+	instanceVariableNames: 'selector sourceInterval method sourceTree node'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -531,6 +535,20 @@ Refactory.Browser.RemoveParameterRefactoring
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Refactory.Browser.ChangeStaticVariableQualificationRefactoring
+	subclass: #'Refactory.Browser.QualifyStaticVariablesRefactoring'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.ChangeStaticVariableQualificationRefactoring
+	subclass: #'Refactory.Browser.UnqualifyStaticVariablesRefactoring'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Refactory.Browser.InlineMethodRefactoring
 	subclass: #'Refactory.Browser.InlineMethodFromComponentRefactoring'
 	instanceVariableNames: ''
@@ -540,7 +558,7 @@ Refactory.Browser.InlineMethodRefactoring
 	classConstants: {}!
 Refactory.Browser.VariableRefactoring
 	subclass: #'Refactory.Browser.AbstractClassVariableRefactoring'
-	instanceVariableNames: 'accessorsRefactoring'
+	instanceVariableNames: 'accessorsRefactoring variableBinding'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -760,26 +778,50 @@ refersToClass:!public!testing! !
 
 !Kernel.StLiteralArrayNode methodsFor!
 
+isOrContainsQualifiedReferenceMatching: aMonadicValuable
+	^self contents
+		anySatisfy: [:each | each isLiteralNode and: [each isOrContainsQualifiedReferenceMatching: aMonadicValuable]]!
+
 refersToClass: aClass
 	^self contents anySatisfy: [:each | each refersToClass: aClass]!
 
 refersToSymbol: aSymbol
-	^self contents anySatisfy: [:each | each refersToSymbol: aSymbol]! !
+	^self contents anySatisfy: [:each | each refersToSymbol: aSymbol]!
+
+rewriteQualifiedReferencesWith: aMonadicValuable
+	^StLiteralArrayNode
+		contents: (self contents collect: [:each | each rewriteQualifiedReferencesWith: aMonadicValuable])! !
 !Kernel.StLiteralArrayNode categoriesForMethods!
+isOrContainsQualifiedReferenceMatching:!public!testing! !
 refersToClass:!public!testing! !
 refersToSymbol:!public!testing! !
+rewriteQualifiedReferencesWith:!public!transforming! !
 !
 
 !Kernel.StLiteralNode methodsFor!
+
+isOrContainsQualifiedReferenceMatching: aMonadicValuable
+	^false!
+
+qualifiedReferencesDo: aMonadicValuable
+	"Overridden by classes that are or may contain qualified reference nodes to enumerate those nodes through the argument block."
+
+	!
 
 refersToClass: aClass
 	^false!
 
 refersToSymbol: aSymbol
-	^false! !
+	^false!
+
+rewriteQualifiedReferencesWith: aMonadicValuable
+	^self copy! !
 !Kernel.StLiteralNode categoriesForMethods!
+isOrContainsQualifiedReferenceMatching:!public!testing! !
+qualifiedReferencesDo:!public!testing! !
 refersToClass:!public!testing! !
 refersToSymbol:!public!testing! !
+rewriteQualifiedReferencesWith:!public!transforming! !
 !
 
 !Kernel.StLiteralValueNode methodsFor!
@@ -810,10 +852,22 @@ refersToClass:!public!testing! !
 
 !Kernel.StQualifiedReferenceNode methodsFor!
 
+copyWithName: aString
+	^self copy
+		pathString: aString;
+		clearPositions;
+		yourself!
+
 isBindingChanged
 	"Assuming that this node has been bound by the RBVariableAnalyser, would it bind differently now?"
 
 	^binding notNil and: [self resolveBinding ~~ binding]!
+
+isOrContainsQualifiedReferenceMatching: aMonadicValuable
+	^aMonadicValuable value: self!
+
+qualifiedReferencesDo: aMonadicValuable
+	^aMonadicValuable value: self!
 
 refersToBinding: aVariableBinding
 	| var |
@@ -824,11 +878,18 @@ refersToClass: aClass
 	| var |
 	var := self binding.
 	#namespaceToDo.	"What about the reference a VariableBinding has to it's environment?"
-	^var notNil and: [var refersToClass: aClass]! !
+	^var notNil and: [var refersToClass: aClass]!
+
+rewriteQualifiedReferencesWith: aMonadicValuable
+	^aMonadicValuable value: self! !
 !Kernel.StQualifiedReferenceNode categoriesForMethods!
+copyWithName:!private!transforming! !
 isBindingChanged!public!testing! !
+isOrContainsQualifiedReferenceMatching:!public!testing! !
+qualifiedReferencesDo:!public!testing! !
 refersToBinding:!public!testing! !
 refersToClass:!public!testing! !
+rewriteQualifiedReferencesWith:!public!transforming! !
 !
 
 !Kernel.StStaticVariable methodsFor!
@@ -857,6 +918,12 @@ refersToClass:!public!testing! !
 
 !Kernel.StVariableNode methodsFor!
 
+copyWithName: aString
+	^self copy
+		name: aString;
+		clearPositions;
+		yourself!
+
 isBindingChanged
 	"Assuming that this node has been bound by a semantic analyser, would it bind differently now?"
 
@@ -865,6 +932,7 @@ isBindingChanged
 refersToClass: aRBClass
 	^false! !
 !Kernel.StVariableNode categoriesForMethods!
+copyWithName:!private!transforming! !
 isBindingChanged!accessing!public! !
 refersToClass:!public!testing! !
 !

@@ -39,11 +39,15 @@ checkClassVars
 	selectors do: [:each | self checkClassVarsFor: each]!
 
 checkClassVarsFor: aSelector
-	class instanceClass classBindingNames do: 
+	| method privateBindings |
+	privateBindings := class instanceClass definedBindings select: [:each | each isPrivate].
+	privateBindings isEmpty ifTrue: [^self].
+	method := class methodFor: aSelector.
+	privateBindings do: 
 			[:each |
-			((class whichSelectorsReferToClassVariable: each) includes: aSelector)
+			(method refersToBinding: each)
 				ifTrue: 
-					[self refactoringError: ('<1p> refers to <2s> which is defined in <3p>'
+					[self refactoringError: ('<1p> refers to <2s> which is defined privately in <3p>'
 								expandMacrosWith: aSelector
 								with: each
 								with: class)]]!
@@ -141,12 +145,7 @@ copyDownMethod: aSelector
 					refactoringError: 'The <2p> method in superclass <3d> must be copied down to its other subclasses, but sends a super message that will be overridden.'
 							<< {class. aSelector. superclassDefiner unqualifiedName}].
 	(self shouldCopyDownSuperclassMethod: aSelector) ifFalse: [self refactoringAborted].
-	importsRefactoring := ExpandImportsRefactoring
-				model: self model
-				forMethod: (superclassDefiner parseTreeFor: aSelector)
-				fromClass: superclassDefiner
-				toClasses: subclasses.
-	self performComponentRefactoring: importsRefactoring.
+	"We don't need to push down imports, because they are inherited anyway, so just go an compile up the pushed down superclass methods"
 	subclasses do: [:each | each compile: oldSource categories: oldProtocols]!
 
 copyDownMethods
@@ -163,23 +162,31 @@ preconditions
 						true])!
 
 pushUp: aSelector
-	| source importsRefactoring packageAndEnv superclass method |
-	method := class methodFor: aSelector.
+	| importsRefactoring packageAndEnv superclass |
 	superclass := class superclass.
 	importsRefactoring := ExpandImportsRefactoring
 				model: self model
-				forMethod: method parseTree
+				forMethod: (class parseTreeFor: aSelector)
 				fromClass: class
-				toClasses: {superclass}.
+				toClasses: { superclass }.
 	self performComponentRefactoring: importsRefactoring.
+	"Before pushing the method up, fully-qualify any static variable references so that they will still bind. This is necessary if the user chose not to expand imports, or for references to class variables defined in the source class as we don't block pushing up such methods any more."
+	self performComponentRefactoring: (QualifyStaticVariablesRefactoring
+				model: model
+				rewriteMethod: aSelector
+				forClass: class).
 	"Maintain package and any custom namespace"
-	source := method source.
 	packageAndEnv := class existingMethodPackageAndEnvironment: aSelector.
 	superclass
-		compile: source
+		compile: (class sourceCodeFor: aSelector)
 		environment: packageAndEnv second
 		categories: (class protocolsFor: aSelector)
-		package: packageAndEnv first!
+		package: packageAndEnv first.
+	"Finally remove any static variable qualification that isn't required"
+	self performComponentRefactoring: (UnqualifyStaticVariablesRefactoring
+				model: model
+				rewriteMethod: aSelector
+				forClass: superclass)!
 
 pushUp: selectorCollection from: aClass 
 	#rbFix. "Ensure displayString works when model is lazily created for Undo/Redo name (needs inst. vars set up)."

@@ -33,8 +33,8 @@ testNewClassVariableAccessors
 	class := ref model metaclassNamed: #'Refactory.Browser.TestData.LintRuleTestData'.
 	self deny: ref changes changes isEmpty.
 	self assert: ref setterMethod identicalTo: #foo1:.
-	self assert: ref getterMethod identicalTo: #foo1.
-	self assert: (class parseTreeFor: #foo1) equals: (self parseMethod: 'foo1 ^Foo1').
+	self assert: ref getterMethod identicalTo: #foo11.
+	self assert: (class parseTreeFor: #foo11) equals: (self parseMethod: 'foo11 ^Foo1').
 	self assert: (class parseTreeFor: #foo1:)
 		equals: (self parseMethod: 'foo1: anObject Foo1 := anObject')!
 

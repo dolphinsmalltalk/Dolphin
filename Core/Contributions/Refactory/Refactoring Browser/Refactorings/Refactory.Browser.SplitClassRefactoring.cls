@@ -12,28 +12,26 @@ Refactory.Browser.SplitClassRefactoring comment: ''!
 !Refactory.Browser.SplitClassRefactoring categoriesForClass!Refactory-Refactorings! !
 !Refactory.Browser.SplitClassRefactoring methodsFor!
 
-abstractReferenceTo: each
-	| setterMethod replacer accessorRef getterMethod |
-	accessorRef := CreateAccessorsForVariableRefactoring
-				variable: each
+abstractReferenceToInstanceVariable: aString
+	| replacer createAccessors |
+	createAccessors := CreateAccessorsForVariableRefactoring
+				variable: aString
 				class: newClass
 				classVariable: false.
-	self performComponentRefactoring: accessorRef.
-	getterMethod := accessorRef getterMethod.
-	setterMethod := accessorRef setterMethod.
+	self performComponentRefactoring: createAccessors.
 	replacer := ParseTreeRewriter
-				variable: each
-				getter: getterMethod
-				setter: setterMethod
-				receiver: referenceVariableName.
-	self
-		convertClasses: class withAllSubclasses
-		select: [:aClass | aClass whichSelectorsReferToInstanceVariable: each]
-		using: replacer.
-	self performComponentRefactoring: (RemoveInstanceVariableRefactoring variable: each class: class)!
+				replaceInstanceVariable: aString
+				withGetter: createAccessors getterMethod
+				andSetter: createAccessors setterMethod
+				forReceiver: referenceVariableName.
+	class withAllSubclasses do: 
+			[:subclass |
+			(subclass whichSelectorsReferToInstanceVariable: aString)
+				do: [:selector | self convertMethod: (subclass methodFor: selector) using: replacer]].
+	self performComponentRefactoring: (RemoveInstanceVariableRefactoring variable: aString class: class)!
 
 abstractVariableReferences
-	instanceVariables do: [:each | self abstractReferenceTo: each]!
+	instanceVariables do: [:each | self abstractReferenceToInstanceVariable: each]!
 
 addClass
 	self performComponentRefactoring: (AddClassRefactoring
@@ -98,7 +96,7 @@ transform
 		createReference;
 		abstractVariableReferences! !
 !Refactory.Browser.SplitClassRefactoring categoriesForMethods!
-abstractReferenceTo:!private!transforming! !
+abstractReferenceToInstanceVariable:!private!transforming! !
 abstractVariableReferences!public!transforming! !
 addClass!private!transforming! !
 addInstanceVariables!private!transforming! !

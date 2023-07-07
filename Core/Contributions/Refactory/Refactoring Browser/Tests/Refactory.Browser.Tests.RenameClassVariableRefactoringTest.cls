@@ -108,6 +108,7 @@ testRenameClassVarWithExternalReferences
 	| CV1 |
 	CV1 :=  ClassToRename.CV1, ClassToRename.CV1.
 	^CV1'.
+	"Ref from a class outside the hierarchy where the class var is defined - this is legal if the variable is not marked exp[icitly as private"
 	externalClass := refactoring model classFor: RefactoryTestDataApp.
 	#(#refersToClassVariablePartiallyQualified #refersToClassVariableFullyQualified) do: 
 			[:each |

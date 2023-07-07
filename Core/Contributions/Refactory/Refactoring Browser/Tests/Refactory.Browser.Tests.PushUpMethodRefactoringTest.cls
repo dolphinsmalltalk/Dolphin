@@ -42,35 +42,114 @@ testPushUpAndCopyDown
 		equals: ((model classNamed: #'Core.Object') parseTreeFor: #yourself)!
 
 testPushUpClassMethod
-	| class |
+	| class refactoring method |
 	class := model classNamed: #'Core.Object'.
 	class addClassVariable: #Foo.
 	class metaclass compile: 'foo ^Foo' classified: #accessing.
-	self shouldFail: (PushUpMethodRefactoring
+	self assert: ((model classFor: Object class) directlyDefinesMethod: #foo).
+	refactoring := PushUpMethodRefactoring
 				model: model
 				pushUp: #(#foo)
-				from: class metaclass)
-		withMessage: '#foo refers to Foo which is defined in Object class'!
+				from: class metaclass.
+	self executeRefactoring: refactoring.
+	method := (model classFor: Class) methodFor: #foo.
+	self assert: method boundParseTree equals: (self parseMethod: 'foo ^Foo').
+	self deny: ((model classFor: Object class) directlyDefinesMethod: #foo)!
+
+testPushUpMethodReferencingClassVariable
+	"This used to be blocked, but is possible in Dolphin 8 (and actually earlier) by using qualified names, if the class variable in question is not private. The reference to the subclass class variable is just made qualified (enough) so that it binds in the superclass. The result is still a pure refactoring, although not necessarily a desirable end state. The subclass class variable can then be pulled up, if desired."
+
+	| refactoring method |
+	refactoring := PushUpMethodRefactoring
+				model: model
+				pushUp: #(#runRecursiveSelfRule:)
+				from: TransformationRuleTestData.
+	self executeRefactoring: refactoring.
+	method := (model classFor: FooLintRuleTestData) methodFor: #runRecursiveSelfRule:.
+	self assert: method boundParseTree
+		equals: (self
+				parseMethod: 'runRecursiveSelfRule: aParseTree ^TransformationRuleTestData.RecursiveSelfRule executeTree: aParseTree initialAnswer: false').
+	self
+		deny: ((model classFor: TransformationRuleTestData) directlyDefinesMethod: #runRecursiveSelfRule:)!
 
 testPushUpMethodWithCopyOverriddenMethodsDown
 	| refactoring |
-	refactoring := PushUpMethodRefactoring pushUp: #(#isComposite) from: CompositeLintRuleTestData.
+	refactoring := PushUpMethodRefactoring
+				model: model
+				pushUp: #(#isComposite)
+				from: CompositeLintRuleTestData.
 	refactoring setOption: #copyDownSuperclassMethod
 		toUse: 
 			[:rcvr :selector |
 			self assert: selector identicalTo: #isComposite.
 			true].
 	self executeRefactoring: refactoring.
-	self
-		assert: ((refactoring model classNamed: BasicLintRuleTestData fullName) parseTreeFor: #isComposite)
+	self assert: ((model classNamed: BasicLintRuleTestData fullName) parseTreeFor: #isComposite)
 		equals: (self parseMethod: 'isComposite ^false').
-	self assert: ((refactoring model classNamed: 'Refactory.Browser.TestData.Foo' , 'LintRuleTestData')
+	self assert: ((model classNamed: 'Refactory.Browser.TestData.Foo' , 'LintRuleTestData')
 				parseTreeFor: #isComposite)
 		equals: (self parseMethod: 'isComposite ^false').
-	self assert: ((refactoring model classNamed: LintRuleTestData fullName) parseTreeFor: #isComposite)
+	self assert: ((model classNamed: LintRuleTestData fullName) parseTreeFor: #isComposite)
 		equals: (self parseMethod: 'isComposite ^true').
-	self deny: ((refactoring model classNamed: CompositeLintRuleTestData fullName)
-				directlyDefinesMethod: #isComposite)!
+	self
+		deny: ((model classNamed: CompositeLintRuleTestData fullName) directlyDefinesMethod: #isComposite)!
+
+testPushUpMethodWithImportedVariableExpandingImports
+	| refactoring targetClass pushedUp |
+	refactoring := PushUpMethodRefactoring
+				model: model
+				pushUp: #(#sharedVarRefs)
+				from: BasicLintRuleTestData.
+	refactoring setOption: #addImports
+		toUse: 
+			[:ref :vars |
+			self assert: (vars collect: [:each | each realReference]) asSortedArray
+				equals: #(#{OS.FacilityCodes} #{OS.Win32Errors}).
+			true].
+	self executeRefactoring: refactoring.
+	targetClass := model classFor: LintRuleTestData.
+	pushedUp := targetClass methodFor: #sharedVarRefs.
+	self assert: pushedUp boundParseTree
+		equals: (self
+				parseMethod: 'sharedVarRefs
+	^{
+		ENOENT.
+		ERROR_FILE_NOT_FOUND.
+		BasicLintRuleTestData.ERROR_FILE_EXISTS.
+		ERROR_FILE_EXISTS.
+		FACILITY_WIN32.
+		OS.FacilityCodes.FACILITY_WIN32
+	}').
+	self deny: ((model classFor: BasicLintRuleTestData) directlyDefinesMethod: #sharedVarRefs)!
+
+testPushUpMethodWithImportedVariableNotExpandingImports
+	| refactoring pushedUp targetClass |
+	refactoring := PushUpMethodRefactoring
+				model: model
+				pushUp: #(#sharedVarRefs)
+				from: BasicLintRuleTestData.
+	refactoring setOption: #addImports
+		toUse: 
+			[:ref :vars |
+			self assert: (vars collect: [:each | each realReference]) asSortedArray
+				equals: #(#{OS.FacilityCodes} #{OS.Win32Errors}).
+			false].
+	self executeRefactoring: refactoring.
+	false ifTrue: [model browseChanges].
+	targetClass := model classFor: LintRuleTestData.
+	pushedUp := targetClass methodFor: #sharedVarRefs.
+	self assert: pushedUp boundParseTree
+		equals: (self
+				parseMethod: 'sharedVarRefs
+	^{
+		ENOENT.
+		OS.Win32Errors.ERROR_FILE_NOT_FOUND.
+		BasicLintRuleTestData.ERROR_FILE_EXISTS.
+		OS.Win32Errors.ERROR_FILE_EXISTS.
+		FACILITY_WIN32.
+		OS.FacilityCodes.FACILITY_WIN32
+	}').
+	self deny: ((model classFor: BasicLintRuleTestData) directlyDefinesMethod: #sharedVarRefs)!
 
 testPushUpReferencesInstVar
 	self shouldFail: (PushUpMethodRefactoring pushUp: #(#checkClass:) from: BasicLintRuleTestData)
@@ -126,7 +205,10 @@ testPushUpWithSuperSendThatCannotBeCopiedDown
 !Refactory.Browser.Tests.PushUpMethodRefactoringTest categoriesForMethods!
 testPushUpAndCopyDown!public!tests! !
 testPushUpClassMethod!failure tests!public! !
+testPushUpMethodReferencingClassVariable!public!tests! !
 testPushUpMethodWithCopyOverriddenMethodsDown!public!tests! !
+testPushUpMethodWithImportedVariableExpandingImports!public!tests! !
+testPushUpMethodWithImportedVariableNotExpandingImports!public!tests! !
 testPushUpReferencesInstVar!failure tests!public! !
 testPushUpWithInvalidSuperSend!failure tests!public! !
 testPushUpWithMethodThatCannotBePushedDown!failure tests!public! !

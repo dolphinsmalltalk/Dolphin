@@ -27,13 +27,16 @@ buildVariableReferenceRewriter
 	"Any real references to the variable will need to be rewritten using a form that still binds to the same (renamed) variable."
 	rewriter
 		replace: '`identifier'
-		withValueFrom: [:variableNode | self rewriteStaleStaticVariable: variableNode]
+		withValueFrom: [:variableNode | self rewriteStaticVariable: variableNode]
 		when: [:variableNode | self isStaleStaticVariable: variableNode].
-	"We rewrite any BindingReferences that bind to class before it is renamed, even if embedded in literal arrays. Symbols are not renamed."
+	"We rewrite any BindingReferences that bind to the class before it is renamed, even if embedded in literal arrays. Symbols are not renamed."
 	rewriter
 		replace: '`#literal'
-		withValueFrom: [:literalNode | self rewriteStaleLiteralReference: literalNode]
-		when: [:literalNode | self isStaleLiteralReference: literalNode].
+		withValueFrom: 
+			[:literalNode |
+			literalNode
+				rewriteQualifiedReferencesWith: [:refNode | self rewriteStaleQualifiedReference: refNode]]
+		when: [:literalNode | literalNode isOrContainsQualifiedReferenceMatching: [:refNode | refNode isBindingChanged]].
 	^rewriter!
 
 canReferenceVariable: aString in: aClass
@@ -79,21 +82,12 @@ convertAllReferencesToClass: aRBClass using: searchReplacer
 	self model allReferencesToClass: aRBClass
 		do: [:method | self convertMethod: method using: searchReplacer]!
 
-convertClasses: classSet select: aBlock using: searchReplacer 
-	classSet do: 
-			[:aClass | 
-			(aBlock value: aClass) do: 
-					[:selector | 
-					self 
-						convertMethod: (aClass methodFor: selector)
-						using: searchReplacer]]!
-
 convertMethod: aRBMethod using: aParseTreeRewriter
 	"Convert the parse tree for the specified method using the specified rewriter. If a change is made then compile it into the changeBuilder."
 
 	| parseTree |
 	parseTree := aRBMethod parseTree.
-	parseTree isNil ifTrue: [^self].
+	parseTree ifNil: [^self].
 	(aParseTreeRewriter executeTree: parseTree) ifFalse: [^self].
 	model compileTree: aParseTreeRewriter tree forMethod: aRBMethod!
 
@@ -269,15 +263,6 @@ importedVariableNamesFor: aClass
 		do: [:import | import valueOrNil ifNotNil: [:pool | pool definedBindings do: [:var | names add: var key]]].
 	^names!
 
-isStaleLiteralReference: aStLiteralNode
-	aStLiteralNode isLiteralArray
-		ifTrue: 
-			[^aStLiteralNode contents
-				anySatisfy: [:each | each isLiteralNode and: [self isStaleLiteralReference: each]]].
-	^aStLiteralNode isQualifiedReference and: 
-			["Any qualified reference that now binds differently against the current state of the model needs rewriting."
-			aStLiteralNode binding ~~ aStLiteralNode resolveBinding]!
-
 isStaleStaticVariable: aStVariableNode
 	"We rewrite any variable reference that needs change (or more qualification), or which is currently qualified but could be shortened."
 
@@ -366,68 +351,53 @@ requestNewMethodName: aMethodName forClasses: aCollection
 requestSelfArgumentName
 	^(self lookupOption: #selfArgumentName) cull: self!
 
-rewriteStaleLiteralReference: aLiteralNode
-	aLiteralNode isLiteralArray
-		ifTrue: [^self rewriteStaleReferencesInLiteralArray: aLiteralNode].
-	aLiteralNode isQualifiedReference ifTrue: [^self rewriteStaleQualifiedReference: aLiteralNode].
-	^aLiteralNode copy!
-
-rewriteStaleQualifiedReference: aQualifiedReferenceNode
-	| binding pathString path i classScope fullName |
+rewriteQualifiedReference: aQualifiedReferenceNode toTarget: aRBVariableBinding
+	"Previous fully qualified reference, just answer the new fully-qualifed reference"
 	aQualifiedReferenceNode isRelative
-		ifFalse: 
-			["Previous fully qualified reference, just answer the new fully-qualifed reference"
-			^aQualifiedReferenceNode copy
-				pathString: aQualifiedReferenceNode binding fullName;
-				clearPositions;
-				yourself].
+		ifFalse: [^aQualifiedReferenceNode copyWithName: aRBVariableBinding fullName].
+	^self rewriteRelativeReference: aQualifiedReferenceNode toTarget: aRBVariableBinding!
 
-	"A relative binding, but it may not actually need to be changed (we might only be here because this ref is inside a literal array with other refs that have changed)"
-	aQualifiedReferenceNode isBindingChanged ifFalse: [^aQualifiedReferenceNode copy].
-	"We have a changed relative binding reference, so need to find the shortest new relative path that will bind to the same variable"
-	binding := aQualifiedReferenceNode binding.
-	classScope := aQualifiedReferenceNode methodNode.
-	fullName := binding fullName.
+rewriteRelativeReference: aQualifiedReferenceNode toTarget: aRBVariableBinding
+	| i fullName classScope path pathString |
+	classScope := aQualifiedReferenceNode classScope.
+	fullName := aRBVariableBinding fullName.
 	path := BindingReference.PathSeparator split: fullName.
 	i := path size.
 	pathString := ''.
 	
 	[pathString := (path at: i) , pathString.
-	(classScope fullBindingFor: pathString) == binding
+	(classScope fullBindingFor: pathString) == aRBVariableBinding
 		ifTrue: 
-			[^aQualifiedReferenceNode copy
-				pathString: (i == path size ifTrue: [pathString] ifFalse: ['_.' , pathString]);
-				clearPositions;
+			[^(aQualifiedReferenceNode
+				copyWithName: (i == path size ifTrue: [pathString] ifFalse: ['_.' , pathString]))
+				isRelative: true;
 				yourself].
 	i > 2]
 			whileTrue: 
 				[i := i - 1.
 				pathString := BindingReference.PathSeparatorString , pathString].
-	^aQualifiedReferenceNode copy
-		pathString: fullName;
+	^(aQualifiedReferenceNode copyWithName: fullName)
 		isRelative: false;
-		clearPositions;
 		yourself!
 
-rewriteStaleReferencesInLiteralArray: aLiteralArrayNode
-	^StLiteralArrayNode
-		contents: (aLiteralArrayNode contents collect: [:each | self rewriteStaleLiteralReference: each])!
-
-rewriteStaleStaticVariable: aVariableNode
-	"Private - Rewrite a variable reference so that it still binds correctly given the current state of the model."
-
-	^aVariableNode copy
-		name: ((aVariableNode parent isAnnotation and: [aVariableNode parent selector == #namespace:])
-					ifTrue: 
-						["If a namespace annotation, the full name should always be used"
-						aVariableNode binding fullName]
-					ifFalse: [self shortestNameForStaticVariable: aVariableNode]);
-		clearPositions;
-		yourself!
+rewriteStaleQualifiedReference: aQualifiedReferenceNode
+	"A fully-qualified binding reference should be unchanged, so we can just answer a copy. A relative binding, may not actually need to be changed (we might only be here because this ref is inside a literal array with other refs that have changed), so we can also answer a copy for that. i.e. any unchanged binding, answer a copy"
+	aQualifiedReferenceNode isBindingChanged ifFalse: [^aQualifiedReferenceNode copy].
+	"We have a changed binding reference, which by definition must therefore be relative, so need to find the shortest new relative path that will bind to the same variable"
+	^self rewriteQualifiedReference: aQualifiedReferenceNode toTarget: aQualifiedReferenceNode binding!
 
 rewriteStaleVariableReferences: aCollectionOfMethods
-	| rewriter |
-	rewriter := self buildVariableReferenceRewriter.
+	self rewriteVariablesOfMethods: aCollectionOfMethods with: self buildVariableReferenceRewriter!
+
+rewriteStaticVariable: aVariableNode
+	"Private - Rewrite a variable reference so that it still binds correctly given the current state of the model."
+
+	^aVariableNode
+		copyWithName: ((aVariableNode parent isAnnotation and: [aVariableNode parent selector == #namespace:])
+				ifTrue: [aVariableNode binding fullName]
+				ifFalse: [self shortestNameForStaticVariable: aVariableNode])!
+
+rewriteVariablesOfMethods: aCollectionOfMethods with: aParseTreeRewriter
 	aCollectionOfMethods do: 
 			[:each |
 			| classScope |
@@ -436,7 +406,7 @@ rewriteStaleVariableReferences: aCollectionOfMethods
 			classScope clearVariableCache.
 			"If an instance method we must also clear out the meta scope's cache in case the method includes any optimised expressions that are compiled as if class methods"
 			classScope metaScope == classScope ifFalse: [classScope metaScope clearVariableCache].
-			self convertMethod: each using: rewriter]!
+			self convertMethod: each using: aParseTreeRewriter]!
 
 safeMethodNameFor: aClass basedOn: aString 
 	"Creates an unused method name containing aString"
@@ -482,6 +452,7 @@ shortestNameToBind: aRBVariableBinding from: aVariableNode
 	pathString := aRBVariableBinding unqualifiedName.
 	current := aRBVariableBinding.
 	root := model rootNamespace.
+	"We have to start the search from the variable node itself in case the static is shadowed by an ill-defined local variable - it is bad practice to start locals with uppercased names that might clash with class names or other static variables, but it is not illegal"
 	scope := aVariableNode scope.
 	
 	[| var |
@@ -489,7 +460,7 @@ shortestNameToBind: aRBVariableBinding from: aVariableNode
 	(var notNil and: [var binding == aRBVariableBinding]) ifTrue: [^pathString].
 	(current := current environment) == root]
 			whileFalse: [pathString := current unqualifiedName , BindingReference.PathSeparatorString , pathString].
-	"Nothing but the fully-qualified name will do"
+	"Nothing but the fully-qualified name is sufficient"
 	^aRBVariableBinding fullName!
 
 shouldExtractAssignmentTo: aString
@@ -541,7 +512,6 @@ checkPreconditions:!preconditions!public! !
 classObjectFor:!accessing!private! !
 convertAllReferencesTo:using:!public!support! !
 convertAllReferencesToClass:using:!public!support! !
-convertClasses:select:using:!public!support! !
 convertMethod:using:!public!support! !
 copyOptionsFrom:!operations!public! !
 defaultEnvironment!public!transforming! !
@@ -576,7 +546,6 @@ getOptionUseExistingMethod:!options!private! !
 getOptionVariableToMoveToOf:in:!options!private! !
 getOptionVariableTypes:selected:!options!private! !
 importedVariableNamesFor:!public!utilities! !
-isStaleLiteralReference:!helpers!private! !
 isStaleStaticVariable:!private!transforming! !
 lookupOption:!accessing!options!private! !
 model!public!transforming! !
@@ -594,11 +563,12 @@ refactoringError:!exceptions!private! !
 refactoringError:with:!exceptions!private! !
 requestNewMethodName:forClasses:!public!requests! !
 requestSelfArgumentName!public!requests! !
-rewriteStaleLiteralReference:!private!transforming! !
+rewriteQualifiedReference:toTarget:!private!transforming! !
+rewriteRelativeReference:toTarget:!private!transforming! !
 rewriteStaleQualifiedReference:!private!transforming! !
-rewriteStaleReferencesInLiteralArray:!private!transforming! !
-rewriteStaleStaticVariable:!private!transforming! !
 rewriteStaleVariableReferences:!private!transforming! !
+rewriteStaticVariable:!private!transforming! !
+rewriteVariablesOfMethods:with:!private!transforming! !
 safeMethodNameFor:basedOn:!public!utilities! !
 selectVariableToMoveMethodTo:class:!public!requests! !
 selectVariableTypesFrom:selected:!public!requests! !

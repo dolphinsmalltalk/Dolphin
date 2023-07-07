@@ -285,7 +285,7 @@ storeOn: aStream
 			value: instanceVariableNames
 			on: aStream;
 		storeDetail: #classVariableNames:
-			value: classVariableNames
+			value: (classVariableNames ifNotNil: [classVariableNames asSortedArray])
 			on: aStream;
 		storeDetail: #imports:
 			value: imports

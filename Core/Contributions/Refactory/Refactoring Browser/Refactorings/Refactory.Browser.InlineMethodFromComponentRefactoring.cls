@@ -33,7 +33,7 @@ addSelfReferenceToInlineParseTree
 	rewriter := ParseTreeRewriter rename: 'self' to: variableName.
 	(rewriter executeTree: inlineParseTree) ifTrue: [inlineParseTree := rewriter tree].
 	newArguments := OrderedCollection withAll: inlineParseTree arguments.
-	newArguments addFirst: (StBasicVariableNode named: variableName).
+	newArguments addFirst: (StParameterNode named: variableName).
 	inlineParseTree renameSelector: (self addArgumentToSelector: inlineParseTree selector)
 		andArguments: newArguments.
 	sourceMessage receiver replaceWith: (StBasicVariableNode named: variableName)!

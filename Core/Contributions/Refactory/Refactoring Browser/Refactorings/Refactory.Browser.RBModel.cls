@@ -164,7 +164,7 @@ compileTree: aMethodNode forMethod: aRBMethod
 	class addMethod: aRBMethod.
 	packageAndEnvironment := aRBMethod existingPackageAndEnvironment.
 	class
-		compile: aMethodNode newSource
+		compile: aRBMethod source
 		environment: packageAndEnvironment second
 		categories: (class protocolsFor: selector)
 		package: packageAndEnvironment first!

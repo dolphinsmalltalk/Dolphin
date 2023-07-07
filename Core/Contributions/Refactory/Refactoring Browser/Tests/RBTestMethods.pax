@@ -29,6 +29,7 @@ package setBinaryVariableNames: #(
 
 package setPrerequisites: #(
 	'..\..\..\..\Object Arts\Dolphin\Base\Dolphin'
+	'..\..\..\..\Object Arts\Dolphin\Base\Tests\Dolphin Base Tests'
 	'..\Change Objects\RBChangeObjects'
 	'..\Environments\RBEnvironments'
 	'..\..\RBNamespaces'
@@ -56,21 +57,21 @@ Core.Object
 	classVariableNames: 'Foo1'
 	imports: #(#{OS.CRTConstants})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'FACILITY_WIN32' -> 'Shadow' }!
 Core.Object
 	subclass: #'Refactory.Browser.TestData.RefactoryTestDataApp'
 	instanceVariableNames: 'temporaryVariable'
 	classVariableNames: 'ClassVar1 ClassVar2'
 	imports: #(#{OS.CRTConstants})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'ClassConst1' -> 'ClassConst1 of RefactoryTestDataApp' }!
 Refactory.Browser.TestData.LintRuleTestData
 	subclass: #'Refactory.Browser.TestData.BasicLintRuleTestData'
 	instanceVariableNames: 'classBlock methodBlock result'
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.Win32Errors} #{OS.FacilityCodes})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'ERROR_FILE_EXISTS' -> 'Shadow' }!
 Refactory.Browser.TestData.LintRuleTestData
 	subclass: #'Refactory.Browser.TestData.CompositeLintRuleTestData'
 	instanceVariableNames: 'rules'

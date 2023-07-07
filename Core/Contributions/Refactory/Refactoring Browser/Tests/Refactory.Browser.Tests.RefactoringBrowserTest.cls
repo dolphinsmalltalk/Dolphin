@@ -45,7 +45,7 @@ parseExpression: aString
 	^Parser parseExpression: aString!
 
 parseMethod: aString
-	^Parser parseMethod: aString!
+	^RBParser parseMethod: aString!
 
 parseMethod: aString in: aRBClass
 	^Parser

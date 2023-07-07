@@ -2,7 +2,7 @@
 
 Refactory.Browser.Refactoring
 	subclass: #'Refactory.Browser.ExpandImportsRefactoring'
-	instanceVariableNames: 'imports fromClass parseTree toClasses'
+	instanceVariableNames: 'imports fromClass parseTree toClasses isExpanded'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -48,17 +48,18 @@ computeReferencedNamespaces
 							[| pool |
 							pool := self whichNamespaceDefines: varName.
 							pool notNil ifTrue: [imports add: pool]]]].
-	searcher executeTree: parseTree!
+	searcher executeTree: parseTree.
+	imports := imports select: 
+					[:each |
+					toClasses anySatisfy: [:eachClass | (eachClass instanceClass importsNamespace: each) not]]!
 
 forMethod: aParseTree fromClass: aClass toClasses: classCollection 
 	fromClass := self model classFor: aClass.
 	parseTree := aParseTree.
 	toClasses := classCollection collect: [:each | self model classFor: each]!
 
-importsToAdd
-	^imports select: 
-			[:eachPoolName |
-			toClasses anySatisfy: [:eachClass | (eachClass instanceClass importsNamespace: eachPoolName) not]]!
+isExpanded
+	^isExpanded!
 
 preconditions
 	^RBCondition empty!
@@ -67,11 +68,11 @@ shouldAddImports: aCollection
 	^(self lookupOption: #addImports) cull: self cull: aCollection!
 
 transform
-	| toMove |
 	self computeReferencedNamespaces.
-	toMove := self importsToAdd.
-	toMove notEmpty ifTrue: [(self shouldAddImports: toMove) ifFalse: [self refactoringAborted]].
-	self addImports!
+	isExpanded := imports isEmpty
+				or: [(self shouldAddImports: imports) and: 
+							[self addImports.
+							true]]!
 
 whichNamespaceDefines: aString
 	| currentClass |
@@ -88,7 +89,7 @@ addImport:toClass:!private!transforming! !
 addImports!private!transforming! !
 computeReferencedNamespaces!private!transforming! !
 forMethod:fromClass:toClasses:!initialize/release!public! !
-importsToAdd!helpers!private! !
+isExpanded!accessing!public! !
 preconditions!preconditions!public! !
 shouldAddImports:!private!requests! !
 transform!public!transforming! !

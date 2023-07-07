@@ -29,15 +29,10 @@ preconditions
 	^condition & (RBCondition isAbstractClass: class)!
 
 pushDown: aSelector
-	| code protocols importsRefactoring packageAndEnv method |
+	| code protocols packageAndEnv method |
 	method := class methodFor: aSelector.
 	protocols := class protocolsFor: aSelector.
-	importsRefactoring := ExpandImportsRefactoring
-				model: self model
-				forMethod: method parseTree
-				fromClass: class
-				toClasses: class subclasses.
-	self performComponentRefactoring: importsRefactoring.
+	#rbFix.	"On Dolphin pools (now imports) are inherited, so never need to be pushed down, so we remove the 'Expand' component refactoring that was here."
 	"Maintain package and any custom namespace of the method being pushed down"
 	code := method source.
 	packageAndEnv := class existingMethodPackageAndEnvironment: aSelector.
@@ -71,8 +66,8 @@ transform
 	selectors do: [:each | class removeSelector: each]! !
 !Refactory.Browser.PushDownMethodRefactoring categoriesForMethods!
 preconditions!preconditions!public! !
-pushDown:!public!transforming! !
-pushDown:from:!initialize/release!public! !
+pushDown:!private!transforming! !
+pushDown:from:!initialize/release!private! !
 storeOn:!printing!public! !
 transform!public!transforming! !
 !

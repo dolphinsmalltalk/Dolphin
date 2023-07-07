@@ -52,6 +52,7 @@ package setClassNames: #(
 	#{Refactory.Browser.Tests.PushDownMethodRefactoringTest}
 	#{Refactory.Browser.Tests.PushUpInstanceVariableRefactoringTest}
 	#{Refactory.Browser.Tests.PushUpMethodRefactoringTest}
+	#{Refactory.Browser.Tests.QualifyStaticVariablesRefactoringTest}
 	#{Refactory.Browser.Tests.RBClassTest}
 	#{Refactory.Browser.Tests.RBConditionTest}
 	#{Refactory.Browser.Tests.RBMethodTest}
@@ -79,6 +80,7 @@ package setClassNames: #(
 	#{Refactory.Browser.Tests.RenameTemporaryRefactoringTest}
 	#{Refactory.Browser.Tests.SmalllintTest}
 	#{Refactory.Browser.Tests.TemporaryToInstanceVariableRefactoringTest}
+	#{Refactory.Browser.Tests.UnqualifyStaticVariablesRefactoringTest}
 	#{Refactory.Browser.Tests.VariableEnvironmentTest}
 	#{Refactory.Browser.Tests.VariableTypeTest}
 ).
@@ -562,6 +564,13 @@ Refactory.Browser.Tests.RefactoringTest
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Refactory.Browser.Tests.RefactoringTest
+	subclass: #'Refactory.Browser.Tests.QualifyStaticVariablesRefactoringTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.Tests.RefactoringTest
 	subclass: #'Refactory.Browser.Tests.RBConditionTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -647,6 +656,13 @@ Refactory.Browser.Tests.RefactoringTest
 	classConstants: {}!
 Refactory.Browser.Tests.RefactoringTest
 	subclass: #'Refactory.Browser.Tests.TemporaryToInstanceVariableRefactoringTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.Tests.RefactoringTest
+	subclass: #'Refactory.Browser.Tests.UnqualifyStaticVariablesRefactoringTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

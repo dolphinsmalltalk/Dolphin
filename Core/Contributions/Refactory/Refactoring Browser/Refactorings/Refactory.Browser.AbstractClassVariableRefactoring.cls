@@ -2,7 +2,7 @@
 
 Refactory.Browser.VariableRefactoring
 	subclass: #'Refactory.Browser.AbstractClassVariableRefactoring'
-	instanceVariableNames: 'accessorsRefactoring'
+	instanceVariableNames: 'accessorsRefactoring variableBinding'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -13,44 +13,59 @@ Refactory.Browser.AbstractClassVariableRefactoring comment: ''!
 !Refactory.Browser.AbstractClassVariableRefactoring methodsFor!
 
 abstractClassReferences
+	| replacer getterMethod setterMethod |
+	replacer := ParseTreeRewriter
+				replaceClassVariable: variableBinding
+				withGetter: accessorsRefactoring getterMethod
+				andSetter: accessorsRefactoring setterMethod
+				forReceiver: 'self'.
+	getterMethod := class metaclass methodFor: accessorsRefactoring getterMethod.
+	setterMethod := accessorsRefactoring setterMethod ifNotNil: [:selector | class metaclass methodFor: selector].
+	class metaclass withAllSubclasses do: 
+			[:aClass |
+			((aClass whichMethodsReferToBinding: variableBinding) reject: [:each | each == getterMethod or: [each == setterMethod]])
+				do: 
+					[:method |
+					method boundParseTree.
+					self convertMethod: method using: replacer]]!
+
+abstractExternalReferences
 	| replacer |
 	replacer := ParseTreeRewriter
-				variable: variableName
-				getter: self accessorsRefactoring getterMethod
-				setter: self accessorsRefactoring setterMethod.
-	self
-		convertClasses: class metaclass withAllSubclasses
-		select: 
-			[:aClass |
-			(aClass whichSelectorsReferToClassVariable: variableName) reject: 
-					[:each |
-					aClass == class metaclass and: 
-							[each == self accessorsRefactoring getterMethod or: [each == self accessorsRefactoring setterMethod]]]]
-		using: replacer!
+				replaceClassVariable: variableBinding
+				withGetter: accessorsRefactoring getterMethod
+				andSetter: accessorsRefactoring setterMethod
+				forReceiver: class fullName.
+	model allBehaviorsDo: 
+			[:behavior |
+			(behavior instanceClass includesBehavior: class instanceClass)
+				ifFalse: 
+					[(behavior whichMethodsReferToBinding: variableBinding) do: 
+							[:method |
+							method boundParseTree.
+							self convertMethod: method using: replacer]]]!
 
 abstractInstanceReferences
 	| replacer |
 	replacer := ParseTreeRewriter
-				classVariable: variableName
-				getter: self accessorsRefactoring getterMethod
-				setter: self accessorsRefactoring setterMethod.
-	self
-		convertClasses: class withAllSubclasses
-		select: [:aClass | aClass whichSelectorsReferToClassVariable: variableName]
-		using: replacer!
-
-accessorsRefactoring
-	^accessorsRefactoring isNil
-		ifTrue: 
-			[accessorsRefactoring := CreateAccessorsForVariableRefactoring
-						model: self model
-						variable: variableName asString
-						class: class
-						classVariable: true]
-		ifFalse: [accessorsRefactoring]!
+				replaceClassVariable: variableBinding
+				withGetter: accessorsRefactoring getterMethod
+				andSetter: accessorsRefactoring setterMethod
+				forReceiver: 'self class'.
+	class withAllSubclasses do: 
+			[:aClass |
+			(aClass whichMethodsReferToBinding: variableBinding) do: 
+					[:method |
+					method boundParseTree.
+					self convertMethod: method using: replacer]]!
 
 createAccessors
-	self performComponentRefactoring: self accessorsRefactoring!
+	accessorsRefactoring := CreateAccessorsForVariableRefactoring
+				model: model
+				variable: variableName asString
+				class: class
+				classVariable: true.
+	self performComponentRefactoring: accessorsRefactoring!
 
 preconditions
 	^(RBCondition isMetaclass: class) not
@@ -61,14 +76,17 @@ preconditions
 					errorMacro: 'This refactoring does not work for Object, Behavior, ClassDescription, or Class')!
 
 transform
-	self createAccessors.
-	self abstractInstanceReferences.
-	self abstractClassReferences! !
+	variableBinding := class bindingFor: variableName.
+	self
+		createAccessors;
+		abstractInstanceReferences;
+		abstractClassReferences;
+		abstractExternalReferences! !
 !Refactory.Browser.AbstractClassVariableRefactoring categoriesForMethods!
-abstractClassReferences!public!transforming! !
-abstractInstanceReferences!public!transforming! !
-accessorsRefactoring!accessing!private! !
-createAccessors!public!transforming! !
+abstractClassReferences!private!transforming! !
+abstractExternalReferences!private!transforming! !
+abstractInstanceReferences!private!transforming! !
+createAccessors!private!transforming! !
 preconditions!preconditions!public! !
 transform!public!transforming! !
 !

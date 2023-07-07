@@ -27,16 +27,23 @@ subclassDefiningVariable
 	^subclasses asArray first!
 
 transform
-	| subclass binding |
+	| subclass binding references |
 	subclass := self subclassDefiningVariable.
 	binding := subclass localBindingFor: variableName.
+	references := model allReferencesToBinding: binding.
+	references do: [:each | each boundParseTree].
 	binding isImmutable
 		ifTrue: 
 			[subclass removeClassConstant: binding.
 			class addClassConstant: binding]
 		ifFalse: 
 			[subclass removeClassVariable: variableName.
-			class addClassVariable: variableName]! !
+			class addClassVariable: variableName].
+	"Any real references to the variable will need to be rewritten to bind to the pulled-up variable"
+	self
+		replaceReferencesToVariable: binding
+		in: references
+		with: (class localBindingFor: variableName)! !
 !Refactory.Browser.PullUpClassVariableRefactoring categoriesForMethods!
 preconditions!preconditions!public! !
 subclassDefiningVariable!accessing!private! !

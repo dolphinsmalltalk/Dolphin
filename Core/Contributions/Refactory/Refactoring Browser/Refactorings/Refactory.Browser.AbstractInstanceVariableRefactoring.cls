@@ -15,41 +15,35 @@ Refactory.Browser.AbstractInstanceVariableRefactoring comment: ''!
 abstractReferences
 	| replacer |
 	replacer := ParseTreeRewriter
-				variable: variableName
-				getter: self accessorsRefactoring getterMethod
-				setter: self accessorsRefactoring setterMethod.
-	self
-		convertClasses: class withAllSubclasses
-		select: 
+				replaceInstanceVariable: variableName
+				withGetter: accessorsRefactoring getterMethod
+				andSetter: accessorsRefactoring setterMethod
+				forReceiver: 'self'.
+	class withAllSubclasses do: 
 			[:aClass |
-			(aClass whichSelectorsReferToInstanceVariable: variableName) reject: 
+			((aClass whichSelectorsReferToInstanceVariable: variableName) reject: 
 					[:each |
-					aClass == class and: 
-							[each == self accessorsRefactoring getterMethod or: [each == self accessorsRefactoring setterMethod]]]]
-		using: replacer!
-
-accessorsRefactoring
-	^accessorsRefactoring isNil
-		ifTrue: 
-			[accessorsRefactoring := CreateAccessorsForVariableRefactoring
-						model: self model
-						variable: variableName
-						class: class
-						classVariable: false]
-		ifFalse: [accessorsRefactoring]!
+					aClass == class
+						and: [each == accessorsRefactoring getterMethod or: [each == accessorsRefactoring setterMethod]]])
+				do: [:selector | self convertMethod: (aClass methodFor: selector) using: replacer]]!
 
 createAccessors
-	self performComponentRefactoring: self accessorsRefactoring!
+	accessorsRefactoring := CreateAccessorsForVariableRefactoring
+				model: self model
+				variable: variableName
+				class: class
+				classVariable: false.
+	self performComponentRefactoring: accessorsRefactoring!
 
 preconditions
 	^RBCondition directlyDefinesInstanceVariable: variableName in: class!
 
 transform
-	self createAccessors.
-	self abstractReferences! !
+	self
+		createAccessors;
+		abstractReferences! !
 !Refactory.Browser.AbstractInstanceVariableRefactoring categoriesForMethods!
 abstractReferences!public!transforming! !
-accessorsRefactoring!accessing!private! !
 createAccessors!public!transforming! !
 preconditions!preconditions!public! !
 transform!public!transforming! !

@@ -23,24 +23,45 @@ testNonExistantName
 
 testPullUpClassConstant
 	| refactoring bar modelClass modelSubclass |
-	refactoring := PullUpClassVariableRefactoring variable: #Bar class: LintRuleTestData.
+	refactoring := PullUpClassVariableRefactoring
+				model: model
+				variable: #Bar
+				class: LintRuleTestData.
 	self executeRefactoring: refactoring.
-	modelClass := refactoring model classFor: LintRuleTestData.
+	modelClass := model classFor: LintRuleTestData.
 	bar := modelClass localBindingFor: 'Bar'.
 	self assert: bar value equals: 123.
 	self assert: bar environment identicalTo: modelClass.
 	self assert: bar isImmutable.
-	modelSubclass := refactoring model classFor: TransformationRuleTestData.
+	modelSubclass := model classFor: TransformationRuleTestData.
 	self assertIsNil: (modelSubclass localBindingFor: 'Bar')!
 
 testPullUpClassVariable
-	| refactoring |
-	refactoring := PullUpClassVariableRefactoring variable: #RecursiveSelfRule class: LintRuleTestData.
+	| refactoring targetClass sourceSubClass refDataApp |
+	targetClass := model classFor: LintRuleTestData.
+	targetClass compile: 'refToClassVar ^TransformationRuleTestData.RecursiveSelfRule'.
+	"Deliberately create a (partially-qualified) reference from outside the class hierarchy - these should be rewritten too."
+	refDataApp := model classFor: RefactoryTestDataApp.
+	refDataApp compile: 'refToExternalClassVar ^TransformationRuleTestData.RecursiveSelfRule'.
+	refactoring := PullUpClassVariableRefactoring
+				model: model
+				variable: #RecursiveSelfRule
+				class: LintRuleTestData.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classFor: LintRuleTestData)
-				directlyDefinesClassVariable: #RecursiveSelfRule).
-	self deny: ((refactoring model classFor: TransformationRuleTestData)
-				directlyDefinesClassVariable: #RecursiveSelfRule)! !
+	self assert: (targetClass directlyDefinesClassVariable: #RecursiveSelfRule).
+	sourceSubClass := model classFor: TransformationRuleTestData.
+	self deny: (sourceSubClass directlyDefinesClassVariable: #RecursiveSelfRule).
+	self assert: (targetClass methodFor: #refToClassVar) parseTree
+		equals: (self parseMethod: 'refToClassVar ^RecursiveSelfRule' in: targetClass).
+	self assert: (sourceSubClass methodFor: #runRecursiveSelfRule:) parseTree
+		equals: (self
+				parseMethod: 'runRecursiveSelfRule: aParseTree ^RecursiveSelfRule executeTree: aParseTree initialAnswer: false'
+				in: targetClass).
+	"The external reference - can still be partially qualified because RefactoryTestDataApp is in the same namespace"
+	self assert: (refDataApp methodFor: #refToExternalClassVar) parseTree
+		equals: (self parseMethod: 'refToExternalClassVar ^LintRuleTestData.RecursiveSelfRule'
+				in: targetClass).
+	false ifTrue: [model browseChanges]! !
 !Refactory.Browser.Tests.PullUpClassVariableRefactoringTest categoriesForMethods!
 testMetaClassFailure!failure tests!public! !
 testNonExistantName!failure tests!public! !

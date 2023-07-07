@@ -68,9 +68,19 @@ testRemoveClassConstant
 
 testRemoveClassVar
 	| refactoring class |
-	refactoring := RemoveClassVariableRefactoring variable: 'Foo1' class: LintRuleTestData.
-	class := refactoring model classFor: LintRuleTestData.
+	refactoring := RemoveClassVariableRefactoring
+				model: model
+				variable: 'Foo1'
+				class: LintRuleTestData.
+	class := model classFor: LintRuleTestData.
 	self assert: (class definesClassVariable: 'Foo1').
+	refactoring setOption: #removeReferencedVariable
+		toUse: 
+			[:ref :var :methods |
+			self assert: var identicalTo: (class localBindingFor: 'Foo1').
+			methods
+				do: [:each | self assert: each methodClass equals: (model classFor: BasicLintRuleTestData) metaclass].
+			true].
 	self executeRefactoring: refactoring.
 	self deny: (class definesClassVariable: 'Foo1')! !
 !Refactory.Browser.Tests.RemoveClassVariableRefactoringTest categoriesForMethods!

@@ -463,6 +463,9 @@ includesClass: aRBClass
 		whileTrue: [currentClass := currentClass superclass].
 	^currentClass = aRBClass!
 
+includesSelector: aSymbol 
+	^self directlyDefinesMethod: aSymbol!
+
 inheritsFrom: aBehavior
 	"Answer whether the receiver is a subclass of the argument. This is the same as #includesBehavior:, but starts from the superclass of the receiver."
 
@@ -913,6 +916,7 @@ imports!accessing!public! !
 importsNamespace:!public!testing! !
 includesBehavior:!class hierarchy-testing!public! !
 includesClass:!public!testing! !
+includesSelector:!public! !
 inheritsFrom:!class hierarchy-testing!public! !
 inheritsPoolDictionaries!public!testing! !
 instanceClass!accessing!public! !
