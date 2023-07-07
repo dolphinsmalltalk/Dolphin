@@ -170,6 +170,32 @@ testDetectIfNone
 					actualElem := self assimilate: $f.
 					self assert: (subject detect: [:each | each = actualElem] ifNone: [absent]) identicalTo: absent]]!
 
+testDifference
+	| empty a aa ab b |
+	empty := self newCollection: #().
+	a := self newCollection: #($a).
+	aa := self newCollection: #($a $a).
+	ab := self newCollection: #($a $b).
+	b := self newCollection: #($b).
+	self assert: (empty difference: empty) equals: empty.
+	self assert: (empty difference: a) equals: empty.
+	self assert: (empty difference: aa) equals: empty.
+	self assert: (a difference: empty) equals: a.
+	self assert: (a difference: a) equals: empty.
+	self assert: (a difference: aa) equals: empty.
+	self assert: (a difference: ab) equals: empty.
+	self assert: (a difference: b) equals: a.
+	self assert: (aa difference: empty) equals: aa.
+	self assert: (aa difference: a) equals: empty.
+	self assert: (aa difference: aa) equals: empty.
+	self assert: (aa difference: ab) equals: empty.
+	self assert: (aa difference: b) equals: aa.
+	self assert: (ab difference: empty) equals: ab.
+	self assert: (ab difference: a) equals: b.
+	self assert: (ab difference: aa) equals: b.
+	self assert: (ab difference: ab) equals: empty.
+	self assert: (ab difference: b) equals: a!
+
 testDistinct
 	| result |
 	#(#() #($a) #($a $a) #($a $b) #($a $b $a) #($a $b $c $a $e)) do: 
@@ -241,6 +267,7 @@ testAsArray!public!unit tests! !
 testAsOrderedCollection!public!unit tests! !
 testCount!public!unit tests! !
 testDetectIfNone!public!unit tests! !
+testDifference!public!unit tests! !
 testDistinct!public!unit tests! !
 testDoSeparatedBy!public!unit tests! !
 testFold!public!unit tests! !

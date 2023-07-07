@@ -284,6 +284,7 @@ detect: discriminator ifNone: exceptionHandler
 difference: aCollection
 	"Answer a <collection> like the receiver containing the set theroetic difference between the receiver and the <collection> argument.  i.e. Answer the set of all objects that are elements of the receiver but not the argument."
 
+	aCollection isEmpty ifTrue: [^self].
 	^self reject: [:each | aCollection includes: each]!
 
 distinct
