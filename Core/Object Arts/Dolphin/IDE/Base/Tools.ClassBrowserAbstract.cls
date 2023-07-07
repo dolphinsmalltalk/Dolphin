@@ -190,8 +190,7 @@ applyOptions
 	super applyOptions.
 	definitionPresenter view wordWrap: self class wordWrapDefinition.
 	self isShowingInheritedMethods: self class defaultShowInheritedMethods.
-	self isFilteringObjectMethods: self class defaultFilterObjectMethods.
-	self createPlugins!
+	self isFilteringObjectMethods: self class defaultFilterObjectMethods!
 
 browseClassHierarchy
 	<commandQuery: #hasClassSelected>
@@ -662,14 +661,14 @@ definitionCardName
 	^'definition'!
 
 definitionOfClass: aClass
-	| strm |
+	| strm filer |
 	strm := (WriteStream on: (Utf8String new: 256))
 				locale: SmalltalkLocale.Hex;
 				yourself.
-	(aClass sourceFilerClass on: strm) 
-		environment: aClass environment;
-		printBasicDefinitionOfClass: aClass.
-	^strm contents!
+	filer := aClass sourceFilerClass on: strm.
+	filer environment: aClass environment.
+	filer printBasicDefinitionOfClass: aClass on: strm.
+	^(Parser parseExpression: strm contents) formattedCode!
 
 deleteItCommand
 	| focus |
@@ -1673,6 +1672,7 @@ onViewOpened
 
 	| toolbar modifiedModel |
 	super onViewOpened.
+	self createPlugins.
 	methodBrowserPresenter beSorted: [:a :b | a selector <= b selector].
 	(self view viewNamed: 'message' ifNone: nil)
 		ifNotNil: 
@@ -2874,7 +2874,7 @@ publishedAspects
 		add: ((Aspect color: #looseMethodColor)
 					defaultValue: Color purple;
 					yourself);
-		add: ((Aspect integer: #grayedMethodFadeFactor)
+		add: ((Aspect number: #grayedMethodFadeFactor)
 					defaultValue: 2;
 					yourself);
 		add: ((Aspect sequenceableCollection: #plugins addFrom: [self availablePluginClasses])

@@ -9,15 +9,15 @@ Core.Object
 	classConstants: {
 			'Commands'
 				-> (IdentityDictionary withAll: {
-								16r7D4 -> #basicClearAll.
+								16r7D4 -> #clearAll.
 								16r7DB -> #redo.
-								16r7DD -> #basicSelectAll.
+								16r7DD -> #selectAll.
 								16r87C -> #yourself.
-								16r880 -> #basicUndo.
+								16r880 -> #undo.
 								16r881 -> #cutSelection.
 								16r882 -> #copySelection.
 								16r883 -> #pasteClipboard.
-								16r884 -> #basicClearSelection.
+								16r884 -> #clearSelection.
 								16r8EF -> #setTargetRangeFromSelection.
 								16r8F0 -> #joinTarget.
 								16r8FC -> #moveDown.

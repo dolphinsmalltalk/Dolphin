@@ -210,12 +210,18 @@ refresh
 resetAspect
 	"Clears the currently selected aspect to nil or its default value"
 
-	| aspect default |
+	| aspect default prompt format |
 	aspect := self aspectAccessor aspectDescriptor.
 	default := aspect defaultValue.
-	(MessageBox new
-		headline: 'Are you sure you wish to set this item to <?nil:it''s default>?' << default isNil;
-		confirm) ifTrue: [self setAspectValue: default value]!
+	prompt := MessageBox new.
+	format := 'Are you sure you wish to reset this item to <1d>?'.
+	default isNil
+		ifTrue: [prompt headline: format << 'nil']
+		ifFalse: 
+			[prompt
+				headline: format << 'it''s default';
+				detailsText: 'The aspect will be reset to it''s default value, <1d>' << default].
+	prompt confirm ifTrue: [self setAspectValue: default value]!
 
 setAspectValue: anObject
 	"Private - Set the value associated with the currently selected

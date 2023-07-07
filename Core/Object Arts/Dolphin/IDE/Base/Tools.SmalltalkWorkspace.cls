@@ -2,8 +2,8 @@
 
 UI.Presenter
 	subclass: #'Tools.SmalltalkWorkspace'
-	instanceVariableNames: 'evaluationContext errorModel findDetails workspacePool namespaces compilationErrors textStyles searchEnvironment modifiedModel flags indicatorStyles variableMetadataProvider'
-	classVariableNames: 'Abbreviations AnnotationMode AutoCompleteDwell DefaultCaretColor DefaultFont DefaultTabWidth FontQuality IndicatorStyles KeyBindings KeywordCompletions MaxAutoCompletionListHeight MaxAutoCompletionListSize MaxAutoCompletionListWidth OptionFlags StandardUnaryReturnTypes TextStyles WrapIndentMode'
+	instanceVariableNames: 'evaluationContext errorModel findDetails workspacePool namespaces compilationErrors textStyles searchEnvironment modifiedModel flags indicatorDefinitions variableMetadataProvider'
+	classVariableNames: 'Abbreviations AnnotationMode AutoCompleteDwell DefaultCaretColor DefaultFont DefaultTabWidth FontQuality IndicatorDefinitions KeyBindings KeywordCompletions MaxAutoCompletionListHeight MaxAutoCompletionListSize MaxAutoCompletionListWidth OptionFlags StandardUnaryReturnTypes TextStyles WrapIndentMode'
 	imports: #(#{Kernel.CompilerFlags} #{UI.Scintilla private} #{Refactory.Browser private})
 	classInstanceVariableNames: 'additionalKeyBindings'
 	classConstants: {
@@ -14,7 +14,7 @@ UI.Presenter
 			'AutoCompletionTruncatingMask' -> 16r20.
 			'LiteralStyleNames'
 				-> (Set withAll: #(#literalNumber #literalPseudo #literalString #literalSymbol)).
-			'LoadingMask' -> 16r1.
+			'LoadingOptionsMask' -> 16r1.
 			'UseDirectWriteMask' -> 16r100.
 			'VariableTipsMask' -> 16r2.
 			'WordWrapMask' -> 16r4
@@ -82,7 +82,7 @@ allVariablesVisibleFrom: aStProgramNode do: aMonadicValuable
 		bindingsDo: [:each | aMonadicValuable value: (StWorkspaceVariable scope: classScope binding: each)]!
 
 applyOptions
-	"Private - Apply the class options to the receiver"
+	"Private - Apply the class options to the receiver. As most options are applied to the view, this is skipped if the view is not availalble. This might happen when loading an image, and the restoration of the first workspace causes loading of options, and an attempt to apply them. The options will get applied to any views that were closed at the time the options were loaded when their view is created later."
 
 	self
 		setFont;
@@ -93,7 +93,7 @@ applyOptions
 	replaced them. N.B. If you blow up here, its because you are trying to use a non-Scintilla
 	view with SmalltalkWorkspace. This is no longer supported."
 	view textStyles: self textStyles.
-	view indicatorStyles: self indicatorStyles.
+	view mergeIndicatorDefinitions: self indicatorDefinitions.
 	view
 		wordChars: ##((Character byteCharacterSet
 				select: [:each | (Compiler isAValidIdentifierChar: each) or: [each == $:]]) asUtf8String).
@@ -111,7 +111,8 @@ applyOptions
 	view wrapIndentMode: self class wrapIndentMode.
 	view setKeyBindings: self class customEditorKeyBindings.
 	self class useDirectWrite ifTrue: [view drawingTechnology: #directWrite].
-	view fontQuality: self class fontQuality!
+	view fontQuality: self class fontQuality.
+	^true!
 
 areVariableTipsEnabled
 	^flags allMask: VariableTipsMask!
@@ -362,9 +363,13 @@ clear
 clearErrors
 	"Clear down the receiver's error model, if any, e.g. in preparation for a compilation"
 
+	| v aCollectionOfSymbols |
+	aCollectionOfSymbols := ##(Set withAll: #(#Error #Warning #Notification)).
 	self clearStatus.
 	compilationErrors := OrderedCollection new.
-	self view indicators: #(); annotations: #()!
+	v := self view.
+	v removeIndicatorsOfTypes: aCollectionOfSymbols.
+	v annotations: #()!
 
 clearStatus
 	self errorModel ifNotNil: [:errors | errors value: nil]!
@@ -620,7 +625,7 @@ displayIt
 	"Evaluate the currently selected text (or the current line if there is no selection). 
 	Display the result at the current insert point (i.e. immediately after the selection)."
 
-	<commandQuery: #isEditable>
+	<commandQuery: #isWriteable>
 	<acceleratorKey: 'Ctrl+D'>
 	self evaluateAndDisplay: [:obj | obj displayString: self developmentSystem displayItLocale]!
 
@@ -839,15 +844,16 @@ hasSmalltalkStyler
 
 highlightCompilationErrors: anInteger
 	| indicators annotations |
-	indicators := OrderedCollection new.
+	self view removeIndicatorsOfTypes: ##(Set withAll: #(#Error #Warning #Notification)).
+	indicators := self view indicators asOrderedCollection.
 	annotations := OrderedCollection new.
 	compilationErrors do: 
 			[:each |
-			indicators add: (Indicator
-						styleName: each severityClass name
+			indicators addLast: (Indicator
+						typeName: each severityClass name
 						range: each range + anInteger
 						tag: each).
-			annotations add: (Annotation
+			annotations addLast: (Annotation
 						line: each line
 						text: ('<1s>: <2s>' expandMacrosWith: each severityName with: each errorMessage)
 						style: each severityClass name)].
@@ -870,13 +876,14 @@ identifierAt: anInteger
 				comments: nil
 				value: (view plainTextRange: range)]!
 
-indicatorStyles
-	^indicatorStyles!
+indicatorDefinitions
+	^indicatorDefinitions!
 
-indicatorStyles: aCollectionOfScintillaIndicatorStyles
-	"The indicator styles in a ScintillaView must be private to it, so ensure we have a copy."
-	indicatorStyles := aCollectionOfScintillaIndicatorStyles collect: [:each | each copy].
-	self isOpen ifTrue: [self view indicatorStyles: indicatorStyles]!
+indicatorDefinitions: aCollectionOfScintillaIndicatorDefinitions
+	"The indicator definitions in a ScintillaView must be individual to it, so ensure we have a copy."
+
+	indicatorDefinitions := aCollectionOfScintillaIndicatorDefinitions collect: [:each | each copy].
+	self isOpen ifTrue: [self view indicatorDefinitions: indicatorDefinitions]!
 
 initialize
 	"Private - Initialize the receiver"
@@ -889,7 +896,7 @@ initialize
 	self clearStatus.
 	compilationErrors := OrderedCollection new.
 	self textStyles: self class textStyles.
-	self indicatorStyles: self class indicatorStyles.
+	self indicatorDefinitions: self class indicatorDefinitions.
 	self isAutoCompletionEnabled: self class isAutoCompletionEnabled.
 	variableMetadataProvider := self!
 
@@ -997,6 +1004,9 @@ isWhitespaceAt: anInteger
 	^(view characterAt: anInteger) isSeparator 
 		and: [(view styleIdAt: anInteger) = (view idOfStyleNamed: #whitespace)]!
 
+isWriteable
+	^self isReadOnly not!
+
 killAutocompleteTimer
 	self view killTimer: SCI_AUTOCSHOW!
 
@@ -1072,14 +1082,9 @@ namespaces: aSequenceableCollection
 newVariablePool
 	workspacePool := PoolDictionary new!
 
-nodeForRange: anInterval 
-	^self parseTree 
-		ifNotNil: 
-			[:tree | 
-			| node |
-			node := tree whichNodeIsContainedBy: anInterval.
-			node isNil ifTrue: [node := tree bestNodeFor: anInterval].
-			node]!
+nodeForRange: anInterval
+	^self parseTree
+		ifNotNil: [:tree | (tree whichNodeIsContainedBy: anInterval) ifNil: [tree bestNodeFor: anInterval]]!
 
 onAutoComplete: aString startingAt: anInteger accept: aValueHolder
 	"Private - "
@@ -1101,10 +1106,7 @@ onHoverStart: aPoint
 	scintilla := self view.
 	scintilla isAutoCompletionActive ifTrue: [^self].
 	indicators := scintilla indicatorsUnder: aPoint.
-	indicators isEmpty
-		ifFalse: 
-			[self showTipForIndicators: indicators.
-			^self].
+	(indicators notEmpty and: [self showTipForIndicators: indicators]) ifTrue: [^self].
 	self areVariableTipsEnabled ifFalse: [^self].
 	index := scintilla charCloseToPosition: aPoint.
 	index <= 0 ifTrue: [^self].
@@ -1152,13 +1154,13 @@ onTipTextRequired: tool
 	#clearSelection == cmd ifTrue: [^'Delete selected text'].
 	^super onTipTextRequired: tool!
 
-onViewOpened
-	"Private - Received when the receiver's view is been connected. "
+onViewAvailable
+	super onViewAvailable.
+	self applyOptions.!
 
-	super onViewOpened.
-	self applyOptions.
-
-!
+onViewStateRestored
+	super onViewStateRestored.
+	self applyOptions!
 
 parseContext
 	^self evaluationContext
@@ -1181,7 +1183,7 @@ printIt
 	(i.e. show the printString of) the result at the current insert point (i.e. immediately
 	after the selection)."
 
-	<commandQuery: #isEditable>
+	<commandQuery: #isWriteable>
 	<acceleratorKey: 'Ctrl+P'>
 	self evaluateAndDisplay: [:obj | obj printString]!
 
@@ -1236,7 +1238,7 @@ publishedAspects
 
 	^(super publishedAspects)
 		add: self class textStylesAspect;
-		add: self class indicatorStylesAspect;
+		add: self class indicatorDefinitionsAspect;
 		yourself!
 
 putAllStaticIdentifiersStartingWith: aString on: aWriteStream
@@ -1337,8 +1339,9 @@ queryBrowseVariableReferences: aCommandQuery
 			var := self variableForIdentifierStyle: #identifier range: (view styleRunRangeAt: pos).
 			varClass := self suggestClassForVariable: var.
 			aCommandQuery
-				isEnabled: true;
-				text: (aCommandQuery menuText expandMacrosWithArguments: { varClass instanceClass shortName }
+				isEnabled: varClass notNil;
+				text: (aCommandQuery menuText
+							expandMacrosWithArguments: { varClass ifNil: ['…'] ifNotNil: [varClass instanceClass shortName] }
 							locale: Locale smalltalk)]!
 
 queryToggleAutoCompletion: aCommandQuery
@@ -1759,12 +1762,15 @@ showTipForIndicators: aCollectionOfScintillaIndicators
 	| tip last |
 	tip := String writeStream.
 	last := 0.
-	aCollectionOfScintillaIndicators do: 
+	(aCollectionOfScintillaIndicators select: [:each | each tag notNil]) do: 
 			[:each |
 			tip nextPutAll: each tag displayString.
 			last := last max: each range stop + 2]
 		separatedBy: [tip nextPut: $\n].
-	self view showCallTip: tip contents at: last!
+	tip := tip grabContents.
+	tip isEmpty ifTrue: [^false].
+	self view showCallTip: tip at: last.
+	^true!
 
 showTipForNumberAt: anInteger
 	| tokenText token number standard |
@@ -1861,8 +1867,8 @@ validateUserInterface
 variableForIdentifierStyle: aSymbol range: anInterval
 	| node name |
 	node := self nodeForRange: anInterval.
-	node notNil
-		ifTrue: 
+	node
+		ifNotNil: 
 			[node isVariable ifFalse: [^nil].
 			node variable ifNotNil: [:var | ^var]].
 	"Parse tree may not have undergone semantic analysis yet"
@@ -2026,8 +2032,8 @@ hasSmalltalkStyler!commands-actions!private! !
 highlightCompilationErrors:!helpers!private! !
 iconForVariable:!helpers!public! !
 identifierAt:!helpers!private! !
-indicatorStyles!accessing!public! !
-indicatorStyles:!accessing!public! !
+indicatorDefinitions!accessing!public! !
+indicatorDefinitions:!accessing!public! !
 initialize!initializing!private! !
 insertCompletion:at:!autocompletion!helpers!private! !
 insertKeywordCompletion:startingAt:!autocompletion!helpers!private! !
@@ -2045,6 +2051,7 @@ isReadOnly:!accessing!public! !
 isSpecialToken:oneOf:!public!testing! !
 isSyntaxColoringEnabled!private!testing! !
 isWhitespaceAt:!accessing!autocompletion!private! !
+isWriteable!private!testing! !
 killAutocompleteTimer!autocompletion!private! !
 maxCompletionListSize!autocompletion!constants!private! !
 maybeExtendingQualifiedNameAt:!autocompletion!helpers!private! !
@@ -2064,7 +2071,8 @@ onHoverStart:!event handling!private! !
 onRightButtonReleased:!event handling!public! !
 onTimerTick:!event handling!private! !
 onTipTextRequired:!event handling!private! !
-onViewOpened!event handling!private! !
+onViewAvailable!event handling!public! !
+onViewStateRestored!event handling!public! !
 parseContext!commands-actions!public! !
 parseTree!accessing!private! !
 plainText!accessing!public! !
@@ -2258,45 +2266,43 @@ defaultFont: aFontOrNil
 	self allSubinstances do: [:each | each setFont].
 	self persistOptions!
 
-defaultIndicatorStyles
+defaultIndicatorDefinitions
 	"Answer the default indicators styles to be used in workspaces."
 
-	^OrderedCollection new
-		add: (IndicatorStyle new
-					forecolor: Color commonGreen;
-					style: #hidden;
-					name: #Notification;
-					yourself);
-		add: (IndicatorStyle new
-					forecolor: Color blue;
-					style: #squiggle;
-					name: #Warning;
-					yourself);
-		add: (IndicatorStyle new
-					forecolor: Color red;
-					style: #squiggle;
-					name: #Error;
-					yourself);
-		add: (IndicatorStyle new
-					alpha: 40;
-					foreAlpha: 65;
-					forecolor: Color darkCyan;
-					style: #straightBox;
-					name: #braceHighlight;
-					yourself);
-		add: (IndicatorStyle new
-					alpha: 55;
-					foreAlpha: 128;
-					forecolor: Color red;
-					style: #straightBox;
-					name: #braceMismatch;
-					yourself);
-		add: (IndicatorStyle new
-					alpha: 15;
-					style: #roundBox;
-					name: #secondarySelection;
-					yourself);
-		yourself!
+	^{
+		IndicatorDefinition
+			name: #Notification
+			style: #hidden
+			forecolor: Color commonGreen.
+		IndicatorDefinition
+			name: #Warning
+			style: #squiggle
+			forecolor: Color blue.
+		IndicatorDefinition
+			name: #Error
+			style: #squiggle
+			forecolor: Color red.
+		(IndicatorDefinition
+			name: #braceHighlight
+			style: #straightBox
+			forecolor: Color darkCyan)
+			alpha: 40;
+			foreAlpha: 65;
+			yourself.
+		(IndicatorDefinition
+			name: #braceMismatch
+			style: #straightBox
+			forecolor: Color red)
+			alpha: 55;
+			foreAlpha: 128;
+			yourself.
+		(IndicatorDefinition new
+			name: #secondarySelection
+			style: #roundBox
+			forecolor: Color black)
+			alpha: 15;
+			yourself
+	} asOrderedCollection!
 
 defaultKeywordCompletions
 	"Private - Answer the default set of special keyword completion templates. These are to
@@ -2532,7 +2538,7 @@ ensureOptionsLoaded
 	OptionFlags ifNil: [self loadOptions]!
 
 finishedLoadingOptions
-	OptionFlags := OptionFlags bitAnd: ##(LoadingMask bitInvert)!
+	OptionFlags := OptionFlags bitAnd: ##(LoadingOptionsMask bitInvert)!
 
 fontQuality
 	self ensureOptionsLoaded.
@@ -2555,25 +2561,24 @@ icon
 
 	^##(self) defaultIcon!
 
-indicatorStyles
+indicatorDefinitions
 	self ensureOptionsLoaded.
-	^IndicatorStyles!
+	^IndicatorDefinitions!
 
-indicatorStyles: aCollectionOfScintillaIndicatorStyles 
-	"Set the text styles used to colour text in the receiver's instances. These must have the
-	names used in the styler, which by default is a <SmalltalkStyler>."
+indicatorDefinitions: aCollectionOfScintillaIndicatorDefinitions
+	"Set the Scintilla indicator definitions for the receiver's instances. These must have the names used in the styler, which by default is a <SmalltalkStyler>."
 
-	IndicatorStyles = aCollectionOfScintillaIndicatorStyles ifTrue: [^self].
-	IndicatorStyles := aCollectionOfScintillaIndicatorStyles.
+	IndicatorDefinitions = aCollectionOfScintillaIndicatorDefinitions ifTrue: [^self].
+	IndicatorDefinitions := aCollectionOfScintillaIndicatorDefinitions.
 	self isLoadingOptions ifTrue: [^self].
-	self primAllSubinstances do: [:each | each indicatorStyles: IndicatorStyles].
+	self primAllSubinstances do: [:each | each indicatorDefinitions: IndicatorDefinitions].
 	self persistOptions!
 
-indicatorStylesAspect
-	^(Aspect sequenceableCollection: #indicatorStyles
-		addEvaluationFrom: [{IndicatorStyle shortName , ' new'}])
+indicatorDefinitionsAspect
+	^(Aspect sequenceableCollection: #indicatorDefinitions
+		addEvaluationFrom: [{ IndicatorDefinition shortName , ' new' }])
 		beImmutable;
-		defaultValue: [self defaultIndicatorStyles];
+		defaultValue: [self defaultIndicatorDefinitions];
 		yourself!
 
 initialize
@@ -2635,7 +2640,7 @@ isAutoCompletionTruncating: aBoolean
 		ifTrue: [self primAllSubinstances do: [:each | each view isAutoCompletionTruncating: aBoolean]]!
 
 isLoadingOptions
-	^OptionFlags allMask: LoadingMask!
+	^OptionFlags allMask: LoadingOptionsMask!
 
 keyBindings
 	self ensureOptionsLoaded.
@@ -2645,8 +2650,7 @@ keyBindings: anArray
 	KeyBindings := anArray!
 
 loadOptions
-	SmalltalkToolShell loadOptionsFor: ##(self).
-	self applyOptions!
+	SmalltalkToolShell loadOptionsFor: ##(self)!
 
 maxAutoCompletionListHeight
 	"Answer the maximum height (in rows) of the auto-completion list window."
@@ -2759,7 +2763,7 @@ publishedAspects
 					defaultValue: [self defaultAcceleratorKeyBindings];
 					yourself);
 		add: self textStylesAspect;
-		add: self indicatorStylesAspect;
+		add: self indicatorDefinitionsAspect;
 		add: ((Aspect symbol: #fontQuality from: ScintillaView fontQualities)
 					defaultValue: #lcdOptimized;
 					yourself);
@@ -2785,7 +2789,7 @@ resource_Default_view
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 5 985166 10 #{UI.STBViewProxy} #{UI.Scintilla.ScintillaView} 34 52 nil nil 34 2 8 1411453252 1 416 918598 2 #{UI.ValueHolder} nil false 1769478 #{Kernel.EqualitySearchPolicy} nil 1245702 #{Graphics.ThemeColor} #smalltalkWorkspace nil 21 461638 4 #{UI.Menu} nil true 34 13 1180742 2 #{UI.CommandMenuItem} 1 1377606 4 #{UI.CommandDescription} #accept 8 '&Accept' 1 1 nil nil nil 1179974 1 #{UI.DividerMenuItem} 4097 578 nil true 34 10 626 1 658 #undo 8 '&Undo' 1 1 852806 4 #{Graphics.Icon} nil true 2819078 #{Graphics.ImageFromStringResourceInitializer} 8 'EditUndo.ico' 2490894 #{Kernel.STBExternalResourceLibraryProxy} 8 'dolphindr8.dll' nil 65541 nil nil nil 706 4097 626 1 658 #cutSelection 8 'Cu&t' 1 1 818 nil true 850 8 'EditCut.ico' 912 65541 nil nil nil 626 1 658 #copySelection 8 '&Copy' 1 1 818 nil true 850 8 'EditCopy.ico' 912 65541 nil nil nil 626 1 658 #pasteClipboard 8 '&Paste' 1 1 818 nil true 850 8 'EditPaste.ico' 912 65541 nil nil nil 626 1 658 #clearSelection 8 'De&lete' 1 1 818 nil true 850 8 'EditClear.ico' 912 65541 nil nil nil 706 4097 626 1 658 #reformatSource 8 'Re&format' 1 1 nil nil nil 706 4097 626 1 658 #selectAll 8 '&Select All' 1 1 nil nil nil 8 '&Edit' nil 134217729 nil nil nil nil nil 578 nil true 34 10 626 1 658 #inspectWorkspacePool 8 '&Variables' 1 1 nil nil nil 626 1 658 #cloneNew 8 'Clo&ne' 1 1 818 nil true 850 8 'SmalltalkWorkspace.ico' 912 65541 nil nil nil 706 4097 626 1 658 #toggleAutoCompletion 8 'Auto-complete' 1 1 nil nil nil 626 1 658 #toggleIndentationGuides 8 'Indentation &Guides' 1 1 nil nil nil 626 1 658 #toggleLineEndings 8 'Line &Endings' 1 1 1378630 2 #{Graphics.TextTileIcon} $¶ 8 'Arial' nil nil nil nil 1 nil nil nil nil 626 1 658 #toggleLineNumbers 8 'Line N&umbers' 1 1 nil nil nil 626 1 658 #toggleStyling 8 '&Syntax Coloring' 1 1 nil nil nil 626 1 658 #toggleWhitespace 8 'W&hitespace' 1 1 nil nil nil 626 1 658 #toggleWordWrap 8 '&Word Wrap' 1 1 nil nil nil 8 'Wor&kspace' nil 134217729 nil nil nil nil nil 706 4097 626 1 658 #browseIt 8 'Bro&wse It' 1 1 818 nil true 850 8 'ClassBrowserShell.ico' 912 65541 nil nil nil 626 1 658 #displayIt 8 '&Display It' 1 1 818 nil true 850 8 'DisplayIt.ico' 912 65541 nil nil nil 626 1 658 #printIt 8 '&Print It' 1 1 818 nil true 850 8 'PrintIt.ico' 912 65541 nil nil nil 626 1 658 #evaluateIt 8 'E&valuate It' 1 1 818 nil true 850 8 'EvaluateIt.ico' 912 65541 nil nil nil 626 1 658 #inspectIt 8 '&Inspect It' 1 1 818 nil true 850 8 'InspectIt.ico' 912 65541 nil nil nil 626 1 658 #debugIt 8 'Deb&ug It' 1 1 818 nil true 850 8 'DebugIt.ico' 912 65541 nil nil nil 706 4097 578 nil true 34 2 626 2097153 658 #browseDefinitions 8 'Defi&nitions of <1d>' 1 1 nil nil nil 626 1 658 #browseReferences 8 '&References to <1d>' 1 1 nil nil nil 8 '&Browse' nil 1 nil nil nil nil nil 8 '&Workspace' nil 134217729 nil nil nil nil nil nil nil 416 nil 8 1879218592 1049094 #{UI.NullConverter} nil nil 9 nil 170 192 34 4 #callTip 1444934 1 #{UI.Scintilla.TextStyle} 77 917510 #{Graphics.Color} #gray 2962 #white 1 nil nil nil nil #callTip nil nil nil #normal 2930 1 nil nil 1 nil nil nil nil #normal nil nil nil nil 2032902 #{Tools.SmalltalkExpressionStyler} 1 nil nil false 138 144 8 #() 170 192 34 2 #default 1903686 2 #{UI.Scintilla.MarkerDefinition} 1 nil nil nil 416 #circle nil nil nil nil nil nil 138 #{Core.IdentitySet} 3072 nil 170 176 3072 nil nil nil 170 176 34 4 81 2962 #windowText 23 546 #workspaceSelection nil 34 1 2360326 #{UI.Scintilla.CharacterRepresentation} $\x2028 nil 33 3216 2162950 #{UI.Scintilla.NullScintillaLibrary} nil 65 nil nil 170 192 34 6 #literalArray 8 '()' #literalBytes 8 '[]' #specialCharacter 8 '()[]<>' nil 3 170 192 34 2 #container 2896 nil nil nil nil 208 nil 170 192 3072 nil nil 170 192 34 6 #Notification 2930 1029 nil 2962 #gainsboro 1 nil nil nil nil #Notification nil nil nil #Warning 2930 1027 2962 #darkGoldenrod 2962 #ivory 1 nil nil nil nil #Warning nil nil nil #Error 2930 1031 2962 #firebrick 2962 #floralWhite 1 nil nil nil nil #Error nil nil nil nil nil nil 1310982 #{Core.MessageSequence} 34 8 1049350 #{Core.MessageSend} #createAt:extent: 34 2 918022 #{Graphics.Point} 6143 21 3714 461 311 416 3666 #sciSetMouseDwellTime: 8 #(500) 416 3666 #wordWrap: 8 #(true) 416 3666 #margins: 34 1 34 3 1247302 3 #{UI.Scintilla.Margin} 1 416 1 3 nil nil nil nil 3874 3 416 1 nil nil 67108863 nil nil 3874 5 416 1 nil nil nil nil nil 416 3666 #tabWidth: 8 #(4) 416 3666 #maxCompletionListHeight: 8 #(9) 416 3666 #hasAdditionalSelectionTyping: 8 #(true) 416 3666 #sciSetSelectionLayer: 8 #(1) 416 1179910 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 229 12 0 0 165 0 0 0] 8 #() 3714 193 193 nil 37)!
+	^#(#'!!STL' 5 985166 10 #{UI.STBViewProxy} #{UI.Scintilla.ScintillaView} 34 56 nil nil 34 2 8 1411453252 1 416 918598 2 #{UI.ValueHolder} nil false 1769478 #{Kernel.EqualitySearchPolicy} nil 1245702 #{Graphics.ThemeColor} #smalltalkWorkspace nil 21 461638 4 #{UI.Menu} nil true 34 13 1180742 2 #{UI.CommandMenuItem} 1 1377606 4 #{UI.CommandDescription} #accept 8 '&Accept' 1 1 nil nil nil 1179974 1 #{UI.DividerMenuItem} 4097 578 nil true 34 10 626 1 658 #undo 8 '&Undo' 1 1 852806 4 #{Graphics.Icon} nil true 2819078 #{Graphics.ImageFromStringResourceInitializer} 8 'EditUndo.ico' 2490894 #{Kernel.STBExternalResourceLibraryProxy} 8 'dolphindr8.dll' nil 65541 nil nil nil 706 4097 626 1 658 #cutSelection 8 'Cu&t' 1 1 818 nil true 850 8 'EditCut.ico' 912 65541 nil nil nil 626 1 658 #copySelection 8 '&Copy' 1 1 818 nil true 850 8 'EditCopy.ico' 912 65541 nil nil nil 626 1 658 #pasteClipboard 8 '&Paste' 1 1 818 nil true 850 8 'EditPaste.ico' 912 65541 nil nil nil 626 1 658 #clearSelection 8 'De&lete' 1 1 818 nil true 850 8 'EditClear.ico' 912 65541 nil nil nil 706 4097 626 1 658 #reformatSource 8 'Re&format' 1 1 nil nil nil 706 4097 626 1 658 #selectAll 8 '&Select All' 1 1 nil nil nil 8 '&Edit' nil 134217729 nil nil nil nil nil 578 nil true 34 10 626 1 658 #inspectWorkspacePool 8 '&Variables' 1 1 nil nil nil 626 1 658 #cloneNew 8 'Clo&ne' 1 1 818 nil true 850 8 'SmalltalkWorkspace.ico' 912 65541 nil nil nil 706 4097 626 1 658 #toggleAutoCompletion 8 'Auto-complete' 1 1 nil nil nil 626 1 658 #toggleIndentationGuides 8 'Indentation &Guides' 1 1 nil nil nil 626 1 658 #toggleLineEndings 8 'Line &Endings' 1 1 1378630 2 #{Graphics.TextTileIcon} $¶ 8 'Arial' nil nil nil nil 1 nil nil nil nil 626 1 658 #toggleLineNumbers 8 'Line N&umbers' 1 1 nil nil nil 626 1 658 #toggleStyling 8 '&Syntax Coloring' 1 1 nil nil nil 626 1 658 #toggleWhitespace 8 'W&hitespace' 1 1 nil nil nil 626 1 658 #toggleWordWrap 8 '&Word Wrap' 1 1 nil nil nil 8 'Wor&kspace' nil 134217729 nil nil nil nil nil 706 4097 626 1 658 #browseIt 8 'Bro&wse It' 1 1 818 nil true 850 8 'ClassBrowserShell.ico' 912 65541 nil nil nil 626 1 658 #displayIt 8 '&Display It' 1 1 818 nil true 850 8 'DisplayIt.ico' 912 65541 nil nil nil 626 1 658 #printIt 8 '&Print It' 1 1 818 nil true 850 8 'PrintIt.ico' 912 65541 nil nil nil 626 1 658 #evaluateIt 8 'E&valuate It' 1 1 818 nil true 850 8 'EvaluateIt.ico' 912 65541 nil nil nil 626 1 658 #inspectIt 8 '&Inspect It' 1 1 818 nil true 850 8 'InspectIt.ico' 912 65541 nil nil nil 626 1 658 #debugIt 8 'Deb&ug It' 1 1 818 nil true 850 8 'DebugIt.ico' 912 65541 nil nil nil 706 4097 578 nil true 34 2 626 2097153 658 #browseDefinitions 8 'Defi&nitions of <1d>' 1 1 nil nil nil 626 1 658 #browseReferences 8 '&References to <1d>' 1 1 nil nil nil 8 '&Browse' nil 1 nil nil nil nil nil 8 '&Workspace' nil 134217729 nil nil nil nil nil nil nil 416 nil 8 1834785184 1049094 #{UI.NullConverter} nil nil 9 #explicit nil nil nil nil 170 192 34 4 #callTip 1444934 1 #{UI.Scintilla.TextStyle} 77 917510 #{Graphics.Color} #gray 2962 #white 1 nil nil nil nil #callTip nil nil nil #normal 2930 1 nil nil 1 nil nil nil nil #normal nil nil nil nil 2032902 #{Tools.SmalltalkExpressionStyler} 1 nil nil false 138 144 8 #() 170 192 34 2 #default 1903686 2 #{UI.Scintilla.MarkerDefinition} 1 nil nil nil 416 #circle nil nil nil nil nil nil 138 #{Core.IdentitySet} 3072 nil 170 176 3072 nil nil nil 170 176 34 4 81 2962 #windowText 23 546 #workspaceSelection nil 34 1 2360326 #{UI.Scintilla.CharacterRepresentation} $\x2028 nil 33 3216 2162950 #{UI.Scintilla.NullScintillaLibrary} nil 65 nil nil 170 192 34 6 #literalArray 8 '()' #literalBytes 8 '[]' #specialCharacter 8 '()[]<>' nil 3 170 192 34 2 #container 2896 nil nil nil nil 208 nil 170 192 3072 nil nil 170 192 34 6 #Notification 2930 1029 nil 2962 #gainsboro 1 nil nil nil nil #Notification nil nil nil #Warning 2930 1027 2962 #darkGoldenrod 2962 #ivory 1 nil nil nil nil #Warning nil nil nil #Error 2930 1031 2962 #firebrick 2962 #floralWhite 1 nil nil nil nil #Error nil nil nil nil nil nil 1310982 #{Core.MessageSequence} 34 8 1049350 #{Core.MessageSend} #createAt:extent: 34 2 918022 #{Graphics.Point} 6143 21 3714 461 311 416 3666 #sciSetMouseDwellTime: 8 #(500) 416 3666 #wordWrap: 8 #(true) 416 3666 #margins: 34 1 34 3 1247302 3 #{UI.Scintilla.Margin} 1 416 nil 3 nil nil nil nil 3874 3 416 nil nil nil 67108863 nil nil 3874 5 416 nil nil nil nil nil nil 416 3666 #tabWidth: 8 #(4) 416 3666 #maxCompletionListHeight: 8 #(9) 416 3666 #hasAdditionalSelectionTyping: 8 #(true) 416 3666 #sciSetSelectionLayer: 8 #(1) 416 1179910 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 229 12 0 0 165 0 0 0] 8 #() 3714 193 193 nil 45)!
 
 setAdditionalKeyBindings: anArray
 	additionalKeyBindings = anArray ifTrue: [^self].
@@ -2798,11 +2802,10 @@ setOptionFlag: anInteger value: aBoolean
 
 	(self optionFlags allMask: anInteger) == aBoolean ifTrue: [^false].
 	OptionFlags := OptionFlags mask: anInteger set: aBoolean.
-	self persistOptions.
-	^self isLoadingOptions not!
+	^self persistOptions!
 
 startLoadingOptions
-	OptionFlags := OptionFlags ?? 0 bitOr: LoadingMask!
+	OptionFlags := OptionFlags ?? 0 bitOr: LoadingOptionsMask!
 
 textStyles
 	self ensureOptionsLoaded.
@@ -2888,7 +2891,7 @@ defaultCaretColor:!accessing!options!public! !
 defaultEditorKeyBindings!constants!options!public! !
 defaultFont!accessing!options!public! !
 defaultFont:!accessing!options!public! !
-defaultIndicatorStyles!constants!public! !
+defaultIndicatorDefinitions!constants!public! !
 defaultKeywordCompletions!autocompletion!private! !
 defaultSelectionColor!accessing!options!public! !
 defaultSelectionColor:!accessing!options!public! !
@@ -2905,9 +2908,9 @@ fontQuality!accessing!public! !
 fontQuality:!accessing!public! !
 getAdditionalKeyBindings!accessing!private! !
 icon!constants!public! !
-indicatorStyles!accessing!public! !
-indicatorStyles:!accessing!public! !
-indicatorStylesAspect!options!private! !
+indicatorDefinitions!accessing!public! !
+indicatorDefinitions:!accessing!public! !
+indicatorDefinitionsAspect!options!private! !
 initialize!initializing!public! !
 invalidateLocalOptions!options!private! !
 invalidateOptions!options!private! !

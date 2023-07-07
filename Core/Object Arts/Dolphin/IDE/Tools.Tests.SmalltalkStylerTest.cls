@@ -59,7 +59,7 @@ scanNumeric: aString class: aClass
 
 setUp
 	super setUp.
-	mock := MockScintillaView new.
+	mock := UI.Scintilla.Tests.MockScintillaView new.
 	mock textStyles: SmalltalkWorkspace defaultTextStyles!
 
 tearDown

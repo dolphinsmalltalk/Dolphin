@@ -6,7 +6,9 @@ package paxVersion: 2.1;
 
 package setClassNames: #(
 	#{UI.Scintilla.Tests}
+	#{UI.Scintilla.Tests.IndicatorDefinitionTest}
 	#{UI.Scintilla.Tests.IndicatorTest}
+	#{UI.Scintilla.Tests.MockScintillaView}
 	#{UI.Scintilla.Tests.ScintillaLexerMetadataTest}
 	#{UI.Scintilla.Tests.ScintillaLexerPropertyTest}
 	#{UI.Scintilla.Tests.ScintillaViewTest}
@@ -22,6 +24,7 @@ package setPrerequisites: #(
 	'..\..\..\Tests\Dolphin MVP Tests'
 	'..\..\..\..\System\Random\Dolphin Random Stream'
 	'..\Dolphin Scintilla View'
+	'..\..\..\Presenters\Text\Dolphin Text Presenter'
 	'..\..\..\Type Converters\Dolphin Type Converters'
 	'..\..\..\Models\Value\Dolphin Value Models'
 	'..\..\..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
@@ -37,6 +40,20 @@ UI.Scintilla
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{XProgramming.SUnit})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Object
+	subclass: #'UI.Scintilla.Tests.MockScintillaView'
+	instanceVariableNames: 'lastStyled tokens text currentTextStyles styleIdMap messages'
+	classVariableNames: ''
+	imports: #(#{UI.Scintilla private})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest
+	subclass: #'UI.Scintilla.Tests.IndicatorDefinitionTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Tests.DolphinTest

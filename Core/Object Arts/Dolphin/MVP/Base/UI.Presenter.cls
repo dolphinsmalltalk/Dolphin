@@ -555,20 +555,10 @@ onTipTextRequired: tool
 	^tool toolTipText!
 
 onViewAvailable
-	"A new view is available, but has not yet been connected to the receiver, i.e. the view will
-	not yet be aware of this presenter, or its model. This is an appropriate point for
-	subclasses to apply any dynamic view configuration that the application may require (e.g.
-	setting a user configured font previously saved in the Registry). Since the view is not yet
-	connected, any events fired will not reach this presenter or the model. This event is new
-	for Dolphin 3.0. Note that this event is only sent when a presenter-view pair is first
-	created, it is not sent when a view is restored on image restart. Typically this is not
-	relevant in applications (which do not save the image), but it may be at development time.
-	The similar #onViewCreated event is, however, sent every time a view is created, whether it
-	be the first time, or on restoration of saved state. Thus if you need to perform one-time
-	initialisation you should override this method, or to perform initialisation that is needed
-	every time a view is created you should override #onViewCreated."
+	"A new view is available, but has not yet been connected to the receiver, i.e. the view will not yet be aware of this presenter, or its model. This is an appropriate point for subclasses to apply any dynamic view configuration that the application may require (e.g. setting a user configured font previously saved in the Registry). Since the view is not yet connected, any events fired by changing its settings will not reach this presenter or the model. This event was added in Dolphin 3.0."
 
-	!
+	"Note that this message is only sent when a presenter-view pair is first created, it is not sent when a view is restored on image restart. Typically this is not relevant in applications (which do not save the image), but it may be at development time. See also #onViewStateRestored and #onViewOpened."
+!
 
 onViewClosed
 	"Sent by the receiver's view when it has been closed"
@@ -576,17 +566,14 @@ onViewClosed
 	self view onViewClosed!
 
 onViewCreated
-	"The receiver's view has been created, but may not yet be connected to the receiver (if the
-	view-presenter pair is being instantiated, then the connection will not have been made, but
-	if the view is being restored from saved state in the image then the presenter will be
-	connected). This is an appropriate point for subclasses to apply any dynamic view
-	configuration that must be performed every time the view is created. Typically this might
-	involve customising some feature of the view that it does not itself save, perhaps because a
-	feature of the underlying control does not have full support in the wrapper class. Note that
-	one should normally override #onViewAvailable to restore user configuration settings, since
-	the views will normally save and restore all relevant settings across an image save."
+	#deprecated. "To be removed in D8.1. Overrides should be replaced, see below."
 
-	^self view onViewCreated!
+	"There is a historic asymmetry as to the receiver of this event, because the message is sent from View>>#createAt:extent: to whatever its `presenter` is at the time. When a view is initially created, e.g. when loading a view from a resource or instantiating through code, it will typically not have been connected to its final presenter and will be its own presenter. Thus the messages targeted at the presenter will get sent directly to the view itself. On the other hand, when restoring views at image load time from saved state (or recreating for other purposes), the view will be connected to its real presenter at the time it is recreated, and so the presenter will receive the message. An attempt was made to provide a message that would be received consistently with the addition of #onViewOpened, but this has almost* the opposite behaviour in that it is received reliably by presenters when initially creating an MVP triad, but it is not received when restoring views at image load time. Consequently it may sometimes be necessary to override more than one event message to cover all cases: 
+		- If the presenter needs to set view settings that are stored as part of its view state, but are not the defaults (or not saved into a view resource), then override #onViewAvailable. This is sent when a presenter first becomes aware of the view, but before the view itself is connected to its presenter or model. This has the advantage that any view settings changes that trigger change events will not be propagated because the observers are not yet connected. For correctly defined View classes, any non-default settings should be saved/restored as part of view state when saving/loading an image.
+		- If the presenter needs to restore user configuration settings that are stored externally, for example in the Windows registry, and the expectation is that those external settings would override any settings saved within the image, then it is necessary to override both #onViewAvailable (or #onViewOpened) to apply the settings to newly created views, _and_ #onViewStateRestored to apply the settings to saved views on image restart.
+	* #onViewCreated will be received by the view itself both on initial creation, and on state restoral (assuming forwarded by the presenter)"
+
+	self view onViewCreated!
 
 onViewDestroyed
 	"Handler for view final view destruction. This is sent on receipt of WM_NCDESTROY,
@@ -600,10 +587,16 @@ onViewDestroyed
 			view := DeafObject.Current]!
 
 onViewOpened
-	"Now run through all our sub-presenters and connect them in turn
-	to same named sub-views within aCompositeView"
+	"The receiver has been connected to its view after initial creation. Now run through all our sub-presenters and connect them in turn to same named sub-views within aCompositeView.
+	See also #onViewCreated and #onViewAvailable."
 
 	self basicOnViewOpened!
+
+onViewStateRestored
+	"The receiver's view has had it's state restored, either on restoring saved views at image load time, or due to the view being recreated (ie.g. when a style is changed that requires it).
+	Like #onViewCreated, this message not received by the presenter's of MVP triads when the views are first created from resources, because at that point the views are not connected to their final presenters. Unlike #onViewCreated, when it is received all the sub-views will have been created and restored. See also #onViewOpened and #onViewAvailable."
+
+	self view onStateRestored!
 
 onXButtonDoubleClicked: aMouseEvent 
 	"Default handler for a mouse X button double-click event."
@@ -910,6 +903,7 @@ onViewClosed!event handling!public! !
 onViewCreated!event handling!public! !
 onViewDestroyed!event handling!public! !
 onViewOpened!event handling!public! !
+onViewStateRestored!event handling!public! !
 onXButtonDoubleClicked:!event handling!public! !
 onXButtonPressed:!event handling!public! !
 onXButtonReleased:!event handling!public! !

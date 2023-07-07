@@ -719,7 +719,8 @@ package setMethodNames: #(
 	#(#{UI.Scintilla.ColourAlphaPropertyDescriptor} #aspectDescriptor)
 	#(#{UI.Scintilla.ColourPropertyDescriptor} #aspectDescriptor)
 	#(#{UI.Scintilla.EnumPropertyDescriptor} #aspectDescriptor)
-	#(#{UI.Scintilla.FloatPropertyDescriptor} #aspectDescriptor)
+	#(#{UI.Scintilla.HundredthsPropertyDescriptor} #aspectDescriptor)
+	#(#{UI.Scintilla.IndicatorDefinition class} #publishedAspectsOfInstances)
 	#(#{UI.Scintilla.IntPropertyDescriptor} #aspectDescriptor)
 	#(#{UI.Scintilla.KeyBinding class} #publishedAspectsOfInstances)
 	#(#{UI.Scintilla.MarkerDefinition class} #publishedAspectsOfInstances)
@@ -1372,14 +1373,14 @@ UI.Presenter
 UI.Presenter
 	subclass: #'Tools.SmalltalkSearchPresenter'
 	instanceVariableNames: 'environment'
-	classVariableNames: 'AutoCompleteDwell'
+	classVariableNames: 'AutoCompleteDwell MaxCompletionListHeight MaxCompletionListWidth OptionFlags'
 	imports: #(#{UI.Scintilla private})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'LoadingOptionsMask' -> 16r1 }!
 UI.Presenter
 	subclass: #'Tools.SmalltalkWorkspace'
-	instanceVariableNames: 'evaluationContext errorModel findDetails workspacePool namespaces compilationErrors textStyles searchEnvironment modifiedModel flags indicatorStyles variableMetadataProvider'
-	classVariableNames: 'Abbreviations AnnotationMode AutoCompleteDwell DefaultCaretColor DefaultFont DefaultTabWidth FontQuality IndicatorStyles KeyBindings KeywordCompletions MaxAutoCompletionListHeight MaxAutoCompletionListSize MaxAutoCompletionListWidth OptionFlags StandardUnaryReturnTypes TextStyles WrapIndentMode'
+	instanceVariableNames: 'evaluationContext errorModel findDetails workspacePool namespaces compilationErrors textStyles searchEnvironment modifiedModel flags indicatorDefinitions variableMetadataProvider'
+	classVariableNames: 'Abbreviations AnnotationMode AutoCompleteDwell DefaultCaretColor DefaultFont DefaultTabWidth FontQuality IndicatorDefinitions KeyBindings KeywordCompletions MaxAutoCompletionListHeight MaxAutoCompletionListSize MaxAutoCompletionListWidth OptionFlags StandardUnaryReturnTypes TextStyles WrapIndentMode'
 	imports: #(#{Kernel.CompilerFlags} #{UI.Scintilla private} #{Refactory.Browser private})
 	classInstanceVariableNames: 'additionalKeyBindings'
 	classConstants: {
@@ -1390,7 +1391,7 @@ UI.Presenter
 			'AutoCompletionTruncatingMask' -> 16r20.
 			'LiteralStyleNames'
 				-> (Set withAll: #(#literalNumber #literalPseudo #literalString #literalSymbol)).
-			'LoadingMask' -> 16r1.
+			'LoadingOptionsMask' -> 16r1.
 			'UseDirectWriteMask' -> 16r100.
 			'VariableTipsMask' -> 16r2.
 			'WordWrapMask' -> 16r4
@@ -8444,6 +8445,7 @@ publishedAspectsOfInstances!constants!public! !
 aspectDescriptor
 	^(Aspect color: key)
 		isNullable: self isNullable;
+		defaultValue: defaultValue;
 		yourself! !
 !UI.Scintilla.ColourAlphaPropertyDescriptor categoriesForMethods!
 aspectDescriptor!development!public! !
@@ -8472,14 +8474,28 @@ aspectDescriptor
 aspectDescriptor!development!public! !
 !
 
-!UI.Scintilla.FloatPropertyDescriptor methodsFor!
+!UI.Scintilla.HundredthsPropertyDescriptor methodsFor!
 
 aspectDescriptor
 	^(Aspect float: key)
 		isNullable: self isNullable;
+		defaultValue: (defaultValue ifNotNil: [defaultValue // 100]);
 		yourself! !
-!UI.Scintilla.FloatPropertyDescriptor categoriesForMethods!
+!UI.Scintilla.HundredthsPropertyDescriptor categoriesForMethods!
 aspectDescriptor!development!public! !
+!
+
+!UI.Scintilla.IndicatorDefinition class methodsFor!
+
+publishedAspectsOfInstances
+	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
+
+	| aspects |
+	aspects := super publishedAspectsOfInstances.
+	aspects add: (Aspect string: #name).
+	^aspects! !
+!UI.Scintilla.IndicatorDefinition class categoriesForMethods!
+publishedAspectsOfInstances!constants!public! !
 !
 
 !UI.Scintilla.IntPropertyDescriptor methodsFor!
@@ -8487,6 +8503,7 @@ aspectDescriptor!development!public! !
 aspectDescriptor
 	^(Aspect integer: key)
 		isNullable: self isNullable;
+		defaultValue: defaultValue;
 		yourself! !
 !UI.Scintilla.IntPropertyDescriptor categoriesForMethods!
 aspectDescriptor!development!public! !
@@ -8579,8 +8596,8 @@ publishedAspectsOfInstances
 		add: ((Aspect sequenceableCollection: #margins)
 					getBlock: [:view | view margins asOrderedCollection];
 					beImmutable);
-		add: (Aspect sequenceableCollection: #indicatorStyles
-					addEvaluationFrom: [{UI.Scintilla.IndicatorStyle shortName , ' new'}]) beImmutable;
+		add: (Aspect sequenceableCollection: #indicatorDefinitions
+					addEvaluationFrom: [{UI.Scintilla.IndicatorDefinition shortName , ' new'}]) beImmutable;
 		add: (Aspect sequenceableCollection: #markerDefinitions
 					addEvaluationFrom: [{UI.Scintilla.MarkerDefinition shortName , ' new'}]) beImmutable;
 		add: (Aspect symbol: #whitespaceVisibility from: self whitespaceVisibilityLevels);
@@ -9052,7 +9069,7 @@ publishedAspectsOfInstances
 	| aspects |
 	aspects := super publishedAspectsOfInstances.
 	aspects removeKey: #value.
-	#(#canHScroll #isReadOnly #isStatic #isSelectionKept #updatePerChar #isFindEnabled)
+	#(#canHScroll #isReadOnly #isStatic #isSelectionKept #isFindEnabled)
 		do: [:each | aspects add: (Aspect boolean: each)].
 	^aspects
 		add: (Aspect symbol: #alignment from: ##(AlignmentMap keys asSortedArray));

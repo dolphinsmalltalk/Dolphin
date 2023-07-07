@@ -44,7 +44,11 @@ aboutDolphin
 	self model aboutDolphin!
 
 applyOptions
-	self developmentSystem applyOptionsToTool: self!
+	self developmentSystem applyOptionsToTool: self.
+	self areVariableTipsEnabled: self class variableTips!
+
+areVariableTipsEnabled: aBoolean
+	workspacePresenter areVariableTipsEnabled: aBoolean!
 
 browsePackages
 	"Open a new package browser."
@@ -67,7 +71,6 @@ createComponents
 
 	super createComponents.
 	workspacePresenter := self add: self class workspaceClass new name: 'workspace'.
-	workspacePresenter areVariableTipsEnabled: self class variableTips.
 	searchPresenter := self
 				add: SmalltalkSearchPresenter new
 				name: 'search'
@@ -216,6 +219,10 @@ onDropDown: aToolbarButton
 	popup showIn: self position: aToolbarButton screenRectangle bottomLeft.
 	^0!
 
+onViewAvailable
+	super onViewAvailable.
+	self applyOptions!
+
 onViewOpened
 	"Private - Received when the receiver's view has been connected. 
 	Transfer any file contents across to the view"
@@ -237,7 +244,6 @@ onViewOpened
 		when: #dropDown:
 		send: #onDropDown:
 		to: self.
-	self applyOptions.
 	self fileLoad!
 
 openViewComposer
@@ -339,6 +345,7 @@ workspace
 !Tools.SmalltalkWorkspaceDocument categoriesForMethods!
 aboutDolphin!commands-actions!public! !
 applyOptions!public! !
+areVariableTipsEnabled:!public! !
 browsePackages!commands-actions!public! !
 buildPopupForCommand:!private! !
 canSaveState!private!saved state! !
@@ -372,6 +379,7 @@ isModified:!modes!public! !
 isText!public!testing! !
 language:!public! !
 onDropDown:!private! !
+onViewAvailable!event handling!public! !
 onViewOpened!event handling!private! !
 openViewComposer!commands-actions!public! !
 openWorkspace!public! !
@@ -654,9 +662,9 @@ setOptionFlag: anInteger value: aBoolean
 	"Private - Set the receiver to reuse an already open instance of the receiver instead of
 	creating an additional one according to aBoolean."
 
-	(self optionFlags allMask: anInteger) == aBoolean ifTrue: [^self].
+	(self optionFlags allMask: anInteger) == aBoolean ifTrue: [^false].
 	OptionFlags := OptionFlags mask: anInteger set: aBoolean.
-	self persistOptions!
+	^self persistOptions!
 
 show
 	"Shows an instance of the receiver. If reuseIfOpen has been set to true then an 
@@ -698,12 +706,13 @@ variableTips
 
 	^self optionFlags allMask: VariableTipsMask!
 
-variableTips: aBoolean 
+variableTips: aBoolean
 	"Set whether tooltips will be displayed to show the value of workspace variables that the user hovers the mouse over.
 	Note that this works even when the workspace is in the background, and uses a relatively high frequency timer to 
 	detect the dwell. It has a certain CPU overhead, and so you may want to disable it if running on battery."
 
-	self setOptionFlag: VariableTipsMask value: aBoolean!
+	(self setOptionFlag: VariableTipsMask value: aBoolean)
+		ifTrue: [self primAllSubinstances do: [:each | each areVariableTipsEnabled: aBoolean]]!
 
 wordWrap
 	"Answer true if instances of the receiver use word wrapping by default."

@@ -71,7 +71,7 @@ initialize
 	flags := self defaultFlags!
 
 initializeAttribute: aScintillaAttribute ofView: aScintillaView
-	"Set the property described by the receiver of the attribute, aScintillaAttribute, of the control, aScintillaView, as if initializing a new view instance. This differs from #setAttribute:ofView: in that the property will only be transferred to the view if it has a non-default value."
+	"Set the property described by the receiver of the attribute, aScintillaAttribute, of the control, aScintillaView, as if initializing a new view instance. This differs from #setAttribute:ofView: in that the property will only be transferred to the view if it has a non-nil, non-default value."
 
 	| value |
 	value := self getValueOfAttribute: aScintillaAttribute.
@@ -115,19 +115,38 @@ printOn: aStream
 		print: getSelector;
 		nextPut: $)!
 
+printPropertyOf: aScintillaAttribute on: aStream
+	printSelector
+		ifNil: 
+			[(self alwaysPrint or: [self shouldPrint: aScintillaAttribute]) ifFalse: [^self].
+			aStream
+				nextPutAll: ', ';
+				nextPutAll: key;
+				nextPut: $=;
+				print: (aScintillaAttribute perform: key)]
+		ifNotNil: 
+			[(aScintillaAttribute perform: printSelector)
+				ifNotNil: 
+					[:valueString |
+					aStream
+						nextPutAll: ', ';
+						nextPutAll: key;
+						nextPut: $=;
+						nextPutAll: valueString]]!
+
 printSelector: aSymbol
 	printSelector := aSymbol!
 
 setAttribute: aScintillaAttribute ofView: aScintillaView
-	"Set the property described by the receiver of the attribute, aScintillaAttribute, of the control, aScintillaView.
-	If the final boolean parameter is true, then the property is only set if the attribute has a non-default value."
+	"Set the property described by the receiver of the attribute, aScintillaAttribute, of the control, aScintillaView."
 
 	| value |
-	value := self getValueOfAttribute: aScintillaAttribute.
+	value := (self getValueOfAttribute: aScintillaAttribute) ?? defaultValue.
+	value isNil ifTrue: [^self].
 	aScintillaView
 		sendMessage: setMessage
 		wParam: aScintillaAttribute basicId
-		lParam: (self lParamFromAttributeValue: (value ?? defaultValue))!
+		lParam: (self lParamFromAttributeValue: value)!
 
 setSelector: aSymbol
 	setSelector := aSymbol!
@@ -168,6 +187,7 @@ key!accessing!public! !
 key:defaultValue:setMessage:!initializing!private! !
 lParamFromAttributeValue:!helpers!private! !
 printOn:!printing!public! !
+printPropertyOf:on:!development!helpers!printing!private! !
 printSelector:!initializing!public! !
 setAttribute:ofView:!operations!private! !
 setSelector:!initializing!public! !

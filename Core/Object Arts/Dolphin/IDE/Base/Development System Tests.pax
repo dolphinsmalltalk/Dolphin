@@ -14,7 +14,6 @@ package setClassNames: #(
 	#{Tools.Tests.MenuPainterTest}
 	#{Tools.Tests.MethodCategoryEnvironmentTest}
 	#{Tools.Tests.MethodSearchTest}
-	#{Tools.Tests.MockScintillaView}
 	#{Tools.Tests.PackageEnvironmentTest}
 	#{Tools.Tests.ParseContextTest}
 	#{Tools.Tests.ProductReleaseTest}
@@ -48,8 +47,9 @@ package setPrerequisites: #(
 	'..\..\MVP\Graphics\Dolphin GDI Graphics'
 	'..\..\MVP\Base\Dolphin MVP Base'
 	'..\..\MVP\Tests\Dolphin MVP Tests'
-	'..\..\MVP\Views\Scintilla\Dolphin Scintilla View'
+	'..\..\MVP\Presenters\Text\Dolphin Rich Text Presenter'
 	'..\..\MVP\Views\Scintilla\Tests\Dolphin Scintilla View Tests'
+	'..\..\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\MVP\Models\Value\Dolphin Value Models'
 	'..\..\Lagoon\Lagoon Image Stripper'
@@ -74,13 +74,6 @@ Tools
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{XProgramming.SUnit})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Core.Object
-	subclass: #'Tools.Tests.MockScintillaView'
-	instanceVariableNames: 'lastStyled tokens text currentTextStyles styleIdMap'
-	classVariableNames: ''
-	imports: #(#{UI.Scintilla private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Kernel.ParseNodeVisitor

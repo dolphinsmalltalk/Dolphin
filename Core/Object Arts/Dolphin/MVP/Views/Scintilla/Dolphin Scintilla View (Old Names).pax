@@ -52,9 +52,9 @@ Smalltalk.ScintillaConstants := UI.Scintilla!
 
 Smalltalk.ScintillaIndicator := UI.Scintilla.Indicator!
 
-Smalltalk.ScintillaIndicatorDefinition := UI.Scintilla.IndicatorStyle!
+Smalltalk.ScintillaIndicatorDefinition := UI.Scintilla.IndicatorDefinition!
 
-Smalltalk.ScintillaIndicatorStyle := UI.Scintilla.IndicatorStyle!
+Smalltalk.ScintillaIndicatorStyle := UI.Scintilla.IndicatorDefinition!
 
 Smalltalk.ScintillaKeyBinding := UI.Scintilla.KeyBinding!
 

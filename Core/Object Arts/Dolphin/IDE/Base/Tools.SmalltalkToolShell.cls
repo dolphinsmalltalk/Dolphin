@@ -299,9 +299,9 @@ onDropDown: aToolbarButton
 	popup showIn: self position: aToolbarButton screenRectangle bottomLeft.
 	^0!
 
-onViewCreated
-	self view acceptDroppedFiles: true.
-	^super onViewCreated!
+onViewAvailable
+	super onViewAvailable.
+	self applyOptions!
 
 onViewOpened
 	super onViewOpened.
@@ -315,7 +315,11 @@ onViewOpened
 			toolbar presenterConnectionPoint
 				when: #dropDown:
 				send: #onDropDown:
-				to: self].
+				to: self]!
+
+onViewStateRestored
+	super onViewStateRestored.
+	self view acceptDroppedFiles: true.
 	self applyOptions!
 
 packageManager
@@ -565,8 +569,9 @@ inspectSystemOptions!commands-actions!public! !
 isIdeaSpaceCard!public! !
 methodBrowserClass!constants!private! !
 onDropDown:!private! !
-onViewCreated!event handling!public! !
+onViewAvailable!event handling!public! !
 onViewOpened!private! !
+onViewStateRestored!event handling!public! !
 packageManager!constants!private! !
 pastSize!accessing!public! !
 performCommand:!commands-routing!public! !
@@ -769,14 +774,14 @@ invalidateLocalOptions
 invalidateOptions
 	SmalltalkWorkspace invalidateOptions.
 	self allSubclassesDo: [:each | each invalidateLocalOptions].
-	SmalltalkWorkspaceDocument invalidateOptions!
+	SmalltalkWorkspaceDocument invalidateOptions.
+	SmalltalkSearchPresenter invalidateOptions!
 
 isLoadingOptions
 	^self optionFlags allMask: LoadingMask!
 
 loadOptions
-	self loadOptionsFor: self.
-	self applyOptions!
+	self loadOptionsFor: self!
 
 loadOptionsFor: aClass
 	| start stop aspects |
@@ -930,8 +935,7 @@ setOptionFlag: anInteger value: aBoolean
 
 	(self optionFlags allMask: anInteger) == aBoolean ifTrue: [^false].
 	optionFlags := optionFlags mask: anInteger set: aBoolean.
-	self persistOptions.
-	^true!
+	^self persistOptions!
 
 show
 	"Shows an instance of the receiver. If reuseIfOpen has been set to true then an 

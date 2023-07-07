@@ -7,20 +7,18 @@ This package includes legacy classes and methods from Dolphin''s Scintilla View 
 
 
 package setMethodNames: #(
-	#(#{UI.Scintilla.Indicator} #type)
-	#(#{UI.Scintilla.IndicatorStyle} #alphaPercent)
-	#(#{UI.Scintilla.IndicatorStyle} #alphaPercent:)
-	#(#{UI.Scintilla.IndicatorStyle} #hoverStyleName)
-	#(#{UI.Scintilla.IndicatorStyle} #hoverStyleName:)
-	#(#{UI.Scintilla.IndicatorStyle} #styleName)
-	#(#{UI.Scintilla.IndicatorStyle} #styleName:)
-	#(#{UI.Scintilla.IndicatorStyle class} #styleNames)
+	#(#{UI.Scintilla.Indicator} #styleName)
+	#(#{UI.Scintilla.Indicator class} #styleName:range:)
+	#(#{UI.Scintilla.Indicator class} #styleName:range:tag:)
+	#(#{UI.Scintilla.IndicatorDefinition class} #styleNames)
 	#(#{UI.Scintilla.ScintillaView} #currentLineAlpha:)
 	#(#{UI.Scintilla.ScintillaView} #firstVisibleLine:)
 	#(#{UI.Scintilla.ScintillaView} #highlightRange:withIndicator:)
 	#(#{UI.Scintilla.ScintillaView} #hoverTime)
 	#(#{UI.Scintilla.ScintillaView} #hoverTime:)
-	#(#{UI.Scintilla.ScintillaView} #indicatorDefinitions:)
+	#(#{UI.Scintilla.ScintillaView} #indicatorCount)
+	#(#{UI.Scintilla.ScintillaView} #indicatorStyles)
+	#(#{UI.Scintilla.ScintillaView} #indicatorStyles:)
 	#(#{UI.Scintilla.ScintillaView} #isCurrentLineHighlighted:)
 	#(#{UI.Scintilla.ScintillaView} #isDrawingBuffered)
 	#(#{UI.Scintilla.ScintillaView} #isDrawingBuffered:)
@@ -40,6 +38,14 @@ package setMethodNames: #(
 	#(#{UI.Scintilla.ScintillaView} #tokenTextAt:)
 ).
 
+package setVariableNames: #(
+	#{UI.Scintilla.IndicatorStyle}
+).
+
+package setAliasVariableNames: #(
+	#{UI.Scintilla.IndicatorStyle}
+).
+
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
 	'Dolphin Scintilla View'
@@ -47,76 +53,54 @@ package setPrerequisites: #(
 
 package!
 
+"Variable Aliases"!
+
+UI.Scintilla.IndicatorStyle := UI.Scintilla.IndicatorDefinition!
+
+
 "Loose Methods"!
 
 !UI.Scintilla.Indicator methodsFor!
 
-type
-	Notification deprecated.
-	^self styleName! !
-!UI.Scintilla.Indicator categoriesForMethods!
-type!accessing!public! !
-!
-
-!UI.Scintilla.IndicatorStyle methodsFor!
-
-alphaPercent
-	"Answer an <integer> representing the percentage alpha (transparency) for the indicator.
-	Note that this is a percentage (hence the name), and not the usual 0..255 range. Zero
-	represents completely transparent, 100 completely opaque. Note that this is currently only
-	relevant for the #roundBox indicator style."
-
-	#deprecated.
-	^self alpha ifNil: [30] ifNotNil: [:a | a * 100 // SC_ALPHA_OPAQUE]!
-
-alphaPercent: anInteger 
-	"Set the percentage alpha (transparency) for the indicator to the <integer> argument. Note
-	that this is a percentage (hence the name), and not the usual 0..255 range. Zero represents
-	completely transparent, 100 completely opaque. Note that this is currently only relevant for
-	the #roundBox indicator style."
-
-	#deprecated.
-	self alpha: SC_ALPHA_OPAQUE * anInteger // 100!
-
-hoverStyleName
-	Notification deprecated.
-	^self hoverStyle!
-
-hoverStyleName: aSymbol
-	Notification deprecated.
-	self hoverStyle: aSymbol!
-
 styleName
-	Notification deprecated.
-	^self style!
+	"Easy to confuse with the style of indicator drawn (i.e. squiggles, or a box). This actually mean't the name of the type of indicator (the IndicatorDefinition)."
 
-styleName: aSymbol
 	Notification deprecated.
-	self style: aSymbol! !
-!UI.Scintilla.IndicatorStyle categoriesForMethods!
-alphaPercent!accessing!public! !
-alphaPercent:!accessing!public! !
-hoverStyleName!accessing!public! !
-hoverStyleName:!accessing!public! !
-styleName!accessing!public! !
-styleName:!accessing!public! !
+	^self typeName! !
+!UI.Scintilla.Indicator categoriesForMethods!
+styleName!public! !
 !
 
-!UI.Scintilla.IndicatorStyle class methodsFor!
+!UI.Scintilla.Indicator class methodsFor!
+
+styleName: aSymbolOrInteger range: anInterval
+	Notification deprecated.
+	^self typeName: aSymbolOrInteger range: anInterval!
+
+styleName: aSymbolOrInteger range: anInterval tag: anObject
+	Notification deprecated.
+	^self
+		typeName: aSymbolOrInteger
+		range: anInterval
+		tag: anObject! !
+!UI.Scintilla.Indicator class categoriesForMethods!
+styleName:range:!instance creation!public! !
+styleName:range:tag:!instance creation!public! !
+!
+
+!UI.Scintilla.IndicatorDefinition class methodsFor!
 
 styleNames
 	Notification deprecated.
-	^IndicatorStyles! !
-!UI.Scintilla.IndicatorStyle class categoriesForMethods!
+	^IndicatorStyleNames! !
+!UI.Scintilla.IndicatorDefinition class categoriesForMethods!
 styleNames!initializing!public! !
 !
 
 !UI.Scintilla.ScintillaView methodsFor!
 
 currentLineAlpha: alphaInteger
-	"Set background alpha of the caret line."
-
-	Notification deprecated.	"Use a currentLineBackcolor with a Color with alpha"
+	#deprecated.	"Set currentLineBackcolor to a ColorAlpha"
 	self currentLineBackcolor: (self currentLineBackcolor alpha: alphaInteger)!
 
 firstVisibleLine: anInteger
@@ -140,9 +124,20 @@ hoverTime: periodMillisecondsInteger
 	#deprecated.	"Use #hoverDwell:. Retained to load legacy view state."
 	self sciSetMouseDwellTime: periodMillisecondsInteger!
 
-indicatorDefinitions: aSequenceableCollection 
-	#deprecated.
-	self indicatorStyles: aSequenceableCollection!
+indicatorCount
+	"Answer the number of indicators configured for the receiver. With the advent of 'modern'
+	indicators, this is now fixed at 32 and not related to the number of style bits used."
+
+	Notification deprecated.
+	^INDICATOR_IME!
+
+indicatorStyles
+	Notification deprecated.
+	^self indicatorDefinitions!
+
+indicatorStyles: aCollection
+	Notification deprecated.
+	self indicatorDefinitions: aCollection!
 
 isCurrentLineHighlighted: showBoolean
 	"Set whether the background of the line containing the caret is highlighted using a in a different colour than the ambient background colour."
@@ -252,7 +247,9 @@ firstVisibleLine:!public!scrolling! !
 highlightRange:withIndicator:!indicators!public! !
 hoverTime!other settings!private! !
 hoverTime:!other settings!private! !
-indicatorDefinitions:!indicators!public! !
+indicatorCount!constants!indicators!public! !
+indicatorStyles!public!scintilla interface! !
+indicatorStyles:!public!scintilla interface! !
 isCurrentLineHighlighted:!caret, selection, and hotspot styles!public! !
 isDrawingBuffered!other settings!public!testing! !
 isDrawingBuffered:!other settings!public! !

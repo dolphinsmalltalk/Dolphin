@@ -1,14 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object
-	subclass: #'Tools.Tests.MockScintillaView'
-	instanceVariableNames: 'lastStyled tokens text currentTextStyles styleIdMap'
+	subclass: #'UI.Scintilla.Tests.MockScintillaView'
+	instanceVariableNames: 'lastStyled tokens text currentTextStyles styleIdMap messages'
 	classVariableNames: ''
 	imports: #(#{UI.Scintilla private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.Tests.MockScintillaView guid: (Core.GUID fromString: '{50616a84-12e3-4960-b005-82a37278383b}')!
-Tools.Tests.MockScintillaView comment: 'To set up:
+UI.Scintilla.Tests.MockScintillaView guid: (Core.GUID fromString: '{50616a84-12e3-4960-b005-82a37278383b}')!
+UI.Scintilla.Tests.MockScintillaView comment: 'To set up:
 
 	mock := MockScintillaView new.
 	mock textStyles: SmalltalkWorkspace defaultTextStyles
@@ -24,8 +24,8 @@ Then to style:
 		in: mock.
 	"Now can access the ''tokens''"
 	mock tokens'!
-!Tools.Tests.MockScintillaView categoriesForClass!Kernel-Objects! !
-!Tools.Tests.MockScintillaView methodsFor!
+!UI.Scintilla.Tests.MockScintillaView categoriesForClass!Kernel-Objects! !
+!UI.Scintilla.Tests.MockScintillaView methodsFor!
 
 applyStyle: aSymbol toNext: anInteger 
 	self styleNext: anInteger mask: ((self styleNamed: aSymbol) ifNil: [0] ifNotNil: [:style | style id])!
@@ -36,11 +36,20 @@ characterAt: anInteger
 maxStyle
 	^31!
 
+messages
+	^messages!
+
 plainTextFrom: startInteger to: stopInteger 
 	^text copyFrom: startInteger to: stopInteger!
 
 plainTextRange: anInterval
 	^self plainTextFrom: anInterval start to: anInterval stop!
+
+resetMessages
+	messages := OrderedCollection new!
+
+sendMessage: anIntegerMessageID wParam: wParam lParam: lParam
+	^messages addLast: { anIntegerMessageID. wParam. lParam }!
 
 setCurrentTextStyles: aCollection
 	| newStylesByName allocatedStyles newStylesById availableStyles count |
@@ -125,12 +134,15 @@ tokens
 					[lastStyle := style.
 					answer addLast: {each first. style. self plainTextRange: each first}]].
 	^answer! !
-!Tools.Tests.MockScintillaView categoriesForMethods!
+!UI.Scintilla.Tests.MockScintillaView categoriesForMethods!
 applyStyle:toNext:!public!styling! !
 characterAt:!public!unit tests! !
 maxStyle!public!unit tests! !
+messages!accessing!public! !
 plainTextFrom:to:!public!unit tests! !
 plainTextRange:!accessing!public! !
+resetMessages!accessing!public! !
+sendMessage:wParam:lParam:!operations!public! !
 setCurrentTextStyles:!private!style definition! !
 setIndicator:from:length:!indicators!public! !
 startStylingFrom:!public!unit tests! !
@@ -142,5 +154,13 @@ text:!public!unit tests! !
 textLength!public!unit tests! !
 textStyles:!public!unit tests! !
 tokens!public!unit tests! !
+!
+
+!UI.Scintilla.Tests.MockScintillaView class methodsFor!
+
+icon
+	^ScintillaView icon! !
+!UI.Scintilla.Tests.MockScintillaView class categoriesForMethods!
+icon!constants!public! !
 !
 

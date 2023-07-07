@@ -3,10 +3,10 @@
 UI.Presenter
 	subclass: #'Tools.SmalltalkSearchPresenter'
 	instanceVariableNames: 'environment'
-	classVariableNames: 'AutoCompleteDwell'
+	classVariableNames: 'AutoCompleteDwell MaxCompletionListHeight MaxCompletionListWidth OptionFlags'
 	imports: #(#{UI.Scintilla private})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'LoadingOptionsMask' -> 16r1 }!
 Tools.SmalltalkSearchPresenter guid: (Core.GUID fromString: '{a8c5bf80-8660-45e4-865c-f489ca9ca4e8}')!
 Tools.SmalltalkSearchPresenter comment: ''!
 !Tools.SmalltalkSearchPresenter categoriesForClass!MVP-Resources-IDE Tools! !
@@ -162,10 +162,12 @@ onTimerTick: anInteger
 	self killAutocompleteTimer.
 	view isAutoCompletionActive ifFalse: [self maybeShowCompletionList]!
 
-onViewOpened
-	"Private - Received when the receiver's view is been connected. "
+onViewAvailable
+	super onViewAvailable.
+	self applyOptions.!
 
-	super onViewOpened.
+onViewStateRestored
+	super onViewStateRestored.
 	self applyOptions!
 
 performSmalltalkSearchFor: anObject
@@ -323,7 +325,8 @@ maybeShowCompletionList!autocompletion!helpers!public! !
 onAutoComplete:startingAt:accept:!autocompletion!event handling!private! !
 onCharAdded:!autocompletion!event handling!private! !
 onTimerTick:!event handling!private! !
-onViewOpened!event handling!private! !
+onViewAvailable!event handling!public! !
+onViewStateRestored!event handling!public! !
 performSmalltalkSearchFor:!operations!private! !
 queryCommand:!commands!private! !
 rangeToCompleteAt:!autocompletion!helpers!private! !
@@ -345,10 +348,21 @@ styleRunStartAt:!accessing!autocompletion!private! !
 autoCompleteDwell
 	"Answer the `Duration` that must elapse between characters being typed  before the workspace will attempt to display an auto-completion list."
 
+	self ensureOptionsLoaded.
 	^AutoCompleteDwell!
 
 autoCompleteDwell: aDuration
-	AutoCompleteDwell := aDuration!
+	self autoCompleteDwell = aDuration ifTrue: [^self].
+	AutoCompleteDwell := aDuration.
+	self isLoadingOptions ifTrue: [^self].
+	self primAllSubinstances do: [:each | each view autoCompleteDwell: aDuration].
+	self persistOptions!
+
+ensureOptionsLoaded
+	OptionFlags ifNil: [self loadOptions]!
+
+finishedLoadingOptions
+	OptionFlags := OptionFlags bitAnd: ##(LoadingOptionsMask bitInvert)!
 
 icon
 	^Icon fromId: 'GoSearch.ico'!
@@ -361,6 +375,63 @@ initialize
 	AutoCompleteDwell := 30 milliseconds
 	!
 
+invalidateOptions
+	OptionFlags := nil!
+
+isLoadingOptions
+	^OptionFlags allMask: LoadingOptionsMask!
+
+loadOptions
+	SmalltalkToolShell loadOptionsFor: ##(self)!
+
+maxCompletionListHeight
+	self ensureOptionsLoaded.
+	^MaxCompletionListHeight!
+
+maxCompletionListHeight: anInteger
+	self maxCompletionListHeight = anInteger ifTrue: [^self].
+	MaxCompletionListHeight := anInteger.
+	self isLoadingOptions ifTrue: [^self].
+	self primAllSubinstances do: [:each | each view maxCompletionListHeight: anInteger].
+	self persistOptions!
+
+maxCompletionListWidth
+	self ensureOptionsLoaded.
+	^MaxCompletionListWidth!
+
+maxCompletionListWidth: anInteger
+	self maxCompletionListWidth = anInteger ifTrue: [^self].
+	MaxCompletionListWidth := anInteger.
+	self isLoadingOptions ifTrue: [^self].
+	self primAllSubinstances do: [:each | each view maxCompletionListWidth: anInteger].
+	self persistOptions!
+
+optionsAspects
+	^self publishedAspects
+		removeKey: #yourself;
+		yourself!
+
+persistOptions
+	^SmalltalkToolShell persistOptionsFor: self!
+
+publishedAspects
+	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
+
+	| aspects |
+	aspects := super publishedAspects.
+	aspects
+		add: ((Aspect integer: #maxCompletionListHeight)
+					defaultValue: 10;
+					yourself);
+		add: ((Aspect integer: #maxCompletionListWidth)
+					defaultValue: 40;
+					yourself);
+		add: ((Aspect duration: #autoCompleteDwell)
+					defaultValue: 30 milliseconds;
+					yourself);
+		yourself.
+	^aspects!
+
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
@@ -369,12 +440,28 @@ resource_Default_view
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 5 985166 10 #{UI.STBViewProxy} #{UI.Scintilla.ScintillaView} 34 52 nil nil 34 2 8 1411449156 262145 416 918598 2 #{UI.ValueHolder} nil false 1769478 #{Kernel.EqualitySearchPolicy} nil nil nil 21 nil nil nil 416 nil 8 1831508384 1049094 #{UI.NullConverter} nil nil 73 nil 170 192 34 4 #callTip 1641542 1 #{UI.Scintilla.CallTipStyle} 77 917510 #{Graphics.Color} #tooltipText 658 #tooltip 1 nil nil nil nil #callTip nil nil nil #normal 1444934 1 #{UI.Scintilla.TextStyle} 1 nil nil 1 nil nil nil nil #normal nil nil nil nil 2032902 #{Tools.SmalltalkExpressionStyler} 1 nil nil false 138 144 8 #() 170 192 784 138 #{Core.IdentitySet} 784 nil 170 176 784 nil nil nil 170 176 34 4 81 658 #windowText 23 1245702 #{Graphics.ThemeColor} #workspaceSelection nil nil 2162950 #{UI.Scintilla.NullScintillaLibrary} nil 65 nil nil 170 192 34 6 #literalBytes 8 '[]' #literalArray 8 '()' #specialCharacter 8 '()[]<>' nil 1 170 192 34 2 #container 592 nil nil nil nil 208 138 #{Core.Set} 34 5 1507846 #{UI.Scintilla.KeyBinding} 9385 4345 1106 9951 4345 1106 9353 4345 1106 9435 4345 1106 9431 4345 170 192 34 4 #Warning 1772614 4 #{UI.Scintilla.IndicatorStyle} 17 416 658 #blue 3 3 #Warning nil nil nil nil nil nil #Error 1234 19 416 658 #red 3 3 #Error nil nil nil nil nil nil nil nil 170 192 34 6 #Notification 706 1029 nil 658 #gainsboro 1 nil nil nil nil #Notification nil nil nil #Warning 706 1027 658 #darkGoldenrod 658 #ivory 1 nil nil nil nil #Warning nil nil nil #Error 706 1031 658 #firebrick 658 #floralWhite 1 nil nil nil nil #Error nil nil nil nil nil nil 1310982 #{Core.MessageSequence} 34 5 1049350 #{Core.MessageSend} #createAt:extent: 34 2 918022 #{Graphics.Point} 6143 21 1570 371 39 416 1522 #margins: 34 1 8 #() 416 1522 #sciSetHScrollBar: 8 #(false) 416 1522 #maxCompletionListHeight: 8 #(9) 416 1522 #sciSetSelectionLayer: 8 #(1) 416 1179910 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 184 12 0 0 29 0 0 0] 8 #() 1570 193 193 nil 37)! !
+	^#(#'!!STL' 5 985166 10 #{UI.STBViewProxy} #{UI.Scintilla.ScintillaView} 34 52 nil nil 34 2 8 1411449156 262145 416 918598 2 #{UI.ValueHolder} nil false 1769478 #{Kernel.EqualitySearchPolicy} nil nil nil 21 nil nil nil 416 nil 8 1831508384 1049094 #{UI.NullConverter} nil nil 73 nil 170 192 34 4 #callTip 1641542 1 #{UI.Scintilla.CallTipStyle} 77 917510 #{Graphics.Color} #tooltipText 658 #tooltip 1 nil nil nil nil #callTip nil nil nil #normal 1444934 1 #{UI.Scintilla.TextStyle} 1 nil nil 1 nil nil nil nil #normal nil nil nil nil 2032902 #{Tools.SmalltalkExpressionStyler} 1 nil nil false 138 144 8 #() 170 192 784 138 #{Core.IdentitySet} 784 nil 170 176 784 nil nil nil 170 176 34 4 81 658 #windowText 23 1245702 #{Graphics.ThemeColor} #workspaceSelection nil nil 2162950 #{UI.Scintilla.NullScintillaLibrary} nil 65 nil nil 170 192 34 6 #literalBytes 8 '[]' #literalArray 8 '()' #specialCharacter 8 '()[]<>' nil 1 170 192 34 2 #container 592 nil nil nil nil 208 138 #{Core.Set} 34 5 1507846 #{UI.Scintilla.KeyBinding} 9385 4345 1106 9951 4345 1106 9353 4345 1106 9435 4345 1106 9431 4345 170 192 34 4 #Warning 1772614 4 #{UI.Scintilla.IndicatorDefinition} 17 416 658 #blue 3 3 #Warning nil nil nil nil nil nil #Error 1234 19 416 658 #red 3 3 #Error nil nil nil nil nil nil nil nil 170 192 34 6 #Notification 706 1029 nil 658 #gainsboro 1 nil nil nil nil #Notification nil nil nil #Warning 706 1027 658 #darkGoldenrod 658 #ivory 1 nil nil nil nil #Warning nil nil nil #Error 706 1031 658 #firebrick 658 #floralWhite 1 nil nil nil nil #Error nil nil nil nil nil nil 1310982 #{Core.MessageSequence} 34 5 1049350 #{Core.MessageSend} #createAt:extent: 34 2 918022 #{Graphics.Point} 6143 21 1570 371 39 416 1522 #margins: 34 1 8 #() 416 1522 #sciSetHScrollBar: 8 #(false) 416 1522 #maxCompletionListHeight: 8 #(9) 416 1522 #sciSetSelectionLayer: 8 #(1) 416 1179910 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 184 12 0 0 29 0 0 0] 8 #() 1570 193 193 nil 37)!
+
+startLoadingOptions
+	OptionFlags := OptionFlags ?? 0 bitOr: LoadingOptionsMask! !
 !Tools.SmalltalkSearchPresenter class categoriesForMethods!
-autoCompleteDwell!accessing!autocompletion!public! !
-autoCompleteDwell:!accessing!autocompletion!public! !
+autoCompleteDwell!autocompletion!options!public! !
+autoCompleteDwell:!autocompletion!options!public! !
+ensureOptionsLoaded!public! !
+finishedLoadingOptions!options!private! !
 icon!constants!public! !
 initialize!initializing!public! !
+invalidateOptions!options!private! !
+isLoadingOptions!options!private! !
+loadOptions!options!private! !
+maxCompletionListHeight!options!public! !
+maxCompletionListHeight:!options!public! !
+maxCompletionListWidth!options!public! !
+maxCompletionListWidth:!options!public! !
+optionsAspects!public! !
+persistOptions!options!private! !
+publishedAspects!public! !
 resource_Default_view!public!resources-views! !
+startLoadingOptions!options!private! !
 !
 
