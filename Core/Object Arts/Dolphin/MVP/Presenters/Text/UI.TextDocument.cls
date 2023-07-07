@@ -67,6 +67,10 @@ onCloseRequested: boolValueHolder
 	super onCloseRequested: boolValueHolder.
 	boolValueHolder value ifTrue: [self saveUserSettings]!
 
+onViewAvailable
+	super onViewAvailable.
+	self restoreUserSettings!
+
 onViewOpened
 	"Received when the receiver's view has been connected."
 
@@ -75,7 +79,10 @@ onViewOpened
 	modifiedModel
 		when: #valueChanged
 		send: #updateCaption
-		to: self.
+		to: self!
+
+onViewStateRestored
+	super onViewStateRestored.
 	self restoreUserSettings!
 
 openFile: pathString
@@ -118,7 +125,9 @@ isModified:!modes!public! !
 isText!public!testing! !
 model:!accessing!public! !
 onCloseRequested:!event handling!private! !
+onViewAvailable!event handling!public! !
 onViewOpened!event handling!public! !
+onViewStateRestored!event handling!public! !
 openFile:!operations!public! !
 restoreUserSettings!operations!options!private! !
 saveUserSettings!helpers!private! !

@@ -802,6 +802,10 @@ onTipTextRequired: tool
 				expandMacrosWith: (methods size = 1 ifTrue: [methods first] ifFalse: ['Selected Methods'])].
 	^super onTipTextRequired: tool!
 
+onViewAvailable
+	super onViewAvailable.
+	self applyOptions!
+
 onViewClosed
 	"Sent by the receiver's view when it has been closed.
 	Disconnect from any events triggered by the devlopment system"
@@ -809,10 +813,8 @@ onViewClosed
 	super onViewClosed.
 	self developmentSystem removeEventsTriggeredFor: self!
 
-onViewOpened
-	"Received when the receiver's view is been connected. "
-
-	super onViewOpened.
+onViewStateRestored
+	super onViewStateRestored.
 	self applyOptions!
 
 parseContext
@@ -1186,8 +1188,9 @@ onMethodSelectionChanging:!event handling!private! !
 onMethodUpdated:!event handling!private! !
 onPromptToSaveChanges:!private!testing! !
 onTipTextRequired:!event handling!private! !
+onViewAvailable!event handling!public! !
 onViewClosed!event handling!public! !
-onViewOpened!event handling!public! !
+onViewStateRestored!event handling!public! !
 parseContext!accessing!public! !
 parseTree!helpers!private! !
 promptToCopyChanges!event handling!public! !

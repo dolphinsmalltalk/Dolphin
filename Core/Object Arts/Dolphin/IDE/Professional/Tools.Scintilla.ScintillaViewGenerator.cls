@@ -628,7 +628,6 @@ defineConstantsPool
 				'SCI_GETADDITIONALCARETFORE' -> 2605.
 				'SCI_GETADDITIONALCARETSBLINK' -> 2568.
 				'SCI_GETADDITIONALCARETSVISIBLE' -> 2609.
-				'SCI_GETADDITIONALSELALPHA' -> 2603.
 				'SCI_GETADDITIONALSELECTIONTYPING' -> 2566.
 				'SCI_GETALLLINESVISIBLE' -> 2236.
 				'SCI_GETANCHOR' -> 2009.
@@ -638,11 +637,9 @@ defineConstantsPool
 				'SCI_GETBUFFEREDDRAW' -> 2034.
 				'SCI_GETCARETFORE' -> 2138.
 				'SCI_GETCARETLINEBACK' -> 2097.
-				'SCI_GETCARETLINEBACKALPHA' -> 2471.
 				'SCI_GETCARETLINEFRAME' -> 2704.
 				'SCI_GETCARETLINEHIGHLIGHTSUBLINE' -> 2773.
 				'SCI_GETCARETLINELAYER' -> 2764.
-				'SCI_GETCARETLINEVISIBLE' -> 2095.
 				'SCI_GETCARETLINEVISIBLEALWAYS' -> 2654.
 				'SCI_GETCARETPERIOD' -> 2075.
 				'SCI_GETCARETSTICKY' -> 2457.
@@ -767,7 +764,6 @@ defineConstantsPool
 				'SCI_GETSCROLLWIDTH' -> 2275.
 				'SCI_GETSCROLLWIDTHTRACKING' -> 2517.
 				'SCI_GETSEARCHFLAGS' -> 2199.
-				'SCI_GETSELALPHA' -> 2477.
 				'SCI_GETSELECTIONEMPTY' -> 2650.
 				'SCI_GETSELECTIONEND' -> 2145.
 				'SCI_GETSELECTIONHIDDEN' -> 2088.
@@ -994,25 +990,17 @@ defineConstantsPool
 				'SCI_SELECTIONDUPLICATE' -> 2469.
 				'SCI_SELECTIONISRECTANGLE' -> 2372.
 				'SCI_SETACCESSIBILITY' -> 2702.
-				'SCI_SETADDITIONALCARETFORE' -> 2604.
 				'SCI_SETADDITIONALCARETSBLINK' -> 2567.
 				'SCI_SETADDITIONALCARETSVISIBLE' -> 2608.
-				'SCI_SETADDITIONALSELALPHA' -> 2602.
-				'SCI_SETADDITIONALSELBACK' -> 2601.
 				'SCI_SETADDITIONALSELECTIONTYPING' -> 2565.
-				'SCI_SETADDITIONALSELFORE' -> 2600.
 				'SCI_SETANCHOR' -> 2026.
 				'SCI_SETAUTOMATICFOLD' -> 2663.
 				'SCI_SETBACKSPACEUNINDENTS' -> 2262.
 				'SCI_SETBIDIRECTIONAL' -> 2709.
 				'SCI_SETBUFFEREDDRAW' -> 2035.
-				'SCI_SETCARETFORE' -> 2069.
-				'SCI_SETCARETLINEBACK' -> 2098.
-				'SCI_SETCARETLINEBACKALPHA' -> 2470.
 				'SCI_SETCARETLINEFRAME' -> 2705.
 				'SCI_SETCARETLINEHIGHLIGHTSUBLINE' -> 2774.
 				'SCI_SETCARETLINELAYER' -> 2765.
-				'SCI_SETCARETLINEVISIBLE' -> 2096.
 				'SCI_SETCARETLINEVISIBLEALWAYS' -> 2655.
 				'SCI_SETCARETPERIOD' -> 2076.
 				'SCI_SETCARETSTICKY' -> 2458.
@@ -1047,8 +1035,6 @@ defineConstantsPool
 				'SCI_SETFONTLOCALE' -> 2760.
 				'SCI_SETFONTQUALITY' -> 2611.
 				'SCI_SETHIGHLIGHTGUIDE' -> 2134.
-				'SCI_SETHOTSPOTACTIVEBACK' -> 2411.
-				'SCI_SETHOTSPOTACTIVEFORE' -> 2410.
 				'SCI_SETHOTSPOTACTIVEUNDERLINE' -> 2412.
 				'SCI_SETHOTSPOTSINGLELINE' -> 2421.
 				'SCI_SETHSCROLLBAR' -> 2130.
@@ -1110,8 +1096,6 @@ defineConstantsPool
 				'SCI_SETSCROLLWIDTHTRACKING' -> 2516.
 				'SCI_SETSEARCHFLAGS' -> 2198.
 				'SCI_SETSEL' -> 2160.
-				'SCI_SETSELALPHA' -> 2478.
-				'SCI_SETSELBACK' -> 2068.
 				'SCI_SETSELECTION' -> 2572.
 				'SCI_SETSELECTIONEND' -> 2144.
 				'SCI_SETSELECTIONLAYER' -> 2763.
@@ -1124,7 +1108,6 @@ defineConstantsPool
 				'SCI_SETSELECTIONNSTART' -> 2584.
 				'SCI_SETSELECTIONSTART' -> 2142.
 				'SCI_SETSELEOLFILLED' -> 2480.
-				'SCI_SETSELFORE' -> 2067.
 				'SCI_SETSTATUS' -> 2382.
 				'SCI_SETSTYLEBITS' -> 2090.
 				'SCI_SETSTYLING' -> 2033.
@@ -1375,14 +1358,15 @@ generateConstantsPool
 	classInstanceVariableNames: ''''
 	classConstants: {';
 		cr.
-	self constantsPool associations sort do: 
-			[:each |
-			stream
-				print: each key;
-				nextPutAll: ' -> ';
-				print: each value;
-				nextPut: $.;
-				cr].
+	(self constantsPool associations reject: [:each | self class deprecatedConstants includes: each key])
+		sort do: 
+				[:each |
+				stream
+					print: each key;
+					nextPutAll: ' -> ';
+					print: each value;
+					nextPut: $.;
+					cr].
 	stream nextPutAll: '})'.
 	changes := model changes.
 	source := (Parser parseMethod: stream contents) formattedCode.
@@ -1392,7 +1376,7 @@ generateConstantsPool
 				[changes addChangeFirst: (Refactory.Browser.AddMethodChange
 							compile: source
 							in: self class
-							categories: {self autoGenCategoryName. 'development'})]!
+							categories: { self autoGenCategoryName. 'development' })]!
 
 generateEventHandler: aScintillaEventDef
 	| stream |
@@ -1494,8 +1478,12 @@ generateNullLibraryDefaults
 		cr.
 	defaultReturnValues associations sort do: 
 			[:each |
+			| key |
+			key := each key.
+			(self class deprecatedConstants includes: key) ifTrue: [
+				key := constantsPool at: key].
 			stream
-				display: each key;
+				display: key;
 				nextPutAll: ' -> ';
 				display: each value]
 		separatedBy: 
@@ -1513,7 +1501,7 @@ generateNullLibraryDefaults
 		compile: stream contents
 		selector: selector
 		in: NullScintillaLibrary
-		categories: self autoGenMethodCategories , {'private'. 'development'}!
+		categories: self autoGenMethodCategories , { 'private'. 'development' }!
 
 getAndResetCommentQueue
 	| answer |
@@ -1841,6 +1829,20 @@ updateLibVersion!accessing!private! !
 
 !Tools.Scintilla.ScintillaViewGenerator class methodsFor!
 
+deprecatedConstants
+	"We don't generate the deprecated constants any more."
+
+	^##(| deprecated |
+	deprecated := Set new.
+
+	"5.0.3 - the elements API replaces quite a number of colour settings"
+	deprecated
+		addAll: #('SCI_GETCARETLINEVISIBLE' 'SCI_SETCARETLINEVISIBLE' 'SCI_SETCARETLINEBACK' 'SCI_GETCARETLINEBACKALPHA' 'SCI_SETCARETLINEBACKALPHA' 'SCI_SETCARETFORE' 'SCI_GETSELALPHA' 'SCI_SETSELALPHA' 'SCI_GETADDITIONALSELALPHA' 'SCI_SETADDITIONALSELALPHA' 'SCI_GETADDITIONALSELFORE' 'SCI_SETADDITIONALSELFORE' 'SCI_GETADDITIONALSELBACK' 'SCI_SETADDITIONALSELBACK' 'SCI_SETADDITIONALCARETFORE' 'SCI_SETSELBACK' 'SCI_SETSELFORE' 'SCI_SETHOTSPOTACTIVEBACK' 'SCI_SETHOTSPOTACTIVEFORE').
+	deprecated
+		shrink;
+		beImmutableObject;
+		yourself)!
+
 icon
 	^ScintillaView icon!
 
@@ -1876,7 +1878,7 @@ ignoredMessages
 		add: 'SCI_GRABFOCUS';
 		yourself.
 
-	"Margin attributes managed by ScintillaMargin"
+	"Margin attributes managed by Margin"
 	ignoredMessages
 		addAll: #('SCI_GETMARGINMASKN' 'SCI_SETMARGINMASKN');
 		addAll: #('SCI_GETMARGINTYPEN' 'SCI_SETMARGINTYPEN');
@@ -1886,7 +1888,7 @@ ignoredMessages
 		addAll: #('SCI_GETMARGINBACKN' 'SCI_SETMARGINBACKN');
 		yourself.
 
-	"Indicator attributes managed by ScintillaIndicatorStyle"
+	"Indicator attributes managed by IndicatorDefinition"
 	ignoredMessages
 		addAll: #('SCI_INDICGETFORE' 'SCI_INDICSETFORE');
 		addAll: #('SCI_INDICGETSTYLE' 'SCI_INDICSETSTYLE');
@@ -1898,7 +1900,7 @@ ignoredMessages
 		addAll: #('SCI_INDICGETOUTLINEALPHA' 'SCI_INDICSETOUTLINEALPHA');
 		yourself.
 
-	"Indicator attributes managed by ScintillaMarkerDefinition"
+	"Indicator attributes managed by MarkerDefinition"
 	ignoredMessages
 		add: 'SCI_MARKERSETBACK';
 		add: 'SCI_MARKERSETBACKSELECTED';
@@ -2463,6 +2465,7 @@ renamedFunctions
 		shrink;
 		yourself)! !
 !Tools.Scintilla.ScintillaViewGenerator class categoriesForMethods!
+deprecatedConstants!constants!private! !
 icon!constants!development!public! !
 ignoredMessages!constants!private! !
 new!instance creation!public! !

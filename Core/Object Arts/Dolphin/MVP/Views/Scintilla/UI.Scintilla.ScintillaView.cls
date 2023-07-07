@@ -2,7 +2,7 @@
 
 UI.MultilineTextEdit
 	subclass: #'UI.Scintilla.ScintillaView'
-	instanceVariableNames: 'this currentTextStyles styleIdMap styler markerDefinitions markers _unused23 registeredImages modificationEventMask autoCStops autoCFillups elementColors caretBlinkTime characterRepresentations library indicators callTipTabWidth _unused34 callTipHighlightColor braceChars _unused37 scFlags allTextStyles foldMarginColor foldMarginHiColor foldMarkerStyle foldFlags stringClass keyBindings indicatorStyles characterClassifications _unused48 annotationStyles _unused50 _unused51 edgeColor'
+	instanceVariableNames: 'this currentTextStyles styleIdMap styler markerDefinitions markers _unused23 registeredImages modificationEventMask autoCStops autoCFillups elementColors caretBlinkTime characterRepresentations library indicators callTipTabWidth _unused34 callTipHighlightColor braceChars _unused37 scFlags allTextStyles foldMarginColor foldMarginHiColor foldMarkerStyle foldFlags stringClass keyBindings indicatorDefinitions characterClassifications _unused48 annotationStyles _unused50 _unused51 edgeColor'
 	classVariableNames: 'DefaultKeyBindings DefaultTextStyles'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -184,6 +184,16 @@ addAnnotation: aScintillaAnnotation
 		inStyles: newStyles contents.
 	self invalidate!
 
+addIndicator: anIndicator
+	indicators := self indicators asOrderedCollection
+				addLast: anIndicator;
+				yourself.
+	self setIndicator: anIndicator typeName range: anIndicator range.
+	^anIndicator!
+
+addIndicatorType: aSymbol over: anInterval
+	^self addIndicator: (Indicator typeName: aSymbol range: anInterval)!
+
 addKeyBinding: aScintillaKeyBinding 
 	| bindings |
 	bindings := self keyBindings.
@@ -211,11 +221,7 @@ addMarkerType: aSymbol at: anInteger
 	definition. "
 
 	| markerType |
-	markerType := markerDefinitions at: aSymbol
-				ifAbsent: 
-					[MarkerDefinition new
-						name: aSymbol;
-						yourself].
+	markerType := (markerDefinitions lookup: aSymbol) ifNil: [MarkerDefinition name: aSymbol].
 	^self addMarker: (markerType newForLine: anInteger)!
 
 addSelectionRange: anInterval
@@ -586,9 +592,7 @@ basicClearAll
 		lParam: 0!
 
 basicClearContainerIndicators
-	"Private - Clear all the containers indicators (those with Id's starting with
-	INDIC_CONTAINER) from the receiver Indicators reserved for use by lexers (those with id's in
-	the range 0..INDIC_CONTAINER-1) are unaffected."
+	"Private - Clear all the containers indicators (those with Id's starting with INDIC_CONTAINER) from the receiver Indicators reserved for use by lexers (those with id's in the range 0..INDIC_CONTAINER-1) are unaffected."
 
 	| length |
 	length := self textLength.
@@ -1235,7 +1239,7 @@ clearAll
 	self modifyText: [self basicClearAll]!
 
 clearContainerIndicators
-	"Clear all the indicators (e.g. squiggly underlines) from the receiver."
+	"Private - Clear all the indicators (e.g. squiggly underlines) from the receiver."
 
 	self basicClearContainerIndicators.
 	indicators := nil!
@@ -1245,8 +1249,7 @@ clearHandle
 	library := NullScintillaLibrary default!
 
 clearIndicator: anIntegerOrSymbol from: startInteger to: stopInteger 
-	"Clear the indicator identified by <integer> id from the range of text between two one-based
-	<integer> positions."
+	"Private - Clear the indicator identified by <integer> id from the range of text between two one-based <integer> positions."
 
 	self currentIndicatorId: (self indicatorIdFromName: anIntegerOrSymbol).
 	self sciIndicatorClearRange: startInteger lengthClear: stopInteger - startInteger + 1!
@@ -2529,6 +2532,9 @@ getEolAnnotations
 								style: {self sciEOLAnnotationGetStyle: each})]].
 	^annotations grabContents!
 
+getIndicatorDefinitions
+	^indicatorDefinitions ifNil: [IdentityDictionary new]!
+
 getLineState: lineInteger
 	"Retrieve the extra styling information for a line."
 
@@ -2722,7 +2728,7 @@ hideCaretWhile: aNiladicBlock
 	^aNiladicBlock ensure: [self sciSetCaretStyle: caretStyle]!
 
 hideIndicators
-	"Private - Reconfigure all indicator styles to hidden apart from the default 3 pre-configured styles."
+	"Private - Reconfigure all indicator types to hidden apart from the default 3 pre-configured types."
 
 	3 to: INDICATOR_MAX
 		do: 
@@ -2804,7 +2810,7 @@ identifyTextMatchingSelectionWithStyleName: aSymbol
 	| index newIndicators selection selectionStart oldIndicators |
 	"get a list of indicators that aren't related to secondary selection"
 	oldIndicators := self indicators.
-	newIndicators := oldIndicators reject: [:each | each styleName == aSymbol].
+	newIndicators := oldIndicators reject: [:each | each typeName == aSymbol].
 	selection := self selection.
 	"If no current selection, then we are done"
 	selection isEmpty
@@ -2822,7 +2828,7 @@ identifyTextMatchingSelectionWithStyleName: aSymbol
 				index ~~ selectionStart
 					ifTrue: 
 						[newIndicators addLast: (Indicator
-									styleName: aSymbol
+									typeName: aSymbol
 									range: (index to: end)
 									tag: nil)].
 				index := end + 1].
@@ -2940,11 +2946,16 @@ indexOfLine: lineInteger column: columnInteger
 		wParam: lineInteger - 1
 		lParam: columnInteger - 1) + 1!
 
-indicatorCount
-	"Answer the number of indicators configured for the receiver. With the advent of 'modern'
-	indicators, this is now fixed at 32 and not related to the number of style bits used."
+indicatorDefinitions
+	"Answer a <sequencedReadableCollection> containing all the receiver's indicator definitions, ordered by id."
 
-	^INDICATOR_IME!
+	^(indicatorDefinitions ifNil: [#()] ifNotNil: [:value | value values])
+		asSortedCollection: Attribute sortByIdBlock!
+
+indicatorDefinitions: aCollection
+	"Set the receiver's collection of indicator definitions (types) to the <collection> of <Scintilla.IndicatorDefinition>s argument."
+
+	self setIndicatorDefinitions: aCollection ?? #()!
 
 indicatorIdFromName: anIntegerOrSymbol
 	^anIntegerOrSymbol isInteger
@@ -2953,9 +2964,9 @@ indicatorIdFromName: anIntegerOrSymbol
 				ifFalse: [self error: 'Indicator id is out of range: ' , anIntegerOrSymbol printString].
 			anIntegerOrSymbol]
 		ifFalse: 
-			[(indicatorStyles ifNotNil: [:indics | indics lookup: anIntegerOrSymbol])
+			[(indicatorDefinitions ifNotNil: [:indics | indics lookup: anIntegerOrSymbol])
 				ifNil: [-1	"Indicator is not configured in the view, not necessarily an error"]
-				ifNotNil: [:indicStyle | indicStyle id]]!
+				ifNotNil: [:defn | defn id]]!
 
 indicatorMaskAt: posInteger
 	"Are any indicators present at pos?"
@@ -2967,35 +2978,20 @@ indicatorMaskAt: posInteger
 		lParam: 0!
 
 indicators
-	"Answer a <collection> of <ScintillaIndicator>s, being the indicators (e.g. squiggly
-	underlines) associated with ranges of text in the receiver."
+	"Answer a <collection> of <Scintilla.Indicator>s, being the indicators (e.g. squiggly underlines) associated with ranges of text in the receiver."
 
 	^indicators ?? #()!
 
 indicators: aCollectionOfScintillaIndicator 
-	"Set the indicators (e.g. squiggly underlines) associated with ranges of text in the
-	receiver to the <Collection> of <ScintillaIndicator>s argument."
+	"Set the indicators (e.g. squiggly underlines) associated with ranges of text in the receiver to the <Collection> of <Scintilla.Indicator>s argument."
 
 	self setIndicators: aCollectionOfScintillaIndicator!
 
 indicatorsAt: anInteger 
-	"Answer a <collection> of <ScintillaIndicator>s, being the indicators applied to the
-	character position with the specified one-based <integer> index."
+	"Answer a <collection> of <Scintilla.Indicator>s, being the indicators applied to the character position with the specified one-based <integer> index."
 
 	(indicators isNil or: [(self indicatorMaskAt: anInteger) == 0]) ifTrue: [^#()].
 	^indicators select: [:each | each range includes: anInteger]!
-
-indicatorStyles
-	"Answer a <sequencedReadableCollection> containing all the receiver's indicator definitions."
-
-	^(indicatorStyles ifNil: [#()] ifNotNil: [:value | value values])
-		asSortedCollection: Attribute sortByIdBlock!
-
-indicatorStyles: aCollection
-	"Set the receiver's collection of indicators to the <collection> of
-	<ScintillaIndicatorStyle>s argument."
-
-	self setIndicatorStyles: aCollection ?? #()!
 
 indicatorsUnder: aPoint 
 	^self indicatorsAt: (self charCloseToPosition: aPoint)!
@@ -3003,6 +2999,7 @@ indicatorsUnder: aPoint
 initialize
 	| styles |
 	super initialize.
+	updateMode := #explicit.
 	library := NullScintillaLibrary default.
 	markerDefinitions := self defaultMarkerDefinitions.
 	markers := IdentitySet new.
@@ -3303,12 +3300,10 @@ isFoldingEnabled: aBoolean
 			self sciSetMarginLeft: self sciGetMarginLeft].
 	self invalidateStyling!
 
-isIndicator: anIntegerOrSymbol setAt: positionInteger 
-	"Answer whether the indicator identified by the <integer> id or <symbol> name,
-	anIntegerOrSymbol, is set at the at the one-based <integer> character position,
-	positionInteger."
+isIndicator: anIntegerOrSymbol setAt: positionInteger
+	"Answer whether the indicator type identified by the <integer> id or <symbol> name,	anIntegerOrSymbol, is set at the at the one-based <integer> character position, positionInteger."
 
-	^(self indicatorMaskAt: positionInteger) 
+	^(self indicatorMaskAt: positionInteger)
 		anyMask: (1 bitShift: (self indicatorIdFromName: anIntegerOrSymbol))!
 
 isInSelectionExtendMode
@@ -3869,8 +3864,7 @@ listSelectionForecolor: aColor
 		defaultSystem: Color highlightText!
 
 margins
-	"Answer a <sequencedReadableCollection> of <ScintillaMargin> containing all the receiver's
-	margins."
+	"Answer a <sequencedReadableCollection> of <Scintilla.Margin> describing all the receiver's margins."
 
 	^(1 to: self sciGetMargins) collect: [:index | Margin view: self index: index - 1]!
 
@@ -3925,16 +3919,10 @@ markerDefinitions: aCollection
 	allocated := Set new: count.
 	aCollection do: [:each | allocated add: each basicId].
 	markerDefinitions := markerDefinitions reject: [:each | userIds includes: each basicId].
-	available := userIds asByteArray readStream.
+	available := (userIds difference: allocated) asByteArray readStream.
 	aCollection do: 
 			[:each |
-			each basicId
-				ifNil: 
-					[| nextId |
-					
-					[nextId := available next.
-					allocated includes: nextId] whileTrue.
-					each basicId: nextId].
+			each basicId ifNil: [each basicId: available next].
 			each applyToView: self.
 			markerDefinitions at: each name put: each]!
 
@@ -4014,6 +4002,12 @@ maxLayoutThreads: threadsInteger
 		msg: SCI_SETLAYOUTTHREADS
 		wParam: threadsInteger
 		lParam: 0!
+
+mergeIndicatorDefinitions: aCollection
+	| mergedDefinitions |
+	mergedDefinitions := self getIndicatorDefinitions.
+	aCollection do: [:each | mergedDefinitions at: each name put: each].
+	self setIndicatorDefinitions: mergedDefinitions!
 
 modificationEventMask
 	"Answer the <integer> notification event mask that controls the SCN_MODIFIED notifications that 
@@ -4639,10 +4633,7 @@ queryToggleWhitespace: aCommandQuery
 		isChecked: self whitespaceVisibility ~~ #invisible!
 
 rangeOfIndicator: anIntegerOrSymbol at: positionInteger
-	"Answer an <Interval> representing the range of one-based character positions of the
-	indicator whose style is identified by the <integer> id or <symbol> name, anIntegerOrSymbol,
-	that intersects with the one-based <integer> character position, positionIndicator. If the
-	indicator is not set at the specified position then the interval will be empty."
+	"Answer an <Interval> representing the range of one-based character positions of the indicator whose type is identified by the <integer> id or <symbol> name, anIntegerOrSymbol, that intersects with the one-based <integer> character position, positionIndicator. If the indicator is not set at the specified position then the interval will be empty."
 
 	^(positionInteger > 0 and: [self isIndicator: anIntegerOrSymbol setAt: positionInteger])
 		ifTrue: 
@@ -4751,6 +4742,14 @@ removeBraceHighlight
 	"Remove any current brace highlighting."
 
 	self highlightBracesAt: 0 and: 0!
+
+removeIndicatorsOfType: aSymbol
+	indicators ifNil: [^self].
+	self setIndicators: (indicators reject: [:each | each typeName == aSymbol])!
+
+removeIndicatorsOfTypes: aCollectionOfSymbols
+	indicators ifNil: [^self].
+	self setIndicators: (indicators reject: [:each | aCollectionOfSymbols includes: each typeName])!
 
 removeKeyBinding: aScintillaKeyBinding
 	| bindings |
@@ -8619,8 +8618,9 @@ selectionBackcolor
 	^self getElementColor: SC_ELEMENT_SELECTION_BACK!
 
 selectionBackcolor: aColor
-	"Set the background <Color> of the selection. If the argument is nil, the default selection colour is used.
-	If the argument has transparency (alpha), this is respected only if the selection layer setting is #underText or #overText. If the selection layer setting is #base, then the alpha is ignored.
+	"Set the background <Color> of the selection. If the argument is nil, the default selection colour is used."
+
+	"N.B. If the argument has transparency (alpha), this is respected only if the selection layer setting is #underText or #overText. If the selection layer setting is #base, then the alpha is ignored.
 	To turn off selection background highlighting, set #selectionLayer to #underText, and use a completely translucent <Color> (i.e. zero alpha)."
 
 	self setOrResetElement: SC_ELEMENT_SELECTION_BACK color: aColor!
@@ -8881,45 +8881,37 @@ setFont: aFont
 	self updateTextStyles!
 
 setIndicator: anIntegerOrSymbol from: startInteger length: lengthInteger
-	"Apply the indicator identified by the <integer> id or <symbol> name, anIntegerOrSymbol, to
-	the range of text in the receiver starting from the one-base integer character position,
-	startInteger, for a run length specified by the <integer>, lengthInteger."
+	"Private - Apply the indicator type identified by the <integer> id or <symbol> name, anIntegerOrSymbol, to the range of text in the receiver starting from the one-base integer character position, startInteger, for a run length specified by the <integer>, lengthInteger. Note: This is a low-level operation to update the view. It does not update the receiver's collection of indicators."
 
 	self currentIndicatorId: (self indicatorIdFromName: anIntegerOrSymbol).
 	self sciIndicatorFillRange: startInteger lengthFill: lengthInteger!
 
 setIndicator: anIntegerOrSymbol range: anInterval 
-	"Apply the indicator identified by the <integer> id or <symbol> name, anIntegerOrSymbol, to
-	the range of text specified by the <Interval>, anInterval."
+	"Private - Apply the indicator type identified by the <integer> id or <symbol> name, anIntegerOrSymbol, to the range of text specified by the <Interval>, anInterval."
 
 	self 
 		setIndicator: anIntegerOrSymbol
 		from: anInterval start
 		length: anInterval size!
 
+setIndicatorDefinitions: aCollection
+	| newByName allocated available count |
+	count := aCollection size.
+	allocated := Set new: count.
+	aCollection do: [:each | allocated add: each basicId].
+	available := (##((INDICATOR_CONTAINER to: INDICATOR_IME - 1) asByteArray) difference: allocated)
+				readStream.
+	newByName := IdentityDictionary new: count.
+	aCollection do: 
+			[:each |
+			each basicId ifNil: [each basicId: available next].
+			newByName at: each name put: each].
+	indicatorDefinitions := newByName.
+	self updateIndicatorDefinitions!
+
 setIndicators: anArray 
 	indicators := anArray.
 	self updateIndicators!
-
-setIndicatorStyles: aCollection
-	| newStylesByName allocatedStyles availableStyles count |
-	count := aCollection size.
-	allocatedStyles := Set new: count.
-	aCollection do: [:each | allocatedStyles add: each basicId].
-	availableStyles := ##((INDICATOR_CONTAINER to: INDICATOR_IME - 1) asByteArray) readStream.
-	newStylesByName := IdentityDictionary new: count.
-	aCollection do: 
-			[:each |
-			each basicId
-				ifNil: 
-					[| nextId |
-					
-					[nextId := availableStyles next.
-					allocatedStyles includes: nextId] whileTrue.
-					each basicId: nextId].
-			newStylesByName at: each name put: each].
-	indicatorStyles := newStylesByName.
-	self updateIndicatorStyles!
 
 setKeyBindings: aCollectionOfScintillaKeyBindings
 	keyBindings := aCollectionOfScintillaKeyBindings.
@@ -9519,7 +9511,7 @@ toggleOvertype
 		lParam: 0!
 
 toggleStyling
-	"Enable/disable dynamic styling of text in the receiver."
+	"Enable/disable dynamic styling of text in the receiver. Note that this is only able to toggle on container styling."
 
 	<commandQuery: #queryToggleStyling:>
 	self isStylingEnabled: self isStylingEnabled not!
@@ -9570,7 +9562,7 @@ unindent
 
 updateControlStyles
 	self
-		updateIndicatorStyles;
+		updateIndicatorDefinitions;
 		updateTextStyles;
 		initializeMarkerDefinitions.
 	elementColors
@@ -9580,20 +9572,20 @@ updateControlStyles
 	foldMarginHiColor ifNotNil: [self setFoldMarginHiColor].
 	edgeColor ifNotNil: [self sciSetEdgeColour: self edgeColor]!
 
-updateIndicators
-	self basicClearContainerIndicators.
-	indicators do: [:each | self setIndicator: each styleName range: each range]!
-
-updateIndicatorStyles
+updateIndicatorDefinitions
 	self hideIndicators.
-	indicatorStyles ifNil: [^self].
-	indicatorStyles do: [:each | each applyToView: self].
-	(indicatorStyles lookup: #braceHighlight)
+	indicatorDefinitions ifNil: [^self].
+	indicatorDefinitions do: [:each | each applyToView: self].
+	(indicatorDefinitions lookup: #braceHighlight)
 		ifNil: [self sciBraceHighlightIndicator: false indicator: 0]
 		ifNotNil: [:indic | self sciBraceHighlightIndicator: true indicator: indic basicId].
-	(indicatorStyles lookup: #braceMismatch)
+	(indicatorDefinitions lookup: #braceMismatch)
 		ifNil: [self sciBraceBadLightIndicator: false indicator: 0]
 		ifNotNil: [:indic | self sciBraceBadLightIndicator: true indicator: indic basicId]!
+
+updateIndicators
+	self basicClearContainerIndicators.
+	indicators do: [:each | self setIndicator: each typeName range: each range]!
 
 updateKeyBindings
 	"Private - Update the control with the key bindings configured for the receiver, replacing
@@ -9941,6 +9933,8 @@ activeHotspotBackcolor:!caret, selection, and hotspot styles!element colors!publ
 activeHotspotForecolor!caret, selection, and hotspot styles!element colors!public! !
 activeHotspotForecolor:!caret, selection, and hotspot styles!element colors!public! !
 addAnnotation:!adding!annotations!public! !
+addIndicator:!indicators!public! !
+addIndicatorType:over:!indicators!public! !
 addKeyBinding:!key bindings!public! !
 addMarker:!markers!public! !
 addMarkerType:at:!markers!public! !
@@ -9951,7 +9945,7 @@ annotateLine:withAll:!annotations!public! !
 annotationMode!annotations!public! !
 annotationMode:!annotations!public! !
 annotations!annotations!public! !
-annotations:!indicators!public! !
+annotations:!annotations!public! !
 annotationsForLine:!annotations!enquiries!public! !
 annotationsFromRawAnnotation:!annotations!converting!helpers!private! !
 annotationStyles!annotations!public!style definition! !
@@ -10061,9 +10055,9 @@ characterRepresentations:!accessing!character representations!public! !
 charCloseToPosition:!public!selection! !
 charNearestPosition:!public!selection! !
 clearAll!commands-actions!public!scintilla interface!text retrieval & modification! !
-clearContainerIndicators!indicators!public! !
+clearContainerIndicators!indicators!private! !
 clearHandle!private!realizing/unrealizing! !
-clearIndicator:from:to:!indicators!public! !
+clearIndicator:from:to:!indicators!private! !
 clearRange:!public!text retrieval & modification! !
 clearTabStops:!**auto generated**!public!scintilla interface!tabs & indentation guides! !
 codePage!other settings!public! !
@@ -10212,6 +10206,7 @@ getCharacterClassifications!character classes!private! !
 getDirectPointer!helpers!private! !
 getElementColor:!element colors!private! !
 getEolAnnotations!annotations!private! !
+getIndicatorDefinitions!accessing!indicators!private! !
 getLineState:!**auto generated**!lexer!public!scintilla interface!styling! !
 getRawAnnotation:!annotations!private! !
 getRawAnnotations!annotations!private! !
@@ -10263,14 +10258,13 @@ indentationGuides!public!tabs & indentation guides! !
 indentationGuides:!public!tabs & indentation guides! !
 indentationOfLine:!**auto generated**!public!scintilla interface!tabs & indentation guides! !
 indexOfLine:column:!**auto generated**!enquiries!private!scintilla interface!selection! !
-indicatorCount!constants!indicators!public! !
+indicatorDefinitions!indicators!public! !
+indicatorDefinitions:!indicators!public! !
 indicatorIdFromName:!indicators!private! !
 indicatorMaskAt:!**auto generated**!indicators!public!scintilla interface! !
 indicators!indicators!public! !
 indicators:!indicators!public! !
 indicatorsAt:!indicators!public! !
-indicatorStyles!indicators!public! !
-indicatorStyles:!indicators!public! !
 indicatorsUnder:!indicators!private! !
 initialize!initializing!public! !
 initializeControl!initializing!private! !
@@ -10386,6 +10380,7 @@ maxCompletionListWidth!**auto generated**!autocompletion!public!scintilla interf
 maxCompletionListWidth:!**auto generated**!autocompletion!public!scintilla interface! !
 maxLayoutThreads!**auto generated**!line wrapping!public!scintilla interface! !
 maxLayoutThreads:!**auto generated**!line wrapping!public!scintilla interface! !
+mergeIndicatorDefinitions:!public! !
 modificationEventMask!notifications!public! !
 modificationEventMask:!notifications!public! !
 modifyText:!private!text retrieval & modification! !
@@ -10471,6 +10466,8 @@ removeAllStyling!**auto generated**!public!scintilla interface!styling! !
 removeAnnotation:!annotations!public!removing! !
 removeAnnotationsForLine:!annotations!public!removing! !
 removeBraceHighlight!brace highlighting!public! !
+removeIndicatorsOfType:!indicators!public! !
+removeIndicatorsOfTypes:!indicators!public! !
 removeKeyBinding:!key bindings!public! !
 removeMarker:!markers!public! !
 removeMarkersOfType:!markers!public! !
@@ -10893,10 +10890,10 @@ setFoldMarginColor!folding!margins!private! !
 setFoldMarginHiColor!folding!margins!private! !
 setFoldProperty:!folding!private! !
 setFont:!font!private!style definition! !
-setIndicator:from:length:!indicators!public! !
-setIndicator:range:!indicators!public! !
-setIndicators:!indicators!private! !
-setIndicatorStyles:!helpers!private! !
+setIndicator:from:length:!indicators!private! !
+setIndicator:range:!indicators!private! !
+setIndicatorDefinitions:!helpers!private! !
+setIndicators:!accessing!indicators!private! !
 setKeyBindings:!key bindings!private! !
 setLexerLanguage:!lexer!private! !
 setLine:state:!**auto generated**!public!scintilla interface!styling! !
@@ -10974,8 +10971,8 @@ undo!commands-actions!public!scintilla interface!undo & redo! !
 unfoldAll!commands-actions!folding!public! !
 unindent!**auto generated**!commands-actions!public!scintilla interface! !
 updateControlStyles!initializing!private! !
+updateIndicatorDefinitions!helpers!indicators!private! !
 updateIndicators!helpers!indicators!private! !
-updateIndicatorStyles!helpers!indicators!private! !
 updateKeyBindings!helpers!key bindings!private! !
 updateMarkers!helpers!markers!private! !
 updateSetting:!event handling!private!updating! !
@@ -11596,20 +11593,6 @@ smalltalkTextStyles
 		yourself.
 	^answer!
 
-stbConvert: instVarArray fromVersion: verInteger 
-	"Private - Convert from earlier version view by updating and answering the array of instance variables
-	(for the View), instVarArray."
-
-	| instVars |
-	instVars := instVarArray.
-	verInteger < 13 ifTrue: [instVars := super stbConvert: instVarArray fromVersion: verInteger].
-	verInteger < 14 ifTrue: [instVars := self stbConvertFromVersion13: instVars].
-	verInteger < 15 ifTrue: [instVars := self stbConvertFromVersion14: instVars].
-	verInteger < 16 ifTrue: [instVars := self stbConvertFromVersion15: instVars].
-	verInteger < 17 ifTrue: [instVars := self stbConvertFromVersion16: instVars].
-	verInteger < 18 ifTrue: [instVars := self stbConvertFromVersion17: instVars].
-	^instVars!
-
 stbConvertFromVersion13: anArray
 	"Private - Perform an STB conversion from a version 13 <ScintillaView> to version 14,
 	i.e. use call tip style, fix a small bug, and add some spare inst vars."
@@ -11669,15 +11652,14 @@ stbConvertFromVersion16: anArray
 	instVars := Array new: count.
 	instVars
 		replaceFrom: 1
-		to: 52
-		with: anArray
-		startingAt: 1.
-	instVars
+			to: 52
+			with: anArray
+			startingAt: 1;
 		replaceFrom: 53
-		to: count
-		with: anArray
-		startingAt: 66.
-	instVars at: 28 put: elementColors.
+			to: count
+			with: anArray
+			startingAt: 66;
+		at: 28 put: elementColors.
 	"Some more special cases"
 	elementColors at: SC_ELEMENT_CARET put: (instVars at: 50) ?? Color.WindowText.
 	instVars at: 50 put: nil.
@@ -11693,17 +11675,16 @@ stbConvertFromVersion17: anArray
 	"Private - Perform an STB conversion from a version 17 <ScintillaView> to version 18.
 	Change in the representation of character classifications (whitespace, punctuation and word-characters). Since these are mutually exclusive (a character can only be in one class), these are better represented as a single property."
 
-	| instVars whitespaces punctuation wordChars |
-	instVars := anArray shallowCopy.
-	"Historically empty whitespaces was treated same as default, which is not especially helpful"
-	whitespaces := instVars at: 37.
-	instVars at: 37 put: nil.
+	| whitespaces punctuation wordChars |
+	wordChars := anArray at: 23.
+	punctuation := anArray at: 34.
+	whitespaces := anArray at: 37.
 	whitespaces ifNotNil: [whitespaces isEmpty ifTrue: [whitespaces := nil]].
-	punctuation := instVars at: 34.
-	instVars at: 34 put: nil.
-	wordChars := instVars at: 23.
-	instVars at: 23 put: nil.
-	instVars at: 47
+	anArray
+		at: 23 put: nil;
+		at: 34 put: nil;
+		at: 37 put: nil.
+	anArray at: 47
 		put: ((wordChars isNil and: [punctuation isNil and: [whitespaces isNil]])
 				ifFalse: 
 					[| characterClassifications |
@@ -11713,7 +11694,7 @@ stbConvertFromVersion17: anArray
 					whitespaces ifNotNil: [characterClassifications whitespaces: whitespaces].
 					punctuation ifNotNil: [characterClassifications punctuation: punctuation].
 					characterClassifications]).
-	^instVars!
+	^anArray!
 
 stbConvertFromVersion9: anArray 
 	"Private - Perform an STB conversion from a version 9 (or earlier) <ScintillaView> to version 10.
@@ -11728,9 +11709,6 @@ stbConvertFromVersion9: anArray
 	"All older resources only have container based lexing"
 	table at: #container put: (array at: 18).
 	^array!
-
-stbVersion
-	^18!
 
 tabDrawModes
 	^#(#longArrow #strikeOut)!
@@ -11968,14 +11946,12 @@ multiPasteModes!constants!public! !
 onStartup!events-session!public! !
 selectionModes!constants!public! !
 smalltalkTextStyles!constants!public!style definition! !
-stbConvert:fromVersion:!binary filing!private! !
 stbConvertFromVersion13:!binary filing!private! !
 stbConvertFromVersion14:!binary filing!private! !
 stbConvertFromVersion15:!binary filing!private! !
 stbConvertFromVersion16:!binary filing!private! !
 stbConvertFromVersion17:!binary filing!private! !
 stbConvertFromVersion9:!binary filing!private! !
-stbVersion!binary filing!public! !
 tabDrawModes!constants!public! !
 txtTextStyles!constants!public!style definition! !
 unmergeKeyBindings:!key bindings!public! !

@@ -65,11 +65,12 @@ defaultSafeClassReferences
 				'IID' -> #{OS.COM.IID}.
 				'LOGFONTW' -> #{OS.LOGFONTW}.
 				'WINDOWPLACEMENT' -> #{OS.WINDOWPLACEMENT}.
-				'UI.Scintilla.IndicatorStyle' -> #{UI.Scintilla.IndicatorStyle}.
-				'UI.Scintilla.KeyBinding' -> #{UI.Scintilla.KeyBinding}.
-				'UI.Scintilla.Margin' -> #{UI.Scintilla.Margin}.
-				'UI.Scintilla.MarkerDefinition' -> #{UI.Scintilla.MarkerDefinition}.
-				'UI.Scintilla.TextStyle' -> #{UI.Scintilla.TextStyle}
+				'Scintilla.IndicatorStyle' -> #{UI.Scintilla.IndicatorDefinition}.
+				'Scintilla.IndicatorDefinition' -> #{UI.Scintilla.IndicatorDefinition}.
+				'Scintilla.KeyBinding' -> #{UI.Scintilla.KeyBinding}.
+				'Scintilla.Margin' -> #{UI.Scintilla.Margin}.
+				'Scintilla.MarkerDefinition' -> #{UI.Scintilla.MarkerDefinition}.
+				'Scintilla.TextStyle' -> #{UI.Scintilla.TextStyle}
 			})
 		beImmutableObject;
 		yourself)!

@@ -58,7 +58,7 @@ UI.Scintilla.Attribute
 			'UnderlinedMask' -> 16r30
 		}!
 UI.Scintilla.TextStyle guid: (Core.GUID fromString: '{441d5422-db7d-4872-a16d-d6ca9d88e0b8}')!
-UI.Scintilla.TextStyle comment: '`ScintillaStyle` instances represent the visual styles that can be applied to colour text in a particular `ScintillaView`.
+UI.Scintilla.TextStyle comment: '`Scintilla.TextStyle` instances represent the visual styles that can be applied to colour text in a particular `ScintillaView`.
 
 There are a number of predefined styles:
   `#normal` - the default style used to draw all unstyled text, and from which user-defined styles inherit.
@@ -522,7 +522,7 @@ buildPropertyDescriptors
 			beNullable;
 			isNonBrowsable: true;
 			yourself.
-		(FloatPropertyDescriptor
+		(HundredthsPropertyDescriptor
 			key: #pointSize
 			defaultValue: nil
 			setMessage: SCI_STYLESETSIZEFRACTIONAL)
@@ -624,19 +624,25 @@ normal
 		description: 'Default text style';
 		yourself!
 
-stbConvertFrom: anSTBClassFormat 
+stbConvertFrom: anSTBClassFormat
 	^
-	[:vars | 
-	| instance |
-	instance := self new.
-	vars keysAndValuesDo: [:eachKey :eachValue | instance instVarAt: eachKey put: eachValue].
+	[:data |
+	data resize: self instSize.
+	data becomeA: self.
 	"Scintilla now supports fractional point size, so convert old instance pointSize stored in the same inst var"
-	instance pointSize: instance centiPointSize.
+	data pointSize: data centiPointSize.
 	"Weight is now stored as an integer value, rather than just a bold flag (BoldMask as 2r11)."
-	instance isBold: (instance getThreeStateFlag: 2r11).
-	instance]!
+	data isBold: (data getThreeStateFlag: 2r11).
+	data]!
 
 stbVersion
+	"Versions:
+		0: 7.0 initial (80d5c9c20)
+		1: Scintilla 3.6.3 upgrade; centiPointSize replaces pointSize, adds weight to replace former isBold flag, and a spare* (29d80afa7)
+
+	*Spare _reserved12 inst var from v1 later used for invisibleRepresentation, no conversion required.
+	"
+
 	^1! !
 !UI.Scintilla.TextStyle class categoriesForMethods!
 buildPropertyDescriptors!constants!must not strip!private! !

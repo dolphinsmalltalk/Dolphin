@@ -74,8 +74,12 @@ onShownInBrowser
 	self model modifiedModel: self modifiedModel.
 	self model statusModel value: nil!
 
-onViewOpened
-	super onViewOpened.
+onViewAvailable
+	super onViewAvailable.
+	self applyOptions!
+
+onViewStateRestored
+	super onViewStateRestored.
 	self applyOptions!
 
 promptToSaveClassChanges: aSelectionChangingEvent 
@@ -100,7 +104,8 @@ isModified!public!testing! !
 modifiedModel!accessing!public! !
 onBrowserCardChangedFrom:to:!event handling!private! !
 onShownInBrowser!event handling!private! !
-onViewOpened!event handling!private! !
+onViewAvailable!event handling!public! !
+onViewStateRestored!event handling!public! !
 promptToSaveClassChanges:!helpers!public! !
 systemModel!public! !
 !

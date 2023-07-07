@@ -70,18 +70,7 @@ printOn: aStream
 	aStream nextPut: $)!
 
 printPropertiesOn: aStream
-	self class propertyDescriptors do: 
-			[:descriptor |
-			| name |
-			name := descriptor key.
-			(descriptor getPrintString: name of: self)
-				ifNotNil: 
-					[:value |
-					aStream
-						nextPutAll: ', ';
-						nextPutAll: name;
-						nextPut: $=;
-						display: value]]!
+	self class propertyDescriptors do: [:descriptor | descriptor printPropertyOf: self on: aStream]!
 
 storeableProperties
 	^{#basicId} , self class propertyDescriptors collect: [:each | each key]!

@@ -53,9 +53,13 @@ styleRunBefore:!helpers!public! !
 !UI.Scintilla.NullStyler class methodsFor!
 
 stbConvertFrom: anSTBVersion 
-	^[:instVars | self new]!
+	^[:instVars | NullStyler new]!
 
 stbVersion
+	"Versions:
+		0: 
+		1: 7.0 initial (80d5c9c20)"
+
 	^1! !
 !UI.Scintilla.NullStyler class categoriesForMethods!
 stbConvertFrom:!binary filing!public! !
