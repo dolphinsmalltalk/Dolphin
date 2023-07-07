@@ -116,7 +116,7 @@ getDirectoryHandle
 				dwCreationDistribution: OPEN_EXISTING
 				dwFlagsAndAttributes: FILE_FLAG_BACKUP_SEMANTICS | FILE_FLAG_OVERLAPPED
 				hTemplateFile: nil.
-	handle asSignedInteger == -1 ifFalse: [^self].
+	handle isInvalid ifFalse: [^self].
 	handle := nil.
 	Kernel32 systemError!
 

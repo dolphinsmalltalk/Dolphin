@@ -220,7 +220,7 @@ open
 				dwCreationDistribution: self openFlags
 				dwFlagsAndAttributes: FILE_ATTRIBUTE_NORMAL
 				hTemplateFile: nil.
-	fh asSignedInteger == -1]
+	fh isInvalid]
 			whileTrue: [self signalOsError: true].
 	handle := fh.
 	self beFinalizable!
@@ -822,11 +822,11 @@ for: matchString in: dirString do: operation
 	"For each file/directory matching the wildcarded string argument, matchString, in the directory named, dirString, evaluate the monadic valuable, operation, with a WIN32_FIND_DATA describing the file/directory as the argument."
 
 	| hFind findStruct pattern |
-	findStruct := WIN32_FIND_DATAW new.
+	findStruct := WIN32_FIND_DATAW newBuffer.
 	findStruct directory: dirString.
 	pattern := self composePath: dirString subPath: matchString.
 	hFind := Kernel32 findFirstFile: pattern lpFindFileData: findStruct.
-	hFind = INVALID_HANDLE_VALUE
+	hFind isInvalid
 		ifTrue: 
 			[| err |
 			err := Kernel32 getLastError.
