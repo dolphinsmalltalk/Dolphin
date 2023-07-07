@@ -94,10 +94,12 @@ package methodNames
 	add: #TextEdit -> #isLowercase:;
 	add: #TextEdit -> #isNumeric;
 	add: #TextEdit -> #isNumeric:;
+	add: #TextEdit -> #isUpdatePerChar:;
 	add: #TextEdit -> #isUpperCase;
 	add: #TextEdit -> #isUppercase:;
 	add: #TextEdit -> #lines;
 	add: #TextEdit -> #setModify:;
+	add: #TextEdit -> #updatePerChar:;
 	add: #TreeView -> #disableExpandAll;
 	add: #TreeView -> #disableExpandAll:;
 	add: #TypeConverter -> #leftExceptionalValue;
@@ -977,6 +979,10 @@ isNumeric: aBoolean
 	#deprecated.	"6.0"
 	self format: #numeric!
 
+isUpdatePerChar: aBoolean
+	Notification deprecated.
+	self updateMode: (aBoolean ifTrue: [#perChar] ifFalse: [#focusLost])!
+
 isUpperCase
 	#deprecated.	"6.0: Use #format"
 	^self format == #uppercase!
@@ -992,7 +998,13 @@ lines
 setModify: aBoolean 
 	"May be used in early version view resources."
 	#deprecated.
-	self isTextModified: aBoolean! !
+	self isTextModified: aBoolean!
+
+updatePerChar: aBoolean
+	"Set the receiver to update its model as each character is typed if aBoolean is true"
+
+	Notification deprecated.
+	self updateMode: (aBoolean ifTrue: [#perChar] ifFalse: [#focusLost])! !
 !TextEdit categoriesForMethods!
 clear!commands-actions!public! !
 findNextWrapped:down:wholeWord:matchCase:!public!searching & replacing! !
@@ -1000,10 +1012,12 @@ isLowercase!public!testing! !
 isLowercase:!public!testing! !
 isNumeric!public!testing! !
 isNumeric:!accessing!public! !
+isUpdatePerChar:!accessing!public! !
 isUpperCase!public!testing! !
 isUppercase:!public!testing! !
 lines!accessing!public! !
 setModify:!modes!public! !
+updatePerChar:!accessing!public! !
 !
 
 !TextTileIcon class methodsFor!

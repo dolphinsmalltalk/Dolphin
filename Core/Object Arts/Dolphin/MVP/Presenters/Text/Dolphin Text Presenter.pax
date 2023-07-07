@@ -207,7 +207,7 @@ OS.AbstractTEXTRANGE
 		}!
 UI.ValueConvertingControlView
 	subclass: #'UI.TextEdit'
-	instanceVariableNames: 'teFlags'
+	instanceVariableNames: 'teFlags updateMode _reserved18 _reserved19 _reserved20'
 	classVariableNames: 'FindDialogMessage'
 	imports: #(#{OS.TextEditConstants})
 	classInstanceVariableNames: ''
@@ -220,7 +220,6 @@ UI.ValueConvertingControlView
 			'ModifiedMask' -> 16r8.
 			'ReadOnlyMask' -> 16r1.
 			'StaticMask' -> 16r10.
-			'UpdatePerCharMask' -> 16r2.
 			'WantTabMask' -> 16r4
 		}!
 UI.TextEdit

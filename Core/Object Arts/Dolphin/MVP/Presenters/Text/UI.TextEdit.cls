@@ -2,7 +2,7 @@
 
 UI.ValueConvertingControlView
 	subclass: #'UI.TextEdit'
-	instanceVariableNames: 'teFlags'
+	instanceVariableNames: 'teFlags updateMode _reserved18 _reserved19 _reserved20'
 	classVariableNames: 'FindDialogMessage'
 	imports: #(#{OS.TextEditConstants})
 	classInstanceVariableNames: ''
@@ -15,7 +15,6 @@ UI.ValueConvertingControlView
 			'ModifiedMask' -> 16r8.
 			'ReadOnlyMask' -> 16r1.
 			'StaticMask' -> 16r10.
-			'UpdatePerCharMask' -> 16r2.
 			'WantTabMask' -> 16r4
 		}!
 UI.TextEdit guid: (Core.GUID fromString: '{87b4c73a-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -52,8 +51,7 @@ alignment: aSymbol
 	!
 
 apply
-	"Apply the changes made to the edit to the receiver's model. Answer whether
-	any update actually occurred to the model."
+	"Apply the changes made to the edit to the receiver's model. Answer whether any update actually occurred to the model."
 
 	<commandQuery: #isTextModified>
 	| modified |
@@ -358,7 +356,7 @@ enChange
 enKillFocus
 	"Private - The receiver is losing focus"
 
-	self updateModel.	
+	updateMode == #explicit ifFalse: [self updateModel].
 	^self presenter onKillFocus.!
 
 enMaxText
@@ -659,12 +657,6 @@ isUpdatePerChar
 	"Answer whether the receiver is in update per character mode."
 
 	^self updatePerChar!
-
-isUpdatePerChar: aBoolean
-	"Sets the receiver into update per char mode if aBoolean is true"
-
-	self updatePerChar: aBoolean
-!
 
 isWriteable
 	^self isReadOnly not!
@@ -1177,6 +1169,22 @@ undo
 	<commandQuery: #canUndo>
 	self basicUndo!
 
+updateMode
+	"Answer the update mode of the receiver:
+		#focus, updates on loss of focus, e.g. tabbing away
+		#perChar, updates immediately after each character typed
+		#explicit, updates only on explicit apply"
+
+	^updateMode!
+
+updateMode: aSymbol
+	"Set the update mode of the receiver:
+		#focusLost, updates on loss of focus, e.g. tabbing away
+		#perChar, updates immediately after each character typed
+		#explicit, updates only on explicit apply"
+
+	updateMode := aSymbol!
+
 updateModel
 	"Private - The displayed value of the receiver may have been changed so set this
 	back into the model after first running through the type converter.
@@ -1193,14 +1201,7 @@ updateModel
 updatePerChar
 	"Answer true if the receiver is to update its model as each character is typed"
 
-	^teFlags anyMask: UpdatePerCharMask
-	!
-
-updatePerChar: aBoolean
-	"Set the receiver to update its model as each character is typed if aBoolean
-	is true"
-
-	teFlags := teFlags mask: UpdatePerCharMask set: aBoolean!
+	^updateMode == #perChar!
 
 value
 	"Answer the value of the receiver."
@@ -1380,7 +1381,6 @@ isStatic:!accessing!public! !
 isTextModified!private!testing! !
 isTextModified:!modes!private! !
 isUpdatePerChar!public!testing! !
-isUpdatePerChar:!accessing!public! !
 isWriteable!public!testing! !
 lineCount!accessing!public! !
 lineFromPosition:!accessing!public! !
@@ -1435,9 +1435,10 @@ textLimit!accessing!public! !
 textLimit:!accessing!public! !
 textRange!accessing!public! !
 undo!commands-actions!public! !
+updateMode!accessing!public! !
+updateMode:!accessing!public! !
 updateModel!private!updating! !
 updatePerChar!public!testing! !
-updatePerChar:!accessing!public! !
 value!accessing!public! !
 value:!accessing!public! !
 wantReturn!public!testing! !
@@ -1483,6 +1484,142 @@ onStartup
 	FindDialogMessage := self registerMessage: 'commdlg_FindReplace'
 !
 
+stbConvert: instVarArray fromVersion: verInteger
+	"Private - Convert from earlier version view by updating and answering the array of instance variables (for the TextEdit view), instVarArray.
+	Note that here we are converting the array of variables for the view proxy."
+
+	| instVars |
+	instVars := instVarArray.
+	verInteger < 22
+		ifTrue: 
+			[verInteger < 21
+				ifTrue: 
+					[verInteger < 20
+						ifTrue: 
+							[verInteger < 19
+								ifTrue: 
+									[verInteger < 18
+										ifTrue: 
+											[verInteger < 17
+												ifTrue: 
+													[verInteger < 16
+														ifTrue: 
+															[verInteger < 15
+																ifTrue: 
+																	[verInteger < 14
+																		ifTrue: 
+																			[verInteger < 13 ifTrue: [instVars := super stbConvert: instVarArray fromVersion: verInteger].
+																			instVars := self stbConvertFromVersion13: instVars].
+																	instVars := self stbConvertFromVersion14: instVars].
+															instVars := self stbConvertFromVersion15: instVars].
+													instVars := self stbConvertFromVersion16: instVars].
+											instVars := self stbConvertFromVersion17: instVars].
+									instVars := self stbConvertFromVersion18: instVars].
+							instVars := self stbConvertFromVersion19: instVars].
+					instVars := self stbConvertFromVersion20: instVars].
+			instVars := self stbConvertFromVersion21: instVars].
+	^instVars!
+
+stbConvertFrom: anSTBClassFormat
+	"Note this is not normally used because views are usually stored as proxies (instances of STBViewProxy) when serialized. It is present to support some contributed subclasses in the hierarchy."
+
+	anSTBClassFormat version >= 22 ifTrue: [^super stbConvertFrom: anSTBClassFormat].
+	^
+	[:instVars |
+	((Array new: self instSize)
+		replaceFrom: 1
+			to: 15
+			with: instVars
+			startingAt: 1;
+		at: 16 put: ((instVars at: 16) bitAnd: ##(2 bitInvert));
+		at: 17 put: (((instVars at: 16) allMask: 16r2) ifTrue: [#perChar] ifFalse: [#focusLost]);
+		replaceFrom: 21
+			to: self instSize
+			with: instVars
+			startingAt: 17;
+		yourself) becomeA: self]!
+
+stbConvertFromVersion13: anArray
+	"Private - Perform an STB conversion from a version 13 to version 14."
+
+	"No change at this level - we are skipping to 22, but see ScintillaView"
+
+	^anArray!
+
+stbConvertFromVersion14: anArray
+	"Private - Perform an STB conversion from a version 14 to version 15."
+
+	"No change at this level - we are skipping to 22, but see ScintillaView"
+
+	^anArray!
+
+stbConvertFromVersion15: anArray
+	"Private - Perform an STB conversion from a version 15 to version 16."
+
+	"No change at this level - we are skipping to 22, but see ScintillaView"
+
+	^anArray!
+
+stbConvertFromVersion16: anArray
+	"Private - Perform an STB conversion from a version 16 to version 17."
+
+	"No change at this level - we are skipping to 22, but see ScintillaView"
+
+	^anArray!
+
+stbConvertFromVersion17: anArray
+	"Private - Perform an STB conversion from a version 17 to version 18."
+
+	"No change at this level - we are skipping to 22, but see ScintillaView"
+
+	^anArray!
+
+stbConvertFromVersion18: anArray
+	"Private - Perform an STB conversion from a version 18 to version 19."
+
+	"No change at this level - we are skipping to 22"
+
+	^anArray!
+
+stbConvertFromVersion19: anArray
+	"Private - Perform an STB conversion from a version 19 to version 20."
+
+	"No change at this level - we are skipping to 22"
+
+	^anArray!
+
+stbConvertFromVersion20: anArray
+	"Private - Perform an STB conversion from a version 20 to version 21."
+
+	"No change at this level - we are skipping to 22"
+
+	^anArray!
+
+stbConvertFromVersion21: anArray
+	"Private - Perform an STB conversion from a version 21 to version 22.
+	Adds 'updateMode' to replace the single UpdatePerChar flag and support 3 model update modes (loss of focus, per char, and explicit).
+	"
+
+	"Here we copy the vars up to teFlags, copy over teFlags without the UpdatePerChar bit, set the updateMode to #focusLost or #perChar depending on whether the UpdatePerChar bit was set, and then copy remaining subclass instance variables over."
+
+	^(Array new: self instSize)
+		replaceFrom: 1
+			to: 15
+			with: anArray
+			startingAt: 1;
+		at: 16 put: ((anArray at: 16) bitAnd: ##(2 bitInvert));
+		at: 17 put: (((anArray at: 16) allMask: 16r2) ifTrue: [#perChar] ifFalse: [#focusLost]);
+		replaceFrom: 21
+			to: self instSize
+			with: anArray
+			startingAt: 17;
+		yourself!
+
+stbVersion
+	"Note we have had to skip from 13 to 22 because of later version in subclasses. At this level there are no changes 13..21, and then 22 adds the updateMode inst var and 3 spares."
+
+	^22!
+
 themePartName
 	^'EDIT'
 !
@@ -1499,6 +1636,18 @@ winClassName
 icon!constants!public! !
 initialize!development!initializing!private! !
 onStartup!event handling!public! !
+stbConvert:fromVersion:!binary filing!private! !
+stbConvertFrom:!binary filing!private! !
+stbConvertFromVersion13:!binary filing!private! !
+stbConvertFromVersion14:!binary filing!private! !
+stbConvertFromVersion15:!binary filing!private! !
+stbConvertFromVersion16:!binary filing!private! !
+stbConvertFromVersion17:!binary filing!private! !
+stbConvertFromVersion18:!binary filing!private! !
+stbConvertFromVersion19:!binary filing!private! !
+stbConvertFromVersion20:!binary filing!private! !
+stbConvertFromVersion21:!binary filing!private! !
+stbVersion!binary filing!public! !
 themePartName!constants!private!theming! !
 uninitialize!class hierarchy-removing!private! !
 winClassName!constants!private! !

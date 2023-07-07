@@ -25,22 +25,22 @@ HDITEMW comment: ''!
 cchTextMax
 	"Answer the <Integer> value of the receiver's 'cchTextMax' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_cchTextMax!
+	^bytes int32AtOffset: _OffsetOf_cchTextMax!
 
 cchTextMax: anInteger
 	"Set the receiver's 'cchTextMax' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_cchTextMax put: anInteger!
+	bytes int32AtOffset: _OffsetOf_cchTextMax put: anInteger!
 
 cxy
 	"Answer the <Integer> value of the receiver's 'cxy' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_cxy!
+	^bytes int32AtOffset: _OffsetOf_cxy!
 
 cxy: anInteger
 	"Set the receiver's 'cxy' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_cxy put: anInteger!
+	bytes int32AtOffset: _OffsetOf_cxy put: anInteger!
 
 dwState
 	"Answer the receiver's dwState field as a Smalltalk object."
@@ -55,12 +55,12 @@ dwState: anObject
 fmt
 	"Answer the <Integer> value of the receiver's 'fmt' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_fmt!
+	^bytes int32AtOffset: _OffsetOf_fmt!
 
 fmt: anInteger
 	"Set the receiver's 'fmt' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_fmt put: anInteger!
+	bytes int32AtOffset: _OffsetOf_fmt put: anInteger!
 
 handle
 	"Answer the 'handle' of the item described by the receiver."
@@ -68,24 +68,24 @@ handle
 	^self shouldNotImplement!
 
 hbm
-	"Answer the <ExternalHandle> value of the receiver's 'hbm' field."
+	"Answer the <Handle> value of the receiver's 'hbm' field."
 
 	^(bytes uintPtrAtOffset: _OffsetOf_hbm) asExternalHandle!
 
-hbm: anExternalHandle
-	"Set the receiver's 'hbm' field to the value of the argument, anExternalHandle"
+hbm: aHandle
+	"Set the receiver's 'hbm' field to the value of the argument, aHandle"
 
-	bytes uintPtrAtOffset: _OffsetOf_hbm put: anExternalHandle!
+	bytes uintPtrAtOffset: _OffsetOf_hbm put: aHandle!
 
 iImage
 	"Answer the <Integer> value of the receiver's 'iImage' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_iImage!
+	^bytes int32AtOffset: _OffsetOf_iImage!
 
 iImage: anInteger
 	"Set the receiver's 'iImage' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_iImage put: anInteger!
+	bytes int32AtOffset: _OffsetOf_iImage put: anInteger!
 
 imageValidMask
 	"Private - Answer the bit mask the receiver uses to denote that the iImage
@@ -96,17 +96,17 @@ imageValidMask
 iOrder
 	"Answer the <Integer> value of the receiver's 'iOrder' field."
 
-	^bytes sdwordAtOffset: _OffsetOf_iOrder!
+	^bytes int32AtOffset: _OffsetOf_iOrder!
 
 iOrder: anInteger
 	"Set the receiver's 'iOrder' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_iOrder put: anInteger!
+	bytes int32AtOffset: _OffsetOf_iOrder put: anInteger!
 
 lParam
 	"Answer the <Integer> value of the receiver's 'lParam' field."
 
-	^bytes dwordAtOffset: _OffsetOf_lParam!
+	^bytes uint32AtOffset: _OffsetOf_lParam!
 
 lParam: anObject
 	"Set the receiver's lParam field to the value of anObject."
@@ -132,22 +132,22 @@ pszText: anUtf16String
 pvFilter
 	"Answer the <Integer> value of the receiver's 'pvFilter' field."
 
-	^bytes dwordAtOffset: _OffsetOf_pvFilter!
+	^bytes uint32AtOffset: _OffsetOf_pvFilter!
 
 pvFilter: anInteger
 	"Set the receiver's 'pvFilter' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_pvFilter put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_pvFilter put: anInteger!
 
 state
 	"Answer the <Integer> value of the receiver's 'state' field."
 
-	^bytes dwordAtOffset: _OffsetOf_state!
+	^bytes uint32AtOffset: _OffsetOf_state!
 
 state: anInteger
 	"Set the receiver's 'state' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_state put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_state put: anInteger!
 
 stateMask
 	"Answer the receiver's stateMask field as a Smalltalk object."
@@ -173,12 +173,12 @@ textValidMask
 type
 	"Answer the <Integer> value of the receiver's 'type' field."
 
-	^bytes dwordAtOffset: _OffsetOf_type!
+	^bytes uint32AtOffset: _OffsetOf_type!
 
 type: anInteger
 	"Set the receiver's 'type' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_type put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_type put: anInteger! !
 !HDITEMW categoriesForMethods!
 cchTextMax!**compiled accessors**!public! !
 cchTextMax:!**compiled accessors**!public! !
@@ -214,6 +214,9 @@ type:!**compiled accessors**!public! !
 !
 
 !HDITEMW class methodsFor!
+
+byteSize
+	^_HDITEMW_Size!
 
 defineFields
 	"Define the fields of the HDITEM structure.
@@ -257,6 +260,7 @@ defineFields
 getFieldNames
 	^#(#mask #cxy #pszText #hbm #cchTextMax #fmt #lParam #iImage #iOrder #type #pvFilter #state)! !
 !HDITEMW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!initializing!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

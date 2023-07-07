@@ -362,7 +362,7 @@ autostring: aStringAspectSymbol
 			| presenter |
 			presenter := TextPresenter createIn: p on: m.
 			presenter view
-				updatePerChar: true;
+				updateMode: #perChar;
 				selectAllIfSingleLine.
 			presenter])
 		type: String;
@@ -807,7 +807,7 @@ multilineString: aStringAspectSymbol
 						in: p
 						on: m.
 			presenter view
-				updatePerChar: true;
+				updateMode: #perChar;
 				tabWidth: 4.
 			presenter])
 		type: String;
@@ -957,7 +957,7 @@ richText: aRichTextAspectSymbol
 			[:p :m |
 			| presenter |
 			presenter := RichTextPresenter createIn: p on: m.
-			presenter view updatePerChar: true.
+			presenter view updateMode: #perChar.
 			presenter])
 		type: RichText;
 		yourself!

@@ -39,7 +39,7 @@ testPackageClosure
 	missing := Smalltalk developmentSystem unimplementedSelectorsIn: aBrowserEnvironment.	"Use symmetric  difference, as we also want to fix up the test if some missing message is fixed."
 	self assert: (missing symmetricDifference: #(#defineTemplate)) asArray sort equals: #()
 	"To debug this, open an env browser on the deployment scope as follows:
-		aBrowserEnvironment openEditor.
+		EnvironmentBrowserShell onEnvironment: aBrowserEnvironment.
 	The call graph to unimplemented messages can then be investigated starting with the Method/Browse other/All unimplemented command"!
 
 testStbConversion15
