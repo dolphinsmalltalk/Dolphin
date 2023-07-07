@@ -629,7 +629,8 @@ testIsUtf16SurrogateTests
 			self deny: ch isSurrogate.
 			self deny: ch isUtf16Surrogate.
 			self deny: ch isUtf16Lead.
-			self deny: ch isUtf16Trail].
+			self deny: ch isUtf16Trail.
+			self assert: ch utf8Length equals: 1].
 	16r80 to: 16rD700
 		do: 
 			[:each |
@@ -641,7 +642,8 @@ testIsUtf16SurrogateTests
 			self deny: ch isSurrogate.
 			self deny: ch isUtf16Surrogate.
 			self deny: ch isUtf16Lead.
-			self deny: ch isUtf16Trail].
+			self deny: ch isUtf16Trail.
+			self assert: ch utf8Length equals: (ch codePoint <= 16r7FF ifTrue: [2] ifFalse: [3])].
 	16rD800 to: 16rDBFF
 		do: 
 			[:each |
@@ -665,6 +667,8 @@ testIsUtf16SurrogateTests
 			self assert: ch isUtf16Surrogate.
 			self deny: ch isUtf16Lead.
 			self assert: ch isUtf16Trail].
+	#(16rD800 16rDBFF 16rDC00 16rDFFF)
+		do: [:each | self should: [(Character utf16Value: each) utf8Length] raise: Error].
 	nonchars := self nonCharacters.
 	((16rE000 to: 16rFFFF) difference: nonchars) do: 
 			[:each |
@@ -676,8 +680,9 @@ testIsUtf16SurrogateTests
 			self deny: ch isSurrogate.
 			self deny: ch isUtf16Surrogate.
 			self deny: ch isUtf16Lead.
-			self deny: ch isUtf16Trail].
-	nonchars , {-1. OS.Win32Constants.MAX_UCSCHAR + 1} do: 
+			self deny: ch isUtf16Trail.
+			self assert: ch utf8Length equals: 3].
+	nonchars , { -1. OS.Win32Constants.MAX_UCSCHAR + 1 } do: 
 			[:each |
 			self deny: (Character isValidUtf16CodeUnit: each).
 			self deny: (Character isValidCodePoint: each).
@@ -733,7 +738,8 @@ testIsUtf8SurrogateTests
 			self assert: ch isSurrogate.
 			self assert: ch isUtf8Surrogate.
 			self deny: ch isUtf8Lead.
-			self assert: ch isUtf8Trail].
+			self assert: ch isUtf8Trail.
+			self assert: ch utf8Length equals: 1].
 	192 to: 255
 		do: 
 			[:i |
@@ -743,7 +749,8 @@ testIsUtf8SurrogateTests
 			self assert: ch isSurrogate.
 			self assert: ch isUtf8Surrogate.
 			self assert: ch isUtf8Lead.
-			self deny: ch isUtf8Trail]!
+			self deny: ch isUtf8Trail.
+			self assert: ch utf8Length equals: 1]!
 
 testIsWhitespace
 	"Graph characters are non-blank printable characters."

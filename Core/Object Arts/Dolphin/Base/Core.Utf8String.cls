@@ -503,13 +503,7 @@ encodedSizeAt: anInteger
 encodedSizeOf: aCharacter
 	"Private - Answer the number of basic slots (code units) occupied by the argument when encoded in the UTF-8 encoding."
 
-	| codePoint |
-	aCharacter isUtf8 ifTrue: [^1].
-	codePoint := aCharacter codePoint.
-	codePoint <= 16r7FF ifTrue: [^2].
-	codePoint <= 16rFFFF ifTrue: [^3].
-	codePoint <= UCHAR_MAX_VALUE ifTrue: [^4].
-	self error: 'Invalid code point U+' , (codePoint printStringBase: 16)!
+	^aCharacter utf8Length!
 
 encodeOn: aPuttableStream put: aCharacter
 	"Private - Encode the <Character> argument onto the <WriteStream> argument using the UTF-8 encoding. This requires between one and four byte code units to be written to the stream, depending on the magnitude of the code point. An error is raised if the <Character> has an invalid code point, or is a UTF-16 surrogate. If the <Character> is a UTF-8 surrogate, the surrogate code point is emitted directly."

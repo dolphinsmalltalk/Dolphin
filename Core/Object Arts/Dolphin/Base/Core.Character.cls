@@ -564,7 +564,23 @@ unicodeName
 	^self unicodeName: U_EXTENDED_CHAR_NAME!
 
 unicodeName: anInteger
-	^OS.ICU u_charName: self nameChoice: anInteger! !
+	^OS.ICU u_charName: self nameChoice: anInteger!
+
+utf8Length
+	| t |
+	code <= 16rFF
+		ifTrue: 
+			[code <= 16r7F ifTrue: [^1].
+			t := AnsiCodePoints at: code + 1]
+		ifFalse: 
+			[t := code bitAnd: EncodingMask.
+			t == Utf8Mask ifTrue: [^1].
+			t == Utf16Mask ifTrue: [^self error: 'UTF-16 surrogates have no representation in UTF-8'].
+			t := code bitAnd: 16rFFFFFF].
+	t <= 16r7FF ifTrue: [^2].
+	t <= 16rFFFF ifTrue: [^3].
+	t <= UCHAR_MAX_VALUE ifTrue: [^4].
+	^self error: 'Invalid code point U+' , (t printStringBase: 16)! !
 !Core.Character categoriesForMethods!
 _beginsString:!comparing!double dispatch!private! !
 _separateSubStringsIn:!private!tokenizing! !
@@ -638,6 +654,7 @@ split:do:!public!tokenizing! !
 to:!converting!public! !
 unicodeName!printing!public! !
 unicodeName:!printing!public! !
+utf8Length!encode/decode!public! !
 !
 
 Core.Character methodProtocol: #Character attributes: #(#ansi #readOnly) selectors: #(#asLowercase #asString #asUppercase #codePoint #isAlphaNumeric #isDigit #isLetter #isLowercase #isUppercase)!

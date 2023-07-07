@@ -121,6 +121,9 @@ display: anObject
 
 	bufferProtect critical: [anObject displayOn: buffer]!
 
+encodedSizeOf: aCharacter 
+	^aCharacter utf8Length!
+
 fileFileIn
 	"The user has selected the standard File/File In command. Prompt for a file
 	(containing chunks) and file it in."
@@ -332,6 +335,7 @@ crtab!adding!public! !
 crtab:!adding!public! !
 defaultHelpId!public! !
 display:!printing!public! !
+encodedSizeOf:!public! !
 fileFileIn!commands!public! !
 flush!buffer!public! !
 forgetSize!commands!public! !
