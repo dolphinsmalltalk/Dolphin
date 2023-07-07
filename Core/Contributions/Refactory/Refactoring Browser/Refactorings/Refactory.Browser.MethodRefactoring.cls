@@ -33,6 +33,22 @@ buildSelectorString: aSelector withPermuteMap: anIntegerCollection
 				nextPut: $\x20].
 	^stream contents!
 
+fullyQualifyReference: aQualifiedReferenceNode
+	"Rewrite a qualified reference to the fully-qualified path of the static variable."
+
+	^aQualifiedReferenceNode binding
+		ifNil: [aQualifiedReferenceNode copy]
+		ifNotNil: 
+			[:binding |
+			(aQualifiedReferenceNode copyWithName: binding fullName)
+				isRelative: false;
+				yourself]!
+
+rewriteRelativeReference: aStQualifiedRefNode
+	^aStQualifiedRefNode binding
+		ifNil: [aStQualifiedRefNode copy]
+		ifNotNil: [:binding | self rewriteRelativeReference: aStQualifiedRefNode toTarget: binding]!
+
 shouldOverride: aSymbol in: aClass
 	^(self lookupOption: #alreadyDefined)
 		cull: self
@@ -41,6 +57,8 @@ shouldOverride: aSymbol in: aClass
 !Refactory.Browser.MethodRefactoring categoriesForMethods!
 buildSelectorString:!helpers!private! !
 buildSelectorString:withPermuteMap:!helpers!private! !
+fullyQualifyReference:!private!transforming! !
+rewriteRelativeReference:!private!transforming! !
 shouldOverride:in:!private!requests! !
 !
 

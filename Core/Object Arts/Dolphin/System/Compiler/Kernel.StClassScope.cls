@@ -61,12 +61,12 @@ outer
 	^nil!
 
 resolveIdentifier: aString
-	^(self instanceVariables lookup: aString)
-		ifNil: 
-			[staticVariables at: aString
-				ifAbsentPutClean: 
-					[(methodClass fullBindingFor: aString environment: self environment)
-						ifNotNil: [:b | StStaticVariable scope: self binding: b]]]!
+	^(self instanceVariables lookup: aString) ifNil: [self resolveStatic: aString]!
+
+resolveStatic: aString
+	^staticVariables at: aString
+		ifAbsentPutClean: 
+			[(self fullBindingFor: aString) ifNotNil: [:b | StStaticVariable scope: self binding: b]]!
 
 selfVariable
 	^selfVariable
@@ -97,7 +97,8 @@ metaScope!accessing!public! !
 methodClass!accessing!public! !
 methodClass:environment:!initializing!private! !
 outer!accessing!public! !
-resolveIdentifier:!operations!private! !
+resolveIdentifier:!operations!public! !
+resolveStatic:!operations!public! !
 selfVariable!operations!public! !
 superVariable!operations!public! !
 visibleVariablesDo:visited:!operations!public! !

@@ -1,8 +1,8 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.Refactoring
+Refactory.Browser.ChangeStaticVariableQualificationRefactoring
 	subclass: #'Refactory.Browser.UnqualifyStaticVariablesRefactoring'
-	instanceVariableNames: 'tree'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -12,45 +12,30 @@ Refactory.Browser.UnqualifyStaticVariablesRefactoring comment: ''!
 !Refactory.Browser.UnqualifyStaticVariablesRefactoring categoriesForClass!Refactory-Refactorings! !
 !Refactory.Browser.UnqualifyStaticVariablesRefactoring methodsFor!
 
-parseTree
-	^tree!
-
-preconditions
-	^RBCondition empty!
-
-transform
-	self unqualifyStaticVariables!
-
-unqualifyStaticVariables
+buildRewriter
 	| rewriter |
 	rewriter := ParseTreeRewriter new.
 	rewriter
 		replace: '`identifier'
-		withValueFrom: [:variableNode | self rewriteStaleStaticVariable: variableNode]
+		withValueFrom: [:variableNode | self rewriteStaticVariable: variableNode]
+		when: [:variableNode | self isStaleStaticVariable: variableNode].
+	rewriter
+		replace: '`#literal'
+		withValueFrom: 
+			[:literalNode |
+			literalNode rewriteQualifiedReferencesWith: [:refNode | self rewriteRelativeReference: refNode]]
 		when: 
-			[:variableNode |
-			variableNode isStaticVariable and: 
-					[variableNode hasQualifiedName
-						and: [(self shortestNameForStaticVariable: variableNode) ~= variableNode name]]].
-	(rewriter executeTree: tree) ifTrue: [tree := rewriter tree]!
-
-unqualifyVariablesIn: aStMethodNode
-	tree := aStMethodNode! !
+			[:literalNode |
+			literalNode isOrContainsQualifiedReferenceMatching: 
+					[:refNode |
+					| binding |
+					binding := refNode binding.
+					binding notNil and: 
+							["Could already be minimally qualified"
+							refNode pathString ~= binding unqualifiedName
+								and: [(self shortestNameToBind: binding from: refNode) ~= refNode pathString]]]].
+	^rewriter! !
 !Refactory.Browser.UnqualifyStaticVariablesRefactoring categoriesForMethods!
-parseTree!accessing!public! !
-preconditions!preconditions!public! !
-transform!public!transforming! !
-unqualifyStaticVariables!private!transforming! !
-unqualifyVariablesIn:!public! !
-!
-
-!Refactory.Browser.UnqualifyStaticVariablesRefactoring class methodsFor!
-
-model: aRBModel unqualifyVariablesIn: aBoundProgramNode
-	^self new
-		model: aRBModel;
-		unqualifyVariablesIn: aBoundProgramNode! !
-!Refactory.Browser.UnqualifyStaticVariablesRefactoring class categoriesForMethods!
-model:unqualifyVariablesIn:!instance creation!public! !
+buildRewriter!private!transforming! !
 !
 

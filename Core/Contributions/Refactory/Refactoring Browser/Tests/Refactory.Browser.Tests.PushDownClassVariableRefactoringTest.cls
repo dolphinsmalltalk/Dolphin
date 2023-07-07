@@ -106,12 +106,34 @@ testNonExistantName
 		withMessage: '<1p> does not define class variable #Foo' << BasicLintRuleTestData!
 
 testPushDownClassVariable
-	| refactoring |
-	refactoring := PushDownClassVariableRefactoring variable: #Foo1 class: LintRuleTestData.
-	self assert: ((refactoring model classFor: LintRuleTestData) directlyDefinesClassVariable: #Foo1).
+	| refactoring refDataApp sourceClass targetClass |
+	"Deliberately create a (partially-qualified) reference from outside the class hierarchy - these should be rewritten too."
+	refDataApp := model classFor: RefactoryTestDataApp.
+	refDataApp
+		compile: 'refToExternalClassVar ^{ #(#{_.LintRuleTestData.Foo1}). LintRuleTestData.Foo1. #{_.LintRuleTestData.Foo1}. #{Refactory.Browser.TestData.LintRuleTestData.Foo1}. Refactory.Browser.TestData.LintRuleTestData.Foo1 }'.
+	refactoring := PushDownClassVariableRefactoring
+				model: model
+				variable: #Foo1
+				class: LintRuleTestData.
+	sourceClass := model classFor: LintRuleTestData.
+	self assert: (sourceClass directlyDefinesClassVariable: #Foo1).
+	targetClass := model classFor: BasicLintRuleTestData.
+	self assert: (targetClass metaclass includesSelector: #foo1).
 	self executeRefactoring: refactoring.
-	(refactoring model classFor: LintRuleTestData) withAllSubclasses
-		do: [:each | self deny: (each directlyDefinesClassVariable: #Foo1)]! !
+	false ifTrue: [model browseChanges].
+	(sourceClass withAllSubclasses copyWithout: targetClass)
+		do: [:each | self deny: (each directlyDefinesClassVariable: #Foo1)].
+	self assert: (targetClass directlyDefinesClassVariable: #Foo1).
+	"Note that the fully-qualified binding refs are deliberately not shorted, but anything relative is adjusted"
+	self assert: (targetClass metaclass methodFor: #foo1) parseTree
+		equals: (self
+				parseMethod: 'foo1 ^{ Foo1. Foo1. Foo1. #(#{Foo1} #{Refactory.Browser.TestData.BasicLintRuleTestData.Foo1}). #{Foo1}. #{Refactory.Browser.TestData.BasicLintRuleTestData.Foo1} }'
+				in: targetClass).
+	"The external reference - can still be partially qualified because RefactoryTestDataApp is in the same namespace"
+	self assert: (refDataApp methodFor: #refToExternalClassVar) parseTree
+		equals: (self
+				parseMethod: 'refToExternalClassVar ^{ #(#{_.BasicLintRuleTestData.Foo1}). BasicLintRuleTestData.Foo1. #{_.BasicLintRuleTestData.Foo1}. #{Refactory.Browser.TestData.BasicLintRuleTestData.Foo1}. BasicLintRuleTestData.Foo1 }'
+				in: targetClass)! !
 !Refactory.Browser.Tests.PushDownClassVariableRefactoringTest categoriesForMethods!
 testModelNonExistantName!failure tests!public! !
 testModelPushDownToMultipleSubclassesFailure!failure tests!public! !

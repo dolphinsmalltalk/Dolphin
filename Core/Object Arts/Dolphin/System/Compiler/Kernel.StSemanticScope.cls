@@ -22,6 +22,9 @@ environment
 environment: aNamespace
 	self outer environment: aNamespace!
 
+fullBindingFor: aString
+	^self methodClass fullBindingFor: aString environment: self environment!
+
 isInlined
 	^false!
 
@@ -57,6 +60,7 @@ visibleVariablesDo: aMonadicValuable visited: aSet
 classScope!accessing!public! !
 environment!accessing!public! !
 environment:!accessing!public! !
+fullBindingFor:!binding!public! !
 isInlined!accessing!public! !
 methodClass!accessing!public! !
 methodScope!accessing!public! !

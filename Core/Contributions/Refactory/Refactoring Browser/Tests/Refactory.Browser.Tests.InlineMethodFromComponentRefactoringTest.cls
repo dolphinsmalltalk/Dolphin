@@ -12,6 +12,30 @@ Refactory.Browser.Tests.InlineMethodFromComponentRefactoringTest comment: ''!
 !Refactory.Browser.Tests.InlineMethodFromComponentRefactoringTest categoriesForClass!Refactory-Testing! !
 !Refactory.Browser.Tests.InlineMethodFromComponentRefactoringTest methodsFor!
 
+setUpToInlineMethodReadingPrivateClassVariable: aBoolean
+	| refactoring source refDataApp object |
+	object := model classNamed: Object fullName.
+	source := 'foo | a | a := RefactoryTestDataApp new. ^a refersToOwnClassVariable'.
+	refDataApp := model classFor: RefactoryTestDataApp.
+	(refDataApp bindingFor: 'ClassVar1') isPrivate: true.
+	object
+		imports: #(#{Refactory.Browser.TestData});
+		compile: source classified: #accessing.
+	refactoring := InlineMethodFromComponentRefactoring
+				model: model
+				inline: ((source indexOf: $^) + 1 to: source size)
+				inMethod: #foo
+				forClass: object.
+	self setupImplementorToInlineFor: refactoring toReturn: refDataApp.
+	refactoring setOption: #abstractVariables
+		toUse: 
+			[:ref |
+			self assert: ref privateClassVarReaders single key equals: 'ClassVar1'.
+			self assert: ref privateClassVarWriters isEmpty.
+			aBoolean].
+	refactoring.
+	^refactoring!
+
 testInlineComponentIntoCascadedMessage
 	| refactoring |
 	refactoring := InlineMethodFromComponentRefactoring
@@ -137,24 +161,112 @@ testInlineMethodFromComponentFailure
 				forClass: RefactoryTestDataApp)
 		withMessage: 'There are no definitions of #fooMax:'!
 
+testModelInlineClassMethodAccessingClassVariables
+	| refactoring object source refDataApp |
+	model := RBModel new.
+	object := model classNamed: Object fullName.
+	source := 'foo RefactoryTestDataApp classSideClassVarRefs'.
+	refDataApp := model classFor: RefactoryTestDataApp.
+	(refDataApp bindingFor: 'ClassVar2') isPrivate: true.
+	(refDataApp bindingFor: 'ClassConst1') isPrivate: true.
+	object
+		imports: #(#{Refactory.Browser.TestData});
+		compile: source classified: #accessing.
+	refactoring := InlineMethodFromComponentRefactoring
+				model: model
+				inline: (5 to: source size)
+				inMethod: #foo
+				forClass: object.
+	self setupImplementorToInlineFor: refactoring toReturn: refDataApp.
+	"Although the method returns a class var, it is not private so we expect it to just be inlined as a fully qualified name"
+	refactoring setOption: #abstractVariables
+		toUse: 
+			[:ref |
+			self assert: ref privateClassVarReaders single key equals: 'ClassConst1'.
+			self assert: ref privateClassVarWriters single key equals: 'ClassVar2'.
+			true].
+	self executeRefactoring: refactoring.
+	"The private class vars are abstracted. Public class vars are not, and the refs to these are rewritten unless initially fully-qualified."
+	self assert: (object parseTreeFor: #foo)
+		equals: (self
+				parseMethod: 'foo
+	RefactoryTestDataApp classVar2: {
+				RefactoryTestDataApp.ClassVar1.
+				RefactoryTestDataApp classConst1.
+				#{_.RefactoryTestDataApp.ClassVar1}.
+				#{Refactory.Browser.TestData.RefactoryTestDataApp.ClassVar1}.
+				#{Refactory.Browser.TestData.RefactoryTestDataApp.ClassVar2}.
+				#{Refactory.Browser.TestData.RefactoryTestDataApp.ClassConst1}
+			}').
+	self
+		verifyMethod: #classVar2
+			of: refDataApp metaclass
+			equals: 'classVar2 ^ClassVar2';
+		verifyMethod: #classVar2:
+			of: refDataApp metaclass
+			equals: 'classVar2: anObject ClassVar2 := anObject';
+		verifyMethod: #classConst1
+			of: refDataApp metaclass
+			equals: 'classConst1 ^ClassConst1'.
+	self
+		deny: (refDataApp metaclass includesSelector: #classVar1);
+		deny: (refDataApp metaclass includesSelector: #classVar1);
+		deny: (refDataApp metaclass includesSelector: #classConst1:)!
+
+testModelInlineMethodReadingPrivateClassVariable
+	"Private class variables have to be abstracted before methods accessing them can be inlined"
+
+	| refactoring |
+	refactoring := self setUpToInlineMethodReadingPrivateClassVariable: true.
+	self executeRefactoring: refactoring.
+	self assert: ((model classNamed: Object fullName) parseTreeFor: #foo)
+		equals: (self parseMethod: 'foo | a | a := RefactoryTestDataApp new. ^a class classVar1')!
+
+testModelInlineMethodReadingPrivateClassVariableRefuseAbstract
+	"Private class variables have to be abstracted before methods accessing them can be inlined"
+
+	self shouldAbort: (self setUpToInlineMethodReadingPrivateClassVariable: false)!
+
+testModelInlineMethodReadingUnqualifiedClassVariable
+	| refactoring object source |
+	model := RBModel new.
+	object := model classNamed: Object fullName.
+	source := 'foo | a | a := RefactoryTestDataApp new. ^a refersToOwnClassVariable'.
+	object
+		imports: #(#{Refactory.Browser.TestData});
+		compile: source classified: #accessing.
+	refactoring := InlineMethodFromComponentRefactoring
+				model: model
+				inline: ((source indexOf: $^) + 1 to: source size)
+				inMethod: #foo
+				forClass: object.
+	self setupImplementorToInlineFor: refactoring toReturn: (model classFor: RefactoryTestDataApp).
+	"Although the method returns a class var, it is not private so we expect it to just be inlined as a fully qualified reference"
+	refactoring setOption: #abstractVariables toUse: [self fail: 'Unexpected abstract variables'].
+	self executeRefactoring: refactoring.
+	self assert: (object parseTreeFor: #foo)
+		equals: (self parseMethod: 'foo | a | a := RefactoryTestDataApp new. ^RefactoryTestDataApp.ClassVar1')!
+
 testModelInlineMethodWithSameVariableNames
-	| class refactoring |
+	| class refactoring object |
 	model := RBModel new.
 	class := model classNamed: self class fullName.
 	class compile: 'a9: a b9: b ^self + a + b' classified: #accessing.
-	(model classNamed: Object fullName)
-		compile: 'foo | a b c | a := InlineMethodFromComponentTest new. b := 1. c := 2. ^a a9: b b9: c'
-		classified: #accessing.
+	object := model classNamed: Object fullName.
+	object
+		imports: #(#{Refactory.Browser.Tests});
+		compile: 'foo | a b c | a := InlineMethodFromComponentRefactoringTest new. b := 1. c := 2. ^a a9: b b9: c'
+			classified: #accessing.
 	refactoring := InlineMethodFromComponentRefactoring
 				model: model
-				inline: (72 to: 84)
+				inline: (83 to: 95)
 				inMethod: #foo
 				forClass: (model classNamed: Object fullName).
 	self setupInlineExpressionFor: refactoring toReturn: false.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: Object fullName) parseTreeFor: #foo)
+	self assert: (object parseTreeFor: #foo)
 		equals: (self
-				parseMethod: 'foo | a b c | a := InlineMethodFromComponentTest new. b := 1. c := 2. ^a + b + c')!
+				parseMethod: 'foo | a b c | a := InlineMethodFromComponentRefactoringTest new. b := 1. c := 2. ^a + b + c')!
 
 testModelInlineMethodWithSameVariableNames1
 	| class refactoring |
@@ -183,26 +295,79 @@ testModelInlineMethodWithSameVariableNames2
 	class := model classNamed: self class fullName.
 	class compile: 'a9: a b9: b ^self + a + b' classified: #accessing.
 	(model classNamed: Object fullName)
-		compile: 'foo | a b c | a := InlineMethodFromComponentTest new. b := 1. c := 2. ^c a9: b b9: a'
-		classified: #accessing.
+		imports: #(#{Refactory.Browser.Tests});
+		compile: 'foo | a b c | a := InlineMethodFromComponentRefactoringTest new. b := 1. c := 2. ^c a9: b b9: a'
+			classified: #accessing.
 	refactoring := InlineMethodFromComponentRefactoring
 				model: model
-				inline: (72 to: 84)
+				inline: (83 to: 95)
 				inMethod: #foo
 				forClass: (model classNamed: Object fullName).
 	self setupInlineExpressionFor: refactoring toReturn: false.
 	self executeRefactoring: refactoring.
 	self assert: ((refactoring model classNamed: Object fullName) parseTreeFor: #foo)
 		equals: (self
-				parseMethod: 'foo | a b c | a := InlineMethodFromComponentTest new. b := 1. c := 2. ^c + b + a')! !
+				parseMethod: 'foo | a b c | a := InlineMethodFromComponentRefactoringTest new. b := 1. c := 2. ^c + b + a')!
+
+testModelInlineUnbindableReference
+	| refactoring object source refDataApp |
+	model := RBModel new.
+	object := model classNamed: Object fullName.
+	source := 'foo ^RefactoryTestDataApp refersToClassBindingNotFound'.
+	refDataApp := model classFor: RefactoryTestDataApp.
+	object compile: source classified: #accessing.
+	refactoring := InlineMethodFromComponentRefactoring
+				model: model
+				inline: (6 to: source size)
+				inMethod: #foo
+				forClass: object.
+	self setupImplementorToInlineFor: refactoring toReturn: refDataApp.
+	"Although the method returns a class var, it is not private so we expect it to just be inlined as a fully qualified name"
+	refactoring setOption: #abstractVariables
+		toUse: 
+			[:ref |
+			self fail: 'Unexpected abstract variables'.
+			false].
+	self executeRefactoring: refactoring.
+	"The private class vars are abstracted. Public class vars are not, and the refs to these are rewritten unless initially fully-qualified."
+	self assert: (object parseTreeFor: #foo) equals: (self parseMethod: 'foo ^#{_.Tests.DolphinTest} bindingOrNil')!
+
+testModelInlineUnbindableReferenceInArray
+	| refactoring object source |
+	model := RBModel new.
+	object := model classNamed: Object fullName.
+	source := 'foo ^RefactoryTestDataApp refersToClassBindingNotFoundInArray'.
+	object compile: source classified: #accessing.
+	refactoring := InlineMethodFromComponentRefactoring
+				model: model
+				inline: (6 to: source size)
+				inMethod: #foo
+				forClass: object.
+	self setupImplementorToInlineFor: refactoring toReturn: (model classFor: RefactoryTestDataApp).
+	refactoring setOption: #abstractVariables
+		toUse: 
+			[:ref |
+			self fail: 'Unexpected abstract variables'.
+			false].
+	self executeRefactoring: refactoring.
+	self assert: (object parseTreeFor: #foo)
+		equals: (self
+				parseMethod: 'foo ^#(#{_.Tests.DolphinTest} #{Refactory.Browser.Tests.ClassToRename} #{ClassToRename} #{Foo.ClassToRename} ) collect: [:each | each valueOrNil]')! !
 !Refactory.Browser.Tests.InlineMethodFromComponentRefactoringTest categoriesForMethods!
+setUpToInlineMethodReadingPrivateClassVariable:!helpers!private! !
 testInlineComponentIntoCascadedMessage!public!tests! !
 testInlineComponentMethodMax!public!tests! !
 testInlineComponentMethodOverriddenAbort!public!tests! !
 testInlineEmptyComponentMethod!public!tests! !
 testInlineMethodFromComponentFailure!failure tests!public! !
+testModelInlineClassMethodAccessingClassVariables!public!tests! !
+testModelInlineMethodReadingPrivateClassVariable!public!tests! !
+testModelInlineMethodReadingPrivateClassVariableRefuseAbstract!public!tests! !
+testModelInlineMethodReadingUnqualifiedClassVariable!public!tests! !
 testModelInlineMethodWithSameVariableNames!public!tests! !
 testModelInlineMethodWithSameVariableNames1!public!tests! !
 testModelInlineMethodWithSameVariableNames2!public!tests! !
+testModelInlineUnbindableReference!public!tests! !
+testModelInlineUnbindableReferenceInArray!public!tests! !
 !
 

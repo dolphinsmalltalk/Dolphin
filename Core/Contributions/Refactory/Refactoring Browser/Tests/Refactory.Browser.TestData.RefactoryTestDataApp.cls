@@ -6,7 +6,7 @@ Core.Object
 	classVariableNames: 'ClassVar1 ClassVar2'
 	imports: #(#{OS.CRTConstants})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'ClassConst1' -> 'ClassConst1 of RefactoryTestDataApp' }!
 Refactory.Browser.TestData.RefactoryTestDataApp guid: (Core.GUID fromString: '{dd22adf0-7b3f-4465-aa71-377108619c45}')!
 Refactory.Browser.TestData.RefactoryTestDataApp comment: 'Test class for Smalllint. Contains lots of smelly code'!
 !Refactory.Browser.TestData.RefactoryTestDataApp categoriesForClass!Refactory-Test data! !
@@ -224,6 +224,9 @@ inlineTemporary
 	self isNil ifTrue: [temp := 4].
 	^temp!
 
+inlineWithNamespace
+	^{ self refersToClassUnqualified. self refersToClassFullyQualifiedBindingInArray }!
+
 isLiteral
 	^false!
 
@@ -304,15 +307,19 @@ referencesConditionFor: aClass
 		yourself!
 
 refersToClassBindingNotFound
-	^#{_.Tests.DolphinTest}!
+	^#{_.Tests.DolphinTest} bindingOrNil!
+
+refersToClassBindingNotFoundInArray
+	^#(#{_.Tests.DolphinTest} #{_.Tests.ClassToRename} #{ClassToRename} #{Foo.ClassToRename})
+		collect: [:each | each valueOrNil]!
 
 refersToClassConstantFullyQualified
 	^Refactory.Browser.Tests.ClassToRename.ClassConst1!
 
-refersToClassConstantPartiallyQualified1
+refersToClassConstantPartiallyQualified
 	^Tests.ClassToRename.ClassConst1!
 
-refersToClassConstantPartiallyQualified2
+refersToClassConstantPartiallyQualifiedWithNamespace
 	<namespace: Refactory.Browser.Tests>
 	^ClassToRename.ClassConst1!
 
@@ -350,7 +357,7 @@ refersToClassPartiallyQualifiedBinding2
 	^#{_.Browser.Tests.ClassToRename}!
 
 refersToClassPartiallyQualifiedBindingInArray
-	^#(#{_.Tests.ClassToRename})!
+	^#(#{_.Browser.Tests.ClassToRename class})!
 
 refersToClassPartiallyQualifiedName
 	"We don't expect this to be recognised as a refercne to ClassToRename"
@@ -409,6 +416,9 @@ refersToDolphinTestUnqualifiedNameMethodNamespace
 
 refersToImportedPoolConstantBindingUnqualified
 	^#{EINVAL}!
+
+refersToImportedPoolConstantFullyQualified
+	^OS.CRTConstants.EINVAL!
 
 refersToImportedPoolConstantUnqualified
 	^EINVAL!
@@ -611,6 +621,7 @@ inlineLast!inline!public! !
 inlineMax!inline!public! !
 inlineMethod!public!test! !
 inlineTemporary!inline!public! !
+inlineWithNamespace!inline!public! !
 isLiteral!lint!public! !
 justSendsSuper!lint!public! !
 literalArrayCharacters!lint!public! !
@@ -625,9 +636,10 @@ noMoveDefinition!public!test! !
 precedence!lint!public! !
 referencesConditionFor:!accessing!public! !
 refersToClassBindingNotFound!lint!public! !
+refersToClassBindingNotFoundInArray!lint!public! !
 refersToClassConstantFullyQualified!lint!public! !
-refersToClassConstantPartiallyQualified1!lint!public! !
-refersToClassConstantPartiallyQualified2!lint!public! !
+refersToClassConstantPartiallyQualified!lint!public! !
+refersToClassConstantPartiallyQualifiedWithNamespace!lint!public! !
 refersToClassConstantUnqualified!lint!public! !
 refersToClassFullyQualified!lint!public! !
 refersToClassFullyQualifiedBinding!lint!public! !
@@ -654,6 +666,7 @@ refersToDolphinTestBindingFullyQualified!lint!public! !
 refersToDolphinTestPartiallyQualifiedBindingMethodNamespace!lint!public! !
 refersToDolphinTestUnqualifiedNameMethodNamespace!lint!public! !
 refersToImportedPoolConstantBindingUnqualified!lint!public! !
+refersToImportedPoolConstantFullyQualified!lint!public! !
 refersToImportedPoolConstantUnqualified!lint!public! !
 refersToOtherClassPartiallyQualifiedBinding!performing!public! !
 refersToOtherClassPartiallyQualifiedName!performing!public! !
@@ -700,6 +713,16 @@ yourselfNotUsed!lint!public! !
 
 !Refactory.Browser.TestData.RefactoryTestDataApp class methodsFor!
 
+classSideClassVarRefs
+	RefactoryTestDataApp.ClassVar2 := {
+				ClassVar1.
+				Refactory.Browser.TestData.RefactoryTestDataApp.ClassConst1.
+				#{ClassVar1}.
+				#{Refactory.Browser.TestData.RefactoryTestDataApp.ClassVar1}.
+				#{ClassVar2}.
+				#{ClassConst1}
+			}!
+
 classSideGlobalRef
 	^Smalltalk!
 
@@ -714,6 +737,7 @@ initialize
 refersToClassPartiallyQualified1
 	^Tests.ClassToRename! !
 !Refactory.Browser.TestData.RefactoryTestDataApp class categoriesForMethods!
+classSideClassVarRefs!class initialization!public! !
 classSideGlobalRef!class initialization!public! !
 comment!accessing!public! !
 initialize!class initialization!public! !

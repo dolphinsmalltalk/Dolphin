@@ -1,8 +1,8 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.Refactoring
+Refactory.Browser.ChangeStaticVariableQualificationRefactoring
 	subclass: #'Refactory.Browser.QualifyStaticVariablesRefactoring'
-	instanceVariableNames: 'tree'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -12,13 +12,7 @@ Refactory.Browser.QualifyStaticVariablesRefactoring comment: ''!
 !Refactory.Browser.QualifyStaticVariablesRefactoring categoriesForClass!Refactory-Refactorings! !
 !Refactory.Browser.QualifyStaticVariablesRefactoring methodsFor!
 
-parseTree
-	^tree!
-
-preconditions
-	^RBCondition empty!
-
-qualifyStaticVariables
+buildRewriter
 	| rewriter |
 	rewriter := ParseTreeRewriter new.
 	rewriter
@@ -30,32 +24,22 @@ qualifyStaticVariables
 				clearPositions;
 				yourself]
 		when: [:variableNode | variableNode isStaticVariable and: [variableNode name ~= variableNode binding fullName]].
-	"rewriter
+	rewriter
 		replace: '`#literal'
-		withValueFrom: [:literalNode | self rewriteStaleLiteralReference: literalNode]
-		when: [:literalNode | self isStaleLiteralReference: literalNode]."
-	(rewriter executeTree: tree) ifTrue: [tree := rewriter tree]!
-
-qualifyVariablesIn: aStMethodNode 
-	tree := aStMethodNode!
-
-transform
-	self qualifyStaticVariables! !
+		withValueFrom: 
+			[:literalNode |
+			literalNode rewriteQualifiedReferencesWith: 
+					[:literalRefNode |
+					literalRefNode binding
+						ifNil: [literalRefNode copy]
+						ifNotNil: 
+							[:binding |
+							(literalRefNode copyWithName: binding fullName)
+								isRelative: false;
+								yourself]]]
+		when: [:literalNode | literalNode isOrContainsQualifiedReferenceMatching: [:refNode | refNode binding notNil]].
+	^rewriter! !
 !Refactory.Browser.QualifyStaticVariablesRefactoring categoriesForMethods!
-parseTree!accessing!public! !
-preconditions!preconditions!public! !
-qualifyStaticVariables!private!transforming! !
-qualifyVariablesIn:!public! !
-transform!public!transforming! !
-!
-
-!Refactory.Browser.QualifyStaticVariablesRefactoring class methodsFor!
-
-model: aRBModel qualifyVariablesIn: aBoundProgramNode
-	^self new
-		model: aRBModel;
-		qualifyVariablesIn: aBoundProgramNode! !
-!Refactory.Browser.QualifyStaticVariablesRefactoring class categoriesForMethods!
-model:qualifyVariablesIn:!instance creation!public! !
+buildRewriter!private!transforming! !
 !
 

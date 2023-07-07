@@ -210,6 +210,12 @@ isAbstractClass: aClass
 		block: [aClass isAbstract]
 		errorString: aClass unqualifiedName , ' is <1?:not >an abstract class'!
 
+isBoundParseTree: aRBProgramNode
+	^self new
+		type: {#isBoundParseTree. aRBProgramNode}
+		block: [aRBProgramNode scope notNil]
+		errorString: 'Parse tree is <1?:not >bound'!
+
 isClass: anObject
 	^self new
 		type: {#IsClass. anObject}
@@ -406,6 +412,7 @@ hierarchyOf:canUnderstand:!instance creation!public! !
 hierarchyOf:definesVariable:!instance creation!public! !
 hierarchyOf:referencesInstanceVariable:!instance creation!public! !
 isAbstractClass:!instance creation!public! !
+isBoundParseTree:!instance creation!public! !
 isClass:!instance creation!public! !
 isClassBinding:!instance creation!public! !
 isDefinedBinding:!instance creation!public! !

@@ -21,9 +21,6 @@ checkReadBeforeWritten
 		writtenBeforeReadIn: definingNode)
 			ifFalse: [self refactoringError: 'The variable is possibly read before it is assigned']!
 
-compileMethod
-	model compileTree: sourceTree forMethod: method!
-
 compileMethod: aMethodNode
 	model compileTree: aMethodNode forMethod: method!
 
@@ -103,7 +100,6 @@ verifySelectedInterval
 !Refactory.Browser.InlineTemporaryRefactoring categoriesForMethods!
 checkMultipleAssignments!preconditions!private! !
 checkReadBeforeWritten!preconditions!private! !
-compileMethod!public!transforming! !
 compileMethod:!public!transforming! !
 determineAssignmentNode!preconditions!private! !
 determineVariableDefinition!preconditions!private! !

@@ -24,6 +24,11 @@ Instance Variables:
 	(anObject isKindOf: StVariableNode) ifFalse: [^false].
 	^self name = anObject name!
 
+binding
+	"Only static variable nodes can have a binding."
+
+	^nil!
+
 hash
 	^self name hash!
 
@@ -79,6 +84,7 @@ variable: aStVariable
 	variable := aStVariable! !
 !Kernel.StVariableNode categoriesForMethods!
 =!comparing!public! !
+binding!accessing!public! !
 hash!comparing!public! !
 hasQualifiedName!public!testing! !
 isConstantNode!public!testing! !

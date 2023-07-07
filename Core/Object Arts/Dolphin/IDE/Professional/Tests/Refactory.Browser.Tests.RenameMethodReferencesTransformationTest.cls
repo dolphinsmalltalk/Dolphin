@@ -43,7 +43,7 @@ testRenamePermuteArgs
 	self assert: (class parseTreeFor: #exampleCall)
 		equals: (self parseMethod: 'exampleCall ^self rename: 2 two: 1').
 	self assert: (class parseTreeFor: #annotationReferenceTwo)
-		equals: (self parseMethod: 'annotationReferenceTwo <rename: #bar two: #foo')!
+		equals: (self parseMethod: 'annotationReferenceTwo <rename: #bar two: #foo>')!
 
 testRenameReferences
 	| refactoring class srcSelector targetSelector |

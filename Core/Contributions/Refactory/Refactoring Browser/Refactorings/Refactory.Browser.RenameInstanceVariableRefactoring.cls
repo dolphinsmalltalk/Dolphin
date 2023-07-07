@@ -33,10 +33,10 @@ renameReferences
 					[self
 						refactoringError: ('<1s> is already defined as a method or block temporary <n> variable in this class or one of its subclasses'
 								expandMacrosWith: newName)].
-	self
-		convertClasses: class withAllSubclasses
-		select: [:aClass | aClass whichSelectorsReferToInstanceVariable: variableName]
-		using: replacer!
+	class withAllSubclasses do: 
+			[:subclass |
+			(subclass whichSelectorsReferToInstanceVariable: variableName)
+				do: [:selector | self convertMethod: (subclass methodFor: selector) using: replacer]]!
 
 storeOn: aStream 
 	aStream nextPut: $(.

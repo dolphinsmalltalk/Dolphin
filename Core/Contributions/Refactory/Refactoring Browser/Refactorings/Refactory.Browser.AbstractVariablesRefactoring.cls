@@ -2,7 +2,7 @@
 
 Refactory.Browser.Refactoring
 	subclass: #'Refactory.Browser.AbstractVariablesRefactoring'
-	instanceVariableNames: 'tree fromClass instVarReaders instVarWriters classVarReaders classVarWriters toClasses ignore'
+	instanceVariableNames: 'tree fromClass instVarReaders instVarWriters privateClassVarReaders privateClassVarWriters toClasses ignore'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -12,35 +12,27 @@ Refactory.Browser.AbstractVariablesRefactoring comment: ''!
 !Refactory.Browser.AbstractVariablesRefactoring categoriesForClass!Refactory-Refactorings! !
 !Refactory.Browser.AbstractVariablesRefactoring methodsFor!
 
-abstractClassVariable: aString
+abstractClassVariable: aVariableBinding
 	| refactoring rewriter |
 	refactoring := CreateAccessorsForVariableRefactoring
-				model: self model
-				variable: aString
+				model: model
+				variable: aVariableBinding key
 				class: fromClass instanceClass
 				classVariable: true.
 	self performComponentRefactoring: refactoring.
-	rewriter := ParseTreeRewriter new.
-	fromClass isMeta
-		ifTrue: 
-			[rewriter
-				replace: aString , ' := ``@object'
-					with: ('self <1s> ``@object' expandMacrosWith: refactoring setterMethod);
-				replace: aString with: 'self ' , refactoring getterMethod]
-		ifFalse: 
-			[rewriter
-				replace: aString , ' := ``@object'
-					with: ('self class <1s> ``@object' expandMacrosWith: refactoring setterMethod);
-				replace: aString with: 'self class ' , refactoring getterMethod].
+	rewriter := ParseTreeRewriter
+				replaceClassVariable: aVariableBinding
+				withGetter: refactoring getterMethod
+				andSetter: refactoring setterMethod
+				forReceiver: (fromClass isMeta ifTrue: ['self'] ifFalse: ['self class']).
 	(rewriter executeTree: tree) ifTrue: [tree := rewriter tree]!
 
 abstractClassVariables
 	| variables |
-	(classVarReaders isEmpty and: [classVarWriters isEmpty]) ifTrue: [^self].
-	variables := Set new.
-	variables
-		addAll: classVarReaders;
-		addAll: classVarWriters.
+	(privateClassVarReaders isEmpty and: [privateClassVarWriters isEmpty]) ifTrue: [^self].
+	variables := (Set withAll: privateClassVarReaders)
+				addAll: privateClassVarWriters;
+				yourself.
 	variables do: [:each | self abstractClassVariable: each]!
 
 abstractInstanceVariable: aString
@@ -81,15 +73,12 @@ abstractVariablesIn: aBRProgramNode from: fromBehavior toAll: behaviorCollection
 	self performComponentRefactoring: importsRefactoring.
 	self computeVariablesToAbstract!
 
-classBindingNames
-	^fromClass instanceClass allClassBindingNames!
-
 computeVariablesToAbstract
 	| searcher |
 	instVarReaders := Set new.
 	instVarWriters := Set new.
-	classVarReaders := Set new.
-	classVarWriters := Set new.
+	privateClassVarReaders := Set new.
+	privateClassVarWriters := Set new.
 	searcher := ParseTreeSearcher new.
 	searcher
 		matches: '`var := ``@anything' do: [:aNode :answer | self processAssignmentNode: aNode];
@@ -98,14 +87,18 @@ computeVariablesToAbstract
 	self removeDefinedClassVariables!
 
 hasVariablesToAbstract
-	^(instVarReaders isEmpty 
-		& instVarWriters isEmpty 
-		& classVarReaders isEmpty 
-		& classVarWriters isEmpty) 
+	^(instVarReaders isEmpty and: 
+			[instVarWriters isEmpty and: [privateClassVarReaders isEmpty and: [privateClassVarWriters isEmpty]]])
 		not!
 
 instanceVariableNames
 	^fromClass allInstanceVariableNames asSet!
+
+instVarReaders
+	^instVarReaders!
+
+instVarWriters
+	^instVarWriters!
 
 parseTree
 	^tree!
@@ -113,32 +106,44 @@ parseTree
 preconditions
 	^RBCondition empty!
 
-processAssignmentNode: aNode
-	| varName |
-	varName := aNode variable name.
-	ignore = varName ifTrue: [^self].
-	(aNode whoDefines: varName) notNil ifTrue: [^self].
-	(self instanceVariableNames includes: varName) ifTrue: [instVarWriters add: varName].
-	(self classBindingNames includes: varName) ifTrue: [classVarWriters add: varName]!
+privateClassVarReaders
+	^privateClassVarReaders!
 
-processReferenceNode: aNode
-	| varName |
-	varName := aNode name.
-	ignore = varName ifTrue: [^self].
-	(aNode whoDefines: varName) notNil ifTrue: [^self].
-	(self instanceVariableNames includes: varName) ifTrue: [instVarReaders add: varName].
-	(self classBindingNames includes: varName) ifTrue: [classVarReaders add: varName]!
+privateClassVarWriters
+	^privateClassVarWriters!
+
+processAssignmentNode: aStAssignmentNode
+	| variable varNode |
+	varNode := aStAssignmentNode variable.
+	(varNode isSpecialVariable or: [ignore = varNode name]) ifTrue: [^self].
+	variable := varNode variable.
+	variable isInstanceVariable ifTrue: [instVarWriters add: varNode name].
+	variable binding
+		ifNotNil: 
+			[:binding |
+			(binding isClassVariable
+				and: [binding isPrivate and: [binding environment == fromClass instanceClass]])
+					ifTrue: [privateClassVarWriters add: binding]]!
+
+processReferenceNode: aStVariableNode
+	| variable |
+	(aStVariableNode isSpecialVariable or: [ignore = aStVariableNode name]) ifTrue: [^self].
+	variable := aStVariableNode variable.
+	variable isInstanceVariable ifTrue: [instVarReaders add: aStVariableNode name].
+	variable binding
+		ifNotNil: 
+			[:binding |
+			(binding isClassVariable
+				and: [binding isPrivate and: [binding environment == fromClass instanceClass]])
+					ifTrue: [privateClassVarReaders add: binding]]!
 
 removeDefinedClassVariables
-	| selectionBlock instanceClass |
-	instanceClass := fromClass instanceClass.
+	| selectionBlock |
 	selectionBlock := 
-			[:varName | 
-			toClasses anySatisfy: 
-					[:each | 
-					(each instanceClass includesClass: (instanceClass whoDefinesClassVariable: varName)) not]].
-	classVarReaders := classVarReaders select: selectionBlock.
-	classVarWriters := classVarWriters select: selectionBlock!
+			[:binding |
+			toClasses anySatisfy: [:each | (each instanceClass includesClass: binding environment) not]].
+	privateClassVarReaders := privateClassVarReaders select: selectionBlock.
+	privateClassVarWriters := privateClassVarWriters select: selectionBlock!
 
 shouldAbstractVariables
 	^(self lookupOption: #abstractVariables) cull: self!
@@ -154,14 +159,17 @@ abstractClassVariables!public!transforming! !
 abstractInstanceVariable:!public!transforming! !
 abstractInstanceVariables!public!transforming! !
 abstractVariablesIn:from:toAll:ignoring:!initializing!private! !
-classBindingNames!public!transforming! !
-computeVariablesToAbstract!public!transforming! !
+computeVariablesToAbstract!private!transforming! !
 hasVariablesToAbstract!public!testing! !
 instanceVariableNames!public!transforming! !
+instVarReaders!accessing!public! !
+instVarWriters!accessing!public! !
 parseTree!accessing!public! !
 preconditions!preconditions!public! !
-processAssignmentNode:!public!transforming! !
-processReferenceNode:!public!transforming! !
+privateClassVarReaders!accessing!public! !
+privateClassVarWriters!accessing!public! !
+processAssignmentNode:!private!transforming! !
+processReferenceNode:!private!transforming! !
 removeDefinedClassVariables!public!transforming! !
 shouldAbstractVariables!private!requests! !
 transform!public!transforming! !

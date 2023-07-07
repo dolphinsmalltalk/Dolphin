@@ -134,6 +134,9 @@ initialize
 	super initialize.
 	changes := OrderedCollection new!
 
+isEmpty
+	^changes isEmpty!
+
 lastChangeMatching: aMonadicValuable
 	changes reverseDo: 
 			[:each |
@@ -221,6 +224,7 @@ executeNotifying:!applying!private! !
 hash!comparing!public! !
 import:into:!adding!public! !
 initialize!initializing!private! !
+isEmpty!public! !
 lastChangeMatching:!public!searching! !
 postCopy!copying!private! !
 printOn:!printing!public! !

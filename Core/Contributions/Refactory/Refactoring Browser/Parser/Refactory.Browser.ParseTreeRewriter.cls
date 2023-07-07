@@ -29,6 +29,10 @@ lookForMoreMatchesInContext: oldContext
 			(key isString not and: [key recurseInto])
 				ifTrue: [oldContext at: key put: (value collect: [:each | self visitNode: each])]]!
 
+renameArgument: oldNameString to: newNameString
+	self addArgumentRule: (RBStringReplaceRule searchForTree: (StParameterNode named: oldNameString)
+				replaceWith: (StParameterNode named: newNameString))!
+
 replace: searchString with: replaceString
 	^self addRule: (RBStringReplaceRule searchFor: searchString replaceWith: replaceString)!
 
@@ -46,9 +50,6 @@ replace: searchString withValueFrom: replaceBlock when: conditionBlock
 				searchFor: searchString
 				replaceWith: replaceBlock
 				when: conditionBlock)!
-
-replaceArgument: searchString with: replaceString
-	self addArgumentRule: (RBStringReplaceRule searchFor: searchString replaceWith: replaceString)!
 
 replaceArgument: searchString with: replaceString when: aBlock
 	self addArgumentRule: (RBStringReplaceRule
@@ -195,11 +196,11 @@ visitSequenceNode: aSequenceNode
 executeTree:!accessing!public! !
 foundMatch!helpers!private! !
 lookForMoreMatchesInContext:!operations!private! !
+renameArgument:to:!public!replacing! !
 replace:with:!public!replacing! !
 replace:with:when:!public!replacing! !
 replace:withValueFrom:!public!replacing! !
 replace:withValueFrom:when:!public!replacing! !
-replaceArgument:with:!public!replacing! !
 replaceArgument:with:when:!public!replacing! !
 replaceArgument:withValueFrom:!public!replacing! !
 replaceArgument:withValueFrom:when:!public!replacing! !
@@ -230,13 +231,6 @@ visitSequenceNode:!public!visitor/double dispatching! !
 
 !Refactory.Browser.ParseTreeRewriter class methodsFor!
 
-classVariable: aVarName getter: getMethod setter: setMethod 
-	^self 
-		variable: aVarName
-		getter: getMethod
-		setter: setMethod
-		receiver: 'self class'!
-
 removeTemporaryNamed: aName 
 	| rewriteRule |
 	rewriteRule := self new.
@@ -249,7 +243,7 @@ rename: varName to: newVarName
 	rewriteRule := self new.
 	rewriteRule
 		replace: varName with: newVarName;
-		replaceArgument: varName with: newVarName.
+		renameArgument: varName to: newVarName.
 	^rewriteRule!
 
 rename: varName to: newVarName handler: aBlock 
@@ -294,6 +288,33 @@ replace: code with: newCode method: aBoolean
 		ifFalse: [rewriteRule replace: code with: newCode].
 	^rewriteRule!
 
+replaceClassVariable: aVariableBinding withGetter: getMethod andSetter: setMethod forReceiver: aString
+	| rewriter accessor |
+	rewriter := self new.
+	"Static variables can be unqualified, partially-qualified, or fully-qualified, so rather than create string searches for all the possible permutations we just match all identifiers, and then filter those based on whether they are accessing or assigning to the binding of the variable we are replacing."
+	setMethod
+		ifNotNil: 
+			[| mutator |
+			mutator := RBPatternParser parseExpression: aString , ' ' , setMethod , ' ``@object'.
+			rewriter
+				replace: '`identifier := ``@object'
+				withValueFrom: [:assignment | mutator copyInContext: rewriter context]
+				when: [:assignment | assignment variable binding == aVariableBinding]].
+	accessor := RBParser parseExpression: aString , ' ' , getMethod.
+	rewriter
+		replace: '`identifier'
+		withValueFrom: [:varNode | accessor copy]
+		when: [:varNode | varNode binding == aVariableBinding].
+	^rewriter!
+
+replaceInstanceVariable: aVarName withGetter: getMethod andSetter: setMethod forReceiver: aString
+	| rewriteRule |
+	rewriteRule := self new.
+	rewriteRule
+		replace: aVarName , ' := ``@object' with: aString , ' ' , setMethod , ' ``@object';
+		replace: aVarName with: aString , ' ' , getMethod.
+	^rewriteRule!
+
 replaceLiteral: literal with: newLiteral
 	^self new
 		replaceLiteral: literal with: newLiteral;
@@ -315,33 +336,17 @@ replaceStatements: code with: newCode in: aParseTree onInterval: anInterval
 		replace: tree formattedCode
 		with: replaceStmt
 		in: aParseTree
-		onInterval: anInterval!
-
-variable: aVarName getter: getMethod setter: setMethod 
-	^self 
-		variable: aVarName
-		getter: getMethod
-		setter: setMethod
-		receiver: 'self'!
-
-variable: aVarName getter: getMethod setter: setMethod receiver: aString 
-	| rewriteRule |
-	rewriteRule := self new.
-	rewriteRule
-		replace: aVarName , ' := ``@object' with: aString , ' ' , setMethod , ' ``@object';
-		replace: aVarName with: aString , ' ' , getMethod.
-	^rewriteRule! !
+		onInterval: anInterval! !
 !Refactory.Browser.ParseTreeRewriter class categoriesForMethods!
-classVariable:getter:setter:!instance creation!public! !
 removeTemporaryNamed:!instance creation!public! !
 rename:to:!instance creation!public! !
 rename:to:handler:!instance creation!public! !
 replace:with:in:!accessing!public! !
 replace:with:in:onInterval:!accessing!public! !
 replace:with:method:!instance creation!public! !
+replaceClassVariable:withGetter:andSetter:forReceiver:!instance creation!public! !
+replaceInstanceVariable:withGetter:andSetter:forReceiver:!instance creation!public! !
 replaceLiteral:with:!instance creation!public! !
 replaceStatements:with:in:onInterval:!accessing!public! !
-variable:getter:setter:!instance creation!public! !
-variable:getter:setter:receiver:!instance creation!public! !
 !
 

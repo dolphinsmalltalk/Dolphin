@@ -583,9 +583,9 @@ testRenameNamespace
 		of: testDataApp
 		equals: 'refersToClassVariablePartiallyQualified ^Tests2.ClassToRename.ClassVar1'.
 	self
-		verifyMethod: #refersToClassConstantPartiallyQualified2
+		verifyMethod: #refersToClassConstantPartiallyQualifiedWithNamespace
 		of: testDataApp
-		equals: 'refersToClassConstantPartiallyQualified2 <namespace: Refactory.Browser.Tests2> ^ClassToRename.ClassConst1'.
+		equals: 'refersToClassConstantPartiallyQualifiedWithNamespace <namespace: Refactory.Browser.Tests2> ^ClassToRename.ClassConst1'.
 	self
 		verifyMethod: #refersToClassConstantFullyQualified
 		of: testDataApp

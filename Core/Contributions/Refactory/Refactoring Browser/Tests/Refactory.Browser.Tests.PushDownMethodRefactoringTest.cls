@@ -14,9 +14,12 @@ Refactory.Browser.Tests.PushDownMethodRefactoringTest comment: ''!
 
 testPushDownMethod
 	| refactoring class |
-	refactoring := PushDownMethodRefactoring pushDown: #(#name:) from: LintRuleTestData.
+	refactoring := PushDownMethodRefactoring
+				model: model
+				pushDown: #(#name:)
+				from: LintRuleTestData.
 	self executeRefactoring: refactoring.
-	class := refactoring model classFor: LintRuleTestData.
+	class := model classFor: LintRuleTestData.
 	self deny: (class directlyDefinesMethod: #name:).
 	class subclasses do: 
 			[:each |
@@ -30,14 +33,18 @@ testPushDownMethodOnNonAbstractClass
 testPushDownMethodThatReferencesPoolDictionary
 	| refactoring class parseTree |
 	parseTree := LintRuleTestData parseTreeFor: #junk.
-	refactoring := PushDownMethodRefactoring pushDown: #(#junk) from: LintRuleTestData.
+	refactoring := PushDownMethodRefactoring
+				model: model
+				pushDown: #(#junk)
+				from: LintRuleTestData.
+	refactoring setOption: #addImports toUse: [:ref :vars | self fail: 'Unexpected addImports'].
 	self executeRefactoring: refactoring.
 	class := refactoring model classFor: LintRuleTestData.
 	self deny: (class directlyDefinesMethod: #junk).
 	class subclasses do: 
 			[:each |
 			self assert: (each parseTreeFor: #junk) equals: parseTree.
-			#rbFix.	"On Dolphin pools are inherited, so in fact the pool should NOT have been copied down."
+			#rbFix.	"On Dolphin pools (imports) are inherited, so in fact the import should NOT have been copied down."
 			self deny: (each directlyImportsNamespace: #{OS.CRTConstants})]!
 
 testPushDownNonExistantMenu

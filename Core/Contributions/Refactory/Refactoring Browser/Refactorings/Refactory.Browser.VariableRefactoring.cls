@@ -13,6 +13,30 @@ Refactory.Browser.VariableRefactoring comment: ''!
 !Refactory.Browser.VariableRefactoring categoriesForClass!Refactory-Refactorings! !
 !Refactory.Browser.VariableRefactoring methodsFor!
 
+replaceReferencesToVariable: sourceVariableBinding in: aCollectionOfMethods with: targetVariableBinding
+	| rewriter hasSourceBinding |
+	rewriter := ParseTreeRewriter new.
+	rewriter
+		replace: '`identifier'
+		withValueFrom: 
+			[:variableNode |
+			variableNode copyWithName: (self shortestNameToBind: targetVariableBinding from: variableNode)]
+		when: [:variableNode | variableNode binding == sourceVariableBinding].
+	"We rewrite any BindingReferences that bind to old variable, even if embedded in literal arrays. Symbols are not renamed."
+	hasSourceBinding := [:refNode | refNode binding == sourceVariableBinding].
+	rewriter
+		replace: '`#literal'
+		withValueFrom: 
+			[:literalNode |
+			literalNode rewriteQualifiedReferencesWith: 
+					[:refNode |
+					"When enumerating a literal array we may encounter other qualified refs than those targetting the binding we are updating"
+					refNode basicBinding == sourceVariableBinding
+						ifTrue: [self rewriteQualifiedReference: refNode toTarget: targetVariableBinding]
+						ifFalse: [refNode copy]]]
+		when: [:literalNode | literalNode isOrContainsQualifiedReferenceMatching: hasSourceBinding].
+	self rewriteVariablesOfMethods: aCollectionOfMethods with: rewriter!
+
 storeOn: aStream 
 	aStream nextPut: $(.
 	self class storeOn: aStream.
@@ -29,6 +53,7 @@ variable: aVarName class: aClass
 	class := self classObjectFor: aClass.
 ! !
 !Refactory.Browser.VariableRefactoring categoriesForMethods!
+replaceReferencesToVariable:in:with:!private!transforming! !
 storeOn:!printing!public! !
 variable:class:!initialize/release!public! !
 !

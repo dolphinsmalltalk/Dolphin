@@ -37,6 +37,9 @@ rewriteUsing: searchReplacer
 	rewriteRule := searchReplacer.
 	self resetResult!
 
+runRecursiveSelfRule: aParseTree
+	^RecursiveSelfRule executeTree: aParseTree initialAnswer: false!
+
 superSends
 	| rule |
 	rule := ParseTreeRewriter new.
@@ -61,6 +64,7 @@ isEmpty!public!testing! !
 problemCount!accessing!public! !
 resetResult!accessing!public! !
 rewriteUsing:!initialize/release!public! !
+runRecursiveSelfRule:!accessing!public! !
 superSends!public!rules! !
 viewResults!private! !
 !

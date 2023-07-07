@@ -13,18 +13,27 @@ Refactory.Browser.Tests.MoveMethodRefactoringTest comment: ''!
 !Refactory.Browser.Tests.MoveMethodRefactoringTest methodsFor!
 
 testMoveMethodIntoArgument
-	| refactoring class |
+	| refactoring class classVar |
 	refactoring := MoveMethodRefactoring
 				selector: #checkMethod:
 				class: TransformationRuleTestData
 				variable: 'aSmalllintContext'.
+	class := refactoring model classFor: TransformationRuleTestData.
+	classVar := class bindingFor: 'RecursiveSelfRule'.
+	classVar isPrivate: true.
 	self setupSelfArgumentNameFor: refactoring toReturn: 'transformationRule'.
 	self setupVariableTypesFor: refactoring
-		toReturn: {refactoring model classNamed: #'Refactory.Browser.SmalllintContext'}.
+		toReturn: { refactoring model classNamed: #'Refactory.Browser.SmalllintContext' }.
 	self setupMethodNameFor: refactoring toReturn: #foo:.
-	refactoring setOption: #abstractVariables toUse: [true].
+	refactoring setOption: #abstractVariables
+		toUse: 
+			[:abstractVars |
+			self assert: abstractVars instVarReaders asSortedArray equals: #('builder' 'class' 'rewriteRule').
+			self assert: abstractVars instVarWriters asSortedArray equals: #('class').
+			self assert: abstractVars privateClassVarReaders single equals: classVar.
+			self assert: abstractVars privateClassVarWriters isEmpty.
+			true].
 	self executeRefactoring: refactoring.
-	class := refactoring model classFor: TransformationRuleTestData.
 	self assert: (class parseTreeFor: #checkMethod:)
 		equals: (self parseMethod: 'checkMethod: aSmalllintContext aSmalllintContext foo: self').
 	self
@@ -102,12 +111,19 @@ testMoveMethodIntoInstanceVariable
 				variable: 'rewriteRule'.
 	self setupSelfArgumentNameFor: refactoring toReturn: 'transformationRule'.
 	self setupVariableTypesFor: refactoring
-		toReturn: {refactoring model classNamed: #'Refactory.Browser.ParseTreeRewriter'}.
+		toReturn: { refactoring model classNamed: #'Refactory.Browser.ParseTreeRewriter' }.
 	self
 		setupMethodNameFor: refactoring
 		toReturn: #foo:foo:
 		withArguments: #('transformationRule' 'aSmalllintContext').
-	refactoring setOption: #abstractVariables toUse: [true].
+	refactoring setOption: #abstractVariables
+		toUse: 
+			[:abstractVars |
+			self assert: abstractVars instVarReaders asSortedArray equals: #('builder' 'class').
+			self assert: abstractVars instVarWriters asSortedArray equals: #('class').
+			self assert: abstractVars privateClassVarReaders isEmpty.
+			self assert: abstractVars privateClassVarWriters isEmpty.
+			true].
 	self executeRefactoring: refactoring.
 	class := refactoring model classFor: TransformationRuleTestData.
 	self assert: (class parseTreeFor: #checkMethod:)
@@ -119,7 +135,7 @@ testMoveMethodIntoInstanceVariable
 				parseMethod: 'foo: transformationRule foo: aSmalllintContext
 	transformationRule class: aSmalllintContext selectedClass.
 	(self executeTree: aSmalllintContext parseTree) ifTrue: 
-			[(transformationRule class recursiveSelfRule executeTree: self tree initialAnswer: false)
+			[(TestData.TransformationRuleTestData.RecursiveSelfRule executeTree: self tree initialAnswer: false)
 				ifFalse: 
 					[transformationRule builder compile: self tree printString
 						in: transformationRule class1
@@ -127,10 +143,8 @@ testMoveMethodIntoInstanceVariable
 	self assert: (class parseTreeFor: #class1) equals: (self parseMethod: 'class1 ^class').
 	self assert: (class parseTreeFor: #class:)
 		equals: (self parseMethod: 'class: anObject class := anObject').
-	self assert: (class metaclass parseTreeFor: #recursiveSelfRule:)
-		equals: (self parseMethod: 'recursiveSelfRule: anObject RecursiveSelfRule := anObject').
-	self assert: (class metaclass parseTreeFor: #recursiveSelfRule)
-		equals: (self parseMethod: 'recursiveSelfRule ^RecursiveSelfRule').
+	self deny: (class metaclass includesSelector: #recursiveSelfRule).
+	self deny: (class metaclass includesSelector: #recursiveSelfRule:).
 	self assert: (class parseTreeFor: #builder) equals: (self parseMethod: 'builder ^builder').
 	self assert: (class parseTreeFor: #builder:)
 		equals: (self parseMethod: 'builder: anObject builder := anObject')!

@@ -34,7 +34,7 @@ resolveBinding
 	^(initial isUppercase or: [initial == $_])
 		ifTrue: [(self lookupInScope: scope) ifNotNil: [:var | var binding]]! !
 !Kernel.StBasicVariableNode categoriesForMethods!
-binding!accessing!private! !
+binding!accessing!public! !
 hasQualifiedName!public!testing! !
 isStaticVariable!public!testing! !
 resolveBinding!accessing!public! !

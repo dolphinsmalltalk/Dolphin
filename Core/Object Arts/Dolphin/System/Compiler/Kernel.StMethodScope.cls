@@ -29,6 +29,15 @@ owningPackage
 		ifNil: [class owningPackage]
 		ifNotNil: [:method | method owningPackage]!
 
+printOn: aPuttableStream
+	self basicPrintOn: aPuttableStream.
+	aPuttableStream
+		nextPut: $(;
+		print: self methodClass;
+		nextPutAll: '>>';
+		print: self selector;
+		nextPut: $)!
+
 selector
 	^node selector! !
 !Kernel.StMethodScope categoriesForMethods!
@@ -36,6 +45,7 @@ environment!accessing!public! !
 environment:!accessing!public! !
 methodScope!accessing!public! !
 owningPackage!public! !
+printOn:!printing!public! !
 selector!accessing!public! !
 !
 

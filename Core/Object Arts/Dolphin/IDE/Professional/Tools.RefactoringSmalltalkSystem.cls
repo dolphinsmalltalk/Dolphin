@@ -585,8 +585,8 @@ inlineAllSelfSendsOf: aCollectionOfMethods within: aBrowserEnvironment
 	caption := String writeStream.
 	caption nextPutAll: 'Inline self sends of '.
 	^self performRefactoringAction: 
-			[| shouldShowChanges |
-			shouldShowChanges := false.
+			[| options |
+			options := IdentityDictionary new.
 			aCollectionOfMethods do: 
 					[:each |
 					| refactoring |
@@ -594,13 +594,12 @@ inlineAllSelfSendsOf: aCollectionOfMethods within: aBrowserEnvironment
 								model: namespace
 								sendersOf: each selector
 								in: each methodClass.
-					refactoring shouldShowChanges: shouldShowChanges.
+					refactoring options: options.
 					refactoring primitiveExecute.
-					shouldShowChanges := refactoring shouldShowChanges.
 					caption display: each]
 				separatedBy: [caption nextPutAll: ', '].
 			namespace name: caption contents.
-			shouldShowChanges
+			(options lookup: #showChanges) value == true
 				ifTrue: [namespace browseChanges]
 				ifFalse: [self changeManager performChange: namespace changes].
 			namespace]!
@@ -631,7 +630,7 @@ inlineMessage: aStMessageNode inMethod: aSelector of: aBehavior
 					receiver isVariable and: [receiver isStaticVariable]])
 				ifTrue: 
 					[| binding |
-					binding := aStMessageNode receiver binding.
+					binding := receiver binding.
 					(binding isClassBinding and: [binding value respondsTo: aStMessageNode selector])
 						ifTrue: [refactoring inlineClass: (binding value classInModel: refactoring model) metaclass]]].
 	self performRefactoring: refactoring!
@@ -1018,7 +1017,7 @@ pushMethods: aCollectionOfMethods up: aBoolean
 	"Private - Implement a multi-method push up or push down refactoring as an atomic unit."
 
 	^self performRefactoringAction: 
-			[| caption namespace byClass |
+			[| caption namespace byClass options |
 			byClass := LookupTable new.
 			aCollectionOfMethods
 				do: [:each | (byClass at: each methodClass ifAbsentPut: [OrderedCollection new]) add: each selector].
@@ -1028,30 +1027,34 @@ pushMethods: aCollectionOfMethods up: aBoolean
 				nextPutAll: (aBoolean ifTrue: ['up'] ifFalse: ['down']);
 				space.
 			namespace := RBModel new.
+			options := IdentityDictionary new.
 			(byClass associations asSortedArray: [:a :b | a key name <= b key name]) do: 
 					[:each |
-					| selectors class |
+					| selectors class pushRefactoring |
 					selectors := each value asSortedArray.
 					class := each key.
 					selectors do: [:eachSelector | caption print: eachSelector] separatedBy: [caption nextPut: $,].
 					caption
 						nextPutAll: ' from ';
 						print: each key.
-					(aBoolean
-						ifTrue: 
-							[PushUpMethodRefactoring
-								model: namespace
-								pushUp: selectors
-								from: class]
-						ifFalse: 
-							[PushDownMethodRefactoring
-								model: namespace
-								pushDown: selectors
-								from: class])
-							primitiveExecute]
+					pushRefactoring := aBoolean
+								ifTrue: 
+									[PushUpMethodRefactoring
+										model: namespace
+										pushUp: selectors
+										from: class]
+								ifFalse: 
+									[PushDownMethodRefactoring
+										model: namespace
+										pushDown: selectors
+										from: class].
+					pushRefactoring options: options.
+					pushRefactoring primitiveExecute]
 				separatedBy: [caption nextPutAll: ', '].
 			namespace name: caption contents.
-			self changeManager performChange: namespace changes.
+			(options lookup: #showChanges) value == true
+				ifTrue: [namespace browseChanges]
+				ifFalse: [self changeManager performChange: namespace changes].
 			namespace]!
 
 pushUpMethods: aCollectionOfMethods 
@@ -1501,7 +1504,7 @@ validateRenameTemp: aStVariableNode to: aString in: aClass
 		& (RBCondition withBlock: 
 					[(definingNode whoDefines: aString) isNil
 						and: [(definingNode allDefinedVariables includes: aString) not]]
-				errorString: ('<1p> is already defined' expandMacrosWith: aString)))
+				errorString: ['<1p> is already defined' expandMacrosWith: aString]))
 			validate! !
 !Tools.RefactoringSmalltalkSystem categoriesForMethods!
 abortSignal!constants!private! !

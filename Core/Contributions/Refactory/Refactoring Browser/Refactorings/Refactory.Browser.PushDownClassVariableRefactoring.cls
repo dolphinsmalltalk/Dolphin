@@ -53,15 +53,24 @@ signalStillReferencedError
 		signalReferenceError: ('<1p> has references to <2s>' expandMacrosWith: class with: variableName)!
 
 transform
+	| binding references |
+	binding := class localBindingFor: variableName.
+	references := model allReferencesToBinding: binding.
+	references do: [:each | each boundParseTree].
 	class removeClassVariable: variableName.
 	destinationClass isNil ifTrue: [^self].
-	destinationClass addClassVariable: variableName! !
+	destinationClass addClassVariable: variableName.
+	"Any real references to the variable will need to be rewritten to bind to the pushed-down variable"
+	self
+		replaceReferencesToVariable: binding
+		in: references
+		with: (destinationClass localBindingFor: variableName)! !
 !Refactory.Browser.PushDownClassVariableRefactoring categoriesForMethods!
-findDestinationClass!preconditions!public! !
+findDestinationClass!preconditions!private! !
 preconditions!preconditions!public! !
-signalMultipleReferenceError!preconditions!public! !
-signalReferenceError:!preconditions!public! !
-signalStillReferencedError!preconditions!public! !
+signalMultipleReferenceError!preconditions!private! !
+signalReferenceError:!preconditions!private! !
+signalStillReferencedError!preconditions!private! !
 transform!public!transforming! !
 !
 

@@ -41,6 +41,7 @@ transform
 	| methods binding |
 	binding := class bindingFor: variableName.
 	methods := model allReferencesToBinding: binding.
+	"We must pre-bind all the parse trees so that we know the target of any references to the class variable that may become stale"
 	methods do: [:each | each boundParseTree].
 	class
 		renameClassVariable: variableName

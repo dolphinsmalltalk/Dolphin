@@ -17,11 +17,15 @@ classVariable: aBoolean
 
 createGetterAccessor
 	getterMethod := self findGetterMethod.
-	getterMethod isNil ifTrue: [getterMethod := self defineGetterMethod]!
+	getterMethod ifNil: [getterMethod := self defineGetterMethod]!
 
 createSetterAccessor
+	(classVariable and: [(self definingClass bindingFor: variableName) isConstant])
+		ifTrue: 
+			["Can't set constants"
+			^self].
 	setterMethod := self findSetterMethod.
-	setterMethod isNil ifTrue: [setterMethod := self defineSetterMethod]!
+	setterMethod ifNil: [setterMethod := self defineSetterMethod]!
 
 defineGetterMethod
 	| selector definingClass |
@@ -147,23 +151,23 @@ usesAssignmentOf: aString in: aClass classVariable: isClassVar
 								using: matcher]]! !
 !Refactory.Browser.CreateAccessorsForVariableRefactoring categoriesForMethods!
 classVariable:!initialize/release!public! !
-createGetterAccessor!public!transforming! !
-createSetterAccessor!public!transforming! !
-defineGetterMethod!public!transforming! !
-defineSetterMethod!public!transforming! !
+createGetterAccessor!private!transforming! !
+createSetterAccessor!private!transforming! !
+defineGetterMethod!private!transforming! !
+defineSetterMethod!private!transforming! !
 definingClass!accessing!private! !
 findGetterMethod!accessing!private! !
 findSetterMethod!accessing!private! !
 getterMethod!accessing!private! !
 methodsReferencingVariable!accessing!private! !
-needsReturnForSetter!public!testing! !
+needsReturnForSetter!private!testing! !
 possibleGetterSelectors!accessing!private! !
 possibleSetterSelectors!accessing!private! !
 preconditions!preconditions!public! !
 setterMethod!accessing!private! !
 storeOn:!printing!public! !
 transform!public!transforming! !
-usesAssignmentOf:in:classVariable:!public!testing! !
+usesAssignmentOf:in:classVariable:!private!testing! !
 !
 
 !Refactory.Browser.CreateAccessorsForVariableRefactoring class methodsFor!

@@ -22,7 +22,16 @@ displayOn: aPuttableStream
 		print: newSelector!
 
 getOptionReplaceReferencesTo: oldSymbol with: newSymbol
-	| references details |
+	| references details prompt |
+	prompt := UI.MessageBox new.
+	prompt
+		caption: self displayString;
+		text: 'Renaming method references is not a true refactoring, and may not preserve behavior.';
+		buttonStyle: #okCancel;
+		customButtons: #(#(#ok '&Rename') #(#cancel '&Don''t Rename'));
+		defaultButton: 2;
+		checkboxText: Tools.SmalltalkSystem current showChangesText;
+		isChecked: self shouldShowChanges.
 	references := self model allReferencesTo: oldSymbol.
 	details := String writeStream.
 	details
@@ -36,14 +45,17 @@ getOptionReplaceReferencesTo: oldSymbol with: newSymbol
 		on: details
 		limit: self maxDetails
 		type: 'methods'.
-	^UI.MessageBox new
-		caption: self displayString;
-		headline: 'Replace references to <1p> with <2p>?' << {oldSymbol. newSymbol};
-		text: 'Renaming method references is not a true refactoring, and may not preserve behavior.';
-		customButtons: #(#(#yes '&Rename') #(#no '&Don''t Rename'));
-		defaultButton: 2;
-		iconStyle: #warning;
-		confirm!
+	details
+		cr;
+		cr.
+	'It is recommended that you review the proposed change<1?s to these methods: this method> before application.'
+		expandMacrosWithArguments: { references size > 1 }
+		on: details.
+	prompt detailsText: details contents.
+	(prompt warning: 'Replace references to <1p> with <2p>?' << { oldSymbol. newSymbol }) == #cancel
+		ifTrue: [^false].
+	self shouldShowChanges: prompt isChecked.
+	^true!
 
 initialize
 	implementors := #()!

@@ -35,6 +35,14 @@ testBadInterval
 					forClass: RefactoryTestDataApp)
 			withMessage: 'The selection doesn''t appear to be a message send'!
 
+testInlineEmptyInterval
+	| source |
+	self shouldFail: (InlineMethodRefactoring
+				inline: (35 to: 34)
+				inMethod: #inlineMethod
+				forClass: RefactoryTestDataApp)
+		withMessage: 'Source interval (35 to: 34) is empty'!
+
 testInlineMethod
 	| refactoring |
 	refactoring := InlineMethodRefactoring
@@ -209,6 +217,15 @@ testInlineMethodForSuperSendThatAlsoSendsSuper
 	self shouldFail: refactoring
 		withMessage: 'RenameInstanceVariableChange does not define #executeNotifying:'!
 
+testInlineNotImplemented
+	| source |
+	source := (RefactoryTestDataApp >> #inlineMethod) getSource.
+	self shouldFail: (InlineMethodRefactoring
+				inline: ((source indexOfSubCollection: 'self') to: (source indexOf: $;) - 1)
+				inMethod: #inlineMethod
+				forClass: RefactoryTestDataApp)
+		withMessage: 'Refactory.Browser.TestData.RefactoryTestDataApp and its superclasses do not define method foo'!
+
 testInlineRecursiveCascadedMethod
 	| refactoring |
 	refactoring := InlineMethodRefactoring
@@ -224,6 +241,32 @@ testInlineRecursiveCascadedMethod
 									temp1 := self foo; inlineMethod; bar.
 									temp := self bar.
 									^temp')!
+
+testInlineWithNamespace
+	"Inlining a method with a custom namespace may require additional qualifications for static variable refs in the inlined code"
+
+	| refactoring refDataApp source |
+	refDataApp := model classFor: RefactoryTestDataApp.
+	source := refDataApp sourceCodeFor: #inlineWithNamespace.
+	refactoring := InlineMethodRefactoring
+				model: model
+				inline: ((source indexOf: ${) + 2 to: (source indexOf: $.) - 1)
+				inMethod: #inlineWithNamespace
+				forClass: RefactoryTestDataApp.
+	self executeRefactoring: refactoring.
+	self assert: (refDataApp parseTreeFor: #inlineWithNamespace)
+		equals: (self
+				parseMethod: 'inlineWithNamespace ^{ Tests.ClassToRename . self refersToClassFullyQualifiedBindingInArray } ').
+	source := refDataApp sourceCodeFor: #inlineWithNamespace.
+	refactoring := InlineMethodRefactoring
+				model: model
+				inline: ((source indexOfSubCollection: '. ') + 2 to: (source indexOf: $}) - 2)
+				inMethod: #inlineWithNamespace
+				forClass: RefactoryTestDataApp.
+	self executeRefactoring: refactoring.
+	self assert: ((model classFor: RefactoryTestDataApp) parseTreeFor: #inlineWithNamespace)
+		equals: (self
+				parseMethod: 'inlineWithNamespace ^{ Tests.ClassToRename. #(#{Refactory.Browser.Tests.ClassToRename}) }')!
 
 testModelInlineRecursiveMethod
 	| refactoring class |
@@ -291,6 +334,7 @@ testReturn
 		withMessage: 'The selection doesn''t appear to be a message send'! !
 !Refactory.Browser.Tests.InlineMethodRefactoringTest categoriesForMethods!
 testBadInterval!failure tests!public! !
+testInlineEmptyInterval!public! !
 testInlineMethod!public!tests! !
 testInlineMethod1!public!tests! !
 testInlineMethod2!public!tests! !
@@ -299,7 +343,9 @@ testInlineMethod4!public!tests! !
 testInlineMethod5!public!tests! !
 testInlineMethodForSuperSend!public!tests! !
 testInlineMethodForSuperSendThatAlsoSendsSuper!failure tests!public! !
+testInlineNotImplemented!failure tests!public! !
 testInlineRecursiveCascadedMethod!public!tests! !
+testInlineWithNamespace!public!tests! !
 testModelInlineRecursiveMethod!public!tests! !
 testNonExistantSelector!failure tests!public! !
 testOverriden!failure tests!public! !

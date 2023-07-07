@@ -84,15 +84,22 @@ inline: anInterval inMethod: aSelector forClass: aClass
 !
 
 inlineClass
-	^inlineClass isNil 
-		ifTrue: 
-			[inlineClass := (sourceMessage receiver name = 'super' 
-						ifTrue: [class superclass]
-						ifFalse: [class]) whoDefinesMethod: self inlineSelector]
-		ifFalse: [inlineClass]!
+	^inlineClass
+		ifNil: 
+			[| selector |
+			selector := self inlineSelector.
+			inlineClass := ((sourceMessage receiver name = 'super' ifTrue: [class superclass] ifFalse: [class])
+						whoDefinesMethod: selector)
+							ifNil: 
+								[self
+									refactoringError: ('<1p> and its superclasses do not define method <2s>' expandMacrosWith: class
+											with: selector)]]!
 
 inlineClass: anObject
 	^inlineClass := anObject!
+
+inlineMethod
+	^self inlineClass methodFor: self inlineSelector!
 
 inlineSelector
 	sourceMessage isNil ifTrue: [self findSelectedMessage].
@@ -103,8 +110,8 @@ inlineSourceReplacing: aParseTree
 	statements := inlineParseTree body statements.
 	(statements size > 1 and: [aParseTree isEvaluatedFirst not])
 		ifTrue: 
-			[(self shouldInlineReordered: (self inlineClass methodFor: self inlineSelector)
-				into: (class methodFor: sourceSelector)) ifFalse: [self refactoringAborted]].
+			[(self shouldInlineReordered: self inlineMethod into: (class methodFor: sourceSelector))
+				ifFalse: [self refactoringAborted]].
 	nodeUnderSequence := aParseTree.
 	[nodeUnderSequence parent isSequence] whileFalse: [nodeUnderSequence := nodeUnderSequence parent].
 	nodeUnderSequence parent
@@ -184,34 +191,52 @@ normalizeReturns
 	[rewriter executeTree: inlineParseTree] whileTrue: [inlineParseTree := rewriter tree]!
 
 parseInlineMethod
-	self inlineClass isNil
-		ifTrue: 
-			[self
-				refactoringError: ('<1p> or its superclasses don''t contain method <2s>' expandMacrosWith: class
-						with: self inlineSelector)].
-	inlineParseTree := self inlineClass parseTreeFor: self inlineSelector.
-	inlineParseTree isNil ifTrue: [self refactoringError: 'Could not parse sources'].
+	inlineParseTree := self inlineMethod boundParseTree.
+	inlineParseTree ifNil: [^self refactoringError: 'Could not parse sources'].
 	inlineParseTree lastIsReturn ifFalse: [inlineParseTree addSelfReturn]!
 
 preconditions
 	^(RBCondition definesSelector: sourceSelector in: class)
-		& (RBCondition withBlock: 
-					[self findSelectedMessage.
-					#rbFix.	"Re-order parseInlineMethod and isOverridden check, since want to first check if 
+		& (RBCondition withBlock: [sourceInterval notEmpty]
+				errorString: ['Source interval <1p> is empty' expandMacrosWith: sourceInterval])
+			& (RBCondition withBlock: 
+						[#rbFix.	"Re-order parseInlineMethod and isOverridden check, since want to first check if 
 							the method to be inlined is actually defined in the class into which it is to be inlined."
-					self parseInlineMethod.
-					self isOverridden
-						ifTrue: 
-							[(self shouldInlineOverriddenMethod: self inlineSelector of: self inlineClass)
-								ifFalse: [self refactoringAborted]].
-					self isPrimitive ifTrue: [self refactoringError: 'Cannot inline primitives'].
-					self checkSuperMessages.
-					self rewriteInlinedTree.
-					(sourceMessage parent isReturn or: [self hasMultipleReturns not])
-						ifFalse: 
-							[self
-								refactoringError: 'Cannot inline method since it contains multiple returns that cannot be rewritten'].
-					true])!
+						self parseInlineMethod.
+						self isOverridden
+							ifTrue: 
+								[(self shouldInlineOverriddenMethod: self inlineSelector of: self inlineClass)
+									ifFalse: [self refactoringAborted]].
+						self isPrimitive ifTrue: [self refactoringError: 'Cannot inline primitives'].
+						self checkSuperMessages.
+						self rewriteInlinedTree.
+						(sourceMessage parent isReturn or: [self hasMultipleReturns not])
+							ifFalse: 
+								[self
+									refactoringError: 'Cannot inline method since it contains multiple returns that cannot be rewritten'].
+						true])!
+
+qualifyInlinedStatics
+	| rewriter |
+	rewriter := ParseTreeRewriter new.
+	rewriter
+		replace: '`identifier'
+		withValueFrom: [:variableNode | variableNode copyWithName: variableNode binding fullName]
+		when: [:variableNode | variableNode isStaticVariable and: [variableNode name ~= variableNode binding fullName]].
+	rewriter
+		replace: '`#literal'
+		withValueFrom: 
+			[:literalNode |
+			literalNode rewriteQualifiedReferencesWith: 
+					[:refNode |
+					refNode binding
+						ifNil: [refNode copy]
+						ifNotNil: 
+							[:binding |
+							"Deliberately leave the relative flag set on the ref node so that we can distinguish between those that were originally fully-qualified, and those that were relative"
+							refNode copyWithName: binding fullName]]]
+		when: [:literalNode | literalNode isOrContainsQualifiedReferenceMatching: [:refNode | refNode binding notNil]].
+	(rewriter executeTree: inlineParseTree) ifTrue: [inlineParseTree := rewriter tree]!
 
 removeEmptyIfTrues
 	| rewriter |
@@ -277,7 +302,7 @@ renameTemporary: oldName to: newName
 	rewriter := ParseTreeRewriter new.
 	rewriter
 		replace: oldName with: newName;
-		replaceArgument: oldName with: newName.
+		replaceArgument: oldName withValueFrom: [:node | node class named: newName].
 	(rewriter executeTree: inlineParseTree) ifTrue: [inlineParseTree := rewriter tree]!
 
 replaceArgument: sourceNode with: replacementNode
@@ -307,16 +332,26 @@ rewriteCascadedMessage
 	inlineParseTree addReturn!
 
 rewriteInlinedTree
-	sourceMessage parent isReturn 
-		ifTrue: 
-			[(sourceParseTree isLast: sourceMessage parent) 
-				ifFalse: [self addSelfReturn]]
+	sourceMessage parent isReturn
+		ifTrue: [(sourceParseTree isLast: sourceMessage parent) ifFalse: [self addSelfReturn]]
 		ifFalse: 
 			[self
 				writeGuardClauses;
 				normalizeIfTrues;
 				normalizeReturns;
-				addSelfReturn]!
+				addSelfReturn].
+	"Even when inlining from self, we may encounter static variables refs that require rewriting because the inlined method might have a custom namespace."
+	self qualifyInlinedStatics!
+
+rewriteStaleVariableReferencesInParseTree: aStMethodNode
+	| rewriter classScope |
+	rewriter := self buildVariableReferenceRewriter.
+	classScope := aStMethodNode classScope.
+	"We must clear out any static variable bindings cached before the refactoring transformation as these may no longer bind the same way"
+	classScope clearVariableCache.
+	"If an instance method we must also clear out the meta scope's cache in case the method includes any optimised expressions that are compiled as if class methods"
+	classScope metaScope == classScope ifFalse: [classScope metaScope clearVariableCache].
+	rewriter executeTree: aStMethodNode!
 
 shouldInlineExpression: aString
 	"This option replaces use of a RefactoringWarning in Dolphin 8 for prompts as to whether expressions that were arguments to the method being inlined should be inlined into the resulting code, or assigned to a a temporary. Note that the 'inline' choice is not guaranteed to preserve behaviour, e.g. if the expression being inlined has side effects so executing it more than once will behave differently that the original code. The richer prompt that this option provides explains this.."
@@ -355,7 +390,27 @@ transform
 	self
 		renameConflictingTemporaries;
 		insertInlinedMethod;
+		unqualifyInlinedStatics;
 		compileMethod!
+
+unqualifyInlinedStatics
+	| rewriter |
+	rewriter := ParseTreeRewriter new.
+	rewriter
+		replace: '`identifier'
+		withValueFrom: [:variableNode | self rewriteStaticVariable: variableNode]
+		when: [:variableNode | variableNode binding notNil].
+	rewriter
+		replace: '`#literal'
+		withValueFrom: 
+			[:literalNode |
+			literalNode rewriteQualifiedReferencesWith: [:refNode | self rewriteRelativeReference: refNode]]
+		when: 
+			[:literalNode |
+			literalNode
+				isOrContainsQualifiedReferenceMatching: [:refNode | refNode isRelative and: [refNode binding notNil]]].
+	RBVariableAnalyser analyseParseTree: sourceParseTree.
+	(rewriter executeTree: sourceParseTree) ifTrue: [sourceParseTree := rewriter tree]!
 
 writeGuardClauses
 	| rewriter |
@@ -382,6 +437,7 @@ hasMultipleReturns!public!testing! !
 inline:inMethod:forClass:!initialize/release!private! !
 inlineClass!public!transforming! !
 inlineClass:!accessing!public! !
+inlineMethod!public!transforming! !
 inlineSelector!public!transforming! !
 inlineSourceReplacing:!public!transforming! !
 insertInlinedMethod!public!transforming! !
@@ -392,6 +448,7 @@ normalizeIfTrues!public!transforming! !
 normalizeReturns!public!transforming! !
 parseInlineMethod!public!transforming! !
 preconditions!preconditions!public! !
+qualifyInlinedStatics!private!transforming! !
 removeEmptyIfTrues!public!transforming! !
 removeImmediateBlocks!public!transforming! !
 removeReturns!public!transforming! !
@@ -403,11 +460,13 @@ replaceArguments!public!transforming! !
 requestImplementorToInline:!public!requests! !
 rewriteCascadedMessage!public!transforming! !
 rewriteInlinedTree!public!transforming! !
+rewriteStaleVariableReferencesInParseTree:!public!transforming! !
 shouldInlineExpression:!public!requests! !
 shouldInlineOverriddenMethod:of:!preconditions!public! !
 shouldInlineReordered:into:!public!requests! !
 storeOn:!printing!public! !
 transform!public!transforming! !
+unqualifyInlinedStatics!private!transforming! !
 writeGuardClauses!public!transforming! !
 !
 
