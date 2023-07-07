@@ -209,6 +209,11 @@ isEnabled: value
 
 	self put_IsEnabled: value!
 
+items
+	"Answer an <ICoreWebView2ContextMenuItemCollection> containing the receiver's sub-menu items, or nil if not a sub-menu"
+
+	^self kind == #subMenu ifTrue: [self children]!
+
 kind
 	"Answer the kind of menu item the receiver describes.
 		#command	- Regular menu command
@@ -313,6 +318,7 @@ isChecked!properties!public! !
 isChecked:!**auto generated**!properties!public! !
 isEnabled!properties!public! !
 isEnabled:!**auto generated**!properties!public! !
+items!properties!public! !
 kind!properties!public! !
 label!properties!public! !
 name!properties!public! !

@@ -83,7 +83,7 @@ testContextMenu
 				createContextMenuItem: '&Blah'
 				iconStream: iconStream
 				kind: WebView2.COREWEBVIEW2_CONTEXT_MENU_ITEM_KIND_COMMAND.
-	self assertIsNil: newCmd children.
+	self assertIsNil: newCmd items.
 	self assert: newCmd label equals: '&Blah'.
 	self assert: newCmd name equals: '&Blah'.
 	self assert: newCmd kind equals: #command.
