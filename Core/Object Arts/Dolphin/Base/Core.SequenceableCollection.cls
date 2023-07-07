@@ -135,6 +135,17 @@ asArray
 		to: size
 		startingAt: 1!
 
+asOrderedCollection
+	"Answer an <OrderedCollection> whose elements are those of the receiver in the same sequence."
+
+	| size |
+	size := self size.
+	^self
+		replaceElementsOf: (OrderedCollection ofSize: size)
+		from: 1
+		to: size
+		startingAt: 1!
+
 asRunArray
 	"Answer a <RunArray> whose elements are the same as those of the receiver. The order of
 	elements will be the same, and there will be the same number when enumerated, but the
@@ -1281,6 +1292,7 @@ anyOne!accessing!public! !
 appendToStream:!double dispatch!private! !
 approxSize!accessing!private! !
 asArray!converting!public! !
+asOrderedCollection!converting!public! !
 asRunArray!converting!public! !
 associations!accessing!public! !
 asString!public! !
