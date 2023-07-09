@@ -78,7 +78,7 @@ printSourceOn: aStream
 	| map entry range source |
 	testMethod ifNil: [^self].
 	map := testMethod textMap.
-	entry := map at: (Kernel.StackFrame findIP: ip inTextMap: map).
+	entry := map at: (Kernel.CompiledCode findIP: ip inTextMap: map).
 	range := entry value.
 	range isEmpty ifTrue: [range := range start to: range start].
 	source := testMethod getSource.

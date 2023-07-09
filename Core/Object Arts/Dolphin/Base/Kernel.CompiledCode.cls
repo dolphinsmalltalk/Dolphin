@@ -293,8 +293,9 @@ isDebugMethod
 	size := byteCodes size.
 	i := 1.
 	[i > size] whileFalse: 
-			[(byteCodes at: i) == Break ifTrue: [^true].
-			i := i + (ByteCodeDispatcher lengthOfInstruction: (byteCodes at: i))].
+			[| bc |
+			(bc := byteCodes at: i) == Break ifTrue: [^true].
+			i := i + (ByteCodeDispatcher.InstructionLengths at: bc + 1)].
 	^false!
 
 isExpression
@@ -466,6 +467,72 @@ localScope
 
 	^methodClass localScope
 !
+
+mapIp: anInteger toDebug: debugCompiledMethod
+	| i interp first map debugMap debugDispatcher debugFirst |
+	map := self debugInfo textMap.
+	debugMap := debugCompiledMethod debugInfo textMap.
+	i := self class findIp: anInteger inTextMap: map.
+	i == 0
+		ifTrue: [first := debugFirst := 1]
+		ifFalse: 
+			[first := (map at: i) key.
+			debugFirst := (debugMap at: i) key].
+	first == anInteger
+		ifTrue: 
+			["Directly corresponding entry"
+			^debugFirst].
+	self assert: [first < anInteger].
+	"We should have the map entry for the previous sync point (send instruction), and need to step forward from there"
+	interp := self byteCodeDispatcher.
+	debugDispatcher := debugCompiledMethod byteCodeDispatcher.
+	interp ip: first.
+	debugDispatcher ip: debugFirst.
+	"Note: If there is more than one step here, the results are unreliable. In use from the debugger, this should not happen though, because any release frame should have been suspended just after a send."
+	
+	[debugDispatcher next.
+	(interp
+		next;
+		ip) == anInteger] whileFalse.
+	^debugDispatcher ip!
+
+mapIP: anInteger toDebug: debugCompiledMethod
+	| i interp offset prev map debugMap debugDispatcher |
+	map := self debugInfo textMap.
+	debugMap := debugCompiledMethod debugInfo textMap.
+	i := self class findIP: anInteger inTextMap: map.
+	(map at: i) key == anInteger
+		ifTrue: 
+			["Directly corresponding entry"
+			^(debugMap at: i) key].
+	"We expect to be mapping from a bytecode immediately after a send (or a jump replacing an optimised send), so we need to remap that previous send instructions IP and then step to the next instruction in the debug method"
+	interp := self byteCodeDispatcher.
+	prev := interp prevIP: anInteger.
+	i := self class findIP: prev inTextMap: map.
+	offset := prev - (map at: i) key.
+	offset == 0
+		ifTrue: 
+			["Text map entry exists for previous instruction, so step forward once from there in the debug method"
+			^interp
+				method: debugCompiledMethod;
+				ip: (debugMap at: i) key;
+				next;
+				ip].
+	"Intermediate bytecode, so find the prior map entry and step forward from there."
+	debugDispatcher := debugCompiledMethod byteCodeDispatcher.
+	[i > 1 and: 
+			["We must skip over any voided entries"
+			(map at: (i := i - 1)) key == 0]]
+		whileTrue.
+	interp ip: (map at: i) key.
+	debugDispatcher ip: (debugMap at: i) key.
+	"Note: If there is more than one step here, the results are unreliable. In use from the debugger, this should not happen though, because any release frame should have been suspended just after a send."
+	[interp ip == prev] whileFalse: 
+			[interp next.
+			debugDispatcher next].
+	^debugDispatcher
+		next;
+		ip!
 
 messages
 	"Answer a <collection> of the messages sent by the receiver."
@@ -753,6 +820,8 @@ literalsDo:!enumerating!private! !
 localCount!accessing!method header!private! !
 localEnvironment!accessing!private! !
 localScope!accessing!public! !
+mapIp:toDebug:!private! !
+mapIP:toDebug:!private! !
 messages!accessing!development!public! !
 messagesDo:!development!enumerating!public! !
 methodClass!accessing!public! !
@@ -797,6 +866,33 @@ elementsExpired: anInteger of: infoCacheKeys
 	GC'd, so clean out any corresponding debug info from the cache."
 
 	InfoCacheKeys nilCorpsesAndDo: [:i | InfoCacheValues at: i put: nil]!
+
+findIp: anInteger inTextMap: aTextMap
+	"Private - Answer the index of the source map entry corresponding to the specified <integer> ip. The key of each text map entry identifies the first IP of the code generated for the range
+	of source which is held as entry's <interval> value."
+
+	| i end first |
+	i := 0.
+	end := aTextMap size.
+	[i < end and: 
+			[first := (aTextMap at: i + 1) key.
+			anInteger >= first]]
+		whileTrue: [i := i + 1].
+	^i!
+
+findIP: anInteger inTextMap: aTextMap
+	"Private - Answer the index of the source map entry corresponding to the specified <integer> ip. The key of each text map entry identifies the first IP of the code generated for the range
+	of source which is held as entry's <interval> value."
+
+	| i end first |
+	i := 1.
+	end := aTextMap size - 1.
+	[i <= end and: 
+			[first := (aTextMap at: i) key.
+			anInteger > first]] whileTrue: [i := i + 1].
+	"Skip to last entry with same first ip - there may be more than one for the same ip where the optimizer combines bytecodes, e.g. push self; send unary"
+	[i < end and: [(aTextMap at: i + 1) key == first]] whileTrue: [i := i + 1].
+	^i!
 
 initialize
 	"Private - Initialize the class variables of the receiver.
@@ -848,6 +944,8 @@ packByteCodes: anArray
 	^codes! !
 !Kernel.CompiledCode class categoriesForMethods!
 elementsExpired:of:!development!finalizing!private! !
+findIp:inTextMap:!private! !
+findIP:inTextMap:!helpers!private! !
 initialize!development!initializing!private! !
 initializeInfoCache!development!initializing!private! !
 initializeInfoCache:!development!initializing!private! !

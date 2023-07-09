@@ -597,6 +597,9 @@ public:
 		case OpCode::LongJumpIfNotNil:
 		{
 			int16_t offset = static_cast<int16_t>((GetBytecode(ip + 2) << 8ui32) + GetBytecode(ip + 1));
+			if (!offset) {
+				offset = static_cast<int16_t>(context.GetJumpTarget(ip) - static_cast<intptr_t>(ip) - 3);
+			}
 			PrintJumpInstruction(ip, stream, static_cast<JumpType>(static_cast<uint8_t>(opcode) - static_cast<uint8_t>(OpCode::LongJump)), offset, static_cast<intptr_t>(ip) + 3 + offset);
 		}
 		break;

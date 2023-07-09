@@ -418,6 +418,10 @@ public:
 	u8string GetSpecialSelector(size_t index);
 	wstring GetLiteralAsString(size_t index) { return DebugPrintString(m_literalFrame[index]); }
 	u8string GetInstVar(size_t index) { return m_instVars[index]; }
+	ip_t GetJumpTarget(ip_t ip) const {
+		_ASSERTE(m_bytecodes[ip].IsJumpInstruction);
+		return m_bytecodes[ip].target;
+	}
 
 private:
 #else

@@ -49,6 +49,13 @@ compileMethod: aString in: aClass
 		environment: nil
 		flags: defaultCompileFlags!
 
+debugCompileResultFor: aCompiledMethod
+	^Compiler
+		compile: aCompiledMethod getSource
+		in: aCompiledMethod methodClass
+		environment: aCompiledMethod environment
+		flags: ##(CompilerFlags.DebugMethod | CompilerFlags.TextMap | CompilerFlags.TempsMap)!
+
 defaultCompileFlags
 	^defaultCompileFlags!
 
@@ -90,7 +97,8 @@ knownTextMapIssues
 	to put a text map entry in for the unconditional jump (wouldn't do any harm)."
 	bad add: DolphinCompilerTestMethods >> #testWarningReadBeforeWrittenBlockTemp.
 	"These case have an extra entry in the debug temps map, apparently due to the optimizatiom of ifNil:ifNotNil:. In the non-debug method the unecessary ifNotNil: branch is optimized away"
-	{Dictionary. OS.IniFileAbstract. Namespace class} do: [:each | bad add: each >> #associationAt:].
+	{ Dictionary. OS.IniFileAbstract. Namespace class. DolphinCompilerTestMethods }
+		do: [:each | bad add: each >> #associationAt:].
 	^Refactory.Browser.BrowserEnvironment new forMethods: bad asArray!
 
 messageFromError: ex
@@ -837,11 +845,11 @@ testIncrementDecrementOptimisation
 	debugMethod := method asDebugMethod.
 	debugMap := debugMethod debugInfo textMap.
 	self assert: map size equals: debugMap size.
-	i := StackFrame findIP: 5 inTextMap: map.
+	i := CompiledCode findIp: 5 inTextMap: map.
 	self assert: (map at: i) key equals: 5.
 	self assert: (map at: i) value equals: (debugMap at: i) value.
 	self assert: (debugMethod byteCodes at: (debugMap at: i) key) equals: Increment.
-	i := StackFrame findIP: 6 inTextMap: map.
+	i := CompiledCode findIp: 6 inTextMap: map.
 	self assert: (map at: i) key equals: 6.
 	self assert: (map at: i) value equals: (debugMap at: i) value.
 	self assert: (debugMethod byteCodes at: (debugMap at: i) key) equals: ShortPopTemp + 1!
@@ -874,7 +882,7 @@ testIncrementPushTempOptimisation
 	self assert: (method byteCodes at: 5) equals: IncPushTemp.
 	self assert: (method byteCodes at: 6) equals: StoreTemp.
 	self assert: (method byteCodes at: 7) equals: 0.	"temp 0"
-	i := StackFrame findIP: 5 inTextMap: map.
+	i := CompiledCode findIp: 5 inTextMap: map.
 	self assert: (map at: i) key equals: 5.
 	self assert: (method getSource copyFrom: (map at: i) value start to: (map at: i) value stop)
 		equals: 'i + 1'.
@@ -882,7 +890,7 @@ testIncrementPushTempOptimisation
 	debugMap := debugMethod debugInfo textMap.
 	self assert: (map at: i) value equals: (debugMap at: i) value.
 	self assert: (debugMethod byteCodes at: (debugMap at: i) key) equals: Increment.
-	i := StackFrame findIP: 6 inTextMap: map.
+	i := CompiledCode findIp: 6 inTextMap: map.
 	self assert: (map at: i) key equals: 6.
 	self assert: (map at: i) value equals: (debugMap at: i) value.
 	self assert: (debugMethod byteCodes at: (debugMap at: i) key) equals: ShortStoreTemp + 0.
@@ -953,11 +961,11 @@ testIncrementTempOptimisation
 	map := method debugInfo textMap.
 	debugMethod := method asDebugMethod.
 	debugMap := debugMethod debugInfo textMap.
-	i := StackFrame findIP: 5 inTextMap: map.
+	i := CompiledCode findIp: 5 inTextMap: map.
 	self assert: (map at: i) key equals: 5.
 	self assert: (map at: i) value equals: (debugMap at: i) value.
 	self assert: (debugMethod byteCodes at: (debugMap at: i) key) equals: Increment.
-	i := StackFrame findIP: 6 inTextMap: map.
+	i := CompiledCode findIp: 6 inTextMap: map.
 	self assert: (map at: i) key equals: 6.
 	self assert: (map at: i) value equals: (debugMap at: i) value.
 	self assert: (debugMethod byteCodes at: (debugMap at: i) key) equals: ShortPopTemp + 0!
@@ -1053,6 +1061,100 @@ testLiteralStringEncoding
 				actual := (Compiler evaluate: array) first.
 				self assert: actual equals: each.
 				self assert: actual isKindOf: Utf8String]!
+
+testMapIpWithVoidedEntry
+	| method debugMap textMap debugMethod |
+	self skip. "Work in progress - works with old mapIP:toDebug:, but not replacement yet"
+	method := self getTestMethod: #performOn:.
+	"If the bytecode generation changes, then this test will be inconclusive, so we need to detect that"
+	self assert: method disassembly
+		equals: 'Normal, 1 args, 1 stack temps, 8 literals
+
+	1	Push Self; Send[0]: #context with 0 args
+	2	Store Temp[1]
+	3	Send[1]: #empty with 0 args
+	4	Pop
+	5	Push Inst Var[1]: iv2
+	6	Push Temp[0]; Push Temp[1]
+	8	Send[2]: #match:inContext: with 2 args
+	9	Jump If False +9 to 20
+	11	Push Self; Push Temp[0]
+	12	Send[3]: #canMatch: with 1 args
+	13	Jump If False +6 to 20
+	14	Push Inst Var[0]: iv1
+	15	Send[4]: #recusivelySearchInContext with 0 args
+	16	Pop; Push Self
+	17	Push Temp[0]
+	18	Send[5]: #foundMatchFor: with 1 args
+	19	Return
+	20	Return nil'.
+	textMap := method debugInfo textMap.
+	self assert: textMap
+		equals: {
+				1 -> (168 to: 179).
+				2 -> (161 to: 179).
+				3 -> (184 to: 192).
+				8 -> (200 to: 237).
+				9 -> (240 to: 243).
+				12 -> (246 to: 272).
+				0 -> (279 to: 285).
+				15 -> (293 to: 321).
+				18 -> (328 to: 359).
+				19 -> (197 to: 378).
+				20 -> (197 to: 378)
+			}.
+	debugMethod := method asDebugMethod.
+	"Note that the debug method is still 'optimised', as this is necessary so that the text maps (used by the debugger to remap normal frames to debug frames) align.
+	There will be fewer optimisation opportunities due to the Break instructions, in particular macro instructions such as send-to-self, will be split"
+	self assert: debugMethod disassembly
+		equals: 'Normal, 1 args, 1 stack temps, 8 literals, debug
+
+	1	Push Self
+	2	*Break
+	3	Send[0]: #context with 0 args
+	4	*Break
+	5	Store Temp[1]
+	6	*Break
+	7	Send[1]: #empty with 0 args
+	8	Pop
+	9	Push Inst Var[1]: iv2
+	10	Push Temp[0]; Push Temp[1]
+	12	*Break
+	13	Send[2]: #match:inContext: with 2 args
+	14	Jump If False +14 to 30
+	16	Push Self; Push Temp[0]
+	17	*Break
+	18	Send[3]: #canMatch: with 1 args
+	19	Jump If False +9 to 30
+	21	Push Inst Var[0]: iv1
+	22	*Break
+	23	Send[4]: #recusivelySearchInContext with 0 args
+	24	Pop; Push Self
+	25	Push Temp[0]
+	26	*Break
+	27	Send[5]: #foundMatchFor: with 1 args
+	28	*Break
+	29	Return
+	30	*Break
+	31	Return nil'.
+	debugMap := debugMethod debugInfo textMap.
+	self assert: debugMap
+		equals: {
+				3 -> (168 to: 179).
+				5 -> (161 to: 179).
+				7 -> (184 to: 192).
+				13 -> (200 to: 237).
+				14 -> (240 to: 243).
+				18 -> (246 to: 272).
+				0 -> (279 to: 285).
+				23 -> (293 to: 321).
+				27 -> (328 to: 359).
+				29 -> (197 to: 378).
+				31 -> (197 to: 378)
+			}.
+	"Verify that we can remap every ip in the method to the correct ip in the debug method, although in practice we only need to map bytecodes for the potential break points (mainly sends)."
+	#(#(1 3) #(2 5) #(3 7) #(4 8) #(5 9) #(6 10) #(8 13) #(9 14) #(11 16) #(12 18) #(13 19) #(14 21) #(15 23) #(16 24) #(17 25) #(18 27) #(19 29) #(20 31))
+		do: [:pair | self assert: (method mapIp: pair first toDebug: debugMethod) equals: pair second]!
 
 testMutableAnnotation
 	| class mutator inst |
@@ -1212,6 +1314,92 @@ DiffBrowser show
 	compare: lowerText id: 'Actual'
 	and: upperText id: 'Expected'
 "!
+
+testReturnIfNotNil
+	| method debugMap textMap debugMethod |
+	method := self getTestMethod: #associationAt:.
+	"If the bytecode generation changes, then this test will be inconclusive, so we need to detect that"
+	self assert: method disassembly
+		equals: 'Normal, 1 args, 1 stack temps, 3 literals
+
+	1	Push Self; Push Temp[0]
+	2	Push nil
+	3	Send[0]: #associationAt:ifAbsent: with 2 args
+	4	Return If Not Nil
+	5	Push Self; Push Temp[0]
+	6	Send[1]: #errorKeyNotFound: with 1 args
+	7	Return'.
+	textMap := method debugInfo textMap.
+	self assert: textMap
+		equals: { 3 -> (172 to: 212). 4 -> (171 to: 286). 6 -> (226 to: 255). 7 -> (170 to: 286) }.
+	debugMethod := method asDebugMethod.
+	"Note that the debug method is still 'optimised', as this is necessary so that the text maps (used by the debugger to remap normal frames to debug frames) align.
+	There will be fewer optimisation opportunities due to the Break instructions, in particular macro instructions such as send-to-self, will be split"
+	self assert: debugMethod disassembly
+		equals: 'Normal, 1 args, 1 stack temps, 3 literals, debug
+
+	1	Push Self; Push Temp[0]
+	2	Push nil
+	3	*Break
+	4	Send[0]: #associationAt:ifAbsent: with 2 args
+	5	Dup
+	6	*Break
+	7	Jump If Not Nil +6 to 15
+	9	Pop; Push Self
+	10	Push Temp[0]
+	11	*Break
+	12	Send[1]: #errorKeyNotFound: with 1 args
+	13	*Break
+	14	Return
+	15	Store Temp[1]
+	16	*Break
+	17	Return'.
+	"Verify that we can remap every ip in the method to the correct ip in the debug method, although in practice we only need to map bytecodes for the potential break points (mainly sends)."
+	#(#(1 1) #(2 2) #(3 4) #(4 7) #(5 9) #(6 12) #(7 14))
+		do: [:pair | self assert: (method mapIp: pair first toDebug: debugMethod) equals: pair second]!
+
+testReturnIfNotNilOptimization
+	| method textMap debugMethod |
+	method := self getTestMethod: #associationAt:.
+	"If the bytecode generation changes, then this test will be inconclusive, so we need to detect that"
+	self assert: method disassembly
+		equals: 'Normal, 1 args, 1 stack temps, 3 literals
+
+	1	Push Self; Push Temp[0]
+	2	Push nil
+	3	Send[0]: #associationAt:ifAbsent: with 2 args
+	4	Return If Not Nil
+	5	Push Self; Push Temp[0]
+	6	Send[1]: #errorKeyNotFound: with 1 args
+	7	Return'.
+	textMap := method debugInfo textMap.
+	self assert: textMap
+		equals: { 3 -> (172 to: 212). 4 -> (171 to: 286). 6 -> (226 to: 255). 7 -> (170 to: 286) }.
+	debugMethod := method asDebugMethod.
+	"Note that the debug method is still 'optimised', as this is necessary so that the text maps (used by the debugger to remap normal frames to debug frames) align.
+	There will be fewer optimisation opportunities due to the Break instructions, in particular macro instructions such as send-to-self, will be split"
+	self assert: debugMethod disassembly
+		equals: 'Normal, 1 args, 1 stack temps, 3 literals, debug
+
+	1	Push Self; Push Temp[0]
+	2	Push nil
+	3	*Break
+	4	Send[0]: #associationAt:ifAbsent: with 2 args
+	5	Dup
+	6	*Break
+	7	Jump If Not Nil +6 to 15
+	9	Pop; Push Self
+	10	Push Temp[0]
+	11	*Break
+	12	Send[1]: #errorKeyNotFound: with 1 args
+	13	*Break
+	14	Return
+	15	Store Temp[1]
+	16	*Break
+	17	Return'.
+	"Verify that we can remap every ip in the method to the correct ip in the debug method, although in practice we only need to map bytecodes for the potential break points (mainly sends)."
+	#(#(1 1) #(2 2) #(3 4) #(4 7) #(5 9) #(6 12) #(7 14))
+		do: [:pair | self assert: (method mapIp: pair first toDebug: debugMethod) equals: pair second]!
 
 testReturnImmediate
 	"#397"
@@ -1505,7 +1693,7 @@ testTextMapOfEmptyBlock
 		do: 
 			[:ip |
 			| debugIp |
-			debugIp := StackFrame findIP: ip inTextMap: method textMap.
+			debugIp := CompiledCode findIp: ip inTextMap: method textMap.
 			self assert: (debugMethod byteCodes at: (debugMethod textMap at: debugIp) key)
 				equals: (method byteCodes at: ip)]!
 
@@ -1711,10 +1899,12 @@ testWriteAccessor
 testYourself
 	"Test that yourself is optimised away, although retained in literal frame"
 
-	| result method disasm expected |
+	| result method disasm expected literals |
 	result := self compileExpression: '^(Array new: 1) at: 1 put: 1234; yourself'.
 	method := result method.
-	self assert: method literals equals: { Array binding. #at:put:. #new:. #yourself }.
+	literals := method literals.
+	self assert: literals first equals: Array binding.
+	self assert: literals asSet equals: { Array binding. #at:put:. #new:. #yourself } asSet.
 	disasm := method disassembly.
 	expected := 'Normal, 0 args, 4 literals
 
@@ -1738,7 +1928,8 @@ verifyTempsMapOf: aCompiledMethod
 	"First check that all ip's are covered by the method scope"
 	ipRange := 1 to: method byteCodes size.
 	tempsMap := info tempsMap.
-	self assert: tempsMap first key equals: ipRange.
+	"This is not necessarily true, as clean blocks are now moved after the rest of the bytecodes of the method."
+	"self assert: tempsMap first key equals: ipRange."
 	tempsAtIp := Array new: ipRange size.
 	"All temps map entries should be for ip's that represent some subset of the method's ip's"
 	tempsMap do: 
@@ -1776,29 +1967,35 @@ verifyTempsMapOf: aCompiledMethod
 						ifTrue: [parseTree]
 						ifFalse: 
 							[| range1 range2 |
-							range1 := (textMap at: (StackFrame findIP: ipRange start inTextMap: textMap)) value.
-							range2 := (textMap at: (Kernel.StackFrame findIP: ipRange stop inTextMap: textMap)) value.
+							range1 := (textMap at: (CompiledCode findIP: ipRange start inTextMap: textMap)) value.
+							range2 := (textMap at: (CompiledCode findIP: ipRange stop inTextMap: textMap)) value.
 							parseTree bestNodeFor: ((range1 start min: range2 start) to: (range1 stop max: range2 stop))].
 			scope := scopeNode scope.
 			self assert: (scope node == scopeNode or: [scope node == scopeNode outer]).
 			refs := refdTemps copyFrom: each key start to: each key stop.
 			each value do: 
 					[:tempDetails |
-					| depth declScope |
+					| depth declScope local |
 					tempName := tempDetails at: 1.
 					depth := tempDetails second.
 					declScope := scope.
 					"Walk out to the scope indicated by the outer depth in the temp map."
-					#todo. "Need to fixup the decls as part of the semantic analysis in the same way that the compiler does, i.e. moving declarations in optimised scopes out to the nearest enclosing real scope, and adding declarations in blocks for locals copied into those blocks."
+					
 					[[declScope isInlined] whileTrue: [declScope := declScope outer].
 					depth > 0] whileTrue: 
 								[declScope := declScope outer.
 								depth := depth - 1].
-					(declScope includesArg: tempName)
+					local := scope resolveIdentifier: tempName.
+					#todo.	"Enable when in-image analyzer does redeclaration of copied temps for copying blocks"
+					"self assert: local scope identicalTo: declScope."
+					local isConstant
 						ifTrue: [self assert: tempDetails second equals: 0	"Arguments can be unreferenced"]
 						ifFalse: 
-							[self assert: (declScope includesTemp: tempName).
-							self assert: (tempDetails second > 0 or: [refs includes: tempDetails])]]].
+							[self
+								assert: (tempDetails second > 0 or: 
+											[(refs includes: tempDetails) or: 
+													["Temps may be visible but unreferenced in optimized block scopes, e.g. an ifTrue: block"
+													scope class == StOptimizedBlockScope]])]]].
 	"Check that there is a temps map entry for the initalIP of each clean block in the literal frame"
 	emptyBlock := VM emptyBlock.
 	method literalsDo: 
@@ -1820,24 +2017,36 @@ verifyTempsMapOf: aCompiledMethod
 								print: each;
 								cr]]]!
 
-verifyTextMapsOf: each
-	| debugTextMap debugMethod textMap |
-	debugMethod := each asDebugMethod.
+verifyTextMapsOf: aCompiledMethod
+	| debugTextMap debugMethod textMap dispatcher initialIp debugInitialIp debugBytes debugDispatcher |
+	debugMethod := aCompiledMethod asDebugMethod.
 	"If fails then the method failed to compile"
 	self denyIsNil: debugMethod.
-	textMap := each debugInfo textMap.
+	textMap := aCompiledMethod debugInfo textMap.
 	debugTextMap := debugMethod textMap.
-	"The text maps should contain exactly the same number of entries, and the text range for each entry should be the same"
+	"The optimized and debug text maps should contain exactly the same number of entries"
 	self assert: debugTextMap size equals: textMap size.
+	"The text range for each entry should be the same"
 	textMap with: debugTextMap do: [:a :b | self assert: a value equals: b value].
-	^debugTextMap do: 
+	debugBytes := debugMethod byteCodes.
+	debugTextMap do: 
 			[:assoc |
-			| byte ip |
+			| ip |
 			ip := assoc key.
-			ip == 0
-				ifFalse: 
-					[byte := debugMethod byteCodes at: ip.
-					self deny: byte equals: 0]]! !
+			ip == 0 ifFalse: [self deny: (debugBytes at: ip) equals: 0]].
+	"Verify that all the blocks' first instructions can be mapped"
+	debugDispatcher := debugMethod byteCodeDispatcher.
+	dispatcher := aCompiledMethod byteCodeDispatcher.
+	dispatcher instructionsDo: 
+			[:op :args |
+			op == #blockCopy:stack:env:copy:offset1:offset2:
+				ifTrue: 
+					[| i |
+					initialIp := dispatcher ip.
+					i := BlockFrame findInitialIP: initialIp inTextMap: textMap.
+					self assert: (textMap at: i) key equals: initialIp.
+					debugInitialIp := (debugTextMap at: i) key.
+					self assert: (debugBytes at: (debugDispatcher prevIP: debugInitialIp)) equals: OpcodePool.BlockCopy]]! !
 !Kernel.Tests.CompilerTest categoriesForMethods!
 assertBlocksOptimized:!helpers!private! !
 checkCompileError:range:code:line:source:!helpers!private! !
@@ -1846,6 +2055,7 @@ compilationWarningClass!constants!private! !
 compileExpression:!helpers!private! !
 compileExpression:in:!helpers!private! !
 compileMethod:in:!helpers!private! !
+debugCompileResultFor:!helpers!private! !
 defaultCompileFlags!helpers!private! !
 evalTestMethod:!helpers!private! !
 evalTestMethod:withArgs:!helpers!private! !
@@ -1897,14 +2107,15 @@ testIfNotNilNoArg!public!unit tests! !
 testIfNotNilNoArgUnused!public!unit tests! !
 testIfNotNilUnused!public! !
 testImmutableLiterals!public!unit tests! !
-testIncrementDecrementOptimisation!public!unit tests! !
-testIncrementPushTempOptimisation!public!unit tests! !
-testIncrementTempOptimisation!public!unit tests! !
+testIncrementDecrementOptimisation!public!unit tests!unit tests-text maps! !
+testIncrementPushTempOptimisation!public!unit tests!unit tests-text maps! !
+testIncrementTempOptimisation!public!unit tests!unit tests-text maps! !
 testIntegerScanning!public!unit tests! !
 testIntegerScanningBoundaries!public!unit tests! !
 testKeywordAnnotations!public!unit tests! !
 testLiteralArray!public!unit tests! !
 testLiteralStringEncoding!public!unit tests! !
+testMapIpWithVoidedEntry!public!unit tests!unit tests-text maps! !
 testMutableAnnotation!public!unit tests! !
 testNestedCopyingBlocks!public!unit tests! !
 testNestedWhileTrueAtStartOfCleanBlock!public!unit tests! !
@@ -1913,6 +2124,8 @@ testOptimizedLoopReadBeforeWritten!public!unit tests! !
 testQualifiedReference!public!unit tests! !
 testRadixInteger!public!unit tests! !
 testReturnFromOptimizedBlock!public!unit tests! !
+testReturnIfNotNil!public!unit tests!unit tests-text maps! !
+testReturnIfNotNilOptimization!public!unit tests-text maps! !
 testReturnImmediate!exceptions!public!unit tests! !
 testReturnPseudoVar!public!unit tests! !
 testScanningScaledDecimals!public!unit tests! !
@@ -1927,8 +2140,8 @@ testTempMaps!public!unit tests! !
 testTempMaps2!public!unit tests! !
 testTempPairing!public!unit tests! !
 testTextMapOfEmptyBlock!public! !
-testTextMapsExhaustive!public!unit tests-long running! !
-testTextMapsOfCleanBlocks!public!unit tests! !
+testTextMapsExhaustive!public!unit tests-long running!unit tests-text maps! !
+testTextMapsOfCleanBlocks!public!unit tests!unit tests-text maps! !
 testTimesRepeat!public!unit tests! !
 testTimesRepeatResult!public!unit tests! !
 testToByDo!public!unit tests! !

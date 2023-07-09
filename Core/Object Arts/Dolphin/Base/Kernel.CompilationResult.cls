@@ -31,14 +31,18 @@ buildTempsMap
 	rawTempsMap := nil!
 
 buildTextMap
-	| sz |
-	sz := rawTextMap basicSize.
-	textMap := OrderedCollection new: sz // 3.
+	| stream sz |
+	stream := Array writeStream: (sz := rawTextMap basicSize) // 3.
 	1 to: sz
 		by: 3
-		do: [:i | textMap add: (rawTextMap at: i) -> ((rawTextMap at: i + 1) to: (rawTextMap at: i + 2))].
+		do: 
+			[:i |
+			stream nextPut: (Association key: (rawTextMap at: i)
+						value: ((rawTextMap at: i + 1) to: (rawTextMap at: i + 2)))].
+	textMap := stream collection.
 	"Discard the raw text map built by the compiler to save space"
-	rawTextMap := nil!
+	rawTextMap := nil.
+	^textMap!
 
 fireSystemUpdateEvent
 	"Before firing the event, let the class know if annotations may have been changed. This could be done by hooking the update event, but we want to ensure it is done as a priority before any UI response that might be triggered by the event."
@@ -102,8 +106,7 @@ tempsMap
 textMap
 	"Answer the map of ip's to source code ranges if such was requested (if not, then nil)."
 
-	textMap isNil ifTrue: [self buildTextMap].
-	^textMap! !
+	^textMap ifNil: [self buildTextMap]! !
 !Kernel.CompilationResult categoriesForMethods!
 affectsAnnotation:!enquiries!public! !
 buildTempsMap!development!private! !

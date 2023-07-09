@@ -2,7 +2,7 @@
 
 Tools.SmalltalkToolShell
 	subclass: #'Tools.Debugger'
-	instanceVariableNames: 'process topFrame localAccessor depth flags breakWhen stackPresenter sourcePresenter variablesPresenter inspectorPresenter breakAction suspendingList _method refactoringTool'
+	instanceVariableNames: 'process topFrame localAccessor depth flags breakWhen stackPresenter sourcePresenter variablesPresenter inspectorPresenter breakAction suspendingList _method refactoringTool sourceInterval'
 	classVariableNames: 'AnimatePause DefaultStackDepth EnableDynamicMenus RestartOnMethodSave RunToCursorBehavior ShowWalkbacks SkipTable'
 	imports: #(#{Kernel.CompilerFlags} #{Kernel.OpcodePool})
 	classInstanceVariableNames: ''
@@ -547,7 +547,7 @@ displaySource
 					[sourcePresenter
 						stylerClass: method stylerClass;
 						text: method getSource].
-			self setSourceSelection].
+			self showCurrentExpression].
 	sourcePresenter isModified: false!
 
 emitKeywordSignatureFor: aMessage in: aClass on: aPuttableStream 
@@ -648,6 +648,23 @@ hasOverrideSelected
 
 hasVariableSelected
 	^variablesPresenter hasSelection!
+
+hideSourceInterval
+	sourcePresenter view
+		removeMarkersOfType: #currentLine;
+		removeIndicatorsOfType: #currentExpression!
+
+highlightCurrentExpression
+	| ip |
+	ip := self selectionIP.	"There are two lines of header text before the bytecode disassembly starts"
+	ip
+		ifNil: 
+			[sourceInterval := nil.
+			^self].
+	sourceInterval := self isDisassembled
+				ifTrue: [sourcePresenter view lineRange: (self selectedMethod indexOfIP: ip) + 2]
+				ifFalse: [self sourceRangeAt: ip inTextMap: self selectedMethod textMap].
+	self showSourceInterval!
 
 iconForVariable: aStVariable
 	^aStVariable iconInFrame: self frame!
@@ -1172,7 +1189,7 @@ refreshFrame
 	"Private - Update the receiver's display of the existing frame."
 
 	self clearCachedMethodInfo.
-	self isDisassembled ifTrue: [self displaySource] ifFalse: [self setSourceSelection].
+	self isDisassembled ifTrue: [self displaySource] ifFalse: [self showCurrentExpression].
 	self updateTemporaries!
 
 restartBlock: aBlockClosure inFrame: aStackFrame 
@@ -1555,6 +1572,7 @@ selectionIP
 
 	| frame ip prevIP |
 	frame := self frame.
+	frame ifNil: [^nil].
 	ip := frame ip.
 	(ip = 1 or: [self isDisassembled]) ifTrue: [^ip].
 	prevIP := frame prevIP.
@@ -1566,23 +1584,6 @@ setInitialFocus
 	"Received when the receiver's view is first opened; set focus to the source workspace."
 
 	sourcePresenter setFocus!
-
-setSourceSelection
-	"Private - Refresh the receiver's source selection to reflect the 'current' IP in the
-	selected frame. Note that the range of source selected will depend on whether the top-most
-	frame is selected, or an inactive frame down the stack. For the active frame the expression
-	that will next be executed is selected. For an older frame the expression that is currently
-	being executed (i.e. the message send that suspended the frame) is selected."
-
-	| ip |
-	ip := self selectionIP.
-	ip isNil ifTrue: [^self].
-	self isDisassembled 
-		ifTrue: 
-			["There are two lines of header text before the bytecode disassembly starts"
-			sourcePresenter selectLine: (self selectedMethod indexOfIP: ip) + 2]
-		ifFalse: 
-			[sourcePresenter selectionRange: (self sourceRangeAt: ip inTextMap: self selectedMethod textMap)]!
 
 setVariablesList: aSequenceableCollection
 	"Private - Set the temporary variables list to an the <sequencedReadableCollection> of <AspectAccessor> on <StackFrameSlot> argument.
@@ -1618,11 +1619,24 @@ setVariablesList: aSequenceableCollection
 			[variablesPresenter selection: newSelection.
 			wasExpanded ifTrue: [variablesPresenter expand: newSelection]]!
 
+showCurrentExpression
+	"Private - Refresh the receiver's source highlighting to reflect the 'current' IP in the selected frame. Note that the range of source highlighted will depend on whether the top-most frame is selected, or an inactive frame down the stack. For the active frame the expression that will next be executed is selected. For an older frame the expression that is currently being executed (i.e. the message send that suspended the frame) is selected."
+
+	self highlightCurrentExpression.
+	sourceInterval ifNotNil: [sourcePresenter view ensureRangeVisible: sourceInterval]!
+
 showNextStatement
 	<commandQuery: #isPaused>
+	self promptToSaveChanges ifFalse: [^self].
 	self isTopFrameSelected
-		ifTrue: [self setSourceSelection]
+		ifTrue: [self showCurrentExpression]
 		ifFalse: [stackPresenter selection: topFrame]!
+
+showSourceInterval
+	self hideSourceInterval.
+	sourcePresenter view
+		addIndicatorType: #currentExpression over: sourceInterval;
+		addMarkerType: #currentLine at: (sourcePresenter view lineFromPosition: sourceInterval start)!
 
 skipMaskFor: aCompiledMethod
 	^(SkipTable lookup: aCompiledMethod methodClass)
@@ -1633,7 +1647,7 @@ source
 	^sourcePresenter source!
 
 sourceRangeAt: anInteger inTextMap: aTextMap
-	^(aTextMap lookup: (StackFrame findIP: anInteger inTextMap: aTextMap))
+	^(aTextMap lookup: (CompiledCode findIP: anInteger inTextMap: aTextMap))
 		ifNil: [1 to: 0]
 		ifNotNil: [:entry | entry value]!
 
@@ -1903,7 +1917,17 @@ userBreak
 		suspend.
 	self debugState: 'User break'.
 	topFrame := process topFrame.
-	self populateStackModel! !
+	self populateStackModel!
+
+validateUserInterface
+	super validateUserInterface.
+	sourcePresenter isModified
+		ifTrue: 
+			[sourceInterval
+				ifNotNil: 
+					[self hideSourceInterval.
+					sourceInterval := nil]]
+		ifFalse: [sourceInterval ifNil: [self highlightCurrentExpression]]! !
 !Tools.Debugger categoriesForMethods!
 accept:methodSource:!operations!private! !
 acceptItCommand!commands-mappings!private! !
@@ -1973,6 +1997,8 @@ hasMoreFrames!private!testing! !
 hasMutableVariableSelected!private!testing! !
 hasOverrideSelected!private!testing! !
 hasVariableSelected!private!testing! !
+hideSourceInterval!private!updating! !
+highlightCurrentExpression!private!updating! !
 iconForVariable:!public! !
 implementDNUMenu!commands-menus!private! !
 initialize!initializing!private! !
@@ -2016,12 +2042,12 @@ onVariableValueChanged!public! !
 onViewClosed!event handling!private! !
 onWalkback:topFrame:resumable:!event handling!private! !
 parseContext!accessing!public! !
-parseTree!commands-actions!private! !
+parseTree!accessing!private! !
 performMethodsRefactoring:name:!private!refactoring! !
 populateImplementMenu:!helpers!private! !
 populateStackModel!private!updating! !
 process:topFrame:!accessing!initializing!private! !
-promptToSaveChanges!commands-actions!private! !
+promptToSaveChanges!helpers!private! !
 queryBrowseMessage:!commands-queries!private! !
 queryImplementMenu:!commands-queries!private! !
 queryMessagesMenu:!commands-queries!private! !
@@ -2052,9 +2078,10 @@ selectedMethods!accessing!public! !
 selectedNode!accessing!private! !
 selectionIP!accessing!private! !
 setInitialFocus!operations!public! !
-setSourceSelection!private!updating! !
 setVariablesList:!private!updating! !
+showCurrentExpression!private!updating! !
 showNextStatement!commands-actions!private! !
+showSourceInterval!private!updating! !
 skipMaskFor:!helpers!private! !
 source!accessing!private! !
 sourceRangeAt:inTextMap:!helpers!private! !
@@ -2074,6 +2101,7 @@ toggleAnimation!commands-actions!private! !
 updateForBreakAt:!operations!private! !
 updateTemporaries!private!updating! !
 userBreak!commands-actions!private! !
+validateUserInterface!operations!public! !
 !
 
 Tools.Debugger methodProtocol: #debugEventHandler attributes: #(#readOnly) selectors: #(#onBreak: #onHalt: #onStep: #onTerminate #onWalkback:topFrame:resumable:)!

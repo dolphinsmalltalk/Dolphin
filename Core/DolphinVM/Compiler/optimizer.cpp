@@ -261,6 +261,7 @@ size_t Compiler::OptimizePairs()
 			lastCount = count;
 			VerifyTextMap();
 			VerifyJumps();
+			//disassemble();
 		}
 #endif
 

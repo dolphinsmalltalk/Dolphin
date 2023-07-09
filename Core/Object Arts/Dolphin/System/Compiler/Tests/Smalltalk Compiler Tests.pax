@@ -31,6 +31,7 @@ package setPrerequisites: #(
 	'..\..\..\MVP\Presenters\List\Dolphin List Presenter'
 	'..\..\..\MVP\Dialogs\Progress\Dolphin Progress Dialog'
 	'..\..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
+	'..\Smalltalk Compiler'
 	'..\Smalltalk Parser'
 	'..\..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
 	'..\..\Win32\Windows Ini Files'

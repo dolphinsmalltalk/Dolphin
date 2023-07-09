@@ -273,9 +273,10 @@ prevIP: anInteger
 	| prevIP |
 	prevIP := 0.
 	ip := 1.
-	[ip < anInteger] whileTrue: [prevIP := ip. self next].
-	^prevIP
-!
+	[ip < anInteger] whileTrue: 
+			[prevIP := ip.
+			ip := ip + (InstructionLengths at: (byteCodes at: ip) + 1)].
+	^prevIP!
 
 readsInstVarAt: anInteger 
 	"Answer whether the method which the receiver is interpreting reads the
