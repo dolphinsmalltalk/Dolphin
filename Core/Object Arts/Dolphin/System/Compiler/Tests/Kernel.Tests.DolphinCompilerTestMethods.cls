@@ -18,6 +18,14 @@ Kernel.Tests.DolphinCompilerTestMethods comment: ''!
 == x
 	^super == x!
 
+associationAt: aString
+	"Answer an <Association> with the specified key and the associated value from the receiver.
+	If the key is not found, raise an exception."
+
+	^(self associationAt: aString ifAbsent: nil)
+		ifNil: [self errorKeyNotFound: aString]
+		ifNotNil: [:assoc | assoc]!
+
 basicSize
 	^super basicSize!
 
@@ -26,6 +34,18 @@ ifNil: aNiladicValuable
 
 ifNil: aNiladicValuable ifNotNil: aMonadicValuable 
 	^super ifNil: [aNiladicValuable value] ifNotNil: [:value | aMonadicValuable value: value]!
+
+performOn: aProgramNode
+	"Originally RBParseTreeRule>>performOn:. Has bytecode optimisation that leaves a voided text map entry for the ifTrue:"
+
+	| ctx |
+	ctx := self context.
+	ctx empty.
+	^((iv2 match: aProgramNode inContext: ctx) and: [self canMatch: aProgramNode])
+		ifTrue: 
+			[iv1 recusivelySearchInContext.
+			self foundMatchFor: aProgramNode]
+		ifFalse: [nil]!
 
 testBlockWithAllTempTypes
 	| sharedOuter copied local innerBlock |
@@ -532,9 +552,11 @@ testWarnUnimplementedAbstractMethod
 !Kernel.Tests.DolphinCompilerTestMethods categoriesForMethods!
 ~~!public!unit tests! !
 ==!public!unit tests! !
+associationAt:!accessing!public! !
 basicSize!public!unit tests! !
 ifNil:!public!unit tests! !
 ifNil:ifNotNil:!public!unit tests! !
+performOn:!matching!public! !
 testBlockWithAllTempTypes!public!unit tests! !
 testCleanBlockInCopyingBlock!public!unit tests! !
 testCopyingBlockNestedInCleanBlock!public!unit tests! !

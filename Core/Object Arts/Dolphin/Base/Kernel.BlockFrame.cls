@@ -59,3 +59,17 @@ isBlockFrame!private!testing! !
 method:!accessing!private! !
 !
 
+!Kernel.BlockFrame class methodsFor!
+
+findInitialIP: anInteger inTextMap: aTextMap
+	"Private - Answer the index of the text map entry corresponding to the specified <integer> initial block ip."
+
+	| i |
+	i := 1.
+	"It is an invariant that there is an entry with a key matching the initialIP. If one is not found, a BoundsError will be thrown."
+	[anInteger == (aTextMap at: i) key] whileFalse: [i := i + 1].
+	^i! !
+!Kernel.BlockFrame class categoriesForMethods!
+findInitialIP:inTextMap:!helpers!private! !
+!
+

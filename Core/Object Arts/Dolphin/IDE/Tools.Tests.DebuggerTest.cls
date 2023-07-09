@@ -65,7 +65,7 @@ testRemapIPOfSendSelf
 	map := info textMap.
 	debugMap := debugInfo textMap.
 	self assert: map size equals: debugMap size.
-	i := BlockFrame findIP: startIP inTextMap: map.
+	i := BlockFrame findInitialIP: startIP inTextMap: map.
 	self assert: (map at: i) key equals: startIP.
 	self assert: (debugMap at: i) key equals: startIP.
 	"Test remapping of the instruction in the middle of the block"

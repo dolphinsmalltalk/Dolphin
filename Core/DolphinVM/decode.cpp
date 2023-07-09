@@ -344,7 +344,7 @@ wostream& operator<<(wostream& st, const CharOTE* ote)
 		{
 			if (U_IS_BMP(codePoint))
 			{
-				return st << static_cast<char>(codePoint);
+				return st << static_cast<wchar_t>(codePoint);
 			}
 			else
 			{
@@ -1044,6 +1044,11 @@ public:
 	std::string GetSpecialSelector(size_t index) {
 		_ASSERTE(index < NumSpecialSelectors);
 		return reinterpret_cast<LPCSTR>(Pointers.specialSelectors[index]->m_location->m_characters);
+	}
+
+	intptr_t GetJumpTarget(size_t ip) {
+		// Should not be needed for normal method disassembly, only by the compiler before jump bytecodes fully generated
+		return ip;
 	}
 
 private:

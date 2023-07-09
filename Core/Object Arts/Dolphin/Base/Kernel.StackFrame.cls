@@ -515,17 +515,6 @@ textMap!accessing!development!private! !
 
 !Kernel.StackFrame class methodsFor!
 
-findIP: anInteger inTextMap: aTextMap
-	"Private - Answer the index of the source map entry corresponding to the
-    	specified <integer> ip. The key of each text map entry identifies the first IP of the code generated for the range
-	of source which is held as the <interval> value."
-
-	| i size |
-	i := 1.
-	size := aTextMap size.
-	[i < size and: [anInteger > (aTextMap at: i) key]] whileTrue: [i := i + 1].
-	^i!
-
 frameClassFor: aProcess at: anInteger
 	"Private - Answer the subclass of the receiver to use to represent a stack frame in aProcess
 	at the specified index. Answer nil if the index is out of bounds."
@@ -548,7 +537,6 @@ process: aProcess index: anInteger
 	^(self frameClassFor: aProcess at: anInteger)
 		ifNotNil: [:frameClass | frameClass onProcess: aProcess index: anInteger]! !
 !Kernel.StackFrame class categoriesForMethods!
-findIP:inTextMap:!helpers!private! !
 frameClassFor:at:!instance creation!private! !
 onProcess:index:!instance creation!private! !
 process:index:!instance creation!public! !
