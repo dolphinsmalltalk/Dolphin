@@ -3630,7 +3630,7 @@ verifyExtCallRetNtStatus: aBoolean
 				matching: [:ex | ex hresult asUnsignedInteger = (each bitOr: HRESULT.FACILITY_NT_BIT)]]!
 
 verifyPrimitiveAt: opAt performBlock: performAt
-	| array outOfBounds notAnIntFormat |
+	| array outOfBounds notAnIntFormat literals |
 	array := (-100 to: 100) asArray.
 	-100 to: 100
 		do: 
@@ -3686,13 +3686,11 @@ verifyPrimitiveAt: opAt performBlock: performAt
 
 	"And again for one with a number of named instance variables (a method)"
 	array := Object compiledMethodAt: #addDependent:.
-	self assert: (opAt value: array value: 1) identicalTo: #getDependents.
-	self should: 
-			[| lit |
-			lit := opAt value: array value: 2.
-			lit == WeakArray or: [(lit isKindOf: VariableBinding) and: [lit value == WeakArray]]].
-	self assert: (opAt value: array value: 3) identicalTo: #setDependents:.
-	self assert: (opAt value: array value: array size) identicalTo: #new.
+	literals := array literals.
+	self assert: (opAt value: array value: 1) identicalTo: literals first.
+	self assert: (opAt value: array value: 2) identicalTo: literals second.
+	self assert: (opAt value: array value: 3) identicalTo: literals third.
+	self assert: (opAt value: array value: array size) identicalTo: literals last.
 	{-1. 0. array size + 1. SmallInteger maximum. SmallInteger minimum} do: 
 			[:each |
 			self should: [opAt value: array value: each] raise: BoundsError.
