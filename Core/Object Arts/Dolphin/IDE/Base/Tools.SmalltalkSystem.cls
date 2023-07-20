@@ -524,7 +524,7 @@ browseClassVariables: aClass
 	aVariable notNil
 		ifTrue: 
 			[self
-				browseReferencesToClassVars: { aVariable }
+				browseReferencesToClassVar: aVariable
 				of: aClass
 				within: self browserEnvironment]!
 
@@ -642,7 +642,7 @@ browseInstanceVariables: browseClass
 
 	self 
 		browseInstanceVariables: browseClass
-		action: #browseReferencesToInstVars:inHierarchyOf:within:
+		action: #browseReferencesToInstVar:inHierarchyOf:within:
 		in: self browserEnvironment!
 
 browseInstanceVariables: browseClass action: selector in: aBrowserEnvironment
@@ -657,7 +657,7 @@ browseInstanceVariables: browseClass action: selector in: aBrowserEnvironment
 		ifTrue: 
 			[self
 				perform: selector
-				with: { varName }
+				with: varName
 				with: browseClass
 				with: aBrowserEnvironment]!
 
@@ -863,6 +863,14 @@ browseReferencesTo: anObject
 
 	^self browseReferencesToLiteral: anObject in: self browserEnvironment!
 
+browseReferencesToClassVar: aString of: aClass within: aBrowserEnvironment
+	"Private - Open a MethodBrowser on all the methods that reference the class variable named by the <readableString> first argument , in the hierarchy of the <Behavior>, aClass."
+
+	self
+		browseReferencesToClassVars: { aString }
+		of: aClass
+		within: aBrowserEnvironment!
+
 browseReferencesToClassVars: aCollection of: aClass within: aBrowserEnvironment
 	"Private - Open a MethodBrowser on all the methods that reference the class variables in aCollection, in the hierarchy of the <Behavior>, aClass."
 
@@ -882,6 +890,14 @@ browseReferencesToGlobal: aString
 browseReferencesToGlobal: aString in: aBrowserEnvironment 
 	(self promptForReferencesToGlobal: aString in: aBrowserEnvironment) 
 		ifNotNil: [:env | self browseMethodsIn: env]!
+
+browseReferencesToInstVar: aString inHierarchyOf: aBehavior within: aBrowserEnvironment
+	"Private - Open a method browser on all the methods that refer to the instance variable named by <readableString> first argument, in the hierarchy of the <Behavior> 2nd argument, within the <BrowserEnvironment> 3rd argument."
+
+	self
+		browseReferencesToInstVars: { aString }
+		inHierarchyOf: aBehavior
+		within: aBrowserEnvironment!
 
 browseReferencesToInstVars: aCollection inHierarchyOf: aBehavior within: aBrowserEnvironment
 	"Private - Open a method browser on all the methods that refer to the instance variables named by the <collection> of <readableString> argument, in the hierarchy of the <Behavior> argument."
@@ -1436,10 +1452,10 @@ copyClass: aClass
 		in: package!
 
 createClassVariableAccessors: aString in: aClass within: aBrowserEnvironment
-	"Implement the 'Create Variable Accessors' class refactoring on a class variable."
+	"Implement the 'Create Variable Accessors' class refactoring on class variables."
 
 	self
-		createVariableAccessors: {aClass -> aString}
+		createVariableAccessors: { aClass -> aString }
 		classVariables: true
 		within: aBrowserEnvironment!
 
@@ -1626,7 +1642,7 @@ definitionsMatching: aMethodSearch inHierarchyOf: aBehavior within: aBrowserEnvi
 	| class hierarchy |
 	class := aBehavior instanceClass.
 	hierarchy := aBrowserEnvironment forClassHierarchyOf: class.
-	^(hierarchy filterMethods: aMethodSearch methodDefinitionFilter)
+	^(hierarchy filterMethods: aMethodSearch definitionFilter)
 		label: ('Definitions of <1p> in the local hierarchy of <2p>' expandMacrosWith: aMethodSearch pattern
 					with: class);
 		yourself!
@@ -2013,6 +2029,7 @@ installPackage: aString
 		on: Notification
 		do: 
 			[:ex |
+			ex toTrace.
 			self sourceManager logComment: ex description.
 			ex resume]!
 
@@ -2106,7 +2123,7 @@ methodsContainingText: aString in: aBrowserEnvironment prompt: aBoolean
 		ifTrue: [findDetails := self promptForSearchString: findDetails caption: 'Methods Containing…'].
 	(findDetails isNil or: [findDetails pattern isEmpty]) ifTrue: [^nil].
 	search := MethodSourceSearch newFindDetails: findDetails copy.
-	filter := search methodReferenceFilter.
+	filter := search referenceFilter.
 	"Consolidate into a SelectorEnvironment, rather than keeping a dynamic PluggableEnvironment
 	otherwise there is a danger the entire source file may be scanned again"
 	caption := 'Finding Methods Containing <1p>' << search pattern.
@@ -3746,7 +3763,7 @@ renameClassVariable: oldName to: newName in: definingBehavior
 renameClassVariable: aString to: newName in: aClass within: aBrowserEnvironment
 	aClass renameClassVar: aString to: newName.
 	self
-		browseReferencesToClassVars: { newName }
+		browseReferencesToClassVar: newName
 		of: aClass
 		within: aBrowserEnvironment!
 
@@ -3783,7 +3800,7 @@ renameInstanceVariable: oldName to: newName in: definingBehavior
 renameInstanceVariable: aString to: newName in: aClass within: aBrowserEnvironment
 	aClass renameInstVar: aString to: newName.
 	self
-		browseReferencesToInstVars: { newName }
+		browseReferencesToInstVar: newName
 		inHierarchyOf: aClass
 		within: aBrowserEnvironment.
 	^newName!
@@ -4347,9 +4364,11 @@ browsePackages:!browsing!commands!public! !
 browseProtocols!browsing!commands!protocols!public! !
 browseReferencesMatching:in:!browsing!private! !
 browseReferencesTo:!browsing!public! !
+browseReferencesToClassVar:of:within:!browsing!private! !
 browseReferencesToClassVars:of:within:!browsing!private! !
 browseReferencesToGlobal:!browsing!public! !
 browseReferencesToGlobal:in:!browsing!public! !
+browseReferencesToInstVar:inHierarchyOf:within:!browsing!private! !
 browseReferencesToInstVars:inHierarchyOf:within:!browsing!private! !
 browseReferencesToLiteral:in:!browsing!public! !
 browseReferencesToVariable:!browsing!public! !
