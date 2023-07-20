@@ -19,6 +19,9 @@ method1
 method2
 	^self method1!
 
+mySubclass
+	^SubclassOfClassToRename!
+
 refersToClassInCustomNamespace
 	<namespace: TestData>
 	^RefactoryTestDataApp!
@@ -37,22 +40,17 @@ refersToOwnClassVariableFullyQualified
 	^Refactory.Browser.Tests.ClassToRename.ClassVar1!
 
 selfReference
-	^ClassToRename new!
-
-testFailure
-	"Can be resolved by unqualified name through the import into the receiver's namespace"
-
-	^TestFailure! !
+	^ClassToRename new! !
 !Refactory.Browser.Tests.ClassToRename categoriesForMethods!
 method1!performing!public! !
 method2!performing!public! !
+mySubclass!performing!public! !
 refersToClassInCustomNamespace!lint!public! !
 refersToClassVariableInCustomNamespace!lint!public! !
 refersToClassVariablePartiallyQualified!lint!public! !
 refersToOwnClassVariable!lint!public! !
 refersToOwnClassVariableFullyQualified!lint!public! !
 selfReference!performing!public! !
-testFailure!performing!public! !
 !
 
 !Refactory.Browser.Tests.ClassToRename class methodsFor!

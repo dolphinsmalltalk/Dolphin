@@ -62,12 +62,7 @@ addMethodChange: anAddMethodChange
 	| selector |
 	selector := anAddMethodChange selector.
 	((newMethods ifNil: [newMethods := IdentityDictionary new]) lookup: selector)
-		ifNil: 
-			[newMethods at: selector
-				put: (RBMethod
-						for: self
-						source: anAddMethodChange source
-						selector: selector)]
+		ifNil: [newMethods at: selector put: (RBMethod for: self change: anAddMethodChange)]
 		ifNotNil: [:method | method source: anAddMethodChange source].
 	removedSelectors notNil ifTrue: [removedSelectors remove: selector ifAbsent: nil].
 	^anAddMethodChange!
@@ -110,17 +105,13 @@ allSelectors
 allSubclasses
 	"Answer a <collection> of the receiver's subclasses in breadth-first order, with the immediate subclasses first. "
 
-	| answer |
-	answer := OrderedCollection new.
-	self allSubclassesBreadthFirstDo: [:each | answer addLast: each].
+	| answer i |
+	answer := OrderedCollection withAll: self subclasses.
+	i := 1.
+	[i <= answer size] whileTrue: 
+			[answer addAllLast: (answer at: i) subclasses.
+			i := i + 1].
 	^answer!
-
-allSubclassesBreadthFirstDo: aMonadicValuable
-	"Evaluate the monadic valuable argument with each of the receiver's subclasses in breadth-first order."
-
-	self subclasses
-		do: aMonadicValuable;
-		do: [:each | each allSubclassesBreadthFirstDo: aMonadicValuable]!
 
 allSuperclasses
 	| supers sprClass |
@@ -415,26 +406,22 @@ hierarchyBindingFor: aString
 	^(self localBindingFor: aString)
 		ifNil: [self superclass ifNotNil: [:sprClass | sprClass hierarchyBindingFor: aString]]!
 
-hierarchyDefinesInstanceVariable: aString 
+hierarchyDefinesInstanceVariable: aString
 	(self definesInstanceVariable: aString) ifTrue: [^true].
-	self allSubclassesBreadthFirstDo: [:each | (each directlyDefinesInstanceVariable: aString) ifTrue: [^true]].
-	^false!
+	^self allSubclasses anySatisfy: [:each | each directlyDefinesInstanceVariable: aString]!
 
 hierarchyDefinesMethod: aSelector
 	^(self definesMethod: aSelector) or: [self subclassRedefines: aSelector]!
 
 hierarchyDefinesVariable: aString
 	(self definesVariable: aString) ifTrue: [^true].
-	self allSubclassesBreadthFirstDo: [:each | (each directlyDefinesVariable: aString) ifTrue: [^true]].
-	^false!
+	^self allSubclasses anySatisfy: [:each | each directlyDefinesVariable: aString]!
 
 hierarchyImportsNamespace: aBindingReference
 	| ref |
 	ref := aBindingReference asQualifiedReference.
 	(self importsNamespace: ref) ifTrue: [^true].
-	self
-		allSubclassesBreadthFirstDo: [:each | (each directlyImportsNamespace: aBindingReference) ifTrue: [^true]].
-	^false!
+	^self allSubclasses anySatisfy: [:each | each directlyImportsNamespace: aBindingReference]!
 
 imports
 	^self subclassResponsibility!
@@ -705,8 +692,7 @@ subclasses
 subclassRedefines: aSelector
 	"Return true, if one of your subclasses redefines the method with name, aMethod"
 
-	self allSubclassesBreadthFirstDo: [:each | (each directlyDefinesMethod: aSelector) ifTrue: [^true]].
-	^false!
+	^self allSubclasses anySatisfy: [:each | each directlyDefinesMethod: aSelector]!
 
 superclass
 	^self subclassResponsibility!
@@ -830,7 +816,7 @@ withAllSubclassesDo: aMonadicValuable
 	"Evaluate the <monadicValuable> argument for the receiver and each of its subclasses using a depth-first traversal."
 
 	aMonadicValuable value: self.
-	self allSubclassesBreadthFirstDo: aMonadicValuable!
+	self allSubclasses do: aMonadicValuable!
 
 withAllSuperclasses
 	#rbFix.	"Ensure in reverse hierarchy order"
@@ -856,7 +842,6 @@ allImports!namespaces!public! !
 allInstanceVariableNames!accessing!public! !
 allSelectors!methods-accessing!public! !
 allSubclasses!accessing!public! !
-allSubclassesBreadthFirstDo:!class hierarchy-accessing!enumerating!public! !
 allSuperclasses!accessing!public! !
 allSuperclassesDo:!accessing!public! !
 asQualifiedReference!converting!public! !

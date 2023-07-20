@@ -139,8 +139,9 @@ isSelfEvaluating
 isUnbound
 	"Answer whether the receiver is unbound (i.e. not linked into a class' method dictionary)."
 
-	^(self methodClass compiledMethodAt: self selector ifAbsent: [^true])	
-		sourceDescriptor ~= self sourceDescriptor!
+	| installed |
+	installed := self methodClass compiledMethodAt: self selector ifAbsent: nil.
+	^installed isNil or: [installed sourceDescriptor ~= self sourceDescriptor]!
 
 loseSource
 	"Private - Set the source object of the receiver to a suitable message informing

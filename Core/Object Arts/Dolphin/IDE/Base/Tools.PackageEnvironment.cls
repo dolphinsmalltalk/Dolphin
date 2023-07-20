@@ -74,7 +74,6 @@ includesClass: aClass
 		and: [(self definesClass: aClass) or: [self definesLooseMethodsInClass: aClass]]!
 
 includesResource: aResourceIdentifier 
-	#rbFix.	"Dolphin specific extension"
 	^(self definesClass: aResourceIdentifier owningClass) or: 
 			[self packages 
 				anySatisfy: [:each | each resourceIdentifiers includes: aResourceIdentifier]]!

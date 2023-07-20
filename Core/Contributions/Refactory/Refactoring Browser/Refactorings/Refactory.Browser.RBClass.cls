@@ -76,7 +76,7 @@ baseEnvironment
 	^model smalltalkNamespace!
 
 basicEnvironment
-	"Answer the receiver's namespace (i.e. an instance of RBNamespaceClass). This is the RBClass' environment as the term is used the Behavior/ClassDescription/Class/Metaclass hierarchy, and not a BrowserEnvironment (another type of scope) environment of the RBModel (Refactoring model) class."
+	"Answer the receiver's namespace (i.e. an instance of RBNamespaceClass). This is the RBClass' environment as the term is used the Behavior/ClassDescription/Class/Metaclass hierarchy, and not a BrowserEnvironment, which is another type of scope that defines the universe of the RBModel (Refactoring model) class."
 
 	^environment ifNil: [environment := self getEnvironment]!
 

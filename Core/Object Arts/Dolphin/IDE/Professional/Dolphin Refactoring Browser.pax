@@ -537,7 +537,7 @@ directlyDefinesVariable: aVariableName
 
 hierarchyDefinesVariable: aString
 	(self definesVariable: aString) ifTrue: [^true].
-	self allSubclassesBreadthFirstDo: [:each | (each directlyDefinesVariable: aString) ifTrue: [^true]].
+	self allSubclassesPreOrderDo: [:each | (each directlyDefinesVariable: aString) ifTrue: [^true]].
 	^false! !
 !Core.ClassDescription categoriesForMethods!
 definesClassVariable:!public!testing! !
@@ -1627,12 +1627,12 @@ hasCompilationIssues
 			do: [:ex | ex severityClass == Notification ifTrue: [ex resume] ifFalse: [ex return: true]]!
 
 owningPackage
-	^compiledMethod isNil 
-		ifTrue: [class owningPackage]
-		ifFalse: [compiledMethod owningPackage]!
+	package ifNotNil: [^package].
+	^compiledMethod ifNil: [class owningPackage] ifNotNil: [compiledMethod owningPackage]!
 
 owningPackageIfLoose
-	^compiledMethod isNil ifFalse: [compiledMethod owningPackageIfLoose]! !
+	package ifNotNil: [^package].
+	^compiledMethod ifNotNil: [compiledMethod owningPackageIfLoose]! !
 !Refactory.Browser.RBMethod categoriesForMethods!
 hasCompilationFailures!public!testing! !
 hasCompilationIssues!public!testing! !

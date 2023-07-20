@@ -1,0 +1,33 @@
+﻿| package |
+package := Package name: 'RBTestMethodsExtra'.
+package paxVersion: 2.1;
+	environmentName: #{Refactory.Browser.TestData};
+	basicComment: ''.
+
+
+package setMethodNames: #(
+	#(#{Refactory.Browser.Tests.ClassToRename} #refersToClassInPackageDefaultNamespace)
+).
+
+package setPrerequisites: #(
+	'..\..\..\..\Object Arts\Dolphin\Base\Dolphin'
+	'..\..\RBNamespaces'
+	'RBTestMethods'
+).
+
+package!
+
+"Loose Methods"!
+
+!Refactory.Browser.Tests.ClassToRename methodsFor!
+
+refersToClassInPackageDefaultNamespace
+	"Reference a class in Tools using an unqualified name - bindable because the owning package, RBTestMethodsExtra, has Tools as its default namespace. Also refers to a class with an unnecessary partially qualified name so when renamed into new namespace a change is generated."
+
+	^{RefactoryTestDataApp. TestData.BasicLintRuleTestData}! !
+!Refactory.Browser.Tests.ClassToRename categoriesForMethods!
+refersToClassInPackageDefaultNamespace!performing!public! !
+!
+
+"End of package definition"!
+

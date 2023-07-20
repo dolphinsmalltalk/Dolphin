@@ -29,22 +29,23 @@ preconditions
 	^condition & (RBCondition isAbstractClass: class)!
 
 pushDown: aSelector
-	| code protocols packageAndEnv method |
+	| code protocols package namespace method |
 	method := class methodFor: aSelector.
 	protocols := class protocolsFor: aSelector.
 	#rbFix.	"On Dolphin pools (now imports) are inherited, so never need to be pushed down, so we remove the 'Expand' component refactoring that was here."
 	"Maintain package and any custom namespace of the method being pushed down"
 	code := method source.
-	packageAndEnv := class existingMethodPackageAndEnvironment: aSelector.
+	package := method owningPackageIfLoose.
+	namespace := method customEnvironment.
 	class subclasses do: 
 			[:each |
 			(each directlyDefinesMethod: aSelector)
 				ifFalse: 
 					[each
 						compile: code
-						environment: packageAndEnv second
+						environment: namespace
 						categories: protocols
-						package: packageAndEnv first]]!
+						package: package]]!
 
 pushDown: selectorCollection from: aClass 
 	#rbFix. "Ensure displayString works when model is lazily created for Undo/Redo name (needs inst. vars set up)."

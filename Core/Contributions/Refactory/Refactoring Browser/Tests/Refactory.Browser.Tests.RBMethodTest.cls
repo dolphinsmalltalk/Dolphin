@@ -12,6 +12,38 @@ Refactory.Browser.Tests.RBMethodTest comment: ''!
 !Refactory.Browser.Tests.RBMethodTest categoriesForClass!Refactory-Testing! !
 !Refactory.Browser.Tests.RBMethodTest methodsFor!
 
+testExistingMethodPackageAndEnvironment
+	| model class method |
+	model := RBModel new.
+	class := model classNamed: #'Refactory.Browser.TestData.RefactoryTestDataApp'.
+	method := class methodFor: #refersToClassFullyQualified.
+	self assert: method owningPackage equals: class realClass owningPackage.
+	self assert: method environment equals: (model classFor: Refactory.Browser.TestData)!
+
+testExistingMethodPackageAndEnvironmentLoose
+	| class model method |
+	model := RBModel new.
+	class := model classNamed: #'Refactory.Browser.TestData.RefactoryTestDataApp'.
+	method := class methodFor: #sendInlineParameterMethod.
+	self assert: method owningPackage equals: self class owningPackage.
+	self assert: method environment equals: (model classFor: TestData)!
+
+testExistingMethodPackageAndEnvironmentLooseCustom
+	| class method model |
+	model := RBModel new.
+	class := model classNamed: #'Refactory.Browser.TestData.RefactoryTestDataApp'.
+	method := class methodFor: #inlineParameterMethod:.
+	self assert: method owningPackage equals: self class owningPackage.
+	self assert: method customEnvironment equals: (model classFor: Tools)!
+
+testExistingMethodPackageAndEnvironmentRootClass
+	| class model method |
+	model := RBModel new.
+	class := model classNamed: #Root.
+	method := class metaclass methodFor: #nestedClasses.
+	self assert: method owningPackage equals: Root owningPackage.
+	self assert: method environment equals: class!
+
 testLiteralStringsDoNotMatchSymbols
 	| model class method |
 	model := RBModel new.
@@ -127,6 +159,10 @@ testRefersToSymbol
 	method := class methodFor: #literalArrayStringsAndSymbols.
 	self assert: (method refersToSymbol: #def)! !
 !Refactory.Browser.Tests.RBMethodTest categoriesForMethods!
+testExistingMethodPackageAndEnvironment!public! !
+testExistingMethodPackageAndEnvironmentLoose!public! !
+testExistingMethodPackageAndEnvironmentLooseCustom!public! !
+testExistingMethodPackageAndEnvironmentRootClass!public! !
 testLiteralStringsDoNotMatchSymbols!public! !
 testParseTreeEnvironment!public! !
 testRefersToClassDirectly!public! !

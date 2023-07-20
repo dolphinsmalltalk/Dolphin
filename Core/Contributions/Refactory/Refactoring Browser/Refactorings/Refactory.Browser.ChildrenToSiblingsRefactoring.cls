@@ -127,10 +127,13 @@ pullUpInstanceVariables
 						class: newSuperclass)]!
 
 pushUp: aSelector in: aClass
-	| source |
-	source := aClass sourceCodeFor: aSelector.
-	source isNil
-		ifFalse: [aClass superclass compile: source categories: (aClass protocolsFor: aSelector)]!
+	| method |
+	method := aClass methodFor: aSelector.
+	aClass superclass
+		compile: method source
+		environment: method parseEnvironment
+		categories: method categories
+		package: method owningPackageIfLoose!
 
 pushUpMethods
 	self pushUpMethodsFrom: parent.

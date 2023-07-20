@@ -2,7 +2,7 @@
 
 Core.Object
 	subclass: #'Refactory.Browser.RBMethod'
-	instanceVariableNames: 'class compiledMethod source selector parseTree hasSourceIntervals'
+	instanceVariableNames: 'class compiledMethod source selector parseTree hasSourceIntervals package'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -47,25 +47,14 @@ categories
 	^class protocolsFor: selector!
 
 customEnvironment
-	"Private - Answer the <Namespace> in whose scope this method was compiled, or nil if that namespace is the same as the method's owning class."
+	"Answer the <Namespace> in whose scope this method was compiled, or nil if that namespace is the same as the method's owning class."
 
-	^compiledMethod
-		ifNotNil: [compiledMethod customEnvironment ifNotNil: [:env | env classInModel: self model]]!
-
-environment
 	^self boundParseTree environment!
 
-existingPackageAndEnvironment
-	^self method
-		ifNil: [Pair first: nil second: nil]
-		ifNotNil: 
-			[:method |
-			method owningPackageIfLoose
-				ifNil: [Pair first: method methodClass owningPackage second: nil]
-				ifNotNil: 
-					[:package |
-					Pair first: package
-						second: (package environment ifNotNil: [:namespace | namespace classInModel: self model])]]!
+environment
+	"Answer the <Namespace> in whose scope this method is/was compiled."
+
+	^self boundParseTree environment!
 
 hash
 	"Answer the <SmallInteger> hash value for the receiver."
@@ -87,6 +76,13 @@ model
 modelClass
 	^class!
 
+modelClass: aRBClass change: anAddMethodChange
+	class := aRBClass.
+	selector := anAddMethodChange selector.
+	source := anAddMethodChange source.
+	package := anAddMethodChange package.
+	hasSourceIntervals := true!
+
 modelClass: anRBClass method: aCompiledMethod
 	class := anRBClass.
 	compiledMethod := aCompiledMethod.
@@ -102,10 +98,10 @@ modelClass: aRBClass selector: aSymbol source: aString
 	^self!
 
 parseEnvironment
-	compiledMethod ifNil: [^nil].
-	compiledMethod customEnvironment ifNotNil: [:env | ^env classInModel: self model].
-	^compiledMethod owningPackageIfLoose
-		ifNotNil: [:package | package environment ifNotNil: [:env | env classInModel: self model]]!
+	compiledMethod
+		ifNotNil: [compiledMethod customEnvironment ifNotNil: [:env | ^env classInModel: self model]].
+	^self owningPackageIfLoose
+		ifNotNil: [:pkg | pkg environment ifNotNil: [:env | env classInModel: self model]]!
 
 parseTree
 	^parseTree ifNil: [parseTree := self buildParseTree]!
@@ -183,15 +179,15 @@ source: aString
 boundParseTree!accessing!public! !
 buildParseTree!accessing!private! !
 categories!public! !
-customEnvironment!accessing!annotations!private! !
+customEnvironment!accessing!annotations!public! !
 environment!accessing!public! !
-existingPackageAndEnvironment!public! !
 hash!comparing!public! !
 method!accessing!public! !
 methodClass!accessing!public! !
 methodInModel:!converting!public! !
 model!accessing!public! !
 modelClass!accessing!public! !
+modelClass:change:!public! !
 modelClass:method:!accessing!initializing!private! !
 modelClass:selector:source:!initializing!private! !
 parseEnvironment!accessing!private! !
@@ -211,6 +207,9 @@ source:!accessing!public! !
 
 !Refactory.Browser.RBMethod class methodsFor!
 
+for: anRBAbstractClass change: anAddMethodChange
+	^self new modelClass: anRBAbstractClass change: anAddMethodChange!
+
 for: aRBClass fromMethod: aCompiledMethod
 	^self new modelClass: aRBClass method: aCompiledMethod!
 
@@ -220,6 +219,7 @@ for: aRBClass source: aString selector: aSelector
 		selector: aSelector
 		source: aString! !
 !Refactory.Browser.RBMethod class categoriesForMethods!
+for:change:!instance creation!public! !
 for:fromMethod:!instance creation!public! !
 for:source:selector:!instance creation!public! !
 !

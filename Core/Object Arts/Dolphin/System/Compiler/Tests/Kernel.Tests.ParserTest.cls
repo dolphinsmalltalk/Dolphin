@@ -16,6 +16,15 @@ assertTree: anObject equals: anotherObject
 	self assert: anObject hash equals: anotherObject hash.
 	self assert: anObject equals: anotherObject!
 
+isEquivalentMethod: method1 to: method2
+	| count |
+	method1 == method2 ifTrue: [^true].
+	method1 class = method2 class ifFalse: [^false].
+	method1 byteCodes = method2 byteCodes ifFalse: [^false].
+	count := method1 literalCount.
+	method2 literalCount = count ifFalse: [^false].
+	^method1 disassembly = method2 disassembly!
+
 parseAll
 	"
 	self new parseAll
@@ -44,9 +53,11 @@ parseAll
 									[tree := method parseTree] on: Kernel.Parser errorClass do: [:ex | errors add: method -> ex].
 									tree isNil
 										ifFalse: 
-											[((Compiler compile: tree formattedCode in: each)
-												isEqualTo: (Compiler compile: method getSource in: each))
-													ifFalse: [errors add: method -> 'Mismatched parse trees']]]]].
+											[(self isEquivalentMethod: (Compiler compile: tree formattedCode in: each)
+												to: (Compiler compile: method getSource in: each))
+													ifFalse: 
+														[self halt.
+														errors add: method -> 'Mismatched parse trees']]]]].
 			errors].
 	^progress showModal!
 
@@ -323,6 +334,7 @@ verifyTree: copiedNode isDeepCopyOf: originalNode
 			self verifyTree: copiedChild isDeepCopyOf: originalChild]! !
 !Kernel.Tests.ParserTest categoriesForMethods!
 assertTree:equals:!helpers!private! !
+isEquivalentMethod:to:!long running!public! !
 parseAll!long running!public! !
 parseExpression:!helpers!private! !
 parseMethod:!helpers!private! !

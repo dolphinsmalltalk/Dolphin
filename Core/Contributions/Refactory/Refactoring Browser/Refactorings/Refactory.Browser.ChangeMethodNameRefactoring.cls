@@ -69,25 +69,28 @@ removeRenamedImplementors
 	self implementors do: [:each | each removeSelector: oldSelector]!
 
 renameImplementors
+	| namespace package |
 	self implementors do: 
 			[:each |
-			| parseTree packageAndEnv |
-			parseTree := each parseTreeFor: oldSelector.
+			| parseTree method |
+			method := each methodFor: oldSelector.
+			"We must maintain any custom packaging or namespace of the original method, or the new method may not compile"
+			package := method owningPackageIfLoose.
+			namespace := method customEnvironment.
+			parseTree := method parseTree.
 			parseTree isNil ifTrue: [self refactoringError: 'Could not parse source code.'].
 			self implementorsCanBePrimitives
 				ifFalse: 
 					[parseTree isPrimitive
 						ifTrue: 
 							[self refactoringError: '<1d>''s implementation of #<2s> is a primitive'
-										<< {each unqualifiedName. oldSelector}]].
+										<< { each unqualifiedName. oldSelector }]].
 			self modifyImplementorParseTree: parseTree in: each.
-			"We must maintain any custom packaging or namespace of the original method, or the new method may not compile"
-			packageAndEnv := each existingMethodPackageAndEnvironment: oldSelector.
 			each
 				compileTree: parseTree
-				environment: packageAndEnv second
+				environment: namespace
 				categories: (each protocolsFor: oldSelector)
-				package: packageAndEnv first]!
+				package: package]!
 
 renameMessageSends
 	self convertAllReferencesTo: oldSelector using: self parseTreeRewriter!

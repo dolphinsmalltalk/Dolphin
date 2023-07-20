@@ -191,7 +191,7 @@ normalizeReturns
 	[rewriter executeTree: inlineParseTree] whileTrue: [inlineParseTree := rewriter tree]!
 
 parseInlineMethod
-	inlineParseTree := self inlineMethod boundParseTree.
+	inlineParseTree := self inlineMethod parseTree.
 	inlineParseTree ifNil: [^self refactoringError: 'Could not parse sources'].
 	inlineParseTree lastIsReturn ifFalse: [inlineParseTree addSelfReturn]!
 
@@ -340,6 +340,8 @@ rewriteInlinedTree
 				normalizeIfTrues;
 				normalizeReturns;
 				addSelfReturn].
+	"Bind the variables for subsequent analysis"
+	RBVariableAnalyser analyseParseTree: inlineParseTree.
 	"Even when inlining from self, we may encounter static variables refs that require rewriting because the inlined method might have a custom namespace."
 	self qualifyInlinedStatics!
 

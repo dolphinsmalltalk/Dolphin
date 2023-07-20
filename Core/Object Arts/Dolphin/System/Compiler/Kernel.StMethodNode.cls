@@ -85,6 +85,9 @@ childrenDo: aMonadicValuable
 	tags ifNotNil: [tags do: aMonadicValuable].
 	aMonadicValuable value: body!
 
+customEnvironment
+	^environment!
+
 defines: aName 
 	^arguments anySatisfy: [:each | each name = aName]!
 
@@ -100,7 +103,7 @@ displayOn: aPuttableStream
 				print: self selector]!
 
 environment
-	^environment ifNil: [methodClass environment]!
+	^environment ifNil: [methodClass basicEnvironment]!
 
 environment: aNamespace
 	environment := aNamespace!
@@ -252,6 +255,7 @@ body!accessing!public! !
 body:!accessing!public! !
 buildSelector!helpers!private! !
 childrenDo:!accessing!public! !
+customEnvironment!accessing!public! !
 defines:!public!testing! !
 displayOn:!printing!public! !
 environment!accessing!public! !

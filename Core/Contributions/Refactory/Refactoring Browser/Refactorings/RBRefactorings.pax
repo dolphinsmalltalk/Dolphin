@@ -166,7 +166,7 @@ Core.Object
 	classConstants: {}!
 Core.Object
 	subclass: #'Refactory.Browser.RBMethod'
-	instanceVariableNames: 'class compiledMethod source selector parseTree hasSourceIntervals'
+	instanceVariableNames: 'class compiledMethod source selector parseTree hasSourceIntervals package'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

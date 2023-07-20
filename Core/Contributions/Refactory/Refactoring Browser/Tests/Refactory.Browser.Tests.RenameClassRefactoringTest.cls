@@ -251,8 +251,9 @@ testRenameAmbiguousClassName
 testRenameChangeNamespace
 	"Tests a rename that changes a class' namespace (i.e. moves it to a new namespace), but not it's unqualified name"
 
-	| refactoring oldName newClass classToRename foo smalltalk change |
+	| refactoring oldName newClass classToRename foo smalltalk change package method |
 	oldName := 'Refactory.Browser.Tests.ClassToRename'.
+	classToRename := oldName asQualifiedReference value.
 	#('Foo' 'Kernel.Bar' 'Refactory.Browser.Tests.FooBar') do: 
 			[:each |
 			model
@@ -264,8 +265,9 @@ testRenameChangeNamespace
 	smalltalk := model classFor: Smalltalk.
 	self assert: foo environment identicalTo: smalltalk.
 	self assert: (smalltalk localBindingFor: 'Foo') value identicalTo: foo.
+	package := (classToRename >> #testFailure) owningPackage name.
+	self assert: package equals: 'RBTests'.
 	"Now rename Refactory.Browser.Tests.ClassToRename to Smalltalk.ClassToRename, effectively changing just its namespace"
-	classToRename := oldName asQualifiedReference value.
 	refactoring := RenameClassRefactoring
 				model: model
 				rename: classToRename
@@ -279,15 +281,31 @@ testRenameChangeNamespace
 		verifyMethod: #method1
 		of: newClass
 		equals: 'method1 ^self method2'.
+	"An extension method with an unqualified external reference that must be qualified after the rename out of a namespace that imports XProgramming.SUnit"
 	self assertIsNil: (newClass fullBindingFor: 'TestFailure').
 	self
 		verifyMethod: #testFailure
 		of: newClass
 		equals: 'testFailure ^XProgramming.SUnit.TestFailure'.
+	self assert: (newClass methodFor: #testFailure) owningPackageIfLoose name equals: 'RBTests'.
 	change := model changes changeForClassNamed: newClass fullyQualifiedReference selector: #testFailure.
 	"Check that a change to a method of the renamed class has the correct (new) namespace (nil, so the class' namespace is used), and that the package is preserved"
 	self assertIsNil: change environment.
-	self assert: change package equals: RefactoryTestDataApp owningPackage.
+	self assert: change packageName equals: 'RBTests'.
+	"An extension method containing an unqualified external reference relying on package default namespace to bind"
+	self assertIsNil: (newClass fullBindingFor: 'RefactoryTestDataApp').
+	self
+		verifyMethod: #refersToClassInPackageDefaultNamespace
+		of: newClass
+		equals: 'refersToClassInPackageDefaultNamespace ^{ RefactoryTestDataApp. BasicLintRuleTestData }'.
+	method := newClass methodFor: #refersToClassInPackageDefaultNamespace.
+	self assert: method owningPackageIfLoose name equals: 'RBTestMethodsExtra'.
+	self assert: method environment equals: (Refactory.Browser.TestData classInModel: model).
+	change := model changes changeForClassNamed: newClass fullyQualifiedReference
+				selector: #refersToClassInPackageDefaultNamespace.
+	"Check that a change to a method of the renamed class has the correct (new) namespace (nil, so the class' namespace is used), and that the package is preserved"
+	self assert: change environment equals: Refactory.Browser.TestData.
+	self assert: change packageName equals: 'RBTestMethodsExtra'.
 	"Model class Foo was defined in Smalltalk, so it can now reference Smalltalk.ClassToRename using just its unqualified name"
 	self
 		verifyMethod: #foo
@@ -619,7 +637,7 @@ testRenameNamespace
 				equals: '<1s> ^#{_.Tests2.ClassToRename}' << each]!
 
 testRenameOfClassWithMethodInPackageNamespace
-	| refactoring conditionClass change selector class |
+	| refactoring conditionClass change selector class method |
 	conditionClass := model classFor: RBCondition.
 	refactoring := RenameClassRefactoring
 				model: model
@@ -630,6 +648,10 @@ testRenameOfClassWithMethodInPackageNamespace
 	class := model classFor: MethodRefactoring.
 	"This method references RBCondition, and also its class is in Refactory.Browser, the method is loose in a tools package with the Tools default namespace, so it needs to refer to RBCondition using a fully-qualified name. The rename will have to update this variable reference. The method also references a class in Tools (MethodNameDialog) that is not visible directly in Refactory.Browser, but because of the method namespace this is still bindable using its unqualified name."
 	selector := #getOptionNewMethodName:classes:.
+	"Custom namespace and package of the renamed loose method should be preserved"
+	method := class methodFor: selector.
+	self assert: method owningPackageIfLoose name equals: 'Dolphin Refactoring Browser'.
+	self assert: method environment equals: (Tools classInModel: model).
 	change := model changes changeForClassNamed: class fullyQualifiedReference selector: selector.
 	"Check that a change to a method of the renamed class has the correct (new) namespace (nil, so the class' namespace is used), and that the package is preserved"
 	self assert: change environment identicalTo: Tools.

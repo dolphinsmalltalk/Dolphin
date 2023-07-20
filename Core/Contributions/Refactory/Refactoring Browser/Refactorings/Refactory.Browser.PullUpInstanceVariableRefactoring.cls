@@ -21,7 +21,7 @@ preconditions
 			true]!
 
 transform
-	class allSubclassesBreadthFirstDo: 
+	class allSubclasses do: 
 			[:each | 
 			(each directlyDefinesInstanceVariable: variableName) 
 				ifTrue: [each removeInstanceVariable: variableName]].

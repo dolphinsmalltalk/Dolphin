@@ -18,7 +18,7 @@ checkBackReferencesTo: aSelector
 	definingClass := superclass whoDefinesMethod: aSelector.
 	definingClass isNil ifTrue: [^self].
 	pushUpParseTree := class parseTreeFor: aSelector.
-	superclass allSubclassesBreadthFirstDo: 
+	superclass allSubclasses do: 
 			[:each |
 			each selectors do: 
 					[:sel |
@@ -82,11 +82,14 @@ checkSiblingSuperSendsFrom: aRBClass
 									definer := superclass whoDefinesMethod: aSelector.
 									(definer notNil and: [class includesClass: definer])
 										ifTrue: 
-											[self refactoringError: ('Cannot push up <1p> since <2d>>><3s> sends a super message to it.'
+											[self
+												refactoringError: ('Cannot push up <1p> since <2d>>><3s> sends a super message to <4d> that would be intercepted'
 														expandMacrosWith: aSelector
 														with: aRBClass unqualifiedName
-														with: each selector)]]]]].
-	aRBClass allSubclassesBreadthFirstDo: [:each | self checkSiblingSuperSendsFrom: each]!
+														with: each selector
+														with: definer)]]]]].
+	#rbFix. "This used to say #allSubclasses, but the method is recursive already so it will visit all the subclasses, so this became a quadratic algorithm rather than linear, explaining why pushing up to Object was so slow..."
+	aRBClass subclasses do: [:each | self checkSiblingSuperSendsFrom: each]!
 
 checkSuperclass
 	| overrideSelectors superclass |
@@ -129,7 +132,7 @@ checkSuperSendsFromSiblings
 	siblings do: [:aRBClass | self checkSiblingSuperSendsFrom: aRBClass]!
 
 copyDownMethod: aSelector
-	| oldProtocols oldSource superclassDefiner subclasses importsRefactoring |
+	| oldProtocols oldSource superclassDefiner subclasses |
 	superclassDefiner := class superclass whoDefinesMethod: aSelector.
 	superclassDefiner isNil ifTrue: [^self].
 	oldSource := superclassDefiner sourceCodeFor: aSelector.
@@ -143,7 +146,7 @@ copyDownMethod: aSelector
 			ifTrue: 
 				[self
 					refactoringError: 'The <2p> method in superclass <3d> must be copied down to its other subclasses, but sends a super message that will be overridden.'
-							<< {class. aSelector. superclassDefiner unqualifiedName}].
+							<< { class. aSelector. superclassDefiner unqualifiedName }].
 	(self shouldCopyDownSuperclassMethod: aSelector) ifFalse: [self refactoringAborted].
 	"We don't need to push down imports, because they are inherited anyway, so just go an compile up the pushed down superclass methods"
 	subclasses do: [:each | each compile: oldSource categories: oldProtocols]!
@@ -153,7 +156,7 @@ copyDownMethods
 
 preconditions
 	^(selectors inject: (RBCondition hasSuperclass: class)
-		into: [:cond :each | cond & (RBCondition definesSelector: each in: class)]) 
+		into: [:cond :each | cond & (RBCondition definesSelector: each in: class)])
 			& (RBCondition withBlock: 
 						[self checkInstVars.
 						self checkClassVars.
@@ -162,11 +165,15 @@ preconditions
 						true])!
 
 pushUp: aSelector
-	| importsRefactoring packageAndEnv superclass |
+	| package namespace superclass method importsRefactoring |
 	superclass := class superclass.
+	method := class methodFor: aSelector.
+	"We need to maintain package of loose methods and any custom namespace"
+	package := method owningPackageIfLoose.
+	namespace := method customEnvironment.
 	importsRefactoring := ExpandImportsRefactoring
 				model: self model
-				forMethod: (class parseTreeFor: aSelector)
+				forMethod: method parseTree
 				fromClass: class
 				toClasses: { superclass }.
 	self performComponentRefactoring: importsRefactoring.
@@ -175,13 +182,11 @@ pushUp: aSelector
 				model: model
 				rewriteMethod: aSelector
 				forClass: class).
-	"Maintain package and any custom namespace"
-	packageAndEnv := class existingMethodPackageAndEnvironment: aSelector.
 	superclass
 		compile: (class sourceCodeFor: aSelector)
-		environment: packageAndEnv second
+		environment: namespace
 		categories: (class protocolsFor: aSelector)
-		package: packageAndEnv first.
+		package: package.
 	"Finally remove any static variable qualification that isn't required"
 	self performComponentRefactoring: (UnqualifyStaticVariablesRefactoring
 				model: model

@@ -160,33 +160,6 @@ testEnvironment
 	self assert: root basicEnvironment identicalTo: root.
 	self assert: root baseEnvironmentName equals: #Root!
 
-testExistingMethodPackageAndEnvironment
-	| class packageAndEnv |
-	class := model classNamed: #'Refactory.Browser.TestData.RefactoryTestDataApp'.
-	packageAndEnv := class existingMethodPackageAndEnvironment: #refersToClassFullyQualified.
-	self assert: packageAndEnv
-		equals: (Pair first: class realClass owningPackage second: (model classFor: Refactory.Browser.TestData))!
-
-testExistingMethodPackageAndEnvironmentLoose
-	| class packageAndEnv |
-	class := model classNamed: #'Refactory.Browser.TestData.RefactoryTestDataApp'.
-	packageAndEnv := class existingMethodPackageAndEnvironment: #sendInlineParameterMethod.
-	self assert: packageAndEnv
-		equals: (Pair first: self class owningPackage second: (model classFor: TestData))!
-
-testExistingMethodPackageAndEnvironmentLooseCustom
-	| class packageAndEnv |
-	class := model classNamed: #'Refactory.Browser.TestData.RefactoryTestDataApp'.
-	packageAndEnv := class existingMethodPackageAndEnvironment: #inlineParameterMethod:.
-	self assert: packageAndEnv
-		equals: (Pair first: self class owningPackage second: (model classFor: Tools))!
-
-testExistingMethodPackageAndEnvironmentRootClass
-	| class packageAndEnv |
-	class := model classNamed: #Root.
-	packageAndEnv := class metaclass existingMethodPackageAndEnvironment: #nestedClasses.
-	self assert: packageAndEnv equals: (Pair first: Root owningPackage second: class)!
-
 testFullName
 	self assert: objectClass fullName equals: 'Core.Object'.
 	self assert: objectClass metaclass fullName equals: 'Core.Object class'.
@@ -239,20 +212,20 @@ testMethodsReferencingExternals1
 	| class referers expectedSelectors subclass newMethod |
 	class := model classNamed: #'Refactory.Browser.Tests.ClassToRename'.
 	referers := (class methodsReferencingExternals asArray collect: [:each | each selector]) sort.
-	expectedSelectors := #(#refersToClassInCustomNamespace #refersToClassVariableInCustomNamespace #refersToClassVariablePartiallyQualified #selfReference #testFailure).
+	expectedSelectors := #(#mySubclass #refersToClassInCustomNamespace #refersToClassInPackageDefaultNamespace #refersToClassVariableInCustomNamespace #refersToClassVariablePartiallyQualified #selfReference #testFailure).
 	self assert: referers equals: expectedSelectors.
 	expectedSelectors do: [:each | class removeSelector: each].
 	self assert: class methodsReferencingExternals isEmpty.
 	"Modify an existing method (should no longer see the real method)."
 	class compile: 'selfReference ^Core.Object'.
 	newMethod := class newMethods at: #selfReference.
-	self assert: class methodsReferencingExternals asArray equals: {newMethod}.
+	self assert: class methodsReferencingExternals asArray equals: { newMethod }.
 	"initialize method references class var ClassVar1, but that is locally defined and so should not be considered an external reference"
 	self assert: class metaclass methodsReferencingExternals single
 		equals: (class metaclass methodFor: #testSkip).
 	subclass := class subclasses first.
 	self assert: (subclass methodsReferencingExternals collect: [:each | each selector]) asSortedArray
-		equals: #(externalReference:_: refersToClassFullyQualified refersToClassPartiallyQualified1 refersToClassPartiallyQualified2 refersToClassPartiallyQualifiedBinding1 refersToClassPartiallyQualifiedBinding2 refersToClassUnqualified refersToClassUnqualifiedBinding refersToClassUnqualifiedHybrid refersToClassUnqualifiedStaticExpression refersToInheritedClassVariableUnqualifiedBinding refersToOtherClassPartiallyQualifiedBinding testSkip unqualifiedBindingReference)!
+		equals: #(#externalReference:_: #refersToClassFullyQualified #refersToClassPartiallyQualified1 #refersToClassPartiallyQualified2 #refersToClassPartiallyQualifiedBinding1 #refersToClassPartiallyQualifiedBinding2 #refersToClassUnqualified #refersToClassUnqualifiedBinding #refersToClassUnqualifiedHybrid #refersToClassUnqualifiedStaticExpression #refersToInheritedClassVariableUnqualifiedBinding #refersToOtherClassPartiallyQualifiedBinding #testSkip #unqualifiedBindingReference)!
 
 testMethodsReferencingExternals2
 	| class referers |
@@ -390,7 +363,7 @@ testWhichMethodsReferToClass
 				sort.
 	"Note that we don't expect to see any of the symbolic references any more as these are deliberately not matched. Symbolic name references are superseded by BindingReferences as we know these are intended to refer to static variables, which is not necessarily true of symbols."
 	self assert: referers
-		equals: #(#refersToClassConstantFullyQualified #refersToClassConstantPartiallyQualified #refersToClassConstantPartiallyQualifiedWithNamespace #refersToClassConstantUnqualified #refersToClassFullyQualified #refersToClassFullyQualifiedBinding #refersToClassFullyQualifiedBindingInArray #refersToClassPartiallyQualified1 #refersToClassPartiallyQualified2 #refersToClassPartiallyQualifiedBinding1 #refersToClassPartiallyQualifiedBinding2 #refersToClassPartiallyQualifiedBindingInArray #refersToClassUnqualified #refersToClassUnqualifiedBinding #refersToClassUnqualifiedBindingInArray #refersToClassUnqualifiedInArray #refersToClassUnqualifiedWithPartiallyQualifiedNamespaceAnnotation #refersToClassVariableFullyQualified #refersToClassVariablePartiallyQualified #refersToClassVariablePartiallyQualifiedBinding)!
+		equals: #(refersToClassBindingNotFoundInArray #refersToClassConstantFullyQualified #refersToClassConstantPartiallyQualified #refersToClassConstantPartiallyQualifiedWithNamespace #refersToClassConstantUnqualified #refersToClassFullyQualified #refersToClassFullyQualifiedBinding #refersToClassFullyQualifiedBindingInArray #refersToClassPartiallyQualified1 #refersToClassPartiallyQualified2 #refersToClassPartiallyQualifiedBinding1 #refersToClassPartiallyQualifiedBinding2 #refersToClassPartiallyQualifiedBindingInArray #refersToClassUnqualified #refersToClassUnqualifiedBinding #refersToClassUnqualifiedBindingInArray #refersToClassUnqualifiedInArray #refersToClassUnqualifiedWithPartiallyQualifiedNamespaceAnnotation #refersToClassVariableFullyQualified #refersToClassVariablePartiallyQualified #refersToClassVariablePartiallyQualifiedBinding)!
 
 testWhichMethodsReferToClassViaMethodNamespace
 	| class targetClass referers |
@@ -424,10 +397,6 @@ testDefinesMethod!public!unit tests! !
 testDefinesPoolDictionary!public!unit tests! !
 testDefinitionString!public!unit tests! !
 testEnvironment!public!unit tests! !
-testExistingMethodPackageAndEnvironment!public! !
-testExistingMethodPackageAndEnvironmentLoose!public! !
-testExistingMethodPackageAndEnvironmentLooseCustom!public! !
-testExistingMethodPackageAndEnvironmentRootClass!public! !
 testFullName!public!unit tests! !
 testHierarchy!public!unit tests! !
 testLegacyDefinitionString!public!unit tests! !

@@ -156,18 +156,17 @@ compile: aString in: aRBClass environment: aRBNamespaceClass categories: aCollec
 	^change!
 
 compileTree: aMethodNode forMethod: aRBMethod
-	| selector class packageAndEnvironment |
+	| selector class |
 	aRBMethod parseTree: aMethodNode.
 	selector := aRBMethod selector.
 	class := aRBMethod modelClass.
 	self assert: aMethodNode selector == aRBMethod selector.
 	class addMethod: aRBMethod.
-	packageAndEnvironment := aRBMethod existingPackageAndEnvironment.
 	class
 		compile: aRBMethod source
-		environment: packageAndEnvironment second
+		environment: aRBMethod parseEnvironment
 		categories: (class protocolsFor: selector)
-		package: packageAndEnvironment first!
+		package: aRBMethod owningPackageIfLoose!
 
 createOrUpdateModelClass: anAddClassChange
 	| newClass newClassName details |
