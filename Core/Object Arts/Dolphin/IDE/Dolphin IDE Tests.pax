@@ -29,6 +29,10 @@ package setClassNames: #(
 	#{Tools.Tests.ViewComposerTest}
 ).
 
+package setMethodNames: #(
+	#(#{Tools.ClassBrowserShell class} #correspondingTestCase)
+).
+
 package setPrerequisites: #(
 	'Base\Development System'
 	'Base\Development System Tests'
@@ -37,20 +41,32 @@ package setPrerequisites: #(
 	'..\Base\Tests\Dolphin Base Tests'
 	'..\MVP\Base\Dolphin Basic Geometry'
 	'..\MVP\Presenters\Boolean\Dolphin Boolean Presenter'
+	'..\MVP\Views\Cards\Dolphin Card Containers'
 	'..\MVP\Views\Common Controls\Dolphin Common Controls'
+	'..\MVP\Views\Control Bars\Dolphin Control Bars'
 	'..\MVP\Graphics\Dolphin GDI Graphics'
+	'..\MVP\Models\List\Dolphin List Models'
 	'..\MVP\Base\Dolphin MVP Base'
 	'..\MVP\Tests\Dolphin MVP Tests'
 	'Professional\Dolphin Professional Tools'
 	'..\MVP\Views\Buttons\Dolphin Push Buttons'
+	'..\MVP\Presenters\Radio\Dolphin Radio Buttons'
 	'Professional\Dolphin Refactoring Browser'
 	'..\MVP\Views\Scintilla\Dolphin Scintilla View'
+	'..\MVP\Views\Scintilla\Tests\Dolphin Scintilla View Tests'
+	'..\MVP\Views\Sliding Tray\Dolphin Slidey-Inney-Outey Thing'
+	'..\MVP\Views\Splitter\Dolphin Splitter Control'
 	'..\MVP\Presenters\Text\Dolphin Text Presenter'
+	'..\MVP\Icons\Dolphin Text Tile Icons'
+	'..\MVP\Models\Tree\Dolphin Tree Models'
 	'..\MVP\Presenters\Tree\Dolphin Tree Presenter'
+	'..\MVP\Type Converters\Dolphin Type Converters'
+	'..\MVP\Models\Value\Dolphin Value Models'
 	'..\..\..\Contributions\IDB\IDB Method History'
 	'..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
 	'..\..\..\Contributions\Refactory\Refactoring Browser\Refactorings\RBRefactorings'
 	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
+	'..\ActiveX\Shell\Windows Shell'
 	'..\ActiveX\Components\XML DOM\XML DOM'
 ).
 
@@ -73,13 +89,6 @@ XProgramming.SUnit.TestCase
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Tests.DolphinTest
-	subclass: #'Tools.Tests.ClassBrowserAbstractTest'
-	instanceVariableNames: 'browser methodsPresenter packageA plugins'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Core.Tests.DolphinTest
 	subclass: #'Tools.Tests.CodeMentorTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -91,20 +100,6 @@ Core.Tests.DolphinTest
 	instanceVariableNames: 'process savedShowWalkbacks savedView'
 	classVariableNames: ''
 	imports: #(#{Kernel.OpcodePool})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Core.Tests.DolphinTest
-	subclass: #'Tools.Tests.IdeaSpaceShellTest'
-	instanceVariableNames: 'ideaShell browserPlugins'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Core.Tests.DolphinTest
-	subclass: #'Tools.Tests.PackageBrowserShellTest'
-	instanceVariableNames: 'packageA packageB packageC dolphinTestA dolphinTestB dolphinTestC shell cardsPresenter classesPresenter methodsPresenter variablesPresenter resourcesPresenter dependencyPresenters methodAA methodAB methodAC methodBA methodBB methodCA'
-	classVariableNames: ''
-	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Tests.DolphinTest
@@ -122,15 +117,57 @@ Core.Tests.DolphinTest
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Tests.DolphinTest
-	subclass: #'Tools.Tests.SmalltalkSystemShellTest'
-	instanceVariableNames: 'systemShell'
+	subclass: #'Tools.Tests.ViewComposerTest'
+	instanceVariableNames: 'vc sampleClass'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest
-	subclass: #'Tools.Tests.ViewComposerTest'
-	instanceVariableNames: 'vc sampleClass'
+UI.Tests.FolderTest
+	subclass: #'Tools.Tests.PackageFolderTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.PresenterTest
+	subclass: #'Tools.Tests.ClassBrowserAbstractTest'
+	instanceVariableNames: 'methodsPresenter packageA plugins'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.PresenterTest
+	subclass: #'Tools.Tests.IdeaSpaceShellTest'
+	instanceVariableNames: 'browserPlugins'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.PresenterTest
+	subclass: #'Tools.Tests.MethodWorkspaceTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.PresenterTest
+	subclass: #'Tools.Tests.PackageBrowserShellTest'
+	instanceVariableNames: 'packageA packageB packageC dolphinTestA dolphinTestB dolphinTestC cardsPresenter classesPresenter methodsPresenter variablesPresenter resourcesPresenter dependencyPresenters methodAA methodAB methodAC methodBA methodBB methodCA'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.PresenterTest
+	subclass: #'Tools.Tests.ResourceBrowserTest'
+	instanceVariableNames: 'testClass'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.PresenterTest
+	subclass: #'Tools.Tests.SmalltalkSystemShellTest'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -145,27 +182,6 @@ Tools.Tests.ClassBrowserAbstractTest
 Tools.Tests.ClassBrowserAbstractTest
 	subclass: #'Tools.Tests.SystemBrowserTest'
 	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-UI.Tests.FolderTest
-	subclass: #'Tools.Tests.PackageFolderTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-UI.Tests.PresenterTest
-	subclass: #'Tools.Tests.MethodWorkspaceTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-UI.Tests.PresenterTest
-	subclass: #'Tools.Tests.ResourceBrowserTest'
-	instanceVariableNames: 'testClass'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -205,6 +221,16 @@ Tools.Tests.ClassSelectorTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
+"Loose Methods"!
+
+!Tools.ClassBrowserShell class methodsFor!
+
+correspondingTestCase
+	^Tests.ClassBrowserTest! !
+!Tools.ClassBrowserShell class categoriesForMethods!
+correspondingTestCase!public! !
+!
 
 "End of package definition"!
 

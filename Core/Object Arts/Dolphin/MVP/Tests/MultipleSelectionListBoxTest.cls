@@ -11,17 +11,9 @@ MultipleSelectionListBoxTest comment: 'Test that the behaviour of the deprecated
 !MultipleSelectionListBoxTest methodsFor!
 
 classToTest
-	^MultipleSelectionListBox!
-
-oldDolphinVersionsForStbUpgrade
-	^1 to: 4!
-
-vuFile
-	^'ListPresenter.Multi-selection list box.vu'! !
+	^MultipleSelectionListBox! !
 !MultipleSelectionListBoxTest categoriesForMethods!
 classToTest!constants!private! !
-oldDolphinVersionsForStbUpgrade!constants!private! !
-vuFile!constants!private! !
 !
 
 !MultipleSelectionListBoxTest class methodsFor!

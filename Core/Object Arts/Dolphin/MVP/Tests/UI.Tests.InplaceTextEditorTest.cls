@@ -14,16 +14,16 @@ UI.Tests.InplaceTextEditorTest comment: ''!
 classToTest
 	^InplaceTextEditor!
 
+initializePresenter
+	presenter := self classToTest createOn: 'a 🐬' asValue!
+
 setUp
 	clipboard := Clipboard current.
 	savedText := clipboard getTextOrEmpty.
-	presenter := self classToTest createOn: 'a 🐬' asValue!
+	super setUp!
 
 tearDown
-	presenter isNil
-		ifFalse: 
-			[presenter destroy.
-			presenter := nil].
+	super tearDown.
 	clipboard setText: savedText!
 
 testPaste
@@ -41,6 +41,7 @@ testPaste
 	self assert: presenter value equals: expected! !
 !UI.Tests.InplaceTextEditorTest categoriesForMethods!
 classToTest!helpers!private! !
+initializePresenter!private!Running! !
 setUp!private!Running! !
 tearDown!public!Running! !
 testPaste!public!unit tests! !

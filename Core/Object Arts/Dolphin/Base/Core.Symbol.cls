@@ -199,15 +199,7 @@ sortUsing: aSortAlgorithm
 species
 	"Answer the preferred class of the receiver - not always the same as the answer to #class (although this implementation uses the class primitive, which should not fail). Normally used when comparing two objects to determine if they are of the comparable types. Symbols are equal to Strings in Dolphin, but we don't want them to be considered interchangeable as Symbols have a distinctly different purpose."
 
-	^self class!
-
-stbSaveOn: anSTBOutFiler 
-	"Save out a binary representation of the receiver to anSTBOutFiler."
-
-	anSTBOutFiler
-		writePreambleFor: self;
-		writeInteger: self size.
-	anSTBOutFiler stream nextPutAll: self asByteArray! !
+	^self class! !
 !Core.Symbol categoriesForMethods!
 argumentCount!accessing!public! !
 asString!converting!public! !
@@ -230,7 +222,6 @@ replaceFrom:to:with:startingAt:!public!replacing! !
 shallowCopy!copying!public! !
 sortUsing:!public!sorting! !
 species!accessing!public! !
-stbSaveOn:!binary filing!public! !
 !
 
 Core.Symbol methodProtocol: #commandMessage attributes: #(#readOnly) selectors: #(#asSymbol #forwardTo:)!

@@ -330,13 +330,14 @@ stbConvertFrom: anSTBClassFormat
 	Version Changes:
 		1: border inst var becomes style."
 
-	^
-	[:data |
-	| instance |
-	instance := self basicNew.
-	1 to: data size do: [:i | instance instVarAt: i put: (data at: i)].
-	instance style: (instance style bitOr: SBT_OWNERDRAW).
-	instance]!
+	anSTBClassFormat version == 0
+		ifTrue: 
+			[^
+			[:data |
+			data becomeA: self.
+			data style: (data style bitOr: SBT_OWNERDRAW).
+			data]].
+	^super stbConvertFrom: anSTBClassFormat!
 
 stbVersion
 	^1! !

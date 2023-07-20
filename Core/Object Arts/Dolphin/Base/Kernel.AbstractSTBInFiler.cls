@@ -2,7 +2,7 @@
 
 Kernel.STBFiler
 	subclass: #'Kernel.AbstractSTBInFiler'
-	instanceVariableNames: 'readMap converters deferredActions flags readSize'
+	instanceVariableNames: 'readMap converters deferredActions flags'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -16,13 +16,29 @@ Kernel.AbstractSTBInFiler comment: ''!
 basicNext
 	"Private - Answer the next object from the receiver's stream."
 
-	^self readObjectWithPrefix: self readInteger!
+	^self subclassResponsibility!
 
 classAt: anInteger
 	"Private - Answer the map value for a class at anInteger. If anInteger is zero then answer nil.
-	Signal an exception if there is no such entry."
+	Signal an exception if the class reference is invalid or not to one of the permitted classes."
 
-	^self objectAt: anInteger!
+	| class |
+	class := readMap at: anInteger.
+	class class isMeta
+		ifTrue: 
+			["Any class already in the read map must have passed any validator previously. Even the pre-defined classes are validated before addition."
+			^class].
+	(policy predefinedClasses lookup: anInteger - PredefinedClassOffset)
+		ifNil: 
+			["Corrupt input stream - the reference object is not a class, e.g. a malicious user could construct a stream that loads an object of a valid class, and then direct the filer to treat it as the class of another entry by modifying the class reference to the reference generated for the prior object that is not actually a class."
+			STBError signal: '<1s> input stream contains an invalid class reference (<2d>)'
+						<< { self class formatName. anInteger }]
+		ifNotNil: [:predefined | self class errorInvalidClass: predefined asQualifiedReference]!
+
+classLocator
+	"Answer a <ClassLocator> for use in resolving classes from the receiver's input stream."
+
+	^self subclassResponsibility!
 
 contents
 	"Answer an array of the objects stored in the stream."
@@ -31,6 +47,9 @@ contents
 	writeStream := Array writeStream: 16.
 	[self atEnd] whileFalse: [writeStream nextPut: self next].
 	^writeStream contents!
+
+converters
+	^converters!
 
 convertObjectOfClass: aClass size: anInteger format: anSTBClassConversion
 	"Private - Read on old format object from the stream: Create an Array or ByteArray into which the stored instance variables are deserialized. This is passed to the converter block which answers an instance of the real class initialised from the array."
@@ -48,12 +67,6 @@ convertObjectOfClass: aClass size: anInteger format: anSTBClassConversion
 	"Initialise a new instance from the old format object data and become it."
 	newObject become: (anSTBClassConversion converterBlock value: newObject).
 	^newObject!
-
-defaultClassLocatorClass
-	"Answer the class of Class Locator to use by default for finding and validating
-	classes in the receiver's input stream."
-
-	^ClassLocator!
 
 deferAction: aNiladicValuable
 	"Add the <niladicValuable> argument to the receiver's deferredActions collection for later 
@@ -83,14 +96,18 @@ initialize
 	flags := 0.
 	^super initialize!
 
+initializeObjectMap
+	self initializeReadMap!
+
+initializeReadMap
+	readMap := OrderedCollection new: 512.
+	policy registerPredefined: self!
+
 isUpgrading
 	^flags allMask: UpgradingMask!
 
 isUpgrading: aBoolean 
 	flags := flags mask: UpgradingMask set: aBoolean!
-
-newClassLocator
-	^self subclassResponsibility!
 
 next
 	"Answer the next object from the receiver's stream."
@@ -105,34 +122,13 @@ objectAt: anInteger
 
 	^readMap at: anInteger!
 
-readClassData: anInteger
-	"Private - Answer the class whose details are prefixed by the specified <integer> flags
-	in <STBPrefix> format."
+objects
+	"Answer the objects that have been read from the stream up to this point, disregarding any pre-registered classes or objects."
 
-	| versionBeingRead class format |
-	versionBeingRead := (anInteger allMask: STBPrefix.NonZeroVersionMask)
-				ifTrue: [self readInteger]
-				ifFalse: [0].
-	class := self readClassLocator: anInteger.
-	self register: class.
-	versionBeingRead == class stbVersion ifTrue: [^class].
-	format := STBClassConversion
-				forFiler: self
-				class: class
-				version: versionBeingRead
-				prefix: anInteger.
-	format converterBlock isNil
-		ifTrue: [^self class errorUnrecognisedClass: class version: versionBeingRead].
-	converters at: class put: format.
-	^class!
+	^readMap copyFrom: self policy lastPredefined + 1!
 
-readClassLocator: anIntegerFlags
-	^self subclassResponsibility!
-
-readInteger
-	"Private - Answer the next 32-bit integer in the stream."
-
-	^stream nextInt32!
+policy: anObject
+	policy := anObject!
 
 readMap
 	"Private - Answer the value of the receiver's readMap. This is an OrderedCollection of all
@@ -167,52 +163,33 @@ readObjectOfClass: aClass size: anInteger
 		ifFalse: [1 to: anInteger do: [:i | newObject basicAt: i put: stream next]].
 	^newObject!
 
-readObjectWithPrefix: anInteger
-	| anObject newObjectIndex class |
-	anInteger == 0 ifTrue: [^nil].	"optimize for nil"
-
-	"SmallInteger?"
-	(anInteger allMask: STBPrefix.SmallIntegerMask) ifTrue: [^anInteger bitShift: -1].
-	(anInteger allMask: STBPrefix.DataPrefixMask)
-		ifFalse: 
-			[^(anInteger allMask: STBPrefix.CharacterMask)
-				ifTrue: [Character value: (anInteger bitShift: STBPrefix.IndexShift)]
-				ifFalse: [self objectAt: (anInteger bitShift: STBPrefix.IndexShift)]].
-
-	"Ascertain the class of the object."
-	class := (anInteger allMask: STBPrefix.ClassPrefixMask)
-				ifTrue: [self readClassData: anInteger]
-				ifFalse: [self classAt: (anInteger bitShift: STBPrefix.IndexShift)].
-
-	"Now read the object data."
-	newObjectIndex := readMap size + 1.
-	anObject := class stbReadFrom: self format: (converters lookup: class).
-
-	"If anObject was a proxy for the real one, evaluate it now."
-	^anObject stbFixup: self at: newObjectIndex!
-
-readSizeBlock
-	^version < 3
-		ifTrue: [[:class | stream nextInt32]]
-		ifFalse: [[:class | class isVariable ifTrue: [stream nextInt32] ifFalse: [0]]]!
-
 readSizeOf: aClass
-	^readSize value: aClass!
+	^policy readObjectSize: aClass from: stream!
 
 readVersion
-	| char |
-	version := 0.
-	[(char := Character ansiValue: stream next) isDigit]
-		whileTrue: [version := version * 10 + char digitValue].
-	^char == $\x20!
+	policy := self class versionPolicyClass readVersionFrom: stream.
+	^policy notNil!
 
 register: anObject
 	"Private - Add anObject to the readMap, answering the index of the object in the map. This is important for some classes that might want to fixup the reference later."
 
 	^readMap addAnsweringIndex: anObject!
 
-registerAll: anArrayOfClass 
+registerAllClasses: anArrayOfClass
 	readMap addAllLast: anArrayOfClass!
+
+registerClass: aClass version: versionInteger prefix: prefixInteger
+	| format |
+	self register: aClass.
+	versionInteger == aClass stbVersion ifTrue: [^aClass].
+	format := STBClassConversion
+				forFiler: self
+				class: aClass
+				version: versionInteger
+				prefix: prefixInteger.
+	format converterBlock ifNil: [^STBFiler errorUnrecognisedClass: aClass version: versionInteger].
+	converters at: aClass put: format.
+	^aClass!
 
 reset
 	"Private - Reset the instance.
@@ -223,67 +200,64 @@ reset
 	readMap := OrderedCollection new: 512.
 	converters := IdentityDictionary new.
 	deferredActions := nil.
-	readSize := self readSizeBlock.
-	super reset!
+	self initializeObjectMap!
 
 resetAndValidateStream
 	((self class peekForSignatureIn: stream) and: [self readVersion])
-		ifFalse: 
-			[STBError
-				signal: ('Input stream not in <1s> format' expandMacrosWith: self class signature asAnsiString)].
-	version > self class version
-		ifTrue: 
-			[STBError
-				signal: ('Input stream is an incompatible <2s> format (version <1d>)' expandMacrosWith: version
-						with: self class signature asAnsiString)]!
+		ifFalse: [STBError signal: 'Input stream not in <1s> format' << self class formatName]!
 
 setRefOffset: anInteger
-	readMap setSize: anInteger! !
+	readMap setSize: anInteger!
+
+stream: aStream
+	stream := aStream.
+	self initialize! !
 !Kernel.AbstractSTBInFiler categoriesForMethods!
 basicNext!accessing!private! !
 classAt:!accessing!private! !
+classLocator!accessing!public! !
 contents!enumerating!public! !
+converters!accessing!private! !
 convertObjectOfClass:size:format:!operations!private! !
-defaultClassLocatorClass!constants!private! !
 deferAction:!deferred actions!public! !
 evaluateDeferredActions!deferred actions!private! !
 fixup:to:!operations!public! !
 initialize!initializing!private! !
+initializeObjectMap!initializing!private! !
+initializeReadMap!initializing!private! !
 isUpgrading!public!testing! !
 isUpgrading:!accessing!public! !
-newClassLocator!helpers!private! !
 next!operations!public! !
 objectAt:!accessing!private! !
-readClassData:!helpers!private! !
-readClassLocator:!helpers!private! !
-readInteger!helpers!private! !
+objects!accessing!private! !
+policy:!accessing!private! !
 readMap!accessing!private! !
 readObjectOfClass:format:size:!operations!public! !
 readObjectOfClass:size:!operations!private! !
-readObjectWithPrefix:!accessing!private! !
-readSizeBlock!operations!private! !
 readSizeOf:!operations!public! !
 readVersion!initializing!private! !
 register:!helpers!private! !
-registerAll:!public! !
+registerAllClasses:!private! !
+registerClass:version:prefix:!helpers!private! !
 reset!initializing!private! !
 resetAndValidateStream!initializing!private! !
 setRefOffset:!accessing!private! !
+stream:!initializing!private! !
 !
 
 !Kernel.AbstractSTBInFiler class methodsFor!
 
-peekForSignatureIn: aReadStream
-	"Answer whether the <readableStream> argument, aReadStream, appears to
-	be an STB stream (or is positioned at the start of an STB stream). If the STB
-	signature is found, then the stream is left positioned immediately after it, 
-	otherwise the stream position is not changed."
+on: aStream
+	"Answer a new instance attached to the binary stream aStream."
 
-	| position |
-	position := aReadStream position.
-	^(aReadStream nextAvailable: self signature size) asByteArray = self signature
-		or: [aReadStream position: position. false]! !
+	^self new stream: aStream!
+
+peekForSignatureIn: aReadStream
+	"Answer whether the <readableStream> argument, aReadStream, appears to be an STB stream (or is positioned at the start of an STB stream). If the STB signature is found, then the stream is left positioned immediately after it, otherwise the stream position is not changed."
+
+	^self versionPolicyClass peekForSignatureIn: aReadStream! !
 !Kernel.AbstractSTBInFiler class categoriesForMethods!
+on:!instance creation!public! !
 peekForSignatureIn:!public!testing! !
 !
 

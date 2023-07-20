@@ -2221,6 +2221,7 @@ Kernel.SharedPool
 			'ERROR_NO_MORE_ITEMS' -> 16r103.
 			'ERROR_NOACCESS' -> 16r3E6.
 			'ERROR_OPERATION_ABORTED' -> 16r3E3.
+			'ERROR_PATH_NOT_FOUND' -> 16r3.
 			'ERROR_PROC_NOT_FOUND' -> 16r7F.
 			'ERROR_SHARING_VIOLATION' -> 16r20.
 			'ERROR_STACK_OVERFLOW' -> 16r3E9.
@@ -2618,7 +2619,7 @@ Core.Object
 			'PathDelimiters' -> '/\'.
 			'ShareModes' -> (IdentityDictionary
 						withAll: { #exclusive -> 16r0. #read -> 16r1. #readWrite -> 16r3. #write -> 16r2 }).
-			'SniffSize' -> 16r400
+			'SniffSize' -> 16r1000
 		}!
 Core.Object
 	subclass: #'Core.FileLocator'
@@ -2971,18 +2972,38 @@ Core.Object
 		}!
 Core.Object
 	subclass: #'Kernel.STBClassConversion'
-	instanceVariableNames: 'version instSize isBytes isVariable converterBlock filer'
+	instanceVariableNames: 'version instSize prefix converterBlock filer'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Object
 	subclass: #'Kernel.STBFiler'
-	instanceVariableNames: 'stream context version'
+	instanceVariableNames: 'stream context policy'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: { 'MaxPredefinedRef' -> 16r18. 'STLFilerVersion' -> 16r5 }!
+	classConstants: {
+			'PredefinedClassOffset' -> 16r4.
+			'PrefixBytesMask' -> 16r30.
+			'PrefixCharacterMask' -> 16r4.
+			'PrefixClassMask' -> 16r6.
+			'PrefixDataMask' -> 16r2.
+			'PrefixInstSizeMask' -> 16rFF.
+			'PrefixInstSizeShift' -> 16r8.
+			'PrefixInstSizeUnshift' -> -16r8.
+			'PrefixLiteralMask' -> 16r8.
+			'PrefixLocatorLenShift' -> 16r10.
+			'PrefixLocatorLenUnshift' -> -16r10.
+			'PrefixNonZeroVersionMask' -> 16r40.
+			'PrefixRefShift' -> 16r4.
+			'PrefixRefUnshift' -> -16r4.
+			'PrefixSmallIntegerMask' -> 16r1.
+			'PrefixVariableMask' -> 16r20.
+			'STBFormatName' -> 'STB'.
+			'STLFilerVersion' -> 16r6.
+			'STLFormatName' -> 'STL'
+		}!
 Core.Object
 	subclass: #'Kernel.STBPrefix'
 	instanceVariableNames: 'uint32'
@@ -3012,6 +3033,32 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Core.Object
+	subclass: #'Kernel.STBVersionPolicy'
+	instanceVariableNames: 'version'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: 'version signatureBytes'
+	classConstants: {
+			'FirstPredefinedClassRef' -> 16r5.
+			'LastPredefinedClassRef' -> 16r18.
+			'PredefinedClasses' -> {
+						AnsiString.
+						Array.
+						ByteArray.
+						LargeInteger.
+						STBClassProxy.
+						STBMetaclassProxy.
+						Symbol.
+						STBCollectionProxy.
+						OrderedCollection.
+						STBIdentityDictionaryProxy.
+						LookupTable.
+						IdentityDictionary.
+						Utf8String.
+						Utf16String
+					}
+		}!
 Core.Object
 	subclass: #'Core.Stream'
 	instanceVariableNames: ''
@@ -4267,6 +4314,13 @@ Core.FileLocator
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Kernel.ClassLocator
+	subclass: #'Kernel.RestrictedClassLocator'
+	instanceVariableNames: 'classMap'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.ClassLocator
 	subclass: #'Kernel.ValidatingClassLocator'
 	instanceVariableNames: 'validationBlock'
 	classVariableNames: ''
@@ -4692,7 +4746,7 @@ Kernel.StackFrame
 	classConstants: {}!
 Kernel.STBFiler
 	subclass: #'Kernel.AbstractSTBInFiler'
-	instanceVariableNames: 'readMap converters deferredActions flags readSize'
+	instanceVariableNames: 'readMap converters deferredActions flags'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -4777,6 +4831,34 @@ Kernel.STBCollectionProxy
 Kernel.STBCollectionProxy
 	subclass: #'Kernel.STBSortedCollectionProxy'
 	instanceVariableNames: 'sortAlgorithm'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.STBVersionPolicy
+	subclass: #'Kernel.STBVersion0Policy'
+	instanceVariableNames: 'headerBytes'
+	classVariableNames: 'Versions'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { 'Signature' -> #[33 83 84 66 32] }!
+Kernel.STBVersion0Policy
+	subclass: #'Kernel.STBVersion1Policy'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.STBVersion1Policy
+	subclass: #'Kernel.STBVersion3Policy'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.STBVersion3Policy
+	subclass: #'Kernel.STBVersion5Policy'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

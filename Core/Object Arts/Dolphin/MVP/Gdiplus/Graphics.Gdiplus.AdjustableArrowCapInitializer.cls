@@ -149,12 +149,15 @@ height: heightReal width: widthReal isFilled: isFilledBoolean
 		isFilled: isFilledBoolean!
 
 stbConvertFrom: anSTBClassFormat
-	^
-	[:data |
-	self
-		height: (data at: 2)
-		width: (data at: 3)
-		isFilled: (data at: 4)]! !
+	anSTBClassFormat version == 0
+		ifTrue: 
+			[^
+			[:data |
+			self
+				height: (data at: 2)
+				width: (data at: 3)
+				isFilled: (data at: 4)]].
+	^super stbConvertFrom: anSTBClassFormat! !
 !Graphics.Gdiplus.AdjustableArrowCapInitializer class categoriesForMethods!
 height:width:isFilled:!instance creation!public! !
 stbConvertFrom:!binary filing!public! !

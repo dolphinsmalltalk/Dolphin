@@ -1422,15 +1422,10 @@ Core.Object
 Core.Object
 	subclass: #'UI.MenuItem'
 	instanceVariableNames: 'flags'
-	classVariableNames: ''
+	classVariableNames: 'Dividers'
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
-	classConstants: {
-			'Dividers'
-				-> (LookupTable withAll: { '-' -> #separator. '|' -> #break. '||' -> #barBreak }).
-			'StringSeparator' -> $/.
-			'StylesMask' -> 16rFFFFF
-		}!
+	classConstants: { 'StringSeparator' -> $/. 'StylesMask' -> 16rFFFFF }!
 Core.Object
 	subclass: #'UI.Presenter'
 	instanceVariableNames: 'model view parentPresenter events subPresenters names helpId'

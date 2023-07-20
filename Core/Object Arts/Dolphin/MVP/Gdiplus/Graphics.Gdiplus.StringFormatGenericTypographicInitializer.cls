@@ -39,7 +39,8 @@ trimming!attributes!public! !
 !Graphics.Gdiplus.StringFormatGenericTypographicInitializer class methodsFor!
 
 stbConvertFrom: anSTBClassFormat
-	^[:data | self genericTypographic]!
+	anSTBClassFormat version == 0 ifTrue: [^[:data | self genericTypographic]].
+	^super stbConvertFrom: anSTBClassFormat!
 
 uninitialize
 	GenericTypographic := nil! !

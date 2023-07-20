@@ -199,16 +199,13 @@ open: aString withAliases: aCollection flags: anInteger
 	aliases do: [:alias | Libraries at: (File default: alias extension: 'dll') put: lib].
 	^lib!
 
-stbConvertFrom: anSTBClassFormat 
+stbConvertFrom: anSTBClassFormat
 	"Convert from version 1 ExternalResourceLibrary (adds loadFlags inst. var)"
 
-	^
-	[:data | 
-	| newInstance |
-	newInstance := self basicNew.
-	1 to: data size do: [:i | newInstance instVarAt: i put: (data at: i)].
-	newInstance loadFlags: 0.
-	newInstance]!
+	"Shouldn't be needed, as resource libraries are proxied?"
+
+	anSTBClassFormat version == 0 ifTrue: [^[:data | { data at: 1. 0 } becomeA: self]].
+	^super stbConvertFrom: anSTBClassFormat!
 
 stbVersion
 	"Answer the current binary filer version number for instances of the receiver."

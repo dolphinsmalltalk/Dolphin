@@ -25,6 +25,9 @@ Class Variables:
 !Kernel.ClassLocator categoriesForClass!System-Binary class loading! !
 !Kernel.ClassLocator methodsFor!
 
+bindingReference
+	^key asQualifiedReference!
+
 codeBase
 	"Answer the receiver's codeBase. This is used to complete a relative key."
 
@@ -41,8 +44,10 @@ copyWithCodeBase
 	"Private - Answer a instance of the same class as the receiver with the same codeBase.
 	This allows both the codeBase and the mechanism for using it to be propagated."
 
-	^(self class codeBase: codeBase) packageName: self packageName
-!
+	^self class
+		codeBase: codeBase
+		packageName: self packageName
+		key: nil!
 
 errorClassCircularityDetected
 	"Private - Signal an error indicating there exists a circular class dependency
@@ -51,31 +56,48 @@ errorClassCircularityDetected
 	self
 		error: ('A circular class dependency has been encountered involving class <1s>' expandMacrosWith: key)!
 
-errorClassNotFound
-	"Private - Signal an error indicating that a particular was not found in the image and 
-	could not be dynamically loaded"
+errorClassNotFound: aBindingReference
+	"Private - Signal an error indicating that a particular was not found in the image and could not be dynamically loaded"
 
-	self error: ('The class <1s> could not be found in the image' expandMacrosWith: key)!
+	NotFoundError
+		signal: ('The class <1p> could not be found in the image' expandMacrosWith: aBindingReference)!
 
 findAvailableClass
 	"Answer the class referred to by the receiver if the class is either resident or a loaded foreign
 	import. If the class referred to by the receiver is a foreign class that has not yet been imported
 	then answer nil."
 
-	^self findResidentClass
-		ifNil: [ImportedClasses notNil ifTrue: [ImportedClasses lookup: self fullClassKey]]!
+	^self findAvailableClass: self bindingReference!
+
+findAvailableClass: aBindingReference
+	"Answer the class referred to by the receiver if the class is either resident or a loaded foreign
+	import. If the class referred to by the receiver is a foreign class that has not yet been imported
+	then answer nil."
+
+	^(self findResidentClass: aBindingReference)
+		ifNil: [ImportedClasses ifNotNil: [ImportedClasses lookup: (self fullClassKey: aBindingReference)]]!
 
 findResidentClass
 	"Private - Answer the class referred to by the receiver if it is
 	fully resident in the image."
 
-	^key asQualifiedReference valueOrNil ifNil: [Aliases lookup: key asSymbol]!
+	^self findResidentClass: self bindingReference!
+
+findResidentClass: aBindingReference
+	"Private - Answer the class referred to by the argument."
+
+	^aBindingReference valueOrNil ifNil: [Aliases lookup: aBindingReference]!
 
 fullClassKey
 	"Answer the full specification of the class identified by the receiver."
 
-	^ self codeBase, self key
+	^self fullClassKey: self key
 !
+
+fullClassKey: aBindingReference
+	"Answer the full specification of the class identified by the receiver and the key <String> argument."
+
+	^self codeBase , aBindingReference instance fullName!
 
 fullPackageKey
 	"Answer the full specification of any package identified by the receiver or nil
@@ -97,10 +119,8 @@ installImportedClass: aClass
 	"Private - Install aClass, an imported class into the system"
 
 	| classKey |
-	classKey := self codeBase, aClass name asString.
-	ImportedClasses at: classKey ifAbsent: [
-		ImportedClasses at: classKey put: aClass ]
-!
+	classKey := self codeBase , aClass fullName.
+	ImportedClasses at: classKey ifAbsent: [ImportedClasses at: classKey put: aClass]!
 
 key
 	"Answer the receiver's key inst var."
@@ -124,10 +144,12 @@ localFileSpecFor: aStringFilename
 locateClass
 	"Answer the class referred to by the receiver."
 
-	| class |
-	(class := self findResidentClass) isNil ifTrue: [
-		class := self findOrImportForeignClass ].
-	^class!
+	^self locateClass: self bindingReference!
+
+locateClass: aBindingReference
+	"Answer the class referred to by the argument."
+
+	^(self findResidentClass: aBindingReference) ifNil: [self findOrImportForeignClass: aBindingReference]!
 
 packageName
 	"Answer the receiver's  package name <readableString>."
@@ -153,14 +175,18 @@ printOn: aStream
 		print: key;
 		nextPut: $)! !
 !Kernel.ClassLocator categoriesForMethods!
+bindingReference!accessing!private! !
 codeBase!accessing!public! !
 codeBase:!initializing!private! !
 copyWithCodeBase!copying!private! !
 errorClassCircularityDetected!exceptions!private! !
-errorClassNotFound!exceptions!private! !
+errorClassNotFound:!exceptions!private! !
 findAvailableClass!operations!public! !
+findAvailableClass:!operations!public! !
 findResidentClass!operations!private! !
-fullClassKey!helpers!private! !
+findResidentClass:!operations!private! !
+fullClassKey!accessing!private! !
+fullClassKey:!helpers!private! !
 fullPackageKey!accessing!public! !
 hasPackageName!accessing!private! !
 initialize!initializing!private! !
@@ -169,6 +195,7 @@ key!accessing!public! !
 key:!initializing!private! !
 localFileSpecFor:!accessing!public! !
 locateClass!operations!public! !
+locateClass:!operations!public! !
 packageName!accessing!public! !
 packageName:!initializing!private! !
 printOn:!printing!public! !
@@ -176,14 +203,14 @@ printOn:!printing!public! !
 
 !Kernel.ClassLocator class methodsFor!
 
-addAlias: aSymbol forClass: aClass
-	"Record the symbolic name, aSymbol, as an alias for the class name, aClass.
+addAlias: aString forClass: aClass
+	"Record the alias for a class for use in subsequent resolution.
 	This is useful where, for example, previously binary filed classes have been renamed, and one
 	does not wish to keep a global variable for that alias. It can be useful to have the global variable
 	as well to permit loading subclasses, but such globals may be removed by the image stripper, so
 	some mechanism is needed to maintain backwards compatibility with old binary files."
 
-	Aliases at: aSymbol asSymbol put: aClass!
+	Aliases at: aString asQualifiedReference put: aClass!
 
 binaryPackageExtension
 	"Answers the standard file extension String used for binary package files."
@@ -252,23 +279,22 @@ onStartup
 	ImportedClasses := nil.
 !
 
-removeAlias: aSymbol
-	"Remove the symbolic name, aSymbol, a previously established class alias.
-	Note that it is not strictly necessary to do this because the Aliases collection
-	is weak, and the alias will disappear if the class is removed."
+removeAlias: aString
+	"Remove a previously established class alias.
+	Note that it is not strictly necessary to do this because the Aliases collection is weak, and the alias will disappear if the class is removed."
 
-	Aliases removeKey: aSymbol asSymbol ifAbsent: nil!
+	Aliases removeKey: aString asQualifiedReference ifAbsent: nil!
 
-stbConvertFrom: anSTBClassFormat 
+stbConvertFrom: anSTBClassFormat
 	"Convert from earlier version models.
 	1: Added 'packageName' instance variable."
 
 	^
-	[:data | 
-	| newInst |
-	newInst := self basicNew.
-	data keysAndValuesDo: [:i :v | newInst instVarAt: i + 1 put: v].
-	newInst]!
+	[:data |
+	self basicNew
+		codeBase: (data at: 1);
+		key: (data at: 2);
+		yourself]!
 
 stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
@@ -278,7 +304,7 @@ stbVersion
 uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
-	ImportedClasses := ImportedClassesMutex := nil.
+	ImportedClasses := ImportedClassesMutex := Aliases := nil.
 	SessionManager current removeEventsTriggeredFor: self! !
 !Kernel.ClassLocator class categoriesForMethods!
 addAlias:forClass:!accessing!public! !

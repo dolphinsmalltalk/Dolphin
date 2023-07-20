@@ -350,14 +350,6 @@ testShortDateFormats
 	self assert: ((Locale standard: 'ja-JP') shortDateFormats includes: 'ggy''年''M''月''d''日''').
 	self assert: (Locale named: 'tk-TM') shortDateFormat equals: 'dd.MM.yy ''ý.'''!
 
-testStbConvertFromVersion0
-	| subject |
-	subject := (Object fromLiteralStoreArray: #(#'!!STL' 4 852742 ##(Smalltalk.WindowsLocale) 656390 ##(Smalltalk.NUMBERFMTW) 8 #[2 0 0 0 1 0 0 0 3 0 0 0 96 28 20 15 176 75 20 15 1 0 0 0] 8 '.' nil 8 ',' 4115 170 192 34 14 35 5 31 8 ',' 8225 3 185 8 'en-GB' 37 3 33 8 '3;0' 29 8 '.')).
-	"We expect a newly constructed instance with the same lcid, but the other data is discarded"
-	self assert: subject lcid equals: 2057.
-	self assertIsNil: (subject instVarNamed: 'numberFormat').
-	self assert: (subject instVarNamed: 'info') isEmpty!
-
 testStbRoundTrip
 	| subject bytes rehydrated |
 	subject := self defaultSubject.
@@ -393,7 +385,16 @@ testStbRoundTripUserDefault
 	Locale userDefault: (Locale standard: 'es-ES').
 	self deny: Locale userDefault equals: subject.
 	subject := Object fromBinaryStoreBytes: bytes.
-	self assert: subject identicalTo: Locale userDefault! !
+	self assert: subject identicalTo: Locale userDefault!
+
+testStlConvertFromVersion0
+	| subject |
+	subject := Object
+				fromLiteralStoreArray: #(#'!!STL' 4 852742 ##(Smalltalk.WindowsLocale) 656390 ##(Smalltalk.NUMBERFMTW) 8 #[2 0 0 0 1 0 0 0 3 0 0 0 96 28 20 15 176 75 20 15 1 0 0 0] 8 '.' nil 8 ',' 4115 170 192 34 14 35 5 31 8 ',' 8225 3 185 8 'en-GB' 37 3 33 8 '3;0' 29 8 '.').
+	"We expect a newly constructed instance with the same lcid, but the other data is discarded"
+	self assert: subject lcid equals: 2057.
+	self assertIsNil: (subject instVarNamed: 'numberFormat').
+	self assert: (subject instVarNamed: 'info') isEmpty! !
 !OS.Tests.WindowsLocaleTest categoriesForMethods!
 defaultSubject!helpers!private! !
 testComparing!public!unit tests! !
@@ -422,10 +423,10 @@ testNoUserOverrides!public!unit tests! !
 testPrintNoLeadingZero!public!unit tests! !
 testPrintString!public!unit tests! !
 testShortDateFormats!public!unit tests! !
-testStbConvertFromVersion0!public!unit tests! !
 testStbRoundTrip!public!unit tests! !
 testStbRoundTripDefault!public!unit tests! !
 testStbRoundTripSystemDefault!public!unit tests! !
 testStbRoundTripUserDefault!public!unit tests! !
+testStlConvertFromVersion0!public!unit tests! !
 !
 

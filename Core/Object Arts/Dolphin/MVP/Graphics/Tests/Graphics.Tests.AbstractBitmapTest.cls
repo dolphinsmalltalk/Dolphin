@@ -54,7 +54,7 @@ testFromResource
 	self assert: bitmap1 hash equals: bitmap2 hash.
 	self assert: bitmap1 extent y equals: 16!
 
-testStbConvertFromVersion3_file
+testStlConvertFromVersion3_file
 	| rehydrated comparand |
 	rehydrated := Object fromLiteralStoreArray: self stlVersion3_file.
 	self assert: rehydrated isPersistent.
@@ -67,7 +67,7 @@ testStbConvertFromVersion3_file
 	self deny: rehydrated handle equals: comparand handle.
 	self assert: rehydrated extent equals: comparand extent!
 
-testStbConvertFromVersion3_resource
+testStlConvertFromVersion3_resource
 	| rehydrated comparand |
 	rehydrated := Object fromLiteralStoreArray: self stlVersion3_resource.
 	self assert: rehydrated isPersistent.
@@ -87,8 +87,8 @@ stlVersion3_resource!constants!private! !
 testDisplayCompatible!public!unit tests! !
 testFromFileFallback!public!unit tests! !
 testFromResource!public! !
-testStbConvertFromVersion3_file!public! !
-testStbConvertFromVersion3_resource!public! !
+testStlConvertFromVersion3_file!public! !
+testStlConvertFromVersion3_resource!public! !
 verifyImage:sameAs:!public!unit tests! !
 !
 

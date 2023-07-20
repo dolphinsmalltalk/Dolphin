@@ -432,7 +432,9 @@ ink: aGpBrushOrColor width: aFloat
 	^self new ink: aGpBrushOrColor width: aFloat!
 
 stbConvertFrom: anSTBClassFormat
-	^[:data | PenInitializer ink: (data at: 2) width: (data at: 3)]! !
+	anSTBClassFormat version == 0
+		ifTrue: [^[:data | PenInitializer ink: (data at: 2) width: (data at: 3)]].
+	^super stbConvertFrom: anSTBClassFormat! !
 !Graphics.Gdiplus.PenInitializer class categoriesForMethods!
 cloneHandle:!private!realizing/unrealizing! !
 freeHandle:!private!realizing/unrealizing! !

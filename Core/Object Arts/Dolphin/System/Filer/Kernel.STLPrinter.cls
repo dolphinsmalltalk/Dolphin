@@ -22,3 +22,19 @@ printClass:!printing!public! !
 printProcessor:!printing!public! !
 !
 
+!Kernel.STLPrinter class methodsFor!
+
+printLiteralStoreArray: aLiteralStoreArray
+	| stream |
+	stream := String writeStream.
+	self printLiteralStoreArray: aLiteralStoreArray on: stream.
+	^stream contents!
+
+printLiteralStoreArray: aLiteralStoreArray on: aPuttableStream
+	((STLVersionPolicy forVersion: (aLiteralStoreArray at: 2)) literalPrinterClass
+		on: aPuttableStream) printArray: aLiteralStoreArray! !
+!Kernel.STLPrinter class categoriesForMethods!
+printLiteralStoreArray:!instance creation!public! !
+printLiteralStoreArray:on:!instance creation!public! !
+!
+

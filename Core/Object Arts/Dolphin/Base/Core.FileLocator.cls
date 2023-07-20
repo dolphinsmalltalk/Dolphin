@@ -46,12 +46,12 @@ Sometimes, especially in the case of development tools, you might want a resourc
 basePath
 	^SessionManager.Current imageBase!
 
-findOrImportForeignClass
+findOrImportForeignClass: aBindingReference
 	"An attempt is being made by a <ClassLocator> to load a class when the dynamic loading
 	capability is not installed. This is normally available as part of the Web Deployment Kit.
 	Raise an error to the effect that the class cannot be found."
 
-	^self errorClassNotFound!
+	^self errorClassNotFound: aBindingReference!
 
 localFileSpecFor: aString
 	"Answer a full filespec for the <readableString> relative path argument, formed according to
@@ -79,7 +79,7 @@ relativeToBase: aFilename
 	^File relativePathOf: aFilename to: self basePath! !
 !Core.FileLocator categoriesForMethods!
 basePath!accessing!public! !
-findOrImportForeignClass!operations!private! !
+findOrImportForeignClass:!operations!private! !
 localFileSpecFor:!accessing!public! !
 relativePathIfSubPath:!accessing!private! !
 relativePathTo:!accessing!public! !

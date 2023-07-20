@@ -8,45 +8,56 @@ Kernel.STBProxy
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Kernel.STBClassProxy guid: (Core.GUID fromString: '{87b4c6ea-026e-11d3-9fd7-00a0cc3e4a32}')!
-Kernel.STBClassProxy comment: ''!
+Kernel.STBClassProxy comment: '`STBClassProxy` is an STB proxy class for wrapping reference to class objects in the serialised object stream. The proxy captures the class and package names. Historically the package name was used for loading binary class definitions in Dolphin Web Applets, although this use is obsolete.
+
+The newer literal filer, STL, does not use `STBClassProxy` or `STBMetaclassProxy`, as it uses literal references to the class.'!
 !Kernel.STBClassProxy categoriesForClass!System-Binary storage! !
 !Kernel.STBClassProxy methodsFor!
+
+locatorKey
+	^locatorKey!
 
 locatorKey: aString
 	"Private - Set the receiver's locatorKey inst var to aString."
 
 	locatorKey := aString!
 
+packageName
+	^packageName!
+
 packageName: aString
 	"Private - Set the receiver's package name inst var to aString."
 
 	packageName := aString!
 
-resolveWithClassLocator: aClassLocator 
+resolveWithClassLocator: aClassLocator
 	"Private - If the class represented by the <ClassLocator> argument is a resident class or a
 	loaded imported class then answer the class. Otherwise answer a <ClassStub> representing the
 	class which will be resolved when it is first used."
 
-	^aClassLocator findAvailableClass ifNil: [self withClassLocator: aClassLocator]!
+	^(aClassLocator findAvailableClass: locatorKey asQualifiedReference)
+		ifNil: [self withClassLocator: aClassLocator]!
 
-stbFixup: inFiler at: anInteger
-	"Resolve the receiver to either the behaviour it represents or an appropriate stub class."
+stbFixup: anSTBInFiler at: anInteger
+	"Ask the STBInFiler to resolve the receiver to either the behaviour it represents or an appropriate stub class.
+	Note that the first argument is not expected to be an STLInFiler that filer does not use class proxies."
 
-	| behaviourOrStub classLocator |
-
-	"Create a class locator that can be used to find this class"
-	classLocator := inFiler newClassLocator.
-	classLocator key: locatorKey; packageName: packageName.
-
-	behaviourOrStub := self resolveWithClassLocator: classLocator.
-	inFiler fixup: anInteger to: behaviourOrStub.
-
-	^behaviourOrStub.!
+	| behaviourOrStub |
+	behaviourOrStub := self resolveWithClassLocator: anSTBInFiler classLocator.
+	anSTBInFiler fixup: anInteger to: behaviourOrStub.
+	^behaviourOrStub!
 
 withClassLocator: aClassLocator
-	^#{ClassStub} ifDefined: [:classStub | classStub withClassLocator: aClassLocator]! !
+	^#{ClassStub} ifDefined: 
+			[:stub |
+			stub withClassLocator: (aClassLocator copyWithCodeBase
+						key: locatorKey;
+						packageName: packageName;
+						yourself)]! !
 !Kernel.STBClassProxy categoriesForMethods!
+locatorKey!accessing!private! !
 locatorKey:!accessing!private! !
+packageName!accessing!private! !
 packageName:!accessing!private! !
 resolveWithClassLocator:!converting!private! !
 stbFixup:at:!converting!public! !
@@ -64,16 +75,15 @@ forClass: aClass
 	aClass owningPackage ifNotNil: [:package | answer packageName: package name].
 	^answer!
 
-stbConvertFrom: anSTBClassFormat 
+stbConvertFrom: anSTBClassFormat
 	"Convert from earlier version models.
 	1: Added 'packageName' instance variable."
 
 	^
-	[:data | 
-	| newInst |
-	newInst := self basicNew.
-	data keysAndValuesDo: [:i :v | newInst instVarAt: i + 1 put: v].
-	newInst]!
+	[:data |
+	self basicNew
+		locatorKey: (data at: 1);
+		yourself]!
 
 stbVersion
 	"Answer the current binary filer version number for instances of the receiver."

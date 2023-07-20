@@ -716,7 +716,7 @@ stbSaveOn: anSTBOutFiler
 
 	| id |
 	anSTBOutFiler
-		writeClass: Locale withPrefix: STBPrefix forData;
+		writeClassPrefix: Locale;
 		register: self.
 	self = UserDefault
 		ifTrue: 

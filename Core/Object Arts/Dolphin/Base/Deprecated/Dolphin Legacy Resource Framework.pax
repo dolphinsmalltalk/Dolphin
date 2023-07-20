@@ -12,6 +12,9 @@ package basicPackageVersion: '6.1.1'.
 
 package setClassNames: #(
 	#{Kernel.D5BytecodeRewriter}
+	#{Smalltalk.LargeNegativeInteger}
+	#{Smalltalk.LargePositiveInteger}
+	#{Smalltalk.OldLargeInteger}
 	#{Smalltalk.Resource}
 	#{Smalltalk.ResourceAccessor}
 	#{Smalltalk.ResourceDummyAccessor}
@@ -26,11 +29,14 @@ package setClassNames: #(
 
 package setMethodNames: #(
 	#(#{Kernel.AbstractChunkSourceFiler} #fileOutResource:)
+	#(#{Kernel.BlockClosure class} #attemptToRecompile:)
+	#(#{Kernel.BlockClosure class} #attemptToUpgradeBlock:data:)
 	#(#{Kernel.BlockClosure class} #convertBlockToClosure:)
 	#(#{Kernel.BlockClosure class} #convertMethodContext:)
 	#(#{Kernel.BlockClosure class} #rewriterClass)
 	#(#{Kernel.BlockClosure class} #stbConvertFrom:)
 	#(#{UI.ResourceIdentifier} #assignBinaryResourceData:)
+	#(#{UI.ResourceIdentifier} #stlVersion)
 	#(#{UI.ResourceIdentifier class} #resourceAt:ifAbsent:)
 	#(#{UI.RuntimeSessionManager} #initializeFromSessionManager:)
 ).
@@ -53,6 +59,13 @@ Core.Object
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Object
+	variableByteSubclass: #OldLargeInteger
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Object
 	subclass: #Resource
 	instanceVariableNames: 'accessor icon'
 	classVariableNames: ''
@@ -63,6 +76,20 @@ Core.Object
 	subclass: #ResourceAccessor
 	instanceVariableNames: 'flags'
 	classVariableNames: 'ChangedMask'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OldLargeInteger
+	variableByteSubclass: #LargeNegativeInteger
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OldLargeInteger
+	variableByteSubclass: #LargePositiveInteger
+	instanceVariableNames: ''
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -152,6 +179,48 @@ fileOutResource:!public!source filing-file out! !
 
 !Kernel.BlockClosure class methodsFor!
 
+attemptToRecompile: aBlockClosure
+	| oldMethod result newBlock newMethod receiver |
+	oldMethod := aBlockClosure method.
+	Notification signal: 'Recompiling block: ' , aBlockClosure printString.
+	oldMethod class ~~ CompiledExpression
+		ifTrue: 
+			[Notification signal: 'Unable to recompile block because it was created by a method '.
+			^aBlockClosure].
+	receiver := aBlockClosure receiver.
+	result := Compiler
+				compileForEvaluation: oldMethod getSource
+				in: (receiver ifNotNil: [oldMethod methodClass])
+				environment: oldMethod customEnvironment
+				evaluationPools: oldMethod evaluationPools
+				flags: 0.
+	newMethod := result method.
+	newMethod isNil
+		ifTrue: 
+			[Notification signal: 'Error recompiling block'.
+			^aBlockClosure].
+	newBlock := [newMethod value: receiver withArguments: #()] on: Error
+				do: 
+					[:ex |
+					Notification signal: 'Error creating block: ' , ex printString.
+					nil].
+	^newBlock ?? aBlockClosure!
+
+attemptToUpgradeBlock: aBlockClosure data: data 
+	| recompiledBlock newMethod |
+	recompiledBlock := self attemptToRecompile: aBlockClosure.
+	recompiledBlock isClean ifFalse: [^recompiledBlock].
+
+	"Danger Will Robinson: If the new block is clean, then it will be referenced from the literal frame of its home method.
+	When the STBInFiler #become:s the array with the answer to swap the refs, the array of old vars will end up
+	stored in the literal frame as useless junk that we don't want, therefore we pre-emptively replace the ref from
+	the literal frame with the array so that it is all correct when swapped [my brain exploded before I understood that, Ed]"
+	newMethod := recompiledBlock method.
+	newMethod whileMutableDo: 
+			[1 to: newMethod literalCount
+				do: [:i | (newMethod at: i) == recompiledBlock ifTrue: [newMethod at: i put: data]]].
+	^recompiledBlock!
+
 convertBlockToClosure: anArray 
 	"Private - Convert an old-format block to a new format closure. The bytecodes are rewritten
 	to be compatible with the BlockClosure VM, but the result will be very inefficient since it
@@ -217,6 +286,8 @@ stbConvertFrom: anSTBClassFormat
 	upgrading ifTrue: [newBlock := self attemptToUpgradeBlock: newBlock data: data].
 	newBlock]! !
 !Kernel.BlockClosure class categoriesForMethods!
+attemptToRecompile:!binary filing!development!private! !
+attemptToUpgradeBlock:data:!binary filing!development!private! !
 convertBlockToClosure:!binary filing!development!private! !
 convertMethodContext:!binary filing!development!private! !
 rewriterClass!binary filing!development!private! !
@@ -226,12 +297,18 @@ stbConvertFrom:!binary filing!development!public! !
 !UI.ResourceIdentifier methodsFor!
 
 assignBinaryResourceData: aViewResource
-	| view |
+	| view stream |
 	view := aViewResource loadWithContext: #{View} value desktop forEdit: true.
-	self assign: view literalStoreArray.
-	view destroy! !
+	stream := Array writeStream: 128.
+	view literalStoreOn: stream version: self legacyStlVersion.
+	self assign: stream contents.
+	view destroy!
+
+stlVersion
+	^self sourceFilerClass stlVersion! !
 !UI.ResourceIdentifier categoriesForMethods!
 assignBinaryResourceData:!private! !
+stlVersion!development!private! !
 !
 
 !UI.ResourceIdentifier class methodsFor!

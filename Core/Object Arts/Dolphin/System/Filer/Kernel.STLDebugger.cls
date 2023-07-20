@@ -55,36 +55,36 @@ basicNext
 			^nil].	"optimize for nil"
 
 	"SmallInteger?"
-	(prefixOrLiteral allMask: STBPrefix.SmallIntegerMask)
+	(prefixOrLiteral allMask: PrefixSmallIntegerMask)
 		ifTrue: 
 			[anObject := prefixOrLiteral bitShift: -1.
 			self printValueToTrace: anObject.
 			^anObject].
 
 	"Literal?"
-	prefixOrLiteral = STBPrefix.LiteralPrefixMask
+	prefixOrLiteral == PrefixLiteralMask
 		ifTrue: 
 			[| literal |
 			literal := self readLiteralData.
 			self printValueToTrace: literal.
 			^literal].
-	(prefixOrLiteral allMask: STBPrefix.DataPrefixMask)
+	(prefixOrLiteral allMask: PrefixDataMask)
 		ifFalse: 
-			[anObject := (prefixOrLiteral allMask: STBPrefix.CharacterMask)
-						ifTrue: [Character value: (prefixOrLiteral bitShift: STBPrefix.IndexShift)]
-						ifFalse: [self objectAt: (prefixOrLiteral bitShift: STBPrefix.IndexShift)].
+			[anObject := (prefixOrLiteral allMask: PrefixCharacterMask)
+						ifTrue: [Character value: (prefixOrLiteral bitShift: PrefixRefUnshift)]
+						ifFalse: [self objectAt: (prefixOrLiteral bitShift: PrefixRefUnshift)].
 			self printValueToTrace: anObject.
 			^anObject].
 
 	"Ascertain the class of the object."
 	indentLevel := indentLevel + 1.
 	traceStream nextPut: $[.
-	(prefixOrLiteral allMask: STBPrefix.ClassPrefixMask)
+	(prefixOrLiteral allMask: PrefixClassMask)
 		ifTrue: 
-			[class := self readClassData: prefixOrLiteral.
+			[class := policy readClassData: self prefix: prefixOrLiteral.
 			traceStream display: class name]
 		ifFalse: 
-			[class := self classAt: (prefixOrLiteral bitShift: STBPrefix.IndexShift).
+			[class := self classAt: (prefixOrLiteral bitShift: PrefixRefUnshift).
 			traceStream nextPutAll: class name].
 	traceStream nextPut: $].
 

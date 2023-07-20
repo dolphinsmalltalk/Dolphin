@@ -309,11 +309,14 @@ initialize
 				yourself!
 
 stbConvertFrom: anSTBClassFormat
-	^
-	[:vars |
-	vars resize: self instSize.
-	(vars at: 8) ifNotNil: [:int | vars at: 8 put: (int isZero ifFalse: [Color fromCOLORREF: int])].
-	vars becomeA: self]!
+	anSTBClassFormat version < 3
+		ifTrue: 
+			[^
+			[:vars |
+			vars resize: self instSize.
+			(vars at: 8) ifNotNil: [:int | vars at: 8 put: (int isZero ifFalse: [Color fromCOLORREF: int])].
+			vars becomeA: self]].
+	^super stbConvertFrom: anSTBClassFormat!
 
 stbVersion
 	"Versions:

@@ -14,6 +14,9 @@ package setClassNames: #(
 	#{Kernel.STLInFiler}
 	#{Kernel.STLOutFiler}
 	#{Kernel.STLPrinter}
+	#{Kernel.STLVersion5Policy}
+	#{Kernel.STLVersion6Policy}
+	#{Kernel.STLVersionPolicy}
 ).
 
 package setMethodNames: #(
@@ -82,6 +85,27 @@ Kernel.AbstractSTBOutFiler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Kernel.STBVersionPolicy
+	subclass: #'Kernel.STLVersionPolicy'
+	instanceVariableNames: ''
+	classVariableNames: 'Versions'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { 'Signature' -> #'!!STL' }!
+Kernel.STLVersionPolicy
+	subclass: #'Kernel.STLVersion5Policy'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.STLVersion5Policy
+	subclass: #'Kernel.STLVersion6Policy'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 
@@ -132,7 +156,7 @@ literalStoreEvaluationOn: aPuttableStream
 	difficult to supply a completely general case that will meet all needs)"
 
 	aPuttableStream nextPutAll: '(Object fromLiteralStoreArray: '.
-	self literalStoreArray literalPrintOn: (STLPrinter on: aPuttableStream).
+	STLPrinter printLiteralStoreArray: self literalStoreArray on: aPuttableStream.
 	aPuttableStream nextPut: $)!
 
 literalStoreEvaluationString

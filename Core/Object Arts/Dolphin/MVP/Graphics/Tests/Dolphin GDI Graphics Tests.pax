@@ -16,6 +16,7 @@ package setClassNames: #(
 	#{Graphics.Tests.IconTest}
 	#{Graphics.Tests.ImageTest}
 	#{Graphics.Tests.MetafileTest}
+	#{Graphics.Tests.PenTest}
 	#{Graphics.Tests.PluggableColorTest}
 	#{Graphics.Tests.ThemeColorTest}
 	#{Graphics.Tests.VirtualColorTest}
@@ -63,6 +64,13 @@ Core.Tests.DolphinTest
 	classConstants: {}!
 Core.Tests.DolphinTest
 	subclass: #'Graphics.Tests.ImageTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest
+	subclass: #'Graphics.Tests.PenTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

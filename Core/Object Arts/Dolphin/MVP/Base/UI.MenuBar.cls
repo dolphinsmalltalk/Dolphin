@@ -18,6 +18,11 @@ createHandle
 
 	^User32 createMenu!
 
+fromStrings: anArray
+	anArray do: 
+			[:each |
+			self addItem: (each isString ifTrue: [MenuItem fromString: each] ifFalse: [Menu fromStrings: each])]!
+
 isMenuBar
 	"Answer whether the receiver is a menu bar rather
 	than a popup menu."
@@ -45,12 +50,17 @@ queryAlong: aCommandPolicy
 showIn: aWindow position: aPos
 	"Private - Show the receiver in aWindow at aPos."
 
-	^self shouldNotImplement! !
+	^self shouldNotImplement!
+
+toStrings
+	^items collect: [:each | each toStrings]! !
 !UI.MenuBar categoriesForMethods!
 createHandle!private!realizing/unrealizing! !
+fromStrings:!converting!public! !
 isMenuBar!public!testing! !
 printOn:!printing!public! !
 queryAlong:!operations!public! !
 showIn:position:!drawing!private! !
+toStrings!converting!private! !
 !
 

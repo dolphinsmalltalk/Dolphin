@@ -14,23 +14,15 @@ UI.Tests.StaticBitmapTest comment: ''!
 classToTest
 	^StaticBitmap!
 
-oldDolphinVersionsForStbUpgrade
-	^2 to: 4!
-
-verifyUpgradedView: anInteger
+verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |
-	super verifyUpgradedView: anInteger.
+	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
 	view := self view.
 	self assertIsNil: view backcolor.
-	self assertIsNil: view image!
-
-vuFile
-	^'ImagePresenter.Static bitmap.vu'! !
+	self assertIsNil: view image! !
 !UI.Tests.StaticBitmapTest categoriesForMethods!
 classToTest!helpers!private! !
-oldDolphinVersionsForStbUpgrade!constants!private! !
-verifyUpgradedView:!helpers!private! !
-vuFile!constants!private! !
+verifyUpgradedView:identifier:!helpers!private! !
 !
 
 !UI.Tests.StaticBitmapTest class methodsFor!

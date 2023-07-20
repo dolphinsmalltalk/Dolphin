@@ -29,15 +29,6 @@ resourceList
 resourceToolboxPresenter
 	^self resourceBrowser resourceToolboxPresenter!
 
-setUp
-	super setUp.
-	testClass := Object
-				subclass: #ResourceBrowserTestSampleClass
-				instanceVariableNames: ''
-				classVariableNames: ''
-				poolDictionaries: ''
-				classInstanceVariableNames: ''!
-
 tearDown
 	testClass ifNotNil: [testClass removeFromSystem].
 	super tearDown!
@@ -45,7 +36,7 @@ tearDown
 testAddRemoveResource
 	| sampleResourceId |
 	
-	[sampleResourceId := ResourceIdentifier class: testClass.
+	[sampleResourceId := ResourceIdentifier class: self testClass.
 	self resourceBrowser selectCategory: 'Misc'.
 	self deny: (self resourceList includes: sampleResourceId).
 	self deny: (self resourceDisplayList includes: sampleResourceId).
@@ -64,7 +55,15 @@ testBasicContents
 	self assert: list first isKindOf: ResourceIdentifier.
 	self assert: list size > 100.
 	self assert: (list includes: (ResourceIdentifier class: Shell)).
-	self assert: (list includes: (ResourceIdentifier class: SystemBrowserShell))! !
+	self assert: (list includes: (ResourceIdentifier class: SystemBrowserShell))!
+
+testClass
+	^testClass ifNil: [testClass := Object
+				subclass: #ResourceBrowserTestSampleClass
+				instanceVariableNames: ''
+				classVariableNames: ''
+				poolDictionaries: ''
+				classInstanceVariableNames: '']! !
 !Tools.Tests.ResourceBrowserTest categoriesForMethods!
 classToTest!private!unit tests! !
 getShellResource!private!unit tests! !
@@ -72,9 +71,9 @@ resourceBrowser!private!unit tests! !
 resourceDisplayList!private!unit tests! !
 resourceList!private!unit tests! !
 resourceToolboxPresenter!private!unit tests! !
-setUp!private!unit tests! !
 tearDown!private!unit tests! !
 testAddRemoveResource!public!unit tests! !
 testBasicContents!public!unit tests! !
+testClass!private!unit tests! !
 !
 

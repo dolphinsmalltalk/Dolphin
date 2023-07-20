@@ -25,9 +25,6 @@ createShell: aString centered: aBoolean
 		show;
 		yourself!
 
-oldDolphinVersionsForStbUpgrade
-	^1 to: 5!
-
 testOpensOnForegroundMonitor
 	"Test that shell opens on the monitor of the monitor with cursor, but preferring the monitor with the foreground window if the program manager has focus."
 
@@ -49,26 +46,21 @@ testOpensOnForegroundMonitor
 	shell3 := self createShell: self printString , ': shell3' centered: false.
 	self assert: shell3 displayMonitor equals: primary!
 
-verifyUpgradedView: anInteger
+verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |
-	super verifyUpgradedView: anInteger.
+	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
 	view := self view.
 	self assert: view interactor identicalTo: view.
 	self assertIsNil: view largeIcon.
 	self assertIsNil: view smallIcon.
 	self assertIsNil: view maxExtent.
 	self assertIsNil: view minExtent.
-	self assert: view defaultButtonId equals: 0!
-
-vuFile
-	^'Shell.Default view.vu'! !
+	self assert: view defaultButtonId equals: 0! !
 !UI.Tests.ShellViewTest categoriesForMethods!
 classToTest!helpers!private! !
 createShell:centered:!helpers!private! !
-oldDolphinVersionsForStbUpgrade!constants!private! !
 testOpensOnForegroundMonitor!public!unit tests! !
-verifyUpgradedView:!helpers!private! !
-vuFile!constants!private! !
+verifyUpgradedView:identifier:!helpers!private! !
 !
 
 !UI.Tests.ShellViewTest class methodsFor!
@@ -91,9 +83,20 @@ resource_Default_view_D7
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ShellView) 34 27 nil nil 8 #(13565952 65536) 416 nil 327686 ##(Smalltalk.Color) #default nil 549 nil nil nil 416 nil 170 192 8 #() nil nil nil nil nil 1 nil nil nil nil 1 nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 7039 21 642 1201 801 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 23 16 0 0 154 1 0 0] 8 #() 642 193 193 nil 27 )! !
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ShellView) 34 27 nil nil 8 #(13565952 65536) 416 nil 327686 ##(Smalltalk.Color) #default nil 549 nil nil nil 416 nil 170 192 8 #() nil nil nil nil nil 1 nil nil nil nil 1 nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 7039 21 642 1201 801 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 23 16 0 0 154 1 0 0] 8 #() 642 193 193 nil 27 )!
+
+resource_Default_view_D8_STL5
+	"Answer the literal data from which the 'Default view' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
+	"
+
+	^#(#'!!STL' 5 985166 10 #{UI.STBViewProxy} #{UI.ShellView} 34 27 nil nil 8 #(13565952 65536) 416 nil 917510 #{Graphics.Color} #default nil 551 nil nil nil 416 nil 170 192 8 #() nil nil nil nil nil 1 nil nil nil nil 1 nil nil 1310982 #{Core.MessageSequence} 34 1 1049350 #{Core.MessageSend} #createAt:extent: 34 2 918022 #{Graphics.Point} 12287 21 626 1201 801 416 1179910 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 87 26 0 0 154 1 0 0] 8 #() 626 193 193 nil 27)! !
 !UI.Tests.ShellViewTest class categoriesForMethods!
 resource_Default_view_D6!public!resources-views! !
 resource_Default_view_D7!public!resources-views! !
+resource_Default_view_D8_STL5!public!resources-views! !
 !
 

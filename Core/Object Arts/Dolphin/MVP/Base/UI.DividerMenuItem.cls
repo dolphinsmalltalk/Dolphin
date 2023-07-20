@@ -48,7 +48,9 @@ commandDescription
 displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	aPuttableStream nextPut: $|!
+	aPuttableStream
+		nextPutAll: (##(IdentityDictionary withAll: { 16r20 -> '||'. 16r40 -> '|'. 16r800 -> '-' })
+				at: self styleFlags)!
 
 id
 	"Answers the menu item identifier for the receiver"
@@ -60,10 +62,24 @@ isDivider
 
 	^true!
 
+isSelfEvaluating
+	"Answer whether or not the receiver has a printString representation that evaluates back to an equivalent object."
+
+	^true!
+
 populateItemInfo: aMENUITEMINFO 
 	"Private - Copy the receiver's item information into the <MENUITEMINFOW> argument."
 
 	aMENUITEMINFO type: self styleFlags!
+
+printOn: aStream
+	"Appends the receiver to aStream as a representation that a 
+	developer would want to see"
+
+	aStream
+		print: self class;
+		space;
+		display: self styleName!
 
 queryAlong: aCommandPolicy
 	"Answer an enabled <CommandQuery> as dividers must always be enabled."
@@ -84,7 +100,10 @@ styleName: aSymbol
 text
 	"Private - Answer the menu text (i.e. the text that appears in the menu) for the receiver."
 
-	^''! !
+	^''!
+
+toStrings
+	^self displayString! !
 !UI.DividerMenuItem categoriesForMethods!
 acceleratorKey!accessing!private! !
 acceleratorKey:!accessing!private! !
@@ -93,11 +112,14 @@ commandDescription!accessing!private! !
 displayOn:!displaying!public! !
 id!accessing!public! !
 isDivider!public!testing! !
+isSelfEvaluating!public!testing! !
 populateItemInfo:!private!realizing/unrealizing! !
+printOn:!printing!public! !
 queryAlong:!operations!public! !
 styleName!accessing!public! !
 styleName:!accessing!private! !
 text!accessing!private! !
+toStrings!public! !
 !
 
 !UI.DividerMenuItem class methodsFor!
@@ -106,17 +128,13 @@ barBreak
 	"Answer unique DividerMenuItem which splits places following menu items in
 	a new column. Vertical line splits the old and new column of menu items."
 
-	BarBreak isNil ifTrue: [BarBreak := self basicNew flags: MFT_MENUBARBREAK; yourself].
-	^BarBreak
-!
+	^BarBreak ifNil: [BarBreak := self dividers at: '||']!
 
 break
 	"Answer unique DividerMenuItem which splits places following menu items in
 	a new column."
 
-	Break isNil ifTrue: [Break := self basicNew flags: MFT_MENUBREAK; yourself].
-	^Break
-!
+	^Break ifNil: [Break := self dividers at: '|']!
 
 new
 	"Answers an instance of the receiver"
@@ -131,20 +149,19 @@ onPreStripImage
 separator
 	"Answer unique DividerMenuItem which draws a horizontal dividing line in menu."
 
-	Separator isNil ifTrue: [Separator := self basicNew flags: MFT_SEPARATOR; yourself].
-	^Separator
-!
+	^Separator ifNil: [Separator := self dividers at: '-']!
 
-stbConvertFrom: anSTBClassFormat 
+stbConvertFrom: anSTBClassFormat
 	"Convert from earlier version models.
-	1: Added 'typeFlags' inst var to MenuItem and removed own 'flags' inst var."
+	1: 'flags' inst var pushed up - doesn't really require a conversion because the inst size and format remains the same."
 
-	^
-	[:data | 
-	| newInst |
-	newInst := self basicNew.
-	data keysAndValuesDo: [:i :v | newInst instVarAt: i put: v].
-	newInst]!
+	anSTBClassFormat version == 0 ifTrue: [^[:data | data becomeA: DividerMenuItem]].
+	^super stbConvertFrom: anSTBClassFormat!
+
+stbVersion
+	"Answer the current binary filer version number for instances of the receiver."
+
+	^1!
 
 styleNameChoices
 	"Answer an Array of available style names for instances of the receiver."
@@ -162,6 +179,7 @@ new!instance creation!public! !
 onPreStripImage!class hierarchy-removing!private! !
 separator!instance creation!public! !
 stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!public! !
 styleNameChoices!constants!public! !
 uninitialize!class hierarchy-removing!private! !
 !

@@ -118,12 +118,8 @@ initialize
 	self addClassConstant: 'UncachedAttributeValue' value: Object new!
 
 stbConvertFrom: anSTBClassFormat
-	^
-	[:data |
-	| upgraded |
-	upgraded := self basicNew.
-	2 to: data size do: [:i | upgraded instVarAt: i - 1 put: (data at: i)].
-	upgraded]!
+	anSTBClassFormat version == 0 ifTrue: [^[:data | (data copyFrom: 2) becomeA: self]].
+	^super stbConvertFrom: anSTBClassFormat!
 
 stbVersion
 	"1: As a general change, the library instance variable has been removed. There are additional changes in some subclasses."

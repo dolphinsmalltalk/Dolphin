@@ -12,17 +12,9 @@ UI.Tests.CardContainerTest comment: ''!
 !UI.Tests.CardContainerTest methodsFor!
 
 classToTest
-	^CardContainer!
-
-oldDolphinVersionsForStbUpgrade
-	^1 to: 4!
-
-vuFile
-	^'CompositePresenter.Card container.vu'! !
+	^CardContainer! !
 !UI.Tests.CardContainerTest categoriesForMethods!
 classToTest!helpers!private! !
-oldDolphinVersionsForStbUpgrade!constants!private! !
-vuFile!constants!private! !
 !
 
 !UI.Tests.CardContainerTest class methodsFor!

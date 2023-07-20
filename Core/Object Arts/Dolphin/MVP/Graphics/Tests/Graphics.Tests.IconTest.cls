@@ -79,7 +79,59 @@ testImageIndexDoesntRealize
 	icon imageIndex.
 	self assertIsNil: icon basicHandle!
 
-testStbConvertFromVersion3_file
+testStbConvertFromVersion1_resource
+	| bytes icon |
+	bytes := #[33 83 84 66 32 48 32 6 4 4 0 73 99 111 110 0 0 0 0 0 0 0 0 16 0 0 0 54 0 6 0 83 116 114 105 110 103 10 0 0 0 79 98 106 101 99 116 46 105 99 111 14 2 31 0 83 84 66 69 120 116 101 114 110 97 108 82 101 115 111 117 114 99 101 76 105 98 114 97 114 121 80 114 111 120 121 0 0 0 0 114 0 0 0 13 0 0 0 68 111 108 112 104 105 110 68 101 118 82 101 115 0 0 0 0].
+	icon := Object fromBinaryStoreBytes: bytes.
+	self assert: icon isKindOf: Icon.
+	self assert: icon ownsHandle.
+	self assert: icon initializer isKindOf: ImageFromStringResourceInitializer.
+	self assert: icon initializer identifier equals: 'Object.ico'.
+	self assert: icon initializer module equals: SessionManager current defaultResourceLibrary.
+	self assert: icon equals: Object icon.
+	self assert: icon extent equals: Icon largeExtent.
+	icon free!
+
+testStbConvertFromVersion1_system
+	| bytes icon |
+	bytes := #[33 83 84 66 32 48 32 6 4 4 0 73 99 111 110 0 0 0 0 0 0 0 0 16 0 0 0 3 254 0 0 1 0 0 0].
+	"Tools.STBDebugger dumpToTranscript: bytes readStream"
+	icon := Object fromBinaryStoreBytes: bytes.
+	self assert: icon isKindOf: Icon.
+	self assert: icon ownsHandle.
+	self assert: icon initializer isKindOf: IconFromSystemInitializer.
+	self assert: icon initializer identifier equals: Win32Constants.IDI_ERROR.
+	self assert: icon initializer isLoadShared.
+	self assert: icon equals: Error icon.
+	self assert: icon handle equals: Error icon handle!
+
+testStbConvertFromVersion3_resource
+	| bytes icon |
+	bytes := #[33 83 84 66 32 49 32 70 5 4 0 3 0 0 0 73 99 111 110 0 0 0 0 0 0 0 0 16 0 0 0 14 2 17 0 83 84 66 83 105 110 103 108 101 116 111 110 80 114 111 120 121 0 0 0 0 154 0 0 0 0 0 0 0 82 0 0 0 7 0 0 0 68 111 108 112 104 105 110 82 0 0 0 24 0 0 0 73 109 97 103 101 82 101 108 97 116 105 118 101 70 105 108 101 76 111 99 97 116 111 114 186 0 0 0 0 0 0 0 82 0 0 0 7 0 0 0 99 117 114 114 101 110 116 82 0 0 0 10 0 0 0 79 98 106 101 99 116 46 105 99 111 14 2 31 0 83 84 66 69 120 116 101 114 110 97 108 82 101 115 111 117 114 99 101 76 105 98 114 97 114 121 80 114 111 120 121 0 0 0 0 82 0 0 0 16 0 0 0 100 111 108 112 104 105 110 100 114 48 48 53 46 100 108 108 0 0 0 0].
+	icon := Object fromBinaryStoreBytes: bytes.
+	self assert: icon isKindOf: Icon.
+	self assert: icon ownsHandle.
+	self assert: icon initializer isKindOf: ImageFromStringResourceInitializer.
+	self assert: icon initializer identifier equals: 'Object.ico'.
+	self assert: icon initializer module equals: SessionManager current defaultResourceLibrary.
+	self assert: icon equals: Object icon.
+	self assert: icon extent equals: Icon largeExtent.
+	icon free!
+
+testStbConvertFromVersion3_system
+	| bytes icon |
+	bytes := #[33 83 84 66 32 49 32 70 5 4 0 3 0 0 0 73 99 111 110 0 0 0 0 0 0 0 0 16 0 0 0 14 2 17 0 83 84 66 83 105 110 103 108 101 116 111 110 80 114 111 120 121 0 0 0 0 154 0 0 0 0 0 0 0 82 0 0 0 7 0 0 0 68 111 108 112 104 105 110 82 0 0 0 24 0 0 0 73 109 97 103 101 82 101 108 97 116 105 118 101 70 105 108 101 76 111 99 97 116 111 114 186 0 0 0 0 0 0 0 82 0 0 0 7 0 0 0 99 117 114 114 101 110 116 3 254 0 0 1 0 0 0].
+	"Tools.STBDebugger dumpToTranscript: bytes readStream"
+	icon := Object fromBinaryStoreBytes: bytes.
+	self assert: icon isKindOf: Icon.
+	self assert: icon ownsHandle.
+	self assert: icon initializer isKindOf: IconFromSystemInitializer.
+	self assert: icon initializer identifier equals: Win32Constants.IDI_ERROR.
+	self assert: icon initializer isLoadShared.
+	self assert: icon equals: Error icon.
+	self assert: icon handle equals: Error icon handle!
+
+testStlConvertFromVersion3_file
 	| rehydrated comparand |
 	rehydrated := Object
 				fromLiteralStoreArray: #(#'!!STL' 4 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'Core\DolphinVM\res\collection.ico' nil).
@@ -92,7 +144,7 @@ testStbConvertFromVersion3_file
 	self deny: rehydrated handle equals: comparand handle.
 	self assert: rehydrated extent equals: Icon largeExtent!
 
-testStbConvertFromVersion3_resource
+testStlConvertFromVersion3_resource
 	| rehydrated comparand |
 	rehydrated := Object
 				fromLiteralStoreArray: #(#'!!STL' 4 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'Collection.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil).
@@ -102,7 +154,7 @@ testStbConvertFromVersion3_resource
 	comparand := Collection icon.
 	self assert: rehydrated equals: comparand!
 
-testStbConvertFromVersion3_system
+testStlConvertFromVersion3_system
 	| rehydrated comparand |
 	comparand := Icon warning.
 	rehydrated := Object
@@ -136,9 +188,13 @@ testFromResource!public! !
 testFromShellStock!public! !
 testFromSystemId!public! !
 testImageIndexDoesntRealize!public! !
-testStbConvertFromVersion3_file!public! !
-testStbConvertFromVersion3_resource!public! !
-testStbConvertFromVersion3_system!public! !
+testStbConvertFromVersion1_resource!public!unit tests! !
+testStbConvertFromVersion1_system!public!unit tests! !
+testStbConvertFromVersion3_resource!public!unit tests! !
+testStbConvertFromVersion3_system!public!unit tests! !
+testStlConvertFromVersion3_file!public! !
+testStlConvertFromVersion3_resource!public! !
+testStlConvertFromVersion3_system!public! !
 testWithExtent!public! !
 verifyImage:sameAs:!helpers!private! !
 !

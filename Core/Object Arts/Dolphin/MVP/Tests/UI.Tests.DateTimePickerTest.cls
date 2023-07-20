@@ -14,26 +14,16 @@ UI.Tests.DateTimePickerTest comment: ''!
 classToTest
 	^DateTimePicker!
 
-oldDolphinVersionsForStbUpgrade
-	^2 to: 4!
-
-verifyUpgradedView: anInteger
+verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |
-	super verifyUpgradedView: anInteger.
+	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
 	view := self view.
 	self assert: view backcolor identicalTo: Color default.
 	self assert: view typeconverter isNullConverter.
-	self assertIsNil: view displayFormat!
-
-vuFile
-	"Was TimePresenter.Time picker in D2"
-
-	^'TimePresenter.Picker view.vu'! !
+	self assertIsNil: view displayFormat! !
 !UI.Tests.DateTimePickerTest categoriesForMethods!
 classToTest!helpers!private! !
-oldDolphinVersionsForStbUpgrade!constants!private! !
-verifyUpgradedView:!helpers!private! !
-vuFile!constants!private! !
+verifyUpgradedView:identifier:!helpers!private! !
 !
 
 !UI.Tests.DateTimePickerTest class methodsFor!

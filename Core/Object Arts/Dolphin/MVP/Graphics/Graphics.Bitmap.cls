@@ -6,7 +6,7 @@ Graphics.Image
 	classVariableNames: 'SharedBitmaps'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: { 'IsSharedMask' -> 16r2 }!
+	classConstants: { '_Map3DColorsMask_Obsolete' -> 16r1. 'IsSharedMask' -> 16r2 }!
 Graphics.Bitmap guid: (Core.GUID fromString: '{87b4c63d-026e-11d3-9fd7-00a0cc3e4a32}')!
 Graphics.Bitmap comment: 'Bitmap is the class of <Image>s that represent Windows'' device-dependent Bitmaps.
 
@@ -575,30 +575,29 @@ sharedCopyOf: aBitmap
 	^SharedBitmaps at: aBitmap initializer ifAbsentPutClean: [aBitmap isShared: true. aBitmap]!
 
 stbConvertFromVersion0: anArray
-	"Convert from version 0 Bitmap. 
+	"Private - Convert from version 0 Bitmap. 
 	Version 1 adds a caching inst var for the extent to avoid having to keep querying 
 	the BITMAPINFOHEADER."
 
-	^anArray copyWith: nil!
+	^self stbConvertFromVersion1: (anArray copyWith: nil)!
 
 stbConvertFromVersion1: anArray
-	"Convert from version 1 Bitmaps. 
+	"Private - Convert from version 1 Bitmaps. 
 	Version 2 converts flags from a boolean to a Map3DColorsMask"
 
-	| vars |
-	vars := anArray shallowCopy.
-	vars at: 6 put: ((anArray at: 6) ifTrue: [1 "Map3DColorsMask"] ifFalse: [0]).
-	^vars!
+	anArray at: 6 put: ((anArray at: 6) ifTrue: [_Map3DColorsMask_Obsolete] ifFalse: [0]).
+	^self stbConvertFromVersion2: anArray!
 
 stbConvertFromVersion3: anArray
-	"Version 4 replaces the identifier, fileLocator and instanceHandle instance variables with initializers."
+	"Private - Version 4 replaces the identifier, fileLocator and instanceHandle instance variables with initializers.
+	The Map3DColorsMask flag is transferred to the initializer as the LR_LOADMAP3DCOLORS flag."
 
 	| vars initializer flags |
 	vars := super stbConvertFromVersion3: anArray.
 	flags := vars at: 5.
 	vars at: 5 put: (flags bitAnd: IsSharedMask).
 	initializer := vars at: 3.
-	(flags allMask: 1 "Map3DColorsMask") ifTrue: [initializer flag: LR_LOADMAP3DCOLORS set: true].
+	(flags allMask: _Map3DColorsMask_Obsolete) ifTrue: [initializer flag: LR_LOADMAP3DCOLORS set: true].
 	^vars!
 
 width: widthInteger height: heightInteger depth: depthInteger
@@ -640,9 +639,9 @@ fromView:background:!instance creation!public! !
 imageType!constants!private! !
 initialize!development!initializing!private! !
 sharedCopyOf:!instance creation!public! !
-stbConvertFromVersion0:!binary filing!public! !
-stbConvertFromVersion1:!binary filing!public! !
-stbConvertFromVersion3:!binary filing!public! !
+stbConvertFromVersion0:!binary filing!private! !
+stbConvertFromVersion1:!binary filing!private! !
+stbConvertFromVersion3:!binary filing!private! !
 width:height:depth:!instance creation!public! !
 width:height:depth:planes:!instance creation!public! !
 width:height:planes:bitsPerPixel:bits:!instance creation!public! !

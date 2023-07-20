@@ -33,13 +33,13 @@ recordStateOf: aView forRecreate: aBoolean
 restore
 	"Restore the receiver's view to its former glory"
 
-	view isStateRestoring: true.
+	view setStateRestoring.
 	view state: state.
 	subViewStates do: [:each | each restore].
 	view
 		placement: placement;
-		basicInvalidateLayout;
-		isStateRestoring: false! !
+		basicInvalidateLayout.
+	view resetStateRestoring! !
 !UI.ViewState categoriesForMethods!
 recordStateOf:forRecreate:!initializing!private! !
 restore!operations!public! !

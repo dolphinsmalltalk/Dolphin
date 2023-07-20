@@ -305,10 +305,11 @@ testCopyAndPasteMenu
 	inspectee2 := ShellView new.
 	inspectee2 create.
 	
-	[| menuBar1 accessor menuBar2 |
-	menuBar1 := (MenuBar fromStrings: #('&File' 'Open//fileOpen' '-' '&Save/Ctrl+S/fileSave')).
-	self assert: menuBar1 size equals: 3.
-	self assert: menuBar1 items first text equals: 'Open'.
+	[| menuBar1 accessor menuBar2 fileMenu |
+	menuBar1 := MenuBar fromStrings: #(#('&File' 'Open//fileOpen' '-' '&Save/Ctrl+S/fileSave')).
+	fileMenu := menuBar1 items single.
+	self assert: fileMenu size equals: 3.
+	self assert: fileMenu items first text equals: 'Open'.
 	inspectee1 menuBar: menuBar1.
 	self createInspectorOn: inspectee1.
 	accessor := self aspectAccessorNamed: #menuBar.
@@ -328,8 +329,9 @@ testCopyAndPasteMenu
 	menuBar2 := inspectee2 menuBar.
 	self denyIsNil: menuBar2.
 	self deny: menuBar1 identicalTo: menuBar2.
-	self assert: menuBar2 size equals: 3.
-	self assert: menuBar2 items first text equals: 'Open']
+	self assert: menuBar2 size equals: 1.
+	fileMenu := menuBar2 items single.
+	self assert: fileMenu items first text equals: 'Open']
 			ensure: 
 				[inspectee1 destroy.
 				inspectee2 destroy]!

@@ -47,6 +47,11 @@ displayOn: aPuttableStream
 	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see.
 	The default is to do nothing, since, from the end-user perspective, the receiver is a null."!
 
+displayString
+	"Answer a String whose characters are a representation of the receiver as a user in the default locale would want to see it. In this case an empty string, since from the end-user perspective the receiver is a null."
+
+	^''!
+
 fullName
 	"Answer the <String> fully qualified name of the receiver, which is a dot-separated path that binds to the receiver from the global namespace, Root."
 
@@ -203,6 +208,7 @@ _deepCopy:!copying!private! !
 bindingFor:!bindings!public! !
 deepCopy!copying!public! !
 displayOn:!displaying!public! !
+displayString!displaying!public! !
 fullName!accessing!public! !
 ifNil:!control flow!public! !
 ifNil:ifNotNil:!control flow!public! !

@@ -886,39 +886,37 @@ stbConvertFromVersion3: anArray
 	"Private - Perform an STB conversion from a version 3 (or earlier) <View> to version 4, 
 	i.e. add getInfoTipBlock inst var in IconicListAbstract and subclasses."
 
-	| newArray size array |
+	| size array |
 	array := super stbConvertFromVersion3: anArray.
-	size := array size.
-	newArray := Array new: size + 1.
-	newArray
+	size := array size + 1.
+	^(Array new: size)
 		replaceFrom: 1
 			to: 16
 			with: array
 			startingAt: 1;
 		replaceFrom: 18
-			to: newArray size
+			to: size
 			with: array
-			startingAt: 17.
-	^newArray!
+			startingAt: 17;
+		yourself!
 
 stbConvertFromVersion9: anArray
 	"Private - Perform an STB conversion from a version 9 (or earlier) <View> to version 10,
 	i.e. append getTextFormat and a couple of dummy instance variables."
 
-	| newArray size array |
+	| size array |
 	array := super stbConvertFromVersion9: anArray.
-	size := array size.
-	newArray := Array new: size + 3.	"3 instance variables were added"
-	newArray
+	size := array size + 3.	"3 instance variables were added"
+	^(Array new: size)
 		replaceFrom: 1
 			to: 19
 			with: array
 			startingAt: 1;
 		replaceFrom: 23
-			to: newArray size
+			to: size
 			with: array
-			startingAt: 20.
-	^newArray!
+			startingAt: 20;
+		yourself!
 
 value: anObject
 	"Private - Implement this message from the monadic valuable to support the default

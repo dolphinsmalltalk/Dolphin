@@ -25,9 +25,6 @@ atEnd
 
 	^stream atEnd!
 
-checkLimit
-	stream position > limit ifTrue: [limitBlock cull: self]!
-
 contents
 	"Answer the contents of the streamed over collection up to the current position or the limit, whichever is less."
 
@@ -164,7 +161,6 @@ visitedBlock: anObject
 !Core.LimitedWriteStream categoriesForMethods!
 alreadyVisited:!private! !
 atEnd!public!testing! !
-checkLimit!helpers!private! !
 contents!accessing!public! !
 contentsSpecies!constants!private! !
 encodedSizeOf:!encode/decode!public! !
@@ -233,6 +229,11 @@ on: aCollection limit: anInteger limitBlock: aLimitBlock
 		limit: anInteger
 		limitBlock: aLimitBlock!
 
+over: aPuttableStream
+	^self
+		over: aPuttableStream
+		limit: self defaultLimit!
+
 over: aPuttableStream limit: anInteger
 	^self
 		over: aPuttableStream
@@ -270,6 +271,7 @@ on:!instance creation!public! !
 on:from:to:!instance creation!public! !
 on:limit:!accessing!public! !
 on:limit:limitBlock:!instance creation!public! !
+over:!accessing!public! !
 over:limit:!accessing!public! !
 over:limit:limitBlock:!instance creation!public! !
 with:!instance creation!public! !

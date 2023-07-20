@@ -14,23 +14,15 @@ UI.Tests.GroupBoxTest comment: ''!
 classToTest
 	^GroupBox!
 
-oldDolphinVersionsForStbUpgrade
-	^1 to: 5!
-
-verifyUpgradedView: anInteger
+verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |
-	super verifyUpgradedView: anInteger.
+	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
 	view := self view.
 	self assert: view isTransparent.
-	self assert: ({Color default. Color transparent} includes: self view backcolor)!
-
-vuFile
-	^'GroupBox.Static group box.vu'! !
+	self assert: ({ Color default. Color transparent } includes: self view backcolor)! !
 !UI.Tests.GroupBoxTest categoriesForMethods!
 classToTest!helpers!private! !
-oldDolphinVersionsForStbUpgrade!constants!private! !
-verifyUpgradedView:!helpers!private! !
-vuFile!constants!private! !
+verifyUpgradedView:identifier:!helpers!private! !
 !
 
 !UI.Tests.GroupBoxTest class methodsFor!

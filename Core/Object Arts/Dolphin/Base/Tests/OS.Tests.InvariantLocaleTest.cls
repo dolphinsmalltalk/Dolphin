@@ -52,21 +52,22 @@ testDisplayName
 testListSeparator
 	self assert: self defaultSubject listSeparator equals: ','!
 
-testStbConvertFromVersion0
+testStlConvertFromVersion0
 	| subject |
 	"From: | obj | obj := Object new. {Locale invariant. obj. {Locale invariant}. #foo. obj} literalStoreEvaluationString"
-	subject := (Object fromLiteralStoreArray: #(#'!!STL' 4 34 5 852742 ##(Smalltalk.WindowsLocale) nil 255 170 192 34 12 125 8 'July' 185 8 '' 29 8 '.' 127 8 'August' 123 8 'June' 5 8 'Invariant Language (Invariant Country)' 393222 ##(Smalltalk.Object) 34 1 432 #foo 592)).
+	subject := Object
+				fromLiteralStoreArray: #(#'!!STL' 4 34 5 852742 ##(Smalltalk.WindowsLocale) nil 255 170 192 34 12 125 8 'July' 185 8 '' 29 8 '.' 127 8 'August' 123 8 'June' 5 8 'Invariant Language (Invariant Country)' 393222 ##(Smalltalk.Object) 34 1 432 #foo 592).
 	"We expect a newly constructed instance with the same lcid, but the other data is discarded"
 	self assert: subject first identicalTo: Locale invariant.
 	self assert: subject third first identicalTo: Locale invariant.
 	self assert: subject fourth identicalTo: #foo.
-	self assert: subject second identicalTo: subject last.! !
+	self assert: subject second identicalTo: subject last! !
 !OS.Tests.InvariantLocaleTest categoriesForMethods!
 defaultSubject!helpers!private! !
 subjectName!constants!private! !
 testDisplayFloatOn!public!unit tests! !
 testDisplayName!public!unit tests! !
 testListSeparator!public!unit tests! !
-testStbConvertFromVersion0!public!unit tests! !
+testStlConvertFromVersion0!public!unit tests! !
 !
 

@@ -237,15 +237,11 @@ new
 
 	^super new initialize!
 
-stbConvertFrom: anSTBClassFormat 
+stbConvertFrom: anSTBClassFormat
 	"Version 1 adds backcolor and maskcolor instance variables."
 
-	^
-	[:data | 
-	| newInstance |
-		newInstance := self basicNew.
-		1 to: data size do: [:i | newInstance instVarAt: i put: (data at: i)].
-		newInstance]!
+	anSTBClassFormat version == 0 ifTrue: [^[:data | (data resize: self instSize) becomeA: self]].
+	^super stbConvertFrom: anSTBClassFormat!
 
 stbVersion
 	"Answer the current binary filer version number for instances of the receiver."

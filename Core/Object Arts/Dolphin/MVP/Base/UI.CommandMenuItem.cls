@@ -241,6 +241,23 @@ new
 
 	^self commandDescription: CommandDescription new!
 
+stbConvertFrom: anSTBClassFormat
+	"Convert from earlier version models.
+		1: 'flags' instance variable pushed up.
+		2: 'image' instance variable added to CommandMenuItem subclass"
+
+	| ver |
+	ver := anSTBClassFormat version.
+	ver == 0 ifTrue: [^[:data | (self stbConvertFromVersion0: data) becomeA: self]].
+	ver == 1 ifTrue: [^[:data | (self stbConvertFromVersion1: data) becomeA: self]].
+	^super stbConvertFrom: anSTBClassFormat!
+
+stbConvertFromVersion0: anArray
+	^{ MFT_STRING. anArray at: 1. nil. nil }!
+
+stbConvertFromVersion1: anArray
+	^anArray resize: 4!
+
 stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
@@ -250,6 +267,9 @@ command:description:!instance creation!public! !
 command:description:image:!instance creation!public! !
 commandDescription:!instance creation!public! !
 new!instance creation!public! !
+stbConvertFrom:!binary filing!public! !
+stbConvertFromVersion0:!binary filing!private! !
+stbConvertFromVersion1:!binary filing!private! !
 stbVersion!binary filing!public! !
 !
 

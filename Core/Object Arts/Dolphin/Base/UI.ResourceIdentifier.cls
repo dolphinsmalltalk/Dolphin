@@ -69,12 +69,12 @@ hiddenObjects
 		ifNotNil: 
 			[:stlInFilerClass |
 			self resource
-				ifNil: [self error: ('Resource [', owningClass fullName, '>>#', selector, '] does not exist')]
+				ifNil: [self error: 'Resource [' , owningClass fullName , '>>#' , selector , '] does not exist']
 				ifNotNil: 
 					[:resource |
-					^((stlInFilerClass on: resource readStream)
+					^(stlInFilerClass on: resource readStream)
 						basicNext;
-						readMap) copyFrom: STBFiler.MaxPredefinedRef + 1]].
+						objects]].
 	^#()!
 
 icon: anIcon
@@ -87,6 +87,9 @@ isChanged
 
 isChanged: aBoolean 
 	self shouldNotImplement!
+
+legacyStlVersion
+	^4!
 
 load
 	"Load and answer the resource represented by the receiver."
@@ -172,6 +175,7 @@ hiddenObjects!accessing!private! !
 icon:!accessing!public! !
 isChanged!development!public!source filing!testing! !
 isChanged:!development!public!source filing! !
+legacyStlVersion!private! !
 load!operations!public! !
 name!accessing!public! !
 name:!accessing!public! !
@@ -270,19 +274,20 @@ selectorFromName: aString
 				ifFalse: [('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789' includes: each) ifTrue: [selector nextPut: each]]].
 	^selector contents asSymbol!
 
-stbConvertFrom: anSTBClassFormat 
+stbConvertFrom: anSTBClassFormat
 	"Convert from previous version resource. 
 	Version Changes:
 		1) removes stores a selector as the resource name rather than a string name (this change was made an age ago, and not properly converted)
 	"
 
-	^
-	[:data | 
-	| answer |
-	answer := self basicNew.
-	1 to: data size do: [:i | answer instVarAt: i put: (data at: i)].
-	answer selector isSymbol ifFalse: [answer name: answer selector].
-	answer]!
+	anSTBClassFormat version == 0
+		ifTrue: 
+			[^
+			[:data |
+			data becomeA: self.
+			data selector isSymbol ifFalse: [data name: data selector].
+			data]].
+	^super stbConvertFrom: anSTBClassFormat!
 
 stbVersion
 	^1!

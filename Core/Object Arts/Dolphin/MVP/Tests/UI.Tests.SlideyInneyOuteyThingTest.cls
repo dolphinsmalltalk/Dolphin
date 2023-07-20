@@ -14,9 +14,9 @@ UI.Tests.SlideyInneyOuteyThingTest comment: ''!
 classToTest
 	^SlideyInneyOuteyThing!
 
-verifyUpgradedView: anInteger
+verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |
-	super verifyUpgradedView: anInteger.
+	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
 	view := self view.
 	self assert: view backcolor identicalTo: Color default.
 	self assert: view animation identicalTo: #roll.
@@ -24,11 +24,10 @@ verifyUpgradedView: anInteger
 	self assert: view isCardChangeAnimated.
 	self assert: view isTrayResizable.
 	self assert: view isHiddenOnUnpin.
-	self assert: view inheritContextMenu.
-! !
+	self assert: view inheritContextMenu! !
 !UI.Tests.SlideyInneyOuteyThingTest categoriesForMethods!
 classToTest!helpers!private! !
-verifyUpgradedView:!helpers!private! !
+verifyUpgradedView:identifier:!helpers!private! !
 !
 
 !UI.Tests.SlideyInneyOuteyThingTest class methodsFor!

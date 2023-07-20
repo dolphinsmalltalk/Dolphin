@@ -1,8 +1,8 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTest
+UI.Tests.PresenterTest
 	subclass: #'UI.Tests.RadioButtonSetPresenterTest'
-	instanceVariableNames: 'radioSet'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -10,6 +10,12 @@ Core.Tests.DolphinTest
 UI.Tests.RadioButtonSetPresenterTest guid: (Core.GUID fromString: '{0b5f0660-ff27-42a8-a388-e35b1b76b3e4}')!
 UI.Tests.RadioButtonSetPresenterTest comment: ''!
 !UI.Tests.RadioButtonSetPresenterTest methodsFor!
+
+classToTest
+	^RadioButtonSetPresenter!
+
+initializePresenter
+	presenter := RadioButtonSetPresenter showOn: #option1!
 
 selectedButton
 	| selected |
@@ -19,69 +25,61 @@ selectedButton
 	^selected first name asSymbol!
 
 selectedButtons
-	^radioSet radioButtons select: [:each | each value]!
-
-setUp
-	super setUp.
-	radioSet := RadioButtonSetPresenter showOn: #option1!
-
-tearDown
-	radioSet topShell destroy.
-	radioSet := nil!
+	^presenter radioButtons select: [:each | each value]!
 
 testDisableEnableAll
-	radioSet radioButtons do: [:each | self assert: each isEnabled].
-	radioSet disableAll.
-	radioSet radioButtons do: [:each | self assert: each isEnabled not].
-	radioSet enableAll.
-	radioSet radioButtons do: [:each | self assert: each isEnabled]!
+	presenter radioButtons do: [:each | self assert: each isEnabled].
+	presenter disableAll.
+	presenter radioButtons do: [:each | self assert: each isEnabled not].
+	presenter enableAll.
+	presenter radioButtons do: [:each | self assert: each isEnabled]!
 
 testEvents
 	self 
-		should: [radioSet value: #option2]
+		should: [presenter value: #option2]
 		triggerAllOf: #(#valueChanged "#radioButtonSelection:")
-		against: radioSet.
+		against: presenter.
 	self 
-		shouldnt: [radioSet value: #option2]
+		shouldnt: [presenter value: #option2]
 		triggerAnyOf: #(#valueChanged "#radioButtonSelection:")
-		against: radioSet.
+		against: presenter.
 	self 
-		should: [radioSet value: #option1]
+		should: [presenter value: #option1]
 		triggerAllOf: #(#valueChanged "#radioButtonSelection:")
-		against: radioSet.
+		against: presenter.
 	self 
-		shouldnt: [radioSet value: #option1]
+		shouldnt: [presenter value: #option1]
 		triggerAnyOf: #(#valueChanged "#radioButtonSelection:")
-		against: radioSet.
+		against: presenter.
 	self 
-		should: [radioSet value: nil]
+		should: [presenter value: nil]
 		trigger: #valueChanged
 "		butNot: #radioButtonSelection:"
-		against: radioSet.
+		against: presenter.
 	self 
-		shouldnt: [radioSet value: nil]
+		shouldnt: [presenter value: nil]
 		triggerAnyOf: #(#valueChanged "#radioButtonSelection:")
-		against: radioSet!
+		against: presenter!
 
 testInitialValue
-	self assert: radioSet value equals: #option1.
+	self assert: presenter value equals: #option1.
 	self assert: self selectedButton equals: #option1!
 
 testValueSelection
-	radioSet value: #option2.
-	self assert: radioSet value equals: #option2.
+	presenter value: #option2.
+	self assert: presenter value equals: #option2.
 	self assert: self selectedButton equals: #option2.
-	radioSet value: #option1.
-	self assert: radioSet value equals: #option1.
+	presenter value: #option1.
+	self assert: presenter value equals: #option1.
 	self assert: self selectedButton equals: #option1.
-	radioSet value: nil.
-	self assertIsNil: radioSet value.
+	presenter value: nil.
+	self assertIsNil: presenter value.
 	self assertIsNil: self selectedButton! !
 !UI.Tests.RadioButtonSetPresenterTest categoriesForMethods!
+classToTest!constants!private! !
+initializePresenter!public!running! !
 selectedButton!private!unit tests! !
 selectedButtons!private!unit tests! !
-setUp!public!running! !
-tearDown!public!running! !
 testDisableEnableAll!public!unit tests! !
 testEvents!public!unit tests! !
 testInitialValue!public!unit tests! !

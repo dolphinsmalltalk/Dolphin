@@ -14,9 +14,6 @@ UI.Tests.StaticPathTest comment: ''!
 classToTest
 	^StaticPath!
 
-oldDolphinVersionsForStbUpgrade
-	^#(5)!
-
 testCalculateExtent
 	| actualText canvas shell expected actual |
 	shell := presenter parentView.
@@ -50,23 +47,18 @@ testLayout
 	displayedText := presenter getWindowText.
 	self assert: (displayedText indexOfSubCollection: '...') identicalTo: 0!
 
-verifyUpgradedView: anInteger
+verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |
-	super verifyUpgradedView: anInteger.
+	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
 	view := self view.
 	self assertIsNil: view backcolor.
 	self assert: view interactor identicalTo: view.
-	self assert: view plainText equals: 'c:\Program Files\Dolphin Smalltalk'!
-
-vuFile
-	^'TextPresenter.Path text.vu'! !
+	self assert: view plainText equals: 'c:\Program Files\Dolphin Smalltalk'! !
 !UI.Tests.StaticPathTest categoriesForMethods!
 classToTest!helpers!private! !
-oldDolphinVersionsForStbUpgrade!constants!private! !
 testCalculateExtent!public!unit tests! !
 testLayout!public!unit tests! !
-verifyUpgradedView:!helpers!private! !
-vuFile!constants!private! !
+verifyUpgradedView:identifier:!helpers!private! !
 !
 
 !UI.Tests.StaticPathTest class methodsFor!

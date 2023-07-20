@@ -24,6 +24,14 @@ checkTestPackageContents
 	| scribbleTestPackage scribbleTestClass scribbleTest scribbleTestResourceMethod scribbleTestDefaultViewId scribbleTestViewId scribbleClass resourceIds |
 	scribbleTestPackage := loadedPackages first.
 	self assert: (scribbleTestPackage name beginsWith: 'ScribbleTest').
+	scribbleTestPackage name = 'ScribbleTest20'
+		ifTrue: 
+			[self assert: (scribbleTestPackage instVarNamed: 'scripts')
+				equals: (IdentityDictionary withAll: {
+								#preinstall
+									-> 'Transcript nextPutAll: ''A blast from the Dolphin 2.0 past is about to arrive''; cr'
+							})]
+		ifFalse: [self assertIsNil: (scribbleTestPackage instVarNamed: 'scripts')].
 	self verifyPackageElementNamesAreAbsolute: scribbleTestPackage.
 	scribbleTestClass := #{Smalltalk.ScribbleTest} value.
 	self assert: (scribbleTestPackage classes identityIncludes: scribbleTestClass).
@@ -203,18 +211,25 @@ b2xwaGluZHIwMDUuZGxsAAAAAA==''))!!
 
 '!
 
+denyDiaryLoaded
+	| classNames |
+	self deny: (Package manager includesPackageNamed: 'Diary').
+	classNames := #(#{Smalltalk.Diary} #{Smalltalk.DiaryEvent} #{Smalltalk.DiaryEventEditor} #{Smalltalk.DiaryTool}).
+	classNames do: [:each | self deny: each isDefined].
+	^classNames!
+
+denyHexdecimalBrowserLoaded
+	| classNames |
+	self deny: (Package manager includesPackageNamed: 'HexdecimalBrowser').
+	classNames := #(#{Smalltalk.HexadecimalBrowser} #{Smalltalk.HexadecimalConverter}).
+	classNames do: [:each | self deny: each isDefined].
+	self deny: (Integer includesSelector: #printStringRadix:zeroPadTo:).
+	^classNames!
+
 loadAndTestPackage: aString
-	| packageFilename notifications |
+	| notifications |
 	self checkNoTestPackageContents.
-	packageFilename := self resourceFilename: aString.
-	notifications := OrderedCollection new.
-	loadedPackages := [Package manager install: packageFilename] on: Notification
-				do: 
-					[:ex |
-					"Ignore package loading notification"
-					notifications add: ex.
-					ex resume].
-	self assert: notifications size > 0.
+	notifications := self loadTestPackage: aString.
 	self checkTestPackageContents.
 	^notifications!
 
@@ -224,6 +239,19 @@ loadTestAndUninstallPackage: aString
 	self assert: loadedPackages first paxVersion equals: 1.
 	self uninstallTestPackages.
 	self checkNoTestPackageContents.
+	^notifications!
+
+loadTestPackage: aString
+	| notifications packageFilename |
+	packageFilename := self resourceFilename: aString.
+	notifications := OrderedCollection new.
+	loadedPackages := [Package manager install: packageFilename] on: Notification
+				do: 
+					[:ex |
+					"Ignore package loading notification"
+					notifications add: ex.
+					ex resume].
+	self assert: notifications size > 0.
 	^notifications!
 
 setUp
@@ -384,6 +412,26 @@ testLegacyFormatErrorQualifiedUntracedVariable
 		raise: SourceFormatNotSupportedError
 		matching: [:ex | ex tag = ref]!
 
+testLoad20Pac
+	"Early format binary package, recreated in D2.0. Similar to the 2.1 package (STB filer version 0, package STB version 4), but the embedded view resource has earlier versions.
+	The package was recreated using an old copy of D2 (surprisingly it still runs fine more than 25 years later) and porting in the ScribbleTest code."
+
+	| pac notifications stbUpgradeMessage |
+	pac := 'ScribbleTestPackages\2.0\ScribbleTest20.pac'.
+	notifications := self loadTestAndUninstallPackage: pac.
+	self assert: notifications size equals: 4.
+	stbUpgradeMessage := 'Converting package from version 4 to: <1d>' << Package stbVersion.
+	self assert: notifications first description equals: stbUpgradeMessage.
+	self assert: notifications second description
+		equals: 'Loading package ''ScribbleTest20'' from: <1d>' << (self resourceFilename: pac).
+	"The package object is deserialized twice"
+	stbUpgradeMessage := 'Converting package from version 4 to: <1d>' << Package stbVersion.
+	self assert: notifications first description equals: stbUpgradeMessage.
+	self assert: notifications fourth description
+		equals: 'The package ''ScribbleTest20'' was saved with a different version of the Dolphin VM (98.2). 
+It will probably load, but it may not operate correctly. 
+If you experience subsequent problems please contact the package supplier for an updated version.'!
+
 testLoad21Pac
 	"The 2.1 packages were a mix of text and binary. The package itself was binary filed, and the view resources also.
 	The test 2.1 package contains a stb version 1 Views and so exercises the whole stb conversion stack. We don't have anything with version 0, but that predated the first commercial release."
@@ -537,6 +585,91 @@ testLoad72Pax
 	self uninstallTestPackages.
 	self checkNoTestPackageContents!
 
+testLoadBinaryVersion0MultifilePackage
+	"'Diary' is a very early sample package in binary format. It is from one of the pre-release versions of Dolphin in the initial, stbVersion 0, package definition. It is not a terribly interesting package from a test perspective as it contains only classes (no loose methods, resources, scripts, etc), but it is the earliest one I have found so far and we should be able to at least load it to exercise the STB conversions all the way up the version stack."
+
+	| pac notifications stbUpgradeMessage classNames relPath aliases |
+	classNames := self denyDiaryLoaded.
+	relPath := 'PackageTests\Diary\Diary.pac'.
+	"This package pre-dated MVP, and was built on the original Tool UI framework (I think). We won't be able to run any of the code, but in order to load it we'll have to add aliases for all the old UI framework classes that were subclassed."
+	aliases := #(#{Smalltalk.Tool} #{Smalltalk.ColumnView} #{Smalltalk.CompositeToolbarView} #{Smalltalk.ListSelectorModel} #{Smalltalk.BarDecoratorView} #{Smalltalk.PushButtonView} #{Smalltalk.TextEditView} #{Smalltalk.RowView} #{Smalltalk.EnhancedListView})
+				select: [:each | each isDefined not and: 
+							[each declare value: Object.
+							true]].
+	
+	["(Tools.STBDebugger on: (FileStream read: (self resourceFilename: relPath) text: false)) traceStream: Transcript; next"
+	notifications := self loadTestPackage: relPath.
+	self assert: (Package manager includesPackageNamed: 'Diary').
+	pac := Package manager packageNamed: 'Diary'.
+	classNames do: [:each | self assert: each isDefined].
+	self assert: pac isLegacySourceFormat.
+	self assert: pac paxVersion equals: 1.
+	self assert: pac classNames equals: classNames asSet.
+	self assert: pac methodNames isEmpty.
+	self assert: pac scripts isEmpty.
+	self assert: pac comment isEmpty.
+	self assert: pac packagePathname equals: 'Resources\Tests\' , relPath.
+	self assertIsNil: (pac instVarNamed: 'doNotReuse').
+	self uninstallTestPackages.
+	self denyDiaryLoaded.
+	self assert: notifications size equals: 4.
+	stbUpgradeMessage := 'Converting package from version 0 to: <1d>' << Package stbVersion.
+	self assert: notifications first description equals: stbUpgradeMessage.
+	self assert: notifications second description
+		equals: 'Loading package ''Diary'' from: <1d>' << (self resourceFilename: relPath).
+	stbUpgradeMessage := 'Converting package from version 0 to: <1d>' << Package stbVersion.
+	self assert: notifications first description equals: stbUpgradeMessage.
+	self assert: notifications fourth description
+		equals: 'The package ''Diary'' was saved with a different version of the Dolphin VM (unknown). 
+It will probably load, but it may not operate correctly. 
+If you experience subsequent problems please contact the package supplier for an updated version.']
+			ensure: [aliases do: [:each | each undeclare]]!
+
+testLoadBinaryVersion3MultifilePackage
+	"Early binary format package (stbVersion 3) from 1.0 beta 2e. The HexadecimalBrowser application in the package was based on that in the article 'Using Dolphin Smalltalk' by Wilf LaLonde and John Pugh in the JOOP Feb 97 issue. The application described in the article was written for Dolphin Beta 1, but that preceded the first MVP UI framework that arrived in beta 2.  Aside from a couple of very small tweaks related to the introduction of Unicode in 7.1, it still loads and works in Dolphin 8 more than 25 years later."
+
+	| pac notifications stbUpgradeMessage classNames relPath hexBrowser |
+	classNames := self denyHexdecimalBrowserLoaded.
+	relPath := 'PackageTests\Hexadecimal Browser\HexdecimalBrowser.pac'.
+	"(Tools.STBDebugger on: (FileStream read: (self resourceFilename: relPath) text: false)) traceStream: Transcript; next"
+	notifications := self loadTestPackage: relPath.
+	self assert: (Package manager includesPackageNamed: 'HexdecimalBrowser').
+	pac := Package manager packageNamed: 'HexdecimalBrowser'.
+	classNames do: [:each | self assert: each isDefined].
+	self assert: pac isLegacySourceFormat.
+	self assert: pac paxVersion equals: 1.
+	self assert: pac classNames equals: classNames asSet.
+	self assert: pac methodNames single
+		equals: (MethodName class: Integer selector: #printStringRadix:zeroPadTo:).
+	self assert: (Integer >> #printStringRadix:zeroPadTo:) owningPackage identicalTo: pac.
+	self assert: pac scripts keys single equals: #postinstall.
+	self assert: (pac comment contains: 'JOOP Feb 97').
+	self assert: pac packagePathname equals: 'Resources\Tests\' , relPath.
+	self assertIsNil: (pac instVarNamed: 'doNotReuse').
+	hexBrowser := #{Smalltalk.HexadecimalBrowser} value on: pac packageFileName.
+	
+	[hexBrowser createView: hexBrowser class defaultView.
+	hexBrowser view
+		extent: 700 @ 350;
+		show]
+			ensure: [hexBrowser view destroy].
+	self uninstallTestPackages.
+	self denyHexdecimalBrowserLoaded.
+	self assert: notifications size equals: 5.
+	stbUpgradeMessage := 'Converting package from version 3 to: <1d>' << Package stbVersion.
+	self assert: notifications first description equals: stbUpgradeMessage.
+	self assert: notifications second description
+		equals: 'Loading package ''HexdecimalBrowser'' from: <1d>' << (self resourceFilename: relPath).
+	stbUpgradeMessage := 'Converting package from version 3 to: <1d>' << Package stbVersion.
+	self assert: notifications first description equals: stbUpgradeMessage.
+	self assert: notifications fourth description
+		equals: 'The package ''HexdecimalBrowser'' was saved with a different version of the Dolphin VM (unknown). 
+It will probably load, but it may not operate correctly. 
+If you experience subsequent problems please contact the package supplier for an updated version.'.
+	"Notification from the (modified) post install script - originally this opened a message box, which has been hacked out"
+	self assert: notifications fifth description
+		equals: 'Installed HexadecimalBrowser: Please see package comments for notes on this release.'!
+
 testLoadedPackagesAreWellFormed
 	Package manager packages do: 
 			[:each |
@@ -555,6 +688,19 @@ testLooseResourceIdentifiers
 testPropertyManager
 	self verifyPropertyManagerOf: Package new!
 
+testStbConvertFromD5Version6
+	"STB version 6 Scribble package from Dolphin 4 or 5."
+
+	| bytes package |
+	bytes := #[33 83 84 66 32 49 32 70 15 7 0 6 0 0 0 80 97 99 107 97 103 101 0 0 0 0 82 0 0 0 12 0 0 0 83 99 114 105 98 98 108 101 84 101 115 116 82 0 0 0 83 0 0 0 68 58 92 100 101 118 92 98 108 97 105 114 109 99 103 92 68 111 108 112 104 105 110 92 82 101 115 111 117 114 99 101 115 92 84 101 115 116 115 92 83 99 114 105 98 98 108 101 84 101 115 116 80 97 99 107 97 103 101 115 92 53 46 49 92 83 99 114 105 98 98 108 101 84 101 115 116 53 49 46 112 97 99 82 0 0 0 0 0 0 0 202 0 0 0 0 0 0 0 154 0 0 0 0 0 0 0 82 0 0 0 7 0 0 0 68 111 108 112 104 105 110 82 0 0 0 11 0 0 0 73 100 101 110 116 105 116 121 83 101 116 98 0 0 0 1 0 0 0 186 0 0 0 0 0 0 0 82 0 0 0 12 0 0 0 83 99 114 105 98 98 108 101 84 101 115 116 202 0 0 0 0 0 0 0 154 0 0 0 0 0 0 0 0 2 0 0 82 0 0 0 12 0 0 0 80 108 117 103 103 97 98 108 101 83 101 116 98 0 0 0 2 0 0 0 6 2 11 0 65 115 115 111 99 105 97 116 105 111 110 0 0 0 0 186 0 0 0 0 0 0 0 82 0 0 0 8 0 0 0 83 99 114 105 98 98 108 101 186 0 0 0 0 0 0 0 82 0 0 0 6 0 0 0 108 111 111 115 101 65 146 2 0 0 0 0 0 0 176 2 0 0 186 0 0 0 0 0 0 0 82 0 0 0 6 0 0 0 108 111 111 115 101 67 202 0 0 0 0 0 0 0 240 1 0 0 98 0 0 0 0 0 0 0 202 0 0 0 0 0 0 0 240 1 0 0 98 0 0 0 3 0 0 0 0 2 0 0 82 0 0 0 16 0 0 0 68 111 108 112 104 105 110 32 77 86 80 32 66 97 115 101 82 0 0 0 8 0 0 0 83 99 114 105 98 98 108 101 0 0 0 0 234 0 0 0 0 0 0 0 0 1 0 0 48 3 0 0 202 0 0 0 0 0 0 0 96 2 0 0 98 0 0 0 1 0 0 0 146 2 0 0 0 0 0 0 176 2 0 0 82 0 0 0 13 0 0 0 83 99 114 105 98 98 108 101 32 116 101 115 116 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0].
+	"Tools.STBDebugger dumpToTranscript: bytes readStream"
+	package := Object fromBinaryStoreBytes: bytes.
+	self assert: package name equals: 'ScribbleTest'.
+	self assert: package prerequisiteNames isKindOf: Array.
+	self assert: package prerequisiteNames asSortedArray equals: #('Dolphin' 'Dolphin MVP Base' 'Scribble').
+	self assert: package classNames equals: (Set withAll: #(#{Smalltalk.ScribbleTest})).
+	self assert: package methodNames equals: {MethodName class: Smalltalk.Scribble selector: #looseA. MethodName class: Smalltalk.Scribble selector: #looseC} asSet!
+
 testTimestampInitialized
 	self assert: Package new timestamp asInteger equals: 0!
 
@@ -564,11 +710,26 @@ uninstallTestPackages
 			[loadedPackages do: [:each | Package manager basicUninstall: each].
 			loadedPackages := nil]!
 
+verifyAbsoluteExistingName: aBindingReference
+	self deny: aBindingReference isRelative.
+	self assert: aBindingReference isDefined!
+
+verifyAbsoluteSmalltalkBindingReference: aBindingReference
+	self assert: aBindingReference path size equals: 2.
+	^self assert: aBindingReference path first equals: 'Smalltalk'!
+
 verifyPackageElementNamesAreAbsolute: aPackage
-	aPackage classNames do: [:each | self assert: each scope isNil].
-	aPackage methodNames do: [:each | self assert: each className scope isNil].
-	aPackage variableNames do: [:each | self assert: each scope isNil].
-	aPackage untracedVariables do: [:each | self assert: each scope isNil]!
+	aPackage methodNames do: 
+			[:each |
+			self verifyAbsoluteExistingName: each className.
+			self assertNotNil: each valueOrNil].
+	aPackage classNames do: [:each | self verifyAbsoluteExistingName: each].
+	aPackage variableNames do: [:each | self verifyAbsoluteExistingName: each].
+	aPackage untracedVariables do: [:each | self verifyAbsoluteExistingName: each].
+	aPackage isLegacySourceFormat ifFalse: [^self].
+	aPackage classNames do: [:each | self verifyAbsoluteSmalltalkBindingReference: each].
+	aPackage variableNames do: [:each | self verifyAbsoluteSmalltalkBindingReference: each].
+	aPackage untracedVariables do: [:each | self verifyAbsoluteSmalltalkBindingReference: each]!
 
 verifyPackageElementsExist: aPackage
 	aPackage classNames do: [:each | | class |
@@ -603,8 +764,11 @@ verifyTestPackageResources: scribbleTestPackage
 checkNoTestPackageContents!helpers!private! !
 checkTestPackageContents!helpers!private! !
 d5ForwardRefTestPacContents!constants!private! !
+denyDiaryLoaded!helpers!private! !
+denyHexdecimalBrowserLoaded!helpers!private! !
 loadAndTestPackage:!helpers!private! !
 loadTestAndUninstallPackage:!helpers!private! !
+loadTestPackage:!helpers!private! !
 setUp!private!running! !
 tearDown!private!running! !
 testForwardRefLoadPac!public!unit tests! !
@@ -616,6 +780,7 @@ testLegacyFormatErrorQualifiedClassName!public!unit tests! !
 testLegacyFormatErrorQualifiedSourceVariableName!public!unit tests! !
 testLegacyFormatErrorQualifiedSuperclassName!public!unit tests! !
 testLegacyFormatErrorQualifiedUntracedVariable!public!unit tests! !
+testLoad20Pac!public!unit tests! !
 testLoad21Pac!public!unit tests! !
 testLoad40Pac!public!unit tests! !
 testLoad40Pax!public!unit tests! !
@@ -625,11 +790,16 @@ testLoad60Pac!public!unit tests! !
 testLoad60Pax!public!unit tests! !
 testLoad70Pax!public!unit tests! !
 testLoad72Pax!public!unit tests! !
+testLoadBinaryVersion0MultifilePackage!public!unit tests! !
+testLoadBinaryVersion3MultifilePackage!public!unit tests! !
 testLoadedPackagesAreWellFormed!public!unit tests! !
 testLooseResourceIdentifiers!public!unit tests! !
 testPropertyManager!public! !
+testStbConvertFromD5Version6!public! !
 testTimestampInitialized!public!unit tests! !
 uninstallTestPackages!private!running! !
+verifyAbsoluteExistingName:!helpers!private! !
+verifyAbsoluteSmalltalkBindingReference:!helpers!private! !
 verifyPackageElementNamesAreAbsolute:!helpers!private! !
 verifyPackageElementsExist:!helpers!private! !
 verifyTestPackageResources:!helpers!private! !

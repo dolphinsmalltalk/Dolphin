@@ -88,15 +88,14 @@ shouldStretchToFit:!accessing!public! !
 
 !UI.ScrollingDecoratorLayout class methodsFor!
 
-stbConvertFrom: anSTBClassFormat 
-	"Convert from earlier schema."
+stbConvertFrom: anSTBClassFormat
+	"Convert from earlier schema.
+		Version 0: No vars
+		Version1: stretchToFit (default = true)
+		"
 
-	^
-	[:data | 
-	| newInstance |
-	newInstance := self new.
-	1 to: data size do: [:i | newInstance instVarAt: i put: (data at: i)].
-	newInstance]!
+	anSTBClassFormat version == 0 ifTrue: [^[:data | { true } becomeA: self]].
+	^super stbConvertFrom: anSTBClassFormat!
 
 stbVersion
 	^1! !

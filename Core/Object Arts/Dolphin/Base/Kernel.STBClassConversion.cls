@@ -2,7 +2,7 @@
 
 Core.Object
 	subclass: #'Kernel.STBClassConversion'
-	instanceVariableNames: 'version instSize isBytes isVariable converterBlock filer'
+	instanceVariableNames: 'version instSize prefix converterBlock filer'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -35,25 +35,22 @@ converterBlock: aBlock
 	converterBlock := aBlock!
 
 instSize
-	"Answer the receiver's instSize inst var."
+	"Answer the count of fixed (named) instance variables that were associated with the class of the object to be converted when originally serialized."
 
 	^instSize!
 
 isBytes
-	"Answer whether the target class is a byte class."
+	"Answer whether the class being converted is a byte class."
 
-	^isBytes!
-
-isBytes: aBoolean
-	isBytes := aBoolean!
+	^prefix allMask: STBFiler.PrefixBytesMask!
 
 isUpgrading
 	^filer isUpgrading!
 
 isVariable
-	"Answer the receiver's isVariable inst var."
+	"Answer whether the class being converted can have indexed instance variables."
 
-	^isVariable!
+	^prefix allMask: STBFiler.PrefixVariableMask!
 
 version
 	"Answer the receiver's version inst var."
@@ -64,16 +61,14 @@ version: versionInteger prefix: anInteger filer: anSTBInFiler
 	"Private - Initialise the receiver from the arguments."
 
 	version := versionInteger.
-	instSize := (anInteger bitShift: STBPrefix.InstSizeShift) bitAnd: STBPrefix.InstSizeMask.
-	self isBytes: (anInteger allMask: STBPrefix.BytesMask).
-	isVariable := anInteger allMask: STBPrefix.VariableMask.
+	instSize := ((prefix := anInteger) bitShift: STBFiler.PrefixInstSizeUnshift)
+				bitAnd: STBFiler.PrefixInstSizeMask.
 	filer := anSTBInFiler! !
 !Kernel.STBClassConversion categoriesForMethods!
 converterBlock!accessing!public! !
 converterBlock:!accessing!public! !
 instSize!accessing!public! !
 isBytes!public!testing! !
-isBytes:!accessing!public! !
 isUpgrading!public!testing! !
 isVariable!public!testing! !
 version!accessing!public! !

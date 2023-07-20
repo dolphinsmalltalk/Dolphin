@@ -14,26 +14,21 @@ UI.Tests.ComboBoxTest comment: ''!
 classToTest
 	^ComboBox!
 
-oldDolphinVersionsForStbUpgrade
-	^1 to: 4!
-
-verifyUpgradedView: anInteger
+verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |
-	super verifyUpgradedView: anInteger.
+	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
 	view := self view.
 	self assert: view backcolor identicalTo: Color default.
 	self assertIsNil: view forecolor.
 	self assert: view droppedHeight equals: 200.
 	self assert: view interactor identicalTo: view.
-	self assert: view mode identicalTo: #dropDown!
-
-vuFile
-	^'ListPresenter.Combo box.vu'! !
+	self assert: view mode
+		identicalTo: (aResourceIdentifier selector == #resource_Drop_down_list
+				ifTrue: [#dropDownList]
+				ifFalse: [#dropDown])! !
 !UI.Tests.ComboBoxTest categoriesForMethods!
 classToTest!helpers!private! !
-oldDolphinVersionsForStbUpgrade!constants!private! !
-verifyUpgradedView:!helpers!private! !
-vuFile!constants!private! !
+verifyUpgradedView:identifier:!helpers!private! !
 !
 
 !UI.Tests.ComboBoxTest class methodsFor!
@@ -56,9 +51,20 @@ resource_Combo_box_D7
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Combo_box_D7)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ComboBox) 34 17 nil nil 34 2 8 1412498946 1025 416 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 327686 ##(Smalltalk.Color) #default nil 5 nil nil nil 416 nil 8 1903738896 459270 ##(Smalltalk.Message) #displayString 8 #() 528 401 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 786 251 51 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 252 7 0 0 35 0 0 0] 8 #() 786 193 193 nil 27)! !
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ComboBox) 34 17 nil nil 34 2 8 1412498946 1025 416 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 327686 ##(Smalltalk.Color) #default nil 5 nil nil nil 416 nil 8 1903738896 459270 ##(Smalltalk.Message) #displayString 8 #() 528 401 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 786 251 51 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 252 7 0 0 35 0 0 0] 8 #() 786 193 193 nil 27)!
+
+resource_Combo_box_D8_STL5
+	"Answer the literal data from which the 'Combo box' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Combo_box)
+	"
+
+	^#(#'!!STL' 5 985166 10 #{UI.STBViewProxy} #{UI.ComboBox} 34 17 nil nil 34 2 8 1412498946 1025 416 787270 2 #{UI.ListModel} 138 144 8 #() nil 1769478 #{Kernel.IdentitySearchPolicy} 917510 #{Graphics.Color} #default nil 5 nil nil nil 416 nil 8 1814646992 786950 #{Core.Message} #displayString 8 #() 8 #() 401 1310982 #{Core.MessageSequence} 34 1 1049350 #{Core.MessageSend} #createAt:extent: 34 2 918022 #{Graphics.Point} 12287 21 786 251 51 416 1179910 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 124 24 0 0 35 0 0 0] 8 #() 786 193 193 nil 27)! !
 !UI.Tests.ComboBoxTest class categoriesForMethods!
 resource_Combo_box_D6!public!resources-views! !
 resource_Combo_box_D7!public!resources-views! !
+resource_Combo_box_D8_STL5!public!resources-views! !
 !
 

@@ -84,10 +84,11 @@ testPrintFloatSeparators
 		groupSeparator: $^.
 	self assert: (subject printFloat: 1234567890.123 format: format) equals: '1234567890@123'!
 
-testStbConvertFromVersion0
+testStlConvertFromVersion0
 	| subject |
 	"From: | obj | obj := Object new. {Locale invariant. obj. {Locale invariant}. #foo. obj} literalStoreEvaluationString"
-	subject := Object fromLiteralStoreArray: #(#'!!STL' 4 34 5 983302 ##(Smalltalk.SmalltalkLocale) nil 393222 ##(Smalltalk.Object) 34 1 432 #foo 464).
+	subject := Object
+				fromLiteralStoreArray: #(#'!!STL' 4 34 5 983302 ##(Smalltalk.SmalltalkLocale) nil 393222 ##(Smalltalk.Object) 34 1 432 #foo 464).
 	"We expect a newly constructed instance with the same lcid, but the other data is discarded"
 	self assert: subject first identicalTo: self defaultSubject.
 	self assert: subject third first identicalTo: self defaultSubject.
@@ -101,6 +102,6 @@ testDisplayFloatOn!public!unit tests! !
 testDisplayName!public!unit tests! !
 testPrintFloatGrouping!public!unit tests! !
 testPrintFloatSeparators!public!unit tests! !
-testStbConvertFromVersion0!public!unit tests! !
+testStlConvertFromVersion0!public!unit tests! !
 !
 

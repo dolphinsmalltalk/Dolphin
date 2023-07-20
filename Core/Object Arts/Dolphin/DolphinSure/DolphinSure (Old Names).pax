@@ -12,6 +12,8 @@ package setVariableNames: #(
 	#{Smalltalk.DolphinSureCertificateInfo}
 	#{Smalltalk.DolphinSureCertificateStore}
 	#{Smalltalk.DolphinSureCertificationAuthorityCertificate}
+	#{Smalltalk.NotSignedCertificate}
+	#{Smalltalk.ObjectArtsRootCertificate}
 ).
 
 package setAliasVariableNames: #(
@@ -19,6 +21,8 @@ package setAliasVariableNames: #(
 	#{Smalltalk.DolphinSureCertificateInfo}
 	#{Smalltalk.DolphinSureCertificateStore}
 	#{Smalltalk.DolphinSureCertificationAuthorityCertificate}
+	#{Smalltalk.NotSignedCertificate}
+	#{Smalltalk.ObjectArtsRootCertificate}
 ).
 
 package setPrerequisites: #(
@@ -36,6 +40,10 @@ Smalltalk.DolphinSureCertificateInfo := Security.DolphinSureCertificateInfo!
 Smalltalk.DolphinSureCertificateStore := Security.DolphinSureCertificateStore!
 
 Smalltalk.DolphinSureCertificationAuthorityCertificate := Security.DolphinSureCertificationAuthorityCertificate!
+
+Smalltalk.NotSignedCertificate := Security.NotSignedCertificate!
+
+Smalltalk.ObjectArtsRootCertificate := Security.ObjectArtsRootCertificate!
 
 
 "End of package definition"!

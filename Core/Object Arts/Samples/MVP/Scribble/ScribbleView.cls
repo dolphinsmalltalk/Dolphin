@@ -57,9 +57,18 @@ defaultModel
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##(self) defaultIcon! !
+	^##(self) defaultIcon!
+
+stbConvertFromVersion1: anArray
+	"Private - Perform an STB conversion from a version 1 (or earlier) <View> to version 2."
+
+	"Originally ScribbleView had 3 instance variables, subsequently removed. Also the model wasn't necessarily initialized."
+
+	(anArray at: 5) ifNil: [anArray at: 5 put: ListModel new].
+	^anArray resize: 10! !
 !ScribbleView class categoriesForMethods!
 defaultModel!models!public! !
 icon!constants!public! !
+stbConvertFromVersion1:!binary filing!private! !
 !
 

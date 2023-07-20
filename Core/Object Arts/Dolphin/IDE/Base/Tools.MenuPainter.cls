@@ -303,15 +303,12 @@ paintSelectedItem: aMenuItem on: aCanvas in: aRectangle
 paintSeparatorOn: aCanvas in: aRectangle 
 	^self subclassResponsibility!
 
-paintSmudge: aRectangle on: aCanvas 
+paintSmudge: aRectangle on: aCanvas
 	| oldPen smudge |
 	smudge := aRectangle leftCenter.
 	oldPen := aCanvas pen.
 	aCanvas
-		pen: (Pen 
-					withStyle: PS_SOLID
-					width: aRectangle height
-					color: Color red);
+		pen: (Pen width: aRectangle height color: Color red);
 		lineFrom: smudge to: smudge + (aRectangle width @ 0);
 		pen: oldPen!
 

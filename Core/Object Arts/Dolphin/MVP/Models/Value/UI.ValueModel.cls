@@ -140,15 +140,39 @@ stbConvertFrom: anSTBClassFormat
 	"Convert from earlier version models.
 	2: Added 'settingValue' instance variable."
 
-	^[:data | | newInst offset |
-		newInst := self basicNew.
-		(anSTBClassFormat version=0) ifTrue: [offset := 2].
-		(anSTBClassFormat version=1) ifTrue: [offset := 1].
-		data keysAndValuesDo: [:i :v | newInst instVarAt: i+offset put: v].
-		newInst]!
+	| ver |
+	ver := anSTBClassFormat version.
+	ver == 1
+		ifTrue: 
+			[^
+			[:data |
+			(Array new: self instSize)
+				at: 1 put: (data at: 1);
+				at: 2 put: false;
+				replaceFrom: 3
+					to: data size + 1
+					with: data
+					startingAt: 2;
+				becomeA: self]].
+	ver == 0
+		ifTrue: 
+			[^
+			[:data |
+			(Array new: self instSize)
+				at: 2 put: false;
+				replaceFrom: 3
+					to: data size + 2
+					with: data
+					startingAt: 1;
+				becomeA: self]].
+	^super stbConvertFrom: anSTBClassFormat!
 
 stbVersion
-	"Answer the current binary filer version number for instances of the receiver."
+	"Answer the current binary filer version number for instances of the receiver.
+		0: comparisonPolicy
+		1: events comparisonPolicy
+		2: events settingValue comparisonPolicy
+	"
 
 	^2! !
 !UI.ValueModel class categoriesForMethods!

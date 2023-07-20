@@ -3,10 +3,13 @@
 Core.Object
 	subclass: #'Security.DolphinSureCertificateInfo'
 	instanceVariableNames: 'serial owner details issued expiry publicKey'
-	classVariableNames: 'ValidStbClasses'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'ValidStbClasses'
+				-> #(#{Core.Date} #{Core.AnsiString} #{Core.Utf8String} #{Core.LargeInteger} #{Core.SmallInteger} #{Security.DolphinSureCertificateInfo})
+		}!
 Security.DolphinSureCertificateInfo guid: (Core.GUID fromString: '{92dfd157-de8b-4c95-8ed4-fcc86403ef31}')!
 Security.DolphinSureCertificateInfo comment: 'A DolphinSureCertificateInfo instance holds the unencoded data for a DolphinSureCertificate.
 
@@ -86,7 +89,7 @@ serial: aStringSerialNo owner: aStringOwner publicKey: pkey
 	serial := aStringSerialNo.
 	owner := aStringOwner.
 	details := ''.
-	issued := Date today.
+	issued := Date fromDays: 38328.
 	publicKey := pkey
 	!
 
@@ -126,22 +129,9 @@ binaryReadFrom: aStream context: anObject
 	"Answers an object read from its binary STB representation on aStream. Because STB is inherently an insecure format (loading objects can cause arbitrary code to be run) we must use a special STBInFiler (an STBValidatingInFiler) that will only load a restricted set of classes that we know to be passive."
 
 	^(STBValidatingInFiler on: aStream)
-		validationBlock: [:className | ValidStbClasses includes: className];
+		validClasses: #(#{Core.Date} #{Core.AnsiString} #{Core.Utf8String} #{Core.LargeInteger} #{Core.SmallInteger} #{Security.DolphinSureCertificateInfo});
 		context: anObject;
 		next!
-
-initialize
-	"
-		self initialize
-	"
-
-	ValidStbClasses := Set new.
-	#(#{Core.Date} #{Core.AnsiString} #{Core.Utf8String} #{Core.LargeInteger} #{Core.SmallInteger} #{Security.DolphinSureCertificateInfo})
-		do: 
-			[:each |
-			ValidStbClasses
-				add: each unqualifiedName;
-				add: each asString]!
 
 new
 	"Private - Use #serial:owner"
@@ -155,7 +145,6 @@ serial: aStringSerialNo owner: aStringOwner publicKey: pkey
 	^super new serial: aStringSerialNo owner: aStringOwner publicKey: pkey! !
 !Security.DolphinSureCertificateInfo class categoriesForMethods!
 binaryReadFrom:context:!binary filing!public! !
-initialize!class initialization!private! !
 new!instance creation!private! !
 serial:owner:publicKey:!instance creation!public! !
 !

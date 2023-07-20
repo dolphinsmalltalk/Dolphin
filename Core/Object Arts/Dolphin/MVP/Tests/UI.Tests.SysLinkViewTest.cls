@@ -23,16 +23,16 @@ testItemFromPoint
 	self assert: (presenter itemFromPoint: ext) equals: 2.
 	self assertIsNil: (presenter itemFromPoint: 1000 @ 1000)!
 
-verifyUpgradedView: anInteger
+verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |
-	super verifyUpgradedView: anInteger.
+	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
 	view := self view.
 	self assertIsNil: view backcolor.
 	self assert: view text equals: '<A HREF="http://www.object-arts.com">Object Arts Home</A>'! !
 !UI.Tests.SysLinkViewTest categoriesForMethods!
 classToTest!helpers!private! !
 testItemFromPoint!public! !
-verifyUpgradedView:!helpers!private! !
+verifyUpgradedView:identifier:!helpers!private! !
 !
 
 !UI.Tests.SysLinkViewTest class methodsFor!

@@ -317,51 +317,40 @@ new
 
 	^super new initialize!
 
-stbConvert: anArray fromVersion: anInteger 
-	"Private - Convert from earlier version view by updating and answering the array of instance
-	variables, instVarArray. "
-
-	| instVars |
-	instVars := anArray.
-	anInteger < 1 ifTrue: [instVars := self stbConvertFromVersion0: instVars].
-	anInteger < 2 ifTrue: [instVars := self stbConvertFromVersion1: instVars].
-	^instVars!
-
-stbConvertFrom: anSTBClassFormat 
+stbConvertFrom: anSTBClassFormat
 	"Convert from previous version resource. 
 	Version Changes:
 		1) removes deprecated framing symbols.
 		2) framing inst. vars hold FramingCalculation objects rather than symbolic names of calculations."
 
-	^
-	[:data | 
-	| answer instVars |
-	instVars := self stbConvert: data fromVersion: anSTBClassFormat version.
-	answer := self basicNew.
-	1 to: instVars size do: [:i | answer instVarAt: i put: (instVars at: i)].
-	answer]!
+	| ver |
+	ver := anSTBClassFormat version.
+	ver == 0 ifTrue: [^[:data | (self stbConvertFromVersion0: data) becomeA: self]].
+	ver == 1 ifTrue: [^[:data | (self stbConvertFromVersion1: data) becomeA: self]].
+	^super stbConvertFrom: anSTBClassFormat!
 
 stbConvertFromVersion0: anArray
-	"Private - Convert from previous version resource. 
-	Version 1 removes deprecated framing symbols."
+	"Private - Convert from version 0 FramingConstraint."
 
-	| conversionMap |
-	conversionMap := ##(IdentityDictionary new
-				at: #relativeParentBottom put: #relativeParentHeight;
-				at: #relativeParentTop put: #relativeParentHeight;
-				at: #relativeParentLeft put: #relativeParentWidth;
-				at: #relativeParentRight put: #relativeParentWidth;
-				at: #relativeViewBottom put: #relativeParentHeight;
-				at: #relativeViewTop put: #relativeParentHeight;
-				at: #relativeViewLeft put: #relativeParentWidth;
-				at: #relativeViewRight put: #relativeParentWidth;
-				yourself).
-	^anArray collect: [:each | conversionMap at: each ifAbsent: [each]]!
+	^self
+		stbConvertFromVersion1: (anArray collect: 
+					[:each |
+					"Version 1 replaces deprecated framing symbols."
+					##(IdentityDictionary new
+						at: #relativeParentBottom put: #relativeParentHeight;
+						at: #relativeParentTop put: #relativeParentHeight;
+						at: #relativeParentLeft put: #relativeParentWidth;
+						at: #relativeParentRight put: #relativeParentWidth;
+						at: #relativeViewBottom put: #relativeParentHeight;
+						at: #relativeViewTop put: #relativeParentHeight;
+						at: #relativeViewLeft put: #relativeParentWidth;
+						at: #relativeViewRight put: #relativeParentWidth;
+						yourself) at: each ifAbsent: [each]])!
 
 stbConvertFromVersion1: anArray
-	"Private - Migrate from previous schema. 
-	Version 2 uses objects for framing calc's rather than holding symbolic names and looking
-	up methods indirectly."
+	"Private - Migrate from version 1 schema. "
+
+	"Version 2 uses objects for framing calc's rather than holding symbolic names and looking up methods indirectly."
 
 	^anArray
 		collect: [:each | (each isKindOf: Symbol) ifTrue: [FramingCalculation perform: each] ifFalse: [each]]!
@@ -373,7 +362,6 @@ stbVersion
 !UI.FramingConstraints class categoriesForMethods!
 calculationClass!constants!private! !
 new!instance creation!public! !
-stbConvert:fromVersion:!binary filing!private! !
 stbConvertFrom:!binary filing!public! !
 stbConvertFromVersion0:!binary filing!private! !
 stbConvertFromVersion1:!binary filing!private! !

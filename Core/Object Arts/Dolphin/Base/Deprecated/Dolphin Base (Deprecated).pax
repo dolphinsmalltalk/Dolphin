@@ -19,7 +19,6 @@ package classNames
 	add: #ConformantStructureArrayField;
 	add: #ConformantStructureArrayPointerField;
 	add: #MEMORY_BASIC_INFORMATION;
-	add: #STBSymbolProxy;
 	yourself.
 
 package methodNames
@@ -27,6 +26,7 @@ package methodNames
 	add: #_FPIEEE_RECORD -> #causeName;
 	add: #_FPIEEE_VALUE -> #valueType;
 	add: #AbstractSTBInFiler -> #readObjectOfClass:format:;
+	add: #AbstractSTBOutFiler -> #stream:;
 	add: #AbstractWindowsLocale -> #dateOrder;
 	add: #AbstractWindowsLocale -> #dateSeparator;
 	add: #ArithmeticValue -> #quoAndRem:;
@@ -55,6 +55,7 @@ package methodNames
 	add: #ExternalStructure -> #do:separatedBy:;
 	add: #File -> #readCharacter;
 	add: #Integer -> #digitSize;
+	add: #Integer -> #printStringRadix:showRadix:;
 	add: #KernelLibrary -> #getTimeFormat:dwFlags:lpTime:lpFormat:lpTimeStr:cchBuf:;
 	add: #Locale -> #isMonthBeforeDay;
 	add: #Metaclass -> #instVarNames:;
@@ -67,7 +68,6 @@ package methodNames
 	add: #PackageManager -> #addGlobalNamed:to:;
 	add: #PackageManager -> #allGlobalAliases;
 	add: #PackageManager -> #packageOfGlobalNamed:;
-	add: #STBPrefix -> #isLiteralPrefix;
 	add: #Stream -> #nextOrNil;
 	add: #String -> #asUnicodeString;
 	add: #String -> #equals:;
@@ -161,11 +161,6 @@ StructureArrayPointerField subclass: #ConformantStructureArrayPointerField
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-STBProxy subclass: #STBSymbolProxy
-	instanceVariableNames: 'string'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 Win32Structure subclass: #MEMORY_BASIC_INFORMATION
 	instanceVariableNames: ''
 	classVariableNames: '_MEMORY_BASIC_INFORMATION_Size _OffsetOf_AllocationBase _OffsetOf_AllocationProtect _OffsetOf_BaseAddress _OffsetOf_Protect _OffsetOf_RegionSize _OffsetOf_State _OffsetOf_Type'
@@ -217,6 +212,15 @@ readObjectOfClass: aClass format: anSTBClassConversion
 		size: (self readSizeOf: aClass)! !
 !AbstractSTBInFiler categoriesForMethods!
 readObjectOfClass:format:!operations!public! !
+!
+
+!AbstractSTBOutFiler methodsFor!
+
+stream: aStream
+	Notification deprecated.
+	stream := aStream! !
+!AbstractSTBOutFiler categoriesForMethods!
+stream:!accessing!public! !
 !
 
 !AbstractWindowsLocale methodsFor!
@@ -638,9 +642,19 @@ fromString:!instance creation!public! !
 
 digitSize
 	#deprecated.
-	^self digitLength! !
+	^self digitLength!
+
+printStringRadix: base showRadix: flag
+	"Answer a String which represents the receiver in the radix, base (an Integer).
+	The radix prefix is included if the boolean flag is true."
+
+	| aStream |
+	aStream := String writeStream: 16.
+	self printOn: aStream base: base showRadix: flag.
+	^aStream contents! !
 !Integer categoriesForMethods!
 digitSize!accessing!public! !
+printStringRadix:showRadix:!printing!public! !
 !
 
 !KernelLibrary methodsFor!
@@ -783,15 +797,6 @@ for: aCollection
 	^self forCollection: aCollection! !
 !STBCollectionProxy class categoriesForMethods!
 for:!instance creation!public! !
-!
-
-!STBPrefix methodsFor!
-
-isLiteralPrefix
-	#deprecated.
-	^uint32 anyMask: LiteralPrefixMask! !
-!STBPrefix categoriesForMethods!
-isLiteralPrefix!public!testing! !
 !
 
 !STBSingletonProxy class methodsFor!

@@ -31,7 +31,8 @@ printAttributesOn:!printing!private! !
 !Graphics.Gdiplus.StringFormatGenericDefaultInitializer class methodsFor!
 
 stbConvertFrom: anSTBClassFormat
-	^[:data | self genericDefault]!
+	anSTBClassFormat version == 0 ifTrue: [^[:data | self genericDefault]].
+	^super stbConvertFrom: anSTBClassFormat!
 
 uninitialize
 	GenericDefault := nil! !

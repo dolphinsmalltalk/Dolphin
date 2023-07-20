@@ -16,8 +16,11 @@ package setClassNames: #(
 	#{Kernel.Bytecode}
 	#{Kernel.LegacyChunkSourceFiler}
 	#{Kernel.LegacySTLPrinter}
+	#{Kernel.STLVersion3Policy}
+	#{Kernel.STLVersion4Policy}
 	#{Smalltalk.MethodContext}
 	#{Smalltalk.PoolConstantsDictionary}
+	#{Smalltalk.STBSymbolProxy}
 ).
 
 package setMethodNames: #(
@@ -31,14 +34,17 @@ package setMethodNames: #(
 	#(#{Core.FileStream} #beBinary)
 	#(#{Core.UndefinedObject} #subclass:instanceVariableNames:classVariableNames:poolDictionaries:)
 	#(#{Core.UndefinedObject} #subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:)
+	#(#{Kernel.Package} #aboutBlockBytes:)
 	#(#{Kernel.Package} #allResourceNames:)
-	#(#{Kernel.Package} #basicLoadVersion4:filer:)
+	#(#{Kernel.Package} #declareClasses:)
 	#(#{Kernel.Package} #errorUnknownFileVersion:)
 	#(#{Kernel.Package} #fileInClassDefinitions:)
+	#(#{Kernel.Package} #isMultifilePAC)
 	#(#{Kernel.Package} #loadGlobalsFromFiler:)
 	#(#{Kernel.Package} #loadLegacyPAC:)
 	#(#{Kernel.Package} #loadLegacyResources)
 	#(#{Kernel.Package} #loadResourcesFromFiler:)
+	#(#{Kernel.Package} #loadSelectorForVersion:)
 	#(#{Kernel.Package} #loadVersion1:filer:)
 	#(#{Kernel.Package} #loadVersion2:filer:)
 	#(#{Kernel.Package} #loadVersion3:filer:)
@@ -47,7 +53,6 @@ package setMethodNames: #(
 	#(#{Kernel.Package} #resourceNames)
 	#(#{Kernel.Package} #script:)
 	#(#{Kernel.Package} #script:put:)
-	#(#{Kernel.Package} #versionLookup)
 	#(#{Kernel.Package class} #binaryGlobalExtension)
 	#(#{Kernel.Package class} #name:comment:)
 ).
@@ -92,6 +97,27 @@ Kernel.LiteralPrinter
 	classConstants: {}!
 Kernel.AbstractChunkSourceFiler
 	subclass: #'Kernel.LegacyChunkSourceFiler'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.STBProxy
+	subclass: #STBSymbolProxy
+	instanceVariableNames: 'string'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.STLVersionPolicy
+	subclass: #'Kernel.STLVersion3Policy'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.STLVersion3Policy
+	subclass: #'Kernel.STLVersion4Policy'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -224,6 +250,12 @@ subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstance
 
 !Kernel.Package methodsFor!
 
+aboutBlockBytes: aByteArray
+	"Private - Set the receiver's about block by rehydrating that in serialized
+	form in the <ByteArray> argument."
+
+	self aboutBlock: (Object fromBinaryStoreBytes: aByteArray)!
+
 allResourceNames: resources
 	"Private - Record the <Collection> of <Associations>s, resources, as the names of all resources
 	in this package. This information is recorded only temporarily during package loading, and later
@@ -231,17 +263,12 @@ allResourceNames: resources
 
 	self propertyAt: #allResourceNames put: resources!
 
-basicLoadVersion4: aFileStream filer: binaryFiler
-	"Private - File in the objects owned by the receiver. The binaryFiler is positioned to
-	a number of stored objects, organized into file version 4."
+declareClasses: aReadStream
+	"Private - Load all package classes definitions."
 
-	self declareVariables.
-	self fileInClassDefinitions: aFileStream.
-	self loadGlobalsFromFiler: binaryFiler.
-	self loadResourcesFromFiler: binaryFiler.
-
-	"File in any trailing source code of class/methods"
-	self sourceManager fileInFrom: aFileStream beText!
+	self isMultifilePAC
+		ifTrue: [self class sourceManager fileIn: self classDefinitionsFileName]
+		ifFalse: [self fileInClassDefinitions: aReadStream]!
 
 errorUnknownFileVersion: foundVersion
 	"Private - Raise an exception to inform that an attempt was made to load a
@@ -253,7 +280,7 @@ errorUnknownFileVersion: foundVersion
 
 fileInClassDefinitions: aFileStream
 	"Private - Load all package classes from the filestream up to the end marker.
-	Note that this is only used for loading binary legacy (pre 4.0) packages."
+	Note that this is only used for loading single-file binary legacy (pre 4.0) packages."
 
 	| filer |
 	aFileStream beText.
@@ -266,25 +293,39 @@ fileInClassDefinitions: aFileStream
 	aFileStream next ~= $X ifTrue: [^self errorFileCorrupt].
 	aFileStream beBinary!
 
+isMultifilePAC
+	"Very early versions of Dolphin had a multi-file format for .PAC files. The .pac was a mix of STB binary and text. Single-file packages, the default, contained all the source but a flag could be set to file out the class definitions and sources as separate files. The resources (as STB'd binary content) and loose methods were still stored into the .pac. This was an attempt at providing a format more suitable for storing in file-based source code control systems, and was superseded by the .pax format."
+
+	^doNotReuse == false!
+
 loadGlobalsFromFiler: binaryFiler
 	"Private - File in binary definitions of all the globals held by
 	the receiver are directly or indirectly through class ownership.
 	Note that this is only used for loading legacy (pre 4.0 packages."
 
-	variableNames size timesRepeat: [binaryFiler next]!
+	variableNames size timesRepeat: [binaryFiler next].
+
+	"If the receiver is a source package then file in the individual global from files if this can be done. We can only do this if the files actually exist."
+	self isMultifilePAC ifFalse: [^self].
+	variableNames do: 
+			[:each |
+			| fileName |
+			fileName := self fileNameForSourceVariable: each.
+			(File exists: fileName) ifTrue: [self sourceManager fileIn: fileName].
+			each value isChanged: false]!
 
 loadLegacyPAC: aReadStream
-	"Private - Load the package the receiver represents from the Dolphin 2.1/3.x format 
+	"Private - Load the package the receiver represents from the Dolphin 1.0..3.x format 
 	(mixed STB binary and source text) on the <readableStream> argument, aReadStream."
 
 	| binaryFiler version selector |
 	aReadStream beBinary.
 	binaryFiler := STBInFiler on: aReadStream.
 
-	"Load the package. We ignore this (since it represents the receiver)."
+	"Skip over the package. We ignore this (since it represents the receiver)."
 	binaryFiler next.
 	version := binaryFiler next.
-	selector := self versionLookup at: version ifAbsent: [^self errorUnknownFileVersion: version].
+	selector := self loadSelectorForVersion: version.
 	self paxVersion: 1.
 	self fileInScript: #preinstall.
 	self
@@ -293,6 +334,7 @@ loadLegacyPAC: aReadStream
 		with: binaryFiler.
 	self initializeGlobals.
 	self initializeLegacyResources.
+	doNotReuse := nil.
 	self fileInScript: #postinstall!
 
 loadLegacyResources
@@ -326,15 +368,19 @@ loadResourcesFromFiler: binaryFiler
 			resourceNames add: aResourceIdentifier owningClass name -> aResourceIdentifier name].
 	self allResourceNames: resourceNames!
 
+loadSelectorForVersion: anInteger
+	^(#(#loadVersion1:filer: #loadVersion2:filer: #loadVersion3:filer: #loadVersion4:filer: #loadVersion5:filer:)
+		lookup: anInteger) ifNil: [self errorUnknownFileVersion: anInteger]!
+
 loadVersion1: aFileStream filer: binaryFiler
 	"Private - File in the objects owned by the receiver. The binaryFiler is positioned to
 	a number of stored objects, organized into file version 1."
 
-	self vmVersionCheck: 0.
+	self vmVersionCheck: -1.
 	self declareVariables.
 	self fileInClassDefinitions: aFileStream.
 	self loadGlobalsFromFiler: binaryFiler.
-
+	self isMultifilePAC ifTrue: [self fileInClasses].
 	"File in any trailing source code of class/methods"
 	self sourceManager fileInFrom: aFileStream beText.
 	self initializeGlobals!
@@ -343,11 +389,11 @@ loadVersion2: aFileStream filer: binaryFiler
 	"Private - File in the objects owned by the receiver. The binaryFiler is positioned to
 	a number of stored objects, organized into file version 2."
 
-	self vmVersionCheck: 0.
+	self vmVersionCheck: -1.
 	self declareVariables.
-	self fileInClassDefinitions: aFileStream.
+	self declareClasses: aFileStream.
 	self loadGlobalsFromFiler: binaryFiler.
-
+	self isMultifilePAC ifTrue: [self fileInClasses].
 	"File in any trailing source code of class/methods"
 	self sourceManager fileInFrom: aFileStream beText.
 	self initializeGlobals!
@@ -356,9 +402,9 @@ loadVersion3: aFileStream filer: binaryFiler
 	"Private - File in the objects owned by the receiver. The binaryFiler is positioned to
 	a number of stored objects, organized into file version 3."
 
-	self vmVersionCheck: 0.
+	self vmVersionCheck: -1.
 	self declareVariables.
-	self fileInClassDefinitions: aFileStream.
+	self declareClasses: aFileStream.
 	self loadGlobalsFromFiler: binaryFiler.
 
 	"Load in resources for each class"
@@ -369,6 +415,7 @@ loadVersion3: aFileStream filer: binaryFiler
 			binaryFiler next
 				keysAndValuesDo: [:resourceName :resource | (UI.ResourceIdentifier class: resourceClass name: resourceName) assign: resource]].
 
+	self isMultifilePAC ifTrue: [self fileInClasses].
 	"File in any trailing source code of class/methods"
 	self sourceManager fileInFrom: aFileStream beText.
 	self initializeGlobals!
@@ -377,18 +424,25 @@ loadVersion4: aFileStream filer: binaryFiler
 	"Private - File in the objects owned by the receiver. The binaryFiler is positioned to
 	a number of stored objects, organized into file version 4."
 
-	self vmVersionCheck: binaryFiler stream nextUInt32.
-	self basicLoadVersion4: aFileStream filer: binaryFiler!
+	self vmVersionCheck: -1.
+	self declareVariables.
+	self declareClasses: aFileStream.
+	self loadGlobalsFromFiler: binaryFiler.
+	self loadResourcesFromFiler: binaryFiler.	"File in any trailing source code of class/methods"
+	self isMultifilePAC ifTrue: [self fileInClasses].
+	self sourceManager fileInFrom: aFileStream beText!
 
 loadVersion5: aFileStream filer: binaryFiler
 	"Private - File in the objects owned by the receiver. The binaryFiler is positioned to
 	a number of stored objects, organized into file version 5."
 
 	self vmVersionCheck: binaryFiler next.
-
-	"Apart from the VM version number, this format is the same as 4, so we just use
-	the version 4 load."
-	^self basicLoadVersion4: aFileStream filer: binaryFiler!
+	"The old multi-file package is no longer a possibility - .pax is used for this instead"
+	self declareVariables.
+	self fileInClassDefinitions: aFileStream.
+	self loadGlobalsFromFiler: binaryFiler.
+	self loadResourcesFromFiler: binaryFiler.	"File in any trailing source code of class/methods"
+	self sourceManager fileInFrom: aFileStream beText!
 
 resourceNames
 	"Required for boot and loading of pre-D6 packages.
@@ -402,28 +456,19 @@ script: scriptSymbol
 
 script: scriptSymbol put: aString 
 	#deprecated.	"In 4.0, but needed to load some old format packages"
-	self scriptAt: scriptSymbol put: aString!
-
-versionLookup
-	"This dictionary is used for loading legacy packages"
-
-	^##(LookupTable new
-		at: 1 put: #loadVersion1:filer:;
-		at: 2 put: #loadVersion2:filer:;
-		at: 3 put: #loadVersion3:filer:;
-		at: 4 put: #loadVersion4:filer:;
-		at: 5 put: #loadVersion5:filer:;
-		shrink;
-		yourself	"same format as 4, except VM version loaded here")	"same format as 4, except VM version loaded here"	"same format as 4, except VM version loaded here"! !
+	self scriptAt: scriptSymbol put: aString! !
 !Kernel.Package categoriesForMethods!
+aboutBlockBytes:!accessing!private! !
 allResourceNames:!private!source filing! !
-basicLoadVersion4:filer:!legacy package loading!private! !
+declareClasses:!helpers!private! !
 errorUnknownFileVersion:!exceptions!legacy package loading!private! !
 fileInClassDefinitions:!development!private!source filing! !
+isMultifilePAC!legacy package loading!private! !
 loadGlobalsFromFiler:!legacy package loading!private! !
 loadLegacyPAC:!legacy package loading!private! !
 loadLegacyResources!legacy package loading!private! !
 loadResourcesFromFiler:!legacy package loading!private! !
+loadSelectorForVersion:!legacy package loading!private! !
 loadVersion1:filer:!legacy package loading!private! !
 loadVersion2:filer:!legacy package loading!private! !
 loadVersion3:filer:!legacy package loading!private! !
@@ -432,7 +477,6 @@ loadVersion5:filer:!legacy package loading!private! !
 resourceNames!legacy package loading!public! !
 script:!legacy package loading!public! !
 script:put:!legacy package loading!public! !
-versionLookup!constants!legacy package loading!private! !
 !
 
 !Kernel.Package class methodsFor!

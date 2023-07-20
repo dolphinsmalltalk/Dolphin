@@ -151,7 +151,7 @@ setView: aView
 	aView isOpen
 		ifTrue: 
 			[placement := aView placement.
-			subViews := aView subViews asArray.
+			subViews := aView subViews.
 			instVars at: HandleIndex put: nil].
 
 	"We must not save the events."
@@ -271,33 +271,32 @@ initialize
 
 stbConvertFrom: anSTBClassFormat
 	"Convert from earlier version view proxies.
-	Note that as of Dolphin 4.0 upgrading of old View resources is handled by the View
-	classes themselves. In future this method should only be modified for genuine
-	upgrades to STBViewProxy, not for upgrades to individual view classes."
+	Note that from Dolphin 4.0 (circa 2000), version 10, responsibility for upgrading of old View resources was transferred to the View classes themselves. This method should only be modified for genuine upgrades to STBViewProxy, not for upgrades to individual view classes. Conversion of the proxy inst var arrays is now handled by View class>>#stbConvert:from:"
 
-	^[:data | | ver viewProxy |
-		ver := anSTBClassFormat version.
-
-		"Finally, generate a new viewProxy and fill with data"
-		viewProxy := self basicNew.
-		1 to: data size do: [:i | viewProxy instVarAt: i put: (data at: i)].
-
-		"Perform the version 6 to 7 conversion last as this affects only the proxy itself."
-		ver < 7 ifTrue: [viewProxy resolution: 96@96].
-
-		"As of version 10 we no longer attempt to maintain a single STB version for all view classes
-		 (i.e. that of the proxy), because this is difficult for a user to maintain and will clash with base
-		 system changes. In the case of older versions we assign over the common (proxy) version, and 
-		 code to upgrade from these versions is implemented in View class>>stbConvert:from:)."
-		ver < 10 ifTrue: [viewProxy version: ver].
-
-		viewProxy]!
+	| ver |
+	ver := anSTBClassFormat version.
+	ver < 7
+		ifTrue: 
+			[^
+			[:data |
+			(data resize: 8)
+				at: 6 put: 96 @ 96;
+				at: 8 put: ver;
+				becomeA: STBViewProxy]].
+	ver < 10
+		ifTrue: 
+			[^
+			[:data |
+			(data resize: 8)
+				at: 8 put: ver;
+				becomeA: STBViewProxy]].
+	^super stbConvertFrom: anSTBClassFormat!
 
 stbVersion
 	"Answer the current binary filer version number for instances of the receiver.
 
 	1: 	Add largeIcon and smallIcon instance variables to ShellViews and subclasses
-	2:	 Map command->commandDescription for PushButtons
+	2:	Map command->commandDescription for PushButtons
 	3: 	Add iconSpacing to ListView and subclasses.
 	4: 	Add getInfoTipBlock instance variable to IconicListAbstract and subclasses
 	5: 	Add maxExtent and minExtent instance variables to ShellView and subclasses
@@ -307,8 +306,7 @@ stbVersion
 	9: 	ShellView defaultButton <PushButton> changed to defaultButtonId <integer>.
 	10: 	version instance variable added to record STB version of specific view class."
 
-	"STBViewProxy should no longer need to be changed to upgrade view classes,
-	 so if you are changing this number, THINK AGAIN."
+	"STBViewProxy should no longer need to be changed to upgrade view classes, so if you are changing this number, THINK AGAIN."
 
 	^10! !
 !UI.STBViewProxy class categoriesForMethods!

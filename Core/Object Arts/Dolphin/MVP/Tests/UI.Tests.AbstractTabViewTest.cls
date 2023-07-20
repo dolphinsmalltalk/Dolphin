@@ -46,9 +46,9 @@ testSetTextImageDoesNotAffectSelection
 		trigger: #selectionChanging:
 		against: presenter!
 
-verifyUpgradedView: anInteger
+verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |
-	super verifyUpgradedView: anInteger.
+	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
 	view := self view.
 	self assertIsNil: view customDrawBlock.
 	self assert: view largeIconExtent equals: Icon largeExtent.
@@ -59,6 +59,6 @@ autoSelectsFirst!private!testing! !
 removingResetsSelection!public!testing! !
 testSelectionsPreservedOnRecreate!public!unit tests! !
 testSetTextImageDoesNotAffectSelection!public!unit tests! !
-verifyUpgradedView:!helpers!private! !
+verifyUpgradedView:identifier:!helpers!private! !
 !
 

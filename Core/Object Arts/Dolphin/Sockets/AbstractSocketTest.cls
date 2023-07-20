@@ -26,10 +26,10 @@ tearDown
 
 testQueryPort
 	"See #1317"
-
 	| s |
 	s := self serverSocketClass port: 1000.
-	[self assert: s queryPort = 1000] ensure: [s close]! !
+	sockets add: s.
+	self assert: s queryPort = 1000! !
 !AbstractSocketTest categoriesForMethods!
 serverSocketClass!constants!private! !
 setUp!private!running! !

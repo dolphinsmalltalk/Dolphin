@@ -473,7 +473,7 @@ stbSaveOn: anSTBOutFiler
 	"Output the receiver to anSTBOutFiler."
 
 	anSTBOutFiler
-		writeClass: Locale withPrefix: STBPrefix forData;
+		writeClassPrefix: Locale;
 		register: self.
 	anSTBOutFiler nextPut: #smalltalk!
 

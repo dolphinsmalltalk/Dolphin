@@ -284,11 +284,11 @@ stbConvertFromVersion10: anArray
 	"Private - Perform an STB conversion from a version 10 <BasicListAbstract> to version 11.
 	Version 11 adds the lastSelIndices selection cache."
 
-	| array |
-	array := super stbConvertFromVersion10: anArray.
 	"Set lastSelIndices to empty"
-	array at: 16 put: #().
-	^array!
+
+	^(super stbConvertFromVersion10: anArray)
+		at: 16 put: #();
+		yourself!
 
 uninitialize
 	View unregisterMessageMappings: {WM_CTLCOLORLISTBOX}!

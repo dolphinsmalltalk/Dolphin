@@ -33,11 +33,7 @@ emitBinaryVariableDefinition: aBindingReference
 		space;
 		cr.
 	binaryStream := ByteArray writeStream: 256.
-	STBOutFiler new
-		stream: binaryStream;
-		version: 4;
-		initialize;
-		nextPut: value.
+	(STBOutFiler on: binaryStream version: 4) nextPut: value.
 	binaryStream contents base64StoreOn: stream.
 	stream
 		nextPut: $!!;
@@ -71,6 +67,19 @@ emitFileOutHeader
 	self
 		emitComment: 'Filed out from Dolphin Smalltalk';
 		cr!
+
+emitPackageAboutBlock: aPackage
+	aPackage aboutBlock
+		ifNotNil: 
+			[:aboutBlock |
+			stream
+				nextPutAll: 'package ';
+				nextPutAll: #aboutBlockBytes:;
+				space.
+			aboutBlock binaryStoreBytes base64StoreOn: stream.
+			stream
+				nextPut: $.;
+				cr]!
 
 emitPackageBinaryVariables: aPackage
 	"Private - Emit the definitions for variables of the specified <Package> that are not aliases and which refer to non-source objects onto the receiver's stream."
@@ -251,25 +260,6 @@ emitPaxVariableNames: aCollectionOfBindingReferences accessor: aSymbol
 		nextPut: $.;
 		cr;
 		cr!
-
-emitResourceMethod: aResourceIdentifier literals: aLiteralArray
-	| printer |
-	self emitResourceMethodHeader: aResourceIdentifier.
-	stream
-		tab;
-		nextPut: $^;
-		nextPutAll: '#('.
-	"Pretend it is a version 4 stream to give D7 a fighting chance of loading it - it will fail if D8 specific objects have been added, e.g. BindingReferences.
-	On the whole, if forwards compatibility must be maintained it is better not to attempt to edit view resources in D8 that must be loaded in D7, although more of the D8 changes could be back-ported (e.g. the ImageInitializer hierarchy) if there is an incentive."
-	printer := LegacySTLPrinter on: stream.
-	aLiteralArray first literalPrintOn: printer.
-	stream nextPutAll: ' 4 '.
-	3 to: aLiteralArray size
-		do: 
-			[:i |
-			(aLiteralArray at: i) literalPrintOn: printer.
-			stream space].
-	stream nextPut: $)!
 
 environment
 	^Smalltalk
@@ -506,6 +496,7 @@ emitClassName:on:!private!source filing-file out! !
 emitClassPoolOfClass:!private!source filing-file out! !
 emitDeclarationForClass:variable:!private!source filing-file out! !
 emitFileOutHeader!private!source filing! !
+emitPackageAboutBlock:!private!source filing-pax! !
 emitPackageBinaryVariables:!private!source filing! !
 emitPackageClassNames:!accessing!private!source filing-pax! !
 emitPackageManualPrerequisites:!private!source filing-pax! !
@@ -518,7 +509,6 @@ emitPackageVariableNameSubsets:!private!source filing-pax! !
 emitPackageVariableReference:!accessing!private!source filing! !
 emitPaxNames:!private!source filing-pax! !
 emitPaxVariableNames:accessor:!private!source filing-pax! !
-emitResourceMethod:literals:!private!source filing! !
 environment!accessing!public! !
 environment:!accessing!public! !
 equivalentLegacyPrerequisites!constants!private! !
@@ -542,8 +532,12 @@ specialBehaviorAttributes!constants!public! !
 !Kernel.LegacyChunkSourceFiler class methodsFor!
 
 fileOutExtensionForClass: aClass
-	^(aClass inheritsFrom: SharedPool) ifTrue: ['st'] ifFalse: ['cls']! !
+	^(aClass inheritsFrom: SharedPool) ifTrue: ['st'] ifFalse: ['cls']!
+
+stlVersion
+	^4! !
 !Kernel.LegacyChunkSourceFiler class categoriesForMethods!
 fileOutExtensionForClass:!enquiries!public! !
+stlVersion!constants!public! !
 !
 

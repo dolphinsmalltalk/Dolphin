@@ -165,12 +165,15 @@ points: aSequenceOfPoints types: aSequenceOfPathPointTypeConstants fillMode: aFi
 		fillMode: aFillModeConstant!
 
 stbConvertFrom: anSTBClassFormat
-	^
-	[:data |
-	self
-		points: (data at: 2)
-		types: (data at: 3)
-		fillMode: (data at: 4)]! !
+	anSTBClassFormat version == 0
+		ifTrue: 
+			[^
+			[:data |
+			self
+				points: (data at: 2)
+				types: (data at: 3)
+				fillMode: (data at: 4)]].
+	^super stbConvertFrom: anSTBClassFormat! !
 !Graphics.Gdiplus.GraphicsPathInitializer class categoriesForMethods!
 cloneHandle:!private!realizing/unrealizing! !
 freeHandle:!private!realizing/unrealizing! !

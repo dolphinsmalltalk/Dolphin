@@ -17,24 +17,16 @@ classToTest
 margins
 	^1 @ 1!
 
-oldDolphinVersionsForStbUpgrade
-	^1 to: 4!
-
-verifyUpgradedView: anInteger
+verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |
-	super verifyUpgradedView: anInteger.
+	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
 	view := self view.
 	self assertIsNil: view contextMenu.
-	self assert: (view instVarNamed: 'teFlags') equals: 4!
-
-vuFile
-	^'TextPresenter.Multiline text.vu'! !
+	self assert: (view instVarNamed: 'teFlags') equals: 4! !
 !UI.Tests.MultilineTextEditTest categoriesForMethods!
 classToTest!constants!private! !
 margins!constants!private! !
-oldDolphinVersionsForStbUpgrade!constants!private! !
-verifyUpgradedView:!helpers!private! !
-vuFile!constants!private! !
+verifyUpgradedView:identifier:!helpers!private! !
 !
 
 !UI.Tests.MultilineTextEditTest class methodsFor!

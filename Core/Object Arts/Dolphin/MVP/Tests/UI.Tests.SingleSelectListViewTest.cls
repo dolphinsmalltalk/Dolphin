@@ -11,9 +11,6 @@ UI.Tests.SingleSelectListViewTest guid: (Core.GUID fromString: '{176c59b9-4286-4
 UI.Tests.SingleSelectListViewTest comment: ''!
 !UI.Tests.SingleSelectListViewTest methodsFor!
 
-oldDolphinVersionsForStbUpgrade
-	^1 to: 5!
-
 sortSelections
 	^#(50)!
 
@@ -40,21 +37,16 @@ testSelectionModeChange
 	presenter view selectionsByIndex: #(1 2).
 	self assert: presenter selectionsByIndex equals: #(1)!
 
-verifyUpgradedView: anInteger
+verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |
-	super verifyUpgradedView: anInteger.
+	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
 	view := self view.
-	self deny: view isMultiSelect.
-	anInteger > 3 ifTrue: [self assert: self view primaryColumn text equals: 'Column 1']!
-
-vuFile
-	^'ListPresenter.Enhanced list view.vu'! !
+	self assert: view isMultiSelect equals: aResourceIdentifier selector == #resource_Multiselection_enhanced_list_view.
+	anInteger > 3 ifTrue: [self assert: self view primaryColumn text equals: 'Column 1']! !
 !UI.Tests.SingleSelectListViewTest categoriesForMethods!
-oldDolphinVersionsForStbUpgrade!constants!private! !
 sortSelections!private!unit tests! !
 testSelectionModeChange!public!unit tests! !
-verifyUpgradedView:!helpers!private! !
-vuFile!constants!private! !
+verifyUpgradedView:identifier:!helpers!private! !
 !
 
 !UI.Tests.SingleSelectListViewTest class methodsFor!

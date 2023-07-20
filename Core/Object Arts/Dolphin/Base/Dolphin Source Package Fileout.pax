@@ -32,6 +32,7 @@ package setMethodNames: #(
 	#(#{Kernel.AbstractChunkSourceFiler} #emitPaxPackage:)
 	#(#{Kernel.AbstractChunkSourceFiler} #emitVersionNumber:)
 	#(#{Kernel.AbstractChunkSourceFiler} #methodNameSortBlock:)
+	#(#{Kernel.ChunkSourceFiler} #emitPackageAboutBlock:)
 	#(#{Kernel.ChunkSourceFiler} #emitPackageBinaryVariables:)
 	#(#{Kernel.ChunkSourceFiler} #emitPackageClassNames:)
 	#(#{Kernel.ChunkSourceFiler} #emitPackageCollection:initializer:)
@@ -88,6 +89,7 @@ package setMethodNames: #(
 
 package setPrerequisites: #(
 	'Dolphin'
+	'..\System\Filer\Dolphin Literal Filer'
 	'..\System\Win32\MessageBox\Dolphin Message Box'
 	'Dolphin Source Fileout'
 	'..\System\STON\Dolphin STON-Core'
@@ -118,14 +120,7 @@ fileOut!public!source filing! !
 !Kernel.AbstractChunkSourceFiler methodsFor!
 
 emitPackageAboutBlock: aPackage
-	aPackage aboutBlock
-		ifNotNil: 
-			[:aboutBlock |
-			stream nextPutAll: 'package aboutBlockBytes: '.
-			aboutBlock binaryStoreBytes base64StoreOn: stream.
-			stream
-				nextPut: $.;
-				cr]!
+	self subclassResponsibility!
 
 emitPackageClassNames: aPackage 
 	self subclassResponsibility!
@@ -288,6 +283,19 @@ methodNameSortBlock:!private!source filing-pax! !
 
 !Kernel.ChunkSourceFiler methodsFor!
 
+emitPackageAboutBlock: aPackage
+	aPackage aboutBlockLiteralStoreArray
+		ifNotNil: 
+			[:stl |
+			stream
+				nextPutAll: 'package ';
+				nextPutAll: #aboutBlockLiteralStoreArray:;
+				space.
+			STLPrinter printLiteralStoreArray: stl on: stream.
+			stream
+				nextPut: $.;
+				cr]!
+
 emitPackageBinaryVariables: aPackage
 	"Private - Emit the definitions for variables of the specified <Package> that are not aliases and which refer to non-source objects onto the receiver's stream."
 
@@ -363,6 +371,7 @@ emitPaxAttributes: aPackage
 				print: namespace fullyQualifiedReference].
 	super emitPaxAttributes: aPackage! !
 !Kernel.ChunkSourceFiler categoriesForMethods!
+emitPackageAboutBlock:!private!source filing-pax! !
 emitPackageBinaryVariables:!private!source filing! !
 emitPackageClassNames:!accessing!private!source filing-pax! !
 emitPackageCollection:initializer:!private!source filing-pax! !
@@ -517,7 +526,7 @@ fileOutBinaryVariables
 					
 					[:each |
 					| stream |
-					stream := FileStream write: (self fileNameForBinaryVariable: each extension: 'ston') text: true.
+					stream := FileStream write: (self fileNameForBinaryVariable: each) text: true.
 					STON put: each value onStreamPretty: stream.
 					stream
 						cr;
@@ -547,8 +556,7 @@ fileOutNames
 		ifFalse: 
 			[Set new
 				add: self fileOutName;
-				addAll: (self binaryVariableNames
-							collect: [:each | self fileNameForBinaryVariable: each extension: 'ston']);
+				addAll: (self binaryVariableNames collect: [:each | self fileNameForBinaryVariable: each]);
 				yourself]!
 
 fileOutOn: aSourceFiler

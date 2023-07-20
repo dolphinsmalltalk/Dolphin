@@ -678,15 +678,18 @@ defineFunctions
 			argumentTypes: 'VARDESC*'
 !
 
-stbConvertFrom: anSTBClassFormat 
-	"Version 1 adds helpId instance variable."
+stbConvertFrom: anSTBClassFormat
+	"Version 1 adds allCustData instance variable, initially nil."
 
-	^
-	[:data | 
-	| newInstance |
-	newInstance := self basicNew.
-	1 to: data size do: [:i | newInstance instVarAt: i put: (data at: i)].
-	newInstance]!
+	anSTBClassFormat version == 0
+		ifTrue: 
+			[^
+			[:data |
+			| newInstance |
+			newInstance := self basicNew.
+			1 to: data size do: [:i | newInstance instVarAt: i put: (data at: i)].
+			newInstance]].
+	^super stbConvertFrom: anSTBClassFormat!
 
 stbVersion
 	^1! !

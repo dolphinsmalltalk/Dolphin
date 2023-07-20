@@ -13,7 +13,7 @@ Kernel.STBIdentityDictionaryProxy comment: ''!
 !Kernel.STBIdentityDictionaryProxy methodsFor!
 
 value
-	"Answer a new IdentityDictionary from the key-value pairs held by the receiver."
+	"Answer a new LookupTable from the key-value pairs held by the receiver."
 
 	| inst count |
 	count := array size.
@@ -28,18 +28,17 @@ value!converting!public! !
 
 !Kernel.STBIdentityDictionaryProxy class methodsFor!
 
-forCollection: anIdentityDictionary
-	"Answer a new instance of the receiver which contains the key-value object pairs
-	of anIdentityDictionary as an Array."
+forCollection: aLookupTable
+	"Answer a new instance of the receiver which contains the key-value object pairs of the <LookupTable> argument as an Array."
 
 	| tempStream |
-	tempStream := Array writeStream: anIdentityDictionary size * 2.
-	anIdentityDictionary keysAndValuesDo: 
+	tempStream := Array writeStream: aLookupTable size * 2.
+	aLookupTable keysAndValuesDo: 
 			[:key :value |
 			tempStream
 				nextPut: key;
 				nextPut: value].
-	^self class: anIdentityDictionary class array: tempStream grabContents! !
+	^self class: aLookupTable class array: tempStream grabContents! !
 !Kernel.STBIdentityDictionaryProxy class categoriesForMethods!
 forCollection:!instance creation!public! !
 !

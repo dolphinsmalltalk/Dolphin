@@ -146,10 +146,13 @@ Core.Object
 Core.Object
 	subclass: #'Security.DolphinSureCertificateInfo'
 	instanceVariableNames: 'serial owner details issued expiry publicKey'
-	classVariableNames: 'ValidStbClasses'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'ValidStbClasses'
+				-> #(#{Core.Date} #{Core.AnsiString} #{Core.Utf8String} #{Core.LargeInteger} #{Core.SmallInteger} #{Security.DolphinSureCertificateInfo})
+		}!
 Core.Object
 	subclass: #'Security.DolphinSureCertificateStore'
 	instanceVariableNames: 'regKey'
@@ -160,10 +163,13 @@ Core.Object
 Core.Object
 	subclass: #'Security.DolphinSureTrustedData'
 	instanceVariableNames: 'data description signature publisherCertificate'
-	classVariableNames: 'ValidStbClasses'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'ValidStbClasses'
+				-> #(#{Core.AnsiString} #{Core.Utf8String} #{Core.ByteArray} #{Security.DolphinSureTrustedData} #{Security.DolphinSureCertificate} #{Security.DolphinSurePersonalCertificate})
+		}!
 Core.Object
 	subclass: #'Security.PC1Cipher'
 	instanceVariableNames: 'key box i j'

@@ -16,8 +16,8 @@ basicNext
 	| prefixOrLiteral |
 	prefixOrLiteral := stream next.
 	prefixOrLiteral isInteger ifFalse: [^self collectClassOf: prefixOrLiteral value].
-	STBPrefix.LiteralPrefixMask == prefixOrLiteral
-		ifFalse: [^self readObjectWithPrefix: prefixOrLiteral].
+	PrefixLiteralMask == prefixOrLiteral
+		ifFalse: [^policy readObject: self withPrefix: prefixOrLiteral].
 	^self readLiteralData!
 
 classes
@@ -57,7 +57,7 @@ initialize
 objectAt: anInteger
 	"Private - Answer the map value at anInteger. Signal an exception if there is no such entry."
 
-	^anInteger < MaxPredefinedRef
+	^anInteger <= policy lastPredefined
 		ifTrue: 
 			["Record a reference to a pre-registered class so we know it is used in this stream"
 			self collectClassOf: (readMap at: anInteger)]
@@ -66,6 +66,8 @@ objectAt: anInteger
 readLiteralData
 	| newObject |
 	newObject := stream next.
+	"Arrays of atomic objects can appear as literals. We only need to drill into these to collect the classes of the immediately contained objects, as those objects must themselves be atomic, and so cannot be composed of other objects.
+	Non-literal arrays will be visited (recursively) and will have their classes collected through #register:, which is called for every non-literal object."
 	newObject basicClass == Array
 		ifTrue: [1 to: newObject size do: [:i | self collectClassOf: (newObject at: i) value]]
 		ifFalse: [self collectClassOf: newObject].
